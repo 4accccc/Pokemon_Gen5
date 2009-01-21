@@ -84,7 +84,8 @@ struct _BTLV_SCU {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static BOOL btlin_loop( int* seq, void* wk_adrs );
+static BOOL btlin_wild_single( int* seq, void* wk_adrs );
+static BOOL btlin_wild_double( int* seq, void* wk_adrs );
 static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
@@ -207,18 +208,47 @@ void BTLV_SCU_Delete( BTLV_SCU* wk )
 
 
 
+//=============================================================================================
+/**
+ * バトル画面初期セットアップ完了までの演出を開始する
+ *
+ * @param   wk		
+ *
+ */
+//=============================================================================================
 void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
 {
-	
-	BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_loop );
+	// @@@ いずれはトレーナー戦かどうかなどでも判定を別ける必要あり
+	if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE )
+	{
+		BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_wild_single );
+	}
+	else
+	{
+		BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_wild_double );
+	}
 }
 
+//=============================================================================================
+/**
+ * バトル画面初期セットアップ完了までの演出を終了するまで待つ
+ *
+ * @param   wk		
+ *
+ * @retval  BOOL		終了したらTRUE
+ */
+//=============================================================================================
 BOOL BTLV_SCU_WaitBtlIn( BTLV_SCU* wk )
 {
 	return BTL_UTIL_CallProc( &wk->proc );
 }
-
-static BOOL btlin_loop( int* seq, void* wk_adrs )
+//--------------------------------------------------------------------------
+/**
+ * 戦闘画面セットアップ完了までの演出（野生／シングル）
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------------------
+static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 {
 	BTLV_SCU* wk = wk_adrs;
 
@@ -278,13 +308,79 @@ static BOOL btlin_loop( int* seq, void* wk_adrs )
 
 	return FALSE;
 }
+//--------------------------------------------------------------------------
+/**
+ * 戦闘画面セットアップ完了までの演出（野生／ダブル）
+ * @retval  BOOL		TRUEで終了
+ */
+//--------------------------------------------------------------------------
+static BOOL btlin_wild_double( int* seq, void* wk_adrs )
+{
+	BTLV_SCU* wk = wk_adrs;
+
+	switch( *seq ){
+	case 0:
+		BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Double );
+		BTLV_SCU_StartMsg( wk, wk->strBuf );
+		(*seq)++;
+		break;
+	case 1:
+		if( BTLV_SCU_WaitMsg(wk) )
+		{
+				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_2ND_0 );
+				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), POKE_MCSS_POS_B );
+				(*seq)++;
+		}
+		break;
+	case 2:
+		if( !BTL_EFFECT_CheckExecute() )
+		{
+				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_2ND_1 );
+				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(bpp), POKE_MCSS_POS_D );
+				(*seq)++;
+		}
+		break;
+	case 3:
+		if( !BTL_EFFECT_CheckExecute() )
+		{
+				BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutDouble );
+				BTLV_SCU_StartMsg( wk, wk->strBuf );
+				(*seq)++;
+		}
+		break;
+	case 4:
+		if( BTLV_SCU_WaitMsg(wk) )
+		{
+				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_1ST_0 );
+				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(bpp), POKE_MCSS_POS_A );
+				(*seq)++;
+		}
+		break;
+	case 5:
+		if( !BTL_EFFECT_CheckExecute() )
+		{
+				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_1ST_1 );
+				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(bpp), POKE_MCSS_POS_C );
+				(*seq)++;
+		}
+		break;
+	case 6:
+		if( !BTL_EFFECT_CheckExecute() )
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+
 
 //=============================================================================================
 /**
  * とくせいウィンドウ表示オン
  *
  * @param   wk		
- * @param   clientID		
+ * @param   pos		
  *
  */
 //=============================================================================================
@@ -377,7 +473,7 @@ typedef struct {
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartWazaAct( BTLV_SCU* wk, u8 atClientID, u8 defClientID, WazaID waza, BtlTypeAff affinity )
+void BTLV_SCU_StartWazaAct( BTLV_SCU* wk, BtlPokePos atPos, BtlPokePos defPos, WazaID waza, BtlTypeAff affinity )
 {
 	enum {
 		DAMAGE_FRAME_MIN = 40,
@@ -387,7 +483,7 @@ void BTLV_SCU_StartWazaAct( BTLV_SCU* wk, u8 atClientID, u8 defClientID, WazaID 
 	DMG_EFF_TASK_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
 	twk->endFlag = &(wk->taskEndFlag[0]);
-	twk->statWin = &wk->statusWin[defClientID];
+	twk->statWin = &wk->statusWin[defPos];
 	twk->hpEnd = BTL_POKEPARAM_GetValue( twk->statWin->bpp, BPP_HP );
 	twk->hpVal = FX32_CONST( twk->statWin->hp );
 	{
@@ -399,6 +495,15 @@ void BTLV_SCU_StartWazaAct( BTLV_SCU* wk, u8 atClientID, u8 defClientID, WazaID 
 		}
 
 		twk->hpMinusVal = FX32_CONST(twk->statWin->hp - twk->hpEnd) / twk->timer;
+	}
+
+	// 技エフェクト出してみる soga
+	{
+		u8 atViewPos, defViewPos;
+
+		atViewPos  = BTL_MAIN_BtlPosToViewPos( wk->mainModule, atPos );
+		defViewPos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPos );
+		BTL_EFFECT_AddByPos( atViewPos, defViewPos, waza );
 	}
 
 	*(twk->endFlag) = FALSE;
@@ -616,7 +721,7 @@ static void tokwin_setupAll( BTLV_SCU* wk )
 {
 	u8 plClientID, enClientID, i;
 
-	for(i=0; i<BTL_CLIENT_MAX; i++)
+	for(i=0; i<NELEMS(wk->tokWin); i++)
 	{
 		wk->tokWin[i].win = NULL;
 	}
@@ -624,14 +729,20 @@ static void tokwin_setupAll( BTLV_SCU* wk )
 	plClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
 	enClientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, plClientID, 0 );
 
-	tokwin_setup( &wk->tokWin[ plClientID ], wk, plClientID );
-	tokwin_setup( &wk->tokWin[ enClientID ], wk, enClientID );
+	tokwin_setup( &wk->tokWin[ BTL_POS_1ST_0 ], wk, BTL_POS_1ST_0 );
+	tokwin_setup( &wk->tokWin[ BTL_POS_2ND_0 ], wk, BTL_POS_2ND_0 );
+
+	if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
+	{
+		tokwin_setup( &wk->tokWin[ BTL_POS_1ST_1 ], wk, BTL_POS_1ST_1 );
+		tokwin_setup( &wk->tokWin[ BTL_POS_2ND_1 ], wk, BTL_POS_2ND_1 );
+	}
 }
 
 static void tokwin_cleanupAll( BTLV_SCU* wk )
 {
 	int i;
-	for(i=0; i<BTL_CLIENT_MAX; i++)
+	for(i=0; i<NELEMS(wk->tokWin); i++)
 	{
 		if( wk->tokWin[i].win != NULL)
 		{

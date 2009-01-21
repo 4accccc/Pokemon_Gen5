@@ -51,6 +51,8 @@ extern void BTL_CLIENT_Main( BTL_CLIENT* client );
 
 extern u8 BTL_CLIENT_GetClientID( const BTL_CLIENT* client );
 extern const BTL_PARTY* BTL_CLIENT_GetParty( const BTL_CLIENT* client );
+extern const BTL_POKEPARAM* BTL_CLIENT_GetProcPokeData( const BTL_CLIENT* client );
+extern BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client );
 extern const BTL_POKEPARAM* BTL_CLIENT_GetFrontPokeData( const BTL_CLIENT* client, u8 posIdx );
 
 

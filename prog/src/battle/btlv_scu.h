@@ -34,7 +34,7 @@ extern void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str );
 extern BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk );
 extern void BTLV_SCU_DispTokWin( BTLV_SCU* wk, u8 clientID );
 extern void BTLV_SCU_HideTokWin( BTLV_SCU* wk, u8 clientID );
-extern void BTLV_SCU_StartWazaAct( BTLV_SCU* wk, u8 atClientID, u8 defClientID, WazaID waza, BtlTypeAff affinity );
+extern void BTLV_SCU_StartWazaAct( BTLV_SCU* wk, BtlPokePos atPos, BtlPokePos defPos, WazaID waza, BtlTypeAff affinity );
 extern BOOL BTLV_SCU_WaitWazaAct( BTLV_SCU* wk );
 extern void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, u8 clientID );
 extern BOOL BTLV_SCU_WaitDeadAct( BTLV_SCU* wk );

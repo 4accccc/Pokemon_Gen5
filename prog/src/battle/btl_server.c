@@ -106,7 +106,7 @@ typedef struct {
 struct _BTL_SERVER {
 	BTL_MAIN_MODULE*	mainModule;
 	CLIENT_WORK			client[ BTL_CLIENT_MAX ];
-	u8					actionOrder[ BTL_CLIENT_MAX ];
+	u8					actionOrder[ BTL_POS_MAX ];
 	u8					numClient;
 	u8					pokeDeadFlag;
 	u8					endFlag;
@@ -175,7 +175,7 @@ static PokeTypePair scEvent_getDefenderPokeType( BTL_SERVER* server, FIGHT_EVENT
 static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID );
 static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 memberIdx );
 static void scEvent_PokeComp( BTL_SERVER* server );
-static void scEvent_RankDown( BTL_SERVER* server, u8 targetClientID, BppValueID statusType, u8 volume );
+static void scEvent_RankDown( BTL_SERVER* server, BtlPokePos pokePos, BppValueID statusType, u8 volume );
 static inline u8 pokeID_to_clientID( const BTL_SERVER* sv, u8 pokeID );
 
 
@@ -572,10 +572,10 @@ static void sortClientAction( BTL_SERVER* server, u8* order )
 
 	CLIENT_WORK* client;
 	const BTL_ACTION_PARAM* actParam;
-	u32 pri[ BTL_CLIENT_MAX ];
+	u32 pri[ BTL_POS_MAX ];
 	u16 agility;
 	u8  action, actionPri, wazaPri;
-	u8  i, j;
+	u8  i, j, numPoke;
 
 // 各クライアントのプライオリティ値を生成
 	for(i=0; i<server->numClient; i++)
@@ -583,38 +583,45 @@ static void sortClientAction( BTL_SERVER* server, u8* order )
 		client = &server->client[i];
 		// 行動による優先順（優先度高いほど数値大）
 		actParam = BTL_ADAPTER_GetReturnData( client->adapter );
-		switch( actParam->gen.cmd ){
-		case BTL_ACTION_ESCAPE:	actionPri = 3; break;
-		case BTL_ACTION_ITEM:	actionPri = 2; break;
-		case BTL_ACTION_CHANGE:	actionPri = 1; break;
-		case BTL_ACTION_FIGHT:	actionPri = 0; break;
-		default:
-			GF_ASSERT(0);
-			actionPri = 0;
-			break;
-		}
+		numPoke = BTL_ADAPTER_GetReturnDataCount( client->adapter );
 
-		// ワザによる優先順
-		if( actParam->gen.cmd == BTL_ACTION_FIGHT )
+		for(i=0; i<numPoke; i++)
 		{
-			WazaID  w = BTL_POKEPARAM_GetWazaNumber( client->frontMember, actParam->fight.wazaIdx );
-			wazaPri = WAZADATA_GetPriority( w ) - WAZAPRI_MIN;
+			switch( actParam->gen.cmd ){
+			case BTL_ACTION_ESCAPE:	actionPri = 3; break;
+			case BTL_ACTION_ITEM:	actionPri = 2; break;
+			case BTL_ACTION_CHANGE:	actionPri = 1; break;
+			case BTL_ACTION_FIGHT:	actionPri = 0; break;
+			default:
+				GF_ASSERT(0);
+				actionPri = 0;
+				break;
+			}
+
+			// ワザによる優先順
+			if( actParam->gen.cmd == BTL_ACTION_FIGHT )
+			{
+				WazaID  w = BTL_POKEPARAM_GetWazaNumber( client->frontMember, actParam->fight.wazaIdx );
+				wazaPri = WAZADATA_GetPriority( w ) - WAZAPRI_MIN;
+			}
+			else
+			{
+				wazaPri = 0;
+			}
+
+			// すばやさ
+			agility = BTL_POKEPARAM_GetValue( client->frontMember, BPP_AGILITY );
+
+			BTL_Printf("[SV] Client[%d]'s actionPri=%d, wazaPri=%d, agility=%d\n",
+					i, actionPri, wazaPri, agility );
+
+			// プライオリティ値とクライアントIDを対にして配列に保存
+			pri[i] = MakePriValue( actionPri, wazaPri, agility );
+			order[i] = i;
+			BTL_Printf("[SV] Client[%d] PriValue=%8x\n", i, pri[i]);
+
+			actParam++;
 		}
-		else
-		{
-			wazaPri = 0;
-		}
-
-		// すばやさ
-		agility = BTL_POKEPARAM_GetValue( client->frontMember, BPP_AGILITY );
-
-		BTL_Printf("[SV] Client[%d]'s actionPri=%d, wazaPri=%d, agility=%d\n",
-				i, actionPri, wazaPri, agility );
-
-		// プライオリティ値とクライアントIDを対にして配列に保存
-		pri[i] = MakePriValue( actionPri, wazaPri, agility );
-		order[i] = i;
-		BTL_Printf("[SV] Client[%d] PriValue=%8x\n", i, pri[i]);
 	}
  
 // プライオリティ値ソートに伴ってクライアントID配列もソート
@@ -1350,9 +1357,9 @@ static void scEvent_PokeComp( BTL_SERVER* server )
 }
 
 // 能力を下げる
-static void scEvent_RankDown( BTL_SERVER* server, u8 targetClientID, BppValueID statusType, u8 volume )
+static void scEvent_RankDown( BTL_SERVER* server, BtlPokePos pokePos, BppValueID statusType, u8 volume )
 {
-	server->eventArgs[ BTL_EVARG_COMMON_CLIENT_ID ] = targetClientID;
+	server->eventArgs[ BTL_EVARG_COMMON_POKEPOS ] = pokePos;
 	server->eventArgs[ BTL_EVARG_RANKDOWN_STATUS_TYPE ] = statusType;
 	server->eventArgs[ BTL_EVARG_RANKDOWN_VOLUME ] = volume;
 	server->eventArgs[ BTL_EVARG_RANKDOWN_FAIL_FLAG ] = FALSE;
@@ -1363,18 +1370,20 @@ static void scEvent_RankDown( BTL_SERVER* server, u8 targetClientID, BppValueID 
 	{
 		volume = server->eventArgs[ BTL_EVARG_RANKDOWN_VOLUME ];
 		BTL_POKEPARAM_RankDown(
-				server->client[targetClientID].frontMember,
+//				server->client[targetClientID].frontMember,
+				BTL_MAIN_GetFrontPokeData( server->mainModule, pokePos ),
 				statusType, 
 				volume
 		);
 
-		SCQUE_PUT_OP_RankDown( server->que, targetClientID, statusType, volume );
-		SCQUE_PUT_ACT_RankDown( server->que, targetClientID, statusType, volume );
-		SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Rankdown_ATK, targetClientID, statusType, volume );
+		SCQUE_PUT_OP_RankDown( server->que, pokePos, statusType, volume );
+		SCQUE_PUT_ACT_RankDown( server->que, pokePos, statusType, volume );
+		SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Rankdown_ATK, pokePos, statusType, volume );
 	}
 }
 
 //----------------------------------------------------------------------------------------------------------
+// 以下、ハンドラからの応答受信関数とユーティリティ群
 //----------------------------------------------------------------------------------------------------------
 
 static inline u8 pokeID_to_clientID( const BTL_SERVER* sv, u8 pokeID )
@@ -1445,22 +1454,22 @@ void BTL_SERVER_RECTPT_SetMessage( BTL_SERVER* server, u16 msgID, u8 clientID )
  * ステータスのランクダウン効果
  *
  * @param   server			
- * @param   exID			対象クライアントID
+ * @param   exPos					対象ポケモン位置
  * @param   statusType		ステータスタイプ
  * @param   volume		
  *
  */
 //=============================================================================================
-void BTL_SERVER_RECEPT_RankDownEffect( BTL_SERVER* server, BtlExClientID exID, BppValueID statusType, u8 volume )
+void BTL_SERVER_RECEPT_RankDownEffect( BTL_SERVER* server, BtlExPos exPos, BppValueID statusType, u8 volume )
 {
-	u8 clientID[ BTL_CLIENT_MAX ];
-	u8 numClients, i;
+	u8 targetPos[ BTL_POSIDX_MAX ];
+	u8 numPokemons, i;
 
-	numClients = BTL_MAIN_ExpandClientID( server->mainModule, exID, clientID );
-	BTL_Printf("ランクさげ効果：タイプ=%d,  対象クライアント数=%d\n", statusType, numClients);
-	for(i=0; i<numClients; i++)
+	numPokemons = BTL_MAIN_ExpandBtlPos( server->mainModule, exPos, targetPos );
+	BTL_Printf("ランクさげ効果：タイプ=%d,  対象ポケモン数=%d\n", statusType, numPokemons );
+	for(i=0; i<numPokemons; i++)
 	{
-		scEvent_RankDown( server, clientID[i], statusType, volume );
+		scEvent_RankDown( server, targetPos[i], statusType, volume );
 	}
 }
 

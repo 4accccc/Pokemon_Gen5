@@ -317,9 +317,9 @@ static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID )
 // ÅõÅõÇÕÇ«Ç§Ç∑ÇÈÅH
 static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID )
 {
-	u8 clientID = BTL_CLIENT_GetClientID( SysWork.client );
+	u8 pokePos = BTL_CLIENT_GetProcPokePos( SysWork.client );
 
-	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
+	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

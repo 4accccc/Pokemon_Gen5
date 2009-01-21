@@ -71,7 +71,7 @@ extern void BTL_ADAPTER_SetCmd( BTL_ADAPTER* wk, BtlAdapterCmd cmd, const void* 
 extern BOOL BTL_ADAPTER_WaitCmd( BTL_ADAPTER* wk );
 extern void BTL_ADAPTER_ResetCmd( BTL_ADAPTER *wk );
 extern const void* BTL_ADAPTER_GetReturnData( BTL_ADAPTER* wk );
-extern u32 BTL_ADAPTER_GetReturnDataSize( BTL_ADAPTER* wk );
+extern u32 BTL_ADAPTER_GetReturnDataCount( BTL_ADAPTER* wk );
 
 // for clients
 extern BtlAdapterCmd BTL_ADAPTER_RecvCmd( BTL_ADAPTER* wk );

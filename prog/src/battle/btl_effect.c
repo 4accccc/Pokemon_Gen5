@@ -195,6 +195,50 @@ void	BTL_EFFECT_Main( void )
 	}
 }
 
+//=============================================================================================
+/**
+ * エフェクト起動（発動位置、受動位置、ワザナンバーからエフェクトナンバーを自動判定）
+ *
+ * @param   from		発動位置
+ * @param   to			受動位置
+ * @param   waza		エフェクトナンバー
+ *
+ */
+//=============================================================================================
+void BTL_EFFECT_AddByPos( PokeMcssPos from, PokeMcssPos to, WazaID waza )
+{
+	static const u16 effnoTbl[] = {
+		BTL_EFFECT_AA2BBGANSEKI,
+		BTL_EFFECT_BB2AAGANSEKI,
+		BTL_EFFECT_A2BGANSEKI,
+		BTL_EFFECT_B2AGANSEKI,
+
+		BTL_EFFECT_AA2BBMIZUDEPPOU,
+		BTL_EFFECT_BB2AAMIZUDEPPOU,
+		BTL_EFFECT_A2BMIZUDEPPOU,
+		BTL_EFFECT_B2AMIZUDEPPOU
+	};
+
+	enum {
+		POS_PATTERNS = 4,	// @@@ ホントはもっとある。
+	};
+
+	// from C, D および to C, D は用意されていないので
+	// C -> A , D->B になるように加工する
+	// @@@ C D が用意されたらこの処理は不要。taya
+	while( from >= POKE_MCSS_POS_C ){  from -= 2; }
+	while( to >= POKE_MCSS_POS_C ) { to -= 2; }
+
+	// ワザが２種類しか用意されていないのでワザナンバー 0-1 になるように加工。
+	// @@@ ワザが揃うのに合わせて適宜、修正。taya
+	waza = waza & 1;
+
+	{
+		int idx = waza * POS_PATTERNS + from;
+		BTL_EFFECT_Add( effnoTbl[idx] );
+	}
+}
+
 //============================================================================================
 /**
  *	エフェクト起動

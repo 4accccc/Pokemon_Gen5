@@ -256,10 +256,10 @@ const void* BTL_ADAPTER_GetReturnData( BTL_ADAPTER* wk )
  * @retval  u32		データポインタ
  */
 //--------------------------------------------------------------------------------------
-u32 BTL_ADAPTER_GetReturnDataSize( BTL_ADAPTER* wk )
+u32 BTL_ADAPTER_GetReturnDataCount( BTL_ADAPTER* wk )
 {
 	GF_ASSERT(wk->returnDataPreparedFlag);
-	return wk->returnDataSize;
+	return wk->returnDataSize / sizeof(BTL_ACTION_PARAM);
 }
 
 //--------------------------------------------------------------------------------------

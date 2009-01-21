@@ -38,13 +38,14 @@ static void handler_MemberComp( BTL_SERVER* server, u8 pokeID, int* work )
 {
 	if( work[0] == 0 )
 	{
-		u8 clientID = BTL_SERVER_RECEPT_PokeIDtoClientID( server, pokeID );
+//		u8 myPos = BTL_SERVER_RECEPT_PokeIDtoClientID( server, pokeID );
+		u8 myPos = pokeID;
 
 		BTL_Printf("‚¢‚©‚­‚¾‚æ‚ñ\n");
 
-		BTL_SERVER_RECEPT_TokuseiWinIn( server, clientID );
-		BTL_SERVER_RECEPT_RankDownEffect( server, EXID_MAKE(BTL_EXCLIENT_ENEMY_ALL, clientID), BPP_ATTACK, 1 );
-		BTL_SERVER_RECEPT_TokuseiWinOut( server, clientID );
+		BTL_SERVER_RECEPT_TokuseiWinIn( server, myPos );
+		BTL_SERVER_RECEPT_RankDownEffect( server, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, myPos), BPP_ATTACK, 1 );
+		BTL_SERVER_RECEPT_TokuseiWinOut( server, myPos );
 
 		work[0] = 1;
 	}

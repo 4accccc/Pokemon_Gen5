@@ -99,8 +99,8 @@ static void cleanupPokeParams( BTL_PARTY* party );
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk );
-static u8 expandClientID_single( const BTL_MAIN_MODULE* wk, BtlExClientType exType, u8 clientID, u8* dst );
-static u8 expandClientID_double( const BTL_MAIN_MODULE* wk, BtlExClientType exType, u8 clientID, u8* dst );
+static u8 expandPokePos_single( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
+static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
 static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
@@ -647,71 +647,108 @@ BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk )
  * 特殊クライアントID指定子を、実際の対象クライアントIDに変換
  *
  * @param   wk						メインモジュールハンドラ
- * @param   exID					特殊クライアントID指定子
+ * @param   exPos					特殊ポケモン位置指定子
  * @param   dst						[out] 対象クライアントIDを格納するバッファ
  *
  * @retval  u8		対象クライアント数
  */
 //=============================================================================================
-u8 BTL_MAIN_ExpandClientID( const BTL_MAIN_MODULE* wk, BtlExClientID exID, u8* dst )
+u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* dst )
 {
-	u8 exType = EXID_GET_TYPE( exID );
-	u8 clientID = EXID_GET_CLIENTID( exID );
+	u8 exType = EXPOS_GET_TYPE( exPos );
+	u8 basePos = EXPOS_GET_BASEPOS( exPos );
 
-	if( exType == BTL_EXCLIENT_DEFAULT )
+	if( exType == BTL_EXPOS_DEFAULT )
 	{
-		dst[0] = clientID;
+		dst[0] = basePos;
 		return 1;
 	}
 
 	switch( wk->setupParam->rule ){
 	case BTL_RULE_SINGLE:
-		return expandClientID_single( wk, exType, clientID, dst );
+		return expandPokePos_single( wk, exType, basePos, dst );
 	case BTL_RULE_DOUBLE:
 	default:
-		return expandClientID_double( wk, exType, clientID, dst );
+		return expandPokePos_double( wk, exType, basePos, dst );
 	}
 }
 // シングル用
-static u8 expandClientID_single( const BTL_MAIN_MODULE* wk, BtlExClientType exType, u8 clientID, u8* dst )
+static u8 expandPokePos_single( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst )
 {
 	switch( exType ){
 	default:
 		GF_ASSERT(0);
 		/* fallthru */
-	case BTL_EXCLIENT_ENEMY_ALL:
-	case BTL_EXCLIENT_ENEMY_RANDOM:
-	case BTL_EXCLIENT_WITHOUT_ME:
-		dst[0] = BTL_MAIN_GetOpponentClientID( wk, clientID, 0 );
+	case BTL_EXPOS_ENEMY_ALL:
+	case BTL_EXPOS_ENEMY_RANDOM:
+	case BTL_EXPOS_WITHOUT_ME:
+		dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
 		break;
 	}
 	return 1;
 }
 // ダブル用
-static u8 expandClientID_double( const BTL_MAIN_MODULE* wk, BtlExClientType exType, u8 clientID, u8* dst )
+static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst )
 {
 	switch( exType ){
 	default:
 		GF_ASSERT(0);
 		/* fallthru */
-	case BTL_EXCLIENT_ENEMY_ALL:
-		dst[0] = BTL_MAIN_GetOpponentClientID( wk, clientID, 0 );
-		dst[1] = BTL_MAIN_GetOpponentClientID( wk, clientID, 1 );
+	case BTL_EXPOS_ENEMY_ALL:
+		dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
+		dst[1] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
 		return 2;
-	case BTL_EXCLIENT_ENEMY_RANDOM:
-		dst[0] = BTL_MAIN_GetOpponentClientID( wk, clientID, GFL_STD_MtRand(1) );
+	case BTL_EXPOS_ENEMY_RANDOM:
+		dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, GFL_STD_MtRand(1) );
 		return 1;
-	case BTL_EXCLIENT_WITHOUT_ME:
-		dst[0] = BTL_MAIN_GetOpponentClientID( wk, clientID, 0 );
-		dst[1] = BTL_MAIN_GetOpponentClientID( wk, clientID, 1 );
-		dst[2] = BTL_MAIN_GetFriendClientID( wk, clientID, 1 );
+	case BTL_EXPOS_WITHOUT_ME:
+		dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
+		dst[1] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
+		dst[2] = (basePos&1) + (~(basePos/2))*2;
 		return 3;
 	}
 }
 
 //=============================================================================================
 /**
- * 相手方クライアントIDを返す
+ * 対戦相手方のポケモン位置を返す
+ *
+ * @param   wk				
+ * @param   basePos		
+ * @param   idx				
+ *
+ * @retval  BtlPokePos		
+ */
+//=============================================================================================
+BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos, u8 idx )
+{
+	switch( wk->setupParam->rule ){
+	case BTL_RULE_SINGLE:
+		GF_ASSERT(idx<1);
+		break;
+	case BTL_RULE_DOUBLE:
+		GF_ASSERT(idx<2)
+		break;
+	case BTL_RULE_TRIPLE:
+		GF_ASSERT(idx<3);
+		break;
+	default:
+		GF_ASSERT(0);
+		break;
+	}
+	if( (basePos&1) == BTL_POS_1ST_0 )
+	{
+		return BTL_POS_2ND_0 + (idx * 2);
+	}
+	else
+	{
+		return BTL_POS_1ST_0 + (idx * 2);
+	}
+}
+
+//=============================================================================================
+/**
+ * 相手方クライアントIDを返す	// @@@ いずれ使わなくなるかも？
  *
  * @param   wk				
  * @param   clientID		
@@ -881,7 +918,7 @@ const BTL_POKEPARAM* BTL_MAIN_GetFrontPokeDataConst( const BTL_MAIN_MODULE* wk, 
 
 	GF_ASSERT_MSG(wk->client[clientID], "btlPos=%d, clientID=%d", pos, clientID);
 
-	TAYA_Printf("[GetFrontPokeDataConst] BtlPos=%d -> clientID:%d, posIdx:%d\n", pos, clientID, posIdx);
+//	TAYA_Printf("[GetFrontPokeDataConst] BtlPos=%d -> clientID:%d, posIdx:%d\n", pos, clientID, posIdx);
 
 	return BTL_CLIENT_GetFrontPokeData( wk->client[clientID], posIdx );
 }

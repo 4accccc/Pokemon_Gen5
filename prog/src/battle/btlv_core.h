@@ -139,8 +139,8 @@ extern void BTLV_StartDeadAct( BTLV_CORE* wk, u8 clientID );
 extern BOOL BTLV_WaitDeadAct( BTLV_CORE* wk );
 
 
-extern void BTLV_StartTokWin( BTLV_CORE* wk, u8 clientID );
-extern void BTLV_QuitTokWin( BTLV_CORE* wk, u8 clientID );
+extern void BTLV_StartTokWin( BTLV_CORE* wk, BtlPokePos clientID );
+extern void BTLV_QuitTokWin( BTLV_CORE* wk, BtlPokePos clientID );
 extern void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 clientID, BppValueID statusType );
 
 

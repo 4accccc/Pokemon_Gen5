@@ -74,8 +74,10 @@ struct _BTL_CLIENT {
 	const BTL_PARTY*	myParty;
 	u8					frontPokeIdx[ BTL_POSIDX_MAX ];
 	u8					numCoverPos;	///< 担当する戦闘ポケモン数
+	u8					procPokeIdx;	///< 処理中ポケモンインデックス
+	BtlPokePos	basePos;			///< 戦闘ポケモンの位置ID
 
-	BTL_ACTION_PARAM	actionParam;
+	BTL_ACTION_PARAM	actionParam[ BTL_POSIDX_MAX ];
 	BTL_SERVER_CMD_QUE*	cmdQue;
 	int					cmdArgs[ BTL_SERVERCMD_ARG_MAX ];
 	ServerCmd			serverCmd;
@@ -138,6 +140,8 @@ BTL_CLIENT* BTL_CLIENT_Create(
 	wk->myParty = BTL_MAIN_GetPartyDataConst( mainModule, clientID );
 	wk->mainModule = mainModule;
 	wk->numCoverPos = numCoverPos;
+	wk->procPokeIdx = 0;
+	wk->basePos = clientID & 1;
 	for(i=0; i<NELEMS(wk->frontPokeIdx); i++)
 	{
 		wk->frontPokeIdx[i] = i;
@@ -272,24 +276,29 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
 	switch( *seq ){
 	case 0:
-		BTL_Printf(" [CL] アクション選択開始します\n");
+		wk->procPokeIdx = 0;
+		(*seq)++;
+		/* fallthru */
+	case 1:
+		BTL_Printf(" [CL] アクション選択(%d体目）開始します\n");
 		BTLV_StartCommand( wk->viewCore, BTLV_CMD_SELECT_ACTION );
 		(*seq)++;
 		break;
-
-	case 1:
-		#ifdef PM_DEBUG
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-		{
-			BTL_Printf(" [CL] アクション選択待ちである\n");
-		}
-		#endif
+	case 2:
 		if( BTLV_WaitCommand(wk->viewCore) )
 		{
-			BTLV_GetActionParam( wk->viewCore, &wk->actionParam );
-			wk->returnDataPtr = &(wk->actionParam);
-			wk->returnDataSize = sizeof(wk->actionParam);
-			return TRUE;
+			BTLV_GetActionParam( wk->viewCore, &wk->actionParam[wk->procPokeIdx] );
+			wk->procPokeIdx++;
+			if( wk->procPokeIdx >= wk->numCoverPos )
+			{
+				wk->returnDataPtr = &(wk->actionParam[0]);
+				wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
+				return TRUE;
+			}
+			else
+			{
+				(*seq) = 1;
+			}
 		}
 		break;
 	}
@@ -299,12 +308,17 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
-	const BTL_POKEPARAM* pp = BTL_CLIENT_GetFrontPokeData( wk, 0 );
-	u8 wazaCount = BTL_POKEPARAM_GetWazaCount( pp );
+	const BTL_POKEPARAM* pp;
+	u8 wazaCount, i;
 
-	BTL_ACTION_SetFightParam( &wk->actionParam, GFL_STD_MtRand(wazaCount), 0 );
-	wk->returnDataPtr = &(wk->actionParam);
-	wk->returnDataSize = sizeof(wk->actionParam);
+	for(i=0; i<wk->numCoverPos; i++)
+	{
+		pp = BTL_CLIENT_GetFrontPokeData( wk, 0 );
+		wazaCount = BTL_POKEPARAM_GetWazaCount( pp );
+		BTL_ACTION_SetFightParam( &wk->actionParam[i], GFL_STD_MtRand(wazaCount), 0 );
+	}
+	wk->returnDataPtr = &(wk->actionParam[0]);
+	wk->returnDataSize = sizeof(wk->actionParam) * wk->numCoverPos;
 
 	return TRUE;
 }
@@ -325,9 +339,9 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 			}
 			else
 			{
-				BTL_ACTION_SetNULL( &wk->actionParam );
-				wk->returnDataPtr = &(wk->actionParam);
-				wk->returnDataSize = sizeof(wk->actionParam);
+				BTL_ACTION_SetNULL( &wk->actionParam[0] );
+				wk->returnDataPtr = &(wk->actionParam[0]);
+				wk->returnDataSize = sizeof(wk->actionParam[0]);
 				return TRUE;
 			}
 		}
@@ -336,9 +350,9 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 	case 1:
 		if( BTLV_WaitCommand(wk->viewCore) )
 		{
-			BTLV_GetActionParam( wk->viewCore, &wk->actionParam );
-			wk->returnDataPtr = &(wk->actionParam);
-			wk->returnDataSize = sizeof(wk->actionParam);
+			BTLV_GetActionParam( wk->viewCore, &wk->actionParam[0] );
+			wk->returnDataPtr = &(wk->actionParam[0]);
+			wk->returnDataSize = sizeof(wk->actionParam[0]);
 			return TRUE;
 		}
 		break;
@@ -371,22 +385,21 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 		i = GFL_STD_MtRand( alivePokeCnt );
 		wk->frontPokeIdx[0] = alivePokeIdx[i];
 
-		BTL_ACTION_SetChangeParam( &wk->actionParam, wk->frontPokeIdx[0] );
+		BTL_ACTION_SetChangeParam( &wk->actionParam[0], wk->frontPokeIdx[0] );
 	}
 	else
 	{
 		BTL_Printf("[CL] id=%d : 先頭ポケ(%d)は生きてる→ポケモン選択待ち\n", wk->myID, wk->frontPokeIdx[0] );
-		BTL_ACTION_SetNULL( &wk->actionParam );
+		BTL_ACTION_SetNULL( &wk->actionParam[0] );
 	}
 
-	wk->returnDataPtr = &(wk->actionParam);
-	wk->returnDataSize = sizeof(wk->actionParam);
+	wk->returnDataPtr = &(wk->actionParam[0]);
+	wk->returnDataSize = sizeof(wk->actionParam[0]);
 	return TRUE;
 }
 //---------------------------------------------------
 // サーバコマンド処理
 //---------------------------------------------------
-
 static BOOL SubProc_AI_ServerCmd( BTL_CLIENT* wk, int* seq )
 {
 	return TRUE;
@@ -703,6 +716,7 @@ static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
+	TAYA_Printf("[CL] OP - RankDown PokePos=%d, ppDat=%p\n", args[0], pp);
 	BTL_POKEPARAM_RankDown( pp, args[1], args[2] );
 	return TRUE;
 }
@@ -733,11 +747,48 @@ const BTL_PARTY* BTL_CLIENT_GetParty( const BTL_CLIENT* client )
 	return client->myParty;
 }
 
+//=============================================================================================
+/**
+ * 現在、行動選択処理中のポケモンデータを取得
+ *
+ * @param   client		
+ *
+ * @retval  const BTL_POKEPARAM*		
+ */
+//=============================================================================================
+const BTL_POKEPARAM* BTL_CLIENT_GetProcPokeData( const BTL_CLIENT* client )
+{
+	return BTL_CLIENT_GetFrontPokeData( client, client->procPokeIdx );
+}
+//=============================================================================================
+/**
+ * 現在、行動選択処理中のポケモン位置IDを取得
+ *
+ * @param   client		
+ *
+ * @retval  BtlPokePos		
+ */
+//=============================================================================================
+BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client )
+{
+	return client->basePos + client->procPokeIdx*2;
+}
+//=============================================================================================
+/**
+ * 戦闘に出ているポケモンのポケモンデータを取得
+ *
+ * @param   client		
+ * @param   posIdx		
+ *
+ * @retval  const BTL_POKEPARAM*		
+ */
+//=============================================================================================
 const BTL_POKEPARAM* BTL_CLIENT_GetFrontPokeData( const BTL_CLIENT* client, u8 posIdx )
 {
 	GF_ASSERT_MSG(posIdx<client->numCoverPos, "posIdx=%d, numCoverPos=%d", posIdx, client->numCoverPos);
 	return BTL_PARTY_GetMemberDataConst( client->myParty, client->frontPokeIdx[posIdx] );
 }
+
 
 
 const BTL_WAZA_EXE_PARAM* BTL_CLIENT_GetWazaExeParam( const BTL_CLIENT* client, u8 clientID )

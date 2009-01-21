@@ -75,6 +75,6 @@ extern void BTL_SERVER_RECTPT_SetMessage( BTL_SERVER* server, u16 msgID, u8 clie
 extern void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SERVER* server, u8 pokeID );
 extern void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SERVER* server, u8 pokeID );
 
-extern void BTL_SERVER_RECEPT_RankDownEffect( BTL_SERVER* server, BtlExClientID exID, BppValueID statusType, u8 volume );
+extern void BTL_SERVER_RECEPT_RankDownEffect( BTL_SERVER* server, BtlExPos exPos, BppValueID statusType, u8 volume );
 
 #endif

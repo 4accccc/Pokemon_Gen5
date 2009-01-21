@@ -9,6 +9,8 @@
 //============================================================================================
 
 #include "poke_mcss.h"
+
+#include "btl_common.h"
 #include "btl_stage.h"
 #include "btl_field.h"
 #include "btl_camera.h"
@@ -33,6 +35,8 @@ extern	void			BTL_EFFECT_Init( int index, HEAPID heapID );
 extern	void			BTL_EFFECT_Exit( void );
 extern	void			BTL_EFFECT_Main( void );
 extern	void			BTL_EFFECT_Add( int eff_no );
+extern	void			BTL_EFFECT_AddByPos( PokeMcssPos from, PokeMcssPos to, WazaID waza );
+
 extern	BOOL			BTL_EFFECT_CheckExecute( void );
 extern	void			BTL_EFFECT_SetPokemon( const POKEMON_PARAM *pp, int position );
 extern	void			BTL_EFFECT_DelPokemon( int position );

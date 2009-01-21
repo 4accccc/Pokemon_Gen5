@@ -299,13 +299,12 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 	case 0:
 		BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction );
 		BTLV_SCU_StartMsg( core->scrnU, core->strBuf );
-		BTL_Printf("[BTLV_CORE] 上画面へアクション選択うながすメッセージ\n");
 		(*seq)++;
 		break;
 	case 1:
 		if( BTLV_SCU_WaitMsg(core->scrnU) )
 		{
-			const BTL_POKEPARAM* bpp = BTL_CLIENT_GetFrontPokeData( core->myClient, 0 );
+			const BTL_POKEPARAM* bpp = BTL_CLIENT_GetProcPokeData( core->myClient );
 			BTL_Printf("[BTLV_CORE] 下画面へアクション選択処理命令\n");
 			BTLV_SCD_StartActionSelect( core->scrnD, bpp );
 			(*seq)++;
@@ -374,7 +373,8 @@ void BTLV_StartWazaAct( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokeP
 
 	WAZA_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_ACT_WORK));
 
-	BTL_Printf("[BTLVC] StartWazaAct aff = %d\n", affinity);
+	BTL_Printf("[BTLVC] StartWazaAct pos[%d]->[%d], aff=%d\n",
+			atPokePos, defPokePos, affinity);
 
 	BTLV_SCU_StartWazaAct( wk->scrnU, atPokePos, defPokePos, waza, affinity );
 
@@ -382,24 +382,6 @@ void BTLV_StartWazaAct( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokeP
 	subwk->timer = 0;
 
 	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocWazaAct );
-
-	//技エフェクト出してみる soga
-	if( atPokePos ){
-		if( waza == WAZANO_MIZUDEPPOU ){
-			BTL_EFFECT_Add( BTL_EFFECT_BB2AAMIZUDEPPOU );
-		}
-		else{
-			BTL_EFFECT_Add( BTL_EFFECT_BB2AAGANSEKI );
-		}
-	}
-	else{
-		if( waza == WAZANO_MIZUDEPPOU ){
-			BTL_EFFECT_Add( BTL_EFFECT_AA2BBMIZUDEPPOU );
-		}
-		else{
-			BTL_EFFECT_Add( BTL_EFFECT_AA2BBGANSEKI );
-		}
-	}
 }
 //=============================================================================================
 /**
@@ -597,14 +579,14 @@ BOOL BTLV_WaitMsg( BTLV_CORE* wk )
  *
  */
 //=============================================================================================
-void BTLV_StartTokWin( BTLV_CORE* wk, u8 clientID )
+void BTLV_StartTokWin( BTLV_CORE* wk, BtlPokePos pos )
 {
-	BTLV_SCU_DispTokWin( wk->scrnU, clientID );
+	BTLV_SCU_DispTokWin( wk->scrnU, pos );
 }
 
-void BTLV_QuitTokWin( BTLV_CORE* wk, u8 clientID )
+void BTLV_QuitTokWin( BTLV_CORE* wk, BtlPokePos pos )
 {
-	BTLV_SCU_HideTokWin( wk->scrnU, clientID );
+	BTLV_SCU_HideTokWin( wk->scrnU, pos );
 }
 
 

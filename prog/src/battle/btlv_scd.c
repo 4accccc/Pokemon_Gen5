@@ -343,7 +343,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 				printBtnWaza( wk, i, 0x0a, wk->strbuf );
 			}
 			// soga
-			for( ; i<4; i++){
+			for( ; i<PTL_WAZA_MAX; i++){
 				printBtnWaza( wk, i, 0x0f, NULL );
 			}
 			(*seq)++;
@@ -363,6 +363,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 //			if( hit != GFL_UI_TP_HIT_NONE )
 			if( ( hit != GFL_UI_TP_HIT_NONE ) && ( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) - 1 ) )
 			{
+				// @@@ DBL ’N‚ð‘_‚¤‚©‘I‘ð‚·‚é
 				BTL_ACTION_SetFightParam( &wk->selAction, hit, 0 );
 				return TRUE;
 			}

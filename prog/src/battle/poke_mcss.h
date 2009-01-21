@@ -30,7 +30,7 @@
 //
 // A C
 //  E
-enum{
+typedef enum{
 	POKE_MCSS_POS_AA = 0,
 	POKE_MCSS_POS_BB,
 	POKE_MCSS_POS_A,
@@ -41,7 +41,8 @@ enum{
 	POKE_MCSS_POS_F,
 	
 	POKE_MCSS_POS_MAX
-};
+
+}PokeMcssPos;
 
 #define	POKE_MCSS_MEPACHI_ON	( MCSS_MEPACHI_ON )
 #define	POKE_MCSS_MEPACHI_OFF	( MCSS_MEPACHI_OFF )
