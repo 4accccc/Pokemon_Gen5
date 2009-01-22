@@ -228,7 +228,10 @@ TR_CARD_DATA* TRAINERCARD_CreateSelfData( const HEAPID heapId )
 	cardData->TrainerName[2] = L'‚Æ';
 	cardData->TrainerName[3] = GFL_STR_GetEOMCode();
 	cardData->PlayTime = SaveData_GetPlayTime( SaveControl_GetPointer() );
-	
+	cardData->PokeBookFlg = TRUE;
+	cardData->PokeBookFlg = TRUE;
+	cardData->gs_badge	= 0xFFFF;
+	cardData->TimeUpdate = TRUE;
 	cardData->UnionTrNo = UNION_TR_NONE;
 	return cardData;
 	

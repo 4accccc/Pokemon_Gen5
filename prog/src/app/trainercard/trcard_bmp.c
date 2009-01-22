@@ -28,9 +28,9 @@
 #define MSG_BG	(GFL_BG_FRAME0_S)
 
 enum{
- EXPMSG_BACK,
- EXPMSG_TOUCH,
- EXPMSG_SIGN,
+	EXPMSG_BACK,
+	EXPMSG_TOUCH,
+	EXPMSG_SIGN,
 };
 
 #define HOUR_DISP_MAX	(999)
@@ -127,9 +127,11 @@ enum{
 //メッセージ領域
 //////////////////////////////////////////////////////////////
 //TalkWindowキャラ領域
-#define TALKWIN_CGX	(MSG_BG_BASE-TALK_WIN_CGX_SIZ)
+//#define TALKWIN_CGX	(MSG_BG_BASE-TALK_WIN_CGX_SIZ)
+#define TALKWIN_CGX	(1+2*24)	//BG分足す
 //YesnoWindowキャラ領域
-#define YNWIN_CGX	(TALKWIN_CGX-TOUCH_SW_USE_CHAR_NUM)
+//#define YNWIN_CGX	(TALKWIN_CGX-TOUCH_SW_USE_CHAR_NUM)
+#define YNWIN_CGX	(TALKWIN_CGX+TALK_WIN_CGX_SIZ)
 #define YNWIN_PX	(26)
 #define YNWIN_PY	(6)
 
@@ -654,7 +656,7 @@ WriteNumDataFill(	TR_CARD_WORK* wk,
 	STRTOOL_SetNumber( buff, inNum, inDigit, inDisptype, STR_NUM_CODE_DEFAULT );
 	len = PRINTSYS_GetStrWidth(buff,wk->fontHandle,0);
 
-	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(inWin), 0, 0, inFillSatrt, inFillWidth, 0 );
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(inWin),inFillSatrt,  0, inFillWidth, 2*8, 0 );
 
 //	GF_STR_PrintColor(	inWin, FONT_SYSTEM, buff,
 //						inBmpWidth-(len+inRightSpace), inStartY,
@@ -728,6 +730,8 @@ void TRCBmp_WritePlayTime(TR_CARD_WORK* wk, GFL_BMPWIN	*win[], const TR_CARD_DAT
 						TIME_H_DIGIT, STR_NUM_DISP_SPACE,
 						HOUR_DISP_POS_X,
 						HOUR_DISP_W,0);		//時
+	//こいつだけリアルタイム更新があるから
+	GFL_BMPWIN_TransVramCharacter(win[TRC_BMPWIN_PLAY_TIME]);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -749,10 +753,11 @@ void TRCBmp_WriteSec(TR_CARD_WORK* wk,GFL_BMPWIN	*win, const BOOL inDisp, STRBUF
 					, SEC_DISP_POS_X+SEC_DISP_OFS, 0
 					, inSecBuf, wk->fontHandle );
 	}else{
-		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(win), 0, SEC_DISP_POS_X, 0, 8, WIN_S_TIME_SY*8 );
-//		GFL_BMP_Fill( win, 0, SEC_DISP_POS_X, 0,  8,  WIN_S_TIME_SY*8 );
+		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(win), SEC_DISP_POS_X, 0, 8, WIN_S_TIME_SY*8, 0 );
 //		GFL_BMPWINOn( win );
 	}
+	GFL_BMPWIN_TransVramCharacter(win);
+	GFL_BG_LoadScreenV_Req( FONT_BG);
 }
 
 //--------------------------------------------------------------------------------------------

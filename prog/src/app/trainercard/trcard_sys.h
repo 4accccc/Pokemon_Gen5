@@ -8,6 +8,7 @@
 #include "trcard_snd.h"
 
 #define TRC_USE_SND (0)
+#define TRC_FRAME_RATE (60)
 
 #define TRC_SCREEN_WIDTH	(32)
 #define TR_CARD_WIN_MAX		(14)
@@ -52,6 +53,7 @@ typedef struct TR_CARD_WORK_tag
 	fx32 CardScaleX;
 	fx32 CardScaleY;
 	fx32 CoverScaleY;
+	int	 RotateCount;
 
 //	int touch;
 	int key_mode;
@@ -59,7 +61,7 @@ typedef struct TR_CARD_WORK_tag
 	int BeforeX;
 	int BeforeY;
 	TR_CARD_OBJ_WORK ObjWork;
-	int RevSpeed;
+//	int RevSpeed;
 	int Scroll;
 	BOOL ButtonPushFlg;
 	SND_BADGE_WORK SndBadgeWork;

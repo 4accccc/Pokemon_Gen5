@@ -320,6 +320,9 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
 	static u8 AnmNo[] = {
 		ANMS_BACK_OFF,ANMS_EXP,ANMS_EFF	
 	};
+	static u8 CellPri[] = {
+		1,1,0	
+	};
 /*
 	// セルアクターヘッダ作成	
 	CLACT_U_MakeHeader(	&cl_act_header,
@@ -372,6 +375,7 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
 			addData.pos_x = ActPos[i][0];
 			addData.pos_y = ActPos[i][1];	//TODO
 			addData.anmseq = AnmNo[i];
+			addData.bgpri = CellPri[i];
 			wk->ClActWorkS[i] = GFL_CLACT_WK_Add( wk->cellUnit , &addData ,
 											&addRes , CLSYS_DEFREND_SUB , wk->heapId );
 			GFL_CLACT_WK_SetDrawEnable( wk->ClActWorkS[i], FALSE);	//非表示

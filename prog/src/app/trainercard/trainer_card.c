@@ -61,8 +61,6 @@
 #define TRC_BG_BADGE_CASE	(GFL_BG_FRAME2_M)
 #define TRC_BG_BADGE_BACK	(GFL_BG_FRAME3_M)
 
-#define CARD_SCALE_MIN	(0x24)
-
 #define UNION_TR_MAX	(16)
 
 enum {
@@ -1092,7 +1090,13 @@ static int SignCall( TR_CARD_WORK *wk )
 	return 0;
 }
 
-#define FIRST_SPEED	(8)
+#define ROTATE_SPEED (0x300)		//90度のカウントアップ
+#define ROTATE_MAX (0x4000)		//360度 = 0x10000　90度 = 0x4000 = 16384
+#define START_SCALE ( FX32_ONE + FX32_CONST( 0.015f ) )	//左右を2ピクセル拡大させる倍率
+#define CARD_SCALE_MIN	( 8.0f )	//最低限表示される厚み(ピクセル)
+#define CARD_SCALE_MIN_FX	( FX32_CONST(CARD_SCALE_MIN/256.0f) )	//最低限表示される厚み
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * カードをひっくり返す
@@ -1110,13 +1114,11 @@ static BOOL CardRev( TR_CARD_WORK *wk )
 	rc = FALSE;
 	switch(wk->sub_seq){
 	case 0:
-		wk->RevSpeed = FIRST_SPEED;	
+		wk->RotateCount = 0;
 		//情報を消す
 		//ちょっと拡大して
-		wk->CardScaleX = 1 << FX32_SHIFT;
-		wk->CardScaleY = 1 << FX32_SHIFT;
-		wk->CardScaleX += 2 << (FX32_SHIFT - 6);
-		wk->CardScaleY += 2 << (FX32_SHIFT - 6);
+		wk->CardScaleX = START_SCALE;
+		wk->CardScaleY = START_SCALE;
 #if TRC_USE_SND
 		Snd_SePlay( SND_TRCARD_REV );		//ひっくり返す音
 #endif
@@ -1124,15 +1126,16 @@ static BOOL CardRev( TR_CARD_WORK *wk )
 		break;
 	case 1:
 		//幅を縮める
-		wk->CardScaleX -= 2 << (REV_SPEED);
-		if (wk->CardScaleX <= 0){//カードスクリーン変更
-			wk->CardScaleX = CARD_SCALE_MIN;	//バグ表示防止(値はカードの厚みを維持できる位の目分量)
+		wk->CardScaleX = FX_Mul(FX_CosIdx(wk->RotateCount),START_SCALE);
+		if (wk->CardScaleX <= CARD_SCALE_MIN_FX){//カードスクリーン変更
+			wk->CardScaleX = CARD_SCALE_MIN_FX;	//バグ表示防止(値はカードの厚みを維持できる位の目分量)
 			wk->sub_seq++;
 		}
 
-		wk->RevSpeed--;
-		if (wk->RevSpeed <=1 ){
-			wk->RevSpeed = 1;
+		wk->RotateCount += ROTATE_SPEED;
+		if( wk->RotateCount >= ROTATE_MAX )
+		{
+			wk->RotateCount = ROTATE_MAX;
 		}
 		break;
 	case 2:
@@ -1159,14 +1162,16 @@ static BOOL CardRev( TR_CARD_WORK *wk )
 		break;
 	case 5:
 		//幅を広げる
-		wk->RevSpeed++;
-		if(wk->RevSpeed > FIRST_SPEED){
-			wk->RevSpeed = FIRST_SPEED;
-		}
+		wk->RotateCount -= ROTATE_SPEED;
+		if( wk->RotateCount <= 0 )
+			wk->RotateCount = 0;
 
-		wk->CardScaleX += 2 << (REV_SPEED);
-		if (wk->CardScaleX >= (1 << FX32_SHIFT)){
-			wk->CardScaleX = 1 << FX32_SHIFT;
+		wk->CardScaleX = FX_Mul(FX_CosIdx(wk->RotateCount),START_SCALE);
+		if (wk->CardScaleX <= CARD_SCALE_MIN_FX){//カードスクリーン変更
+			wk->CardScaleX = CARD_SCALE_MIN_FX;	//バグ表示防止(値はカードの厚みを維持できる位の目分量)
+		}
+		if( wk->RotateCount == 0 )
+		{
 			//元のサイズへ
 			wk->CardScaleX = 1 << FX32_SHIFT;
 			wk->CardScaleY = 1 << FX32_SHIFT;
@@ -1232,23 +1237,28 @@ static int CheckKTStatus(TR_CARD_WORK* wk)
 
 static int CheckKey(TR_CARD_WORK* wk)
 {
-	const int keyTrg = GFL_UI_TP_GetTrg();
-	if ( keyTrg & PAD_BUTTON_DECIDE ){
-		if(wk->is_back && (!wk->isComm)){
+	const int keyTrg = GFL_UI_KEY_GetTrg();
+	if ( keyTrg & PAD_BUTTON_DECIDE )
+	{
+		if(wk->is_back && (!wk->isComm))
+		{
 			//サインを書く
 #if TRC_USE_SND
 			Snd_SePlay( SND_TRCARD_SIGN );
 #endif
 			return TRC_KEY_REQ_SIGN_CALL;
 		}
-	}else if ( keyTrg & PAD_BUTTON_CANCEL ){
+	}
+	else if( keyTrg & PAD_BUTTON_CANCEL )
+	{
 #if TRC_USE_SND
 		Snd_SePlay( SND_TRCARD_END );		//終了音
 #endif
 		return TRC_KEY_REQ_END_BUTTON;
 	}
 
-	if(keyTrg & (PAD_KEY_LEFT|PAD_KEY_RIGHT)){
+	if(keyTrg & (PAD_KEY_LEFT|PAD_KEY_RIGHT))
+	{
 		return TRC_KEY_REQ_REV_BUTTON;
 	}
 	return TRC_KEY_REQ_NONE;
@@ -1538,12 +1548,14 @@ static void UpdatePlayTime(TR_CARD_WORK *wk, const u8 inUpdateFlg)
 			TRCBmp_WritePlayTime(wk,wk->win, wk->TrCardData, wk->PlayTimeBuf);
 			//コロン描く
 			TRCBmp_WriteSec(wk,wk->win[TRC_BMPWIN_PLAY_TIME], TRUE, wk->SecBuf);
-		}else if(wk->SecCount == 15){
+		}else if(wk->SecCount == TRC_FRAME_RATE/2){
 			//コロン消す
 			TRCBmp_WriteSec(wk,wk->win[TRC_BMPWIN_PLAY_TIME], FALSE, wk->SecBuf);
 		}
 	}
 	//カウントアップ
-	wk->SecCount = (wk->SecCount+1)%30;		//	1/30なので
+	wk->SecCount++;		//	1/TRC_FRAME_RATEなので
+	if( wk->SecCount >= TRC_FRAME_RATE )
+		wk->SecCount -= TRC_FRAME_RATE;
 }
 
