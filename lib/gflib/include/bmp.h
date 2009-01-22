@@ -20,6 +20,7 @@ typedef struct	_GFL_BMP_DATA	GFL_BMP_DATA;
 
 #define	GFL_BMP_16_COLOR	(0x20)
 #define	GFL_BMP_256_COLOR	(0x40)
+typedef u8	GFL_BMP_ColorFormat;
 
 // VRAM確保方向定義
 #define GFL_BMP_CHRAREA_GET_F	(GFL_BG_CHRAREA_GET_F)		//VRAM前方確保
@@ -152,6 +153,17 @@ extern	GFL_BMP_DATA * GFL_BMP_LoadCharacter( int arcID, int datID, int compflag,
 
 //--------------------------------------------------------------------------------------------
 /**
+ * BMPのカラーフォーマットを取得
+ *
+ * @param   bmp		対象Bmp
+ *
+ * @retval  GFL_BMP_ColorFormat			カラーフォーマット
+ */
+//--------------------------------------------------------------------------------------------
+extern GFL_BMP_ColorFormat  GFL_BMP_GetColorFormat( const GFL_BMP_DATA* bmp );
+
+//--------------------------------------------------------------------------------------------
+/**
  * 読み込みと書き込みのアドレスと範囲を指定してキャラを描画(透明色指定あり）
  *
  * @param	src			読み込み元キャラデータヘッダー構造体ポインタ
@@ -169,6 +181,25 @@ extern	GFL_BMP_DATA * GFL_BMP_LoadCharacter( int arcID, int datID, int compflag,
 //--------------------------------------------------------------------------------------------
 extern void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, s16 pos_dx, s16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 読み込みと書き込みのアドレスと範囲を指定してキャラを描画 (透明色指定あり / 16色→256色専用）
+ *
+ * @param  src				読み込み元Bmpデータ（16色）
+ * @param  dest				書き込み先Bmpデータ（256色）
+ * @param  pos_sx			読み込み開始Ｘ座標（ドット）
+ * @param  pos_sy			読み込み開始Ｙ座標（ドット）
+ * @param  pos_dx			書き込み開始Ｘ座標（ドット）
+ * @param  pos_dy			書き込み開始Ｙ座標（ドット）
+ * @param  size_x			描画範囲Ｘサイズ（ドット）
+ * @param  size_y			描画範囲Ｙサイズ（ドット）
+ * @param  nuki_col		透明色指定（0～15 GF_BMPPRT_NOTNUKI:透明色指定なし）
+ * @param  col_offset	読み込みデータの色番号(0～15）に付加するオフセット値
+ */
+//--------------------------------------------------------------------------------------------
+extern void GFL_BMP_Print16to256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, s16 pos_dx, s16 pos_dy,
+			u16 size_x, u16 size_y, u16 nuki_col, u16 col_offset );
 
 //--------------------------------------------------------------------------------------------
 /**
