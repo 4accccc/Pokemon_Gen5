@@ -6,30 +6,50 @@
 #ifndef __BUFLEN_H__
 #define __BUFLEN_H__
 
+#define	PERSON_NAME_SIZE	7	// 人物の名前の長さ（自分も含む）
+#define	MONS_NAME_SIZE		10	// ポケモン名の長さ(バッファサイズ EOM_含まず)
+#define MONUMENT_NAME_SIZE	10	// 石碑の名前の長さ
+#define	EOM_SIZE			1	// 終了コードの長さ
+//-------------------------------------------------------------------------------
+/**
+ *  以下はセーブデータ等に使うための厳密な文字列長です。
+ *  単位は「文字数」です（バイトサイズではありません）。
+ *  定義は世界共通です。
+ */
+//-------------------------------------------------------------------------------
 
-//	文字列関連の長さ定義
-#define PERSON_NAME_SIZE	7	// 人物の名前の長さ（自分も含む）
+
+//-------------------------------------------------------------------------------
+/**
+ *  以下はセーブデータ等に使うための厳密な文字列長です。
+ *  単位は「文字数」です（バイトサイズではありません）。
+ *  定義は世界共通です。
+ */
+//-------------------------------------------------------------------------------
+#define	SAVELEN_PLAYER_NAME		(7)			///< プレイヤー名
+#define	SAVELEN_TRAINER_NAME	(14)		///< ゲーム内トレーナー名
+#define	SAVELEN_POKEMON_NAME	(10)		///< ポケモン名
+
+
+/*
 #define	TR_NAME_SIZE		5	// トレーナーの名前の長さ	// localspecmark (ダミー)
-#define MONS_NAME_SIZE		10	// ポケモン名の長さ(バッファサイズ EOM_含まず)
-#define MONS_DISP_SIZE		5	// ポケモン名の長さ(表示サイズ EOM_含まず)
+#define	MONS_DISP_SIZE		5	// ポケモン名の長さ(表示サイズ EOM_含まず)
 #define	WAZA_NAME_SIZE		7	// わざ名の長さ
 #define	ITEM_NAME_SIZE		8	// どうぐ名の長さ
-#define SEED_NAME_SIZE		6	// タネの名前の長さ
-#define SPEABI_NAME_SIZE	7	// 特性名の長さ		// localspecmark 
-#define ZOKUSEI_NAME_SIZE	4	// 属性名の長さ		// localspecmark 
-#define MAPNAME_WIDTH		10  // 地名文字列の表示幅	// mapname.c, townmap.h から移動
-#define MAPNAME_MAX			18  // 地名文字列の最大長	// mapname.c, townmap.h から移動
-#define TRTYPE_NAME_SIZE	10	// トレーナータイプ名の長さ	// localspecmark murakawa
+#define	SEED_NAME_SIZE		6	// タネの名前の長さ
+#define	SPEABI_NAME_SIZE	7	// 特性名の長さ		// localspecmark 
+#define	ZOKUSEI_NAME_SIZE	4	// 属性名の長さ		// localspecmark 
+#define	MAPNAME_WIDTH		10  // 地名文字列の表示幅	// mapname.c, townmap.h から移動
+#define	MAPNAME_MAX			18  // 地名文字列の最大長	// mapname.c, townmap.h から移動
+#define	TRTYPE_NAME_SIZE	10	// トレーナータイプ名の長さ	// localspecmark murakawa
 #define	GOODS_NAME_SIZE		10	// グッズ名の長さ
 #define	ZUKAN_TYPE_SIZE		5	// 図鑑タイプ名の長さ
-#define	EOM_SIZE			1	// 終了コードの長さ
 #define	KAIWA_WORK_SIZE		7	// 簡易会話の１単語の最長文字数（EOM_含まず）
-#define MONUMENT_NAME_SIZE	10	// 石碑の名前の長さ
 #define	GROUP_NAME_SIZE		7	// ランダムグループの名前の長さ
 #define	LOBBY_GAME_SIZE		10	// 広場ミニゲーム名サイズ
-#define LOBBY_EVENT_SIZE	5	// 広場イベント名サイズ
-#define LOBBY_GADGET_SIZE	10	// 広場がジェット名サイズ
-
+#define	LOBBY_EVENT_SIZE	5	// 広場イベント名サイズ
+#define	LOBBY_GADGET_SIZE	10	// 広場がジェット名サイズ
+*/
 
 //-------------------------------------------------------------------------------
 /**

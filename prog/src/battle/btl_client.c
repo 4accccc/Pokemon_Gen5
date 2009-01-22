@@ -280,7 +280,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 		(*seq)++;
 		/* fallthru */
 	case 1:
-		BTL_Printf(" [CL] アクション選択(%d体目）開始します\n");
+		BTL_Printf(" [CL] アクション選択(%d体目）開始します\n", wk->procPokeIdx);
 		BTLV_StartCommand( wk->viewCore, BTLV_CMD_SELECT_ACTION );
 		(*seq)++;
 		break;
@@ -318,7 +318,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 		BTL_ACTION_SetFightParam( &wk->actionParam[i], GFL_STD_MtRand(wazaCount), 0 );
 	}
 	wk->returnDataPtr = &(wk->actionParam[0]);
-	wk->returnDataSize = sizeof(wk->actionParam) * wk->numCoverPos;
+	wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
 
 	return TRUE;
 }
@@ -517,13 +517,14 @@ static BOOL scProc_DATA_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 	case 0:
 		{
 			u8 clientID = wk->cmdArgs[0];
-			u8 memberIdx = wk->cmdArgs[1];
+			u8 posIdx = wk->cmdArgs[1];
+			u8 memberIdx = wk->cmdArgs[2];
 
 			BTL_Printf("[CL] MEMBER IN .... client=%d, memberIdx=%d\n", clientID, memberIdx);
 
 			if( wk->myID == clientID )
 			{
-				wk->frontPokeIdx[0] = memberIdx;
+				wk->frontPokeIdx[ posIdx ] = memberIdx;
 			}
 
 			BTLV_StartMemberChangeAct( wk->viewCore, clientID, memberIdx );

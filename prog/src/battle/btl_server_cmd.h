@@ -160,10 +160,10 @@ static inline void SCQUE_READ_OP_RankDown( BTL_SERVER_CMD_QUE* que, int *args )
 }
 
 
-static inline void SCQUE_PUT_DATA_WazaExe( BTL_SERVER_CMD_QUE* que, u8 atClientID, u8 wazaIdx, u8 numDefClients, u8 defClientID1, u8 defClientID2, u8 defClientID3 )
+static inline void SCQUE_PUT_DATA_WazaExe( BTL_SERVER_CMD_QUE* que, u8 atPokePos, u8 wazaIdx, u8 numDefClients, u8 defClientID1, u8 defClientID2, u8 defClientID3 )
 {
 	scque_put2byte( que, SC_DATA_WAZA_EXE );
-	scque_put1byte( que, atClientID );
+	scque_put1byte( que, atPokePos );
 	scque_put1byte( que, wazaIdx );
 	scque_put1byte( que, numDefClients );
 	scque_put1byte( que, defClientID1 );
@@ -180,16 +180,18 @@ static inline void SCQUE_READ_DATA_WazaExe( BTL_SERVER_CMD_QUE* que, int* args )
 	args[5] = scque_read1byte( que );
 }
 // メンバー入れ替えデータ
-static inline void SCQUE_PUT_DATA_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 memberIdx )
+static inline void SCQUE_PUT_DATA_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx, u8 memberIdx )
 {
 	scque_put2byte( que, SC_DATA_MEMBER_IN );
 	scque_put1byte( que, clientID );
+	scque_put1byte( que, posIdx );
 	scque_put1byte( que, memberIdx );
 }
 static inline void SCQUE_READ_DATA_MemberIn( BTL_SERVER_CMD_QUE* que, int* args )
 {
 	args[0] = scque_read1byte( que );
 	args[1] = scque_read1byte( que );
+	args[2] = scque_read1byte( que );
 }
 
 //---------------------------------------------

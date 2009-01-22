@@ -114,10 +114,20 @@ static inline BOOL PokeTypePair_IsMatch( PokeTypePair pair, PokeType type )
 //===================================================================
 // ÉoÉgÉãópPrintfèàóù
 //===================================================================
-extern void BTL_UTIL_Printf( const char* filename, int line, const char* fmt, ... );
-#define BTL_Printf( ... )	BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ )
 
+extern void BTL_UTIL_Printf( const char* filename, int line, const char* fmt, ... );
 extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size );
+
+#ifdef DEBUG_ONLY_FOR_taya
+
+#define BTL_Printf( ... )	BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ )
 #define BTL_DUMP_Printf( cap, dat, siz )	BTL_UTIL_DumpPrintf( cap, dat, siz );
+
+#else	// #ifdef DEBUG_ONLY_FOR_taya
+
+#define BTL_Printf( ... )		(void)0
+#define BTL_DUMP_Printf( cap, dat, siz )	(void)0
+
+#endif	// #ifdef DEBUG_ONLY_FOR_taya
 
 #endif

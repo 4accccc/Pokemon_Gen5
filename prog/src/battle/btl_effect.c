@@ -1007,12 +1007,14 @@ static	void	BTL_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 			GFL_PTC_Delete( bew->ptc );
 			BTL_CAMERA_GetDefaultCameraPosition( &pos, &target );
 			BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+			TAYA_Printf("エフェクト終了直前シーケンス\n");
 			bet->seq_no++;
 		}
 		break;
 	//カメラデフォルト位置に移動
 	case 8:
 		if( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ){
+			TAYA_Printf("エフェクト終了シーケンス\n");
 			BTL_EFFECT_TCB_End( tcb, bet );
 			POKE_MCSS_SetOrthoMode( bew->pmw );
 		}
@@ -1098,7 +1100,7 @@ static	void	BTL_EFFECT_InitPTCB( GFL_EMIT_PTR emit )
 
 static	void	BTL_EFFECT_TCB_End( GFL_TCB *tcb, BTL_EFFECT_TCB *bet )
 {
-	if( bew->execute_flag == 1 ){
+	if( bew->execute_flag != 0 ){
 		GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON );
 		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
 	}

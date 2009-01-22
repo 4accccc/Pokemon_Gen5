@@ -275,8 +275,8 @@ static BOOL setup_alone_single( int* seq, void* work )
 	wk->myOrgPos = BTL_POS_1ST_0;
 
 	// Server に Client を接続
-	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), &wk->partyForServerCalc[0], 0 );
-	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), &wk->partyForServerCalc[1], 1 );
+	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), &wk->partyForServerCalc[0], 0, 1 );
+	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), &wk->partyForServerCalc[1], 1, 1 );
 
 	// 描画エンジン生成
 	wk->viewCore = BTLV_Create( wk, wk->client[0], HEAPID_BTL_VIEW );
@@ -400,10 +400,10 @@ static BOOL setup_comm_single( int* seq, void* work )
 			BTL_Printf("サーバ用のパーティデータセット\n");
 
 			wk->server = BTL_SERVER_Create( wk, wk->heapID );
-			wk->client[netID] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle, netID, 1, BTL_THINKER_UI, wk->heapID );
-			BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), &wk->partyForServerCalc[netID], netID );
-
-			BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, &wk->partyForServerCalc[!netID], !netID );
+			wk->client[netID] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle,
+					netID, 1, BTL_THINKER_UI, wk->heapID );
+			BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), &wk->partyForServerCalc[netID], netID, 1 );
+			BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, &wk->partyForServerCalc[!netID], !netID, 1 );
 
 			// 描画エンジン生成
 			wk->viewCore = BTLV_Create( wk, wk->client[netID], HEAPID_BTL_VIEW );
@@ -418,7 +418,7 @@ static BOOL setup_comm_single( int* seq, void* work )
 
 			BTL_Printf("サーバではない用のパーティデータセット\n");
 
-			wk->client[ netID ] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle, netID, 1, BTL_THINKER_UI, wk->heapID );
+			wk->client[ netID ] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle, netID, 1, BTL_THINKER_UI, wk->heapID  );
 
 			// 描画エンジン生成
 			wk->viewCore = BTLV_Create( wk, wk->client[netID], HEAPID_BTL_VIEW );
@@ -461,8 +461,8 @@ static BOOL setup_alone_double( int* seq, void* work )
 	wk->numClients = 2;
 
 	// Server に Client を接続
-	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), &wk->partyForServerCalc[0], 0 );
-	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), &wk->partyForServerCalc[1], 1 );
+	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), &wk->partyForServerCalc[0], 0, 2 );
+	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), &wk->partyForServerCalc[1], 1, 2 );
 
 	// 描画エンジン生成
 	wk->viewCore = BTLV_Create( wk, wk->client[0], HEAPID_BTL_VIEW );
@@ -711,7 +711,24 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
 
 //=============================================================================================
 /**
- * 対戦相手方のポケモン位置を返す
+ * クライアントIDからポケモン戦闘位置を返す
+ *
+ * @param   wk				
+ * @param   basePos		
+ * @param   idx				
+ *
+ * @retval  BtlPokePos		
+ */
+//=============================================================================================
+BtlPokePos BTL_MAIN_GetClientPokePos( const BTL_MAIN_MODULE* wk, u8 clientID, u8 posIdx )
+{
+	// @@@ マルチとかだとこれじゃだめかも
+	return clientID + posIdx * 2;
+}
+
+//=============================================================================================
+/**
+ * 対戦相手方のポケモン戦闘位置を返す
  *
  * @param   wk				
  * @param   basePos		
@@ -777,36 +794,6 @@ u8 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx 
 }
 //=============================================================================================
 /**
- * 味方クライアントIDを返す
- *
- * @param   wk			
- * @param   cliendID	
- * @param   idx			
- *
- * @retval  u8			
- */
-//=============================================================================================
-u8 BTL_MAIN_GetFriendClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
-{
-	switch( wk->setupParam->rule ){
-	case BTL_RULE_SINGLE:
-		GF_ASSERT(idx==0);
-		GF_ASSERT(clientID<2);
-		return clientID;
-
-	case BTL_RULE_DOUBLE:
-		GF_ASSERT(idx<2);
-		GF_ASSERT(clientID<4);
-		return (clientID&1) + (idx*2);
-
-	default:
-		GF_ASSERT(0);
-		return (clientID&1);
-	}
-}
-
-//=============================================================================================
-/**
  * ２つのクライアントIDが対戦相手同士のものかどうかを判別
  *
  * @param   wk		
@@ -820,9 +807,6 @@ BOOL BTL_MAIN_IsOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID1, u8 cl
 {
 	return (clientID1&1) != (clientID2&1);
 }
-
-
-
 //=============================================================================================
 /**
  * 指定クライアントのパーティデータを返す
@@ -834,10 +818,6 @@ BOOL BTL_MAIN_IsOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID1, u8 cl
  */
 //=============================================================================================
 const BTL_PARTY* BTL_MAIN_GetPartyDataConst( const BTL_MAIN_MODULE* wk, u32 clientID )
-{
-	return &wk->party[ clientID ];
-}
-BTL_PARTY* BTL_MAIN_GetPartyData( BTL_MAIN_MODULE* wk, u32 clientID )
 {
 	return &wk->party[ clientID ];
 }
@@ -922,8 +902,6 @@ const BTL_POKEPARAM* BTL_MAIN_GetFrontPokeDataConst( const BTL_MAIN_MODULE* wk, 
 
 	return BTL_CLIENT_GetFrontPokeData( wk->client[clientID], posIdx );
 }
-
-
 //=============================================================================================
 /**
  * 戦闘位置->クライアントID変換
@@ -937,6 +915,7 @@ u8 BTL_MAIN_BtlPosToClientID( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
 {
 	return btlPos_to_clientID( wk, pos );
 }
+
 
 //=============================================================================================
 /**

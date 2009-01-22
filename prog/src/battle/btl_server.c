@@ -46,12 +46,20 @@ typedef struct {
 	BTL_ADAPTER*	adapter;
 	BTL_PARTY*		party;
 	BTL_POKEPARAM*	member[ TEMOTI_POKEMAX ];
-	BTL_POKEPARAM*	frontMember;
-	u8				frontMemberIdx;
+	BTL_POKEPARAM*	frontMember[ BTL_POSIDX_MAX ];
 	u8				memberCount;
+	u8				numCoverPos;
 	u8				myID;
 
 }CLIENT_WORK;
+
+/**
+ *	アクション優先順記録構造体
+ */
+typedef struct {
+	u8  clientID;		///< クライアントID
+	u8  pokeIdx;		///< そのクライアントの、何体目？ 0～
+}ACTION_ORDER_WORK;
 
 
 typedef struct {
@@ -106,7 +114,9 @@ typedef struct {
 struct _BTL_SERVER {
 	BTL_MAIN_MODULE*	mainModule;
 	CLIENT_WORK			client[ BTL_CLIENT_MAX ];
-	u8					actionOrder[ BTL_POS_MAX ];
+//	u8					actionOrder[ BTL_POS_MAX ];
+	ACTION_ORDER_WORK	actOrder[ BTL_POS_MAX ];
+	u8					numActPokemon;
 	u8					numClient;
 	u8					pokeDeadFlag;
 	u8					endFlag;
@@ -132,6 +142,7 @@ struct _BTL_SERVER {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static inline void setup_client_members( CLIENT_WORK* client, BTL_PARTY* party, u8 numCoverPos );
 static BOOL callMainProc( BTL_SERVER* sv );
 static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
@@ -141,15 +152,15 @@ static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
 static BOOL WaitAdapterCmd( BTL_SERVER* server );
 static void ResetAdapterCmd( BTL_SERVER* server );
-static void sortClientAction( BTL_SERVER* server, u8* order );
+static u8 sortClientAction( BTL_SERVER* server, ACTION_ORDER_WORK* order );
 static u8 countAlivePokemon( const BTL_SERVER* server );
 static BOOL createServerCommand( BTL_SERVER* server );
-static BOOL createServerCommandPokeSelect( BTL_SERVER* server );
-static void scput_ChangePokemon( BTL_SERVER* server, u8 clientID, u8 pokeIdx );
-static void scput_Fight( BTL_SERVER* server, u8 attackClientID, const BTL_ACTION_PARAM* action );
+static BOOL createServerCommandAfterPokeSelect( BTL_SERVER* server );
+static void scput_ChangePokemon( BTL_SERVER* server, u8 clientID, u8 posIdx, u8 nextPokeIdx );
+static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action );
 static inline int roundValue( int val, int min, int max );
 static void initFightEventParams( FIGHT_EVENT_PARAM* fep );
-static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, const BTL_ACTION_PARAM* action, WazaID waza );
+static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, u8 posIdx, const BTL_ACTION_PARAM* action, WazaID waza );
 static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
 	 const CLIENT_WORK* atClient, const CLIENT_WORK* defClient,
 	 BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
@@ -173,10 +184,9 @@ static PokeType scEvent_getWazaPokeType( BTL_SERVER* server, FIGHT_EVENT_PARAM* 
 static PokeTypePair scEvent_getAttackerPokeType( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker );
 static PokeTypePair scEvent_getDefenderPokeType( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* defender );
 static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID );
-static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 memberIdx );
+static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scEvent_PokeComp( BTL_SERVER* server );
 static void scEvent_RankDown( BTL_SERVER* server, BtlPokePos pokePos, BppValueID statusType, u8 volume );
-static inline u8 pokeID_to_clientID( const BTL_SERVER* sv, u8 pokeID );
 
 
 
@@ -224,30 +234,24 @@ void BTL_SERVER_Delete( BTL_SERVER* wk )
  *
  * @param   server			サーバハンドラ
  * @param   adapter			アダプタ（既にクライアントに関連付けられている）
+ * @param   party				クライアントのパーティデータ
  * @param   clientID		クライアントID
+ * @param   numCoverPos	クライアントが受け持つ戦闘中ポケモン数
  *
  */
 //--------------------------------------------------------------------------------------
-void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL_PARTY* party, u16 clientID )
+void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL_PARTY* party, u8 clientID, u8 numCoverPos )
 {
 	GF_ASSERT(server->client[clientID].adapter==NULL);
 
 	{
 		CLIENT_WORK* client;
-		int i;
 
 		client = &server->client[ clientID ];
 
 		client->adapter = adapter;
-		client->party = party;
-		client->memberCount = BTL_PARTY_GetMemberCount( client->party );
-		for(i=0; i<client->memberCount; i++)
-		{
-			client->member[i] = BTL_PARTY_GetMemberData( client->party, i );
-		}
-		client->frontMemberIdx = 0;
-		client->frontMember = client->member[0];
 		client->myID = clientID;
+		setup_client_members( client, party, numCoverPos );
 	}
 
 	server->numClient++;
@@ -261,10 +265,11 @@ void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL
  * @param   commMode		通信モード
  * @param   netHandle		ネットワークハンドラ
  * @param   clientID		クライアントID
+ * @param   numCoverPos	クライアントが受け持つ戦闘中ポケモン数
  *
  */
 //--------------------------------------------------------------------------------------
-void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, BTL_PARTY* party, u16 clientID )
+void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, BTL_PARTY* party, u8 clientID, u8 numCoverPos )
 {
 	GF_ASSERT(server->client[clientID].adapter==NULL);
 
@@ -275,20 +280,52 @@ void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GF
 		client = &server->client[ clientID ];
 
 		client->adapter = BTL_ADAPTER_Create( netHandle, server->heapID, clientID );
-		client->party = party;
-		client->memberCount = BTL_PARTY_GetMemberCount( client->party );
-		for(i=0; i<client->memberCount; i++)
-		{
-			client->member[i] = BTL_PARTY_GetMemberData( client->party, i );
-		}
-		client->frontMemberIdx = 0;
-		client->frontMember = client->member[0];
 		client->myID = clientID;
+
+		setup_client_members( client, party, numCoverPos );
 	}
 
 	server->numClient++;
 }
 
+//--------------------------------------------------------------------------
+/**
+ * クライアントワークのメンバーデータ部分初期化
+ *
+ * @param   client				クライアントワーク
+ * @param   party					パーティデータ
+ * @param   numCoverPos		クライアントが受け持つ戦闘中ポケモン数
+ */
+//--------------------------------------------------------------------------
+static inline void setup_client_members( CLIENT_WORK* client, BTL_PARTY* party, u8 numCoverPos )
+{
+	u16 i;
+
+	client->party = party;
+	client->memberCount = BTL_PARTY_GetMemberCount( party );
+	client->numCoverPos = numCoverPos;
+
+	for(i=0; i<client->memberCount; i++)
+	{
+		client->member[i] = BTL_PARTY_GetMemberData( client->party, i );
+	}
+	for( ; i<NELEMS(client->member); i++)
+	{
+		client->member[i] = NULL;
+	}
+
+	{
+		u16 numFrontPoke = (numCoverPos < client->memberCount)? numCoverPos : client->memberCount;
+		for(i=0; i<numFrontPoke; i++)
+		{
+			client->frontMember[i] = client->member[i];
+		}
+		for( ; i<NELEMS(client->frontMember); i++)
+		{
+			client->frontMember[i] = NULL;
+		}
+	}
+}
 
 
 //--------------------------------------------------------------------------------------
@@ -332,13 +369,19 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
 	case 1:
 		if( WaitAdapterCmd(server) )
 		{
-			int i;
+			u16 i, p;
 
 			ResetAdapterCmd( server );
 
 			for(i=0; i<server->numClient; i++)
 			{
-				BTL_HANDLER_TOKUSEI_Add( server->client[i].frontMember );
+				for(p=0; p<server->client[i].numCoverPos; p++)
+				{
+					if( server->client[i].frontMember[p] != NULL )
+					{
+						BTL_HANDLER_TOKUSEI_Add( server->client[i].frontMember[p] );
+					}
+				}
 			}
 			setMainProc( server, ServerMain_SelectAction );
 		}
@@ -385,7 +428,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 		if( WaitAdapterCmd(server) )
 		{
 			ResetAdapterCmd( server );
-			sortClientAction( server, server->actionOrder );
+			server->numActPokemon = sortClientAction( server, server->actOrder );
 			SCQUE_Init( server->que );
 			server->pokeDeadFlag = createServerCommand( server );
 			if( server->pokeDeadFlag )
@@ -469,7 +512,7 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 		{
 			ResetAdapterCmd( server );
 			SCQUE_Init( server->que );
-			server->pokeDeadFlag = createServerCommandPokeSelect( server );
+			server->pokeDeadFlag = createServerCommandAfterPokeSelect( server );
 			BTL_DUMP_Printf( "[SV]コマンド発信", server->que->buffer, server->que->writePtr );
 			SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
 
@@ -560,7 +603,7 @@ static void ResetAdapterCmd( BTL_SERVER* server )
  *
  */
 //--------------------------------------------------------------------------
-static void sortClientAction( BTL_SERVER* server, u8* order )
+static u8 sortClientAction( BTL_SERVER* server, ACTION_ORDER_WORK* order )
 {
 	/*
 		行動優先順  ... 2BIT
@@ -575,18 +618,23 @@ static void sortClientAction( BTL_SERVER* server, u8* order )
 	u32 pri[ BTL_POS_MAX ];
 	u16 agility;
 	u8  action, actionPri, wazaPri;
-	u8  i, j, numPoke;
+	u8  i, j, p, numPoke;
 
 // 各クライアントのプライオリティ値を生成
-	for(i=0; i<server->numClient; i++)
+	for(i=0, p=0; i<server->numClient; i++)
 	{
 		client = &server->client[i];
-		// 行動による優先順（優先度高いほど数値大）
+
 		actParam = BTL_ADAPTER_GetReturnData( client->adapter );
 		numPoke = BTL_ADAPTER_GetReturnDataCount( client->adapter );
 
-		for(i=0; i<numPoke; i++)
+		TAYA_Printf("[SV] アクションソート, CLIENT<%d> のカバー数は%d, 帰りデータ数は%d\n",
+					i, client->numCoverPos, numPoke);
+
+//		for(j=0; j<client->numCoverPos; j++)
+		for(j=0; j<numPoke; j++)
 		{
+			// 行動による優先順（優先度高いほど数値大）
 			switch( actParam->gen.cmd ){
 			case BTL_ACTION_ESCAPE:	actionPri = 3; break;
 			case BTL_ACTION_ITEM:	actionPri = 2; break;
@@ -601,7 +649,7 @@ static void sortClientAction( BTL_SERVER* server, u8* order )
 			// ワザによる優先順
 			if( actParam->gen.cmd == BTL_ACTION_FIGHT )
 			{
-				WazaID  w = BTL_POKEPARAM_GetWazaNumber( client->frontMember, actParam->fight.wazaIdx );
+				WazaID  w = BTL_POKEPARAM_GetWazaNumber( client->frontMember[j], actParam->fight.wazaIdx );
 				wazaPri = WAZADATA_GetPriority( w ) - WAZAPRI_MIN;
 			}
 			else
@@ -610,24 +658,26 @@ static void sortClientAction( BTL_SERVER* server, u8* order )
 			}
 
 			// すばやさ
-			agility = BTL_POKEPARAM_GetValue( client->frontMember, BPP_AGILITY );
+			agility = BTL_POKEPARAM_GetValue( client->frontMember[j], BPP_AGILITY );
 
-			BTL_Printf("[SV] Client[%d]'s actionPri=%d, wazaPri=%d, agility=%d\n",
-					i, actionPri, wazaPri, agility );
+			BTL_Printf("[SV] Client[%d-%d]'s actionPri=%d, wazaPri=%d, agility=%d\n",
+					i, j, actionPri, wazaPri, agility );
 
 			// プライオリティ値とクライアントIDを対にして配列に保存
-			pri[i] = MakePriValue( actionPri, wazaPri, agility );
-			order[i] = i;
+			pri[p] = MakePriValue( actionPri, wazaPri, agility );
+			order[p].clientID = i;
+			order[p].pokeIdx = j;
 			BTL_Printf("[SV] Client[%d] PriValue=%8x\n", i, pri[i]);
 
 			actParam++;
+			p++;
 		}
 	}
  
 // プライオリティ値ソートに伴ってクライアントID配列もソート
-	for(i=0; i<server->numClient; i++)
+	for(i=0; i<p; i++)
 	{
-		for(j=i+1; j<server->numClient; j++)
+		for(j=i+1; j<p; j++)
 		{
 			if( pri[i] < pri[j] )
 			{
@@ -635,9 +685,11 @@ static void sortClientAction( BTL_SERVER* server, u8* order )
 				pri[i] = pri[j];
 				pri[j] = t;
 
-				t = order[i];
-				order[i] = order[j];
-				order[j] = t;
+				{
+					ACTION_ORDER_WORK w = order[i];
+					order[i] = order[j];
+					order[j] = w;
+				}
 			}
 		}
 	}
@@ -645,18 +697,29 @@ static void sortClientAction( BTL_SERVER* server, u8* order )
 // 全く同じプライオリティ値があったらランダムシャッフル
 // @@@ 未実装
 
+	return p;
 
 }
 
+// 今、戦闘に出ていて生きているポケモンの数をカウント
 static u8 countAlivePokemon( const BTL_SERVER* server )
 {
+	const CLIENT_WORK* cl;
+	u16 i, j;
 	u8 cnt = 0;
-	int i;
+
 	for(i=0; i<server->numClient; i++)
 	{
-		if( BTL_POKEPARAM_GetValue( server->client[i].frontMember, BPP_HP ) )
+		cl = &server->client[i];
+		for(j=0; j<cl->numCoverPos; j++)
 		{
-			cnt++;
+			if( cl->frontMember[j] )
+			{
+				if( BTL_POKEPARAM_GetValue(cl->frontMember[j], BPP_HP) )
+				{
+					cnt++;
+				}
+			}
 		}
 	}
 	return cnt;
@@ -672,30 +735,34 @@ static u8 countAlivePokemon( const BTL_SERVER* server )
 //--------------------------------------------------------------------------
 static BOOL createServerCommand( BTL_SERVER* server )
 {
-	int i, clientID;
+	u16 clientID, pokeIdx;
 	u8 numPokeBegin, numPokeAlive;
+	u8 i;
 
 	numPokeBegin = countAlivePokemon( server );
 
-	for(i=0; i<server->numClient; i++)
+	for(i=0; i<server->numActPokemon; i++)
 	{
-		clientID = server->actionOrder[ i ];
+		clientID = server->actOrder[i].clientID;
+		pokeIdx  = server->actOrder[i].pokeIdx;
 
-		if( BTL_POKEPARAM_GetValue(server->client[clientID].frontMember, BPP_HP) )
+		if( BTL_POKEPARAM_GetValue(server->client[clientID].frontMember[pokeIdx], BPP_HP) )
 		{
 			const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( server->client[clientID].adapter );
+			action += pokeIdx;
+
 			BTL_Printf("Client[%d] の ", clientID);
 			switch( action->gen.cmd ){
 			case BTL_ACTION_FIGHT:
 				BTL_Printf("【たたかう】を処理。%d番目のワザを、%d番の相手に。\n", action->fight.wazaIdx, action->fight.targetIdx);
-				scput_Fight( server, clientID, action );
+				scput_Fight( server, clientID, pokeIdx, action );
 				break;
 			case BTL_ACTION_ITEM:
 				BTL_Printf("【どうぐ】を処理。アイテム%dを、%d番の相手に。\n", action->item.number, action->item.targetIdx);
 				break;
 			case BTL_ACTION_CHANGE:
 				BTL_Printf("【ポケモン】を処理。%d番の相手と。\n", action->change.memberIdx);
-				scput_ChangePokemon( server, clientID, action->change.memberIdx );
+				scput_ChangePokemon( server, clientID, pokeIdx, action->change.memberIdx );
 				break;
 			case BTL_ACTION_ESCAPE:
 				BTL_Printf("【にげる】を処理。\n");
@@ -717,26 +784,31 @@ static BOOL createServerCommand( BTL_SERVER* server )
 }
 //--------------------------------------------------------------------------
 /**
- * １ターン分サーバコマンド生成（行動選択後）
+ * １ターン分サーバコマンド生成（ポケモン選択後）
  *
  * @param   server		
  *
  * @retval  BOOL		ターン中、瀕死になったポケモンがいる場合はTRUE／それ以外FALSE
  */
 //--------------------------------------------------------------------------
-static BOOL createServerCommandPokeSelect( BTL_SERVER* server )
+static BOOL createServerCommandAfterPokeSelect( BTL_SERVER* server )
 {
+	u16 clientID, posIdx;
 	int i;
 
-	for(i=0; i<server->numClient; i++)
+	for(i=0; i<server->numActPokemon; i++)
 	{
-		if( BTL_POKEPARAM_GetValue(server->client[i].frontMember, BPP_HP) == 0 )
+		clientID = server->actOrder[i].clientID;
+		posIdx  = server->actOrder[i].pokeIdx;
+
+		if( BTL_POKEPARAM_GetValue(server->client[i].frontMember[posIdx], BPP_HP) == 0 )
 		{
 			const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( server->client[i].adapter );
+			action += posIdx;
 
 			GF_ASSERT(action->gen.cmd == BTL_ACTION_CHANGE);
 
-			scput_ChangePokemon( server, i, action->change.memberIdx );
+			scput_ChangePokemon( server, clientID, posIdx, action->change.memberIdx );
 		}
 	}
 
@@ -744,24 +816,23 @@ static BOOL createServerCommandPokeSelect( BTL_SERVER* server )
 	return FALSE;
 }
 
-static void scput_ChangePokemon( BTL_SERVER* server, u8 clientID, u8 pokeIdx )
+static void scput_ChangePokemon( BTL_SERVER* server, u8 clientID, u8 posIdx, u8 nextPokeIdx )
 {
-	server->client[clientID].frontMemberIdx = pokeIdx;
-	server->client[clientID].frontMember = server->client[clientID].member[ pokeIdx ];
-	scEvent_MemberIn( server, &server->changeEventParams, clientID, pokeIdx );
+	server->client[clientID].frontMember[posIdx] = server->client[clientID].member[ nextPokeIdx ];
+	scEvent_MemberIn( server, &server->changeEventParams, clientID, posIdx, nextPokeIdx );
 }
 
 
 
 
-static void scput_Fight( BTL_SERVER* server, u8 attackClientID, const BTL_ACTION_PARAM* action )
+static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action )
 {
 	const CLIENT_WORK *atClient;
 	const BTL_POKEPARAM  *attacker, *defender;
 	WazaID  waza;
 
 	atClient = &server->client[ attackClientID ];
-	waza = BTL_POKEPARAM_GetWazaNumber( atClient->frontMember, action->fight.wazaIdx );
+	waza = BTL_POKEPARAM_GetWazaNumber( atClient->frontMember[posIdx], action->fight.wazaIdx );
 
 	switch( WAZADATA_GetCategory(waza) ){
 	case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
@@ -779,7 +850,7 @@ static void scput_Fight( BTL_SERVER* server, u8 attackClientID, const BTL_ACTION
 	case WAZADATA_CATEGORY_OTHERS:
 	default:
 		initFightEventParams( &server->fightEventParams );
-		scput_FightRoot( server, atClient, action, waza );
+		scput_FightRoot( server, atClient, posIdx, action, waza );
 //		sc_fight_layer1_single( server, atClient, defClient, action, waza );
 		break;
 
@@ -889,10 +960,10 @@ static void initFightEventParams( FIGHT_EVENT_PARAM* fep )
 }
 
 //
-static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, const BTL_ACTION_PARAM* action, WazaID waza )
+static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, u8 posIdx, const BTL_ACTION_PARAM* action, WazaID waza )
 {
 	FIGHT_EVENT_PARAM* fep = &server->fightEventParams;
-	BTL_POKEPARAM* attacker = atClient->frontMember;
+	BTL_POKEPARAM* attacker = atClient->frontMember[posIdx];
 
 	fep->waza = waza;
 	fep->attackPokeID = BTL_POKEPARAM_GetID( attacker );
@@ -932,17 +1003,17 @@ static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, co
 	{
 		CLIENT_WORK* defClient;
 		BTL_POKEPARAM* defender;
+		BtlPokePos  atPos, defPos;
 		u8 defClientID;
 
+		atPos = BTL_MAIN_GetClientPokePos( server->mainModule, atClient->myID, posIdx );
+		defPos = BTL_MAIN_GetOpponentPokePos( server->mainModule, atPos, action->fight.targetIdx );
 		defClientID = BTL_MAIN_GetOpponentClientID( server->mainModule, atClient->myID, action->fight.targetIdx );
 		defClient = &server->client[ defClientID ];
-		defender = defClient->frontMember;
+		defender = defClient->frontMember[ action->fight.targetIdx ];
 
-		BTL_Printf("SetWazaExeData atClientID=%d, defClientID=%d, waza=%d\n",
-			atClient->myID, defClientID, BTL_POKEPARAM_GetWazaNumber(attacker, action->fight.wazaIdx)
-		);
-		SCQUE_PUT_DATA_WazaExe( server->que, atClient->myID, action->fight.wazaIdx, 1, defClient->myID, 0, 0 );
-		SCQUE_PUT_MSG_WAZA( server->que, atClient->myID, action->fight.wazaIdx );
+		SCQUE_PUT_DATA_WazaExe( server->que, atPos, action->fight.wazaIdx, 1, defPos, 0, 0 );
+		SCQUE_PUT_MSG_WAZA( server->que, atPos, action->fight.wazaIdx );
 
 		scPut_FightSingleDmg( server, fep, atClient, defClient, attacker, defender, waza, action->fight.wazaIdx );
 	}
@@ -1343,10 +1414,10 @@ static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 c
 }
 
 // メンバー新規参加
-static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 memberIdx )
+static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx )
 {
 //	cep->inPokeParam = BTL_MAIN_GetPokeParam
-	SCQUE_PUT_DATA_MemberIn( server->que, clientID, memberIdx );
+	SCQUE_PUT_DATA_MemberIn( server->que, clientID, posIdx, nextPokeIdx );
 //	SCQUE_PUT_ACT_MemberIn( server->que, clientID, memberIdx );
 }
 
@@ -1385,25 +1456,6 @@ static void scEvent_RankDown( BTL_SERVER* server, BtlPokePos pokePos, BppValueID
 //----------------------------------------------------------------------------------------------------------
 // 以下、ハンドラからの応答受信関数とユーティリティ群
 //----------------------------------------------------------------------------------------------------------
-
-static inline u8 pokeID_to_clientID( const BTL_SERVER* sv, u8 pokeID )
-{
-	int i;
-	for(i=0; i<sv->numClient; i++)
-	{
-		if( BTL_POKEPARAM_GetID(sv->client[i].frontMember) == pokeID )
-		{
-			return i;
-		}
-	}
-	GF_ASSERT(0);
-	return 0;
-}
-
-u8 BTL_SERVER_RECEPT_PokeIDtoClientID( const BTL_SERVER* sv, u8 pokeID )
-{
-	return pokeID_to_clientID( sv, pokeID );
-}
 
 int BTL_SERVER_RECEPT_GetEventArg( const BTL_SERVER* server, u8 idx )
 {

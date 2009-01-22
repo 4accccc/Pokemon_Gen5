@@ -32,8 +32,8 @@ extern BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainWork, HEAPID heapID )
 extern void BTL_SERVER_Delete( BTL_SERVER* wk );
 
 
-extern void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL_PARTY* party, u16 clientID );
-extern void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, BTL_PARTY* party, u16 clientID );
+extern void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL_PARTY* party, u8 clientID, u8 numCoverPos );
+extern void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, BTL_PARTY* party, u8 clientID, u8 numCoverPos );
 extern BOOL BTL_SERVER_Main( BTL_SERVER* server );
 
 // ワザ失敗理由
@@ -66,7 +66,6 @@ static inline u8 BTL_SERVER_MakeArg8_44( u8 arg1, u8 arg2 )
 //------------------------------------------------
 // イベントハンドラとの連絡関数
 //------------------------------------------------
-extern u8 BTL_SERVER_RECEPT_PokeIDtoClientID( const BTL_SERVER* sv, u8 pokeID );
 
 extern int BTL_SERVER_RECEPT_GetEventArg( const BTL_SERVER* server, u8 idx );
 extern void BTL_SERVER_RECEPT_SetEventArg( BTL_SERVER* server, u8 idx, int value );
