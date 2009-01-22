@@ -199,8 +199,8 @@ static const FLDMMDL_H DATA_JikiHeader =
 	0,	///<指定パラメタ 0
 	0,	///<指定パラメタ 1
 	0,	///<指定パラメタ 2
-	0,	///<X方向移動制限
-	0,	///<Z方向移動制限
+	MOVE_LIMIT_NOT,	///<X方向移動制限
+	MOVE_LIMIT_NOT,	///<Z方向移動制限
 	0,	///<グリッドX
 	0,	///<グリッドZ
 	0,	///<Y値 fx32型
@@ -241,20 +241,30 @@ void PlayerActGrid_Update(
 {
 	VecFx32 trans;
 	pcActCont->trans = *pos;
-	FLDMMDL_VecPosSet( pcActCont->pFldMMdl, pos );	//add
+	
+	SetGridPlayerActTrans( pcActCont, pos );
 	FLDMMDL_DirDispSetForce( pcActCont->pFldMMdl, dir );
 }
 
-void	SetGridPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
+void SetGridPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
 {
 	int gx = SIZE_GRID_FX32( trans->x );
 	int gy = SIZE_GRID_FX32( trans->y );
 	int gz = SIZE_GRID_FX32( trans->z );
-	VEC_Set( &pcActCont->trans, trans->x, trans->y, trans->z );
+	
+	FLDMMDL_OldPosGX_Set( pcActCont->pFldMMdl,
+		FLDMMDL_NowPosGX_Get(pcActCont->pFldMMdl) );
+	FLDMMDL_OldPosGY_Set( pcActCont->pFldMMdl,
+		FLDMMDL_NowPosGY_Get(pcActCont->pFldMMdl) );
+	FLDMMDL_OldPosGZ_Set( pcActCont->pFldMMdl,
+		FLDMMDL_NowPosGZ_Get(pcActCont->pFldMMdl) );
+	
 	FLDMMDL_NowPosGX_Set( pcActCont->pFldMMdl, gx );
-	FLDMMDL_NowPosGY_Set( pcActCont->pFldMMdl, gy );
+	FLDMMDL_NowPosGY_Set( pcActCont->pFldMMdl, G_GRID_H_GRID(gy) );
 	FLDMMDL_NowPosGZ_Set( pcActCont->pFldMMdl, gz );
 	FLDMMDL_VecPosSet( pcActCont->pFldMMdl, trans );
+	
+	VEC_Set( &pcActCont->trans, trans->x, trans->y, trans->z );
 }
 
 #if 0
@@ -326,5 +336,13 @@ void PlayerActGrid_ScaleSizeSet(
 	GFL_BBD_SetObjectSiz(
 		GFL_BBDACT_GetBBDSystem(bbdActSys),
 		idx, &sizeX, &sizeY );
+}
+
+
+FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
+
+FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont )
+{
+	return pcActCont->pFldMMdl;
 }
 

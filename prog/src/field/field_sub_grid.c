@@ -736,6 +736,8 @@ static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
  * @retval	nothing
  */
 //--------------------------------------------------------------
+extern FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
+
 static void FGridPlayer_Move(
 	FGRID_PLAYER *pJiki, u32 key_trg, u32 key_cont )
 {
@@ -762,7 +764,7 @@ static void FGridPlayer_Move(
 		else if( (key_cont&PAD_KEY_RIGHT) ){ dir = DIR_RIGHT; }
 		
 		if( dir != DIR_NOT ){
-			MAPHITBIT hit;
+			MAPHITBIT hit = MAPHITBIT_NON;
 			fx32 val = GRID_VALUE_FX32;
 			VecFx32 next = pJiki->vec_pos;
 
@@ -776,9 +778,22 @@ static void FGridPlayer_Move(
 			case DIR_LEFT:	next.x -= val; break;
 			case DIR_RIGHT:	next.x += val; break;
 			}
-			
+
+			#if 0
 			hit = MapHitCheck( pJiki->pGridCont, &pJiki->vec_pos, &next );
-			
+			#else
+			{
+				FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
+				int next_gx = SIZE_GRID_FX32( next.x );
+				int next_gy = G_GRID_H_GRID( SIZE_GRID_FX32(next.y) );
+				int next_gz = SIZE_GRID_FX32( next.z );
+				
+				if( FLDMMDL_MoveHitCheckDir(fmmdl,dir) !=
+					FLDMMDL_MOVE_HIT_BIT_NON ){
+					hit = 1;
+				}
+			}
+			#endif
 			if( hit == MAPHITBIT_NON ||
 				((key_cont&PAD_BUTTON_R) && !(hit&MAPHITBIT_MASK_ERROR)) ){
 				pJiki->move_flag = TRUE;
@@ -1361,7 +1376,7 @@ static void GridAct_ActWorkCreate(
 //--------------------------------------------------------------
 static const FLDMMDL_H DATA_NpcHeader =
 {
-	0xff,	///<識別ID
+	0,	///<識別ID
 	1,	///<表示するOBJコード
 	MV_RND,	///<動作コード
 	0,	///<イベントタイプ
@@ -1406,6 +1421,7 @@ static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
 			if( GetMapAttr(mapper,&pos,&attr) == TRUE ){
 				if( attr == 0 ){
 					head = DATA_NpcHeader;
+					head.id = i + 1;
 					head.obj_code = 1 + GFUser_GetPublicRand( 7 );
 					head.gx = gx;
 					head.gz = gz;

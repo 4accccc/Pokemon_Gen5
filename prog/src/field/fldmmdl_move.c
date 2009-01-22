@@ -1305,7 +1305,7 @@ int FLDMMDL_MoveHitCheckFellow( const FLDMMDL * fmmdl, int x, int y, int z )
 				if( FLDMMDL_StatusBit_Check(fieldobj,FLDMMDL_STABIT_FELLOW_HIT_NON) == 0 ){
 					hx = FLDMMDL_NowPosGX_Get( fieldobj );
 					hz = FLDMMDL_NowPosGZ_Get( fieldobj );
-			
+					
 					if( hx == x && hz == z ){
 						int hy = FLDMMDL_NowPosGY_Get( fieldobj );
 						int sy = hy - y;
