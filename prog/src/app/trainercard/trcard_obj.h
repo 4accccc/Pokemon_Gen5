@@ -45,6 +45,7 @@ typedef struct TR_CARD_OBJ_WORK_tag
 	CLACT_WORK_PTR			ClActWork[TR_CARD_ACT_MAX];				// セルアクターワークポインタ配列
 	CLACT_WORK_PTR			ClActWorkS[TR_CARD_SUB_ACT_MAX];		// セルアクターワークポインタ配列
 	*/
+	HEAPID	heapId;
 
 	GFL_CLUNIT	*cellUnit;
 	GFL_CLSYS_REND* cellRender;
@@ -52,10 +53,10 @@ typedef struct TR_CARD_OBJ_WORK_tag
 	GFL_CLWK	*ClActWork[TR_CARD_ACT_MAX];		// セルアクターワークポインタ配列
 	GFL_CLWK	*ClActWorkS[TR_CARD_SUB_ACT_MAX];	// セルアクターワークポインタ配列
 	
-	NNSG2dCharacterData	*charaData[2];
-	NNSG2dCellDataBank	*cellData[2];
-	NNSG2dAnimBankData	*anmData[2];
-	NNSG2dPaletteData	*palData[2];
+	NNSG2dImageProxy		charaProxy[2];
+	NNSG2dCellDataBank		*cellData[2];
+	NNSG2dAnimBankData		*anmData[2];
+	NNSG2dImagePaletteProxy	pltProxy[2];
 	void*		ResObjTbl[2][RESOURCE_NUM];		// リソースオブジェテーブル(上下画面)
 
 
@@ -64,14 +65,11 @@ typedef struct TR_CARD_OBJ_WORK_tag
 }TR_CARD_OBJ_WORK;
 
 
-extern void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk );
+extern void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk , const GFL_DISP_VRAM *vramBank);
 extern void SetTrCardActor( TR_CARD_OBJ_WORK *wk, const u8 *inBadgeDisp ,const BOOL isClear);
 extern void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk);
 extern void RereaseCellObject(TR_CARD_OBJ_WORK *wk);
 
-extern void SetBadgePalette(TR_CARD_OBJ_WORK *wk,
-							const u8 inBadgeNo,
-							const u8 inPalNo );
 extern void SetSActDrawSt( TR_CARD_OBJ_WORK *wk, u8 act_id, u8 anm_pat ,u8 draw_f);
 extern void SetEffActDrawSt( TR_CARD_OBJ_WORK *wk, u8 pat ,u8 draw_f);
 

@@ -23,7 +23,8 @@
 #include "font/font.naix"
 #include "msg/msg_trainercard.h"
 
-#define FONT_BG	(GFL_BG_FRAME3_S)
+//#define FONT_BG	(GFL_BG_FRAME3_S)
+#define FONT_BG	(GFL_BG_FRAME0_S)
 #define MSG_BG	(GFL_BG_FRAME0_S)
 
 enum{
@@ -98,7 +99,7 @@ enum{
 #define WIN_CLEAR_PX	(2)
 #define WIN_CLEAR_PY	(1)
 #define WIN_CLEAR_SX	(BMP_CSX_TYPE3)
-#define WIN_CLEAR_SY	(3)
+#define WIN_CLEAR_SY	(4)
 #define WIN_CLEAR_CGX	(SIGN_CGX+TR_SIGN_SIZE)
 //つうしん回数					:56
 #define WIN_COMM_PX	(2)
@@ -293,15 +294,19 @@ void TRCBmp_AddTrCardBmp( TR_CARD_WORK* wk )
 {
 	u8 i;
 	const TRC_BMPWIN_DAT * dat =TrCardBmpData;
+	
+	GFL_BMPWIN_Init( wk->heapId );
+	
 	for(i=0;i<TR_CARD_WIN_MAX;i++){
 		wk->win[i] = GFL_BMPWIN_Create( dat[i].frm_num , dat[i].pos_x , dat[i].pos_y 
 							, dat[i].siz_x , dat[i].siz_y 
 							, dat[i].palnum , GFL_BMP_CHRAREA_GET_B );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[i]), 0 );
 	}
 
 	//先頭キャラをクリア（スクリーンクリアされてるところは、このキャラで埋まる）
 	GFL_BG_FillCharacter( FONT_BG, 0, 1, 0 );
-	GFL_BG_FillCharacter( MSG_BG, 0, 1, 0 );
+//	GFL_BG_FillCharacter( MSG_BG, 0, 1, 0 );
 
 	//会話ウィンドウ用リソース展開
 	BmpWinFrame_GraphicSet(MSG_BG,
@@ -335,6 +340,7 @@ void TRCBmp_ExitTrCardBmpWin( TR_CARD_WORK* wk)
 	for( i=0; i<TR_CARD_WIN_MAX; i++ ){
 		GFL_BMPWIN_Delete( wk->win[i] );
 	}
+	GFL_BMPWIN_Exit();
 }
 
 static const int MsgList[] = {
@@ -424,7 +430,7 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN	*win[], const TR_CARD_DA
 							BMP_WIDTH_TYPE3, 3*8, 0, str, inTrCardData->PlayTime_h, TIME_H_DIGIT,
 							STR_NUM_DISP_SPACE,0);		//時
 			
-			PRINTSYS_Print( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PLAY_TIME]) , SEC_DISP_POS_X+SEC_DISP_OFS, 0, wk->CPrmBuf[i], wk->fontHandle );
+			PRINTSYS_Print( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PLAY_TIME]) , SEC_DISP_POS_X+SEC_DISP_OFS, 0, wk->CPrmBuf[MSG_TCARD_12], wk->fontHandle );
 //			GF_STR_PrintColor(win[TRC_BMPWIN_PLAY_TIME], FONT_SYSTEM, wk->CPrmBuf[MSG_TCARD_12],
 //					SEC_DISP_POS_X+SEC_DISP_OFS, 0, 0, TR_MSGCOLOR, NULL);
 		}
@@ -450,16 +456,18 @@ void TRCBmp_TransTrWinInfo(TR_CARD_WORK* wk,GFL_BMPWIN	*win[])
 	if(wk->is_back){
 		for(i = 7;i < TR_CARD_PARAM_MAX;i++){
 //			GFL_BMPWINOn(&win[i]);
-			GFL_BMPWIN_TransVramCharacter(win[i]);
 			GFL_BMPWIN_MakeScreen(win[i]);
+			GFL_BMPWIN_TransVramCharacter(win[i]);
 		}
 	}else{
 		for(i = 0;i < 7;i++){
 //			GFL_BMPWINOn(&win[i]);
-			GFL_BMPWIN_TransVramCharacter(win[i]);
 			GFL_BMPWIN_MakeScreen(win[i]);
+			GFL_BMPWIN_TransVramCharacter(win[i]);
 		}
 	}
+//	GFL_BG_LoadScreenV_Req(FONT_BG);
+	GFL_BG_LoadScreenV_Req(MSG_BG);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -564,9 +572,11 @@ void TRCBmp_NonDispWinInfo(GFL_BMPWIN	*win[], const u8 start, const u8 end)
 {
 	u8 i;
 	for(i=start;i<=end;i++){
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win[i]), 0 );
+//		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win[i]), 0 );
+		GFL_BMPWIN_ClearScreen( win[i] );
 //		GFL_BMPWINOff( &win[i] );
 	}
+//	GFL_BG_ClearScreen( MSG_BG );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -773,6 +783,8 @@ void TRCBmp_WriteBackButton(TR_CARD_WORK* wk,const u8 on_f)
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win[TRC_BMPWIN_BACK]) 
 					, size/2, 4, wk->ExpBuf[EXPMSG_BACK], wk->fontHandle );
 	}
+	GFL_BMPWIN_MakeScreen(wk->win[TRC_BMPWIN_BACK]);
+	GFL_BMPWIN_TransVramCharacter(wk->win[TRC_BMPWIN_BACK]);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -814,6 +826,8 @@ void TRCBmp_WriteExpWin(TR_CARD_WORK* wk,u8 pat)
 		SetSActDrawSt(&wk->ObjWork,ACTS_BTN_SIGN,ANMS_EXP,TRUE);
 		break;
 	}
+	GFL_BMPWIN_MakeScreen(win);
+	GFL_BMPWIN_TransVramCharacter(win);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -839,6 +853,7 @@ void TRCBmp_SignDrawMsgPut(TR_CARD_WORK* wk,const u8 pat)
 			,wk->SignBuf[pat] ,wk->fontHandle ,wk->msg_spd 
 			,wk->vblankTcblSys , 0 , wk->heapId , 0);
 	
+	GFL_BMPWIN_MakeScreen(wk->win[TRC_BMPWIN_MSG]);
 	GFL_BG_LoadScreenV_Req( MSG_BG);
 }
 

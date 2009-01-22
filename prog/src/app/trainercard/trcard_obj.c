@@ -90,22 +90,16 @@ static void InitCharPlttManager(void);
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk )
+void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk , const GFL_DISP_VRAM *vramBank)
 {
 	int i;
 //	initVramTransferManagerHeap( 32, HEAPID_TR_CARD );
 
-	//メインのキャラ境界を128kbyteモードに変更
-	GX_SetOBJVRamModeChar(GX_OBJVRAMMODE_CHAR_1D_128K);	
-	GXS_SetOBJVRamModeChar(GX_OBJVRAMMODE_CHAR_1D_32K);	
-
 	InitCharPlttManager();
-	// OAMマネージャーの初期化
-	NNS_G2dInitOamManagerModule();
 
-	GFL_CLACT_Init( GFL_CLSYSINIT_DEF_DIVSCREEN , wk->heapId );
+	GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , vramBank, wk->heapId );
 	// セルアクター初期化
-	wk->cellUnit = GFL_CLACT_UNIT_Create( TR_CARD_ACT_MAX, wk->heapId );
+	wk->cellUnit = GFL_CLACT_UNIT_Create( TR_CARD_ACT_MAX, 0, wk->heapId );
 
 	//サブサーフェースの距離を設定
 //	CLACT_U_SetSubSurfaceMatrix(&wk->RendData,0,SUB_SURFACE_Y+FX32_CONST(TR_SUBSURFACE_Y));
@@ -121,27 +115,29 @@ void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk )
 			NNS_G2D_VRAM_TYPE_2DMAIN,NNS_G2D_VRAM_TYPE_2DSUB,
 		};
 		u8 res_name[2][4] = {
-		 {	NARC_trainer_case_card_badge_NCGR, 
-			NARC_trainer_case_card_badge_NCLR, 
+		 {	NARC_trainer_case_card_badge_NCLR, 
+			NARC_trainer_case_card_badge_NCGR, 
 			NARC_trainer_case_card_badge_NCER, 
 			NARC_trainer_case_card_badge_NANR },
-		 {	NARC_trainer_case_card_button_NCGR, 
-			NARC_trainer_case_card_button_NCLR, 
+		 {	NARC_trainer_case_card_button_NCLR, 
+			NARC_trainer_case_card_button_NCGR, 
 			NARC_trainer_case_card_button_NCER, 
 			NARC_trainer_case_card_button_NANR },
 		};
 		//chara読み込み
+		NNS_G2dInitImageProxy( &wk->charaProxy[i] );
 		GFL_ARC_UTIL_TransVramCharacterMakeProxy( ARCID_TRAINERCARD , res_name[i][1] 
-											, FALSE , MAP_TYPE_1D , 0 , vram_type[i] , 
-											, wk->heapId , &charaData[i] );
+											, FALSE , CHAR_MAP_1D , 0 , vram_type[i] 
+											, 0 , wk->heapId , &wk->charaProxy[i] );
 //		wk->ResObjTbl[MAIN_LCD+i][CLACT_U_CHAR_RES] = GFL_ARC_UTIL_LoadOBJCharacter(
 //											wk->ResMan[MAIN_LCD+i][CLACT_U_CHAR_RES],
 //											ARCID_TRAINERCARD, res_name[i][CLACT_U_CHAR_RES],
 //											FALSE, i, vram_type[i], HEAPID_TR_CARD);
 
 		//pal読み込み
+		NNS_G2dInitImagePaletteProxy( &wk->pltProxy[i] );
 		GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID_TRAINERCARD , res_name[i][0]
-											, vram_type[i] , 
+											, vram_type[i] , 0 , wk->heapId , &wk->pltProxy[i] );
 //		wk->ResObjTbl[MAIN_LCD+i][CLACT_U_PLTT_RES] = CLACT_U_ResManagerResAddArcPltt(
 //											wk->ResMan[MAIN_LCD+i][CLACT_U_PLTT_RES],
 //											ARCID_TRAINERCARD, res_name[i][CLACT_U_PLTT_RES],
@@ -157,7 +153,7 @@ void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk )
 //											FALSE, i, CLACT_U_CELL_RES, HEAPID_TR_CARD);
 
 		//同じ関数でanim読み込み
-		wk->ResObjTbl[MAIN_LCD+i][3] = GFL_ARC_UTIL_LoadAnimeBank( ARCID_TRAINERCARD ,
+		wk->ResObjTbl[MAIN_LCD+i][3] = GFL_ARC_UTIL_LoadAnimeBank( ARCID_TRAINERCARD
 											, res_name[i][3] , FALSE , &wk->anmData[i] , wk->heapId );
 //		wk->ResObjTbl[MAIN_LCD+i][CLACT_U_CELLANM_RES] = CLACT_U_ResManagerResAddArcKindCell(
 //											wk->ResMan[MAIN_LCD+i][CLACT_U_CELLANM_RES],
@@ -188,6 +184,7 @@ void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk )
 			NARC_trainer_case_card_badge2_7_NCLR
 		};
 		//パレットアーカイブハンドルオープン
+		/*
 		pal_handle  = ArchiveDataHandleOpen( ARCID_TRAINERCARD, HEAPID_TR_CARD);
 		for (i=0;i<TR_CARD_BADGE_ACT_MAX;i++){
 			wk->PalDataBuf[i] = ArchiveDataLoadAllocByHandle( pal_handle, pal_arc_idx[i], HEAPID_TR_CARD );
@@ -203,14 +200,17 @@ void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk )
 		}
 		//ハンドルクローズ
 		ArchiveDataHandleClose( pal_handle );
+		*/
+		for (i=0;i<TR_CARD_BADGE_ACT_MAX;i++)
+		{
+			wk->badgePalBuf[i] = GFL_ARC_UTIL_LoadPalette( ARCID_TRAINERCARD ,
+									pal_arc_idx[i], &wk->badgePalData[i] ,wk->heapId );
+		}
 	}
 	
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// MAIN DISP OBJ ON
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// SUB DISP OBJ ON
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// MAIN DISP OBJ ON
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// SUB DISP OBJ ON
 }
-
-#if 0
-#pragma mark [>end edit
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -226,6 +226,7 @@ void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk )
 void SetTrCardActor( TR_CARD_OBJ_WORK *wk, const u8 *inBadgeDisp ,const BOOL isClear)
 {
 	int i;
+/*
 	CLACT_HEADER			cl_act_header;
 	
 	// セルアクターヘッダ作成	
@@ -238,12 +239,16 @@ void SetTrCardActor( TR_CARD_OBJ_WORK *wk, const u8 *inBadgeDisp ,const BOOL isC
 						wk->ResMan[MAIN_LCD][CLACT_U_CELL_RES],
 						wk->ResMan[MAIN_LCD][CLACT_U_CELLANM_RES],
 						NULL,NULL);
-
+*/
+	GFL_CLWK_RES	addRes;
+	GFL_CLACT_WK_SetCellResData( &addRes , &wk->charaProxy[MAIN_LCD] ,
+						&wk->pltProxy[MAIN_LCD] , wk->cellData[MAIN_LCD] , wk->anmData[MAIN_LCD] );
 	{
 		//登録情報格納
 		u8 ofs;
-		CLACT_ADD add;
 		u16	badge_ofs = 0;
+		/*
+		CLACT_ADD add;
 
 		add.ClActSet	= wk->ClactSet;
 		add.ClActHeader	= &cl_act_header;
@@ -258,7 +263,10 @@ void SetTrCardActor( TR_CARD_OBJ_WORK *wk, const u8 *inBadgeDisp ,const BOOL isC
 		add.pri			= 2;
 		add.DrawArea	= NNS_G2D_VRAM_TYPE_2DMAIN;
 		add.heap		= HEAPID_TR_CARD;
-
+		*/
+		GFL_CLWK_DATA	addData;
+		
+		
 		//セルアクター表示開始
 		if(!isClear){
 			badge_ofs = BADGE_NC_OFS; 
@@ -267,6 +275,7 @@ void SetTrCardActor( TR_CARD_OBJ_WORK *wk, const u8 *inBadgeDisp ,const BOOL isC
 		// 下画面(メイン画面)
 		//バッジ
 		for(i=0;i<TR_CARD_BADGE_ACT_MAX;i++){
+			/*
 			add.mat.x = FX32_ONE * BadgePos[i].x;
 			add.mat.y = FX32_ONE * (BadgePos[i].y+badge_ofs);
 			wk->ClActWork[i] = CLACT_Add(&add);
@@ -275,6 +284,17 @@ void SetTrCardActor( TR_CARD_OBJ_WORK *wk, const u8 *inBadgeDisp ,const BOOL isC
 			if (!inBadgeDisp[i]){
 				CLACT_SetDrawFlag(wk->ClActWork[i], 0);	//非表示
 			}
+			*/
+			addData.pos_x = BadgePos[i].x;
+			addData.pos_y = BadgePos[i].y+badge_ofs;
+			addData.anmseq = i;
+			wk->ClActWork[i] = GFL_CLACT_WK_Add( wk->cellUnit , &addData ,
+											&addRes , CLSYS_DEFREND_MAIN , wk->heapId );
+			if (!inBadgeDisp[i]){
+				GFL_CLACT_WK_SetDrawEnable( wk->ClActWork[i], FALSE);	//非表示
+			}
+			GFL_CLACT_WK_SetAutoAnmSpeed( wk->ClActWork[i], FX32_ONE );
+			GFL_CLACT_WK_SetAutoAnmFlag( wk->ClActWork[i], TRUE );
 		}
 	}	
 }
@@ -293,13 +313,14 @@ void SetTrCardActor( TR_CARD_OBJ_WORK *wk, const u8 *inBadgeDisp ,const BOOL isC
 void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
 {
 	int i;
-	CLACT_HEADER			cl_act_header;
+//	CLACT_HEADER			cl_act_header;
 	static u8 ActPos[][2] = {
 	 {192,21*8},{0,21*8},
 	};
 	static u8 AnmNo[] = {
 		ANMS_BACK_OFF,ANMS_EXP,ANMS_EFF	
 	};
+/*
 	// セルアクターヘッダ作成	
 	CLACT_U_MakeHeader(	&cl_act_header,
 						SUB_LCD, SUB_LCD, SUB_LCD, SUB_LCD,
@@ -310,12 +331,15 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
 						wk->ResMan[SUB_LCD][CLACT_U_CELL_RES],
 						wk->ResMan[SUB_LCD][CLACT_U_CELLANM_RES],
 						NULL,NULL);
+*/
+	GFL_CLWK_RES	addRes;
+	GFL_CLACT_WK_SetCellResData( &addRes , &wk->charaProxy[SUB_LCD] ,
+						&wk->pltProxy[SUB_LCD] , wk->cellData[SUB_LCD] , wk->anmData[SUB_LCD] );
 
 	{
 		//登録情報格納
-//		u8 ofs;
+/*
 		CLACT_ADD add;
-//		u16	badge_ofs = 0;
 
 		add.ClActSet	= wk->ClactSet;
 		add.ClActHeader	= &cl_act_header;
@@ -330,10 +354,13 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
 		add.pri			= 0;
 		add.DrawArea	= NNS_G2D_VRAM_TYPE_2DSUB;
 		add.heap		= HEAPID_TR_CARD;
-
+*/
+		GFL_CLWK_DATA	addData;
+		
 		//セルアクター表示開始
 		// 下画面(サブ画面)
 		for(i=0;i<TR_CARD_SUB_ACT_MAX;i++){
+		/*
 			add.mat.x = FX32_ONE * ActPos[i][0];
 			add.mat.y = FX32_ONE * ActPos[i][1] + (FX32_CONST(TR_SUBSURFACE_Y)+SUB_SURFACE_Y);
 			wk->ClActWorkS[i] = CLACT_Add(&add);
@@ -341,10 +368,19 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
 			CLACT_AnmChg( wk->ClActWorkS[i], AnmNo[i] );
 			CLACT_DrawPriorityChg( wk->ClActWorkS[i],TR_CARD_SUB_ACT_MAX-i);
 			CLACT_SetDrawFlag(wk->ClActWorkS[i], FALSE);	//非表示
+		*/
+			addData.pos_x = ActPos[i][0];
+			addData.pos_y = ActPos[i][1];	//TODO
+			addData.anmseq = AnmNo[i];
+			wk->ClActWorkS[i] = GFL_CLACT_WK_Add( wk->cellUnit , &addData ,
+											&addRes , CLSYS_DEFREND_SUB , wk->heapId );
+			GFL_CLACT_WK_SetDrawEnable( wk->ClActWorkS[i], FALSE);	//非表示
+			GFL_CLACT_WK_SetAutoAnmSpeed( wk->ClActWorkS[i], FX32_ONE );
+			GFL_CLACT_WK_SetAutoAnmFlag( wk->ClActWorkS[i], TRUE );
+			
 		}
 	}	
 }
-
 //--------------------------------------------------------------------------------------------
 /**
  * 2Dセルオブジェクト解放
@@ -356,14 +392,14 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
 //--------------------------------------------------------------------------------------------
 void RereaseCellObject(TR_CARD_OBJ_WORK *wk)
 {
-	u8 i;
+	u8 i,j;
 	//パレット解放
 	for(i=0;i<TR_CARD_BADGE_ACT_MAX;i++){
-		sys_FreeMemoryEz(wk->PalDataBuf[i]);
+		GFL_HEAP_FreeMemory(wk->badgePalBuf[i]);
 	}
 
 	// セルアクターリソース解放
-
+/*
 	// キャラ転送マネージャー破棄
 	CLACT_U_CharManagerDelete(wk->ResObjTbl[MAIN_LCD][CLACT_U_CHAR_RES]);
 	CLACT_U_CharManagerDelete(wk->ResObjTbl[SUB_LCD][CLACT_U_CHAR_RES]);
@@ -379,48 +415,28 @@ void RereaseCellObject(TR_CARD_OBJ_WORK *wk)
 	}
 	//サブサーフェースの距離を設定
 	CLACT_U_SetSubSurfaceMatrix(&wk->RendData,0,SUB_SURFACE_Y);
+*/
+	for(i=0;i<RESOURCE_NUM;i++)
+	{
+		for(j=0;j<2;j++)
+		{
+			if( wk->ResObjTbl[j][i] != NULL )
+			{
+				GFL_HEAP_FreeMemory(wk->ResObjTbl[j][i]);
+			}
+		}
+	}
 
 	// セルアクターセット破棄
-	CLACT_DestSet(wk->ClactSet);
+	GFL_CLACT_UNIT_Delete(wk->cellUnit);
 
 	//OAMレンダラー破棄
-	REND_OAM_Delete();
+	GFL_CLACT_SYS_Delete();
 
-	DeleteCharManager();
-	DeletePlttManager();
+//	DeleteCharManager();
+//	DeletePlttManager();
 	
 	GX_SetOBJVRamModeChar(GX_OBJVRAMMODE_CHAR_1D_32K);	
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * バッジパレット変更
- *
- * @param	wk			OBJワーク
- * @param	inBadgeNo	バッジナンバー
- * @param	inOalNo		パレット番号
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void SetBadgePalette( TR_CARD_OBJ_WORK *wk, const u8 inBadgeNo, const u8 inPalNo )
-{
-	NNSG2dImagePaletteProxy *proxy;
-	u32 palette_vram;
-	u32 pal_ofs;
-	u8 * adr;
-	
-	GF_ASSERT(inBadgeNo<TR_CARD_BADGE_ACT_MAX);
-	GF_ASSERT(inPalNo<=3);
-	
-///	CLACT_PaletteNoChg( wk->ClActWork[inBadgeNo], inPalNo );
-
-	proxy = CLACT_PaletteProxyGet( wk->ClActWork[inBadgeNo] );
-	palette_vram = NNS_G2dGetImagePaletteLocation(proxy, NNS_G2D_VRAM_TYPE_2DMAIN);
-	palette_vram += inBadgeNo*(16*2);
-	adr = wk->PalData[inBadgeNo]->pRawData;
-	DC_FlushRange( &adr[inPalNo*16*2], 16*2 );
-	GX_LoadOBJPltt( &adr[inPalNo*16*2], palette_vram, 16*2 );	//32byte 1Palette
 }
 
 //--------------------------------------------------------------------------------------------
@@ -437,9 +453,9 @@ void SetBadgePalette( TR_CARD_OBJ_WORK *wk, const u8 inBadgeNo, const u8 inPalNo
 void SetSActDrawSt( TR_CARD_OBJ_WORK *wk, u8 act_id, u8 anm_pat ,u8 draw_f)
 {
 //	CLACT_SetAnmFlag(wk->ClActWorkS[act_id],TRUE);
-	CLACT_AnmChg( wk->ClActWorkS[act_id],anm_pat);
-	CLACT_AnmReStart(wk->ClActWorkS[act_id]);
-	CLACT_SetDrawFlag(wk->ClActWorkS[act_id],draw_f);	
+	GFL_CLACT_WK_SetAnmSeq( wk->ClActWorkS[act_id],anm_pat);
+	GFL_CLACT_WK_ResetAnm(wk->ClActWorkS[act_id]);
+	GFL_CLACT_WK_SetDrawEnable(wk->ClActWorkS[act_id],draw_f);	
 }
 
 //--------------------------------------------------------------------------------------------
@@ -455,14 +471,24 @@ void SetSActDrawSt( TR_CARD_OBJ_WORK *wk, u8 act_id, u8 anm_pat ,u8 draw_f)
 //--------------------------------------------------------------------------------------------
 void SetEffActDrawSt( TR_CARD_OBJ_WORK *wk, u8 pat ,u8 draw_f)
 {
+	GFL_CLACTPOS cellPos;
 	static const u8 pos_x[2] = {28*8,7*8};
-	if(pat == 2){
-		CATS_ObjectPosSet(wk->ClActWorkS[ACTS_BTN_EFF],sys.tp_x,sys.tp_y+TR_SUBSURFACE_Y);
-	}else{
-		CATS_ObjectPosSet(wk->ClActWorkS[ACTS_BTN_EFF],pos_x[pat],22*8+TR_SUBSURFACE_Y);
+	u32 tpx,tpy;
+	GFL_UI_TP_GetPointCont( &tpx , &tpy );
+	if(pat == 2)
+	{
+		cellPos.x = tpx;
+		cellPos.y = tpy; //TODO +TR_SUBSURFACE_Y
+		GFL_CLACT_WK_SetPos(wk->ClActWorkS[ACTS_BTN_EFF],&cellPos,CLSYS_DEFREND_SUB);
 	}
-	CLACT_AnmReStart(wk->ClActWorkS[ACTS_BTN_EFF]);
-	CLACT_SetDrawFlag(wk->ClActWorkS[ACTS_BTN_EFF],draw_f);	
+	else
+	{
+		cellPos.x = pos_x[pat];
+		cellPos.y = 22*8; //TODO +TR_SUBSURFACE_Y
+		GFL_CLACT_WK_SetPos(wk->ClActWorkS[ACTS_BTN_EFF],&cellPos,CLSYS_DEFREND_SUB);
+	}
+	GFL_CLACT_WK_ResetAnm(wk->ClActWorkS[ACTS_BTN_EFF]);
+	GFL_CLACT_WK_SetDrawEnable(wk->ClActWorkS[ACTS_BTN_EFF],draw_f);	
 }
 
 //--------------------------------------------------------------------------------------------
@@ -475,6 +501,7 @@ void SetEffActDrawSt( TR_CARD_OBJ_WORK *wk, u8 pat ,u8 draw_f)
 //--------------------------------------------------------------------------------------------
 static void InitCharPlttManager(void)
 {
+	/*
 	// キャラクタマネージャー初期化
 	{
 		CHAR_MANAGER_MAKE cm = {
@@ -496,10 +523,6 @@ static void InitCharPlttManager(void)
 	REND_OAM_UtilOamRamClear_Sub(HEAPID_TR_CARD);
 
 //	DellVramTransferManager();
+	*/
 }
-
-
-#pragma mark [>start edit
-#endif
-
 

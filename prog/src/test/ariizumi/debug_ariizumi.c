@@ -24,7 +24,7 @@ DEBUG_ARIIZUMI_WORK *debWork = NULL;
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DebugAriizumiMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ARIIZUMI_DEBUG, 0x200000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ARIIZUMI_DEBUG, 0x100000 );
 
 	debWork = GFL_HEAP_AllocMemory( HEAPID_ARIIZUMI_DEBUG , sizeof(DEBUG_ARIIZUMI_WORK));
 	//debWork->cardWork_ = ARI_COMM_CARD_Init( HEAPID_ARIIZUMI_DEBUG );

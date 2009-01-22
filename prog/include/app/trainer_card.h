@@ -24,7 +24,7 @@ typedef enum{
 	TR_CARD_RANK_BLACK,
 }TR_CARD_RANK;
 
-//extern  const PROC_DATA TrCardProcData;		// プロセス定義データ
+extern const GFL_PROC_DATA TrCardSysProcData;
 extern GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 extern GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 extern GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
@@ -92,9 +92,9 @@ typedef struct TR_CARD_DATA_tag
 }TR_CARD_DATA;
 
 typedef struct TRCARD_CALL_PARAM_tag{
-	TR_CARD_DATA	TrCardData;
+	TR_CARD_DATA		*TrCardData;
 
-	const SAVE_CONTROL_WORK*	savedata;	///<セーブデータへのポインタ
+//	const SAVE_CONTROL_WORK*	savedata;	///<セーブデータへのポインタ
 	int					value;		///<リターン値
 }TRCARD_CALL_PARAM;
 

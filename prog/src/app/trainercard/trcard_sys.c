@@ -18,13 +18,12 @@
 
 
 typedef struct _TR_CARD_SYS{
- int heapID;
- 
- void	*app_wk;	///<簡易会話モジュールワークの保存
- GFL_PROCSYS*	procSys;		///<サブプロセスワーク
+	int heapId;
 
- TRCARD_CALL_PARAM* tcp;
- TR_CARD_DATA *pTrCardData;
+	void	*app_wk;	///<簡易会話モジュールワークの保存
+	GFL_PROCSYS*	procSys;		///<サブプロセスワーク
+
+	TRCARD_CALL_PARAM* tcp;
 
 }TR_CARD_SYS;
 
@@ -34,6 +33,11 @@ typedef struct _TR_CARD_SYS{
 GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
+const GFL_PROC_DATA TrCardSysProcData = {
+	TrCardSysProc_Init,
+	TrCardSysProc_Main,
+	TrCardSysProc_End,
+};
 
 //================================================================
 ///データ定義エリア
@@ -61,7 +65,7 @@ static int sub_SignWait(TR_CARD_SYS* wk);
 static BOOL TrCardSysProcCall(GFL_PROCSYS ** procSys)
 {
 	if (*procSys) {
-		if (GFL_PROC_LOCAL_Main(*procSys)) {
+		if (GFL_PROC_LOCAL_Main(*procSys) == FALSE ) {
 			GFL_PROC_LOCAL_Exit(*procSys);
 			*procSys = NULL;
 			return TRUE;
@@ -76,19 +80,21 @@ static BOOL TrCardSysProcCall(GFL_PROCSYS ** procSys)
 GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
 	TR_CARD_SYS* wk = NULL;
-	TRCARD_CALL_PARAM* pp = (TRCARD_CALL_PARAM*)pwk;
+//	TRCARD_CALL_PARAM* pp = (TRCARD_CALL_PARAM*)pwk;
 	
 	//ヒープ作成
-	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_TRCARD_SYS,0x1000);
+	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_TRCARD_SYS,0x20000);
 	wk = GFL_PROC_AllocWork(proc,sizeof(TR_CARD_SYS),HEAPID_TRCARD_SYS);
 	MI_CpuClear8(wk,sizeof(TR_CARD_SYS));
 
 	//ヒープID保存
-	wk->heapID = HEAPID_TRCARD_SYS;
+	wk->heapId = HEAPID_TRCARD_SYS;
 
 	//データテンポラリ作成
-	wk->tcp = pp;
-	wk->pTrCardData = &pp->TrCardData;
+//	wk->tcp = pp;
+//	wk->pTrCardData = &pp->TrCardData;
+	wk->tcp = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ));
+	wk->tcp->TrCardData = TRAINERCARD_CreateSelfData( wk->heapId );
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -126,7 +132,8 @@ GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void 
 {
 	TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
 
-	MI_CpuClear8(wk,sizeof(TR_CARD_SYS));
+	GFL_HEAP_FreeMemory( wk->tcp->TrCardData );
+	GFL_HEAP_FreeMemory( wk->tcp );
 
 	//ワークエリア解放
 	GFL_PROC_FreeWork(proc);
@@ -149,8 +156,8 @@ static int sub_CardInit(TR_CARD_SYS* wk)
 		TrCardProc_Main,
 		TrCardProc_End,
 	};
-//	wk->proc = PROC_Create(&TrCardProcData,wk->tcp,wk->heapID);
-	wk->procSys = GFL_PROC_LOCAL_boot( wk->heapID );
+//	wk->proc = PROC_Create(&TrCardProcData,wk->tcp,wk->heapId);
+	wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
 	GFL_PROC_LOCAL_CallProc( wk->procSys, NO_OVERLAY_ID, &TrCardProcData,(void*)wk->tcp);
 	return CARD_WAIT;
 }
@@ -163,7 +170,7 @@ static int sub_CardWait(TR_CARD_SYS* wk)
 	if(!TrCardSysProcCall(&wk->procSys)){
 		return CARD_WAIT;
 	}
-
+	
 	if(wk->tcp->value){
 		return SIGN_INIT;
 	}
@@ -184,8 +191,8 @@ static int sub_SignInit(TR_CARD_SYS* wk)
 		MySignProc_End,
 	};
 		
-//	wk->proc = PROC_Create(&MySignProcData,(void*)wk->tcp->savedata,wk->heapID);
-	wk->procSys = GFL_PROC_LOCAL_boot( wk->heapID );
+//	wk->proc = PROC_Create(&MySignProcData,(void*)wk->tcp->savedata,wk->heapId);
+	wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
 	GFL_PROC_LOCAL_CallProc( wk->procSys, NO_OVERLAY_ID, &MySignProcData,wk->tcp);
 #endif
 	return SIGN_WAIT;
@@ -201,22 +208,28 @@ static int sub_SignWait(TR_CARD_SYS* wk)
 	}
 	//サインデータを呼び出しテンポラリに書き戻し
 	{
-		TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr((SAVE_CONTROL_WORK*)wk->tcp->savedata);
+		TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(SaveControl_GetPointer());
 		//サインデータの有効/無効フラグを取得(金銀ローカルでのみ有効)
-		wk->tcp->TrCardData.MySignValid = TRCSave_GetSigned(trc_ptr);
+		wk->tcp->TrCardData->MySignValid = TRCSave_GetSigned(trc_ptr);
 		//サインデータをセーブデータからコピー
 		MI_CpuCopy8(TRCSave_GetSignDataPtr(trc_ptr),
-				wk->tcp->TrCardData.SignRawData, SIGN_SIZE_X*SIGN_SIZE_Y*8 );
+				wk->tcp->TrCardData->SignRawData, SIGN_SIZE_X*SIGN_SIZE_Y*8 );
 	}
 	return CARD_INIT;
 }
 
-
-#if 0
-#pragma mark [>end edit
-
-
-#pragma mark [>start edit
-#endif
-
-
+TR_CARD_DATA* TRAINERCARD_CreateSelfData( const HEAPID heapId )
+{
+	TR_CARD_DATA *cardData;
+	
+	cardData = GFL_HEAP_AllocClearMemory( heapId , sizeof( TR_CARD_DATA ) );
+	cardData->TrainerName[0] = L'て';
+	cardData->TrainerName[1] = L'す';
+	cardData->TrainerName[2] = L'と';
+	cardData->TrainerName[3] = GFL_STR_GetEOMCode();
+	cardData->PlayTime = SaveData_GetPlayTime( SaveControl_GetPointer() );
+	
+	cardData->UnionTrNo = UNION_TR_NONE;
+	return cardData;
+	
+}

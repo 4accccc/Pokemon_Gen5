@@ -74,6 +74,10 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				savedata/wifilist.c \
 				system/touch_subwindow.c \
 				app/trainercard/trainercard.c \
+				app/trainercard/trainer_card.c \
+				app/trainercard/trcard_bmp.c \
+				app/trainercard/trcard_obj.c \
+				app/trainercard/trcard_sys.c \
 				app/name_input/name_input.c \
 				mystery/comm_mystery_gift.c \
 				savedata/mystery_data.c \

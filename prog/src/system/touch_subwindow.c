@@ -148,7 +148,7 @@ typedef struct {
 struct _TOUCH_SW_SYS
 {
 	GFL_BUTTON_MAN* p_button_man;// ボタンマネージャ
-	GFL_UI_TP_HITTBL hit_tbl[ TOUCH_SW_BUF_NUM ];		// ボタンデータ
+	GFL_UI_TP_HITTBL hit_tbl[ TOUCH_SW_BUF_NUM+1 ];		// ボタンデータ(終端データ
 	TOUCH_SW_BUTTON button[ TOUCH_SW_BUF_NUM ];	// ボタンデータ
 	u32 bg_frame;			// BGナンバー
 	u32 heapid;				// 使用ヒープID
@@ -666,16 +666,26 @@ static void TouchSW_SYS_ButtonInit( TOUCH_SW_SYS* p_touch_sw, const TOUCH_SW_PAR
 	bt_pr.tbl_num	= TOUCH_SW_ANIME_NUM;
 	bt_pr.ofs_x		= p_touch_sw->x;
 
-	if(cp_param->type == TOUCH_SW_TYPE_S){
-		datIdx = NARC_yn_touch_no_touch_s01_NSCR;
-	}else{
-		datIdx = NARC_yn_touch_no_touch_l01_NSCR;
-	}
 	for( i=0; i<TOUCH_SW_BUF_NUM; i++ ){
+
+		if(cp_param->type == TOUCH_SW_TYPE_S)
+		{
+			if( i == TOUCH_SW_BUF_YES )
+				datIdx = NARC_yn_touch_yes_touch_s01_NSCR;
+			else
+				datIdx = NARC_yn_touch_no_touch_s01_NSCR;
+		}
+		else
+		{
+			if( i == TOUCH_SW_BUF_YES )
+				datIdx = NARC_yn_touch_yes_touch_l01_NSCR;
+			else
+				datIdx = NARC_yn_touch_no_touch_l01_NSCR;
+		}
 
 		// スクリーンデータインデックスバッファ作成
 		for( j=0; j<TOUCH_SW_ANIME_NUM; j++ ){
-			bt_pr.scrn_arcidx[ j ] = datIdx + j + (i*TOUCH_SW_ANIME_NUM);
+			bt_pr.scrn_arcidx[ j ] = datIdx + j;
 		}
 
 		// Yオフセット値
@@ -711,6 +721,7 @@ static void TouchSW_SYS_ButtonManaInit( TOUCH_SW_SYS* p_touch_sw, const TOUCH_SW
 			(p_touch_sw->y*8) + (i*p_touch_sw->sizy*8) + (p_touch_sw->sizy*8);
 		p_touch_sw->hit_tbl[ i ].rect.right	= (p_touch_sw->x*8) + (p_touch_sw->sizx*8);
 	}
+	p_touch_sw->hit_tbl[ TOUCH_SW_BUF_NUM ].circle.code = GFL_UI_TP_HIT_END;
 	
 	p_touch_sw->p_button_man = GFL_BMN_Create( p_touch_sw->hit_tbl, 
 							TouchSW_ButtonCallBack, p_touch_sw, p_touch_sw->heapid );

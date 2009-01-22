@@ -27,11 +27,13 @@
 #include "trcard_obj.h"
 #include "trcard_cgx_def.h"
 #include "trainer_case.naix"
+#include "trc_union.naix"
 
 #include "savedata/config.h"
 #include "msg/msg_trainercard.h"
 #include "message.naix"
 #include "system/wipe.h"
+#include "test/ariizumi/ari_debug.h"
 
 #define MIN_SCRUCH	(3)
 #define MAX_SCRUCH	(40)
@@ -128,25 +130,44 @@ typedef struct {
 static const int UniTrTable[UNION_TR_MAX] = 
 {
 	//男
-	NARC_trainer_case_trdp_schoolb256_NCGR,
-	NARC_trainer_case_trdp_mushi256_NCGR,
-	NARC_trainer_case_trdp_elitem256_NCGR,
-	NARC_trainer_case_trdp_heads256_NCGR,
-	NARC_trainer_case_trdp_iseki256_NCGR,
-	NARC_trainer_case_trdp_karate256_NCGR,
-	NARC_trainer_case_trdp_prince256_NCGR,
-	NARC_trainer_case_trdp_espm256_NCGR,
+	NARC_trc_union_trdp_schoolb256_NCGR,
+	NARC_trc_union_trdp_mushi256_NCGR,
+	NARC_trc_union_trdp_elitem256_NCGR,
+	NARC_trc_union_trdp_heads256_NCGR,
+	NARC_trc_union_trdp_iseki256_NCGR,
+	NARC_trc_union_trdp_karate256_NCGR,
+	NARC_trc_union_trdp_prince256_NCGR,
+	NARC_trc_union_trdp_espm256_NCGR,
 	//女
-	NARC_trainer_case_trdp_mini256_NCGR,
-	NARC_trainer_case_trdp_battleg256_NCGR,
-	NARC_trainer_case_trdp_sister256_NCGR,
-	NARC_trainer_case_trdp_elitew256_NCGR,
-	NARC_trainer_case_trdp_idol256_NCGR,
-	NARC_trainer_case_trdp_madam256_NCGR,
-	NARC_trainer_case_trdp_cowgirl256_NCGR,
-	NARC_trainer_case_trdp_princess256_NCGR,
+	NARC_trc_union_trdp_mini256_NCGR,
+	NARC_trc_union_trdp_battleg256_NCGR,
+	NARC_trc_union_trdp_sister256_NCGR,
+	NARC_trc_union_trdp_elitew256_NCGR,
+	NARC_trc_union_trdp_idol256_NCGR,
+	NARC_trc_union_trdp_madam256_NCGR,
+	NARC_trc_union_trdp_cowgirl256_NCGR,
+	NARC_trc_union_trdp_princess256_NCGR,
 };
 
+static const GFL_DISP_VRAM vramBank = {
+	GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+
+	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+
+	GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+
+	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+
+	GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
+
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+};
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -154,7 +175,6 @@ static const int UniTrTable[UNION_TR_MAX] =
 static void AllocStrBuf( TR_CARD_WORK * wk );
 static void FreeStrBuf( TR_CARD_WORK * wk );
 
-static void SetTrCardVramBank(void);
 static void SetTrCardBg( void );
 static void SetTrCardBgGraphic( TR_CARD_WORK * wk );
 
@@ -196,7 +216,7 @@ static int SignCall( TR_CARD_WORK *wk );
  * @return	処理状況
  */
 //--------------------------------------------------------------------------------------------
-GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
+GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
 	TR_CARD_WORK * wk;
 	CONFIG*	configSave;	///<コンフィグセーブデータ
@@ -210,6 +230,8 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
 	WIPE_ResetWndMask(WIPE_DISP_MAIN);
 	WIPE_ResetWndMask(WIPE_DISP_SUB);
 
+	PRINTSYS_Init( GFL_HEAPID_APP );
+
 	GFL_UI_KEY_SetRepeatSpeed( 4, 8 );
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TR_CARD, 0x50000 );
 
@@ -217,9 +239,10 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
 	memset( wk, 0, sizeof(TR_CARD_WORK) );
 
 	wk->heapId = HEAPID_TR_CARD;
+	wk->ObjWork.heapId = HEAPID_TR_CARD;
 	//引継ぎパラメータ取得
 	wk->tcp = pwk;
-	wk->TrCardData = &wk->tcp->TrCardData;
+	wk->TrCardData = wk->tcp->TrCardData;
 	wk->key_mode = GFL_UI_CheckTouchOrKey();
 
 	configSave = SaveData_GetConfig(SaveControl_GetPointer());
@@ -243,6 +266,14 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
 			flag <<= 1;
 		}
 	}
+	//FullOpen!
+#if DEB_ARI
+	{
+		u8 i;
+		wk->isClear = TRUE;
+		for(i=0;i<TR_BADGE_NUM_MAX;i++)wk->badge[i] = 1;
+	}
+#endif
 
 	//通信中かどうか？
 //	if( CommIsConnect(u16 netID) ){
@@ -254,7 +285,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
 	
 	AllocStrBuf(wk);
 	
-	SetTrCardVramBank();
+	GFL_DISP_SetBank( &vramBank );
 	SetTrCardBg();
 	SetTrCardBgGraphic( wk );
 
@@ -268,7 +299,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
 	Snd_SePlay( SND_TRCARD_CALL );		//呼び出し音
 #endif
 	
-	InitTRCardCellActor( &wk->ObjWork );
+	InitTRCardCellActor( &wk->ObjWork , &vramBank );
 	
 	SetTrCardActor( &wk->ObjWork, wk->badge ,wk->isClear);
 	SetTrCardActorSub( &wk->ObjWork);
@@ -331,7 +362,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
  * @return	処理状況
  */
 //--------------------------------------------------------------------------------------------
-GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
+GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
 	TR_CARD_WORK * wk  = mywk;
 
@@ -411,6 +442,8 @@ GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void
 		wk->scrl_ct = 0;
 	}
 	GFL_CLACT_SYS_Main();
+	if( wk->vblankTcblSys != NULL )
+		GFL_TCBL_Main( wk->vblankTcblSys );
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -425,7 +458,7 @@ GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void
  * @return	処理状況
  */
 //--------------------------------------------------------------------------------------------
-GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
+GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
 	TR_CARD_WORK * wk  = mywk;
 
@@ -535,39 +568,6 @@ static void FreeStrBuf( TR_CARD_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * VRAM設定
- *
- * @param	none
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void SetTrCardVramBank(void)
-{
-	GFL_DISP_VRAM tbl = {
-		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-
-		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-
-		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-
-		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-
-		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
-
-		GX_OBJVRAMMODE_CHAR_1D_32K,		// メインOBJマッピングモード
-		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-	};
-	GFL_DISP_SetBank( &tbl );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
  * カードパレット設定
  *
  * @param	inCardRank		カードランク
@@ -640,6 +640,7 @@ static void SetCasePalette(TR_CARD_WORK *wk ,const u8 inVersion)
 {
 	void *buf;
 	NNSG2dPaletteData *dat;
+/*
 	switch(inVersion){
 	case VERSION_DIAMOND:		//ダイヤ
 		buf = GFL_ARC_UTIL_LoadPalette(
@@ -660,6 +661,11 @@ static void SetCasePalette(TR_CARD_WORK *wk ,const u8 inVersion)
 				ARCID_TRAINERCARD, NARC_trainer_case_card_case_x_NCLR, &dat, wk->heapId );
 		break;
 	}
+*/
+	//とりあえずGOLDの動作に統一
+	buf = GFL_ARC_UTIL_LoadPalette(
+			ARCID_TRAINERCARD, NARC_trainer_case_card_case_g_NCLR, &dat, wk->heapId );
+
 		
 	DC_FlushRange( dat->pRawData, 2*16 );
 	GX_LoadBGPltt( dat->pRawData, CASE_BD_PAL*32, 2*16 );
@@ -682,7 +688,7 @@ static void SetUniTrainerPalette(TR_CARD_WORK *wk ,const u8 inTrainerNo)
 	u8 *addr;
 	NNSG2dPaletteData *dat;
 	buf = GFL_ARC_UTIL_LoadPalette(
-			ARCID_TRAINERCARD, NARC_trainer_case_trdp_union_card_NCLR, &dat, wk->heapId );
+			ARCID_TRAINERCARD, NARC_trc_union_trdp_union_card_NCLR, &dat, wk->heapId );
 
 	addr = (u8*)(dat->pRawData);
 		
@@ -714,57 +720,63 @@ static void SetTrCardBg( void )
 
 	{	// FONT (BMP)
 		GFL_BG_BGCNT_HEADER  ExAffineBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x18000, GX_BG_EXTPLTT_01,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,	//TODO 256から変えて平気？
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x18000, 0x8000, GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( TRC_BG_FONT, &ExAffineBgCntDat, GFL_BG_MODE_256X16 );
 		GFL_BG_ClearFrame( TRC_BG_FONT );
+		GFL_BG_SetVisible( TRC_BG_FONT, VISIBLE_ON );
 	}
 
 	{	// BG (CASE CHAR,MSG_CHAR)
 		GFL_BG_BGCNT_HEADER  TextBgCntDat[] = {
 		 {	0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE},
 		 {	0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
 			3, 0, 0, FALSE},
 		};
 		GFL_BG_SetBGControl( TRC_BG_MSG,  &TextBgCntDat[0], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearFrame( TRC_BG_MSG );
+		GFL_BG_SetVisible( TRC_BG_MSG, VISIBLE_ON );
 		GFL_BG_SetBGControl( TRC_BG_BACK, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearFrame( TRC_BG_BACK );
+		GFL_BG_SetVisible( TRC_BG_BACK, VISIBLE_ON );
 	}
 
 	{	// BG (CARD CHAR)
 		GFL_BG_BGCNT_HEADER  AffineBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( TRC_BG_CARD, &AffineBgCntDat, GFL_BG_MODE_256X16 );
 		GFL_BG_ClearFrame( TRC_BG_CARD );
+		GFL_BG_SetVisible( TRC_BG_CARD, VISIBLE_ON );
 	}
 
 	{	// BG (BADGE_CASE CHAR)
 		GFL_BG_BGCNT_HEADER  TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( TRC_BG_BADGE_CASE, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearFrame( TRC_BG_BADGE_CASE );
+		GFL_BG_SetVisible( TRC_BG_BADGE_CASE, VISIBLE_ON );
 	}
 
 	{	// BG (BADGE_BACK CHAR)
 		GFL_BG_BGCNT_HEADER  TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
 			3, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( TRC_BG_BADGE_BACK, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearFrame( TRC_BG_BADGE_BACK );
+		GFL_BG_SetVisible( TRC_BG_BADGE_BACK, VISIBLE_ON );
 	}
 }
 
@@ -808,13 +820,12 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 		GX_LoadBGPltt( dat->pRawData, 0, 16*2*16 );
 		sys_FreeMemoryEz(buf);
 	*/
-		GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_0_NCLR,
+		GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_case_g_NCLR,
 					PALTYPE_MAIN_BG , 0 , 16*2*16 ,wk->heapId );
 	}
 	// CASE PALETTE
 	SetCasePalette(wk,wk->TrCardData->Version);
 
-	
 	//TRAINER
 	if (wk->TrCardData->UnionTrNo == UNION_TR_NONE){
 		{
@@ -855,7 +866,7 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 			wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRAINERCARD, UniTrTable[wk->TrCardData->UnionTrNo],
 										FALSE, &wk->TrCharData, wk->heapId);
 
-			wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen(ARCID_TRAINERCARD, NARC_trainer_case_card_test256_NSCR,
+			wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen(ARCID_TRAINERCARD, NARC_trc_union_card_test256_NSCR,
 													0, &wk->ScrnData, wk->heapId);
 			//トレーナーパレット変更
 			SetUniTrainerPalette(wk,wk->TrCardData->UnionTrNo);
@@ -1039,6 +1050,7 @@ static int SignCall( TR_CARD_WORK *wk )
 		{
 			return 0;
 		}
+		PRINTSYS_PrintStreamDelete( wk->printHandle );
 		TRCBmp_SignDrawYesNoCall(wk,0);
 		wk->sub_seq++;
 		break;
@@ -1063,6 +1075,7 @@ static int SignCall( TR_CARD_WORK *wk )
 		{
 			return 0;
 		}
+		PRINTSYS_PrintStreamDelete( wk->printHandle );
 		TRCBmp_SignDrawYesNoCall(wk,1);
 		wk->sub_seq++;
 		break;
@@ -1170,19 +1183,19 @@ static void CardRevAffineSet(TR_CARD_WORK* wk)
 {
 	MtxFx22 mtx;
 
-    mtx._00 = FX_Inv(wk->CardScaleX);
-    mtx._01 = 0;
-    mtx._10 = 0;
-    mtx._11 = FX_Inv(wk->CardScaleY);
-    SVC_WaitVBlankIntr();          // Waiting the end of VBlank interrup
+	mtx._00 = FX_Inv(wk->CardScaleX);
+	mtx._01 = 0;
+	mtx._10 = 0;
+	mtx._11 = FX_Inv(wk->CardScaleY);
+//	SVC_WaitVBlankIntr();          // Waiting the end of VBlank interrup
 	G2S_SetBG2Affine(&mtx,          // a matrix for rotation and scaling
-                        128, 96,      // the center of rotation
-                        0, 0           // the reference point before rotation and scaling applied
-            );
+					128, 96,      // the center of rotation
+					0, 0           // the reference point before rotation and scaling applied
+			);
 	G2S_SetBG3Affine(&mtx,          // a matrix for rotation and scaling
-                        128, 96,      // the center of rotation
-                        0, 0           // the reference point before rotation and scaling applied
-            );
+					128, 96,      // the center of rotation
+					0, 0           // the reference point before rotation and scaling applied
+			);
 	wk->aff_req = FALSE; 
 }
 
@@ -1329,7 +1342,8 @@ static void VBlankFunc( GFL_TCB *tcb, void *work )
 	}
 	GFL_BG_VBlankFunc();
 	
-	GFL_TCBL_Main( wk->vblankTcblSys );
+	GFL_CLACT_SYS_VBlankFunc();
+	
 	
 //	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
@@ -1350,24 +1364,25 @@ static void ResetAffinePlane(void)
 	
 	rScale_x = FX_Inv((1 << FX32_SHIFT));
 	rScale_y = FX_Inv((1 << FX32_SHIFT));
-    mtx._00 = rScale_x;
-    mtx._01 = 0;
-    mtx._10 = 0;
-    mtx._11 = rScale_y;
-    SVC_WaitVBlankIntr();          // Waiting the end of VBlank interrup
+	mtx._00 = rScale_x;
+	mtx._01 = 0;
+	mtx._10 = 0;
+	mtx._11 = rScale_y;
+	SVC_WaitVBlankIntr();          // Waiting the end of VBlank interrup
 	G2S_SetBG2Affine(&mtx,          // a matrix for rotation and scaling
-                        128, 96,      // the center of rotation
-                        0, 0           // the reference point before rotation and scaling applied
-            );
+						128, 96,      // the center of rotation
+						0, 0           // the reference point before rotation and scaling applied
+			);
+
 	G2S_SetBG3Affine(&mtx,          // a matrix for rotation and scaling
-                        128, 96,      // the center of rotation
-                        0, 0           // the reference point before rotation and scaling applied
-            );
+						128, 96,      // the center of rotation
+						0, 0           // the reference point before rotation and scaling applied
+			);
 	SVC_WaitVBlankIntr();          // Waiting the end of VBlank interrup
 	G2_SetBG3Affine(&mtx,          // a matrix for rotation and scaling
-                        128, 0,      // the center of rotation
-                        0, 0           // the reference point before rotation and scaling applied
-            );
+						128, 0,      // the center of rotation
+						0, 0           // the reference point before rotation and scaling applied
+			);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1382,7 +1397,7 @@ static void ResetAffinePlane(void)
 static void DispTrainer(TR_CARD_WORK *wk)
 {
 	u32 transSize;
-	
+
 	transSize = wk->ScrnData->szByte;
 	
 	//TRAINER
@@ -1400,6 +1415,7 @@ static void DispTrainer(TR_CARD_WORK *wk)
 		wk->ScrnData->screenWidth/8,wk->ScrnData->screenHeight/8);
 	GFL_BG_LoadScreenReq( TRC_BG_TRAINER );
 #endif
+
 }
 
 //--------------------------------------------------------------------------------------------

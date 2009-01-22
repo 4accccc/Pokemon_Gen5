@@ -853,9 +853,11 @@ FS_EXTERN_OVERLAY(ariizumi_debug);
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
 FS_EXTERN_OVERLAY(mystery);
 extern const GFL_PROC_DATA MysteryGiftProcData;
+extern const GFL_PROC_DATA TrCardSysProcData;
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
+//	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &TrCardSysProcData, NULL);
 	return TRUE;
 }
 
