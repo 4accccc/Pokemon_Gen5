@@ -68,6 +68,8 @@ enum {
 // 文字コード
 typedef u16		STRCODE;
 
+// １文字書き込み関数フォーマット
+typedef void (*pPut1CharFunc)( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
 
 //--------------------------------------------------------------------------
 /**
@@ -77,17 +79,18 @@ typedef u16		STRCODE;
  */
 //--------------------------------------------------------------------------
 typedef struct {
-	u16   org_x;		///< 書き込み開始Ｘ座標
-	u16   org_y;		///< 書き込み開始Ｙ座標
+	u16   org_x;			///< 書き込み開始Ｘ座標
+	u16   org_y;			///< 書き込み開始Ｙ座標
 	u16   write_x;		///< 書き込み中のＸ座標
 	u16   write_y;		///< 書き込み中のＹ座標
 
-	u8    colorLetter;		///< 描画色（文字）
-	u8    colorShadow;		///< 描画色（影）
+	u8    colorLetter;			///< 描画色（文字）
+	u8    colorShadow;			///< 描画色（影）
 	u8    colorBackGround;	///< 描画色（背景）
 
-	GFL_FONT*		fontHandle;	///< フォントハンドル
-	GFL_BMP_DATA*	dst;		///< 書き込み先 Bitmap
+	GFL_FONT*				fontHandle;		///< フォントハンドル
+	GFL_BMP_DATA*		dst;					///< 書き込み先 Bitmap
+	pPut1CharFunc		put1charFunc;	///< １文字書き込み関数
 
 }PRINT_JOB;
 
@@ -168,7 +171,8 @@ static struct {
 static inline BOOL IsNetConnecting( void );
 static void setupPrintJob( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y );
 static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp );
-static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
+static void put1char_normal( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
+static void put1char_16to256( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
 static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp );
 static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp );
 static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs );
@@ -513,6 +517,8 @@ void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, G
 static void setupPrintJob( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y )
 {
 	wk->dst = dst;
+	wk->put1charFunc = (GFL_BMP_GetColorFormat(dst) == GFL_BMP_16_COLOR)?
+								put1char_normal : put1char_16to256;
 	wk->fontHandle = font;
 	wk->org_x = wk->write_x = org_x;
 	wk->org_y = wk->write_y = org_y;
@@ -564,7 +570,8 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
 				GFL_FONT_SIZE	size;
 				u16 w, h;
 
-				put_1char( wk->dst, wk->write_x, wk->write_y, wk->fontHandle, *sp, &size );
+				wk->put1charFunc( wk->dst, wk->write_x, wk->write_y, wk->fontHandle, *sp, &size );
+
 				wk->write_x += size.width;
 				sp++;
 
@@ -576,22 +583,42 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
 }
 //------------------------------------------------------------------
 /**
- * Bitmap１文字分描画
+ * Bitmap１文字分描画（通常版=16色->16色フォーマット）
  *
  * @param[out]	dst				描画先ビットマップ
- * @param[in]	xpos			描画先Ｘ座標（ドット）
- * @param[in]	ypos			描画先Ｙ座標（ドット）
- * @param[in]	fontHandle		描画フォントハンドル
+ * @param[in]	xpos				描画先Ｘ座標（ドット）
+ * @param[in]	ypos				描画先Ｙ座標（ドット）
+ * @param[in]	fontHandle	描画フォントハンドル
  * @param[in]	charCode		文字コード
  * @param[out]	size			文字サイズ取得ワーク
  *
  */
 //------------------------------------------------------------------
-static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size )
+static void put1char_normal( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size )
 {
 	GFL_FONT_GetBitMap( fontHandle, charCode, GFL_BMP_GetCharacterAdrs(SystemWork.charBuffer), size );
 	GFL_BMP_Print( SystemWork.charBuffer, dst, 0, 0, xpos+size->left_width, ypos, size->glyph_width, size->height, 0x0f );
 }
+//------------------------------------------------------------------
+/**
+ * Bitmap１文字分描画（16色->256色フォーマット）
+ *
+ * @param[out]	dst				描画先ビットマップ
+ * @param[in]	xpos				描画先Ｘ座標（ドット）
+ * @param[in]	ypos				描画先Ｙ座標（ドット）
+ * @param[in]	fontHandle	描画フォントハンドル
+ * @param[in]	charCode		文字コード
+ * @param[out]	size			文字サイズ取得ワーク
+ *
+ */
+//------------------------------------------------------------------
+static void put1char_16to256( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size )
+{
+	GFL_FONT_GetBitMap( fontHandle, charCode, GFL_BMP_GetCharacterAdrs(SystemWork.charBuffer), size );
+	GFL_BMP_Print16to256( SystemWork.charBuffer, dst, 0, 0, xpos+size->left_width, ypos, size->glyph_width, size->height, 0x0f, 0 );
+}
+
+
 //------------------------------------------------------------------
 /**
  * 汎用コントロール処理
