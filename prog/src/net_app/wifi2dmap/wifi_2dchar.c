@@ -2,7 +2,7 @@
 /**
  *
  *	@file		wifi_2dchar.c
- *	@brief		wifi２Dキャラクタ読み込みシステム
+ *	@brief		wifi２Ｄキャラクタ読み込みシステム
  *	@author		tomoya takahshi
  *	@data		2007.02.07
  *
@@ -10,11 +10,13 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include <gflib.h>
+#include "system/palanm.h"
 //#include "include/system/arc_util.h"
 //#include "include/system/clact_util.h"
+#include "arc_def.h"
 #include "wifi2dchar.naix"
 #include "wifi_unionobj.naix"
-//#include "src/field/fieldobj_code.h"
+#include "src/field/fldmmdl_code.h"
 
 #include "net_app/wifi2dmap/wifi_2dchar.h"
 
@@ -256,7 +258,7 @@ enum{
 
 
 
-#define WF_2DC_RESMAN_NUM	(CLACT_U_MULTI_RES)	// 作成するリソースマネージュ数
+#define WF_2DC_RESMAN_NUM	( 4 )	// 作成するリソースマネージュ数
 #define WF_2DC_ANMRESMAN_OBJNUM	( (WF_2DC_MOVENUM*2)+WF_2DC_UNICHAR_NUM+1 )	// セルとアニメのリソースマネージャオブジェクト数	+1は陰
 enum{
 	WF_2DC_ANMRES_ANM_CELL,
@@ -356,10 +358,12 @@ static const u8 WF_2DC_UnionChar[WF_2DC_UNICHAR_NUM] = {
 typedef struct {
 	WF_2DC_RESTYPE type;
 
-	CLACT_U_RES_OBJ_PTR resobj[2];	//CG PLリソースオブジェ
+//	void* resobj[2];	//CG PLリソースオブジェ
+    u32 resid[2];	//CG PLリソースオブジェ
+    
 	u32					drawtype;	// 転送先
 	WF_2DC_MOVETYPE		movetype;	// 動作タイプ
-	CLACT_HEADER		header;		// アクターヘッダー
+	GFL_CLWK_RES		header;		// アクターヘッダー
 } WF_2DCRES;
 
 /*
@@ -375,7 +379,8 @@ typedef struct {
 ///	アニメリソースデータ
 //=====================================
 typedef struct {
-	CLACT_U_RES_OBJ_PTR resobj[WF_2DC_ANMRES_ANM_NUM];	// CE ANリソースオブジェ
+	void* resobj[WF_2DC_ANMRES_ANM_NUM];	// CE ANリソースオブジェ
+    u32 resid;
 } WF_2DCANMRES;
 
 
@@ -384,8 +389,8 @@ typedef struct {
 //=====================================
 typedef struct _WF_2DCWK {
 	const WF_2DCRES* cp_res;	// リソースデータ
-	CLACT_WORK_PTR	p_clwk;		// 人物
-	CLACT_WORK_PTR	p_shadow;	// 陰
+	GFL_CLWK*	p_clwk;		// 人物
+	GFL_CLWK*	p_shadow;	// 陰
 	WF_2DC_ANMTYPE	patanmtype;
 	WF_COMMON_WAY	patanmway;
 	s16				patanmframe;
@@ -396,8 +401,9 @@ typedef struct _WF_2DCWK {
 ///	陰リソース
 //=====================================
 typedef struct {
-	CLACT_U_RES_OBJ_PTR resobj[4];	//リソースオブジェ
-	CLACT_HEADER		header;		// アクターヘッダー
+//	void* resobj[4];	//リソースオブジェ
+    u32 resid[4];	//影リソース
+	GFL_CLWK_RES	header;		// アクターヘッダー
 } WF_2DCSH_RES;
 
 
@@ -405,7 +411,7 @@ typedef struct {
 ///	2Dキャラクタ管理システム
 //=====================================
 typedef struct _WF_2DCSYS {
-    GFL_CLUNIT* p_unit
+    GFL_CLUNIT* p_unit;
 //    CLACT_SET_PTR p_clset;
 	PALETTE_FADE_PTR p_pfd;
 	WF_2DCWK*		p_wk;
@@ -415,9 +421,13 @@ typedef struct _WF_2DCSYS {
 	WF_2DCANMRES	unionres[ WF_2DC_UNICHAR_NUM ];
 	WF_2DCSH_RES	shadowres;
 	u32				shadow_pri;		// 陰のソフト優先順位開始位置
-	CLACT_U_RES_MANAGER_PTR p_res_man[ WF_2DC_RESMAN_NUM ];
-	CLACT_U_RES_OBJ_PTR p_unionpltt;
+//	CLACT_U_RES_MANAGER_PTR p_res_man[ WF_2DC_RESMAN_NUM ];
+    GFL_CLWK_RES* p_res_man[ WF_2DC_RESMAN_NUM ];
+//	void* p_unionpltt;
+    u32 unionplttid;
 	ARCHANDLE*	p_handle[WF_2DC_ARCHANDLE_NUM];
+    u32 CELLANIMIndex[WF_2DC_MOVENUM][WF_2DC_ANMRES_ANM_NUM];
+    u32 hero_no;
 } WF_2DCSYS;
 
 
@@ -645,14 +655,14 @@ static const u8 WF_2DC_AnmFrame[WF_2DC_ANMNUM] = {
 //-------------------------------------
 ///	パレットフェードシステムにパレットカラーを設定
 //=====================================
-static void WF_2DC_PFDPalSet( WF_2DCSYS* p_sys, CLACT_U_RES_OBJ_PTR p_pal, u32 num );
+static void WF_2DC_PFDPalSet( WF_2DCSYS* p_sys, u32 id, u32 num );
 
 //-------------------------------------
 /// アニメリソース関連
 //=====================================
 static void WF_2DC_AnmResLoad( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype, u32 heap );
 static void WF_2DC_AnmResDel( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype );
-static BOOL WF_2DC_AnmResCheck( const WF_2DCSYS* cp_sys, WF_2DC_MOVETYPE movetype );
+
 static u32 WF_2DC_CharNoGet( u32 view_type );
 static BOOL WF_2DC_AnmModeLinkCheck( u32 view_type, WF_2DC_MOVETYPE movetype );
 static u32 WF_2DC_AnmResContIdGet( WF_2DC_MOVETYPE movetype, u32 res_type, BOOL flip );
@@ -736,8 +746,7 @@ WF_2DCSYS* WF_2DC_SysInit( GFL_CLUNIT* p_unit, PALETTE_FADE_PTR p_pfd, u32 objnu
 	int i;
 
 	// メモリ確保
-	p_sys = sys_AllocMemory( heap, sizeof(WF_2DCSYS) );
-	memset( p_sys, 0, sizeof(WF_2DCSYS) );
+	p_sys = GFL_HEAP_AllocClearMemory( heap, sizeof(WF_2DCSYS) );
 
 	// アクターセットは上からもらう
 	p_sys->p_unit = p_unit;
@@ -746,16 +755,22 @@ WF_2DCSYS* WF_2DC_SysInit( GFL_CLUNIT* p_unit, PALETTE_FADE_PTR p_pfd, u32 objnu
 	p_sys->p_pfd = p_pfd;
 
 	// アーカイブハンドルオープン
-	p_sys->p_handle[WF_2DC_ARCHANDLE_NML] = ArchiveDataHandleOpen( ARC_WIFI2DCHAR, heap );
-	p_sys->p_handle[WF_2DC_ARCHANDLE_UNI] = ArchiveDataHandleOpen( ARC_WIFIUNIONCHAR, heap );
+	p_sys->p_handle[WF_2DC_ARCHANDLE_NML] = GFL_ARC_OpenDataHandle( ARCID_WIFI2DCHAR, heap );
+	p_sys->p_handle[WF_2DC_ARCHANDLE_UNI] = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, heap );
 
+
+//    NNS_G2dInitImagePaletteProxy( p_sys->pltProxy[screen] );
+  //  GFL_ARC_UTIL_TransVramPaletteMakeProxy( arcfile , arcpal , 
+    //                                        hwscreen , 0 , wk->heapid , &wk->clact.pltProxy[screen] );
+
+    
 	// リソースマネージャ初期化
-	for( i=0; i<2; i++ ){	// CG、PLは、キャラクタ分
-		p_sys->p_res_man[i] = CLACT_U_ResManagerInit( WF_2DC_RESM_OBJ_NUM, i, heap );
-	}
-	for( i=0; i<2; i++ ){	// CE,ANはアニメタイプ分
-		p_sys->p_res_man[i+2] = CLACT_U_ResManagerInit( WF_2DC_ANMRESMAN_OBJNUM, i+2, heap );
-	}
+//	for( i=0; i<2; i++ ){	// CG、PLは、キャラクタ分
+//		p_sys->p_res_man[i] = CLACT_U_ResManagerInit( WF_2DC_RESM_OBJ_NUM, i, heap );
+//	}
+//	for( i=0; i<2; i++ ){	// CE,ANはアニメタイプ分
+//		p_sys->p_res_man[i+2] = CLACT_U_ResManagerInit( WF_2DC_ANMRESMAN_OBJNUM, i+2, heap );
+//	}
 
 	// アニメーションリソース読み込み
 	for( i=0; i<WF_2DC_MOVENUM; i++ ){
@@ -764,8 +779,7 @@ WF_2DCSYS* WF_2DC_SysInit( GFL_CLUNIT* p_unit, PALETTE_FADE_PTR p_pfd, u32 objnu
 
 	// アクターワーク作成
 	p_sys->objnum = objnum;
-	p_sys->p_wk = sys_AllocMemory( heap, sizeof(WF_2DCWK)*p_sys->objnum );
-	memset( p_sys->p_wk, 0, sizeof(WF_2DCWK)*p_sys->objnum );
+	p_sys->p_wk = GFL_HEAP_AllocClearMemory( heap, sizeof(WF_2DCWK)*p_sys->objnum );
  
 	return p_sys;
 }
@@ -797,17 +811,20 @@ void WF_2DC_SysExit( WF_2DCSYS* p_sys )
 	WF_2DC_AllResDel( p_sys );
 
 	// アーカイブハンドルクローズ
-	ArchiveDataHandleClose( p_sys->p_handle[WF_2DC_ARCHANDLE_NML] );
-	ArchiveDataHandleClose( p_sys->p_handle[WF_2DC_ARCHANDLE_UNI] );
-	
+//	ArchiveDataHandleClose( p_sys->p_handle[WF_2DC_ARCHANDLE_NML] );
+//	ArchiveDataHandleClose( p_sys->p_handle[WF_2DC_ARCHANDLE_UNI] );
+
+    GFL_ARC_CloseDataHandle( p_sys->p_handle[WF_2DC_ARCHANDLE_NML] );
+    GFL_ARC_CloseDataHandle( p_sys->p_handle[WF_2DC_ARCHANDLE_UNI] );
+
 	// リソースマネージャ破棄
-	for( i=0; i<WF_2DC_RESMAN_NUM; i++ ){
-		CLACT_U_ResManagerDelete( p_sys->p_res_man[i] );
-	}
+//	for( i=0; i<WF_2DC_RESMAN_NUM; i++ ){
+//		CLACT_U_ResManagerDelete( p_sys->p_res_man[i] );
+//	}
 
 	// ワーク破棄
-	sys_FreeMemoryEz( p_sys->p_wk );
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys->p_wk );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 
@@ -894,7 +911,8 @@ void WF_2DC_AllResDel( WF_2DCSYS* p_sys )
 	int i;
 
 	// ユニオンリソースの破棄
-	if( p_sys->p_unionpltt != NULL ){
+//	if( p_sys->p_unionpltt != NULL ){
+    if( p_sys->unionplttid !=  GFL_CLGRP_REGISTER_FAILED){
 		WF_2DC_UnionResDel( p_sys );
 	}
 	
@@ -1017,7 +1035,8 @@ void WF_2DC_ShadowResDel( WF_2DCSYS* p_sys )
 WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view_type, u32 heap )
 {
 	WF_2DCWK* p_wk;
-	GFL_CLWK_DATA add;
+//	GFL_CLWK_DATA add;
+    GFL_CLWK_DATA	cellInitData;
 	u32 char_no;
 	
 	// 空のワーク取得
@@ -1029,36 +1048,48 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 	// 読み込み済みチェック
 	GF_ASSERT( WF_2DC_CharResCheck( p_sys, char_no ) == TRUE );
 	
-	memset( &add, 0, sizeof(CLACT_ADD) );
-	add.ClActSet = p_sys->p_unit;
-	add.ClActHeader = &p_sys->res[ char_no ].header;
-	add.mat.x	= cp_data->x << FX32_SHIFT;
-	add.mat.y	= cp_data->y << FX32_SHIFT;
-	add.sca.x	= FX32_ONE;
-	add.sca.y	= FX32_ONE;
-	add.sca.z	= FX32_ONE;
-	add.pri		= cp_data->pri;
-	add.heap	= heap;
+//	memset( &add, 0, sizeof(CLACT_ADD) );
+//	add.ClActSet = p_sys->p_unit;
+//	add.ClActHeader = &p_sys->res[ char_no ].header;
+//	add.mat.x	= cp_data->x << FX32_SHIFT;
+//	add.mat.y	= cp_data->y << FX32_SHIFT;
+//	add.sca.x	= FX32_ONE;
+//	add.sca.y	= FX32_ONE;
+//	add.sca.z	= FX32_ONE;
+//	add.pri		= cp_data->pri;
+//	add.heap	= heap;
 
+    cellInitData.pos_x = cp_data->x;
+    cellInitData.pos_y = cp_data->y;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = cp_data->pri;
+    cellInitData.bgpri = 0;
+
+
+    
 	// 表示エリア
 	if( (p_sys->res[ char_no ].drawtype == NNS_G2D_VRAM_TYPE_MAX) || 
 		(p_sys->res[ char_no ].drawtype == NNS_G2D_VRAM_TYPE_2DMAIN) ){
-		add.DrawArea = NNS_G2D_VRAM_TYPE_2DMAIN;
+//		add.DrawArea = NNS_G2D_VRAM_TYPE_2DMAIN;
 	}else{
-		add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
+//		add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
 	}
 	
 	// アクター登録
-	p_wk->p_clwk = CLACT_Add( &add );
-	CLACT_BGPriorityChg( p_wk->p_clwk, cp_data->bgpri );
+//	p_wk->p_clwk = CLACT_Add( &add );
+    p_wk->p_clwk = GFL_CLACT_WK_Create(p_sys->p_unit, char_no,0,0, &cellInitData, 0, heap );
+//	CLACT_BGPriorityChg( p_wk->p_clwk, cp_data->bgpri );
+    GFL_CLACT_WK_SetBgPri( p_wk->p_clwk, cp_data->bgpri );
 
 	// 動作モードにより初期アニメを変更
 	if( p_sys->res[ char_no ].movetype == WF_2DC_MOVENORMAL ){
 		// した歩き
-		CLACT_AnmChg( p_wk->p_clwk, WF_2DC_ANM_WALK+WF_COMMON_BOTTOM );
-	}else{
+//		CLACT_AnmChg( p_wk->p_clwk, WF_2DC_ANM_WALK+WF_COMMON_BOTTOM );
+        GFL_CLACT_WK_SetAnmFrame(p_wk->p_clwk, WF_2DC_ANM_WALK+WF_COMMON_BOTTOM);
+    }else{
 		// 下向き
-		CLACT_AnmChg( p_wk->p_clwk, WF_COMMON_BOTTOM );
+//		CLACT_AnmChg( p_wk->p_clwk, WF_COMMON_BOTTOM );
+        GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk, WF_COMMON_BOTTOM );
 	}
 
 	// アニメデータ初期化
@@ -1072,28 +1103,43 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 	// 陰ワークの作成
 	if( WF_2DC_ShResCheck( &p_sys->shadowres ) ){
 
-		memset( &add, 0, sizeof(CLACT_ADD) );
-		add.ClActSet = p_sys->p_unit;
-		add.ClActHeader = &p_sys->shadowres.header;
-		add.mat.x	= cp_data->x << FX32_SHIFT;
-		add.mat.y	= cp_data->y << FX32_SHIFT;
-		add.sca.x	= FX32_ONE;
-		add.sca.y	= FX32_ONE;
-		add.sca.z	= FX32_ONE;
-		add.pri		= p_sys->shadow_pri;
-		add.heap	= heap;
+//		memset( &add, 0, sizeof(CLACT_ADD) );
+//		add.ClActSet = p_sys->p_unit;
+//		add.ClActHeader = &p_sys->shadowres.header;
+//		add.mat.x	= cp_data->x << FX32_SHIFT;
+//		add.mat.y	= cp_data->y << FX32_SHIFT;
+//		add.sca.x	= FX32_ONE;
+//		add.sca.y	= FX32_ONE;
+//		add.sca.z	= FX32_ONE;
+//		add.pri		= p_sys->shadow_pri;
+//		add.heap	= heap;
 
+		cellInitData.pos_x = cp_data->x;
+		cellInitData.pos_y = cp_data->y;
+		cellInitData.anmseq = 0;
+		cellInitData.softpri = p_sys->shadow_pri;
+		cellInitData.bgpri = 0;
+
+        
 		// 表示エリア
 		if( (p_sys->res[ char_no ].drawtype == NNS_G2D_VRAM_TYPE_MAX) || 
 			(p_sys->res[ char_no ].drawtype == NNS_G2D_VRAM_TYPE_2DMAIN) ){
-			add.DrawArea = NNS_G2D_VRAM_TYPE_2DMAIN;
+//			add.DrawArea = NNS_G2D_VRAM_TYPE_2DMAIN;
 		}else{
-			add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
+//			add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
 		}
 
-		p_wk->p_shadow = GFL_CLACT_WK_Add( p_wk->p_unit ,&add , ,CLWK_SETSF_NONE, heap);
+//		p_wk->p_shadow = GFL_CLACT_WK_Add( p_wk->p_unit ,&add , ,CLWK_SETSF_NONE, heap);
+        p_wk->p_shadow = GFL_CLACT_WK_Create(p_sys->p_unit,
+                                             WF_2DC_ARC_CONTSHADOWID,
+                                             WF_2DC_ARC_CONTCHARID+p_sys->hero_no,
+                                             WF_2DC_ARC_CONTSHADOWID,
+                                             &cellInitData,
+                                             0,heap );
 
-		CLACT_BGPriorityChg( p_wk->p_shadow, cp_data->bgpri );
+        
+//		CLACT_BGPriorityChg( p_wk->p_shadow, cp_data->bgpri );
+        GFL_CLACT_WK_SetBgPri( p_wk->p_shadow, cp_data->bgpri );
 	}else{
 		p_wk->p_shadow = NULL;
 	}
@@ -1111,10 +1157,10 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 void WF_2DC_WkDel( WF_2DCWK* p_wk )
 {
 	if( p_wk->p_shadow != NULL ){
-		CLACT_Delete( p_wk->p_shadow );
+		GFL_CLACT_WK_Remove( p_wk->p_shadow );
 	}
-	CLACT_Delete( p_wk->p_clwk );
-	memset( p_wk, 0, sizeof(WF_2DCWK) );
+	GFL_CLACT_WK_Remove( p_wk->p_clwk );
+	GFL_STD_MemClear( p_wk, sizeof(WF_2DCWK) );
 }
 
 //----------------------------------------------------------------------------
@@ -1126,7 +1172,7 @@ void WF_2DC_WkDel( WF_2DCWK* p_wk )
  *	@return	セルアクターワーク
  */
 //-----------------------------------------------------------------------------
-CLACT_WORK_PTR WF_2DC_WkClWkGet( WF_2DCWK* p_wk )
+GFL_CLWK* WF_2DC_WkClWkGet( WF_2DCWK* p_wk )
 {
 	return p_wk->p_clwk;
 }
@@ -1140,7 +1186,7 @@ CLACT_WORK_PTR WF_2DC_WkClWkGet( WF_2DCWK* p_wk )
  *	@return	セルアクターワーク
  */
 //-----------------------------------------------------------------------------
-CONST_CLACT_WORK_PTR WF_2DC_WkConstClWkGet( const WF_2DCWK* cp_wk )
+const GFL_CLWK* WF_2DC_WkConstClWkGet( const WF_2DCWK* cp_wk )
 {
 	return cp_wk->p_clwk;
 }
@@ -1156,18 +1202,28 @@ CONST_CLACT_WORK_PTR WF_2DC_WkConstClWkGet( const WF_2DCWK* cp_wk )
 //-----------------------------------------------------------------------------
 void WF_2DC_WkMatrixSet( WF_2DCWK* p_wk, s16 x, s16 y )
 {
-	VecFx32	mat;
+	GFL_CLACTPOS	mat;
 
-	mat.x = x<<FX32_SHIFT;
-	mat.y = y<<FX32_SHIFT;
-	mat.z = 0;
-	CLACT_SetMatrix( p_wk->p_clwk, &mat );
+    mat.x = x;
+    mat.y = y;
+//	mat.x = x<<FX32_SHIFT;
+//	mat.y = y<<FX32_SHIFT;
+//	mat.z = 0;
+	//CLACT_SetMatrix( p_wk->p_clwk, &mat );
 
+    GFL_CLACT_WK_SetWldPos( p_wk->p_clwk, &mat );
+
+    
 	if( p_wk->p_shadow ){
-		mat.x += WF_2DC_SHADOW_MAT_OFS_X << FX32_SHIFT;
-		mat.y += WF_2DC_SHADOW_MAT_OFS_Y << FX32_SHIFT;
-		CLACT_SetMatrix( p_wk->p_shadow, &mat );
-	}
+//		mat.x += WF_2DC_SHADOW_MAT_OFS_X << FX32_SHIFT;
+//		mat.y += WF_2DC_SHADOW_MAT_OFS_Y << FX32_SHIFT;
+//		CLACT_SetMatrix( p_wk->p_shadow, &mat );
+
+        mat.x += WF_2DC_SHADOW_MAT_OFS_X;
+        mat.y += WF_2DC_SHADOW_MAT_OFS_Y;
+        GFL_CLACT_WK_SetWldPos( p_wk->p_clwk, &mat );
+
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -1187,14 +1243,24 @@ void WF_2DC_WkMatrixSet( WF_2DCWK* p_wk, s16 x, s16 y )
 //-----------------------------------------------------------------------------
 s16 WF_2DC_WkMatrixGet( WF_2DCWK* p_wk, WF_2DC_MAT x_y )
 {
-	const VecFx32* cp_mat;
+//	const VecFx32* cp_mat;
 
-	cp_mat = CLACT_GetMatrix( p_wk->p_clwk );
+//	cp_mat = CLACT_GetMatrix( p_wk->p_clwk );
 
-	if( x_y == WF_2DC_GET_X ){
-		return cp_mat->x >> FX32_SHIFT;
-	}
-	return cp_mat->y >> FX32_SHIFT;
+//	if( x_y == WF_2DC_GET_X ){
+//		return cp_mat->x >> FX32_SHIFT;
+//	}
+//	return cp_mat->y >> FX32_SHIFT;
+    GFL_CLACTPOS p_pos;
+
+    GFL_CLACT_WK_GetWldPos(p_wk->p_clwk, &p_pos);
+
+    if( x_y == WF_2DC_GET_X ){
+        return p_pos.x;
+    }
+    else{
+        return p_pos.y;
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -1207,7 +1273,7 @@ s16 WF_2DC_WkMatrixGet( WF_2DCWK* p_wk, WF_2DC_MAT x_y )
 //-----------------------------------------------------------------------------
 void WF_2DC_WkDrawPriSet( WF_2DCWK* p_wk, u16 pri )
 {
-	CLACT_DrawPriorityChg( p_wk->p_clwk, pri );
+	GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk, pri );
 }
 
 //----------------------------------------------------------------------------
@@ -1221,7 +1287,7 @@ void WF_2DC_WkDrawPriSet( WF_2DCWK* p_wk, u16 pri )
 //-----------------------------------------------------------------------------
 u16 WF_2DC_WkDrawPriGet( const WF_2DCWK* cp_wk )
 {
-	return CLACT_DrawPriorityGet( cp_wk->p_clwk );
+	return GFL_CLACT_WK_GetSoftPri( cp_wk->p_clwk );
 }
 
 //----------------------------------------------------------------------------
@@ -1234,7 +1300,7 @@ u16 WF_2DC_WkDrawPriGet( const WF_2DCWK* cp_wk )
 //-----------------------------------------------------------------------------
 void WF_2DC_WkAnmAddFrame( WF_2DCWK* p_wk, fx32 frame )
 {
-	CLACT_AnmFrameChg( p_wk->p_clwk, frame );
+	GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, frame );
 }
 
 //----------------------------------------------------------------------------
@@ -1247,9 +1313,9 @@ void WF_2DC_WkAnmAddFrame( WF_2DCWK* p_wk, fx32 frame )
 //-----------------------------------------------------------------------------
 void WF_2DC_WkDrawFlagSet( WF_2DCWK* p_wk, BOOL flag )
 {
-	CLACT_SetDrawFlag( p_wk->p_clwk, flag );
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, flag );
 	if( p_wk->p_shadow ){
-		CLACT_SetDrawFlag( p_wk->p_shadow, flag );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_shadow, flag );
 	}
 }
 
@@ -1265,7 +1331,7 @@ void WF_2DC_WkDrawFlagSet( WF_2DCWK* p_wk, BOOL flag )
 //-----------------------------------------------------------------------------
 BOOL WF_2DC_WkDrawFlagGet( const WF_2DCWK* cp_wk )
 {
-	return CLACT_GetDrawFlag( cp_wk->p_clwk );
+	return GFL_CLACT_WK_GetDrawEnable( cp_wk->p_clwk );
 }
 
 //----------------------------------------------------------------------------
@@ -1306,7 +1372,7 @@ WF_2DC_ANMTYPE WF_2DC_WkAnmTypeGet( const WF_2DCWK* cp_wk )
 //-----------------------------------------------------------------------------
 void WF_2DC_WkAnmFrameSet( WF_2DCWK* p_wk, u16 frame )
 {
-	CLACT_AnmFrameSet( p_wk->p_clwk, frame );
+	GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk, frame );
 }
 
 //----------------------------------------------------------------------------
@@ -1320,7 +1386,7 @@ void WF_2DC_WkAnmFrameSet( WF_2DCWK* p_wk, u16 frame )
 //-----------------------------------------------------------------------------
 u16 WF_2DC_WkAnmFrameGet( const WF_2DCWK* cp_wk )
 {
-	return CLACT_AnmFrameGet( cp_wk->p_clwk );
+	return GFL_CLACT_WK_GetAnmFrame( cp_wk->p_clwk );
 }
 
 //----------------------------------------------------------------------------
@@ -1334,7 +1400,7 @@ u16 WF_2DC_WkAnmFrameGet( const WF_2DCWK* cp_wk )
 //-----------------------------------------------------------------------------
 void WF_2DC_WkShadowMatrixSet( WF_2DCWK* p_wk, s16 x, s16 y )
 {
-	VecFx32	mat;
+/*	VecFx32	mat;
 	if( p_wk->p_shadow != NULL ){
 
 		mat.x = x+WF_2DC_SHADOW_MAT_OFS_X<<FX32_SHIFT;
@@ -1342,6 +1408,14 @@ void WF_2DC_WkShadowMatrixSet( WF_2DCWK* p_wk, s16 x, s16 y )
 		mat.z = 0;
 		CLACT_SetMatrix( p_wk->p_shadow, &mat );
 	}
+*/
+    GFL_CLACTPOS pos;
+
+    if( p_wk->p_shadow != NULL ){
+        pos.x = x+WF_2DC_SHADOW_MAT_OFS_X;
+        pos.y = y+WF_2DC_SHADOW_MAT_OFS_Y;
+        GFL_CLACT_WK_SetWldPos(p_wk->p_shadow,&pos );
+    }
 }
 
 
@@ -1449,7 +1523,8 @@ void WF_2DC_WkPatAnmAddFrame( WF_2DCWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WF_2DC_AnmResLoad( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype, u32 heap )
 {
-	int i;
+#if 0
+    int i;
 	u32 res_type;
 	u32 anm_contid;
 	static const u32 sc_WF_2DC_ANMRES_ANM_IDX[ WF_2DC_MOVENUM ][ WF_2DC_ANMRES_ANM_NUM ] = {
@@ -1487,6 +1562,39 @@ static void WF_2DC_AnmResLoad( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype, u32 h
 				sc_WF_2DC_ANMRES_ANM_IDX[movetype][i], FALSE,
 				anm_contid, res_type, heap );
 	}
+#endif
+
+    int i,k;
+	static const u32 sc_WF_2DC_ANMRES_ANM_IDX[ WF_2DC_MOVENUM ][ WF_2DC_ANMRES_ANM_NUM ] = {
+		{ // WF_2DC_MOVERUN
+			NARC_wifi2dchar_run_NCER,
+			NARC_wifi2dchar_run_NANR,
+			NARC_wifi2dchar_run_NCER,
+			NARC_wifi2dchar_run_NANR,
+		},
+		{ // WF_2DC_MOVENORMAL
+			NARC_wifi2dchar_normal_NCER,
+			NARC_wifi2dchar_normal_NANR,
+			NARC_wifi2dchar_normal01_NCER,
+			NARC_wifi2dchar_normal01_NANR,
+		},
+		{ // WF_2DC_MOVETURN
+			NARC_wifi2dchar_npc_NCER,
+			NARC_wifi2dchar_npc_NANR,
+			NARC_wifi2dchar_npc01_NCER,
+			NARC_wifi2dchar_npc01_NANR,
+		},
+	};
+
+
+    for(i = 0; i < WF_2DC_ANMRES_ANM_NUM/2; i++ ){
+        k = i*2;
+        p_sys->CELLANIMIndex[movetype][i] = GFL_CLGRP_CELLANIM_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+                                    sc_WF_2DC_ANMRES_ANM_IDX[movetype][ k ],
+                                    sc_WF_2DC_ANMRES_ANM_IDX[movetype][ k+1 ],
+                                    heap);
+    }
+
 }
 
 //----------------------------------------------------------------------------
@@ -1499,6 +1607,7 @@ static void WF_2DC_AnmResLoad( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype, u32 h
 //-----------------------------------------------------------------------------
 static void WF_2DC_AnmResDel( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype )
 {
+    /*
 	int i;
 	u32 res_type;
 	
@@ -1511,25 +1620,13 @@ static void WF_2DC_AnmResDel( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype )
 					p_sys->anmres[movetype].resobj[i] );
 		p_sys->anmres[ movetype ].resobj[i] = NULL;
 	}
-}
+       */
+    int i;
 
-//----------------------------------------------------------------------------
-/**
- *	@brief	アニメーションリソース　読み込み済みかチェック
- *
- *	@param	cp_sys		システムワーク
- *	@param	movetype	動作タイプ
- *
- *	@retval	TRUE	読み込んである
- *	@retval	FALSE	読み込んでない
- */
-//-----------------------------------------------------------------------------
-static BOOL WF_2DC_AnmResCheck( const WF_2DCSYS* cp_sys, WF_2DC_MOVETYPE movetype )
-{
-	if( cp_sys->anmres[ movetype ].resobj[0] == NULL ){
-		return FALSE;
-	}
-	return TRUE;
+    for(i = 0; i < WF_2DC_ANMRES_ANM_NUM/2; i++ ){
+        GFL_CLGRP_CELLANIM_Release(p_sys->CELLANIMIndex[movetype][i]);
+        p_sys->CELLANIMIndex[movetype][i] = 0;
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -1589,9 +1686,11 @@ static BOOL WF_2DC_AnmModeLinkCheck( u32 view_type, WF_2DC_MOVETYPE movetype )
  *	@return	リソース管理ID
  */
 //-----------------------------------------------------------------------------
+#if 0
 u32 WF_2DC_AnmResContIdGet( WF_2DC_MOVETYPE movetype, u32 res_type, BOOL flip )
 {
-	u32 idx;
+/*
+    u32 idx;
 	
 	GF_ASSERT( (res_type == CLACT_U_CELL_RES) || (res_type == CLACT_U_CELLANM_RES) );
 	
@@ -1601,8 +1700,14 @@ u32 WF_2DC_AnmResContIdGet( WF_2DC_MOVETYPE movetype, u32 res_type, BOOL flip )
 	}
 	
 	return (WF_2DC_ARC_CONTANMID + (movetype * 2) + sc_WF_2DC_ANMRES_ANMCONTID[idx]);
+*/
+    int i=0;
+	if( flip == FALSE ){
+        i++;
+    }
+    return p_sys->CELLANIMIndex[movetype][i];
 }
-
+#endif  //0
 //----------------------------------------------------------------------------
 /**
  *	@brief	キャラクタリソース読み込み
@@ -1618,7 +1723,7 @@ u32 WF_2DC_AnmResContIdGet( WF_2DC_MOVETYPE movetype, u32 res_type, BOOL flip )
 static void WF_2DC_CharResLoad( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type, WF_2DC_MOVETYPE movetype, u32 heap, WF_2DC_RESTYPE restype )
 {
 	// 読み込み済みでないことをチェック
-	GF_ASSERT( p_sys->res[ char_no ].resobj[0] == NULL );
+//	GF_ASSERT( p_sys->res[ char_no ].resobj[0] == NULL );
 
 	if( restype == WF_2DC_RES_NML ){
 		WF_2DC_CharResLoadNml( p_sys, char_no, draw_type, movetype, heap );
@@ -1648,20 +1753,30 @@ static void WF_2DC_CharResLoadNml( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 //	OS_Printf( "char_no %d\n", char_no );
 
 	// 読み込み
-	p_sys->res[ char_no ].resobj[ 0 ] = 
-		CLACT_U_ResManagerResAddArcChar_ArcHandle(
-				p_sys->p_res_man[ 0 ], p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
-				WF_2DC_ARC_GETNCG( char_no ),
-				FALSE, WF_2DC_ARC_CONTCHARID+char_no, draw_type, heap );
+//	p_sys->res[ char_no ].resobj[ 0 ] = 
+//		CLACT_U_ResManagerResAddArcChar_ArcHandle(
+//				p_sys->p_res_man[ 0 ], p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+//				WF_2DC_ARC_GETNCG( char_no ),
+//				FALSE, WF_2DC_ARC_CONTCHARID+char_no, draw_type, heap );
 
-	p_sys->res[ char_no ].resobj[ 1 ] = 
-		CLACT_U_ResManagerResAddArcPltt_ArcHandle(
-				p_sys->p_res_man[ 1 ], p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
-				WF_2DC_ARC_GETNCL( char_no ),
-				FALSE, WF_2DC_ARC_CONTCHARID+char_no, draw_type, 1, heap );
+
+    p_sys->res[ char_no ].resid[ 0 ] = GFL_CLGRP_CGR_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+                                                              WF_2DC_ARC_GETNCG( char_no ),
+                                                              FALSE , draw_type, heap);
+
+//	p_sys->res[ char_no ].resobj[ 1 ] = 
+//		CLACT_U_ResManagerResAddArcPltt_ArcHandle(
+//				p_sys->p_res_man[ 1 ], p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+//				WF_2DC_ARC_GETNCL( char_no ),
+//				FALSE, WF_2DC_ARC_CONTCHARID+char_no, draw_type, 1, heap );
+
+    p_sys->res[ char_no ].resid[ 1 ] = GFL_CLGRP_PLTT_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+                                                               WF_2DC_ARC_GETNCL( char_no ),
+                                                               draw_type, 0, heap);
 
 //	OS_TPrintf( "pltt contid=0x%x  ncl=%d\n", WF_2DC_ARC_CONTCHARID+char_no, WF_2DC_ARC_GETNCL( char_no ) );
 
+#if 0  // 素材依存 
 	//  キャラクタデータ取得
 	p_char = CLACT_U_ResManagerGetResObjResChar( p_sys->res[ char_no ].resobj[ 0 ] );
 
@@ -1689,22 +1804,29 @@ static void WF_2DC_CharResLoadNml( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 		}else{
 			p_char->szByte = WF_2DC_ARC_NORMALANMCHARSIZ_NOTFLIP;
 		}
-	}
+    }
+#else
+    //
+	flip = TRUE;
+#endif
 	
 	// 転送
-	result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_sys->res[ char_no ].resobj[0] );
-	GF_ASSERT( result );
-	result = CLACT_U_PlttManagerSetCleanArea( p_sys->res[ char_no ].resobj[1] );
-	GF_ASSERT( result );
+//	result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_sys->res[ char_no ].resobj[0] );
+//	GF_ASSERT( result );
+//	result = CLACT_U_PlttManagerSetCleanArea( p_sys->res[ char_no ].resobj[1] );
+//	GF_ASSERT( result );
 
 	// パレットフェード設定
+//	if( p_sys->p_pfd ){
+//		WF_2DC_PFDPalSet( p_sys, p_sys->res[ char_no ].resid[1], 1 );
+//	}
 	if( p_sys->p_pfd ){
-		WF_2DC_PFDPalSet( p_sys, p_sys->res[ char_no ].resobj[1], 1 );
+		WF_2DC_PFDPalSet( p_sys, p_sys->res[ char_no ].resid[1], 1 );
 	}
 
 	// リソースだけ破棄
-	CLACT_U_ResManagerResOnlyDelete( p_sys->res[ char_no ].resobj[0] );
-	CLACT_U_ResManagerResOnlyDelete( p_sys->res[ char_no ].resobj[1] );
+//	CLACT_U_ResManagerResOnlyDelete( p_sys->res[ char_no ].resobj[0] );
+//	CLACT_U_ResManagerResOnlyDelete( p_sys->res[ char_no ].resobj[1] );
 
 	// 管理パラメータ設定
 	p_sys->res[ char_no ].drawtype = draw_type;
@@ -1712,7 +1834,8 @@ static void WF_2DC_CharResLoadNml( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 	p_sys->res[ char_no ].type = WF_2DC_RES_NML;
 
 	// セルアクターヘッダー作成
-	cell_contid	= WF_2DC_AnmResContIdGet( movetype, CLACT_U_CELL_RES, flip );
+/*
+    cell_contid	= WF_2DC_AnmResContIdGet( movetype, CLACT_U_CELL_RES, flip );
 	anm_contid	= WF_2DC_AnmResContIdGet( movetype, CLACT_U_CELLANM_RES, flip );
 	CLACT_U_MakeHeader( &p_sys->res[ char_no ].header, 
 			WF_2DC_ARC_CONTCHARID+char_no, WF_2DC_ARC_CONTCHARID+char_no,
@@ -1721,6 +1844,7 @@ static void WF_2DC_CharResLoadNml( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 			p_sys->p_res_man[0], p_sys->p_res_man[1], 
 			p_sys->p_res_man[2], p_sys->p_res_man[3],
 			NULL, NULL );
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -1746,13 +1870,17 @@ static void WF_2DC_CharResLoadUni( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 //	OS_Printf( "char_no %d\n", char_no );
 
 	// 読み込み
-	p_sys->res[ char_no ].resobj[ 0 ] = 
-		CLACT_U_ResManagerResAddArcChar_ArcHandle(
-				p_sys->p_res_man[ 0 ], p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
-				WF_2DC_ARC_GETUNINCG( char_no ),
-				FALSE, WF_2DC_ARC_CONTCHARID+char_no, draw_type, heap );
+//	p_sys->res[ char_no ].resobj[ 0 ] = 
+//		CLACT_U_ResManagerResAddArcChar_ArcHandle(
+//				p_sys->p_res_man[ 0 ], p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
+//				WF_2DC_ARC_GETUNINCG( char_no ),
+//				FALSE, WF_2DC_ARC_CONTCHARID+char_no, draw_type, heap );
 
-
+    p_sys->res[ char_no ].resid[ 0 ] = GFL_CLGRP_CGR_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
+                                                              WF_2DC_ARC_GETUNINCG( char_no ),
+                                                              FALSE , draw_type, heap);
+    
+#if 0
 	// 転送サイズ調整
 	if( movetype == WF_2DC_MOVETURN ){
 		// キャラクタサイズを削減できる
@@ -1763,31 +1891,35 @@ static void WF_2DC_CharResLoadUni( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 		p_char = CLACT_U_ResManagerGetResObjResChar( p_sys->res[ char_no ].resobj[ 0 ] );
 		p_char->szByte = WF_2DC_ARC_NORMALANMCHARSIZ;
 	}
+#endif
 	
 	// 転送
-	result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_sys->res[ char_no ].resobj[0] );
-	GF_ASSERT( result );
+//	result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_sys->res[ char_no ].resobj[0] );
+//	GF_ASSERT( result );
 
 	// リソースだけ破棄
-	CLACT_U_ResManagerResOnlyDelete( p_sys->res[ char_no ].resobj[0] );
+//	CLACT_U_ResManagerResOnlyDelete( p_sys->res[ char_no ].resobj[0] );
 
 	// パレットデータ部分にはNULLを入れておく
-	p_sys->res[ char_no ].resobj[1] = NULL;
+	//p_sys->res[ char_no ].resobj[1] = NULL;
 
+    p_sys->res[ char_no ].resid[ 1 ] = GFL_CLGRP_REGISTER_FAILED;
+
+    
 	// 管理パラメータ設定
 	p_sys->res[ char_no ].drawtype = draw_type;
 	p_sys->res[ char_no ].movetype = movetype;
 	p_sys->res[ char_no ].type = WF_2DC_RES_UNI;
 
 	// セルアクターヘッダー作成
-	CLACT_U_MakeHeader( &p_sys->res[ char_no ].header, 
-			WF_2DC_ARC_CONTCHARID+char_no, WF_2DC_ARC_CONTUNIONPLTTID,
-			WF_2DC_ARC_CONTUNIONANMID+union_idx, 
-			WF_2DC_ARC_CONTUNIONANMID+union_idx,
-			CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,0,0,
-			p_sys->p_res_man[0], p_sys->p_res_man[1], 
-			p_sys->p_res_man[2], p_sys->p_res_man[3],
-			NULL, NULL );
+//	CLACT_U_MakeHeader( &p_sys->res[ char_no ].header, 
+//			WF_2DC_ARC_CONTCHARID+char_no, WF_2DC_ARC_CONTUNIONPLTTID,
+//			WF_2DC_ARC_CONTUNIONANMID+union_idx, 
+//			WF_2DC_ARC_CONTUNIONANMID+union_idx,
+//			CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,0,0,
+//			p_sys->p_res_man[0], p_sys->p_res_man[1], 
+//			p_sys->p_res_man[2], p_sys->p_res_man[3],
+//			NULL, NULL );
 }
 
 //----------------------------------------------------------------------------
@@ -1801,7 +1933,7 @@ static void WF_2DC_CharResLoadUni( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 static void WF_2DC_CharResDel( WF_2DCSYS* p_sys, u32 char_no )
 {
 	// 読み込み済みであることをチェック
-	GF_ASSERT( p_sys->res[ char_no ].resobj[0] != NULL );
+//	GF_ASSERT( p_sys->res[ char_no ].resobj[0] != NULL );
 
 	if( p_sys->res[ char_no ].type == WF_2DC_RES_NML ){
 		WF_2DC_CharResDelNml( p_sys, char_no );
@@ -1822,15 +1954,22 @@ static void WF_2DC_CharResDel( WF_2DCSYS* p_sys, u32 char_no )
 static void WF_2DC_CharResDelNml( WF_2DCSYS* p_sys, u32 char_no )
 {
 	// VRAM管理から破棄
-	CLACT_U_CharManagerDelete( p_sys->res[ char_no ].resobj[0] );
-	CLACT_U_PlttManagerDelete( p_sys->res[ char_no ].resobj[1] );
+//	CLACT_U_CharManagerDelete( p_sys->res[ char_no ].resobj[0] );
+//	CLACT_U_PlttManagerDelete( p_sys->res[ char_no ].resobj[1] );
 	
 	// リソース破棄
-	CLACT_U_ResManagerResDelete( p_sys->p_res_man[0], p_sys->res[ char_no ].resobj[0] );
-	CLACT_U_ResManagerResDelete( p_sys->p_res_man[1], p_sys->res[ char_no ].resobj[1] );
+//	CLACT_U_ResManagerResDelete( p_sys->p_res_man[0], p_sys->res[ char_no ].resobj[0] );
+//	CLACT_U_ResManagerResDelete( p_sys->p_res_man[1], p_sys->res[ char_no ].resobj[1] );
 
-	p_sys->res[ char_no ].resobj[0] = NULL;
-	p_sys->res[ char_no ].resobj[1] = NULL;
+//	p_sys->res[ char_no ].resobj[0] = NULL;
+//	p_sys->res[ char_no ].resobj[1] = NULL;
+
+
+    GFL_CLGRP_CGR_Release(p_sys->res[ char_no ].resid[0]);
+    GFL_CLGRP_CGR_Release(p_sys->res[ char_no ].resid[1]);
+    p_sys->res[ char_no ].resid[ 0 ] = GFL_CLGRP_REGISTER_FAILED;
+    p_sys->res[ char_no ].resid[ 1 ] = GFL_CLGRP_REGISTER_FAILED;
+
 }
 
 //----------------------------------------------------------------------------
@@ -1844,12 +1983,16 @@ static void WF_2DC_CharResDelNml( WF_2DCSYS* p_sys, u32 char_no )
 static void WF_2DC_CharResDelUni( WF_2DCSYS* p_sys, u32 char_no )
 {
 	// VRAM管理から破棄
-	CLACT_U_CharManagerDelete( p_sys->res[ char_no ].resobj[0] );
+//	CLACT_U_CharManagerDelete( p_sys->res[ char_no ].resobj[0] );
 	
 	// リソース破棄
-	CLACT_U_ResManagerResDelete( p_sys->p_res_man[0], p_sys->res[ char_no ].resobj[0] );
+//	CLACT_U_ResManagerResDelete( p_sys->p_res_man[0], p_sys->res[ char_no ].resobj[0] );
 
-	p_sys->res[ char_no ].resobj[0] = NULL;
+//	p_sys->res[ char_no ].resobj[0] = NULL;
+
+    GFL_CLGRP_CGR_Release(p_sys->res[ char_no ].resid[0]);
+    p_sys->res[ char_no ].resid[ 0 ] = GFL_CLGRP_REGISTER_FAILED;
+
 }
 
 //----------------------------------------------------------------------------
@@ -1865,7 +2008,7 @@ static void WF_2DC_CharResDelUni( WF_2DCSYS* p_sys, u32 char_no )
 //-----------------------------------------------------------------------------
 static BOOL WF_2DC_CharResCheck( const WF_2DCSYS* cp_sys, u32 char_no )
 {
-	if( cp_sys->res[ char_no ].resobj[0] == NULL ){
+	if( cp_sys->res[ char_no ].resid[ 0 ] == GFL_CLGRP_REGISTER_FAILED ){
 		return FALSE;
 	}
 	return TRUE;	
@@ -1913,65 +2056,75 @@ static void WF_2DC_ShResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 heap )
 	int i;
 	BOOL result;
 	BOOL hero_load;
-	u32 hero_no;
-	GF_ASSERT( p_sys->shadowres.resobj[0] == NULL );
+//	u32 hero_no;
+//	GF_ASSERT( p_sys->shadowres.resobj[0] == NULL );
 
 	// 主人公が読み込まれているかチェックする
 
 	hero_load = FALSE;
 	if( WF_2DC_CharResCheck( p_sys, WF_2DC_HERO ) == TRUE ){
-		hero_no		= WF_2DC_HERO;
+		p_sys->hero_no		= WF_2DC_HERO;
 		hero_load	= TRUE;
 	}
 	else if( WF_2DC_CharResCheck( p_sys, WF_2DC_HEROINE ) == TRUE ){
-		hero_no		= WF_2DC_HEROINE;
+		p_sys->hero_no		= WF_2DC_HEROINE;
 		hero_load	= TRUE;
 	}
 	else if( WF_2DC_CharResCheck( p_sys, WF_2DC_DPHERO ) == TRUE ){
-		hero_no		= WF_2DC_DPHERO;
+		p_sys->hero_no		= WF_2DC_DPHERO;
 		hero_load	= TRUE;
 	}
 	else if( WF_2DC_CharResCheck( p_sys, WF_2DC_DPHEROINE ) == TRUE ){
-		hero_no		= WF_2DC_DPHEROINE;
+		p_sys->hero_no		= WF_2DC_DPHEROINE;
 		hero_load	= TRUE;
 	}
 
 	GF_ASSERT_MSG( hero_load == TRUE, "shodow load miss  hero or heroine not load" );
 
 	// アニメリソース
-	for( i=0; i<2; i++ ){
-		p_sys->shadowres.resobj[i+2] = 
-			CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-				p_sys->p_res_man[i+2], p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
-				NARC_wifi2dchar_hero_ine_kage_NCER+i, FALSE,
-				WF_2DC_ARC_CONTSHADOWID, CLACT_U_CELL_RES+i, heap );
-	}
+//	for( i=0; i<2; i++ ){
+//		p_sys->shadowres.resobj[i+2] = 
+//			CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
+//				p_sys->p_res_man[i+2], p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+//				NARC_wifi2dchar_hero_ine_kage_NCER+i, FALSE,
+//				WF_2DC_ARC_CONTSHADOWID, CLACT_U_CELL_RES+i, heap );
+//    }
 
+    p_sys->shadowres.resid[2] = GFL_CLGRP_CELLANIM_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+                                                                    NARC_wifi2dchar_hero_ine_kage_NCER,
+                                                                    NARC_wifi2dchar_hero_ine_kage_NANR,
+                                                                    heap);
+
+    
 	// キャラクタリソース
 	// 読み込み
-	p_sys->shadowres.resobj[0] = 
-		CLACT_U_ResManagerResAddArcChar_ArcHandle(
-				p_sys->p_res_man[0], p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
-				NARC_wifi2dchar_hero_ine_kage_NCGR,
-				FALSE, WF_2DC_ARC_CONTSHADOWID, draw_type, heap );
+//	p_sys->shadowres.resobj[0] = 
+//		CLACT_U_ResManagerResAddArcChar_ArcHandle(
+//				p_sys->p_res_man[0], p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+//				NARC_wifi2dchar_hero_ine_kage_NCGR,
+//				FALSE, WF_2DC_ARC_CONTSHADOWID, draw_type, heap );
+
+    p_sys->shadowres.resid[0] = GFL_CLGRP_CGR_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+                                                       NARC_wifi2dchar_hero_ine_kage_NCGR,
+                                                       FALSE , draw_type, heap);
 
 	
 	// 転送
-	result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_sys->shadowres.resobj[0] );
-	GF_ASSERT( result );
+//	result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_sys->shadowres.resobj[0] );
+//	GF_ASSERT( result );
 
 	// リソースだけ破棄
-	CLACT_U_ResManagerResOnlyDelete( p_sys->shadowres.resobj[0] );
+//	CLACT_U_ResManagerResOnlyDelete( p_sys->shadowres.resobj[0] );
 
 
 	// セルアクターヘッダー作成
-	CLACT_U_MakeHeader( &p_sys->shadowres.header, 
-			WF_2DC_ARC_CONTSHADOWID, WF_2DC_ARC_CONTCHARID+hero_no,
-			WF_2DC_ARC_CONTSHADOWID, WF_2DC_ARC_CONTSHADOWID,
-			CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,0,0,
-			p_sys->p_res_man[0], p_sys->p_res_man[1], 
-			p_sys->p_res_man[2], p_sys->p_res_man[3],
-			NULL, NULL );
+//	CLACT_U_MakeHeader( &p_sys->shadowres.header, 
+//			WF_2DC_ARC_CONTSHADOWID, WF_2DC_ARC_CONTCHARID+p_sys->hero_no,
+//			WF_2DC_ARC_CONTSHADOWID, WF_2DC_ARC_CONTSHADOWID,
+//			CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,0,0,
+//			p_sys->p_res_man[0], p_sys->p_res_man[1], 
+//			p_sys->p_res_man[2], p_sys->p_res_man[3],
+//			NULL, NULL );
 }
 
 //----------------------------------------------------------------------------
@@ -1990,20 +2143,29 @@ static void WF_2DC_ShResDel( WF_2DCSYS* p_sys )
 		// キャラクタリソース破棄
 		{
 			// VRAM管理から破棄
-			CLACT_U_CharManagerDelete( p_sys->shadowres.resobj[0] );
+//			CLACT_U_CharManagerDelete( p_sys->shadowres.resobj[0] );
 			
 			// リソース破棄
-			CLACT_U_ResManagerResDelete( p_sys->p_res_man[0], p_sys->shadowres.resobj[0] );
-			p_sys->shadowres.resobj[0] = NULL;
-		}
+//			CLACT_U_ResManagerResDelete( p_sys->p_res_man[0], p_sys->shadowres.resobj[0] );
+//			p_sys->shadowres.resobj[0] = NULL;
+
+            GFL_CLGRP_CGR_Release(p_sys->shadowres.resid[0]);
+            p_sys->shadowres.resid[ 0 ] = GFL_CLGRP_REGISTER_FAILED;
+
+
+        }
 
 		// アニメリソース破棄
-		for( i=0; i<2; i++ ){
-			CLACT_U_ResManagerResDelete( p_sys->p_res_man[i+2],
-						p_sys->shadowres.resobj[i+2] );
-			p_sys->shadowres.resobj[i+2] = NULL;
-		}
-	}
+//		for( i=0; i<2; i++ ){
+//			CLACT_U_ResManagerResDelete( p_sys->p_res_man[i+2],
+//						p_sys->shadowres.resobj[i+2] );
+//			p_sys->shadowres.resobj[i+2] = NULL;
+//		}
+
+        GFL_CLGRP_CGR_Release(p_sys->shadowres.resid[2]);
+        p_sys->shadowres.resid[ 2 ] = GFL_CLGRP_REGISTER_FAILED;
+
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -2019,7 +2181,8 @@ static void WF_2DC_ShResDel( WF_2DCSYS* p_sys )
 static BOOL WF_2DC_ShResCheck( const WF_2DCSH_RES* cp_shadowres )
 {
 
-	if( cp_shadowres->resobj[0] != NULL ){
+//	if( cp_shadowres->resobj[0] != NULL ){
+	if( cp_shadowres->resid[0] != GFL_CLGRP_REGISTER_FAILED ){
 		return TRUE;
 	}
 	return FALSE;
@@ -2038,27 +2201,32 @@ static void WF_2DC_UniCharPlttResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 heap
 {
 	BOOL result;
 
-	GF_ASSERT( p_sys->p_unionpltt == NULL );
+//	GF_ASSERT( p_sys->p_unionpltt == NULL );
 	
 	// ユニオンパレット読み込み
-	p_sys->p_unionpltt = 
-		CLACT_U_ResManagerResAddArcPltt_ArcHandle(
-				p_sys->p_res_man[ 1 ], p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
-				WF_2DC_ARC_GETUNINCL,
-				FALSE, WF_2DC_ARC_CONTUNIONPLTTID, draw_type, WF_2DC_UNIPLTT_NUM,
-				heap );
+//	p_sys->p_unionpltt = 
+//		CLACT_U_ResManagerResAddArcPltt_ArcHandle(
+//				p_sys->p_res_man[ 1 ], p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
+//				WF_2DC_ARC_GETUNINCL,
+//				FALSE, WF_2DC_ARC_CONTUNIONPLTTID, draw_type, WF_2DC_UNIPLTT_NUM,
+//				heap );
 
 	// 転送
-	result = CLACT_U_PlttManagerSetCleanArea( p_sys->p_unionpltt );
-	GF_ASSERT( result );
+//	result = CLACT_U_PlttManagerSetCleanArea( p_sys->p_unionpltt );
+//	GF_ASSERT( result );
+
+
+    p_sys->unionplttid = GFL_CLGRP_PLTT_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
+                                                 WF_2DC_ARC_GETUNINCL,
+                                                 draw_type, 0, heap);
 
 	// パレットフェード設定
 	if( p_sys->p_pfd ){
-		WF_2DC_PFDPalSet( p_sys, p_sys->p_unionpltt, WF_2DC_UNIPLTT_NUM );
+		WF_2DC_PFDPalSet( p_sys, p_sys->unionplttid, WF_2DC_UNIPLTT_NUM );
 	}
 
 	// リソースだけ破棄
-	CLACT_U_ResManagerResOnlyDelete( p_sys->p_unionpltt );
+//	CLACT_U_ResManagerResOnlyDelete( p_sys->p_unionpltt );
 }
 
 //----------------------------------------------------------------------------
@@ -2070,12 +2238,16 @@ static void WF_2DC_UniCharPlttResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 heap
 //-----------------------------------------------------------------------------
 static void WF_2DC_UniCharPlttResDel( WF_2DCSYS* p_sys )
 {
-	GF_ASSERT( p_sys->p_unionpltt != NULL );
-	
+//	GF_ASSERT( p_sys->p_unionpltt != NULL );
+
+    GFL_CLGRP_CGR_Release(p_sys->unionplttid);
+    p_sys->unionplttid = GFL_CLGRP_REGISTER_FAILED;
+
+    
 	// ユニオンパレット破棄
-	CLACT_U_PlttManagerDelete( p_sys->p_unionpltt );
-	CLACT_U_ResManagerResDelete( p_sys->p_res_man[1], p_sys->p_unionpltt );
-	p_sys->p_unionpltt = NULL;
+//	CLACT_U_PlttManagerDelete( p_sys->p_unionpltt );
+//	CLACT_U_ResManagerResDelete( p_sys->p_res_man[1], p_sys->p_unionpltt );
+//	p_sys->p_unionpltt = NULL;
 }
 
 //----------------------------------------------------------------------------
@@ -2093,6 +2265,13 @@ static void WF_2DC_UniCharAnmResLoad( WF_2DCSYS* p_sys, u32 heap )
 
 	for( i=0; i<WF_2DC_UNICHAR_NUM; i++ ){
 
+        p_sys->unionres[i].resid = GFL_CLGRP_CELLANIM_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
+                                                               WF_2DC_ARC_GETUNICEL(i),
+                                                               WF_2DC_ARC_GETUNIANM(i),
+                                                               heap);
+
+
+        /*
 		p_sys->unionres[i].resobj[ 0 ] = 
 			CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
 				p_sys->p_res_man[2], p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
@@ -2104,6 +2283,7 @@ static void WF_2DC_UniCharAnmResLoad( WF_2DCSYS* p_sys, u32 heap )
 				p_sys->p_res_man[3], p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
 				WF_2DC_ARC_GETUNIANM(i), FALSE,
 				WF_2DC_ARC_CONTUNIONANMID+i, CLACT_U_CELLANM_RES, heap );
+         */
 	}
 }
 
@@ -2118,18 +2298,22 @@ static void WF_2DC_UniCharAnmResDel( WF_2DCSYS* p_sys )
 {
 	int i;
 
-	GF_ASSERT( p_sys->unionres[ 0 ].resobj[0] != NULL );
+//	GF_ASSERT( p_sys->unionres[ 0 ].resobj[0] != NULL );
 
 	for( i=0; i<WF_2DC_UNICHAR_NUM; i++ ){
 
-		CLACT_U_ResManagerResDelete( p_sys->p_res_man[2],
-					p_sys->unionres[i].resobj[ 0 ] );
+        GFL_CLGRP_CGR_Release(p_sys->unionres[i].resid);
+        p_sys->unionres[i].resid = GFL_CLGRP_REGISTER_FAILED;
 
-		CLACT_U_ResManagerResDelete( p_sys->p_res_man[3],
-					p_sys->unionres[i].resobj[ 1 ] );
+        
+//		CLACT_U_ResManagerResDelete( p_sys->p_res_man[2],
+//					p_sys->unionres[i].resobj[ 0 ] );
 
-		p_sys->unionres[ i ].resobj[0] = NULL;
-		p_sys->unionres[ i ].resobj[1] = NULL;
+//		CLACT_U_ResManagerResDelete( p_sys->p_res_man[3],
+//					p_sys->unionres[i].resobj[ 1 ] );
+
+//		p_sys->unionres[ i ].resobj[0] = NULL;
+//		p_sys->unionres[ i ].resobj[1] = NULL;
 	}
 }
 
@@ -2192,7 +2376,8 @@ static void WF_2DC_WkPatAnmUpdate( WF_2DCWK* p_wk )
 static void WF_2DC_WkPatAnmWayInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 {
 	p_wk->patanmway = way;
-	CLACT_AnmChgCheck( p_wk->p_clwk, p_wk->patanmway );
+//	CLACT_AnmChgCheck( p_wk->p_clwk, p_wk->patanmway );
+    GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_clwk, p_wk->patanmway );
 }
 
 //----------------------------------------------------------------------------
@@ -2205,7 +2390,8 @@ static void WF_2DC_WkPatAnmWayInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 static void WF_2DC_WkPatAnmRotaInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 {
 	p_wk->patanmway = way;
-	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_ROTA );
+//	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_ROTA );
+    GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_clwk, WF_2DC_ANM_ROTA );
 }
 
 //----------------------------------------------------------------------------
@@ -2218,7 +2404,8 @@ static void WF_2DC_WkPatAnmRotaInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 static void WF_2DC_WkPatAnmWalkInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 {
 	p_wk->patanmway = way;
-	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+//	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+    GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
 }
 
 //----------------------------------------------------------------------------
@@ -2230,8 +2417,9 @@ static void WF_2DC_WkPatAnmWalkInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 //-----------------------------------------------------------------------------
 static void WF_2DC_WkPatAnmTurnInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 {
-	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
-
+//	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+    GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+    
 	// 後で設定することで２フレーム目で方向が変わる
 	p_wk->patanmway = way;
 }
@@ -2246,7 +2434,8 @@ static void WF_2DC_WkPatAnmTurnInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 static void WF_2DC_WkPatAnmRunInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 {
 	p_wk->patanmway = way;
-	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_RUN+p_wk->patanmway );
+	//CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_RUN+p_wk->patanmway );
+    GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_clwk, WF_2DC_ANM_RUN+p_wk->patanmway );
 }
 
 //----------------------------------------------------------------------------
@@ -2259,7 +2448,8 @@ static void WF_2DC_WkPatAnmRunInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 static void WF_2DC_WkPatAnmWallWalkInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 {
 	p_wk->patanmway = way;
-	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+//	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+    GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
 }
 
 //----------------------------------------------------------------------------
@@ -2272,7 +2462,8 @@ static void WF_2DC_WkPatAnmWallWalkInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 static void WF_2DC_WkPatAnmSlowWalkInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 {
 	p_wk->patanmway = way;
-	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+//	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+    GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
 }
 
 //----------------------------------------------------------------------------
@@ -2286,7 +2477,8 @@ static void WF_2DC_WkPatAnmSlowWalkInit( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 static void WF_2DC_WkPatAnmHighWalk2Init( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 {
 	p_wk->patanmway = way;
-	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+//	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+    GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
 }
 
 //----------------------------------------------------------------------------
@@ -2300,7 +2492,8 @@ static void WF_2DC_WkPatAnmHighWalk2Init( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 static void WF_2DC_WkPatAnmHighWalk4Init( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 {
 	p_wk->patanmway = way;
-	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+//	CLACT_AnmChgCheck( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+    GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
 }
 
 //----------------------------------------------------------------------------
@@ -2312,7 +2505,8 @@ static void WF_2DC_WkPatAnmHighWalk4Init( WF_2DCWK* p_wk, WF_COMMON_WAY way )
 //-----------------------------------------------------------------------------
 static void WF_2DC_WkPatAnmRotaMain( WF_2DCWK* p_wk )
 {
-	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_FRAME );
+//	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_FRAME );
+    GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, WF_2DC_ANM_FRAME );
 }
 
 //----------------------------------------------------------------------------
@@ -2324,7 +2518,8 @@ static void WF_2DC_WkPatAnmRotaMain( WF_2DCWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WF_2DC_WkPatAnmWalkMain( WF_2DCWK* p_wk )
 {
-	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_FRAME );
+//	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_FRAME );
+    GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, WF_2DC_ANM_FRAME );
 }
 
 //----------------------------------------------------------------------------
@@ -2337,9 +2532,11 @@ static void WF_2DC_WkPatAnmWalkMain( WF_2DCWK* p_wk )
 static void WF_2DC_WkPatAnmTurnMain( WF_2DCWK* p_wk )
 {
 	if( p_wk->patanmframe == 0 ){
-		CLACT_AnmFrameSet( p_wk->p_clwk, 1 );
+	//	CLACT_AnmFrameSet( p_wk->p_clwk, 1 );
+        GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, 1 );
 	}else{
-		CLACT_AnmChg( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+	//	CLACT_AnmChg( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
+        GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, WF_2DC_ANM_WALK+p_wk->patanmway );
 	}
 }
 
@@ -2352,7 +2549,8 @@ static void WF_2DC_WkPatAnmTurnMain( WF_2DCWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WF_2DC_WkPatAnmRunMain( WF_2DCWK* p_wk )
 {
-	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_FRAME );
+//	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_FRAME );
+    GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, WF_2DC_ANM_FRAME );
 }
 
 //----------------------------------------------------------------------------
@@ -2364,7 +2562,8 @@ static void WF_2DC_WkPatAnmRunMain( WF_2DCWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WF_2DC_WkPatAnmWallWalkMain( WF_2DCWK* p_wk )
 {
-	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_SLOWFRAME );
+//	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_SLOWFRAME );
+    GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, WF_2DC_ANM_SLOWFRAME );
 }
 
 //----------------------------------------------------------------------------
@@ -2376,7 +2575,8 @@ static void WF_2DC_WkPatAnmWallWalkMain( WF_2DCWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WF_2DC_WkPatAnmSlowWalkMain( WF_2DCWK* p_wk )
 {
-	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_SLOWFRAME );
+//	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_SLOWFRAME );
+    GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, WF_2DC_ANM_SLOWFRAME );
 }
 
 //----------------------------------------------------------------------------
@@ -2388,7 +2588,8 @@ static void WF_2DC_WkPatAnmSlowWalkMain( WF_2DCWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WF_2DC_WkPatAnmHighWalk2Main( WF_2DCWK* p_wk )
 {
-	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_HIGH2 );
+//	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_HIGH2 );
+    GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, WF_2DC_ANM_HIGH2 );
 }
 
 //----------------------------------------------------------------------------
@@ -2400,7 +2601,8 @@ static void WF_2DC_WkPatAnmHighWalk2Main( WF_2DCWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WF_2DC_WkPatAnmHighWalk4Main( WF_2DCWK* p_wk )
 {
-	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_HIGH4 );
+//	CLACT_AnmFrameChg( p_wk->p_clwk, WF_2DC_ANM_HIGH4 );
+    GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, WF_2DC_ANM_HIGH4 );
 }
 
 
@@ -2431,8 +2633,9 @@ static BOOL WF_2DC_WkCleanCheck( const WF_2DCWK* cp_wk )
  *	@param	num			数
  */
 //-----------------------------------------------------------------------------
-static void WF_2DC_PFDPalSet( WF_2DCSYS* p_sys, CLACT_U_RES_OBJ_PTR p_pal, u32 num )
+static void WF_2DC_PFDPalSet( WF_2DCSYS* p_sys, u32 resid, u32 num )
 {
+#if 0  // やりのこしk.ohno
 	NNSG2dPaletteData* p_paldata;
 	u32 pal_no[2];
 
@@ -2446,4 +2649,5 @@ static void WF_2DC_PFDPalSet( WF_2DCSYS* p_sys, CLACT_U_RES_OBJ_PTR p_pal, u32 n
 	if( pal_no[1] != CLACT_U_PLTT_NO_NONE ){
 		PaletteWorkSet( p_sys->p_pfd, p_paldata->pRawData, FADE_SUB_OBJ, pal_no[1]*16, num*32 );
 	}
+#endif
 }

@@ -9,10 +9,9 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
-#define __WF2DMAP_OBJDRAW_H_GLOBAL
-#include "application/wifi_2dmap/wf2dmap_objdraw.h"
+#include "net_app/wifi2dmap/wf2dmap_objdraw.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -110,20 +109,19 @@ static void WF2DMAP_OBJDrawWkAnmSet( WF2DMAP_OBJDRAWWK* p_wk, WF_2DC_ANMTYPE anm
 	両方に登録：NNS_G2D_VRAM_TYPE_2DMAX
  */
 //-----------------------------------------------------------------------------
-WF2DMAP_OBJDRAWSYS* WF2DMAP_OBJDrawSysInit( CLACT_SET_PTR p_clset, PALETTE_FADE_PTR p_pfd, u32 objnum, u32 draw_type, u32 heapID )
+WF2DMAP_OBJDRAWSYS* WF2DMAP_OBJDrawSysInit( GFL_CLUNIT* p_clunit, PALETTE_FADE_PTR p_pfd, u32 objnum, u32 draw_type, u32 heapID )
 {
 	WF2DMAP_OBJDRAWSYS* p_sys;
 
 	// システムワーク作成
-	p_sys = sys_AllocMemory( heapID, sizeof(WF2DMAP_OBJDRAWSYS) );
+	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_OBJDRAWSYS) );
 
 	// 表示システム作成
-	p_sys->p_drawsys = WF_2DC_SysInit( p_clset, p_pfd, objnum, heapID );
+	p_sys->p_drawsys = WF_2DC_SysInit( p_clunit, p_pfd, objnum, heapID );
 
 	// オブジェクトワーク作成
 	p_sys->objnum = objnum;
-	p_sys->p_wk = sys_AllocMemory( heapID, sizeof(WF2DMAP_OBJDRAWWK)*p_sys->objnum );
-	memset( p_sys->p_wk, 0, sizeof(WF2DMAP_OBJDRAWWK)*p_sys->objnum );
+	p_sys->p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_OBJDRAWWK)*p_sys->objnum );
 
 	// 基本設定
 	p_sys->bg_pri		= WF2DMAP_BGPRI_DEF;
@@ -153,20 +151,19 @@ WF2DMAP_OBJDRAWSYS* WF2DMAP_OBJDrawSysInit( CLACT_SET_PTR p_clset, PALETTE_FADE_
 	両方に登録：NNS_G2D_VRAM_TYPE_2DMAX
  */
 //-----------------------------------------------------------------------------
-WF2DMAP_OBJDRAWSYS* WF2DMAP_OBJDrawSysInit_Shadow( CLACT_SET_PTR p_clset, PALETTE_FADE_PTR p_pfd, u32 objnum, u32 hero_charid, WF_2DC_MOVETYPE hero_movetype,  u32 draw_type,u32 heapID )
+WF2DMAP_OBJDRAWSYS* WF2DMAP_OBJDrawSysInit_Shadow( GFL_CLUNIT* p_clunit, PALETTE_FADE_PTR p_pfd, u32 objnum, u32 hero_charid, WF_2DC_MOVETYPE hero_movetype,  u32 draw_type,u32 heapID )
 {
 	WF2DMAP_OBJDRAWSYS* p_sys;
 
 	// システムワーク作成
-	p_sys = sys_AllocMemory( heapID, sizeof(WF2DMAP_OBJDRAWSYS) );
+	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_OBJDRAWSYS) );
 
 	// 表示システム作成
-	p_sys->p_drawsys = WF_2DC_SysInit( p_clset, p_pfd, objnum, heapID );
+	p_sys->p_drawsys = WF_2DC_SysInit( p_clunit, p_pfd, objnum, heapID );
 
 	// オブジェクトワーク作成
 	p_sys->objnum = objnum;
-	p_sys->p_wk = sys_AllocMemory( heapID, sizeof(WF2DMAP_OBJDRAWWK)*p_sys->objnum );
-	memset( p_sys->p_wk, 0, sizeof(WF2DMAP_OBJDRAWWK)*p_sys->objnum );
+	p_sys->p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_OBJDRAWWK)*p_sys->objnum );
 
 	// 基本設定
 	p_sys->bg_pri		= WF2DMAP_BGPRI_DEF;
@@ -210,8 +207,8 @@ void WF2DMAP_OBJDrawSysExit( WF2DMAP_OBJDRAWSYS* p_sys )
 	WF_2DC_SysExit( p_sys->p_drawsys );
 	
 	// ワークバッファ破棄
-	sys_FreeMemoryEz( p_sys->p_wk );
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys->p_wk );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -650,10 +647,10 @@ u32 WF2DMAP_OBJDrawWkDrawPriCalc( s16 y, BOOL hero )
  *	@return	今参照しているパレット位置
  */
 //-----------------------------------------------------------------------------
-u32 WF2DMAP_OBJDrawWkPaletteNoGet( const WF2DMAP_OBJDRAWWK* cp_wk )
-{
-	return CLACT_PaletteOffsetGet( WF_2DC_WkConstClWkGet( cp_wk->p_drawwk ) );
-}
+//u32 WF2DMAP_OBJDrawWkPaletteNoGet( const WF2DMAP_OBJDRAWWK* cp_wk )
+//{
+//	return CLACT_PaletteOffsetGet( WF_2DC_WkConstClWkGet( cp_wk->p_drawwk ) );
+//}
 
 //----------------------------------------------------------------------------
 /**

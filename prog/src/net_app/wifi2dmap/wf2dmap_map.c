@@ -9,10 +9,9 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
-#define __WF2DMAP_MAP_H_GLOBAL
-#include "application/wifi_2dmap/wf2dmap_map.h"
+#include "net_app/wifi2dmap/wf2dmap_map.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -74,16 +73,15 @@ WF2DMAP_MAPSYS* WF2DMAP_MAPSysInit( u16 xgrid, u16 ygrid, u32 heapID )
 	WF2DMAP_MAPSYS* p_sys;
 
 	// システム作成
-	p_sys = sys_AllocMemory( heapID, sizeof(WF2DMAP_MAPSYS) );
+	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_MAPSYS) );
 	GF_ASSERT( p_sys );
 
 	// システムデータ作成
 	p_sys->xgrid = xgrid;
 	p_sys->ygrid = ygrid;
 
-	p_sys->p_buff = sys_AllocMemory( heapID, sizeof(WF2DMAP_MAP)*(p_sys->xgrid*p_sys->ygrid) );
+	p_sys->p_buff = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_MAP)*(p_sys->xgrid*p_sys->ygrid) );
 	GF_ASSERT( p_sys->p_buff );
-	memset( p_sys->p_buff, 0, sizeof(WF2DMAP_MAP)*(p_sys->xgrid*p_sys->ygrid) );
 	
 	return p_sys;
 }
@@ -98,8 +96,8 @@ WF2DMAP_MAPSYS* WF2DMAP_MAPSysInit( u16 xgrid, u16 ygrid, u32 heapID )
 void WF2DMAP_MAPSysExit( WF2DMAP_MAPSYS* p_sys )
 {
 	GF_ASSERT( p_sys );
-	sys_FreeMemoryEz( p_sys->p_buff );
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys->p_buff );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -141,7 +139,7 @@ u16 WF2DMAP_MAPSysGridYGet( const WF2DMAP_MAPSYS* cp_sys )
 void WF2DMAP_MAPSysDataSet( WF2DMAP_MAPSYS* p_sys, const WF2DMAP_MAP* cp_buff )
 {
 	GF_ASSERT( p_sys );
-	memcpy( p_sys->p_buff, cp_buff, sizeof(WF2DMAP_MAP)*(p_sys->xgrid*p_sys->ygrid) );
+	GFL_STD_MemCopy(  cp_buff,p_sys->p_buff, sizeof(WF2DMAP_MAP)*(p_sys->xgrid*p_sys->ygrid) );
 }
 
 //----------------------------------------------------------------------------

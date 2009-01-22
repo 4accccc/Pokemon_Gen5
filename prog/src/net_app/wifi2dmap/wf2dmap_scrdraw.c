@@ -9,10 +9,9 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
-#define __WF2DMAP_SCRDRAW_H_GLOBAL
-#include "application/wifi_2dmap/wf2dmap_scrdraw.h"
+#include "net_app/wifi2dmap/wf2dmap_scrdraw.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -60,8 +59,8 @@ enum {
 ///	スクロール描画ワーク
 //=====================================
 typedef struct _WF2DMAP_SCRDRAW {
-	CLACT_U_EASYRENDER_DATA* p_render;
-	GF_BGL_INI* p_bgl;
+	GFL_CLSYS_REND* p_render;
+	GFL_BG_INI* p_bgl;
 	void* p_scrnbuff;
 	NNSG2dScreenData* p_scrn;
 	u32 surface_type;
@@ -76,11 +75,11 @@ typedef struct _WF2DMAP_SCRDRAW {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-static void WF2DMAP_OBJDrawSysBGCNTSet( GF_BGL_INI* p_bgl, int bg_frame, const WF2DMAP_SCRDRAWINIT* cp_data );
+static void WF2DMAP_OBJDrawSysBGCNTSet( GFL_BG_INI* p_bgl, int bg_frame, const WF2DMAP_SCRDRAWINIT* cp_data );
 static void WF2DMAP_OBJDrawSysBGScrSet( WF2DMAP_SCRDRAW* p_sys, s16 scr_x, s16 scr_y );
-static void WF2DMAP_OBJDrawSysBGScrnWrite( GF_BGL_INI* p_bgl, int bg_frame, const NNSG2dScreenData* cp_scrn, s16 scrn_x, s16 scrn_y );
+static void WF2DMAP_OBJDrawSysBGScrnWrite( GFL_BG_INI* p_bgl, int bg_frame, const NNSG2dScreenData* cp_scrn, s16 scrn_x, s16 scrn_y );
 
-static void WF2DMAP_OBJDrawSysScrnDraw( GF_BGL_INI * ini, u8 frmnum, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy, const void * buf, u8 buf_px, u8 buf_py, u8 buf_sx, u8 buf_sy );
+static void WF2DMAP_OBJDrawSysScrnDraw( GFL_BG_INI * ini, u8 frmnum, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy, const void * buf, u8 buf_px, u8 buf_py, u8 buf_sx, u8 buf_sy );
 static u8 WF2DMAP_OBJDrawSysScrnTypeGet( u8 scrn_siz_x, u8 scrn_siz_y );
 static const void* WF2DMAP_OBJDrawSysScrnBuffPtrGet( const u8* p_buf, u8 scrnblck_x, u8 scrnblck_y, u8 scrntype, u8 scrn_siz_x, u8 scrn_siz_y, WF2DMAP_POS* p_siz );
 
@@ -98,12 +97,12 @@ static const void* WF2DMAP_OBJDrawSysScrnBuffPtrGet( const u8* p_buf, u8 scrnblc
  *
  */
 //-----------------------------------------------------------------------------
-WF2DMAP_SCRDRAW* WF2DMAP_SCRDrawSysInit( CLACT_U_EASYRENDER_DATA* p_render, GF_BGL_INI* p_bgl, const WF2DMAP_SCRDRAWINIT* cp_init, u32 heapID )
+WF2DMAP_SCRDRAW* WF2DMAP_SCRDrawSysInit( GFL_CLSYS_REND* p_render, GFL_BG_INI* p_bgl, const WF2DMAP_SCRDRAWINIT* cp_init, u32 heapID )
 {
 	WF2DMAP_SCRDRAW* p_sys;
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WF2DMAP_SCRDRAW) );
-	memset( p_sys, 0, sizeof(WF2DMAP_SCRDRAW) );
+	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_SCRDRAW) );
+
 	p_sys->p_render = p_render;
 	p_sys->p_bgl = p_bgl;
 	p_sys->surface_type = cp_init->surface_type;
@@ -113,7 +112,7 @@ WF2DMAP_SCRDRAW* WF2DMAP_SCRDrawSysInit( CLACT_U_EASYRENDER_DATA* p_render, GF_B
 	WF2DMAP_OBJDrawSysBGCNTSet( p_sys->p_bgl, p_sys->bg_frame, cp_init );
 
 	// スクリーングラフィック読み込み
-	p_sys->p_scrnbuff = ArcUtil_ScrnDataGet( cp_init->arcid_scrn, cp_init->dataid_scrn,
+	p_sys->p_scrnbuff = GFL_ARC_UTIL_LoadScreen( cp_init->arcid_scrn, cp_init->dataid_scrn,
 			cp_init->arcdata_comp, &p_sys->p_scrn, heapID );
 
 	return p_sys;
@@ -128,8 +127,8 @@ WF2DMAP_SCRDRAW* WF2DMAP_SCRDrawSysInit( CLACT_U_EASYRENDER_DATA* p_render, GF_B
 //-----------------------------------------------------------------------------
 void WF2DMAP_SCRDrawSysExit( WF2DMAP_SCRDRAW* p_sys )
 {
-	sys_FreeMemoryEz( p_sys->p_scrnbuff );
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys->p_scrnbuff );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -140,21 +139,32 @@ void WF2DMAP_SCRDrawSysExit( WF2DMAP_SCRDRAW* p_sys )
  *	@param	cp_scroll	スクロールデータ
  */
 //-----------------------------------------------------------------------------
+#define SUB_SURFACE_Y_INTEGER	(192)
 void WF2DMAP_SCRDrawSysMain( WF2DMAP_SCRDRAW* p_sys, const WF2DMAP_SCROLL* cp_scroll )
 {
+    GFL_CLACTPOS pos;
 	s16 scr_x;
 	s16 scr_y;
 	
 	// スクロール座標からスクロール座標を各表示システムに設定
-	scr_y = WF2DMAP_SCROLLSysTopGet( cp_scroll );	
-	scr_x = WF2DMAP_SCROLLSysLeftGet( cp_scroll );	
+	scr_y = WF2DMAP_SCROLLSysTopGet( cp_scroll );
+	scr_x = WF2DMAP_SCROLLSysLeftGet( cp_scroll );
+    pos.x = scr_x;
+    pos.y = scr_y;
 
-	// サーフェース
+#if 0
+    // サーフェース
 	if( p_sys->surface_type == CLACT_U_EASYRENDER_SURFACE_MAIN ){
-		CLACT_U_SetMainSurfaceMatrix( p_sys->p_render, FX32_CONST(scr_x), FX32_CONST(scr_y) );
-	}else{
-		CLACT_U_SetSubSurfaceMatrix( p_sys->p_render, FX32_CONST(scr_x), FX32_CONST(scr_y)+SUB_SURFACE_Y );
+//		CLACT_U_SetMainSurfaceMatrix( p_sys->p_render, FX32_CONST(scr_x), FX32_CONST(scr_y) );
+        GFL_CLACT_USERREND_SetSurfacePos(p_sys->p_render, 0, &pos);
+    }else{
+//		CLACT_U_SetSubSurfaceMatrix( p_sys->p_render, FX32_CONST(scr_x), FX32_CONST(scr_y)+SUB_SURFACE_Y );
+        pos.y += SUB_SURFACE_Y_INTEGER;
+        GFL_CLACT_USERREND_SetSurfacePos(p_sys->p_render, 0, &pos);
 	}
+#else
+    GFL_CLACT_USERREND_SetSurfacePos(p_sys->p_render, 0, &pos);
+#endif
 
 	// BGL
 	// スクロール座標からスクリーンデータを書き込んで転送
@@ -176,10 +186,10 @@ void WF2DMAP_SCRDrawSysMain( WF2DMAP_SCRDRAW* p_sys, const WF2DMAP_SCROLL* cp_sc
  *	@param	cp_data		初期化データ
  */
 //-----------------------------------------------------------------------------
-static void WF2DMAP_OBJDrawSysBGCNTSet( GF_BGL_INI* p_bgl, int bg_frame, const WF2DMAP_SCRDRAWINIT* cp_data )
+static void WF2DMAP_OBJDrawSysBGCNTSet( GFL_BG_INI* p_bgl, int bg_frame, const WF2DMAP_SCRDRAWINIT* cp_data )
 {
-	GF_BGL_BGCNT_HEADER TextBgCntDat = {
-		0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256,
+	GFL_BG_BGCNT_HEADER TextBgCntDat = {
+		0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256,
 	};
 
 	TextBgCntDat.colorMode = cp_data->colorMode;
@@ -190,8 +200,10 @@ static void WF2DMAP_OBJDrawSysBGCNTSet( GF_BGL_INI* p_bgl, int bg_frame, const W
 	TextBgCntDat.areaOver = 0;
 	TextBgCntDat.mosaic = cp_data->mosaic;
 
-	GF_BGL_BGControlExit( p_bgl, bg_frame );
-	GF_BGL_BGControlSet( p_bgl, bg_frame, &TextBgCntDat, GF_BGL_MODE_TEXT );
+//	GFL_BG_BGControlExit( p_bgl, bg_frame );
+    GFL_BG_FreeBGControl( bg_frame );
+//	GFL_BG_BGControlSet( p_bgl, bg_frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( bg_frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 //	GF_BGL_ScrClear( p_bgl, bg_frame );
 }	
 
@@ -222,12 +234,14 @@ static void WF2DMAP_OBJDrawSysBGScrSet( WF2DMAP_SCRDRAW* p_sys, s16 scr_x, s16 s
 		p_sys->now_scrn_x = scrn_x;
 		p_sys->now_scrn_y = scrn_y;
 		WF2DMAP_OBJDrawSysBGScrnWrite( p_sys->p_bgl, p_sys->bg_frame, p_sys->p_scrn, -scrn_x, -scrn_y );
-		GF_BGL_LoadScreenV_Req( p_sys->p_bgl, p_sys->bg_frame );
+		GFL_BG_LoadScreenV_Req( p_sys->bg_frame );
 	}
 
 	// スクロール座標を設定
-	GF_BGL_ScrollReq( p_sys->p_bgl, p_sys->bg_frame, GF_BGL_SCROLL_X_SET, ofs_x );
-	GF_BGL_ScrollReq( p_sys->p_bgl, p_sys->bg_frame, GF_BGL_SCROLL_Y_SET, ofs_y );
+//	GFL_BG_ScrollReq( p_sys->p_bgl, p_sys->bg_frame, GF_BGL_SCROLL_X_SET, ofs_x );
+//	GFL_BG_ScrollReq( p_sys->p_bgl, p_sys->bg_frame, GF_BGL_SCROLL_Y_SET, ofs_y );
+	GFL_BG_SetScrollReq( p_sys->bg_frame, GFL_BG_SCROLL_X_SET, ofs_x );
+	GFL_BG_SetScrollReq( p_sys->bg_frame, GFL_BG_SCROLL_Y_SET, ofs_y );
 }
 
 //----------------------------------------------------------------------------
@@ -241,7 +255,7 @@ static void WF2DMAP_OBJDrawSysBGScrSet( WF2DMAP_SCRDRAW* p_sys, s16 scr_x, s16 s
  *	@param	scrn_y		スクリーンデータの書き出し位置
  */
 //-----------------------------------------------------------------------------
-static void WF2DMAP_OBJDrawSysBGScrnWrite( GF_BGL_INI* p_bgl, int bg_frame, const NNSG2dScreenData* cp_scrn, s16 scrn_x, s16 scrn_y )
+static void WF2DMAP_OBJDrawSysBGScrnWrite( GFL_BG_INI* p_bgl, int bg_frame, const NNSG2dScreenData* cp_scrn, s16 scrn_x, s16 scrn_y )
 {
 	s16 write_siz_x, write_siz_y;
 	s16 read_x, read_y;
@@ -288,9 +302,9 @@ static void WF2DMAP_OBJDrawSysBGScrnWrite( GF_BGL_INI* p_bgl, int bg_frame, cons
 	}
 
 	// スクリーンクリーン
-	GF_BGL_ScrFill( p_bgl, bg_frame, 0, 
+	GFL_BG_FillScreen( bg_frame, 0, 
 			0, 0, 
-			WF2DMAP_SCRDRAW_SCRNSIZE_X, WF2DMAP_SCRDRAW_SCRNSIZE_Y, GF_BGL_SCRWRT_PALIN );
+			WF2DMAP_SCRDRAW_SCRNSIZE_X, WF2DMAP_SCRDRAW_SCRNSIZE_Y, GFL_BG_SCRWRT_PALIN );
 	
 	// 立てに２スクリーンに分けなくてはいけないかチェック
 	WF2DMAP_OBJDrawSysScrnDraw(
@@ -322,7 +336,7 @@ static void WF2DMAP_OBJDrawSysBGScrnWrite( GF_BGL_INI* p_bgl, int bg_frame, cons
  *	@param	buf_sy			スクリーンデータ　ｙキャラサイズ
  */
 //-----------------------------------------------------------------------------
-static void WF2DMAP_OBJDrawSysScrnDraw( GF_BGL_INI * p_bgl, u8 bg_frame, u8 write_x, u8 write_y, u8 write_siz_x, u8 write_siz_y, const void * buf, u8 read_x, u8 read_y, u8 buf_sx, u8 buf_sy )
+static void WF2DMAP_OBJDrawSysScrnDraw( GFL_BG_INI * p_bgl, u8 bg_frame, u8 write_x, u8 write_y, u8 write_siz_x, u8 write_siz_y, const void * buf, u8 read_x, u8 read_y, u8 buf_sx, u8 buf_sy )
 {
 	s8 ws_x, ws_y;	// 書き込んだサイズ
 	s8 nws_x, nws_y;// 次の書き込むサイズ
@@ -338,8 +352,8 @@ static void WF2DMAP_OBJDrawSysScrnDraw( GF_BGL_INI * p_bgl, u8 bg_frame, u8 writ
 	
 	// バッファが３２＊３２内に入っているならそのまま書き込む
 	if( scrn_type == WF2DMAP_SCRNTYPE_256x256 ){
-		GF_BGL_ScrWriteExpand(
-				p_bgl, bg_frame,
+		GFL_BG_WriteScreenExpand(
+				 bg_frame,
 				write_x, write_y,				// 書き込み開始位置
 				write_siz_x,					// 書き込みサイズ 
 				write_siz_y,					// 書き込みサイズ
@@ -395,8 +409,8 @@ static void WF2DMAP_OBJDrawSysScrnDraw( GF_BGL_INI * p_bgl, u8 bg_frame, u8 writ
 			OS_Printf( "siz_x[%d] siz_y[%d]\n", siz.x, siz.y );
 			//*/
 
-			GF_BGL_ScrWriteExpand(
-					p_bgl, bg_frame,
+			GFL_BG_WriteScreenExpand(
+					 bg_frame,
 					writew_x, write_y,				//  書き込み開始位置
 					nws_x,							// 書き込みサイズ 
 					nws_y,							// 書き込みサイズ

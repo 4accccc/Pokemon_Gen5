@@ -341,7 +341,8 @@ struct _WIFIP2PMATCH_WORK{
   int				MsgIndex;								// 終了検出用ワーク
   BMPMENU_WORK* pYesNoWork;
   void* timeWaitWork;			// タイムウエイトアイコンワーク
-  CLACT_SET_PTR 			clactSet;								// セルアクターセット
+//  CLACT_SET_PTR 			clactSet;								// セルアクターセット
+  GFL_CLUNIT* clactSet;								// セルアクターセット
   CLACT_U_EASYRENDER_DATA	renddata;								// 簡易レンダーデータ
   CLACT_U_RES_MANAGER_PTR	resMan[CLACT_RESOURCE_NUM];				// リソースマネージャ
   FONTOAM_SYS_PTR			fontoam;								// フォントOAMシステム

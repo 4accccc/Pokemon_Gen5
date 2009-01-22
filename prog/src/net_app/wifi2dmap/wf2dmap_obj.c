@@ -9,10 +9,9 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
-#define __WF2DMAP_OBJ_H_GLOBAL
-#include "application/wifi_2dmap/wf2dmap_obj.h"
+#include "net_app/wifi2dmap/wf2dmap_obj.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -126,14 +125,13 @@ WF2DMAP_OBJSYS* WF2DMAP_OBJSysInit( u32 objnum, u32 heapID )
 {
 	WF2DMAP_OBJSYS* p_sys;
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WF2DMAP_OBJSYS) );
+	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_OBJSYS) );
 	GF_ASSERT( p_sys );
 
 	p_sys->num = objnum;
 
-	p_sys->p_buff = sys_AllocMemory( heapID, sizeof(WF2DMAP_OBJWK)*p_sys->num );
+	p_sys->p_buff = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_OBJWK)*p_sys->num );
 	GF_ASSERT( p_sys->p_buff );
-	memset( p_sys->p_buff, 0, sizeof(WF2DMAP_OBJWK)*p_sys->num );
 
 	return p_sys;
 }
@@ -148,8 +146,8 @@ WF2DMAP_OBJSYS* WF2DMAP_OBJSysInit( u32 objnum, u32 heapID )
 void WF2DMAP_OBJSysExit( WF2DMAP_OBJSYS* p_sys )
 {
 	GF_ASSERT( p_sys );
-	sys_FreeMemoryEz( p_sys->p_buff );
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys->p_buff );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------

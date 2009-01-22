@@ -688,6 +688,26 @@ enum{
 	MCV_USERD_BTTN_RET_RIGHT,	// 右がおされた
 };
 
+
+static GF_BGL_DISPVRAM _defVBTbl = {
+        GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+        GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+
+        GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+        GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+
+//        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+        GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+
+        GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+        GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+
+        GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+        GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
+        };
+
+
 #ifdef WFP2P_DEBUG	// 人をいっぱい出す
 //#define WFP2PM_MANY_OBJ
 #endif
@@ -1810,24 +1830,7 @@ static void VBlankFunc( void * work )
 //--------------------------------------------------------------------------------------------
 static void VramBankSet(void)
 {
-    GF_BGL_DISPVRAM tbl = {
-        GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-        GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-
-        GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-        GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-
-//        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-        GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-
-        GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-        GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-
-        GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-        GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
-        };
-    GF_Disp_SetBank( &tbl );
+    GF_Disp_SetBank( &_defVBTbl );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2614,7 +2617,7 @@ static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)
 {
     int i;
 
-
+#if 0
     // OAMマネージャーの初期化
     NNS_G2dInitOamManagerModule();
 
@@ -2639,6 +2642,18 @@ static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)
     for(i=0;i<CLACT_RESOURCE_NUM;i++){		//リソースマネージャー作成
         wk->resMan[i] = CLACT_U_ResManagerInit(WF_CLACT_RESNUM, i, HEAPID_WIFIP2PMATCH);
     }
+#endif
+	const u8 CELL_MAX = 16;
+	GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
+	cellSysInitData.oamst_main = 1; //通信アイコンの分
+	cellSysInitData.oamnum_main = 64-1;
+	cellSysInitData.oamst_sub = 16; 
+	cellSysInitData.oamnum_sub = 128-16;
+	
+	GFL_CLACT_SYS_Create( &cellSysInitData , &_defVBTbl, HEAPID_WIFIP2PMATCH );
+	wk->clactSet  = GFL_CLACT_UNIT_Create( CELL_MAX , 0, HEAPID_WIFIP2PMATCH );
+	GFL_CLACT_UNIT_SetDefaultRend( wk->clactSet );
+
 
 	// FontOAMシステム作成
 	wk->fontoam = FONTOAM_SysInit( WF_FONTOAM_NUM, HEAPID_WIFIP2PMATCH );

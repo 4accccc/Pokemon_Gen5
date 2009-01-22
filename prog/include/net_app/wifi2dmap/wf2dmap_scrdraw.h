@@ -78,7 +78,7 @@ typedef struct {
 */
 //-----------------------------------------------------------------------------
 // システム作成
-extern WF2DMAP_SCRDRAW* WF2DMAP_SCRDrawSysInit( CLACT_U_EASYRENDER_DATA* p_render, GFL_BG_INI* p_bgl, const WF2DMAP_SCRDRAWINIT* cp_init, u32 heapID );
+extern WF2DMAP_SCRDRAW* WF2DMAP_SCRDrawSysInit( GFL_CLSYS_REND* p_render, GFL_BG_INI* p_bgl, const WF2DMAP_SCRDRAWINIT* cp_init, u32 heapID );
 extern void WF2DMAP_SCRDrawSysExit( WF2DMAP_SCRDRAW* p_sys );
 
 // スクロール反映

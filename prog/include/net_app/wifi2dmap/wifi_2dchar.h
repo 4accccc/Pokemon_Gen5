@@ -15,15 +15,10 @@ extern "C" {
 #define __WIFI_2DCHAR_H__
 
 #include <gflib.h>
+#include "system/palanm.h"
 #include "wifi_2dcharcon.h"
 #include "net_app/wifi2dmap/wifi_2dcommon.h"
 
-#undef GLOBAL
-#ifdef	__WIFI_2DCHAR_H_GLOBAL
-#define	GLOBAL	/* */
-#else
-#define	GLOBAL	extern
-#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -117,55 +112,54 @@ typedef struct {
 */
 //-----------------------------------------------------------------------------
 // システムの生成
-GLOBAL WF_2DCSYS* WF_2DC_SysInit( GFL_CLUNIT* p_unit, PALETTE_FADE_PTR p_pfd, u32 objnum, u32 heap );
-GLOBAL void WF_2DC_SysExit( WF_2DCSYS* p_sys );
+extern WF_2DCSYS* WF_2DC_SysInit( GFL_CLUNIT* p_unit, PALETTE_FADE_PTR p_pfd, u32 objnum, u32 heap );
+extern void WF_2DC_SysExit( WF_2DCSYS* p_sys );
 
 // リソース登録
-GLOBAL void WF_2DC_ResSet( WF_2DCSYS* p_sys, u32 view_type, u32 draw_type, WF_2DC_MOVETYPE movetype, u32 heap );
-GLOBAL void WF_2DC_ResDel( WF_2DCSYS* p_sys, u32 view_type );
-GLOBAL BOOL WF_2DC_ResCheck( const WF_2DCSYS* cp_sys, u32 view_type );
-GLOBAL void WF_2DC_AllResDel( WF_2DCSYS* p_sys );
+extern void WF_2DC_ResSet( WF_2DCSYS* p_sys, u32 view_type, u32 draw_type, WF_2DC_MOVETYPE movetype, u32 heap );
+extern void WF_2DC_ResDel( WF_2DCSYS* p_sys, u32 view_type );
+extern BOOL WF_2DC_ResCheck( const WF_2DCSYS* cp_sys, u32 view_type );
+extern void WF_2DC_AllResDel( WF_2DCSYS* p_sys );
 
 // ユニオンリソース登録
 // ユニオンリソースは、boy1 boy3 man3 badman explore fighter gorggeousm mystery girl1 girl2 woman2 woman3 idol lady cowgirl gorggeousw の１６体
-GLOBAL void WF_2DC_UnionResSet( WF_2DCSYS* p_sys, u32 draw_type, WF_2DC_MOVETYPE movetype, u32 heap );
-GLOBAL void WF_2DC_UnionResDel( WF_2DCSYS* p_sys );
+extern void WF_2DC_UnionResSet( WF_2DCSYS* p_sys, u32 draw_type, WF_2DC_MOVETYPE movetype, u32 heap );
+extern void WF_2DC_UnionResDel( WF_2DCSYS* p_sys );
 
 // 陰のリソース読み込み
 // 陰リソースは主人公（男女どちらか）のリソースを読み込んだ後に登録してください。
 // 主人公用のカラーパレットを使用して表示します。
 // また、陰のリソースを破棄する前に主人公のリソースを破棄しないようにお願いいたします。
-GLOBAL void WF_2DC_ShadowResSet( WF_2DCSYS* p_sys, u32 draw_type, u32 shadow_pri, u32 heap );
-GLOBAL void WF_2DC_ShadowResDel( WF_2DCSYS* p_sys );
+extern void WF_2DC_ShadowResSet( WF_2DCSYS* p_sys, u32 draw_type, u32 shadow_pri, u32 heap );
+extern void WF_2DC_ShadowResDel( WF_2DCSYS* p_sys );
 
 // アクター作成
-GLOBAL WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view_type, u32 heap );
-GLOBAL void WF_2DC_WkDel( WF_2DCWK* p_wk );
+extern WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view_type, u32 heap );
+extern void WF_2DC_WkDel( WF_2DCWK* p_wk );
 
 // ワーク操作系
-GLOBAL GFL_CLWK* WF_2DC_WkClWkGet( WF_2DCWK* p_wk );
-GLOBAL const GFL_CLWK* WF_2DC_WkConstClWkGet( const WF_2DCWK* cp_wk );
-GLOBAL void WF_2DC_WkMatrixSet( WF_2DCWK* p_wk, s16 x, s16 y );
-GLOBAL s16 WF_2DC_WkMatrixGet( WF_2DCWK* p_wk, WF_2DC_MAT x_y );
-GLOBAL void WF_2DC_WkDrawPriSet( WF_2DCWK* p_wk, u16 pri );
-GLOBAL u16 WF_2DC_WkDrawPriGet( const WF_2DCWK* cp_wk );
-GLOBAL void WF_2DC_WkAnmAddFrame( WF_2DCWK* p_wk, fx32 frame );
-GLOBAL void WF_2DC_WkDrawFlagSet( WF_2DCWK* p_wk, BOOL flag );
-GLOBAL BOOL WF_2DC_WkDrawFlagGet( const WF_2DCWK* cp_wk );
-GLOBAL WF_2DC_MOVETYPE WF_2DC_WkMoveTypeGet( const WF_2DCWK* cp_wk );
-GLOBAL WF_2DC_ANMTYPE WF_2DC_WkAnmTypeGet( const WF_2DCWK* cp_wk );
-GLOBAL void WF_2DC_WkAnmFrameSet( WF_2DCWK* p_wk, u16 frame );
-GLOBAL u16 WF_2DC_WkAnmFrameGet( const WF_2DCWK* cp_wk );
-GLOBAL void WF_2DC_WkShadowMatrixSet( WF_2DCWK* p_wk, s16 x, s16 y );
+extern GFL_CLWK* WF_2DC_WkClWkGet( WF_2DCWK* p_wk );
+extern const GFL_CLWK* WF_2DC_WkConstClWkGet( const WF_2DCWK* cp_wk );
+extern void WF_2DC_WkMatrixSet( WF_2DCWK* p_wk, s16 x, s16 y );
+extern s16 WF_2DC_WkMatrixGet( WF_2DCWK* p_wk, WF_2DC_MAT x_y );
+extern void WF_2DC_WkDrawPriSet( WF_2DCWK* p_wk, u16 pri );
+extern u16 WF_2DC_WkDrawPriGet( const WF_2DCWK* cp_wk );
+extern void WF_2DC_WkAnmAddFrame( WF_2DCWK* p_wk, fx32 frame );
+extern void WF_2DC_WkDrawFlagSet( WF_2DCWK* p_wk, BOOL flag );
+extern BOOL WF_2DC_WkDrawFlagGet( const WF_2DCWK* cp_wk );
+extern WF_2DC_MOVETYPE WF_2DC_WkMoveTypeGet( const WF_2DCWK* cp_wk );
+extern WF_2DC_ANMTYPE WF_2DC_WkAnmTypeGet( const WF_2DCWK* cp_wk );
+extern void WF_2DC_WkAnmFrameSet( WF_2DCWK* p_wk, u16 frame );
+extern u16 WF_2DC_WkAnmFrameGet( const WF_2DCWK* cp_wk );
+extern void WF_2DC_WkShadowMatrixSet( WF_2DCWK* p_wk, s16 x, s16 y );
 
 // Patternアニメ（歩き、振り向きなどは決まった動作をするので）
 // WF_2DC_ANMWAYは、1フレームで終わります。
 // 終了チェックをする必要はありません
-GLOBAL void WF_2DC_WkPatAnmStart( WF_2DCWK* p_wk, WF_2DC_ANMTYPE anmtype, WF_COMMON_WAY anmway );
-GLOBAL BOOL WF_2DC_WkPatAnmEndCheck( const WF_2DCWK* cp_wk );
-GLOBAL void WF_2DC_WkPatAnmAddFrame( WF_2DCWK* p_wk );// Patternアニメ更新処理
+extern void WF_2DC_WkPatAnmStart( WF_2DCWK* p_wk, WF_2DC_ANMTYPE anmtype, WF_COMMON_WAY anmway );
+extern BOOL WF_2DC_WkPatAnmEndCheck( const WF_2DCWK* cp_wk );
+extern void WF_2DC_WkPatAnmAddFrame( WF_2DCWK* p_wk );// Patternアニメ更新処理
 
-#undef	GLOBAL
 #endif		// __WIFI_2DCHAR_H__
 
 #ifdef __cplusplus

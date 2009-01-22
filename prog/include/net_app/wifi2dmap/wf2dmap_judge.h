@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
@@ -15,12 +18,6 @@
 #include "net_app/wifi2dmap/wf2dmap_obj.h"
 #include "net_app/wifi2dmap/wf2dmap_map.h"
 
-#undef GLOBAL
-#ifdef	__WF2DMAP_JUDGE_H_GLOBAL
-#define	GLOBAL	/* */
-#else
-#define	GLOBAL	extern
-#endif
 
 
 
@@ -29,9 +26,10 @@
  *			コマンドジャッジモジュール
  */
 //-----------------------------------------------------------------------------
-GLOBAL BOOL WF2DMAP_JUDGESysCmdJudge( const WF2DMAP_MAPSYS* cp_mapsys, const WF2DMAP_OBJSYS* cp_objsys, const WF2DMAP_REQCMD* cp_req, WF2DMAP_ACTCMD* p_act );
+extern BOOL WF2DMAP_JUDGESysCmdJudge( const WF2DMAP_MAPSYS* cp_mapsys, const WF2DMAP_OBJSYS* cp_objsys, const WF2DMAP_REQCMD* cp_req, WF2DMAP_ACTCMD* p_act );
 
-
-#undef	GLOBAL
 #endif		// __WF2DMAP_JUDGE_H__
 
+#ifdef __cplusplus
+}/* extern "C" */
+#endif

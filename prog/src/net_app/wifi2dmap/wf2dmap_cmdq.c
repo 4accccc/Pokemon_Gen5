@@ -9,10 +9,10 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
-#define __WF2DMAP_CMDQ_H_GLOBAL
-#include "application/wifi_2dmap/wf2dmap_cmdq.h"
+#include "net_app/wifi2dmap/wf2dmap_cmdq.h"
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -65,13 +65,12 @@ WF2DMAP_ACTCMDQ* WF2DMAP_ACTCMDQSysInit( u32 buffnum, u32 heapID )
 {
 	WF2DMAP_ACTCMDQ* p_sys;
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WF2DMAP_ACTCMDQ) );
+	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_ACTCMDQ) );
 	GF_ASSERT( p_sys );
 
 	p_sys->num = buffnum + 1;	// キューがいっぱいになったことチェック用
 	
-	p_sys->p_buff = sys_AllocMemory( heapID, sizeof(WF2DMAP_ACTCMD)*p_sys->num );
-	memset( p_sys->p_buff, 0, sizeof(WF2DMAP_ACTCMD)*p_sys->num );
+	p_sys->p_buff = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_ACTCMD)*p_sys->num );
 
 	p_sys->top = 0;
 	p_sys->tail = 0;
@@ -88,8 +87,8 @@ WF2DMAP_ACTCMDQ* WF2DMAP_ACTCMDQSysInit( u32 buffnum, u32 heapID )
 //-----------------------------------------------------------------------------
 void WF2DMAP_ACTCMDQSysExit( WF2DMAP_ACTCMDQ* p_sys )
 {
-	sys_FreeMemoryEz( p_sys->p_buff );
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys->p_buff );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -209,13 +208,12 @@ WF2DMAP_REQCMDQ* WF2DMAP_REQCMDQSysInit( u32 buffnum, u32 heapID )
 {
 	WF2DMAP_REQCMDQ* p_sys;
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WF2DMAP_REQCMDQ) );
+	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_REQCMDQ) );
 	GF_ASSERT( p_sys );
 
 	p_sys->num = buffnum + 1;	// キューがいっぱいになったことチェック用
 	
-	p_sys->p_buff = sys_AllocMemory( heapID, sizeof(WF2DMAP_REQCMD)*p_sys->num );
-	memset( p_sys->p_buff, 0, sizeof(WF2DMAP_REQCMD)*p_sys->num );
+	p_sys->p_buff = GFL_HEAP_AllocClearMemory( heapID, sizeof(WF2DMAP_REQCMD)*p_sys->num );
 
 	p_sys->top = 0;
 	p_sys->tail = 0;
@@ -232,8 +230,8 @@ WF2DMAP_REQCMDQ* WF2DMAP_REQCMDQSysInit( u32 buffnum, u32 heapID )
 //-----------------------------------------------------------------------------
 void WF2DMAP_REQCMDQSysExit( WF2DMAP_REQCMDQ* p_sys )
 {
-	sys_FreeMemoryEz( p_sys->p_buff );
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys->p_buff );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------

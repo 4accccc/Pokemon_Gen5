@@ -10,10 +10,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 
-#include "common.h"
+#include <gflib.h>
 
-#define __WF2DMAP_SCROLL_H_GLOBAL
-#include "application/wifi_2dmap/wf2dmap_scroll.h"
+#include "net_app/wifi2dmap/wf2dmap_scroll.h"
 
 //-----------------------------------------------------------------------------
 /**

@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
@@ -79,3 +82,6 @@ GLOBAL u32 WF2DMAP_MAPSysParamGet( const WF2DMAP_MAPSYS* cp_sys, u16 xgrid, u16 
 #undef	GLOBAL
 #endif		// __WF2DMAP_MAP_H__
 
+#ifdef __cplusplus
+}/* extern "C" */
+#endif

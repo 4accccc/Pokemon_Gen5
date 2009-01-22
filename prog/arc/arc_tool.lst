@@ -94,6 +94,9 @@
 	$VERSION_WHITE	ARCID_TITLE	"title.narc"	#ホワイト版タイトル
 	ARCID_EASYPOKELIST	"test_graphic/easy_pokelist.narc"	#簡易ポケモンリスト
 	ARCID_CONFIG_GRA	"test_graphic/config_gra.narc"		#設定画面用データ
+	ARCID_WIFI2DCHAR		"wifi2dchar.narc"
+	ARCID_WIFIUNIONCHAR		"wifi_unionobj.narc"
+	ARCID_WIFIP2PMATCH		"wifip2pmatch.narc"
 	ARCID_MYSTERY		"mystery.narc"			#不思議な贈り物
 	ARCID_STARTMENU		"startmenu.narc"		#スタートメニュー
 	ARCID_FLDMMDL_BTX	"test_graphic/fldmmdl_btx.narc" #動作モデル
@@ -102,4 +105,3 @@
 	ARCID_YN_TOUCH		"yn_touch.narc"			#YesNoボタン
 	ARCID_TRAINERCARD	"trainer_case.narc"		#トレーナーカード
 	ARCID_TRC_UNION		"trc_union.narc"		#ユニオンルーム トレーナーカード キャラ絵
-

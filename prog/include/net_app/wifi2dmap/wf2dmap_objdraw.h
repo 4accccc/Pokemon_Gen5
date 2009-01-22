@@ -14,6 +14,7 @@ extern "C" {
 #ifndef __WF2DMAP_OBJDRAW_H__
 #define __WF2DMAP_OBJDRAW_H__
 
+#include "system/palanm.h"
 #include "net_app/wifi2dmap/wf2dmap_common.h"
 #include "net_app/wifi2dmap/wf2dmap_obj.h"
 #include "net_app/wifi2dmap/wifi_2dchar.h"

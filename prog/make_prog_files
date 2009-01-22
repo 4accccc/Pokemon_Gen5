@@ -340,19 +340,18 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_WIFICLUB	= net_app/wificlub/wifi_p2pevent.c
 
+# WIFI2DMAP
+#===> SRCS_OVERLAY_WIFICLUB
+SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
+							net_app/wifi2dmap/wf2dmap_map.c \
+							net_app/wifi2dmap/wf2dmap_obj.c \
+							net_app/wifi2dmap/wf2dmap_judge.c \
+							net_app/wifi2dmap/wf2dmap_objdraw.c \
+							net_app/wifi2dmap/wf2dmap_scroll.c \
+							net_app/wifi2dmap/wf2dmap_scrdraw.c \
+							net_app/wifi2dmap/wf2dmap_cmdq.c
 
 
-## WIFI2DMAP
-##===> SRCS_OVERLAY_WIFICLUB
-#SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
-#							net_app/wifi2dmap/wf2dmap_map.c \
-#							net_app/wifi2dmap/wf2dmap_obj.c \
-#							net_app/wifi2dmap/wf2dmap_judge.c \
-#							net_app/wifi2dmap/wf2dmap_objdraw.c \
-#							net_app/wifi2dmap/wf2dmap_scroll.c \
-#							net_app/wifi2dmap/wf2dmap_scrdraw.c \
-#							net_app/wifi2dmap/wf2dmap_cmdq.c
-#
 # •sŽv‹c‚È‘¡‚è•¨
 #===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
@@ -361,4 +360,3 @@ SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
 			mystery/mysterylib.c \
 			mystery/beacondownload.c 
 
-#

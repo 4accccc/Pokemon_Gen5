@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
@@ -14,12 +17,6 @@
 #include "net_app/wifi2dmap/wf2dmap_common.h"
 #include "net_app/wifi2dmap/wf2dmap_objst.h"
 
-#undef GLOBAL
-#ifdef	__WF2DMAP_OBJ_H_GLOBAL
-#define	GLOBAL	/* */
-#else
-#define	GLOBAL	extern
-#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -99,46 +96,48 @@ typedef struct {
 //-----------------------------------------------------------------------------
 
 // システム管理
-GLOBAL WF2DMAP_OBJSYS* WF2DMAP_OBJSysInit( u32 objnum, u32 heapID );
-GLOBAL void WF2DMAP_OBJSysExit( WF2DMAP_OBJSYS* p_sys );
+extern WF2DMAP_OBJSYS* WF2DMAP_OBJSysInit( u32 objnum, u32 heapID );
+extern void WF2DMAP_OBJSysExit( WF2DMAP_OBJSYS* p_sys );
 
 // 動作メイン
-GLOBAL void WF2DMAP_OBJSysCmdSet( WF2DMAP_OBJSYS* p_objsys, const WF2DMAP_ACTCMD* cp_cmd );
-GLOBAL void WF2DMAP_OBJSysMain( WF2DMAP_OBJSYS* p_objsys );
+extern void WF2DMAP_OBJSysCmdSet( WF2DMAP_OBJSYS* p_objsys, const WF2DMAP_ACTCMD* cp_cmd );
+extern void WF2DMAP_OBJSysMain( WF2DMAP_OBJSYS* p_objsys );
 
 
-GLOBAL u32 WF2DMAP_OBJSysObjNumGet( const WF2DMAP_OBJSYS* cp_sys );
+extern u32 WF2DMAP_OBJSysObjNumGet( const WF2DMAP_OBJSYS* cp_sys );
 
 // ワーク作成破棄
-GLOBAL WF2DMAP_OBJWK* WF2DMAP_OBJWkNew( WF2DMAP_OBJSYS* p_sys, const WF2DMAP_OBJDATA* cp_data );
-GLOBAL void WF2DMAP_OBJWkDel( WF2DMAP_OBJWK* p_wk );
+extern WF2DMAP_OBJWK* WF2DMAP_OBJWkNew( WF2DMAP_OBJSYS* p_sys, const WF2DMAP_OBJDATA* cp_data );
+extern void WF2DMAP_OBJWkDel( WF2DMAP_OBJWK* p_wk );
 
 
 // プレイヤーIDのオブジェクト取得
-GLOBAL WF2DMAP_OBJWK* WF2DMAP_OBJWkGet( WF2DMAP_OBJSYS* p_sys, u16 playid );
-GLOBAL WF2DMAP_OBJWK* WF2DMAP_OBJWkIdxGet( WF2DMAP_OBJSYS* p_sys, u16 idx );
-GLOBAL const WF2DMAP_OBJWK* WF2DMAP_OBJWkConstGet( const WF2DMAP_OBJSYS* cp_sys, u16 playid );
-GLOBAL const WF2DMAP_OBJWK* WF2DMAP_OBJWkConstIdxGet( const WF2DMAP_OBJSYS* cp_sys, u16 idx );
+extern WF2DMAP_OBJWK* WF2DMAP_OBJWkGet( WF2DMAP_OBJSYS* p_sys, u16 playid );
+extern WF2DMAP_OBJWK* WF2DMAP_OBJWkIdxGet( WF2DMAP_OBJSYS* p_sys, u16 idx );
+extern const WF2DMAP_OBJWK* WF2DMAP_OBJWkConstGet( const WF2DMAP_OBJSYS* cp_sys, u16 playid );
+extern const WF2DMAP_OBJWK* WF2DMAP_OBJWkConstIdxGet( const WF2DMAP_OBJSYS* cp_sys, u16 idx );
 
 // データ取得設定
-GLOBAL s32 WF2DMAP_OBJWkDataGet( const WF2DMAP_OBJWK* cp_wk, WF2DMAP_OBJPARAM id );
-GLOBAL void WF2DMAP_OBJWkDataSet( WF2DMAP_OBJWK* p_wk, WF2DMAP_OBJPARAM id, s32 data );
-GLOBAL void WF2DMAP_OBJWkDataAdd( WF2DMAP_OBJWK* p_wk, WF2DMAP_OBJPARAM id, s32 data );
-GLOBAL WF2DMAP_POS WF2DMAP_OBJWkMatrixGet( const WF2DMAP_OBJWK* cp_wk );
-GLOBAL WF2DMAP_POS WF2DMAP_OBJWkLastMatrixGet( const WF2DMAP_OBJWK* cp_wk );
-GLOBAL WF2DMAP_POS WF2DMAP_OBJWkFrameMatrixGet( const WF2DMAP_OBJWK* cp_wk );
-GLOBAL void WF2DMAP_OBJWkMatrixSet( WF2DMAP_OBJWK* p_wk, WF2DMAP_POS pos );
-GLOBAL void WF2DMAP_OBJWkLastMatrixSet( WF2DMAP_OBJWK* p_wk, WF2DMAP_POS pos );
+extern s32 WF2DMAP_OBJWkDataGet( const WF2DMAP_OBJWK* cp_wk, WF2DMAP_OBJPARAM id );
+extern void WF2DMAP_OBJWkDataSet( WF2DMAP_OBJWK* p_wk, WF2DMAP_OBJPARAM id, s32 data );
+extern void WF2DMAP_OBJWkDataAdd( WF2DMAP_OBJWK* p_wk, WF2DMAP_OBJPARAM id, s32 data );
+extern WF2DMAP_POS WF2DMAP_OBJWkMatrixGet( const WF2DMAP_OBJWK* cp_wk );
+extern WF2DMAP_POS WF2DMAP_OBJWkLastMatrixGet( const WF2DMAP_OBJWK* cp_wk );
+extern WF2DMAP_POS WF2DMAP_OBJWkFrameMatrixGet( const WF2DMAP_OBJWK* cp_wk );
+extern void WF2DMAP_OBJWkMatrixSet( WF2DMAP_OBJWK* p_wk, WF2DMAP_POS pos );
+extern void WF2DMAP_OBJWkLastMatrixSet( WF2DMAP_OBJWK* p_wk, WF2DMAP_POS pos );
 
 // 当たり判定関係
-GLOBAL const WF2DMAP_OBJWK* WF2DMAP_OBJSysHitCheck( const WF2DMAP_OBJWK* cp_wk, const WF2DMAP_OBJSYS* cp_objsys, WF2DMAP_WAY way );
-GLOBAL const WF2DMAP_OBJWK* WF2DMAP_OBJSysPosHitCheck( const WF2DMAP_OBJSYS* cp_objsys, WF2DMAP_POS pos );
+extern const WF2DMAP_OBJWK* WF2DMAP_OBJSysHitCheck( const WF2DMAP_OBJWK* cp_wk, const WF2DMAP_OBJSYS* cp_objsys, WF2DMAP_WAY way );
+extern const WF2DMAP_OBJWK* WF2DMAP_OBJSysPosHitCheck( const WF2DMAP_OBJSYS* cp_objsys, WF2DMAP_POS pos );
 
 
 // ツール類
-GLOBAL WF2DMAP_POS WF2DMAP_OBJToolWayPosGet( WF2DMAP_POS pos, WF2DMAP_WAY way );
-GLOBAL WF2DMAP_WAY WF2DMPA_OBJToolRetWayGet( WF2DMAP_WAY way );
+extern WF2DMAP_POS WF2DMAP_OBJToolWayPosGet( WF2DMAP_POS pos, WF2DMAP_WAY way );
+extern WF2DMAP_WAY WF2DMPA_OBJToolRetWayGet( WF2DMAP_WAY way );
 
-#undef	GLOBAL
 #endif		// __WF2DMAP_OBJ_H__
 
+#ifdef __cplusplus
+}/* extern "C" */
+#endif

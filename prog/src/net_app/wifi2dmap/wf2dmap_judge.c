@@ -9,10 +9,9 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
-#define __WF2DMAP_JUDGE_H_GLOBAL
-#include "application/wifi_2dmap/wf2dmap_judge.h"
+#include "net_app/wifi2dmap/wf2dmap_judge.h"
 
 //-----------------------------------------------------------------------------
 /**
