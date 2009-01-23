@@ -213,13 +213,13 @@ static void callHandlers( const BtlEventHandlerTable* tbl, BtlEventType type, BT
 
 
 
-void BTL_EVENT_CallHandlers( BTL_SERVER* server, BtlEventType type )
+void BTL_EVENT_CallHandlers( BTL_SERVER* server, BtlEventType eventID )
 {
 	BTL_EVENT_FACTOR* factor;
 
 	for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
 	{
-		callHandlers( factor->handlerTable, type, server, factor->pokeID, factor->work );
+		callHandlers( factor->handlerTable, eventID, server, factor->pokeID, factor->work );
 	}
 }
 

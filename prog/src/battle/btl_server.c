@@ -43,8 +43,8 @@ typedef BOOL (*ServerMainProc)(BTL_SERVER*, int*);
 
 typedef struct {
 
-	BTL_ADAPTER*	adapter;
-	BTL_PARTY*		party;
+	BTL_ADAPTER*		adapter;
+	BTL_PARTY*			party;
 	BTL_POKEPARAM*	member[ TEMOTI_POKEMAX ];
 	BTL_POKEPARAM*	frontMember[ BTL_POSIDX_MAX ];
 	u8				memberCount;
@@ -64,37 +64,39 @@ typedef struct {
 
 typedef struct {
 
-	WazaID	waza;				///< 出したワザID
+	WazaID	waza;						///< 出したワザID
 
-	u8		attackPokeID;		///< 攻撃側ポケID
+	u8		attackPokeID;			///< 攻撃側ポケID
 	u8		defencePokeID;		///< 受け側ポケID
 
 	u8		wazaExecuteFlag;	///< ワザ実行できたかフラグ
-	u8		wazaHitRatio;		///< ワザ命中確率
+	u8		wazaHitRatio;			///< ワザ命中確率
 //	u8		attackHitRank;
 //	u8		defenceHitRank;
-	u8		wazaPower;			///< ワザ威力
+	u8		wazaPower;				///< ワザ威力
 	u8		wazaDamageType;		///< ダメージタイプ（物理・特殊）
-	u8		criticalRank;		///< クリティカル率
-	u8		criticalFlag;		///< クリティカルフラグ
-	u8		wazaPokeType;		///< ワザのポケタイプ
-	u8		typeAff;			///< ワザと受け側ポケの相性
+	u8		criticalRank;			///< クリティカル率
+	u8		criticalFlag;			///< クリティカルフラグ
+	u8		wazaPokeType;			///< ワザのポケタイプ
+	u8		typeAff;					///< ワザと受け側ポケの相性
 	PokeTypePair	attackerPokeType;	///< 攻撃側ポケタイプ
 	PokeTypePair	defenderPokeType;	///< 受け側ポケタイプ
 	u16		attackerPower;		///< 攻撃側の能力値（こうげきorとくこう）
 	u16		defenderGuard;		///< 防御側の能力値（ぼうぎょorとくぼう）
-	u16		damageDenom;		///< ダメージ計算用の母数
-	u32		rawDamage;			///< タイプ計算前の素ダメージ
-	u32		realDamage;			///< タイプ計算後の実ダメージ
+	u16		damageDenom;			///< ダメージ計算用の母数
+	u32		rawDamage;				///< タイプ計算前の素ダメージ
+	u32		realDamage;				///< タイプ計算後の実ダメージ
 	u32		refrectDamage;		///< 攻撃側の反動ダメージ
 	fx32	typeMatchRatio;		///< 攻撃側ポケとワザのタイプ一致によるダメージ倍率(1.0 or 1.5）
 
 	u8		wazaFailReason;		///< ワザ失敗理由
-	u8		confFlag;			///< こんらん自滅フラグ
-	u8		confDamage;			///< こんらん自滅ダメージ
+	u8		confFlag;					///< こんらん自滅フラグ
+	u8		confDamage;				///< こんらん自滅ダメージ
 
-	u8		hitCountMax;		///< 最大ヒット数
-	u8		hitCountReal;		///< 実際ヒット数
+	u8		hitCountMax;			///< 最大ヒット数
+	u8		hitCountReal;			///< 実際ヒット数
+
+	u8		decPP;						///< 減少PP値
 
 }FIGHT_EVENT_PARAM;
 
@@ -134,8 +136,6 @@ struct _BTL_SERVER {
 
 	HEAPID				heapID;
 
-
-
 };
 
 
@@ -173,6 +173,7 @@ static u16 scEvent_CalcConfDamage( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, c
 static BOOL scEvent_CheckWazaExecute( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const CLIENT_WORK* atClient );
 static BOOL scEvent_checkHit( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static void scEvent_checkAffinity( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
+static void scEvent_decrementPP( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, u8 wazaIdx );
 static u8 scEvent_getHitRatio( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza );
 static u8 scEvent_GetHitCount( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, u8 hitCountMax );
 static u8 scEvent_getCriticalRank( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, WazaID waza );
@@ -214,7 +215,6 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, HEAPID heapID )
 
 	return sv;
 }
-
 //--------------------------------------------------------------------------------------
 /**
  * サーバ削除
@@ -227,7 +227,6 @@ void BTL_SERVER_Delete( BTL_SERVER* wk )
 {
 	GFL_HEAP_FreeMemory( wk );
 }
-
 //--------------------------------------------------------------------------------------
 /**
  * サーバと同一マシン上にあるクライアントとのアダプタを接続する
@@ -256,7 +255,6 @@ void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL
 
 	server->numClient++;
 }
-
 //--------------------------------------------------------------------------------------
 /**
  * サーバと異なるマシン上にあるクライアントとのアダプタを生成する
@@ -287,6 +285,38 @@ void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GF
 
 	server->numClient++;
 }
+//--------------------------------------------------------------------------------------
+/**
+ * 指定ポケIDを持つポケモンが戦闘に出ているかチェックし、出ていたらその戦闘位置を返す
+ *
+ * @param   server		
+ * @param   pokeID		
+ *
+ * @retval  BtlPokePos		出ている場合は戦闘位置ID／出ていない場合はBTL_POS_MAX
+ */
+//--------------------------------------------------------------------------------------
+BtlPokePos BTL_SERVER_CheckExistFrontPokeID( BTL_SERVER* server, u8 pokeID )
+{
+	int i;
+
+	for(i=0; i<BTL_CLIENT_MAX; i++)
+	{
+		if( server->client[i].numCoverPos )
+		{
+			int p;
+			for(p=0; p<server->client[i].numCoverPos; p++)
+			{
+				if( (server->client[i].frontMember[p] != NULL)
+				&&	(BTL_POKEPARAM_GetID(server->client[i].frontMember[p]) == pokeID)
+				){
+					return BTL_MAIN_GetClientPokePos( server->mainModule, i, p );
+				}
+			}
+		}
+	}
+	return BTL_POS_MAX;
+}
+
 
 //--------------------------------------------------------------------------
 /**
@@ -1016,6 +1046,8 @@ static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, u8
 		SCQUE_PUT_MSG_WAZA( server->que, atPos, action->fight.wazaIdx );
 
 		scPut_FightSingleDmg( server, fep, atClient, defClient, attacker, defender, waza, action->fight.wazaIdx );
+
+		scEvent_decrementPP( server, fep, attacker, action->fight.wazaIdx );
 	}
 }
 
@@ -1276,6 +1308,22 @@ static void scEvent_checkAffinity( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, c
 	fep->typeAff = BTL_CALC_TypeAff( fep->wazaPokeType, fep->defenderPokeType );
 }
 
+// 使ったワザのPPデクリメント
+static void scEvent_decrementPP( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, u8 wazaIdx )
+{
+	fep->decPP = 1;
+
+	BTL_EVENT_CallHandlers( server, BTL_EVENT_DECREMENT_PP );
+
+	if( fep->decPP )
+	{
+		u8 pokeID = BTL_POKEPARAM_GetID( attacker );
+		BTL_Printf("[SV] DECPP_ コマンドセット, value=%d\n", fep->decPP);
+		SCQUE_PUT_OP_PPMinus( server->que, pokeID, wazaIdx, fep->decPP );
+	}
+
+}
+
 // ワザ的中率取得
 static u8 scEvent_getHitRatio( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza )
 {
@@ -1505,7 +1553,7 @@ void BTL_SERVER_RECTPT_SetMessage( BTL_SERVER* server, u16 msgID, BtlPokePos pok
 
 //=============================================================================================
 /**
- * ステータスのランクダウン効果
+ * [ハンドラ受信] ステータスのランクダウン効果
  *
  * @param   server			
  * @param   exPos					対象ポケモン位置
@@ -1528,6 +1576,20 @@ void BTL_SERVER_RECEPT_RankDownEffect( BTL_SERVER* server, BtlExPos exPos, BppVa
 		pokeID = BTL_POKEPARAM_GetID( pp );
 		scEvent_RankDown( server, pokeID, targetPos[i], statusType, volume );
 	}
+}
+
+//=============================================================================================
+/**
+ * [ハンドラ受信] 減少PP値の修正
+ *
+ * @param   server		
+ * @param   volume		修正後のPP
+ *
+ */
+//=============================================================================================
+void BTL_SERVER_RECEPT_SetDecrementPP( BTL_SERVER* server, u8 volume )
+{
+	server->fightEventParams.decPP = volume;
 }
 
 

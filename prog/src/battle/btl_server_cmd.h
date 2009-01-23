@@ -131,6 +131,21 @@ static inline void SCQUE_READ_OP_HpMinus( BTL_SERVER_CMD_QUE* que, int* args )
 	args[1] = scque_read2byte( que );
 }
 
+static inline void SCQUE_PUT_OP_PPMinus( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 wazaIdx, u8 value )
+{
+	scque_put2byte( que, SC_OP_PP_MINUS );
+	scque_put1byte( que, pokeID );
+	scque_put1byte( que, wazaIdx );
+	scque_put1byte( que, value );
+}
+static inline void SCQUE_READ_OP_PPMinus( BTL_SERVER_CMD_QUE* que, int *args )
+{
+	args[0] = scque_read1byte( que );
+	args[1] = scque_read1byte( que );
+	args[2] = scque_read1byte( que );
+}
+
+
 static inline void SCQUE_PUT_OP_RankUp( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 statusType, u8 volume )
 {
 	scque_put2byte( que, SC_OP_RANK_UP );
@@ -318,20 +333,21 @@ static inline ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 
 	switch( cmd ){
 	case SC_OP_HP_MINUS:		SCQUE_READ_OP_HpMinus( que, args ); break;
+	case SC_OP_PP_MINUS:		SCQUE_READ_OP_PPMinus( que, args ); break;
 	case SC_OP_RANK_UP:			SCQUE_READ_OP_RankUp( que, args ); break;
 	case SC_OP_RANK_DOWN:		SCQUE_READ_OP_RankDown( que, args ); break;
-	case SC_DATA_WAZA_EXE:		SCQUE_READ_DATA_WazaExe( que, args ); break;
-	case SC_DATA_MEMBER_IN:		SCQUE_READ_DATA_MemberIn( que, args ); break;
+	case SC_DATA_WAZA_EXE:	SCQUE_READ_DATA_WazaExe( que, args ); break;
+	case SC_DATA_MEMBER_IN:	SCQUE_READ_DATA_MemberIn( que, args ); break;
 	case SC_ACT_WAZA_DMG:		SCQUE_READ_ACT_WazaDamage( que, args ); break;
 	case SC_ACT_RANKUP:			SCQUE_READ_ACT_RankUp( que, args ); break;
 	case SC_ACT_RANKDOWN:		SCQUE_READ_ACT_RankDown( que, args ); break;
-	case SC_ACT_DEAD:			SCQUE_READ_ACT_Dead( que, args ); break;
-	case SC_ACT_MEMBER_IN:		SCQUE_READ_ACT_MemberIn( que, args ); break;
+	case SC_ACT_DEAD:				SCQUE_READ_ACT_Dead( que, args ); break;
+	case SC_ACT_MEMBER_IN:	SCQUE_READ_ACT_MemberIn( que, args ); break;
 	case SC_TOKWIN_IN:			SCQUE_READ_TOKWIN( que, args ); break;
 	case SC_TOKWIN_OUT:			SCQUE_READ_TOKWIN( que, args ); break;
-	case SC_MSG_STD:			SCQUE_READ_Msg( que, args ); break;
-	case SC_MSG_SET:			SCQUE_READ_Msg( que, args ); break;
-	case SC_MSG_WAZA:			SCQUE_READ_MSG_WAZA( que, args ); break;
+	case SC_MSG_STD:				SCQUE_READ_Msg( que, args ); break;
+	case SC_MSG_SET:				SCQUE_READ_Msg( que, args ); break;
+	case SC_MSG_WAZA:				SCQUE_READ_MSG_WAZA( que, args ); break;
 	default:
 		args[0] = scque_read1byte( que );
 		break;

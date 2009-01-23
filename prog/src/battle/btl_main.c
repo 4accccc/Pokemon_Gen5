@@ -64,9 +64,9 @@ struct _BTL_MAIN_MODULE {
 
 	// サーバが計算時に書き換えても良い一時使用パラメータ領域と、
 	// サーバコマンドを受け取ったクライアントが実際に書き換えるパラメータ領域
-	BTL_PARTY		party[ BTL_CLIENT_MAX ];
+	BTL_PARTY				party[ BTL_CLIENT_MAX ];
 	BTL_POKEPARAM*	pokeParam[ BTL_COMMITMENT_POKE_MAX ];
-	BTL_PARTY		partyForServerCalc[ BTL_CLIENT_MAX ];
+	BTL_PARTY				partyForServerCalc[ BTL_CLIENT_MAX ];
 	BTL_POKEPARAM*	pokeParamForServerCalc[ BTL_COMMITMENT_POKE_MAX ];
 
 	u8				numClients;
@@ -902,6 +902,22 @@ const BTL_POKEPARAM* BTL_MAIN_GetFrontPokeDataConst( const BTL_MAIN_MODULE* wk, 
 
 	return BTL_CLIENT_GetFrontPokeData( wk->client[clientID], posIdx );
 }
+
+//=============================================================================================
+/**
+ * バトルポケモンIDをポケモン戦闘位置に変換
+ *
+ * @param   wk		
+ * @param   pokeID		
+ *
+ * @retval  BtlPokePos		ポケモン戦闘位置（バトルに出ていなければ BTL_POS_MAX）
+ */
+//=============================================================================================
+BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, u8 pokeID )
+{
+	return BTL_SERVER_CheckExistFrontPokeID( wk->server, pokeID );
+}
+
 //=============================================================================================
 /**
  * 戦闘位置->クライアントID変換

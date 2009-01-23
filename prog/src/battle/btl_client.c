@@ -704,8 +704,15 @@ static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args )
 }
 static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
-	BTL_POKEPARAM_PPMinus( pp, args[1], args[2] );
+	u8 pokeID = args[0];
+	u8 wazaIdx = args[1];
+	u8 value = args[2];
+	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, pokeID );
+
+	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, pokePos );
+	BTL_POKEPARAM_PPMinus( pp, wazaIdx, value );
+	BTL_Printf(" [CL] ƒ|ƒPƒ‚ƒ“‚ÌPP Œ¸‚ç‚µ‚Ü‚· pokeID=%d, waza=%d, val=%d\n", pokeID, wazaIdx, value);
+
 	return TRUE;
 }
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )

@@ -35,6 +35,8 @@ extern void BTL_SERVER_Delete( BTL_SERVER* wk );
 extern void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL_PARTY* party, u8 clientID, u8 numCoverPos );
 extern void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, BTL_PARTY* party, u8 clientID, u8 numCoverPos );
 extern BOOL BTL_SERVER_Main( BTL_SERVER* server );
+extern BtlPokePos BTL_SERVER_CheckExistFrontPokeID( BTL_SERVER* server, u8 pokeID );
+
 
 // ÉèÉUé∏îsóùóR
 typedef enum {
@@ -75,5 +77,6 @@ extern void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SERVER* server, u8 pokeID );
 extern void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SERVER* server, u8 pokeID );
 
 extern void BTL_SERVER_RECEPT_RankDownEffect( BTL_SERVER* server, BtlExPos exPos, BppValueID statusType, u8 volume );
+extern void BTL_SERVER_RECEPT_SetDecrementPP( BTL_SERVER* server, u8 volume );
 
 #endif

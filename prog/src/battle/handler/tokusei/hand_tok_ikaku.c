@@ -39,10 +39,7 @@ static void handler_MemberComp( BTL_SERVER* server, u8 pokeID, int* work )
 	// work[0] を発動フラグとして使用
 	if( work[0] == 0 )
 	{
-//		u8 myPos = BTL_SERVER_RECEPT_PokeIDtoClientID( server, pokeID );
-		u8 myPos = pokeID;
-
-		BTL_Printf("いかくだよん\n");
+		BtlPokePos myPos = BTL_SERVER_CheckExistFrontPokeID( server, pokeID );
 
 		BTL_SERVER_RECEPT_TokuseiWinIn( server, myPos );
 		BTL_SERVER_RECEPT_RankDownEffect( server, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, myPos), BPP_ATTACK, 1 );
