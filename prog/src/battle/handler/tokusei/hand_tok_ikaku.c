@@ -33,9 +33,10 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Ikaku( u16 pri, u8 pokeID )
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
 
-
+// BTL_EVENT_MEMBER_COMP:戦闘メンバーが出そろった直後のハンドラ
 static void handler_MemberComp( BTL_SERVER* server, u8 pokeID, int* work )
 {
+	// work[0] を発動フラグとして使用
 	if( work[0] == 0 )
 	{
 //		u8 myPos = BTL_SERVER_RECEPT_PokeIDtoClientID( server, pokeID );

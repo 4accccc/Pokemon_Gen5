@@ -37,11 +37,12 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_ClearBody( u16 pri, u8 pokeID )
 
 static void handler_BeforeRankDown( BTL_SERVER* server, u8 pokeID, int* work )
 {
-//	u8 myPos = BTL_SERVER_RECEPT_PokeIDtoClientID( server, pokeID );
-	u8 myPos = pokeID;
-
-	if( BTL_SERVER_RECEPT_GetEventArg(server, BTL_EVARG_COMMON_POKEPOS) == myPos )
+	if( BTL_SERVER_RECEPT_GetEventArg(server, BTL_EVARG_COMMON_POKEID) == pokeID )
 	{
+		u8 myPos = BTL_SERVER_RECEPT_GetEventArg(server, BTL_EVARG_COMMON_POKEPOS);
+
+		BTL_Printf("クリアボディがランクダウン前に呼ばれたよ pos=%d\n", myPos);
+
 		BTL_SERVER_RECEPT_SetEventArg( server, BTL_EVARG_RANKDOWN_FAIL_FLAG, TRUE );
 		BTL_SERVER_RECEPT_TokuseiWinIn( server, myPos );
 		BTL_SERVER_RECTPT_SetMessage( server, BTL_STRID_SET_RankdownFail, myPos );

@@ -70,7 +70,7 @@ static inline u8 BTL_SERVER_MakeArg8_44( u8 arg1, u8 arg2 )
 extern int BTL_SERVER_RECEPT_GetEventArg( const BTL_SERVER* server, u8 idx );
 extern void BTL_SERVER_RECEPT_SetEventArg( BTL_SERVER* server, u8 idx, int value );
 
-extern void BTL_SERVER_RECTPT_SetMessage( BTL_SERVER* server, u16 msgID, u8 clientID );
+extern void BTL_SERVER_RECTPT_SetMessage( BTL_SERVER* server, u16 msgID, BtlPokePos pos );
 extern void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SERVER* server, u8 pokeID );
 extern void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SERVER* server, u8 pokeID );
 

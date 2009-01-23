@@ -186,7 +186,7 @@ static PokeTypePair scEvent_getDefenderPokeType( BTL_SERVER* server, FIGHT_EVENT
 static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID );
 static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scEvent_PokeComp( BTL_SERVER* server );
-static void scEvent_RankDown( BTL_SERVER* server, BtlPokePos pokePos, BppValueID statusType, u8 volume );
+static void scEvent_RankDown( BTL_SERVER* server, u8 pokeID, BtlPokePos pokePos, BppValueID statusType, u8 volume );
 
 
 
@@ -1428,9 +1428,10 @@ static void scEvent_PokeComp( BTL_SERVER* server )
 }
 
 // 能力を下げる
-static void scEvent_RankDown( BTL_SERVER* server, BtlPokePos pokePos, BppValueID statusType, u8 volume )
+static void scEvent_RankDown( BTL_SERVER* server, u8 pokeID, BtlPokePos pokePos, BppValueID statusType, u8 volume )
 {
 	server->eventArgs[ BTL_EVARG_COMMON_POKEPOS ] = pokePos;
+	server->eventArgs[ BTL_EVARG_COMMON_POKEID ] = pokeID;
 	server->eventArgs[ BTL_EVARG_RANKDOWN_STATUS_TYPE ] = statusType;
 	server->eventArgs[ BTL_EVARG_RANKDOWN_VOLUME ] = volume;
 	server->eventArgs[ BTL_EVARG_RANKDOWN_FAIL_FLAG ] = FALSE;
@@ -1496,9 +1497,10 @@ void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SERVER* server, u8 clientID )
 	SCQUE_PUT_TOKWIN_OUT( server->que, clientID );
 }
 
-void BTL_SERVER_RECTPT_SetMessage( BTL_SERVER* server, u16 msgID, u8 clientID )
+void BTL_SERVER_RECTPT_SetMessage( BTL_SERVER* server, u16 msgID, BtlPokePos pokePos )
 {
-	SCQUE_PUT_Msg( server->que, msgID, clientID );
+//	SCQUE_PUT_Msg( server->que, msgID, clientID );
+	SCQUE_PUT_MSG_SET( server->que, msgID, pokePos );
 }
 
 //=============================================================================================
@@ -1514,14 +1516,17 @@ void BTL_SERVER_RECTPT_SetMessage( BTL_SERVER* server, u16 msgID, u8 clientID )
 //=============================================================================================
 void BTL_SERVER_RECEPT_RankDownEffect( BTL_SERVER* server, BtlExPos exPos, BppValueID statusType, u8 volume )
 {
+	const BTL_POKEPARAM* pp;
 	u8 targetPos[ BTL_POSIDX_MAX ];
-	u8 numPokemons, i;
+	u8 numPokemons, pokeID, i;
 
 	numPokemons = BTL_MAIN_ExpandBtlPos( server->mainModule, exPos, targetPos );
 	BTL_Printf("ランクさげ効果：タイプ=%d,  対象ポケモン数=%d\n", statusType, numPokemons );
 	for(i=0; i<numPokemons; i++)
 	{
-		scEvent_RankDown( server, targetPos[i], statusType, volume );
+		pp = BTL_MAIN_GetFrontPokeData( server->mainModule, targetPos[i] );
+		pokeID = BTL_POKEPARAM_GetID( pp );
+		scEvent_RankDown( server, pokeID, targetPos[i], statusType, volume );
 	}
 }
 
