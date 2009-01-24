@@ -68,3 +68,32 @@ void	MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key)
 		SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
 	}
 }
+
+void	MainPlayerAct_C3( PC_ACTCONT* pcActCont, int key, u16 angle)
+{
+	BOOL	mvFlag = FALSE;
+
+	if( key & PAD_KEY_UP ){
+		mvFlag = TRUE;
+		pcActCont->direction = angle;
+	}
+	if( key & PAD_KEY_DOWN ){
+		mvFlag = TRUE;
+		pcActCont->direction = angle + 0x8000;
+	}
+	if( key & PAD_KEY_LEFT ){
+		mvFlag = TRUE;
+		pcActCont->direction = angle + 0x4000;
+	}
+	if( key & PAD_KEY_RIGHT ){
+		mvFlag = TRUE;
+		pcActCont->direction = angle + 0xc000;
+	}
+
+    
+	if( mvFlag == TRUE ){
+		SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
+	} else {
+		SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
+	}
+}

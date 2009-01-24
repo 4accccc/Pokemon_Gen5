@@ -15,8 +15,9 @@
 static void CalcPos(VecFx32 * pos, const VecFx32 * center, u16 len, u16 dir);
 
 static u16 player_len;
-static s16 mv_value;
+static s16 v_angle;
 static u16 pos_angle;
+static u16 v_len;
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -35,9 +36,9 @@ static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 
 	{
 		FIELD_CAMERA * cam = fieldWork->camera_control;
-		u16 len = 0x0308;
+		u16 len = 0x0340;
 		u16 dir = 0;
-		fx32 height = 0x2000;
+		fx32 height = 0x7c000;
 		VecFx32 trans = {0x2f6f36, 0, 0x301402};
 
 		FLD_SetCameraLength(cam, 0x0308);
@@ -45,19 +46,10 @@ static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 		FLD_SetCameraHeight(cam, height);
 		FLD_SetCameraTrans(cam, &trans);
 
-		player_len = 0x200;
-		mv_value = 16;
-	}
-	if (0){
-		u16 len;
-		fx32 height;
-		FLD_GetCameraLength(fieldWork->camera_control, &len);
-		len += 0x0080;
-		FLD_SetCameraLength(fieldWork->camera_control, len);
-
-		FLD_GetCameraHeight(fieldWork->camera_control, &height);
-		height += 0x0003a000;
-		FLD_SetCameraHeight(fieldWork->camera_control, height);
+		player_len = 0x1f0;
+		v_len = 1;
+		v_angle = 16;
+		pos_angle = 0;
 	}
 }
 
@@ -69,70 +61,52 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 
 	{
 		switch (tp_dir) {
-		case FLDEASYTP_TCHDIR_LEFT:		mv_value -= 8;	break;
-		case FLDEASYTP_TCHDIR_RIGHT:	mv_value += 8;	break;
-		case FLDEASYTP_TCHDIR_UP:		player_len += 8;	break;
-		case FLDEASYTP_TCHDIR_DOWN:		player_len -= 8;	break;
+		case FLDEASYTP_TCHDIR_LEFT:		v_angle -= 4;	break;
+		case FLDEASYTP_TCHDIR_RIGHT:	v_angle += 4;	break;
+		case FLDEASYTP_TCHDIR_UP:		v_len += 1;	break;
+		case FLDEASYTP_TCHDIR_DOWN:		v_len -= 1;	break;
 		}
-		if (mv_value <= 0) {mv_value = 8;}
-		if (mv_value > FX32_ONE / 16) { mv_value = FX32_ONE / 16; }
+		if (v_angle <= 0) {v_angle = 4;}
+		if (v_angle > FX32_ONE / 16) { v_angle = FX32_ONE / 16; }
+		if (v_len <= 0) {v_len = 1; }
+		if (v_len > 8) {v_len = 8; }
 	}
 	{
 		u16 dir;
 		FLD_GetCameraDirection(fieldWork->camera_control, &dir);
 		if (fieldWork->key_cont & PAD_KEY_LEFT) {
-			dir -= mv_value;
+			pos_angle -= v_angle;
+			dir -= v_angle;
 		}
 		if (fieldWork->key_cont & PAD_KEY_RIGHT) {
-			dir += mv_value;
+			pos_angle += v_angle;
+			dir += v_angle;
 		}
 		FLD_SetCameraDirection(fieldWork->camera_control, &dir);
 	}
 	{
+		if (fieldWork->key_cont & PAD_KEY_UP) {
+			player_len -= v_len;
+		}
+		if (fieldWork->key_cont & PAD_KEY_DOWN) {
+			player_len += v_len;
+		}
+	}
+	{
 		VecFx32 cam, player_pos;
-		u16 dir;
-		FLD_GetCameraDirection( fieldWork->camera_control, &dir);
 		FLD_GetCameraTrans( fieldWork->camera_control, &cam);
-		CalcPos(&player_pos, &cam, player_len, dir);
+		CalcPos(&player_pos, &cam, player_len, pos_angle);
 		SetPlayerActTrans( fieldWork->pcActCont, &player_pos );
 	}
-	//MainPlayerAct_NoGrid( fieldWork->pcActCont, fieldWork->key_cont );
+	MainPlayerAct_C3( fieldWork->pcActCont, fieldWork->key_cont, pos_angle );
 	FLD_MainFieldActSys( fieldWork->fldActCont );
 	
-	GetPlayerActTrans( fieldWork->pcActCont, pos );
-
-	//FLD_SetCameraTrans( fieldWork->camera_control, pos );
-	//FLD_SetCameraDirection( fieldWork->camera_control, &dir );
-
 	FLD_MainCamera( fieldWork->camera_control, fieldWork->key_cont );
-#if 0
-	{
-		GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(fieldWork->gs);
-		VecFx32 target, c_pos;
-		c_pos = *pos;
 
-		VEC_Set(	&target,
-					c_pos.x,
-					c_pos.y + CAMERA_TARGET_HEIGHT*FX32_ONE,
-					c_pos.z);
-		c_pos.x = pos->x + 16 * FX_SinIdx(0);
-		c_pos.y = pos->y;
-		c_pos.z = pos->z + 16 * FX_CosIdx(0);
+	if (tp_dir == FLDEASYTP_TCHDIR_CENTER) {
+		TAMADA_Printf("LEN %04x vec:%04x\n", player_len, v_len);
+		TAMADA_Printf("ANGLE %04x vec:%04x\n", pos_angle, v_angle);
 
-		GFL_G3D_CAMERA_SetTarget( g3Dcamera, &target );
-		GFL_G3D_CAMERA_SetPos( g3Dcamera, &c_pos );
-	}
-#endif
-	if (tp_dir == FLDEASYTP_TCHDIR_DOWN) {
-		VecFx32 trans;
-		FLDMAPPER_GRIDINFO gridInfo;
-		int i;
-		GetPlayerActTrans(fieldWork->pcActCont, &trans);
-		FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork->gs), &trans, &gridInfo);
-		OS_Printf("gridInfo.count = %d\n", gridInfo.count);
-		for (i = 0; i < gridInfo.count; i++) {
-			OS_Printf("[%02d]%08x\n",i, gridInfo.gridData[i].height);
-		}
 	}
 }
 
