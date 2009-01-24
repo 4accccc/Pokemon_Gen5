@@ -75,6 +75,7 @@ void	FLD_MainCamera( FIELD_CAMERA* camera, int key )
 	VecFx32	vecUD = { 0, 0, 0 };
 	BOOL	mvFlag = FALSE;
 
+#if 0
 	if( key & PAD_BUTTON_R ){
 		camera->direction -= RT_SPEED;
 	}
@@ -99,6 +100,7 @@ void	FLD_MainCamera( FIELD_CAMERA* camera, int key )
 	if( key & PAD_BUTTON_X ){
 		camera->cameraHeight += MV_SPEED;
 	}
+#endif
 	
 	trans = camera->trans;
 	trans.x += camera->transOffset.x;
