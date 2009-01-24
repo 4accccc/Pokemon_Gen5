@@ -38,7 +38,15 @@ void	MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key)
 		pcActCont->direction += RT_SPEED;
 	}
 #endif
-	{
+	if (key & PAD_BUTTON_Y) {
+		vecMove.y = -2 * FX32_ONE;
+	}
+	if (key & PAD_BUTTON_X) {
+		vecMove.y = +2 * FX32_ONE;
+	}
+	if (key & PAD_BUTTON_B) {
+		VEC_Add(&pcActCont->trans, &vecMove, &pcActCont->trans);
+	} else {
 		VecFx32 newPos = pcActCont->trans;
 		fx32 diff;
 		CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->gs), &pcActCont->gridInfoData, 
