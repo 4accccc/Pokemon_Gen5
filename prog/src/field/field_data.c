@@ -327,7 +327,7 @@ const SCENE_DATA resistMapTbl[] = {
 			2,  2, NELEMS(test_c3map),
 			test_c3map, 
 		}, 
-		&FieldNoGridFunctions,
+		&FieldTestC3Functions,
 		FALSE,
 	},
 };

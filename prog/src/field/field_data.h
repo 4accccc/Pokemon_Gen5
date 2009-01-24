@@ -23,4 +23,5 @@ extern u16 FIELDDATA_GetMapIDMax(void);
 extern const DEPEND_FUNCTIONS FieldBaseFunctions;
 extern const DEPEND_FUNCTIONS FieldNoGridFunctions;
 extern const DEPEND_FUNCTIONS FieldGridFunctions;
+extern const DEPEND_FUNCTIONS FieldTestC3Functions;
 
