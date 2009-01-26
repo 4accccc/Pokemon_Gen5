@@ -17,3 +17,4 @@ NNSARC_DEPEND_FILES	= \
 	nsbtx_files/tex_set_dun03.nsbtx \
 	nsbtx_files/tex_set_dun04.nsbtx \
 	nsbtx_files/tex_set_loopbridge.nsbtx \
+	nsbtx_files/tex_set_c3.nsbtx \

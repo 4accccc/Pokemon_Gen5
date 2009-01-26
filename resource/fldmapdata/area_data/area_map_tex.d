@@ -88,3 +88,8 @@ nsbtx_files/tex_set_loopbridge.nsbtx: src_imd_files/loopbridge.imd
 	@$(COPY) src_imd_files/loopbridge.imd marged_imd_files/tex_set_loopbridge.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_loopbridge.imd -o nsbtx_files/tex_set_loopbridge.nsbtx -etex
 
+nsbtx_files/tex_set_c3.nsbtx: src_imd_files/tex_c3.imd
+	@echo src_imd_files/tex_c3.imd Å® nsbtx_files/tex_set_c3.nsbtx
+	@$(COPY) src_imd_files/tex_c3.imd marged_imd_files/tex_set_c3.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_c3.imd -o nsbtx_files/tex_set_c3.nsbtx -etex
+
