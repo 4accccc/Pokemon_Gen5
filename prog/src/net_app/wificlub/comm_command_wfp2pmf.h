@@ -11,14 +11,7 @@
 #ifndef __COMM_COMMAND_WFP2PMF_H__
 #define __COMM_COMMAND_WFP2PMF_H__
 
-
-
-#undef GLOBAL
-#ifdef	__COMM_COMMAND_WFP2PMF_H_GLOBAL
-#define	GLOBAL	/* */
-#else
-#define	GLOBAL	extern
-#endif
+#include "net/network_define.h"
 
 enum CommCommandTradeList_e {
 
@@ -26,7 +19,7 @@ enum CommCommandTradeList_e {
 	//　ゲーム用
 	//=====================================
 	// 同期用	
-	CNM_WFP2PMF_RESULT = CS_COMMAND_MAX,	///< 通信KONG		親ー＞子
+	CNM_WFP2PMF_RESULT = GFL_NET_CMD_WIFICLUB,	///< 通信KONG		親ー＞子
 	CNM_WFP2PMF_START,						///< ゲーム開始		親ー＞子
 	CNM_WFP2PMF_VCHAT,						///< VCHATデータ	親ー＞子
 
@@ -38,9 +31,8 @@ enum CommCommandTradeList_e {
 	CNM_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
 
-GLOBAL const CommPacketTbl* WFP2PMF_CommCommandTclGet( void );
-GLOBAL int WFP2PMF_CommCommandTblNumGet( void );
+extern const NetRecvFuncTable* WFP2PMF_CommCommandTclGet( void );
+extern int WFP2PMF_CommCommandTblNumGet( void );
 
-#undef	GLOBAL
 #endif		// __COMM_COMMAND_WFP2PMF_H__
 

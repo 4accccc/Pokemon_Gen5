@@ -4512,7 +4512,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 #ifdef WFP2PM_MANY_OBJ
 		wk->friend_num = 32;
 #endif
-		WIFI_MCR_Init( &wk->matchroom, HEAPID_WIFIP2PMATCH, p_handle, wk->bgl, obj_code, wk->friend_num );
+		WIFI_MCR_Init( &wk->matchroom, HEAPID_WIFIP2PMATCH, p_handle, wk->bgl, obj_code, wk->friend_num, ARC_WIFIP2PMATCH_GRA );
 
 		// Ž©•ª‚ðo‚·
 		p_moveobj = WIFI_MCR_SetPlayer( &wk->matchroom, obj_code );

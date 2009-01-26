@@ -297,14 +297,21 @@ typedef struct {
 	GFL_BMPWIN*	  userWin;
 
 	// ボタン
-	CLACT_U_RES_OBJ_PTR	button_res[ 4 ];
-	CLACT_WORK_PTR button_act[MCV_USERD_BTTN_NUM];
-	CHAR_MANAGER_ALLOCDATA back_fontoam_cg;
+//	CLACT_U_RES_OBJ_PTR	button_res[ 4 ];
+  u32 btnCGRid;
+  u32 btnCLRid;
+  u32 btnCERid;
+
+//	CLACT_WORK_PTR button_act[MCV_USERD_BTTN_NUM];
+   GFL_CLWK* button_act[MCV_USERD_BTTN_NUM];
+#if 0 //@@OO
+  CHAR_MANAGER_ALLOCDATA back_fontoam_cg;
 	FONTOAM_OBJ_PTR back_fontoam;	// もどる用FONTOAM
-	u32 buttonact_on;			// ボタン動作モード
+#endif
+  u32 buttonact_on;			// ボタン動作モード
 	u32 touch_button;
 	u32 touch_button_event;
-	BUTTON_MAN* p_oambttnman;	// ボタン管理システム
+	GFL_BUTTON_MAN* p_oambttnman;	// ボタン管理システム
 } WIFIP2PMATCH_VIEW;
 
 
@@ -320,13 +327,15 @@ struct _WIFIP2PMATCH_WORK{
 //  NAMEIN_PARAM*		nameinParam;
   
   // メインリスト用ワーク
-  BMPLIST_DATA*   menulist;
-  BMPLIST_WORK* lw;		// BMPメニューワーク
+  BMP_MENULIST_DATA*   menulist;
+  BMPMENULIST_WORK* lw;		// BMPメニューワーク
   
-  BMPLIST_DATA*   submenulist;
-  BMPLIST_WORK* sublw;		// BMPメニューワーク
-  GF_BGL_INI		*bgl;									// GF_BGL_INI
-  SAVEDATA*  pSaveData;
+  BMP_MENULIST_DATA*   submenulist;
+  BMPMENULIST_WORK* sublw;		// BMPメニューワーク
+  GFL_BG_INI		*bgl;									// GF_BGL_INI
+#if 0
+  //SAVEDATA*  pSaveData;
+#endif
   WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー
   MSGDATA_MANAGER *MsgManager;							// 名前入力メッセージデータマネージャー
   MSGDATA_MANAGER *SysMsgManager;  //
@@ -339,7 +348,7 @@ struct _WIFIP2PMATCH_WORK{
   STRBUF*         pTemp;        // 入力登録時の一時バッファ
   
   int				MsgIndex;								// 終了検出用ワーク
-  BMPMENU_WORK* pYesNoWork;
+  BMPMENULIST_WORK* pYesNoWork;
   void* timeWaitWork;			// タイムウエイトアイコンワーク
 //  CLACT_SET_PTR 			clactSet;								// セルアクターセット
   GFL_CLUNIT* clactSet;								// セルアクターセット
@@ -354,14 +363,13 @@ struct _WIFIP2PMATCH_WORK{
 	//CLACT_WORK_PTR			SubActWork[_OAM_NUM];				// セルアクターワークポインタ配列
 //*/
 
-  GF_BGL_BMPWIN			MsgWin;									// 会話ウインドウ
-  //   GF_BGL_BMPWIN           MenuWin[4];
-  GF_BGL_BMPWIN			MyInfoWin;								// 自分の状態表示
-  GF_BGL_BMPWIN			MyInfoWinBack;								// タイトル
-  GF_BGL_BMPWIN			SysMsgWin;								// システムウィンドウで描画するもの	えらーや、DWCルールのメッセージ
-  GF_BGL_BMPWIN			ListWin;									// フレンドリスト
-  GF_BGL_BMPWIN			SubListWin;									// 募集するタイプなどを描画するリスト
-  GF_BGL_BMPWIN			MyWin;									// 友達の個人情報表示
+  GFL_BG_BMPWIN			MsgWin;									// 会話ウインドウ
+  GFL_BG_BMPWIN			MyInfoWin;								// 自分の状態表示
+  GFL_BG_BMPWIN			MyInfoWinBack;								// タイトル
+  GFL_BG_BMPWIN			SysMsgWin;								// システムウィンドウで描画するもの	えらーや、DWCルールのメッセージ
+  GFL_BG_BMPWIN			ListWin;									// フレンドリスト
+  GFL_BG_BMPWIN			SubListWin;									// 募集するタイプなどを描画するリスト
+  GFL_BG_BMPWIN			MyWin;									// 友達の個人情報表示
 
    int cancelEnableTimer;   // キャンセル許可になる為のタイマー
   int localTime;

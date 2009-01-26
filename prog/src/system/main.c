@@ -16,6 +16,7 @@
 #include "system\gfl_use.h"
 #include "system\main.h"
 #include "sound\snd_strm.h"
+#include "sound\snd_system.h"
 #include "savedata/save_control.h"
 #include "print/printsys.h"
 #include "print/global_font.h"
@@ -174,14 +175,11 @@ static	void	GameInit(void)
 
 	//サウンドストリーミング再生システム
 	SND_STRM_Init(GFL_HEAPID_SYSTEM);
+    //
+    //Snd_AllInit(NULL,NULL);
 
 	//キーコントロールモード設定
 	CONFIG_SYSTEM_KyeControlTblSetting();
-
-#ifdef PM_DEBUG
-    //メモリーを予約する為の一時的な措置
-    SoundDummyInit();
-#endif //PM_DEBUG
 
 }
 

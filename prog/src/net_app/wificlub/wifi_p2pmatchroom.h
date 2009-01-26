@@ -101,19 +101,23 @@ typedef struct _MCR_MOVEOBJ{
 ///	エフェクトワーク
 //=====================================
 typedef struct {
-	CLACT_U_RES_OBJ_PTR resobj[4];	// エフェクトリソースバッファ
-	CLACT_HEADER header;
-	CLACT_WORK_PTR exit_cursor;
-	CLACT_WORK_PTR obj_waku;
+//	CLACT_U_RES_OBJ_PTR resobj[4];	// エフェクトリソースバッファ
+    u32 CGRid;
+    u32 CLRid;
+    u32 CERid;
+//	CLACT_HEADER header;
+	GFL_CLWK* exit_cursor;
+	GFL_CLWK* obj_waku;
 } MCR_EFFECT;
 
 //-------------------------------------
 ///	セルアクターワーク
 //=====================================
 typedef struct {
-	CLACT_SET_PTR 			clactSet;						// セルアクターセット
-	CLACT_U_EASYRENDER_DATA	renddata;						// 簡易レンダーデータ
-	CLACT_U_RES_MANAGER_PTR	resMan[MCR_CLACT_RESNUM];		// キャラ・パレットリソースマネージャ
+	GFL_CLUNIT* 			clactSet;						// セルアクターセット
+    GFL_CLSYS_REND*          renddata;						// 簡易レンダーデータ
+  //CLACT_U_EASYRENDER_DATA	renddata;						// 簡易レンダーデータ
+//	CLACT_U_RES_MANAGER_PTR	resMan[MCR_CLACT_RESNUM];		// キャラ・パレットリソースマネージャ
 	MCR_EFFECT effect;	// エフェクト
 } MCR_CLACT; 
 
@@ -165,7 +169,7 @@ typedef struct _WIFI_MATCHROOM{
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, GF_BGL_INI* p_bgl, u32 hero_view, u32 friendNum );
+extern void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, GFL_BG_INI* p_bgl, u32 hero_view, u32 friendNum,ARCID arcID );
 extern void WIFI_MCR_Dest( WIFI_MATCHROOM* p_mcr );
 extern BOOL WIFI_MCR_GetInitFlag( const WIFI_MATCHROOM* cp_mcr );
 

@@ -75,6 +75,7 @@ enum NetworkServiceID_e {
   WB_NET_BALLOON,					///<風船割り(ソーナンス)
   WB_NET_BUCKET,					///<球入れ(マルノーム)
   WB_NET_BALANCEBALL,				///<バランスボール(マネネ)
+  WB_NET_WIFICLUB,                 ///<WIFICLUB
   WB_NET_SERVICEID_MAX   // 終端
 };
 
@@ -94,6 +95,8 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_BALLOON = (WB_NET_BALLOON<<8),				///<風船割り
   GFL_NET_CMD_BUCKET = (WB_NET_BUCKET<<8),					///<球入れ
   GFL_NET_CMD_BALANCEBALL = (WB_NET_BALANCEBALL<<8),		///<バランスボール
+  GFL_NET_CMD_WIFICLUB = (WB_NET_WIFICLUB<<8),				///<WIFICLUB
+
 };
 
 

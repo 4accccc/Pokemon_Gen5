@@ -9,44 +9,26 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
+#include <calctool.h>
+#include "arc_def.h"
 
-#include "wifi/dwc_rap.h"
-#include "wifi/vchat.h"
-#include "system/bmp_list.h"
+//#include "msgdata/msg.naix"
+//#include "msgdata/msg_wifi_lobby.h"
 
-#include "system/msgdata_util.h"
-#include "system/wordset.h"
-#include "msgdata/msg.naix"
-#include "msgdata/msg_wifi_lobby.h"
-
-#include "system/window.h"
-#include "system/bmp_menu.h"
-#include "system/wipe.h"
-#include "system/brightness.h"
-#include "system/fontproc.h"
-
-#include "system/pm_overlay.h"
-
-#include "communication/communication.h"
-#include "communication/comm_state.h"
 
 #include "comm_command_wfp2pmf.h"
 #include "comm_command_wfp2pmf_func.h"
 
-#include "application/wifi_2dmap/wf2dmap_obj.h"
-#include "application/wifi_2dmap/wf2dmap_objdraw.h"
+#include "net_app/wifi2dmap/wf2dmap_obj.h"
+#include "net_app/wifi2dmap/wf2dmap_objdraw.h"
 
-#include "wifi/dwc_rapfriend.h"
+//#include "net/dwc_rapfriend.h"
+//#include "system/snd_tool.h"
+//#include "wifi_p2pmatch_se.h"
 
-#include "system/snd_tool.h"
-#include "wifi_p2pmatch_se.h"
 
-
-#define __WIFI_P2PMATCHFOUR_H_GLOBAL
 #include "wifi_p2pmatchfour.h"
-
-#include "application\namein.h"
 #include "wifi_p2pmatch_local.h"
 #include "wifi_p2pmatchfour_local.h"
 

@@ -9,32 +9,22 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
+#include <calctool.h>
+#include "arc_def.h"
 
-#include "system/procsys.h"
-#include "system/arc_util.h"
-#include "system/clact_tool.h"
-#include "system/wipe.h"
-#include "system/lib_pack.h"
-#include "system/snd_tool.h"
-
-#include "wifi/dwc_rap.h"
 #include "wifi_p2pmatch_se.h"
-#include "wifi/dwc_rapfriend.h"
 
-#include "communication/communication.h"
-#include "communication/comm_state.h"
-#include "system/snd_tool.h"  //sndTOOL
+//#include "system/snd_tool.h"  //sndTOOL
 
 #include "wifip2pmatch.naix"			// グラフィックアーカイブ定義
 
-#include "include/system/pm_debug_wifi.h"
+//#include "include/system/pm_debug_wifi.h"
 
-#include "application/wifi_p2pmatch_def.h"
+#include "net_app/wificlub/wifi_p2pmatch_def.h"
 
-#define __WIFI_P2PMATCHROOM_H_GLOBAL
 #include "wifi_p2pmatchroom.h"
-
+#include "system/gfl_use.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -230,9 +220,9 @@ static void WcrClactResLoad( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle
 static void WcrClactResRelease( MCR_CLACT* p_clact );
 static void WcrClactAdd( MCR_CLACT* p_clact, u32 heapID );
 static void WcrClactDel( MCR_CLACT* p_clact );
-static void WcrBgContInit( GF_BGL_INI* p_bgl, u32 heapID );
-static void WcrBgContDest( GF_BGL_INI* p_bgl );
-static void WcrBgSet( GF_BGL_INI* p_bgl, u32 heapID, ARCHANDLE* p_handle );
+static void WcrBgContInit( GFL_BG_INI* p_bgl, u32 heapID );
+static void WcrBgContDest( GFL_BG_INI* p_bgl );
+static void WcrBgSet( GFL_BG_INI* p_bgl, u32 heapID, ARCHANDLE* p_handle,ARCID arcID );
 
 static BOOL WcrExitCheck( WIFI_MATCHROOM* p_mcr );
 
@@ -278,7 +268,7 @@ static BOOL WcrMoveObj_MoveSetOkCheck( const MCR_MOVEOBJ* cp_obj );
 static void WcrMoveObj_MoveSet( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, MCR_NPC_MOVETYPE moveID );
 
 
-static void WcrPCANM_Init( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk, ARCHANDLE* p_handle );
+static void WcrPCANM_Init( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk, ARCHANDLE* p_handle,ARCID arcID);
 static void WcrPCANM_Delete( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk );
 static void WcrPCANM_Main( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk );
 static void WcrPCANM_AllMain( MCR_PCANM* p_wk );
@@ -301,7 +291,7 @@ static void WcrPCANM_UseEndReq( MCR_PCANM* p_wk );
  *	@param	friendNum	友達の総数
  */
 //-----------------------------------------------------------------------------
-void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, GF_BGL_INI* p_bgl, u32 hero_view, u32 friendNum )
+void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, GFL_BG_INI* p_bgl, u32 hero_view, u32 friendNum, u32 arcID )
 {
 	WF2DMAP_POS map_siz;
 	u32 map_no;
@@ -335,10 +325,10 @@ void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, GF_B
 
 	// スクロール描画システム初期化
 	WcrScrnDrawInit( p_mcr, heapID, p_handle, map_no );
-	WcrBgSet( p_mcr->p_bgl, heapID, p_handle );
+	WcrBgSet( p_mcr->p_bgl, heapID, p_handle,arcID );
 
 	// PCあにめ初期化
-	WcrPCANM_Init( p_mcr, &p_mcr->pc_anm, p_handle );
+	WcrPCANM_Init( p_mcr, &p_mcr->pc_anm, p_handle,arcID );
 
 	// リクエストコマンドキュー生成
 	p_mcr->p_reqcmdQ = WF2DMAP_REQCMDQSysInit( MCR_REQCMDQ_NUM, heapID );
@@ -453,11 +443,13 @@ u32 WIFI_MCR_Main( WIFI_MATCHROOM* p_mcr )
 			WcrClactResEffectExitDrawOn( p_mcr );
 
 			// さらに下を押したら、部屋を出る
-			if( sys.cont & PAD_KEY_DOWN ){
+		//	if( sys.cont & PAD_KEY_DOWN ){
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
 				return MCR_RET_CANCEL;
 			}
 		}
-		if( sys.trg & PAD_BUTTON_DECIDE ){
+//		if( sys.trg & PAD_BUTTON_DECIDE ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 			// 他人を選択したかチェック
 			if( WIFI_MCR_PlayerSelect( p_mcr ) > 0 ){
 				return MCR_RET_SELECT;
@@ -483,7 +475,7 @@ u32 WIFI_MCR_Main( WIFI_MATCHROOM* p_mcr )
 void WIFI_MCR_Draw( WIFI_MATCHROOM* p_mcr )
 {
 	if( p_mcr->init ){
-		CLACT_Draw( p_mcr->clact.clactSet );
+//		CLACT_Draw( p_mcr->clact.clactSet );
 	}
 }
 
@@ -1144,24 +1136,25 @@ static void WcrObjDrawExit( WIFI_MATCHROOM* p_mcr )
 static void WcrScrnDrawInit( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 map_no )
 {
 	WF2DMAP_SCRDRAWINIT init = {
-		CLACT_U_EASYRENDER_SURFACE_MAIN,
-		GF_BGL_FRAME0_M,
+		CLSYS_DEFREND_MAIN,
+		GFL_BG_FRAME0_M,
 		GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xe000,
 		GX_BG_CHARBASE_0x00000,
 		GX_BG_EXTPLTT_01,
 		MCR_MOVEOBJ_BG_PRI,
 		FALSE,
-		ARC_WIFIP2PMATCH_GRA,
+		ARCID_WIFIP2PMATCH,
 		NARC_wifip2pmatch_wf_match_top_room_1_NSCR,
 		FALSE
 	};
 
 	// グラフィックデータを設定
 	init.dataid_scrn += map_no;
+ //   p_mcr->clact.renddata = GFL_CLACT_USERREND_Create(sizeof(GFL_CLSYS_REND));
 
 	p_mcr->p_scrdraw = WF2DMAP_SCRDrawSysInit( 
-			&p_mcr->clact.renddata, p_mcr->p_bgl, &init, heapID );
+			p_mcr->clact.renddata, p_mcr->p_bgl, &init, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -1176,6 +1169,25 @@ static void WcrScrnDrawExit( WIFI_MATCHROOM* p_mcr )
 	WF2DMAP_SCRDrawSysExit( p_mcr->p_scrdraw );
 }
 
+static GFL_DISP_VRAM _defVBTbl = {
+        GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+        GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+
+        GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+        GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+
+//        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+        GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+
+        GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+        GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+
+        GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+        GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
+        };
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクター　初期化
@@ -1187,8 +1199,27 @@ static void WcrScrnDrawExit( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static void WcrClactInit( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 {
-	int i;
+	const u8 CELL_MAX = 16;
+	GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
 
+    cellSysInitData.oamst_main = 1; //通信アイコンの分
+	cellSysInitData.oamnum_main = 64-1;
+	cellSysInitData.oamst_sub = 16; 
+	cellSysInitData.oamnum_sub = 128-16;
+	
+	GFL_CLACT_SYS_Create( &cellSysInitData , &_defVBTbl, heapID );
+	p_clact->clactSet  = GFL_CLACT_UNIT_Create( CELL_MAX , 0, heapID );
+	GFL_CLACT_UNIT_SetDefaultRend( p_clact->clactSet );
+
+
+
+
+#if 0
+
+    int i;
+
+
+   
 	// セルアクターセット作成
 	p_clact->clactSet = CLACT_U_SetEasyInit( MCR_CLACT_OBJNUM, &p_clact->renddata, heapID );
     CLACT_U_SetSubSurfaceMatrix( &p_clact->renddata, 0, MCR_CLACTSUBSURFACE_Y );
@@ -1204,6 +1235,7 @@ static void WcrClactInit( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 
 	// アクターの登録
 	WcrClactAdd( p_clact, heapID );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1222,14 +1254,17 @@ static void WcrClactDest( MCR_CLACT* p_clact )
 	
 	// リソース破棄
 	WcrClactResRelease( p_clact );
-	
+
+#if 0
 	// リソースマネージャ破棄
 	for( i=0; i<MCR_CLACT_RESNUM; i++ ){
 		CLACT_U_ResManagerDelete( p_clact->resMan[i] );
 	}
+#endif
 
 	// セルアクターセット破棄
-	CLACT_DestSet( p_clact->clactSet );
+//	CLACT_DestSet( p_clact->clactSet );
+    GFL_CLACT_UNIT_Delete(p_clact->clactSet);
 }
 
 //----------------------------------------------------------------------------
@@ -1293,7 +1328,7 @@ static void WcrClactDel( MCR_CLACT* p_clact )
  *	@param	heapID	使用ヒープ
  */
 //-----------------------------------------------------------------------------
-static void WcrBgContInit( GF_BGL_INI* p_bgl, u32 heapID )
+static void WcrBgContInit( GFL_BG_INI* p_bgl, u32 heapID )
 {
 }
 
@@ -1304,7 +1339,7 @@ static void WcrBgContInit( GF_BGL_INI* p_bgl, u32 heapID )
  *	@param	p_bgl	BGL
  */
 //-----------------------------------------------------------------------------
-static void WcrBgContDest( GF_BGL_INI* p_bgl )
+static void WcrBgContDest( GFL_BG_INI* p_bgl )
 {
 }
 
@@ -1317,18 +1352,26 @@ static void WcrBgContDest( GF_BGL_INI* p_bgl )
  *	@param	p_handle	ハンドル
  */
 //-----------------------------------------------------------------------------
-static void WcrBgSet( GF_BGL_INI* p_bgl, u32 heapID, ARCHANDLE* p_handle )
+static void WcrBgSet( GFL_BG_INI* p_bgl, u32 heapID, ARCHANDLE* p_handle,ARCID arcID )
 {
 	// パレット転送
 	// 使用してよいパレットはMAX　8
-	ArcUtil_HDL_PalSet( p_handle, NARC_wifip2pmatch_wf_match_top_room_NCLR, PALTYPE_MAIN_BG, 0, 8*32, heapID );	
-	// バックグラウンドカラーは変えない
-	GF_BGL_BackGroundColorSet( GF_BGL_FRAME0_M, 0 );
-	
+//	ArcUtil_HDL_PalSet( p_handle, NARC_wifip2pmatch_wf_match_top_room_NCLR, PALTYPE_MAIN_BG, 0, 8*32, heapID );	
+
+    GFL_ARC_UTIL_TransVramPalette(arcID , NARC_wifip2pmatch_wf_match_top_room_NCLR,
+                                  PALTYPE_MAIN_BG, 0, 8*32, heapID);
+
+    // バックグラウンドカラーは変えない
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0 );
+
     // メイン画面BG2キャラ転送
-    ArcUtil_HDL_BgCharSet( p_handle, NARC_wifip2pmatch_wf_match_top_room_NCGR, p_bgl,
-                       GF_BGL_FRAME0_M, 0, 0, 0, heapID);
-/*
+//    ArcUtil_HDL_BgCharSet( p_handle, NARC_wifip2pmatch_wf_match_top_room_NCGR, p_bgl,
+  //                     GF_BGL_FRAME0_M, 0, 0, 0, heapID);
+
+    GFL_ARC_UTIL_TransVramBgCharacter( arcID, NARC_wifip2pmatch_wf_match_top_room_NCGR,
+                                       GFL_BG_FRAME0_M, 0, 0, FALSE, heapID);
+
+    /*
     // メイン画面BG2スクリーン転送
     ArcUtil_HDL_ScrnSet(   p_handle, NARC_wifip2pmatch_wf_match_top_room_1_NSCR+map_no, p_bgl,
                        GF_BGL_FRAME0_M, 0, 0, 0, heapID);
@@ -1346,7 +1389,8 @@ static void WcrBgSet( GF_BGL_INI* p_bgl, u32 heapID, ARCHANDLE* p_handle )
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectLoad( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 {
-	BOOL result;
+#if 0
+    BOOL result;
 	
 	p_clact->effect.resobj[0] = 
 		CLACT_U_ResManagerResAddArcChar_ArcHandle( p_clact->resMan[0], 
@@ -1387,6 +1431,23 @@ static void WcrClactResEffectLoad( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_
 			 p_clact->resMan[0], p_clact->resMan[1],
 			 p_clact->resMan[2], p_clact->resMan[3],
 			 NULL, NULL );
+
+#endif
+
+    p_clact->effect.CGRid = GFL_CLGRP_CGR_Register(p_handle,
+                                      NARC_wifip2pmatch_wf_match_top_room_obj_NCGR,
+                                      FALSE,NNS_G2D_VRAM_TYPE_2DMAIN, heapID);
+
+    p_clact->effect.CLRid = GFL_CLGRP_PLTT_Register(p_handle,
+                                      NARC_wifip2pmatch_wf_match_top_room_obj_NCLR,
+                                      NNS_G2D_VRAM_TYPE_2DMAIN, 0, heapID);
+
+    p_clact->effect.CERid = GFL_CLGRP_CELLANIM_Register(p_handle,
+                                           NARC_wifip2pmatch_wf_match_top_room_obj_NCER,
+                                           NARC_wifip2pmatch_wf_match_top_room_obj_NANR,
+                                           heapID);
+
+
 }
 
 //----------------------------------------------------------------------------
@@ -1400,12 +1461,17 @@ static void WcrClactResEffectRelease( MCR_CLACT* p_clact )
 {
 	int i;
 
-	CLACT_U_CharManagerDelete( p_clact->effect.resobj[0] );
-	CLACT_U_PlttManagerDelete( p_clact->effect.resobj[1] );
+//	CLACT_U_CharManagerDelete( p_clact->effect.resobj[0] );
+//	CLACT_U_PlttManagerDelete( p_clact->effect.resobj[1] );
 	
-	for( i=0; i<4; i++ ){
-		CLACT_U_ResManagerResDelete( p_clact->resMan[i], p_clact->effect.resobj[i] );
-	}
+//	for( i=0; i<4; i++ ){
+//		CLACT_U_ResManagerResDelete( p_clact->resMan[i], p_clact->effect.resobj[i] );
+//	}
+
+    GFL_CLGRP_CGR_Release( p_clact->effect.CGRid );
+    GFL_CLGRP_PLTT_Release( p_clact->effect.CLRid );
+    GFL_CLGRP_CELLANIM_Release( p_clact->effect.CERid );
+
 }
 
 //----------------------------------------------------------------------------
@@ -1418,31 +1484,56 @@ static void WcrClactResEffectRelease( MCR_CLACT* p_clact )
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectAdd( MCR_CLACT* p_clact, u32 heapID )
 {
-	CLACT_ADD add;
+    GFL_CLWK_DATA param;
+    
+        
+//	CLACT_ADD add;
 
 	// ０クリア
-	memset( &add, 0, sizeof(CLACT_ADD) );
+//	memset( &add, 0, sizeof(CLACT_ADD) );
 	
-	add.ClActSet = p_clact->clactSet;
-	add.ClActHeader = &p_clact->effect.header;
-	add.DrawArea = NNS_G2D_VRAM_TYPE_2DMAIN;
-	add.sca.x = FX32_ONE;
-	add.sca.y = FX32_ONE;
-	add.pri = MCR_EFFECTRES_SOFTPRI;
-	add.heap  = heapID;
+//	add.ClActSet = p_clact->clactSet;
+//	add.ClActHeader = &p_clact->effect.header;
+//	add.DrawArea = NNS_G2D_VRAM_TYPE_2DMAIN;
+//	add.sca.x = FX32_ONE;
+//	add.sca.y = FX32_ONE;
+//	add.pri = MCR_EFFECTRES_SOFTPRI;
+//	add.heap  = heapID;
 
-	p_clact->effect.exit_cursor = CLACT_Add( &add );
-	p_clact->effect.obj_waku = CLACT_Add( &add );
+	param.pos_x =1;				// ｘ座標
+	param.pos_y = 1;				// ｙ座標
+	param.anmseq = 0;				// アニメーションシーケンス
+	param.softpri = MCR_EFFECTRES_SOFTPRI;			// ソフト優先順位	0>0xff
+	param.bgpri = 0;				// BG優先順位
+    
+    p_clact->effect.exit_cursor = GFL_CLACT_WK_Create(p_clact->clactSet,
+                                                      p_clact->effect.CGRid,
+                                                      p_clact->effect.CLRid,
+                                                      p_clact->effect.CERid,
+                                                      &param,0,heapID);
+    p_clact->effect.obj_waku = GFL_CLACT_WK_Create(p_clact->clactSet,
+                                                   p_clact->effect.CGRid,
+                                                   p_clact->effect.CLRid,
+                                                   p_clact->effect.CERid,
+                                                   &param,0,heapID);
+    
+//	p_clact->effect.exit_cursor = CLACT_Add( &add );
+//	p_clact->effect.obj_waku = CLACT_Add( &add );
 
 	// 表示OFF
-	CLACT_SetDrawFlag( p_clact->effect.exit_cursor, FALSE );
-	CLACT_SetDrawFlag( p_clact->effect.obj_waku, FALSE );
+//	CLACT_SetDrawFlag( p_clact->effect.exit_cursor, FALSE );
+//	CLACT_SetDrawFlag( p_clact->effect.obj_waku, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( p_clact->effect.exit_cursor, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( p_clact->effect.obj_waku, FALSE );
 
 	// カーソルはオートアニメ
-	CLACT_SetAnmFlag( p_clact->effect.exit_cursor, TRUE );
+//	CLACT_SetAnmFlag( p_clact->effect.exit_cursor, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( p_clact->effect.exit_cursor, TRUE );
 
 	// 枠はアニメ１
-	CLACT_AnmChg( p_clact->effect.obj_waku, 1 );
+//	CLACT_AnmChg( p_clact->effect.obj_waku, 1 );
+    GFL_CLACT_WK_SetAnmSeq( p_clact->effect.obj_waku, 1 );
+
 }
 
 //----------------------------------------------------------------------------
@@ -1454,8 +1545,11 @@ static void WcrClactResEffectAdd( MCR_CLACT* p_clact, u32 heapID )
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectDel( MCR_CLACT* p_clact )
 {
-	CLACT_Delete( p_clact->effect.exit_cursor );
-	CLACT_Delete( p_clact->effect.obj_waku );
+//	CLACT_Delete( p_clact->effect.exit_cursor );
+//	CLACT_Delete( p_clact->effect.obj_waku );
+    
+	GFL_CLACT_WK_Remove( p_clact->effect.exit_cursor );
+	GFL_CLACT_WK_Remove( p_clact->effect.obj_waku );
 }
 
 //----------------------------------------------------------------------------
@@ -1468,20 +1562,25 @@ static void WcrClactResEffectDel( MCR_CLACT* p_clact )
 static void WcrClactResEffectExitDrawOn( WIFI_MATCHROOM* p_mcr )
 {
 	MCR_MOVEOBJ_ONPOS pos;
-	VecFx32 mat;
+//	VecFx32 mat;
+    GFL_CLACTPOS clp;
 	
 	// 出口座標を取得 補正してアクターに設定
 	WcrMapGetPlayerSetPos( p_mcr, &pos );
 
 	pos.x += MCR_EFFECTRES_OFS_X;
 	pos.y += MCR_EFFECTRES_OFS_Y;
-	mat.x = pos.x << FX32_SHIFT;
-	mat.y = pos.y << FX32_SHIFT;
-	CLACT_SetMatrix( p_mcr->clact.effect.exit_cursor, &mat );
+//	mat.x = pos.x << FX32_SHIFT;
+//	mat.y = pos.y << FX32_SHIFT;
+    clp.x = pos.x;
+    clp.y = pos.y;
+//	CLACT_SetMatrix( p_mcr->clact.effect.exit_cursor, &mat );
+	GFL_CLACT_WK_SetWldPos( p_mcr->clact.effect.exit_cursor, &clp );
 	
 	
 	// その座標で表示ON
-	CLACT_SetDrawFlag( p_mcr->clact.effect.exit_cursor, TRUE );
+//	CLACT_SetDrawFlag( p_mcr->clact.effect.exit_cursor, TRUE );
+	GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.exit_cursor, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -1493,7 +1592,8 @@ static void WcrClactResEffectExitDrawOn( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectExitDrawOff( WIFI_MATCHROOM* p_mcr )
 {
-	CLACT_SetDrawFlag( p_mcr->clact.effect.exit_cursor, FALSE );
+//	CLACT_SetDrawFlag( p_mcr->clact.effect.exit_cursor, FALSE );
+	GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.exit_cursor, FALSE );
 }
 
 //----------------------------------------------------------------------------
@@ -1507,18 +1607,25 @@ static void WcrClactResEffectExitDrawOff( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectCursorDrawOn( WIFI_MATCHROOM* p_mcr, WF2DMAP_POS pos, u32 pri )
 {
-	VecFx32 mat;
+//	VecFx32 mat;
+    GFL_CLACTPOS clp;
 
 	pos.x += MCR_EFFECTWAKURES_OFS_X;
 	pos.y += MCR_EFFECTWAKURES_OFS_Y;
-	mat.x = pos.x << FX32_SHIFT;
-	mat.y = pos.y << FX32_SHIFT;
-	CLACT_SetMatrix( p_mcr->clact.effect.obj_waku, &mat );
+//	mat.x = pos.x << FX32_SHIFT;
+//	mat.y = pos.y << FX32_SHIFT;
+    clp.x = pos.x;
+    clp.y = pos.y;
+    
+//	CLACT_SetMatrix( p_mcr->clact.effect.obj_waku, &mat );
+    GFL_CLACT_WK_SetWldPos( p_mcr->clact.effect.obj_waku, &clp);
 
-	CLACT_DrawPriorityChg( p_mcr->clact.effect.obj_waku, pri );
+//	CLACT_DrawPriorityChg( p_mcr->clact.effect.obj_waku, pri );
+    GFL_CLACT_WK_SetSoftPri( p_mcr->clact.effect.obj_waku, pri );
 	
 	// その座標で表示ON
-	CLACT_SetDrawFlag( p_mcr->clact.effect.obj_waku, TRUE );
+//	CLACT_SetDrawFlag( p_mcr->clact.effect.obj_waku, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.obj_waku, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -1530,7 +1637,8 @@ static void WcrClactResEffectCursorDrawOn( WIFI_MATCHROOM* p_mcr, WF2DMAP_POS po
 //-----------------------------------------------------------------------------
 static void WcrClactResEffectCursorDrawOff( WIFI_MATCHROOM* p_mcr )
 {
-	CLACT_SetDrawFlag( p_mcr->clact.effect.obj_waku, FALSE );
+//	CLACT_SetDrawFlag( p_mcr->clact.effect.obj_waku, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( p_mcr->clact.effect.obj_waku, FALSE );
 }
 
 
@@ -1815,7 +1923,7 @@ static void WcrMoveObj_SetMoveFuncNpc( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj
 {
 	p_obj->pMove = WcrMoveObj_MoveFuncNpc;
 	p_obj->pDraw = WcrMoveObj_DrawFuncDefault;
-	p_obj->move_count = MCR_MOVEOBJ_NPC_RAND_S + (gf_mtRand() % MCR_MOVEOBJ_NPC_RAND_M);
+	p_obj->move_count = MCR_MOVEOBJ_NPC_RAND_S + GFUser_GetPublicRand(MCR_MOVEOBJ_NPC_RAND_M);
 
 	p_obj->move_st	= MCR_MOVEOBJ_ST_NPC;
 
@@ -1977,7 +2085,7 @@ static BOOL WcrMoveObj_MoveFuncPlayerKeyWait( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ
 
 	// キャラクタを入れ替えるデバック機能
 #ifdef MCR_DEBUG_2CCHAR_CHECK
-	if( sys.trg & PAD_BUTTON_START ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
 		static const u16 sc_DEBUG_VIEW_TBL[] = {
 			HERO,
 			BOY1,
@@ -2114,7 +2222,7 @@ static BOOL WcrMoveObj_MoveFuncPlayerKeyWait( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ
 #endif
 
 	// 選択関係
-	if( sys.trg & PAD_BUTTON_DECIDE ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 
 		// 目の前に人がいるかチェック
 		cp_wk = WcrMoveObjGetHitCheck( p_mcr, p_obj, way );
@@ -2139,32 +2247,32 @@ static BOOL WcrMoveObj_MoveFuncPlayerKeyWait( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ
 	}
 
 	// 歩くか走るか
-	if( sys.cont & PAD_BUTTON_B ){
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B ){
 		cmd = WF2DMAP_OBJST_RUN;
 	}else{
 		cmd = WF2DMAP_OBJST_WALK;
 	}
 	
 	// 移動関係
-	if( sys.cont & PAD_KEY_UP ){
+	if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
 		if( way == MCR_MOVEOBJ_WAY_TOP ){
 			WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
 		}else{
 			WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_TOP, playid );
 		}
-	}else if( sys.cont & PAD_KEY_DOWN ){
+	}else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
 		if( way == MCR_MOVEOBJ_WAY_BOTTOM ){
 			WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
 		}else{
 			WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_BOTTOM, playid );
 		}
-	}else if( sys.cont & PAD_KEY_LEFT ){
+	}else if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
 		if( way == MCR_MOVEOBJ_WAY_LEFT ){
 			WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
 		}else{
 			WcrMoveObj_ReqCmdSet( p_mcr, WF2DMAP_OBJST_TURN, MCR_MOVEOBJ_WAY_LEFT, playid );
 		}
-	}else if( sys.cont & PAD_KEY_RIGHT ){
+	}else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
 		if( way == MCR_MOVEOBJ_WAY_RIGHT ){
 			WcrMoveObj_ReqCmdSet( p_mcr, cmd, way, playid );
 		}else{
@@ -2224,10 +2332,10 @@ static BOOL WcrMoveObj_MoveFuncNpc( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj )
 	p_obj->move_count --;
 	if( p_obj->move_count <= 0 ){
 
-		p_obj->move_count = MCR_MOVEOBJ_NPC_RAND_S + (gf_mtRand() % MCR_MOVEOBJ_NPC_RAND_M);
+		p_obj->move_count = MCR_MOVEOBJ_NPC_RAND_S + GFUser_GetPublicRand(MCR_MOVEOBJ_NPC_RAND_M);
 	
 		// ランダムで方向を変える
-		way = gf_mtRand() % MCR_MOVEOBJ_WAY_NUM;
+		way = GFUser_GetPublicRand(MCR_MOVEOBJ_WAY_NUM);
 			
 		// リクエストコマンド設定
 		// その方向に変更
@@ -2349,15 +2457,18 @@ static void WcrMoveObj_MoveSet( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, MCR_N
  *	@param	p_handle	アーカイブハンドル
  */
 //-----------------------------------------------------------------------------
-static void WcrPCANM_Init( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk, ARCHANDLE* p_handle )
+static void WcrPCANM_Init( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk, ARCHANDLE* p_handle,ARCID id )
 {
 	// ワークのクリア
-	memset( p_wk, 0, sizeof(MCR_PCANM) );
+	GFL_STD_MemClear( p_wk, sizeof(MCR_PCANM) );
 	
 	// リソース読込み
-	p_wk->p_plbuff = ArcUtil_HDL_PalDataGet( p_handle, 
-			NARC_wifip2pmatch_wf_match_top_room_pc_NCLR, &p_wk->p_pltt, p_sys->use_heap );
+//	p_wk->p_plbuff = ArcUtil_HDL_PalDataGet( p_handle, 
+//			NARC_wifip2pmatch_wf_match_top_room_pc_NCLR, &p_wk->p_pltt, p_sys->use_heap );
+    p_wk->p_plbuff = GFL_ARC_UTIL_LoadPalette( id, 
+            NARC_wifip2pmatch_wf_match_top_room_pc_NCLR, &p_wk->p_pltt, p_sys->use_heap );
 
+    
 	// 全PCアニメ開始
 	p_wk->all_pcbitmap = (1<<0) | (1<<1) | (1<<2) | (1<<3);
 	p_wk->all_seq = MCR_PCANM_ALL_SEQ_OFF;
@@ -2375,8 +2486,8 @@ static void WcrPCANM_Init( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk, ARCHANDLE* p_
 static void WcrPCANM_Delete( WIFI_MATCHROOM* p_sys, MCR_PCANM* p_wk )
 {
 	// ワークの破棄
-	sys_FreeMemoryEz( p_wk->p_plbuff );
-	memset( p_wk, 0, sizeof(MCR_PCANM) );
+	GFL_HEAP_FreeMemory( p_wk->p_plbuff );
+	GFL_STD_MemClear( p_wk, sizeof(MCR_PCANM) );
 }
 
 //----------------------------------------------------------------------------
@@ -2422,9 +2533,15 @@ static void WcrPCANM_AllMain( MCR_PCANM* p_wk )
 		}
 		for( i=0; i<MCR_PCANM_PCNUM; i++ ){
 			if( p_wk->all_pcbitmap & (1<<i) ){
+#if 0
 				AddVramTransferManager( NNS_GFD_DST_2D_BG_PLTT_MAIN, 
 						MCR_PCANM_DESTPL(i), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
+#endif
+                NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN, 
+						MCR_PCANM_DESTPL(i), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
 
+
+                
 //				TOMOYA_PRINT( "転送処理 %d dest[0x%x] src[0x%x] \n", on_off, MCR_PCANM_DESTPL(i), WcrPCANM_GetAnmSrc(p_wk, on_off ) );
 			}
 		}
@@ -2482,9 +2599,14 @@ static void WcrPCANM_UseMain( MCR_PCANM* p_wk )
 
 	// 転送処理
 	if( trans ){
+#if 0
 		AddVramTransferManager( NNS_GFD_DST_2D_BG_PLTT_MAIN, 
 				MCR_PCANM_DESTPL(p_wk->use_pc), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
-//		TOMOYA_PRINT( "転送処理 %d dest[0x%x] src[0x%x] \n", on_off, MCR_PCANM_DESTPL(p_wk->use_pc), WcrPCANM_GetAnmSrc(p_wk, on_off ) );
+#endif
+        NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN, 
+				MCR_PCANM_DESTPL(p_wk->use_pc), WcrPCANM_GetAnmSrc(p_wk, on_off ), 2 );
+    
+        //		TOMOYA_PRINT( "転送処理 %d dest[0x%x] src[0x%x] \n", on_off, MCR_PCANM_DESTPL(p_wk->use_pc), WcrPCANM_GetAnmSrc(p_wk, on_off ) );
 	}
 }
 

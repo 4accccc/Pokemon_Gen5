@@ -77,10 +77,10 @@ class GmmRead
   ['時間帯','[1:33:時間帯'],
   ['コンテスト名称','[1:34:コンテスト名称'],
   ['コンテストランク','[1:35:コンテストランク'],
-  ['国名',''],            ##WBなくなりました
-  ['地域名',''],            ##WBなくなりました
+  ['国名','[1:36:国名'],
+  ['地域名','[1:37:地域名'],
   ['風船の名前',''],            ##WBなくなりました
-  ['リボンの名前',''],            ##WBなくなりました
+  ['リボンの名前','[1:39:リボンの名前'],
   ['イメージクリップ背景',''],            ##WBなくなりました
   ['GTC:ポケモン分類項目',''],            ##WBなくなりました
   ['GTC:ポケモン性別指定項目',''] ,           ##WBなくなりました
@@ -114,7 +114,7 @@ class GmmRead
           if tagbuf[1] != ''
             sjisline = sjisline.gsub(/\[\d+:\d+:#{tagbuf[0]}/,tagbuf[1])
           else
-            p "WBでなくなったタグを発見"
+            p "Warring:Find not WBTag : " + @ConvFileLineTmp.length.to_s + " : " + sjisline
           end
         end
       }
@@ -138,6 +138,7 @@ class GmmRead
   
   
   def FileRead( gmmrenew )
+    p "conv:"+gmmrenew
     fpr = File.new(gmmrenew)
     fpr.each{ |line|
       @ConvFileLine.push(line)
@@ -250,7 +251,7 @@ begin
   GRead.JpnConv()    ##   日本語をJPNに変更
   GRead.JpnDupe()    ##   JPNとJPN_KANJIに増やす
   GRead.TagConv()   ## タグを置き換える
-  GRead.FileWrite( ARGV[1] + ".wb.gmm")  ##コンバート結果を出力する
+  GRead.FileWrite( ARGV[1] + ".wbgmm")  ##コンバート結果を出力する
   
   exit(0)
 end

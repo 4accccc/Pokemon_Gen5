@@ -60,7 +60,11 @@ enum {
 	NARC_wifip2pmatch_wf_match_top_room_2_NSCR = 46,
 	NARC_wifip2pmatch_wf_match_top_room_3_NSCR = 47,
 	NARC_wifip2pmatch_wf_match_top_room_4_NSCR = 48,
-	NARC_wifip2pmatch_wifi_check_bg_NSCR = 49
+	NARC_wifip2pmatch_wifi_check_bg_NSCR = 49,
+	NARC_wifip2pmatch_conect_NANR = 50,
+	NARC_wifip2pmatch_wf_match_btm_button_NANR = 51,
+	NARC_wifip2pmatch_wf_match_btm_oam_NANR = 52,
+	NARC_wifip2pmatch_wf_match_top_room_obj_NANR = 53
 };
 
 /* NARC_WIFIP2PMATCH_NAIX_ */
