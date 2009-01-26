@@ -59,11 +59,12 @@
 //--------------------------------------------------------------
 //	高さグリッド
 //--------------------------------------------------------------
+#if 0
 #define H_GRID_ONE	(1)										///<1グリッド
 #define H_GRID		(8)										///<1グリッド単位。実座標8
 #define H_GRID_2	(H_GRID*2)
 
-#define H_GRID_HALF	(H_GRID>>1)								///<1/2グリッド
+#define H_GRID_HALF	(H_GRID>>1)							///<1/2グリッド
 #define H_GRID_SHIFT	(3)								///<グリッド実座標変換に必要なシフト数
 #define H_GRID_SIZE(a) ((a)<<H_GRID_SHIFT)					///<グリッド実サイズ変換
 #define SIZE_H_GRID(a) ((a)>>H_GRID_SHIFT)					///<実サイズグリッド変換
@@ -74,6 +75,10 @@
 #define H_GRID_FELLOW_SIZE (H_GRID_ONE*2)			///<OBJ同士の当たり判定　高さヒットサイズ
 #define H_GRID_G_GRID(a) ((a)/2) ///<高さグリッド->地面グリッドサイズに
 #define G_GRID_H_GRID(a) ((a)*2) ///<地面グリッド->高さグリッドサイズに
+#endif
+
+///<OBJ同士の当たり判定　高さヒットサイズ
+#define H_GRID_FELLOW_SIZE (GRID_ONE)
 
 //--------------------------------------------------------------
 //	移動制限
@@ -269,11 +274,12 @@ enum
 //--------------------------------------------------------------
 //	ヒットチェックビット
 //--------------------------------------------------------------
-#define FLDMMDL_MOVE_HIT_BIT_NON		(0)						///<ヒット無し
-#define FLDMMDL_MOVE_HIT_BIT_LIM		(1<<0)					///<移動制限によるヒット
-#define FLDMMDL_MOVE_HIT_BIT_ATTR	(1<<1)					///<アトリビュートによるヒット
-#define FLDMMDL_MOVE_HIT_BIT_OBJ		(1<<2)					///<OBJ同士の衝突
-#define FLDMMDL_MOVE_HIT_BIT_HEIGHT	(1<<3)					///<高低差によるヒット
+#define FLDMMDL_MOVE_HIT_BIT_NON	(0)		///<ヒット無し
+#define FLDMMDL_MOVE_HIT_BIT_LIM	(1<<0)	///<移動制限によるヒット
+#define FLDMMDL_MOVE_HIT_BIT_ATTR	(1<<1)	///<アトリビュートヒット
+#define FLDMMDL_MOVE_HIT_BIT_OBJ	(1<<2)	///<OBJ同士の衝突
+#define FLDMMDL_MOVE_HIT_BIT_HEIGHT	(1<<3)	///<高低差によるヒット
+#define FLDMMDL_MOVE_HIT_BIT_OUTRANGE (1<<4) ///<範囲外ヒット
 
 //--------------------------------------------------------------
 ///	フィールド動作モデルヘッダー引数識別

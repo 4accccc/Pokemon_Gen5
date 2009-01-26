@@ -1600,9 +1600,9 @@ static void fmmdl_AddHeaderPosInit( FLDMMDL * fmmdl, const FLDMMDL_H *head )
 	FLDMMDL_OldPosGX_Set( fmmdl, pos );
 	FLDMMDL_NowPosGX_Set( fmmdl, pos );
 	
-	pos = FLDMMDL_H_PosYGet( head );							//posÝ’è‚Ífx32Œ^‚Å—ˆ‚éB
+	pos = FLDMMDL_H_PosYGet( head );		//posÝ’è‚Ífx32Œ^‚Å—ˆ‚éB
 	vec.y = (fx32)pos;
-	pos = SIZE_H_GRID_FX32( pos );
+	pos = SIZE_GRID_FX32( pos );
 	FLDMMDL_InitPosGY_Set( fmmdl, pos );
 	FLDMMDL_OldPosGY_Set( fmmdl, pos );
 	FLDMMDL_NowPosGY_Set( fmmdl, pos );
@@ -4983,7 +4983,7 @@ void FLDMMDL_VecAttrOffsSet( FLDMMDL * fmmdl, const VecFx32 *vec )
 int FLDMMDL_HeightGridGet( const FLDMMDL * fmmdl )
 {
 	fx32 y = FLDMMDL_VecPosYGet( fmmdl );
-	int gy = SIZE_H_GRID_FX32( y );
+	int gy = SIZE_GRID_FX32( y );
 	return( gy );
 }
 
@@ -5605,7 +5605,7 @@ void FLDMMDL_VecPosDirInit( FLDMMDL * fmmdl, const VecFx32 *vec, int dir )
 	gx = SIZE_GRID_FX32( vec->x );
 	FLDMMDL_NowPosGX_Set( fmmdl, gx );
 	
-	gy = SIZE_H_GRID_FX32( vec->y );
+	gy = SIZE_GRID_FX32( vec->y );
 	FLDMMDL_NowPosGY_Set( fmmdl, gy );
 	
 	gz = SIZE_GRID_FX32( vec->z );
@@ -5643,7 +5643,7 @@ void FLDMMDL_GPosDirInit( FLDMMDL * fmmdl, int x, int y, int z, int dir )
 	vec.x = GRID_SIZE_FX32( x ) + FLDMMDL_VEC_X_GRID_OFFS_FX32;
 	FLDMMDL_NowPosGX_Set( fmmdl, x );
 	
-	vec.y = H_GRID_SIZE_FX32( y ) + FLDMMDL_VEC_Y_GRID_OFFS_FX32;
+	vec.y = GRID_SIZE_FX32( y ) + FLDMMDL_VEC_Y_GRID_OFFS_FX32;
 	FLDMMDL_NowPosGY_Set( fmmdl, y );
 	
 	vec.z = GRID_SIZE_FX32( z ) + FLDMMDL_VEC_Z_GRID_OFFS_FX32;

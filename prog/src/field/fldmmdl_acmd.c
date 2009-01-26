@@ -224,6 +224,7 @@ static void AcDirSet( FLDMMDL * fmmdl, int dir );
 
 static void AcWalkWorkInit( FLDMMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw );
 static int AC_Walk_1( FLDMMDL * fmmdl );
+static int AC_Walk_End( FLDMMDL *fmmdl );
 
 static void AcStayWalkWorkInit( FLDMMDL * fmmdl, int dir, s16 wait, u16 draw );
 static int AC_StayWalk_1( FLDMMDL * fmmdl );
@@ -848,13 +849,34 @@ static int AC_Walk_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_MOVE_END|FLDMMDL_STABIT_ACMD_END );
+	FLDMMDL_StatusBit_ON(
+		fmmdl, FLDMMDL_STABIT_MOVE_END|FLDMMDL_STABIT_ACMD_END );
 	FLDMMDL_GPosUpdate( fmmdl );
+#if 0
 	FLDMMDL_DrawProcCall( fmmdl );						//1ƒtƒŒ[ƒ€i‚ß‚é
 	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
+#else
+#endif
 	FLDMMDL_AcmdSeqInc( fmmdl );
 	
+#if 0
 	return( TRUE );
+#else
+	return( FALSE );
+#endif
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_WALKŒn ˆÚ“®Š®—¹
+ * @param	fmmdl	FLDMMDL *
+ * @retval	int	TRUE
+ */
+//--------------------------------------------------------------
+static int AC_Walk_End( FLDMMDL *fmmdl )
+{
+	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
+	return( FALSE );
 }
 
 //==============================================================================
@@ -3075,8 +3097,8 @@ static void AcWalkVecWorkInit( FLDMMDL * fmmdl,
 	FLDMMDL_OldPosGZ_Set( fmmdl, FLDMMDL_NowPosGZ_Get(fmmdl) );
 	if( vec->x < 0 ){ FLDMMDL_NowPosGX_Add( fmmdl, -GRID_ONE ); }
 	else if( vec->x > 0 ){ FLDMMDL_NowPosGX_Add( fmmdl, GRID_ONE ); }
-	if( vec->y < 0 ){ FLDMMDL_NowPosGY_Add( fmmdl, -H_GRID_ONE*2 ); }
-	else if( vec->y > 0 ){ FLDMMDL_NowPosGY_Add( fmmdl, H_GRID_ONE*2 ); }
+	if( vec->y < 0 ){ FLDMMDL_NowPosGY_Add( fmmdl, -GRID_ONE ); }
+	else if( vec->y > 0 ){ FLDMMDL_NowPosGY_Add( fmmdl, GRID_ONE ); }
 	if( vec->z < 0 ){ FLDMMDL_NowPosGZ_Add( fmmdl, -GRID_ONE ); }
 	else if( vec->z > 0 ){ FLDMMDL_NowPosGZ_Add( fmmdl, GRID_ONE ); }
 	
@@ -3994,7 +4016,7 @@ int (* const DATA_AC_WalkU_32F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkU32F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4004,7 +4026,7 @@ int (* const DATA_AC_WalkD_32F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkD32F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4014,7 +4036,7 @@ int (* const DATA_AC_WalkL_32F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkL32F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4024,7 +4046,7 @@ int (* const DATA_AC_WalkR_32F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkR32F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4034,7 +4056,7 @@ int (* const DATA_AC_WalkU_16F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkU16F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4044,7 +4066,7 @@ int (* const DATA_AC_WalkD_16F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkD16F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4054,7 +4076,7 @@ int (* const DATA_AC_WalkL_16F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkL16F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4064,7 +4086,7 @@ int (* const DATA_AC_WalkR_16F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkR16F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4074,7 +4096,7 @@ int (* const DATA_AC_WalkU_8F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkU8F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4084,7 +4106,7 @@ int (* const DATA_AC_WalkD_8F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkD8F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4094,7 +4116,7 @@ int (* const DATA_AC_WalkL_8F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkL8F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4104,7 +4126,7 @@ int (* const DATA_AC_WalkR_8F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkR8F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4114,7 +4136,7 @@ int (* const DATA_AC_WalkU_4F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkU4F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4124,7 +4146,7 @@ int (* const DATA_AC_WalkD_4F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkD4F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4134,7 +4156,7 @@ int (* const DATA_AC_WalkL_4F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkL4F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4144,7 +4166,7 @@ int (* const DATA_AC_WalkR_4F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkR4F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4154,7 +4176,7 @@ int (* const DATA_AC_WalkU_2F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkU2F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4164,7 +4186,7 @@ int (* const DATA_AC_WalkD_2F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkD2F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4174,7 +4196,7 @@ int (* const DATA_AC_WalkL_2F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkL2F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4184,7 +4206,7 @@ int (* const DATA_AC_WalkR_2F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkR2F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4194,7 +4216,7 @@ int (* const DATA_AC_WalkU_1F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkU1F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4204,7 +4226,7 @@ int (* const DATA_AC_WalkD_1F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkD1F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4214,7 +4236,7 @@ int (* const DATA_AC_WalkL_1F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkL1F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4224,7 +4246,7 @@ int (* const DATA_AC_WalkR_1F_Tbl[])( FLDMMDL * ) =
 {
 	AC_WalkR1F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4878,7 +4900,7 @@ int (* const DATA_AC_DashU_4F_Tbl[])( FLDMMDL * ) =
 {
 	AC_DashU4F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4888,7 +4910,7 @@ int (* const DATA_AC_DashD_4F_Tbl[])( FLDMMDL * ) =
 {
 	AC_DashD4F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4898,7 +4920,7 @@ int (* const DATA_AC_DashL_4F_Tbl[])( FLDMMDL * ) =
 {
 	AC_DashL4F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------
@@ -4908,7 +4930,7 @@ int (* const DATA_AC_DashR_4F_Tbl[])( FLDMMDL * ) =
 {
 	AC_DashR4F_0,
 	AC_Walk_1,
-	AC_End,
+	AC_Walk_End,
 };
 
 //--------------------------------------------------------------

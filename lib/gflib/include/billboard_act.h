@@ -162,6 +162,10 @@ extern int		GFL_BBDACT_GetBBDActIdxResIdx( GFL_BBDACT_SYS* bbdActSys, u16 actIdx
 //	ÉäÉ\Å[ÉXÇhÇcÇwéÊìæ
 extern u16	GFL_BBDACT_GetResIdx( GFL_BBDACT_SYS* bbdActSys, u16 actIdx );
 
+//
+extern u16	GFL_BBDACT_GetAnimeIdx( const GFL_BBDACT_SYS* bbdActSys, u16 actIdx );
+extern u16 GFL_BBDACT_GetAnimeFrmIdx( const GFL_BBDACT_SYS* bbdActSys, u16 actIdx );
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

@@ -207,11 +207,12 @@ static const FLDMMDL_H DATA_JikiHeader =
 };
 
 PC_ACTCONT * CreatePlayerActGrid(
-		FIELD_MAIN_WORK *fieldWork, HEAPID heapID )
+		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos, HEAPID heapID )
 {
+	FLDMMDL_H head;
 	PC_ACTCONT *pcActCont;
 	FLDMMDLSYS *pFldMMdlSys;
-	
+
 	pFldMMdlSys = FIELDMAP_GetFldMMdlSys( fieldWork );
 	pcActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(PC_ACTCONT) );
 	
@@ -219,6 +220,10 @@ PC_ACTCONT * CreatePlayerActGrid(
 	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
 	
 	//FLDMMDLセットアップ
+	head = DATA_JikiHeader;
+	head.gx = SIZE_GRID_FX32( pos->x );
+	head.gz = SIZE_GRID_FX32( pos->z );
+	head.gy = pos->y;
 	pcActCont->pFldMMdl = FLDMMDL_AddH( pFldMMdlSys, &DATA_JikiHeader, 0 );
 	
 	//BLACTセットアップ
@@ -260,7 +265,7 @@ void SetGridPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
 		FLDMMDL_NowPosGZ_Get(pcActCont->pFldMMdl) );
 	
 	FLDMMDL_NowPosGX_Set( pcActCont->pFldMMdl, gx );
-	FLDMMDL_NowPosGY_Set( pcActCont->pFldMMdl, G_GRID_H_GRID(gy) );
+	FLDMMDL_NowPosGY_Set( pcActCont->pFldMMdl, gy );
 	FLDMMDL_NowPosGZ_Set( pcActCont->pFldMMdl, gz );
 	FLDMMDL_VecPosSet( pcActCont->pFldMMdl, trans );
 	
@@ -345,4 +350,3 @@ FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont )
 {
 	return pcActCont->pFldMMdl;
 }
-

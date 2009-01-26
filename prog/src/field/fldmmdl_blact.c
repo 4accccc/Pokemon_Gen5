@@ -229,23 +229,28 @@ static const GFL_BBDACT_ANM PCjumpDAnm[] = {
 };
 
 static const GFL_BBDACT_ANM* playerBBDactAnmTable[] = { 
-	PCstopUAnm, PCstopDAnm, PCstopLAnm, PCstopRAnm,
-	PCwalkUAnm, PCwalkDAnm, PCwalkLAnm, PCwalkRAnm,
-	PCwalkUAnm, PCwalkDAnm, PCwalkLAnm, PCwalkRAnm,
-	PCwalkUAnm, PCwalkDAnm, PCwalkLAnm, PCwalkRAnm,
-	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,
-	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,
-	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,
-	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,
-	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,
-	PCjumpUAnm, PCjumpDAnm, PCjumpLAnm, PCjumpRAnm,
+	PCstopUAnm, PCstopDAnm, PCstopLAnm, PCstopRAnm,	//停止
+	PCwalkUAnm, PCwalkDAnm, PCwalkLAnm, PCwalkRAnm,	//移動32
+	PCwalkUAnm, PCwalkDAnm, PCwalkLAnm, PCwalkRAnm,	//移動16
+	PCwalkUAnm, PCwalkDAnm, PCwalkLAnm, PCwalkRAnm,	//移動8
+	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,		//移動4
+	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,		//移動2
+	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,		//移動6
+	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,		//移動3
+	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,		//移動7
+
+	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,		//ダッシュ4
+
+	PCjumpUAnm, PCjumpDAnm, PCjumpLAnm, PCjumpRAnm,	//
 };
 
 typedef struct
 {
 	u8 init;
-	u16 old_anm_id;
-	u8 dmy[1];
+	u8 anm_dir;
+	u8 anm_status;
+	u8 anm_walk_next_frmidx;
+	s8 anm_walk_stop_frame;
 }TEST_DRAW_WORK;
 
 static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
@@ -261,12 +266,124 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 	anm_id = tbl[status];
 	anm_id += dir;
 	
-	if( draw->init == FALSE || draw->old_anm_id != anm_id ){
+	if( draw->init == FALSE ){
 		draw->init = TRUE;
+		draw->anm_dir = dir;
+		draw->anm_status = status;
+		draw->anm_walk_next_frmidx = 0;
 		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+	}else if( draw->anm_dir != dir ){
+		draw->anm_dir = dir;
+		draw->anm_status = status;
+		draw->anm_walk_next_frmidx = 0;
+		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+	}else if( draw->anm_status != status ){
+		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+		if( status >= DRAW_STA_WALK && status <= DRAW_STA_WALK_2F ){
+			GFL_BBDACT_SetAnimeFrmIdx(
+				bbdActSys, actIdx, draw->anm_walk_next_frmidx );
+		}
+		draw->anm_status = status;
 	}
 	
-	draw->old_anm_id = anm_id;
+	if( draw->anm_status >= DRAW_STA_WALK && draw->anm_status <= DRAW_STA_WALK_2F ){
+		u8 frm = GFL_BBDACT_GetAnimeFrmIdx( bbdActSys, actIdx );
+		if( frm < 2 ){ frm = 2; }
+		else{ frm = 0; }
+		draw->anm_walk_next_frmidx = frm;
+	}
+	
+	FLDMMDL_DrawVecPosTotalGet( fmmdl, &pos );
+	pos.y += FX32_ONE * 12;
+//	pos.y += FX32_ONE * 7; //3
+	
+	GFL_BBD_SetObjectTrans(
+		GFL_BBDACT_GetBBDSystem(bbdActSys), actIdx, &pos );
+}
+
+typedef struct
+{
+	u8 init;
+}TEST_JIKI_DRAW_WORK;
+
+static void testJikiFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
+{
+	u16 dir,anm_id,status;
+	VecFx32 pos;
+	FLDMMDL *fmmdl = work;
+	int tbl[] = {
+		 0, 4, 8,12,
+		16,20,24,28,
+		32,36,40,44
+	};
+	TEST_DRAW_WORK *draw = FLDMMDL_DrawProcWorkGet( fmmdl );
+	
+	dir = FLDMMDL_DirDispGet( fmmdl );
+	status = FLDMMDL_DrawStatusGet( fmmdl );
+	anm_id = tbl[status];
+	anm_id += dir;
+	
+	if( draw->init == FALSE ){
+		draw->init = TRUE;
+		draw->anm_dir = dir;
+		draw->anm_status = status;
+		draw->anm_walk_next_frmidx = 0;
+		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+	}else if( draw->anm_dir != dir ){
+		draw->anm_dir = dir;
+		draw->anm_status = status;
+		draw->anm_walk_next_frmidx = 0;
+		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+	}else if( draw->anm_status != status ){
+		if( draw->anm_status == DRAW_STA_DASH_4F ){
+			draw->anm_walk_stop_frame++;
+		}else{
+			draw->anm_walk_stop_frame = 2;
+		}
+		
+		if( draw->anm_walk_stop_frame > 1 ){
+			draw->anm_walk_stop_frame = 0;
+			
+			switch( draw->anm_status ){
+			case DRAW_STA_WALK_32F:
+			case DRAW_STA_WALK_16F:
+			case DRAW_STA_WALK_8F:
+			case DRAW_STA_WALK_4F:
+			case DRAW_STA_WALK_2F:
+			case DRAW_STA_DASH_4F:
+				{
+					u8 frm = GFL_BBDACT_GetAnimeFrmIdx( bbdActSys, actIdx );
+					if( frm <= 2 ){
+						draw->anm_walk_next_frmidx = 2;
+					}else{
+						draw->anm_walk_next_frmidx = 0;
+					}
+				}
+				break;
+			}
+			
+			if( draw->anm_status == DRAW_STA_DASH_4F &&
+				status == DRAW_STA_STOP ){
+				OS_Printf( "ダッシュだったけど停止が来たでござる\n" );
+			}
+			
+			GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+			
+			switch( status ){
+			case DRAW_STA_WALK_32F:
+			case DRAW_STA_WALK_16F:
+			case DRAW_STA_WALK_8F:
+			case DRAW_STA_WALK_4F:
+			case DRAW_STA_WALK_2F:
+			case DRAW_STA_DASH_4F:
+				GFL_BBDACT_SetAnimeFrmIdx(
+					bbdActSys, actIdx, draw->anm_walk_next_frmidx );
+				break;
+			}
+			
+			draw->anm_status = status;
+		}
+	}
 	
 	FLDMMDL_DrawVecPosTotalGet( fmmdl, &pos );
 	pos.y += FX32_ONE * 12;
@@ -335,8 +452,13 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor(FLDMMDL *pFldMMdl, u32 id)
 	if( FLDMMDL_OBJIDGet(pFldMMdl) == FLDMMDL_ID_PLAYER ){
 	}else{
 	}
+	
+	if( id == 0 ){
+		actData.func = testJikiFunc;
+	}else{
+		actData.func = testFunc;
+	}
 
-	actData.func = testFunc;
 	actData.work = pFldMMdl;
 	
 	actID = GFL_BBDACT_AddAct(

@@ -142,6 +142,7 @@ static void FldWorkPlayerWorkPosSet(
 		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos );
 static void FldWorkPlayerWorkDirSet(
 	FIELD_MAIN_WORK *fieldWork, u16 dir );
+static void Jiki_UpdatePlayerWork( FIELD_MAIN_WORK *fieldWork );
 
 static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork );
 
@@ -200,9 +201,9 @@ static void GridMoveCreate(
 	}
 	
 	fieldWork->pcActCont = CreatePlayerActGrid(
-			fieldWork, fieldWork->heapID );
+			fieldWork, pos, fieldWork->heapID );
 	
-	SetGridPlayerActTrans( fieldWork->pcActCont, pos );
+//	SetGridPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
 	
 	fieldWork->pGridCont = FGridCont_Init( fieldWork, pos, dir );
@@ -306,7 +307,6 @@ static void GridMoveMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 		pGridCont->proc_switch = GRIDPROC_MAIN;
 	case GRIDPROC_MAIN: 
 		GridProc_Main( fieldWork, pos );
-		FLDMMDLSYS_UpdateMove( fieldWork->fldMMdlSys );
 		break;
 	case GRIDPROC_DEBUG00:
 		GridProc_DEBUG00( fieldWork, pos );
@@ -372,6 +372,9 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	if( fieldWork->fldActCont != NULL ){
 		FLD_MainFieldActSys( fieldWork->fldActCont );
 	}
+	
+	FLDMMDLSYS_UpdateMove( fieldWork->fldMMdlSys );
+	Jiki_UpdatePlayerWork( fieldWork );
 
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
@@ -406,7 +409,7 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
 	FGRID_PLAYER *pGridPlayer = pGridCont->pGridPlayer;
 	FIELD_CAMERA *camera = fieldWork->camera_control;
-
+	
 	trg = GFL_UI_KEY_GetTrg();
 	cont = GFL_UI_KEY_GetCont();
 	
@@ -742,6 +745,83 @@ static void FGridPlayer_Move(
 	FGRID_PLAYER *pJiki, u32 key_trg, u32 key_cont )
 {
 	PC_ACTCONT *pcActCont = pJiki->pGridCont->pFieldWork->pcActCont;
+	FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
+	
+	//----とりあえず
+	#ifdef DEBUG_ONLY_FOR_kagaya
+	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
+		DEBUG_PrintAttr( pJiki );
+	}
+	#elif defined DEBUG_ONLY_FOR_nakatsui
+	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
+		DEBUG_PrintAttr( pJiki );
+	}
+	#endif
+	//----
+	
+	if( FLDMMDL_AcmdSetCheck(fmmdl) == TRUE ){
+		int code;
+		int dir = DIR_NOT;
+		
+		if( (key_cont&PAD_KEY_UP) ){ dir = DIR_UP; }
+		else if( (key_cont&PAD_KEY_DOWN) ){ dir = DIR_DOWN; }
+		else if( (key_cont&PAD_KEY_LEFT) ){ dir = DIR_LEFT; }
+		else if( (key_cont&PAD_KEY_RIGHT) ){ dir = DIR_RIGHT; }
+		
+		if( dir == DIR_NOT ){
+			dir = FLDMMDL_DirDispGet( fmmdl );
+			code = FLDMMDL_AcmdCodeDirChange( dir, AC_DIR_U );
+		}else{
+			u32 hit;
+			hit = FLDMMDL_MoveHitCheckDir( fmmdl, dir );
+			
+			//--debug移動チェック
+			if( hit != FLDMMDL_MOVE_HIT_BIT_NON &&
+				(key_cont&PAD_BUTTON_R) &&
+				!(hit&FLDMMDL_MOVE_HIT_BIT_OUTRANGE) ){
+				hit = FLDMMDL_MOVE_HIT_BIT_NON;
+			}
+			//--
+			
+			if( hit == FLDMMDL_MOVE_HIT_BIT_NON ){
+				#if 1 //debug移動
+				if( (key_cont&PAD_BUTTON_R) ){
+					code = FLDMMDL_AcmdCodeDirChange( dir, AC_WALK_U_2F );
+				}else{
+					if( (key_cont & PAD_BUTTON_B) ){
+						code = FLDMMDL_AcmdCodeDirChange( dir, AC_DASH_U_4F );
+					}else{
+						code = FLDMMDL_AcmdCodeDirChange( dir, AC_WALK_U_8F );
+					}
+				}
+				#else
+				if( (key_cont & PAD_BUTTON_B) ){
+					code = FLDMMDL_AcmdCodeDirChange( dir, AC_DASH_U_4F );
+				}else{
+					code = FLDMMDL_AcmdCodeDirChange( dir, AC_WALK_U_8F );
+				}
+				#endif
+			}else{
+				code = FLDMMDL_AcmdCodeDirChange( dir, AC_STAY_WALK_U_8F );
+			}
+		}
+		
+		FLDMMDL_AcmdSet( fmmdl, code );
+	}
+	
+	#if 0
+	FldWorkPlayerWorkDirSet(
+		pJiki->pGridCont->pFieldWork, pJiki->dir );
+	FldWorkPlayerWorkPosSet(
+		pJiki->pGridCont->pFieldWork, &pJiki->vec_pos );
+	#endif
+}
+
+#if 0
+static void FGridPlayer_Move(
+	FGRID_PLAYER *pJiki, u32 key_trg, u32 key_cont )
+{
+	PC_ACTCONT *pcActCont = pJiki->pGridCont->pFieldWork->pcActCont;
 	
 	//----とりあえず
 	#ifdef DEBUG_ONLY_FOR_kagaya
@@ -785,7 +865,7 @@ static void FGridPlayer_Move(
 			{
 				FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
 				int next_gx = SIZE_GRID_FX32( next.x );
-				int next_gy = G_GRID_H_GRID( SIZE_GRID_FX32(next.y) );
+				int next_gy = SIZE_GRID_FX32( next.y );
 				int next_gz = SIZE_GRID_FX32( next.z );
 				
 				if( FLDMMDL_MoveHitCheckDir(fmmdl,dir) !=
@@ -915,6 +995,7 @@ static void FGridPlayer_Move(
 	}
 	#endif
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1229,6 +1310,22 @@ static void FldWorkPlayerWorkDirSet(
 	PLAYERWORK_setDirection( player, tbl[dir] );
 }
 
+static void Jiki_UpdatePlayerWork( FIELD_MAIN_WORK *fieldWork )
+{
+	VecFx32 pos;
+	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
+	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+	FLDMMDL *fmmdl = Player_GetFldMMdl( fieldWork->pcActCont );
+	u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xb000 };
+	int dir = FLDMMDL_DirDispGet( fmmdl );
+	
+	FLDMMDL_VecPosGet( fmmdl, &pos );
+
+	PLAYERWORK_setDirection( player, tbl[dir] );
+	PLAYERWORK_setPosition( player, &pos );
+	SetPlayerActDirection( fieldWork->pcActCont, &tbl[dir] );
+	SetGridPlayerActTrans( fieldWork->pcActCont, &pos );
+}
 
 #if 0	//実データ利用
 static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
@@ -1397,7 +1494,7 @@ static const FLDMMDL_H DATA_NpcHeader =
 
 //--------------------------------------------------------------
 /**
- * npc配置
+ * npc配置テスト
  * @param
  * @retval
  */

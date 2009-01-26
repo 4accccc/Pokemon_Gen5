@@ -1211,9 +1211,9 @@ u32 FLDMMDL_MoveHitCheck(
 		fx32 height;
 		VecFx32 pos;
 		
-		pos.x = GRID_SIZE_FX32( x );
-		pos.y = 0;
-		pos.z = GRID_SIZE_FX32( z );
+		pos.x = GRID_SIZE_FX32( x ) + GRID_HALF_FX32;
+		pos.y = GRID_SIZE_FX32( y );
+		pos.z = GRID_SIZE_FX32( z ) + GRID_HALF_FX32;
 		
 		if( FLDMMDL_GetMapAttr(fmmdl,&pos,&attr) == TRUE ){
 			if( attr != 0 ){
@@ -1226,7 +1226,7 @@ u32 FLDMMDL_MoveHitCheck(
 		if( FLDMMDL_GetMapHeight(fmmdl,&pos,&height) == TRUE ){
 			fx32 diff = vec->y - height;
 			if( diff < 0 ){ diff = -diff; }
-			if( diff >= (FX32_ONE*17) ){
+			if( diff >= (FX32_ONE*20) ){
 				ret |= FLDMMDL_MOVE_HIT_BIT_HEIGHT;
 			}
 		}else{
@@ -1236,6 +1236,20 @@ u32 FLDMMDL_MoveHitCheck(
 	
 	if( FLDMMDL_MoveHitCheckFellow(fmmdl,x,y,z) == TRUE ){
 		ret |= FLDMMDL_MOVE_HIT_BIT_OBJ;
+	}
+	
+	{
+		VecFx32 pos;
+		const FLDMAPPER *pG3DMapper;
+
+		pG3DMapper = FLDMMDLSYS_GetG3DMapper( FLDMMDL_GetFldMMdlSys(fmmdl) );
+		pos.x = GRID_SIZE_FX32( x ) + GRID_HALF_FX32;
+		pos.y = GRID_SIZE_FX32( y );
+		pos.z = GRID_SIZE_FX32( z ) + GRID_HALF_FX32;
+		
+		if( FLDMAPPER_CheckOutRange(pG3DMapper,&pos) == TRUE ){
+			ret |= FLDMMDL_MOVE_HIT_BIT_OUTRANGE;
+		}
 	}
 #endif
 	return( ret );
@@ -2034,7 +2048,7 @@ void FieldOBJTool_GridCenterPosGet( int gx, int gz, VecFx32 *vec )
 void FieldOBJTool_VectorGridPosGet( int *gx, int *gy, int *gz, const VecFx32 *vec )
 {
 	*gx = SIZE_GRID_FX32( vec->x );
-	*gy = SIZE_H_GRID_FX32( vec->y );
+	*gy = SIZE_GRID_FX32( vec->y );
 	*gz = SIZE_GRID_FX32( vec->z );
 }
 
