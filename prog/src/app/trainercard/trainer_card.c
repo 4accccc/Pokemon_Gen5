@@ -443,6 +443,37 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
 	if( wk->vblankTcblSys != NULL )
 		GFL_TCBL_Main( wk->vblankTcblSys );
 
+#if DEB_ARI
+	{
+		int x,y;
+		u8 bgPlane = TRC_BG_FONT;
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+			bgPlane = TRC_BG_MSG;
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+		{
+			for( y=0;y<24;y++ )
+			{
+				for( x=0;x<32;x++ )
+				{
+					GFL_BG_FillScreen( bgPlane , x+y*32 , x,y,1,1 ,GFL_BG_SCRWRT_PALIN );
+				}
+			}
+			GFL_BG_LoadScreenV_Req( bgPlane);
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+		{
+			for( y=0;y<24;y++ )
+			{
+				for( x=0;x<32;x++ )
+				{
+					GFL_BG_FillScreen( bgPlane , x+y*32+32*24 , x,y,1,1 ,GFL_BG_SCRWRT_PALIN );
+				}
+			}
+			GFL_BG_LoadScreenV_Req( bgPlane);
+		}
+	}
+	
+#endif
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -719,7 +750,7 @@ static void SetTrCardBg( void )
 	{	// FONT (BMP)
 		GFL_BG_BGCNT_HEADER  ExAffineBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,	//TODO 256‚©‚ç•Ï‚¦‚Ä•½‹CH
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x18000, 0x8000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000, 0x10000, GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( TRC_BG_FONT, &ExAffineBgCntDat, GFL_BG_MODE_256X16 );
@@ -730,10 +761,10 @@ static void SetTrCardBg( void )
 	{	// BG (CASE CHAR,MSG_CHAR)
 		GFL_BG_BGCNT_HEADER  TextBgCntDat[] = {
 		 {	0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000, 0x6000, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE},
 		 {	0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x6000, GX_BG_EXTPLTT_01,
 			3, 0, 0, FALSE},
 		};
 		GFL_BG_SetBGControl( TRC_BG_MSG,  &TextBgCntDat[0], GFL_BG_MODE_TEXT );
@@ -747,7 +778,7 @@ static void SetTrCardBg( void )
 	{	// BG (CARD CHAR)
 		GFL_BG_BGCNT_HEADER  AffineBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000, 0x8000, GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( TRC_BG_CARD, &AffineBgCntDat, GFL_BG_MODE_256X16 );

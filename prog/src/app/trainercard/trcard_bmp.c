@@ -23,8 +23,8 @@
 #include "font/font.naix"
 #include "msg/msg_trainercard.h"
 
-//#define FONT_BG	(GFL_BG_FRAME3_S)
-#define FONT_BG	(GFL_BG_FRAME0_S)
+#define FONT_BG	(GFL_BG_FRAME3_S)
+//#define FONT_BG	(GFL_BG_FRAME0_S)
 #define MSG_BG	(GFL_BG_FRAME0_S)
 
 enum{
@@ -468,7 +468,7 @@ void TRCBmp_TransTrWinInfo(TR_CARD_WORK* wk,GFL_BMPWIN	*win[])
 			GFL_BMPWIN_TransVramCharacter(win[i]);
 		}
 	}
-//	GFL_BG_LoadScreenV_Req(FONT_BG);
+	GFL_BG_LoadScreenV_Req(FONT_BG);
 	GFL_BG_LoadScreenV_Req(MSG_BG);
 }
 
