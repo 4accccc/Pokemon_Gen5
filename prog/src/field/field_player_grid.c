@@ -343,10 +343,25 @@ void PlayerActGrid_ScaleSizeSet(
 		idx, &sizeX, &sizeY );
 }
 
-
 FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
 
 FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont )
 {
 	return pcActCont->pFldMMdl;
 }
+
+void PLAYER_GRID_GetFrontGridPos(
+	PC_ACTCONT *pcActCont, int *gx, int *gy, int *gz )
+{
+	int dir;
+	FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
+	
+	*gx = FLDMMDL_NowPosGX_Get( fmmdl );
+	*gy = FLDMMDL_NowPosGY_Get( fmmdl );
+	*gz = FLDMMDL_NowPosGZ_Get( fmmdl );
+	dir = FLDMMDL_DirDispGet( fmmdl );
+	
+	*gx += FLDMMDL_DirAddValueGX( dir );
+	*gz += FLDMMDL_DirAddValueGZ( dir );
+}
+

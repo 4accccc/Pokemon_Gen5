@@ -46,5 +46,6 @@ extern const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork );
 extern void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork );
 
 extern u16 FieldMainGrid_GetPlayerDir( const FIELD_MAIN_WORK *fieldWork );
+extern BOOL FIELDMAP_CheckGridControl( FIELD_MAIN_WORK *fieldWork );
 
 #endif //__FIELD_MAIN_H__

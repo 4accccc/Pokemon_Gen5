@@ -226,7 +226,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/fieldmap_proc.c \
 				field/fldmmdl_move_2.c \
 				field/fldmmdl_movedata.c \
 				field/fldmmdl_drawdata.c \
-				field/fldmmdl_blact.c
+				field/fldmmdl_blact.c \
+				field/event_fieldtalk.c
 
 # マッパーサンプル
 #===> main

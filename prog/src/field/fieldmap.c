@@ -37,12 +37,15 @@
 #include "event_debug_menu.h"
 #include "event_fieldmap_menu.h"
 #include "event_battle.h"
+#include "event_fieldtalk.h"
 
 #include "field_comm_actor.h"
 #include "field_comm/field_comm_main.h"
 #include "field_comm/field_comm_event.h"
 
 #include "fldmmdl.h"
+
+extern FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
 
 //============================================================================================
 /**
@@ -463,34 +466,48 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 	};
 	FIELD_MAIN_WORK * fieldWork = work;
 	GMEVENT * event;
+	int	trg = GFL_UI_KEY_GetTrg();
+	int cont = GFL_UI_KEY_GetCont();
 
+	//座標接続チェック
 	event = ConnectCheck(gsys, fieldWork, &fieldWork->now_pos);
 	if (event != NULL) return event;
-
+	
+	//キー入力接続チェック
 	event = PushConnectCheck(gsys, fieldWork);
 	if (event != NULL) return event;
-
-	if( ( GFL_UI_KEY_GetCont() & resetCont ) == resetCont ){
+	
+	//ソフトリセットチェック
+	if( (cont&resetCont) == resetCont ){
 		return DEBUG_EVENT_GameEnd(gsys, fieldWork);
 		//return DEBUG_EVENT_FieldSample(gsys, fieldWork);
 	}
-	if( ( GFL_UI_KEY_GetCont() & chgCont ) == chgCont ){
+	
+	//マップ変更チェック
+	if( (cont&chgCont) == chgCont ){
 		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
 	}
-	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
+	
+	//戦闘移行チェック
+	if( trg == PAD_BUTTON_START ){
 		return DEBUG_EVENT_Battle(gsys, fieldWork);
 	}
-	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X ){
+	
+	//メニュー起動チェック
+	if( trg == PAD_BUTTON_X ){
 		return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
 	}
-	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
+	
+	//デバッグメニュー起動チェック
+	if( trg == PAD_BUTTON_SELECT ){
 		PrintDebugInfo(gsys, fieldWork);
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
 				fieldWork->heapID, ZONEDATA_GetMapRscID(fieldWork->map_id));
 	}
+	
 	///通信用会話処理(仮
 	//話しかける側
-	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ){
+	if( trg == PAD_BUTTON_A ){
 		if( FIELD_COMM_MAIN_CanTalk( fieldWork->commSys ) == TRUE ){
 			return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , fieldWork->commSys );
 		}
@@ -499,7 +516,21 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 	if( FIELD_COMM_MAIN_CheckReserveTalk( fieldWork->commSys ) == TRUE ){
 		return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , fieldWork->commSys );
 	}
-
+	
+	//フィールド話し掛けチェック
+	if( trg == PAD_BUTTON_A && FIELDMAP_CheckGridControl(fieldWork) ){
+		int gx,gy,gz;
+		FLDMMDL *fmmdl_talk;
+		PLAYER_GRID_GetFrontGridPos( fieldWork->pcActCont, &gx, &gy, &gz );
+		fmmdl_talk = FLDMMDL_SearchGridPos( fieldWork->fldMMdlSys, gx, gz, FALSE );
+		if( fmmdl_talk != NULL ){
+			u32 scr_id = 0;
+			FLDMMDL *fmmdl_player = Player_GetFldMMdl( fieldWork->pcActCont );
+			return EVENT_FieldTalk( gsys, fieldWork,
+				scr_id, fmmdl_player, fmmdl_talk, fieldWork->heapID );
+		}
+	}
+	
 	return NULL;
 }
 

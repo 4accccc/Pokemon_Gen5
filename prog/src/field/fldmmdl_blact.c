@@ -253,12 +253,12 @@ typedef struct
 	s8 anm_walk_stop_frame;
 }TEST_DRAW_WORK;
 
-static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
+static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
 {
 	u16 dir,anm_id,status;
 	VecFx32 pos;
-	FLDMMDL *fmmdl = work;
 	int tbl[] = {0,4,8,12,16,20};
+	FLDMMDL *fmmdl = work;
 	TEST_DRAW_WORK *draw = FLDMMDL_DrawProcWorkGet( fmmdl );
 	
 	dir = FLDMMDL_DirDispGet( fmmdl );
@@ -299,6 +299,13 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(bbdActSys), actIdx, &pos );
+	
+	if( FLDMMDL_MovePauseCheck(fmmdl) == FALSE ||
+		FLDMMDL_StatusBitCheck_Acmd(fmmdl) == TRUE ){
+		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, TRUE );
+	}else{
+		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, FALSE );
+	}
 }
 
 typedef struct
@@ -306,16 +313,16 @@ typedef struct
 	u8 init;
 }TEST_JIKI_DRAW_WORK;
 
-static void testJikiFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
+static void testJikiFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
 {
 	u16 dir,anm_id,status;
 	VecFx32 pos;
-	FLDMMDL *fmmdl = work;
 	int tbl[] = {
 		 0, 4, 8,12,
 		16,20,24,28,
 		32,36,40,44
 	};
+	FLDMMDL *fmmdl = work;
 	TEST_DRAW_WORK *draw = FLDMMDL_DrawProcWorkGet( fmmdl );
 	
 	dir = FLDMMDL_DirDispGet( fmmdl );
@@ -391,6 +398,13 @@ static void testJikiFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(bbdActSys), actIdx, &pos );
+	
+	if( FLDMMDL_MovePauseCheck(fmmdl) == FALSE ||
+		FLDMMDL_StatusBitCheck_Acmd(fmmdl) == TRUE ){
+		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, TRUE );
+	}else{
+		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, FALSE );
+	}
 }
 
 //--------------------------------------------------------------
