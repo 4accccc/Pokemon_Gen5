@@ -525,3 +525,11 @@ void BTL_STR_MakeStatusWinStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16 hp )
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 
+void BTL_STR_MakeWarnStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16 strID )
+{
+	WORDSET_RegisterPokeNickName( SysWork.wset, 0, BTL_POKEPARAM_GetSrcData(bpp) );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
+

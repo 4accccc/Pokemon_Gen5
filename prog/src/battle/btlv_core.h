@@ -27,6 +27,7 @@ typedef  struct _BTLV_CORE		BTLV_CORE;
 #include "btl_action.h"
 #include "btl_calc.h"
 #include "btl_string.h"
+#include "btl_pokeselect.h"
 
 //----------------------------------------------------------------------
 /**
@@ -113,8 +114,32 @@ extern BOOL BTLV_WaitCommand( BTLV_CORE* btlv );
 extern void BTLV_GetActionParam( const BTLV_CORE* core, BTL_ACTION_PARAM* dst );
 
 
-extern void BTLV_StartMemberChangeAct( BTLV_CORE* wk, u8 clientID, u8 memberIdx );
+extern void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 memberIdx );
 extern BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk );
+
+
+//=============================================================================================
+/**
+ * ポケモン選択処理を開始
+ *
+ * @param   core			[in]  描画メインモジュールハンドラ
+ * @param   param			[in]  選択処理パラメータポインタ
+ * @param   result		[out] 選択結果格納構造体ポインタ
+ */
+//=============================================================================================
+extern void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
+
+//=============================================================================================
+/**
+ * ポケモン選択処理の終了待ち
+ *
+ * @param   core			[in]  描画メインモジュールハンドラ
+ *
+ * @retval  BOOL			終了したらTRUE
+ */
+//=============================================================================================
+extern BOOL BTLV_WaitPokeSelect( BTLV_CORE* core );
+
 
 
 //=============================================================================================
@@ -135,7 +160,7 @@ extern BOOL BTLV_WaitMsg( BTLV_CORE* wk );
 
 extern void BTLV_StartWazaAct( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, u16 damage, WazaID waza, BtlTypeAff affinity );
 extern BOOL BTLV_WaitWazaAct( BTLV_CORE* wk );
-extern void BTLV_StartDeadAct( BTLV_CORE* wk, u8 clientID );
+extern void BTLV_StartDeadAct( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_WaitDeadAct( BTLV_CORE* wk );
 
 

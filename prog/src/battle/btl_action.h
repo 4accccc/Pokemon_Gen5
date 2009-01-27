@@ -39,14 +39,16 @@ typedef union {
 	}fight;
 
 	struct {
-		u32 cmd			: 3;
+		u32 cmd				: 3;
 		u32 number		: 16;
 		u32 targetIdx	: 3;
 	}item;
 
 	struct {
-		u32 cmd			: 3;
-		u32 memberIdx	: 3;
+		u32 cmd				: 3;
+		u32 posIdx		: 3;	// 入れ替え対象位置ID
+		u32 memberIdx	: 3;	// 選ばれたポケモンのパーティ内インデックス
+		u32 depleteFlag	: 1;
 	}change;
 
 	struct {
@@ -56,25 +58,34 @@ typedef union {
 
 }BTL_ACTION_PARAM;
 
-
+// たたかうアクション
 static void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, u8 wazaIdx, u8 targetIdx )
 {
 	p->fight.cmd = BTL_ACTION_FIGHT;
 	p->fight.wazaIdx = wazaIdx;
 	p->fight.targetIdx = targetIdx;
 }
-
+// アイテムつかうアクション
 static void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber, u8 targetIdx )
 {
 	p->item.cmd = BTL_ACTION_ITEM;
 	p->item.number = itemNumber;
 	p->item.targetIdx = targetIdx;
 }
-
-static void BTL_ACTION_SetChangeParam( BTL_ACTION_PARAM* p, u8 memberIdx )
+// 入れ替えポケモン選択アクション（通常）
+static void BTL_ACTION_SetChangeParam( BTL_ACTION_PARAM* p, u8 posIdx, u8 memberIdx )
 {
 	p->change.cmd = BTL_ACTION_CHANGE;
+	p->change.posIdx = posIdx;
 	p->change.memberIdx = memberIdx;
+	p->change.depleteFlag = 0;
+}
+// 入れ替えポケモン選択アクション（もう戦えるポケモンがいない）
+static void BTL_ACTION_SetChangeDepleteParam( BTL_ACTION_PARAM* p )
+{
+	p->change.cmd = BTL_ACTION_CHANGE;
+	p->change.memberIdx = 0;
+	p->change.depleteFlag = 1;
 }
 
 static void BTL_ACTION_SetEscapeParam( BTL_ACTION_PARAM* p )

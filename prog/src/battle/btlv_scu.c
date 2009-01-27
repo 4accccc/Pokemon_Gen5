@@ -562,16 +562,16 @@ typedef struct {
  * ポケモンひんしアクション開始
  *
  * @param   wk			
- * @param   clientID	
+ * @param   pos		ひんしになったポケモンの位置ID	
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, u8 clientID )
+void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
 {
 	GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskDeadEffect, sizeof(DEAD_EFF_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
 	DEAD_EFF_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
-	twk->statWin = &wk->statusWin[clientID];
+	twk->statWin = &wk->statusWin[pos];
 	twk->endFlag = &wk->taskEndFlag[0];
 	twk->timer = 0;
 	twk->line = 0;
@@ -579,7 +579,7 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, u8 clientID )
 	*(twk->endFlag) = FALSE;
 
 	//soga
-	BTL_EFFECT_DelPokemon( clientID );
+	BTL_EFFECT_DelPokemon( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
 
 }
 //=============================================================================================
@@ -631,12 +631,12 @@ typedef struct {
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, u8 clientID )
+void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos )
 {
 	GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskPokeInEffect, sizeof(POKEIN_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
 	POKEIN_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
-	twk->statWin = &wk->statusWin[ clientID ];
+	twk->statWin = &wk->statusWin[ pos ];
 	twk->endFlag = &wk->taskEndFlag[0];
 	twk->seq = 0;
 
@@ -644,8 +644,8 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, u8 clientID )
 
 	//soga
 	{
-		const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
-		BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), clientID );
+		const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
+		BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule,pos) );
 	}
 }
 

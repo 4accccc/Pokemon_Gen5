@@ -32,20 +32,20 @@ typedef enum {
 	SC_OP_RANK_DOWN,		///< 【計算】ステータスランクダウン  [ClientID, StatusType, マイナス量]
 
 	SC_DATA_WAZA_EXE,		///< 【データセット】ワザ発動 [ AtClientID, wazaIdx, DefPokeNum, DefClientID1, ... ]
-	SC_DATA_MEMBER_OUT,		///< 【データセット】フロントメンバーアウト[ CliendID ]
-	SC_DATA_MEMBER_IN,		///< 【データセット】フロントメンバーイン[ ClientID, pokeIdx ]
+	SC_DATA_MEMBER_OUT,	///< 【データセット】フロントメンバーアウト[ CliendID ]
+	SC_DATA_MEMBER_IN,	///< 【データセット】フロントメンバーイン[ ClientID, pokeIdx ]
 
 	SC_ACT_WAZA_DMG,		///< 【ワザ発動：ダメージ】[ AtClient, DefClient, wazaIdx, Affinity ]
 	SC_ACT_RANKUP,			///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
 	SC_ACT_RANKDOWN,		///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
-	SC_ACT_DEAD,			///< 【ポケモンひんし】[ ClientID ]
+	SC_ACT_DEAD,				///< 【ポケモンひんし】[ ClientID ]
 	SC_ACT_MEMBER_IN,		///< 【ポケモンイン】[ ClientID, pokeIdx ]
 
-	SC_TOKWIN_IN,			///< とくせいウィンドウ表示イン [ClientID]
+	SC_TOKWIN_IN,				///< とくせいウィンドウ表示イン [ClientID]
 	SC_TOKWIN_OUT,			///< とくせいウィンドウ表示アウト [ClientID]
-	SC_MSG_STD,				///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
-	SC_MSG_SET,				///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
-	SC_MSG_WAZA,			///< ワザメッセージ表示[ ClientID, wazaIdx ]
+	SC_MSG_STD,					///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
+	SC_MSG_SET,					///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
+	SC_MSG_WAZA,				///< ワザメッセージ表示[ ClientID, wazaIdx ]
 
 	SC_NULL,
 

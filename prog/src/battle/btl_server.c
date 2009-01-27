@@ -66,8 +66,9 @@ typedef struct {
 
 	WazaID	waza;						///< 出したワザID
 
-	u8		attackPokeID;			///< 攻撃側ポケID
-	u8		defencePokeID;		///< 受け側ポケID
+	u8		attackPokeID;				///< 攻撃側ポケID
+	u8		defencePokeID;			///< 受け側ポケID（単体）
+	BtlExPos	defencePokePos;	///< 受け側ポケ位置ID（範囲選択）
 
 	u8		wazaExecuteFlag;	///< ワザ実行できたかフラグ
 	u8		wazaHitRatio;			///< ワザ命中確率
@@ -164,6 +165,7 @@ static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, u8
 static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
 	 const CLIENT_WORK* atClient, const CLIENT_WORK* defClient,
 	 BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
+	 BtlPokePos atPos, BtlPokePos defPos,
 	 WazaID waza, u8 wazaIdx );
 static BOOL sc_fight_layer1_calc_damage( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static u16 sc_fight_layer1_single_dmg( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
@@ -791,8 +793,8 @@ static BOOL createServerCommand( BTL_SERVER* server )
 				BTL_Printf("【どうぐ】を処理。アイテム%dを、%d番の相手に。\n", action->item.number, action->item.targetIdx);
 				break;
 			case BTL_ACTION_CHANGE:
-				BTL_Printf("【ポケモン】を処理。%d番の相手と。\n", action->change.memberIdx);
-				scput_ChangePokemon( server, clientID, pokeIdx, action->change.memberIdx );
+				BTL_Printf("【ポケモン】を処理。位置%d <- ポケ%d \n", action->change.posIdx, action->change.memberIdx);
+				scput_ChangePokemon( server, clientID, action->change.posIdx, action->change.memberIdx );
 				break;
 			case BTL_ACTION_ESCAPE:
 				BTL_Printf("【にげる】を処理。\n");
@@ -823,22 +825,28 @@ static BOOL createServerCommand( BTL_SERVER* server )
 //--------------------------------------------------------------------------
 static BOOL createServerCommandAfterPokeSelect( BTL_SERVER* server )
 {
+	const BTL_ACTION_PARAM* action;
+	CLIENT_WORK* client;
 	u16 clientID, posIdx;
-	int i;
+	int i, j, actionCnt;
 
-	for(i=0; i<server->numActPokemon; i++)
+	BTL_Printf("[SV] ひんしポケモン入れ替え選択後のサーバーコマンド生成\n");
+
+	for(i=0; i<server->numClient; i++)
 	{
-		clientID = server->actOrder[i].clientID;
-		posIdx  = server->actOrder[i].pokeIdx;
+		client = &server->client[i];
+		action = BTL_ADAPTER_GetReturnData( client->adapter );
+		actionCnt = BTL_ADAPTER_GetReturnDataCount( client->adapter );
 
-		if( BTL_POKEPARAM_GetValue(server->client[i].frontMember[posIdx], BPP_HP) == 0 )
+		for(j=0; j<actionCnt; j++, action++)
 		{
-			const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( server->client[i].adapter );
-			action += posIdx;
+			if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
+			if( action->change.depleteFlag ){ continue; }
 
-			GF_ASSERT(action->gen.cmd == BTL_ACTION_CHANGE);
+			BTL_Printf("[SV]  クライアント[%d]のポケモン(位置%d) を、%d番目のポケといれかえる\n",
+						i, action->change.posIdx, action->change.memberIdx );
 
-			scput_ChangePokemon( server, clientID, posIdx, action->change.memberIdx );
+			scput_ChangePokemon( server, i, action->change.posIdx, action->change.memberIdx );
 		}
 	}
 
@@ -1045,7 +1053,7 @@ static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, u8
 		SCQUE_PUT_DATA_WazaExe( server->que, atPos, action->fight.wazaIdx, 1, defPos, 0, 0 );
 		SCQUE_PUT_MSG_WAZA( server->que, atPos, action->fight.wazaIdx );
 
-		scPut_FightSingleDmg( server, fep, atClient, defClient, attacker, defender, waza, action->fight.wazaIdx );
+		scPut_FightSingleDmg( server, fep, atClient, defClient, attacker, defender, atPos, defPos, waza, action->fight.wazaIdx );
 
 		scEvent_decrementPP( server, fep, attacker, action->fight.wazaIdx );
 	}
@@ -1055,8 +1063,16 @@ static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, u8
 static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
 	 const CLIENT_WORK* atClient, const CLIENT_WORK* defClient,
 	 BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
+	 BtlPokePos atPos, BtlPokePos defPos,
 	 WazaID waza, u8 wazaIdx )
 {
+
+	// 既に対象が死んでいる
+	if( BTL_POKEPARAM_GetValue(defender, BPP_HP) == 0 )
+	{
+		SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaAvoid );
+		return;
+	}
 // ヒットチェック
 	// はずれた
 	if( !scEvent_checkHit(server, fep, attacker, defender, waza) )
@@ -1112,14 +1128,14 @@ static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
 
 				if( BTL_POKEPARAM_GetValue(defender, BPP_HP) == 0 )
 				{
-					SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, defClient->myID );
+					SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, defPos );
 					SCQUE_PUT_ACT_Dead( server->que, defClient->myID );
 					deadFlag = TRUE;
 				}
 				if( BTL_POKEPARAM_GetValue(attacker, BPP_HP) == 0 )
 				{
 					SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, atClient->myID );
-					SCQUE_PUT_ACT_Dead( server->que, atClient->myID );
+					SCQUE_PUT_ACT_Dead( server->que, atPos );
 					deadFlag = TRUE;
 				}
 				if( deadFlag ){ break; }
@@ -1465,7 +1481,7 @@ static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 c
 static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx )
 {
 //	cep->inPokeParam = BTL_MAIN_GetPokeParam
-	SCQUE_PUT_DATA_MemberIn( server->que, clientID, posIdx, nextPokeIdx );
+		SCQUE_PUT_DATA_MemberIn( server->que, clientID, posIdx, nextPokeIdx );
 //	SCQUE_PUT_ACT_MemberIn( server->que, clientID, memberIdx );
 }
 

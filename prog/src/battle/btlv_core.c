@@ -181,8 +181,8 @@ void BTLV_StartCommand( BTLV_CORE* core, BtlvCmd cmd )
 			BtlvCmd		cmd;
 			pCmdProc	proc;
 		}procTbl[] = {
-			{ BTLV_CMD_SETUP,			CmdProc_Setup },
-			{ BTLV_CMD_SELECT_ACTION,	CmdProc_SelectAction },
+			{ BTLV_CMD_SETUP,						CmdProc_Setup },
+			{ BTLV_CMD_SELECT_ACTION,		CmdProc_SelectAction },
 			{ BTLV_CMD_SELECT_POKEMON,	CmdProc_SelectPokemon },
 		};
 
@@ -349,6 +349,16 @@ static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer )
 }
 
 
+void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
+{
+	BTLV_SCD_PokeSelect_Start( core->scrnD, param, result );
+}
+
+BOOL BTLV_WaitPokeSelect( BTLV_CORE* core )
+{
+	return BTLV_SCD_PokeSelect_Wait( core->scrnD );
+}
+
 
 //--------------------------
 typedef struct {
@@ -447,13 +457,13 @@ static BOOL subprocWazaAct( int* seq, void* wk_adrs )
  * ポケモンひんしアクション開始
  *
  * @param   wk		
- * @param   clientID		
+ * @param   pos		ひんしになったポケモンの位置ID
  *
  */
 //=============================================================================================
-void BTLV_StartDeadAct( BTLV_CORE* wk, u8 clientID )
+void BTLV_StartDeadAct( BTLV_CORE* wk, BtlPokePos pos )
 {
-	BTLV_SCU_StartDeadAct( wk->scrnU, clientID );
+	BTLV_SCU_StartDeadAct( wk->scrnU, pos );
 }
 BOOL BTLV_WaitDeadAct( BTLV_CORE* wk )
 {
@@ -463,6 +473,8 @@ BOOL BTLV_WaitDeadAct( BTLV_CORE* wk )
 //------------------------------------------
 typedef struct {
 	u8 clientID;
+	u8 memberIdx;
+	BtlPokePos  pokePos;
 }MEMBER_IN_WORK;
 
 //=============================================================================================
@@ -475,11 +487,14 @@ typedef struct {
  *
  */
 //=============================================================================================
-void BTLV_StartMemberChangeAct( BTLV_CORE* wk, u8 clientID, u8 memberIdx )
+void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 memberIdx )
 {
 	MEMBER_IN_WORK* subwk = getGenericWork( wk, sizeof(MEMBER_IN_WORK) );
 
 	subwk->clientID = clientID;
+	subwk->memberIdx = memberIdx;
+	subwk->pokePos = pos;
+
 	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMemberIn );
 //	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
 //	printf("ゆけっ！%s！\n", BTRSTR_GetMonsName( BTL_POKEPARAM_GetMonsNo(pp)) );
@@ -509,7 +524,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 	case 1:
 		if( BTLV_SCU_WaitMsg(wk->scrnU) )
 		{
-			BTLV_SCU_StartPokeIn( wk->scrnU, subwk->clientID );
+			BTLV_SCU_StartPokeIn( wk->scrnU, subwk->pokePos );
 			(*seq)++;
 		}
 		break;

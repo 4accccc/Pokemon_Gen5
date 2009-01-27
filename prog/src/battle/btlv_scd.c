@@ -70,10 +70,14 @@ struct _BTLV_SCD {
 
 	BTL_PROC			subProc;
 	BTL_PROC			subProcStack[ SUBPROC_STACK_DEPTH ];
-	u32					subProcStackPtr;
+	u32						subProcStackPtr;
 
 	const BTL_POKEPARAM*	bpp;
 	BTL_ACTION_PARAM		selAction;
+
+	const BTL_POKESELECT_PARAM*		pokesel_param;
+	BTL_POKESELECT_RESULT*				pokesel_result;
+	
 
 	const BTLV_CORE* vcore;
 	const BTL_MAIN_MODULE* mainModule;
@@ -393,6 +397,11 @@ void BTLV_SCD_GetSelectAction( BTLV_SCD* wk, BTL_ACTION_PARAM* action )
 
 
 //=============================================================================================
+//	ポケモン選択処理
+//=============================================================================================
+
+
+//=============================================================================================
 /**
  * ポケモン選択開始
  *
@@ -412,6 +421,19 @@ BOOL BTLV_SCD_WaitPokemonSelect( BTLV_SCD* wk )
 	return spstack_call( wk );
 }
 
+void BTLV_SCD_PokeSelect_Start( BTLV_SCD* wk, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
+{
+	wk->pokesel_param = param;
+	wk->pokesel_result = result;
+	BTL_Printf("[*SCD] ポケモン選択開始 : %d 体えらぶ\n", param->numSelect );
+	spstack_push( wk, selectPokemon_init, selectPokemon_loop );
+}
+BOOL BTLV_SCD_PokeSelect_Wait( BTLV_SCD* wk )
+{
+	return spstack_call( wk );
+}
+
+// ポケモン選択画面：構築
 static BOOL selectPokemon_init( int* seq, void* wk_adrs )
 {
 	static const struct {
@@ -438,7 +460,7 @@ static BOOL selectPokemon_init( int* seq, void* wk_adrs )
 
 			GFL_BMP_Clear( wk->bmp, 0xff );
 
-			party = BTL_MAIN_GetPartyDataConst( wk->mainModule, BTLV_CORE_GetPlayerClientID(wk->vcore) );
+			party = wk->pokesel_param->party;
 			members = BTL_PARTY_GetMemberCount( party );
 
 			for(i=0; i<members; i++)
@@ -466,8 +488,17 @@ static BOOL selectPokemon_init( int* seq, void* wk_adrs )
 	return FALSE;
 }
 
+// ポケモン選択画面：動作
 static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
 {
+	enum {
+		SEQ_INIT = 0,
+		SEQ_WAIT_SELECT,
+		SEQ_WARNING_START,
+		SEQ_WARNING_WAIT_PRINT,
+		SEQ_WARNING_WAIT_AGREE,
+	};
+
 	enum {
 		POKEWIN_1_BTM = POKEWIN_1_Y+POKEWIN_HEIGHT - 1,
 		POKEWIN_1_RGT = POKEWIN_1_X+POKEWIN_WIDTH - 1,
@@ -481,7 +512,13 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
 		POKEWIN_5_RGT = POKEWIN_5_X+POKEWIN_WIDTH - 1,
 		POKEWIN_6_BTM = POKEWIN_6_Y+POKEWIN_HEIGHT - 1,
 		POKEWIN_6_RGT = POKEWIN_6_X+POKEWIN_WIDTH - 1,
+
+		WARNWIN_WIDTH = 256-(8*2),
+		WARNWIN_HEIGHT = 32,
+		WARNWIN_X = 8,
+		WARNWIN_Y = 192-8-WARNWIN_HEIGHT,
 	};
+
 	static const GFL_UI_TP_HITTBL hitTbl[] = {
 		{ POKEWIN_1_Y, POKEWIN_1_BTM, POKEWIN_1_X, POKEWIN_1_RGT },
 		{ POKEWIN_2_Y, POKEWIN_2_BTM, POKEWIN_2_X, POKEWIN_2_RGT },
@@ -493,25 +530,101 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
 	};
 
 	BTLV_SCD* wk = wk_adrs;
-	int hitpos;
+	const BTL_POKESELECT_PARAM* param = wk->pokesel_param;
+	BTL_POKESELECT_RESULT *res = wk->pokesel_result;
 
-	hitpos = GFL_UI_TP_HitTrg( hitTbl );
-	if( hitpos != GFL_UI_TP_HIT_NONE )
-	{
-		const BTL_PARTY* party = BTL_MAIN_GetPartyDataConst( wk->mainModule, BTLV_CORE_GetPlayerClientID(wk->vcore) );
+	switch( *seq ){
+	case SEQ_INIT:
+		res->cnt = 0;
+		(*seq) = SEQ_WAIT_SELECT;
 
-		if( hitpos < BTL_PARTY_GetMemberCount(party) )
+		/* fallthru */
+
+	// ポケモン名ウィンドウのタッチ選択待ち
+	case SEQ_WAIT_SELECT:
 		{
-			const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, hitpos );
-			if( BTL_POKEPARAM_GetValue(bpp, BPP_HP) )
+			int hitpos = GFL_UI_TP_HitTrg( hitTbl );
+			if( hitpos != GFL_UI_TP_HIT_NONE )
 			{
-				BTL_ACTION_SetChangeParam( &wk->selAction, hitpos );
-				return TRUE;
+				const BTL_PARTY* party = param->party;
+
+				if( hitpos < BTL_PARTY_GetMemberCount(party) )
+				{
+					const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, param->idxOrder[hitpos] );
+
+					// 生きてるポケしか選べない場合のチェック
+					if( param->aliveOnly )
+					{
+						if( BTL_POKEPARAM_IsDead(bpp) )
+						{
+							BTL_STR_MakeWarnStr( wk->strbuf, bpp, BTLSTR_UI_WARN_NotAlivePoke );
+							(*seq) = SEQ_WARNING_START;
+							break;
+						}
+					}
+					// 戦闘に出てるポケは選べない場合のチェック
+					if(	(param->numProhibit > 0)
+					&&	(hitpos < param->numProhibit)
+					){
+						BTL_STR_MakeWarnStr( wk->strbuf, bpp, BTLSTR_UI_WARN_FightingPoke );
+						(*seq) = SEQ_WARNING_START;
+						break;
+					}
+					// 既に選んだポケは選べない
+					{
+						u8 i;
+						for(i=0; i<res->cnt; i++)
+						{
+							if( res->selIdx[i] == hitpos )
+							{
+								break;
+							}
+						}
+						if( i != res->cnt )
+						{
+							BTL_STR_MakeWarnStr( wk->strbuf, bpp, BTLSTR_UI_WARN_SelectedPoke );
+							(*seq) = SEQ_WARNING_START;
+							break;
+						}
+					}
+					// --- ここまで来たら正しいポケを選んでる ---
+					res->selIdx[ res->cnt++ ] = hitpos;
+					if( res->cnt >= param->numSelect )
+					{
+						return TRUE;
+					}
+				}
 			}
 		}
+		break;
+
+	// 警告表示中（タッチ待ち）
+	case SEQ_WARNING_START:
+		PRINT_UTIL_Print( &wk->printUtil, wk->printQue, WARNWIN_X, WARNWIN_Y, wk->strbuf, wk->font );
+		(*seq) = SEQ_WARNING_WAIT_PRINT;
+		/* fallthru */
+	case SEQ_WARNING_WAIT_PRINT:
+		PRINTSYS_QUE_Main( wk->printQue );
+		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
+		{
+			(*seq) = SEQ_WARNING_WAIT_AGREE;
+		}
+		break;
+	case SEQ_WARNING_WAIT_AGREE:
+		if(	GFL_UI_TP_GetTrg()
+		||	GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A)
+		){
+				GFL_BMP_Fill( wk->bmp, WARNWIN_X, WARNWIN_Y, WARNWIN_WIDTH, WARNWIN_HEIGHT, 0x0f );
+				GFL_BMPWIN_TransVramCharacter( wk->win );
+				(*seq) = SEQ_WAIT_SELECT;
+		}
+		break;
 	}
 
 	return FALSE;
 }
+
+
+
 
 

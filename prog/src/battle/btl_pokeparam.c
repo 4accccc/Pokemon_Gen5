@@ -337,7 +337,19 @@ int BTL_POKEPARAM_GetValueCriticalHit( const BTL_POKEPARAM* pp, BppValueID vid )
 		return BTL_POKEPARAM_GetValue( pp, vid );
 	}
 }
-
+//=============================================================================================
+/**
+ * ひんし状態かチェック
+ *
+ * @param   pp				
+ *
+ * @retval  BOOL			
+ */
+//=============================================================================================
+BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp )
+{
+	return BTL_POKEPARAM_GetValue( pp, BPP_HP ) == 0;
+}
 //=============================================================================================
 /**
  * 特定の状態異常にかかっているかチェック

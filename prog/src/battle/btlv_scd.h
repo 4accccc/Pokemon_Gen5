@@ -23,7 +23,9 @@ typedef struct _BTLV_SCD	BTLV_SCD;
 #include "btl_main.h"
 #include "btl_pokeparam.h"
 #include "btl_action.h"
+#include "btl_pokeselect.h"
 #include "btlv_core.h"
+
 
 
 extern BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, GFL_TCBLSYS* tcbl, GFL_FONT* font, HEAPID heapID );
@@ -36,6 +38,9 @@ extern BOOL BTLV_SCD_WaitActionSelect( BTLV_SCD* wk );
 
 extern void BTLV_SCD_StartPokemonSelect( BTLV_SCD* wk );
 extern BOOL BTLV_SCD_WaitPokemonSelect( BTLV_SCD* wk );
+
+extern void BTLV_SCD_PokeSelect_Start( BTLV_SCD* wk, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
+extern BOOL BTLV_SCD_PokeSelect_Wait( BTLV_SCD* wk );
 
 
 extern void BTLV_SCD_GetSelectAction( BTLV_SCD* wk, BTL_ACTION_PARAM* action );
