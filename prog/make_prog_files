@@ -41,6 +41,7 @@ SRCS	+=		$(SOUNDSRC) \
 				savedata/contest_savedata.c \
 				savedata/test_savedata.c \
 				savedata/box_savedata.c \
+				savedata/perapvoice.c \
 				test/goto/d_goto.c \
 				test/goto/comm_error.c \
 				system/mcss.c \

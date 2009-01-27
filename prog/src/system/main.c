@@ -29,7 +29,6 @@
 #ifdef PM_DEBUG
 #include "test/performance.h"
 #include "test/goto/comm_error.h"
-extern void SoundDummyInit(void);
 #endif //PM_DEBUG
 
 #include "title/title.h"
@@ -175,8 +174,8 @@ static	void	GameInit(void)
 
 	//サウンドストリーミング再生システム
 	SND_STRM_Init(GFL_HEAPID_SYSTEM);
-    //
-    //Snd_AllInit(NULL,NULL);
+    //サウンドの初期化
+    Snd_AllInit(NULL,NULL);
 
 	//キーコントロールモード設定
 	CONFIG_SYSTEM_KyeControlTblSetting();
@@ -205,6 +204,7 @@ static	void	GameMain(void)
 		NetErr_ErrorSet();
 	}
 	SND_STRM_Main();
+    Snd_Main();
 }
 
 //------------------------------------------------------------------

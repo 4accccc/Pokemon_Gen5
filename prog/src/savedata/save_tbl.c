@@ -21,6 +21,7 @@
 #include "savedata/trainercard_data.h"
 #include "savedata/mystery_data.h"
 #include "savedata/situation.h"
+#include "perapvoice_local.h"
 
 
 //==============================================================================
@@ -173,6 +174,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_MYSTERYDATA,
 		(FUNC_GET_SIZE)MYSTERYDATA_GetWorkSize,
 		(FUNC_INIT_WORK)MYSTERYDATA_Init,
+	},
+	{	//ぺラップボイス
+		GMDATA_ID_PERAPVOICE,
+		(FUNC_GET_SIZE)PERAPVOICE_GetWorkSize,
+		(FUNC_INIT_WORK)PERAPVOICE_Init,
 	},
 };
 

@@ -241,8 +241,11 @@ void Snd_AllInit( PERAPVOICE* perap, CONFIG* config )
 
 	//サウンドアーカイブの初期化(プラチナデータ読み込みに変更)
 	//NNS_SndArcInit( &wk->arc, "data/sound/sound_data.sdat", wk->heap, FALSE );
-    NNS_SndArcInit( &wk->arc, "data/sound/pl_sound_data.sdat", wk->heap, FALSE );
-
+#ifdef PM_DEBUG
+    GF_ASSERT(NNS_SndArcInitWithResult( &wk->arc, "/sound_data.sdat", wk->heap, FALSE ));
+#else
+    NNS_SndArcInit( &wk->arc, "sound_data.sdat", wk->heap, FALSE );
+#endif
 	//プレイヤーのセットアップ
 	//サウンドアーカイブ中で定義されているプレイヤー設定に基づきセットアップされる
     (void)NNS_SndArcPlayerSetup( wk->heap );
@@ -279,9 +282,10 @@ void Snd_AllInit( PERAPVOICE* perap, CONFIG* config )
 	//自分のぺラップのポインタを常にもっておく(06.04.20)
 	wk->my_perap_ptr = perap;
 
-	//コンフィグ設定に変更
-	Snd_SetMonoFlag( config->sound_mode );
-
+	//コンフィグ設定に変更[
+    if(config){
+        Snd_SetMonoFlag( config->sound_mode );
+    }
 	return;
 }
 

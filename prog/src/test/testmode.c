@@ -149,6 +149,7 @@ static BOOL TESTMODE_ITEM_SelectFuncTaya( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSample1( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncMatsuda( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSave( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncSound( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncDlPlay( TESTMODE_WORK *work , const int idx );
@@ -167,6 +168,7 @@ static TESTMODE_MENU_LIST topMenu[] =
 	{L"名前を選んで開始"	,TESTMODE_ITEM_SelectFuncChangeSelectName },
 	{L"RTC調整"				,TESTMODE_ITEM_SelectFuncRTCEdit },
 	{L"セーブ破かい"		,TESTMODE_ITEM_SelectFuncSave },
+    {L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
 
 	//個人
 	{L"わたなべ　てつや"	,TESTMODE_ITEM_SelectFuncWatanabe },
@@ -829,6 +831,14 @@ static BOOL TESTMODE_ITEM_SelectFuncMatsuda( TESTMODE_WORK *work , const int idx
 //セーブ破壊
 extern const GFL_PROC_DATA DebugSaveProcData;
 static BOOL TESTMODE_ITEM_SelectFuncSave( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(matsuda_debug), &DebugSaveProcData, NULL);
+	return TRUE;
+}
+
+//SOUND
+extern const GFL_PROC_DATA DebugSaveProcData;
+static BOOL TESTMODE_ITEM_SelectFuncSound( TESTMODE_WORK *work , const int idx )
 {
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(matsuda_debug), &DebugSaveProcData, NULL);
 	return TRUE;

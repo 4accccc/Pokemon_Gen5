@@ -55,7 +55,7 @@ enum{
 	GMDATA_ID_WIFILIST,
 	GMDATA_ID_TRCARD,		//トレーナーカード(サイン
 	GMDATA_ID_MYSTERYDATA,	//不思議な贈り物
-	
+	GMDATA_ID_PERAPVOICE,  //ぺラップヴォイス
 	
 #if 0
 	GMDATA_ID_SYSTEM_DATA,
