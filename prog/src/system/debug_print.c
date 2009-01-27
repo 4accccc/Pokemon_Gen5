@@ -13,6 +13,8 @@
 #define REGULAR_AUTHOR_ID	(AUTHOR_FREE)
 
 
+#ifdef DEBUG_PRINT_ENABLE
+
 //==============================================================================================
 /**
  * 特定ユーザの環境でコンパイルした場合のみ動作するPrintf関数
@@ -36,3 +38,4 @@ void DEBUG_Printf( AUTHOR_ID author_id, const char * fmt, ... )
 	}
 }
 
+#endif

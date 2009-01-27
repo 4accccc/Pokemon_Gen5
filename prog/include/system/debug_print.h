@@ -53,8 +53,13 @@ typedef enum {
 #endif
 
 
-
+// デバッグプリント有効フラグを PM_DEBUG とは別にしておく
 #ifdef PM_DEBUG
+#define DEBUG_PRINT_ENABLE
+#endif
+
+
+#ifdef DEBUG_PRINT_ENABLE
 
 //==============================================================================================
 /**
@@ -80,14 +85,14 @@ extern void DEBUG_Printf( AUTHOR_ID author_id, const char * fmt, ... );
 //-----------------------------------------------------------
 // かんたん記述用マクロ
 //-----------------------------------------------------------
-#define		TAYA_Printf( ... )		DEBUG_Printf( AUTHOR_TAYA, __VA_ARGS__ )
+#define		TAYA_Printf( ... )			DEBUG_Printf( AUTHOR_TAYA, __VA_ARGS__ )
 #define		WATANABE_Printf( ... )	DEBUG_Printf( AUTHOR_WATANABE, __VA_ARGS__ )
-#define		TAMADA_Printf( ...)		DEBUG_Printf( AUTHOR_TAMADA, __VA_ARGS__ )
-#define		SOGABE_Printf( ...)		DEBUG_Printf( AUTHOR_SOGABE, __VA_ARGS__ )
-#define		OHNO_Printf( ...)		DEBUG_Printf( AUTHOR_OHNO, __VA_ARGS__ )
-#define		MATSUDA_Printf( ...)	DEBUG_Printf( AUTHOR_MATSUDA, __VA_ARGS__ )
-#define		KAGAYA_Printf( ...)		DEBUG_Printf( AUTHOR_KAGAYA, __VA_ARGS__ )
-#define		ARIIZUMI_Printf( ...)	DEBUG_Printf( AUTHOR_ARIIZUMI, __VA_ARGS__ )
+#define		TAMADA_Printf( ...)			DEBUG_Printf( AUTHOR_TAMADA, __VA_ARGS__ )
+#define		SOGABE_Printf( ...)			DEBUG_Printf( AUTHOR_SOGABE, __VA_ARGS__ )
+#define		OHNO_Printf( ...)				DEBUG_Printf( AUTHOR_OHNO, __VA_ARGS__ )
+#define		MATSUDA_Printf( ...)		DEBUG_Printf( AUTHOR_MATSUDA, __VA_ARGS__ )
+#define		KAGAYA_Printf( ...)			DEBUG_Printf( AUTHOR_KAGAYA, __VA_ARGS__ )
+#define		ARIIZUMI_Printf( ...)		DEBUG_Printf( AUTHOR_ARIIZUMI, __VA_ARGS__ )
 
 
 #endif
