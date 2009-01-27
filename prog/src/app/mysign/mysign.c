@@ -26,6 +26,7 @@
 
 #include "app/mysign.h"
 #include "mysign_local.h"
+#include "test/ariizumi/ari_debug.h"
 
 // SE用定義
 #if SIGN_USE_SND
@@ -37,6 +38,9 @@
 #define BUTTON_NUM			( 1 )
 
 #include "mysign.naix"			// グラフィックアーカイブ定義
+
+#include "startmenu.naix"
+
 //============================================================================================
 //	定数定義
 //============================================================================================
@@ -63,7 +67,6 @@ static void char_pltt_manager_init(void);
 static void InitCellActor(MYSIGN_WORK *wk);
 static void SetCellActor(MYSIGN_WORK *wk);
 static void BmpWinInit(MYSIGN_WORK *wk );
-static void BmpTouchYesnoWin_Init( GFL_BMPWIN  **yeswin, GFL_BMPWIN  **nowin, int heap  );
 static void BmpTouchYesnoWin_End( GFL_BMPWIN  *yeswin, GFL_BMPWIN  *nowin );
 static void BmpWinDelete( MYSIGN_WORK *wk );
 static void ControlCursor(MYSIGN_WORK *wk);
@@ -85,13 +88,9 @@ static int Oekaki_EndParentOnlyWait( MYSIGN_WORK *wk, int seq );
 static void DrawPoint_to_Line( 	GFL_BMPWIN *win, 	const u8 *brush, 	int px, int py, int *sx, int *sy, 	int count, int flag );
 static void Stock_OldTouch( TOUCH_INFO *all, OLD_TOUCH_INFO *stock );
 static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, OLD_TOUCH_INFO *old, int draw );
-static void MoveCommCursor( MYSIGN_WORK *wk );
-static void DebugTouchDataTrans( MYSIGN_WORK *wk );
 static void CursorColTrans(u16 *CursorCol);
-static void LineDataSendRecv( MYSIGN_WORK *wk );
 static void EndMessagePrint( MYSIGN_WORK *wk, int msgno );
-static int EndMessageWait( int msg_index );
-static void EndMessageWindowOff( MYSIGN_WORK *wk );
+static int EndMessageWait( MYSIGN_WORK *wk );
 static int Oekaki_LogoutChildMes( MYSIGN_WORK *wk, int seq );
 static int Oekaki_LogoutChildClose( MYSIGN_WORK *wk, int seq );
 static int Oekaki_LogoutChildMesWait( MYSIGN_WORK *wk, int seq );
@@ -100,13 +99,16 @@ static void EndButtonAppearChange( GFL_CLWK *act[], BOOL flag );
 static int Oekaki_ReWriteSelect( MYSIGN_WORK *wk, int seq );
 static void TouchYesNoStart( TOUCH_SW_SYS* touch_sub_window_sys );
 static void Output_SignData( u8 *des, u8 *src );
-static void *PrintCGXOnly( MYSIGN_WORK *wk,GFL_BMPWIN * win, STRBUF *msg, int y, u8 fnt_index);
+static void *PrintCGXOnly( MYSIGN_WORK *wk,GFL_BMPWIN * win, STRBUF *msg, int y);
 static void BrushCanvas( MYSIGN_WORK *wk);
 static void PlayScruchSe( SCRUCH_INFO *scruchInfo );
 static void _BmpWinPrint_Rap(
 			GFL_BMPWIN * win, void * src,
 			int src_x, int src_y, int src_dx, int src_dy,
 			int win_x, int win_y, int win_dx, int win_dy );
+
+void MYSIGN_BmpCutOamSize( GFL_BMPWIN* cp_bmp, int oam_csx, int oam_csy, int bmp_cmx, int bmp_cmy, char* char_buff );
+
 
 static int (*FuncTable[])(MYSIGN_WORK *wk, int seq)={
 	NULL,							// MYSIGN_MODE_INIT  = 0, 
@@ -165,7 +167,7 @@ GFL_PROC_RESULT MySignProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 		GFL_DISP_GX_InitVisibleControl();
 		GFL_DISP_GXS_InitVisibleControl();
 
-		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OEKAKI, 0x40000 );
+		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OEKAKI, 0x60000 );
 
 		wk = GFL_PROC_AllocWork( proc, sizeof(MYSIGN_WORK), HEAPID_OEKAKI );
 		memset( wk, 0, sizeof(MYSIGN_WORK) );
@@ -206,7 +208,8 @@ GFL_PROC_RESULT MySignProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 
 		// VBlank関数セット
 		wk->vblankFunc = GFUser_VIntr_CreateTCB( VBlankFunc , wk , 1 );
-  
+		wk->printTcblSys = GFL_TCBL_Init( HEAPID_OEKAKI , HEAPID_OEKAKI , 3 , 0 );
+
 		// ボタン用フォントを読み込み
 		wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_OEKAKI );
 
@@ -232,6 +235,9 @@ GFL_PROC_RESULT MySignProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 	
 		// 画面出力を上下入れ替える
 		GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
+		
+		//サンプリング開始
+		GFL_UI_TP_AutoStartNoBuff( 2 );	//今までは30フレーム動作で内部的にx2されてた
 
 		(*seq)++;
 		break;
@@ -287,6 +293,9 @@ GFL_PROC_RESULT MySignProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
 	}
 	GFL_CLACT_SYS_Main();			// セルアクター常駐関数
 
+	if( wk->printTcblSys != NULL )
+		GFL_TCBL_Main( wk->printTcblSys );
+
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -315,8 +324,12 @@ GFL_PROC_RESULT MySignProc_End( GFL_PROC * proc, int * seq , void *pwk, void *my
 	// サインをセーブデータに書き出し
 	Output_SignData( wk->SignBuf, GFL_BMP_GetCharacterAdrs( GFL_BMPWIN_GetBmp(wk->OekakiBoard) ) );
 
+	//サンプリング終了
+	GFL_UI_TP_AutoStop();
+
 	// Vblank期間中のBG転送終了
 	GFL_TCB_DeleteTask( wk->vblankFunc );
+	GFL_TCBL_Exit( wk->printTcblSys );
 
 	// セルアクターリソース解放
 /*
@@ -425,6 +438,7 @@ static void BgInit( void )
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
 
 
 	}
@@ -438,6 +452,8 @@ static void BgInit( void )
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearFrame( GFL_BG_FRAME1_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+
 	}
 
 	// メイン画面背景
@@ -449,6 +465,7 @@ static void BgInit( void )
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
 //		GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
 	}
 
 #if 0
@@ -460,6 +477,7 @@ static void BgInit( void )
 			3, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
 	}
 #endif
 
@@ -472,6 +490,7 @@ static void BgInit( void )
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearFrame( GFL_BG_FRAME0_S );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
 	}
 
 	// サブ画面背景面
@@ -482,6 +501,7 @@ static void BgInit( void )
 			1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
 	}
 
 	GFL_BG_FillCharacter( GFL_BG_FRAME0_M, 0, 1, 0 );
@@ -513,6 +533,7 @@ static void InitWork( MYSIGN_WORK *wk )
 		wk->OldTouch[i].size = 0;
 	}
 */
+	wk->OldTouch.size = 0;
 
 	// 「やめる」文字列バッファ作成
 	wk->EndString   = GFL_STR_CreateBuffer( END_MESSAGE_BUF_NUM,   HEAPID_OEKAKI );
@@ -599,8 +620,8 @@ static void BgGraphicSet( MYSIGN_WORK * wk )
 {
 
 	// 上下画面ＢＧパレット転送
-	GFL_ARC_UTIL_TransVramPalette( ARCID_MYSIGN , NARC_mysign_mysign_m_nclr, PALTYPE_MAIN_BG, 0, 16*2*3,  HEAPID_OEKAKI);
-	GFL_ARC_UTIL_TransVramPalette( ARCID_MYSIGN , NARC_mysign_mysign_s_nclr, PALTYPE_SUB_BG,  0, 16*2*2,  HEAPID_OEKAKI);
+	GFL_ARC_UTIL_TransVramPalette( ARCID_MYSIGN , NARC_mysign_mysign_m_NCLR, PALTYPE_MAIN_BG, 0, 16*2*3,  HEAPID_OEKAKI);
+	GFL_ARC_UTIL_TransVramPalette( ARCID_MYSIGN , NARC_mysign_mysign_s_NCLR, PALTYPE_SUB_BG,  0, 16*2*2,  HEAPID_OEKAKI);
 	
 	// 会話フォントパレット転送
 //	TalkFontPaletteLoad( PALTYPE_MAIN_BG, 13*0x20, HEAPID_OEKAKI );
@@ -612,18 +633,18 @@ static void BgGraphicSet( MYSIGN_WORK * wk )
 	GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0, 1, 0);
 
 	// メイン画面BG2キャラ転送
-	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MYSIGN, NARC_mysign_mainbg_lz_ncgr, GFL_BG_FRAME2_M, 0, 32*8*0x20, 1, HEAPID_OEKAKI);
+	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MYSIGN, NARC_mysign_mysign_m_NCGR, GFL_BG_FRAME2_M, 0, 32*8*0x20, 0, HEAPID_OEKAKI);
 
 	// メイン画面BG2スクリーン転送
-	GFL_ARC_UTIL_TransVramScreen( ARCID_MYSIGN, NARC_mysign_mainbg_lz_nscr, GFL_BG_FRAME2_M, 0, 32*24*2, 1, HEAPID_OEKAKI);
+	GFL_ARC_UTIL_TransVramScreen( ARCID_MYSIGN, NARC_mysign_mysign_m_NSCR, GFL_BG_FRAME2_M, 0, 32*24*2, 0, HEAPID_OEKAKI);
 
 
 
 	// サブ画面BG1キャラ転送
-	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MYSIGN, NARC_mysign_subbg_lz_ncgr, GFL_BG_FRAME1_S, 0, 32*8*0x20, 1, HEAPID_OEKAKI);
+	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MYSIGN, NARC_mysign_mysign_s_NCGR, GFL_BG_FRAME1_S, 0, 32*8*0x20, 0, HEAPID_OEKAKI);
 
 	// サブ画面BG1スクリーン転送
-	GFL_ARC_UTIL_TransVramScreen(   ARCID_MYSIGN, NARC_mysign_subbg_lz_nscr, GFL_BG_FRAME1_S, 0, 32*24*2, 1, HEAPID_OEKAKI);
+	GFL_ARC_UTIL_TransVramScreen(   ARCID_MYSIGN, NARC_mysign_mysign_s_NSCR, GFL_BG_FRAME1_S, 0, 32*24*2, 0, HEAPID_OEKAKI);
 
 	// メイン画面会話ウインドウグラフィック転送
 	BmpWinFrame_GraphicSet(
@@ -704,13 +725,13 @@ static void InitCellActor(MYSIGN_WORK *wk)
 //	wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES] = CLACT_U_ResManagerResAddArcChar_ArcHandle(wk->resMan[CLACT_U_CHAR_RES], 
 //							p_handle, NARC_mysign_obj_lz_ncgr, 1, 0, NNS_G2D_VRAM_TYPE_2DMAIN, HEAPID_OEKAKI);
 	wk->resObjTbl[MYSIGN_RES_MAIN_CHAR] = 
-			GFL_CLGRP_CGR_Register( arcHandle , NARC_mysign_obj_lz_ncgr , 1 , CLSYS_DRAW_MAIN , HEAPID_OEKAKI );
+			GFL_CLGRP_CGR_Register( arcHandle , NARC_mysign_mysign_m_obj_NCGR , 0 , CLSYS_DRAW_MAIN , HEAPID_OEKAKI );
 
 	//pal読み込み
 	//wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(wk->resMan[CLACT_U_PLTT_RES],
 	//						p_handle, NARC_mysign_mysign_m_obj_nclr, 0, 0, NNS_G2D_VRAM_TYPE_2DMAIN, 3, HEAPID_OEKAKI);
 	wk->resObjTbl[MYSIGN_RES_MAIN_PLTT] = 
-			GFL_CLGRP_PLTT_Register( arcHandle , NARC_mysign_mysign_m_obj_nclr, CLSYS_DRAW_MAIN , 0 , HEAPID_OEKAKI );
+			GFL_CLGRP_PLTT_Register( arcHandle , NARC_mysign_mysign_m_obj_NCLR, CLSYS_DRAW_MAIN , 0 , HEAPID_OEKAKI );
 	
 	//cell読み込み
 //	wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(wk->resMan[CLACT_U_CELL_RES],
@@ -719,7 +740,7 @@ static void InitCellActor(MYSIGN_WORK *wk)
 //	wk->resObjTbl[MAIN_LCD][CLACT_U_CELLANM_RES] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(wk->resMan[CLACT_U_CELLANM_RES],
 //							p_handle, NARC_mysign_obj_lz_nanr, 1, 0, CLACT_U_CELLANM_RES,HEAPID_OEKAKI);
 	wk->resObjTbl[MYSIGN_RES_MAIN_ANIM] = 
-			GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_mysign_obj_lz_ncer , NARC_mysign_obj_lz_nanr , HEAPID_OEKAKI );
+			GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_mysign_mysign_m_obj_NCER , NARC_mysign_mysign_m_obj_NANR , HEAPID_OEKAKI );
 
 
 	//---------下画面用-------------------
@@ -730,13 +751,13 @@ static void InitCellActor(MYSIGN_WORK *wk)
 //	wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES] = CLACT_U_ResManagerResAddArcChar_ArcHandle(wk->resMan[CLACT_U_CHAR_RES], 
 //							p_handle, NARC_mysign_obj_lz_ncgr, 1, 1, NNS_G2D_VRAM_TYPE_2DSUB, HEAPID_OEKAKI);
 	wk->resObjTbl[MYSIGN_RES_SUB_CHAR] = 
-			GFL_CLGRP_CGR_Register( arcHandle , NARC_mysign_obj_lz_ncgr , 1 , CLSYS_DRAW_SUB , HEAPID_OEKAKI );
+			GFL_CLGRP_CGR_Register( arcHandle , NARC_mysign_mysign_m_obj_NCGR , 0 , CLSYS_DRAW_SUB , HEAPID_OEKAKI );
 
 	//pal読み込み
 //	wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(wk->resMan[CLACT_U_PLTT_RES],
 //							p_handle, NARC_mysign_mysign_m_obj_nclr, 0, 1, NNS_G2D_VRAM_TYPE_2DSUB, 3, HEAPID_OEKAKI);
 	wk->resObjTbl[MYSIGN_RES_SUB_PLTT] = 
-			GFL_CLGRP_PLTT_Register( arcHandle , NARC_mysign_mysign_m_obj_nclr, CLSYS_DRAW_SUB , 0 , HEAPID_OEKAKI );
+			GFL_CLGRP_PLTT_Register( arcHandle , NARC_mysign_mysign_m_obj_NCLR, CLSYS_DRAW_SUB , 0 , HEAPID_OEKAKI );
 
 	//cell読み込み
 //	wk->resObjTbl[SUB_LCD][CLACT_U_CELL_RES] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(wk->resMan[CLACT_U_CELL_RES],
@@ -745,7 +766,7 @@ static void InitCellActor(MYSIGN_WORK *wk)
 //	wk->resObjTbl[SUB_LCD][CLACT_U_CELLANM_RES] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(wk->resMan[CLACT_U_CELLANM_RES],
 //							p_handle, NARC_mysign_obj_lz_nanr, 1, 1, CLACT_U_CELLANM_RES,HEAPID_OEKAKI);
 	wk->resObjTbl[MYSIGN_RES_SUB_ANIM] = 
-			GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_mysign_obj_lz_ncer , NARC_mysign_obj_lz_nanr , HEAPID_OEKAKI );
+			GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_mysign_mysign_m_obj_NCER , NARC_mysign_mysign_m_obj_NANR , HEAPID_OEKAKI );
 
 	// リソースマネージャーから転送
 
@@ -811,13 +832,14 @@ static void SetCellActor(MYSIGN_WORK *wk)
 			addData.pos_y = pal_button_oam_table[i][1];
 			addData.anmseq = pal_button_oam_table[i][2];
 			wk->ButtonActWork[i] = GFL_CLACT_WK_Create( wk->cellUnit ,
-						wk->resObjTbl[MYSIGN_RES_SUB_CHAR] ,
-						wk->resObjTbl[MYSIGN_RES_SUB_PLTT] ,
-						wk->resObjTbl[MYSIGN_RES_SUB_ANIM] ,
-						&addData , CLSYS_DEFREND_SUB , HEAPID_OEKAKI );
+						wk->resObjTbl[MYSIGN_RES_MAIN_CHAR] ,
+						wk->resObjTbl[MYSIGN_RES_MAIN_PLTT] ,
+						wk->resObjTbl[MYSIGN_RES_MAIN_ANIM] ,
+						&addData , CLSYS_DEFREND_MAIN , HEAPID_OEKAKI );
 //			CLACT_SetAnmFlag(wk->ButtonActWork[i],1);
 			GFL_CLACT_WK_SetAutoAnmSpeed( wk->ButtonActWork[i], FX32_ONE );
 			GFL_CLACT_WK_SetAutoAnmFlag( wk->ButtonActWork[i], TRUE );
+			GFL_CLACT_WK_SetDrawEnable( wk->ButtonActWork[i], TRUE );
 //			CLACT_PaletteNoChg( wk->ButtonActWork[i], 0 );
 			if(i==0){
 				GFL_CLACT_WK_SetBgPri( wk->ButtonActWork[i], 2 );
@@ -845,7 +867,7 @@ static void SetCellActor(MYSIGN_WORK *wk)
  * @retval  void *		描画してメモリのトップ
  */
 //------------------------------------------------------------------
-static void* PrintCGXOnly( MYSIGN_WORK *wk,GFL_BMPWIN * win, STRBUF *msg, int y, u8 fnt_index)
+static void* PrintCGXOnly( MYSIGN_WORK *wk,GFL_BMPWIN * win, STRBUF *msg, int y)
 {
 	int x,length;
 
@@ -902,20 +924,25 @@ static void* PrintCGXOnly( MYSIGN_WORK *wk,GFL_BMPWIN * win, STRBUF *msg, int y,
 //------------------------------------------------------------------
 static void BmpWinInit( MYSIGN_WORK *wk )
 {
+	GFL_BMPWIN_Init( HEAPID_OEKAKI );
 	// ---------- メイン画面 ------------------
 
 	// BG0面BMP（会話ウインドウ）ウインドウ確保
 	wk->MsgWin = GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
 		OEKAKI_TALK_X, OEKAKI_TALK_Y, 27, 4, 13, GFL_BMP_CHRAREA_GET_B );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0 );
+	GFL_BMPWIN_MakeScreen(wk->MsgWin);
+	GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
 
 	// BG1面用BMP（お絵かき画像）ウインドウ確保
 	wk->OekakiBoard = GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
 		OEKAKI_BOARD_POSX, OEKAKI_BOARD_POSY, OEKAKI_BOARD_W, OEKAKI_BOARD_H, 1, GFL_BMP_CHRAREA_GET_B );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->OekakiBoard), 0 );
+	GFL_BMPWIN_MakeScreen(wk->OekakiBoard);
+	GFL_BMPWIN_TransVramCharacter(wk->OekakiBoard);
 
 	// BG1面BMP（やめる）ウインドウ確保・描画
-/*
+
 	wk->EndWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
 		OEKAKI_END_BMP_X, OEKAKI_END_BMP_Y, OEKAKI_END_BMP_W, OEKAKI_END_BMP_H, 2, GFL_BMP_CHRAREA_GET_B );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->EndWin), 0 );
@@ -924,17 +951,17 @@ static void BmpWinInit( MYSIGN_WORK *wk )
 	{
 		void *objcharaadr;
 		int  i;
-		objcharaadr = PrintCGXOnly(wk,&wk->EndWin, wk->EndString, 1, FONT_BUTTON);
+		objcharaadr = PrintCGXOnly(wk,wk->EndWin, wk->EndString, 1);
 
 		// BMP処理で描画したバッファをOBJに転送して反映させる
 		DC_FlushRange(objcharaadr,0x20*8*2);	
 		for(i=0;i<2;i++){						
-			FONTOAM_BmpCutOamSize( &wk->EndWin, 4, 2, 4*i, 0,  (char*)wk->TransWork);
+			MYSIGN_BmpCutOamSize( wk->EndWin, 4, 2, 4*i, 0,  (char*)wk->TransWork);
 			DC_FlushRange(wk->TransWork,OBJ_VRAM_WORD_TRANS_SIZE);	
 			GX_LoadOBJ(wk->TransWork, OBJ_VRAM_WORD_OFFSET+i*OBJ_VRAM_WORD_TRANS_SIZE, OBJ_VRAM_WORD_TRANS_SIZE);
 		}
 	}
-*/
+
 
 	// BG1面BMP（トレーナーサインを書こう！）ウインドウ確保・描画
 	wk->TitleWin= GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
@@ -947,6 +974,8 @@ static void BmpWinInit( MYSIGN_WORK *wk )
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TitleWin), 0 );
 		//GF_STR_PrintColor( wk->TitleWin, FONT_TALK, wk->TitleString, x, 0, MSG_ALLPUT, GF_PRINTCOLOR_MAKE(0x1,0x2,0x0),NULL);
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->TitleWin) , x, 0 , wk->TitleString ,  wk->fontHandle );
+		GFL_BMPWIN_MakeScreen(wk->TitleWin);
+		GFL_BMPWIN_TransVramCharacter(wk->TitleWin);
 	}
 /*
 	// ----------- サブ画面名前表示BMP確保 ------------------
@@ -959,6 +988,8 @@ static void BmpWinInit( MYSIGN_WORK *wk )
 		}
 	}
 */
+	GFL_BG_LoadScreenV_Req(GFL_BG_FRAME0_M);
+	GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
 
 }	
 
@@ -994,62 +1025,6 @@ static const MYSIGN_BMPWIN_DAT TouchYesNoBmpDat[2]={
 		
 	}
 };
-
-
-//------------------------------------------------------------------
-/**
- * $brief   下画面（タッチ用）はい・いいえウインドウ表示
- *
- * @param   ini		
- * @param   yeswin		
- * @param   nowin		
- * @param   heap		
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void BmpTouchYesnoWin_Init( GFL_BMPWIN  **yeswin, GFL_BMPWIN  **nowin, int heap  )
-{
-	MSGDATA_MANAGER * man;
-	STRBUF *yes,*no;
-	int yespos, nopos;
-
-	// はい・いいえ文字列取得
-	man = MSGMAN_Create( MSGMAN_TYPE_DIRECT, ARC_MSG, NARC_msg_ev_win_dat, heap );
-	yes = MSGMAN_AllocString( man, msg_ev_win_046 );
-	no  = MSGMAN_AllocString( man, msg_ev_win_047 );
-	MSGMAN_Delete( man );
-
-	// BMPWIN確保(Alloc)
-	*yeswin = GFL_BG_BmpWinAllocGet( heap, 1 );
-	*nowin  = GFL_BG_BmpWinAllocGet( heap, 1 );
-	
-	GFL_BMPWIN_CreateEx( ini, *yeswin, &TouchYesNoBmpDat[0] );
-	GFL_BMPWIN_CreateEx( ini, *nowin, &TouchYesNoBmpDat[1] );
-
-	// Window枠描画
-	BmpMenuWinWrite( *yeswin, WINDOW_TRANS_OFF, YESNO_WIN_FRAME_CHAR, FLD_MENUFRAME_PAL );
-	BmpMenuWinWrite( *nowin, WINDOW_TRANS_OFF, YESNO_WIN_FRAME_CHAR, FLD_MENUFRAME_PAL );
-
-	// BMPキャラ塗りつぶし
-	GFL_BG_BmpWinDataFill( *yeswin, 0x0f0f );
-	GFL_BG_BmpWinDataFill( *nowin,  0x0f0f );
-
-	// はい・いいえセンタリング位置取得
-	yespos = FontProc_GetPrintStrWidth( FONT_TALK, yes, 0 );
-    nopos  = FontProc_GetPrintStrWidth( FONT_TALK,  no, 0 );
-	yespos = (YESNO_CHARA_W*8/2) - yespos/2;
-	nopos =  (YESNO_CHARA_W*8/2) - nopos/2;
-	
-	// はい・いいえ描画
-	
-	GF_STR_PrintSimple( *yeswin, FONT_TALK,  yes,  yespos, 2*8-12/2, MSG_ALLPUT, NULL);
-	GF_STR_PrintSimple( *nowin,  FONT_TALK,   no,  nopos,  2*8-12/2, MSG_ALLPUT, NULL);
-
-	// はい・いいえ文字列解放
-	STRBUF_Delete(yes);
-	STRBUF_Delete(no);
-}
 
 
 //------------------------------------------------------------------
@@ -1096,11 +1071,11 @@ static void BmpWinDelete( MYSIGN_WORK *wk )
 //		GFL_BMPWIN_Delete( wk->TrainerNameWin[i] );
 //	}
 	GFL_BMPWIN_Delete( wk->TitleWin );
-//	GFL_BMPWIN_Delete( wk->EndWin );
+	GFL_BMPWIN_Delete( wk->EndWin );
 	GFL_BMPWIN_Delete( wk->OekakiBoard );
 	GFL_BMPWIN_Delete( wk->MsgWin );
 
-
+	GFL_BMPWIN_Exit();
 }
 
 
@@ -1269,7 +1244,7 @@ static void NormalTouchFunc(MYSIGN_WORK *wk)
 	{
 		TP_ONE_DATA	tpData;
 		int i;
-		if(GFL_UI_TP_AutoSamplingMain( &tpData, TP_BUFFERING_JUST, 1 )==TP_NO_BUFF){
+		if(GFL_UI_TP_AutoSamplingMain( &tpData, TP_BUFFERING_JUST, 1 )==TP_OK){
 			for(i=0;i<tpData.Size;i++){
 				wk->MyTouchResult.x[i] = tpData.TPDataTbl[i].x;
 				wk->MyTouchResult.y[i] = tpData.TPDataTbl[i].y;
@@ -1377,10 +1352,6 @@ static int Oekaki_MainNormal( MYSIGN_WORK *wk, int seq )
 {
 	NormalTouchFunc(wk);			//  タッチパネル処理
 
-	
-	LineDataSendRecv( wk );
-
-	MoveCommCursor( wk );
 	DrawBrushLine( wk->OekakiBoard, &wk->MyTouchResult, &wk->OldTouch, 1 );
 
 	return seq;
@@ -1398,7 +1369,6 @@ static int Oekaki_MainNormal( MYSIGN_WORK *wk, int seq )
 static void EndSequenceCommonFunc( MYSIGN_WORK *wk )
 {
 	ControlCursor(wk);		//	DebugOBJPOSGet(wk);
-	MoveCommCursor( wk );
 	DrawBrushLine( wk->OekakiBoard, &wk->MyTouchResult, &wk->OldTouch, 0 );
 	
 }
@@ -1424,7 +1394,12 @@ static void TouchYesNoStart( TOUCH_SW_SYS* touch_sub_window_sys )
 	param.x			= 25;
 	param.y			= 6;
 
+//	param.kt_st = TOUCH_SW_GetKTStatus(wk->TouchSubWindowSys);
+	param.key_pos = 0;
+	param.type = TOUCH_SW_TYPE_S;
+
 	TOUCH_SW_Init( touch_sub_window_sys, &param );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
 
 }
 
@@ -1441,8 +1416,7 @@ static void TouchYesNoStart( TOUCH_SW_SYS* touch_sub_window_sys )
 //------------------------------------------------------------------
 static int Oekaki_EndSelectPutString( MYSIGN_WORK *wk, int seq )
 {
-	if( EndMessageWait( wk->MsgIndex ) ){
-		TOUCH_SW_PARAM param;
+	if( EndMessageWait( wk ) ){
 
 		// YES NO ウィンドウボタンの表示
 		TouchYesNoStart( wk->TouchSubWindowSys );
@@ -1474,6 +1448,7 @@ static int Oekaki_EndSelectWait( MYSIGN_WORK *wk, int seq )
 //		RECORD_Inc( wk->record, RECID_MYSIGN_WRITE );
 		
 		BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
+		PRINTSYS_PrintStreamDelete( wk->printHandle );
 		TOUCH_SW_Reset( wk->TouchSubWindowSys );
 		WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, 16, 1, HEAPID_OEKAKI );
 		return SEQ_OUT;
@@ -1481,7 +1456,8 @@ static int Oekaki_EndSelectWait( MYSIGN_WORK *wk, int seq )
 	case TOUCH_SW_RET_NO:						//いいえ
 		wk->seq = MYSIGN_MODE_REWRITE;
 		EndButtonAppearChange( wk->ButtonActWork, FALSE );
-		BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
+//		BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
+		PRINTSYS_PrintStreamDelete( wk->printHandle );
 		TOUCH_SW_Reset( wk->TouchSubWindowSys );
 		break;
 	}
@@ -1514,15 +1490,17 @@ static int Oekaki_ReWriteSelect( MYSIGN_WORK *wk, int seq )
 		
 		wk->seq = MYSIGN_MODE;
 		BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
+		PRINTSYS_PrintStreamDelete( wk->printHandle );
 		TOUCH_SW_Reset( wk->TouchSubWindowSys );
 
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->OekakiBoard) , 0x02 );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->OekakiBoard) , 0 );
 		GFL_BMPWIN_TransVramCharacter( wk->OekakiBoard );
 
 		break;
 	case TOUCH_SW_RET_NO:						//いいえ
 		wk->seq = MYSIGN_MODE;
 		BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
+		PRINTSYS_PrintStreamDelete( wk->printHandle );
 		TOUCH_SW_Reset( wk->TouchSubWindowSys );
 		break;
 	}
@@ -1563,7 +1541,7 @@ static int Oekaki_ReWrite( MYSIGN_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int Oekaki_ReWriteWait( MYSIGN_WORK *wk, int seq )
 {
-	if( EndMessageWait( wk->MsgIndex ) ){
+	if( EndMessageWait( wk ) ){
 		wk->seq = MYSIGN_MODE_REWRITE_SELECT;
 		TouchYesNoStart( wk->TouchSubWindowSys );
 //		return SEQ_OUT;
@@ -1619,10 +1597,6 @@ static const u8 oekaki_brush[2][8][16]={
 	},
 };
 
-
-#pragma mark [>End Edit
-#if 0
-
 /*
 
 
@@ -1657,6 +1631,7 @@ static void _BmpWinPrint_Rap(
 			int src_x, int src_y, int src_dx, int src_dy,
 			int win_x, int win_y, int win_dx, int win_dy )
 {
+	GFL_BMP_DATA *srcBmp = GFL_BMP_CreateWithData( (u8*)src , 1,1,GFL_BMP_16_COLOR,HEAPID_OEKAKI );
 	if(win_x < 0){
 		int diff;
 		diff = win_x*-1;
@@ -1680,8 +1655,14 @@ static void _BmpWinPrint_Rap(
 		src_dy -= diff;
 		win_dy -= diff;
 	}
+	//TODO ok?
+//	ARI_TPrintf("[%d][%d][%d][%d][%d][%d][%d][%d]\n",win_x, win_y, win_dx, win_dy, src_x, src_y, src_dx, src_dy);
+//	ARI_TPrintf("!");
+	GFL_BMP_Print( srcBmp, GFL_BMPWIN_GetBmp(win), src_x, src_y, win_x, win_y, win_dx, win_dy, 0);
+//	GFL_BG_WriteScreenExpand( GFL_BMPWIN_GetFrame(win) , src_x, src_y, src_dx, src_dy, src ,win_x, win_y, win_dx, win_dy );
+//	GFL_BG_BmpWinPrint( win, src,	src_x, src_y, src_dx, src_dy, win_x, win_y, win_dx, win_dy );
 
-	GFL_BG_BmpWinPrint( win, src,	src_x, src_y, src_dx, src_dy, win_x, win_y, win_dx, win_dy );
+	GFL_BMP_Delete( srcBmp );
 }
 
 
@@ -1721,32 +1702,49 @@ static void DrawPoint_to_Line(
 	
 
 	dx = MATH_IAbs(x2 - x1);  dy = MATH_IAbs(y2 - y1);
-	if (dx > dy) {
-		if (x1 > x2) {
+	if (dx > dy) 
+	{
+		if (x1 > x2)
+		{
 			step = (y1 > y2) ? 1 : -1;
 			s = x1;  x1 = x2;  x2 = s;  y1 = y2;
-		} else step = (y1 < y2) ? 1: -1;
+		} 
+		else
+		{	
+			step = (y1 < y2) ? 1: -1;
+		}
 
 //		GFL_BG_BmpWinPrint( win, (void*)brush,	0, 0, 4, 4, x1, y1, 4, 4 );
 		_BmpWinPrint_Rap( win, (void*)brush,	0, 0, 4, 4, x1, y1, 4, 4 );
 		s = dx >> 1;
-		while (++x1 <= x2) {
-			if ((s -= dy) < 0) {
+		while (++x1 <= x2)
+		{
+			if ((s -= dy) < 0)
+			{
 				s += dx;  y1 += step;
 			};
-//		GFL_BG_BmpWinPrint( win, (void*)brush,	0, 0, 4, 4, x1, y1, 4, 4 );
-		_BmpWinPrint_Rap( win, (void*)brush,	0, 0, 4, 4, x1, y1, 4, 4 );
+//			GFL_BG_BmpWinPrint( win, (void*)brush,	0, 0, 4, 4, x1, y1, 4, 4 );
+			_BmpWinPrint_Rap( win, (void*)brush,	0, 0, 4, 4, x1, y1, 4, 4 );
 		}
-	} else {
-		if (y1 > y2) {
+	}
+	else
+	{
+		if (y1 > y2)
+		{
 			step = (x1 > x2) ? 1 : -1;
 			s = y1;  y1 = y2;  y2 = s;  x1 = x2;
-		} else step = (x1 < x2) ? 1 : -1;
+		}
+		else
+		{
+			step = (x1 < x2) ? 1 : -1;
+		}
 //		GFL_BG_BmpWinPrint( win, (void*)brush,	0, 0, 4, 4, x1, y1, 4, 4 );
 		_BmpWinPrint_Rap( win, (void*)brush,	0, 0, 4, 4, x1, y1, 4, 4 );
 		s = dy >> 1;
-		while (++y1 <= y2) {
-			if ((s -= dx) < 0) {
+		while (++y1 <= y2)
+		{
+			if ((s -= dx) < 0)
+			{
 				s += dy;  x1 += step;
 			}
 //			GFL_BG_BmpWinPrint( win, (void*)brush,	0, 0, 4, 4, x1, y1, 4, 4 );
@@ -1761,13 +1759,10 @@ static void DrawPoint_to_Line(
 
 static void Stock_OldTouch( TOUCH_INFO *all, OLD_TOUCH_INFO *stock )
 {
-	int i;
-	for(i=0;i<OEKAKI_MEMBER_MAX;i++){
-		stock[i].size = all[i].size;
-		if(all[i].size!=0){
-			stock[i].x = all[i].x[all[i].size-1];
-			stock[i].y = all[i].y[all[i].size-1];
-		}
+	stock->size = all->size;
+	if(all->size!=0){
+		stock->x = all->x[all->size-1];
+		stock->y = all->y[all->size-1];
 	}
 }
 
@@ -1790,77 +1785,35 @@ static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, OLD_TOUCH_INFO *old
 	int px,py,i,r,flag=0, sx, sy;
 
 //	OS_Printf("id0=%d,id1=%d,id2=%d,id3=%d,id4=%d\n",all[0].size,all[1].size,all[2].size,all[3].size,all[4].size);
-
-	for(i=0;i<OEKAKI_MEMBER_MAX;i++){
-		if(all[i].size!=0){
-			if(old[i].size){
-				sx = old[i].x-OEKAKI_BOARD_POSX*8;
-				sy = old[i].y-OEKAKI_BOARD_POSY*8;
-			}
-			for(r=0;r<all[i].size;r++){
-				px = all[i].x[r] - OEKAKI_BOARD_POSX*8;
-				py = all[i].y[r] - OEKAKI_BOARD_POSY*8;
-				
-
-				// BG1面用BMP（お絵かき画像）ウインドウ確保
-				DrawPoint_to_Line(win, oekaki_brush[0][all[i].brush], px, py, &sx, &sy, r, old[i].size);
-//				DrawPoint_to_Line(win, oekaki_brush[0][all[i].brush], -1, -1, &sx, &sy, r, old[i].size);
-				flag = 1;
-			}
-			
+	
+	if(all->size!=0){
+		if(old->size){
+			sx = old->x-OEKAKI_BOARD_POSX*8;
+			sy = old->y-OEKAKI_BOARD_POSY*8;
 		}
-	}
-	if(flag && draw){
+		for(r=0;r<all->size;r++){
+			px = all->x[r] - OEKAKI_BOARD_POSX*8;
+			py = all->y[r] - OEKAKI_BOARD_POSY*8;
+			
+
+			// BG1面用BMP（お絵かき画像）ウインドウ確保
+			DrawPoint_to_Line(win, oekaki_brush[0][all->brush], px, py, &sx, &sy, r, old->size);
+			flag = 1;
+		}
 		
+	}
+	if(flag && draw)
+	{
 //		OS_Printf("write board %d times\n",debug_count++);
-		GFL_BG_BmpWinOn( win );
+		GFL_BMPWIN_TransVramCharacter( win );
+		GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
 	}
 	
 	// 今回の最終座標のバックアップを取る   
     Stock_OldTouch(all, old);
-	for(i=0;i<OEKAKI_MEMBER_MAX;i++){
-		all[i].size = 0;		// 一度描画したら座標情報は捨てる
-	}
+	all->size = 0;		// 一度描画したら座標情報は捨てる
 	
 }
-
-//------------------------------------------------------------------
-/**
- * $brief   通信データからカーソル位置を移動させる
- *
- * @param   wk		
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void MoveCommCursor( MYSIGN_WORK *wk )
-{
-	int i;
-	// 描画用ペン先情報ワークにも直接反映させる
-	TOUCH_INFO *all = wk->AllTouchResult;
-
-
-	// 座標データが入っている時はカーソル座標を反映させる
-
-//	SetCursor_Pos( wk->MainActWork[i], all[0].x[all[0].size-1],  all[0].y[all[0].size-1]);
-
-	
-	
-}
-//------------------------------------------------------------------
-/**
- * $brief   デバッグ用に自分で取得した情報を受信バッファにコピーする
- *
- * @param   wk		
- *
- * @retval  static		
- */
-//------------------------------------------------------------------
-static void DebugTouchDataTrans( MYSIGN_WORK *wk )
-{
-	wk->AllTouchResult[0] = wk->MyTouchResult;
-}
-
 
 //------------------------------------------------------------------
 /**
@@ -1873,6 +1826,7 @@ static void DebugTouchDataTrans( MYSIGN_WORK *wk )
 //------------------------------------------------------------------
 static void CursorColTrans(u16 *CursorCol)
 {
+	/*
 	fx32  sin;
 	GXRgb tmp;
 	int   r,g,b;
@@ -1888,6 +1842,7 @@ static void CursorColTrans(u16 *CursorCol)
 
 
 	GX_LoadOBJPltt((u16*)&tmp, ( 12 )*2, 2);
+	*/
 }
 
 
@@ -1914,23 +1869,6 @@ static const u8 plate_chara_no[][5]={
 
 
 
-//------------------------------------------------------------------
-/**
- * $brief   タッチパネル情報の送受信を行う
- *
- * @param   wk		
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void LineDataSendRecv( MYSIGN_WORK *wk )
-{
-
-	wk->AllTouchResult[0] = wk->MyTouchResult;
-
-}
-
-
 
 //------------------------------------------------------------------
 /**
@@ -1946,18 +1884,22 @@ static void EndMessagePrint( MYSIGN_WORK *wk, int msgno )
 	// 文字列取得
 	STRBUF *tempbuf;
 	
-	tempbuf = STRBUF_Create(TALK_MESSAGE_BUF_NUM,HEAPID_OEKAKI);
-	MSGMAN_GetString(  wk->MsgManager, msgno, tempbuf );
+	tempbuf = GFL_STR_CreateBuffer(TALK_MESSAGE_BUF_NUM,HEAPID_OEKAKI);
+	GFL_MSG_GetString(  wk->MsgManager, msgno, tempbuf );
 	WORDSET_ExpandStr( wk->WordSet, wk->TalkString, tempbuf );
-	STRBUF_Delete(tempbuf);
+	GFL_STR_DeleteBuffer(tempbuf);
 
 	// 会話ウインドウ枠描画
-	GFL_BG_BmpWinDataFill( &wk->MsgWin,  0x0f0f );
-	BmpTalkWinWrite( &wk->MsgWin, WINDOW_TRANS_ON, 1, FLD_MESFRAME_PAL );
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->MsgWin),15/*FBMP_COL_WHITE*/);
+	BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, 1, 12 );
+	GFL_BMPWIN_MakeScreen(wk->MsgWin);
+	GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
+	GFL_BG_LoadScreenV_Req(GFL_BG_FRAME0_M);
 
 	// 文字列描画開始
-	wk->MsgIndex = GF_STR_PrintSimple( &wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, 
-										CONFIG_GetMsgPrintSpeed(wk->config), NULL);
+	wk->printHandle = PRINTSYS_PrintStream( wk->MsgWin, 0,0
+			,wk->TalkString ,wk->fontHandle ,CONFIG_GetMsgPrintSpeed(wk->config) 
+			,wk->printTcblSys , 0 , HEAPID_OEKAKI , 0);
 
 
 }
@@ -1971,30 +1913,14 @@ static void EndMessagePrint( MYSIGN_WORK *wk, int msgno )
  * @retval  int		
  */
 //------------------------------------------------------------------
-static int EndMessageWait( int msg_index )
+static int EndMessageWait( MYSIGN_WORK *wk )
 {
-	if(GF_MSG_PrintEndCheck( msg_index )==0){
+	if(PRINTSYS_PrintStreamGetState( wk->printHandle )==PRINTSTREAM_STATE_DONE){
 		
 		return 1;
 	}
 	return 0;
 }
-
-
-//------------------------------------------------------------------
-/**
- * $brief   
- *
- * @param   wk		
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void EndMessageWindowOff( MYSIGN_WORK *wk )
-{
-	BmpTalkWinClear( &wk->MsgWin, WINDOW_TRANS_ON );
-}
-
 
 
 //------------------------------------------------------------------
@@ -2063,24 +1989,26 @@ static void BrushCanvas( MYSIGN_WORK *wk)
 {
 	BOOL scruch;
 	int sub;
+	u32 tpx,tpy;
+	const BOOL isTouch = GFL_UI_TP_GetPointCont( &tpx,&tpy );
 	scruch = FALSE;
 	//保持座標とタッチ座標の差分を取る
-	if( (sys.tp_x!=0xffff)&&(sys.tp_y!=0xffff) && (wk->BeforeX!=0xffff)&&(wk->BeforeY!=0xffff) ){	//値有効か？
+	if( isTouch == TRUE && wk->BeforeTouch == TRUE ){	//値有効か？
 
 		//差分が規定値以上の場合は磨いたことにする
-		if ( wk->BeforeX > sys.tp_x ){		//前回のほうが値が大きいか？
-			sub = wk->BeforeX - sys.tp_x;
+		if ( wk->BeforeX > tpx ){		//前回のほうが値が大きいか？
+			sub = wk->BeforeX - tpx;
 			wk->scruchInfo.DirX = -1;
 		}else{
-			sub = sys.tp_x - wk->BeforeX;
+			sub = tpx - wk->BeforeX;
 			wk->scruchInfo.DirX = 1;
 		}
 		if ( (sub>=MIN_SCRUCH)&&(sub<=MAX_SCRUCH) ){
-			if ( wk->BeforeY > sys.tp_y ){	//前回のほうが値が大きいか？
-				sub = wk->BeforeY - sys.tp_y;
+			if ( wk->BeforeY > tpy ){	//前回のほうが値が大きいか？
+				sub = wk->BeforeY - tpy;
 				wk->scruchInfo.DirY = -1;
 			}else{
-				sub = sys.tp_y - wk->BeforeY;
+				sub = tpy - wk->BeforeY;
 				wk->scruchInfo.DirY = 1;
 			}
 			if (sub<=MAX_SCRUCH){
@@ -2091,11 +2019,11 @@ static void BrushCanvas( MYSIGN_WORK *wk)
 //				ClearScruchSndNow(&wk->ScruchSnd);
 			}
 		}else if (sub<=MAX_SCRUCH){
-			if ( wk->BeforeY > sys.tp_y ){		//前回のほうが値が大きいか？
-				sub = wk->BeforeY - sys.tp_y;
+			if ( wk->BeforeY > tpy ){		//前回のほうが値が大きいか？
+				sub = wk->BeforeY - tpy;
 				wk->scruchInfo.DirY = -1;
 			}else{
-				sub = sys.tp_y - wk->BeforeY;
+				sub = tpy - wk->BeforeY;
 				wk->scruchInfo.DirY = 1;
 			}
 			if ((sub>=MIN_SCRUCH)&&(sub<=MAX_SCRUCH)){
@@ -2109,8 +2037,9 @@ static void BrushCanvas( MYSIGN_WORK *wk)
 
 	}
 		//保持座標更新
-	wk->BeforeX = sys.tp_x;
-	wk->BeforeY = sys.tp_y;
+	wk->BeforeX = tpx;
+	wk->BeforeY = tpy;
+	wk->BeforeTouch = isTouch;
 }
 
 
@@ -2128,17 +2057,21 @@ static void PlayScruchSe( SCRUCH_INFO *scruchInfo )
 	//初回判定
 	if ((scruchInfo->OldDirX == 0)&&(scruchInfo->OldDirY == 0)){
 		OS_Printf("初回\n");//初回音
+#if SIGN_USE_SND
 		if(!Snd_SePlayCheck( SEQ_SE_DP_KYU01 )){
 			Snd_SePlay( SEQ_SE_DP_KYU01 );
 		}
+#endif
 	}
 	//前回の方向と今回の方向を比較
 	if ((scruchInfo->OldDirX*scruchInfo->DirX<0) ||
 			(scruchInfo->OldDirY*scruchInfo->DirY<0)){
 //		OS_Printf("切り替え\n");//方向が変わったので音を切り替える
+#if SIGN_USE_SND
 		if(!Snd_SePlayCheck( SEQ_SE_DP_KYU01 )){
 			Snd_SePlay( SEQ_SE_DP_KYU01 );
 		}
+#endif
 	}
 
 	scruchInfo->OldDirX = scruchInfo->DirX;
@@ -2147,4 +2080,42 @@ static void PlayScruchSe( SCRUCH_INFO *scruchInfo )
 	scruchInfo->DirY = 0;
 }
 
-#endif
+//----------------------------------------------------------------------------
+/**
+ *
+ *	@brief	BMPのキャラクタデータをOAMのサイズで切り取る
+ *
+ *	@param	bmp				ビットマップデータ
+ *	@param	oam_csx			OAMの横サイズ	（キャラクタ単位）
+ *	@param	oam_csy			OAMの縦サイズ	（キャラクタ単位）
+ *	@param	bmp_cmx			ビットマップ切り取り左上ｘ座標	（キャラクタ単位）
+ *	@param	bmp_cmy			ビットマップ切り取り左上ｙ座標	（キャラクタ単位）
+ *	@param	char_buff		出力先キャラクタバッファ (oam_csx * oam_csy)*32byte　サイズ以上の領域
+ *
+ *	@return	none
+ *
+ *
+ */
+//-----------------------------------------------------------------------------
+void MYSIGN_BmpCutOamSize( GFL_BMPWIN* cp_bmp, int oam_csx, int oam_csy, int bmp_cmx, int bmp_cmy, char* char_buff )
+{
+	const int MYSIGN_CHAR_BYTE	= 32;	// 1charサイズ
+	int i;				// ループ用
+	int buff_out;		// バッファ書き込み先
+	int buff_in;		// バッファ読み込み先
+	
+	// bmpデータのサイズが足りるかチェック
+	GF_ASSERT( GFL_BMPWIN_GetScreenSizeX(cp_bmp) >= (oam_csx + bmp_cmx) );
+	GF_ASSERT( GFL_BMPWIN_GetScreenSizeX(cp_bmp) >= (oam_csy + bmp_cmy) );
+	
+	// ローカルバッファにデータ代入
+	for( i=0; i<oam_csy; i++ ){
+		
+		buff_out = i * oam_csx;
+		buff_out *= MYSIGN_CHAR_BYTE;
+		buff_in =  ((i + bmp_cmy) * GFL_BMPWIN_GetScreenSizeX(cp_bmp));
+		buff_in += bmp_cmx;
+		buff_in *= MYSIGN_CHAR_BYTE;
+		memcpy( char_buff + buff_out, (char*)(GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp(cp_bmp)) ) + buff_in , MYSIGN_CHAR_BYTE * oam_csx );
+	}
+}

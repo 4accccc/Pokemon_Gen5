@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-01-23T18:19:57"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-01-26T19:46:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,15 +260,15 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="194" top="258" right="899" bottom="878" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="597" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -292,8 +292,8 @@
 		<comment>おえかきチャット：
 誰かが入ってきたときのメッセージ
 ０：入ってきた人</comment>
-		<language name="JPN">[1:01:ポケモン種族名:0]さんが　はいって　きました</language>
-		<language name="JPN_KANJI">[1:01:ポケモン種族名:0]さんが　はいって　きました</language>
+		<language name="JPN">[1:00:トレーナー名:0]さんが　はいって　きました</language>
+		<language name="JPN_KANJI">[1:00:トレーナー名:0]さんが　はいって　きました</language>
 	</row>
 
 	<row id="msg_oekaki_02">
@@ -308,17 +308,17 @@
 		<comment>おえかきチャット：
 誰かが帰ったときのメッセージ
 ０：帰った人の名前</comment>
-		<language name="JPN">[1:01:ポケモン種族名:0]さんが　かえりました</language>
-		<language name="JPN_KANJI">[1:01:ポケモン種族名:0]さんが　かえりました</language>
+		<language name="JPN">[1:00:トレーナー名:0]さんが　かえりました</language>
+		<language name="JPN_KANJI">[1:00:トレーナー名:0]さんが　かえりました</language>
 	</row>
 
 	<row id="msg_oekaki_04">
 		<comment>おえかきチャット：
 リーダーが抜けた場合のメッセージ
 ０：リーダーの名前</comment>
-		<language name="JPN">リーダーの　[1:01:ポケモン種族名:0]さんが
+		<language name="JPN">リーダーの　[1:00:トレーナー名:0]さんが
 ぬけたので　かいさん　します</language>
-		<language name="JPN_KANJI">リーダーの　[1:01:ポケモン種族名:0]さんが
+		<language name="JPN_KANJI">リーダーの　[1:00:トレーナー名:0]さんが
 ぬけたので　かいさん　します</language>
 	</row>
 
@@ -358,8 +358,8 @@
 	<row id="msg_oekaki_09">
 		<comment>おえかきチャット：
 ０：上画面の名前表示</comment>
-		<language name="JPN">[1:01:ポケモン種族名:0]</language>
-		<language name="JPN_KANJI">[1:01:ポケモン種族名:0]</language>
+		<language name="JPN">[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI">[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="msg_oekaki_10">

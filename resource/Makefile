@@ -32,7 +32,8 @@ SUBDIRS	=	wmi \
 			wifi_union_obj \
 			wifi_2dchar \
 			trainer_case \
-			yn_touch
+			yn_touch \
+			mysign
 
 include $(RESOURCE_MACRO)
 

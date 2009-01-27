@@ -12,7 +12,7 @@
 #include "savedata/config.h"
 #include "savedata/trainercard_data.h"
 
-//#include "app/mysign.h"
+#include "app/mysign.h"
 #include "app/trainer_card.h"
 #include "trcard_sys.h"
 
@@ -95,6 +95,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
 //	wk->pTrCardData = &pp->TrCardData;
 	wk->tcp = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ));
 	wk->tcp->TrCardData = TRAINERCARD_CreateSelfData( wk->heapId );
+	
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -183,9 +184,8 @@ static int sub_CardWait(TR_CARD_SYS* wk)
 static int sub_SignInit(TR_CARD_SYS* wk)
 {
 //	FS_EXTERN_OVERLAY(mysign);
-#if 0
 	// プロセス定義データ
-	const GFL_PROC_DATA MySignProcData = {
+	static const GFL_PROC_DATA MySignProcData = {
 		MySignProc_Init,
 		MySignProc_Main,
 		MySignProc_End,
@@ -194,7 +194,6 @@ static int sub_SignInit(TR_CARD_SYS* wk)
 //	wk->proc = PROC_Create(&MySignProcData,(void*)wk->tcp->savedata,wk->heapId);
 	wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
 	GFL_PROC_LOCAL_CallProc( wk->procSys, NO_OVERLAY_ID, &MySignProcData,wk->tcp);
-#endif
 	return SIGN_WAIT;
 }
 
@@ -221,6 +220,7 @@ static int sub_SignWait(TR_CARD_SYS* wk)
 TR_CARD_DATA* TRAINERCARD_CreateSelfData( const HEAPID heapId )
 {
 	TR_CARD_DATA *cardData;
+	TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(SaveControl_GetPointer());
 	
 	cardData = GFL_HEAP_AllocClearMemory( heapId , sizeof( TR_CARD_DATA ) );
 	cardData->TrainerName[0] = L'て';
@@ -233,6 +233,13 @@ TR_CARD_DATA* TRAINERCARD_CreateSelfData( const HEAPID heapId )
 	cardData->gs_badge	= 0xFFFF;
 	cardData->TimeUpdate = TRUE;
 	cardData->UnionTrNo = UNION_TR_NONE;
+
+	//サインデータの取得
+	//サインデータの有効/無効フラグを取得(金銀ローカルでのみ有効)
+	cardData->MySignValid = TRCSave_GetSigned(trc_ptr);
+	//サインデータをセーブデータからコピー
+	MI_CpuCopy8(TRCSave_GetSignDataPtr(trc_ptr),
+			cardData->SignRawData, SIGN_SIZE_X*SIGN_SIZE_Y*8 );
 	return cardData;
 	
 }

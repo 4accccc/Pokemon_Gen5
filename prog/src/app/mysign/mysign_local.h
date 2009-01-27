@@ -147,7 +147,7 @@ struct MYSIGN_WORK{
 //	GFL_BMPWIN 			*TrainerNameWin[BMP_OEKAKI_MAX];			// お絵かき画面用BMPウインドウ
 	GFL_BMPWIN			*OekakiBoard;
 	GFL_BMPWIN			*MsgWin;								// 会話ウインドウ
-//	GFL_BMPWIN			*EndWin;								// やめる
+	GFL_BMPWIN			*EndWin;								// やめる
 	GFL_BMPWIN			*TitleWin;								// 「トレーナーサインをかこう！」
 
 	int						seq;									// 現在の文字入力状態（入力OK/アニメ中）など
@@ -170,8 +170,11 @@ struct MYSIGN_WORK{
 	TOUCH_SW_SYS			*TouchSubWindowSys;
 	SCRUCH_INFO				scruchInfo;								// こすり検出用ワーク
 	int						BeforeX,BeforeY;
+	BOOL					BeforeTouch;
 	
 	GFL_TCB					*vblankFunc;
+	PRINT_STREAM			*printHandle;
+	GFL_TCBLSYS 			*printTcblSys;
 
 #ifdef PM_DEBUG
 	int 					frame;									//

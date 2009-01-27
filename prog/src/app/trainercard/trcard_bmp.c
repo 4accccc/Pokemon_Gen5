@@ -885,6 +885,7 @@ void TRCBmp_SignDrawYesNoCall(TR_CARD_WORK* wk,const u8 pat)
 	param.y		= YNWIN_PY;
 	param.kt_st = wk->key_mode;
 	param.key_pos = 0;
+	param.type = TOUCH_SW_TYPE_S;
 	TOUCH_SW_Init( wk->ynbtn_wk, &param);
 
 	GFL_BG_LoadScreenV_Req( MSG_BG);
