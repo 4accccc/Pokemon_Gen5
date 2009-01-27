@@ -121,8 +121,8 @@ typedef	struct {
 	GFL_FONT 			*fontHandle;
 	GFL_BMPWIN			*bmpWin;
 
-	PRINT_UTIL			printUtilSub;
-	PRINT_QUE			*printQueSub;
+//	PRINT_UTIL			printUtilSub;
+//	PRINT_QUE			*printQueSub;
 //	GFL_BMPWIN			*bmpWinSub;	//情報画面用？
 
 	HEAPID heapId;
@@ -237,17 +237,6 @@ static void SndTestCall(SND_TEST_WORK * wk)
 	GF_BGL_BmpWinAddEx( wk->bgl, &wk->bmpwin, &SndTestWinData );		//ビットマップ追加
 	GF_BGL_BmpWinDataFill( &wk->bmpwin, FBMP_COL_WHITE );				//塗りつぶし
 
-	SndTestSysMsgSet( wk );									//必要な情報メッセージ
-	SndTestCursor( wk );									//カーソル更新
-
-	//曲名メッセージ表示
-	MsgRewrite( wk, SND_TEST_TYPE_BGM );					//BGMナンバー
-	MsgRewrite( wk, SND_TEST_TYPE_SE );						//SEナンバー
-	MsgRewrite( wk, SND_TEST_TYPE_PV );						//PVナンバー
-
-	SndTestNumMsgSet( wk, wk->pitch, ST_TYPE_X+88, ST_BGM_MSG_Y );//音程
-	SndTestNumMsgSet( wk, wk->tempo, ST_TYPE_X+168, ST_BGM_MSG_Y );//テンポ
-
 	GF_BGL_BmpWinOn( &wk->bmpwin );
 #endif
 
@@ -268,12 +257,27 @@ static void SndTestCall(SND_TEST_WORK * wk)
 	GFL_BMPWIN_MakeScreen( wk->bmpWin );
 	GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpWin), 15 );
-	GFL_BG_LoadScreenReq( SND_TEST_BMPWIN_FRAME );
+
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapId );
 	PRINT_UTIL_Setup( &wk->printUtil , wk->bmpWin );
 
 	wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
 									NARC_message_snd_test_name_dat, wk->heapId );
+    
+	SndTestSysMsgSet( wk );									//必要な情報メッセージ
+	SndTestCursor( wk );									//カーソル更新
+
+	//曲名メッセージ表示
+	MsgRewrite( wk, SND_TEST_TYPE_BGM );					//BGMナンバー
+	MsgRewrite( wk, SND_TEST_TYPE_SE );						//SEナンバー
+	MsgRewrite( wk, SND_TEST_TYPE_PV );						//PVナンバー
+
+	SndTestNumMsgSet( wk, wk->pitch, ST_TYPE_X+88, ST_BGM_MSG_Y );//音程
+	SndTestNumMsgSet( wk, wk->tempo, ST_TYPE_X+168, ST_BGM_MSG_Y );//テンポ
+
+
+
+    GFL_BG_LoadScreenReq( SND_TEST_BMPWIN_FRAME );
     
 //	wk->printQueSub = PRINTSYS_QUE_Create( wk->heapId );
 //	PRINT_UTIL_Setup( &wk->printUtilSub , wk->bmpWinSub );
