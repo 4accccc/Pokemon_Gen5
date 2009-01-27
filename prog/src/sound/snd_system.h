@@ -475,6 +475,16 @@ extern void Snd_PlayerPauseAll( BOOL flag );
 
 extern void Snd_SetPokemonVoiceWork(SND_PMVOICE_LENGTH_WORK* pWk);
 
+//--------------------------------------------------------------
+/**
+ * @brief	ポケモンの声監視Main
+ * @param	wk		ワークのアドレス
+ * @retval	none
+ */
+//--------------------------------------------------------------
+extern void Snd_PMVoiceLengthMain(SND_PMVOICE_LENGTH_WORK* swk);
+
+
 #endif
 
 

@@ -36,10 +36,20 @@
 
 #include "sound/snd_system.h"
 
-#include "message.naix"						//NARC_msg_??_dat
+#include "arc_def.h"
+#include "message.naix"
+#include "font/font.naix"
+
 #include "msg/msg_snd_test_str.h"
 #include "msg/msg_snd_test_name.h"
 
+#include "system/main.h"
+#include "system/bmp_menuwork.h"
+#include "system/bmp_menulist.h"
+#include "system/bmp_winframe.h"
+#include "msg/msg_debugname.h"
+
+#include "print/str_tool.h"
 
 //==============================================================================================
 //
@@ -55,6 +65,12 @@ enum{
 };
 
 #define SND_TEST_BUF_SIZE		(48)		//バッファのサイズ
+//#define BG_PLANE_MENU (SND_TEST_BMPWIN_FRAME)
+#define ITEM_NAME_MAX (32)
+#define TESTMODE_PLT_FONT	(15)
+#define LIST_DISP_MAX (5)
+#define FBMP_COL_RED  (3)
+#define FBMP_COL_WHITE (15)
 
 
 //==============================================================================================
@@ -91,12 +107,26 @@ typedef	struct {
 
 	GFL_BG_INI * bgl;
 
-	GFL_BG_BMPWIN bmpwin;				//BMPウィンドウデータ
+//	GFL_BMPWIN bmpwin;				//BMPウィンドウデータ
 
 	STRBUF* msg_buf[BUF_MAX];
 
-	MSGDATA_MANAGER* msgman;			//メッセージマネージャー
+	GFL_MSGDATA* msgman;			//メッセージマネージャー
 
+
+	BMP_MENULIST_DATA	*menuList;
+	BMPMENULIST_WORK	*menuWork;
+	PRINT_UTIL			printUtil;
+	PRINT_QUE			*printQue;
+	GFL_FONT 			*fontHandle;
+	GFL_BMPWIN			*bmpWin;
+
+	PRINT_UTIL			printUtilSub;
+	PRINT_QUE			*printQueSub;
+//	GFL_BMPWIN			*bmpWinSub;	//情報画面用？
+
+	HEAPID heapId;
+    
 }SND_TEST_WORK;
 
 
@@ -126,13 +156,13 @@ static void (* const SndTestTable[])(SND_TEST_WORK*) = {
 	SndTestSeqExit,						//終了
 };
 
-static void SndTestNumMsgSet( GF_BGL_BMPWIN* win, int num, u8 x, u8 y );
-static void SndTestNameMsgSet( GF_BGL_BMPWIN* win, const STRBUF* msg, u8 x, u8 y );
+static void SndTestNumMsgSet( SND_TEST_WORK* wk, int num, u8 x, u8 y );
+static void SndTestNameMsgSet( SND_TEST_WORK* wk, const STRBUF* msg, u8 x, u8 y );
 static void MsgRewrite( SND_TEST_WORK* wk, s8 select );
 static void SndTestInit( SND_TEST_WORK* wk );
 static void SndTestCursor( SND_TEST_WORK* wk );
 static void SndTestSysMsgSet( SND_TEST_WORK* wk );
-static void SndTestStrPrint( GF_BGL_BMPWIN* win, u32 fontID, u32 strID, u32 x, u32 y, u32 wait, pStrPrintCallBack callback );
+static void SndTestStrPrint( SND_TEST_WORK* wk,  u32 strID, u32 x, u32 y );
 static void SndTestTrackMute( SND_TEST_WORK* wk );
 
 //BG設定
@@ -145,6 +175,7 @@ static void BgSet( SND_TEST_WORK* wk );
 //	データ
 //
 //==================================================================================================
+/*
 static const BMPWIN_DAT	SndTestWinData = {
 	SND_TEST_BMPWIN_FRAME,					//ウインドウ使用フレーム
 	SND_TEST_BMPWIN_PX1,SND_TEST_BMPWIN_PY1,//ウインドウ領域の左上のX,Y座標（キャラ単位で指定）
@@ -152,7 +183,7 @@ static const BMPWIN_DAT	SndTestWinData = {
 	SND_TEST_BMPWIN_PL,						//ウインドウ領域のパレットナンバー	
 	SND_TEST_BMPWIN_CH						//ウインドウキャラ領域の開始キャラクタナンバー
 };
-
+*/
 
 //==================================================================================================
 //
@@ -171,7 +202,7 @@ static const BMPWIN_DAT	SndTestWinData = {
 //--------------------------------------------------------------
 static void SndTestCall(SND_TEST_WORK * wk)
 {
-
+#if 0
 	if( wk == NULL ){
 		OS_Printf("snd_test.c Alloc ERROR!");
 		return;
@@ -195,8 +226,8 @@ static void SndTestCall(SND_TEST_WORK * wk)
 	SndTestWorkInit(wk);									//ワーク初期化
 
 	//メッセージデータマネージャー作成
-	wk->msgman = MSGMAN_Create( MSGMAN_TYPE_DIRECT, ARC_MSG, 
-									NARC_msg_snd_test_name_dat, HEAPID_BASE_DEBUG );
+//	wk->msgman = MSGMAN_Create( MSGMAN_TYPE_DIRECT, ARC_MSG, 
+//									NARC_msg_snd_test_name_dat, HEAPID_BASE_DEBUG );
 
 	//app初期化(fld_debug.c)
 	//FieldBitMapWinCgxSet();
@@ -214,12 +245,39 @@ static void SndTestCall(SND_TEST_WORK * wk)
 	MsgRewrite( wk, SND_TEST_TYPE_SE );						//SEナンバー
 	MsgRewrite( wk, SND_TEST_TYPE_PV );						//PVナンバー
 
-	SndTestNumMsgSet( &wk->bmpwin, wk->pitch, ST_TYPE_X+88, ST_BGM_MSG_Y );//音程
-	SndTestNumMsgSet( &wk->bmpwin, wk->tempo, ST_TYPE_X+168, ST_BGM_MSG_Y );//テンポ
+	SndTestNumMsgSet( wk, wk->pitch, ST_TYPE_X+88, ST_BGM_MSG_Y );//音程
+	SndTestNumMsgSet( wk, wk->tempo, ST_TYPE_X+168, ST_BGM_MSG_Y );//テンポ
 
 	GF_BGL_BmpWinOn( &wk->bmpwin );
+#endif
 
+	GX_SetMasterBrightness(0);	
+	GXS_SetMasterBrightness(-16);
+	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+	GFL_DISP_GXS_SetVisibleControlDirect(0);
+	SetBank();							//VRAMバンク設定
+    GFL_BG_Init(wk->heapId );
+	BgSet(wk);							//BG設定
+    GFL_BMPWIN_Init( wk->heapId );
 
+    
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , TESTMODE_PLT_FONT * 32, 16*2, wk->heapId );
+	wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , wk->heapId );
+
+	wk->bmpWin = GFL_BMPWIN_Create( SND_TEST_BMPWIN_FRAME , 1,1,30,LIST_DISP_MAX*2,TESTMODE_PLT_FONT,GFL_BMP_CHRAREA_GET_B );
+	GFL_BMPWIN_MakeScreen( wk->bmpWin );
+	GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpWin), 15 );
+	GFL_BG_LoadScreenReq( SND_TEST_BMPWIN_FRAME );
+	wk->printQue = PRINTSYS_QUE_Create( wk->heapId );
+	PRINT_UTIL_Setup( &wk->printUtil , wk->bmpWin );
+
+	wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+									NARC_message_snd_test_name_dat, wk->heapId );
+    
+//	wk->printQueSub = PRINTSYS_QUE_Create( wk->heapId );
+//	PRINT_UTIL_Setup( &wk->printUtilSub , wk->bmpWinSub );
+    
 	return;
 }
 
@@ -266,7 +324,7 @@ static void SndTestWorkInit( SND_TEST_WORK* wk )
 	// バッファ作成
 	for(i=0; i<BUF_MAX; i++)
 	{
-		wk->msg_buf[i] = STRBUF_Create(SND_TEST_BUF_SIZE*2, HEAPID_BASE_DEBUG);
+		wk->msg_buf[i] = GFL_STR_CreateBuffer(SND_TEST_BUF_SIZE*2, wk->heapId);
 	}
 
 	return;
@@ -354,20 +412,20 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 	int ret, i, spd;
 
 	//音程変更
-	if( sys.cont & PAD_BUTTON_SELECT ){
-		if( sys.repeat & PAD_KEY_UP ){
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
 			wk->pitch++;
-		}else if( sys.repeat & PAD_KEY_DOWN ){
+		}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
 			wk->pitch--;
 		}
-		SndTestNumMsgSet( &wk->bmpwin, wk->pitch, ST_TYPE_X+88, ST_BGM_MSG_Y );
+		SndTestNumMsgSet( wk, wk->pitch, ST_TYPE_X+88, ST_BGM_MSG_Y );
 		Snd_PlayerSetTrackPitch( SND_HANDLE_BGM, 0xffff, (wk->pitch*64) );
-		GF_BGL_BmpWinOn( &wk->bmpwin );
+//		GF_BGL_BmpWinOn( &wk->bmpwin );
 		return;
 	}
 
 	//シーケンスローカルワークを変更
-	if( (sys.cont & PAD_BUTTON_R) && (sys.repeat & PAD_KEY_UP) ){
+	if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_R) && (GFL_UI_KEY_GetRepeat() & PAD_KEY_UP) ){
 
 		wk->var++;
 		if( wk->var >= 128 ){
@@ -376,7 +434,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 		return;
 	}
 
-	if( (sys.cont & PAD_BUTTON_R) && (sys.repeat & PAD_KEY_DOWN) ){
+	if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_R) && (GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN) ){
 
 		wk->var--;
 		if( wk->var < 0 ){
@@ -386,44 +444,44 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 	}
 
 	//テンポ変更
-	if( sys.cont & PAD_BUTTON_START ){
-		if( sys.repeat & PAD_KEY_UP ){
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_START ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
 			wk->tempo+=32;
-		}else if( sys.repeat & PAD_KEY_DOWN ){
+		}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
 			wk->tempo-=32;
 		}
-		SndTestNumMsgSet( &wk->bmpwin, wk->tempo, ST_TYPE_X+168, ST_BGM_MSG_Y );
+		SndTestNumMsgSet( wk, wk->tempo, ST_TYPE_X+168, ST_BGM_MSG_Y );
 		Snd_PlayerSetTempoRatio( SND_HANDLE_BGM, wk->tempo );
-		GF_BGL_BmpWinOn( &wk->bmpwin );
+//		GF_BGL_BmpWinOn( &wk->bmpwin );
 		return;
 	}
 
 	//対象を変更(←BGM←PV←SE←)
-	if( sys.trg & PAD_KEY_DOWN ){
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
 		wk->select++;
 		if( wk->select >= SND_TEST_TYPE_MAX ){
 			wk->select = SND_TEST_TYPE_BGM;
 		}
 
 		SndTestCursor( wk );					//カーソル更新
-		GF_BGL_BmpWinOn( &wk->bmpwin );
+//		GF_BGL_BmpWinOn( &wk->bmpwin );
 	}
 
 	//対象を変更(→BGM→SE→PV→)
-	if( sys.trg & PAD_KEY_UP ){
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
 		wk->select--;
 		if( wk->select < SND_TEST_TYPE_BGM ){
 			wk->select = (SND_TEST_TYPE_MAX-1);
 		}
 
 		SndTestCursor( wk );					//カーソル更新
-		GF_BGL_BmpWinOn( &wk->bmpwin );
+//		GF_BGL_BmpWinOn( &wk->bmpwin );
 	}
 
 	//シーケンスナンバーを進める
-	if( sys.repeat & PAD_KEY_RIGHT ){
+	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
 
-		if( (sys.cont & PAD_BUTTON_R) || (sys.cont & PAD_BUTTON_L) ){
+		if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_R) || (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) ){
 			spd = 10;												//10ずつ
 		}else{
 			spd = 1;												//1ずつ
@@ -438,7 +496,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_BGM );					//BGMナンバー
-			GF_BGL_BmpWinOn( &wk->bmpwin );
+//			GF_BGL_BmpWinOn( &wk->bmpwin );
 			break;
 		case SND_TEST_TYPE_SE:
 			wk->se+=spd;
@@ -447,7 +505,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_SE );						//SEナンバー
-			GF_BGL_BmpWinOn( &wk->bmpwin );
+//			GF_BGL_BmpWinOn( &wk->bmpwin );
 			break;
 		case SND_TEST_TYPE_PV:
 			wk->pv+=spd;
@@ -456,15 +514,15 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_PV );						//PVナンバー
-			GF_BGL_BmpWinOn( &wk->bmpwin );
+//			GF_BGL_BmpWinOn( &wk->bmpwin );
 			break;
 		};
 	}
 
 	//シーケンスナンバーを戻す
-	if( sys.repeat & PAD_KEY_LEFT ){
+	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
 
-		if( (sys.cont & PAD_BUTTON_R) || (sys.cont & PAD_BUTTON_L) ){
+		if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_R) || (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) ){
 			spd = 10;												//10ずつ
 		}else{
 			spd = 1;												//1ずつ
@@ -479,7 +537,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_BGM );					//BGMナンバー
-			GF_BGL_BmpWinOn( &wk->bmpwin );
+//			GF_BGL_BmpWinOn( &wk->bmpwin );
 			break;
 		case SND_TEST_TYPE_SE:
 			wk->se-=spd;
@@ -488,7 +546,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_SE );						//SEナンバー
-			GF_BGL_BmpWinOn( &wk->bmpwin );
+//			GF_BGL_BmpWinOn( &wk->bmpwin );
 			break;
 		case SND_TEST_TYPE_PV:
 			wk->pv-=spd;
@@ -497,18 +555,18 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_PV );						//PVナンバー
-			GF_BGL_BmpWinOn( &wk->bmpwin );
+//			GF_BGL_BmpWinOn( &wk->bmpwin );
 			break;
 		};
 	}
 
 	//停止
-	if( sys.trg & PAD_BUTTON_B ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		SndTestStop(wk);
 	}
 
 	//再生(停止させてから再生)
-	if( sys.trg & PAD_BUTTON_A ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
 		SndTestStop(wk);
 		SndTestPlay(wk);
 
@@ -516,23 +574,23 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 		//シーケンスローカルワーク操作
 		//サウンドハンドルが関連付けられた後に操作する！
 		Snd_PlayerWriteVariable( wk->var );
-		SndTestNumMsgSet( &wk->bmpwin, wk->var, ST_TYPE_X+168, ST_BGM_MSG_Y+16 );
-		GF_BGL_BmpWinOn( &wk->bmpwin );
+		SndTestNumMsgSet( wk, wk->var, ST_TYPE_X+168, ST_BGM_MSG_Y+16 );
+//		GF_BGL_BmpWinOn( &wk->bmpwin );
 #endif
 
 	}
 
 	//初期化
-	//if( sys.cont & PAD_BUTTON_SELECT ){
-	if( sys.cont & PAD_BUTTON_Y ){
+	//if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ){
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
 		Snd_Stop();						//全て停止
 		SndTestInit( wk );				//ワーク、データなどクリア
-		GF_BGL_BmpWinOn( &wk->bmpwin );
+//		GF_BGL_BmpWinOn( &wk->bmpwin );
 	}
 
 	//終了
-	//if( sys.cont & PAD_BUTTON_START ){
-	if( sys.cont & PAD_BUTTON_X ){
+	//if( GFL_UI_KEY_GetCont() & PAD_BUTTON_START ){
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
 		Snd_Stop();						//全て停止
 		SndTestSeqNext(wk);
 		return;
@@ -555,34 +613,47 @@ static void SndTestSeqExit( SND_TEST_WORK* wk )
 	int i;
 
 	//BMPウィンドウOFF
-	GF_BGL_BmpWinOff( &wk->bmpwin );
+//	GF_BGL_BmpWinOff( &wk->bmpwin );
 	
 	//BMPリスト破棄
 	//BmpListExit( wp->bmplistContID,&DebugList,&DebugCursor );
 	//BmpListExit( wk->blwin, NULL, NULL );
 
 	//BMPWindow消去
-	GF_BGL_BmpWinDel( &wk->bmpwin );
+//	GF_BGL_BmpWinDel( &wk->bmpwin );
 
-	MSGMAN_Delete( wk->msgman );
 
-	//BGL開放
-	GF_BGL_BGControlExit( wk->bgl, SND_TEST_BMPWIN_FRAME );
+	//開放処理
+	PRINTSYS_QUE_Clear( wk->printQue );
+	PRINTSYS_QUE_Delete( wk->printQue );
+	GFL_BMPWIN_Delete( wk->bmpWin );
+	GFL_FONT_Delete( wk->fontHandle );
+	GFL_BMPWIN_Exit();
+	GFL_BG_Exit();
 
-	//bgl削除
-	sys_FreeMemoryEz( wk->bgl );
+
+	GX_SetMasterBrightness(0);
+	GXS_SetMasterBrightness(0);
+
+
+
+    
+	GFL_MSG_Delete( wk->msgman );
+
 
 	//文字バッファ削除
 	for(i=0; i<BUF_MAX; i++)
 	{
 		if(wk->msg_buf[i]){
-			STRBUF_Delete(wk->msg_buf[i]);
+			GFL_STR_DeleteBuffer(wk->msg_buf[i]);
 		}
 	}
 
+
+
+    
 	wk->end_flag = TRUE;
 
-	return;
 }
 
 //--------------------------------------------------------------
@@ -613,7 +684,6 @@ static void SndTestStop( SND_TEST_WORK* wk )
 		break;
 	};
 
-	return;
 }
 
 //--------------------------------------------------------------
@@ -631,7 +701,9 @@ static void SndTestPlay( SND_TEST_WORK* wk )
 
 	switch( wk->select ){
 	case SND_TEST_TYPE_BGM:
-		Snd_ArcPlayerStartSeqEx( SND_HANDLE_BGM, PLAYER_BGM, wk->bgm );
+        if(Snd_ArcPlayerStartSeqEx( SND_HANDLE_BGM, PLAYER_BGM, wk->bgm )){
+            OS_TPrintf("SND_TEST_TYPE_BGMSTART\n");
+        }
 		break;
 
 	case SND_TEST_TYPE_SE:
@@ -671,7 +743,7 @@ static void SetBank(void)
 {
 	//display.c
 	
-	GF_BGL_DISPVRAM vramSetTable = {	//VRAM設定構造体
+	GFL_DISP_VRAM vramSetTable = {	//VRAM設定構造体
 		//GX_VRAM_BG_256_AB,			//メイン2DエンジンのBG
 		GX_VRAM_BG_128_C,				//メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,			//メイン2DエンジンのBG拡張パレット
@@ -695,8 +767,7 @@ static void SetBank(void)
 		//GX_VRAM_TEXPLTT_0123_E		//テクスチャパレットスロット
 	};
 
-	GF_Disp_SetBank( &vramSetTable );
-	return;
+	GFL_DISP_SetBank( &vramSetTable );
 }
 
 //--------------------------------------------------------------
@@ -714,7 +785,7 @@ static void BgSet( SND_TEST_WORK* wk )
 	
 #if 1
 	{
-		GF_BGL_SYS_HEADER BGsys_data = {	//BGシステム構造体
+		GFL_BG_SYS_HEADER BGsys_data = {	//BGシステム構造体
 			GX_DISPMODE_GRAPHICS,			//表示モード指定 
 			GX_BGMODE_0,					//ＢＧモード指定(メインスクリーン)
 			GX_BGMODE_0,					//ＢＧモード指定(サブスクリーン)
@@ -725,31 +796,24 @@ static void BgSet( SND_TEST_WORK* wk )
 		//メイン、サブのグラフィックスエンジンの表示モード設定
 		//メイン、サブの画面の各面の表示コントロール初期化(display.c)
 		//ビットマップウィンドウ設定構造体初期化
-		GF_BGL_InitBG( &BGsys_data );
+		GFL_BG_SetBGMode( &BGsys_data );
 	}
 #endif
 
 	{	//BMPウィンドウ
-		GF_BGL_BGCNT_HEADER BmpWinBgCntData = {	//BGコントロール設定構造体
-			0, 0,								//初期表示ＸＹ
-			0x800,								//スクリーンバッファサイズ( 0 = 使用しない )
-			0,									//スクリーンバッファオフセット
-
-			//BG設定
-			GF_BGL_SCRSIZ_256x256,				//スクリーンサイズ
-			GX_BG_COLORMODE_16,					//カラーモード
-			GX_BG_SCRBASE_0xd000,				//スクリーンベースブロック
-			GX_BG_CHARBASE_0x00000,				//キャラクタベースブロック
-			GX_BG_EXTPLTT_01,					//ＢＧ拡張パレットスロット選択
-
-			0,									//表示プライオリティー
-			0, 0,								//エリアオーバーフラグ、ダミー
-			FALSE								//モザイク設定
+		GFL_BG_BGCNT_HEADER BmpWinBgCntData = {	//BGコントロール設定構造体
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 
-		GF_BGL_BGControlSet(wk->bgl, SND_TEST_BMPWIN_FRAME, 
-							&BmpWinBgCntData, GF_BGL_MODE_TEXT );
-		GF_BGL_ScrClear( wk->bgl, SND_TEST_BMPWIN_FRAME );
+		GFL_BG_SetBGControl(SND_TEST_BMPWIN_FRAME, 
+							&BmpWinBgCntData, GFL_BG_MODE_TEXT );
+        GFL_BG_SetVisible( SND_TEST_BMPWIN_FRAME, VISIBLE_ON );
+        GFL_BG_ClearFrame( SND_TEST_BMPWIN_FRAME );
+        GFL_BG_LoadScreenReq( SND_TEST_BMPWIN_FRAME );
+        
 	}
 
 	return;
@@ -767,15 +831,24 @@ static void BgSet( SND_TEST_WORK* wk )
  * @retval	none
  */
 //--------------------------------------------------------------
-static void SndTestNumMsgSet( GF_BGL_BMPWIN* win, int num, u8 x, u8 y )
+static void SndTestNumMsgSet( SND_TEST_WORK* wk, int num, u8 x, u8 y )
 {
-	STRBUF* buf = STRBUF_Create( 6, HEAPID_BASE_DEBUG );
+	const u16 strLen = 64;
+#if 0
+    STRBUF* buf = STRBUF_Create( 6, HEAPID_BASE_DEBUG );
 
 	STRBUF_SetNumber( buf, num, 4, NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
 	GF_STR_PrintSimple( win, FONT_SYSTEM, buf, x, y, MSG_NO_PUT, NULL );
 	STRBUF_Delete(buf);
+#endif
+    STRBUF* msg = GFL_STR_CreateBuffer( strLen , wk->heapId );
 
-	return;
+	STRTOOL_SetNumber( msg, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    
+    PRINT_UTIL_Print(&wk->printUtil , wk->printQue , x, y, msg, wk->fontHandle);
+
+	GFL_STR_DeleteBuffer(msg);
+    
 }
 
 //--------------------------------------------------------------
@@ -790,10 +863,12 @@ static void SndTestNumMsgSet( GF_BGL_BMPWIN* win, int num, u8 x, u8 y )
  * @retval	none
  */
 //--------------------------------------------------------------
-static void SndTestNameMsgSet( GF_BGL_BMPWIN* win, const STRBUF* msg, u8 x, u8 y )
+static void SndTestNameMsgSet( SND_TEST_WORK* wk, const STRBUF* msg, u8 x, u8 y )
 {
-	GF_STR_PrintSimple( win, FONT_SYSTEM, msg, x, y, MSG_NO_PUT, NULL );
-	return;
+//	GF_STR_PrintSimple( win, FONT_SYSTEM, msg, x, y, MSG_NO_PUT, NULL );
+
+    PRINT_UTIL_Print(&wk->printUtil , wk->printQue , x, y, msg, wk->fontHandle);
+
 }
 
 //------------------------------------------------------------------
@@ -810,17 +885,17 @@ static void SndTestNameMsgSet( GF_BGL_BMPWIN* win, const STRBUF* msg, u8 x, u8 y
  *
  */
 //------------------------------------------------------------------
-static void SndTestStrPrint( GF_BGL_BMPWIN* win, u32 fontID, u32 strID, u32 x, u32 y, u32 wait, pStrPrintCallBack callback )
+static void SndTestStrPrint( SND_TEST_WORK* wk, u32 strID, u32 x, u32 y )
 {
-	MSGDATA_MANAGER* man = MSGMAN_Create( MSGMAN_TYPE_DIRECT, ARC_MSG, 
-									NARC_msg_snd_test_str_dat, HEAPID_BASE_DEBUG );
+	STRBUF *strbuf;
+	const u16 strLen = 64;
+	GFL_MSGDATA *msgMng = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_snd_test_str_dat, wk->heapId);
 
-	STRBUF* str = MSGMAN_AllocString( man, strID );
-
-	GF_STR_PrintSimple( win, fontID, str, x, y, wait, callback );
-
-	STRBUF_Delete(str);
-	MSGMAN_Delete(man);
+    strbuf = GFL_STR_CreateBuffer( strLen , wk->heapId );
+    GFL_MSG_GetString(msgMng, strID, strbuf);
+    PRINT_UTIL_Print(&wk->printUtil , wk->printQue , x, y, strbuf, wk->fontHandle);
+	GFL_STR_DeleteBuffer(strbuf);
+	GFL_MSG_Delete(msgMng);
 }
 
 //--------------------------------------------------------------
@@ -846,24 +921,24 @@ static void MsgRewrite( SND_TEST_WORK* wk, s8 select )
 		msg_h_id = wk->bgm - SND_TEST_BGM_START_NO + msg_seq_pv_end + 1;
 
 		//指定範囲を塗りつぶし
-		GF_BGL_BmpWinFill( &wk->bmpwin, 
-							FBMP_COL_WHITE, ST_TYPE_X, ST_BGM_MSG_Y+16, 8*24, 16*1 );
+		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->bmpWin), ST_TYPE_X, ST_BGM_MSG_Y+16, 8*24, 16*1 , 
+							FBMP_COL_WHITE);
 
-		SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_BGM, 
-						ST_TYPE_X, ST_BGM_MSG_Y, MSG_NO_PUT, NULL );
-		SndTestNumMsgSet( &wk->bmpwin, wk->bgm, ST_TYPE_X, ST_BGM_MSG_Y+16 );
+		SndTestStrPrint( wk,  msg_BGM, 
+						ST_TYPE_X, ST_BGM_MSG_Y );
+		SndTestNumMsgSet( wk, wk->bgm, ST_TYPE_X, ST_BGM_MSG_Y+16 );
 
-		MSGMAN_GetString( wk->msgman, msg_h_id, wk->msg_buf[BUF_BGM] );
-		SndTestNameMsgSet( &wk->bmpwin, wk->msg_buf[BUF_BGM], ST_NAME_X, ST_BGM_MSG_Y+16 );
+		GFL_MSG_GetString( wk->msgman, msg_h_id, wk->msg_buf[BUF_BGM] );
+		SndTestNameMsgSet( wk, wk->msg_buf[BUF_BGM], ST_NAME_X, ST_BGM_MSG_Y+16 );
 
-		SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_ME, 
-						ST_TYPE_X+32, ST_BGM_MSG_Y, MSG_NO_PUT, NULL );
+		SndTestStrPrint( wk,  msg_ME, 
+						ST_TYPE_X+32, ST_BGM_MSG_Y );
 
-		SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_KEY, 
-						ST_TYPE_X+56, ST_BGM_MSG_Y, MSG_NO_PUT, NULL );
+		SndTestStrPrint( wk,  msg_KEY, 
+						ST_TYPE_X+56, ST_BGM_MSG_Y );
 
-		SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_TMP, 
-						ST_TYPE_X+136, ST_BGM_MSG_Y, MSG_NO_PUT, NULL );
+		SndTestStrPrint( wk,  msg_TMP, 
+						ST_TYPE_X+136, ST_BGM_MSG_Y );
 
 		break;
 
@@ -871,40 +946,40 @@ static void MsgRewrite( SND_TEST_WORK* wk, s8 select )
 		msg_h_id = wk->se - SND_TEST_SE_START_NO + msg_seq_bgm_end + 1;
 
 		//指定範囲を塗りつぶし
-		GF_BGL_BmpWinFill( &wk->bmpwin, 
-							FBMP_COL_WHITE, ST_TYPE_X, ST_SE_MSG_Y+16, 8*24, 16*1 );
+		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->bmpWin)
+							, ST_TYPE_X, ST_SE_MSG_Y+16, 8*24, 16*1,FBMP_COL_WHITE );
 
 		//シーケンスナンバーから、SEのプレイヤーナンバーを取得
 		type = Snd_GetPlayerNo(wk->se);
 		type -= PLAYER_SE_1;
 
 		//SEのみプレイヤーナンバー表示
-		SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_PLAYER, 
-						ST_TYPE_X+32, ST_SE_MSG_Y, MSG_NO_PUT, NULL );
-		SndTestNumMsgSet( &wk->bmpwin, type, ST_TYPE_X+32+56, ST_SE_MSG_Y );
+		SndTestStrPrint(wk,  msg_PLAYER, 
+						ST_TYPE_X+32, ST_SE_MSG_Y );
+		SndTestNumMsgSet( wk, type, ST_TYPE_X+32+56, ST_SE_MSG_Y );
 
-		SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_SE, 
-						ST_TYPE_X, ST_SE_MSG_Y, MSG_NO_PUT, NULL );
+		SndTestStrPrint( wk,  msg_SE, 
+						ST_TYPE_X, ST_SE_MSG_Y );
 
-		SndTestNumMsgSet( &wk->bmpwin, wk->se, ST_TYPE_X, ST_SE_MSG_Y+16 );
+		SndTestNumMsgSet( wk, wk->se, ST_TYPE_X, ST_SE_MSG_Y+16 );
 
-		MSGMAN_GetString( wk->msgman, msg_h_id, wk->msg_buf[BUF_SE] );
-		SndTestNameMsgSet( &wk->bmpwin, wk->msg_buf[BUF_SE], ST_NAME_X, ST_SE_MSG_Y+16 );
+		GFL_MSG_GetString( wk->msgman, msg_h_id, wk->msg_buf[BUF_SE] );
+		SndTestNameMsgSet( wk, wk->msg_buf[BUF_SE], ST_NAME_X, ST_SE_MSG_Y+16 );
 		break;
 
 	case SND_TEST_TYPE_PV:
 		msg_h_id = wk->pv - SND_TEST_PV_START_NO + msg_seq_pv001;
 
 		//指定範囲を塗りつぶし
-		GF_BGL_BmpWinFill( &wk->bmpwin, 
-							FBMP_COL_WHITE, ST_TYPE_X, ST_PV_MSG_Y+16, 8*24, 16*1 );
+		GFL_BMP_Fill(GFL_BMPWIN_GetBmp(wk->bmpWin)
+							, ST_TYPE_X, ST_PV_MSG_Y+16, 8*24, 16*1,FBMP_COL_WHITE );
 
-		SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_PV, 
-						ST_TYPE_X, ST_PV_MSG_Y, MSG_NO_PUT, NULL );
-		SndTestNumMsgSet( &wk->bmpwin, wk->pv, ST_TYPE_X, ST_PV_MSG_Y+16 );
+		SndTestStrPrint( wk,  msg_PV, 
+						ST_TYPE_X, ST_PV_MSG_Y );
+		SndTestNumMsgSet( wk, wk->pv, ST_TYPE_X, ST_PV_MSG_Y+16 );
 
-		MSGMAN_GetString( wk->msgman, msg_h_id, wk->msg_buf[BUF_PV] );
-		SndTestNameMsgSet( &wk->bmpwin, wk->msg_buf[BUF_PV], ST_NAME_X, ST_PV_MSG_Y+16 );
+		GFL_MSG_GetString( wk->msgman, msg_h_id, wk->msg_buf[BUF_PV] );
+		SndTestNameMsgSet( wk, wk->msg_buf[BUF_PV], ST_NAME_X, ST_PV_MSG_Y+16 );
 		break;
 	};
 
@@ -946,7 +1021,7 @@ static void SndTestInit( SND_TEST_WORK* wk )
 //--------------------------------------------------------------
 static void SndTestCursor( SND_TEST_WORK* wk )
 {
-	u16 y;
+    u16 y;
 
 	switch( wk->select ){
 	case SND_TEST_TYPE_BGM:
@@ -961,10 +1036,8 @@ static void SndTestCursor( SND_TEST_WORK* wk )
 	};
 
 	//指定範囲を塗りつぶし
-	GF_BGL_BmpWinFill( &wk->bmpwin, 
-						FBMP_COL_WHITE, ST_CURSOR_X, ST_BGM_MSG_Y, 8*1, 16*8 );
-	GF_BGL_BmpWinFill( &wk->bmpwin, 
-						FBMP_COL_RED, ST_CURSOR_X, y, 8*1, 16*1 );
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->bmpWin), ST_CURSOR_X, ST_BGM_MSG_Y, 8*1, 16*8,FBMP_COL_WHITE );
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->bmpWin), ST_CURSOR_X, y, 8*1, 16*1, FBMP_COL_RED );
 
 	return;
 }
@@ -980,16 +1053,16 @@ static void SndTestCursor( SND_TEST_WORK* wk )
 //--------------------------------------------------------------
 static void SndTestSysMsgSet( SND_TEST_WORK* wk )
 {
-	SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_SOUND_TEST, 
-				ST_TITLE_X, ST_TITLE_Y, MSG_NO_PUT, NULL );			//SOUND TEST
-	SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_A_PLAY, 
-				ST_KEY_X, ST_KEY_Y, MSG_NO_PUT, NULL );				//A PLAY
-	SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_B_STOP, 
-				ST_KEY_X+64, ST_KEY_Y, MSG_NO_PUT, NULL );			//B STOP
-	SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_X_END, 
-				ST_KEY_X, ST_KEY_Y+16, MSG_NO_PUT, NULL );			//X END
-	SndTestStrPrint( &wk->bmpwin, FONT_SYSTEM, msg_Y_INIT, 
-				ST_KEY_X+64, ST_KEY_Y+16, MSG_NO_PUT, NULL );		//Y INIT
+	SndTestStrPrint( wk,  msg_SOUND_TEST, 
+				ST_TITLE_X, ST_TITLE_Y );			//SOUND TEST
+	SndTestStrPrint( wk,  msg_A_PLAY, 
+				ST_KEY_X, ST_KEY_Y );				//A PLAY
+	SndTestStrPrint( wk,  msg_B_STOP, 
+				ST_KEY_X+64, ST_KEY_Y );			//B STOP
+	SndTestStrPrint( wk,  msg_X_END, 
+				ST_KEY_X, ST_KEY_Y+16 );			//X END
+	SndTestStrPrint( wk,  msg_Y_INIT, 
+				ST_KEY_X+64, ST_KEY_Y+16 );		//Y INIT
 
 	return;
 }
@@ -1003,51 +1076,57 @@ static void SndTestSysMsgSet( SND_TEST_WORK* wk )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static PROC_RESULT SoundTestProc_Init(PROC * proc, int * seq)
+static GFL_PROC_RESULT SoundTestProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	SND_TEST_WORK* wk = NULL;
 
-	wk = PROC_AllocWork(proc, sizeof(SND_TEST_WORK), HEAPID_BASE_DEBUG);
-	memset( wk, 0, sizeof(SND_TEST_WORK) );
+	wk = GFL_PROC_AllocWork(proc, sizeof(SND_TEST_WORK), GFL_HEAPID_APP);
+
+    GFL_STD_MemClear( wk,  sizeof(SND_TEST_WORK) );
+    wk->heapId = GFL_HEAPID_APP;
 
 	SndTestCall(wk);
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 		
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static PROC_RESULT SoundTestProc_Main(PROC * proc, int * seq)
+static GFL_PROC_RESULT SoundTestProc_Main(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	SND_TEST_WORK *swk;
-	swk = PROC_GetWork(proc);
+	SND_TEST_WORK *wk;
+	wk = mywk;
 
-	SndTestTable[swk->seq](swk);
+	SndTestTable[wk->seq](wk);
 
-	if (swk->end_flag) {
-		return PROC_RES_FINISH;
+	PRINTSYS_QUE_Main( wk->printQue );
+	PRINT_UTIL_Trans( &wk->printUtil ,wk->printQue );
+
+    
+	if (wk->end_flag) {
+		return GFL_PROC_RES_FINISH;
 	} else {
-		return PROC_RES_CONTINUE;
+		return GFL_PROC_RES_CONTINUE;
 	}
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static PROC_RESULT SoundTestProc_End(PROC * proc, int * seq)
+static GFL_PROC_RESULT SoundTestProc_End(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	PROC_FreeWork(proc);
+	GFL_PROC_FreeWork(proc);
 	//Main_SetNextProc(NO_OVERLAY_ID, &TitleProcData);
 
 	//ソフトリセット
 	//詳細はソース先頭の「サウンドテストの例外処理について」を参照して下さい
 	//OS_InitReset();
-	OS_ResetSystem(0);									//ソフトリセット
-	return PROC_RES_FINISH;
+//	OS_ResetSystem(0);									//ソフトリセット
+	return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-const PROC_DATA SoundTestProcData = {
+const GFL_PROC_DATA DebugSoundProcData = {
 	SoundTestProc_Init,
 	SoundTestProc_Main,
 	SoundTestProc_End,

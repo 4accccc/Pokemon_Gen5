@@ -8,7 +8,6 @@ SOUNDSRC = 		sound/snd_strm.c \
 				sound/snd_perap.c
 
 
-#				sound/snd_test.c
 #				sound/fld_bgm.c \
 
 
@@ -254,6 +253,12 @@ SRCS_OVERLAY_WATANABE_SAMPLE	= test/tetsu/game/gamemain.c \
 # コンフィグ画面
 #===> main
 SRCS_OVERLAY_CONFIG_PANEL	= app/config_panel/config_panel.c
+
+
+# サウンドデバッグ画面
+#===> main
+SRCS_OVERLAY_SOUND_DEBUG	= sound/snd_test.c
+
 
 # 大野デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
