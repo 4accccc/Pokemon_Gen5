@@ -106,12 +106,14 @@ extern const GFL_PROC_DATA DebugMatsudaItemProcData;
 extern const GFL_PROC_DATA DebugSaveProcData;
 extern const GFL_PROC_DATA PalaceBlockProcData;
 extern const GFL_PROC_DATA PalaceHandProcData;
+extern const GFL_PROC_DATA DebugMatsudaBeaconProcData;
 
 //==============================================================================
 //	データ
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
+	{DM_MSG_MENU010, &DebugMatsudaBeaconProcData,	FS_OVERLAY_ID(matsuda_debug)},	//巨大ビーコン送受信テスト
 	{DM_MSG_MENU004, &DebugMatsudaItemProcData,		FS_OVERLAY_ID(matsuda_debug)},	//アイテム
 	{DM_MSG_MENU003, &DebugMatsudaIrcMatchProcData,	FS_OVERLAY_ID(matsuda_debug)},	//赤外線複数マッチング
 	{DM_MSG_MENU002, &DebugMatsudaNetProcData,		FS_OVERLAY_ID(matsuda_debug)},	//ワイヤレス通信テスト

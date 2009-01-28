@@ -423,6 +423,7 @@ static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
     if(myNo != beaconNo){
         return FALSE;
     }
+    OS_TPrintf("b-con true\n");
     return TRUE;
 }
 
