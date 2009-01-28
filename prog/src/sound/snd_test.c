@@ -68,7 +68,7 @@ enum{
 //#define BG_PLANE_MENU (SND_TEST_BMPWIN_FRAME)
 #define ITEM_NAME_MAX (32)
 #define TESTMODE_PLT_FONT	(15)
-#define LIST_DISP_MAX (5)
+#define LIST_DISP_MAX (11)
 #define FBMP_COL_RED  (3)
 #define FBMP_COL_WHITE (15)
 
@@ -237,7 +237,8 @@ static void SndTestCall(SND_TEST_WORK * wk)
 	GF_BGL_BmpWinAddEx( wk->bgl, &wk->bmpwin, &SndTestWinData );		//ビットマップ追加
 	GF_BGL_BmpWinDataFill( &wk->bmpwin, FBMP_COL_WHITE );				//塗りつぶし
 
-	GF_BGL_BmpWinOn( &wk->bmpwin );
+	//GF_BGL_BmpWinOn( &wk->bmpwin );
+    GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
 #endif
 
 
@@ -430,6 +431,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 		SndTestNumMsgSet( wk, wk->pitch, ST_TYPE_X+88, ST_BGM_MSG_Y );
 		Snd_PlayerSetTrackPitch( SND_HANDLE_BGM, 0xffff, (wk->pitch*64) );
 //		GF_BGL_BmpWinOn( &wk->bmpwin );
+        GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
 		return;
 	}
 
@@ -462,7 +464,8 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 		SndTestNumMsgSet( wk, wk->tempo, ST_TYPE_X+168, ST_BGM_MSG_Y );
 		Snd_PlayerSetTempoRatio( SND_HANDLE_BGM, wk->tempo );
 //		GF_BGL_BmpWinOn( &wk->bmpwin );
-		return;
+        GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
+        return;
 	}
 
 	//対象を変更(←BGM←PV←SE←)
@@ -474,7 +477,8 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 
 		SndTestCursor( wk );					//カーソル更新
 //		GF_BGL_BmpWinOn( &wk->bmpwin );
-	}
+        GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
+    }
 
 	//対象を変更(→BGM→SE→PV→)
 	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
@@ -485,7 +489,8 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 
 		SndTestCursor( wk );					//カーソル更新
 //		GF_BGL_BmpWinOn( &wk->bmpwin );
-	}
+        GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
+    }
 
 	//シーケンスナンバーを進める
 	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
@@ -506,7 +511,8 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 
 			MsgRewrite( wk, SND_TEST_TYPE_BGM );					//BGMナンバー
 //			GF_BGL_BmpWinOn( &wk->bmpwin );
-			break;
+            GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
+            break;
 		case SND_TEST_TYPE_SE:
 			wk->se+=spd;
 			if( wk->se >= SND_TEST_SE_END_NO ){
@@ -515,7 +521,8 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 
 			MsgRewrite( wk, SND_TEST_TYPE_SE );						//SEナンバー
 //			GF_BGL_BmpWinOn( &wk->bmpwin );
-			break;
+            GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
+            break;
 		case SND_TEST_TYPE_PV:
 			wk->pv+=spd;
 			if( wk->pv >= SND_TEST_PV_END_NO ){
@@ -524,7 +531,8 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 
 			MsgRewrite( wk, SND_TEST_TYPE_PV );						//PVナンバー
 //			GF_BGL_BmpWinOn( &wk->bmpwin );
-			break;
+            GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
+            break;
 		};
 	}
 
@@ -547,7 +555,8 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 
 			MsgRewrite( wk, SND_TEST_TYPE_BGM );					//BGMナンバー
 //			GF_BGL_BmpWinOn( &wk->bmpwin );
-			break;
+            GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
+            break;
 		case SND_TEST_TYPE_SE:
 			wk->se-=spd;
 			if( wk->se < SND_TEST_SE_START_NO ){
@@ -556,6 +565,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 
 			MsgRewrite( wk, SND_TEST_TYPE_SE );						//SEナンバー
 //			GF_BGL_BmpWinOn( &wk->bmpwin );
+            GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
 			break;
 		case SND_TEST_TYPE_PV:
 			wk->pv-=spd;
@@ -565,7 +575,8 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 
 			MsgRewrite( wk, SND_TEST_TYPE_PV );						//PVナンバー
 //			GF_BGL_BmpWinOn( &wk->bmpwin );
-			break;
+            GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
+            break;
 		};
 	}
 
@@ -585,6 +596,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 		Snd_PlayerWriteVariable( wk->var );
 		SndTestNumMsgSet( wk, wk->var, ST_TYPE_X+168, ST_BGM_MSG_Y+16 );
 //		GF_BGL_BmpWinOn( &wk->bmpwin );
+        GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
 #endif
 
 	}
@@ -595,6 +607,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 		Snd_Stop();						//全て停止
 		SndTestInit( wk );				//ワーク、データなどクリア
 //		GF_BGL_BmpWinOn( &wk->bmpwin );
+        GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
 	}
 
 	//終了
@@ -1048,7 +1061,6 @@ static void SndTestCursor( SND_TEST_WORK* wk )
 	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->bmpWin), ST_CURSOR_X, ST_BGM_MSG_Y, 8*1, 16*8,FBMP_COL_WHITE );
 	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->bmpWin), ST_CURSOR_X, y, 8*1, 16*1, FBMP_COL_RED );
 
-	return;
 }
 
 //--------------------------------------------------------------
