@@ -240,6 +240,11 @@ static void SndTestCall(SND_TEST_WORK * wk)
 	GF_BGL_BmpWinOn( &wk->bmpwin );
 #endif
 
+
+	wk->end_flag = FALSE;
+	wk->seq			= 0;									//処理ナンバー
+	SndTestWorkInit(wk);									//ワーク初期化
+
 	GX_SetMasterBrightness(0);	
 	GXS_SetMasterBrightness(-16);
 	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
