@@ -38,8 +38,8 @@
 //
 //==============================================================================================
 //sound_data.smapのサイズより少し大きめに確保する
-#define SOUND_HEAP_SIZE		(0xb0000)				//サウンドヒープサイズ(約750k)
-//#define SOUND_HEAP_SIZE		(0xbbc00)				//サウンドヒープサイズ(約750k)
+//#define SOUND_HEAP_SIZE		(0xb0000)				//サウンドヒープサイズ(約700k)
+#define SOUND_HEAP_SIZE		(0xbbc00)				//サウンドヒープサイズ(約750k)
 //#define SOUND_HEAP_SIZE	(0xbd000)				//サウンドヒープサイズ(約750k)
 //#define SOUND_HEAP_SIZE	(0xc0000)				//サウンドヒープサイズ(約750k)
 //#define SOUND_HEAP_SIZE	(0x80000)				//サウンドヒープサイズ(約500k)
@@ -903,8 +903,9 @@ BOOL Snd_ArcLoadSeq( u16 no )
 
     ret = NNS_SndArcLoadSeq( no, wk->heap );
 
-#ifdef SOUND_OS_PRINT_ON
-	OS_Printf( "＜▲シーケンスロード＞ シーケンスNo = %d 成功=TRUE、失敗=FALSE 結果=%d\n", no, ret );
+//#ifdef SOUND_OS_PRINT_ON
+#if 1
+	OS_Printf( "＜▲シーケンスロード＞ シーケンスNo = %d ret=%d\n", no, ret );
 	Snd_UseHeapSizeOsPrint();							//追加したサウンドヒープの容量を出力する
 #endif
 

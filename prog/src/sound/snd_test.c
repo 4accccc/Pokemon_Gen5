@@ -42,6 +42,7 @@
 
 #include "msg/msg_snd_test_str.h"
 #include "msg/msg_snd_test_name.h"
+#include "msg/msg_monsname.h"
 
 #include "system/main.h"
 #include "system/bmp_menuwork.h"
@@ -49,6 +50,7 @@
 #include "system/bmp_winframe.h"
 #include "msg/msg_debugname.h"
 
+#include "poke_tool/monsno_def.h"
 #include "print/str_tool.h"
 
 //==============================================================================================
@@ -72,6 +74,7 @@ enum{
 #define FBMP_COL_RED  (3)
 #define FBMP_COL_WHITE (15)
 
+#define POKEMON_VOICE_NUMMAX (MONSNO_END)   /// @@OO本来はポケモンボイス数を得るラベルが必要
 
 //==============================================================================================
 //
@@ -112,6 +115,7 @@ typedef	struct {
 	STRBUF* msg_buf[BUF_MAX];
 
 	GFL_MSGDATA* msgman;			//メッセージマネージャー
+	GFL_MSGDATA* monsmsgman;			//メッセージマネージャー
 
 
 	BMP_MENULIST_DATA	*menuList;
@@ -269,6 +273,8 @@ static void SndTestCall(SND_TEST_WORK * wk)
 
 	wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
 									NARC_message_snd_test_name_dat, wk->heapId );
+	wk->monsmsgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+									NARC_message_monsname_dat, wk->heapId );
     
 	SndTestSysMsgSet( wk );									//必要な情報メッセージ
 	SndTestCursor( wk );									//カーソル更新
@@ -525,7 +531,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
             break;
 		case SND_TEST_TYPE_PV:
 			wk->pv+=spd;
-			if( wk->pv >= SND_TEST_PV_END_NO ){
+			if( wk->pv >= POKEMON_VOICE_NUMMAX ){   /// @@OO本来はポケモンボイス数を得るラベルが必要
 				wk->pv = SND_TEST_PV_START_NO;
 			}
 
@@ -570,7 +576,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 		case SND_TEST_TYPE_PV:
 			wk->pv-=spd;
 			if( wk->pv < SND_TEST_PV_START_NO ){
-				wk->pv = (SND_TEST_PV_END_NO);
+				wk->pv = (POKEMON_VOICE_NUMMAX);
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_PV );						//PVナンバー
@@ -660,6 +666,7 @@ static void SndTestSeqExit( SND_TEST_WORK* wk )
 
 
     
+	GFL_MSG_Delete( wk->monsmsgman );
 	GFL_MSG_Delete( wk->msgman );
 
 
@@ -734,7 +741,7 @@ static void SndTestPlay( SND_TEST_WORK* wk )
 		Snd_ArcLoadSeq( wk->se );										//ロード
 		//Snd_HeapSaveState( Snd_GetParamAdrs(SND_W_ID_HEAP_SAVE_SE) );	//階層保存
 		ret = Snd_ArcPlayerStartSeqEx( SND_HANDLE_SE_1, PLAYER_SE_1, wk->se );
-		//OS_Printf( "se_play = %d\n", ret );
+		OS_Printf( "se_play = %d\n", ret );
 		break;
 
 	case SND_TEST_TYPE_PV:
@@ -1000,7 +1007,7 @@ static void MsgRewrite( SND_TEST_WORK* wk, s8 select )
 						ST_TYPE_X, ST_PV_MSG_Y );
 		SndTestNumMsgSet( wk, wk->pv, ST_TYPE_X, ST_PV_MSG_Y+16 );
 
-		GFL_MSG_GetString( wk->msgman, msg_h_id, wk->msg_buf[BUF_PV] );
+        GFL_MSG_GetString( wk->monsmsgman, msg_h_id+1, wk->msg_buf[BUF_PV] );
 		SndTestNameMsgSet( wk, wk->msg_buf[BUF_PV], ST_NAME_X, ST_PV_MSG_Y+16 );
 		break;
 	};

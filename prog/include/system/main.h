@@ -58,5 +58,5 @@ enum{
 };
 
 #define	HEAPSIZE_SYSTEM	(0x008000)
-#define	HEAPSIZE_APP	(0x170000)   // PL,GS‚Í–ñ0x13A000
+#define	HEAPSIZE_APP	(0x160000)   // PL,GS‚Í–ñ0x13A000
 
