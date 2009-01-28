@@ -24,38 +24,22 @@ typedef enum{
 	TR_CARD_RANK_BLACK,
 }TR_CARD_RANK;
 
-extern const GFL_PROC_DATA TrCardSysProcData;
-extern GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
-extern GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
-extern GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
-
-typedef struct TR_BADGE_DATA_tag
-{
-	int BadgeHold:1;			//バッジ所持フラグ
-	int BadgeScruchCount:31;	//磨き具合
-	
-}TR_BADGE_DATA;
-
 typedef struct TR_CARD_DATA_tag
 {
 	u8 Version;			//バージョン
 	u8 CountryCode;		//国コード
-	u8 GymReaderMask;	//ジムリーダー８人顔マスクフラグ(金銀では未参照)
+	u8 GymReaderMask;	//ジムリーダー８人顔マスクフラグ
 	u8 CardRank;		//カードランク
 	
-	u8 BrushValid:1;		//バッジ磨きアプリ有効フラグ
-	u8 TimeUpdate:1;		//時間更新フラグ
+	u8 BrushValid:1;	//バッジ磨きアプリ有効フラグ
+	u8 TimeUpdate:1;	//時間更新フラグ
 	u8 TrSex:1;			//性別
 	u8 PokeBookFlg:1;	//図鑑所持フラグ
-	u8 MySignValid:1;	//サインデータ有効/無効フラグ(金銀のみ有効)
-	u8 Dummy:3;
+	u8 MySignValid:1;	//サインデータ有効/無効フラグ
+	u8 Padding:3;
 	u8 UnionTrNo;		//ユニオントレーナーナンバー（0～15）指定無しのときはUNION_TR_NONE(0xff)
 
-#if 0	//DP時のソース
-	u8 Dummy2[2];
-#else	//金銀のソース
-	u16	gs_badge;	//金銀バッジ入手フラグ(16bit) DP&PではDummyとして参照されません
-#endif
+	u16	BadgeFlag;		//バッジ入手フラグ(16bit)
 	
 	STRCODE TrainerName[PERSON_NAME_SIZE+EOM_SIZE];	//トレーナー名
 	const PLAYTIME *PlayTime;	//プレイ時間構造体（通信時は時間更新が行われないのでNULLをセットする）
@@ -76,16 +60,13 @@ typedef struct TR_CARD_DATA_tag
 	u8 Clear_y;			//クリア年
 	u8 Clear_m;			//クリア月
 	u8 Clear_d;			//クリア日
-	u8 ClearTime_m;	//クリア時間（分）
+	u8 ClearTime_m;		//クリア時間（分）
 	
 	u32 CommNum;		//通信回数
 	u32 CommBattleWin;	//対戦勝ち数
 	u32 CommBattleLose;	//対戦負け数
 	u32 CommTrade;		//交換回数
 
-	//4byte*8=32byte
-	TR_BADGE_DATA	BadgeData[8];	//DP&Pバッジデータ(金銀は参照しません)
-	
 	u8	SignRawData[SIGN_SIZE_X*SIGN_SIZE_Y*8];	//サインデータ
 	u16	_xor;			// 検証用
 	u16 reached;		// 到着フラグ(通信時に使用）
@@ -93,9 +74,23 @@ typedef struct TR_CARD_DATA_tag
 
 typedef struct TRCARD_CALL_PARAM_tag{
 	TR_CARD_DATA		*TrCardData;
-
-//	const SAVE_CONTROL_WORK*	savedata;	///<セーブデータへのポインタ
 	int					value;		///<リターン値
 }TRCARD_CALL_PARAM;
+
+FS_EXTERN_OVERLAY(trainercard);
+#define TRCARD_OVERLAY_ID (FS_OVERLAY_ID(trainercard))
+
+//データの取得
+extern void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , const BOOL isSendData );
+
+
+//通信用と自分用のProc呼び出し。
+extern void TRAINERCASR_CallProcSelfData( void );
+//通信用はTR_CARD_DATAのポインタを渡す
+extern void TRAINERCASR_CallProcCommData( void* pCardData );
+
+extern const GFL_PROC_DATA TrCardSysProcData;
+//初期化が違う通信用Procデータ
+extern const GFL_PROC_DATA TrCardSysCommProcData;
 
 #endif //_TRAINER_CARD_H_

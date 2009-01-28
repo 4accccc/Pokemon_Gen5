@@ -55,7 +55,7 @@ typedef struct
 	u16 posX_;
 	u16 posZ_;
 	s8	posY_;		//マックス不明なので。場合によってはなしでOK？
-	u8	dir_;		//グリッドなので上下左右が0～3で入る
+	u8	dir_;		//グリッドなので上左下右が0～3で入る(方向自体は0x4000単位
 	u16	zoneID_;	//ここは通信用のIDとして変換して抑えられる
 	u8	talkState_;
 }FIELD_COMM_PLAYER_PACKET;
@@ -627,11 +627,10 @@ const BOOL	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc )
 	commFunc->plPkt_.posX_ = F32_CONST( pos->x );
 	commFunc->plPkt_.posY_ = (int)F32_CONST( pos->y );
 	commFunc->plPkt_.posZ_ = F32_CONST( pos->z );
-	//plPkt.dir_ = dir>>8;
 	commFunc->plPkt_.dir_ = dir;
 	commFunc->plPkt_.talkState_ = talkState;
 
-//	ARI_TPrintf("SEND[ ][%d][%d][%d][%d]\n",plPkt.posX_,plPkt.posY_,plPkt.posZ_,dir);
+	ARI_TPrintf("SEND[ ][%d][%d][%d][%x]\n",commFunc->plPkt_.posX_,commFunc->plPkt_.posY_,commFunc->plPkt_.posZ_,dir);
 	{
 		GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
 		const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
@@ -660,10 +659,9 @@ void	FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const void
 	pos.x = FX32_CONST( pkt->posX_ );
 	pos.y = FX32_CONST( pkt->posY_ );
 	pos.z = FX32_CONST( pkt->posZ_ );
-	//dir	= pkt->dir_<<8;
-	dir = pkt->dir_;
+	dir = pkt->dir_;//通信キャラはインデックスの4方向なので
 
-//	ARI_TPrintf("POST[%d][%d][%d][%d][%d]\n",netID,pkt->posX_,pkt->posY_,pkt->posZ_,dir);
+	ARI_TPrintf("POST[%d][%d][%d][%d][%x]\n",netID,pkt->posX_,pkt->posY_,pkt->posZ_,dir);
 	
 	//set
 	plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(netID);
@@ -910,7 +908,7 @@ void	FIELD_COMM_FUNC_Post_UserData( const int netID, const int size , const void
 }
 u8*		FIELD_COMM_FUNC_Post_UserData_Buff( int netID, void* pWork , int size )
 {
-	void* userData = FIELD_COMM_DATA_GetSelfUserData( FCUT_MAX );
+	void* userData = FIELD_COMM_DATA_GetPartnerUserData( FCUT_MAX );
 	return (u8*)userData;
 }
 

@@ -35,6 +35,7 @@ SRCS	+=		$(SOUNDSRC) \
 				field/field_player.c \
 				field/field_comm/field_comm_data.c \
 				field/field_comm/field_comm_func.c \
+				field/field_comm/field_comm_event.c \
 				savedata/save_tbl.c \
 				savedata/save_control.c \
 				savedata/contest_savedata.c \
@@ -86,10 +87,6 @@ SRCS	+=		$(SOUNDSRC) \
 				savedata/wifihistory.c \
 				savedata/wifilist.c \
 				system/touch_subwindow.c \
-				app/trainercard/trainercard.c \
-				app/trainercard/trainer_card.c \
-				app/trainercard/trcard_bmp.c \
-				app/trainercard/trcard_obj.c \
 				app/trainercard/trcard_sys.c \
 				app/name_input/name_input.c \
 				app/mysign/mysign.c \
@@ -216,7 +213,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/fieldmap_proc.c \
 				field/field_comm_actor.c \
 				field/field_comm/field_comm_main.c \
 				field/field_comm/field_comm_menu.c \
-				field/field_comm/field_comm_event.c \
 				field/field_comm/field_comm_debug.c \
 				field/fldmmdl_draw.c \
 				field/fldmmdl_acmd.c \
@@ -379,10 +375,21 @@ SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
 
 
 # 不思議な贈り物
+#===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
 			mystery/comm_mystery_state.c \
 			mystery/comm_mystery_card.c \
 			mystery/mysterylib.c \
 			mystery/beacondownload.c 
+
+# トレーナーカード
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
+			app/trainercard/trcard_bmp.c \
+			app/trainercard/trcard_obj.c
+
 

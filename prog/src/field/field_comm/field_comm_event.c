@@ -11,12 +11,14 @@
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
+#include "app/trainer_card.h"
 #include "field_comm_def.h"
 #include "field_comm_main.h"
 #include "field_comm_menu.h"
 #include "field_comm_func.h"
 #include "field_comm_data.h"
 #include "field_comm_event.h"
+#include "field/event_fieldmap_control.h"	//EVENT_FieldSubProc
 
 #include "msg/msg_d_field.h"
 
@@ -103,6 +105,7 @@ struct _FIELD_COMM_EVENT
 	FIELD_COMM_MAIN *commSys_;
 	FIELD_MAIN_WORK *fieldWork_;
 	GAMESYS_WORK	*gameSys_;
+	GMEVENT			*event_;
 
 	u8	subSeq_;
 	F_COMM_ACTION_LIST selectAction_;	//選ばれた行動
@@ -220,6 +223,7 @@ GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys ,FIELD_MAIN_WORK *fie
 	GMEVENT *event;
 	event = GMEVENT_Create(gameSys, NULL, FIELD_COMM_EVENT_TalkEvent, sizeof(FIELD_COMM_EVENT));
 	evtWork = GMEVENT_GetEventWork(event);
+	evtWork->event_ = event;
 	evtWork->commSys_ = commSys;
 	evtWork->gameSys_ = gameSys;
 	evtWork->fieldWork_ = fieldWork;
@@ -368,6 +372,7 @@ GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELD_MAIN_W
 	GMEVENT *event;
 	event = GMEVENT_Create(gameSys, NULL, FIELD_COMM_EVENT_TalkEventPartner, sizeof(FIELD_COMM_EVENT));
 	evtWork = GMEVENT_GetEventWork(event);
+	evtWork->event_ = event;
 	evtWork->commSys_ = commSys;
 	evtWork->gameSys_ = gameSys;
 	evtWork->fieldWork_ = fieldWork;
@@ -649,70 +654,36 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkCommonEvent( GMEVENT *event , int *se
 //--------------------------------------------------------------
 //	パート切り替え
 //--------------------------------------------------------------
-extern const GFL_PROC_DATA TrainerCardProcData;
 extern const GFL_PROC_DATA DebugSogabeMainProcData;
 static	const BOOL	FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 {
 	switch( evtWork->subSeq_ )
 	{
 	case 0:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
-									 0 ,16 ,ARI_FADE_SPD );
-		evtWork->subSeq_++;
+		{
+			GMEVENT * newEvent;
+			if( evtWork->selectAction_ == FCAL_TRAINERCARD )
+			{
+				newEvent = EVENT_FieldSubProc(evtWork->gameSys_, evtWork->fieldWork_,
+							TRCARD_OVERLAY_ID, &TrCardSysCommProcData, 
+							FIELD_COMM_DATA_GetPartnerUserData(FCUT_TRAINERCARD) );
+			}
+			else if( evtWork->selectAction_ == FCAL_BATTLE )
+			{
+				newEvent = EVENT_FieldSubProc(evtWork->gameSys_, evtWork->fieldWork_,
+							NO_OVERLAY_ID, &DebugSogabeMainProcData, 
+							NULL );
+			}
+			GMEVENT_CallEvent( evtWork->event_, newEvent);
+			evtWork->subSeq_++;
+		}
 		break;
 	case 1:
-		if( GFL_FADE_CheckFade() == FALSE )
+//		if( GFL_FADE_CheckFade() == FALSE )
 		{
-			FIELDMAP_Close(evtWork->fieldWork_);
-			evtWork->subSeq_++;
-		}
-		break;
-
-	case 2:
-		if( GAMESYSTEM_IsProcExists(evtWork->gameSys_) == FALSE )
-		{
-			evtWork->subSeq_++;
-		}
-		break;
-
-	case 3:
-		if( evtWork->selectAction_ == FCAL_TRAINERCARD )
-		{
-			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TrainerCardProcData, NULL);
-		}
-		else if( evtWork->selectAction_ == FCAL_BATTLE )
-		{
-			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
-		}
-		evtWork->subSeq_++;
-		//ここでフィールドのProcを抜ける
-		break;
-	case 4:
-		//復帰後にここに来る
-		GAMESYSTEM_CallFieldProc( evtWork->gameSys_ );
-		evtWork->subSeq_++;
-		break;
-	case 5:
-		//フィールドマップを開始待ち
-		if(GAMESYSTEM_IsProcExists( evtWork->gameSys_ ) == TRUE )
-		{
-			//この時点ではまだフィールドの初期化は完全ではない
-			if( FIELDMAP_IsReady( evtWork->fieldWork_ ) == TRUE )
-			{
-				GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
-											 16 ,0 ,ARI_FADE_SPD );
-				evtWork->subSeq_++;
-			}
-		}
-		break;
-	case 6:
-		if( GFL_FADE_CheckFade() == FALSE )
-		{
-			FIELDMAP_ForceUpdate( evtWork->fieldWork_ );
 			evtWork->subSeq_++;
 			return TRUE;
 		}
-
 		break;
 	}
 	return FALSE;
@@ -723,19 +694,11 @@ static	const BOOL	FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 static void FIELD_COMM_EVENT_InitUserData_TrainerCard( FIELD_COMM_MAIN *commSys )
 {
 	STRBUF *workStr;
-	FIELD_COMM_USERDATA_TRAINERCARD *cardData;
+	TR_CARD_DATA *cardData;
 	FIELD_COMM_DATA_CreateUserData( FCUT_TRAINERCARD );
 	cardData = FIELD_COMM_DATA_GetSelfUserData( FCUT_TRAINERCARD );
 	
-	workStr = GFL_STR_CreateBuffer( 128 , FIELD_COMM_MAIN_GetHeapID( commSys ) );
-
-	TRAINER_CARD_GetCardString( workStr , CMI_ID_USER , NULL );
-	GFL_STR_GetStringCode( workStr , cardData->id_ , 128 );
-	GFL_STR_ClearBuffer( workStr );
-	
-	TRAINER_CARD_GetCardString( workStr , CMI_NAME_USER , NULL );
-	GFL_STR_GetStringCode( workStr , cardData->name_ , 128 );
-	GFL_STR_DeleteBuffer( workStr );
+	TRAINERCARD_GetSelfData( cardData , TRUE );
 }
 static void FIELD_COMM_EVENT_InitUserData_Battle( FIELD_COMM_MAIN *commSys )
 {

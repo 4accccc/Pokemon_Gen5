@@ -63,17 +63,13 @@ static void InitWork( MYSIGN_WORK *wk );
 static void FreeWork( MYSIGN_WORK *wk );
 static void BgExit(void);
 static void BgGraphicSet( MYSIGN_WORK * wk );
-static void char_pltt_manager_init(void);
 static void InitCellActor(MYSIGN_WORK *wk);
 static void SetCellActor(MYSIGN_WORK *wk);
 static void BmpWinInit(MYSIGN_WORK *wk );
-static void BmpTouchYesnoWin_End( GFL_BMPWIN  *yeswin, GFL_BMPWIN  *nowin );
 static void BmpWinDelete( MYSIGN_WORK *wk );
 static void ControlCursor(MYSIGN_WORK *wk);
 static void CursorAppearUpDate(MYSIGN_WORK *wk, int arrow);
-static void SetCursor_Pos( GFL_CLWK *act, int x, int y );
 static void NormalTouchFunc(MYSIGN_WORK *wk);
-static int  EndTouchFunc( GFL_BMPWIN *TalkWin, GFL_BMPWIN *Yes, GFL_BMPWIN *No );
 static int Oekaki_MainNormal( MYSIGN_WORK *wk, int seq );
 static void EndSequenceCommonFunc( MYSIGN_WORK *wk );
 static int Oekaki_EndSelectPutString( MYSIGN_WORK *wk, int seq );
@@ -94,7 +90,6 @@ static int EndMessageWait( MYSIGN_WORK *wk );
 static int Oekaki_LogoutChildMes( MYSIGN_WORK *wk, int seq );
 static int Oekaki_LogoutChildClose( MYSIGN_WORK *wk, int seq );
 static int Oekaki_LogoutChildMesWait( MYSIGN_WORK *wk, int seq );
-static void PalButtonAppearChange( GFL_CLWK *act, int no);
 static void EndButtonAppearChange( GFL_CLWK *act[], BOOL flag );
 static int Oekaki_ReWriteSelect( MYSIGN_WORK *wk, int seq );
 static void TouchYesNoStart( TOUCH_SW_SYS* touch_sub_window_sys );
@@ -215,9 +210,6 @@ GFL_PROC_RESULT MySignProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 
 		// ワーク初期化
 		InitWork( wk );
-
-		// OBJキャラ、パレットマネージャー初期化
-		char_pltt_manager_init();
 
 		// CellActorシステム初期化
 		InitCellActor(wk);
@@ -351,7 +343,6 @@ GFL_PROC_RESULT MySignProc_End( GFL_PROC * proc, int * seq , void *pwk, void *my
 	//OAMレンダラー破棄
 	REND_OAM_Delete();
 */
-	//FIXME リソース開放処理
 	
 	// セルアクターセット破棄
 	GFL_CLACT_UNIT_Delete(wk->cellUnit);
@@ -467,19 +458,6 @@ static void BgInit( void )
 //		GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
 		GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
 	}
-
-#if 0
-	// 背景 (CHAR)
-	{	
-		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-			3, 0, 0, FALSE
-		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
-		GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
-	}
-#endif
 
 	// サブ画面テキスト面
 	{	
@@ -653,41 +631,6 @@ static void BgGraphicSet( MYSIGN_WORK * wk )
 	BmpWinFrame_GraphicSet(
 				GFL_BG_FRAME0_M, 1+TALK_WIN_CGX_SIZ, 11, 0, HEAPID_OEKAKI );
 
-}
-
-
-//** CharManager PlttManager用 **//
-#define OEKAKI_CHAR_CONT_NUM				(20)
-#define OEKAKI_CHAR_VRAMTRANS_MAIN_SIZE		(2048)
-#define OEKAKI_CHAR_VRAMTRANS_SUB_SIZE		(2048)
-#define OEKAKI_PLTT_CONT_NUM				(20)
-
-//-------------------------------------
-//
-//	キャラクタマネージャー
-//	パレットマネージャーの初期化
-//
-//=====================================
-static void char_pltt_manager_init(void)
-{
-#if 0
-	// キャラクタマネージャー初期化
-	{
-		CHAR_MANAGER_MAKE cm = {
-			OEKAKI_CHAR_CONT_NUM,
-			OEKAKI_CHAR_VRAMTRANS_MAIN_SIZE,
-			OEKAKI_CHAR_VRAMTRANS_SUB_SIZE,
-			HEAPID_OEKAKI
-		};
-		InitCharManager(&cm);
-	}
-	// パレットマネージャー初期化
-	InitPlttManager(OEKAKI_PLTT_CONT_NUM, HEAPID_OEKAKI);
-
-	// 読み込み開始位置を初期化
-	CharLoadStartAll();
-	PlttLoadStartAll();
-#endif
 }
 
 
@@ -1002,57 +945,6 @@ static void BmpWinInit( MYSIGN_WORK *wk )
 #define YESNO_CHARA_W		( 8 )
 #define YESNO_CHARA_H		( 4 )
 
-#if 0
-///ビットマップリスト用データ構造体
-typedef struct{
-	u8	frm_num;	///<ウインドウ使用フレーム
-	u8	pos_x;		///<ウインドウ領域の左上のX座標（キャラ単位で指定）
-	u8	pos_y;		///<ウインドウ領域の左上のY座標（キャラ単位で指定）
-	u8	siz_x;		///<ウインドウ領域のXサイズ（キャラ単位で指定）
-	u8	siz_y;		///<ウインドウ領域のYサイズ（キャラ単位で指定）
-	u8	palnum;		///<ウインドウ領域のパレットナンバー
-	u16	chrnum;		///<ウインドウキャラ領域の開始キャラクタナンバー
-}MYSIGN_BMPWIN_DAT;
-
-static const MYSIGN_BMPWIN_DAT TouchYesNoBmpDat[2]={
-	{
-		GFL_BG_FRAME0_M, YESNO_WINDOW_X, YESNO_WINDOW_Y1,
-		YESNO_CHARA_W, YESNO_CHARA_H, 13, YESNO_CHARA_OFFSET
-	},
-	{
-		GFL_BG_FRAME0_M, YESNO_WINDOW_X, YESNO_WINDOW_Y2,
-		YESNO_CHARA_W, YESNO_CHARA_H, 13, YESNO_CHARA_OFFSET+YESNO_CHARA_W*YESNO_CHARA_H
-		
-	}
-};
-
-
-//------------------------------------------------------------------
-/**
- * $brief   下画面（タッチ用）はい・いいえウインドウ削除
- *
- * @param   yeswin		
- * @param   nowin		
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void BmpTouchYesnoWin_End( GFL_BMPWIN  *yeswin, GFL_BMPWIN  *nowin )
-{
-	// BMPWIN表示OFF
-	GFL_BG_BmpWinOff( yeswin );
-	GFL_BG_BmpWinOff( nowin  );
-
-	// Window枠消去
-	BmpMenuWinClear( yeswin, WINDOW_TRANS_ON );
-	BmpMenuWinClear( nowin,  WINDOW_TRANS_ON );
-
-	// BMPWIN解放
-	GFL_BG_BmpWinFree( yeswin,1 );
-	GFL_BG_BmpWinFree( nowin,1 );
-}
-
-#endif
 
 //------------------------------------------------------------------
 /**
@@ -1124,33 +1016,6 @@ static void CursorAppearUpDate(MYSIGN_WORK *wk, int arrow)
 
 
 }
-
-
-#if 0
-
-//------------------------------------------------------------------
-/**
- * $brief   カーソル位置を変更する
- *
- * @param   act		アクターのポインタ
- * @param   x		
- * @param   y		
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void SetCursor_Pos( GFL_CLWK act, int x, int y )
-{
-	VecFx32 mat;
-
-	mat.x = FX32_CONST( x + 8 );
-	mat.y = FX32_CONST( y - 10 );
-	mat.z = 0;
-	CLACT_SetMatrix( act, &mat);
-
-}
-
-#endif
 
 #define PAL_BUTTON_X	(  0  )
 #define PAL_BUTTON_Y	( 150 )
@@ -1224,8 +1089,6 @@ static void NormalTouchFunc(MYSIGN_WORK *wk)
 			}
 		}else{
 			// 終了ボタンじゃない場合は、色変更
-//			wk->brush_color = button;
-//			PalButtonAppearChange( wk->ButtonActWork, button);
 		}
 	}
 
@@ -1236,7 +1099,6 @@ static void NormalTouchFunc(MYSIGN_WORK *wk)
 	if( touch != GFL_UI_TP_HIT_NONE )
 	{
 		// 自分のカーソルはタッチパネルの座標を反映させる
-//		SetCursor_Pos( wk->MainActWork[0], sys.tp_x, sys.tp_y );
 		BrushCanvas(wk);
 	}
 
@@ -1261,32 +1123,6 @@ static void NormalTouchFunc(MYSIGN_WORK *wk)
 
 }
 
-#if 0
-//------------------------------------------------------------------
-/**
- * $brief   パレットとやめるボタンのセルアクター制御
- *
- * @param   act		アクターのポインタ
- * @param   button		
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void PalButtonAppearChange( GFL_CLWK *act, int no )
-{
-	int i;
-	
-	for(i=0;i<BUTTON_NUM;i++){
-		// 押されたボタンはへこむ。ほかのボタンは戻る
-		if(i==no){
-			CLACT_AnmChg( act[i], pal_button_oam_table[i][2]+1 );
-		}else{
-			CLACT_AnmChg( act[i], pal_button_oam_table[i][2] );
-		}
-	}
-}
-#endif
-
 //------------------------------------------------------------------
 /**
  * $brief   やめるボタンのオン・オフ
@@ -1305,38 +1141,6 @@ static void EndButtonAppearChange( GFL_CLWK *act[], BOOL flag )
 		GFL_CLACT_WK_SetAnmSeq( act[0], pal_button_oam_table[0][2] );
 	}
 }
-
-#if 0
-//------------------------------------------------------------------
-/**
- * $brief   おえかき終了のはい・いいえウインドウタッチ処理
- *
- * @param   wk		
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static int  EndTouchFunc( GFL_BMPWIN *TalkWin, GFL_BMPWIN *Yes, GFL_BMPWIN *No )
-{
-	int button;
-	int result = 0;
-	
-	// はい・いいえテスト
-	button=GF_TP_RectHitTrg( end_button_touchtbl );
-	if( button != RECT_HIT_NONE ){
-			// ウインドウクリア
-		BmpTalkWinClear( TalkWin, WINDOW_TRANS_ON );
-//		BmpTouchYesnoWin_End( Yes, No   );
-		if(button==0){
-			result = 1;
-		}else{
-			result = 2;
-		}
-	}
-	
-	return result;
-}
-#endif
 
 //------------------------------------------------------------------
 /**
@@ -1571,7 +1375,6 @@ static int Oekaki_ReWriteWait( MYSIGN_WORK *wk, int seq )
 //---------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------
-//11520
 //---------------------------------------------------------
 // ブラシパターン
 //---------------------------------------------------------
@@ -1655,12 +1458,8 @@ static void _BmpWinPrint_Rap(
 		src_dy -= diff;
 		win_dy -= diff;
 	}
-	//TODO ok?
-//	ARI_TPrintf("[%d][%d][%d][%d][%d][%d][%d][%d]\n",win_x, win_y, win_dx, win_dy, src_x, src_y, src_dx, src_dy);
-//	ARI_TPrintf("!");
+
 	GFL_BMP_Print( srcBmp, GFL_BMPWIN_GetBmp(win), src_x, src_y, win_x, win_y, win_dx, win_dy, 0);
-//	GFL_BG_WriteScreenExpand( GFL_BMPWIN_GetFrame(win) , src_x, src_y, src_dx, src_dy, src ,win_x, win_y, win_dx, win_dy );
-//	GFL_BG_BmpWinPrint( win, src,	src_x, src_y, src_dx, src_dy, win_x, win_y, win_dx, win_dy );
 
 	GFL_BMP_Delete( srcBmp );
 }

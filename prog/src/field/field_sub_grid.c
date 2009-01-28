@@ -1305,7 +1305,7 @@ static void FldWorkPlayerWorkDirSet(
 {
 	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
-	u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xb000 };
+	u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xc000 };
 	GF_ASSERT( dir < DIR_MAX4 );
 	PLAYERWORK_setDirection( player, tbl[dir] );
 }
@@ -1316,7 +1316,7 @@ static void Jiki_UpdatePlayerWork( FIELD_MAIN_WORK *fieldWork )
 	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 	FLDMMDL *fmmdl = Player_GetFldMMdl( fieldWork->pcActCont );
-	u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xb000 };
+	u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xc000 };
 	int dir = FLDMMDL_DirDispGet( fmmdl );
 	
 	FLDMMDL_VecPosGet( fmmdl, &pos );

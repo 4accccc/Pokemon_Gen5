@@ -228,8 +228,6 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 	WIPE_ResetWndMask(WIPE_DISP_MAIN);
 	WIPE_ResetWndMask(WIPE_DISP_SUB);
 
-	PRINTSYS_Init( GFL_HEAPID_APP );
-
 	GFL_UI_KEY_SetRepeatSpeed( 4, 8 );
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TR_CARD, 0x50000 );
 
@@ -256,7 +254,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 		int i;
 		u16 flag  = 1;
 		for(i=0;i<TR_BADGE_NUM_MAX;i++){
-			if(wk->TrCardData->gs_badge & flag){
+			if(wk->TrCardData->BadgeFlag & flag){
 				wk->badge[i] = 1;
 			}else{
 				wk->badge[i] = 0;
@@ -265,7 +263,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 		}
 	}
 	//FullOpen!
-#if DEB_ARI
+#if DEB_ARI&0
 	{
 		u8 i;
 		wk->isClear = TRUE;
@@ -953,11 +951,11 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 		TRC_BG_BADGE_BACK, 0, 0, 0, wk->heapId );
 
 	//殿堂入りマーク表示
-	if(!wk->isClear && wk->TrCardData->gs_badge >= 0x00FF){
+	if(!wk->isClear && wk->TrCardData->BadgeFlag >= 0x00FF){
 		GFL_BG_WriteScreenExpand(TRC_BG_BADGE_CASE,
 			0,7,7,9,wk->pSBCase->rawData,0,0,
 			wk->pSBCase->screenWidth/8,wk->pSBCase->screenHeight/8);
-	}else if(wk->TrCardData->gs_badge == 0xFFFF){
+	}else if(wk->TrCardData->BadgeFlag == 0xFFFF){
 		GFL_BG_WriteScreenExpand(TRC_BG_BADGE_CASE,
 			0,14,7,9,wk->pSBCase->rawData,7,0,
 			wk->pSBCase->screenWidth/8,wk->pSBCase->screenHeight/8);

@@ -119,8 +119,6 @@ extern GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, 
 extern GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 extern GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 
-extern TR_CARD_DATA* TRAINERCARD_CreateSelfData( const HEAPID heapId );
-
 #endif //_TRCARD_SYS_H_
 
 

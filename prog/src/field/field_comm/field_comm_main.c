@@ -147,8 +147,8 @@ static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork ,
 	//自キャラ座標を更新
 	zoneID = PLAYERWORK_getZoneID( plWork );
 	GetPlayerActTrans( pcActor , &pos );
-	//GetPlayerActDirection( pcActor , &dir );
-	dir = FieldMainGrid_GetPlayerDir( fieldWork );
+	GetPlayerActDirection( pcActor , &dir );
+	//dir = FieldMainGrid_GetPlayerDir( fieldWork );
 	FIELD_COMM_DATA_SetSelfData_Pos( &zoneID , &pos , &dir );
 	FIELD_COMM_FUNC_Send_SelfData( commSys->commFunc_ );
 }
@@ -228,7 +228,7 @@ static	const u8 FIELD_COMM_MAIN_CheckTalkTarget( FIELD_COMM_MAIN *commSys )
 {
 	u8 i;
 	const PLAYER_WORK *plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork( FCD_SELF_INDEX );
-	const u8 selfDir = plWork->direction;
+	const u16 selfDir = plWork->direction;
 	int selfX,selfZ;
 	FIELD_COMM_DATA_GetGridPos_AfterMove( FCD_SELF_INDEX,&selfX,&selfZ );
 	selfX += FCM_dirOfsArr[selfDir][0];
@@ -289,7 +289,7 @@ const BOOL	FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys )
 void	FIELD_COMM_MAIN_StartTalk( FIELD_COMM_MAIN *commSys )
 {
 	const PLAYER_WORK *plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork( FCD_SELF_INDEX );
-	const u8 selfDir = plWork->direction;
+	const u16 selfDir = plWork->direction;
 	int selfX,selfZ;
 	u16	sendValue;
 	FIELD_COMM_DATA_GetGridPos_AfterMove( FCD_SELF_INDEX,&selfX,&selfZ );

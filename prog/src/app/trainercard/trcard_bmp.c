@@ -790,6 +790,7 @@ void TRCBmp_WriteBackButton(TR_CARD_WORK* wk,const u8 on_f)
 	}
 	GFL_BMPWIN_MakeScreen(wk->win[TRC_BMPWIN_BACK]);
 	GFL_BMPWIN_TransVramCharacter(wk->win[TRC_BMPWIN_BACK]);
+	GFL_BG_LoadScreenV_Req(MSG_BG);
 }
 
 //--------------------------------------------------------------------------------------------

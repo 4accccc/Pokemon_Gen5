@@ -11,6 +11,7 @@
 
 #include "gamesystem/playerwork.h"
 #include "test/ariizumi/ari_debug.h"
+#include "app/trainer_card.h"
 #include "field_comm_main.h"
 #include "field_comm_data.h"
 
@@ -162,10 +163,15 @@ const u8 FIELD_COMM_DATA_GetFieldCommMode(void)
 //--------------------------------------------------------------
 void	FIELD_COMM_DATA_SetSelfData_Pos( const ZONEID *zoneID , const VecFx32 *pos , const u16 *dir )
 {
+	u16 workDir;
+	const u16 tempDir = *dir;
+	static const u8 changeDirArr[4] = { COMMDIR_UP , COMMDIR_LEFT , COMMDIR_DOWN , COMMDIR_RIGHT };
 	GF_ASSERT( commData != NULL );
 	PLAYERWORK_setZoneID( &commData->selfData_.plWork_ , *zoneID );
 	PLAYERWORK_setPosition( &commData->selfData_.plWork_ , pos );
-	PLAYERWORK_setDirection( &commData->selfData_.plWork_ , *dir );
+	// 方向が0xFFFFで360度になったため、インデックスと変換させる
+	workDir = changeDirArr[(*dir)>>14];	
+	PLAYERWORK_setDirection( &commData->selfData_.plWork_ , workDir );
 	commData->selfData_.isExist_ = TRUE;
 	commData->selfData_.isValid_ = TRUE;	
 }
@@ -348,7 +354,7 @@ const u32 FIELD_COMM_DATA_GetUserDataSize( const F_COMM_USERDATA_TYPE type )
 {
 	static const u32 UserDataSizeTable[FCUT_MAX] =
 	{
-		sizeof(FIELD_COMM_USERDATA_TRAINERCARD),
+		sizeof(TR_CARD_DATA),
 		0x400,
 	};
 	return UserDataSizeTable[type];

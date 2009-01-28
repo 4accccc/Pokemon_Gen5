@@ -11,6 +11,7 @@
 
 #include "savedata/config.h"
 #include "savedata/trainercard_data.h"
+#include "savedata/mystatus.h"
 
 #include "app/mysign.h"
 #include "app/trainer_card.h"
@@ -31,10 +32,17 @@ typedef struct _TR_CARD_SYS{
 //================================================================
 ///オーバーレイプロセス
 GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
+GFL_PROC_RESULT TrCardSysProc_InitComm( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 const GFL_PROC_DATA TrCardSysProcData = {
 	TrCardSysProc_Init,
+	TrCardSysProc_Main,
+	TrCardSysProc_End,
+};
+//初期化が違う通信用Procデータ
+const GFL_PROC_DATA TrCardSysCommProcData = {
+	TrCardSysProc_InitComm,
 	TrCardSysProc_Main,
 	TrCardSysProc_End,
 };
@@ -83,7 +91,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
 //	TRCARD_CALL_PARAM* pp = (TRCARD_CALL_PARAM*)pwk;
 	
 	//ヒープ作成
-	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_TRCARD_SYS,0x20000);
+	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_TRCARD_SYS,0x18000);
 	wk = GFL_PROC_AllocWork(proc,sizeof(TR_CARD_SYS),HEAPID_TRCARD_SYS);
 	MI_CpuClear8(wk,sizeof(TR_CARD_SYS));
 
@@ -91,13 +99,34 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
 	wk->heapId = HEAPID_TRCARD_SYS;
 
 	//データテンポラリ作成
-//	wk->tcp = pp;
-//	wk->pTrCardData = &pp->TrCardData;
 	wk->tcp = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ));
-	wk->tcp->TrCardData = TRAINERCARD_CreateSelfData( wk->heapId );
-	
+	wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
+	TRAINERCARD_GetSelfData( wk->tcp->TrCardData , FALSE);
+
 	return GFL_PROC_RES_FINISH;
 }
+//通信用初期化
+GFL_PROC_RESULT TrCardSysProc_InitComm( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
+{
+	TR_CARD_SYS* wk = NULL;
+//	TRCARD_CALL_PARAM* pp = (TRCARD_CALL_PARAM*)pwk;
+	
+	//ヒープ作成
+	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_TRCARD_SYS,0x18000);
+	wk = GFL_PROC_AllocWork(proc,sizeof(TR_CARD_SYS),HEAPID_TRCARD_SYS);
+	MI_CpuClear8(wk,sizeof(TR_CARD_SYS));
+
+	//ヒープID保存
+	wk->heapId = HEAPID_TRCARD_SYS;
+
+	//データテンポラリ作成
+	wk->tcp = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ));
+	wk->tcp->TrCardData = pwk;
+
+	return GFL_PROC_RES_FINISH;
+}
+
+
 
 /**
  *	@brief	トレーナーカード　システムメイン
@@ -217,22 +246,58 @@ static int sub_SignWait(TR_CARD_SYS* wk)
 	return CARD_INIT;
 }
 
-TR_CARD_DATA* TRAINERCARD_CreateSelfData( const HEAPID heapId )
+void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , const BOOL isSendData )
 {
-	TR_CARD_DATA *cardData;
+	u8 i,flag;
 	TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(SaveControl_GetPointer());
+	MYSTATUS *mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+
+	//名前
+	if( MyStatus_CheckNameClear( mystatus ) == FALSE )
+	{
+		const STRCODE *baseName = MyStatus_GetMyName( mystatus );
+		GFL_STD_MemCopy16( baseName , cardData->TrainerName , sizeof(STRCODE)*(PERSON_NAME_SIZE+EOM_SIZE) );
+	}
+	else
+	{
+		//TODO 念のため名前が入ってないときに落ちないようにしておく
+		cardData->TrainerName[0] = L'N';
+		cardData->TrainerName[1] = L'o';
+		cardData->TrainerName[2] = L'N';
+		cardData->TrainerName[3] = L'a';
+		cardData->TrainerName[4] = L'm';
+		cardData->TrainerName[5] = L'e';
+		cardData->TrainerName[6] = GFL_STR_GetEOMCode();
+	}
 	
-	cardData = GFL_HEAP_AllocClearMemory( heapId , sizeof( TR_CARD_DATA ) );
-	cardData->TrainerName[0] = L'て';
-	cardData->TrainerName[1] = L'す';
-	cardData->TrainerName[2] = L'と';
-	cardData->TrainerName[3] = GFL_STR_GetEOMCode();
+	cardData->TrSex = MyStatus_GetMySex( mystatus );
+	cardData->TrainerID = MyStatus_GetID( mystatus );
+	cardData->Money = MyStatus_GetGold( mystatus );
+	cardData->BadgeFlag = 0;
+	//FIXME 正しいバッヂ個数の定義に(8個)
+	flag = 1;
+	for( i=0; i<8; i++ )
+	{
+		if( MyStatus_GetBadgeFlag( mystatus , i ) == TRUE )
+		{
+			cardData->BadgeFlag &= flag;
+		}
+		flag <<= 1;
+	}
+	//通信用かで分岐
+	if( isSendData == TRUE )
+	{
+		cardData->UnionTrNo = MyStatus_GetTrainerView( mystatus );
+		cardData->TimeUpdate = FALSE;
+	}
+	else
+	{
+		cardData->UnionTrNo = UNION_TR_NONE;
+		cardData->TimeUpdate = TRUE;
+	}
+	
 	cardData->PlayTime = SaveData_GetPlayTime( SaveControl_GetPointer() );
 	cardData->PokeBookFlg = TRUE;
-	cardData->PokeBookFlg = TRUE;
-	cardData->gs_badge	= 0xFFFF;
-	cardData->TimeUpdate = TRUE;
-	cardData->UnionTrNo = UNION_TR_NONE;
 
 	//サインデータの取得
 	//サインデータの有効/無効フラグを取得(金銀ローカルでのみ有効)
@@ -240,6 +305,16 @@ TR_CARD_DATA* TRAINERCARD_CreateSelfData( const HEAPID heapId )
 	//サインデータをセーブデータからコピー
 	MI_CpuCopy8(TRCSave_GetSignDataPtr(trc_ptr),
 			cardData->SignRawData, SIGN_SIZE_X*SIGN_SIZE_Y*8 );
-	return cardData;
 	
+}
+//自分のカードを見るときのProc呼び出し
+void TRAINERCASR_CallProcSelfData( void )
+{
+	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TrCardSysProcData, NULL);
+}
+
+//通信のカードを見るときのProc呼び出し
+void TRAINERCASR_CallProcCommData( void* pCardData )
+{
+	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TrCardSysCommProcData, pCardData);
 }
