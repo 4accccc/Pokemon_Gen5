@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2008-12-04T13:02:04"/>
+	<create user="kagaya" host="W00143" date="2009-01-28T21:06:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -112,7 +112,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -149,8 +149,8 @@
 	</row>
 
 	<row id="DEBUG_FIELD_STR03">
-		<language name="JPN" font=" 2:lcfont12" width="80">スケール切替</language>
-		<language name="JPN_KANJI" width="80">スケール切替</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">スケールきりかえ</language>
+		<language name="JPN_KANJI" width="80">スケール切かえ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR04">
@@ -265,13 +265,38 @@
 	</row>
 
 	<row id="DEBUG_FIELD_STR05">
-		<language name="JPN" font=" 2:lcfont12" width="80">マップ遷移</language>
-		<language name="JPN_KANJI" width="80">マップ遷移</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">マップせんい</language>
+		<language name="JPN_KANJI" width="80">マップせん移</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR06">
 		<language name="JPN" font=" 2:lcfont12" width="80">四季ジャンプ</language>
 		<language name="JPN_KANJI" width="80">四季ジャンプ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR07">
+		<language name="JPN" font=" 2:lcfont12" width="80">カメラサンプル</language>
+		<language name="JPN_KANJI" width="80">カメラサンプル</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR08">
+		<language name="JPN" font=" 2:lcfont12" width="80">リセット</language>
+		<language name="JPN_KANJI" width="80">リセット</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR09">
+		<language name="JPN" font=" 2:lcfont12" width="80">すぎもり</language>
+		<language name="JPN_KANJI" width="80">すぎもり</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR10">
+		<language name="JPN" font=" 2:lcfont12" width="80">ますだ０</language>
+		<language name="JPN_KANJI" width="80">ますだ０</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR11">
+		<language name="JPN" font=" 2:lcfont12" width="80">ますだ１</language>
+		<language name="JPN_KANJI" width="80">ますだ１</language>
 	</row>
 
 	<flowchart-group-list>
