@@ -26,7 +26,6 @@ SUBDIRS	=	wmi \
 			wifi_lobby_minigame\
 			mystery\
 			startmenu \
-			soundtest \
 			palace \
 			wificlub \
 			wifi_union_obj \
