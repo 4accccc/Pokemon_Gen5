@@ -14,8 +14,8 @@ USERS	=	ohno
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR	= $(PROJECT_ARCDIR)../filetree
-TARGETFILENAME  = sound_data.sdat
+TARGETDIR	= ../message/src
+TARGETFILENAME  = snd_test_name.gmm
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
@@ -30,9 +30,8 @@ do-build:	$(TARGETDIR)/$(TARGETFILENAME)
 
 
 $(TARGETDIR)/$(TARGETFILENAME):	$(TARGETFILENAME)
-	$(COPY)	$(TARGETFILENAME) $(TARGETDIR)
+	ruby gmm_make.rb ../message/template.gmm wb_sound_data.sadl $(TARGETFILENAME)
 	$(COPY) $(TARGETFILENAME) $(TARGETDIR)
-
 
 
 #------------------------------------------------------------------------------

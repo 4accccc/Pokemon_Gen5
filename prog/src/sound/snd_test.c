@@ -519,7 +519,6 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_BGM );					//BGMナンバー
-//			GF_BGL_BmpWinOn( &wk->bmpwin );
             GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
             break;
 		case SND_TEST_TYPE_SE:
@@ -529,17 +528,15 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_SE );						//SEナンバー
-//			GF_BGL_BmpWinOn( &wk->bmpwin );
             GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
             break;
 		case SND_TEST_TYPE_PV:
 			wk->pv+=spd;
-			if( wk->pv >= POKEMON_VOICE_NUMMAX ){   /// @@OO本来はポケモンボイス数を得るラベルが必要
+			if( wk->pv > POKEMON_VOICE_NUMMAX ){   /// @@OO本来はポケモンボイス数を得るラベルが必要
 				wk->pv = SND_TEST_PV_START_NO;
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_PV );						//PVナンバー
-//			GF_BGL_BmpWinOn( &wk->bmpwin );
             GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
             break;
 		};
@@ -563,7 +560,6 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_BGM );					//BGMナンバー
-//			GF_BGL_BmpWinOn( &wk->bmpwin );
             GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
             break;
 		case SND_TEST_TYPE_SE:
@@ -573,7 +569,6 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			}
 
 			MsgRewrite( wk, SND_TEST_TYPE_SE );						//SEナンバー
-//			GF_BGL_BmpWinOn( &wk->bmpwin );
             GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
 			break;
 		case SND_TEST_TYPE_PV:
@@ -581,9 +576,7 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 			if( wk->pv < SND_TEST_PV_START_NO ){
 				wk->pv = (POKEMON_VOICE_NUMMAX);
 			}
-
 			MsgRewrite( wk, SND_TEST_TYPE_PV );						//PVナンバー
-//			GF_BGL_BmpWinOn( &wk->bmpwin );
             GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
             break;
 		};
@@ -591,7 +584,8 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 
 	//停止
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		SndTestStop(wk);
+		wk->old_bgm = wk->bgm;  //今の曲を停止
+        SndTestStop(wk);
 	}
 
 	//再生(停止させてから再生)
@@ -604,14 +598,12 @@ static void SndTestSeqKeyCheck( SND_TEST_WORK* wk )
 		//サウンドハンドルが関連付けられた後に操作する！
 		Snd_PlayerWriteVariable( wk->var );
 		SndTestNumMsgSet( wk, wk->var, ST_TYPE_X+168, ST_BGM_MSG_Y+16 );
-//		GF_BGL_BmpWinOn( &wk->bmpwin );
         GFL_BMPWIN_TransVramCharacter( wk->bmpWin );
 #endif
 
 	}
 
 	//初期化
-	//if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ){
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
 		Snd_Stop();						//全て停止
 		SndTestInit( wk );				//ワーク、データなどクリア
