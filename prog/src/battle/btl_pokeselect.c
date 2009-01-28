@@ -14,36 +14,6 @@
 #include "btl_pokeselect.h"
 
 
-
-//------------------------------------------------------
-/**
- *	ポケモン選択画面用パラメータ
- */
-//------------------------------------------------------
-typedef struct {
-
-	const BTL_PARTY*	party;				///< パーティデータ
-	u8								numSelect;		///< 選択するポケモン数
-	u8								aliveOnly;		///< TRUEだと生きているポケモンしか選べない
-
-	u8								prohibit[ BTL_PARTY_MEMBER_MAX ];	///< 選択不可理由
-
-}BTL_POKESELECT_PARAM;
-
-//------------------------------------------------------
-/**
- *	結果格納用構造体
- */
-//------------------------------------------------------
-typedef struct {
-
-	u8			selIdx[ BTL_POSIDX_MAX ];	///< 選択したポケモンの並び順（現在の並び順で先頭を0と数える）
-	u8			cnt;											///< 選択した数
-
-}BTL_POKESELECT_RESULT;
-
-
-
 //=============================================================================================
 /**
  * パラメータ構造体を初期化
@@ -93,7 +63,7 @@ void BTL_POKESELECT_PARAM_SetProhibitFighting( BTL_POKESELECT_PARAM* param, u8 n
  *
  */
 //=============================================================================================
-void BTL_POKESELECT_PARAM_SetProhibit( BTL_POKESELECT_PARAM* param, BtlPokeSelReason reason, u8 idx )
+void BTL_POKESELECT_PARAM_SetProhibit( BTL_POKESELECT_PARAM* param, BtlPokeselReason reason, u8 idx )
 {
 	GF_ASSERT(idx<NELEMS(param->prohibit));
 	param->prohibit[ idx ] = reason;
@@ -163,6 +133,44 @@ BOOL BTL_POKESELECT_IsDone( const BTL_POKESELECT_RESULT* result )
 	return result->cnt == result->max;
 }
 
+//=============================================================================================
+/**
+ * 選んだ数を取得
+ *
+ * @param   result		
+ *
+ * @retval  u8		
+ */
+//=============================================================================================
+u8 BTL_POKESELECT_RESULT_GetCount( const BTL_POKESELECT_RESULT* result )
+{
+	return result->cnt;
+}
+
+//=============================================================================================
+/**
+ * 最後に選んだポケモンの並び順を返す
+ *
+ * @param   result		
+ *
+ * @retval  u8		
+ */
+//=============================================================================================
+u8 BTL_POKESELECT_RESULT_GetLast( const BTL_POKESELECT_RESULT* result )
+{
+	if( result->cnt > 0 )
+	{
+		return result->selIdx[ result->cnt - 1 ];
+	}
+	else
+	{
+		GF_ASSERT(0);
+		return 0;
+	}
+}
+
+
+
 
 //=============================================================================================
 /**
@@ -180,7 +188,7 @@ BtlPokeselReason BTL_POKESELECT_CheckProhibit( const BTL_POKESELECT_PARAM* param
 	// 生きてるポケしか選べない場合のチェック
 	if( param->aliveOnly )
 	{
-		const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst(param, idx);
+		const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( param->party, idx );
 
 		if( BTL_POKEPARAM_IsDead(bpp) )
 		{
@@ -208,17 +216,3 @@ BtlPokeselReason BTL_POKESELECT_CheckProhibit( const BTL_POKESELECT_PARAM* param
 
 	return BTL_POKESEL_CANT_NONE;
 }
-				break;
-			}
-		}
-		if( i != res->cnt )
-		{
-			BTL_STR_MakeWarnStr( wk->strbuf, bpp, BTLSTR_UI_WARN_SelectedPoke );
-			(*seq) = SEQ_WARNING_START;
-			break;
-		}
-	}
-
-}
-
-

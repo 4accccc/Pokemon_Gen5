@@ -72,6 +72,15 @@ static void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber, u8 tar
 	p->item.number = itemNumber;
 	p->item.targetIdx = targetIdx;
 }
+// 入れ替えポケモン選択アクション（選択対象は未定）
+static inline void BTL_ACTION_SetChangeBegin( BTL_ACTION_PARAM* p )
+{
+	p->change.cmd = BTL_ACTION_CHANGE;
+	p->change.posIdx = 0;
+	p->change.memberIdx = 0;
+	p->change.depleteFlag = 0;
+}
+
 // 入れ替えポケモン選択アクション（通常）
 static void BTL_ACTION_SetChangeParam( BTL_ACTION_PARAM* p, u8 posIdx, u8 memberIdx )
 {
@@ -96,6 +105,11 @@ static void BTL_ACTION_SetEscapeParam( BTL_ACTION_PARAM* p )
 static void BTL_ACTION_SetNULL( BTL_ACTION_PARAM* p )
 {
 	p->gen.cmd = BTL_ACTION_NULL;
+}
+
+static inline BtlAction BTL_ACTION_GetAction( const BTL_ACTION_PARAM* p )
+{
+	return p->gen.cmd;
 }
 
 #endif

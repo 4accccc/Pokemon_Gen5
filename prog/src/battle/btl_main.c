@@ -822,6 +822,23 @@ const BTL_PARTY* BTL_MAIN_GetPartyDataConst( const BTL_MAIN_MODULE* wk, u32 clie
 	return &wk->party[ clientID ];
 }
 
+//=============================================================================================
+/**
+ * 指定クライアントのパーティメンバーを入れ替え
+ *
+ * @param   wk				
+ * @param   clientID		
+ * @param   idx1		
+ * @param   idx2		
+ *
+ */
+//=============================================================================================
+void BTL_MAIN_CLIENTDATA_SwapPartyMembers( BTL_MAIN_MODULE* wk, u8 clientID, u8 idx1, u8 idx2 )
+{
+	BTL_PARTY* party = &wk->party[ clientID ];
+
+	BTL_PARTY_SwapMembers( party, idx1, idx2 );
+}
 
 //--------------------------------------------------------------------------
 /**
@@ -869,15 +886,7 @@ static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, Btl
 //=============================================================================================
 BTL_POKEPARAM* BTL_MAIN_GetFrontPokeData( BTL_MAIN_MODULE* wk, BtlPokePos pos )
 {
-	u8 clientID, posIdx;
-
-	btlPos_to_cliendID_and_posIdx( wk, pos, &clientID, &posIdx );
-
-	GF_ASSERT_MSG(wk->client[clientID], "btlPos=%d, clientID=%d", pos, clientID);
-
-	// @@@ このキャストは良くない…  この関数の呼び出し先はクライアントのダメージ計算ルーチンなので、
-	// それらの処理はmainか、あるいは別の下請けモジュールに任せるようにした方がいいかも。
-	return (BTL_POKEPARAM*)BTL_CLIENT_GetFrontPokeData( wk->client[clientID], posIdx );
+	return (BTL_POKEPARAM*)BTL_MAIN_GetFrontPokeDataConst(wk, pos);
 }
 
 //=============================================================================================
@@ -892,15 +901,29 @@ BTL_POKEPARAM* BTL_MAIN_GetFrontPokeData( BTL_MAIN_MODULE* wk, BtlPokePos pos )
 //=============================================================================================
 const BTL_POKEPARAM* BTL_MAIN_GetFrontPokeDataConst( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
 {
+	const BTL_PARTY* party;
 	u8 clientID, posIdx;
 
 	btlPos_to_cliendID_and_posIdx( wk, pos, &clientID, &posIdx );
 
-	GF_ASSERT_MSG(wk->client[clientID], "btlPos=%d, clientID=%d", pos, clientID);
+	party = &wk->party[ clientID ];
+	return BTL_PARTY_GetMemberDataConst( party, posIdx );
+}
 
-//	TAYA_Printf("[GetFrontPokeDataConst] BtlPos=%d -> clientID:%d, posIdx:%d\n", pos, clientID, posIdx);
-
-	return BTL_CLIENT_GetFrontPokeData( wk->client[clientID], posIdx );
+//=============================================================================================
+/**
+ * クライアントポケモンデータの取得 ( const )
+ *
+ * @param   wk		
+ * @param   clientID		
+ * @param   memberIdx		
+ *
+ * @retval  const BTL_POKEPARAM*		
+ */
+//=============================================================================================
+const BTL_POKEPARAM* BTL_MAIN_GetClientPokeData( const BTL_MAIN_MODULE* wk, u8 clientID, u8 memberIdx )
+{
+	return wk->pokeParam[ clientID * TEMOTI_POKEMAX + memberIdx ];
 }
 
 //=============================================================================================
@@ -1020,6 +1043,19 @@ const BTL_POKEPARAM* BTL_PARTY_GetMemberDataConst( const BTL_PARTY* party, u8 id
 {
 	return party->member[ idx ];
 }
+
+
+void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
+{
+	GF_ASSERT(idx1<party->memberCount);
+	GF_ASSERT(idx2<party->memberCount);
+	{
+		BTL_POKEPARAM* tmp = party->member[ idx1 ];
+		party->member[ idx1 ] = party->member[ idx2 ];
+		party->member[ idx2 ] = tmp;
+	}
+}
+
 
 const BTL_POKEPARAM* BTL_MAIN_GetPokeParam( const BTL_MAIN_MODULE* wk, u8 pokeID )
 {

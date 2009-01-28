@@ -74,6 +74,7 @@ struct _BTLV_SCD {
 
 	const BTL_POKEPARAM*	bpp;
 	BTL_ACTION_PARAM		selAction;
+	BTL_ACTION_PARAM*		destActionParam;
 
 	const BTL_POKESELECT_PARAM*		pokesel_param;
 	BTL_POKESELECT_RESULT*				pokesel_result;
@@ -185,7 +186,6 @@ static void spstack_push( BTLV_SCD* wk, BPFunc initFunc, BPFunc loopFunc )
 		BTL_UTIL_SetupProc( proc, wk, initFunc, loopFunc );
 	}
 }
-
 static BOOL spstack_call( BTLV_SCD* wk )
 {
 	if( wk->subProcStackPtr > 0 )
@@ -204,12 +204,14 @@ static BOOL spstack_call( BTLV_SCD* wk )
 		return TRUE;
 	}
 }
-
-void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp )
+//=============================================================================================
+//	アクション選択処理
+//=============================================================================================
+void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
 {
 	wk->bpp = bpp;
+	wk->destActionParam = dest;
 	spstack_push( wk, selectAction_init, selectAction_loop );
-//	BTL_UTIL_SetupProc( &wk->subProc, wk, selectAction_init, selectAction_loop );
 }
 
 BOOL BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
@@ -368,7 +370,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 			if( ( hit != GFL_UI_TP_HIT_NONE ) && ( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) - 1 ) )
 			{
 				// @@@ DBL 誰を狙うか選択する
-				BTL_ACTION_SetFightParam( &wk->selAction, hit, 0 );
+				BTL_ACTION_SetFightParam( wk->destActionParam, hit, 0 );
 				return TRUE;
 			}
 		}
@@ -376,24 +378,21 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 
 
 	case SEQ_SEL_POKEMON:
-		spstack_push( wk, selectPokemon_init, selectPokemon_loop );
-		(*seq)++;
-		break;
+//		spstack_push( wk, selectPokemon_init, selectPokemon_loop );
+		BTL_ACTION_SetChangeBegin( wk->destActionParam );
+		return TRUE;
+
 	case SEQ_SEL_POKEMON+1:
 		return TRUE;
 
 
 	case SEQ_SEL_ESCAPE:
-		BTL_ACTION_SetEscapeParam( &wk->selAction );
+		BTL_ACTION_SetEscapeParam( wk->destActionParam );
 		break;
 	}
 	return FALSE;
 }
 
-void BTLV_SCD_GetSelectAction( BTLV_SCD* wk, BTL_ACTION_PARAM* action )
-{
-	*action = wk->selAction;
-}
 
 
 //=============================================================================================
@@ -423,6 +422,8 @@ BOOL BTLV_SCD_WaitPokemonSelect( BTLV_SCD* wk )
 
 void BTLV_SCD_PokeSelect_Start( BTLV_SCD* wk, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
 {
+	GF_ASSERT( wk->pokesel_param == NULL );
+
 	wk->pokesel_param = param;
 	wk->pokesel_result = result;
 	BTL_Printf("[*SCD] ポケモン選択開始 : %d 体えらぶ\n", param->numSelect );
@@ -535,7 +536,7 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
 
 	switch( *seq ){
 	case SEQ_INIT:
-		res->cnt = 0;
+		BTL_POKESELECT_RESULT_Init( res, param );
 		(*seq) = SEQ_WAIT_SELECT;
 
 		/* fallthru */
@@ -550,49 +551,44 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
 
 				if( hitpos < BTL_PARTY_GetMemberCount(party) )
 				{
-					const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, param->idxOrder[hitpos] );
+					const BTL_POKEPARAM* bpp;
+					BtlPokeselReason  result;
 
-					// 生きてるポケしか選べない場合のチェック
-					if( param->aliveOnly )
-					{
-						if( BTL_POKEPARAM_IsDead(bpp) )
-						{
-							BTL_STR_MakeWarnStr( wk->strbuf, bpp, BTLSTR_UI_WARN_NotAlivePoke );
-							(*seq) = SEQ_WARNING_START;
-							break;
-						}
-					}
-					// 戦闘に出てるポケは選べない場合のチェック
-					if(	(param->numProhibit > 0)
-					&&	(hitpos < param->numProhibit)
-					){
+					bpp = BTL_PARTY_GetMemberDataConst( party, hitpos );
+					result = BTL_POKESELECT_CheckProhibit( param, res, hitpos );
+
+					switch( result ){
+					default:
+						GF_ASSERT(0);
+					case BTL_POKESEL_CANT_FIGHTING:
 						BTL_STR_MakeWarnStr( wk->strbuf, bpp, BTLSTR_UI_WARN_FightingPoke );
-						(*seq) = SEQ_WARNING_START;
 						break;
-					}
-					// 既に選んだポケは選べない
-					{
-						u8 i;
-						for(i=0; i<res->cnt; i++)
+
+					case BTL_POKESEL_CANT_DEAD:
+						BTL_STR_MakeWarnStr( wk->strbuf, bpp, BTLSTR_UI_WARN_NotAlivePoke );
+						break;
+
+					case BTL_POKESEL_CANT_SELECTED:
+						BTL_STR_MakeWarnStr( wk->strbuf, bpp, BTLSTR_UI_WARN_SelectedPoke );
+						break;
+
+					case BTL_POKESEL_CANT_NONE:
+						// --- ここまで来たら正しいポケを選んでる ---
+						BTL_POKESELECT_RESULT_Push( res, hitpos );
+						if( BTL_POKESELECT_IsDone(res) )
 						{
-							if( res->selIdx[i] == hitpos )
-							{
-								break;
-							}
+							// 次回に正しく初期化されずに呼び出されたら止まるようにNULLクリアしておく
+							wk->pokesel_param = NULL;
+							wk->pokesel_result = NULL;
+							return TRUE;
 						}
-						if( i != res->cnt )
+						else
 						{
-							BTL_STR_MakeWarnStr( wk->strbuf, bpp, BTLSTR_UI_WARN_SelectedPoke );
-							(*seq) = SEQ_WARNING_START;
-							break;
+							return FALSE;
 						}
 					}
-					// --- ここまで来たら正しいポケを選んでる ---
-					res->selIdx[ res->cnt++ ] = hitpos;
-					if( res->cnt >= param->numSelect )
-					{
-						return TRUE;
-					}
+					// --- ここにくるのは警告メッセージ表示シーケンス ---
+					(*seq) = SEQ_WARNING_START;
 				}
 			}
 		}

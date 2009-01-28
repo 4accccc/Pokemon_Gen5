@@ -33,7 +33,7 @@ extern void BTLV_SCD_Delete( BTLV_SCD* wk );
 
 extern void BTLV_SCD_Setup( BTLV_SCD* wk );
 
-extern void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* pp );
+extern void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
 extern BOOL BTLV_SCD_WaitActionSelect( BTLV_SCD* wk );
 
 extern void BTLV_SCD_StartPokemonSelect( BTLV_SCD* wk );
@@ -43,6 +43,5 @@ extern void BTLV_SCD_PokeSelect_Start( BTLV_SCD* wk, const BTL_POKESELECT_PARAM*
 extern BOOL BTLV_SCD_PokeSelect_Wait( BTLV_SCD* wk );
 
 
-extern void BTLV_SCD_GetSelectAction( BTLV_SCD* wk, BTL_ACTION_PARAM* action );
 
 #endif

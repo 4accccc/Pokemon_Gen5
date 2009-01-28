@@ -57,7 +57,7 @@ struct _BTLV_CORE {
 	BTL_PROC	subProc;
 	u8			genericWork[ GENERIC_WORK_SIZE ];
 
-	BTL_ACTION_PARAM	actionParam;
+	BTL_ACTION_PARAM*	actionParam;
 	STRBUF*				strBuf;
 	GFL_FONT*			fontHandle;
 
@@ -219,6 +219,7 @@ BOOL BTLV_WaitCommand( BTLV_CORE* core )
 		if( core->mainProc(core, &core->mainSeq, core->genericWork) )
 		{
 			core->processingCmd = BTLV_CMD_NULL;
+			core->mainProc = NULL;
 			return TRUE;
 		}
 		return FALSE;
@@ -226,19 +227,6 @@ BOOL BTLV_WaitCommand( BTLV_CORE* core )
 	return TRUE;
 }
 
-//=============================================================================================
-/**
- * プレイヤー選択アクション内容を取得
- *
- * @param   core		描画メインモジュールハンドラ
- * @param   dst			[out] アクション内容取得構造体アドレス
- *
- */
-//=============================================================================================
-void BTLV_GetActionParam( const BTLV_CORE* core, BTL_ACTION_PARAM* dst )
-{
-	*dst = core->actionParam;
-}
 
 static void* getGenericWork( BTLV_CORE* core, u32 size )
 {
@@ -305,15 +293,13 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 		if( BTLV_SCU_WaitMsg(core->scrnU) )
 		{
 			const BTL_POKEPARAM* bpp = BTL_CLIENT_GetProcPokeData( core->myClient );
-			BTL_Printf("[BTLV_CORE] 下画面へアクション選択処理命令\n");
-			BTLV_SCD_StartActionSelect( core->scrnD, bpp );
+			BTLV_SCD_StartActionSelect( core->scrnD, bpp, core->actionParam );
 			(*seq)++;
 		}
 		break;
 	case 2:
 		if( BTLV_SCD_WaitActionSelect(core->scrnD) )
 		{
-			BTLV_SCD_GetSelectAction( core->scrnD, &core->actionParam );
 			return TRUE;
 		}
 	}
@@ -340,13 +326,88 @@ static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer )
 	case 1:
 		if( BTLV_SCD_WaitPokemonSelect(core->scrnD) )
 		{
-			BTLV_SCD_GetSelectAction( core->scrnD, &core->actionParam );
+//			BTLV_SCD_GetSelectAction( core->scrnD, core->actionParam );
 			return TRUE;
 		}
 		break;
 	}
 	return FALSE;
 }
+
+//--------------------------------------------------------------------------
+/**
+ * メインプロセス設定
+ *
+ * @param   core		
+ * @param   proc		
+ *
+ */
+//--------------------------------------------------------------------------
+static void mainproc_setup( BTLV_CORE* core, pCmdProc proc )
+{
+	GF_ASSERT(core);
+	GF_ASSERT_MSG( core->mainProc == NULL, "mainProc=%p\n", core->mainProc );
+
+	core->mainProc = proc;
+	core->mainSeq = 0;
+}
+//--------------------------------------------------------------------------
+/**
+ * メインプロセスコール
+ *
+ * @param   core		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------------------
+static BOOL mainproc_call( BTLV_CORE* core )
+{
+	if( core->mainProc != NULL )
+	{
+		if( core->mainProc(core, &core->mainSeq, core->genericWork) )
+		{
+			core->mainProc = NULL;
+			return TRUE;
+		}
+		return FALSE;
+	}
+	return TRUE;
+}
+
+
+//=============================================================================================
+/**
+ * アクション選択開始
+ *
+ * @param   core		
+ * @param   dest		[out] 
+ *
+ */
+//=============================================================================================
+void BTLV_UI_SelectAction_Start( BTLV_CORE* core, BTL_ACTION_PARAM* dest )
+{
+	core->actionParam = dest;
+	mainproc_setup( core, CmdProc_SelectAction );
+}
+//=============================================================================================
+/**
+ * アクション選択終了待ち
+ *
+ * @param   core		
+ *
+ * @retval  BOOL		終了していたらTRUE
+ */
+//=============================================================================================
+BOOL BTLV_UI_SelectAction_Wait( BTLV_CORE* core )
+{
+	return mainproc_call( core );
+}
+
+
+
+
+
+
 
 
 void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
@@ -524,7 +585,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 	case 1:
 		if( BTLV_SCU_WaitMsg(wk->scrnU) )
 		{
-			BTLV_SCU_StartPokeIn( wk->scrnU, subwk->pokePos );
+			BTLV_SCU_StartPokeIn( wk->scrnU, subwk->pokePos, subwk->clientID, subwk->memberIdx );
 			(*seq)++;
 		}
 		break;

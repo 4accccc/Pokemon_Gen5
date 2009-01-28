@@ -631,7 +631,7 @@ typedef struct {
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos )
+void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberIdx )
 {
 	GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskPokeInEffect, sizeof(POKEIN_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
 	POKEIN_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
@@ -644,7 +644,7 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos )
 
 	//soga
 	{
-		const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
+		const BTL_POKEPARAM* bpp = BTL_MAIN_GetClientPokeData( wk->mainModule, clientID, memberIdx );
 		BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule,pos) );
 	}
 }

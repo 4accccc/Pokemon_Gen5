@@ -101,18 +101,9 @@ extern void BTLV_StartCommand( BTLV_CORE* btlv, BtlvCmd cmd );
 extern BOOL BTLV_WaitCommand( BTLV_CORE* btlv );
 
 
-//=============================================================================================
-/**
- * 
- *
- * @param   core		
- * @param   dst		
- *
- * @retval  extern void		
- */
-//=============================================================================================
-extern void BTLV_GetActionParam( const BTLV_CORE* core, BTL_ACTION_PARAM* dst );
 
+extern void BTLV_UI_SelectAction_Start( BTLV_CORE* core, BTL_ACTION_PARAM* dest );
+extern BOOL BTLV_UI_SelectAction_Wait( BTLV_CORE* core );
 
 extern void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 memberIdx );
 extern BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk );

@@ -307,10 +307,10 @@ static void ms_put_double( STRBUF* dst, BtlStrID_STD strID )
 // ‚ ‚¢‚Ä‚ª‚­‚è‚¾‚µ‚½ƒVƒ“ƒOƒ‹
 static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID )
 {
-	u8 clientID = BTL_CLIENT_GetClientID( SysWork.client );
-	clientID = BTL_MAIN_GetOpponentClientID( SysWork.mainModule, clientID, 0 );
+	u8 pokePos = BTL_CLIENT_GetProcPokePos( SysWork.client );
+	pokePos = BTL_MAIN_GetOpponentPokePos( SysWork.mainModule, pokePos, 0 );
 
-	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
+	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

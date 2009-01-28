@@ -556,6 +556,8 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 		if( WaitAdapterCmd(server) )
 		{
 			ResetAdapterCmd( server );
+			BTL_MAIN_SyncServerCalcData( server->mainModule );
+
 			if( server->endFlag )
 			{
 				return TRUE;
@@ -1111,6 +1113,13 @@ static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
 				// デバッグを簡単にするため必ず大ダメージにする措置
 				#ifdef PM_DEBUG
 				if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+				{
+					if( (defClient->myID & 1) )
+					{
+						fep->realDamage = 999;
+					}
+				}
+				if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
 				{
 					if( !(defClient->myID & 1) )
 					{
