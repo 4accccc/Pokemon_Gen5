@@ -715,7 +715,7 @@ static void SetUniTrainerPalette(TR_CARD_WORK *wk ,const u8 inTrainerNo)
 	u8 *addr;
 	NNSG2dPaletteData *dat;
 	buf = GFL_ARC_UTIL_LoadPalette(
-			ARCID_TRAINERCARD, NARC_trc_union_trdp_union_card_NCLR, &dat, wk->heapId );
+			ARCID_TRC_UNION, NARC_trc_union_trdp_union_card_NCLR, &dat, wk->heapId );
 
 	addr = (u8*)(dat->pRawData);
 		
@@ -890,10 +890,10 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 			rc = NNS_G2dGetUnpackedBGCharacterData( wk->TrArcData, &wk->TrCharData);
 			GF_ASSERT(rc);
 			*/
-			wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRAINERCARD, UniTrTable[wk->TrCardData->UnionTrNo],
+			wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRC_UNION, UniTrTable[wk->TrCardData->UnionTrNo],
 										FALSE, &wk->TrCharData, wk->heapId);
 
-			wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen(ARCID_TRAINERCARD, NARC_trc_union_card_test256_NSCR,
+			wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen(ARCID_TRC_UNION, NARC_trc_union_card_test256_NSCR,
 													0, &wk->ScrnData, wk->heapId);
 			//トレーナーパレット変更
 			SetUniTrainerPalette(wk,wk->TrCardData->UnionTrNo);

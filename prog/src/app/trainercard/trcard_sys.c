@@ -17,6 +17,8 @@
 #include "app/trainer_card.h"
 #include "trcard_sys.h"
 
+#include "test/ariizumi/ari_debug.h"
+
 
 typedef struct _TR_CARD_SYS{
 	int heapId;

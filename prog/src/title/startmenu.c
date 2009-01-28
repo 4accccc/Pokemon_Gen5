@@ -250,7 +250,7 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 		case SMI_RETURN_TITLE:
 			GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
 			break;
-		defalut:
+		default:
 			//Proc‚Ì•ÏX‚ğ’†‚Å‚â‚Á‚Ä‚é
 			GameStart_Beginning();
 			break;

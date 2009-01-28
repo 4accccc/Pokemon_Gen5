@@ -89,7 +89,6 @@ SRCS	+=		$(SOUNDSRC) \
 				system/touch_subwindow.c \
 				app/trainercard/trcard_sys.c \
 				app/name_input/name_input.c \
-				app/mysign/mysign.c \
 				mystery/comm_mystery_gift.c \
 				savedata/mystery_data.c \
 				system/laster.c \
@@ -392,6 +391,7 @@ SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
 			app/trainercard/trcard_bmp.c \
-			app/trainercard/trcard_obj.c
+			app/trainercard/trcard_obj.c \
+			app/mysign/mysign.c
 
 

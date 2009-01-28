@@ -58,7 +58,7 @@ enum{
 // アニメーション関係
 #define TOUCH_SW_GRA_ID	(ARC_YNTOUCH_GRA)
 #define TOUCH_SW_ANIME_NUM		( 2 )		// アニメーション数
-#define TOUCH_SW_ANIME_SP		( FX32_ONE )// アニメスピード
+#define TOUCH_SW_ANIME_SP		( FX32_ONE * 2 )// アニメスピード
 #define TOUCH_SW_ANIME_TIMING	( FX32_ONE * 1 )
 
 //反応するキー
@@ -487,6 +487,7 @@ static int touchsw_ktst_input(TOUCH_SW_SYS* p_touch_sw)
 //-----------------------------------------------------------------------------
 u32 TOUCH_SW_Main( TOUCH_SW_SYS* p_touch_sw )
 {
+	const int anmSpdRate = 2;
 	BOOL check;
 	
 	// 実行データ設定済み
@@ -505,7 +506,7 @@ u32 TOUCH_SW_Main( TOUCH_SW_SYS* p_touch_sw )
 		return TOUCH_SW_RET_NORMAL;
 	}
 
-	if(p_touch_sw->wait == 8){
+	if(p_touch_sw->wait == 8*anmSpdRate){
 		//アニメ終了
 		if( p_touch_sw->button_move_flag == TOUCH_SW_BUF_YES ){
 			return TOUCH_SW_RET_YES;
@@ -514,8 +515,8 @@ u32 TOUCH_SW_Main( TOUCH_SW_SYS* p_touch_sw )
 		}
 	}
 	//アニメ中
-	if(p_touch_sw->wait % 2 == 0){
-		if((p_touch_sw->wait / 2) % 2 == 0){
+	if(p_touch_sw->wait % (2*anmSpdRate) == 0){
+		if((p_touch_sw->wait / (2*anmSpdRate)) % 2 == 0){
 			touchsw_btn_draw(p_touch_sw,p_touch_sw->button_move_flag,TRUE);
 		}else{
 			touchsw_btn_draw(p_touch_sw,p_touch_sw->button_move_flag,FALSE);
