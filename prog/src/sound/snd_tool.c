@@ -48,6 +48,8 @@
 
 #define SND_CH_SET								//定義有効で使用可能チャンネルの操作をする
 
+#define _SEQ_BICYCLE   (SEQ_GS_BICYCLE)       //自転車の定義はバージョンで変わるようなのでここに出した
+
 
 //==============================================================================================
 //
@@ -615,10 +617,10 @@ int Snd_LoadSeByScene( u8 scene )
 		break;
 
 	//モロッコ号(注意！)
-	case SND_SCENE_SUB_TRAIN:
-		ret = Snd_ArcLoadBank( BANK_SE_TRAIN );			//バンクロード
-		ret = Snd_ArcLoadWaveArc( WAVE_ARC_SE_TRAIN );	//波形アーカイブ
-		break;
+//	case SND_SCENE_SUB_TRAIN:
+//		ret = Snd_ArcLoadBank( BANK_SE_TRAIN );			//バンクロード
+//		ret = Snd_ArcLoadWaveArc( WAVE_ARC_SE_TRAIN );	//波形アーカイブ
+//		break;
 
 	//スクラッチ(注意！)
 	case SND_SCENE_SUB_SCRATCH:
@@ -627,7 +629,7 @@ int Snd_LoadSeByScene( u8 scene )
 		break;
 
 	//エラー
-	defalut:
+	default:
 		GF_ASSERT( (0) && "シーンナンバーが不正です！" );
 		ret = FALSE;
 		break;
@@ -786,7 +788,7 @@ BOOL Snd_DataSetByScene( u8 scene, u16 no, int flag )
 		//break;
 
 	//何もしない
-	defalut:
+	default:
 		return 0;
 	};
 
@@ -872,7 +874,7 @@ static void Snd_FieldDataSet( u16 no, int flag )
 			//次のBGMに自転車をセットしている状態で(フェードアウト中)
 			//プレイヤーシーケンスナンバーは、まだ自転車になっていないので、
 			//何もせずリターンしてしまう！なのでチェックを入れる
-			if( Snd_NextBgmNoGet() != SEQ_BICYCLE ){
+			if( Snd_NextBgmNoGet() != _SEQ_BICYCLE ){
 				return;		//注意！
 			}
 		}
@@ -936,7 +938,18 @@ static void Snd_FieldDataSet_PauseOffStart( u16 no, u16 player_field_seq_no )
 	OS_Printf( "＜フィールドBGMポーズ解除！＞\n" );
 #endif
 
-	if( (tmp_bank_no != BANK_BGM_FIELD) && (tmp_bank_no != BANK_BGM_DUNGEON) ){
+	//080917
+	//Snd_GetBankNoが0を返すことがあるが、
+	//ここはゾーンに設定しているBGMのバンクをチェックしているので、
+	//基本的にelseの流れに進むはず。(必ず、FIELDかDUNGEONのバンクが設定されているので)
+	//Snd_FieldDataSetからしか呼ばれないので、
+	//フィールドに設定されているバンク以外がくるとアサートの流れが、(PL)
+	//ベーシックしかチェックしていないが、(GS)
+	//バンクと波形をロードする流れはまちがいではないはずなので、
+	//現状で問題ないはず。(ゾーンに指定しているBGMのバンクチェックが甘いだけということ)
+    
+//	if( (tmp_bank_no != BANK_BGM_FIELD) && (tmp_bank_no != BANK_BGM_DUNGEON) ){
+	if( tmp_bank_no == BANK_BASIC ){
 		Snd_ArcLoadSeqEx( no, NNS_SND_ARC_LOAD_WAVE );				//波形アーカイブロード
 		OS_Printf( "zone_bgm = %d\n", *zone_bgm );
 		OS_Printf( "tmp_bank_no = %d\n", tmp_bank_no );
@@ -1021,7 +1034,8 @@ void Snd_FieldDataSetSub( u16 no, u16 old_bank_no )
 		//必要な波形をフェードアウト中にロードする
 
 		tmp_bank_no = Snd_GetBankNo(*zone_bgm);				//不正な値が入っていないかチェック
-		if( (tmp_bank_no != BANK_BGM_FIELD) && (tmp_bank_no != BANK_BGM_DUNGEON) ){
+//		if( (tmp_bank_no != BANK_BGM_FIELD) && (tmp_bank_no != BANK_BGM_DUNGEON) ){
+        if( tmp_bank_no == BANK_BASIC ){
 			Snd_ArcLoadSeqEx( no, NNS_SND_ARC_LOAD_WAVE );				//波形アーカイブロード
 			OS_Printf( "zone_bgm = %d\n", *zone_bgm );
 			OS_Printf( "tmp_bank_no = %d\n", tmp_bank_no );
@@ -4231,9 +4245,9 @@ static void Snd_FieldPauseOrStop( void )
 	//フェード中ではなく、
 	//PLAYER_FIELDにシーケンスが設定されていて、
 	//現在のBGMが「ゆれ草」でなかったら
-	if( (Snd_FadeCheck() == 0) && 
-		(Snd_GetSeqNo(Snd_HandleGet(SND_HANDLE_FIELD)) != -1) &&
-		(Snd_NowBgmNoGet() != SEQ_KUSAGASA) ){
+    if( (Snd_FadeCheck() == 0) && (Snd_GetSeqNo(Snd_HandleGet(SND_HANDLE_FIELD)) != -1) ){
+//		(Snd_GetSeqNo(Snd_HandleGet(SND_HANDLE_FIELD)) != -1) &&
+//		(Snd_NowBgmNoGet() != SEQ_KUSAGASA) ){
 
 		Snd_StopEx();											//フィールドBGMを抜かして全停止
 		Snd_PlayerPause( PLAYER_FIELD, TRUE );					//フィールドBGMポーズ

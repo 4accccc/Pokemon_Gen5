@@ -175,7 +175,7 @@ static	void	GameInit(void)
 	//サウンドストリーミング再生システム
 	SND_STRM_Init(GFL_HEAPID_SYSTEM);
     //サウンドの初期化
-    Snd_AllInit(NULL,NULL);
+    SOUND_Init(NULL,NULL);
 
 	//キーコントロールモード設定
 	CONFIG_SYSTEM_KyeControlTblSetting();
@@ -204,7 +204,7 @@ static	void	GameMain(void)
 		NetErr_ErrorSet();
 	}
 	SND_STRM_Main();
-    Snd_Main();
+    SOUND_Main();
 }
 
 //------------------------------------------------------------------
@@ -215,4 +215,5 @@ static	void	GameMain(void)
 static	void	GameExit(void)
 {
 	SND_STRM_Exit();
+    SOUND_Exit();
 }

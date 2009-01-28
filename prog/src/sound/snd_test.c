@@ -66,6 +66,9 @@ enum{
 	BUF_MAX,								//バッファの最大数
 };
 
+///デバッグは何でもなるように大目の確保しておく バンクテストは別に作るのが良い
+#define DEBUG_SOUND_HEAP_SIZE (SOUND_HEAP_SIZE + 0x20000)
+
 #define SND_TEST_BUF_SIZE		(48)		//バッファのサイズ
 //#define BG_PLANE_MENU (SND_TEST_BMPWIN_FRAME)
 #define ITEM_NAME_MAX (32)
@@ -1108,13 +1111,17 @@ static GFL_PROC_RESULT SoundTestProc_Init(GFL_PROC * proc, int * seq, void * pwk
 {
 	SND_TEST_WORK* wk = NULL;
 
+
+    SOUND_ChangeHeap(GFL_HEAPID_APP, DEBUG_SOUND_HEAP_SIZE);
+
 	wk = GFL_PROC_AllocWork(proc, sizeof(SND_TEST_WORK), GFL_HEAPID_APP);
 
     GFL_STD_MemClear( wk,  sizeof(SND_TEST_WORK) );
     wk->heapId = GFL_HEAPID_APP;
 
 	SndTestCall(wk);
-	return GFL_PROC_RES_FINISH;
+
+    return GFL_PROC_RES_FINISH;
 		
 }
 
@@ -1149,7 +1156,9 @@ static GFL_PROC_RESULT SoundTestProc_End(GFL_PROC * proc, int * seq, void * pwk,
 	//詳細はソース先頭の「サウンドテストの例外処理について」を参照して下さい
 	//OS_InitReset();
 //	OS_ResetSystem(0);									//ソフトリセット
-	return GFL_PROC_RES_FINISH;
+
+    SOUND_RestoreHeap();
+    return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------

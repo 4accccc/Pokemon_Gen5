@@ -11,7 +11,7 @@
 
 #include "sound/snd_def.h"
 #include "sound/snd_play.h"
-#include "sound/sound_data.sadl"		//サウンドラベルファイル
+#include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 
 
 //==============================================================================================

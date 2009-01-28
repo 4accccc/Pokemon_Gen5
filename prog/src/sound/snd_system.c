@@ -32,17 +32,6 @@
 #include "savedata/config.h"
 
 
-//==============================================================================================
-//
-//	定義
-//
-//==============================================================================================
-//sound_data.smapのサイズより少し大きめに確保する
-//#define SOUND_HEAP_SIZE		(0xb0000)				//サウンドヒープサイズ(約700k)
-#define SOUND_HEAP_SIZE		(0xbbc00)				//サウンドヒープサイズ(約750k)
-//#define SOUND_HEAP_SIZE	(0xbd000)				//サウンドヒープサイズ(約750k)
-//#define SOUND_HEAP_SIZE	(0xc0000)				//サウンドヒープサイズ(約750k)
-//#define SOUND_HEAP_SIZE	(0x80000)				//サウンドヒープサイズ(約500k)
 
 
 //==============================================================================================
@@ -201,6 +190,7 @@ static void Snd_UseHeapSizeOsPrint(void);
 static BOOL Snd_MeUseCheck(void);
 static void Snd_StatusCall(void);
 static void Snd_PlayerBgmStop( void );			//PLAYER_BGMの停止、ハンドルリリース
+static void sound_ArcSetup(SND_WORK* wk);
 
 
 //==============================================================================================
@@ -224,7 +214,7 @@ static void Snd_PlayerBgmStop( void );			//PLAYER_BGMの停止、ハンドルリリース
  * OS_SetIrqMask関数 などで割り込みの設定を上書きしないようにしてください。 
  */
 //--------------------------------------------------------------
-void Snd_AllInit( PERAPVOICE* perap, CONFIG* config )
+void SOUND_Init( PERAPVOICE* perap, CONFIG* config )
 {
 	SND_WORK* wk = Snd_GetSystemAdrs();
 
@@ -239,22 +229,8 @@ void Snd_AllInit( PERAPVOICE* perap, CONFIG* config )
 	//サウンドヒープの作成
     wk->heap = NNS_SndHeapCreate( &wk->sndHeap, sizeof(wk->sndHeap) );
 
-	//サウンドアーカイブの初期化(プラチナデータ読み込みに変更)
-	//NNS_SndArcInit( &wk->arc, "data/sound/sound_data.sdat", wk->heap, FALSE );
-#ifdef PM_DEBUG
-    GF_ASSERT(NNS_SndArcInitWithResult( &wk->arc, "/sound_data.sdat", wk->heap, FALSE ));
-#else
-    NNS_SndArcInit( &wk->arc, "sound_data.sdat", wk->heap, FALSE );
-#endif
-	//プレイヤーのセットアップ
-	//サウンドアーカイブ中で定義されているプレイヤー設定に基づきセットアップされる
-    (void)NNS_SndArcPlayerSetup( wk->heap );
-
-#ifdef STREAM_ON
-	NNS_SndArcStrmInit( STREAM_THREAD_PRIO, wk->heap );
-
-    NNS_SndStrmHandleInit( &wk->strmHandle );
-#endif
+	//サウンドアーカイブの初期化
+    sound_ArcSetup(wk);
 
     //サウンドハンドル初期化
     Snd_HandleInit(wk);
@@ -300,7 +276,7 @@ void Snd_AllInit( PERAPVOICE* perap, CONFIG* config )
  * 1フレームに1度呼び出しさえすれば、どこでコールしても構わない
  */
 //--------------------------------------------------------------
-void Snd_Main(void)
+void SOUND_Main(void)
 {
 	int i;
 	SND_WORK* wk = Snd_GetSystemAdrs();
@@ -355,6 +331,87 @@ void Snd_Main(void)
 
 	NNS_SndMain();
 	return;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	サウンド開放
+ * @param	none
+ * @retval	none
+ */
+//--------------------------------------------------------------
+void SOUND_Exit(void)
+{
+	SND_WORK* wk = Snd_GetSystemAdrs();
+    NNS_SndHeapDestroy( wk->heap );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	サウンドヒープ変更   大きく確保したい場合GFL_HEAPから確保します
+            この関数は２度続けて呼んではいけません
+ * @param	heapID     とりたいID
+ * @param	size       とりたいサイズ
+ * @retval	none
+ */
+//--------------------------------------------------------------
+void SOUND_ChangeHeap(HEAPID heapID, int size)
+{
+	SND_WORK* wk = Snd_GetSystemAdrs();
+    void* pData;
+    NNS_SndHeapDestroy( wk->heap );
+    pData = GFL_HEAP_AllocClearMemory(heapID, size);
+    GF_ASSERT(pData);
+    wk->heap = NNS_SndHeapCreate( pData, size );
+    GF_ASSERT(wk->heap);
+    sound_ArcSetup(wk);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	サウンドヒープを元に戻す
+ * @param	none
+ * @retval	none
+ */
+//--------------------------------------------------------------
+void SOUND_RestoreHeap(void)
+{
+	SND_WORK* wk = Snd_GetSystemAdrs();
+    void* pData;
+    NNS_SndHeapDestroy( wk->heap );
+    GFL_HEAP_FreeMemory(wk->heap);
+    wk->heap = NNS_SndHeapCreate( &wk->sndHeap, sizeof(wk->sndHeap) );
+    GF_ASSERT(wk->heap);
+    sound_ArcSetup(wk);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	サウンドアーカイブの初期化
+ * @param	none
+ * @retval	none
+ */
+//--------------------------------------------------------------
+
+static void sound_ArcSetup(SND_WORK* wk)
+{
+
+	//サウンドアーカイブの初期化(プラチナデータ読み込みに変更)
+	//NNS_SndArcInit( &wk->arc, "data/sound/sound_data.sdat", wk->heap, FALSE );
+#ifdef PM_DEBUG
+    GF_ASSERT(NNS_SndArcInitWithResult( &wk->arc, "wb_sound_data.sdat", wk->heap, FALSE ));
+#else
+    NNS_SndArcInit( &wk->arc, "wb_sound_data.sdat", wk->heap, FALSE );
+#endif
+	//プレイヤーのセットアップ
+	//サウンドアーカイブ中で定義されているプレイヤー設定に基づきセットアップされる
+    (void)NNS_SndArcPlayerSetup( wk->heap );
+
+#ifdef STREAM_ON
+	NNS_SndArcStrmInit( STREAM_THREAD_PRIO, wk->heap );
+
+    NNS_SndStrmHandleInit( &wk->strmHandle );
+#endif
 }
 
 //--------------------------------------------------------------
