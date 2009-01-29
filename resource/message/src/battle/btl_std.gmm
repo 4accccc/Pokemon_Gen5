@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-01-16T17:49:16"/>
+	<create user="taya" host="W00146" date="2009-01-29T17:24:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -388,7 +388,7 @@
 
 	<dialog left="240" top="137" right="921" bottom="651" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="205" top="427" right="636" bottom="825" visible="no"/>
+		<tag-palette left="205" top="427" right="636" bottom="825" visible="yes"/>
 		<band id="0" index="0" style="0001" width="506"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
@@ -441,7 +441,7 @@
 	<row id="BTL_STRID_STD_PutDouble" back-color="#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">ゆけっ！　[1:01:ニックネーム:0]！
 [1:01:ニックネーム:1]！</language>
-		<language name="JPN_KANJI">ゆけっ！　[1:01:ニックネーム:0]！
+		<language name="JPN_KANJI">行けっ！　[1:01:ニックネーム:0]！
 [1:01:ニックネーム:1]！</language>
 	</row>
 
@@ -450,6 +450,11 @@
 [1:00:ポケモン名:0]を　くりだした！</language>
 		<language name="JPN_KANJI">相手のトレーナーは
 [1:00:ポケモン名:0]を　繰り出した！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_MemberOut1" back-color="#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　もどれ！</language>
+		<language name="JPN_KANJI">[1:01:ニックネーム:0]　もどれ！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_SelectAction" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
