@@ -22,7 +22,7 @@
 require "nkf"
 require "rexml/document"
 include REXML
-require "gmmconv.rb"
+require "tools/gmmconv.rb"
 
 ### メイン
 begin
@@ -30,11 +30,13 @@ begin
   GRead = GmmRead.new
   GRead.FileRead( ARGV[1] )  ##コンバート対象ファイルを読み込む
   GRead.TmplateRead( ARGV[0] ) ## テンプレを読み込む
-  GRead.TmplateConv()  ##  テンプレを差し替える
+  GRead.TmplateMake()  ##  テンプレを差し替える
+  GRead.BodyAdd()
   GRead.JpnConv()    ##   日本語をJPNに変更
   GRead.JpnDupe()    ##   JPNとJPN_KANJIに増やす
   GRead.TagConv()   ## タグを置き換える
-  GRead.FileWrite( ARGV[1] + ".wbgmm")  ##コンバート結果を出力する
+  GRead.FileWrite( ARGV[1])  ##コンバート結果を出力する
+  
   
   exit(0)
 end
