@@ -1101,6 +1101,36 @@ u32 PRINTSYS_GetStrWidth( const STRBUF* str, GFL_FONT* font, u16 margin )
 
 	return max;
 }
+//=============================================================================================
+/**
+ * 文字列の中に含まれる、単語タグの数をカウントして返す
+ *
+ * @param   str		文字列
+ *
+ * @retval  u16		単語タグの数
+ */
+//=============================================================================================
+u16 PRINTSYS_GetTagCount( const STRBUF* str )
+{
+	const STRCODE* sp;
+	u16 cnt = 0;
+
+	sp = GFL_STR_GetStringCodePointer( str );
+
+	while( *sp != EOM_CODE )
+	{
+		if( *sp == SPCODE_TAG_START_ )
+		{
+			if( PRINTSYS_IsWordSetTagType(sp) )
+			{
+				cnt++;
+			}
+			sp = PRINTSYS_SkipTag( sp );
+		}
+	}
+
+	return cnt;
+}
 
 
 //=============================================================================================
