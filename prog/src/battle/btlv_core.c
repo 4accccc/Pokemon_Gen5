@@ -75,6 +75,8 @@ static void* getGenericWork( BTLV_CORE* core, u32 size );
 static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer );
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer );
+static void mainproc_setup( BTLV_CORE* core, pCmdProc proc );
+static BOOL mainproc_call( BTLV_CORE* core );
 static BOOL subprocWazaAct( int* seq, void* wk_adrs );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
 static void setup_core( BTLV_CORE* wk, HEAPID heapID );
@@ -531,6 +533,31 @@ BOOL BTLV_WaitDeadAct( BTLV_CORE* wk )
 	return BTLV_SCU_WaitDeadAct( wk->scrnU );
 }
 
+
+
+
+//=============================================================================================
+/**
+ * ポケモン退出アクション開始
+ *
+ * @param   wk		
+ * @param   clientID		
+ * @param   memberIdx		
+ *
+ */
+//=============================================================================================
+void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, u8 clientID, u8 memberIdx )
+{
+	BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, memberIdx );
+
+	BTLV_SCU_StartMemberOutAct( wk->scrnU, clientID, memberIdx, pos );
+}
+BOOL BTLV_ACT_MemberOut_Wait( BTLV_CORE* wk )
+{
+	return BTLV_SCU_WaitMemberOutAct( wk->scrnU );
+}
+
+
 //------------------------------------------
 typedef struct {
 	u8 clientID;
@@ -609,7 +636,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 //=============================================================================================
 void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 {
-	BTL_STR_MakeStringStd( wk->strBuf, strID );
+	BTL_STR_MakeStringStdWithParams( wk->strBuf, strID, args );
 	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
 //	printf( wk->strBuf );
 }

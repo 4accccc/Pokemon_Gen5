@@ -19,6 +19,29 @@ enum {
 
 //--------------------------------------------------------------
 /**
+ *		サーバ引数型
+ */
+//--------------------------------------------------------------
+typedef enum {
+
+	SC_ARGFMT_1,
+	SC_ARGFMT_4bit_x2,
+
+	SC_ARGFMT_5bit_x3,
+	SC_ARGFMT_4bit_x4,
+	SC_ARGFMT_3bit_x5,
+
+	SC_ARGFMT_4bit_x5,
+	SC_ARGFMT_4bit_x6,
+	SC_ARGFMT_4bit_x7,
+	SC_ARGFMT_3bit_x8,
+
+	SC_ARGFMT_Variable,
+
+}ScArgFormat;
+
+//--------------------------------------------------------------
+/**
  *		サーバコマンド
  */
 //--------------------------------------------------------------
@@ -43,6 +66,7 @@ typedef enum {
 
 	SC_TOKWIN_IN,				///< とくせいウィンドウ表示イン [ClientID]
 	SC_TOKWIN_OUT,			///< とくせいウィンドウ表示アウト [ClientID]
+
 	SC_MSG_STD,					///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
 	SC_MSG_SET,					///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
 	SC_MSG_WAZA,				///< ワザメッセージ表示[ ClientID, wazaIdx ]
@@ -208,6 +232,17 @@ static inline void SCQUE_READ_DATA_MemberIn( BTL_SERVER_CMD_QUE* que, int* args 
 	args[1] = scque_read1byte( que );
 	args[2] = scque_read1byte( que );
 }
+static inline void SCQUE_PUT_DATA_MemberOut( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 memberIdx )
+{
+	scque_put2byte( que, SC_DATA_MEMBER_OUT );
+	scque_put1byte( que, clientID );
+	scque_put1byte( que, memberIdx );
+}
+static inline void SCQUE_READ_DATA_MemberOut( BTL_SERVER_CMD_QUE* que, int* args )
+{
+	args[0] = scque_read1byte( que );
+	args[1] = scque_read1byte( que );
+}
 
 //---------------------------------------------
 static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 atClientID, u8 defClientID, u16 damage, u8 wazaIdx, u8 affinity )
@@ -338,6 +373,7 @@ static inline ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 	case SC_OP_RANK_DOWN:		SCQUE_READ_OP_RankDown( que, args ); break;
 	case SC_DATA_WAZA_EXE:	SCQUE_READ_DATA_WazaExe( que, args ); break;
 	case SC_DATA_MEMBER_IN:	SCQUE_READ_DATA_MemberIn( que, args ); break;
+	case SC_DATA_MEMBER_OUT:SCQUE_READ_DATA_MemberOut( que, args ); break;
 	case SC_ACT_WAZA_DMG:		SCQUE_READ_ACT_WazaDamage( que, args ); break;
 	case SC_ACT_RANKUP:			SCQUE_READ_ACT_RankUp( que, args ); break;
 	case SC_ACT_RANKDOWN:		SCQUE_READ_ACT_RankDown( que, args ); break;

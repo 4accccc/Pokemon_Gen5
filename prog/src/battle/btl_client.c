@@ -73,7 +73,6 @@ struct _BTL_CLIENT {
 
 
 	const BTL_PARTY*	myParty;
-	u8					pokeIdxOrder[ BTL_PARTY_MEMBER_MAX ];		///< パーティメンバーをどの順番で出しているか
 	u8					frontPokeEmpty[ BTL_POSIDX_MAX ];				///< 担当している戦闘位置にもう出せない時にTRUEにする
 	u8					numCoverPos;	///< 担当する戦闘ポケモン数
 	u8					procPokeIdx;	///< 処理中ポケモンインデックス
@@ -120,6 +119,7 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL scProc_DATA_WazaExe( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_DATA_MemberOut( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_DATA_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args );
@@ -604,6 +604,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		ServerCmdProc	proc;
 	}scprocTbl[] = {
 		{	SC_DATA_WAZA_EXE,		scProc_DATA_WazaExe			},
+		{	SC_DATA_MEMBER_OUT,	scProc_DATA_MemberOut		},
 		{	SC_DATA_MEMBER_IN,	scProc_DATA_MemberIn		},
 		{	SC_MSG_STD,					scProc_MSG_Std				},
 		{	SC_MSG_SET,					scProc_MSG_Set				},
@@ -702,7 +703,29 @@ static BOOL scProc_DATA_WazaExe( BTL_CLIENT* wk, int* seq, const int* args )
 
 	return TRUE;
 }
+static BOOL scProc_DATA_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		{
+			u8 clientID = args[0];
+			u8 memberIdx = args[1];
 
+			BTLV_ACT_MemberOut_Start( wk->viewCore, clientID, memberIdx );
+			(*seq)++;
+		}
+		break;
+
+	case 1:
+		if( BTLV_ACT_MemberOut_Wait(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+
+	}
+	return FALSE;
+}
 static BOOL scProc_DATA_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ){
@@ -984,7 +1007,7 @@ BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client )
 const BTL_POKEPARAM* BTL_CLIENT_GetFrontPokeData( const BTL_CLIENT* client, u8 posIdx )
 {
 	GF_ASSERT_MSG(posIdx<client->numCoverPos, "posIdx=%d, numCoverPos=%d", posIdx, client->numCoverPos);
-	return BTL_PARTY_GetMemberDataConst( client->myParty, client->pokeIdxOrder[posIdx] );
+	return BTL_PARTY_GetMemberDataConst( client->myParty, posIdx );
 }
 
 

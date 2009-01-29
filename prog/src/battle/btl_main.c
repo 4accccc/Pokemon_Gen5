@@ -912,6 +912,21 @@ const BTL_POKEPARAM* BTL_MAIN_GetFrontPokeDataConst( const BTL_MAIN_MODULE* wk, 
 
 //=============================================================================================
 /**
+ * クライアントポケモンデータの取得
+ *
+ * @param   wk		
+ * @param   clientID		
+ * @param   memberIdx		
+ *
+ * @retval  const BTL_POKEPARAM*		
+ */
+//=============================================================================================
+BTL_POKEPARAM* BTL_MAIN_GetClientPokeData( BTL_MAIN_MODULE* wk, u8 clientID, u8 memberIdx )
+{
+	return wk->pokeParam[ clientID * TEMOTI_POKEMAX + memberIdx ];
+}
+//=============================================================================================
+/**
  * クライアントポケモンデータの取得 ( const )
  *
  * @param   wk		
@@ -921,7 +936,7 @@ const BTL_POKEPARAM* BTL_MAIN_GetFrontPokeDataConst( const BTL_MAIN_MODULE* wk, 
  * @retval  const BTL_POKEPARAM*		
  */
 //=============================================================================================
-const BTL_POKEPARAM* BTL_MAIN_GetClientPokeData( const BTL_MAIN_MODULE* wk, u8 clientID, u8 memberIdx )
+const BTL_POKEPARAM* BTL_MAIN_GetClientPokeDataConst( const BTL_MAIN_MODULE* wk, u8 clientID, u8 memberIdx )
 {
 	return wk->pokeParam[ clientID * TEMOTI_POKEMAX + memberIdx ];
 }

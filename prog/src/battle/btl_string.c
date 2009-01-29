@@ -110,6 +110,7 @@ static void ms_put_single( STRBUF* dst, BtlStrID_STD strID );
 static void ms_put_double( STRBUF* dst, BtlStrID_STD strID );
 static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID );
 static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID );
+static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_sp_waza_dead( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
@@ -237,36 +238,55 @@ static inline u16 get_setPtnStrID( BtlPokePos pos, u16 originStrID, u8 ptnNum )
 //=============================================================================================
 void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID )
 {
-	static void (* const funcTbl[])( STRBUF* buf, BtlStrID_STD strID ) = {
-		NULL,
-
-		ms_encount,
-		ms_encount_double,
-		ms_put_single,
-		ms_put_double,
-		ms_put_single_enemy,
-		ms_select_action_ready,
-
-		ms_std_simple,
-		ms_std_simple,
-		ms_std_simple,
-		ms_std_simple,
-		ms_std_simple,
-		ms_std_simple,
-		ms_std_simple,
+	static const struct {
+		BtlStrID_STD   strID;
+		void  (* const func)( STRBUF* buf, BtlStrID_STD strID );
+	}funcTbl[] = {
+		{ BTL_STRID_STD_Encount,				ms_encount },
+		{ BTL_STRID_STD_Encount_Double,	ms_encount_double },
+		{ BTL_STRID_STD_PutSingle,			ms_put_single },
+		{ BTL_STRID_STD_PutDouble,			ms_put_double },
+		{ BTL_STRID_STD_PutSingle_Enemy,ms_put_single_enemy },
+		{ BTL_STRID_STD_SelectAction,		ms_select_action_ready },
 	};
 
-	if( strID && strID < NELEMS(funcTbl) )
+	u32 i;
+
+	for(i=0; i<NELEMS(funcTbl); ++i)
 	{
-		funcTbl[strID]( buf, strID );
-	}
-	else
-	{
-//		GF_ASSERT_MSG(0, " unknown strID=%d\n", strID);
-		GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], 0, buf );
+		if( funcTbl[i].strID == strID )
+		{
+			funcTbl[i].func( buf, strID );
+			return;
+		}
 	}
 
+	ms_std_simple( buf, strID );
 }
+
+void BTL_STR_MakeStringStdWithParams( STRBUF* buf, BtlStrID_STD strID, const int* args )
+{
+	static const struct {
+		BtlStrID_STD   strID;
+		void  (* const func)( STRBUF* buf, BtlStrID_STD strID, const int* args );
+	}funcTbl[] = {
+		{ BTL_STRID_STD_MemberOut1,	ms_out_member1 },
+	};
+	u32 i;
+
+	for(i=0; i<NELEMS(funcTbl); ++i)
+	{
+		if( funcTbl[i].strID == strID )
+		{
+			funcTbl[i].func( buf, strID, args );
+			return;
+		}
+	}
+
+	// 用意されていないメッセージの場合
+	ms_std_simple( buf, strID );
+}
+
 static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID )
 {
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, dst );
@@ -323,6 +343,22 @@ static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID )
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+
+
+
+// ○○　もどれ！
+static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args )
+{
+	u8 pokePos = BTL_MAIN_GetClientPokePos( SysWork.mainModule, args[0], args[1] );
+
+	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
+
+
+
 
 //----------------------------------------------------------------------
 

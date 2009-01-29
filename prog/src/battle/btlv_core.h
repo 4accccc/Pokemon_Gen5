@@ -153,6 +153,8 @@ extern void BTLV_StartWazaAct( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos d
 extern BOOL BTLV_WaitWazaAct( BTLV_CORE* wk );
 extern void BTLV_StartDeadAct( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_WaitDeadAct( BTLV_CORE* wk );
+extern void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, u8 clientID, u8 memberIdx );
+extern BOOL BTLV_ACT_MemberOut_Wait( BTLV_CORE* wk );
 
 
 extern void BTLV_StartTokWin( BTLV_CORE* wk, BtlPokePos clientID );

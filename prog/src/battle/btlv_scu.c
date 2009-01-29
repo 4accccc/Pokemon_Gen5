@@ -88,6 +88,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs );
 static BOOL btlin_wild_double( int* seq, void* wk_adrs );
 static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs );
+static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void statwin_setupAll( BTLV_SCU* wk );
 static void statwin_cleanupAll( BTLV_SCU* wk );
@@ -612,6 +613,56 @@ static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs )
 	}
 }
 //--------------------------------------------------------
+// ポケモン退場アクション
+//--------------------------------------------------------
+typedef struct {
+
+	STATUS_WIN*  statWin;
+	u16			seq;
+	u16			viewpos;
+	u8*			endFlag;
+
+}POKEOUT_ACT_WORK;
+
+
+void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, u8 clientID, u8 memberIdx, BtlPokePos pos )
+{
+	GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskPokeOutAct, sizeof(POKEOUT_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+	POKEOUT_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
+
+	twk->viewpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+	twk->statWin = &wk->statusWin[ pos ];
+	twk->endFlag = &wk->taskEndFlag[0];
+	twk->seq = 0;
+
+
+	*(twk->endFlag) = FALSE;
+}
+BOOL BTLV_SCU_WaitMemberOutAct( BTLV_SCU* wk )
+{
+	return wk->taskEndFlag[0];
+}
+
+static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
+{
+	POKEOUT_ACT_WORK* wk = wk_adrs;
+
+	switch( wk->seq ){
+	case 0:
+		statwin_hide( wk->statWin );
+		BTL_EFFECT_DelPokemon( wk->viewpos );
+		wk->seq++;
+		break;
+	case 1:
+		*(wk->endFlag) = TRUE;
+		GFL_TCBL_Delete( tcbl );
+	}
+}
+
+
+//--------------------------------------------------------
+// ポケモン入場アクション
+//--------------------------------------------------------
 typedef struct {
 
 	STATUS_WIN*  statWin;
@@ -644,7 +695,7 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
 
 	//soga
 	{
-		const BTL_POKEPARAM* bpp = BTL_MAIN_GetClientPokeData( wk->mainModule, clientID, memberIdx );
+		const BTL_POKEPARAM* bpp = BTL_MAIN_GetClientPokeDataConst( wk->mainModule, clientID, memberIdx );
 		BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule,pos) );
 	}
 }

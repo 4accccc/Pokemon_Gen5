@@ -157,7 +157,8 @@ static u8 sortClientAction( BTL_SERVER* server, ACTION_ORDER_WORK* order );
 static u8 countAlivePokemon( const BTL_SERVER* server );
 static BOOL createServerCommand( BTL_SERVER* server );
 static BOOL createServerCommandAfterPokeSelect( BTL_SERVER* server );
-static void scput_ChangePokemon( BTL_SERVER* server, u8 clientID, u8 posIdx, u8 nextPokeIdx );
+static void scput_MemberIn( BTL_SERVER* server, u8 clientID, u8 posIdx, u8 nextPokeIdx );
+static void scput_MemberOut( BTL_SERVER* server, u8 clientID, const BTL_ACTION_PARAM* action );
 static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action );
 static inline int roundValue( int val, int min, int max );
 static void initFightEventParams( FIGHT_EVENT_PARAM* fep );
@@ -186,7 +187,7 @@ static u16 scEvent_getDamageDenom( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep );
 static PokeType scEvent_getWazaPokeType( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza );
 static PokeTypePair scEvent_getAttackerPokeType( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker );
 static PokeTypePair scEvent_getDefenderPokeType( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* defender );
-static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID );
+static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 outPokeIdx );
 static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scEvent_PokeComp( BTL_SERVER* server );
 static void scEvent_RankDown( BTL_SERVER* server, u8 pokeID, BtlPokePos pokePos, BppValueID statusType, u8 volume );
@@ -796,7 +797,8 @@ static BOOL createServerCommand( BTL_SERVER* server )
 				break;
 			case BTL_ACTION_CHANGE:
 				BTL_Printf("【ポケモン】を処理。位置%d <- ポケ%d \n", action->change.posIdx, action->change.memberIdx);
-				scput_ChangePokemon( server, clientID, action->change.posIdx, action->change.memberIdx );
+				scput_MemberOut( server, clientID, action );
+				scput_MemberIn( server, clientID, action->change.posIdx, action->change.memberIdx );
 				break;
 			case BTL_ACTION_ESCAPE:
 				BTL_Printf("【にげる】を処理。\n");
@@ -848,7 +850,7 @@ static BOOL createServerCommandAfterPokeSelect( BTL_SERVER* server )
 			BTL_Printf("[SV]  クライアント[%d]のポケモン(位置%d) を、%d番目のポケといれかえる\n",
 						i, action->change.posIdx, action->change.memberIdx );
 
-			scput_ChangePokemon( server, i, action->change.posIdx, action->change.memberIdx );
+			scput_MemberIn( server, i, action->change.posIdx, action->change.memberIdx );
 		}
 	}
 
@@ -856,14 +858,15 @@ static BOOL createServerCommandAfterPokeSelect( BTL_SERVER* server )
 	return FALSE;
 }
 
-static void scput_ChangePokemon( BTL_SERVER* server, u8 clientID, u8 posIdx, u8 nextPokeIdx )
+static void scput_MemberIn( BTL_SERVER* server, u8 clientID, u8 posIdx, u8 nextPokeIdx )
 {
 	server->client[clientID].frontMember[posIdx] = server->client[clientID].member[ nextPokeIdx ];
 	scEvent_MemberIn( server, &server->changeEventParams, clientID, posIdx, nextPokeIdx );
 }
-
-
-
+static void scput_MemberOut( BTL_SERVER* server, u8 clientID, const BTL_ACTION_PARAM* action )
+{
+	scEvent_MemberOut( server, &server->changeEventParams, clientID, action->change.posIdx );
+}
 
 static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action )
 {
@@ -1481,9 +1484,19 @@ static PokeTypePair scEvent_getDefenderPokeType( BTL_SERVER* server, FIGHT_EVENT
 }
 
 // メンバーバトル場から退出
-static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID )
+static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx )
 {
-	
+	cep->outPokeParam = BTL_MAIN_GetClientPokeData( server->mainModule, clientID, posIdx );
+
+	SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_MemberOut1, clientID, posIdx );
+
+	BTL_EVENT_CallHandlers( server, BTL_EVENT_MEMBER_OUT );
+	// ここで死ぬこともある
+
+	if( !BTL_POKEPARAM_IsDead(cep->outPokeParam) )
+	{
+		SCQUE_PUT_DATA_MemberOut( server->que, clientID, posIdx );
+	}
 }
 
 // メンバー新規参加
