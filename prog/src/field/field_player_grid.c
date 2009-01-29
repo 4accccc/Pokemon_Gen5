@@ -90,36 +90,7 @@ static const GFL_BBDACT_ANM* playerGridBBDactAnmTable[] = {
 	PCjumpUAnm, PCjumpDAnm, PCjumpLAnm, PCjumpRAnm,
 };
 
-#if 0
-static void playerBBDactFuncGrid(
-	GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
-{
-	GFL_BBD_SYS *bbdSys = GFL_BBDACT_GetBBDSystem( bbdActSys );
-	PC_ACTCONT *pcActCont = (PC_ACTCONT*)work;
-	VecFx32	trans = pcActCont->trans;
-	
-	#if 0
-	dir = pcActCont->direction -
-		getCameraRotate(GetG3Dcamera(pcActCont->gs) );
-	anmID = getPlayerBBDanm(
-		pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
-	OS_Printf( "アニメID = %d\n", anmID );
-
-	//カメラ補正(アニメ向きの変更をするのに参照)
-	GFL_BBDACT_SetAnimeIdxContinue(
-		GetBbdActSys( pcActCont->gs ), actIdx, anmID );
-	#endif
-	
-	//位置補正
-	trans.x = pcActCont->trans.x;
-	trans.y = pcActCont->trans.y + FX32_ONE*12;	//補正
-	trans.z = pcActCont->trans.z;// + -FX32_ONE*4; //補正
-	GFL_BBD_SetObjectTrans( bbdSys, actIdx, &trans );
-}
-#else
-#endif
-
-#if 0
+#if 0	//3head test
 PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )
 {
 	PC_ACTCONT*	pcActCont =

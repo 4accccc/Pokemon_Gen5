@@ -1071,7 +1071,7 @@ static BOOL DMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk )
 
 //--------------------------------------------------------------
 /**
- * イベント：どこでもジャンプ
+ * イベント：テストカメラリスト
  * @param	event	GMEVENT
  * @param	seq		シーケンス
  * @param	wk		event work

@@ -1,38 +1,19 @@
-//******************************************************************************
+//======================================================================
 /**
- * 
  * @file	fldmmdl.c
  * @brief	フィールド動作モデル
  * @author	kagaya
  * @data	05.07.13
- *
  */
-//******************************************************************************
+//======================================================================
 #include "fldmmdl.h"
 
-//==============================================================================
+//======================================================================
 //	define
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 //	debug
 //--------------------------------------------------------------
-#if 0
-#ifdef PM_DEBUG
-#define DEBUG_OBJID_SAM_CHECK		//定義でOBJ ID同一チェック
-#define DEBUG_PRINT_FLDMMDL_COUNT	//定義でOBJ存在数出力
-
-#ifdef DEBUG_ONLY_FOR_kagaya		//kagaya専用
-//#define DEBUG_CHECK_NEWOBJ		//新規OBJチェック
-#define DEBUG_FLDMMDL_PRINTF			//OS_Printf()有効
-#endif
-
-#ifdef DEBUG_CHECK_NEWOBJ
-#define DEBUG_NEWOBJCODE_0 ROTOMWALL
-#define DEBUG_NEWOBJCODE_1 ROTOMWALL
-#endif
-
-#endif //PM_DEBUG
-#endif
 
 //--------------------------------------------------------------
 ///	エイリアスシンボル
@@ -44,36 +25,32 @@ enum
 	RET_ALIES_CHANGE,	//エイリアス変更が必要である
 };
 
-//==============================================================================
+//======================================================================
 //	struct
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 ///	FLDMMDLSYS構造体
 //--------------------------------------------------------------
 typedef struct _TAG_FLDMMDLSYS
 {
 	u32 status_bit;					///<ステータスビット
-	int fmmdl_max;					///<FLDMMDL最大数
-	int fmmdl_count;				///<フィールド動作モデル現在数
-	int tcb_pri;					///<TCBプライオリティ
-	int blact_idx;					///<ビルボードアクターインデックス
-	ARCHANDLE *archandle;			///<アーカイブハンドル
+	u16 fmmdl_max;					///<FLDMMDL最大数
+	u16 fmmdl_count;				///<フィールド動作モデル現在数
+	u16 tcb_pri;					///<TCBプライオリティ
 	FLDMMDL *fmmdl_work;			///<FLDMMDLワーク *
-	
-#if 0
-	FLDMMDL_BLACT_CONT blact_cont;			///<FLDMMDL_BLACT_CONT
-	FLDMMDL_RENDER_CONT_PTR render_cont;	///<FLDMMDL_RENDER_CONT
-	FIELDSYS_WORK *fieldsys;				///<FIELDSYS_WORK *
-#endif
+	void *pTCBSysWork;
 	
 	HEAPID heapID;
-	void *pTCBSysWork;
+
+	int blact_idx;					///<ビルボードアクターインデックス
+	ARCHANDLE *archandle;			///<アーカイブハンドル
+	const FLDMAPPER *pG3DMapper;
+	
+	FLDMMDL_BLACTCONT *pBlActCont;
+
 	GFL_TCBSYS *pTCBSys;
 	FIELD_MAIN_WORK *pFldMainWork;
 	
-	const FLDMAPPER *pG3DMapper;
-
-	FLDMMDL_BLACTCONT *pBlActCont;
 }FLDMMDLSYS;
 
 #define FLDMMDLSYS_SIZE (sizeof(FLDMMDLSYS)) ///<FLDMMDLSYSサイズ
