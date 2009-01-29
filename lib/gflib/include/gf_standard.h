@@ -289,6 +289,25 @@ extern u16 GFL_STD_CrcCalc( const void* pData, u32 dataLength );
 //----------------------------------------------------------------------------
 extern void GFL_STD_RandGeneralInit(GFL_STD_RandContext *context);
 
+//----------------------------------------------------------------------------------------------
+//	暗号化系移植 
+//----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+/**
+ * チェックサムの算出ルーチン
+ *
+ * @param	adrs	開始アドレス
+ * @param	size	データサイズ
+ *
+ * @retval	"算出した値"
+ */
+//----------------------------------------------------------------------------------------------
+extern u32 GFL_STD_CODED_CheckSum(const void * adrs, u32 size);
+
+extern void	GFL_STD_CODED_Coded(void *data,u32 size,u32 code);
+extern void	GFL_STD_CODED_Decoded(void *data,u32 size,u32 code);
+
+
 #endif	/*	__GF_STANDARD_H__ */
 #ifdef __cplusplus
 } /* extern "C" */

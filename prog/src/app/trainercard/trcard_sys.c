@@ -12,6 +12,8 @@
 #include "savedata/config.h"
 #include "savedata/trainercard_data.h"
 #include "savedata/mystatus.h"
+#include "savedata/gametime.h"
+#include "savedata/record.h"
 
 #include "app/mysign.h"
 #include "app/trainer_card.h"
@@ -253,6 +255,8 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , const BOOL isSendData )
 	u8 i,flag;
 	TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(SaveControl_GetPointer());
 	MYSTATUS *mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+	GMTIME *gameTime = SaveData_GetGameTime( SaveControl_GetPointer() );
+	RECORD *rec = SaveData_GetRecord( SaveControl_GetPointer() );
 
 	//名前
 	if( MyStatus_CheckNameClear( mystatus ) == FALSE )
@@ -289,17 +293,65 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , const BOOL isSendData )
 	//通信用かで分岐
 	if( isSendData == TRUE )
 	{
+		PLAYTIME *playTime = SaveData_GetPlayTime( SaveControl_GetPointer() );
 		cardData->UnionTrNo = MyStatus_GetTrainerView( mystatus );
 		cardData->TimeUpdate = FALSE;
+		cardData->PlayTime = NULL;
+		cardData->PlayTime_h = PLAYTIME_GetHour( playTime );
+		cardData->PlayTime_m = PLAYTIME_GetMinute( playTime );
 	}
 	else
 	{
 		cardData->UnionTrNo = UNION_TR_NONE;
 		cardData->TimeUpdate = TRUE;
+		cardData->PlayTime = SaveData_GetPlayTime( SaveControl_GetPointer() );
 	}
+	//クリア日時とプレイ開始日時
+	{
+		RTCDate workDate;
+		RTCTime workTime;
+		
+		RTC_ConvertSecondToDateTime( &workDate , &workTime , gameTime->start_sec );
+		cardData->Start_y = workDate.year;
+		cardData->Start_m = workDate.month;
+		cardData->Start_d = workDate.day;
+
+		if( gameTime->clear_sec == 0 )
+		{
+			//未クリア
+			cardData->Clear_y = 0;
+			cardData->Clear_m = 0;
+			cardData->Clear_d = 0;
+			cardData->ClearTime_h = 0;
+			cardData->ClearTime_m = 0;
+		}
+		else
+		{
+			RTC_ConvertSecondToDateTime( &workDate , &workTime , gameTime->clear_sec );
+			cardData->Clear_y = workDate.year;
+			cardData->Clear_m = workDate.month;
+			cardData->Clear_d = workDate.day;
+			cardData->ClearTime_h = workTime.hour;
+			cardData->ClearTime_m = workTime.minute;
+		}
+	}
+	//通信回数	ワイヤレスコンテスト+ワイヤレス交換+WiFi交換+ワイヤレス対戦+WiFi対戦+ワイヤレスポルト
+	cardData->CommNum = RECORD_Get(rec, RECID_CONTEST_COMM_ENTRY)+
+						RECORD_Get(rec, RECID_COMM_TRADE)+RECORD_Get(rec, RECID_WIFI_TRADE)+
+						RECORD_Get(rec, RECID_COMM_BATTLE)+RECORD_Get(rec, RECID_WIFI_BATTLE)+
+						RECORD_Get(rec, RECID_PORUTO_COMM);
+	//勝ち数	ワイヤレス+WiFi
+	cardData->CommBattleWin = RECORD_Get(rec, RECID_COMM_BTL_WIN)+RECORD_Get(rec, RECID_WIFI_BTL_WIN);
+	//負け数	ワイヤレス+WiFi
+	cardData->CommBattleLose = RECORD_Get(rec, RECID_COMM_BTL_LOSE)+RECORD_Get(rec, RECID_WIFI_BTL_LOSE);
+	//通信交換	ワイヤレス+WiFi
+	cardData->CommTrade = RECORD_Get(rec, RECID_COMM_TRADE)+RECORD_Get(rec, RECID_WIFI_TRADE);
 	
-	cardData->PlayTime = SaveData_GetPlayTime( SaveControl_GetPointer() );
-	cardData->PokeBookFlg = TRUE;
+	//スコア
+	cardData->Score = RECORD_Score_Get( rec );
+	
+	//FIXME 図鑑処理
+	cardData->PokeBookFlg = FALSE;
 
 	//サインデータの取得
 	//サインデータの有効/無効フラグを取得(金銀ローカルでのみ有効)
@@ -307,7 +359,6 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , const BOOL isSendData )
 	//サインデータをセーブデータからコピー
 	MI_CpuCopy8(TRCSave_GetSignDataPtr(trc_ptr),
 			cardData->SignRawData, SIGN_SIZE_X*SIGN_SIZE_Y*8 );
-	
 }
 //自分のカードを見るときのProc呼び出し
 void TRAINERCASR_CallProcSelfData( void )

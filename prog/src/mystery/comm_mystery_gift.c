@@ -1961,8 +1961,6 @@ static GFL_PROC_RESULT MysteryGiftProc_Init(GFL_PROC *proc, int * seq, void *pwk
 	wk->streamMsg = NULL;
 	
 	GFL_FONTSYS_SetColor(MYSTERYGIFT_BLACK);
-	
-	GFL_RTC_Init();
 
 	return GFL_PROC_RES_FINISH;
 }

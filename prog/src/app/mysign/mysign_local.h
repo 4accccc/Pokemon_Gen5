@@ -112,7 +112,7 @@ enum
 struct MYSIGN_WORK{
 	
 	BOOL			wipe_end;
-//	RECORD			*record;
+	RECORD			*record;
 	CONFIG			*config;
 
 	WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー

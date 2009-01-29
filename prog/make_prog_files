@@ -78,6 +78,8 @@ SRCS	+=		$(SOUNDSRC) \
 				savedata/player_data.c \
 				savedata/situation.c \
 				savedata/trainercard_data.c \
+				savedata/system_data.c \
+				savedata/record.c \
 				system/palanm.c \
 				system/wipe.c \
 				system/wipe_sub.c \

@@ -111,7 +111,7 @@ enum{
 //í êMëŒêÌ						:56
 #define WIN_BATTLE_PX	(2)
 #define WIN_BATTLE_PY	(8)
-#define WIN_BATTLE_SX	(BMP_CSX_TYPE2)
+#define WIN_BATTLE_SX	(BMP_CSX_TYPE3)
 #define WIN_BATTLE_SY	(2)
 #define WIN_BATTLE_CGX	(WIN_COMM_CGX+WIN_COMM_SX*WIN_COMM_SY)
 

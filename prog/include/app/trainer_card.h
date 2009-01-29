@@ -31,12 +31,11 @@ typedef struct TR_CARD_DATA_tag
 	u8 GymReaderMask;	//ジムリーダー８人顔マスクフラグ
 	u8 CardRank;		//カードランク
 	
-	u8 BrushValid:1;	//バッジ磨きアプリ有効フラグ
 	u8 TimeUpdate:1;	//時間更新フラグ
 	u8 TrSex:1;			//性別
 	u8 PokeBookFlg:1;	//図鑑所持フラグ
 	u8 MySignValid:1;	//サインデータ有効/無効フラグ
-	u8 Padding:3;
+	u8 Padding:4;
 	u8 UnionTrNo;		//ユニオントレーナーナンバー（0～15）指定無しのときはUNION_TR_NONE(0xff)
 
 	u16	BadgeFlag;		//バッジ入手フラグ(16bit)

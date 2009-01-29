@@ -138,6 +138,9 @@ void GFLUser_Init(void)
 	//システムフォント初期化
 	GFL_TEXT_CreateSystem( NULL );
 
+	//RTC初期化
+	GFL_RTC_Init();
+	
 	GFL_USE_VintrCounter = 0;
 }
 

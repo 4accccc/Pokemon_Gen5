@@ -22,6 +22,7 @@
 
 #include "savedata/config.h"
 #include "savedata/trainercard_data.h"
+#include "savedata/record.h"
 #include "system/wipe.h"
 
 #include "app/mysign.h"
@@ -194,7 +195,7 @@ GFL_PROC_RESULT MySignProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 			wk->SignBuf = (u8*)TRCSave_GetSignDataPtr(TRCSave_GetSaveDataPtr(sv));
 
 			// レコードデータポインタ取得
-			//wk->record  = (RECORD *)SaveData_GetRecord((SAVEDATA*)PROC_GetParentWork(proc));
+			wk->record  = (RECORD *)SaveData_GetRecord(sv);
 			wk->config  = SaveData_GetConfig(sv);
 		}
 
@@ -1248,8 +1249,8 @@ static int Oekaki_EndSelectWait( MYSIGN_WORK *wk, int seq )
 	switch(result){				//やめますか？
 	case TOUCH_SW_RET_YES:						//はい
 		// スコア加算
-//		RECORD_Score_Add( wk->record, SCORE_ID_WRITE_SIGN );
-//		RECORD_Inc( wk->record, RECID_MYSIGN_WRITE );
+		RECORD_Score_Add( wk->record, SCORE_ID_WRITE_SIGN );
+		RECORD_Inc( wk->record, RECID_MYSIGN_WRITE );
 		
 		BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
 		PRINTSYS_PrintStreamDelete( wk->printHandle );

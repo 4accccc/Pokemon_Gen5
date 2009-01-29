@@ -184,6 +184,8 @@ GLOBAL s32 CalcTool_CircleVectorDistance( s32 x0, s32 y0, s32 x1, s32 y1, u32 r 
 GLOBAL s32 CalcTool_CircleVectroDistRotaGet( u16 r, s32 dist );
 
 
+
+
 #undef GLOBAL
 #ifdef __cplusplus
 }/* extern "C" */

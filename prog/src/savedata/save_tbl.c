@@ -22,6 +22,8 @@
 #include "savedata/mystery_data.h"
 #include "savedata/situation.h"
 #include "perapvoice_local.h"
+#include "savedata/system_data.h"
+#include "savedata/record.h"
 
 
 //==============================================================================
@@ -179,6 +181,16 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_PERAPVOICE,
 		(FUNC_GET_SIZE)PERAPVOICE_GetWorkSize,
 		(FUNC_INIT_WORK)PERAPVOICE_Init,
+	},
+	{	//システムデータ
+		GMDATA_ID_SYSTEM_DATA,
+		(FUNC_GET_SIZE)SYSTEMDATA_GetWorkSize,
+		(FUNC_INIT_WORK)SYSTEMDATA_Init,
+	},
+	{	//レコード(スコア
+		GMDATA_ID_RECORD,
+		(FUNC_GET_SIZE)RECORD_GetWorkSize,
+		(FUNC_INIT_WORK)RECORD_Init,
 	},
 };
 
