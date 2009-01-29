@@ -36,8 +36,8 @@
 
 #include "field/shop_gra.naix"
 
-#include "msgdata/msg_wifi_hiroba.h"
-#include "msgdata/msg_wifi_system.h"
+#include "msg/msg_wifi_hiroba.h"
+#include "msg/msg_wifi_system.h"
 #include "message.naix"
 
 #include "graphic/wifi_lobby_other.naix"
@@ -52,6 +52,7 @@
 #include "wflby_gadget.h"
 #include "wflby_timeevent.h"
 
+#include "system/gfl_use.h"
 
 
 
@@ -394,7 +395,7 @@ static const u16 sc_WFLBY_TRCARD_WAZATYPE_SCRN[ WFLBY_SELECT_TYPENUM ][WFLBY_TRC
 
 static const BMPWIN_DAT sc_WFLBY_TRCARD_WIN_DATA[ WFLBY_TRCARD_WIN_NUM ] = {
 	{
-		GF_BGL_FRAME2_S,
+		GFL_BG_FRAME2_S,
 		WFLBY_TRCARD_WIN_NAME_X,
 		WFLBY_TRCARD_WIN_NAME_Y,
 		WFLBY_TRCARD_WIN_NAME_SIZX,
@@ -403,7 +404,7 @@ static const BMPWIN_DAT sc_WFLBY_TRCARD_WIN_DATA[ WFLBY_TRCARD_WIN_NUM ] = {
 		WFLBY_TRCARD_WIN_NAME_CGX,
 	},
 	{
-		GF_BGL_FRAME2_S,
+		GFL_BG_FRAME2_S,
 		WFLBY_TRCARD_WIN_COUNTRY_X,
 		WFLBY_TRCARD_WIN_COUNTRY_Y,
 		WFLBY_TRCARD_WIN_COUNTRY_SIZX,
@@ -412,7 +413,7 @@ static const BMPWIN_DAT sc_WFLBY_TRCARD_WIN_DATA[ WFLBY_TRCARD_WIN_NUM ] = {
 		WFLBY_TRCARD_WIN_COUNTRY_CGX,
 	},
 	{
-		GF_BGL_FRAME2_S,
+		GFL_BG_FRAME2_S,
 		WFLBY_TRCARD_WIN_TRSTART_X,
 		WFLBY_TRCARD_WIN_TRSTART_Y,
 		WFLBY_TRCARD_WIN_TRSTART_SIZX,
@@ -421,7 +422,7 @@ static const BMPWIN_DAT sc_WFLBY_TRCARD_WIN_DATA[ WFLBY_TRCARD_WIN_NUM ] = {
 		WFLBY_TRCARD_WIN_TRSTART_CGX,
 	},
 	{
-		GF_BGL_FRAME2_S,
+		GFL_BG_FRAME2_S,
 		WFLBY_TRCARD_WIN_LASTACTION_X,
 		WFLBY_TRCARD_WIN_LASTACTION_Y,
 		WFLBY_TRCARD_WIN_LASTACTION_SIZX,
@@ -430,7 +431,7 @@ static const BMPWIN_DAT sc_WFLBY_TRCARD_WIN_DATA[ WFLBY_TRCARD_WIN_NUM ] = {
 		WFLBY_TRCARD_WIN_LASTACTION_CGX,
 	},
 	{
-		GF_BGL_FRAME2_S,
+		GFL_BG_FRAME2_S,
 		WFLBY_TRCARD_WIN_VIPAIKOTOBA_X,
 		WFLBY_TRCARD_WIN_VIPAIKOTOBA_Y,
 		WFLBY_TRCARD_WIN_VIPAIKOTOBA_SIZX,
@@ -584,7 +585,7 @@ enum{	//  ボタン動作ステータス
 #define WFLBY_BTTN_WIN_TITLE_SIZY	( 3 )
 #define WFLBY_BTTN_WIN_TITLE_CGX	( WFLBY_UNDERWIN_BTTN_ICON_BGCG_END )
 static const BMPWIN_DAT sc_WFLBY_BTTN_WIN_DATA = {
-	GF_BGL_FRAME1_S,
+	GFL_BG_FRAME1_S,
 	WFLBY_BTTN_WIN_TITLE_X,
 	WFLBY_BTTN_WIN_TITLE_Y,
 	WFLBY_BTTN_WIN_TITLE_SIZX,
@@ -823,6 +824,8 @@ typedef struct _WFLBY_ROOMWK{
 
 	// セーブデータ
 	MYSTATUS*			p_mystatus;
+
+	GFL_TCB *vintr_tcb;
 } WFLBY_ROOMWK;
 
 
@@ -875,31 +878,31 @@ static const GFL_BG_SYS_HEADER sc_BGINIT = {
 
 // BGコントロール
 static const u32 sc_WFLBY_ROOM_BGCNT_FRM[ WFLBY_ROOM_BGCNT_NUM ] = {
-	GF_BGL_FRAME1_M,
-	GF_BGL_FRAME0_S,
-	GF_BGL_FRAME1_S,
-	GF_BGL_FRAME2_S,
+	GFL_BG_FRAME1_M,
+	GFL_BG_FRAME0_S,
+	GFL_BG_FRAME1_S,
+	GFL_BG_FRAME2_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_WFLBY_ROOM_BGCNT_DATA[ WFLBY_ROOM_BGCNT_NUM ] = {
 	// メイン画面
-	{	// GF_BGL_FRAME1_M
+	{	// GFL_BG_FRAME1_M
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x7800, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
 
 	// サブ画面
-	{	// GF_BGL_FRAME0_S
+	{	// GFL_BG_FRAME0_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 		2, 0, 0, FALSE
 	},
-	{	// GF_BGL_FRAME1_S
+	{	// GFL_BG_FRAME1_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 		1, 0, 0, FALSE
 	},
-	{	// GF_BGL_FRAME2_S
+	{	// GFL_BG_FRAME2_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
@@ -947,7 +950,7 @@ static const BMPLIST_HEADER sc_WFLBY_ROOM_YESNO_HEADER = {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_VBlank( void* p_work );
+static void WFLBY_ROOM_VBlank(GFL_TCB *tcb, void *p_work);
 
 static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void WFLBY_ROOM_GraphicMain( WFLBY_GRAPHICCONT* p_sys );
@@ -1188,10 +1191,12 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	p_wk->plno = WFLBY_SYSTEM_GetMyIdx( p_wk->p_system );
 	GF_ASSERT( WFLBY_SYSTEM_GetMyIdx( p_wk->p_system ) != DWC_LOBBY_USERIDTBL_IDX_NONE );
 
+#if WB_TEMP_FIX
 	// メッセージ表示関係を設定
 	MsgPrintSkipFlagSet(MSG_SKIP_ON);
 	MsgPrintAutoFlagSet(MSG_AUTO_OFF);
 	MsgPrintTouchPanelFlagSet(MSG_TP_OFF);
+#endif
 
 
 	// セーブデータ設定
@@ -1263,7 +1268,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	p_wk->p_timeevent = WFLBY_TIMEEVENT_Init( HEAPID_WFLBY_ROOM, p_wk );
 
 	// VBlank関数設定
-	sys_VBlankFuncChange( WFLBY_ROOM_VBlank, p_wk );
+	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(WFLBY_ROOM_VBlank, p_wk, 200);
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 	
 	return	GFL_PROC_RES_FINISH;
@@ -1304,12 +1309,12 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 
 #ifdef WFLBY_DEBUG_ROOM_WLDTIMER_AUTO
 		if( WFLBY_DEBUG_ROOM_WFLBY_TIMER_AUTO == TRUE ){
-			sys.trg		|= PAD_KEY_RIGHT;
-			sys.cont	|= PAD_KEY_RIGHT;
+			GFL_UI_KEY_GetTrg()		|= PAD_KEY_RIGHT;
+			GFL_UI_KEY_GetCont()	|= PAD_KEY_RIGHT;
 
 			if( (gf_mtRand() % 200) == 0 ){
-				sys.trg		|= PAD_BUTTON_A;
-				sys.cont	|= PAD_BUTTON_A;
+				GFL_UI_KEY_GetTrg()		|= PAD_BUTTON_A;
+				GFL_UI_KEY_GetCont()	|= PAD_BUTTON_A;
 			}
 		}
 #endif
@@ -1317,8 +1322,8 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 #ifdef WFLBY_DEBUG_ROOM_MINIGAME_AUTO
 		if( WFLBY_DEBUG_ROOM_MINIGAME_AUTO_FLAG == TRUE ){
 			if( (gf_mtRand() % 10) == 0 ){
-				sys.trg		|= (PAD_KEY_LEFT | PAD_BUTTON_A);
-				sys.cont	|= PAD_KEY_LEFT;
+				GFL_UI_KEY_GetTrg()		|= (PAD_KEY_LEFT | PAD_BUTTON_A);
+				GFL_UI_KEY_GetCont()	|= PAD_KEY_LEFT;
 			}
 		}
 #endif
@@ -1403,7 +1408,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 		
 	// メッセージ終了待ち
 	case WFLBY_ROOM_MAINSEQ_ERR_MSGWAIT:
-		if( sys.trg & PAD_BUTTON_DECIDE ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 			(*p_seq) = WFLBY_ROOM_MAINSEQ_FADEOUT;
 		}
 		break;
@@ -1519,7 +1524,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 		static u32 WFLBY_DEBUG_LightNum = 1;
 		int i;
 		
-		if( sys.trg & PAD_BUTTON_R ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
 			for( i=0; i<2;  i++ ){
 				NNS_G3dGlbLightColor( i, sc_WFLBY_DEBUG_Light[WFLBY_DEBUG_LightNum].lightcolor[i] );
 			}
@@ -1535,7 +1540,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 
 	// 現状を表示
 #ifdef	WFLBY_DEBUG_ROOM_DPRINT
-	if( sys.trg & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		NNS_GfdDumpLnkTexVramManager();
 		NNS_GfdDumpLnkPlttVramManager();
 
@@ -1572,7 +1577,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	}
 
 	// 割り込み設定
-	sys_VBlankFuncChange( NULL, NULL );
+	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	// タイムイベント破棄
@@ -2868,7 +2873,7 @@ BOOL WFLBY_ROOM_GadGet_PlayWait( const WFLBY_ROOMWK* cp_wk, u32 idx )
  *	@brief	VBLANK関数
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_VBlank( void* p_work )
+static void WFLBY_ROOM_VBlank(GFL_TCB *tcb, void *p_work)
 {
 	WFLBY_ROOMWK* p_wk = p_work;
 
@@ -2894,20 +2899,22 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 	G2_BlendNone();
 	G2S_BlendNone();
 
+#if WB_FIX
 	// Vram転送マネージャ作成
 	initVramTransferManagerHeap( WFLBY_ROOM_VTRTSK_NUM, heapID );
+#endif
 
 	// バンク設定
 	GF_Disp_SetBank( &sc_WFLBY_ROOM_BANK );
 
 	// 描画面変更
 	// メインとサブを切り替える
-	sys.disp3DSW = DISP_3D_TO_MAIN;
-	GF_Disp_DispSelect();
+	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
+	GFL_DISP_SetDispOn();
 
 	// バックグラウンドを黒にする
 	{
-		GF_BGL_BackGroundColorSet( GF_BGL_FRAME0_M, 0 );
+		GF_BGL_BackGroundColorSet( GFL_BG_FRAME0_M, 0 );
 	}
 
 	// BGL
@@ -2993,7 +3000,9 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 
 
 		// 下画面に通信アイコンを出す
+#if WB_TEMP_FIX
 		WirelessIconEasy();  // 接続中なのでアイコン表示
+#endif
 
 
 		// セルアクター作成
@@ -3010,8 +3019,8 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 		
 
 		// 表示開始
-		GF_Disp_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-		GF_Disp_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	}
 
 	// 3D設定
@@ -3044,15 +3053,17 @@ static void WFLBY_ROOM_GraphicMain( WFLBY_GRAPHICCONT* p_sys )
 //-----------------------------------------------------------------------------
 static void WFLBY_ROOM_GraphicExit( WFLBY_GRAPHICCONT* p_sys )
 {
+#if WB_TEMP_FIX
 	// VRAM転送マネージャ破棄
 	DellVramTransferManager();
+#endif
 
 	// BGの破棄
 	{
 		int i;
 
 		for( i=0; i<WFLBY_ROOM_BGCNT_NUM; i++ ){
-			GF_BGL_BGControlExit( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[i] );
+			GFL_BG_FreeBGControl( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[i] );
 		}
 
 		// BGL破棄
@@ -3106,8 +3117,10 @@ static void WFLBY_ROOM_GraphicVblank( WFLBY_GRAPHICCONT* p_sys )
     // レンダラ共有OAMマネージャVram転送
     REND_OAMTrans();
 
+#if WB_TEMP_FIX
 	// Vram転送
 	DoVramTransferManager();
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -3118,7 +3131,7 @@ static void WFLBY_ROOM_GraphicVblank( WFLBY_GRAPHICCONT* p_sys )
 static void WFLBY_ROOM_DrawSys3DSetUp( void )
 {
 	// ３Ｄ使用面の設定(表示＆プライオリティー)
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
     G2_SetBG0Priority(1);
 
 	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
@@ -3245,7 +3258,7 @@ static void WFLBY_ROOM_RoomMain( WFLBY_ROOMWK* p_wk )
 #ifdef WFLBY_DEBUG_ROOM_CAMERA
 
 	// カメラを変える
-	if( sys.trg & PAD_BUTTON_SELECT ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		WFLBY_DEBUG_ROOM_CAMERA_FLAG ^= 1;
 		WFLBY_CAMERA_Exit( p_wk->p_camera );
 		if( WFLBY_DEBUG_ROOM_CAMERA_FLAG ){
@@ -3261,7 +3274,7 @@ static void WFLBY_ROOM_RoomMain( WFLBY_ROOMWK* p_wk )
 
 #ifdef WFLBY_DEBUG_ROOM_ITEMCHG
 	// タッチトイを変える
-	if( sys.trg & PAD_BUTTON_L ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
 		WFLBY_USER_PROFILE* p_profile;
 		u32 item;
 
@@ -3435,7 +3448,7 @@ static void WFLBY_ROOM_TalkWin_Exit( WFLBY_ROOM_TALKMSG* p_wk )
 	GFL_STR_DeleteBuffer( p_wk->p_str );
 
 	// ビットマップ破棄
-	GF_BGL_BmpWinDel( &p_wk->win );
+	GFL_BMPWIN_Delete( &p_wk->win );
 }
 
 //----------------------------------------------------------------------------
@@ -3790,7 +3803,7 @@ static void WFLBY_ROOM_ListWin_Init( WFLBY_ROOM_LISTWIN* p_wk, WFLBY_GRAPHICCONT
 	int i;
 
 	// アクターリソース読み込み
-	ARCHANDLE* p_handle = ArchiveDataHandleOpen( ARC_SHOP_GRA, heapID );
+	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARC_SHOP_GRA, heapID );
 	// リソース読み込み
 	p_wk->resObj[ CLACT_U_CHAR_RES ] = CLACT_U_ResManagerResAddArcChar_ArcHandle( 
 			p_sys->p_resman[ CLACT_U_CHAR_RES ],
@@ -3816,7 +3829,7 @@ static void WFLBY_ROOM_ListWin_Init( WFLBY_ROOM_LISTWIN* p_wk, WFLBY_GRAPHICCONT
 			FALSE, WFLBY_LISTWIN_CLACT_RESCONT_ID, 
 			CLACT_U_CELLANM_RES, heapID );
 
-	ArchiveDataHandleClose( p_handle );
+	GFL_ARC_CloseDataHandle( p_handle );
 
 
 	CLACT_U_CharManagerSetAreaCont( p_wk->resObj[ CLACT_U_CHAR_RES ] );
@@ -4105,7 +4118,7 @@ static void WFLBY_ROOM_ListWin_End( WFLBY_ROOM_LISTWIN* p_wk, u16* p_list_p, u16
 	// ウィンドウを破棄
     BmpMenuWinClear( &p_wk->win, WINDOW_TRANS_OFF );
 	GF_BGL_BmpWinOffVReq( &p_wk->win );
-	GF_BGL_BmpWinDel( &p_wk->win );
+	GFL_BMPWIN_Delete( &p_wk->win );
 
 	// OAM非表示
 	p_wk->clact_draw = FALSE;
@@ -4249,7 +4262,7 @@ static void WFLBY_ROOM_SubWin_End( WFLBY_ROOM_SUBWIN* p_wk )
 		// ウィンドウを破棄
 		BmpMenuWinClear( &p_wk->win, WINDOW_TRANS_OFF );
 		GF_BGL_BmpWinOffVReq( &p_wk->win );
-		GF_BGL_BmpWinDel( &p_wk->win );
+		GFL_BMPWIN_Delete( &p_wk->win );
 	}
 }
 
@@ -4384,7 +4397,7 @@ static void WFLBY_ROOM_ErrWin_Init( WFLBY_ROOM_ERRMSG* p_wk, WFLBY_GRAPHICCONT* 
 static void WFLBY_ROOM_ErrWin_Exit( WFLBY_ROOM_ERRMSG* p_wk )
 {
 	// ビットマップ破棄
-	GF_BGL_BmpWinDel( &p_wk->win );
+	GFL_BMPWIN_Delete( &p_wk->win );
 }
 
 //----------------------------------------------------------------------------
@@ -4695,7 +4708,7 @@ static void WFLBY_ROOM_UNDERWIN_Init( WFLBY_UNDER_WIN* p_wk, const WFLBY_ROOM_SA
 	// 性別取得
 	sex = MyStatus_GetMySex( cp_mystatus );
 	
-	p_wk->p_handle = ArchiveDataHandleOpen( ARC_WIFILOBBY_OTHER_GRA, heapID );
+	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARC_WIFILOBBY_OTHER_GRA, heapID );
 	WFLBY_ROOM_UNDERWIN_Common_Init( p_wk, p_sys, p_wk->p_handle, sex, heapID );
 
 	// トレーナカード
@@ -4711,13 +4724,13 @@ static void WFLBY_ROOM_UNDERWIN_Init( WFLBY_UNDER_WIN* p_wk, const WFLBY_ROOM_SA
 		p_wk->seq = WFLBY_UNDERWIN_SEQ_STARTWAIT;
 
 		// バックパレットカラーを黒にしておく
-		GF_BGL_BackGroundColorSet( GF_BGL_FRAME0_S, 0 );
+		GF_BGL_BackGroundColorSet( GFL_BG_FRAME0_S, 0 );
 		
 		// サブ面全部非表示
-		GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-		GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-		GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
-		GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
 	}else{
 		p_wk->seq = WFLBY_UNDERWIN_SEQ_NORMAL;
 	}
@@ -4742,7 +4755,7 @@ static void WFLBY_ROOM_UNDERWIN_Exit( WFLBY_UNDER_WIN* p_wk, WFLBY_ROOM_TALKMSG*
 	WFLBY_ROOM_UNDERWIN_TrCard_Exit( &p_wk->tr_card, p_boardwin, p_sys );
 
 	WFLBY_ROOM_UNDERWIN_Common_Exit( p_wk, p_sys );
-	ArchiveDataHandleClose( p_wk->p_handle );
+	GFL_ARC_CloseDataHandle( p_wk->p_handle );
 }
 
 //----------------------------------------------------------------------------
@@ -4812,10 +4825,10 @@ static void WFLBY_ROOM_UNDERWIN_Main( WFLBY_UNDER_WIN* p_wk, WFLBY_ROOMWK* p_roo
 			}
 
 			// サブ面全部表示開始
-			GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-			GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
-			GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
-			GF_Disp_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+			GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+			GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+			GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+			GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 			p_wk->seq ++;
 		}
 		break;
@@ -5402,7 +5415,7 @@ static void WFLBY_ROOM_UNDERWIN_PalTransVTcb( GFL_TCB* p_tcb, void* p_work )
 	}
 
 	// タスク破棄
-	TCB_Delete( p_tcb );
+	GFL_TCB_DeleteTask( p_tcb );
 }
 
 
@@ -5551,7 +5564,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_Exit( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_TAL
 		int i;
 
 		for( i=0; i<WFLBY_TRCARD_WIN_NUM; i++ ){
-			GF_BGL_BmpWinDel( &p_wk->win[i] );
+			GFL_BMPWIN_Delete( &p_wk->win[i] );
 		}
 	}
 }
@@ -6435,7 +6448,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_InitRireki( WFLBY_TR_CARD* p_wk, WFLBY_GR
 
 
 	// ユニオンオブジェ　表向きのアーカイブハンドルオープン
-	p_union_handle = ArchiveDataHandleOpen( ARC_2DUNIONOBJ_FRONT, heapID );
+	p_union_handle = GFL_ARC_OpenDataHandle( ARC_2DUNIONOBJ_FRONT, heapID );
 
 
 	// 自分のユーザIDX取得
@@ -6553,7 +6566,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_InitRireki( WFLBY_TR_CARD* p_wk, WFLBY_GR
 		}
 	}
 
-	ArchiveDataHandleClose( p_union_handle );
+	GFL_ARC_CloseDataHandle( p_union_handle );
 	
 }
 
@@ -6666,7 +6679,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_Exit( WFLBY_GADGET_BTTN* p_wk )
 	BMN_Delete( p_wk->p_bttnman );	
 
 	//  ビットマップ破棄
-	GF_BGL_BmpWinDel( &p_wk->win );
+	GFL_BMPWIN_Delete( &p_wk->win );
 	
 	// 全リソース破棄
 	for( i=0; i<WFLBY_ROOM_UNDERWIN_BTTN_ANM_NUM; i++ ){

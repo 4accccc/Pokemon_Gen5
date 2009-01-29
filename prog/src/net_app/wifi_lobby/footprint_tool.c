@@ -22,7 +22,7 @@
 #include "message.naix"
 //#include "system/fontproc.h"
 #include "gflib/strbuf_family.h"
-#include "msgdata/msg_wflby_footprint.h"
+#include "msg/msg_wflby_footprint.h"
 #include "system\font_arc.h"
 #include "savedata/config.h"
 //#include  "communication/wm_icon.h"

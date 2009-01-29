@@ -39,8 +39,8 @@
 #include "balloon_control.h"
 #include "balloon_snd_def.h"
 
-#include "graphic/balloon_gra_def.h"
-#include "msgdata/msg_balloon.h"
+#include "balloon_gra_def.h"
+#include "msg/msg_balloon.h"
 
 
 //==============================================================================
@@ -838,7 +838,7 @@ void BalloonTool_BalloonBGSet(int player_max, int level, BALLOON_STATUS *bst)
 	OS_TPrintf("balloon level = %d\n", level);
 	
 	//ハンドルオープン
-	hdl  = ArchiveDataHandleOpen(ARC_BALLOON_GRA,  HEAPID_BALLOON); 
+	hdl  = GFL_ARC_OpenDataHandle(ARCID_BALLOON_GRA,  HEAPID_BALLOON); 
 
 	ArcUtil_HDL_BgCharSet(hdl, BalloonLevelData[level].ncgr_id, 
 		BALLOON_SUBFRAME_BALLOON, 0, 0, 0, HEAPID_BALLOON);
@@ -846,7 +846,7 @@ void BalloonTool_BalloonBGSet(int player_max, int level, BALLOON_STATUS *bst)
 		BALLOON_SUBFRAME_BALLOON, 0, 0, 0, HEAPID_BALLOON);
 
 	//ハンドル閉じる
-	ArchiveDataHandleClose( hdl );
+	GFL_ARC_CloseDataHandle( hdl );
 	
 	
 	//ステータスパラメータセット
@@ -3089,7 +3089,7 @@ void BalloonTool_FontOamCreate(CATS_RES_PTR crp,
 	FONTOAM_SetMat(fontoam, x, y);
 	
 	//解放処理
-	GF_BGL_BmpWinDel(&bmpwin);
+	GFL_BMPWIN_Delete(&bmpwin);
 	
 	fontact->fontoam = fontoam;
 	fontact->cma = cma;

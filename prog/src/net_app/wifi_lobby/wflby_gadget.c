@@ -1432,7 +1432,7 @@ WFLBY_GADGET* WFLBY_GADGET_Init( WFLBY_SYSTEM* p_system, WFLBY_MAPCONT* p_mapcon
 	// リソース読み込み
 	{
 		ARCHANDLE* p_handle;
-		p_handle = ArchiveDataHandleOpen( ARC_WIFILOBBY_OTHER_GRA, heapID );
+		p_handle = GFL_ARC_OpenDataHandle( ARC_WIFILOBBY_OTHER_GRA, heapID );
 
 		// アロケータ作成
 		sys_InitAllocator( &p_sys->allocator, gheapID, 4 );
@@ -1446,7 +1446,7 @@ WFLBY_GADGET* WFLBY_GADGET_Init( WFLBY_SYSTEM* p_system, WFLBY_MAPCONT* p_mapcon
 		// アニメ読み込み
 		WFLBY_GADGET_LoadAnm( p_sys, p_handle, gheapID );
 
-		ArchiveDataHandleClose( p_handle );
+		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
 	return p_sys;
@@ -1489,7 +1489,7 @@ void WFLBY_GADGET_Main( WFLBY_GADGET* p_sys )
 	int i;
 
 #ifdef WFLBY_DEBUG_GADGET_ALL_PUT
-	if( sys.cont & PAD_BUTTON_R ){
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
 		const WFLBY_USER_PROFILE* cp_profile;
 		cp_profile = WFLBY_SYSTEM_GetMyProfileLocal( p_sys->p_system );
 		for( i=0; i<WFLBY_PLAYER_MAX; i++ ){
@@ -3423,16 +3423,16 @@ static BOOL WFLBY_GADGET_Balloon_MainUp_Normal( WFLBY_GADGET* p_sys, WFLBY_GADGE
 	// キーで方向を変える
 	if( p_wk->p_person == WFLBY_3DOBJCONT_GetPlayer( p_sys->p_objcont ) ){
 		u32 way = WF2DMAP_WAY_NUM;
-		if( sys.trg & PAD_KEY_UP ){
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
 			way = WF2DMAP_WAY_UP;
 		}
-		if( sys.trg & PAD_KEY_DOWN ){
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
 			way = WF2DMAP_WAY_DOWN;
 		}
-		if( sys.trg & PAD_KEY_RIGHT ){
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
 			way = WF2DMAP_WAY_RIGHT;
 		}
-		if( sys.trg & PAD_KEY_LEFT ){
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
 			way = WF2DMAP_WAY_LEFT;
 		}
 		if( way != WF2DMAP_WAY_NUM ){

@@ -56,11 +56,11 @@ enum{
 #define BALLOON_BGPRI_BACKGROUND		(2)
 
 ///ウィンドウ・パネル面のフレーム
-#define BALLOON_FRAME_WIN				(GF_BGL_FRAME1_M)
+#define BALLOON_FRAME_WIN				(GFL_BG_FRAME1_M)
 ///エフェクト面のフレーム
-#define BALLOON_FRAME_EFF				(GF_BGL_FRAME2_M)
+#define BALLOON_FRAME_EFF				(GFL_BG_FRAME2_M)
 ///観客(背景)面のフレーム
-#define BALLOON_FRAME_BACK				(GF_BGL_FRAME3_M)
+#define BALLOON_FRAME_BACK				(GFL_BG_FRAME3_M)
 
 #define BALLOON_BGNO_WINDOW			(1)					///<BG番号：ウィンドウ
 #define BALLOON_BGNO_EFFECT			(2)					///<BG番号：エフェクト
@@ -79,13 +79,13 @@ enum{
 #define BALLOON_SUBBG_BALLOON_PRI		(0)
 
 ///ウィンドウ面のフレーム
-#define BALLOON_SUBFRAME_WIN			(GF_BGL_FRAME0_S)
+#define BALLOON_SUBFRAME_WIN			(GFL_BG_FRAME0_S)
 ///パイプBG面のフレーム
-#define BALLOON_SUBFRAME_PIPE			(GF_BGL_FRAME1_S)
+#define BALLOON_SUBFRAME_PIPE			(GFL_BG_FRAME1_S)
 ///背景面のフレーム
-#define BALLOON_SUBFRAME_BACK			(GF_BGL_FRAME2_S)
+#define BALLOON_SUBFRAME_BACK			(GFL_BG_FRAME2_S)
 ///風船BGのフレーム
-#define BALLOON_SUBFRAME_BALLOON		(GF_BGL_FRAME3_S)
+#define BALLOON_SUBFRAME_BALLOON		(GFL_BG_FRAME3_S)
 
 //--------------------------------------------------------------
 //	スクリーンクリアコード

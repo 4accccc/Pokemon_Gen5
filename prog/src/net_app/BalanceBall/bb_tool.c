@@ -423,7 +423,7 @@ static void BB_Stardust_TCB( GFL_TCB* tcb, void* work )
 			CATS_ActorPointerDelete_S( wk->cap[ i ] );
 		}
 		wk->active = FALSE;
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		return;
 	}
 	
@@ -458,7 +458,7 @@ static void BB_Stardust_TCB( GFL_TCB* tcb, void* work )
 			CATS_ActorPointerDelete_S( wk->cap[ i ] );
 		}
 		wk->active = FALSE;
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		break;
 	}	
 }
@@ -520,7 +520,7 @@ static void BB_Client_Effect_TCB( GFL_TCB* tcb, void* work )
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (sys->comm_err_data.dis_err == TRUE) ){
 		*wk->flag = FALSE;		
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		GFL_HEAP_FreeMemory( wk );
 		return;
 	}
@@ -669,7 +669,7 @@ static void BB_Client_Effect_TCB( GFL_TCB* tcb, void* work )
 	default:
 		BB_disp_Hanabi_OAM_Enable( wk->client, FALSE, 0 );		
 		GFL_HEAP_FreeMemory( wk );
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		break;
 	}	
 	BB_disp_Hanabi_OAM_Update( wk->client );
@@ -923,7 +923,7 @@ static void BB_Effect_Main_TCB( GFL_TCB* tcb, void* work )
 	BB_SYS* sys = wk->sys;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (sys->comm_err_data.dis_err == TRUE) ){
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		return;
 	}
 	
@@ -1096,11 +1096,11 @@ static void BB_Fever_Open( BB_FEVER* wk )
 			for ( i = 0; i < 3; i++ ){
 				bEnd[ i ] = BB_MoveMain_FX( &wk->scr_move[ i ] );
 			}
-			GF_BGL_ScrollReq( GF_BGL_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
-			GF_BGL_ScrollReq( GF_BGL_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( GF_BGL_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
-			GF_BGL_ScrollReq( GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( GF_BGL_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
+			GF_BGL_ScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
+			GF_BGL_ScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
 			if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] ){
 				wk->seq++;
 			}
@@ -1146,11 +1146,11 @@ static void BB_Fever_Close( BB_FEVER* wk )
 			for ( i = 0; i < 3; i++ ){
 				bEnd[ i ] = BB_MoveMain_FX( &wk->scr_move[ i ] );
 			}
-			GF_BGL_ScrollReq( GF_BGL_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
-			GF_BGL_ScrollReq( GF_BGL_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( GF_BGL_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
-			GF_BGL_ScrollReq( GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( GF_BGL_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
+			GF_BGL_ScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
+			GF_BGL_ScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
 			if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] ){
 				wk->seq++;
 			}
@@ -1173,12 +1173,12 @@ static void BB_Fever_Close( BB_FEVER* wk )
 	ColorConceChangePfd( wk->sys->pfd, FADE_SUB_BG,  BB_COLOR_FADE_PAL_OFS, *col1 + *col2, BB_COLOR_FADE_COL );
 }
 
-///GF_BGL_FRAME1_M = ©
-///GF_BGL_FRAME2_M = ¨
+///GFL_BG_FRAME1_M = ©
+///GFL_BG_FRAME2_M = ¨
 
-///GF_BGL_FRAME1_S = ©
-///GF_BGL_FRAME2_S = ¨
-///GF_BGL_FRAME3_S = ª
+///GFL_BG_FRAME1_S = ©
+///GFL_BG_FRAME2_S = ¨
+///GFL_BG_FRAME3_S = ª
 
 //--------------------------------------------------------------
 /**
@@ -1247,7 +1247,7 @@ static void BB_Fever_Main_TCB( GFL_TCB* tcb, void* work )
 	level = *wk->level;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		return;
 	}
 
@@ -1346,7 +1346,7 @@ static void Fever01_TCB( GFL_TCB* tcb, void* work )
 	fx32 px, py;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		return;
 	}
 	
@@ -1426,7 +1426,7 @@ static void Fever01_TCB( GFL_TCB* tcb, void* work )
 
 	default:
 //		OS_Printf( " TYPE 1 EFFECT END = %d\n", wk->wait );
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		break;
 	}
 }
@@ -1607,7 +1607,7 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 	fx32 px, py;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		return;
 	}
 	
@@ -1721,7 +1721,7 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 	
 	default:
 //		OS_Printf( " TYPE 2 EFFECT END = %d\n", wk->wait );
-		TCB_Delete( tcb );	
+		GFL_TCB_DeleteTask( tcb );	
 		break;
 	}
 }
@@ -1736,7 +1736,7 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 	fx32 px, py;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		return;
 	}
 
@@ -1850,7 +1850,7 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 	
 	default:
 //		OS_Printf( " TYPE 3 EFFECT END = %d\n", wk->wait );
-		TCB_Delete( tcb );	
+		GFL_TCB_DeleteTask( tcb );	
 		break;
 	}
 }
@@ -1865,7 +1865,7 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 	fx32 px, py;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		return;
 	}
 
@@ -1998,7 +1998,7 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 	
 	default:
 //		OS_Printf( " TYPE 4 EFFECT END = %d\n", wk->wait );
-		TCB_Delete( tcb );	
+		GFL_TCB_DeleteTask( tcb );	
 		break;
 	}
 }
@@ -2013,7 +2013,7 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 	fx32 px, py;
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		return;
 	}
 
@@ -2147,7 +2147,7 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 	
 	default:
 //		OS_Printf( " TYPE 4 EFFECT END = %d\n", wk->wait );
-		TCB_Delete( tcb );	
+		GFL_TCB_DeleteTask( tcb );	
 		break;
 	}
 }

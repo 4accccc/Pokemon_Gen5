@@ -448,7 +448,7 @@ u32 WIFI_MCR_Main( WIFI_MATCHROOM* p_mcr )
 				return MCR_RET_CANCEL;
 			}
 		}
-//		if( sys.trg & PAD_BUTTON_DECIDE ){
+//		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 			// 他人を選択したかチェック
 			if( WIFI_MCR_PlayerSelect( p_mcr ) > 0 ){

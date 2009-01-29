@@ -19,7 +19,7 @@
 #include "print\gf_font.h"
 
 #include "message.naix"
-#include "msgdata/msg_wflby_news.h"
+#include "msg/msg_wflby_news.h"
 
 #include "lobby_news_data.h"
 

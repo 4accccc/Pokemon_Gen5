@@ -38,10 +38,10 @@
 #include "balloon_tool.h"
 #include "balloon_snd_def.h"
 
-#include "graphic/balloon_gra_def.h"
+#include "balloon_gra_def.h"
 #include "balloon_id.h"
-#include "../../particledata/pl_etc/pl_etc_particle_def.h"
-#include "../../particledata/pl_etc/pl_etc_particle_lst.h"
+#include "balloon_particle.naix"
+#include "balloon_particle_lst.h"
 
 
 //==============================================================================
@@ -489,7 +489,7 @@ void Sonans_Update(BALLOON_GAME_PTR game, SONANS_SYS_PTR sns)
 	}
 	
 #ifdef PM_DEBUG
-	if(sys.trg & PAD_BUTTON_L){
+	if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
 //		sns->debug_aim_on_off ^= 1;
 	}
 #endif
@@ -709,10 +709,10 @@ static void Sonans_PolygonCreate(SONANS_SYS_PTR sns)
 //	GF_G3X_Reset();
 	
 #if 0
-	if(sys.cont & PAD_BUTTON_Y){
+	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_Y){
 		sns->rotate = 0;
 	}
-	if(sys.cont & PAD_BUTTON_X){
+	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){
 		sns->rotate += 256;
 	}
 #endif
@@ -825,7 +825,7 @@ static void Sonas_TexLoad(SONANS_SYS *sns)
 {
 	//テクスチャファイル読み込み
 	sns->tex_file = ArchiveDataLoadMalloc(
-		ARC_BALLOON_GRA, SONANS_NSBTX, HEAPID_BALLOON);
+		ARCID_BALLOON_GRA, SONANS_NSBTX, HEAPID_BALLOON);
 	sns->texture = NNS_G3dGetTex(sns->tex_file);	// テクスチャリソース取得
 	
 	//VRAMへ展開
@@ -1667,7 +1667,7 @@ static void Aim_ResourceLoad(BALLOON_GAME_PTR game)
 	ARCHANDLE* hdl;
 
 	//ハンドルオープン
-	hdl  = ArchiveDataHandleOpen(ARC_BALLOON_GRA,  HEAPID_BALLOON); 
+	hdl  = GFL_ARC_OpenDataHandle(ARCID_BALLOON_GRA,  HEAPID_BALLOON); 
 
 	CATS_LoadResourcePlttWorkArcH(game->pfd, FADE_MAIN_OBJ, game->csp, game->crp, 
 		hdl, AIM_NCLR, 0, 
@@ -1680,7 +1680,7 @@ static void Aim_ResourceLoad(BALLOON_GAME_PTR game)
 		0, CELLANMID_BALLOON_AIM);
 
 	//ハンドル閉じる
-	ArchiveDataHandleClose( hdl );
+	GFL_ARC_CloseDataHandle( hdl );
 }
 
 //--------------------------------------------------------------

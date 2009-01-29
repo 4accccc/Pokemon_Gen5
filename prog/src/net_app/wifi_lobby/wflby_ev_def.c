@@ -12,9 +12,9 @@
 
 #include "common.h"
 
-#include "msgdata/msg_wifi_h_info.h"
-#include "msgdata/msg_wifi_hiroba.h"
-#include "msgdata/msg_wifi_system.h"
+#include "msg/msg_wifi_h_info.h"
+#include "msg/msg_wifi_hiroba.h"
+#include "msg/msg_wifi_system.h"
 
 //#include "system/fontproc.h"
 
@@ -1155,7 +1155,7 @@ static BOOL WFLBY_EV_DEF_WayKeyInput( WF2DMAP_WAY way )
 		key = PAD_KEY_RIGHT;
 		break;
 	}
-	if( sys.cont & key ){
+	if( GFL_UI_KEY_GetCont() & key ){
 		return TRUE;
 	}
 	return FALSE;
@@ -1930,7 +1930,7 @@ static BOOL WFLBY_EV_DEF_PlayerInNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMW
 	// ”よろしければ　タイプ選択”
 	case WFLBY_EV_DEF_PLAYERIN_NORMAL_SEQ_MSG17:
 
-		if( !((Snd_SePlayCheck( WFLBY_SND_TOUCH_TOY_CHG ) == FALSE) && (sys.trg & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL))) ){
+		if( !((Snd_SePlayCheck( WFLBY_SND_TOUCH_TOY_CHG ) == FALSE) && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL))) ){
 			break;
 		}
 
@@ -2541,7 +2541,7 @@ static BOOL WFLBY_EV_DEF_PlayerMain_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p
 
 
 				// 選択関係
-				if( sys.trg & PAD_BUTTON_DECIDE ){
+				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 					// 目の前に誰かいるかチェック
 					// いたらその人と話す
 					{
@@ -2683,7 +2683,7 @@ static BOOL WFLBY_EV_DEF_PlayerMain_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p
 
 
 				// Xボタンを押したら自分のプロフィールを表示
-				if( sys.trg & PAD_BUTTON_X ){
+				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 					// スイッチ表示
 					if( WFLBY_ROOM_UNDERWIN_TrCardGetDraw( p_rmwk ) == FALSE ){
 						WFLBY_ROOM_UNDERWIN_TrCardOn( p_rmwk, WFLBY_SYSTEM_GetMyIdx( p_system ), FALSE );
@@ -3593,7 +3593,7 @@ static BOOL WFLBY_EV_DEF_PlayerOutAnketo( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 
 		// 終了してないかチェック
 #ifdef WFLBY_DEBUG_EV_DEF_ANKETO
-		if( (WFLBY_SYSTEM_Event_GetEndCM( p_system ) == TRUE) || (sys.cont & PAD_BUTTON_L) ){
+		if( (WFLBY_SYSTEM_Event_GetEndCM( p_system ) == TRUE) || (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) ){
 #else
 		if( (WFLBY_SYSTEM_Event_GetEndCM( p_system ) == TRUE) ){
 #endif
@@ -3604,7 +3604,7 @@ static BOOL WFLBY_EV_DEF_PlayerOutAnketo( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 
 		// 結果表示
 #ifdef WFLBY_DEBUG_EV_DEF_ANKETO
-		if( (WFLBY_SYSTEM_Event_GetNeon( p_system ) == TRUE) || (sys.cont & PAD_BUTTON_SELECT) ){
+		if( (WFLBY_SYSTEM_Event_GetNeon( p_system ) == TRUE) || (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT) ){
 #else
 		if( (WFLBY_SYSTEM_Event_GetNeon( p_system ) == TRUE) ){
 #endif
@@ -4104,7 +4104,7 @@ static BOOL WFLBY_EV_FLOAT_Inside( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u3
 	case WFLBY_EV_FLOAT_SEQ_FLOAT_INWAIT:	
 
 		// BボタンとKEYDOWNでCancel処理
-		if( (sys.trg & PAD_BUTTON_CANCEL) || (sys.trg & PAD_KEY_DOWN) ){
+		if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL) || (GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN) ){
 			// 予約Cancel
 			WFLBY_SYSTEM_ResetFloatReserve( p_system, plno );
 
@@ -4220,7 +4220,7 @@ static BOOL WFLBY_EV_FLOAT_Inside( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u3
 			WFLBY_EV_FLOAT_MatrixDonDonSet( p_evwk, p_mapobjcont, p_rmwk );
 
 #ifdef WFLBY_DEBUG_EV_DEF_FLOAT_RETRY
-			if( sys.trg & PAD_BUTTON_B ){
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 				WFLBY_ROOM_SAVE* p_save;
 
 				// 予約リセット

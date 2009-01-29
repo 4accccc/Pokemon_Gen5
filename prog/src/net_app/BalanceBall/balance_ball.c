@@ -20,6 +20,7 @@
 
 #include "bb_server.h"
 #include "bb_client.h"
+#include "system/gfl_use.h"
 
 #define BB_COMM_END_CMD	( 999 )
 
@@ -37,7 +38,7 @@ static void BB_VramBankSet( void );
 static void BB_CATS_Init( BB_WORK* wk );
 static BOOL BB_WipeStart( int type );
 static void BB_MainSeq_Change( BB_WORK* wk, BOOL bEnd, int next_seq, int* seq );
-static void BB_VBlank( void* work );
+static void BB_VBlank(GFL_TCB *tcb, void *work);
 static void MainResource_Delete( BB_WORK* wk );
 static void Reset_GameData( BB_WORK* wk );
 
@@ -92,14 +93,17 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 
 	BB_SystemInit( wk );
 	
-	sys_VBlankFuncChange( BB_VBlank, wk );
+	wk->vintr_tcb = GFUser_VIntr_CreateTCB(BB_VBlank, wk, 200);
 	sys_HBlankIntrStop();
 
+#if WB_FIX
 	initVramTransferManagerHeap( BB_TRANSFER_NUM, HEAPID_BB );	
+#endif
 
 	///< wi-fi アイコン( パレットをpalette_fade に渡す )
     CLACT_U_WmIcon_SetReserveAreaCharManager( NNS_G2D_VRAM_TYPE_2DMAIN, GX_OBJVRAMMODE_CHAR_1D_128K );
     CLACT_U_WmIcon_SetReserveAreaPlttManager( NNS_G2D_VRAM_TYPE_2DMAIN );
+#if WB_TEMP_FIX
 	WirelessIconEasy();
 	{
 		NNSG2dPaletteData *palData;
@@ -111,6 +115,7 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 
 		GFL_HEAP_FreeMemory( dat );
 	}
+#endif
 
 	///< 通信部分
 	{
@@ -126,12 +131,14 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 	}
 	
 	///< Touch Panel
+#if WB_FIX
 	{
 		u32 active;
 		InitTPSystem();
 		active = InitTPNoBuff( 4 );
 	//	wk->sys.btn = BMN_Create( ball_hit_tbl, BB_TOUCH_HIT_NUM, BB_Client_TouchPanel_CallBack, wk, HEAPID_BB );
 	}
+#endif
 	
 	///< 2D リソース読み込み
 	BB_disp_BG_Load( wk );
@@ -494,7 +501,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 		MNGM_ENTRY_Exit( wk->entry_work );
 		wk->entry_work = NULL;
 #ifdef PM_DEBUG
-		if ( sys.cont & PAD_BUTTON_A ){
+		if ( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
 			wk->rule.ball_type = 1;
 		}
 #endif
@@ -594,7 +601,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 				
 				if ( BB_Server_Main( wk->p_server ) == FALSE ){
 			#ifdef BB_GAME_ENDLESS	
-					if ( sys.trg & PAD_BUTTON_B ){
+					if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 						CommSendData( CCMD_BB_END, NULL, 0 );
 						break;	
 					}
@@ -757,10 +764,13 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 
 static void MainResource_Delete( BB_WORK* wk )
 {
-	sys_VBlankFuncChange( NULL, NULL );
+	GFL_TCB_DeleteTask(wk->vintr_tcb);
 	sys_HBlankIntrStop();
+#if WB_TEMP_FIX
 	DellVramTransferManager();
+#endif
 
+#if WB_TEMP_FIX
 	///< touch panel
 	{
 		{
@@ -769,6 +779,7 @@ static void MainResource_Delete( BB_WORK* wk )
 		}
 	//	BMN_Delete( wk->sys.btn );
 	}
+#endif
 	
 	///< 乱数のタネ戻す
 	gf_srand( wk->seed_tmp );
@@ -923,8 +934,8 @@ static void BB_TcbMain(BB_WORK *wk)
 //--------------------------------------------------------------
 static void BB_SystemInit( BB_WORK* wk )
 {
-	wk->sys.p_handle_bb = ArchiveDataHandleOpen( ARCID_BB_RES, HEAPID_BB );	;
-	wk->sys.p_handle_cr = ArchiveDataHandleOpen( ARCID_COMMON_RES, HEAPID_BB );	
+	wk->sys.p_handle_bb = GFL_ARC_OpenDataHandle( ARCID_BB_RES, HEAPID_BB );	;
+	wk->sys.p_handle_cr = GFL_ARC_OpenDataHandle( ARCID_COMMON_RES, HEAPID_BB );	
 	GFL_BG_Init( HEAPID_BB );
 	GFL_BMPWIN_Init( HEAPID_BB );
 	wk->sys.pfd			= PaletteFadeInit( HEAPID_BB );
@@ -970,22 +981,22 @@ static void BB_SystemInit( BB_WORK* wk )
 //--------------------------------------------------------------
 void BB_SystemExit( BB_WORK* wk )
 {	
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0,  VISIBLE_OFF );
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG1,  VISIBLE_OFF );
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG2,  VISIBLE_OFF );
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG3,  VISIBLE_OFF );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
-	GF_BGL_BGControlExit( GF_BGL_FRAME0_M );
-	GF_BGL_BGControlExit( GF_BGL_FRAME1_M );
-	GF_BGL_BGControlExit( GF_BGL_FRAME2_M );
-	GF_BGL_BGControlExit( GF_BGL_FRAME3_M );
-	GF_BGL_BGControlExit( GF_BGL_FRAME0_S );
-	GF_BGL_BGControlExit( GF_BGL_FRAME1_S );
-	GF_BGL_BGControlExit( GF_BGL_FRAME2_S );
-	GF_BGL_BGControlExit( GF_BGL_FRAME3_S );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0,  VISIBLE_OFF );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1,  VISIBLE_OFF );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2,  VISIBLE_OFF );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3,  VISIBLE_OFF );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME2_S );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_S );
 	GFL_BG_Exit();
 	GFL_BMPWIN_Exit();
 
@@ -995,8 +1006,8 @@ void BB_SystemExit( BB_WORK* wk )
 	PaletteFadeWorkAllocFree( wk->sys.pfd, FADE_SUB_OBJ );
 	PaletteFadeFree( wk->sys.pfd );
 
-	ArchiveDataHandleClose( wk->sys.p_handle_bb );
-	ArchiveDataHandleClose( wk->sys.p_handle_cr );
+	GFL_ARC_CloseDataHandle( wk->sys.p_handle_bb );
+	GFL_ARC_CloseDataHandle( wk->sys.p_handle_cr );
 	
 	GF_G3D_Exit();
 	GFL_G3D_CAMERA_Delete( wk->sys.camera_p );
@@ -1005,8 +1016,8 @@ void BB_SystemExit( BB_WORK* wk )
 	CATS_ResourceDestructor_S( wk->sys.csp, wk->sys.crp );
 	CATS_FreeMemory( wk->sys.csp );
 	
-	sys.disp3DSW = DISP_3D_TO_MAIN;
-	GF_Disp_DispSelect();
+	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
+	GFL_DISP_SetDispOn();
 	
 	G3X_AlphaBlend( FALSE );
 }
@@ -1023,7 +1034,7 @@ void BB_SystemExit( BB_WORK* wk )
 //--------------------------------------------------------------
 static void BB_VramBankSet( void )
 {
-	GF_Disp_GX_VisibleControlInit();
+	GFL_DISP_GX_SetVisibleControlDirect(0);
 	
 	{	// BG SYSTEM
 		GFL_BG_SYS_HEADER BGsys_data = {
@@ -1085,18 +1096,18 @@ static void BB_VramBankSet( void )
 				GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
 			},
 		};
-//		GF_BGL_ClearCharSet( GF_BGL_FRAME0_M, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GF_BGL_FRAME1_M, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GF_BGL_FRAME2_M, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GF_BGL_FRAME3_M, 32, 0, HEAPID_BB );
-//		GFL_BG_SetBGControl( GF_BGL_FRAME0_M, &TextBgCntDat[ 0 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GF_BGL_FRAME1_M, &TextBgCntDat[ 1 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GF_BGL_FRAME2_M, &TextBgCntDat[ 2 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GF_BGL_FRAME3_M, &TextBgCntDat[ 3 ], GF_BGL_MODE_TEXT );
-		GFL_BG_ClearScreen( GF_BGL_FRAME0_M );
-		GFL_BG_ClearScreen( GF_BGL_FRAME1_M );
-		GFL_BG_ClearScreen( GF_BGL_FRAME2_M );
-		GFL_BG_ClearScreen( GF_BGL_FRAME3_M );
+//		GF_BGL_ClearCharSet( GFL_BG_FRAME0_M, 32, 0, HEAPID_BB );
+		GF_BGL_ClearCharSet( GFL_BG_FRAME1_M, 32, 0, HEAPID_BB );
+		GF_BGL_ClearCharSet( GFL_BG_FRAME2_M, 32, 0, HEAPID_BB );
+		GF_BGL_ClearCharSet( GFL_BG_FRAME3_M, 32, 0, HEAPID_BB );
+//		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat[ 0 ], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat[ 1 ], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat[ 2 ], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat[ 3 ], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+		GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
+		GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
+		GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
 	}
 	///< サブ画面フレーム設定
 	{
@@ -1126,39 +1137,39 @@ static void BB_VramBankSet( void )
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
 		};
-		GF_BGL_ClearCharSet( GF_BGL_FRAME0_S, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GF_BGL_FRAME1_S, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GF_BGL_FRAME2_S, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GF_BGL_FRAME3_S, 32, 0, HEAPID_BB );
-		GFL_BG_SetBGControl( GF_BGL_FRAME0_S, &TextBgCntDat[ 0 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GF_BGL_FRAME1_S, &TextBgCntDat[ 1 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GF_BGL_FRAME2_S, &TextBgCntDat[ 2 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GF_BGL_FRAME3_S, &TextBgCntDat[ 3 ], GF_BGL_MODE_TEXT );
-		GFL_BG_ClearScreen( GF_BGL_FRAME0_S );
-		GFL_BG_ClearScreen( GF_BGL_FRAME1_S );
-		GFL_BG_ClearScreen( GF_BGL_FRAME2_S );
-		GFL_BG_ClearScreen( GF_BGL_FRAME3_S );
+		GF_BGL_ClearCharSet( GFL_BG_FRAME0_S, 32, 0, HEAPID_BB );
+		GF_BGL_ClearCharSet( GFL_BG_FRAME1_S, 32, 0, HEAPID_BB );
+		GF_BGL_ClearCharSet( GFL_BG_FRAME2_S, 32, 0, HEAPID_BB );
+		GF_BGL_ClearCharSet( GFL_BG_FRAME3_S, 32, 0, HEAPID_BB );
+		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat[ 0 ], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat[ 1 ], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &TextBgCntDat[ 2 ], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &TextBgCntDat[ 3 ], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
+		GFL_BG_ClearScreen( GFL_BG_FRAME1_S );
+		GFL_BG_ClearScreen( GFL_BG_FRAME2_S );
+		GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
 	}
-	GF_BGL_ClearCharSet( GF_BGL_FRAME0_S, 32, 0, HEAPID_BB );
-	GF_BGL_ClearCharSet( GF_BGL_FRAME1_S, 32, 0, HEAPID_BB );
-	GF_BGL_ClearCharSet( GF_BGL_FRAME2_S, 32, 0, HEAPID_BB );
-	GF_BGL_ClearCharSet( GF_BGL_FRAME3_S, 32, 0, HEAPID_BB );
+	GF_BGL_ClearCharSet( GFL_BG_FRAME0_S, 32, 0, HEAPID_BB );
+	GF_BGL_ClearCharSet( GFL_BG_FRAME1_S, 32, 0, HEAPID_BB );
+	GF_BGL_ClearCharSet( GFL_BG_FRAME2_S, 32, 0, HEAPID_BB );
+	GF_BGL_ClearCharSet( GFL_BG_FRAME3_S, 32, 0, HEAPID_BB );
 	
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	
 	///< SUB画面をメイン画面にするため
-	sys.disp3DSW = DISP_3D_TO_SUB;
-	GF_Disp_DispSelect();	
+	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
+	GFL_DISP_SetDispOn();	
 	
 	G2_SetBlendAlpha(  0, GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, 7, 10 );					  
 	G2S_SetBlendAlpha( 0, GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ, 7, 10 );
@@ -1265,11 +1276,13 @@ static void BB_MainSeq_Change( BB_WORK* wk, BOOL bEnd, int next_seq, int* seq )
  *
  */
 //--------------------------------------------------------------
-static void BB_VBlank( void* work )
+static void BB_VBlank(GFL_TCB *tcb, void *work)
 {
 	BB_WORK* wk = work;
 	
+#if WB_TEMP_FIX
 	DoVramTransferManager();
+#endif
 	
 	CATS_RenderOamTrans();
 

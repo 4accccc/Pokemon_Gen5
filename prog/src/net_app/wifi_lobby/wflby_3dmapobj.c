@@ -378,7 +378,7 @@ void WFLBY_3DMAPOBJ_ResLoad( WFLBY_3DMAPOBJ* p_sys, WFLBY_ROOM_TYPE room, WFLBY_
 	p_data = WFLBY_3DMAPOBJ_MDLRES_DATA_Init( room, season, heapID );
 	
 	// シーズンの各リソースを読み込む
-	p_handle = ArchiveDataHandleOpen( ARC_WFLBY_GRA, heapID );	// ハンドルオープン
+	p_handle = GFL_ARC_OpenDataHandle( ARC_WFLBY_GRA, heapID );	// ハンドルオープン
 
 	// アロケータを作成
 	sys_InitAllocator( &p_sys->allocator, gheapID, 4 );
@@ -393,7 +393,7 @@ void WFLBY_3DMAPOBJ_ResLoad( WFLBY_3DMAPOBJ* p_sys, WFLBY_ROOM_TYPE room, WFLBY_
 	// フロートオブジェクト
 	WFLBY_3DMAPOBJ_FLOAT_Load( &p_sys->floatres, p_handle, &p_sys->allocator, p_data, gheapID );
 
-	ArchiveDataHandleClose( p_handle );
+	GFL_ARC_CloseDataHandle( p_handle );
 	
 	// 破棄
 	WFLBY_3DMAPOBJ_MDLRES_DATA_Exit( p_data );	

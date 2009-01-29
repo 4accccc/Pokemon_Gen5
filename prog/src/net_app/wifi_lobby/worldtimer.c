@@ -31,9 +31,9 @@
 #include "graphic/worldtimer.naix"
 
 #include "message.naix"
-#include "msgdata/msg_worldtimer.h"
-#include "msgdata/msg_wifi_place_msg_world.h"
-#include "msgdata/msg_wifi_place_msg_GBR.h"
+#include "msg/msg_worldtimer.h"
+#include "msg/msg_wifi_place_msg_world.h"
+#include "msg/msg_wifi_place_msg_GBR.h"
 
 #include "net_app/wifi_lobby/worldtimer.h"
 #include "net_app/wifi_lobby/wldtimer_snd.h"
@@ -44,6 +44,7 @@
 #include "net_app/wifi_lobby/worldtimer_place.h"
 
 #include "wflby_snd.h"
+#include "system/gfl_use.h"
 
 
 //-----------------------------------------------------------------------------
@@ -281,36 +282,36 @@ static const GFL_BG_SYS_HEADER sc_BGINIT = {
 //=====================================
 #define WLDTIMER_BGCNT_NUM	( 5 )	// ＢＧコントロールテーブル数
 static const u32 sc_WLDTIMER_BGCNT_FRM[ WLDTIMER_BGCNT_NUM ] = {
-	GF_BGL_FRAME1_M,
-	GF_BGL_FRAME2_S,
-	GF_BGL_FRAME3_S,
-	GF_BGL_FRAME0_S,
-	GF_BGL_FRAME1_S,
+	GFL_BG_FRAME1_M,
+	GFL_BG_FRAME2_S,
+	GFL_BG_FRAME3_S,
+	GFL_BG_FRAME0_S,
+	GFL_BG_FRAME1_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_WLDTIMER_BGCNT_DATA[ WLDTIMER_BGCNT_NUM ] = {
-	{	// GF_BGL_FRAME1_M
+	{	// GFL_BG_FRAME1_M
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x3800, GX_BG_CHARBASE_0x00000, 0x3800, jGX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
-	{	// GF_BGL_FRAME2_S
+	{	// GFL_BG_FRAME2_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, 0x3800, GX_BG_EXTPLTT_01,
 		2, 0, 0, FALSE
 	},
-	{	// GF_BGL_FRAME3_S
+	{	// GFL_BG_FRAME3_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x3800, GX_BG_EXTPLTT_01,
 		3, 0, 0, FALSE
 	},
 
 	// サブ画面０，１は同じキャラクタオフセット
-	{	// GF_BGL_FRAME0_S
+	{	// GFL_BG_FRAME0_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
-	{	// GF_BGL_FRAME1_S
+	{	// GFL_BG_FRAME1_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 		1, 0, 0, FALSE
@@ -761,7 +762,7 @@ static const WLDTIMER_POKEBLN_MOVEDATA sc_WLDTIMER_POKEBLN_MOVEDATA_TBL[ WLDTIME
 #define WLDTIMER_MAIN_SUBBTTN_CGXEND	( WLDTIMER_MAIN_SUBBTTN_CGX+TOUCH_SW_USE_CHAR_NUM )
 static const TOUCH_SW_PARAM sc_TOUCH_SW_PARAM = {
 	NULL,
-	GF_BGL_FRAME1_M,
+	GFL_BG_FRAME1_M,
 	WLDTIMER_MAIN_SUBBTTN_CGX,
 	WLDTIMER_MAIN_SUBBTTN_PLTT,
 	WLDTIMER_MAIN_SUBBTTN_X,
@@ -1141,6 +1142,7 @@ typedef struct {
 	// した画面終了チェック
 	WLDTIMER_END_MSG end_msg;
 
+	GFL_TCB *vintr_tcb;
 } WLDTIMER_WK;
 
 
@@ -1177,7 +1179,7 @@ static BOOL WLDTIMER_RotateCheck( s32 minx, s32 maxx, u16 rotx );
 static BOOL WLDTIMER_WkMainControl( WLDTIMER_WK* p_wk );
 static void WLDTIMER_WkSubControl( WLDTIMER_WK* p_wk );
 static void WLDTIMER_WkDraw( WLDTIMER_WK* p_wk );
-static void WLDTIMER_WkVBlank( void* p_work );
+static void WLDTIMER_WkVBlank(GFL_TCB *tcb, void *p_work);
 
 // 地球儀管理
 static u32 WLDTIMER_EarthControl( WLDTIMER_WK* p_wk );
@@ -1355,7 +1357,7 @@ GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 
 	// 全地域表示でバック機能
 #ifdef WLDTIMER_DEBUG_ALLPLACEOPEN
-	if( sys.cont & PAD_BUTTON_R ){
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
 		s_WLDTIMER_DEBUG_ALLPLACEOPEN_FLAG = TRUE;
 	}else{
 		s_WLDTIMER_DEBUG_ALLPLACEOPEN_FLAG = FALSE;
@@ -1418,7 +1420,7 @@ GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 
 	
 	// 割り込み設定
-	sys_VBlankFuncChange( WLDTIMER_WkVBlank, p_wk );
+	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(WLDTIMER_WkVBlank, p_wk, 200);
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	return	GFL_PROC_RES_FINISH;
@@ -1442,8 +1444,8 @@ GFL_PROC_RESULT WLDTIMER_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 
 #ifdef WFLBY_DEBUG_ROOM_WLDTIMER_AUTO
 	WFLBY_DEBUG_ROOM_WFLBY_TIMER_AUTO = TRUE;
-	sys.trg		|= PAD_BUTTON_B;
-	sys.cont	|= PAD_BUTTON_B;
+	GFL_UI_KEY_GetTrg()		|= PAD_BUTTON_B;
+	GFL_UI_KEY_GetCont()	|= PAD_BUTTON_B;
 #endif
 	
 
@@ -1522,7 +1524,7 @@ GFL_PROC_RESULT WLDTIMER_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 	p_param = pwk;
 
 	// 割り込み設定
-	sys_VBlankFuncChange( NULL, NULL );
+	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	// ビューアー破棄
@@ -1599,7 +1601,7 @@ GFL_PROC_RESULT WLDTIMER_DebugExit(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 //-----------------------------------------------------------------------------
 static void WLDTIMER_EarthListLoad( WLDTIMER_PLACE* p_wk, const WFLBY_WLDTIMER* cp_data, u32 heapID )
 {
-	ARCHANDLE* p_handle = ArchiveDataHandleOpen( ARC_WIFI_EARCH_PLACE, heapID );
+	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARC_WIFI_EARCH_PLACE, heapID );
 	
 	//地点リスト総数初期化
 	p_wk->placelist.listcount = 0;
@@ -1657,7 +1659,7 @@ static void WLDTIMER_EarthListLoad( WLDTIMER_PLACE* p_wk, const WFLBY_WLDTIMER* 
 		}
 	}
 
-	ArchiveDataHandleClose( p_handle );
+	GFL_ARC_CloseDataHandle( p_handle );
 }
 
 //----------------------------------------------------------------------------
@@ -1964,11 +1966,11 @@ static BOOL WLDTIMER_WkMainControl( WLDTIMER_WK* p_wk )
 	u32 result;
 
 #ifdef WLDTIMER_DEBUG_TIMEZONE
-	if( sys.trg & PAD_BUTTON_R ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
 		s_WLDTIMER_DEBUG_TimeZone = (s_WLDTIMER_DEBUG_TimeZone + 2) % WLDTIMER_TIMEZONE_DATANUM;
 		OS_Printf( "debug timezone %d\n", s_WLDTIMER_DEBUG_TimeZone );
 	}
-	if( sys.trg & PAD_BUTTON_L ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
 		if( (s_WLDTIMER_DEBUG_TimeZone - 1) >= 0 ){
 			s_WLDTIMER_DEBUG_TimeZone--;
 		}else{
@@ -2095,7 +2097,7 @@ static void WLDTIMER_WkDraw( WLDTIMER_WK* p_wk )
  *	@param	p_work 
  */
 //-----------------------------------------------------------------------------
-static void WLDTIMER_WkVBlank( void* p_work )
+static void WLDTIMER_WkVBlank(GFL_TCB *tcb, void *p_work)
 {
 	WLDTIMER_WK* p_wk = p_work;
 
@@ -2129,7 +2131,7 @@ static u32 WLDTIMER_EarthControl( WLDTIMER_WK* p_wk )
 	}
 	else{
 		// 位置選択
-		if( (sys.trg & PAD_BUTTON_X) ){
+		if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_X) ){
 			// 地球儀がさしている位置の地域データを取得
 			{
 				WLDTIMER_POINTDATA draw_point;
@@ -2161,7 +2163,7 @@ static u32 WLDTIMER_EarthControl( WLDTIMER_WK* p_wk )
 		}else{
 
 			//地球回転コントロール
-			ret = WLDTIMER_Earth3D_Control(p_wk, sys.trg, sys.cont);
+			ret = WLDTIMER_Earth3D_Control(p_wk, GFL_UI_KEY_GetTrg(), GFL_UI_KEY_GetCont());
 		}
 	}
 
@@ -2557,10 +2559,12 @@ static void WLDTIMER_FlagControl( WLDTIMER_WK* p_wk, const WLDTIMER_PARAM* cp_pa
 static void WLDTIMER_DrawSysInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u32 heapID )
 {
 	// アーカイブハンドル
-	p_wk->p_handle = ArchiveDataHandleOpen( ARC_WORLDTIMER, heapID );
+	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARC_WORLDTIMER, heapID );
 
+#if WB_FIX
 	// Vram転送マネージャ作成
 	initVramTransferManagerHeap( WLDTIMER_VRAMTRANS_TASKNUM, heapID );
+#endif
 	
 	// バンク設定
 	GF_Disp_SetBank( &sc_WLDTIMER_BANK );
@@ -2585,10 +2589,12 @@ static void WLDTIMER_DrawSysInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u32 
 static void WLDTIMER_DrawSysExit( WLDTIMER_DRAWSYS* p_wk )
 {
 	// アーカイブハンドル
-	ArchiveDataHandleClose( p_wk->p_handle );
+	GFL_ARC_CloseDataHandle( p_wk->p_handle );
 
+#if WB_TEMP_FIX
 	// Vram転送マネージャ破棄
 	DellVramTransferManager();
+#endif
 	
 	// BG設定
 	WLDTIMER_DrawSysBgExit( p_wk );
@@ -2628,8 +2634,10 @@ static void WLDTIMER_DrawSysVBlank( WLDTIMER_DRAWSYS* p_wk )
     // レンダラ共有OAMマネージャVram転送
     REND_OAMTrans();
 
+#if WB_TEMP_FIX
 	// Vram転送
 	DoVramTransferManager();
+#endif
 }
 
 // BG
@@ -2643,8 +2651,8 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
 	GFL_BMPWIN_Init(heapID);
 
 	// メインとサブを切り替える
-	sys.disp3DSW = DISP_3D_TO_SUB;
-	GF_Disp_DispSelect();
+	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
+	GFL_DISP_SetDispOn();
 
 
 	// BGコントロール設定
@@ -2669,22 +2677,22 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
 	{
 		ArcUtil_HDL_BgCharSet( p_wk->p_handle, 
 				NARC_worldtimer_world_watch_frame_NCGR, p_wk->p_bgl,
-				GF_BGL_FRAME0_S, 0, 0, FALSE, heapID );
+				GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
 
 		ArcUtil_HDL_ScrnSet( p_wk->p_handle,
 				NARC_worldtimer_world_watch_frame_NSCR, p_wk->p_bgl,
-				GF_BGL_FRAME0_S, 0, 0, FALSE, heapID );
+				GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
 	}
 
 	// 背景
 	{
 		ArcUtil_HDL_BgCharSet( p_wk->p_handle,
 				NARC_worldtimer_world_watch_NCGR, p_wk->p_bgl, 
-				GF_BGL_FRAME2_S, 0, 0, FALSE, heapID );
+				GFL_BG_FRAME2_S, 0, 0, FALSE, heapID );
 
 		ArcUtil_HDL_ScrnSet( p_wk->p_handle,
 				NARC_worldtimer_world_watch_wall_NSCR, p_wk->p_bgl,
-				GF_BGL_FRAME3_S, 0, 0, FALSE, heapID );
+				GFL_BG_FRAME3_S, 0, 0, FALSE, heapID );
 	}
 	
 	// フォントカラー
@@ -2692,28 +2700,28 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
     TalkFontPaletteLoad( PALTYPE_SUB_BG, WLDTIMER_PALSUB_FONT*0x20, heapID );
 
     MenuWinGraphicSet(
-        p_wk->p_bgl, GF_BGL_FRAME1_M, 
+        p_wk->p_bgl, GFL_BG_FRAME1_M, 
 		WLDTIMER_MAIN_SYSTEMWIN_CGX, WLDTIMER_PALMAIN_SYSTEM, 0, heapID );
 
 	// システムウィンドウ
     MenuWinGraphicSet(
-        p_wk->p_bgl, GF_BGL_FRAME1_M, 
+        p_wk->p_bgl, GFL_BG_FRAME1_M, 
 		WLDTIMER_MAIN_SYSTEMWIN_CGX, WLDTIMER_PALMAIN_SYSTEM, 0, heapID );
 
 	// トークウィンドウ
 	{
 		u8 win_num = CONFIG_GetWindowType( p_config );
-		TalkWinGraphicSet( p_wk->p_bgl, GF_BGL_FRAME0_S,
+		TalkWinGraphicSet( p_wk->p_bgl, GFL_BG_FRAME0_S,
 				WLDTIMER_SUB_TALKWIN_CGX, WLDTIMER_SUB_TALKWIN_PAL,
 				win_num, heapID );
 
-		TalkWinGraphicSet( p_wk->p_bgl, GF_BGL_FRAME1_M,
+		TalkWinGraphicSet( p_wk->p_bgl, GFL_BG_FRAME1_M,
 				WLDTIMER_MAIN_TALKWIN_CGX, WLDTIMER_MAIN_TALKWIN_PAL,
 				win_num, heapID );
 	}
 
 	// バックグラウンドカラー設定
-	GF_BGL_BackGroundColorSet( GF_BGL_FRAME0_M, 0x72ca );
+	GF_BGL_BackGroundColorSet( GFL_BG_FRAME0_M, 0x72ca );
 }
 static void WLDTIMER_DrawSysBgExit( WLDTIMER_DRAWSYS* p_wk )
 {
@@ -2722,7 +2730,7 @@ static void WLDTIMER_DrawSysBgExit( WLDTIMER_DRAWSYS* p_wk )
 		int i;
 
 		for( i=0; i<WLDTIMER_BGCNT_NUM; i++ ){
-			GF_BGL_BGControlExit( p_wk->p_bgl, sc_WLDTIMER_BGCNT_FRM[i] );
+			GFL_BG_FreeBGControl( p_wk->p_bgl, sc_WLDTIMER_BGCNT_FRM[i] );
 		}
 	}
 	
@@ -2731,8 +2739,8 @@ static void WLDTIMER_DrawSysBgExit( WLDTIMER_DRAWSYS* p_wk )
 	GFL_BMPWIN_Exit();
 
 	// メインとサブを元に戻す
-	sys.disp3DSW = DISP_3D_TO_MAIN;
-	GF_Disp_DispSelect();
+	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
+	GFL_DISP_SetDispOn();
 }
 
 // OAM
@@ -2780,12 +2788,14 @@ static void WLDTIMER_DrawSysOamInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
     }
 
 	// 下画面に通信アイコンを出す
+#if WB_TEMP_FIX
 	WirelessIconEasy();  // 接続中なのでアイコン表示
+#endif
 
 
 	// 表示開始
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 static void WLDTIMER_DrawSysOamExit( WLDTIMER_DRAWSYS* p_wk )
 {
@@ -2824,7 +2834,7 @@ static void WLDTIMER_DrawSys3DExit( WLDTIMER_DRAWSYS* p_wk )
 static void WLDTIMER_DrawSys3DSetUp( void )
 {
 	// ３Ｄ使用面の設定(表示＆プライオリティー)
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
     G2_SetBG0Priority(1);
 
 	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
@@ -3431,7 +3441,7 @@ static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsy
 
 	// ボタンビットマップ作成
 	p_wk->bttn = GFL_BMPWIN_Create(
-				GF_BGL_FRAME1_M,
+				GFL_BG_FRAME1_M,
 				WLDTIMER_MAIN_BTTNBMP_X, WLDTIMER_MAIN_BTTNBMP_Y,
 				WLDTIMER_MAIN_BTTNBMP_SIZX, WLDTIMER_MAIN_BTTNBMP_SIZY, 
 				WLDTIMER_MAIN_BTTNBMP_PAL, GFL_BMP_CHRAREA_GET_B );
@@ -3465,7 +3475,7 @@ static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsy
 static void WLDTIMER_TouchExit( WLDTIMER_TOUCH* p_wk )
 {
 	// ビットマップ破棄
-	GF_BGL_BmpWinDel( &p_wk->bttn );
+	GFL_BMPWIN_Delete( &p_wk->bttn );
 	
 }
 
@@ -3618,7 +3628,7 @@ static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_dra
 
 	// ボタンビットマップ作成
 	p_wk->win = GFL_BMPWIN_Create(
-				GF_BGL_FRAME1_M,
+				GFL_BG_FRAME1_M,
 				WLDTIMER_MAIN_TALKBMP_X, WLDTIMER_MAIN_TALKBMP_Y,
 				WLDTIMER_MAIN_TALKBMP_SIZX, WLDTIMER_MAIN_TALKBMP_SIZY, 
 				WLDTIMER_MAIN_TALKBMP_PAL, GFL_BMP_CHRAREA_GET_B );
@@ -3654,7 +3664,7 @@ static void WLDTIMER_EndMsgExit( WLDTIMER_END_MSG* p_wk )
 	TOUCH_SW_FreeWork( p_wk->p_touch_sw );
 
 	// ビットマップ破棄
-	GF_BGL_BmpWinDel( &p_wk->win );
+	GFL_BMPWIN_Delete( &p_wk->win );
 }
 
 //----------------------------------------------------------------------------
@@ -3759,7 +3769,7 @@ static void WLDTIMER_ViewerInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_draw
 		STRBUF* p_str;
 
 		p_wk->talkwin = GFL_BMPWIN_Create(
-					GF_BGL_FRAME0_S,
+					GFL_BG_FRAME0_S,
 					WLDTIMER_SUB_TALKBMP_X, WLDTIMER_SUB_TALKBMP_Y,
 					WLDTIMER_SUB_TALKBMP_SIZX, WLDTIMER_SUB_TALKBMP_SIZY, 
 					WLDTIMER_SUB_TALKBMP_PAL, GFL_BMP_CHRAREA_GET_B );
@@ -3815,7 +3825,7 @@ static void WLDTIMER_ViewerExit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_draw
 	WLDTIMER_ViewerMsgExit( p_wk );
 	
 	// メッセージ破棄
-	GF_BGL_BmpWinDel( &p_wk->talkwin );
+	GFL_BMPWIN_Delete( &p_wk->talkwin );
 	
 	// キューパラメータ破棄
 	WLDTIMER_ViewerQExit( p_wk );
@@ -4430,7 +4440,7 @@ static void WLDTIMER_ViewerFadeScrn_LineTrans( WLDTIMER_VIEWER* p_wk, u32 y, WLD
 {
 
 	GF_BGL_ScrWriteExpand(
-			p_drawsys->p_bgl, GF_BGL_FRAME2_S, 
+			p_drawsys->p_bgl, GFL_BG_FRAME2_S, 
 			WLDTIMER_VIEWER_SCRN_X, 
 			WLDTIMER_VIEWER_SCRN_Y+y,
 			WLDTIMER_VIEWER_SCRN_SX, 1,
@@ -4441,7 +4451,7 @@ static void WLDTIMER_ViewerFadeScrn_LineTrans( WLDTIMER_VIEWER* p_wk, u32 y, WLD
 			p_wk->p_fadescrndata->screenHeight/8 );
 
 	// 転送フラグを立てる
-	GF_BGL_LoadScreenV_Req( p_drawsys->p_bgl, GF_BGL_FRAME2_S );
+	GF_BGL_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
 }
 
 //----------------------------------------------------------------------------
@@ -4471,7 +4481,7 @@ static void WLDTIMER_ViewerWndInit( WLDTIMER_VWND* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_ViewerWndExit( WLDTIMER_VWND* p_wk )
 {
-	TCB_Delete( p_wk->p_tcb );
+	GFL_TCB_DeleteTask( p_wk->p_tcb );
 	GXS_SetVisibleWnd( GX_WNDMASK_NONE );
 }
 
@@ -4551,7 +4561,7 @@ static void WLDTIMER_ViewerMsgInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_d
 	for( i=0; i<WLDTIMER_VIEWER_DRAWNUM; i++ ){
 
 		p_wk->msg[i] = GFL_BMPWIN_Create(
-			GF_BGL_FRAME1_S,
+			GFL_BG_FRAME1_S,
 			WLDTIMER_VIEWER_MSGBMP_X, 
 			WLDTIMER_VIEWER_MSGBMP_Y + (WLDTIMER_VIEWER_MSGBMP_SIZY*i),
 			WLDTIMER_VIEWER_MSGBMP_SIZX, WLDTIMER_VIEWER_MSGBMP_SIZY,
@@ -4566,7 +4576,7 @@ static void WLDTIMER_ViewerMsgInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_d
 	}
 
 	p_wk->dummy = GFL_BMPWIN_Create(
-		GF_BGL_FRAME1_S,
+		GFL_BG_FRAME1_S,
 		WLDTIMER_VIEWER_MSGBMP_X, 
 		WLDTIMER_VIEWER_MSGBMP_Y,
 		WLDTIMER_VIEWER_MSGBMP_SIZX, WLDTIMER_VIEWER_MSGBMP_SIZY,
@@ -4587,9 +4597,9 @@ static void WLDTIMER_ViewerMsgExit( WLDTIMER_VIEWER* p_wk )
 	int i;
 
 	for( i=0; i<WLDTIMER_VIEWER_DRAWNUM; i++ ){
-		GF_BGL_BmpWinDel( &p_wk->msg[i] );
+		GFL_BMPWIN_Delete( &p_wk->msg[i] );
 	}
-	GF_BGL_BmpWinDel( &p_wk->dummy );
+	GFL_BMPWIN_Delete( &p_wk->dummy );
 }
 
 //----------------------------------------------------------------------------
@@ -4808,7 +4818,7 @@ static void WLDTIMER_TimeZoneAnm_Main( WLDTIMER_TIMEZONEANM* p_wk, WLDTIMER_DRAW
 			if( p_wk->drawflag[ i ] == TRUE ){
 				// 転送処理
 				GF_BGL_ScrWriteExpand(
-						p_drawsys->p_bgl, GF_BGL_FRAME2_S, 
+						p_drawsys->p_bgl, GFL_BG_FRAME2_S, 
 						WLDTIMER_VIEWER_SCRN_X, 
 						WLDTIMER_VIEWER_SCRN_Y+(WLDTIMER_VIEWER_SCRN_SY*i),
 						WLDTIMER_VIEWER_SCRN_SX, WLDTIMER_VIEWER_SCRN_SY,
@@ -4819,7 +4829,7 @@ static void WLDTIMER_TimeZoneAnm_Main( WLDTIMER_TIMEZONEANM* p_wk, WLDTIMER_DRAW
 						p_wk->p_scrndata[ p_wk->scrnframe_now ]->screenHeight/8 );
 
 				// 転送フラグを立てる
-				GF_BGL_LoadScreenV_Req( p_drawsys->p_bgl, GF_BGL_FRAME2_S );
+				GF_BGL_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
 			}
 		}
 	}
@@ -4885,7 +4895,7 @@ static void WLDTIMER_TimeZoneAnm_LineTrans( WLDTIMER_TIMEZONEANM* p_wk, u32 y, W
 	// フレームのスクリーンデータのYラインだけを転送
 	if( p_wk->scrnframe>0 ){
 		GF_BGL_ScrWriteExpand(
-				p_drawsys->p_bgl, GF_BGL_FRAME2_S, 
+				p_drawsys->p_bgl, GFL_BG_FRAME2_S, 
 				WLDTIMER_VIEWER_SCRN_X, 
 				WLDTIMER_VIEWER_SCRN_Y+y,
 				WLDTIMER_VIEWER_SCRN_SX, 1,
@@ -4896,7 +4906,7 @@ static void WLDTIMER_TimeZoneAnm_LineTrans( WLDTIMER_TIMEZONEANM* p_wk, u32 y, W
 				p_wk->p_scrndata[ p_wk->scrnframe_now ]->screenHeight/8 );
 
 		// 転送フラグを立てる
-		GF_BGL_LoadScreenV_Req( p_drawsys->p_bgl, GF_BGL_FRAME2_S );
+		GF_BGL_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
 	}
 }
 

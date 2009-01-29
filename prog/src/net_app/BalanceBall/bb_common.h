@@ -498,6 +498,7 @@ typedef struct {
 	
 	void				*tcb_work;		///<TCBシステムで使用するワーク
 	GFL_TCBSYS			*tcbsys;		///<TCBシステム
+	GFL_TCB *vintr_tcb;
 } BB_WORK;
 
 

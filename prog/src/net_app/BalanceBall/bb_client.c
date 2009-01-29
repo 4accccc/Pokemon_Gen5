@@ -457,7 +457,7 @@ void BB_Manene_3D_Fall_TCB( GFL_TCB* tcb, void* work )
 	}
 	
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		GFL_HEAP_FreeMemory( wk );
 		return;
 	}
@@ -575,7 +575,7 @@ void BB_Manene_3D_Fall_TCB( GFL_TCB* tcb, void* work )
 					wk->model->pos.y = BB_MODEL_OFS_Y;
 				}
 				wk->model->pos.z = BB_MODEL_OFS_Z;			
-				TCB_Delete( tcb );
+				GFL_TCB_DeleteTask( tcb );
 				GFL_HEAP_FreeMemory( wk );
 			}
 		}
@@ -595,7 +595,7 @@ void BB_Client_Manene_3D_Recover_Action_TCB( GFL_TCB* tcb, void* work )
 	s16 check_z = wk->mane_pos.z >> FX32_SHIFT;
 	
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		GFL_HEAP_FreeMemory( wk );
 		return;
 	}
@@ -631,7 +631,7 @@ void BB_Client_Manene_3D_Recover_Action_TCB( GFL_TCB* tcb, void* work )
 		}
 		wk->model->pos.z = BB_MODEL_OFS_Z;
 		
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		GFL_HEAP_FreeMemory( wk );	
 		return;	
 	}
@@ -660,7 +660,7 @@ void BB_Client_Manene_Action_TCB( GFL_TCB* tcb, void* work )
 	int frame = CATS_ObjectAnimeFrameGetCap( wk->cap_mane );
 	
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		GFL_HEAP_FreeMemory( wk );
 		return;
 	}
@@ -708,7 +708,7 @@ void BB_Client_Manene_Action_TCB( GFL_TCB* tcb, void* work )
 		}
 		else {
 			if ( (++wk->wait) >= 10 ){
-				TCB_Delete( tcb );
+				GFL_TCB_DeleteTask( tcb );
 				GFL_HEAP_FreeMemory( wk );
 			}
 		}
@@ -734,7 +734,7 @@ static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		wk->bStart = FALSE;
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		return;
 	}
 
@@ -818,7 +818,7 @@ static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 		CATS_ObjectPriSetCap( wk->cap_kage, 2 );
 		CATS_ObjectAffineSetCap( wk->cap_kage, CLACT_AFFINE_NONE );
 		wk->bStart = FALSE;
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 	//	GFL_HEAP_FreeMemory( wk );
 		break;
 	}
@@ -851,7 +851,7 @@ static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 		D3DOBJ_AnmDelete( &up->anm[ 0 ], &wk->sys->allocator );
 		D3DOBJ_AnmDelete( &up->anm[ 1 ], &wk->sys->allocator );
 		wk->bStart = FALSE;
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 		return;
 	}
 	
@@ -950,7 +950,7 @@ static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 		D3DOBJ_AnmDelete( &up->anm[ 0 ], &wk->sys->allocator );
 		D3DOBJ_AnmDelete( &up->anm[ 1 ], &wk->sys->allocator );
 		wk->bStart = FALSE;
-		TCB_Delete( tcb );
+		GFL_TCB_DeleteTask( tcb );
 	//	GFL_HEAP_FreeMemory( wk );
 		break;
 	}
@@ -1509,7 +1509,7 @@ void BB_Client_GameUpdate( BB_CLIENT* wk )
 
 #ifdef BB_SW_GAME_UPDATE_OFF
 
-	if ( sys.cont & PAD_BUTTON_A ){
+	if ( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
 		return;
 	}
 	

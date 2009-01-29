@@ -12,6 +12,8 @@
 
 #include "common.h"
 #include "bb_common.h"
+#include "print\gf_font.h"
+#include "font/font.naix"
 
 #include "wlmngm_tool.naix"
 
@@ -591,7 +593,7 @@ void BB_disp_Manene_OAM_Del( BB_CLIENT* wk )
 void BB_disp_InfoWinAdd( BB_CLIENT* wk )
 {
 	GF_BGL_BmpWinInit( &wk->win );
-	wk->win = GFL_BMPWIN_Create( GF_BGL_FRAME3_S, 2, 19, 28, 4, 14, GFL_BMP_CHRAREA_GET_B );
+	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_S, 2, 19, 28, 4, 14, GFL_BMP_CHRAREA_GET_B );
 	GFL_BMPWIN_MakeScreen(wk->win);
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win), 0xFF );	
 	{
@@ -626,7 +628,7 @@ void BB_disp_InfoWinDel( BB_CLIENT* wk )
 	if( GF_BGL_BmpWinAddCheck( &wk->win ) == TRUE ){
 		BmpMenuWinClear( &wk->win, WINDOW_TRANS_OFF );
 		GF_BGL_BmpWinOff( &wk->win );
-		GF_BGL_BmpWinDel( &wk->win );
+		GFL_BMPWIN_Delete( &wk->win );
 	}
 }
 
@@ -723,13 +725,13 @@ void BB_disp_NameWinAdd( BB_WORK* bwk, BB_CLIENT* wk )
 	
 	switch ( wk->comm_num ){
 	case 2:
-		ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_1_NSCR, GF_BGL_FRAME3_S, 0, 0, 0, HEAPID_BB );
+		ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_1_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
 		break;
 	case 3:
-		ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_2_NSCR, GF_BGL_FRAME3_S, 0, 0, 0, HEAPID_BB );
+		ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_2_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
 		break;
 	case 4:
-		ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_3_NSCR, GF_BGL_FRAME3_S, 0, 0, 0, HEAPID_BB );
+		ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_3_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
 		break;
 	default:
 		GF_ASSERT( 0 );
@@ -749,7 +751,7 @@ void BB_disp_NameWinAdd( BB_WORK* bwk, BB_CLIENT* wk )
 		y = win_dat[ wk->comm_num - 2 ][ no ][ 1 ];
 		w = win_dat[ wk->comm_num - 2 ][ no ][ 2 ];
 		h = win_dat[ wk->comm_num - 2 ][ no ][ 3 ];
-		wk->win_name[ no ] = GFL_BMPWIN_Create( GF_BGL_FRAME3_S, x, y, w, h, 14, GFL_BMP_CHRAREA_GET_B );
+		wk->win_name[ no ] = GFL_BMPWIN_Create( GFL_BG_FRAME3_S, x, y, w, h, 14, GFL_BMP_CHRAREA_GET_B );
 		GFL_BMPWIN_MakeScreen(wk->win_name[no]);
 		ofs += ( w * h );
 
@@ -793,12 +795,12 @@ void BB_disp_NameWinDel( BB_CLIENT* wk )
 		if( GF_BGL_BmpWinAddCheck( &wk->win_name[ no ] ) == TRUE ){
 			BmpMenuWinClear( &wk->win_name[ no ], WINDOW_TRANS_OFF );
 		    GF_BGL_BmpWinOff( &wk->win_name[ no ] );
-			GF_BGL_BmpWinDel( &wk->win_name[ no ] );
+			GFL_BMPWIN_Delete( &wk->win_name[ no ] );
 		}
 		
 		no++;
 	}	
-	ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_NSCR, GF_BGL_FRAME3_S, 0, 0, 0, HEAPID_BB );
+	ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
 }
 
 
@@ -912,7 +914,7 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	
 	// ÉyÉì
 	{
-		ARCHANDLE* res_hdl = ArchiveDataHandleOpen( ARC_WLMNGM_TOOL_GRA, HEAPID_BB );
+		ARCHANDLE* res_hdl = GFL_ARC_OpenDataHandle( ARC_WLMNGM_TOOL_GRA, HEAPID_BB );
 
 	    nca = NARC_wlmngm_tool_touchpen_NANR;
 		nce = NARC_wlmngm_tool_touchpen_NCER;
@@ -925,7 +927,7 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 		CATS_LoadResourceCellAnmArcH( csp, crp, res_hdl, nca, FALSE, id );
 		CATS_LoadResourcePlttWorkArcH( pfd, FADE_MAIN_OBJ, csp, crp, res_hdl, ncl, FALSE, palnum, NNS_G2D_VRAM_TYPE_2DMAIN, id );	
 
-		ArchiveDataHandleClose( res_hdl );
+		GFL_ARC_CloseDataHandle( res_hdl );
 	}
 }
 
@@ -1136,26 +1138,26 @@ void BB_disp_BG_Load( BB_WORK* wk )
 	ARCHANDLE* hdl = hdl_bb;
 	
 	// ----- è„âÊñ  -----	
-	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_upper_bg_NCGR,   	GF_BGL_FRAME0_S, 0, 0, 0, HEAPID_BB );		///< îwåi
-	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_upper_bg_maku_NCGR, GF_BGL_FRAME1_S, 0, 0, 0, HEAPID_BB );		///< ñã
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_00_NSCR,  	GF_BGL_FRAME0_S, 0, 0, 0, HEAPID_BB );
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_maku1_NSCR, 	GF_BGL_FRAME1_S, 0, 0, 0, HEAPID_BB );
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_maku2_NSCR, 	GF_BGL_FRAME2_S, 0, 0, 0, HEAPID_BB );
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_maku3_NSCR, 	GF_BGL_FRAME3_S, 0, 0, 0, HEAPID_BB );
+	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_upper_bg_NCGR,   	GFL_BG_FRAME0_S, 0, 0, 0, HEAPID_BB );		///< îwåi
+	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_upper_bg_maku_NCGR, GFL_BG_FRAME1_S, 0, 0, 0, HEAPID_BB );		///< ñã
+	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_00_NSCR,  	GFL_BG_FRAME0_S, 0, 0, 0, HEAPID_BB );
+	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_maku1_NSCR, 	GFL_BG_FRAME1_S, 0, 0, 0, HEAPID_BB );
+	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_maku2_NSCR, 	GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_BB );
+	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_maku3_NSCR, 	GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
 	PaletteWorkSet_Arc( pfd, ARCID_BB_RES, NARC_manene_upper_bg_NCLR, 	HEAPID_BB, FADE_SUB_BG, 0x20 * 5, 0 );	///< 4ñ{ï™
 
 	// ----- â∫âÊñ  -----
-	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_bottom_bg_NCGR,   	GF_BGL_FRAME3_M, 0, 0, 0, HEAPID_BB );		///< îwåi
-	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_bottom_bg_maku_NCGR,GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_BB );		///< ñã
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_bottom_bg_NSCR,  		GF_BGL_FRAME3_M, 0, 0, 0, HEAPID_BB );
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_bottom_bg_maku1_NSCR, GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_BB );
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_bottom_bg_maku2_NSCR, GF_BGL_FRAME2_M, 0, 0, 0, HEAPID_BB );
+	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_bottom_bg_NCGR,   	GFL_BG_FRAME3_M, 0, 0, 0, HEAPID_BB );		///< îwåi
+	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_bottom_bg_maku_NCGR,GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );		///< ñã
+	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_bottom_bg_NSCR,  		GFL_BG_FRAME3_M, 0, 0, 0, HEAPID_BB );
+	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_bottom_bg_maku1_NSCR, GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );
+	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_bottom_bg_maku2_NSCR, GFL_BG_FRAME2_M, 0, 0, 0, HEAPID_BB );
 	PaletteWorkSet_Arc( pfd, ARCID_BB_RES, NARC_manene_bottom_bg_NCLR, 	HEAPID_BB, FADE_MAIN_BG, 0x20, 0 );
 
 	// ----- ÉtÉHÉìÉg -----
-	PaletteWorkSet_Arc( pfd, ARC_FONT, NARC_font_talk_ncrl, HEAPID_BB, FADE_SUB_BG, 0x20, 14 * 16);
+	PaletteWorkSet_Arc( pfd, ARCID_FONT, NARC_font_talk_ncrl, HEAPID_BB, FADE_SUB_BG, 0x20, 14 * 16);
 	
 	// ----- ÉEÉBÉìÉhÉE -----
 	PaletteWorkSet_Arc( pfd, ARC_WINFRAME, MenuWinPalArcGet(), HEAPID_BB, FADE_SUB_BG, 0x20, 13 * 16);	
-	MenuWinGraphicSet( GF_BGL_FRAME3_S, BB_BG_CGX_OFS, 13, 0, HEAPID_BB );
+	MenuWinGraphicSet( GFL_BG_FRAME3_S, BB_BG_CGX_OFS, 13, 0, HEAPID_BB );
 }

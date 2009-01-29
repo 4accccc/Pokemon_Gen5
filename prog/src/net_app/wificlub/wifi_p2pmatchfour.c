@@ -943,8 +943,10 @@ PROC_RESULT WifiP2PMatchFourProc_End( PROC * proc, int * seq )
 	// 描画データ破棄
 	WFP2PMF_GraphicDelete( p_wk, HEAPID_WIFI_FOURMATCH );
 
+#if WB_TEMP_FIX
 	// VRAMTRMAN
 	DellVramTransferManager();
+#endif
 	
 	// プロセスワーク破棄
     PROC_FreeWork( proc );				// PROCワーク開放
@@ -1238,7 +1240,7 @@ static void WFP2PMF_GraphicBGLInit( WFP2PMF_DRAW* p_draw, u32 heapID )
     GF_Disp_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
 
 
-	p_handle = ArchiveDataHandleOpen( ARC_WIFIP2PMATCH_GRA, heapID );
+	p_handle = GFL_ARC_OpenDataHandle( ARC_WIFIP2PMATCH_GRA, heapID );
 
 	// VCHATアイコン用キャラクタの読込み
     ArcUtil_HDL_PalSet( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCLR, 
@@ -1266,7 +1268,7 @@ static void WFP2PMF_GraphicBGLInit( WFP2PMF_DRAW* p_draw, u32 heapID )
 		p_draw->pltt_idx	= 1;
 	}
 	
-	ArchiveDataHandleClose( p_handle );
+	GFL_ARC_CloseDataHandle( p_handle );
 }
 
 //----------------------------------------------------------------------------
@@ -3209,7 +3211,7 @@ static BOOL WFP2PMF_OyaConnectWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 
 	do{
 		// 進むボタンを押した
-		if( sys.trg & PAD_BUTTON_DECIDE ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 			Snd_SePlay( _SE_DESIDE );
 
 			// 通信中かチェック
@@ -3231,7 +3233,7 @@ static BOOL WFP2PMF_OyaConnectWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 			}
 		}
 		// キャンセル押しチェック
-		if( sys.trg & PAD_BUTTON_CANCEL ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 			Snd_SePlay( _SE_DESIDE );
 //			p_wk->data.status = WFP2PMF_OYA_STATUS_END_INIT00;	// 終了チェックを２から行う
 			p_wk->data.status = WFP2PMF_OYA_STATUS_END2_INIT00;	// 終了チェックを２から行う
@@ -3248,7 +3250,7 @@ static BOOL WFP2PMF_OyaConnectWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 		}
 
 		// ボイスチャットチェック
-		if( sys.trg & PAD_BUTTON_X ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 			p_wk->data.status = WFP2PMF_OYA_STATUS_VCHAT_INIT00;
 			Snd_SePlay( _SE_DESIDE );
 			break;
@@ -4691,7 +4693,7 @@ static BOOL WFP2PMF_KoStart( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID 
 	}else{
 
 		// VChatOnOff
-		if( sys.trg & PAD_BUTTON_X ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 
 			// 待ちアイコン非表示
 			WFP2PMF_TimeWaitIconOff( p_wk, p_init, heapID );

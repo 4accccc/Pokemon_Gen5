@@ -1572,32 +1572,32 @@ static void WFLBY_3DOBJCONT_PlayerMove( WFLBY_3DPERSON* p_wk, WFLBY_3DOBJCONT* p
 
 
 	// •à‚­‚©‘–‚é‚©
-	if( sys.cont & PAD_BUTTON_B ){
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B ){
 		cmd = WF2DMAP_OBJST_RUN;
 	}else{
 		cmd = WF2DMAP_OBJST_WALK;
 	}
 	
 	// ˆÚ“®ŠÖŒW
-	if( sys.cont & PAD_KEY_UP ){
+	if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
 		if( way == WF2DMAP_WAY_UP ){
 			WFLBY_3DOBJCONT_REQCMD_Set( p_sys, cmd, way, playid );
 		}else{
 			WFLBY_3DOBJCONT_REQCMD_Set( p_sys, WF2DMAP_OBJST_TURN, WF2DMAP_WAY_UP, playid );
 		}
-	}else if( sys.cont & PAD_KEY_DOWN ){
+	}else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
 		if( way == WF2DMAP_WAY_DOWN ){
 			WFLBY_3DOBJCONT_REQCMD_Set( p_sys, cmd, way, playid );
 		}else{
 			WFLBY_3DOBJCONT_REQCMD_Set( p_sys, WF2DMAP_OBJST_TURN, WF2DMAP_WAY_DOWN, playid );
 		}
-	}else if( sys.cont & PAD_KEY_LEFT ){
+	}else if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
 		if( way == WF2DMAP_WAY_LEFT ){
 			WFLBY_3DOBJCONT_REQCMD_Set( p_sys, cmd, way, playid );
 		}else{
 			WFLBY_3DOBJCONT_REQCMD_Set( p_sys, WF2DMAP_OBJST_TURN, WF2DMAP_WAY_LEFT, playid );
 		}
-	}else if( sys.cont & PAD_KEY_RIGHT ){
+	}else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
 		if( way == WF2DMAP_WAY_RIGHT ){
 			WFLBY_3DOBJCONT_REQCMD_Set( p_sys, cmd, way, playid );
 		}else{

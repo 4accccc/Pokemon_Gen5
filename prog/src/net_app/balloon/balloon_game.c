@@ -10,21 +10,15 @@
 #include "system/palanm.h"
 #include "print\printsys.h"
 #include <arc_tool.h>
-//#include "system/arc_util.h"
-//#include "system/fontproc.h"
 #include "print\gf_font.h"
-//#include "system/particle.h"
-//#include "system/brightness.h"
-//#include "system/snd_tool.h"
 #include "net\network_define.h"
-//#include  "communication/wm_icon.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include  "communication/wm_icon.h"
-//#include "system/msgdata_util.h"
 #include <procsys.h>
-//#include "system/d3dobj.h"
-//#include "system/fontoam.h"
+#include "system/main.h"
+#include "print\gf_font.h"
+#include "font/font.naix"
+#include "font/font.naix"
 
 #include "balloon_common.h"
 #include "balloon_comm_types.h"
@@ -41,14 +35,16 @@
 #include "balloon_control.h"
 #include "balloon_snd_def.h"
 
-#include "graphic/balloon_gra_def.h"
-#include "system\font_arc.h"
-#include "../../particledata/pl_etc/pl_etc_particle_def.h"
-#include "../../particledata/pl_etc/pl_etc_particle_lst.h"
-#include "msgdata/msg_balloon.h"
+#include "balloon_gra_def.h"
+#include "balloon_particle.naix"
+#include "balloon_particle_lst.h"
+#include "msg/msg_balloon.h"
 #include "wlmngm_tool.naix"		//タッチペングラフィック
-#include "system/window.h"
+//#include "system/window.h"
 #include "system/actor_tool.h"
+#include "arc_def.h"
+#include "system/sdkdef.h"
+#include "system/gfl_use.h"
 
 
 
@@ -81,9 +77,11 @@
 #define MODEL_3D_CAMERA_DISTANCE		(80 << FX32_SHIFT)
 
 ///カメラアングル
+#if WB_FIX
 static const CAMERA_ANGLE BalloonCameraAngle = {
 	FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(0),
 };
+#endif
 
 //--------------------------------------------------------------
 //	パイプモデル設定
@@ -239,7 +237,7 @@ static const CAMERA_ANGLE BalloonCameraAngle = {
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-static void BalloonVBlank(void *work);
+static void BalloonVBlank(GFL_TCB *tcb, void *work);
 static void Balloon_3D_Init(int heap_id);
 static void BalloonSimpleSetUp(void);
 static void Balloon_3D_Exit(void);
@@ -344,6 +342,22 @@ enum{
 //==============================================================================
 //	データ
 //==============================================================================
+///VRAMバンク設定
+static const GFL_DISP_VRAM BalloonVramSetTable = {
+	GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+	GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+};
+
 ///サーバーのゲーム進行関数テーブル
 static int (* const ServerPlayFuncTbl[])(BALLOON_GAME_PTR, BALLOON_SERVER_WORK *) = {
 	ServerPlay_Start,
@@ -372,6 +386,7 @@ ALIGN4 static const u8 BalloonPlayerSortBmpNamePosTbl[][WFLBY_MINIGAME_MAX] = {
 //==============================================================================
 //	CLACT用データ
 //==============================================================================
+#if WB_FIX
 static	const TCATS_OAM_INIT BalloonTcats = {
 	BALLOON_OAM_START_MAIN, BALLOON_OAM_END_MAIN,
 	BALLOON_OAM_AFFINE_START_MAIN, BALLOON_OAM_AFFINE_END_MAIN,
@@ -395,6 +410,7 @@ static const TCATS_RESOURCE_NUM_LIST BalloonResourceList = {
 	BALLOON_OAMRESOURCE_MCELL_MAX,
 	BALLOON_OAMRESOURCE_MCELLANM_MAX,
 };
+#endif
 
 //--------------------------------------------------------------
 //	プレイヤー位置によって変えるグラフィックデータ
@@ -684,6 +700,13 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 #define G3DUTIL_RESCOUNT	(NELEMS(g3Dutil_resTbl))
 #define G3DUTIL_OBJCOUNT	(NELEMS(g3Dutil_objTbl))
 
+enum{
+	G3DRES_PIPE_R_BMD = 0,
+	G3DRES_PIPE_B_BMD,
+	G3DRES_PIPE_Y_BMD,
+	G3DRES_PIPE_G_BMD,
+};
+
 //読み込む3Dリソース　パイプモデルのみ(プレイヤーの位置によって読み込むものを変えるので別個に用意
 static const GFL_G3D_UTIL_RES g3Dutil_Pipe_resTbl[] = {
 	{ ARCID_BALLOON_GRA, SONANS_PIPE_R_NSBMD, GFL_G3D_UTIL_RESARC },
@@ -747,12 +770,12 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Pipe_setup = {
 GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	BALLOON_GAME_WORK *game;
-
-	sys_VBlankFuncChange(NULL, NULL);	// VBlankセット
+	int i, s;
+	
 //	sys_HBlankIntrStop();	//HBlank割り込み停止
 
-	GF_Disp_GX_VisibleControlInit();
-	GF_Disp_GXS_VisibleControlInit();
+	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+	GFL_DISP_GXS_SetVisibleControlDirect(0);
 	GX_SetVisiblePlane(0);
 	GXS_SetVisiblePlane(0);
 	GX_SetVisibleWnd(GX_WNDMASK_NONE);
@@ -772,8 +795,10 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
     game->tcb_work = GFL_HEAP_AllocClearMemory(HEAPID_BALLOON, GFL_TCB_CalcSystemWorkSize( 64 ));
     game->tcbsys = GFL_TCB_Init(64, game->tcb_work);
     
+#if WB_FIX
     // アロケータ作成
 	sys_InitAllocator(&game->allocator, HEAPID_BALLOON, 32 );
+#endif
 
 	Balloon_3D_Init(HEAPID_BALLOON);
 	game->g3Dutil = GFL_G3D_UTIL_Create(G3DUTIL_RESCOUNT, G3DUTIL_OBJCOUNT, HEAPID_BALLOON);
@@ -784,10 +809,10 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		CommCommandBalloonInitialize(game);
 	}
 	else{
-		if(sys.cont & PAD_BUTTON_L){
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
 			game->bsw->raregame_type = MNGM_RAREGAME_BALLOON_FINE;
 		}
-		else if(sys.cont & PAD_BUTTON_R){
+		else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
 			game->bsw->raregame_type = MNGM_RAREGAME_BALLOON_THICK;
 		}
 	}
@@ -809,16 +834,18 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	GFL_BG_Init(HEAPID_BALLOON);
 	GFL_BMPWIN_Init(HEAPID_BALLOON);
 
+#if WB_FIX
 	initVramTransferManagerHeap(BALLOON_VRAM_TRANSFER_TASK_NUM, HEAPID_BALLOON);
-
-	sys_KeyRepeatSpeedSet( SYS_KEYREPEAT_SPEED_DEF, SYS_KEYREPEAT_WAIT_DEF );
+#endif
 
 	//VRAM割り当て設定
 	BalloonSys_VramBankSet();
 
+#if WB_FIX
 	// タッチパネルシステム初期化
 	InitTPSystem();
 	InitTPNoBuff(4);
+#endif
 
 	//3D
 	Balloon_CameraInit(game);
@@ -841,13 +868,11 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		clsys_init.oamst_main = 1;	//通信アイコンの分
 		clsys_init.oamnum_main = 128-1;
 		clsys_init.tr_cell = 32;	//セルVram転送管理数
-		GFL_CLACT_Init(&clsys_init, HEAPID_BALLOON);
+		clsys_init.CGR_RegisterMax = 96;
+		GFL_CLACT_SYS_Create(&clsys_init, &BalloonVramSetTable, HEAPID_BALLOON);
 		
-		game->clunit = GFL_CLACT_UNIT_Create(128+128, HEAPID_BALLOON);
+		game->clunit = GFL_CLACT_UNIT_Create(128+128, 0, HEAPID_BALLOON);
 		GFL_CLACT_UNIT_SetDefaultRend(game->clunit);
-
-		//パレットマネージャ
-		wk->plttslot = PLTTSLOT_Init(HEAPID_BALLOON, 15, 16);	//15=通信アイコン用
 	}
 #endif
 
@@ -871,7 +896,7 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		ARCHANDLE* hdl;
 	
 		//ハンドルオープン
-		hdl  = ArchiveDataHandleOpen(ARC_BALLOON_GRA,  HEAPID_BALLOON); 
+		hdl  = GFL_ARC_OpenDataHandle(ARCID_BALLOON_GRA,  HEAPID_BALLOON); 
 	
 		//常駐BGセット
 		BalloonDefaultBGSet(game, hdl);
@@ -888,14 +913,14 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		BalloonDefault3DSet(game, hdl);
 		
 		//ハンドル閉じる
-		ArchiveDataHandleClose( hdl );
+		GFL_ARC_CloseDataHandle( hdl );
 	}
 
 	//システムフォントパレット：メイン画面
-	PaletteWorkSet_Arc(game->pfd, ARC_FONT, NARC_font_system_ncrl, 
+	PaletteWorkSet_Arc(game->pfd, ARCID_FONT, NARC_font_default_nclr, 
 		HEAPID_BALLOON, FADE_MAIN_BG, 0x20, BMPWIN_TALK_COLOR * 16);
 	//システムフォントパレット：サブ画面
-	PaletteWorkSet_Arc(game->pfd, ARC_FONT, NARC_font_system_ncrl, 
+	PaletteWorkSet_Arc(game->pfd, ARCID_FONT, NARC_font_default_nclr, 
 		HEAPID_BALLOON, FADE_SUB_BG, 0x20, BMPWIN_SUB_TALK_COLOR * 16);
 
 	//プレイヤー名描画
@@ -904,7 +929,9 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	//説明文表示
 	GameStartMessageDraw(game);
 
+#if WB_TEMP_FIX
 	WirelessIconEasy();	//通信アイコン
+#endif
 	
 	//ソーナンス初期設定
 	game->sns = Sonas_Init(game);
@@ -916,23 +943,25 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	game->update_tcb = GFL_TCB_AddTask(game->tcbsys, BalloonUpdate, game, TCBPRI_BALLOON_UPDATE);
 
 	//メイン画面設定
-	sys.disp3DSW = DISP_3D_TO_SUB;
-	GF_Disp_DispSelect();
+	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
+	GFL_DISP_SetDispOn();
 
-	GF_Disp_DispOn();
-	GF_Disp_GX_VisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
-	GF_Disp_GXS_VisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+	GFL_DISP_SetDispOn();
+	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
 
 	//サウンドデータロード(コンテスト)
 //	Snd_DataSetByScene( SND_SCENE_CONTEST, SEQ_CON_TEST, 1 );
 
+#if WB_TEMP_FIX
 	//メッセージ設定
 	{
 		MsgPrintAutoFlagSet(MSG_AUTO_ON);
 		MsgPrintSkipFlagSet(MSG_SKIP_OFF);
 		MsgPrintTouchPanelFlagSet(MSG_TP_OFF);
 	}
-	
+#endif
+
 #if WB_TEMP_FIX
 	//ミニゲーム共通カウントダウンシステム
 	game->mgcount = MNGM_COUNT_Init(CATS_GetClactSetPtr(game->crp), HEAPID_BALLOON);
@@ -944,7 +973,7 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	}
 #endif
 
-	sys_VBlankFuncChange(BalloonVBlank, game);
+	game->vintr_tcb = GFUser_VIntr_CreateTCB(BalloonVBlank, game, 200);
 	
 	if ( game->bsw->vchat ){
 		GFL_NET_DWC_StartVChat( HEAPID_BALLOON );
@@ -1138,8 +1167,8 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 
 		#ifdef PM_DEBUG
 			if(game->bsw->debug_offline == TRUE){
-				if(sys.cont & PAD_BUTTON_SELECT){
-					if(sys.trg & PAD_BUTTON_A){
+				if(GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT){
+					if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
 						*seq = SEQ_OUT;
 					}
 				}
@@ -1166,6 +1195,7 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 	game->main_frame++;
 	
 	GFL_TCB_Main(game->tcbsys);
+	GFL_CLACT_SYS_Main();
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -1195,7 +1225,7 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	Air_ActorAllDelete(game);
 	Exploded_AllDelete(game);
 	
-	sys_VBlankFuncChange( NULL, NULL );		// VBlankセット
+	GFL_TCB_DeleteTask(game->vintr_tcb);
 //	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	BalloonParticleExit(game);
@@ -1214,20 +1244,20 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	
 	//BMP開放
 	for(i = 0; i < BALLOON_BMPWIN_MAX; i++){
-		GF_BGL_BmpWinDel(&game->win[i]);
+		GFL_BMPWIN_Delete(game->win[i]);
 	}
 	
 	//メイン画面BG削除
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-	GF_BGL_BGControlExit(BALLOON_FRAME_WIN );
-	GF_BGL_BGControlExit(BALLOON_FRAME_EFF );
-	GF_BGL_BGControlExit(BALLOON_FRAME_BACK );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
+	GFL_BG_FreeBGControl(BALLOON_FRAME_WIN );
+	GFL_BG_FreeBGControl(BALLOON_FRAME_EFF );
+	GFL_BG_FreeBGControl(BALLOON_FRAME_BACK );
 	//サブ画面BG削除
-	GF_BGL_BGControlExit(GF_BGL_FRAME0_S );
-	GF_BGL_BGControlExit(GF_BGL_FRAME1_S );
-	GF_BGL_BGControlExit(GF_BGL_FRAME2_S );
-	GF_BGL_BGControlExit(GF_BGL_FRAME3_S );
+	GFL_BG_FreeBGControl(GFL_BG_FRAME0_S );
+	GFL_BG_FreeBGControl(GFL_BG_FRAME1_S );
+	GFL_BG_FreeBGControl(GFL_BG_FRAME2_S );
+	GFL_BG_FreeBGControl(GFL_BG_FRAME3_S );
 
 	//フォントOAMシステム削除
 #if WB_TEMP_FIX
@@ -1235,11 +1265,13 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 #endif
 
 	//アクターシステム削除
-	CATS_ResourceDestructor_S(game->csp,game->crp);
-	CATS_FreeMemory(game->csp);
+	GFL_CLACT_UNIT_Delete(game->clunit);
+	GFL_CLACT_SYS_Delete();
 
+#if WB_TEMP_FIX
 	//Vram転送マネージャー削除
 	DellVramTransferManager();
+#endif
 
 	//パレットフェードシステム削除
 	PaletteFadeWorkAllocFree(game->pfd, FADE_MAIN_BG);
@@ -1260,7 +1292,7 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	//カメラ削除
 	Balloon_CameraExit(game);
 	
-	TCB_Delete(game->update_tcb);
+	GFL_TCB_DeleteTask(game->update_tcb);
 
 	GX_SetVisibleWnd(GX_WNDMASK_NONE);
 	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
@@ -1272,15 +1304,21 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	GFL_TCB_Exit( game->tcbsys );
 	GFL_HEAP_FreeMemory(game->tcb_work);
 
+#if WB_TEMP_FIX
 	StopTP();		//タッチパネルの終了
+#endif
 
 	GFL_PROC_FreeWork(proc);				// ワーク開放
 	
+#if WB_TEMP_FIX
 	MsgPrintSkipFlagSet(MSG_SKIP_OFF);
 	MsgPrintAutoFlagSet(MSG_AUTO_OFF);
 	MsgPrintTouchPanelFlagSet(MSG_TP_OFF);
+#endif
 
+#if WB_TEMP_FIX
 	WirelessIconEasyEnd();
+#endif
 	
 	return GFL_PROC_RES_FINISH;
 }
@@ -1295,15 +1333,17 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
  *
  */
 //--------------------------------------------------------------
-static void BalloonVBlank(void *work)
+static void BalloonVBlank(GFL_TCB *tcb, void *work)
 {
 	BALLOON_GAME_WORK *game = work;
 	
 	Sonans_VBlank(game, game->sns);
 	
-	GFL_CLACT_VBlankFunc();
+	GFL_CLACT_SYS_VBlankFunc();
 	
+#if WB_TEMP_FIX
 	DoVramTransferManager();	// Vram転送マネージャー実行
+#endif
 	CATS_RenderOamTrans();
 	PaletteFadeTrans(game->pfd);
 	
@@ -1337,7 +1377,7 @@ static void Balloon_3D_Init(int heap_id)
 static void BalloonSimpleSetUp(void)
 {
 	// ３Ｄ使用面の設定(表示＆プライオリティー)
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
     G2_SetBG0Priority(1);
 
 	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
@@ -1385,8 +1425,6 @@ static void Balloon_CameraInit(BALLOON_GAME_WORK *game)
 #if WB_FIX
 	game->camera = GFC_AllocCamera( HEAPID_BALLOON );
 
-//	GFC_InitCameraTC( &target, &pos, 
-//		BALLOON_CAMERA_PERSPWAY, GF_CAMERA_ORTHO, FALSE, game->camera);
 	GFC_InitCameraTDA(&target, BALLOON_CAMERA_DISTANCE, &BalloonCameraAngle,
 						BALLOON_CAMERA_PERSPWAY, GF_CAMERA_ORTHO, FALSE, game->camera);
 
@@ -1563,25 +1601,11 @@ static void BalloonUpdate(GFL_TCB* tcb, void *work)
 //--------------------------------------------------------------
 static void BalloonSys_VramBankSet(void)
 {
-	GF_Disp_GX_VisibleControlInit();
+	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
 
 	//VRAM設定
 	{
-		GFL_DISP_VRAM vramSetTable = {
-			GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
-			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-			GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-			GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_01_FG			// テクスチャパレットスロット
-			GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
-			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-		};
-		GF_Disp_SetBank( &vramSetTable );	//H32が余り。サブBG面の拡張パレットとして当てられる
+		GF_Disp_SetBank( &BalloonVramSetTable );//H32が余り。サブBG面の拡張パレットとして当てられる
 
 		//VRAMクリア
 		GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
@@ -1635,29 +1659,29 @@ static void BalloonSys_VramBankSet(void)
 		GFL_BG_SetScroll(BALLOON_FRAME_BACK, GFL_BG_SCROLL_Y_SET, 0);
 
 		G2_SetBG0Priority(BALLOON_3DBG_PRIORITY);
-		GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 	}
 
 	//サブ画面フレーム設定
 	{
 		int i;
 		static const GFL_BG_BGCNT_HEADER SubBgCntDat[] = {
-			{//GF_BGL_FRAME0_S	ウィンドウ
+			{//GFL_BG_FRAME0_S	ウィンドウ
 				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, 0x8000,
 				GX_BG_EXTPLTT_01, BALLOON_SUBBG_WIN_PRI, 0, 0, FALSE
 			},
-			{//GF_BGL_FRAME1_S	パイプ
+			{//GFL_BG_FRAME1_S	パイプ
 				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, 0x4000,
 				GX_BG_EXTPLTT_01, BALLOON_SUBBG_PIPE_PRI, 0, 0, FALSE
 			},
-			{//GF_BGL_FRAME2_S	背景
+			{//GFL_BG_FRAME2_S	背景
 				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x4000, GX_BG_CHARBASE_0x14000, 0x4000,
 				GX_BG_EXTPLTT_01, BALLOON_SUBBG_BACK_PRI, 0, 0, FALSE
 			},
-			{//GF_BGL_FRAME3_S	風船
+			{//GFL_BG_FRAME3_S	風船
 				0, 0, 0x400, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_256,
 				GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x18000, 0x8000,
 				GX_BG_EXTPLTT_01, BALLOON_SUBBG_BALLOON_PRI, 0, 0, FALSE
@@ -1666,15 +1690,15 @@ static void BalloonSys_VramBankSet(void)
 		
 		for(i = 0; i < NELEMS(SubBgCntDat); i++){
 			if(i < 3){
-				GFL_BG_SetBGControl(GF_BGL_FRAME0_S + i, &SubBgCntDat[i], GF_BGL_MODE_TEXT);
+				GFL_BG_SetBGControl(GFL_BG_FRAME0_S + i, &SubBgCntDat[i], GF_BGL_MODE_TEXT);
 			}
 			else{
-				GFL_BG_SetBGControl(GF_BGL_FRAME0_S + i, &SubBgCntDat[i], GF_BGL_MODE_AFFINE);
+				GFL_BG_SetBGControl(GFL_BG_FRAME0_S + i, &SubBgCntDat[i], GF_BGL_MODE_AFFINE);
 			}
-			GF_BGL_ClearCharSet( GF_BGL_FRAME0_S + i, 0x20, 0, HEAPID_BALLOON);
-			GFL_BG_ClearScreen(GF_BGL_FRAME0_S + i);
-			GFL_BG_SetScroll(GF_BGL_FRAME0_S + i, GFL_BG_SCROLL_X_SET, 0);
-			GFL_BG_SetScroll(GF_BGL_FRAME0_S + i, GFL_BG_SCROLL_Y_SET, 0);
+			GF_BGL_ClearCharSet( GFL_BG_FRAME0_S + i, 0x20, 0, HEAPID_BALLOON);
+			GFL_BG_ClearScreen(GFL_BG_FRAME0_S + i);
+			GFL_BG_SetScroll(GFL_BG_FRAME0_S + i, GFL_BG_SCROLL_X_SET, 0);
+			GFL_BG_SetScroll(GFL_BG_FRAME0_S + i, GFL_BG_SCROLL_Y_SET, 0);
 		}
 		//最初は風船BG非表示
 		GFL_BG_SetVisible(BALLOON_SUBFRAME_BALLOON, VISIBLE_OFF);
@@ -1868,7 +1892,8 @@ static void BalloonParticleInit(BALLOON_GAME_PTR game)
 	GFL_G3D_CAMERA_GetFar(camera_ptr, BP_FAR);
 
 	//リソース読み込み＆登録
-	resource = GFL_PTC_LoadArcResource(ARC_PL_ETC_PARTICLE, BALLOON_SPA, HEAPID_BALLOON);
+	resource = GFL_PTC_LoadArcResource(
+		ARC_PL_ETC_PARTICLE, NARC_balloon_particle_balloon_spa, HEAPID_BALLOON);
 	GFL_PTC_SetResource(ptc, resource, TRUE, NULL);
 }
 
@@ -2119,7 +2144,7 @@ static void BalloonDefaultOBJDel_Sub(BALLOON_GAME_WORK *game)
 static void BalloonDefaultBGSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 {
 	//BG共通パレット
-	PaletteWorkSet_Arc(game->pfd, ARC_BALLOON_GRA, MINI_FUSEN_BOTTOM_NCLR, 
+	PaletteWorkSet_Arc(game->pfd, ARCID_BALLOON_GRA, MINI_FUSEN_BOTTOM_NCLR, 
 		HEAPID_BALLOON, FADE_MAIN_BG, 0, 0);
 
 	//背景
@@ -2158,10 +2183,10 @@ static void BalloonDefaultBGDel(BALLOON_GAME_WORK *game)
 static void BalloonDefaultBGSet_Sub(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 {
 	//BG共通パレット
-	PaletteWorkSet_Arc(game->pfd, ARC_BALLOON_GRA, MINI_FUSEN_TOP_NCLR, 
+	PaletteWorkSet_Arc(game->pfd, ARCID_BALLOON_GRA, MINI_FUSEN_TOP_NCLR, 
 		HEAPID_BALLOON, FADE_SUB_BG, 5 * 0x20, 0);
 	//BG共通パレット
-	PaletteWorkSetEx_Arc(game->pfd, ARC_BALLOON_GRA, MINI_FUSEN_POKEFUSEN_NCLR, HEAPID_BALLOON, 
+	PaletteWorkSetEx_Arc(game->pfd, ARCID_BALLOON_GRA, MINI_FUSEN_POKEFUSEN_NCLR, HEAPID_BALLOON, 
 		FADE_SUB_BG, FUSEN_BG_LOAD_SIZE, FUSEN_BG_LOAD_POS * 16, FUSEN_BG_READ_POS * 16);
 
 	//背景
@@ -3241,7 +3266,7 @@ static int ServerPlay_Game(BALLOON_GAME_PTR game, BALLOON_SERVER_WORK *server)
 	case SEQ_EXPLODED:
 //		OS_TPrintf("SEQ_EXPLODED\n");
 	#ifdef PM_DEBUG
-		if(sys.trg & PAD_BUTTON_SELECT){
+		if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
 			game->bst.air = game->bst.max_air;
 		}
 	#endif
@@ -3376,13 +3401,13 @@ static void Debug_CameraMove(GFL_G3D_CAMERA * camera)
 		MODE_ANGLE_REV,		//公転
 	};
 	
-	if((sys.cont & PAD_BUTTON_L) && (sys.cont & PAD_BUTTON_R)){
+	if((GFL_UI_KEY_GetCont() & PAD_BUTTON_L) && (GFL_UI_KEY_GetCont() & PAD_BUTTON_R)){
 		mode = MODE_DISTANCE;
 	}
-	else if(sys.cont & PAD_BUTTON_L){
+	else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
 		mode = MODE_SHIFT;
 	}
-	else if(sys.cont & PAD_BUTTON_R){
+	else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
 		mode = MODE_ANGLE_REV;
 	}
 	else{
@@ -3391,22 +3416,22 @@ static void Debug_CameraMove(GFL_G3D_CAMERA * camera)
 	
 	switch(mode){
 	case MODE_SHIFT:
-		if(sys.cont & PAD_KEY_LEFT){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT){
 			move.x -= value;
 		}
-		if(sys.cont & PAD_KEY_RIGHT){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT){
 			move.x += value;
 		}
-		if(sys.cont & PAD_KEY_UP){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){
 			move.y += value;
 		}
-		if(sys.cont & PAD_KEY_DOWN){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_DOWN){
 			move.y -= value;
 		}
-		if(sys.cont & PAD_BUTTON_X){
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){
 			move.z -= value;
 		}
-		if(sys.cont & PAD_BUTTON_B){
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_B){
 			move.z += value;
 		}
 		GFC_ShiftCamera(&move, camera);
@@ -3415,22 +3440,22 @@ static void Debug_CameraMove(GFL_G3D_CAMERA * camera)
 		break;
 	
 	case MODE_ANGLE_REV:
-		if(sys.cont & PAD_KEY_LEFT){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT){
 			angle.y -= add_angle;
 		}
-		if(sys.cont & PAD_KEY_RIGHT){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT){
 			angle.y += add_angle;
 		}
-		if(sys.cont & PAD_KEY_UP){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){
 			angle.x += add_angle;
 		}
-		if(sys.cont & PAD_KEY_DOWN){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_DOWN){
 			angle.x -= add_angle;
 		}
-		if(sys.cont & PAD_BUTTON_X){
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){
 			angle.z -= add_angle;
 		}
-		if(sys.cont & PAD_BUTTON_B){
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_B){
 			angle.z += add_angle;
 		}
 		GFC_AddCameraAngleRev(&angle, camera);
@@ -3438,10 +3463,10 @@ static void Debug_CameraMove(GFL_G3D_CAMERA * camera)
 		OS_TPrintf("カメラアングル　x=%d, y=%d, z=%d\n", angle.x, angle.y, angle.z);
 		break;
 	case MODE_DISTANCE:
-		if(sys.cont & PAD_KEY_UP){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){
 			GFC_AddCameraDistance(FX32_ONE, camera);
 		}
-		if(sys.cont & PAD_KEY_DOWN){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_DOWN){
 			GFC_AddCameraDistance(-FX32_ONE, camera);
 		}
 		OS_TPrintf("カメラ距離＝%d(16進:%x)\n", GFC_GetCameraDistance(camera), GFC_GetCameraDistance(camera));

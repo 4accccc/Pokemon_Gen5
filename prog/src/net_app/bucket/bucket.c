@@ -27,6 +27,7 @@
 #include "net_app/bucket/bct_client.h"
 #include "net_app/bucket/bct_local.h"
 #include "net_app/bucket.h"
+#include "system/gfl_use.h"
 
 
 //-----------------------------------------------------------------------------
@@ -127,6 +128,7 @@ typedef struct _BUCKET_WK{
 
 	void				*tcb_work;		///<TCBシステムで使用するワーク
 	GFL_TCBSYS			*tcbsys;		///<TCBシステム
+	GFL_TCB *vintr_tcb;
 } ;
 
 //-----------------------------------------------------------------------------
@@ -134,7 +136,7 @@ typedef struct _BUCKET_WK{
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-static void BCT_VBlank( void* p_work );
+static void BCT_VBlank(GFL_TCB *tcb, void *p_work);
 static void BCT_ClientNutsSend( BUCKET_WK* p_wk );
 static void BCT_ClientMiddleScoreSend( BUCKET_WK* p_wk );
 static void BCT_GAMEDATA_Load( BUCKET_WK* p_wk, u32 heapID );
@@ -166,19 +168,19 @@ GFL_PROC_RESULT BucketProc_Init( GFL_PROC * p_proc, int * p_seq, void * pwk, voi
 	OS_Printf( "モードをえらんでください x[40] a[45] b[50] y[55]\n" );
 	result = FALSE;
 
-	if( sys.cont & PAD_BUTTON_X ){
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
 		BCT_TIME_LIMIT = 30*40;
 		result = TRUE;
 		OS_Printf( "40秒モード\n" );
-	}else if( sys.cont & PAD_BUTTON_A ){
+	}else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
 		BCT_TIME_LIMIT = 30*45;
 		result = TRUE;
 		OS_Printf( "45秒モード\n" );
-	}else if( sys.cont & PAD_BUTTON_B ){
+	}else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B ){
 		BCT_TIME_LIMIT = 30*50;
 		result = TRUE;
 		OS_Printf( "50秒モード\n" );
-	}else if( sys.cont & PAD_BUTTON_Y ){
+	}else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
 		BCT_TIME_LIMIT = 30*55;
 		result = TRUE;
 		OS_Printf( "55秒モード\n" );
@@ -298,12 +300,12 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		break;
 		
 	case BCT_MAINSEQ_INIT:
-		if( sys.cont & PAD_BUTTON_A ){
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
 			break;
 		}
 
 		// VブランクHブランク関数設定
-		sys_VBlankFuncChange( BCT_VBlank, p_wk );	// VBlankセット
+		p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(BCT_VBlank, p_wk, 200);
 		sys_HBlankIntrStop();	//HBlank割り込み停止
 
 		// 各種フラグの初期化
@@ -313,7 +315,9 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		GFL_STD_MemFill( p_wk->middle_score_get_count, 0, sizeof(u8)*BCT_PLAYER_NUM );
 
 		// VramTransferManager初期化
+#if WB_FIX
 		initVramTransferManagerHeap( BCT_VRAMTR_MAN_NUM, HEAPID_BUCKET );
+#endif
 
 		// 通信開始
 		CommCommandBCTInitialize( p_wk );
@@ -338,7 +342,9 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		}
 		p_wk->p_client = BCT_CLIENT_Init( HEAPID_BUCKET, BCT_TIME_LIMIT, p_wk->comm_num, p_wk->plno, &p_wk->gamedata, p_wk->tcbsys );
 
+#if WB_TEMP_FIX
 		WirelessIconEasy();  // 接続中なのでアイコン表示
+#endif
 
 		// VChatOn
 		if( pp->vchat ){
@@ -466,7 +472,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 				BCT_GAMESendData( p_wk, CNM_BCT_END, NULL,  0 );
 			}
 #ifdef BCT_DEBUG_NOT_TIMECOUNT
-			if( sys.trg & PAD_BUTTON_CANCEL ){	
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){	
 				BCT_GAMESendData( p_wk, CNM_BCT_END, NULL,  0 );
 			}
 #endif	// BCT_DEBUG_NOT_TIMECOUNT
@@ -554,11 +560,13 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		BCT_CLIENT_Delete( p_wk->p_client );
 		p_wk->p_client = NULL;
 
-		sys_VBlankFuncChange( NULL, NULL );	// VBlankセット
+		GFL_TCB_DeleteTask(p_wk->vintr_tcb);
 		sys_HBlankIntrStop();	//HBlank割り込み停止
 
+#if WB_TEMP_FIX
 		//
 		DellVramTransferManager();
+#endif
 
 		(*p_seq)++;
 		break;
@@ -870,7 +878,7 @@ void Bucket_ClientMiddleScoreOkSet( BUCKET_WK* p_wk )
  *	@brief	VBlank関数
  */
 //-----------------------------------------------------------------------------
-static void BCT_VBlank( void* p_work )
+static void BCT_VBlank(GFL_TCB *tcb, void *p_work)
 {
 	BUCKET_WK* p_wk = p_work;
 
@@ -918,10 +926,10 @@ static void BCT_ClientNutsSend( BUCKET_WK* p_wk )
 		BCT_GAMESendData( p_wk, CNM_BCT_NUTS, &comm, sizeof(BCT_NUT_COMM) );
 	}
 
-	if( sys.trg & PAD_KEY_UP ){
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
 		timing ++;
 		OS_Printf( "send timing %d\n", timing );
-	}else if( sys.trg & PAD_KEY_DOWN ){
+	}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
 		timing --;
 		OS_Printf( "send timing %d\n", timing );
 	}
@@ -1019,7 +1027,7 @@ static void BCT_GAMEDATA_Release( BUCKET_WK* p_wk )
 //-----------------------------------------------------------------------------
 static void BCT_ErrAllSysEnd( BUCKET_WK* p_wk, BUCKET_PROC_WORK* pp )
 {
-	sys_VBlankFuncChange( NULL, NULL );	// VBlankセット
+	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	// 全メモリ破棄
@@ -1033,7 +1041,9 @@ static void BCT_ErrAllSysEnd( BUCKET_WK* p_wk, BUCKET_PROC_WORK* pp )
 		}
 		BCT_CLIENT_Delete( p_wk->p_client );
 
+#if WB_TEMP_FIX
 		DellVramTransferManager();
+#endif
 	}
 	if( pp->vchat ){
 		// ボイスチャット終了

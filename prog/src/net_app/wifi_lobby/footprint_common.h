@@ -28,14 +28,14 @@ enum{
 ///フレーム指定
 enum{
 	//メイン画面
-	FOOT_FRAME_WIN = GF_BGL_FRAME1_M,			//ウィンドウ面
-	FOOT_FRAME_PANEL = GF_BGL_FRAME2_M,			//パネル
-	FOOT_FRAME_BG = GF_BGL_FRAME3_M,			//背景
+	FOOT_FRAME_WIN = GFL_BG_FRAME1_M,			//ウィンドウ面
+	FOOT_FRAME_PANEL = GFL_BG_FRAME2_M,			//パネル
+	FOOT_FRAME_BG = GFL_BG_FRAME3_M,			//背景
 	
 	//サブ画面
-	FOOT_SUBFRAME_WIN = GF_BGL_FRAME1_S,		//ウィンドウ名
-	FOOT_SUBFRAME_PLATE = GF_BGL_FRAME2_S,			//プレート
-	FOOT_SUBFRAME_BG = GF_BGL_FRAME3_S,			//背景
+	FOOT_SUBFRAME_WIN = GFL_BG_FRAME1_S,		//ウィンドウ名
+	FOOT_SUBFRAME_PLATE = GFL_BG_FRAME2_S,			//プレート
+	FOOT_SUBFRAME_BG = GFL_BG_FRAME3_S,			//背景
 };
 
 //--------------------------------------------------------------

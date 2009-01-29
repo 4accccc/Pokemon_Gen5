@@ -78,7 +78,7 @@ WFLBY_TIME WFLBY_WORLDTIMER_PLACE_GetPlaceTime( u16 nation, u8 area, WFLBY_TIME 
 	WFLBY_TIME time;
 	ARCHANDLE* p_handle;
 
-	p_handle = ArchiveDataHandleOpen( ARC_WIFI_EARCH_PLACE, heapID );
+	p_handle = GFL_ARC_OpenDataHandle( ARC_WIFI_EARCH_PLACE, heapID );
 	
 
 	// GMT’nˆæ‚Ì‰ñ“]Šp“xŽæ“¾
@@ -105,7 +105,7 @@ WFLBY_TIME WFLBY_WORLDTIMER_PLACE_GetPlaceTime( u16 nation, u8 area, WFLBY_TIME 
 	time.hour = hour_dif;
 	WFLBY_TIME_Add( &time, &gmt, &time );
 
-	ArchiveDataHandleClose( p_handle );
+	GFL_ARC_CloseDataHandle( p_handle );
 
 	return time;
 }

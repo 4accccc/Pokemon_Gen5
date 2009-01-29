@@ -30,10 +30,10 @@
 
 
 #include "message.naix"
-#include "msgdata/msg_wifi_lobby.h"
-#include "msgdata/msg_wifi_hiroba.h"
-#include "msgdata/msg_wifi_system.h"
-#include "msgdata/msg_debug_tomoya.h"
+#include "msg/msg_wifi_lobby.h"
+#include "msg/msg_wifi_hiroba.h"
+#include "msg/msg_wifi_system.h"
+#include "msg/msg_debug_tomoya.h"
 
 //#include  "communication/wm_icon.h"
 
@@ -45,6 +45,7 @@
 
 // ダミーグラフィックです
 #include "net_app/wifi_p2pmatch/wifip2pmatch.naix"
+#include "system/gfl_use.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -269,6 +270,8 @@ typedef struct {
 	BMPMENU_WORK*		p_yesno;	// yesnoウィンドウ
 	
 	CONNECT_BG_PALANM	cbp;		// Wifi接続BGパレットアニメ制御
+
+	GFL_TCB *vintr_tcb;
 } WFLBY_CONNECTWK;
 
 
@@ -307,9 +310,9 @@ static const GFL_BG_SYS_HEADER sc_BGINIT = {
 
 // BGコントロール
 static const u32 sc_WFLBY_BGCNT_FRM[ WFLBY_BGCNT_NUM ] = {
-	GF_BGL_FRAME0_M,
-	GF_BGL_FRAME1_M,
-	GF_BGL_FRAME0_S,
+	GFL_BG_FRAME0_M,
+	GFL_BG_FRAME1_M,
+	GFL_BG_FRAME0_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_WFLBY_BGCNT_DATA[ WFLBY_BGCNT_NUM ] = {
 	// メイン画面
@@ -332,7 +335,7 @@ static const GFL_BG_BGCNT_HEADER sc_WFLBY_BGCNT_DATA[ WFLBY_BGCNT_NUM ] = {
 	},
 };
 static const BMPWIN_DAT	sc_WFLBY_BMPWIN_DAT_YESNO = {
-	GF_BGL_FRAME1_M, WFLBY_YESNOWIN_X, WFLBY_YESNOWIN_Y,
+	GFL_BG_FRAME1_M, WFLBY_YESNOWIN_X, WFLBY_YESNOWIN_Y,
 	WFLBY_YESNOWIN_SIZX, WFLBY_YESNOWIN_SIZY, 
 	WFLBY_MAIN_PLTT_SYSFONT, WFLBY_YESNOWIN_CGX,
 };
@@ -345,7 +348,7 @@ static const BMPWIN_DAT	sc_WFLBY_BMPWIN_DAT_YESNO = {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-static void WFLBY_CONNECT_VBlank( void* p_work );
+static void WFLBY_CONNECT_VBlank(GFL_TCB *tcb, void *work);
 
 
 static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID );
@@ -435,7 +438,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 
 
 	// VBlank関数設定
-	sys_VBlankFuncChange( WFLBY_CONNECT_VBlank, p_wk );
+	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(WFLBY_CONNECT_VBlank, p_wk, 200);
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	return GFL_PROC_RES_FINISH;
@@ -528,11 +531,11 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 		(*p_seq)++;
 
 	case WFLBY_CONNECT_SEQ_DEBUG_SEL_ROOMWAIT:
-		if( sys.trg & PAD_KEY_UP ){
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
 			DEBUG_SEL_ROOM = (DEBUG_SEL_ROOM + 1) % WFLBY_ROOM_NUM;
 			WFLBY_CONNECT_WIN_PrintDEBUG( &p_wk->talk, MSG_WFLBY_00, DEBUG_SEL_ROOM );
 		}
-		if( sys.trg & PAD_KEY_DOWN ){
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
 			
 			DEBUG_SEL_ROOM --;
 			if( DEBUG_SEL_ROOM < 0 ){
@@ -540,7 +543,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 			}
 			WFLBY_CONNECT_WIN_PrintDEBUG( &p_wk->talk, MSG_WFLBY_00, DEBUG_SEL_ROOM );
 		}
-		if( sys.trg & PAD_BUTTON_A ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
 			(*p_seq)++;
 		}
 		break;
@@ -550,11 +553,11 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 		(*p_seq)++;
 
 	case WFLBY_CONNECT_SEQ_DEBUG_SEL_SEASONWAIT:
-		if( sys.trg & PAD_KEY_UP ){
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
 			DEBUG_SEL_SEASON = (DEBUG_SEL_SEASON + 1) % WFLBY_SEASON_NUM;
 			WFLBY_CONNECT_WIN_PrintDEBUG( &p_wk->talk, MSG_WFLBY_01, DEBUG_SEL_SEASON );
 		}
-		if( sys.trg & PAD_KEY_DOWN ){
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
 			
 			DEBUG_SEL_SEASON --;
 			if( DEBUG_SEL_SEASON < 0 ){
@@ -562,7 +565,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 			}
 			WFLBY_CONNECT_WIN_PrintDEBUG( &p_wk->talk, MSG_WFLBY_01, DEBUG_SEL_SEASON );
 		}
-		if( sys.trg & PAD_BUTTON_A ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
 			(*p_seq)++;
 		}
 		break;
@@ -572,11 +575,11 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 		(*p_seq)++;
 
 	case WFLBY_CONNECT_SEQ_DEBUG_SEL_ITEMWAIT:
-		if( sys.repeat & PAD_KEY_UP ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
 			DEBUG_SEL_ITEM = (DEBUG_SEL_ITEM + 1) % WFLBY_ITEM_NUM;
 			WFLBY_CONNECT_WIN_PrintDEBUG2( &p_wk->talk, MSG_WFLBY_02, DEBUG_SEL_ITEM );
 		}
-		if( sys.repeat & PAD_KEY_DOWN ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
 			
 			DEBUG_SEL_ITEM --;
 			if( DEBUG_SEL_ITEM < 0 ){
@@ -584,7 +587,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 			}
 			WFLBY_CONNECT_WIN_PrintDEBUG2( &p_wk->talk, MSG_WFLBY_02, DEBUG_SEL_ITEM );
 		}
-		if( sys.trg & PAD_BUTTON_A ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
 			(*p_seq)++;
 		}
 		break;
@@ -688,7 +691,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 
 	// キー入力待ち
 	case WFLBY_CONNECT_SEQ_ERR:
-		if( sys.trg & PAD_BUTTON_DECIDE ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 			WFLBY_ERR_TYPE err_type;
 			int err_no;
 
@@ -803,7 +806,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	p_wk	= mywk;
 
 	// 割り込み設定
-	sys_VBlankFuncChange( NULL, NULL );
+	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	ConnectBGPalAnm_End(&p_wk->cbp);
@@ -877,11 +880,13 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 
 #if PL_G0220_081027_FIX
 	// アイコンOAM表示
+#if WB_TEMP_FIX
     WirelessIconEasy();
+#endif
 #endif
 
 	// VBlank関数設定
-	sys_VBlankFuncChange( WFLBY_CONNECT_VBlank, p_wk );
+	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(WFLBY_CONNECT_VBlank, p_wk, 200);
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	return GFL_PROC_RES_FINISH;
@@ -1041,7 +1046,7 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 	p_wk	= mywk;
 
 	// 割り込み設定
-	sys_VBlankFuncChange( NULL, NULL );
+	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	ConnectBGPalAnm_End(&p_wk->cbp);
@@ -1080,7 +1085,7 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, 
  *	@brief	VBlank関数
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_CONNECT_VBlank( void* p_work )
+static void WFLBY_CONNECT_VBlank(GFL_TCB *tcb, void *p_work)
 {
 	WFLBY_CONNECTWK* p_wk = p_work;
 
@@ -1181,17 +1186,17 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID )
 	}
 
 	// 通信グラフィックON
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	
 	{
 		ARCHANDLE* p_handle;
-		p_handle = ArchiveDataHandleOpen( ARC_WIFIP2PMATCH_GRA, heapID );
+		p_handle = GFL_ARC_OpenDataHandle( ARC_WIFIP2PMATCH_GRA, heapID );
 
 		//Wifi接続BGパレットアニメシステム初期化
 		ConnectBGPalAnm_Init(&p_wk->cbp, p_handle, 
 			NARC_wifip2pmatch_conect_anm_NCLR, heapID);
 
-		ArchiveDataHandleClose( p_handle );
+		GFL_ARC_CloseDataHandle( p_handle );
 	}
 }
 
@@ -1209,7 +1214,7 @@ static void WFLBY_CONNECT_GraphicExit( WFLBY_CONNECTWK* p_wk )
 		int i;
 
 		for( i=0; i<WFLBY_BGCNT_NUM; i++ ){
-			GF_BGL_BGControlExit( p_wk->p_bgl, sc_WFLBY_BGCNT_FRM[i] );
+			GFL_BG_FreeBGControl( p_wk->p_bgl, sc_WFLBY_BGCNT_FRM[i] );
 		}
 
 		// BGL破棄
@@ -1379,7 +1384,7 @@ static void WFLBY_CONNECT_WIN_Exit( WFLBY_WINWK* p_wk )
 		WFLBY_CONNECT_WIN_EndTimeWait( p_wk );
 	}
 	
-	GF_BGL_BmpWinDel( &p_wk->win );
+	GFL_BMPWIN_Delete( &p_wk->win );
 
 	GFL_STR_DeleteBuffer( p_wk->p_tmp );
 	GFL_STR_DeleteBuffer( p_wk->p_str );

@@ -13,7 +13,7 @@
 #include "common.h"
 
 
-#include "msgdata/msg_wifi_hiroba.h"
+#include "msg/msg_wifi_hiroba.h"
 
 #include "wflby_def.h"
 #include "wflby_system_def.h"

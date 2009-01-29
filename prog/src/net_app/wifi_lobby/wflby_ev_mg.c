@@ -17,7 +17,7 @@
 
 #include "net\network_define.h"
 
-#include "msgdata/msg_wifi_h_info.h"
+#include "msg/msg_wifi_h_info.h"
 
 #include "wflby_ev_mg.h"
 #include "wflby_snd.h"
@@ -646,7 +646,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 
 			// Bƒ{ƒ^ƒ“‚ÅŽQ‰ÁCancel
 			if( p_evwk->timelimit_10 == FALSE ){
-				if( sys.trg & PAD_BUTTON_CANCEL ){
+				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 
 					Snd_SePlay( SEQ_SE_DP_SELECT );
 					
@@ -1340,7 +1340,7 @@ BOOL WFLBY_EV_DEF_PlayerA_MINIGAME_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_
 		break;
 
 	case 1:
-		if( (sys.trg & PAD_BUTTON_DECIDE) || (sys.trg & PAD_KEY_RIGHT) || (sys.trg & PAD_KEY_LEFT) || (sys.trg & PAD_KEY_DOWN) ){
+		if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE) || (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) || (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) || (GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN) ){
 			WFLBY_EV_MG_MINIGAME_PrintExit( &p_evwk->data, p_rmwk );
 			WFLBY_ROOM_TALKWIN_Off( p_rmwk );
 			{

@@ -124,7 +124,6 @@ GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq , void * pwk, void 
 			p_param->p_wflby_counter, p_wk->p_commsys, HEAPID_WFLOBBY );
 
 	// VブランクHブランク関数設定
-	sys_VBlankFuncChange( NULL, NULL );	// VBlankセット
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 
@@ -187,7 +186,7 @@ GFL_PROC_RESULT WFLBYProc_Exit( GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	p_wk = mywk;
 
 	// 常時動作VブランクTCB破棄
-	TCB_Delete( p_wk->p_vtcb );
+	GFL_TCB_DeleteTask( p_wk->p_vtcb );
 	
 	// VブランクHブランク関数設定
 	sys_VBlankFuncChange( NULL, NULL );	// VBlankセット

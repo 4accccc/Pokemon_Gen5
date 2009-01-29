@@ -33,6 +33,7 @@ SUBDIRS	=	wmi \
 			wifi_2dchar \
 			trainer_case \
 			yn_touch \
+			balloon \
 			mysign
 
 include $(RESOURCE_MACRO)

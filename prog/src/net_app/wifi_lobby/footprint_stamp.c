@@ -486,8 +486,8 @@ void StampSys_Init(STAMP_SYSTEM_WORK *ssw, BOOL arceus_flg)
 		};
 		int i;
 		
-		hdl_main = ArchiveDataHandleOpen( ARC_FOOTPRINT_GRA, HEAPID_FOOTPRINT );
-		hdl_mark = ArchiveDataHandleOpen(ARC_POKEFOOT_GRA, HEAPID_FOOTPRINT);
+		hdl_main = GFL_ARC_OpenDataHandle( ARC_FOOTPRINT_GRA, HEAPID_FOOTPRINT );
+		hdl_mark = GFL_ARC_OpenDataHandle(ARC_POKEFOOT_GRA, HEAPID_FOOTPRINT);
 
 		Stamp_MdlLoadH(ssw, &DebugStamp.mdl, hdl_main, hdl_mark, &debug_stamp, arceus_flg);
 		for(i = 0; i < 4; i++){
@@ -495,8 +495,8 @@ void StampSys_Init(STAMP_SYSTEM_WORK *ssw, BOOL arceus_flg)
 			D3DOBJ_SetDraw( &DebugStamp.obj[i], FALSE );
 		}
 
-		ArchiveDataHandleClose( hdl_main );
-		ArchiveDataHandleClose( hdl_mark );
+		GFL_ARC_CloseDataHandle( hdl_main );
+		GFL_ARC_CloseDataHandle( hdl_mark );
 	}
 #endif
 }
@@ -573,7 +573,7 @@ void StampSys_Update(STAMP_SYSTEM_WORK *ssw, GFL_G3D_CAMERA * camera_ptr, int ga
 	BOOL sp_ret;
 	
 #ifdef PM_DEBUG		//サウンドチェック用
-	if((sys.trg & PAD_BUTTON_A) && ssw->special_effect_type == 0){
+	if((GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) && ssw->special_effect_type == 0){
 		GFL_STD_MemClear(&ssw->special_work, sizeof(STAMP_SPECIAL_WORK));
 		debug_sp_eff++;
 		debug_sp_eff %= NELEMS(SpecialEffectDataTbl);
@@ -1353,7 +1353,7 @@ static void Stamp_HitRectCreate(D3DOBJ *obj, const STAMP_PARAM *param, STAMP_HIT
 	{
 		int i;
 		
-		if(sys.cont & PAD_BUTTON_X){
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){
 			D3DOBJ_SetMatrix( &DebugStamp.obj[0], rect->left, rect->top, STAMP_POS_Z);
 			D3DOBJ_SetMatrix( &DebugStamp.obj[1], rect->left, rect->bottom, STAMP_POS_Z);
 			D3DOBJ_SetMatrix( &DebugStamp.obj[2], rect->right, rect->top, STAMP_POS_Z);

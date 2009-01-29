@@ -19,7 +19,7 @@
 //#include "system/fontproc.h"
 
 #include "message.naix"
-#include "msgdata/msg_wifi_hiroba.h"
+#include "msg/msg_wifi_hiroba.h"
 
 #include "savedata/mystatus.h"
 #include "savedata/zukanwork.h"
@@ -884,7 +884,7 @@ void WFLBY_SYSTEM_Main( WFLBY_SYSTEM* p_wk )
 	
 #ifdef WFLBY_DEBUG_NPC_IN
 	
-	if( sys.trg & PAD_BUTTON_L ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
 		WFLBY_USER_PROFILE profile;
 		int i;
 		static const u32 tr_type[] = {
@@ -917,7 +917,7 @@ void WFLBY_SYSTEM_Main( WFLBY_SYSTEM* p_wk )
 			DWC_LOBBY_DEBUG_PlayerIN( &profile, i );
 		}
 
-		if( sys.trg & PAD_BUTTON_R ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
 			int i;
 			WFLBY_USER_PROFILE* p_profile;
 			// 全員を一気にサブチャンネルのほうにいかせて見る

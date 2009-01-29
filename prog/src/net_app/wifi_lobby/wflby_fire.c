@@ -413,7 +413,7 @@ static void WFLBY_FIRE_CONT_MoveKougo( WFLBY_FIRE_CONT* p_sys, u32 count )
 
 #if 0
 	// Žw’è‚µ‚½ˆÊ’u‚Ì‰Ô‰Î‚ð‚Â‚¯‚é
-	if( sys.trg & PAD_BUTTON_R ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
 		static s32 hanabi_no;
 		static s32 last_hanabi_no;
 

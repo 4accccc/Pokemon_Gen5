@@ -1381,13 +1381,15 @@ static void _graphicInit(WIFIP2PMATCH_WORK * wk)
     sys_VBlankFuncChange( NULL, NULL );	// VBlankセット
     sys_HBlankIntrStop();	//HBlank割り込み停止
 
-    GF_Disp_GX_VisibleControlInit();
-    GF_Disp_GXS_VisibleControlInit();
+	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+	GFL_DISP_GXS_SetVisibleControlDirect(0);
     GX_SetVisiblePlane( 0 );
     GXS_SetVisiblePlane( 0 );
+#if WB_FIX
 	sys_KeyRepeatSpeedSet( SYS_KEYREPEAT_SPEED_DEF, SYS_KEYREPEAT_WAIT_DEF );
+#endif
 
-	p_handle = ArchiveDataHandleOpen( ARC_WIFIP2PMATCH_GRA, HEAPID_WIFIP2PMATCH );
+	p_handle = GFL_ARC_OpenDataHandle( ARC_WIFIP2PMATCH_GRA, HEAPID_WIFIP2PMATCH );
 
     wk->bgl = GF_BGL_BglIniAlloc( HEAPID_WIFIP2PMATCH );
     // 文字列マネージャー生成
@@ -1419,7 +1421,7 @@ static void _graphicInit(WIFIP2PMATCH_WORK * wk)
     // CellActro表示登録
     SetCellActor(wk);
 
-	ArchiveDataHandleClose( p_handle );
+	GFL_ARC_CloseDataHandle( p_handle );
 }
 
 
@@ -1485,7 +1487,9 @@ PROC_RESULT WifiP2PMatchProc_Init( PROC * proc, int * seq )
         MI_CpuFill8( wk, 0, sizeof(WIFIP2PMATCH_WORK) );
 
 		// Vram転送マネージャ作成
+#if WB_FIX
 		initVramTransferManagerHeap( VRANTRANSFERMAN_NUM, HEAPID_WIFIP2PMATCH );
+#endif
 
         wk->MsgIndex = _PRINTTASK_MAX;
         wk->pSaveData = pParentWork->pSaveData;
@@ -1572,9 +1576,9 @@ PROC_RESULT WifiP2PMatchProc_Main( PROC * proc, int * seq )
 
 #ifdef _WIFI_DEBUG_TUUSHIN
 		if( WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_MODE != _WIFI_DEBUG_NONE ){
-			sys.trg |= PAD_KEY_DOWN;	//  したおしっぱ
+			GFL_UI_KEY_GetTrg() |= PAD_KEY_DOWN;	//  したおしっぱ
 			sys.cont |= PAD_KEY_DOWN;
-			sys.trg |= PAD_BUTTON_A;
+			GFL_UI_KEY_GetTrg() |= PAD_BUTTON_A;
 			sys.cont |= PAD_BUTTON_A;
 		}
 #endif
@@ -1734,8 +1738,10 @@ PROC_RESULT WifiP2PMatchProc_End( PROC * proc, int * seq )
 	// タッチパネル停止
 	StopTP();
 
+#if WB_TEMP_FIX
 	// VramTransferマネージャ破棄
 	DellVramTransferManager();
+#endif
 
     sys_DeleteHeap( HEAPID_WIFIP2PMATCH );
     //    WIPE_ResetBrightness( WIPE_DISP_MAIN );
@@ -3064,7 +3070,7 @@ static int _normalConnectWait( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _differMachineInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
-    if(sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
         _systemMessagePrint(wk,dwc_message_0006);
         GF_BGL_PrioritySet(GF_BGL_FRAME3_M , 0);  // メッセージ
         GF_BGL_PrioritySet(GF_BGL_FRAME2_M , 1);   //
@@ -3475,7 +3481,7 @@ static int _poweroffInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
 // WIFI設定に行かないように
 
-    if(sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
         if(GF_BGL_BmpWinAddCheck(&wk->SysMsgWin)){
             BmpTalkWinClear(&wk->SysMsgWin, WINDOW_TRANS_ON );
             GF_BGL_BmpWinDel( &wk->SysMsgWin );
@@ -3555,7 +3561,7 @@ static int _retryInit( WIFIP2PMATCH_WORK *wk, int seq )
 		return seq;
 	}
 	
-    if(sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
         if(GF_BGL_BmpWinAddCheck(&wk->SysMsgWin)){
             BmpTalkWinClear(&wk->SysMsgWin, WINDOW_TRANS_ON );
             GF_BGL_BmpWinDel( &wk->SysMsgWin );
@@ -3665,9 +3671,9 @@ static int _retry( WIFIP2PMATCH_WORK *wk, int seq )
         GF_BGL_ScrClear(wk->bgl, GF_BGL_FRAME3_M);
 
 		// グラフィックリセット
-		p_handle = ArchiveDataHandleOpen( ARC_WIFIP2PMATCH_GRA, HEAPID_WIFIP2PMATCH );
+		p_handle = GFL_ARC_OpenDataHandle( ARC_WIFIP2PMATCH_GRA, HEAPID_WIFIP2PMATCH );
 		BgGraphicSet( wk, p_handle );
-		ArchiveDataHandleClose( p_handle );
+		GFL_ARC_CloseDataHandle( p_handle );
 
 
 		// パレットフェード再開
@@ -3889,7 +3895,7 @@ static int _firstConnectEndMsg( WIFIP2PMATCH_WORK *wk, int seq )
 //WIFIP2PMATCH_FIRST_ENDMSG_WAIT
 static int _firstConnectEndMsgWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
-    if(sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
         if(wk->initSeq == WIFI_P2PMATCH_DPW){ // 世界対戦なら
             wk->endSeq = WIFI_P2PMATCH_DPW_END;   // 終了処理へ
             wk->seq = WIFIP2PMATCH_MODE_END_WAIT;
@@ -4473,7 +4479,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 	
 	ConnectBGPalAnm_OccSet(&wk->cbp, FALSE);
 
-	p_handle = ArchiveDataHandleOpen( ARC_WIFIP2PMATCH_GRA, HEAPID_WIFIP2PMATCH );
+	p_handle = GFL_ARC_OpenDataHandle( ARC_WIFIP2PMATCH_GRA, HEAPID_WIFIP2PMATCH );
 
 
 	// アイコンデータ読込み
@@ -4582,7 +4588,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
     CLACT_SetDrawFlag( wk->MainActWork[_CLACT_LINE_CUR], 1 );
 #endif
 
-	ArchiveDataHandleClose( p_handle );
+	GFL_ARC_CloseDataHandle( p_handle );
 
 	// ワイプイン
 	WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
@@ -4917,7 +4923,7 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
 	if( WIFI_MCR_PlayerMovePauseGet( &wk->matchroom ) == FALSE ){
 		// ボイスチャット
 		if(mydwc_IsNewPlayer() == -1){
-			if(PAD_BUTTON_X & sys.trg){
+			if(PAD_BUTTON_X & GFL_UI_KEY_GetTrg()){
 				if(_myVChatStatusToggleOrg(wk)){
 					WifiP2PMatchMessagePrint(wk, msg_wifilobby_054, FALSE);
 				}
@@ -4950,7 +4956,7 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
 
 #ifdef WFP2P_DEBUG   /// ＶＣＨＡＴ音質切り替え
 #if 0
-    if(PAD_BUTTON_Y & sys.trg){
+    if(PAD_BUTTON_Y & GFL_UI_KEY_GetTrg()){
         switch(wk->vctEnc){
           case VCHAT_2BIT_ADPCM:
             wk->vctEnc = VCHAT_3BIT_ADPCM;
@@ -5038,7 +5044,7 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
     if(wk->preConnect == -1){
 
 		// CANCELボタンでも待機状態をクリア
-		if( sys.trg & PAD_BUTTON_CANCEL ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 			if(_modeWait(status)){	// 待ち状態のとき
 				Snd_SePlay(_SE_DESIDE);
 				wk->seq = WIFIP2PMATCH_MODE_SELECT_REL_INIT;  // 解除
@@ -5279,7 +5285,7 @@ static int WifiP2PMatch_VCTConnectWait( WIFIP2PMATCH_WORK *wk, int seq )        
 	}
 	
     if( GF_MSG_PrintEndCheck( wk->MsgIndex ) == 0 ){
-        if(sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+        if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
             EndMessageWindowOff(wk);
             wk->seq = WIFIP2PMATCH_MODE_VCT_CONNECT; // 次に行く際に呼ぶ
         }
@@ -5353,7 +5359,7 @@ static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
         wk->seq = WIFIP2PMATCH_MODE_VCT_DISCONNECT;
 	}
-    else if(sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+    else if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_017, FALSE);
         wk->seq = WIFIP2PMATCH_MODE_VCT_CONNECTEND_YESNO;
     }
@@ -5474,7 +5480,7 @@ static int WifiP2PMatch_VCTDisconnect(WIFIP2PMATCH_WORK *wk, int seq)
         return seq;
     }
     wk->timer--;
-    if((sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)) || (wk->timer==0)){
+    if((GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)) || (wk->timer==0)){
         EndMessageWindowOff(wk);
         CommStateWifiMatchEnd();
 
@@ -5508,7 +5514,7 @@ static int WifiP2PMatch_BattleDisconnect(WIFIP2PMATCH_WORK *wk, int seq)
     if( GF_MSG_PrintEndCheck( wk->MsgIndex ) != 0 ){
         return seq;
     }
-    if(sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
         EndMessageWindowOff(wk);
         _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);
         CommStateWifiMatchEnd();
@@ -5536,7 +5542,7 @@ static int WifiP2PMatch_Disconnect(WIFIP2PMATCH_WORK *wk, int seq)
         return seq;
     }
     wk->timer--;
-    if((sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)) || (wk->timer==0)){
+    if((GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)) || (wk->timer==0)){
         EndMessageWindowOff(wk);
         _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);
 
@@ -5614,7 +5620,7 @@ static int WifiP2PMatch_CheckAndEnd( WIFIP2PMATCH_WORK *wk, int seq )
 		return seq;
 	}
 
-    if(sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
 
 
         WifiP2PMatchMessagePrint(wk, dwc_message_0011, TRUE);
@@ -7615,7 +7621,7 @@ static int _personalDataWait( WIFIP2PMATCH_WORK *wk, int seq )
     if( 0 !=  _checkParentConnect(wk)){ // 接続してきた
         wk->seq = WIFIP2PMATCH_MODE_PERSONAL_END;
     }
-    if(sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
         wk->seq = WIFIP2PMATCH_MODE_PERSONAL_END;
     }
     return seq;
@@ -8681,7 +8687,7 @@ static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret )
 	
 	//  移動はcontボタンはトリガー
 	if( (sys.cont & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)) ||
-		(sys.trg & (PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_X)) ||
+		(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_X)) ||
 		(oambttn_ret == MCV_USERD_BTTN_RET_BACK) ){
 		return TRUE;
 	}

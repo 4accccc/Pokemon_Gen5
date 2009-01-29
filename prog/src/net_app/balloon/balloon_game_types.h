@@ -497,7 +497,6 @@ typedef struct _BALLOON_GAME_WORK{
 	void				*tcb_work;		///<TCBシステムで使用するワーク
 	GFL_TCBSYS			*tcbsys;		///<TCBシステム
 	GFL_CLUNIT			*clunit;	///<セルユニット
-	PLTTSLOT_SYS_PTR	plttslot;	///<パレットスロット管理ワークへのポインタ
 #if WB_FIX
 	CATS_SYS_PTR		csp;
 	CATS_RES_PTR		crp;
@@ -569,6 +568,9 @@ typedef struct _BALLOON_GAME_WORK{
 	
 	s32 my_total_air;			///<自分が入れた空気量の合計値
 	u32 main_frame;				///<ゲーム開始からのフレーム数
+	GFL_TCB *vintr_tcb;
+
+	GFL_G3D_UTIL *g3Dutil;
 }BALLOON_GAME_WORK;
 
 

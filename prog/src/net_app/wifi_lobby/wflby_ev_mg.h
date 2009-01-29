@@ -14,8 +14,8 @@
 
 #include "wflby_event.h"
 
-#include "msgdata/msg_wifi_h_info.h"
-#include "msgdata/msg_wifi_hiroba.h"
+#include "msg/msg_wifi_h_info.h"
+#include "msg/msg_wifi_hiroba.h"
 
 //-----------------------------------------------------------------------------
 /**

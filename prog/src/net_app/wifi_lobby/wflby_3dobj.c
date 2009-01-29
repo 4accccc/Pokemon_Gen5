@@ -452,8 +452,8 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 		void* p_file;
 		int i;
 		
-		p_handle		= ArchiveDataHandleOpen( ARC_MMODEL, heapID );
-		p_handle_other	= ArchiveDataHandleOpen( ARC_WIFILOBBY_OTHER_GRA, heapID );
+		p_handle		= GFL_ARC_OpenDataHandle( ARC_MMODEL, heapID );
+		p_handle_other	= GFL_ARC_OpenDataHandle( ARC_WIFILOBBY_OTHER_GRA, heapID );
 
 		// ƒ‚ƒfƒ‹
 		{
@@ -520,8 +520,8 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 		// ‰e
 		WFLBY_3DMDL_RES_Load( &p_sys->shadowres, p_handle_other, NARC_wifi_lobby_other_kage_nsbmd, gheapID );
 
-		ArchiveDataHandleClose( p_handle );
-		ArchiveDataHandleClose( p_handle_other );
+		GFL_ARC_CloseDataHandle( p_handle );
+		GFL_ARC_CloseDataHandle( p_handle_other );
 	}
 	return p_sys;
 }

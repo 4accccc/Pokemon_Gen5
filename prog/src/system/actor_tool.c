@@ -24,6 +24,8 @@ void ACTORTOOL_Init(int heap_id, const GFL_CLSYS_INIT *clsysinit, const GFL_DISP
 #endif
 
 
+
+#if 0
 //==============================================================================
 //
 //	パレットスロット管理
@@ -219,4 +221,6 @@ void PLTTSLOT_ResourceFree(PLTTSLOT_SYS_PTR pssp, u32 index, GFL_VRAM_TYPE vram_
 	PLTTSLOT_Free(pssp, pal_no, vram_type);
 }
 
+
+#endif
 

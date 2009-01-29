@@ -564,7 +564,7 @@ DWC_LOBBY_CHANNEL_STATE DWC_LOBBY_Update( void )
 
 #ifdef DWC_LOBBY_USERENUM
 	{
-		if( sys.trg & PAD_BUTTON_L ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
 			u32 num;
 			static s32 buff[20];
 			s32* p_buff;

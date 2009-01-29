@@ -22,7 +22,7 @@
 #include "message.naix"
 //#include "system/fontproc.h"
 #include "gflib/strbuf_family.h"
-#include "msgdata/msg_wflby_footprint.h"
+#include "msg/msg_wflby_footprint.h"
 #include "system\font_arc.h"
 #include "savedata/config.h"
 //#include  "communication/wm_icon.h"
@@ -46,6 +46,9 @@
 #include "poketool/pokefoot.h"	//POKEFOOT_ARC_CHAR_DMMY定義の為
 #include "system/touch_subwindow.h"
 #include <tcb.h>
+#include "print\gf_font.h"
+#include "font/font.naix"
+#include "system/gfl_use.h"
 
 
 //==============================================================================
@@ -301,6 +304,8 @@ typedef struct _FOOTPRINT_SYS{
 	int ink_sub;						///<インクの減算量
 	
 	BOOL arceus_flg;					///<TRUE:アルセウスOK
+
+	GFL_TCB *vintr_tcb;
 }FOOTPRINT_SYS;
 
 
@@ -500,7 +505,7 @@ static const TCATS_OBJECT_ADD_PARAM_S NameFootObjParam = {
 //	プロトタイプ宣言
 //==============================================================================
 static void Footprint_Update(GFL_TCB* tcb, void *work);
-static void VBlankFunc( void * work );
+static void VBlankFunc(GFL_TCB *tcb, void *work);
 static void FootPrint_VramBankSet(void);
 static void BgExit( GF_BGL_INI * ini );
 static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle );
@@ -572,11 +577,10 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 {
 	FOOTPRINT_SYS *fps;
 	
-	sys_VBlankFuncChange(NULL, NULL);	// VBlankセット
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
-	GF_Disp_GX_VisibleControlInit();
-	GF_Disp_GXS_VisibleControlInit();
+	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+	GFL_DISP_GXS_SetVisibleControlDirect(0);
 	GX_SetVisiblePlane(0);
 	GXS_SetVisiblePlane(0);
 	GX_SetVisibleWnd(GX_WNDMASK_NONE);
@@ -625,16 +629,18 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	GFL_BG_Init(HEAPID_FOOTPRINT);
 	GFL_BMPWIN_Init(HEAPID_FOOTPRINT);
 
+#if WB_FIX
 	initVramTransferManagerHeap(64, HEAPID_FOOTPRINT);
-
-	sys_KeyRepeatSpeedSet( SYS_KEYREPEAT_SPEED_DEF, SYS_KEYREPEAT_WAIT_DEF );
+#endif
 
 	//VRAM割り当て設定
 	FootPrint_VramBankSet();
 
+#if WB_FIX
 	// タッチパネルシステム初期化
 	InitTPSystem();
 	InitTPNoBuff(4);
+#endif
 
 	// ボタン用フォントを読み込み
 	FontProc_LoadFont(FONT_BUTTON, HEAPID_FOOTPRINT);
@@ -647,8 +653,8 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	fps->fontoam_sys = FONTOAM_SysInit(FOOT_FONTOAM_MAX, HEAPID_FOOTPRINT);
 
 	//ハンドルを開ける(足跡など頻繁にグラフィックロードが行われるのでハンドル開けっ放しにする
-	fps->handle_footprint = ArchiveDataHandleOpen( ARC_FOOTPRINT_GRA, HEAPID_FOOTPRINT );
-	fps->handle_footmark = ArchiveDataHandleOpen(ARC_POKEFOOT_GRA, HEAPID_FOOTPRINT);
+	fps->handle_footprint = GFL_ARC_OpenDataHandle( ARC_FOOTPRINT_GRA, HEAPID_FOOTPRINT );
+	fps->handle_footmark = GFL_ARC_OpenDataHandle(ARC_POKEFOOT_GRA, HEAPID_FOOTPRINT);
 
 	// BGグラフィック転送
 	BgGraphicSet( fps, fps->handle_footprint );
@@ -676,7 +682,9 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	CLACT_U_SetSubSurfaceMatrix(CATS_EasyRenderGet(fps->csp), 0, FOOTPRINT_SUB_ACTOR_DISTANCE);
 
 	// Wifi通信アイコン
+#if WB_TEMP_FIX
     WirelessIconEasy();
+#endif
 
 	//スタンプシステム作成
 	StampSys_Init(&fps->ssw, fps->arceus_flg);
@@ -706,28 +714,29 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 //	Snd_SePlay( WFLBY_SND_FOOTIN );
 
 	// BG面表示ON
-	GF_Disp_GX_VisibleControl(  GX_PLANEMASK_BG0, VISIBLE_ON );
-	GF_Disp_GX_VisibleControl(  GX_PLANEMASK_BG1, VISIBLE_ON );
-	GF_Disp_GX_VisibleControl(  GX_PLANEMASK_BG2, VISIBLE_ON );
-	GF_Disp_GX_VisibleControl(  GX_PLANEMASK_BG3, VISIBLE_ON );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG0, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG1, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG2, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG3, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
 
 	//メイン画面設定
-	sys.disp3DSW = DISP_3D_TO_SUB;
-	GF_Disp_DispSelect();
-	GF_Disp_DispOn();
-	GF_Disp_GX_VisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
-	GF_Disp_GXS_VisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
+	GFL_DISP_SetDispOn();
+	GFL_DISP_SetDispOn();
+	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
 
+#if WB_TEMP_FIX
 	MsgPrintSkipFlagSet(MSG_SKIP_ON);
 	MsgPrintAutoFlagSet(MSG_AUTO_OFF);
 	MsgPrintTouchPanelFlagSet(MSG_TP_OFF);
+#endif
 
 	fps->update_tcb = GFL_TCB_AddTask(fps->tcbsys, Footprint_Update, fps, 60000);
 
-	sys_VBlankFuncChange(VBlankFunc, fps);
-
+	fps->vintr_tcb = GFUser_VIntr_CreateTCB(VBlankFunc, fps, 200);
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -789,7 +798,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 				if(DebugFoot.occ_seikaku){
 					DebugFoot.backup_personal_rnd 
 						= fps->my_stamp_param[fps->select_no].personal_rnd;
-					if(sys.cont & PAD_BUTTON_B){
+					if(GFL_UI_KEY_GetCont() & PAD_BUTTON_B){
 						fps->my_stamp_param[fps->select_no].personal_rnd 
 							= DebugSeikakuTbl[gf_rand() % NELEMS(DebugSeikakuTbl)];
 					}
@@ -978,17 +987,17 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 	Debug_CameraMove(fps);
 	
 #ifdef PM_DEBUG
-	if(sys.trg & PAD_BUTTON_START){
+	if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_START){
 		DebugFoot.occ_seikaku ^= 1;
 	}
-	if(sys.trg & PAD_BUTTON_SELECT){
+	if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
 		DebugFoot.move_type++;
 		if(DebugFoot.move_type >= NELEMS(DebugSeikakuTbl)){
 			DebugFoot.move_type = 0;
 		}
 		OS_TPrintf("デバッグ move_type = %d\n", DebugFoot.move_type);
 	}
-	if(sys.trg & PAD_BUTTON_Y){
+	if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
 		DebugFoot.consume_zero ^= 1;
 	}
 #endif
@@ -1011,7 +1020,7 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 {
 	FOOTPRINT_SYS * fps  = mywk;
 
-	TCB_Delete(fps->tcbsys, fps->update_tcb);
+	GFL_TCB_DeleteTask(fps->tcbsys, fps->update_tcb);
 
 	DefaultActorDel_Main(fps);
 	DefaultActorDel_Sub(fps);
@@ -1061,26 +1070,34 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 	Footprint_3D_Exit();
 
 	//ハンドル閉じる
-	ArchiveDataHandleClose( fps->handle_footprint );
-	ArchiveDataHandleClose( fps->handle_footmark );
+	GFL_ARC_CloseDataHandle( fps->handle_footprint );
+	GFL_ARC_CloseDataHandle( fps->handle_footmark );
 
-	sys_VBlankFuncChange( NULL, NULL );		// VBlankセット
+	GFL_TCB_DeleteTask(fps->vintr_tcb);
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
+#if WB_TEMP_FIX
 	//Vram転送マネージャー削除
 	DellVramTransferManager();
+#endif
 
 	//TCBシステム削除
 	GFL_TCB_Exit( fps->tcbsys );
 	GFL_HEAP_FreeMemory(fps->tcb_work);
 
+#if WB_TEMP_FIX
 	StopTP();		//タッチパネルの終了
+#endif
 
+#if WB_TEMP_FIX
 	MsgPrintSkipFlagSet(MSG_SKIP_OFF);
 	MsgPrintAutoFlagSet(MSG_AUTO_OFF);
 	MsgPrintTouchPanelFlagSet(MSG_TP_OFF);
+#endif
 
+#if WB_TEMP_FIX
 	WirelessIconEasyEnd();
+#endif
 
 #ifdef PM_DEBUG
 	if(fps->parent_work->wflby_sys == NULL){
@@ -1134,14 +1151,16 @@ static void Footprint_Update(GFL_TCB* tcb, void *work)
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void VBlankFunc( void * work )
+static void VBlankFunc(GFL_TCB *tcb, void *work)
 {
 	FOOTPRINT_SYS *fps = work;
 	
 	StampSys_VWaitUpdate(&fps->ssw, fps->game_status);
 
+#if WB_TEMP_FIX
 	// セルアクターVram転送マネージャー実行
 	DoVramTransferManager();
+#endif
 
 	// レンダラ共有OAMマネージャVram転送
 	CATS_RenderOamTrans();
@@ -1161,8 +1180,8 @@ static void VBlankFunc( void * work )
 //--------------------------------------------------------------
 static void FootPrint_VramBankSet(void)
 {
-	GF_Disp_GX_VisibleControlInit();
-	GF_Disp_GXS_VisibleControlInit();
+	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+	GFL_DISP_GXS_SetVisibleControlDirect(0);
 	
 	//VRAM設定
 	{
@@ -1241,7 +1260,7 @@ static void FootPrint_VramBankSet(void)
 
 		//3D面
 		G2_SetBG0Priority(FOOT_BGPRI_3D);
-		GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 	}
 	//サブ画面フレーム設定
 	{
@@ -1295,12 +1314,12 @@ static void FootPrint_VramBankSet(void)
 //--------------------------------------------------------------------------------------------
 static void BgExit( GF_BGL_INI * ini )
 {
-	GF_BGL_BGControlExit( ini, FOOT_SUBFRAME_PLATE );
-	GF_BGL_BGControlExit( ini, FOOT_SUBFRAME_WIN );
-	GF_BGL_BGControlExit( ini, FOOT_SUBFRAME_BG );
-	GF_BGL_BGControlExit( ini, FOOT_FRAME_BG );
-	GF_BGL_BGControlExit( ini, FOOT_FRAME_PANEL );
-	GF_BGL_BGControlExit( ini, FOOT_FRAME_WIN );
+	GFL_BG_FreeBGControl( ini, FOOT_SUBFRAME_PLATE );
+	GFL_BG_FreeBGControl( ini, FOOT_SUBFRAME_WIN );
+	GFL_BG_FreeBGControl( ini, FOOT_SUBFRAME_BG );
+	GFL_BG_FreeBGControl( ini, FOOT_FRAME_BG );
+	GFL_BG_FreeBGControl( ini, FOOT_FRAME_PANEL );
+	GFL_BG_FreeBGControl( ini, FOOT_FRAME_WIN );
 
 }
 
@@ -1357,10 +1376,10 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 			FOOT_MAINBG_TALKWIN_PAL,  win_type, HEAPID_FOOTPRINT);
 
 		//システムフォントパレット転送
-		PaletteWorkSet_Arc(fps->pfd, ARC_FONT, NARC_font_system_ncrl, HEAPID_FOOTPRINT, 
+		PaletteWorkSet_Arc(fps->pfd, ARCID_FONT, NARC_font_default_nclr, HEAPID_FOOTPRINT, 
 			FADE_MAIN_BG, 0x20, FOOT_MAINBG_TALKFONT_PAL * 16);
 		if(fps->parent_work->board_type == FOOTPRINT_BOARD_TYPE_WHITE){
-			PaletteWorkSet_Arc(fps->pfd, ARC_FONT, NARC_font_system_ncrl, HEAPID_FOOTPRINT, 
+			PaletteWorkSet_Arc(fps->pfd, ARCID_FONT, NARC_font_default_nclr, HEAPID_FOOTPRINT, 
 				FADE_SUB_BG, 0x20, FOOT_SUBBG_TALKFONT_PAL * 16);
 		}
 		else{
@@ -1929,11 +1948,11 @@ static void BmpWinDelete( FOOTPRINT_SYS *fps )
 	int i;
 	
 	//-- メイン画面 --//
-	GF_BGL_BmpWinDel(&fps->talk_win);
+	GFL_BMPWIN_Delete(&fps->talk_win);
 	
 	//-- サブ画面 --//
 	for(i = 0; i < FOOTPRINT_BMPWIN_NAME_MAX; i++){
-		GF_BGL_BmpWinDel(&fps->name_win[i]);
+		GFL_BMPWIN_Delete(&fps->name_win[i]);
 	}
 }
 
@@ -1953,7 +1972,7 @@ static void Footprint_3D_Init(int heap_id)
 static void FootprintSimpleSetUp(void)
 {
 	// ３Ｄ使用面の設定(表示＆プライオリティー)
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
     G2_SetBG0Priority(1);
 
 	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
@@ -2061,7 +2080,7 @@ static void Footprint_Temoti_to_StampParam(int board_type, SAVE_CONTROL_WORK * s
 		stamp_array[i].color 
 			= FootprintTool_StampColorGet(board_type, PokeParaGet(pp, ID_PARA_id_no, NULL));
 	#ifdef PM_DEBUG
-		if(sys.cont & PAD_BUTTON_B){	//ランダムで色を変える
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_B){	//ランダムで色を変える
 			stamp_array[i].color = FootprintTool_StampColorGet(board_type, gf_rand());
 		}
 	#endif
@@ -2393,7 +2412,7 @@ static void Sub_FontOamCreate(FOOTPRINT_SYS_PTR fps, FONT_ACTOR *font_actor, con
 	FONTOAM_SetMat(fontoam, x, y);
 	
 	//解放処理
-	GF_BGL_BmpWinDel(&bmpwin);
+	GFL_BMPWIN_Delete(&bmpwin);
 	
 	font_actor->fontoam = fontoam;
 	font_actor->cma = cma;
@@ -2526,13 +2545,13 @@ static void Debug_CameraMove(FOOTPRINT_SYS *fps)
 		MODE_ANGLE_REV,		//公転
 	};
 	
-	if((sys.cont & PAD_BUTTON_L) && (sys.cont & PAD_BUTTON_R)){
+	if((GFL_UI_KEY_GetCont() & PAD_BUTTON_L) && (GFL_UI_KEY_GetCont() & PAD_BUTTON_R)){
 		mode = MODE_DISTANCE;
 	}
-	else if(sys.cont & PAD_BUTTON_L){
+	else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
 		mode = MODE_SHIFT;
 	}
-	else if(sys.cont & PAD_BUTTON_R){
+	else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
 		mode = MODE_ANGLE_REV;
 	}
 	else{
@@ -2541,22 +2560,22 @@ static void Debug_CameraMove(FOOTPRINT_SYS *fps)
 	
 	switch(mode){
 	case MODE_SHIFT:
-		if(sys.cont & PAD_KEY_LEFT){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT){
 			move.x -= value;
 		}
-		if(sys.cont & PAD_KEY_RIGHT){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT){
 			move.x += value;
 		}
-		if(sys.cont & PAD_KEY_UP){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){
 			move.y += value;
 		}
-		if(sys.cont & PAD_KEY_DOWN){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_DOWN){
 			move.y -= value;
 		}
-		if(sys.cont & PAD_BUTTON_X){
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){
 			move.z -= value;
 		}
-		if(sys.cont & PAD_BUTTON_B){
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_B){
 			move.z += value;
 		}
 		GFC_ShiftCamera(&move, fps->camera);
@@ -2565,22 +2584,22 @@ static void Debug_CameraMove(FOOTPRINT_SYS *fps)
 		break;
 	
 	case MODE_ANGLE_REV:
-		if(sys.cont & PAD_KEY_LEFT){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT){
 			angle.y -= add_angle;
 		}
-		if(sys.cont & PAD_KEY_RIGHT){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT){
 			angle.y += add_angle;
 		}
-		if(sys.cont & PAD_KEY_UP){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){
 			angle.x += add_angle;
 		}
-		if(sys.cont & PAD_KEY_DOWN){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_DOWN){
 			angle.x -= add_angle;
 		}
-		if(sys.cont & PAD_BUTTON_X){
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){
 			angle.z -= add_angle;
 		}
-		if(sys.cont & PAD_BUTTON_B){
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_B){
 			angle.z += add_angle;
 		}
 		GFC_AddCameraAngleRev(&angle, fps->camera);
@@ -2588,10 +2607,10 @@ static void Debug_CameraMove(FOOTPRINT_SYS *fps)
 		OS_TPrintf("カメラアングル　x=%d, y=%d, z=%d\n", angle.x, angle.y, angle.z);
 		break;
 	case MODE_DISTANCE:
-		if(sys.cont & PAD_KEY_UP){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){
 			GFC_AddCameraDistance(FX32_ONE, fps->camera);
 		}
-		if(sys.cont & PAD_KEY_DOWN){
+		if(GFL_UI_KEY_GetCont() & PAD_KEY_DOWN){
 			GFC_AddCameraDistance(-FX32_ONE, fps->camera);
 		}
 		OS_TPrintf("カメラ距離＝%d(16進:%x)\n", GFC_GetCameraDistance(fps->camera), GFC_GetCameraDistance(fps->camera));

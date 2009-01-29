@@ -15,7 +15,7 @@
 
 #include "savedata/wifihistory.h"
 
-#include "msgdata/msg_wifi_system.h"
+#include "msg/msg_wifi_system.h"
 
 #include "net_app/wifi_country.h"
 

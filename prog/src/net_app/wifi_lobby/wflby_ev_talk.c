@@ -17,14 +17,14 @@
 //#include "system/fontproc.h"
 
 #include "message.naix"
-#include "msgdata/msg_wifi_aisatu.h"
-#include "msgdata/msg_wifi_aisatu_japan.h"
-#include "msgdata/msg_wifi_aisatu_english.h"
-#include "msgdata/msg_wifi_aisatu_france.h"
-#include "msgdata/msg_wifi_aisatu_germany.h"
-#include "msgdata/msg_wifi_aisatu_italy.h"
-#include "msgdata/msg_wifi_aisatu_spain.h"
-#include "msgdata/msg_wifi_hiroba.h"
+#include "msg/msg_wifi_aisatu.h"
+#include "msg/msg_wifi_aisatu_japan.h"
+#include "msg/msg_wifi_aisatu_english.h"
+#include "msg/msg_wifi_aisatu_france.h"
+#include "msg/msg_wifi_aisatu_germany.h"
+#include "msg/msg_wifi_aisatu_italy.h"
+#include "msg/msg_wifi_aisatu_spain.h"
+#include "msg/msg_wifi_hiroba.h"
 
 #include "wflby_event.h"
 #include "wflby_snd.h"
@@ -1093,7 +1093,7 @@ BOOL WFLBY_EV_TALK_StartA( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 
 #ifdef WFLBY_EV_TALK_DEBUG_SEL_MSG
 		// 順番に質問が出てくるデバックON
-		if( sys.cont & PAD_BUTTON_R ){
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
 			s_WFLBY_EV_TALK_DEBUG_SEL_MSG_ON = TRUE;
 		}else{
 			s_WFLBY_EV_TALK_DEBUG_SEL_MSG_ON = FALSE;
@@ -1619,9 +1619,9 @@ BOOL WFLBY_EV_TALK_StartA( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 #ifdef WFLBY_EV_TALK_DEBUG_SEL_MSG
 			// 順番に質問が出てくるデバック
 			if( s_WFLBY_EV_TALK_DEBUG_SEL_MSG_ON == TRUE ){
-				if( (sys.trg & PAD_KEY_RIGHT) || (sys.trg & PAD_KEY_LEFT) ){
+				if( (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) || (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) ){
 
-					if( sys.trg & PAD_KEY_RIGHT ){
+					if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
 						s_WFLBY_EV_TALK_DEBUG_SEL_MSG_PAGE = (s_WFLBY_EV_TALK_DEBUG_SEL_MSG_PAGE+1) % 8;
 					}else{
 						s_WFLBY_EV_TALK_DEBUG_SEL_MSG_PAGE --;
@@ -3315,7 +3315,7 @@ BOOL WFLBY_EV_TALK_StartA_AllWorld( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u
 	case 1:
 
 		// Aがおされるまでまつ
-		if( (sys.trg & PAD_BUTTON_A) == 0 ){
+		if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) == 0 ){
 			break;
 		}
 

@@ -811,8 +811,8 @@ void WF_2DC_SysExit( WF_2DCSYS* p_sys )
 	WF_2DC_AllResDel( p_sys );
 
 	// アーカイブハンドルクローズ
-//	ArchiveDataHandleClose( p_sys->p_handle[WF_2DC_ARCHANDLE_NML] );
-//	ArchiveDataHandleClose( p_sys->p_handle[WF_2DC_ARCHANDLE_UNI] );
+//	GFL_ARC_CloseDataHandle( p_sys->p_handle[WF_2DC_ARCHANDLE_NML] );
+//	GFL_ARC_CloseDataHandle( p_sys->p_handle[WF_2DC_ARCHANDLE_UNI] );
 
     GFL_ARC_CloseDataHandle( p_sys->p_handle[WF_2DC_ARCHANDLE_NML] );
     GFL_ARC_CloseDataHandle( p_sys->p_handle[WF_2DC_ARCHANDLE_UNI] );

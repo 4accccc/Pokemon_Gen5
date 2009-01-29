@@ -41,9 +41,11 @@
 #include "gflib/calctool.h"
 
 #include "message.naix"
-#include "msgdata/msg_debug_tomoya.h"
-#include "msgdata/msg_lobby_minigame1.h"
+#include "msg/msg_debug_tomoya.h"
+#include "msg/msg_lobby_minigame1.h"
 //#include "system/snd_tool.h"
+#include "print\gf_font.h"
+#include "font/font.naix"
 
 //-----------------------------------------------------------------------------
 /**
@@ -1644,10 +1646,12 @@ BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, B
 //-----------------------------------------------------------------------------
 void BCT_CLIENT_Delete( BCT_CLIENT* p_wk )
 {
+#if WB_TEMP_FIX
 	u32 check;
 	// タッチパネルサンプリング終了
 	check = StopTP();
 	GF_ASSERT( check == TP_OK );
+#endif
 
 	// タッチペンシステム破棄
 	BCT_CLIENT_TOUCHPEN_Exit( &p_wk->touchpen_wk, &p_wk->graphic );
@@ -1997,8 +2001,10 @@ void BCT_CLIENT_VBlank( BCT_CLIENT* p_wk )
     // BG書き換え
     GF_BGL_VBlankFunc( p_wk->graphic.p_bgl );
 
+#if WB_TEMP_FIX
     // Vram転送マネージャー実行
     DoVramTransferManager();
+#endif
 
     // レンダラ共有OAMマネージャVram転送
     REND_OAMTrans();
@@ -2771,7 +2777,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
     GFL_STD_MemFill( p_graphic, 0, sizeof(BCT_COUNTDOWN_DRAW) );
 
     // メッセージウィンドウ作成
-    p_graphic->helpwin = GFL_BMPWIN_Create( GF_BGL_FRAME1_M,
+    p_graphic->helpwin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
             BCT_GRA_STARTWIN_X, BCT_GRA_STARTWIN_Y,
             BCT_GRA_STARTWIN_SIZX, BCT_GRA_STARTWIN_SIZY, 
             BCT_GRA_BGMAIN_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
@@ -2791,9 +2797,9 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 
 	// 名前スクリーン読み込み
 	ArcUtil_HDL_BgCharSet( p_handle, NARC_bucket_ent_win_bg_NCGR, 
-			p_drawsys->p_bgl, GF_BGL_FRAME2_M, 0, 0, FALSE, heapID );
+			p_drawsys->p_bgl, GFL_BG_FRAME2_M, 0, 0, FALSE, heapID );
 	ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_ent_win_bg02_NSCR+(commnum-2),
-			p_drawsys->p_bgl, GF_BGL_FRAME2_M, 0, 0, FALSE, heapID);
+			p_drawsys->p_bgl, GFL_BG_FRAME2_M, 0, 0, FALSE, heapID);
 	ArcUtil_HDL_PalSet( p_handle, NARC_bucket_ent_win_bg_NCLR,
 			PALTYPE_MAIN_BG, BCT_GRA_BGMAIN_PAL_NAME_PL00*32, (BCT_GRA_BGMAIN_PAL_NAME_PL03+1)*32,
 			heapID );
@@ -2810,7 +2816,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 		u32 namestrsize;
 		u32 draw_x;
 
-		namebmpwin = GFL_BMPWIN_Create( GF_BGL_FRAME2_M,
+		namebmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME2_M,
 						0, 0, BCT_START_NAME_BMP_WINSIZ_X, BCT_START_NAME_BMP_WINSIZ_Y, 
 						BCT_GRA_BGMAIN_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
 		GFL_BMPWIN_MakeScreen(namebmpwin);
@@ -2825,7 +2831,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 				name_y = sc_BCT_START_NAME_TBL[ myplno ][ commnum-1 ][ i ].y;
 //				OS_TPrintf( "my_plno=%d comm_num=%d plno=%d name_x=%d name_y=%d\n", myplno, commnum, i, name_x, name_y );
 				// 名前の書き込みとフレームカラー変更
-				GF_BGL_ScrPalChange( p_drawsys->p_bgl, GF_BGL_FRAME2_M, name_x-1, name_y-1,
+				GF_BGL_ScrPalChange( p_drawsys->p_bgl, GFL_BG_FRAME2_M, name_x-1, name_y-1,
 						BCT_START_NAME_FRAMESIZ_X, BCT_START_NAME_FRAMESIZ_Y, BCT_GRA_BGMAIN_PAL_NAME_PL00+i );
 
 				// 名前書き込み
@@ -2852,7 +2858,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 
 		GFL_STR_DeleteBuffer( p_namestr );
 
-		GF_BGL_BmpWinDel( &namebmpwin );
+		GFL_BMPWIN_Delete( &namebmpwin );
 	}
 
 
@@ -2864,8 +2870,8 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
     p_graphic->count = 0;
 
 
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
 }
 
 //----------------------------------------------------------------------------
@@ -2879,7 +2885,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 static void BCT_CLIENT_StartSysExit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys )
 {
     // BMP破棄
-    GF_BGL_BmpWinDel( &p_graphic->helpwin );
+    GFL_BMPWIN_Delete( &p_graphic->helpwin );
 }
 
 //----------------------------------------------------------------------------
@@ -2896,8 +2902,8 @@ static void BCT_CLIENT_StartSysCountDownInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT
     BmpMenuWinWrite(&p_graphic->helpwin, WINDOW_TRANS_ON,
         BCT_GRA_SYSWND_CGX, BCT_GRA_BGMAIN_PAL_SYSWND );
 
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
 
 	//  カウントダウン開始
 	MNGM_COUNT_StartStart( p_drawsys->p_countwk, tcbsys );
@@ -2938,7 +2944,7 @@ static void BCT_CLIENT_StartSysDrawOff( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIEN
     BmpMenuWinClear( &p_graphic->helpwin, WINDOW_TRANS_OFF );
     GF_BGL_BmpWinOffVReq( &p_graphic->helpwin );
 
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
 
 }
 
@@ -5310,7 +5316,7 @@ static void BCT_CLIENT_TOUCHPEN_Init( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 
 	GFL_STD_MemFill( p_wk, 0, sizeof(BCT_CLIENT_TOUCHPEN_MOVE) );
 
-	p_handle = ArchiveDataHandleOpen( ARC_WLMNGM_TOOL_GRA, heapID );
+	p_handle = GFL_ARC_OpenDataHandle( ARC_WLMNGM_TOOL_GRA, heapID );
 	
 
 	// グラフィックの読み込み
@@ -5374,7 +5380,7 @@ static void BCT_CLIENT_TOUCHPEN_Init( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 		CLACT_SetDrawFlag( p_wk->p_clwk, FALSE );
 	}
 
-    ArchiveDataHandleClose( p_handle );
+    GFL_ARC_CloseDataHandle( p_handle );
 }
 
 //----------------------------------------------------------------------------
@@ -5668,7 +5674,7 @@ static void BCT_CLIENT_BankSet( void )
 static void BCT_CLIENT_3DSetUp( void )
 {
 	// ３Ｄ使用面の設定(表示＆プライオリティー)
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
     G2_SetBG0Priority(2);
 
 	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
@@ -5748,7 +5754,7 @@ static void BCT_CLIENT_GraphicInit( BCT_CLIENT* p_wk, u32 heapID )
     BCT_CLIENT_MsgInit( &p_wk->graphic, heapID );
 
     // アーカイブハンドルオープン
-    p_handle = ArchiveDataHandleOpen( ARC_BUCKET_GRAPHIC, heapID );
+    p_handle = GFL_ARC_OpenDataHandle( ARC_BUCKET_GRAPHIC, heapID );
 
     // メイン面OAMリソース初期化
     BCT_CLIENT_MainOamInit( &p_wk->graphic, p_handle, heapID );
@@ -5790,7 +5796,7 @@ static void BCT_CLIENT_GraphicInit( BCT_CLIENT* p_wk, u32 heapID )
     BCT_DEBUG_PositionInit( p_handle, heapID );
 #endif
     
-    ArchiveDataHandleClose( p_handle );
+    GFL_ARC_CloseDataHandle( p_handle );
 
 
 	// カウントワーク初期化
@@ -5987,9 +5993,9 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x4000,
             GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
             };
-        GFL_BG_SetBGControl( GF_BGL_FRAME1_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GF_BGL_FRAME1_M, 32, 0, heapID);
-        GFL_BG_ClearScreen( GF_BGL_FRAME1_M );
+        GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GF_BGL_ClearCharSet( GFL_BG_FRAME1_M, 32, 0, heapID);
+        GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
     }
 
     // メイン画面2
@@ -5999,9 +6005,9 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x04000, 0x3000,
             GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
             };
-        GFL_BG_SetBGControl( GF_BGL_FRAME2_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GF_BGL_FRAME2_M, 32, 0, heapID);
-        GFL_BG_ClearScreen( GF_BGL_FRAME2_M );
+        GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GF_BGL_ClearCharSet( GFL_BG_FRAME2_M, 32, 0, heapID);
+        GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
     }
 
     // サブ画面0
@@ -6011,9 +6017,9 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, 0x8000,
             GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
         };
-        GFL_BG_SetBGControl( GF_BGL_FRAME0_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GF_BGL_FRAME0_S, 32, 0, heapID);
-        GFL_BG_ClearScreen( GF_BGL_FRAME0_S );
+        GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GF_BGL_ClearCharSet( GFL_BG_FRAME0_S, 32, 0, heapID);
+        GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
     }
 
     // サブ画面1   
@@ -6023,9 +6029,9 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, 0x8000,
             GX_BG_EXTPLTT_01,1, 0, 0, FALSE
         };
-        GFL_BG_SetBGControl( GF_BGL_FRAME1_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GF_BGL_FRAME1_S, 32, 0, heapID);
-        GFL_BG_ClearScreen( GF_BGL_FRAME1_S );
+        GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GF_BGL_ClearCharSet( GFL_BG_FRAME1_S, 32, 0, heapID);
+        GFL_BG_ClearScreen( GFL_BG_FRAME1_S );
     }
 
 	// サブ画面2	
@@ -6035,9 +6041,9 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000,
             GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
         };
-        GFL_BG_SetBGControl( GF_BGL_FRAME2_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GF_BGL_FRAME2_S, 32, 0, heapID);
-        GFL_BG_ClearScreen( GF_BGL_FRAME2_S );
+        GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GF_BGL_ClearCharSet( GFL_BG_FRAME2_S, 32, 0, heapID);
+        GFL_BG_ClearScreen( GFL_BG_FRAME2_S );
 	}
 
 	// サブ画面3	
@@ -6047,30 +6053,30 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,
             GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
         };
-        GFL_BG_SetBGControl( GF_BGL_FRAME3_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GF_BGL_FRAME3_S, 32, 0, heapID);
-        GFL_BG_ClearScreen( GF_BGL_FRAME3_S );
+        GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GF_BGL_ClearCharSet( GFL_BG_FRAME3_S, 32, 0, heapID);
+        GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
 	}
 
 
     // メイン画面設定
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
     // サブ面は表示OFF
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
     // メイン面にウィンドウグラフィックを設定
     TalkFontPaletteLoad( PALTYPE_MAIN_BG, BCT_GRA_BGMAIN_PAL_FONT*0x20, heapID );
     MenuWinGraphicSet(
-        p_wk->p_bgl, GF_BGL_FRAME1_M, BCT_GRA_SYSWND_CGX, BCT_GRA_BGMAIN_PAL_SYSWND, 0, heapID );
+        p_wk->p_bgl, GFL_BG_FRAME1_M, BCT_GRA_SYSWND_CGX, BCT_GRA_BGMAIN_PAL_SYSWND, 0, heapID );
 
 
 }
@@ -6084,12 +6090,12 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_BgExit( BCT_CLIENT_GRAPHIC* p_wk )
 {
-    GF_BGL_BGControlExit( p_wk->p_bgl, GF_BGL_FRAME1_M );
-    GF_BGL_BGControlExit( p_wk->p_bgl, GF_BGL_FRAME2_M );
-    GF_BGL_BGControlExit( p_wk->p_bgl, GF_BGL_FRAME0_S );
-    GF_BGL_BGControlExit( p_wk->p_bgl, GF_BGL_FRAME1_S );
-    GF_BGL_BGControlExit( p_wk->p_bgl, GF_BGL_FRAME2_S );
-    GF_BGL_BGControlExit( p_wk->p_bgl, GF_BGL_FRAME3_S );
+    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME1_M );
+    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME2_M );
+    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME0_S );
+    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME1_S );
+    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME2_S );
+    GFL_BG_FreeBGControl( p_wk->p_bgl, GFL_BG_FRAME3_S );
 
     GFL_BG_Exit();
     GFL_BMPWIN_Exit();
@@ -6395,23 +6401,23 @@ static void BCT_CLIENT_BgResLoad( BCT_CLIENT_GRAPHIC* p_wk, ARCHANDLE* p_handle,
 	};
 	
     // サブ画面のBG
-    ArcUtil_HDL_BgCharSet( p_handle, NARC_bucket_tamaire_bg_NCGR, p_wk->p_bgl, GF_BGL_FRAME0_S, 0, 0, FALSE, heapID );
-    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg0_NSCR, p_wk->p_bgl,GF_BGL_FRAME3_S, 0, 0, FALSE, heapID );
-    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg1_NSCR, p_wk->p_bgl,GF_BGL_FRAME2_S, 0, 0, FALSE, heapID );
-    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg2_NSCR, p_wk->p_bgl,GF_BGL_FRAME1_S, 0, 0, FALSE, heapID );
-    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg3_NSCR, p_wk->p_bgl,GF_BGL_FRAME0_S, 0, 0, FALSE, heapID );
+    ArcUtil_HDL_BgCharSet( p_handle, NARC_bucket_tamaire_bg_NCGR, p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
+    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg0_NSCR, p_wk->p_bgl,GFL_BG_FRAME3_S, 0, 0, FALSE, heapID );
+    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg1_NSCR, p_wk->p_bgl,GFL_BG_FRAME2_S, 0, 0, FALSE, heapID );
+    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg2_NSCR, p_wk->p_bgl,GFL_BG_FRAME1_S, 0, 0, FALSE, heapID );
+    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg3_NSCR, p_wk->p_bgl,GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
     ArcUtil_HDL_PalSet( p_handle, NARC_bucket_tamaire_bg_NCLR, PALTYPE_SUB_BG, 0, BCT_GRA_BGSUB_PAL_NUM*32, heapID );
 
 	// パレットを合わせる
-	GF_BGL_ScrPalChange( p_wk->p_bgl, GF_BGL_FRAME3_S, 0, 0, 32, 32, sc_SubPal[plno] );	
-	GF_BGL_ScrPalChange( p_wk->p_bgl, GF_BGL_FRAME2_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_BACK+(plno*2) );	
-	GF_BGL_ScrPalChange( p_wk->p_bgl, GF_BGL_FRAME1_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );	
-	GF_BGL_ScrPalChange( p_wk->p_bgl, GF_BGL_FRAME0_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );
+	GF_BGL_ScrPalChange( p_wk->p_bgl, GFL_BG_FRAME3_S, 0, 0, 32, 32, sc_SubPal[plno] );	
+	GF_BGL_ScrPalChange( p_wk->p_bgl, GFL_BG_FRAME2_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_BACK+(plno*2) );	
+	GF_BGL_ScrPalChange( p_wk->p_bgl, GFL_BG_FRAME1_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );	
+	GF_BGL_ScrPalChange( p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );
 
-	GF_BGL_LoadScreenReq( p_wk->p_bgl, GF_BGL_FRAME0_S );
-	GF_BGL_LoadScreenReq( p_wk->p_bgl, GF_BGL_FRAME1_S );
-	GF_BGL_LoadScreenReq( p_wk->p_bgl, GF_BGL_FRAME2_S );
-	GF_BGL_LoadScreenReq( p_wk->p_bgl, GF_BGL_FRAME3_S );
+	GF_BGL_LoadScreenReq( p_wk->p_bgl, GFL_BG_FRAME0_S );
+	GF_BGL_LoadScreenReq( p_wk->p_bgl, GFL_BG_FRAME1_S );
+	GF_BGL_LoadScreenReq( p_wk->p_bgl, GFL_BG_FRAME2_S );
+	GF_BGL_LoadScreenReq( p_wk->p_bgl, GFL_BG_FRAME3_S );
 }
 
 //----------------------------------------------------------------------------
@@ -7952,7 +7958,7 @@ static void BCT_CLIENT_MainBackDraw( BCT_CLIENT_MAINBACK* p_wk )
 			}
 
 			// アニメスピード加速
-/*			if( sys.trg & PAD_BUTTON_A ){
+/*			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
 				p_wk->fever_anm_speed += FX32_HALF;
 				OS_TPrintf( "anm_speed 0x%x\n", p_wk->fever_anm_speed );
 			}//*/
@@ -8272,7 +8278,7 @@ static void BCT_CLIENT_BGPRISCRL_SetPri( BCT_CLIENT_GRAPHIC* p_gra, s16 most_bac
 		if( bgno < 0 ){
 			bgno += BCT_BGPRI_SCRL_MOSTBACK_MAX;
 		}
-		bgno += GF_BGL_FRAME0_S;
+		bgno += GFL_BG_FRAME0_S;
 
 		
 		// 優先順位設定
@@ -8398,8 +8404,8 @@ static void BCT_CLIENT_NUTS_COUNT_Init( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 
 		// フォント用パレット
 		p_wk->p_fontoam_pltt = CLACT_U_ResManagerResAddArcPltt(
-                    p_gra->resMan[1], ARC_FONT,
-                    NARC_font_system_ncrl,
+                    p_gra->resMan[1], ARCID_FONT,
+                    NARC_font_default_nclr,
                     FALSE, BCT_NUTS_COUNT_FONTOAM_PLTT_ID, NNS_G2D_VRAM_TYPE_2DMAIN, 1, heapID ); 
 
         result = CLACT_U_PlttManagerSetCleanArea( p_wk->p_fontoam_pltt );
@@ -8430,7 +8436,7 @@ static void BCT_CLIENT_NUTS_COUNT_Init( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 		FONTOAM_SetDrawFlag( p_wk->p_fontoam, FALSE );
 
 		// ビットマップ
-		GF_BGL_BmpWinDel( &p_wk->objbmp );
+		GFL_BMPWIN_Delete( &p_wk->objbmp );
 
 	}
 
@@ -8525,7 +8531,7 @@ static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT
 
 
 		// ビットマップ
-		GF_BGL_BmpWinDel( &p_wk->objbmp );
+		GFL_BMPWIN_Delete( &p_wk->objbmp );
 	}
 
 	// 描画開始
@@ -8592,7 +8598,7 @@ static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIE
 			FONTOAM_OAMDATA_ResetBmp( p_wk->p_fontoam, p_wk->p_fontoam_data, &p_wk->objbmp, p_wk->heapID );
 
 			// ビットマップ
-			GF_BGL_BmpWinDel( &p_wk->objbmp );
+			GFL_BMPWIN_Delete( &p_wk->objbmp );
 		}
 
 		// ゆれアニメ開始

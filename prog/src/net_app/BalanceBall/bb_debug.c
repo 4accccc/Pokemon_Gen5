@@ -42,22 +42,22 @@ BOOL Debug_GameSetup( BB_WORK* work )
 	if ( wk->seq == 0 ) {
 		
 		GF_BGL_BmpWinInit( wk->win );
-		wk->win = GFL_BMPWIN_Create( GF_BGL_FRAME3_M, 1, 1, 30, 22, 14, GFL_BMP_CHRAREA_GET_B );
+		wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, 1, 1, 30, 22, 14, GFL_BMP_CHRAREA_GET_B );
 		GFL_BMPWIN_MakeScreen(wk->win);
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win), 0xFF );
 		GF_BGL_BmpWinOn( wk->win );
 		
-		GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 		
 		wk->seq++;
 	}
 	
-	if ( sys.trg & PAD_BUTTON_B ){
-		ArcUtil_HDL_BgCharSet( wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NCGR, GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_BB );	
-		ArcUtil_HDL_ScrnSet(   wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NSCR, GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_BB );
+	if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		ArcUtil_HDL_BgCharSet( wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NCGR, GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );	
+		ArcUtil_HDL_ScrnSet(   wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NSCR, GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );
 		
 	    GF_BGL_BmpWinOff( wk->win );
-		GF_BGL_BmpWinDel( wk->win );
+		GFL_BMPWIN_Delete( wk->win );
 		return TRUE;
 	}
 	

@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: balloon_particle.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_BALLOON_PARTICLE_NAIX_
+#define NARC_BALLOON_PARTICLE_NAIX_
+
+enum {
+	NARC_balloon_particle_balloon_spa = 0,
+	NARC_balloon_particle_opening_demo_spa = 1
+};
+
+/* NARC_BALLOON_PARTICLE_NAIX_ */
+#endif

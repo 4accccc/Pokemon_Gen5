@@ -16,8 +16,8 @@
 #include "wflby_def.h"
 
 
-#include "msgdata/msg_wifi_place_msg_world.h"
-#include "msgdata/msg_wifi_place_msg_GBR.h"
+#include "msg/msg_wifi_place_msg_world.h"
+#include "msg/msg_wifi_place_msg_GBR.h"
 
 //-----------------------------------------------------------------------------
 /**
