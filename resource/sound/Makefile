@@ -30,8 +30,15 @@ do-build:	$(TARGETDIR)/$(TARGETFILENAME)
 
 
 $(TARGETDIR)/$(TARGETFILENAME):	$(TARGETFILENAME)
-	ruby gmm_make.rb ../message/template.gmm wb_sound_data.sadl $(TARGETFILENAME)
 	$(COPY) $(TARGETFILENAME) $(TARGETDIR)
+
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+
+$(TARGETFILENAME) : wb_sound_data.sadl
+	ruby gmm_make.rb ../message/template.gmm wb_sound_data.sadl $(TARGETFILENAME)
+
+endif
 
 
 #------------------------------------------------------------------------------
@@ -39,6 +46,8 @@ $(TARGETDIR)/$(TARGETFILENAME):	$(TARGETFILENAME)
 #------------------------------------------------------------------------------
 
 clean:
-	-rm -f $(TARGETDIR)/$(TARGETFILENAME)
-
+	rm -f $(TARGETDIR)/$(TARGETFILENAME)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+	rm -f $(TARGETFILENAME)
+endif
 
