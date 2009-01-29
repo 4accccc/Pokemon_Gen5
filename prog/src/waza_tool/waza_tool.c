@@ -306,8 +306,41 @@ u8 WAZADATA_GetMaxHitCount( WazaID id )
 // 効果範囲
 WazaTarget WAZADATA_GetTarget( WazaID id )
 {
-	return 0;
+	enum {
+		OLD_RANGE_NORMAL		= 0,
+		OLD_RANGE_NONE			= 1,
+		OLD_RANGE_RANDOM		= 2,
+		OLD_RANGE_ENEMY2		= 4,
+		OLD_RANGE_OTHER_ALL	= 8,
+		OLD_RANGE_USER			= 16,
+		OLD_RANGE_FRIEND_ALL = 32,
+		OLD_RANGE_WEATHER		= 64,
+		OLD_RANGE_MAKIBISI	= 128,
+		OLD_RANGE_TEDASUKE	= 256,
+		OLD_RANGE_TUBO			= 512,
+		OLD_RANGE_SAKIDORI	= 1024,
+	};
+
+	u32 old_range = WT_WazaDataParaGet( id, ID_WTD_attackrange );
+
+	switch( old_range ){
+	case OLD_RANGE_NORMAL:		return WAZA_TARGET_SINGLE;
+	case OLD_RANGE_NONE:			return WAZA_TARGET_UNKNOWN;
+	case OLD_RANGE_ENEMY2:		return WAZA_TARGET_ENEMY2;
+	case OLD_RANGE_OTHER_ALL:	return WAZA_TARGET_OTHER_ALL;
+	case OLD_RANGE_USER:			return WAZA_TARGET_ONLY_USER;
+	case OLD_RANGE_FRIEND_ALL:return WAZA_TARGET_TEAM_USER;
+	case OLD_RANGE_RANDOM:		return WAZA_TARGET_RANDOM;
+	case OLD_RANGE_WEATHER:		return WAZA_TARGET_WEATHER;
+	case OLD_RANGE_MAKIBISI:	return WAZA_TARGET_TEAM_ENEMY;
+	case OLD_RANGE_TEDASUKE:	return WAZA_TARGET_OTHER_FRIEND;
+	case OLD_RANGE_TUBO:			return WAZA_TARGET_SINGLE_FRIEND;
+	case OLD_RANGE_SAKIDORI:	return WAZA_TARGET_SINGLE_ENEMY;
+	}
+
+	return WAZA_TARGET_SINGLE;///< 自分以外の１体（選択）
 }
+
 
 
 #ifdef PM_DEBUG
@@ -323,6 +356,8 @@ void WAZADATA_PrintDebug( void )
 		{ "かげぶんしん（自分）",		WAZANO_KAGEBUNSIN },
 		{ "くろいきり（場）",			WAZANO_KUROIKIRI },
 		{ "げきりん（ランダム）",				WAZANO_KUROIKIRI },
+		{ "あまごい（場）",							WAZANO_AMAGOI },
+		{ "あばれる（ランダム）",				WAZANO_ABARERU },
 		{ "アロマセラピー（味方２体）",	WAZANO_AROMASERAPII },
 		{ "まきびし（まきびし）",				WAZANO_MAKIBISI },
 		{ "てだすけ（てだすけ）",				WAZANO_TEDASUKE },
