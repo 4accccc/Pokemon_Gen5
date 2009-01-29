@@ -37,6 +37,8 @@ typedef enum {
 	WAZADATA_CATEGORY_WEATHER,
 	WAZADATA_CATEGORY_OTHERS,
 
+	WAZADATA_CATEGORY_MAX,
+
 }WazaCategory;
 
 
@@ -86,32 +88,40 @@ typedef enum {
 //------------------------------------------------------------------------------
 typedef enum {
 
-	WAZA_INFLU_NULL = 0,
-	WAZA_INFLU_ORIGIN = 1,
+	WAZA_ADDITION_NULL = 0,
+	WAZA_ADDITION_ORIGIN = 1,
 
-	WAZA_INFLU_ATTACK = WAZA_INFLU_ORIGIN,
-	WAZA_INFLU_DEFENCE,
-	WAZA_INFLU_SP_ATTACK,
-	WAZA_INFLU_SP_DEFENCE,
-	WAZA_INFLU_AGILITY,
-	WAZA_INFLU_HIT,
-	WAZA_INFLU_AVOID,
+	WAZA_ADDITION_ATTACK = WAZA_ADDITION_ORIGIN,
+	WAZA_ADDITION_DEFENCE,
+	WAZA_ADDITION_SP_ATTACK,
+	WAZA_ADDITION_SP_DEFENCE,
+	WAZA_ADDITION_AGILITY,
+	WAZA_ADDITION_HIT,
+	WAZA_ADDITION_AVOID,
 
-	WAZA_INFLU_MAX,
+	WAZA_ADDITION_MAX,
 
-}WazaInflu;
+}WazaAddition;
 
 
 typedef enum {
 
-	WAZA_TARGET_SINGLE,			///< 自分以外の１体選択
-	WAZA_TARGET_ENEMY2,			///< 敵側２体
-	WAZA_TARGET_WITHOUT_USER,	///< 自分以外全部
 
-	WAZA_TARGET_ONLY_USER,		///< 自分１体
-	WAZA_TARGET_TEAM_USER,		///< 自分側チーム
-	WAZA_TARGET_TEAM_ENEMY,		///< 敵側チーム
 
+	WAZA_TARGET_SINGLE,				///< 自分以外の１体（選択）
+	WAZA_TARGET_ENEMY2,				///< 敵側２体
+	WAZA_TARGET_OTHER_ALL,		///< 自分以外全部
+
+	WAZA_TARGET_ONLY_USER,		///< 自分１体のみ
+	WAZA_TARGET_SINGLE_FRIEND,///< 自分を含む味方１体（選択）
+	WAZA_TARGET_OTHER_FRIEND,	///< 自分以外の味方１体
+	WAZA_TARGET_RANDOM,				///< 敵ランダム
+
+	WAZA_TARGET_TEAM_USER,		///< 自分側陣地
+	WAZA_TARGET_TEAM_ENEMY,		///< 敵側陣地
+	WAZA_TARGET_FIELD,				///< 場に効く（天候系など）
+
+	WAZA_TARGET_UNKNOWN,			///< ゆびをふるなど、相手のワザに応じるタイプ
 
 //	WAZA_TARGET_DOUBLE,		///< 
 
@@ -163,7 +173,7 @@ extern WazaSick  WAZADATA_GetAdditionalSick( WazaID id );
 extern u8  WAZADATA_GetAdditionalSickRatio( WazaID id );
 
 // 必中フラグ。つばめがえしなどがTRUEを返す。
-extern BOOL WAZADATA_IsAleadyHit( WazaID id );
+extern BOOL WAZADATA_IsAlwaysHit( WazaID id );
 
 // ダメージワザかどうか
 extern BOOL WAZADATA_IsDamage( WazaID id );
@@ -177,6 +187,8 @@ extern u8 WAZADATA_GetCriticalRank( WazaID id );
 // 最大ヒット回数
 extern u8 WAZADATA_GetMaxHitCount( WazaID id );
 
+// 効果範囲
+extern WazaTarget WAZADATA_GetTarget( WazaID id );
 
 /*-----------------------------------------------------------------
 
@@ -191,5 +203,12 @@ extern u8 WAZADATA_GetMaxHitCount( WazaID id );
 
 
 -----------------------------------------------------------------*/
+
+#ifdef PM_DEBUG
+extern void WAZADATA_PrintDebug( void );
+#else
+#define WAZADATA_PrintDebug()	/* */
+#endif
+
 
 #endif
