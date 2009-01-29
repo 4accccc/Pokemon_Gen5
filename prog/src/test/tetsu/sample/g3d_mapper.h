@@ -1,4 +1,4 @@
-#define MAP_BLOCK_COUNT		(9)
+#define MAP_BLOCK_COUNT		(4)
 
 #define	MAPMDL_SIZE		(0x0f000)	//モデルデータ用メモリ確保サイズ 
 #define	MAPTEX_SIZE		(0x4800) 	//テクスチャデータ用ＶＲＡＭ＆メモリ確保サイズ 

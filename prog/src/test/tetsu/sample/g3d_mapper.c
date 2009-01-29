@@ -29,7 +29,6 @@
  * @brief	å^êÈåæ
  */
 //------------------------------------------------------------------
-#define MAP_BLOCK_COUNT		(9)
 #define MAPID_NULL			(0xffffffff)
 #define MAPARC_NULL			(0xffffffff)
 

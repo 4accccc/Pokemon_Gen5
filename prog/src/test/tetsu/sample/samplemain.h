@@ -3,22 +3,22 @@
 #include "test_graphic/test3dp.naix"
 
 static const G3D_MAPPER_DATA sampleMap[] = {
-	{ NARC_test3dp_map_a1_3dppack },
-	{ NARC_test3dp_map_a2_3dppack },
-	{ NARC_test3dp_map_a3_3dppack },
-	{ NARC_test3dp_map_a4_3dppack },
-	{ NARC_test3dp_map_b1_3dppack },
+	//{ NARC_test3dp_map_a1_3dppack },
+	//{ NARC_test3dp_map_a2_3dppack },
+	//{ NARC_test3dp_map_a3_3dppack },
+	//{ NARC_test3dp_map_a4_3dppack },
+	//{ NARC_test3dp_map_b1_3dppack },
 	{ NARC_test3dp_map_b2_3dppack },
 	{ NARC_test3dp_map_b3_3dppack },
-	{ NARC_test3dp_map_b4_3dppack },
-	{ NARC_test3dp_map_c1_3dppack },
+	//{ NARC_test3dp_map_b4_3dppack },
+	//{ NARC_test3dp_map_c1_3dppack },
 	{ NARC_test3dp_map_c2_3dppack },
 	{ NARC_test3dp_map_c3_3dppack },
-	{ NARC_test3dp_map_c4_3dppack },
-	{ NARC_test3dp_map_d1_3dppack },
-	{ NARC_test3dp_map_d2_3dppack },
-	{ NARC_test3dp_map_d3_3dppack },
-	{ NARC_test3dp_map_d4_3dppack },
+	//{ NARC_test3dp_map_c4_3dppack },
+	//{ NARC_test3dp_map_d1_3dppack },
+	//{ NARC_test3dp_map_d2_3dppack },
+	//{ NARC_test3dp_map_d3_3dppack },
+	//{ NARC_test3dp_map_d4_3dppack },
 };
 
 static const G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
@@ -64,6 +64,7 @@ typedef struct {
 #define MAP_WIDTH (512 * FX32_ONE)
 #define MAP_HEIGHT (128 * FX32_ONE)
 static const SCENE_DATA	resistMapTbl[] = {
+#if 0
 	{
 		{	
 			FILE_CUSTOM_DATA,
@@ -76,16 +77,17 @@ static const SCENE_DATA	resistMapTbl[] = {
 		}, 
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
 	},
+#endif
 	{
 		{	
 			FILE_MAPEDITER_DATA,
-			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
+			2,  2, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_NONE, 
 			ARCID_TEST3DP,
 			NON_GLOBAL_TEX, NULL,
 			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
 			sampleMap, 
 		}, 
-		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
 	},
 };
 

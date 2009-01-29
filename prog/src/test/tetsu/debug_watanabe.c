@@ -32,7 +32,7 @@ extern BOOL	SampleMain( void );
 static GFL_PROC_RESULT DebugWatanabeMainProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x200000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x100000 );
 	SampleBoot( HEAPID_WATANABE_DEBUG );
 
 	return GFL_PROC_RES_FINISH;
