@@ -115,6 +115,7 @@ typedef enum {
 	WAZA_TARGET_ONLY_USER,		///< Ž©•ª‚P‘Ì‚Ì‚Ý
 	WAZA_TARGET_SINGLE_FRIEND,///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
 	WAZA_TARGET_OTHER_FRIEND,	///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ì
+	WAZA_TARGET_SINGLE_ENEMY,	///< “G‚P‘Ìi‘I‘ðj
 	WAZA_TARGET_RANDOM,				///< “Gƒ‰ƒ“ƒ_ƒ€
 
 	WAZA_TARGET_TEAM_USER,		///< Ž©•ª‘¤w’n
