@@ -5570,7 +5570,7 @@ static BOOL WFLBY_EV_DEF_NpcJumpParamMake( WFLBY_EV_DEF_NPCJUMP_PARAM* p_param, 
 	case WFLBY_STATUS_UNKNOWN:		// 不明
 	case WFLBY_STATUS_MATCHING:		// ミニゲームのマッチング中
 	case WFLBY_STATUS_ANKETO:		// アンケート中
-	defalut:
+	default:
 		return FALSE;
 	}
 

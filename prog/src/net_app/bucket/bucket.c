@@ -253,7 +253,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 			BCT_ErrAllSysEnd( p_wk, pp );
 			return GFL_PROC_RES_FINISH;
 
-		defalut:
+		default:
 			GF_ASSERT(0);
 			return GFL_PROC_RES_FINISH;
 		}
