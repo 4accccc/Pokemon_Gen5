@@ -336,7 +336,7 @@ void WAZADATA_PrintDebug( void )
 	for(i=0; i<NELEMS(tbl); ++i)
 	{
 		range = WT_WazaDataParaGet( tbl[i].id, ID_WTD_attackrange );
-		OS_TPrintf("%s\t=%d\n",range);
+		OS_TPrintf("%s\t=%d\n", tbl[i].name, range);
 		
 	}
 }
