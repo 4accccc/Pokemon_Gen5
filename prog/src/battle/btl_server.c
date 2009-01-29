@@ -1293,7 +1293,7 @@ static BOOL scEvent_CheckWazaExecute( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep
 // ÉèÉUìñÇΩÇÈÇ©îªíË
 static BOOL scEvent_checkHit( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
-	if( WAZADATA_IsAleadyHit(waza) )
+	if( WAZADATA_IsAlwaysHit(waza) )
 	{
 		return TRUE;
 	}
