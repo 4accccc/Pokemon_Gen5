@@ -58,6 +58,7 @@ enum{
 	GMDATA_ID_PERAPVOICE,	//ぺラップヴォイス
 	GMDATA_ID_SYSTEM_DATA,	//システムデータ
 	GMDATA_ID_RECORD,  		//レコード(スコア
+	GMDATA_ID_PMS,  		//簡易文
 	
 #if 0
 	GMDATA_ID_SYSTEM_DATA,

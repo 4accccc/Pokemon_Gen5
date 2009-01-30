@@ -95,7 +95,9 @@ SRCS	+=		$(SOUNDSRC) \
 				savedata/mystery_data.c \
 				system/laster.c \
 				field/fldmmdl.c \
-				field/fldmmdl_move.c
+				field/fldmmdl_move.c \
+				system/pms_data.c \
+				system/pms_word.c
 
 
 #================================================

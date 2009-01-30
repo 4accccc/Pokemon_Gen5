@@ -24,6 +24,7 @@
 #include "perapvoice_local.h"
 #include "savedata/system_data.h"
 #include "savedata/record.h"
+#include "system/pms_word.h"
 
 
 //==============================================================================
@@ -191,6 +192,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_RECORD,
 		(FUNC_GET_SIZE)RECORD_GetWorkSize,
 		(FUNC_INIT_WORK)RECORD_Init,
+	},
+	{	//ŠÈˆÕ•¶
+		GMDATA_ID_PMS,
+		(FUNC_GET_SIZE)PMSW_GetSaveDataSize,
+		(FUNC_INIT_WORK)PMSW_InitSaveData,
 	},
 };
 

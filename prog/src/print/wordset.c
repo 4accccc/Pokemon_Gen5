@@ -367,6 +367,21 @@ void WORDSET_RegisterNumber( WORDSET* wordset, u32 bufID, s32 number, u32 keta, 
 	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 }
 
+//------------------------------------------------------------------
+/**
+ * 指定バッファに簡易会話単語を登録
+ *
+ * @param   wordset		ワードセットオブジェクト
+ * @param   bufID		何番のバッファに登録するか
+ * @param   word		簡易会話単語ナンバー
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterPMSWord( WORDSET* wordset, u32 bufID, PMS_WORD word )
+{
+	PMSW_GetStr( word, wordset->tmpBuf , wordset->heapID );
+	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+}
 
 
 //======================================================================================================
