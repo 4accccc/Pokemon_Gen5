@@ -33,6 +33,8 @@
 #define CHANNEL_KOTEI		(1)	//１＝固定
 ///親機を見つけた後はScanExではなく、Scanでサーチする
 #define SCAN_USE			(0)	//1=Scanを使う
+///親子を固定するモード
+#define PARENTCHILD_KOTEI	(0)	//1=固定
 
 //==============================================================================
 //	構造体定義
@@ -101,6 +103,10 @@ typedef struct{
 	u16 use_channel_list;
 	u16 use_channel_level;
 	u16 use_channel;
+
+#if PARENTCHILD_KOTEI
+	BOOL pc_kotei;		///<TRUE:親で固定　FALSE:子で固定
+#endif
 }HUGEBEACON_SYS;
 
 
@@ -236,6 +242,17 @@ void HUGEBEACON_SystemCreate(int heap_id, u32 send_data_size, const void *send_d
 	HbSys->receive_buf = receive_buf;
 	HbSys->data_no_max = bit_num;
 	HbSys->seq = HBSEQ_WAIT;
+
+#if PARENTCHILD_KOTEI
+	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+		OS_TPrintf("親子：固定モード：ずっと親\n");
+		HbSys->pc_kotei = TRUE;
+	}
+	else{
+		OS_TPrintf("親子：固定モード：ずっと子\n");
+		HbSys->pc_kotei = FALSE;
+	}
+#endif
 }
 
 //--------------------------------------------------------------
@@ -261,6 +278,11 @@ void HUGEBEACON_Start(void)
 {
 	GF_ASSERT(HbSys != NULL);
 	HbSys->seq = HBSEQ_CHILD_START_INIT;
+#if PARENTCHILD_KOTEI
+	if(HbSys->pc_kotei == TRUE){
+		HbSys->seq = HBSEQ_PARENT_START_INIT;
+	}
+#endif
 }
 
 //--------------------------------------------------------------
@@ -599,7 +621,10 @@ static int _HUGEBEACON_ChildStartWait(HUGEBEACON_SYS *hb)
 	}
 	else{
 		int max_timeout;
-		
+	
+	#if PARENTCHILD_KOTEI
+		hb->timeout = 0;	//固定モードの為、タイムアウトさせない
+	#endif
 		max_timeout = hb->cm.parent_lockon ? HB_ROCKON_TIMEOUT : HB_CHILD_MODE_TIME;
 
 		if(hb->timeout > max_timeout){
@@ -940,6 +965,10 @@ static int _HUGEBEACON_ParentStartWait(HUGEBEACON_SYS *hb)
 		break;
 	}
 	return HBSEQ_CONTINUE;
+#endif
+
+#if PARENTCHILD_KOTEI
+	hb->timeout = 0;	//親子固定モードの為、タイムアウトさせない
 #endif
 
 	hb->pm.send_loop++;
