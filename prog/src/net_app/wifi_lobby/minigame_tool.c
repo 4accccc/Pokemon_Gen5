@@ -902,7 +902,7 @@ static const MNGM_BGL_DATA sc_MNGM_ENTRY_BGCNT[MNGM_ENTRY_BGL_USE] = {
 	{	// 背景
 		GFL_BG_FRAME3_M,
 		{
-			0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
 			3, 0, 0, FALSE
 		},
@@ -910,7 +910,7 @@ static const MNGM_BGL_DATA sc_MNGM_ENTRY_BGCNT[MNGM_ENTRY_BGL_USE] = {
 	{	// テーブル&タイトルロゴメッセージ面
 		GFL_BG_FRAME1_M,
 		{
-			0, 0, 0x2000, 0, GF_BGL_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+			0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		},
@@ -918,7 +918,7 @@ static const MNGM_BGL_DATA sc_MNGM_ENTRY_BGCNT[MNGM_ENTRY_BGL_USE] = {
 	{
 		GFL_BG_FRAME2_M,
 		{
-			0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x18000, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		},
@@ -926,7 +926,7 @@ static const MNGM_BGL_DATA sc_MNGM_ENTRY_BGCNT[MNGM_ENTRY_BGL_USE] = {
 	{	// タイトルロゴ&テーブル用文字面
 		GFL_BG_FRAME0_M,
 		{
-			0, 0, 0x2000, 0, GF_BGL_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+			0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xa000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		},
@@ -936,7 +936,7 @@ static const MNGM_BGL_DATA sc_MNGM_ENTRY_BGCNT[MNGM_ENTRY_BGL_USE] = {
 	{
 		GFL_BG_FRAME0_S,
 		{
-			0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		},
@@ -1037,7 +1037,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
 	{	// 背景
 		GFL_BG_FRAME3_M,
 		{
-			0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
 			3, 0, 0, FALSE
 		},
@@ -1045,7 +1045,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
 	{	// テーブル
 		GFL_BG_FRAME1_M,
 		{
-			0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		},
@@ -1053,7 +1053,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
 	{	// メッセージ２面
 		GFL_BG_FRAME2_M,
 		{
-			0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		},
@@ -1061,7 +1061,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
 	{	// テーブル用メッセージ
 		GFL_BG_FRAME0_M,
 		{
-			0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
 			1, 0, 0, FALSE
 		},
@@ -1071,7 +1071,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
 	{
 		GFL_BG_FRAME0_S,
 		{
-			0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x04000, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		},
@@ -1079,7 +1079,7 @@ static const MNGM_BGL_DATA sc_MNGM_RESULT_BGCNT[MNGM_RESULT_BGL_USE] = {
 	{
 		GFL_BG_FRAME1_S,
 		{
-			0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		},
@@ -2440,8 +2440,8 @@ static void MNGM_BGL_Init( MNGM_BGL* p_wk, const GFL_BG_SYS_HEADER* cp_sys, cons
 		for( i=0; i<cnt_num; i++ ){
 			GFL_BG_SetBGControl( 
 					cp_cnt[i].frame, &cp_cnt[i].cnt,
-					GF_BGL_MODE_TEXT );
-			GF_BGL_ClearCharSet( cp_cnt[i].frame, 32, 0, heapID);
+					GFL_BG_MODE_TEXT );
+			GFL_BG_SetClearCharacter( cp_cnt[i].frame, 32, 0, heapID);
 			GFL_BG_ClearScreen( cp_cnt[i].frame );
 
 			// スクロール位置初期化
@@ -2488,7 +2488,7 @@ static void MNGM_BGL_Exit( MNGM_BGL* p_wk )
 static void MNGM_BGL_VBlank( MNGM_BGL* p_wk )
 {
     // BG書き換え
-    GF_BGL_VBlankFunc( p_wk->p_bgl );
+    GFL_BG_VBlankFunc( p_wk->p_bgl );
 }
 
 
@@ -3122,7 +3122,7 @@ static MNGM_ENTRYWK* MNGM_ENTRY_CommonInit( const MNGM_ENRES_PARAM* cp_commparam
     p_wk->tcbsys = GFL_TCB_Init(64, p_wk->tcb_work);
 
 	// バンク設定
-	GF_Disp_SetBank( &sc_MNGM_ENTRY_BANK );
+	GFL_DISP_SetBank( &sc_MNGM_ENTRY_BANK );
 
 	// ヒープID保存
 	p_wk->heapID = heapID;
@@ -4549,7 +4549,7 @@ static MNGM_RESULTWK* MNGM_RESULT_CommonInit( const MNGM_ENRES_PARAM* cp_commpar
     p_wk->tcbsys = GFL_TCB_Init(64, p_wk->tcb_work);
 
 	// バンク設定
-	GF_Disp_SetBank( &sc_MNGM_RESULT_BANK );
+	GFL_DISP_SetBank( &sc_MNGM_RESULT_BANK );
 
 	// ヒープID保存
 	p_wk->heapID = heapID;

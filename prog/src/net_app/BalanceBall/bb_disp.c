@@ -185,8 +185,8 @@ void BB_disp_Model_Delete( BB_3D_MODEL* wk )
 //--------------------------------------------------------------
 void BB_disp_Draw( BB_WORK* wk )
 {
-	GF_G3X_Reset();
-	GFC_CameraLookAt();
+	GFL_G3D_DRAW_Start();
+	GFL_G3D_DRAW_SetLookAt();
 	
 	BB_inline_LightSet();
 	
@@ -246,9 +246,9 @@ void BB_disp_Draw( BB_WORK* wk )
 		}
 	}
 	
-	GF_G3_RequestSwapBuffers( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );	
+	GFL_G3D_DRAW_End();
 
-    CATS_Draw( wk->sys.crp );
+    GFL_CLACT_SYS_Main();
 }
 
 

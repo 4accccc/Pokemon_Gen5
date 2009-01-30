@@ -317,19 +317,19 @@ static const u32 sc_WFLBY_BGCNT_FRM[ WFLBY_BGCNT_NUM ] = {
 static const GFL_BG_BGCNT_HEADER sc_WFLBY_BGCNT_DATA[ WFLBY_BGCNT_NUM ] = {
 	// メイン画面
 	{	// sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_BACK]
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
 		1, 0, 0, FALSE
 	},
 	{	// sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN]
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
 
 	// サブ画面
 	{	// sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_SUB_BACK]
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
@@ -1109,7 +1109,7 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID )
 	G2S_BlendNone();
 	
 	// BANK設定
-	GF_Disp_SetBank( &sc_WFLBY_BANK );
+	GFL_DISP_SetBank( &sc_WFLBY_BANK );
 
 	// バックグラウンドを黒にする
 	{
@@ -1129,8 +1129,8 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID )
 		for( i=0; i<WFLBY_BGCNT_NUM; i++ ){
 			GFL_BG_SetBGControl( 
 					sc_WFLBY_BGCNT_FRM[i], &sc_WFLBY_BGCNT_DATA[i],
-					GF_BGL_MODE_TEXT );
-			GF_BGL_ClearCharSet( sc_WFLBY_BGCNT_FRM[i], 32, 0, heapID);
+					GFL_BG_MODE_TEXT );
+			GFL_BG_SetClearCharacter( sc_WFLBY_BGCNT_FRM[i], 32, 0, heapID);
 			GFL_BG_ClearScreen( sc_WFLBY_BGCNT_FRM[i] );
 		}
 	}
@@ -1233,7 +1233,7 @@ static void WFLBY_CONNECT_GraphicExit( WFLBY_CONNECTWK* p_wk )
 static void WFLBY_CONNECT_GraphicVBlank( WFLBY_CONNECTWK* p_wk )
 {
 	// BGLVBLANK
-    GF_BGL_VBlankFunc( p_wk->p_bgl );
+    GFL_BG_VBlankFunc( p_wk->p_bgl );
 }
 
 

@@ -46,6 +46,7 @@
 //#include "system/snd_tool.h"
 #include "print\gf_font.h"
 #include "font/font.naix"
+#include <calctool.h>
 
 //-----------------------------------------------------------------------------
 /**
@@ -1999,7 +2000,7 @@ void BCT_CLIENT_VBlank( BCT_CLIENT* p_wk )
 {
     
     // BG書き換え
-    GF_BGL_VBlankFunc( p_wk->graphic.p_bgl );
+    GFL_BG_VBlankFunc( p_wk->graphic.p_bgl );
 
 #if WB_TEMP_FIX
     // Vram転送マネージャー実行
@@ -5663,7 +5664,7 @@ static void BCT_CLIENT_BankSet( void )
 		GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 		GX_OBJVRAMMODE_CHAR_1D_128K,	// サブOBJマッピングモード
     };
-    GF_Disp_SetBank( &vramSetTable );
+    GFL_DISP_SetBank( &vramSetTable );
 }
 
 //----------------------------------------------------------------------------
@@ -5705,6 +5706,7 @@ static void BCT_CLIENT_3DInit( BCT_CLIENT_GRAPHIC* p_wk, u32 comm_num, u32 plno,
 {
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						0x1000, heapID, BCT_CLIENT_3DSetUp);
+	GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 	
     // カメラ設定
     BCT_CLIENT_CameraInit( p_wk, comm_num, plno, heapID );
@@ -5720,7 +5722,7 @@ static void BCT_CLIENT_3DExit( BCT_CLIENT_GRAPHIC* p_wk )
     // カメラ破棄
     BCT_CLIENT_CameraExit( p_wk );
     
-    GF_G3D_Exit();
+    GFL_G3D_Exit();
 }
 
 //----------------------------------------------------------------------------
@@ -5916,7 +5918,7 @@ static void BCT_CLIENT_GraphicDrawCore( const BCT_CLIENT* cp_wk, BCT_CLIENT_GRAP
 	BCT_CLIENT_ScoreEffectMain( &p_wk->score_effect );
 	
     //３Ｄ描画開始
-    GF_G3X_Reset();
+    GFL_G3D_DRAW_Start();
 
     // カメラ設定
     BCT_CLIENT_CameraMain( p_wk );
@@ -5958,7 +5960,7 @@ static void BCT_CLIENT_GraphicDrawCore( const BCT_CLIENT* cp_wk, BCT_CLIENT_GRAP
 #endif
     
 
-    /* ジオメトリ＆レンダリングエンジン関連メモリのスワップ */
+    GFL_G3D_DRAW_End();
     GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 
     // セルアクター描画
@@ -5989,72 +5991,72 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
     // メイン画面1
     {   // ウィンドウ
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
-            0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+            0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
             GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x4000,
             GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
             };
-        GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GFL_BG_FRAME1_M, 32, 0, heapID);
+        GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+        GFL_BG_SetClearCharacter( GFL_BG_FRAME1_M, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
     }
 
     // メイン画面2
     {   // ウィンドウ
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
-            0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+            0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
             GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x04000, 0x3000,
             GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
             };
-        GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GFL_BG_FRAME2_M, 32, 0, heapID);
+        GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+        GFL_BG_SetClearCharacter( GFL_BG_FRAME2_M, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
     }
 
     // サブ画面0
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
-            0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+            0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
             GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, 0x8000,
             GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
         };
-        GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GFL_BG_FRAME0_S, 32, 0, heapID);
+        GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+        GFL_BG_SetClearCharacter( GFL_BG_FRAME0_S, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
     }
 
     // サブ画面1   
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
-            0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+            0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
             GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, 0x8000,
             GX_BG_EXTPLTT_01,1, 0, 0, FALSE
         };
-        GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GFL_BG_FRAME1_S, 32, 0, heapID);
+        GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+        GFL_BG_SetClearCharacter( GFL_BG_FRAME1_S, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME1_S );
     }
 
 	// サブ画面2	
 	{
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
-            0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+            0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
             GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000,
             GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
         };
-        GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GFL_BG_FRAME2_S, 32, 0, heapID);
+        GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+        GFL_BG_SetClearCharacter( GFL_BG_FRAME2_S, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME2_S );
 	}
 
 	// サブ画面3	
 	{
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
-            0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+            0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
             GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,
             GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
         };
-        GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GFL_BG_FRAME3_S, 32, 0, heapID);
+        GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+        GFL_BG_SetClearCharacter( GFL_BG_FRAME3_S, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
 	}
 
@@ -6378,7 +6380,7 @@ static void BCT_CLIENT_CameraExit( BCT_CLIENT_GRAPHIC* p_wk )
 static void BCT_CLIENT_CameraMain( BCT_CLIENT_GRAPHIC* p_wk )
 {
     // カメラ設定
-    GFC_CameraLookAt();
+    GFL_G3D_DRAW_SetLookAt();
 }
 
 //----------------------------------------------------------------------------

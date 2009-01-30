@@ -290,29 +290,29 @@ static const u32 sc_WLDTIMER_BGCNT_FRM[ WLDTIMER_BGCNT_NUM ] = {
 };
 static const GFL_BG_BGCNT_HEADER sc_WLDTIMER_BGCNT_DATA[ WLDTIMER_BGCNT_NUM ] = {
 	{	// GFL_BG_FRAME1_M
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x3800, GX_BG_CHARBASE_0x00000, 0x3800, jGX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
 	{	// GFL_BG_FRAME2_S
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, 0x3800, GX_BG_EXTPLTT_01,
 		2, 0, 0, FALSE
 	},
 	{	// GFL_BG_FRAME3_S
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x3800, GX_BG_EXTPLTT_01,
 		3, 0, 0, FALSE
 	},
 
 	// サブ画面０，１は同じキャラクタオフセット
 	{	// GFL_BG_FRAME0_S
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
 	{	// GFL_BG_FRAME1_S
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 		1, 0, 0, FALSE
 	},
@@ -2072,7 +2072,7 @@ static void WLDTIMER_WkSubControl( WLDTIMER_WK* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_WkDraw( WLDTIMER_WK* p_wk )
 {
-	GF_G3X_Reset();
+	GFL_G3D_DRAW_Start();
 	
 	// カメラ設定
 	WLDTIMER_CameraDraw( &p_wk->camera );
@@ -2087,7 +2087,7 @@ static void WLDTIMER_WkDraw( WLDTIMER_WK* p_wk )
 	WLDTIMER_DrawSysDraw( &p_wk->drawsys );
 
 	// 
-	GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO,GX_BUFFERMODE_W);
+	GFL_G3D_DRAW_End();
 }
 
 //----------------------------------------------------------------------------
@@ -2567,7 +2567,7 @@ static void WLDTIMER_DrawSysInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u32 
 #endif
 	
 	// バンク設定
-	GF_Disp_SetBank( &sc_WLDTIMER_BANK );
+	GFL_DISP_SetBank( &sc_WLDTIMER_BANK );
 
 	// BG設定
 	WLDTIMER_DrawSysBgInit( p_wk, p_config, heapID );
@@ -2629,7 +2629,7 @@ static void WLDTIMER_DrawSysDraw( WLDTIMER_DRAWSYS* p_wk )
 static void WLDTIMER_DrawSysVBlank( WLDTIMER_DRAWSYS* p_wk )
 {
     // BG書き換え
-    GF_BGL_VBlankFunc( p_wk->p_bgl );
+    GFL_BG_VBlankFunc( p_wk->p_bgl );
 
     // レンダラ共有OAMマネージャVram転送
     REND_OAMTrans();
@@ -2662,8 +2662,8 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
 		for( i=0; i<WLDTIMER_BGCNT_NUM; i++ ){
 			GFL_BG_SetBGControl( 
 					sc_WLDTIMER_BGCNT_FRM[i], &sc_WLDTIMER_BGCNT_DATA[i],
-					GF_BGL_MODE_TEXT );
-			GF_BGL_ClearCharSet( sc_WLDTIMER_BGCNT_FRM[i], 32, 0, heapID);
+					GFL_BG_MODE_TEXT );
+			GFL_BG_SetClearCharacter( sc_WLDTIMER_BGCNT_FRM[i], 32, 0, heapID);
 			GFL_BG_ClearScreen( sc_WLDTIMER_BGCNT_FRM[i] );
 		}
 	}
@@ -2822,6 +2822,7 @@ static void WLDTIMER_DrawSys3DInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
 	// ３D設定
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						0x1000, heapID, WLDTIMER_DrawSys3DSetUp);
+	GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_AUTO, GX_BUFFERMODE_W);
 
 	// ライト初期化
 	NNS_G3dGlbLightVector(USE_LIGHT_NUM,
@@ -2829,7 +2830,7 @@ static void WLDTIMER_DrawSys3DInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
 }
 static void WLDTIMER_DrawSys3DExit( WLDTIMER_DRAWSYS* p_wk )
 {
-    GF_G3D_Exit();
+    GFL_G3D_Exit();
 }
 static void WLDTIMER_DrawSys3DSetUp( void )
 {
@@ -3345,7 +3346,7 @@ static void WLDTIMER_CameraExit( WLDTIMER_CAMERA* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_CameraDraw( const WLDTIMER_CAMERA* cp_wk )
 {
-	GFC_CameraLookAt();
+	GFL_G3D_DRAW_SetLookAt();
 }
 
 //----------------------------------------------------------------------------

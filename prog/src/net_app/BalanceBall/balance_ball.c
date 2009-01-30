@@ -941,6 +941,7 @@ static void BB_SystemInit( BB_WORK* wk )
 	wk->sys.pfd			= PaletteFadeInit( HEAPID_BB );
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						0x1000, HEAPID_BB, NULL);
+	GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_AUTO, GX_BUFFERMODE_W);
 
 	wk->sys.camera_p	= GFC_AllocCamera( HEAPID_BB );
 	BB_disp_CameraSet( wk );
@@ -1009,7 +1010,7 @@ void BB_SystemExit( BB_WORK* wk )
 	GFL_ARC_CloseDataHandle( wk->sys.p_handle_bb );
 	GFL_ARC_CloseDataHandle( wk->sys.p_handle_cr );
 	
-	GF_G3D_Exit();
+	GFL_G3D_Exit();
 	GFL_G3D_CAMERA_Delete( wk->sys.camera_p );
 	
 	
@@ -1059,7 +1060,7 @@ static void BB_VramBankSet( void )
 			GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 		};
-		GF_Disp_SetBank( &vramSetTable );
+		GFL_DISP_SetBank( &vramSetTable );
 
 		//VRAMクリア
 		GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
@@ -1073,37 +1074,37 @@ static void BB_VramBankSet( void )
 		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
 			///<FRAME0_M　
 			{
-				0, 0, 0x0800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, 0x4000,
 				GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
 			},
 			///<FRAME1_M　左幕
 			{
-				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+				0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x2800, GX_BG_CHARBASE_0x14000, 0x8000,
 				GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 			},
 			///<FRAME2_M　右幕
 			{
-				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+				0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x3800, GX_BG_CHARBASE_0x14000, 0x8000,
 				GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 			},
 			///<FRAME3_M　背景
 			{
-				0, 0, 0x0800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x4800, GX_BG_CHARBASE_0x10000, 0x4000,
 				GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
 			},
 		};
-//		GF_BGL_ClearCharSet( GFL_BG_FRAME0_M, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GFL_BG_FRAME1_M, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GFL_BG_FRAME2_M, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GFL_BG_FRAME3_M, 32, 0, HEAPID_BB );
-//		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat[ 0 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat[ 1 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat[ 2 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat[ 3 ], GF_BGL_MODE_TEXT );
+//		GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_BB );
+		GFL_BG_SetClearCharacter( GFL_BG_FRAME1_M, 32, 0, HEAPID_BB );
+		GFL_BG_SetClearCharacter( GFL_BG_FRAME2_M, 32, 0, HEAPID_BB );
+		GFL_BG_SetClearCharacter( GFL_BG_FRAME3_M, 32, 0, HEAPID_BB );
+//		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat[ 0 ], GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat[ 1 ], GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat[ 2 ], GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat[ 3 ], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
 		GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
 		GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
@@ -1114,46 +1115,46 @@ static void BB_VramBankSet( void )
 		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
 			///<FRAME0_S　背景
 			{
-				0, 0, 0x0800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0xb000, GX_BG_CHARBASE_0x00000, 0x4000,
 				GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
 			},
 			///<FRAME1_S　←幕
 			{
-				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+				0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0xb800, GX_BG_CHARBASE_0x04000, 0x7000,
 				GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 			},
 			///<FRAME2_S　→幕
 			{
-				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+				0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x04000, 0x7000,
 				GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 			},
 			///<FRAME3_S　↑幕
 			{
-				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+				0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x04000, 0x7000,
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
 		};
-		GF_BGL_ClearCharSet( GFL_BG_FRAME0_S, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GFL_BG_FRAME1_S, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GFL_BG_FRAME2_S, 32, 0, HEAPID_BB );
-		GF_BGL_ClearCharSet( GFL_BG_FRAME3_S, 32, 0, HEAPID_BB );
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat[ 0 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat[ 1 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &TextBgCntDat[ 2 ], GF_BGL_MODE_TEXT );
-		GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &TextBgCntDat[ 3 ], GF_BGL_MODE_TEXT );
+		GFL_BG_SetClearCharacter( GFL_BG_FRAME0_S, 32, 0, HEAPID_BB );
+		GFL_BG_SetClearCharacter( GFL_BG_FRAME1_S, 32, 0, HEAPID_BB );
+		GFL_BG_SetClearCharacter( GFL_BG_FRAME2_S, 32, 0, HEAPID_BB );
+		GFL_BG_SetClearCharacter( GFL_BG_FRAME3_S, 32, 0, HEAPID_BB );
+		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat[ 0 ], GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat[ 1 ], GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &TextBgCntDat[ 2 ], GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &TextBgCntDat[ 3 ], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
 		GFL_BG_ClearScreen( GFL_BG_FRAME1_S );
 		GFL_BG_ClearScreen( GFL_BG_FRAME2_S );
 		GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
 	}
-	GF_BGL_ClearCharSet( GFL_BG_FRAME0_S, 32, 0, HEAPID_BB );
-	GF_BGL_ClearCharSet( GFL_BG_FRAME1_S, 32, 0, HEAPID_BB );
-	GF_BGL_ClearCharSet( GFL_BG_FRAME2_S, 32, 0, HEAPID_BB );
-	GF_BGL_ClearCharSet( GFL_BG_FRAME3_S, 32, 0, HEAPID_BB );
+	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_S, 32, 0, HEAPID_BB );
+	GFL_BG_SetClearCharacter( GFL_BG_FRAME1_S, 32, 0, HEAPID_BB );
+	GFL_BG_SetClearCharacter( GFL_BG_FRAME2_S, 32, 0, HEAPID_BB );
+	GFL_BG_SetClearCharacter( GFL_BG_FRAME3_S, 32, 0, HEAPID_BB );
 	
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
@@ -1284,11 +1285,11 @@ static void BB_VBlank(GFL_TCB *tcb, void *work)
 	DoVramTransferManager();
 #endif
 	
-	CATS_RenderOamTrans();
+	GFL_CLACT_SYS_VBlankFunc();
 
 	PaletteFadeTrans( wk->sys.pfd );
 	
-	GF_BGL_VBlankFunc(  );
+	GFL_BG_VBlankFunc(  );
 	
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }

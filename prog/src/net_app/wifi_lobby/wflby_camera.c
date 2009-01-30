@@ -143,7 +143,7 @@ void WFLBY_CAMERA_Draw( WFLBY_CAMERA* p_sys )
 	}
 	
 	// ÉJÉÅÉâîΩâf
-	GFC_CameraLookAt();
+	GFL_G3D_DRAW_SetLookAt();
 }
 
 //----------------------------------------------------------------------------

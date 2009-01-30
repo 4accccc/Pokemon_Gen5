@@ -886,24 +886,24 @@ static const u32 sc_WFLBY_ROOM_BGCNT_FRM[ WFLBY_ROOM_BGCNT_NUM ] = {
 static const GFL_BG_BGCNT_HEADER sc_WFLBY_ROOM_BGCNT_DATA[ WFLBY_ROOM_BGCNT_NUM ] = {
 	// メイン画面
 	{	// GFL_BG_FRAME1_M
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x7800, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
 
 	// サブ画面
 	{	// GFL_BG_FRAME0_S
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 		2, 0, 0, FALSE
 	},
 	{	// GFL_BG_FRAME1_S
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 		1, 0, 0, FALSE
 	},
 	{	// GFL_BG_FRAME2_S
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
@@ -2905,7 +2905,7 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 #endif
 
 	// バンク設定
-	GF_Disp_SetBank( &sc_WFLBY_ROOM_BANK );
+	GFL_DISP_SetBank( &sc_WFLBY_ROOM_BANK );
 
 	// 描画面変更
 	// メインとサブを切り替える
@@ -2929,8 +2929,8 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 		for( i=0; i<WFLBY_ROOM_BGCNT_NUM; i++ ){
 			GFL_BG_SetBGControl( 
 					sc_WFLBY_ROOM_BGCNT_FRM[i], &sc_WFLBY_ROOM_BGCNT_DATA[i],
-					GF_BGL_MODE_TEXT );
-			GF_BGL_ClearCharSet( sc_WFLBY_ROOM_BGCNT_FRM[i], 32, 0, heapID);
+					GFL_BG_MODE_TEXT );
+			GFL_BG_SetClearCharacter( sc_WFLBY_ROOM_BGCNT_FRM[i], 32, 0, heapID);
 			GFL_BG_ClearScreen( sc_WFLBY_ROOM_BGCNT_FRM[i] );
 		}
 	}
@@ -3027,6 +3027,7 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 	{
 		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						0x1000, heapID, WFLBY_ROOM_DrawSys3DSetUp);
+		GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 	}
 }
 
@@ -3097,7 +3098,7 @@ static void WFLBY_ROOM_GraphicExit( WFLBY_GRAPHICCONT* p_sys )
 
 	// BGの破棄
 	{
-		GF_G3D_Exit();
+		GFL_G3D_Exit();
 	}
 	
 }
@@ -3112,7 +3113,7 @@ static void WFLBY_ROOM_GraphicExit( WFLBY_GRAPHICCONT* p_sys )
 static void WFLBY_ROOM_GraphicVblank( WFLBY_GRAPHICCONT* p_sys )
 {
     // BG書き換え
-    GF_BGL_VBlankFunc( p_sys->p_bgl );
+    GFL_BG_VBlankFunc( p_sys->p_bgl );
 
     // レンダラ共有OAMマネージャVram転送
     REND_OAMTrans();
@@ -3302,7 +3303,7 @@ static void WFLBY_ROOM_RoomDraw( WFLBY_ROOMWK* p_wk )
 		
 	WFLBY_DEBUG_ROOM_PRINT_TIME_TICK_INIT;
 	
-	GF_G3X_Reset();
+	GFL_G3D_DRAW_Start();
 
 
 	// カメラ設定
@@ -3344,7 +3345,7 @@ static void WFLBY_ROOM_RoomDraw( WFLBY_ROOMWK* p_wk )
 	// ガジェット
 	WFLBY_GADGET_Draw( p_wk->p_gadget );
 	WFLBY_DEBUG_ROOM_PRINT_TIME_TICK_PRINT_DRAW( __LINE__ );
-	
+	GFL_G3D_DRAW_End();
 	GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO,GX_BUFFERMODE_Z);
 
 	// 描画システムメイン

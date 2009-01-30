@@ -658,23 +658,23 @@ static const u32 sc_ANKETO_BGCNT_FRM[ ANKETO_BGCNT_NUM ] = {
 };
 static const GFL_BG_BGCNT_HEADER sc_ANKETO_BGCNT_DATA[ ANKETO_BGCNT_NUM ] = {
 	{	// GFL_BG_FRAME0_M	（背景）
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x08000, 0x6800, GX_BG_EXTPLTT_01,
 		3, 0, 0, FALSE
 	},
 	{	// GFL_BG_FRAME1_M	（フレーム面）
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
 		1, 0, 0, FALSE
 	},
 	{	// GFL_BG_FRAME2_M	（メッセージ面）
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 		2, 0, 0, FALSE
 	},
 
 	{	// GFL_BG_FRAME0_S	（した背景）
-		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
@@ -918,7 +918,7 @@ static void ANKETO_InitGraphic( ANKETO_DRAWSYS* p_wk, SAVE_CONTROL_WORK* p_save,
 #endif
 
 	// バンク設定
-	GF_Disp_SetBank( &sc_ANKETO_BANK );
+	GFL_DISP_SetBank( &sc_ANKETO_BANK );
 
 	// BG初期化
 	ANKETO_BgInit( p_wk, p_config, heapID );	
@@ -973,7 +973,7 @@ static void ANKETO_MainGraphic( ANKETO_DRAWSYS* p_wk )
 static void ANKETO_VBlankGraphic( ANKETO_DRAWSYS* p_wk )
 {
     // BG書き換え
-    GF_BGL_VBlankFunc( p_wk->p_bgl );
+    GFL_BG_VBlankFunc( p_wk->p_bgl );
 
     // レンダラ共有OAMマネージャVram転送
     REND_OAMTrans();
@@ -1016,8 +1016,8 @@ static void ANKETO_BgInit( ANKETO_DRAWSYS* p_wk, CONFIG* p_config, u32 heapID )
 		for( i=0; i<ANKETO_BGCNT_NUM; i++ ){
 			GFL_BG_SetBGControl( 
 					sc_ANKETO_BGCNT_FRM[i], &sc_ANKETO_BGCNT_DATA[i],
-					GF_BGL_MODE_TEXT );
-			GF_BGL_ClearCharSet( sc_ANKETO_BGCNT_FRM[i], 32, 0, heapID);
+					GFL_BG_MODE_TEXT );
+			GFL_BG_SetClearCharacter( sc_ANKETO_BGCNT_FRM[i], 32, 0, heapID);
 			GFL_BG_ClearScreen( sc_ANKETO_BGCNT_FRM[i] );
 		}
 	}

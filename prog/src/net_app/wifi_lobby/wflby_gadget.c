@@ -21,6 +21,7 @@
 #include "wflby_3dmapobj.h"
 #include "wflby_snd.h"
 #include "wflby_3dmatrix.h"
+#include <calctool.h>
 
 //-----------------------------------------------------------------------------
 /**

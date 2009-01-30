@@ -45,6 +45,7 @@
 #include "arc_def.h"
 #include "system/sdkdef.h"
 #include "system/gfl_use.h"
+#include <calctool.h>
 
 
 
@@ -1344,7 +1345,6 @@ static void BalloonVBlank(GFL_TCB *tcb, void *work)
 #if WB_TEMP_FIX
 	DoVramTransferManager();	// Vram転送マネージャー実行
 #endif
-	CATS_RenderOamTrans();
 	PaletteFadeTrans(game->pfd);
 	
 	if(game->bst.bg_on_req == TRUE){
@@ -1356,7 +1356,7 @@ static void BalloonVBlank(GFL_TCB *tcb, void *work)
 		game->bst.bg_off_req = 0;
 	}
 	
-	GF_BGL_VBlankFunc();
+	GFL_BG_VBlankFunc();
 	
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK);
 }
@@ -1372,6 +1372,7 @@ static void Balloon_3D_Init(int heap_id)
 {
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
 						0x1000, heap_id, BalloonSimpleSetUp);
+	GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 }
 
 static void BalloonSimpleSetUp(void)
@@ -1402,7 +1403,7 @@ static void BalloonSimpleSetUp(void)
 //--------------------------------------------------------------
 static void Balloon_3D_Exit(void)
 {
-	GF_G3D_Exit();
+	GFL_G3D_Exit();
 }
 
 //--------------------------------------------------------------
@@ -1513,11 +1514,16 @@ static void BalloonUpdate(GFL_TCB* tcb, void *work)
 
 	{
 		//３Ｄ描画開始
-		GF_G3X_Reset();
-		
+		GFL_G3D_DRAW_Start();
+
+#if WB_FIX
 		GFC_AttachCamera(game->camera);
 		GFC_SetCameraView(GF_CAMERA_ORTHO, game->camera); //正射影設定
 		GFC_CameraLookAt();
+#else
+		GFL_G3D_DRAW_Start();
+		GFL_G3D_DRAW_SetLookAt();
+#endif
 
 		// ライトとアンビエント
 		NNS_G3dGlbLightVector( 0, 0, -FX32_ONE, 0 );
@@ -1563,23 +1569,24 @@ static void BalloonUpdate(GFL_TCB* tcb, void *work)
 	{//パーティクル
 		int draw_num;
 
-		GF_G3X_Reset();
+		GFL_G3D_DRAW_Start();
 		
-		draw_num = Particle_DrawAll();	//パーティクル描画
+		draw_num = GFL_PTC_DrawAll();	//パーティクル描画
 		if(draw_num > 0){
 			//パーティクルの描画が終了したので、再びソフトウェアスプライト用カメラに設定
-			GF_G3X_Reset();
+			GFL_G3D_DRAW_Start();
 		}
 
-		Particle_CalcAll();	//パーティクル計算
+		GFL_PTC_CalcAll();	//パーティクル計算
 	}
 
 //	BattleParticle_Main();
-	CATS_Draw(game->crp);
-	CATS_UpdateTransfer();
-	GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
+	GFL_CLACT_SYS_Main();
+	GFL_G3D_DRAW_End();
 	
+#if WB_TEMP_FIX
 	CommErrorCheck(HEAPID_BALLOON);
+#endif
 
 #ifdef PM_DEBUG		//ポリゴンのラインズオーバーチェック
 	if(G3X_IsLineBufferUnderflow() != 0){
@@ -1605,7 +1612,7 @@ static void BalloonSys_VramBankSet(void)
 
 	//VRAM設定
 	{
-		GF_Disp_SetBank( &BalloonVramSetTable );//H32が余り。サブBG面の拡張パレットとして当てられる
+		GFL_DISP_SetBank( &BalloonVramSetTable );//H32が余り。サブBG面の拡張パレットとして当てられる
 
 		//VRAMクリア
 		GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
@@ -1627,33 +1634,33 @@ static void BalloonSys_VramBankSet(void)
 		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
 			///<FRAME1_M	ウィンドウ
 			{
-				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-//				0, 0, 0x0800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+//				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, 0x8000,
 				GX_BG_EXTPLTT_01, BALLOON_BGPRI_WINDOW, 0, 0, FALSE
 			},
 			///<FRAME2_M	エフェクト
 			{
-				0, 0, 0x2000, 0, GF_BGL_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, 0x4000,
 				GX_BG_EXTPLTT_01, BALLOON_BGPRI_EFFECT, 0, 0, FALSE
 			},
 			///<FRAME3_M	背景
 			{
-				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+				0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x10000, 0x8000,
 				GX_BG_EXTPLTT_01, BALLOON_BGPRI_BACKGROUND, 0, 0, FALSE
 			},
 		};
-		GFL_BG_SetBGControl(BALLOON_FRAME_WIN, &TextBgCntDat[0], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl(BALLOON_FRAME_WIN, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(BALLOON_FRAME_WIN );
 		GFL_BG_SetScroll(BALLOON_FRAME_WIN, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(BALLOON_FRAME_WIN, GFL_BG_SCROLL_Y_SET, 0);
-		GFL_BG_SetBGControl(BALLOON_FRAME_EFF, &TextBgCntDat[1], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl(BALLOON_FRAME_EFF, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(BALLOON_FRAME_EFF );
 		GFL_BG_SetScroll(BALLOON_FRAME_EFF, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(BALLOON_FRAME_EFF, GFL_BG_SCROLL_Y_SET, 0);
-		GFL_BG_SetBGControl(BALLOON_FRAME_BACK, &TextBgCntDat[2], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl(BALLOON_FRAME_BACK, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(BALLOON_FRAME_BACK );
 		GFL_BG_SetScroll(BALLOON_FRAME_BACK, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(BALLOON_FRAME_BACK, GFL_BG_SCROLL_Y_SET, 0);
@@ -1667,22 +1674,22 @@ static void BalloonSys_VramBankSet(void)
 		int i;
 		static const GFL_BG_BGCNT_HEADER SubBgCntDat[] = {
 			{//GFL_BG_FRAME0_S	ウィンドウ
-				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, 0x8000,
 				GX_BG_EXTPLTT_01, BALLOON_SUBBG_WIN_PRI, 0, 0, FALSE
 			},
 			{//GFL_BG_FRAME1_S	パイプ
-				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, 0x4000,
 				GX_BG_EXTPLTT_01, BALLOON_SUBBG_PIPE_PRI, 0, 0, FALSE
 			},
 			{//GFL_BG_FRAME2_S	背景
-				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x4000, GX_BG_CHARBASE_0x14000, 0x4000,
 				GX_BG_EXTPLTT_01, BALLOON_SUBBG_BACK_PRI, 0, 0, FALSE
 			},
 			{//GFL_BG_FRAME3_S	風船
-				0, 0, 0x400, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+				0, 0, 0x400, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
 				GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x18000, 0x8000,
 				GX_BG_EXTPLTT_01, BALLOON_SUBBG_BALLOON_PRI, 0, 0, FALSE
 			},
@@ -1690,12 +1697,12 @@ static void BalloonSys_VramBankSet(void)
 		
 		for(i = 0; i < NELEMS(SubBgCntDat); i++){
 			if(i < 3){
-				GFL_BG_SetBGControl(GFL_BG_FRAME0_S + i, &SubBgCntDat[i], GF_BGL_MODE_TEXT);
+				GFL_BG_SetBGControl(GFL_BG_FRAME0_S + i, &SubBgCntDat[i], GFL_BG_MODE_TEXT);
 			}
 			else{
-				GFL_BG_SetBGControl(GFL_BG_FRAME0_S + i, &SubBgCntDat[i], GF_BGL_MODE_AFFINE);
+				GFL_BG_SetBGControl(GFL_BG_FRAME0_S + i, &SubBgCntDat[i], GFL_BG_MODE_AFFINE);
 			}
-			GF_BGL_ClearCharSet( GFL_BG_FRAME0_S + i, 0x20, 0, HEAPID_BALLOON);
+			GFL_BG_SetClearCharacter( GFL_BG_FRAME0_S + i, 0x20, 0, HEAPID_BALLOON);
 			GFL_BG_ClearScreen(GFL_BG_FRAME0_S + i);
 			GFL_BG_SetScroll(GFL_BG_FRAME0_S + i, GFL_BG_SCROLL_X_SET, 0);
 			GFL_BG_SetScroll(GFL_BG_FRAME0_S + i, GFL_BG_SCROLL_Y_SET, 0);
@@ -1729,9 +1736,9 @@ static void BalloonSys_DefaultBmpWinAdd(BALLOON_GAME_WORK *game)
 	game->win[BALLOON_BMPWIN_NAME_3] = GFL_BMPWIN_Create(BALLOON_SUBFRAME_WIN, 
 		1, 14, 10, 2, BMPWIN_SUB_TALK_COLOR, GFL_BMP_CHRAREA_GET_B);
 
-	GFL_BMPWIN_MakeScreen(BALLOON_BMPWIN_NAME_1);
-	GFL_BMPWIN_MakeScreen(BALLOON_BMPWIN_NAME_2);
-	GFL_BMPWIN_MakeScreen(BALLOON_BMPWIN_NAME_3);
+	GFL_BMPWIN_MakeScreen(game->win[BALLOON_BMPWIN_NAME_1]);
+	GFL_BMPWIN_MakeScreen(game->win[BALLOON_BMPWIN_NAME_2]);
+	GFL_BMPWIN_MakeScreen(game->win[BALLOON_BMPWIN_NAME_3]);
 	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->win[BALLOON_BMPWIN_NAME_1]), 0xf);
 	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->win[BALLOON_BMPWIN_NAME_2]), 0xf);
 	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->win[BALLOON_BMPWIN_NAME_3]), 0xf);

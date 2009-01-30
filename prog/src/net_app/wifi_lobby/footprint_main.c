@@ -49,6 +49,7 @@
 #include "print\gf_font.h"
 #include "font/font.naix"
 #include "system/gfl_use.h"
+#include <calctool.h>
 
 
 //==============================================================================
@@ -1124,9 +1125,9 @@ static void Footprint_Update(GFL_TCB* tcb, void *work)
 
 	Model3D_Update(fps);
 
-	CATS_Draw(fps->crp);
+	GFL_CLACT_SYS_Main();
 	CATS_UpdateTransfer();
-	GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
+	GFL_G3D_DRAW_End();
 	
 
 #ifdef PM_DEBUG		//ポリゴンのラインズオーバーチェック
@@ -1162,11 +1163,10 @@ static void VBlankFunc(GFL_TCB *tcb, void *work)
 	DoVramTransferManager();
 #endif
 
-	// レンダラ共有OAMマネージャVram転送
-	CATS_RenderOamTrans();
+	GFL_CLACT_SYS_VBlankFunc();
 	PaletteFadeTrans(fps->pfd);
 	
-	GF_BGL_VBlankFunc();
+	GFL_BG_VBlankFunc();
 
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
@@ -1204,7 +1204,7 @@ static void FootPrint_VramBankSet(void)
 			GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 		};
-		GF_Disp_SetBank( &vramSetTable );
+		GFL_DISP_SetBank( &vramSetTable );
 
 		//VRAMクリア
 		GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
@@ -1226,34 +1226,34 @@ static void FootPrint_VramBankSet(void)
 		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
 			///<FOOT_FRAME_WIN	ウィンドウ面
 			{
-				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, 0x8000, GX_BG_EXTPLTT_01,
 				FOOT_BGPRI_WIN, 0, 0, FALSE
 			},
 			///<FOOT_FRAME_PANEL	パネル面
 			{
-				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 				FOOT_BGPRI_PANEL, 0, 0, FALSE
 			},
 			///<FOOT_FRAME_BG	背景
 			{
-				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 				FOOT_BGPRI_BG, 0, 0, FALSE
 			},
 		};
-		GFL_BG_SetBGControl(FOOT_FRAME_WIN, &TextBgCntDat[0], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl(FOOT_FRAME_WIN, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( FOOT_FRAME_WIN );
 		GFL_BG_SetScroll(FOOT_FRAME_WIN, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(FOOT_FRAME_WIN, GFL_BG_SCROLL_Y_SET, 0);
 
-		GFL_BG_SetBGControl(FOOT_FRAME_PANEL, &TextBgCntDat[1], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl(FOOT_FRAME_PANEL, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( FOOT_FRAME_PANEL );
 		GFL_BG_SetScroll(FOOT_FRAME_PANEL, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(FOOT_FRAME_PANEL, GFL_BG_SCROLL_Y_SET, 0);
 		
-		GFL_BG_SetBGControl(FOOT_FRAME_BG, &TextBgCntDat[2], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl(FOOT_FRAME_BG, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( FOOT_FRAME_BG );
 		GFL_BG_SetScroll(FOOT_FRAME_BG, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(FOOT_FRAME_BG, GFL_BG_SCROLL_Y_SET, 0);
@@ -1267,40 +1267,40 @@ static void FootPrint_VramBankSet(void)
 		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
 			///<FOOT_SUBFRAME_WIN	テキスト面
 			{
-				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 				FOOT_SUBBGPRI_WIN, 0, 0, FALSE
 			},
 			///<FOOT_SUBFRAME_PLATE	プレート
 			{
-				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 				FOOT_SUBBGPRI_PLATE, 0, 0, FALSE
 			},
 			///<FOOT_SUBFRAME_BG	背景
 			{
-				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 				FOOT_SUBBGPRI_BG, 0, 0, FALSE
 			},
 		};
-		GFL_BG_SetBGControl(FOOT_SUBFRAME_WIN, &TextBgCntDat[0], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl(FOOT_SUBFRAME_WIN, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( FOOT_SUBFRAME_WIN );
 		GFL_BG_SetScroll(FOOT_SUBFRAME_WIN, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(FOOT_SUBFRAME_WIN, GFL_BG_SCROLL_Y_SET, 0);
 		
-		GFL_BG_SetBGControl(FOOT_SUBFRAME_PLATE, &TextBgCntDat[1], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl(FOOT_SUBFRAME_PLATE, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( FOOT_SUBFRAME_PLATE );
 		GFL_BG_SetScroll(FOOT_SUBFRAME_PLATE, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(FOOT_SUBFRAME_PLATE, GFL_BG_SCROLL_Y_SET, 0);
 
-		GFL_BG_SetBGControl(FOOT_SUBFRAME_BG, &TextBgCntDat[2], GF_BGL_MODE_TEXT );
+		GFL_BG_SetBGControl(FOOT_SUBFRAME_BG, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( FOOT_SUBFRAME_BG );
 		GFL_BG_SetScroll(FOOT_SUBFRAME_BG, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(FOOT_SUBFRAME_BG, GFL_BG_SCROLL_Y_SET, 0);
 	}
 
-	GF_BGL_ClearCharSet( FOOT_SUBFRAME_WIN, 32, 0, HEAPID_FOOTPRINT );
+	GFL_BG_SetClearCharacter( FOOT_SUBFRAME_WIN, 32, 0, HEAPID_FOOTPRINT );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1871,11 +1871,11 @@ static void Model3D_Update(FOOTPRINT_SYS *fps)
 	MTX_Identity33(&rot);
 
 	//３Ｄ描画開始
-	GF_G3X_Reset();
+	GFL_G3D_DRAW_Start();
 	
 	GFC_AttachCamera(fps->camera);
 	GFC_SetCameraView(FOOTPRINT_CAMERA_MODE, fps->camera); //正射影設定
-	GFC_CameraLookAt();
+	GFL_G3D_DRAW_SetLookAt();
 
 	// ライトとアンビエント
 	NNS_G3dGlbLightVector( 0, 0, -FX32_ONE, 0 );
@@ -1967,6 +1967,7 @@ static void Footprint_3D_Init(int heap_id)
 {
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
 						0x1000, heap_id, FootprintSimpleSetUp);
+	GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 }
 
 static void FootprintSimpleSetUp(void)
@@ -1997,7 +1998,7 @@ static void FootprintSimpleSetUp(void)
 //--------------------------------------------------------------
 static void Footprint_3D_Exit(void)
 {
-	GF_G3D_Exit();
+	GFL_G3D_Exit();
 }
 
 //--------------------------------------------------------------

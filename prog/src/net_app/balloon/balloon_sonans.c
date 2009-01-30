@@ -706,7 +706,7 @@ static void Sonans_PolygonCreate(SONANS_SYS_PTR sns)
 {
 	u32 tex_address, pltt_address;
 
-//	GF_G3X_Reset();
+//	GFL_G3D_DRAW_Start();
 	
 #if 0
 	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_Y){
