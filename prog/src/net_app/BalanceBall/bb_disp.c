@@ -16,6 +16,7 @@
 #include "font/font.naix"
 
 #include "wlmngm_tool.naix"
+#include "system/bmp_winframe.h"
 
 #include "communication/comm_info.h"
 #define BB_PRINT_COL		( GF_PRINTCOLOR_MAKE( 1,  2, 15 ) )
@@ -608,7 +609,7 @@ void BB_disp_InfoWinAdd( BB_CLIENT* wk )
 		GFL_STR_DeleteBuffer( str );
 		GFL_MSG_Delete( man );	
 	}	
-	BmpMenuWinWrite( &wk->win, WINDOW_TRANS_ON, BB_BG_CGX_OFS, 13 );
+	BmpWinFrame_Write( wk->win, WINDOW_TRANS_ON, BB_BG_CGX_OFS, 13 );
 	GF_BGL_BmpWinOn( &wk->win );
 }
 
@@ -840,10 +841,10 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	id  = eBB_ID_OAM_S;
 	palnum = eBB_OAM_PAL_TD_MAX;
 
-	CATS_LoadResourceCharArcH( csp, crp, hdl, ncg, FALSE, NNS_G2D_VRAM_TYPE_2DSUB, id );
-	CATS_LoadResourceCellArcH( csp, crp, hdl, nce, FALSE, id );
-	CATS_LoadResourceCellAnmArcH( csp, crp, hdl, nca, FALSE, id );
-	CATS_LoadResourcePlttWorkArcH( pfd, FADE_SUB_OBJ, csp, crp, hdl, ncl, FALSE, palnum, NNS_G2D_VRAM_TYPE_2DSUB, id );		
+	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_SUB, HEAPID_BB);
+	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
+	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
+		hdl, ncl, CLSYS_DRAW_SUB, 0, 0, palnum, HEAPID_BB);
 	
 	// ----- 下画面 -----
 	// 星
@@ -854,10 +855,10 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	id  = eBB_ID_STAR;
 	palnum = 1;
 
-	CATS_LoadResourceCharArcH( csp, crp, hdl, ncg, FALSE, NNS_G2D_VRAM_TYPE_2DMAIN, id );
-	CATS_LoadResourceCellArcH( csp, crp, hdl, nce, FALSE, id );
-	CATS_LoadResourceCellAnmArcH( csp, crp, hdl, nca, FALSE, id );
-	CATS_LoadResourcePlttWorkArcH( pfd, FADE_MAIN_OBJ, csp, crp, hdl, ncl, FALSE, palnum, NNS_G2D_VRAM_TYPE_2DMAIN, id );
+	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
+	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
+	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
+		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
 	
 	// 拍手
     nca = NARC_manene_bottom_hakusyu_NANR;
@@ -867,10 +868,10 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	id  = eBB_ID_HAND;
 	palnum = 1;
 
-	CATS_LoadResourceCharArcH( csp, crp, hdl, ncg, FALSE, NNS_G2D_VRAM_TYPE_2DMAIN, id );
-	CATS_LoadResourceCellArcH( csp, crp, hdl, nce, FALSE, id );
-	CATS_LoadResourceCellAnmArcH( csp, crp, hdl, nca, FALSE, id );
-	CATS_LoadResourcePlttWorkArcH( pfd, FADE_MAIN_OBJ, csp, crp, hdl, ncl, FALSE, palnum, NNS_G2D_VRAM_TYPE_2DMAIN, id );
+	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
+	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
+	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
+		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
 	
 	// 紙
     nca = NARC_manene_bottom_kami_NANR;
@@ -880,10 +881,10 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	id  = eBB_ID_KAMI;
 	palnum = 1;
 
-	CATS_LoadResourceCharArcH( csp, crp, hdl, ncg, FALSE, NNS_G2D_VRAM_TYPE_2DMAIN, id );
-	CATS_LoadResourceCellArcH( csp, crp, hdl, nce, FALSE, id );
-	CATS_LoadResourceCellAnmArcH( csp, crp, hdl, nca, FALSE, id );
-	CATS_LoadResourcePlttWorkArcH( pfd, FADE_MAIN_OBJ, csp, crp, hdl, ncl, FALSE, palnum, NNS_G2D_VRAM_TYPE_2DMAIN, id );
+	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
+	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
+	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
+		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
 	
 	
 	// 花火
@@ -894,10 +895,10 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	id  = eBB_ID_HANABI;
 	palnum = 1;
 
-	CATS_LoadResourceCharArcH( csp, crp, hdl, ncg, FALSE, NNS_G2D_VRAM_TYPE_2DMAIN, id );
-	CATS_LoadResourceCellArcH( csp, crp, hdl, nce, FALSE, id );
-	CATS_LoadResourceCellAnmArcH( csp, crp, hdl, nca, FALSE, id );
-	CATS_LoadResourcePlttWorkArcH( pfd, FADE_MAIN_OBJ, csp, crp, hdl, ncl, FALSE, palnum, NNS_G2D_VRAM_TYPE_2DMAIN, id );
+	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
+	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
+	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
+		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
 	
 	// ライト
     nca = NARC_manene_bottom_oam_NANR;
@@ -907,14 +908,14 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	id  = eBB_ID_LIGHT_M;
 	palnum = 3;
 
-	CATS_LoadResourceCharArcH( csp, crp, hdl, ncg, FALSE, NNS_G2D_VRAM_TYPE_2DMAIN, id );
-	CATS_LoadResourceCellArcH( csp, crp, hdl, nce, FALSE, id );
-	CATS_LoadResourceCellAnmArcH( csp, crp, hdl, nca, FALSE, id );
-	CATS_LoadResourcePlttWorkArcH( pfd, FADE_MAIN_OBJ, csp, crp, hdl, ncl, FALSE, palnum, NNS_G2D_VRAM_TYPE_2DMAIN, id );
+	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
+	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
+	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
+		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
 	
 	// ペン
 	{
-		ARCHANDLE* res_hdl = GFL_ARC_OpenDataHandle( ARC_WLMNGM_TOOL_GRA, HEAPID_BB );
+		ARCHANDLE* res_hdl = GFL_ARC_OpenDataHandle( ARCID_WLMNGM_TOOL_GRA, HEAPID_BB );
 
 	    nca = NARC_wlmngm_tool_touchpen_NANR;
 		nce = NARC_wlmngm_tool_touchpen_NCER;
@@ -922,10 +923,10 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 		ncl = NARC_wlmngm_tool_touchpen_NCLR;
 		id  = eBB_ID_PEN;
 		palnum = 2;
-		CATS_LoadResourceCharArcH( csp, crp, res_hdl, ncg, FALSE, NNS_G2D_VRAM_TYPE_2DMAIN, id );
-		CATS_LoadResourceCellArcH( csp, crp, res_hdl, nce, FALSE, id );
-		CATS_LoadResourceCellAnmArcH( csp, crp, res_hdl, nca, FALSE, id );
-		CATS_LoadResourcePlttWorkArcH( pfd, FADE_MAIN_OBJ, csp, crp, res_hdl, ncl, FALSE, palnum, NNS_G2D_VRAM_TYPE_2DMAIN, id );	
+		wk->cgr_id[id] = GFL_CLGRP_CGR_Register(res_hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
+		wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(res_hdl, nce, nca, HEAPID_BB);
+		wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
+			res_hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
 
 		GFL_ARC_CloseDataHandle( res_hdl );
 	}
@@ -1159,5 +1160,5 @@ void BB_disp_BG_Load( BB_WORK* wk )
 	
 	// ----- ウィンドウ -----
 	PaletteWorkSet_Arc( pfd, ARC_WINFRAME, MenuWinPalArcGet(), HEAPID_BB, FADE_SUB_BG, 0x20, 13 * 16);	
-	MenuWinGraphicSet( GFL_BG_FRAME3_S, BB_BG_CGX_OFS, 13, 0, HEAPID_BB );
+	BmpWinFrame_GraphicSet( GFL_BG_FRAME3_S, BB_BG_CGX_OFS, 13, 0, HEAPID_BB );
 }

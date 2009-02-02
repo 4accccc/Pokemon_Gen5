@@ -45,6 +45,7 @@
 
 #include "wflby_snd.h"
 #include "system/gfl_use.h"
+#include "system/bmp_winframe.h"
 
 
 //-----------------------------------------------------------------------------
@@ -2699,13 +2700,13 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
     TalkFontPaletteLoad( PALTYPE_MAIN_BG, WLDTIMER_PALMAIN_FONT*0x20, heapID );
     TalkFontPaletteLoad( PALTYPE_SUB_BG, WLDTIMER_PALSUB_FONT*0x20, heapID );
 
-    MenuWinGraphicSet(
-        p_wk->p_bgl, GFL_BG_FRAME1_M, 
+    BmpWinFrame_GraphicSet(
+        GFL_BG_FRAME1_M, 
 		WLDTIMER_MAIN_SYSTEMWIN_CGX, WLDTIMER_PALMAIN_SYSTEM, 0, heapID );
 
 	// システムウィンドウ
-    MenuWinGraphicSet(
-        p_wk->p_bgl, GFL_BG_FRAME1_M, 
+    BmpWinFrame_GraphicSet(
+        GFL_BG_FRAME1_M, 
 		WLDTIMER_MAIN_SYSTEMWIN_CGX, WLDTIMER_PALMAIN_SYSTEM, 0, heapID );
 
 	// トークウィンドウ
@@ -3462,7 +3463,7 @@ static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsy
 	}
 
 	// ウィンドウ描画
-	BmpMenuWinWrite(&p_wk->bttn,WINDOW_TRANS_ON,
+	BmpWinFrame_Write(p_wk->bttn,WINDOW_TRANS_ON,
 			WLDTIMER_MAIN_SYSTEMWIN_CGX,WLDTIMER_MAIN_SYSTEMWIN_PAL);
 }
 
@@ -3597,7 +3598,7 @@ static void WLDTIMER_TouchBttnOff( WLDTIMER_TOUCH* p_wk )
 static void WLDTIMER_TouchBttnOn( WLDTIMER_TOUCH* p_wk )
 {
 	GF_BGL_BmpWinOnVReq( &p_wk->bttn );
-	BmpMenuWinWrite(&p_wk->bttn,WINDOW_TRANS_ON,
+	BmpWinFrame_Write(p_wk->bttn,WINDOW_TRANS_ON,
 			WLDTIMER_MAIN_SYSTEMWIN_CGX,WLDTIMER_MAIN_SYSTEMWIN_PAL);
 }
 
@@ -4452,7 +4453,7 @@ static void WLDTIMER_ViewerFadeScrn_LineTrans( WLDTIMER_VIEWER* p_wk, u32 y, WLD
 			p_wk->p_fadescrndata->screenHeight/8 );
 
 	// 転送フラグを立てる
-	GF_BGL_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
+	GFL_BG_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
 }
 
 //----------------------------------------------------------------------------
@@ -4830,7 +4831,7 @@ static void WLDTIMER_TimeZoneAnm_Main( WLDTIMER_TIMEZONEANM* p_wk, WLDTIMER_DRAW
 						p_wk->p_scrndata[ p_wk->scrnframe_now ]->screenHeight/8 );
 
 				// 転送フラグを立てる
-				GF_BGL_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
+				GFL_BG_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
 			}
 		}
 	}
@@ -4907,7 +4908,7 @@ static void WLDTIMER_TimeZoneAnm_LineTrans( WLDTIMER_TIMEZONEANM* p_wk, u32 y, W
 				p_wk->p_scrndata[ p_wk->scrnframe_now ]->screenHeight/8 );
 
 		// 転送フラグを立てる
-		GF_BGL_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
+		GFL_BG_LoadScreenV_Req( p_drawsys->p_bgl, GFL_BG_FRAME2_S );
 	}
 }
 

@@ -1034,8 +1034,8 @@ static void ANKETO_BgInit( ANKETO_DRAWSYS* p_wk, CONFIG* p_config, u32 heapID )
 	}
 
 	// システムウィンドウ
-    MenuWinGraphicSet(
-        p_wk->p_bgl, GFL_BG_FRAME1_M, 
+    BmpWinFrame_GraphicSet(
+        GFL_BG_FRAME1_M, 
 		ANKETO_SYSTEMWIN_CGX, ANKETO_SYSTEMWIN_PAL, 0, heapID );
 
 

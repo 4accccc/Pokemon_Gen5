@@ -46,6 +46,7 @@
 // ダミーグラフィックです
 #include "net_app/wifi_p2pmatch/wifip2pmatch.naix"
 #include "system/gfl_use.h"
+#include "system/bmp_winframe.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -1149,8 +1150,8 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID )
 		TalkFontPaletteLoad( PALTYPE_MAIN_BG, WFLBY_MAIN_PLTT_TALKFONT*32, heapID );
 
 		// ウィンドウグラフィック
-		MenuWinGraphicSet(
-				p_wk->p_bgl, sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], WFLBY_SYSWINGRA_CGX,
+		BmpWinFrame_GraphicSet(
+				sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], WFLBY_SYSWINGRA_CGX,
 				WFLBY_MAIN_PLTT_SYSWIN, 0, heapID );
 		TalkWinGraphicSet(
 				p_wk->p_bgl, sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], WFLBY_TALKWINGRA_CGX, 
@@ -1299,7 +1300,7 @@ static void WFLBY_CONNECT_WIN_Print( WFLBY_WINWK* p_wk, u32 strid )
 			0,0,MSG_NO_PUT,NULL);
 	
 	if( p_wk->fontid == FONT_SYSTEM ){	
-		BmpMenuWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
+		BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN );
 	}else{
 		BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
@@ -1422,7 +1423,7 @@ static void WFLBY_CONNECT_WIN_PrintWait( WFLBY_WINWK* p_wk, u32 strid )
 			0,0, p_wk->msgspeed,NULL);
 	
 	if( p_wk->fontid == FONT_SYSTEM ){	
-		BmpMenuWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
+		BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN );
 	}else{
 		BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
@@ -1498,7 +1499,7 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG( WFLBY_WINWK* p_wk, u32 strid, u32 num 
 			0,0,MSG_NO_PUT,NULL);
 	
 	if( p_wk->fontid == FONT_SYSTEM ){	
-		BmpMenuWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
+		BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN );
 	}else{
 		BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
@@ -1523,7 +1524,7 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 ite
 			0,0,MSG_NO_PUT,NULL);
 	
 	if( p_wk->fontid == FONT_SYSTEM ){	
-		BmpMenuWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
+		BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN );
 	}else{
 		BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 

@@ -53,6 +53,7 @@
 #include "wflby_timeevent.h"
 
 #include "system/gfl_use.h"
+#include "system/bmp_winframe.h"
 
 
 
@@ -2949,8 +2950,8 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 		TalkFontPaletteLoad( PALTYPE_MAIN_BG, WFLBY_ROOM_BGPL_TALKFONT_CL*32, heapID );
 
 		// ウィンドウグラフィック
-		MenuWinGraphicSet(
-				p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN], WFLBY_SYSWINGRA_CGX,
+		BmpWinFrame_GraphicSet(
+				sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN], WFLBY_SYSWINGRA_CGX,
 				WFLBY_ROOM_BGPL_SYSWIN, 0, heapID );
 		TalkWinGraphicSet(
 				p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN], WFLBY_TALKWINGRA_CGX, 
@@ -4055,7 +4056,7 @@ static void WFLBY_ROOM_ListWin_Start( WFLBY_ROOM_LISTWIN* p_wk, const BMPLIST_HE
 	
 	// リスト作成
     p_wk->p_listwk = BmpListSet(&p_wk->data, list_p, cursor_p, heapID );
-    BmpMenuWinWrite( &p_wk->win, WINDOW_TRANS_OFF, WFLBY_SYSWINGRA_CGX, WFLBY_ROOM_BGPL_SYSWIN );
+    BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, WFLBY_SYSWINGRA_CGX, WFLBY_ROOM_BGPL_SYSWIN );
 
 	// 表示
 	GF_BGL_BmpWinOnVReq( &p_wk->win );
@@ -4239,7 +4240,7 @@ static void WFLBY_ROOM_SubWin_Start( WFLBY_ROOM_SUBWIN* p_wk, WFLBY_GRAPHICCONT*
 				szcx, szcy, WFLBY_ROOM_BGPL_SYSFONT_CL,
 				GFL_BMP_CHRAREA_GET_B );
 
-    BmpMenuWinWrite( &p_wk->win, WINDOW_TRANS_OFF, WFLBY_SYSWINGRA_CGX, WFLBY_ROOM_BGPL_SYSWIN );
+    BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, WFLBY_SYSWINGRA_CGX, WFLBY_ROOM_BGPL_SYSWIN );
 
 	// クリーン
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
@@ -4415,7 +4416,7 @@ static void WFLBY_ROOM_ErrWin_DrawErr( WFLBY_ROOM_ERRMSG* p_wk, const STRBUF* cp
 			MSG_NO_PUT, WFLBY_ERRWIN_MSGCOL, NULL );
 
 	// ウィンドウを書き込む
-	BmpMenuWinWrite( &p_wk->win, WINDOW_TRANS_OFF, WFLBY_SYSWINGRA_CGX, WFLBY_ROOM_BGPL_SYSWIN );
+	BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, WFLBY_SYSWINGRA_CGX, WFLBY_ROOM_BGPL_SYSWIN );
 	GF_BGL_BmpWinOnVReq( &p_wk->win );
 }
 
@@ -5513,7 +5514,7 @@ static void WFLBY_ROOM_UNDERWIN_Common_LoadScrn( WFLBY_GRAPHICCONT* p_sys, ARCHA
 			0, 0, p_scrn->screenWidth/8, p_scrn->screenHeight/8 );
 
 	// 転送フラグを立てる
-	GF_BGL_LoadScreenV_Req( p_sys->p_bgl, bg_frame );
+	GFL_BG_LoadScreenV_Req( p_sys->p_bgl, bg_frame );
 
 	GFL_HEAP_FreeMemory( p_buff );
 }
@@ -5910,7 +5911,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WriteWazaType( WFLBY_UNDER_WIN* p_ugwk, W
 					WFLBY_TRCARD_WIN_WAZATYPE1_SIZEX, WFLBY_TRCARD_WIN_WAZATYPE1_SIZEY,
 					WFLBY_ROOM_BGSPL_WAZATYPE0 + WazaTypeIcon_PlttOffsetGet( bt_type ) );
 
-			GF_BGL_LoadScreenV_Req( p_sys->p_bgl, 
+			GFL_BG_LoadScreenV_Req( p_sys->p_bgl, 
 					sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG] );
 		}
 	}
@@ -6896,7 +6897,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_DrawButton( WFLBY_GADGET_BTTN* p_wk, WFLB
 				(const void*)p_wk->p_scrn[idx]->rawData, 0, 3, 32, 32 );
 	
 
-	GF_BGL_LoadScreenV_Req( p_sys->p_bgl , sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN_TR] );
+	GFL_BG_LoadScreenV_Req( p_sys->p_bgl , sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN_TR] );
 
 
 	// フロートモードならフローログラフィックも変更

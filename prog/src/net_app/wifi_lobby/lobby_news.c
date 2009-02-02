@@ -1257,7 +1257,7 @@ static void NEWSDRAW_ScrnWriteTimeBlock( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSY
 			p_wk->p_scrn->screenWidth/8,
 			p_wk->p_scrn->screenHeight/8 );
 
-	GF_BGL_LoadScreenV_Req( p_draw->p_bgl, GFL_BG_FRAME3_M );
+	GFL_BG_LoadScreenV_Req( p_draw->p_bgl, GFL_BG_FRAME3_M );
 }
 
 //----------------------------------------------------------------------------
@@ -1326,7 +1326,7 @@ static void NEWSDRAW_ScrnWritePlayer( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSYS* 
 		}
 	}
 
-	GF_BGL_LoadScreenV_Req( p_draw->p_bgl, GFL_BG_FRAME3_M );
+	GFL_BG_LoadScreenV_Req( p_draw->p_bgl, GFL_BG_FRAME3_M );
 }
 
 
@@ -1518,12 +1518,12 @@ static void NEWSDRAW_TimeWinDrawUpdate( NEWSDRAW_TIMEWIN* p_wk, NEWSDRAW_SCRNSET
 		p_wk->updata = FALSE;
 
 		// スクリーン領域をClean
-		GF_BGL_ScrFill( p_draw->p_bgl, GFL_BG_FRAME3_M, 0,
+		GFL_BG_FillScreen( p_draw->p_bgl, GFL_BG_FRAME3_M, 0,
 				NEWSDRAW_TIME_SCRN_DRAWX, NEWSDRAW_TIME_SCRN_DRAWY,
 				NEWSDRAW_TIME_X_SIZ*NEWSDRAW_TIME_BLOCK_SIZX,
 				NEWSDRAW_TIME_Y_SIZ*NEWSDRAW_TIME_BLOCK_SIZY,
 				0 );
-		GF_BGL_LoadScreenV_Req( p_draw->p_bgl, GFL_BG_FRAME3_M );
+		GFL_BG_LoadScreenV_Req( p_draw->p_bgl, GFL_BG_FRAME3_M );
 		
 		
 		// 残り時間でスクリーンを表示する
@@ -1741,7 +1741,7 @@ static void NEWSDRAW_PlayerWinWrite( NEWSDRAW_SCRNSET* p_scrn, NEWSDRAW_DRAWSYS*
 	u32 draw_player_type;
 
 	// スクリーン領域をClean
-	GF_BGL_ScrFill( p_draw->p_bgl, GFL_BG_FRAME3_M, 0,
+	GFL_BG_FillScreen( p_draw->p_bgl, GFL_BG_FRAME3_M, 0,
 			NEWSDRAW_PLAYER_SCRN_DRAWX, NEWSDRAW_PLAYER_SCRN_DRAWY,
 			NEWSDRAW_PLAYERWIN_DRAW_X*NEWSDRAW_PLAYER_BLOCK_SIZX,
 			NEWSDRAW_PLAYERWIN_DRAW_Y*NEWSDRAW_PLAYER_BLOCK_SIZY,

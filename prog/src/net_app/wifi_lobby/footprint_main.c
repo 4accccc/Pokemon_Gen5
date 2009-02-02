@@ -307,6 +307,12 @@ typedef struct _FOOTPRINT_SYS{
 	BOOL arceus_flg;					///<TRUE:アルセウスOK
 
 	GFL_TCB *vintr_tcb;
+	
+	//アクターリソース管理ID
+	u32 pltt_id[PLTTID_MAX];
+	u32 cgr_id[CHARID_MAX];
+	u32 cell_id[CELLID_MAX];
+	u32 anm_id[CELLANMID_MAX];
 }FOOTPRINT_SYS;
 
 
@@ -1389,7 +1395,7 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 		}
 	}
 
-	GF_BGL_LoadScreenV_Req(FOOT_SUBFRAME_PLATE);
+	GFL_BG_LoadScreenV_Req(FOOT_SUBFRAME_PLATE);
 }
 
 //--------------------------------------------------------------
@@ -1405,34 +1411,32 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	u16 color_code;
 	
 	//-- メイン画面OBJ常駐パレット --//
-	CATS_LoadResourcePlttWorkArcH(fps->pfd, FADE_MAIN_OBJ, fps->csp, fps->crp, 
-		hdl_main, NARC_footprint_board_a_board_eff_NCLR, 0, FOOTPRINT_COMMON_PAL_NUM, 
-		NNS_G2D_VRAM_TYPE_2DMAIN, PLTTID_OBJ_COMMON);
+	fps->pltt_id[PLTTID_OBJ_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
+		hdl, NARC_footprint_board_a_board_eff_NCLR,
+		CLSYS_DRAW_MAIN, 0, 0, FOOTPRINT_COMMON_PAL_NUM, HEAPID_FOOTPRINT);
 
 	//-- インク(インクの下地も共通) --//
-	CATS_LoadResourceCharArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_ashiato_gage_NCGR, 0, NNS_G2D_VRAM_TYPE_2DMAIN, CHARID_INK);
-	CATS_LoadResourceCellArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_ashiato_gage_NCER, 0, CELLID_INK);
-	CATS_LoadResourceCellAnmArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_ashiato_gage_NANR, 0, CELLANMID_INK);
+	fps->cgr_id[CHARID_INK] = GFL_CLGRP_CGR_Register(hdl_main, 
+		NARC_footprint_board_ashiato_gage_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_FOOTPRINT);
+	fps->cell_id[CELLID_INK] = GFL_CLGRP_CELLANIM_Register(hdl_main, 
+		NARC_footprint_board_ashiato_gage_NCER, 
+		NARC_footprint_board_ashiato_gage_NANR, HEAPID_FOOTPRINT);
 
 	//-- インクの上に配置する足跡 --//
 	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
-		CATS_LoadResourceCharArcH(fps->csp, fps->crp, hdl_main, 
-			NARC_footprint_board_wifi_mark_NCGR, 0, 
-			NNS_G2D_VRAM_TYPE_2DMAIN, CHARID_INK_FOOT_0 + i);
+		fps->cgr_id[CHARID_INK_FOOT_0 + i] = GFL_CLGRP_CGR_Register(hdl_main, 
+			NARC_footprint_board_wifi_mark_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_FOOTPRINT);
 	}
-	CATS_LoadResourceCellArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_wifi_mark_NCER, 0, CELLID_INK_FOOT);
-	CATS_LoadResourceCellAnmArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_wifi_mark_NANR, 0, CELLANMID_INK_FOOT);
+	fps->cell_id[CELLID_INK_FOOT] = GFL_CLGRP_CELLANIM_Register(hdl_main, 
+		NARC_footprint_board_wifi_mark_NCER, 
+		NARC_footprint_board_wifi_mark_NANR, HEAPID_FOOTPRINT);
 	//インクの上に配置する足跡のパレット(データはダミー。領域だけ確保)
 	//ダミーグラフィックは7、足跡データは4番のカラーで書かれているので、
 	//一本確保して、足跡用に割り当ててしまう。全てのカラーを足跡の色で埋める
-	pal_pos = CATS_LoadResourcePlttWorkArcH(fps->pfd, FADE_MAIN_OBJ, fps->csp, fps->crp, 
-		hdl_main, NARC_footprint_board_a_board_eff_NCLR, 0, 1, 
-		NNS_G2D_VRAM_TYPE_2DMAIN, PLTTID_OBJ_INK_FOOT);
+	fps->pltt_id[PLTTID_OBJ_INK_FOOT] = GFL_CLGRP_PLTT_RegisterEx(
+		hdl_main, NARC_footprint_board_a_board_eff_NCLR,
+		CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_FOOTPRINT);
+	pal_pos = GFL_CLGRP_PLTT_GetPos( fps->pltt_id[PLTTID_OBJ_INK_FOOT], CLSYS_DRAW_MAIN );
 	if(fps->parent_work->board_type == FOOTPRINT_BOARD_TYPE_WHITE){
 		color_code = INKPAL_FOOT_COLOR_CODE_WHITE;
 	}
@@ -1443,18 +1447,16 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 		pal_pos * 16, pal_pos * 16 + 16);
 	
 	//-- タッチエフェクト --//
-	CATS_LoadResourceCharArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_a_board_eff_NCGR, 0, NNS_G2D_VRAM_TYPE_2DMAIN, CHARID_TOUCH_EFF);
-	CATS_LoadResourceCellArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_a_board_eff_NCER, 0, CELLID_TOUCH_EFF);
-	CATS_LoadResourceCellAnmArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_a_board_eff_NANR, 0, CELLANMID_TOUCH_EFF);
+	fps->cgr_id[CHARID_TOUCH_EFF] = GFL_CLGRP_CGR_Register(hdl_main, 
+		NARC_footprint_board_a_board_eff_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_FOOTPRINT);
+	fps->cell_id[CELLID_TOUCH_EFF] = GFL_CLGRP_CELLANIM_Register(hdl_main, 
+		NARC_footprint_board_a_board_eff_NCER, 
+		NARC_footprint_board_a_board_eff_NANR, HEAPID_FOOTPRINT);
 		
 	//-- FONTOAM --//
-	fps->yameru_pal_pos = CATS_LoadResourcePlttWorkArc(
-		fps->pfd, FADE_MAIN_OBJ, fps->csp, fps->crp, 
-		ARC_FOOTPRINT_GRA, NARC_footprint_board_a_board_font_b_NCLR, 0, 1, 
-		NNS_G2D_VRAM_TYPE_2DMAIN, PLTTID_OBJ_FONTOAM);
+	fps->pltt_id[PLTTID_OBJ_FONTOAM] = GFL_CLGRP_PLTT_RegisterEx(hdl_main, 
+		NARC_footprint_board_a_board_font_b_NCLR, CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_FOOTPRINT);
+	fps->yameru_pal_pos = GFL_CLGRP_PLTT_GetPos(fps->pltt_id[PLTTID_OBJ_FONTOAM], CLSYS_DRAW_MAIN);
 }
 
 //--------------------------------------------------------------
@@ -1556,29 +1558,25 @@ static void DefaultResourceSet_Sub(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	int i;
 	
 	//-- サブ画面OBJ常駐パレット --//
-	CATS_LoadResourcePlttWorkArcH(fps->pfd, FADE_SUB_OBJ, fps->csp, fps->crp, 
-		hdl_main, NARC_footprint_board_ashiato_frame_NCLR, 0, FOOTPRINT_SUB_COMMON_PAL_NUM, 
-		NNS_G2D_VRAM_TYPE_2DSUB, PLTTID_SUB_OBJ_COMMON);
+	fps->pltt_id[PLTTID_SUB_OBJ_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
+		hdl_main, NARC_footprint_board_ashiato_frame_NCLR,
+		CLSYS_DRAW_SUB, 0, 0, FOOTPRINT_SUB_COMMON_PAL_NUM, HEAPID_FOOTPRINT);
 
 	//-- 名前を囲むフレーム --//
-	CATS_LoadResourceCharArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_ashiato_frame_NCGR, 0, NNS_G2D_VRAM_TYPE_2DSUB, 
-		CHARID_SUB_NAME_FRAME);
-	CATS_LoadResourceCellArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_ashiato_frame_NCER, 0, CELLID_SUB_NAME_FRAME);
-	CATS_LoadResourceCellAnmArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_ashiato_frame_NANR, 0, CELLANMID_SUB_NAME_FRAME);
-		
+	fps->cgr_id[CHARID_SUB_NAME_FRAME] = GFL_CLGRP_CGR_Register(hdl_main, 
+		NARC_footprint_board_ashiato_frame_NCGR, FALSE, CLSYS_DRAW_SUB, HEAPID_FOOTPRINT);
+	fps->cell_id[CELLID_SUB_NAME_FRAME] = GFL_CLGRP_CELLANIM_Register(hdl_main, 
+		NARC_footprint_board_ashiato_frame_NCER, 
+		NARC_footprint_board_ashiato_frame_NANR, HEAPID_FOOTPRINT);
+	
 	//-- 名前の横の足跡 --//
 	for(i = 0; i < FOOTPRINT_ENTRY_MAX; i++){
-		CATS_LoadResourceCharArcH(fps->csp, fps->crp, hdl_main, 
-			NARC_footprint_board_foot_dummy_NCGR, 0, NNS_G2D_VRAM_TYPE_2DSUB, 
-			CHARID_SUB_NAME_FOOT_0 + i);
+		fps->cgr_id[CHARID_SUB_NAME_FOOT_0 + i] = GFL_CLGRP_CGR_Register(hdl_main, 
+			NARC_footprint_board_foot_dummy_NCGR, FALSE, CLSYS_DRAW_SUB, HEAPID_FOOTPRINT);
 	}
-	CATS_LoadResourceCellArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_foot_dummy_NCER, 0, CELLID_SUB_NAME_FOOT);
-	CATS_LoadResourceCellAnmArcH(fps->csp, fps->crp, hdl_main, 
-		NARC_footprint_board_foot_dummy_NANR, 0, CELLANMID_SUB_NAME_FOOT);
+	fps->cell_id[CELLID_SUB_NAME_FOOT] = GFL_CLGRP_CELLANIM_Register(hdl_main, 
+		NARC_footprint_board_foot_dummy_NCER, 
+		NARC_footprint_board_foot_dummy_NANR, HEAPID_FOOTPRINT);
 }
 
 //--------------------------------------------------------------
@@ -1654,9 +1652,9 @@ static void MyInkPaletteSettings(FOOTPRINT_SYS *fps)
 
 			//BGのインクの枠を消す
 			for(y = 0; y < SCRN_INK_POS_SIZE_Y; y++){
-				GF_BGL_ScrFill(FOOT_FRAME_PANEL, MyInkPaletteEraseScrnCode[y], 
+				GFL_BG_FillScreen(FOOT_FRAME_PANEL, MyInkPaletteEraseScrnCode[y], 
 					SCRN_INK_POS_START_X + SCRN_INK_POS_SIZE_X * i, SCRN_INK_POS_Y + y,
-					SCRN_INK_POS_SIZE_X, 1, GF_BGL_SCRWRT_PALIN);
+					SCRN_INK_POS_SIZE_X, 1, GFL_BG_SCRWRT_PALIN);
 			}
 		}
 		else{
@@ -1682,7 +1680,7 @@ static void MyInkPaletteSettings(FOOTPRINT_SYS *fps)
 		}
 	}
 	Footprint_SelectInkPaletteFade(fps, 0);
-	GF_BGL_LoadScreenV_Req(FOOT_FRAME_PANEL);
+	GFL_BG_LoadScreenV_Req(FOOT_FRAME_PANEL);
 }
 
 //--------------------------------------------------------------
@@ -2186,7 +2184,7 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 							&panel_scrn[y*32 + Sub_ListScrnRange[i][0]], 
 							Sub_ListScrnRange[i][2] * 2);
 					}
-					GF_BGL_LoadScreenV_Req(FOOT_SUBFRAME_PLATE);
+					GFL_BG_LoadScreenV_Req(FOOT_SUBFRAME_PLATE);
 				}
 
 				entry_num++;
@@ -2197,10 +2195,10 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 				fps->name_foot_monsno[i] = 0;
 				fps->name_foot_color[i] = 0;
 				CATS_ObjectEnableCap(fps->cap_name_foot[i], CATS_ENABLE_FALSE);	//足跡非表示
-				GF_BGL_ScrFill(FOOT_SUBFRAME_PLATE, 0, 
+				GFL_BG_FillScreen(FOOT_SUBFRAME_PLATE, 0, 
 					Sub_ListScrnRange[i][0], Sub_ListScrnRange[i][1],
-					Sub_ListScrnRange[i][2], Sub_ListScrnRange[i][3], GF_BGL_SCRWRT_PALNL);
-				GF_BGL_LoadScreenV_Req(FOOT_SUBFRAME_PLATE);
+					Sub_ListScrnRange[i][2], Sub_ListScrnRange[i][3], GFL_BG_SCRWRT_PALNL);
+				GFL_BG_LoadScreenV_Req(FOOT_SUBFRAME_PLATE);
 				out_num++;
 			}
 			

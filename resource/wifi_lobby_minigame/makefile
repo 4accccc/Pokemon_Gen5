@@ -31,12 +31,14 @@ include	$(PROJECT_RSCDIR)\macro_define
 lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
+esources:=$(wildcard *.nce)
 psources:=$(wildcard *.spa)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
 sobjects = $(subst .nsc,.NSCR,$(ssources))
+eobjects = $(subst .nce,.NCER,$(esources))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -63,7 +65,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lsources) $(gsources) $(ssources) $(psources)
+$(targetname).narc: $(lsources) $(gsources) $(ssources) $(esources) $(psources)
 	conv.bat
 	$(NAIXCUT) $(targetname).naix
 endif

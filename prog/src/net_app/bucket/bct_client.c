@@ -47,6 +47,7 @@
 #include "print\gf_font.h"
 #include "font/font.naix"
 #include <calctool.h>
+#include "system/bmp_winframe.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -2900,7 +2901,7 @@ static void BCT_CLIENT_StartSysExit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 static void BCT_CLIENT_StartSysCountDownInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys, GFL_TCBSYS *tcbsys )
 {
     // グラフィックの表示ON
-    BmpMenuWinWrite(&p_graphic->helpwin, WINDOW_TRANS_ON,
+    BmpWinFrame_Write(p_graphic->helpwin, WINDOW_TRANS_ON,
         BCT_GRA_SYSWND_CGX, BCT_GRA_BGMAIN_PAL_SYSWND );
 
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
@@ -5317,7 +5318,7 @@ static void BCT_CLIENT_TOUCHPEN_Init( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 
 	GFL_STD_MemFill( p_wk, 0, sizeof(BCT_CLIENT_TOUCHPEN_MOVE) );
 
-	p_handle = GFL_ARC_OpenDataHandle( ARC_WLMNGM_TOOL_GRA, heapID );
+	p_handle = GFL_ARC_OpenDataHandle( ARCID_WLMNGM_TOOL_GRA, heapID );
 	
 
 	// グラフィックの読み込み
@@ -6077,8 +6078,8 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
 
     // メイン面にウィンドウグラフィックを設定
     TalkFontPaletteLoad( PALTYPE_MAIN_BG, BCT_GRA_BGMAIN_PAL_FONT*0x20, heapID );
-    MenuWinGraphicSet(
-        p_wk->p_bgl, GFL_BG_FRAME1_M, BCT_GRA_SYSWND_CGX, BCT_GRA_BGMAIN_PAL_SYSWND, 0, heapID );
+    BmpWinFrame_GraphicSet(
+        GFL_BG_FRAME1_M, BCT_GRA_SYSWND_CGX, BCT_GRA_BGMAIN_PAL_SYSWND, 0, heapID );
 
 
 }

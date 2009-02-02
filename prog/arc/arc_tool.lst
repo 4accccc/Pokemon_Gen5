@@ -103,7 +103,9 @@
 	ARCID_PALACE		"palace.narc"			#パレス
 	ARCID_FLDMMLD		"test_graphic/mmodel.narc"
 	ARCID_YN_TOUCH		"yn_touch.narc"			#YesNoボタン
+	ARCID_WLMNGM_TOOL_GRA	"wlmngm_tool.narc"	#WiFiロビーミニゲームツールグラフィック
 	ARCID_BALLOON_GRA	"balloon_gra.narc"		#風船割りミニゲーム
+	ARCID_BALLOON_PARTICLE	"balloon_particle.narc"		#風船割りミニゲーム：パーティクル
 	ARCID_MYSIGN		"mysign.narc"			#サイン(トレーナーカード)
 	ARCID_TRAINERCARD	"trainer_case.narc"		#トレーナーカード
 	ARCID_TRC_UNION		"trc_union.narc"		#ユニオンルーム トレーナーカード キャラ絵

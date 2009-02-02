@@ -11,9 +11,6 @@ g2dcvtr mini_fusen_score.nsc
 
 nnsarc -c -i -n wlmngm_tool -S list.txt
 
-copy *.naix ..\..\pokemon_pl\src\graphic\
-copy *.narc ..\..\pokemon_pl\src\graphic\
-
 del *.NSCR
 del *.NCLR
 del *.NCGR

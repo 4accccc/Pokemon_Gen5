@@ -772,10 +772,10 @@ static int BalloonTool_AirStackAdd(BALLOON_GAME_PTR game, BALLOON_STATUS *bst,
 	int air, int net_id, int booster_type);
 static int Air_ParamCreate(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA * air_data, PLAYER_AIR_PARAM *air_param);
 static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param);
-static GFL_CLWK Air_ActorCreate(BALLOON_GAME_PTR game, const AIR_POSITION_DATA *air_posdata);
+static GFL_CLWK* Air_ActorCreate(BALLOON_GAME_PTR game, const AIR_POSITION_DATA *air_posdata);
 static void Exploded_ActorCreate(BALLOON_GAME_PTR game, EXPLODED_PARAM *exploded, BALLOON_STATUS *bst);
 static void BalloonTool_BalloonBGErase(BALLOON_STATUS *bst);
-static GFL_CLWK IconBalloon_ActorCreate(BALLOON_GAME_PTR game, int icon_type, int pos);
+static GFL_CLWK* IconBalloon_ActorCreate(BALLOON_GAME_PTR game, int icon_type, int pos);
 void IconBalloon_AllCreate(BALLOON_GAME_PTR game);
 BOOL IconBalloon_Update(BALLOON_GAME_PTR game);
 static BOOL BalloonTool_IconBalloonParamAdd(BALLOON_GAME_PTR game, ICONBALLOON_PARAM *ibp, int pos, int balloon_no);
@@ -1366,9 +1366,9 @@ static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param)
  * @retval  生成したアクターへのポインタ
  */
 //--------------------------------------------------------------
-static GFL_CLWK Air_ActorCreate(BALLOON_GAME_PTR game, const AIR_POSITION_DATA *air_posdata)
+static GFL_CLWK* Air_ActorCreate(BALLOON_GAME_PTR game, const AIR_POSITION_DATA *air_posdata)
 {
-	GFL_CLWK cap;
+	GFL_CLWK* cap;
 	TCATS_OBJECT_ADD_PARAM_S act_head;
 	
 	//-- アクター生成 --//
@@ -1423,7 +1423,7 @@ void Air_ActorAllDelete(BALLOON_GAME_PTR game)
 static void Exploded_ActorCreate(BALLOON_GAME_PTR game, EXPLODED_PARAM *exploded, BALLOON_STATUS *bst)
 {
 	TCATS_OBJECT_ADD_PARAM_S act_head;
-	GFL_CLWK cap;
+	GFL_CLWK* cap;
 	int player_pos;
 	int act_num[WFLBY_MINIGAME_MAX];
 	int total_air, total_act, anmseq;
@@ -1693,9 +1693,9 @@ BOOL BalloonTool_ExplodedParamAdd(BALLOON_GAME_PTR game)
  * @retval  生成した破裂アクターへのポインタ
  */
 //--------------------------------------------------------------
-static GFL_CLWK IconBalloon_ActorCreate(BALLOON_GAME_PTR game, int icon_type, int pos)
+static GFL_CLWK* IconBalloon_ActorCreate(BALLOON_GAME_PTR game, int icon_type, int pos)
 {
-	GFL_CLWK cap;
+	GFL_CLWK* cap;
 	TCATS_OBJECT_ADD_PARAM_S act_head;
 
 	//-- アクター生成 --//
@@ -2220,7 +2220,7 @@ BOOL BalloonTool_SendAirBoosterSet(BALLOON_GAME_PTR game, int booster_type)
 //--------------------------------------------------------------
 void Joint_ActorCreateAll(BALLOON_GAME_PTR game, JOINT_WORK *joint)
 {
-	GFL_CLWK cap;
+	GFL_CLWK* cap;
 	TCATS_OBJECT_ADD_PARAM_S act_head;
 	int i;
 
@@ -3328,9 +3328,9 @@ static BOOL Balloon_CounterRotate(BALLOON_COUNTER *counter)
  * @retval  生成した破裂アクターへのポインタ
  */
 //--------------------------------------------------------------
-GFL_CLWK CounterWindow_ActorCreate(BALLOON_GAME_PTR game)
+GFL_CLWK* CounterWindow_ActorCreate(BALLOON_GAME_PTR game)
 {
-	GFL_CLWK cap;
+	GFL_CLWK* cap;
 
 	//-- アクター生成 --//
 	cap = CATS_ObjectAdd_S(game->csp, game->crp, &CounterWindowObjParam);
@@ -3395,7 +3395,7 @@ void CounterDummyNumber_ActorDelete(BALLOON_GAME_PTR game)
  * @param   game		
  */
 //--------------------------------------------------------------
-void CounterWindow_ActorDelete(BALLOON_GAME_PTR game, GFL_CLWK cap)
+void CounterWindow_ActorDelete(BALLOON_GAME_PTR game, GFL_CLWK* cap)
 {
 	CATS_ActorPointerDelete_S(cap);
 }
@@ -3407,9 +3407,9 @@ void CounterWindow_ActorDelete(BALLOON_GAME_PTR game, GFL_CLWK cap)
  * @param   game		
  */
 //--------------------------------------------------------------
-GFL_CLWK TouchPen_ActorCreate(BALLOON_GAME_PTR game)
+GFL_CLWK* TouchPen_ActorCreate(BALLOON_GAME_PTR game)
 {
-	GFL_CLWK cap;
+	GFL_CLWK* cap;
 
 	cap = CATS_ObjectAdd_S(game->csp, game->crp, &TouchPenObjParam);
 //	CATS_ObjectPosSetCap_SubSurface(cap, x, y, BALLOON_SUB_ACTOR_DISTANCE);
@@ -3425,7 +3425,7 @@ GFL_CLWK TouchPen_ActorCreate(BALLOON_GAME_PTR game)
  * @param   game		
  */
 //--------------------------------------------------------------
-void TouchPen_ActorDelete(BALLOON_GAME_PTR game, GFL_CLWK cap)
+void TouchPen_ActorDelete(BALLOON_GAME_PTR game, GFL_CLWK* cap)
 {
 	CATS_ActorPointerDelete_S(cap);
 }
@@ -3502,7 +3502,7 @@ BOOL BalloonTool_TouchPenDemoMove(BALLOON_GAME_PTR game, BALLOON_PEN *pen)
 //--------------------------------------------------------------
 static void BoosterLandSmoke_ActorCreate(BALLOON_GAME_PTR game, BOOSTER_LAND_SMOKE *land_smoke)
 {
-	GFL_CLWK cap;
+	GFL_CLWK* cap;
 	int i;
 	
 	for(i = 0; i < BOOSTER_LAND_SMOKE_NUM; i++){

@@ -1928,7 +1928,7 @@ MNGM_COUNTWK* MNGM_COUNT_Init( GFL_CLUNIT* p_clset, u32 heapID )
 	p_wk->p_clset = p_clset;
 	
 	// ハンドルオープン
-	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARC_WLMNGM_TOOL_GRA, heapID );
+	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARCID_WLMNGM_TOOL_GRA, heapID );
 
 	// リソースマネージャ作成
 	MNGM_CLACTRES_Init( &p_wk->resman, MNGM_COUNT_OAMRESNUM, heapID );
@@ -3185,7 +3185,7 @@ static void MNGM_ENTRY_GraphicLoad( MNGM_ENTRYWK* p_wk, u32 heapID )
 {
 	ARCHANDLE* p_handle;
 
-	p_handle = GFL_ARC_OpenDataHandle( ARC_WLMNGM_TOOL_GRA, heapID );
+	p_handle = GFL_ARC_OpenDataHandle( ARCID_WLMNGM_TOOL_GRA, heapID );
 
 	// パレット
 	ArcUtil_HDL_PalSet( p_handle, NARC_wlmngm_tool_minigame_win_NCLR,
@@ -3796,7 +3796,7 @@ static void MNGM_PLATE_PLAYERTBL_DrawTime( MNGM_PLATE_PLAYER* p_player, MNGM_MSG
 static void MNGM_PLATE_PLAYERTBL_BgWriteVReq( MNGM_PLATE_PLAYER* p_player, MNGM_BGL* p_bgl )
 {
 	GF_BGL_BmpWinOnVReq( &p_player->win );
-	GF_BGL_LoadScreenV_Req( p_bgl->p_bgl, GFL_BG_FRAME1_M );
+	GFL_BG_LoadScreenV_Req( p_bgl->p_bgl, GFL_BG_FRAME1_M );
 }
 
 //----------------------------------------------------------------------------
@@ -4643,7 +4643,7 @@ static void MNGM_RESULT_GraphicLoad( MNGM_RESULTWK* p_wk, u32 heapID )
 {
 	ARCHANDLE* p_handle;
 
-	p_handle = GFL_ARC_OpenDataHandle( ARC_WLMNGM_TOOL_GRA, heapID );
+	p_handle = GFL_ARC_OpenDataHandle( ARCID_WLMNGM_TOOL_GRA, heapID );
 
 	// パレット
 	ArcUtil_HDL_PalSet( p_handle, NARC_wlmngm_tool_minigame_win_NCLR,
@@ -5863,7 +5863,7 @@ static void MNGM_RESULT_Balloon_GraphicInit( MNGM_BALLOON_WK* p_wk, MNGM_BGL* p_
 	//	システムウィンドウ
 	{
 		// キャラクタ、パレット転送
-		MenuWinGraphicSet( p_bgl->p_bgl, GFL_BG_FRAME2_M, MNGM_RESULT_BALLOON_SYSWIN_CGX,
+		BmpWinFrame_GraphicSet( GFL_BG_FRAME2_M, MNGM_RESULT_BALLOON_SYSWIN_CGX,
 			MNGM_RESULT_BALLOON_SYSWIN_PAL, MENU_TYPE_SYSTEM, heapID );
 
 		// ウィンドウ作成
@@ -5989,7 +5989,7 @@ static BOOL MNGM_RESULT_Balloon_Main( MNGM_BALLOON_WK* p_wk, MNGM_BGL* p_bgl )
 		GF_BGL_ScrPalChange( p_bgl->p_bgl, GFL_BG_FRAME2_M, 0, 0,
 				MNGM_RESULT_BALLOON_SYSWIN_SCRNSIZX, MNGM_RESULT_BALLOON_SYSWIN_SCRNSIZY,
 				MNGM_RESULT_BALLOON_SYSWIN_PAL );
-		GF_BGL_LoadScreenV_Req( p_bgl->p_bgl, GFL_BG_FRAME2_M );
+		GFL_BG_LoadScreenV_Req( p_bgl->p_bgl, GFL_BG_FRAME2_M );
 
 		p_wk->seq ++;
 		break;

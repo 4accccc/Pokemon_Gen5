@@ -13,6 +13,7 @@
 #include "print/wordset.h"
 #include <tcb.h>
 #include <g3d_camera.h>
+#include "balloon_id.h"
 
 
 //==============================================================================
@@ -571,6 +572,12 @@ typedef struct _BALLOON_GAME_WORK{
 	GFL_TCB *vintr_tcb;
 
 	GFL_G3D_UTIL *g3Dutil;
+	
+	//アクターリソース管理ID
+	u32 pltt_id[PLTTID_MAX];
+	u32 cgr_id[CHARID_MAX];
+	u32 cell_id[CELLID_MAX];
+	u32 anm_id[CELLANMID_MAX];
 }BALLOON_GAME_WORK;
 
 

@@ -75,7 +75,7 @@ enum {
 };
 
 enum {	
-	eBB_ID_OAM_S	= 9000,
+	eBB_ID_OAM_S	= 0,//9000,
 	eBB_ID_LIGHT_S,
 	eBB_ID_LIGHT_M,
 	eBB_ID_STAR,

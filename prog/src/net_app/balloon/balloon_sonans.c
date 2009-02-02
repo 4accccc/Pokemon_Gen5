@@ -1669,15 +1669,13 @@ static void Aim_ResourceLoad(BALLOON_GAME_PTR game)
 	//ハンドルオープン
 	hdl  = GFL_ARC_OpenDataHandle(ARCID_BALLOON_GRA,  HEAPID_BALLOON); 
 
-	CATS_LoadResourcePlttWorkArcH(game->pfd, FADE_MAIN_OBJ, game->csp, game->crp, 
-		hdl, AIM_NCLR, 0, 
-		1, NNS_G2D_VRAM_TYPE_2DMAIN, PLTTID_OBJ_AIM);
+	game->pltt_id[PLTTID_OBJ_AIM] = GFL_CLGRP_PLTT_RegisterEx(hdl, AIM_NCLR,
+		CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
 
-	CATS_LoadResourceCharArcH(game->csp, game->crp, hdl, 
-		AIM_NCGR, 0, NNS_G2D_VRAM_TYPE_2DMAIN, CHARID_BALLOON_AIM);
-	CATS_LoadResourceCellArcH(game->csp, game->crp, hdl, AIM_NCER, 0, CELLID_BALLOON_AIM);
-	CATS_LoadResourceCellAnmArcH(game->csp, game->crp, hdl, AIM_NANR, 
-		0, CELLANMID_BALLOON_AIM);
+	game->cgr_id[CHARID_BALLOON_AIM] = GFL_CLGRP_CGR_Register(
+		hdl, AIM_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_BALLOON);
+	game->cell_id[CELLID_BALLOON_AIM] = GFL_CLGRP_CELLANIM_Register(hdl, 
+		AIM_NCER, AIM_NANR, HEAPID_BALLOON);
 
 	//ハンドル閉じる
 	GFL_ARC_CloseDataHandle( hdl );

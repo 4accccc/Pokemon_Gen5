@@ -14,8 +14,6 @@
 //	キャラID
 //==============================================================================
 enum{
-	CHARID_FOOTPRINT_START = 10000,
-	
 	CHARID_INK_FOOT_0,				//インクの上に置く足跡：0番目
 	CHARID_INK_FOOT_1,				//インクの上に置く足跡：1番目
 	CHARID_INK_FOOT_2,				//インクの上に置く足跡：2番目
@@ -36,20 +34,22 @@ enum{
 	CHARID_SUB_NAME_FOOT_5,			///<名前の横に置く足跡：5番目
 	CHARID_SUB_NAME_FOOT_6,			///<名前の横に置く足跡：6番目
 	CHARID_SUB_NAME_FOOT_7,			///<名前の横に置く足跡：7番目
+	
+	CHARID_MAX,
 };
 
 //==============================================================================
 //	パレットID
 //==============================================================================
 enum{
-	PLTTID_FOOTPRINT_START = 10000,
-
 	PLTTID_OBJ_COMMON,	///<常駐OBJパレット
 	PLTTID_OBJ_INK_FOOT,	///<インクパレットに置かれている自分の足跡
 	PLTTID_OBJ_FONTOAM,		///<FONTOAM用パレット
 	
 	//-- サブ画面 --//
 	PLTTID_SUB_OBJ_COMMON,	///<サブ画面の常駐OBJパレット
+	
+	PLTTID_MAX,
 };
 
 //--------------------------------------------------------------
@@ -87,25 +87,22 @@ enum{
 //	セルID
 //==============================================================================
 enum{
-	CELLID_FOOTPRINT_START = 10000,
-
 	CELLID_INK_FOOT,				//インクの上に置く足跡
 	CELLID_INK,						//インク
 	CELLID_INK_FOUNDATION = CELLID_INK,			//インクの下に敷く下地
 	CELLID_TOUCH_EFF,				//インクをタッチした時に出すエフェクト
 
 	//-- サブ画面 --//
-	//-- サブ画面 --//
 	CELLID_SUB_NAME_FRAME,			///<名前を囲むフレーム
 	CELLID_SUB_NAME_FOOT,			///<名前の横に置く足跡
+	
+	CELLID_MAX,
 };
 
 //==============================================================================
 //	セルアニメID
 //==============================================================================
 enum{
-	CELLANMID_FOOTPRINT_START = 10000,
-
 	CELLANMID_INK_FOOT,					//インクの上に置く足跡
 	CELLANMID_INK,						//インク
 	CELLANMID_INK_FOUNDATION = CELLANMID_INK,			//インクの下に敷く下地
@@ -115,6 +112,8 @@ enum{
 	//-- サブ画面 --//
 	CELLANMID_SUB_NAME_FRAME,			///<名前を囲むフレーム
 	CELLANMID_SUB_NAME_FOOT,			///<名前の横に置く足跡
+	
+	CELLANMID_MAX,
 };
 
 //==============================================================================

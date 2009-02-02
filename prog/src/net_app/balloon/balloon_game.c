@@ -46,6 +46,7 @@
 #include "system/sdkdef.h"
 #include "system/gfl_use.h"
 #include <calctool.h>
+#include "system/bmp_winframe.h"
 
 
 
@@ -287,8 +288,6 @@ void Air3D_Delete(BALLOON_GAME_PTR game, int air_no, int air_size);
 void Air3D_Update(BALLOON_GAME_PTR game);
 void Air3D_Draw(BALLOON_GAME_PTR game);
 static void Debug_CameraMove(GFL_G3D_CAMERA * camera);
-static u32 sAllocTex(u32 size, BOOL is4x4comp);
-static u32 sAllocTexPalette(u32 size, BOOL is4pltt);
 
 
 ///BalloonMainSeqTblの戻り値として使用
@@ -1761,15 +1760,17 @@ static void GameStartMessageDraw(BALLOON_GAME_WORK *game)
 {
 	STRBUF *message;
 	
-	BmpMenuWinWrite(&game->win[BALLOON_BMPWIN_SUB_TALK], WINDOW_TRANS_OFF, 
+	BmpWinFrame_Write(game->win[BALLOON_BMPWIN_SUB_TALK], WINDOW_TRANS_OFF, 
 		BMPWIN_SUB_CGX_OFFSET_SYSTEM, BMPWIN_SUB_SYSTEM_WIN_COLOR);
 
+#if WB_TEMP_FIX
 	message = MSGMAN_AllocString(game->msgman, msg_balloon_start);
 	GF_STR_PrintColor(&game->win[BALLOON_BMPWIN_SUB_TALK], 
 		FONT_SYSTEM, message, 0, 0, MSG_ALLPUT, BMPWIN_SUB_STR_PRINTCOLOR, NULL);
 	GFL_STR_DeleteBuffer(message);
 	
 	GF_BGL_BmpWinOnVReq(&game->win[BALLOON_BMPWIN_SUB_TALK]);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1783,9 +1784,9 @@ static void GameStartMessageErase(BALLOON_GAME_WORK *game)
 {
 //	GF_BGL_BmpWinOffVReq(&game->win[BALLOON_BMPWIN_SUB_TALK]);
 
-	GF_BGL_ScrFill(BALLOON_SUBFRAME_WIN, 
-		1023, 2-1, 0x13-1, 0x1c+2, 4+2, GF_BGL_SCRWRT_PALIN);
-	GF_BGL_LoadScreenV_Req(BALLOON_SUBFRAME_WIN);
+	GFL_BG_FillScreen(BALLOON_SUBFRAME_WIN, 
+		1023, 2-1, 0x13-1, 0x1c+2, 4+2, GFL_BG_SCRWRT_PALIN);
+	GFL_BG_LoadScreenV_Req(BALLOON_SUBFRAME_WIN);
 }
 
 //--------------------------------------------------------------
@@ -1830,10 +1831,12 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 				draw_x_offset--;
 			}
 			OS_TPrintf("name dot_len (bmp_pos=%d) = %d, x_offset = %d\n", bmp_pos, dot_len, draw_x_offset);
+		#if WB_TEMP_FIX
 			GF_STR_PrintColor(
 				&game->win[BalloonPlayerSortBmpNamePosTbl[game->bsw->player_max][bmp_pos]], 
 				FONT_SYSTEM, name, draw_x_offset, 0, MSG_ALLPUT, print_color, NULL);
 			GFL_HEAP_FreeMemory(name);
+		#endif
 		}
 	}
 #endif
@@ -1851,31 +1854,31 @@ static void PlayerName_Erase(BALLOON_GAME_PTR game, int all_erase)
 {
 	if(all_erase == TRUE){
 		//左
-		GF_BGL_ScrFill(BALLOON_SUBFRAME_WIN, 1023, 0, 13, 12, 4, GF_BGL_SCRWRT_PALIN);
+		GFL_BG_FillScreen(BALLOON_SUBFRAME_WIN, 1023, 0, 13, 12, 4, GFL_BG_SCRWRT_PALIN);
 		//上
-		GF_BGL_ScrFill(BALLOON_SUBFRAME_WIN, 1023, 0x11, 0, 12, 4, GF_BGL_SCRWRT_PALIN);
+		GFL_BG_FillScreen(BALLOON_SUBFRAME_WIN, 1023, 0x11, 0, 12, 4, GFL_BG_SCRWRT_PALIN);
 		//右
-		GF_BGL_ScrFill(BALLOON_SUBFRAME_WIN, 1023, 0x14, 13, 12, 4, GF_BGL_SCRWRT_PALIN);
+		GFL_BG_FillScreen(BALLOON_SUBFRAME_WIN, 1023, 0x14, 13, 12, 4, GFL_BG_SCRWRT_PALIN);
 	}
 	else{
 		switch(game->bsw->player_max){
 		case 2:
 			//左
-			GF_BGL_ScrFill(BALLOON_SUBFRAME_WIN, 
-				1023, 0, 13, 12, 4, GF_BGL_SCRWRT_PALIN);
+			GFL_BG_FillScreen(BALLOON_SUBFRAME_WIN, 
+				1023, 0, 13, 12, 4, GFL_BG_SCRWRT_PALIN);
 			//右
-			GF_BGL_ScrFill(BALLOON_SUBFRAME_WIN, 
-				1023, 0x14, 13, 12, 4, GF_BGL_SCRWRT_PALIN);
+			GFL_BG_FillScreen(BALLOON_SUBFRAME_WIN, 
+				1023, 0x14, 13, 12, 4, GFL_BG_SCRWRT_PALIN);
 			break;
 		case 3:
 			//上
-			GF_BGL_ScrFill(BALLOON_SUBFRAME_WIN, 
-				1023, 0x11, 0, 12, 4, GF_BGL_SCRWRT_PALIN);
+			GFL_BG_FillScreen(BALLOON_SUBFRAME_WIN, 
+				1023, 0x11, 0, 12, 4, GFL_BG_SCRWRT_PALIN);
 			break;
 		}
 	}
 	
-	GF_BGL_LoadScreenV_Req(BALLOON_SUBFRAME_WIN);
+	GFL_BG_LoadScreenV_Req(BALLOON_SUBFRAME_WIN);
 }
 
 //--------------------------------------------------------------
@@ -1888,20 +1891,23 @@ static void BalloonParticleInit(BALLOON_GAME_PTR game)
 	void *heap;
 	GFL_G3D_CAMERA * camera_ptr;
 	void *resource;
-
+	fx32 near, far;
+	
 	//パーティクルシステムワーク初期化
 	GFL_PTC_Init(HEAPID_BALLOON);
 	
 	heap = GFL_HEAP_AllocMemory(HEAPID_BALLOON, PARTICLE_LIB_HEAP_SIZE);
 	game->ptc = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, TRUE, HEAPID_BALLOON);
 	camera_ptr = GFL_PTC_GetCameraPtr(game->ptc);
-	GFL_G3D_CAMERA_SetNear(camera_ptr, BP_NEAR);
-	GFL_G3D_CAMERA_GetFar(camera_ptr, BP_FAR);
+	near = BP_NEAR;
+	far = BP_FAR;
+	GFL_G3D_CAMERA_SetNear(camera_ptr, &near);
+	GFL_G3D_CAMERA_GetFar(camera_ptr, &far);
 
 	//リソース読み込み＆登録
 	resource = GFL_PTC_LoadArcResource(
-		ARC_PL_ETC_PARTICLE, NARC_balloon_particle_balloon_spa, HEAPID_BALLOON);
-	GFL_PTC_SetResource(ptc, resource, TRUE, NULL);
+		ARCID_BALLOON_PARTICLE, NARC_balloon_particle_balloon_spa, HEAPID_BALLOON);
+	GFL_PTC_SetResource(game->ptc, resource, TRUE, NULL);
 }
 
 //--------------------------------------------------------------
@@ -1950,52 +1956,6 @@ void BalloonParticle_EmitAdd(BALLOON_GAME_PTR game, int emit_no)
 
 //--------------------------------------------------------------
 /**
- * @brief   テクスチャVRAMアドレスを返すためのコールバック関数
- *
- * @param   size		テクスチャサイズ
- * @param   is4x4comp	4x4圧縮テクスチャであるかどうかのフラグ(TRUE=圧縮テクスチャ)
- *
- * @retval  読み込みを開始するVRAMのアドレス
- */
-//--------------------------------------------------------------
-static u32 sAllocTex(u32 size, BOOL is4x4comp)
-{
-	NNSGfdTexKey key;
-	
-	key = NNS_GfdAllocTexVram(size, is4x4comp, 0);
-	GF_ASSERT(key != NNS_GFD_ALLOC_ERROR_TEXKEY);
-	Particle_LnkTexKeySet(key);		//リンクドリストを使用しているのでキー情報をセット
-	
-	return NNS_GfdGetTexKeyAddr(key);
-}
-
-//--------------------------------------------------------------
-/**
- * @brief	テクスチャパレットVRAMアドレスを返すためのコールバック関数
- *
- * @param	size		テクスチャサイズ
- * @param	is4pltt		4色パレットであるかどうかのフラグ
- *
- * @retval	読み込みを開始するVRAMのアドレス
- *
- * direct形式のテクスチャの場合、SPL_LoadTexPlttByCallbackFunctionは
- * コールバック関数を呼び出しません。
- */
-//--------------------------------------------------------------
-static u32 sAllocTexPalette(u32 size, BOOL is4pltt)
-{
-	NNSGfdPlttKey key;
-	
-	key = NNS_GfdAllocPlttVram(size, is4pltt, NNS_GFD_ALLOC_FROM_LOW);
-	GF_ASSERT(key != NNS_GFD_ALLOC_ERROR_PLTTKEY);
-	
-	Particle_PlttLnkTexKeySet(key);	//リンクドリストを使用しているのでキー情報をセット
-	
-	return NNS_GfdGetPlttKeyAddr(key);
-}
-
-//--------------------------------------------------------------
-/**
  * @brief   演技力部門で使用する基本的な常駐OBJの登録を行う
  * @param   game		演技力部門管理ワークへのポインタ
  */
@@ -2007,9 +1967,8 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		STRBUF *str0, *str1;
 		int i;
 		
-		CATS_LoadResourcePlttWorkArcH(game->pfd, FADE_MAIN_OBJ, game->csp, game->crp, 
-			hdl, MINI_FUSEN_CCOBJ_NCLR, 0, 
-			1, NNS_G2D_VRAM_TYPE_2DMAIN, PLTTID_COUNTER);
+		game->pltt_id[PLTTID_COUNTER] = GFL_CLGRP_PLTT_RegisterEx(hdl, MINI_FUSEN_CCOBJ_NCLR,
+			CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
 
 	#if WB_TEMP_FIX
 		str0 = MSGMAN_AllocString(game->msgman, msg_balloon_counter001);
@@ -2045,30 +2004,32 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		CounterDummyNumber_ActorCreate(game);
 
 		//BGの下に敷くアクター
-		CATS_LoadResourcePlttWorkArcH(game->pfd, FADE_MAIN_OBJ, game->csp, game->crp, 
-			hdl, MINI_FUSEN_CCOBJ_NCLR, 0, 
-			1, NNS_G2D_VRAM_TYPE_2DMAIN, PLTTID_COUNTER_WIN);
-		CATS_LoadResourceCharArcH(game->csp, game->crp, hdl, MINI_FUSEN_CCOBJ_NCGR, 0, 
-			NNS_G2D_VRAM_TYPE_2DMAIN, CHARID_COUNTER_WIN);
-		CATS_LoadResourceCellArcH(game->csp, game->crp, hdl, MINI_FUSEN_CCOBJ_NCER, 0, 
-			CELLID_COUNTER_WIN);
-		CATS_LoadResourceCellAnmArcH(game->csp, game->crp, hdl, MINI_FUSEN_CCOBJ_NANR,
-			0, CELLANMID_COUNTER_WIN);
+		game->pltt_id[PLTTID_COUNTER_WIN] = GFL_CLGRP_PLTT_RegisterEx(hdl, MINI_FUSEN_CCOBJ_NCLR,
+			CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
+		game->cgr_id[CHARID_COUNTER_WIN] = GFL_CLGRP_CGR_Register(
+			hdl, MINI_FUSEN_CCOBJ_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_BALLOON);
+		game->cell_id[CELLID_COUNTER_WIN] = GFL_CLGRP_CELLANIM_Register(
+			hdl, MINI_FUSEN_CCOBJ_NCER, MINI_FUSEN_CCOBJ_NANR, HEAPID_BALLOON);
 		game->counter.win_cap = CounterWindow_ActorCreate(game);
 	}
 
 	//タッチペン
-	CATS_LoadResourcePlttWorkArc(game->pfd, FADE_MAIN_OBJ, game->csp, game->crp, 
-		ARC_WLMNGM_TOOL_GRA, NARC_wlmngm_tool_touchpen_NCLR, 0, 
-		1, NNS_G2D_VRAM_TYPE_2DMAIN, PLTTID_TOUCH_PEN);
-	CATS_LoadResourceCharArc(game->csp, game->crp, ARC_WLMNGM_TOOL_GRA, 
-		NARC_wlmngm_tool_touchpen_NCGR, 0, 
-		NNS_G2D_VRAM_TYPE_2DMAIN, CHARID_TOUCH_PEN);
-	CATS_LoadResourceCellArc(game->csp, game->crp, ARC_WLMNGM_TOOL_GRA, 
-		NARC_wlmngm_tool_touchpen_NCER, 0, CELLID_TOUCH_PEN);
-	CATS_LoadResourceCellAnmArc(game->csp, game->crp, ARC_WLMNGM_TOOL_GRA, 
-		NARC_wlmngm_tool_touchpen_NANR, 0, CELLANMID_TOUCH_PEN);
-	game->pen.cap = TouchPen_ActorCreate(game);
+	{
+		ARCHANDLE *hdl_pen;
+		
+		hdl_pen = GFL_ARC_OpenDataHandle(ARCID_WLMNGM_TOOL_GRA, HEAPID_BALLOON);
+		
+		game->pltt_id[PLTTID_TOUCH_PEN] = GFL_CLGRP_PLTT_RegisterEx(hdl_pen, 
+			NARC_wlmngm_tool_touchpen_NCLR, CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
+		game->cgr_id[CHARID_TOUCH_PEN] = GFL_CLGRP_CGR_Register(hdl_pen, 
+			NARC_wlmngm_tool_touchpen_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_BALLOON);
+		game->cell_id[CELLID_TOUCH_PEN] = GFL_CLGRP_CELLANIM_Register(hdl_pen, 
+			NARC_wlmngm_tool_touchpen_NCER, NARC_wlmngm_tool_touchpen_NANR, HEAPID_BALLOON);
+
+		GFL_ARC_CloseDataHandle(hdl_pen);
+
+		game->pen.cap = TouchPen_ActorCreate(game);
+	}
 }
 
 //--------------------------------------------------------------
@@ -2103,17 +2064,15 @@ static void BalloonDefaultOBJDel(BALLOON_GAME_WORK *game)
 static void BalloonDefaultOBJSet_Sub(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 {
 	//常駐OBJパレットロード
-	CATS_LoadResourcePlttWorkArcH(game->pfd, FADE_SUB_OBJ, game->csp, game->crp, 
-		hdl, MINI_FUSEN_OBJ_NCLR, 0, 
-		BALLOON_SUB_COMMON_PAL_NUM, NNS_G2D_VRAM_TYPE_2DSUB, PLTTID_SUB_OBJ_COMMON);
+	game->pltt_id[PLTTID_SUB_OBJ_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
+		hdl, MINI_FUSEN_OBJ_NCLR,
+		CLSYS_DRAW_SUB, 0, 0, BALLOON_SUB_COMMON_PAL_NUM, HEAPID_BALLOON);
 	
 	//風船などのキャラ＆セル登録
-	CATS_LoadResourceCharArcH(game->csp, game->crp, hdl, MINI_FUSEN_OBJ_NCGR, 0, 
-		NNS_G2D_VRAM_TYPE_2DSUB, CHARID_SUB_BALLOON_MIX);
-	CATS_LoadResourceCellArcH(game->csp, game->crp, hdl, MINI_FUSEN_OBJ_NCER, 0, 
-		CELLID_SUB_BALLOON_MIX);
-	CATS_LoadResourceCellAnmArcH(game->csp, game->crp, hdl, MINI_FUSEN_OBJ_NANR,
-		0, CELLANMID_SUB_BALLOON_MIX);
+	game->cgr_id[CHARID_SUB_BALLOON_MIX] = GFL_CLGRP_CGR_Register(
+		hdl, MINI_FUSEN_OBJ_NCGR, FALSE, CLSYS_DRAW_SUB, HEAPID_BALLOON);
+	game->cell_id[CELLID_SUB_BALLOON_MIX] = GFL_CLGRP_CELLANIM_Register(hdl, 
+		MINI_FUSEN_OBJ_NCER, MINI_FUSEN_OBJ_NANR, HEAPID_BALLOON);
 
 	//風船アイコンアクター生成
 	IconBalloon_AllCreate(game);
@@ -2232,9 +2191,8 @@ static void BalloonDefaultBGSet_Sub(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 	BalloonTool_NameWindowPalNoSwap(game);
 
 	//システムウィンドウを登録
-	MenuWinGraphicSet(BALLOON_SUBFRAME_WIN, BMPWIN_SUB_CGX_OFFSET_SYSTEM, 
+	BmpWinFrame_GraphicSet(BALLOON_SUBFRAME_WIN, BMPWIN_SUB_CGX_OFFSET_SYSTEM, 
 		BMPWIN_SUB_SYSTEM_WIN_COLOR, MENU_TYPE_SYSTEM, HEAPID_BALLOON);
-	PaletteWorkSet_VramCopy(game->pfd, FADE_SUB_BG, BMPWIN_SUB_SYSTEM_WIN_COLOR * 16, 0x20);
 	
 	//バックグラウンドに黒のカラーを入れる
 	PaletteWork_Clear(game->pfd, FADE_SUB_BG, FADEBUF_ALL, 0x0000, 0, 1);
