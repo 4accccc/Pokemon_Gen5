@@ -57,10 +57,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 MAP3DPPACKS	= $(ARCDEPENDS)
 
-.imd.bhc:
-	echo $< | sed -e 's/\.imd//' > heightlist.lst
-	echo \#END >> heightlist.lst
-	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+#.imd.bhc:
+#	echo $< | sed -e 's/\.imd//' > heightlist.lst
+#	echo \#END >> heightlist.lst
+#	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
 
 dependfile:	list
 	ruby makedepend.rb list
@@ -88,7 +88,7 @@ clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	-rm -f arcfilelist dependfile heightlist.lst
 	-rm -f *.nsbtx *.nsbmd
-	-rm -f *h.bhc
+	-rm -f *.bhc
 	-rm -f *.$(EXTNAME)
 endif
 
