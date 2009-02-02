@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	tamada
+USERS	=	tamada lee_hyunjung
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -27,7 +27,8 @@ TARGETDIR	= $(PROJECT_ARCDIR)/test_graphic
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
 
-HEIGHTCNV =	$(PROJECT_ROOT)/tools/heightcnv/imdcnv01
+HEIGHTCNV =	$(PROJECT_ROOT)tools/heightcnv/imdcnv01
+HEIGHTRETFILE = $(PROJECT_ROOT)tools/heightcnv/return.txt
 
 #依存対象が複数ある
 MAPNSBMDS	:= $(wildcard *.nsbmd)
@@ -42,7 +43,7 @@ MAPBHCS		:= $(wildcard *.bhc)
 	g3dcvtr $< -emdl
 	g3dcvtr $< -etex
 
-.PHONY:	do-build clean height
+.PHONY:	do-build clean
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
@@ -55,6 +56,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 -include dependfile
 
 MAP3DPPACKS	= $(ARCDEPENDS)
+
+.imd.bhc:
+	echo $< | sed -e 's/\.imd//' > heightlist.lst
+	echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
 
 dependfile:	list
 	ruby makedepend.rb list
@@ -80,13 +86,17 @@ clean:
 	-rm -f $(TARGETNAME).naix
 	-rm -f $(TARGETNAME).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	-rm -f arcfilelist dependfile heightlist
+	-rm -f arcfilelist dependfile heightlist.lst
 	-rm -f *.nsbtx *.nsbmd
+	-rm -f *h.bhc
 	-rm -f *.$(EXTNAME)
 endif
 
 
 height:
-	ls *.imd |sed -e 's/\.imd//' > height_data.lst
+	ls *h.imd |sed -e 's/\.imd//' > heightlist.lst
 	echo \#END >> height_data.lst
-	heightcnv/imdcnv01 height_data.lst
+	#heightcnv/imdcnv01 height_data.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	@echo finish height data convert
+

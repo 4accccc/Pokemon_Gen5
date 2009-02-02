@@ -20,12 +20,13 @@ File.open(ARGV[0]){|file|
 		name = line.chomp
 		if name == '' then break end
 		if name == '#END' then break end
-		dependfile.puts "#{name}.#{TARGETEXT}: #{name}.nsbmd #{name}.bhc #{name}.3dmd"
-		dependfile.puts "	$(BINLINKER) $*.nsbmd $*.nsbtx $*.bhc $*.3dmd $*.#{TARGETEXT} BR"
+		dependfile.puts "#{name}.#{TARGETEXT}: #{name}.nsbmd #{name}h.bhc #{name}.3dmd"
+		dependfile.puts "	$(BINLINKER) $*.nsbmd $*.nsbtx $*h.bhc $*.3dmd $*.#{TARGETEXT} BR"
 		dependfile.puts ""
-		dependfile.puts "#{name}.bhc: dummy.bhc"
-		dependfile.puts "	@echo #{name}.bhcが存在しないためダミーデータを生成します"
-		dependfile.puts "	cp dummy.bhc #{name}.bhc"
+	#	dependfile.puts "#{name}h.bhc: dummy.bhc"
+	#	dependfile.puts "	@echo #{name}.bhcが存在しないためダミーデータを生成します"
+	#	dependfile.puts "	cp dummy.bhc #{name}.bhc"
+		dependfile.puts "#{name}h.bhc: #{name}h.imd"
 		dependfile.puts ""
 		dependfile.puts "#{name}.3dmd: dummy.3dmd"
 		dependfile.puts "	@echo #{name}.3dmdが存在しないためダミーデータを生成します"
