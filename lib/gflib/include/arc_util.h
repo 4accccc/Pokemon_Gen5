@@ -68,6 +68,7 @@ typedef enum {
  */
 //------------------------------------------------------------------
 extern u32 GFL_ARC_UTIL_TransVramBgCharacter(ARCID arcID, ARCDATID datID, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern u32 GFL_ARCHDL_UTIL_TransVramBgCharacter(ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
@@ -84,6 +85,7 @@ extern u32 GFL_ARC_UTIL_TransVramBgCharacter(ARCID arcID, ARCDATID datID, u32 fr
  */
 //------------------------------------------------------------------
 extern	u32 GFL_ARC_UTIL_TransVramBgCharacterAreaMan(ARCID arcID, ARCDATID datID, u32 frm, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern u32 GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
@@ -101,6 +103,7 @@ extern	u32 GFL_ARC_UTIL_TransVramBgCharacterAreaMan(ARCID arcID, ARCDATID datID,
  */
 //------------------------------------------------------------------
 extern u32 GFL_ARC_UTIL_TransVramObjCharacter( ARCID arcID, ARCDATID datID, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID );
+extern u32 GFL_ARCHDL_UTIL_TransVramObjCharacter( ARCHANDLE *handle, ARCDATID datID, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -118,6 +121,7 @@ extern u32 GFL_ARC_UTIL_TransVramObjCharacter( ARCID arcID, ARCDATID datID, OBJT
  */
 //--------------------------------------------------------------------------------------------
 extern void GFL_ARC_UTIL_TransVramScreen(u32 arcFile, u32 dataIdx, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern void GFL_ARCHDL_UTIL_TransVramScreen(ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -136,6 +140,7 @@ extern void GFL_ARC_UTIL_TransVramScreen(u32 arcFile, u32 dataIdx, u32 frm, u32 
  */
 //--------------------------------------------------------------------------------------------
 extern	void GFL_ARC_UTIL_TransVramScreenCharOfs(ARCID arcID, ARCDATID datID, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern void GFL_ARCHDL_UTIL_TransVramScreenCharOfs(ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
@@ -151,6 +156,7 @@ extern	void GFL_ARC_UTIL_TransVramScreenCharOfs(ARCID arcID, ARCDATID datID, u32
  */
 //------------------------------------------------------------------
 extern void GFL_ARC_UTIL_TransVramPalette( ARCID arcID, ARCDATID datID, PALTYPE palType, u32 offs, u32 transSize, HEAPID heapID );
+extern void GFL_ARCHDL_UTIL_TransVramPalette( ARCHANDLE *handle, ARCDATID datID, PALTYPE palType, u32 offs, u32 transSize, HEAPID heapID );
 
 
 //------------------------------------------------------------------
@@ -168,6 +174,7 @@ extern void GFL_ARC_UTIL_TransVramPalette( ARCID arcID, ARCDATID datID, PALTYPE 
  */
 //------------------------------------------------------------------
 extern void GFL_ARC_UTIL_TransVramPaletteEx( ARCID arcID, ARCDATID datID, PALTYPE palType, u32 srcOfs, u32 dstOfs, u32 transSize, HEAPID heapID );
+extern void GFL_ARCHDL_UTIL_TransVramPaletteEx( ARCHANDLE *handle, ARCDATID datID, PALTYPE palType, u32 srcOfs, u32 dstOfs, u32 transSize, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -189,6 +196,7 @@ extern void GFL_ARC_UTIL_TransVramPaletteEx( ARCID arcID, ARCDATID datID, PALTYP
  */
 //------------------------------------------------------------------
 extern void GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID arcID, ARCDATID datID, NNS_G2D_VRAM_TYPE type, u32 offs, HEAPID heapID, NNSG2dImagePaletteProxy* proxy );
+extern void GFL_ARCHDL_UTIL_TransVramPaletteMakeProxy( ARCHANDLE *handle, ARCDATID datID, NNS_G2D_VRAM_TYPE type, u32 offs, HEAPID heapID, NNSG2dImagePaletteProxy* proxy );
 
 //------------------------------------------------------------------
 /**
@@ -223,6 +231,7 @@ extern void GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID arcID, ARCDATID datID,
 //------------------------------------------------------------------
 extern u32 GFL_ARC_UTIL_TransVramCharacterMakeProxy( ARCID arcID, ARCDATID datID, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType,
 	u32 transSize, NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy );
+extern u32 GFL_ARCHDL_UTIL_TransVramCharacterMakeProxy(ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize, NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy );
 
 
 //------------------------------------------------------------------
@@ -258,6 +267,8 @@ extern u32 GFL_ARC_UTIL_TransVramCharacterMakeProxy( ARCID arcID, ARCDATID datID
 //------------------------------------------------------------------
 extern void GFL_ARC_UTIL_TransVramCharacterMakeProxySyncroMappingMode( ARCID arcID, ARCDATID datID, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy );
+extern void GFL_ARCHDL_UTIL_TransVramCharacterMakeProxySyncroMappingMode( ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
+	NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy );
 
 //------------------------------------------------------------------
 /**
@@ -287,6 +298,8 @@ extern void GFL_ARC_UTIL_TransVramCharacterMakeProxySyncroMappingMode( ARCID arc
 //------------------------------------------------------------------
 extern const void* GFL_ARC_UTIL_LoadTransTypeCharacterMakeProxy( ARCID arcID, ARCDATID datID, BOOL compressedFlag, 
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy, NNSG2dCharacterData** charData );
+extern const void* GFL_ARCHDL_UTIL_LoadTransTypeCharacterMakeProxy( ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, 
+	NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy, NNSG2dCharacterData** charData );
 
 //------------------------------------------------------------------
 /**
@@ -302,6 +315,7 @@ extern const void* GFL_ARC_UTIL_LoadTransTypeCharacterMakeProxy( ARCID arcID, AR
  */
 //------------------------------------------------------------------
 extern void* GFL_ARC_UTIL_LoadBGCharacter( ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
+extern void* GFL_ARCHDL_UTIL_LoadBGCharacter( ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -316,7 +330,8 @@ extern void* GFL_ARC_UTIL_LoadBGCharacter( ARCID arcID, ARCDATID datID, BOOL com
  * @retval  void*		€∞ƒﬁÇµÇΩ√ﬁ∞¿ÇÃêÊì™Œﬂ≤›¿
  */
 //------------------------------------------------------------------
-void* GFL_ARC_UTIL_LoadOBJCharacter( ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
+extern void* GFL_ARC_UTIL_LoadOBJCharacter( ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
+extern void* GFL_ARCHDL_UTIL_LoadOBJCharacter( ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -332,6 +347,7 @@ void* GFL_ARC_UTIL_LoadOBJCharacter( ARCID arcID, ARCDATID datID, BOOL compresse
  */
 //--------------------------------------------------------------------------------------------
 extern void* GFL_ARC_UTIL_LoadScreen(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dScreenData** scrnData, HEAPID heapID);
+extern void* GFL_ARCHDL_UTIL_LoadScreen(ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, NNSG2dScreenData** scrnData, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
@@ -346,6 +362,7 @@ extern void* GFL_ARC_UTIL_LoadScreen(ARCID arcID, ARCDATID datID, BOOL compresse
  */
 //------------------------------------------------------------------
 extern void* GFL_ARC_UTIL_LoadPalette( ARCID arcID, ARCDATID datID, NNSG2dPaletteData** palData, HEAPID heapID );
+extern void* GFL_ARCHDL_UTIL_LoadPalette(ARCHANDLE *handle, ARCDATID datID, NNSG2dPaletteData** palData, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -361,6 +378,7 @@ extern void* GFL_ARC_UTIL_LoadPalette( ARCID arcID, ARCDATID datID, NNSG2dPalett
  */
 //--------------------------------------------------------------------------------------------
 extern void* GFL_ARC_UTIL_LoadCellBank(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dCellDataBank** cellBank, HEAPID heapID );
+extern void* GFL_ARCHDL_UTIL_LoadCellBank(ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, NNSG2dCellDataBank** cellBank, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -376,6 +394,7 @@ extern void* GFL_ARC_UTIL_LoadCellBank(ARCID arcID, ARCDATID datID, BOOL compres
  */
 //--------------------------------------------------------------------------------------------
 extern void* GFL_ARC_UTIL_LoadAnimeBank(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, HEAPID heapID);
+extern void* GFL_ARCHDL_UTIL_LoadAnimeBank(ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, HEAPID heapID);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -392,6 +411,7 @@ extern void* GFL_ARC_UTIL_LoadAnimeBank(ARCID arcID, ARCDATID datID, BOOL compre
  */
 //--------------------------------------------------------------------------------------------
 extern	void* GFL_ARC_UTIL_LoadMultiCellBank(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dMultiCellDataBank** cellBank, HEAPID heapID );
+extern void* GFL_ARCHDL_UTIL_LoadMultiCellBank(ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, NNSG2dMultiCellDataBank** cellBank, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -407,6 +427,7 @@ extern	void* GFL_ARC_UTIL_LoadMultiCellBank(ARCID arcID, ARCDATID datID, BOOL co
  */
 //--------------------------------------------------------------------------------------------
 extern	void* GFL_ARC_UTIL_LoadMultiAnimeBank(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dMultiCellAnimBankData** anmBank, HEAPID heapID);
+extern void* GFL_ARCHDL_UTIL_LoadMultiAnimeBank(ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, NNSG2dMultiCellAnimBankData** anmBank, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
@@ -420,6 +441,7 @@ extern	void* GFL_ARC_UTIL_LoadMultiAnimeBank(ARCID arcID, ARCDATID datID, BOOL c
  */
 //------------------------------------------------------------------
 extern void* GFL_ARC_UTIL_LoadUnCompress(ARCID arcID, ARCDATID datID, HEAPID heapID);
+extern void* GFL_ARCHDL_UTIL_LoadUnCompress(ARCHANDLE *handle, ARCDATID datID, HEAPID heapID);
 
 
 //------------------------------------------------------------------
@@ -436,6 +458,7 @@ extern void* GFL_ARC_UTIL_LoadUnCompress(ARCID arcID, ARCDATID datID, HEAPID hea
  */
 //------------------------------------------------------------------
 extern void* GFL_ARC_UTIL_Load(ARCID arcID, ARCDATID datID, BOOL compressedFlag, HEAPID heapID );
+extern void* GFL_ARCHDL_UTIL_Load(ARCHANDLE *handle, ARCDATID datID, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
@@ -452,6 +475,11 @@ extern void* GFL_ARC_UTIL_Load(ARCID arcID, ARCDATID datID, BOOL compressedFlag,
  */
 //------------------------------------------------------------------
 extern void* GFL_ARC_UTIL_LoadEx(ARCID arcID, ARCDATID datID, BOOL compressedFlag, HEAPID heapID, u32* pSize);
+extern void* GFL_ARCHDL_UTIL_LoadEx(ARCHANDLE* handle, ARCDATID datID, BOOL compressedFlag, u32 heapID, u32* pSize);
+
+
+
+
 
 #ifdef __cplusplus
 }/* extern "C" */
