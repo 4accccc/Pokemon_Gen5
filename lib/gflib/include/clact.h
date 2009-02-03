@@ -487,6 +487,16 @@ extern void* GFL_CLGRP_CGR_GetSrcPointer_VramTransfer( u32 index );
 //==============================================================================================
 extern void GFL_CLGRP_CGR_GetProxy( u32 index, NNSG2dImageProxy* proxy );
 
+//--------------------------------------------------------------
+/**
+ * @brief   登録されたCGRデータから転送先アドレスを取得する
+ * @param   index		登録インデックス
+ * @param   vramType	転送先VRAM指定
+ * @retval  転送先オフセットアドレス
+ */
+//--------------------------------------------------------------
+extern u32 GFL_CLGRP_CGR_GetAddr( u32 index, CLSYS_DRAW_TYPE vramType );
+
 
 
 //-----------------------------------------------------------------------------------------------------------
@@ -600,6 +610,15 @@ extern void GFL_CLGRP_PLTT_Replace( u32 index, const NNSG2dPaletteData* src, u16
 //==============================================================================================
 extern void GFL_CLGRP_PLTT_GetProxy( u32 index, NNSG2dImagePaletteProxy* proxy );
 
+//--------------------------------------------------------------
+/**
+ * @brief   登録されたパレットデータから転送先アドレスを取得する
+ * @param   index		登録インデックス
+ * @param   vramType	転送先VRAM指定
+ * @retval  転送先オフセットアドレス
+ */
+//--------------------------------------------------------------
+extern u32 GFL_CLGRP_PLTT_GetAddr( u32 index, CLSYS_DRAW_TYPE vramType );
 
 
 //-----------------------------------------------------------------------------------------------------------
