@@ -249,7 +249,15 @@ s8   WAZADATA_GetPriority( WazaID id )
 
 WazaCategory  WAZADATA_GetCategory( WazaID id )
 {
-	return WAZADATA_CATEGORY_SIMPLE_DAMAGE;
+	if( WAZADATA_IsDamage(id) )
+	{
+		return WAZADATA_CATEGORY_SIMPLE_DAMAGE;
+	}
+	else
+	{
+		return WAZADATA_CATEGORY_OTHERS;
+	}
+	
 }
 
 PokeType WAZADATA_GetType( WazaID id )

@@ -130,6 +130,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 			BTL_ADAPTERSYS_Init( setup_param->commMode );
 
 			setSubProcForSetup( &wk->subProc, wk, setup_param );
+
+		WAZADATA_PrintDebug();
 			(*seq)++;
 		}
 		break;
@@ -626,8 +628,6 @@ BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk )
 {
 	return wk->setupParam->rule;
 }
-
-
 //=============================================================================================
 /**
  * 対戦相手タイプを返す
@@ -641,7 +641,6 @@ BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk )
 {
 	return wk->setupParam->competitor;
 }
-
 //=============================================================================================
 /**
  * 特殊クライアントID指定子を、実際の対象クライアントIDに変換
@@ -723,9 +722,9 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
 BtlPokePos BTL_MAIN_GetClientPokePos( const BTL_MAIN_MODULE* wk, u8 clientID, u8 posIdx )
 {
 	// @@@ マルチとかだとこれじゃだめかも
+	// @@@ ダブル、トリプル考えて無効値を返すようにしないとダメですな
 	return clientID + posIdx * 2;
 }
-
 //=============================================================================================
 /**
  * 対戦相手方のポケモン戦闘位置を返す
@@ -762,10 +761,40 @@ BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos ba
 		return BTL_POS_1ST_0 + (idx * 2);
 	}
 }
-
 //=============================================================================================
 /**
- * 相手方クライアントIDを返す	// @@@ いずれ使わなくなるかも？
+ * 指定位置から見て隣りの戦闘位置を返す
+ *
+ * @param   wk				
+ * @param   basePos		
+ * @param   idx				
+ *
+ * @retval  BtlPokePos		
+ */
+//=============================================================================================
+BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos )
+{
+	switch( wk->setupParam->rule ){
+	case BTL_RULE_SINGLE:
+		GF_ASSERT(0);
+		return basePos;
+	case BTL_RULE_DOUBLE:
+		{
+			u8 retPos = (basePos + 2) & 0x03;
+			BTL_Printf("[MAIN] nextPos %d -> %d\n", basePos, retPos);
+			return retPos;
+		}
+	case BTL_RULE_TRIPLE:
+		GF_ASSERT(0);
+		return basePos;
+	default:
+		GF_ASSERT(0);
+		return basePos;
+	}
+}
+//=============================================================================================
+/**
+ * 対戦相手方のクライアントIDを返す	// @@@ いずれ使わなくなるかも？
  *
  * @param   wk				
  * @param   clientID		
@@ -785,13 +814,39 @@ u8 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx 
 	case BTL_RULE_DOUBLE:
 		GF_ASSERT(idx<2);
 		GF_ASSERT(clientID<4);
-		return !(clientID&1) + (idx*2);
+		// @@@ マルチの時にこれじゃダメ
+		return !(clientID&1);
 
 	default:
 		GF_ASSERT(0);
 		return !(clientID&1);
 	}
 }
+
+void BTL_MAIN_GetOpponentPokeClientParam( const BTL_MAIN_MODULE* wk, u8 clientID, u8 pokeIdx, u8* dstClientID, u8* dstPokeIdx )
+{
+	switch( wk->setupParam->rule ){
+	case BTL_RULE_SINGLE:
+		GF_ASSERT(pokeIdx==0);
+		GF_ASSERT(clientID<2);
+		*dstClientID = !clientID;
+		*dstPokeIdx = 0;
+		break;
+
+	case BTL_RULE_DOUBLE:
+		GF_ASSERT(pokeIdx<2);
+		GF_ASSERT(clientID<4);
+		// @@@ マルチの時にこれじゃダメ
+		*dstClientID = !clientID;
+		*dstPokeIdx = pokeIdx;
+		break;
+
+	default:
+		GF_ASSERT(0);
+	}
+
+}
+
 //=============================================================================================
 /**
  * ２つのクライアントIDが対戦相手同士のものかどうかを判別
@@ -943,17 +998,29 @@ const BTL_POKEPARAM* BTL_MAIN_GetClientPokeDataConst( const BTL_MAIN_MODULE* wk,
 
 //=============================================================================================
 /**
- * バトルポケモンIDをポケモン戦闘位置に変換
+ * バトルポケモンIDをポケモン戦闘位置に変換（現状、サーバからのみ呼び出し可能）
  *
  * @param   wk		
  * @param   pokeID		
  *
- * @retval  BtlPokePos		ポケモン戦闘位置（バトルに出ていなければ BTL_POS_MAX）
+ * @retval  BtlPokePos		ポケモン戦闘位置
  */
 //=============================================================================================
 BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, u8 pokeID )
 {
-	return BTL_SERVER_CheckExistFrontPokeID( wk->server, pokeID );
+	const BTL_POKEPARAM* bpp = wk->pokeParam[ pokeID ];
+	u8 clientID = pokeID / BTL_PARTY_MEMBER_MAX;
+	s16 idx = BTL_PARTY_FindMember( &wk->party[clientID], bpp );
+	if( idx >= 0 )
+	{
+		BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, idx );
+		if( pos != BTL_POS_MAX )
+		{
+			return pos;
+		}
+	}
+	GF_ASSERT_MSG(0, " not fighting pokeID [%d]", pokeID );
+	return 0;
 }
 
 //=============================================================================================
@@ -968,6 +1035,22 @@ BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, u8 pokeID )
 u8 BTL_MAIN_BtlPosToClientID( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
 {
 	return btlPos_to_clientID( wk, pos );
+}
+
+//=============================================================================================
+/**
+ * 戦闘位置 -> クライアントID，ポケモンインデックス変換
+ *
+ * @param   wk		
+ * @param   pos		
+ * @param   clientID		
+ * @param   pokeIdx		
+ *
+ */
+//=============================================================================================
+void BTL_MAIN_BtlPosToClientID_and_PokeIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos, u8* clientID, u8* pokeIdx )
+{
+	btlPos_to_cliendID_and_posIdx( wk, pos, clientID, pokeIdx );
 }
 
 
@@ -1071,8 +1154,28 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
 	}
 }
 
+s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
+{
+	int i;
+	for(i=0; i<party->memberCount; ++i)
+	{
+		if( party->member[i] == param )
+		{
+			return i;
+		}
+	}
+	return -1;
+}
 
-const BTL_POKEPARAM* BTL_MAIN_GetPokeParam( const BTL_MAIN_MODULE* wk, u8 pokeID )
+
+const BTL_POKEPARAM* BTL_MAIN_GetPokeParamConst( const BTL_MAIN_MODULE* wk, u8 pokeID )
+{
+	GF_ASSERT(pokeID<BTL_COMMITMENT_POKE_MAX);
+	GF_ASSERT(wk->pokeParam[pokeID]);
+
+	return wk->pokeParam[ pokeID ];
+}
+BTL_POKEPARAM* BTL_MAIN_GetPokeParam( BTL_MAIN_MODULE* wk, u8 pokeID )
 {
 	GF_ASSERT(pokeID<BTL_COMMITMENT_POKE_MAX);
 	GF_ASSERT(wk->pokeParam[pokeID]);
@@ -1094,4 +1197,5 @@ void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk )
 {
 	GFL_STD_MemCopy32( wk->pokeParam, wk->pokeParamForServerCalc, sizeof(wk->pokeParamForServerCalc) );
 }
+
 

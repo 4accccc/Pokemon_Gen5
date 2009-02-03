@@ -33,6 +33,35 @@ typedef enum {
 
 }BtlTypeAff;
 
+/**
+ *	タイプ相性（こうかなし・ふつう・ばつぐん・もうひとつの４段階）
+ */
+typedef enum {
+
+	BTL_TYPEAFF_ABOUT_NONE = 0,
+	BTL_TYPEAFF_ABOUT_NORMAL,
+	BTL_TYPEAFF_ABOUT_ADVANTAGE,
+	BTL_TYPEAFF_ABOUT_DISADVANTAGE,
+
+}BtlTypeAffAbout;
+
+static inline BtlTypeAffAbout BTL_CALC_TypeAffAbout( BtlTypeAff aff )
+{
+	if( aff > BTL_TYPEAFF_100 )
+	{
+		return BTL_TYPEAFF_ABOUT_ADVANTAGE;
+	}
+	if( aff == BTL_TYPEAFF_100 )
+	{
+		return BTL_TYPEAFF_ABOUT_NORMAL;
+	}
+	if( aff != BTL_TYPEAFF_0 )
+	{
+		return BTL_TYPEAFF_ABOUT_DISADVANTAGE;
+	}
+	return BTL_TYPEAFF_ABOUT_NONE;
+}
+
 
 extern u16 BTL_CALC_StatusRank( u16 defaultVal, u8 rank );
 extern u8 BTL_CALC_HitPer( u8 defPer, u8 rank );

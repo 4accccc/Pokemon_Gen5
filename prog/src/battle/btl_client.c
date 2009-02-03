@@ -124,7 +124,9 @@ static BOOL scProc_DATA_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
@@ -195,7 +197,7 @@ void BTL_CLIENT_Main( BTL_CLIENT* wk )
 				wk->subProc = getSubProc( wk, cmd );
 				wk->subSeq = 0;
 				wk->myState = 1;
-				BTL_Printf("  [CL]  %d, コマンド%dを受け取りました\n", wk->myID, cmd);
+//				BTL_Printf("  [CL]  %d, コマンド%dを受け取りました\n", wk->myID, cmd);
 			}
 		}
 		break;
@@ -205,7 +207,7 @@ void BTL_CLIENT_Main( BTL_CLIENT* wk )
 		{
 			BTL_ADAPTER_ReturnCmd( wk->adapter, wk->returnDataPtr, wk->returnDataSize );
 			wk->myState = 0;
-			BTL_Printf("  [CL]  %d, 返信しました\n", wk->myID );
+//			BTL_Printf("  [CL]  %d, 返信しました\n", wk->myID );
 		}
 		break;
 	}
@@ -268,7 +270,6 @@ static BOOL SubProc_UI_Initialize( BTL_CLIENT* wk, int* seq )
 	case 1:
 		if( BTLV_WaitCommand(wk->viewCore) )
 		{
-			BTL_Printf(" [CL] 画面構築おわりました\n");
 			return TRUE;
 		}
 		break;
@@ -441,21 +442,31 @@ static u8 calc_puttable_pokemons( BTL_CLIENT* wk, u8* list )
 	}
 	return cnt;
 }
-// 
 //--------------------------------------------------------------------------
 /**
- * ポケモン選択画面用パラメータセット（自分のポケモンが瀕死になったとき）
+ * 今、場に出ているポケモンで、死んでいるポケモンの数を返す
  *
- * @param   wk					クライアントモジュールハンドラ
- * @param   numSelect		選択しなければいけない数
- * @param   param				[out] 選択画面用パラメータを格納する
+ * @param   wk		
+ * @param   list		[out] 場に出ていて死んでるポケモンのパーティ内インデックスを格納する配列
  *
+ * @retval  u8		
  */
 //--------------------------------------------------------------------------
-static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param )
+static u8 calc_front_dead_pokemons( BTL_CLIENT* wk, u8* list )
 {
-	BTL_POKESELECT_PARAM_Init( param, wk->myParty, numSelect, TRUE );
-	BTL_POKESELECT_PARAM_SetProhibitFighting( param, wk->numCoverPos );
+	const BTL_POKEPARAM* pp;
+	u8 cnt, numMembers, i;
+
+	numMembers = BTL_PARTY_GetMemberCount( wk->myParty );
+	for(i=0, cnt=0; i<wk->numCoverPos; ++i)
+	{
+		pp = BTL_PARTY_GetMemberDataConst(wk->myParty, i);
+		if( BTL_POKEPARAM_IsDead(pp) )
+		{
+			list[cnt++] = i;
+		}
+	}
+	return cnt;
 }
 //--------------------------------------------------------------------------
 /**
@@ -471,16 +482,35 @@ static void setup_pokesel_param_change( BTL_CLIENT* wk, BTL_POKESELECT_PARAM* pa
 	BTL_POKESELECT_PARAM_Init( param, wk->myParty, 1, TRUE );
 	BTL_POKESELECT_PARAM_SetProhibitFighting( param, wk->numCoverPos );
 }
+//--------------------------------------------------------------------------
+/**
+ * ポケモン選択画面用パラメータセット（自分のポケモンが瀕死になったとき）
+ *
+ * @param   wk					クライアントモジュールハンドラ
+ * @param   numSelect		選択しなければいけない数
+ * @param   param				[out] 選択画面用パラメータを格納する
+ *
+ */
+//--------------------------------------------------------------------------
+static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param )
+{
+	BTL_POKESELECT_PARAM_Init( param, wk->myParty, numSelect, TRUE );
+	BTL_POKESELECT_PARAM_SetProhibitFighting( param, wk->numCoverPos );
+}
 
 // ポケモン選択画面結果 -> 決定アクションパラメータに変換
 static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res )
 {
 	u8 i, selIdx;
+	u8 deadList[ BTL_PARTY_MEMBER_MAX ];
+
+	calc_front_dead_pokemons( wk, deadList );
+
 	for(i=0; i<res->cnt; i++)
 	{
 		selIdx = res->selIdx[i];
-		BTL_Printf("[CL] ポケモン入れ替え %d体目 <-> %d体目\n", i, selIdx );
-		BTL_ACTION_SetChangeParam( &wk->actionParam[i], i, selIdx );
+		BTL_Printf("[CL] ポケモン入れ替え %d体目 <-> %d体目\n", deadList[i], selIdx );
+		BTL_ACTION_SetChangeParam( &wk->actionParam[i], deadList[i], selIdx );
 	}
 
 	wk->returnDataPtr = &(wk->actionParam[0]);
@@ -609,7 +639,9 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_MSG_STD,					scProc_MSG_Std				},
 		{	SC_MSG_SET,					scProc_MSG_Set				},
 		{	SC_MSG_WAZA,				scProc_MSG_Waza				},
+		{	SC_ACT_WAZA_EFFECT,	scProc_ACT_WazaEffect			},
 		{	SC_ACT_WAZA_DMG,		scProc_ACT_WazaDmg			},
+		{	SC_ACT_WAZA_DMG_DBL,scProc_ACT_WazaDmg_Dbl			},
 		{	SC_ACT_DEAD,				scProc_ACT_Dead				},
 		{	SC_ACT_RANKDOWN,		scProc_ACT_RankDownEffect	},
 		{	SC_TOKWIN_IN,				scProc_TOKWIN_In			},
@@ -822,42 +854,27 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args )
 	return FALSE;
 }
 
-static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
+static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ) {
 	case 0:
 	{
 		WazaID waza;
-		u8 atPokePos, defPokePos, affinity, wazaIdx;
-		u16 damage;
+		u8 atPokePos, defPokePos;
 		const BTL_PARTY* party;
 		const BTL_POKEPARAM* poke;
 
-		atPokePos		= args[0];
-		defPokePos	= args[1];
-		damage		= args[2];
-		wazaIdx		= args[3];
-		affinity	= args[4];
-
+		atPokePos		= BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+		defPokePos	= BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[1] );
+		waza			= args[2];
 		poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, atPokePos );
-		waza = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
-
-		BTL_Printf("[CL] WazaAct aff=%d, damage=%d\n", affinity, damage);
-
-		BTLV_StartWazaAct( wk->viewCore, atPokePos, defPokePos, damage, waza, affinity );
+		BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza );
 		(*seq)++;
 	}
 	break;
 
 	case 1:
-		if( BTLV_WaitWazaAct(wk->viewCore) )
-		{
-			(*seq)++;
-		}
-		break;
-
-	case 2:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		if( BTLV_ACT_WazaEffect_Wait(wk->viewCore) )
 		{
 			return TRUE;
 		}
@@ -867,12 +884,76 @@ static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
 	return FALSE;
 }
 
+
+static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ) {
+	case 0:
+	{
+		WazaID waza;
+		u8 atPokePos, defPokePos, affinity;
+		u16 damage;
+		const BTL_PARTY* party;
+		const BTL_POKEPARAM* poke;
+
+		defPokePos	= BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+		damage		= args[1];
+		affinity	= args[2];
+
+		BTLV_ACT_DamageEffectSingle_Start( wk->viewCore, defPokePos, damage, affinity );
+		(*seq)++;
+	}
+	break;
+
+	case 1:
+		if( BTLV_ACT_DamageEffectSingle_Wait(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+
+static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ) {
+	case 0:
+	{
+		WazaID waza;
+		u8  defPokePos1, defPokePos2, aff;
+		u16 damage1, damage2;
+
+		defPokePos1	= BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+		defPokePos2	= BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[1] );
+		damage1		= args[2];
+		damage2		= args[3];
+		aff				= args[4];
+
+		BTLV_ACT_DamageEffectDouble_Start( wk->viewCore, defPokePos1, defPokePos2, damage1, damage2, aff );
+		(*seq)++;
+	}
+	break;
+
+	case 1:
+		if( BTLV_ACT_DamageEffectDouble_Wait(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ){
 	case 0:
-		BTLV_StartDeadAct( wk->viewCore, args[0] );
-		(*seq)++;
+		{
+			BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+			BTLV_StartDeadAct( wk->viewCore, pos );
+			(*seq)++;
+		}
 		break;
 	case 1:
 		if( BTLV_WaitDeadAct(wk->viewCore) )
@@ -905,13 +986,13 @@ static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args )
 
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
+	BTL_POKEPARAM* pp = BTL_MAIN_GetPokeParam( wk->mainModule, args[0] );
 	BTL_POKEPARAM_HpMinus( pp, args[1] );
 	return TRUE;
 }
 static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
+	BTL_POKEPARAM* pp = BTL_MAIN_GetPokeParam( wk->mainModule, args[0] );
 	BTL_POKEPARAM_HpPlus( pp, args[1] );
 	return TRUE;
 }
@@ -941,12 +1022,6 @@ static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 	BTL_POKEPARAM_RankDown( pp, args[1], args[2] );
 	return TRUE;
 }
-
-
-
-
-
-
 
 
 

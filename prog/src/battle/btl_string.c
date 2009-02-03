@@ -115,6 +115,7 @@ static void ms_sp_waza_dead( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown_fail( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_waza_avoid( STRBUF* dst, u16 strID, const int* args );
 
 
 
@@ -283,7 +284,6 @@ void BTL_STR_MakeStringStdWithParams( STRBUF* buf, BtlStrID_STD strID, const int
 		}
 	}
 
-	// 用意されていないメッセージの場合
 	ms_std_simple( buf, strID );
 }
 
@@ -379,10 +379,11 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 		u16		strID;
 		void	(* func)( STRBUF*, u16, const int* );
 	}funcTbl[] = {
-		{ BTL_STRID_SET_Dead,			ms_sp_waza_dead			},
+		{ BTL_STRID_SET_Dead,					ms_sp_waza_dead			},
 		{ BTL_STRID_SET_Rankup_ATK,		ms_set_rankup			},
 		{ BTL_STRID_SET_Rankdown_ATK,	ms_set_rankdown			},
 		{ BTL_STRID_SET_RankdownFail,	ms_set_rankdown_fail	},
+		{ BTL_STRID_SET_WazaAvoid,		ms_set_waza_avoid	},
 	};
 
 	int i;
@@ -395,6 +396,8 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 			return;
 		}
 	}
+
+	BTL_Printf("[STR] SET 用意されていない文字列 %d\n", strID);
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], 0, buf );
 }
 
@@ -406,8 +409,10 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 //--------------------------------------------------------------
 static void ms_sp_waza_dead( STRBUF* dst, u16 strID, const int* args )
 {
-	register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-	strID = get_setStrID( args[0], strID );
+	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( SysWork.mainModule, args[0] );
+
+	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
+	strID = get_setStrID( pokePos, strID );
 
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
@@ -455,7 +460,20 @@ static void ms_set_rankdown_fail( STRBUF* dst, u16 strID, const int* args )
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+//--------------------------------------------------------------
+/**
+ *	○○には　あたらなかった！
+ */
+//--------------------------------------------------------------
+static void ms_set_waza_avoid( STRBUF* dst, u16 strID, const int* args )
+{
+	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( SysWork.mainModule, args[0] );
 
+	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
+	strID = get_setStrID( pokePos, strID );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
 
 //=============================================================================================
 /**

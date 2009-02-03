@@ -149,8 +149,16 @@ extern void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args );
 extern void BTLV_StartMsgWaza( BTLV_CORE* wk, BtlPokePos pokePos, u16 waza );
 extern BOOL BTLV_WaitMsg( BTLV_CORE* wk );
 
-extern void BTLV_StartWazaAct( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, u16 damage, WazaID waza, BtlTypeAff affinity );
-extern BOOL BTLV_WaitWazaAct( BTLV_CORE* wk );
+extern void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, WazaID waza );
+extern BOOL BTLV_ACT_WazaEffect_Wait( BTLV_CORE* wk );
+
+extern void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, BtlPokePos defPokePos, u16 damage, BtlTypeAff aff );
+extern BOOL BTLV_ACT_DamageEffectSingle_Wait( BTLV_CORE* wk );
+
+extern void BTLV_ACT_DamageEffectDouble_Start( BTLV_CORE* wk, BtlPokePos defPokePos1, BtlPokePos defPokePos2,
+		u16 damage1, u16 damage2, BtlTypeAff aff );
+extern BOOL BTLV_ACT_DamageEffectDouble_Wait( BTLV_CORE* wk );
+
 extern void BTLV_StartDeadAct( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_WaitDeadAct( BTLV_CORE* wk );
 extern void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, u8 clientID, u8 memberIdx );

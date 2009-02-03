@@ -123,6 +123,7 @@ struct _BTL_SERVER {
 	u8					numClient;
 	u8					pokeDeadFlag;
 	u8					endFlag;
+	u8					wazaEffectPuttedFlag;
 
 	ServerMainProc		mainProc;
 	int					seq;
@@ -160,22 +161,37 @@ static BOOL createServerCommandAfterPokeSelect( BTL_SERVER* server );
 static void scput_MemberIn( BTL_SERVER* server, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scput_MemberOut( BTL_SERVER* server, u8 clientID, const BTL_ACTION_PARAM* action );
 static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action );
+static void scput_Fight_Damage(
+	 BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza, CLIENT_WORK* atClient,
+	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
+static BTL_POKEPARAM* svflowsub_get_opponent_pokeparam( BTL_SERVER* server, BtlPokePos pos, u8 pokeSideIdx );
+static BTL_POKEPARAM* svflowsub_get_next_pokeparam( BTL_SERVER* server, BtlPokePos pos );
+static void scput_Fight_Damage_Single(
+	 BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza, CLIENT_WORK* atClient,
+	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
+static void scput_Fight_Damage_Enemy2(
+	 BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza, CLIENT_WORK* atClient,
+	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
+static void scput_Fight_Damage_OtherAll(
+	 BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza, CLIENT_WORK* atClient,
+	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
+static void svflowsub_damage_singular( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza );
+static void svflowsub_damage_enemy_all( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender1, BTL_POKEPARAM* defender2, WazaID waza );
+static void svflowsub_damage_act_singular( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza, BtlTypeAff aff );
+static void svflowsub_damage_act_enemy_all( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep,
+		BTL_POKEPARAM* attacker, BTL_POKEPARAM* def1, BTL_POKEPARAM* def2, BtlTypeAff aff1, BtlTypeAff aff2, WazaID waza );
+static void svflowsub_damage_act_enemy_all_atonce( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep,
+		BTL_POKEPARAM* attacker, BTL_POKEPARAM* def1, BTL_POKEPARAM* def2, BtlTypeAff aff, WazaID waza );
+static BOOL svflowsub_hitcheck_singular( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza );
+static u16 svflowsub_damage_calc_core( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BtlTypeAff typeAff );
+static void svflowsub_set_waza_effect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, WazaID waza );
 static inline int roundValue( int val, int min, int max );
 static void initFightEventParams( FIGHT_EVENT_PARAM* fep );
-static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, u8 posIdx, const BTL_ACTION_PARAM* action, WazaID waza );
-static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
-	 const CLIENT_WORK* atClient, const CLIENT_WORK* defClient,
-	 BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
-	 BtlPokePos atPos, BtlPokePos defPos,
-	 WazaID waza, u8 wazaIdx );
-static BOOL sc_fight_layer1_calc_damage( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
-static u16 sc_fight_layer1_single_dmg( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
-static void sc_fight_layer1_single_not_dmg( BTL_SERVER* server, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_CheckConf( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const CLIENT_WORK* atClient );
 static u16 scEvent_CalcConfDamage( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckWazaExecute( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const CLIENT_WORK* atClient );
 static BOOL scEvent_checkHit( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
-static void scEvent_checkAffinity( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
+static BtlTypeAff scEvent_checkAffinity( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static void scEvent_decrementPP( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, u8 wazaIdx );
 static u8 scEvent_getHitRatio( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza );
 static u8 scEvent_GetHitCount( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, u8 hitCountMax );
@@ -187,7 +203,7 @@ static u16 scEvent_getDamageDenom( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep );
 static PokeType scEvent_getWazaPokeType( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza );
 static PokeTypePair scEvent_getAttackerPokeType( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker );
 static PokeTypePair scEvent_getDefenderPokeType( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* defender );
-static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 outPokeIdx );
+static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx );
 static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scEvent_PokeComp( BTL_SERVER* server );
 static void scEvent_RankDown( BTL_SERVER* server, u8 pokeID, BtlPokePos pokePos, BppValueID statusType, u8 volume );
@@ -466,7 +482,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 			server->pokeDeadFlag = createServerCommand( server );
 			if( server->pokeDeadFlag )
 			{
-				BTL_Printf("ポケモンしにました\n");
+				BTL_Printf(" **** ポケモンしにました\n");
 			}
 			SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
 			(*seq)++;
@@ -750,7 +766,7 @@ static u8 countAlivePokemon( const BTL_SERVER* server )
 		{
 			if( cl->frontMember[j] )
 			{
-				if( BTL_POKEPARAM_GetValue(cl->frontMember[j], BPP_HP) )
+				if( !BTL_POKEPARAM_IsDead(cl->frontMember[j]) )
 				{
 					cnt++;
 				}
@@ -781,7 +797,7 @@ static BOOL createServerCommand( BTL_SERVER* server )
 		clientID = server->actOrder[i].clientID;
 		pokeIdx  = server->actOrder[i].pokeIdx;
 
-		if( BTL_POKEPARAM_GetValue(server->client[clientID].frontMember[pokeIdx], BPP_HP) )
+		if( !BTL_POKEPARAM_IsDead(server->client[clientID].frontMember[pokeIdx]) )
 		{
 			const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( server->client[clientID].adapter );
 			action += pokeIdx;
@@ -811,6 +827,7 @@ static BOOL createServerCommand( BTL_SERVER* server )
 
 	// 死んだポケモンがいる場合の処理
 	numPokeAlive = countAlivePokemon( server );
+	BTL_Printf("[SV] ポケモン数 %d -> %d ...\n", numPokeBegin, numPokeAlive);
 	if( numPokeBegin > numPokeAlive )
 	{
 		return TRUE;
@@ -867,41 +884,542 @@ static void scput_MemberOut( BTL_SERVER* server, u8 clientID, const BTL_ACTION_P
 {
 	scEvent_MemberOut( server, &server->changeEventParams, clientID, action->change.posIdx );
 }
-
+//----------------------------------------------------------------------
+// サーバーフロー：「たたかう」ルート
+//----------------------------------------------------------------------
 static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action )
 {
-	const CLIENT_WORK *atClient;
-	const BTL_POKEPARAM  *attacker, *defender;
+	CLIENT_WORK *atClient;
+	BTL_POKEPARAM  *attacker;
+	FIGHT_EVENT_PARAM* fep;
 	WazaID  waza;
 
 	atClient = &server->client[ attackClientID ];
-	waza = BTL_POKEPARAM_GetWazaNumber( atClient->frontMember[posIdx], action->fight.wazaIdx );
+	attacker = atClient->frontMember[posIdx];
 
-	switch( WAZADATA_GetCategory(waza) ){
-	case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
-	case WAZADATA_CATEGORY_SIMPLE_SICK:
-	case WAZADATA_CATEGORY_SIMPLE_EFFECT:
-	case WAZADATA_CATEGORY_SIMPLE_RECOVER:
-	case WAZADATA_CATEGORY_DAMAGE_SICK:
-	case WAZADATA_CATEGORY_DAMAGE_EFFECT:
-	case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
-	case WAZADATA_CATEGORY_DAMAGE_RECOVER:
-	case WAZADATA_CATEGORY_ICHIGEKI:
-	case WAZADATA_CATEGORY_BIND:
-	case WAZADATA_CATEGORY_GUARD:
-	case WAZADATA_CATEGORY_WEATHER:
-	case WAZADATA_CATEGORY_OTHERS:
-	default:
-		initFightEventParams( &server->fightEventParams );
-		scput_FightRoot( server, atClient, posIdx, action, waza );
-//		sc_fight_layer1_single( server, atClient, defClient, action, waza );
-		break;
+	waza = BTL_POKEPARAM_GetWazaNumber( attacker, action->fight.wazaIdx );
 
+  fep = &server->fightEventParams;
+	initFightEventParams( fep );
+	fep->waza = waza;
+	fep->attackPokeID = BTL_POKEPARAM_GetID( attacker );
+
+// こんらん自爆判定
+	if( scEvent_CheckConf( server, fep, attacker, atClient ) )
+	{
+		fep->confDamage = scEvent_CalcConfDamage( server, fep, attacker );
+		{
+			u16 hp = BTL_POKEPARAM_GetValue( attacker, BPP_HP );
+			u8 deadFlag = FALSE;
+			if( fep->confDamage >= hp )
+			{
+				fep->confDamage = hp;
+				deadFlag = TRUE;
+			}
+			BTL_POKEPARAM_HpMinus( attacker, fep->confDamage );
+			SCQUE_PUT_OP_HpMinus( server->que, atClient->myID, fep->confDamage );
+//			SCQUE_PUT_MSG_ConfOn( server->que, atClient->myID );	@@@ メッセージまだです
+			if( deadFlag )
+			{
+				SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, atClient->myID );
+				SCQUE_PUT_ACT_Dead( server->que, atClient->myID );
+				return;
+			}
+		}
+	}
+// ワザ出し成功判定
+	if( !scEvent_CheckWazaExecute(server, fep, attacker, atClient ) )
+	{
+		SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaFail );
+		return;
+	}
+	else
+	{
+		WazaCategory  category;
+		BtlPokePos    atPos;
+
+		category = WAZADATA_GetCategory( waza );
+		atPos = BTL_MAIN_GetClientPokePos( server->mainModule, atClient->myID, posIdx );
+
+		BTL_Printf("[SV] 出すポケ位置=%d, 出すワザ=%d, カテゴリ=%d\n", atPos, waza, category);
+
+		SCQUE_PUT_MSG_WAZA( server->que, atPos, action->fight.wazaIdx );
+
+		switch( category ){
+		case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
+		case WAZADATA_CATEGORY_DAMAGE_SICK:
+		case WAZADATA_CATEGORY_DAMAGE_EFFECT:
+		case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
+		case WAZADATA_CATEGORY_DAMAGE_RECOVER:
+			scput_Fight_Damage( server, fep, waza, atClient, attacker, atPos, action );
+			break;
+
+//	case WAZADATA_CATEGORY_ICHIGEKI:
+//	case WAZADATA_CATEGORY_BIND:
+//	case WAZADATA_CATEGORY_GUARD:
+//	case WAZADATA_CATEGORY_FIELD_EFFECT:
+//	case WAZADATA_CATEGORY_SIDE_EFFECT:
+//	case WAZADATA_CATEGORY_OTHERS:
+		default:
+//		SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaAvoid );
+			SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaFail );
+			break;
+		}
+		scEvent_decrementPP( server, fep, attacker, action->fight.wazaIdx );
+	}
+}
+//----------------------------------------------------------------------
+// サーバーフロー：「たたかう」> ダメージワザ系
+//----------------------------------------------------------------------
+static void scput_Fight_Damage(
+	 BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza, CLIENT_WORK* atClient,
+	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action )
+{
+	SCQUE_ClearFlag( server->que, QUEFLG_WAZAEFFECT_ADDED );
+
+	// シングル
+	if( BTL_MAIN_GetRule(server->mainModule) == BTL_RULE_SINGLE )
+	{
+		scput_Fight_Damage_Single( server, fep, waza, atClient, attacker, atPos, action );
+	}
+	// ダブル
+	else
+	{
+		WazaTarget  targetType = WAZADATA_GetTarget( waza );
+
+		BTL_Printf("[SV] ダブルです。ワザナンバー=%d, ワザターゲットタイプ=%d\n", waza, targetType);
+
+		switch( targetType ) {
+		case WAZA_TARGET_SINGLE:				///< 自分以外の１体（選択）
+		case WAZA_TARGET_SINGLE_ENEMY:	///< 敵１体（選択）
+		case WAZA_TARGET_RANDOM:				///< 敵ランダム
+			scput_Fight_Damage_Single( server, fep, waza, atClient, attacker, atPos, action );
+			break;
+
+		case WAZA_TARGET_ENEMY2:				///< 敵側２体
+			scput_Fight_Damage_Enemy2( server, fep, waza, atClient, attacker, atPos, action );
+			break;
+
+		case WAZA_TARGET_OTHER_ALL:			///< 自分以外全部
+			scput_Fight_Damage_OtherAll( server, fep, waza, atClient, attacker, atPos, action );
+			break;
+
+	//	case WAZA_TARGET_ONLY_USER:			///< 自分１体のみ
+	//	case WAZA_TARGET_TEAM_USER:			///< 自分側陣地
+	//	case WAZA_TARGET_TEAM_ENEMY:		///< 敵側陣地
+	//	case WAZA_TARGET_FIELD:					///< 場に効く（天候系など）
+		default:
+//			GF_ASSERT_MSG(0, "illegal targetType!! waza=%d, targetType=%d", waza, targetType);
+			return;
+		}
+	}
+}
+//----------------------------------------------------------------------
+// サーバーフロー下請け：指定位置から見て対戦相手のポケモンデータを返す
+//----------------------------------------------------------------------
+static BTL_POKEPARAM* svflowsub_get_opponent_pokeparam( BTL_SERVER* server, BtlPokePos pos, u8 pokeSideIdx )
+{
+	BtlPokePos targetPos;
+	u8 clientID, pokeIdx;
+
+	targetPos = BTL_MAIN_GetOpponentPokePos( server->mainModule, pos, pokeSideIdx );
+	BTL_MAIN_BtlPosToClientID_and_PokeIdx( server->mainModule, targetPos, &clientID, &pokeIdx );
+
+	return server->client[ clientID ].frontMember[ pokeIdx ];
+}
+//----------------------------------------------------------------------
+// サーバーフロー下請け：指定位置から見て隣のポケモンデータを返す
+//----------------------------------------------------------------------
+static BTL_POKEPARAM* svflowsub_get_next_pokeparam( BTL_SERVER* server, BtlPokePos pos )
+{
+	BtlPokePos nextPos;
+	u8 clientID, pokeIdx;
+
+	nextPos = BTL_MAIN_GetNextPokePos( server->mainModule, pos );
+	BTL_MAIN_BtlPosToClientID_and_PokeIdx( server->mainModule, nextPos, &clientID, &pokeIdx );
+
+	return server->client[ clientID ].frontMember[ pokeIdx ];
+}
+//----------------------------------------------------------------------
+// サーバーフロー下請け：指定ポケモンが死んでたら死亡処理コマンド生成
+//----------------------------------------------------------------------
+static void svflowsub_check_and_make_dead_command( BTL_SERVER* server, BTL_POKEPARAM* poke )
+{
+	if( BTL_POKEPARAM_IsDead(poke) )
+	{
+		u8 pokeID = BTL_POKEPARAM_GetID( poke );
+		SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, pokeID );
+		SCQUE_PUT_ACT_Dead( server->que, pokeID );
+	}
+}
+
+
+//----------------------------------------------------------------------
+// サーバーフロー：「たたかう」> ダメージワザ系 > 単体選択
+//----------------------------------------------------------------------
+static void scput_Fight_Damage_Single(
+	 BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza, CLIENT_WORK* atClient,
+	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action )
+{
+//	BtlPokePos  defPos;
+//	u8 defClientID;
+	BTL_POKEPARAM* defender;
+
+//	defPos = BTL_MAIN_GetClientPokePos( server->mainModule, atPos, action->fight.targetIdx );
+//	BTL_MAIN_GetFrontPokeData( server->mainModule, defPos );
+	defender = svflowsub_get_opponent_pokeparam( server, atPos, action->fight.targetIdx );
+
+	svflowsub_damage_singular( server, fep, attacker, defender, waza );
+}
+//----------------------------------------------------------------------
+// サーバーフロー：「たたかう」> ダメージワザ系 > 相手２体対象
+//----------------------------------------------------------------------
+static void scput_Fight_Damage_Enemy2(
+	 BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza, CLIENT_WORK* atClient,
+	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action )
+{
+	BTL_POKEPARAM *defpoke1, *defpoke2;
+
+	defpoke1 = svflowsub_get_opponent_pokeparam( server, atPos, 0 );
+	defpoke2 = svflowsub_get_opponent_pokeparam( server, atPos, 1 );
+
+	svflowsub_damage_enemy_all( server, fep, attacker, defpoke1, defpoke2, waza );
+}
+
+//----------------------------------------------------------------------
+// サーバーフロー：「たたかう」> ダメージワザ系 > ３体（自分以外）対象
+//----------------------------------------------------------------------
+static void scput_Fight_Damage_OtherAll(
+	 BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza, CLIENT_WORK* atClient,
+	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action )
+{
+	BTL_POKEPARAM *defF, *defE1, *defE2;
+
+	defF  = svflowsub_get_next_pokeparam( server, atPos );
+	defE1 = svflowsub_get_opponent_pokeparam( server, atPos, 0 );
+	defE2 = svflowsub_get_opponent_pokeparam( server, atPos, 1 );
+
+	svflowsub_damage_singular( server, fep, attacker, defF, waza );
+	svflowsub_damage_enemy_all( server, fep, attacker, defE1, defE2, waza );
+}
+
+//------------------------------------------------------------------
+// サーバーフロー下請け：単体ダメージ処理（上位分岐）
+//------------------------------------------------------------------
+static void svflowsub_damage_singular( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza )
+{
+	BtlTypeAff aff;
+
+	if( !svflowsub_hitcheck_singular(server, fep, attacker, defender, waza) )
+	{
+		return;
+	}
+
+	aff = scEvent_checkAffinity( server, fep, attacker, defender, waza );
+
+	svflowsub_damage_act_singular( server, fep, attacker, defender, waza, aff );
+
+	svflowsub_check_and_make_dead_command( server, defender );
+	svflowsub_check_and_make_dead_command( server, attacker );
+}
+//------------------------------------------------------------------
+// サーバーフロー下請け：相手全体ダメージ処理（上位分岐）
+//------------------------------------------------------------------
+static void svflowsub_damage_enemy_all( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender1, BTL_POKEPARAM* defender2, WazaID waza )
+{
+	u8 hit1, hit2;
+	u8 alive1, alive2;
+
+	hit1 = svflowsub_hitcheck_singular(server, fep, attacker, defender1, waza);
+	hit2 = svflowsub_hitcheck_singular(server, fep, attacker, defender2, waza);
+
+	alive1 = !BTL_POKEPARAM_IsDead( defender1 );
+	alive2 = !BTL_POKEPARAM_IsDead( defender2 );
+
+	// ２体ともヒット
+	if( hit1 && hit2 )
+	{
+		BtlTypeAff aff1, aff2;
+		u8 about1, about2;
+
+		aff1 = scEvent_checkAffinity( server, fep, attacker, defender1, waza );
+		aff2 = scEvent_checkAffinity( server, fep, attacker, defender2, waza );
+
+		about1 = BTL_CALC_TypeAffAbout( aff1 );
+		about2 = BTL_CALC_TypeAffAbout( aff2 );
+
+		// 相性が別々なら、個別の処理
+		if( about1 != about2 )
+		{
+			BTL_Printf("[SV] ２体ともにヒットし、相性べつべつ\n");
+			svflowsub_damage_act_enemy_all( server, fep, attacker, defender1, defender2, aff1, aff2, waza );
+		}
+		// 相性も同じなら、体力バーを同時に減らすようにコマンド生成する
+		else
+		{
+			BTL_Printf("[SV] ２体ともにヒットし、相性も一緒\n");
+			svflowsub_damage_act_enemy_all_atonce( server, fep, attacker, defender1, defender2, aff1, waza );
+		}
+	}
+	// どっちかのみヒット
+	else if( hit1 != !hit2 )
+	{
+		BTL_POKEPARAM* defender = (hit1)? defender1 : defender2;
+		BtlTypeAff aff;
+
+		aff = scEvent_checkAffinity( server, fep, attacker, defender, waza );
+		svflowsub_damage_act_singular( server, fep, attacker, defender, waza, aff );
+	}
+	// ２体ともハズれ
+	else
+	{
+		// return;
+	}
+
+	// 死亡チェック（ワザが当たらなくても反動などで死ぬケースはある）
+	if( alive1 ){
+		svflowsub_check_and_make_dead_command( server, defender1 );
+	}
+	if( alive2 ){
+		svflowsub_check_and_make_dead_command( server, defender2 );
+	}
+	svflowsub_check_and_make_dead_command( server, attacker );
+
+}
+//------------------------------------------------------------------
+// サーバーフロー下請け：単体ダメージ処理（下位）
+//------------------------------------------------------------------
+static void svflowsub_damage_act_singular( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza, BtlTypeAff aff )
+{
+	u8 pluralHit = FALSE;	// 複数回ヒットフラグ
+	u8 deadFlag = FALSE;
+	u8 atPokeID, defPokeID;
+	int i;
+
+	fep->hitCountMax = WAZADATA_GetMaxHitCount( waza );
+	if( fep->hitCountMax > 1 )
+	{
+		fep->hitCountReal = scEvent_GetHitCount( server, fep, fep->hitCountMax );
+		pluralHit = TRUE;
+	}
+	else
+	{
+		fep->hitCountReal = 1;
+	}
+
+	atPokeID = BTL_POKEPARAM_GetID( attacker );
+	defPokeID = BTL_POKEPARAM_GetID( defender );
+
+	for(i=0; i<fep->hitCountReal; ++i)
+	{
+		fep->realDamage = svflowsub_damage_calc_core( server, fep, attacker, defender, waza, aff );
+
+		// デバッグを簡単にするため必ず大ダメージにする措置
+		#ifdef PM_DEBUG
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+		{
+			u8 pokeID = BTL_POKEPARAM_GetID(defender);
+			if( pokeID >= BTL_PARTY_MEMBER_MAX )
+			{
+				fep->realDamage = 999;
+			}
+		}
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+		{
+			u8 pokeID = BTL_POKEPARAM_GetID(defender);
+			if( pokeID < BTL_PARTY_MEMBER_MAX )
+			{
+				fep->realDamage = 999;
+			}
+		}
+		#endif
+
+		BTL_POKEPARAM_HpMinus( defender, fep->realDamage );
+		SCQUE_PUT_OP_HpMinus( server->que, defPokeID, fep->realDamage );
+		svflowsub_set_waza_effect( server->que, atPokeID, defPokeID, waza );
+		SCQUE_PUT_ACT_WazaDamage( server->que, defPokeID, fep->realDamage, fep->typeAff );
+		BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_AFTER );
+
+		BTL_Printf("[SV] Waza Aff=%d, Damage=%d\n", fep->typeAff, fep->realDamage );
+
+		if( BTL_POKEPARAM_IsDead(defender) )
+		{
+			deadFlag = TRUE;
+		}
+		if( BTL_POKEPARAM_IsDead(attacker) )
+		{
+			deadFlag = TRUE;
+		}
+		if( deadFlag ){ break; }
+	}
+
+	BTL_Printf("Damage Waza Exe %d times ... plural=%d, dead=%d\n",
+			fep->hitCountReal, pluralHit, deadFlag);
+
+	if( pluralHit )
+	{
+//			SCQUE_PUT_MSG_WazaHitCount( server->que, i );	// @@@ あとで
+	}
+}
+//------------------------------------------------------------------
+// サーバーフロー下請け：敵全体を順番にダメージ処理（下位）
+//------------------------------------------------------------------
+static void svflowsub_damage_act_enemy_all( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep,
+		BTL_POKEPARAM* attacker, BTL_POKEPARAM* def1, BTL_POKEPARAM* def2, BtlTypeAff aff1, BtlTypeAff aff2, WazaID waza )
+{
+	u8 atPokeID, defPokeID1, defPokeID2;
+	u16 dmg1, dmg2;
+
+	// 同時攻撃の時、ヒットカウントは１固定
+	fep->hitCountMax = 1;
+	fep->hitCountReal = 1;
+
+	atPokeID = BTL_POKEPARAM_GetID( attacker );
+	defPokeID1 = BTL_POKEPARAM_GetID( def1 );
+	defPokeID2 = BTL_POKEPARAM_GetID( def2 );
+
+	dmg1 = svflowsub_damage_calc_core( server, fep, attacker, def1, waza, aff1 );
+	BTL_POKEPARAM_HpMinus( def1, dmg1 );
+	SCQUE_PUT_OP_HpMinus( server->que, defPokeID1, fep->realDamage );
+
+	dmg2 = svflowsub_damage_calc_core( server, fep, attacker, def2, waza, aff2 );
+	BTL_POKEPARAM_HpMinus( def2, dmg2 );
+	SCQUE_PUT_OP_HpMinus( server->que, defPokeID2, fep->realDamage );
+
+	svflowsub_set_waza_effect( server->que, atPokeID, defPokeID1, waza );
+//SCQUE_PUT_ACT_WazaDamage( server->que, defPokeID1, defPokeID2, dmg1, dmg2, aff );
+	SCQUE_PUT_ACT_WazaDamage( server->que, defPokeID1, dmg1, aff1 );
+	SCQUE_PUT_ACT_WazaDamage( server->que, defPokeID2, dmg2, aff2 );
+
+	BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_AFTER );
+}
+//------------------------------------------------------------------
+// サーバーフロー下請け：敵全体を一斉にダメージ処理（下位）
+//------------------------------------------------------------------
+static void svflowsub_damage_act_enemy_all_atonce( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep,
+		BTL_POKEPARAM* attacker, BTL_POKEPARAM* def1, BTL_POKEPARAM* def2, BtlTypeAff aff, WazaID waza )
+{
+	u8 atPokeID, defPokeID1, defPokeID2;
+	u16 dmg1, dmg2;
+
+	// 同時攻撃の時、ヒットカウントは１固定
+	fep->hitCountMax = 1;
+	fep->hitCountReal = 1;
+
+	atPokeID = BTL_POKEPARAM_GetID( attacker );
+	defPokeID1 = BTL_POKEPARAM_GetID( def1 );
+	defPokeID2 = BTL_POKEPARAM_GetID( def2 );
+
+	dmg1 = svflowsub_damage_calc_core( server, fep, attacker, def1, waza, aff );
+	BTL_POKEPARAM_HpMinus( def1, dmg1 );
+	SCQUE_PUT_OP_HpMinus( server->que, defPokeID1, dmg1 );
+
+	dmg2 = svflowsub_damage_calc_core( server, fep, attacker, def2, waza, aff );
+	BTL_POKEPARAM_HpMinus( def2, dmg2 );
+	SCQUE_PUT_OP_HpMinus( server->que, defPokeID2, dmg2 );
+
+	svflowsub_set_waza_effect( server->que, atPokeID, defPokeID1, waza );
+	SCQUE_PUT_ACT_WazaDamageDbl( server->que, defPokeID1, defPokeID2, dmg1, dmg2, aff );
+	BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_AFTER );
+}
+
+//------------------------------------------------------------------
+// サーバーフロー下請け：１体分攻撃ヒットチェック
+//------------------------------------------------------------------
+static BOOL svflowsub_hitcheck_singular( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza )
+{
+	u8 defPokeID = BTL_POKEPARAM_GetID( defender );
+
+	// 既に対象が死んでいる
+	if( BTL_POKEPARAM_IsDead(defender) )
+	{
+		SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_WazaAvoid, defPokeID );
+		return FALSE;
+	}
+	// 命中率・回避率によるヒットチェックで外れた
+	if( !scEvent_checkHit(server, fep, attacker, defender, waza) )
+	{
+		SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_WazaAvoid, defPokeID );
+		return FALSE;
+	}
+	return TRUE;
+}
+//------------------------------------------------------------------
+// サーバーフロー下請け： たたかう > ダメージワザ系 > ダメージ値計算
+//------------------------------------------------------------------
+static u16 svflowsub_damage_calc_core( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BtlTypeAff typeAff )
+{
+	fep->wazaDamageType = WAZADATA_GetDamageType( waza );
+
+	GF_ASSERT(fep->wazaDamageType != WAZADATA_DMG_NONE);
+
+	fep->criticalRank = scEvent_getCriticalRank( server, fep, attacker, waza );
+	fep->criticalFlag = BTL_CALC_CheckCritical( fep->criticalRank );
+	fep->wazaPower = scEvent_getWazaPower( server, fep, waza );
+	fep->attackerPower = scEvent_getAttackPower( server, fep, attacker, waza );
+	fep->defenderGuard = scEvent_getDefenderGuard( server, fep, defender, waza );
+
+	fep->damageDenom = scEvent_getDamageDenom( server, fep );
+	{
+		u8 attackerLevel = BTL_POKEPARAM_GetValue( attacker, BPP_LEVEL );
+		fep->rawDamage = fep->wazaPower * fep->attackerPower * (attackerLevel*2/5+2) / fep->defenderGuard;
+		fep->rawDamage /= fep->damageDenom;
+		if( fep->criticalFlag )
+		{
+			fep->rawDamage *= 2;
+		}
+
+		BTL_Printf("[SV WAZA] 威力:%d, こうげき:%d, LV:%d, ぼうぎょ:%d, 分母:%d ... 素ダメ:%d\n",
+				fep->wazaPower, fep->attackerPower, attackerLevel, fep->defenderGuard, fep->damageDenom, fep->rawDamage
+		);
+	}
+	BTL_EVENT_CallHandlers( server, BTL_EVENT_DAMAGE_PROC1 );
+
+	//ランダム補正
+	{
+		u16 ratio = 100 - GFL_STD_MtRand(16);
+		fep->rawDamage = (fep->rawDamage * ratio) / 100;
+		BTL_Printf("[SV WAZA] ランダム補正:%d%%  -> 素ダメ=%d\n", ratio, fep->rawDamage);
+	}
+
+	// タイプ一致補正
+	fep->rawDamage = (fep->rawDamage * fep->typeMatchRatio) >> FX32_SHIFT;
+	BTL_Printf("[SV WAZA] タイプ一致補正:%08x  -> 素ダメ=%d\n", fep->typeMatchRatio, fep->rawDamage);
+
+	// タイプ相性計算
+	fep->realDamage = BTL_CALC_AffDamage( fep->rawDamage, typeAff );
+
+	// 最低、１はダメージを与える
+	if( fep->realDamage == 0 )
+	{
+		fep->realDamage = 1;
 	}
 
 
+	BTL_Printf("[SV WAZA] タイプ相性:%02d -> ダメージ値：%d\n", typeAff, fep->realDamage);
 
+	BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_PROC2 );
+
+	return fep->realDamage;
 }
+//---------------------------------------------------------------------------------------------
+// １度のワザ処理にて、エフェクト発動コマンドを１回しか作成しないための仕組み
+//---------------------------------------------------------------------------------------------
+
+static void svflowsub_set_waza_effect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, WazaID waza )
+{
+	if( SCQUE_GetFlag( que, QUEFLG_WAZAEFFECT_ADDED) == FALSE )
+	{
+		BTL_Printf("[SV] ワザエフェクトコマンド生成しますよ, ワザナンバ%d\n", waza);
+		SCQUE_PUT_ACT_WazaEffect( que, atPokeID, defPokeID, waza );
+		SCQUE_SetFlag( que, QUEFLG_WAZAEFFECT_ADDED );
+	}
+	else
+	{
+		BTL_Printf("[SV] ワザエフェクトコマンド生成済みなので無視, ワザナンバ%d\n", waza);
+	}
+}
+
 //---------------------------------------------------------------------------------------------
 // 
 //---------------------------------------------------------------------------------------------
@@ -1002,255 +1520,6 @@ static void initFightEventParams( FIGHT_EVENT_PARAM* fep )
 	GFL_STD_MemClear( fep, sizeof(*fep) );
 }
 
-//
-static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, u8 posIdx, const BTL_ACTION_PARAM* action, WazaID waza )
-{
-	FIGHT_EVENT_PARAM* fep = &server->fightEventParams;
-	BTL_POKEPARAM* attacker = atClient->frontMember[posIdx];
-
-	fep->waza = waza;
-	fep->attackPokeID = BTL_POKEPARAM_GetID( attacker );
-
-	// こんらん自爆判定
-	if( scEvent_CheckConf( server, fep, attacker, atClient ) )
-	{
-		fep->confDamage = scEvent_CalcConfDamage( server, fep, attacker );
-		{
-			u16 hp = BTL_POKEPARAM_GetValue( attacker, BPP_HP );
-			u8 deadFlag = FALSE;
-			if( fep->confDamage >= hp )
-			{
-				fep->confDamage = hp;
-				deadFlag = TRUE;
-			}
-			BTL_POKEPARAM_HpMinus( attacker, fep->confDamage );
-			SCQUE_PUT_OP_HpMinus( server->que, atClient->myID, fep->confDamage );
-//			SCQUE_PUT_MSG_ConfOn( server->que, atClient->myID );	@@@ メッセージまだです
-			if( deadFlag )
-			{
-				SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, atClient->myID );
-				SCQUE_PUT_ACT_Dead( server->que, atClient->myID );
-				return;
-			}
-		}
-	}
-
-	// ワザ出し成功判定
-	if( !scEvent_CheckWazaExecute(server, fep, attacker, atClient ) )
-	{
-//		SCQUE_PUT_MSG_WazaFail( server->que, atClient->myID, fep->wazaFailReason );
-		SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaAvoid );
-		return;
-	}
-	else
-	{
-		CLIENT_WORK* defClient;
-		BTL_POKEPARAM* defender;
-		BtlPokePos  atPos, defPos;
-		u8 defClientID;
-
-		atPos = BTL_MAIN_GetClientPokePos( server->mainModule, atClient->myID, posIdx );
-		defPos = BTL_MAIN_GetOpponentPokePos( server->mainModule, atPos, action->fight.targetIdx );
-		defClientID = BTL_MAIN_GetOpponentClientID( server->mainModule, atClient->myID, action->fight.targetIdx );
-		defClient = &server->client[ defClientID ];
-		defender = defClient->frontMember[ action->fight.targetIdx ];
-
-		SCQUE_PUT_DATA_WazaExe( server->que, atPos, action->fight.wazaIdx, 1, defPos, 0, 0 );
-		SCQUE_PUT_MSG_WAZA( server->que, atPos, action->fight.wazaIdx );
-
-		scPut_FightSingleDmg( server, fep, atClient, defClient, attacker, defender, atPos, defPos, waza, action->fight.wazaIdx );
-
-		scEvent_decrementPP( server, fep, attacker, action->fight.wazaIdx );
-	}
-}
-
-// シングル戦第１階層
-static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
-	 const CLIENT_WORK* atClient, const CLIENT_WORK* defClient,
-	 BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
-	 BtlPokePos atPos, BtlPokePos defPos,
-	 WazaID waza, u8 wazaIdx )
-{
-
-	// 既に対象が死んでいる
-	if( BTL_POKEPARAM_GetValue(defender, BPP_HP) == 0 )
-	{
-		SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaAvoid );
-		return;
-	}
-// ヒットチェック
-	// はずれた
-	if( !scEvent_checkHit(server, fep, attacker, defender, waza) )
-	{
-		SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaAvoid );
-		return;
-	}
-	// あたった
-	else
-	{
-		// ダメージワザ
-		if( WAZADATA_IsDamage(waza) )
-		{
-			u8 pluralHit, deadFlag, i;
-
-			scEvent_checkAffinity( server, fep, attacker, defender, waza );
-
-			fep->hitCountMax = WAZADATA_GetMaxHitCount( waza );
-			if( fep->hitCountMax > 1 )
-			{
-				fep->hitCountReal = scEvent_GetHitCount( server, fep, fep->hitCountMax );
-				pluralHit = TRUE;
-			}
-			else
-			{
-				fep->hitCountReal = 1;
-				pluralHit = FALSE;
-			}
-
-			deadFlag = FALSE;
-			for(i=0; i<fep->hitCountReal; i++)
-			{
-				fep->realDamage = sc_fight_layer1_single_dmg( server, fep, attacker, defender, waza );
-//				scEvent_WazaDamage( server, fep, attacker, defender , waza );
-
-				// デバッグを簡単にするため必ず大ダメージにする措置
-				#ifdef PM_DEBUG
-				if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-				{
-					if( (defClient->myID & 1) )
-					{
-						fep->realDamage = 999;
-					}
-				}
-				if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-				{
-					if( !(defClient->myID & 1) )
-					{
-						fep->realDamage = 999;
-					}
-				}
-				#endif
-
-				BTL_POKEPARAM_HpMinus( defender, fep->realDamage );
-				SCQUE_PUT_OP_HpMinus( server->que, defClient->myID, fep->realDamage );
-				SCQUE_PUT_ACT_WazaDamage( server->que, atClient->myID, defClient->myID, fep->realDamage, wazaIdx, fep->typeAff );
-				BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_AFTER );
-
-				BTL_Printf("[SV] Waza Aff=%d, Damage=%d\n", fep->typeAff, fep->realDamage );
-
-				if( BTL_POKEPARAM_GetValue(defender, BPP_HP) == 0 )
-				{
-					SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, defPos );
-					SCQUE_PUT_ACT_Dead( server->que, defClient->myID );
-					deadFlag = TRUE;
-				}
-				if( BTL_POKEPARAM_GetValue(attacker, BPP_HP) == 0 )
-				{
-					SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, atClient->myID );
-					SCQUE_PUT_ACT_Dead( server->que, atPos );
-					deadFlag = TRUE;
-				}
-				if( deadFlag ){ break; }
-			}
-
-			BTL_Printf("Damage Waza Exe %d times ... plural=%d, dead=%d\n",
-					fep->hitCountReal, pluralHit, deadFlag);
-
-			if( pluralHit )
-			{
-//				SCQUE_PUT_MSG_WazaHitCount( server->que, i );	// @@@ あとで
-			}
-		}
-		// 非ダメージワザ
-		else
-		{
-			SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaAvoid );
-			return;
-		}
-	}
-}
-
-// 
-static BOOL sc_fight_layer1_calc_damage( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
-{
-	if( WAZADATA_IsDamage(waza) )
-	{
-		sc_fight_layer1_single_dmg( server, fep, attacker, defender, waza );
-		return TRUE;
-	}
-	else
-	{
-		sc_fight_layer1_single_not_dmg( server, attacker, defender, waza );
-		return FALSE;
-	}
-}
-
-// ダメージワザヒット
-static u16 sc_fight_layer1_single_dmg( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
-{
-	fep->wazaDamageType = WAZADATA_GetDamageType( waza );
-
-	GF_ASSERT(fep->wazaDamageType != WAZADATA_DMG_NONE);
-
-	fep->criticalRank = scEvent_getCriticalRank( server, fep, attacker, waza );
-	fep->criticalFlag = BTL_CALC_CheckCritical( fep->criticalRank );
-	fep->wazaPower = scEvent_getWazaPower( server, fep, waza );
-	fep->attackerPower = scEvent_getAttackPower( server, fep, attacker, waza );
-	fep->defenderGuard = scEvent_getDefenderGuard( server, fep, defender, waza );
-
-
-	fep->damageDenom = scEvent_getDamageDenom( server, fep );
-	{
-		u8 attackerLevel = BTL_POKEPARAM_GetValue( attacker, BPP_LEVEL );
-		fep->rawDamage = fep->wazaPower * fep->attackerPower * (attackerLevel*2/5+2) / fep->defenderGuard;
-		fep->rawDamage /= fep->damageDenom;
-		if( fep->criticalFlag )
-		{
-			fep->rawDamage *= 2;
-		}
-
-		BTL_Printf("[SV WAZA] 威力:%d, こうげき:%d, LV:%d, ぼうぎょ:%d, 分母:%d ... 素ダメ:%d\n",
-				fep->wazaPower, fep->attackerPower, attackerLevel, fep->defenderGuard, fep->damageDenom, fep->rawDamage
-		);
-
-	}
-	BTL_EVENT_CallHandlers( server, BTL_EVENT_DAMAGE_PROC1 );
-
-
-	//ランダム補正
-	{
-		u16 ratio = 100 - GFL_STD_MtRand(16);
-		fep->rawDamage = (fep->rawDamage * ratio) / 100;
-		BTL_Printf("[SV WAZA] ランダム補正:%d%%  -> 素ダメ=%d\n", ratio, fep->rawDamage);
-	}
-
-	// タイプ一致補正
-	fep->rawDamage = (fep->rawDamage * fep->typeMatchRatio) >> FX32_SHIFT;
-	BTL_Printf("[SV WAZA] タイプ一致補正:%08x  -> 素ダメ=%d\n", fep->typeMatchRatio, fep->rawDamage);
-
-	// タイプ相性計算
-	fep->realDamage = BTL_CALC_AffDamage( fep->rawDamage, fep->typeAff );
-
-	// 最低、１はダメージを与える
-	if( fep->realDamage == 0 )
-	{
-		fep->realDamage = 1;
-	}
-
-
-	BTL_Printf("[SV WAZA] タイプ相性:%02d -> ダメージ値：%d\n", fep->typeAff, fep->realDamage);
-
-	BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_PROC2 );
-
-	return fep->realDamage;
-
-}
-// 非ダメージワザヒット
-static void sc_fight_layer1_single_not_dmg( BTL_SERVER* server, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
-{
-	
-}
-
 
 //---------------------------------------------------------------------------------------------
 // コマンド出力  イベント群
@@ -1315,7 +1584,7 @@ static BOOL scEvent_checkHit( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const 
 }
 
 // ワザ相性チェック
-static void scEvent_checkAffinity( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
+static BtlTypeAff scEvent_checkAffinity( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
 	// タイプ一致補正
 	fep->wazaPokeType = scEvent_getWazaPokeType( server, fep, waza );
@@ -1334,6 +1603,8 @@ static void scEvent_checkAffinity( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, c
 	// タイプ相性計算
 	fep->defenderPokeType = scEvent_getDefenderPokeType( server, fep, defender );
 	fep->typeAff = BTL_CALC_TypeAff( fep->wazaPokeType, fep->defenderPokeType );
+
+	return fep->typeAff;
 }
 
 // 使ったワザのPPデクリメント
@@ -1585,7 +1856,6 @@ void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SERVER* server, u8 clientID )
 
 void BTL_SERVER_RECTPT_SetMessage( BTL_SERVER* server, u16 msgID, BtlPokePos pokePos )
 {
-//	SCQUE_PUT_Msg( server->que, msgID, clientID );
 	SCQUE_PUT_MSG_SET( server->que, msgID, pokePos );
 }
 

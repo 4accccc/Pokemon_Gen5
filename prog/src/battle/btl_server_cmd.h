@@ -58,7 +58,9 @@ typedef enum {
 	SC_DATA_MEMBER_OUT,	///< 【データセット】フロントメンバーアウト[ CliendID ]
 	SC_DATA_MEMBER_IN,	///< 【データセット】フロントメンバーイン[ ClientID, pokeIdx ]
 
+	SC_ACT_WAZA_EFFECT,
 	SC_ACT_WAZA_DMG,		///< 【ワザ発動：ダメージ】[ AtClient, DefClient, wazaIdx, Affinity ]
+	SC_ACT_WAZA_DMG_DBL,
 	SC_ACT_RANKUP,			///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
 	SC_ACT_RANKDOWN,		///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
 	SC_ACT_DEAD,				///< 【ポケモンひんし】[ ClientID ]
@@ -77,6 +79,20 @@ typedef enum {
 
 //--------------------------------------------------------------
 /**
+ *		サーバキュー処理フラグ
+ */
+//--------------------------------------------------------------
+typedef enum {
+
+	QUEFLG_WAZAEFFECT_ADDED = 0,
+
+	QUEFLG_MAX,
+	QUEFLG_BYTE_MAX = ((QUEFLG_MAX/4)+((QUEFLG_MAX&3)!=0)*4),
+
+}ServerQueFlag;
+
+//--------------------------------------------------------------
+/**
  *		サーバキュー構造
  */
 //--------------------------------------------------------------
@@ -84,14 +100,20 @@ typedef struct {
 	u16		writePtr;
 	u16		readPtr;
 	u8		buffer[BTL_SERVER_CMD_QUE_SIZE];
+	u8		flags[QUEFLG_MAX];
 }BTL_SERVER_CMD_QUE;
 
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
 static inline void SCQUE_Init( BTL_SERVER_CMD_QUE* que )
 {
+	int i;
 	que->writePtr = 0;
 	que->readPtr = 0;
+	for(i=0; i<NELEMS(que->flags); ++i)
+	{
+		que->flags[i] = 0;
+	}
 }
 static inline void SCQUE_Setup( BTL_SERVER_CMD_QUE* que, const void* data, u16 dataLength )
 {
@@ -101,6 +123,20 @@ static inline void SCQUE_Setup( BTL_SERVER_CMD_QUE* que, const void* data, u16 d
 	que->writePtr = dataLength;
 	que->readPtr = 0;
 }
+
+static inline void SCQUE_SetFlag( BTL_SERVER_CMD_QUE* que, ServerQueFlag flg )
+{
+	que->flags[ flg ] = 1;
+}
+static inline void SCQUE_ClearFlag( BTL_SERVER_CMD_QUE* que, ServerQueFlag flg )
+{
+	que->flags[ flg ] = 0;
+}
+static inline BOOL SCQUE_GetFlag( BTL_SERVER_CMD_QUE* que, ServerQueFlag flg )
+{
+	return que->flags[ flg ];
+}
+
 
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
@@ -245,23 +281,56 @@ static inline void SCQUE_READ_DATA_MemberOut( BTL_SERVER_CMD_QUE* que, int* args
 }
 
 //---------------------------------------------
-static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 atClientID, u8 defClientID, u16 damage, u8 wazaIdx, u8 affinity )
+static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, u16 waza )
 {
-	scque_put2byte( que, SC_ACT_WAZA_DMG );
-	scque_put1byte( que, atClientID );
-	scque_put1byte( que, defClientID );
-	scque_put2byte( que, damage );
-	scque_put1byte( que, wazaIdx );
-	scque_put1byte( que, affinity );
+	scque_put2byte( que, SC_ACT_WAZA_EFFECT );
+
+	scque_put1byte( que, atPokeID );
+	scque_put1byte( que, defPokeID );
+	scque_put2byte( que, waza );
+
 }
-static inline void SCQUE_READ_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, int* args )
+static inline void SCQUE_READ_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, int* args )
 {
 	args[0] = scque_read1byte( que );
 	args[1] = scque_read1byte( que );
 	args[2] = scque_read2byte( que );
-	args[3] = scque_read1byte( que );
+}
+
+static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 defPokeID, u16 damage, u8 affinity )
+{
+	scque_put2byte( que, SC_ACT_WAZA_DMG );
+	scque_put1byte( que, defPokeID );
+	scque_put2byte( que, damage );
+	scque_put1byte( que, affinity );
+}
+
+static inline void SCQUE_READ_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, int* args )
+{
+	args[0] = scque_read1byte( que );
+	args[1] = scque_read2byte( que );
+	args[2] = scque_read1byte( que );
+}
+
+static inline void SCQUE_PUT_ACT_WazaDamageDbl( BTL_SERVER_CMD_QUE* que, u8 defPokeID1, u8 defPokeID2, u16 damage1, u16 damage2, u8 aff  )
+{
+	scque_put2byte( que, SC_ACT_WAZA_DMG_DBL );
+
+	scque_put1byte( que, defPokeID1 );
+	scque_put1byte( que, defPokeID2 );
+	scque_put2byte( que, damage1 );
+	scque_put2byte( que, damage2 );
+	scque_put1byte( que, aff );
+}
+static inline void SCQUE_READ_ACT_WazaDamage_Dbl( BTL_SERVER_CMD_QUE* que, int* args )
+{
+	args[0] = scque_read1byte( que );
+	args[1] = scque_read1byte( que );
+	args[2] = scque_read2byte( que );
+	args[3] = scque_read2byte( que );
 	args[4] = scque_read1byte( que );
 }
+
 static inline void SCQUE_PUT_ACT_RankUp( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 statusType, u8 volume )
 {
 	scque_put2byte( que, SC_ACT_RANKUP );
@@ -335,11 +404,6 @@ enum {
 
 #include <stdarg.h>
 
-// ↓こいつらはいずれ消す
-extern void SCQUE_PUT_MsgSpecial( BTL_SERVER_CMD_QUE* que, u16 strID, u8 arg1, u8 arg2 );
-extern void SCQUE_PUT_MsgBody( BTL_SERVER_CMD_QUE* que, u16 strID, ... );
-#define SCQUE_PUT_Msg(que, ...)	SCQUE_PUT_MsgBody(que, __VA_ARGS__, MSGARG_TERMINATOR)
-
 // ↓ 可変部分の最初の引数には必ず文字列IDを渡す。
 extern void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... );
 #define SCQUE_PUT_MSG_STD(que, ...)	SCQUE_PUT_MsgImpl( que, SC_MSG_STD, __VA_ARGS__, MSGARG_TERMINATOR )
@@ -374,7 +438,9 @@ static inline ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 	case SC_DATA_WAZA_EXE:	SCQUE_READ_DATA_WazaExe( que, args ); break;
 	case SC_DATA_MEMBER_IN:	SCQUE_READ_DATA_MemberIn( que, args ); break;
 	case SC_DATA_MEMBER_OUT:SCQUE_READ_DATA_MemberOut( que, args ); break;
+	case SC_ACT_WAZA_EFFECT:SCQUE_READ_ACT_WazaEffect( que, args ); break;
 	case SC_ACT_WAZA_DMG:		SCQUE_READ_ACT_WazaDamage( que, args ); break;
+	case SC_ACT_WAZA_DMG_DBL : SCQUE_READ_ACT_WazaDamage_Dbl( que, args ); break;
 	case SC_ACT_RANKUP:			SCQUE_READ_ACT_RankUp( que, args ); break;
 	case SC_ACT_RANKDOWN:		SCQUE_READ_ACT_RankDown( que, args ); break;
 	case SC_ACT_DEAD:				SCQUE_READ_ACT_Dead( que, args ); break;

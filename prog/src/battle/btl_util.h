@@ -111,6 +111,9 @@ static inline BOOL PokeTypePair_IsMatch( PokeTypePair pair, PokeType type )
 	return FALSE;
 }
 
+
+
+
 //===================================================================
 // ƒoƒgƒ‹—pPrintfˆ—
 //===================================================================

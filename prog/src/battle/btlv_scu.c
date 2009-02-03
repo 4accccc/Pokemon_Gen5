@@ -38,6 +38,13 @@ enum {
 	STRBUF_LEN = 512,
 };
 
+typedef enum {
+
+	TASKTYPE_DEFAULT = 0,
+	TASKTYPE_WAZA_DAMAGE,
+
+}TaskType;
+
 
 typedef struct {
 	GFL_BMPWIN*				win;
@@ -70,7 +77,7 @@ struct _BTLV_SCU {
 	GFL_TCBLSYS*		tcbl;
 	PRINT_STREAM*		printStream;
 	STRBUF*				strBuf;
-	u8					taskEndFlag[32];
+	u8						taskCounter[32];
 
 	STATUS_WIN		statusWin[ BTL_POS_MAX ];
 	TOK_WIN				tokWin[ BTL_POS_MAX ];
@@ -111,7 +118,7 @@ static void tokwin_hide( TOK_WIN* tokwin );
 
 BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, GFL_TCBLSYS* tcbl, GFL_FONT* defaultFont, HEAPID heapID )
 {
-	BTLV_SCU* wk = GFL_HEAP_AllocMemory( heapID, sizeof(BTLV_SCU) );
+	BTLV_SCU* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTLV_SCU) );
 
 	wk->vcore = vcore;
 	wk->mainModule = mainModule;
@@ -330,6 +337,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 		{
 				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_2ND_0 );
 				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), POKE_MCSS_POS_B );
+				statwin_disp_start( &wk->statusWin[ BTL_POS_2ND_0 ] );
 				(*seq)++;
 		}
 		break;
@@ -338,6 +346,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 		{
 				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_2ND_1 );
 				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(bpp), POKE_MCSS_POS_D );
+				statwin_disp_start( &wk->statusWin[ BTL_POS_2ND_1 ] );
 				(*seq)++;
 		}
 		break;
@@ -354,6 +363,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 		{
 				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_1ST_0 );
 				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(bpp), POKE_MCSS_POS_A );
+				statwin_disp_start( &wk->statusWin[ BTL_POS_1ST_0 ] );
 				(*seq)++;
 		}
 		break;
@@ -362,6 +372,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 		{
 				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_1ST_1 );
 				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(bpp), POKE_MCSS_POS_C );
+				statwin_disp_start( &wk->statusWin[ BTL_POS_1ST_1 ] );
 				(*seq)++;
 		}
 		break;
@@ -449,6 +460,44 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
 	return TRUE;
 }
 
+
+
+
+//==============================================================================
+
+//=============================================================================================
+/**
+ * ワザエフェクト発動開始
+ *
+ * @param   wk			
+ * @param   atPos		
+ * @param   defPos	
+ * @param   waza		
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlPokePos atPos, BtlPokePos defPos, WazaID waza )
+{
+	u8 atViewPos, defViewPos;
+
+	atViewPos  = BTL_MAIN_BtlPosToViewPos( wk->mainModule, atPos );
+	defViewPos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPos );
+	BTL_EFFECT_AddByPos( atViewPos, defViewPos, waza );
+}
+//=============================================================================================
+/**
+ * ワザエフェクト終了待ち
+ *
+ * @param   wk		
+ *
+ * @retval  BOOL		TRUEで終了
+ */
+//=============================================================================================
+BOOL BTLV_SCU_WaitWazaEffect( BTLV_SCU* wk )
+{
+	return BTL_EFFECT_CheckExecute() == FALSE;
+}
+
 //==============================================================================
 typedef struct {
 
@@ -457,24 +506,24 @@ typedef struct {
 	fx32		hpMinusVal;
 	u16			hpEnd;
 	u16			timer;
-	u8*			endFlag;
+	u8*			taskCounter;
 
 }DMG_EFF_TASK_WORK;
 
 
 //=============================================================================================
 /**
- * ワザエフェクト発動
+ * ダメージエフェクト発動
  *
- * @param   wk->scrnU		
+ * @param   wk->scrnU			
  * @param   atClientID		
  * @param   defClientID		
- * @param   waza		
- * @param   affinity		
+ * @param   waza					
+ * @param   affinity			
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartWazaAct( BTLV_SCU* wk, BtlPokePos atPos, BtlPokePos defPos, WazaID waza, BtlTypeAff affinity )
+void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, u16 damage, BtlTypeAff affinity, BOOL playSE )
 {
 	enum {
 		DAMAGE_FRAME_MIN = 40,
@@ -483,7 +532,7 @@ void BTLV_SCU_StartWazaAct( BTLV_SCU* wk, BtlPokePos atPos, BtlPokePos defPos, W
 	GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskDamageEffect, sizeof(DMG_EFF_TASK_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
 	DMG_EFF_TASK_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
-	twk->endFlag = &(wk->taskEndFlag[0]);
+	twk->taskCounter = &(wk->taskCounter[TASKTYPE_WAZA_DAMAGE]);
 	twk->statWin = &wk->statusWin[defPos];
 	twk->hpEnd = BTL_POKEPARAM_GetValue( twk->statWin->bpp, BPP_HP );
 	twk->hpVal = FX32_CONST( twk->statWin->hp );
@@ -498,16 +547,7 @@ void BTLV_SCU_StartWazaAct( BTLV_SCU* wk, BtlPokePos atPos, BtlPokePos defPos, W
 		twk->hpMinusVal = FX32_CONST(twk->statWin->hp - twk->hpEnd) / twk->timer;
 	}
 
-	// 技エフェクト出してみる soga
-	{
-		u8 atViewPos, defViewPos;
-
-		atViewPos  = BTL_MAIN_BtlPosToViewPos( wk->mainModule, atPos );
-		defViewPos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPos );
-		BTL_EFFECT_AddByPos( atViewPos, defViewPos, waza );
-	}
-
-	*(twk->endFlag) = FALSE;
+	(*(twk->taskCounter))++;
 }
 
 //=============================================================================================
@@ -519,9 +559,9 @@ void BTLV_SCU_StartWazaAct( BTLV_SCU* wk, BtlPokePos atPos, BtlPokePos defPos, W
  * @retval  BOOL		
  */
 //=============================================================================================
-BOOL BTLV_SCU_WaitWazaAct( BTLV_SCU* wk )
+BOOL BTLV_SCU_WaitWazaDamageAct( BTLV_SCU* wk )
 {
-	return (wk->taskEndFlag[0]);
+	return wk->taskCounter[TASKTYPE_WAZA_DAMAGE] == 0;
 }
 static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs )
 {
@@ -541,7 +581,7 @@ static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs )
 	else
 	{
 		statwin_update( wk->statWin, wk->hpEnd, TEST_STATWIN_BGCOL );
-		*(wk->endFlag) = TRUE;
+		(*(wk->taskCounter))--;
 		GFL_TCBL_Delete( tcbl );
 	}
 }
@@ -573,7 +613,7 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
 	DEAD_EFF_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
 	twk->statWin = &wk->statusWin[pos];
-	twk->endFlag = &wk->taskEndFlag[0];
+	twk->endFlag = &wk->taskCounter[0];
 	twk->timer = 0;
 	twk->line = 0;
 
@@ -594,7 +634,7 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
 //=============================================================================================
 BOOL BTLV_SCU_WaitDeadAct( BTLV_SCU* wk )
 {
-	return (wk->taskEndFlag[0]);
+	return (wk->taskCounter[0]);
 }
 
 static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs )
@@ -632,7 +672,7 @@ void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, u8 clientID, u8 memberIdx, BtlPok
 
 	twk->viewpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
 	twk->statWin = &wk->statusWin[ pos ];
-	twk->endFlag = &wk->taskEndFlag[0];
+	twk->endFlag = &wk->taskCounter[0];
 	twk->seq = 0;
 
 
@@ -640,7 +680,7 @@ void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, u8 clientID, u8 memberIdx, BtlPok
 }
 BOOL BTLV_SCU_WaitMemberOutAct( BTLV_SCU* wk )
 {
-	return wk->taskEndFlag[0];
+	return wk->taskCounter[0];
 }
 
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
@@ -688,7 +728,7 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
 	POKEIN_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
 	twk->statWin = &wk->statusWin[ pos ];
-	twk->endFlag = &wk->taskEndFlag[0];
+	twk->endFlag = &wk->taskCounter[0];
 	twk->seq = 0;
 
 	*(twk->endFlag) = FALSE;
@@ -696,14 +736,17 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
 	//soga
 	{
 		const BTL_POKEPARAM* bpp = BTL_MAIN_GetClientPokeDataConst( wk->mainModule, clientID, memberIdx );
-		BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule,pos) );
+		{
+			u8 vpos =  BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos);
+			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), vpos );
+		}
 	}
 }
 
 
 BOOL BTLV_SCU_WaitPokeIn( BTLV_SCU* wk )
 {
-	return wk->taskEndFlag[0];
+	return wk->taskCounter[0];
 }
 
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs )
@@ -807,30 +850,36 @@ static void tokwin_cleanupAll( BTLV_SCU* wk )
 
 static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos )
 {
+	enum {
+		STATWIN_WIDTH = 7,
+		STATWIN_HEIGHT = 4,
+	};
 	static const struct {
 		u8 x;
 		u8 y;
 	} winpos[] = {
-		{  4,  2 },
 		{ 18, 13 },
+		{  4,  2 },
 
-		{ 11,  3 },
-		{ 10, 13 },
-		{  0,  2 },
-		{ 21, 14 },
+		{ 17, 13 },
+		{  8,  2 },
+		{ 25, 14 },
+		{  0,  1 },
 	};
 
 	u8 viewPos, px, py;
 
-	TAYA_Printf("[STATWIN Setup] pokePos=%d\n", pokePos);
 	stwin->pokePos = pokePos;
 	stwin->parentWk = wk;
 
 	viewPos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pokePos );
+
 	px = winpos[viewPos].x;
 	py = winpos[viewPos].y;
 
-	stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, px, py, 10, 4, 0, GFL_BMP_CHRAREA_GET_F );
+	TAYA_Printf("[STATWIN Setup] pokePos=%d, viewPos=%d (%d,%d)\n", pokePos, viewPos, px, py);
+
+	stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, px, py, STATWIN_WIDTH, STATWIN_HEIGHT, 0, GFL_BMP_CHRAREA_GET_F );
 	stwin->bmp = GFL_BMPWIN_GetBmp( stwin->win );
 
 	statwin_reset_data( stwin );
@@ -859,6 +908,7 @@ static void statwin_disp_start( STATUS_WIN* stwin )
 	GFL_BMPWIN_TransVramCharacter( stwin->win );
 	GFL_BMPWIN_MakeScreen( stwin->win );
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
+	BTL_Printf("[SCU] StatusWin (pos=%d) disp start!!\n", stwin->pokePos);
 }
 
 static void statwin_disp( STATUS_WIN* stwin )

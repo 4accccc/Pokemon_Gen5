@@ -77,7 +77,8 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer );
 static void mainproc_setup( BTLV_CORE* core, pCmdProc proc );
 static BOOL mainproc_call( BTLV_CORE* core );
-static BOOL subprocWazaAct( int* seq, void* wk_adrs );
+static BOOL subprocDamageEffect( int* seq, void* wk_adrs );
+static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
 static void setup_core( BTLV_CORE* wk, HEAPID heapID );
 static void cleanup_core( BTLV_CORE* wk );
@@ -423,88 +424,107 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* core )
 }
 
 
-//--------------------------
-typedef struct {
-	BtlTypeAff	affinity;
-	u16			timer;
-}WAZA_ACT_WORK;
-
-
+//--------------------------------------
 
 //=============================================================================================
 /**
- * ワザアクション開始
+ * ワザエフェクト開始
  *
  * @param   core		
  * @param   dst			
  *
  */
 //=============================================================================================
-void BTLV_StartWazaAct( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, u16 damage, WazaID waza, BtlTypeAff affinity )
+void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, WazaID waza )
 {
-//	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, atPokePos );
+	BTL_Printf( "[BTLVC] StartWazaAct pos[%d]->[%d], waza=%d\n",
+			atPokePos, defPokePos, waza );
 
-	WAZA_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_ACT_WORK));
-
-	BTL_Printf("[BTLVC] StartWazaAct pos[%d]->[%d], aff=%d\n",
-			atPokePos, defPokePos, affinity);
-
-	BTLV_SCU_StartWazaAct( wk->scrnU, atPokePos, defPokePos, waza, affinity );
-
-	subwk->affinity = affinity;
-	subwk->timer = 0;
-
-	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocWazaAct );
+	BTLV_SCU_StartWazaEffect( wk->scrnU, atPokePos, defPokePos, waza );
 }
 //=============================================================================================
 /**
- * ワザアクション終了待ち
+ * ワザエフェクト終了待ち
  *
  * @param   wk		
  *
  * @retval  BOOL		
  */
 //=============================================================================================
-BOOL BTLV_WaitWazaAct( BTLV_CORE* wk )
+BOOL BTLV_ACT_WazaEffect_Wait( BTLV_CORE* wk )
+{
+	return BTLV_SCU_WaitWazaEffect( wk->scrnU );
+}
+
+//--------------------------------------
+
+typedef struct {
+	BtlTypeAff	affinity;
+	u16			damage;
+	u16			timer;
+	u8			defPokePos;
+}WAZA_DMG_ACT_WORK;
+
+//=============================================================================================
+/**
+ * 単体ダメージエフェクト開始
+ *
+ * @param   wk					
+ * @param   defPokePos	
+ * @param   damage			
+ * @param   aff					
+ *
+ */
+//=============================================================================================
+void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, BtlPokePos defPokePos, u16 damage, BtlTypeAff aff )
+{
+	WAZA_DMG_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_DMG_ACT_WORK));
+
+	subwk->affinity = aff;
+	subwk->damage = damage;
+	subwk->defPokePos = defPokePos;
+	subwk->timer = 0;
+
+	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocDamageEffect );
+}
+//=============================================================================================
+/**
+ * 単体ダメージエフェクト終了待ち
+ *
+ * @param   wk		
+ *
+ * @retval  BOOL		
+ */
+//=============================================================================================
+BOOL BTLV_ACT_DamageEffectSingle_Wait( BTLV_CORE* wk )
 {
 	return BTL_UTIL_CallProc( &wk->subProc );
 }
 
-static BOOL subprocWazaAct( int* seq, void* wk_adrs )
+static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
 {
 	BTLV_CORE* wk = wk_adrs;
-	WAZA_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_ACT_WORK));
+	WAZA_DMG_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_DMG_ACT_WORK));
 
 	switch( *seq ){
 	case 0:
-		//soga
-		if( BTL_EFFECT_CheckExecute() == FALSE )
-#if 0
-		if( ++(subwk->timer) > 30 )
-#endif
+		BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos, subwk->damage, subwk->affinity, TRUE );
+
+		if( subwk->affinity < BTL_TYPEAFF_100 )
 		{
-			do {
-				if( subwk->affinity < BTL_TYPEAFF_100 )
-				{
-					BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad );
-					BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
-					break;;
-				}
-				if ( subwk->affinity > BTL_TYPEAFF_100 )
-				{
-					BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood );
-					BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
-					break;
-				}
-
-			}while(0);
-
-			(*seq)++;
+			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
 		}
+		else if ( subwk->affinity > BTL_TYPEAFF_100 )
+		{
+			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+		}
+		(*seq)++;
 		break;
 
 	case 1:
-		if(	BTLV_SCU_WaitWazaAct(wk->scrnU)
+		if(	BTLV_SCU_WaitWazaDamageAct(wk->scrnU)
 		&&	BTLV_SCU_WaitMsg(wk->scrnU)
 		){
 			return TRUE;
@@ -514,6 +534,90 @@ static BOOL subprocWazaAct( int* seq, void* wk_adrs )
 	}
 	return FALSE;
 }
+//--------------------------------------
+
+typedef struct {
+	BtlTypeAff	affinity;
+	u16			damage1;
+	u16			damage2;
+	u8			defPokePos1;
+	u8			defPokePos2;
+	u16			timer;
+}WAZA_DMG2_ACT_WORK;
+
+//=============================================================================================
+/**
+ * ２体同時ダメージエフェクト開始
+ *
+ * @param   wk					
+ * @param   defPokePos	
+ * @param   damage			
+ * @param   aff					
+ *
+ */
+//=============================================================================================
+void BTLV_ACT_DamageEffectDouble_Start( BTLV_CORE* wk, BtlPokePos defPokePos1, BtlPokePos defPokePos2,
+		u16 damage1, u16 damage2, BtlTypeAff aff )
+{
+	WAZA_DMG2_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_DMG2_ACT_WORK));
+
+	subwk->affinity = aff;
+	subwk->damage1 = damage1;
+	subwk->damage2 = damage2;
+	subwk->defPokePos1 = defPokePos1;
+	subwk->defPokePos2 = defPokePos2;
+	subwk->timer = 0;
+
+	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocDamageDoubleEffect );
+}
+//=============================================================================================
+/**
+ * ２体同時ダメージエフェクト終了待ち
+ *
+ * @param   wk		
+ *
+ * @retval  BOOL		TRUEで終了
+ */
+//=============================================================================================
+BOOL BTLV_ACT_DamageEffectDouble_Wait( BTLV_CORE* wk )
+{
+	return BTL_UTIL_CallProc( &wk->subProc );
+}
+static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs )
+{
+	BTLV_CORE* wk = wk_adrs;
+	WAZA_DMG2_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_DMG2_ACT_WORK));
+
+	switch( *seq ){
+	case 0:
+		BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos1, subwk->damage1, subwk->affinity, TRUE );
+		BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos2, subwk->damage2, subwk->affinity, FALSE );
+
+		if( subwk->affinity < BTL_TYPEAFF_100 )
+		{
+			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+		}
+		else if ( subwk->affinity > BTL_TYPEAFF_100 )
+		{
+			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+		}
+		(*seq)++;
+		break;
+
+	case 1:
+		if(	BTLV_SCU_WaitWazaDamageAct(wk->scrnU)
+		&&	BTLV_SCU_WaitMsg(wk->scrnU)
+		){
+			return TRUE;
+		}
+		break;
+
+	}
+	return FALSE;
+}
+
 
 //=============================================================================================
 /**
@@ -636,6 +740,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 //=============================================================================================
 void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 {
+	BTL_Printf("[BTLV] 標準メッセージ出力コマンド処理  strID=%d\n", strID);
 	BTL_STR_MakeStringStdWithParams( wk->strBuf, strID, args );
 	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
 //	printf( wk->strBuf );

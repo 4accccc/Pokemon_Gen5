@@ -206,18 +206,18 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 static void initGraphicSystems( MAIN_WORK* wk )
 {
 	static const GFL_DISP_VRAM vramBank = {
-		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+		GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+		GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE,	// サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_128_B,					// メイン2DエンジンのOBJ
 		GX_VRAM_OBJEXTPLTT_0_F,			// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+		GX_VRAM_SUB_OBJ_16_I,				// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
 		GX_VRAM_TEXPLTT_0123_E,			// テクスチャパレットスロット
-		GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
-		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_128K,// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,	// サブOBJマッピングモード
 	};
 
 	GFL_DISP_SetBank( &vramBank );
@@ -687,25 +687,25 @@ static TEST_BCON testBcon = { WB_NET_SERVICEID_DEBUG_TAYA };
 static const GFLNetInitializeStruct testNetInitParam = {
 	testPacketTbl,				// 受信関数テーブル
 	NELEMS(testPacketTbl),		// 受信テーブル要素数
-    NULL,    ///< ハードで接続した時に呼ばれる
-    NULL,    ///< ネゴシエーション完了時にコール
+	NULL,    ///< ハードで接続した時に呼ばれる
+	NULL,    ///< ネゴシエーション完了時にコール
 	NULL,						// ユーザー同士が交換するデータのポインタ取得関数
 	NULL,						// ユーザー同士が交換するデータのサイズ取得関数
 	testBeaconGetFunc,			// ビーコンデータ取得関数
 	testBeaconGetSizeFunc,		// ビーコンデータサイズ取得関数
 	testBeaconCompFunc,			// ビーコンのサービスを比較して繋いで良いかどうか判断する
-    NULL,            // 普通のエラーが起こった場合 通信終了
+	NULL,            // 普通のエラーが起こった場合 通信終了
 	FatalError_Disp,			// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
 	NULL,						// 通信切断時に呼ばれる関数
 	NULL,						// オート接続で親になった場合
 #if GFL_NET_WIFI
-    NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
-    NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-    NULL,  ///< wifiフレンドリスト削除コールバック
-    NULL,   ///< DWC形式の友達リスト	
-    NULL,  ///< DWCのユーザデータ（自分のデータ）
-    0,   ///< DWCへのHEAPサイズ
-    TRUE,        ///< デバック用サーバにつなぐかどうか
+	NULL,	///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+	NULL,	///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+	NULL,	///< wifiフレンドリスト削除コールバック
+	NULL,	///< DWC形式の友達リスト	
+	NULL,	///< DWCのユーザデータ（自分のデータ）
+	0,		///< DWCへのHEAPサイズ
+	TRUE,        ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
 	TEST_GGID,					// ggid  DP=0x333,RANGER=0x178,WII=0x346
 	GFL_HEAPID_APP,				//元になるheapid
@@ -780,6 +780,7 @@ FS_EXTERN_OVERLAY(battle);
 
 #include "battle/battle.h"
 #include "poke_tool/monsno_def.h"
+#include "waza_tool/wazano_def.h"
 
 
 //----------------------------------
@@ -821,7 +822,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 
 		#ifdef DEBUG_ONLY_FOR_taya
 			setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
-			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
+			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_HITOKAGE, MONSNO_BAKUUDA, MONSNO_SUTAAMII, 0 );
 		#else
 			setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_AUSU + 2, MONSNO_AUSU + 1, 0 );
 			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_AUSU + 1, MONSNO_AUSU + 2, 0 );
@@ -972,9 +973,9 @@ static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void*
 			para->commPos = para->netID;
 
 			para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );	///< プレイヤーのパーティ
-			para->partyEnemy1 = NULL;	///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
+			para->partyEnemy1 = NULL;		///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
 			para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
-			para->partyEnemy2 = NULL;	///< 2vs2時の２番目敵AI用（不要ならnull）
+			para->partyEnemy2 = NULL;		///< 2vs2時の２番目敵AI用（不要ならnull）
 
 			if( para->netID == 0 )
 			{
@@ -1022,6 +1023,10 @@ static void setup_party( HEAPID heapID, POKEPARTY* party, ... )
 		{
 			TAYA_Printf("Create MonsNo=%d\n", monsno);
 			pp = PP_Create( monsno, 50, 3594, heapID );
+			if( monsno == MONSNO_GYARADOSU )
+			{
+				PP_SetWazaPush( pp, WAZANO_NAMINORI );
+			}
 			PokeParty_Add( party, pp );
 		}
 		else
