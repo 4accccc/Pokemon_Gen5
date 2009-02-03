@@ -799,7 +799,15 @@ extern void debugcheck(u32* data,int size );
  * @return      GFL_NETSYS
  */
 //==============================================================================
-extern void* GFI_NET_GetWork(void);
+extern void* GFL_NET_GetWork(void);
+//==============================================================================
+/**
+ * ©•ª‚Ì‹@‚ÌID‚ğ•Ô‚·
+ * @param   
+ * @retval  ©•ª‚Ì‹@‚ÌID  ‚Â‚È‚ª‚Á‚Ä‚¢‚È‚¢ê‡GFL_NET_NO_PARENTMACHINE
+ */
+//==============================================================================
+extern u16 GFL_NET_SystemGetCurrentID(void);
 
 #include "net_devicetbl.h"
 
