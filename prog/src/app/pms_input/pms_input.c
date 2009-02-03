@@ -1,31 +1,27 @@
 //============================================================================================
 /**
- * @file	pms_input.c
- * @bfief	簡易会話入力画面
- * @author	taya
- * @date	06.01.20
- */
+	* @file	pms_input.c
+	* @bfief	簡易会話入力画面
+	* @author	taya
+	* @date	06.01.20
+	*/
 //============================================================================================
-#include "common.h"
-#include "gflib\heapsys.h"
-#include "gflib\touchpanel.h"
-#include "gflib\button_man.h"
-#include "system\procsys.h"
-#include "system\pms_data.h"
+#include <gflib.h>
 
+#include "system\main.h"
+#include "savedata/save_control.h"
+
+#include "system\pms_data.h"
 #include "pmsi_sound_def.h"
 #include "pms_input_prv.h"
 #include "pmsi_initial_data.h"
 
-#ifdef DEBUG_ONLY_FOR_iwasawa 
- #undef IWASAWA_PRINT
- #define IWASAWA_PRINT(...) ((void) 0)
-#endif
+#include "test/ariizumi/ari_debug.h"
 
 //------------------------------------------------------
 /**
- * 定数定義
- */
+	* 定数定義
+	*/
 //------------------------------------------------------
 enum {
 	HEAPSIZE_SYS = 0x8000,
@@ -79,60 +75,60 @@ enum TOUCH_BUTTON {
 };
 
 enum{
- TPED_DCBTN_PX = 24*8,
- TPED_DCBTN_PY0 = 14*8,
- TPED_DCBTN_PY1 = 17*8,
- TPED_DCBTN_SX = 8*8,
- TPED_DCBTN_SY = 2*8,
+	TPED_DCBTN_PX = 24*8,
+	TPED_DCBTN_PY0 = 14*8,
+	TPED_DCBTN_PY1 = 17*8,
+	TPED_DCBTN_SX = 8*8,
+	TPED_DCBTN_SY = 2*8,
 
- TPED_WORD1_PX = 10*8,
- TPED_WORD_PY = 2*8,
- TPED_WORD_SX = 12*8,
- TPED_WORD_SY = 2*8,
- TPED_WORD2_PX0 = 3*8,
- TPED_WORD2_PX1 = 17*8,
+	TPED_WORD1_PX = 10*8,
+	TPED_WORD_PY = 2*8,
+	TPED_WORD_SX = 12*8,
+	TPED_WORD_SY = 2*8,
+	TPED_WORD2_PX0 = 3*8,
+	TPED_WORD2_PX1 = 17*8,
 
- TPED_SBTN_PX0 = 8,
- TPED_SBTN_PX1 = 27*8,
- TPED_SBTN_PY = 6*8+4,
- TPED_SBTN_SX = 4*8,
- TPED_SBTN_SY = 3*8,
+	TPED_SBTN_PX0 = 8,
+	TPED_SBTN_PX1 = 27*8,
+	TPED_SBTN_PY = 6*8+4,
+	TPED_SBTN_SX = 4*8,
+	TPED_SBTN_SY = 3*8,
 
- TPCA_RET_PX = 24*8+4,
- TPCA_RET_PY = 20*8+4,
- TPCA_RET_SX = 7*8,
- TPCA_RET_SY = 22,
+	TPCA_RET_PX = 24*8+4,
+	TPCA_RET_PY = 20*8+4,
+	TPCA_RET_SX = 7*8,
+	TPCA_RET_SY = 22,
 
- TPCA_GMODE_PX = 2*8,
- TPCA_IMODE_PX = 22*8,
- TPCA_MODE_PY = 0,
- TPCA_MODE_SX = 8*8,
- TPCA_MODE_SY = 5*8+2,
+	TPCA_GMODE_PX = 2*8,
+	TPCA_IMODE_PX = 22*8,
+	TPCA_MODE_PY = 0,
+	TPCA_MODE_SX = 8*8,
+	TPCA_MODE_SY = 5*8+2,
 
- TPCA_GMA_SX = 9*8,
- TPCA_GMA_SY = 2*8,
- TPCA_GMA_PX = 1*8,
- TPCA_GMA_PY = 9*8,
- TPCA_GMA_OX = TPCA_GMA_SX+1*8,
- TPCA_GMA_OY = TPCA_GMA_SY+1*8,
+	TPCA_GMA_SX = 9*8,
+	TPCA_GMA_SY = 2*8,
+	TPCA_GMA_PX = 1*8,
+	TPCA_GMA_PY = 9*8,
+	TPCA_GMA_OX = TPCA_GMA_SX+1*8,
+	TPCA_GMA_OY = TPCA_GMA_SY+1*8,
 
- TPCA_IMA_SX = 13,
- TPCA_IMA_SY = 16,
- TPCA_IMA_PX = 2*8-GROUPMODE_BG_XOFS,
- TPCA_IMA_PY = 10*8-CATEGORY_BG_ENABLE_YOFS,
+	TPCA_IMA_SX = 13,
+	TPCA_IMA_SY = 16,
+	TPCA_IMA_PX = 2*8-GROUPMODE_BG_XOFS,
+	TPCA_IMA_PY = 10*8-CATEGORY_BG_ENABLE_YOFS,
 
- TPWD_SCR_PX = 28*8+4,
- TPWD_SCR_SX = 24,
- TPWD_SCR_SY = 7*8,
- TPWD_SCR_PY0 = 6*8,
- TPWD_SCR_PY1 = TPWD_SCR_PY0+TPWD_SCR_SY,
+	TPWD_SCR_PX = 28*8+4,
+	TPWD_SCR_SX = 24,
+	TPWD_SCR_SY = 7*8,
+	TPWD_SCR_PY0 = 6*8,
+	TPWD_SCR_PY1 = TPWD_SCR_PY0+TPWD_SCR_SY,
 
- TPWD_WORD_PX = 4*8,
- TPWD_WORD_PY = 6*8,
- TPWD_WORD_SX = 9*8,
- TPWD_WORD_SY = 2*8,
- TPWD_WORD_OX = TPWD_WORD_SX+32,
- TPWD_WORD_OY = TPWD_WORD_SY+8,
+	TPWD_WORD_PX = 4*8,
+	TPWD_WORD_PY = 6*8,
+	TPWD_WORD_SX = 9*8,
+	TPWD_WORD_SY = 2*8,
+	TPWD_WORD_OX = TPWD_WORD_SX+32,
+	TPWD_WORD_OY = TPWD_WORD_SY+8,
 };
 
 enum {
@@ -172,17 +168,17 @@ enum {
 
 //------------------------------------------------------
 /**
- * 関数型定義
- */
+	* 関数型定義
+	*/
 //------------------------------------------------------
 typedef  void (*SubProc)(PMS_INPUT_WORK*, int*);
-typedef  PROC_RESULT (*MainProc)(PMS_INPUT_WORK*, int*);
+typedef  GFL_PROC_RESULT (*MainProc)(PMS_INPUT_WORK*, int* );
 typedef	void (*KTSTChangeProc)(PMS_INPUT_WORK*,int* seq);
 
 //------------------------------------------------------
 /**
- * メニュー操作ワーク
- */
+	* メニュー操作ワーク
+	*/
 //------------------------------------------------------
 typedef struct {
 	u8   pos;
@@ -209,8 +205,8 @@ typedef struct {
 
 //------------------------------------------------------
 /**
- * ワーク領域定義
- */
+	* ワーク領域定義
+	*/
 //------------------------------------------------------
 struct _PMS_INPUT_WORK{
 
@@ -238,7 +234,7 @@ struct _PMS_INPUT_WORK{
 	u16           key_repeat;
 	int           touch_button;
 	int           hold_button;
-	BUTTON_MAN*   bmn;
+	GFL_BUTTON_MAN*   bmn;
 	BOOL          button_up_hold_flag;
 	BOOL          button_down_hold_flag;
 
@@ -259,6 +255,9 @@ struct _PMS_INPUT_WORK{
 
 	int			key_mode;
 	KTSTChangeProc	cb_ktchg_func;
+	
+	void		*tcbWork;
+	GFL_TCBSYS	*tcbSys;
 };
 
 
@@ -266,19 +265,19 @@ struct _PMS_INPUT_WORK{
 // Prototype
 //==============================================================
 static void BmnCallBack( u32 buttonID, u32 event, void* wk_ptr );
-static PMS_INPUT_WORK* ConstructWork( PROC* proc );
+static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk );
 static void setup_sentence_work( SENTENCE_WORK* s_wk, PMS_DATA* pms );
 static void sentence_increment( SENTENCE_WORK* s_wk, PMS_DATA* pms );
 static void sentence_decrement( SENTENCE_WORK* s_wk, PMS_DATA* pms );
-static void DestructWork( PMS_INPUT_WORK* wk, PROC* proc );
+static void DestructWork( PMS_INPUT_WORK* wk, GFL_PROC* proc );
 static void ChangeMainProc( PMS_INPUT_WORK* wk, MainProc main_proc );
 static void ChangeMainProc_ToCommandButtonArea( PMS_INPUT_WORK* wk );
-static PROC_RESULT MainProc_EditArea( PMS_INPUT_WORK* wk, int* seq );
-static PROC_RESULT mp_input_single( PMS_INPUT_WORK* wk, int* seq );
-static PROC_RESULT mp_input_double( PMS_INPUT_WORK* wk, int* seq );
-static PROC_RESULT mp_input_sentence( PMS_INPUT_WORK* wk, int* seq );
-static PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq );
-static PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq );
+static GFL_PROC_RESULT MainProc_EditArea( PMS_INPUT_WORK* wk, int* seq );
+static GFL_PROC_RESULT mp_input_single( PMS_INPUT_WORK* wk, int* seq );
+static GFL_PROC_RESULT mp_input_double( PMS_INPUT_WORK* wk, int* seq );
+static GFL_PROC_RESULT mp_input_sentence( PMS_INPUT_WORK* wk, int* seq );
+static GFL_PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq );
+static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq );
 static void category_input_key(PMS_INPUT_WORK* wk,int* seq);
 static void category_input_touch(PMS_INPUT_WORK* wk,int* seq);
 static void category_input(PMS_INPUT_WORK* wk,int* seq);
@@ -295,7 +294,7 @@ static u32 get_wordwin_pos( const WORDWIN_WORK* wordwin );
 static int get_wordwin_scroll_vector( const WORDWIN_WORK* wordwin );
 static int get_wordwin_linepos( const WORDWIN_WORK* wordwin );
 static int get_wordwin_linemax( const WORDWIN_WORK* wordwin );
-static PROC_RESULT MainProc_WordWin( PMS_INPUT_WORK* wk, int* seq );
+static GFL_PROC_RESULT MainProc_WordWin( PMS_INPUT_WORK* wk, int* seq );
 static void word_input_key(PMS_INPUT_WORK* wk,int* seq);
 static void word_input_touch(PMS_INPUT_WORK* wk,int* seq);
 static void word_input(PMS_INPUT_WORK* wk,int* seq);
@@ -303,7 +302,7 @@ static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key );
 static int check_wordwin_scroll_up( WORDWIN_WORK* wordwin );
 static int check_wordwin_scroll_down( WORDWIN_WORK* wordwin );
 static BOOL set_select_word( PMS_INPUT_WORK* wk );
-static PROC_RESULT MainProc_Quit( PMS_INPUT_WORK* wk, int* seq );
+static GFL_PROC_RESULT MainProc_Quit( PMS_INPUT_WORK* wk, int* seq );
 static void SetSubProc( PMS_INPUT_WORK* wk, SubProc sub_proc );
 static void QuitSubProc( PMS_INPUT_WORK* wk );
 static void SubProc_FadeIn( PMS_INPUT_WORK* wk, int* seq );
@@ -319,28 +318,26 @@ static void SubProc_ChangeCategoryMode( PMS_INPUT_WORK* wk, int* seq );
 
 
 //==============================================================
-// PROC-DATA
+// GFL_PROC-DATA
 //==============================================================
-const PROC_DATA ProcData_PMSInput = {
+const GFL_PROC_DATA ProcData_PMSInput = {
 	PMSInput_Init,
 	PMSInput_Main,
 	PMSInput_Quit,
-	NO_OVERLAY_ID,
 };
-
 
 
 //------------------------------------------------------------------
 /**
- * PROC初期化
- *
- * @param   proc		
- * @param   seq		
- *
- * @retval  PROC_RESULT		
- */
+	* GFL_PROC初期化
+	*
+	* @param   proc		
+	* @param   seq		
+	*
+	* @retval  GFL_PROC_RESULT		
+	*/
 //------------------------------------------------------------------
-PROC_RESULT PMSInput_Init( PROC * proc, int * seq )
+GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
 	PMS_INPUT_WORK* wk;
 
@@ -348,15 +345,15 @@ PROC_RESULT PMSInput_Init( PROC * proc, int * seq )
 	case 0:
 		Snd_DataSetByScene( SND_SCENE_SUB_PMS, 0, 0 );	// サウンドデータロード(PMS)(BGM引継ぎ)
 
-		sys_CreateHeap( HEAPID_BASE_APP, HEAPID_PMS_INPUT_SYSTEM, HEAPSIZE_SYS );
-		sys_CreateHeap( HEAPID_BASE_APP, HEAPID_PMS_INPUT_VIEW, HEAPSIZE_VIEW );
-		wk = ConstructWork( proc );
+		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PMS_INPUT_SYSTEM, HEAPSIZE_SYS );
+		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PMS_INPUT_VIEW, HEAPSIZE_VIEW );
+		wk = ConstructWork( proc , pwk );
 		PMSIView_SetCommand( wk->vwk, VCMD_INIT );
 		(*seq)++;
 		break;
 
 	case 1:
-		wk = PROC_GetWork( proc );
+		wk = mywk;
 		if( PMSIView_WaitCommandAll( wk->vwk ) )
 		{
 			if( wk->input_mode == PMSI_MODE_SENTENCE )
@@ -367,65 +364,67 @@ PROC_RESULT PMSInput_Init( PROC * proc, int * seq )
 			{
 				wk->sentence_edit_pos_max = 0;
 			}
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		break;
 	}
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 
 
 //------------------------------------------------------------------
 /**
- * PROC メイン
- *
- * @param   proc		
- * @param   seq		
- *
- * @retval  PROC_RESULT		
- */
+	* GFL_PROC メイン
+	*
+	* @param   proc		
+	* @param   seq		
+	*
+	* @retval  GFL_PROC_RESULT		
+	*/
 //------------------------------------------------------------------
-PROC_RESULT PMSInput_Main( PROC * proc, int * seq )
+GFL_PROC_RESULT PMSInput_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
-	PMS_INPUT_WORK* wk = PROC_GetWork( proc );
+	GFL_PROC_RESULT ret = GFL_PROC_RES_CONTINUE;
+	PMS_INPUT_WORK* wk = mywk;
 
-	wk->key_trg = sys.trg;
-	wk->key_cont = sys.cont;
-	wk->key_repeat = sys.repeat;
+	wk->key_trg = GFL_UI_KEY_GetTrg();
+	wk->key_cont = GFL_UI_KEY_GetCont();
+	wk->key_repeat = GFL_UI_KEY_GetRepeat();
 
-	BMN_Main( wk->bmn );
+	GFL_BMN_Main( wk->bmn );
 
 	if( wk->sub_proc != NULL )
 	{
 		wk->sub_proc( wk, &(wk->sub_seq) );
-		return PROC_RES_CONTINUE;
+		ret = GFL_PROC_RES_CONTINUE;
 	}
 	else
 	{
-		return wk->main_proc( wk, &(wk->main_seq) );
+		ret = wk->main_proc( wk, &(wk->main_seq) );
 	}
 
-	return PROC_RES_CONTINUE;
+	
+	return ret;
 }
 
 //------------------------------------------------------------------
 /**
- * ボタン管理マネージャコールバック
- *
- * @param   buttonID	
- * @param   event		
- * @param   wk_ptr		
- *
- */
+	* ボタン管理マネージャコールバック
+	*
+	* @param   buttonID	
+	* @param   event		
+	* @param   wk_ptr		
+	*
+	*/
 //------------------------------------------------------------------
 static void BmnCallBack( u32 buttonID, u32 event, void* wk_ptr )
 {
 	PMS_INPUT_WORK* wk = wk_ptr;
 
 	switch( event ){
-	case BMN_EVENT_TOUCH:
+	case GFL_BMN_EVENT_TOUCH:
 		wk->touch_button = buttonID;
 		switch(buttonID){
 		case TOUCH_BUTTON_UP:
@@ -437,8 +436,8 @@ static void BmnCallBack( u32 buttonID, u32 event, void* wk_ptr )
 		}
 		break;
 
-	case BMN_EVENT_RELEASE:
-	case BMN_EVENT_SLIDEOUT:
+	case GFL_BMN_EVENT_RELEASE:
+	case GFL_BMN_EVENT_SLIDEOUT:
 		switch(buttonID){
 		case TOUCH_BUTTON_UP:
 			PMSIView_SetCommand( wk->vwk, VCMD_BUTTON_UP_RELEASE );
@@ -450,7 +449,7 @@ static void BmnCallBack( u32 buttonID, u32 event, void* wk_ptr )
 		wk->touch_button = TOUCH_BUTTON_NULL;
 		break;
 
-	case BMN_EVENT_HOLD:
+	case GFL_BMN_EVENT_HOLD:
 		if(	(buttonID == TOUCH_BUTTON_UP)
 		||	(buttonID == TOUCH_BUTTON_DOWN)
 		){
@@ -466,47 +465,47 @@ static void BmnCallBack( u32 buttonID, u32 event, void* wk_ptr )
 
 //------------------------------------------------------------------
 /**
- * PROC 終了
- *
- * @param   proc		
- * @param   seq		
- *
- * @retval  PROC_RESULT		
- */
+	* GFL_PROC 終了
+	*
+	* @param   proc		
+	* @param   seq		
+	*
+	* @retval  GFL_PROC_RESULT		
+	*/
 //------------------------------------------------------------------
-PROC_RESULT PMSInput_Quit( PROC * proc, int * seq )
+GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
-	DestructWork( PROC_GetWork(proc), proc );
+	DestructWork( mywk, proc );
 
-	sys_DeleteHeap( HEAPID_PMS_INPUT_SYSTEM );
-	sys_DeleteHeap( HEAPID_PMS_INPUT_VIEW );
+	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_SYSTEM );
+	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_VIEW );
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 //------------------------------------------------------------------
 /**
- * メインワーク構築
- *
- * @param   wk		
- * @param   proc		
- *
- */
+	* メインワーク構築
+	*
+	* @param   wk		
+	* @param   proc		
+	*
+	*/
 //------------------------------------------------------------------
-static PMS_INPUT_WORK* ConstructWork( PROC* proc )
+static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
 {
 	// enum TOUCH_BUTTON と一致させる
-	static const TP_HIT_TBL hit_tbl[] = {
+	static const GFL_UI_TP_HITTBL hit_tbl[] = {
 		{ BUTTON_GROUP_TOUCH_TOP, BUTTON_GROUP_TOUCH_BOTTOM, BUTTON_GROUP_TOUCH_LEFT, BUTTON_GROUP_TOUCH_RIGHT },
 		{ BUTTON_INITIAL_TOUCH_TOP, BUTTON_INITIAL_TOUCH_BOTTOM, BUTTON_INITIAL_TOUCH_LEFT, BUTTON_INITIAL_TOUCH_RIGHT },
 		{ BUTTON_UP_TOUCH_TOP, BUTTON_UP_TOUCH_BOTTOM, BUTTON_UP_TOUCH_LEFT, BUTTON_UP_TOUCH_RIGHT },
 		{ BUTTON_DOWN_TOUCH_TOP, BUTTON_DOWN_TOUCH_BOTTOM, BUTTON_DOWN_TOUCH_LEFT, BUTTON_DOWN_TOUCH_RIGHT },
-		{ TP_HIT_END, 0, 0, 0 },
+		{ GFL_UI_TP_HIT_END, 0, 0, 0 },
 	};
 
 	PMS_INPUT_WORK* wk;
 
-	wk = PROC_AllocWork( proc, sizeof(PMS_INPUT_WORK), HEAPID_PMS_INPUT_SYSTEM );
-	wk->input_param = PROC_GetParentWork( proc );
+	wk = GFL_PROC_AllocWork( proc, sizeof(PMS_INPUT_WORK), HEAPID_PMS_INPUT_SYSTEM );
+	wk->input_param = pwk;
 	wk->input_mode = PMSI_PARAM_GetInputMode( wk->input_param );
 
 	//キーorタッチステータス取得
@@ -522,7 +521,7 @@ static PMS_INPUT_WORK* ConstructWork( PROC* proc )
 
 	wk->dwk = PMSI_DATA_Create( HEAPID_PMS_INPUT_SYSTEM, wk->input_param );
 	wk->vwk = PMSIView_Create(wk, wk->dwk);
-	wk->bmn = BMN_Create( hit_tbl, NELEMS(hit_tbl), BmnCallBack, wk, HEAPID_PMS_INPUT_SYSTEM );
+	wk->bmn = GFL_BMN_Create( hit_tbl, BmnCallBack, wk, HEAPID_PMS_INPUT_SYSTEM );
 	wk->button_up_hold_flag = FALSE;
 	wk->button_down_hold_flag = FALSE;
 
@@ -530,6 +529,9 @@ static PMS_INPUT_WORK* ConstructWork( PROC* proc )
 	wk->sub_proc = NULL;
 	wk->sub_seq = 0;
 	wk->edit_pos = 0;
+
+	wk->tcbWork = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_SYSTEM , GFL_TCB_CalcSystemWorkSize( 5 ) );
+	wk->tcbSys = GFL_TCB_Init( 5 , wk->tcbWork );
 	
 	ChangeMainProc(wk, MainProc_EditArea);
 	SetSubProc( wk, SubProc_FadeIn );
@@ -582,23 +584,25 @@ static void sentence_decrement( SENTENCE_WORK* s_wk, PMS_DATA* pms )
 
 //------------------------------------------------------------------
 /**
- * メインワーク破棄
- *
- * @param   wk		
- *
- */
+	* メインワーク破棄
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
-static void DestructWork( PMS_INPUT_WORK* wk, PROC* proc )
+static void DestructWork( PMS_INPUT_WORK* wk, GFL_PROC* proc )
 {
+	GFL_TCB_Exit( wk->tcbSys );
+	GFL_HEAP_FreeMemory( wk->tcbWork );
+	
 	//キーorタッチステータス反映
 	PMSI_PARAM_SetKTStatus(wk->input_param,wk->key_mode);
 	
-	BMN_Delete( wk->bmn );
+	GFL_BMN_Delete( wk->bmn );
 	PMSIView_Delete( wk->vwk );
 	PMSI_DATA_Delete( wk->dwk );
-	PROC_FreeWork( proc );
+	GFL_PROC_FreeWork( proc );
 }
-
 
 
 
@@ -623,30 +627,30 @@ static void ChangeMainProc_ToCommandButtonArea( PMS_INPUT_WORK* wk )
 }
 
 /*
- *	@brief	キー/タッチの切替
- */
+	*	@brief	キー/タッチの切替
+	*/
 static int KeyStatusChange(PMS_INPUT_WORK* wk,int* seq)
 {
-	if(wk->key_mode == APP_KTST_TOUCH){
-		if(GF_TP_GetCont() != 0){	//
+	if(wk->key_mode == GFL_APP_KTST_TOUCH){
+		if(GFL_UI_TP_GetCont() != 0){	//
 			return 0;
 		}
-		if(sys.cont != 0){
+		if(GFL_UI_KEY_GetCont() != 0){
 			if(wk->cb_ktchg_func != NULL){
 				(wk->cb_ktchg_func)(wk,seq);
 			}
-			wk->key_mode = APP_KTST_KEY;
+			wk->key_mode = GFL_APP_KTST_KEY;
 			return 1;
 		}
 	}else{
-		if(sys.cont != 0){
+		if(GFL_UI_KEY_GetCont() != 0){
 			return 0;
 		}
-		if(GF_TP_GetCont() != 0){
+		if(GFL_UI_TP_GetCont() != 0){
 			if(wk->cb_ktchg_func != NULL){
 				(wk->cb_ktchg_func)(wk,seq);
 			}
-			wk->key_mode = APP_KTST_TOUCH;
+			wk->key_mode = GFL_APP_KTST_TOUCH;
 			return 0;
 		}
 	}
@@ -655,17 +659,18 @@ static int KeyStatusChange(PMS_INPUT_WORK* wk,int* seq)
 }
 
 
+
 //----------------------------------------------------------------------------------------------
 /**
- * メインプロセス：入力欄での動作
- *
- * @param   wk		
- * @param   seq		
- *
- * @retval  PROC_RESULT		
- */
+	* メインプロセス：入力欄での動作
+	*
+	* @param   wk		
+	* @param   seq		
+	*
+	* @retval  GFL_PROC_RESULT		
+	*/
 //----------------------------------------------------------------------------------------------
-static PROC_RESULT MainProc_EditArea( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT MainProc_EditArea( PMS_INPUT_WORK* wk, int* seq )
 {
 	static const MainProc proc_tbl[] = {
 		mp_input_single,
@@ -677,24 +682,24 @@ static PROC_RESULT MainProc_EditArea( PMS_INPUT_WORK* wk, int* seq )
 }
 
 /**
- *	@brief	EditArea キー/タッチ切替
- */
+	*	@brief	EditArea キー/タッチ切替
+	*/
 static void CB_EditArea_KTChange(PMS_INPUT_WORK* wk,int* seq)
 {
 	PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_EDITAREA);
 }
 
 /**
- *	@brief	Category キー/タッチ切替
- */
+	*	@brief	Category キー/タッチ切替
+	*/
 static void CB_Category_KTChange(PMS_INPUT_WORK* wk,int* seq)
 {	
 	PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_CATEGORY);
 }
 
 /**
- *	@brief	WordWin キー/タッチ切替
- */
+	*	@brief	WordWin キー/タッチ切替
+	*/
 static void CB_WordWin_KTChange(PMS_INPUT_WORK* wk,int* seq)
 {	
 	PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_WORDWIN);
@@ -702,15 +707,15 @@ static void CB_WordWin_KTChange(PMS_INPUT_WORK* wk,int* seq)
 
 //------------------------------------------------------------------
 /**
- * 単語１つ入力モード
- *
- * @param   wk		
- * @param   seq		
- *
- * @retval  PROC_RESULT		
- */
+	* 単語１つ入力モード
+	*
+	* @param   wk		
+	* @param   seq		
+	*
+	* @retval  GFL_PROC_RESULT		
+	*/
 //------------------------------------------------------------------
-static PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq)
+static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 {
 	switch( *seq ){
 	case SEQ_EDW_KEYWAIT:
@@ -719,7 +724,9 @@ static PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq)
 		}
 		if( wk->key_trg & (PAD_KEY_DOWN | PAD_BUTTON_START))
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );
@@ -729,14 +736,18 @@ static PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq)
 		}
 		if( wk->key_trg & PAD_BUTTON_B )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 
 			SetSubProc( wk, SubProc_CommandCancel );
 			break;
 		}
 		if( wk->key_trg & PAD_BUTTON_A )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 			wk->category_pos = 0;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
@@ -750,7 +761,9 @@ static PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq)
 		}
 		if( wk->key_trg & PAD_KEY_UP )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 			if(wk->cmd_button_pos){
 				wk->cmd_button_pos ^= 1;
@@ -761,7 +774,9 @@ static PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq)
 			}
 			break;
 		}else if( wk->key_trg & (PAD_KEY_DOWN) ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 			wk->cmd_button_pos ^= 1;
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
@@ -769,13 +784,17 @@ static PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq)
 		}
 
 		if( wk->key_trg & PAD_BUTTON_START ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
 			break;
 		}
 		if( wk->key_trg & PAD_BUTTON_A ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 			if( wk->cmd_button_pos == BUTTON_POS_DECIDE ){
 				(*seq) = SEQ_EDW_TO_SUBPROC_OK;
@@ -787,7 +806,9 @@ static PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq)
 			}
 
 			if( wk->key_trg & PAD_BUTTON_B ){
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 				(*seq) = SEQ_EDW_TO_SUBPROC_CANCEL;
 				break;
 			}
@@ -820,48 +841,53 @@ static PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq)
 		break;
 	}
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 
 }
+
+
 static int edit_single_touch(PMS_INPUT_WORK* wk)
 {
 	int ret;
 	
-	static const RECT_HIT_TBL Btn_TpRect[] = {
+	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
 		{TPED_DCBTN_PY0,TPED_DCBTN_PY0+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
 		{TPED_DCBTN_PY1,TPED_DCBTN_PY1+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
 		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD1_PX,TPED_WORD1_PX+TPED_WORD_SX},
-		{RECT_HIT_END,0,0,0}
+		{GFL_UI_TP_HIT_END,0,0,0}
 	};
 //	pat = 0x007C;	//0000 0000 0111 1100	無効パレットbit(onになっている色Noは反応させない)
 //	if(GF_BGL_DotCheck(wk->bgl,GF_BGL_FRAME2_M,sys.tp_x,sys.tp_y,&pat) == FALSE){
 //		return FALSE;
 //	}
-	ret = GF_TP_RectHitTrg(Btn_TpRect);
+	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
 	return ret;
 }
+
+
 static int edit_double_touch(PMS_INPUT_WORK* wk)
 {
 	int ret;
 
-	static const RECT_HIT_TBL Btn_TpRect[] = {
+	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
 		{TPED_DCBTN_PY0,TPED_DCBTN_PY0+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
 		{TPED_DCBTN_PY1,TPED_DCBTN_PY1+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
 		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD2_PX0,TPED_WORD2_PX0+TPED_WORD_SX},
 		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD2_PX1,TPED_WORD2_PX1+TPED_WORD_SX},
-		{RECT_HIT_END,0,0,0}
+		{GFL_UI_TP_HIT_END,0,0,0}
 	};
-	ret = GF_TP_RectHitTrg(Btn_TpRect);
+	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
 	return ret;
 }
 static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 {
 	int ret,num,i;
-	RECT_HIT_TBL tbl;
+	u32 tpx,tpy;
+	GFL_UI_TP_HITTBL tbl;
 
-	static const RECT_HIT_TBL Btn_TpRect[] = {
+	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
 		{TPED_DCBTN_PY0,TPED_DCBTN_PY0+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
 		{TPED_DCBTN_PY1,TPED_DCBTN_PY1+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
@@ -869,28 +895,30 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 //		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD2_PX1,TPED_WORD2_PX1+TPED_WORD_SX},
 		{TPED_SBTN_PY,TPED_SBTN_PY+TPED_SBTN_SY,TPED_SBTN_PX0,TPED_SBTN_PX0+TPED_SBTN_SX},
 		{TPED_SBTN_PY,TPED_SBTN_PY+TPED_SBTN_SY,TPED_SBTN_PX1,TPED_SBTN_PX1+TPED_SBTN_SX},
-		{RECT_HIT_END,0,0,0}
+		{GFL_UI_TP_HIT_END,0,0,0}
 	};
-	if(GF_TP_GetTrg() == 0){
-		return RECT_HIT_NONE;
+	if(GFL_UI_TP_GetTrg() == 0){
+		return GFL_UI_TP_HIT_NONE;
 	}
-	ret = GF_TP_RectHitTrg(Btn_TpRect);
-	if(ret != RECT_HIT_NONE){
+	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
+	if(ret != GFL_UI_TP_HIT_NONE){
 		return ret;
 	}
 	num = PMSIView_GetSentenceEditPosMax( wk->vwk );
+	//TODO Cont? Trg?
+	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
 	for(i = 0;i < num;i++){
 		PMSIView_GetSentenceWordArea( wk->vwk ,&tbl,i);
-		if(GF_TP_SingleHitSelf( &tbl, sys.tp_x,sys.tp_y)){
+		if(GFL_UI_TP_HitSelf( &tbl, tpx , tpy )){
 			return i+4;
 		}
 
 	}
-	return RECT_HIT_NONE;
+	return GFL_UI_TP_HIT_NONE;
 }
 
 
-static PROC_RESULT mp_input_touch(PMS_INPUT_WORK* wk,int *seq)
+static GFL_PROC_RESULT mp_input_touch(PMS_INPUT_WORK* wk,int *seq )
 {
 	int ret;
 	u16	pat;
@@ -906,7 +934,9 @@ static PROC_RESULT mp_input_touch(PMS_INPUT_WORK* wk,int *seq)
 		switch(ret){
 		case 0:	//決定
 		case 1:	//やめる
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 			*seq = SEQ_EDW_TO_SUBPROC_OK+ret;
 			break;
 		case 2:	//単語選択
@@ -936,18 +966,18 @@ static PROC_RESULT mp_input_touch(PMS_INPUT_WORK* wk,int *seq)
 		}
 		break;
 	}
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
-static PROC_RESULT mp_input_single( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT mp_input_single( PMS_INPUT_WORK* wk, int* seq )
 {
 	if(	*seq == SEQ_EDW_KEYWAIT ||
 		*seq == SEQ_EDW_BUTTON_KEYWAIT){
 		if(KeyStatusChange(wk,seq)){
-			return PROC_RES_CONTINUE;
+			return GFL_PROC_RES_CONTINUE;
 		}
 	}
-	if(wk->key_mode == APP_KTST_KEY){
+	if(wk->key_mode == GFL_APP_KTST_KEY){
 		return mp_input_single_key(wk,seq);
 	}else{
 		return mp_input_touch(wk,seq);
@@ -956,15 +986,15 @@ static PROC_RESULT mp_input_single( PMS_INPUT_WORK* wk, int* seq )
 
 //------------------------------------------------------------------
 /**
- * 単語２つ入力モード
- *
- * @param   wk		
- * @param   seq		
- *
- * @retval  PROC_RESULT		
- */
+	* 単語２つ入力モード
+	*
+	* @param   wk		
+	* @param   seq		
+	*
+	* @retval  GFL_PROC_RESULT		
+	*/
 //------------------------------------------------------------------
-static PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 {
 	switch( *seq ){
 	case SEQ_EDW_KEYWAIT:
@@ -976,7 +1006,9 @@ static PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_trg & (PAD_KEY_DOWN|PAD_BUTTON_START) )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );
@@ -987,7 +1019,9 @@ static PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		{
 			if( wk->edit_pos != 0 )
 			{
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 				wk->edit_pos = 0;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_EDITAREA_CURSOR );
 			}
@@ -997,7 +1031,9 @@ static PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		{
 			if( wk->edit_pos == 0 )
 			{
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif /PMS_USE_SND
 				wk->edit_pos = 1;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_EDITAREA_CURSOR );
 			}
@@ -1005,14 +1041,18 @@ static PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_trg & PAD_BUTTON_B )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 
 			SetSubProc( wk, SubProc_CommandCancel );
 			break;
 		}
 		if( wk->key_trg & PAD_BUTTON_A )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 			wk->category_pos = 0;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
@@ -1029,7 +1069,9 @@ static PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_trg & PAD_KEY_UP )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 			if(wk->cmd_button_pos){
 				wk->cmd_button_pos ^= 1;
@@ -1040,7 +1082,9 @@ static PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 			}
 			break;
 		}else if( wk->key_trg & (PAD_KEY_DOWN) ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 			wk->cmd_button_pos ^= 1;
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
@@ -1048,13 +1092,17 @@ static PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 
 		if( wk->key_trg & PAD_BUTTON_START ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
 			break;
 		}
 		if( wk->key_trg & PAD_BUTTON_A ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 			if( wk->cmd_button_pos == BUTTON_POS_DECIDE ){
 				(*seq) = SEQ_EDW_TO_SUBPROC_OK;
@@ -1066,7 +1114,9 @@ static PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 			}
 
 			if( wk->key_trg & PAD_BUTTON_B ){
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 				(*seq) = SEQ_EDW_TO_SUBPROC_CANCEL;
 				break;
 			}
@@ -1100,17 +1150,17 @@ static PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		break;
 	}
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
-static PROC_RESULT mp_input_double( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT mp_input_double( PMS_INPUT_WORK* wk, int* seq )
 {
 	if(	*seq == SEQ_EDW_KEYWAIT ||
 		*seq == SEQ_EDW_BUTTON_KEYWAIT){
 		if(KeyStatusChange(wk,seq)){
-			return PROC_RES_CONTINUE;
+			return GFL_PROC_RES_CONTINUE;
 		}
 	}
-	if(wk->key_mode == APP_KTST_KEY){
+	if(wk->key_mode == GFL_APP_KTST_KEY){
 		return mp_input_double_key(wk,seq);
 	}else{
 		return mp_input_touch(wk,seq);
@@ -1119,15 +1169,15 @@ static PROC_RESULT mp_input_double( PMS_INPUT_WORK* wk, int* seq )
 
 //------------------------------------------------------------------
 /**
- * 文章入力モード
- *
- * @param   wk		
- * @param   seq		
- *
- * @retval  PROC_RESULT		
- */
+	* 文章入力モード
+	*
+	* @param   wk		
+	* @param   seq		
+	*
+	* @retval  GFL_PROC_RESULT		
+	*/
 //------------------------------------------------------------------
-static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 {
 
 	switch( *seq ){
@@ -1143,7 +1193,9 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		{
 			if( (wk->sentence_edit_pos_max) && (wk->edit_pos != 0) )
 			{
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 				wk->edit_pos--;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_EDITAREA_CURSOR );
 			}
@@ -1151,7 +1203,9 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_trg & PAD_KEY_DOWN )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 			if( (wk->sentence_edit_pos_max) && (wk->edit_pos < (wk->sentence_edit_pos_max-1)) )
 			{
@@ -1169,7 +1223,9 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		if( (wk->key_trg & PAD_BUTTON_START)
 		||	( (wk->key_trg & PAD_BUTTON_A) && (wk->sentence_edit_pos_max==0) )
 		){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );
@@ -1178,7 +1234,9 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_repeat & PAD_KEY_LEFT )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CHANGE_SENTENCE);
+#endif //PMS_USE_SND
 
 			wk->edit_pos = 0;
 			sentence_decrement( &wk->sentence_wk, &wk->edit_pms );
@@ -1188,7 +1246,9 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_repeat & PAD_KEY_RIGHT )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CHANGE_SENTENCE);
+#endif //PMS_USE_SND
 
 			wk->edit_pos = 0;
 			sentence_increment( &wk->sentence_wk, &wk->edit_pms );
@@ -1199,13 +1259,17 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 
 		if( wk->key_trg & PAD_BUTTON_B )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 			SetSubProc( wk, SubProc_CommandCancel );
 			break;
 		}
 		if( wk->key_trg & PAD_BUTTON_A )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 			wk->category_pos = 0;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
@@ -1227,7 +1291,9 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 		if( wk->key_trg & PAD_KEY_UP )
 		{
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 			if(wk->cmd_button_pos){
 				wk->cmd_button_pos ^= 1;
@@ -1238,7 +1304,9 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 			}
 			break;
 		}else if( wk->key_trg & (PAD_KEY_DOWN) ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 			wk->cmd_button_pos ^= 1;
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
@@ -1246,13 +1314,17 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 
 		if( wk->key_trg & PAD_BUTTON_START ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
 			break;
 		}
 		if( wk->key_trg & PAD_BUTTON_A ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 			if( wk->cmd_button_pos == BUTTON_POS_DECIDE ){
 				(*seq) = SEQ_EDS_TO_SUBPROC_OK;
@@ -1264,7 +1336,9 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 			}
 
 			if( wk->key_trg & PAD_BUTTON_B ){
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 				(*seq) = SEQ_EDS_TO_SUBPROC_CANCEL;
 				break;
 			}
@@ -1298,20 +1372,20 @@ static PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		break;
 	}
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //------------------------------------------------------------------
 /**
- * 文章入力モード
- *
- * @param   wk		
- * @param   seq		
- *
- * @retval  PROC_RESULT		
- */
+	* 文章入力モード
+	*
+	* @param   wk		
+	* @param   seq		
+	*
+	* @retval  GFL_PROC_RESULT		
+	*/
 //------------------------------------------------------------------
-static PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 {
 	int ret;
 	u16 pat;
@@ -1331,11 +1405,15 @@ static PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 		switch(ret){
 		case 0:	//決定
 		case 1:	//やめる
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 			*seq = SEQ_EDS_TO_SUBPROC_OK+ret;
 			break;
 		case 2:	//スクロールボタン
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CHANGE_SENTENCE);
+#endif //PMS_USE_SND
 
 			wk->edit_pos = 0;
 			sentence_decrement( &wk->sentence_wk, &wk->edit_pms );
@@ -1343,7 +1421,9 @@ static PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 			(*seq) = SEQ_EDS_WAIT_EDITAREA_UPDATE;
 			break;
 		case 3:
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CHANGE_SENTENCE);
+#endif //PMS_USE_SND
 
 			wk->edit_pos = 0;
 			sentence_increment( &wk->sentence_wk, &wk->edit_pms );
@@ -1359,7 +1439,7 @@ static PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 			break;
 		}
 		//ページスクロール
-#if 0
+#if 0	//移植していません
 		if( wk->key_trg & PAD_KEY_UP )
 		{
 			if( (wk->sentence_edit_pos_max) && (wk->edit_pos != 0) )
@@ -1472,19 +1552,19 @@ static PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 		break;
 	}
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
-static PROC_RESULT mp_input_sentence( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT mp_input_sentence( PMS_INPUT_WORK* wk, int* seq )
 {
 	if(	*seq == SEQ_EDS_INIT || 
 		*seq == SEQ_EDS_KEYWAIT ||
 		*seq == SEQ_EDS_BUTTON_KEYWAIT){
 		if(KeyStatusChange(wk,seq)){
-			return PROC_RES_CONTINUE;
+			return GFL_PROC_RES_CONTINUE;
 		}
 	}
-	if(wk->key_mode == APP_KTST_KEY){
+	if(wk->key_mode == GFL_APP_KTST_KEY){
 		return mp_input_sentence_key(wk,seq);
 	}else{
 		return mp_input_sentence_touch(wk,seq);
@@ -1493,14 +1573,14 @@ static PROC_RESULT mp_input_sentence( PMS_INPUT_WORK* wk, int* seq )
 
 //----------------------------------------------------------------------------------------------
 /**
- * メインプロセス：コマンドボタン（けってい・やめる）での動作
- *
- * @param   wk		
- * @param   seq		
- *
- */
+	* メインプロセス：コマンドボタン（けってい・やめる）での動作
+	*
+	* @param   wk		
+	* @param   seq		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 {
 	enum {
 		SEQ_KEYWAIT,
@@ -1517,7 +1597,9 @@ static PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 		{
 			if( wk->key_trg & PAD_KEY_UP )
 			{
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 				if(wk->cmd_button_pos){
 					wk->cmd_button_pos ^= 1;
@@ -1529,7 +1611,9 @@ static PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 				break;
 			}else if( wk->key_trg & (PAD_KEY_DOWN) )
 			{
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 
 				wk->cmd_button_pos ^= 1;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
@@ -1538,7 +1622,9 @@ static PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 
 			if( wk->key_trg & PAD_BUTTON_START )
 			{
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 				wk->cmd_button_pos = BUTTON_POS_DECIDE;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_BUTTON_CURSOR );
 				break;
@@ -1547,7 +1633,9 @@ static PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 
 			if( wk->key_trg & PAD_BUTTON_A )
 			{
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 				if( wk->cmd_button_pos == BUTTON_POS_DECIDE )
 				{
@@ -1563,7 +1651,9 @@ static PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 
 			if( wk->key_trg & PAD_BUTTON_B )
 			{
+#if PMS_USE_SND
 				Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 				(*seq) = SEQ_TO_SUBPROC_CANCEL;
 				break;
 			}
@@ -1594,20 +1684,20 @@ static PROC_RESULT MainProc_CommandButton( PMS_INPUT_WORK* wk, int* seq )
 	}
 
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 
 //----------------------------------------------------------------------------------------------
 /**
- * メインプロセス：カテゴリ選択
- *
- * @param   wk
- * @param   seq		
- *
- */
+	* メインプロセス：カテゴリ選択
+	*
+	* @param   wk
+	* @param   seq		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 {
 	switch( *seq ){
 	case SEQ_CA_KEYWAIT:
@@ -1634,19 +1724,21 @@ static PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 		break;
 	}
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 /**
- *	@brief
- */
+	*	@brief
+	*/
 static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 {
 	if(	(wk->touch_button == TOUCH_BUTTON_GROUP) && (wk->category_mode != CATEGORY_MODE_GROUP)
 	||	(wk->touch_button == TOUCH_BUTTON_INITIAL) && (wk->category_mode !=CATEGORY_MODE_INITIAL)
 	||	(wk->key_trg & PAD_BUTTON_SELECT)
 	){
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_CHANGE_CATEGORY);
+#endif //PMS_USE_SND
 		wk->category_mode ^= 1;
 		wk->category_pos = 0;
 		PMSIView_SetCommand( wk->vwk, VCMD_CHANGE_CATEGORY_MODE_ENABLE );
@@ -1656,7 +1748,9 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 
 	if( wk->key_trg & PAD_BUTTON_B )
 	{
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 
 		PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
 		wk->next_proc = MainProc_EditArea;
@@ -1665,46 +1759,54 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 	}
 	if( wk->key_trg & PAD_BUTTON_A ){
 		if( wk->category_pos == CATEGORY_POS_BACK ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
 			wk->next_proc = MainProc_EditArea;
 			*seq = SEQ_CA_NEXTPROC;
 		}else if( check_category_enable( wk ) ){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 			setup_wordwin_params( &wk->word_win, wk );
 			wk->next_proc = MainProc_WordWin;
 			PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_WORDWIN );
 			*seq = SEQ_CA_NEXTPROC;
 		}else{
+#if PMS_USE_SND
 			Snd_SePlay( SOUND_DISABLE_CATEGORY );
+#endif //PMS_USE_SND
 		}
 		return;
 	}
 	if( check_category_cursor_move( wk ) ){
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 		PMSIView_SetCommand( wk->vwk, VCMD_MOVE_CATEGORY_CURSOR );
 		return;
 	}
 }
 
 /**
- *	@brief	モード切替ボタン取得
- */
+	*	@brief	モード切替ボタン取得
+	*/
 static int input_category_word_btn(PMS_INPUT_WORK* wk)
 {
 	int ret;
 
-	static const RECT_HIT_TBL Btn_TpRect[] = {
+	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
 		{TPCA_RET_PY,TPCA_RET_PY+TPCA_RET_SY,TPCA_RET_PX,TPCA_RET_PX+TPCA_RET_SX},
 		{TPCA_MODE_PY,TPCA_MODE_PY+TPCA_MODE_SY,TPCA_GMODE_PX,TPCA_GMODE_PX+TPCA_MODE_SX},
 		{TPCA_MODE_PY,TPCA_MODE_PY+TPCA_MODE_SY,TPCA_IMODE_PX,TPCA_IMODE_PX+TPCA_MODE_SX},
-		{RECT_HIT_END,0,0,0}
+		{GFL_UI_TP_HIT_END,0,0,0}
 	};
-	ret = GF_TP_RectHitTrg(Btn_TpRect);
-	if(	ret == RECT_HIT_NONE){
+	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
+	if(	ret == GFL_UI_TP_HIT_NONE){
 		return 0;
 	}
 	switch(ret){
@@ -1726,11 +1828,14 @@ static int input_category_word_btn(PMS_INPUT_WORK* wk)
 static int category_touch_group(PMS_INPUT_WORK* wk)
 {
 	int i,j;
-	TP_HIT_TBL tbl;
+	u32 tpx,tpy;
+	GFL_UI_TP_HITTBL tbl;
 
-	if(GF_TP_GetTrg() == 0){
+	if(GFL_UI_TP_GetTrg() == 0){
 		return -1;
 	}
+	//TODO Cont? Trg?
+	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
 	for(i = 0;i < 4;i++){
 		tbl.rect.top = TPCA_GMA_PY+TPCA_GMA_OY*i - CATEGORY_BG_ENABLE_YOFS;
 		tbl.rect.bottom = tbl.rect.top + TPCA_GMA_SY;
@@ -1738,7 +1843,7 @@ static int category_touch_group(PMS_INPUT_WORK* wk)
 			tbl.rect.left = TPCA_GMA_PX+TPCA_GMA_OX*j - GROUPMODE_BG_XOFS;
 			tbl.rect.right = tbl.rect.left + TPCA_GMA_SX;
 			
-			if(GF_TP_SingleHitSelf( &tbl, sys.tp_x,sys.tp_y)){
+			if(GFL_UI_TP_HitSelf( &tbl, tpx,tpy)){
 				return i*3+j;
 			}
 		}
@@ -1749,44 +1854,46 @@ static int category_touch_group(PMS_INPUT_WORK* wk)
 static int category_touch_initial(PMS_INPUT_WORK* wk)
 {
 	int ret;
+	u32 tpx,tpy;
 	s16 x,y;
-	static const RECT_HIT_TBL Btn_TpRect[] = {
+	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
 		{TPCA_IMA_PY,TPCA_IMA_PY+TPCA_IMA_SY*4,TPCA_IMA_PX,TPCA_IMA_PX+TPCA_IMA_SX*15},
-		{RECT_HIT_END,0,0,0}
+		{GFL_UI_TP_HIT_END,0,0,0}
 	};
 	
-	ret = GF_TP_RectHitTrg(Btn_TpRect);
-	if(	ret == RECT_HIT_NONE){
+	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
+	if(	ret == GFL_UI_TP_HIT_NONE){
 		return -1;
 	}
-	x = (sys.tp_x - TPCA_IMA_PX) / TPCA_IMA_SX;
-	y = (sys.tp_y - TPCA_IMA_PY) / TPCA_IMA_SY;
+	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
+	x = (tpx - TPCA_IMA_PX) / TPCA_IMA_SX;
+	y = (tpy - TPCA_IMA_PY) / TPCA_IMA_SY;
 	if(x == 5 || x == 11){
 		return -1;
 	}
 	if(x < 5){
-		IWASAWA_PRINT(" Initial Hit0 = %d\n",y*5+x);
+		ARI_TPrintf(" Initial Hit0 = %d\n",y*5+x);
 		return y*5+x;
 	}
 	if(x < 11){
-		IWASAWA_PRINT(" Initial Hit1 = %d\n",y*5+(x-6)+20);
+		ARI_TPrintf(" Initial Hit1 = %d\n",y*5+(x-6)+20);
 		return y*5+(x-6)+20;
 	}
 	if(y == 0){
-		IWASAWA_PRINT(" Initial Hit2 = %d\n",(x-12)+40);
+		ARI_TPrintf(" Initial Hit2 = %d\n",(x-12)+40);
 		return (x-12)+40;
 	}
 	if(y == 1 && x < 14){
-		IWASAWA_PRINT(" Initial Hit3 = %d\n",(x-12)+43);
+		ARI_TPrintf(" Initial Hit3 = %d\n",(x-12)+43);
 		return (x-12)+43;
 	}
 	return -1;
 }
 
 /**
- *	@brief
- */
+	*	@brief
+	*/
 static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 {
 	int ret;
@@ -1805,14 +1912,18 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 	ret = input_category_word_btn(wk);
 	switch(ret){
 	case 1:
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 
 		PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
 		wk->next_proc = MainProc_EditArea;
 		*seq = SEQ_CA_NEXTPROC;
 		return;
 	case 2:
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_CHANGE_CATEGORY);
+#endif //PMS_USE_SND
 		wk->category_mode ^= 1;
 		wk->category_pos = 0;
 		PMSIView_SetCommand( wk->vwk, VCMD_CHANGE_CATEGORY_MODE_ENABLE );
@@ -1826,7 +1937,9 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		}
 		wk->category_pos = ret;
 		if(PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos ) == 0){
+#if PMS_USE_SND
 			Snd_SePlay( SOUND_DISABLE_CATEGORY );
+#endif //PMS_USE_SND
 			return;
 		}
 	}else{
@@ -1836,11 +1949,15 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		}
 		wk->category_pos = ini_idx[ret];
 		if(PMSI_DATA_GetInitialEnableWordCount( wk->dwk, wk->category_pos ) == 0 ){
+#if PMS_USE_SND
 			Snd_SePlay( SOUND_DISABLE_CATEGORY );
+#endif //PMS_USE_SND
 			return;
 		}
 	}
+#if PMS_USE_SND
 	Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 	setup_wordwin_params( &wk->word_win, wk );
 	wk->next_proc = MainProc_WordWin;
@@ -1849,14 +1966,14 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 }
 
 /**
- *	@brief	
- */
+	*	@brief	
+	*/
 static void category_input(PMS_INPUT_WORK* wk,int* seq)
 {
 	if(KeyStatusChange(wk,seq)){
 		return;
 	}
-	if(wk->key_mode == APP_KTST_KEY){
+	if(wk->key_mode == GFL_APP_KTST_KEY){
 		category_input_key(wk,seq);
 	}else{
 		category_input_touch(wk,seq);
@@ -1866,12 +1983,12 @@ static void category_input(PMS_INPUT_WORK* wk,int* seq)
 
 //------------------------------------------------------------------
 /**
- * 選択しているカテゴリに使用可能な単語が含まれているかチェック
- *
- * @param   wk		
- *
- * @retval  BOOL	TRUEで含まれている
- */
+	* 選択しているカテゴリに使用可能な単語が含まれているかチェック
+	*
+	* @param   wk		
+	*
+	* @retval  BOOL	TRUEで含まれている
+	*/
 //------------------------------------------------------------------
 static BOOL check_category_enable( PMS_INPUT_WORK* wk )
 {
@@ -1888,12 +2005,12 @@ static BOOL check_category_enable( PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * カテゴリ選択時のカーソル移動チェック
- *
- * @param   wk			ワークポインタ
- *
- * @retval  BOOL		TRUEでカーソル移動した
- */
+	* カテゴリ選択時のカーソル移動チェック
+	*
+	* @param   wk			ワークポインタ
+	*
+	* @retval  BOOL		TRUEでカーソル移動した
+	*/
 //------------------------------------------------------------------
 static BOOL check_category_cursor_move( PMS_INPUT_WORK* wk )
 {
@@ -1979,6 +2096,7 @@ static BOOL keycheck_category_group_mode( PMS_INPUT_WORK* wk )
 	}
 	return FALSE;
 }
+
 //----------------------------------------------
 // イニシャルモード
 //----------------------------------------------
@@ -2039,12 +2157,12 @@ static BOOL keycheck_category_initial_mode( PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * 単語ウィンドウパラメータ初期化
- *
- * @param   word_win		
- * @param   wk		
- *
- */
+	* 単語ウィンドウパラメータ初期化
+	*
+	* @param   word_win		
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
 static void setup_wordwin_params( WORDWIN_WORK* word_win, PMS_INPUT_WORK* wk )
 {
@@ -2091,14 +2209,14 @@ static int get_wordwin_linemax( const WORDWIN_WORK* wordwin )
 
 //----------------------------------------------------------------------------------------------
 /**
- * メインプロセス：単語選択
- *
- * @param   wk
- * @param   seq		
- *
- */
+	* メインプロセス：単語選択
+	*
+	* @param   wk
+	* @param   seq		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static PROC_RESULT MainProc_WordWin( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT MainProc_WordWin( PMS_INPUT_WORK* wk, int* seq )
 {
 
 	switch(*seq ) {
@@ -2130,7 +2248,7 @@ static PROC_RESULT MainProc_WordWin( PMS_INPUT_WORK* wk, int* seq )
 	}
 
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
@@ -2139,7 +2257,9 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 	||	(wk->touch_button == TOUCH_BUTTON_INITIAL) && (wk->category_mode !=CATEGORY_MODE_INITIAL)
 	||	(wk->key_trg & PAD_BUTTON_SELECT)
 	){
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_CHANGE_CATEGORY);
+#endif //PMS_USE_SND
 		wk->category_pos = 0;
 		wk->category_mode ^= 1;
 		PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
@@ -2161,18 +2281,24 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 
 		switch( result ){
 		case WORDWIN_RESULT_CURSOR_MOVE:
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR );
 			return;
 
 		case WORDWIN_RESULT_SCROLL:
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 			PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
 			(*seq) = SEQ_WORD_SCROLL_WAIT;
 			return;
 
 		case WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE:
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 			PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
 			(*seq) = SEQ_WORD_SCROLL_WAIT_AND_CURSOR_MOVE;
 			return;
@@ -2181,7 +2307,9 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 
 	if( wk->key_trg & PAD_BUTTON_B )
 	{
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 
 		PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
 		wk->next_proc = MainProc_Category;
@@ -2191,14 +2319,18 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 	if( wk->key_trg & PAD_BUTTON_A )
 	{
 		if(wk->word_win.back_f){
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
 			wk->next_proc = MainProc_Category;
 			*seq = SEQ_WORD_CHANGE_NEXTPROC;
 			return;
 		}
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 		wk->word_win.touch_pos = 0xFFFF;
 		set_select_word( wk );
@@ -2212,25 +2344,27 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 {
 	int ret,i,j;
+	u32 tpx,tpy;
 	u16	pos,end_f;
-	RECT_HIT_TBL tbl;
+	GFL_UI_TP_HITTBL tbl;
 
-	static const RECT_HIT_TBL Btn_TpRect[] = {
+	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
 		{TPWD_SCR_PY0,TPWD_SCR_PY0+TPWD_SCR_SY,TPWD_SCR_PX,TPWD_SCR_PX+TPWD_SCR_SX},
 		{TPWD_SCR_PY1,TPWD_SCR_PY1+TPWD_SCR_SY,TPWD_SCR_PX,TPWD_SCR_PX+TPWD_SCR_SX},
-		{RECT_HIT_END,0,0,0}
+		{GFL_UI_TP_HIT_END,0,0,0}
 	};
-	if(GF_TP_GetTrg() == 0){
+	if(GFL_UI_TP_GetTrg() == 0){
 		return WORDWIN_RESULT_NONE;
 	}
-	ret = GF_TP_RectHitTrg(Btn_TpRect);
+	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
 	switch(ret){
 	case 0:
 		return check_wordwin_scroll_up( &(wk->word_win) );
 	case 1:
 		return check_wordwin_scroll_down( &(wk->word_win) );
 	}
+	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
 	pos = wk->word_win.line*2;
 	end_f = 0;
 	for(i = 0;i < 5;i++){
@@ -2240,10 +2374,10 @@ static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 			tbl.rect.left = j*TPWD_WORD_OX+TPWD_WORD_PX;
 			tbl.rect.right = tbl.rect.left+TPWD_WORD_SX;
 		
-			if(GF_TP_SingleHitSelf( &tbl, sys.tp_x,sys.tp_y)){
+			if(GFL_UI_TP_HitSelf( &tbl, tpx,tpy)){
 				wk->word_win.touch_pos = pos;
 
-				IWASAWA_PRINT(" Select Pos = %d -> %d\n",i*2+j , pos);
+				ARI_TPrintf(" Select Pos = %d -> %d\n",i*2+j , pos);
 				return WORDWIN_RESULT_SELECT;
 			}
 			if(++pos >= wk->word_win.word_max){
@@ -2265,14 +2399,18 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 	ret = input_category_word_btn(wk);
 	switch(ret){
 	case 1:
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 
 		PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
 		wk->next_proc = MainProc_Category;
 		*seq = SEQ_WORD_CHANGE_NEXTPROC;
 		return;
 	case 2:
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_CHANGE_CATEGORY);
+#endif //PMS_USE_SND
 		wk->category_pos = 0;
 		wk->category_mode ^= 1;
 		PMSIView_SetCommand( wk->vwk, VCMD_WORDWIN_TO_CATEGORY );
@@ -2284,7 +2422,9 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 
 	switch( ret ){
 	case WORDWIN_RESULT_SELECT:
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 
 		set_select_word( wk );
 		wk->next_proc = MainProc_EditArea;
@@ -2292,18 +2432,24 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 		(*seq) = SEQ_WORD_CHANGE_NEXTPROC;
 		return;
 	case WORDWIN_RESULT_CURSOR_MOVE:
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 		PMSIView_SetCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR );
 		return;
 
 	case WORDWIN_RESULT_SCROLL:
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
 		(*seq) = SEQ_WORD_SCROLL_WAIT;
 		return;
 
 	case WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE:
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
 		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
 		(*seq) = SEQ_WORD_SCROLL_WAIT_AND_CURSOR_MOVE;
 		return;
@@ -2315,12 +2461,13 @@ static void word_input(PMS_INPUT_WORK* wk,int* seq)
 	if(KeyStatusChange(wk,seq)){
 		return;
 	}
-	if(wk->key_mode == APP_KTST_KEY){
+	if(wk->key_mode == GFL_APP_KTST_KEY){
 		word_input_key(wk,seq);
 	}else{
 		word_input_touch(wk,seq);
 	}
 }
+
 
 static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key )
 {
@@ -2528,12 +2675,12 @@ static int check_wordwin_scroll_down( WORDWIN_WORK* wordwin )
 
 //------------------------------------------------------------------
 /**
- * 選択された単語をデータに反映する
- *
- * @param   wk		
- *
- * @retval  BOOL	入力できる欄を全て埋めたらTRUEが返る
- */
+	* 選択された単語をデータに反映する
+	*
+	* @param   wk		
+	*
+	* @retval  BOOL	入力できる欄を全て埋めたらTRUEが返る
+	*/
 //------------------------------------------------------------------
 static BOOL set_select_word( PMS_INPUT_WORK* wk )
 {
@@ -2550,7 +2697,7 @@ static BOOL set_select_word( PMS_INPUT_WORK* wk )
 	}else{
 		word = PMSI_DATA_GetInitialEnableWordCode( wk->dwk, wk->category_pos, word_idx );
 	}
-	IWASAWA_PRINT(" WordSet pos=%d, idx = %d, word = %d\n",wk->edit_pos,word_idx,word);
+	ARI_TPrintf(" WordSet pos=%d, idx = %d, word = %d\n",wk->edit_pos,word_idx,word);
 	switch( wk->input_mode ){
 	case PMSI_MODE_SINGLE:
 		wk->edit_word[0] = word;
@@ -2570,14 +2717,14 @@ static BOOL set_select_word( PMS_INPUT_WORK* wk )
 
 //----------------------------------------------------------------------------------------------
 /**
- * メインプロセス：フェードアウト～終了
- *
- * @param   wk
- * @param   seq		
- *
- */
+	* メインプロセス：フェードアウト～終了
+	*
+	* @param   wk
+	* @param   seq		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static PROC_RESULT MainProc_Quit( PMS_INPUT_WORK* wk, int* seq )
+static GFL_PROC_RESULT MainProc_Quit( PMS_INPUT_WORK* wk, int* seq )
 {
 	switch( *seq ){
 	case 0:
@@ -2588,14 +2735,12 @@ static PROC_RESULT MainProc_Quit( PMS_INPUT_WORK* wk, int* seq )
 	case 1:
 		if( PMSIView_WaitCommandAll( wk->vwk ) )
 		{
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		break;
 	}
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
-
-
 
 
 
@@ -2604,12 +2749,12 @@ static PROC_RESULT MainProc_Quit( PMS_INPUT_WORK* wk, int* seq )
 
 //------------------------------------------------------------------
 /**
- * サブプロセススタート（メイン・サブ両方から呼んで良い）
- *
- * @param   wk		
- * @param   sub_proc
- *
- */
+	* サブプロセススタート（メイン・サブ両方から呼んで良い）
+	*
+	* @param   wk		
+	* @param   sub_proc
+	*
+	*/
 //------------------------------------------------------------------
 static void SetSubProc( PMS_INPUT_WORK* wk, SubProc sub_proc )
 {
@@ -2619,11 +2764,11 @@ static void SetSubProc( PMS_INPUT_WORK* wk, SubProc sub_proc )
 
 //------------------------------------------------------------------
 /**
- * サブプロセス終了（実行中のサブプロセスからのみ呼び出す）
- *
- * @param   wk		
- *
- */
+	* サブプロセス終了（実行中のサブプロセスからのみ呼び出す）
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
 static void QuitSubProc( PMS_INPUT_WORK* wk )
 {
@@ -2635,12 +2780,12 @@ static void QuitSubProc( PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * サブプロセス：フェードイン
- *
- * @param   wk		ワークポインタ
- * @param   seq		シーケンス
- *
- */
+	* サブプロセス：フェードイン
+	*
+	* @param   wk		ワークポインタ
+	* @param   seq		シーケンス
+	*
+	*/
 //------------------------------------------------------------------
 static void SubProc_FadeIn( PMS_INPUT_WORK* wk, int* seq )
 {
@@ -2659,12 +2804,12 @@ static void SubProc_FadeIn( PMS_INPUT_WORK* wk, int* seq )
 }
 //------------------------------------------------------------------
 /**
- * サブプロセス：「けってい」コマンド
- *
- * @param   wk		ワークポインタ
- * @param   seq		シーケンス
- *
- */
+	* サブプロセス：「けってい」コマンド
+	*
+	* @param   wk		ワークポインタ
+	* @param   seq		シーケンス
+	*
+	*/
 //------------------------------------------------------------------
 static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 {
@@ -2733,16 +2878,20 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 		ret = PMSIView_WaitYesNo(wk->vwk);
 		switch(ret){
 		case 0:
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
 			(*seq) = SEQ_RETURN;
 			break;
 		case 1:
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 			if( wk->input_mode == PMSI_MODE_SENTENCE )
 			{
-				PMSDAT_ClearUnnecessaryWord( &(wk->edit_pms) );
+				PMSDAT_ClearUnnecessaryWord( &(wk->edit_pms) , HEAPID_PMS_INPUT_VIEW );
 			}
 			PMSI_PARAM_WriteBackData( wk->input_param, wk->edit_word, &wk->edit_pms );
 			ChangeMainProc( wk, MainProc_Quit );
@@ -2770,14 +2919,15 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 		break;
 	}
 }
+
 //--------------------------------------------------------------------------------------
 /**
- * サブプロセス：「やめる」コマンド
- *
- * @param   wk		ワークポインタ
- * @param   seq		シーケンス
- *
- */
+	* サブプロセス：「やめる」コマンド
+	*
+	* @param   wk		ワークポインタ
+	* @param   seq		シーケンス
+	*
+	*/
 //--------------------------------------------------------------------------------------
 static void SubProc_CommandCancel( PMS_INPUT_WORK* wk, int* seq )
 {
@@ -2826,13 +2976,17 @@ static void SubProc_CommandCancel( PMS_INPUT_WORK* wk, int* seq )
 		ret = PMSIView_WaitYesNo(wk->vwk);
 		switch(ret){
 		case 0:
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_CANCEL);
+#endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
 			(*seq) = SEQ_RETURN;
 			break;
 		case 1:
+#if PMS_USE_SND
 			Snd_SePlay(SOUND_DECIDE);
+#endif //PMS_USE_SND
 			ChangeMainProc( wk, MainProc_Quit );
 			(*seq) = SEQ_RETURN;
 			break;
@@ -2854,12 +3008,12 @@ static void SubProc_CommandCancel( PMS_INPUT_WORK* wk, int* seq )
 
 //------------------------------------------------------------------
 /**
- * 入力欄が初期状態と比べて変更されているかチェック
- *
- * @param   wk			
- *
- * @retval  BOOL		更新されていたらTRUEを返す
- */
+	* 入力欄が初期状態と比べて変更されているかチェック
+	*
+	* @param   wk			
+	*
+	* @retval  BOOL		更新されていたらTRUEを返す
+	*/
 //------------------------------------------------------------------
 static BOOL CheckModified( PMS_INPUT_WORK* wk )
 {
@@ -2876,7 +3030,7 @@ static BOOL check_input_complete( PMS_INPUT_WORK* wk )
 		return ( (wk->edit_word[0] != PMS_WORD_NULL) && (wk->edit_word[1] != PMS_WORD_NULL) );
 
 	case PMSI_MODE_SENTENCE:
-		return PMSDAT_IsComplete( &wk->edit_pms );
+		return PMSDAT_IsComplete( &wk->edit_pms , HEAPID_PMS_INPUT_VIEW );
 	}
 
 	return FALSE;
@@ -2885,13 +3039,13 @@ static BOOL check_input_complete( PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * メニューコントロール初期化
- *
- * @param   menu		
- * @param   max		
- * @param   pos		
- *
- */
+	* メニューコントロール初期化
+	*
+	* @param   menu		
+	* @param   max		
+	* @param   pos		
+	*
+	*/
 //------------------------------------------------------------------
 static void InitMenuState( MENU_WORK* menu, int max, int pos )
 {
@@ -2901,13 +3055,13 @@ static void InitMenuState( MENU_WORK* menu, int max, int pos )
 
 //------------------------------------------------------------------
 /**
- * メニューコントロール更新
- *
- * @param   menu		
- * @param   key		
- *
- * @retval  MENU_RESULT		
- */
+	* メニューコントロール更新
+	*
+	* @param   menu		
+	* @param   key		
+	*
+	* @retval  MENU_RESULT		
+	*/
 //------------------------------------------------------------------
 static MENU_RESULT  CtrlMenuState( MENU_WORK* menu , u16 key )
 {
@@ -2953,19 +3107,21 @@ static u32 get_menu_cursor_pos( const MENU_WORK* menu )
 
 //--------------------------------------------------------------------------------------
 /**
- * サブプロセス： カテゴリモード変更（編集・ボタン操作時のみ）
- *
- * @param   wk		ワークポインタ
- * @param   seq		シーケンス
- *
- */
+	* サブプロセス： カテゴリモード変更（編集・ボタン操作時のみ）
+	*
+	* @param   wk		ワークポインタ
+	* @param   seq		シーケンス
+	*
+	*/
 //--------------------------------------------------------------------------------------
 static void SubProc_ChangeCategoryMode( PMS_INPUT_WORK* wk, int* seq )
 {
 	switch(*seq ){
 
 	case 0:
+#if PMS_USE_SND
 		Snd_SePlay(SOUND_CHANGE_CATEGORY);
+#endif //PMS_USE_SND
 		wk->category_mode ^= 1;
 		PMSIView_SetCommand( wk->vwk, VCMD_CHANGE_CATEGORY_MODE_DISABLE );
 		(*seq) = 1;
@@ -2981,13 +3137,12 @@ static void SubProc_ChangeCategoryMode( PMS_INPUT_WORK* wk, int* seq )
 	}
 }
 
-
 //==============================================================================================
 //==============================================================================================
 
 /**
- *	@brief	キーモード保持ポインタの取得
- */
+	*	@brief	キーモード保持ポインタの取得
+	*/
 int* PMSI_GetKTModePointer(const PMS_INPUT_WORK* wk)
 {
 	return (int*)&(wk->key_mode);
@@ -2995,12 +3150,12 @@ int* PMSI_GetKTModePointer(const PMS_INPUT_WORK* wk)
 
 //------------------------------------------------------------------
 /*int**
- * 入力モード取得
- *
- * @param   wk		ワークポインタ
- *
- * @retval  u32		入力モード（enum PMSI_MODE)
- */
+	* 入力モード取得
+	*
+	* @param   wk		ワークポインタ
+	*
+	* @retval  u32		入力モード（enum PMSI_MODE)
+	*/
 //------------------------------------------------------------------
 u32 PMSI_GetInputMode( const PMS_INPUT_WORK* wk )
 {
@@ -3009,12 +3164,12 @@ u32 PMSI_GetInputMode( const PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * 説明文字列タイプ取得
- *
- * @param   wk		ワークポインタ
- *
- * @retval  u32		説明文字列タイプ（enum PMSI_GUIDANCE)
- */
+	* 説明文字列タイプ取得
+	*
+	* @param   wk		ワークポインタ
+	*
+	* @retval  u32		説明文字列タイプ（enum PMSI_GUIDANCE)
+	*/
 //------------------------------------------------------------------
 u32 PMSI_GetGuidanceType( const PMS_INPUT_WORK* wk )
 {
@@ -3023,12 +3178,12 @@ u32 PMSI_GetGuidanceType( const PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * カテゴリモード取得
- *
- * @param   wk		ワークポインタ
- *
- * @retval  u32		カテゴリモード
- */
+	* カテゴリモード取得
+	*
+	* @param   wk		ワークポインタ
+	*
+	* @retval  u32		カテゴリモード
+	*/
 //------------------------------------------------------------------
 u32 PMSI_GetCategoryMode( const PMS_INPUT_WORK* wk )
 {
@@ -3037,12 +3192,12 @@ u32 PMSI_GetCategoryMode( const PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * 表示中の文章タイプを取得
- *
- * @param   wk		ワークポインタ
- *
- * @retval  u32		文章タイプ（enum PMS_TYPE）
- */
+	* 表示中の文章タイプを取得
+	*
+	* @param   wk		ワークポインタ
+	*
+	* @retval  u32		文章タイプ（enum PMS_TYPE）
+	*/
 //------------------------------------------------------------------
 u32 PMSI_GetSentenceType( const PMS_INPUT_WORK* wk )
 {
@@ -3051,13 +3206,13 @@ u32 PMSI_GetSentenceType( const PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * 編集中の単語ナンバーを返す
- *
- * @param   wk			ワークポインタ
- * @param   pos			何番目の単語？
- *
- * @retval  PMS_WORD	簡易会話単語ナンバー
- */
+	* 編集中の単語ナンバーを返す
+	*
+	* @param   wk			ワークポインタ
+	* @param   pos			何番目の単語？
+	*
+	* @retval  PMS_WORD	簡易会話単語ナンバー
+	*/
 //------------------------------------------------------------------
 PMS_WORD  PMSI_GetEditWord( const PMS_INPUT_WORK* wk, int pos )
 {
@@ -3073,13 +3228,13 @@ PMS_WORD  PMSI_GetEditWord( const PMS_INPUT_WORK* wk, int pos )
 
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   wk			
- * @param   heapID		
- *
- * @retval  STRBUF*		
- */
+	* 
+	*
+	* @param   wk			
+	* @param   heapID		
+	*
+	* @retval  STRBUF*		
+	*/
 //------------------------------------------------------------------
 STRBUF* PMSI_GetEditSourceString( const PMS_INPUT_WORK* wk, u32 heapID )
 {
@@ -3088,12 +3243,12 @@ STRBUF* PMSI_GetEditSourceString( const PMS_INPUT_WORK* wk, u32 heapID )
 
 //------------------------------------------------------------------
 /**
- * 編集エリアのカーソル位置を返す
- *
- * @param   wk		
- *
- * @retval  u32		
- */
+	* 編集エリアのカーソル位置を返す
+	*
+	* @param   wk		
+	*
+	* @retval  u32		
+	*/
 //------------------------------------------------------------------
 u32 PMSI_GetEditAreaCursorPos( const PMS_INPUT_WORK* wk )
 {
@@ -3102,12 +3257,12 @@ u32 PMSI_GetEditAreaCursorPos( const PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * ボタンカーソル位置取得
- *
- * @param   wk		
- *
- * @retval  u32		
- */
+	* ボタンカーソル位置取得
+	*
+	* @param   wk		
+	*
+	* @retval  u32		
+	*/
 //------------------------------------------------------------------
 u32 PMSI_GetButtonCursorPos( const PMS_INPUT_WORK* wk )
 {
@@ -3116,12 +3271,12 @@ u32 PMSI_GetButtonCursorPos( const PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * カテゴリカーソル位置取得
- *
- * @param   wk		
- *
- * @retval  u32		
- */
+	* カテゴリカーソル位置取得
+	*
+	* @param   wk		
+	*
+	* @retval  u32		
+	*/
 //------------------------------------------------------------------
 u32 PMSI_GetCategoryCursorPos( const PMS_INPUT_WORK* wk )
 {
@@ -3132,12 +3287,12 @@ u32 PMSI_GetCategoryCursorPos( const PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * カテゴリ内の有効単語総数を返す
- *
- * @param   wk		
- *
- * @retval  u32		
- */
+	* カテゴリ内の有効単語総数を返す
+	*
+	* @param   wk		
+	*
+	* @retval  u32		
+	*/
 //------------------------------------------------------------------
 u32 PMSI_GetCategoryWordMax( const PMS_INPUT_WORK* wk )
 {
@@ -3153,13 +3308,13 @@ u32 PMSI_GetCategoryWordMax( const PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * カテゴリ内の有効単語の内、指定インデックスの単語をバッファにコピーする
- *
- * @param   wk		
- * @param   word_num		
- * @param   buf		
- *
- */
+	* カテゴリ内の有効単語の内、指定インデックスの単語をバッファにコピーする
+	*
+	* @param   wk		
+	* @param   word_num		
+	* @param   buf		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSI_GetCategoryWord( const PMS_INPUT_WORK* wk, u32 word_num, STRBUF* buf )
 {
@@ -3206,14 +3361,20 @@ int PMSI_GetTalkWindowType( const PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * メニューカーソルの位置を返す
- *
- * @param   wk		
- *
- * @retval  u32		
- */
+	* メニューカーソルの位置を返す
+	*
+	* @param   wk		
+	*
+	* @retval  u32		
+	*/
 //------------------------------------------------------------------
 u32 PMSI_GetMenuCursorPos( const PMS_INPUT_WORK* wk )
 {
 	return get_menu_cursor_pos( &wk->menu );
+}
+
+
+GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk )
+{
+	return wk->tcbSys;
 }

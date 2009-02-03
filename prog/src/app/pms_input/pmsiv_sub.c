@@ -1,10 +1,10 @@
 //============================================================================================
 /**
- * @file	pmsiv_sub.c
- * @bfief	簡易会話入力画面（描画下請け：サブ画面）
- * @author	taya
- * @date	06.02.10
- */
+	* @file	pmsiv_sub.c
+	* @bfief	簡易会話入力画面（描画下請け：サブ画面）
+	* @author	taya
+	* @date	06.02.10
+	*/
 //============================================================================================
 #include "common.h"
 #include "gflib\heapsys.h"
@@ -109,8 +109,8 @@ typedef struct {
 
 //--------------------------------------------------------------
 /**
- *	
- */
+	*	
+	*/
 //--------------------------------------------------------------
 struct _PMSIV_SUB {
 	PMS_INPUT_VIEW*        vwk;
@@ -144,7 +144,7 @@ static void unload_clpack( CELL_ANIM_PACK* clpack );
 static void ChangeButtonTask( TCB_PTR tcb, void* wk_adrs );
 
 
- static CLACT_WORK_PTR add_actor(
+	static CLACT_WORK_PTR add_actor(
 	PMSIV_SUB* wk, NNSG2dImageProxy* imgProxy, NNSG2dImagePaletteProxy* palProxy,
 	CELL_ANIM_PACK* clpack, int xpos, int ypos, int bgpri, int actpri );
 
@@ -152,14 +152,14 @@ static void ChangeButtonTask( TCB_PTR tcb, void* wk_adrs );
 
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   vwk		
- * @param   mwk		
- * @param   dwk		
- *
- * @retval  PMSIV_SUB*		
- */
+	* 
+	*
+	* @param   vwk		
+	* @param   mwk		
+	* @param   dwk		
+	*
+	* @retval  PMSIV_SUB*		
+	*/
 //------------------------------------------------------------------
 PMSIV_SUB*  PMSIV_SUB_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
 {
@@ -179,11 +179,11 @@ PMSIV_SUB*  PMSIV_SUB_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, co
 }
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   wk		
- *
- */
+	* 
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_SUB_Delete( PMSIV_SUB* wk )
 {
@@ -196,11 +196,11 @@ void PMSIV_SUB_Delete( PMSIV_SUB* wk )
 
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   wk		
- *
- */
+	* 
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_SUB_SetupGraphicDatas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 {
@@ -432,7 +432,7 @@ static void unload_clpack( CELL_ANIM_PACK* clpack )
 }
 
 
- static CLACT_WORK_PTR add_actor(
+	static CLACT_WORK_PTR add_actor(
 	PMSIV_SUB* wk, NNSG2dImageProxy* imgProxy, NNSG2dImagePaletteProxy* palProxy,
 	CELL_ANIM_PACK* clpack, int xpos, int ypos, int bgpri, int actpri )
 {
@@ -489,11 +489,11 @@ typedef struct {
 
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   wk		
- *
- */
+	* 
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_SUB_ChangeCategoryButton( PMSIV_SUB* wk )
 {
@@ -610,12 +610,12 @@ static void ChangeButtonTask( TCB_PTR tcb, void* wk_adrs )
 
 //------------------------------------------------------------------
 /**
- * 矢印ボタン描画オン／オフ
- *
- * @param   wk		
- * @param   flag		
- *
- */
+	* 矢印ボタン描画オン／オフ
+	*
+	* @param   wk		
+	* @param   flag		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_SUB_VisibleArrowButton( PMSIV_SUB* wk, BOOL flag )
 {
@@ -635,13 +635,13 @@ void PMSIV_SUB_VisibleArrowButton( PMSIV_SUB* wk, BOOL flag )
 
 //------------------------------------------------------------------
 /**
- * 矢印ボタン状態切り替え
- *
- * @param   wk		
- * @param   pos		
- * @param   state		
- *
- */
+	* 矢印ボタン状態切り替え
+	*
+	* @param   wk		
+	* @param   pos		
+	* @param   state		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_SUB_ChangeArrowButton( PMSIV_SUB* wk, int pos, int state )
 {

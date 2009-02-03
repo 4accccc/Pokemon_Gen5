@@ -1,24 +1,22 @@
 //============================================================================================
 /**
- * @file	pms_input_prv.h
- * @bfief	簡易会話入力画面（private ヘッダ）
- * @author	taya
- * @date	06.01.24
- */
+	* @file	pms_input_prv.h
+	* @bfief	簡易会話入力画面（private ヘッダ）
+	* @author	taya
+	* @date	06.01.24
+	*/
 //============================================================================================
 #ifndef __PMS_INPUT_PRV_H__
 #define __PMS_INPUT_PRV_H__
 
-#include "application\pms_input.h"
-#include "application\pms_input_data.h"
-#include "system\keytouch_status.h"
-#include "gflib\touchpanel.h"
+#include "app\pms_input.h"
+#include "app\pms_input_data.h"
 #include "pms_input_param.h"
 
 //------------------------------------------------------
 /**
- * 描画コマンド
- */
+	* 描画コマンド
+	*/
 //------------------------------------------------------
 enum {
 	VCMD_INIT,					///< 画面初期構築
@@ -65,8 +63,8 @@ enum {
 
 //------------------------------------------------------
 /**
- * ボタンアクターレイアウト
- */
+	* ボタンアクターレイアウト
+	*/
 //------------------------------------------------------
 enum {
 
@@ -128,8 +126,8 @@ enum{
 
 //-------------------------------------------------------------
 /**
- *  各文字のインデックス
- */
+	*  各文字のインデックス
+	*/
 //-------------------------------------------------------------
 enum {
 	INI_A = 0,
@@ -197,22 +195,22 @@ enum {
 
 //------------------------------------------------------
 /**
- * メインワーク型宣言
- */
+	* メインワーク型宣言
+	*/
 //------------------------------------------------------
 typedef struct _PMS_INPUT_WORK	PMS_INPUT_WORK;
 
 //------------------------------------------------------
 /**
- * 描画ワーク型宣言
- */
+	* 描画ワーク型宣言
+	*/
 //------------------------------------------------------
 typedef struct _PMS_INPUT_VIEW	PMS_INPUT_VIEW;
 
 //------------------------------------------------------
 /**
- * タスクプライオリティ
- */
+	* タスクプライオリティ
+	*/
 //------------------------------------------------------
 enum {
 	TASKPRI_MAIN,
@@ -244,8 +242,8 @@ enum {
 
 //------------------------------------------------------
 /**
- * システム関連関数プロトタイプ
- */
+	* システム関連関数プロトタイプ
+	*/
 //------------------------------------------------------
 extern int* PMSI_GetKTModePointer(const PMS_INPUT_WORK* wk);
 extern u32 PMSI_GetInputMode( const PMS_INPUT_WORK* wk );
@@ -266,10 +264,12 @@ extern BOOL PMSI_GetWordWinDownArrowVisibleFlag( const PMS_INPUT_WORK* wk );
 extern int PMSI_GetTalkWindowType( const PMS_INPUT_WORK* wk );
 extern u32 PMSI_GetMenuCursorPos( const PMS_INPUT_WORK* wk );
 
+extern GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk );
+
 //------------------------------------------------------
 /**
- * 描画関連関数プロトタイプ
- */
+	* 描画関連関数プロトタイプ
+	*/
 //------------------------------------------------------
 extern PMS_INPUT_VIEW*  PMSIView_Create(const PMS_INPUT_WORK* wk, const PMS_INPUT_DATA* dwk);
 extern void PMSIView_Delete( PMS_INPUT_VIEW* vwk );
@@ -277,7 +277,7 @@ extern void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd );
 extern BOOL PMSIView_WaitCommand( PMS_INPUT_VIEW* vwk, int cmd );
 extern BOOL PMSIView_WaitCommandAll( PMS_INPUT_VIEW* vwk );
 extern u32 PMSIView_GetSentenceEditPosMax( PMS_INPUT_VIEW* wk );
-extern void PMSIView_GetSentenceWordArea( PMS_INPUT_VIEW* wk ,RECT_HIT_TBL* tbl,u8 idx);
+extern void PMSIView_GetSentenceWordArea( PMS_INPUT_VIEW* wk ,GFL_UI_TP_HITTBL* tbl,u8 idx);
 
 extern int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk);
 

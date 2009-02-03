@@ -486,7 +486,7 @@ PMSW_AIKOTOBA_TBL* PMSW_AIKOTOBATBL_Init( u32 heapID )
 	memset( p_tbl, 0, sizeof(PMSW_AIKOTOBA_TBL) );
 
 	// ƒf[ƒ^“Ç‚Ýž‚Ý
-	p_tbl->p_data	= GFL_ARC_UTIL_LoadEx( ARC_PMS_AIKOTOBA_DATA,
+	p_tbl->p_data	= GFL_ARC_UTIL_LoadEx( ARCID_PMS_AIKOTOBA_DATA,
 			0, FALSE, heapID, &size );
 	p_tbl->num		= size / sizeof(u32);
 

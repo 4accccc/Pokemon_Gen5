@@ -35,7 +35,8 @@ SUBDIRS	=	wmi \
 			yn_touch \
 			balloon \
 			mysign \
-			pms
+			pms \
+			pms_gra
 
 include $(RESOURCE_MACRO)
 

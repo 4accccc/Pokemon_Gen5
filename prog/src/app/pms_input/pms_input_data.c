@@ -1,18 +1,18 @@
 //============================================================================================
 /**
- * @file	pms_input_data.c
- * @bfief	簡易会話入力画面（カテゴリ・イニシャル等のデータ管理）
- * @author	taya
- * @date	06.01.28
- */
+	* @file	pms_input_data.c
+	* @bfief	簡易会話入力画面（カテゴリ・イニシャル等のデータ管理）
+	* @author	taya
+	* @date	06.01.28
+	*/
 //============================================================================================
-#include "common.h"
-#include "gflib\heapsys.h"
-#include "system\pms_word.h"
-#include "savedata\zukanwork.h"
-#include "msgdata\msg.naix"
+#include <gflib.h>
 
-#include "application\pms_input_data.h"
+#include "system\pms_word.h"
+//#include "savedata\zukanwork.h"
+#include "message.naix"
+
+#include "app\pms_input_data.h"
 #include "pms_input_param.h"
 
 
@@ -24,11 +24,10 @@
 
 #define  INITIAL_MAX	(NELEMS(PMS_InitialTable))
 
-
 //--------------------------------------------------------------
 /**
- *	データ管理オブジェクト実体
- */
+	*	データ管理オブジェクト実体
+	*/
 //--------------------------------------------------------------
 struct _PMS_INPUT_DATA {
 	const PMSI_PARAM*	input_param;
@@ -69,19 +68,19 @@ static u32 CountupInitialWord( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, PM
 /*====================================================================================================*/
 //------------------------------------------------------------------
 /**
- * データ管理オブジェクト構築
- *
- * @param   heapID		
- *
- * @retval  PMS_INPUT_DATA*		
- */
+	* データ管理オブジェクト構築
+	*
+	* @param   heapID		
+	*
+	* @retval  PMS_INPUT_DATA*		
+	*/
 //------------------------------------------------------------------
 PMS_INPUT_DATA* PMSI_DATA_Create( u32 heapID, const PMSI_PARAM* input_param )
 {
 	PMS_INPUT_DATA*  pmsi;
 	int i;
 
-	pmsi = sys_AllocMemory( heapID, sizeof(PMS_INPUT_DATA) );
+	pmsi = GFL_HEAP_AllocMemory( heapID, sizeof(PMS_INPUT_DATA) );
 
 	pmsi->input_param = input_param;
 	pmsi->word_man = PMSW_MAN_Create( heapID );
@@ -98,22 +97,21 @@ PMS_INPUT_DATA* PMSI_DATA_Create( u32 heapID, const PMSI_PARAM* input_param )
 }
 //------------------------------------------------------------------
 /**
- * データ管理オブジェクト破棄
- *
- * @param   heapID		
- *
- * @retval  PMS_INPUT_DATA*		
- */
+	* データ管理オブジェクト破棄
+	*
+	* @param   heapID		
+	*
+	* @retval  PMS_INPUT_DATA*		
+	*/
 //------------------------------------------------------------------
 void PMSI_DATA_Delete( PMS_INPUT_DATA* pmsi )
 {
 	if( pmsi )
 	{
 		PMSW_MAN_Delete( pmsi->word_man );
-		sys_FreeMemoryEz( pmsi );
+		GFL_HEAP_FreeMemory( pmsi );
 	}
 }
-
 
 /*====================================================================================================*/
 /*                                                                                                    */
@@ -148,11 +146,11 @@ static const struct {
 /*====================================================================================================*/
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   pmsi		
- *
- */
+	* 
+	*
+	* @param   pmsi		
+	*
+	*/
 //------------------------------------------------------------------
 static void SetupGroupEnableFlag( PMS_INPUT_DATA* pmsi )
 {
@@ -182,6 +180,7 @@ static inline BOOL GetWordEnableFlag( const PMS_INPUT_DATA* data, u32 pos )
 
 static u32 CountupGruopPokemon( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
 {
+/*
 	const ZUKAN_WORK* zw;
 	u32 i, cnt;
 
@@ -198,6 +197,8 @@ static u32 CountupGruopPokemon( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u
 	}
 
 	return cnt;
+*/
+	return 20;
 }
 
 static u32 CountupGruopSkill( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
@@ -243,7 +244,7 @@ static u32 CountupGroupAisatsu( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, 
 	PMS_WORD  aisatsu_top, aisatsu_end;
 	u32 i, cnt;
 
-	aisatsu_top = PMSW_GetWordNumberByGmmID( NARC_msg_pms_word08_dat, 0 );
+	aisatsu_top = PMSW_GetWordNumberByGmmID( NARC_message_pms_word08_dat, 0 );
 	aisatsu_end = aisatsu_top + PMSW_AISATSU_HIDE_MAX - 1;
 
 	cnt = 0;
@@ -364,13 +365,13 @@ static u32 CountupInitialWord( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, PM
 
 //------------------------------------------------------------------
 /**
- * カテゴリグループに含まれる有効単語数
- *
- * @param   pmsi		データ管理オブジェクト
- * @param   group		グループナンバー
- *
- * @retval  u32			有効単語数（０だったらそのカテゴリ自体が無効）
- */
+	* カテゴリグループに含まれる有効単語数
+	*
+	* @param   pmsi		データ管理オブジェクト
+	* @param   group		グループナンバー
+	*
+	* @retval  u32			有効単語数（０だったらそのカテゴリ自体が無効）
+	*/
 //------------------------------------------------------------------
 u32 PMSI_DATA_GetGroupEnableWordCount( const PMS_INPUT_DATA* pmsi, u32 group )
 {
@@ -378,13 +379,13 @@ u32 PMSI_DATA_GetGroupEnableWordCount( const PMS_INPUT_DATA* pmsi, u32 group )
 }
 //------------------------------------------------------------------
 /**
- * カテゴリグループの有効単語を文字列化してバッファにコピー
- *
- * @param   pmsi			データ管理オブジェクト
- * @param   group			グループナンバー
- * @param   word_idx		単語インデックス（0～）
- *
- */
+	* カテゴリグループの有効単語を文字列化してバッファにコピー
+	*
+	* @param   pmsi			データ管理オブジェクト
+	* @param   group			グループナンバー
+	* @param   word_idx		単語インデックス（0～）
+	*
+	*/
 //------------------------------------------------------------------
 void PMSI_DATA_GetGroupEnableWord( const PMS_INPUT_DATA* pmsi, u32 group, u32 word_idx, STRBUF* buf )
 {
@@ -394,14 +395,14 @@ void PMSI_DATA_GetGroupEnableWord( const PMS_INPUT_DATA* pmsi, u32 group, u32 wo
 
 //------------------------------------------------------------------
 /**
- * カテゴリグループの有効単語の内、指定番の単語コードを返す
- *
- * @param   pmsi			データ管理オブジェクト
- * @param   group			グループナンバー
- * @param   word_idx		単語インデックス
- *
- * @retval  PMS_WORD		単語コード
- */
+	* カテゴリグループの有効単語の内、指定番の単語コードを返す
+	*
+	* @param   pmsi			データ管理オブジェクト
+	* @param   group			グループナンバー
+	* @param   word_idx		単語インデックス
+	*
+	* @retval  PMS_WORD		単語コード
+	*/
 //------------------------------------------------------------------
 PMS_WORD  PMSI_DATA_GetGroupEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 group, u32 word_idx )
 {
@@ -411,13 +412,13 @@ PMS_WORD  PMSI_DATA_GetGroupEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 grou
 
 //------------------------------------------------------------------
 /**
- * イニシャルグループに含まれる有効単語数
- *
- * @param   pmsi			データ管理オブジェクト
- * @param   initial			イニシャルナンバー
- *
- * @retval  u32			有効単語数（０だったらそのイニシャル自体が無効）
- */
+	* イニシャルグループに含まれる有効単語数
+	*
+	* @param   pmsi			データ管理オブジェクト
+	* @param   initial			イニシャルナンバー
+	*
+	* @retval  u32			有効単語数（０だったらそのイニシャル自体が無効）
+	*/
 //------------------------------------------------------------------
 u32 PMSI_DATA_GetInitialEnableWordCount( const PMS_INPUT_DATA* pmsi, u32 initial )
 {
@@ -426,13 +427,13 @@ u32 PMSI_DATA_GetInitialEnableWordCount( const PMS_INPUT_DATA* pmsi, u32 initial
 
 //------------------------------------------------------------------
 /**
- * イニシャルグループの有効単語を文字列化してバッファにコピー
- *
- * @param   pmsi			データ管理オブジェクト
- * @param   initial			イニシャルナンバー
- * @param   word_idx		単語インデックス（0～）
- *
- */
+	* イニシャルグループの有効単語を文字列化してバッファにコピー
+	*
+	* @param   pmsi			データ管理オブジェクト
+	* @param   initial			イニシャルナンバー
+	* @param   word_idx		単語インデックス（0～）
+	*
+	*/
 //------------------------------------------------------------------
 void PMSI_DATA_GetInitialEnableWord( const PMS_INPUT_DATA* pmsi, u32 initial, u32 word_idx, STRBUF* buf )
 {
@@ -445,13 +446,13 @@ void PMSI_DATA_GetInitialEnableWord( const PMS_INPUT_DATA* pmsi, u32 initial, u3
 
 //------------------------------------------------------------------
 /**
- * イニシャルグループの有効単語の内、指定番の単語コードを返す
- *
- * @param   pmsi			データ管理オブジェクト
- * @param   initial			イニシャルナンバー
- * @param   word_idx		単語インデックス（0～）
- *
- */
+	* イニシャルグループの有効単語の内、指定番の単語コードを返す
+	*
+	* @param   pmsi			データ管理オブジェクト
+	* @param   initial			イニシャルナンバー
+	* @param   word_idx		単語インデックス（0～）
+	*
+	*/
 //------------------------------------------------------------------
 PMS_WORD PMSI_DATA_GetInitialEnableWordCode( const PMS_INPUT_DATA* pmsi, u32 initial, u32 word_idx )
 {
@@ -515,3 +516,4 @@ int PMSI_DAT_WordToBoxPwdID( PMS_WORD word )
 
 	return -1;
 }
+

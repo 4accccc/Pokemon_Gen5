@@ -1,10 +1,10 @@
 //============================================================================================
 /**
- * @file	pmsiv_wordwin.c
- * @bfief	簡易会話入力画面（描画下請け：単語表示ウィンドウ）
- * @author	taya
- * @date	06.02.10
- */
+	* @file	pmsiv_wordwin.c
+	* @bfief	簡易会話入力画面（描画下請け：単語表示ウィンドウ）
+	* @author	taya
+	* @date	06.02.10
+	*/
 //============================================================================================
 #include "common.h"
 #include "gflib\heapsys.h"
@@ -92,8 +92,8 @@ enum {
 //======================================================================
 //--------------------------------------------------------------
 /**
- *	
- */
+	*	
+	*/
 //--------------------------------------------------------------
 struct _PMSIV_WORDWIN {
 	PMS_INPUT_VIEW*        vwk;
@@ -136,14 +136,14 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line );
 
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   vwk		
- * @param   mwk		
- * @param   dwk		
- *
- * @retval  PMSIV_WORDWIN*		
- */
+	* 
+	*
+	* @param   vwk		
+	* @param   mwk		
+	* @param   dwk		
+	*
+	* @retval  PMSIV_WORDWIN*		
+	*/
 //------------------------------------------------------------------
 PMSIV_WORDWIN*  PMSIV_WORDWIN_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
 {
@@ -173,11 +173,11 @@ PMSIV_WORDWIN*  PMSIV_WORDWIN_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK*
 }
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   wk		
- *
- */
+	* 
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_Delete( PMSIV_WORDWIN* wk )
 {
@@ -208,11 +208,11 @@ void PMSIV_WORDWIN_Delete( PMSIV_WORDWIN* wk )
 
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   wk		
- *
- */
+	* 
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_SetupGraphicDatas( PMSIV_WORDWIN* wk )
 {
@@ -262,11 +262,11 @@ static void setup_actor( PMSIV_WORDWIN* wk )
 
 //------------------------------------------------------------------
 /**
- * 単語内容をBitmapWindowに描画
- *
- * @param   wk		
- *
- */
+	* 単語内容をBitmapWindowに描画
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_SetupWord( PMSIV_WORDWIN* wk )
 {
@@ -301,11 +301,11 @@ void PMSIV_WORDWIN_SetupWord( PMSIV_WORDWIN* wk )
 
 //------------------------------------------------------------------
 /**
- * フェードインエフェクト開始
- *
- * @param   wk		
- *
- */
+	* フェードインエフェクト開始
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_StartFadeIn( PMSIV_WORDWIN* wk )
 {
@@ -327,12 +327,12 @@ void PMSIV_WORDWIN_StartFadeIn( PMSIV_WORDWIN* wk )
 }
 //------------------------------------------------------------------
 /**
- * フェードインエフェクト終了待ち
- *
- * @param   wk		
- *
- * @retval  BOOL		
- */
+	* フェードインエフェクト終了待ち
+	*
+	* @param   wk		
+	*
+	* @retval  BOOL		
+	*/
 //------------------------------------------------------------------
 BOOL PMSIV_WORDWIN_WaitFadeIn( PMSIV_WORDWIN* wk )
 {
@@ -352,11 +352,11 @@ BOOL PMSIV_WORDWIN_WaitFadeIn( PMSIV_WORDWIN* wk )
 
 //------------------------------------------------------------------
 /**
- * フェードアウトエフェクト開始
- *
- * @param   wk		
- *
- */
+	* フェードアウトエフェクト開始
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_StartFadeOut( PMSIV_WORDWIN* wk )
 {
@@ -365,12 +365,12 @@ void PMSIV_WORDWIN_StartFadeOut( PMSIV_WORDWIN* wk )
 }
 //------------------------------------------------------------------
 /**
- * フェードアウトエフェクト終了待ち
- *
- * @param   wk		
- *
- * @retval  BOOL		
- */
+	* フェードアウトエフェクト終了待ち
+	*
+	* @param   wk		
+	*
+	* @retval  BOOL		
+	*/
 //------------------------------------------------------------------
 BOOL PMSIV_WORDWIN_WaitFadeOut( PMSIV_WORDWIN* wk )
 {
@@ -399,12 +399,12 @@ BOOL PMSIV_WORDWIN_WaitFadeOut( PMSIV_WORDWIN* wk )
 
 //------------------------------------------------------------------
 /**
- * カーソル表示オンオフ
- *
- * @param   wk		
- * @param   flag		
- *
- */
+	* カーソル表示オンオフ
+	*
+	* @param   wk		
+	* @param   flag		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_VisibleCursor( PMSIV_WORDWIN* wk, BOOL flag )
 {
@@ -429,12 +429,12 @@ void PMSIV_WORDWIN_VisibleCursor( PMSIV_WORDWIN* wk, BOOL flag )
 
 //------------------------------------------------------------------
 /**
- * カーソル移動
- *
- * @param   wk		
- * @param   pos		
- *
- */
+	* カーソル移動
+	*
+	* @param   wk		
+	* @param   pos		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_MoveCursor( PMSIV_WORDWIN* wk, u32 pos )
 {
@@ -465,12 +465,12 @@ void PMSIV_WORDWIN_MoveCursor( PMSIV_WORDWIN* wk, u32 pos )
 
 //------------------------------------------------------------------
 /**
- * スクロール開始
- *
- * @param   wk		
- * @param   vector		
- *
- */
+	* スクロール開始
+	*
+	* @param   wk		
+	* @param   vector		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_StartScroll( PMSIV_WORDWIN* wk, int vector )
 {
@@ -519,12 +519,12 @@ void PMSIV_WORDWIN_StartScroll( PMSIV_WORDWIN* wk, int vector )
 
 //------------------------------------------------------------------
 /**
- * スクロール終了待ち
- *
- * @param   wk		
- *
- * @retval  BOOL		
- */
+	* スクロール終了待ち
+	*
+	* @param   wk		
+	*
+	* @retval  BOOL		
+	*/
 //------------------------------------------------------------------
 BOOL PMSIV_WORDWIN_WaitScroll( PMSIV_WORDWIN* wk )
 {

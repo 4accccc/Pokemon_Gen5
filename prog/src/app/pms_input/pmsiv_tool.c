@@ -1,10 +1,10 @@
 //============================================================================================
 /**
- * @file	pmsiv_tool.c
- * @bfief	簡易会話入力画面（描画下請け：共有ツール類）
- * @author	taya
- * @date	06.02.10
- */
+	* @file	pmsiv_tool.c
+	* @bfief	簡易会話入力画面（描画下請け：共有ツール類）
+	* @author	taya
+	* @date	06.02.10
+	*/
 //============================================================================================
 #include "common.h"
 #include "gflib\heapsys.h"
@@ -35,16 +35,16 @@ static void bright_task( TCB_PTR tcb, void* wk_adrs );
 
 //------------------------------------------------------------------
 /**
- * スクロール処理ワークセットアップ
- *
- * @param   wk			ワークポインタ
- * @param   bgl			bglポインタ
- * @param   bg_frame	対象BGフレーム
- * @param   direction	スクロール方向（PMSIV_TOOL_SCROLL_DIRECTION）
- * @param   vector		スクロール量
- * @param   wait		スクロールに要するフレーム数
- *
- */
+	* スクロール処理ワークセットアップ
+	*
+	* @param   wk			ワークポインタ
+	* @param   bgl			bglポインタ
+	* @param   bg_frame	対象BGフレーム
+	* @param   direction	スクロール方向（PMSIV_TOOL_SCROLL_DIRECTION）
+	* @param   vector		スクロール量
+	* @param   wait		スクロールに要するフレーム数
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_TOOL_SetupScrollWork( PMSIV_TOOL_SCROLL_WORK* wk, GF_BGL_INI* bgl, u32 bg_frame, int direction, int vector, int wait )
 {
@@ -72,12 +72,12 @@ void PMSIV_TOOL_SetupScrollWork( PMSIV_TOOL_SCROLL_WORK* wk, GF_BGL_INI* bgl, u3
 
 //------------------------------------------------------------------
 /**
- * スクロール処理終了待ち
- *
- * @param   wk			ワークポインタ
- *
- * @retval  BOOL		TRUEで終了
- */
+	* スクロール処理終了待ち
+	*
+	* @param   wk			ワークポインタ
+	*
+	* @retval  BOOL		TRUEで終了
+	*/
 //------------------------------------------------------------------
 BOOL PMSIV_TOOL_WaitScroll( PMSIV_TOOL_SCROLL_WORK* wk )
 {
@@ -105,12 +105,12 @@ BOOL PMSIV_TOOL_WaitScroll( PMSIV_TOOL_SCROLL_WORK* wk )
 
 //------------------------------------------------------------------
 /**
- * スクロール処理タスク
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* スクロール処理タスク
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //------------------------------------------------------------------
 static void bg_scroll_task( TCB_PTR tcb, void* wk_adrs )
 {
@@ -131,16 +131,16 @@ static void bg_scroll_task( TCB_PTR tcb, void* wk_adrs )
 
 //------------------------------------------------------------------
 /**
- * 半透明エフェクト開始
- *
- * @param   wk		
- * @param   plane1		
- * @param   plane2		
- * @param   start		
- * @param   end		
- * @param   wait		
- *
- */
+	* 半透明エフェクト開始
+	*
+	* @param   wk		
+	* @param   plane1		
+	* @param   plane2		
+	* @param   start		
+	* @param   end		
+	* @param   wait		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_TOOL_SetupBlendWork( PMSIV_TOOL_BLEND_WORK* wk, int plane1, int plane2, int start, int end, int wait )
 {
@@ -207,15 +207,15 @@ static void fade_task( TCB_PTR tcb, void* wk_adrs )
 
 //------------------------------------------------------------------
 /**
- * 輝度エフェクト開始
- *
- * @param   wk			
- * @param   bg_plane	
- * @param   start		
- * @param   end			
- * @param   wait		
- *
- */
+	* 輝度エフェクト開始
+	*
+	* @param   wk			
+	* @param   bg_plane	
+	* @param   start		
+	* @param   end			
+	* @param   wait		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIV_TOOL_SetupBrightWork( PMSIV_TOOL_BLEND_WORK* wk,
 		int bg_plane,int start, int end, int wait )
@@ -234,12 +234,12 @@ void PMSIV_TOOL_SetupBrightWork( PMSIV_TOOL_BLEND_WORK* wk,
 
 //------------------------------------------------------------------
 /**
- * 輝度エフェクト終了待ち
- *
- * @param   wk		
- *
- * @retval  BOOL	TRUEで終了
- */
+	* 輝度エフェクト終了待ち
+	*
+	* @param   wk		
+	*
+	* @retval  BOOL	TRUEで終了
+	*/
 //------------------------------------------------------------------
 BOOL PMSIV_TOOL_WaitBright( PMSIV_TOOL_BLEND_WORK* wk )
 {

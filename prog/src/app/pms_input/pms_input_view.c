@@ -1,21 +1,21 @@
 //============================================================================================
 /**
- * @file	pms_input_view.c
- * @bfief	簡易会話入力画面
- * @author	taya
- * @date	06.01.24
- */
+	* @file	pms_input_view.c
+	* @bfief	簡易会話入力画面
+	* @author	taya
+	* @date	06.01.24
+	*/
 //============================================================================================
-#include "common.h"
-#include "gflib\tcb.h"
-#include "gflib\bg_system.h"
-#include "gflib\clact.h"
-#include "system\clact_util.h"
-#include "system\render_oam.h"
-#include "system\brightness.h"
-#include "system\arc_util.h"
-#include "system\wipe.h"
+#include <gflib.h>
 
+#include "system\main.h"
+#include "system\gfl_use.h"
+#include "system\wipe.h"
+#include "savedata\save_control.h"
+#include "print\printsys.h"
+
+#include "arc_def.h"
+#include "font/font.naix"
 #include "pms_input_prv.h"
 #include "pms_input_view.h"
 #include "pmsi.naix"
@@ -37,21 +37,19 @@ enum {
 
 //------------------------------------------------------
 /**
- *  描画メインワーク
- */
+	*  描画メインワーク
+	*/
 //------------------------------------------------------
 struct _PMS_INPUT_VIEW {
-	TCB_PTR     mainTask;
-	TCB_PTR     vintrTask;
+	GFL_TCB *mainTask;
+	GFL_TCB *vintrTask;
 
-	TCB_PTR     cmdTask[ STORE_COMMAND_MAX ];
+	GFL_TCB *cmdTask[ STORE_COMMAND_MAX ];
 
 	const PMS_INPUT_WORK*	main_wk;
 	const PMS_INPUT_DATA*	data_wk;
 
-	GF_BGL_INI*					bgl;
-	CLACT_SET_PTR				actsys;
-	CLACT_U_EASYRENDER_DATA		renddata;
+	GFL_CLUNIT				*cellUnit;
 
 	// メインとサブで２つずつ
 	NNSG2dImageProxy			obj_image_proxy[2];
@@ -71,12 +69,14 @@ struct _PMS_INPUT_VIEW {
 	u8					key_mode;
 
 	int*				p_key_mode;
+	
+	GFL_FONT			*fontHandle;
 };
 
 //------------------------------------------------------
 /**
- *  描画コマンドワーク
- */
+	*  描画コマンドワーク
+	*/
 //------------------------------------------------------
 typedef struct {
 	PMS_INPUT_VIEW*        vwk;
@@ -94,79 +94,88 @@ typedef struct {
 //==============================================================
 // Prototype
 //==============================================================
-static void PMSIView_MainTask( TCB_PTR tcb, void* wk_adrs );
-static void PMSIView_VintrTask( TCB_PTR tcb, void* wk_adrs );
+static void PMSIView_MainTask( GFL_TCB *tcb, void* wk_adrs );
+static void PMSIView_VintrTask( GFL_TCB *tcb, void* wk_adrs );
 static void DeleteCommand( COMMAND_WORK* cwk );
-static void Cmd_Init( TCB_PTR tcb, void* wk_adrs );
+static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs );
 static void setup_obj_graphic( COMMAND_WORK* cwk, ARCHANDLE* p_handle );
-static void Cmd_Quit( TCB_PTR tcb, void* wk_adrs );
+static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs );
 static void setup_bg_params( COMMAND_WORK* cwk );
-static void Cmd_FadeIn( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_UpdateEditArea( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_ChangeKTEditArea( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_ChangeKTCategory( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_ChangeKTWordWin( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_EditAreaToButton( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_ButtonToEditArea( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_EditAreaToCategory( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_ChangeCategoryModeDisable( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_ChangeCategoryModeEnable( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_CategoryToEditArea( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_CategoryToWordWin( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_WordWinToCategory( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_WordWinToEditArea( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_WordWinToButton( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_MoveEditAreaCursor( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_MoveButtonCursor( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_MoveCategoryCursor( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_MoveWordWinCursor( TCB_PTR tcb, void* wk_adrs  );
-static void Cmd_ScrollWordWin( TCB_PTR tcb, void* wk_adrs  );
-static void Cmd_DispMessageDefault( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_DispMessageOK( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_DispMessageCancel( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_DispMessageWarn( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_MoveMenuCursor( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_EraseMenu( TCB_PTR tcb, void* wk_adrs );
-static void Cmd_ButtonUpHold(TCB_PTR tcb, void* wk_adrs);
-static void Cmd_ButtonDownHold(TCB_PTR tcb, void* wk_adrs);
-static void Cmd_ButtonUpRelease(TCB_PTR tcb, void* wk_adrs);
-static void Cmd_ButtonDownRelease(TCB_PTR tcb, void* wk_adrs);
+static void Cmd_FadeIn( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_UpdateEditArea( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_ChangeKTEditArea( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_ChangeKTCategory( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_ChangeKTWordWin( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_EditAreaToButton( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_ButtonToEditArea( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_ChangeCategoryModeDisable( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_WordWinToButton( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_MoveEditAreaCursor( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_MoveButtonCursor( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_MoveCategoryCursor( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_MoveWordWinCursor( GFL_TCB *tcb, void* wk_adrs  );
+static void Cmd_ScrollWordWin( GFL_TCB *tcb, void* wk_adrs  );
+static void Cmd_DispMessageDefault( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_DispMessageOK( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_DispMessageCancel( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_DispMessageWarn( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_MoveMenuCursor( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_EraseMenu( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_ButtonUpHold(GFL_TCB *tcb, void* wk_adrs);
+static void Cmd_ButtonDownHold(GFL_TCB *tcb, void* wk_adrs);
+static void Cmd_ButtonUpRelease(GFL_TCB *tcb, void* wk_adrs);
+static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs);
 
-
+static const GFL_DISP_VRAM bank_data = {
+	GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+	GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_64K,
+	GX_OBJVRAMMODE_CHAR_1D_32K
+};
 
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   main_wk		
- * @param   data_wk		
- *
- * @retval  PMS_INPUT_VIEW*		
- */
+	* 
+	*
+	* @param   main_wk		
+	* @param   data_wk		
+	*
+	* @retval  PMS_INPUT_VIEW*		
+	*/
 //------------------------------------------------------------------
 PMS_INPUT_VIEW*  PMSIView_Create(const PMS_INPUT_WORK* main_wk, const PMS_INPUT_DATA* data_wk)
 {
-	PMS_INPUT_VIEW*  vwk = sys_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(PMS_INPUT_VIEW) );
+	PMS_INPUT_VIEW*  vwk = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(PMS_INPUT_VIEW) );
 
 	if( vwk )
 	{
 		int i;
-
-		sys_VBlankFuncChange( NULL, NULL );
-		sys_HBlankIntrStop();
 
 		vwk->main_wk = main_wk;
 		vwk->data_wk = data_wk;
 
 		vwk->p_key_mode = PMSI_GetKTModePointer(main_wk);
 
-		NNS_G2dInitOamManagerModule();
-		REND_OAMInit( 0, 128, 0, 32, 0, 128, 0, 32, HEAPID_PMS_INPUT_VIEW );
-		vwk->actsys = CLACT_U_SetEasyInit( 128, &vwk->renddata, HEAPID_PMS_INPUT_VIEW );
+		GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &bank_data, HEAPID_PMS_INPUT_VIEW );
+		vwk->cellUnit = GFL_CLACT_UNIT_Create( 128, 0, HEAPID_PMS_INPUT_VIEW );
 
-		vwk->bgl = GF_BGL_BglIniAlloc( HEAPID_PMS_INPUT_VIEW );
-
-		vwk->mainTask = TCB_Add( PMSIView_MainTask, vwk, TASKPRI_VIEW_MAIN );
+		GFL_BG_Init( HEAPID_PMS_INPUT_VIEW );
+		
+		vwk->mainTask = GFL_TCB_AddTask( PMSI_GetTcbSystem(main_wk) ,PMSIView_MainTask, vwk, TASKPRI_VIEW_MAIN );
 		vwk->vintrTask = PMSIView_AddVTask( PMSIView_VintrTask, vwk, VTASKPRI_MAIN );
 		for(i=0; i<STORE_COMMAND_MAX; i++)
 		{
@@ -177,13 +186,15 @@ PMS_INPUT_VIEW*  PMSIView_Create(const PMS_INPUT_WORK* main_wk, const PMS_INPUT_
 
 	return vwk;
 }
+
+
 //------------------------------------------------------------------
 /**
- * 
- *
- * @param   vwk		
- *
- */
+	* 
+	*
+	* @param   vwk		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIView_Delete( PMS_INPUT_VIEW* vwk )
 {
@@ -191,26 +202,25 @@ void PMSIView_Delete( PMS_INPUT_VIEW* vwk )
 	{
 		int i;
 
-		sys_VBlankFuncChange(NULL, NULL);
-
 		for(i=0; i<STORE_COMMAND_MAX; i++)
 		{
 			if( vwk->cmdTask[i] )
 			{
-				TCB_Delete( vwk->cmdTask[i] );
+				GFL_TCB_DeleteTask( vwk->cmdTask[i] );
 			}
 		}
 
-		TCB_Delete( vwk->mainTask );
-		TCB_Delete( vwk->vintrTask );
+		GFL_TCB_DeleteTask( vwk->mainTask );
+		GFL_TCB_DeleteTask( vwk->vintrTask );
 
-		REND_OAM_Delete();
-		CLACT_DestSet( vwk->actsys );
+		GFL_CLACT_UNIT_Delete( vwk->cellUnit );
+		GFL_CLACT_SYS_Delete();
 
-		sys_FreeMemoryEz( vwk->bgl );
-		sys_FreeMemoryEz( vwk );
+		GFL_BG_Exit();
+		GFL_HEAP_FreeMemory( vwk );
 	}
 }
+
 
 //==============================================================================================
 //==============================================================================================
@@ -218,57 +228,58 @@ void PMSIView_Delete( PMS_INPUT_VIEW* vwk )
 
 //------------------------------------------------------------------
 /**
- * V Blank 動作タスクをセットする
- *
- * @param   func		
- * @param   wk		
- * @param   pri		
- *
- * @retval  TCB_PTR		
- */
+	* V Blank 動作タスクをセットする
+	*
+	* @param   func		
+	* @param   wk		
+	* @param   pri		
+	*
+	* @retval  TCB_PTR		
+	*/
 //------------------------------------------------------------------
-TCB_PTR PMSIView_AddVTask( TCB_FUNC func, void* wk, int pri )
+GFL_TCB *PMSIView_AddVTask( GFL_TCB_FUNC func, void* wk, int pri )
 {
 #ifdef PMSI_FPS_60
-	return VIntrTCB_Add( func, wk, pri );
+	return GFUser_VIntr_CreateTCB( func, wk, pri );
 #else
-	return VWaitTCB_Add( func, wk, pri );
+	return GFUser_VIntr_CreateTCB( func, wk, pri );
 #endif
 }
 
 
 //------------------------------------------------------------------
 /**
- * メインタスク
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* メインタスク
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //------------------------------------------------------------------
-static void PMSIView_MainTask( TCB_PTR tcb, void* wk_adrs )
+static void PMSIView_MainTask( GFL_TCB *tcb, void* wk_adrs )
 {
+
+	GFL_CLACT_SYS_Main();
 	// 3D 関連の処理が無いのでなんにもしてない…
 }
 
 //------------------------------------------------------------------
 /**
- * V Blank タスク
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* V Blank タスク
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //------------------------------------------------------------------
-static void PMSIView_VintrTask( TCB_PTR tcb, void* wk_adrs )
+static void PMSIView_VintrTask( GFL_TCB *tcb, void* wk_adrs )
 {
 	PMS_INPUT_VIEW* vwk = wk_adrs;
 	
-	GF_BGL_VBlankFunc(vwk->bgl);
+	GFL_BG_VBlankFunc();
 	
-	CLACT_Draw( vwk->actsys );
-	REND_OAMTrans();		// レンダラ共有OAMマネージャVram転送
-	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
+	GFL_CLACT_SYS_VBlankFunc();
+	
 }
 
 //==============================================================================================
@@ -276,16 +287,17 @@ static void PMSIView_VintrTask( TCB_PTR tcb, void* wk_adrs )
 
 //------------------------------------------------------------------
 /**
- * コマンド登録
- *
- * @param   vwk		
- * @param   cmd		
- *
- */
+	* コマンド登録
+	*
+	* @param   vwk		
+	* @param   cmd		
+	*
+	*/
 //------------------------------------------------------------------
 void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 {
-	static const TCB_FUNC  func_tbl[] = {
+	GFL_TCB_FUNC *test = Cmd_Init;
+	GFL_TCB_FUNC *func_tbl[] = {
 		Cmd_Init,
 		Cmd_Quit,
 		Cmd_FadeIn,
@@ -331,7 +343,7 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 
 	if( cmd < NELEMS(func_tbl) )
 	{
-		COMMAND_WORK* cwk = sys_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(COMMAND_WORK) );
+		COMMAND_WORK* cwk = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(COMMAND_WORK) );
 
 		if( cwk )
 		{
@@ -348,7 +360,7 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 				if( vwk->cmdTask[i] == NULL )
 				{
 					cwk->store_pos = i;
-					vwk->cmdTask[i] = TCB_Add( func_tbl[cmd], cwk, TASKPRI_VIEW_COMMAND );
+					vwk->cmdTask[i] = GFL_TCB_AddTask( PMSI_GetTcbSystem(vwk->main_wk) ,func_tbl[cmd], cwk, TASKPRI_VIEW_COMMAND );
 					break;
 				}
 			}
@@ -360,14 +372,15 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 	}
 
 }
+
 //------------------------------------------------------------------
 /**
- * コマンド終了待ち（全てのコマンドが終了するのを待つ）
- *
- * @param   vwk		描画メインワーク
- *
- * @retval  BOOL	TRUEで終了
- */
+	* コマンド終了待ち（全てのコマンドが終了するのを待つ）
+	*
+	* @param   vwk		描画メインワーク
+	*
+	* @retval  BOOL	TRUEで終了
+	*/
 //------------------------------------------------------------------
 BOOL PMSIView_WaitCommandAll( PMS_INPUT_VIEW* vwk )
 {
@@ -385,13 +398,13 @@ BOOL PMSIView_WaitCommandAll( PMS_INPUT_VIEW* vwk )
 }
 //------------------------------------------------------------------
 /**
- * コマンド終了待ち（指定ナンバーのコマンドが終了するのを待つ）
- *
- * @param   vwk		描画メインワーク
- * @param   cmd		コマンドナンバー
- *
- * @retval  BOOL	TRUEで終了
- */
+	* コマンド終了待ち（指定ナンバーのコマンドが終了するのを待つ）
+	*
+	* @param   vwk		描画メインワーク
+	* @param   cmd		コマンドナンバー
+	*
+	* @retval  BOOL	TRUEで終了
+	*/
 //------------------------------------------------------------------
 BOOL PMSIView_WaitCommand( PMS_INPUT_VIEW* vwk, int cmd )
 {
@@ -401,7 +414,7 @@ BOOL PMSIView_WaitCommand( PMS_INPUT_VIEW* vwk, int cmd )
 	{
 		if( vwk->cmdTask[i] != NULL )
 		{
-			COMMAND_WORK* cwk = TCB_GetWork( vwk->cmdTask[i] );
+			COMMAND_WORK* cwk = GFL_TCB_GetWork( vwk->cmdTask[i] );
 			if( cwk->command_no == cmd )
 			{
 				return FALSE;
@@ -410,19 +423,20 @@ BOOL PMSIView_WaitCommand( PMS_INPUT_VIEW* vwk, int cmd )
 	}
 	return TRUE;
 }
+
 //------------------------------------------------------------------
 /**
- * コマンド自殺
- *
- * @param   cwk		
- *
- */
+	* コマンド自殺
+	*
+	* @param   cwk		
+	*
+	*/
 //------------------------------------------------------------------
 static void DeleteCommand( COMMAND_WORK* cwk )
 {
-	TCB_Delete( cwk->vwk->cmdTask[ cwk->store_pos ] );
+	GFL_TCB_DeleteTask( cwk->vwk->cmdTask[ cwk->store_pos ] );
 	cwk->vwk->cmdTask[ cwk->store_pos ] = NULL;
-	sys_FreeMemoryEz( cwk );
+	GFL_HEAP_FreeMemory( cwk );
 }
 
 
@@ -431,27 +445,24 @@ static void DeleteCommand( COMMAND_WORK* cwk )
 
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：画面構築
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：画面構築
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_Init( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_Init( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* cwk = wk_adrs;
 	ARCHANDLE* p_handle;
 
-	GF_Disp_GX_VisibleControlInit();
-	GF_Disp_GXS_VisibleControlInit();
+	GFL_DISP_GX_InitVisibleControl();
+	GFL_DISP_GXS_InitVisibleControl();
 	GX_SetVisiblePlane( 0 );
 	GXS_SetVisiblePlane( 0 );
 
-	GX_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_64K );
-	GXS_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
-
-	p_handle = ArchiveDataHandleOpen( ARC_PMSI_GRAPHIC, HEAPID_PMS_INPUT_VIEW );
+	p_handle = GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, HEAPID_PMS_INPUT_VIEW );
 
 	setup_bg_params( cwk );
 	setup_obj_graphic( cwk, p_handle );
@@ -471,22 +482,22 @@ static void Cmd_Init( TCB_PTR tcb, void* wk_adrs )
 	cwk->vwk->sub_wk = PMSIV_SUB_Create( cwk->vwk, cwk->mwk, cwk->dwk );
 	PMSIV_SUB_SetupGraphicDatas( cwk->vwk->sub_wk, p_handle );
 
-	GF_Disp_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GX_DispOn();
 
-	ArchiveDataHandleClose( p_handle );
+	GFL_ARC_CloseDataHandle( p_handle );
 
 
 	DeleteCommand(cwk);
 }
 //------------------------------------------------------------------
 /**
- * OBJグラフィックデータ転送
- *
- * @param   cwk		
- *
- */
+	* OBJグラフィックデータ転送
+	*
+	* @param   cwk		
+	*
+	*/
 //------------------------------------------------------------------
 static void setup_obj_graphic( COMMAND_WORK* cwk, ARCHANDLE* p_handle )
 {
@@ -497,17 +508,26 @@ static void setup_obj_graphic( COMMAND_WORK* cwk, ARCHANDLE* p_handle )
 		NNS_G2dInitImagePaletteProxy( &(vwk->obj_pltt_proxy[i]) );
 		NNS_G2dInitImageProxy( &(vwk->obj_image_proxy[i]) );
 
-		ArcUtil_HDL_CharSysLoad(p_handle, NARC_pmsi_obj_main_lz_ncgr, TRUE, CHAR_MAP_1D, 0,
-					NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, HEAPID_PMS_INPUT_VIEW, &(vwk->obj_image_proxy[i]) );
+		GFL_ARC_UTIL_TransVramCharacterMakeProxy( ARCID_PMSI_GRAPHIC , NARC_pmsi_pms_obj_main_NCGR, 
+					FALSE, 0, 0, NNS_G2D_VRAM_TYPE_2DMAIN+i, 0,  HEAPID_PMS_INPUT_VIEW ,
+					&(vwk->obj_image_proxy[i]) );
+//		ArcUtil_HDL_CharSysLoad(p_handle, NARC_pmsi_obj_main_lz_ncgr, TRUE, CHAR_MAP_1D, 0,
+//					NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, HEAPID_PMS_INPUT_VIEW, &(vwk->obj_image_proxy[i]) );
 
-		ArcUtil_HDL_PalSysLoad(p_handle, NARC_pmsi_obj_main_nclr, NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, 
-					HEAPID_PMS_INPUT_VIEW, &(vwk->obj_pltt_proxy[i]));
+		GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID_PMSI_GRAPHIC , NARC_pmsi_pms_obj_main_NCLR ,
+					NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, HEAPID_PMS_INPUT_VIEW , &(vwk->obj_pltt_proxy[i]));
+//		ArcUtil_HDL_PalSysLoad(p_handle, NARC_pmsi_obj_main_nclr, NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, 
+//					HEAPID_PMS_INPUT_VIEW, &(vwk->obj_pltt_proxy[i]));
 
-		vwk->cell_load_ptr[i] = ArcUtil_HDL_CellBankDataGet(p_handle, NARC_pmsi_obj_main_lz_ncer,
-				TRUE,&(vwk->cellbank[i]), HEAPID_PMS_INPUT_VIEW );
-
-		vwk->anm_load_ptr[i] = ArcUtil_HDL_AnimBankDataGet(p_handle, NARC_pmsi_obj_main_lz_nanr, TRUE,
-				&(vwk->anmbank[i]), HEAPID_PMS_INPUT_VIEW );
+		vwk->cell_load_ptr[i] = GFL_ARC_UTIL_LoadCellBank( ARCID_PMSI_GRAPHIC,
+				NARC_pmsi_pms_obj_main_NCER, FALSE ,&(vwk->cellbank[i]),HEAPID_PMS_INPUT_VIEW );
+//		vwk->cell_load_ptr[i] = ArcUtil_HDL_CellBankDataGet(p_handle, NARC_pmsi_obj_main_lz_ncer,
+//				TRUE,&(vwk->cellbank[i]), HEAPID_PMS_INPUT_VIEW );
+		
+		vwk->anm_load_ptr[i] = GFL_ARC_UTIL_LoadAnimeBank( ARCID_PMSI_GRAPHIC,
+				NARC_pmsi_pms_obj_main_NANR, FALSE, &(vwk->anmbank[i]), HEAPID_PMS_INPUT_VIEW );
+//		vwk->anm_load_ptr[i] = ArcUtil_HDL_AnimBankDataGet(p_handle, NARC_pmsi_obj_main_lz_nanr, TRUE,
+//				&(vwk->anmbank[i]), HEAPID_PMS_INPUT_VIEW );
 	
 	}
 }
@@ -515,14 +535,14 @@ static void setup_obj_graphic( COMMAND_WORK* cwk, ARCHANDLE* p_handle )
 
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：描画終了
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：描画終了
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_Quit( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* cwk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = cwk->vwk;
@@ -549,21 +569,21 @@ static void Cmd_Quit( TCB_PTR tcb, void* wk_adrs )
 			{
 				if( vwk->cell_load_ptr[i] != NULL )
 				{
-					sys_FreeMemoryEz( vwk->cell_load_ptr[i] );
+					GFL_HEAP_FreeMemory( vwk->cell_load_ptr[i] );
 				}
 				if( vwk->anm_load_ptr[i] != NULL )
 				{
-					sys_FreeMemoryEz( vwk->anm_load_ptr[i] );
+					GFL_HEAP_FreeMemory( vwk->anm_load_ptr[i] );
 				}
 			}
-			FontProc_UnloadFont(FONT_BUTTON);
+			GFL_FONT_Delete(vwk->fontHandle);
 			
-			GF_BGL_BGControlExit( vwk->bgl, FRM_MAIN_EDITAREA );
-			GF_BGL_BGControlExit( vwk->bgl, FRM_MAIN_CATEGORY );
-			GF_BGL_BGControlExit( vwk->bgl, FRM_MAIN_WORDWIN );
-			GF_BGL_BGControlExit( vwk->bgl, FRM_MAIN_BACK );
-			GF_BGL_BGControlExit( vwk->bgl, FRM_SUB_EDITAREA );
-			GF_BGL_BGControlExit( vwk->bgl, FRM_SUB_BG );
+			GFL_BG_FreeBGControl( FRM_MAIN_EDITAREA );
+			GFL_BG_FreeBGControl( FRM_MAIN_CATEGORY );
+			GFL_BG_FreeBGControl( FRM_MAIN_WORDWIN );
+			GFL_BG_FreeBGControl( FRM_MAIN_BACK );
+			GFL_BG_FreeBGControl( FRM_SUB_EDITAREA );
+			GFL_BG_FreeBGControl( FRM_SUB_BG );
 	
 			GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
 
@@ -576,70 +596,58 @@ static void Cmd_Quit( TCB_PTR tcb, void* wk_adrs )
 
 //--------------------------------------------------------------
 /**
- * BG システム設定
- *
- * @param   cwk		
- */
+	* BG システム設定
+	*
+	* @param   cwk		
+	*/
 //--------------------------------------------------------------
 static void setup_bg_params( COMMAND_WORK* cwk )
 {
 	int i;
 
-	static const GF_BGL_DISPVRAM bank_data = {
-		GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
-		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-		GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_01_FG			// テクスチャパレットスロット
-	};
-	static const GF_BGL_SYS_HEADER sys_data = {
+	static const GFL_BG_SYS_HEADER sys_data = {
 			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
 	};
 
 	// BG0 MAIN
-	static const GF_BGL_BGCNT_HEADER header_main0 = {
+	static const GFL_BG_BGCNT_HEADER header_main0 = {
 		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-		GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000,0x8000,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
 	// BG1 MAIN
-	static const GF_BGL_BGCNT_HEADER header_main1 = {
+	static const GFL_BG_BGCNT_HEADER header_main1 = {
 		0, 0, 0x1000, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-		GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000,
+		GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000,0x8000,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
 	// BG2 MAIN
-	static const GF_BGL_BGCNT_HEADER header_main2 = {
+	static const GFL_BG_BGCNT_HEADER header_main2 = {
 		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-		GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x18000,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x18000,0x8000,
 		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
 	// BG3 MAIN
-	static const GF_BGL_BGCNT_HEADER header_main3 = {
+	static const GFL_BG_BGCNT_HEADER header_main3 = {
 		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-		GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x08000,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x08000,0x6000,
 		GX_BG_EXTPLTT_01, 3, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
 	// BG0 SUB
-	static const GF_BGL_BGCNT_HEADER header_sub0 = {
+	static const GFL_BG_BGCNT_HEADER header_sub0 = {
 		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-		GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,0x8000,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
-	static const GF_BGL_BGCNT_HEADER header_sub1 = {
+	static const GFL_BG_BGCNT_HEADER header_sub1 = {
 		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-		GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000,0x6000,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
 
@@ -649,37 +657,37 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 	GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
 	GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_3D);
 
-	GF_Disp_SetBank( &bank_data );
-	GF_BGL_InitBG( &sys_data );
+	GFL_DISP_SetBank( &bank_data );
+	GFL_BG_SetBGMode( &sys_data );
 
 
-	GF_BGL_BGControlSet( vwk->bgl, FRM_MAIN_EDITAREA,  &header_main0, GF_BGL_MODE_TEXT );
-	GF_BGL_BGControlSet( vwk->bgl, FRM_MAIN_CATEGORY,  &header_main1, GF_BGL_MODE_TEXT );
-	GF_BGL_BGControlSet( vwk->bgl, FRM_MAIN_WORDWIN,   &header_main2, GF_BGL_MODE_TEXT );
-	GF_BGL_BGControlSet( vwk->bgl, FRM_MAIN_BACK,    &header_main3, GF_BGL_MODE_TEXT );
+	GFL_BG_SetBGControl( FRM_MAIN_EDITAREA,  &header_main0, GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( FRM_MAIN_CATEGORY,  &header_main1, GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( FRM_MAIN_WORDWIN,   &header_main2, GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( FRM_MAIN_BACK,    &header_main3, GFL_BG_MODE_TEXT );
 
-	GF_BGL_BGControlSet( vwk->bgl, FRM_SUB_EDITAREA, &header_sub0, GF_BGL_MODE_TEXT );
-	GF_BGL_BGControlSet( vwk->bgl, FRM_SUB_BG, &header_sub1, GF_BGL_MODE_TEXT );
+	GFL_BG_SetBGControl( FRM_SUB_EDITAREA, &header_sub0, GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( FRM_SUB_BG, &header_sub1, GFL_BG_MODE_TEXT );
 
 	for(i = 0;i < 6;i++){
-		GF_BGL_ScrClear(vwk->bgl,GF_BGL_FRAME0_M+i);
+		GFL_BG_ClearScreen(GFL_BG_FRAME0_M+i);
 	}
 
 	//ボタンフォント読み出し
-	FontProc_LoadFont(FONT_BUTTON,HEAPID_PMS_INPUT_VIEW);
+	vwk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_PMS_INPUT_VIEW );
 }
 
 
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：フェードイン
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：フェードイン
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_FadeIn( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_FadeIn( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* cwk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = cwk->vwk;
@@ -707,14 +715,14 @@ static void Cmd_FadeIn( TCB_PTR tcb, void* wk_adrs )
 
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：編集エリア更新
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：編集エリア更新
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_UpdateEditArea( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_UpdateEditArea( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -727,19 +735,19 @@ static void Cmd_UpdateEditArea( TCB_PTR tcb, void* wk_adrs )
 
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：編集エリア タッチorキー更新
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：編集エリア タッチorキー更新
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_ChangeKTEditArea( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_ChangeKTEditArea( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-	if(*vwk->p_key_mode == APP_KTST_TOUCH){	//キーからタッチへ
+	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){	//キーからタッチへ
 		PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );
 		PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
 	}else{	//タッチからキーへ
@@ -754,14 +762,14 @@ static void Cmd_ChangeKTEditArea( TCB_PTR tcb, void* wk_adrs )
 
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：編集エリア タッチorキー更新
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：編集エリア タッチorキー更新
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_ChangeKTCategory( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_ChangeKTCategory( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -784,14 +792,14 @@ static void Cmd_ChangeKTCategory( TCB_PTR tcb, void* wk_adrs )
 
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：編集エリア タッチorキー更新
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：編集エリア タッチorキー更新
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_ChangeKTWordWin( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_ChangeKTWordWin( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -808,14 +816,14 @@ static void Cmd_ChangeKTWordWin( TCB_PTR tcb, void* wk_adrs )
 
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：編集エリアからコマンドボタンへ
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：編集エリアからコマンドボタンへ
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_EditAreaToButton( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_EditAreaToButton( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -832,14 +840,14 @@ static void Cmd_EditAreaToButton( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：コマンドボタンから編集エリアへ
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：コマンドボタンから編集エリアへ
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_ButtonToEditArea( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_ButtonToEditArea( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -854,14 +862,14 @@ static void Cmd_ButtonToEditArea( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：編集エリアからカテゴリ選択へ
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：編集エリアからカテゴリ選択へ
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_EditAreaToCategory( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -892,14 +900,14 @@ static void Cmd_EditAreaToCategory( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：カテゴリモード切替え（編集エリア・コマンドボタン選択動作中）
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：カテゴリモード切替え（編集エリア・コマンドボタン選択動作中）
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_ChangeCategoryModeDisable( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_ChangeCategoryModeDisable( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -930,14 +938,14 @@ static void Cmd_ChangeCategoryModeDisable( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：カテゴリモード切替え（カテゴリ選択動作中）
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：カテゴリモード切替え（カテゴリ選択動作中）
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_ChangeCategoryModeEnable( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -976,14 +984,14 @@ static void Cmd_ChangeCategoryModeEnable( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：カテゴリ選択から編集エリアへ
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：カテゴリ選択から編集エリアへ
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_CategoryToEditArea( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1014,14 +1022,14 @@ static void Cmd_CategoryToEditArea( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：カテゴリ選択から単語選択へ
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：カテゴリ選択から単語選択へ
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_CategoryToWordWin( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1055,14 +1063,14 @@ static void Cmd_CategoryToWordWin( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：単語選択からカテゴリ選択へ
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：単語選択からカテゴリ選択へ
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_WordWinToCategory( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1109,14 +1117,14 @@ static void Cmd_WordWinToCategory( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：単語決定後、編集エリアへ
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：単語決定後、編集エリアへ
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_WordWinToEditArea( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
 {
 	int flag1,flag2;
 	COMMAND_WORK* wk = wk_adrs;
@@ -1166,14 +1174,14 @@ static void Cmd_WordWinToEditArea( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：単語決定後、コマンドボタンへ
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：単語決定後、コマンドボタンへ
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_WordWinToButton( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_WordWinToButton( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1216,14 +1224,14 @@ static void Cmd_WordWinToButton( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：編集エリアのカーソル移動
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：編集エリアのカーソル移動
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_MoveEditAreaCursor( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_MoveEditAreaCursor( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1234,14 +1242,14 @@ static void Cmd_MoveEditAreaCursor( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：ボタンカーソル移動
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：ボタンカーソル移動
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_MoveButtonCursor( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_MoveButtonCursor( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1251,14 +1259,14 @@ static void Cmd_MoveButtonCursor( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：カテゴリカーソル移動
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：カテゴリカーソル移動
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_MoveCategoryCursor( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_MoveCategoryCursor( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1268,14 +1276,14 @@ static void Cmd_MoveCategoryCursor( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：単語ウィンドウカーソル移動
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：単語ウィンドウカーソル移動
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_MoveWordWinCursor( TCB_PTR tcb, void* wk_adrs  )
+static void Cmd_MoveWordWinCursor( GFL_TCB *tcb, void* wk_adrs  )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1285,14 +1293,14 @@ static void Cmd_MoveWordWinCursor( TCB_PTR tcb, void* wk_adrs  )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：単語ウィンドウスクロール
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：単語ウィンドウスクロール
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_ScrollWordWin( TCB_PTR tcb, void* wk_adrs  )
+static void Cmd_ScrollWordWin( GFL_TCB *tcb, void* wk_adrs  )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1314,14 +1322,14 @@ static void Cmd_ScrollWordWin( TCB_PTR tcb, void* wk_adrs  )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：初期状態メッセージ表示
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：初期状態メッセージ表示
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_DispMessageDefault( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_DispMessageDefault( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1332,14 +1340,14 @@ static void Cmd_DispMessageDefault( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：これでいいですか？メッセージ表示
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：これでいいですか？メッセージ表示
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_DispMessageOK( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_DispMessageOK( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1347,7 +1355,7 @@ static void Cmd_DispMessageOK( TCB_PTR tcb, void* wk_adrs )
 	PMSIV_EDIT_SetSystemMessage( vwk->edit_wk, PMSIV_MSG_CONFIRM_DECIDE );
 
 //	if( PMSIV_BUTTON_GetCursorVisibleFlag( vwk->button_wk ) )
-	if(*vwk->p_key_mode == APP_KTST_TOUCH){
+	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){
 		PMSIV_BUTTON_UpdateButton(wk->vwk->button_wk,FALSE,FALSE);
 	}else if( vwk->status == PMSI_ST_BUTTON){
 		PMSIV_BUTTON_UpdateButton(wk->vwk->button_wk,FALSE,FALSE);
@@ -1361,14 +1369,14 @@ static void Cmd_DispMessageOK( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：やめますか？メッセージ表示
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：やめますか？メッセージ表示
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_DispMessageCancel( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_DispMessageCancel( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1376,7 +1384,7 @@ static void Cmd_DispMessageCancel( TCB_PTR tcb, void* wk_adrs )
 	PMSIV_EDIT_SetSystemMessage( vwk->edit_wk, PMSIV_MSG_CONFIRM_CANCEL );
 
 //	if( PMSIV_BUTTON_GetCursorVisibleFlag( vwk->button_wk ) )
-	if(*vwk->p_key_mode == APP_KTST_TOUCH){
+	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){
 		PMSIV_BUTTON_UpdateButton(wk->vwk->button_wk,FALSE,FALSE);
 	}else if( vwk->status == PMSI_ST_BUTTON){
 		PMSIV_BUTTON_UpdateButton(wk->vwk->button_wk,FALSE,FALSE);
@@ -1390,14 +1398,14 @@ static void Cmd_DispMessageCancel( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：何かことばを入れてください！メッセージ表示
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：何かことばを入れてください！メッセージ表示
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_DispMessageWarn( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_DispMessageWarn( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1407,14 +1415,14 @@ static void Cmd_DispMessageWarn( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：はい／いいえカーソル移動
- *
- * @param   tcb			
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：はい／いいえカーソル移動
+	*
+	* @param   tcb			
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_MoveMenuCursor( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_MoveMenuCursor( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1424,14 +1432,14 @@ static void Cmd_MoveMenuCursor( TCB_PTR tcb, void* wk_adrs )
 }
 //----------------------------------------------------------------------------------------------
 /**
- * 描画コマンド：メニュー表示消去
- *
- * @param   tcb			
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：メニュー表示消去
+	*
+	* @param   tcb			
+	* @param   wk_adrs		
+	*
+	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_EraseMenu( TCB_PTR tcb, void* wk_adrs )
+static void Cmd_EraseMenu( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1456,14 +1464,14 @@ static void Cmd_EraseMenu( TCB_PTR tcb, void* wk_adrs )
 
 //------------------------------------------------------------------
 /**
- * 描画コマンド：三角ボタン（上）押した状態に
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：三角ボタン（上）押した状態に
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //------------------------------------------------------------------
-static void Cmd_ButtonUpHold(TCB_PTR tcb, void* wk_adrs)
+static void Cmd_ButtonUpHold(GFL_TCB *tcb, void* wk_adrs)
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1474,14 +1482,14 @@ static void Cmd_ButtonUpHold(TCB_PTR tcb, void* wk_adrs)
 }
 //------------------------------------------------------------------
 /**
- * 描画コマンド：三角ボタン（下）押した状態に
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：三角ボタン（下）押した状態に
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //------------------------------------------------------------------
-static void Cmd_ButtonDownHold(TCB_PTR tcb, void* wk_adrs)
+static void Cmd_ButtonDownHold(GFL_TCB *tcb, void* wk_adrs)
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1492,14 +1500,14 @@ static void Cmd_ButtonDownHold(TCB_PTR tcb, void* wk_adrs)
 }
 //------------------------------------------------------------------
 /**
- * 描画コマンド：三角ボタン（上）離した状態に
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：三角ボタン（上）離した状態に
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //------------------------------------------------------------------
-static void Cmd_ButtonUpRelease(TCB_PTR tcb, void* wk_adrs)
+static void Cmd_ButtonUpRelease(GFL_TCB *tcb, void* wk_adrs)
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1510,14 +1518,14 @@ static void Cmd_ButtonUpRelease(TCB_PTR tcb, void* wk_adrs)
 }
 //------------------------------------------------------------------
 /**
- * 描画コマンド：三角ボタン（下）離した状態に
- *
- * @param   tcb		
- * @param   wk_adrs		
- *
- */
+	* 描画コマンド：三角ボタン（下）離した状態に
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
 //------------------------------------------------------------------
-static void Cmd_ButtonDownRelease(TCB_PTR tcb, void* wk_adrs)
+static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs)
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1534,13 +1542,13 @@ static void Cmd_ButtonDownRelease(TCB_PTR tcb, void* wk_adrs)
 //==============================================================================================
 //------------------------------------------------------------------
 /**
- * 文章モード時の、単語入力欄がいくつあるか取得
- * （文章解析を描画側で行っているため）
- *
- * @param   wk		
- *
- * @retval  u32		
- */
+	* 文章モード時の、単語入力欄がいくつあるか取得
+	* （文章解析を描画側で行っているため）
+	*
+	* @param   wk		
+	*
+	* @retval  u32		
+	*/
 //------------------------------------------------------------------
 u32 PMSIView_GetSentenceEditPosMax( PMS_INPUT_VIEW* wk )
 {
@@ -1549,21 +1557,21 @@ u32 PMSIView_GetSentenceEditPosMax( PMS_INPUT_VIEW* wk )
 
 //------------------------------------------------------------------
 /**
- * 文章モード時の、単語入力欄矩形取得
- * （文章解析を描画側で行っているため）
- *
- * @param   wk		
- *
- */
+	* 文章モード時の、単語入力欄矩形取得
+	* （文章解析を描画側で行っているため）
+	*
+	* @param   wk		
+	*
+	*/
 //------------------------------------------------------------------
-void PMSIView_GetSentenceWordArea( PMS_INPUT_VIEW* wk ,RECT_HIT_TBL* tbl,u8 idx)
+void PMSIView_GetSentenceWordArea( PMS_INPUT_VIEW* wk ,GFL_UI_TP_HITTBL* tbl,u8 idx)
 {
 	PMSIV_EDIT_GetSentenceWordPos( wk->edit_wk ,tbl,idx);
 }
 
 /**
- *	@brief	YesNoボタン待ち
- */
+	*	@brief	YesNoボタン待ち
+	*/
 int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk)
 {
 	return PMSIV_EDIT_WaitYesNoBtn(wk->edit_wk);
@@ -1578,14 +1586,14 @@ int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk)
 // 下請けモジュールへの情報提供
 //==============================================================================================
 
-GF_BGL_INI* PMSIView_GetBGL( PMS_INPUT_VIEW* vwk )
+GFL_CLUNIT*  PMSIView_GetActSys( PMS_INPUT_VIEW* vwk )
 {
-	return vwk->bgl;
+	return vwk->cellUnit;
 }
 
-CLACT_SET_PTR  PMSIView_GetActSys( PMS_INPUT_VIEW* vwk )
+GFL_FONT*  PMSIView_GetFontHandle( PMS_INPUT_VIEW* vwk )
 {
-	return vwk->actsys;
+	return vwk->fontHandle;
 }
 
 NNSG2dImageProxy* PMSIView_GetObjImageProxy( PMS_INPUT_VIEW* vwk, int lcd )
@@ -1597,8 +1605,9 @@ NNSG2dImagePaletteProxy* PMSIView_GetObjPaletteProxy( PMS_INPUT_VIEW* vwk, int l
 	return &(vwk->obj_pltt_proxy[lcd]);
 }
 
-void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, CLACT_HEADER* header, u32 lcd, u32 bgpri )
+void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 lcd, u32 bgpri )
 {
+#if 0
 	header->pImageProxy   = &vwk->obj_image_proxy[lcd];
 	header->pPaletteProxy = &vwk->obj_pltt_proxy[lcd];
 	header->pCellBank     = vwk->cellbank[lcd];
@@ -1609,36 +1618,39 @@ void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, CLACT_HEADER* header, 
 	header->pMCBank = NULL;
 	header->pMCABank = NULL;
 	header->flag = FALSE;
+#endif
+	GFL_CLACT_WK_SetCellResData( header , &vwk->obj_image_proxy[lcd],
+				&vwk->obj_pltt_proxy[lcd], vwk->cellbank[lcd], vwk->anmbank[lcd] );
 }
 
-CLACT_WORK_PTR PMSIView_AddActor( PMS_INPUT_VIEW* vwk, CLACT_HEADER* header, u32 x, u32 y, u32 actpri, int drawArea )
+GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 x, u32 y, u32 actpri, int drawArea )
 {
-	CLACT_ADD_SIMPLE  add;
-	CLACT_WORK_PTR    act;
-	OSIntrMode        oldIntr;
+	GFL_CLWK_DATA	add;
+	GFL_CLWK*		act;
+	OSIntrMode		oldIntr;
+	u16				setsf;
 
-	add.ClActSet = vwk->actsys;
-	add.ClActHeader = header;
-	add.mat.x = x * FX32_ONE;
-	add.mat.y = y * FX32_ONE;
-	add.mat.z = 0;
-	add.pri = actpri;
-	add.DrawArea = drawArea;
-	add.heap = HEAPID_PMS_INPUT_VIEW;
+	add.pos_x = x;
+	add.pos_y = y;
+	add.softpri = actpri;
 
 	if(drawArea == NNS_G2D_VRAM_TYPE_2DSUB ){
-		add.mat.y += FX32_CONST(192);
+		setsf = CLSYS_DEFREND_SUB;
 	}
+	else
+	{
+		setsf = CLSYS_DEFREND_MAIN;
+	}
+
 	oldIntr = OS_DisableInterrupts();
-	act = CLACT_AddSimple( &add );
+	act = GFL_CLACT_WK_Add( vwk->cellUnit , &add , header , setsf , HEAPID_PMS_INPUT_VIEW);
 	OS_RestoreInterrupts( oldIntr );
 
 	if( act )
 	{
-		CLACT_SetAnmFlag( act, TRUE );
-		CLACT_SetAnmFrame( act, PMSI_ANM_SPEED );
+		GFL_CLACT_WK_SetAutoAnmFlag( act, TRUE );
+		GFL_CLACT_WK_SetAnmFrame( act, PMSI_ANM_SPEED );
 	}
 	return act;
 }
-
 

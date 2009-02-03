@@ -1,16 +1,14 @@
 //============================================================================================
 /**
- * @file	pms_input_view.h
- * @bfief	簡易会話入力画面（描画メイン－下請け参照ヘッダ）
- * @author	taya
- * @date	06.02.07
- */
+	* @file	pms_input_view.h
+	* @bfief	簡易会話入力画面（描画メイン－下請け参照ヘッダ）
+	* @author	taya
+	* @date	06.02.07
+	*/
 //============================================================================================
 #ifndef __PMS_INPUT_VIEW_H__
 #define __PMS_INPUT_VIEW_H__
 
-#include "gflib\tcb.h"
-#include "system\fontproc.h"
 #include "pmsi.naix"
 
 
@@ -31,18 +29,18 @@
 
 //------------------------------------------------
 /**
- * フレーム割り振り
- */ 
+	* フレーム割り振り
+	*/ 
 //------------------------------------------------
 enum {
-	FRM_MAIN_EDITAREA =  GF_BGL_FRAME0_M,
-	FRM_MAIN_CATEGORY =  GF_BGL_FRAME1_M,
-	FRM_MAIN_WORDWIN  =  GF_BGL_FRAME2_M,
-	FRM_MAIN_BUTTON   =  GF_BGL_FRAME0_M,
-	FRM_MAIN_BACK	  =  GF_BGL_FRAME3_M,
+	FRM_MAIN_EDITAREA =  GFL_BG_FRAME0_M,
+	FRM_MAIN_CATEGORY =  GFL_BG_FRAME1_M,
+	FRM_MAIN_WORDWIN  =  GFL_BG_FRAME2_M,
+	FRM_MAIN_BUTTON   =  GFL_BG_FRAME0_M,
+	FRM_MAIN_BACK	  =  GFL_BG_FRAME3_M,
 
-	FRM_SUB_EDITAREA = GF_BGL_FRAME0_S,
-	FRM_SUB_BG = GF_BGL_FRAME1_S,
+	FRM_SUB_EDITAREA = GFL_BG_FRAME0_S,
+	FRM_SUB_BG = GFL_BG_FRAME1_S,
 
 	FRM_MAIN_EDITAREA_BLENDMASK = GX_BLEND_PLANEMASK_BG0,
 	FRM_MAIN_CATEGORY_BLENDMASK = GX_BLEND_PLANEMASK_BG1,
@@ -57,8 +55,8 @@ enum {
 };
 //------------------------------------------------
 /**
- * パレット割り振り
- */ 
+	* パレット割り振り
+	*/ 
 //------------------------------------------------
 enum {
 	PALNUM_MAIN_EDITAREA = 0x00,
@@ -74,24 +72,25 @@ enum {
 
 //------------------------------------------------
 /**
- * 使用フォント
- */ 
+	* 使用フォント
+	*/ 
 //------------------------------------------------
+
 enum {
-	PMSI_FONT_EDITAREA_BASE = FONT_TALK,
-	PMSI_FONT_EDITAREA_WORD = FONT_TALK,
-	PMSI_FONT_BUTTON = FONT_SYSTEM,
-	PMSI_FONT_CATEGORY = FONT_SYSTEM,
-	PMSI_FONT_WORDWIN = FONT_SYSTEM,
-	PMSI_FONT_MESSAGE = FONT_TALK,
-	PMSI_FONT_YESNO = FONT_SYSTEM,
+	PMSI_FONT_EDITAREA_BASE =	0,	//FONT_TALK,
+	PMSI_FONT_EDITAREA_WORD =	0,	//FONT_TALK,
+	PMSI_FONT_BUTTON =			1,	//FONT_SYSTEM,
+	PMSI_FONT_CATEGORY =		1,	//FONT_SYSTEM,
+	PMSI_FONT_WORDWIN =			1,	//FONT_SYSTEM,
+	PMSI_FONT_MESSAGE =			0,	//FONT_TALK,
+	PMSI_FONT_YESNO =			1,	//FONT_SYSTEM,
 };
 
 
 //------------------------------------------------
 /**
- * アプリステータス
- */ 
+	* アプリステータス
+	*/ 
 //------------------------------------------------
 enum{
 	PMSI_ST_EDIT,
@@ -100,8 +99,8 @@ enum{
 
 //------------------------------------------------
 /**
- * LCD
- */ 
+	* LCD
+	*/ 
 //------------------------------------------------
 enum {
 	PMSIV_LCD_MAIN = 0,
@@ -164,13 +163,13 @@ enum {
 };
 
 
-extern TCB_PTR  PMSIView_AddVTask( TCB_FUNC func, void* wk, int pri );
-extern GF_BGL_INI*  PMSIView_GetBGL( PMS_INPUT_VIEW* vwk );
-extern CLACT_SET_PTR  PMSIView_GetActSys( PMS_INPUT_VIEW* vwk );
+extern GFL_TCB* PMSIView_AddVTask( GFL_TCB_FUNC func, void* wk, int pri );
+extern GFL_CLUNIT*  PMSIView_GetActSys( PMS_INPUT_VIEW* vwk );
+GFL_FONT*  PMSIView_GetFontHandle( PMS_INPUT_VIEW* vwk );
 extern NNSG2dImageProxy*  PMSIView_GetObjImageProxy( PMS_INPUT_VIEW* vwk, int lcd );
 extern NNSG2dImagePaletteProxy*  PMSIView_GetObjPaletteProxy( PMS_INPUT_VIEW* vwk, int lcd );
-extern void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, CLACT_HEADER* header, u32 lcd, u32 bgpri );
-extern CLACT_WORK_PTR PMSIView_AddActor( PMS_INPUT_VIEW* vwk, CLACT_HEADER* header, u32 x, u32 y, u32 actpri, int drawArea );
+extern void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 lcd, u32 bgpri );
+extern GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 x, u32 y, u32 actpri, int drawArea );
 
 
 //================================================================================
@@ -184,7 +183,7 @@ extern void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle );
 extern void PMSIV_EDIT_UpdateEditArea( PMSIV_EDIT* wk );
 extern void PMSIV_EDIT_ScrollSet( PMSIV_EDIT* wk,u8 scr_dir);
 extern int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk);
-extern void PMSIV_EDIT_GetSentenceWordPos( PMSIV_EDIT* wk ,RECT_HIT_TBL* tbl,u8 idx);
+extern void PMSIV_EDIT_GetSentenceWordPos( PMSIV_EDIT* wk ,GFL_UI_TP_HITTBL* tbl,u8 idx);
 
 extern void PMSIV_EDIT_StopCursor( PMSIV_EDIT* wk );
 extern void PMSIV_EDIT_ActiveCursor( PMSIV_EDIT* wk );
@@ -212,10 +211,10 @@ extern PMSIV_BUTTON*  PMSIV_BUTTON_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_
 extern void PMSIV_BUTTON_Delete( PMSIV_BUTTON* wk );
 extern void PMSIV_BUTTON_SetupGraphicDatas( PMSIV_BUTTON* wk, ARCHANDLE* p_handle );
 /**
- *	@brief	けってい/やめる　ボタンの描画状態コントロール
- *	@param	draw_f	ボタン本体の描画On/Off
- *	@param	cur_f	選択カーソルの描画On/Off
- */
+	*	@brief	けってい/やめる　ボタンの描画状態コントロール
+	*	@param	draw_f	ボタン本体の描画On/Off
+	*	@param	cur_f	選択カーソルの描画On/Off
+	*/
 extern void PMSIV_BUTTON_UpdateButton( PMSIV_BUTTON* wk,BOOL draw_f,BOOL cur_f);
 extern void PMSIV_BUTTON_UpdateRetButton( PMSIV_BUTTON* wk,u8 draw_mode);
 
