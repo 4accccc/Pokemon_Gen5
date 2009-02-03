@@ -68,6 +68,7 @@ extern	void			MCSS_SetMepachiFlag( MCSS_WORK *mcss );
 extern	void			MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
 extern	void			MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
 extern	void			MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
+extern	int				MCSS_GetVanishFlag( MCSS_WORK *mcss );
 extern	void			MCSS_SetVanishFlag( MCSS_WORK *mcss );
 extern	void			MCSS_ResetVanishFlag( MCSS_WORK *mcss );
 
