@@ -77,6 +77,7 @@ void			MCSS_SetMepachiFlag( MCSS_WORK *mcss );
 void			MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
 void			MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
 void			MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
+int				MCSS_GetVanishFlag( MCSS_WORK *mcss );
 void			MCSS_SetVanishFlag( MCSS_WORK *mcss );
 void			MCSS_ResetVanishFlag( MCSS_WORK *mcss );
 
@@ -752,6 +753,16 @@ void	MCSS_SetAnmStopFlag( MCSS_WORK *mcss )
 void	MCSS_ResetAnmStopFlag( MCSS_WORK *mcss )
 {
 	mcss->anm_stop_flag = MCSS_ANM_STOP_OFF;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * バニッシュフラグゲット
+ */
+//--------------------------------------------------------------------------
+int		MCSS_GetVanishFlag( MCSS_WORK *mcss )
+{
+	return mcss->vanish_flag;
 }
 
 //--------------------------------------------------------------------------

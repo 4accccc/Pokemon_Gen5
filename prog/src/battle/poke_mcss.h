@@ -48,6 +48,8 @@ typedef enum{
 #define	POKE_MCSS_MEPACHI_OFF	( MCSS_MEPACHI_OFF )
 #define	POKE_MCSS_ANM_STOP_ON	( MCSS_ANM_STOP_ON )
 #define	POKE_MCSS_ANM_STOP_OFF	( MCSS_ANM_STOP_OFF )
+#define	POKE_MCSS_VANISH_ON		( MCSS_VANISH_ON )
+#define	POKE_MCSS_VANISH_OFF	( MCSS_VANISH_OFF )
 
 typedef struct _POKE_MCSS_WORK POKE_MCSS_WORK;
 
@@ -61,6 +63,8 @@ extern	void			POKE_MCSS_SetOrthoMode( POKE_MCSS_WORK *pmw );
 extern	void			POKE_MCSS_ResetOrthoMode( POKE_MCSS_WORK *pmw );
 extern	void			POKE_MCSS_SetMepachiFlag( POKE_MCSS_WORK *pmw, int position, int flag );
 extern	void			POKE_MCSS_SetAnmStopFlag( POKE_MCSS_WORK *pmw, int position, int flag );
+extern	int				POKE_MCSS_GetVanishFlag( POKE_MCSS_WORK *pmw, int position );
+extern	void			POKE_MCSS_SetVanishFlag( POKE_MCSS_WORK *pmw, int position, int flag );
 extern	void			POKE_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position );
 extern	fx32			POKE_MCSS_GetPokeDefaultScale( POKE_MCSS_WORK *pmw, int position );
 extern	void			POKE_MCSS_GetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );

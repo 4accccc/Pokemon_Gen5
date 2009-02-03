@@ -115,6 +115,8 @@ void			POKE_MCSS_SetOrthoMode( POKE_MCSS_WORK *pmw );
 void			POKE_MCSS_ResetOrthoMode( POKE_MCSS_WORK *pmw );
 void			POKE_MCSS_SetMepachiFlag( POKE_MCSS_WORK *pmw, int position, int flag );
 void			POKE_MCSS_SetAnmStopFlag( POKE_MCSS_WORK *pmw, int position, int flag );
+int				POKE_MCSS_GetVanishFlag( POKE_MCSS_WORK *pmw, int position );
+void			POKE_MCSS_SetVanishFlag( POKE_MCSS_WORK *pmw, int position, int flag );
 void			POKE_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position );
 fx32			POKE_MCSS_GetPokeDefaultScale( POKE_MCSS_WORK *pmw, int position );
 void			POKE_MCSS_GetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
@@ -349,6 +351,40 @@ void	POKE_MCSS_SetAnmStopFlag( POKE_MCSS_WORK *pmw, int position, int flag )
 	}
 	else{
 		MCSS_ResetAnmStopFlag( pmw->mcss[ position ] );
+	}
+}
+
+//============================================================================================
+/**
+ *	バニッシュフラグ取得
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	position	フラグ操作させたいポケモンの立ち位置
+ */
+//============================================================================================
+int		POKE_MCSS_GetVanishFlag( POKE_MCSS_WORK *pmw, int position )
+{
+	GF_ASSERT( pmw->mcss[ position ] != NULL );
+	return MCSS_GetVanishFlag( pmw->mcss[ position ] );
+}
+
+//============================================================================================
+/**
+ *	バニッシュ処理
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	position	フラグ操作させたいポケモンの立ち位置
+ * @param[in]	flag		バニッシュフラグ（POKE_MCSS_VANISH_ON、POKE_MCSS_VANISH_OFF）
+ */
+//============================================================================================
+void	POKE_MCSS_SetVanishFlag( POKE_MCSS_WORK *pmw, int position, int flag )
+{
+	GF_ASSERT( pmw->mcss[ position ] != NULL );
+	if( flag == POKE_MCSS_VANISH_ON ){
+		MCSS_SetVanishFlag( pmw->mcss[ position ] );
+	}
+	else{
+		MCSS_ResetVanishFlag( pmw->mcss[ position ] );
 	}
 }
 
