@@ -40,7 +40,7 @@ typedef BOOL (*MYDWCConnectModeCheckFunc) (int index);
  * @retval none
  */
 //==============================================================================
-extern void mydwc_setVchat(int codec);
+extern void GFL_NET_DWC_SetVchat(int codec);
 // ボイスチャットなし
 #define VCHAT_NONE 0
 #define VCHAT_8BIT_RAW 1
@@ -239,7 +239,7 @@ extern void mydwc_setFriendStateBuffer( void *array, int size );
  * @retval  成功の可否
  */
 //==============================================================================
-extern BOOL mydwc_setMyInfo( const void *data, int size );
+extern BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size );
 
 //==============================================================================
 /**
@@ -375,7 +375,7 @@ extern BOOL mydwc_VChatGetSend( void );
  * @retval  none
  */
 //==============================================================================
-extern int mydwc_SetClientBlock(void);
+extern int GFL_NET_DWC_SetClientBlock(void);
 
 //==============================================================================
 /**
@@ -384,7 +384,7 @@ extern int mydwc_SetClientBlock(void);
  * @retval  none
  */
 //==============================================================================
-extern void mydwc_ResetClientBlock(void);
+extern void GFL_NET_DWC_ResetClientBlock(void);
 //==============================================================================
 /**
  * @brief   MYDWCが初期化済みかどうか

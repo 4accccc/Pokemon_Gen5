@@ -1063,7 +1063,7 @@ static void DeleteFriendListCallback(int deletedIndex, int srcIndex, void* param
                deletedIndex, srcIndex);
 
     if(pNetInit->friendDeleteFunc){
-        pNetInit->friendDeleteFunc(deletedIndex, srcIndex, GFI_NET_GetWork());
+        pNetInit->friendDeleteFunc(deletedIndex, srcIndex, GFL_NET_GetWork());
     }
 
     // 現在はコメント。上記のfriendDeleteFuncに実装する必要がある 2008.12.15 @@OO
@@ -1744,7 +1744,8 @@ void GFL_NET_DWC_StartVChat(int heapID)
  * @retval none
  */
 //==============================================================================
-void mydwc_setVchat(int codec){
+void GFL_NET_DWC_SetVchat(int codec)
+{
 	_dWork->vchatcodec = codec;
 
 	if( _dWork->isvchat ){
@@ -1918,7 +1919,7 @@ int mydwc_returnLobby()
 //        _dWork->op_aid = -1;
         _dWork->state = MDSTATE_LOGIN;
         _dWork->newFriendConnect = -1;
-        mydwc_ResetClientBlock();
+        GFL_NET_DWC_ResetClientBlock();
         return 1;
 	 }
 	 return 0;
@@ -2013,7 +2014,7 @@ static void mydwc_updateFriendInfo( )
  * @retval  成功の可否
  */
 //==============================================================================
-BOOL mydwc_setMyInfo( const void *data, int size )
+BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size )
 {
 	MYDWC_DEBUGPRINT("upload status change(%p, %d)\n", data, size);
 	return DWC_SetOwnStatusData( data, size );
@@ -2519,7 +2520,7 @@ static void _blockCallback(void* param)
  * @retval  none
  */
 //==============================================================================
-int mydwc_SetClientBlock(void)
+int GFL_NET_DWC_SetClientBlock(void)
 {
     if(_dWork->blockClient==_BLOCK_NONE){
 	    _dWork->blockClient = _BLOCK_START;
@@ -2535,7 +2536,7 @@ int mydwc_SetClientBlock(void)
  * @retval  none
  */
 //==============================================================================
-void mydwc_ResetClientBlock(void)
+void GFL_NET_DWC_ResetClientBlock(void)
 {
     _dWork->blockClient = _BLOCK_NONE;
 }
