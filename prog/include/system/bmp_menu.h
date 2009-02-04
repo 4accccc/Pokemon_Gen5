@@ -210,4 +210,69 @@ extern void BmpMenu_SetCursorString( BMPMENU_WORK *mw, u32 strID );
 //--------------------------------------------------------------
 extern void BmpMenu_RedrawString( BMPMENU_WORK *mw );
 
+
+typedef struct {
+	u8	frmnum;	///<ウインドウ使用フレーム
+	u8	pos_x;		///<ウインドウ領域の左上のX座標（キャラ単位で指定）
+	u8	pos_y;		///<ウインドウ領域の左上のY座標（キャラ単位で指定）
+	u8	palnum;		///<ウインドウ領域のパレットナンバー
+	u16	chrnum;		///<ウインドウキャラ領域の開始キャラクタナンバー
+} BMPWIN_YESNO_DAT;
+
+//--------------------------------------------------------------------------------------------
+/**
+ * はい・いいえウィンドウセット（カーソル位置指定）
+ *
+ * @param	data	ウィンドウデータ
+ * @param	cgx		ウィンドウキャラ位置
+ * @param	pal		ウィンドウパレット番号
+ * @param	pos		初期カーソル位置
+ * @param	heap	ヒープID
+ *
+ * @return	BMPメニューワーク
+ *
+ * @li	BMPウィンドウとBMPメニューワークをAllocで取得している
+ */
+//--------------------------------------------------------------------------------------------
+extern BMPMENU_WORK * BmpMenu_YesNoSelectInit(	const BMPWIN_YESNO_DAT *data, u16 cgx, u8 pal, u8 pos, HEAPID heap );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * はい・いいえ選択ウィンドウの制御
+ *
+ * @param	ini		BGLデータ
+ * @param	heap	ヒープID
+ *
+ * @retval	"BMPMENU_NULL	選択されていない"
+ * @retval	"0				はいを選択"
+ * @retval	"BMPMENU_CANCEL	いいえorキャンセル"
+ */
+//--------------------------------------------------------------------------------------------
+extern u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * はい・いいえウィンドウ削除
+ *
+ * @param	ini		BGLデータ
+ * @param	heap	ヒープID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BmpMenu_YesNoMenuExit( BMPMENU_WORK * mw );
+
+//------------------------------------------------------------------
+/**
+ * ウィンドウにカーソル画像を描画
+ *
+ * @param   win		ウィンドウ
+ * @param   x		描画Ｘ座標（ドット）
+ * @param   y		描画Ｙ座標（ドット）
+ *
+ */
+//------------------------------------------------------------------
+extern void BmpWin_DrawCursorImage(GFL_BMPWIN* win, u32 x, u32 y);
+
+
 #endif	/* BMP_MENU_H */

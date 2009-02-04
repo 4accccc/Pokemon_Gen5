@@ -13,8 +13,8 @@
 #include <calctool.h>
 #include "arc_def.h"
 
-//#include "msgdata/msg.naix"
-//#include "msgdata/msg_wifi_lobby.h"
+#include "message.naix"
+#include "msg/msg_wifi_lobby.h"
 
 
 #include "comm_command_wfp2pmf.h"
@@ -22,17 +22,23 @@
 
 #include "net_app/wifi2dmap/wf2dmap_obj.h"
 #include "net_app/wifi2dmap/wf2dmap_objdraw.h"
+#include "system/bmp_winframe.h"
+#include "system/bmp_menu.h"
+#include "system/main.h"
 
 //#include "net/dwc_rapfriend.h"
 //#include "system/snd_tool.h"
 //#include "wifi_p2pmatch_se.h"
+#include "font/font.naix"
 
-
+#include "net/dwc_rap.h"
 #include "wifi_p2pmatchfour.h"
 #include "wifi_p2pmatch_local.h"
 #include "wifi_p2pmatchfour_local.h"
 
 #include "wifip2pmatch.naix"			// グラフィックアーカイブ定義
+
+#include "print/str_tool.h"
 
 
 //-----------------------------------------------------------------------------
@@ -85,6 +91,10 @@ FS_EXTERN_OVERLAY(wifi_2dmapsys);
 #define KO_ENTRYNUM_CHECK_WAIT	(10*30)
 
 #define CONNECT_TIMEOUT		(60*30)
+
+//@SEの関数が正式に決まったら対応
+#define SOUND_SEPLAY(seno)       ((void) 0)
+
 
 //-------------------------------------
 ///	メイン分岐
@@ -225,13 +235,16 @@ enum {
 #define WFP2PMF_BACK_PALNUM		(18)// アニメの数
 #define WFP2PMF_BACK_PALANM	(3)// アニメフレーム
 #define WFP2PMF_TALK_PAL	(1)	// 文字パレット
+
+#define FBMP_COL_WHITE  (15)  //ウインドウカラー白
+
 // パレットアニメデータ
 static const u8 WFP2PMF_BACK_PAL_IDX[ WFP2PMF_BACK_PALNUM ] = {
 	5, 4, 3, 2, 1, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 5, 5, 5,
 };
 
 // VCHATICON
-#define WFP2PMF_VCHAT_ICON_FRM_NUM	( GF_BGL_FRAME2_M )
+#define WFP2PMF_VCHAT_ICON_FRM_NUM	( GFL_BG_FRAME2_M )
 #define WFP2PMF_VCHAT_ICON_PAL		( 5 )
 #define WFP2PMF_VCHAT_ICON_PALNUM	( 1 )
 #define WFP2PMF_VCHAT_ICON_CG		( 0 )
@@ -304,7 +317,7 @@ enum{
 #define WFP2PMF_NEWCONWIN_SIZ	( WFP2PMF_NEWCONWIN_SIZX*WFP2PMF_NEWCONWIN_SIZY )
 
 // yes no win
-#define WFP2PMF_YESNOWIN_FRM_NUM	( GF_BGL_FRAME2_M )
+#define WFP2PMF_YESNOWIN_FRM_NUM	( GFL_BG_FRAME2_M )
 #define WFP2PMF_YESNOWIN_X			( 25 )
 #define WFP2PMF_YESNOWIN_Y			( 13 )
 #define WFP2PMF_YESNOWIN_SIZX		( 5 )
@@ -313,9 +326,8 @@ enum{
 #define WFP2PMF_YESNOWIN_CGX		( WFP2PMF_BG2_MENUWIN_CGX + MENU_WIN_CGX_SIZ )
 #define WFP2PMF_YESNOWIN_SIZ		( WFP2PMF_YESNOWIN_SIZX * WFP2PMF_YESNOWIN_SIZY )
 
-static const BMPWIN_DAT WFP2PMF_YESNOBMPDAT = {
+static const BMPWIN_YESNO_DAT WFP2PMF_YESNOBMPDAT = {
 	WFP2PMF_YESNOWIN_FRM_NUM, WFP2PMF_YESNOWIN_X, WFP2PMF_YESNOWIN_Y,
-	WFP2PMF_YESNOWIN_SIZX, WFP2PMF_YESNOWIN_SIZY, 
 	WFP2PMF_YESNOWIN_PAL, WFP2PMF_YESNOWIN_CGX
 };
 
@@ -418,30 +430,40 @@ typedef struct {
 ///	描画データ
 //=====================================
 typedef struct {
-	GF_BGL_INI*			p_bgl;				// GF_BGL_INI
+//	GF_BGL_INI*			p_bgl;				// GF_BGL_INI
 	WORDSET*			p_wordset;			// メッセージ展開用ワークマネージャー
-	MSGDATA_MANAGER*	p_msgman;			// メッセージデータマネージャー
+	PRINT_QUE			*printQue;
+	GFL_FONT 			*fontHandle;
+	GFL_MSGDATA*	p_msgman;			// メッセージデータマネージャー
 	STRBUF*				p_msgstr;			// メッセージ用文字列バッファ
 	STRBUF*				p_msgtmp;			// メッセージ用文字列バッファ
 	u8					msg_no;				// メッセージ完了検査ナンバー
 	u8					msg_wait;			// メッセージウエイト
 	u16					msg_speed;			// メッセージスピード
 
-	CLACT_SET_PTR 			clactSet;						// セルアクターセット
-	CLACT_U_EASYRENDER_DATA	renddata;						// 簡易レンダーデータ
-	CLACT_U_RES_MANAGER_PTR	resMan[WIFI_P2PMATCH_RESNUM];	// キャラ・パレットリソースマネージャ
+	GFL_CLUNIT* 			clactSet;						// セルアクターセット
+    GFL_CLSYS_REND*          renddata;						// 簡易レンダーデータ
+//	CLACT_U_EASYRENDER_DATA	renddata;						// 簡易レンダーデータ
+//	CLACT_U_RES_MANAGER_PTR	resMan[WIFI_P2PMATCH_RESNUM];	// キャラ・パレットリソースマネージャ
 
 	WF2DMAP_OBJSYS*		p_objsys;			// オブジェクトシステム
 	WF2DMAP_OBJDRAWSYS* p_objdraw;			// オブジェクト描画システム
 	WFP2PMF_DRAWOBJ		objdata[WIFI_P2PMATCH_CLACTWK_NUM];	// オブジェクトデータ
 
 
-	GF_BGL_BMPWIN		msgwin;				// 会話ウインドウ
-	GF_BGL_BMPWIN		titlewin;			// 自分の状態表示
-	GF_BGL_BMPWIN		vchatwin;			// ボイスチャットウィンドウ
-	GF_BGL_BMPWIN		conlistwin;			// コネクトリストウィンドウ
-	GF_BGL_BMPWIN		newconwin;			// 新規コネクトウィンドウ
-	BMPMENU_WORK*		p_yesnowin;			// yes noウィンドウ
+	GFL_BMPWIN*		msgwin;				// 会話ウインドウ
+	GFL_BMPWIN*		titlewin;			// 自分の状態表示
+	GFL_BMPWIN*		vchatwin;			// ボイスチャットウィンドウ
+	GFL_BMPWIN*		conlistwin;			// コネクトリストウィンドウ
+	GFL_BMPWIN*		newconwin;			// 新規コネクトウィンドウ
+
+	PRINT_UTIL		msgwinPrintUtil;
+    PRINT_UTIL		titlewinPrintUtil;
+    PRINT_UTIL	    vchatwinPrintUtil;
+    PRINT_UTIL	    conlistwinPrintUtil;
+    PRINT_UTIL	    newconwinPrintUtil;
+
+    BMPMENU_WORK*		p_yesnowin;			// yes noウィンドウ
 
 	void* p_vchatscrnbuf;
 	NNSG2dScreenData*  p_vchatscrn;			// ボイスチャットアイコン
@@ -469,12 +491,15 @@ typedef struct _WFP2P_WK{
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
+static GFL_PROC_RESULT WifiP2PMatchFourProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT WifiP2PMatchFourProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT WifiP2PMatchFourProc_End(GFL_PROC * proc, int * seq, void * pwk, void * mywk);
+
 static void VBlankFunc( void * work );
 
 static BOOL WFP2PMF_MyDataOyaCheck( const WFP2PMF_DATA* cp_data );
 static void WFP2PMF_GraphicInit( WFP2PMF_WK* p_wk, const WFP2PMF_INIT* cp_init, u32 heapID );
 static void WFP2PMF_GraphicDelete( WFP2PMF_WK* p_wk, u32 heapID );
-static void WFP2PMF_GraphicBankSet( void );
 static void WFP2PMF_GraphicBGLInit( WFP2PMF_DRAW* p_draw, u32 heapID );
 static void WFP2PMF_GraphicBGLDelete( WFP2PMF_DRAW* p_draw );
 static void WFP2PMF_GraphicBmpInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp_init, u32 heapID );
@@ -556,8 +581,6 @@ static void WFP2PMF_DrawObjMoveNormal( WFP2PMF_WK* p_wk, WFP2PMF_DRAWOBJ* p_obj 
 static void WFP2PMF_VchatCommSend( WFP2PMF_WK* p_wk );
 
 static BOOL WFP2PMF_MatchOkCheck( WFP2PMF_WK* p_wk );
-
-static void WFP2PMF_FNOTE_Set( WFP2PMF_INIT* p_param, u32 heapID );
 
 static BOOL WFP2PMF_Oya_CheckConnectPlayer( const WFP2PMF_WK* cp_wk, const WFP2PMF_INIT* cp_param );
 
@@ -717,6 +740,28 @@ static BOOL (* const pKoFunc[ WFP2PMF_KO_STATUS_NUM ])( WFP2PMF_WK* p_wk, WFP2PM
 };
 
 
+static GFL_DISP_VRAM p2pmatchfourVramTbl = {
+    GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+    GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+    
+    GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+    GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+    
+    //        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+    GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+    GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+    
+    GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+    
+    GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+    GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
+        GX_OBJVRAMMODE_CHAR_1D_128K,
+        GX_OBJVRAMMODE_CHAR_1D_32K,
+    };
+
+
+
 // 描画オブジェクト動作
 static void (* const pDrawObjMoveFunc[ WFP2PMF_DRAWOBJ_MOVENUM ])( WFP2PMF_WK* p_wk, WFP2PMF_DRAWOBJ* p_obj ) = {
 	WFP2PMF_DrawObjMoveNone,
@@ -736,47 +781,47 @@ static void (* const pDrawObjMoveFunc[ WFP2PMF_DRAWOBJ_MOVENUM ])( WFP2PMF_WK* p
  * @return	処理状況
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WifiP2PMatchFourProc_Init( PROC * proc, int * seq )
+GFL_PROC_RESULT WifiP2PMatchFourProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	WFP2PMF_WK* p_wk;
-	WFP2PMF_INIT* p_init = PROC_GetParentWork(proc);
+	WFP2PMF_INIT* p_init = pwk;
 	BOOL result;
 
 	// wifi_2dmapオーバーレイ読込み
-	Overlay_Load( FS_OVERLAY_ID(wifi_2dmapsys), OVERLAY_LOAD_NOT_SYNCHRONIZE);
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi_2dmapsys));
 
 	// 通信中かチェック
-	result = CommStateIsWifiConnect();
-	GF_ASSERT( result == TRUE );
+	//result = CommStateIsWifiConnect();
+	//GF_ASSERT( result == TRUE );
 
 	// ヒープ作成
-    sys_CreateHeap( HEAPID_BASE_APP, HEAPID_WIFI_FOURMATCH, 0x18000 );
-    sys_CreateHeap( HEAPID_BASE_APP, HEAPID_WIFI_FOURMATCHVCHAT, 0xa000 );
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFI_FOURMATCH, 0x18000 );
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFI_FOURMATCHVCHAT, 0xa000 );
 
 	// プロセスワーク作成
-	p_wk = PROC_AllocWork( proc, sizeof(WFP2PMF_WK), HEAPID_WIFI_FOURMATCH );
-	MI_CpuFill8( p_wk, 0, sizeof(WFP2PMF_WK) );
+	p_wk = GFL_PROC_AllocWork( proc, sizeof(WFP2PMF_WK), HEAPID_WIFI_FOURMATCH );
+	GFL_STD_MemClear( p_wk, sizeof(WFP2PMF_WK) );
 
 
 	// VCHATワークの初期化
-	MI_CpuFill8( p_wk->data.vchat_tmp, TRUE, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// １つ前のVCHAT
-	MI_CpuFill8( p_wk->data.vchat_now, TRUE, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// １つ前のVCHAT
+	GFL_STD_MemFill( p_wk->data.vchat_tmp, TRUE, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// １つ前のVCHAT
+	GFL_STD_MemFill( p_wk->data.vchat_now, TRUE, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// １つ前のVCHAT
 
 
 
 	// VRAM転送マネージャ初期化
-	initVramTransferManagerHeap( WIFI_P2PMATCH_VRAMTRMAN_NUM, HEAPID_WIFI_FOURMATCH );
+	//initVramTransferManagerHeap( WIFI_P2PMATCH_VRAMTRMAN_NUM, HEAPID_WIFI_FOURMATCH );
 
 
 	// 通信データ取得
-	p_wk->data.p_match = CommStateGetMatchWork();
+	p_wk->data.p_match = GFL_NET_GetWork();
 	p_wk->data.p_match->myMatchStatus.vchat = p_wk->data.p_match->myMatchStatus.vchat_org;
 
 	// 自分が親かチェック
 	p_wk->data.oya = WFP2PMF_MyDataOyaCheck( &p_wk->data );
 
 	// ワーク初期化
-	p_wk->data.new_con = INVALID_NETID;
+	p_wk->data.new_con = GFL_NET_NETID_INVALID;
 
 	// 通信コマンド設定
 	CommCommandWFP2PMFInitialize( p_wk );
@@ -789,15 +834,15 @@ PROC_RESULT WifiP2PMatchFourProc_Init( PROC * proc, int * seq )
 	WFP2PMF_GraphicInit( p_wk, p_init, HEAPID_WIFI_FOURMATCH );
 
     // VBlank関数セット
-    sys_VBlankFuncChange( VBlankFunc, p_wk );
+  //  sys_VBlankFuncChange( VBlankFunc, p_wk );
 
-	WirelessIconEasy();  // 接続中なのでアイコン表示
+	GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
 
 	// エラーチェック　開始
 	p_wk->data.err_check = TRUE;
 
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------------------------
@@ -810,23 +855,28 @@ PROC_RESULT WifiP2PMatchFourProc_Init( PROC * proc, int * seq )
  * @return	処理状況
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WifiP2PMatchFourProc_Main( PROC * proc, int * seq )
+GFL_PROC_RESULT WifiP2PMatchFourProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	WFP2PMF_WK* p_wk = PROC_GetWork( proc );
-	WFP2PMF_INIT* p_init = PROC_GetParentWork(proc);
+	WFP2PMF_WK* p_wk = mywk;
+	WFP2PMF_INIT* p_init = pwk;
 	BOOL result;
 
 	// メイン処理
 	switch( *seq ){
 	case WFP2PMF_MAIN_WIPE_S:
         // ワイプフェード開始
-        WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
-                        COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFI_FOURMATCH);
-		(*seq)++;
+//        WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
+//                        COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFI_FOURMATCH);
+		GFL_FADE_SetMasterBrightReq(
+				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+				16, 0, 0);
+
+
+        (*seq)++;
 		break;
 
 	case WFP2PMF_MAIN_WIPE_E:
-        if( WIPE_SYS_EndCheck() ){
+        if( GFL_FADE_CheckFade() ){
             (*seq)++;
         }
 		break;
@@ -841,6 +891,7 @@ PROC_RESULT WifiP2PMatchFourProc_Main( PROC * proc, int * seq )
 
 		if( p_wk->data.oya ){
 
+#if 0 ///COMMINFOも考え直す@@OO
 			// CommInfoがあるかをチェック
 			if( CommInfoIsInitialize() == TRUE ){
 				
@@ -854,7 +905,7 @@ PROC_RESULT WifiP2PMatchFourProc_Main( PROC * proc, int * seq )
 				// なったら再接続してもらう
 				WFP2PMF_NewConLockNewCon( p_wk );
 			}
-
+#endif
 			
 			// 親の動作
 			result = pOyaFunc[ p_wk->data.status ]( p_wk, p_init, HEAPID_WIFI_FOURMATCH );
@@ -863,11 +914,13 @@ PROC_RESULT WifiP2PMatchFourProc_Main( PROC * proc, int * seq )
 
 			result = pKoFunc[ p_wk->data.status ]( p_wk, p_init, HEAPID_WIFI_FOURMATCH );
 
+#if 0 ///COMMINFOも考え直す@@OO
 			// CommInfoがあるかをチェック
 			if( CommInfoIsInitialize() == TRUE ){
 				//  自分以外の人のエントリー処理
 				WFP2PMF_KoRecvEntry( p_wk, HEAPID_WIFI_FOURMATCH );
 			}
+#endif
 		}
 
 		// リストの描画チェック
@@ -892,13 +945,17 @@ PROC_RESULT WifiP2PMatchFourProc_Main( PROC * proc, int * seq )
 
 	case WFP2PMF_MAIN_EWIPE_S:
 		// ワイプフェード開始
-		WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
-						COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFI_FOURMATCH);
+//		WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
+//						COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFI_FOURMATCH);
+		GFL_FADE_SetMasterBrightReq(
+				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+				0, 16, 0);
+        
 		(*seq)++;
 		break;
 	case WFP2PMF_MAIN_EWIPE_E:
-        if( WIPE_SYS_EndCheck() ){
-			return PROC_RES_FINISH;
+        if( GFL_FADE_CheckFade() ){
+			return GFL_PROC_RES_FINISH;
         }
 		break;
 	}
@@ -908,9 +965,9 @@ PROC_RESULT WifiP2PMatchFourProc_Main( PROC * proc, int * seq )
 
 
 	// OAM描画処理
-	CLACT_Draw( p_wk->draw.clactSet );
+//	CLACT_Draw( p_wk->draw.clactSet );
 	
-    return PROC_RES_CONTINUE;
+    return GFL_PROC_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------
@@ -923,13 +980,13 @@ PROC_RESULT WifiP2PMatchFourProc_Main( PROC * proc, int * seq )
  * @return	処理状況
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WifiP2PMatchFourProc_End( PROC * proc, int * seq )
+GFL_PROC_RESULT WifiP2PMatchFourProc_End(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	WFP2PMF_WK* p_wk = PROC_GetWork( proc );
-	WFP2PMF_INIT* p_init = PROC_GetParentWork(proc);
+	WFP2PMF_WK* p_wk = mywk;
+	WFP2PMF_INIT* p_init = pwk;
 
 
-    sys_VBlankFuncChange( NULL, NULL );	// VBlankReset
+//    sys_VBlankFuncChange( NULL, NULL );	// VBlankReset
 
 	// LOGOUTチェック終了
 	WFP2PMF_LogOutCheckEnd( p_wk );
@@ -949,15 +1006,15 @@ PROC_RESULT WifiP2PMatchFourProc_End( PROC * proc, int * seq )
 #endif
 	
 	// プロセスワーク破棄
-    PROC_FreeWork( proc );				// PROCワーク開放
+    GFL_PROC_FreeWork( proc );				// PROCワーク開放
 
-    sys_DeleteHeap( HEAPID_WIFI_FOURMATCHVCHAT );
-    sys_DeleteHeap( HEAPID_WIFI_FOURMATCH );
+    GFL_HEAP_DeleteHeap( HEAPID_WIFI_FOURMATCHVCHAT );
+    GFL_HEAP_DeleteHeap( HEAPID_WIFI_FOURMATCH );
 
 	// オーバーレイ破棄
-	Overlay_UnloadID( FS_OVERLAY_ID(wifi_2dmapsys) );
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi_2dmapsys) );
 
-    return PROC_RES_FINISH;
+    return GFL_PROC_RES_FINISH;
 }
 
 
@@ -973,10 +1030,10 @@ PROC_RESULT WifiP2PMatchFourProc_End( PROC * proc, int * seq )
 //-----------------------------------------------------------------------------
 void WFP2PMF_CommResultRecv( WFP2P_WK* p_wk, const WFP2PMF_COMM_RESULT* cp_data )
 {
-	TOMOYA_PRINT( "recv result [%d]\n", cp_data->flag );
+	NET_PRINT( "recv result [%d]\n", cp_data->flag );
 			
 	if( p_wk->data.oya == FALSE ){
-		if( cp_data->netID == CommGetCurrentID() ){
+		if( cp_data->netID == GFL_NET_SystemGetCurrentID() ){
 
 			
 			switch( cp_data->flag ){
@@ -1002,9 +1059,11 @@ void WFP2PMF_CommResultRecv( WFP2P_WK* p_wk, const WFP2PMF_COMM_RESULT* cp_data 
 			
 			case WFP2PMF_CON_NG:
 			case WFP2PMF_CON_LOCK:
+#if 0 ///COMMINFOも考え直す@@OO
 				if( CommInfoIsInitialize() == TRUE ){
 					CommInfoDeletePlayer( cp_data->netID );
 				}
+#endif
 				break;
 			}
 		}
@@ -1024,7 +1083,8 @@ void WFP2PMF_CommStartRecv( WFP2P_WK* p_wk )
 	if( p_wk->data.oya_start == FALSE ){
 		p_wk->data.oya_start = TRUE;
 		// 同期開始
-		CommTimingSyncStart(_TIMING_GAME_CHECK);
+//		CommTimingSyncStart(_TIMING_GAME_CHECK);
+        GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_GAME_CHECK);
 	}
 	OS_TPrintf( "sync start \n" );
 }
@@ -1039,8 +1099,9 @@ void WFP2PMF_CommStartRecv( WFP2P_WK* p_wk )
 void WFP2PMF_CommVchatRecv( WFP2P_WK* p_wk, const WFP2PMF_COMM_VCHAT* cp_data )
 {
 	if( p_wk->data.oya != TRUE ){	// 親じゃないときだけ
-		memcpy( p_wk->data.vchat_now, cp_data->vchat_now, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );
-	}
+//		memcpy( p_wk->data.vchat_now, cp_data->vchat_now, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );
+		GFL_STD_MemCopy( cp_data->vchat_now, p_wk->data.vchat_now, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );
+    }
 }
 
 
@@ -1056,13 +1117,13 @@ static void VBlankFunc( void * work )
 	WFP2PMF_WK* p_wk = work;
 
     // BG書き換え
-	GF_BGL_VBlankFunc( p_wk->draw.p_bgl );
+//	GF_BGL_VBlankFunc( p_wk->draw.p_bgl );
 
     // Vram転送マネージャー実行
-    DoVramTransferManager();
+//    DoVramTransferManager();
 
     // レンダラ共有OAMマネージャVram転送
-    REND_OAMTrans();
+//    REND_OAMTrans();
 }
 
 //----------------------------------------------------------------------------
@@ -1077,7 +1138,7 @@ static void VBlankFunc( void * work )
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_MyDataOyaCheck( const WFP2PMF_DATA* cp_data )
 {
-	if( (CommGetCurrentID() == COMM_PARENT_ID) ){
+	if( GFL_NET_IsParentMachine() ){
 		// 待機なら親
 		return TRUE;
 	}
@@ -1097,7 +1158,7 @@ static BOOL WFP2PMF_MyDataOyaCheck( const WFP2PMF_DATA* cp_data )
 static void WFP2PMF_GraphicInit( WFP2PMF_WK* p_wk, const WFP2PMF_INIT* cp_init, u32 heapID )
 {
 	// バンク設定
-	WFP2PMF_GraphicBankSet();
+    GFL_DISP_SetBank( &p2pmatchfourVramTbl );
 	
 	// BGL作成
 	WFP2PMF_GraphicBGLInit( &p_wk->draw, heapID );
@@ -1144,33 +1205,6 @@ static void WFP2PMF_GraphicDelete( WFP2PMF_WK* p_wk, u32 heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	バンク設定
- */
-//-----------------------------------------------------------------------------
-static void WFP2PMF_GraphicBankSet( void )
-{
-    GF_BGL_DISPVRAM tbl = {
-        GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-        GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-
-        GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-        GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-
-//        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-        GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-
-        GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-        GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-
-        GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-        GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
-    };
-    GF_Disp_SetBank( &tbl );
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief	BGL初期化
  *		
  *	@param	p_draw		ワーク
@@ -1181,85 +1215,83 @@ static void WFP2PMF_GraphicBGLInit( WFP2PMF_DRAW* p_draw, u32 heapID )
 {
 	ARCHANDLE* p_handle;
 
-	p_draw->p_bgl = GF_BGL_BglIniAlloc( heapID );
+    GFL_BG_Init(heapID);
 
     // BG SYSTEM
     {
-        GF_BGL_SYS_HEADER BGsys_data = {
+        GFL_BG_SYS_HEADER BGsys_data = {
             GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
         };
-        GF_BGL_InitBG( &BGsys_data );
+        GFL_BG_SetBGMode( &BGsys_data );
     }
 
     // 背景面
     {
-        GF_BGL_BGCNT_HEADER TextBgCntDat = {
-            0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+        GFL_BG_BGCNT_HEADER TextBgCntDat = {
+            0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
             GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
             2, 0, 0, FALSE
             };
-        GF_BGL_BGControlSet( p_draw->p_bgl, GF_BGL_FRAME0_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GF_BGL_FRAME0_M, 32, 0, heapID);
-        GF_BGL_ScrClear( p_draw->p_bgl, GF_BGL_FRAME0_M );
-
-
+        GFL_BG_SetBGControl(GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+        GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
+        GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
     }
 
     // メイン画面1
     {
-        GF_BGL_BGCNT_HEADER TextBgCntDat = {
-            0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+        GFL_BG_BGCNT_HEADER TextBgCntDat = {
+            0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
             GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
             1, 0, 0, FALSE
             };
-        GF_BGL_BGControlSet( p_draw->p_bgl, GF_BGL_FRAME1_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GF_BGL_FRAME1_M, 32, 0, heapID);
-        GF_BGL_ScrClear( p_draw->p_bgl, GF_BGL_FRAME1_M );
+        GFL_BG_SetBGControl(GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+        GFL_BG_ClearFrame( GFL_BG_FRAME1_M );
+        GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
     }
 
     // YesNoリスト
     {
-        GF_BGL_BGCNT_HEADER TextBgCntDat = {
-            0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+        GFL_BG_BGCNT_HEADER TextBgCntDat = {
+            0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
             GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_23,
             0, 0, 0, FALSE
         };
-        GF_BGL_BGControlSet( p_draw->p_bgl, GF_BGL_FRAME2_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
-        GF_BGL_ClearCharSet( GF_BGL_FRAME2_M, 32, 0, heapID);
-        GF_BGL_ScrClear( p_draw->p_bgl, GF_BGL_FRAME2_M );
+        GFL_BG_SetBGControl(GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+        GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
+        GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
     }
 
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
-    GF_Disp_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+    
+    GFL_DISP_GX_SetVisibleControl(
+        GX_PLANEMASK_BG3, VISIBLE_OFF );
+	GFL_DISP_GXS_SetVisibleControl(
+		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 |
+		GX_PLANEMASK_BG3 | GX_PLANEMASK_OBJ, VISIBLE_OFF );
+	GFL_DISP_GX_SetVisibleControl(
+		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 |
+        GX_PLANEMASK_OBJ, VISIBLE_ON );
+    
 
-	// サブ面は表示OFF
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
-    GF_Disp_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-
-
-	p_handle = GFL_ARC_OpenDataHandle( ARC_WIFIP2PMATCH_GRA, heapID );
+	p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFIP2PMATCH, heapID );
 
 	// VCHATアイコン用キャラクタの読込み
-    ArcUtil_HDL_PalSet( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCLR, 
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCLR, 
 			PALTYPE_MAIN_BG,  WFP2PMF_VCHAT_ICON_PAL*32,
 			WFP2PMF_VCHAT_ICON_PALNUM*32, heapID );
-	ArcUtil_HDL_BgCharSet( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCGR,
-			p_draw->p_bgl, WFP2PMF_VCHAT_ICON_FRM_NUM, WFP2PMF_VCHAT_ICON_CG*32, WFP2PMF_VCHAT_ICON_CGSIZ*32, FALSE, heapID );
-	p_draw->p_vchatscrnbuf = ArcUtil_HDL_ScrnDataGet( p_handle, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCGR,
+			WFP2PMF_VCHAT_ICON_FRM_NUM, WFP2PMF_VCHAT_ICON_CG*32, WFP2PMF_VCHAT_ICON_CGSIZ*32, FALSE, heapID );
+	p_draw->p_vchatscrnbuf = GFL_ARCHDL_UTIL_LoadScreen( p_handle, 
 			NARC_wifip2pmatch_wf_match_all_icon_NSCR, FALSE,
 			&p_draw->p_vchatscrn, heapID );
 
 	// 背景読み込み
 	{
-		p_draw->p_plttbuff = ArcUtil_HDL_PalDataGet( p_handle, NARC_wifip2pmatch_wifi_check_bg_NCLR, 
+		p_draw->p_plttbuff = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_wifip2pmatch_wifi_check_bg_NCLR, 
 				&p_draw->p_pltt, heapID );
-		ArcUtil_HDL_BgCharSet( p_handle, NARC_wifip2pmatch_wifi_check_bg_NCGR,
-				p_draw->p_bgl, GF_BGL_FRAME0_M, 0, 0, FALSE, heapID );
-		ArcUtil_HDL_ScrnSet( p_handle, NARC_wifip2pmatch_wifi_check_bg_NSCR,
-				p_draw->p_bgl, GF_BGL_FRAME0_M, 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wifi_check_bg_NCGR,
+				GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifip2pmatch_wifi_check_bg_NSCR,
+				 GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
 
 		// パレットアニメ初期化
 		// とりあえず、０フレーム目を送信
@@ -1281,14 +1313,13 @@ static void WFP2PMF_GraphicBGLInit( WFP2PMF_DRAW* p_draw, u32 heapID )
 //-----------------------------------------------------------------------------
 static void WFP2PMF_GraphicBGLDelete( WFP2PMF_DRAW* p_draw )
 {
-	sys_FreeMemoryEz( p_draw->p_vchatscrnbuf );
-	sys_FreeMemoryEz( p_draw->p_plttbuff );
+	GFL_HEAP_FreeMemory( p_draw->p_vchatscrnbuf );
+	GFL_HEAP_FreeMemory( p_draw->p_plttbuff );
 	
-    GF_BGL_BGControlExit( p_draw->p_bgl, GF_BGL_FRAME2_M );
-    GF_BGL_BGControlExit( p_draw->p_bgl, GF_BGL_FRAME1_M );
-    GF_BGL_BGControlExit( p_draw->p_bgl, GF_BGL_FRAME0_M );
+    GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
+    GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
+    GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
 
-    sys_FreeMemoryEz( p_draw->p_bgl );
 }
 
 //----------------------------------------------------------------------------
@@ -1305,58 +1336,64 @@ static void WFP2PMF_GraphicBmpInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp
 	int wintype;
 	
 	// パレット、キャラクタデータ転送
-    TalkFontPaletteLoad( PALTYPE_MAIN_BG, WFP2PMF_TALK_PAL*0x20, heapID );
-	wintype = CONFIG_GetWindowType(SaveData_GetConfig(cp_init->p_savedata)); 
-	TalkWinGraphicSet(
-		p_draw->p_bgl, GF_BGL_FRAME1_M, WFP2PMF_BG1_TALKWIN_CGX, WFP2PMF_BG1_TALKWIN_PAL,  wintype, heapID );
-	MenuWinGraphicSet(
-		p_draw->p_bgl, GF_BGL_FRAME1_M, WFP2PMF_BG1_MENUWIN_CGX, WFP2PMF_BG1_MENUWIN_PAL, 0, heapID );
-	MenuWinGraphicSet(
-		p_draw->p_bgl, GF_BGL_FRAME2_M, WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL, 0, heapID );
+//    TalkFontPaletteLoad( PALTYPE_MAIN_BG, WFP2PMF_TALK_PAL*0x20, heapID );
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , 13*0x20, 16*2, heapID );
+
+    wintype = cp_init->wintype;
+    
+//    TalkWinGraphicSet(
+    BmpWinFrame_GraphicSet(
+		GFL_BG_FRAME1_M, WFP2PMF_BG1_TALKWIN_CGX, WFP2PMF_BG1_TALKWIN_PAL,  wintype, heapID );
+//	MenuWinGraphicSet(
+    BmpWinFrame_GraphicSet(
+		GFL_BG_FRAME1_M, WFP2PMF_BG1_MENUWIN_CGX, WFP2PMF_BG1_MENUWIN_PAL, 0, heapID );
+//	MenuWinGraphicSet(
+    BmpWinFrame_GraphicSet(
+		GFL_BG_FRAME2_M, WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL, 0, heapID );
 
 	// ビットマップ作成
 	// メッセージウィンドウ
-    GF_BGL_BmpWinAdd( p_draw->p_bgl , &p_draw->msgwin, GF_BGL_FRAME1_M,
+    p_draw->msgwin = GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
 			WFP2PMF_MSGWIN_X, WFP2PMF_MSGWIN_Y,
 			WFP2PMF_MSGWIN_SIZX, WFP2PMF_MSGWIN_SIZY, 
 			WFP2PMF_MSGWIN_PAL, WFP2PMF_MSGWIN_CGX );
-    GF_BGL_BmpWinDataFill( &p_draw->msgwin, 15 );
-    BmpTalkWinWrite(&p_draw->msgwin, WINDOW_TRANS_OFF,
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->msgwin), 15 );
+    GFL_BMPWIN_MakeFrameScreen( p_draw->msgwin,
 		WFP2PMF_BG1_TALKWIN_CGX, WFP2PMF_BG1_TALKWIN_PAL );
 
 
 	// タイトルウィンドウ
-    GF_BGL_BmpWinAdd( p_draw->p_bgl , &p_draw->titlewin, GF_BGL_FRAME1_M,
+    p_draw->titlewin = GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
 			WFP2PMF_TITLEWIN_X, WFP2PMF_TITLEWIN_Y,
 			WFP2PMF_TITLEWIN_SIZX, WFP2PMF_TITLEWIN_SIZY, 
 			WFP2PMF_TITLEWIN_PAL, WFP2PMF_TITLEWIN_CGX );
-    GF_BGL_BmpWinDataFill( &p_draw->titlewin, 15 );
-	BmpMenuWinWrite( &p_draw->titlewin, WINDOW_TRANS_OFF, 
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->titlewin), 15 );
+    GFL_BMPWIN_MakeFrameScreen( p_draw->titlewin,
 			WFP2PMF_BG1_MENUWIN_CGX, WFP2PMF_BG1_MENUWIN_PAL );
 
 
 	// ボイスチャットウィンドウ
-    GF_BGL_BmpWinAdd( p_draw->p_bgl , &p_draw->vchatwin, GF_BGL_FRAME1_M,
+    p_draw->vchatwin = GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
 			WFP2PMF_VCHATWIN_X, WFP2PMF_VCHATWIN_Y,
 			WFP2PMF_VCHATWIN_SIZX, WFP2PMF_VCHATWIN_SIZY, 
 			WFP2PMF_VCHATWIN_PAL, WFP2PMF_VCHATWIN_CGX );
-    GF_BGL_BmpWinDataFill( &p_draw->vchatwin, 0 );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->vchatwin), 0 );
 
 	// CONNECTリスト
-    GF_BGL_BmpWinAdd( p_draw->p_bgl , &p_draw->conlistwin, GF_BGL_FRAME1_M,
+    p_draw->conlistwin = GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
 			WFP2PMF_CONLISTWIN_X, WFP2PMF_CONLISTWIN_Y,
 			WFP2PMF_CONLISTWIN_SIZX, WFP2PMF_CONLISTWIN_SIZY, 
 			WFP2PMF_CONLISTWIN_PAL, WFP2PMF_CONLISTWIN_CGX );
-    GF_BGL_BmpWinDataFill( &p_draw->conlistwin, 15 );
-	BmpMenuWinWrite( &p_draw->conlistwin, WINDOW_TRANS_OFF, 
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->conlistwin), 15 );
+    GFL_BMPWIN_MakeFrameScreen( p_draw->conlistwin,
 			WFP2PMF_BG1_MENUWIN_CGX, WFP2PMF_BG1_MENUWIN_PAL );
 
 	// NEWCONウィンドウ
-    GF_BGL_BmpWinAdd( p_draw->p_bgl , &p_draw->newconwin, GF_BGL_FRAME1_M,
+    p_draw->newconwin = GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
 			WFP2PMF_NEWCONWIN_X, WFP2PMF_NEWCONWIN_Y,
 			WFP2PMF_NEWCONWIN_SIZX, WFP2PMF_NEWCONWIN_SIZY, 
 			WFP2PMF_NEWCONWIN_PAL, WFP2PMF_NEWCONWIN_CGX );
-    GF_BGL_BmpWinDataFill( &p_draw->newconwin, 15 );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->newconwin), 15 );
 }
 
 
@@ -1374,27 +1411,36 @@ static void WFP2PMF_GraphicBmpDelete( WFP2PMF_DRAW* p_draw, u32 heapID )
 	
 	// ビットマップの破棄
 	// メッセージ
-	BmpTalkWinClear( &p_draw->msgwin, WINDOW_TRANS_ON );
-	GF_BGL_BmpWinDel( &p_draw->msgwin );
+    BmpWinFrame_Clear( p_draw->msgwin, WINDOW_TRANS_ON );
+    //BmpTalkWinClear( &p_draw->msgwin, WINDOW_TRANS_ON );
+//	GF_BGL_BmpWinDel( &p_draw->msgwin );
+    GFL_BMPWIN_Delete( p_draw->msgwin );
 
 	// タイトル
-	BmpMenuWinClear( &p_draw->titlewin, WINDOW_TRANS_ON );
-	GF_BGL_BmpWinDel( &p_draw->titlewin );
+//	BmpMenuWinClear( &p_draw->titlewin, WINDOW_TRANS_ON );
+    BmpWinFrame_Clear( p_draw->titlewin, WINDOW_TRANS_ON );
+//	GF_BGL_BmpWinDel( &p_draw->titlewin );
+    GFL_BMPWIN_Delete( p_draw->titlewin );
 
 	// ボイスチャット
-	GF_BGL_BmpWinDel( &p_draw->vchatwin );
+//	GF_BGL_BmpWinDel( &p_draw->vchatwin );
+    GFL_BMPWIN_Delete( p_draw->vchatwin );
 
 	// CONNECTリスト
-	BmpMenuWinClear( &p_draw->conlistwin, WINDOW_TRANS_ON );
-	GF_BGL_BmpWinDel( &p_draw->conlistwin );
+//	BmpMenuWinClear( &p_draw->conlistwin, WINDOW_TRANS_ON );
+//	GF_BGL_BmpWinDel( &p_draw->conlistwin );
+    BmpWinFrame_Clear( p_draw->conlistwin, WINDOW_TRANS_ON );
+    GFL_BMPWIN_Delete( p_draw->conlistwin );
 
 	// 新コネクトリスト
-	BmpMenuWinClear( &p_draw->newconwin, WINDOW_TRANS_ON );
-	GF_BGL_BmpWinDel( &p_draw->newconwin );
+//	BmpMenuWinClear( &p_draw->newconwin, WINDOW_TRANS_ON );
+//	GF_BGL_BmpWinDel( &p_draw->newconwin );
+    BmpWinFrame_Clear( p_draw->newconwin, WINDOW_TRANS_ON );
+    GFL_BMPWIN_Delete( p_draw->newconwin );
 	
 	// YesNoのワークがあったら破棄
 	if( p_draw->p_yesnowin != NULL ){
-		BmpYesNoWinDel( p_draw->p_yesnowin, heapID );
+		BmpMenu_YesNoMenuExit( p_draw->p_yesnowin );
 	}
 }
 
@@ -1410,11 +1456,25 @@ static void WFP2PMF_GraphicBmpDelete( WFP2PMF_DRAW* p_draw, u32 heapID )
 static void WFP2PMF_GraphicMsgInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp_init, u32 heapID )
 {
     p_draw->p_wordset  = WORDSET_Create( heapID );
-    p_draw->p_msgman = MSGMAN_Create( MSGMAN_TYPE_NORMAL, ARC_MSG, NARC_msg_wifi_lobby_dat, heapID );
-	p_draw->p_msgstr = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
-	p_draw->p_msgtmp = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
-	p_draw->msg_no = WFP2PMF_MSGNO_NONE;
-	p_draw->msg_speed = CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(cp_init->p_savedata));
+//    p_draw->p_msgman = MSGMAN_Create( MSGMAN_TYPE_NORMAL, ARC_MSG, NARC_msg_wifi_lobby_dat, heapID );
+//	p_draw->p_msgstr = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
+//	p_draw->p_msgtmp = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
+//	p_draw->msg_no = WFP2PMF_MSGNO_NONE;
+//	p_draw->msg_speed = CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(cp_init->p_savedata));
+
+
+
+	p_draw->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , heapID );
+	p_draw->printQue = PRINTSYS_QUE_Create( heapID );
+	PRINT_UTIL_Setup( &p_draw->msgwinPrintUtil , p_draw->msgwin );
+	PRINT_UTIL_Setup( &p_draw->titlewinPrintUtil , p_draw->titlewin );
+	PRINT_UTIL_Setup( &p_draw->vchatwinPrintUtil , p_draw->vchatwin );
+	PRINT_UTIL_Setup( &p_draw->conlistwinPrintUtil , p_draw->conlistwin );
+	PRINT_UTIL_Setup( &p_draw->newconwinPrintUtil , p_draw->newconwin );
+
+	p_draw->p_msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+									NARC_message_wifi_lobby_dat, heapID );
+
 }
 
 //----------------------------------------------------------------------------
@@ -1426,10 +1486,21 @@ static void WFP2PMF_GraphicMsgInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp
 //-----------------------------------------------------------------------------
 static void WFP2PMF_GraphicMsgDelete( WFP2PMF_DRAW* p_draw )
 {
-	STRBUF_Delete( p_draw->p_msgtmp );
-	STRBUF_Delete( p_draw->p_msgstr );
-    MSGMAN_Delete( p_draw->p_msgman );
+//	STRBUF_Delete( p_draw->p_msgtmp );
+//	STRBUF_Delete( p_draw->p_msgstr );
+//    MSGMAN_Delete( p_draw->p_msgman );
     WORDSET_Delete( p_draw->p_wordset );
+
+    GFL_MSG_Delete( p_draw->p_msgman );
+
+
+    GFL_STR_DeleteBuffer( p_draw->p_msgtmp );
+    GFL_STR_DeleteBuffer( p_draw->p_msgstr );
+
+    PRINTSYS_QUE_Clear(p_draw->printQue);
+    PRINTSYS_QUE_Delete(p_draw->printQue);
+    GFL_FONT_Delete(p_draw->fontHandle);
+
 }
 
 //----------------------------------------------------------------------------
@@ -1460,22 +1531,34 @@ static void WFP2PMF_GraphicBmpMsgInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT*
 		WORDSET_RegisterWiFiLobbyGameName( p_draw->p_wordset, 0, WFLBY_GAME_BALLOON );
 		break;
 	}
-    MSGMAN_GetString(  p_draw->p_msgman, WFP2PMF_TITLE[ cp_init->type ], p_draw->p_msgtmp );
+    //MSGMAN_GetString(  p_draw->p_msgman, WFP2PMF_TITLE[ cp_init->type ], p_draw->p_msgtmp );
+    GFL_MSG_GetString(  p_draw->p_msgman, WFP2PMF_TITLE[ cp_init->type ], p_draw->p_msgtmp );
+    
     WORDSET_ExpandStr(  p_draw->p_wordset, p_draw->p_msgstr, p_draw->p_msgtmp );
-	GF_STR_PrintColor( &p_draw->titlewin, FONT_SYSTEM, p_draw->p_msgstr, 0, 0, MSG_NO_PUT, _COL_N_BLACK, NULL);
-	GF_BGL_BmpWinOnVReq( &p_draw->titlewin );
+	//GF_STR_PrintColor( &p_draw->titlewin, FONT_SYSTEM, p_draw->p_msgstr, 0, 0, MSG_NO_PUT, _COL_N_BLACK, NULL);
+    PRINT_UTIL_Print(&p_draw->titlewinPrintUtil , p_draw->printQue , 0, 0, p_draw->p_msgstr, p_draw->fontHandle);
+
+//	GF_BGL_BmpWinOnVReq( &p_draw->titlewin );
+    GFL_BMPWIN_TransVramCharacter( p_draw->titlewin );
 	
 	// リスト
-	GF_BGL_BmpWinOnVReq( &p_draw->conlistwin );
+//	GF_BGL_BmpWinOnVReq( &p_draw->conlistwin );
+    GFL_BMPWIN_TransVramCharacter( p_draw->conlistwin );
 	
 	
 	// VCHT
-    MSGMAN_GetString(  p_draw->p_msgman, msg_wifilobby_132, p_draw->p_msgstr );
-    GF_STR_PrintColor( &p_draw->vchatwin, FONT_SYSTEM, p_draw->p_msgstr, 0, 0, MSG_NO_PUT, _COL_N_BLACK_C, NULL);
-    GF_BGL_BmpWinOnVReq( &p_draw->vchatwin );
+//    MSGMAN_GetString(  p_draw->p_msgman, msg_wifilobby_132, p_draw->p_msgstr );
+    GFL_MSG_GetString(  p_draw->p_msgman, msg_wifilobby_132, p_draw->p_msgstr );
+//    GF_STR_PrintColor( &p_draw->vchatwin, FONT_SYSTEM, p_draw->p_msgstr, 0, 0, MSG_NO_PUT, _COL_N_BLACK_C, NULL);
+    PRINT_UTIL_Print(&p_draw->vchatwinPrintUtil , p_draw->printQue , 0, 0, p_draw->p_msgstr, p_draw->fontHandle);
+
+
+    //GF_BGL_BmpWinOnVReq( &p_draw->vchatwin );
+    GFL_BMPWIN_TransVramCharacter( p_draw->vchatwin );
 	
 	// メッセージ
-    GF_BGL_BmpWinOnVReq( &p_draw->msgwin );
+    //GF_BGL_BmpWinOnVReq( &p_draw->msgwin );
+    GFL_BMPWIN_TransVramCharacter( p_draw->msgwin );
 }
 
 //----------------------------------------------------------------------------
@@ -1492,47 +1575,39 @@ static void WFP2PMF_GraphicClactInit( WFP2PMF_DRAW* p_draw, u32 heapID )
 
     // OAMマネージャーの初期化
     NNS_G2dInitOamManagerModule();
-
-    // 共有OAMマネージャ作成
-    // レンダラ用OAMマネージャ作成
-    // ここで作成したOAMマネージャをみんなで共有する
-    REND_OAMInit(
-        0, 126,		// メイン画面OAM管理領域
-        0, 31,		// メイン画面アフィン管理領域
-        0, 126,		// サブ画面OAM管理領域
-        0, 31,		// サブ画面アフィン管理領域
-        heapID);
+    GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &p2pmatchfourVramTbl, heapID );
 
 
     // キャラクタマネージャー初期化
     {
-        CHAR_MANAGER_MAKE cm = {
-            WIFI_P2PMATCH_LOADRESNUM,
-            WIFI_P2PMATCH_VRAMMAINSIZ,
-            WIFI_P2PMATCH_VRAMSUBSIZ,
-            0
-        };
-		cm.heap = heapID;
-        InitCharManagerReg(&cm, GX_OBJVRAMMODE_CHAR_1D_128K, GX_OBJVRAMMODE_CHAR_1D_32K );
+//        CHAR_MANAGER_MAKE cm = {
+          //  WIFI_P2PMATCH_LOADRESNUM,
+        //    WIFI_P2PMATCH_VRAMMAINSIZ,
+      //      WIFI_P2PMATCH_VRAMSUBSIZ,
+    //        0
+  //      };
+//		cm.heap = heapID;
+//        InitCharManagerReg(&cm, GX_OBJVRAMMODE_CHAR_1D_128K, GX_OBJVRAMMODE_CHAR_1D_32K );
     }
     // パレットマネージャー初期化
-    InitPlttManager(WIFI_P2PMATCH_LOADRESNUM, heapID);
+  //  InitPlttManager(WIFI_P2PMATCH_LOADRESNUM, heapID);
 
     // 読み込み開始位置を初期化
-    CharLoadStartAll();
-    PlttLoadStartAll();
+    //CharLoadStartAll();
+    //PlttLoadStartAll();
 
 	//通信アイコン用にキャラ＆パレット制限
-	CLACT_U_WmIcon_SetReserveAreaCharManager(NNS_G2D_VRAM_TYPE_2DMAIN, GX_OBJVRAMMODE_CHAR_1D_128K);
-	CLACT_U_WmIcon_SetReserveAreaPlttManager(NNS_G2D_VRAM_TYPE_2DMAIN);
+//	CLACT_U_WmIcon_SetReserveAreaCharManager(NNS_G2D_VRAM_TYPE_2DMAIN, GX_OBJVRAMMODE_CHAR_1D_128K);
+//	CLACT_U_WmIcon_SetReserveAreaPlttManager(NNS_G2D_VRAM_TYPE_2DMAIN);
 	
 
 	// セルアクターセット作成
-	p_draw->clactSet = CLACT_U_SetEasyInit( WIFI_P2PMATCH_CLACTWK_NUM, &p_draw->renddata, heapID );
+	p_draw->clactSet = GFL_CLACT_UNIT_Create( WIFI_P2PMATCH_CLACTWK_NUM, 0, heapID );
+	//p_draw->clactSet = CLACT_U_SetEasyInit( WIFI_P2PMATCH_CLACTWK_NUM, &p_draw->renddata, heapID );
 	// キャラとパレットのリソースマネージャ作成
-	for( i=0; i<WIFI_P2PMATCH_RESNUM; i++ ){
-		p_draw->resMan[i] = CLACT_U_ResManagerInit(WIFI_P2PMATCH_LOADRESNUM, i, heapID);
-	}
+//	for( i=0; i<WIFI_P2PMATCH_RESNUM; i++ ){
+//		p_draw->resMan[i] = CLACT_U_ResManagerInit(WIFI_P2PMATCH_LOADRESNUM, i, heapID);
+//	}
 
 
 	// オブジェクトシステム初期化
@@ -1557,18 +1632,19 @@ static void WFP2PMF_GraphicClactDelete( WFP2PMF_DRAW* p_draw )
 	WF2DMAP_OBJSysExit( p_draw->p_objsys );	
 
 	// アクターの破棄
-	CLACT_DestSet( p_draw->clactSet );
+//	CLACT_DestSet( p_draw->clactSet );
+    GFL_CLACT_UNIT_Delete( p_draw->clactSet );
 
-	for( i=0; i<WIFI_P2PMATCH_RESNUM; i++ ){
-		CLACT_U_ResManagerDelete( p_draw->resMan[i] );
-	}
+//	for( i=0; i<WIFI_P2PMATCH_RESNUM; i++ ){
+//		CLACT_U_ResManagerDelete( p_draw->resMan[i] );
+//	}
 
     // リソース解放
-    DeleteCharManager();
-    DeletePlttManager();
+    //DeleteCharManager();
+    //DeletePlttManager();
 
     //OAMレンダラー破棄
-    REND_OAM_Delete();
+    GFL_CLACT_SYS_Delete();
 }
 
 
@@ -1599,33 +1675,40 @@ static void WFP2PMF_GraphicMsgBmpStrPut( WFP2PMF_DRAW* p_draw, const WFP2PMF_INI
 static void WFP2PMF_GraphicMsgBmpStrPutEx( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp_init, u32 msg_idx, u8 wait, u32 heapID )
 {
 	STRBUF* p_expand;
-	int wintype;
+	int wintype = cp_init->wintype;;
 	
 	// １つ前の物が終わっていなかったらとめる
-    if( p_draw->msg_no != WFP2PMF_MSGNO_NONE){
-        if(GF_MSG_PrintEndCheck( p_draw->msg_no )!=0){
-			TOMOYA_PRINT( "msg stop\n" );
-            GF_STR_PrintForceStop( p_draw->msg_no );
-			p_draw->msg_no = WFP2PMF_MSGNO_NONE;
-        }
+//    if( p_draw->msg_no != WFP2PMF_MSGNO_NONE){
+//        if(GF_MSG_PrintEndCheck( p_draw->msg_no )!=0){
+//			NET_PRINT( "msg stop\n" );
+//            GF_STR_PrintForceStop( p_draw->msg_no );
+//			p_draw->msg_no = WFP2PMF_MSGNO_NONE;
+//        }
+//    }
+    if(PRINTSYS_QUE_IsFinished(p_draw->printQue)){
+        PRINTSYS_QUE_Clear( p_draw->printQue );
     }
 
-
-	
 	// 書き込み
-    GF_BGL_BmpWinDataFill( &p_draw->msgwin, 15 );
-	p_expand = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
-	MSGMAN_GetString(  p_draw->p_msgman, msg_idx, p_expand );
+//    GF_BGL_BmpWinDataFill( &p_draw->msgwin, 15 );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->msgwin), 15 );
+    p_expand = GFL_STR_CreateBuffer( WFP2PMF_MSGDATA_STRNUM, heapID );
+//	p_expand = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
+//	MSGMAN_GetString(  p_draw->p_msgman, msg_idx, p_expand );
+	GFL_MSG_GetString(  p_draw->p_msgman, msg_idx, p_expand );
 	WORDSET_ExpandStr( p_draw->p_wordset, p_draw->p_msgstr, p_expand );
-    p_draw->msg_no = GF_STR_PrintColor( &p_draw->msgwin, FONT_TALK, p_draw->p_msgstr, 0, 0, p_draw->msg_speed, _COL_N_BLACK, NULL);
-    GF_BGL_BmpWinOnVReq( &p_draw->msgwin );
-	STRBUF_Delete( p_expand );
+//    p_draw->msg_no = GF_STR_PrintColor( &p_draw->msgwin, FONT_TALK, p_draw->p_msgstr, 0, 0, p_draw->msg_speed, _COL_N_BLACK, NULL);
+    PRINT_UTIL_Print(&p_draw->msgwinPrintUtil , p_draw->printQue , 0, 0, p_draw->p_msgstr, p_draw->fontHandle);
+    
+//    GF_BGL_BmpWinOnVReq( &p_draw->msgwin );
+    GFL_BMPWIN_TransVramCharacter( p_draw->msgwin );
+	GFL_STR_DeleteBuffer( p_expand );
 
 
 	// ウィンドウデータ再転送
-	wintype = CONFIG_GetWindowType(SaveData_GetConfig(cp_init->p_savedata)); 
-	TalkWinGraphicSet(
-		p_draw->p_bgl, GF_BGL_FRAME1_M, WFP2PMF_BG1_TALKWIN_CGX, WFP2PMF_BG1_TALKWIN_PAL,  wintype, heapID );
+//	TalkWinGraphicSet(
+    BmpWinFrame_GraphicSet(
+		GFL_BG_FRAME1_M, WFP2PMF_BG1_TALKWIN_CGX, WFP2PMF_BG1_TALKWIN_PAL,  wintype, heapID );
 
 	p_draw->msg_wait = wait;
 }
@@ -1644,22 +1727,21 @@ static void WFP2PMF_GraphicMsgBmpStrPutAll( WFP2PMF_DRAW* p_draw, const WFP2PMF_
 	int wintype;
 
 	// １つ前の物が終わっていなかったらとめる
-    if( p_draw->msg_no != WFP2PMF_MSGNO_NONE ){
-        if(GF_MSG_PrintEndCheck( p_draw->msg_no )!=0){
-            GF_STR_PrintForceStop( p_draw->msg_no );
-        }
-		p_draw->msg_no = WFP2PMF_MSGNO_NONE;
+    if(PRINTSYS_QUE_IsFinished(p_draw->printQue)){
+        PRINTSYS_QUE_Clear( p_draw->printQue );
     }
 	
-    GF_BGL_BmpWinDataFill( &p_draw->msgwin, 15 );
-    MSGMAN_GetString(  p_draw->p_msgman, msg_idx, p_draw->p_msgstr );
-    GF_STR_PrintColor( &p_draw->msgwin, FONT_TALK, p_draw->p_msgstr, 0, 0, MSG_NO_PUT, _COL_N_BLACK, NULL);
-    GF_BGL_BmpWinOnVReq( &p_draw->msgwin );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->msgwin), 15 );
+    GFL_MSG_GetString(  p_draw->p_msgman, msg_idx, p_draw->p_msgstr );
+    PRINT_UTIL_Print(&p_draw->msgwinPrintUtil , p_draw->printQue , 0, 0, p_draw->p_msgstr, p_draw->fontHandle);
+
+    GFL_BMPWIN_TransVramCharacter( p_draw->msgwin );
 
 	// ウィンドウデータ再転送
-	wintype = CONFIG_GetWindowType(SaveData_GetConfig(cp_init->p_savedata)); 
-	TalkWinGraphicSet(
-		p_draw->p_bgl, GF_BGL_FRAME1_M, WFP2PMF_BG1_TALKWIN_CGX, WFP2PMF_BG1_TALKWIN_PAL,  wintype, heapID );
+    wintype = cp_init->wintype;
+//	TalkWinGraphicSet(
+    BmpWinFrame_GraphicSet(
+		GFL_BG_FRAME1_M, WFP2PMF_BG1_TALKWIN_CGX, WFP2PMF_BG1_TALKWIN_PAL,  wintype, heapID );
 
 	p_draw->msg_wait = 0;
 }
@@ -1676,25 +1758,13 @@ static void WFP2PMF_GraphicMsgBmpStrPutAll( WFP2PMF_DRAW* p_draw, const WFP2PMF_
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_GraphicMsgBmpStrMain( WFP2PMF_DRAW* p_draw )
 {
-	if( p_draw->msg_no == WFP2PMF_MSGNO_NONE ){
-		if( p_draw->msg_wait > 0 ){
+    if(PRINTSYS_QUE_IsFinished(p_draw->printQue)){
+        if( p_draw->msg_wait > 0 ){
 			p_draw->msg_wait --;
 			return FALSE;
 		}
-	}else{
-
-		if( GF_MSG_PrintEndCheck( p_draw->msg_no ) == 0 ){
-			if( p_draw->msg_no != WFP2PMF_MSGNO_NONE ){
-				p_draw->msg_no = WFP2PMF_MSGNO_NONE;
-			}
-		}
-	}
-	
-	if( (p_draw->msg_no == WFP2PMF_MSGNO_NONE) && (p_draw->msg_wait == 0) ){
-		return TRUE;
-	}
-
-	
+        return TRUE;
+    }
 	return FALSE;
 }
 
@@ -1708,14 +1778,14 @@ static BOOL WFP2PMF_GraphicMsgBmpStrMain( WFP2PMF_DRAW* p_draw )
 static void WFP2PMF_GraphicMsgBmpStrOff( WFP2PMF_DRAW* p_draw )
 {
 	// １つ前の物が終わっていなかったらとめる
-    if( p_draw->msg_no != WFP2PMF_MSGNO_NONE ){
-        if(GF_MSG_PrintEndCheck( p_draw->msg_no )!=0){
-            GF_STR_PrintForceStop( p_draw->msg_no );
-        }
-		p_draw->msg_no = WFP2PMF_MSGNO_NONE;
+    if(PRINTSYS_QUE_IsFinished(p_draw->printQue)){
+        PRINTSYS_QUE_Clear( p_draw->printQue );
     }
-    GF_BGL_BmpWinDataFill( &p_draw->msgwin, 15 );
-    GF_BGL_BmpWinOnVReq( &p_draw->msgwin );
+
+    
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->msgwin), 15 );
+    GFL_BMPWIN_TransVramCharacter( p_draw->msgwin );
+        
 	p_draw->msg_wait = 0;
 }
 
@@ -1734,23 +1804,26 @@ static void WFP2PMF_GraphicNewConStrPut( WFP2PMF_DRAW* p_draw, const WFP2PMF_INI
 	STRBUF* p_expand;
 	STRBUF* p_setstr;
 
-	p_expand = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
-	p_setstr = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
+	p_expand = GFL_STR_CreateBuffer( WFP2PMF_MSGDATA_STRNUM, heapID );
+	p_setstr = GFL_STR_CreateBuffer( WFP2PMF_MSGDATA_STRNUM, heapID );
 	
 	WFP2PMF_WordSetPlayerNameSet( p_draw, cp_init, netid, 0, heapID );
 	WFP2PMF_WordSetPlayerIDSet( p_draw, cp_init, netid, 1, heapID );
-	MSGMAN_GetString(  p_draw->p_msgman, msg_wifilobby_135, p_expand );
+
+    GFL_MSG_GetString(  p_draw->p_msgman, msg_wifilobby_135, p_expand );
 	WORDSET_ExpandStr( p_draw->p_wordset, p_setstr, p_expand );
 
 	// 書き込む
-    GF_BGL_BmpWinDataFill( &p_draw->newconwin, 15 );
-    GF_STR_PrintColor( &p_draw->newconwin, FONT_SYSTEM, p_setstr, 0, 0, MSG_NO_PUT, _COL_N_BLACK, NULL);
-	BmpMenuWinWrite( &p_draw->newconwin, WINDOW_TRANS_OFF, 
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->newconwin), 15 );
+
+    PRINT_UTIL_Print(&p_draw->newconwinPrintUtil , p_draw->printQue , 0, 0, p_setstr, p_draw->fontHandle);
+
+    GFL_BMPWIN_MakeFrameScreen( p_draw->newconwin,
 			WFP2PMF_BG1_MENUWIN_CGX, WFP2PMF_BG1_MENUWIN_PAL );
-    GF_BGL_BmpWinOnVReq( &p_draw->newconwin );
-	
-	STRBUF_Delete( p_expand );
-	STRBUF_Delete( p_setstr );
+    GFL_BMPWIN_TransVramCharacter( p_draw->newconwin );
+    
+	GFL_STR_DeleteBuffer( p_expand );
+	GFL_STR_DeleteBuffer( p_setstr );
 }
 
 //----------------------------------------------------------------------------
@@ -1763,8 +1836,11 @@ static void WFP2PMF_GraphicNewConStrPut( WFP2PMF_DRAW* p_draw, const WFP2PMF_INI
 static void WFP2PMF_GraphicNewConStrOff( WFP2PMF_DRAW* p_draw )
 {
 	// 新コネクトリスト
-	BmpMenuWinClear( &p_draw->newconwin, WINDOW_TRANS_OFF );
-	GF_BGL_BmpWinOffVReq( &p_draw->newconwin );
+	//BmpMenuWinClear( &p_draw->newconwin, WINDOW_TRANS_OFF );
+	//GF_BGL_BmpWinOffVReq( &p_draw->newconwin );
+    BmpWinFrame_Clear( p_draw->newconwin, WINDOW_TRANS_OFF );
+    GFL_BMPWIN_TransVramCharacter( p_draw->newconwin );
+
 }
 
 //----------------------------------------------------------------------------
@@ -1783,6 +1859,7 @@ static void WFP2PMF_GraphicConlistStrPutAll( WFP2PMF_WK* p_wk, const WFP2PMF_INI
 
 
 	// COMMINFO　初期化づみチェック
+#if 0 ///COMMINFOも考え直す@@OO
 	if( CommInfoIsInitialize() == FALSE ){
 		return ;
 	}
@@ -1790,7 +1867,7 @@ static void WFP2PMF_GraphicConlistStrPutAll( WFP2PMF_WK* p_wk, const WFP2PMF_INI
 	// エントリー人数分表示
 	for( i=0; i<connum; i++ ){
 		
-		if( (i == COMM_PARENT_ID) && (CommInfoIsNewName(i) == TRUE) ){	// 親は確実に
+		if( (i == GFL_NET_NO_PARENTMACHINE) && (CommInfoIsNewName(i) == TRUE) ){	// 親は確実に
 			WFP2PMF_GraphicConlistStrPut( p_wk, &p_wk->draw, cp_init, i, heapID );
 		}else{
 			if( (CommInfoGetEntry(i) == TRUE) ){	// その他はENTRY状態なら表示
@@ -1801,6 +1878,7 @@ static void WFP2PMF_GraphicConlistStrPutAll( WFP2PMF_WK* p_wk, const WFP2PMF_INI
 			}
 		}
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1820,36 +1898,51 @@ static void WFP2PMF_GraphicConlistStrPut( WFP2PMF_WK* p_wk, WFP2PMF_DRAW* p_draw
 	u8 vchat;
 	u8 friendno;
 
-	p_expand = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
-	p_setstr = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
+//	p_expand = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
+//	p_setstr = STRBUF_Create( WFP2PMF_MSGDATA_STRNUM, heapID );
+    p_expand = GFL_STR_CreateBuffer( WFP2PMF_MSGDATA_STRNUM, heapID );
+    p_setstr = GFL_STR_CreateBuffer( WFP2PMF_MSGDATA_STRNUM, heapID );
 	
 	WFP2PMF_WordSetPlayerNameSet( p_draw, cp_init, netid, 0, heapID );
-    MSGMAN_GetString(  p_draw->p_msgman, msg_wifilobby_133, p_expand );
+//    MSGMAN_GetString(  p_draw->p_msgman, msg_wifilobby_133, p_expand );
+    GFL_MSG_GetString(p_draw->p_msgman, msg_wifilobby_133, p_expand);
     WORDSET_ExpandStr( p_draw->p_wordset, p_setstr, p_expand );
 
 	// 書き込む
-    GF_BGL_BmpWinFill( &p_draw->conlistwin, 15, 
-			0, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8), 
-			(WFP2PMF_CONLISTWIN_SIZX*8), (WFP2PMF_CONLISTWIN_ONELIST_Y*8) );
+//    GF_BGL_BmpWinFill( &p_draw->conlistwin, 15, 
+//			0, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8), 
+//			(WFP2PMF_CONLISTWIN_SIZX*8), (WFP2PMF_CONLISTWIN_ONELIST_Y*8) );
+    GFL_BMP_Fill(GFL_BMPWIN_GetBmp(p_draw->conlistwin),
+                 0, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8), 
+                 (WFP2PMF_CONLISTWIN_SIZX*8), (WFP2PMF_CONLISTWIN_ONELIST_Y*8),
+                 FBMP_COL_WHITE);
 
 	
-    GF_STR_PrintColor( &p_draw->conlistwin, FONT_SYSTEM, p_setstr, 
-			0, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8),
-			MSG_NO_PUT, _COL_N_BLACK, NULL);
-
+//    GF_STR_PrintColor( &p_draw->conlistwin, FONT_SYSTEM, p_setstr, 
+//			0, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8),
+//			MSG_NO_PUT, _COL_N_BLACK, NULL);
+    PRINT_UTIL_Print(&p_draw->conlistwinPrintUtil , p_draw->printQue , 0,
+                     netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8), p_setstr, p_draw->fontHandle);
 
 	WFP2PMF_WordSetPlayerIDSet( p_draw, cp_init, netid, 0, heapID );
-    MSGMAN_GetString(  p_draw->p_msgman, msg_wifilobby_134, p_expand );
+//    MSGMAN_GetString(  p_draw->p_msgman, msg_wifilobby_134, p_expand );
+    GFL_MSG_GetString(  p_draw->p_msgman, msg_wifilobby_134, p_expand );
     WORDSET_ExpandStr( p_draw->p_wordset, p_setstr, p_expand );
 
-    GF_STR_PrintColor( &p_draw->conlistwin, FONT_SYSTEM, p_setstr, 
-			WFP2PMF_CONLISTWIN_ID_X, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8),
-			MSG_NO_PUT, _COL_N_BLACK, NULL);
-	
-    GF_BGL_BmpWinOnVReq( &p_draw->conlistwin );
+//    GF_STR_PrintColor( &p_draw->conlistwin, FONT_SYSTEM, p_setstr, 
+//			WFP2PMF_CONLISTWIN_ID_X, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8),
+//			MSG_NO_PUT, _COL_N_BLACK, NULL);
 
+    PRINT_UTIL_Print(&p_draw->conlistwinPrintUtil , p_draw->printQue ,
+                     WFP2PMF_CONLISTWIN_ID_X, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8), p_setstr,
+                     p_draw->fontHandle);
+
+    
+//    GF_BGL_BmpWinOnVReq( &p_draw->conlistwin );
+    GFL_BMPWIN_TransVramCharacter( p_draw->conlistwin );
+    
 	// VCHATデータ描画
-	if( netid == CommGetCurrentID() ){
+	if( netid == GFL_NET_SystemGetCurrentID() ){
 		if( p_wk->data.p_match->myMatchStatus.vchat ){
 			vchat = WFP2PMF_VCHATICON_ON;
 		}else{
@@ -1864,7 +1957,15 @@ static void WFP2PMF_GraphicConlistStrPut( WFP2PMF_WK* p_wk, WFP2PMF_DRAW* p_draw
 		}
 	}
 	// 友達ナンバが帰ってきていないなら描画しない
-	GF_BGL_ScrWriteExpand( p_draw->p_bgl, WFP2PMF_VCHAT_ICON_FRM_NUM,
+//	GF_BGL_ScrWriteExpand( p_draw->p_bgl, WFP2PMF_VCHAT_ICON_FRM_NUM,
+//			WFP2PMF_VCHAT_ICON_WX, 
+//			WFP2PMF_VCHAT_ICON_WY+(netid*WFP2PMF_CONLISTWIN_ONELIST_Y), 
+//			WFP2PMF_VCHAT_ICON_SIZ, WFP2PMF_VCHAT_ICON_SIZ,
+//			p_draw->p_vchatscrn->rawData, 
+//			vchat*WFP2PMF_VCHAT_ICON_SIZ, 0,
+//			p_draw->p_vchatscrn->screenWidth/8,
+//			p_draw->p_vchatscrn->screenHeight/8 );
+    GFL_BG_WriteScreenExpand( WFP2PMF_VCHAT_ICON_FRM_NUM,
 			WFP2PMF_VCHAT_ICON_WX, 
 			WFP2PMF_VCHAT_ICON_WY+(netid*WFP2PMF_CONLISTWIN_ONELIST_Y), 
 			WFP2PMF_VCHAT_ICON_SIZ, WFP2PMF_VCHAT_ICON_SIZ,
@@ -1872,14 +1973,16 @@ static void WFP2PMF_GraphicConlistStrPut( WFP2PMF_WK* p_wk, WFP2PMF_DRAW* p_draw
 			vchat*WFP2PMF_VCHAT_ICON_SIZ, 0,
 			p_draw->p_vchatscrn->screenWidth/8,
 			p_draw->p_vchatscrn->screenHeight/8 );
-	GF_BGL_ScrPalChange( p_draw->p_bgl, WFP2PMF_VCHAT_ICON_FRM_NUM,
+    
+	GFL_BG_ChangeScreenPalette( WFP2PMF_VCHAT_ICON_FRM_NUM,
 			WFP2PMF_VCHAT_ICON_WX, 
 			WFP2PMF_VCHAT_ICON_WY+(netid*WFP2PMF_CONLISTWIN_ONELIST_Y), 
 			WFP2PMF_VCHAT_ICON_SIZ, WFP2PMF_VCHAT_ICON_SIZ, WFP2PMF_VCHAT_ICON_PAL );
-	GF_BGL_LoadScreenV_Req( p_draw->p_bgl, WFP2PMF_VCHAT_ICON_FRM_NUM );
-	
-	STRBUF_Delete( p_expand );
-	STRBUF_Delete( p_setstr );
+	//GF_BGL_LoadScreenV_Req( p_draw->p_bgl, WFP2PMF_VCHAT_ICON_FRM_NUM );
+    GFL_BG_LoadScreenReq( WFP2PMF_VCHAT_ICON_FRM_NUM );
+
+	GFL_STR_DeleteBuffer( p_expand );
+	GFL_STR_DeleteBuffer( p_setstr );
 }
 
 //----------------------------------------------------------------------------
@@ -1895,11 +1998,24 @@ static void WFP2PMF_GraphicConlistStrPut( WFP2PMF_WK* p_wk, WFP2PMF_DRAW* p_draw
 static void WFP2PMF_GraphicConlistStrOff( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp_init, int netid, u32 heapID )
 {
 	// 書き込む
-    GF_BGL_BmpWinFill( &p_draw->conlistwin, 15, 
-			0, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8), 
-			(WFP2PMF_CONLISTWIN_SIZX*8), (WFP2PMF_CONLISTWIN_ONELIST_Y*8) );
+//    GF_BGL_BmpWinFill( &p_draw->conlistwin, 15, 
+//			0, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8), 
+//			(WFP2PMF_CONLISTWIN_SIZX*8), (WFP2PMF_CONLISTWIN_ONELIST_Y*8) );
+    GFL_BMP_Fill(GFL_BMPWIN_GetBmp(p_draw->conlistwin),
+                 0, netid * (WFP2PMF_CONLISTWIN_ONELIST_Y*8),
+                 (WFP2PMF_CONLISTWIN_SIZX*8), (WFP2PMF_CONLISTWIN_ONELIST_Y*8),
+                 FBMP_COL_WHITE);
 
-	GF_BGL_ScrWriteExpand( p_draw->p_bgl, WFP2PMF_VCHAT_ICON_FRM_NUM,
+//	GF_BGL_ScrWriteExpand( p_draw->p_bgl, WFP2PMF_VCHAT_ICON_FRM_NUM,
+//			WFP2PMF_VCHAT_ICON_WX, 
+//			WFP2PMF_VCHAT_ICON_WY+netid*WFP2PMF_CONLISTWIN_ONELIST_Y, 
+//			WFP2PMF_VCHAT_ICON_SIZ, WFP2PMF_VCHAT_ICON_SIZ,
+//			p_draw->p_vchatscrn->rawData, 
+//			WFP2PMF_VCHATICON_NONE*WFP2PMF_VCHAT_ICON_SIZ, 0,
+//			p_draw->p_vchatscrn->screenWidth/8,
+//			p_draw->p_vchatscrn->screenHeight/8 );
+
+	GFL_BG_WriteScreenExpand(  WFP2PMF_VCHAT_ICON_FRM_NUM,
 			WFP2PMF_VCHAT_ICON_WX, 
 			WFP2PMF_VCHAT_ICON_WY+netid*WFP2PMF_CONLISTWIN_ONELIST_Y, 
 			WFP2PMF_VCHAT_ICON_SIZ, WFP2PMF_VCHAT_ICON_SIZ,
@@ -1907,9 +2023,12 @@ static void WFP2PMF_GraphicConlistStrOff( WFP2PMF_DRAW* p_draw, const WFP2PMF_IN
 			WFP2PMF_VCHATICON_NONE*WFP2PMF_VCHAT_ICON_SIZ, 0,
 			p_draw->p_vchatscrn->screenWidth/8,
 			p_draw->p_vchatscrn->screenHeight/8 );
-	GF_BGL_LoadScreenV_Req( p_draw->p_bgl, WFP2PMF_VCHAT_ICON_FRM_NUM );
 
-    GF_BGL_BmpWinOnVReq( &p_draw->conlistwin );
+//	GF_BGL_LoadScreenV_Req( p_draw->p_bgl, WFP2PMF_VCHAT_ICON_FRM_NUM );
+    GFL_BG_LoadScreenReq(WFP2PMF_VCHAT_ICON_FRM_NUM);
+
+//    GF_BGL_BmpWinOnVReq( &p_draw->conlistwin );
+    GFL_BMPWIN_TransVramCharacter( p_draw->conlistwin );
 }
 
 //----------------------------------------------------------------------------
@@ -1925,10 +2044,12 @@ static void WFP2PMF_GraphicConlistStrOff( WFP2PMF_DRAW* p_draw, const WFP2PMF_IN
 //-----------------------------------------------------------------------------
 static void WFP2PMF_WordSetPlayerNameSet( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp_init, int netid, int set_no, u32 heapID )
 {
+#if 0 ///COMMINFOも考え直す@@OO
 	MYSTATUS* p_target;
 	p_target = CommInfoGetMyStatus( netid );
-	TOMOYA_PRINT( "player netid %d\n", netid );
+	NET_PRINT( "player netid %d\n", netid );
 	WORDSET_RegisterPlayerName( p_draw->p_wordset, set_no, p_target );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1944,11 +2065,13 @@ static void WFP2PMF_WordSetPlayerNameSet( WFP2PMF_DRAW* p_draw, const WFP2PMF_IN
 //-----------------------------------------------------------------------------
 static void WFP2PMF_WordSetPlayerIDSet( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp_init, int netid, int set_no, u32 heapID )
 {
+#if 0 ///COMMINFOも考え直す@@OO
 	MYSTATUS* p_target;
 	u16 id;
 	p_target = CommInfoGetMyStatus( netid );
 	id = MyStatus_GetID_Low( p_target );
 	WORDSET_RegisterNumber( p_draw->p_wordset, set_no, id, 5, NUMBER_DISPTYPE_ZERO, NUMBER_CODETYPE_HANKAKU );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1981,16 +2104,17 @@ static void WFP2PMF_PlttAnm( WFP2PMF_DRAW* p_draw )
 //-----------------------------------------------------------------------------
 static void WFP2PMF_PlttAnm_Trans( WFP2PMF_DRAW* p_draw, u32 idx )
 {
-	BOOL result;
 	u16* p_data;
 	u32 num;
 
 	num = WFP2PMF_BACK_PAL_IDX[ idx ];
 
 	p_data = p_draw->p_pltt->pRawData;
-	result = AddVramTransferManager( NNS_GFD_DST_2D_BG_PLTT_MAIN, WFP2PMF_BACK_PAL*32, 
+	//result = AddVramTransferManager( NNS_GFD_DST_2D_BG_PLTT_MAIN, WFP2PMF_BACK_PAL*32, 
+	//		&p_data[ num*16 ], 32 );
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN, WFP2PMF_BACK_PAL*32, 
 			&p_data[ num*16 ], 32 );
-	GF_ASSERT( result );
+//	GF_ASSERT( result );
 }
 
 //----------------------------------------------------------------------------
@@ -2007,8 +2131,8 @@ static BOOL WFP2PMF_VchatSwitch( WFP2PMF_WK* p_wk, u32 heapID )
 {
     p_wk->data.p_match->myMatchStatus.vchat_org = 1 - p_wk->data.p_match->myMatchStatus.vchat_org;
     p_wk->data.p_match->myMatchStatus.vchat = p_wk->data.p_match->myMatchStatus.vchat_org;
-    mydwc_setVChat( p_wk->data.p_match->myMatchStatus.vchat );
-    mydwc_setMyInfo( &(p_wk->data.p_match->myMatchStatus), sizeof(_WIFI_MACH_STATUS) );
+    GFL_NET_DWC_SetVchat( p_wk->data.p_match->myMatchStatus.vchat );
+    GFL_NET_DWC_SetMyInfo( &(p_wk->data.p_match->myMatchStatus), sizeof(_WIFI_MACH_STATUS) );
 	
 	if( p_wk->data.p_match->myMatchStatus.vchat == TRUE ){
 
@@ -2046,7 +2170,7 @@ static void WFP2PMF_ErrCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_param, u32 heapI
 		// エントリー数が１以下でマッチしていないときは何もしなくてよい
 		// ただし、エントリー数が２以上になったら何らかのチェックを行う必要がある
 		// エントリー数１というのは自分がエントリーしている状態ということです
-		if( CommWifiIsMatched() <= 2 ){	// マッチステート的におかしくなっていたら、エラーチェックする
+		if( GFL_NET_StateGetWifiStatus() <= GFL_NET_STATE_NOTMATCH ){	// マッチステート的におかしくなっていたら、エラーチェックする
 			if( (WFP2PMF_GetEntryNum( p_wk ) <= 1) && (WFP2PMF_MatchCheck( p_wk ) == FALSE) ){
 				return ;
 			}
@@ -2079,7 +2203,7 @@ static void WFP2PMF_ErrCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_param, u32 heapI
 	result = WFP2PMF_LogOutCheck( p_wk );
 
 	//  エントリー数より通信人数が減ったらエラーへ
-	if( WFP2PMF_GetEntryNum( p_wk ) > CommGetConnectNum() ){
+	if( WFP2PMF_GetEntryNum( p_wk ) > GFL_NET_GetConnectNum() ){
 		connect_num_errror = TRUE;		
 	}else{
 		connect_num_errror = FALSE;		
@@ -2087,14 +2211,14 @@ static void WFP2PMF_ErrCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_param, u32 heapI
 	
 	// エラーチェック
 /*
-    if( (CommWifiIsMatched() == 3) || 
-		(CommWifiIsMatched() > 4) ||		// 切断チェックは他でやる
+    if( (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT) || 
+		(GFL_NET_StateGetWifiStatus() > GFL_NET_STATE_DISCONNECTING) ||		// 切断チェックは他でやる
 */
 	// 080704	tomoya takahashi
-    if( (CommWifiIsMatched() >= 3) ||	// Disconnectもみる
-		(CommStateIsWifiError()) || 
-		CommStateIsWifiDisconnect() || 
-		(CommIsConnect(COMM_PARENT_ID) == FALSE) ||	// 親と切断した
+    if( (GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_TIMEOUT) ||	// Disconnectもみる
+		(GFL_NET_StateIsWifiError()) || 
+		GFL_NET_StateIsWifiDisconnect() || 
+		(GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER) == FALSE) ||	// 親と切断した
 		(WFP2PMF_MatchCheck( p_wk ) == FALSE) ||	// 誰かとつながっているのに、通信していないときはだめ
 		(connect_num_errror == TRUE) ||		// エントリー数より通信人数がへった
 		(timeout == TRUE) ||		// 接続タイムアウト
@@ -2102,30 +2226,30 @@ static void WFP2PMF_ErrCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_param, u32 heapI
 		(result == TRUE) ){			// 切断
 
 #ifdef WFP2P_DEBUG
-		if( (CommWifiIsMatched() >= 3) ){
-			TOMOYA_PRINT( "(CommWifiIsMatched() == %d)\n", CommWifiIsMatched() );
+		if( (GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_TIMEOUT) ){
+			NET_PRINT( "(GFL_NET_StateGetWifiStatus() == %d)\n", GFL_NET_StateGetWifiStatus() );
 		}
-		if( CommStateIsWifiError() ){
-			TOMOYA_PRINT( "CommStateIsWifiError()\n" );
+		if( GFL_NET_StateIsWifiError() ){
+			NET_PRINT( "GFL_NET_StateIsWifiError()\n" );
 		}
-		if( CommStateIsWifiDisconnect() ){
-			TOMOYA_PRINT( "CommStateIsWifiDisconnect()\n" );
+		if( GFL_NET_StateIsWifiDisconnect() ){
+			NET_PRINT( "CommStateIsWifiDisconnect()\n" );
 		}
-		if( !CommIsConnect(COMM_PARENT_ID) ){
-			TOMOYA_PRINT( "!CommIsConnect(COMM_PARENT_ID)\n" );
+		if( GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER) == FALSE ){
+			NET_PRINT( "!CommIsConnect(COMM_PARENT_ID)\n" );
 		}
 		if( (WFP2PMF_MatchCheck( p_wk ) == FALSE) ){
-			TOMOYA_PRINT( "(WFP2PMF_MatchCheck( p_wk ) == FALSE)\n" );
+			NET_PRINT( "(WFP2PMF_MatchCheck( p_wk ) == FALSE)\n" );
 		}
 		if( result ){
-			TOMOYA_PRINT( "errcheck  logout\n" );
+			NET_PRINT( "errcheck  logout\n" );
 		}
 		if( timeout ){
-			TOMOYA_PRINT( "errcheck  timeout\n" );
+			NET_PRINT( "errcheck  timeout\n" );
 		}
 #endif
 
-		// CommWifiIsMatched() == 4の切断処理は無視する
+		// GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_DISCONNECTINGの切断処理は無視する
 		if( p_wk->data.oya ){
 			p_wk->data.status = WFP2PMF_OYA_STATUS_ERR_INIT;
 		}else{
@@ -2145,20 +2269,20 @@ static void WFP2PMF_ReConErrCheck( WFP2PMF_WK* p_wk )
 {
 	// エラーチェック
 #if 0
-    if( (CommWifiIsMatched() == 3) || 
-		(CommWifiIsMatched() > 4) ||		// 切断チェックは他でやる
-		(CommStateIsWifiError())  ){	// 切断
+    if( (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT) || 
+		(GFL_NET_StateGetWifiStatus() > GFL_NET_STATE_DISCONNECTING) ||		// 切断チェックは他でやる
+		(GFL_NET_StateIsWifiError())  ){	// 切断
 #endif
-    if( (CommWifiIsMatched() > 3) || 
-		CommStateIsWifiDisconnect() ||
-		(CommStateIsWifiError())  ){	// 切断
+    if( (GFL_NET_StateGetWifiStatus() > GFL_NET_STATE_TIMEOUT) || 
+		GFL_NET_StateIsWifiDisconnect() ||
+		(GFL_NET_StateIsWifiError())  ){	// 切断
 
 #ifdef WFP2P_DEBUG
-		if( (CommWifiIsMatched() >= 3) ){
-			TOMOYA_PRINT( "(CommWifiIsMatched() == %d)\n", CommWifiIsMatched() );
+		if( (GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_TIMEOUT) ){
+			NET_PRINT( "(GFL_NET_StateGetWifiStatus() == %d)\n", GFL_NET_StateGetWifiStatus() );
 		}
-		if( CommStateIsWifiError() ){
-			TOMOYA_PRINT( "CommStateIsWifiError()\n" );
+		if( GFL_NET_StateIsWifiError() ){
+			NET_PRINT( "GFL_NET_StateIsWifiError()\n" );
 		}
 #endif
 
@@ -2178,7 +2302,7 @@ static void WFP2PMF_ReConErrCheck( WFP2PMF_WK* p_wk )
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_MatchCheck( const WFP2PMF_WK* cp_wk )
 {
-	if( CommGetConnectNum() > 0 ){
+	if( GFL_NET_GetConnectNum() > 0 ){
 		return TRUE;
 	}
 	return FALSE;
@@ -2199,19 +2323,19 @@ static BOOL WFP2PMF_CommWiFiMatchStart( u32 friendno, u32 type )
 {
 	BOOL ret;
 
-	ret = CommWifiBattleStart( friendno );
+	ret = GFL_NET_StateStartWifiPeerMatch( friendno );
 	if( ret == TRUE ){
-		switch( type ){
-		case WFP2PMF_TYPE_POFIN:				// ポフィン
-			CommStateChangeWiFiPofin();
-			break;
+//		switch( type ){
+//		case WFP2PMF_TYPE_POFIN:				// ポフィン
+//			CommStateChangeWiFiPofin();
+//			break;
 			
-		case WFP2PMF_TYPE_BUCKET:			// たまいれ
-		case WFP2PMF_TYPE_BALANCE_BALL:		// たまのり	
-		case WFP2PMF_TYPE_BALLOON:			// ふうせんわり
-			CommStateChangeWiFiClub();	
-			break;
-		}
+//		case WFP2PMF_TYPE_BUCKET:			// たまいれ
+//		case WFP2PMF_TYPE_BALANCE_BALL:		// たまのり	
+//		case WFP2PMF_TYPE_BALLOON:			// ふうせんわり
+//			CommStateChangeWiFiClub();	
+//			break;
+//		}
 	}
 	return ret;
 }
@@ -2292,7 +2416,7 @@ static void WFP2PMF_StatusChange( WFP2PMF_WK* p_wk, const WFP2PMF_INIT* cp_init 
 		p_wk->data.p_match->myMatchStatus.status = WIFI_STATUS_BALLOON;
 		break;
 	}
-	mydwc_setMyInfo( &(p_wk->data.p_match->myMatchStatus), sizeof(_WIFI_MACH_STATUS) );
+	GFL_NET_DWC_SetMyInfo( &(p_wk->data.p_match->myMatchStatus), sizeof(_WIFI_MACH_STATUS) );
 }
 
 //----------------------------------------------------------------------------
@@ -2311,10 +2435,10 @@ static BOOL WFP2PMF_StatusVChatOn( WFP2PMF_WK* p_wk )
 	
 	// マッチングしていたらボイスチャットを動かす
 	if( WFP2PMF_MatchCheck( p_wk ) == TRUE ){
-		mydwc_startvchat( HEAPID_WIFI_FOURMATCHVCHAT );
+		GFL_NET_DWC_StartVChat( HEAPID_WIFI_FOURMATCHVCHAT );
 		p_wk->data.vchat_flag = TRUE;
 
-		TOMOYA_PRINT( "vcht on\n" );
+		NET_PRINT( "vcht on\n" );
 		return TRUE;
 	}
 	return FALSE;
@@ -2334,10 +2458,10 @@ static BOOL WFP2PMF_StatusVChatOff( WFP2PMF_WK* p_wk )
 		return FALSE;
 	}
 
-	mydwc_stopvchat();
+	GFL_NET_DWC_StopVChat();
 	p_wk->data.vchat_flag = FALSE;
 
-	TOMOYA_PRINT( "vcht off\n" );
+	NET_PRINT( "vcht off\n" );
 
 	return TRUE;
 }
@@ -2353,7 +2477,7 @@ static void WFP2PMF_StatusVChatOnBmpFade( WFP2PMF_WK* p_wk )
 {
 	if( WFP2PMF_StatusVChatOn( p_wk ) ){
 		// BGMの音量を落とす
-		Snd_VChatVolSetBySeqNo( Snd_NowBgmNoGet() );
+//		Snd_VChatVolSetBySeqNo( Snd_NowBgmNoGet() );  //@@OOサウンド固まり次第
 	}
 }
 
@@ -2367,7 +2491,7 @@ static void WFP2PMF_StatusVChatOnBmpFade( WFP2PMF_WK* p_wk )
 static void WFP2PMF_StatusVChatOffBmpFade( WFP2PMF_WK* p_wk )
 {
 	if( WFP2PMF_StatusVChatOff( p_wk ) ){
-		Snd_PlayerSetInitialVolume( SND_HANDLE_FIELD, BGM_WIFILOBBY_VOL );
+//		Snd_PlayerSetInitialVolume( SND_HANDLE_FIELD, BGM_WIFILOBBY_VOL );//@@OOサウンド固まり次第
 	}
 }
 
@@ -2379,11 +2503,15 @@ static void WFP2PMF_StatusVChatOffBmpFade( WFP2PMF_WK* p_wk )
 //-----------------------------------------------------------------------------
 static int WFP2PMF_GetEntryNum( WFP2PMF_WK* p_wk )
 {
+#if 0 ///COMMINFOも考え直す@@OO
 	if( p_wk->data.oya ){
 		return CommInfoGetEntryNum();
 	}else{
 		return CommInfoGetEntryNum();
 	}
+#else
+    return GFL_NET_GetConnectNum();
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2397,18 +2525,19 @@ static BOOL WFP2PMF_SetEntryOya( WFP2PMF_WK* p_wk, u32 heapID )
 	int currentid;
 	BOOL result = TRUE;
 
+#if 0 ///COMMINFOも考え直す@@OO
 
 	// 親と自分のAIDより小さいAIDの子はエントリー状態にする
-	currentid = CommGetCurrentID();
+	currentid = GFL_NET_SystemGetCurrentID();
 	currentid --;
 
-//	TOMOYA_PRINT( "my id = %d\n", currentid + 1 );
+//	NET_PRINT( "my id = %d\n", currentid + 1 );
 	
-	for( i=currentid; i>=COMM_PARENT_ID; i-- ){
+	for( i=currentid; i>=GFL_NET_NO_PARENTMACHINE; i-- ){
 		if( CommInfoIsBattleNewName( i ) == TRUE ){
 			WFP2PMF_CommInfoSetEntry( p_wk, i, heapID );
 
-			TOMOYA_PRINT( "entry id = %d\n", i );
+			NET_PRINT( "entry id = %d\n", i );
 			
 		}else if( CommInfoGetEntry( i ) == FALSE ) {
 			// NEWENTRYでもなくENTRYでもないときは、
@@ -2416,7 +2545,8 @@ static BOOL WFP2PMF_SetEntryOya( WFP2PMF_WK* p_wk, u32 heapID )
 			result = FALSE;
 		}
 	}
-	
+
+#endif
 	return result;
 }
 
@@ -2429,6 +2559,7 @@ static BOOL WFP2PMF_SetEntryOya( WFP2PMF_WK* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void WFP2PMF_CommSendNewEntryNg( WFP2PMF_WK* p_wk )
 {
+#if 0 ///COMMINFOも考え直す@@OO
 	int i;
 	WFP2PMF_COMM_RESULT result;
 	BOOL send_result;
@@ -2443,6 +2574,7 @@ static void WFP2PMF_CommSendNewEntryNg( WFP2PMF_WK* p_wk )
 			CommInfoDeletePlayer( i );	// いないことにする
 		}
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2454,6 +2586,7 @@ static void WFP2PMF_CommSendNewEntryNg( WFP2PMF_WK* p_wk )
 //-----------------------------------------------------------------------------
 static void WFP2PMF_CommSendAllEntryNg( WFP2PMF_WK* p_wk )
 {
+#if 0 ///COMMINFOも考え直す@@OO
 	int i;
 	WFP2PMF_COMM_RESULT result;
 	BOOL send_result;
@@ -2468,6 +2601,7 @@ static void WFP2PMF_CommSendAllEntryNg( WFP2PMF_WK* p_wk )
 			CommInfoDeletePlayer( i );	// いないことにする
 		}
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2479,7 +2613,7 @@ static void WFP2PMF_CommSendAllEntryNg( WFP2PMF_WK* p_wk )
 //-----------------------------------------------------------------------------
 static void WFP2PMF_LogOutCheckStart( WFP2PMF_WK* p_wk )
 {
-	mydwc_setDisconnectCallback( WFP2PMF_LogOutCallBack, p_wk );
+	GFL_NET_DWC_SetDisconnectCallback( WFP2PMF_LogOutCallBack, p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -2491,7 +2625,7 @@ static void WFP2PMF_LogOutCheckStart( WFP2PMF_WK* p_wk )
 //-----------------------------------------------------------------------------
 static void WFP2PMF_LogOutCheckEnd( WFP2PMF_WK* p_wk )
 {
-	mydwc_setDisconnectCallback( NULL, NULL );
+	GFL_NET_DWC_SetDisconnectCallback( NULL, NULL );
 }
 
 //----------------------------------------------------------------------------
@@ -2509,6 +2643,7 @@ static BOOL WFP2PMF_LogOutCheck( WFP2PMF_WK* p_wk )
 	int i;
 	BOOL result = FALSE;
 	
+#if 0 ///COMMINFOも考え直す@@OO
 	for( i=0;i<WIFI_P2PMATCH_NUM_MAX; i++ ){
 		
 		if( p_wk->data.logout_in[i] == TRUE ){
@@ -2523,7 +2658,7 @@ static BOOL WFP2PMF_LogOutCheck( WFP2PMF_WK* p_wk )
 			p_wk->data.logout_id[i] = 0;
 		}
 	}
-
+#endif
 	return result;
 }
 
@@ -2595,6 +2730,7 @@ static void WFP2PMF_ConListWriteReq( WFP2PMF_WK* p_wk )
 //-----------------------------------------------------------------------------
 static void WFP2PMF_CommInfoSetEntry( WFP2PMF_WK* p_wk, u32 aid, u32 heapID )
 {
+#if 0 ///COMMINFOも考え直す@@OO
 	// ENTRYじゃなかったらENTRY
 	if( CommInfoGetEntry( aid ) == FALSE ){
 		CommInfoSetEntry( aid );
@@ -2608,6 +2744,7 @@ static void WFP2PMF_CommInfoSetEntry( WFP2PMF_WK* p_wk, u32 aid, u32 heapID )
 		// コネクトリスト再描画
 		WFP2PMF_ConListWriteReq( p_wk );
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2631,15 +2768,17 @@ static void WFP2PMF_DrawOamInit( WFP2PMF_WK* p_wk, u32 aid, u32 heapID )
  
 	// 初期化データコピー
 	objdata = WFP2PMF_OBJData[ aid ];
-	if( aid != CommGetCurrentID() ){
+	if( aid != GFL_NET_SystemGetCurrentID() ){
+#if 0 ///COMMINFOも考え直す@@OO
 		p_status = CommInfoGetMyStatus( aid );
 		GF_ASSERT( p_status != NULL );
 		objdata.charaid = MyStatus_GetTrainerView( p_status );
+#endif
 	}else{
 		if( p_wk->data.p_match->myMatchStatus.sex == PM_MALE ){
-			objdata.charaid = HERO;
+//			objdata.charaid = HERO;    //@@OO
 		}else{
-			objdata.charaid = HEROINE;
+//			objdata.charaid = HEROINE;  //@@OO
 		}
 	}
 	
@@ -2702,7 +2841,7 @@ static void WFP2PMF_DrawOamDelete( WFP2PMF_WK* p_wk )
 	WF2DMAP_OBJDrawSysAllResDel( p_wk->draw.p_objdraw );
 
 	// 描画オブジェデータ破棄
-	memset( p_wk->draw.objdata, 0, sizeof( WFP2PMF_DRAWOBJ )*WIFI_P2PMATCH_CLACTWK_NUM );
+	GFL_STD_MemClear( p_wk->draw.objdata, sizeof( WFP2PMF_DRAWOBJ )*WIFI_P2PMATCH_CLACTWK_NUM );
 }
 
 //----------------------------------------------------------------------------
@@ -2719,7 +2858,7 @@ static void WFP2PMF_NewConLockSend( WFP2PMF_WK* p_wk, u32 aid )
 
 	result.netID = aid;
 	result.flag = WFP2PMF_CON_LOCK;
-	send_result = CommSendData( CNM_WFP2PMF_RESULT, &result, sizeof(WFP2PMF_COMM_RESULT) );
+	send_result = GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_RESULT, sizeof(WFP2PMF_COMM_RESULT),&result );
 	GF_ASSERT( send_result == TRUE );
 }
 
@@ -2734,6 +2873,7 @@ static void WFP2PMF_NewConLockSend( WFP2PMF_WK* p_wk, u32 aid )
 static void WFP2PMF_NewConLockNewCon( WFP2PMF_WK* p_wk )
 {
 	int i;
+#if 0 ///COMMINFOも考え直す@@OO
 	
 	for( i=0; i<WIFI_P2PMATCH_NUM_MAX; i++ ){
 		if( p_wk->data.last_netid+1 < i ){	// 最後にENTRYしたNETIDより大きい
@@ -2746,6 +2886,7 @@ static void WFP2PMF_NewConLockNewCon( WFP2PMF_WK* p_wk )
 			}
 		}
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2758,6 +2899,7 @@ static void WFP2PMF_NewConLockNewCon( WFP2PMF_WK* p_wk )
 static void WFP2PMF_KoRecvEntry( WFP2PMF_WK* p_wk, u32 heapID )
 {
 	int i;
+#if 0 ///COMMINFOも考え直す@@OO
 
 	for( i=0; i<WIFI_P2PMATCH_NUM_MAX; i++ ){
 		if( p_wk->data.entry_on[ i ] == TRUE ){
@@ -2772,6 +2914,7 @@ static void WFP2PMF_KoRecvEntry( WFP2PMF_WK* p_wk, u32 heapID )
 			}
 		}
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2784,7 +2927,7 @@ static void WFP2PMF_KoRecvEntry( WFP2PMF_WK* p_wk, u32 heapID )
 static void WFP2PMF_TimeWaitIconOn( WFP2PMF_WK* p_wk )
 {
 	GF_ASSERT( p_wk->draw.p_timewaiticon == NULL );
-	p_wk->draw.p_timewaiticon = TimeWaitIconAdd( &p_wk->draw.msgwin, WFP2PMF_BG1_TALKWIN_CGX );
+//	p_wk->draw.p_timewaiticon = TimeWaitIconAdd( &p_wk->draw.msgwin, WFP2PMF_BG1_TALKWIN_CGX ); //@@OO
 }
 
 //----------------------------------------------------------------------------
@@ -2796,7 +2939,8 @@ static void WFP2PMF_TimeWaitIconOn( WFP2PMF_WK* p_wk )
 //-----------------------------------------------------------------------------
 static void WFP2PMF_TimeWaitIconOff( WFP2PMF_WK* p_wk, const WFP2PMF_INIT* cp_init, u32 heapID )
 {
-	int wintype;
+#if 0
+    int wintype;
 	
 	if( p_wk->draw.p_timewaiticon == NULL ){
 		return ;
@@ -2806,10 +2950,11 @@ static void WFP2PMF_TimeWaitIconOff( WFP2PMF_WK* p_wk, const WFP2PMF_INIT* cp_in
 	p_wk->draw.p_timewaiticon = NULL;
 	
 	// ウィンドウデータ再転送
-	wintype = CONFIG_GetWindowType(SaveData_GetConfig(cp_init->p_savedata)); 
-	TalkWinGraphicSet(
-		p_wk->draw.p_bgl, GF_BGL_FRAME1_M, WFP2PMF_BG1_TALKWIN_CGX, WFP2PMF_BG1_TALKWIN_PAL,  wintype, heapID );
-
+    wintype = cp_init->wintype;
+//	TalkWinGraphicSet(
+    BmpWinFrame_GraphicSet(
+		 GFL_BG_FRAME1_M, WFP2PMF_BG1_TALKWIN_CGX, WFP2PMF_BG1_TALKWIN_PAL,  wintype, heapID );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2908,6 +3053,7 @@ static void WFP2PMF_VchatCommSend( WFP2PMF_WK* p_wk )
 	int friendno;
 	int vchat;
 	WFP2PMF_COMM_VCHAT comm_vchat;
+#if 0 ///COMMINFOも考え直す@@OO
 
 	// Infoがなくなったら呼ばない
 	if( CommInfoIsInitialize() == FALSE ){
@@ -2927,7 +3073,7 @@ static void WFP2PMF_VchatCommSend( WFP2PMF_WK* p_wk )
 	
 	// 誰かのVCHATフラグが変わっている
 	for( i=0; i<roop_num; i++ ){
-		if( i==COMM_PARENT_ID ){
+		if( i==GFL_NET_NO_PARENTMACHINE ){
 			vchat = p_wk->data.p_match->myMatchStatus.vchat;
 		}else{
 			friendno = CommInfoSearchWifiListIndex( i );
@@ -2943,10 +3089,12 @@ static void WFP2PMF_VchatCommSend( WFP2PMF_WK* p_wk )
 	// フラグが変わっていたら送信する
 	if( result == TRUE ){
 		BOOL send_result;
-		memcpy( comm_vchat.vchat_now, p_wk->data.vchat_now, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );
-		CommSendData( CNM_WFP2PMF_VCHAT, &comm_vchat, sizeof(WFP2PMF_COMM_VCHAT) );
-		TOMOYA_PRINT( "VCHATFLAG send\n" );
+//		memcpy( comm_vchat.vchat_now, p_wk->data.vchat_now, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );
+		GFL_STD_MemCopy(  p_wk->data.vchat_now,comm_vchat.vchat_now, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );
+        CommSendData( CNM_WFP2PMF_VCHAT, &comm_vchat, sizeof(WFP2PMF_COMM_VCHAT) );
+		NET_PRINT( "VCHATFLAG send\n" );
 	}
+#endif
 }
 
 
@@ -2962,30 +3110,11 @@ static void WFP2PMF_VchatCommSend( WFP2PMF_WK* p_wk )
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_MatchOkCheck( WFP2PMF_WK* p_wk )
 {
-	if(CommIsTimingSync(_TIMING_GAME_CHECK)){
+	if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_CHECK)){
 		return TRUE;
 	}
 	return FALSE;
 }
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	ボウケンノート	データ設定
- *
- *	@param	p_param 
- */
-//-----------------------------------------------------------------------------
-static void WFP2PMF_FNOTE_Set( WFP2PMF_INIT* p_param, u32 heapID )
-{
-	void* p_buf;
-	FNOTE_DATA* p_fnote;
-	_WIFI_MACH_STATUS* p_status;
-
-	p_fnote		= SaveData_GetFNote( p_param->p_savedata );
-	p_buf = FNOTE_SioIDOnlyDataMake( heapID, FNOTE_ID_PL_WIFICLUB );
-	FNOTE_DataSave( p_fnote, p_buf, FNOTE_TYPE_SIO );
-}
-
 
 //----------------------------------------------------------------------------
 /**
@@ -3004,13 +3133,14 @@ static BOOL WFP2PMF_Oya_CheckConnectPlayer( const WFP2PMF_WK* cp_wk, const WFP2P
 	BOOL ret;
 	BOOL result;
 
+#if 0 ///COMMINFOも考え直す@@OO
 	ret = TRUE;
 	
 	// 通信接続した人全員のSTATUSをチェックし、
 	// 不正な人がいたら、切断する。
 	for( i=0; i<WIFI_P2PMATCH_NUM_MAX; i++ ){
-		if( i != CommGetCurrentID() ){
-			if( CommIsConnect(i) == TRUE ){
+		if( i != GFL_NET_SystemGetCurrentID() ){
+			if( GFL_NET_IsConnectMember(i) == TRUE ){
 
 				// STATUSチェック
 				friend = CommInfoSearchWifiListIndex( i );
@@ -3034,7 +3164,7 @@ static BOOL WFP2PMF_Oya_CheckConnectPlayer( const WFP2PMF_WK* cp_wk, const WFP2P
 			}
 		}
 	}
-
+#endif
 	return ret;
 }
 
@@ -3118,12 +3248,13 @@ static BOOL WFP2PMF_OyaInit( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID 
 	}
 
 	// 募集中は、ClosedCallbackが来ても、切断処理に遷移しないようにロックする
-	mydwc_SetClosedDisconnectFlag( FALSE );
+	GFL_NET_DWC_SetClosedDisconnectFlag( FALSE );
 
-	CommStateSetErrorCheck(FALSE,TRUE);	// 切断はエラーじゃない
+    GFL_NET_SetAutoErrorCheck(TRUE);
+    GFL_NET_SetNoChildErrorCheck(FALSE);
 
 	// OAM描画開始
-	WFP2PMF_DrawOamInit( p_wk, CommGetCurrentID(), heapID );
+	WFP2PMF_DrawOamInit( p_wk, GFL_NET_SystemGetCurrentID(), heapID );
 
 	p_wk->data.status = WFP2PMF_OYA_STATUS_CONNECT_WAIT_INIT;
 
@@ -3168,6 +3299,7 @@ static BOOL WFP2PMF_OyaConnectWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 {
 	BOOL result;
 
+#if 0 ///COMMINFOも考え直す@@OO
 
 	result = WFP2PMF_GraphicMsgBmpStrMain( &p_wk->draw );
 	// メッセージ表示が終わるまでまつ
@@ -3185,10 +3317,10 @@ static BOOL WFP2PMF_OyaConnectWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 
 		new_con_netid = CommInfoGetNewNameID();
 
-		if( new_con_netid != INVALID_NETID ){
+		if( new_con_netid != GFL_NET_NETID_INVALID ){
 
 			// 自分だったらなにもしない
-			if( p_wk->data.new_con != COMM_PARENT_ID ){
+			if( p_wk->data.new_con != GFL_NET_NO_PARENTMACHINE ){
 				// その人を知っているかチェック
 				if( CommInfoSearchWifiListIndex( new_con_netid ) == WIFILIST_FRIEND_MAX ){
 					// 知らないので、拒否する
@@ -3212,7 +3344,7 @@ static BOOL WFP2PMF_OyaConnectWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 	do{
 		// 進むボタンを押した
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
-			Snd_SePlay( _SE_DESIDE );
+			SOUND_SEPLAY( _SE_DESIDE );
 
 			// 通信中かチェック
 			if( WFP2PMF_MatchCheck( p_wk ) == FALSE ){
@@ -3234,16 +3366,16 @@ static BOOL WFP2PMF_OyaConnectWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 		}
 		// キャンセル押しチェック
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			Snd_SePlay( _SE_DESIDE );
+			SOUND_SEPLAY( _SE_DESIDE );
 //			p_wk->data.status = WFP2PMF_OYA_STATUS_END_INIT00;	// 終了チェックを２から行う
 			p_wk->data.status = WFP2PMF_OYA_STATUS_END2_INIT00;	// 終了チェックを２から行う
 			break;
 		}
 		
 		// 新コネクトがきた！
-		if( p_wk->data.new_con != INVALID_NETID ){
+		if( p_wk->data.new_con != GFL_NET_NETID_INVALID ){
 
-			Snd_SePlay( _SE_DESIDE );
+			SOUND_SEPLAY( _SE_DESIDE );
 
 			p_wk->data.status = WFP2PMF_OYA_STATUS_CONNECT_SELECT_INIT00;
 			break;
@@ -3252,12 +3384,12 @@ static BOOL WFP2PMF_OyaConnectWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 		// ボイスチャットチェック
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 			p_wk->data.status = WFP2PMF_OYA_STATUS_VCHAT_INIT00;
-			Snd_SePlay( _SE_DESIDE );
+			SOUND_SEPLAY( _SE_DESIDE );
 			break;
 		}
 
 	}while(0);
-	
+#endif	
 	return FALSE;
 }
 
@@ -3310,11 +3442,15 @@ static BOOL WFP2PMF_OyaConnectSelectInit01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_in
 
 
 	// YESNOウィンドウを出す
-	p_wk->draw.p_yesnowin = BmpYesNoSelectInit( p_wk->draw.p_bgl,
-							&WFP2PMF_YESNOBMPDAT,
-							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,
+//	p_wk->draw.p_yesnowin = BmpYesNoSelectInit( p_wk->draw.p_bgl,
+//							&WFP2PMF_YESNOBMPDAT,
+//							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,
+//							heapID );
+    p_wk->draw.p_yesnowin = BmpMenu_YesNoSelectInit(&WFP2PMF_YESNOBMPDAT,
+							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,0,
 							heapID );
-	p_wk->data.status = WFP2PMF_OYA_STATUS_CONNECT_SELECT;
+
+    p_wk->data.status = WFP2PMF_OYA_STATUS_CONNECT_SELECT;
 	
 	return FALSE;
 }
@@ -3338,7 +3474,7 @@ static BOOL WFP2PMF_OyaConnectSelect( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u3
 	BOOL send_result;
 	
 	// YESならコネクト　Noなら切断
-	yesno_ret = BmpYesNoSelectMain( p_wk->draw.p_yesnowin, heapID );
+	yesno_ret = BmpMenu_YesNoSelectMain( p_wk->draw.p_yesnowin );
 
 	
 	if( yesno_ret != BMPMENU_NULL ){
@@ -3372,20 +3508,22 @@ static BOOL WFP2PMF_OyaConnectSelect( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u3
 		}else{
 
 			result.flag = WFP2PMF_CON_NG;		
+#if 0 ///COMMINFOも考え直す@@OO
 			// キャンセルなら切断
 			// 切断を命令する
 			CommInfoDeletePlayer( p_wk->data.new_con );
+#endif
 
 			// 待ち状態に戻る
 			p_wk->data.status = WFP2PMF_OYA_STATUS_CONNECT_WAIT_INIT;
 		}
 
 		// 子機に通信OKを通知
-		send_result = CommSendData( CNM_WFP2PMF_RESULT, &result, sizeof(WFP2PMF_COMM_RESULT) );
+		send_result = GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_RESULT, sizeof(WFP2PMF_COMM_RESULT),&result  );
 		GF_ASSERT( send_result == TRUE );
 
 		// 新規コネクト終了
-		p_wk->data.new_con = INVALID_NETID;
+		p_wk->data.new_con = GFL_NET_NETID_INVALID;
 		WFP2PMF_GraphicNewConStrOff( &p_wk->draw );
 		p_wk->draw.p_yesnowin = NULL;
 	}
@@ -3484,9 +3622,9 @@ static BOOL WFP2PMF_OyaStartInit01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 	}
 
 	// YESNOウィンドウを出す
-	p_wk->draw.p_yesnowin = BmpYesNoSelectInit( p_wk->draw.p_bgl,
+	p_wk->draw.p_yesnowin = BmpMenu_YesNoSelectInit(
 							&WFP2PMF_YESNOBMPDAT,
-							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,
+							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,0,
 							heapID );
 	p_wk->data.status = WFP2PMF_OYA_STATUS_START_SELECT;
 	
@@ -3510,7 +3648,7 @@ static BOOL WFP2PMF_OyaStartSelect( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 	int yesno_ret;
 	
 	// YESならコネクト　Noなら切断
-	yesno_ret = BmpYesNoSelectMain( p_wk->draw.p_yesnowin, heapID );
+	yesno_ret = BmpMenu_YesNoSelectMain( p_wk->draw.p_yesnowin );
 	if( yesno_ret != BMPMENU_NULL ){
 		if( yesno_ret == 0 ){	// はいを選択
 
@@ -3565,7 +3703,7 @@ static BOOL WFP2PMF_OyaStart( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID
 	p_wk->data.status = WFP2PMF_OYA_STATUS_STARTNUMCHECK;
 
 	// クライアントロックを一応解除
-	mydwc_ResetClientBlock();
+	GFL_NET_DWC_ResetClientBlock();
 	
 	return FALSE;
 }
@@ -3586,24 +3724,25 @@ static BOOL WFP2PMF_OyaStartNumCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u3
 {
 	int result;
 	
+#if 0 ///COMMINFOも考え直す@@OO
 	
 	// ENTRY人数と通信中の人数が一緒になったら終わる
-	if( CommGetConnectNum() != CommInfoGetEntryNum() ){
-		TOMOYA_PRINT( "connectnum notmatch\n" );
+	if( GFL_NET_GetConnectNum() != CommInfoGetEntryNum() ){
+		NET_PRINT( "connectnum notmatch\n" );
 		// ENTRY以外の人を切断する
 		WFP2PMF_CommSendNewEntryNg( p_wk );
 		return FALSE;
 	}
-
+#endif
 	// 新規コネクトロック
-	result = mydwc_SetClientBlock();
+	result = GFL_NET_DWC_SetClientBlock();
 	if( result == FALSE ){
-		TOMOYA_PRINT( "mydwc_SetClientBlock false  %d  \n", result );
+		NET_PRINT( "GFL_NET_DWC_SetClientBlock false  %d  \n", result );
 		return FALSE;
 	}
 
 	// ClosedCallbackがきたら切断処理へ遷移する
-	mydwc_SetClosedDisconnectFlag( TRUE );
+	GFL_NET_DWC_SetClosedDisconnectFlag( TRUE );
 	// 同期開始へ
 	p_wk->data.status = WFP2PMF_OYA_STATUS_STARTSYNC_INIT;
 
@@ -3627,7 +3766,7 @@ static BOOL WFP2PMF_OyaStartSyncInit( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u3
 	BOOL result;	
 
 	if(p_wk->data.timer == 0){
-		result = CommSendData( CNM_WFP2PMF_START, NULL, 0 );	// ゲーム開始
+		result = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_START, 0, NULL );	// ゲーム開始
 		if( result ){
 			p_wk->data.status = WFP2PMF_OYA_STATUS_STARTSYNC;
 		}
@@ -3652,13 +3791,14 @@ static BOOL WFP2PMF_OyaStartSyncInit( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u3
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_OyaStartSync( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
-	if(CommIsTimingSync(_TIMING_GAME_CHECK)){
+	if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_CHECK)){
 
 		// ステータス書き換え
 		WFP2PMF_StatusChange( p_wk, p_init );
 
-		CommToolTempDataReset();
-		CommTimingSyncStart(_TIMING_GAME_CHECK2);
+//		CommToolTempDataReset();         //@@OOコマンドを作って移植しなければいけない 2.2
+//		CommTimingSyncStart(_TIMING_GAME_CHECK2);
+        GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_GAME_CHECK2);
 		p_wk->data.status = WFP2PMF_OYA_STATUS_STATE_SEND;
 	}
 	return FALSE;
@@ -3678,10 +3818,10 @@ static BOOL WFP2PMF_OyaStartSync( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 he
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_OyaStateSend( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
-	if(CommIsTimingSync(_TIMING_GAME_CHECK2)){
+	if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_CHECK2)){
         u16 status = p_wk->data.p_match->myMatchStatus.status;
-		BOOL result;
-        result = CommToolSetTempData(CommGetCurrentID() ,&status);
+		BOOL result=TRUE;
+//        result = CommToolSetTempData(GFL_NET_SystemGetCurrentID() ,&status);  @@OO
 		if( result == TRUE ){
 	        p_wk->data.status = WFP2PMF_OYA_STATUS_STATE_CHECK;
 		}
@@ -3706,13 +3846,13 @@ static BOOL WFP2PMF_OyaStateCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 h
 	int i;
 	int con_num;
 	int current_id;
-	const u16* cp_data;
+	const u16* cp_data=NULL;
 	int ok_num;
 
 	// エントリー数を取得
 	con_num = WFP2PMF_GetEntryNum( p_wk );
 
-	current_id = CommGetCurrentID();
+	current_id = GFL_NET_SystemGetCurrentID();
 
 	ok_num = 0;
 
@@ -3721,7 +3861,7 @@ static BOOL WFP2PMF_OyaStateCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 h
 		if( current_id != i ){
 
 			// ステータスが一緒かチェック
-			cp_data = CommToolGetTempData( i );	
+//			cp_data = CommToolGetTempData( i );	  @@OO
 
 			// ステータスの受信が完了しているかチェック
 			if( cp_data != NULL ){
@@ -3759,8 +3899,9 @@ static BOOL WFP2PMF_OyaStateCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 h
 static BOOL WFP2PMF_OyaMyStatusWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
 //	CommInfoSendPokeData();
-	CommStateSetErrorCheck(TRUE,TRUE);
-	CommTimingSyncStart(_TIMING_GAME_START2);
+    GFL_NET_SetAutoErrorCheck(TRUE);
+    GFL_NET_SetNoChildErrorCheck(TRUE);
+    GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_GAME_START2);
 	p_wk->data.status = WFP2PMF_OYA_STATUS_GAME_START;
 
 	return FALSE;
@@ -3780,13 +3921,10 @@ static BOOL WFP2PMF_OyaMyStatusWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_OyaGameStart( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
-	if(CommIsTimingSync(_TIMING_GAME_START2)){
+    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_START2)){
 		// 同期開始など
 		p_wk->data.match_result = TRUE;
 
-		// ボウケンノート設定
-		WFP2PMF_FNOTE_Set( p_init, heapID );
-		
 		// WaitIconを消す
 		WFP2PMF_TimeWaitIconOff( p_wk, p_init, heapID );
 
@@ -3839,7 +3977,7 @@ static BOOL WFP2PMF_OyaEndInit01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 he
 	}
 
 	// YESNOウィンドウを出す
-	p_wk->draw.p_yesnowin = BmpYesNoSelectInitEx( p_wk->draw.p_bgl,
+	p_wk->draw.p_yesnowin = BmpMenu_YesNoSelectInit( 
 							&WFP2PMF_YESNOBMPDAT,
 							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,
 							1, heapID );
@@ -3865,7 +4003,7 @@ static BOOL WFP2PMF_OyaEndSelect( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 he
 	int yesno_ret;
 	
 	// YESならコネクト　Noなら切断
-	yesno_ret = BmpYesNoSelectMain( p_wk->draw.p_yesnowin, heapID );
+	yesno_ret = BmpMenu_YesNoSelectMain( p_wk->draw.p_yesnowin );
 	if( yesno_ret != BMPMENU_NULL ){
 		if( yesno_ret == 0 ){	// はいを選択
 			p_wk->data.status = WFP2PMF_OYA_STATUS_END2_INIT00;
@@ -3933,7 +4071,7 @@ static BOOL WFP2PMF_OyaEnd2Init01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 h
 	}
 
 	// YESNOウィンドウを出す
-	p_wk->draw.p_yesnowin = BmpYesNoSelectInitEx( p_wk->draw.p_bgl,
+	p_wk->draw.p_yesnowin = BmpMenu_YesNoSelectInit(
 							&WFP2PMF_YESNOBMPDAT,
 							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,
 							1,heapID );
@@ -3958,7 +4096,7 @@ static BOOL WFP2PMF_OyaEnd2Select( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 h
 	int yesno_ret;
 	
 	// YESならコネクト　Noなら切断
-	yesno_ret = BmpYesNoSelectMain( p_wk->draw.p_yesnowin, heapID );
+	yesno_ret = BmpMenu_YesNoSelectMain( p_wk->draw.p_yesnowin );
 	if( yesno_ret != BMPMENU_NULL ){
 		if( yesno_ret == 0 ){	// はいを選択
 
@@ -4041,17 +4179,18 @@ static BOOL WFP2PMF_OyaEnd( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 
 	// マッチング中ならマッチングを解除
 //	if( WFP2PMF_MatchCheck(p_wk) ){  //再度つなぎ直す処理へ移行する 080525/k.o/0193
-        CommStateWifiMatchEnd();
+        GFL_NET_StateWifiMatchEnd(TRUE);
 //	}
 
 	// みんな切断する
 	WFP2PMF_CommSendAllEntryNg( p_wk );
 
 	// 通信状態を元に戻す
-	CommStateChangeWiFiLogin();
+	//CommStateChangeWiFiLogin();  //@@OO
 
 
-	CommStateSetErrorCheck(FALSE,TRUE);  // エラーがあったら反応する 080525/k.o/0193
+    GFL_NET_SetNoChildErrorCheck(FALSE);
+    GFL_NET_SetAutoErrorCheck(TRUE);
 	
 	return TRUE;
 }
@@ -4072,7 +4211,7 @@ static BOOL WFP2PMF_OyaErrInit( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heap
 {
 	// YesNoのワークがあったら破棄
 	if( p_wk->draw.p_yesnowin != NULL ){
-		BmpYesNoWinDel( p_wk->draw.p_yesnowin, heapID );
+		BmpMenu_YesNoMenuExit( p_wk->draw.p_yesnowin );
 		p_wk->draw.p_yesnowin = NULL;
 	}
 	WFP2PMF_GraphicNewConStrOff( &p_wk->draw );
@@ -4111,9 +4250,9 @@ static BOOL WFP2PMF_OyaErrInit01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 he
 	{
 		int ret;
 		WFP2PMF_StatusChange( p_wk, p_init );
-		ret = CommWifiIsMatched();
-		if( (ret == 4) ||	// 切断状態か軽度なエラーなら、DWCの更新のみ行う
-			(ret == 5) ){	
+		ret = GFL_NET_StateGetWifiStatus();
+		if( (ret == GFL_NET_STATE_DISCONNECTING) ||	// 切断状態か軽度なエラーなら、DWCの更新のみ行う
+			(ret == GFL_NET_STATE_FAIL) ){	
 			DWC_ProcessFriendsMatch();  // DWC通信処理更新
 		}
 	}
@@ -4141,9 +4280,9 @@ static BOOL WFP2PMF_OyaErr( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 #if PL_G0255_081217_FIX
 	{
 		int ret;
-		ret = CommWifiIsMatched();
-		if( (ret == 4) ||	// 切断状態か軽度なエラーなら、DWCの更新のみ行う
-			(ret == 5) ){	
+		ret = GFL_NET_StateGetWifiStatus();
+		if( (ret == GFL_NET_STATE_DISCONNECTING) ||	// 切断状態か軽度なエラーなら、DWCの更新のみ行う
+			(ret == GFL_NET_STATE_FAIL) ){	
 			DWC_ProcessFriendsMatch();  // DWC通信処理更新
 		}
 	}
@@ -4156,11 +4295,11 @@ static BOOL WFP2PMF_OyaErr( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 	}
 
 	// マッチングを解除
-    CommStateWifiMatchEnd();
+    GFL_NET_StateWifiMatchEnd(TRUE);
 
 
 	// 通信状態を元に戻す
-	CommStateChangeWiFiLogin();
+//	CommStateChangeWiFiLogin();  //@@OO
 
 	// みんな切断する
 	WFP2PMF_CommSendAllEntryNg( p_wk );
@@ -4169,7 +4308,8 @@ static BOOL WFP2PMF_OyaErr( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 	// 終了処理
 	p_wk->data.match_result = FALSE;
 
-	CommStateSetErrorCheck(FALSE,TRUE);
+    GFL_NET_SetNoChildErrorCheck(FALSE);
+    GFL_NET_SetAutoErrorCheck(TRUE);
 
 	return TRUE;
 }
@@ -4226,9 +4366,9 @@ static BOOL WFP2PMF_OyaVchatInit01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 	}
 
 	// YESNOウィンドウを出す
-	p_wk->draw.p_yesnowin = BmpYesNoSelectInit( p_wk->draw.p_bgl,
+	p_wk->draw.p_yesnowin = BmpMenu_YesNoSelectInit(
 							&WFP2PMF_YESNOBMPDAT,
-							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,
+							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,0,
 							heapID );
 	p_wk->data.status = WFP2PMF_OYA_STATUS_VCHAT_SELECT;
 	
@@ -4252,7 +4392,7 @@ static BOOL WFP2PMF_OyaVchatSelect( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 	int yesno_ret;
 	
 	// YESならコネクト　Noなら切断
-	yesno_ret = BmpYesNoSelectMain( p_wk->draw.p_yesnowin, heapID );
+	yesno_ret = BmpMenu_YesNoSelectMain( p_wk->draw.p_yesnowin );
 	if( yesno_ret != BMPMENU_NULL ){
 		if( yesno_ret == 0 ){	// はいを選択
 			
@@ -4292,11 +4432,14 @@ static BOOL WFP2PMF_OyaVchatSelect( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_KoEntryOyaWaitInit( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
+#if 0 ///COMMINFOも考え直す@@OO
 	CommInfoSendPokeData();	// Infoデータ送信
+#endif
 
-	TOMOYA_PRINT( "子　通信データ送信\n" );
+	NET_PRINT( "子　通信データ送信\n" );
 
-	CommStateSetErrorCheck(FALSE,TRUE);	// 切断はエラーじゃない
+    GFL_NET_SetNoChildErrorCheck(FALSE);
+    GFL_NET_SetAutoErrorCheck(TRUE);
 
 #if PL_G0254_081217_FIX
 	// 親まちタイムアウト開始
@@ -4328,7 +4471,7 @@ static BOOL WFP2PMF_KoEntryOyaWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 	WFP2PMF_SetEntryOya( p_wk, heapID );
 
 	// 親から切断されたらえらー処理へ
-	if( CommIsConnect(COMM_PARENT_ID) == FALSE ){
+	if( GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER) == FALSE ){
 #if PL_G0254_081217_FIX
 		// 親まちタイムアウト停止
 		WFP2PMF_TimeOut_Stop( p_wk );
@@ -4336,6 +4479,8 @@ static BOOL WFP2PMF_KoEntryOyaWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 		p_wk->data.status = WFP2PMF_KO_STATUS_ERR_INIT;
 	}else{
 		
+
+#if 0 ///COMMINFOも考え直す@@OO
 
 		// 親のデータが飛んでくるのは待つ
 		if( CommInfoGetEntry( COMM_PARENT_ID ) ){
@@ -4345,7 +4490,8 @@ static BOOL WFP2PMF_KoEntryOyaWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 #endif
 			p_wk->data.status = WFP2PMF_KO_STATUS_ENTRY_INIT;
 		}
-	}
+#endif
+    }
 
 	return FALSE;
 }
@@ -4370,7 +4516,7 @@ static BOOL WFP2PMF_KoEntryInit( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 hea
 	WFP2PMF_SetEntryOya( p_wk, heapID );
 
 	// メッセージ
-	WFP2PMF_WordSetPlayerNameSet( &p_wk->draw, p_init, COMM_PARENT_ID, 0, heapID );
+	WFP2PMF_WordSetPlayerNameSet( &p_wk->draw, p_init, GFL_NET_NO_PARENTMACHINE, 0, heapID );
 	WFP2PMF_GraphicMsgBmpStrPut( &p_wk->draw, p_init, msg_wifilobby_118, heapID );
 
 	// 待ちアイコン表示
@@ -4449,13 +4595,13 @@ static BOOL WFP2PMF_KoEntryWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 hea
 static BOOL WFP2PMF_KoEntryOkInit( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
 	// メッセージ
-	WFP2PMF_WordSetPlayerNameSet( &p_wk->draw, p_init, COMM_PARENT_ID, 0, heapID );
+	WFP2PMF_WordSetPlayerNameSet( &p_wk->draw, p_init, GFL_NET_NO_PARENTMACHINE, 0, heapID );
 	WFP2PMF_GraphicMsgBmpStrPutEx( &p_wk->draw, p_init, msg_wifilobby_129, WFP2PMF_MSGENDWAIT, heapID );
 
 	p_wk->data.status = WFP2PMF_KO_STATUS_ENTRY_OK;
 
 	// 自分をエントリーにする
-	WFP2PMF_CommInfoSetEntry( p_wk, CommGetCurrentID(), HEAPID_WIFI_FOURMATCH );
+	WFP2PMF_CommInfoSetEntry( p_wk, GFL_NET_HANDLE_GetNetHandleID(GFL_NET_HANDLE_GetCurrentHandle()), HEAPID_WIFI_FOURMATCH );
 
 	return FALSE;
 }
@@ -4506,17 +4652,17 @@ static BOOL WFP2PMF_KoEntryOk( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapI
 static BOOL WFP2PMF_KoEntryNgInit( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
 	// メッセージ
-	WFP2PMF_WordSetPlayerNameSet( &p_wk->draw, p_init, COMM_PARENT_ID, 0, heapID );
+	WFP2PMF_WordSetPlayerNameSet( &p_wk->draw, p_init, GFL_NET_NO_PARENTMACHINE, 0, heapID );
 	WFP2PMF_GraphicMsgBmpStrPut( &p_wk->draw, p_init, p_wk->data.ng_msg_idx, heapID );
 
 	p_wk->data.status = WFP2PMF_KO_STATUS_ENTRY_NG;
 
 	// 080703	tomoya	通信終了は、メッセージ表示時に行う
 	// マッチングを解除
-	CommStateWifiMatchEnd();
+	GFL_NET_StateWifiMatchEnd(TRUE);
 
 	// 通信状態を元に戻す
-	CommStateChangeWiFiLogin();
+//	CommStateChangeWiFiLogin();  @@OO
 
 	return FALSE;
 }
@@ -4543,19 +4689,12 @@ static BOOL WFP2PMF_KoEntryNg( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapI
 		return FALSE;
 	}
 
-	// 080703	tomoya	通信終了は、メッセージ表示時に行う
-#if 0
-	// マッチングを解除
-	CommStateWifiMatchEnd();
-
-	// 通信状態を元に戻す
-	CommStateChangeWiFiLogin();
-#endif
 
 	// 終了処理
 	p_wk->data.match_result = FALSE;
 
-	CommStateSetErrorCheck(FALSE,TRUE);
+    GFL_NET_SetNoChildErrorCheck(FALSE);
+    GFL_NET_SetAutoErrorCheck(TRUE);
 
 	return TRUE;
 
@@ -4671,8 +4810,8 @@ static BOOL WFP2PMF_KoStart( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID 
 	}
 
 	if( WFP2PMF_MatchOkCheck( p_wk ) == TRUE ){
-		CommToolTempDataReset();
-		CommTimingSyncStart(_TIMING_GAME_CHECK2);
+//		CommToolTempDataReset();  @@OO
+        GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_GAME_CHECK2);
 
 		WFP2PMF_TimeWaitIconOff( p_wk, p_init, heapID );
 
@@ -4720,14 +4859,14 @@ static BOOL WFP2PMF_KoStateSend( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 hea
 {
 	int con_num;
 
-    if(CommIsTimingSync(_TIMING_GAME_CHECK2)){
+    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_GAME_CHECK2)){
         u16 status = p_wk->data.p_match->myMatchStatus.status;
-		BOOL result;
+		BOOL result=TRUE;
 
         // エントリー数を取得
         con_num = WFP2PMF_GetEntryNum( p_wk );
 
-        if(CommGetConnectNum()!=con_num){
+        if(GFL_NET_GetConnectNum()!=con_num){
 			p_wk->data.timer--;
 			if( p_wk->data.timer <= 0 ){
 	            // 違ったら切断処理へ
@@ -4737,7 +4876,7 @@ static BOOL WFP2PMF_KoStateSend( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 hea
         }
 
 
-        result = CommToolSetTempData(CommGetCurrentID() ,&status);
+//        result = CommToolSetTempData(GFL_NET_SystemGetCurrentID() ,&status);  @@OO
 		if( result == TRUE ){
 	        p_wk->data.status = WFP2PMF_KO_STATUS_STATE_CHECK;
 		}
@@ -4763,13 +4902,13 @@ static BOOL WFP2PMF_KoStateCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 he
 	int i;
 	int con_num;
 	int current_id;
-	const u16* cp_data;
+	const u16* cp_data=NULL;
 	int ok_num;
 
 	// エントリー数を取得
 	con_num = WFP2PMF_GetEntryNum( p_wk );
 
-	current_id = CommGetCurrentID();
+	current_id = GFL_NET_SystemGetCurrentID();
 
 	ok_num = 0;
 
@@ -4778,7 +4917,7 @@ static BOOL WFP2PMF_KoStateCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 he
 		if( current_id != i ){
 
 			// ステータスが一緒かチェック
-			cp_data = CommToolGetTempData( i );	
+//			cp_data = CommToolGetTempData( i );	  //@@OO
 
 			// ステータスの受信が完了しているかチェック
 			if( cp_data != NULL ){
@@ -4817,8 +4956,10 @@ static BOOL WFP2PMF_KoStateCheck( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 he
 static BOOL WFP2PMF_KoMyStatusWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
 //	CommInfoSendPokeData();
-	CommStateSetErrorCheck(TRUE,TRUE);
-	CommTimingSyncStart(_TIMING_GAME_START2);
+    GFL_NET_SetNoChildErrorCheck(TRUE);
+    GFL_NET_SetAutoErrorCheck(TRUE);
+//	CommTimingSyncStart(_TIMING_GAME_START2);
+    GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_GAME_START2);
 	p_wk->data.status = WFP2PMF_KO_STATUS_GAME_START;
 
 	return FALSE;
@@ -4838,16 +4979,13 @@ static BOOL WFP2PMF_KoMyStatusWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_KoGameStart( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
-	if(CommIsTimingSync(_TIMING_GAME_START2)){
+	if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_GAME_CHECK2)){
 
 		// 待ちアイコン非表示
 		WFP2PMF_TimeWaitIconOff( p_wk, p_init, heapID );
 
 		// 同期開始など
 		p_wk->data.match_result = TRUE;
-
-		// ボウケンノート設定
-		WFP2PMF_FNOTE_Set( p_init, heapID );
 
 		return TRUE;
 	}
@@ -4871,7 +5009,7 @@ static BOOL WFP2PMF_KoErrInit( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapI
 
 	// YesNoのワークがあったら破棄
 	if( p_wk->draw.p_yesnowin != NULL ){
-		BmpYesNoWinDel( p_wk->draw.p_yesnowin, heapID );
+		BmpMenu_YesNoMenuExit( p_wk->draw.p_yesnowin );
 		p_wk->draw.p_yesnowin = NULL;
 	}
 	WFP2PMF_GraphicNewConStrOff( &p_wk->draw );
@@ -4930,16 +5068,17 @@ static BOOL WFP2PMF_KoErr( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 	}
 
 	// マッチングを解除
-    CommStateWifiMatchEnd();
+    GFL_NET_StateWifiMatchEnd(TRUE);
 
 
 	// 通信状態を元に戻す
-	CommStateChangeWiFiLogin();
+//	CommStateChangeWiFiLogin(); @@OO
 
 	// 終了処理
 	p_wk->data.match_result = FALSE;
 
-	CommStateSetErrorCheck(FALSE,TRUE);
+    GFL_NET_SetNoChildErrorCheck(FALSE);
+    GFL_NET_SetAutoErrorCheck(TRUE);
 
 	return TRUE;
 }
@@ -5015,9 +5154,9 @@ static BOOL WFP2PMF_KoVchatInit01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 h
 	}
 
 	// YESNOウィンドウを出す
-	p_wk->draw.p_yesnowin = BmpYesNoSelectInit( p_wk->draw.p_bgl,
+	p_wk->draw.p_yesnowin = BmpMenu_YesNoSelectInit(
 							&WFP2PMF_YESNOBMPDAT,
-							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,
+							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,0,
 							heapID );
 	p_wk->data.status = WFP2PMF_KO_STATUS_VCHAT_SELECT;
 	
@@ -5049,13 +5188,13 @@ static BOOL WFP2PMF_KoVchatSelect( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 h
 		p_wk->data.status = WFP2PMF_KO_STATUS_START;
 		// メッセージ表示OFF
 		WFP2PMF_GraphicMsgBmpStrOff( &p_wk->draw );
-		BmpYesNoWinDel( p_wk->draw.p_yesnowin, heapID );
+		BmpMenu_YesNoMenuExit( p_wk->draw.p_yesnowin );
 		p_wk->draw.p_yesnowin = NULL;
 		return FALSE;
 	}
 	
 	// YESならコネクト　Noなら切断
-	yesno_ret = BmpYesNoSelectMain( p_wk->draw.p_yesnowin, heapID );
+	yesno_ret = BmpMenu_YesNoSelectMain( p_wk->draw.p_yesnowin );
 	if( yesno_ret != BMPMENU_NULL ){
 		if( yesno_ret == 0 ){	// はいを選択
 			
@@ -5089,15 +5228,16 @@ static BOOL WFP2PMF_KoVchatSelect( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 h
 static BOOL WFP2PMF_KoConLockInit00( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
 
-	// 親の友達numberを取得
-	p_wk->data.oya_friendid = CommInfoSearchWifiListIndex( COMM_PARENT_ID );
+#if 0 ///COMMINFOも考え直す@@OO
+    // 親の友達numberを取得
+	p_wk->data.oya_friendid = CommInfoSearchWifiListIndex( GFL_NET_NO_PARENTMACHINE );
 	GF_ASSERT( p_wk->data.oya_friendid != WIFILIST_FRIEND_MAX );
 
 	// ワードセットに名前をせっていしとく
-	WFP2PMF_WordSetPlayerNameSet( &p_wk->draw, p_init, COMM_PARENT_ID, 0, heapID );
+	WFP2PMF_WordSetPlayerNameSet( &p_wk->draw, p_init, GFL_NET_NO_PARENTMACHINE, 0, heapID );
+#endif
 
-
-	CommStateWifiMatchEnd();
+	GFL_NET_StateWifiMatchEnd(TRUE);
 
 	// エラーチェック　OFF
 	p_wk->data.err_check = FALSE;
@@ -5132,9 +5272,9 @@ static BOOL WFP2PMF_KoConLockInit01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32
 	}
 
 	// YESNOウィンドウを出す
-	p_wk->draw.p_yesnowin = BmpYesNoSelectInit( p_wk->draw.p_bgl,
+	p_wk->draw.p_yesnowin = BmpMenu_YesNoSelectInit(
 							&WFP2PMF_YESNOBMPDAT,
-							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,
+							WFP2PMF_BG2_MENUWIN_CGX, WFP2PMF_BG2_MENUWIN_PAL,0,
 							heapID );
 	p_wk->data.status = WFP2PMF_KO_STATUS_CONLOCK_SELECT;
 	
@@ -5159,7 +5299,7 @@ static BOOL WFP2PMF_KoConLockSelect( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32
 
 	
 	// YESならコネクト　Noなら切断
-	yesno_ret = BmpYesNoSelectMain( p_wk->draw.p_yesnowin, heapID );
+	yesno_ret = BmpMenu_YesNoSelectMain( p_wk->draw.p_yesnowin );
 	if( yesno_ret != BMPMENU_NULL ){
 		if( yesno_ret == 0 ){	// はいを選択
 			p_wk->data.status = WFP2PMF_KO_STATUS_CONLOCK_RECON;
@@ -5230,7 +5370,7 @@ static BOOL WFP2PMF_KoConLockReCon01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u3
 		return FALSE;
 	}
 
-	TOMOYA_PRINT( "wifi接続先 %d\n", p_wk->data.oya_friendid );
+	NET_PRINT( "wifi接続先 %d\n", p_wk->data.oya_friendid );
 
 	// 再接続
 	if( WFP2PMF_CommWiFiMatchStart( p_wk->data.oya_friendid, p_init->type ) ){
@@ -5258,18 +5398,21 @@ static BOOL WFP2PMF_KoConLockReConWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, 
 	WFP2PMF_ReConErrCheck( p_wk );
 	
 	// 待機
-	if( (CommWifiIsMatched()==1) && (
-		CommIsConnect(COMM_PARENT_ID) == TRUE) ){
+	if( (GFL_NET_StateGetWifiStatus()==GFL_NET_STATE_MATCHED) && (
+		GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER) == TRUE) ){
 
 		//
-		CommSetWifiBothNet(FALSE);
+		GFL_NET_SetWifiBothNet(FALSE);
 			
 		// 待ちアイコン表示
 		WFP2PMF_TimeWaitIconOff( p_wk, p_init, heapID );
 
 		// ワイプフェード開始
-		WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
-						COMM_BRIGHTNESS_SYNC, 1, heapID);
+//		WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
+//						COMM_BRIGHTNESS_SYNC, 1, heapID);
+		GFL_FADE_SetMasterBrightReq(
+				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+				0, 16, 0);
 
 
 		p_wk->data.status = WFP2PMF_KO_STATUS_CONLOCK_GRAPHIC_RESET00;
@@ -5291,10 +5434,10 @@ static BOOL WFP2PMF_KoConLockReConWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, 
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_KoConLockReConGraphicReset00( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
-	if( WIPE_SYS_EndCheck() ){
+	if( GFL_FADE_CheckFade() ){
 
 		// まずは通信の開通
-		CommInfoInitialize(p_init->p_savedata,NULL);   //Info初期化
+		//@@CommInfoInitialize(p_init->p_savedata,NULL);   //Info初期化
 
 		// エラーチェック　ON
 		p_wk->data.err_check = TRUE;
@@ -5307,7 +5450,7 @@ static BOOL WFP2PMF_KoConLockReConGraphicReset00( WFP2PMF_WK* p_wk, WFP2PMF_INIT
 			WFP2PMF_GraphicDelete( p_wk, heapID );
 
 			// 描画ワークをクリーン
-			memset( &p_wk->draw, 0, sizeof(WFP2PMF_DRAW) );
+			GFL_STD_MemClear( &p_wk->draw, sizeof(WFP2PMF_DRAW) );
 
 			// 切断チェック開始
 			WFP2PMF_LogOutCheckStart( p_wk );
@@ -5315,25 +5458,28 @@ static BOOL WFP2PMF_KoConLockReConGraphicReset00( WFP2PMF_WK* p_wk, WFP2PMF_INIT
 			// 描画データ初期化
 			WFP2PMF_GraphicInit( p_wk, p_init, heapID );
 			
-			WirelessIconEasy();  // 接続中なのでアイコン表示
+			GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
 		}
 
 		// ワークのクリア
 		{
 			p_wk->data.ko_newcon_flag = 0;
 			p_wk->data.entry = 0;
-			memset( p_wk->data.logout_in, 0, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// LOGアウト検知
-			memset( p_wk->data.logout_id, 0, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// LOGアウト検知
-			MI_CpuFill8( p_wk->data.vchat_tmp, TRUE, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// １つ前のVCHAT
-			MI_CpuFill8( p_wk->data.vchat_now, TRUE, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// １つ前のVCHAT
+			GFL_STD_MemClear( p_wk->data.logout_in,  sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// LOGアウト検知
+			GFL_STD_MemClear( p_wk->data.logout_id,  sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// LOGアウト検知
+			GFL_STD_MemFill( p_wk->data.vchat_tmp, TRUE, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// １つ前のVCHAT
+			GFL_STD_MemFill( p_wk->data.vchat_now, TRUE, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// １つ前のVCHAT
 			p_wk->data.conlist_rewrite = 0;	// conlistを再描画
 			p_wk->data.oya_friendid = 0;	// 親の友達コード
-			memset( p_wk->data.entry_on, 0, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// エントリーフラグ
+			GFL_STD_MemClear( p_wk->data.entry_on, sizeof(u8)*WIFI_P2PMATCH_NUM_MAX );// エントリーフラグ
 		}
 
 		// ワイプフェード開始
-        WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
-                        COMM_BRIGHTNESS_SYNC, 1, heapID);
+//        WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
+//                        COMM_BRIGHTNESS_SYNC, 1, heapID);
+		GFL_FADE_SetMasterBrightReq(
+				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+				16, 0, 0);
 
 		p_wk->data.status = WFP2PMF_KO_STATUS_CONLOCK_GRAPHIC_RESET01;
 	}
@@ -5355,7 +5501,7 @@ static BOOL WFP2PMF_KoConLockReConGraphicReset00( WFP2PMF_WK* p_wk, WFP2PMF_INIT
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_KoConLockReConGraphicReset01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
-	if( WIPE_SYS_EndCheck() ){
+	if( GFL_FADE_CheckFade() ){
 		// 接続開始
 		p_wk->data.status = WFP2PMF_KO_STATUS_ENTRY_OYAWAITINIT;
 	}
@@ -5377,16 +5523,17 @@ static BOOL WFP2PMF_KoConLockReConGraphicReset01( WFP2PMF_WK* p_wk, WFP2PMF_INIT
 static BOOL WFP2PMF_KoConLockDeCon( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
 	// マッチングを解除
-    CommStateWifiMatchEnd();
+    GFL_NET_StateWifiMatchEnd(TRUE);
 
 
 	// 通信状態を元に戻す
-	CommStateChangeWiFiLogin();
+//	CommStateChangeWiFiLogin();   @@OO
 
 	// 終了処理
 	p_wk->data.match_result = FALSE;
 
-	CommStateSetErrorCheck(FALSE,TRUE);
+    GFL_NET_SetNoChildErrorCheck(FALSE);
+    GFL_NET_SetAutoErrorCheck(TRUE);
 
 	return TRUE;
 }

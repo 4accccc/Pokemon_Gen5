@@ -18,6 +18,11 @@
 #include "system/bmp_winframe.h"
 #include "system/bmp_cursor.h"
 #include "system/bmp_menu.h"
+#include "system/bmp_menu.h"
+
+#include "message.naix"
+#include "msg/msg_yesnomenu.h"
+#include "font/font.naix"
 
 //======================================================================
 //	シンボル定義
@@ -608,7 +613,7 @@ static void CursorWritePosGet( BMPMENU_WORK * mw, u8 * x, u8 * y, u8 pos )
 	*y = ( pos % mw->hed.y_max ) * ( mw->sy + mw->hed.line_spc ) + mw->py;
 }
 
-#if 0
+#if 1  //YESNOWINDOW
 //============================================================================================
 //	はい・いいえ処理
 //============================================================================================
@@ -616,7 +621,6 @@ static void CursorWritePosGet( BMPMENU_WORK * mw, u8 * x, u8 * y, u8 pos )
 /**
  * はい・いいえウィンドウセット（カーソル位置指定）
  *
- * @param	ini		BGLデータ
  * @param	data	ウィンドウデータ
  * @param	cgx		ウィンドウキャラ位置
  * @param	pal		ウィンドウパレット番号
@@ -628,76 +632,35 @@ static void CursorWritePosGet( BMPMENU_WORK * mw, u8 * x, u8 * y, u8 pos )
  * @li	BMPウィンドウとBMPメニューワークをAllocで取得している
  */
 //--------------------------------------------------------------------------------------------
-BMPMENU_WORK * BmpMenu_YesNoSelectInitEx(
-	const BMPWIN_DAT *data, u16 cgx, u8 pal, u8 pos, u32 heap )
+BMPMENU_WORK * BmpMenu_YesNoSelectInit(	const BMPWIN_YESNO_DAT *data, u16 cgx, u8 pal, u8 pos, HEAPID heap )
 {
 	BMPMENU_HEADER hed;
-	MSGDATA_MANAGER * man;
+	GFL_MSGDATA * man;
 	BMP_MENULIST_DATA * ld;
-	
-	man = MSGMAN_Create( MSGMAN_TYPE_DIRECT, ARC_MSG, NARC_msg_ev_win_dat, heap );
-	ld  = BMP_MENULIST_Create( 2, heap );
-	BMP_MENULIST_AddArchiveString( ld, man, msg_ev_win_046, 0 );
-	BMP_MENULIST_AddArchiveString( ld, man, msg_ev_win_047, BMPMENU_CANCEL );
-	MSGMAN_Delete( man );
+
+
+    
+	man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_yesnomenu_dat, heap );
+	ld  = BmpMenuWork_ListCreate( 2, heap );
+	BmpMenuWork_ListAddArchiveString( ld, man, msgid_yesno_yes, 0,heap );
+	BmpMenuWork_ListAddArchiveString( ld, man, msgid_yesno_no, BMPMENU_CANCEL,heap );
+	GFL_MSG_Delete( man );
 
 	hed.menu     = ld;
-	hed.win      = GF_BGL_BmpWinAllocGet( heap, 1 );
-	hed.font     = FONT_SYSTEM;
+	hed.win      = GFL_BMPWIN_Create( data->frmnum , data->pos_x, data->pos_y, 5, 4, data->palnum, data->chrnum );
 	hed.x_max    = 1;
 	hed.y_max    = 2;
 	hed.line_spc = 0;
 	hed.c_disp_f = 0;
 	hed.loop_f = 0;
 
-	GF_BGL_BmpWinAddEx( ini, hed.win, data );
-	BmpMenuWinWrite( hed.win, WINDOW_TRANS_OFF, cgx, pal );
-	return BmpMenuAddEx( &hed, 8, 0, pos, heap, PAD_BUTTON_CANCEL );
-}
+    hed.font_handle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
+    PRINT_UTIL_Setup(hed.print_util, hed.win);
+    hed.print_que = PRINTSYS_QUE_Create( heap );
 
-//--------------------------------------------------------------------------------------------
-/**
- * はい・いいえウィンドウセット
- *
- * @param	ini		BGLデータ
- * @param	data	ウィンドウデータ
- * @param	cgx		ウィンドウキャラ位置
- * @param	pal		ウィンドウパレット番号
- * @param	heap	ヒープID
- *
- * @return	BMPメニューワーク
- *
- * @li	BMPウィンドウとBMPメニューワークをAllocで取得している
- */
-//--------------------------------------------------------------------------------------------
-BMPMENU_WORK * BmpYesNoSelectInit(
-					GF_BGL_INI * ini, const BMPWIN_DAT * data, u16 cgx, u8 pal, u32 heap )
-{
-/*
-	BMPMENU_HEADER hed;
-	MSGDATA_MANAGER * man;
-	BMP_MENULIST_DATA * ld;
-
-	man = MSGMAN_Create( MSGMAN_TYPE_DIRECT, ARC_MSG, NARC_msg_ev_win_dat, heap );
-	ld  = BMP_MENULIST_Create( 2, heap );
-	BMP_MENULIST_AddArchiveString( ld, man, msg_ev_win_046, 0 );
-	BMP_MENULIST_AddArchiveString( ld, man, msg_ev_win_047, BMPMENU_CANCEL );
-	MSGMAN_Delete( man );
-
-	hed.menu     = ld;
-	hed.win      = GF_BGL_BmpWinAllocGet( heap, 1 );
-	hed.font     = FONT_SYSTEM;
-	hed.x_max    = 1;
-	hed.y_max    = 2;
-	hed.line_spc = 0;
-	hed.c_disp_f = 0;
-	hed.line_spc = 0;
-
-	GF_BGL_BmpWinAddEx( ini, hed.win, data );
-	BmpMenuWinWrite( hed.win, WINDOW_TRANS_OFF, cgx, pal );
-	return BmpMenuAddEx( &hed, 8, 0, 0, heap, PAD_BUTTON_CANCEL );
-*/
-	return BmpYesNoSelectInitEx( ini, data, cgx, pal, 0, heap );
+//	GFL_BG_BmpWinAddEx( ini, hed.win, data );
+	//BmpMenuWinWrite( hed.win, WINDOW_TRANS_OFF, cgx, pal );
+	return BmpMenu_AddEx( &hed, 8, 0, pos, heap, PAD_BUTTON_CANCEL );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -712,12 +675,13 @@ BMPMENU_WORK * BmpYesNoSelectInit(
  * @retval	"BMPMENU_CANCEL	いいえorキャンセル"
  */
 //--------------------------------------------------------------------------------------------
-u32 BmpYesNoSelectMain( BMPMENU_WORK * mw, u32 heap )
+u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
 {
-	u32	ret = BmpMenuMain( mw );
+//	u32	ret = BmpMenu_MainSE( mw,SE_DECIDE );
+    u32	ret = BmpMenu_Main( mw );
 
 	if( ret != BMPMENU_NULL ){
-		BmpYesNoWinDel( mw, heap );
+		BmpMenu_YesNoMenuExit( mw );
 	}
 	return	ret;
 }
@@ -735,6 +699,7 @@ u32 BmpYesNoSelectMain( BMPMENU_WORK * mw, u32 heap )
  * @retval	"BMPMENU_CANCEL	いいえorキャンセル"
  */
 //--------------------------------------------------------------------------------------------
+#if 0
 u32 BmpYesNoSelectMainOutControl( BMPMENU_WORK * mw, u8 prm, u32 heap )
 {
 	u32	ret = BmpMenuMainOutControl( mw, prm );
@@ -744,6 +709,7 @@ u32 BmpYesNoSelectMainOutControl( BMPMENU_WORK * mw, u8 prm, u32 heap )
 	}
 	return	ret;
 }
+#endif
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -755,13 +721,15 @@ u32 BmpYesNoSelectMainOutControl( BMPMENU_WORK * mw, u8 prm, u32 heap )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BmpYesNoWinDel( BMPMENU_WORK * mw, u32 heap )
+void BmpMenu_YesNoMenuExit( BMPMENU_WORK * mw )
 {
-	BmpMenuWinClear( mw->hed.win, WINDOW_TRANS_ON );
-	GF_BGL_BmpWinDel( mw->hed.win );
-	sys_FreeMemory( heap, mw->hed.win );
-	BMP_MENULIST_Delete( (BMP_MENULIST_DATA *)mw->hed.menu );
-	BmpMenuExit( mw, NULL );
+	PRINTSYS_QUE_Delete( mw->hed.print_que );
+
+    BmpWinFrame_Clear( mw->hed.win, WINDOW_TRANS_ON );
+	GFL_BMPWIN_Delete( mw->hed.win );
+	BmpMenuWork_ListDelete( (BMPMENU_DATA*)mw->hed.menu );
+
+    BmpMenu_Exit( mw, NULL );
 }
 
 
@@ -775,9 +743,10 @@ void BmpYesNoWinDel( BMPMENU_WORK * mw, u32 heap )
  *
  */
 //------------------------------------------------------------------
-void BmpWin_DrawCursorImage(GF_BGL_BMPWIN* win, u32 x, u32 y)
+void BmpWin_DrawCursorImage(GFL_BMPWIN* win, u32 x, u32 y)
 {
-	static const u8 CursorBitmapImage[] = {
+#if 0
+    static const u8 CursorBitmapImage[] = {
 		0xff,0xff,0xff,0x00,
 		0xff,0xff,0xff,0x00,
 		0x21,0xff,0xff,0x00,
@@ -797,10 +766,10 @@ void BmpWin_DrawCursorImage(GF_BGL_BMPWIN* win, u32 x, u32 y)
 		0x00,0x00,0x00,0x00,
 	};
 
-	GF_BGL_BmpWinPrint( win, (void*)CursorBitmapImage, 0, 0, 8, 16, x, y, 8, 16 );
-
-}
+	GFL_BMP_Print( win, (void*)CursorBitmapImage, 0, 0, 8, 16, x, y, 8, 16 );
 #endif
+}
+#endif //YESNOWINDOW
 
 //======================================================================
 //

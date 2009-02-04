@@ -54,7 +54,10 @@ typedef struct {
 	u8 vchat;		// VCHAT ON/OFF
 	u8 pad[3];
 	
-	GFL_SAVEDATA*  p_savedata;
+//	GFL_SAVEDATA*  p_savedata;
+//	FNOTE_DATA* p_fnote;
+//  CONFIG* p_config;
+    int wintype;
 
 } WFP2PMF_INIT;
 

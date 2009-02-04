@@ -111,7 +111,7 @@ typedef	struct {
 
 	u16* pMsg;
 
-	GFL_BG_INI * bgl;
+//	GFL_BG_INI * bgl;
 
 //	GFL_BMPWIN bmpwin;				//BMPウィンドウデータ
 
@@ -121,8 +121,8 @@ typedef	struct {
 	GFL_MSGDATA* monsmsgman;			//メッセージマネージャー
 
 
-	BMP_MENULIST_DATA	*menuList;
-	BMPMENULIST_WORK	*menuWork;
+//	BMP_MENULIST_DATA	*menuList;
+//	BMPMENULIST_WORK	*menuWork;
 	PRINT_UTIL			printUtil;
 	PRINT_QUE			*printQue;
 	GFL_FONT 			*fontHandle;

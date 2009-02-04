@@ -28,7 +28,7 @@
 
 
 // P2PMATCH からの戻り値
-enum {
+typedef enum {
   WIFI_P2PMATCH_NONE,
   WIFI_P2PMATCH_SBATTLE50,   // 通信対戦呼び出し
   WIFI_P2PMATCH_SBATTLE100,   // 通信対戦呼び出し
@@ -50,6 +50,7 @@ enum {
 #endif	// WFP2P_DEBUG_EXON
 } WIFI_P2PMATCH_KINDENUM;
 
+  
 typedef enum{
 	WIFI_BATTLEFLAG_SINGLE,	// シングルバトル
 	WIFI_BATTLEFLAG_DOUBLE,	// ダブルバトル

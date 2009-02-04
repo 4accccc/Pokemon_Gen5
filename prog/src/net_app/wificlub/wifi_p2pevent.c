@@ -405,8 +405,10 @@ static void P2P_FourWaitInit( EV_P2PEVENT_WORK* p_wk, GMEVENT* fsys, u32 heapID,
 	p_work->comm_max = sc_P2P_FOUR_MATCH_MAX[ type ];
 	p_work->result = FALSE;
 	p_work->vchat = FALSE;
-	p_work->p_savedata = fsys->savedata;
-	
+//	p_work->p_savedata = fsys->savedata;
+    p_work->p_fnote = ;
+    p_work->wintype = CONFIG_GetWindowType(SaveData_GetConfig(SaveControl_GetPointer()));
+
 	p_wk->work = p_work;
 
 	EventCmd_CallSubProc(fsys, &WifiP2PMatchFourProcData, p_work);

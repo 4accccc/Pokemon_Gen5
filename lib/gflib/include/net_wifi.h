@@ -164,6 +164,66 @@ typedef struct{
 extern GFL_NETSTATE_DWCERROR* GFL_NET_StateGetWifiError(void);
 
 
+#define GFL_NET_STATE_MATCHING (0)
+#define GFL_NET_STATE_MATCHED (1)
+#define GFL_NET_STATE_NOTMATCH (2)
+#define GFL_NET_STATE_TIMEOUT (3)
+#define GFL_NET_STATE_DISCONNECTING (4)
+#define GFL_NET_STATE_FAIL (5)
+
+//==============================================================================
+/**
+ * WIFIのステート遷移を得る
+ * @brief   マッチングが完了したかどうかを判定
+ * @param   pNetHandle   GFL_NETHANDLE
+ * @param   target: 負なら親、０以上ならつなぎにいく親機の番号
+ * @retval  1. 完了　　0. 接続中   2. エラーやキャンセルで中断
+ */
+//==============================================================================
+extern int GFL_NET_StateGetWifiStatus(void);
+
+//==============================================================================
+/**
+ * WifiErrorかどうか
+ * @param   none
+ * @retval  Error
+ */
+//==============================================================================
+extern BOOL GFL_NET_StateIsWifiError(void);
+//==============================================================================
+/**
+ * @brief   Wifi切断コマンドを受け取った場合TRUE
+ * @param   none
+ * @retval  WifiLogoutに移行した場合TRUE
+ */
+//==============================================================================
+extern BOOL GFL_NET_StateIsWifiDisconnect(void);
+//==============================================================================
+/**
+ * @brief   WIFI指定接続を開始する
+ * @param   target    つなぎにいく親機の番号
+ * @retval  TRUE      成功
+ * @retval  FALSE     失敗
+ */
+//==============================================================================
+extern int GFL_NET_StateStartWifiPeerMatch( int target );
+//==============================================================================
+/**
+ * @brief   WIFIランダムマッチを開始する
+ * @retval  TRUE      成功
+ * @retval  FALSE     失敗
+ */
+//==============================================================================
+extern int GFL_NET_StateStartWifiRandomMatch( void);
+//==============================================================================
+/**
+ * @brief   WIFIでマッチングを切る場合の処理
+ * @param   bAuto  自分から強制切断するときはFALSE 接続状況にあわせる場合TRUE
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_StateWifiMatchEnd(BOOL bAuto);
+
 
 /// WiFiで使うHeapのサイズ
 #define MYDWC_HEAPSIZE (0x30000)

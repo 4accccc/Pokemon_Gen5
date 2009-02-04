@@ -1608,9 +1608,9 @@ PROC_RESULT WifiP2PMatchProc_Main( PROC * proc, int * seq )
         break;
     }
 #if 1
-    if(wk->clactSet){
-        CLACT_Draw( wk->clactSet );									// セルアクター常駐関数
-    }
+//    if(wk->clactSet){
+  //      CLACT_Draw( wk->clactSet );									// セルアクター常駐関数
+//    }
 #endif
 	if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
 		WIFI_MCR_Draw( &wk->matchroom );

@@ -15,6 +15,8 @@
 #include "savedata/wifilist.h"
 #include "print/wordset.h"
 #include "wifi_p2pmatchroom.h"
+#include "system/bmp_menulist.h"
+#include "net_app/connect_anm.h"
 
 
 #define WIFIP2PMATCH_MEMBER_MAX  (WIFILIST_FRIEND_MAX)
@@ -337,8 +339,8 @@ struct _WIFIP2PMATCH_WORK{
   //SAVEDATA*  pSaveData;
 #endif
   WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー
-  MSGDATA_MANAGER *MsgManager;							// 名前入力メッセージデータマネージャー
-  MSGDATA_MANAGER *SysMsgManager;  //
+  GFL_MSGDATA *MsgManager;							// 名前入力メッセージデータマネージャー
+  GFL_MSGDATA *SysMsgManager;  //
  // STRBUF			*TrainerName[WIFIP2PMATCH_MEMBER_MAX];		// 名前
 //  STRBUF			*MsgString;								// メッセージ
   STRBUF*         pExpStrBuf;
@@ -352,9 +354,10 @@ struct _WIFIP2PMATCH_WORK{
   void* timeWaitWork;			// タイムウエイトアイコンワーク
 //  CLACT_SET_PTR 			clactSet;								// セルアクターセット
   GFL_CLUNIT* clactSet;								// セルアクターセット
-  CLACT_U_EASYRENDER_DATA	renddata;								// 簡易レンダーデータ
-  CLACT_U_RES_MANAGER_PTR	resMan[CLACT_RESOURCE_NUM];				// リソースマネージャ
-  FONTOAM_SYS_PTR			fontoam;								// フォントOAMシステム
+  GFL_CLSYS_REND*          renddata;						// 簡易レンダーデータ
+  //CLACT_U_EASYRENDER_DATA	renddata;								// 簡易レンダーデータ
+  //CLACT_U_RES_MANAGER_PTR	resMan[CLACT_RESOURCE_NUM];				// リソースマネージャ
+//  FONTOAM_SYS_PTR			fontoam;								// フォントOAMシステム  @@OO
 /*
   CLACT_U_RES_OBJ_PTR 	resObjTbl[BOTH_LCD][CLACT_RESOURCE_NUM];// リソースオブジェテーブル
   CLACT_HEADER			clActHeader_m;							// セルアクターヘッダー
@@ -363,13 +366,13 @@ struct _WIFIP2PMATCH_WORK{
 	//CLACT_WORK_PTR			SubActWork[_OAM_NUM];				// セルアクターワークポインタ配列
 //*/
 
-  GFL_BG_BMPWIN			MsgWin;									// 会話ウインドウ
-  GFL_BG_BMPWIN			MyInfoWin;								// 自分の状態表示
-  GFL_BG_BMPWIN			MyInfoWinBack;								// タイトル
-  GFL_BG_BMPWIN			SysMsgWin;								// システムウィンドウで描画するもの	えらーや、DWCルールのメッセージ
-  GFL_BG_BMPWIN			ListWin;									// フレンドリスト
-  GFL_BG_BMPWIN			SubListWin;									// 募集するタイプなどを描画するリスト
-  GFL_BG_BMPWIN			MyWin;									// 友達の個人情報表示
+  GFL_BMPWIN*			MsgWin;									// 会話ウインドウ
+  GFL_BMPWIN*			MyInfoWin;								// 自分の状態表示
+  GFL_BMPWIN*			MyInfoWinBack;								// タイトル
+  GFL_BMPWIN*			SysMsgWin;								// システムウィンドウで描画するもの	えらーや、DWCルールのメッセージ
+  GFL_BMPWIN*			ListWin;									// フレンドリスト
+  GFL_BMPWIN*			SubListWin;									// 募集するタイプなどを描画するリスト
+  GFL_BMPWIN*			MyWin;									// 友達の個人情報表示
 
    int cancelEnableTimer;   // キャンセル許可になる為のタイマー
   int localTime;
@@ -383,7 +386,7 @@ struct _WIFIP2PMATCH_WORK{
   u8     mainCur;
   u8     subCur;
   BOOL bInitMessage;		// 初回接続か
-  PROC*		subProc;
+  GFL_PROC*		subProc;
   int preConnect;			// 新しく来た友達(-1=なし)
   u16 battleCur;			// バトルタイプ選択メニューカーソル
   u16 singleCur[3];			// バトルの詳細部分のメニューカーソル
