@@ -2676,22 +2676,22 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
 	
 	// ƒtƒŒ[ƒ€
 	{
-		ArcUtil_HDL_BgCharSet( p_wk->p_handle, 
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_wk->p_handle, 
 				NARC_worldtimer_world_watch_frame_NCGR, p_wk->p_bgl,
 				GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
 
-		ArcUtil_HDL_ScrnSet( p_wk->p_handle,
+		GFL_ARCHDL_UTIL_TransVramScreen( p_wk->p_handle,
 				NARC_worldtimer_world_watch_frame_NSCR, p_wk->p_bgl,
 				GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
 	}
 
 	// ”wŒi
 	{
-		ArcUtil_HDL_BgCharSet( p_wk->p_handle,
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_wk->p_handle,
 				NARC_worldtimer_world_watch_NCGR, p_wk->p_bgl, 
 				GFL_BG_FRAME2_S, 0, 0, FALSE, heapID );
 
-		ArcUtil_HDL_ScrnSet( p_wk->p_handle,
+		GFL_ARCHDL_UTIL_TransVramScreen( p_wk->p_handle,
 				NARC_worldtimer_world_watch_wall_NSCR, p_wk->p_bgl,
 				GFL_BG_FRAME3_S, 0, 0, FALSE, heapID );
 	}

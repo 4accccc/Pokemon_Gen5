@@ -2798,9 +2798,9 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 
 
 	// 名前スクリーン読み込み
-	ArcUtil_HDL_BgCharSet( p_handle, NARC_bucket_ent_win_bg_NCGR, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_bucket_ent_win_bg_NCGR, 
 			p_drawsys->p_bgl, GFL_BG_FRAME2_M, 0, 0, FALSE, heapID );
-	ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_ent_win_bg02_NSCR+(commnum-2),
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_ent_win_bg02_NSCR+(commnum-2),
 			p_drawsys->p_bgl, GFL_BG_FRAME2_M, 0, 0, FALSE, heapID);
 	ArcUtil_HDL_PalSet( p_handle, NARC_bucket_ent_win_bg_NCLR,
 			PALTYPE_MAIN_BG, BCT_GRA_BGMAIN_PAL_NAME_PL00*32, (BCT_GRA_BGMAIN_PAL_NAME_PL03+1)*32,
@@ -2833,7 +2833,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 				name_y = sc_BCT_START_NAME_TBL[ myplno ][ commnum-1 ][ i ].y;
 //				OS_TPrintf( "my_plno=%d comm_num=%d plno=%d name_x=%d name_y=%d\n", myplno, commnum, i, name_x, name_y );
 				// 名前の書き込みとフレームカラー変更
-				GF_BGL_ScrPalChange( p_drawsys->p_bgl, GFL_BG_FRAME2_M, name_x-1, name_y-1,
+				GFL_BG_ChangeScreenPalette( p_drawsys->p_bgl, GFL_BG_FRAME2_M, name_x-1, name_y-1,
 						BCT_START_NAME_FRAMESIZ_X, BCT_START_NAME_FRAMESIZ_Y, BCT_GRA_BGMAIN_PAL_NAME_PL00+i );
 
 				// 名前書き込み
@@ -6404,18 +6404,18 @@ static void BCT_CLIENT_BgResLoad( BCT_CLIENT_GRAPHIC* p_wk, ARCHANDLE* p_handle,
 	};
 	
     // サブ画面のBG
-    ArcUtil_HDL_BgCharSet( p_handle, NARC_bucket_tamaire_bg_NCGR, p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
-    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg0_NSCR, p_wk->p_bgl,GFL_BG_FRAME3_S, 0, 0, FALSE, heapID );
-    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg1_NSCR, p_wk->p_bgl,GFL_BG_FRAME2_S, 0, 0, FALSE, heapID );
-    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg2_NSCR, p_wk->p_bgl,GFL_BG_FRAME1_S, 0, 0, FALSE, heapID );
-    ArcUtil_HDL_ScrnSet( p_handle, NARC_bucket_tamaire_bg3_NSCR, p_wk->p_bgl,GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_bucket_tamaire_bg_NCGR, p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg0_NSCR, p_wk->p_bgl,GFL_BG_FRAME3_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg1_NSCR, p_wk->p_bgl,GFL_BG_FRAME2_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg2_NSCR, p_wk->p_bgl,GFL_BG_FRAME1_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg3_NSCR, p_wk->p_bgl,GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
     ArcUtil_HDL_PalSet( p_handle, NARC_bucket_tamaire_bg_NCLR, PALTYPE_SUB_BG, 0, BCT_GRA_BGSUB_PAL_NUM*32, heapID );
 
 	// パレットを合わせる
-	GF_BGL_ScrPalChange( p_wk->p_bgl, GFL_BG_FRAME3_S, 0, 0, 32, 32, sc_SubPal[plno] );	
-	GF_BGL_ScrPalChange( p_wk->p_bgl, GFL_BG_FRAME2_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_BACK+(plno*2) );	
-	GF_BGL_ScrPalChange( p_wk->p_bgl, GFL_BG_FRAME1_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );	
-	GF_BGL_ScrPalChange( p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );
+	GFL_BG_ChangeScreenPalette( p_wk->p_bgl, GFL_BG_FRAME3_S, 0, 0, 32, 32, sc_SubPal[plno] );	
+	GFL_BG_ChangeScreenPalette( p_wk->p_bgl, GFL_BG_FRAME2_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_BACK+(plno*2) );	
+	GFL_BG_ChangeScreenPalette( p_wk->p_bgl, GFL_BG_FRAME1_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );	
+	GFL_BG_ChangeScreenPalette( p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );
 
 	GF_BGL_LoadScreenReq( p_wk->p_bgl, GFL_BG_FRAME0_S );
 	GF_BGL_LoadScreenReq( p_wk->p_bgl, GFL_BG_FRAME1_S );
@@ -8290,10 +8290,10 @@ static void BCT_CLIENT_BGPRISCRL_SetPri( BCT_CLIENT_GRAPHIC* p_gra, s16 most_bac
 		// パレット設定
 		if( i==0 ){
 			// 一番下
-			GF_BGL_ScrPalChange( p_gra->p_bgl, bgno, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_BACK+(plno*2) );
+			GFL_BG_ChangeScreenPalette( p_gra->p_bgl, bgno, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_BACK+(plno*2) );
 		}else{
 			// それ以外
-			GF_BGL_ScrPalChange( p_gra->p_bgl, bgno, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );
+			GFL_BG_ChangeScreenPalette( p_gra->p_bgl, bgno, 0, 0, 32, 32, BCT_GRA_BGSUB_PAL_NETID0_TOP+(plno*2) );
 		}
 
 		GF_BGL_LoadScreenReq( p_gra->p_bgl, bgno );

@@ -6,25 +6,11 @@
  * @date	2007.11.13(火)
  */
 //==============================================================================
-#include "common.h"
+#include <gflib.h>
 #include "system/palanm.h"
 #include "print\printsys.h"
 #include <arc_tool.h>
-//#include "system/arc_util.h"
-//#include "system/fontproc.h"
-#include "print\gf_font.h"
-//#include "system/particle.h"
-//#include "system/brightness.h"
-//#include "system/snd_tool.h"
-#include "net\network_define.h"
-//#include  "communication/wm_icon.h"
-#include "message.naix"
-#include "system/wipe.h"
-//#include  "communication/wm_icon.h"
-//#include "system/msgdata_util.h"
-#include <procsys.h>
-//#include "system/d3dobj.h"
-//#include "system/fontoam.h"
+#include "system/main.h"
 
 #include "balloon_common.h"
 #include "balloon_comm_types.h"
@@ -42,6 +28,8 @@
 #include "balloon_id.h"
 #include "balloon_particle.naix"
 #include "balloon_particle_lst.h"
+
+#include "arc_def.h"
 
 
 //==============================================================================
@@ -178,10 +166,10 @@ typedef struct _SONANS_SYS{
 	VERTEX_LIST vertex_list[SONANS_QUAD_STRIP_NUM];
 	TEX_COORD_LIST tex_coord_list[SONANS_QUAD_STRIP_NUM];
 	
-	int tp_x;
-	int tp_y;
-	int tp_cont;
-	int tp_trg;
+	u32 tp_x;
+	u32 tp_y;
+	BOOL tp_cont;
+	BOOL tp_trg;
 	
 	int aim_x;
 	int aim_y;
@@ -189,7 +177,7 @@ typedef struct _SONANS_SYS{
 	int aim_hit_y;
 	int aim_hit_y_zure;				///<照準の中心からいくつずれてタッチしたかを保持(Y座標)
 	fx32 aim_hit_center_y_fx;
-	GFL_CLWK aim_cap;			///<照準アクターへのポインタ
+	GFL_CLWK* aim_cap;			///<照準アクターへのポインタ
 	
 	int push_mode;
 	int backup_tp_y;
@@ -219,6 +207,9 @@ typedef struct _SONANS_SYS{
 	u8 snd_push_se;					///<TRUE:ソーナンスを押しているSE再生中
 	u8 voltage_anm_wait;			///<ボルテージ最大の時のアニメウェイト
 	u8 color_trans_req;				///<TRUE:Vブランクでパレット転送リクエスト
+	u8 padding;
+	
+	GFL_G3D_RES * g3Dres_btx;
 	
 #ifdef PM_DEBUG
 	int debug_aim_on_off;			///<TRUE：照準表示　　FALSE:照準非表示
@@ -284,6 +275,7 @@ static const fx32 gCubeTexCoordFx[] = {	//s, t
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
+#if WB_TEMP_FIX		//もう使用しないのでこのまま消しても良い　2009.02.03(火)
 ///照準のアクターヘッダ(メイン画面用)
 static const TCATS_OBJECT_ADD_PARAM_S AimObjParam = {
 	0, 0, 0,		//x, y, z
@@ -300,6 +292,7 @@ static const TCATS_OBJECT_ADD_PARAM_S AimObjParam = {
 	BALLOON_BGPRI_AIM,				//BGプライオリティ
 	0,									//Vram転送フラグ
 };
+#endif
 
 
 //--------------------------------------------------------------
@@ -352,9 +345,9 @@ void DEMO_Set3DDefaultShininessTable();
 
 static void Aim_ResourceLoad(BALLOON_GAME_PTR game);
 static void Aim_ResourceFree(BALLOON_GAME_PTR game);
-static GFL_CLWK Aim_ActorCreate(BALLOON_GAME_PTR game);
-static void Aim_Update(SONANS_SYS_PTR sns, GFL_CLWK cap);
-static void Aim_ActorDelete(GFL_CLWK cap);
+static GFL_CLWK* Aim_ActorCreate(BALLOON_GAME_PTR game);
+static void Aim_Update(SONANS_SYS_PTR sns, GFL_CLWK* cap);
+static void Aim_ActorDelete(GFL_CLWK* cap);
 
 
 //==============================================================================
@@ -482,11 +475,10 @@ void Sonans_Update(BALLOON_GAME_PTR game, SONANS_SYS_PTR sns)
 		sns->tp_trg = 0;
 	}
 	else{
-		sns->tp_x = sys.tp_x;
-		sns->tp_y = sys.tp_y;
-		sns->tp_cont = sys.tp_cont;
-		sns->tp_trg = sys.tp_trg;
+		sns->tp_cont = GFL_UI_TP_GetPointCont(&sns->tp_x, &sns->tp_y);
+		sns->tp_trg = GFL_UI_TP_GetTrg();
 	}
+
 	
 #ifdef PM_DEBUG
 	if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
@@ -534,7 +526,9 @@ void Sonans_Update(BALLOON_GAME_PTR game, SONANS_SYS_PTR sns)
 				if(voltage_max == TRUE){
 					sns->scale_voltage_x = SONANS_VOLTAGE_SCALE_ADD_X;
 					sns->voltage_anm_wait = 0;
+				#if WB_TEMP_FIX
 					Snd_SePlay(SE_SONANS_BIG);
+				#endif
 				}
 			}
 			else{
@@ -640,7 +634,9 @@ static void Sonans_ParticleSet(BALLOON_GAME_PTR game, SONANS_SYS_PTR sns, int po
 {
 	if(voltage_max == TRUE && sns->pomp_area >= SONANS_POMP_AREA_GREAT_LINE){
 		BalloonParticle_EmitAdd(game, BALLOON_HINOMARU);
+	#if WB_TEMP_FIX
 		Snd_SePlay(SE_GREAT);
+	#endif
 	}
 	else if(sns->pomp_area >= SONANS_POMP_AREA_GOOD_LINE){
 		;
@@ -648,11 +644,15 @@ static void Sonans_ParticleSet(BALLOON_GAME_PTR game, SONANS_SYS_PTR sns, int po
 	else{	//失敗
 		if(sns->vertex_list[0].lu.y < sns->vertex_list[0].ru.y){
 			BalloonParticle_EmitAdd(game, BALLOON_PUSYU2);
+		#if WB_TEMP_FIX
 			Snd_SePlay(SE_SONANS_AIR);
+		#endif
 		}
 		else if(sns->vertex_list[0].lu.y > sns->vertex_list[0].ru.y){
 			BalloonParticle_EmitAdd(game, BALLOON_PUSYU);
+		#if WB_TEMP_FIX
 			Snd_SePlay(SE_SONANS_AIR);
+		#endif
 		}
 	}
 }
@@ -823,13 +823,17 @@ static void Sonans_PolygonCreate(SONANS_SYS_PTR sns)
 //--------------------------------------------------------------
 static void Sonas_TexLoad(SONANS_SYS *sns)
 {
+	ARCHANDLE* hdl;
+
 	//テクスチャファイル読み込み
-	sns->tex_file = ArchiveDataLoadMalloc(
-		ARCID_BALLOON_GRA, SONANS_NSBTX, HEAPID_BALLOON);
-	sns->texture = NNS_G3dGetTex(sns->tex_file);	// テクスチャリソース取得
+	hdl  = GFL_ARC_OpenDataHandle(ARCID_BALLOON_GRA, HEAPID_BALLOON);
+	sns->g3Dres_btx = GFL_G3D_CreateResourceHandle(hdl, ARCID_BALLOON_GRA);
+//	sns->tex_file = GFL_ARCHDL_UTIL_Load(hdl, SONANS_NSBTX, FALSE, HEAPID_BALLOON);
+	sns->texture = GFL_G3D_GetResTex(sns->g3Dres_btx);	// テクスチャリソース取得
+	GFL_ARC_CloseDataHandle(hdl);
 	
 	//VRAMへ展開
-	LoadVRAMTexture(sns->texture);
+	GFL_G3D_TransVramTexture(sns->g3Dres_btx);
 
 	//パレットをワークへコピーする(ソーナンスを赤くしていくため)
 	{
@@ -844,8 +848,8 @@ static void Sonas_TexLoad(SONANS_SYS *sns)
 		GF_ASSERT(sns->palette_work_src == NULL);
 		sns->palette_work_src = GFL_HEAP_AllocMemory(HEAPID_BALLOON, sz);
 		sns->palette_work_dest = GFL_HEAP_AllocMemory(HEAPID_BALLOON, sz);
-		GFL_STD_MemCopy8(pData, sns->palette_work_src, sz);
-		GFL_STD_MemCopy8(pData, sns->palette_work_dest, sz);
+		GFL_STD_MemCopy(pData, sns->palette_work_src, sz);
+		GFL_STD_MemCopy(pData, sns->palette_work_dest, sz);
 		DC_FlushRange(sns->palette_work_dest, sz);
 		OS_TPrintf("ソーナンスのパレットサイズ＝%d\n", sz);
 		sns->palette_trans_adrs = from;
@@ -853,6 +857,7 @@ static void Sonas_TexLoad(SONANS_SYS *sns)
 	}
 	
 	//テクスチャイメージをVRAMへ展開し終わったので、実体を破棄
+#if WB_TEMP_FIX		//メモリ分割命令がなくなっているのでとりあえず無効化する
 	{
 		u8* texImgStartAddr;
 		u32 newSize;
@@ -863,6 +868,7 @@ static void Sonas_TexLoad(SONANS_SYS *sns)
 		newSize = (u32)(texImgStartAddr - (u8*)sns->tex_file);
 		sys_CutMemoryBlockSize( sns->tex_file, newSize );
 	}
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1258,24 +1264,26 @@ static int Sonans_VertexUpdate(SONANS_SYS_PTR sns)
 	
 	if(sns->push_mode == TRUE){
 		if(sns->tp_y < sns->backup_tp_y){
-		//	Sonans_PushModeReset(sns);	慎重にタッチしないと画面にあてた時のブレで上行くのでやめた
-		//	Snd_SeStopBySeqNo( SE_SONANS_PUSH, 0 );
 			sns->snd_push_se = 0;
 			return FALSE;	//上方向へペンを動かした
 		}
 		else if(sns->tp_y == sns->backup_tp_y){
-		//	Snd_SeStopBySeqNo( SE_SONANS_PUSH, 0 );
 			sns->snd_push_se = 0;
 			return TRUE;	//位置が変わっていないので計算処理する必要なし
 		}
 		
-		//if(sns->snd_push_se == 0){
+	#if WB_TEMP_FIX
 		if(sns->backup_tp_y != -1 && sns->tp_y > sns->backup_tp_y 
 				&& Snd_SePlayCheck(SE_SONANS_PUSH) == FALSE){
 			Snd_SePlay(SE_SONANS_PUSH);
 			sns->snd_push_se = TRUE;
 		}
-
+	#else
+		if(sns->backup_tp_y != -1 && sns->tp_y > sns->backup_tp_y){
+			sns->snd_push_se = TRUE;
+		}
+	#endif
+	
 		tp_offset = sns->tp_y - sns->aim_hit_y_zure;
 		//OS_TPrintf("before tp_offset = %d, tp_y = %d, zure = %d\n", tp_offset, sns->tp_y, sns->aim_hit_y_zure);
 //		tp_offset -= sns->backup_offset_tp_y;
@@ -1690,10 +1698,9 @@ static void Aim_ResourceLoad(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 static void Aim_ResourceFree(BALLOON_GAME_PTR game)
 {
-	CATS_FreeResourceChar(game->crp, CHARID_BALLOON_AIM);
-	CATS_FreeResourceCell(game->crp, CELLID_BALLOON_AIM);
-	CATS_FreeResourceCellAnm(game->crp, CELLANMID_BALLOON_AIM);
-	CATS_FreeResourcePltt(game->crp, PLTTID_OBJ_AIM);
+	GFL_CLGRP_CGR_Release(game->cgr_id[CHARID_BALLOON_AIM]);
+	GFL_CLGRP_PLTT_Release(game->pltt_id[PLTTID_OBJ_AIM]);
+	GFL_CLGRP_CELLANIM_Release(game->cell_id[CELLID_BALLOON_AIM]);
 }
 
 //--------------------------------------------------------------
@@ -1705,18 +1712,22 @@ static void Aim_ResourceFree(BALLOON_GAME_PTR game)
  * @retval  生成した照準アクターへのポインタ
  */
 //--------------------------------------------------------------
-static GFL_CLWK Aim_ActorCreate(BALLOON_GAME_PTR game)
+static GFL_CLWK* Aim_ActorCreate(BALLOON_GAME_PTR game)
 {
-	GFL_CLWK cap;
+#if WB_TEMP_FIX	//もう使用しないのでこのまま消しても良い
+	GFL_CLWK* cap;
 	TCATS_OBJECT_ADD_PARAM_S act_head;
 	
 	//-- アクター生成 --//
 	act_head = AimObjParam;
 	cap = CATS_ObjectAdd_S(game->csp, game->crp, &act_head);
-	CATS_ObjectEnableCap(cap, CATS_ENABLE_FALSE);
+	GFL_CLACT_WK_SetDrawEnable(cap, FALSE);
 	
-	CATS_ObjectUpdate(cap->act);
+	GFL_CLACT_WK_AddAnmFrame(cap->act, FX32_ONE);
 	return cap;
+#else
+	return NULL;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1729,8 +1740,9 @@ static GFL_CLWK Aim_ActorCreate(BALLOON_GAME_PTR game)
  * @param   anmseq	アニメシーケンス番号
  */
 //--------------------------------------------------------------
-static void Aim_Update(SONANS_SYS_PTR sns, GFL_CLWK cap)
+static void Aim_Update(SONANS_SYS_PTR sns, GFL_CLWK* cap)
 {
+#if WB_TEMP_FIX	//もう使用しないのでこのまま消しても良い
 	int anmseq;
 	
 	if(sns->push_mode == FALSE){
@@ -1743,10 +1755,11 @@ static void Aim_Update(SONANS_SYS_PTR sns, GFL_CLWK cap)
 	CATS_ObjectPosSetCap_SubSurface(cap, sns->aim_x, 
 		(sns->aim_hit_center_y_fx >> FX32_SHIFT) + SonansHitRect[sns->rare_type].top, 
 		BALLOON_SUB_ACTOR_DISTANCE);
-	CATS_ObjectAnimeSeqSetCap(cap, anmseq );
-	CATS_ObjectUpdate(cap->act);
+	GFL_CLACT_WK_SetAnmSeq(cap, anmseq );
+	GFL_CLACT_WK_AddAnmFrame(cap->act, FX32_ONE);
 #ifdef PM_DEBUG
-	CATS_ObjectEnableCap(cap, sns->debug_aim_on_off);
+	GFL_CLACT_WK_SetDrawEnable(cap, sns->debug_aim_on_off);
+#endif
 #endif
 }
 
@@ -1757,8 +1770,10 @@ static void Aim_Update(SONANS_SYS_PTR sns, GFL_CLWK cap)
  * @param   cap		照準アクターへのポインタ
  */
 //--------------------------------------------------------------
-static void Aim_ActorDelete(GFL_CLWK cap)
+static void Aim_ActorDelete(GFL_CLWK* cap)
 {
-	CATS_ActorPointerDelete_S(cap);
+#if WB_TEMP_FIX	//もう使用しないのでこのまま消しても良い
+	GFL_CLACT_WK_Remove(cap);
+#endif
 }
 

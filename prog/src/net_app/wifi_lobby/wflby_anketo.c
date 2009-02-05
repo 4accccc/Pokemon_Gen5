@@ -1348,8 +1348,8 @@ static void ANKETO_INPUT_Init( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 	// 背景設定
 	{
 		ArcUtil_HDL_PalSet( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCLR, PALTYPE_MAIN_BG, ANKETO_PLTT_MAIN_BACK00, ANKETO_PLTT_MAINBACK_PLTTNUM*32, heapID );
-		ArcUtil_HDL_BgCharSet( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCGR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
-		ArcUtil_HDL_ScrnSet( p_drawsys->p_handle, NARC_wifi_lobby_other_bg00_NSCR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCGR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_drawsys->p_handle, NARC_wifi_lobby_other_bg00_NSCR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
 	}
 
 	// OAM読み込み
@@ -2040,8 +2040,8 @@ static void ANKETO_OUTPUT_Init( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 	// 背景設定
 	{
 		ArcUtil_HDL_PalSet( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCLR, PALTYPE_MAIN_BG, ANKETO_PLTT_MAIN_BACK00, ANKETO_PLTT_MAINBACK_PLTTNUM*32, heapID );
-		ArcUtil_HDL_BgCharSet( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCGR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
-		ArcUtil_HDL_ScrnSet( p_drawsys->p_handle, NARC_wifi_lobby_other_bg01_NSCR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCGR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_drawsys->p_handle, NARC_wifi_lobby_other_bg01_NSCR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
 	}
 
 	// ウィンドウ作成
@@ -2670,7 +2670,7 @@ static void ANKETO_OUTPUT_SetLastWeekGraphic( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN
 {
 	// 背景設定
 	{
-		ArcUtil_HDL_ScrnSet( p_drawsys->p_handle, NARC_wifi_lobby_other_bg02_NSCR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_drawsys->p_handle, NARC_wifi_lobby_other_bg02_NSCR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
 	}
 
 	// ウィンドウ作成

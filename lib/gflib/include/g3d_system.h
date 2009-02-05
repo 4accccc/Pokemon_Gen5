@@ -379,6 +379,11 @@ extern GFL_G3D_RES*
 	GFL_G3D_CreateResourceArc
 		( const int arcID, const int datID );
 
+// アーカイブハンドルによる読み込み
+extern GFL_G3D_RES*
+	GFL_G3D_CreateResourceHandle
+		( ARCHANDLE *handle, const int datID ) ;
+
 // アーカイブファイルパスによる読み込み
 extern GFL_G3D_RES*
 	GFL_G3D_CreateResourcePath
@@ -408,6 +413,10 @@ extern void
 extern void
 	GFL_G3D_LoadResourceArc
 		( const int arcID, const int datID, GFL_G3D_RES* g3Dres );
+
+extern void
+	GFL_G3D_LoadResourceHandle
+		( ARCHANDLE *handle, const int datID, GFL_G3D_RES* g3Dres );
 
 //--------------------------------------------------------------------------------------------
 /**

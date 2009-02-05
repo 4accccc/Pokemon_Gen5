@@ -21,8 +21,10 @@ extern "C" {
 //フェードモード指定
 #define	GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN	(0x0001)		//マスター輝度ブラックアウト（メイン画面）
 #define	GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB		(0x0002)		//マスター輝度ブラックアウト（サブ画面）
+#define	GFL_FADE_MASTER_BRIGHT_BLACKOUT		    (0x0003)		//マスター輝度ブラックアウト（両画面）
 #define	GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN	(0x0004)		//マスター輝度ホワイトアウト（メイン画面）
 #define	GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB		(0x0008)		//マスター輝度ホワイトアウト（サブ画面）
+#define	GFL_FADE_MASTER_BRIGHT_WHITEOUT		    (0x000C)		//マスター輝度ホワイトアウト（両画面）
 #define	GFL_FADE_SOFT_CALC_FADE					(0x0010)		//プログラム計算によるカラー加減算（未実装）
 
 #define	GFL_FADE_MASTER_BRIGHT	(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | \

@@ -5451,7 +5451,7 @@ static void WFLBY_ROOM_UNDERWIN_Common_Init( WFLBY_UNDER_WIN* p_wk, WFLBY_GRAPHI
 		}
 
 		// キャラクタ
-		ArcUtil_HDL_BgCharSet( p_handle, 
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, 
 				NARC_wifi_lobby_other_gadget_bg_NCGR, p_sys->p_bgl, 
 				sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BACK], 0, 0, FALSE, heapID );
 	}
@@ -5904,7 +5904,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WriteWazaType( WFLBY_UNDER_WIN* p_ugwk, W
 					WFLBY_TRCARD_WIN_WAZATYPE1_SIZEX, WFLBY_TRCARD_WIN_WAZATYPE1_SIZEY );
 
 			// パレット設定
-			GF_BGL_ScrPalChange( p_sys->p_bgl, 
+			GFL_BG_ChangeScreenPalette( p_sys->p_bgl, 
 					sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG],
 					WFLBY_TRCARD_WIN_WAZATYPE1_X,
 					WFLBY_TRCARD_WIN_WAZATYPE1_Y+(WFLBY_TRCARD_WIN_WAZATYPE1_SIZEY*i), 
@@ -6767,7 +6767,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_Start( WFLBY_GADGET_BTTN* p_wk, WFLBY_GRA
 {
 	// バックグラウンド設定
 	{
-		ArcUtil_HDL_ScrnSet( p_handle, NARC_wifi_lobby_other_gadget_bg_NSCR,
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifi_lobby_other_gadget_bg_NSCR,
 				p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BACK],
 				0, 0, FALSE, heapID );
 	}
@@ -6779,7 +6779,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_Start( WFLBY_GADGET_BTTN* p_wk, WFLBY_GRA
 	{
 
 		p_wk->bttn_itemno = WFLBY_SYSTEM_GetProfileItem( cp_profile );
-		ArcUtil_HDL_BgCharSet( p_handle, NARC_wifi_lobby_other_gadget_1a_NCGR+p_wk->bttn_itemno,
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifi_lobby_other_gadget_1a_NCGR+p_wk->bttn_itemno,
 				p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG],
 				WFLBY_UNDERWIN_BGCG_END, 0, FALSE, heapID );
 
@@ -6826,7 +6826,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_StartFloat( WFLBY_GADGET_BTTN* p_wk, WFLB
 	
 	// バックグラウンド設定
 	{
-		ArcUtil_HDL_ScrnSet( p_handle, NARC_wifi_lobby_other_gadget_bg_NSCR,
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifi_lobby_other_gadget_bg_NSCR,
 				p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BACK],
 				0, 0, FALSE, heapID );
 	}
@@ -6836,7 +6836,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_StartFloat( WFLBY_GADGET_BTTN* p_wk, WFLB
 	p_wk->bttn_itemno	= idx;
 
 	// 上に出す絵を出す
-	ArcUtil_HDL_BgCharSet( p_handle, NARC_wifi_lobby_other_float_a_NCGR+p_wk->bttn_itemno,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifi_lobby_other_float_a_NCGR+p_wk->bttn_itemno,
 			p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG],
 			WFLBY_UNDERWIN_BGCG_END, 0, FALSE, heapID );
 
@@ -6917,7 +6917,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_DrawButton( WFLBY_GADGET_BTTN* p_wk, WFLB
 
 	// idxによって。sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG]面の
 	// Y座標を調整
-	GF_BGL_ScrollReq( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG],
+	GFL_BG_SetScrollReq( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG],
 			GFL_BG_SCROLL_Y_SET, sc_BUTTON_Y[idx] );
 }
 

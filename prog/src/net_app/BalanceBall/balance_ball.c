@@ -433,14 +433,14 @@ static BOOL PenDemo( BB_CLIENT* wk )
 	if ( wk->seq2 == 3 && now == 11 ){
 		wk->seq  = 0;
 		wk->seq2 = 0;
-		CATS_ObjectEnableCap( wk->cap_pen, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( wk->cap_pen, FALSE );
 		Quaternion_Identity( &wk->bb3d_ball.tq );
 		Quaternion_Identity( &wk->bb3d_ball.cq );
 		Quaternion_Rotation( &wk->bb3d_ball, 0, 0, +5, +5, BB_COEFFICIENT_AMI, FALSE );
 		Quaternion_Rotation( &wk->bb3d_ball, 0, 0, -5, -5, BB_COEFFICIENT_AMI, FALSE );	
 		return TRUE;
 	}
-	CATS_ObjectUpdateCapEx( wk->cap_pen );
+	GFL_CLACT_WK_AddAnmFrame( wk->cap_pen, FX32_ONE*2 );
 	
 	return FALSE;
 }

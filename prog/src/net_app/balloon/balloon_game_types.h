@@ -276,6 +276,9 @@ typedef struct{
 	
 	GFL_CLWK *cap;
 	const AIR_POSITION_DATA *apd;
+	
+	fx32 x;
+	fx32 y;
 }PLAYER_AIR_PARAM; 
 
 ///紙ふぶきワーク
@@ -322,6 +325,9 @@ typedef struct{
 	fx32 add_y[BOOSTER_LAND_SMOKE_NUM];
 	u8 seq;
 	u8 time;
+	u8 padding[2];
+	fx32 x[BOOSTER_LAND_SMOKE_NUM];
+	fx32 y[BOOSTER_LAND_SMOKE_NUM];
 }BOOSTER_LAND_SMOKE;
 
 ///ブースターの動作ワーク
@@ -578,6 +584,9 @@ typedef struct _BALLOON_GAME_WORK{
 	u32 cgr_id[CHARID_MAX];
 	u32 cell_id[CELLID_MAX];
 	u32 anm_id[CELLANMID_MAX];
+
+	u16 g3DutilUnitIdx;
+	u16 g3DutilUnitIdx_Pipe;
 }BALLOON_GAME_WORK;
 
 

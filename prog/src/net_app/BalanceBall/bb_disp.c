@@ -404,7 +404,7 @@ void BB_disp_Hanabi_OAM_Add( BB_CLIENT* wk )
 		BB_disp_COAP_SimpleInit( &coap, i * 8, 20, CATS_D_AREA_MAIN, eBB_OAM_PAL_BD_HANABI, eBB_ID_HANABI );
 		wk->cap_hanabi[ i ] = CATS_ObjectAdd_S( csp, crp, &coap );
 		CATS_ObjectPaletteOffsetSetCap( wk->cap_hanabi[ i ], eBB_OAM_PAL_BD_HANABI );		
-		CATS_ObjectAnimeSeqSetCap( wk->cap_hanabi[ i ], ( i % 11 ) + 1 );
+		GFL_CLACT_WK_SetAnmSeq( wk->cap_hanabi[ i ], ( i % 11 ) + 1 );
 	}
 
 	BB_disp_Hanabi_OAM_Enable( wk, FALSE, 0 );
@@ -436,7 +436,7 @@ void BB_disp_Hand_Add( BB_CLIENT* wk )
 		coap.bg_pri = 0;
 		coap.pri = 1;
 		wk->cap_hand[ i ] = CATS_ObjectAdd_S( csp, crp, &coap );
-		CATS_ObjectUpdateCapEx( wk->cap_hand[ i ] );
+		GFL_CLACT_WK_AddAnmFrame( wk->cap_hand[ i ], FX32_ONE*2 );
 		CATS_ObjectPaletteOffsetSetCap( wk->cap_hand[ i ], eBB_OAM_PAL_BD_HAND );
 	}
 }
@@ -457,7 +457,7 @@ void BB_disp_Hand_Del( BB_CLIENT* wk )
 	int i;
 	
 	for ( i = 0; i < BB_HAND_MAX; i++ ){
-		CATS_ActorPointerDelete_S( wk->cap_hand[ i ] );
+		GFL_CLACT_WK_Remove( wk->cap_hand[ i ] );
 	}
 }
 
@@ -466,7 +466,7 @@ void BB_disp_Hanabi_OAM_Enable( BB_CLIENT* wk, BOOL flag, int mode )
 	int i;
 	
 	for ( i = 0; i < BB_KAMI_MAX; i++ ){		
-		CATS_ObjectEnableCap( wk->cap_hanabi[ i ], flag );
+		GFL_CLACT_WK_SetDrawEnable( wk->cap_hanabi[ i ], flag );
 	}	
 }
 
@@ -476,7 +476,7 @@ void BB_disp_Hanabi_OAM_Update( BB_CLIENT* wk )
 	
 	for ( i = 0; i < BB_KAMI_MAX; i++ ){
 		
-		CATS_ObjectUpdateCapEx( wk->cap_hanabi[ i ] );
+		GFL_CLACT_WK_AddAnmFrame( wk->cap_hanabi[ i ], FX32_ONE*2 );
 	}
 }
 
@@ -486,7 +486,7 @@ void BB_disp_Hanabi_OAM_Del( BB_CLIENT* wk )
 	
 	for ( i = 0; i < BB_KAMI_MAX; i++ ){
 		
-		CATS_ActorPointerDelete_S( wk->cap_hanabi[ i ] );
+		GFL_CLACT_WK_Remove( wk->cap_hanabi[ i ] );
 	}
 }
 
@@ -499,7 +499,7 @@ void BB_disp_Manene_OAM_AnimeChangeCap( GFL_CLWK cap, int type, int anime )
 		{ eANM_MANENE_OCHIRU, eANM_BALL_STOP },
 	};
 		
-	CATS_ObjectAnimeSeqSetCap( cap, anime_seq[ anime ][ type ] );
+	GFL_CLACT_WK_SetAnmSeq( cap, anime_seq[ anime ][ type ] );
 }
 
 void BB_disp_Manene_OAM_AnimeChange( BB_CLIENT* wk, int netid, int anime )
@@ -513,8 +513,8 @@ void BB_disp_Manene_OAM_AnimeChange( BB_CLIENT* wk, int netid, int anime )
 	
 	int no = wk->netid_to_capid[ netid ];
 	
-	CATS_ObjectAnimeSeqSetCap( wk->cap_mane[ no ], anime_seq[ anime ][ 0 ] );
-	CATS_ObjectAnimeSeqSetCap( wk->cap_ball[ no ], anime_seq[ anime ][ 1 ] );
+	GFL_CLACT_WK_SetAnmSeq( wk->cap_mane[ no ], anime_seq[ anime ][ 0 ] );
+	GFL_CLACT_WK_SetAnmSeq( wk->cap_ball[ no ], anime_seq[ anime ][ 1 ] );
 }
 
 
@@ -557,9 +557,9 @@ void BB_disp_Manene_OAM_Update( BB_CLIENT* wk )
 	
 	for ( i = 0; i < wk->comm_num; i++ ){		
 		if ( i == wk->netid ){ continue; }		
-		CATS_ObjectUpdateCapEx( wk->cap_mane[ no ] );
-		CATS_ObjectUpdateCapEx( wk->cap_ball[ no ] );
-		CATS_ObjectUpdateCapEx( wk->cap_kage[ no ] );
+		GFL_CLACT_WK_AddAnmFrame( wk->cap_mane[ no ], FX32_ONE*2 );
+		GFL_CLACT_WK_AddAnmFrame( wk->cap_ball[ no ], FX32_ONE*2 );
+		GFL_CLACT_WK_AddAnmFrame( wk->cap_kage[ no ], FX32_ONE*2 );
 		no++;
 	}	
 }
@@ -573,9 +573,9 @@ void BB_disp_Manene_OAM_Del( BB_CLIENT* wk )
 		
 		if ( i == wk->netid ){ continue; }
 		
-		CATS_ActorPointerDelete_S( wk->cap_mane[ no ] );
-		CATS_ActorPointerDelete_S( wk->cap_ball[ no ] );
-		CATS_ActorPointerDelete_S( wk->cap_kage[ no ] );
+		GFL_CLACT_WK_Remove( wk->cap_mane[ no ] );
+		GFL_CLACT_WK_Remove( wk->cap_ball[ no ] );
+		GFL_CLACT_WK_Remove( wk->cap_kage[ no ] );
 		
 		no++;
 	}
@@ -726,13 +726,13 @@ void BB_disp_NameWinAdd( BB_WORK* bwk, BB_CLIENT* wk )
 	
 	switch ( wk->comm_num ){
 	case 2:
-		ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_1_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
+		GFL_ARCHDL_UTIL_TransVramScreen( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_1_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
 		break;
 	case 3:
-		ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_2_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
+		GFL_ARCHDL_UTIL_TransVramScreen( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_2_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
 		break;
 	case 4:
-		ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_3_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
+		GFL_ARCHDL_UTIL_TransVramScreen( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_3_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
 		break;
 	default:
 		GF_ASSERT( 0 );
@@ -801,7 +801,7 @@ void BB_disp_NameWinDel( BB_CLIENT* wk )
 		
 		no++;
 	}	
-	ArcUtil_HDL_ScrnSet( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
+	GFL_ARCHDL_UTIL_TransVramScreen( wk->sys->p_handle_bb, NARC_manene_upper_bg_maku3_NSCR, GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
 }
 
 
@@ -967,11 +967,11 @@ void BB_disp_Manene_Add( BB_WORK* bb_wk, BB_CLIENT* wk )
 		coap.pri = 3;
 		wk->cap_kage[ no ] = CATS_ObjectAdd_S( csp, crp, &coap );
 		CATS_ObjectPaletteOffsetSetCap( wk->cap_kage[ no ], eBB_OAM_PAL_TD_MANENE + NetID_To_PlayerNo( bb_wk, i ) );
-		CATS_ObjectAnimeSeqSetCap( wk->cap_kage[ no ], eANM_KAGE );
+		GFL_CLACT_WK_SetAnmSeq( wk->cap_kage[ no ], eANM_KAGE );
 
-		CATS_ObjectUpdateCapEx( wk->cap_mane[ no ] );
-		CATS_ObjectUpdateCapEx( wk->cap_ball[ no ] );
-		CATS_ObjectUpdateCapEx( wk->cap_kage[ no ] );
+		GFL_CLACT_WK_AddAnmFrame( wk->cap_mane[ no ], FX32_ONE*2 );
+		GFL_CLACT_WK_AddAnmFrame( wk->cap_ball[ no ], FX32_ONE*2 );
+		GFL_CLACT_WK_AddAnmFrame( wk->cap_kage[ no ], FX32_ONE*2 );
 		BB_disp_Manene_OAM_AnimeChange( wk, i, eANM_CODE_STOP );		
 		no++;
 	}
@@ -1003,7 +1003,7 @@ GFL_CLWK BB_disp_Stardust_Add( BB_CLIENT* wk, s16 x, s16 y )
 
 	cap = CATS_ObjectAdd_S( csp, crp, &coap );
 
-	CATS_ObjectUpdateCapEx( cap );
+	GFL_CLACT_WK_AddAnmFrame( cap, FX32_ONE*2 );
 	
 	return cap;
 }
@@ -1032,21 +1032,21 @@ void BB_disp_Light_Add( BB_CLIENT* wk )
 		coap.bg_pri = 2;
 		coap.pri	= 20;
 		wk->cap_light_m[ i ] = CATS_ObjectAdd_S( csp, crp, &coap );
-		CATS_ObjectAnimeSeqSetCap( wk->cap_light_m[ i ], 0 );	
-		CATS_ObjectUpdateCap( wk->cap_light_m[ i ] );
+		GFL_CLACT_WK_SetAnmSeq( wk->cap_light_m[ i ], 0 );	
+		GFL_CLACT_WK_AddAnmFrame( wk->cap_light_m[ i ] , FX32_ONE);
 		CATS_ObjectPaletteOffsetSetCap( wk->cap_light_m[ i ], eBB_OAM_PAL_BD_LIGHT );	
-		CATS_ObjectObjModeSetCap( wk->cap_light_m[ i ], GX_OAM_MODE_XLU );
-		CATS_ObjectEnableCap( wk->cap_light_m[ i ], FALSE );
+		GFL_CLACT_WK_SetObjMode( wk->cap_light_m[ i ], GX_OAM_MODE_XLU );
+		GFL_CLACT_WK_SetDrawEnable( wk->cap_light_m[ i ], FALSE );
 
 		BB_disp_COAP_SimpleInit( &coap, 0, 0, CATS_D_AREA_SUB, eBB_OAM_PAL_TD_MANENE, eBB_ID_OAM_S );
 		coap.bg_pri = 2;
 		coap.pri	= 20;
 		wk->cap_light_s[ i ] = CATS_ObjectAdd_S( csp, crp, &coap );
-		CATS_ObjectAnimeSeqSetCap( wk->cap_light_s[ i ], eANM_SPOT_LIGHT );	
-		CATS_ObjectUpdateCap( wk->cap_light_s[ i ] );
+		GFL_CLACT_WK_SetAnmSeq( wk->cap_light_s[ i ], eANM_SPOT_LIGHT );	
+		GFL_CLACT_WK_AddAnmFrame( wk->cap_light_s[ i ] , FX32_ONE);
 		CATS_ObjectPaletteOffsetSetCap( wk->cap_light_s[ i ], eBB_OAM_PAL_TD_MANENE );
-		CATS_ObjectObjModeSetCap( wk->cap_light_s[ i ], GX_OAM_MODE_XLU );
-		CATS_ObjectEnableCap( wk->cap_light_s[ i ], FALSE );
+		GFL_CLACT_WK_SetObjMode( wk->cap_light_s[ i ], GX_OAM_MODE_XLU );
+		GFL_CLACT_WK_SetDrawEnable( wk->cap_light_s[ i ], FALSE );
 	}
 }
 
@@ -1066,8 +1066,8 @@ void BB_disp_Light_Del( BB_CLIENT* wk )
 	int i;
 
 	for ( i = 0; i < BB_LIGHT_MAX; i++ ){
-		CATS_ActorPointerDelete_S( wk->cap_light_m[ i ] );
-		CATS_ActorPointerDelete_S( wk->cap_light_s[ i ] );
+		GFL_CLACT_WK_Remove( wk->cap_light_m[ i ] );
+		GFL_CLACT_WK_Remove( wk->cap_light_s[ i ] );
 	}
 }
 
@@ -1095,9 +1095,9 @@ void BB_disp_Pen_Add( BB_CLIENT* wk )
 	coap.bg_pri = 0;
 	coap.pri	= 0;
 	wk->cap_pen = CATS_ObjectAdd_S( csp, crp, &coap );
-	CATS_ObjectAnimeSeqSetCap( wk->cap_pen, 1 );
-	CATS_ObjectEnableCap( wk->cap_pen, TRUE );	
-	CATS_ObjectUpdateCap( wk->cap_pen );
+	GFL_CLACT_WK_SetAnmSeq( wk->cap_pen, 1 );
+	GFL_CLACT_WK_SetDrawEnable( wk->cap_pen, TRUE );	
+	GFL_CLACT_WK_AddAnmFrame( wk->cap_pen , FX32_ONE);
 	CATS_ObjectPaletteOffsetSetCap( wk->cap_pen, eBB_OAM_PAL_BD_PEN );
 }
 
@@ -1114,7 +1114,7 @@ void BB_disp_Pen_Add( BB_CLIENT* wk )
 //--------------------------------------------------------------
 void BB_disp_Pen_Del( BB_CLIENT* wk )
 {
-	CATS_ActorPointerDelete_S( wk->cap_pen );
+	GFL_CLACT_WK_Remove( wk->cap_pen );
 }
 
 //--------------------------------------------------------------
@@ -1139,20 +1139,20 @@ void BB_disp_BG_Load( BB_WORK* wk )
 	ARCHANDLE* hdl = hdl_bb;
 	
 	// ----- è„âÊñ  -----	
-	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_upper_bg_NCGR,   	GFL_BG_FRAME0_S, 0, 0, 0, HEAPID_BB );		///< îwåi
-	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_upper_bg_maku_NCGR, GFL_BG_FRAME1_S, 0, 0, 0, HEAPID_BB );		///< ñã
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_00_NSCR,  	GFL_BG_FRAME0_S, 0, 0, 0, HEAPID_BB );
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_maku1_NSCR, 	GFL_BG_FRAME1_S, 0, 0, 0, HEAPID_BB );
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_maku2_NSCR, 	GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_BB );
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_upper_bg_maku3_NSCR, 	GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( hdl, NARC_manene_upper_bg_NCGR,   	GFL_BG_FRAME0_S, 0, 0, 0, HEAPID_BB );		///< îwåi
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( hdl, NARC_manene_upper_bg_maku_NCGR, GFL_BG_FRAME1_S, 0, 0, 0, HEAPID_BB );		///< ñã
+	GFL_ARCHDL_UTIL_TransVramScreen( hdl, NARC_manene_upper_bg_00_NSCR,  	GFL_BG_FRAME0_S, 0, 0, 0, HEAPID_BB );
+	GFL_ARCHDL_UTIL_TransVramScreen( hdl, NARC_manene_upper_bg_maku1_NSCR, 	GFL_BG_FRAME1_S, 0, 0, 0, HEAPID_BB );
+	GFL_ARCHDL_UTIL_TransVramScreen( hdl, NARC_manene_upper_bg_maku2_NSCR, 	GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_BB );
+	GFL_ARCHDL_UTIL_TransVramScreen( hdl, NARC_manene_upper_bg_maku3_NSCR, 	GFL_BG_FRAME3_S, 0, 0, 0, HEAPID_BB );
 	PaletteWorkSet_Arc( pfd, ARCID_BB_RES, NARC_manene_upper_bg_NCLR, 	HEAPID_BB, FADE_SUB_BG, 0x20 * 5, 0 );	///< 4ñ{ï™
 
 	// ----- â∫âÊñ  -----
-	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_bottom_bg_NCGR,   	GFL_BG_FRAME3_M, 0, 0, 0, HEAPID_BB );		///< îwåi
-	ArcUtil_HDL_BgCharSet( hdl, NARC_manene_bottom_bg_maku_NCGR,GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );		///< ñã
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_bottom_bg_NSCR,  		GFL_BG_FRAME3_M, 0, 0, 0, HEAPID_BB );
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_bottom_bg_maku1_NSCR, GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );
-	ArcUtil_HDL_ScrnSet( hdl, NARC_manene_bottom_bg_maku2_NSCR, GFL_BG_FRAME2_M, 0, 0, 0, HEAPID_BB );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( hdl, NARC_manene_bottom_bg_NCGR,   	GFL_BG_FRAME3_M, 0, 0, 0, HEAPID_BB );		///< îwåi
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( hdl, NARC_manene_bottom_bg_maku_NCGR,GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );		///< ñã
+	GFL_ARCHDL_UTIL_TransVramScreen( hdl, NARC_manene_bottom_bg_NSCR,  		GFL_BG_FRAME3_M, 0, 0, 0, HEAPID_BB );
+	GFL_ARCHDL_UTIL_TransVramScreen( hdl, NARC_manene_bottom_bg_maku1_NSCR, GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );
+	GFL_ARCHDL_UTIL_TransVramScreen( hdl, NARC_manene_bottom_bg_maku2_NSCR, GFL_BG_FRAME2_M, 0, 0, 0, HEAPID_BB );
 	PaletteWorkSet_Arc( pfd, ARCID_BB_RES, NARC_manene_bottom_bg_NCLR, 	HEAPID_BB, FADE_MAIN_BG, 0x20, 0 );
 
 	// ----- ÉtÉHÉìÉg -----

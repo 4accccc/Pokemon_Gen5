@@ -16,6 +16,27 @@ extern "C" {
 
 #include "heap.h"
 
+///< ２次元をあらわす汎用構造体
+typedef struct {
+  int x;
+  int y;
+} GFL_POINT;
+
+///< ３次元をあらわす汎用構造体
+typedef struct {
+  int x;
+  int y;
+  int z;
+} GFL_POINT3D;
+
+///< 始点と範囲をあらわす汎用構造体
+typedef struct {
+  int left;
+  int top;
+  int right;
+  int bottom;
+} GFL_RECT;
+
 
 #define GFL_STD_RAND_MAX	(0)  ///< MtRand等で渡す最大乱数を引き出す引数
 

@@ -1067,15 +1067,15 @@ static void NEWSDRAW_DrawSysBgInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 		TalkFontPaletteLoad( PALTYPE_MAIN_BG, NEWS_PLTT_TALKFONT*32, heapID );
 
 		// キャラクタ
-		ArcUtil_HDL_BgCharSet( p_wk->p_handle,
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_wk->p_handle,
 				NARC_lobby_news_lobby_news_bg_NCGR, 
 				p_wk->p_bgl, GFL_BG_FRAME1_M, 0, 0, FALSE, heapID );
 
 		// スクリーン
-		ArcUtil_HDL_ScrnSet(p_wk->p_handle, 
+		GFL_ARCHDL_UTIL_TransVramScreen(p_wk->p_handle, 
 				NARC_lobby_news_lobby_news_bg1_NSCR, 
 				p_wk->p_bgl, GFL_BG_FRAME1_M, 0, 0, FALSE, heapID);
-		ArcUtil_HDL_ScrnSet(p_wk->p_handle, 
+		GFL_ARCHDL_UTIL_TransVramScreen(p_wk->p_handle, 
 				NARC_lobby_news_lobby_news_bg2_NSCR, 
 				p_wk->p_bgl, GFL_BG_FRAME2_M, 0, 0, FALSE, heapID);
 
@@ -1088,12 +1088,12 @@ static void NEWSDRAW_DrawSysBgInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 				PALTYPE_SUB_BG, 0, 0, heapID );
 
 		// キャラクタ
-		ArcUtil_HDL_BgCharSet( p_wk->p_handle,
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_wk->p_handle,
 				NARC_lobby_news_wifi_mark_bg_NCGR, 
 				p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
 
 		// スクリーン
-		ArcUtil_HDL_ScrnSet(p_wk->p_handle, 
+		GFL_ARCHDL_UTIL_TransVramScreen(p_wk->p_handle, 
 				NARC_lobby_news_wifi_mark_bg_NSCR, 
 				p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
 	}
@@ -1309,7 +1309,7 @@ static void NEWSDRAW_ScrnWritePlayer( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSYS* 
 
 	// vipは青くする
 	if( vip ){
-		GF_BGL_ScrPalChange( p_draw->p_bgl, GFL_BG_FRAME3_M,
+		GFL_BG_ChangeScreenPalette( p_draw->p_bgl, GFL_BG_FRAME3_M,
 				NEWSDRAW_PLAYER_SCRN_DRAWX+(x*NEWSDRAW_PLAYER_BLOCK_SIZX), 
 				NEWSDRAW_PLAYER_SCRN_DRAWY+(y*NEWSDRAW_PLAYER_BLOCK_SIZY),
 				NEWSDRAW_PLAYER_BLOCK_SIZX, NEWSDRAW_PLAYER_BLOCK_SIZY,
@@ -1318,7 +1318,7 @@ static void NEWSDRAW_ScrnWritePlayer( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSYS* 
 
 		// 自分のデータはオレンジくする
 		if( mydata ){
-			GF_BGL_ScrPalChange( p_draw->p_bgl, GFL_BG_FRAME3_M,
+			GFL_BG_ChangeScreenPalette( p_draw->p_bgl, GFL_BG_FRAME3_M,
 					NEWSDRAW_PLAYER_SCRN_DRAWX+(x*NEWSDRAW_PLAYER_BLOCK_SIZX), 
 					NEWSDRAW_PLAYER_SCRN_DRAWY+(y*NEWSDRAW_PLAYER_BLOCK_SIZY),
 					NEWSDRAW_PLAYER_BLOCK_SIZX, NEWSDRAW_PLAYER_BLOCK_SIZY,

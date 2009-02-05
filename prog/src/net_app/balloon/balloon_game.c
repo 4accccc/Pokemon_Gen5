@@ -287,8 +287,9 @@ BOOL Air3D_EntryAdd(BALLOON_GAME_PTR game, int air);
 void Air3D_Delete(BALLOON_GAME_PTR game, int air_no, int air_size);
 void Air3D_Update(BALLOON_GAME_PTR game);
 void Air3D_Draw(BALLOON_GAME_PTR game);
+#if WB_TEMP_FIX
 static void Debug_CameraMove(GFL_G3D_CAMERA * camera);
-
+#endif
 
 ///BalloonMainSeqTblの戻り値として使用
 enum{
@@ -1191,7 +1192,9 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 		break;
 	}
 
+#if WB_TEMP_FIX
 	Debug_CameraMove(game->camera);
+#endif
 	game->main_frame++;
 	
 	GFL_TCB_Main(game->tcbsys);
@@ -2114,14 +2117,14 @@ static void BalloonDefaultBGSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		HEAPID_BALLOON, FADE_MAIN_BG, 0, 0);
 
 	//背景
-	ArcUtil_HDL_BgCharSet(hdl, MINI_FUSEN_BOTTOM_NCGR, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, MINI_FUSEN_BOTTOM_NCGR, 
 		BALLOON_FRAME_BACK, 0, 0, 0, HEAPID_BALLOON);
-	ArcUtil_HDL_ScrnSet(hdl, MINI_FUSEN_BOTTOM_NSCR, 
+	GFL_ARCHDL_UTIL_TransVramScreen(hdl, MINI_FUSEN_BOTTOM_NSCR, 
 		BALLOON_FRAME_BACK, 0, 0, 0, HEAPID_BALLOON);
 	//ウィンドウ
-	ArcUtil_HDL_BgCharSet(hdl, MINI_FUSEN_CCWIN_NCGR, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, MINI_FUSEN_CCWIN_NCGR, 
 		BALLOON_FRAME_EFF, 0, 0, 0, HEAPID_BALLOON);
-	ArcUtil_HDL_ScrnSet(hdl, MINI_FUSEN_CCWIN_NSCR, 
+	GFL_ARCHDL_UTIL_TransVramScreen(hdl, MINI_FUSEN_CCWIN_NSCR, 
 		BALLOON_FRAME_EFF, 0, 0, 0, HEAPID_BALLOON);
 
 	
@@ -2156,33 +2159,33 @@ static void BalloonDefaultBGSet_Sub(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		FADE_SUB_BG, FUSEN_BG_LOAD_SIZE, FUSEN_BG_LOAD_POS * 16, FUSEN_BG_READ_POS * 16);
 
 	//背景
-	ArcUtil_HDL_BgCharSet(hdl, MINI_FUSEN_BG_NCGR, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, MINI_FUSEN_BG_NCGR, 
 		BALLOON_SUBFRAME_BACK, 0, 0, 0, HEAPID_BALLOON);
-	ArcUtil_HDL_ScrnSet(hdl, MINI_FUSEN_BG_NSCR, 
+	GFL_ARCHDL_UTIL_TransVramScreen(hdl, MINI_FUSEN_BG_NSCR, 
 		BALLOON_SUBFRAME_BACK, 0, 0, 0, HEAPID_BALLOON);
 
 	//パイプ
-	ArcUtil_HDL_BgCharSet(hdl, MINI_FUSEN_WINDOW_NCGR, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, MINI_FUSEN_WINDOW_NCGR, 
 		BALLOON_SUBFRAME_PIPE, 0, 0, 0, HEAPID_BALLOON);
 	switch(game->bsw->player_max){
 	case 2:
-		ArcUtil_HDL_ScrnSet(hdl, MINI_FUSEN_PIPE2P_NSCR, 
+		GFL_ARCHDL_UTIL_TransVramScreen(hdl, MINI_FUSEN_PIPE2P_NSCR, 
 			BALLOON_SUBFRAME_PIPE, 0, 0, 0, HEAPID_BALLOON);
 		break;
 	case 3:
-		ArcUtil_HDL_ScrnSet(hdl, MINI_FUSEN_PIPE3P_NSCR, 
+		GFL_ARCHDL_UTIL_TransVramScreen(hdl, MINI_FUSEN_PIPE3P_NSCR, 
 			BALLOON_SUBFRAME_PIPE, 0, 0, 0, HEAPID_BALLOON);
 		break;
 	default:
-		ArcUtil_HDL_ScrnSet(hdl, MINI_FUSEN_PIPE4P_NSCR, 
+		GFL_ARCHDL_UTIL_TransVramScreen(hdl, MINI_FUSEN_PIPE4P_NSCR, 
 			BALLOON_SUBFRAME_PIPE, 0, 0, 0, HEAPID_BALLOON);
 		break;
 	}
 
 	//ウィンドウ面
-	ArcUtil_HDL_BgCharSet(hdl, MINI_FUSEN_WINDOW_NCGR, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, MINI_FUSEN_WINDOW_NCGR, 
 		BALLOON_SUBFRAME_WIN, 0, 0, 0, HEAPID_BALLOON);
-	ArcUtil_HDL_ScrnSet(hdl, MINI_FUSEN_WINDOW_NSCR, 
+	GFL_ARCHDL_UTIL_TransVramScreen(hdl, MINI_FUSEN_WINDOW_NSCR, 
 		BALLOON_SUBFRAME_WIN, 0, 0, 0, HEAPID_BALLOON);
 
 	//プレイヤー位置に従ってカラースワップを行う
@@ -2416,20 +2419,23 @@ BOOL Air3D_EntryAdd(BALLOON_GAME_PTR game, int air)
 		if(pa->air[i][air_size].occ == FALSE){
 			//レンダーオブジェクト初期化
 			if(pa->air[i][air_size].enable_anm_index != 0xffff){
-				GFL_G3D_OBJECT_DisableAnime(g3dobj, pa->air[i][air_size].enable_anm_index);
+				GFL_G3D_OBJECT_DisableAnime(
+					pa->air[i][air_size].g3dobj, pa->air[i][air_size].enable_anm_index);
 			}
 			//座標設定
 			VEC_Set(&pa->air[i][air_size].status.trans, PIPE_AIR_X, PIPE_AIR_Y, PIPE_AIR_Z);
 			VEC_Set(&pa->air[i][air_size].status.scale, 
 				PIPE_AIR_SCALE, PIPE_AIR_SCALE, PIPE_AIR_SCALE);
-			MTX_Identity(&pa->air[i][air_size].status.rotate);
+			MTX_Identity33(&pa->air[i][air_size].status.rotate);
 			//アニメ関連付け
-			GFL_G3D_OBJECT_SetAnimeFrame(g3dobj, air_size, &anmframe);
-			GFL_G3D_OBJECT_EnableAnime(g3dobj, air_size);
+			GFL_G3D_OBJECT_SetAnimeFrame(pa->air[i][air_size].g3dobj, air_size, &anmframe);
+			GFL_G3D_OBJECT_EnableAnime(pa->air[i][air_size].g3dobj, air_size);
 			
 			pa->air[i][air_size].enable_anm_index = air_size;
 			pa->air[i][air_size].occ = TRUE;
+		#if WB_TEMP_FIX
 			Snd_SePlay(SE_BALLOON_POMP_AIR);
+		#endif
 			return TRUE;
 		}
 	}
@@ -2489,7 +2495,7 @@ void Air3D_Update(BALLOON_GAME_PTR game)
 		#else
 			if(pa->air[i][s].occ == TRUE && pa->air[i][s].enable_anm_index != 0xffff){
 				if(GFL_G3D_OBJECT_LoopAnimeFrame(
-					pa->air[i][s].g3dobj, &pa->air[i][s].enable_anm_index, FX32_ONE) == FALSE){
+					pa->air[i][s].g3dobj, pa->air[i][s].enable_anm_index, FX32_ONE) == FALSE){
 		#endif
 					Air3D_Delete(game, i, s);
 				}
@@ -2497,7 +2503,6 @@ void Air3D_Update(BALLOON_GAME_PTR game)
 		}
 	}
 }
-		( GFL_G3D_OBJ* g3dobj, const u16 anmIdx, const fx32 count ) 
 
 //--------------------------------------------------------------
 /**
@@ -3352,6 +3357,7 @@ static BOOL Server_GamePlayingManage(BALLOON_GAME_PTR game)
  * @param   camera
  */
 //--------------------------------------------------------------
+#if WB_TEMP_FIX	//どうせ使わないし、このまま消しても良い 2009.02.03(火)
 static void Debug_CameraMove(GFL_G3D_CAMERA * camera)
 {
 #ifdef PM_DEBUG
@@ -3439,3 +3445,4 @@ static void Debug_CameraMove(GFL_G3D_CAMERA * camera)
 	}
 #endif
 }
+#endif

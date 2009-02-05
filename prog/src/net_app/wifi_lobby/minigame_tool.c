@@ -3192,7 +3192,7 @@ static void MNGM_ENTRY_GraphicLoad( MNGM_ENTRYWK* p_wk, u32 heapID )
 			PALTYPE_MAIN_BG, 0, MNGM_BGPLTT_NUM*32, heapID );
 	
 	// キャラクタ	
-	ArcUtil_HDL_BgCharSet( p_handle, NARC_wlmngm_tool_minigame_win_bg_NCGR,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wlmngm_tool_minigame_win_bg_NCGR,
 			p_wk->bgl.p_bgl, 
 			GFL_BG_FRAME1_M, 0, 0,
 			FALSE, heapID );
@@ -3203,7 +3203,7 @@ static void MNGM_ENTRY_GraphicLoad( MNGM_ENTRYWK* p_wk, u32 heapID )
 			FALSE, &p_wk->p_scrn, heapID );
 
 	// 背景設定
-	ArcUtil_HDL_ScrnSet( p_handle, NARC_wlmngm_tool_minigame_win_bg0_NSCR, p_wk->bgl.p_bgl,
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wlmngm_tool_minigame_win_bg0_NSCR, p_wk->bgl.p_bgl,
 			GFL_BG_FRAME3_M, 0, 0, FALSE, heapID );
 	// 背景パレット転送
 	MNGM_BACKPLTT_Trans( p_handle, p_wk->gametype, heapID );
@@ -3480,9 +3480,9 @@ static void MNGM_ENTRY_Tcb( GFL_TCB* tcb, void* p_work )
 	MNGM_CLACT_Draw( &p_wk->clact );
 
 	// スクリーン面をスクロールさせる
-	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME3_M, 
+	GFL_BG_SetScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME3_M, 
 			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
-	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME1_S, 
+	GFL_BG_SetScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME1_S, 
 			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
 }
 
@@ -4215,11 +4215,11 @@ static void MNGM_TITLELOGO_Init( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk, MNGM_
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );	
 
 	// キャラクタスクリーン転送
-	ArcUtil_HDL_BgCharSet( p_handle, NARC_wlmngm_tool_minigame_win_poke_NCGR,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wlmngm_tool_minigame_win_poke_NCGR,
 			p_bglwk->p_bgl, 
 			GFL_BG_FRAME0_M, 0, 0,
 			FALSE, heapID );
-	ArcUtil_HDL_ScrnSet( p_handle, NARC_wlmngm_tool_minigame_win_bg2_NSCR, p_bglwk->p_bgl,
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wlmngm_tool_minigame_win_bg2_NSCR, p_bglwk->p_bgl,
 			GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
 }
 
@@ -4451,16 +4451,16 @@ static void MNGM_TITLELOGO_SetMoveMatrixVReq( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p
 
 	case WFLBY_GAME_BALLSLOW:	// 玉投げ
 	case WFLBY_GAME_BALANCEBALL:	// 玉乗り
-		GF_BGL_ScrollReq( p_bglwk->p_bgl, GFL_BG_FRAME0_M, 
+		GFL_BG_SetScrollReq( p_bglwk->p_bgl, GFL_BG_FRAME0_M, 
 				GFL_BG_SCROLL_X_SET, num );
-		GF_BGL_ScrollReq( p_bglwk->p_bgl, GFL_BG_FRAME1_M, 
+		GFL_BG_SetScrollReq( p_bglwk->p_bgl, GFL_BG_FRAME1_M, 
 				GFL_BG_SCROLL_X_SET, num );
 		break;
 
 	case WFLBY_GAME_BALLOON:		// ふうせんわり
-		GF_BGL_ScrollReq( p_bglwk->p_bgl, GFL_BG_FRAME0_M, 
+		GFL_BG_SetScrollReq( p_bglwk->p_bgl, GFL_BG_FRAME0_M, 
 				GFL_BG_SCROLL_Y_SET, num );
-		GF_BGL_ScrollReq( p_bglwk->p_bgl, GFL_BG_FRAME1_M, 
+		GFL_BG_SetScrollReq( p_bglwk->p_bgl, GFL_BG_FRAME1_M, 
 				GFL_BG_SCROLL_Y_SET, num );
 		break;
 
@@ -4652,11 +4652,11 @@ static void MNGM_RESULT_GraphicLoad( MNGM_RESULTWK* p_wk, u32 heapID )
 			PALTYPE_SUB_BG, 0, MNGM_BGPLTT_NUM*32, heapID );
 	
 	// キャラクタ	
-	ArcUtil_HDL_BgCharSet( p_handle, NARC_wlmngm_tool_minigame_win_bg_NCGR,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wlmngm_tool_minigame_win_bg_NCGR,
 			p_wk->bgl.p_bgl, 
 			GFL_BG_FRAME1_M, 0, 0,
 			FALSE, heapID );
-	ArcUtil_HDL_BgCharSet( p_handle, NARC_wlmngm_tool_minigame_win_bg_NCGR,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wlmngm_tool_minigame_win_bg_NCGR,
 			p_wk->bgl.p_bgl, 
 			GFL_BG_FRAME1_S, 0, 0x4000,
 			FALSE, heapID );
@@ -4672,9 +4672,9 @@ static void MNGM_RESULT_GraphicLoad( MNGM_RESULTWK* p_wk, u32 heapID )
 	}
 
 	// 背景設定
-	ArcUtil_HDL_ScrnSet( p_handle, NARC_wlmngm_tool_minigame_win_bg0_NSCR, p_wk->bgl.p_bgl,
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wlmngm_tool_minigame_win_bg0_NSCR, p_wk->bgl.p_bgl,
 			GFL_BG_FRAME3_M, 0, 0, FALSE, heapID );
-	ArcUtil_HDL_ScrnSet( p_handle, NARC_wlmngm_tool_minigame_win_bg0_NSCR, p_wk->bgl.p_bgl,
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wlmngm_tool_minigame_win_bg0_NSCR, p_wk->bgl.p_bgl,
 			GFL_BG_FRAME1_S, 0, 0, FALSE, heapID );
 
 	// 背景用パレット転送
@@ -5164,9 +5164,9 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( GFL_TCB* tcb, void* p_work )
 
 
 	// スクリーン面をスクロールさせる
-	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME3_M, 
+	GFL_BG_SetScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME3_M, 
 			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
-	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME1_S, 
+	GFL_BG_SetScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME1_S, 
 			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
 }
 
@@ -5454,9 +5454,9 @@ static void MNGM_RESULT_Tcb_Balloon( GFL_TCB* tcb, void* p_work )
 
 
 	// スクリーン面をスクロールさせる
-	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME3_M, 
+	GFL_BG_SetScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME3_M, 
 			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
-	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME1_S, 
+	GFL_BG_SetScrollReq( p_wk->bgl.p_bgl, GFL_BG_FRAME1_S, 
 			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
 }
 
@@ -5879,7 +5879,7 @@ static void MNGM_RESULT_Balloon_GraphicInit( MNGM_BALLOON_WK* p_wk, MNGM_BGL* p_
 	{
 		ArcUtil_HDL_PalSet( p_handle, NARC_wlmngm_tool_mini_fusen_score_NCLR, PALTYPE_MAIN_BG, 
 				MNGM_RESULT_BALLOON_SYSWIN_PAL*32, 32, heapID );
-		ArcUtil_HDL_BgCharSet( p_handle, NARC_wlmngm_tool_mini_fusen_score_NCGR,
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wlmngm_tool_mini_fusen_score_NCGR,
 				p_bgl->p_bgl, GFL_BG_FRAME2_M, MNGM_RESULT_BALLOON_SYSWIN_CGX, 0, FALSE, heapID );
 		p_wk->p_scrnbuff = ArcUtil_HDL_ScrnDataGet( p_handle, NARC_wlmngm_tool_mini_fusen_score_NSCR, 
 				FALSE, &p_wk->p_scrn, heapID );
@@ -5986,7 +5986,7 @@ static BOOL MNGM_RESULT_Balloon_Main( MNGM_BALLOON_WK* p_wk, MNGM_BGL* p_bgl )
 		GF_BGL_ScrWrite( p_bgl->p_bgl, GFL_BG_FRAME2_M, p_wk->p_scrn->rawData, 
 				0, 0,
 				MNGM_RESULT_BALLOON_SYSWIN_SCRNSIZX, MNGM_RESULT_BALLOON_SYSWIN_SCRNSIZY );
-		GF_BGL_ScrPalChange( p_bgl->p_bgl, GFL_BG_FRAME2_M, 0, 0,
+		GFL_BG_ChangeScreenPalette( p_bgl->p_bgl, GFL_BG_FRAME2_M, 0, 0,
 				MNGM_RESULT_BALLOON_SYSWIN_SCRNSIZX, MNGM_RESULT_BALLOON_SYSWIN_SCRNSIZY,
 				MNGM_RESULT_BALLOON_SYSWIN_PAL );
 		GFL_BG_LoadScreenV_Req( p_bgl->p_bgl, GFL_BG_FRAME2_M );

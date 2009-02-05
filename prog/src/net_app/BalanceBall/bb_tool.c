@@ -420,7 +420,7 @@ static void BB_Stardust_TCB( GFL_TCB* tcb, void* work )
 	
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		for ( i = 0; i < STAR_DUST_MAX; i++ ){
-			CATS_ActorPointerDelete_S( wk->cap[ i ] );
+			GFL_CLACT_WK_Remove( wk->cap[ i ] );
 		}
 		wk->active = FALSE;
 		GFL_TCB_DeleteTask( tcb );
@@ -448,14 +448,14 @@ static void BB_Stardust_TCB( GFL_TCB* tcb, void* work )
 				bNext = FALSE;
 			}
 
-			CATS_ObjectUpdateCap( wk->cap[ i ] );
+			GFL_CLACT_WK_AddAnmFrame( wk->cap[ i ] , FX32_ONE);
 		}
 		if ( bNext ){ wk->seq++; }
 		break;
 
 	default:
 		for ( i = 0; i < STAR_DUST_MAX; i++ ){
-			CATS_ActorPointerDelete_S( wk->cap[ i ] );
+			GFL_CLACT_WK_Remove( wk->cap[ i ] );
 		}
 		wk->active = FALSE;
 		GFL_TCB_DeleteTask( tcb );
@@ -490,7 +490,7 @@ void BB_Stardust_Call( BB_CLIENT* wk, s16 x, s16 y )
 		
 		for ( j = 0; j < STAR_DUST_MAX; j++ ){
 			wk->star[ i ].cap[ j ] = BB_disp_Stardust_Add( wk, x, y );
-			CATS_ObjectAnimeSeqSetCap( wk->star[ i ].cap[ j ], ( ( x * ( i + 1 ) ) + ( y * ( j + 1 ) ) ) % 3 );
+			GFL_CLACT_WK_SetAnmSeq( wk->star[ i ].cap[ j ], ( ( x * ( i + 1 ) ) + ( y * ( j + 1 ) ) ) % 3 );
 		}
 		
 		GFL_TCB_AddTask( BB_Stardust_TCB, &wk->star[ i ], BB_TCB_PRI_1 );
@@ -601,7 +601,7 @@ static void BB_Client_Effect_TCB( GFL_TCB* tcb, void* work )
 					if ( wk->pe1[ i ].wait >= ( 10 + wk->pe1[ i ].cnt ) ){
 						
 						if ( wk->pe1[ i ].wait == ( 10 + wk->pe1[ i ].cnt ) ){
-							CATS_ObjectAnimeSeqSetCap( wk->pe1[ i ].cap, 0 );
+							GFL_CLACT_WK_SetAnmSeq( wk->pe1[ i ].cap, 0 );
 						}
 						if ( wk->pe1[ i ].wait == ( 18 + wk->pe1[ i ].cnt ) ){
 							wk->pe1[ i ].vanish = 0;																					
@@ -612,7 +612,7 @@ static void BB_Client_Effect_TCB( GFL_TCB* tcb, void* work )
 							}
 						}
 						
-						CATS_ObjectEnableCap( wk->pe1[ i ].cap, wk->pe1[ i ].vanish );						
+						GFL_CLACT_WK_SetDrawEnable( wk->pe1[ i ].cap, wk->pe1[ i ].vanish );						
 						switch ( wk->pe1[ i ].dir ){
 						case 0:	wk->pe1[ i ].ox = FX32_CONST( -1 );	break;
 						case 1:	wk->pe1[ i ].ox = FX32_CONST( +0 );	break;
@@ -835,7 +835,7 @@ static void EFF_2( BB_EFF_WORK* wk )
 		cap = wk->data[ i ];
 		if ( cap == NULL ){ continue; }
 		
-		CATS_ObjectUpdateCapEx( cap );
+		GFL_CLACT_WK_AddAnmFrame( cap, FX32_ONE*2 );
 	}
 }
 
@@ -1096,11 +1096,11 @@ static void BB_Fever_Open( BB_FEVER* wk )
 			for ( i = 0; i < 3; i++ ){
 				bEnd[ i ] = BB_MoveMain_FX( &wk->scr_move[ i ] );
 			}
-			GF_BGL_ScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
-			GF_BGL_ScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
-			GF_BGL_ScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
+			GFL_BG_SetScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
+			GFL_BG_SetScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GFL_BG_SetScrollReq( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
+			GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
 			if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] ){
 				wk->seq++;
 			}
@@ -1146,11 +1146,11 @@ static void BB_Fever_Close( BB_FEVER* wk )
 			for ( i = 0; i < 3; i++ ){
 				bEnd[ i ] = BB_MoveMain_FX( &wk->scr_move[ i ] );
 			}
-			GF_BGL_ScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
-			GF_BGL_ScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
-			GF_BGL_ScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
+			GFL_BG_SetScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
+			GFL_BG_SetScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GFL_BG_SetScrollReq( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
+			GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
 			if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] ){
 				wk->seq++;
 			}
@@ -1357,14 +1357,14 @@ static void Fever01_TCB( GFL_TCB* tcb, void* work )
 		mvwk->main[ 0 ].cy	= BB_LIGHT_CENTER;
 		mvwk->main[ 0 ].rx	= 64;
 		mvwk->main[ 0 ].ry	= BB_LIGHT_RY;
-		CATS_ObjectEnableCap( mvwk->main[ 0 ].cap, TRUE );
+		GFL_CLACT_WK_SetDrawEnable( mvwk->main[ 0 ].cap, TRUE );
 
 		mvwk->sub[ 0 ].rad	= 0;
 		mvwk->sub[ 0 ].cx	= 128;
 		mvwk->sub[ 0 ].cy	= BB_LIGHT_CENTER;
 		mvwk->sub[ 0 ].rx	= 64;
 		mvwk->sub[ 0 ].ry	= BB_LIGHT_RY;
-		CATS_ObjectEnableCap( mvwk->sub[ 0 ].cap, TRUE );
+		GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ 0 ].cap, TRUE );
 		{
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ 0 ].cap, &px, &py, BB_SURFACE_Y_FX );			
 			ox = ( mvwk->main[ 0 ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->main[ 0 ].rad ) * mvwk->main[ 0 ].rx );
@@ -1619,14 +1619,14 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 			mvwk->main[ i ].cy	= BB_LIGHT_CENTER;
 			mvwk->main[ i ].rx	= 64;
 			mvwk->main[ i ].ry	= BB_LIGHT_RY;
-			CATS_ObjectEnableCap( mvwk->main[ i ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->main[ i ].cap, TRUE );
 
 			mvwk->sub[ i ].rad	= 0;
 			mvwk->sub[ i ].cx	= 128;
 			mvwk->sub[ i ].cy	= BB_LIGHT_CENTER;
 			mvwk->sub[ i ].rx	= 64;
 			mvwk->sub[ i ].ry	= BB_LIGHT_RY;
-			CATS_ObjectEnableCap( mvwk->sub[ i ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
 			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
@@ -1642,7 +1642,7 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 		MoveInit( &mvwk->sub[ 1 ] );
 		MoveInit( &mvwk->main[ 0 ] );
 		MoveInit( &mvwk->main[ 1 ] );
-		CATS_ObjectEnableCap( mvwk->main[ 1 ].cap, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( mvwk->main[ 1 ].cap, FALSE );
 		wk->eff_seq++;
 	
 	case 1:		
@@ -1655,7 +1655,7 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 			MoveInit( &mvwk->sub[ 1 ] );
 			MoveInit( &mvwk->main[ 0 ] );
 			MoveInit( &mvwk->main[ 1 ] );
-			CATS_ObjectEnableCap( mvwk->main[ 1 ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->main[ 1 ].cap, TRUE );
 			wk->eff_seq++;
 		}
 		else {
@@ -1748,14 +1748,14 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 			mvwk->main[ i ].cy	= BB_LIGHT_CENTER;
 			mvwk->main[ i ].rx	= 64;
 			mvwk->main[ i ].ry	= BB_LIGHT_RY;
-			CATS_ObjectEnableCap( mvwk->main[ i ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->main[ i ].cap, TRUE );
 
 			mvwk->sub[ i ].rad	= 0;
 			mvwk->sub[ i ].cx	= 128;
 			mvwk->sub[ i ].cy	= BB_LIGHT_CENTER;
 			mvwk->sub[ i ].rx	= 64;
 			mvwk->sub[ i ].ry	= BB_LIGHT_RY;
-			CATS_ObjectEnableCap( mvwk->sub[ i ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
 			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
@@ -1771,7 +1771,7 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 		MoveInit( &mvwk->sub[ 1 ] );
 		MoveInit( &mvwk->main[ 0 ] );
 		MoveInit( &mvwk->main[ 1 ] );
-		CATS_ObjectEnableCap( mvwk->main[ 1 ].cap, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( mvwk->main[ 1 ].cap, FALSE );
 		wk->eff_seq++;
 	
 	case 1:		
@@ -1784,7 +1784,7 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 			MoveInit( &mvwk->sub[ 1 ] );
 			MoveInit( &mvwk->main[ 0 ] );
 			MoveInit( &mvwk->main[ 1 ] );
-			CATS_ObjectEnableCap( mvwk->main[ 1 ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->main[ 1 ].cap, TRUE );
 			wk->eff_seq++;
 		}
 		else {
@@ -1877,14 +1877,14 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 			mvwk->main[ i ].cy	= BB_LIGHT_CENTER;
 			mvwk->main[ i ].rx	= 64;
 			mvwk->main[ i ].ry	= BB_LIGHT_RY;
-			CATS_ObjectEnableCap( mvwk->main[ i ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->main[ i ].cap, TRUE );
 
 			mvwk->sub[ i ].rad	= 0;
 			mvwk->sub[ i ].cx	= 128;
 			mvwk->sub[ i ].cy	= BB_LIGHT_CENTER;
 			mvwk->sub[ i ].rx	= 64;
 			mvwk->sub[ i ].ry	= BB_LIGHT_RY;
-			CATS_ObjectEnableCap( mvwk->sub[ i ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
 			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
@@ -1900,7 +1900,7 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 		MoveInit( &mvwk->sub[ 1 ] );
 		MoveInit( &mvwk->main[ 0 ] );
 		MoveInit( &mvwk->main[ 1 ] );
-		CATS_ObjectEnableCap( mvwk->main[ 1 ].cap, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( mvwk->main[ 1 ].cap, FALSE );
 		wk->eff_seq++;
 	
 	case 1:		
@@ -1913,7 +1913,7 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 			MoveInit( &mvwk->sub[ 1 ] );
 			MoveInit( &mvwk->main[ 0 ] );
 			MoveInit( &mvwk->main[ 1 ] );
-			CATS_ObjectEnableCap( mvwk->main[ 1 ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->main[ 1 ].cap, TRUE );
 			wk->eff_seq++;
 		}
 		else {
@@ -2025,14 +2025,14 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 			mvwk->main[ i ].cy	= BB_LIGHT_CENTER;
 			mvwk->main[ i ].rx	= 64;
 			mvwk->main[ i ].ry	= BB_LIGHT_RY;
-			CATS_ObjectEnableCap( mvwk->main[ i ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->main[ i ].cap, TRUE );
 
 			mvwk->sub[ i ].rad	= 0;
 			mvwk->sub[ i ].cx	= 128;
 			mvwk->sub[ i ].cy	= BB_LIGHT_CENTER;
 			mvwk->sub[ i ].rx	= 64;
 			mvwk->sub[ i ].ry	= BB_LIGHT_RY;
-			CATS_ObjectEnableCap( mvwk->sub[ i ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
 			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
@@ -2049,7 +2049,7 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 		MoveInit( &mvwk->sub[ 1 ] );
 		MoveInit( &mvwk->main[ 0 ] );
 		MoveInit( &mvwk->main[ 1 ] );
-		CATS_ObjectEnableCap( mvwk->main[ 1 ].cap, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( mvwk->main[ 1 ].cap, FALSE );
 		wk->eff_seq++;
 	
 	case 1:		
@@ -2062,7 +2062,7 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 			MoveInit( &mvwk->sub[ 1 ] );
 			MoveInit( &mvwk->main[ 0 ] );
 			MoveInit( &mvwk->main[ 1 ] );
-			CATS_ObjectEnableCap( mvwk->main[ 1 ].cap, TRUE );
+			GFL_CLACT_WK_SetDrawEnable( mvwk->main[ 1 ].cap, TRUE );
 			wk->eff_seq++;
 		}
 		else {

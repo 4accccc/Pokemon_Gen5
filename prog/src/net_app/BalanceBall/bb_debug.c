@@ -53,8 +53,8 @@ BOOL Debug_GameSetup( BB_WORK* work )
 	}
 	
 	if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		ArcUtil_HDL_BgCharSet( wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NCGR, GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );	
-		ArcUtil_HDL_ScrnSet(   wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NSCR, GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NCGR, GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );	
+		GFL_ARCHDL_UTIL_TransVramScreen(   wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NSCR, GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_BB );
 		
 	    GF_BGL_BmpWinOff( wk->win );
 		GFL_BMPWIN_Delete( wk->win );

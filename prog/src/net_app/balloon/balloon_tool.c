@@ -6,25 +6,19 @@
  * @date	2007.11.25(日)
  */
 //==============================================================================
-#include "common.h"
+#include <gflib.h>
 #include "system/palanm.h"
 #include "print\printsys.h"
 #include <arc_tool.h>
-//#include "system/arc_util.h"
-//#include "system/fontproc.h"
 #include "print\gf_font.h"
-//#include "system/particle.h"
-//#include "system/brightness.h"
-//#include "system/snd_tool.h"
 #include "net\network_define.h"
-//#include  "communication/wm_icon.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include  "communication/wm_icon.h"
-//#include "system/msgdata_util.h"
 #include <procsys.h>
-//#include "system/d3dobj.h"
-//#include "system/fontoam.h"
+#include "system/main.h"
+#include "print\gf_font.h"
+#include "font/font.naix"
+#include "font/font.naix"
 
 #include "balloon_common.h"
 #include "balloon_comm_types.h"
@@ -33,14 +27,25 @@
 #include "balloon_game.h"
 #include "balloon_tcb_pri.h"
 #include "balloon_sonans.h"
-#include "balloon_id.h"
 #include "balloon_tool.h"
+#include "comm_command_balloon.h"
+#include "balloon_comm_types.h"
 #include "balloon_send_recv.h"
+#include "balloon_id.h"
 #include "balloon_control.h"
 #include "balloon_snd_def.h"
 
 #include "balloon_gra_def.h"
+#include "balloon_particle.naix"
+#include "balloon_particle_lst.h"
 #include "msg/msg_balloon.h"
+#include "wlmngm_tool.naix"		//タッチペングラフィック
+#include "system/actor_tool.h"
+#include "arc_def.h"
+#include "system/sdkdef.h"
+#include "system/gfl_use.h"
+#include <calctool.h>
+#include "system/bmp_winframe.h"
 
 
 //==============================================================================
@@ -330,173 +335,85 @@ static const AIR_POSITION_DATA AirPositionDataTbl[][WFLBY_MINIGAME_MAX] = {
 };
 
 ///空気のアクターヘッダ(サブ画面用)
-static const TCATS_OBJECT_ADD_PARAM_S AirObjParam = {
-	0, 0, 0,		//x, y, z
-	0, BALLOONSUB_SOFTPRI_AIR, PALOFS_SUB_AIR_BLUE,	//アニメ番号、優先順位、パレット番号
-	NNS_G2D_VRAM_TYPE_2DSUB,		//描画エリア
-	{	//使用リソースIDテーブル
-		CHARID_SUB_BALLOON_MIX,			//キャラ
-		PLTTID_SUB_OBJ_COMMON,			//パレット
-		CELLID_SUB_BALLOON_MIX,			//セル
-		CELLANMID_SUB_BALLOON_MIX,		//セルアニメ
-		CLACT_U_HEADER_DATA_NONE,		//マルチセル
-		CLACT_U_HEADER_DATA_NONE,		//マルチセルアニメ
+static const GFL_CLWK_AFFINEDATA AirObjParam = {
+	{//GFL_CLWK_DATA
+		0, 0,		//pos_x, pos_y
+		0, 			//anmseq
+		BALLOONSUB_SOFTPRI_AIR, BALLOONSUB_BGPRI_AIR,	//softpri, bgpri
 	},
-	BALLOONSUB_BGPRI_AIR,				//BGプライオリティ
-	0,									//Vram転送フラグ
+	0, 0,		//アフィンX座標、アフィンY座標
+	FX32_ONE, FX32_ONE,		//拡大X値、拡大Y値
+	0,			//回転角度(0～0xffff 0xffffが360度)
+	CLSYS_AFFINETYPE_DOUBLE,	//CLSYS_AFFINETYPE
 };
 
 ///紙ふぶきのアクターヘッダ(サブ画面用)
-static const TCATS_OBJECT_ADD_PARAM_S ExplodedStormObjParam = {
-	BALLOON_APPEAR_POS_X, BALLOON_APPEAR_POS_Y, 0,		//x, y, z
-	0, BALLOONSUB_SOFTPRI_EXPLODED_STORM, PALOFS_SUB_EXPLODED,//アニメ番号、優先順位、パレット番号
-	NNS_G2D_VRAM_TYPE_2DSUB,		//描画エリア
-	{	//使用リソースIDテーブル
-		CHARID_SUB_BALLOON_MIX,			//キャラ
-		PLTTID_SUB_OBJ_COMMON,			//パレット
-		CELLID_SUB_BALLOON_MIX,			//セル
-		CELLANMID_SUB_BALLOON_MIX,		//セルアニメ
-		CLACT_U_HEADER_DATA_NONE,		//マルチセル
-		CLACT_U_HEADER_DATA_NONE,		//マルチセルアニメ
-	},
-	BALLOONSUB_BGPRI_EXPLODED,				//BGプライオリティ
-	0,									//Vram転送フラグ
+static const GFL_CLWK_DATA ExplodedStormObjParam = {
+	BALLOON_APPEAR_POS_X, BALLOON_APPEAR_POS_Y,		//pos_x, pos_y
+	0, 			//anmseq
+	BALLOONSUB_SOFTPRI_EXPLODED_STORM, BALLOONSUB_BGPRI_EXPLODED,	//softpri, bgpri
 };
 
 ///風船アイコンのアクターヘッダ(サブ画面用)
-static const TCATS_OBJECT_ADD_PARAM_S IconBalloonObjParam = {
-	0, 0, 0,		//x, y, z
-	0, BALLOONSUB_SOFTPRI_ICON_BALLOON,PALOFS_SUB_ICON_BALLOON,//アニメ番号、優先順位、パレット番号
-	NNS_G2D_VRAM_TYPE_2DSUB,		//描画エリア
-	{	//使用リソースIDテーブル
-		CHARID_SUB_BALLOON_MIX,			//キャラ
-		PLTTID_SUB_OBJ_COMMON,			//パレット
-		CELLID_SUB_BALLOON_MIX,			//セル
-		CELLANMID_SUB_BALLOON_MIX,		//セルアニメ
-		CLACT_U_HEADER_DATA_NONE,		//マルチセル
-		CLACT_U_HEADER_DATA_NONE,		//マルチセルアニメ
-	},
-	BALLOONSUB_BGPRI_ICON_BALLOON,				//BGプライオリティ
-	0,									//Vram転送フラグ
+static const GFL_CLWK_DATA IconBalloonObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	BALLOONSUB_SOFTPRI_ICON_BALLOON, BALLOONSUB_BGPRI_ICON_BALLOON,	//softpri, bgpri
 };
 
 ///ジョイントのアクターヘッダ(サブ画面用)
-static const TCATS_OBJECT_ADD_PARAM_S JointObjParam = {
-	0, 0, 0,		//x, y, z
-	0, BALLOONSUB_SOFTPRI_JOINT, PALOFS_SUB_JOINT,//アニメ番号、優先順位、パレット番号
-	NNS_G2D_VRAM_TYPE_2DSUB,		//描画エリア
-	{	//使用リソースIDテーブル
-		CHARID_SUB_BALLOON_MIX,			//キャラ
-		PLTTID_SUB_OBJ_COMMON,			//パレット
-		CELLID_SUB_BALLOON_MIX,			//セル
-		CELLANMID_SUB_BALLOON_MIX,		//セルアニメ
-		CLACT_U_HEADER_DATA_NONE,		//マルチセル
-		CLACT_U_HEADER_DATA_NONE,		//マルチセルアニメ
-	},
-	BALLOONSUB_BGPRI_JOINT,				//BGプライオリティ
-	0,									//Vram転送フラグ
+static const GFL_CLWK_DATA JointObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	BALLOONSUB_SOFTPRI_JOINT, BALLOONSUB_BGPRI_JOINT,	//softpri, bgpri
 };
 
 ///ブースター(ソーナノ)のアクターヘッダ(サブ画面用)
-static const TCATS_OBJECT_ADD_PARAM_S BoosterObjParam = {
-	0, 0, 0,		//x, y, z
-	0, BALLOONSUB_SOFTPRI_BOOSTER, PALOFS_SUB_BOOSTER_RED,//アニメ番号、優先順位、パレット番号
-	NNS_G2D_VRAM_TYPE_2DSUB,		//描画エリア
-	{	//使用リソースIDテーブル
-		CHARID_SUB_BALLOON_MIX,			//キャラ
-		PLTTID_SUB_OBJ_COMMON,			//パレット
-		CELLID_SUB_BALLOON_MIX,			//セル
-		CELLANMID_SUB_BALLOON_MIX,		//セルアニメ
-		CLACT_U_HEADER_DATA_NONE,		//マルチセル
-		CLACT_U_HEADER_DATA_NONE,		//マルチセルアニメ
-	},
-	BALLOONSUB_BGPRI_BOOSTER,				//BGプライオリティ
-	0,									//Vram転送フラグ
+static const GFL_CLWK_DATA BoosterObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	BALLOONSUB_SOFTPRI_BOOSTER, BALLOONSUB_BGPRI_BOOSTER,	//softpri, bgpri
 };
 
 ///ブースターヒット時に出るエフェクトのアクターヘッダ(サブ画面用)
-static const TCATS_OBJECT_ADD_PARAM_S BoosterHitObjParam = {
-	0, 0, 0,		//x, y, z
-	0, BALLOONSUB_SOFTPRI_BOOSTER_HIT, PALOFS_SUB_BOOSTER_HIT,//アニメ番号、優先順位、パレット番号
-	NNS_G2D_VRAM_TYPE_2DSUB,		//描画エリア
-	{	//使用リソースIDテーブル
-		CHARID_SUB_BALLOON_MIX,			//キャラ
-		PLTTID_SUB_OBJ_COMMON,			//パレット
-		CELLID_SUB_BALLOON_MIX,			//セル
-		CELLANMID_SUB_BALLOON_MIX,		//セルアニメ
-		CLACT_U_HEADER_DATA_NONE,		//マルチセル
-		CLACT_U_HEADER_DATA_NONE,		//マルチセルアニメ
-	},
-	BALLOONSUB_BGPRI_BOOSTER,				//BGプライオリティ
-	0,									//Vram転送フラグ
+static const GFL_CLWK_DATA BoosterHitObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	BALLOONSUB_SOFTPRI_BOOSTER_HIT, BALLOONSUB_BGPRI_BOOSTER,	//softpri, bgpri
 };
 
 ///ブースターの影のアクターヘッダ(サブ画面用)
-static const TCATS_OBJECT_ADD_PARAM_S BoosterShadowObjParam = {
-	0, 0, 0,		//x, y, z
-	0, BALLOONSUB_SOFTPRI_BOOSTER_SHADOW, PALOFS_SUB_BOOSTER_SHADOW,//アニメ番号、優先順位、パレット番号
-	NNS_G2D_VRAM_TYPE_2DSUB,		//描画エリア
-	{	//使用リソースIDテーブル
-		CHARID_SUB_BALLOON_MIX,			//キャラ
-		PLTTID_SUB_OBJ_COMMON,			//パレット
-		CELLID_SUB_BALLOON_MIX,			//セル
-		CELLANMID_SUB_BALLOON_MIX,		//セルアニメ
-		CLACT_U_HEADER_DATA_NONE,		//マルチセル
-		CLACT_U_HEADER_DATA_NONE,		//マルチセルアニメ
+static const GFL_CLWK_AFFINEDATA BoosterShadowObjParam = {
+	{//GFL_CLWK_DATA
+		0, 0,		//pos_x, pos_y
+		0, 			//anmseq
+		BALLOONSUB_SOFTPRI_BOOSTER_SHADOW, BALLOONSUB_BGPRI_BOOSTER,	//softpri, bgpri
 	},
-	BALLOONSUB_BGPRI_BOOSTER,				//BGプライオリティ
-	0,									//Vram転送フラグ
+	0, 0,		//アフィンX座標、アフィンY座標
+	FX32_ONE, FX32_ONE,		//拡大X値、拡大Y値
+	0,			//回転角度(0～0xffff 0xffffが360度)
+	CLSYS_AFFINETYPE_NORMAL,	//CLSYS_AFFINETYPE
 };
 
 ///ブースターの着地の煙のアクターヘッダ(サブ画面用)
-static const TCATS_OBJECT_ADD_PARAM_S BoosterLandSmokeObjParam = {
-	0, 0, 0,		//x, y, z
-	0, BALLOONSUB_SOFTPRI_BOOSTER_LAND_SMOKE, PALOFS_SUB_BOOSTER_LAND_SMOKE,//アニメ番号、優先順位、パレット番号
-	NNS_G2D_VRAM_TYPE_2DSUB,		//描画エリア
-	{	//使用リソースIDテーブル
-		CHARID_SUB_BALLOON_MIX,			//キャラ
-		PLTTID_SUB_OBJ_COMMON,			//パレット
-		CELLID_SUB_BALLOON_MIX,			//セル
-		CELLANMID_SUB_BALLOON_MIX,		//セルアニメ
-		CLACT_U_HEADER_DATA_NONE,		//マルチセル
-		CLACT_U_HEADER_DATA_NONE,		//マルチセルアニメ
-	},
-	BALLOONSUB_BGPRI_BOOSTER,				//BGプライオリティ
-	0,									//Vram転送フラグ
+static const GFL_CLWK_DATA BoosterLandSmokeObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	BALLOONSUB_SOFTPRI_BOOSTER_LAND_SMOKE, BALLOONSUB_BGPRI_BOOSTER,	//softpri, bgpri
 };
 
 ///カウンターウィンドウのアクターヘッダ(メイン画面用)
-static const TCATS_OBJECT_ADD_PARAM_S CounterWindowObjParam = {
-	8*5, 192-16, 0,		//x, y, z
-	0, BALLOON_SOFTPRI_COUNTER_WIN, 0,//アニメ番号、優先順位、パレット番号
-	NNS_G2D_VRAM_TYPE_2DMAIN,		//描画エリア
-	{	//使用リソースIDテーブル
-		CHARID_COUNTER_WIN,			//キャラ
-		PLTTID_COUNTER_WIN,			//パレット
-		CELLID_COUNTER_WIN,			//セル
-		CELLANMID_COUNTER_WIN,		//セルアニメ
-		CLACT_U_HEADER_DATA_NONE,		//マルチセル
-		CLACT_U_HEADER_DATA_NONE,		//マルチセルアニメ
-	},
-	BALLOON_BGPRI_COUNTER,				//BGプライオリティ
-	0,									//Vram転送フラグ
+static const GFL_CLWK_DATA CounterWindowObjParam = {
+	8*5, 192-16,		//pos_x, pos_y
+	0, 			//anmseq
+	BALLOON_SOFTPRI_COUNTER_WIN, BALLOON_BGPRI_COUNTER,	//softpri, bgpri
 };
 
 ///タッチペンのアクターヘッダ(メイン画面用)
-static const TCATS_OBJECT_ADD_PARAM_S TouchPenObjParam = {
-	0, 0, 0,		//x, y, z
-	0, BALLOON_SOFTPRI_TOUCH_PEN, 0,//アニメ番号、優先順位、パレット番号
-	NNS_G2D_VRAM_TYPE_2DMAIN,		//描画エリア
-	{	//使用リソースIDテーブル
-		CHARID_TOUCH_PEN,			//キャラ
-		PLTTID_TOUCH_PEN,			//パレット
-		CELLID_TOUCH_PEN,			//セル
-		CELLANMID_TOUCH_PEN,		//セルアニメ
-		CLACT_U_HEADER_DATA_NONE,		//マルチセル
-		CLACT_U_HEADER_DATA_NONE,		//マルチセルアニメ
-	},
-	BALLOON_BGPRI_TOUCH_PEN,				//BGプライオリティ
-	0,									//Vram転送フラグ
+static const GFL_CLWK_DATA TouchPenObjParam = {
+	0, 0,		//pos_x, pos_y
+	0, 			//anmseq
+	BALLOON_SOFTPRI_TOUCH_PEN, BALLOON_BGPRI_TOUCH_PEN,	//softpri, bgpri
 };
 
 //--------------------------------------------------------------
@@ -840,9 +757,9 @@ void BalloonTool_BalloonBGSet(int player_max, int level, BALLOON_STATUS *bst)
 	//ハンドルオープン
 	hdl  = GFL_ARC_OpenDataHandle(ARCID_BALLOON_GRA,  HEAPID_BALLOON); 
 
-	ArcUtil_HDL_BgCharSet(hdl, BalloonLevelData[level].ncgr_id, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, BalloonLevelData[level].ncgr_id, 
 		BALLOON_SUBFRAME_BALLOON, 0, 0, 0, HEAPID_BALLOON);
-	ArcUtil_HDL_ScrnSet(hdl, BalloonLevelData[level].nscr_id, 
+	GFL_ARCHDL_UTIL_TransVramScreen(hdl, BalloonLevelData[level].nscr_id, 
 		BALLOON_SUBFRAME_BALLOON, 0, 0, 0, HEAPID_BALLOON);
 
 	//ハンドル閉じる
@@ -859,7 +776,9 @@ void BalloonTool_BalloonBGSet(int player_max, int level, BALLOON_STATUS *bst)
 	//拡縮率設定
 	BalloonTool_BalloonAffineScaleUpdate(bst, player_max);
 	
+#if WB_TEMP_FIX
 	Snd_SePlay(SE_BALLOON_APPEAR);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -931,7 +850,7 @@ static void BalloonTool_BalloonAffineScaleUpdate(BALLOON_STATUS *bst, int player
 		}
 		else{
 			//shake_x = bst->air % 8;
-			shake_x = (gf_rand() & 7) + 1;
+			shake_x = GFUser_GetPublicRand(8) + 1;
 			if(bst->shake_flag & 1){
 				shake_x = -shake_x;
 			}
@@ -941,11 +860,11 @@ static void BalloonTool_BalloonAffineScaleUpdate(BALLOON_STATUS *bst, int player
 		rScale_x = FX_Inv(scale_x);
 		rScale_y = FX_Inv(scale_y);
 
-		GF_BGL_ScaleSetReq(BALLOON_SUBFRAME_BALLOON, GF_BGL_SCALE_X_SET, rScale_x);
-		GF_BGL_ScaleSetReq(BALLOON_SUBFRAME_BALLOON, GF_BGL_SCALE_Y_SET, rScale_y);
+		GFL_BG_SetScaleReq(BALLOON_SUBFRAME_BALLOON, GFL_BG_SCALE_X_SET, rScale_x);
+		GFL_BG_SetScaleReq(BALLOON_SUBFRAME_BALLOON, GFL_BG_SCALE_Y_SET, rScale_y);
 
-		GF_BGL_ScrollReq(BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_X_SET, 0-x_offset + shake_x);
-		GF_BGL_ScrollReq(BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_Y_SET, (256-192)/2 + 7 - y_offset);
+		GFL_BG_SetScrollReq(BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_X_SET, 0-x_offset + shake_x);
+		GFL_BG_SetScrollReq(BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_Y_SET, (256-192)/2 + 7 - y_offset);
 	}
 #else
 	{
@@ -1147,6 +1066,7 @@ static int Air_ParamCreate(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA * air_d
 	int player_pos;
 	const AIR_POSITION_DATA *air_posdata;
 	int arrival_frame;
+	GFL_CLACTPOS before;
 	
 	GF_ASSERT(air_param->occ == FALSE);
 	
@@ -1162,32 +1082,34 @@ static int Air_ParamCreate(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA * air_d
 	air_param->booster_type = air_data->booster_type;
 	air_param->cap = Air_ActorCreate(game, air_posdata);
 
+	GFL_CLACT_WK_GetPos(air_param->cap, &before, CLWK_SETSF_NONE);
+	air_param->x = before.x * FX32_ONE;
+	air_param->y = before.y * FX32_ONE;
+
 	if(air_data->net_id == GFL_NET_SystemGetCurrentID()){
 		Air3D_EntryAdd(game, air_data->air);
 		air_param->wait = MY_AIR_2D_APPEAR_WAIT;
-		CATS_ObjectEnableCap(air_param->cap, CATS_ENABLE_FALSE);
+		GFL_CLACT_WK_SetDrawEnable(air_param->cap, FALSE);
 	}
 	
 	air_param->occ = TRUE;
 
+
 	{//ジョイント到着までのフレーム数を返す
-		s16 before_x, before_y;
 		s32 before_joint_offset = 0;
-		
-		CATS_ObjectPosGetCap_SubSurface(
-			air_param->cap, &before_x, &before_y, BALLOON_SUB_ACTOR_DISTANCE);
+
 		switch(air_posdata->move_dir){
 		case DIR_DOWN:
-			before_joint_offset = JointActorPosTbl[JOINT_ACTOR_U].y - before_y;
+			before_joint_offset = JointActorPosTbl[JOINT_ACTOR_U].y - before.y;
 			break;
 		case DIR_LEFT:
-			before_joint_offset = before_x - JointActorPosTbl[JOINT_ACTOR_R].x;
+			before_joint_offset = before.x - JointActorPosTbl[JOINT_ACTOR_R].x;
 			break;
 		case DIR_UP:
-			before_joint_offset = before_y - JointActorPosTbl[JOINT_ACTOR_D].y;
+			before_joint_offset = before.y - JointActorPosTbl[JOINT_ACTOR_D].y;
 			break;
 		case DIR_RIGHT:
-			before_joint_offset = JointActorPosTbl[JOINT_ACTOR_L].x - before_x;
+			before_joint_offset = JointActorPosTbl[JOINT_ACTOR_L].x - before.x;
 			break;
 		}
 		arrival_frame = (before_joint_offset * FX32_ONE) / AIR_MOVE_SPEED;
@@ -1213,7 +1135,7 @@ void Air_Update(BALLOON_GAME_PTR game)
 			if(air_param->wait > 0){
 				air_param->wait--;
 				if(air_param->wait == 0){
-					CATS_ObjectEnableCap(air_param->cap, CATS_ENABLE_TRUE);
+					GFL_CLACT_WK_SetDrawEnable(air_param->cap, TRUE);
 				}
 			}
 			else if(Air_Move(game, air_param) == TRUE){
@@ -1223,7 +1145,7 @@ void Air_Update(BALLOON_GAME_PTR game)
 					BalloonTool_AirStackAdd(game, 
 						&game->bst, air_param->air, air_param->net_id, air_param->booster_type);
 				}
-				CATS_ActorPointerDelete_S(air_param->cap);
+				GFL_CLACT_WK_Remove(air_param->cap);
 				air_param->occ = FALSE;
 			}
 		}
@@ -1242,53 +1164,63 @@ void Air_Update(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param)
 {
-	s16 x, y, before_x, before_y;
 	int del_flag = FALSE;
 	s32 joint_offset, before_joint_offset;	//+はジョイント手前、-はジョイント通過後
-	f32 scale_xy;
 	fx32 check_scale_xy;
-	
-	CATS_ObjectPosGetCap_SubSurface(
-		air_param->cap, &before_x, &before_y, BALLOON_SUB_ACTOR_DISTANCE);
+	GFL_CLACTPOS before, pos, move_pos;
+
+	GFL_CLACT_WK_GetPos(air_param->cap, &before, CLWK_SETSF_NONE);
 	
 	switch(air_param->apd->move_dir){
 	case DIR_DOWN:
-		before_joint_offset = JointActorPosTbl[JOINT_ACTOR_U].y - before_y;
+		before_joint_offset = JointActorPosTbl[JOINT_ACTOR_U].y - before.y;
 		
-		CATS_ObjectPosMoveCapFx32(air_param->cap, 0, AIR_MOVE_SPEED);
-		CATS_ObjectPosGetCap_SubSurface(air_param->cap, &x, &y, BALLOON_SUB_ACTOR_DISTANCE);
-		joint_offset = JointActorPosTbl[JOINT_ACTOR_U].y - y;
-		if(y > AIR_MOVE_DOWN_DELETE_Y){
+		air_param->y += AIR_MOVE_SPEED;
+		move_pos.x = air_param->x / FX32_ONE;
+		move_pos.y = air_param->y / FX32_ONE;
+		GFL_CLACT_WK_SetPos(air_param->cap, &move_pos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_GetPos(air_param->cap, &pos, CLWK_SETSF_NONE);
+		joint_offset = JointActorPosTbl[JOINT_ACTOR_U].y - pos.y;
+		if(pos.y > AIR_MOVE_DOWN_DELETE_Y){
 			del_flag = TRUE;
 		}
 		break;
 	case DIR_LEFT:
-		before_joint_offset = before_x - JointActorPosTbl[JOINT_ACTOR_R].x;
+		before_joint_offset = before.x - JointActorPosTbl[JOINT_ACTOR_R].x;
 
-		CATS_ObjectPosMoveCapFx32(air_param->cap, -AIR_MOVE_SPEED, 0);
-		CATS_ObjectPosGetCap_SubSurface(air_param->cap, &x, &y, BALLOON_SUB_ACTOR_DISTANCE);
-		joint_offset = x - JointActorPosTbl[JOINT_ACTOR_R].x;
-		if(x < AIR_MOVE_LEFT_DELETE_X){
+		air_param->x += -AIR_MOVE_SPEED;
+		move_pos.x = air_param->x / FX32_ONE;
+		move_pos.y = air_param->y / FX32_ONE;
+		GFL_CLACT_WK_SetPos(air_param->cap, &move_pos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_GetPos(air_param->cap, &pos, CLWK_SETSF_NONE);
+		joint_offset = pos.x - JointActorPosTbl[JOINT_ACTOR_R].x;
+		if(pos.x < AIR_MOVE_LEFT_DELETE_X){
 			del_flag = TRUE;
 		}
 		break;
 	case DIR_UP:
-		before_joint_offset = before_y - JointActorPosTbl[JOINT_ACTOR_D].y;
+		before_joint_offset = before.y - JointActorPosTbl[JOINT_ACTOR_D].y;
 
-		CATS_ObjectPosMoveCapFx32(air_param->cap, 0, -AIR_MOVE_SPEED);
-		CATS_ObjectPosGetCap_SubSurface(air_param->cap, &x, &y, BALLOON_SUB_ACTOR_DISTANCE);
-		joint_offset = y - JointActorPosTbl[JOINT_ACTOR_D].y;
-		if(y < AIR_MOVE_UP_DELETE_Y){
+		air_param->y += -AIR_MOVE_SPEED;
+		move_pos.x = air_param->x / FX32_ONE;
+		move_pos.y = air_param->y / FX32_ONE;
+		GFL_CLACT_WK_SetPos(air_param->cap, &move_pos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_GetPos(air_param->cap, &pos, CLWK_SETSF_NONE);
+		joint_offset = pos.y - JointActorPosTbl[JOINT_ACTOR_D].y;
+		if(pos.y < AIR_MOVE_UP_DELETE_Y){
 			del_flag = TRUE;
 		}
 		break;
 	case DIR_RIGHT:
-		before_joint_offset = JointActorPosTbl[JOINT_ACTOR_L].x - before_x;
+		before_joint_offset = JointActorPosTbl[JOINT_ACTOR_L].x - before.x;
 
-		CATS_ObjectPosMoveCapFx32(air_param->cap, AIR_MOVE_SPEED, 0);
-		CATS_ObjectPosGetCap_SubSurface(air_param->cap, &x, &y, BALLOON_SUB_ACTOR_DISTANCE);
-		joint_offset = JointActorPosTbl[JOINT_ACTOR_L].x - x;
-		if(x > AIR_MOVE_RIGHT_DELETE_X){
+		air_param->x += AIR_MOVE_SPEED;
+		move_pos.x = air_param->x / FX32_ONE;
+		move_pos.y = air_param->y / FX32_ONE;
+		GFL_CLACT_WK_SetPos(air_param->cap, &move_pos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_GetPos(air_param->cap, &pos, CLWK_SETSF_NONE);
+		joint_offset = JointActorPosTbl[JOINT_ACTOR_L].x - pos.x;
+		if(pos.x > AIR_MOVE_RIGHT_DELETE_X){
 			del_flag = TRUE;
 		}
 		break;
@@ -1300,8 +1232,8 @@ static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param)
 			if(check_scale_xy < 0x400){
 				check_scale_xy = 0x400;
 			}
-			scale_xy = FX_FX32_TO_F32(check_scale_xy);
-			CATS_ObjectScaleSetCap(air_param->cap, scale_xy, scale_xy);
+			GFL_CLACT_WK_SetTypeScale(air_param->cap, check_scale_xy, CLSYS_MAT_X);
+			GFL_CLACT_WK_SetTypeScale(air_param->cap, check_scale_xy, CLSYS_MAT_Y);
 		}
 	}
 	else{	//ジョイント通過後　ブースターでの大きさを元に拡縮率を設定する
@@ -1311,8 +1243,8 @@ static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param)
 			if(check_scale_xy < 0x400){
 				check_scale_xy = 0x400;
 			}
-			scale_xy = FX_FX32_TO_F32(check_scale_xy);
-			CATS_ObjectScaleSetCap(air_param->cap, scale_xy, scale_xy);
+			GFL_CLACT_WK_SetTypeScale(air_param->cap, check_scale_xy, CLSYS_MAT_X);
+			GFL_CLACT_WK_SetTypeScale(air_param->cap, check_scale_xy, CLSYS_MAT_Y);
 		}
 	}
 	
@@ -1369,22 +1301,18 @@ static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param)
 static GFL_CLWK* Air_ActorCreate(BALLOON_GAME_PTR game, const AIR_POSITION_DATA *air_posdata)
 {
 	GFL_CLWK* cap;
-	TCATS_OBJECT_ADD_PARAM_S act_head;
+	GFL_CLWK_AFFINEDATA act_head;
 	
 	//-- アクター生成 --//
 	act_head = AirObjParam;
-	act_head.x = air_posdata->x;
-	act_head.y = air_posdata->y;
-	act_head.pal = air_posdata->pal_ofs;
-	cap = CATS_ObjectAdd_S(game->csp, game->crp, &act_head);
+	act_head.clwkdata.pos_x = air_posdata->x;
+	act_head.clwkdata.pos_y = air_posdata->y;
+	act_head.clwkdata.anmseq = air_posdata->anmseq;
+	cap = GFL_CLACT_WK_CreateAffine( game->clunit, CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, 
+		CELLID_SUB_BALLOON_MIX, &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
+	GFL_CLACT_WK_SetPlttOffs(cap, air_posdata->pal_ofs);
 	
-	CATS_ObjectPosSetCap_SubSurface(
-		cap, air_posdata->x, air_posdata->y, BALLOON_SUB_ACTOR_DISTANCE);
-	CATS_ObjectAnimeSeqSetCap(cap, air_posdata->anmseq);
-	
-	CATS_ObjectAffineSetCap(cap, CLACT_AFFINE_DOUBLE);
-
-	CATS_ObjectUpdate(cap->act);
+	GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 	return cap;
 }
 
@@ -1405,7 +1333,7 @@ void Air_ActorAllDelete(BALLOON_GAME_PTR game)
 	
 	for(i = 0; i < PLAYER_AIR_PARAM_MAX; i++){
 		if(game->air_param[i].occ == TRUE){
-			CATS_ActorPointerDelete_S(game->air_param[i].cap);
+			GFL_CLACT_WK_Remove(game->air_param[i].cap);
 			game->air_param[i].occ = FALSE;
 		}
 	}
@@ -1422,7 +1350,7 @@ void Air_ActorAllDelete(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 static void Exploded_ActorCreate(BALLOON_GAME_PTR game, EXPLODED_PARAM *exploded, BALLOON_STATUS *bst)
 {
-	TCATS_OBJECT_ADD_PARAM_S act_head;
+	GFL_CLWK_DATA act_head;
 	GFL_CLWK* cap;
 	int player_pos;
 	int act_num[WFLBY_MINIGAME_MAX];
@@ -1440,68 +1368,66 @@ static void Exploded_ActorCreate(BALLOON_GAME_PTR game, EXPLODED_PARAM *exploded
 		for(s = 0; s < act_num[i]; s++){
 			STORM_WORK *storm = &exploded->storm[act_index];
 			
-			cap = CATS_ObjectAdd_S(game->csp, game->crp, &act_head);
+			cap = GFL_CLACT_WK_Create(game->clunit, CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, 
+				CELLID_SUB_BALLOON_MIX, &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
 			if(cap == NULL){
 				break;
 			}
-			CATS_ObjectPosSetCap_SubSurface(
-				cap, BALLOON_APPEAR_POS_X, BALLOON_APPEAR_POS_Y, BALLOON_SUB_ACTOR_DISTANCE);
-			CATS_ObjectAnimeSeqSetCap(cap, anmseq);
-			CATS_ObjectUpdate(cap->act);
+			GFL_CLACT_WK_SetAnmSeq( cap, anmseq );
+			GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_EXPLODED);
+			GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 			
-			storm->furihaba = gf_rand() % 0x2000 + 0x2000;
-			storm->add_furihaba = gf_rand() % 0x4000 + 0x2000;
-			storm->sec = (gf_rand() % 360) << FX32_SHIFT;
-			storm->add_sec = gf_rand() % 0x14000 + 0xa000;
-			storm->delete_wait = gf_rand() % 15 + 20;
+			storm->furihaba = GFUser_GetPublicRand(0x2000) + 0x2000;
+			storm->add_furihaba = GFUser_GetPublicRand(0x4000) + 0x2000;
+			storm->sec = GFUser_GetPublicRand(360) << FX32_SHIFT;
+			storm->add_sec = GFUser_GetPublicRand(0x14000) + 0xa000;
+			storm->delete_wait = GFUser_GetPublicRand(15) + 20;
 			exploded->storm[act_index].cap = cap;
 			act_index++;
 		}
 	}
 	
 	//-- 風圧 --//
-	act_head.pri = BALLOONSUB_SOFTPRI_EXPLODED_SMOKE;
-	act_head.pal = PALOFS_SUB_EXPLODED_SMOKE;
+	act_head.softpri = BALLOONSUB_SOFTPRI_EXPLODED_SMOKE;
 	for(i = 0; i < EXPLODED_SMOKE_ACTOR_MAX; i++){
 		STORM_WORK *smoke = &exploded->smoke[i];
 		
-		cap = CATS_ObjectAdd_S(game->csp, game->crp, &act_head);
+		cap = GFL_CLACT_WK_Create(game->clunit, CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, 
+			CELLID_SUB_BALLOON_MIX, &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
 		if(cap == NULL){
 			break;
 		}
-		CATS_ObjectPosSetCap_SubSurface(
-			cap, BALLOON_APPEAR_POS_X, BALLOON_APPEAR_POS_Y, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectAnimeSeqSetCap(cap, MIXOBJ_ANMSEQ_EXPLODED_SMOKE_1 + gf_rand() % 3);
-		CATS_ObjectUpdate(cap->act);
+		GFL_CLACT_WK_SetAnmSeq( cap, MIXOBJ_ANMSEQ_EXPLODED_SMOKE_1 + GFUser_GetPublicRand(3) );
+		GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_EXPLODED_SMOKE);
+		GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 		
-		smoke->furihaba = gf_rand() % 0x2000 + 0x2000;
-		smoke->add_furihaba = gf_rand() % 0x4000 + 0x2000;
-		smoke->sec = (gf_rand() % 360) << FX32_SHIFT;
-		smoke->add_sec = gf_rand() % 0x14000 + 0x10000;
-		smoke->delete_wait = gf_rand() % 15 + 20;
+		smoke->furihaba = GFUser_GetPublicRand(0x2000) + 0x2000;
+		smoke->add_furihaba = GFUser_GetPublicRand(0x4000) + 0x2000;
+		smoke->sec = GFUser_GetPublicRand(360) << FX32_SHIFT;
+		smoke->add_sec = GFUser_GetPublicRand(0x14000) + 0x10000;
+		smoke->delete_wait = GFUser_GetPublicRand(15) + 20;
 		exploded->smoke[i].cap = cap;
 	}
 	
 	//-- 破片 --//
-	act_head.pri = BALLOONSUB_SOFTPRI_EXPLODED_CHIP;
-	act_head.pal = ExplodedChipPalNo[bst->level];
+	act_head.softpri = BALLOONSUB_SOFTPRI_EXPLODED_CHIP;
 	for(i = 0; i < EXPLODED_CHIP_ACTOR_MAX; i++){
 		STORM_WORK *chip = &exploded->chip[i];
 		
-		cap = CATS_ObjectAdd_S(game->csp, game->crp, &act_head);
+		cap = GFL_CLACT_WK_Create(game->clunit, CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, 
+			CELLID_SUB_BALLOON_MIX, &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
 		if(cap == NULL){
 			break;
 		}
-		CATS_ObjectPosSetCap_SubSurface(
-			cap, BALLOON_APPEAR_POS_X, BALLOON_APPEAR_POS_Y, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectAnimeSeqSetCap(cap, MIXOBJ_ANMSEQ_BALLOON_EXPLODED);
-		CATS_ObjectUpdate(cap->act);
+		GFL_CLACT_WK_SetAnmSeq( cap, MIXOBJ_ANMSEQ_BALLOON_EXPLODED);
+		GFL_CLACT_WK_SetPlttOffs(cap, ExplodedChipPalNo[bst->level]);
+		GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 		
-		chip->furihaba = gf_rand() % 0x2000 + 0x2000;
-		chip->add_furihaba = gf_rand() % 0x4000 + 0x2000;
-		chip->sec = (gf_rand() % 360) << FX32_SHIFT;
-		chip->add_sec = gf_rand() % 0x14000 + 0x10000;
-		chip->delete_wait = gf_rand() % 15 + 20;
+		chip->furihaba = GFUser_GetPublicRand(0x2000) + 0x2000;
+		chip->add_furihaba = GFUser_GetPublicRand(0x4000) + 0x2000;
+		chip->sec = GFUser_GetPublicRand(360) << FX32_SHIFT;
+		chip->add_sec = GFUser_GetPublicRand(0x14000) + 0x10000;
+		chip->delete_wait = GFUser_GetPublicRand(15) + 20;
 		exploded->chip[i].cap = cap;
 	}
 }
@@ -1525,21 +1451,21 @@ void Exploded_AllDelete(BALLOON_GAME_PTR game)
 	for(i = 0; i < EXPLODED_STORM_ACTOR_MAX; i++){
 		storm = &game->exploded_param.storm[i];
 		if(storm->cap != NULL){
-			CATS_ActorPointerDelete_S(storm->cap);
+			GFL_CLACT_WK_Remove(storm->cap);
 		}
 	}
 
 	for(i = 0; i < EXPLODED_SMOKE_ACTOR_MAX; i++){
 		smoke = &game->exploded_param.smoke[i];
 		if(smoke->cap != NULL){
-			CATS_ActorPointerDelete_S(smoke->cap);
+			GFL_CLACT_WK_Remove(smoke->cap);
 		}
 	}
 
 	for(i = 0; i < EXPLODED_CHIP_ACTOR_MAX; i++){
 		chip = &game->exploded_param.chip[i];
 		if(chip->cap != NULL){
-			CATS_ActorPointerDelete_S(chip->cap);
+			GFL_CLACT_WK_Remove(chip->cap);
 		}
 	}
 }
@@ -1557,9 +1483,9 @@ BOOL Exploded_Update(BALLOON_GAME_PTR game)
 {
 	EXPLODED_PARAM *exploded = &game->exploded_param;
 	STORM_WORK *storm, *smoke, *chip;
-	s16 x, y;
 	int eff_count = 0;
 	int i;
+	GFL_CLACTPOS pos;
 	
 	if(exploded->occ == FALSE){
 		return FALSE;
@@ -1570,7 +1496,7 @@ BOOL Exploded_Update(BALLOON_GAME_PTR game)
 		storm = &exploded->storm[i];
 		if(storm->cap != NULL){
 			if(storm->delete_wait == 0){
-				CATS_ActorPointerDelete_S(storm->cap);
+				GFL_CLACT_WK_Remove(storm->cap);
 				storm->cap = NULL;
 				continue;
 			}
@@ -1579,9 +1505,9 @@ BOOL Exploded_Update(BALLOON_GAME_PTR game)
 			if(storm->furihaba >= (128+32) << FX32_SHIFT){
 				storm->furihaba = (128+32) << FX32_SHIFT;
 			}
-			x = BALLOON_APPEAR_POS_X + (FX_Mul(Sin360FX(storm->sec), storm->furihaba)) / FX32_ONE;
-			y = BALLOON_APPEAR_POS_Y + (-FX_Mul(Cos360FX(storm->sec), storm->furihaba)) / FX32_ONE;
-			CATS_ObjectPosSetCap_SubSurface(storm->cap, x, y, BALLOON_SUB_ACTOR_DISTANCE);
+			pos.x = BALLOON_APPEAR_POS_X + (FX_Mul(Sin360FX(storm->sec), storm->furihaba)) / FX32_ONE;
+			pos.y = BALLOON_APPEAR_POS_Y + (-FX_Mul(Cos360FX(storm->sec), storm->furihaba)) / FX32_ONE;
+			GFL_CLACT_WK_SetPos(storm->cap, &pos, CLWK_SETSF_NONE);
 			storm->delete_wait--;
 			eff_count++;
 		}
@@ -1592,7 +1518,7 @@ BOOL Exploded_Update(BALLOON_GAME_PTR game)
 		smoke = &exploded->smoke[i];
 		if(smoke->cap != NULL){
 			if(smoke->delete_wait == 0){
-				CATS_ActorPointerDelete_S(smoke->cap);
+				GFL_CLACT_WK_Remove(smoke->cap);
 				smoke->cap = NULL;
 				continue;
 			}
@@ -1601,9 +1527,9 @@ BOOL Exploded_Update(BALLOON_GAME_PTR game)
 			if(smoke->furihaba >= (128+32) << FX32_SHIFT){
 				smoke->furihaba = (128+32) << FX32_SHIFT;
 			}
-			x = BALLOON_APPEAR_POS_X + (FX_Mul(Sin360FX(smoke->sec), smoke->furihaba)) / FX32_ONE;
-			y = BALLOON_APPEAR_POS_Y + (-FX_Mul(Cos360FX(smoke->sec), smoke->furihaba)) / FX32_ONE;
-			CATS_ObjectPosSetCap_SubSurface(smoke->cap, x, y, BALLOON_SUB_ACTOR_DISTANCE);
+			pos.x = BALLOON_APPEAR_POS_X + (FX_Mul(Sin360FX(smoke->sec), smoke->furihaba)) / FX32_ONE;
+			pos.y = BALLOON_APPEAR_POS_Y + (-FX_Mul(Cos360FX(smoke->sec), smoke->furihaba)) / FX32_ONE;
+			GFL_CLACT_WK_SetPos(smoke->cap, &pos, CLWK_SETSF_NONE);
 			smoke->delete_wait--;
 			eff_count++;
 		}
@@ -1614,7 +1540,7 @@ BOOL Exploded_Update(BALLOON_GAME_PTR game)
 		chip = &exploded->chip[i];
 		if(chip->cap != NULL){
 			if(chip->delete_wait == 0){
-				CATS_ActorPointerDelete_S(chip->cap);
+				GFL_CLACT_WK_Remove(chip->cap);
 				chip->cap = NULL;
 				continue;
 			}
@@ -1623,9 +1549,9 @@ BOOL Exploded_Update(BALLOON_GAME_PTR game)
 			if(chip->furihaba >= (128+32) << FX32_SHIFT){
 				chip->furihaba = (128+32) << FX32_SHIFT;
 			}
-			x = BALLOON_APPEAR_POS_X + (FX_Mul(Sin360FX(chip->sec), chip->furihaba)) / FX32_ONE;
-			y = BALLOON_APPEAR_POS_Y + (-FX_Mul(Cos360FX(chip->sec), chip->furihaba)) / FX32_ONE;
-			CATS_ObjectPosSetCap_SubSurface(chip->cap, x, y, BALLOON_SUB_ACTOR_DISTANCE);
+			pos.x = BALLOON_APPEAR_POS_X + (FX_Mul(Sin360FX(chip->sec), chip->furihaba)) / FX32_ONE;
+			pos.y = BALLOON_APPEAR_POS_Y + (-FX_Mul(Cos360FX(chip->sec), chip->furihaba)) / FX32_ONE;
+			GFL_CLACT_WK_SetPos(chip->cap, &pos, CLWK_SETSF_NONE);
 			chip->delete_wait--;
 			eff_count++;
 		}
@@ -1678,7 +1604,9 @@ BOOL BalloonTool_ExplodedParamAdd(BALLOON_GAME_PTR game)
 		game->bst.player_air[i] = 0;
 	}
 
+#if WB_TEMP_FIX
 	Snd_SePlay(SE_BALLOON_EXPLODED);
+#endif
 	exploded->occ = TRUE;
 	return TRUE;
 }
@@ -1696,19 +1624,20 @@ BOOL BalloonTool_ExplodedParamAdd(BALLOON_GAME_PTR game)
 static GFL_CLWK* IconBalloon_ActorCreate(BALLOON_GAME_PTR game, int icon_type, int pos)
 {
 	GFL_CLWK* cap;
-	TCATS_OBJECT_ADD_PARAM_S act_head;
+	GFL_CLWK_DATA act_head;
 
 	//-- アクター生成 --//
 	act_head = IconBalloonObjParam;
-	cap = CATS_ObjectAdd_S(game->csp, game->crp, &act_head);
+	act_head.pos_x = ICON_BALLOON_POS_RIGHT_X - pos * ICON_BALLOON_POS_OFFSET_X;
+	act_head.pos_y = ICON_BALLOON_POS_Y;
+	cap = GFL_CLACT_WK_Create(game->clunit, CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, 
+		CELLID_SUB_BALLOON_MIX, &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
+	GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_ICON_BALLOON);
 	
-	CATS_ObjectPosSetCap_SubSurface(
-		cap, ICON_BALLOON_POS_RIGHT_X - pos * ICON_BALLOON_POS_OFFSET_X, 
-		ICON_BALLOON_POS_Y, BALLOON_SUB_ACTOR_DISTANCE);
-	CATS_ObjectAnimeSeqSetCap(cap, MIXOBJ_ANMSEQ_ICON_BALLOON_1 + icon_type);
+	GFL_CLACT_WK_SetAnmSeq(cap, MIXOBJ_ANMSEQ_ICON_BALLOON_1 + icon_type);
 	
-	CATS_ObjectUpdate(cap->act);
-	CATS_ObjectAutoAnimeSetCap(cap, TRUE);	//オートアニメ設定
+	GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
+	GFL_CLACT_WK_SetAutoAnmFlag(cap, TRUE);
 	return cap;
 }
 
@@ -1727,7 +1656,7 @@ void IconBalloon_AllCreate(BALLOON_GAME_PTR game)
 	for(i = 0; i < ICON_BALLOON_PARAM_MAX; i++){
 		ibp = &game->iconballoon_param[i];
 		BalloonTool_IconBalloonParamAdd(game, ibp, i, i);
-		CATS_ObjectUpdateNumCap(ibp->cap, FX32_ONE*4 * i);	//最初のアニメをバラけさせる
+		GFL_CLACT_WK_AddAnmFrame(ibp->cap, FX32_ONE*4 * i);	//最初のアニメをバラけさせる
 	}
 }
 
@@ -1745,7 +1674,7 @@ void IconBalloon_AllDelete(BALLOON_GAME_PTR game)
 	
 	for(i = 0; i < ICON_BALLOON_PARAM_MAX; i++){
 		ibp = &game->iconballoon_param[i];
-		CATS_ActorPointerDelete_S(ibp->cap);
+		GFL_CLACT_WK_Remove(ibp->cap);
 	}
 }
 
@@ -1806,17 +1735,18 @@ static BOOL BalloonTool_IconBalloonParamAdd(BALLOON_GAME_PTR game, ICONBALLOON_P
 //--------------------------------------------------------------
 static void IconBalloon_PosMove(ICONBALLOON_PARAM *ibp)
 {
-	s16 x, now_x, now_y;
+	s16 x;
+	GFL_CLACTPOS now;
 	
 	x = ICON_BALLOON_POS_RIGHT_X - ibp->pos * ICON_BALLOON_POS_OFFSET_X;
-	CATS_ObjectPosGetCap_SubSurface(ibp->cap, &now_x, &now_y, BALLOON_SUB_ACTOR_DISTANCE);
+	GFL_CLACT_WK_GetPos(ibp->cap, &now, CLWK_SETSF_NONE);
 	
-	if(x > now_x){
-		now_x += ICON_BALLOON_MOVE_SP_X;
-		if(now_x > x){
-			now_x = x;
+	if(x > now.x){
+		now.x += ICON_BALLOON_MOVE_SP_X;
+		if(now.x > x){
+			now.x = x;
 		}
-		CATS_ObjectPosSetCap_SubSurface(ibp->cap, now_x, now_y, BALLOON_SUB_ACTOR_DISTANCE);
+		GFL_CLACT_WK_SetPos(ibp->cap, &now, CLWK_SETSF_NONE);
 	}
 }
 
@@ -1836,6 +1766,7 @@ static void IconBalloon_StatusUpdate(BALLOON_GAME_PTR game, ICONBALLOON_PARAM *i
 {
 	int parcent, i;
 	ICONBALLOON_PARAM *get_ibp;
+	GFL_CLACTPOS pos;
 	
 	if(ibp->pos != 0){
 		return;	//一番右端以外は関係なし
@@ -1844,15 +1775,15 @@ static void IconBalloon_StatusUpdate(BALLOON_GAME_PTR game, ICONBALLOON_PARAM *i
 	switch(ibp->status){
 	//爆発アニメ終了チェック
 	case ICON_BALLOON_STATUS_EXPLODED:
-		if(CATS_ObjectAnimeActiveCheckCap(ibp->cap) == FALSE){
+		if(GFL_CLACT_WK_CheckAnmActive(ibp->cap) == FALSE){
 			//爆発した風船アイコンを左から新しく登場するアイコンとして再利用する
 			ibp->balloon_no += ICON_BALLOON_PARAM_MAX;	//風船番号更新
 			ibp->type = IconBalloon_TypeGet(ibp->balloon_no);
 			ibp->status = ICON_BALLOON_STATUS_NORMAL;
-			CATS_ObjectAnimeSeqSetCap(ibp->cap, MIXOBJ_ANMSEQ_ICON_BALLOON_1 + ibp->type);
-			CATS_ObjectPosSetCap_SubSurface(ibp->cap, 
-				ICON_BALLOON_POS_RIGHT_X - ICON_BALLOON_PARAM_MAX * ICON_BALLOON_POS_OFFSET_X, 
-				ICON_BALLOON_POS_Y, BALLOON_SUB_ACTOR_DISTANCE);
+			GFL_CLACT_WK_SetAnmSeq(ibp->cap, MIXOBJ_ANMSEQ_ICON_BALLOON_1 + ibp->type);
+			pos.x = ICON_BALLOON_POS_RIGHT_X - ICON_BALLOON_PARAM_MAX * ICON_BALLOON_POS_OFFSET_X;
+			pos.y = ICON_BALLOON_POS_Y;
+			GFL_CLACT_WK_SetPos(ibp->cap, &pos, CLWK_SETSF_NONE);
 			//全ての風船アイコンのposを詰める
 			for(i = 0; i < ICON_BALLOON_PARAM_MAX; i++){
 				get_ibp = &game->iconballoon_param[i];
@@ -1870,8 +1801,10 @@ static void IconBalloon_StatusUpdate(BALLOON_GAME_PTR game, ICONBALLOON_PARAM *i
 		parcent = BalloonTool_AirParcentGet(game);
 		if(ibp->status == ICON_BALLOON_STATUS_NORMAL && parcent > ICON_BALLOON_PINCH_PARCENT){
 			ibp->status = ICON_BALLOON_STATUS_PINCH;
-			CATS_ObjectAnimeSeqSetCap(ibp->cap, MIXOBJ_ANMSEQ_ICON_BALLOON_1_PINCH + ibp->type);
+			GFL_CLACT_WK_SetAnmSeq(ibp->cap, MIXOBJ_ANMSEQ_ICON_BALLOON_1_PINCH + ibp->type);
+		#if WB_TEMP_FIX
 			Snd_SePlay(SE_BALLOON_PINCH);
+		#endif
 		}
 		break;
 	}
@@ -1911,7 +1844,7 @@ static void IconBalloon_ExplodedReq(BALLOON_GAME_PTR game)
 		ibp = &game->iconballoon_param[i];
 		if(ibp->pos == 0){
 			ibp->status = ICON_BALLOON_STATUS_EXPLODED;
-			CATS_ObjectAnimeSeqSetCap(ibp->cap, MIXOBJ_ANMSEQ_ICON_BALLOON_EXPLODED);
+			GFL_CLACT_WK_SetAnmSeq(ibp->cap, MIXOBJ_ANMSEQ_ICON_BALLOON_EXPLODED);
 			return;
 		}
 	}
@@ -1930,8 +1863,8 @@ void BalloonTool_NameWindowPalNoSwap(BALLOON_GAME_PTR game)
 	
 	switch(game->bsw->player_max){
 	case 3:	//問題があるのは3人の時だけ。(2人、4人は元データのままでOK)
-		GF_BGL_ScrPalChange(BALLOON_SUBFRAME_WIN, 0, 13, 12, 4, NAME_WIN_PALNO_YELLOW);
-		GF_BGL_ScrPalChange(BALLOON_SUBFRAME_WIN, 0x14, 13, 12, 4, NAME_WIN_PALNO_BLUE);
+		GFL_BG_ChangeScreenPalette(BALLOON_SUBFRAME_WIN, 0, 13, 12, 4, NAME_WIN_PALNO_YELLOW);
+		GFL_BG_ChangeScreenPalette(BALLOON_SUBFRAME_WIN, 0x14, 13, 12, 4, NAME_WIN_PALNO_BLUE);
 		break;
 	}
 }
@@ -1997,7 +1930,7 @@ void BalloonTool_PaletteSwap_PlayerOBJ(BALLOON_GAME_PTR game)
 	u16 *plttbuf, *transbuf;
 	int common_palno;
 	
-	common_palno = CATS_PlttID_NoGet(game->crp, PLTTID_SUB_OBJ_COMMON, NNS_G2D_VRAM_TYPE_2DSUB);
+	common_palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_SUB_OBJ_COMMON], CLSYS_DRAW_SUB) / 0x20;
 	
 	//各プレイヤーのカラーデータをテンポラリバッファへコピー
 	for(player = 0; player < game->bsw->player_max; player++){
@@ -2045,7 +1978,7 @@ void BalloonTool_PaletteSwap_Storm(BALLOON_GAME_PTR game)
 	u16 *plttbuf, *transbuf;
 	int common_palno;
 	
-	common_palno = CATS_PlttID_NoGet(game->crp, PLTTID_SUB_OBJ_COMMON, NNS_G2D_VRAM_TYPE_2DSUB);
+	common_palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_SUB_OBJ_COMMON], CLSYS_DRAW_SUB) / 0x20;
 	
 	//各プレイヤーのカラーデータをテンポラリバッファへコピー
 	for(player = 0; player < game->bsw->player_max; player++){
@@ -2221,25 +2154,28 @@ BOOL BalloonTool_SendAirBoosterSet(BALLOON_GAME_PTR game, int booster_type)
 void Joint_ActorCreateAll(BALLOON_GAME_PTR game, JOINT_WORK *joint)
 {
 	GFL_CLWK* cap;
-	TCATS_OBJECT_ADD_PARAM_S act_head;
+	GFL_CLWK_DATA act_head;
 	int i;
 
 	act_head = JointObjParam;
 	for(i = 0; i < JOINT_ACTOR_MAX; i++){
-		joint->cap[i] = CATS_ObjectAdd_S(game->csp, game->crp, &act_head);
-		CATS_ObjectPosSetCap_SubSurface(joint->cap[i], 
-			JointActorPosTbl[i].x, JointActorPosTbl[i].y, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectAnimeSeqSetCap(joint->cap[i], MIXOBJ_ANMSEQ_JOINT_UD + i/2);
-		CATS_ObjectUpdate(joint->cap[i]->act);
+		act_head.pos_x = JointActorPosTbl[i].x;
+		act_head.pos_y = JointActorPosTbl[i].y;
+		joint->cap[i] = GFL_CLACT_WK_Create(game->clunit, 
+			CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, 
+			CELLID_SUB_BALLOON_MIX, &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
+		GFL_CLACT_WK_SetPlttOffs(joint->cap[i], PALOFS_SUB_JOINT);
+		GFL_CLACT_WK_SetAnmSeq(joint->cap[i], MIXOBJ_ANMSEQ_JOINT_UD + i/2);
+		GFL_CLACT_WK_AddAnmFrame(joint->cap[i], FX32_ONE);
 	}
 	
 	switch(game->bsw->player_max){
 	case 2:
-		CATS_ObjectEnableCap(joint->cap[JOINT_ACTOR_L], CATS_ENABLE_FALSE);
-		CATS_ObjectEnableCap(joint->cap[JOINT_ACTOR_R], CATS_ENABLE_FALSE);
+		GFL_CLACT_WK_SetDrawEnable(joint->cap[JOINT_ACTOR_L], FALSE);
+		GFL_CLACT_WK_SetDrawEnable(joint->cap[JOINT_ACTOR_R], FALSE);
 		break;
 	case 3:
-		CATS_ObjectEnableCap(joint->cap[JOINT_ACTOR_U], CATS_ENABLE_FALSE);
+		GFL_CLACT_WK_SetDrawEnable(joint->cap[JOINT_ACTOR_U], FALSE);
 		break;
 	}
 }
@@ -2256,7 +2192,7 @@ void Joint_ActorDeleteAll(BALLOON_GAME_PTR game, JOINT_WORK *joint)
 	int i;
 	
 	for(i = 0; i < JOINT_ACTOR_MAX; i++){
-		CATS_ActorPointerDelete_S(joint->cap[i]);
+		GFL_CLACT_WK_Remove(joint->cap[i]);
 	}
 }
 
@@ -2270,7 +2206,8 @@ void Joint_ActorDeleteAll(BALLOON_GAME_PTR game, JOINT_WORK *joint)
 //--------------------------------------------------------------
 void Booster_ActorCreateAll(BALLOON_GAME_PTR game, BOOSTER_WORK *booster)
 {
-	TCATS_OBJECT_ADD_PARAM_S act_head;
+	GFL_CLWK_DATA act_head;
+	GFL_CLWK_AFFINEDATA aff_head;
 	int i, pal_ofs;
 	fx32 base_x, base_y;
 	
@@ -2283,42 +2220,45 @@ void Booster_ActorCreateAll(BALLOON_GAME_PTR game, BOOSTER_WORK *booster)
 		base_y = 196/2 + (-FX_Mul(
 			Cos360FX(booster->theta + booster->move[i].start_theta), BOOSTER_FURIHABA_Y));
 		
-//		act_head.pal = pal_ofs;
-		booster->move[i].cap = CATS_ObjectAdd_S(game->csp, game->crp, &act_head);
-		CATS_ObjectPosSetCap_SubSurface(booster->move[i].cap, 
-			base_x, base_y + BOOSTER_OFFSET_Y, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectAnimeSeqSetCap(booster->move[i].cap, 
+		act_head.pos_x = base_x;
+		act_head.pos_y = base_y + BOOSTER_OFFSET_Y;
+		booster->move[i].cap = GFL_CLACT_WK_Create(game->clunit, 
+			CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, 
+			CELLID_SUB_BALLOON_MIX, &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
+		GFL_CLACT_WK_SetPlttOffs(booster->move[i].cap, PALOFS_SUB_BOOSTER_RED);
+		GFL_CLACT_WK_SetAnmSeq(booster->move[i].cap, 
 			BoosterType_StartSeqAnimeNo[i + BOOSTER_TYPE_NORMAL]);
-		CATS_ObjectUpdate(booster->move[i].cap->act);
-		CATS_ObjectEnableCap(booster->move[i].cap, CATS_ENABLE_FALSE);
+		GFL_CLACT_WK_AddAnmFrame(booster->move[i].cap, FX32_ONE);
+		GFL_CLACT_WK_SetDrawEnable(booster->move[i].cap, FALSE);
 		
 		//ヒットエフェクト
-		booster->move[i].hit_cap = CATS_ObjectAdd_S(game->csp, game->crp, &BoosterHitObjParam);
-		CATS_ObjectPosSetCap_SubSurface(booster->move[i].hit_cap, 
-			0, 0, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectAnimeSeqSetCap(booster->move[i].hit_cap, MIXOBJ_ANMSEQ_BOOSTER_HIT_EFF);
-		CATS_ObjectUpdate(booster->move[i].hit_cap->act);
-		CATS_ObjectEnableCap(booster->move[i].hit_cap, CATS_ENABLE_FALSE);
+		booster->move[i].hit_cap = GFL_CLACT_WK_Create(game->clunit, 
+			CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, CELLID_SUB_BALLOON_MIX, 
+			&BoosterHitObjParam, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
+		GFL_CLACT_WK_SetPlttOffs(booster->move[i].hit_cap, PALOFS_SUB_BOOSTER_HIT);
+		GFL_CLACT_WK_SetAnmSeq(booster->move[i].hit_cap, MIXOBJ_ANMSEQ_BOOSTER_HIT_EFF);
+		GFL_CLACT_WK_AddAnmFrame(booster->move[i].hit_cap, FX32_ONE);
+		GFL_CLACT_WK_SetDrawEnable(booster->move[i].hit_cap, FALSE);
 		
 		//影
-		booster->move[i].shadow_cap 
-			= CATS_ObjectAdd_S(game->csp, game->crp, &BoosterShadowObjParam);
-		CATS_ObjectPosSetCap_SubSurface(booster->move[i].shadow_cap, 
-			base_x, base_y + BOOSTER_OFFSET_Y + BOOSTER_SHADOW_OFFSET_Y, 
-			BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectObjModeSetCap(booster->move[i].shadow_cap, GX_OAM_MODE_XLU);	//半透明ON
-		CATS_ObjectAffineSetCap(booster->move[i].shadow_cap, CLACT_AFFINE_NORMAL);	//拡縮ON
-		CATS_ObjectScaleSetCap(booster->move[i].shadow_cap, 1.0f, 1.0f);
-		CATS_ObjectAnimeSeqSetCap(booster->move[i].shadow_cap, MIXOBJ_ANMSEQ_BOOSTER_SHADOW + i);
-		CATS_ObjectUpdate(booster->move[i].shadow_cap->act);
-		CATS_ObjectEnableCap(booster->move[i].shadow_cap, CATS_ENABLE_FALSE);
+		aff_head = BoosterShadowObjParam;
+		aff_head.clwkdata.pos_x = base_x;
+		aff_head.clwkdata.pos_y = base_y + BOOSTER_OFFSET_Y + BOOSTER_SHADOW_OFFSET_Y;
+		booster->move[i].shadow_cap = GFL_CLACT_WK_CreateAffine(game->clunit, 
+			CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, CELLID_SUB_BALLOON_MIX, 
+			&aff_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
+		GFL_CLACT_WK_SetPlttOffs(booster->move[i].shadow_cap, PALOFS_SUB_BOOSTER_SHADOW);
+		GFL_CLACT_WK_SetObjMode(booster->move[i].shadow_cap, GX_OAM_MODE_XLU);	//半透明ON
+		GFL_CLACT_WK_SetAnmSeq(booster->move[i].shadow_cap, MIXOBJ_ANMSEQ_BOOSTER_SHADOW + i);
+		GFL_CLACT_WK_AddAnmFrame(booster->move[i].shadow_cap, FX32_ONE);
+		GFL_CLACT_WK_SetDrawEnable(booster->move[i].shadow_cap, FALSE);
 		
 		//着地の煙
 		BoosterLandSmoke_ActorCreate(game, &booster->move[i].land_smoke);
 	}
 	
-	CATS_ObjectEnableCap(booster->move[BOOSTER_ACTOR_NORMAL].cap, CATS_ENABLE_TRUE);
-	CATS_ObjectEnableCap(booster->move[BOOSTER_ACTOR_NORMAL].shadow_cap, CATS_ENABLE_TRUE);
+	GFL_CLACT_WK_SetDrawEnable(booster->move[BOOSTER_ACTOR_NORMAL].cap, TRUE);
+	GFL_CLACT_WK_SetDrawEnable(booster->move[BOOSTER_ACTOR_NORMAL].shadow_cap, TRUE);
 }
 
 //--------------------------------------------------------------
@@ -2334,9 +2274,9 @@ void Booster_ActorDeleteAll(BALLOON_GAME_PTR game, BOOSTER_WORK *booster)
 	int i;
 	
 	for(i = 0; i < BOOSTER_ACTOR_MAX; i++){
-		CATS_ActorPointerDelete_S(booster->move[i].cap);
-		CATS_ActorPointerDelete_S(booster->move[i].hit_cap);
-		CATS_ActorPointerDelete_S(booster->move[i].shadow_cap);
+		GFL_CLACT_WK_Remove(booster->move[i].cap);
+		GFL_CLACT_WK_Remove(booster->move[i].hit_cap);
+		GFL_CLACT_WK_Remove(booster->move[i].shadow_cap);
 		BoosterLandSmoke_ActorDelete(game, &booster->move[i].land_smoke);
 	}
 }
@@ -2545,24 +2485,24 @@ static int BoosterMove_Wait(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOSTE
 //--------------------------------------------------------------
 static int BoosterMove_Appear(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOSTER_MOVE *move)
 {
-	s16 x, y, add_x, add_y, offset_y, offset_x;
+	s16 add_x, add_y, offset_y, offset_x;
 	fx32 jump_theta;
 	int jump_y = 0;
 	fx32 check_scale_xy;
-	f32 scale_xy;
+	GFL_CLACTPOS pos, srcpos;
 	
 	add_x = 0;
 	add_y = 0;
-	x = move->local_x;
-	y = move->local_y;
+	pos.x = move->local_x;
+	pos.y = move->local_y;
 	
 	switch(move->seq){
 	case 0:
-		CATS_ObjectEnableCap(move->cap, CATS_ENABLE_TRUE);
-		CATS_ObjectEnableCap(move->shadow_cap, CATS_ENABLE_TRUE);
-		CATS_ObjectPosGetCap_SubSurface(move->cap, &x, &y, BALLOON_SUB_ACTOR_DISTANCE);
-		move->local_x = x;
-		move->local_y = y;
+		GFL_CLACT_WK_SetDrawEnable(move->cap, TRUE);
+		GFL_CLACT_WK_SetDrawEnable(move->shadow_cap, TRUE);
+		GFL_CLACT_WK_GetPos(move->cap, &pos, CLWK_SETSF_NONE);
+		move->local_x = pos.x;
+		move->local_y = pos.y;
 		move->seq++;
 		//break;
 	case 1:
@@ -2570,22 +2510,22 @@ static int BoosterMove_Appear(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 		case 0:
 			offset_y = move->local_y - BOOSTER_APPEAR_START_Y_0;
 			add_y = move->local_frame * offset_y / BOOSTER_APPEAR_FRAME;
-			y = BOOSTER_APPEAR_START_Y_0 + add_y;
+			pos.y = BOOSTER_APPEAR_START_Y_0 + add_y;
 			break;
 		case 90<<FX32_SHIFT:
 			offset_x = move->local_x - BOOSTER_APPEAR_START_X_90;
 			add_x = move->local_frame * offset_x / BOOSTER_APPEAR_FRAME;
-			x = BOOSTER_APPEAR_START_X_90 + add_x;
+			pos.x = BOOSTER_APPEAR_START_X_90 + add_x;
 			break;
 		case 180<<FX32_SHIFT:
 			offset_y = move->local_y - BOOSTER_APPEAR_START_Y_180;
 			add_y = move->local_frame * offset_y / BOOSTER_APPEAR_FRAME;
-			y = BOOSTER_APPEAR_START_Y_180 + add_y;
+			pos.y = BOOSTER_APPEAR_START_Y_180 + add_y;
 			break;
 		case 270<<FX32_SHIFT:
 			offset_x = move->local_x - BOOSTER_APPEAR_START_X_270;
 			add_x = move->local_frame * offset_x / BOOSTER_APPEAR_FRAME;
-			x = BOOSTER_APPEAR_START_X_270 + add_x;
+			pos.x = BOOSTER_APPEAR_START_X_270 + add_x;
 			break;
 		default:
 			GF_ASSERT(0);
@@ -2593,11 +2533,12 @@ static int BoosterMove_Appear(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 		}
 		
 		if(move->local_frame >= BOOSTER_APPEAR_FRAME){
-			CATS_ObjectPosSetCap_SubSurface(
-				move->cap, move->local_x, move->local_y, BALLOON_SUB_ACTOR_DISTANCE);
-			CATS_ObjectPosSetCap_SubSurface(
-				move->shadow_cap, move->local_x, move->local_y + BOOSTER_SHADOW_OFFSET_Y, 
-				BALLOON_SUB_ACTOR_DISTANCE);
+			srcpos.x = move->local_x;
+			srcpos.y = move->local_y;
+			GFL_CLACT_WK_SetPos(move->cap, &srcpos, CLWK_SETSF_NONE);
+			srcpos.x = move->local_x;
+			srcpos.y = move->local_y + BOOSTER_SHADOW_OFFSET_Y;
+			GFL_CLACT_WK_SetPos(move->shadow_cap, &srcpos, CLWK_SETSF_NONE);
 			BoosterMoveModeChange(move, BOOSTER_MODE_NORMAL);
 			BoosterLandSmoke_SmokeReq(game, move, &move->land_smoke);
 			return TRUE;
@@ -2605,13 +2546,16 @@ static int BoosterMove_Appear(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 
 		jump_theta = ((180 * move->local_frame) << FX32_SHIFT) / BOOSTER_APPEAR_FRAME;
 		jump_y = -(FX_Mul(Sin360FX(jump_theta), BOOSTER_APPEAR_JUMP_FURIHABA_Y)) / FX32_ONE;
-		CATS_ObjectPosSetCap_SubSurface(move->cap, x, y + jump_y, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectPosSetCap_SubSurface(move->shadow_cap, x, y + BOOSTER_SHADOW_OFFSET_Y, 
-			BALLOON_SUB_ACTOR_DISTANCE);
+		srcpos.x = pos.x;
+		srcpos.y = pos.y + jump_y;
+		GFL_CLACT_WK_SetPos(move->cap, &srcpos, CLWK_SETSF_NONE);
+		srcpos.x = pos.x;
+		srcpos.y = pos.y + BOOSTER_SHADOW_OFFSET_Y;
+		GFL_CLACT_WK_SetPos(move->shadow_cap, &srcpos, CLWK_SETSF_NONE);
 		check_scale_xy 
 			= FX32_ONE - (FX32_ONE * (-jump_y/3) / (BOOSTER_APPEAR_JUMP_FURIHABA_Y >> FX32_SHIFT));
-		scale_xy = FX_FX32_TO_F32(check_scale_xy);
-		CATS_ObjectScaleSetCap(move->shadow_cap, scale_xy, scale_xy);
+		GFL_CLACT_WK_SetTypeScale(move->shadow_cap, check_scale_xy, CLSYS_MAT_X);
+		GFL_CLACT_WK_SetTypeScale(move->shadow_cap, check_scale_xy, CLSYS_MAT_Y);
 		break;
 	}
 	move->local_frame++;
@@ -2635,17 +2579,17 @@ static int BoosterMove_Normal(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 	fx32 jump_theta;
 	int offset_y = 0;
 	fx32 check_scale_xy;
-	f32 scale_xy;
+	GFL_CLACTPOS pos;
 	
 	if(booster->frame > 0){
-		CATS_ObjectUpdateNumCap(move->cap, (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame);
-		OS_TPrintf("seq_num = %d\n", CATS_ObjectAnimeSeqGetCap( move->cap ));
+		GFL_CLACT_WK_AddAnmFrame(move->cap, (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame);
+//		OS_TPrintf("seq_num = %d\n", CATS_ObjectAnimeSeqGetCap( move->cap ));
 		OS_TPrintf("booster anime frame = %d, lap = %d, frame = %d\n", (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame, booster->lap, booster->frame);
 	}
 	else{
-		OS_TPrintf("0 seq_num = %d\n", CATS_ObjectAnimeSeqGetCap( move->cap ));
+//		OS_TPrintf("0 seq_num = %d\n", CATS_ObjectAnimeSeqGetCap( move->cap ));
 		OS_TPrintf("0 booster anime frame = %d, lap = %d, frame = %d\n", (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame, booster->lap, booster->frame);
-		CATS_ObjectAnimeFrameSetCap(move->cap, 0);
+		GFL_CLACT_WK_SetAnmFrame(move->cap, 0);
 	}
 	
 	jump_theta = ((180 * booster->frame) << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame;
@@ -2653,17 +2597,18 @@ static int BoosterMove_Normal(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 
 	base_x = 256/2 + FX_Mul(Sin360FX(booster->theta + move->start_theta), BOOSTER_FURIHABA_X);
 	base_y = 196/2 + (-FX_Mul(Cos360FX(booster->theta + move->start_theta), BOOSTER_FURIHABA_Y));
-	CATS_ObjectPosSetCap_SubSurface(move->cap, base_x, base_y + BOOSTER_OFFSET_Y + offset_y, 
-		BALLOON_SUB_ACTOR_DISTANCE);
+	pos.x = base_x;
+	pos.y = base_y + BOOSTER_OFFSET_Y + offset_y;
+	GFL_CLACT_WK_SetPos(move->cap, &pos, CLWK_SETSF_NONE);
 	
 	//影
-	CATS_ObjectPosSetCap_SubSurface(move->shadow_cap, 
-		base_x, base_y + BOOSTER_OFFSET_Y + BOOSTER_SHADOW_OFFSET_Y, 
-		BALLOON_SUB_ACTOR_DISTANCE);
+	pos.x = base_x;
+	pos.y = base_y + BOOSTER_OFFSET_Y + BOOSTER_SHADOW_OFFSET_Y;
+	GFL_CLACT_WK_SetPos(move->shadow_cap, &pos, CLWK_SETSF_NONE);
 	check_scale_xy 
 		= FX32_ONE - (FX32_ONE * (-offset_y/3) / (BOOSTER_JUMP_FURIHABA_Y >> FX32_SHIFT));
-	scale_xy = FX_FX32_TO_F32(check_scale_xy);
-	CATS_ObjectScaleSetCap(move->shadow_cap, scale_xy, scale_xy);
+	GFL_CLACT_WK_SetTypeScale(move->shadow_cap, check_scale_xy, CLSYS_MAT_X);
+	GFL_CLACT_WK_SetTypeScale(move->shadow_cap, check_scale_xy, CLSYS_MAT_Y);
 
 	if(booster->frame == BoosterMoveDataTbl[booster->lap].move_frame - 1){
 		BoosterLandSmoke_SmokeReq(game, move, &move->land_smoke);
@@ -2691,23 +2636,25 @@ static int BoosterMove_Normal(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 //--------------------------------------------------------------
 static int BoosterMove_Hit(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOSTER_MOVE *move)
 {
-	s16 x, y;
 	int next_frame, next_byousin;
-	s16 end_x, end_y, start_x, start_y;
+	s16 end_x, end_y;
 	fx32 jump_theta;
 	int jump_y = 0;
+	GFL_CLACTPOS pos, start;
 	
 	switch(move->seq){
 	case 0:
+	#if WB_TEMP_FIX
 		Snd_SePlay(SE_BALLOON_BOOSTER_HIT);
-		CATS_ObjectPosGetCap_SubSurface(move->cap, &x, &y, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectPosSetCap_SubSurface(move->hit_cap, x, y + BOOSTER_HIT_OFFSET_Y, 
-			BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectAnimeSeqSetCap(move->hit_cap, MIXOBJ_ANMSEQ_BOOSTER_HIT_EFF);//アニメリセット
-		CATS_ObjectEnableCap(move->hit_cap, CATS_ENABLE_TRUE);
+	#endif
+		GFL_CLACT_WK_GetPos(move->cap, &pos, CLWK_SETSF_NONE);
+		pos.y += BOOSTER_HIT_OFFSET_Y;
+		GFL_CLACT_WK_SetPos(move->hit_cap, &pos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_SetAnmSeq(move->hit_cap, MIXOBJ_ANMSEQ_BOOSTER_HIT_EFF);//アニメリセット
+		GFL_CLACT_WK_SetDrawEnable(move->hit_cap, TRUE);
 		
 		//本体のアニメを変更
-		CATS_ObjectAnimeSeqSetCap(move->cap, 	//1枚目が膨らんでいる絵なので
+		GFL_CLACT_WK_SetAnmSeq(move->cap, 	//1枚目が膨らんでいる絵なので
 			BoosterType_StartSeqAnimeNo[move->booster_type] + OFFSET_ANMID_BOOSTER_SHRIVEL);
 		
 		move->local_frame = BoosterMoveDataTbl[booster->lap].hit_anime_time;
@@ -2716,15 +2663,15 @@ static int BoosterMove_Hit(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOSTER
 		break;
 	case 1:
 		if(move->local_frame == move->local_wait){
-			CATS_ObjectAnimeSeqSetCap(move->cap, 	//1枚目が凹んでいる絵なので
+			GFL_CLACT_WK_SetAnmSeq(move->cap, 	//1枚目が凹んでいる絵なので
 				BoosterType_StartSeqAnimeNo[move->booster_type] + OFFSET_ANMID_BOOSTER_SWELLING);
-			CATS_ObjectEnableCap(move->hit_cap, CATS_ENABLE_FALSE);
-			CATS_ObjectUpdateNumCap(move->hit_cap, BOOSTER_HITEFF_NEXT_ANM_FRAME);
+			GFL_CLACT_WK_SetDrawEnable(move->hit_cap, FALSE);
+			GFL_CLACT_WK_AddAnmFrame(move->hit_cap, BOOSTER_HITEFF_NEXT_ANM_FRAME);
 		}
 		if(move->local_frame == 0){
-			CATS_ObjectEnableCap(move->hit_cap, CATS_ENABLE_FALSE);	//一応ここでも
+			GFL_CLACT_WK_SetDrawEnable(move->hit_cap, FALSE);	//一応ここでも
 			//1枚目がしぼんでいる絵なので
-			CATS_ObjectAnimeSeqSetCap(move->cap, 	//1枚目が膨らんでいる絵なので
+			GFL_CLACT_WK_SetAnmSeq(move->cap, 	//1枚目が膨らんでいる絵なので
 //				BoosterType_StartSeqAnimeNo[move->booster_type] + OFFSET_ANMID_BOOSTER_SWELLING);
 				BoosterType_StartSeqAnimeNo[move->booster_type] + OFFSET_ANMID_BOOSTER_JUMP);
 			
@@ -2762,12 +2709,12 @@ static int BoosterMove_Hit(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOSTER
 		
 		end_x = 256/2 + FX_Mul(Sin360FX((360<<FX32_SHIFT) / BOOSTER_STOP_PART_NUM * next_byousin), BOOSTER_FURIHABA_X);
 		end_y = 196/2 + (-FX_Mul(Cos360FX((360<<FX32_SHIFT) / BOOSTER_STOP_PART_NUM * next_byousin), BOOSTER_FURIHABA_Y));
-		CATS_ObjectPosGetCap_SubSurface(move->cap, &start_x, &start_y, BALLOON_SUB_ACTOR_DISTANCE);
-		start_y -= BOOSTER_OFFSET_Y;
-		move->local_add_x = (end_x - start_x) * FX32_ONE / next_frame;
-		move->local_add_y = (end_y - start_y) * FX32_ONE / next_frame;
-		move->local_fx_x = start_x * FX32_ONE;
-		move->local_fx_y = start_y * FX32_ONE;
+		GFL_CLACT_WK_GetPos(move->cap, &start, CLWK_SETSF_NONE);
+		start.y -= BOOSTER_OFFSET_Y;
+		move->local_add_x = (end_x - start.x) * FX32_ONE / next_frame;
+		move->local_add_y = (end_y - start.y) * FX32_ONE / next_frame;
+		move->local_fx_x = start.x * FX32_ONE;
+		move->local_fx_y = start.y * FX32_ONE;
 		move->local_frame = next_frame;
 		move->local_work = next_frame;
 		move->seq++;
@@ -2780,23 +2727,21 @@ static int BoosterMove_Hit(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOSTER
 		jump_theta = ((180 * move->local_frame) << FX32_SHIFT) / move->local_work;
 		jump_y = -(FX_Mul(Sin360FX(jump_theta), BOOSTER_JUMP_FURIHABA_Y)) / FX32_ONE;
 		
-		CATS_ObjectPosSetCap_SubSurface(move->cap, 
-			move->local_fx_x / FX32_ONE, 
-			move->local_fx_y / FX32_ONE + BOOSTER_OFFSET_Y + jump_y, 
-			BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectUpdateNumCap(move->cap, (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / move->local_work);
+		pos.x = move->local_fx_x / FX32_ONE;
+		pos.y = move->local_fx_y / FX32_ONE + BOOSTER_OFFSET_Y + jump_y;
+		GFL_CLACT_WK_SetPos(move->cap, &pos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_AddAnmFrame(move->cap, (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / move->local_work);
 
 		//影
-		CATS_ObjectPosSetCap_SubSurface(move->shadow_cap, 
-			move->local_fx_x / FX32_ONE, 
-			move->local_fx_y / FX32_ONE + BOOSTER_OFFSET_Y + BOOSTER_SHADOW_OFFSET_Y, 
-			BALLOON_SUB_ACTOR_DISTANCE);
+		pos.x = move->local_fx_x / FX32_ONE;
+		pos.y = move->local_fx_y / FX32_ONE + BOOSTER_OFFSET_Y + BOOSTER_SHADOW_OFFSET_Y;
+		GFL_CLACT_WK_SetPos(move->shadow_cap, &pos, CLWK_SETSF_NONE);
 		
 		move->local_frame--;
 		if(move->local_frame <= 0){
-			CATS_ObjectAnimeSeqSetCap(move->cap, 
+			GFL_CLACT_WK_SetAnmSeq(move->cap, 
 				BoosterType_StartSeqAnimeNo[move->booster_type] + OFFSET_ANMID_BOOSTER_JUMP);
-			CATS_ObjectAnimeFrameSetCap(move->cap, 0);
+			GFL_CLACT_WK_SetAnmFrame(move->cap, 0);
 			BoosterMoveModeChange(move, BOOSTER_MODE_NORMAL);
 			return TRUE;
 		}
@@ -2819,23 +2764,25 @@ static int BoosterMove_Hit(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOSTER
 //--------------------------------------------------------------
 void SioBooster_ActorCreateAll(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_booster)
 {
-	TCATS_OBJECT_ADD_PARAM_S act_head;
+	GFL_CLWK_DATA act_head;
 	int i;
 	
 	act_head = BoosterObjParam;
 	for(i = 0; i < SIO_BOOSTER_ACTOR_MAX; i++){
-		sio_booster->move[i].cap = CATS_ObjectAdd_S(game->csp, game->crp, &act_head);
-		CATS_ObjectPosSetCap_SubSurface(sio_booster->move[i].cap, 
-			0, 0, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectEnableCap(sio_booster->move[i].cap, CATS_ENABLE_FALSE);
+		sio_booster->move[i].cap = GFL_CLACT_WK_Create(game->clunit, 
+			CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, 
+			CELLID_SUB_BALLOON_MIX, &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
+		GFL_CLACT_WK_SetPlttOffs(sio_booster->move[i].cap, PALOFS_SUB_BOOSTER_RED);
+		GFL_CLACT_WK_SetDrawEnable(sio_booster->move[i].cap, FALSE);
 		
 		//ヒットエフェクト
-		sio_booster->move[i].hit_cap = CATS_ObjectAdd_S(game->csp, game->crp, &BoosterHitObjParam);
-		CATS_ObjectPosSetCap_SubSurface(sio_booster->move[i].hit_cap, 
-			0, 0, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectAnimeSeqSetCap(sio_booster->move[i].hit_cap, MIXOBJ_ANMSEQ_BOOSTER_HIT_EFF);
-		CATS_ObjectUpdate(sio_booster->move[i].hit_cap->act);
-		CATS_ObjectEnableCap(sio_booster->move[i].hit_cap, CATS_ENABLE_FALSE);
+		sio_booster->move[i].hit_cap = GFL_CLACT_WK_Create(game->clunit, 
+			CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, 
+			CELLID_SUB_BALLOON_MIX, &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
+		GFL_CLACT_WK_SetPlttOffs(sio_booster->move[i].hit_cap, PALOFS_SUB_BOOSTER_HIT);
+		GFL_CLACT_WK_SetAnmSeq(sio_booster->move[i].hit_cap, MIXOBJ_ANMSEQ_BOOSTER_HIT_EFF);
+		GFL_CLACT_WK_AddAnmFrame(sio_booster->move[i].hit_cap, FX32_ONE);
+		GFL_CLACT_WK_SetDrawEnable(sio_booster->move[i].hit_cap, FALSE);
 	}
 }
 
@@ -2852,8 +2799,8 @@ void SioBooster_ActorDeleteAll(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_boos
 	int i;
 	
 	for(i = 0; i < SIO_BOOSTER_ACTOR_MAX; i++){
-		CATS_ActorPointerDelete_S(sio_booster->move[i].cap);
-		CATS_ActorPointerDelete_S(sio_booster->move[i].hit_cap);
+		GFL_CLACT_WK_Remove(sio_booster->move[i].cap);
+		GFL_CLACT_WK_Remove(sio_booster->move[i].hit_cap);
 	}
 }
 
@@ -2872,6 +2819,7 @@ void SioBooster_Appear(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_booster, int
 {
 	int i, pal_ofs, player_pos, joint_no;
 	SIO_BOOSTER_MOVE *sio_move = NULL;
+	GFL_CLACTPOS pos;
 	
 	if(booster_type == BOOSTER_TYPE_NONE || net_id == GFL_NET_SystemGetCurrentID()){
 		return;
@@ -2890,20 +2838,20 @@ void SioBooster_Appear(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_booster, int
 	player_pos = Balloon_NetID_to_PlayerPos(game, net_id);
 	pal_ofs = PlayerNoPalOfs_Booster[game->bsw->player_max][player_pos];
 //	CATS_ObjectPaletteOffsetSetCap(sio_move->cap, pal_ofs);
-	CATS_ObjectPaletteSetCap(sio_move->cap, pal_ofs);
+	GFL_CLACT_WK_SetPlttOffs(sio_move->cap, pal_ofs);
 	
 	//アニメ設定
-	CATS_ObjectAnimeSeqSetCap(sio_move->cap, 
+	GFL_CLACT_WK_SetAnmSeq(sio_move->cap, 
 		BoosterType_StartSeqAnimeNo[booster_type] + OFFSET_ANMID_BOOSTER_JUMP);
 	
 	//座標設定
 	joint_no = PlayerNoJointNo_SioBooster[game->bsw->player_max][player_pos];
 	sio_move->end_y = JointActorPosTbl[joint_no].y + BOOSTER_OFFSET_Y;
-	CATS_ObjectPosSetCap_SubSurface(sio_move->cap, 
-		JointActorPosTbl[joint_no].x, sio_move->end_y + SIO_BOOSTER_APPEAR_OFFSET_Y,
-		BALLOON_SUB_ACTOR_DISTANCE);
+	pos.x = JointActorPosTbl[joint_no].x;
+	pos.y = sio_move->end_y + SIO_BOOSTER_APPEAR_OFFSET_Y;
+	GFL_CLACT_WK_SetPos(sio_move->cap, &pos, CLWK_SETSF_NONE);
 
-	CATS_ObjectUpdate(sio_move->cap->act);
+	GFL_CLACT_WK_AddAnmFrame(sio_move->cap, FX32_ONE);
 	sio_move->booster_type = booster_type;
 	sio_move->start_wait = arrival_frame - (MATH_ABS(SIO_BOOSTER_APPEAR_OFFSET_Y) * FX32_ONE) / SIO_BOOSTER_IN_SPEED;
 	sio_move->seq = 0;
@@ -2943,13 +2891,13 @@ void SioBooster_Update(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_booster)
 //--------------------------------------------------------------
 static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOVE *sio_move)
 {
-	s16 x, y;
+	GFL_CLACTPOS pos;
 	
 	switch(sio_move->seq){
 	case 0:		//ワーク初期化
-		CATS_ObjectPosGetCap_SubSurface(sio_move->cap, &x, &y, BALLOON_SUB_ACTOR_DISTANCE);
-		sio_move->local_fx_x = x * FX32_ONE;
-		sio_move->local_fx_y = y * FX32_ONE;
+		GFL_CLACT_WK_GetPos(sio_move->cap, &pos, CLWK_SETSF_NONE);
+		sio_move->local_fx_x = pos.x * FX32_ONE;
+		sio_move->local_fx_y = pos.y * FX32_ONE;
 		sio_move->seq++;
 		//break;
 	case 1:		//落下
@@ -2957,7 +2905,7 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
 			sio_move->start_wait--;
 			break;
 		}
-		CATS_ObjectEnableCap(sio_move->cap, CATS_ENABLE_TRUE);
+		GFL_CLACT_WK_SetDrawEnable(sio_move->cap, TRUE);
 		sio_move->local_fx_y += SIO_BOOSTER_IN_SPEED;
 		if((sio_move->local_fx_y / FX32_ONE) >= sio_move->end_y){
 			sio_move->local_fx_y = sio_move->end_y * FX32_ONE;
@@ -2965,15 +2913,17 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
 		}
 		break;
 	case 2:		//アニメ
-		CATS_ObjectPosGetCap_SubSurface(sio_move->cap, &x, &y, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectPosSetCap_SubSurface(sio_move->hit_cap, x, y + BOOSTER_HIT_OFFSET_Y, 
-			BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectAnimeSeqSetCap(sio_move->hit_cap, MIXOBJ_ANMSEQ_BOOSTER_HIT_EFF);
-		CATS_ObjectEnableCap(sio_move->hit_cap, CATS_ENABLE_TRUE);
+		GFL_CLACT_WK_GetPos(sio_move->cap, &pos, CLWK_SETSF_NONE);
+		pos.y += BOOSTER_HIT_OFFSET_Y;
+		GFL_CLACT_WK_SetPos(sio_move->hit_cap, &pos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_SetAnmSeq(sio_move->hit_cap, MIXOBJ_ANMSEQ_BOOSTER_HIT_EFF);
+		GFL_CLACT_WK_SetDrawEnable(sio_move->hit_cap, TRUE);
+	#if WB_TEMP_FIX
 		Snd_SePlay(SE_BALLOON_BOOSTER_HIT);
-
+	#endif
+	
 		//本体のアニメを変更
-		CATS_ObjectAnimeSeqSetCap(sio_move->cap, 	//1枚目が膨らんでいる絵なので
+		GFL_CLACT_WK_SetAnmSeq(sio_move->cap, 	//1枚目が膨らんでいる絵なので
 			BoosterType_StartSeqAnimeNo[sio_move->booster_type] + OFFSET_ANMID_BOOSTER_SHRIVEL);
 		sio_move->local_frame = 8;
 		sio_move->seq++;
@@ -2981,11 +2931,11 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
 	case 3:
 		sio_move->local_frame--;
 		if(sio_move->local_frame == 3){
-			CATS_ObjectUpdateNumCap(sio_move->hit_cap, BOOSTER_HITEFF_NEXT_ANM_FRAME);
+			GFL_CLACT_WK_AddAnmFrame(sio_move->hit_cap, BOOSTER_HITEFF_NEXT_ANM_FRAME);
 		}
 		if(sio_move->local_frame == 0){
-			CATS_ObjectEnableCap(sio_move->hit_cap, CATS_ENABLE_FALSE);
-			CATS_ObjectAnimeSeqSetCap(sio_move->cap,	//1枚目がしぼんでいる絵なので
+			GFL_CLACT_WK_SetDrawEnable(sio_move->hit_cap, FALSE);
+			GFL_CLACT_WK_SetAnmSeq(sio_move->cap,	//1枚目がしぼんでいる絵なので
 				BoosterType_StartSeqAnimeNo[sio_move->booster_type] + OFFSET_ANMID_BOOSTER_JUMP);
 			sio_move->seq++;
 		}
@@ -2993,7 +2943,7 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
 	case 4:		//上昇
 		sio_move->local_fx_y -= SIO_BOOSTER_OUT_SPEED;
 		if((sio_move->local_fx_y / FX32_ONE) <= sio_move->end_y + SIO_BOOSTER_APPEAR_OFFSET_Y){
-			CATS_ObjectEnableCap(sio_move->cap, CATS_ENABLE_FALSE);
+			GFL_CLACT_WK_SetDrawEnable(sio_move->cap, FALSE);
 			sio_move->seq = 0;
 			sio_move->occ = FALSE;
 			return FALSE;
@@ -3001,8 +2951,9 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
 		break;
 	}
 	
-	CATS_ObjectPosSetCap_SubSurface(sio_move->cap, sio_move->local_fx_x / FX32_ONE, 
-		sio_move->local_fx_y / FX32_ONE, BALLOON_SUB_ACTOR_DISTANCE);
+	pos.x = sio_move->local_fx_x / FX32_ONE;
+	pos.y = sio_move->local_fx_y / FX32_ONE;
+	GFL_CLACT_WK_SetPos(sio_move->cap, &pos, CLWK_SETSF_NONE);
 	return TRUE;
 }
 
@@ -3333,8 +3284,9 @@ GFL_CLWK* CounterWindow_ActorCreate(BALLOON_GAME_PTR game)
 	GFL_CLWK* cap;
 
 	//-- アクター生成 --//
-	cap = CATS_ObjectAdd_S(game->csp, game->crp, &CounterWindowObjParam);
-	CATS_ObjectUpdate(cap->act);
+	cap = GFL_CLACT_WK_Create(game->clunit, CHARID_COUNTER_WIN, PLTTID_COUNTER_WIN, 
+		CELLID_COUNTER_WIN, &CounterWindowObjParam, CLSYS_DEFREND_MAIN, HEAPID_BALLOON);
+	GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 	return cap;
 }
 
@@ -3397,7 +3349,7 @@ void CounterDummyNumber_ActorDelete(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 void CounterWindow_ActorDelete(BALLOON_GAME_PTR game, GFL_CLWK* cap)
 {
-	CATS_ActorPointerDelete_S(cap);
+	GFL_CLACT_WK_Remove(cap);
 }
 
 //--------------------------------------------------------------
@@ -3411,10 +3363,10 @@ GFL_CLWK* TouchPen_ActorCreate(BALLOON_GAME_PTR game)
 {
 	GFL_CLWK* cap;
 
-	cap = CATS_ObjectAdd_S(game->csp, game->crp, &TouchPenObjParam);
-//	CATS_ObjectPosSetCap_SubSurface(cap, x, y, BALLOON_SUB_ACTOR_DISTANCE);
-	CATS_ObjectEnableCap(cap, CATS_ENABLE_FALSE);
-	CATS_ObjectUpdate(cap->act);
+	cap = GFL_CLACT_WK_Create(game->clunit, CHARID_TOUCH_PEN, PLTTID_TOUCH_PEN, 
+		CELLID_TOUCH_PEN, &TouchPenObjParam, CLSYS_DEFREND_MAIN, HEAPID_BALLOON);
+	GFL_CLACT_WK_SetDrawEnable(cap, FALSE);
+	GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 	return cap;
 }
 
@@ -3427,7 +3379,7 @@ GFL_CLWK* TouchPen_ActorCreate(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 void TouchPen_ActorDelete(BALLOON_GAME_PTR game, GFL_CLWK* cap)
 {
-	CATS_ActorPointerDelete_S(cap);
+	GFL_CLACT_WK_Remove(cap);
 }
 
 //--------------------------------------------------------------
@@ -3443,12 +3395,15 @@ void TouchPen_ActorDelete(BALLOON_GAME_PTR game, GFL_CLWK* cap)
 //--------------------------------------------------------------
 BOOL BalloonTool_TouchPenDemoMove(BALLOON_GAME_PTR game, BALLOON_PEN *pen)
 {
+	GFL_CLACTPOS pos, calcpos;
+
 	switch(pen->seq){
 	case 0:
 	case 5:
-		CATS_ObjectPosSetCap_SubSurface(pen->cap, 
-			DEMO_PEN_X, DEMO_PEN_Y, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectEnableCap(pen->cap, CATS_ENABLE_TRUE);
+		pos.x = DEMO_PEN_X;
+		pos.y = DEMO_PEN_Y;
+		GFL_CLACT_WK_SetPos(pen->cap, &pos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_SetDrawEnable(pen->cap, TRUE);
 		pen->seq++;
 		break;
 	case 1:
@@ -3467,7 +3422,9 @@ BOOL BalloonTool_TouchPenDemoMove(BALLOON_GAME_PTR game, BALLOON_PEN *pen)
 	case 7:
 		pen->tp_trg = FALSE;
 		pen->tp_y += DEMO_PEN_SPEED;
-		CATS_ObjectPosMoveCap(pen->cap, 0, DEMO_PEN_SPEED);
+		GFL_CLACT_WK_GetPos(pen->cap, &calcpos, CLWK_SETSF_NONE);
+		calcpos.y += DEMO_PEN_SPEED;
+		GFL_CLACT_WK_SetPos(pen->cap, &calcpos, CLWK_SETSF_NONE);
 		if(pen->tp_y > 192 - 96){
 			pen->seq++;
 		}
@@ -3475,7 +3432,7 @@ BOOL BalloonTool_TouchPenDemoMove(BALLOON_GAME_PTR game, BALLOON_PEN *pen)
 	case 3:
 	case 8:
 		pen->tp_cont = FALSE;
-		CATS_ObjectEnableCap(pen->cap, CATS_ENABLE_FALSE);
+		GFL_CLACT_WK_SetDrawEnable(pen->cap, FALSE);
 		pen->seq++;
 		//break;
 	case 4:
@@ -3506,12 +3463,13 @@ static void BoosterLandSmoke_ActorCreate(BALLOON_GAME_PTR game, BOOSTER_LAND_SMO
 	int i;
 	
 	for(i = 0; i < BOOSTER_LAND_SMOKE_NUM; i++){
-		cap = CATS_ObjectAdd_S(game->csp, game->crp, &BoosterLandSmokeObjParam);
-	//	CATS_ObjectPosSetCap_SubSurface(cap, x, y, BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectAnimeSeqSetCap(cap, MIXOBJ_ANMSEQ_BOOSTER_LAND_SMOKE);
-		CATS_ObjectObjModeSetCap(cap, GX_OAM_MODE_XLU);	//半透明ON
-		CATS_ObjectEnableCap(cap, CATS_ENABLE_FALSE);
-		CATS_ObjectUpdate(cap->act);
+		cap = GFL_CLACT_WK_Create(game->clunit, CHARID_SUB_BALLOON_MIX, PLTTID_SUB_OBJ_COMMON, 
+			CELLID_SUB_BALLOON_MIX, &BoosterLandSmokeObjParam, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
+		GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_BOOSTER_LAND_SMOKE);
+		GFL_CLACT_WK_SetAnmSeq(cap, MIXOBJ_ANMSEQ_BOOSTER_LAND_SMOKE);
+		GFL_CLACT_WK_SetObjMode(cap, GX_OAM_MODE_XLU);	//半透明ON
+		GFL_CLACT_WK_SetDrawEnable(cap, FALSE);
+		GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 		
 		land_smoke->cap[i] = cap;
 	}
@@ -3529,7 +3487,7 @@ static void BoosterLandSmoke_ActorDelete(BALLOON_GAME_PTR game, BOOSTER_LAND_SMO
 	int i;
 	
 	for(i = 0; i < BOOSTER_LAND_SMOKE_NUM; i++){
-		CATS_ActorPointerDelete_S(land_smoke->cap[i]);
+		GFL_CLACT_WK_Remove(land_smoke->cap[i]);
 	}
 }
 
@@ -3544,23 +3502,25 @@ static void BoosterLandSmoke_ActorDelete(BALLOON_GAME_PTR game, BOOSTER_LAND_SMO
 //--------------------------------------------------------------
 static void BoosterLandSmoke_SmokeReq(BALLOON_GAME_PTR game, BOOSTER_MOVE *move, BOOSTER_LAND_SMOKE *land_smoke)
 {
-	s16 x, y;
 	int i;
-	
-	CATS_ObjectPosGetCap_SubSurface(move->cap, &x, &y, BALLOON_SUB_ACTOR_DISTANCE);
+	GFL_CLACTPOS pos, srcpos;
+
+	GFL_CLACT_WK_GetPos(move->cap, &pos, CLWK_SETSF_NONE);
 	
 	for(i = 0; i < BOOSTER_LAND_SMOKE_NUM; i++){
-		CATS_ObjectPosSetCap_SubSurface(land_smoke->cap[i], x, y + BOOSTER_LAND_SMOKE_OFFSET_Y, 
-			BALLOON_SUB_ACTOR_DISTANCE);
-		CATS_ObjectAnimeSeqSetCap(land_smoke->cap[i], 
-			//MIXOBJ_ANMSEQ_BOOSTER_LAND_SMOKE + gf_rand() % BOOSTER_LAND_SMOKE_ANM_PATERN);
+		srcpos.x = pos.x;
+		srcpos.y = pos.y + BOOSTER_LAND_SMOKE_OFFSET_Y;
+		land_smoke->x[i] = srcpos.x * FX32_ONE;
+		land_smoke->y[i] = srcpos.y * FX32_ONE;
+		GFL_CLACT_WK_SetPos(land_smoke->cap[i], &srcpos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_SetAnmSeq(land_smoke->cap[i], 
 			MIXOBJ_ANMSEQ_BOOSTER_LAND_SMOKE);
-		CATS_ObjectObjModeSetCap(land_smoke->cap[i], GX_OAM_MODE_XLU);	//半透明ON
-		CATS_ObjectEnableCap(land_smoke->cap[i], CATS_ENABLE_TRUE);
-		//CATS_ObjectUpdate(land_smoke->cap[i]->act);
+		GFL_CLACT_WK_SetObjMode(land_smoke->cap[i], GX_OAM_MODE_XLU);	//半透明ON
+		GFL_CLACT_WK_SetDrawEnable(land_smoke->cap[i], TRUE);
+		//GFL_CLACT_WK_AddAnmFrame(land_smoke->cap[i], FX32_ONE);
 
-		land_smoke->add_x[i] = gf_rand() % 0x1000 + 0x1000;
-		land_smoke->add_y[i] = gf_rand() % 0x400 + 0x400;
+		land_smoke->add_x[i] = GFUser_GetPublicRand(0x1000) + 0x1000;
+		land_smoke->add_y[i] = GFUser_GetPublicRand(0x400) + 0x400;
 		if(i & 1){
 			land_smoke->add_x[i] *= -1;
 		}
@@ -3581,20 +3541,24 @@ static void BoosterLandSmoke_SmokeReq(BALLOON_GAME_PTR game, BOOSTER_MOVE *move,
 static void BoosterLandSmoke_Update(BALLOON_GAME_PTR game, BOOSTER_MOVE *move, BOOSTER_LAND_SMOKE *land_smoke)
 {
 	int i;
+	GFL_CLACTPOS move_pos;
 	
 	switch(land_smoke->seq){
 	case 0:
 		break;
 	case 1:
 		for(i = 0; i < BOOSTER_LAND_SMOKE_NUM; i++){
-			CATS_ObjectPosMoveCapFx32(land_smoke->cap[i], 
-				land_smoke->add_x[i], -land_smoke->add_y[i]);
-			CATS_ObjectUpdate(land_smoke->cap[i]->act);
+			land_smoke->x[i] += land_smoke->add_x[i];
+			land_smoke->y[i] += -land_smoke->add_y[i];
+			move_pos.x = land_smoke->x[i] / FX32_ONE;
+			move_pos.y = land_smoke->y[i] / FX32_ONE;
+			GFL_CLACT_WK_SetPos(land_smoke->cap[i], &move_pos, CLWK_SETSF_NONE);
+			GFL_CLACT_WK_AddAnmFrame(land_smoke->cap[i], FX32_ONE);
 		}
 		land_smoke->time++;
 		if(land_smoke->time > BOOSTER_LAND_SMOKE_DELETE_TIME){
 			for(i = 0; i < BOOSTER_LAND_SMOKE_NUM; i++){
-				CATS_ObjectEnableCap(land_smoke->cap[i], CATS_ENABLE_FALSE);
+				GFL_CLACT_WK_SetDrawEnable(land_smoke->cap[i], FALSE);
 			}
 			land_smoke->seq = 0;
 		}

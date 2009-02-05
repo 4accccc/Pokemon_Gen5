@@ -742,7 +742,7 @@ static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 	case 0:
 		{
 			f32 x, y;
-			CATS_ObjectAnimeSeqSetCap( wk->cap_kage, eANM_LEVEL_EFF );
+			GFL_CLACT_WK_SetAnmSeq( wk->cap_kage, eANM_LEVEL_EFF );
 			CATS_ObjectPriSetCap( wk->cap_kage, 0 );			
 			CATS_ObjectAffineSetCap( wk->cap_kage, CLACT_AFFINE_DOUBLE );
 			CATS_ObjectScaleGetCap( wk->cap_kage, &x, &y );
@@ -814,7 +814,7 @@ static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 	default:
 		///< —Ž‰ºˆ—
 		CATS_ObjectScaleSetCap( wk->cap_kage, 1.0f, 1.0f );
-		CATS_ObjectAnimeSeqSetCap( wk->cap_kage, eANM_KAGE );
+		GFL_CLACT_WK_SetAnmSeq( wk->cap_kage, eANM_KAGE );
 		CATS_ObjectPriSetCap( wk->cap_kage, 2 );
 		CATS_ObjectAffineSetCap( wk->cap_kage, CLACT_AFFINE_NONE );
 		wk->bStart = FALSE;
@@ -1707,6 +1707,7 @@ BOOL BB_Client_JumpOnToBall( BB_CLIENT* wk )
 	BB_3D_MODEL* model = &wk->bb3d_mane[ 0 ];
 	s16 py = model->pos.y >> FX32_SHIFT;
 	s16 pz = model->pos.z >> FX32_SHIFT;
+	GFL_CLACTPOS calcpos;
 
 	if ( (++wk->wait) < BB_JUMP_BALL_WAIT ){ return FALSE; }
 	
@@ -1715,7 +1716,9 @@ BOOL BB_Client_JumpOnToBall( BB_CLIENT* wk )
 		if ( wk->cap_mane[ i ] == NULL ){
 			continue;
 		}
-		CATS_ObjectPosMoveCap( wk->cap_mane[ i ], 0, -pos_2d_y );
+		GFL_CLACT_WK_GetPos(wk->cap_mane[ i ], &calcpos, CLWK_SETSF_NONE);
+		calcpos.y += -pos_2d_y;
+		GFL_CLACT_WK_SetPos(wk->cap_mane[ i ], &calcpos, CLWK_SETSF_NONE);
 	}
 	
 	///< ‰º‰æ–Ê

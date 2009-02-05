@@ -807,7 +807,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 						= fps->my_stamp_param[fps->select_no].personal_rnd;
 					if(GFL_UI_KEY_GetCont() & PAD_BUTTON_B){
 						fps->my_stamp_param[fps->select_no].personal_rnd 
-							= DebugSeikakuTbl[gf_rand() % NELEMS(DebugSeikakuTbl)];
+							= DebugSeikakuTbl[GFUser_GetPublicRand(NELEMS(DebugSeikakuTbl))];
 					}
 					else{
 						fps->my_stamp_param[fps->select_no].personal_rnd 
@@ -1346,11 +1346,11 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 	//-- メイン画面 --//
 	PaletteWorkSet_Arc(fps->pfd, ARC_FOOTPRINT_GRA, NARC_footprint_board_a_board_sita_NCLR, 
 		HEAPID_FOOTPRINT, FADE_MAIN_BG, 0x200-0x40, 0);
-	ArcUtil_HDL_BgCharSet(p_handle, NARC_footprint_board_a_board_sita_NCGR, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_footprint_board_a_board_sita_NCGR, 
 		FOOT_FRAME_PANEL, 0, 0, 0, HEAPID_FOOTPRINT);
-	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_a_board_sita_NSCR, 
+	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_footprint_board_a_board_sita_NSCR, 
 		FOOT_FRAME_PANEL, 0, 0, 0, HEAPID_FOOTPRINT);
-	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_a_board_sita_bg_NSCR, 
+	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_footprint_board_a_board_sita_bg_NSCR, 
 		FOOT_FRAME_BG, 0, 0, 0, HEAPID_FOOTPRINT);
 
 	//-- サブ画面 --//
@@ -1359,11 +1359,11 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 	if(fps->parent_work->board_type == FOOTPRINT_BOARD_TYPE_WHITE){
 		PaletteWorkCopy(fps->pfd, FADE_SUB_BG, 16*1, FADE_SUB_BG, 16*0, 0x20);
 	}
-	ArcUtil_HDL_BgCharSet(p_handle, NARC_footprint_board_ashiato_board_NCGR, 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_footprint_board_ashiato_board_NCGR, 
 		FOOT_SUBFRAME_PLATE, 0, 0, 0, HEAPID_FOOTPRINT);
-	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_ashiato_board_NSCR, 
+	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_footprint_board_ashiato_board_NSCR, 
 		FOOT_SUBFRAME_PLATE, 0, 0, 0, HEAPID_FOOTPRINT);
-	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_ashiato_board_bg_NSCR, 
+	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_footprint_board_ashiato_board_bg_NSCR, 
 		FOOT_SUBFRAME_BG, 0, 0, 0, HEAPID_FOOTPRINT);
 	panel_scrn = GF_BGL_ScreenAdrsGet(FOOT_SUBFRAME_PLATE);
 	GFL_STD_MemCopy16(panel_scrn, fps->namelist_scrn, NAMELIST_SCRN_SIZE);
@@ -1436,7 +1436,7 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	fps->pltt_id[PLTTID_OBJ_INK_FOOT] = GFL_CLGRP_PLTT_RegisterEx(
 		hdl_main, NARC_footprint_board_a_board_eff_NCLR,
 		CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_FOOTPRINT);
-	pal_pos = GFL_CLGRP_PLTT_GetPos( fps->pltt_id[PLTTID_OBJ_INK_FOOT], CLSYS_DRAW_MAIN );
+	pal_pos = GFL_CLGRP_PLTT_GetAddr( fps->pltt_id[PLTTID_OBJ_INK_FOOT], CLSYS_DRAW_MAIN ) / 0x20;
 	if(fps->parent_work->board_type == FOOTPRINT_BOARD_TYPE_WHITE){
 		color_code = INKPAL_FOOT_COLOR_CODE_WHITE;
 	}
@@ -1456,7 +1456,8 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	//-- FONTOAM --//
 	fps->pltt_id[PLTTID_OBJ_FONTOAM] = GFL_CLGRP_PLTT_RegisterEx(hdl_main, 
 		NARC_footprint_board_a_board_font_b_NCLR, CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_FOOTPRINT);
-	fps->yameru_pal_pos = GFL_CLGRP_PLTT_GetPos(fps->pltt_id[PLTTID_OBJ_FONTOAM], CLSYS_DRAW_MAIN);
+	fps->yameru_pal_pos 
+		= GFL_CLGRP_PLTT_GetAddr(fps->pltt_id[PLTTID_OBJ_FONTOAM], CLSYS_DRAW_MAIN) / 0x20;
 }
 
 //--------------------------------------------------------------
@@ -1477,8 +1478,8 @@ static void DefaultActorSet_Main(FOOTPRINT_SYS *fps)
 		head.x = INK_POS_START_X + INK_POS_SPACE_X * i;
 		head.y = INK_POS_Y;
 		fps->cap_ink[i] = CATS_ObjectAdd_S(fps->csp, fps->crp, &head);
-		CATS_ObjectAnimeSeqSetCap(fps->cap_ink[i], i);
-		CATS_ObjectUpdate(fps->cap_ink[i]->act);
+		GFL_CLACT_WK_SetAnmSeq(fps->cap_ink[i], i);
+		GFL_CLACT_WK_AddAnmFrame(fps->cap_ink[i]->act, FX32_ONE);
 	}
 
 	//-- インクの下地 --//
@@ -1487,8 +1488,8 @@ static void DefaultActorSet_Main(FOOTPRINT_SYS *fps)
 		head.x = INK_FOUNDATION_POS_START_X + INK_FOUNDATION_POS_SPACE_X * i;
 		head.y = INK_FOUNDATION_POS_Y;
 		fps->cap_ink_foundation[i] = CATS_ObjectAdd_S(fps->csp, fps->crp, &head);
-		CATS_ObjectAnimeSeqSetCap(fps->cap_ink_foundation[i], i);
-		CATS_ObjectUpdate(fps->cap_ink_foundation[i]->act);
+		GFL_CLACT_WK_SetAnmSeq(fps->cap_ink_foundation[i], i);
+		GFL_CLACT_WK_AddAnmFrame(fps->cap_ink_foundation[i]->act, FX32_ONE);
 	}
 	
 	//-- インクの上に配置する足跡 --//
@@ -1498,7 +1499,7 @@ static void DefaultActorSet_Main(FOOTPRINT_SYS *fps)
 		head.y = INK_FOOT_POS_Y;
 		head.id[CLACT_U_CHAR_RES] = CHARID_INK_FOOT_0 + i;
 		fps->cap_ink_foot[i] = CATS_ObjectAdd_S(fps->csp, fps->crp, &head);
-		CATS_ObjectUpdate(fps->cap_ink_foot[i]->act);
+		GFL_CLACT_WK_AddAnmFrame(fps->cap_ink_foot[i]->act, FX32_ONE);
 	}
 
 	//-- 「やめる」FONTOAM --//
@@ -1529,17 +1530,17 @@ static void DefaultActorDel_Main(FOOTPRINT_SYS *fps)
 	
 	//-- インク --//
 	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
-		CATS_ActorPointerDelete_S(fps->cap_ink[i]);
+		GFL_CLACT_WK_Remove(fps->cap_ink[i]);
 	}
 	
 	//-- インクの下地 --//
 	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
-		CATS_ActorPointerDelete_S(fps->cap_ink_foundation[i]);
+		GFL_CLACT_WK_Remove(fps->cap_ink_foundation[i]);
 	}
 
 	//-- インクの上に配置する足跡 --//
 	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
-		CATS_ActorPointerDelete_S(fps->cap_ink_foot[i]);
+		GFL_CLACT_WK_Remove(fps->cap_ink_foot[i]);
 	}
 
 	//-- FONTOAM --//
@@ -1593,8 +1594,8 @@ static void DefaultActorSet_Sub(FOOTPRINT_SYS *fps)
 	
 	//-- 名前を囲む枠 --//
 	fps->cap_name_frame = CATS_ObjectAdd_S(fps->csp, fps->crp, &NameFrameObjParam);
-	CATS_ObjectUpdate(fps->cap_name_frame->act);
-	CATS_ObjectEnableCap(fps->cap_name_frame, CATS_ENABLE_FALSE);	//最初は非表示
+	GFL_CLACT_WK_AddAnmFrame(fps->cap_name_frame->act, FX32_ONE);
+	GFL_CLACT_WK_SetDrawEnable(fps->cap_name_frame, FALSE);	//最初は非表示
 
 	//-- 名前の横の足跡 --//
 	head = NameFootObjParam;
@@ -1603,8 +1604,8 @@ static void DefaultActorSet_Sub(FOOTPRINT_SYS *fps)
 		fps->cap_name_foot[i] = CATS_ObjectAdd_S(fps->csp, fps->crp, &head);
 		CATS_ObjectPosSetCap_SubSurface(fps->cap_name_foot[i], 
 			Sub_FootmarkPos[i][0], Sub_FootmarkPos[i][1], FOOTPRINT_SUB_ACTOR_DISTANCE);
-		CATS_ObjectUpdate(fps->cap_name_foot[i]->act);
-		CATS_ObjectEnableCap(fps->cap_name_foot[i], CATS_ENABLE_FALSE);	//最初は非表示
+		GFL_CLACT_WK_AddAnmFrame(fps->cap_name_foot[i]->act, FX32_ONE);
+		GFL_CLACT_WK_SetDrawEnable(fps->cap_name_foot[i], FALSE);	//最初は非表示
 	}
 }
 
@@ -1620,11 +1621,11 @@ static void DefaultActorDel_Sub(FOOTPRINT_SYS *fps)
 	int i;
 	
 	//-- 名前を囲む枠 --//
-	CATS_ActorPointerDelete_S(fps->cap_name_frame);
+	GFL_CLACT_WK_Remove(fps->cap_name_frame);
 	
 	//-- 名前の横の足跡 --//
 	for(i = 0; i < FOOTPRINT_ENTRY_MAX; i++){
-		CATS_ActorPointerDelete_S(fps->cap_name_foot[i]);
+		GFL_CLACT_WK_Remove(fps->cap_name_foot[i]);
 	}
 }
 
@@ -1646,9 +1647,9 @@ static void MyInkPaletteSettings(FOOTPRINT_SYS *fps)
 	
 	for(i = 0; i < POKEMON_TEMOTI_MAX; i++){
 		if(fps->my_stamp_param[i].monsno == 0 || fps->my_stamp_param[i].monsno > MONSNO_END){
-			CATS_ObjectEnableCap(fps->cap_ink[i], CATS_ENABLE_FALSE);
-			CATS_ObjectEnableCap(fps->cap_ink_foundation[i], CATS_ENABLE_FALSE);
-			CATS_ObjectEnableCap(fps->cap_ink_foot[i], CATS_ENABLE_FALSE);
+			GFL_CLACT_WK_SetDrawEnable(fps->cap_ink[i], FALSE);
+			GFL_CLACT_WK_SetDrawEnable(fps->cap_ink_foundation[i], FALSE);
+			GFL_CLACT_WK_SetDrawEnable(fps->cap_ink_foot[i], FALSE);
 
 			//BGのインクの枠を消す
 			for(y = 0; y < SCRN_INK_POS_SIZE_Y; y++){
@@ -2080,7 +2081,7 @@ static void Footprint_Temoti_to_StampParam(int board_type, SAVE_CONTROL_WORK * s
 			= FootprintTool_StampColorGet(board_type, PokeParaGet(pp, ID_PARA_id_no, NULL));
 	#ifdef PM_DEBUG
 		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_B){	//ランダムで色を変える
-			stamp_array[i].color = FootprintTool_StampColorGet(board_type, gf_rand());
+			stamp_array[i].color = FootprintTool_StampColorGet(board_type, GFUser_GetPublicRand(0x10000));
 		}
 	#endif
 	}
@@ -2129,7 +2130,7 @@ BOOL Footprint_StampAdd(FOOTPRINT_SYS_PTR fps, const STAMP_PARAM *param, s32 use
 				OBJFootCharRewrite(param->monsno, param->form_no, fps->cap_name_foot[user_index], 
 					fps->handle_footprint, fps->handle_footmark, 
 					NNS_G2D_VRAM_TYPE_2DSUB, fps->arceus_flg);
-				CATS_ObjectEnableCap(fps->cap_name_foot[user_index], CATS_ENABLE_TRUE);
+				GFL_CLACT_WK_SetDrawEnable(fps->cap_name_foot[user_index], TRUE);
 				//パレットも変える
 				PaletteWork_Clear(fps->pfd, FADE_SUB_BG, FADEBUF_ALL, param->color, 
 					SUBBG_LIST_COLOR_START + user_index, SUBBG_LIST_COLOR_START + user_index + 1);
@@ -2194,7 +2195,7 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 				FootPrintTool_NameErase(fps->name_win, i);
 				fps->name_foot_monsno[i] = 0;
 				fps->name_foot_color[i] = 0;
-				CATS_ObjectEnableCap(fps->cap_name_foot[i], CATS_ENABLE_FALSE);	//足跡非表示
+				GFL_CLACT_WK_SetDrawEnable(fps->cap_name_foot[i], FALSE);	//足跡非表示
 				GFL_BG_FillScreen(FOOT_SUBFRAME_PLATE, 0, 
 					Sub_ListScrnRange[i][0], Sub_ListScrnRange[i][1],
 					Sub_ListScrnRange[i][2], Sub_ListScrnRange[i][3], GFL_BG_SCRWRT_PALNL);
@@ -2206,7 +2207,7 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 			if(chan_user.cp_tbl[i] == fps->my_comm_status.user_id){
 				CATS_ObjectPosSetCap_SubSurface(fps->cap_name_frame,
 					Sub_NameFramePos[i][0], Sub_NameFramePos[i][1], FOOTPRINT_SUB_ACTOR_DISTANCE);
-				CATS_ObjectEnableCap(fps->cap_name_frame, CATS_ENABLE_TRUE);
+				GFL_CLACT_WK_SetDrawEnable(fps->cap_name_frame, TRUE);
 			}
 		}
 		fps->entry_userid[i] = chan_user.cp_tbl[i];
@@ -2280,7 +2281,7 @@ static void Footprint_TouchEffAdd(FOOTPRINT_SYS_PTR fps, int hit_pos)
 			head.x = INK_FOOT_POS_START_X + INK_FOOT_POS_SPACE_X * hit_pos;
 			head.y = INK_FOOT_POS_Y;
 			fps->cap_touch_eff[i] = CATS_ObjectAdd_S(fps->csp, fps->crp, &head);
-//			CATS_ObjectUpdate(fps->cap_touch_eff[i]->act);
+//			GFL_CLACT_WK_AddAnmFrame(fps->cap_touch_eff[i]->act, FX32_ONE);
 			break;
 		}
 	}
@@ -2327,12 +2328,12 @@ static void Footprint_TouchEffUpdate(FOOTPRINT_SYS_PTR fps)
 	
 	for(i = 0; i < TOUCH_EFF_MAX; i++){
 		if(fps->cap_touch_eff[i] != NULL){
-			if(CATS_ObjectAnimeActiveCheckCap(fps->cap_touch_eff[i]) == FALSE){
-				CATS_ActorPointerDelete_S(fps->cap_touch_eff[i]);
+			if(GFL_CLACT_WK_CheckAnmActive(fps->cap_touch_eff[i]) == FALSE){
+				GFL_CLACT_WK_Remove(fps->cap_touch_eff[i]);
 				fps->cap_touch_eff[i] = NULL;
 			}
 			else{
-				CATS_ObjectUpdate(fps->cap_touch_eff[i]->act);
+				GFL_CLACT_WK_AddAnmFrame(fps->cap_touch_eff[i]->act, FX32_ONE);
 			}
 		}
 	}
