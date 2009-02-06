@@ -20,18 +20,18 @@ File.open(ARGV[0]){|file|
 		name = line.chomp
 		if name == '' then break end
 		if name == '#END' then break end
+				#データ連結ルール
 		dependfile.puts "#{name}.#{TARGETEXT}: #{name}.nsbmd #{name}.bhc #{name}.3dmd"
 		dependfile.puts "	$(BINLINKER) $*.nsbmd $*.nsbtx $*.bhc $*.3dmd $*.#{TARGETEXT} BR"
 		dependfile.puts ""
-	#	dependfile.puts "#{name}h.bhc: dummy.bhc"
-	#	dependfile.puts "	@echo #{name}.bhcが存在しないためダミーデータを生成します"
-	#	dependfile.puts "	cp dummy.bhc #{name}.bhc"
+				#高さデータコンバートルール
 		dependfile.puts "#{name}.bhc: #{name}h.imd"
 		dependfile.puts "	@echo #{name}h > heightlist.lst"
 		dependfile.puts "	@echo \\\#END >> heightlist.lst"
 		dependfile.puts "	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)"
 		dependfile.puts "	ruby pad4byte.rb #{name}h.bhc"
 		dependfile.puts ""
+				#配置データ生成ルール（今はダミー）
 		dependfile.puts "#{name}.3dmd: dummy.3dmd"
 		dependfile.puts "	@echo #{name}.3dmdが存在しないためダミーデータを生成します"
 		dependfile.puts "	cp dummy.3dmd #{name}.3dmd"
