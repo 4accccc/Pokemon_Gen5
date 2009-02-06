@@ -6,21 +6,20 @@
 	* @date	06.02.10
 	*/
 //============================================================================================
-#include "common.h"
-#include "gflib\heapsys.h"
-#include "gflib\strbuf.h"
-#include "system\arc_util.h"
-#include "system\window.h"
-#include "system\pms_word.h"
-#include "system\winframe.naix"
-#include "system\msgdata.h"
-#include "msgdata\msg_pms_input.h"
-#include "msgdata\msg.naix"
+#include <gflib.h>
 
+#include "arc_def.h"
+
+#include "system\main.h"
+#include "system\pms_word.h"
+#include "system\bmp_winframe.h"
+#include "print\printsys.h"
+#include "print\wordset.h"
+#include "msg\msg_pms_input.h"
+#include "message.naix"
 
 #include "pms_input_prv.h"
 #include "pms_input_view.h"
-
 
 //======================================================================
 
@@ -117,16 +116,14 @@ struct _PMSIV_SUB {
 	const PMS_INPUT_WORK*  mwk;
 	const PMS_INPUT_DATA*  dwk;
 
-	GF_BGL_INI*        bgl;
-
-	CLACT_SET_PTR      actsys;
-	CLACT_WORK_PTR     up_button;
-	CLACT_WORK_PTR     down_button;
+	GFL_CLUNIT		*actsys;
+	GFL_CLWK		*up_button;
+	GFL_CLWK		*down_button;
 	CELL_ANIM_PACK     clpack;
 
-	u16   button_scrn[SCRN_ID_MAX][MODEBUTTON_SCRN_SIZE];
+	u16		button_scrn[SCRN_ID_MAX][MODEBUTTON_SCRN_SIZE];
 
-	TCB_PTR       changeButtonTask;
+	GFL_TCB		*changeButtonTask;
 
 };
 
@@ -136,15 +133,15 @@ struct _PMSIV_SUB {
 //==============================================================
 static void load_scrn_datas( PMSIV_SUB* wk, ARCHANDLE* p_handle );
 static void setup_cgx_datas( PMSIV_SUB* wk, ARCHANDLE* p_handle );
-static void print_mode_name( GF_BGL_BMPWIN* win, GF_BGL_INI* bgl, const STRBUF* str, int yofs );
+static void print_mode_name( PMSIV_SUB* wk,GFL_BMP_DATA* bmp, const STRBUF* str, int yofs );
 static void setup_actors( PMSIV_SUB* wk, ARCHANDLE* p_handle );
 static void cleanup_actors( PMSIV_SUB* wk );
 static void load_clpack( CELL_ANIM_PACK* clpack, ARCHANDLE* p_handle, u32 cellDatID, u32 animDatID );
 static void unload_clpack( CELL_ANIM_PACK* clpack );
-static void ChangeButtonTask( TCB_PTR tcb, void* wk_adrs );
+static void ChangeButtonTask( GFL_TCB *tcb, void* wk_adrs );
 
 
-	static CLACT_WORK_PTR add_actor(
+static GFL_CLWK* add_actor(
 	PMSIV_SUB* wk, NNSG2dImageProxy* imgProxy, NNSG2dImagePaletteProxy* palProxy,
 	CELL_ANIM_PACK* clpack, int xpos, int ypos, int bgpri, int actpri );
 
@@ -163,12 +160,11 @@ static void ChangeButtonTask( TCB_PTR tcb, void* wk_adrs );
 //------------------------------------------------------------------
 PMSIV_SUB*  PMSIV_SUB_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
 {
-	PMSIV_SUB*  wk = sys_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(PMSIV_SUB) );
+	PMSIV_SUB*  wk = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(PMSIV_SUB) );
 
 	wk->vwk = vwk;
 	wk->mwk = mwk;
 	wk->dwk = dwk;
-	wk->bgl = PMSIView_GetBGL(vwk);
 	wk->actsys = PMSIView_GetActSys(vwk);
 
 	wk->up_button = NULL;
@@ -189,7 +185,7 @@ void PMSIV_SUB_Delete( PMSIV_SUB* wk )
 {
 	cleanup_actors( wk );
 
-	sys_FreeMemoryEz( wk );
+	GFL_HEAP_FreeMemory( wk );
 }
 
 
@@ -204,9 +200,9 @@ void PMSIV_SUB_Delete( PMSIV_SUB* wk )
 //------------------------------------------------------------------
 void PMSIV_SUB_SetupGraphicDatas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 {
-//	ArcUtil_PalSet( ARC_PMSI_GRAPHIC, NARC_pmsi_bg_sub_nclr, PALTYPE_SUB_BG, 0, 0x60, HEAPID_PMS_INPUT_VIEW );
-	ArcUtil_HDL_ScrnSet( p_handle, NARC_pmsi_bg_sub_lz_nscr, wk->bgl, FRM_SUB_BG, 0, 0, TRUE, HEAPID_PMS_INPUT_VIEW );
-
+//	ArcUtil_HDL_ScrnSet( p_handle, NARC_pmsi_bg_sub_lz_nscr, wk->bgl, FRM_SUB_BG, 0, 0, TRUE, HEAPID_PMS_INPUT_VIEW );
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_sub_NSCR, FRM_SUB_BG, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+	
 	load_scrn_datas( wk, p_handle );
 	setup_cgx_datas( wk, p_handle );
 
@@ -235,20 +231,20 @@ void PMSIV_SUB_SetupGraphicDatas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 #endif
 	setup_actors( wk, p_handle );
 
-	GF_BGL_LoadScreenReq( wk->bgl, FRM_SUB_BG );
+	GFL_BG_LoadScreenReq( FRM_SUB_BG );
 
 }
 static void load_scrn_datas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 {
 	static const u16 dat_id[] = {
-		NARC_pmsi_bg_sub_a1_lz_nscr,
-		NARC_pmsi_bg_sub_a2_lz_nscr,
-		NARC_pmsi_bg_sub_a3_lz_nscr,
-		NARC_pmsi_bg_sub_a4_lz_nscr,
-		NARC_pmsi_bg_sub_b1_lz_nscr,
-		NARC_pmsi_bg_sub_b2_lz_nscr,
-		NARC_pmsi_bg_sub_b3_lz_nscr,
-		NARC_pmsi_bg_sub_b4_lz_nscr,
+		NARC_pmsi_pms_bg_sub_a1_NSCR,
+		NARC_pmsi_pms_bg_sub_a2_NSCR,
+		NARC_pmsi_pms_bg_sub_a3_NSCR,
+		NARC_pmsi_pms_bg_sub_a4_NSCR,
+		NARC_pmsi_pms_bg_sub_b1_NSCR,
+		NARC_pmsi_pms_bg_sub_b2_NSCR,
+		NARC_pmsi_pms_bg_sub_b3_NSCR,
+		NARC_pmsi_pms_bg_sub_b4_NSCR,
 	};
 	int i;
 	void* loadPtr;
@@ -256,12 +252,13 @@ static void load_scrn_datas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 
 	for(i=0; i<NELEMS(dat_id); i++)
 	{
-		loadPtr = ArcUtil_HDL_ScrnDataGet(p_handle, dat_id[i], TRUE, &scrnData, HEAPID_PMS_INPUT_VIEW);
+//		loadPtr = ArcUtil_HDL_ScrnDataGet(p_handle, dat_id[i], TRUE, &scrnData, HEAPID_PMS_INPUT_VIEW);
+		loadPtr = GFL_ARCHDL_UTIL_LoadScreen( p_handle, dat_id[i], FALSE, &scrnData, HEAPID_PMS_INPUT_VIEW);
 		if( loadPtr )
 		{
 			MI_CpuCopy16( scrnData->rawData, wk->button_scrn[i], MODEBUTTON_SCRN_SIZE*2 );
 			DC_FlushRange( wk->button_scrn[i], MODEBUTTON_SCRN_SIZE*2 );
-			sys_FreeMemoryEz( loadPtr );
+			GFL_HEAP_FreeMemory( loadPtr );
 		}
 	}
 }
@@ -275,43 +272,58 @@ static void setup_cgx_datas( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 
 	STRBUF* str_group;
 	STRBUF* str_initial;
+	GFL_MSGDATA *workMsg;
 	void* loadPtr;
 	NNSG2dCharacterData* charData;
 
 //	FontProc_LoadFont( FONT_BUTTON, HEAPID_BASE_SYSTEM );
-	str_group = MSGDAT_GetStrDirectAlloc(ARC_MSG, NARC_msg_pms_input_dat, str_group_mode, HEAPID_PMS_INPUT_VIEW );
-	str_initial = MSGDAT_GetStrDirectAlloc(ARC_MSG, NARC_msg_pms_input_dat, str_initial_mode, HEAPID_PMS_INPUT_VIEW );
+//	str_group = MSGDAT_GetStrDirectAlloc(ARC_MSG, NARC_msg_pms_input_dat, str_group_mode, HEAPID_PMS_INPUT_VIEW );
+//	str_initial = MSGDAT_GetStrDirectAlloc(ARC_MSG, NARC_msg_pms_input_dat, str_initial_mode, HEAPID_PMS_INPUT_VIEW );
+	workMsg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_pms_input_dat, HEAPID_PMS_INPUT_VIEW );
+	str_group = GFL_MSG_CreateString(workMsg, str_group_mode );
+	str_initial = GFL_MSG_CreateString(workMsg, str_initial_mode );
+	GFL_MSG_Delete( workMsg );
+	
 
-
-	loadPtr = ArcUtil_HDL_CharDataGet(p_handle, NARC_pmsi_bg_sub_lz_ncgr, TRUE, &charData, HEAPID_PMS_INPUT_VIEW);
+	loadPtr = GFL_ARCHDL_UTIL_LoadOBJCharacter(p_handle, NARC_pmsi_pms_bg_sub_NCGR, FALSE, &charData, HEAPID_PMS_INPUT_VIEW);
 	if(loadPtr)
 	{
-		GF_BGL_BMPWIN   win;
+		GFL_BMP_DATA	*bmp;
 		int i;
 #if 1
-		GF_BGL_BmpWinInit(&win);
-		win.ini = wk->bgl;
-		win.sizx = CGX_WIDTH;
-		win.sizy = CGX_HEIGHT;
-		win.bitmode = GF_BGL_BMPWIN_BITMODE_4;
-		win.chrbuf = charData->pRawData;
-		print_mode_name( &win, wk->bgl, str_group,   0 );
+		bmp = GFL_BMP_CreateWithData( charData->pRawData , 
+										CGX_WIDTH , CGX_HEIGHT , 
+										GFL_BMP_16_COLOR ,
+										HEAPID_PMS_INPUT_VIEW );
+//		GF_BGL_BmpWinInit(&win);
+//		win.ini = wk->bgl;
+//		win.sizx = CGX_WIDTH;
+//		win.sizy = CGX_HEIGHT;
+//		win.bitmode = GF_BGL_BMPWIN_BITMODE_4;
+//		win.chrbuf = charData->pRawData;
+		print_mode_name( wk, bmp, str_group,   0 );
+		GFL_BMP_Delete( bmp );
+		bmp = GFL_BMP_CreateWithData( (u8*)(charData->pRawData) + ((CGX_WIDTH * (MODEBUTTON_SCRN_HEIGHT*4))*0x20), 
+										CGX_WIDTH , CGX_HEIGHT , 
+										GFL_BMP_16_COLOR ,
+										HEAPID_PMS_INPUT_VIEW );
 
-		win.chrbuf = (u8*)(charData->pRawData) + ((CGX_WIDTH * (MODEBUTTON_SCRN_HEIGHT*4))*0x20);
-		print_mode_name( &win, wk->bgl, str_initial, 0 );
+//		win.chrbuf = (u8*)(charData->pRawData) + ((CGX_WIDTH * (MODEBUTTON_SCRN_HEIGHT*4))*0x20);
+		print_mode_name( wk, bmp, str_initial, 0 );
+		GFL_BMP_Delete( bmp );
 
 		DC_FlushRange( charData->pRawData, charData->szByte );
-		GF_BGL_LoadCharacter(wk->bgl, FRM_SUB_BG, charData->pRawData, charData->szByte, 0);
+		GFL_BG_LoadCharacter(FRM_SUB_BG, charData->pRawData, charData->szByte, 0);
 #endif
-		sys_FreeMemoryEz(loadPtr);
+		GFL_HEAP_FreeMemory(loadPtr);
 	}
 
-	STRBUF_Delete(str_initial);
-	STRBUF_Delete(str_group);
+	GFL_STR_DeleteBuffer(str_initial);
+	GFL_STR_DeleteBuffer(str_group);
 //	FontProc_UnloadFont( FONT_BUTTON );
 }
 
-static void print_mode_name( GF_BGL_BMPWIN* win, GF_BGL_INI* bgl, const STRBUF* str, int yofs )
+static void print_mode_name( PMSIV_SUB* wk,GFL_BMP_DATA* bmp, const STRBUF* str, int yofs )
 {
 	enum {
 		COL_1 = 0x01,
@@ -337,18 +349,20 @@ static void print_mode_name( GF_BGL_BMPWIN* win, GF_BGL_INI* bgl, const STRBUF* 
 	for(i=0; i<NELEMS(writeParam); i++)
 	{
 		y = writeParam[i].yofs + yofs;
-		GF_STR_PrintColor( win, FONT_BUTTON, str, writeParam[i].xofs, y,
-							MSG_NO_PUT, GF_PRINTCOLOR_MAKE(COL_1,COL_2,COL_3), NULL );
+		GFL_FONTSYS_SetColor( COL_1,COL_2,COL_3 );
+		PRINTSYS_Print( bmp , writeParam[i].xofs, y, str , PMSIView_GetFontHandle(wk->vwk) );
+//		GF_STR_PrintColor( win, FONT_BUTTON, str, writeParam[i].xofs, y,
+//							MSG_NO_PUT, GF_PRINTCOLOR_MAKE(COL_1,COL_2,COL_3), NULL );
+		GFL_FONTSYS_SetDefaultColor();
 	}
 }
 
 
 //==============================================================================================
 //==============================================================================================
-
 static void setup_actors( PMSIV_SUB* wk, ARCHANDLE* p_handle )
 {
-	CLACT_HEADER  header;
+//	CLACT_HEADER  header;
 
 #if 0
 	NNSG2dImagePaletteProxy	palProxy;
@@ -420,8 +434,10 @@ static void cleanup_actors( PMSIV_SUB* wk )
 
 static void load_clpack( CELL_ANIM_PACK* clpack, ARCHANDLE* p_handle, u32 cellDatID, u32 animDatID )
 {
+#if 0
 	clpack->cellLoadPtr = ArcUtil_HDL_CellBankDataGet(p_handle, cellDatID, TRUE, &(clpack->cellData), HEAPID_PMS_INPUT_VIEW);
 	clpack->animLoadPtr = ArcUtil_HDL_AnimBankDataGet(p_handle, animDatID, TRUE, &(clpack->animData), HEAPID_PMS_INPUT_VIEW);
+#endif
 }
 static void unload_clpack( CELL_ANIM_PACK* clpack )
 {
@@ -432,10 +448,11 @@ static void unload_clpack( CELL_ANIM_PACK* clpack )
 }
 
 
-	static CLACT_WORK_PTR add_actor(
+static GFL_CLWK* add_actor(
 	PMSIV_SUB* wk, NNSG2dImageProxy* imgProxy, NNSG2dImagePaletteProxy* palProxy,
 	CELL_ANIM_PACK* clpack, int xpos, int ypos, int bgpri, int actpri )
 {
+#if 0
 	CLACT_HEADER  header;
 	CLACT_ADD_SIMPLE  add;
 	CLACT_WORK_PTR   act;
@@ -466,6 +483,8 @@ static void unload_clpack( CELL_ANIM_PACK* clpack )
 		CLACT_SetAnmFrame( act, PMSI_ANM_SPEED );
 	}
 	return act;
+#endif
+	return NULL;
 }
 
 //==============================================================================================
@@ -497,7 +516,7 @@ typedef struct {
 //------------------------------------------------------------------
 void PMSIV_SUB_ChangeCategoryButton( PMSIV_SUB* wk )
 {
-	CHANGE_BUTTON_WORK* twk = sys_AllocMemory(HEAPID_PMS_INPUT_VIEW, sizeof(CHANGE_BUTTON_WORK));
+	CHANGE_BUTTON_WORK* twk = GFL_HEAP_AllocMemory(HEAPID_PMS_INPUT_VIEW, sizeof(CHANGE_BUTTON_WORK));
 
 	if( twk )
 	{
@@ -533,7 +552,7 @@ void PMSIV_SUB_ChangeCategoryButton( PMSIV_SUB* wk )
 		twk->off_scrn_x		= TaskParam[mode].off_x;
 		twk->off_scrn_y		= TaskParam[mode].off_y;
 
-		wk->changeButtonTask = TCB_Add( ChangeButtonTask, twk, TASKPRI_VIEW_COMMAND );
+		wk->changeButtonTask = GFL_TCB_AddTask( PMSI_GetTcbSystem(wk->mwk) , ChangeButtonTask, twk, TASKPRI_VIEW_COMMAND );
 
 	}
 	else
@@ -547,8 +566,7 @@ BOOL PMSIV_SUB_WaitChangeCategoryButton( PMSIV_SUB* wk )
 	return (wk->changeButtonTask == NULL);
 }
 
-
-static void ChangeButtonTask( TCB_PTR tcb, void* wk_adrs )
+static void ChangeButtonTask( GFL_TCB *tcb, void* wk_adrs )
 {
 	enum {
 		ANM_WAIT1 = 2,
@@ -559,15 +577,15 @@ static void ChangeButtonTask( TCB_PTR tcb, void* wk_adrs )
 
 	switch( twk->seq ){
 	case 0:
-		GF_BGL_ScrWriteExpand(twk->wk->bgl, FRM_SUB_BG, twk->on_scrn_x, twk->on_scrn_y,
+		GFL_BG_WriteScreenExpand( FRM_SUB_BG, twk->on_scrn_x, twk->on_scrn_y,
 						MODEBUTTON_SCRN_WIDTH, MODEBUTTON_SCRN_HEIGHT, twk->wk->button_scrn[twk->on_scrnID],
 						0, 0, MODEBUTTON_SCRN_WIDTH, MODEBUTTON_SCRN_HEIGHT );
 
-		GF_BGL_ScrWriteExpand(twk->wk->bgl, FRM_SUB_BG, twk->off_scrn_x, twk->off_scrn_y,
+		GFL_BG_WriteScreenExpand( FRM_SUB_BG, twk->off_scrn_x, twk->off_scrn_y,
 						MODEBUTTON_SCRN_WIDTH, MODEBUTTON_SCRN_HEIGHT, twk->wk->button_scrn[twk->off_scrnID],
 						0, 0, MODEBUTTON_SCRN_WIDTH, MODEBUTTON_SCRN_HEIGHT );
 
-		GF_BGL_LoadScreenReq( twk->wk->bgl, FRM_SUB_BG );
+		GFL_BG_LoadScreenReq( FRM_SUB_BG );
 		twk->on_scrnID++;
 		twk->seq++;
 		break;
@@ -575,11 +593,11 @@ static void ChangeButtonTask( TCB_PTR tcb, void* wk_adrs )
 	case 1:
 		if( ++(twk->timer) >= ANM_WAIT1 )
 		{
-			GF_BGL_ScrWriteExpand(twk->wk->bgl, FRM_SUB_BG, twk->on_scrn_x, twk->on_scrn_y,
+			GFL_BG_WriteScreenExpand(FRM_SUB_BG, twk->on_scrn_x, twk->on_scrn_y,
 						MODEBUTTON_SCRN_WIDTH, MODEBUTTON_SCRN_HEIGHT, twk->wk->button_scrn[twk->on_scrnID],
 						0, 0, MODEBUTTON_SCRN_WIDTH, MODEBUTTON_SCRN_HEIGHT );
 
-			GF_BGL_LoadScreenReq( twk->wk->bgl, FRM_SUB_BG );
+			GFL_BG_LoadScreenReq( FRM_SUB_BG );
 			twk->timer = 0;
 			twk->on_scrnID++;
 			twk->seq++;
@@ -589,22 +607,21 @@ static void ChangeButtonTask( TCB_PTR tcb, void* wk_adrs )
 	case 2:
 		if( ++(twk->timer) >= ANM_WAIT2 )
 		{
-			GF_BGL_ScrWriteExpand(twk->wk->bgl, FRM_SUB_BG, twk->on_scrn_x, twk->on_scrn_y,
+			GFL_BG_WriteScreenExpand(FRM_SUB_BG, twk->on_scrn_x, twk->on_scrn_y,
 						MODEBUTTON_SCRN_WIDTH, MODEBUTTON_SCRN_HEIGHT, twk->wk->button_scrn[twk->on_scrnID],
 						0, 0, MODEBUTTON_SCRN_WIDTH, MODEBUTTON_SCRN_HEIGHT );
 
-			GF_BGL_LoadScreenReq( twk->wk->bgl, FRM_SUB_BG );
+			GFL_BG_LoadScreenReq( FRM_SUB_BG );
 			twk->seq++;
 		}
 		break;
 
 	case 3:
 		twk->wk->changeButtonTask = NULL;
-		sys_FreeMemoryEz(wk_adrs);
-		TCB_Delete(tcb);
+		GFL_HEAP_FreeMemory(wk_adrs);
+		GFL_TCB_DeleteTask(tcb);
 	}
 }
-
 
 
 
@@ -632,6 +649,7 @@ void PMSIV_SUB_VisibleArrowButton( PMSIV_SUB* wk, BOOL flag )
 	}
 #endif
 }
+
 
 //------------------------------------------------------------------
 /**
@@ -671,4 +689,3 @@ void PMSIV_SUB_ChangeArrowButton( PMSIV_SUB* wk, int pos, int state )
 	}
 #endif
 }
-

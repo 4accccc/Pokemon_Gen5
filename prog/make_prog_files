@@ -99,6 +99,9 @@ SRCS	+=		$(SOUNDSRC) \
 				app/pms_input/pmsiv_button.c \
 				app/pms_input/pmsiv_category.c \
 				app/pms_input/pmsiv_edit.c \
+				app/pms_input/pmsiv_sub.c \
+				app/pms_input/pmsiv_tool.c \
+				app/pms_input/pmsiv_wordwin.c \
 				mystery/comm_mystery_gift.c \
 				savedata/mystery_data.c \
 				system/laster.c \

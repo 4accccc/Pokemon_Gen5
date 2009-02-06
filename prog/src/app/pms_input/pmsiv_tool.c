@@ -6,18 +6,15 @@
 	* @date	06.02.10
 	*/
 //============================================================================================
-#include "common.h"
-#include "gflib\heapsys.h"
-#include "system\arc_util.h"
-#include "system\window.h"
-#include "system\buflen.h"
+#include <gflib.h>
+
+#include "arc_def.h"
 #include "system\pms_word.h"
-#include "system\winframe.naix"
-#include "system\msgdata.h"
-#include "msgdata\msg_pms_category.h"
-
-#include "msgdata\msg.naix"
-
+#include "system\bmp_winframe.h"
+#include "print\printsys.h"
+#include "print\wordset.h"
+#include "msg\msg_pms_category.h"
+#include "message.naix"
 
 #include "pms_input_prv.h"
 #include "pms_input_view.h"
@@ -27,9 +24,10 @@
 //==============================================================
 // Prototype
 //==============================================================
-static void bg_scroll_task( TCB_PTR tcb, void* wk_adrs );
-static void fade_task( TCB_PTR tcb, void* wk_adrs );
-static void bright_task( TCB_PTR tcb, void* wk_adrs );
+static void bg_scroll_task( GFL_TCB *tcb, void* wk_adrs );
+static void fade_task( GFL_TCB *tcb, void* wk_adrs );
+static void bright_task( GFL_TCB *tcb, void* wk_adrs );
+
 
 
 
@@ -46,20 +44,19 @@ static void bright_task( TCB_PTR tcb, void* wk_adrs );
 	*
 	*/
 //------------------------------------------------------------------
-void PMSIV_TOOL_SetupScrollWork( PMSIV_TOOL_SCROLL_WORK* wk, GF_BGL_INI* bgl, u32 bg_frame, int direction, int vector, int wait )
+void PMSIV_TOOL_SetupScrollWork( PMSIV_TOOL_SCROLL_WORK* wk, u32 bg_frame, int direction, int vector, int wait )
 {
-	wk->bgl = bgl;
 	wk->bg_frame = bg_frame;
 
 	if( direction == PMSIV_TOOL_SCROLL_DIRECTION_X )
 	{
-		wk->pos = GF_BGL_ScrollGetX( bgl, bg_frame );
-		wk->scroll_param = GF_BGL_SCROLL_X_SET;
+		wk->pos = GFL_BG_GetScreenScrollX( bg_frame );
+		wk->scroll_param = GFL_BG_SCROLL_X_SET;
 	}
 	else
 	{
-		wk->pos = GF_BGL_ScrollGetY( bgl, bg_frame );
-		wk->scroll_param = GF_BGL_SCROLL_Y_SET;
+		wk->pos = GFL_BG_GetScreenScrollY( bg_frame );
+		wk->scroll_param = GFL_BG_SCROLL_Y_SET;
 	}
 
 	wk->end_pos = (wk->pos + vector) & 0x01ff;
@@ -90,7 +87,7 @@ BOOL PMSIV_TOOL_WaitScroll( PMSIV_TOOL_SCROLL_WORK* wk )
 	case 1:
 		if( wk->timer == 0 )
 		{
-			TCB_Delete( wk->tcb );
+			GFL_TCB_DeleteTask( wk->tcb );
 			wk->seq++;
 			return TRUE;
 		}
@@ -112,19 +109,19 @@ BOOL PMSIV_TOOL_WaitScroll( PMSIV_TOOL_SCROLL_WORK* wk )
 	*
 	*/
 //------------------------------------------------------------------
-static void bg_scroll_task( TCB_PTR tcb, void* wk_adrs )
+static void bg_scroll_task( GFL_TCB *tcb, void* wk_adrs )
 {
 	PMSIV_TOOL_SCROLL_WORK* wk = wk_adrs;
 
 	if( wk->timer )
 	{
 		wk->pos += wk->add_value;
-		GF_BGL_ScrollSet( wk->bgl, wk->bg_frame, wk->scroll_param, (wk->pos >> FX32_SHIFT) );
+		GFL_BG_SetScroll( wk->bg_frame, wk->scroll_param, (wk->pos >> FX32_SHIFT) );
 		wk->timer--;
 	}
 	else
 	{
-		GF_BGL_ScrollSet( wk->bgl, wk->bg_frame, wk->scroll_param, wk->end_pos );
+		GFL_BG_SetScroll( wk->bg_frame, wk->scroll_param, wk->end_pos );
 	}
 }
 
@@ -162,7 +159,7 @@ BOOL PMSIV_TOOL_WaitBlend( PMSIV_TOOL_BLEND_WORK* wk )
 	case 0:
 		if( wk->wait == 0 )
 		{
-			TCB_Delete( wk->tcb );
+			GFL_TCB_DeleteTask( wk->tcb );
 			wk->seq++;
 			return TRUE;
 		}
@@ -175,7 +172,7 @@ BOOL PMSIV_TOOL_WaitBlend( PMSIV_TOOL_BLEND_WORK* wk )
 }
 
 
-static void fade_task( TCB_PTR tcb, void* wk_adrs )
+static void fade_task( GFL_TCB *tcb, void* wk_adrs )
 {
 	PMSIV_TOOL_BLEND_WORK* wk = wk_adrs;
 	int ev1, ev2;
@@ -247,7 +244,7 @@ BOOL PMSIV_TOOL_WaitBright( PMSIV_TOOL_BLEND_WORK* wk )
 	case 0:
 		if( wk->wait == 0 )
 		{
-			TCB_Delete( wk->tcb );
+			GFL_TCB_DeleteTask( wk->tcb );
 			wk->seq++;
 			return TRUE;
 		}
@@ -259,7 +256,7 @@ BOOL PMSIV_TOOL_WaitBright( PMSIV_TOOL_BLEND_WORK* wk )
 	return FALSE;
 }
 
-static void bright_task( TCB_PTR tcb, void* wk_adrs )
+static void bright_task( GFL_TCB *tcb, void* wk_adrs )
 {
 	PMSIV_TOOL_BLEND_WORK* wk = wk_adrs;
 

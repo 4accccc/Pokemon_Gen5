@@ -216,10 +216,10 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
 										GX_WND_PLANEMASK_BG3|
 										GX_WND_PLANEMASK_OBJ);
 
-	GFL_ARC_UTIL_TransVramScreen(ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_main3_NSCR,
+	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_pmsi_pms_bg_main3_NSCR,
 		FRM_MAIN_CATEGORY, 0, 0, TRUE, HEAPID_PMS_INPUT_VIEW );
 
-	charpos = GFL_ARC_UTIL_TransVramBgCharacter(ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_main1_NCGR,
+	charpos = GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main1_NCGR,
 		FRM_MAIN_CATEGORY, 0, 0, TRUE, HEAPID_PMS_INPUT_VIEW );
 	charpos /= 0x20;
 

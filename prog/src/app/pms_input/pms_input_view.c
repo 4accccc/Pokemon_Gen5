@@ -508,23 +508,23 @@ static void setup_obj_graphic( COMMAND_WORK* cwk, ARCHANDLE* p_handle )
 		NNS_G2dInitImagePaletteProxy( &(vwk->obj_pltt_proxy[i]) );
 		NNS_G2dInitImageProxy( &(vwk->obj_image_proxy[i]) );
 
-		GFL_ARC_UTIL_TransVramCharacterMakeProxy( ARCID_PMSI_GRAPHIC , NARC_pmsi_pms_obj_main_NCGR, 
+		GFL_ARCHDL_UTIL_TransVramCharacterMakeProxy( p_handle , NARC_pmsi_pms_obj_main_NCGR, 
 					FALSE, 0, 0, NNS_G2D_VRAM_TYPE_2DMAIN+i, 0,  HEAPID_PMS_INPUT_VIEW ,
 					&(vwk->obj_image_proxy[i]) );
 //		ArcUtil_HDL_CharSysLoad(p_handle, NARC_pmsi_obj_main_lz_ncgr, TRUE, CHAR_MAP_1D, 0,
 //					NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, HEAPID_PMS_INPUT_VIEW, &(vwk->obj_image_proxy[i]) );
 
-		GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID_PMSI_GRAPHIC , NARC_pmsi_pms_obj_main_NCLR ,
+		GFL_ARCHDL_UTIL_TransVramPaletteMakeProxy( p_handle , NARC_pmsi_pms_obj_main_NCLR ,
 					NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, HEAPID_PMS_INPUT_VIEW , &(vwk->obj_pltt_proxy[i]));
 //		ArcUtil_HDL_PalSysLoad(p_handle, NARC_pmsi_obj_main_nclr, NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, 
 //					HEAPID_PMS_INPUT_VIEW, &(vwk->obj_pltt_proxy[i]));
 
-		vwk->cell_load_ptr[i] = GFL_ARC_UTIL_LoadCellBank( ARCID_PMSI_GRAPHIC,
+		vwk->cell_load_ptr[i] = GFL_ARCHDL_UTIL_LoadCellBank( p_handle,
 				NARC_pmsi_pms_obj_main_NCER, FALSE ,&(vwk->cellbank[i]),HEAPID_PMS_INPUT_VIEW );
 //		vwk->cell_load_ptr[i] = ArcUtil_HDL_CellBankDataGet(p_handle, NARC_pmsi_obj_main_lz_ncer,
 //				TRUE,&(vwk->cellbank[i]), HEAPID_PMS_INPUT_VIEW );
 		
-		vwk->anm_load_ptr[i] = GFL_ARC_UTIL_LoadAnimeBank( ARCID_PMSI_GRAPHIC,
+		vwk->anm_load_ptr[i] = GFL_ARCHDL_UTIL_LoadAnimeBank( p_handle,
 				NARC_pmsi_pms_obj_main_NANR, FALSE, &(vwk->anmbank[i]), HEAPID_PMS_INPUT_VIEW );
 //		vwk->anm_load_ptr[i] = ArcUtil_HDL_AnimBankDataGet(p_handle, NARC_pmsi_obj_main_lz_nanr, TRUE,
 //				&(vwk->anmbank[i]), HEAPID_PMS_INPUT_VIEW );

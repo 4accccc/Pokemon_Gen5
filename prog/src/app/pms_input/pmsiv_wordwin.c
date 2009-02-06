@@ -6,17 +6,17 @@
 	* @date	06.02.10
 	*/
 //============================================================================================
-#include "common.h"
-#include "gflib\heapsys.h"
-#include "gflib\strbuf.h"
-#include "system\arc_util.h"
-#include "system\window.h"
-#include "system\buflen.h"
+#include <gflib.h>
+
+#include "arc_def.h"
+#include "system\main.h"
 #include "system\pms_word.h"
-#include "system\winframe.naix"
-#include "system\msgdata.h"
-#include "msgdata\msg_pms_category.h"
-#include "msgdata\msg.naix"
+#include "system\bmp_winframe.h"
+#include "print\printsys.h"
+#include "print\wordset.h"
+#include "system\pms_word.h"
+#include "msg\msg_pms_category.h"
+#include "message.naix"
 
 
 #include "pms_input_prv.h"
@@ -100,14 +100,13 @@ struct _PMSIV_WORDWIN {
 	const PMS_INPUT_WORK*  mwk;
 	const PMS_INPUT_DATA*  dwk;
 
-	GF_BGL_INI*    bgl;
-	GF_BGL_BMPWIN  win;
-	GF_BGL_BMPWIN  tmp_win;
+	GFL_BMPWIN  *win;
+	GFL_BMPWIN  *tmp_win;
 
-	CLACT_WORK_PTR  cursor_actor;
-	CLACT_WORK_PTR  up_arrow_actor;
-	CLACT_WORK_PTR  down_arrow_actor;
-	STRBUF*         tmpbuf;
+	GFL_CLWK*	cursor_actor;
+	GFL_CLWK*	up_arrow_actor;
+	GFL_CLWK*	down_arrow_actor;
+	STRBUF*		tmpbuf;
 
 	PMSIV_TOOL_BLEND_WORK   blend_work;
 	PMSIV_TOOL_SCROLL_WORK  scroll_work;
@@ -147,20 +146,19 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line );
 //------------------------------------------------------------------
 PMSIV_WORDWIN*  PMSIV_WORDWIN_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
 {
-	PMSIV_WORDWIN*  wk = sys_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(PMSIV_WORDWIN) );
+	PMSIV_WORDWIN*  wk = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(PMSIV_WORDWIN) );
 
 	wk->vwk = vwk;
 	wk->mwk = mwk;
 	wk->dwk = dwk;
 
-	wk->bgl = PMSIView_GetBGL(vwk);
-	wk->tmpbuf = STRBUF_Create( BUFLEN_PMS_WORD, HEAPID_PMS_INPUT_VIEW );
+	wk->tmpbuf = GFL_STR_CreateBuffer( BUFLEN_PMS_WORD, HEAPID_PMS_INPUT_VIEW );
 
-	GF_BGL_BmpWinAdd( wk->bgl, &wk->win, FRM_MAIN_WORDWIN, WORDWIN_XORG, WORDWIN_YORG,
-					WORDWIN_WIDTH, WORDWIN_HEIGHT, PALNUM_MAIN_WORDWIN, WORDWIN_CHARPOS );
+	wk->win = GFL_BMPWIN_Create( FRM_MAIN_WORDWIN, WORDWIN_XORG, WORDWIN_YORG,
+					WORDWIN_WIDTH, WORDWIN_HEIGHT, PALNUM_MAIN_WORDWIN, GFL_BMP_CHRAREA_GET_B );
 
-	GF_BGL_BmpWinAdd( wk->bgl, &wk->tmp_win, FRM_MAIN_WORDWIN, 0, 0,
-					WORD_TMPWIN_WIDTH, 4, PALNUM_MAIN_WORDWIN, WORDWIN_CHARPOS );
+	wk->tmp_win = GFL_BMPWIN_Create( FRM_MAIN_WORDWIN, 0, 0,
+					WORD_TMPWIN_WIDTH, 4, PALNUM_MAIN_WORDWIN, GFL_BMP_CHRAREA_GET_B );
 
 
 	wk->cursor_actor = NULL;
@@ -171,6 +169,7 @@ PMSIV_WORDWIN*  PMSIV_WORDWIN_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK*
 
 	return wk;
 }
+
 //------------------------------------------------------------------
 /**
 	* 
@@ -183,25 +182,25 @@ void PMSIV_WORDWIN_Delete( PMSIV_WORDWIN* wk )
 {
 	if( wk->cursor_actor )
 	{
-		CLACT_Delete( wk->cursor_actor );
+		GFL_CLACT_WK_Remove( wk->cursor_actor );
 	}
 	if( wk->up_arrow_actor )
 	{
-		CLACT_Delete( wk->up_arrow_actor );
+		GFL_CLACT_WK_Remove( wk->up_arrow_actor );
 	}
 	if( wk->down_arrow_actor )
 	{
-		CLACT_Delete( wk->down_arrow_actor );
+		GFL_CLACT_WK_Remove( wk->down_arrow_actor );
 	}
 	if( wk->tmpbuf )
 	{
-		STRBUF_Delete( wk->tmpbuf );
+		GFL_STR_DeleteBuffer( wk->tmpbuf );
 	}
 
-	GF_BGL_BmpWinDel( &(wk->tmp_win) );
-	GF_BGL_BmpWinDel( &(wk->win) );
+	GFL_BMPWIN_Delete( wk->tmp_win );
+	GFL_BMPWIN_Delete( wk->win );
 
-	sys_FreeMemoryEz( wk );
+	GFL_HEAP_FreeMemory( wk );
 }
 
 
@@ -216,45 +215,46 @@ void PMSIV_WORDWIN_Delete( PMSIV_WORDWIN* wk )
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_SetupGraphicDatas( PMSIV_WORDWIN* wk )
 {
-	GF_BGL_INI* bgl;
 	u32 charpos;
 
-	bgl = PMSIView_GetBGL( wk->vwk );
+	GFL_BG_SetClearCharacter( FRM_MAIN_WORDWIN, 0x20, CLEAR_CHARPOS*0x20 , HEAPID_PMS_INPUT_VIEW );
+	GFL_BG_FillScreen( FRM_MAIN_WORDWIN, CLEAR_CHARPOS, 0, 0, 32, 32, PALNUM_MAIN_WORDWIN );
 
-	GF_BGL_ClearCharSet( FRM_MAIN_WORDWIN, 0x20, CLEAR_CHARPOS*0x20, HEAPID_PMS_INPUT_VIEW );
-	GF_BGL_ScrFill( bgl, FRM_MAIN_WORDWIN, CLEAR_CHARPOS, 0, 0, 32, 32, PALNUM_MAIN_WORDWIN );
-
-	GF_BGL_BmpWinDataFill(&wk->win, WORD_COL_GROUND);
-	GF_BGL_BmpWinMakeScrn(&wk->win);
-	GF_BGL_BmpWinCgxOn(&wk->win);
-	GF_BGL_LoadScreenReq( bgl, FRM_MAIN_WORDWIN );
+//	GF_BGL_BmpWinDataFill(&wk->win, WORD_COL_GROUND);
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win ), WORD_COL_GROUND);
+//	GF_BGL_BmpWinMakeScrn(&wk->win);
+	GFL_BMPWIN_MakeScreen( wk->win );
+	//GF_BGL_BmpWinCgxOn(&wk->win);
+	GFL_BMPWIN_TransVramCharacter( wk->win );
+	GFL_BG_LoadScreenReq( FRM_MAIN_WORDWIN );
 
 	setup_actor( wk );
 
-	GF_BGL_VisibleSet( FRM_MAIN_WORDWIN, FALSE );
+	GFL_BG_SetVisible( FRM_MAIN_WORDWIN, FALSE );
 
 }
+
 static void setup_actor( PMSIV_WORDWIN* wk )
 {
-	CLACT_HEADER  header;
+	GFL_CLWK_RES  header;
 
 	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_MAIN, BGPRI_MAIN_EDITAREA );
 	wk->cursor_actor = PMSIView_AddActor( wk->vwk, &header, CURSOR_OX, CURSOR_OY,
 			ACTPRI_WORDWIN_CURSOR, NNS_G2D_VRAM_TYPE_2DMAIN );
 
-	CLACT_AnmChg( wk->cursor_actor, ANM_WORDWIN_CURSOR_ACTIVE );
-	CLACT_SetDrawFlag( wk->cursor_actor, FALSE );
+	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_WORDWIN_CURSOR_ACTIVE );
+	GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor, FALSE );
 
 
 	wk->up_arrow_actor = PMSIView_AddActor( wk->vwk, &header, ARROW_UP_X, ARROW_UP_Y,
 			ACTPRI_WORDWIN_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
-	CLACT_AnmChg( wk->up_arrow_actor, ANM_WORD_SCR_U01 );
-	CLACT_SetDrawFlag( wk->up_arrow_actor, FALSE );
+	GFL_CLACT_WK_SetAnmSeq( wk->up_arrow_actor, ANM_WORD_SCR_U01 );
+	GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, FALSE );
 
 	wk->down_arrow_actor = PMSIView_AddActor( wk->vwk, &header, ARROW_DOWN_X, ARROW_DOWN_Y,
 			ACTPRI_WORDWIN_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
-	CLACT_AnmChg( wk->down_arrow_actor, ANM_WORD_SCR_D01 );
-	CLACT_SetDrawFlag( wk->down_arrow_actor, FALSE );
+	GFL_CLACT_WK_SetAnmSeq( wk->down_arrow_actor, ANM_WORD_SCR_D01 );
+	GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, FALSE );
 
 
 }
@@ -272,7 +272,8 @@ void PMSIV_WORDWIN_SetupWord( PMSIV_WORDWIN* wk )
 {
 	u32 word_max, v_line, i;
 
-	GF_BGL_BmpWinDataFill(&wk->win, WORD_COL_GROUND);
+//	GF_BGL_BmpWinDataFill(&wk->win, WORD_COL_GROUND);
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win ), WORD_COL_GROUND);
 	init_write_params( wk );
 
 	word_max = PMSI_GetCategoryWordMax( wk->mwk );
@@ -293,7 +294,8 @@ void PMSIV_WORDWIN_SetupWord( PMSIV_WORDWIN* wk )
 
 	
 
-	GF_BGL_BmpWinCgxOn( &wk->win );
+//	GF_BGL_BmpWinCgxOn( &wk->win );
+	GFL_BMPWIN_TransVramCharacter( wk->win );
 
 }
 
@@ -309,21 +311,34 @@ void PMSIV_WORDWIN_SetupWord( PMSIV_WORDWIN* wk )
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_StartFadeIn( PMSIV_WORDWIN* wk )
 {
-	G2_SetBlendAlpha( FRM_MAIN_WORDWIN_BLENDMASK, GX_BLEND_ALL, 0, 16 );
+	static const int PMSVI_BLEND_ALL = (GX_BLEND_PLANEMASK_BG0|
+										GX_BLEND_PLANEMASK_BG1|
+										GX_BLEND_PLANEMASK_BG2|
+										GX_BLEND_PLANEMASK_BG3|
+										GX_BLEND_PLANEMASK_OBJ|
+										GX_BLEND_PLANEMASK_BD );
+	static const int PMSVI_PLANEMASK_ALL = (GX_WND_PLANEMASK_BG0|
+											GX_WND_PLANEMASK_BG1|
+											GX_WND_PLANEMASK_BG2|
+											GX_WND_PLANEMASK_BG3|
+											GX_WND_PLANEMASK_OBJ);
+
+	
+	G2_SetBlendAlpha( FRM_MAIN_WORDWIN_BLENDMASK, PMSVI_BLEND_ALL, 0, 16 );
 //G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE, GX_BLEND_ALL, 6, 10 );
-	GF_BGL_VisibleSet( FRM_MAIN_WORDWIN, TRUE );
+	GFL_BG_SetVisible( FRM_MAIN_WORDWIN, TRUE );
 
 	// 上下際のスクロール文字列を見られないようにウィンドウで隠す
-	G2_SetWnd1InsidePlane(GX_WND_PLANEMASK_ALL, TRUE);
+	G2_SetWnd1InsidePlane(PMSVI_PLANEMASK_ALL, TRUE);
 
 	wk->winout_backup = G2_GetWndOutsidePlane();
 	wk->win_visible_backup = GX_GetVisibleWnd();
-	G2_SetWndOutsidePlane(GX_WND_PLANEMASK_ALL^FRM_MAIN_WORDWIN_WNDMASK, TRUE);
+	G2_SetWndOutsidePlane(PMSVI_PLANEMASK_ALL^FRM_MAIN_WORDWIN_WNDMASK, TRUE);
 	G2_SetWnd1Position(0,46,255,176);
 	GX_SetVisibleWnd( GX_WNDMASK_W1 );
 
 	wk->eff_seq = 0;
-	PMSIV_TOOL_SetupBlendWork( &wk->blend_work, FRM_MAIN_WORDWIN_BLENDMASK, GX_BLEND_ALL, 0, PMSIV_BLEND_MAX, PMSI_FRAMES(6) );
+	PMSIV_TOOL_SetupBlendWork( &wk->blend_work, FRM_MAIN_WORDWIN_BLENDMASK, PMSVI_BLEND_ALL, 0, PMSIV_BLEND_MAX, PMSI_FRAMES(6) );
 }
 //------------------------------------------------------------------
 /**
@@ -360,8 +375,14 @@ BOOL PMSIV_WORDWIN_WaitFadeIn( PMSIV_WORDWIN* wk )
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_StartFadeOut( PMSIV_WORDWIN* wk )
 {
+	static const int PMSVI_BLEND_ALL = (GX_BLEND_PLANEMASK_BG0|
+										GX_BLEND_PLANEMASK_BG1|
+										GX_BLEND_PLANEMASK_BG2|
+										GX_BLEND_PLANEMASK_BG3|
+										GX_BLEND_PLANEMASK_OBJ|
+										GX_BLEND_PLANEMASK_BD );
 	wk->eff_seq = 0;
-	PMSIV_TOOL_SetupBlendWork( &wk->blend_work, FRM_MAIN_WORDWIN_BLENDMASK, GX_BLEND_ALL, PMSIV_BLEND_MAX, 0, PMSI_FRAMES(6) );
+	PMSIV_TOOL_SetupBlendWork( &wk->blend_work, FRM_MAIN_WORDWIN_BLENDMASK, PMSVI_BLEND_ALL, PMSIV_BLEND_MAX, 0, PMSI_FRAMES(6) );
 }
 //------------------------------------------------------------------
 /**
@@ -378,7 +399,7 @@ BOOL PMSIV_WORDWIN_WaitFadeOut( PMSIV_WORDWIN* wk )
 	case 0:
 		if( PMSIV_TOOL_WaitBlend( &wk->blend_work ) )
 		{
-			GF_BGL_VisibleSet( FRM_MAIN_WORDWIN, FALSE );
+			GFL_BG_SetVisible( FRM_MAIN_WORDWIN, FALSE );
 			G2_SetWndOutsidePlane( wk->winout_backup.planeMask, wk->winout_backup.effect );
 			GX_SetVisibleWnd( wk->win_visible_backup );
 			return TRUE;
@@ -390,11 +411,6 @@ BOOL PMSIV_WORDWIN_WaitFadeOut( PMSIV_WORDWIN* wk )
 	}
 	return FALSE;
 }
-
-
-
-
-
 
 
 //------------------------------------------------------------------
@@ -411,19 +427,19 @@ void PMSIV_WORDWIN_VisibleCursor( PMSIV_WORDWIN* wk, BOOL flag )
 
 	if( flag )
 	{
-		if(*wk->p_key_mode == APP_KTST_KEY){
-			CLACT_SetDrawFlag( wk->cursor_actor,TRUE);
+		if(*wk->p_key_mode == GFL_APP_KTST_KEY){
+			GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor,TRUE);
 		}else{
-			CLACT_SetDrawFlag( wk->cursor_actor,FALSE);
+			GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor,FALSE);
 		}
-		CLACT_SetDrawFlag( wk->up_arrow_actor, PMSI_GetWordWinUpArrowVisibleFlag(wk->mwk) );
-		CLACT_SetDrawFlag( wk->down_arrow_actor, PMSI_GetWordWinDownArrowVisibleFlag(wk->mwk) );
+		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, PMSI_GetWordWinUpArrowVisibleFlag(wk->mwk) );
+		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, PMSI_GetWordWinDownArrowVisibleFlag(wk->mwk) );
 	}
 	else
 	{
-		CLACT_SetDrawFlag( wk->cursor_actor, flag );
-		CLACT_SetDrawFlag( wk->up_arrow_actor, FALSE );
-		CLACT_SetDrawFlag( wk->down_arrow_actor, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor, flag );
+		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, FALSE );
 	}
 }
 
@@ -438,27 +454,25 @@ void PMSIV_WORDWIN_VisibleCursor( PMSIV_WORDWIN* wk, BOOL flag )
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_MoveCursor( PMSIV_WORDWIN* wk, u32 pos )
 {
-	VecFx32 mtx;
+	GFL_CLACTPOS clPos;
 	u32 x, y;
 
 	if(pos == 0xFFFFFFFF){	//back
-		mtx.x = CURSOR_BACK_XPOS * FX32_ONE;
-		mtx.y = CURSOR_BACK_YPOS * FX32_ONE;
-		mtx.z = 0;
+		clPos.x = CURSOR_BACK_XPOS;
+		clPos.y = CURSOR_BACK_YPOS;
 
-		CLACT_SetMatrix( wk->cursor_actor, &mtx );
-		CLACT_AnmChg( wk->cursor_actor, ANM_CATEGORY_BACK_CURSOR_ACTIVE );
+		GFL_CLACT_WK_SetWldPos( wk->cursor_actor, &clPos );
+		GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_CATEGORY_BACK_CURSOR_ACTIVE );
 	
 	}else{
 		x = pos & 1;
 		y = pos / 2;
 
-		mtx.x = (CURSOR_OX + CURSOR_X_MARGIN * x ) * FX32_ONE;
-		mtx.y = (CURSOR_OY + CURSOR_Y_MARGIN * y ) * FX32_ONE;
-		mtx.z = 0;
+		clPos.x = (CURSOR_OX + CURSOR_X_MARGIN * x );
+		clPos.y = (CURSOR_OY + CURSOR_Y_MARGIN * y );
 
-		CLACT_SetMatrix( wk->cursor_actor, &mtx );
-		CLACT_AnmChg( wk->cursor_actor, ANM_WORDWIN_CURSOR_ACTIVE );
+		GFL_CLACT_WK_SetWldPos( wk->cursor_actor, &clPos );
+		GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_WORDWIN_CURSOR_ACTIVE );
 	}
 }
 
@@ -510,9 +524,9 @@ void PMSIV_WORDWIN_StartScroll( PMSIV_WORDWIN* wk, int vector )
 	wk->write_v_line = next_v_line;
 	wk->write_word_idx = next_word_idx;
 
-	GF_BGL_BmpWinCgxOn( &wk->win );
+	GFL_BMPWIN_TransVramCharacter( wk->win );
 
-	PMSIV_TOOL_SetupScrollWork( &(wk->scroll_work), wk->bgl, FRM_MAIN_WORDWIN, PMSIV_TOOL_SCROLL_DIRECTION_Y,
+	PMSIV_TOOL_SetupScrollWork( &(wk->scroll_work), FRM_MAIN_WORDWIN, PMSIV_TOOL_SCROLL_DIRECTION_Y,
 		vector*WORDWIN_WRITE_Y_MARGIN, scroll_wait );
 
 }
@@ -530,8 +544,8 @@ BOOL PMSIV_WORDWIN_WaitScroll( PMSIV_WORDWIN* wk )
 {
 	if( PMSIV_TOOL_WaitScroll(&wk->scroll_work) )
 	{
-		CLACT_SetDrawFlag( wk->up_arrow_actor, PMSI_GetWordWinUpArrowVisibleFlag(wk->mwk) );
-		CLACT_SetDrawFlag( wk->down_arrow_actor, PMSI_GetWordWinDownArrowVisibleFlag(wk->mwk) );
+		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, PMSI_GetWordWinUpArrowVisibleFlag(wk->mwk) );
+		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, PMSI_GetWordWinDownArrowVisibleFlag(wk->mwk) );
 		return TRUE;
 	}
 	return FALSE;
@@ -554,12 +568,12 @@ static void clear_scroll_area( PMSIV_WORDWIN* wk, int vector )
 
 	if( top < bottom )
 	{
-		GF_BGL_BmpWinFill( &wk->win, WORD_COL_GROUND, 0, top, WORDWIN_WIDTH*8, (bottom-top) );
+		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->win), 0, top, WORDWIN_WIDTH*8, (bottom-top),WORD_COL_GROUND );
 	}
 	else
 	{
-		GF_BGL_BmpWinFill( &wk->win, WORD_COL_GROUND, 0, top, WORDWIN_WIDTH*8, 256-top );
-		GF_BGL_BmpWinFill( &wk->win, WORD_COL_GROUND, 0, 0, WORDWIN_WIDTH*8, bottom );
+		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->win), 0, top, WORDWIN_WIDTH*8, 256-top ,WORD_COL_GROUND);
+		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->win), 0, 0, WORDWIN_WIDTH*8, bottom ,WORD_COL_GROUND);
 	}
 }
 
@@ -569,31 +583,41 @@ static void init_write_params( PMSIV_WORDWIN* wk )
 {
 	wk->write_v_line = WORDWIN_WRITE_LINE_INIT;
 	wk->write_word_idx = 0;
-	GF_BGL_ScrollSet( wk->bgl, FRM_MAIN_WORDWIN, GF_BGL_SCROLL_Y_SET, 0 );
+	GFL_BG_SetScroll( FRM_MAIN_WORDWIN, GFL_BG_SCROLL_Y_SET, 0 );
 }
 
 
 static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
 {
+	GFL_FONT *fontHandle = PMSIView_GetFontHandle(wk->vwk);
 	PMSI_GetCategoryWord( wk->mwk, wordnum, wk->tmpbuf );
 
 	if( v_line <= WORDWIN_WRITE_LINE_ROUND_BORDER )
 	{
-		GF_STR_PrintColor( &wk->win, PMSI_FONT_WORDWIN, wk->tmpbuf,
-					WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN, v_line, MSG_NO_PUT,
-					GF_PRINTCOLOR_MAKE(WORD_COL_LETTER, WORD_COL_SHADOW, WORD_COL_GROUND),
-					NULL);
+//		GF_STR_PrintColor( &wk->win, PMSI_FONT_WORDWIN, wk->tmpbuf,
+//					WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN, v_line, MSG_NO_PUT,
+//					GF_PRINTCOLOR_MAKE(WORD_COL_LETTER, WORD_COL_SHADOW, WORD_COL_GROUND),
+//					NULL);
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->tmp_win ) , 
+						WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN, 
+						v_line,
+						wk->tmpbuf,
+						fontHandle );
 	}
 	else
 	{
 		u32  write_v_range = WORDWIN_WRITE_LINE_MAX - v_line;
-		GF_BGL_BmpWinDataFill( &wk->tmp_win, WORD_COL_GROUND );
+//		GF_BGL_BmpWinDataFill( &wk->tmp_win, WORD_COL_GROUND );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win ), WORD_COL_GROUND);
 
-		GF_STR_PrintColor( &wk->tmp_win, PMSI_FONT_WORDWIN, wk->tmpbuf,
-					0, 0, MSG_NO_PUT,
-					GF_PRINTCOLOR_MAKE(WORD_COL_LETTER, WORD_COL_SHADOW, WORD_COL_GROUND),
-					NULL);
-
+//		GF_STR_PrintColor( &wk->tmp_win, PMSI_FONT_WORDWIN, wk->tmpbuf,
+//					0, 0, MSG_NO_PUT,
+//					GF_PRINTCOLOR_MAKE(WORD_COL_LETTER, WORD_COL_SHADOW, WORD_COL_GROUND),
+//					NULL);
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->tmp_win ) , 0, 0,wk->tmpbuf,fontHandle);
+		
+		//FIXME
+/*
 		GF_BGL_BmpWinPrint( &wk->win, wk->tmp_win.chrbuf, 0, 0,
 				WORD_TMPWIN_WIDTH*8, WORD_TMPWIN_HEIGHT*8,
 				WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   v_line,
@@ -604,7 +628,7 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
 				WORD_TMPWIN_WIDTH*8, WORD_TMPWIN_HEIGHT*8,
 				WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   0,
 				WORD_TMPWIN_WIDTH*8, (WORD_TMPWIN_HEIGHT*8) - write_v_range );
-
+*/
 	}
 
 

@@ -333,17 +333,17 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	
 	setup_pal_datas( wk, p_handle );
 
-	GFL_ARC_UTIL_TransVramScreen( ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_main0_NSCR,
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_main0_NSCR,
 		FRM_MAIN_EDITAREA, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
-	GFL_ARC_UTIL_TransVramScreen( ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_main0_NSCR,
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_main0_NSCR,
 		FRM_SUB_EDITAREA , 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 
 	wk->sub_scr = -24*8;
 	GFL_BG_SetScroll( FRM_SUB_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->sub_scr);
 
-	charpos = GFL_ARC_UTIL_TransVramBgCharacter(ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_main0_NCGR,
+	charpos = GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main0_NCGR,
 		FRM_MAIN_EDITAREA, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
-	GFL_ARC_UTIL_TransVramBgCharacter(ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_main0_NCGR,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main0_NCGR,
 		FRM_SUB_EDITAREA, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	charpos /= 0x20;
 
@@ -504,13 +504,13 @@ static void setup_pal_datas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	void*   data_ptr;
 
 	// 一度全てVRAM転送する
-	GFL_ARC_UTIL_TransVramPalette( ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_main_NCLR, PALTYPE_MAIN_BG,
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_pmsi_pms_bg_main_NCLR, PALTYPE_MAIN_BG,
 		 0, 14*0x20, HEAPID_PMS_INPUT_VIEW );
-	GFL_ARC_UTIL_TransVramPalette( ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_sub_NCLR, PALTYPE_SUB_BG,
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_pmsi_pms_bg_sub_NCLR, PALTYPE_SUB_BG,
 		 0, 3*0x20, HEAPID_PMS_INPUT_VIEW );
 
 	// 後の色変え用にヒープにも読み込んでおく
-	data_ptr = GFL_ARC_UTIL_LoadPalette( ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bgm_dat_NCLR, &palDat, HEAPID_PMS_INPUT_VIEW );
+	data_ptr = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_pmsi_pms_bgm_dat_NCLR, &palDat, HEAPID_PMS_INPUT_VIEW );
 
 	MI_CpuCopy16( palDat->pRawData, wk->pal_data, sizeof(wk->pal_data) );
 	DC_FlushRange( wk->pal_data, sizeof(wk->pal_data) );
@@ -1160,11 +1160,4 @@ void PMSIV_EDIT_EraseYesNoWin( PMSIV_EDIT* wk )
 //	GF_BGL_BmpWinOff( &wk->win_yesno );
 	GFL_BMPWIN_ClearScreen( wk->win_yesno );
 }
-
-#if 0
-#pragma mark [>end edit
-
-
-#pragma mark [>start edit
-#endif
 

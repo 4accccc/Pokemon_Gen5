@@ -194,16 +194,16 @@ void PMSIV_BUTTON_SetupGraphicDatas( PMSIV_BUTTON* wk, ARCHANDLE* p_handle )
 {
 
 	// screen, cgx
-	GFL_ARC_UTIL_TransVramScreen(ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_main3_NSCR,
+	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_pmsi_pms_bg_main3_NSCR,
 		FRM_MAIN_BACK, 0, 0, TRUE, HEAPID_PMS_INPUT_VIEW );
 
-	GFL_ARC_UTIL_TransVramBgCharacter(ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_main3_NCGR,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main3_NCGR,
 		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 
 	// button screen
-	wk->pSBufBtn = GFL_ARC_UTIL_LoadScreen(ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_main01_NSCR,FALSE,
+	wk->pSBufBtn = GFL_ARCHDL_UTIL_LoadScreen(p_handle, NARC_pmsi_pms_bg_main01_NSCR,FALSE,
 		&wk->pSBtn, HEAPID_PMS_INPUT_VIEW);
-	wk->pSBufWin = GFL_ARC_UTIL_LoadScreen(ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_bg_m3dat_NSCR,FALSE,
+	wk->pSBufWin = GFL_ARCHDL_UTIL_LoadScreen(p_handle, NARC_pmsi_pms_bg_m3dat_NSCR,FALSE,
 		&wk->pSWin, HEAPID_PMS_INPUT_VIEW);
 
 	// bmp window
