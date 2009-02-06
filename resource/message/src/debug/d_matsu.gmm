@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-01-20T13:15:21"/>
+	<create user="matsuda" host="W00142" date="2009-02-06T17:21:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -414,7 +414,12 @@
 
 	<row id="DM_MSG_MENU010">
 		<language name="JPN" font=" 2:lcfont12" width="256">きょだいビーコンそうじゅしん</language>
-		<language name="JPN_KANJI" width="80">巨大ビーコン送受信</language>
+		<language name="JPN_KANJI" width="80">きょだいビーコン送受信</language>
+	</row>
+
+	<row id="DM_MSG_MENU011">
+		<language name="JPN" font=" 2:lcfont12" width="256">ふうせん</language>
+		<language name="JPN_KANJI" width="80">ふうせん</language>
 	</row>
 
 	<row id="DM_MSG_TRADE000">

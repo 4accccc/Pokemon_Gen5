@@ -40,6 +40,11 @@ extern GFL_PROC_RESULT BalloonProc_Init( GFL_PROC * proc, int * seq, void * pwk,
 extern GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 extern GFL_PROC_RESULT BalloonProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
+//==============================================================================
+//	外部データ
+//==============================================================================
+extern const GFL_PROC_DATA BalloonProcData;
+
 
 #endif		// __BALLOON_H__
 

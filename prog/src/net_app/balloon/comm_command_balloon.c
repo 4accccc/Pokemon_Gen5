@@ -8,25 +8,19 @@
  * @date    2007.11.26(月)
  */
 //=============================================================================
-#include "common.h"
+#include <gflib.h>
 #include "system/palanm.h"
 #include "print\printsys.h"
 #include <arc_tool.h>
-//#include "system/arc_util.h"
-//#include "system/fontproc.h"
 #include "print\gf_font.h"
-//#include "system/particle.h"
-//#include "system/brightness.h"
-//#include "system/snd_tool.h"
 #include "net\network_define.h"
-//#include  "communication/wm_icon.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include  "communication/wm_icon.h"
-//#include "system/msgdata_util.h"
 #include <procsys.h>
-//#include "system/d3dobj.h"
-//#include "system/fontoam.h"
+#include "system/main.h"
+#include "print\gf_font.h"
+#include "font/font.naix"
+#include "font/font.naix"
 
 #include "balloon_common.h"
 #include "balloon_comm_types.h"
@@ -39,22 +33,34 @@
 #include "comm_command_balloon.h"
 #include "balloon_comm_types.h"
 #include "balloon_send_recv.h"
+#include "balloon_id.h"
+#include "balloon_control.h"
+#include "balloon_snd_def.h"
+
+#include "balloon_gra_def.h"
+#include "balloon_particle.naix"
+#include "balloon_particle_lst.h"
+#include "msg/msg_balloon.h"
+#include "wlmngm_tool.naix"		//タッチペングラフィック
+#include "system/actor_tool.h"
+#include "arc_def.h"
+#include "system/sdkdef.h"
+#include "system/gfl_use.h"
+#include <calctool.h>
+#include "system/bmp_winframe.h"
+#include "comm_command_balloon.h"
+#include "balloon_comm_types.h"
+#include "balloon_send_recv.h"
 
 
 
 //==============================================================================
 //  テーブルに書く関数の定義
 //==============================================================================
-static	void Recv_CommTiming(int id_no,int size,void *pData,void *work);
-static	void Recv_CommBalloonPlayData(int id_no,int size,void *pData,void *work);
-static	void Recv_CommGameEnd(int id_no,int size,void *pData,void *work);
-static	void Recv_CommServerVersion(int id_no,int size,void *pData,void *work);
+static	void Recv_CommBalloonPlayData(const int id_no, const int size,const void *pData,void *work, GFL_NETHANDLE *pNetHandle);
+static	void Recv_CommGameEnd(const int id_no, const int size,const void *pData,void *work, GFL_NETHANDLE *pNetHandle);
+static	void Recv_CommServerVersion(const int id_no,const int size,const void *pData,void *work, GFL_NETHANDLE *pNetHandle);
 
-//==============================================================================
-//  static定義
-//==============================================================================
-static int _getGamePlaySize(void);
-static int _getServerVersionSize(void);
 
 
 //==============================================================================
@@ -65,10 +71,10 @@ static int _getServerVersionSize(void);
 //  _getZeroはサイズなしを返します。_getVariableは可変データ使用時に使います
 //==============================================================================
 static const NetRecvFuncTable _CommPacketTbl[] = {
-    {NULL,                      _getZero, 			NULL},	// CB_EXIT_BALLOON
-	{Recv_CommServerVersion,	_getServerVersionSize,	NULL},	// CB_SERVER_VERSION
-	{Recv_CommBalloonPlayData, 	_getGamePlaySize,	NULL},	// CB_PLAY_PARAM
-	{Recv_CommGameEnd,		 	_getZero,			NULL},	// CB_GAME_END
+    {NULL,                      NULL},	// CB_EXIT_BALLOON
+	{Recv_CommServerVersion,	NULL},	// CB_SERVER_VERSION
+	{Recv_CommBalloonPlayData, 	NULL},	// CB_PLAY_PARAM
+	{Recv_CommGameEnd,		 	NULL},	// CB_GAME_END
 };
 
 //--------------------------------------------------------------
@@ -80,34 +86,15 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
 //--------------------------------------------------------------
 void CommCommandBalloonInitialize(void* pWork)
 {
+#if WB_TEMP_FIX
     int length = sizeof(_CommPacketTbl)/sizeof(NetRecvFuncTable);
     CommCommandInitialize(_CommPacketTbl, length, pWork);
-    
+#else
+	//GGIDを後で入れる
+	GFL_NET_COMMAND_Init(0, _CommPacketTbl, NELEMS(_CommPacketTbl), pWork);
+#endif
+
     GF_ASSERT(sizeof(BALLOON_SIO_PLAY_WORK) < 256);	//このサイズを超えたらHugeBuffにする必要がある
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   ３つともサイズを返します
- * @param   command         コマンド
- * @retval  サイズ   可変なら COMM_VARIABLE_SIZE Zeroは０を返す
- */
-//--------------------------------------------------------------
-static int _getGamePlaySize(void)
-{
-	return sizeof(BALLOON_SIO_PLAY_WORK);
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   サーバーバージョンサイズを返します
- * @param   command         コマンド
- * @retval  サイズ   可変なら COMM_VARIABLE_SIZE Zeroは０を返す
- */
-//--------------------------------------------------------------
-static int _getServerVersionSize(void)
-{
-	return sizeof(u32);
 }
 
 
@@ -119,21 +106,6 @@ static int _getServerVersionSize(void)
 //	
 //
 //==============================================================================
-//--------------------------------------------------------------
-/**
- * @brief   同期取り通信受信処理
- *
- * @param   id_no		送信者のネットID
- * @param   size		受信データサイズ
- * @param   pData		受信データ
- * @param   work		
- */
-//--------------------------------------------------------------
-static	void Recv_CommTiming(int id_no,int size,void *pData,void *work)
-{
-	;
-}
-
 
 //==============================================================================
 //	
@@ -148,7 +120,7 @@ static	void Recv_CommTiming(int id_no,int size,void *pData,void *work)
  * @param   work		
  */
 //--------------------------------------------------------------
-static	void Recv_CommBalloonPlayData(int id_no,int size,void *pData,void *work)
+static	void Recv_CommBalloonPlayData(const int id_no, const int size,const void *pData,void *work, GFL_NETHANDLE *pNetHandle)
 {
 	BALLOON_GAME_PTR game = work;
 	
@@ -164,7 +136,11 @@ static	void Recv_CommBalloonPlayData(int id_no,int size,void *pData,void *work)
 //--------------------------------------------------------------
 BOOL Send_CommBalloonPlayData(BALLOON_GAME_PTR game, BALLOON_SIO_PLAY_WORK *send_data)
 {
+#if WB_FIX
 	if(CommSendData(CB_PLAY_PARAM, send_data, sizeof(BALLOON_SIO_PLAY_WORK)) == TRUE){
+#else
+	if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CB_PLAY_PARAM, sizeof(BALLOON_SIO_PLAY_WORK), send_data) == TRUE){
+#endif
 		return TRUE;
 	}
 	return FALSE;
@@ -184,7 +160,7 @@ BOOL Send_CommBalloonPlayData(BALLOON_GAME_PTR game, BALLOON_SIO_PLAY_WORK *send
  * @param   work		
  */
 //--------------------------------------------------------------
-static	void Recv_CommGameEnd(int id_no,int size,void *pData,void *work)
+static	void Recv_CommGameEnd(const int id_no, const int size,const void *pData,void *work, GFL_NETHANDLE *pNetHandle)
 {
 	BALLOON_GAME_PTR game = work;
 	
@@ -200,7 +176,11 @@ static	void Recv_CommGameEnd(int id_no,int size,void *pData,void *work)
 //--------------------------------------------------------------
 BOOL Send_CommGameEnd(BALLOON_GAME_PTR game)
 {
+#if WB_FIX
 	if(CommSendData(CB_GAME_END, NULL, 0) == TRUE){
+#else
+	if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CB_GAME_END, 0, NULL) == TRUE){
+#endif
 		return TRUE;
 	}
 	return FALSE;
@@ -219,10 +199,10 @@ BOOL Send_CommGameEnd(BALLOON_GAME_PTR game)
  * @param   work		
  */
 //--------------------------------------------------------------
-static	void Recv_CommServerVersion(int id_no,int size,void *pData,void *work)
+static	void Recv_CommServerVersion(const int id_no,const int size,const void *pData,void *work, GFL_NETHANDLE *pNetHandle)
 {
 	BALLOON_GAME_PTR game = work;
-	u32 *recv_data = pData;
+	const u32 *recv_data = pData;
 	u32 server_version;
 	int i;
 	
@@ -249,7 +229,11 @@ BOOL Send_CommServerVersion(BALLOON_GAME_PTR game)
 {
 	u32 server_version = BALLOON_SERVER_VERSION;
 	
+#if WB_FIX
 	if(CommSendData(CB_SERVER_VERSION, &server_version, sizeof(u32)) == TRUE){
+#else
+	if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CB_SERVER_VERSION, sizeof(u32), &server_version) == TRUE){
+#endif
 		return TRUE;
 	}
 	return FALSE;

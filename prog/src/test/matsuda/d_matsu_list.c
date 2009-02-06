@@ -32,14 +32,17 @@
 #include "trade/trade_main.h"
 #include "test/easy_pokelist.h"
 
+#include "net_app/balloon.h"
+
 
 //==============================================================================
 //	定数定義
 //==============================================================================
 ///STRBUFポインタの数(メニューの配列より多く持っておく事)
-#define D_STRBUF_NUM			(10)
+#define D_STRBUF_NUM			(30)
 
 FS_EXTERN_OVERLAY(matsuda_debug);
+FS_EXTERN_OVERLAY(balloon);
 
 //==============================================================================
 //	構造体定義
@@ -80,12 +83,15 @@ typedef struct {
 	void	*icon_anm_res;
 	
 	int cursor_y;
+	
+	void *parent_work;
 }D_MATSU_WORK;
 
 ///メニューリスト
 typedef struct{
 	u32 str_id;
 	const GFL_PROC_DATA *next_proc;
+	void *(*parent_work_func)(D_MATSU_WORK *);
 	u32 ov_id;
 }D_MENULIST;
 
@@ -93,6 +99,7 @@ typedef struct{
 //	プロトタイプ宣言
 //==============================================================================
 static BOOL DebugMatsuda_ItemDebug(D_MATSU_WORK *wk);
+static void * _BalloonParentWorkCreate(D_MATSU_WORK *wk);
 
 
 //==============================================================================
@@ -113,16 +120,72 @@ extern const GFL_PROC_DATA DebugMatsudaBeaconProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
-	{DM_MSG_MENU010, &DebugMatsudaBeaconProcData,	FS_OVERLAY_ID(matsuda_debug)},	//巨大ビーコン送受信テスト
-	{DM_MSG_MENU004, &DebugMatsudaItemProcData,		FS_OVERLAY_ID(matsuda_debug)},	//アイテム
-	{DM_MSG_MENU003, &DebugMatsudaIrcMatchProcData,	FS_OVERLAY_ID(matsuda_debug)},	//赤外線複数マッチング
-	{DM_MSG_MENU002, &DebugMatsudaNetProcData,		FS_OVERLAY_ID(matsuda_debug)},	//ワイヤレス通信テスト
-	{DM_MSG_MENU001, &DebugMatsudaMainProcData,		FS_OVERLAY_ID(matsuda_debug)},	//セーブテスト
-	{DM_MSG_MENU005, &EasyPokeListData,				FS_OVERLAY_ID(pokelist)},//簡易ポケモンリスト
-	{DM_MSG_MENU006, &TradeMainProcData,			FS_OVERLAY_ID(trade)},	//簡易ポケモン交換
-	{DM_MSG_MENU007, &DebugSaveProcData,			FS_OVERLAY_ID(matsuda_debug)},	//セーブ破壊
-	{DM_MSG_MENU008, &PalaceBlockProcData,			FS_OVERLAY_ID(matsuda_debug)},	//パレス
-	{DM_MSG_MENU009, &PalaceHandProcData,			FS_OVERLAY_ID(matsuda_debug)},	//パレス
+	{//風船ミニゲーム
+		DM_MSG_MENU011, 
+		&BalloonProcData,	
+		_BalloonParentWorkCreate,
+		FS_OVERLAY_ID(balloon)
+	},
+	{//巨大ビーコン送受信テスト
+		DM_MSG_MENU010, 
+		&DebugMatsudaBeaconProcData,	
+		NULL,
+		FS_OVERLAY_ID(matsuda_debug)
+	},
+	{//アイテム
+		DM_MSG_MENU004, 
+		&DebugMatsudaItemProcData,		
+		NULL,
+		FS_OVERLAY_ID(matsuda_debug)
+	},
+	{//赤外線複数マッチング
+		DM_MSG_MENU003, 
+		&DebugMatsudaIrcMatchProcData,	
+		NULL,
+		FS_OVERLAY_ID(matsuda_debug)
+	},
+	{//ワイヤレス通信テスト
+		DM_MSG_MENU002, 
+		&DebugMatsudaNetProcData,		
+		NULL,
+		FS_OVERLAY_ID(matsuda_debug)
+	},
+	{//セーブテスト
+		DM_MSG_MENU001,
+		&DebugMatsudaMainProcData,
+		NULL,
+		FS_OVERLAY_ID(matsuda_debug)
+	},
+	{//簡易ポケモンリスト
+		DM_MSG_MENU005, 
+		&EasyPokeListData,				
+		NULL,
+		FS_OVERLAY_ID(pokelist)
+	},
+	{//簡易ポケモン交換
+		DM_MSG_MENU006, 
+		&TradeMainProcData,			
+		NULL,
+		FS_OVERLAY_ID(trade)
+	},
+	{//セーブ破壊
+		DM_MSG_MENU007,
+		&DebugSaveProcData,			
+		NULL,
+		FS_OVERLAY_ID(matsuda_debug)
+	},
+	{//パレス
+		DM_MSG_MENU008, 
+		&PalaceBlockProcData,			
+		NULL,
+		FS_OVERLAY_ID(matsuda_debug)
+	},
+	{//パレス
+		DM_MSG_MENU009, 
+		&PalaceHandProcData,			
+		NULL,
+		FS_OVERLAY_ID(matsuda_debug)
+	},
 };
 
 
@@ -311,10 +374,19 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 {
 	D_MATSU_WORK* wk = mywk;
 	int i;
+	void *parent_work;
+	
+	if(DebugMenuList[wk->cursor_y].parent_work_func != NULL){
+		wk->parent_work = DebugMenuList[wk->cursor_y].parent_work_func(wk);
+		parent_work = wk->parent_work;
+	}
+	else{
+		parent_work = NULL;
+	}
 	
 	//次のPROC予約
 	GFL_PROC_SysSetNextProc(
-		DebugMenuList[wk->cursor_y].ov_id, DebugMenuList[wk->cursor_y].next_proc, NULL);
+		DebugMenuList[wk->cursor_y].ov_id, DebugMenuList[wk->cursor_y].next_proc, parent_work);
 
 	GFL_BMPWIN_Delete(wk->drawwin.win);
 	for(i = 0; i < D_STRBUF_NUM; i++){
@@ -415,6 +487,17 @@ static BOOL DebugMatsuda_ItemDebug(D_MATSU_WORK *wk)
 
 
 
+//==============================================================================
+//	
+//==============================================================================
+static void * _BalloonParentWorkCreate(D_MATSU_WORK *wk)
+{
+	BALLOON_PROC_WORK *balloon_pwk;
+	
+	balloon_pwk = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(BALLOON_PROC_WORK));
+	balloon_pwk->debug_offline = TRUE;
+	return balloon_pwk;
+}
 
 
 //==============================================================================

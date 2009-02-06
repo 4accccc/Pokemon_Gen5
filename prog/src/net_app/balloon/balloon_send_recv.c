@@ -6,25 +6,19 @@
  * @date	2007.11.27(火)
  */
 //==============================================================================
-#include "common.h"
+#include <gflib.h>
 #include "system/palanm.h"
 #include "print\printsys.h"
 #include <arc_tool.h>
-//#include "system/arc_util.h"
-//#include "system/fontproc.h"
 #include "print\gf_font.h"
-//#include "system/particle.h"
-//#include "system/brightness.h"
-//#include "system/snd_tool.h"
 #include "net\network_define.h"
-//#include  "communication/wm_icon.h"
 #include "message.naix"
 #include "system/wipe.h"
-//#include  "communication/wm_icon.h"
-//#include "system/msgdata_util.h"
 #include <procsys.h>
-//#include "system/d3dobj.h"
-//#include "system/fontoam.h"
+#include "system/main.h"
+#include "print\gf_font.h"
+#include "font/font.naix"
+#include "font/font.naix"
 
 #include "balloon_common.h"
 #include "balloon_comm_types.h"
@@ -35,6 +29,25 @@
 #include "balloon_sonans.h"
 #include "balloon_tool.h"
 #include "comm_command_balloon.h"
+#include "balloon_comm_types.h"
+#include "balloon_send_recv.h"
+#include "balloon_id.h"
+#include "balloon_control.h"
+#include "balloon_snd_def.h"
+
+#include "balloon_gra_def.h"
+#include "balloon_particle.naix"
+#include "balloon_particle_lst.h"
+#include "msg/msg_balloon.h"
+#include "wlmngm_tool.naix"		//タッチペングラフィック
+#include "system/actor_tool.h"
+#include "arc_def.h"
+#include "system/sdkdef.h"
+#include "system/gfl_use.h"
+#include <calctool.h>
+#include "system/bmp_winframe.h"
+#include "comm_command_balloon.h"
+#include "balloon_comm_types.h"
 #include "balloon_send_recv.h"
 
 

@@ -2235,8 +2235,6 @@ static void BalloonDefault3DSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		G3DOBJ_BALL1Y_BMD,
 		G3DOBJ_BALL1G_BMD,
 	};
-	
-	GF_ASSERT(NELEMS(AirObjIndexTbl) == PIPE_AIR_AIR_MAX);
 #endif
 
 	entry_pos = Balloon_NetID_to_EntryNo(game, GFL_NET_SystemGetCurrentID());

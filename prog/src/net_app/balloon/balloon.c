@@ -40,6 +40,13 @@ enum{
 //==============================================================================
 //	GFL_PROCデータ
 //==============================================================================
+///風船割りメインPROC
+const GFL_PROC_DATA BalloonProcData = {
+	BalloonProc_Init,
+	BalloonProc_Main,
+	BalloonProc_End,
+};
+
 ///風船割りゲーム画面プロセス定義データ
 static const GFL_PROC_DATA BalloonGameProcData = {
 	BalloonGameProc_Init,
@@ -264,10 +271,14 @@ static void Ballon_ProcWorkInit(BALLOON_SYSTEM_WORK *bsw, BALLOON_PROC_WORK *par
 	}
 	else{
 		//エントリー画面＆結果発表画面用の値セット
+	#if WB_TEMP_FIX
 		MNGM_ENRES_PARAM_Init( &bsw->entry_param, parent->wifi_lobby, parent->p_save, parent->vchat, &parent->lobby_wk );
+	#endif
 	}
 #else
+#if WB_TEMP_FIX
 	MNGM_ENRES_PARAM_Init( &bsw->entry_param, parent->wifi_lobby, parent->p_save, parent->vchat, &parent->lobby_wk );
+#endif
 #endif
 }
 

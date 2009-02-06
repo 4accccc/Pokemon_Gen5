@@ -71,6 +71,7 @@ SRCS	+=		$(SOUNDSRC) \
 				test/dlplay/dlplay_disp_sys.c \
 				item/item.c \
 				title/title_control.c \
+				system/actor_tool.c \
 				savedata/myitem_savedata.c \
 				savedata/config.c \
 				savedata/mystatus.c \
@@ -340,6 +341,16 @@ SRCS_OVERLAY_POKELIST	= test/matsuda/easy_pokelist.c
 #===> SRCS_OVERLAY_POKELIST
 SRCS_OVERLAY_TRADE	= trade/trade.c \
 				trade/trade_main.c
+
+#wifi•—‘DŠ„‚è
+#===> main
+SRCS_OVERLAY_BALLOON =	net_app/balloon/balloon.c \
+						net_app/balloon/balloon_game.c \
+						net_app/balloon/balloon_sonans.c \
+						net_app/balloon/balloon_tool.c \
+						net_app/balloon/balloon_entry.c \
+						net_app/balloon/comm_command_balloon.c \
+						net_app/balloon/balloon_send_recv.c
 
 # ƒoƒgƒ‹
 #===> SRCS_OVERLAY_SOGABE_DEBUG
