@@ -71,7 +71,6 @@ SRCS	+=		$(SOUNDSRC) \
 				test/dlplay/dlplay_disp_sys.c \
 				item/item.c \
 				title/title_control.c \
-				system/actor_tool.c \
 				savedata/myitem_savedata.c \
 				savedata/config.c \
 				savedata/mystatus.c \
