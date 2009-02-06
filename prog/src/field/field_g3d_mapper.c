@@ -9,13 +9,15 @@
 #include "gflib.h"
 #include "system\gfl_use.h"	//—”—p
 
-#include "mapdatafunc\field_func_mapeditor_file.h"
-#include "mapdatafunc\field_func_pmcustom_file.h"
-#include "mapdatafunc\field_func_bridge_file.h"
+#include "mapdatafunc/field_func_mapeditor_file.h"
+#include "mapdatafunc/field_func_pmcustom_file.h"
+#include "mapdatafunc/field_func_bridge_file.h"
+#include "mapdatafunc/field_func_wbnormal_file.h"
 
 #include "field_g3d_mapper.h"
 #include "fieldmap_resist.h"
 
+#include "system/g3d_tool.h"
 //============================================================================================
 /**
  *
@@ -131,6 +133,7 @@ static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
  */
 //------------------------------------------------------------------
 static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
+	{ DP3PACK_HEADER, FieldLoadMapData_WBNormalFile, FieldGetAttr_WBNormalFile },
 	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
 	{ BRIDGEPACK_HEADER, FieldLoadMapData_BridgeFile, FieldGetAttr_BridgeFile },
 	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
@@ -351,7 +354,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 		int i;
 		GFL_G3D_MAP_SETUP setup;
 
-		if (g3Dmapper->globalTexture == NULL) {
+		if (g3Dmapper->globalTexture != NULL) {
 			setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
 			setup.texVramSize = 0;
 			setup.mapFileFunc = mapFileFuncTbl;
