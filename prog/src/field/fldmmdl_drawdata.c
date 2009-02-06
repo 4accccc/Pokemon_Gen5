@@ -34,6 +34,7 @@
 */
 //==============================================================================
 #include "fldmmdl.h"
+#include "fldmmdl_procdraw.h"
 #include "../../arc/test_graphic/mmodel.naix"
 
 //==============================================================================
@@ -307,11 +308,18 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FieldOBJDraw_Non =
 //--------------------------------------------------------------
 const FLDMMDL_DRAW_PROC_LIST DATA_FieldOBJDraw_Legend =
 {
+#ifndef FLDMMDL_PL_NULL
 	FLDMMDL_DrawLegend_Init,
 	FLDMMDL_DrawLegend_Draw,
 	FLDMMDL_DrawLegend_Delete,
 	FLDMMDL_DrawLegend_Push,
 	FLDMMDL_DrawLegend_Pop,
+#else
+	FLDMMDL_DrawNon_Init,
+	FLDMMDL_DrawNon_Draw,
+	FLDMMDL_DrawNon_Delete,
+	FLDMMDL_DrawNon_Push,
+#endif
 };
 
 //--------------------------------------------------------------
@@ -320,11 +328,18 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FieldOBJDraw_Legend =
 //--------------------------------------------------------------
 const FLDMMDL_DRAW_PROC_LIST DATA_FieldOBJDraw_ReiAiHai =
 {
+#ifndef FLDMMDL_PL_NULL
 	FLDMMDL_DrawReiAiHai_Init,
 	FLDMMDL_DrawReiAiHai_Draw,
 	FLDMMDL_DrawReiAiHai_Delete,
 	FLDMMDL_DrawLegend_Push,
 	FLDMMDL_DrawLegend_Pop,
+#else
+	FLDMMDL_DrawNon_Init,
+	FLDMMDL_DrawNon_Draw,
+	FLDMMDL_DrawNon_Delete,
+	FLDMMDL_DrawNon_Push,
+#endif
 };
 
 //--------------------------------------------------------------
@@ -2286,6 +2301,7 @@ const OBJCODE_SEEDDATA DATA_OBJCodeSeedDataTbl[] =
 //--------------------------------------------------------------
 ///	表示コード別レンダ表示位置オフセット
 //--------------------------------------------------------------
+#if 0
 const CODEOFFS DATA_FieldOBJRenderOBJDrawOffset[] =
 {
 	{ BOARD_A,{BOARD_OFFS_X,BOARD_OFFS_Y,BOARD_OFFS_Z} },
@@ -2299,4 +2315,4 @@ const CODEOFFS DATA_FieldOBJRenderOBJDrawOffset[] =
 	{ ROTOMWALL, {ROBJ_OFFS_X,ROBJ_OFFS_Y,ROBJ_OFFS_Z}, },
 	{OBJCODEMAX,{0,0,0},},
 };
-
+#endif

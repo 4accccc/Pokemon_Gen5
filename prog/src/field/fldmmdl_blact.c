@@ -352,10 +352,10 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
 	VecFx32 pos;
 	int tbl[] = {0,4,8,12,16,20};
 	FLDMMDL *fmmdl = work;
-	TEST_DRAW_WORK *draw = FLDMMDL_DrawProcWorkGet( fmmdl );
+	TEST_DRAW_WORK *draw = FLDMMDL_GetDrawProcWork( fmmdl );
 	
-	dir = FLDMMDL_DirDispGet( fmmdl );
-	status = FLDMMDL_DrawStatusGet( fmmdl );
+	dir = FLDMMDL_GetDirDisp( fmmdl );
+	status = FLDMMDL_GetDrawStatus( fmmdl );
 	anm_id = tbl[status];
 	anm_id += dir;
 	
@@ -386,15 +386,15 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
 		draw->anm_walk_next_frmidx = frm;
 	}
 	
-	FLDMMDL_DrawVecPosTotalGet( fmmdl, &pos );
+	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
 	pos.y += FX32_ONE * 12;
 //	pos.y += FX32_ONE * 7; //3
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(bbdActSys), actIdx, &pos );
 	
-	if( FLDMMDL_MovePauseCheck(fmmdl) == FALSE ||
-		FLDMMDL_StatusBitCheck_Acmd(fmmdl) == TRUE ){
+	if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) == FALSE ||
+		FLDMMDL_CheckStatusBitAcmd(fmmdl) == TRUE ){
 		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, TRUE );
 	}else{
 		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, FALSE );
@@ -425,10 +425,10 @@ static void testJikiFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
 #endif
 	
 	FLDMMDL *fmmdl = work;
-	TEST_DRAW_WORK *draw = FLDMMDL_DrawProcWorkGet( fmmdl );
+	TEST_DRAW_WORK *draw = FLDMMDL_GetDrawProcWork( fmmdl );
 	
-	dir = FLDMMDL_DirDispGet( fmmdl );
-	status = FLDMMDL_DrawStatusGet( fmmdl );
+	dir = FLDMMDL_GetDirDisp( fmmdl );
+	status = FLDMMDL_GetDrawStatus( fmmdl );
 	anm_id = tbl[status];
 	anm_id += dir;
 	
@@ -494,15 +494,15 @@ static void testJikiFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
 		}
 	}
 	
-	FLDMMDL_DrawVecPosTotalGet( fmmdl, &pos );
+	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
 	pos.y += FX32_ONE * 12;
 //	pos.y += FX32_ONE * 7; //3
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(bbdActSys), actIdx, &pos );
 	
-	if( FLDMMDL_MovePauseCheck(fmmdl) == FALSE ||
-		FLDMMDL_StatusBitCheck_Acmd(fmmdl) == TRUE ){
+	if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) == FALSE ||
+		FLDMMDL_CheckStatusBitAcmd(fmmdl) == TRUE ){
 		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, TRUE );
 	}else{
 		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, FALSE );
@@ -552,10 +552,10 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor(FLDMMDL *pFldMMdl, u32 id)
 	VecFx32 pos;
 	GFL_BBDACT_ACTDATA actData;
 	GFL_BBDACT_ACTUNIT_ID actID;
-	FLDMMDLSYS *pFMMdlSys = FLDMMDL_GetFldMMdlSys( pFldMMdl );
+	FLDMMDLSYS *pFMMdlSys = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( pFldMMdl );
 	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( pFMMdlSys );
 	
-	FLDMMDL_DrawVecPosTotalGet( pFldMMdl, &pos );
+	FLDMMDL_GetDrawVectorPos( pFldMMdl, &pos );
 	
 	actData.resID = id;
 	actData.sizX = FX16_ONE*8-1;
@@ -565,7 +565,7 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor(FLDMMDL *pFldMMdl, u32 id)
 	actData.drawEnable = TRUE;
 	actData.lightMask = GFL_BBD_LIGHTMASK_01;
 	
-	if( FLDMMDL_OBJIDGet(pFldMMdl) == FLDMMDL_ID_PLAYER ){
+	if( FLDMMDL_GetOBJID(pFldMMdl) == FLDMMDL_ID_PLAYER ){
 	}else{
 	}
 	
@@ -601,7 +601,7 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor(FLDMMDL *pFldMMdl, u32 id)
 void FLDMMDL_BLACTCONT_DeleteActor(
 	FLDMMDL *pFldMMdl, GFL_BBDACT_ACTUNIT_ID actID )
 {
-	FLDMMDLSYS *pFMMdlSys = FLDMMDL_GetFldMMdlSys( pFldMMdl );
+	FLDMMDLSYS *pFMMdlSys = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( pFldMMdl );
 	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( pFMMdlSys );
 	GFL_BBDACT_RemoveAct( pBlActCont->pBbdActSys, actID, 1 );
 }

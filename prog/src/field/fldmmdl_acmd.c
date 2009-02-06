@@ -1,4 +1,4 @@
-//******************************************************************************
+//======================================================================
 /**
  *
  * @file	fieldobj_acmd.c
@@ -7,12 +7,13 @@
  * @data	05.08.05
  *
  */
-//******************************************************************************
+//======================================================================
 #include "fldmmdl.h"
+#include "fldmmdl_procacmd.h"
 
-//==============================================================================
+//======================================================================
 //	define
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 ///	整数２桁 小数点2桁 u16
 //--------------------------------------------------------------
@@ -25,12 +26,12 @@
 //--------------------------------------------------------------
 enum
 {
-	SEQNO_AL_ACMD_COUNT_INIT = 0,								///<回数初期化
-	SEQNO_AL_ACMD_SET_CHECK,									///<セット可能チェック
-	SEQNO_AL_ACMD_SET,											///<セット
-	SEQNO_AL_ACMD_END_CHECK,									///<アニメコマンド終了チェック
-	SEQNO_AL_ACMD_SET_COUNT,									///<アニメコマンドセットカウント
-	SEQNO_AL_END,												///<終了
+	SEQNO_AL_ACMD_COUNT_INIT = 0,///<回数初期化
+	SEQNO_AL_ACMD_SET_CHECK,	///<セット可能チェック
+	SEQNO_AL_ACMD_SET,			///<セット
+	SEQNO_AL_ACMD_END_CHECK,	///<アニメコマンド終了チェック
+	SEQNO_AL_ACMD_SET_COUNT,	///<アニメコマンドセットカウント
+	SEQNO_AL_END,				///<終了
 };
 
 //--------------------------------------------------------------
@@ -39,21 +40,21 @@ enum
 //--------------------------------------------------------------
 enum
 {
-	AC_JUMP_HEIGHT_12 = 0,										///<高さ12
-	AC_JUMP_HEIGHT_8,											///<高さ8
-	AC_JUMP_HEIGHT_6,											///<高さ6
+	AC_JUMP_HEIGHT_12 = 0,		///<高さ12
+	AC_JUMP_HEIGHT_8,			///<高さ8
+	AC_JUMP_HEIGHT_6,			///<高さ6
 };
 
-#define AC_JUMP_H_TBL_MAX (16)									///<高さテーブル要素数
-#define AC_JUMP_H_TBL_FRAME_MAX (AC_JUMP_H_TBL_MAX-1)			///<高さテーブル要素数
+#define AC_JUMP_H_TBL_MAX (16)///<高さテーブル要素数
+#define AC_JUMP_H_TBL_FRAME_MAX (AC_JUMP_H_TBL_MAX-1)///<高さテーブル要素数
 #define AC_JUMP_H_TBL_FRAME_MAX_UX16 (NUM_UX16(AC_JUMP_H_TBL_FRAME_MAX))
 
 //--------------------------------------------------------------
 ///	AC_JUMP_WORKで指定する上昇速度
 //--------------------------------------------------------------
-#define AC_JUMP_SPEED_UX16_1 (NUM_UX16(1))							///<速度1
-#define	AC_JUMP_SPEED_UX16_2 (NUM_UX16(2))							///<速度2
-#define AC_JUMP_SPEED_UX16_4 (NUM_UX16(4))							///<速度4
+#define AC_JUMP_SPEED_UX16_1 (NUM_UX16(1))///<速度1
+#define	AC_JUMP_SPEED_UX16_2 (NUM_UX16(2))///<速度2
+#define AC_JUMP_SPEED_UX16_4 (NUM_UX16(4))///<速度4
 #define AC_JUMP_SPEED_UX16_TBL(a) (AC_JUMP_H_TBL_FRAME_MAX_UX16/a)
 
 //--------------------------------------------------------------
@@ -65,63 +66,63 @@ enum
 #define SE_TWORLD_JUMP (SE_YABURETA_JUMP2)
 #endif
 
-//==============================================================================
-//	typedef struct
-//==============================================================================
+//======================================================================
+//	struct
+//======================================================================
 //--------------------------------------------------------------
 ///	ACMD_LIST_WORK構造体
 //--------------------------------------------------------------
 typedef struct
 {
-	int seq_no;													///<処理番号
-	int end_flag;												///<終了フラグ
-	int acmd_count;												///<アニメ実行回数を記録
-	FLDMMDL * fmmdl;										///<アニメ対象FLDMMDL *
-	const FLDMMDL_ACMD_LIST *list;							///<実行するコマンドリスト
+	int seq_no;					///<処理番号
+	BOOL end_flag;				///<終了フラグ
+	int acmd_count;				///<アニメ実行回数を記録
+	FLDMMDL * fmmdl;			///<アニメ対象FLDMMDL *
+	const FLDMMDL_ACMD_LIST *list;	///<実行するコマンドリスト
 }ACMD_LIST_WORK;
 
-#define ACMD_LIST_WORK_SIZE (sizeof(ACMD_LIST_WORK))			///<ACMD_LIST_WORKサイズ
+#define ACMD_LIST_WORK_SIZE (sizeof(ACMD_LIST_WORK)) ///<ACMD_LIST_WORKサイズ
 
 //--------------------------------------------------------------
 ///	AC_WALK_WORK構造体。歩き系で共通使用するワーク
 //--------------------------------------------------------------
 typedef struct
 {
-	u16 draw_state;												///<描画ステータス
-	s16 wait;													///<ウェイト
-	int dir;													///<移動方向
-	fx32 val;													///<移動量
+	u16 draw_state;			///<描画ステータス
+	s16 wait;				///<ウェイト
+	int dir;				///<移動方向
+	fx32 val;				///<移動量
 }AC_WALK_WORK;
 
-#define AC_WALK_WORK_SIZE (sizeof(AC_WALK_WORK))				///<AC_WALK_WORKサイズ
+#define AC_WALK_WORK_SIZE (sizeof(AC_WALK_WORK))///<AC_WALK_WORKサイズ
 
 //--------------------------------------------------------------
 ///	AC_STAY_WALK_WORK構造体。その場歩きで共通使用する
 //--------------------------------------------------------------
 typedef struct
 {
-	u16 draw_state;												///<描画ステータス
-	s16 wait;													///<ウェイト
+	u16 draw_state;			///<描画ステータス
+	s16 wait;				///<ウェイト
 }AC_STAY_WALK_WORK;
 
-#define AC_STAY_WALK_WORK_SIZE (sizeof(AC_STAY_WALK_WORK))		///<AC_STAY_WALKサイズ
+#define AC_STAY_WALK_WORK_SIZE (sizeof(AC_STAY_WALK_WORK))///<AC_STAY_WALKサイズ
 
 //--------------------------------------------------------------
 ///	AC_JUMP_WORK構造体。ジャンプで使用する
 //--------------------------------------------------------------
 typedef struct
 {
-	fx32 val;													///<移動量
-	fx32 dest_val;												///<移動
+	fx32 val;			///<移動量
+	fx32 dest_val;		///<移動
 	u16 h_speed;
 	u16 h_frame;
-	s8 dir;														///<移動方向
-	s8 wait;													///<ウェイト
-	u8 draw_state;												///<描画ステータス
-	s8 h_type;													///<高さ
+	s8 dir;				///<移動方向
+	s8 wait;			///<ウェイト
+	u8 draw_state;		///<描画ステータス
+	s8 h_type;			///<高さ
 }AC_JUMP_WORK;
 
-#define AC_JUMP_WORK_SIZE (sizeof(AC_JUMP_WORK))				///<AC_JUMP_WORKサイズ
+#define AC_JUMP_WORK_SIZE (sizeof(AC_JUMP_WORK))///<AC_JUMP_WORKサイズ
 
 //--------------------------------------------------------------
 ///	AC_WAIT構造体 待機で使用する
@@ -131,7 +132,7 @@ typedef struct
 	int wait;
 }AC_WAIT_WORK;
 
-#define AC_WAIT_WORK_SIZE (sizeof(AC_WAIT_WORK))				///<AC_WAIT_WORKサイズ
+#define AC_WAIT_WORK_SIZE (sizeof(AC_WAIT_WORK))///<AC_WAIT_WORKサイズ
 
 //--------------------------------------------------------------
 ///	AC_WARP_WORK構造体 上下ワープで使用する
@@ -150,9 +151,9 @@ typedef struct
 typedef struct
 {
 	int type;
-#if 0
+	#ifndef FLDMMDL_PL_NULL
 	EOA_PTR eoa_mark;
-#endif
+	#endif
 }AC_MARK_WORK;
 
 #define AC_MARK_WORK_SIZE (sizeof(AC_MARK_WORK))
@@ -162,10 +163,10 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-	s16 dir;													///<移動方向
-	u16 draw_state;												///<描画ステータス
-	s16 max_frame;												///<最大フレーム
-	s16 frame;													///<ウェイト
+	s16 dir;			///<移動方向
+	u16 draw_state;		///<描画ステータス
+	s16 max_frame;		///<最大フレーム
+	s16 frame;			///<ウェイト
 }AC_WALK_ODD_WORK;
 
 #define AC_WALK_ODD_WORK_SIZE (sizeof(AC_WALK_ODD_WORK))
@@ -210,9 +211,9 @@ enum
 	VEC_Z,
 };
 
-//==============================================================================
-//	static
-//==============================================================================
+//======================================================================
+//	proto
+//======================================================================
 static void fmmdl_AcmdListProcTCB( GFL_TCB * tcb, void *wk );
 int (* const DATA_AcmdListProcTbl[])( ACMD_LIST_WORK *work );
 
@@ -222,14 +223,16 @@ static int AC_End( FLDMMDL * fmmdl );
 
 static void AcDirSet( FLDMMDL * fmmdl, int dir );
 
-static void AcWalkWorkInit( FLDMMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw );
+static void AcWalkWorkInit(
+	FLDMMDL * fmmdl, int dir, fx32 val, s16 wait, u16 draw );
 static int AC_Walk_1( FLDMMDL * fmmdl );
 static int AC_Walk_End( FLDMMDL *fmmdl );
 
-static void AcStayWalkWorkInit( FLDMMDL * fmmdl, int dir, s16 wait, u16 draw );
+static void AcStayWalkWorkInit(
+	FLDMMDL * fmmdl, int dir, s16 wait, u16 draw );
 static int AC_StayWalk_1( FLDMMDL * fmmdl );
 
-#if 0
+#ifndef FLDMMDL_PL_NULL
 static void AcMarkWorkInit(
 	FLDMMDL * fmmdl, GYOE_TYPE type, int trans );
 #else
@@ -244,9 +247,9 @@ static const fx32 DATA_AcWalk7FMoveValueTbl[AC_WALK_7F_FRAME];
 static const fx32 DATA_AcWalk6FMoveValueTbl[AC_WALK_6F_FRAME];
 static const fx32 DATA_AcWalk3FMoveValueTbl[AC_WALK_3F_FRAME];
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * アニメーションコマンドが可能かチェック
@@ -254,18 +257,18 @@ static const fx32 DATA_AcWalk3FMoveValueTbl[AC_WALK_3F_FRAME];
  * @retval	int			TRUE=可能。FALSE=無理
  */
 //--------------------------------------------------------------
-int FLDMMDL_AcmdSetCheck( const FLDMMDL * fmmdl )
+BOOL FLDMMDL_CheckPossibleAcmd( const FLDMMDL * fmmdl )
 {
-	if( FLDMMDL_StatusBit_CheckEasy(fmmdl,FLDMMDL_STABIT_USE) == FALSE ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_USE) == 0 ){
 		return( FALSE );
 	}
 	
-	if( FLDMMDL_StatusBit_CheckEasy(fmmdl,FLDMMDL_STABIT_MOVE) == TRUE ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_MOVE) ){
 		return( FALSE );
 	}
 	
-	if( FLDMMDL_StatusBit_CheckEasy(fmmdl,FLDMMDL_STABIT_ACMD) == TRUE &&
-		FLDMMDL_StatusBit_CheckEasy(fmmdl,FLDMMDL_STABIT_ACMD_END) == FALSE ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD) &&
+		FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
 		return( FALSE );
 	}
 	
@@ -280,14 +283,13 @@ int FLDMMDL_AcmdSetCheck( const FLDMMDL * fmmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDL_AcmdSet( FLDMMDL * fmmdl, int code )
+void FLDMMDL_SetAcmd( FLDMMDL * fmmdl, u16 code )
 {
-	GF_ASSERT( code < ACMD_MAX && "FLDMMDL_AcmdSet() アニメーションコード不正" );
-	
-	FLDMMDL_AcmdCodeSet( fmmdl, code );
-	FLDMMDL_AcmdSeqSet( fmmdl, 0 );
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_ACMD );
-	FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_ACMD_END );
+	GF_ASSERT( code < ACMD_MAX );
+	FLDMMDL_SetAcmdCode( fmmdl, code );
+	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD );
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
 }
 
 //--------------------------------------------------------------
@@ -298,11 +300,11 @@ void FLDMMDL_AcmdSet( FLDMMDL * fmmdl, int code )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDL_CmdSet( FLDMMDL * fmmdl, int code )
+void FLDMMDL_SetLocalAcmd( FLDMMDL * fmmdl, u16 code )
 {
-	FLDMMDL_AcmdCodeSet( fmmdl, code );
-	FLDMMDL_AcmdSeqSet( fmmdl, 0 );
-	FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_ACMD_END );
+	FLDMMDL_SetAcmdCode( fmmdl, code );
+	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
 }
 
 //--------------------------------------------------------------
@@ -312,13 +314,13 @@ void FLDMMDL_CmdSet( FLDMMDL * fmmdl, int code )
  * @retval	int			TRUE=終了
  */
 //--------------------------------------------------------------
-int FLDMMDL_AcmdEndCheck( const FLDMMDL * fmmdl )
+BOOL FLDMMDL_CheckEndAcmd( const FLDMMDL * fmmdl )
 {
-	if( FLDMMDL_StatusBit_CheckEasy(fmmdl,FLDMMDL_STABIT_ACMD) == FALSE ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD) == 0 ){
 		return( TRUE );
 	}
 	
-	if( FLDMMDL_StatusBit_CheckEasy(fmmdl,FLDMMDL_STABIT_ACMD_END) == FALSE ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
 		return( FALSE );
 	}
 	
@@ -327,44 +329,47 @@ int FLDMMDL_AcmdEndCheck( const FLDMMDL * fmmdl )
 
 //--------------------------------------------------------------
 /**
- * アニメーションコマンド終了チェックと開放
+ * アニメーションコマンド終了チェックと開放。
+ * アニメーションコマンドが終了していない場合は開放されない。
  * @param	fmmdl		対象となるFLDMMDL * 
- * @retval	int			TRUE=終了
+ * @retval	BOOL	TRUE=終了している。
  */
 //--------------------------------------------------------------
-int FLDMMDL_AcmdEnd( FLDMMDL * fmmdl )
+BOOL FLDMMDL_EndAcmd( FLDMMDL * fmmdl )
 {
-	if( FLDMMDL_StatusBit_CheckEasy(fmmdl,FLDMMDL_STABIT_ACMD) == FALSE ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD) == 0 ){
 		return( TRUE );
 	}
 	
-	if( FLDMMDL_StatusBit_CheckEasy(fmmdl,FLDMMDL_STABIT_ACMD_END) == FALSE ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
 		return( FALSE );
 	}
 	
-	FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_ACMD|FLDMMDL_STABIT_ACMD_END );
+	FLDMMDL_OffStatusBit(
+		fmmdl, FLDMMDL_STABIT_ACMD|FLDMMDL_STABIT_ACMD_END );
 	
 	return( TRUE );
 }
 
 //--------------------------------------------------------------
 /**
- * アニメーションコマンド開放
+ * アニメーションコマンド開放。
+ * アニメーションコマンドが終了していなくとも強制開放。
  * @param	fmmdl		対象となるFLDMMDL * 
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDL_AcmdFree( FLDMMDL * fmmdl )
+void FLDMMDL_FreeAcmd( FLDMMDL * fmmdl )
 {
-	FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_ACMD );
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_ACMD_END );	//ローカルコマンドフラグ
-	FLDMMDL_AcmdCodeSet( fmmdl, ACMD_NOT );
-	FLDMMDL_AcmdSeqSet( fmmdl, 0 );
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );	//ローカルコマンドフラグ
+	FLDMMDL_SetAcmdCode( fmmdl, ACMD_NOT );
+	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
 }
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンドリスト
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * フィールド動作モデルアニメーションコマンドリストセット
@@ -373,37 +378,41 @@ void FLDMMDL_AcmdFree( FLDMMDL * fmmdl )
  * @retval	GFL_TCB *		アニメーションコマンドを実行するGFL_TCB *
  */
 //--------------------------------------------------------------
-GFL_TCB * FLDMMDL_AcmdListSet( FLDMMDL * fmmdl, const FLDMMDL_ACMD_LIST *list )
+GFL_TCB * FLDMMDL_SetAcmdList(
+	FLDMMDL *fmmdl, const FLDMMDL_ACMD_LIST *list )
 {
-	GFL_TCB * tcb;
+	GFL_TCB *tcb;
 	ACMD_LIST_WORK *work;
+	FLDMMDLSYS *fmmdlsys;
 	
-	work = GFL_HEAP_AllocClearMemoryLo( FLDMMDL_GetHeapID(fmmdl), ACMD_LIST_WORK_SIZE );
+	fmmdlsys = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );
+	work = GFL_HEAP_AllocClearMemoryLo(
+		FLDMMDLSYS_GetHeapID(fmmdlsys), ACMD_LIST_WORK_SIZE );
 	
 	{
-		int pri;
-		pri = FLDMMDLSYS_TCBStandardPriorityGet(
-				FLDMMDL_FieldOBJSysGet(fmmdl) ) - 1;
-		tcb = GFL_TCB_AddTask( FLDMMDL_GetTCBSYS(fmmdl), fmmdl_AcmdListProcTCB, work, pri );
+		int pri = FLDMMDLSYS_GetTCBPriority(
+			FLDMMDL_GetFldMMdlSys(fmmdl) ) - 1;
+		tcb = GFL_TCB_AddTask( FLDMMDLSYS_GetTCBSYS(fmmdlsys),
+			fmmdl_AcmdListProcTCB, work, pri );
+		GF_ASSERT( tcb != NULL );
 	}
 	
 	work->fmmdl = fmmdl;
 	work->list = list;
-	
 	return( tcb );
 }
 
 //--------------------------------------------------------------
 /**
  * アニメーションコマンドリスト終了チェック
- * @param	tcb		チェックするアニメをセットしたFLDMMDL_AcmdListSet()の戻り値GFL_TCB *
- * @retval	int		TRUE=終了 FALSE=実行中
+ * @param	tcb	 チェックするアニメをセットしたFLDMMDL_SetAcmdList()の戻り値GFL_TCB *
+ * @retval	BOOL TRUE=終了 FALSE=実行中
  */
 //--------------------------------------------------------------
-int FLDMMDL_AcmdListEndCheck( GFL_TCB * tcb )
+BOOL FLDMMDL_CheckEndAcmdList( GFL_TCB * tcb )
 {
 	ACMD_LIST_WORK *work;
-	
+	GF_ASSERT( tcb != NULL );
 	work = GFL_TCB_GetWork( tcb );
 	return( work->end_flag );
 }
@@ -411,21 +420,16 @@ int FLDMMDL_AcmdListEndCheck( GFL_TCB * tcb )
 //--------------------------------------------------------------
 /**
  * アニメーションコマンドリスト終了
- * @param	tcb		終了するアニメをセットしたFLDMMDL_AcmdListSet()の戻り値GFL_TCB *
+ * @param	tcb		終了するアニメをセットしたFLDMMDL_SetAcmdList()の戻り値GFL_TCB *
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDL_AcmdListEnd( GFL_TCB * tcb )
+void FLDMMDL_EndAcmdList( GFL_TCB * tcb )
 {
 	ACMD_LIST_WORK *work;
-	
 	work = GFL_TCB_GetWork( tcb );
-	
-	GF_ASSERT( FLDMMDL_AcmdEndCheck(work->fmmdl) == TRUE &&
-			"FLDMMDL アニメコマンド実行中にアニメコマンド終了" );
-	
-	FLDMMDL_AcmdEnd( work->fmmdl );
-	
+	GF_ASSERT( FLDMMDL_CheckEndAcmd(work->fmmdl) == TRUE );
+	FLDMMDL_EndAcmd( work->fmmdl );
 	GFL_HEAP_FreeMemory( work );
 	GFL_TCB_DeleteTask( tcb );
 }
@@ -441,9 +445,7 @@ void FLDMMDL_AcmdListEnd( GFL_TCB * tcb )
 static void fmmdl_AcmdListProcTCB( GFL_TCB * tcb, void *wk )
 {
 	ACMD_LIST_WORK *work;
-	
 	work = wk;
-	
 	while( DATA_AcmdListProcTbl[work->seq_no](work) == TRUE ){};
 }
 
@@ -471,7 +473,7 @@ static int AcmdListProc_Init( ACMD_LIST_WORK *work )
 //--------------------------------------------------------------
 static int AcmdListProc_AcmdSetCheck( ACMD_LIST_WORK *work )
 {
-	if( FLDMMDL_AcmdSetCheck(work->fmmdl) == FALSE ){
+	if( FLDMMDL_CheckPossibleAcmd(work->fmmdl) == FALSE ){
 		return( FALSE );
 	}
 	
@@ -491,7 +493,7 @@ static int AcmdListProc_AcmdSet( ACMD_LIST_WORK *work )
 	const FLDMMDL_ACMD_LIST *list;
 		
 	list = work->list;
-	FLDMMDL_AcmdSet( work->fmmdl, list->code );
+	FLDMMDL_SetAcmd( work->fmmdl, list->code );
 		
 	work->seq_no = SEQNO_AL_ACMD_END_CHECK;
 	
@@ -507,7 +509,7 @@ static int AcmdListProc_AcmdSet( ACMD_LIST_WORK *work )
 //--------------------------------------------------------------
 static int AcmdListProc_AcmdEndCheck( ACMD_LIST_WORK *work )
 {
-	if( FLDMMDL_AcmdEndCheck(work->fmmdl) == FALSE ){
+	if( FLDMMDL_CheckEndAcmd(work->fmmdl) == FALSE ){
 		return( FALSE );
 	}
 	
@@ -573,9 +575,9 @@ static int (* const DATA_AcmdListProcTbl[])( ACMD_LIST_WORK *work ) =
 	AcmdListProc_End,
 };
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド　コード取得
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * 方向によるアニメーションコマンドコード変更
@@ -584,17 +586,16 @@ static int (* const DATA_AcmdListProcTbl[])( ACMD_LIST_WORK *work ) =
  * @retval	int		dir別に変更されたcode　例：dir=DIR_LEFT,code=AC_DIR_U = return(AC_DIR_L)
  */
 //--------------------------------------------------------------
-int FLDMMDL_AcmdCodeDirChange( int dir, int code )
+u16 FLDMMDL_ChangeDirAcmdCode( u16 dir, u16 code )
 {
 	int i;
 	const int * const *tbl;
 	const int *dir_tbl;
 	
-	GF_ASSERT( dir < DIR_4_MAX && "FLDMMDL_AcmdCodeDirChange(未対応方向)" );
-	
+	GF_ASSERT( dir < DIR_4_MAX );
 	tbl = DATA_AcmdCodeDirChangeTbl;
 	
-	while( (*tbl) != NULL ){
+	do{
 		i = 0;
 		dir_tbl = *tbl;
 		
@@ -604,10 +605,9 @@ int FLDMMDL_AcmdCodeDirChange( int dir, int code )
 		}while( i < DIR_4_MAX );
 		
 		tbl++;
-	}
+	}while( (*tbl) != NULL );
 	
-	GF_ASSERT( 0 && "FLDMMDL_AcmdCodeDirChange(未対応コード)" );
-	
+	GF_ASSERT( 0 && "FLDMMDL_ChangeDirAcmdCode(未対応コード)" );
 	return( code );
 }
 
@@ -618,7 +618,7 @@ int FLDMMDL_AcmdCodeDirChange( int dir, int code )
  * @retval	int		codeから得られた方向
  */
 //--------------------------------------------------------------
-int FLDMMDL_AcmdCodeDirGet( int code )
+u16 FLDMMDL_GetAcmdDir( u16 code )
 {
 	int dir;
 	const int * const *tbl;
@@ -641,9 +641,9 @@ int FLDMMDL_AcmdCodeDirGet( int code )
 	return( DIR_NOT );
 }
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド　動作
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * アニメーションコマンドアクション
@@ -651,18 +651,18 @@ int FLDMMDL_AcmdCodeDirGet( int code )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDL_AcmdAction( FLDMMDL * fmmdl )
+void FLDMMDL_ActionAcmd( FLDMMDL * fmmdl )
 {
 	int code,seq;
 	
 	do{
-		code = FLDMMDL_AcmdCodeGet( fmmdl );
+		code = FLDMMDL_GetAcmdCode( fmmdl );
 		
 		if( code == ACMD_NOT ){
 			break;
 		}
 		
-		seq = FLDMMDL_AcmdSeqGet( fmmdl );
+		seq = FLDMMDL_GetAcmdSeq( fmmdl );
 	}while( fmmdl_AcmdAction(fmmdl,code,seq) );
 }
 
@@ -677,18 +677,17 @@ void FLDMMDL_AcmdAction( FLDMMDL * fmmdl )
  * @retval	int			TRUE=終了
  */
 //--------------------------------------------------------------
-int FLDMMDL_CmdAction( FLDMMDL * fmmdl )
+BOOL FLDMMDL_ActionLocalAcmd( FLDMMDL * fmmdl )
 {
-	FLDMMDL_AcmdAction( fmmdl );
+	FLDMMDL_ActionAcmd( fmmdl );
 	
-	if( FLDMMDL_StatusBit_CheckEasy(fmmdl,FLDMMDL_STABIT_ACMD_END) == FALSE ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
 		return( FALSE );
 	}
 	
-	FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_ACMD_END );
-	FLDMMDL_AcmdCodeSet( fmmdl, ACMD_NOT );
-	FLDMMDL_AcmdSeqSet( fmmdl, 0 );
-	
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
+	FLDMMDL_SetAcmdCode( fmmdl, ACMD_NOT );
+	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
 	return( TRUE );
 }
 
@@ -704,9 +703,9 @@ static int fmmdl_AcmdAction( FLDMMDL * fmmdl, int code, int seq )
 	return( DATA_AcmdActionTbl[code][seq](fmmdl) );
 }
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド　共通パーツ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC系　コマンド終了
@@ -717,14 +716,14 @@ static int fmmdl_AcmdAction( FLDMMDL * fmmdl, int code, int seq )
 //--------------------------------------------------------------
 static int AC_End( FLDMMDL * fmmdl )
 {
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_ACMD_END );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
 	
 	return( FALSE );
 }
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド AC_DIR_U-AC_DIR_R
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_DIR系共通処理
@@ -735,10 +734,10 @@ static int AC_End( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static void AcDirSet( FLDMMDL * fmmdl, int dir )
 {
-	FLDMMDL_DirDispCheckSet( fmmdl, dir );
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_GPosUpdate( fmmdl );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_SetDirDisp( fmmdl, dir );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_UpdateGridPosCurrent( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -797,9 +796,9 @@ static int AC_DirR_0( FLDMMDL * fmmdl )
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_WALK系　共通
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_WALK_WORK初期化
@@ -815,17 +814,17 @@ static void AcWalkWorkInit( FLDMMDL * fmmdl, int dir, fx32 val, s16 wait, u16 dr
 {
 	AC_WALK_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_WALK_WORK_SIZE );
+	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WALK_WORK_SIZE );
 	work->draw_state = draw;
 	work->wait = wait;
 	work->dir = dir;
 	work->val = val;
 	
-	FLDMMDL_NowGPosDirAdd( fmmdl, dir );
-	FLDMMDL_DirMoveDispCheckSet( fmmdl, dir );
-	FLDMMDL_DrawStatusSet( fmmdl, draw );
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_MOVE_START );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_UpdateGridPosDir( fmmdl, dir );
+	FLDMMDL_SetDirAll( fmmdl, dir );
+	FLDMMDL_SetDrawStatus( fmmdl, draw );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -839,9 +838,9 @@ static int AC_Walk_1( FLDMMDL * fmmdl )
 {
 	AC_WALK_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkGet( fmmdl );
-	FLDMMDL_VecPosDirAdd( fmmdl, work->dir, work->val );
-	FLDMMDL_VecPosNowHeightGetSet( fmmdl );
+	work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	FLDMMDL_AddVectorPosDir( fmmdl, work->dir, work->val );
+	FLDMMDL_UpdateCurrentHeight( fmmdl );
 	
 	work->wait--;
 	
@@ -849,15 +848,15 @@ static int AC_Walk_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_StatusBit_ON(
+	FLDMMDL_OnStatusBit(
 		fmmdl, FLDMMDL_STABIT_MOVE_END|FLDMMDL_STABIT_ACMD_END );
-	FLDMMDL_GPosUpdate( fmmdl );
+	FLDMMDL_UpdateGridPosCurrent( fmmdl );
 #if 0
-	FLDMMDL_DrawProcCall( fmmdl );						//1フレーム進める
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_CallDrawProc( fmmdl );						//1フレーム進める
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
 #else
 #endif
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	
 #if 0
 	return( TRUE );
@@ -875,13 +874,13 @@ static int AC_Walk_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_Walk_End( FLDMMDL *fmmdl )
 {
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
 	return( FALSE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_WALK_系
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_32F 0
@@ -1274,9 +1273,9 @@ static int AC_DashR4F_0( FLDMMDL * fmmdl )
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_STAY_WALK系	共通
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_WORK初期化
@@ -1291,15 +1290,15 @@ static void AcStayWalkWorkInit( FLDMMDL * fmmdl, int dir, s16 wait, u16 draw )
 {
 	AC_STAY_WALK_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_WALK_WORK_SIZE );
+	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WALK_WORK_SIZE );
 	
 	work->draw_state = draw;
 	work->wait = wait + FRAME_1;	//FRAME_1=動作->アニメへの1フレーム
 	
-	FLDMMDL_DirDispCheckSet( fmmdl, dir );
-	FLDMMDL_DrawStatusSet( fmmdl, draw );
-	FLDMMDL_GPosUpdate( fmmdl );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_SetDirDisp( fmmdl, dir );
+	FLDMMDL_SetDrawStatus( fmmdl, draw );
+	FLDMMDL_UpdateGridPosCurrent( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -1313,7 +1312,7 @@ static int AC_StayWalk_1( FLDMMDL * fmmdl )
 {
 	AC_STAY_WALK_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveCmdWork( fmmdl );
 	
 	work->wait--;
 	
@@ -1321,16 +1320,16 @@ static int AC_StayWalk_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_ACMD_END );
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_STAY_WALK系
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_STAY_WALK_U_32F 0
@@ -1611,9 +1610,9 @@ static int AC_StayWalkR2F_0( FLDMMDL * fmmdl )
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド　AC_STAY_JUMP_U系
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_JUMP_WORK初期化　メイン
@@ -1634,7 +1633,7 @@ static void AcJumpWorkInitMain(
 {
 	AC_JUMP_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_JUMP_WORK_SIZE );
+	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_JUMP_WORK_SIZE );
 	work->dir = dir;
 	work->val = val;
 	work->wait = wait;
@@ -1643,18 +1642,18 @@ static void AcJumpWorkInitMain(
 	work->h_speed = h_speed;
 	
 	if( val == 0 ){												//その場
-		FLDMMDL_GPosUpdate( fmmdl );
+		FLDMMDL_UpdateGridPosCurrent( fmmdl );
 	}else{
-		FLDMMDL_NowGPosDirAdd( fmmdl, dir );					//移動
+		FLDMMDL_UpdateGridPosDir( fmmdl, dir );					//移動
 	}
 	
-	FLDMMDL_StatusBit_ON( fmmdl,
+	FLDMMDL_OnStatusBit( fmmdl,
 			FLDMMDL_STABIT_MOVE_START |
 			FLDMMDL_STABIT_JUMP_START );
 	
-	FLDMMDL_DirMoveDispCheckSet( fmmdl, dir );
-	FLDMMDL_DrawStatusSet( fmmdl, draw );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_SetDirAll( fmmdl, dir );
+	FLDMMDL_SetDrawStatus( fmmdl, draw );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	
 	if( se ){
 #if 0
@@ -1699,16 +1698,16 @@ static int AC_Jump_1( FLDMMDL * fmmdl )
 {
 	AC_JUMP_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveCmdWork( fmmdl );
 	
 	if( work->val ){
-		FLDMMDL_VecPosDirAdd( fmmdl, work->dir, work->val );
-		FLDMMDL_VecPosNowHeightGetSet( fmmdl );
+		FLDMMDL_AddVectorPosDir( fmmdl, work->dir, work->val );
+		FLDMMDL_UpdateCurrentHeight( fmmdl );
 			
 		if( work->dest_val >= GRID_FX32 ){						//１グリッド移動
 			work->dest_val = 0;
-			FLDMMDL_NowGPosDirAdd( fmmdl, work->dir );
-			FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_MOVE_START );
+			FLDMMDL_UpdateGridPosDir( fmmdl, work->dir );
+			FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START );
 		}
 			
 		{
@@ -1736,7 +1735,7 @@ static int AC_Jump_1( FLDMMDL * fmmdl )
 			vec.x = 0;
 			vec.y = tbl[frame];
 			vec.z = 0;
-			FLDMMDL_VecDrawOffsSet( fmmdl, &vec );
+			FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
 		}
 	}
 	
@@ -1748,18 +1747,18 @@ static int AC_Jump_1( FLDMMDL * fmmdl )
 	
 	{
 		VecFx32 vec = { 0, 0, 0 };								//オフセットクリア
-		FLDMMDL_VecDrawOffsSet( fmmdl, &vec );
+		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
 	}
 	
-	FLDMMDL_StatusBit_ON( fmmdl,
+	FLDMMDL_OnStatusBit( fmmdl,
 			FLDMMDL_STABIT_MOVE_END |
 			FLDMMDL_STABIT_JUMP_END |
 			FLDMMDL_STABIT_ACMD_END );
 	
-	FLDMMDL_GPosUpdate( fmmdl );
-	FLDMMDL_DrawProcCall( fmmdl );						//1フレーム進める
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_UpdateGridPosCurrent( fmmdl );
+	FLDMMDL_CallDrawProc( fmmdl );						//1フレーム進める
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 #if 0
 	Snd_SePlay( SE_SUTYA2 );
 #endif
@@ -2158,9 +2157,9 @@ static int AC_JumpR3G24F_0( FLDMMDL * fmmdl )
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド　AC_WAIT系
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_WAIT_WORK初期化
@@ -2173,10 +2172,10 @@ static void AcWaitWorkInit( FLDMMDL * fmmdl, int wait )
 {
 	AC_WAIT_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_WAIT_WORK_SIZE );
+	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WAIT_WORK_SIZE );
 	work->wait = wait;
 	
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -2190,14 +2189,14 @@ static int AC_Wait_1( FLDMMDL * fmmdl )
 {
 	AC_WAIT_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveCmdWork( fmmdl );
 	
 	if( work->wait ){
 		work->wait--;
 		return( FALSE );
 	}
 	
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2292,9 +2291,9 @@ static int AC_Wait32F_0( FLDMMDL * fmmdl )
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド　AC_WARP_UP DOWN
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_WARP_UP 0
@@ -2306,11 +2305,11 @@ static int AC_WarpUp_0( FLDMMDL * fmmdl )
 {
 	AC_WARP_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_WARP_WORK_SIZE );
+	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WARP_WORK_SIZE );
 	work->value = FX32_ONE * 16;
 	
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	
 	return( TRUE );
 }
@@ -2327,14 +2326,14 @@ static int AC_WarpUp_1( FLDMMDL * fmmdl )
 	int grid;
 	AC_WARP_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveCmdWork( fmmdl );
 	
 	work->total_offset += work->value;
 	
 	{
 		VecFx32 vec = {0,0,0};
 		vec.y = work->total_offset;
-		FLDMMDL_VecDrawOffsSet( fmmdl, &vec );
+		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
 	}
 	
 	grid = work->total_offset / GRID_HALF_FX32;
@@ -2343,7 +2342,7 @@ static int AC_WarpUp_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2358,12 +2357,12 @@ static int AC_WarpDown_0( FLDMMDL * fmmdl )
 {
 	AC_WARP_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_WARP_WORK_SIZE );
+	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WARP_WORK_SIZE );
 	work->total_offset = GRID_HALF_FX32 * 40;
 	work->value = -(FX32_ONE * 16);
 	
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	
 	return( TRUE );
 }
@@ -2379,7 +2378,7 @@ static int AC_WarpDown_1( FLDMMDL * fmmdl )
 {
 	AC_WARP_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveCmdWork( fmmdl );
 	
 	work->total_offset += work->value;
 	
@@ -2391,7 +2390,7 @@ static int AC_WarpDown_1( FLDMMDL * fmmdl )
 		VecFx32 vec = {0,0,0};
 		vec.y = work->total_offset;
 		
-		FLDMMDL_VecDrawOffsSet( fmmdl, &vec );
+		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &vec );
 	}
 	
 	if( work->total_offset > 0 ){
@@ -2399,13 +2398,13 @@ static int AC_WarpDown_1( FLDMMDL * fmmdl )
 	}
 	
 	
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド　AC_VANISH_ON OFF
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_VANISH_ON 0
@@ -2415,8 +2414,8 @@ static int AC_WarpDown_1( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_VanishON_0( FLDMMDL * fmmdl )
 {
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_VANISH );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_VANISH );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2429,14 +2428,15 @@ static int AC_VanishON_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_VanishOFF_0( FLDMMDL * fmmdl )
 {
-	FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_VANISH );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_VANISH );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
+//
 //	アニメーションコマンド　AC_DIR_PAUSE_ON OFF
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_DIR_PAUSE_ON 0
@@ -2446,8 +2446,8 @@ static int AC_VanishOFF_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_DirPauseON_0( FLDMMDL * fmmdl )
 {
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_PAUSE_DIR );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_PAUSE_DIR );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2460,14 +2460,14 @@ static int AC_DirPauseON_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_DirPauseOFF_0( FLDMMDL * fmmdl )
 {
-	FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_PAUSE_DIR );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_PAUSE_DIR );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド　AC_ANM_PAUSE_ON OFF
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_ANM_PAUSE_ON 0
@@ -2477,8 +2477,8 @@ static int AC_DirPauseOFF_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_AnmPauseON_0( FLDMMDL * fmmdl )
 {
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_PAUSE_ANM );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_PAUSE_ANM );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
@@ -2491,14 +2491,14 @@ static int AC_AnmPauseON_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_AnmPauseOFF_0( FLDMMDL * fmmdl )
 {
-	FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_PAUSE_ANM );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_PAUSE_ANM );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	アニメーションコマンド　マーク
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_MARK_WORK初期化
@@ -2518,10 +2518,10 @@ static void AcMarkWorkInit(
 {
 	AC_MARK_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_MARK_WORK_SIZE );
+	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_MARK_WORK_SIZE );
 	work->type = type;
 //	work->eoa_mark = FE_fmmdlGyoe_Add( fmmdl, type, TRUE, trans );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -2535,15 +2535,15 @@ static int AC_Mark_1( FLDMMDL * fmmdl )
 {
 	AC_MARK_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveCmdWork( fmmdl );
 #if 0	
 	if( FE_Gyoe_EndCheck(work->eoa_mark) == TRUE ){
 		EOA_Delete( work->eoa_mark );
-		FLDMMDL_AcmdSeqInc( fmmdl );
+		FLDMMDL_IncAcmdSeq( fmmdl );
 		return( TRUE );
 	}
 #else
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 #endif
 	return( FALSE );
@@ -2600,9 +2600,9 @@ static int AC_MarkGyoeTWait_0( FLDMMDL * fmmdl )
 	return( FALSE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_WALK_ODD系
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_WALK_ODD_WORK初期化
@@ -2617,16 +2617,16 @@ static void AcWalkOddWorkInit( FLDMMDL * fmmdl, int dir, s16 max_frame, u16 draw
 {
 	AC_WALK_ODD_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_WALK_ODD_WORK_SIZE );
+	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WALK_ODD_WORK_SIZE );
 	work->dir = dir;
 	work->draw_state = draw;
 	work->max_frame = max_frame;
 	
-	FLDMMDL_NowGPosDirAdd( fmmdl, dir );
-	FLDMMDL_DirMoveDispCheckSet( fmmdl, dir );
-	FLDMMDL_DrawStatusSet( fmmdl, draw );
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_MOVE_START );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_UpdateGridPosDir( fmmdl, dir );
+	FLDMMDL_SetDirAll( fmmdl, dir );
+	FLDMMDL_SetDrawStatus( fmmdl, draw );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -2641,9 +2641,9 @@ static int AC_WalkOdd_Walk( FLDMMDL * fmmdl, const fx32 *tbl )
 {
 	AC_WALK_ODD_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkGet( fmmdl );
-	FLDMMDL_VecPosDirAdd( fmmdl, work->dir, tbl[work->frame] );
-	FLDMMDL_VecPosNowHeightGetSet( fmmdl );
+	work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	FLDMMDL_AddVectorPosDir( fmmdl, work->dir, tbl[work->frame] );
+	FLDMMDL_UpdateCurrentHeight( fmmdl );
 	
 	work->frame++;
 	
@@ -2651,18 +2651,18 @@ static int AC_WalkOdd_Walk( FLDMMDL * fmmdl, const fx32 *tbl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_MOVE_END|FLDMMDL_STABIT_ACMD_END );
-	FLDMMDL_GPosUpdate( fmmdl );
-	FLDMMDL_DrawProcCall( fmmdl );						//1フレーム進める
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_END|FLDMMDL_STABIT_ACMD_END );
+	FLDMMDL_UpdateGridPosCurrent( fmmdl );
+	FLDMMDL_CallDrawProc( fmmdl );						//1フレーム進める
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_WALK フレーム奇数系
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_6F 0
@@ -2867,9 +2867,9 @@ static int AC_Walk7F_1( FLDMMDL * fmmdl )
 	return( FALSE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_PC_BOW PCWOMANお辞儀
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 ///	AC_PC_BOW_WORK
 //--------------------------------------------------------------
@@ -2889,9 +2889,9 @@ typedef struct
 //--------------------------------------------------------------
 static int AC_PcBow_0( FLDMMDL * fmmdl )
 {
-	AC_PC_BOW_WORK *work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_PC_BOW_WORK_SIZE );
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_PC_BOW );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	AC_PC_BOW_WORK *work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_PC_BOW_WORK_SIZE );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_PC_BOW );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	
 	return( FALSE );
 }
@@ -2905,22 +2905,22 @@ static int AC_PcBow_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_PcBow_1( FLDMMDL * fmmdl )
 {
-	AC_PC_BOW_WORK *work = FLDMMDL_MoveCmdWorkGet( fmmdl );
+	AC_PC_BOW_WORK *work = FLDMMDL_GetMoveCmdWork( fmmdl );
 	
 	work->frame++;
 	
 	if( work->frame >= 8 ){
-		FLDMMDL_DirDispCheckSet( fmmdl, DIR_DOWN );
-		FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-		FLDMMDL_AcmdSeqInc( fmmdl );
+		FLDMMDL_SetDirDisp( fmmdl, DIR_DOWN );
+		FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+		FLDMMDL_IncAcmdSeq( fmmdl );
 	}
 	
 	return( FALSE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_HIDE_PULLOFF 隠れ蓑脱ぎ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 ///	AC_HIDE_PULLOFF
 //--------------------------------------------------------------
@@ -2940,7 +2940,7 @@ typedef struct
 //--------------------------------------------------------------
 static int AC_HidePullOFF_0( FLDMMDL * fmmdl )
 {
-	AC_HIDE_PULLOFF_WORK *work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_HIDE_PULLOFF_WORK_SIZE );
+	AC_HIDE_PULLOFF_WORK *work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_HIDE_PULLOFF_WORK_SIZE );
 	
 	{
 #if 0
@@ -2951,17 +2951,17 @@ static int AC_HidePullOFF_0( FLDMMDL * fmmdl )
 	
 	{
 		VecFx32 offs = { 0, 0, 0 };
-		FLDMMDL_VecDrawOffsSet( fmmdl, &offs );
+		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	}
 	
 #if 0
 	FE_fmmdlHKemuri_Add( fmmdl );
 #endif
 
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_MOVE_START|FLDMMDL_STABIT_JUMP_START );
-	FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START|FLDMMDL_STABIT_JUMP_START );
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
 	
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( FALSE );
 }
 
@@ -2974,12 +2974,12 @@ static int AC_HidePullOFF_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_HidePullOFF_1( FLDMMDL * fmmdl )
 {
-	AC_HIDE_PULLOFF_WORK *work = FLDMMDL_MoveCmdWorkGet( fmmdl );
+	AC_HIDE_PULLOFF_WORK *work = FLDMMDL_GetMoveCmdWork( fmmdl );
 	const fx32 *tbl = DATA_AcJumpOffsetTbl[AC_JUMP_HEIGHT_12];
 	VecFx32 offs = { 0, 0, 0 };
 	
 	offs.y = tbl[work->frame];
-	FLDMMDL_VecDrawOffsSet( fmmdl, &offs );
+	FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	
 	work->frame += 2;
  	
@@ -2988,19 +2988,19 @@ static int AC_HidePullOFF_1( FLDMMDL * fmmdl )
 	}
 	
 	offs.y = 0;
-	FLDMMDL_VecDrawOffsSet( fmmdl, &offs );
+	FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	
-	FLDMMDL_StatusBit_ON( fmmdl,
+	FLDMMDL_OnStatusBit( fmmdl,
 			FLDMMDL_STABIT_MOVE_END | FLDMMDL_STABIT_JUMP_END | FLDMMDL_STABIT_ACMD_END );
 	
 	FLDMMDL_MoveHidePullOffFlagSet( fmmdl );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_HERO_BANZAI 自機万歳
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 ///	AC_HERO_BANZAI
 //--------------------------------------------------------------
@@ -3020,9 +3020,9 @@ typedef struct
 //--------------------------------------------------------------
 static int AC_HeroBanzai_0( FLDMMDL * fmmdl )
 {
-	AC_HERO_BANZAI_WORK *work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_HERO_BANZAI_WORK_SIZE );
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_BANZAI );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	AC_HERO_BANZAI_WORK *work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_HERO_BANZAI_WORK_SIZE );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( FALSE );
 }
 
@@ -3035,9 +3035,9 @@ static int AC_HeroBanzai_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_HeroBanzaiUke_0( FLDMMDL * fmmdl )
 {
-	AC_HERO_BANZAI_WORK *work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_HERO_BANZAI_WORK_SIZE );
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_BANZAI_UKE );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	AC_HERO_BANZAI_WORK *work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_HERO_BANZAI_WORK_SIZE );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI_UKE );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	
 	return( FALSE );
 }
@@ -3051,7 +3051,7 @@ static int AC_HeroBanzaiUke_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_HeroBanzai_1( FLDMMDL * fmmdl )
 {
-	AC_HERO_BANZAI_WORK *work = FLDMMDL_MoveCmdWorkGet( fmmdl );
+	AC_HERO_BANZAI_WORK *work = FLDMMDL_GetMoveCmdWork( fmmdl );
 	
 	work->frame++;
  	
@@ -3059,14 +3059,14 @@ static int AC_HeroBanzai_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-//	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_BANZAI_STOP );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+//	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_BANZAI_STOP );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_WALKGL系
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /*
  * AC_WALKVEC_WORK初期化 1G限定
@@ -3083,26 +3083,26 @@ static void AcWalkVecWorkInit( FLDMMDL * fmmdl,
 	const VecFx32 *vec, int d_dir, int m_dir, int wait, u8 draw )
 {
 	AC_WALKVEC_WORK *work;
-	work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_WALKVEC_WORK_SIZE );
+	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_WALKVEC_WORK_SIZE );
 	work->wait = wait;
 	work->vec = *vec;
 	
-	FLDMMDL_DirDispCheckSet( fmmdl, d_dir );
-	FLDMMDL_DirMoveSet( fmmdl, m_dir );
-	FLDMMDL_DrawStatusSet( fmmdl, draw );
-	FLDMMDL_StatusBitON_MoveStart( fmmdl );
+	FLDMMDL_SetDirDisp( fmmdl, d_dir );
+	FLDMMDL_SetDirMove( fmmdl, m_dir );
+	FLDMMDL_SetDrawStatus( fmmdl, draw );
+	FLDMMDL_OnStatusBitMoveStart( fmmdl );
 	
-	FLDMMDL_OldPosGX_Set( fmmdl, FLDMMDL_NowPosGX_Get(fmmdl) );
-	FLDMMDL_OldPosGY_Set( fmmdl, FLDMMDL_NowPosGY_Get(fmmdl) );
-	FLDMMDL_OldPosGZ_Set( fmmdl, FLDMMDL_NowPosGZ_Get(fmmdl) );
-	if( vec->x < 0 ){ FLDMMDL_NowPosGX_Add( fmmdl, -GRID_ONE ); }
-	else if( vec->x > 0 ){ FLDMMDL_NowPosGX_Add( fmmdl, GRID_ONE ); }
-	if( vec->y < 0 ){ FLDMMDL_NowPosGY_Add( fmmdl, -GRID_ONE ); }
-	else if( vec->y > 0 ){ FLDMMDL_NowPosGY_Add( fmmdl, GRID_ONE ); }
-	if( vec->z < 0 ){ FLDMMDL_NowPosGZ_Add( fmmdl, -GRID_ONE ); }
-	else if( vec->z > 0 ){ FLDMMDL_NowPosGZ_Add( fmmdl, GRID_ONE ); }
+	FLDMMDL_SetOldGridPosX( fmmdl, FLDMMDL_GetGridPosX(fmmdl) );
+	FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetGridPosY(fmmdl) );
+	FLDMMDL_SetOldGridPosZ( fmmdl, FLDMMDL_GetGridPosZ(fmmdl) );
+	if( vec->x < 0 ){ FLDMMDL_AddGridPosX( fmmdl, -GRID_ONE ); }
+	else if( vec->x > 0 ){ FLDMMDL_AddGridPosX( fmmdl, GRID_ONE ); }
+	if( vec->y < 0 ){ FLDMMDL_AddGridPosY( fmmdl, -GRID_ONE ); }
+	else if( vec->y > 0 ){ FLDMMDL_AddGridPosY( fmmdl, GRID_ONE ); }
+	if( vec->z < 0 ){ FLDMMDL_AddGridPosZ( fmmdl, -GRID_ONE ); }
+	else if( vec->z > 0 ){ FLDMMDL_AddGridPosZ( fmmdl, GRID_ONE ); }
 	
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -3116,8 +3116,8 @@ static int AC_WalkVec_1( FLDMMDL * fmmdl )
 {
 	AC_WALKVEC_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkGet( fmmdl );
-	FLDMMDL_VecPosAdd( fmmdl, &work->vec );
+	work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	FLDMMDL_AddVectorPos( fmmdl, &work->vec );
 	
 	work->wait--;
 	
@@ -3125,13 +3125,13 @@ static int AC_WalkVec_1( FLDMMDL * fmmdl )
 		return( FALSE );
 	}
 	
-	FLDMMDL_StatusBit_ON(
+	FLDMMDL_OnStatusBit(
 		fmmdl, FLDMMDL_STABIT_MOVE_END|FLDMMDL_STABIT_ACMD_END );
 	
-	FLDMMDL_GPosUpdate( fmmdl );
-	FLDMMDL_DrawProcCall( fmmdl );
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_UpdateGridPosCurrent( fmmdl );
+	FLDMMDL_CallDrawProc( fmmdl );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	
 	return( TRUE );
 }
@@ -3616,9 +3616,9 @@ static int AC_DashGUR4F_0( FLDMMDL * fmmdl )
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	AC_JUMPGL系
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * AC_JUMPVEC_WORK初期化
@@ -3638,7 +3638,7 @@ static void AcJumpVecWorkInit( FLDMMDL * fmmdl,
 {
 	int grid = GRID_ONE;
 	AC_JUMPVEC_WORK *work;
-	work = FLDMMDL_MoveCmdWorkInit( fmmdl, AC_JUMPVEC_WORK_SIZE );
+	work = FLDMMDL_InitMoveCmdWork( fmmdl, AC_JUMPVEC_WORK_SIZE );
 	
 	work->wait = wait;
 	work->val = val;
@@ -3647,14 +3647,14 @@ static void AcJumpVecWorkInit( FLDMMDL * fmmdl,
 	work->jump_flip = jump_flip;
 	work->jump_frame_val = NUM_UX16(16) / work->wait;
 	
-	FLDMMDL_DirDispCheckSet( fmmdl, d_dir );
-	FLDMMDL_DirMoveSet( fmmdl, m_dir );
-	FLDMMDL_DrawStatusSet( fmmdl, draw );
-	FLDMMDL_StatusBitON_MoveStart( fmmdl );
+	FLDMMDL_SetDirDisp( fmmdl, d_dir );
+	FLDMMDL_SetDirMove( fmmdl, m_dir );
+	FLDMMDL_SetDrawStatus( fmmdl, draw );
+	FLDMMDL_OnStatusBitMoveStart( fmmdl );
 	
-	FLDMMDL_OldPosGX_Set( fmmdl, FLDMMDL_NowPosGX_Get(fmmdl) );
-	FLDMMDL_OldPosGY_Set( fmmdl, FLDMMDL_NowPosGY_Get(fmmdl) );
-	FLDMMDL_OldPosGZ_Set( fmmdl, FLDMMDL_NowPosGZ_Get(fmmdl) );
+	FLDMMDL_SetOldGridPosX( fmmdl, FLDMMDL_GetGridPosX(fmmdl) );
+	FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetGridPosY(fmmdl) );
+	FLDMMDL_SetOldGridPosZ( fmmdl, FLDMMDL_GetGridPosZ(fmmdl) );
 	
 	GF_ASSERT( vec_type <= VEC_Z );
 	
@@ -3662,20 +3662,20 @@ static void AcJumpVecWorkInit( FLDMMDL * fmmdl,
 		switch( vec_type ){
 		case VEC_X:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_NowPosGX_Add( fmmdl, grid );
+			FLDMMDL_AddGridPosX( fmmdl, grid );
 			break;
 		case VEC_Y:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_NowPosGY_Add( fmmdl, grid*2 );
+			FLDMMDL_AddGridPosY( fmmdl, grid*2 );
 			break;
 		case VEC_Z:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_NowPosGZ_Add( fmmdl, grid );
+			FLDMMDL_AddGridPosZ( fmmdl, grid );
 			break;
 		}
 	}
 	
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -3691,8 +3691,8 @@ static int AC_JumpVec_1( FLDMMDL * fmmdl )
 	VecFx32 pos;
 	AC_JUMPVEC_WORK *work;
 	
-	work = FLDMMDL_MoveCmdWorkGet( fmmdl );
-	FLDMMDL_VecPosGet( fmmdl, &pos );
+	work = FLDMMDL_GetMoveCmdWork( fmmdl );
+	FLDMMDL_GetVectorPos( fmmdl, &pos );
 	
 	switch( work->vec_type ){
 	case VEC_X:
@@ -3706,7 +3706,7 @@ static int AC_JumpVec_1( FLDMMDL * fmmdl )
 		break;
 	}
 	
-	FLDMMDL_VecPosSet( fmmdl, &pos );
+	FLDMMDL_SetVectorPos( fmmdl, &pos );
 	
 	val = work->val;
 	if( val < 0 ){ val = -val; }
@@ -3734,7 +3734,7 @@ static int AC_JumpVec_1( FLDMMDL * fmmdl )
 		case VEC_Z: offs.z = val; break;
 		}
 		
-		FLDMMDL_VecDrawOffsSet( fmmdl, &offs );
+		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	}
 	
 	work->wait--;
@@ -3745,22 +3745,22 @@ static int AC_JumpVec_1( FLDMMDL * fmmdl )
 		work->count -= GRID_FX32;
 		val = work->val;
 		
-		FLDMMDL_OldPosGX_Set( fmmdl, FLDMMDL_NowPosGX_Get(fmmdl) );
-		FLDMMDL_OldPosGY_Set( fmmdl, FLDMMDL_NowPosGY_Get(fmmdl) );
-		FLDMMDL_OldPosGZ_Set( fmmdl, FLDMMDL_NowPosGZ_Get(fmmdl) );
+		FLDMMDL_SetOldGridPosX( fmmdl, FLDMMDL_GetGridPosX(fmmdl) );
+		FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetGridPosY(fmmdl) );
+		FLDMMDL_SetOldGridPosZ( fmmdl, FLDMMDL_GetGridPosZ(fmmdl) );
 		
 		switch( work->vec_type ){
 		case VEC_X:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_NowPosGX_Add( fmmdl, grid );
+			FLDMMDL_AddGridPosX( fmmdl, grid );
 			break;
 		case VEC_Y:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_NowPosGY_Add( fmmdl, grid*2 );
+			FLDMMDL_AddGridPosY( fmmdl, grid*2 );
 			break;
 		case VEC_Z:
 			if( val < 0 ){ grid = -grid; }
-			FLDMMDL_NowPosGZ_Add( fmmdl, grid );
+			FLDMMDL_AddGridPosZ( fmmdl, grid );
 			break;
 		}
 	}
@@ -3771,18 +3771,18 @@ static int AC_JumpVec_1( FLDMMDL * fmmdl )
 	
 	{
 		VecFx32 offs = {0,0,0};
-		FLDMMDL_VecDrawOffsSet( fmmdl, &offs );
+		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	}
 	
-	FLDMMDL_StatusBit_ON( fmmdl,
+	FLDMMDL_OnStatusBit( fmmdl,
 			FLDMMDL_STABIT_MOVE_END |
 			FLDMMDL_STABIT_JUMP_END |
 			FLDMMDL_STABIT_ACMD_END );
 	
-	FLDMMDL_GPosUpdate( fmmdl );
-	FLDMMDL_DrawProcCall( fmmdl );				//1フレーム進める
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_AcmdSeqInc( fmmdl );
+	FLDMMDL_UpdateGridPosCurrent( fmmdl );
+	FLDMMDL_CallDrawProc( fmmdl );				//1フレーム進める
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_IncAcmdSeq( fmmdl );
 	
 #if 0
 	Snd_SePlay( SE_SUTYA2 );
@@ -3970,9 +3970,9 @@ static int AC_JumpGUR1G_8F_0( FLDMMDL * fmmdl )
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	data	アニメーションコマンドテーブル
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 ///	AC_DIR_U
 //--------------------------------------------------------------
@@ -5502,13 +5502,13 @@ int (* const DATA_AC_MarkGyoeTWait_Tbl[])( FLDMMDL * ) =
 	AC_End,
 };
 
-//==============================================================================
+//======================================================================
 //	data
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 ///	AC_JUMP系　高さYオフセット その0
 //--------------------------------------------------------------
-static const fx32 DATA_AcJumpOffsTblType0[AC_JUMP_H_TBL_MAX] =			// 12
+static const fx32 DATA_AcJumpOffsTblType0[AC_JUMP_H_TBL_MAX] =	// 12
 {
 	4*FX32_ONE,6*FX32_ONE,8*FX32_ONE,10*FX32_ONE,
 	11*FX32_ONE,12*FX32_ONE,12*FX32_ONE,12*FX32_ONE,
@@ -5519,7 +5519,7 @@ static const fx32 DATA_AcJumpOffsTblType0[AC_JUMP_H_TBL_MAX] =			// 12
 //--------------------------------------------------------------
 ///	AC_JUMP系　高さYオフセット その1
 //--------------------------------------------------------------
-static const fx32 DATA_AcJumpOffsTblType1[AC_JUMP_H_TBL_MAX] =			// 6
+static const fx32 DATA_AcJumpOffsTblType1[AC_JUMP_H_TBL_MAX] =	// 6
 {
 	 0*FX32_ONE,2*FX32_ONE,3*FX32_ONE,4*FX32_ONE,
 	 5*FX32_ONE,6*FX32_ONE,6*FX32_ONE,6*FX32_ONE,
@@ -5530,7 +5530,7 @@ static const fx32 DATA_AcJumpOffsTblType1[AC_JUMP_H_TBL_MAX] =			// 6
 //--------------------------------------------------------------
 ///	AC_JUMP系　高さYオフセット その2
 //--------------------------------------------------------------
-static const fx32 DATA_AcJumpOffsTblType2[AC_JUMP_H_TBL_MAX] =			// 8
+static const fx32 DATA_AcJumpOffsTblType2[AC_JUMP_H_TBL_MAX] =	// 8
 {
 	 2*FX32_ONE,4*FX32_ONE,6*FX32_ONE,8*FX32_ONE,
 	 9*FX32_ONE,10*FX32_ONE,10*FX32_ONE,10*FX32_ONE,
@@ -5541,7 +5541,7 @@ static const fx32 DATA_AcJumpOffsTblType2[AC_JUMP_H_TBL_MAX] =			// 8
 //--------------------------------------------------------------
 ///	AC_JUMP系　高さYオフセット その3
 //--------------------------------------------------------------
-static const fx32 DATA_AcJumpOffsTblType3[AC_JUMP_H_TBL_MAX] =			// 12
+static const fx32 DATA_AcJumpOffsTblType3[AC_JUMP_H_TBL_MAX] =	// 12
 {
 	4*FX32_ONE,6*FX32_ONE,8*FX32_ONE,10*FX32_ONE,
 	11*FX32_ONE,12*FX32_ONE,12*FX32_ONE,12*FX32_ONE,
@@ -5592,4 +5592,3 @@ static const fx32 DATA_AcWalk3FMoveValueTbl[AC_WALK_3F_FRAME] =
 {
 	FX32_ONE*5, FX32_ONE*6, FX32_ONE*5,
 };
-

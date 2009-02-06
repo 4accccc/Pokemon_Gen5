@@ -1,37 +1,31 @@
-//******************************************************************************
+//======================================================================
 /**
- *
  * @file	fieldobj_draw.c
  * @brief	フィールド動作モデル 描画系
  * @author	kagaya
  * @data	05.07.25
  *
  */
-//******************************************************************************
+//======================================================================
 #include "fldmmdl.h"
 
-//==============================================================================
+//======================================================================
 //	define
-//==============================================================================
-//#ifdef PM_DEBUG
-//#define DEBUG_DRAW
-//#endif
+//======================================================================
 
-//==============================================================================
-//	プロトタイプ
-//==============================================================================
-static void fmmdlsys_ArcHandleOpen( FLDMMDLSYS *fos );
-static void fmmdlsys_ArcHandleClose( FLDMMDLSYS *fos );
+//======================================================================
+//	struct
+//======================================================================
 
-static const OBJCODE_STATE * fmmdl_OBJCodeDrawStateGet( int code );
+//======================================================================
+//	proto
+//======================================================================
+static void FldMMdlSys_ArcHandleOpen( FLDMMDLSYS *fos );
+static void FldMMdlSys_ArcHandleClose( FLDMMDLSYS *fos );
 
-#ifdef DEBUG_DRAW
-static void DEBUG_Print( void );
-#endif
-
-//==============================================================================
+//======================================================================
 //	フィールド動作モデル　描画システム
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * FIELD OBJ 描画系初期化
@@ -43,41 +37,25 @@ static void DEBUG_Print( void );
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDLSYS_DrawInit( FLDMMDLSYS *fos,
+void FLDMMDLSYS_InitDraw( FLDMMDLSYS *fos,
 		int tex_max, int reg_tex_max,
 		const int *tex_tbl, int frm_trans_max )
 {
+	#ifndef FLDMMDL_PL_NULL
 	int max,pri;
 	FLDMMDL_BLACT_CONT *cont;
 	
-	GF_ASSERT( FLDMMDLSYS_StatusBit_Check(fos,FLDMMDLSYS_STABIT_DRAW_INIT_COMP) == 0 &&
-			"FLDMMDLSYS_DrawInit()が重ねて呼び出れています\n" );
+	GF_ASSERT( FLDMMDLSYS_CheckCompleteDrawInit(fos) == FALSE );
+	FldMMdlSys_ArcHandleOpen( fos );
 	
-	fmmdlsys_ArcHandleOpen( fos );
-	
-	max = FLDMMDLSYS_OBJMaxGet( fos );
-	pri = FLDMMDLSYS_TCBStandardPriorityGet( fos ) - 1; //ゲストビルボード追加処理は標準より上
+	max = FLDMMDLSYS_GetFldMMdlMax( fos );
+	pri = FLDMMDLSYS_GetTCBPriority( fos ) - 1; //追加処理は標準より上
 	cont = FLDMMDLSYS_BlActContGet( fos );
 	
-#if 0
-	FLDMMDL_BlActCont_Init( cont, fos, max, pri, tex_max, reg_tex_max, tex_tbl, frm_trans_max );
-#endif
-
-#if 0	
-	{
-		FLDMMDL_RENDER_CONT_PTR rdcont = FLDMMDL_RenderCont_Init( fos, HEAPID_FIELD );
-		FLDMMDLSYS_RenderContSet( fos, rdcont );
-		FLDMMDL_RenderCont_RegistInit( rdcont, DATA_FIELDOBJ_RenderOBJMax );
-	}
-#endif
-	
+	FLDMMDL_BlActCont_Init(
+		cont, fos, max, pri, tex_max, reg_tex_max, tex_tbl, frm_trans_max );
 	FLDMMDLSYS_StatusBit_ON( fos, FLDMMDLSYS_STABIT_DRAW_INIT_COMP );
-	
-	OS_Printf( "フィールド動作モデル 描画処理を初期化しました\n" );
-	
-#ifdef DEBUG_DRAW	
-	DEBUG_Print();
-#endif
+	#endif
 }
 
 //--------------------------------------------------------------
@@ -89,37 +67,19 @@ void FLDMMDLSYS_DrawInit( FLDMMDLSYS *fos,
 //--------------------------------------------------------------
 void FLDMMDLSYS_DrawDelete( FLDMMDLSYS *fos )
 {
-	int ret;
+	#ifndef FLDMMDL_PL_NULL
+	GF_ASSERT( FLDMMDLSYS_CheckCompleteDrawInit(fos) == TRUE );
 	
-	ret = FLDMMDLSYS_DrawInitCompCheck( fos );
-#if 0
-	GF_ASSERT( ret == TRUE && "フィールド動作モデル 描画処理削除が二重に呼び出されています\n" );
-#else
-	if( ret == TRUE ){
-	}
-#endif
-
-#if 0
 	FLDMMDL_BlActCont_Delete( FLDMMDLSYS_BlActContGet(fos) );
-#endif
-
-#if 0	
-	{
-		FLDMMDL_RENDER_CONT_PTR rdcont = FLDMMDLSYS_RenderContGet( fos );
-		FLDMMDL_RenderCont_Delete( rdcont );
-		FLDMMDLSYS_RenderContSet( fos, NULL );
-	}
-#endif
 	
 	FLDMMDLSYS_StatusBit_OFF( fos, FLDMMDLSYS_STABIT_DRAW_INIT_COMP );
-	fmmdlsys_ArcHandleClose( fos );
-	
-	OS_Printf( "フィールド動作モデル 描画処理を削除しました\n" );
+	FldMMdlSys_ArcHandleClose( fos );
+	#endif
 }
 
-//==============================================================================
+//======================================================================
 //	アーカイブ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * アーカイブハンドルセット
@@ -127,11 +87,11 @@ void FLDMMDLSYS_DrawDelete( FLDMMDLSYS *fos )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void fmmdlsys_ArcHandleOpen( FLDMMDLSYS *fos )
+static void FldMMdlSys_ArcHandleOpen( FLDMMDLSYS *fos )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	ARCHANDLE *handle = ArchiveDataHandleOpen( ARC_MMODEL, HEAPID_FIELD );
-	FLDMMDLSYS_ArcHandleSet( fos, handle );
+	FLDMMDLSYS_SetArcHandle( fos, handle );
 #endif
 }
 
@@ -142,17 +102,17 @@ static void fmmdlsys_ArcHandleOpen( FLDMMDLSYS *fos )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void fmmdlsys_ArcHandleClose( FLDMMDLSYS *fos )
+static void FldMMdlSys_ArcHandleClose( FLDMMDLSYS *fos )
 {
-#if 0
-	ARCHANDLE *handle = FLDMMDLSYS_ArcHandleGet( fos );
+#ifndef FLDMMDL_PL_NULL
+	ARCHANDLE *handle = FLDMMDLSYS_GetArcHandle( fos );
 	ArchiveDataHandleClose( handle );
 #endif
 }
 
-//==============================================================================
+//======================================================================
 //	フィールド動作モデル 描画処理
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * フィールド動作モデル描画
@@ -162,57 +122,62 @@ static void fmmdlsys_ArcHandleClose( FLDMMDLSYS *fos )
 //--------------------------------------------------------------
 void FLDMMDL_Draw( FLDMMDL * fmmdl )
 {
-	const FLDMMDLSYS *fos = FLDMMDL_FieldOBJSysGet( fmmdl );
+	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys( fmmdl );
 	
-	if( FLDMMDLSYS_StatusBit_Check(fos,FLDMMDLSYS_STABIT_DRAW_PROC_STOP) ){
+	if( FLDMMDLSYS_CheckStatusBit(fos,FLDMMDLSYS_STABIT_DRAW_PROC_STOP) ){
 		return;
 	}
 	
-	if( FLDMMDL_StatusBit_Check(fmmdl,FLDMMDL_STABIT_DRAW_PROC_INIT_COMP) == FALSE ){
+	if( FLDMMDL_CheckStatusBitCompletedDrawInit(fmmdl) == FALSE ){
 		return;
 	}
 	
-	if( FLDMMDL_MovePauseCheck(fmmdl) == FALSE || FLDMMDL_StatusBitCheck_Acmd(fmmdl) ){
-		FLDMMDL_DrawProcCall( fmmdl );
+	if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) == FALSE ||
+		FLDMMDL_CheckStatusBitAcmd(fmmdl) ){
+		FLDMMDL_CallDrawProc( fmmdl );
 	}
 }
 
-//==============================================================================
+//======================================================================
 //	フィールド動作モデル 描画ステータス
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * OBJコードから描画ステータス取得
- * @param	fmmdl	 FLDMMDL *
- * @retval	nothing
+ * @param	code	表示コード HERO等
+ * @retval	OBJCODE_STATE*
  */
 //--------------------------------------------------------------
-const OBJCODE_STATE * FLDMMDL_OBJCodeDrawStateGet( const FLDMMDL * fmmdl )
-{
-	int code = FLDMMDL_OBJCodeGet( fmmdl );
-	const OBJCODE_STATE *state = fmmdl_OBJCodeDrawStateGet( code );
-	return( state );
-}
-
-//--------------------------------------------------------------
-/**
- * DATA_FieldOBJCodeDrawStateTbl[]取得
- * @param	code	HERO等
- * @retval	OBJCODE_STATE codeに対応したOBJCODE_STATE
- */
-//--------------------------------------------------------------
-static const OBJCODE_STATE * fmmdl_OBJCodeDrawStateGet( int code )
+const OBJCODE_STATE * FLDMMDL_TOOL_GetOBJCodeState( u16 code )
 {
 	const OBJCODE_STATE *state = DATA_FieldOBJCodeDrawStateTbl;
-	do{ if(state->code==code){return(state);} state++; }while( state->code != OBJCODEMAX );
-	OS_Printf( "fmmdl_OBJCodeDrawStateGet() OBJ CODE ERROR!! CODE = 0x%x\n", code );
+	
+	do{
+		if( state->code == code ){
+			return( state );
+		}
+		state++;
+	}while( state->code != OBJCODEMAX );
+	
 	GF_ASSERT( 0 );
 	return( NULL );
 }
 
-//==============================================================================
-//	パーツ
-//==============================================================================
+//--------------------------------------------------------------
+/**
+ * 動作モデルOBJコードから描画ステータス取得
+ * @param	code	表示コード HERO等
+ * @retval	OBJCODE_STATE*
+ */
+//--------------------------------------------------------------
+const OBJCODE_STATE * FLDMMDL_GetOBJCodeState( const FLDMMDL *fmmdl )
+{
+	return( FLDMMDL_TOOL_GetOBJCodeState(FLDMMDL_GetOBJCode(fmmdl)) );
+}
+
+//======================================================================
+//	parts
+//======================================================================
 //--------------------------------------------------------------
 /**
  * フィールド動作モデル 描画ポーズチェック
@@ -220,15 +185,15 @@ static const OBJCODE_STATE * fmmdl_OBJCodeDrawStateGet( int code )
  * @retval	int		TRUE=描画ポーズ
  */
 //--------------------------------------------------------------
-int FLDMMDL_DrawPauseCheck( const FLDMMDL * fmmdl )
+BOOL FLDMMDL_CheckDrawPause( const FLDMMDL * fmmdl )
 {
-	if( FLDMMDL_MovePauseCheck(fmmdl) == TRUE ){
-		if( FLDMMDL_StatusBitCheck_Acmd(fmmdl) == FALSE ){
+	if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) == TRUE ){
+		if( FLDMMDL_CheckStatusBitAcmd(fmmdl) == FALSE ){
 			return( TRUE );
 		}
 	}
 	
-	if( FLDMMDL_StatusBit_Check(fmmdl,FLDMMDL_STABIT_PAUSE_ANM) ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_PAUSE_ANM) ){
 		return( TRUE );
 	}
 	
@@ -240,15 +205,15 @@ int FLDMMDL_DrawPauseCheck( const FLDMMDL * fmmdl )
  * アーカイブデータロード
  * @param	fos		FLDMMDLSYS *
  * @param	datID	アーカイブデータID
- * @param	fb		TRUE=GFL_HEAP_AllocClearMemory() FALSE=GFL_HEAP_AllocClearMemoryLo()
+ * @param	fb TRUE=GFL_HEAP_AllocClearMemory() FALSE=GFL_HEAP_AllocClearMemoryLo()
  * @retval	void*	取得したデータ
  */
 //--------------------------------------------------------------
 void * FLDMMDL_DrawArcDataAlloc( const FLDMMDLSYS *fos, u32 datID, int fb )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	void *buf;
-	ARCHANDLE *handle = FLDMMDLSYS_ArcHandleGet( fos );
+	ARCHANDLE *handle = FLDMMDLSYS_GetArcHandle( fos );
 	u32 size = ArchiveDataSizeGetByHandle( handle, datID );
 	
 	if( fb == TRUE ){
@@ -280,40 +245,22 @@ void * FLDMMDL_DrawArcDataAlloc( const FLDMMDLSYS *fos, u32 datID, int fb )
  * @retval	void*	取得したデータ
  */
 //--------------------------------------------------------------
-void FLDMMDL_DrawVecPosTotalGet( const FLDMMDL * fmmdl, VecFx32 *vec )
+void FLDMMDL_GetDrawVectorPos( const FLDMMDL * fmmdl, VecFx32 *vec )
 {
 	VecFx32 vec_pos,vec_offs,vec_out,vec_attr;
 	
-	FLDMMDL_VecPosGet( fmmdl, &vec_pos );
-	FLDMMDL_VecDrawOffsGet( fmmdl, &vec_offs );
-	FLDMMDL_VecDrawOffsOutSideGet( fmmdl, &vec_out );
-	FLDMMDL_VecAttrOffsGet( fmmdl, &vec_attr );
-	
+	FLDMMDL_GetVectorPos( fmmdl, &vec_pos );
+	FLDMMDL_GetVectorDrawOffsetPos( fmmdl, &vec_offs );
+	FLDMMDL_GetVectorOuterDrawOffsetPos( fmmdl, &vec_out );
+	FLDMMDL_GetVectorAttrDrawOffsetPos( fmmdl, &vec_attr );
 	vec->x = vec_pos.x + vec_offs.x + vec_out.x + vec_attr.x;
 	vec->y = vec_pos.y + vec_offs.y + vec_out.y + vec_attr.y;
 	vec->z = vec_pos.z + vec_offs.z + vec_out.z + vec_attr.z;
 }
 
-//--------------------------------------------------------------
-/**
- * 方向をセットする。描画系も併せて更新
- * @param	fmmdl	FLDMMDL *
- * @param	dir		方向、DIR_UP等
- * @retval	nothing
- */
-//--------------------------------------------------------------
-void FLDMMDL_DirDispDrawSet( FLDMMDL * fmmdl, int dir )
-{
-	FLDMMDL_DirDispCheckSet( fmmdl, dir );
-	
-	if( FLDMMDL_StatusBitCheck_DrawProcInitComp(fmmdl) == TRUE ){
-		FLDMMDL_DrawProcCall( fmmdl );
-	}
-}
-
-//==============================================================================
+//======================================================================
 //	描画無し
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * 描画無し　初期化
@@ -323,8 +270,8 @@ void FLDMMDL_DirDispDrawSet( FLDMMDL * fmmdl, int dir )
 //--------------------------------------------------------------
 void FLDMMDL_DrawNon_Init( FLDMMDL * fmmdl )
 {
-	FLDMMDL_StatusBitSet_Vanish( fmmdl, TRUE );
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
+	FLDMMDL_SetStatusBitVanish( fmmdl, TRUE );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
 }
 
 //--------------------------------------------------------------
@@ -372,33 +319,3 @@ void FLDMMDL_DrawNon_Pop( FLDMMDL * fmmdl )
 {
 }
 
-//==============================================================================
-//	debug
-//==============================================================================
-#ifdef DEBUG_DRAW
-#include "fieldobj_test.c"
-
-static void DEBUG_Print( void )
-{
-	u32 i;
-	
-	OS_Printf( "const OBJCODE_STATE DATA_FieldOBJCodeStateTbl[] =\n" );
-	OS_Printf( "{\r\n" );
-	
-	for( i = 0; i <= KOIKING; i++ ){
-		OS_Printf( " {" );
-		OS_Printf( "%s,", DEBUGDATA_CharTbl[i] );
-		OS_Printf( "FLDMMDL_DRAWTYPE_BLACT," );
-		OS_Printf( "FLDMMDL_SHADOW_ON," );
-		OS_Printf( "FLDMMDL_FOOTMARK_NORMAL," );
-		OS_Printf( "FLDMMDL_REFLECT_BLACT," );
-		OS_Printf( "0},\r\n" );
-		{ u32 f; for( f = 0; f < 0xffffffff; f++ ){}; }
-	}
-	
-	{
-		int j;
-		for( j = 0; j < 2; j++ ){};
-	}
-}
-#endif	//DEBUG_DRAW

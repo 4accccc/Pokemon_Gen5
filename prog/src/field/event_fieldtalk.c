@@ -99,10 +99,10 @@ static GMEVENT_RESULT FldTalkEvent( GMEVENT *event, int *seq, void *wk )
 	switch( (*seq) ){
 	case 0:	//‘ÎÛMDL‚ÌˆÚ“®I—¹‘Ò‚¿
 		if( work->fmmdl_talk != NULL ){
-			if( FLDMMDL_StatusBitCheck_Move(work->fmmdl_talk) == TRUE ){
-				FLDMMDL_Move( work->fmmdl_talk );
+			if( FLDMMDL_CheckStatusBitMove(work->fmmdl_talk) == TRUE ){
+				FLDMMDL_UpdateMove( work->fmmdl_talk );
 				
-				if( FLDMMDL_StatusBitCheck_Move(work->fmmdl_talk) == TRUE ){
+				if( FLDMMDL_CheckStatusBitMove(work->fmmdl_talk) == TRUE ){
 					break;
 				}
 			}
@@ -110,7 +110,7 @@ static GMEVENT_RESULT FldTalkEvent( GMEVENT *event, int *seq, void *wk )
 		
 		{
 			FLDMMDLSYS *fmmdlsys = FIELDMAP_GetFldMMdlSys( work->fieldWork );
-			FLDMMDLSYS_MovePauseAll( fmmdlsys );
+			FLDMMDLSYS_PauseMoveProc( fmmdlsys );
 		}
 		(*seq)++;
 	case 1:
@@ -139,7 +139,7 @@ static GMEVENT_RESULT FldTalkEvent( GMEVENT *event, int *seq, void *wk )
 
 		{
 			FLDMMDLSYS *fmmdlsys = FIELDMAP_GetFldMMdlSys( work->fieldWork );
-			FLDMMDLSYS_MovePauseAllClear( fmmdlsys );
+			FLDMMDLSYS_ClearPauseMoveProc( fmmdlsys );
 		}
 		return( GMEVENT_RES_FINISH );
 	}

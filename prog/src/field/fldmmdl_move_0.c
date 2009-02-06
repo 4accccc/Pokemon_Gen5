@@ -1,18 +1,17 @@
-//******************************************************************************
+//======================================================================
 /**
- *
  * @file	fieldobj_move_0.c
  * @brief	フィールド動作モデル　基本動作系その0
  * @author	kagaya
  * @data	05.07.21
- *
  */
-//******************************************************************************
+//======================================================================
 #include "fldmmdl.h"
+#include "fldmmdl_procmove.h"
 
-//==============================================================================
+//======================================================================
 //	define
-//==============================================================================
+//======================================================================
 #define WAIT_END (-1)										///<ウェイト終端
 
 //--------------------------------------------------------------
@@ -154,9 +153,9 @@ enum
 //#define DEBUG_SEARCH	//有効で方向切り替え型動作全て自機サーチ
 //#endif
 
-//==============================================================================
-//	typedef
-//==============================================================================
+//======================================================================
+//	struct
+//======================================================================
 //--------------------------------------------------------------
 //	DIR_TBL構造体
 //--------------------------------------------------------------
@@ -286,9 +285,9 @@ typedef struct
 
 #define MV_RT4_WORK_SIZE (sizeof(MV_RT4_WORK))
 
-//==============================================================================
-//	プロトタイプ
-//==============================================================================
+//======================================================================
+//	proto
+//======================================================================
 static void DirRndWorkInit( FLDMMDL * fmmdl, int id );
 
 static void MvRndWorkInit( FLDMMDL * fmmdl, int ac, int id, int check );
@@ -372,13 +371,13 @@ static const DIR_TBL DATA_MoveDirTbl[DIRID_MAX];
 
 const int JikiDashSensorMoveCodeTbl[];
 
-//==============================================================================
+//======================================================================
 //	デバッグ
-//==============================================================================
+//======================================================================
 
-//==============================================================================
+//======================================================================
 //	MV_DIR_RND	ランダムに方向切り替え
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_DIR_RND_WORK初期化
@@ -391,12 +390,12 @@ static void DirRndWorkInit( FLDMMDL * fmmdl, int id )
 {
 	MV_DIR_RND_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_DIR_RND_WORK_SIZE );	//動作ワーク初期化
+	work = FLDMMDL_InitMoveProcWork( fmmdl, MV_DIR_RND_WORK_SIZE );	//動作ワーク初期化
 	work->wait = TblRndGet( DATA_MvDirRndWaitTbl, WAIT_END );			//待ち時間セット
 	work->tbl_id = id;
 	
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );					//描画ステータス　停止
-	FLDMMDL_StatusBitOFF_Move( fmmdl );								//常に停止中
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );					//描画ステータス　停止
+	FLDMMDL_OffStatusBitMove( fmmdl );								//常に停止中
 }
 
 //--------------------------------------------------------------
@@ -540,11 +539,11 @@ void FLDMMDL_MoveDirRndLR_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveDirRnd_Move( FLDMMDL * fmmdl )
 {
-	MV_DIR_RND_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_DIR_RND_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	int dir = TrJikiDashSearchTbl( fmmdl, work->tbl_id, DIR_NOT );
 	
 	if( dir != DIR_NOT ){
-		FLDMMDL_DirDispCheckSet( fmmdl, dir );
+		FLDMMDL_SetDirDisp( fmmdl, dir );
 	}else{
 		switch( work->seq_no ){
 		case 0:
@@ -552,12 +551,12 @@ void FLDMMDL_MoveDirRnd_Move( FLDMMDL * fmmdl )
 		
 			if( work->wait <= 0 ){									//待ち時間 0
 				work->wait = TblRndGet( DATA_MvDirRndWaitTbl, WAIT_END );
-				FLDMMDL_DirDispCheckSet( fmmdl, TblIDRndGet(work->tbl_id,DIR_NOT) );
+				FLDMMDL_SetDirDisp( fmmdl, TblIDRndGet(work->tbl_id,DIR_NOT) );
 			}
 		}
 	}
 	
-	FLDMMDL_GPosUpdate( fmmdl );
+	FLDMMDL_UpdateGridPosCurrent( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -571,9 +570,9 @@ void FLDMMDL_MoveDirRnd_Delete( FLDMMDL * fmmdl )
 {
 }
 
-//==============================================================================
+//======================================================================
 //	MV_RND系	ランダムに移動
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_RND 初期化
@@ -634,15 +633,15 @@ void FLDMMDL_MoveRndRect_Init( FLDMMDL * fmmdl )
 	MvRndWorkInit( fmmdl, AC_WALK_U_8F, DIRID_MV_RND_DirTbl, MV_RND_MOVE_CHECK_RECT );
 }
 
-//==============================================================================
+//======================================================================
 //	MV_RND系　パーツ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_RND_WORK初期化
  * @param	fmmdl		FLDMMDL *
  * @param	ac			移動する際に使用するアニメーションコマンド。
- * FLDMMDL_AcmdCodeDirChange()で変換対象となる。AC_WALK_U_32F等
+ * FLDMMDL_ChangeDirAcmdCode()で変換対象となる。AC_WALK_U_32F等
  * @param	tbl_id		方向テーブルID
  * @param	check		MV_RND_MOVE_CHECK_NORMAL等
  * @retval	nothing
@@ -652,13 +651,13 @@ static void MvRndWorkInit( FLDMMDL * fmmdl, int ac, int tbl_id, int check )
 {
 	MV_RND_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_RND_WORK_SIZE );
+	work = FLDMMDL_InitMoveProcWork( fmmdl, MV_RND_WORK_SIZE );
 	work->move_check_type = check;
 	work->acmd_code = ac;
 	work->tbl_id = tbl_id;
 	
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_OffStatusBitMove( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -673,21 +672,21 @@ void FLDMMDL_MvRnd_Move( FLDMMDL * fmmdl )
 	int ret;
 	MV_RND_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveProcWork( fmmdl );
 	
 	switch( work->seq_no ){
 	case 0:
-		FLDMMDL_StatusBitOFF_Move( fmmdl );
-		FLDMMDL_StatusBitOFF_MoveEnd( fmmdl );
+		FLDMMDL_OffStatusBitMove( fmmdl );
+		FLDMMDL_OffStatusBitMoveEnd( fmmdl );
 		
-		ret = FLDMMDL_DirDispGet( fmmdl );
-		ret = FLDMMDL_AcmdCodeDirChange( ret, AC_DIR_U );
-		FLDMMDL_CmdSet( fmmdl, ret );
+		ret = FLDMMDL_GetDirDisp( fmmdl );
+		ret = FLDMMDL_ChangeDirAcmdCode( ret, AC_DIR_U );
+		FLDMMDL_SetLocalAcmd( fmmdl, ret );
 		
 		work->seq_no++;
 		break;
 	case 1:
-		if( FLDMMDL_CmdAction(fmmdl) == FALSE ){
+		if( FLDMMDL_ActionLocalAcmd(fmmdl) == FALSE ){
 			break;
 		}
 		
@@ -703,7 +702,7 @@ void FLDMMDL_MvRnd_Move( FLDMMDL * fmmdl )
 		work->seq_no++;
 	case 3:
 		ret = TblIDRndGet( work->tbl_id, DIR_NOT );
-		FLDMMDL_DirMoveDispCheckSet( fmmdl, ret );
+		FLDMMDL_SetDirAll( fmmdl, ret );
 		
 		if( work->move_check_type == MV_RND_MOVE_CHECK_RECT ){
 			if( MvRndRectMoveLimitCheck(fmmdl,ret) == FALSE ){
@@ -713,11 +712,11 @@ void FLDMMDL_MvRnd_Move( FLDMMDL * fmmdl )
 		}
 		
 		{
-			u32 hit = FLDMMDL_MoveHitCheckDir( fmmdl, ret );
+			u32 hit = FLDMMDL_HitCheckMoveDir( fmmdl, ret );
 			
-			if( hit != FLDMMDL_MOVE_HIT_BIT_NON ){
+			if( hit != FLDMMDL_MOVEHITBIT_NON ){
 				if( work->move_check_type == MV_RND_MOVE_CHECK_LIMIT_ONLY ){
-					if( (hit&FLDMMDL_MOVE_HIT_BIT_LIM) ){ //移動制限のみ見る
+					if( (hit&FLDMMDL_MOVEHITBIT_LIM) ){ //移動制限のみ見る
 						work->seq_no = 0;
 						break;
 					}
@@ -728,24 +727,24 @@ void FLDMMDL_MvRnd_Move( FLDMMDL * fmmdl )
 			}
 		}
 		
-		ret = FLDMMDL_AcmdCodeDirChange( ret, work->acmd_code );
-		FLDMMDL_CmdSet( fmmdl, ret );
+		ret = FLDMMDL_ChangeDirAcmdCode( ret, work->acmd_code );
+		FLDMMDL_SetLocalAcmd( fmmdl, ret );
 			
-		FLDMMDL_StatusBitON_Move( fmmdl );
+		FLDMMDL_OnStatusBitMove( fmmdl );
 		work->seq_no++;
 	case 4:
-		if( FLDMMDL_CmdAction(fmmdl) == FALSE ){
+		if( FLDMMDL_ActionLocalAcmd(fmmdl) == FALSE ){
 			break;
 		}
 		
-		FLDMMDL_StatusBitOFF_Move( fmmdl );
+		FLDMMDL_OffStatusBitMove( fmmdl );
 		work->seq_no = 0;
 	}
 }
 
-//==============================================================================
+//======================================================================
 //	MV_RND_UL等パーツ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * 移動可能範囲矩形作成
@@ -758,12 +757,12 @@ static void MvRndRectMake( FLDMMDL * fmmdl, RECT *rect )
 {
 	int code,ix,iz,lx,lz;
 	
-	ix = FLDMMDL_InitPosGX_Get( fmmdl );
-	iz = FLDMMDL_InitPosGZ_Get( fmmdl );
-	lx = FLDMMDL_MoveLimitXGet( fmmdl );
-	lz = FLDMMDL_MoveLimitZGet( fmmdl );
+	ix = FLDMMDL_GetInitGridPosX( fmmdl );
+	iz = FLDMMDL_GetInitGridPosZ( fmmdl );
+	lx = FLDMMDL_GetMoveLimitX( fmmdl );
+	lz = FLDMMDL_GetMoveLimitZ( fmmdl );
 	
-	code = FLDMMDL_MoveCodeGet( fmmdl );
+	code = FLDMMDL_GetMoveCode( fmmdl );
 	
 	switch( code ){
 	case MV_RND_UL:
@@ -817,8 +816,8 @@ static int MvRndRectMoveLimitCheck( FLDMMDL * fmmdl, int dir )
 	RECT rect;
 	
 	MvRndRectMake( fmmdl, &rect );
-	gx = FLDMMDL_NowPosGX_Get( fmmdl ) + FLDMMDL_DirAddValueGX( dir );
-	gz = FLDMMDL_NowPosGZ_Get( fmmdl ) + FLDMMDL_DirAddValueGZ( dir );
+	gx = FLDMMDL_GetGridPosX( fmmdl ) + FLDMMDL_TOOL_GetDirAddValueGridX( dir );
+	gz = FLDMMDL_GetGridPosZ( fmmdl ) + FLDMMDL_TOOL_GetDirAddValueGridZ( dir );
 	
 	if( rect.left > gx || rect.right < gx ){
 		return( FALSE );
@@ -831,9 +830,9 @@ static int MvRndRectMoveLimitCheck( FLDMMDL * fmmdl, int dir )
 	return( TRUE );
 }
 
-//==============================================================================
+//======================================================================
 //	MV_UP系　常に指定方向を向く
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_UP系　初期化
@@ -846,12 +845,12 @@ static void MvDirWorkInit( FLDMMDL * fmmdl, int dir )
 {
 	MV_DIR_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_DIR_WORK_SIZE );
+	work = FLDMMDL_InitMoveProcWork( fmmdl, MV_DIR_WORK_SIZE );
 	work->dir = dir;
 	
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
-	FLDMMDL_GPosUpdate( fmmdl );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_OffStatusBitMove( fmmdl );
+	FLDMMDL_UpdateGridPosCurrent( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -865,11 +864,11 @@ void FLDMMDL_MoveDir_Move( FLDMMDL * fmmdl )
 {
 	MV_DIR_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveProcWork( fmmdl );
 	
 	switch( work->seq_no ){
 	case 0:
-		FLDMMDL_DirDispCheckSet( fmmdl, work->dir );
+		FLDMMDL_SetDirDisp( fmmdl, work->dir );
 		work->seq_no++;
 		break;
 	case 1:
@@ -925,9 +924,9 @@ void FLDMMDL_MoveRight_Init( FLDMMDL * fmmdl )
 	MvDirWorkInit( fmmdl, DIR_RIGHT );
 }
 
-//==============================================================================
+//======================================================================
 //	MV_SPIN系　方向回転
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_SPIN_DIR_WORK初期化
@@ -940,12 +939,12 @@ static void MvSpinDirWorkInit( FLDMMDL * fmmdl, int dir )
 {
 	MV_SPIN_DIR_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_SPIN_DIR_WORK_SIZE );
+	work = FLDMMDL_InitMoveProcWork( fmmdl, MV_SPIN_DIR_WORK_SIZE );
 	work->spin_dir = dir;
 	
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
-	FLDMMDL_GPosUpdate( fmmdl );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_OffStatusBitMove( fmmdl );
+	FLDMMDL_UpdateGridPosCurrent( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -983,7 +982,7 @@ void FLDMMDL_MoveSpin_Move( FLDMMDL * fmmdl )
 {
 	MV_SPIN_DIR_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveProcWork( fmmdl );
 	while( DATA_MvSpinMoveTbl[work->seq_no](fmmdl,work) == TRUE ){};
 }
 
@@ -1000,11 +999,11 @@ static int MvSpinMove_DirCmdSet( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *work )
 	int ret = TrJikiDashSearchTbl( fmmdl, DIRID_MvDirSpin_DirTbl, DIR_NOT );
 	
 	if( ret == DIR_NOT ){
-		ret = FLDMMDL_DirDispGet( fmmdl );
+		ret = FLDMMDL_GetDirDisp( fmmdl );
 	}
 	
-	ret = FLDMMDL_AcmdCodeDirChange( ret, AC_DIR_U );
-	FLDMMDL_CmdSet( fmmdl, ret );
+	ret = FLDMMDL_ChangeDirAcmdCode( ret, AC_DIR_U );
+	FLDMMDL_SetLocalAcmd( fmmdl, ret );
 	
 	work->seq_no = SEQNO_MV_SPIN_DIR_CMD_ACT;
 	return( TRUE );
@@ -1020,7 +1019,7 @@ static int MvSpinMove_DirCmdSet( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *work )
 //--------------------------------------------------------------
 static int MvSpinMove_CmdAction( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == FALSE ){
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == FALSE ){
 		return( FALSE );
 	}
 	
@@ -1076,7 +1075,7 @@ static int MvSpinMove_NextDirSet( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *work )
 		tbl = right;
 	}
 	
-	ret = FLDMMDL_DirDispGet( fmmdl );
+	ret = FLDMMDL_GetDirDisp( fmmdl );
 	
 	for( i = 0; tbl[i] != DIR_NOT; i++ ){
 		if( ret == tbl[i] ){
@@ -1094,7 +1093,7 @@ static int MvSpinMove_NextDirSet( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *work )
 	
 	ret = tbl[i];
 	
-	FLDMMDL_DirDispCheckSet( fmmdl, ret );
+	FLDMMDL_SetDirDisp( fmmdl, ret );
 	
 	work->seq_no = SEQNO_MV_SPIN_DIR_CMD_SET;
 	return( TRUE );
@@ -1111,9 +1110,9 @@ static int (* const DATA_MvSpinMoveTbl[])( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *wo
 	MvSpinMove_NextDirSet,
 };
 
-//==============================================================================
+//======================================================================
 //	MV_REWAR　右回転<->左回転
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_REWAR 初期化
@@ -1137,7 +1136,7 @@ void FLDMMDL_MoveRewar_Move( FLDMMDL * fmmdl )
 {
 	MV_SPIN_DIR_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveProcWork( fmmdl );
 	while( DATA_MvRewarMoveTbl[work->seq_no](fmmdl,work) == TRUE ){};
 }
 
@@ -1151,9 +1150,9 @@ void FLDMMDL_MoveRewar_Move( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int MvRewarMove_DirCmdSet( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *work )
 {
-	int ret = FLDMMDL_DirDispGet( fmmdl );
-	ret = FLDMMDL_AcmdCodeDirChange( ret, AC_DIR_U );
-	FLDMMDL_CmdSet( fmmdl, ret );
+	int ret = FLDMMDL_GetDirDisp( fmmdl );
+	ret = FLDMMDL_ChangeDirAcmdCode( ret, AC_DIR_U );
+	FLDMMDL_SetLocalAcmd( fmmdl, ret );
 	
 	work->seq_no = SEQNO_MV_REWAR_DIR_CMD_ACT;
 	return( TRUE );
@@ -1169,7 +1168,7 @@ static int MvRewarMove_DirCmdSet( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *work )
 //--------------------------------------------------------------
 static int MvRewarMove_CmdAction( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == FALSE ){
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == FALSE ){
 		return( FALSE );
 	}
 	
@@ -1218,7 +1217,7 @@ static int MvRewarMove_NextDirSet( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *work )
 		tbl = right;
 	}
 	
-	ret = FLDMMDL_DirDispGet( fmmdl );
+	ret = FLDMMDL_GetDirDisp( fmmdl );
 	
 	for( i = 0; tbl[i] != DIR_NOT; i++ ){
 		if( ret == tbl[i] ){
@@ -1236,14 +1235,14 @@ static int MvRewarMove_NextDirSet( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *work )
 	
 	ret = tbl[i];
 	
-	FLDMMDL_DirDispCheckSet( fmmdl, ret );
+	FLDMMDL_SetDirDisp( fmmdl, ret );
 	
 	{
-		int dir = FLDMMDL_DirDispGet( fmmdl );
-		int sdir = FLDMMDL_DirHeaderGet( fmmdl );
+		int dir = FLDMMDL_GetDirDisp( fmmdl );
+		int sdir = FLDMMDL_GetDirHeader( fmmdl );
 		
 		if( dir == sdir ){
-			work->spin_dir = FieldOBJTool_DirFlip( work->spin_dir );
+			work->spin_dir = FLDMMDL_TOOL_FlipDir( work->spin_dir );
 		}
 	}
 	
@@ -1262,9 +1261,9 @@ static int (* const DATA_MvRewarMoveTbl[])( FLDMMDL * fmmdl, MV_SPIN_DIR_WORK *w
 	MvRewarMove_NextDirSet,
 };
 
-//==============================================================================
+//======================================================================
 //	MV_RT2　一方向を往復	
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_RT2 初期化
@@ -1276,7 +1275,7 @@ void FLDMMDL_MoveRoute2_Init( FLDMMDL * fmmdl )
 {
 	MV_RT2_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_RT2_WORK_SIZE );
+	work = FLDMMDL_InitMoveProcWork( fmmdl, MV_RT2_WORK_SIZE );
 	
 	if( MoveSub_KuruKuruCheck(fmmdl) == TRUE ){
 		MoveSub_KuruKuruInit( fmmdl, &work->kurukuru );
@@ -1292,7 +1291,7 @@ void FLDMMDL_MoveRoute2_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveRoute2_Move( FLDMMDL * fmmdl )
 {
-	MV_RT2_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_RT2_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	
 	while( DATA_MvRt2MoveTbl[work->seq_no](fmmdl,work) == TRUE ){};
 }
@@ -1309,16 +1308,16 @@ static int MvRt2_DirCheck( FLDMMDL * fmmdl, MV_RT2_WORK *work )
 {
 	int dir;
 	
-	dir = FLDMMDL_DirHeaderGet( fmmdl );						//ヘッダ指定方向
+	dir = FLDMMDL_GetDirHeader( fmmdl );						//ヘッダ指定方向
 	
 	if( work->turn_flag == TRUE ){
-		dir = FieldOBJTool_DirFlip( dir );
+		dir = FLDMMDL_TOOL_FlipDir( dir );
 	}
 	
-	FLDMMDL_DirMoveSet( fmmdl, dir );
+	FLDMMDL_SetDirMove( fmmdl, dir );
 	
 	if( MoveSub_KuruKuruCheck(fmmdl) == FALSE ){
-		FLDMMDL_DirDispCheckSet( fmmdl, dir );
+		FLDMMDL_SetDirDisp( fmmdl, dir );
 	}
 	
 	work->seq_no = SEQNO_MV_RT2_MOVE_SET;
@@ -1338,18 +1337,18 @@ static int MvRt2_MoveSet( FLDMMDL * fmmdl, MV_RT2_WORK *work )
 	if( work->turn_flag ){
 		int ix,iz,gx,gz;
 		
-		ix = FLDMMDL_InitPosGX_Get( fmmdl );
-		iz = FLDMMDL_InitPosGZ_Get( fmmdl );
-		gx = FLDMMDL_NowPosGX_Get( fmmdl );
-		gz = FLDMMDL_NowPosGZ_Get( fmmdl );
+		ix = FLDMMDL_GetInitGridPosX( fmmdl );
+		iz = FLDMMDL_GetInitGridPosZ( fmmdl );
+		gx = FLDMMDL_GetGridPosX( fmmdl );
+		gz = FLDMMDL_GetGridPosZ( fmmdl );
 		
 		if( ix == gx && iz == gz ){
-			int dir = FieldOBJTool_DirFlip( FLDMMDL_DirMoveGet(fmmdl) );
+			int dir = FLDMMDL_TOOL_FlipDir( FLDMMDL_GetDirMove(fmmdl) );
 			
-			FLDMMDL_DirMoveSet( fmmdl, dir );
+			FLDMMDL_SetDirMove( fmmdl, dir );
 			
 			if( MoveSub_KuruKuruCheck(fmmdl) == FALSE ){
-				FLDMMDL_DirDispCheckSet( fmmdl, dir );
+				FLDMMDL_SetDirDisp( fmmdl, dir );
 			}
 			
 			work->turn_flag = FALSE;
@@ -1360,30 +1359,30 @@ static int MvRt2_MoveSet( FLDMMDL * fmmdl, MV_RT2_WORK *work )
 		int dir,ac;
 		u32 ret;
 		
-		dir = FLDMMDL_DirMoveGet( fmmdl );
-		ret = FLDMMDL_MoveHitCheckDir( fmmdl, dir );
+		dir = FLDMMDL_GetDirMove( fmmdl );
+		ret = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
 		
-		if( (ret & FLDMMDL_MOVE_HIT_BIT_LIM) ){
+		if( (ret & FLDMMDL_MOVEHITBIT_LIM) ){
 			work->turn_flag = TRUE;
-			dir = FieldOBJTool_DirFlip( dir );
-			ret = FLDMMDL_MoveHitCheckDir( fmmdl, dir );
+			dir = FLDMMDL_TOOL_FlipDir( dir );
+			ret = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
 		}
 		
 		ac = AC_WALK_U_8F;
 		
-		if( ret != FLDMMDL_MOVE_HIT_BIT_NON ){
+		if( ret != FLDMMDL_MOVEHITBIT_NON ){
 			ac = AC_STAY_WALK_U_8F;
 		}
 		
-		ac = FLDMMDL_AcmdCodeDirChange( dir, ac );
-		FLDMMDL_CmdSet( fmmdl, ac );
+		ac = FLDMMDL_ChangeDirAcmdCode( dir, ac );
+		FLDMMDL_SetLocalAcmd( fmmdl, ac );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == TRUE ){
 			MoveSub_KuruKuruSet( fmmdl, &work->kurukuru );
 		}
 	}
 	
-	FLDMMDL_StatusBitON_Move( fmmdl );
+	FLDMMDL_OnStatusBitMove( fmmdl );
 	work->seq_no = SEQNO_MV_RT2_MOVE;
 	return( TRUE );
 }
@@ -1398,8 +1397,8 @@ static int MvRt2_MoveSet( FLDMMDL * fmmdl, MV_RT2_WORK *work )
 //--------------------------------------------------------------
 static int MvRt2_Move( FLDMMDL * fmmdl, MV_RT2_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == TRUE ){
-		FLDMMDL_StatusBitOFF_Move( fmmdl );
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == TRUE ){
+		FLDMMDL_OffStatusBitMove( fmmdl );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == TRUE ){
 			MoveSub_KuruKuruEnd( fmmdl, &work->kurukuru );
@@ -1421,9 +1420,9 @@ static int (* const DATA_MvRt2MoveTbl[])( FLDMMDL * fmmdl, MV_RT2_WORK *work ) =
 	MvRt2_Move,
 };
 
-//==============================================================================
+//======================================================================
 //	MV_RTURLD等　3箇所往復
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_RT3_WORK初期化
@@ -1438,7 +1437,7 @@ static void MvRt3WorkInit( FLDMMDL * fmmdl, int check_no, int check_type, int tb
 {
 	MV_RT3_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_RT3_WORK_SIZE );
+	work = FLDMMDL_InitMoveProcWork( fmmdl, MV_RT3_WORK_SIZE );
 	work->turn_check_no = check_no;
 	work->turn_check_type = check_type;
 	work->tbl_id = tbl_id;
@@ -1651,7 +1650,7 @@ void FLDMMDL_MoveRoute3_Move( FLDMMDL * fmmdl )
 {
 	MV_RT3_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	work = FLDMMDL_GetMoveProcWork( fmmdl );
 	while( DATA_MvRt3MoveTbl[work->seq_no](fmmdl,work) == TRUE ){};
 }
 
@@ -1667,15 +1666,15 @@ static int MvRt3Move_MoveDirSet( FLDMMDL * fmmdl, MV_RT3_WORK *work )
 {
 	if( work->turn_no == work->turn_check_no  ){
 		if( work->turn_check_type == MV_RT3_CHECK_TYPE_X ){
-			int ix = FLDMMDL_InitPosGX_Get( fmmdl );
-			int gx = FLDMMDL_NowPosGX_Get( fmmdl );
+			int ix = FLDMMDL_GetInitGridPosX( fmmdl );
+			int gx = FLDMMDL_GetGridPosX( fmmdl );
 			
 			if( ix == gx ){
 				work->turn_no++;
 			}
 		}else{
-			int iz = FLDMMDL_InitPosGZ_Get( fmmdl );
-			int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
+			int iz = FLDMMDL_GetInitGridPosZ( fmmdl );
+			int gz = FLDMMDL_GetGridPosZ( fmmdl );
 			
 			if( iz == gz ){
 				work->turn_no++;
@@ -1684,10 +1683,10 @@ static int MvRt3Move_MoveDirSet( FLDMMDL * fmmdl, MV_RT3_WORK *work )
 	}
 	
 	if( work->turn_no == MV_RT3_TURN_END_NO ){
-		int ix = FLDMMDL_InitPosGX_Get( fmmdl );
-		int iz = FLDMMDL_InitPosGZ_Get( fmmdl );
-		int gx = FLDMMDL_NowPosGX_Get( fmmdl );
-		int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
+		int ix = FLDMMDL_GetInitGridPosX( fmmdl );
+		int iz = FLDMMDL_GetInitGridPosZ( fmmdl );
+		int gx = FLDMMDL_GetGridPosX( fmmdl );
+		int gz = FLDMMDL_GetGridPosZ( fmmdl );
 		
 		if( ix == gx && iz == gz ){
 			work->turn_no = 0;
@@ -1702,42 +1701,42 @@ static int MvRt3Move_MoveDirSet( FLDMMDL * fmmdl, MV_RT3_WORK *work )
 		tbl = MoveDirTblIDSearch( work->tbl_id );
 		dir = tbl[work->turn_no];
 		
-		FLDMMDL_DirMoveSet( fmmdl, dir );
+		FLDMMDL_SetDirMove( fmmdl, dir );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == FALSE ){
-			FLDMMDL_DirDispCheckSet( fmmdl, dir );
+			FLDMMDL_SetDirDisp( fmmdl, dir );
 		}
 		
-		ret = FLDMMDL_MoveHitCheckDir( fmmdl, dir );
+		ret = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
 		
-		if( (ret & FLDMMDL_MOVE_HIT_BIT_LIM) ){
+		if( (ret & FLDMMDL_MOVEHITBIT_LIM) ){
 			work->turn_no++;
 			dir = tbl[work->turn_no];
 			
-			FLDMMDL_DirMoveSet( fmmdl, dir );
+			FLDMMDL_SetDirMove( fmmdl, dir );
 			
 			if( MoveSub_KuruKuruCheck(fmmdl) == FALSE ){
-				FLDMMDL_DirDispCheckSet( fmmdl, dir );
+				FLDMMDL_SetDirDisp( fmmdl, dir );
 			}
 			
-			ret = FLDMMDL_MoveHitCheckDir( fmmdl, dir );
+			ret = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
 		}
 		
 		ac = AC_WALK_U_8F;
 		
-		if( (ret != FLDMMDL_MOVE_HIT_BIT_NON) ){
+		if( (ret != FLDMMDL_MOVEHITBIT_NON) ){
 			ac = AC_STAY_WALK_U_8F;
 		}
 		
-		ac = FLDMMDL_AcmdCodeDirChange( dir, ac );
-		FLDMMDL_CmdSet( fmmdl, ac );
+		ac = FLDMMDL_ChangeDirAcmdCode( dir, ac );
+		FLDMMDL_SetLocalAcmd( fmmdl, ac );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == TRUE ){
 			MoveSub_KuruKuruSet( fmmdl, &work->kurukuru );
 		}
 	}
 	
-	FLDMMDL_StatusBitON_Move( fmmdl );
+	FLDMMDL_OnStatusBitMove( fmmdl );
 	work->seq_no = SEQNO_MV_RT3_MOVE;
 	return( TRUE );
 }
@@ -1752,8 +1751,8 @@ static int MvRt3Move_MoveDirSet( FLDMMDL * fmmdl, MV_RT3_WORK *work )
 //--------------------------------------------------------------
 static int MvRt3Move_MoveDir( FLDMMDL * fmmdl, MV_RT3_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == TRUE ){
-		FLDMMDL_StatusBitOFF_Move( fmmdl );
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == TRUE ){
+		FLDMMDL_OffStatusBitMove( fmmdl );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == TRUE ){
 			MoveSub_KuruKuruEnd( fmmdl, &work->kurukuru );
@@ -1774,9 +1773,9 @@ static int (* const DATA_MvRt3MoveTbl[])( FLDMMDL * fmmdl, MV_RT3_WORK *work ) =
 	MvRt3Move_MoveDir,
 };
 
-//==============================================================================
+//======================================================================
 //	MV_RTRL等　４点移動動作
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_RT4_WORK初期化
@@ -1791,7 +1790,7 @@ static void MvRt4WorkInit( FLDMMDL * fmmdl, int check_no, int check_type, int tb
 {
 	MV_RT4_WORK *work;
 	
-	work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_RT4_WORK_SIZE );
+	work = FLDMMDL_InitMoveProcWork( fmmdl, MV_RT4_WORK_SIZE );
 	work->turn_check_no = check_no;
 	work->turn_check_type = check_type;
 	work->tbl_id = tbl_id;
@@ -1906,7 +1905,7 @@ void FLDMMDL_MoveRouteRD_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveRoute4_Move( FLDMMDL * fmmdl )
 {
-	MV_RT4_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_RT4_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	while( DATA_MvRt4MoveTbl[work->seq_no](fmmdl,work) == TRUE ){};
 }
 
@@ -1940,17 +1939,17 @@ static void MvRt4Move_TurnNoInc( MV_RT4_WORK *work )
 static int MvRt4Move_JikiCheck( FLDMMDL * fmmdl, MV_RT4_WORK *work )
 {
 #if 0
-	if( FLDMMDL_EventTypeGet(fmmdl) == EV_TYPE_TRAINER_ESCAPE ){
+	if( FLDMMDL_GetEventType(fmmdl) == EV_TYPE_TRAINER_ESCAPE ){
 		FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
 		PLAYER_STATE_PTR jiki = Player_FieldSysWorkPlayerGet( fsys );
-		int eye_dir = FLDMMDL_DirDispGet( fmmdl );
-		int eye_range = FLDMMDL_ParamGet( fmmdl, FLDMMDL_PARAM_0 );
+		int eye_dir = FLDMMDL_GetDirDisp( fmmdl );
+		int eye_range = FLDMMDL_GetParam( fmmdl, FLDMMDL_PARAM_0 );
 		int ret = EvTrainer_EyeRangeHitCheck( fmmdl, jiki, eye_dir, eye_range );
 		
 		if( ret != EYE_CHECK_NOHIT ){
-			int ac = FLDMMDL_AcmdCodeDirChange( eye_dir, AC_STAY_JUMP_U_8F );
-			FLDMMDL_CmdSet( fmmdl, ret );
-			FLDMMDL_StatusBitON_Move( fmmdl );
+			int ac = FLDMMDL_ChangeDirAcmdCode( eye_dir, AC_STAY_JUMP_U_8F );
+			FLDMMDL_SetLocalAcmd( fmmdl, ret );
+			FLDMMDL_OnStatusBitMove( fmmdl );
 			work->seq_no = SEQNO_MV_RT4_DISCOVERY_JUMP;
 			return( TRUE );
 		}
@@ -1970,8 +1969,8 @@ static int MvRt4Move_JikiCheck( FLDMMDL * fmmdl, MV_RT4_WORK *work )
 //--------------------------------------------------------------
 static int MvRt4Move_DiscoveryJump( FLDMMDL * fmmdl, MV_RT4_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == TRUE ){
-		FLDMMDL_StatusBitOFF_Move( fmmdl );
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == TRUE ){
+		FLDMMDL_OffStatusBitMove( fmmdl );
 		work->seq_no = SEQNO_MV_RT4_MOVE_DIR_SET;
 	}
 	
@@ -1990,15 +1989,15 @@ static int MvRt4Move_MoveDirSet( FLDMMDL * fmmdl, MV_RT4_WORK *work )
 {
 	if( work->turn_no == work->turn_check_no  ){
 		if( work->turn_check_type == MV_RT3_CHECK_TYPE_X ){
-			int ix = FLDMMDL_InitPosGX_Get( fmmdl );
-			int gx = FLDMMDL_NowPosGX_Get( fmmdl );
+			int ix = FLDMMDL_GetInitGridPosX( fmmdl );
+			int gx = FLDMMDL_GetGridPosX( fmmdl );
 			
 			if( ix == gx ){
 				MvRt4Move_TurnNoInc( work );
 			}
 		}else{
-			int iz = FLDMMDL_InitPosGZ_Get( fmmdl );
-			int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
+			int iz = FLDMMDL_GetInitGridPosZ( fmmdl );
+			int gz = FLDMMDL_GetGridPosZ( fmmdl );
 			
 			if( iz == gz ){
 				MvRt4Move_TurnNoInc( work );
@@ -2007,10 +2006,10 @@ static int MvRt4Move_MoveDirSet( FLDMMDL * fmmdl, MV_RT4_WORK *work )
 	}
 	
 	if( work->turn_no == MV_RT3_TURN_END_NO ){
-		int ix = FLDMMDL_InitPosGX_Get( fmmdl );
-		int iz = FLDMMDL_InitPosGZ_Get( fmmdl );
-		int gx = FLDMMDL_NowPosGX_Get( fmmdl );
-		int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
+		int ix = FLDMMDL_GetInitGridPosX( fmmdl );
+		int iz = FLDMMDL_GetInitGridPosZ( fmmdl );
+		int gx = FLDMMDL_GetGridPosX( fmmdl );
+		int gz = FLDMMDL_GetGridPosZ( fmmdl );
 		
 		if( ix == gx && iz == gz ){
 			work->turn_no = 0;
@@ -2025,42 +2024,42 @@ static int MvRt4Move_MoveDirSet( FLDMMDL * fmmdl, MV_RT4_WORK *work )
 		tbl = MoveDirTblIDSearch( work->tbl_id );
 		dir = tbl[work->turn_no];
 		
-		FLDMMDL_DirMoveSet( fmmdl, dir );
+		FLDMMDL_SetDirMove( fmmdl, dir );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == FALSE ){
-			FLDMMDL_DirDispCheckSet( fmmdl, dir );
+			FLDMMDL_SetDirDisp( fmmdl, dir );
 		}
 		
-		ret = FLDMMDL_MoveHitCheckDir( fmmdl, dir );
+		ret = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
 		
-		if( (ret & FLDMMDL_MOVE_HIT_BIT_LIM) ){
+		if( (ret & FLDMMDL_MOVEHITBIT_LIM) ){
 			MvRt4Move_TurnNoInc( work );
 			dir = tbl[work->turn_no];
 			
-			FLDMMDL_DirMoveSet( fmmdl, dir );
+			FLDMMDL_SetDirMove( fmmdl, dir );
 			
 			if( MoveSub_KuruKuruCheck(fmmdl) == FALSE ){
-				FLDMMDL_DirDispCheckSet( fmmdl, dir );
+				FLDMMDL_SetDirDisp( fmmdl, dir );
 			}
 			
-			ret = FLDMMDL_MoveHitCheckDir( fmmdl, dir );
+			ret = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
 		}
 		
 		ac = AC_WALK_U_8F;
 		
-		if( (ret != FLDMMDL_MOVE_HIT_BIT_NON) ){
+		if( (ret != FLDMMDL_MOVEHITBIT_NON) ){
 			ac = AC_STAY_WALK_U_8F;
 		}
 		
-		ac = FLDMMDL_AcmdCodeDirChange( dir, ac );
-		FLDMMDL_CmdSet( fmmdl, ac );
+		ac = FLDMMDL_ChangeDirAcmdCode( dir, ac );
+		FLDMMDL_SetLocalAcmd( fmmdl, ac );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == TRUE ){
 			MoveSub_KuruKuruSet( fmmdl, &work->kurukuru );
 		}
 	}
 	
-	FLDMMDL_StatusBitON_Move( fmmdl );
+	FLDMMDL_OnStatusBitMove( fmmdl );
 	work->seq_no = SEQNO_MV_RT4_MOVE;
 	return( TRUE );
 }
@@ -2075,8 +2074,8 @@ static int MvRt4Move_MoveDirSet( FLDMMDL * fmmdl, MV_RT4_WORK *work )
 //--------------------------------------------------------------
 static int MvRt4Move_MoveDir( FLDMMDL * fmmdl, MV_RT4_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == TRUE ){
-		FLDMMDL_StatusBitOFF_Move( fmmdl );
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == TRUE ){
+		FLDMMDL_OffStatusBitMove( fmmdl );
 		
 		if( MoveSub_KuruKuruCheck(fmmdl) == TRUE ){
 			MoveSub_KuruKuruEnd( fmmdl, &work->kurukuru );
@@ -2099,9 +2098,9 @@ static int (* const DATA_MvRt4MoveTbl[])( FLDMMDL * fmmdl, MV_RT4_WORK *work ) =
 	MvRt4Move_MoveDir,
 };
 
-//==============================================================================
+//======================================================================
 //	パーツ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * 方向テーブル要素数取得
@@ -2175,7 +2174,7 @@ static const int * MoveDirTblIDSearch( int id )
 //--------------------------------------------------------------
 static int TrJikiDashSearch( FLDMMDL * fmmdl )
 {
-	int ret = FLDMMDL_EventTypeGet( fmmdl );
+	int ret = FLDMMDL_GetEventType( fmmdl );
 	
 #ifndef DEBUG_SEARCH	
 	if( ret != EV_TYPE_TRAINER && ret != EV_TYPE_TRAINER_EYEALL ){
@@ -2195,7 +2194,7 @@ static int TrJikiDashSearch( FLDMMDL * fmmdl )
 #endif		
 		{
 			int code,i = 0;
-			ret = FLDMMDL_MoveCodeGet( fmmdl );
+			ret = FLDMMDL_GetMoveCode( fmmdl );
 			
 			do{
 				code = JikiDashSensorMoveCodeTbl[i++];
@@ -2209,8 +2208,8 @@ static int TrJikiDashSearch( FLDMMDL * fmmdl )
 		
 		{
 			const FLDMMDL * jikiobj = Player_FieldOBJGet( jiki );
-			int jy = FLDMMDL_HeightGridGet( jikiobj );
-			int y = FLDMMDL_HeightGridGet( fmmdl );
+			int jy = FLDMMDL_GetHeightGrid( jikiobj );
+			int y = FLDMMDL_GetHeightGrid( fmmdl );
 			
 			if( jy != y ){
 				return( DIR_NOT );
@@ -2221,12 +2220,12 @@ static int TrJikiDashSearch( FLDMMDL * fmmdl )
 			int jx = Player_NowGPosXGet( jiki );
 			int jz = Player_NowGPosZGet( jiki );
 #ifndef DEBUG_SEARCH
-			int range = FLDMMDL_ParamGet( fmmdl, FLDMMDL_PARAM_0 );
+			int range = FLDMMDL_GetParam( fmmdl, FLDMMDL_PARAM_0 );
 #else
 			int range = 4;
 #endif
-			int x = FLDMMDL_NowPosGX_Get( fmmdl );
-			int z = FLDMMDL_NowPosGZ_Get( fmmdl );
+			int x = FLDMMDL_GetGridPosX( fmmdl );
+			int z = FLDMMDL_GetGridPosZ( fmmdl );
 			int sx = x - range;
 			int ex = x + range;
 			int sz = z - range;
@@ -2234,7 +2233,7 @@ static int TrJikiDashSearch( FLDMMDL * fmmdl )
 			
 			if( sz <= jz && ez >= jz ){
 				if( sx <= jx && ex >= jx ){
-					return( FieldOBJTool_DirRange(x,z,jx,jz) );
+					return( FLDMMDL_TOOL_GetRangeDir(x,z,jx,jz) );
 				}
 			}
 		}
@@ -2274,8 +2273,8 @@ static int TrJikiDashSearchTbl( FLDMMDL * fmmdl, int id, int end )
 			
 			{
 				int dirx = DIR_NOT,dirz = DIR_NOT;
-				int x = FLDMMDL_NowPosGX_Get( fmmdl );
-				int z = FLDMMDL_NowPosGZ_Get( fmmdl );
+				int x = FLDMMDL_GetGridPosX( fmmdl );
+				int z = FLDMMDL_GetGridPosZ( fmmdl );
 				FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
 				PLAYER_STATE_PTR jiki = Player_FieldSysWorkPlayerGet( fsys );
 				int jx = Player_NowGPosXGet( jiki );
@@ -2305,9 +2304,9 @@ static int TrJikiDashSearchTbl( FLDMMDL * fmmdl, int id, int end )
 	return( DIR_NOT );
 }
 
-//==============================================================================
+//======================================================================
 //	ルート型　クルクル移動パーツ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 ///	クルクルテーブル
 //--------------------------------------------------------------
@@ -2326,7 +2325,7 @@ static const int DATA_KuruKuruTbl[RT_KURU2_MAX][RT_KURU2_DIR_MAX] =
 //--------------------------------------------------------------
 static int MoveSub_KuruKuruCheck( FLDMMDL * fmmdl )
 {
-	int type = FLDMMDL_EventTypeGet( fmmdl );
+	int type = FLDMMDL_GetEventType( fmmdl );
 	
 	if( type == EV_TYPE_TRAINER_SPIN_MOVE_L	||
 		type == EV_TYPE_TRAINER_SPIN_MOVE_R	){
@@ -2346,7 +2345,7 @@ static int MoveSub_KuruKuruCheck( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static void MoveSub_KuruKuruInit( FLDMMDL * fmmdl, RT_KURUKURU_WORK *work )
 {
-	if( FLDMMDL_EventTypeGet(fmmdl) == EV_TYPE_TRAINER_SPIN_MOVE_L ){
+	if( FLDMMDL_GetEventType(fmmdl) == EV_TYPE_TRAINER_SPIN_MOVE_L ){
 		work->spin_type = RT_KURU2_L;
 	}else{
 		work->spin_type = RT_KURU2_R;
@@ -2364,7 +2363,7 @@ static void MoveSub_KuruKuruInit( FLDMMDL * fmmdl, RT_KURUKURU_WORK *work )
 //--------------------------------------------------------------
 static void MoveSub_KuruKuruSet( FLDMMDL * fmmdl, RT_KURUKURU_WORK *work )
 {
-	int i,dir = FLDMMDL_DirDispGet( fmmdl );
+	int i,dir = FLDMMDL_GetDirDisp( fmmdl );
 	
 #if 0	
 	{
@@ -2384,14 +2383,14 @@ static void MoveSub_KuruKuruSet( FLDMMDL * fmmdl, RT_KURUKURU_WORK *work )
 	i = (i + 1) % RT_KURU2_DIR_MAX;								//+1=1つ先
 	dir = DATA_KuruKuruTbl[work->spin_type][i];
 	
-	if( FLDMMDL_StatusBit_Check(fmmdl,FLDMMDL_STABIT_PAUSE_DIR) ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_PAUSE_DIR) ){
 		work->dir_pause = TRUE;
 	}else{
 		work->dir_pause = FALSE;
 	}
 	
-	FLDMMDL_DirDispCheckSet( fmmdl, dir );
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_PAUSE_DIR );
+	FLDMMDL_SetDirDisp( fmmdl, dir );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_PAUSE_DIR );
 #if 0	
 	{
 		switch( dir ){
@@ -2415,13 +2414,13 @@ static void MoveSub_KuruKuruSet( FLDMMDL * fmmdl, RT_KURUKURU_WORK *work )
 static void MoveSub_KuruKuruEnd( FLDMMDL * fmmdl, RT_KURUKURU_WORK *work )
 {
 	if( work->dir_pause == FALSE ){
-		FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_PAUSE_DIR );
+		FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_PAUSE_DIR );
 	}
 }
 
-//==============================================================================
+//======================================================================
 //	data
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 ///	DIR_RND ウェイトテーブル
 //--------------------------------------------------------------

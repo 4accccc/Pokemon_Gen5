@@ -158,7 +158,7 @@ PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )
 	return pcActCont;
 }
 #else
-static const FLDMMDL_H DATA_JikiHeader =
+static const FLDMMDL_HEADER DATA_JikiHeader =
 {
 	0xff,	///<識別ID
 	0,	///<表示するOBJコード
@@ -180,7 +180,7 @@ static const FLDMMDL_H DATA_JikiHeader =
 PC_ACTCONT * CreatePlayerActGrid(
 		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos, HEAPID heapID )
 {
-	FLDMMDL_H head;
+	FLDMMDL_HEADER head;
 	PC_ACTCONT *pcActCont;
 	FLDMMDLSYS *pFldMMdlSys;
 
@@ -195,7 +195,7 @@ PC_ACTCONT * CreatePlayerActGrid(
 	head.gx = SIZE_GRID_FX32( pos->x );
 	head.gz = SIZE_GRID_FX32( pos->z );
 	head.gy = pos->y;
-	pcActCont->pFldMMdl = FLDMMDL_AddH( pFldMMdlSys, &DATA_JikiHeader, 0 );
+	pcActCont->pFldMMdl = FLDMMDLSYS_AddFldMMdl( pFldMMdlSys, &DATA_JikiHeader, 0 );
 	
 	//BLACTセットアップ
 	pcActCont->bbdActActUnitID =
@@ -219,7 +219,7 @@ void PlayerActGrid_Update(
 	pcActCont->trans = *pos;
 	
 	SetGridPlayerActTrans( pcActCont, pos );
-	FLDMMDL_DirDispSetForce( pcActCont->pFldMMdl, dir );
+	FLDMMDL_SetForceDirDisp( pcActCont->pFldMMdl, dir );
 }
 
 void SetGridPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
@@ -228,17 +228,17 @@ void SetGridPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
 	int gy = SIZE_GRID_FX32( trans->y );
 	int gz = SIZE_GRID_FX32( trans->z );
 	
-	FLDMMDL_OldPosGX_Set( pcActCont->pFldMMdl,
-		FLDMMDL_NowPosGX_Get(pcActCont->pFldMMdl) );
-	FLDMMDL_OldPosGY_Set( pcActCont->pFldMMdl,
-		FLDMMDL_NowPosGY_Get(pcActCont->pFldMMdl) );
-	FLDMMDL_OldPosGZ_Set( pcActCont->pFldMMdl,
-		FLDMMDL_NowPosGZ_Get(pcActCont->pFldMMdl) );
+	FLDMMDL_SetOldGridPosX( pcActCont->pFldMMdl,
+		FLDMMDL_GetGridPosX(pcActCont->pFldMMdl) );
+	FLDMMDL_SetOldGridPosY( pcActCont->pFldMMdl,
+		FLDMMDL_GetGridPosY(pcActCont->pFldMMdl) );
+	FLDMMDL_SetOldGridPosZ( pcActCont->pFldMMdl,
+		FLDMMDL_GetGridPosZ(pcActCont->pFldMMdl) );
 	
-	FLDMMDL_NowPosGX_Set( pcActCont->pFldMMdl, gx );
-	FLDMMDL_NowPosGY_Set( pcActCont->pFldMMdl, gy );
-	FLDMMDL_NowPosGZ_Set( pcActCont->pFldMMdl, gz );
-	FLDMMDL_VecPosSet( pcActCont->pFldMMdl, trans );
+	FLDMMDL_SetGridPosX( pcActCont->pFldMMdl, gx );
+	FLDMMDL_SetGridPosY( pcActCont->pFldMMdl, gy );
+	FLDMMDL_SetGridPosZ( pcActCont->pFldMMdl, gz );
+	FLDMMDL_SetVectorPos( pcActCont->pFldMMdl, trans );
 	
 	VEC_Set( &pcActCont->trans, trans->x, trans->y, trans->z );
 }
@@ -285,13 +285,13 @@ void PlayerActGrid_AnimeSet(
 #else	
 	switch( flag ){
 	case PLAYER_ANIME_FLAG_STOP:
-		FLDMMDL_DrawStatusSet( pcActCont->pFldMMdl, DRAW_STA_STOP );
+		FLDMMDL_SetDrawStatus( pcActCont->pFldMMdl, DRAW_STA_STOP );
 		break;
 	case PLAYER_ANIME_FLAG_WALK:
-		FLDMMDL_DrawStatusSet( pcActCont->pFldMMdl, DRAW_STA_WALK_8F );
+		FLDMMDL_SetDrawStatus( pcActCont->pFldMMdl, DRAW_STA_WALK_8F );
 		break;
 	default:
-		FLDMMDL_DrawStatusSet( pcActCont->pFldMMdl, DRAW_STA_WALK_4F );
+		FLDMMDL_SetDrawStatus( pcActCont->pFldMMdl, DRAW_STA_WALK_4F );
 		break;
 	}
 #endif
@@ -327,12 +327,12 @@ void PLAYER_GRID_GetFrontGridPos(
 	int dir;
 	FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
 	
-	*gx = FLDMMDL_NowPosGX_Get( fmmdl );
-	*gy = FLDMMDL_NowPosGY_Get( fmmdl );
-	*gz = FLDMMDL_NowPosGZ_Get( fmmdl );
-	dir = FLDMMDL_DirDispGet( fmmdl );
+	*gx = FLDMMDL_GetGridPosX( fmmdl );
+	*gy = FLDMMDL_GetGridPosY( fmmdl );
+	*gz = FLDMMDL_GetGridPosZ( fmmdl );
+	dir = FLDMMDL_GetDirDisp( fmmdl );
 	
-	*gx += FLDMMDL_DirAddValueGX( dir );
-	*gz += FLDMMDL_DirAddValueGZ( dir );
+	*gx += FLDMMDL_TOOL_GetDirAddValueGridX( dir );
+	*gz += FLDMMDL_TOOL_GetDirAddValueGridZ( dir );
 }
 

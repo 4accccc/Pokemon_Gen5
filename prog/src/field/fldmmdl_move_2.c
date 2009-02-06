@@ -1,4 +1,4 @@
-//******************************************************************************
+//======================================================================
 /**
  *
  * @file	fieldobj_move_2.c
@@ -7,12 +7,13 @@
  * @data	05.07.21
  *
  */
-//******************************************************************************
+//======================================================================
 #include "fldmmdl.h"
+#include "fldmmdl_procmove.h"
 
-//==============================================================================
+//======================================================================
 //	define
-//==============================================================================
+//======================================================================
 ///トレーナーペア　親移動停止
 #define PAIR_TR_OYA_STA_BIT_STOP \
 	(FLDMMDL_STABIT_ATTR_GET_ERROR		| \
@@ -42,19 +43,19 @@ typedef enum
 	ALONG_LR,			///<左右
 }ALONG_DIR;
 
-//==============================================================================
-//	typedef
-//==============================================================================
+//======================================================================
+//	struct
+//======================================================================
 //--------------------------------------------------------------
 //	MV_PAIR_WORK構造体
 //--------------------------------------------------------------
 typedef struct
 {
-	u8 seq_no;												///<動作番号
-	u8 jiki_init;											///<自機情報初期化完了
-	s16 jiki_gx;											///<自機グリッド座標X
-	s16 jiki_gz;											///<自機グリッド座標Z
-	u16 jiki_ac;											///<自機アニメーションコード
+	u8 seq_no;				///<動作番号
+	u8 jiki_init;			///<自機情報初期化完了
+	s16 jiki_gx;			///<自機グリッド座標X
+	s16 jiki_gz;			///<自機グリッド座標Z
+	u16 jiki_ac;			///<自機アニメーションコード
 }MV_PAIR_WORK;
 
 #define MV_PAIR_WORK_SIZE (sizeof(MV_PAIR_WORK))
@@ -64,12 +65,12 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-	u8 seq_no;											///<動作番号
-	u8 oya_init;										///<親情報初期化完了
-	s16 oya_gx;											///<親グリッド座標X
-	s16 oya_gz;											///<親グリッド座標Z
-	u16 oya_ac;											///<自機アニメーションコード
-	FLDMMDL * oyaobj;								///<親となるOBJ
+	u8 seq_no;				///<動作番号
+	u8 oya_init;			///<親情報初期化完了
+	s16 oya_gx;				///<親グリッド座標X
+	s16 oya_gz;				///<親グリッド座標Z
+	u16 oya_ac;				///<自機アニメーションコード
+	FLDMMDL * oyaobj;		///<親となるOBJ
 }MV_TR_PAIR_WORK;
 
 #define MV_TR_PAIR_WORK_SIZE (sizeof(MV_TR_PAIR_WORK))
@@ -83,9 +84,9 @@ typedef struct
 	u8 hide_type;
 	u8 pulloff_flag;
 	u8 dmy;
-#if 0
+	#ifndef FLDMMDL_PL_NULL
 	EOA_PTR eoa_hide;
-#endif
+	#endif
 }MV_HIDE_WORK;
 
 #define MV_HIDE_WORK_SIZE (sizeof(MV_HIDE_WORK))
@@ -115,9 +116,9 @@ typedef struct
 
 #define MV_ALONGW_WORK_SIZE (sizeof(MV_ALONGW_WORK))
 
-//==============================================================================
+//======================================================================
 //	プロトタイプ
-//==============================================================================
+//======================================================================
 int (* const DATA_PairMoveTbl[])( FLDMMDL * fmmdl, MV_PAIR_WORK *work );
 
 static int Pair_WorkSetJikiSearch( FLDMMDL * fmmdl, MV_PAIR_WORK *work );
@@ -137,9 +138,9 @@ static int PairTr_OyaCheckAcmdSet( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work );
 
 int (* const DATA_HideMoveTbl[])( FLDMMDL * fmmdl, MV_HIDE_WORK *work );
 
-//==============================================================================
+//======================================================================
 //	MV_PAIR	自機連れ歩き
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_PAIR　初期化
@@ -149,11 +150,11 @@ int (* const DATA_HideMoveTbl[])( FLDMMDL * fmmdl, MV_HIDE_WORK *work );
 //--------------------------------------------------------------
 void FLDMMDL_MovePair_Init( FLDMMDL * fmmdl )
 {
-	MV_PAIR_WORK *work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_PAIR_WORK_SIZE );
+	MV_PAIR_WORK *work = FLDMMDL_InitMoveProcWork( fmmdl, MV_PAIR_WORK_SIZE );
 	Pair_WorkSetJikiSearch( fmmdl, work );
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
-	FLDMMDL_StatusBitSet_FellowHit( fmmdl, FALSE );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_OffStatusBitMove( fmmdl );
+	FLDMMDL_SetStatusBitFellowHit( fmmdl, FALSE );
 }
 
 //--------------------------------------------------------------
@@ -165,13 +166,13 @@ void FLDMMDL_MovePair_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MovePair_Move( FLDMMDL * fmmdl )
 {
-	MV_PAIR_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_PAIR_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	
 	if( Pair_WorkSetJikiSearch(fmmdl,work) == FALSE ){
 		return;
 	}
 	
-	FLDMMDL_StatusBitSet_FellowHit( fmmdl, FALSE );
+	FLDMMDL_SetStatusBitFellowHit( fmmdl, FALSE );
 	
 	while( DATA_PairMoveTbl[work->seq_no](fmmdl,work) == TRUE ){};
 }
@@ -187,9 +188,9 @@ void FLDMMDL_MovePair_Delete( FLDMMDL * fmmdl )
 {
 }
 
-//==============================================================================
+//======================================================================
 //	MV_PAIR 動作
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * Pair 0
@@ -200,14 +201,14 @@ void FLDMMDL_MovePair_Delete( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int PairMove_Init( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 {
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
-	FLDMMDL_StatusBitOFF_MoveEnd( fmmdl );
+	FLDMMDL_OffStatusBitMove( fmmdl );
+	FLDMMDL_OffStatusBitMoveEnd( fmmdl );
 		
 	if( Pair_JikiPosUpdateCheck(fmmdl,work) == TRUE ){
 		Pair_JikiPosSet( fmmdl, work );
 		
 		if( Pair_JikiCheckAcmdSet(fmmdl) == TRUE ){
-			FLDMMDL_StatusBitON_Move( fmmdl );
+			FLDMMDL_OnStatusBitMove( fmmdl );
 			work->seq_no++;
 			return( TRUE );
 		}
@@ -226,8 +227,8 @@ static int PairMove_Init( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 //--------------------------------------------------------------
 static int PairMove_Move( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == TRUE ){
-		FLDMMDL_StatusBitOFF_Move( fmmdl );
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == TRUE ){
+		FLDMMDL_OffStatusBitMove( fmmdl );
 		work->seq_no = 0;
 	}
 	
@@ -243,9 +244,9 @@ static int (* const DATA_PairMoveTbl[])( FLDMMDL * fmmdl, MV_PAIR_WORK *work ) =
 	PairMove_Move,
 };
 
-//==============================================================================
+//======================================================================
 //	MV_PAIR　パーツ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * 自機が存在するかチェック　存在するのであれば情報初期化 
@@ -256,8 +257,8 @@ static int (* const DATA_PairMoveTbl[])( FLDMMDL * fmmdl, MV_PAIR_WORK *work ) =
 //--------------------------------------------------------------
 static int Pair_WorkSetJikiSearch( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 {
-#if 0
-	const FLDMMDLSYS *fos = FLDMMDL_FieldOBJSysGet( fmmdl );
+#ifndef FLDMMDL_PL_NULL
+	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys( fmmdl );
 	FLDMMDL * jikiobj = Player_FieldOBJSearch( fos );
 	
 	if( jikiobj == NULL ){
@@ -285,7 +286,7 @@ static int Pair_WorkSetJikiSearch( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 //--------------------------------------------------------------
 static void Pair_WorkInit( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
 	PLAYER_STATE_PTR jiki = Player_FieldSysWorkPlayerGet( fsys );
 	
@@ -306,7 +307,7 @@ static void Pair_WorkInit( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 //--------------------------------------------------------------
 static int Pair_JikiPosUpdateCheck( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
 	PLAYER_STATE_PTR jiki = Player_FieldSysWorkPlayerGet( fsys );
 	
@@ -332,7 +333,7 @@ static int Pair_JikiPosUpdateCheck( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 //--------------------------------------------------------------
 static void Pair_JikiPosSet( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
 	PLAYER_STATE_PTR jiki = Player_FieldSysWorkPlayerGet( fsys );
 	
@@ -350,7 +351,7 @@ static void Pair_JikiPosSet( FLDMMDL * fmmdl, MV_PAIR_WORK *work )
 //--------------------------------------------------------------
 static u32 Pair_JikiAcmdCodeGet( FLDMMDL * fmmdl )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	u32 code;
 	FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
 	PLAYER_STATE_PTR jiki = Player_FieldSysWorkPlayerGet( fsys );
@@ -378,19 +379,19 @@ static u32 Pair_JikiAcmdCodeGet( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int Pair_JikiCheckAcmdSet( FLDMMDL * fmmdl )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
 	PLAYER_STATE_PTR jiki = Player_FieldSysWorkPlayerGet( fsys );
-	int gx = FLDMMDL_NowPosGX_Get( fmmdl );
-	int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
+	int gx = FLDMMDL_GetGridPosX( fmmdl );
+	int gz = FLDMMDL_GetGridPosZ( fmmdl );
 	int jx = Player_OldGPosXGet( jiki );
 	int jz = Player_OldGPosZGet( jiki );
 	
 	if( gx != jx || gz != jz ){
 		u32 code = Pair_JikiAcmdCodeGet( fmmdl );
-		int dir = FieldOBJTool_DirRange( gx, gz, jx, jz );
-		code = FLDMMDL_AcmdCodeDirChange( dir, code );
-		FLDMMDL_CmdSet( fmmdl, code );
+		int dir = FLDMMDL_TOOL_GetRangeDir( gx, gz, jx, jz );
+		code = FLDMMDL_ChangeDirAcmdCode( dir, code );
+		FLDMMDL_SetLocalAcmd( fmmdl, code );
 		
 		return( TRUE );
 	}
@@ -399,9 +400,9 @@ static int Pair_JikiCheckAcmdSet( FLDMMDL * fmmdl )
 #endif
 }
 
-//==============================================================================
+//======================================================================
 //	MV_TR_PAIR トレーナー連れ歩き
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_TR_PAIR　初期化
@@ -411,12 +412,12 @@ static int Pair_JikiCheckAcmdSet( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MovePairTr_Init( FLDMMDL * fmmdl )
 {
-	MV_TR_PAIR_WORK *work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_TR_PAIR_WORK_SIZE );
+	MV_TR_PAIR_WORK *work = FLDMMDL_InitMoveProcWork( fmmdl, MV_TR_PAIR_WORK_SIZE );
 	PairTr_WorkSetOyaSearch( fmmdl, work );
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_OffStatusBitMove( fmmdl );
 	
-//	FLDMMDL_StatusBitSet_FellowHit( fmmdl, FALSE );
+//	FLDMMDL_SetStatusBitFellowHit( fmmdl, FALSE );
 	work->oya_init = FALSE;
 }
 
@@ -429,13 +430,13 @@ void FLDMMDL_MovePairTr_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MovePairTr_Move( FLDMMDL * fmmdl )
 {
-	MV_TR_PAIR_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_TR_PAIR_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	
 	if( PairTr_WorkSetOyaSearch(fmmdl,work) == FALSE ){
 		return;
 	}
 	
-//	FLDMMDL_StatusBitSet_FellowHit( fmmdl, FALSE );
+//	FLDMMDL_SetStatusBitFellowHit( fmmdl, FALSE );
 	while( DATA_PairTrMoveTbl[work->seq_no](fmmdl,work) == TRUE ){};
 }
 
@@ -459,14 +460,14 @@ void FLDMMDL_MovePairTr_Delete( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MovePairTr_Return( FLDMMDL * fmmdl )
 {
-	MV_TR_PAIR_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_TR_PAIR_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	work->oya_init = 0;
 //	PairTr_WorkSetOyaSearch( fmmdl, work );
 }
 
-//==============================================================================
+//======================================================================
 //	MV_TR_PAIR 動作
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * Pair 0
@@ -477,13 +478,13 @@ void FLDMMDL_MovePairTr_Return( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int PairTrMove_Init( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 {
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
-	FLDMMDL_StatusBitOFF_MoveEnd( fmmdl );
+	FLDMMDL_OffStatusBitMove( fmmdl );
+	FLDMMDL_OffStatusBitMoveEnd( fmmdl );
 		
 	if( PairTr_OyaPosUpdateCheck(fmmdl,work) == TRUE ){
 		if( PairTr_OyaCheckAcmdSet(fmmdl,work) == TRUE ){
 //			PairTr_OyaPosSet( fmmdl, work );
-			FLDMMDL_StatusBitON_Move( fmmdl );
+			FLDMMDL_OnStatusBitMove( fmmdl );
 			work->seq_no++;
 			return( TRUE );
 		}
@@ -502,11 +503,11 @@ static int PairTrMove_Init( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 //--------------------------------------------------------------
 static int PairTrMove_Move( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == FALSE ){
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == FALSE ){
 		return( FALSE );
 	}
 	
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
+	FLDMMDL_OffStatusBitMove( fmmdl );
 	work->seq_no = 0;
 	return( FALSE );
 }
@@ -520,9 +521,9 @@ static int (* const DATA_PairTrMoveTbl[])( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *wor
 	PairTrMove_Move,
 };
 
-//==============================================================================
+//======================================================================
 //	MV_TR_PAIR　パーツ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * 対象がペア動作かどうか。ペア動作であれば相方を探す
@@ -532,12 +533,12 @@ static int (* const DATA_PairTrMoveTbl[])( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *wor
 //--------------------------------------------------------------
 FLDMMDL * FLDMMDL_MovePairSearch( FLDMMDL * fmmdl )
 {
-#if 0
-	int no = 0;
-	int type = FLDMMDL_EventTypeGet( fmmdl );
-	int zone_id = FLDMMDL_ZoneIDGet( fmmdl );
+#ifndef FLDMMDL_PL_NULL
+	u32 no = 0;
+	int type = FLDMMDL_GetEventType( fmmdl );
+	int zone_id = FLDMMDL_GetZoneID( fmmdl );
 	u32 trid = EvTrainerfmmdlTrainerIDGet( fmmdl );
-	const FLDMMDLSYS *fos = FLDMMDL_FieldOBJSysGet( fmmdl );
+	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys( fmmdl );
 	FLDMMDL * pair;
 	
 	switch( type ){
@@ -549,8 +550,8 @@ FLDMMDL * FLDMMDL_MovePairSearch( FLDMMDL * fmmdl )
 	case EV_TYPE_TRAINER_SPIN_STOP_R:
 	case EV_TYPE_TRAINER_SPIN_MOVE_L:
 	case EV_TYPE_TRAINER_SPIN_MOVE_R:
-		while( FLDMMDLSYS_FieldOBJSearch(fos,&pair,&no,FLDMMDL_STABIT_USE) == TRUE ){
-			if( fmmdl != pair && FLDMMDL_ZoneIDGet(pair) == zone_id ){
+		while( FLDMMDLSYS_SearchUseFldMMdl(fos,&pair,&no,FLDMMDL_STABIT_USE) == TRUE ){
+			if( fmmdl != pair && FLDMMDL_GetZoneID(pair) == zone_id ){
 				if( EvTrainerfmmdlTrainerIDGet(pair) == trid ){
 					return( pair );
 				}
@@ -571,19 +572,20 @@ FLDMMDL * FLDMMDL_MovePairSearch( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int PairTr_WorkSetOyaSearch( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 {
-#if 0
-	int no,zone;
-	u32 trid;
-	FLDMMDL * oyaobj;
-	const FLDMMDLSYS *fos = FLDMMDL_FieldOBJSysGet( fmmdl );
+#ifndef FLDMMDL_PL_NULL
+	int zone;
+	u32 trid,no;
+	FLDMMDL *oyaobj;
+	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys( fmmdl );
 	
 	no = 0;
-	zone = FLDMMDL_ZoneIDGet( fmmdl );
+	zone = FLDMMDL_GetZoneID( fmmdl );
 	trid = EvTrainerfmmdlTrainerIDGet( fmmdl );
 	
-	while( FLDMMDLSYS_FieldOBJSearch(fos,&oyaobj,&no,FLDMMDL_STABIT_USE) == TRUE ){
+	while( FLDMMDLSYS_SearchUseFldMMdl(
+		fos,&oyaobj,&no,FLDMMDL_STABIT_USE) == TRUE ){
 		if( fmmdl != oyaobj &&
-			FLDMMDL_ZoneIDGet(oyaobj) == zone &&
+			FLDMMDL_GetZoneID(oyaobj) == zone &&
 			EvTrainerfmmdlTrainerIDGet(oyaobj) == trid ){
 			
 			if( work->oya_init == FALSE ){
@@ -610,8 +612,8 @@ static int PairTr_WorkSetOyaSearch( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 static void PairTr_WorkInit( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work, FLDMMDL * oyaobj )
 {
 	work->oya_init = TRUE;
-	work->oya_gx = FLDMMDL_NowPosGX_Get( oyaobj );
-	work->oya_gz = FLDMMDL_NowPosGZ_Get( oyaobj );
+	work->oya_gx = FLDMMDL_GetGridPosX( oyaobj );
+	work->oya_gz = FLDMMDL_GetGridPosZ( oyaobj );
 	work->oya_ac = ACMD_NOT;
 	work->oyaobj = oyaobj;
 }
@@ -627,14 +629,14 @@ static void PairTr_WorkInit( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work, FLDMMDL * o
 static int PairTr_OyaPosUpdateCheck( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 {
 	FLDMMDL * oyaobj = work->oyaobj;
-	int gx = FLDMMDL_NowPosGX_Get( fmmdl );
-	int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
-	int ngx = FLDMMDL_OldPosGX_Get( oyaobj );
-	int ngz = FLDMMDL_OldPosGZ_Get( oyaobj );
+	int gx = FLDMMDL_GetGridPosX( fmmdl );
+	int gz = FLDMMDL_GetGridPosZ( fmmdl );
+	int ngx = FLDMMDL_GetOldGridPosX( oyaobj );
+	int ngz = FLDMMDL_GetOldGridPosZ( oyaobj );
 	
 	if( (gx != ngx || gz != ngz) &&
-		(FLDMMDL_StatusBitCheck_Move(oyaobj) == TRUE ||
-		FLDMMDL_StatusBit_Check(oyaobj,PAIR_TR_OYA_STA_BIT_STOP) == 0) ){
+		(FLDMMDL_CheckStatusBitMove(oyaobj) == TRUE ||
+		FLDMMDL_CheckStatusBit(oyaobj,PAIR_TR_OYA_STA_BIT_STOP) == 0) ){
 		return( TRUE );
 	}
 	
@@ -645,14 +647,14 @@ static int PairTr_OyaPosUpdateCheck( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 static int PairTr_OyaPosUpdateCheck( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 {
 	FLDMMDL * oyaobj = work->oyaobj;
-	int gx = FLDMMDL_NowPosGX_Get( fmmdl );
-	int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
-	int ngx = FLDMMDL_OldPosGX_Get( oyaobj );
-	int ngz = FLDMMDL_OldPosGZ_Get( oyaobj );
+	int gx = FLDMMDL_GetGridPosX( fmmdl );
+	int gz = FLDMMDL_GetGridPosZ( fmmdl );
+	int ngx = FLDMMDL_GetOldGridPosX( oyaobj );
+	int ngz = FLDMMDL_GetOldGridPosZ( oyaobj );
 	
 	if( (gx != ngx || gz != ngz) &&
-		FLDMMDL_StatusBit_CheckEasy(oyaobj,FLDMMDL_STABIT_ATTR_GET_ERROR) == FALSE &&
-		FLDMMDL_StatusBit_CheckEasy(oyaobj,FLDMMDL_STABIT_PAUSE_MOVE) == FALSE ){
+		FLDMMDL_CheckStatusBit(oyaobj,FLDMMDL_STABIT_ATTR_GET_ERROR) == 0 &&
+		FLDMMDL_CheckStatusBit(oyaobj,FLDMMDL_STABIT_PAUSE_MOVE) == 0 ){
 		return( TRUE );
 	}
 	
@@ -664,12 +666,12 @@ static int PairTr_OyaPosUpdateCheck( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 static int PairTr_OyaPosUpdateCheck( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 {
 	FLDMMDL * oyaobj = work->oyaobj;
-	int gx = FLDMMDL_NowPosGX_Get( oyaobj );
-	int gz = FLDMMDL_NowPosGZ_Get( oyaobj );
+	int gx = FLDMMDL_GetGridPosX( oyaobj );
+	int gz = FLDMMDL_GetGridPosZ( oyaobj );
 	
 	if( (gx != work->oya_gx || gz != work->oya_gz) &&
-		FLDMMDL_StatusBit_CheckEasy(oyaobj,FLDMMDL_STABIT_ATTR_GET_ERROR) == FALSE &&
-		FLDMMDL_StatusBit_CheckEasy(oyaobj,FLDMMDL_STABIT_PAUSE_MOVE) == FALSE ){
+		FLDMMDL_CheckStatusBit(oyaobj,FLDMMDL_STABIT_ATTR_GET_ERROR) == 0 &&
+		FLDMMDL_CheckStatusBit(oyaobj,FLDMMDL_STABIT_PAUSE_MOVE) == 0 ){
 		return( TRUE );
 	}
 	
@@ -687,8 +689,8 @@ static int PairTr_OyaPosUpdateCheck( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 //--------------------------------------------------------------
 static void PairTr_OyaPosSet( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 {
-	work->oya_gx = FLDMMDL_NowPosGX_Get( work->oyaobj );
-	work->oya_gz = FLDMMDL_NowPosGZ_Get( work->oyaobj );
+	work->oya_gx = FLDMMDL_GetGridPosX( work->oyaobj );
+	work->oya_gz = FLDMMDL_GetGridPosZ( work->oyaobj );
 }
 
 //--------------------------------------------------------------
@@ -700,26 +702,26 @@ static void PairTr_OyaPosSet( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 //--------------------------------------------------------------
 static int PairTr_OyaCheckAcmdSet( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 {
-	int gx = FLDMMDL_NowPosGX_Get( fmmdl );
-	int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
-	int ngx = FLDMMDL_NowPosGX_Get( work->oyaobj );
-	int ngz = FLDMMDL_NowPosGZ_Get( work->oyaobj );
-	int ogx = FLDMMDL_OldPosGX_Get( work->oyaobj );
-	int ogz = FLDMMDL_OldPosGZ_Get( work->oyaobj );
+	int gx = FLDMMDL_GetGridPosX( fmmdl );
+	int gz = FLDMMDL_GetGridPosZ( fmmdl );
+	int ngx = FLDMMDL_GetGridPosX( work->oyaobj );
+	int ngz = FLDMMDL_GetGridPosZ( work->oyaobj );
+	int ogx = FLDMMDL_GetOldGridPosX( work->oyaobj );
+	int ogz = FLDMMDL_GetOldGridPosZ( work->oyaobj );
 	int dir;
 	
 	if( gx == ngx && gz == ngz ){
 		return( FALSE );
 	}
 	
-	dir = FieldOBJTool_DirRange( gx, gz, ogx, ogz );
-	gx += FLDMMDL_DirAddValueGX( dir );
-	gz += FLDMMDL_DirAddValueGZ( dir );
+	dir = FLDMMDL_TOOL_GetRangeDir( gx, gz, ogx, ogz );
+	gx += FLDMMDL_TOOL_GetDirAddValueGridX( dir );
+	gz += FLDMMDL_TOOL_GetDirAddValueGridZ( dir );
 		
 	if( gx != ngx || gz != ngz ){
 		u32 code = AC_WALK_U_8F;
-		code = FLDMMDL_AcmdCodeDirChange( dir, code );
-		FLDMMDL_CmdSet( fmmdl, code );
+		code = FLDMMDL_ChangeDirAcmdCode( dir, code );
+		FLDMMDL_SetLocalAcmd( fmmdl, code );
 		return( TRUE );
 	}
 	
@@ -729,12 +731,12 @@ static int PairTr_OyaCheckAcmdSet( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 #if 0
 static int PairTr_OyaCheckAcmdSet( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 {
-	int gx = FLDMMDL_NowPosGX_Get( fmmdl );
-	int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
-	int ngx = FLDMMDL_NowPosGX_Get( work->oyaobj );
-	int ngz = FLDMMDL_NowPosGZ_Get( work->oyaobj );
-	int ogx = FLDMMDL_OldPosGX_Get( work->oyaobj );
-	int ogz = FLDMMDL_OldPosGZ_Get( work->oyaobj );
+	int gx = FLDMMDL_GetGridPosX( fmmdl );
+	int gz = FLDMMDL_GetGridPosZ( fmmdl );
+	int ngx = FLDMMDL_GetGridPosX( work->oyaobj );
+	int ngz = FLDMMDL_GetGridPosZ( work->oyaobj );
+	int ogx = FLDMMDL_GetOldGridPosX( work->oyaobj );
+	int ogz = FLDMMDL_GetOldGridPosZ( work->oyaobj );
 	int sx,sz;
 	
 	if( gx == ngx && gz == ngz ){
@@ -747,14 +749,14 @@ static int PairTr_OyaCheckAcmdSet( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 	if( sz < 0 ){ sz = -sz; }
 	
 	if( sx || sz ){
-		int dir = FieldOBJTool_DirRange( gx, gz, ogx, ogz );
-		gx += FLDMMDL_DirAddValueGX( dir );
-		gz += FLDMMDL_DirAddValueGZ( dir );
+		int dir = FLDMMDL_TOOL_GetRangeDir( gx, gz, ogx, ogz );
+		gx += FLDMMDL_TOOL_GetDirAddValueGridX( dir );
+		gz += FLDMMDL_TOOL_GetDirAddValueGridZ( dir );
 		
 		if( gx != ngx && gz != ngz ){
 			u32 code = AC_WALK_U_8F;
-			code = FLDMMDL_AcmdCodeDirChange( dir, code );
-			FLDMMDL_CmdSet( fmmdl, code );
+			code = FLDMMDL_ChangeDirAcmdCode( dir, code );
+			FLDMMDL_SetLocalAcmd( fmmdl, code );
 			return( TRUE );
 		}
 	}
@@ -763,9 +765,9 @@ static int PairTr_OyaCheckAcmdSet( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
 }
 #endif
 
-//==============================================================================
+//======================================================================
 //	MV_HIDE_SNOW　隠れ蓑　雪
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_HIDE 初期化
@@ -774,18 +776,18 @@ static int PairTr_OyaCheckAcmdSet( FLDMMDL * fmmdl, MV_TR_PAIR_WORK *work )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-#if 0
-static void fmmdl_MoveHide_Init( FLDMMDL * fmmdl, HIDETYPE type )
+#ifndef FLDMMDL_PL_NULL
+static void FldMMdl_MoveHide_Init( FLDMMDL * fmmdl, HIDETYPE type )
 {
-	MV_HIDE_WORK *work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_HIDE_WORK_SIZE );
+	MV_HIDE_WORK *work = FLDMMDL_InitMoveProcWork( fmmdl, MV_HIDE_WORK_SIZE );
 	work->hide_type = type;
-	FLDMMDL_DrawStatusSet( fmmdl, DRAW_STA_STOP );
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
-	FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
+	FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+	FLDMMDL_OffStatusBitMove( fmmdl );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
 	
 	{															//高さ落とす
 		VecFx32 offs = { 0, NUM_FX32(-32), 0 };
-		FLDMMDL_VecDrawOffsSet( fmmdl, &offs );
+		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 	}
 }
 #endif
@@ -799,8 +801,8 @@ static void fmmdl_MoveHide_Init( FLDMMDL * fmmdl, HIDETYPE type )
 //--------------------------------------------------------------
 void FLDMMDL_MoveHideSnow_Init( FLDMMDL * fmmdl )
 {
-#if 0
-	fmmdl_MoveHide_Init( fmmdl, HIDE_SNOW );
+#ifndef FLDMMDL_PL_NULL
+	FldMMdl_MoveHide_Init( fmmdl, HIDE_SNOW );
 #endif
 }
 
@@ -813,8 +815,8 @@ void FLDMMDL_MoveHideSnow_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveHideSand_Init( FLDMMDL * fmmdl )
 {
-#if 0
-	fmmdl_MoveHide_Init( fmmdl, HIDE_SAND );
+#ifndef FLDMMDL_PL_NULL
+	FldMMdl_MoveHide_Init( fmmdl, HIDE_SAND );
 #endif
 }
 
@@ -827,8 +829,8 @@ void FLDMMDL_MoveHideSand_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveHideGround_Init( FLDMMDL * fmmdl )
 {
-#if 0
-	fmmdl_MoveHide_Init( fmmdl, HIDE_GROUND );
+#ifndef FLDMMDL_PL_NULL
+	FldMMdl_MoveHide_Init( fmmdl, HIDE_GROUND );
 #endif
 }
 
@@ -841,8 +843,8 @@ void FLDMMDL_MoveHideGround_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveHideKusa_Init( FLDMMDL * fmmdl )
 {
-#if 0
-	fmmdl_MoveHide_Init( fmmdl, HIDE_GRASS );
+#ifndef FLDMMDL_PL_NULL
+	FldMMdl_MoveHide_Init( fmmdl, HIDE_GRASS );
 #endif
 }
 
@@ -855,7 +857,7 @@ void FLDMMDL_MoveHideKusa_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveHide_Move( FLDMMDL * fmmdl )
 {
-	MV_HIDE_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_HIDE_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	while( DATA_HideMoveTbl[work->seq_no](fmmdl,work) == TRUE ){};
 }
 
@@ -868,7 +870,7 @@ void FLDMMDL_MoveHide_Move( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveHide_Delete( FLDMMDL * fmmdl )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	EOA_PTR eoa = FLDMMDL_MoveHideEoaPtrGet( fmmdl );
 	if( eoa != NULL ){ FE_EoaDelete( eoa ); }
 #endif
@@ -883,8 +885,8 @@ void FLDMMDL_MoveHide_Delete( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveHide_Return( FLDMMDL * fmmdl )
 {
-#if 0
-	MV_HIDE_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+#ifndef FLDMMDL_PL_NULL
+	MV_HIDE_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	
 	work->seq_no = 0;
 	
@@ -892,16 +894,16 @@ void FLDMMDL_MoveHide_Return( FLDMMDL * fmmdl )
 	
 	if( work->pulloff_flag == FALSE ){
 		VecFx32 offs = { 0, NUM_FX32(-32), 0 };
-		FLDMMDL_VecDrawOffsSet( fmmdl, &offs );
+		FLDMMDL_SetVectorDrawOffsetPos( fmmdl, &offs );
 		//add pl 
-		FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
+		FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
 	}
 #endif
 }
 
-//==============================================================================
+//======================================================================
 //	MV_HIDE 動作
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * hide 0
@@ -912,14 +914,14 @@ void FLDMMDL_MoveHide_Return( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int HideMove_Init( FLDMMDL * fmmdl, MV_HIDE_WORK *work )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	if( work->pulloff_flag == FALSE ){
 		EOA_PTR eoa = FE_fmmdlHide_Add( fmmdl, work->hide_type );
 		FLDMMDL_MoveHideEoaPtrSet( fmmdl, eoa );
 	}
 	
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
-	FLDMMDL_StatusBitOFF_MoveEnd( fmmdl );
+	FLDMMDL_OffStatusBitMove( fmmdl );
+	FLDMMDL_OffStatusBitMoveEnd( fmmdl );
 	
 	work->seq_no++;
 #endif
@@ -936,22 +938,21 @@ static int HideMove_Init( FLDMMDL * fmmdl, MV_HIDE_WORK *work )
 //--------------------------------------------------------------
 static int HideMove_Move( FLDMMDL * fmmdl, MV_HIDE_WORK *work )
 {
+#ifndef FLDMMDL_PL_NULL
 	if( work->pulloff_flag == FALSE ){
-#if 0
 		EOA_PTR eoa = FLDMMDL_MoveHideEoaPtrGet( fmmdl );
 	
 		if( eoa == NULL ){ 
-			if( FLDMMDL_StatusBit_DrawInitCompCheck(fmmdl) == TRUE ){
+			if( FLDMMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
 				eoa = FE_fmmdlHide_Add( fmmdl, work->hide_type );
 				FLDMMDL_MoveHideEoaPtrSet( fmmdl, eoa );
 			}
 		}
 		
 		//add pl 常に影を消す
-		FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
-#endif
+		FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
 	}
-	
+#endif
 	return( FALSE );
 }
 
@@ -964,9 +965,9 @@ static int (* const DATA_HideMoveTbl[])( FLDMMDL * fmmdl, MV_HIDE_WORK *work ) =
 	HideMove_Move,
 };
 
-//==============================================================================
+//======================================================================
 //	MV_HIDE パーツ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * MV_HIDE 隠れ蓑EOA_PTRセット
@@ -975,12 +976,13 @@ static int (* const DATA_HideMoveTbl[])( FLDMMDL * fmmdl, MV_HIDE_WORK *work ) =
  * @retval	nothing
  */
 //--------------------------------------------------------------
-#if 0
+#ifndef FLDMMDL_PL_NULL
 void FLDMMDL_MoveHideEoaPtrSet( FLDMMDL * fmmdl, EOA_PTR eoa )
 {
-	MV_HIDE_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_HIDE_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	work->eoa_hide = eoa;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -990,9 +992,10 @@ void FLDMMDL_MoveHideEoaPtrSet( FLDMMDL * fmmdl, EOA_PTR eoa )
  * @retval	nothing
  */
 //--------------------------------------------------------------
+#ifndef FLDMMDL_PL_NULL
 EOA_PTR FLDMMDL_MoveHideEoaPtrGet( FLDMMDL * fmmdl )
 {
-	MV_HIDE_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_HIDE_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	return( work->eoa_hide );
 }
 #endif
@@ -1006,13 +1009,13 @@ EOA_PTR FLDMMDL_MoveHideEoaPtrGet( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveHidePullOffFlagSet( FLDMMDL * fmmdl )
 {
-	MV_HIDE_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_HIDE_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	work->pulloff_flag = TRUE;
 }
 
-//==============================================================================
+//======================================================================
 //	MV_COPYU
-//==============================================================================
+//======================================================================
 static int (* const DATA_CopyMoveTbl[SEQNO_COPYMOVE_MAX])( FLDMMDL *, MV_COPY_WORK * );
 
 //--------------------------------------------------------------
@@ -1026,10 +1029,10 @@ static int (* const DATA_CopyMoveTbl[SEQNO_COPYMOVE_MAX])( FLDMMDL *, MV_COPY_WO
 //--------------------------------------------------------------
 static void MoveCopy_WorkInit( FLDMMDL * fmmdl, int dir, u32 lgrass )
 {
-	MV_COPY_WORK *work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_COPY_WORK_SIZE );
+	MV_COPY_WORK *work = FLDMMDL_InitMoveProcWork( fmmdl, MV_COPY_WORK_SIZE );
 	work->dir_jiki = DIR_NOT;
 	work->lgrass_on = lgrass;
-	FLDMMDL_DirDispCheckSet( fmmdl, DIR_UP );
+	FLDMMDL_SetDirDisp( fmmdl, DIR_UP );
 }
 
 //--------------------------------------------------------------
@@ -1137,7 +1140,7 @@ void FLDMMDL_MoveCopyLGrassR_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_MoveCopy_Move( FLDMMDL * fmmdl )
 {
-	MV_COPY_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_COPY_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	while( DATA_CopyMoveTbl[work->seq_no](fmmdl,work) == TRUE ){};
 }
 
@@ -1151,11 +1154,11 @@ void FLDMMDL_MoveCopy_Move( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int CopyMove_FirstInit( FLDMMDL * fmmdl, MV_COPY_WORK *work )
 {
-	int ret = FLDMMDL_DirDispGet( fmmdl );
-	ret = FLDMMDL_AcmdCodeDirChange( ret, AC_DIR_U );
-	FLDMMDL_CmdSet( fmmdl, ret );
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
-	FLDMMDL_StatusBitOFF_MoveEnd( fmmdl );
+	int ret = FLDMMDL_GetDirDisp( fmmdl );
+	ret = FLDMMDL_ChangeDirAcmdCode( ret, AC_DIR_U );
+	FLDMMDL_SetLocalAcmd( fmmdl, ret );
+	FLDMMDL_OffStatusBitMove( fmmdl );
+	FLDMMDL_OffStatusBitMoveEnd( fmmdl );
 	work->seq_no = SEQNO_COPYMOVE_FIRST_WAIT;
 	return( TRUE );
 }
@@ -1170,7 +1173,7 @@ static int CopyMove_FirstInit( FLDMMDL * fmmdl, MV_COPY_WORK *work )
 //--------------------------------------------------------------
 static int CopyMove_FirstWait( FLDMMDL * fmmdl, MV_COPY_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == TRUE ){
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == TRUE ){
 		work->seq_no = SEQNO_COPYMOVE_INIT;
 		return( TRUE );
 	}
@@ -1188,14 +1191,14 @@ static int CopyMove_FirstWait( FLDMMDL * fmmdl, MV_COPY_WORK *work )
 //--------------------------------------------------------------
 static int CopyMove_Init( FLDMMDL * fmmdl, MV_COPY_WORK *work )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	if( work->dir_jiki == DIR_NOT ){
 		FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
 		work->dir_jiki = Player_DirGet( fsys->player );
 	}
 	
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
-	FLDMMDL_StatusBitOFF_MoveEnd( fmmdl );
+	FLDMMDL_OffStatusBitMove( fmmdl );
+	FLDMMDL_OffStatusBitMoveEnd( fmmdl );
 	work->seq_no = SEQNO_COPYMOVE_CMD_SET;
 #endif
 	return( TRUE );
@@ -1211,14 +1214,14 @@ static int CopyMove_Init( FLDMMDL * fmmdl, MV_COPY_WORK *work )
 //--------------------------------------------------------------
 static u32 CopyMove_LongGrassHitCheck( FLDMMDL * fmmdl, int dir )
 {
-#if 0
-	u32 ret = FLDMMDL_NextDirAttrGet( fmmdl, dir );
+#ifndef FLDMMDL_PL_NULL
+	u32 ret = FLDMMDL_GetMapDirAttr( fmmdl, dir );
 	
 	if( MATR_IsLongGrass(ret) == FALSE ){
-		ret = FLDMMDL_MOVE_HIT_BIT_ATTR;
+		ret = FLDMMDL_MOVEHITBIT_ATTR;
 	}
 	
-	ret |= FLDMMDL_MoveHitCheckDir( fmmdl, dir );
+	ret |= FLDMMDL_HitCheckMoveDir( fmmdl, dir );
 	return( ret );
 #else
 	return( 0 );
@@ -1232,24 +1235,25 @@ static u32 CopyMove_LongGrassHitCheck( FLDMMDL * fmmdl, int dir )
  * @retval
  */
 //--------------------------------------------------------------
-static void CopyMove_MoveSet( FLDMMDL * fmmdl, int dir, int ac, u32 lgrass_on )
+static void CopyMove_MoveSet(
+	FLDMMDL * fmmdl, int dir, int ac, u32 lgrass_on )
 {
 	u32 ret;
 	
 	if( lgrass_on == FALSE ){
-		ret = FLDMMDL_MoveHitCheckDir( fmmdl, dir );
+		ret = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
 	}else{
 		ret = CopyMove_LongGrassHitCheck( fmmdl, dir );
 	}
 	
-	if( ret != FLDMMDL_MOVE_HIT_BIT_NON ){
-		ac = FLDMMDL_AcmdCodeDirChange( dir, AC_DIR_U );
+	if( ret != FLDMMDL_MOVEHITBIT_NON ){
+		ac = FLDMMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
 	}else{
-		ac = FLDMMDL_AcmdCodeDirChange( dir, ac );
-		FLDMMDL_StatusBitON_Move( fmmdl );
+		ac = FLDMMDL_ChangeDirAcmdCode( dir, ac );
+		FLDMMDL_OnStatusBitMove( fmmdl );
 	}
 	
-	FLDMMDL_CmdSet( fmmdl, ac );
+	FLDMMDL_SetLocalAcmd( fmmdl, ac );
 }
 
 //--------------------------------------------------------------
@@ -1262,7 +1266,7 @@ static void CopyMove_MoveSet( FLDMMDL * fmmdl, int dir, int ac, u32 lgrass_on )
 //--------------------------------------------------------------
 static int CopyMove_CmdSet( FLDMMDL * fmmdl, MV_COPY_WORK *work )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	int ret;
 	FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
 	int dir = Player_DirGet( fsys->player );
@@ -1271,8 +1275,8 @@ static int CopyMove_CmdSet( FLDMMDL * fmmdl, MV_COPY_WORK *work )
 	switch( type ){
 	case HEROACTYPE_NON:
 	case HEROACTYPE_STOP:
-		ret = FLDMMDL_AcmdCodeDirChange( dir, AC_DIR_U );
-		FLDMMDL_CmdSet( fmmdl, ret );
+		ret = FLDMMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
+		FLDMMDL_SetLocalAcmd( fmmdl, ret );
 		break;
 	case HEROACTYPE_WALK_32F:
 		CopyMove_MoveSet( fmmdl, dir, AC_WALK_U_32F, work->lgrass_on );
@@ -1305,12 +1309,12 @@ static int CopyMove_CmdSet( FLDMMDL * fmmdl, MV_COPY_WORK *work )
 //--------------------------------------------------------------
 static int CopyMove_MoveWait( FLDMMDL * fmmdl, MV_COPY_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == FALSE ){
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == FALSE ){
 		return( FALSE );
 	}
 	
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
-	FLDMMDL_StatusBitOFF_MoveEnd( fmmdl );
+	FLDMMDL_OffStatusBitMove( fmmdl );
+	FLDMMDL_OffStatusBitMoveEnd( fmmdl );
 	work->seq_no = SEQNO_COPYMOVE_INIT;
 	return( FALSE );
 }
@@ -1327,11 +1331,11 @@ static int (* const DATA_CopyMoveTbl[SEQNO_COPYMOVE_MAX])( FLDMMDL *, MV_COPY_WO
 	CopyMove_MoveWait,
 };
 
-//==============================================================================
+//======================================================================
 //	壁沿い移動
-//==============================================================================
-static int AlongWall_WallMove( FLDMMDL * fmmdl, MV_ALONGW_WORK *work, int ac );
-static int (* const DATA_AlongMoveTbl[3])( FLDMMDL *, MV_ALONGW_WORK * );
+//======================================================================
+static int AlongWall_WallMove(FLDMMDL * fmmdl,MV_ALONGW_WORK *work,int ac);
+static int (* const DATA_AlongMoveTbl[3])(FLDMMDL *, MV_ALONGW_WORK *);
 
 //--------------------------------------------------------------
 /**
@@ -1344,7 +1348,8 @@ static int (* const DATA_AlongMoveTbl[3])( FLDMMDL *, MV_ALONGW_WORK * );
 //--------------------------------------------------------------
 static void AlongWallWorkInit( FLDMMDL * fmmdl, ALONG_DIR dir_h_init, ALONG_DIR dir_h )
 {
-	MV_ALONGW_WORK *work = FLDMMDL_MoveProcWorkInit( fmmdl, MV_ALONGW_WORK_SIZE );
+	MV_ALONGW_WORK *work;
+	work = FLDMMDL_InitMoveProcWork( fmmdl, MV_ALONGW_WORK_SIZE );
 	work->dir_hand_init = dir_h_init;
 	work->dir_hand = dir_h;
 }
@@ -1406,7 +1411,7 @@ void FLDMMDL_AlongWallLRR_Init( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_AlongWall_Move( FLDMMDL * fmmdl )
 {
-	MV_ALONGW_WORK *work = FLDMMDL_MoveProcWorkGet( fmmdl );
+	MV_ALONGW_WORK *work = FLDMMDL_GetMoveProcWork( fmmdl );
 	while( DATA_AlongMoveTbl[work->seq_no](fmmdl,work) == TRUE ){};
 }
 
@@ -1420,7 +1425,7 @@ void FLDMMDL_AlongWall_Move( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AlongWallMove_Init( FLDMMDL * fmmdl, MV_ALONGW_WORK *work )
 {
-	FLDMMDL_StatusBitOFF_Move( fmmdl );
+	FLDMMDL_OffStatusBitMove( fmmdl );
 	work->seq_no++;
 	return( TRUE );
 }
@@ -1450,7 +1455,7 @@ static int AlongWallMove_CmdSet( FLDMMDL * fmmdl, MV_ALONGW_WORK *work )
 //--------------------------------------------------------------
 static int AlongWallMove_CmdWait( FLDMMDL * fmmdl, MV_ALONGW_WORK *work )
 {
-	if( FLDMMDL_CmdAction(fmmdl) == TRUE ){
+	if( FLDMMDL_ActionLocalAcmd(fmmdl) == TRUE ){
 		work->seq_no = 0;
 		return( TRUE );
 	}
@@ -1545,18 +1550,15 @@ static const ALONG_DIR DATA_DirHandFlip[ALONG_LR] =
  * @retval	BOOL	TRUE=壁あり
  */
 //--------------------------------------------------------------
-#if 0
-static BOOL AlongWall_HandHitGet( FIELDSYS_WORK *fsys, int gx, int gz, int dir, ALONG_DIR hdir )
+#ifndef FLDMMDL_PL_NULL
+static BOOL AlongWall_HandHitGet(
+	FIELDSYS_WORK *fsys, int gx, int gz, int dir, ALONG_DIR hdir )
 {
-#if 0
 	BOOL hit;
 	gx += DATA_DirHandPosX[dir][hdir];
 	gz += DATA_DirHandPosZ[dir][hdir];
 	hit = GetHitAttr( fsys, gx, gz );
 	return( hit );
-#else
-	return( FALSE );
-#endif
 }
 #endif
 
@@ -1571,7 +1573,7 @@ static BOOL AlongWall_HandHitGet( FIELDSYS_WORK *fsys, int gx, int gz, int dir, 
  * @retval	BOOL	TRUE=壁あり
  */
 //--------------------------------------------------------------
-#if 0
+#ifndef FLDMMDL_PL_NULL
 static BOOL AlongWall_HandLostHitGet(
 		FIELDSYS_WORK *fsys, int gx, int gz, int dir, ALONG_DIR hdir )
 {
@@ -1591,12 +1593,13 @@ static BOOL AlongWall_HandLostHitGet(
  * @retval	int		TRUE=壁アリ
  */
 //--------------------------------------------------------------
-static int AlongWall_HandWallCheck( FLDMMDL * fmmdl, int dir, ALONG_DIR dir_hand )
+static int AlongWall_HandWallCheck(
+	FLDMMDL * fmmdl, int dir, ALONG_DIR dir_hand )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
-	int gx = FLDMMDL_NowPosGX_Get( fmmdl );
-	int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
+	int gx = FLDMMDL_GetGridPosX( fmmdl );
+	int gz = FLDMMDL_GetGridPosZ( fmmdl );
 	BOOL hit = AlongWall_HandHitGet( fsys, gx, gz, dir, dir_hand );
 	return( hit );
 #else
@@ -1612,12 +1615,13 @@ static int AlongWall_HandWallCheck( FLDMMDL * fmmdl, int dir, ALONG_DIR dir_hand
  * @retval	int		TRUE=壁アリ
  */
 //--------------------------------------------------------------
-static int AlongWall_HandLostWallCheck( FLDMMDL * fmmdl, int dir, ALONG_DIR dir_hand )
+static int AlongWall_HandLostWallCheck(
+	FLDMMDL * fmmdl, int dir, ALONG_DIR dir_hand )
 {
-#if 0
+#ifndef FLDMMDL_PL_NULL
 	FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
-	int gx = FLDMMDL_NowPosGX_Get( fmmdl );
-	int gz = FLDMMDL_NowPosGZ_Get( fmmdl );
+	int gx = FLDMMDL_GetGridPosX( fmmdl );
+	int gz = FLDMMDL_GetGridPosZ( fmmdl );
 	BOOL hit = AlongWall_HandLostHitGet( fsys, gx, gz, dir, dir_hand );
 	return( hit );
 #else
@@ -1633,15 +1637,18 @@ static int AlongWall_HandLostWallCheck( FLDMMDL * fmmdl, int dir, ALONG_DIR dir_
  * @retval	int		移動するべき方向
  */
 //--------------------------------------------------------------
-static int AlongWall_MoveHitCheck( FLDMMDL * fmmdl, int dir_move, ALONG_DIR dir_hand )
+static int AlongWall_MoveHitCheck(
+	FLDMMDL * fmmdl, int dir_move, ALONG_DIR dir_hand )
 {
-#if 0
-	if( AlongWall_HandWallCheck(fmmdl,dir_move,dir_hand) == FALSE ){	//壁が無い
+#ifndef FLDMMDL_PL_NULL
+	if( AlongWall_HandWallCheck(
+		fmmdl,dir_move,dir_hand) == FALSE ){	//壁が無い
 		if( AlongWall_HandLostWallCheck(fmmdl,dir_move,dir_hand) == FALSE ){
-			return( DIR_NOT );									//手探りでも壁が無い
+			return( DIR_NOT );					//手探りでも壁が無い
 		}
 		
-		dir_move = DATA_DirHandLostDir[dir_move][dir_hand];		//壁発見 方向切り替え
+		//壁発見 方向切り替え
+		dir_move = DATA_DirHandLostDir[dir_move][dir_hand];
 	}
 	
 	return( dir_move );
@@ -1659,14 +1666,15 @@ static int AlongWall_MoveHitCheck( FLDMMDL * fmmdl, int dir_move, ALONG_DIR dir_
  * @retval	u32		ヒットビット
  */
 //--------------------------------------------------------------
-static u32 AlongWall_WallMoveCheck( FLDMMDL * fmmdl, int *dir_move, ALONG_DIR dir_hand )
+static u32 AlongWall_WallMoveCheck(
+	FLDMMDL * fmmdl, int *dir_move, ALONG_DIR dir_hand )
 {
 	u32 ret;
 	
 	*dir_move = AlongWall_MoveHitCheck( fmmdl, *dir_move, dir_hand );
 	
 	if( *dir_move != DIR_NOT ){
-		ret = FLDMMDL_MoveHitCheckDir( fmmdl, *dir_move );
+		ret = FLDMMDL_HitCheckMoveDir( fmmdl, *dir_move );
 		return( ret );
 	}
 	
@@ -1681,76 +1689,76 @@ static u32 AlongWall_WallMoveCheck( FLDMMDL * fmmdl, int *dir_move, ALONG_DIR di
  * @retval	int		TRUE=移動した
  */
 //--------------------------------------------------------------
-static int AlongWall_WallMove( FLDMMDL * fmmdl, MV_ALONGW_WORK *work, int ac )
+static int AlongWall_WallMove(
+	FLDMMDL * fmmdl, MV_ALONGW_WORK *work, int ac )
 {
 	u32 ret;
 	int dir_hand = work->dir_hand;
-	int dir_move = FLDMMDL_DirDispGet( fmmdl );
+	int dir_move = FLDMMDL_GetDirDisp( fmmdl );
 	
 	ret = AlongWall_WallMoveCheck( fmmdl, &dir_move, dir_hand );
 	
 	if( dir_move == DIR_NOT ){					//壁がない
-		dir_move = FLDMMDL_DirDispGet( fmmdl );
-		ac = FLDMMDL_AcmdCodeDirChange( dir_move, AC_STAY_WALK_U_16F );
-		FLDMMDL_CmdSet( fmmdl, ac );
+		dir_move = FLDMMDL_GetDirDisp( fmmdl );
+		ac = FLDMMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
+		FLDMMDL_SetLocalAcmd( fmmdl, ac );
 		return( FALSE );
 	}
 	
-	if( ret == FLDMMDL_MOVE_HIT_BIT_NON ){		//移動可能
-		ac = FLDMMDL_AcmdCodeDirChange( dir_move, ac );
-		FLDMMDL_StatusBitON_Move( fmmdl );
-		FLDMMDL_CmdSet( fmmdl, ac );
+	if( ret == FLDMMDL_MOVEHITBIT_NON ){		//移動可能
+		ac = FLDMMDL_ChangeDirAcmdCode( dir_move, ac );
+		FLDMMDL_OnStatusBitMove( fmmdl );
+		FLDMMDL_SetLocalAcmd( fmmdl, ac );
 		return( TRUE );
 	}
 	
 	//移動制限ヒット&両手利き　反転を試みる
-	if( (ret & FLDMMDL_MOVE_HIT_BIT_LIM) && work->dir_hand_init == ALONG_LR ){
-		dir_move = FieldOBJTool_DirFlip( FLDMMDL_DirDispGet(fmmdl) );
+	if( (ret & FLDMMDL_MOVEHITBIT_LIM) && work->dir_hand_init == ALONG_LR ){
+		dir_move = FLDMMDL_TOOL_FlipDir( FLDMMDL_GetDirDisp(fmmdl) );
 		dir_hand = DATA_DirHandFlip[dir_hand];
 		work->dir_hand = dir_hand;
 		
 		ret = AlongWall_WallMoveCheck( fmmdl, &dir_move, dir_hand );
 		
 		if( dir_move == DIR_NOT ){					//壁がない
-			dir_move = FLDMMDL_DirDispGet( fmmdl );
-			ac = FLDMMDL_AcmdCodeDirChange( dir_move, AC_STAY_WALK_U_16F );
-			FLDMMDL_CmdSet( fmmdl, ac );
+			dir_move = FLDMMDL_GetDirDisp( fmmdl );
+			ac = FLDMMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
+			FLDMMDL_SetLocalAcmd( fmmdl, ac );
 			return( FALSE );
 		}
 		
-		if( ret == FLDMMDL_MOVE_HIT_BIT_NON ){		//移動可能
-			ac = FLDMMDL_AcmdCodeDirChange( dir_move, ac );
-			FLDMMDL_StatusBitON_Move( fmmdl );
-			FLDMMDL_CmdSet( fmmdl, ac );
+		if( ret == FLDMMDL_MOVEHITBIT_NON ){		//移動可能
+			ac = FLDMMDL_ChangeDirAcmdCode( dir_move, ac );
+			FLDMMDL_OnStatusBitMove( fmmdl );
+			FLDMMDL_SetLocalAcmd( fmmdl, ac );
 			return( TRUE );
 		}
 	}
 	
 	//壁ヒット　移動方向変更
-	if( (ret & FLDMMDL_MOVE_HIT_BIT_ATTR) ){
+	if( (ret & FLDMMDL_MOVEHITBIT_ATTR) ){
 		dir_move = DATA_DirHandAttrHitDir[dir_move][dir_hand];
 		
 		ret = AlongWall_WallMoveCheck( fmmdl, &dir_move, dir_hand );
 		
 		if( dir_move == DIR_NOT ){					//壁が無い
-			dir_move = FLDMMDL_DirDispGet( fmmdl );
-			ac = FLDMMDL_AcmdCodeDirChange( dir_move, AC_STAY_WALK_U_16F );
-			FLDMMDL_CmdSet( fmmdl, ac );
+			dir_move = FLDMMDL_GetDirDisp( fmmdl );
+			ac = FLDMMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
+			FLDMMDL_SetLocalAcmd( fmmdl, ac );
 			return( FALSE );
 		}
 		
-		if( ret == FLDMMDL_MOVE_HIT_BIT_NON ){		//移動可能
-			ac = FLDMMDL_AcmdCodeDirChange( dir_move, ac );
-			FLDMMDL_StatusBitON_Move( fmmdl );
-			FLDMMDL_CmdSet( fmmdl, ac );
+		if( ret == FLDMMDL_MOVEHITBIT_NON ){		//移動可能
+			ac = FLDMMDL_ChangeDirAcmdCode( dir_move, ac );
+			FLDMMDL_OnStatusBitMove( fmmdl );
+			FLDMMDL_SetLocalAcmd( fmmdl, ac );
 			return( TRUE );
 		}
 	}
 	
 	//移動不可
-	dir_move = FLDMMDL_DirDispGet( fmmdl );	//向きを戻す
-	ac = FLDMMDL_AcmdCodeDirChange( dir_move, AC_STAY_WALK_U_16F );
-	FLDMMDL_CmdSet( fmmdl, ac );
+	dir_move = FLDMMDL_GetDirDisp( fmmdl );	//向きを戻す
+	ac = FLDMMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
+	FLDMMDL_SetLocalAcmd( fmmdl, ac );
 	return( FALSE );
 }
-

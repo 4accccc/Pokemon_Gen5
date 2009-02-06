@@ -188,7 +188,7 @@ static void GridMoveCreate(
 		int zone_id = PLAYERWORK_getZoneID( player );
 		FLDMMDL_BLACTCONT *pBlActCont;
 
-		fieldWork->fldMMdlSys = FLDMMDLSYS_Init(
+		fieldWork->fldMMdlSys = FLDMMDLSYS_Create(
 				fieldWork, GetFieldG3Dmapper(fieldWork->gs),
 				fieldWork->heapID, 256 );
 		pBlActCont = FLDMMDL_BLACTCONT_Setup( fieldWork->fldMMdlSys,
@@ -759,7 +759,7 @@ static void FGridPlayer_Move(
 	#endif
 	//----
 	
-	if( FLDMMDL_AcmdSetCheck(fmmdl) == TRUE ){
+	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == TRUE ){
 		int code;
 		int dir = DIR_NOT;
 		
@@ -769,44 +769,44 @@ static void FGridPlayer_Move(
 		else if( (key_cont&PAD_KEY_RIGHT) ){ dir = DIR_RIGHT; }
 		
 		if( dir == DIR_NOT ){
-			dir = FLDMMDL_DirDispGet( fmmdl );
-			code = FLDMMDL_AcmdCodeDirChange( dir, AC_DIR_U );
+			dir = FLDMMDL_GetDirDisp( fmmdl );
+			code = FLDMMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
 		}else{
 			u32 hit;
-			hit = FLDMMDL_MoveHitCheckDir( fmmdl, dir );
+			hit = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
 			
 			//--debug移動チェック
-			if( hit != FLDMMDL_MOVE_HIT_BIT_NON &&
+			if( hit != FLDMMDL_MOVEHITBIT_NON &&
 				(key_cont&PAD_BUTTON_R) &&
-				!(hit&FLDMMDL_MOVE_HIT_BIT_OUTRANGE) ){
-				hit = FLDMMDL_MOVE_HIT_BIT_NON;
+				!(hit&FLDMMDL_MOVEHITBIT_OUTRANGE) ){
+				hit = FLDMMDL_MOVEHITBIT_NON;
 			}
 			//--
 			
-			if( hit == FLDMMDL_MOVE_HIT_BIT_NON ){
+			if( hit == FLDMMDL_MOVEHITBIT_NON ){
 				#if 1 //debug移動
 				if( (key_cont&PAD_BUTTON_R) ){
-					code = FLDMMDL_AcmdCodeDirChange( dir, AC_WALK_U_2F );
+					code = FLDMMDL_ChangeDirAcmdCode( dir, AC_WALK_U_2F );
 				}else{
 					if( (key_cont & PAD_BUTTON_B) ){
-						code = FLDMMDL_AcmdCodeDirChange( dir, AC_DASH_U_4F );
+						code = FLDMMDL_ChangeDirAcmdCode( dir, AC_DASH_U_4F );
 					}else{
-						code = FLDMMDL_AcmdCodeDirChange( dir, AC_WALK_U_8F );
+						code = FLDMMDL_ChangeDirAcmdCode( dir, AC_WALK_U_8F );
 					}
 				}
 				#else
 				if( (key_cont & PAD_BUTTON_B) ){
-					code = FLDMMDL_AcmdCodeDirChange( dir, AC_DASH_U_4F );
+					code = FLDMMDL_ChangeDirAcmdCode( dir, AC_DASH_U_4F );
 				}else{
-					code = FLDMMDL_AcmdCodeDirChange( dir, AC_WALK_U_8F );
+					code = FLDMMDL_ChangeDirAcmdCode( dir, AC_WALK_U_8F );
 				}
 				#endif
 			}else{
-				code = FLDMMDL_AcmdCodeDirChange( dir, AC_STAY_WALK_U_8F );
+				code = FLDMMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_8F );
 			}
 		}
 		
-		FLDMMDL_AcmdSet( fmmdl, code );
+		FLDMMDL_SetAcmd( fmmdl, code );
 	}
 	
 	#if 0
@@ -868,8 +868,8 @@ static void FGridPlayer_Move(
 				int next_gy = SIZE_GRID_FX32( next.y );
 				int next_gz = SIZE_GRID_FX32( next.z );
 				
-				if( FLDMMDL_MoveHitCheckDir(fmmdl,dir) !=
-					FLDMMDL_MOVE_HIT_BIT_NON ){
+				if( FLDMMDL_HitCheckMoveDir(fmmdl,dir) !=
+					FLDMMDL_MOVEHITBIT_NON ){
 					hit = 1;
 				}
 			}
@@ -1317,9 +1317,9 @@ static void Jiki_UpdatePlayerWork( FIELD_MAIN_WORK *fieldWork )
 	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 	FLDMMDL *fmmdl = Player_GetFldMMdl( fieldWork->pcActCont );
 	u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xc000 };
-	int dir = FLDMMDL_DirDispGet( fmmdl );
+	int dir = FLDMMDL_GetDirDisp( fmmdl );
 	
-	FLDMMDL_VecPosGet( fmmdl, &pos );
+	FLDMMDL_GetVectorPos( fmmdl, &pos );
 
 	PLAYERWORK_setDirection( player, tbl[dir] );
 	PLAYERWORK_setPosition( player, &pos );
@@ -1471,7 +1471,7 @@ static void GridAct_ActWorkCreate(
 //--------------------------------------------------------------
 ///	
 //--------------------------------------------------------------
-static const FLDMMDL_H DATA_NpcHeader =
+static const FLDMMDL_HEADER DATA_NpcHeader =
 {
 	0,	///<識別ID
 	1,	///<表示するOBJコード
@@ -1504,7 +1504,7 @@ static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
 	u32 attr;
 	int i,gx,gy,gz;
 	FLDMMDL *fmmdl;
-	FLDMMDL_H head;
+	FLDMMDL_HEADER head;
 	VecFx32 pos = {0,0,0};
 	const FLDMAPPER *mapper = GetFieldG3Dmapper( fieldWork->gs );
 
@@ -1522,7 +1522,7 @@ static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
 					head.obj_code = 1 + GFUser_GetPublicRand( 7 );
 					head.gx = gx;
 					head.gz = gz;
-					fmmdl = FLDMMDL_AddH(
+					fmmdl = FLDMMDLSYS_AddFldMMdl(
 						fieldWork->fldMMdlSys, &head, 0 );
 					FLDMMDL_SetBlActID( fmmdl,
 						FLDMMDL_BLACTCONT_AddActor(fmmdl,head.obj_code) );
