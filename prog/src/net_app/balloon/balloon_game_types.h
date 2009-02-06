@@ -9,7 +9,7 @@
 #ifndef __BALLOON_GAME_TYPES_H__
 #define __BALLOON_GAME_TYPES_H__
 
-#include "system/actor_tool.h"
+//#include "system/actor_tool.h"
 #include "print/wordset.h"
 #include <tcb.h>
 #include <g3d_camera.h>

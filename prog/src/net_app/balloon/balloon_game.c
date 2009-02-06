@@ -41,7 +41,7 @@
 #include "msg/msg_balloon.h"
 #include "wlmngm_tool.naix"		//タッチペングラフィック
 //#include "system/window.h"
-#include "system/actor_tool.h"
+//#include "system/actor_tool.h"
 #include "arc_def.h"
 #include "system/sdkdef.h"
 #include "system/gfl_use.h"
