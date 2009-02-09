@@ -246,9 +246,7 @@ void FLDMMDLSYS_Delete( FLDMMDLSYS *fos )
 void FLDMMDLSYS_DeleteAll( FLDMMDLSYS *fos )
 {
 	FLDMMDLSYS_DeleteMMdl( fos );
-	#ifndef FLDMMDL_PL_NULL
 	FLDMMDLSYS_DeleteDraw( fos );
-	#endif
 	FLDMMDLSYS_Delete( fos );
 }
 
@@ -493,13 +491,11 @@ static void FldMMdl_TCB_MoveProc( GFL_TCB * tcb, void *work )
 //--------------------------------------------------------------
 static void FldMMdl_TCB_DrawProc( FLDMMDL * fmmdl )
 {
-#ifndef FLDMMDL_PL_NULL
 	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys(fmmdl);
 	
 	if( FLDMMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
-		FLDMMDL_Draw( fmmdl );
+		FLDMMDLSYS_UpdateDraw( fmmdl );
 	}
-#endif
 }
 
 //======================================================================
@@ -658,13 +654,39 @@ GFL_TCBSYS * FLDMMDLSYS_GetTCBSYS( FLDMMDLSYS *fos )
 	return( fos->pTCBSys );
 }
 
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS FLDMMDL_BLACTCONTセット
+ * @param	fmmdlsys	FLDMMDLSYS
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDLSYS_SetBlActCont(
+	FLDMMDLSYS *fmmdlsys, FLDMMDL_BLACTCONT *pBlActCont )
+{
+	fmmdlsys->pBlActCont = pBlActCont;
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS FLDMMDL_BLACTCONT取得
+ * @param	fmmdlsys FLDMMDLSYS
+ * @retval	FLDMMDL_BLACTCONT*
+ */
+//--------------------------------------------------------------
+FLDMMDL_BLACTCONT * FLDMMDLSYS_GetBlActCont( FLDMMDLSYS *fmmdlsys )
+{
+	GF_ASSERT( fmmdlsys->pBlActCont != NULL );
+	return( fmmdlsys->pBlActCont );
+}
+
 //======================================================================
 //	FLDMMDL　パラメタ参照、設定
 //======================================================================
 //--------------------------------------------------------------
 /**
  * FLDMMDL ステータスビットON
- * @param	fmmdl	fldmmdl
+ * @param	fmmdl	fmmdl
  * @param	bit		FLDMMDL_STABIT
  * @retval	nothing
  */
@@ -677,7 +699,7 @@ void FLDMMDL_OnStatusBit( FLDMMDL *fmmdl, FLDMMDL_STABIT bit )
 //--------------------------------------------------------------
 /**
  * FLDMMDL ステータスビットOFF
- * @param	fmmdl	fldmmdl
+ * @param	fmmdl	fmmdl
  * @param	bit		FLDMMDL_STABIT
  * @retval	nothing
  */
@@ -3512,31 +3534,19 @@ void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl )
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-void FLDMMDLSYS_SetBlActCont(
-	FLDMMDLSYS *fldmmdlsys, FLDMMDL_BLACTCONT *pBlActCont )
+FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork( FLDMMDLSYS *fmmdlsys )
 {
-	fldmmdlsys->pBlActCont = pBlActCont;
+	return( fmmdlsys->pFldMainWork );
 }
 
-FLDMMDL_BLACTCONT * FLDMMDLSYS_GetBlActCont( FLDMMDLSYS *fldmmdlsys )
+void FLDMMDL_SetBlActID( FLDMMDL *fmmdl, GFL_BBDACT_ACTUNIT_ID blActID )
 {
-	GF_ASSERT( fldmmdlsys->pBlActCont != NULL );
-	return( fldmmdlsys->pBlActCont );
+	fmmdl->blActID = blActID;
 }
 
-FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork( FLDMMDLSYS *fldmmdlsys )
+GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fmmdl )
 {
-	return( fldmmdlsys->pFldMainWork );
-}
-
-void FLDMMDL_SetBlActID( FLDMMDL *fldmmdl, GFL_BBDACT_ACTUNIT_ID blActID )
-{
-	fldmmdl->blActID = blActID;
-}
-
-GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fldmmdl )
-{
-	return( fldmmdl->blActID );
+	return( fmmdl->blActID );
 }
 
 const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos )

@@ -65,7 +65,7 @@ void FLDMMDLSYS_InitDraw( FLDMMDLSYS *fos,
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDLSYS_DrawDelete( FLDMMDLSYS *fos )
+void FLDMMDLSYS_DeleteDraw( FLDMMDLSYS *fos )
 {
 	#ifndef FLDMMDL_PL_NULL
 	GF_ASSERT( FLDMMDLSYS_CheckCompleteDrawInit(fos) == TRUE );
@@ -120,7 +120,7 @@ static void FldMMdlSys_ArcHandleClose( FLDMMDLSYS *fos )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDL_Draw( FLDMMDL * fmmdl )
+void FLDMMDLSYS_UpdateDraw( FLDMMDL * fmmdl )
 {
 	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys( fmmdl );
 	

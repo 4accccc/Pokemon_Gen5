@@ -1,32 +1,376 @@
 //======================================================================
 /**
- * @file
- * @brief
- * @author
- * @data
+ * @file	fldmmdl_blact.c
+ * @brief	フィールド動作モデル ビルボードアクター管理
+ * @author	kagaya
+ * @data	05.07.13
  */
 //======================================================================
 #include "fldmmdl.h"
 #include "test_graphic/fld_act.naix"
 
-//#define HEAD3_TEST
+//#define HEAD3_TEST //定義で三頭身絵テスト
 
 #ifdef HEAD3_TEST
 #include "test_graphic/fldmmdl_btx.naix"
 #endif
 
-struct _TAG_FLDMMDL_BLACTCONT{
-	HEAPID heapID;
-	FIELD_SETUP *gs;
-	u16						cameraRotate;
-	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
-	u16						bbdActResCount;
-	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
-	u16						bbdActActCount;
+//======================================================================
+//	define
+//======================================================================
 
+//======================================================================
+//	struct
+//======================================================================
+//--------------------------------------------------------------
+///	FLDMMDL_BLACTCONT
+//--------------------------------------------------------------
+struct _TAG_FLDMMDL_BLACTCONT{
 	GFL_BBDACT_SYS *pBbdActSys;
+	GFL_BBDACT_RESUNIT_ID bbdActResUnitID;
+	GFL_BBDACT_ACTUNIT_ID bbdActActUnitID;
+	u16 bbdActResCount;
+	u16 bbdActActCount;
+	
+	FLDMMDLSYS *fmmdlsys;
 };
 
+//======================================================================
+//	proto
+//======================================================================
+//test func
+static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work );
+static void testJikiFunc(
+	GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work );
+//test data
+const GFL_BBDACT_RESDATA testResTable[];
+const GFL_BBDACT_ANM *testAnmTable[];
+const GFL_BBDACT_ANM* playerBBDactAnmTable[];
+const u32 testResTableMax;
+const u32 testAnmTableMax;
+const u32 playerBBDactAnmTableMax;
+
+//======================================================================
+//	フィールド動作モデル　ビルボードアクター管理
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_BLACTCONT ビルボードアクター管理　セットアップ
+ * @param	fmmdlsys	構築済みのFLDMMDLSYS
+ * @param	pBbdActSys	構築済みのGFL_BBDACT_SYS
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_BLACTCONT_Setup(
+	FLDMMDLSYS *fmmdlsys, GFL_BBDACT_SYS *pBbdActSys )
+{
+	HEAPID heapID;
+	GFL_BBDACT_ACTDATA *actData;
+	GFL_BBDACT_ACTUNIT_ID actUnitID;
+	FLDMMDL_BLACTCONT *pBlActCont;
+	
+	heapID = FLDMMDLSYS_GetHeapID( fmmdlsys );
+	pBlActCont = GFL_HEAP_AllocClearMemory(
+			heapID, sizeof(FLDMMDL_BLACTCONT) );
+	
+	pBlActCont->fmmdlsys = fmmdlsys;
+	pBlActCont->pBbdActSys = pBbdActSys;
+	
+	pBlActCont->bbdActResCount = testResTableMax;
+	pBlActCont->bbdActResUnitID = GFL_BBDACT_AddResourceUnit(
+			pBbdActSys, testResTable, pBlActCont->bbdActResCount );
+	
+	FLDMMDLSYS_SetBlActCont( fmmdlsys, pBlActCont );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_BLACTCONT ビルボードアクター管理　削除
+ * @param	fmmdlsys	FLDMMDLSYS
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_BLACTCONT_Release( FLDMMDLSYS *fmmdlsys )
+{
+	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( fmmdlsys );
+	
+	GFL_BBDACT_RemoveResourceUnit( pBlActCont->pBbdActSys,
+		pBlActCont->bbdActResUnitID, pBlActCont->bbdActResCount );
+	GFL_HEAP_FreeMemory( pBlActCont );
+	
+	FLDMMDLSYS_SetBlActCont( fmmdlsys, NULL );
+}
+
+//======================================================================
+//	フィールド動作モデル ビルボードアクター追加
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * ビルボードアクター 追加
+ * @param	fmmdl	FLDMMDL
+ * @param	resID	追加するアクターで使用するリソースID
+ * @retval	GFL_BBDACT_ACTUNIT_ID
+ */
+//--------------------------------------------------------------
+GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor( FLDMMDL *fmmdl, u32 resID )
+{
+	VecFx32 pos;
+	GFL_BBDACT_ACTDATA actData;
+	GFL_BBDACT_ACTUNIT_ID actID;
+	FLDMMDLSYS *fmmdlsys = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );
+	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( fmmdlsys );
+	
+	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
+	
+	actData.resID = resID;
+	actData.sizX = FX16_ONE*8-1;
+	actData.sizY = FX16_ONE*8-1;
+	actData.trans = pos;
+	actData.alpha = 31;
+	actData.drawEnable = TRUE;
+	actData.lightMask = GFL_BBD_LIGHTMASK_01;
+	actData.work = fmmdl;
+	
+	actData.func = testFunc;
+	
+	if( resID == 0 ){
+		actData.func = testJikiFunc;
+	}
+	
+	actID = GFL_BBDACT_AddAct(
+		pBlActCont->pBbdActSys, pBlActCont->bbdActResUnitID, &actData, 1 );
+	
+	if( resID == 0 ){
+		GFL_BBDACT_SetAnimeTable( pBlActCont->pBbdActSys,
+			actID, playerBBDactAnmTable, playerBBDactAnmTableMax );
+	}else{
+		GFL_BBDACT_SetAnimeTable( pBlActCont->pBbdActSys,
+			actID, testAnmTable, testAnmTableMax );
+	}
+	
+	GFL_BBDACT_SetAnimeIdxOn(
+			pBlActCont->pBbdActSys, actID, 0 );
+	return( actID );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビルボードアクター 削除
+ * @param	fmmdl	FLDMMDL*
+ * @param	actID GFL_BBDACT_ACTUNIT_ID
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_BLACTCONT_DeleteActor( FLDMMDL *fmmdl, u32 actID )
+{
+	FLDMMDLSYS *pFMMdlSys = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );
+	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( pFMMdlSys );
+	GFL_BBDACT_RemoveAct( pBlActCont->pBbdActSys, actID, 1 );
+}
+
+//======================================================================
+//	フィールド動作モデル　ビルボードアクター管理　参照
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * ビルボードアクター管理　GFL_BBDACT_SYS取得
+ * @param	pBlActCont FLDMMDL_BLACTCONT
+ * @retval	GFL_BBDACT_SYS
+ */
+//--------------------------------------------------------------
+GFL_BBDACT_SYS * FLDMMDL_BLACTCONT_GetBbdActSys(
+		FLDMMDL_BLACTCONT *pBlActCont )
+{
+	return( pBlActCont->pBbdActSys );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビルボードアクター管理 GFL_BBDACT_RESUNIT_ID取得
+ * @param	pBlActCont FLDMMDL_BLACTCONT
+ * @retval	GFL_BBDACT_RESUNIT_ID
+ */
+//--------------------------------------------------------------
+GFL_BBDACT_RESUNIT_ID FLDMMDL_BLACTCONT_GetResUnitID(
+		FLDMMDL_BLACTCONT *pBlActCont )
+{
+	return( pBlActCont->bbdActResUnitID );
+}
+
+//======================================================================
+//	test func
+//======================================================================
+typedef struct
+{
+	u8 init;
+	u8 anm_dir;
+	u8 anm_status;
+	u8 anm_walk_next_frmidx;
+	s8 anm_walk_stop_frame;
+}TEST_DRAW_WORK;
+
+static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
+{
+	u16 dir,anm_id,status;
+	VecFx32 pos;
+	int tbl[] = {0,4,8,12,16,20};
+	FLDMMDL *fmmdl = work;
+	TEST_DRAW_WORK *draw = FLDMMDL_GetDrawProcWork( fmmdl );
+	
+	dir = FLDMMDL_GetDirDisp( fmmdl );
+	status = FLDMMDL_GetDrawStatus( fmmdl );
+	anm_id = tbl[status];
+	anm_id += dir;
+	
+	if( draw->init == FALSE ){
+		draw->init = TRUE;
+		draw->anm_dir = dir;
+		draw->anm_status = status;
+		draw->anm_walk_next_frmidx = 0;
+		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+	}else if( draw->anm_dir != dir ){
+		draw->anm_dir = dir;
+		draw->anm_status = status;
+		draw->anm_walk_next_frmidx = 0;
+		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+	}else if( draw->anm_status != status ){
+		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+		if( status >= DRAW_STA_WALK && status <= DRAW_STA_WALK_2F ){
+			GFL_BBDACT_SetAnimeFrmIdx(
+				bbdActSys, actIdx, draw->anm_walk_next_frmidx );
+		}
+		draw->anm_status = status;
+	}
+	
+	if( draw->anm_status >= DRAW_STA_WALK &&
+		draw->anm_status <= DRAW_STA_WALK_2F ){
+		u8 frm = GFL_BBDACT_GetAnimeFrmIdx( bbdActSys, actIdx );
+		if( frm < 2 ){ frm = 2; }
+		else{ frm = 0; }
+		draw->anm_walk_next_frmidx = frm;
+	}
+	
+	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
+	pos.y += FX32_ONE * 12;
+//	pos.y += FX32_ONE * 7; //3
+	
+	GFL_BBD_SetObjectTrans(
+		GFL_BBDACT_GetBBDSystem(bbdActSys), actIdx, &pos );
+	
+	if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) == FALSE ||
+		FLDMMDL_CheckStatusBitAcmd(fmmdl) == TRUE ){
+		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, TRUE );
+	}else{
+		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, FALSE );
+	}
+}
+
+static void testJikiFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
+{
+	u16 dir,anm_id,status;
+	VecFx32 pos;
+#ifdef HEAD3_TEST
+	int tbl[] = {
+		0,4,4,4,
+		4,4,4,4,
+		4,4,4,4,
+	};
+#else
+	int tbl[] = {
+		 0, 4, 8,12,
+		16,20,24,28,
+		32,36,40,44
+	};
+#endif
+	
+	FLDMMDL *fmmdl = work;
+	TEST_DRAW_WORK *draw = FLDMMDL_GetDrawProcWork( fmmdl );
+	
+	dir = FLDMMDL_GetDirDisp( fmmdl );
+	status = FLDMMDL_GetDrawStatus( fmmdl );
+	anm_id = tbl[status];
+	anm_id += dir;
+	
+	if( draw->init == FALSE ){
+		draw->init = TRUE;
+		draw->anm_dir = dir;
+		draw->anm_status = status;
+		draw->anm_walk_next_frmidx = 0;
+		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+	}else if( draw->anm_dir != dir ){
+		draw->anm_dir = dir;
+		draw->anm_status = status;
+		draw->anm_walk_next_frmidx = 0;
+		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+	}else if( draw->anm_status != status ){
+		if( draw->anm_status == DRAW_STA_DASH_4F ){
+			draw->anm_walk_stop_frame++;
+		}else{
+			draw->anm_walk_stop_frame = 2;
+		}
+		
+		if( draw->anm_walk_stop_frame > 1 ){
+			draw->anm_walk_stop_frame = 0;
+			
+			switch( draw->anm_status ){
+			case DRAW_STA_WALK_32F:
+			case DRAW_STA_WALK_16F:
+			case DRAW_STA_WALK_8F:
+			case DRAW_STA_WALK_4F:
+			case DRAW_STA_WALK_2F:
+			case DRAW_STA_DASH_4F:
+				{
+					u8 frm = GFL_BBDACT_GetAnimeFrmIdx( bbdActSys, actIdx );
+					if( frm <= 2 ){
+						draw->anm_walk_next_frmidx = 2;
+					}else{
+						draw->anm_walk_next_frmidx = 0;
+					}
+				}
+				break;
+			}
+			
+			if( draw->anm_status == DRAW_STA_DASH_4F &&
+				status == DRAW_STA_STOP ){
+				OS_Printf( "ダッシュだったけど停止が来たでござる\n" );
+			}
+			
+			GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
+			
+			switch( status ){
+			case DRAW_STA_WALK_32F:
+			case DRAW_STA_WALK_16F:
+			case DRAW_STA_WALK_8F:
+			case DRAW_STA_WALK_4F:
+			case DRAW_STA_WALK_2F:
+			case DRAW_STA_DASH_4F:
+				GFL_BBDACT_SetAnimeFrmIdx(
+					bbdActSys, actIdx, draw->anm_walk_next_frmidx );
+				break;
+			}
+			
+			draw->anm_status = status;
+		}
+	}
+	
+	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
+	pos.y += FX32_ONE * 12;
+//	pos.y += FX32_ONE * 7; //3
+	
+	GFL_BBD_SetObjectTrans(
+		GFL_BBDACT_GetBBDSystem(bbdActSys), actIdx, &pos );
+	
+	if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) == FALSE ||
+		FLDMMDL_CheckStatusBitAcmd(fmmdl) == TRUE ){
+		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, TRUE );
+	}else{
+		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, FALSE );
+	}
+}
+
+//======================================================================
+//	test data
+//======================================================================
 static const GFL_BBDACT_RESDATA testResTable[] = {
 #ifdef HEAD3_TEST
 	{ ARCID_FLDMMDL_BTX, NARC_fldmmdl_btx_obj_kabi32_nsbtx, 
@@ -337,272 +681,6 @@ static const GFL_BBDACT_ANM* playerBBDactAnmTable[] = {
 };
 #endif
 
-typedef struct
-{
-	u8 init;
-	u8 anm_dir;
-	u8 anm_status;
-	u8 anm_walk_next_frmidx;
-	s8 anm_walk_stop_frame;
-}TEST_DRAW_WORK;
-
-static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
-{
-	u16 dir,anm_id,status;
-	VecFx32 pos;
-	int tbl[] = {0,4,8,12,16,20};
-	FLDMMDL *fmmdl = work;
-	TEST_DRAW_WORK *draw = FLDMMDL_GetDrawProcWork( fmmdl );
-	
-	dir = FLDMMDL_GetDirDisp( fmmdl );
-	status = FLDMMDL_GetDrawStatus( fmmdl );
-	anm_id = tbl[status];
-	anm_id += dir;
-	
-	if( draw->init == FALSE ){
-		draw->init = TRUE;
-		draw->anm_dir = dir;
-		draw->anm_status = status;
-		draw->anm_walk_next_frmidx = 0;
-		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
-	}else if( draw->anm_dir != dir ){
-		draw->anm_dir = dir;
-		draw->anm_status = status;
-		draw->anm_walk_next_frmidx = 0;
-		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
-	}else if( draw->anm_status != status ){
-		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
-		if( status >= DRAW_STA_WALK && status <= DRAW_STA_WALK_2F ){
-			GFL_BBDACT_SetAnimeFrmIdx(
-				bbdActSys, actIdx, draw->anm_walk_next_frmidx );
-		}
-		draw->anm_status = status;
-	}
-	
-	if( draw->anm_status >= DRAW_STA_WALK && draw->anm_status <= DRAW_STA_WALK_2F ){
-		u8 frm = GFL_BBDACT_GetAnimeFrmIdx( bbdActSys, actIdx );
-		if( frm < 2 ){ frm = 2; }
-		else{ frm = 0; }
-		draw->anm_walk_next_frmidx = frm;
-	}
-	
-	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
-	pos.y += FX32_ONE * 12;
-//	pos.y += FX32_ONE * 7; //3
-	
-	GFL_BBD_SetObjectTrans(
-		GFL_BBDACT_GetBBDSystem(bbdActSys), actIdx, &pos );
-	
-	if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) == FALSE ||
-		FLDMMDL_CheckStatusBitAcmd(fmmdl) == TRUE ){
-		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, TRUE );
-	}else{
-		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, FALSE );
-	}
-}
-
-typedef struct
-{
-	u8 init;
-}TEST_JIKI_DRAW_WORK;
-
-static void testJikiFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
-{
-	u16 dir,anm_id,status;
-	VecFx32 pos;
-#ifdef HEAD3_TEST
-	int tbl[] = {
-		0,4,4,4,
-		4,4,4,4,
-		4,4,4,4,
-	};
-#else
-	int tbl[] = {
-		 0, 4, 8,12,
-		16,20,24,28,
-		32,36,40,44
-	};
-#endif
-	
-	FLDMMDL *fmmdl = work;
-	TEST_DRAW_WORK *draw = FLDMMDL_GetDrawProcWork( fmmdl );
-	
-	dir = FLDMMDL_GetDirDisp( fmmdl );
-	status = FLDMMDL_GetDrawStatus( fmmdl );
-	anm_id = tbl[status];
-	anm_id += dir;
-	
-	if( draw->init == FALSE ){
-		draw->init = TRUE;
-		draw->anm_dir = dir;
-		draw->anm_status = status;
-		draw->anm_walk_next_frmidx = 0;
-		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
-	}else if( draw->anm_dir != dir ){
-		draw->anm_dir = dir;
-		draw->anm_status = status;
-		draw->anm_walk_next_frmidx = 0;
-		GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
-	}else if( draw->anm_status != status ){
-		if( draw->anm_status == DRAW_STA_DASH_4F ){
-			draw->anm_walk_stop_frame++;
-		}else{
-			draw->anm_walk_stop_frame = 2;
-		}
-		
-		if( draw->anm_walk_stop_frame > 1 ){
-			draw->anm_walk_stop_frame = 0;
-			
-			switch( draw->anm_status ){
-			case DRAW_STA_WALK_32F:
-			case DRAW_STA_WALK_16F:
-			case DRAW_STA_WALK_8F:
-			case DRAW_STA_WALK_4F:
-			case DRAW_STA_WALK_2F:
-			case DRAW_STA_DASH_4F:
-				{
-					u8 frm = GFL_BBDACT_GetAnimeFrmIdx( bbdActSys, actIdx );
-					if( frm <= 2 ){
-						draw->anm_walk_next_frmidx = 2;
-					}else{
-						draw->anm_walk_next_frmidx = 0;
-					}
-				}
-				break;
-			}
-			
-			if( draw->anm_status == DRAW_STA_DASH_4F &&
-				status == DRAW_STA_STOP ){
-				OS_Printf( "ダッシュだったけど停止が来たでござる\n" );
-			}
-			
-			GFL_BBDACT_SetAnimeIdx( bbdActSys, actIdx, anm_id );
-			
-			switch( status ){
-			case DRAW_STA_WALK_32F:
-			case DRAW_STA_WALK_16F:
-			case DRAW_STA_WALK_8F:
-			case DRAW_STA_WALK_4F:
-			case DRAW_STA_WALK_2F:
-			case DRAW_STA_DASH_4F:
-				GFL_BBDACT_SetAnimeFrmIdx(
-					bbdActSys, actIdx, draw->anm_walk_next_frmidx );
-				break;
-			}
-			
-			draw->anm_status = status;
-		}
-	}
-	
-	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
-	pos.y += FX32_ONE * 12;
-//	pos.y += FX32_ONE * 7; //3
-	
-	GFL_BBD_SetObjectTrans(
-		GFL_BBDACT_GetBBDSystem(bbdActSys), actIdx, &pos );
-	
-	if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) == FALSE ||
-		FLDMMDL_CheckStatusBitAcmd(fmmdl) == TRUE ){
-		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, TRUE );
-	}else{
-		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, FALSE );
-	}
-}
-
-//--------------------------------------------------------------
-/**
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-FLDMMDL_BLACTCONT * FLDMMDL_BLACTCONT_Setup(
-	FLDMMDLSYS *pFldMMdlSys, GFL_BBDACT_SYS *pBbdActSys, HEAPID heapID )
-{
-	FIELD_MAIN_WORK *pFldMainWork =
-		FLDMMDLSYS_GetFieldMainWork( pFldMMdlSys );
-	GFL_BBDACT_ACTDATA *actData;
-	GFL_BBDACT_ACTUNIT_ID actUnitID;
-	FLDMMDL_BLACTCONT *pBlActCont;
-	
-	pBlActCont = GFL_HEAP_AllocClearMemory(
-			heapID, sizeof(FLDMMDL_BLACTCONT) );
-	pBlActCont->pBbdActSys = pBbdActSys;
-	pBlActCont->heapID = heapID;
-	
-	pBlActCont->bbdActResCount = NELEMS(testResTable);
-	pBlActCont->bbdActResUnitID = GFL_BBDACT_AddResourceUnit(
-			pBbdActSys, testResTable, pBlActCont->bbdActResCount );
-	
-	FLDMMDLSYS_SetBlActCont( pFldMMdlSys, pBlActCont );
-	return( pBlActCont );
-}
-
-void FLDMMDL_BLACTCONT_Release(
-	FLDMMDLSYS *pFldMMdlSys, FLDMMDL_BLACTCONT *pBlActCont )
-{
-	GFL_BBDACT_RemoveResourceUnit( pBlActCont->pBbdActSys,
-		pBlActCont->bbdActResUnitID, pBlActCont->bbdActResCount );
-	GFL_HEAP_FreeMemory( pBlActCont );
-	
-	FLDMMDLSYS_SetBlActCont( pFldMMdlSys, NULL );
-}
-
-GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor(FLDMMDL *pFldMMdl, u32 id)
-{
-	VecFx32 pos;
-	GFL_BBDACT_ACTDATA actData;
-	GFL_BBDACT_ACTUNIT_ID actID;
-	FLDMMDLSYS *pFMMdlSys = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( pFldMMdl );
-	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( pFMMdlSys );
-	
-	FLDMMDL_GetDrawVectorPos( pFldMMdl, &pos );
-	
-	actData.resID = id;
-	actData.sizX = FX16_ONE*8-1;
-	actData.sizY = FX16_ONE*8-1;
-	actData.trans = pos;
-	actData.alpha = 31;
-	actData.drawEnable = TRUE;
-	actData.lightMask = GFL_BBD_LIGHTMASK_01;
-	
-	if( FLDMMDL_GetOBJID(pFldMMdl) == FLDMMDL_ID_PLAYER ){
-	}else{
-	}
-	
-	if( id == 0 ){
-		actData.func = testJikiFunc;
-	}else{
-		actData.func = testFunc;
-	}
-
-	actData.work = pFldMMdl;
-	
-	actID = GFL_BBDACT_AddAct(
-		pBlActCont->pBbdActSys, pBlActCont->bbdActResUnitID, &actData, 1 );
-	
-	#if 0	
-	GFL_BBDACT_BindActTexResLoad( pBlActCont->pBbdActSys,
-			actID, testResTable[id].arcID, testResTable[id].datID );
-	#endif
-	
-	if( id == 0 ){	//hero
-		GFL_BBDACT_SetAnimeTable( pBlActCont->pBbdActSys,
-			actID, playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
-	}else{
-		GFL_BBDACT_SetAnimeTable( pBlActCont->pBbdActSys,
-			actID, testAnmTable, NELEMS(testAnmTable) );
-	}
-
-	GFL_BBDACT_SetAnimeIdxOn(
-		pBlActCont->pBbdActSys, actID, 0 );
-	return( actID );
-}
-
-void FLDMMDL_BLACTCONT_DeleteActor(
-	FLDMMDL *pFldMMdl, GFL_BBDACT_ACTUNIT_ID actID )
-{
-	FLDMMDLSYS *pFMMdlSys = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( pFldMMdl );
-	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( pFMMdlSys );
-	GFL_BBDACT_RemoveAct( pBlActCont->pBbdActSys, actID, 1 );
-}
-
+const u32 testResTableMax = NELEMS( testResTable );
+const u32 testAnmTableMax = NELEMS( testAnmTable );
+const u32 playerBBDactAnmTableMax = NELEMS( playerBBDactAnmTable );

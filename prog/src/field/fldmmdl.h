@@ -361,18 +361,6 @@ typedef struct
 //	extern
 //======================================================================
 //--------------------------------------------------------------
-///	fldmmdl_blact.c
-//--------------------------------------------------------------
-extern FLDMMDL_BLACTCONT * FLDMMDL_BLACTCONT_Setup(
-	FLDMMDLSYS *pFldMMdlSys, GFL_BBDACT_SYS *pBbdActSys, HEAPID heapID );
-extern void FLDMMDL_BLACTCONT_Release(
-	FLDMMDLSYS *pFldMMdlSys, FLDMMDL_BLACTCONT *pBlActCont );
-extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor(
-	FLDMMDL *pFldMMdl, u32 id );
-extern void FLDMMDL_BLACTCONT_DeleteActor(
-	FLDMMDL *pFldMMdl, GFL_BBDACT_ACTUNIT_ID actID );
-
-//--------------------------------------------------------------
 ///	fldmmdl.h
 //--------------------------------------------------------------
 extern FLDMMDLSYS * FLDMMDLSYS_Create(
@@ -393,15 +381,20 @@ extern u16 FLDMMDLSYS_GetFldMMdlMax( const FLDMMDLSYS *fmmdlsys );
 extern u16 FLDMMDLSYS_GetFldMMdlCount( const FLDMMDLSYS *fmmdlsys );
 extern u16 FLDMMDLSYS_GetTCBPriority( const FLDMMDLSYS *fmmdlsys );
 extern HEAPID FLDMMDLSYS_GetHeapID( const FLDMMDLSYS *fmmdlsys );
-extern const FLDMMDL * FLDMMDLSYS_GetFldMMdlBuffer( const FLDMMDLSYS *fmmdlsys );
-extern void FLDMMDLSYS_SetArcHandle( FLDMMDLSYS *fmmdlsys, ARCHANDLE *handle );
+extern const FLDMMDL * FLDMMDLSYS_GetFldMMdlBuffer(
+		const FLDMMDLSYS *fmmdlsys );
+extern void FLDMMDLSYS_SetArcHandle(
+		FLDMMDLSYS *fmmdlsys, ARCHANDLE *handle );
 extern ARCHANDLE * FLDMMDLSYS_GetArcHandle( FLDMMDLSYS *fmmdlsys );
 extern GFL_TCBSYS * FLDMMDLSYS_GetTCBSYS( FLDMMDLSYS *fos );
+extern void FLDMMDLSYS_SetBlActCont(
+		FLDMMDLSYS *fmmdlsys, FLDMMDL_BLACTCONT *pBlActCont );
+extern FLDMMDL_BLACTCONT * FLDMMDLSYS_GetBlActCont( FLDMMDLSYS *fmmdlsys );
 
 extern void FLDMMDL_OnStatusBit( FLDMMDL *fmmdl, FLDMMDL_STABIT bit );
 extern void FLDMMDL_OffStatusBit( FLDMMDL *fmmdl, FLDMMDL_STABIT bit );
 extern u32 FLDMMDL_GetStatusBit( const FLDMMDL * fmmdl );
-extern u32 FLDMMDL_CheckStatusBit( const FLDMMDL *fmmdl, FLDMMDL_STABIT bit );
+extern u32 FLDMMDL_CheckStatusBit(const FLDMMDL *fmmdl, FLDMMDL_STABIT bit);
 extern u32 FLDMMDL_GetMoveBit( const FLDMMDL * fmmdl );
 extern void FLDMMDL_OnMoveBit( FLDMMDL * fmmdl, u32 bit );
 extern void FLDMMDL_OffMoveBit( FLDMMDL * fmmdl, u32 bit );
@@ -430,8 +423,8 @@ extern void FLDMMDL_SetDirMove( FLDMMDL * fmmdl, u16 dir );
 extern u16 FLDMMDL_GetDirMove( const FLDMMDL * fmmdl );
 extern u16 FLDMMDL_GetDirMoveOld( const FLDMMDL * fmmdl );
 extern void FLDMMDL_SetDirAll( FLDMMDL * fmmdl, u16 dir );
-extern void FLDMMDL_SetParam( FLDMMDL *fmmdl, int param, FLDMMDL_H_PARAM no );
-extern int FLDMMDL_GetParam( const FLDMMDL * fmmdl, FLDMMDL_H_PARAM param );
+extern void FLDMMDL_SetParam(FLDMMDL *fmmdl, int param, FLDMMDL_H_PARAM no);
+extern int FLDMMDL_GetParam(const FLDMMDL * fmmdl, FLDMMDL_H_PARAM param);
 extern void FLDMMDL_SetMoveLimitX( FLDMMDL * fmmdl, s16 x );
 extern s16 FLDMMDL_GetMoveLimitX( const FLDMMDL * fmmdl );
 extern void FLDMMDL_SetMoveLimitZ( FLDMMDL * fmmdl, s16 z );
@@ -491,12 +484,18 @@ extern void FLDMMDL_AddGridPosZ( FLDMMDL * fmmdl, s16 z );
 extern void FLDMMDL_GetVectorPos( const FLDMMDL * fmmdl, VecFx32 *vec );
 extern void FLDMMDL_SetVectorPos( FLDMMDL * fmmdl, const VecFx32 *vec );
 extern fx32 FLDMMDL_GetVectorPosY( const FLDMMDL * fmmdl );
-extern void FLDMMDL_GetVectorDrawOffsetPos( const FLDMMDL * fmmdl, VecFx32 *vec );
-extern void FLDMMDL_SetVectorDrawOffsetPos( FLDMMDL * fmmdl, const VecFx32 *vec );
-extern void FLDMMDL_GetVectorOuterDrawOffsetPos( const FLDMMDL * fmmdl, VecFx32 *vec );
-extern void FLDMMDL_SetVectorOuterDrawOffsetPos( FLDMMDL * fmmdl, const VecFx32 *vec );
-extern void FLDMMDL_GetVectorAttrDrawOffsetPos( const FLDMMDL * fmmdl, VecFx32 *vec );
-extern void FLDMMDL_SetVectorAttrDrawOffsetPos( FLDMMDL * fmmdl, const VecFx32 *vec );
+extern void FLDMMDL_GetVectorDrawOffsetPos(
+		const FLDMMDL * fmmdl, VecFx32 *vec );
+extern void FLDMMDL_SetVectorDrawOffsetPos(
+		FLDMMDL * fmmdl, const VecFx32 *vec );
+extern void FLDMMDL_GetVectorOuterDrawOffsetPos(
+		const FLDMMDL * fmmdl, VecFx32 *vec );
+extern void FLDMMDL_SetVectorOuterDrawOffsetPos(
+		FLDMMDL * fmmdl, const VecFx32 *vec );
+extern void FLDMMDL_GetVectorAttrDrawOffsetPos(
+		const FLDMMDL * fmmdl, VecFx32 *vec );
+extern void FLDMMDL_SetVectorAttrDrawOffsetPos(
+		FLDMMDL * fmmdl, const VecFx32 *vec );
 extern s16 FLDMMDL_GetHeightGrid( const FLDMMDL * fmmdl );
 
 extern BOOL FLDMMDLSYS_CheckCompleteDrawInit( const FLDMMDLSYS *fmmdlsys );
@@ -522,7 +521,7 @@ extern void FLDMMDL_OffStatusBitMoveEnd( FLDMMDL * fmmdl );
 extern BOOL FLDMMDL_CheckStatusBitMoveEnd( const FLDMMDL * fmmdl );
 extern void FLDMMDL_OnStatusBitCompletedDrawInit( FLDMMDL * fmmdl );
 extern void FLDMMDL_OffStatusBitCompletedDrawInit( FLDMMDL * fmmdl );
-extern BOOL FLDMMDL_CheckStatusBitCompletedDrawInit( const FLDMMDL * fmmdl );
+extern BOOL FLDMMDL_CheckStatusBitCompletedDrawInit(const FLDMMDL * fmmdl);
 extern BOOL FLDMMDL_CheckStatusBitVanish( const FLDMMDL * fmmdl );
 extern void FLDMMDL_SetStatusBitVanish( FLDMMDL * fmmdl, BOOL flag );
 extern void FLDMMDL_SetStatusBitFellowHit( FLDMMDL * fmmdl, BOOL flag );
@@ -583,12 +582,10 @@ extern void FLDMMDL_DrawPushProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl );
 
 //‰¼
-extern void FLDMMDLSYS_SetBlActCont(
-	FLDMMDLSYS *fldmmdlsys, FLDMMDL_BLACTCONT *pBlActCont );
-extern FLDMMDL_BLACTCONT * FLDMMDLSYS_GetBlActCont( FLDMMDLSYS *fldmmdlsys );
-extern FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork( FLDMMDLSYS *fldmmdlsys );
-extern void FLDMMDL_SetBlActID( FLDMMDL *fldmmdl, GFL_BBDACT_ACTUNIT_ID blActID );
-extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fldmmdl );
+extern FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork(FLDMMDLSYS *fmmdlsys);
+extern void FLDMMDL_SetBlActID(
+	FLDMMDL *fmmdl, GFL_BBDACT_ACTUNIT_ID blActID );
+extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fmmdl );
 extern const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos );
 
 //--------------------------------------------------------------
@@ -596,7 +593,7 @@ extern const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos );
 //--------------------------------------------------------------
 extern const FLDMMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[];
 extern int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( FLDMMDL * );
-const int * const DATA_AcmdCodeDirChangeTbl[];
+extern const int * const DATA_AcmdCodeDirChangeTbl[];
 
 //--------------------------------------------------------------
 //	fieldobj_drawdata.c
@@ -676,9 +673,9 @@ extern EOA_PTR FLDMMDL_MoveHideEoaPtrGet( FLDMMDL * fmmdl );
 extern void FLDMMDLSYS_InitDraw( FLDMMDLSYS *fos,
 		int tex_max, int reg_tex_max,
 		const int *tex_tbl, int frm_trans_max );
-extern void FLDMMDLSYS_DrawDelete( FLDMMDLSYS *fos );
+extern void FLDMMDLSYS_DeleteDraw( FLDMMDLSYS *fos );
 
-extern void FLDMMDL_Draw( FLDMMDL * fmmdl );
+extern void FLDMMDLSYS_UpdateDraw( FLDMMDL * fmmdl );
 
 extern const OBJCODE_STATE * FLDMMDL_TOOL_GetOBJCodeState( u16 code );
 extern const OBJCODE_STATE * FLDMMDL_GetOBJCodeState( const FLDMMDL *fmmdl );
@@ -709,5 +706,21 @@ extern u16 FLDMMDL_GetAcmdDir( u16 code );
 
 extern void FLDMMDL_ActionAcmd( FLDMMDL * fmmdl );
 extern BOOL FLDMMDL_ActionLocalAcmd( FLDMMDL * fmmdl );
+
+//--------------------------------------------------------------
+///	fldmmdl_blact.c
+//--------------------------------------------------------------
+extern void FLDMMDL_BLACTCONT_Setup(
+	FLDMMDLSYS *fmmdlsys, GFL_BBDACT_SYS *pBbdActSys );
+extern void FLDMMDL_BLACTCONT_Release( FLDMMDLSYS *fmmdlsys );
+
+extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor(
+		FLDMMDL *fmmdl, u32 resID );
+extern void FLDMMDL_BLACTCONT_DeleteActor( FLDMMDL *fmmdl, u32 actID );
+
+extern GFL_BBDACT_SYS * FLDMMDL_BLACTCONT_GetBbdActSys(
+		FLDMMDL_BLACTCONT *pBlActCont );
+extern GFL_BBDACT_RESUNIT_ID FLDMMDL_BLACTCONT_GetResUnitID(
+		FLDMMDL_BLACTCONT *pBlActCont );
 
 #endif //FLDMMDL_H_FILE

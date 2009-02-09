@@ -1,36 +1,40 @@
-//******************************************************************************
+//======================================================================
 /**
- * 
  * @file	fieldobj_code.h
- * @brief	フィールド動作モデルで使用するシンボル,コード宣言 アセンブラソース読み込みアリ 故にenum禁止
+ * @brief	フィールド動作モデルで使用するシンボル,コード宣言。
+ * アセンブラソース読み込みアリ 故にenum禁止
  * @author	kagaya
  * @data	05.07.20
  */
-//******************************************************************************
+//======================================================================
 #ifndef FLDMMDL_CODE_H_FILE
 #define FLDMMDL_CODE_H_FILE
 
-//==============================================================================
-///	方向
-//==============================================================================
-#if 0
-#define DIR_NOT			(-1)								///<向きがない場合
-#define DIR_UP			(0)									///<上向き
-#define DIR_DOWN		(1)									///<下向き
-#define DIR_LEFT		(2)									///<左向き
-#define DIR_RIGHT		(3)									///<右向き
+//======================================================================
+//
+//======================================================================
 
-#define DIR_LEFTUP		(4)									///<左上向き
-#define DIR_RIGHTUP		(5)									///<右上向き
-#define DIR_LEFTDOWN	(6)									///<左下向き
-#define DIR_RIGHTDOWN	(7)									///<右下向き
+//======================================================================
+///	方向
+//======================================================================
+#if 0
+#define DIR_NOT			(-1)				///<向きがない場合
+#define DIR_UP			(0)					///<上向き
+#define DIR_DOWN		(1)					///<下向き
+#define DIR_LEFT		(2)					///<左向き
+#define DIR_RIGHT		(3)					///<右向き
+
+#define DIR_LEFTUP		(4)					///<左上向き
+#define DIR_RIGHTUP		(5)					///<右上向き
+#define DIR_LEFTDOWN	(6)					///<左下向き
+#define DIR_RIGHTDOWN	(7)					///<右下向き
 #endif
 
-#define DIR_4_MAX (4)								///<4方向最大
+#define DIR_4_MAX (4)						///<4方向最大
 
-//==============================================================================
+//======================================================================
 //	特殊ID
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 //	フィールド動作モデル 特殊ID
 //--------------------------------------------------------------
@@ -43,9 +47,9 @@
 //--------------------------------------------------------------
 #define SP_SCRID_ALIES (0xffff)
 
-//==============================================================================
+//======================================================================
 //	フィールド動作モデル 動作コード
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 //	フィールド動作モデル 動作コード
 //--------------------------------------------------------------
@@ -116,8 +120,7 @@
 #define MV_ALONGW_R		0x40		///<壁沿い右(m
 #define MV_ALONGW_LRL	0x41		///<壁沿い両手左(m
 #define MV_ALONGW_LRR	0x42		///<壁沿い両手右(m
-#define MV_RND_H_LIM	0x43		///<ランダムに横移動 移動チェック移動制限のみ
-
+#define MV_RND_H_LIM	0x43 ///<ランダムに横移動 移動チェック移動制限のみ
 #define MV_CODE_MAX		0x44		///<コード最大（プログラム判定専用
 #define MV_CODE_NOT		0xff		///<非動作コード(プログラム判定専用
 
@@ -148,23 +151,23 @@
 　　ルート２?
  * */
 
-//==============================================================================
+//======================================================================
 //	フィールド動作モデル イベントタイプ
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 //	フィールド動作モデル イベントタイプ
 //--------------------------------------------------------------
-#define EV_TYPE_NORMAL 				0x00	///<通常タイプ
-#define EV_TYPE_TRAINER				0x01	///<トレーナータイプ
-#define EV_TYPE_TRAINER_EYEALL		0x02	///<トレーナー全方位検知タイプ
-#define EV_TYPE_ITEM				0x03	///<アイテムタイプ
-#define EV_TYPE_TRAINER_KYORO		0x04	///<トレーナータイプ　きょろきょろ
-#define EV_TYPE_TRAINER_SPIN_STOP_L	0x05	///<トレーナータイプ　停止回転　左周り
-#define EV_TYPE_TRAINER_SPIN_STOP_R	0x06	///<トレーナータイプ　停止回転　右回り
-#define EV_TYPE_TRAINER_SPIN_MOVE_L	0x07	///<トレーナータイプ　移動回転　左周り
-#define EV_TYPE_TRAINER_SPIN_MOVE_R	0x08	///<トレーナータイプ　移動回転　右回り
-#define EV_TYPE_MSG 				0x09	///<通常タイプ メッセージID指定
-#define EV_TYPE_TRAINER_ESCAPE		0x0a	///<トレーナータイプ　逃げる
+#define EV_TYPE_NORMAL 				0x00 ///<通常タイプ
+#define EV_TYPE_TRAINER				0x01 ///<トレーナータイプ
+#define EV_TYPE_TRAINER_EYEALL		0x02 ///<トレーナー全方位検知タイプ
+#define EV_TYPE_ITEM				0x03 ///<アイテムタイプ
+#define EV_TYPE_TRAINER_KYORO		0x04 ///<トレーナータイプ　きょろきょろ
+#define EV_TYPE_TRAINER_SPIN_STOP_L	0x05 ///<トレーナータイプ停止回転左周り
+#define EV_TYPE_TRAINER_SPIN_STOP_R	0x06 ///<トレーナータイプ停止回転右回り
+#define EV_TYPE_TRAINER_SPIN_MOVE_L	0x07 ///<トレーナータイプ移動回転左周り
+#define EV_TYPE_TRAINER_SPIN_MOVE_R	0x08 ///<トレーナータイプ移動回転右回り
+#define EV_TYPE_MSG 				0x09 ///<通常タイプ メッセージID指定
+#define EV_TYPE_TRAINER_ESCAPE		0x0a ///<トレーナータイプ逃げる
 
 /*
 #define EV_TYPE_TRAINER_ESCAPE		0x09	///<トレーナータイプ　逃げる
@@ -173,9 +176,9 @@
 #define EV_TYPE_TRAINER_LIGHT_DASH		///<トレーナータイプ　ライトダッシュ
 */
 
-//==============================================================================
+//======================================================================
 //	フィールド動作モデル 描画ステータス
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 ///	フィールド動作モデル 描画ステータス
 //--------------------------------------------------------------
@@ -226,176 +229,176 @@
 #define DRAW_STA_BANZAI_UKE	0x01
 #define DRAW_STA_MAX_BANZAI (DRAW_STA_BANZAI_UKE+1)
 
-//==============================================================================
+//======================================================================
 //	フィールド動作モデル アニメーションコマンドコード
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 //	フィールド動作モデル アニメーションコマンドコード
 //--------------------------------------------------------------
-#define AC_DIR_U				0x00		///<上に向く
-#define AC_DIR_D				0x01		///<下に向く
-#define AC_DIR_L				0x02		///<左に向く
-#define AC_DIR_R				0x03		///<右に向く
-#define AC_WALK_U_32F			0x04		///<上に移動　32フレーム
-#define AC_WALK_D_32F			0x05		///<下に移動　32フレーム
-#define AC_WALK_L_32F			0x06		///<左に移動　32フレーム
-#define AC_WALK_R_32F			0x07		///<右に移動　32フレーム
-#define AC_WALK_U_16F			0x08		///<上に移動　16フレーム
-#define AC_WALK_D_16F			0x09		///<下に移動　16フレーム
-#define AC_WALK_L_16F			0x0a		///<左に移動　16フレーム
-#define AC_WALK_R_16F			0x0b		///<右に移動　16フレーム
-#define AC_WALK_U_8F			0x0c		///<上に移動　8フレーム
-#define AC_WALK_D_8F			0x0d		///<下に移動　8フレーム
-#define AC_WALK_L_8F			0x0e		///<左に移動　8フレーム
-#define AC_WALK_R_8F			0x0f		///<右に移動　8フレーム
-#define AC_WALK_U_4F			0x10		///<上に移動　4フレーム
-#define AC_WALK_D_4F			0x11		///<下に移動　4フレーム
-#define AC_WALK_L_4F			0x12		///<左に移動　4フレーム
-#define AC_WALK_R_4F			0x13		///<右に移動　4フレーム
-#define AC_WALK_U_2F			0x14		///<上に移動　2フレーム
-#define AC_WALK_D_2F			0x15		///<下に移動　2フレーム
-#define AC_WALK_L_2F			0x16		///<左に移動　2フレーム
-#define AC_WALK_R_2F			0x17		///<右に移動　2フレーム
-#define AC_STAY_WALK_U_32F		0x18		///<上向きにその場歩き　32フレーム
-#define AC_STAY_WALK_D_32F		0x19		///<下向きにその場歩き　32フレーム
-#define AC_STAY_WALK_L_32F		0x1a		///<左向きにその場歩き　32フレーム
-#define AC_STAY_WALK_R_32F		0x1b		///<右向きにその場歩き　32フレーム
-#define AC_STAY_WALK_U_16F		0x1c		///<上向きにその場歩き　16フレーム
-#define AC_STAY_WALK_D_16F		0x1d		///<下向きにその場歩き　16フレーム
-#define AC_STAY_WALK_L_16F		0x1e		///<左向きにその場歩き　16フレーム
-#define AC_STAY_WALK_R_16F		0x1f		///<右向きにその場歩き　16フレーム
-#define AC_STAY_WALK_U_8F		0x20		///<上向きにその場歩き　8フレーム
-#define AC_STAY_WALK_D_8F		0x21		///<下向きにその場歩き　8フレーム
-#define AC_STAY_WALK_L_8F		0x22		///<左向きにその場歩き　8フレーム
-#define AC_STAY_WALK_R_8F		0x23		///<右向きにその場歩き　8フレーム
-#define AC_STAY_WALK_U_4F		0x24		///<上向きにその場歩き　4フレーム
-#define AC_STAY_WALK_D_4F		0x25		///<下向きにその場歩き　4フレーム
-#define AC_STAY_WALK_L_4F		0x26		///<左向きにその場歩き　4フレーム
-#define AC_STAY_WALK_R_4F		0x27		///<右向きにその場歩き　4フレーム
-#define AC_STAY_WALK_U_2F		0x28		///<上向きにその場歩き　2フレーム
-#define AC_STAY_WALK_D_2F		0x29		///<下向きにその場歩き　2フレーム
-#define AC_STAY_WALK_L_2F		0x2a		///<左向きにその場歩き　2フレーム
-#define AC_STAY_WALK_R_2F		0x2b		///<右向きにその場歩き　2フレーム
-#define AC_STAY_JUMP_U_16F		0x2c		///<上向きにその場ジャンプ 16フレーム
-#define AC_STAY_JUMP_D_16F		0x2d		///<下向きにその場ジャンプ 16フレーム
-#define AC_STAY_JUMP_L_16F		0x2e		///<左向きにその場ジャンプ 16フレーム
-#define AC_STAY_JUMP_R_16F		0x2f		///<右向きにその場ジャンプ 16フレーム
-#define AC_STAY_JUMP_U_8F		0x30		///<上向きにその場ジャンプ 8フレーム
-#define AC_STAY_JUMP_D_8F		0x31		///<下向きにその場ジャンプ 8フレーム
-#define AC_STAY_JUMP_L_8F		0x32		///<左向きにその場ジャンプ 8フレーム
-#define AC_STAY_JUMP_R_8F		0x33		///<右向きにその場ジャンプ 8フレーム
-#define AC_JUMP_U_1G_8F			0x34		///<上向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMP_D_1G_8F			0x35		///<下向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMP_L_1G_8F			0x36		///<左向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMP_R_1G_8F			0x37		///<右向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMP_U_2G_16F		0x38		///<上向きにジャンプ 2グリッド 16フレーム
-#define AC_JUMP_D_2G_16F		0x39		///<下向きにジャンプ 2グリッド 16フレーム
-#define AC_JUMP_L_2G_16F		0x3a		///<左向きにジャンプ 2グリッド 16フレーム
-#define AC_JUMP_R_2G_16F		0x3b		///<右向きにジャンプ 2グリッド 16フレーム
-#define AC_WAIT_1F				0x3c		///<1フレーム待ち
-#define AC_WAIT_2F				0x3d		///<2フレーム待ち
-#define AC_WAIT_4F				0x3e		///<4フレーム待ち
-#define AC_WAIT_8F				0x3f		///<8フレーム待ち
-#define AC_WAIT_15F				0x40		///<15フレーム待ち
-#define AC_WAIT_16F				0x41		///<16フレーム待ち
-#define AC_WAIT_32F				0x42		///<32フレーム待ち
-#define AC_WARP_UP				0x43		///<上にワープ
-#define AC_WARP_DOWN			0x44		///<下にワープ
-#define AC_VANISH_ON			0x45		///<非表示にする
-#define AC_VANISH_OFF			0x46		///<表示にする
-#define AC_DIR_PAUSE_ON			0x47		///<方向固定する
-#define AC_DIR_PAUSE_OFF		0x48		///<方向固定しない
-#define AC_ANM_PAUSE_ON			0x49		///<アニメポーズ
-#define AC_ANM_PAUSE_OFF		0x4a		///<アニメポーズを解除
-#define AC_MARK_GYOE			0x4b		///<!マークを出す
-#define AC_WALK_U_6F			0x4c		///<上方向に移動　6フレーム
-#define AC_WALK_D_6F			0x4d		///<下方向に移動　6フレーム
-#define AC_WALK_L_6F			0x4e		///<左方向に移動　6フレーム
-#define AC_WALK_R_6F			0x4f		///<右方向に移動　6フレーム
-#define AC_WALK_U_3F			0x50		///<上方向に移動　3フレーム
-#define AC_WALK_D_3F			0x51		///<下方向に移動　3フレーム
-#define AC_WALK_L_3F			0x52		///<左方向に移動　3フレーム
-#define AC_WALK_R_3F			0x53		///<右方向に移動　3フレーム
-#define AC_WALK_U_1F			0x54		///<上方向に移動　1フレーム(システム未対応 使用禁止
-#define AC_WALK_D_1F			0x55		///<下方向に移動　1フレーム(システム未対応 使用禁止
-#define AC_WALK_L_1F			0x56		///<左方向に移動　1フレーム(システム未対応 使用禁止
-#define AC_WALK_R_1F			0x57		///<右方向に移動　1フレーム(システム未対応 使用禁止
-#define AC_DASH_U_4F			0x58		///<上方向に移動　4フレーム(自機専用
-#define AC_DASH_D_4F			0x59		///<下方向に移動　4フレーム(自機専用
-#define AC_DASH_L_4F			0x5a		///<左方向に移動　4フレーム(自機専用
-#define AC_DASH_R_4F			0x5b		///<右方向に移動　4フレーム(自機専用
-#define AC_JUMPHI_L_1G_16F		0x5c	///<左方向に高いジャンプ 1グリッド 16フレーム(自機専用
-#define AC_JUMPHI_R_1G_16F		0x5d	///<右方向に高いジャンプ 1グリッド 16フレーム(自機専用
-#define AC_JUMPHI_L_3G_32F		0x5e	///<左方向に高いジャンプ 3グリッド 32フレーム(自機専用
-#define AC_JUMPHI_R_3G_32F		0x5f	///<右方向に高いジャンプ 3グリッド 32フレーム(自機専用
-#define AC_WALK_U_7F			0x60		///<上方向に移動　7フレーム
-#define AC_WALK_D_7F			0x61		///<下方向に移動　7フレーム
-#define AC_WALK_L_7F			0x62		///<左方向に移動　7フレーム
-#define AC_WALK_R_7F			0x63		///<右方向に移動　7フレーム
-#define AC_PC_BOW				0x64		///<PCお辞儀(PCWOMAN1専用
-#define AC_HIDE_PULLOFF			0x65		///<隠れ蓑脱ぐ(MV_HIDE専用
-#define AC_HERO_BANZAI			0x66		///<PC両手差出(自機専用
-#define AC_MARK_SAISEN			0x67		///<再戦マーク表示
-#define AC_HERO_BANZAI_UKE		0x68		///<PC両手差出受け取り(自機専用
-#define AC_WALKGL_U_8F			0x69		///<左壁移動 上 8フレーム
-#define AC_WALKGL_D_8F			0x6a		///<左壁移動 下 8フレーム
-#define AC_WALKGL_L_8F			0x6b		///<左壁移動 左 8フレーム
-#define AC_WALKGL_R_8F			0x6c		///<左壁移動 右 8フレーム
-#define AC_WALKGR_U_8F			0x6d		///<右壁移動 上 8フレーム
-#define AC_WALKGR_D_8F			0x6e		///<右壁移動 下 8フレーム
-#define AC_WALKGR_L_8F			0x6f		///<右壁移動 左 8フレーム
-#define AC_WALKGR_R_8F			0x70		///<右壁移動 右 8フレーム
-#define AC_WALKGU_U_8F			0x71		///<上壁移動 上 8フレーム
-#define AC_WALKGU_D_8F			0x72		///<上壁移動 下 8フレーム
-#define AC_WALKGU_L_8F			0x73		///<上壁移動 左 8フレーム
-#define AC_WALKGU_R_8F			0x74		///<上壁移動 右 8フレーム
-#define AC_JUMP_U_3G_24F		0x75			///<上向きにジャンプ 3グリッド 24フレーム
-#define AC_JUMP_D_3G_24F		0x76			///<上向きにジャンプ 3グリッド 24フレーム
-#define AC_JUMP_L_3G_24F		0x77			///<上向きにジャンプ 3グリッド 24フレーム
-#define AC_JUMP_R_3G_24F		0x78			///<上向きにジャンプ 3グリッド 24フレーム
-#define AC_DASHGL_U_4F			0x79		///<左壁移動 上 4フレーム(自機専用
-#define AC_DASHGL_D_4F			0x7a		///<左壁移動 下 4フレーム(自機専用
-#define AC_DASHGL_L_4F			0x7b		///<左壁移動 左 4フレーム(自機専用
-#define AC_DASHGL_R_4F			0x7c		///<左壁移動 右 4フレーム(自機専用
-#define AC_DASHGR_U_4F			0x7d		///<右壁移動 上 4フレーム(自機専用
-#define AC_DASHGR_D_4F			0x7e		///<右壁移動 下 4フレーム(自機専用
-#define AC_DASHGR_L_4F			0x7f		///<右壁移動 左 4フレーム(自機専用
-#define AC_DASHGR_R_4F			0x80		///<右壁移動 右 4フレーム(自機専用
-#define AC_DASHGU_U_4F			0x81		///<上壁移動 上 4フレーム(自機専用
-#define AC_DASHGU_D_4F			0x82		///<上壁移動 下 4フレーム(自機専用
-#define AC_DASHGU_L_4F			0x83		///<上壁移動 左 4フレーム(自機専用
-#define AC_DASHGU_R_4F			0x84		///<上壁移動 右 4フレーム(自機専用
+#define AC_DIR_U				0x00 ///<上に向く
+#define AC_DIR_D				0x01 ///<下に向く
+#define AC_DIR_L				0x02 ///<左に向く
+#define AC_DIR_R				0x03 ///<右に向く
+#define AC_WALK_U_32F			0x04 ///<上に移動　32フレーム
+#define AC_WALK_D_32F			0x05 ///<下に移動　32フレーム
+#define AC_WALK_L_32F			0x06 ///<左に移動　32フレーム
+#define AC_WALK_R_32F			0x07 ///<右に移動　32フレーム
+#define AC_WALK_U_16F			0x08 ///<上に移動　16フレーム
+#define AC_WALK_D_16F			0x09 ///<下に移動　16フレーム
+#define AC_WALK_L_16F			0x0a ///<左に移動　16フレーム
+#define AC_WALK_R_16F			0x0b ///<右に移動　16フレーム
+#define AC_WALK_U_8F			0x0c ///<上に移動　8フレーム
+#define AC_WALK_D_8F			0x0d ///<下に移動　8フレーム
+#define AC_WALK_L_8F			0x0e ///<左に移動　8フレーム
+#define AC_WALK_R_8F			0x0f ///<右に移動　8フレーム
+#define AC_WALK_U_4F			0x10 ///<上に移動　4フレーム
+#define AC_WALK_D_4F			0x11 ///<下に移動　4フレーム
+#define AC_WALK_L_4F			0x12 ///<左に移動　4フレーム
+#define AC_WALK_R_4F			0x13 ///<右に移動　4フレーム
+#define AC_WALK_U_2F			0x14 ///<上に移動　2フレーム
+#define AC_WALK_D_2F			0x15 ///<下に移動　2フレーム
+#define AC_WALK_L_2F			0x16 ///<左に移動　2フレーム
+#define AC_WALK_R_2F			0x17 ///<右に移動　2フレーム
+#define AC_STAY_WALK_U_32F		0x18 ///<上向きにその場歩き　32フレーム
+#define AC_STAY_WALK_D_32F		0x19 ///<下向きにその場歩き　32フレーム
+#define AC_STAY_WALK_L_32F		0x1a ///<左向きにその場歩き　32フレーム
+#define AC_STAY_WALK_R_32F		0x1b ///<右向きにその場歩き　32フレーム
+#define AC_STAY_WALK_U_16F		0x1c ///<上向きにその場歩き　16フレーム
+#define AC_STAY_WALK_D_16F		0x1d ///<下向きにその場歩き　16フレーム
+#define AC_STAY_WALK_L_16F		0x1e ///<左向きにその場歩き　16フレーム
+#define AC_STAY_WALK_R_16F		0x1f ///<右向きにその場歩き　16フレーム
+#define AC_STAY_WALK_U_8F		0x20 ///<上向きにその場歩き　8フレーム
+#define AC_STAY_WALK_D_8F		0x21 ///<下向きにその場歩き　8フレーム
+#define AC_STAY_WALK_L_8F		0x22 ///<左向きにその場歩き　8フレーム
+#define AC_STAY_WALK_R_8F		0x23 ///<右向きにその場歩き　8フレーム
+#define AC_STAY_WALK_U_4F		0x24 ///<上向きにその場歩き　4フレーム
+#define AC_STAY_WALK_D_4F		0x25 ///<下向きにその場歩き　4フレーム
+#define AC_STAY_WALK_L_4F		0x26 ///<左向きにその場歩き　4フレーム
+#define AC_STAY_WALK_R_4F		0x27 ///<右向きにその場歩き　4フレーム
+#define AC_STAY_WALK_U_2F		0x28 ///<上向きにその場歩き　2フレーム
+#define AC_STAY_WALK_D_2F		0x29 ///<下向きにその場歩き　2フレーム
+#define AC_STAY_WALK_L_2F		0x2a ///<左向きにその場歩き　2フレーム
+#define AC_STAY_WALK_R_2F		0x2b ///<右向きにその場歩き　2フレーム
+#define AC_STAY_JUMP_U_16F		0x2c ///<上向きにその場ジャンプ 16フレーム
+#define AC_STAY_JUMP_D_16F		0x2d ///<下向きにその場ジャンプ 16フレーム
+#define AC_STAY_JUMP_L_16F		0x2e ///<左向きにその場ジャンプ 16フレーム
+#define AC_STAY_JUMP_R_16F		0x2f ///<右向きにその場ジャンプ 16フレーム
+#define AC_STAY_JUMP_U_8F		0x30 ///<上向きにその場ジャンプ 8フレーム
+#define AC_STAY_JUMP_D_8F		0x31 ///<下向きにその場ジャンプ 8フレーム
+#define AC_STAY_JUMP_L_8F		0x32 ///<左向きにその場ジャンプ 8フレーム
+#define AC_STAY_JUMP_R_8F		0x33 ///<右向きにその場ジャンプ 8フレーム
+#define AC_JUMP_U_1G_8F			0x34 ///<上向きにジャンプ 1grid 8フレーム
+#define AC_JUMP_D_1G_8F			0x35 ///<下向きにジャンプ 1grid 8フレーム
+#define AC_JUMP_L_1G_8F			0x36 ///<左向きにジャンプ 1grid 8フレーム
+#define AC_JUMP_R_1G_8F			0x37 ///<右向きにジャンプ 1grid 8フレーム
+#define AC_JUMP_U_2G_16F		0x38 ///<上向きにジャンプ 2grid 16フレーム
+#define AC_JUMP_D_2G_16F		0x39 ///<下向きにジャンプ 2grid 16フレーム
+#define AC_JUMP_L_2G_16F		0x3a ///<左向きにジャンプ 2grid 16フレーム
+#define AC_JUMP_R_2G_16F		0x3b ///<右向きにジャンプ 2grid 16フレーム
+#define AC_WAIT_1F				0x3c ///<1フレーム待ち
+#define AC_WAIT_2F				0x3d ///<2フレーム待ち
+#define AC_WAIT_4F				0x3e ///<4フレーム待ち
+#define AC_WAIT_8F				0x3f ///<8フレーム待ち
+#define AC_WAIT_15F				0x40 ///<15フレーム待ち
+#define AC_WAIT_16F				0x41 ///<16フレーム待ち
+#define AC_WAIT_32F				0x42 ///<32フレーム待ち
+#define AC_WARP_UP				0x43 ///<上にワープ
+#define AC_WARP_DOWN			0x44 ///<下にワープ
+#define AC_VANISH_ON			0x45 ///<非表示にする
+#define AC_VANISH_OFF			0x46 ///<表示にする
+#define AC_DIR_PAUSE_ON			0x47 ///<方向固定する
+#define AC_DIR_PAUSE_OFF		0x48 ///<方向固定しない
+#define AC_ANM_PAUSE_ON			0x49 ///<アニメポーズ
+#define AC_ANM_PAUSE_OFF		0x4a ///<アニメポーズを解除
+#define AC_MARK_GYOE			0x4b ///<!マークを出す
+#define AC_WALK_U_6F			0x4c ///<上方向に移動　6フレーム
+#define AC_WALK_D_6F			0x4d ///<下方向に移動　6フレーム
+#define AC_WALK_L_6F			0x4e ///<左方向に移動　6フレーム
+#define AC_WALK_R_6F			0x4f ///<右方向に移動　6フレーム
+#define AC_WALK_U_3F			0x50 ///<上方向に移動　3フレーム
+#define AC_WALK_D_3F			0x51 ///<下方向に移動　3フレーム
+#define AC_WALK_L_3F			0x52 ///<左方向に移動　3フレーム
+#define AC_WALK_R_3F			0x53 ///<右方向に移動　3フレーム
+#define AC_WALK_U_1F			0x54 ///<上方向に移動　1フレーム(システム未対応 使用禁止
+#define AC_WALK_D_1F			0x55 ///<下方向に移動　1フレーム(システム未対応 使用禁止
+#define AC_WALK_L_1F			0x56 ///<左方向に移動　1フレーム(システム未対応 使用禁止
+#define AC_WALK_R_1F			0x57 ///<右方向に移動　1フレーム(システム未対応 使用禁止
+#define AC_DASH_U_4F			0x58 ///<上方向に移動　4フレーム(自機専用
+#define AC_DASH_D_4F			0x59 ///<下方向に移動　4フレーム(自機専用
+#define AC_DASH_L_4F			0x5a ///<左方向に移動　4フレーム(自機専用
+#define AC_DASH_R_4F			0x5b ///<右方向に移動　4フレーム(自機専用
+#define AC_JUMPHI_L_1G_16F		0x5c ///<左方向に高いジャンプ 1grid 16フレーム(自機専用
+#define AC_JUMPHI_R_1G_16F		0x5d ///<右方向に高いジャンプ 1grid 16フレーム(自機専用
+#define AC_JUMPHI_L_3G_32F		0x5e ///<左方向に高いジャンプ 3grid 32フレーム(自機専用
+#define AC_JUMPHI_R_3G_32F		0x5f ///<右方向に高いジャンプ 3grid 32フレーム(自機専用
+#define AC_WALK_U_7F			0x60 ///<上方向に移動　7フレーム
+#define AC_WALK_D_7F			0x61 ///<下方向に移動　7フレーム
+#define AC_WALK_L_7F			0x62 ///<左方向に移動　7フレーム
+#define AC_WALK_R_7F			0x63 ///<右方向に移動　7フレーム
+#define AC_PC_BOW				0x64 ///<PCお辞儀(PCWOMAN1専用
+#define AC_HIDE_PULLOFF			0x65 ///<隠れ蓑脱ぐ(MV_HIDE専用
+#define AC_HERO_BANZAI			0x66 ///<PC両手差出(自機専用
+#define AC_MARK_SAISEN			0x67 ///<再戦マーク表示
+#define AC_HERO_BANZAI_UKE		0x68 ///<PC両手差出受け取り(自機専用
+#define AC_WALKGL_U_8F			0x69 ///<左壁移動 上 8フレーム
+#define AC_WALKGL_D_8F			0x6a ///<左壁移動 下 8フレーム
+#define AC_WALKGL_L_8F			0x6b ///<左壁移動 左 8フレーム
+#define AC_WALKGL_R_8F			0x6c ///<左壁移動 右 8フレーム
+#define AC_WALKGR_U_8F			0x6d ///<右壁移動 上 8フレーム
+#define AC_WALKGR_D_8F			0x6e ///<右壁移動 下 8フレーム
+#define AC_WALKGR_L_8F			0x6f ///<右壁移動 左 8フレーム
+#define AC_WALKGR_R_8F			0x70 ///<右壁移動 右 8フレーム
+#define AC_WALKGU_U_8F			0x71 ///<上壁移動 上 8フレーム
+#define AC_WALKGU_D_8F			0x72 ///<上壁移動 下 8フレーム
+#define AC_WALKGU_L_8F			0x73 ///<上壁移動 左 8フレーム
+#define AC_WALKGU_R_8F			0x74 ///<上壁移動 右 8フレーム
+#define AC_JUMP_U_3G_24F		0x75 ///<上向きにジャンプ 3grid 24フレーム
+#define AC_JUMP_D_3G_24F		0x76 ///<上向きにジャンプ 3grid 24フレーム
+#define AC_JUMP_L_3G_24F		0x77 ///<上向きにジャンプ 3grid 24フレーム
+#define AC_JUMP_R_3G_24F		0x78 ///<上向きにジャンプ 3grid 24フレーム
+#define AC_DASHGL_U_4F			0x79 ///<左壁移動 上 4フレーム(自機専用
+#define AC_DASHGL_D_4F			0x7a ///<左壁移動 下 4フレーム(自機専用
+#define AC_DASHGL_L_4F			0x7b ///<左壁移動 左 4フレーム(自機専用
+#define AC_DASHGL_R_4F			0x7c ///<左壁移動 右 4フレーム(自機専用
+#define AC_DASHGR_U_4F			0x7d ///<右壁移動 上 4フレーム(自機専用
+#define AC_DASHGR_D_4F			0x7e ///<右壁移動 下 4フレーム(自機専用
+#define AC_DASHGR_L_4F			0x7f ///<右壁移動 左 4フレーム(自機専用
+#define AC_DASHGR_R_4F			0x80 ///<右壁移動 右 4フレーム(自機専用
+#define AC_DASHGU_U_4F			0x81 ///<上壁移動 上 4フレーム(自機専用
+#define AC_DASHGU_D_4F			0x82 ///<上壁移動 下 4フレーム(自機専用
+#define AC_DASHGU_L_4F			0x83 ///<上壁移動 左 4フレーム(自機専用
+#define AC_DASHGU_R_4F			0x84 ///<上壁移動 右 4フレーム(自機専用
 
-#define AC_JUMPGL_U_1G_8F		0x85		///<左壁　上向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGL_D_1G_8F		0x86		///<左壁　下向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGL_L_1G_8F		0x87		///<左壁　左向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGL_R_1G_8F		0x88		///<左壁　右向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGR_U_1G_8F		0x89		///<右壁　上向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGR_D_1G_8F		0x8a		///<右壁　下向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGR_L_1G_8F		0x8b		///<右壁　左向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGR_R_1G_8F		0x8c		///<右壁　右向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGU_U_1G_8F		0x8d		///<上壁　上向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGU_D_1G_8F		0x8e		///<上壁　下向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGU_L_1G_8F		0x8f		///<上壁　左向きにジャンプ 1グリッド 8フレーム
-#define AC_JUMPGU_R_1G_8F		0x90		///<上壁　右向きにジャンプ 1グリッド 8フレーム
-#define AC_WALKGU_U_4F			0x91		///<上壁移動 上 4フレーム
-#define AC_WALKGU_D_4F			0x92		///<上壁移動 下 4フレーム
-#define AC_WALKGU_L_4F			0x93		///<上壁移動 左 4フレーム
-#define AC_WALKGU_R_4F			0x94		///<上壁移動 右 4フレーム
-#define AC_WALKGU_U_2F			0x95		///<上壁移動 上 2フレーム
-#define AC_WALKGU_D_2F			0x96		///<上壁移動 下 2フレーム
-#define AC_WALKGU_L_2F			0x97		///<上壁移動 左 2フレーム
-#define AC_WALKGU_R_2F			0x98		///<上壁移動 右 2フレーム
-#define AC_MARK_GYOE_TWAIT		0x99		///<!マークを出す グラフィックデータ転送待ち版
+#define AC_JUMPGL_U_1G_8F		0x85 ///<左壁　上向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGL_D_1G_8F		0x86 ///<左壁　下向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGL_L_1G_8F		0x87 ///<左壁　左向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGL_R_1G_8F		0x88 ///<左壁　右向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGR_U_1G_8F		0x89 ///<右壁　上向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGR_D_1G_8F		0x8a ///<右壁　下向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGR_L_1G_8F		0x8b ///<右壁　左向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGR_R_1G_8F		0x8c ///<右壁　右向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGU_U_1G_8F		0x8d ///<上壁　上向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGU_D_1G_8F		0x8e ///<上壁　下向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGU_L_1G_8F		0x8f ///<上壁　左向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGU_R_1G_8F		0x90 ///<上壁　右向きにジャンプ 1grid 8フレーム
+#define AC_WALKGU_U_4F			0x91 ///<上壁移動 上 4フレーム
+#define AC_WALKGU_D_4F			0x92 ///<上壁移動 下 4フレーム
+#define AC_WALKGU_L_4F			0x93 ///<上壁移動 左 4フレーム
+#define AC_WALKGU_R_4F			0x94 ///<上壁移動 右 4フレーム
+#define AC_WALKGU_U_2F			0x95 ///<上壁移動 上 2フレーム
+#define AC_WALKGU_D_2F			0x96 ///<上壁移動 下 2フレーム
+#define AC_WALKGU_L_2F			0x97 ///<上壁移動 左 2フレーム
+#define AC_WALKGU_R_2F			0x98 ///<上壁移動 右 2フレーム
+#define AC_MARK_GYOE_TWAIT		0x99 ///<!マークを出す グラフィックデータ転送待ち版
 
-#define ACMD_MAX				0x9a		///<アニメーションコマンド最大数
+#define ACMD_MAX				0x9a ///<アニメーションコマンド最大数
 
-#define ACMD_END				0xfe		///<アニメーションコマンド終了
-#define ACMD_NOT				0xff		///<非アニメーションコマンド
+#define ACMD_END				0xfe ///<アニメーションコマンド終了
+#define ACMD_NOT				0xff ///<非アニメーションコマンド
 
-//==============================================================================
+//======================================================================
 //	フィールド動作モデル 表示コード
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 //	フィールド動作モデル 表示コード
 //--------------------------------------------------------------
@@ -888,9 +891,9 @@
 //--------------------------------------------------------------
 #define NONDRAW			(0x2000)
 
-//==============================================================================
+//======================================================================
 //	フィールド動作モデル モデルID
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 //	モデルID
 //--------------------------------------------------------------
@@ -915,9 +918,9 @@
 
 #define BLACT_MDLID_MAX			0xffff		///<モデルID最大
 
-//==============================================================================
+//======================================================================
 //	フィールド動作モデル アニメID
-//==============================================================================
+//======================================================================
 //--------------------------------------------------------------
 //	アニメID
 //--------------------------------------------------------------

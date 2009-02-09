@@ -191,9 +191,8 @@ static void GridMoveCreate(
 		fieldWork->fldMMdlSys = FLDMMDLSYS_Create(
 				fieldWork, GetFieldG3Dmapper(fieldWork->gs),
 				fieldWork->heapID, 256 );
-		pBlActCont = FLDMMDL_BLACTCONT_Setup( fieldWork->fldMMdlSys,
-				GetBbdActSys(fieldWork->gs), fieldWork->heapID );
-		FLDMMDLSYS_SetBlActCont( fieldWork->fldMMdlSys, pBlActCont );
+		FLDMMDL_BLACTCONT_Setup(
+				fieldWork->fldMMdlSys, GetBbdActSys(fieldWork->gs) );
 		
 		if( ZONEDATA_DEBUG_IsSampleObjUse(zone_id) == TRUE ){
 		//	GridMap_SetupNPC( fieldWork );
@@ -336,8 +335,7 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 #endif
 	}
 	
-	FLDMMDL_BLACTCONT_Release( fieldWork->fldMMdlSys,
-		FLDMMDLSYS_GetBlActCont(fieldWork->fldMMdlSys) );
+	FLDMMDL_BLACTCONT_Release( fieldWork->fldMMdlSys );
 	FLDMMDLSYS_DeleteAll( fieldWork->fldMMdlSys );
 }
 
