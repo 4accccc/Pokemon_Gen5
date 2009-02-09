@@ -1716,9 +1716,9 @@ BOOL BB_Client_JumpOnToBall( BB_CLIENT* wk )
 		if ( wk->cap_mane[ i ] == NULL ){
 			continue;
 		}
-		GFL_CLACT_WK_GetPos(wk->cap_mane[ i ], &calcpos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_GetPos(wk->cap_mane[ i ], &calcpos, CLSYS_DEFREND_SUB);
 		calcpos.y += -pos_2d_y;
-		GFL_CLACT_WK_SetPos(wk->cap_mane[ i ], &calcpos, CLWK_SETSF_NONE);
+		GFL_CLACT_WK_SetPos(wk->cap_mane[ i ], &calcpos, CLSYS_DEFREND_SUB);
 	}
 	
 	///< ‰º‰æ–Ê

@@ -522,19 +522,19 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 //3Dアニメ
 static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
 	{
-		SONANS_BALL1_NSBCA, 	//アニメリソースID
+		G3DRES_BALL1_BCA, 	//アニメリソースID
 		0,					//アニメデータID(リソース内部INDEX)
 	},
 	{
-		SONANS_BALL2_NSBCA, 	//アニメリソースID
+		G3DRES_BALL2_BCA, 	//アニメリソースID
 		0,					//アニメデータID(リソース内部INDEX)
 	},
 	{
-		SONANS_BALL3_NSBCA, 	//アニメリソースID
+		G3DRES_BALL3_BCA, 	//アニメリソースID
 		0,					//アニメデータID(リソース内部INDEX)
 	},
 	{
-		SONANS_BALL4_NSBCA, 	//アニメリソースID
+		G3DRES_BALL4_BCA, 	//アニメリソースID
 		0,					//アニメデータID(リソース内部INDEX)
 	},
 };
@@ -698,9 +698,9 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 	NELEMS(g3Dutil_objTbl),		//オブジェクト数
 };
 
-#define G3DUTIL_RESCOUNT	(NELEMS(g3Dutil_resTbl))
-#define G3DUTIL_OBJCOUNT	(NELEMS(g3Dutil_objTbl))
-
+//--------------------------------------------------------------
+//	
+//--------------------------------------------------------------
 enum{
 	G3DRES_PIPE_R_BMD = 0,
 	G3DRES_PIPE_B_BMD,
@@ -754,6 +754,10 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Pipe_setup = {
 	g3Dutil_Pipe_objTbl,		//オブジェクト設定テーブル
 	1,							//オブジェクト数
 };
+
+
+#define G3DUTIL_RESCOUNT	(NELEMS(g3Dutil_resTbl) + NELEMS(g3Dutil_Pipe_resTbl))
+#define G3DUTIL_OBJCOUNT	(NELEMS(g3Dutil_objTbl) + NELEMS(g3Dutil_Pipe_objTbl))
 
 #endif
 
@@ -1658,14 +1662,17 @@ static void BalloonSys_VramBankSet(void)
 		GFL_BG_ClearScreen(BALLOON_FRAME_WIN );
 		GFL_BG_SetScroll(BALLOON_FRAME_WIN, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(BALLOON_FRAME_WIN, GFL_BG_SCROLL_Y_SET, 0);
+		GFL_BG_SetVisible(BALLOON_FRAME_WIN, VISIBLE_ON);
 		GFL_BG_SetBGControl(BALLOON_FRAME_EFF, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(BALLOON_FRAME_EFF );
 		GFL_BG_SetScroll(BALLOON_FRAME_EFF, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(BALLOON_FRAME_EFF, GFL_BG_SCROLL_Y_SET, 0);
+		GFL_BG_SetVisible(BALLOON_FRAME_EFF, VISIBLE_ON);
 		GFL_BG_SetBGControl(BALLOON_FRAME_BACK, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(BALLOON_FRAME_BACK );
 		GFL_BG_SetScroll(BALLOON_FRAME_BACK, GFL_BG_SCROLL_X_SET, 0);
 		GFL_BG_SetScroll(BALLOON_FRAME_BACK, GFL_BG_SCROLL_Y_SET, 0);
+		GFL_BG_SetVisible(BALLOON_FRAME_BACK, VISIBLE_ON);
 
 		G2_SetBG0Priority(BALLOON_3DBG_PRIORITY);
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
@@ -1708,6 +1715,7 @@ static void BalloonSys_VramBankSet(void)
 			GFL_BG_ClearScreen(GFL_BG_FRAME0_S + i);
 			GFL_BG_SetScroll(GFL_BG_FRAME0_S + i, GFL_BG_SCROLL_X_SET, 0);
 			GFL_BG_SetScroll(GFL_BG_FRAME0_S + i, GFL_BG_SCROLL_Y_SET, 0);
+			GFL_BG_SetVisible(GFL_BG_FRAME0_S + i, VISIBLE_ON);
 		}
 		//最初は風船BG非表示
 		GFL_BG_SetVisible(BALLOON_SUBFRAME_BALLOON, VISIBLE_OFF);
@@ -1965,6 +1973,8 @@ void BalloonParticle_EmitAdd(BALLOON_GAME_PTR game, int emit_no)
 //--------------------------------------------------------------
 static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 {
+	int palno;
+	
 	//-- カウンター --//
 	{
 		STRBUF *str0, *str1;
@@ -1972,6 +1982,8 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		
 		game->pltt_id[PLTTID_COUNTER] = GFL_CLGRP_PLTT_RegisterEx(hdl, MINI_FUSEN_CCOBJ_NCLR,
 			CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
+		palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_COUNTER], CLSYS_DRAW_MAIN) / 0x20;
+		PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, palno*16, 1*0x20);
 
 	#if WB_TEMP_FIX
 		str0 = MSGMAN_AllocString(game->msgman, msg_balloon_counter001);
@@ -2009,6 +2021,8 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		//BGの下に敷くアクター
 		game->pltt_id[PLTTID_COUNTER_WIN] = GFL_CLGRP_PLTT_RegisterEx(hdl, MINI_FUSEN_CCOBJ_NCLR,
 			CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
+		palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_COUNTER_WIN], CLSYS_DRAW_MAIN) / 0x20;
+		PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, palno*16, 1*0x20);
 		game->cgr_id[CHARID_COUNTER_WIN] = GFL_CLGRP_CGR_Register(
 			hdl, MINI_FUSEN_CCOBJ_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_BALLOON);
 		game->cell_id[CELLID_COUNTER_WIN] = GFL_CLGRP_CELLANIM_Register(
@@ -2024,6 +2038,8 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		
 		game->pltt_id[PLTTID_TOUCH_PEN] = GFL_CLGRP_PLTT_RegisterEx(hdl_pen, 
 			NARC_wlmngm_tool_touchpen_NCLR, CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
+		palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_TOUCH_PEN], CLSYS_DRAW_MAIN) / 0x20;
+		PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, palno*16, 1*0x20);
 		game->cgr_id[CHARID_TOUCH_PEN] = GFL_CLGRP_CGR_Register(hdl_pen, 
 			NARC_wlmngm_tool_touchpen_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_BALLOON);
 		game->cell_id[CELLID_TOUCH_PEN] = GFL_CLGRP_CELLANIM_Register(hdl_pen, 
@@ -2066,10 +2082,14 @@ static void BalloonDefaultOBJDel(BALLOON_GAME_WORK *game)
 //--------------------------------------------------------------
 static void BalloonDefaultOBJSet_Sub(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 {
+	int palno;
+	
 	//常駐OBJパレットロード
 	game->pltt_id[PLTTID_SUB_OBJ_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
 		hdl, MINI_FUSEN_OBJ_NCLR,
 		CLSYS_DRAW_SUB, 0, 0, BALLOON_SUB_COMMON_PAL_NUM, HEAPID_BALLOON);
+	palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_SUB_OBJ_COMMON], CLSYS_DRAW_SUB) / 0x20;
+	PaletteWorkSet_VramCopy(game->pfd, FADE_SUB_OBJ, palno*16, BALLOON_SUB_COMMON_PAL_NUM*0x20);
 	
 	//風船などのキャラ＆セル登録
 	game->cgr_id[CHARID_SUB_BALLOON_MIX] = GFL_CLGRP_CGR_Register(
@@ -2318,6 +2338,7 @@ static void BalloonDefault3DSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 	MTX_Identity33(&pa->status.rotate);
 
 	//-- 台座 --//
+	daiza->g3dobj = GFL_G3D_UTIL_GetObjHandle(game->g3Dutil, objIdx + G3DOBJ_DAIZA);
 	VEC_Set(&daiza->status.trans, DAIZA_X, DAIZA_Y, DAIZA_Z);
 	VEC_Set(&daiza->status.scale, DAIZA_SCALE, DAIZA_SCALE, DAIZA_SCALE);
 	MTX_Identity33(&daiza->status.rotate);

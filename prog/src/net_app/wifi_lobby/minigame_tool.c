@@ -2281,7 +2281,7 @@ static GFL_CLWK* MNGM_CLACTRES_Add( MNGM_CLACTRESOBJ* p_obj, GFL_CLUNIT* p_clset
 
 	return GFL_OBJGRP_CreateClAct(clunit, p_obj->p_resobj_index[0], 
 		p_obj->p_resobj_index[1], p_obj->p_resobj_index[2], 
-		&HeadClwkData, CLWK_SETSF_NONE, heapID);
+		&HeadClwkData, CLSYS_DEFREND_MAIN, heapID);
 #endif
 }
 

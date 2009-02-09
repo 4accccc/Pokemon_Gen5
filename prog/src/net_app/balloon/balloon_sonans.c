@@ -827,7 +827,7 @@ static void Sonas_TexLoad(SONANS_SYS *sns)
 
 	//テクスチャファイル読み込み
 	hdl  = GFL_ARC_OpenDataHandle(ARCID_BALLOON_GRA, HEAPID_BALLOON);
-	sns->g3Dres_btx = GFL_G3D_CreateResourceHandle(hdl, ARCID_BALLOON_GRA);
+	sns->g3Dres_btx = GFL_G3D_CreateResourceHandle(hdl, SONANS_NSBTX);
 //	sns->tex_file = GFL_ARCHDL_UTIL_Load(hdl, SONANS_NSBTX, FALSE, HEAPID_BALLOON);
 	sns->texture = GFL_G3D_GetResTex(sns->g3Dres_btx);	// テクスチャリソース取得
 	GFL_ARC_CloseDataHandle(hdl);
