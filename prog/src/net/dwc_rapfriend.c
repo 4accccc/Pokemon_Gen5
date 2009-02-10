@@ -122,7 +122,7 @@ int dwc_checkFriendCodeByToken( u64 friend_key, int *index)
  */
 //------------------------------------------------------------------
 
-int dwc_friendAutoInputCheck( DWCFriendData* pFriend )
+int GFL_NET_DWC_FriendAutoInputCheck( DWCFriendData* pFriend )
 {
     int i,hit = FALSE,pos,ret;
     DWCFriendData *keyList  = GFI_NET_GetMyDWCFriendData();

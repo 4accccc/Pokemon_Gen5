@@ -34,6 +34,7 @@ extern int dwc_checkFriendCodeByToken( u64 friend_key, int *index);
  * @retval  int 	
  */
 //------------------------------------------------------------------
-extern int dwc_friendAutoInputCheck( DWCFriendData* pFriend );
+
+extern int GFL_NET_DWC_FriendAutoInputCheck( DWCFriendData* pFriend );
 
 #endif //__DWC_RAPFRIEND_H__

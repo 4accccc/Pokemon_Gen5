@@ -394,7 +394,7 @@ static BOOL _DevIsVChat(void)
 //------------------------------------------------------------------------------
 static BOOL _DevIsNewPlayer(void)
 {
-    return mydwc_IsNewPlayer();
+    return GFL_NET_DWC_IsNewPlayer();
 }
 
 

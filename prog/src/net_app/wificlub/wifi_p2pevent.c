@@ -351,10 +351,12 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
 
 static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+    return GFL_PROC_RES_FINISH;
 }
 
 static GFL_PROC_RESULT WifiClubProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+    return GFL_PROC_RES_FINISH;
 }
 
 

@@ -11,13 +11,9 @@
 #include	"pm_define.h"
 #include	"poke_tool/poke_tool.h"
 #include	"poke_tool_def.h"
-
-//セーブ系処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning	SaveData Nothing
-#endif
 #include	"poke_tool/pokeparty.h"
 #include	"pokeparty_local.h"
+#include     "savedata/save_tbl.h"  //save GMDATA_ID_MYPOKE
 
 //============================================================================================
 //============================================================================================
@@ -279,12 +275,34 @@ BOOL PokeParty_PokemonCheck(const POKEPARTY * ppt, int mons_no)
 	return (i!=ppt->PokeCount);
 }
 
-//セーブ系処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning	SaveData Nothing
-#endif
+//----------------------------------------------------------
+/**
+ * @brief	POKEPARTY内に戦えるモンスターがいるかどうか？
+ * @param	ppt		チェックするPOKEPARTY構造体へのポインタ
+ * @return	バトル出来る数
+ */
+//----------------------------------------------------------
+int PokeParty_GetBattlePokeNum(const POKEPARTY * ppt)
+{
+    POKEMON_PARAM* poke;
+    int max = PokeParty_GetPokeCount(ppt);
+    int i,num = 0;
 
-#if 0
+	for(i = 0 ; i < max ; i++){
+		poke = PokeParty_GetMemberPointer(ppt, i);
+        if (PP_Get(poke, ID_PARA_hp, NULL) == 0) {
+            continue;
+        }
+        if (PP_Get(poke, ID_PARA_tamago_flag, NULL)) {
+            continue;
+        }
+        num++;
+	}
+    return num;
+}
+
+
+
 //============================================================================================
 //============================================================================================
 //----------------------------------------------------------
@@ -294,16 +312,12 @@ BOOL PokeParty_PokemonCheck(const POKEPARTY * ppt, int mons_no)
  * @return	POKEPARTY	手持ちポケモンデータへのポインタ
  */
 //----------------------------------------------------------
-POKEPARTY * SaveData_GetTemotiPokemon(SAVEDATA * sv)
+POKEPARTY * SaveData_GetTemotiPokemon(SAVE_CONTROL_WORK * sv)
 {
 	POKEPARTY * party;
-	party = (POKEPARTY *)SaveData_Get(sv, GMDATA_ID_TEMOTI_POKE);
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_POKE)
-	SVLD_CheckCrc(GMDATA_ID_TEMOTI_POKE);
-#endif //CRC_LOADCHECK
+	party = (POKEPARTY *)SaveControl_DataPtrGet(sv, GMDATA_ID_MYPOKE);
 	return party;
 }
-#endif
 
 //----------------------------------------------------------
 /**
@@ -321,9 +335,6 @@ void Debug_PokeParty_MakeParty(POKEPARTY * party)
 		PP_Setup( &poke, 392+i, 99, 0 );
 		PokeParty_Add(party, &poke);
 	}
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_POKE)
-	SVLD_SetCrc(GMDATA_ID_TEMOTI_POKE);
-#endif //CRC_LOADCHECK
 }
 
 // 外部参照インデックスを作る時のみ有効(ゲーム中は無効)

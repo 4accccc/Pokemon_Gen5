@@ -291,7 +291,7 @@ static void WcrPCANM_UseEndReq( MCR_PCANM* p_wk );
  *	@param	friendNum	—F’B‚Ì‘”
  */
 //-----------------------------------------------------------------------------
-void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, GFL_BG_INI* p_bgl, u32 hero_view, u32 friendNum, u32 arcID )
+void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 hero_view, u32 friendNum, u32 arcID )
 {
 	WF2DMAP_POS map_siz;
 	u32 map_no;
@@ -301,7 +301,7 @@ void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, GFL_
 	map_no = (friendNum-1) / WCR_MAPDATA_1BLOCKOBJNUM;
 
 	p_mcr->use_heap = heapID;
-	p_mcr->p_bgl	= p_bgl;
+//	p_mcr->p_bgl	= p_bgl;
 	
 	// CLACT INIT
 	WcrClactInit( &p_mcr->clact, p_mcr->use_heap, p_handle );
@@ -1610,12 +1610,8 @@ static void WcrClactResEffectCursorDrawOn( WIFI_MATCHROOM* p_mcr, WF2DMAP_POS po
 //	VecFx32 mat;
     GFL_CLACTPOS clp;
 
-	pos.x += MCR_EFFECTWAKURES_OFS_X;
-	pos.y += MCR_EFFECTWAKURES_OFS_Y;
-//	mat.x = pos.x << FX32_SHIFT;
-//	mat.y = pos.y << FX32_SHIFT;
-    clp.x = pos.x;
-    clp.y = pos.y;
+    clp.x = pos.x + MCR_EFFECTWAKURES_OFS_X;
+    clp.y = pos.y + MCR_EFFECTWAKURES_OFS_Y;
     
 //	CLACT_SetMatrix( p_mcr->clact.effect.obj_waku, &mat );
     GFL_CLACT_WK_SetWldPos( p_mcr->clact.effect.obj_waku, &clp);

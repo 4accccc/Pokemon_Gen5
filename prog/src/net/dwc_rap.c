@@ -282,7 +282,7 @@ int mydwc_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
 	_dWork->clientCallback = NULL;	
 	_dWork->fetalErrorCallback = NULL;
 	_dWork->state = MDSTATE_INIT;
-    GFL_HEAP_CreateHeap( pNetInit->baseHeapID, pNetInit->wifiHeapID, pNetInit->heapSize );
+//    GFL_HEAP_CreateHeap( pNetInit->baseHeapID, pNetInit->wifiHeapID, pNetInit->heapSize );
 
     _dWork->vchatcodec = VCHAT_NONE;
 	_dWork->friendindex = -1;
@@ -1969,7 +1969,7 @@ void mydwc_Logout(void)
  * @retval  none
  */
 //==============================================================================
-void mydwc_setFriendStateBuffer( void *array, int size )
+void GFL_NET_DWC_SetFriendStateBuffer( void *array, int size )
 {
 	_dWork->friendinfo = array;	
 	_dWork->infosize = size;
@@ -2132,7 +2132,7 @@ int GFL_NET_DWC_StartGame( int target,int maxnum, BOOL bVCT )
  * @retval  ０以上…友達番号。－１…まだ接続してない。
  */
 //==============================================================================
-int mydwc_getFriendIndex()
+int GFL_NET_DWC_GetFriendIndex(void)
 {
     if(_dWork){
         // 今接続している友達のフレンドリスト上の位置を返します。
@@ -2428,7 +2428,7 @@ BOOL mydwc_IsVChat(void)
  * @retval  TRUE…接続開始なのでキー操作をブロック   FALSE…
  */
 //==============================================================================
-BOOL mydwc_IsNewPlayer(void)
+BOOL GFL_NET_DWC_IsNewPlayer(void)
 {
     if(_dWork){
         return _dWork->newFriendConnect;
@@ -2442,7 +2442,7 @@ BOOL mydwc_IsNewPlayer(void)
  * @retval  none
  */
 //==============================================================================
-void mydwc_ResetNewPlayer(void)
+void GFL_NET_DWC_ResetNewPlayer(void)
 {
     if(_dWork){
         _dWork->newFriendConnect = -1;
@@ -2454,7 +2454,7 @@ void mydwc_ResetNewPlayer(void)
  * VCHATのONOFF     k.ohno 06.05.24
  */
 //==============================================================================
-void mydwc_setVChat(BOOL bVChat)
+void GFL_NET_DWC_SetVChat(BOOL bVChat)
 {
     _dWork->bVChat = bVChat;
 }
@@ -2641,7 +2641,7 @@ u8 GFL_NET_DWC_GetSaving(void)
  *	@brief	セーブして良いかどうか確認するフラグを消す
  */
 //-----------------------------------------------------------------------------
-void mydwc_resetSaving(void)
+void GFL_NET_DWC_ResetSaving(void)
 {
     _dWork->saveing = 0;
 }

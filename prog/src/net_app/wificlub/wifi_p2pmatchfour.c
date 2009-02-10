@@ -10,7 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include <gflib.h>
-#include <calctool.h>
+//#include <calctool.h>
 #include "arc_def.h"
 
 #include "message.naix"
@@ -1516,9 +1516,6 @@ static void WFP2PMF_GraphicBmpMsgInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT*
 {
 	// タイトル
 	switch( cp_init->type ){
-	case WFP2PMF_TYPE_POFIN:				// ポフィン
-		break;
-		
 	case WFP2PMF_TYPE_BUCKET:			// たまいれ
 		WORDSET_RegisterWiFiLobbyGameName( p_draw->p_wordset, 0, WFLBY_GAME_BALLSLOW );
 		break;
@@ -2326,10 +2323,6 @@ static BOOL WFP2PMF_CommWiFiMatchStart( u32 friendno, u32 type )
 	ret = GFL_NET_StateStartWifiPeerMatch( friendno );
 	if( ret == TRUE ){
 //		switch( type ){
-//		case WFP2PMF_TYPE_POFIN:				// ポフィン
-//			CommStateChangeWiFiPofin();
-//			break;
-			
 //		case WFP2PMF_TYPE_BUCKET:			// たまいれ
 //		case WFP2PMF_TYPE_BALANCE_BALL:		// たまのり	
 //		case WFP2PMF_TYPE_BALLOON:			// ふうせんわり
@@ -2357,12 +2350,6 @@ static BOOL WFP2PMF_CheckP2PMatchFriendStatus( const WFP2PMF_WK* cp_wk, const WF
 	}
 
 	switch( cp_param->type ){
-	case WFP2PMF_TYPE_POFIN:
-		if( (cp_wk->data.p_match->friendMatchStatus[ friend ].status == WIFI_STATUS_POFIN) ||
-			(cp_wk->data.p_match->friendMatchStatus[ friend ].status == WIFI_STATUS_POFIN_WAIT) ){
-			return TRUE;
-		}
-		break;
 
 	case WFP2PMF_TYPE_BUCKET:
 		if( (cp_wk->data.p_match->friendMatchStatus[ friend ].status == WIFI_STATUS_BUCKET) ||
@@ -2400,9 +2387,6 @@ static BOOL WFP2PMF_CheckP2PMatchFriendStatus( const WFP2PMF_WK* cp_wk, const WF
 static void WFP2PMF_StatusChange( WFP2PMF_WK* p_wk, const WFP2PMF_INIT* cp_init )
 {
 	switch( cp_init->type ){
-	case WFP2PMF_TYPE_POFIN:
-		p_wk->data.p_match->myMatchStatus.status = WIFI_STATUS_POFIN;
-		break;
 
 	case WFP2PMF_TYPE_BUCKET:
 		p_wk->data.p_match->myMatchStatus.status = WIFI_STATUS_BUCKET;

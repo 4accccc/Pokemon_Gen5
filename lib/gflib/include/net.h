@@ -808,6 +808,22 @@ extern void* GFL_NET_GetWork(void);
  */
 //==============================================================================
 extern u16 GFL_NET_SystemGetCurrentID(void);
+//--------------------------------------------------------------
+/**
+ * @brief  初期化構造体の変更
+ * @param[in]   pNetInit  通信初期化構造体のポインタ
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_ChangeInitStruct(const GFLNetInitializeStruct* pNetInit);
+//----------------------------------------------------------------
+/**
+ * @brief   wifi接続したかどうかを設定する
+ * @param   none
+ * @retval  コマンドが在ったらFALSE
+ */
+//----------------------------------------------------------------
+extern BOOL GFL_NET_SystemGetWifiConnect(void);
+
 
 #include "net_devicetbl.h"
 

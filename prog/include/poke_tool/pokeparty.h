@@ -15,8 +15,7 @@
 #ifndef	__POKEPARTY_H__
 #define	__POKEPARTY_H__
 
-//セーブ系ないです
-//#include "system/save_control.h"	//SAVEDATA参照のため
+#include "savedata/save_control.h"	//SAVEDATA参照のため
 #include "poke_tool.h"
 
 //============================================================================================
@@ -50,12 +49,13 @@ extern BOOL PokeParty_PokemonCheck(const POKEPARTY * ppt, int mons_no);
 extern int	PokeParty_GetPokeCountMax(const POKEPARTY * party);
 extern int PokeParty_GetPokeCount(const POKEPARTY* party);
 extern void PokeParty_SetMemberData( POKEPARTY* party, int pos, POKEMON_PARAM* pp );
+extern int PokeParty_GetBattlePokeNum(const POKEPARTY * ppt);
 
 extern void Debug_PokeParty_MakeParty(POKEPARTY * party);
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
-//extern POKEPARTY * SaveData_GetTemotiPokemon(SAVEDATA * sv);
+extern POKEPARTY * SaveData_GetTemotiPokemon(SAVE_CONTROL_WORK * sv);
 
 #ifdef CREATE_INDEX
 extern void *Index_Get_PokeCount_Offset(POKEPARTY *pt);

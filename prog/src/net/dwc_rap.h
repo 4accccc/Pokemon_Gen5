@@ -220,16 +220,6 @@ extern void mydwc_Logout(void);
 
 
 
-//==============================================================================
-/**
- * オンラインの友達がサーバにアップしている情報をおさめる配列を指定します。
- * この配列はmydwc_step, mydwc_stepmatchを呼び出した際に更新される可能性があります。
- * @param 	array - データをおさめる配列の先頭
- * @param 	size  - 一人あたりのデータサイズ
- * @retval  none
- */
-//==============================================================================
-extern void mydwc_setFriendStateBuffer( void *array, int size );
 
 //==============================================================================
 /**
@@ -285,7 +275,7 @@ extern void mydwc_changeVADLevel(int d);
  * @retval  ０以上…友達番号。－１…まだ接続してない。
  */
 //==============================================================================
-extern int mydwc_getFriendIndex();
+extern int GFL_NET_DWC_GetFriendIndex(void);
 
 //==============================================================================
 /**
@@ -331,8 +321,8 @@ extern u32 mydwc_GetBitmap(void);
  * @retval  フレンドインデックス  無効=-1
  */
 //==============================================================================
-extern int mydwc_IsNewPlayer(void);
-extern void mydwc_ResetNewPlayer(void);
+extern int GFL_NET_DWC_IsNewPlayer(void);
+extern void GFL_NET_DWC_ResetNewPlayer(void);
 
 //==============================================================================
 /**
@@ -340,7 +330,7 @@ extern void mydwc_ResetNewPlayer(void);
  * @retval  ON = TRUE
  */
 //==============================================================================
-extern void mydwc_setVChat(BOOL bVChat);
+extern void GFL_NET_DWC_SetVChat(BOOL bVChat);
 //==============================================================================
 /**
  * 遅延機能ののONOFFができる    k.ohno 06.05.30
@@ -417,7 +407,7 @@ extern int GFL_NET_DWC_SendToOther(void *data, int size);
  *	@brief	セーブして良いかどうか確認するフラグを消す
  */
 //-----------------------------------------------------------------------------
-extern void mydwc_resetSaving(void);
+extern void GFL_NET_DWC_ResetSaving(void);
 //----------------------------------------------------------------------------
 /**
  *	@brief	キャンセル処理を行って良いかどうか

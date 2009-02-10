@@ -131,6 +131,7 @@ static BOOL _DevStartFunc(NetDevEndCallback callback)
 static int _DevMainFunc(u16 bitmap)
 {
     GFL_NET_IRC_CommandContinue();
+    return 0;
 }
 
 //------------------------------------------------------------------------------
@@ -143,6 +144,7 @@ static int _DevMainFunc(u16 bitmap)
 static BOOL _DevEndFunc(BOOL bForce,NetDevEndCallback callback)
 {
     //ê‘äOê¸Ç…ÇÕêÿífèàóùÇ™Ç»Ç¢
+    return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -155,6 +157,7 @@ static BOOL _DevEndFunc(BOOL bForce,NetDevEndCallback callback)
 static BOOL _DevExitFunc(NetDevEndCallback callback)
 {
     GFL_NET_IRC_Exit();
+    return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -181,6 +184,7 @@ static BOOL _DevSendDataFunc(void* data,int size,int no,NetDevEndCallback callba
 static BOOL _DevSetRecvCallbackFunc(PTRCommRecvLocalFunc recvCallback)
 {
     GFL_NET_IRC_RecieveFuncSet(recvCallback);
+    return TRUE;
 }
 
 

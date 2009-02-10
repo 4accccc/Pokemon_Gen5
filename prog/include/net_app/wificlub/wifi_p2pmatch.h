@@ -23,7 +23,7 @@
  */
 //------------------------------------------------------
 typedef struct {
-	GFL_SAVEDATA*  pSaveData;
+	SAVE_CONTROL_WORK*  pSaveData;
     int seq;                // ‚Ç‚±‚É•ªŠò‚µ‚Ä‚Ù‚µ‚¢‚©‚ª“ü‚Á‚Ä‚¢‚é
     int targetID;   //‘Îí ŒğŠ·‚·‚él‚ª’N‚È‚Ì‚©‚ª“ü‚Á‚Ä‚¢‚é
 }WIFIP2PMATCH_PROC_PARAM;

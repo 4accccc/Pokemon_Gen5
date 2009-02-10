@@ -13,10 +13,13 @@
 
 #include <gflib.h>
 #include "savedata/wifilist.h"
+#include "savedata/config.h"
 #include "print/wordset.h"
 #include "wifi_p2pmatchroom.h"
+#include "system/bmp_menu.h"
 #include "system/bmp_menulist.h"
 #include "net_app/connect_anm.h"
+#include "poke_tool/pokeparty.h"
 
 
 #define WIFIP2PMATCH_MEMBER_MAX  (WIFILIST_FRIEND_MAX)
@@ -165,8 +168,6 @@ typedef enum{
   WIFI_STATUS_DP_UNK,        // DPのUNKNOWN
   
   // プラチナで追加
-  WIFI_STATUS_POFIN,          // ポフィン料理中
-  WIFI_STATUS_POFIN_WAIT,    // ポフィン募集中
   WIFI_STATUS_FRONTIER,          // フロンティア中
   WIFI_STATUS_FRONTIER_WAIT,    // フロンティア募集中
 
@@ -199,13 +200,13 @@ typedef enum{
 #define _CANCELENABLE_TIMER (60*30)   // キャンセルになる為のタイマー60min
 
 
-enum{
+typedef enum{
 	WF_VIEW_STATUS,
 	WF_VIEW_VCHAT,
 	WF_VIEW_STATUS_NUM,
 } WF_VIEW_STATUS_e;
 
-enum{
+typedef enum{
 	WF_USERDISPTYPE_NRML,	// 通常
 	WF_USERDISPTYPE_MINI,	// ミニゲーム
 	WF_USERDISPTYPE_BLTW,	// バトルタワー
@@ -217,7 +218,7 @@ enum{
 } WF_USERDISPTYPE__e;
 
 // ユーザ表示ボタン数
-enum{
+typedef enum{
 	MCV_USERD_BTTN_LEFT = 0,
 	MCV_USERD_BTTN_BACK,
 	MCV_USERD_BTTN_RIGHT,
@@ -308,7 +309,7 @@ typedef struct {
    GFL_CLWK* button_act[MCV_USERD_BTTN_NUM];
 #if 0 //@@OO
   CHAR_MANAGER_ALLOCDATA back_fontoam_cg;
-	FONTOAM_OBJ_PTR back_fontoam;	// もどる用FONTOAM
+  FONTOAM_OBJ_PTR back_fontoam;	// もどる用FONTOAM
 #endif
   u32 buttonact_on;			// ボタン動作モード
 	u32 touch_button;
@@ -334,13 +335,16 @@ struct _WIFIP2PMATCH_WORK{
   
   BMP_MENULIST_DATA*   submenulist;
   BMPMENULIST_WORK* sublw;		// BMPメニューワーク
-  GFL_BG_INI		*bgl;									// GF_BGL_INI
-#if 0
-  //SAVEDATA*  pSaveData;
-#endif
+//  GFL_BG_INI		*bgl;									// GF_BGL_INI
+  SAVE_CONTROL_WORK*  pSaveData;
+  POKEPARTY* pMyPoke;
+  void* pEmail;
+  void* pFrontier;
+  CONFIG* pConfig;
   WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー
   GFL_MSGDATA *MsgManager;							// 名前入力メッセージデータマネージャー
   GFL_MSGDATA *SysMsgManager;  //
+  GFL_FONT 			*fontHandle;
  // STRBUF			*TrainerName[WIFIP2PMATCH_MEMBER_MAX];		// 名前
 //  STRBUF			*MsgString;								// メッセージ
   STRBUF*         pExpStrBuf;
@@ -350,7 +354,7 @@ struct _WIFIP2PMATCH_WORK{
   STRBUF*         pTemp;        // 入力登録時の一時バッファ
   
   int				MsgIndex;								// 終了検出用ワーク
-  BMPMENULIST_WORK* pYesNoWork;
+  BMPMENU_WORK* pYesNoWork;
   void* timeWaitWork;			// タイムウエイトアイコンワーク
 //  CLACT_SET_PTR 			clactSet;								// セルアクターセット
   GFL_CLUNIT* clactSet;								// セルアクターセット
@@ -373,6 +377,8 @@ struct _WIFIP2PMATCH_WORK{
   GFL_BMPWIN*			ListWin;									// フレンドリスト
   GFL_BMPWIN*			SubListWin;									// 募集するタイプなどを描画するリスト
   GFL_BMPWIN*			MyWin;									// 友達の個人情報表示
+  PRINT_UTIL            SysMsgPrintUtil;    // システムウインドウPrintUtil
+  PRINT_QUE*            SysMsgQue;
 
    int cancelEnableTimer;   // キャンセル許可になる為のタイマー
   int localTime;

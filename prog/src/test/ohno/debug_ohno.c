@@ -366,7 +366,7 @@ static BOOL NetTestEndStart(void* pCtl)
  */
 //--------------------------------------------------------------
 
-void _initCallBack(void* pWork)
+static void _initCallBack(void* pWork)
 {
     DEBUG_OHNO_CONTROL* pDOC = pWork;
     _CHANGE_STATE( NetTestAutoConnect );

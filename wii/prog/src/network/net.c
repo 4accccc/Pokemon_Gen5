@@ -208,7 +208,7 @@ void GFL_NET_Boot(HEAPID heapID, NetErrorFunc errorFunc)
 
 //==============================================================================
 /**
- * @brief 通信初期化が完了したかどうかを確認する  今のところIchneumonと同じ
+ * @brief 通信初期化が完了したかどうかを確認する
  * @retval TRUE   初期化終了
  * @retval FALSE  初期化がまだ終わっていない
  */
