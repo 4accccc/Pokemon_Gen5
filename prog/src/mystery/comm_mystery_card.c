@@ -554,6 +554,7 @@ static void DrawStringWindow(MYSTERYCARD_WORK *wk,GFL_BMPWIN *win, int msgid)
 
 	//GF_BGL_BmpWinDataFill(win, FontHeaderGet(FONT_TALK, FONT_HEADER_B_COLOR));
 	baseStr = GFL_STR_CreateBuffer( 192 , wk->heapid );
+	msg = GFL_STR_CreateBuffer( 96 , HEAPID_MYSTERYGIFT );
 	GFL_MSG_GetString( msgman , msgid , baseStr );
 	WORDSET_ExpandStr( word , msg , baseStr );
 	//msg = MSGDAT_UTIL_AllocExpandString(word, msgman, msgid, HEAPID_MYSTERYCARD);
@@ -784,6 +785,7 @@ static BOOL MysteryCardStatusWin(MYSTERYCARD_WORK *wk, GFL_BMPWIN **win, int lco
 	}
 
 	baseStr = GFL_STR_CreateBuffer( 192 , wk->heapid );
+	msg = GFL_STR_CreateBuffer( 192 , HEAPID_MYSTERYGIFT );
 	GFL_MSG_GetString( wk->msgman , msgid , baseStr );
 	WORDSET_ExpandStr( wk->word , msg , baseStr );
 //	msg = MSGDAT_UTIL_AllocExpandString(wk->word, wk->msgman, msgid, wk->heapid);
@@ -863,6 +865,7 @@ static BOOL MysteryCardTransWin(MYSTERYCARD_WORK *wk, GFL_BMPWIN **win, int lcol
 		// 無限回数の配布
 		STRBUF *msg,*baseStr;
 		baseStr = GFL_STR_CreateBuffer( 192 , wk->heapid );
+		msg = GFL_STR_CreateBuffer( 192 , HEAPID_MYSTERYGIFT );
 		GFL_MSG_GetString( wk->msgman , mystery_card_016 , baseStr );
 		WORDSET_ExpandStr( wk->word , msg , baseStr );
 //		msg = MSGDAT_UTIL_AllocExpandString(wk->word, wk->msgman, mystery_card_016, wk->heapid);
@@ -1054,6 +1057,7 @@ static void MysteryCardCreateMsgWindow(MYSTERYCARD_WORK *wk, int font, int side)
 				// メッセージがあれば表示する
 				if(tbl[i].msgid){
 					baseStr = GFL_STR_CreateBuffer( 192 , wk->heapid );
+					msg = GFL_STR_CreateBuffer( 192 , HEAPID_MYSTERYGIFT );
 					GFL_MSG_GetString( wk->msgman , tbl[i].msgid , baseStr );
 					WORDSET_ExpandStr( wk->word , msg , baseStr );
 					//msg = MSGDAT_UTIL_AllocExpandString(wk->word, wk->msgman, tbl[i].msgid, wk->heapid);
@@ -1112,6 +1116,7 @@ static int MysteryCardCreateWindow(MYSTERYCARD_WORK *wk, GFL_BMPWIN	**win, int i
 	// メッセージがあれば表示して…
 	if(tbl->msgid){
 		baseStr = GFL_STR_CreateBuffer( 192 , wk->heapid );
+		msg = GFL_STR_CreateBuffer( 192 , HEAPID_MYSTERYGIFT );
 		GFL_MSG_GetString( wk->msgman , tbl->msgid , baseStr );
 		WORDSET_ExpandStr( wk->word , msg , baseStr );
 		//msg = MSGDAT_UTIL_AllocExpandString(wk->word, wk->msgman, tbl->msgid, HEAPID_MYSTERYCARD);

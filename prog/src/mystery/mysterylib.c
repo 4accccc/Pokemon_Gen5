@@ -1224,7 +1224,7 @@ void MysteryLib_DecodeCryptoData(GIFT_COMM_PACK *gift_data, GIFT_DATA *data, int
 	MATHCRC16Table *CrcTbl;
 	CRYPTORC4Context *rc4context;
 	const WMBssDesc *bssDesc;
-	u16 key[4];
+	u16 key[4]={0,0,0,0};
 	u16 crc, mask;
 	int i;
 
@@ -1262,7 +1262,7 @@ void MysteryLib_DecodeCryptoData(GIFT_COMM_PACK *gift_data, GIFT_DATA *data, int
 	// 親のMACアドレスを得る
 	//FIXME 親のMACアドレスを接続時保持しておくこと
 	//bssDesc = CommMPGetWMBssDesc(0);
-	memcpy(key, bssDesc->bssid, WM_SIZE_BSSID);
+	//memcpy(key, bssDesc->bssid, WM_SIZE_BSSID);
 	key[3] = key[1];
 	key[1] = crc;
 	mask = SECRET_KEY;
