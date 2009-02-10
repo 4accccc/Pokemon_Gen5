@@ -28,7 +28,7 @@ typedef struct _BTLV_SCD	BTLV_SCD;
 
 
 
-extern BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, GFL_TCBLSYS* tcbl, GFL_FONT* font, HEAPID heapID );
+extern BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID );
 extern void BTLV_SCD_Delete( BTLV_SCD* wk );
 
 extern void BTLV_SCD_Setup( BTLV_SCD* wk );

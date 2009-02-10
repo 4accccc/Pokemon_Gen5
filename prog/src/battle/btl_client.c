@@ -768,8 +768,7 @@ static BOOL scProc_DATA_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 			u8 memberIdx = wk->cmdArgs[2];
 			BtlPokePos  pokePos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
 
-			BTL_Printf("[CL] MEMBER IN .... client=%d, posIdx=%d, memberIdx=%d\n", clientID, posIdx, memberIdx);
-
+			BTL_Printf("[CL] MEMBER IN .... myParty:%p, client=%d, posIdx=%d, memberIdx=%d\n", wk->myParty, clientID, posIdx, memberIdx);
 			BTL_MAIN_CLIENTDATA_SwapPartyMembers( wk->mainModule, clientID, posIdx, memberIdx );
 
 			BTLV_StartMemberChangeAct( wk->viewCore, pokePos, clientID, memberIdx );

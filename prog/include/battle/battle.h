@@ -26,7 +26,7 @@
 //--------------------------------------------------------------
 typedef enum {
 
-	BTL_ENGINE_ALONE,			///< スタンドアロン
+	BTL_ENGINE_ALONE,					///< スタンドアロン
 	BTL_ENGINE_COMM_PARENT,		///< 通信（親）
 	BTL_ENGINE_COMM_CHILD,		///< 通信（子）
 
@@ -66,7 +66,7 @@ typedef enum {
 typedef enum {
 
 	BTL_COMM_NONE,	///< 通信しない
-	BTL_COMM_DS,	///< DS無線通信
+	BTL_COMM_DS,		///< DS無線通信
 	BTL_COMM_WIFI,	///< Wi-Fi通信
 
 }BtlCommMode;
@@ -76,9 +76,9 @@ typedef struct {
 
 	BtlEngineType		engine;
 	BtlCompetitor		competitor;
-	BtlRule				rule;
+	BtlRule					rule;
 
-	GFL_NETHANDLE*		netHandle;
+	GFL_NETHANDLE*	netHandle;
 	BtlCommMode			commMode;
 	u8							commPos;		///< 通信対戦なら自分の立ち位置（非通信時は無視）
 	u8							netID;			///< NetID

@@ -778,10 +778,10 @@ static void autoConnectCallBack( void* pWork )
 
 FS_EXTERN_OVERLAY(battle);
 
-#include "battle/battle.h"
-#include "poke_tool/monsno_def.h"
-#include "waza_tool/wazano_def.h"
-
+#include "battle\battle.h"
+#include "poke_tool\monsno_def.h"
+#include "waza_tool\wazano_def.h"
+#include "test\performance.h"
 
 //----------------------------------
 // スタンドアロン
@@ -964,7 +964,7 @@ static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void*
 			BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
 
 			para->engine = BTL_ENGINE_ALONE;
-			para->rule = BTL_RULE_SINGLE;
+			para->rule = BTL_RULE_DOUBLE;
 			para->competitor = BTL_COMPETITOR_COMM;
 
 			para->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
@@ -986,6 +986,7 @@ static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void*
 				setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
 			}
 
+			DEBUG_PerformanceSetActive( FALSE );
 			GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
 			(*seq)++;
 		}

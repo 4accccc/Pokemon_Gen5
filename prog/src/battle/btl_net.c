@@ -249,26 +249,26 @@ BOOL BTL_NET_IsServer( void )
 
 
 // 各マシンにクライアントIDを通知する（サーバからのみ呼び出し）
-void BTL_NET_NotifyClientID( NetID netID, const u8* clientID, u8 numClients )
+void BTL_NET_NotifyClientID( NetID netID, const u8* clientID, u8 numCoverPos )
 {
-	GF_ASSERT(numClients<=3);
+	GF_ASSERT(numCoverPos<=BTL_POSIDX_MAX);
 
 	{
 		TMP_SEND_BUFFER* tsbuf;
 		u8 i;
 
-		BTL_Printf("[BTLNET] netID=%d のマシンにクライアントIDを通知します。受け持ち数は%d,\n", netID, numClients );
+		BTL_Printf("[BTLNET] netID=%d のマシンにクライアントIDを通知します。受け持ち場所数は%d,\n", netID, numCoverPos );
 		BTL_Printf("  クライアントID=[ ");
 
 		tsbuf = &Sys->sendBuf[netID];
 
-		for(i=0; i<numClients; i++)
+		for(i=0; i<numCoverPos; i++)
 		{
 			tsbuf->val8[i+1] = clientID[i];
 			BTL_Printf("%d ", clientID[i]);
 		}
 		BTL_Printf("]\n");
-		tsbuf->val8[0] = numClients;
+		tsbuf->val8[0] = numCoverPos;
 
 		BTL_Printf("  送信サイズ=%d, 内容=%d,%d,%d,%d\n",
 			sizeof(*tsbuf), tsbuf->val8[0], tsbuf->val8[1], tsbuf->val8[2], tsbuf->val8[3] );
@@ -296,7 +296,7 @@ static void recv_cliendID( const int netID, const int size, const void* pData, v
 
 	BTL_Printf("[BTLNET] netID=%d, クライアントID受信しました。バッファ内容=%d,%d,%d,%d, 受け持ち数は%d,\n",
 			netID, tsb->val8[0], tsb->val8[1], tsb->val8[2], tsb->val8[3], tsb->val8[0]);
-	BTL_Printf("    ID=[ ");
+	BTL_Printf("    Pos=[ ");
 
 	for(i=0; i<tsb->val8[0]; i++)
 	{

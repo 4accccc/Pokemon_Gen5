@@ -38,13 +38,6 @@ enum {
 
 typedef BOOL (*pMainLoop)(BTL_MAIN_MODULE*);
 
-typedef struct {
-	u8	competitor;
-	u8	rule;
-	u8	engine;
-	u8	comm_mode;
-}BTL_BASIC_PARAMS;
-
 
 struct _BTL_PARTY {
 	BTL_POKEPARAM*  member[ TEMOTI_POKEMAX ];
@@ -56,7 +49,6 @@ struct _BTL_PARTY {
 struct _BTL_MAIN_MODULE {
 
 	const BATTLE_SETUP_PARAM*	setupParam;
-	BTL_BASIC_PARAMS			basicParam;
 
 	BTLV_CORE*		viewCore;
 	BTL_SERVER*		server;
@@ -68,6 +60,8 @@ struct _BTL_MAIN_MODULE {
 	BTL_POKEPARAM*	pokeParam[ BTL_COMMITMENT_POKE_MAX ];
 	BTL_PARTY				partyForServerCalc[ BTL_CLIENT_MAX ];
 	BTL_POKEPARAM*	pokeParamForServerCalc[ BTL_COMMITMENT_POKE_MAX ];
+
+	u8							posCoverClientID[ BTL_POS_MAX ];
 
 	u8				numClients;
 	u8				myClientID;
@@ -94,6 +88,7 @@ static BOOL cleanup_alone_single( int* seq, void* work );
 static BOOL setup_comm_single( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
 static BOOL cleanup_alone_double( int* seq, void* work );
+static BOOL setup_comm_double( int* seq, void* work );
 static void setupPokeParams( BTL_PARTY* dstParty, BTL_POKEPARAM** dstParams, const POKEPARTY* party, u8 pokeID_Origin );
 static void cleanupPokeParams( BTL_PARTY* party );
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk );
@@ -200,6 +195,14 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 // 各種モジュール生成＆関連付けルーチンを設定
 static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param )
 {
+	int i;
+
+	// 位置担当クライアントIDを無効値で初期化しておく
+	for(i=0; i<NELEMS(wk->posCoverClientID); ++i)
+	{
+		wk->posCoverClientID[i] = BTL_CLIENT_MAX;
+	}
+
 	// @@@ 本来は setup_param を参照して各種初期化処理ルーチンを決定する
 	if( setup_param->commMode == BTL_COMM_NONE )
 	{
@@ -218,7 +221,18 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
 	}
 	else
 	{
-		BTL_UTIL_SetupProc( bp, wk, setup_comm_single, NULL );
+		switch( setup_param->rule ){
+		case BTL_RULE_SINGLE:
+			BTL_UTIL_SetupProc( bp, wk, setup_comm_single, NULL );
+			break;
+		case BTL_RULE_DOUBLE:
+			BTL_UTIL_SetupProc( bp, wk, setup_comm_double, NULL );
+			break;
+		default:
+			GF_ASSERT(0);
+			BTL_UTIL_SetupProc( bp, wk, setup_alone_single, NULL );
+			break;
+		}
 	}
 }
 
@@ -243,7 +257,18 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 	}
 	else
 	{
-		BTL_UTIL_SetupProc( bp, wk, cleanup_alone_single, NULL );
+		switch( setup_param->rule ){
+		case BTL_RULE_SINGLE:
+			BTL_UTIL_SetupProc( bp, wk, cleanup_alone_single, NULL );
+			break;
+		case BTL_RULE_DOUBLE:
+			BTL_UTIL_SetupProc( bp, wk, cleanup_alone_double, NULL );
+			break;
+		default:
+			GF_ASSERT(0);
+			BTL_UTIL_SetupProc( bp, wk, cleanup_alone_single, NULL );
+			break;
+		}
 	}
 
 }
@@ -275,6 +300,8 @@ static BOOL setup_alone_single( int* seq, void* work )
 	wk->numClients = 2;
 	wk->myClientID = 0;
 	wk->myOrgPos = BTL_POS_1ST_0;
+	wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+	wk->posCoverClientID[BTL_POS_2ND_0] = 1;
 
 	// Server に Client を接続
 	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), &wk->partyForServerCalc[0], 0, 1 );
@@ -391,8 +418,11 @@ static BOOL setup_comm_single( int* seq, void* work )
 		break;
 	case 6:
 		wk->numClients = 2;
+		wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+		wk->posCoverClientID[BTL_POS_2ND_0] = 1;
 		wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
 		wk->myOrgPos = (wk->myClientID == 0)? BTL_POS_1ST_0 : BTL_POS_2ND_0;
+
 
 		// 自分がサーバ
 		if( BTL_NET_IsServer() )
@@ -461,6 +491,10 @@ static BOOL setup_alone_double( int* seq, void* work )
 	wk->client[0] = BTL_CLIENT_Create( wk, BTL_COMM_NONE, sp->netHandle, 0, 2, BTL_THINKER_UI, wk->heapID );
 	wk->client[1] = BTL_CLIENT_Create( wk, BTL_COMM_NONE, sp->netHandle, 1, 2, BTL_THINKER_AI, wk->heapID );
 	wk->numClients = 2;
+	wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+	wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+	wk->posCoverClientID[BTL_POS_1ST_1] = 0;
+	wk->posCoverClientID[BTL_POS_2ND_1] = 1;
 
 	// Server に Client を接続
 	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), &wk->partyForServerCalc[0], 0, 2 );
@@ -497,8 +531,138 @@ static BOOL cleanup_alone_double( int* seq, void* work )
 	cleanupPokeParams( &wk->partyForServerCalc[0] );
 	cleanupPokeParams( &wk->partyForServerCalc[1] );
 
-
 	return TRUE;
+}
+//--------------------------------------------------------------------------
+/**
+ * 通信／ダブルバトル：セットアップ
+ */
+//--------------------------------------------------------------------------
+static BOOL setup_comm_double( int* seq, void* work )
+{
+	BTL_MAIN_MODULE* wk = work;
+	const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+	switch( *seq ){
+	case 0:
+		if( BTL_NET_IsServerDetermained() )
+		{
+			BTL_Printf("サーバ決定しましたよ\n");
+			if( BTL_NET_IsServer() )
+			{
+				// サーバーマシンが、各参加者にクライアントIDを割り振る
+				u8 clientID_0, clientID_1;
+
+				clientID_0 = 0;
+				clientID_1 = 1;
+
+				BTL_Printf("ワシ、サーバーです。\n");
+
+				BTL_NET_NotifyClientID( clientID_0, &clientID_0, 1 );
+				BTL_NET_NotifyClientID( clientID_1, &clientID_1, 1 );
+			}
+			else
+			{
+				BTL_Printf("ワシ、サーバーではない。\n");
+			}
+			(*seq)++;
+		}
+		break;
+	case 1:
+		#ifdef PM_DEBUG
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+		{
+			BTL_Printf("クライアントIDの確定待ちでーす\n");
+		}
+		#endif
+		// 自分のクライアントIDが確定
+		if( BTL_NET_IsClientIdDetermined() )
+		{
+			BTL_Printf("クライアントIDが確定した→タイミングシンクロ\n");
+			BTL_NET_TimingSyncStart( BTL_NET_TIMING_CLIENTID_DETERMINE );
+			(*seq)++;
+		}
+		break;
+	case 2:
+		if( BTL_NET_IsTimingSync(BTL_NET_TIMING_CLIENTID_DETERMINE) )
+		{
+			BTL_Printf("タイミングシンクロしました。\n");
+			BTL_NET_StartNotifyPartyData( sp->partyPlayer );
+			(*seq)++;
+		}
+		break;
+	case 3:
+		// パーティデータ相互受信を完了
+		if( BTL_NET_IsCompleteNotifyPartyData() )
+		{
+			BTL_Printf("パーティデータ相互受信できました。\n");
+			setupPokeParams( &wk->party[0], &wk->pokeParam[0], BTL_NET_GetPartyData(0), 0 );
+			setupPokeParams( &wk->party[1], &wk->pokeParam[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
+			(*seq)++;
+		}
+		break;
+	case 4:
+		if( BTL_NET_IsServer() )
+		{
+			setupPokeParams( &wk->partyForServerCalc[0], &wk->pokeParamForServerCalc[0], BTL_NET_GetPartyData(0), 0 );
+			setupPokeParams( &wk->partyForServerCalc[1], &wk->pokeParamForServerCalc[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
+		}
+		(*seq)++;
+		break;
+	case 5:
+		BTL_NET_EndNotifyPartyData();
+		(*seq)++;
+		break;
+	case 6:
+		wk->numClients = 2;
+		wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+		wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+		wk->posCoverClientID[BTL_POS_1ST_1] = 0;
+		wk->posCoverClientID[BTL_POS_2ND_1] = 1;
+		wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
+		wk->myOrgPos = (wk->myClientID == 0)? BTL_POS_1ST_0 : BTL_POS_2ND_0;
+
+		// 自分がサーバ
+		if( BTL_NET_IsServer() )
+		{
+			u8 netID = GFL_NET_GetNetID( sp->netHandle );
+
+			BTL_Printf("サーバ用のパーティデータセット\n");
+
+			wk->server = BTL_SERVER_Create( wk, wk->heapID );
+			wk->client[netID] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle,
+					netID, 2, BTL_THINKER_UI, wk->heapID );
+			BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), &wk->partyForServerCalc[netID], netID, 2 );
+			BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, &wk->partyForServerCalc[!netID], !netID, 2 );
+
+			// 描画エンジン生成
+			wk->viewCore = BTLV_Create( wk, wk->client[netID], HEAPID_BTL_VIEW );
+			BTL_CLIENT_AttachViewCore( wk->client[netID], wk->viewCore );
+
+			wk->mainLoop = MainLoop_Comm_Server;
+		}
+		// 自分がサーバではない
+		else
+		{
+			u8 netID = GFL_NET_GetNetID( sp->netHandle );
+
+			BTL_Printf("サーバではない用のパーティデータセット\n");
+
+			wk->client[ netID ] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle, netID, 2, BTL_THINKER_UI, wk->heapID  );
+
+			// 描画エンジン生成
+			wk->viewCore = BTLV_Create( wk, wk->client[netID], HEAPID_BTL_VIEW );
+			BTL_CLIENT_AttachViewCore( wk->client[netID], wk->viewCore );
+
+			wk->mainLoop = MainLoop_Comm_NotServer;
+		}
+		(*seq)++;
+		break;
+	case 7:
+		BTL_Printf("セットアップ完了\n");
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //--------------------------------------------------------------------------
@@ -721,9 +885,21 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
 //=============================================================================================
 BtlPokePos BTL_MAIN_GetClientPokePos( const BTL_MAIN_MODULE* wk, u8 clientID, u8 posIdx )
 {
-	// @@@ マルチとかだとこれじゃだめかも
-	// @@@ ダブル、トリプル考えて無効値を返すようにしないとダメですな
-	return clientID + posIdx * 2;
+	u8 i;
+
+	for(i=0; i<NELEMS(wk->posCoverClientID); ++i)
+	{
+		if( wk->posCoverClientID[i] == clientID )
+		{
+			if( posIdx == 0 )
+			{
+				return i;
+			}
+			--posIdx;
+		}
+	}
+//	GF_ASSERT(0);
+	return BTL_POS_MAX;
 }
 //=============================================================================================
 /**
@@ -794,61 +970,6 @@ BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePo
 }
 //=============================================================================================
 /**
- * 対戦相手方のクライアントIDを返す	// @@@ いずれ使わなくなるかも？
- *
- * @param   wk				
- * @param   clientID		
- * @param   idx				
- *
- * @retval  u8				
- */
-//=============================================================================================
-u8 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
-{
-	switch( wk->setupParam->rule ){
-	case BTL_RULE_SINGLE:
-		GF_ASSERT(idx==0);
-		GF_ASSERT(clientID<2);
-		return !clientID;
-
-	case BTL_RULE_DOUBLE:
-		GF_ASSERT(idx<2);
-		GF_ASSERT(clientID<4);
-		// @@@ マルチの時にこれじゃダメ
-		return !(clientID&1);
-
-	default:
-		GF_ASSERT(0);
-		return !(clientID&1);
-	}
-}
-
-void BTL_MAIN_GetOpponentPokeClientParam( const BTL_MAIN_MODULE* wk, u8 clientID, u8 pokeIdx, u8* dstClientID, u8* dstPokeIdx )
-{
-	switch( wk->setupParam->rule ){
-	case BTL_RULE_SINGLE:
-		GF_ASSERT(pokeIdx==0);
-		GF_ASSERT(clientID<2);
-		*dstClientID = !clientID;
-		*dstPokeIdx = 0;
-		break;
-
-	case BTL_RULE_DOUBLE:
-		GF_ASSERT(pokeIdx<2);
-		GF_ASSERT(clientID<4);
-		// @@@ マルチの時にこれじゃダメ
-		*dstClientID = !clientID;
-		*dstPokeIdx = pokeIdx;
-		break;
-
-	default:
-		GF_ASSERT(0);
-	}
-
-}
-
-//=============================================================================================
-/**
  * ２つのクライアントIDが対戦相手同士のものかどうかを判別
  *
  * @param   wk		
@@ -907,8 +1028,10 @@ void BTL_MAIN_CLIENTDATA_SwapPartyMembers( BTL_MAIN_MODULE* wk, u8 clientID, u8 
 //--------------------------------------------------------------------------
 static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos )
 {
-	// @@@ 本当はマルチなどの場合にこれじゃダメです
-	return btlPos & 1;
+	GF_ASSERT(btlPos < NELEMS(wk->posCoverClientID));
+	GF_ASSERT(wk->posCoverClientID[btlPos] != BTL_CLIENT_MAX);
+
+	return wk->posCoverClientID[btlPos];
 }
 //--------------------------------------------------------------------------
 /**
@@ -925,8 +1048,18 @@ static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, Btl
 {
 	*clientID = btlPos_to_clientID( wk, btlPos );
 
-	// @@@ 本当はマルチなどの場合にこれじゃダメです
-	*posIdx = btlPos / 2;
+	{
+		u8 idx = 0;
+		while( btlPos-- )
+		{
+			if( wk->posCoverClientID[ btlPos ] == *clientID  )
+			{
+				++idx;
+			}
+		}
+
+		*posIdx = idx;
+	}
 }
 
 //=============================================================================================
@@ -962,6 +1095,7 @@ const BTL_POKEPARAM* BTL_MAIN_GetFrontPokeDataConst( const BTL_MAIN_MODULE* wk, 
 	btlPos_to_cliendID_and_posIdx( wk, pos, &clientID, &posIdx );
 
 	party = &wk->party[ clientID ];
+
 	return BTL_PARTY_GetMemberDataConst( party, posIdx );
 }
 
@@ -1087,6 +1221,8 @@ u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
 	}
 }
 
+//======================================================================================================
+//======================================================================================================
 
 static void BTL_PARTY_Initialize( BTL_PARTY* party )
 {
@@ -1151,6 +1287,7 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
 		BTL_POKEPARAM* tmp = party->member[ idx1 ];
 		party->member[ idx1 ] = party->member[ idx2 ];
 		party->member[ idx2 ] = tmp;
+		BTL_Printf("[MAIN] Party[%p]Member Swap ... %d<->%d\n", party, idx1, idx2);
 	}
 }
 
@@ -1167,7 +1304,8 @@ s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
 	return -1;
 }
 
-
+//======================================================================================================
+//======================================================================================================
 const BTL_POKEPARAM* BTL_MAIN_GetPokeParamConst( const BTL_MAIN_MODULE* wk, u8 pokeID )
 {
 	GF_ASSERT(pokeID<BTL_COMMITMENT_POKE_MAX);

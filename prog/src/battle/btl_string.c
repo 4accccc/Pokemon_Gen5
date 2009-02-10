@@ -83,14 +83,14 @@ typedef enum {
 //------------------------------------------------------------------------------
 static struct {
 
-	const BTL_MAIN_MODULE*	mainModule;			///< メインモジュール
-	const BTL_CLIENT*		client;				///< UIクライアント
-	WORDSET*				wset;				///< WORDSET
-	STRBUF*					tmpBuf;				///< 文字列一時展開用バッファ
+	const BTL_MAIN_MODULE*	mainModule;		///< メインモジュール
+	const BTL_CLIENT*				client;					///< UIクライアント
+	WORDSET*					wset;								///< WORDSET
+	STRBUF*						tmpBuf;							///< 文字列一時展開用バッファ
 	GFL_MSGDATA*			msg[ MSGDATA_MAX ];	///< メッセージデータハンドル
 
-	HEAPID					heapID;				///< ヒープID
-	u8						clientID;			///< UIクライアントID
+	HEAPID					heapID;								///< ヒープID
+	u8							clientID;							///< UIクライアントID
 
 }SysWork;
 
@@ -107,8 +107,10 @@ static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID );
 static void ms_encount( STRBUF* dst, BtlStrID_STD strID );
 static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID );
 static void ms_put_single( STRBUF* dst, BtlStrID_STD strID );
+static void ms_put_single_arg( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_double( STRBUF* dst, BtlStrID_STD strID );
 static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID );
+static void ms_put_single_enemy_arg( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID );
 static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_sp_waza_dead( STRBUF* dst, u16 strID, const int* args );
@@ -145,6 +147,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* cl
 	SysWork.mainModule = mainModule;
 	SysWork.client = client;
 	SysWork.heapID = heapID;
+	SysWork.clientID = BTL_CLIENT_GetClientID( client );
 
 	SysWork.wset = WORDSET_Create( heapID );
 	SysWork.tmpBuf = GFL_STR_CreateBuffer( TMP_STRBUF_SIZE, heapID );
@@ -191,6 +194,9 @@ static inline void register_PokeNickname( BtlPokePos pos, WordBufID bufID )
 static inline SetStrFormat get_strFormat( BtlPokePos pokePos )
 {
 	u8 targetClientID = BTL_MAIN_BtlPosToClientID( SysWork.mainModule, pokePos );
+
+	BTL_Printf("[STR] myClientID=%d, targetClientID=%d, targetPos=%d\n",
+				SysWork.clientID, targetClientID, pokePos);
 
 	if( BTL_MAIN_IsOpponentClientID(SysWork.mainModule, SysWork.clientID, targetClientID) )
 	{
@@ -265,13 +271,16 @@ void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID )
 	ms_std_simple( buf, strID );
 }
 
-void BTL_STR_MakeStringStdWithParams( STRBUF* buf, BtlStrID_STD strID, const int* args )
+void BTL_STR_MakeStringStdWithArgs( STRBUF* buf, BtlStrID_STD strID, const int* args )
 {
 	static const struct {
 		BtlStrID_STD   strID;
 		void  (* const func)( STRBUF* buf, BtlStrID_STD strID, const int* args );
 	}funcTbl[] = {
-		{ BTL_STRID_STD_MemberOut1,	ms_out_member1 },
+		{ BTL_STRID_STD_MemberOut1,			ms_out_member1 },
+		{ BTL_STRID_STD_PutSingle,			ms_put_single_arg },
+		{ BTL_STRID_STD_PutSingle_Enemy,ms_put_single_enemy_arg },
+
 	};
 	u32 i;
 
@@ -315,6 +324,13 @@ static void ms_put_single( STRBUF* dst, BtlStrID_STD strID )
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+static void ms_put_single_arg( STRBUF* dst, BtlStrID_STD strID, const int* args )
+{
+	register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
 // ゆけっ！ダブル
 static void ms_put_double( STRBUF* dst, BtlStrID_STD strID )
 {
@@ -331,6 +347,12 @@ static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID )
 	pokePos = BTL_MAIN_GetOpponentPokePos( SysWork.mainModule, pokePos, 0 );
 
 	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+static void ms_put_single_enemy_arg( STRBUF* dst, BtlStrID_STD strID, const int* args )
+{
+	register_PokeNickname( args[0], BUFIDX_POKE_1ST );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

@@ -718,7 +718,7 @@ static u8 sortClientAction( BTL_SERVER* server, ACTION_ORDER_WORK* order )
 			pri[p] = MakePriValue( actionPri, wazaPri, agility );
 			order[p].clientID = i;
 			order[p].pokeIdx = j;
-			BTL_Printf("[SV] Client[%d] PriValue=%8x\n", i, pri[i]);
+			BTL_Printf("[SV] Client[%d] PriValue=0x%8x\n", i, pri[i]);
 
 			actParam++;
 			p++;

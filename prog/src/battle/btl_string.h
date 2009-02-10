@@ -35,7 +35,7 @@ enum {
 typedef u16 BtlStrID_STD;
 
 extern void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID );
-extern void BTL_STR_MakeStringStdWithParams( STRBUF* buf, BtlStrID_STD strID, const int* args );
+extern void BTL_STR_MakeStringStdWithArgs( STRBUF* buf, BtlStrID_STD strID, const int* args );
 
 
 //---------------------------------------------------------------------------------------

@@ -49,21 +49,21 @@ struct _BTLV_CORE {
 
 	BTL_MAIN_MODULE*	mainModule;
 	const BTL_CLIENT*	myClient;
-	u8					myClientID;
+	u8								myClientID;
 
 	BtlvCmd		processingCmd;
 	pCmdProc	mainProc;
-	int			mainSeq;
+	int				mainSeq;
 	BTL_PROC	subProc;
-	u8			genericWork[ GENERIC_WORK_SIZE ];
+	u8				genericWork[ GENERIC_WORK_SIZE ];
 
 	BTL_ACTION_PARAM*	actionParam;
-	STRBUF*				strBuf;
-	GFL_FONT*			fontHandle;
+	STRBUF*						strBuf;
+	GFL_FONT*					fontHandle;
 
 	GFL_TCBLSYS*	tcbl;
-	BTLV_SCU*		scrnU;
-	BTLV_SCD*		scrnD;
+	BTLV_SCU*			scrnU;
+	BTLV_SCD*			scrnD;
 
 	HEAPID	heapID;
 };
@@ -110,8 +110,8 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 
 
 	core->tcbl = GFL_TCBL_Init( heapID, heapID, 64, 128 );
-	core->scrnU = BTLV_SCU_Create( core, core->mainModule, core->tcbl, core->fontHandle, heapID );
-	core->scrnD = BTLV_SCD_Create( core, core->mainModule, core->tcbl, core->fontHandle, heapID );
+	core->scrnU = BTLV_SCU_Create( core, core->mainModule, core->tcbl, core->fontHandle, core->myClientID, heapID );
+	core->scrnD = BTLV_SCD_Create( core, core->mainModule, core->tcbl, core->fontHandle, core->myClientID, heapID );
 
 	core->mainProc = NULL;
 	core->mainSeq = 0;
@@ -667,6 +667,7 @@ typedef struct {
 	u8 clientID;
 	u8 memberIdx;
 	BtlPokePos  pokePos;
+	int printArg;
 }MEMBER_IN_WORK;
 
 //=============================================================================================
@@ -688,8 +689,6 @@ void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 m
 	subwk->pokePos = pos;
 
 	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMemberIn );
-//	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
-//	printf("ゆけっ！%s！\n", BTRSTR_GetMonsName( BTL_POKEPARAM_GetMonsNo(pp)) );
 }
 
 BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk )
@@ -707,7 +706,10 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 		{
 			u16 strID = BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myClientID, subwk->clientID)?
 					BTL_STRID_STD_PutSingle_Enemy : BTL_STRID_STD_PutSingle;
-			BTL_STR_MakeStringStd( wk->strBuf, strID );
+
+			subwk->printArg = subwk->pokePos;
+
+			BTL_STR_MakeStringStdWithArgs( wk->strBuf, strID, &subwk->printArg );
 			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
 			(*seq)++;
 		}
@@ -740,8 +742,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 //=============================================================================================
 void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 {
-	BTL_Printf("[BTLV] 標準メッセージ出力コマンド処理  strID=%d\n", strID);
-	BTL_STR_MakeStringStdWithParams( wk->strBuf, strID, args );
+	BTL_STR_MakeStringStdWithArgs( wk->strBuf, strID, args );
 	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
 //	printf( wk->strBuf );
 }
