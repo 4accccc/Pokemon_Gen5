@@ -581,6 +581,7 @@ static void setup_obj( PMSIV_EDIT* wk )
 	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_MAIN, BGPRI_MAIN_EDITAREA );
 	wk->cursor_actor[0] = PMSIView_AddActor( wk->vwk, &header, actpos.x, actpos.y,
 			ACTPRI_EDITAREA_CURSOR, NNS_G2D_VRAM_TYPE_2DMAIN );
+	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_SUB, BGPRI_MAIN_EDITAREA );
 	wk->cursor_actor[1] = PMSIView_AddActor( wk->vwk, &header, actpos.x, actpos.y-wk->sub_scr,
 			ACTPRI_EDITAREA_CURSOR, NNS_G2D_VRAM_TYPE_2DSUB );
 	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[1], 1);
@@ -1038,9 +1039,10 @@ void PMSIV_EDIT_MoveCursor( PMSIV_EDIT* wk, int pos )
 
 //		CLACT_SetMatrix( wk->cursor_actor, &mtx );
 	}
-	GFL_CLACT_WK_SetWldPos( wk->cursor_actor[0], &clPos );
-	clPos.y += 192-wk->sub_scr;
-	GFL_CLACT_WK_SetWldPos( wk->cursor_actor[1], &clPos );
+	GFL_CLACT_WK_SetPos( wk->cursor_actor[0], &clPos , CLSYS_DEFREND_MAIN );
+//	clPos.y += 192-wk->sub_scr;
+	clPos.y -= wk->sub_scr;
+	GFL_CLACT_WK_SetPos( wk->cursor_actor[1], &clPos , CLSYS_DEFREND_SUB );
 	set_cursor_anm( wk, TRUE );
 }
 

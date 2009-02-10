@@ -461,7 +461,7 @@ void PMSIV_WORDWIN_MoveCursor( PMSIV_WORDWIN* wk, u32 pos )
 		clPos.x = CURSOR_BACK_XPOS;
 		clPos.y = CURSOR_BACK_YPOS;
 
-		GFL_CLACT_WK_SetWldPos( wk->cursor_actor, &clPos );
+		GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
 		GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_CATEGORY_BACK_CURSOR_ACTIVE );
 	
 	}else{
@@ -471,7 +471,7 @@ void PMSIV_WORDWIN_MoveCursor( PMSIV_WORDWIN* wk, u32 pos )
 		clPos.x = (CURSOR_OX + CURSOR_X_MARGIN * x );
 		clPos.y = (CURSOR_OY + CURSOR_Y_MARGIN * y );
 
-		GFL_CLACT_WK_SetWldPos( wk->cursor_actor, &clPos );
+		GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
 		GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_WORDWIN_CURSOR_ACTIVE );
 	}
 }

@@ -20,6 +20,8 @@
 #include "pms_input_view.h"
 #include "pmsi.naix"
 
+#include "test/ariizumi/ari_debug.h"
+
 //==============================================================================================
 //==============================================================================================
 
@@ -174,6 +176,7 @@ PMS_INPUT_VIEW*  PMSIView_Create(const PMS_INPUT_WORK* main_wk, const PMS_INPUT_
 		vwk->cellUnit = GFL_CLACT_UNIT_Create( 128, 0, HEAPID_PMS_INPUT_VIEW );
 
 		GFL_BG_Init( HEAPID_PMS_INPUT_VIEW );
+		GFL_BMPWIN_Init( HEAPID_PMS_INPUT_VIEW );
 		
 		vwk->mainTask = GFL_TCB_AddTask( PMSI_GetTcbSystem(main_wk) ,PMSIView_MainTask, vwk, TASKPRI_VIEW_MAIN );
 		vwk->vintrTask = PMSIView_AddVTask( PMSIView_VintrTask, vwk, VTASKPRI_MAIN );
@@ -216,6 +219,7 @@ void PMSIView_Delete( PMS_INPUT_VIEW* vwk )
 		GFL_CLACT_UNIT_Delete( vwk->cellUnit );
 		GFL_CLACT_SYS_Delete();
 
+		GFL_BMPWIN_Exit();
 		GFL_BG_Exit();
 		GFL_HEAP_FreeMemory( vwk );
 	}
@@ -1626,22 +1630,29 @@ void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, 
 GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 x, u32 y, u32 actpri, int drawArea )
 {
 	GFL_CLWK_DATA	add;
-	GFL_CLWK*		act;
+	GFL_CLWK*		act = NULL;
 	OSIntrMode		oldIntr;
 	u16				setsf;
 
 	add.pos_x = x;
 	add.pos_y = y;
 	add.softpri = actpri;
+	add.bgpri = 0;
+	add.anmseq = 0;
+
 
 	if(drawArea == NNS_G2D_VRAM_TYPE_2DSUB ){
 		setsf = CLSYS_DEFREND_SUB;
+		add.pos_y = y-192;
 	}
 	else
 	{
 		setsf = CLSYS_DEFREND_MAIN;
 	}
 
+	ARI_TPrintf("pos[%d:%d]sur[%d]\n",add.pos_x,add.pos_y,drawArea);
+	add.pos_x = 128;
+	add.pos_y = 96;
 	oldIntr = OS_DisableInterrupts();
 	act = GFL_CLACT_WK_Add( vwk->cellUnit , &add , header , setsf , HEAPID_PMS_INPUT_VIEW);
 	OS_RestoreInterrupts( oldIntr );
@@ -1649,8 +1660,9 @@ GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 x, u
 	if( act )
 	{
 		GFL_CLACT_WK_SetAutoAnmFlag( act, TRUE );
-		GFL_CLACT_WK_SetAnmFrame( act, PMSI_ANM_SPEED );
+		GFL_CLACT_WK_SetAutoAnmSpeed( act, PMSI_ANM_SPEED );
 	}
+
 	return act;
 }
 

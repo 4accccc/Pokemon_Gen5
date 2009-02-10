@@ -195,7 +195,7 @@ void PMSIV_BUTTON_SetupGraphicDatas( PMSIV_BUTTON* wk, ARCHANDLE* p_handle )
 
 	// screen, cgx
 	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_pmsi_pms_bg_main3_NSCR,
-		FRM_MAIN_BACK, 0, 0, TRUE, HEAPID_PMS_INPUT_VIEW );
+		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main3_NCGR,
 		FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
@@ -441,7 +441,7 @@ void PMSIV_BUTTON_MoveCursor( PMSIV_BUTTON* wk, int pos )
 		break;
 	}
 
-	GFL_CLACT_WK_SetWldPos( wk->cursor_actor, &clPos );
+	GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
 	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_BUTTON_CURSOR_ACTIVE );
 }
 

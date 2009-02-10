@@ -24,8 +24,8 @@
 	*/
 //------------------------------------------------------
 enum {
-	HEAPSIZE_SYS = 0x8000,
-	HEAPSIZE_VIEW = 0x28000,
+	HEAPSIZE_SYS = 0x10000,
+	HEAPSIZE_VIEW = 0x38000,
 };
 
 enum {
@@ -369,6 +369,7 @@ GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *myw
 		break;
 	}
 
+	GFL_TCB_Main(wk->tcbSys);	//‰Šú‰»‚ÅŽg‚Á‚Ä‚é‚©‚çƒRƒR‚Å‚Ü‚í‚·
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -405,7 +406,7 @@ GFL_PROC_RESULT PMSInput_Main( GFL_PROC * proc, int * seq , void *pwk, void *myw
 		ret = wk->main_proc( wk, &(wk->main_seq) );
 	}
 
-	
+	GFL_TCB_Main(wk->tcbSys);
 	return ret;
 }
 
@@ -519,6 +520,9 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
 	}
 
 
+	wk->tcbWork = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_SYSTEM , GFL_TCB_CalcSystemWorkSize( 5 ) );
+	wk->tcbSys = GFL_TCB_Init( 5 , wk->tcbWork );
+
 	wk->dwk = PMSI_DATA_Create( HEAPID_PMS_INPUT_SYSTEM, wk->input_param );
 	wk->vwk = PMSIView_Create(wk, wk->dwk);
 	wk->bmn = GFL_BMN_Create( hit_tbl, BmnCallBack, wk, HEAPID_PMS_INPUT_SYSTEM );
@@ -530,9 +534,6 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
 	wk->sub_seq = 0;
 	wk->edit_pos = 0;
 
-	wk->tcbWork = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_SYSTEM , GFL_TCB_CalcSystemWorkSize( 5 ) );
-	wk->tcbSys = GFL_TCB_Init( 5 , wk->tcbWork );
-	
 	ChangeMainProc(wk, MainProc_EditArea);
 	SetSubProc( wk, SubProc_FadeIn );
 

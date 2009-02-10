@@ -860,15 +860,18 @@ static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx 
 	return TRUE;
 }
 
-FS_EXTERN_OVERLAY(ariizumi_debug);
-extern const GFL_PROC_DATA DebugAriizumiMainProcData;
-FS_EXTERN_OVERLAY(mystery);
-extern const GFL_PROC_DATA MysteryGiftProcData;
-#include "app/trainer_card.h"
+//FS_EXTERN_OVERLAY(ariizumi_debug);
+//extern const GFL_PROC_DATA DebugAriizumiMainProcData;
+//FS_EXTERN_OVERLAY(mystery);
+//extern const GFL_PROC_DATA MysteryGiftProcData;
+extern const GFL_PROC_DATA ProcData_PMSInput;
+#include "app/pms_Input.h"
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx )
 {
+	PMSI_PARAM	*initParam;
+	initParam = PMSI_PARAM_Create( PMSI_MODE_SENTENCE , PMSI_GUIDANCE_DEFAULT , SaveControl_GetPointer() , GFL_HEAPID_APP );
 //	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
-	TESTMODE_COMMAND_ChangeProc(work,TRCARD_OVERLAY_ID, &TrCardSysProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &ProcData_PMSInput, initParam);
 	return TRUE;
 }
 

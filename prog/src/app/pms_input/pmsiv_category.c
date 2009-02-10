@@ -217,10 +217,10 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
 										GX_WND_PLANEMASK_OBJ);
 
 	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_pmsi_pms_bg_main3_NSCR,
-		FRM_MAIN_CATEGORY, 0, 0, TRUE, HEAPID_PMS_INPUT_VIEW );
+		FRM_MAIN_CATEGORY, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 
 	charpos = GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main1_NCGR,
-		FRM_MAIN_CATEGORY, 0, 0, TRUE, HEAPID_PMS_INPUT_VIEW );
+		FRM_MAIN_CATEGORY, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	charpos /= 0x20;
 
 	//TODO こいつはキャラのアドレスを固定してやらないと、解放後に上書きされるかも
@@ -505,7 +505,7 @@ void PMSIV_CATEGORY_MoveCursor( PMSIV_CATEGORY* wk, u32 pos )
 		}
 	}
 
-	GFL_CLACT_WK_SetWldPos( wk->cursor_actor, &clPos );
+	GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
 	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, anm );
 }
 
