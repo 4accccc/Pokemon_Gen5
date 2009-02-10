@@ -131,7 +131,9 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 #endif //USE_RENDER
 
 	//テクスチャ系の転送先アドレスをセット（可変に出来る予定）
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning MCSS TEX PAL ADRS Not Changeability
+#endif
 	mcss_sys->texAdrs = MCSS_TEX_ADRS;
 	mcss_sys->palAdrs = MCSS_PAL_ADRS;
 
