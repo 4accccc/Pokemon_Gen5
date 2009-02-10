@@ -607,6 +607,9 @@ extern	void	PPP_Clear( POKEMON_PASO_PARAM *ppp );
 // PPP部分からPP部分を再計算
 extern	void	PP_Renew( POKEMON_PARAM *pp );
 
+// PPPポインタを取得
+extern	const POKEMON_PASO_PARAM	*PP_GetPPPPointerConst( const POKEMON_PARAM *pp );
+
 // 低レベル関数群
 extern	u32		POKETOOL_CalcLevel( u16 mons_no, u16 form_no, u32 exp );
 extern	u32		POKETOOL_GetMinExp( u16 mons_no, u16 form_no, u16 level );
