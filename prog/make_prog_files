@@ -45,6 +45,7 @@ SRCS	+=		$(SOUNDSRC) \
 				test/goto/d_goto.c \
 				test/goto/comm_error.c \
 				system/mcss.c \
+				system/mcss_tool.c \
 				battle/poke_mcss.c \
 				poke_tool/poke_tool.c \
 				poke_tool/pokeparty.c \
