@@ -36,7 +36,8 @@ SUBDIRS	=	wmi \
 			balloon \
 			mysign \
 			pms \
-			pms_gra
+			pms_gra \
+			compatible
 
 include $(RESOURCE_MACRO)
 

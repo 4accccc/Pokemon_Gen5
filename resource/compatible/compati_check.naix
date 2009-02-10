@@ -1,0 +1,29 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: compati_check.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_COMPATI_CHECK_NAIX_
+#define NARC_COMPATI_CHECK_NAIX_
+
+enum {
+	NARC_compati_check_cc_main_NCGR = 0,
+	NARC_compati_check_cc_bg_m_NCLR = 1,
+	NARC_compati_check_cc_back_m_NSCR = 2,
+	NARC_compati_check_cc_count_m_NSCR = 3,
+	NARC_compati_check_cc_sub_NCGR = 4,
+	NARC_compati_check_cc_bg_s_NCLR = 5,
+	NARC_compati_check_cc_back_s_NSCR = 6,
+	NARC_compati_check_cc_circle_NCGR = 7,
+	NARC_compati_check_cc_circle_NANR = 8,
+	NARC_compati_check_cc_circle_NCER = 9,
+	NARC_compati_check_cc_circle_NCLR = 10,
+	NARC_compati_check_cc_circle_light_NCLR = 11
+};
+
+/* NARC_COMPATI_CHECK_NAIX_ */
+#endif

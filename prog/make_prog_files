@@ -422,4 +422,13 @@ SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
 			app/trainercard/trcard_obj.c \
 			app/mysign/mysign.c
 
+#相性チェック
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
+			net_app/compatible/compati_tool.c \
+			net_app/compatible/compati_control.c \
+			net_app/compatible/compati_result.c
+
 

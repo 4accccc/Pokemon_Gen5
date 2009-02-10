@@ -33,6 +33,7 @@
 #include "test/easy_pokelist.h"
 
 #include "net_app/balloon.h"
+#include "net_app/compati_control.h"
 
 
 //==============================================================================
@@ -43,6 +44,7 @@
 
 FS_EXTERN_OVERLAY(matsuda_debug);
 FS_EXTERN_OVERLAY(balloon);
+FS_EXTERN_OVERLAY(compati_check);
 
 //==============================================================================
 //	構造体定義
@@ -120,6 +122,12 @@ extern const GFL_PROC_DATA DebugMatsudaBeaconProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
+	{//相性チェック
+		DM_MSG_MENU012, 
+		&CompatiControlProcData,
+		NULL,
+		FS_OVERLAY_ID(compati_check)
+	},
 	{//風船ミニゲーム
 		DM_MSG_MENU011, 
 		&BalloonProcData,	
