@@ -1476,7 +1476,7 @@ static int (* const DATA_AlongMoveTbl[3])( FLDMMDL *, MV_ALONGW_WORK * ) =
 //--------------------------------------------------------------
 ///	éËÇÃà íu
 //--------------------------------------------------------------
-static const int DATA_DirHandPosX[DIR_4_MAX][2] = 
+static const int DATA_DirHandPosX[DIR_MAX4][2] = 
 {
 	{ -1, 1 },	//up,left,right
 	{ 1, -1 },	//down,left,right
@@ -1484,7 +1484,7 @@ static const int DATA_DirHandPosX[DIR_4_MAX][2] =
 	{ 0, 0 },	//right,left,right
 };
 
-static const int DATA_DirHandPosZ[DIR_4_MAX][2] =
+static const int DATA_DirHandPosZ[DIR_MAX4][2] =
 {
 	{ 0, 0 },	//up,left,right
 	{ 0, 0 },	//down,left,right
@@ -1495,7 +1495,7 @@ static const int DATA_DirHandPosZ[DIR_4_MAX][2] =
 //--------------------------------------------------------------
 ///	å©é∏Ç¡ÇΩç€ÇÃîªíËà íu
 //--------------------------------------------------------------
-static const int DATA_DirHandLostPosX[DIR_4_MAX][2] =
+static const int DATA_DirHandLostPosX[DIR_MAX4][2] =
 {
 	{ -1, 1 },	//up,left,right
 	{ 1, -1 },	//down,left,right
@@ -1503,7 +1503,7 @@ static const int DATA_DirHandLostPosX[DIR_4_MAX][2] =
 	{ -1, -1 },	//right,left,right
 };
 
-static const int DATA_DirHandLostPosZ[DIR_4_MAX][2] =
+static const int DATA_DirHandLostPosZ[DIR_MAX4][2] =
 {
 	{ 1, 1 },	//up,left,right
 	{ -1, -1 },	//down,left,right
@@ -1514,7 +1514,7 @@ static const int DATA_DirHandLostPosZ[DIR_4_MAX][2] =
 //--------------------------------------------------------------
 ///	å©é∏Ç¡ÇΩç€ÇÃï˚å¸êÿÇËë÷Ç¶
 //--------------------------------------------------------------
-static const int DATA_DirHandLostDir[DIR_4_MAX][2] =
+static const int DATA_DirHandLostDir[DIR_MAX4][2] =
 {
 	{ DIR_LEFT, DIR_RIGHT },	//up,left,right
 	{ DIR_RIGHT, DIR_LEFT },	//down,left,right
@@ -1525,7 +1525,7 @@ static const int DATA_DirHandLostDir[DIR_4_MAX][2] =
 //--------------------------------------------------------------
 ///	ï«è’ìÀéûÇÃï˚å¸êÿÇËë÷Ç¶
 //--------------------------------------------------------------
-static const int DATA_DirHandAttrHitDir[DIR_4_MAX][2] =
+static const int DATA_DirHandAttrHitDir[DIR_MAX4][2] =
 {
 	{ DIR_RIGHT, DIR_LEFT },	//up,left,right
 	{ DIR_LEFT, DIR_RIGHT },	//down,left,right

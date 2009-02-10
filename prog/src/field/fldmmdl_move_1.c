@@ -514,8 +514,8 @@ static int SubMoveSpinStop_Move( FLDMMDL * fmmdl )
 		{
 			int i,dir = FLDMMDL_GetDirDisp( fmmdl );
 			
-			for( i = 0; (i < DIR_4_MAX && dir != spin_tbl[work->dir_type][i]); i++ ){}
-			GF_ASSERT( i < DIR_4_MAX && "SubMoveKyoro_Move()ï˚å¸àŸèÌ" );
+			for( i = 0; (i < DIR_MAX4 && dir != spin_tbl[work->dir_type][i]); i++ ){}
+			GF_ASSERT( i < DIR_MAX4 && "SubMoveKyoro_Move()ï˚å¸àŸèÌ" );
 			
 			work->origin_dir = dir;
 			work->dir_no = (i + 1) % SPIN_STOP_COUNT_MAX;		//+1=1Ç¬êÊ

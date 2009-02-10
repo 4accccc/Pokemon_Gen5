@@ -96,7 +96,7 @@ enum
 	RT_KURU2_MAX,
 };
 
-#define RT_KURU2_DIR_MAX (DIR_4_MAX)		///<クルクル移動最大回転数
+#define RT_KURU2_DIR_MAX (DIR_MAX4)		///<クルクル移動最大回転数
 
 //--------------------------------------------------------------
 ///	方向テーブルID

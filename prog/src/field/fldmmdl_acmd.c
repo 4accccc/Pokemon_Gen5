@@ -592,7 +592,7 @@ u16 FLDMMDL_ChangeDirAcmdCode( u16 dir, u16 code )
 	const int * const *tbl;
 	const int *dir_tbl;
 	
-	GF_ASSERT( dir < DIR_4_MAX );
+	GF_ASSERT( dir < DIR_MAX4 );
 	tbl = DATA_AcmdCodeDirChangeTbl;
 	
 	do{
@@ -602,7 +602,7 @@ u16 FLDMMDL_ChangeDirAcmdCode( u16 dir, u16 code )
 		do{
 			if( dir_tbl[i] == code ){ return( dir_tbl[dir] ); }
 			i++;
-		}while( i < DIR_4_MAX );
+		}while( i < DIR_MAX4 );
 		
 		tbl++;
 	}while( (*tbl) != NULL );
@@ -633,7 +633,7 @@ u16 FLDMMDL_GetAcmdDir( u16 code )
 		do{
 			if( dir_tbl[dir] == code ){ return( dir ); }
 			dir++;
-		}while( dir < DIR_4_MAX );
+		}while( dir < DIR_MAX4 );
 		
 		tbl++;
 	}

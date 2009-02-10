@@ -18,7 +18,7 @@
 #include "fldmmdl_header.h"
 #include "fldmmdl_code.h"
 
-#include "fieldmap_local.h"
+#include "field_g3d_mapper.h"
 
 //======================================================================
 //	define
@@ -364,8 +364,7 @@ typedef struct
 ///	fldmmdl.h
 //--------------------------------------------------------------
 extern FLDMMDLSYS * FLDMMDLSYS_Create(
-	FIELD_MAIN_WORK *pFldMainWork,
-	const FLDMAPPER *pG3DMapper, HEAPID heapID, int max );
+	int max, HEAPID heapID, const FLDMAPPER *pG3DMapper );
 extern void FLDMMDLSYS_Delete( FLDMMDLSYS *fos );
 extern void FLDMMDLSYS_DeleteAll( FLDMMDLSYS *fos );
 extern void FLDMMDLSYS_UpdateMove( FLDMMDLSYS *fos );
@@ -497,6 +496,7 @@ extern void FLDMMDL_GetVectorAttrDrawOffsetPos(
 extern void FLDMMDL_SetVectorAttrDrawOffsetPos(
 		FLDMMDL * fmmdl, const VecFx32 *vec );
 extern s16 FLDMMDL_GetHeightGrid( const FLDMMDL * fmmdl );
+extern FLDMMDL_BLACTCONT * FLDMMDL_GetBlActCont( FLDMMDL *fmmdl );
 
 extern BOOL FLDMMDLSYS_CheckCompleteDrawInit( const FLDMMDLSYS *fmmdlsys );
 extern void FLDMMDLSYS_SetJoinShadow( FLDMMDLSYS *fos, BOOL flag );
@@ -582,7 +582,7 @@ extern void FLDMMDL_DrawPushProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl );
 
 //‰¼
-extern FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork(FLDMMDLSYS *fmmdlsys);
+//extern FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork(FLDMMDLSYS *fmmdlsys);
 extern void FLDMMDL_SetBlActID(
 	FLDMMDL *fmmdl, GFL_BBDACT_ACTUNIT_ID blActID );
 extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fmmdl );

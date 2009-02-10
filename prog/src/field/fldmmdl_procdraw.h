@@ -12,6 +12,12 @@
 #define FLDMMDL_PROCDRAW_H_FILE
 
 //--------------------------------------------------------------
+//	fldmmdl_draw_0.c
+//--------------------------------------------------------------
+extern const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Hero;
+extern const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_BlAct;
+
+//--------------------------------------------------------------
 //	fieldobj_draw.c
 //--------------------------------------------------------------
 extern void FLDMMDL_DrawNon_Init( FLDMMDL * fmmdl );

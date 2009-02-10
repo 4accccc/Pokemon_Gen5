@@ -111,8 +111,8 @@ static BOOL FldMMdl_HitCheckMoveAttr(
 	const FLDMMDL * fmmdl, s16 x, s16 z, u16 dir );
 
 #ifndef FLDMMDL_PL_NULL
-static BOOL (* const DATA_HitCheckAttr_Now[DIR_4_MAX])( MATR attr );
-static BOOL (* const DATA_HitCheckAttr_Next[DIR_4_MAX])( MATR attr );
+static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MATR attr );
+static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MATR attr );
 #endif
 
 static BOOL FldMMdl_GetMapGridInfo(
@@ -1376,7 +1376,7 @@ BOOL FldMMdl_HitCheckMoveAttr(
 ///	現在位置アトリビュートから判定する移動制御アトリビュートチェック関数
 //--------------------------------------------------------------
 #ifndef FLDMMDL_PL_NULL
-static BOOL (* const DATA_HitCheckAttr_Now[DIR_4_MAX])( MATR attr ) =
+static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MATR attr ) =
 {
 	MATR_IsBadMoveUpCheck,
 	MATR_IsBadMoveDownCheck,
@@ -1387,7 +1387,7 @@ static BOOL (* const DATA_HitCheckAttr_Now[DIR_4_MAX])( MATR attr ) =
 //--------------------------------------------------------------
 ///	未来位置アトリビュートから判定する移動制御アトリビュートチェック関数
 //--------------------------------------------------------------
-static BOOL (* const DATA_HitCheckAttr_Next[DIR_4_MAX])( MATR attr ) =
+static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MATR attr ) =
 {
 	MATR_IsBadMoveDownCheck,
 	MATR_IsBadMoveUpCheck,

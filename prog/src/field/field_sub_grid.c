@@ -186,11 +186,9 @@ static void GridMoveCreate(
 		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 		PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 		int zone_id = PLAYERWORK_getZoneID( player );
-		FLDMMDL_BLACTCONT *pBlActCont;
-
-		fieldWork->fldMMdlSys = FLDMMDLSYS_Create(
-				fieldWork, GetFieldG3Dmapper(fieldWork->gs),
-				fieldWork->heapID, 256 );
+		
+		fieldWork->fldMMdlSys = FLDMMDLSYS_Create( 256,
+				fieldWork->heapID, GetFieldG3Dmapper(fieldWork->gs) );
 		FLDMMDL_BLACTCONT_Setup(
 				fieldWork->fldMMdlSys, GetBbdActSys(fieldWork->gs) );
 		

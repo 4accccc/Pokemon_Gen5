@@ -45,7 +45,7 @@ typedef struct _TAG_FLDMMDLSYS
 	ARCHANDLE *pArcHandle;			///<アーカイブハンドル
 	
 	const FLDMAPPER *pG3DMapper;	///<FLDMAPPER
-	FIELD_MAIN_WORK *pFldMainWork;	///<FIELD_MAIN_WORK
+//	FIELD_MAIN_WORK *pFldMainWork;	///<FIELD_MAIN_WORK
 }FLDMMDLSYS;
 
 #define FLDMMDLSYS_SIZE (sizeof(FLDMMDLSYS)) ///<FLDMMDLSYSサイズ
@@ -169,7 +169,7 @@ static void FldMMdlSys_AddFldMMdlTCB(
 
 //FLDMMDL ツール
 static void FldMMdl_InitDrawWork( FLDMMDL *fmmdl );
-static void FldMMdl_InitDrawProcWork( FLDMMDL * fmmdl );
+static void FldMMdl_InitCallDrawProcWork( FLDMMDL * fmmdl );
 static void FldMMdl_InitDrawEffectFlag( FLDMMDL * fmmdl );
 static void FldMMdl_ClearWork( FLDMMDL *fmmdl );
 static int FldMMdl_CheckHeaderAlies(
@@ -203,8 +203,7 @@ static int FldMMdlHeader_GetAliesZoneID( const FLDMMDL_HEADER *head );
  */
 //--------------------------------------------------------------
 FLDMMDLSYS * FLDMMDLSYS_Create(
-	FIELD_MAIN_WORK *pFldMainWork,
-	const FLDMAPPER *pG3DMapper, HEAPID heapID, int max )
+	int max, HEAPID heapID, const FLDMAPPER *pG3DMapper )
 {
 	FLDMMDLSYS *fos;
 	
@@ -212,7 +211,7 @@ FLDMMDLSYS * FLDMMDLSYS_Create(
 	fos->pFldMMdlBuf = GFL_HEAP_AllocClearMemory( heapID, max*FLDMMDL_SIZE );
 	fos->fmmdl_max = max;
 	fos->heapID = heapID;
-	fos->pFldMainWork = pFldMainWork;
+//	fos->pFldMainWork = pFldMainWork;
 	fos->pG3DMapper = pG3DMapper;
 	
 	fos->pTCBSysWork = GFL_HEAP_AllocMemory(
@@ -231,7 +230,7 @@ FLDMMDLSYS * FLDMMDLSYS_Create(
 void FLDMMDLSYS_Delete( FLDMMDLSYS *fos )
 {
 	GFL_TCB_Exit( fos->pTCBSys );
-	GFL_HEAP_FreeMemory( fos->pTCBSys );
+	GFL_HEAP_FreeMemory( fos->pTCBSysWork );
 	GFL_HEAP_FreeMemory( fos->pFldMMdlBuf );
 	GFL_HEAP_FreeMemory( fos );
 }
@@ -475,11 +474,9 @@ static void FldMMdl_TCB_MoveProc( GFL_TCB * tcb, void *work )
 	FLDMMDL *fmmdl = (FLDMMDL *)work;
 	FLDMMDL_UpdateMove( fmmdl );
 	
-	if( FLDMMDL_CheckStatusBitUse(fmmdl) == FALSE ){
-		return;
+	if( FLDMMDL_CheckStatusBitUse(fmmdl) == TRUE ){
+		FldMMdl_TCB_DrawProc( fmmdl );
 	}
-	
-	FldMMdl_TCB_DrawProc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -1981,6 +1978,18 @@ s16 FLDMMDL_GetHeightGrid( const FLDMMDL * fmmdl )
 	return( gy );
 }
 
+//--------------------------------------------------------------
+/**
+ * FLDMMDL FLDMMDL_BLACTCONTを取得
+ * @param	fmmdl	FLDMMDL *
+ * @retval	FLDMMDL_BLACTCONT*
+ */
+//--------------------------------------------------------------
+FLDMMDL_BLACTCONT * FLDMMDL_GetBlActCont( FLDMMDL *fmmdl )
+{
+	return( FLDMMDLSYS_GetBlActCont((FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys(fmmdl)) );
+}
+
 //======================================================================
 //	FLDMMDLSYS ステータス操作
 //======================================================================
@@ -3047,7 +3056,7 @@ static void FldMMdl_InitDrawWork( FLDMMDL *fmmdl )
 	#endif
 	
 	if( FLDMMDL_CheckStatusBitCompletedDrawInit(fmmdl) == FALSE ){
-		FldMMdl_InitDrawProcWork( fmmdl );
+		FldMMdl_InitCallDrawProcWork( fmmdl );
 		FLDMMDL_CallDrawInitProc( fmmdl );
 		FLDMMDL_OnStatusBitCompletedDrawInit( fmmdl );
 	}
@@ -3060,7 +3069,7 @@ static void FldMMdl_InitDrawWork( FLDMMDL *fmmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void FldMMdl_InitDrawProcWork( FLDMMDL * fmmdl )
+static void FldMMdl_InitCallDrawProcWork( FLDMMDL * fmmdl )
 {
 	const FLDMMDL_DRAW_PROC_LIST *list;
 	u32 code = FLDMMDL_GetOBJCode( fmmdl );
@@ -3534,10 +3543,12 @@ void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl )
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
+#if 0
 FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork( FLDMMDLSYS *fmmdlsys )
 {
 	return( fmmdlsys->pFldMainWork );
 }
+#endif
 
 void FLDMMDL_SetBlActID( FLDMMDL *fmmdl, GFL_BBDACT_ACTUNIT_ID blActID )
 {
