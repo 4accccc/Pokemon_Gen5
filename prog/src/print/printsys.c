@@ -65,9 +65,6 @@ enum {
 // Typedefs
 //==============================================================
 
-// 文字コード
-typedef u16		STRCODE;
-
 // １文字書き込み関数フォーマット
 typedef void (*pPut1CharFunc)( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
 
