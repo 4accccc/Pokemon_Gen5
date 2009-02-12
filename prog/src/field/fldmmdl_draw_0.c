@@ -26,12 +26,84 @@ typedef struct
 	GFL_BBDACT_ACTUNIT_ID actID;
 	u8 set_anm_dir;
 	u8 set_anm_status;
-	s8 anm_walk_stop_frame;
 }DRAW_BLACT_WORK;
 
 //======================================================================
 //	proto
 //======================================================================
+
+//======================================================================
+//	•`‰æˆ—@•`‰æ–³‚µ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * •`‰æ–³‚µ@‰Šú‰»
+ * @param	fmmdl		FLDMMDL * 
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FldMMdl_DrawNon_Init( FLDMMDL * fmmdl )
+{
+	FLDMMDL_SetStatusBitVanish( fmmdl, TRUE );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
+}
+
+//--------------------------------------------------------------
+/**
+ * •`‰æ–³‚µ@•`‰æ
+ * @param	fmmdl		FLDMMDL * 
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FldMMdl_DrawNon_Draw( FLDMMDL * fmmdl )
+{
+}
+
+//--------------------------------------------------------------
+/**
+ * •`‰æ–³‚µ@íœ
+ * @param	fmmdl	FLDMMDL * 
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FldMMdl_DrawNon_Delete( FLDMMDL * fmmdl )
+{
+}
+
+//--------------------------------------------------------------
+/**
+ * •`‰æ–³‚µ@‘Þ”ð
+ * @param	fmmdl		FLDMMDL * 
+ * @retval	int			TRUE=‰Šú‰»¬Œ÷
+ */
+//--------------------------------------------------------------
+static void FldMMdl_DrawNon_Push( FLDMMDL * fmmdl )
+{
+}
+
+//--------------------------------------------------------------
+/**
+ * •`‰æ–³‚µ@•œ‹A
+ * ‘Þ”ð‚µ‚½î•ñ‚ðŒ³‚ÉÄ•`‰æB
+ * @param	fmmdl		FLDMMDL * 
+ * @retval	int			TRUE=‰Šú‰»¬Œ÷
+ */
+//--------------------------------------------------------------
+static void FldMMdl_DrawNon_Pop( FLDMMDL * fmmdl )
+{
+}
+
+//--------------------------------------------------------------
+///	•`‰æˆ—@•`‰æ‚È‚µ@‚Ü‚Æ‚ß
+//--------------------------------------------------------------
+const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Non =
+{
+	FldMMdl_DrawNon_Init,
+	FldMMdl_DrawNon_Draw,
+	FldMMdl_DrawNon_Delete,
+	FldMMdl_DrawNon_Push,
+	FldMMdl_DrawNon_Pop,
+};
 
 //======================================================================
 //	•`‰æˆ—@ƒrƒ‹ƒ{[ƒh@Ž©‹@ê—p
@@ -75,7 +147,7 @@ static void DrawHero_Delete( FLDMMDL *fmmdl )
 //--------------------------------------------------------------
 static void DrawHero_Draw( FLDMMDL *fmmdl )
 {
-#ifdef HEAD3_TEST
+#ifdef FLDMMDL_BLACT_HEAD3_TEST
 	int tbl[] = {
 		0,4,4,4,
 		4,4,4,4,
@@ -106,38 +178,28 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 		work->set_anm_status = status;
 		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
 	}else if( work->set_anm_status != status ){
-		if( work->set_anm_status == DRAW_STA_DASH_4F ){ //ƒXƒe[ƒ^ƒXXV
-			work->anm_walk_stop_frame++;
-		}else{
-			work->anm_walk_stop_frame = 2;
+		u16 frame = 0;
+		
+		switch( work->set_anm_status ){
+		case DRAW_STA_WALK_32F:
+		case DRAW_STA_WALK_16F:
+		case DRAW_STA_WALK_8F:
+		case DRAW_STA_WALK_4F:
+		case DRAW_STA_WALK_2F:
+		case DRAW_STA_DASH_4F:
+			if( GFL_BBDACT_GetAnimeFrmIdx(actSys,work->actID) < 2 ){
+				frame = 2;
+			}
+			break;
 		}
 		
-		if( work->anm_walk_stop_frame > 0 ){
-			u16 frame = 0;
-			work->anm_walk_stop_frame = 0;
-			
-			switch( work->set_anm_status ){
-			case DRAW_STA_WALK_32F:
-			case DRAW_STA_WALK_16F:
-			case DRAW_STA_WALK_8F:
-			case DRAW_STA_WALK_4F:
-			case DRAW_STA_WALK_2F:
-			case DRAW_STA_DASH_4F:
-				if( GFL_BBDACT_GetAnimeFrmIdx(actSys,work->actID) <= 2 ){
-					frame = 2;
-				}
-				break;
-			}
-			
-			GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
-			GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, frame );
-			
-			work->set_anm_status = status;
-		}
+		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+		GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, frame );
+		work->set_anm_status = status;
 	}
 	
 	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
-	#ifndef HEAD3_TEST
+	#ifndef FLDMMDL_BLACT_HEAD3_TEST
 	pos.y += FX32_ONE * 12;
 	#else
 	pos.y += FX32_ONE * 7; //3
@@ -147,9 +209,9 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 	
 	if( FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
-		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, TRUE );
-	}else{
 		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, FALSE );
+	}else{
+		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, TRUE );
 	}
 }
 
@@ -244,7 +306,7 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 	}
 	
 	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
-	#ifndef HEAD3_TEST
+	#ifndef FLDMMDL_BLACT_HEAD3_TEST
 	pos.y += FX32_ONE * 12;
 	#else
 	pos.y += FX32_ONE * 7; //3
@@ -252,11 +314,11 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
-
+	
 	if( FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
-		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, TRUE );
-	}else{
 		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, FALSE );
+	}else{
+		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, TRUE );
 	}
 }
 

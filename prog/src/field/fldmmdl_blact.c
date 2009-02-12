@@ -9,9 +9,7 @@
 #include "fldmmdl.h"
 #include "test_graphic/fld_act.naix"
 
-//#define HEAD3_TEST //定義で三頭身絵テスト
-
-#ifdef HEAD3_TEST
+#ifdef FLDMMDL_BLACT_HEAD3_TEST
 #include "test_graphic/fldmmdl_btx.naix"
 #endif
 
@@ -38,10 +36,14 @@ struct _TAG_FLDMMDL_BLACTCONT{
 //======================================================================
 //	proto
 //======================================================================
+static void BlActFunc( GFL_BBDACT_SYS *bbdActSys, int actIdx, void *work );
+
 //test func
+#if 0
 static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work );
 static void testJikiFunc(
 	GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work );
+#endif
 //test data
 const GFL_BBDACT_RESDATA testResTable[];
 const GFL_BBDACT_ANM *testAnmTable[];
@@ -131,11 +133,15 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor( FLDMMDL *fmmdl, u32 resID )
 	actData.lightMask = GFL_BBD_LIGHTMASK_01;
 	actData.work = fmmdl;
 	
+#if 0
 	actData.func = testFunc;
 	
 	if( resID == 0 ){
 		actData.func = testJikiFunc;
 	}
+#else
+	actData.func = BlActFunc;
+#endif
 	
 	actID = GFL_BBDACT_AddAct(
 		pBlActCont->pBbdActSys, pBlActCont->bbdActResUnitID, &actData, 1 );
@@ -169,8 +175,20 @@ void FLDMMDL_BLACTCONT_DeleteActor( FLDMMDL *fmmdl, u32 actID )
 }
 
 //======================================================================
-//	
+//	フィールド動作モデル　ビルボードアクター動作
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * ビルボードアクター動作関数
+ * @param	bbdActSys	GFL_BBDACT_SYS
+ * @param	actIdx		int
+ * @param	work		void*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void BlActFunc( GFL_BBDACT_SYS *bbdActSys, int actIdx, void *work )
+{
+}
 
 //======================================================================
 //	フィールド動作モデル　ビルボードアクター管理　参照
@@ -204,6 +222,7 @@ GFL_BBDACT_RESUNIT_ID FLDMMDL_BLACTCONT_GetResUnitID(
 //======================================================================
 //	test func
 //======================================================================
+#if 0
 typedef struct
 {
 	u8 init;
@@ -273,7 +292,7 @@ static void testJikiFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
 {
 	u16 dir,anm_id,status;
 	VecFx32 pos;
-#ifdef HEAD3_TEST
+#ifdef FLDMMDL_BLACT_HEAD3_TEST
 	int tbl[] = {
 		0,4,4,4,
 		4,4,4,4,
@@ -370,12 +389,13 @@ static void testJikiFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void *work )
 		GFL_BBDACT_SetAnimeEnable( bbdActSys, actIdx, FALSE );
 	}
 }
+#endif
 
 //======================================================================
 //	test data
 //======================================================================
 static const GFL_BBDACT_RESDATA testResTable[] = {
-#ifdef HEAD3_TEST
+#ifdef FLDMMDL_BLACT_HEAD3_TEST
 	{ ARCID_FLDMMDL_BTX, NARC_fldmmdl_btx_obj_kabi32_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
 #else
@@ -482,7 +502,7 @@ static const GFL_BBDACT_ANM* testAnmTable[] = {
 };
 
 //-----HERO
-#ifdef HEAD3_TEST	//三頭身テスト
+#ifdef FLDMMDL_BLACT_HEAD3_TEST	//三頭身テスト
 static const GFL_BBDACT_ANM PCstopLAnm[] = {
 	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
 	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },

@@ -189,6 +189,7 @@ static void GridMoveCreate(
 		
 		fieldWork->fldMMdlSys = FLDMMDLSYS_Create( 256,
 				fieldWork->heapID, GetFieldG3Dmapper(fieldWork->gs) );
+		FLDMMDLSYS_InitDraw( fieldWork->fldMMdlSys );
 		FLDMMDL_BLACTCONT_Setup(
 				fieldWork->fldMMdlSys, GetBbdActSys(fieldWork->gs) );
 		
@@ -333,7 +334,6 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 #endif
 	}
 	
-	FLDMMDL_BLACTCONT_Release( fieldWork->fldMMdlSys );
 	FLDMMDLSYS_DeleteAll( fieldWork->fldMMdlSys );
 }
 
@@ -1520,8 +1520,10 @@ static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
 					head.gz = gz;
 					fmmdl = FLDMMDLSYS_AddFldMMdl(
 						fieldWork->fldMMdlSys, &head, 0 );
+#if 0
 					FLDMMDL_SetBlActID( fmmdl,
 						FLDMMDL_BLACTCONT_AddActor(fmmdl,head.obj_code) );
+#endif
 					break;
 				}
 			}

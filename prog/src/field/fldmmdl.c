@@ -7,6 +7,7 @@
  */
 //======================================================================
 #include "fldmmdl.h"
+#include "fldmmdl_procdraw.h"
 
 //======================================================================
 //	define
@@ -31,7 +32,7 @@ enum
 //--------------------------------------------------------------
 ///	FLDMMDLSYS構造体
 //--------------------------------------------------------------
-typedef struct _TAG_FLDMMDLSYS
+struct _TAG_FLDMMDLSYS
 {
 	u32 status_bit;					///<ステータスビット
 	u16 fmmdl_max;					///<FLDMMDL最大数
@@ -46,14 +47,14 @@ typedef struct _TAG_FLDMMDLSYS
 	
 	const FLDMAPPER *pG3DMapper;	///<FLDMAPPER
 //	FIELD_MAIN_WORK *pFldMainWork;	///<FIELD_MAIN_WORK
-}FLDMMDLSYS;
+};
 
 #define FLDMMDLSYS_SIZE (sizeof(FLDMMDLSYS)) ///<FLDMMDLSYSサイズ
 
 //--------------------------------------------------------------
 ///	FLDMMDL構造体
 //--------------------------------------------------------------
-typedef struct _TAG_FLDMMDL
+struct _TAG_FLDMMDL
 {
 	u32 status_bit;				///<ステータスビット
 	u32 move_bit;				///<動作ビット
@@ -118,10 +119,11 @@ typedef struct _TAG_FLDMMDL
 	u8 draw_proc_work[FLDMMDL_DRAW_WORK_SIZE];
 	
 	GFL_BBDACT_ACTUNIT_ID blActID;
-}FLDMMDL;
+};
 
 #define FLDMMDL_SIZE (sizeof(FLDMMDL)) ///<FLDMMDLサイズ
 
+#ifndef FLDMMDL_PL_NULL
 //--------------------------------------------------------------
 ///	FLDMMDL_HEADER_LOAD_FILE構造体
 //--------------------------------------------------------------
@@ -136,6 +138,7 @@ typedef struct
 
 ///FLDMMDL_HEADER_LOAD_FILEサイズ
 #define FLDMMDL_HEADER_LOAD_FILE_SIZE (sizeof(FLDMMDL_HEADER_LOAD_FILE))
+#endif
 
 //======================================================================
 //	proto
@@ -145,7 +148,7 @@ static void FldMMdl_SetHeader(
 	FLDMMDL * fmmdl, const FLDMMDL_HEADER *head, void *sys );
 static void FldMMdl_SetHeaderPos( FLDMMDL *fmmdl, const FLDMMDL_HEADER *head );
 static void FldMMdl_InitWork( FLDMMDL * fmmdl, const FLDMMDLSYS *sys );
-static void FldMMdl_InitMoveProcWork( FLDMMDL * fmmdl );
+static void FldMMdl_InitCallMoveProcWork( FLDMMDL * fmmdl );
 static void FldMMdl_InitMoveWork( FLDMMDL * fmmdl );
 
 //FLDMMDL 動作関数
@@ -436,7 +439,7 @@ static void FldMMdl_InitWork( FLDMMDL * fmmdl, const FLDMMDLSYS *sys )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void FldMMdl_InitMoveProcWork( FLDMMDL * fmmdl )
+static void FldMMdl_InitCallMoveProcWork( FLDMMDL * fmmdl )
 {
 	const FLDMMDL_MOVE_PROC_LIST *list;
 	list = MoveProcList_GetList( FLDMMDL_GetMoveCode(fmmdl) );
@@ -454,7 +457,7 @@ static void FldMMdl_InitMoveProcWork( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static void FldMMdl_InitMoveWork( FLDMMDL * fmmdl )
 {
-	FldMMdl_InitMoveProcWork( fmmdl );
+	FldMMdl_InitCallMoveProcWork( fmmdl );
 	FLDMMDL_InitMoveProc( fmmdl );
 }
 
@@ -491,7 +494,7 @@ static void FldMMdl_TCB_DrawProc( FLDMMDL * fmmdl )
 	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys(fmmdl);
 	
 	if( FLDMMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
-		FLDMMDLSYS_UpdateDraw( fmmdl );
+		FLDMMDL_UpdateDraw( fmmdl );
 	}
 }
 
@@ -675,6 +678,19 @@ FLDMMDL_BLACTCONT * FLDMMDLSYS_GetBlActCont( FLDMMDLSYS *fmmdlsys )
 {
 	GF_ASSERT( fmmdlsys->pBlActCont != NULL );
 	return( fmmdlsys->pBlActCont );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS FLDMAPPER取得
+ * @param	fmmdlsys	FLDMMDLSYS
+ * @retval	FLDMAPPER* FLDMAPPER*
+ */
+//--------------------------------------------------------------
+const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos )
+{
+	GF_ASSERT( fos->pG3DMapper != NULL);
+	return( fos->pG3DMapper );
 }
 
 //======================================================================
@@ -1417,9 +1433,7 @@ void FLDMMDL_CallDrawInitProc( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_CallDrawProc( FLDMMDL * fmmdl )
 {
-#ifndef FLDMMDL_PL_NULL
 	fmmdl->draw_proc( fmmdl );
-#endif
 }
 
 //--------------------------------------------------------------
@@ -2007,6 +2021,23 @@ BOOL FLDMMDLSYS_CheckCompleteDrawInit( const FLDMMDLSYS *fmmdlsys )
 		return( TRUE );
 	}
 	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS 描画処理初期化完了セット
+ * @param	fmmdlsys	FLDMMDLSYS*
+ * @param	flag	TRUE=初期化完了
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDLSYS_SetCompleteDrawInit( FLDMMDLSYS *fmmdlsys, BOOL flag )
+{
+	if( flag == TRUE ){
+		FldMMdlSys_OnStatusBit( fmmdlsys, FLDMMDLSYS_STABIT_DRAW_INIT_COMP );
+	}else{
+		FldMMdlSys_OffStatusBit( fmmdlsys, FLDMMDLSYS_STABIT_DRAW_INIT_COMP );
+	}
 }
 
 //--------------------------------------------------------------
@@ -3027,7 +3058,7 @@ void FLDMMDL_ChangeMoveCode( FLDMMDL *fmmdl, u16 code )
 {
 	FLDMMDL_CallMoveDeleteProc( fmmdl );
 	FLDMMDL_SetMoveCode( fmmdl, code );
-	FldMMdl_InitMoveProcWork( fmmdl );
+	FldMMdl_InitCallMoveProcWork( fmmdl );
 	FLDMMDL_InitMoveProc( fmmdl );
 }
 
@@ -3075,13 +3106,9 @@ static void FldMMdl_InitCallDrawProcWork( FLDMMDL * fmmdl )
 	u32 code = FLDMMDL_GetOBJCode( fmmdl );
 	
 	if( code == NONDRAW ){
-		list = &DATA_FieldOBJDraw_Non;
+		list = &DATA_FLDMMDL_DRAWPROCLIST_Non;
 	}else{
-		#ifndef FLDMMDL_PL_NULL
 		list = DrawProcList_GetList( code );
-		#else
-		list = &DATA_FieldOBJDraw_Non;
-		#endif
 	}
 	
 	fmmdl->draw_init_proc = list->init_proc;
@@ -3394,8 +3421,16 @@ static const FLDMMDL_DRAW_PROC_LIST * DrawProcList_GetList( u16 code )
 	
 	GF_ASSERT( 0 );
 	return( NULL );
-#else
-	return( NULL );
+#else //仮
+	u32 no = 0;
+	
+	if( code == HERO ){
+		no = 0;
+	}else{
+		no = 1;
+	}
+	
+	return( DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[no] );
 #endif
 }
 
@@ -3550,6 +3585,7 @@ FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork( FLDMMDLSYS *fmmdlsys )
 }
 #endif
 
+#if 0
 void FLDMMDL_SetBlActID( FLDMMDL *fmmdl, GFL_BBDACT_ACTUNIT_ID blActID )
 {
 	fmmdl->blActID = blActID;
@@ -3559,8 +3595,4 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fmmdl )
 {
 	return( fmmdl->blActID );
 }
-
-const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos )
-{
-	return( fos->pG3DMapper );
-}
+#endif

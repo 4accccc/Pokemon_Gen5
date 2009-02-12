@@ -27,6 +27,7 @@
 //	debug
 //--------------------------------------------------------------
 #define FLDMMDL_PL_NULL	//プラチナで行っていた処理無効化
+//#define FLDMMDL_BLACT_HEAD3_TEST //定義で三頭身テスト
 
 //--------------------------------------------------------------
 //	fx
@@ -389,6 +390,7 @@ extern GFL_TCBSYS * FLDMMDLSYS_GetTCBSYS( FLDMMDLSYS *fos );
 extern void FLDMMDLSYS_SetBlActCont(
 		FLDMMDLSYS *fmmdlsys, FLDMMDL_BLACTCONT *pBlActCont );
 extern FLDMMDL_BLACTCONT * FLDMMDLSYS_GetBlActCont( FLDMMDLSYS *fmmdlsys );
+extern const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos );
 
 extern void FLDMMDL_OnStatusBit( FLDMMDL *fmmdl, FLDMMDL_STABIT bit );
 extern void FLDMMDL_OffStatusBit( FLDMMDL *fmmdl, FLDMMDL_STABIT bit );
@@ -499,6 +501,7 @@ extern s16 FLDMMDL_GetHeightGrid( const FLDMMDL * fmmdl );
 extern FLDMMDL_BLACTCONT * FLDMMDL_GetBlActCont( FLDMMDL *fmmdl );
 
 extern BOOL FLDMMDLSYS_CheckCompleteDrawInit( const FLDMMDLSYS *fmmdlsys );
+extern void FLDMMDLSYS_SetCompleteDrawInit( FLDMMDLSYS *fmmdlsys, BOOL flag );
 extern void FLDMMDLSYS_SetJoinShadow( FLDMMDLSYS *fos, BOOL flag );
 extern BOOL FLDMMDLSYS_CheckJoinShadow( const FLDMMDLSYS *fos );
 
@@ -583,10 +586,9 @@ extern void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl );
 
 //仮
 //extern FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork(FLDMMDLSYS *fmmdlsys);
-extern void FLDMMDL_SetBlActID(
-	FLDMMDL *fmmdl, GFL_BBDACT_ACTUNIT_ID blActID );
-extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fmmdl );
-extern const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos );
+//extern void FLDMMDL_SetBlActID(
+//	FLDMMDL *fmmdl, GFL_BBDACT_ACTUNIT_ID blActID );
+//extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fmmdl );
 
 //--------------------------------------------------------------
 //	fieldobj_movedata.c
@@ -598,6 +600,9 @@ extern const int * const DATA_AcmdCodeDirChangeTbl[];
 //--------------------------------------------------------------
 //	fieldobj_drawdata.c
 //--------------------------------------------------------------
+extern const FLDMMDL_DRAW_PROC_LIST * const DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[];
+
+#ifndef FLDMMDL_PL_NULL
 extern const FLDMMDL_DRAW_PROC_LIST DATA_FieldOBJDraw_Non;
 
 extern const FLDMMDL_RESMNARC DATA_FLDMMDL_ResmNArcTbl_RenderOBJ[];
@@ -610,6 +615,7 @@ extern const int DATA_FLDMMDL_Regular_Tex[];
 extern const int DATA_FLDMMDL_Regular_Mdl[];
 extern const int DATA_FLDMMDL_Regular_Anm[];
 extern const int DATA_FLDMMDL_BlActFogEnableOFFTbl[];
+#endif
 
 extern const OBJCODE_STATE DATA_FieldOBJCodeDrawStateTbl[];
 
@@ -670,12 +676,10 @@ extern EOA_PTR FLDMMDL_MoveHideEoaPtrGet( FLDMMDL * fmmdl );
 //--------------------------------------------------------------
 //	fieldobj_draw.c
 //--------------------------------------------------------------
-extern void FLDMMDLSYS_InitDraw( FLDMMDLSYS *fos,
-		int tex_max, int reg_tex_max,
-		const int *tex_tbl, int frm_trans_max );
+extern void FLDMMDLSYS_InitDraw( FLDMMDLSYS *fos );
 extern void FLDMMDLSYS_DeleteDraw( FLDMMDLSYS *fos );
 
-extern void FLDMMDLSYS_UpdateDraw( FLDMMDL * fmmdl );
+extern void FLDMMDL_UpdateDraw( FLDMMDL * fmmdl );
 
 extern const OBJCODE_STATE * FLDMMDL_TOOL_GetOBJCodeState( u16 code );
 extern const OBJCODE_STATE * FLDMMDL_GetOBJCodeState( const FLDMMDL *fmmdl );

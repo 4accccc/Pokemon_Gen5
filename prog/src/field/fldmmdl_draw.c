@@ -8,7 +8,6 @@
  */
 //======================================================================
 #include "fldmmdl.h"
-#include "fldmmdl_procdraw.h"
 
 //======================================================================
 //	define
@@ -38,9 +37,7 @@ static void FldMMdlSys_ArcHandleClose( FLDMMDLSYS *fos );
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDLSYS_InitDraw( FLDMMDLSYS *fos,
-		int tex_max, int reg_tex_max,
-		const int *tex_tbl, int frm_trans_max )
+void FLDMMDLSYS_InitDraw( FLDMMDLSYS *fos )
 {
 	#ifndef FLDMMDL_PL_NULL
 	int max,pri;
@@ -56,6 +53,8 @@ void FLDMMDLSYS_InitDraw( FLDMMDLSYS *fos,
 	FLDMMDL_BlActCont_Init(
 		cont, fos, max, pri, tex_max, reg_tex_max, tex_tbl, frm_trans_max );
 	FLDMMDLSYS_StatusBit_ON( fos, FLDMMDLSYS_STABIT_DRAW_INIT_COMP );
+	#else
+	FLDMMDLSYS_SetCompleteDrawInit( fos, TRUE );
 	#endif
 }
 
@@ -75,6 +74,10 @@ void FLDMMDLSYS_DeleteDraw( FLDMMDLSYS *fos )
 	
 	FLDMMDLSYS_StatusBit_OFF( fos, FLDMMDLSYS_STABIT_DRAW_INIT_COMP );
 	FldMMdlSys_ArcHandleClose( fos );
+	#else
+	if( FLDMMDLSYS_GetBlActCont(fos) != NULL ){
+		FLDMMDL_BLACTCONT_Release( fos );
+	}
 	#endif
 }
 
@@ -121,7 +124,7 @@ static void FldMMdlSys_ArcHandleClose( FLDMMDLSYS *fos )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FLDMMDLSYS_UpdateDraw( FLDMMDL * fmmdl )
+void FLDMMDL_UpdateDraw( FLDMMDL * fmmdl )
 {
 	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys( fmmdl );
 	
@@ -258,65 +261,3 @@ void FLDMMDL_GetDrawVectorPos( const FLDMMDL * fmmdl, VecFx32 *vec )
 	vec->y = vec_pos.y + vec_offs.y + vec_out.y + vec_attr.y;
 	vec->z = vec_pos.z + vec_offs.z + vec_out.z + vec_attr.z;
 }
-
-//======================================================================
-//	ï`âÊñ≥Çµ
-//======================================================================
-//--------------------------------------------------------------
-/**
- * ï`âÊñ≥ÇµÅ@èâä˙âª
- * @param	fmmdl		FLDMMDL * 
- * @retval	nothing
- */
-//--------------------------------------------------------------
-void FLDMMDL_DrawNon_Init( FLDMMDL * fmmdl )
-{
-	FLDMMDL_SetStatusBitVanish( fmmdl, TRUE );
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_VANISH );
-}
-
-//--------------------------------------------------------------
-/**
- * ï`âÊñ≥ÇµÅ@ï`âÊ
- * @param	fmmdl		FLDMMDL * 
- * @retval	nothing
- */
-//--------------------------------------------------------------
-void FLDMMDL_DrawNon_Draw( FLDMMDL * fmmdl )
-{
-}
-
-//--------------------------------------------------------------
-/**
- * ï`âÊñ≥ÇµÅ@çÌèú
- * @param	fmmdl	FLDMMDL * 
- * @retval	nothing
- */
-//--------------------------------------------------------------
-void FLDMMDL_DrawNon_Delete( FLDMMDL * fmmdl )
-{
-}
-
-//--------------------------------------------------------------
-/**
- * ï`âÊñ≥ÇµÅ@ëﬁî
- * @param	fmmdl		FLDMMDL * 
- * @retval	int			TRUE=èâä˙âªê¨å˜
- */
-//--------------------------------------------------------------
-void FLDMMDL_DrawNon_Push( FLDMMDL * fmmdl )
-{
-}
-
-//--------------------------------------------------------------
-/**
- * ï`âÊñ≥ÇµÅ@ïúãA
- * ëﬁîÇµÇΩèÓïÒÇå≥Ç…çƒï`âÊÅB
- * @param	fmmdl		FLDMMDL * 
- * @retval	int			TRUE=èâä˙âªê¨å˜
- */
-//--------------------------------------------------------------
-void FLDMMDL_DrawNon_Pop( FLDMMDL * fmmdl )
-{
-}
-

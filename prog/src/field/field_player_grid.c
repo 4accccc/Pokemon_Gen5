@@ -197,18 +197,22 @@ PC_ACTCONT * CreatePlayerActGrid(
 	head.gy = pos->y;
 	pcActCont->pFldMMdl = FLDMMDLSYS_AddFldMMdl( pFldMMdlSys, &DATA_JikiHeader, 0 );
 	
+#if 0
 	//BLACTセットアップ
 	pcActCont->bbdActActUnitID =
 		FLDMMDL_BLACTCONT_AddActor( pcActCont->pFldMMdl, 0 );
 	FLDMMDL_SetBlActID( pcActCont->pFldMMdl, pcActCont->bbdActActUnitID );
+#endif
 	return pcActCont;
 }
 #endif
 
 void DeletePlayerActGrid( PC_ACTCONT* pcActCont )
 {
+#if 0
 	FLDMMDL_BLACTCONT_DeleteActor(
 		pcActCont->pFldMMdl, FLDMMDL_GetBlActID(pcActCont->pFldMMdl) );
+#endif
 	GFL_HEAP_FreeMemory( pcActCont );
 }
 
