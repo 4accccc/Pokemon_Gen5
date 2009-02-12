@@ -28,7 +28,6 @@
 
 #ifdef PM_DEBUG
 #include "test/performance.h"
-#include "test/goto/comm_error.h"
 #endif //PM_DEBUG
 
 #include "title/title.h"
@@ -192,11 +191,6 @@ static	void	GameMain(void)
 	/* ユーザーレベルで必要なメイン処理をここに記述する */
 
 	WIPE_SYS_Main();
-#ifdef PM_DEBUG
-
-	CommErrorSys_SampleView();
-	
-#endif	// PM_DEBUG
 
 	NetErr_Main();
 	NetErr_App_ErrorCheck();

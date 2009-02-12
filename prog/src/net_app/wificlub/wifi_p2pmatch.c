@@ -4342,6 +4342,75 @@ static void DEBUG_DummyObjIn( WIFIP2PMATCH_WORK *wk, int num )
 
 //------------------------------------------------------------------
 /**
+ * $brief   マッチングしてよいかどうかの判定
+ * @param   friendIndex判定する友人のindex
+ * @retval  マッチングokならTRUE
+ */
+//------------------------------------------------------------------
+
+static BOOL WIFIP2PModeCheck( int friendIndex ,void* pWork)
+{
+    int mySt;
+    int targetSt;
+    WIFIP2PMATCH_WORK *wk = pWork;
+    TEST_MATCH_WORK* pMatch = wk->pMatch;
+
+    mySt = pMatch->myMatchStatus.status;
+    targetSt = pMatch->friendMatchStatus[ friendIndex ].status;
+    
+    if((mySt == WIFI_STATUS_DBATTLE50_WAIT)&&(targetSt == WIFI_STATUS_DBATTLE50)){
+        return TRUE;
+    }
+    else if((mySt == WIFI_STATUS_DBATTLE100_WAIT)&&(targetSt == WIFI_STATUS_DBATTLE100)){
+        return TRUE;
+    }
+    else if((mySt == WIFI_STATUS_DBATTLE_FREE_WAIT)&&(targetSt == WIFI_STATUS_DBATTLE_FREE)){
+        return TRUE;
+    }
+#ifdef WFP2P_DEBUG_EXON 
+    else if((mySt == WIFI_STATUS_MBATTLE_FREE_WAIT)&&(targetSt == WIFI_STATUS_MBATTLE_FREE)){
+        return TRUE;
+    }
+#endif
+    else if((mySt == WIFI_STATUS_SBATTLE50_WAIT)&&(targetSt == WIFI_STATUS_SBATTLE50)){
+        return TRUE;
+    }
+    else if((mySt == WIFI_STATUS_SBATTLE100_WAIT)&&(targetSt == WIFI_STATUS_SBATTLE100)){
+        return TRUE;
+    }
+    else if((mySt == WIFI_STATUS_SBATTLE_FREE_WAIT)&&(targetSt == WIFI_STATUS_SBATTLE_FREE)){
+        return TRUE;
+    }
+    else if((mySt == WIFI_STATUS_TRADE_WAIT)&&(targetSt == WIFI_STATUS_TRADE)){
+        return TRUE;
+    }
+    else if((mySt == WIFI_STATUS_FRONTIER_WAIT)&&(targetSt == WIFI_STATUS_FRONTIER)){
+        return TRUE;
+    }
+#ifdef WFP2P_DEBUG_EXON 
+    else if((mySt == WIFI_STATUS_BATTLEROOM_WAIT)&&(targetSt == WIFI_STATUS_BATTLEROOM)){
+        return TRUE;
+    }
+#endif
+    else if((mySt == WIFI_STATUS_BUCKET_WAIT)&&(targetSt == WIFI_STATUS_BUCKET)){
+        return TRUE;
+    }
+    else if((mySt == WIFI_STATUS_BALANCEBALL_WAIT)&&(targetSt == WIFI_STATUS_BALANCEBALL)){
+        return TRUE;
+    }
+    else if((mySt == WIFI_STATUS_BALLOON_WAIT)&&(targetSt == WIFI_STATUS_BALLOON)){
+        return TRUE;
+    }
+    else if((mySt == WIFI_STATUS_LOGIN_WAIT)&&(targetSt == WIFI_STATUS_VCT)){
+        return TRUE;
+    }
+    return FALSE;
+}
+
+
+
+//------------------------------------------------------------------
+/**
  * $brief   フレンドリスト表示初期化   WIFIP2PMATCH_FRIENDLIST_INIT
  *
  * @param   wk
@@ -6383,7 +6452,7 @@ static void WifiP2P_SetLobbyBgm( void )
 
 	if( WifiP2P_CheckLobbyBgm() == FALSE ){
 
-		if( GF_RTC_IsNightTime() == FALSE ){			//FALSE=昼、TRUE=夜
+		if( GFL_RTC_IsNightTime() == FALSE ){			//FALSE=昼、TRUE=夜
 			bgm = SEQ_PC_01;
 		}else{
 			bgm = SEQ_PC_02;

@@ -17,7 +17,7 @@
 
 #include "net\network_define.h"
 
-#include "test/goto/comm_error.h"
+//#include "test/goto/comm_error.h"
 
 
 //==============================================================================

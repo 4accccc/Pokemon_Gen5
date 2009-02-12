@@ -14,7 +14,7 @@
 #include "system/main.h"
 #include "arc_def.h"
 
-#include "comm_error.h"
+//#include "comm_error.h"
 
 typedef struct
 {

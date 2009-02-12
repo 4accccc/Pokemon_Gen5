@@ -308,7 +308,7 @@ extern void GFL_NET_StateSendWifiMatchEnd(GFL_NETHANDLE* pNet);
 typedef void (*MYDWCReceiverFunc) (u16 aid, u16 *data, u16 size);
 
 //接続検査 フレンドコードリストインデックス
-typedef BOOL (*MYDWCConnectModeCheckFunc) (int index);
+typedef BOOL (*MYDWCConnectModeCheckFunc) (int index,void* pWork);
 
 #define DWCRAP_STARTGAME_OK (0)
 #define DWCRAP_STARTGAME_NOTSTATE  (-1)

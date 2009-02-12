@@ -18,13 +18,13 @@
 //--------------------------------------------------------------
 //	ツール関数
 //--------------------------------------------------------------
-extern int GF_RTC_ConvertHourToTimeZone(int hour);
-extern int GF_RTC_GetTimeZone(void);
-extern int GF_RTC_GetDaysOffset(const RTCDate * date);
+extern int GFL_RTC_ConvertHourToTimeZone(int hour);
+extern int GFL_RTC_GetTimeZone(void);
+extern int GFL_RTC_GetDaysOffset(const RTCDate * date);
 //夜かどうかチェック
-extern BOOL GF_RTC_IsNightTime(void);
+extern BOOL GFL_RTC_IsNightTime(void);
 
-static inline BOOL GF_RTC_IsLeapYear(u32 year)
+static inline BOOL GFL_RTC_IsLeapYear(u32 year)
 {
 	if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
 		return TRUE;

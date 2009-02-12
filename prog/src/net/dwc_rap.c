@@ -9,7 +9,7 @@
 
 #include <nitro.h>
 #include <nnsys.h>
-#include "gflib.h"
+#include <gflib.h>
 //#include "../net_state.h"
 
 #if GFL_NET_WIFI
@@ -2171,7 +2171,7 @@ static void SetupGameServerCallback(DWCError error,
             }
 
             if(_dWork->connectModeCheck){
-                if(FALSE == _dWork->connectModeCheck(index)){
+                if(FALSE == _dWork->connectModeCheck(index,GFL_NET_GetWork())){
                     OS_TPrintf("êÿífWIFIP2PModeCheck \n");
                     bFriendOnly = TRUE;
                 }

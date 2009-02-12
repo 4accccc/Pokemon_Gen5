@@ -794,14 +794,10 @@ static BOOL TESTMODE_ITEM_SelectFuncSogabe( TESTMODE_WORK *work , const int idx 
 }
 
 FS_EXTERN_OVERLAY(ohno_debug);
-extern const GFL_PROC_DATA DebugOhnoMainProcData;
-extern const GFL_PROC_DATA DebugLayoutMainProcData;
-extern const GFL_PROC_DATA DebugGotoMainProcData;
+extern const GFL_PROC_DATA DebugOhnoListProcData;
 static BOOL TESTMODE_ITEM_SelectFuncOhno( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(ohno_debug) , &DebugOhnoMainProcData, NULL);
-//	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(ohno_debug), &DebugGotoMainProcData, NULL);
-//	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(ohno_debug), &DebugLayoutMainProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(ohno_debug) , &DebugOhnoListProcData, NULL);
 	return TRUE;
 }
 
@@ -875,10 +871,11 @@ static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx )
 	return TRUE;
 }
 
+FS_EXTERN_OVERLAY(download_play);
 extern const GFL_PROC_DATA DebugDLPlayMainProcData;
 static BOOL TESTMODE_ITEM_SelectFuncDlPlay( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &DebugDLPlayMainProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(download_play), &DebugDLPlayMainProcData, NULL);
 	return TRUE;
 }
 

@@ -14,7 +14,7 @@
 #include "system/main.h"
 #include "arc_def.h"
 
-#include "../goto/comm_error.h"
+//#include "../goto/comm_error.h"
 #include "layout.naix"
 
 //======================================================================
@@ -270,16 +270,10 @@ static GFL_PROC_RESULT DebugLayoutMainProcMain( GFL_PROC * proc, int * seq, void
                 wk->layoutno = 0;
             }
         }
-        ///< main
-//		CommErrorSys_Init( GFL_BG_FRAME0_M );
-//		CommErrorSys_Call();
 	}
 	
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
 	{
-		///< sub 
-		CommErrorSys_Init( GFL_BG_FRAME0_S );
-		CommErrorSys_Call();
 	}
 	
 	if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
@@ -301,8 +295,6 @@ static GFL_PROC_RESULT DebugLayoutMainProcMain( GFL_PROC * proc, int * seq, void
 	
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
 	{
-	//	CommErrorSys_Init( GFL_BG_FRAME0_M );	///< –¢‰Šú‰»ƒeƒXƒg
-		CommErrorSys_Call();
 	}
 
 	return GFL_PROC_RES_CONTINUE;	

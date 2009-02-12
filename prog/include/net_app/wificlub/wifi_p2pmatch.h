@@ -42,13 +42,11 @@ extern void EventCmd_DPWInitProc2(GMEVENT * event, u16* ret);
 
 
 //------------------------------------------------------------------
-/**
- * $brief   マッチングしてよいかどうかの判定
- * @param   friendIndex判定する友人のindex
- * @retval  マッチングokならばTRUE
+/*
+   @title WIFIクラブイベントメモリを確保
  */
 //------------------------------------------------------------------
-extern BOOL WIFIP2PModeCheck( int friendIndex );
+extern void* WIFICLUB_CreateWork(void);
 
 
 #endif //__WIFI_P2PMATCH_H__

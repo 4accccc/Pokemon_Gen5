@@ -11,14 +11,43 @@ SOUNDSRC = 		sound/snd_strm.c \
 #				sound/fld_bgm.c \
 
 
+#セーブデータ関連
+SAVEDATASRC = 	savedata/save_tbl.c \
+				savedata/save_control.c \
+				savedata/contest_savedata.c \
+				savedata/test_savedata.c \
+				savedata/box_savedata.c \
+				savedata/perapvoice.c \
+				savedata/myitem_savedata.c \
+				savedata/config.c \
+				savedata/mystatus.c \
+				savedata/playtime.c \
+				savedata/player_data.c \
+				savedata/situation.c \
+				savedata/trainercard_data.c \
+				savedata/system_data.c \
+				savedata/record.c \
+				savedata/wifihistory.c \
+				savedata/wifilist.c \
+				savedata/mystery_data.c
+
+#通信の常駐
+NETWORKSRC =	net/net_icondata.c \
+				net/net_dev.c \
+				system/net_err.c
+
+
+
 #常駐プログラム
 SRCS	+=		$(SOUNDSRC) \
+				$(SAVEDATASRC) \
+				$(NETWORKSRC) \
 				test/tetsu/game/calc_ph.c \
 				test/matsuda/performance.c \
-				system/net_err.c \
 				system/debug_print.c \
 				system/vm.c \
 				system/g3d_tool.c \
+				system/rtc_tool.c \
 				gamesystem/gamesystem.c \
 				gamesystem/game_event.c \
 				gamesystem/game_data.c \
@@ -36,14 +65,6 @@ SRCS	+=		$(SOUNDSRC) \
 				field/field_comm/field_comm_data.c \
 				field/field_comm/field_comm_func.c \
 				field/field_comm/field_comm_event.c \
-				savedata/save_tbl.c \
-				savedata/save_control.c \
-				savedata/contest_savedata.c \
-				savedata/test_savedata.c \
-				savedata/box_savedata.c \
-				savedata/perapvoice.c \
-				test/goto/d_goto.c \
-				test/goto/comm_error.c \
 				system/mcss.c \
 				system/mcss_tool.c \
 				battle/poke_mcss.c \
@@ -64,31 +85,12 @@ SRCS	+=		$(SOUNDSRC) \
 				system/bmp_menulist.c \
 				system/bmp_cursor.c \
 				system/file_util.c \
-				test/dlplay/dlplay_parent_sample.c \
-				test/dlplay/dlplay_parent_main.c \
-				test/dlplay/dlplay_func.c \
-				test/dlplay/mbp.c \
-				test/dlplay/dlplay_comm_func.c \
-				test/dlplay/dlplay_disp_sys.c \
 				item/item.c \
 				title/title_control.c \
-				savedata/myitem_savedata.c \
-				savedata/config.c \
-				savedata/mystatus.c \
-				savedata/playtime.c \
-				savedata/player_data.c \
-				savedata/situation.c \
-				savedata/trainercard_data.c \
-				savedata/system_data.c \
-				savedata/record.c \
 				system/palanm.c \
 				system/wipe.c \
 				system/wipe_sub.c \
 				system/wipe_wnd.c \
-				net/net_icondata.c \
-				net/net_dev.c \
-				savedata/wifihistory.c \
-				savedata/wifilist.c \
 				system/touch_subwindow.c \
 				app/trainercard/trcard_sys.c \
 				app/name_input/name_input.c \
@@ -104,7 +106,6 @@ SRCS	+=		$(SOUNDSRC) \
 				app/pms_input/pmsiv_tool.c \
 				app/pms_input/pmsiv_wordwin.c \
 				mystery/comm_mystery_gift.c \
-				savedata/mystery_data.c \
 				system/laster.c \
 				field/fldmmdl.c \
 				field/fldmmdl_move.c \
@@ -277,6 +278,7 @@ SRCS_OVERLAY_SOUND_DEBUG	= sound/snd_test.c
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_OHNO_DEBUG	= test/ohno/debug_ohno.c \
+				test/ohno/d_ohno_list.c \
 				test/ohno/fatal_error.c \
 				test/ohno/debug_field.c \
 				test/ohno/test_layout.c
@@ -293,7 +295,6 @@ SRCS_OVERLAY_ARIIZUMI_DEBUG	= test/ariizumi/debug_ariizumi.c
 SRCS_OVERLAY_MATSUDA_DEBUG	= test/matsuda/d_matsu.c \
 				test/matsuda/d_matsu_net.c \
 				test/matsuda/d_matsu_match.c \
-				test/matsuda/d_matsu_error.c \
 				test/matsuda/d_matsu_item.c \
 				test/matsuda/d_matsu_list.c \
 				test/matsuda/d_matsu_huge_beacon.c \
@@ -430,4 +431,14 @@ SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
 			net_app/compatible/compati_control.c \
 			net_app/compatible/compati_result.c
 
+
+#ダウンロードプレイ  DP/PL/GS吸い上げ
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_DOWNLOAD_PLAY = test/dlplay/dlplay_parent_sample.c \
+				test/dlplay/dlplay_parent_main.c \
+				test/dlplay/dlplay_func.c \
+				test/dlplay/mbp.c \
+				test/dlplay/dlplay_comm_func.c \
+				test/dlplay/dlplay_disp_sys.c
 

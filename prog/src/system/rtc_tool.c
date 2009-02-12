@@ -25,7 +25,7 @@
 //--------------------------------------------------------------
 BOOL GFL_RTC_IsNightTime(void)
 {
-	switch (GF_RTC_GetTimeZone()) {
+	switch (GFL_RTC_GetTimeZone()) {
 	case TIMEZONE_MIDNIGHT:
 	case TIMEZONE_NIGHT:
 		return TRUE;
@@ -42,8 +42,8 @@ BOOL GFL_RTC_IsNightTime(void)
 int GFL_RTC_GetTimeZone(void)
 {
 	RTCTime time;
-	GF_RTC_GetTime(&time);
-	return GF_RTC_ConvertHourToTimeZone(time.hour);
+	GFL_RTC_GetTime(&time);
+	return GFL_RTC_ConvertHourToTimeZone(time.hour);
 }
 
 //--------------------------------------------------------------
