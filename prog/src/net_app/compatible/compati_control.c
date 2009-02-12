@@ -20,6 +20,10 @@
 //==============================================================================
 typedef struct{
 	COMPATI_PARENTWORK cppw;		///<子PROCへ渡すパレントワーク
+	union{
+		CCNET_FIRST_PARAM first_param[2];	///< [0]:自分のデータ [1]:受信した相手のデータ
+		CCNET_RESULT_PARAM result_param[2];	///< [0]:自分のデータ [1]:受信した相手のデータ
+	};
 }COMPATI_CONTROL_SYS;
 
 
@@ -84,6 +88,10 @@ static GFL_PROC_RESULT CompatiControlProcMain(GFL_PROC * proc, int * seq, void *
 		(*seq)++;
 		break;
 	case 1:
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &CompatiResultProcData, &ccs->cppw);
+		(*seq)++;
+		break;
+	case 2:
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &CompatiCheckProcData, &ccs->cppw);
 		(*seq)++;
 		break;

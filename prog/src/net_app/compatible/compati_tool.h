@@ -13,6 +13,7 @@
 //	äOïîä÷êîêÈåæ
 //==============================================================================
 extern void CCTOOL_CircleDataGet(CC_CIRCLE_PACKAGE *dest);
+extern void CCTOOL_CircleTouchCheck(const CC_CIRCLE_PACKAGE *ccp, CCT_TOUCH_SYS *cts);
 
 
 #endif	//__COMPATI_TOOL_H__

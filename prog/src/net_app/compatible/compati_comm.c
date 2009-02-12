@@ -19,7 +19,7 @@
 //	データ
 //==============================================================================
 ///通信コマンドテーブル
-static const NetRecvFuncTable _CommPacketTbl[] = {
+static const NetRecvFuncTable _CompatiCommPacketTbl[] = {
     {_RecvMoveData,         NULL},    ///NET_CMD_MOVE
     {_RecvHugeData,         NULL},    ///NET_CMD_HUGE
     {_RecvKeyData,          NULL},    ///NET_CMD_KEY
@@ -39,8 +39,8 @@ enum{
 
 
 static const GFLNetInitializeStruct aGFLNetInit = {
-    _CommPacketTbl,  // 受信関数テーブル
-    NELEMS(_CommPacketTbl), // 受信テーブル要素数
+    _CompatiCommPacketTbl,  // 受信関数テーブル
+    NELEMS(_CompatiCommPacketTbl), // 受信テーブル要素数
     NULL,    ///< ハードで接続した時に呼ばれる
     NULL,    ///< ネゴシエーション完了時にコール
     NULL,   // ユーザー同士が交換するデータのポインタ取得関数
@@ -72,9 +72,9 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     _BCON_GET_NUM,    // 最大ビーコン収集数
     TRUE,     // CRC計算
     FALSE,     // MP通信＝親子型通信モードかどうか
-    GFL_NET_TYPE_WIRELESS,//GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
+    GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
-    WB_NET_DEBUG_MATSUDA_SERVICEID,  //GameServiceID
+    WB_NET_COMPATI_CHECK,  //GameServiceID
 };
 
 //--------------------------------------------------------------
@@ -668,7 +668,7 @@ typedef struct{
     int gameNo;   ///< ゲーム種類
 } _testBeaconStruct;
 
-static _testBeaconStruct _testBeacon = { WB_NET_DEBUG_MATSUDA_SERVICEID };
+static _testBeaconStruct _testBeacon = { WB_NET_COMPATI_CHECK };
 
 //--------------------------------------------------------------
 /**

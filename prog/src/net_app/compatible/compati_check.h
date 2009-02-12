@@ -13,6 +13,7 @@
 //	外部データ
 //==============================================================================
 extern const GFL_PROC_DATA CompatiCheckProcData;
+extern const GFL_PROC_DATA CompatiResultProcData;
 
 
 #endif	//__COMPATI_CHECK_H__

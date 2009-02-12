@@ -20,9 +20,12 @@
 #include "system\gfl_use.h"
 #include "compati_check.naix"
 #include "system/wipe.h"
+#include "print/wordset.h"
 
 #include "compati_check.h"
 #include "compati_types.h"
+#include "compati_tool.h"
+#include "msg\msg_compati_check.h"
 
 
 //==============================================================================
@@ -57,6 +60,7 @@ enum{
 enum{
 	CCBMPWIN_TITLE,		///<ゲーム名
 	CCBMPWIN_POINT,		///<得点
+	CCBMPWIN_TALK,		///<会話文
 	
 	CCBMPWIN_MAX,
 };
@@ -76,6 +80,12 @@ enum{
 	MY_PARENT,		///<親である
 };
 
+///赤外線接続中のバックグランド背景色
+#define BG_COLOR_IRC		(0x001f)
+
+///タイムアップまでの時間(秒数指定)
+#define CC_TIMEUP			(30)
+
 //--------------------------------------------------------------
 //	アクター
 //--------------------------------------------------------------
@@ -87,15 +97,15 @@ enum{
 //--------------------------------------------------------------
 enum{
 	//キャラID
-	CHARID_CIRCLE,
+	CHARID_CIRCLE = 0,
 	CHARID_END,		//キャラID終端
 	
 	//セルID
-	CELLID_CIRCLE,
+	CELLID_CIRCLE = 0,
 	CELLID_END,		//セルID終端
 
 	//パレットID
-	PLTTID_CIRCLE,
+	PLTTID_CIRCLE = 0,
 	PLTTID_CIRCLE_END = PLTTID_CIRCLE + CC_CIRCLE_MAX - 1,
 	PLTTID_END,		//パレットID終端
 };
@@ -113,6 +123,8 @@ typedef struct{
 
 ///相性チェックシステムワーク構造体
 typedef struct {
+	COMPATI_PARENTWORK *cppw;
+	
 	s16 local_seq;
 	s16 local_timer;
 	
@@ -121,8 +133,10 @@ typedef struct {
 	PRINT_STREAM	*ps_entry[CCBMPWIN_MAX];
 	GFL_MSGDATA		*mm;
 	STRBUF			*strbuf_win[CCBMPWIN_MAX];
+	STRBUF			*strbuf_point;
 	GFL_TCBLSYS		*tcbl;
 	MSG_DRAW_WIN drawwin[CCBMPWIN_MAX];	//+1 = メインメッセージウィンドウ
+	WORDSET			*wordset;
 	
 	//アクター
 	GFL_CLUNIT *clunit;
@@ -131,12 +145,14 @@ typedef struct {
 	GFL_TCB *vintr_tcb;
 	
 	u16 light_pal[16];			///<円を押した時の明るい色のパレットデータ
+	u16 normal_pal[16];			///<円を押していない時のパレットデータ
+	u16 bg_color;				///<バックグラウンド色の元の色
 	
 	u32 cgr_id[CHARID_END];
 	u32 cell_id[CELLID_END];
 	u32 pltt_id[PLTTID_END];
 	
-	CC_CIRCLE_PACKAGE circle_package;	///<使用するサークルデータ
+	CCT_TOUCH_SYS ccts;			///<円とタッチペンの当たり判定管理ワーク
 }COMPATI_SYS;
 
 
@@ -157,6 +173,9 @@ static void CCLocal_ActorSetting(COMPATI_SYS *cs);
 static void CCLocal_CircleActor_Create(COMPATI_SYS *cs, ARCHANDLE *hdl);
 static void CCLocal_CircleActor_Delete(COMPATI_SYS *cs);
 static void CCLocal_CircleActor_PosSet(COMPATI_SYS *cs, const CC_CIRCLE_PACKAGE *circle_package);
+static void CCLocal_CirclePalCopy(COMPATI_SYS *cs, ARCHANDLE *hdl);
+static void CCLocal_MessagePut(COMPATI_SYS *cs, int win_index, STRBUF *strbuf, int x, int y);
+static void CCLocal_PointMessagePut(COMPATI_SYS *cs, int point);
 static int CCSeq_Init(COMPATI_SYS *cs);
 static int CCSeq_Countdown(COMPATI_SYS *cs);
 static int CCSeq_Main(COMPATI_SYS *cs);
@@ -275,6 +294,7 @@ static GFL_PROC_RESULT CompatiCheck_ProcInit( GFL_PROC * proc, int * seq, void *
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMPATI, 0x70000 );
 	cs = GFL_PROC_AllocWork( proc, sizeof(COMPATI_SYS), HEAPID_COMPATI );
 	GFL_STD_MemClear(cs, sizeof(COMPATI_SYS));
+	cs->cppw = cppw;
 	
 	//ファイルオープン
 	hdl = GFL_ARC_OpenDataHandle(ARCID_COMPATI_CHECK, HEAPID_COMPATI);
@@ -283,11 +303,13 @@ static GFL_PROC_RESULT CompatiCheck_ProcInit( GFL_PROC * proc, int * seq, void *
 		CCLocal_VramSetting(cs);
 		CCLocal_BGFrameSetting(cs);
 		CCLocal_BGGraphicLoad(hdl);
+		GFL_STD_MemCopy16((void*)(HW_BG_PLTT + 0xc*2), &cs->bg_color, 2);
 		
 		//各種ライブラリ設定
 		GFL_BMPWIN_Init(HEAPID_COMPATI);
 		GFL_FONTSYS_Init();
 		cs->tcbl = GFL_TCBL_Init(HEAPID_COMPATI, HEAPID_COMPATI, 4, 32);
+		cs->wordset = WORDSET_Create(HEAPID_COMPATI);
 
 		//メッセージ描画の為の準備
 		CCLocal_MessageSetting(cs);
@@ -296,12 +318,20 @@ static GFL_PROC_RESULT CompatiCheck_ProcInit( GFL_PROC * proc, int * seq, void *
 		CCLocal_ActorSetting(cs);
 		CCLocal_CircleActor_Create(cs, hdl);
 		CCLocal_CircleActor_PosSet(cs, &cppw->circle_package);
+		CCLocal_CirclePalCopy(cs, hdl);
 	}
 	//ファイルクローズ
 	GFL_ARC_CloseDataHandle(hdl);
 	
 	//VブランクTCB登録
 	cs->vintr_tcb = GFUser_VIntr_CreateTCB(CCLocal_VblankFunc, cs, 5);
+
+	//最初のメッセージ描画
+	CCLocal_PointMessagePut(cs, 0);
+	GFL_MSG_GetString(cs->mm, COMPATI_STR_010, cs->strbuf_win[CCBMPWIN_TITLE]);
+	CCLocal_MessagePut(cs, CCBMPWIN_TITLE, cs->strbuf_win[CCBMPWIN_TITLE], 0, 0);
+	GFL_MSG_GetString(cs->mm, COMPATI_STR_011, cs->strbuf_win[CCBMPWIN_TALK]);
+	CCLocal_MessagePut(cs, CCBMPWIN_TALK, cs->strbuf_win[CCBMPWIN_TALK], 0, 0);
 	
 	return GFL_PROC_RES_FINISH;
 }
@@ -385,7 +415,6 @@ static GFL_PROC_RESULT CompatiCheck_ProcEnd( GFL_PROC * proc, int * seq, void * 
 	GFL_CLACT_UNIT_Delete(cs->clunit);
 	GFL_CLACT_SYS_Delete();
 
-	GFL_FONT_Delete(cs->fontHandle);
 	GFL_TCBL_Exit(cs->tcbl);
 	
 	GFL_BG_Exit();
@@ -467,8 +496,8 @@ static void CCLocal_BGFrameSetting(COMPATI_SYS *cs)
 
 	GFL_BG_SetBGControl( FRAME_BACK_M,   &bgcnt_frame[0],   GFL_BG_MODE_TEXT );
 	GFL_BG_SetBGControl( FRAME_COUNT_M,   &bgcnt_frame[1],   GFL_BG_MODE_TEXT );
-	GFL_BG_SetBGControl( FRAME_MSG_S,   &sub_bgcnt_frame[0],   GFL_BG_MODE_TEXT );
-	GFL_BG_SetBGControl( FRAME_BACK_S,   &sub_bgcnt_frame[1],   GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( FRAME_BACK_S,   &sub_bgcnt_frame[0],   GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( FRAME_MSG_S,   &sub_bgcnt_frame[1],   GFL_BG_MODE_TEXT );
 
 	GFL_BG_FillCharacter( FRAME_BACK_M, 0x00, 1, 0 );
 	GFL_BG_FillCharacter( FRAME_COUNT_M, 0x00, 1, 0 );
@@ -542,19 +571,20 @@ static void CCLocal_MessageSetting(COMPATI_SYS *cs)
 	int i;
 
 	cs->drawwin[CCBMPWIN_TITLE].win = GFL_BMPWIN_Create(
-		FRAME_MSG_S, 2, 2, 30, 2, CC_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
+		FRAME_MSG_S, 8, 2, 16, 2, CC_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
 	cs->drawwin[CCBMPWIN_POINT].win = GFL_BMPWIN_Create(
+		FRAME_MSG_S, 14, 8, 6, 2, CC_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
+	cs->drawwin[CCBMPWIN_TALK].win = GFL_BMPWIN_Create(
 		FRAME_MSG_S, 1, 18, 30, 4, CC_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
 	for(i = 0; i < CCBMPWIN_MAX; i++){
 		GF_ASSERT(cs->drawwin[i].win != NULL);
 		cs->drawwin[i].bmp = GFL_BMPWIN_GetBmp(cs->drawwin[i].win);
 		GFL_BMP_Clear( cs->drawwin[i].bmp, 0xff );
 		GFL_BMPWIN_MakeScreen( cs->drawwin[i].win );
+		GFL_BG_LoadScreenReq(FRAME_MSG_S);
 		GFL_BMPWIN_TransVramCharacter( cs->drawwin[i].win );
 		PRINT_UTIL_Setup( cs->drawwin[i].printUtil, cs->drawwin[i].win );
 	}
-
-	GFL_BG_LoadScreenReq(FRAME_BACK_S);
 
 	cs->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_COMPATI );
@@ -563,10 +593,11 @@ static void CCLocal_MessageSetting(COMPATI_SYS *cs)
 	cs->printQue = PRINTSYS_QUE_Create( HEAPID_COMPATI );
 
 	cs->mm = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_matsu_dat, HEAPID_COMPATI);
+		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_compati_check_dat, HEAPID_COMPATI);
 	for(i = 0; i < CCBMPWIN_MAX; i++){
 		cs->strbuf_win[i] = GFL_STR_CreateBuffer( 64, HEAPID_COMPATI );
 	}
+	cs->strbuf_point = GFL_MSG_CreateString(cs->mm, COMPATI_STR_009);
 }
 
 //--------------------------------------------------------------
@@ -581,12 +612,14 @@ static void CCLocal_MessageExit(COMPATI_SYS *cs)
 	int i;
 	
 	GFL_MSG_Delete(cs->mm);
+	WORDSET_Delete(cs->wordset);
 	PRINTSYS_QUE_Delete(cs->printQue);
 	GFL_FONT_Delete(cs->fontHandle);
 	for(i = 0; i < CCBMPWIN_MAX; i++){
 		GFL_BMPWIN_Delete(cs->drawwin[i].win);
 		GFL_STR_DeleteBuffer(cs->strbuf_win[i]);
 	}
+	GFL_STR_DeleteBuffer(cs->strbuf_point);
 }
 
 //--------------------------------------------------------------
@@ -633,7 +666,7 @@ static void CCLocal_CircleActor_Create(COMPATI_SYS *cs, ARCHANDLE *hdl)
 	for(i = 0; i < CC_CIRCLE_MAX; i++){
 		cs->pltt_id[PLTTID_CIRCLE + i] = GFL_CLGRP_PLTT_RegisterEx(hdl, 
 			NARC_compati_check_cc_circle_NCLR,
-			CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_COMPATI);
+			CLSYS_DRAW_MAIN, 0x20 * i, 0, 1, HEAPID_COMPATI);
 	}
 	
 	//アクター登録
@@ -664,9 +697,9 @@ static void CCLocal_CircleActor_Delete(COMPATI_SYS *cs)
 	
 	//リソース解放
 	GFL_CLGRP_CGR_Release(cs->cgr_id[CHARID_CIRCLE]);
-	GFL_CLGRP_CELLANIM_Release(cs->cgr_id[CELLID_CIRCLE]);
+	GFL_CLGRP_CELLANIM_Release(cs->cell_id[CELLID_CIRCLE]);
 	for(i = 0; i < CC_CIRCLE_MAX; i++){
-		GFL_CLGRP_PLTT_Release(cs->cgr_id[PLTTID_CIRCLE + i]);
+		GFL_CLGRP_PLTT_Release(cs->pltt_id[PLTTID_CIRCLE + i]);
 	}
 }
 
@@ -693,6 +726,62 @@ static void CCLocal_CircleActor_PosSet(COMPATI_SYS *cs, const CC_CIRCLE_PACKAGE 
 		GFL_CLACT_WK_SetAnmSeq(cs->circle_cap[i], circle_package->data[i].type);
 		GFL_CLACT_WK_SetDrawEnable(cs->circle_cap[i], TRUE);
 	}
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   円アクターのパレットのノーマル色と明るい色をワークにコピーしておく
+ *
+ * @param   cs		
+ * @param   hdl		アーカイブハンドル
+ */
+//--------------------------------------------------------------
+static void CCLocal_CirclePalCopy(COMPATI_SYS *cs, ARCHANDLE *hdl)
+{
+	void *arc_data;
+	NNSG2dPaletteData *paldata;
+
+	arc_data = GFL_ARCHDL_UTIL_LoadPalette(hdl, NARC_compati_check_cc_circle_light_NCLR, 
+		&paldata, HEAPID_COMPATI);
+	GFL_STD_MemCopy16(paldata->pRawData, cs->light_pal, 0x20);
+	GFL_HEAP_FreeMemory(arc_data);
+
+	arc_data = GFL_ARCHDL_UTIL_LoadPalette(hdl, NARC_compati_check_cc_circle_NCLR, 
+		&paldata, HEAPID_COMPATI);
+	GFL_STD_MemCopy16(paldata->pRawData, cs->normal_pal, 0x20);
+	GFL_HEAP_FreeMemory(arc_data);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   メッセージを表示する
+ *
+ * @param   cs			
+ * @param   strbuf		表示するメッセージデータ
+ * @param   x			X座標
+ * @param   y			Y座標
+ */
+//--------------------------------------------------------------
+static void CCLocal_MessagePut(COMPATI_SYS *cs, int win_index, STRBUF *strbuf, int x, int y)
+{
+	GFL_BMP_Clear( cs->drawwin[win_index].bmp, 0xff );
+	PRINTSYS_PrintQue(cs->printQue, cs->drawwin[win_index].bmp, x, y, strbuf, cs->fontHandle);
+	cs->drawwin[win_index].message_req = TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   得点をメッセージ表示する
+ *
+ * @param   cs			
+ * @param   point		得点
+ */
+//--------------------------------------------------------------
+static void CCLocal_PointMessagePut(COMPATI_SYS *cs, int point)
+{
+	WORDSET_RegisterNumber(cs->wordset, 0, point, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+	WORDSET_ExpandStr(cs->wordset, cs->strbuf_win[CCBMPWIN_POINT], cs->strbuf_point);
+	CCLocal_MessagePut(cs, CCBMPWIN_POINT, cs->strbuf_win[CCBMPWIN_POINT], 0, 0);
 }
 
 
@@ -771,6 +860,34 @@ static int CCSeq_Countdown(COMPATI_SYS *cs)
 //--------------------------------------------------------------
 static int CCSeq_Main(COMPATI_SYS *cs)
 {
+	int pal_addr, i;
+	int before_point, after_point;
+	
+	cs->local_timer++;
+	if(cs->local_timer > CC_TIMEUP * 60){
+		return SEQ_NEXT;
+	}
+	
+	before_point = cs->ccts.total_len / CC_POINT_DOT;
+
+	CCTOOL_CircleTouchCheck(&cs->cppw->circle_package, &cs->ccts);
+	if(cs->ccts.touch_hold == CIRCLE_TOUCH_HOLD){
+		pal_addr = GFL_CLGRP_PLTT_GetAddr(
+			cs->pltt_id[PLTTID_CIRCLE + cs->ccts.hold_circle_no], CLSYS_DRAW_MAIN);
+		GFL_STD_MemCopy16(cs->light_pal, (void*)(HW_OBJ_PLTT + pal_addr), 0x20);
+	}
+	else{
+		for(i = 0; i < CC_CIRCLE_MAX; i++){
+			pal_addr = GFL_CLGRP_PLTT_GetAddr(cs->pltt_id[PLTTID_CIRCLE + i], CLSYS_DRAW_MAIN);
+			GFL_STD_MemCopy16(cs->normal_pal, (void*)(HW_OBJ_PLTT + pal_addr), 0x20);
+		}
+	}
+
+	after_point = cs->ccts.total_len / CC_POINT_DOT;
+	if(before_point != after_point){
+		CCLocal_PointMessagePut(cs, after_point);
+		OS_TPrintf("after_point = %d\n", after_point);
+	}
 	return SEQ_CONTINUE;
 }
 
@@ -783,5 +900,17 @@ static int CCSeq_Main(COMPATI_SYS *cs)
 //--------------------------------------------------------------
 static int CCSeq_End(COMPATI_SYS *cs)
 {
+	switch(cs->local_seq){
+	case 0:
+		WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, 
+			WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_COMPATI);
+		cs->local_seq++;
+		break;
+	case 1:
+		if(WIPE_SYS_EndCheck() == TRUE){
+			return SEQ_FINISH;
+		}
+		break;
+	}
 	return SEQ_CONTINUE;
 }

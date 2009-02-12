@@ -15,6 +15,9 @@
 //==============================================================================
 //	定数定義
 //==============================================================================
+///何ドットで1点とするか
+#define CC_POINT_DOT		(40)
+
 ///円アクターを同時に出せる数
 #define CC_CIRCLE_MAX	(8)
 
@@ -27,6 +30,14 @@ enum{
 	
 	CC_CIRCLE_TYPE_NULL,	//データ終端コードとして使用
 };
+
+///円の掴み状況
+enum{
+	CIRCLE_TOUCH_NULL,		///<円を掴んでいない
+	CIRCLE_TOUCH_HOLD,		///<円を掴んでいる
+	CIRCLE_TOUCH_OUTSIDE,	///<掴んでいるが範囲外座標を指している
+};
+
 
 //==============================================================================
 //	型定義
@@ -51,6 +62,34 @@ typedef struct{
 	u8 partner_macAddress[6];			///<通信相手のMacAddress
 	u8 padding[2];
 }COMPATI_PARENTWORK;
+
+///円とタッチの当たり判定チェック用ワーク
+typedef struct{
+	s32 old_len_x;
+	s32 old_len_y;
+	s32 total_len;		///総距離
+
+	u8 touch_hold;		///<円の掴み状況：CIRCLE_TOUCH_???
+	u8 hold_circle_no;	///<掴んでいる円の番号
+	u8 padding[2];
+}CCT_TOUCH_SYS;
+
+
+//--------------------------------------------------------------
+//	通信で交換しあうデータ
+//--------------------------------------------------------------
+///初回接続時に交換しあうデータ
+typedef struct{
+	CC_CIRCLE_PACKAGE circle_package;	///<サークルパッケージ
+	u8 macAddress[6];					///<通信相手のMacAddress
+	u8 padding[2];
+}CCNET_FIRST_PARAM;
+
+///ゲーム終了後に交換しあうデータ
+typedef struct{
+	u8 point;							///<得点
+	u8 dummy[3];
+}CCNET_RESULT_PARAM;
 
 
 #endif	//__COMPATI_TYPES_H__
