@@ -317,7 +317,7 @@ static u32 get_include_word_max( u32 sentence_type, u32 sentence_id , const HEAP
 	buf = GFL_MSG_CreateString(msgman,sentence_id);
 	GFL_MSG_Delete(msgman);
 	
-	PRINTSYS_GetTagCount( buf );
+	cnt = PRINTSYS_GetTagCount( buf );
 	/*
 	cp = GFL_STR_GetStringCodePointer( buf );
 	cnt = 0;
