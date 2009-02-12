@@ -462,10 +462,10 @@ PMS_WORD PMSW_GetDupWord( PMS_WORD word, int idx )
  *		0x5ACbyte使用
  */
 //-----------------------------------------------------------------------------
-typedef struct _PMSW_AIKOTOBA_TBL{
+struct _PMSW_AIKOTOBA_TBL{
 	u32		num;		// テーブル用素数
 	u32*	p_data;		// テーブルデータ
-}PMSW_AIKOTOBA_TBL;
+};
 
 //----------------------------------------------------------------------------
 /**
