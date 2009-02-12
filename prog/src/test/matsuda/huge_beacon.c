@@ -1295,5 +1295,5 @@ static void _HB_TOOL_ReceiveDataSet(HUGEBEACON_SYS *hb, const void *receive_data
 		HbSys->cm.receive_finish = TRUE;
 		OS_TPrintf("データ受信：全ての受信を完了\n");
 	}
-	OS_TPrintf("残りデータ数=%d, 現在までの受信データ状況 %d\%\n", HbSys->data_no_max - HbSys->receive_data_count, HbSys->receive_data_count * 100 / HbSys->data_no_max);
+	OS_TPrintf("残りデータ数=%d, 現在までの受信データ状況 %d%%\n", HbSys->data_no_max - HbSys->receive_data_count, HbSys->receive_data_count * 100 / HbSys->data_no_max);
 }
