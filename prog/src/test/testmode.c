@@ -157,6 +157,7 @@ static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx );
 
 static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_ChangeRTC( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx );
 
 static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int idx );
 
@@ -169,6 +170,7 @@ static TESTMODE_MENU_LIST topMenu[] =
 	{L"RTC調整"				,TESTMODE_ITEM_SelectFuncRTCEdit },
 	{L"セーブ破かい"		,TESTMODE_ITEM_SelectFuncSave },
     {L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
+    {L"ドレスアップ"		,TESTMODE_ITEM_SelectFuncDressUp },
 
 	//個人
 	{L"わたなべ　てつや"	,TESTMODE_ITEM_SelectFuncWatanabe },
@@ -860,14 +862,15 @@ static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx 
 //extern const GFL_PROC_DATA DebugAriizumiMainProcData;
 //FS_EXTERN_OVERLAY(mystery);
 //extern const GFL_PROC_DATA MysteryGiftProcData;
+FS_EXTERN_OVERLAY(pmsinput);
 extern const GFL_PROC_DATA ProcData_PMSInput;
 #include "app/pms_Input.h"
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx )
 {
+
 	PMSI_PARAM	*initParam;
 	initParam = PMSI_PARAM_Create( PMSI_MODE_SENTENCE , PMSI_GUIDANCE_DEFAULT , SaveControl_GetPointer() , GFL_HEAPID_APP );
-//	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
-	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &ProcData_PMSInput, initParam);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, initParam);
 	return TRUE;
 }
 
@@ -889,6 +892,17 @@ static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx )
 static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx )
 {
 	TESTMODE_COMMAND_ChangeMenu( work , menuRTCEdit , NELEMS(menuRTCEdit) );
+	return TRUE;
+}
+
+#include "musical/dressup_system.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/monsno_def.h"
+static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx )
+{
+	DRESSUP_INIT_WORK *initWork = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof(DRESSUP_INIT_WORK));
+	initWork->pokePara = PP_Create( MONSNO_PIKATYUU , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
+	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &DressUp_ProcData, initWork);
 	return TRUE;
 }
 

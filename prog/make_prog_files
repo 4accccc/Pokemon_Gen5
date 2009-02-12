@@ -95,22 +95,19 @@ SRCS	+=		$(SOUNDSRC) \
 				app/trainercard/trcard_sys.c \
 				app/name_input/name_input.c \
 				app/pms_input/pms_input.c \
-				app/pms_input/pms_input_data.c \
-				app/pms_input/pms_input_view.c \
-				app/pms_input/pmsi_initial_data.c \
 				app/pms_input/pmsi_param.c \
-				app/pms_input/pmsiv_button.c \
-				app/pms_input/pmsiv_category.c \
-				app/pms_input/pmsiv_edit.c \
-				app/pms_input/pmsiv_sub.c \
-				app/pms_input/pmsiv_tool.c \
-				app/pms_input/pmsiv_wordwin.c \
 				mystery/comm_mystery_gift.c \
 				system/laster.c \
 				field/fldmmdl.c \
 				field/fldmmdl_move.c \
 				system/pms_data.c \
-				system/pms_word.c
+				system/pms_word.c \
+				system/mcss_tool.c \
+				musical/musical_system.c \
+				musical/mus_poke_draw.c \
+				musical/mus_item_draw.c \
+				musical/dressup/dressup_system.c \
+				musical/dressup/dup_fitting.c
 
 
 #================================================
@@ -441,4 +438,19 @@ SRCS_OVERLAY_DOWNLOAD_PLAY = test/dlplay/dlplay_parent_sample.c \
 				test/dlplay/mbp.c \
 				test/dlplay/dlplay_comm_func.c \
 				test/dlplay/dlplay_disp_sys.c
+
+# ŠÈˆÕ•¶“ü—Í
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
+				app/pms_input/pms_input_view.c \
+				app/pms_input/pmsi_initial_data.c \
+				app/pms_input/pmsiv_button.c \
+				app/pms_input/pmsiv_category.c \
+				app/pms_input/pmsiv_edit.c \
+				app/pms_input/pmsiv_sub.c \
+				app/pms_input/pmsiv_tool.c \
+				app/pms_input/pmsiv_wordwin.c
+
 

@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: musical_item.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MUSICAL_ITEM_NAIX_
+#define NARC_MUSICAL_ITEM_NAIX_
+
+enum {
+	NARC_musical_item_item01_nsbtx = 0,
+	NARC_musical_item_item02_nsbtx = 1,
+	NARC_musical_item_item03_nsbtx = 2,
+	NARC_musical_item_item04_nsbtx = 3
+};
+
+/* NARC_MUSICAL_ITEM_NAIX_ */
+#endif

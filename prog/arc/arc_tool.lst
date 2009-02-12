@@ -112,4 +112,5 @@
 	ARCID_PMS_AIKOTOBA_DATA	"pms_aikotoba.narc"	#簡易文・壁紙取得合言葉
 	ARCID_PMSI_GRAPHIC	"pmsi.narc"		#簡易文入力画面素材
 	ARCID_COMPATI_CHECK	"compati_check.narc"	#相性チェック
+	ARCID_MUSICAL_ITEM	"musical_item.narc"		#ミュージカル装備品
 
