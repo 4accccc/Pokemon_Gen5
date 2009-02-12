@@ -37,7 +37,8 @@ SUBDIRS	=	wmi \
 			mysign \
 			pms \
 			pms_gra \
-			compatible
+			compatible \
+			musical
 
 include $(RESOURCE_MACRO)
 
