@@ -1576,7 +1576,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
         _graphicInit(wk);
         // ワイプフェード開始
         GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
-                                    0,16,COMM_BRIGHTNESS_SYNC);
+                                    16,0,COMM_BRIGHTNESS_SYNC);
 
         if(GFL_NET_IsInit()){
 			GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示

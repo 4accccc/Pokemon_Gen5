@@ -58,7 +58,7 @@ enum {
 //-------------------------------------
 ///	スクロール描画ワーク
 //=====================================
-typedef struct _WF2DMAP_SCRDRAW {
+ struct _WF2DMAP_SCRDRAW {
 	GFL_CLSYS_REND* p_render;
 	GFL_BG_INI* p_bgl;
 	void* p_scrnbuff;
@@ -67,7 +67,7 @@ typedef struct _WF2DMAP_SCRDRAW {
 	u32 bg_frame;
 	u16 now_scrn_x;	// 現在のスクリーン書き出し先
 	u16 now_scrn_y;	// 現在のスクリーン書き出し先
-}WF2DMAP_SCRDRAW;
+};
 
 
 //-----------------------------------------------------------------------------

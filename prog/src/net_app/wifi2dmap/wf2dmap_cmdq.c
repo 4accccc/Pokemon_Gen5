@@ -42,12 +42,12 @@
 //-------------------------------------
 ///	アクションコマンドバッファ
 //=====================================
-typedef struct _WF2DMAP_ACTCMDQ {
+ struct _WF2DMAP_ACTCMDQ {
 	WF2DMAP_ACTCMD* p_buff;
 	u32 num;
 	u16 top;		// 先頭
 	u16	tail;		// 末尾
-}WF2DMAP_ACTCMDQ;
+};
 
 
 
@@ -180,12 +180,12 @@ BOOL WF2DMAP_ACTCMDQSysCmdPop( WF2DMAP_ACTCMDQ* p_sys, WF2DMAP_ACTCMD* p_cmd )
 //-------------------------------------
 ///	リクエストコマンドキュー
 //=====================================
-typedef struct _WF2DMAP_REQCMDQ{
+ struct _WF2DMAP_REQCMDQ{
 	WF2DMAP_REQCMD* p_buff;
 	u32 num;
 	u16 top;		// 先頭
 	u16	tail;		// 末尾
-}WF2DMAP_REQCMDQ;
+};
 
 //-----------------------------------------------------------------------------
 /**
