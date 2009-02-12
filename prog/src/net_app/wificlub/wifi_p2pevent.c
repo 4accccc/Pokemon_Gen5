@@ -165,7 +165,7 @@ NextMatchKindTbl aNextMatchKindTbl[] = {
 static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	int len;
-    EV_P2PEVENT_WORK * ep2p = mywk;
+    EV_P2PEVENT_WORK * ep2p = pwk;
 
     switch (ep2p->seq) {
       case P2P_INIT:
@@ -371,10 +371,10 @@ static void* _WIFICLUB_CreateWork(int kind)
 //	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldOpenEvent, sizeof(EV_P2PEVENT_WORK));
   //  EV_P2PEVENT_WORK * ep2p = GMEVENT_GetEventWork(event);
     SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-
     EV_P2PEVENT_WORK* ep2p = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EV_P2PEVENT_WORK));
 
     ep2p->pMatchParam = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WIFIP2PMATCH_PROC_PARAM));
+    ep2p->pMatchParam->pSaveData = saveWork;
 
     ep2p->pWifiList = SaveData_GetWifiListData(saveWork); //クラブに必要な物を移し変え
     ep2p->pMatchParam->seq = kind;

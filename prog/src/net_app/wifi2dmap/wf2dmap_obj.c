@@ -48,7 +48,7 @@
 //-------------------------------------
 ///	オブジェクトワーク
 //=====================================
-typedef struct _WF2DMAP_OBJWK {
+ struct _WF2DMAP_OBJWK {
 	BOOL move;				// 動作フラグ
 	WF2DMAP_POS pos;		// 現在座標
 	WF2DMAP_POS last_pos;	// 前座標
@@ -59,15 +59,15 @@ typedef struct _WF2DMAP_OBJWK {
 	u8	way;				// 方向
 	u8	status;				// 状態
 	u16 st_frame;			// この状態になっているフレーム数
-}WF2DMAP_OBJWK;
+};
 
 //-------------------------------------
 ///	オブジェクトデータ管理システム
 //=====================================
-typedef struct _WF2DMAP_OBJSYS {
+ struct _WF2DMAP_OBJSYS {
 	WF2DMAP_OBJWK* p_buff;
 	u32 num;
-}WF2DMAP_OBJSYS;
+};
 
 //-----------------------------------------------------------------------------
 /**

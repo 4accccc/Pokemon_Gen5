@@ -1457,6 +1457,7 @@ static void _graphicInit(WIFIP2PMATCH_WORK * wk)
 
 	p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFIP2PMATCH, HEAPID_WIFIP2PMATCH );
 
+
     // 文字列マネージャー生成
     wk->WordSet    = WORDSET_Create( HEAPID_WIFIP2PMATCH );
     wk->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_lobby_dat, HEAPID_WIFIP2PMATCH );
@@ -1468,6 +1469,7 @@ static void _graphicInit(WIFIP2PMATCH_WORK * wk)
 
     // BGLレジスタ設定
     BgInit(HEAPID_WIFIP2PMATCH );
+    GFL_BMPWIN_Init( HEAPID_WIFIP2PMATCH );
 
     //BGグラフィックセット
     BgGraphicSet( wk, p_handle );
@@ -1555,9 +1557,12 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
 #endif
 
 //        wk->MsgIndex = _PRINTTASK_MAX;
-//        wk->pSaveData = pParentWork->pSaveData;
+        wk->pSaveData = pParentWork->pSaveData;
+        OS_TPrintf("--%x \n",wk->pSaveData);
+        
         wk->pMyPoke = SaveData_GetTemotiPokemon(pParentWork->pSaveData);
         wk->pList = SaveData_GetWifiListData(pParentWork->pSaveData);
+        wk->pConfig = SaveData_GetConfig(pParentWork->pSaveData);
         wk->initSeq = pParentWork->seq;    // P2PかDPWか
         wk->endSeq = WIFI_P2PMATCH_END;
         wk->preConnect = -1;
@@ -1726,6 +1731,7 @@ static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
     // BMPウィンドウ開放
     BmpWinDelete( wk );
 
+    GFL_BMPWIN_Exit();
     // BGL削除
     GFL_BG_Exit( );
 
@@ -1900,7 +1906,9 @@ static void BgInit(HEAPID heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+            GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,
+            0x8000,
+            GX_BG_EXTPLTT_01,
             0, 0, 0, FALSE
             };
         GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1914,7 +1922,9 @@ static void BgInit(HEAPID heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+            GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000,
+            0x8000,
+            GX_BG_EXTPLTT_01,
             1, 0, 0, FALSE
             };
         GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1926,7 +1936,9 @@ static void BgInit(HEAPID heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_23,
+            GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000,
+            0x8000,
+            GX_BG_EXTPLTT_23,
             2, 0, 0, FALSE
             };
         GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1939,7 +1951,9 @@ static void BgInit(HEAPID heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x18000, GX_BG_EXTPLTT_23,
+            GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x18000,
+            0x8000,
+            GX_BG_EXTPLTT_23,
             3, 0, 0, FALSE
             };
         GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1952,7 +1966,9 @@ static void BgInit(HEAPID heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+            GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,
+            0x8000,
+            GX_BG_EXTPLTT_01,
             3, 0, 0, FALSE
             };
         GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1962,7 +1978,9 @@ static void BgInit(HEAPID heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+            GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000,
+            0x8000,
+            GX_BG_EXTPLTT_01,
             0, 0, 0, FALSE
             };
         GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1972,7 +1990,9 @@ static void BgInit(HEAPID heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+            GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000,
+            0x8000,
+            GX_BG_EXTPLTT_01,
             2, 0, 0, FALSE
         };
         GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1982,7 +2002,9 @@ static void BgInit(HEAPID heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x18000, GX_BG_EXTPLTT_01,
+            GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x18000,
+            0x8000,
+            GX_BG_EXTPLTT_01,
             0, 0, 0, FALSE
             };
         GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -7775,12 +7797,12 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
     if(!PRINTSYS_QUE_IsFinished(wk->SysMsgQue)){
         PRINTSYS_QUE_Clear(wk->SysMsgQue);
     }
-    
+
     wk->MsgWin=GFL_BMPWIN_Create(  
                      GFL_BG_FRAME2_M,
                      COMM_MSG_WIN_PX, COMM_MSG_WIN_PY,
                      COMM_MSG_WIN_SX, COMM_MSG_WIN_SY,
-                     COMM_MESFONT_PAL, COMM_MSG_WIN_CGX);
+                     COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_F);
     if(bSystem){
         GFL_MSG_GetString(  wk->SysMsgManager, msgno, wk->pExpStrBuf );
     }

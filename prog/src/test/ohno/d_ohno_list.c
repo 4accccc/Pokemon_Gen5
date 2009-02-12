@@ -324,7 +324,13 @@ static GFL_PROC_RESULT DebugOhnoMainProcEnd( GFL_PROC * proc, int * seq, void * 
 	void *parent_work;
 	
 	if(DebugMenuList[wk->cursor_y].parent_work_func != NULL){
+        if(DebugMenuList[wk->cursor_y].ov_id != GFL_OVERLAY_BLANK_ID){
+            GFL_OVERLAY_Load(DebugMenuList[wk->cursor_y].ov_id);
+        }
 		wk->parent_work = DebugMenuList[wk->cursor_y].parent_work_func(wk);
+        if(DebugMenuList[wk->cursor_y].ov_id != GFL_OVERLAY_BLANK_ID){
+            GFL_OVERLAY_Unload(DebugMenuList[wk->cursor_y].ov_id);
+        }
 		parent_work = wk->parent_work;
 	}
 	else{

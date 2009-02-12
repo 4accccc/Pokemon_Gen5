@@ -387,7 +387,7 @@ typedef struct {
 //-------------------------------------
 /// 2Dキャラクタワーク
 //=====================================
-typedef struct _WF_2DCWK {
+ struct _WF_2DCWK {
 	const WF_2DCRES* cp_res;	// リソースデータ
 	GFL_CLWK*	p_clwk;		// 人物
 	GFL_CLWK*	p_shadow;	// 陰
@@ -395,7 +395,7 @@ typedef struct _WF_2DCWK {
 	WF_COMMON_WAY	patanmway;
 	s16				patanmframe;
 	s16				pad_0;
-} WF_2DCWK;
+};
 
 //-------------------------------------
 ///	陰リソース
@@ -410,7 +410,7 @@ typedef struct {
 //-------------------------------------
 ///	2Dキャラクタ管理システム
 //=====================================
-typedef struct _WF_2DCSYS {
+ struct _WF_2DCSYS {
     GFL_CLUNIT* p_unit;
 //    CLACT_SET_PTR p_clset;
 	PALETTE_FADE_PTR p_pfd;
@@ -428,7 +428,7 @@ typedef struct _WF_2DCSYS {
 	ARCHANDLE*	p_handle[WF_2DC_ARCHANDLE_NUM];
     u32 CELLANIMIndex[WF_2DC_MOVENUM][WF_2DC_ANMRES_ANM_NUM];
     u32 hero_no;
-} WF_2DCSYS;
+} ;
 
 
 //-------------------------------------

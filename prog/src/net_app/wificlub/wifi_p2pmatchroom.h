@@ -143,7 +143,7 @@ typedef struct {
 //-------------------------------------
 ///	WIFIマッチングルーム構造体
 //=====================================
-typedef struct _WIFI_MATCHROOM{
+ struct _WIFI_MATCHROOM{
 	BOOL	init;			// 初期化ﾁｪｯｸ用
 	u32 use_heap;			// 使用するヒープ
 	u32 seq;				// シーケンス
@@ -161,7 +161,7 @@ typedef struct _WIFI_MATCHROOM{
 	WF2DMAP_SCRDRAW*	p_scrdraw;
 	WF2DMAP_REQCMDQ*	p_reqcmdQ;	// リクエストコマンドキュー
 
-} WIFI_MATCHROOM;
+} ;
 
 
 //-----------------------------------------------------------------------------

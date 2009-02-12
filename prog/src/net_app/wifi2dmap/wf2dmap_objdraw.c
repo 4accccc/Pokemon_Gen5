@@ -54,7 +54,7 @@
 //-------------------------------------
 ///	表示ワーク
 //=====================================
-typedef struct _WF2DMAP_OBJDRAWWK{
+ struct _WF2DMAP_OBJDRAWWK{
 	const WF2DMAP_OBJWK* cp_objwk;	// リンクしているオブジェクトワーク
 	WF_2DCWK* p_drawwk;	// 表示ワーク
 	u16 status;	// 今の状態
@@ -64,19 +64,19 @@ typedef struct _WF2DMAP_OBJDRAWWK{
 	u16 lastanm;	// 1つ前のアニメ
 	u8 hero;	// 主人公フラグ
 	u8 updata;	// アップデートフラグ
-}WF2DMAP_OBJDRAWWK;
+};
 
 
 //-------------------------------------
 ///	表示システムワーク
 //=====================================
-typedef struct _WF2DMAP_OBJDRAWSYS{
+ struct _WF2DMAP_OBJDRAWSYS{
 	WF_2DCSYS* p_drawsys;
 	WF2DMAP_OBJDRAWWK* p_wk;
 	u16 objnum;
 	u8	bg_pri;
 	u8	draw_type;
-}WF2DMAP_OBJDRAWSYS;
+};
 
 //-----------------------------------------------------------------------------
 /**
