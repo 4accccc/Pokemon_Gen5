@@ -161,11 +161,11 @@ static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx
 
 static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int idx );
 
-//------------------------------------------------------
+//------------------------------------------------------------------------
 /*
- *	STARTボタン一発で任意のメニューを起動するための関数
+ *	QUICKSTART -> STARTボタン一発で任意のメニューを起動するための関数設定
  */
-//------------------------------------------------------
+//------------------------------------------------------------------------
 #if defined DEBUG_ONLY_FOR_taya
 	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncTaya
 #elif defined DEBUG_ONLY_FOR_watanabe
