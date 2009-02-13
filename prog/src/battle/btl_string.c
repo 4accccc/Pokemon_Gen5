@@ -195,7 +195,7 @@ static inline SetStrFormat get_strFormat( BtlPokePos pokePos )
 {
 	u8 targetClientID = BTL_MAIN_BtlPosToClientID( SysWork.mainModule, pokePos );
 
-	BTL_Printf("[STR] myClientID=%d, targetClientID=%d, targetPos=%d\n",
+	BTL_Printf("myClientID=%d, targetClientID=%d, targetPos=%d\n",
 				SysWork.clientID, targetClientID, pokePos);
 
 	if( BTL_MAIN_IsOpponentClientID(SysWork.mainModule, SysWork.clientID, targetClientID) )
@@ -419,7 +419,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 		}
 	}
 
-	BTL_Printf("[STR] SET —pˆÓ‚³‚ê‚Ä‚¢‚È‚¢•¶Žš—ñ %d\n", strID);
+	BTL_Printf("SET —pˆÓ‚³‚ê‚Ä‚¢‚È‚¢•¶Žš—ñ %d\n", strID);
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], 0, buf );
 }
 

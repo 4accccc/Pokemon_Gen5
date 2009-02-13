@@ -173,7 +173,7 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
 			Sys->tmpLargeBufUsedSize[i] = 0;
 		}
 
-		BTL_Printf("[BTLNET] 自分のネットID=%d, 接続メンバー数=%d\n", Sys->myNetID, Sys->memberCount);
+		BTL_Printf("自分のネットID=%d, 接続メンバー数=%d\n", Sys->myNetID, Sys->memberCount);
 
 		{
 			TMP_SEND_BUFFER* tsb = &Sys->sendBuf[0];
@@ -197,7 +197,7 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
 	const TMP_SEND_BUFFER* tsb = (const TMP_SEND_BUFFER*)pData;
 	SVVER_WORK* swk = (SVVER_WORK*)(&Sys->svverWork);
 
-	BTL_Printf("[BTLNET]サーババージョン受信 ... netID=%d, version=%d\n", netID, tsb->val32);
+	BTL_Printf("サーババージョン受信 ... netID=%d, version=%d\n", netID, tsb->val32);
 
 	if( swk->recvTable[netID].recvedFlag == FALSE )
 	{
@@ -225,7 +225,7 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
 				if( swk->recvTable[i].version == swk->maxVersion )
 				{
 					Sys->serverNetID = i;
-					BTL_Printf("[BTLNET]サーバは netID=%d のマシンに決定\n", i);
+					BTL_Printf("サーバは netID=%d のマシンに決定\n", i);
 					break;
 				}
 			}
@@ -257,7 +257,7 @@ void BTL_NET_NotifyClientID( NetID netID, const u8* clientID, u8 numCoverPos )
 		TMP_SEND_BUFFER* tsbuf;
 		u8 i;
 
-		BTL_Printf("[BTLNET] netID=%d のマシンにクライアントIDを通知します。受け持ち場所数は%d,\n", netID, numCoverPos );
+		BTL_Printf("netID=%d のマシンにクライアントIDを通知します。受け持ち場所数は%d,\n", netID, numCoverPos );
 		BTL_Printf("  クライアントID=[ ");
 
 		tsbuf = &Sys->sendBuf[netID];
@@ -294,7 +294,7 @@ static void recv_cliendID( const int netID, const int size, const void* pData, v
 	const TMP_SEND_BUFFER* tsb = pData;
 	int i;
 
-	BTL_Printf("[BTLNET] netID=%d, クライアントID受信しました。バッファ内容=%d,%d,%d,%d, 受け持ち数は%d,\n",
+	BTL_Printf("netID=%d, クライアントID受信しました。バッファ内容=%d,%d,%d,%d, 受け持ち数は%d,\n",
 			netID, tsb->val8[0], tsb->val8[1], tsb->val8[2], tsb->val8[3], tsb->val8[0]);
 	BTL_Printf("    Pos=[ ");
 
@@ -374,8 +374,8 @@ BOOL BTL_NET_IsCompleteNotifyPartyData( void )
 
 const POKEPARTY* BTL_NET_GetPartyData( int netID )
 {
-	GF_ASSERT(Sys->tmpLargeBuf[netID] != NULL);
-	GF_ASSERT(Sys->tmpLargeBufUsedSize[netID] != 0);
+	GF_ASSERT_MSG(Sys->tmpLargeBuf[netID] != NULL, "netID=%d", netID);
+	GF_ASSERT_MSG(Sys->tmpLargeBufUsedSize[netID] != 0, "netID=%d", netID);
 
 	return Sys->tmpLargeBuf[netID];
 }
@@ -428,7 +428,7 @@ void BTL_NET_SendToClient( u8 netID, const void* adrs, u32 size )
 				FALSE,		// 同一コマンドがキューに無い場合のみ送信する
 				TRUE		// GFL_NETライブラリの外で保持するバッファを使用
 	);
-	BTL_Printf("[BTLNET] マシン(%d) に %d bytes 送信開始\n", netID, size);
+	BTL_Printf("マシン(%d) に %d bytes 送信開始\n", netID, size);
 }
 
 //=============================================================================================
@@ -450,7 +450,7 @@ BOOL BTL_NET_CheckReturnFromClient( void )
 		}
 	}
 
-	BTL_Printf("[BTLNET] 全クライアントからのデータ返ってきたよ\n");
+	BTL_Printf("全クライアントからのデータ返ってきたよ\n");
 
 	return TRUE;
 }
@@ -475,7 +475,7 @@ static void recv_clientData( const int netID, const int size, const void* pData,
 	{
 		Sys->recvClient[netID].size = 1;
 	}
-	BTL_Printf("[BTLNET] クライアント(NETID=%d)からの受信完了, サイズ=%d\n", netID, size);
+	BTL_Printf("クライアント(NETID=%d)からの受信完了, サイズ=%d\n", netID, size);
 }
 
 
@@ -517,7 +517,7 @@ void BTL_NET_ReturnToServer( const void* data, u32 size )
 	);
 
 	Sys->serverCmdReceived = FALSE;
-	BTL_Printf("[BTLNET]  サーバへ返信, フラグオフ\n");
+	BTL_Printf("サーバへ返信, フラグオフ\n");
 
 }
 
@@ -540,7 +540,7 @@ static void recv_serverCmd( const int netID, const int size, const void* pData, 
 //		recvBuf_Store( &Sys->recvServer, pData, size );
 		Sys->recvServer.size = size;
 		Sys->serverCmdReceived = TRUE;
-		BTL_Printf("[BTLNET]  サーバコマンド受信, フラグオン\n");
+		BTL_Printf("サーバコマンド受信, フラグオン\n");
 	}
 }
 

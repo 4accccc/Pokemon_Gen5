@@ -412,7 +412,7 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
 	switch( *seq ){
 	case 0:
 		BTL_EVENT_InitSystem();
-		BTL_Printf("[SV] イニシャライズコマンド発行\n");
+		BTL_Printf("イニシャライズコマンド発行\n");
 		SetAdapterCmd( server, BTL_ACMD_WAIT_INITIALIZE );
 		(*seq)++;
 	case 1:
@@ -448,7 +448,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 		scEvent_PokeComp( server );
 		if( server->que->writePtr )
 		{
-			BTL_Printf("[SV] 再生コマンド発行\n");
+			BTL_Printf("再生コマンド発行\n");
 			SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
 			(*seq) = 1;
 		}
@@ -467,7 +467,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 		break;
 
 	case 2:
-		BTL_Printf(" [SV] アクション選択コマンド発行\n");
+		BTL_Printf("アクション選択コマンド発行\n");
 		SetAdapterCmd( server, BTL_ACMD_SELECT_ACTION );
 		server->endFlag = FALSE;
 		(*seq)++;
@@ -711,14 +711,14 @@ static u8 sortClientAction( BTL_SERVER* server, ACTION_ORDER_WORK* order )
 			// すばやさ
 			agility = BTL_POKEPARAM_GetValue( client->frontMember[j], BPP_AGILITY );
 
-			BTL_Printf("[SV] Client[%d-%d]'s actionPri=%d, wazaPri=%d, agility=%d\n",
+			BTL_Printf("Client{%d-%d}'s actionPri=%d, wazaPri=%d, agility=%d\n",
 					i, j, actionPri, wazaPri, agility );
 
 			// プライオリティ値とクライアントIDを対にして配列に保存
 			pri[p] = MakePriValue( actionPri, wazaPri, agility );
 			order[p].clientID = i;
 			order[p].pokeIdx = j;
-			BTL_Printf("[SV] Client[%d] PriValue=0x%8x\n", i, pri[i]);
+			BTL_Printf("Client(%d) PriValue=0x%8x\n", i, pri[i]);
 
 			actParam++;
 			p++;
@@ -802,7 +802,7 @@ static BOOL createServerCommand( BTL_SERVER* server )
 			const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( server->client[clientID].adapter );
 			action += pokeIdx;
 
-			BTL_Printf("Client[%d] の ", clientID);
+			BTL_Printf("Client(%d) の ", clientID);
 			switch( action->gen.cmd ){
 			case BTL_ACTION_FIGHT:
 				BTL_Printf("【たたかう】を処理。%d番目のワザを、%d番の相手に。\n", action->fight.wazaIdx, action->fight.targetIdx);
@@ -827,7 +827,7 @@ static BOOL createServerCommand( BTL_SERVER* server )
 
 	// 死んだポケモンがいる場合の処理
 	numPokeAlive = countAlivePokemon( server );
-	BTL_Printf("[SV] ポケモン数 %d -> %d ...\n", numPokeBegin, numPokeAlive);
+	BTL_Printf("ポケモン数 %d -> %d ...\n", numPokeBegin, numPokeAlive);
 	if( numPokeBegin > numPokeAlive )
 	{
 		return TRUE;
@@ -851,7 +851,7 @@ static BOOL createServerCommandAfterPokeSelect( BTL_SERVER* server )
 	u16 clientID, posIdx;
 	int i, j, actionCnt;
 
-	BTL_Printf("[SV] ひんしポケモン入れ替え選択後のサーバーコマンド生成\n");
+	BTL_Printf("ひんしポケモン入れ替え選択後のサーバーコマンド生成\n");
 
 	for(i=0; i<server->numClient; i++)
 	{
@@ -864,7 +864,7 @@ static BOOL createServerCommandAfterPokeSelect( BTL_SERVER* server )
 			if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
 			if( action->change.depleteFlag ){ continue; }
 
-			BTL_Printf("[SV]  クライアント[%d]のポケモン(位置%d) を、%d番目のポケといれかえる\n",
+			BTL_Printf("クライアント(%d)のポケモン(位置%d) を、%d番目のポケといれかえる\n",
 						i, action->change.posIdx, action->change.memberIdx );
 
 			scput_MemberIn( server, i, action->change.posIdx, action->change.memberIdx );
@@ -941,7 +941,7 @@ static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const
 		category = WAZADATA_GetCategory( waza );
 		atPos = BTL_MAIN_GetClientPokePos( server->mainModule, atClient->myID, posIdx );
 
-		BTL_Printf("[SV] 出すポケ位置=%d, 出すワザ=%d, カテゴリ=%d\n", atPos, waza, category);
+		BTL_Printf("出すポケ位置=%d, 出すワザ=%d, カテゴリ=%d\n", atPos, waza, category);
 
 		SCQUE_PUT_MSG_WAZA( server->que, atPos, action->fight.wazaIdx );
 
@@ -987,7 +987,7 @@ static void scput_Fight_Damage(
 	{
 		WazaTarget  targetType = WAZADATA_GetTarget( waza );
 
-		BTL_Printf("[SV] ダブルです。ワザナンバー=%d, ワザターゲットタイプ=%d\n", waza, targetType);
+		BTL_Printf("ダブルです。ワザナンバー=%d, ワザターゲットタイプ=%d\n", waza, targetType);
 
 		switch( targetType ) {
 		case WAZA_TARGET_SINGLE:				///< 自分以外の１体（選択）
@@ -1151,13 +1151,13 @@ static void svflowsub_damage_enemy_all( BTL_SERVER* server, FIGHT_EVENT_PARAM* f
 		// 相性が別々なら、個別の処理
 		if( about1 != about2 )
 		{
-			BTL_Printf("[SV] ２体ともにヒットし、相性べつべつ\n");
+			BTL_Printf("２体ともにヒットし、相性べつべつ\n");
 			svflowsub_damage_act_enemy_all( server, fep, attacker, defender1, defender2, aff1, aff2, waza );
 		}
 		// 相性も同じなら、体力バーを同時に減らすようにコマンド生成する
 		else
 		{
-			BTL_Printf("[SV] ２体ともにヒットし、相性も一緒\n");
+			BTL_Printf("２体ともにヒットし、相性も一緒\n");
 			svflowsub_damage_act_enemy_all_atonce( server, fep, attacker, defender1, defender2, aff1, waza );
 		}
 	}
@@ -1240,7 +1240,7 @@ static void svflowsub_damage_act_singular( BTL_SERVER* server, FIGHT_EVENT_PARAM
 		SCQUE_PUT_ACT_WazaDamage( server->que, defPokeID, fep->realDamage, fep->typeAff );
 		BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_AFTER );
 
-		BTL_Printf("[SV] Waza Aff=%d, Damage=%d\n", fep->typeAff, fep->realDamage );
+		BTL_Printf(" Waza Aff=%d, Damage=%d\n", fep->typeAff, fep->realDamage );
 
 		if( BTL_POKEPARAM_IsDead(defender) )
 		{
@@ -1369,7 +1369,7 @@ static u16 svflowsub_damage_calc_core( BTL_SERVER* server, FIGHT_EVENT_PARAM* fe
 			fep->rawDamage *= 2;
 		}
 
-		BTL_Printf("[SV WAZA] 威力:%d, こうげき:%d, LV:%d, ぼうぎょ:%d, 分母:%d ... 素ダメ:%d\n",
+		BTL_Printf("威力:%d, こうげき:%d, LV:%d, ぼうぎょ:%d, 分母:%d ... 素ダメ:%d\n",
 				fep->wazaPower, fep->attackerPower, attackerLevel, fep->defenderGuard, fep->damageDenom, fep->rawDamage
 		);
 	}
@@ -1379,12 +1379,12 @@ static u16 svflowsub_damage_calc_core( BTL_SERVER* server, FIGHT_EVENT_PARAM* fe
 	{
 		u16 ratio = 100 - GFL_STD_MtRand(16);
 		fep->rawDamage = (fep->rawDamage * ratio) / 100;
-		BTL_Printf("[SV WAZA] ランダム補正:%d%%  -> 素ダメ=%d\n", ratio, fep->rawDamage);
+		BTL_Printf("ランダム補正:%d%%  -> 素ダメ=%d\n", ratio, fep->rawDamage);
 	}
 
 	// タイプ一致補正
 	fep->rawDamage = (fep->rawDamage * fep->typeMatchRatio) >> FX32_SHIFT;
-	BTL_Printf("[SV WAZA] タイプ一致補正:%08x  -> 素ダメ=%d\n", fep->typeMatchRatio, fep->rawDamage);
+	BTL_Printf("タイプ一致補正:%08x  -> 素ダメ=%d\n", fep->typeMatchRatio, fep->rawDamage);
 
 	// タイプ相性計算
 	fep->realDamage = BTL_CALC_AffDamage( fep->rawDamage, typeAff );
@@ -1396,7 +1396,7 @@ static u16 svflowsub_damage_calc_core( BTL_SERVER* server, FIGHT_EVENT_PARAM* fe
 	}
 
 
-	BTL_Printf("[SV WAZA] タイプ相性:%02d -> ダメージ値：%d\n", typeAff, fep->realDamage);
+	BTL_Printf("タイプ相性:%02d -> ダメージ値：%d\n", typeAff, fep->realDamage);
 
 	BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_PROC2 );
 
@@ -1410,13 +1410,13 @@ static void svflowsub_set_waza_effect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 
 {
 	if( SCQUE_GetFlag( que, QUEFLG_WAZAEFFECT_ADDED) == FALSE )
 	{
-		BTL_Printf("[SV] ワザエフェクトコマンド生成しますよ, ワザナンバ%d\n", waza);
+		BTL_Printf("ワザエフェクトコマンド生成しますよ, ワザナンバ%d\n", waza);
 		SCQUE_PUT_ACT_WazaEffect( que, atPokeID, defPokeID, waza );
 		SCQUE_SetFlag( que, QUEFLG_WAZAEFFECT_ADDED );
 	}
 	else
 	{
-		BTL_Printf("[SV] ワザエフェクトコマンド生成済みなので無視, ワザナンバ%d\n", waza);
+		BTL_Printf("ワザエフェクトコマンド生成済みなので無視, ワザナンバ%d\n", waza);
 	}
 }
 
@@ -1617,7 +1617,7 @@ static void scEvent_decrementPP( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, con
 	if( fep->decPP )
 	{
 		u8 pokeID = BTL_POKEPARAM_GetID( attacker );
-		BTL_Printf("[SV] DECPP_ コマンドセット, value=%d\n", fep->decPP);
+		BTL_Printf("DECPP_ コマンドセット, value=%d\n", fep->decPP);
 		SCQUE_PUT_OP_PPMinus( server->que, pokeID, wazaIdx, fep->decPP );
 	}
 

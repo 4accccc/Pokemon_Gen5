@@ -199,7 +199,7 @@ void BTL_ADAPTER_SetCmd( BTL_ADAPTER* wk, BtlAdapterCmd cmd, const void* sendDat
 	wk->returnDataSize = 0;
 	wk->returnDataPreparedFlag = FALSE;
 
-	BTL_Printf(" [AD] %d, コマンド %d を送信開始します\n", wk->myID, wk->processingCmd );
+	BTL_Printf(" %d, コマンド %d を送信開始します\n", wk->myID, wk->processingCmd );
 }
 
 
@@ -303,6 +303,7 @@ static BOOL _ReceptionClient( BTL_ADAPTER* wk )
 		{
 			wk->returnDataSize = BTL_NET_GetRecvClientData( wk->myID, &wk->returnDataAdrs );
 			wk->returnDataPreparedFlag = TRUE;
+			BTL_Printf("クライアント(%d)からの返信データを取得\n", wk->myID );
 			return TRUE;
 		}
 		return FALSE;
@@ -336,7 +337,7 @@ BtlAdapterCmd BTL_ADAPTER_RecvCmd( BTL_ADAPTER* wk )
 			BTL_NET_GetReceivedCmdData( (const void**)&sendBuf );
 			cmd = sendBuf_getCmd( sendBuf );
 
-			BTL_Printf("[BTLADP] サーバコマンド[%d]受信しました\n", cmd);
+			BTL_Printf("サーバコマンド(%d)受信しました\n", cmd);
 
 			return cmd;
 		}

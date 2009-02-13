@@ -25,6 +25,7 @@ extern BTL_POKEPARAM* BTL_MAIN_GetFrontPokeData( BTL_MAIN_MODULE* wk, BtlPokePos
 extern BTL_POKEPARAM* BTL_MAIN_GetClientPokeData( BTL_MAIN_MODULE* wk, u8 clientID, u8 memberIdx );
 extern u8 BTL_MAIN_BtlPosToClientID( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
+extern BtlSide BTL_MAIN_GetClientSide( const BTL_MAIN_MODULE* wk, u8 clientID );
 //-------------------------
 extern void BTL_MAIN_CLIENTDATA_SwapPartyMembers( BTL_MAIN_MODULE* wk, u8 clientID, u8 idx1, u8 idx2 );
 extern void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk );
@@ -47,7 +48,25 @@ extern BTL_POKEPARAM* BTL_PARTY_GetMemberData( BTL_PARTY* party, u8 idx );
 extern void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 );
 
 
+//-------------------------------------------------------------------------------
+/**
+ *	サイドID関連
+ */
+//-------------------------------------------------------------------------------
 
+static inline BtlSide BTL_MAINUTIL_GetOpponentSide( BtlSide side )
+{
+	GF_ASSERT(side < BTL_SIDE_MAX);
+	return !side;
+}
+
+static inline BtlPokePos BTL_MAINUTIL_GetSidePos( BtlSide side, u8 idx )
+{
+	GF_ASSERT(side < BTL_SIDE_MAX);
+	GF_ASSERT(idx < BTL_POSIDX_MAX);
+
+	return (side&1) + idx*2;
+}
 
 
 

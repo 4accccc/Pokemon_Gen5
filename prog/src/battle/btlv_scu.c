@@ -333,9 +333,13 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 		{
 			const BTL_POKEPARAM* bpp;
 			BtlPokePos  pos, myPos;
+			u8 viewPos;
 
 			myPos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->playerClientID, 0 );
 			pos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, myPos, 0 );
+			viewPos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+			BTL_Printf("Ž©•ªClientID=%d, Ž©•ªPOS:%d, ‘ŠŽè0”ÔPOS:%d->v(%d)\n", wk->playerClientID, myPos, pos, viewPos );
 
 			bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
 			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
@@ -348,12 +352,16 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 		{
 			const BTL_POKEPARAM* bpp;
 			BtlPokePos  pos, myPos;
+			u8 viewPos;
 
 			myPos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->playerClientID, 0 );
 			pos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, myPos, 1 );
+			viewPos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+			BTL_Printf("Ž©•ªClientID=%d, Ž©•ªPOS:%d, ‘ŠŽè1”ÔPOS:%d->v(%d)\n", wk->playerClientID, myPos, pos, viewPos );
 
 			bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
-			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
+			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), viewPos );
 
 			statwin_disp_start( &wk->statusWin[ pos ] );
 			(*seq)++;
@@ -371,11 +379,18 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 		if( BTLV_SCU_WaitMsg(wk) )
 		{
 			const BTL_POKEPARAM* bpp;
+			BtlSide     side;
 			BtlPokePos  pos;
+			u8 vpos;
 
-			pos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->playerClientID, 0 );
+			side = BTL_MAIN_GetClientSide( wk->mainModule, wk->playerClientID );
+			pos = BTL_MAINUTIL_GetSidePos( side, 0 );
 			bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
-			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
+			vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+			BTL_Printf("–¡•û0”ÔPOS:%d->v(%d)\n", pos, vpos );
+
+			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), vpos );
 
 			statwin_disp_start( &wk->statusWin[ pos ] );
 
@@ -386,11 +401,18 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 		if( !BTL_EFFECT_CheckExecute() )
 		{
 			const BTL_POKEPARAM* bpp;
+			BtlSide     side;
 			BtlPokePos  pos;
+			u8 vpos;
 
-			pos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->playerClientID, 1 );
+			side = BTL_MAIN_GetClientSide( wk->mainModule, wk->playerClientID );
+			pos = BTL_MAINUTIL_GetSidePos( side, 1 );
 			bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
-			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
+			vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+			BTL_Printf("–¡•û1”ÔPOS:%d->v(%d)\n", pos, vpos );
+
+			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), vpos );
 
 			statwin_disp_start( &wk->statusWin[ pos ] );
 			(*seq)++;
@@ -918,7 +940,7 @@ static void statwin_disp_start( STATUS_WIN* stwin )
 	GFL_BMPWIN_TransVramCharacter( stwin->win );
 	GFL_BMPWIN_MakeScreen( stwin->win );
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(stwin->win) );
-	BTL_Printf("[SCU] StatusWin (pos=%d) disp start!!\n", stwin->pokePos);
+	BTL_Printf("StatusWin (pos=%d) disp start!!\n", stwin->pokePos);
 }
 
 static void statwin_disp( STATUS_WIN* stwin )

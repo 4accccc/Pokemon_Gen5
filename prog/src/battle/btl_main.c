@@ -96,8 +96,10 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk );
 static u8 expandPokePos_single( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
 static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
+static inline clientID_to_side( u8 clientID );
 static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
+static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
 static void BTL_PARTY_Cleanup( BTL_PARTY* party );
 static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member );
@@ -206,6 +208,8 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
 	// @@@ 本来は setup_param を参照して各種初期化処理ルーチンを決定する
 	if( setup_param->commMode == BTL_COMM_NONE )
 	{
+		BTL_UTIL_SetPrintType( BTL_PRINTTYPE_STANDALONE );
+
 		switch( setup_param->rule ){
 		case BTL_RULE_SINGLE:
 			BTL_UTIL_SetupProc( bp, wk, setup_alone_single, NULL );
@@ -359,6 +363,7 @@ static BOOL setup_comm_single( int* seq, void* work )
 				clientID_0 = 0;
 				clientID_1 = 1;
 
+				BTL_UTIL_SetPrintType( BTL_PRINTTYPE_SERVER );
 				BTL_Printf("ワシ、サーバーです。\n");
 
 				BTL_NET_NotifyClientID( clientID_0, &clientID_0, 1 );
@@ -366,6 +371,7 @@ static BOOL setup_comm_single( int* seq, void* work )
 			}
 			else
 			{
+				BTL_UTIL_SetPrintType( BTL_PRINTTYPE_CLIENT );
 				BTL_Printf("ワシ、サーバーではない。\n");
 			}
 			(*seq)++;
@@ -547,22 +553,29 @@ static BOOL setup_comm_double( int* seq, void* work )
 	case 0:
 		if( BTL_NET_IsServerDetermained() )
 		{
-			BTL_Printf("サーバ決定しましたよ\n");
+			wk->numClients = (sp->multiMode==0)? 2 : 4;
+
+			BTL_Printf("サーバ決定しましたよ。クライアント数は%d\n", wk->numClients);
+
 			if( BTL_NET_IsServer() )
 			{
 				// サーバーマシンが、各参加者にクライアントIDを割り振る
-				u8 clientID_0, clientID_1;
+				u8 clientID, numCoverPos;
+				u8 i;
 
-				clientID_0 = 0;
-				clientID_1 = 1;
-
+				BTL_UTIL_SetPrintType( BTL_PRINTTYPE_SERVER );
 				BTL_Printf("ワシ、サーバーです。\n");
 
-				BTL_NET_NotifyClientID( clientID_0, &clientID_0, 1 );
-				BTL_NET_NotifyClientID( clientID_1, &clientID_1, 1 );
+				numCoverPos = (sp->multiMode==0)? 2 : 1;
+				for(i=0; i<wk->numClients; ++i)
+				{
+					clientID = i;
+					BTL_NET_NotifyClientID( i, &clientID, numCoverPos );
+				}
 			}
 			else
 			{
+				BTL_UTIL_SetPrintType( BTL_PRINTTYPE_CLIENT );
 				BTL_Printf("ワシ、サーバーではない。\n");
 			}
 			(*seq)++;
@@ -578,7 +591,8 @@ static BOOL setup_comm_double( int* seq, void* work )
 		// 自分のクライアントIDが確定
 		if( BTL_NET_IsClientIdDetermined() )
 		{
-			BTL_Printf("クライアントIDが確定した→タイミングシンクロ\n");
+			wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
+			BTL_Printf("クライアントIDが%dに確定→タイミングシンクロ\n", wk->myClientID);
 			BTL_NET_TimingSyncStart( BTL_NET_TIMING_CLIENTID_DETERMINE );
 			(*seq)++;
 		}
@@ -595,17 +609,34 @@ static BOOL setup_comm_double( int* seq, void* work )
 		// パーティデータ相互受信を完了
 		if( BTL_NET_IsCompleteNotifyPartyData() )
 		{
+			u8 i;
+
 			BTL_Printf("パーティデータ相互受信できました。\n");
+			#if 0
 			setupPokeParams( &wk->party[0], &wk->pokeParam[0], BTL_NET_GetPartyData(0), 0 );
 			setupPokeParams( &wk->party[1], &wk->pokeParam[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
+			#else
+			for(i=0; i<wk->numClients; ++i)
+			{
+				setupPokeParams( &wk->party[i], &wk->pokeParam[i*TEMOTI_POKEMAX], BTL_NET_GetPartyData(i), i*TEMOTI_POKEMAX );
+			}
+			#endif
 			(*seq)++;
 		}
 		break;
 	case 4:
 		if( BTL_NET_IsServer() )
 		{
+			#if 0
 			setupPokeParams( &wk->partyForServerCalc[0], &wk->pokeParamForServerCalc[0], BTL_NET_GetPartyData(0), 0 );
 			setupPokeParams( &wk->partyForServerCalc[1], &wk->pokeParamForServerCalc[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
+			#else
+			u8 i;
+			for(i=0; i<wk->numClients; ++i)
+			{
+				setupPokeParams( &wk->partyForServerCalc[i], &wk->pokeParamForServerCalc[i*TEMOTI_POKEMAX], BTL_NET_GetPartyData(i), i*TEMOTI_POKEMAX );
+			}
+			#endif
 		}
 		(*seq)++;
 		break;
@@ -614,26 +645,54 @@ static BOOL setup_comm_double( int* seq, void* work )
 		(*seq)++;
 		break;
 	case 6:
-		wk->numClients = 2;
-		wk->posCoverClientID[BTL_POS_1ST_0] = 0;
-		wk->posCoverClientID[BTL_POS_2ND_0] = 1;
-		wk->posCoverClientID[BTL_POS_1ST_1] = 0;
-		wk->posCoverClientID[BTL_POS_2ND_1] = 1;
-		wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
-		wk->myOrgPos = (wk->myClientID == 0)? BTL_POS_1ST_0 : BTL_POS_2ND_0;
+		if( sp->multiMode == 0 )
+		{
+			wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+			wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+			wk->posCoverClientID[BTL_POS_1ST_1] = 0;
+			wk->posCoverClientID[BTL_POS_2ND_1] = 1;
+		}
+		else
+		{
+			wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+			wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+			wk->posCoverClientID[BTL_POS_1ST_1] = 2;
+			wk->posCoverClientID[BTL_POS_2ND_1] = 3;
+		}
+		{
+			u8 i;
+
+			wk->myOrgPos = 0;
+			for(i=0; i<NELEMS(wk->posCoverClientID); ++i)
+			{
+				if( wk->posCoverClientID[i] == wk->myClientID )
+				{
+					wk->myOrgPos = i;
+					break;
+				}
+			}
+		}
 
 		// 自分がサーバ
 		if( BTL_NET_IsServer() )
 		{
-			u8 netID = GFL_NET_GetNetID( sp->netHandle );
+			u8 netID, numCoverPos, i;
+
+			netID = GFL_NET_GetNetID( sp->netHandle );
+			numCoverPos = (sp->multiMode==0)? 2 : 1;
 
 			BTL_Printf("サーバ用のパーティデータセット\n");
 
 			wk->server = BTL_SERVER_Create( wk, wk->heapID );
 			wk->client[netID] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle,
-					netID, 2, BTL_THINKER_UI, wk->heapID );
-			BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), &wk->partyForServerCalc[netID], netID, 2 );
-			BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, &wk->partyForServerCalc[!netID], !netID, 2 );
+					netID, numCoverPos, BTL_THINKER_UI, wk->heapID );
+			BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), &wk->partyForServerCalc[netID], netID, numCoverPos );
+
+			for(i=0; i<wk->numClients; ++i)
+			{
+				if(i==netID){ continue; }
+				BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, &wk->partyForServerCalc[i], i, numCoverPos );
+			}
 
 			// 描画エンジン生成
 			wk->viewCore = BTLV_Create( wk, wk->client[netID], HEAPID_BTL_VIEW );
@@ -644,11 +703,15 @@ static BOOL setup_comm_double( int* seq, void* work )
 		// 自分がサーバではない
 		else
 		{
-			u8 netID = GFL_NET_GetNetID( sp->netHandle );
+			u8 netID, numCoverPos;
+
+			netID = GFL_NET_GetNetID( sp->netHandle );
+			numCoverPos = (sp->multiMode==0)? 2 : 1;
 
 			BTL_Printf("サーバではない用のパーティデータセット\n");
 
-			wk->client[ netID ] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle, netID, 2, BTL_THINKER_UI, wk->heapID  );
+			wk->client[ netID ] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle,
+					netID, numCoverPos, BTL_THINKER_UI, wk->heapID  );
 
 			// 描画エンジン生成
 			wk->viewCore = BTLV_Create( wk, wk->client[netID], HEAPID_BTL_VIEW );
@@ -728,7 +791,7 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 		return TRUE;
 	}
 
-	for(i=0; i<2; i++)
+	for(i=0; i<wk->numClients; i++)
 	{
 		if( wk->client[i] )
 		{
@@ -745,7 +808,7 @@ static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
 {
 	int i;
 
-	for(i=0; i<2; i++)
+	for(i=0; i<wk->numClients; i++)
 	{
 		if( wk->client[i] )
 		{
@@ -871,6 +934,28 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
 		return 3;
 	}
 }
+//
+//	クライアントID -> サイドIDに変換
+//
+static inline clientID_to_side( u8 clientID )
+{
+	return clientID & 1;
+}
+
+//=============================================================================================
+/**
+ * クライアントIDからサイドIDを返す
+ *
+ * @param   wk				
+ * @param   clientID	
+ *
+ * @retval  BtlSide		
+ */
+//=============================================================================================
+BtlSide BTL_MAIN_GetClientSide( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+	return clientID_to_side( clientID );
+}
 
 //=============================================================================================
 /**
@@ -957,7 +1042,7 @@ BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePo
 	case BTL_RULE_DOUBLE:
 		{
 			u8 retPos = (basePos + 2) & 0x03;
-			BTL_Printf("[MAIN] nextPos %d -> %d\n", basePos, retPos);
+			BTL_Printf("nextPos %d -> %d\n", basePos, retPos);
 			return retPos;
 		}
 	case BTL_RULE_TRIPLE:
@@ -1060,6 +1145,13 @@ static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, Btl
 
 		*posIdx = idx;
 	}
+}
+//
+// 戦闘位置 -> 自サイド中の位置インデックスへ変換
+//
+static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos )
+{
+	return pos / 2;
 }
 
 //=============================================================================================
@@ -1214,9 +1306,7 @@ u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
 			{ POKE_MCSS_POS_B, POKE_MCSS_POS_D, POKE_MCSS_POS_F },
 			{ POKE_MCSS_POS_A, POKE_MCSS_POS_C, POKE_MCSS_POS_E },
 		};
-		u8 clientID, posIdx;
-
-		btlPos_to_cliendID_and_posIdx( wk, pos, &clientID, &posIdx );
+		u8 posIdx = btlPos_to_sidePosIdx( pos );
 		return vpos[ isPlayerSide ][ posIdx ];
 	}
 }
@@ -1287,7 +1377,7 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
 		BTL_POKEPARAM* tmp = party->member[ idx1 ];
 		party->member[ idx1 ] = party->member[ idx2 ];
 		party->member[ idx2 ] = tmp;
-		BTL_Printf("[MAIN] Party[%p]Member Swap ... %d<->%d\n", party, idx1, idx2);
+		BTL_Printf("Party(0x%p)Member Swap ... %d<->%d\n", party, idx1, idx2);
 	}
 }
 

@@ -11,15 +11,70 @@
 #include "btl_common.h"
 #include "btl_util.h"
 
+#ifdef BTL_PRINT_SYSTEM_ENABLE
+
+static BtlPrintType _PrintType;
+
+static void print_type( void )
+{
+	switch( _PrintType ){
+	case BTL_PRINTTYPE_SERVER:			OS_TPrintf("[SV]"); break;
+	case BTL_PRINTTYPE_CLIENT:			OS_TPrintf("[CL]"); break;
+	case BTL_PRINTTYPE_STANDALONE:	OS_TPrintf("[SA]"); break;
+	case BTL_PRINTTYPE_UNKNOWN:
+	default:
+		OS_TPrintf("[UN]");
+		break;
+	}
+}
+
+static void print_file_info( const char* filename, int line )
+{
+	static const struct {
+		char* longName;
+		char* shortName;
+	}names[] = {
+		{ "btl_main.c",				"MAI" },
+		{ "btl_server.c",			"SVR" },
+		{ "btl_client.c",			"CLI" },
+		{ "btl_adapter.c",		"ADP" },
+		{ "btl_string.c",			"STR" },
+		{ "btl_net.c",				"NET" },
+		{ "btl_pokeparam.c",	"PAR" },
+		{ "btlv_core.c",			"VCO" },
+		{ "btlv_scu.c",				"VSU" },
+		{ "btlv_scd.c",				"VSD" },
+		{ NULL,								"OTR" },
+	};
+	u32 i;
+
+	for(i=0; names[i].longName!=NULL; ++i)
+	{
+		if( !strcmp(names[i].longName, filename) )
+		{
+			break;
+		}
+	}
+
+	OS_TPrintf( "-%s(%4d)-", names[i].shortName, line);
+}
+
+void BTL_UTIL_SetPrintType( BtlPrintType type )
+{
+	_PrintType = type;
+}
 
 void BTL_UTIL_Printf( const char* filename, int line, const char* fmt, ... )
 {
 //	AssertPrintTitle(filename, line_no);
+	print_type();
+	print_file_info( filename, line );
+
 	{
-	    va_list vlist;
-	    va_start( vlist, fmt );
-	    OS_TVPrintf( fmt, vlist );
-	    va_end( vlist );
+		va_list vlist;
+		va_start( vlist, fmt );
+		OS_TVPrintf( fmt, vlist );
+		va_end( vlist );
 	}
 
 }
@@ -40,4 +95,7 @@ void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size )
 		OS_TPrintf("\n");
 	}
 }
+
+#endif	/* #ifdef BTL_PRINT_SYSTEM_ENABLE */
+
 

@@ -369,10 +369,26 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 //			if( hit != GFL_UI_TP_HIT_NONE )
 			if( ( hit != GFL_UI_TP_HIT_NONE ) && ( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) - 1 ) )
 			{
-				// @@@ DBL 誰を狙うか選択する
 				BTL_ACTION_SetFightParam( wk->destActionParam, hit, 0 );
+
+				if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE )
+				{
+					return TRUE;
+				}
+				else
+				{
+					(*seq)++;
+				}
+			}
+			break;
+		case SEQ_SEL_FIGHT+3:
+			{
+			// @@@ダブル時の選択処理 書きかけ。
+//				u8 wazaIdx = wk->destActionParam.wazaIdx;
+//				u8 targetIdx = 0;
 				return TRUE;
 			}
+			break;
 		}
 		break;
 
@@ -426,7 +442,7 @@ void BTLV_SCD_PokeSelect_Start( BTLV_SCD* wk, const BTL_POKESELECT_PARAM* param,
 
 	wk->pokesel_param = param;
 	wk->pokesel_result = result;
-	BTL_Printf("[*SCD] ポケモン選択開始 : %d 体えらぶ\n", param->numSelect );
+	BTL_Printf("ポケモン選択開始 : %d 体えらぶ\n", param->numSelect );
 	spstack_push( wk, selectPokemon_init, selectPokemon_loop );
 }
 BOOL BTLV_SCD_PokeSelect_Wait( BTLV_SCD* wk )
