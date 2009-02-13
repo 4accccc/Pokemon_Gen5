@@ -161,6 +161,30 @@ static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx
 
 static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int idx );
 
+//------------------------------------------------------
+/*
+ *	STARTボタン一発で任意のメニューを起動するための関数
+ */
+//------------------------------------------------------
+#if defined DEBUG_ONLY_FOR_taya
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncTaya
+#elif defined DEBUG_ONLY_FOR_watanabe
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncWatanabe
+#elif defined DEBUG_ONLY_FOR_tamada
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncTamada
+#elif defined DEBUG_ONLY_FOR_sogabe
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncSogabe
+#elif defined DEBUG_ONLY_FOR_ohno
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncOhno
+#elif defined DEBUG_ONLY_FOR_matsuda
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncMatsuda
+#elif defined DEBUG_ONLY_FOR_kagaya
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncKagaya
+#elif defined DEBUG_ONLY_FOR_ariizumi_nobuhiko
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncAri
+#endif
+
+
 static TESTMODE_MENU_LIST topMenu[] = 
 {
 	//汎用
@@ -350,6 +374,12 @@ static BOOL TESTMODE_UpdateMenu( TESTMODE_WORK *work )
 	switch(ret)
 	{
 	case BMPMENULIST_NULL:	/* 何も選択されていない */
+		#ifdef QuickSelectFunc
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+		{
+			return QuickSelectFunc( work, 0 );
+		}
+		#endif
 		break;
 	case BMPMENULIST_CANCEL:	/* キャンセルされた */
 		if( work->currentMenu_ != topMenu && work->parentWork_ == NULL )
