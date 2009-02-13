@@ -132,16 +132,7 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor( FLDMMDL *fmmdl, u32 resID )
 	actData.drawEnable = TRUE;
 	actData.lightMask = GFL_BBD_LIGHTMASK_01;
 	actData.work = fmmdl;
-	
-#if 0
-	actData.func = testFunc;
-	
-	if( resID == 0 ){
-		actData.func = testJikiFunc;
-	}
-#else
 	actData.func = BlActFunc;
-#endif
 	
 	actID = GFL_BBDACT_AddAct(
 		pBlActCont->pBbdActSys, pBlActCont->bbdActResUnitID, &actData, 1 );

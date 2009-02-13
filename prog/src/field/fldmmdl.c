@@ -46,7 +46,6 @@ struct _TAG_FLDMMDLSYS
 	ARCHANDLE *pArcHandle;			///<アーカイブハンドル
 	
 	const FLDMAPPER *pG3DMapper;	///<FLDMAPPER
-//	FIELD_MAIN_WORK *pFldMainWork;	///<FIELD_MAIN_WORK
 };
 
 #define FLDMMDLSYS_SIZE (sizeof(FLDMMDLSYS)) ///<FLDMMDLSYSサイズ
@@ -100,25 +99,13 @@ struct _TAG_FLDMMDL
 	GFL_TCB *pTCB;				///<動作関数TCB*
 	const FLDMMDLSYS *pFldMMdlSys;///<FLDMMDLSYS*
 	
-	FLDMMDL_MOVE_PROC_INIT move_init_proc;	///<初期化関数
-	FLDMMDL_MOVE_PROC move_proc;			///<動作関数
-	FLDMMDL_MOVE_PROC_DEL move_delete_proc;	///<削除関数
-	FLDMMDL_DRAW_PROC_INIT draw_init_proc;	///<描画初期化関数
-	FLDMMDL_DRAW_PROC draw_proc;			///<描画関数
-	FLDMMDL_DRAW_PROC_DEL draw_delete_proc;	///<描画削除関数
-	FLDMMDL_DRAW_PROC_PUSH draw_push_proc;	///<描画退避関数
-	FLDMMDL_DRAW_PROC_POP draw_pop_proc;	///<描画復帰関数
+	const FLDMMDL_MOVE_PROC_LIST *move_proc_list; ///<動作関数リスト
+	const FLDMMDL_DRAW_PROC_LIST *draw_proc_list; ///<描画関数リスト
 	
-	///動作関数用ワーク
-	u8 move_proc_work[FLDMMDL_MOVE_WORK_SIZE];
-	///動作サブ関数用ワーク
-	u8 move_sub_proc_work[FLDMMDL_MOVE_SUB_WORK_SIZE];
-	///動作コマンド用ワーク
-	u8 move_cmd_proc_work[FLDMMDL_MOVE_CMD_WORK_SIZE];
-	///描画関数用ワーク
-	u8 draw_proc_work[FLDMMDL_DRAW_WORK_SIZE];
-	
-	GFL_BBDACT_ACTUNIT_ID blActID;
+	u8 move_proc_work[FLDMMDL_MOVE_WORK_SIZE];///動作関数用ワーク
+	u8 move_sub_proc_work[FLDMMDL_MOVE_SUB_WORK_SIZE];///動作サブ関数用ワーク
+	u8 move_cmd_proc_work[FLDMMDL_MOVE_CMD_WORK_SIZE];///動作コマンド用ワーク
+	u8 draw_proc_work[FLDMMDL_DRAW_WORK_SIZE];///描画関数用ワーク
 };
 
 #define FLDMMDL_SIZE (sizeof(FLDMMDL)) ///<FLDMMDLサイズ
@@ -441,11 +428,8 @@ static void FldMMdl_InitWork( FLDMMDL * fmmdl, const FLDMMDLSYS *sys )
 //--------------------------------------------------------------
 static void FldMMdl_InitCallMoveProcWork( FLDMMDL * fmmdl )
 {
-	const FLDMMDL_MOVE_PROC_LIST *list;
-	list = MoveProcList_GetList( FLDMMDL_GetMoveCode(fmmdl) );
-	fmmdl->move_init_proc = list->init_proc;
-	fmmdl->move_proc = list->move_proc;
-	fmmdl->move_delete_proc = list->delete_proc;
+	fmmdl->move_proc_list =
+		MoveProcList_GetList( FLDMMDL_GetMoveCode(fmmdl) );
 }
 
 //--------------------------------------------------------------
@@ -1368,8 +1352,9 @@ void * FLDMMDL_GetDrawProcWork( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_CallMoveInitProc( FLDMMDL * fmmdl )
 {
-	GF_ASSERT( fmmdl->move_init_proc );
-	fmmdl->move_init_proc( fmmdl );
+	GF_ASSERT( fmmdl->move_proc_list );
+	GF_ASSERT( fmmdl->move_proc_list->init_proc );
+	fmmdl->move_proc_list->init_proc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -1381,8 +1366,9 @@ void FLDMMDL_CallMoveInitProc( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_CallMoveProc( FLDMMDL * fmmdl )
 {
-	GF_ASSERT( fmmdl->move_proc );
-	fmmdl->move_proc( fmmdl );
+	GF_ASSERT( fmmdl->move_proc_list );
+	GF_ASSERT( fmmdl->move_proc_list->move_proc );
+	fmmdl->move_proc_list->move_proc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -1394,8 +1380,9 @@ void FLDMMDL_CallMoveProc( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_CallMoveDeleteProc( FLDMMDL * fmmdl )
 {
-	GF_ASSERT( fmmdl->move_delete_proc );
-	fmmdl->move_delete_proc( fmmdl );
+	GF_ASSERT( fmmdl->move_proc_list );
+	GF_ASSERT( fmmdl->move_proc_list->delete_proc );
+	fmmdl->move_proc_list->delete_proc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -1407,9 +1394,9 @@ void FLDMMDL_CallMoveDeleteProc( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_CallMovePopProc( FLDMMDL * fmmdl )
 {
-	const FLDMMDL_MOVE_PROC_LIST *list =
-		MoveProcList_GetList( FLDMMDL_GetMoveCode(fmmdl) );
-	list->return_proc( fmmdl );
+	GF_ASSERT( fmmdl->move_proc_list );
+	GF_ASSERT( fmmdl->move_proc_list->return_proc );
+	fmmdl->move_proc_list->return_proc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -1421,7 +1408,9 @@ void FLDMMDL_CallMovePopProc( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_CallDrawInitProc( FLDMMDL * fmmdl )
 {
-	fmmdl->draw_init_proc( fmmdl );
+	GF_ASSERT( fmmdl->draw_proc_list );
+	GF_ASSERT( fmmdl->draw_proc_list->init_proc );
+	fmmdl->draw_proc_list->init_proc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -1433,7 +1422,9 @@ void FLDMMDL_CallDrawInitProc( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_CallDrawProc( FLDMMDL * fmmdl )
 {
-	fmmdl->draw_proc( fmmdl );
+	GF_ASSERT( fmmdl->draw_proc_list );
+	GF_ASSERT( fmmdl->draw_proc_list->draw_proc );
+	fmmdl->draw_proc_list->draw_proc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -1445,7 +1436,9 @@ void FLDMMDL_CallDrawProc( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_CallDrawDeleteProc( FLDMMDL * fmmdl )
 {
-	fmmdl->draw_delete_proc( fmmdl );
+	GF_ASSERT( fmmdl->draw_proc_list );
+	GF_ASSERT( fmmdl->draw_proc_list->delete_proc );
+	fmmdl->draw_proc_list->delete_proc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -1457,7 +1450,9 @@ void FLDMMDL_CallDrawDeleteProc( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_CallDrawPushProc( FLDMMDL * fmmdl )
 {
-	fmmdl->draw_push_proc( fmmdl );
+	GF_ASSERT( fmmdl->draw_proc_list );
+	GF_ASSERT( fmmdl->draw_proc_list->push_proc );
+	fmmdl->draw_proc_list->push_proc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -1469,7 +1464,24 @@ void FLDMMDL_CallDrawPushProc( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 void FLDMMDL_CallDrawPopProc( FLDMMDL * fmmdl )
 {
-	fmmdl->draw_pop_proc( fmmdl );
+	GF_ASSERT( fmmdl->draw_proc_list );
+	GF_ASSERT( fmmdl->draw_proc_list->pop_proc );
+	fmmdl->draw_proc_list->pop_proc( fmmdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL 描画取得関数実行
+ * @param	fmmdl	FLDMMDL*
+ * @param	state	取得関数に与える情報
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+u32 FLDMMDL_CallDrawGetProc( FLDMMDL *fmmdl, u32 state )
+{
+	GF_ASSERT( fmmdl->draw_proc_list );
+	GF_ASSERT( fmmdl->draw_proc_list->get_proc );
+	return( fmmdl->draw_proc_list->get_proc(fmmdl,state) );
 }
 
 //--------------------------------------------------------------
@@ -2790,7 +2802,7 @@ int FLDMMDL_CheckMoveBitAttrGetOFF( const FLDMMDL * fmmdl )
  * @param	fmmdl	FLDMMDL*格納先
  * @param	no	検索開始ワークno。先頭から検索する際は初期値0を指定。
  * @retval	BOOL TRUE=動作モデル取得した FALSE=noから終端まで検索し取得無し。
- * 引数noは呼び出し後、検索位置+1の値になる。
+ * 引数noは呼び出し後、取得位置+1の値になる。
  *
  * ※例：OBJ ID 1番の動作モデルを探す。
  * u32 no=0;
@@ -3111,11 +3123,7 @@ static void FldMMdl_InitCallDrawProcWork( FLDMMDL * fmmdl )
 		list = DrawProcList_GetList( code );
 	}
 	
-	fmmdl->draw_init_proc = list->init_proc;
-	fmmdl->draw_proc = list->draw_proc;
-	fmmdl->draw_delete_proc = list->delete_proc;
-	fmmdl->draw_push_proc = list->push_proc;
-	fmmdl->draw_pop_proc = list->pop_proc;
+	fmmdl->draw_proc_list = list;
 }
 
 //--------------------------------------------------------------
@@ -3359,7 +3367,6 @@ BOOL FLDMMDL_CheckSameIDCode(
 	return( FLDMMDL_CheckSameID(fmmdl,obj_id,zone_id) );
 }
 
-
 //======================================================================
 //	parts
 //======================================================================
@@ -3566,33 +3573,3 @@ void FLDMMDL_DrawPushProcDummy( FLDMMDL * fmmdl )
 void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl )
 {
 }
-
-//////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-//	仮
-//////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-#if 0
-FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork( FLDMMDLSYS *fmmdlsys )
-{
-	return( fmmdlsys->pFldMainWork );
-}
-#endif
-
-#if 0
-void FLDMMDL_SetBlActID( FLDMMDL *fmmdl, GFL_BBDACT_ACTUNIT_ID blActID )
-{
-	fmmdl->blActID = blActID;
-}
-
-GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fmmdl )
-{
-	return( fmmdl->blActID );
-}
-#endif

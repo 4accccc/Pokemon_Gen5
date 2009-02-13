@@ -26,7 +26,7 @@
 //--------------------------------------------------------------
 //	debug
 //--------------------------------------------------------------
-#define FLDMMDL_PL_NULL	//プラチナで行っていた処理無効化
+#define FLDMMDL_PL_NULL	//定義でプラチナで行っていた処理無効化
 //#define FLDMMDL_BLACT_HEAD3_TEST //定義で三頭身テスト
 
 //--------------------------------------------------------------
@@ -292,13 +292,14 @@ typedef void (*FLDMMDL_DRAW_PROC)(FLDMMDL*);///<描画関数
 typedef void (*FLDMMDL_DRAW_PROC_DEL)(FLDMMDL*);///<描画削除関数
 typedef void (*FLDMMDL_DRAW_PROC_PUSH)(FLDMMDL*);///<描画退避関数
 typedef void (*FLDMMDL_DRAW_PROC_POP)(FLDMMDL*);///<描画復帰関数
+typedef u32 (*FLDMMDL_DRAW_PROC_GET)(FLDMMDL*,u32);///<描画取得関数
 
 //--------------------------------------------------------------
 ///	FLDMMDL_MOVE_PROC_LIST構造体
 //--------------------------------------------------------------
 typedef struct
 {
-	int move_code;///<動作コード
+	u32 move_code;///<動作コード
 	FLDMMDL_MOVE_PROC_INIT init_proc;///<初期化関数
 	FLDMMDL_MOVE_PROC move_proc;///<動作関数
 	FLDMMDL_MOVE_PROC_DEL delete_proc;///<削除関数
@@ -318,6 +319,7 @@ typedef struct
 	FLDMMDL_DRAW_PROC_DEL delete_proc;///<削除関数
 	FLDMMDL_DRAW_PROC_PUSH push_proc;///<退避関数
 	FLDMMDL_DRAW_PROC_POP pop_proc;///<復帰関数
+	FLDMMDL_DRAW_PROC_GET get_proc;///<取得関数
 }FLDMMDL_DRAW_PROC_LIST;
 
 ///FLDMMDL_DRAW_PROC_LISTサイズ
@@ -450,6 +452,7 @@ extern void FLDMMDL_CallDrawProc( FLDMMDL * fmmdl );
 extern void FLDMMDL_CallDrawDeleteProc( FLDMMDL * fmmdl );
 extern void FLDMMDL_CallDrawPushProc( FLDMMDL * fmmdl );
 extern void FLDMMDL_CallDrawPopProc( FLDMMDL * fmmdl );
+extern u32 FLDMMDL_CallDrawGetProc( FLDMMDL *fmmdl, u32 state );
 extern void FLDMMDL_SetAcmdCode( FLDMMDL * fmmdl, u16 code );
 extern u16 FLDMMDL_GetAcmdCode( const FLDMMDL * fmmdl );
 extern void FLDMMDL_SetAcmdSeq( FLDMMDL * fmmdl, u16 no );
@@ -591,14 +594,14 @@ extern void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl );
 //extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fmmdl );
 
 //--------------------------------------------------------------
-//	fieldobj_movedata.c
+//	fldmmdl_movedata.c
 //--------------------------------------------------------------
 extern const FLDMMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[];
 extern int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( FLDMMDL * );
 extern const int * const DATA_AcmdCodeDirChangeTbl[];
 
 //--------------------------------------------------------------
-//	fieldobj_drawdata.c
+//	fldmmdl_drawdata.c
 //--------------------------------------------------------------
 extern const FLDMMDL_DRAW_PROC_LIST * const DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[];
 
@@ -620,7 +623,7 @@ extern const int DATA_FLDMMDL_BlActFogEnableOFFTbl[];
 extern const OBJCODE_STATE DATA_FieldOBJCodeDrawStateTbl[];
 
 //--------------------------------------------------------------
-//	fieldobj_move.c
+//	fldmmdl_move.c
 //--------------------------------------------------------------
 extern void FLDMMDL_InitMoveProc( FLDMMDL * fmmdl );
 extern void FLDMMDL_UpdateMove( FLDMMDL * fmmdl );
@@ -674,7 +677,7 @@ extern EOA_PTR FLDMMDL_MoveHideEoaPtrGet( FLDMMDL * fmmdl );
 #endif
 
 //--------------------------------------------------------------
-//	fieldobj_draw.c
+//	fldmmdl_draw.c
 //--------------------------------------------------------------
 extern void FLDMMDLSYS_InitDraw( FLDMMDLSYS *fos );
 extern void FLDMMDLSYS_DeleteDraw( FLDMMDLSYS *fos );
@@ -691,7 +694,7 @@ extern void FLDMMDL_GetDrawVectorPos(
 		const FLDMMDL * fmmdl, VecFx32 *vec );
 
 //--------------------------------------------------------------
-//	fieldobj_acmd.c
+//	fldmmdl_acmd.c
 //--------------------------------------------------------------
 extern BOOL FLDMMDL_CheckPossibleAcmd( const FLDMMDL * fmmdl );
 extern void FLDMMDL_SetAcmd( FLDMMDL * fmmdl, u16 code );

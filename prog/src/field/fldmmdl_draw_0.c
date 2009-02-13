@@ -103,6 +103,7 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Non =
 	FldMMdl_DrawNon_Delete,
 	FldMMdl_DrawNon_Push,
 	FldMMdl_DrawNon_Pop,
+	NULL,
 };
 
 //======================================================================
@@ -216,6 +217,22 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 }
 
 //--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　自機専用　取得。
+ * ビルボードアクターIDを返す。
+ * @param	fmmdl	FLDMMDL
+ * @param	state	特に無し
+ * @retval	u32	GFL_BBDACT_ACTUNIT_ID
+ */
+//--------------------------------------------------------------
+static u32 DrawHero_GetBlActID( FLDMMDL *fmmdl, u32 state )
+{
+	DRAW_BLACT_WORK *work;
+	work = FLDMMDL_GetDrawProcWork( fmmdl );
+	return( work->actID );
+}
+
+//--------------------------------------------------------------
 //	描画処理　ビルボード　自機　まとめ
 //--------------------------------------------------------------
 const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Hero =
@@ -225,6 +242,7 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Hero =
 	DrawHero_Delete,
 	FLDMMDL_DrawPushProcDummy,
 	FLDMMDL_DrawPopProcDummy,
+	DrawHero_GetBlActID,
 };
 
 //======================================================================
@@ -323,6 +341,22 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 }
 
 //--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　汎用　取得。
+ * ビルボードアクターIDを返す。
+ * @param	fmmdl	FLDMMDL
+ * @param	state	特に無し
+ * @retval	u32	GFL_BBDACT_ACTUNIT_ID
+ */
+//--------------------------------------------------------------
+static u32 DrawBlAct_GetBlActID( FLDMMDL *fmmdl, u32 state )
+{
+	DRAW_BLACT_WORK *work;
+	work = FLDMMDL_GetDrawProcWork( fmmdl );
+	return( work->actID );
+}
+
+//--------------------------------------------------------------
 //	描画処理　ビルボード　汎用　まとめ
 //--------------------------------------------------------------
 const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_BlAct =
@@ -332,4 +366,5 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_BlAct =
 	DrawBlAct_Delete,
 	FLDMMDL_DrawPushProcDummy,
 	FLDMMDL_DrawPopProcDummy,
+	DrawBlAct_GetBlActID,
 };
