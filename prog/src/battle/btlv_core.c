@@ -826,18 +826,18 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 	};
 #else
 	static const GFL_DISP_VRAM vramBank = {
-		GX_VRAM_BG_128_D,				// メイン2DエンジンのBG
+		GX_VRAM_BG_128_D,						// メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+		GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE,	// サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_64_E,						// メイン2DエンジンのOBJ
 		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-		GX_VRAM_TEX_01_AB,				// テクスチャイメージスロット
+		GX_VRAM_SUB_OBJ_16_I,				// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_01_AB,					// テクスチャイメージスロット
 		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
-		GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
-		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_64K,	// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,	// サブOBJマッピングモード
 	};
 #endif
 

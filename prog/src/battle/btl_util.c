@@ -18,12 +18,12 @@ static BtlPrintType _PrintType;
 static void print_type( void )
 {
 	switch( _PrintType ){
-	case BTL_PRINTTYPE_SERVER:			OS_TPrintf("[SV]"); break;
-	case BTL_PRINTTYPE_CLIENT:			OS_TPrintf("[CL]"); break;
-	case BTL_PRINTTYPE_STANDALONE:	OS_TPrintf("[SA]"); break;
+	case BTL_PRINTTYPE_SERVER:			OS_TPrintf("SV/"); break;
+	case BTL_PRINTTYPE_CLIENT:			OS_TPrintf("CL/"); break;
+	case BTL_PRINTTYPE_STANDALONE:	OS_TPrintf("SA/"); break;
 	case BTL_PRINTTYPE_UNKNOWN:
 	default:
-		OS_TPrintf("[UN]");
+		OS_TPrintf("UN/");
 		break;
 	}
 }
@@ -55,8 +55,7 @@ static void print_file_info( const char* filename, int line )
 			break;
 		}
 	}
-
-	OS_TPrintf( "-%s(%4d)-", names[i].shortName, line);
+	OS_TPrintf( "[%s-%4d]", names[i].shortName, line);
 }
 
 void BTL_UTIL_SetPrintType( BtlPrintType type )
