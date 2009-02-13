@@ -13,6 +13,7 @@ typedef struct _BTL_PARTY		BTL_PARTY;
 
 extern BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk );
 extern BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk );
+extern BtlCommMode BTL_MAIN_GetCommMode( const BTL_MAIN_MODULE* wk );
 extern const BTL_PARTY* BTL_MAIN_GetPartyDataConst( const BTL_MAIN_MODULE* wk, u32 clientID );
 extern BtlPokePos BTL_MAIN_GetClientPokePos( const BTL_MAIN_MODULE* wk, u8 clientID, u8 posIdx );
 extern BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos, u8 idx );

@@ -88,7 +88,9 @@ struct _BTLV_SCU {
 	const BTLV_CORE*	vcore;
 	const BTL_MAIN_MODULE*	mainModule;
 	HEAPID				heapID;
+	u8						printSeq;
 	u8						playerClientID;
+	u16						printWait;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -267,7 +269,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 	switch( *seq ){
 	case 0:
 		BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount );
-		BTLV_SCU_StartMsg( wk, wk->strBuf );
+		BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
 		(*seq)++;
 		break;
 	case 1:
@@ -283,10 +285,10 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 		}
 		break;
 	case 2:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		if( !BTL_EFFECT_CheckExecute() )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle );
-			BTLV_SCU_StartMsg( wk, wk->strBuf );
+			BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
 			(*seq)++;
 		}
 		break;
@@ -303,7 +305,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 		}
 		break;
 	case 4:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		if( !BTL_EFFECT_CheckExecute() )
 		{
 			return TRUE;
 		}
@@ -325,7 +327,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 	switch( *seq ){
 	case 0:
 		BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Double );
-		BTLV_SCU_StartMsg( wk, wk->strBuf );
+		BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
 		(*seq)++;
 		break;
 	case 1:
@@ -371,7 +373,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 		if( !BTL_EFFECT_CheckExecute() )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutDouble );
-			BTLV_SCU_StartMsg( wk, wk->strBuf );
+			BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
 			(*seq)++;
 		}
 		break;
@@ -462,12 +464,13 @@ void BTLV_SCU_HideTokWin( BTLV_SCU* wk, u8 clientID )
 /**
  * メッセージ表示開始
  *
- * @param   wk		
- * @param   str		
+ * @param   wk			
+ * @param   str			表示文字列
+ * @param   wait		表示終了後の待ち方( 0:何もしない / 1～:通常時はキー待ち，通信時は指定フレーム待ち）
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str )
+void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
 {
 	GF_ASSERT( wk->printStream == NULL );
 
@@ -477,6 +480,8 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str )
 				wk->win, 0, 0, str, wk->defaultFont, 0, wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
 				wk->heapID, 0x0f
 	);
+	wk->printSeq = 0;
+	wk->printWait = wait;
 }
 
 //=============================================================================================
@@ -490,16 +495,56 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str )
 //=============================================================================================
 BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
 {
-	if( wk->printStream )
-	{
-		if( PRINTSYS_PrintStreamGetState( wk->printStream ) == PRINTSTREAM_STATE_DONE )
+	switch( wk->printSeq ){
+	case 0:
+		if( wk->printStream )
 		{
-			PRINTSYS_PrintStreamDelete( wk->printStream );
-			wk->printStream = NULL;
+			if( PRINTSYS_PrintStreamGetState( wk->printStream ) == PRINTSTREAM_STATE_DONE )
+			{
+				PRINTSYS_PrintStreamDelete( wk->printStream );
+				wk->printStream = NULL;
+			}
+			return FALSE;
 		}
-		return FALSE;
+		else
+		{
+			if( wk->printWait )
+			{
+				if( BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE )
+				{
+					wk->printSeq = 1;
+				}
+				else
+				{
+					wk->printSeq = 2;
+				}
+			}
+			else
+			{
+				return TRUE;
+			}
+		}
+		break;
+
+	case 1:	// 待ち指定あり（通常時）
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		{
+			return TRUE;
+		}
+		break;
+
+	case 2:	// 待ち指定あり（通信時）
+		if( wk->printWait )
+		{
+			wk->printWait--;
+		}
+		else
+		{
+			return TRUE;
+		}
+		break;
 	}
-	return TRUE;
+	return FALSE;
 }
 
 

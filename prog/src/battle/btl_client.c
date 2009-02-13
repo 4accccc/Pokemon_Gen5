@@ -822,15 +822,8 @@ static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args )
 	case 1:
 		if( BTLV_WaitMsg(wk->viewCore) )
 		{
-			(*seq)++;
-		}
-		break;
-	case 2:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-		{
 			return TRUE;
 		}
-		break;
 	}
 	return FALSE;
 }
@@ -845,15 +838,8 @@ static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args )
 	case 1:
 		if( BTLV_WaitMsg(wk->viewCore) )
 		{
-			(*seq)++;
-		}
-		break;
-	case 2:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-		{
 			return TRUE;
 		}
-		break;
 	}
 	return FALSE;
 }

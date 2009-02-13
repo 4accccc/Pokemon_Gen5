@@ -289,7 +289,7 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 	switch( *seq ){
 	case 0:
 		BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction );
-		BTLV_SCU_StartMsg( core->scrnU, core->strBuf );
+		BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_NONE );
 		(*seq)++;
 		break;
 	case 1:
@@ -512,12 +512,12 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
 		if( subwk->affinity < BTL_TYPEAFF_100 )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad );
-			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 		}
 		else if ( subwk->affinity > BTL_TYPEAFF_100 )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood );
-			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 		}
 		(*seq)++;
 		break;
@@ -595,12 +595,12 @@ static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs )
 		if( subwk->affinity < BTL_TYPEAFF_100 )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad );
-			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 		}
 		else if ( subwk->affinity > BTL_TYPEAFF_100 )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood );
-			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 		}
 		(*seq)++;
 		break;
@@ -709,7 +709,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 			subwk->printArg = subwk->pokePos;
 
 			BTL_STR_MakeStringStdWithArgs( wk->strBuf, strID, &subwk->printArg );
-			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 			(*seq)++;
 		}
 		break;
@@ -742,7 +742,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 {
 	BTL_STR_MakeStringStdWithArgs( wk->strBuf, strID, args );
-	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 //	printf( wk->strBuf );
 }
 
@@ -761,14 +761,14 @@ void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args )
 {
 	BTL_STR_MakeStringSet( wk->strBuf, strID, args );
-	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 //	printf( wk->strBuf );
 }
 
 void BTLV_StartMsgWaza( BTLV_CORE* wk, BtlPokePos pokePos, u16 waza )
 {
 	BTL_STR_MakeStringWaza( wk->strBuf, pokePos, waza );
-	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 }
 
 BOOL BTLV_WaitMsg( BTLV_CORE* wk )
