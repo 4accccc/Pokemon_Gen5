@@ -119,8 +119,11 @@ void GFL_NET_IRC_Init(void)
 //--------------------------------------------------------------
 void GFL_NET_IRC_Exit(void)
 {
+	OS_TPrintf("IRC Exit éÛêM\n");
     IRC_Shutdown();
+#if 0	//Å¶check
 	GF_ASSERT(NetIrcSys.initialize == TRUE);
+#endif
 	NetIrcSys.initialize = FALSE;
 }
 

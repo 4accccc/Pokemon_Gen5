@@ -25,8 +25,14 @@
 #include "compati_check.h"
 #include "compati_types.h"
 #include "compati_tool.h"
+#include "compati_irc.h"
 #include "msg\msg_compati_check.h"
 
+
+//--------------------------------------------------------------
+//	
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(dev_irc);
 
 //==============================================================================
 //	定数定義
@@ -81,7 +87,9 @@ enum{
 };
 
 ///赤外線接続中のバックグランド背景色
-#define BG_COLOR_IRC		(0x001f)
+#define BG_COLOR_IRC		(0x0c34)
+///赤外線接続中のバックグランド背景色のパレット位置
+#define BG_COLOR_IRC_COLOR_POS	((16*0 + 0xc) * 2)
 
 ///タイムアップまでの時間(秒数指定)
 #define CC_TIMEUP			(30)
@@ -153,6 +161,11 @@ typedef struct {
 	u32 pltt_id[PLTTID_END];
 	
 	CCT_TOUCH_SYS ccts;			///<円とタッチペンの当たり判定管理ワーク
+	COMPATI_IRC_SYS ircsys;		///<ゲーム中の赤外線接続管理ワーク
+	
+	BOOL before_irc_ret;
+	s32 irc_time_count;
+	s32 irc_time_count_max;
 }COMPATI_SYS;
 
 
@@ -333,6 +346,10 @@ static GFL_PROC_RESULT CompatiCheck_ProcInit( GFL_PROC * proc, int * seq, void *
 	GFL_MSG_GetString(cs->mm, COMPATI_STR_011, cs->strbuf_win[CCBMPWIN_TALK]);
 	CCLocal_MessagePut(cs, CCBMPWIN_TALK, cs->strbuf_win[CCBMPWIN_TALK], 0, 0);
 	
+	//ゲーム中の赤外線通信用にここでIRCオーバーレイ読み込み　※check 暫定処理
+	GFL_OVERLAY_Load(FS_OVERLAY_ID(dev_irc));
+	CompatiIrc_Init(&cs->ircsys);
+	
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -406,7 +423,15 @@ static GFL_PROC_RESULT CompatiCheck_ProcMain( GFL_PROC * proc, int * seq, void *
 static GFL_PROC_RESULT CompatiCheck_ProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	COMPATI_SYS* cs = mywk;
+	COMPATI_PARENTWORK *cppw = pwk;
 
+	//IRCオーバーレイ解放　※check
+	GFL_OVERLAY_Unload(FS_OVERLAY_ID(dev_irc));
+	
+	//得点結果をパレントワークに格納
+	cppw->point = cs->ccts.total_len / CC_POINT_DOT;
+	cppw->irc_time_count_max = cs->irc_time_count_max;
+	
 	GFL_TCB_DeleteTask(cs->vintr_tcb);
 	
 	CCLocal_CircleActor_Delete(cs);
@@ -581,10 +606,10 @@ static void CCLocal_MessageSetting(COMPATI_SYS *cs)
 		cs->drawwin[i].bmp = GFL_BMPWIN_GetBmp(cs->drawwin[i].win);
 		GFL_BMP_Clear( cs->drawwin[i].bmp, 0xff );
 		GFL_BMPWIN_MakeScreen( cs->drawwin[i].win );
-		GFL_BG_LoadScreenReq(FRAME_MSG_S);
 		GFL_BMPWIN_TransVramCharacter( cs->drawwin[i].win );
 		PRINT_UTIL_Setup( cs->drawwin[i].printUtil, cs->drawwin[i].win );
 	}
+	GFL_BG_LoadScreenReq(FRAME_MSG_S);	//MakeScreenしたのを反映
 
 	cs->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_COMPATI );
@@ -862,10 +887,29 @@ static int CCSeq_Main(COMPATI_SYS *cs)
 {
 	int pal_addr, i;
 	int before_point, after_point;
+	BOOL irc_ret;
+	
+	irc_ret = CompatiIrc_Main(&cs->ircsys);
+	if(cs->before_irc_ret == TRUE && irc_ret == TRUE){
+		cs->irc_time_count++;
+		if(cs->irc_time_count > cs->irc_time_count_max){
+			cs->irc_time_count_max++;
+		}
+	}
+	else if(irc_ret == FALSE){
+		cs->irc_time_count = 0;
+	}
+	cs->before_irc_ret = irc_ret;
 	
 	cs->local_timer++;
 	if(cs->local_timer > CC_TIMEUP * 60){
-		return SEQ_NEXT;
+		if(irc_ret == TRUE){
+			CompatiIRC_Shoutdown(&cs->ircsys);
+			return SEQ_CONTINUE;
+		}
+		else{
+			return SEQ_NEXT;
+		}
 	}
 	
 	before_point = cs->ccts.total_len / CC_POINT_DOT;
@@ -888,6 +932,18 @@ static int CCSeq_Main(COMPATI_SYS *cs)
 		CCLocal_PointMessagePut(cs, after_point);
 		OS_TPrintf("after_point = %d\n", after_point);
 	}
+	
+	//赤外線で繋がっていれば背景色変更
+	if(irc_ret == TRUE){
+		u16 set_color = BG_COLOR_IRC;
+		GFL_STD_MemCopy16(&set_color, (void*)(HW_BG_PLTT + BG_COLOR_IRC_COLOR_POS), 2);
+		GFL_STD_MemCopy16(&set_color, (void*)(HW_DB_BG_PLTT + BG_COLOR_IRC_COLOR_POS), 2);
+	}
+	else{
+		GFL_STD_MemCopy16(&cs->bg_color, (void*)(HW_BG_PLTT + BG_COLOR_IRC_COLOR_POS), 2);
+		GFL_STD_MemCopy16(&cs->bg_color, (void*)(HW_DB_BG_PLTT + BG_COLOR_IRC_COLOR_POS), 2);
+	}
+	
 	return SEQ_CONTINUE;
 }
 

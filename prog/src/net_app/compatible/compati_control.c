@@ -88,11 +88,18 @@ static GFL_PROC_RESULT CompatiControlProcMain(GFL_PROC * proc, int * seq, void *
 		(*seq)++;
 		break;
 	case 1:
+		ccs->cppw.game_mode = COMPATI_GAMEMODE_START;
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &CompatiResultProcData, &ccs->cppw);
 		(*seq)++;
 		break;
 	case 2:
+		ccs->cppw.game_mode = COMPATI_GAMEMODE_GAME;
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &CompatiCheckProcData, &ccs->cppw);
+		(*seq)++;
+		break;
+	case 3:
+		ccs->cppw.game_mode = COMPATI_GAMEMODE_RESULT;
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &CompatiResultProcData, &ccs->cppw);
 		(*seq)++;
 		break;
 	default:

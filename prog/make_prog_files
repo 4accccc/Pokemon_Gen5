@@ -415,7 +415,9 @@ SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
 SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
 			net_app/compatible/compati_tool.c \
 			net_app/compatible/compati_control.c \
-			net_app/compatible/compati_result.c
+			net_app/compatible/compati_result.c \
+			net_app/compatible/compati_comm.c \
+			net_app/compatible/compati_irc.c
 
 
 #ダウンロードプレイ  DP/PL/GS吸い上げ

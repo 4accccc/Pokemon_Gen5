@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-02-12T18:21:11"/>
+	<create user="matsuda" host="W00142" date="2009-02-13T17:27:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -356,7 +356,7 @@
 		<language name="JPN" width="256">あいしょう
 ふつう</language>
 		<language name="JPN_KANJI" width="256">相性
-普通</language>
+ふつう</language>
 	</row>
 
 	<row id="COMPATI_STR_004">
@@ -406,18 +406,24 @@
 	</row>
 
 	<row id="COMPATI_STR_100">
-		<language name="JPN" width="256">あいて</language>
-		<language name="JPN_KANJI" width="256">あいて</language>
+		<language name="JPN" width="256">あいて
+　[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">あいて
+　[2:02:３桁:0]</language>
 	</row>
 
 	<row id="COMPATI_STR_101">
-		<language name="JPN" width="256">じぶん</language>
-		<language name="JPN_KANJI" width="256">じぶん</language>
+		<language name="JPN" width="256">じぶん
+　[2:02:３桁:1]</language>
+		<language name="JPN_KANJI" width="256">じぶん
+　[2:02:３桁:1]</language>
 	</row>
 
 	<row id="COMPATI_STR_102">
-		<language name="JPN" width="256">そうごう</language>
-		<language name="JPN_KANJI" width="256">そうごう</language>
+		<language name="JPN" width="256">ボーナス [2:03:４桁:3]
+そうごう　[2:02:３桁:2]</language>
+		<language name="JPN_KANJI" width="256">ボーナス [2:03:４桁:3]
+そうごう　[2:02:３桁:2]</language>
 	</row>
 
 	<flowchart-group-list>

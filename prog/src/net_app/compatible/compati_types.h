@@ -16,7 +16,7 @@
 //	定数定義
 //==============================================================================
 ///何ドットで1点とするか
-#define CC_POINT_DOT		(40)
+#define CC_POINT_DOT		80//(40)
 
 ///円アクターを同時に出せる数
 #define CC_CIRCLE_MAX	(8)
@@ -36,6 +36,13 @@ enum{
 	CIRCLE_TOUCH_NULL,		///<円を掴んでいない
 	CIRCLE_TOUCH_HOLD,		///<円を掴んでいる
 	CIRCLE_TOUCH_OUTSIDE,	///<掴んでいるが範囲外座標を指している
+};
+
+///ゲームモード
+enum{
+	COMPATI_GAMEMODE_START,		///<ゲーム開始画面
+	COMPATI_GAMEMODE_GAME,		///<ゲーム中
+	COMPATI_GAMEMODE_RESULT,	///<結果発表画面
 };
 
 
@@ -60,7 +67,12 @@ typedef struct{
 	CC_CIRCLE_PACKAGE circle_package;	///<サークルパッケージ
 	
 	u8 partner_macAddress[6];			///<通信相手のMacAddress
-	u8 padding[2];
+	u8 game_mode;						///<COMPATI_GAMEMODE_???
+	u8 point;							///<自分の得点
+	u8 partner_point;					///<相手の得点
+	u8 padding[3];
+	
+	s32 irc_time_count_max;
 }COMPATI_PARENTWORK;
 
 ///円とタッチの当たり判定チェック用ワーク
@@ -73,6 +85,16 @@ typedef struct{
 	u8 hold_circle_no;	///<掴んでいる円の番号
 	u8 padding[2];
 }CCT_TOUCH_SYS;
+
+///ゲーム中の赤外線接続管理ワーク
+typedef struct{
+	u8 seq;
+	u8 shutdown_req;
+	u8 connect;
+	u8 padding;
+	s16 wait;
+	s16 timer;
+}COMPATI_IRC_SYS;
 
 
 //--------------------------------------------------------------
@@ -89,7 +111,20 @@ typedef struct{
 typedef struct{
 	u8 point;							///<得点
 	u8 dummy[3];
+	s32 irc_time_count_max;
 }CCNET_RESULT_PARAM;
+
+///通信管理ワーク
+typedef struct{
+	CCNET_FIRST_PARAM *send_first_param;		///<送信データへのポインタ
+	CCNET_FIRST_PARAM *receive_first_param;		///<受信データ代入先
+	CCNET_RESULT_PARAM *send_result_param;
+	CCNET_RESULT_PARAM *receive_result_param;
+	u8 seq;
+	u8 receive_ok;
+	u8 connect_ok;
+	u8 connect_bit;		///<接続しているnetIDをビット管理
+}COMPATI_CONNECT_SYS;
 
 
 #endif	//__COMPATI_TYPES_H__
