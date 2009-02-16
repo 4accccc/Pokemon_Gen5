@@ -35,8 +35,8 @@ Static main
 	Library		$(LLIBS) $(GLIBS) $(CW_LIBS)
 
 #	スタックサイズ　IRQスタックサイズ
-#	(省略時にはスタックサイズは0(最大限度まで確保)、IRQ スタックサイズは 0x400 バイト)
-#	StackSize	0 0x800
+#	(省略時にはスタックサイズは0(最大限度まで確保)、IRQ スタックサイズは 0x800 バイト)
+	StackSize	0x1800 0x800
 }
 
 Autoload ITCM
