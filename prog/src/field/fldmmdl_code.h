@@ -187,6 +187,7 @@
 #define DRAW_STA_WALK_7F	0x08		///<移動 7フレーム
 
 #define DRAW_STA_MAX (DRAW_STA_WALK_7F+1)	///<描画ステータス最大
+#define DRAW_STA_MAXDIR4 (DRAW_STA_MAX*DIR_MAX4)
 
 #define DRAW_STA_PC_BOW		0x09
 #define DRAW_STA_PCWOMAN_MAX (DRAW_STA_PC_BOW+1)
@@ -204,6 +205,8 @@
 #define DRAW_STA_TAKE_OFF_8F	(DRAW_STA_MAX+1)
 ///描画ステータス最大　自機
 #define DRAW_STA_MAX_CYCLEHERO	(DRAW_STA_TAKE_OFF_8F+1)
+
+#define DRAW_STA_MAXDIR4_HERO (DRAW_STA_MAX_HERO*DIR_MAX4)
 
 //--------------------------------------------------------------
 ///	フィールド動作モデル 自機釣り専用描画ステータス
@@ -942,5 +945,12 @@
 #define BLACT_ANMID_BSHERO		0x0016
 
 #define BLACT_ANMID_MAX			0xffff		///<アニメID最大
+
+//--------------------------------------------------------------
+///	ビルボードアクターアニメーション種類 WB
+//--------------------------------------------------------------
+#define FLDMMDL_BLACT_ANMTBLNO_BLACT (0) ///<ビルボード汎用アニメ
+#define FLDMMDL_BLACT_ANMTBLNO_HERO (1) ///<自機専用
+#define FLDMMDL_BLACT_ANMTBLNO_MAX (2) ///<最大
 
 #endif //FLDMMDL_CODE_H_FILE

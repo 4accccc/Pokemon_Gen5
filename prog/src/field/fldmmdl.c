@@ -201,7 +201,6 @@ FLDMMDLSYS * FLDMMDLSYS_Create(
 	fos->pFldMMdlBuf = GFL_HEAP_AllocClearMemory( heapID, max*FLDMMDL_SIZE );
 	fos->fmmdl_max = max;
 	fos->heapID = heapID;
-//	fos->pFldMainWork = pFldMainWork;
 	fos->pG3DMapper = pG3DMapper;
 	
 	fos->pTCBSysWork = GFL_HEAP_AllocMemory(

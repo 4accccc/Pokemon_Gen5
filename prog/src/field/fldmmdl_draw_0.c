@@ -148,19 +148,6 @@ static void DrawHero_Delete( FLDMMDL *fmmdl )
 //--------------------------------------------------------------
 static void DrawHero_Draw( FLDMMDL *fmmdl )
 {
-#ifdef FLDMMDL_BLACT_HEAD3_TEST
-	int tbl[] = {
-		0,4,4,4,
-		4,4,4,4,
-		4,4,4,4,
-	};
-#else
-	int tbl[] = {
-		 0, 4, 8,12,
-		16,20,24,28,
-		32,36,40,44
-	};
-#endif
 	VecFx32 pos;
 	u16 dir,anm_id,status;
 	DRAW_BLACT_WORK *work;
@@ -171,7 +158,8 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 	
 	dir = FLDMMDL_GetDirDisp( fmmdl );
 	status = FLDMMDL_GetDrawStatus( fmmdl );
-	anm_id = tbl[status];
+	GF_ASSERT( status < DRAW_STA_MAX_HERO );
+	anm_id = status * DIR_MAX4;
 	anm_id += dir;
 	
 	if( work->set_anm_dir != dir ){ //方向更新
@@ -287,7 +275,6 @@ static void DrawBlAct_Delete( FLDMMDL *fmmdl )
 //--------------------------------------------------------------
 static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 {
-	int tbl[] = {0,4,8,12,16,20};
 	VecFx32 pos;
 	u16 dir,anm_id,status;
 	DRAW_BLACT_WORK *work;
@@ -298,7 +285,8 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 	
 	dir = FLDMMDL_GetDirDisp( fmmdl );
 	status = FLDMMDL_GetDrawStatus( fmmdl );
-	anm_id = tbl[status];
+	GF_ASSERT( status < DRAW_STA_MAX );
+	anm_id = status * DIR_MAX4;
 	anm_id += dir;
 	
 	if( work->set_anm_dir != dir ){ //方向更新

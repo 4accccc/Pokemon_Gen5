@@ -360,6 +360,15 @@ typedef struct
 	u32 dmy:20;				///<bit—]‚è
 }OBJCODE_STATE;
 
+//--------------------------------------------------------------
+///	FLDMMDL_BBDACT_ANMTBL\‘¢‘Ì
+//--------------------------------------------------------------
+typedef struct
+{
+	const GFL_BBDACT_ANM * const *pAnmTbl;
+	u32 anm_max;
+}FLDMMDL_BBDACT_ANMTBL;
+
 //======================================================================
 //	extern
 //======================================================================
@@ -605,6 +614,11 @@ extern const int * const DATA_AcmdCodeDirChangeTbl[];
 //--------------------------------------------------------------
 extern const FLDMMDL_DRAW_PROC_LIST * const DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[];
 
+extern const FLDMMDL_BBDACT_ANMTBL
+	DATA_FLDMMDL_BBDACT_ANM_ListTable[FLDMMDL_BLACT_ANMTBLNO_MAX];
+
+extern const OBJCODE_STATE DATA_FieldOBJCodeDrawStateTbl[];
+
 #ifndef FLDMMDL_PL_NULL
 extern const FLDMMDL_DRAW_PROC_LIST DATA_FieldOBJDraw_Non;
 
@@ -619,8 +633,6 @@ extern const int DATA_FLDMMDL_Regular_Mdl[];
 extern const int DATA_FLDMMDL_Regular_Anm[];
 extern const int DATA_FLDMMDL_BlActFogEnableOFFTbl[];
 #endif
-
-extern const OBJCODE_STATE DATA_FieldOBJCodeDrawStateTbl[];
 
 //--------------------------------------------------------------
 //	fldmmdl_move.c
