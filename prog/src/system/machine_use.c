@@ -63,6 +63,13 @@ void MachineSystem_Init(void)
 	}
 	// ＶＲＡＭ転送関数初期化
 	NNS_GfdInitVramTransferManager( VRAMtransManTaskArray, VRAMTRANS_MAN_TASKNUM );
+
+#ifdef PM_DEBUG
+	//スタック溢れチェック
+	OS_SetThreadStackWarningOffset(OS_GetCurrentThread(), 0x100);
+    OS_CheckStack(OS_GetCurrentThread());
+    OS_SetIrqStackWarningOffset(0x100);
+#endif
 }
 
 //------------------------------------------------------------------

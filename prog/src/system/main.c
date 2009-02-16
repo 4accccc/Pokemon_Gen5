@@ -38,6 +38,9 @@ static	void	GameInit(void);
 static	void	GameMain(void);
 static	void	GameExit(void);
 
+#ifdef PM_DEBUG
+static void DEBUG_StackOverCheck(void);
+#endif
 
 
 //------------------------------------------------------------------
@@ -73,10 +76,14 @@ void NitroMain(void)
 
 	while(TRUE){
 #ifdef PM_DEBUG
-//	DEBUG_PerformanceStart();
-	DEBUG_PerformanceMain();
-	DEBUG_PerformanceStartLine(PERFORMANCE_ID_MAIN);
+	//	DEBUG_PerformanceStart();
+		DEBUG_PerformanceMain();
+		DEBUG_PerformanceStartLine(PERFORMANCE_ID_MAIN);
 #endif //PM_DEBUG
+
+#ifdef PM_DEBUG
+		DEBUG_StackOverCheck();
+#endif	//PM_DEBUG
 
         MachineSystem_Main();
 		// メイン処理して…
@@ -211,3 +218,41 @@ static	void	GameExit(void)
 	SND_STRM_Exit();
     SOUND_Exit();
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   スタック溢れチェック
+ */
+//--------------------------------------------------------------
+#ifdef PM_DEBUG
+static void DEBUG_StackOverCheck(void)
+{
+	OSStackStatus stack_status;
+	
+	stack_status = OS_GetStackStatus(OS_GetCurrentThread());
+	switch(stack_status){
+	case OS_STACK_OVERFLOW:
+		GF_ASSERT("スタック最下位のマジックナンバーが書き換えられています\n");
+		break;
+	case OS_STACK_UNDERFLOW:
+		GF_ASSERT("スタック最上位のマジックナンバーが書き換えられています\n");
+		break;
+	case OS_STACK_ABOUT_TO_OVERFLOW:
+		OS_TPrintf("スタック溢れの警戒水準に達しています\n");
+		break;
+	}
+	
+	stack_status = OS_GetIrqStackStatus();
+	switch(stack_status){
+	case OS_STACK_OVERFLOW:
+		GF_ASSERT("IRQスタック最下位のマジックナンバーが書き換えられています\n");
+		break;
+	case OS_STACK_UNDERFLOW:
+		GF_ASSERT("IRQスタック最上位のマジックナンバーが書き換えられています\n");
+		break;
+	case OS_STACK_ABOUT_TO_OVERFLOW:
+		OS_TPrintf("IRQスタック溢れの警戒水準に達しています\n");
+		break;
+	}
+}
+#endif	//PM_DEBUG
