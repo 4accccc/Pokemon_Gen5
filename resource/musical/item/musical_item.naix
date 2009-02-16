@@ -14,7 +14,27 @@ enum {
 	NARC_musical_item_item01_nsbtx = 0,
 	NARC_musical_item_item02_nsbtx = 1,
 	NARC_musical_item_item03_nsbtx = 2,
-	NARC_musical_item_item04_nsbtx = 3
+	NARC_musical_item_item04_nsbtx = 3,
+	NARC_musical_item_item05_nsbtx = 4,
+	NARC_musical_item_item06_nsbtx = 5,
+	NARC_musical_item_item07_nsbtx = 6,
+	NARC_musical_item_item08_nsbtx = 7,
+	NARC_musical_item_item09_nsbtx = 8,
+	NARC_musical_item_item10_nsbtx = 9,
+	NARC_musical_item_item11_nsbtx = 10,
+	NARC_musical_item_item12_nsbtx = 11,
+	NARC_musical_item_item13_nsbtx = 12,
+	NARC_musical_item_item14_nsbtx = 13,
+	NARC_musical_item_item15_nsbtx = 14,
+	NARC_musical_item_item16_nsbtx = 15,
+	NARC_musical_item_item17_nsbtx = 16,
+	NARC_musical_item_item18_nsbtx = 17,
+	NARC_musical_item_item19_nsbtx = 18,
+	NARC_musical_item_item20_nsbtx = 19,
+	NARC_musical_item_item21_nsbtx = 20,
+	NARC_musical_item_item22_nsbtx = 21,
+	NARC_musical_item_item23_nsbtx = 22,
+	NARC_musical_item_item24_nsbtx = 23
 };
 
 /* NARC_MUSICAL_ITEM_NAIX_ */

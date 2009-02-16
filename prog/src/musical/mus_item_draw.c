@@ -56,9 +56,8 @@ static MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddFunc( MUS_ITEM_DRAW_SYSTEM* work , u
 
 
 //--------------------------------------------------------------
-//	
-//--------------------------------------------------------------
 //システムの初期化と開放
+//--------------------------------------------------------------
 MUS_ITEM_DRAW_SYSTEM*	MUS_ITEM_DRAW_InitSystem( GFL_BBD_SYS *bbdSys , u16 itemMax , HEAPID heapId )
 {
 	int i;
@@ -82,7 +81,7 @@ void MUS_ITEM_DRAW_TermSystem( MUS_ITEM_DRAW_SYSTEM* work )
 	{
 		if( work->musItem[i].enable == TRUE )
 		{
-			MUS_ITEM_DRAW_Del( work , &work->musItem[i] );
+			MUS_ITEM_DRAW_DelItem( work , &work->musItem[i] );
 		}
 	}
 	GFL_HEAP_FreeMemory( work->musItem );
@@ -97,8 +96,9 @@ void MUS_ITEM_DRAW_UpdateSystem( MUS_ITEM_DRAW_SYSTEM* work )
 //アイテム番号からARCの番号を調べる
 static u16 MUS_ITEM_DRAW_GetArcIdx( const u16 itemIdx )
 {
-	//FIXME 今は４パターンだからループ
-	return (NARC_musical_item_item01_nsbtx + itemIdx)%4;
+	//FIXME 今は24パターンだからループ
+	//		わかりやすいように1だけ違う
+	return (NARC_musical_item_item01_nsbtx + itemIdx)%24;
 }
 
 //アイテム番号からリソースの読み込み
@@ -169,17 +169,22 @@ static MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddFunc( MUS_ITEM_DRAW_SYSTEM* work , u
 	work->musItem[idx].bbdIdx = GFL_BBD_AddObject( work->bbdSys , work->musItem[idx].resIdx ,
 											FX32_ONE,FX32_ONE , pos , 31 ,GFL_BBD_LIGHT_NONE);
 	GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->musItem[idx].bbdIdx , &flg );
+	work->musItem[idx].enable = TRUE;
 	
 	return &work->musItem[idx];
 }
 
-void MUS_ITEM_DRAW_Del( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork )
+void MUS_ITEM_DRAW_DelItem( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork )
 {
 	GFL_BBD_RemoveObject( work->bbdSys , itemWork->bbdIdx );
 	GFL_BBD_RemoveResource( work->bbdSys , itemWork->resIdx );
 	itemWork->enable = FALSE;
 }
 
+void MUS_ITEM_DRAW_SetDrawEnable( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , BOOL flg )
+{
+	GFL_BBD_SetObjectDrawEnable( work->bbdSys , itemWork->bbdIdx , &flg );
+}
 void MUS_ITEM_DRAW_SetPosition( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , VecFx32 *pos )
 {
 	GFL_BBD_SetObjectTrans( work->bbdSys , itemWork->bbdIdx , pos );
@@ -190,9 +195,9 @@ void MUS_ITEM_DRAW_GetPosition( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK 
 	GFL_BBD_GetObjectTrans( work->bbdSys , itemWork->bbdIdx , pos );
 }
 
-void MUS_ITEM_DRAW_SetSize( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , fx16 *sizeX , fx16 *sizeY )
+void MUS_ITEM_DRAW_SetSize( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , fx16 sizeX , fx16 sizeY )
 {
-	GFL_BBD_SetObjectSiz( work->bbdSys , itemWork->bbdIdx , sizeX , sizeY );
+	GFL_BBD_SetObjectSiz( work->bbdSys , itemWork->bbdIdx , &sizeX , &sizeY );
 }
 
 void MUS_ITEM_DRAW_GetSize( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , fx16 *sizeX , fx16 *sizeY )
