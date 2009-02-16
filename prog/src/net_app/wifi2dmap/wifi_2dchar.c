@@ -1077,7 +1077,11 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 	
 	// アクター登録
 //	p_wk->p_clwk = CLACT_Add( &add );
-    p_wk->p_clwk = GFL_CLACT_WK_Create(p_sys->p_unit, char_no,0,0, &cellInitData, 0, heap );
+//    p_wk->p_clwk = GFL_CLACT_WK_Create(p_sys->p_unit, char_no,0,0, &cellInitData, 0, heap );
+    p_wk->p_clwk = GFL_CLACT_WK_Create(p_sys->p_unit,
+                                       p_sys->res[ char_no ].resid[ 0 ],
+                                       p_sys->res[ char_no ].resid[ 1 ],
+                                       p_sys->res[ char_no ].resid[ 2 ], &cellInitData, 0, heap );
 //	CLACT_BGPriorityChg( p_wk->p_clwk, cp_data->bgpri );
     GFL_CLACT_WK_SetBgPri( p_wk->p_clwk, cp_data->bgpri );
 
@@ -1131,9 +1135,10 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 
 //		p_wk->p_shadow = GFL_CLACT_WK_Add( p_wk->p_unit ,&add , ,CLWK_SETSF_NONE, heap);
         p_wk->p_shadow = GFL_CLACT_WK_Create(p_sys->p_unit,
-                                             WF_2DC_ARC_CONTSHADOWID,
-                                             WF_2DC_ARC_CONTCHARID+p_sys->hero_no,
-                                             WF_2DC_ARC_CONTSHADOWID,
+                                             p_sys->shadowres.resid[0],
+                                             p_sys->res[ p_sys->hero_no ].resid[ 1 ],
+                                             //WF_2DC_ARC_CONTCHARID+p_sys->hero_no,
+                                             p_sys->shadowres.resid[2],
                                              &cellInitData,
                                              0,heap );
 
@@ -1867,7 +1872,7 @@ static void WF_2DC_CharResLoadUni( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 	// ユニオンキャラクタとしてのナンバーを取得
 	union_idx = char_no - WF_2DC_BOY1;
 
-//	OS_Printf( "char_no %d\n", char_no );
+	OS_Printf( "char_no %d\n", char_no );
 
 	// 読み込み
 //	p_sys->res[ char_no ].resobj[ 0 ] = 

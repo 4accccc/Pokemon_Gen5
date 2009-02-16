@@ -127,6 +127,7 @@ fx32 DP3MAP_GetNormalVector( const NormalVtxFormat* pNormalVtx, const VecFx32* p
                              const fx32 map_width, const fx32 map_height, VecFx32* normalOut )
 {
 	fx32			grid_w, grid_x, grid_z;
+	fx32			grid_w_x, grid_w_z;
 	u32				grid_idx;
 	VecFx32			pos, vecN;
 	fx32			by, valD;
@@ -135,10 +136,15 @@ fx32 DP3MAP_GetNormalVector( const NormalVtxFormat* pNormalVtx, const VecFx32* p
 
 	VEC_Set( &pos, posInBlock->x + map_width/2, posInBlock->y, posInBlock->z + map_width/2 );
 	//グリッド内情報取得
-	grid_w = map_width / pNormalVtx->width;	//マップ幅をグリッド数で分割
-	grid_idx = ( pos.z / grid_w ) * pNormalVtx->width + ( pos.x / grid_w );
-	grid_x = pos.x % grid_w;
-	grid_z = pos.z % grid_w;
+	grid_w_x = map_width / pNormalVtx->width;	//マップ幅をグリッド数で分割
+	grid_w_z = map_height / pNormalVtx->height;	//マップ幅をグリッド数で分割
+	grid_idx = ( pos.z / grid_w_z ) * pNormalVtx->width + ( pos.x / grid_w_x );
+	grid_x = pos.x % grid_w_x;
+	grid_z = pos.z % grid_w_z;
+
+	// 比率にする
+	grid_x = FX_Div( grid_x, grid_w_x );
+	grid_z = FX_Div( grid_z, grid_w_z );
 
 	//情報取得(軸の取り方が違うので法線ベクトルはZ反転)
 	nvs = (NormalVtxSt*)(attrAdrs + sizeof(NormalVtxFormat) + grid_idx * sizeof(NormalVtxSt));
@@ -146,7 +152,15 @@ fx32 DP3MAP_GetNormalVector( const NormalVtxFormat* pNormalVtx, const VecFx32* p
 	//グリッド内三角形の判定
 	if( nvs->tryangleType == 0 ){
 		//0-2-1,3-1-2のパターン
-		if( grid_x + grid_z < grid_w ){
+		//　｜－－－－－－｜
+		//　｜　　　　　/ ｜
+		//　｜　　　　/ 　｜
+		//　｜　　　/ 　　｜
+		//　｜　　/ 　　　｜
+		//　｜　/ 　　　　｜
+		//　｜/ 　　　　　｜
+		//　｜－－－－－－｜
+		if( grid_x + grid_z < FX32_ONE ){
 			VEC_Set( normalOut, nvs->vecN1_x, nvs->vecN1_y, -nvs->vecN1_z );
 			valD = nvs->vecN1_D;
 		} else {
@@ -155,6 +169,14 @@ fx32 DP3MAP_GetNormalVector( const NormalVtxFormat* pNormalVtx, const VecFx32* p
 		}
 	} else {
 		//2-3-0,1-0-3のパターン
+		//　｜－－－－－－｜
+		//　｜・　　　　　｜
+		//　｜　・　　　　｜
+		//　｜　　・　　　｜
+		//　｜　　　・　　｜
+		//　｜　　　　・　｜
+		//　｜　　　　　・｜
+		//　｜－－－－－－｜
 		if( grid_x > grid_z ){
 			VEC_Set( normalOut, nvs->vecN1_x, nvs->vecN1_y, -nvs->vecN1_z );
 			valD = nvs->vecN1_D;

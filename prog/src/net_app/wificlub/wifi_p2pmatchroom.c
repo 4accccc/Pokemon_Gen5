@@ -294,11 +294,13 @@ static void WcrPCANM_UseEndReq( MCR_PCANM* p_wk );
 void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 hero_view, u32 friendNum, u32 arcID )
 {
 	WF2DMAP_POS map_siz;
-	u32 map_no;
+	u32 map_no=0;
 	
 	memset( p_mcr, 0, sizeof(WIFI_MATCHROOM) );
 
-	map_no = (friendNum-1) / WCR_MAPDATA_1BLOCKOBJNUM;
+    if(friendNum != 0){
+        map_no = (friendNum-1) / WCR_MAPDATA_1BLOCKOBJNUM;
+    }
 
 	p_mcr->use_heap = heapID;
 //	p_mcr->p_bgl	= p_bgl;
@@ -1102,7 +1104,7 @@ static void WcrObjDrawInit( WIFI_MATCHROOM* p_mcr, u32 hero_view, u32 heapID )
 	WF2DMAP_OBJDrawSysResSet( p_mcr->p_objdraw, AMBRELLA, WF_2DC_MOVENORMAL, heapID );
 #else
 	p_mcr->p_objdraw = WF2DMAP_OBJDrawSysInit_Shadow( p_mcr->clact.clactSet, NULL, MCR_MOVEOBJNUM, 
-			hero_view, WF_2DC_MOVERUN, NNS_G2D_VRAM_TYPE_2DMAIN, heapID );
+			hero_view, WF_2DC_MOVERUN, CLSYS_DRAW_MAIN/*NNS_G2D_VRAM_TYPE_2DMAIN*/, heapID );
 
 	// キャラクタデータの登録
 	// UNIONキャラクタ
@@ -1148,11 +1150,24 @@ static void WcrScrnDrawInit( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_han
 		NARC_wifip2pmatch_wf_match_top_room_1_NSCR,
 		FALSE
 	};
+    //-------------------------------------
+    ///	独自レンダラー作成用
+    /// サーフェースデータ構造体
+    //=====================================
+    GFL_REND_SURFACE_INIT sini = {
+        0,0,			// サーフェース左上ｘ座標			// サーフェース左上ｙ座標
+        256,				// サーフェース幅
+        192,				// サーフェース高さ
+        CLSYS_DRAW_MAIN,	// サーフェースタイプ(CLSYS_DRAW_TYPE)
+    };
 
 	// グラフィックデータを設定
 	init.dataid_scrn += map_no;
  //   p_mcr->clact.renddata = GFL_CLACT_USERREND_Create(sizeof(GFL_CLSYS_REND));
 
+     p_mcr->clact.renddata =  GFL_CLACT_USERREND_Create( &sini, 1, heapID );
+
+    
 	p_mcr->p_scrdraw = WF2DMAP_SCRDrawSysInit( 
 			p_mcr->clact.renddata, p_mcr->p_bgl, &init, heapID );
 }
@@ -1166,6 +1181,7 @@ static void WcrScrnDrawInit( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_han
 //-----------------------------------------------------------------------------
 static void WcrScrnDrawExit( WIFI_MATCHROOM* p_mcr )
 {
+    GFL_CLACT_USERREND_Delete(p_mcr->clact.renddata);
 	WF2DMAP_SCRDrawSysExit( p_mcr->p_scrdraw );
 }
 
@@ -1212,6 +1228,12 @@ static void WcrClactInit( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 	GFL_CLACT_UNIT_SetDefaultRend( p_clact->clactSet );
 
 
+	// 人物リソース読み込みとキャラクタパレットの転送
+	// エフェクトリソース読み込みとキャラクタパレットの転送
+	WcrClactResLoad( p_clact, heapID, p_handle );
+
+	// アクターの登録
+	WcrClactAdd( p_clact, heapID );
 
 
 #if 0

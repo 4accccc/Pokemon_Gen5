@@ -52,7 +52,7 @@ WIFI_LIST * WifiList_AllocWork(u32 heapID)
 {
 	int i;
 	WIFI_LIST * list;
-	list = GFL_HEAP_AllocMemory(heapID, sizeof(WIFI_LIST));
+	list = GFL_HEAP_AllocClearMemory(heapID, sizeof(WIFI_LIST));
 	
 	WifiList_Init( list );
 

@@ -372,6 +372,7 @@ void mydwc_free()
 //==============================================================================
 int mydwc_connect()
 {
+    OS_TPrintf("mydwc_connect %d\n",_dWork->state);
     switch( _dWork->state )
 	{
 		case MDSTATE_INIT:
@@ -428,7 +429,7 @@ int mydwc_connect()
                     return ret;
                 }
 			}
-
+        // オーバーレイしてる場合 DWC_Initを再度CALLしてあげないとここで停止
         // フレンドライブラリ初期化
         DWC_InitFriendsMatch(&(_dWork->stDwcCnt), (_dWork->myUserData), 
                              GAME_PRODUCTID, GAME_NAME,

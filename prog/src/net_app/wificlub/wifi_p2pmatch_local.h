@@ -268,7 +268,6 @@ typedef struct {
 ///	データビューアーデータ
 //=====================================
 typedef struct {
-
 	// ワードセット
 	WORDSET*	p_wordset;			// メッセージ展開用ワークマネージャー
 	
@@ -320,6 +319,7 @@ typedef struct {
 
 
 struct _WIFIP2PMATCH_WORK{
+	GFL_TCB					*vblankFunc;
   WIFI_LIST* pList;				// セーブデータ内のユーザーとフレンドデータ
   TEST_MATCH_WORK* pMatch;		// サーバーと送受信する自分と友達の状態
   int friendMatchReadCount;		// ビーコンを受信した友達数

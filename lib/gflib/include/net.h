@@ -21,6 +21,11 @@ extern "C" {
 //#else
 #define GFL_NET_WIFI    (1)   ///< WIFIÇÉQÅ[ÉÄÇ≈égópÇ∑ÇÈèÍçá ON
 #define GFL_NET_IRC     (1)   ///< IRCÇÉQÅ[ÉÄÇ≈égópÇ∑ÇÈèÍçá ON
+
+#if GFL_NET_WIFI
+#include <dwc.h>
+#endif  //GFL_NET_WIFI
+
 //#endif
 
 //#if defined(DEBUG_ONLY_FOR_ohno)
@@ -211,12 +216,9 @@ typedef void (*NetConnectNegotiation)(void* pWork,int netID); ///< ÉlÉSÉVÉGÅ[ÉVÉ
 
 typedef void (*NetDeleteFriendListCallback)(int deletedIndex, int srcIndex, void* pWork); ///< ÉtÉåÉìÉhÉäÉXÉgçÌèúÉRÅ[ÉãÉoÉbÉN
 
+typedef DWCUserData* (*NetGetDWCUserDataCallback)(void* pWork); ///< DWCÇÃÉÜÅ[ÉUÉfÅ[É^Åié©ï™ÇÃÉfÅ[É^ÅjÇìæÇÈ
+typedef DWCFriendData* (*NetGetDWCFriendDataCallback)(void* pWork); ///< DWCå`éÆÇÃóFíBÉäÉXÉg	
 
-
-
-#if GFL_NET_WIFI
-#include <dwc.h>
-#endif  //GFL_NET_WIFI
 
 /// @brief í êMÇÃèâä˙âªópç\ë¢ëÃ
 typedef struct{
@@ -237,8 +239,8 @@ typedef struct{
   NetWifiSaveUserDataFunc wifiSaveFunc;     ///< wifiê⁄ë±éûÇ…é©ï™ÇÃÉfÅ[É^ÇÉZÅ[ÉuÇ∑ÇÈïKóvÇ™Ç†ÇÈèÍçáÇ…åƒÇŒÇÍÇÈä÷êî
   NetWifiMargeFrinedDataFunc wifiMargeFunc; ///< wifiê⁄ë±éûÇ…ÉtÉåÉìÉhÉRÅ[ÉhÇÃì¸ÇÍë÷Ç¶ÇçsÇ§ïKóvÇ™Ç†ÇÈèÍçáåƒÇŒÇÍÇÈä÷êî
   NetDeleteFriendListCallback friendDeleteFunc;  ///< wifiÉtÉåÉìÉhÉäÉXÉgçÌèúÉRÅ[ÉãÉoÉbÉN
-  DWCFriendData *keyList;   ///< DWCå`éÆÇÃóFíBÉäÉXÉg	
-  DWCUserData *myUserData;  ///< DWCÇÃÉÜÅ[ÉUÉfÅ[É^Åié©ï™ÇÃÉfÅ[É^Åj
+  NetGetDWCFriendDataCallback keyList;   ///< DWCå`éÆÇÃóFíBÉäÉXÉg	
+  NetGetDWCUserDataCallback myUserData;  ///< DWCÇÃÉÜÅ[ÉUÉfÅ[É^Åié©ï™ÇÃÉfÅ[É^Åj
   int heapSize;           ///< DWCÇ÷ÇÃÉqÅ[ÉvÉTÉCÉY
   u16 bDebugServer;        ///< ÉfÉoÉbÉNópÉTÅ[ÉoÇ…Ç¬Ç»ÇÆÇ©Ç«Ç§Ç©
 #endif  //GFL_NET_WIFI

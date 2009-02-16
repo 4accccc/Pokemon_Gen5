@@ -13,6 +13,7 @@
 
 #include "net_app/wificlub/wifi_p2pmatch.h"
 #include "net_app/wificlub/wifi_p2pmatchfour.h"
+#include "wifi_p2pmatch_local.h"
 
 #include "net/dwc_rap.h"
 #include "net/dwc_raputil.h"
@@ -38,7 +39,7 @@ const GFL_PROC_DATA WifiClubProcData = {
 };
 
 
-FS_EXTERN_OVERLAY(wificlub);
+FS_EXTERN_OVERLAY(wifi2dmap);
 
 
 typedef struct{
@@ -178,7 +179,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
         }
 		break;
       case P2P_MATCH_BOARD:
-        GFL_PROC_SysCallProc(NO_OVERLAY_ID, &WifiP2PMatchProcData, ep2p->pMatchParam);
+        GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi2dmap), &WifiP2PMatchProcData, ep2p->pMatchParam);
         ep2p->seq ++;
 		break;
       case P2P_SELECT:
@@ -374,6 +375,9 @@ static void* _WIFICLUB_CreateWork(int kind)
     EV_P2PEVENT_WORK* ep2p = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EV_P2PEVENT_WORK));
 
     ep2p->pMatchParam = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WIFIP2PMATCH_PROC_PARAM));
+
+    ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(TEST_MATCH_WORK));
+
     ep2p->pMatchParam->pSaveData = saveWork;
 
     ep2p->pWifiList = SaveData_GetWifiListData(saveWork); //クラブに必要な物を移し変え

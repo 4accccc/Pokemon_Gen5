@@ -445,6 +445,9 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
 //==============================================================================
 static void * _wificlubWorkCreate(D_OHNO_WORK *wk)
 {
+    // セーブデータを読み込む
+    SaveControl_Load(SaveControl_GetPointer());
+
 	return WIFICLUB_CreateWork();
 }
 

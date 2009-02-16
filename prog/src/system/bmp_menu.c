@@ -637,7 +637,7 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit(	const BMPWIN_YESNO_DAT *data, u16 cgx, u
 	BMPMENU_HEADER hed;
 	GFL_MSGDATA * man;
 	BMP_MENULIST_DATA * ld;
-
+    BMPMENU_WORK* pWk;
 
     
 	man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_yesnomenu_dat, heap );
@@ -646,21 +646,32 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit(	const BMPWIN_YESNO_DAT *data, u16 cgx, u
 	BmpMenuWork_ListAddArchiveString( ld, man, msgid_yesno_no, BMPMENU_CANCEL,heap );
 	GFL_MSG_Delete( man );
 
+    GFL_STD_MemClear(&hed,sizeof(BMPMENU_HEADER));
+
 	hed.menu     = ld;
-	hed.win      = GFL_BMPWIN_Create( data->frmnum , data->pos_x, data->pos_y, 5, 4, data->palnum, data->chrnum );
+	hed.win      = GFL_BMPWIN_Create( data->frmnum , data->pos_x, data->pos_y, 6, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
 	hed.x_max    = 1;
 	hed.y_max    = 2;
-	hed.line_spc = 0;
+	hed.line_spc = 1;
 	hed.c_disp_f = 0;
 	hed.loop_f = 0;
+    hed.print_util = GFL_HEAP_AllocClearMemory(heap,sizeof(PRINT_UTIL));
 
     hed.font_handle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
+    hed.font_size_y = GFL_FONT_GetLineHeight(hed.font_handle);
     PRINT_UTIL_Setup(hed.print_util, hed.win);
     hed.print_que = PRINTSYS_QUE_Create( heap );
 
 //	GFL_BG_BmpWinAddEx( ini, hed.win, data );
 	//BmpMenuWinWrite( hed.win, WINDOW_TRANS_OFF, cgx, pal );
-	return BmpMenu_AddEx( &hed, 8, 0, pos, heap, PAD_BUTTON_CANCEL );
+	pWk = BmpMenu_AddEx( &hed, 8, 0, pos, heap, PAD_BUTTON_CANCEL );
+    GFL_BMPWIN_MakeScreen(hed.win);
+    BmpWinFrame_Write( hed.win, WINDOW_TRANS_ON, cgx, pal );
+    
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(hed.win) );
+	GFL_BMPWIN_TransVramCharacter( hed.win );
+    return pWk;
+
 }
 
 //--------------------------------------------------------------------------------------------
@@ -724,6 +735,7 @@ u32 BmpYesNoSelectMainOutControl( BMPMENU_WORK * mw, u8 prm, u32 heap )
 void BmpMenu_YesNoMenuExit( BMPMENU_WORK * mw )
 {
 	PRINTSYS_QUE_Delete( mw->hed.print_que );
+    GFL_HEAP_FreeMemory( mw->hed.print_util );
 
     BmpWinFrame_Clear( mw->hed.win, WINDOW_TRANS_ON );
 	GFL_BMPWIN_Delete( mw->hed.win );

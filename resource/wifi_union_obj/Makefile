@@ -77,7 +77,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects)
-	nnsarc -r -l -n -i $(targetname) $^
+	nnsarc -r -l -n -i $(targetname) -S conv_list.txt
 	$(NAIXCUT) $(targetname).naix
 endif
 
