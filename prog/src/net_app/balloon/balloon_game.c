@@ -1363,8 +1363,6 @@ static void BalloonVBlank(GFL_TCB *tcb, void *work)
 	}
 	
 	GFL_BG_VBlankFunc();
-	
-	OS_SetIrqCheckFlag( OS_IE_V_BLANK);
 }
 
 //--------------------------------------------------------------

@@ -15,6 +15,9 @@
 //==============================================================================
 //	定数定義
 //==============================================================================
+///切断として判定するまでの時間の標準値(この時間内なら切断しても再接続を試みる)
+#define IRC_TIMEOUT_STANDARD		(60 * 5)
+
 ///IRCライブラリ内部で使用しているヘッダーのサイズ
 #define IRC_HEADER_SIZE		(4)
 
@@ -33,7 +36,7 @@ typedef void (*IrcRecvFunc)(u16 aid, u16 *data, u16 size);
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
-extern void GFL_NET_IRC_Init(void);
+extern void GFL_NET_IRC_Init(u32 irc_timeout);
 extern void GFL_NET_IRC_Exit(void);
 extern void GFL_NET_IRC_RecieveFuncSet(IrcRecvFunc recieve_func);
 extern void GFL_NET_IRC_InitializeFlagSet(void);

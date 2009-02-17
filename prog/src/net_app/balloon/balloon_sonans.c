@@ -1673,12 +1673,15 @@ static int Sonans_NowAreaParcentGet(SONANS_SYS_PTR sns)
 static void Aim_ResourceLoad(BALLOON_GAME_PTR game)
 {
 	ARCHANDLE* hdl;
-
+	int dest_palno;
+	
 	//ハンドルオープン
 	hdl  = GFL_ARC_OpenDataHandle(ARCID_BALLOON_GRA,  HEAPID_BALLOON); 
 
 	game->pltt_id[PLTTID_OBJ_AIM] = GFL_CLGRP_PLTT_RegisterEx(hdl, AIM_NCLR,
 		CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
+	dest_palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_OBJ_AIM], CLSYS_DRAW_MAIN) / 0x20;
+	PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, dest_palno*16, 1*0x20);
 
 	game->cgr_id[CHARID_BALLOON_AIM] = GFL_CLGRP_CGR_Register(
 		hdl, AIM_NCGR, FALSE, CLSYS_DRAW_MAIN, HEAPID_BALLOON);

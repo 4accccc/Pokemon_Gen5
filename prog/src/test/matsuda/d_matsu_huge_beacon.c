@@ -294,6 +294,9 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     GFL_NET_TYPE_WIRELESS,//GFL_NET_TYPE_IRC,	//GFL_NET_TYPE_IRC_WIRELESS,//GFL_NET_TYPE_WIRELESS,//GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_DEBUG_MATSUDA_SERVICEID,  //GameServiceID
+#if GFL_NET_IRC
+	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
+#endif
 };
 
 //--------------------------------------------------------------

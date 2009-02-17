@@ -729,6 +729,9 @@ static const GFLNetInitializeStruct testNetInitParam = {
 	FALSE,						// wifi通信を行うかどうか
 	TRUE,						// 親が再度初期化した場合、つながらないようにする場合TRUE
 	WB_NET_SERVICEID_DEBUG_TAYA,//GameServiceID
+#if GFL_NET_IRC
+	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
+#endif
 };
 
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
@@ -918,6 +921,9 @@ static const GFLNetInitializeStruct btlNetInitParam = {
 	GFL_NET_TYPE_WIRELESS,	/// 使用する通信を指定
 	TRUE,										// 親が再度初期化した場合、つながらないようにする場合TRUE
 	WB_NET_BATTLE_SERVICEID,//GameServiceID
+#if GFL_NET_IRC
+	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
+#endif
 };
 
 static const GFLNetInitializeStruct btlMultiNetInitParam = {
@@ -958,6 +964,9 @@ static const GFLNetInitializeStruct btlMultiNetInitParam = {
 	GFL_NET_TYPE_WIRELESS,	/// 使用する通信を指定
 	TRUE,										// 親が再度初期化した場合、つながらないようにする場合TRUE
 	WB_NET_BATTLE_SERVICEID,//GameServiceID
+#if GFL_NET_IRC
+	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
+#endif
 };
 
 static void btlAutoConnectCallback( void* pWork )

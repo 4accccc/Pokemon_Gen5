@@ -1414,6 +1414,8 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	fps->pltt_id[PLTTID_OBJ_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
 		hdl, NARC_footprint_board_a_board_eff_NCLR,
 		CLSYS_DRAW_MAIN, 0, 0, FOOTPRINT_COMMON_PAL_NUM, HEAPID_FOOTPRINT);
+	pal_pos = GFL_CLGRP_PLTT_GetAddr(fps->pltt_id[PLTTID_OBJ_COMMON], CLSYS_DRAW_MAIN) / 0x20;
+	PaletteWorkSet_VramCopy(fps->pfd, FADE_MAIN_OBJ, pal_pos*16, FOOTPRINT_COMMON_PAL_NUM*0x20);
 
 	//-- インク(インクの下地も共通) --//
 	fps->cgr_id[CHARID_INK] = GFL_CLGRP_CGR_Register(hdl_main, 
@@ -1437,6 +1439,7 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 		hdl_main, NARC_footprint_board_a_board_eff_NCLR,
 		CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_FOOTPRINT);
 	pal_pos = GFL_CLGRP_PLTT_GetAddr( fps->pltt_id[PLTTID_OBJ_INK_FOOT], CLSYS_DRAW_MAIN ) / 0x20;
+	PaletteWorkSet_VramCopy(fps->pfd, FADE_MAIN_OBJ, pal_pos*16, 1*0x20);
 	if(fps->parent_work->board_type == FOOTPRINT_BOARD_TYPE_WHITE){
 		color_code = INKPAL_FOOT_COLOR_CODE_WHITE;
 	}
@@ -1458,6 +1461,7 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 		NARC_footprint_board_a_board_font_b_NCLR, CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_FOOTPRINT);
 	fps->yameru_pal_pos 
 		= GFL_CLGRP_PLTT_GetAddr(fps->pltt_id[PLTTID_OBJ_FONTOAM], CLSYS_DRAW_MAIN) / 0x20;
+	PaletteWorkSet_VramCopy(fps->pfd, FADE_MAIN_OBJ, fps->yameru_pal_pos*16, 1*0x20);
 }
 
 //--------------------------------------------------------------
@@ -1556,12 +1560,14 @@ static void DefaultActorDel_Main(FOOTPRINT_SYS *fps)
 //--------------------------------------------------------------
 static void DefaultResourceSet_Sub(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 {
-	int i;
+	int i, pal_pos;
 	
 	//-- サブ画面OBJ常駐パレット --//
 	fps->pltt_id[PLTTID_SUB_OBJ_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
 		hdl_main, NARC_footprint_board_ashiato_frame_NCLR,
 		CLSYS_DRAW_SUB, 0, 0, FOOTPRINT_SUB_COMMON_PAL_NUM, HEAPID_FOOTPRINT);
+	pal_pos = GFL_CLGRP_PLTT_GetAddr(fps->pltt_id[PLTTID_SUB_OBJ_COMMON], CLSYS_DRAW_SUB) / 0x20;
+	PaletteWorkSet_VramCopy(fps->pfd, FADE_SUB_OBJ, pal_pos*16, FOOTPRINT_SUB_COMMON_PAL_NUM*0x20);
 
 	//-- 名前を囲むフレーム --//
 	fps->cgr_id[CHARID_SUB_NAME_FRAME] = GFL_CLGRP_CGR_Register(hdl_main, 

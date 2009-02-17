@@ -259,6 +259,9 @@ typedef struct{
   u8 bNetType;              ///< 使用する通信を指定(GFL_NET_TYPE_???)	※check
   u8 bTGIDChange;           ///< 親が再度初期化した場合、つながらないようにする場合TRUE
   GameServiceID gsid;                 ///< ゲームサービスID  通信の種類  バトルやユニオンとかで変更する値
+#if GFL_NET_IRC
+  u32 irc_timeout;			///< 赤外線再接続時のタイムアウト時間
+#endif	//GFL_NET_IRC
 } GFLNetInitializeStruct;
 
 //-------------------------------

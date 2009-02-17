@@ -110,7 +110,7 @@ static GFLNetDevTable netDevTbl={
 //------------------------------------------------------------------------------
 static BOOL _DevInitFunc(HEAPID heapID, GFL_NETSYS* pNet,NetDevEndCallback callback, void* pUserWork)
 {
-    GFL_NET_IRC_Init();
+    GFL_NET_IRC_Init((GFL_NET_GetNETInitStruct())->irc_timeout);
     GFL_NET_IRC_InitializeFlagSet();
     return TRUE;
 }

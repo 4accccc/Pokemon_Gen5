@@ -1132,6 +1132,9 @@ static GFLNetInitializeStruct aGFLNetInit = {
     GFL_NET_TYPE_WIFI,  //通信種別
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_WIFICLUB,  //GameServiceID
+#if GFL_NET_IRC
+	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
+#endif
 };
 
 

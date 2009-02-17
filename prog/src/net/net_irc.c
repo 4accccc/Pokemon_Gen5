@@ -19,7 +19,7 @@
 //	定数定義
 //==============================================================================
 ///切断として判定するまでの時間(この時間内なら切断しても再接続を試みる)
-#define NET_IRC_SHOUT_DOWN_TIME		(60 * 5)	//0を指定すれば時間切れ無し
+#define NET_IRC_SHOUT_DOWN_TIME		(60 * 5)
 
 ///再接続する際に、再接続リクエスト開始するまでのウェイト
 ///(相手方の終了、初期化処理などもあるので少し間を空ける)
@@ -56,7 +56,8 @@ typedef struct{
 	u8 isSender;		///<TRUE:最初に接続要求した(再接続時は値は変わりません)
 	u8 connect;			///<TRUE:繋がっている(再接続中もTRUE)
 	
-	s32 retry_time;		///<再接続中のタイムカウンタ
+	u32 timeout;		///<再接続時のタイムアウト時間
+	u32 retry_time;		///<再接続中のタイムカウンタ
 	
 	void *send_buf;		///<送信データへのポインタ
 	u8 send_size;		///<送信サイズ
@@ -80,7 +81,7 @@ static NET_IRC_SYS NetIrcSys = {0,0};
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-void GFL_NET_IRC_Init(void);
+void GFL_NET_IRC_Init(u32 irc_timeout);
 BOOL GFL_NET_IRC_SendTurnGet(void);
 BOOL GFL_NET_IRC_SendLockFlagGet(void);
 BOOL GFL_NET_IRC_SendCheck(void);
@@ -93,16 +94,17 @@ static int IRC_TargetIDGet(void);
 /**
  * @brief   
  *
- * @param   none		
+ * @param   irc_timeout		赤外線再接続時のタイムアウト時間
  *
  * @retval  
  *
  *
  */
 //--------------------------------------------------------------
-void GFL_NET_IRC_Init(void)
+void GFL_NET_IRC_Init(u32 irc_timeout)
 {
 	GFL_STD_MemClear(&NetIrcSys, sizeof(NET_IRC_SYS));
+	NetIrcSys.timeout = irc_timeout;
 	IRC_Init();
 	IRC_SetRecvCallback(IRC_ReceiveCallback);
 //	GFL_NET_SystemIrcModeInit();
@@ -435,7 +437,7 @@ BOOL GFL_NET_IRC_IsConnect(void)
 	if(IRC_IsConnect() == TRUE){
 		return TRUE;
 	}
-	if(NetIrcSys.retry_time < NET_IRC_SHOUT_DOWN_TIME){
+	if(NetIrcSys.retry_time < NetIrcSys.timeout){
 		return TRUE;	//再接続中
 	}
 	return FALSE;
@@ -462,7 +464,7 @@ void GFL_NET_IRC_Move(void)
 {
 	NET_IRC_SYS *nis = &NetIrcSys;
 
-	if(nis->connect == FALSE && nis->retry_time >= NET_IRC_SHOUT_DOWN_TIME){
+	if(nis->connect == FALSE && nis->retry_time >= nis->timeout){
 		//再接続も失敗して完全に終了状態。IRC_Moveを動かすとまだ相手がリトライをかけていた場合
 		//こちらは完全終了に移行したのに向こうが繋がる、となってしまうのでここでreturnする
 		return;
@@ -505,13 +507,11 @@ void GFL_NET_IRC_Move(void)
 					return;
 				}
 
-				if(nis->retry_time < NET_IRC_SHOUT_DOWN_TIME || NET_IRC_SHOUT_DOWN_TIME == 0){
+				if(nis->retry_time < nis->timeout){
 					if(nis->isSender == TRUE && nis->retry_time % NET_IRC_CONNECT_REQ_WAIT == 0){
 						IRC_Connect();
 					}
-				#if (NET_IRC_SHOUT_DOWN_TIME != 0)
 					nis->retry_time++;
-				#endif
 				}
 				else{	//再接続の時間切れ
 					OS_TPrintf("赤外線：再接続の時間切れ\n");

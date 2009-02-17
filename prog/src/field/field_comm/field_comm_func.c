@@ -298,7 +298,10 @@ void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc )
 #if DEB_ARI&0
 		30//GameServiceID
 #else
-		WB_NET_FIELDMOVE_SERVICEID	//GameServiceID
+		WB_NET_FIELDMOVE_SERVICEID,	//GameServiceID
+#endif
+#if GFL_NET_IRC
+	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
 #endif
 	};
 

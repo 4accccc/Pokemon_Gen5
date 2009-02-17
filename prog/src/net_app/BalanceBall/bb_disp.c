@@ -831,6 +831,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	int id;
 	int palnum;
 	
+	int dest_palno;
+	
 	// ----- ã‰æ–Ê -----
 	
 	hdl = hdl_bb;
@@ -845,6 +847,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
 	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
 		hdl, ncl, CLSYS_DRAW_SUB, 0, 0, palnum, HEAPID_BB);
+	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_SUB) / 0x20;
+	PaletteWorkSet_VramCopy(pfd, FADE_SUB_OBJ, dest_palno*16, palnum * 0x20);
 	
 	// ----- ‰º‰æ–Ê -----
 	// ¯
@@ -859,6 +863,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
 	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
 		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
+	PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 	
 	// ”Žè
     nca = NARC_manene_bottom_hakusyu_NANR;
@@ -872,6 +878,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
 	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
 		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
+	PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 	
 	// Ž†
     nca = NARC_manene_bottom_kami_NANR;
@@ -885,6 +893,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
 	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
 		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
+	PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 	
 	
 	// ‰Ô‰Î
@@ -899,6 +909,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
 	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
 		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
+	PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 	
 	// ƒ‰ƒCƒg
     nca = NARC_manene_bottom_oam_NANR;
@@ -912,6 +924,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
 	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
 		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
+	PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 	
 	// ƒyƒ“
 	{
@@ -927,6 +941,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 		wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(res_hdl, nce, nca, HEAPID_BB);
 		wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
 			res_hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+		dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
+		PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 
 		GFL_ARC_CloseDataHandle( res_hdl );
 	}
