@@ -300,9 +300,11 @@ extern BOOL GFL_NET_IsInit(void);
 /**
  * @brief   通信終了
  * @param   netEndCallback    通信が終了した際に呼ばれるコールバックです
+ * @retval  TRUE:終了リクエストを受け付けた
+ * @retval  FALSE:既に解放済み or システムが作成されていない
  */
 //==============================================================================
-extern void GFL_NET_Exit(NetEndCallback netEndCallback);
+extern BOOL GFL_NET_Exit(NetEndCallback netEndCallback);
 //==============================================================================
 /**
  * @brief   通信のメイン実行関数
