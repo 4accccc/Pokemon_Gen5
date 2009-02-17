@@ -17,13 +17,6 @@
 #include "compati_irc.h"
 
 
-//==============================================================================
-//	プロトタイプ宣言
-//==============================================================================
-static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 value);
-
-static COMPATI_IRC_SYS *glb_ircsys = NULL;
-
 
 //--------------------------------------------------------------
 /**
@@ -32,12 +25,9 @@ static COMPATI_IRC_SYS *glb_ircsys = NULL;
  * @param   ircsys		
  */
 //--------------------------------------------------------------
-void CompatiIrc_Init(COMPATI_IRC_SYS *ircsys)
+void CompatiIrc_Init(COMPATI_IRC_SYS *ircsys, COMPATI_CONNECT_SYS *commsys)
 {
-	glb_ircsys = ircsys;
-
-	IRC_Init();
-	IRC_SetRecvCallback(IRC_ReceiveCallback);
+	;
 }
 
 //--------------------------------------------------------------
@@ -46,76 +36,66 @@ void CompatiIrc_Init(COMPATI_IRC_SYS *ircsys)
  *
  * @param   ircsys		
  *
- * @retval  TRUE:接続している。　FALSE:接続していない
+ * @retval  COMPATIIRC_RESULT_???
  */
 //--------------------------------------------------------------
-BOOL CompatiIrc_Main(COMPATI_IRC_SYS *ircsys)
+int CompatiIrc_Main(COMPATI_IRC_SYS *ircsys, COMPATI_CONNECT_SYS *commsys)
 {
-	BOOL irc_ret;
-	
-	IRC_Move();
-	irc_ret = IRC_IsConnect();
-	if(irc_ret == TRUE){
-		//OS_TPrintf("赤外線接続されている\n");
-		if(ircsys->shutdown_req == TRUE){
-			//OS_TPrintf("赤外線shutdown\n");
-			IRC_Shutdown();
-			return irc_ret;
+	if(ircsys->shutdown_req == COMPATIIRC_RESULT_CONNECT && ircsys->seq < 100){
+		if(GFL_NET_GetConnectNum() > 1){
+			ircsys->seq = 100;
 		}
-	}
-	else{
-		//OS_TPrintf("赤外線繋がっていない\n");
-		if(ircsys->shutdown_req == TRUE){
-			//OS_TPrintf("shutdownがかかっている\n");
-			return irc_ret;
-		}
-		else if(ircsys->seq == 100){
-			//OS_TPrintf("赤外線seq＝０\n");
-			ircsys->seq = 0;
+		else{
+			ircsys->seq = 101;
 		}
 	}
 	
 	switch(ircsys->seq){
 	case 0:
-		ircsys->connect = FALSE;
-		IRC_Init();
-		IRC_SetRecvCallback(IRC_ReceiveCallback);
-		ircsys->wait = GFUser_GetPublicRand(30);	//親子同時にリクエストを送らないようにランダム
-		//OS_TPrintf("赤外線初期化\n");
+		GFL_STD_MemClear(commsys, sizeof(COMPATI_CONNECT_SYS));
 		ircsys->seq++;
-		break;
+		//break;
 	case 1:
-		if(ircsys->wait > 0){
-			ircsys->wait--;
-			break;
+		if(CompatiComm_Init(commsys, 30) == TRUE){
+			ircsys->seq++;
 		}
-		IRC_Connect();
-		//OS_TPrintf("赤外線接続リクエスト\n");
-		ircsys->seq++;
 		break;
 	case 2:
-		if(IRC_IsConnect() == TRUE){
-			if(IRC_IsSender() == FALSE){
-				IRC_Send(NULL, 0, 8, 10);
-			}
-			//OS_TPrintf("赤外線繋がった\n");
-			ircsys->seq = 100;
+		if(CompatiComm_Connect(commsys) == TRUE){
+			OS_TPrintf("赤外線：繋がった\n");
+			ircsys->seq++;
+		}
+		break;
+	case 3:
+		if(GFL_NET_GetConnectNum() > 1){
+			return COMPATIIRC_RESULT_CONNECT;
 		}
 		else{
-			ircsys->wait++;
-			if(ircsys->wait > 60*2){	//ある程度待っても接続出来ない場合はもう一度初期化から
-				ircsys->wait = 0;
-				ircsys->seq = 0;
-				//OS_TPrintf("赤外線なかなか接続しないので最初から\n");
-			}
-			break;
+			ircsys->seq++;
+			OS_TPrintf("赤外線切断\n");
 		}
 		break;
-	default:	//接続中
+	case 4:
+		if(CompatiComm_Exit(commsys) == TRUE){
+			ircsys->seq = 0;
+		}
 		break;
+	
+	case 100:
+		if(CompatiComm_Shoutdown(commsys) == TRUE){
+			ircsys->seq++;
+			return COMPATIIRC_RESULT_FALSE;
+		}
+		return COMPATIIRC_RESULT_CONNECT;
+	case 101:
+		if(CompatiComm_Exit(commsys) == TRUE){
+			ircsys->seq = 0;
+			return COMPATIIRC_RESULT_EXIT;
+		}
+		return COMPATIIRC_RESULT_FALSE;
 	}
 	
-	return irc_ret;
+	return COMPATIIRC_RESULT_FALSE;
 }
 
 //--------------------------------------------------------------
@@ -125,34 +105,8 @@ BOOL CompatiIrc_Main(COMPATI_IRC_SYS *ircsys)
  * @param   ircsys		
  */
 //--------------------------------------------------------------
-void CompatiIRC_Shoutdown(COMPATI_IRC_SYS *ircsys)
+void CompatiIrc_Shoutdown(COMPATI_IRC_SYS *ircsys, COMPATI_CONNECT_SYS *commsys)
 {
 	ircsys->shutdown_req = TRUE;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief   IRC受信時に呼ばれるコールバック
- *
- * @param   data		
- * @param   size		
- * @param   command		
- * @param   value		
- */
-//--------------------------------------------------------------
-static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 value)
-{
-	//OS_TPrintf("赤外線受信 command = %d\n", command);
-
-	//-- 赤外線ライブラリ内部で使用しているシステムコマンド --//
-	if(command >= 0xf0){
-		if(command == 0xf4){
-			OS_TPrintf("IRC切断コマンドを受信\n");
-		}
-		return;	//赤外線ライブラリ内部で使用しているシステムコマンドの為、ここでは無視
-	}
-	
-	IRC_Send(NULL, 0, 8, 0);	//通信継続の為、返事を返す
-	glb_ircsys->connect = TRUE;
-	glb_ircsys->seq = 100;
-}

@@ -162,8 +162,9 @@ typedef struct {
 	
 	CCT_TOUCH_SYS ccts;			///<円とタッチペンの当たり判定管理ワーク
 	COMPATI_IRC_SYS ircsys;		///<ゲーム中の赤外線接続管理ワーク
+	COMPATI_CONNECT_SYS commsys;
 	
-	BOOL before_irc_ret;
+	int before_irc_ret;
 	s32 irc_time_count;
 	s32 irc_time_count_max;
 }COMPATI_SYS;
@@ -347,8 +348,8 @@ static GFL_PROC_RESULT CompatiCheck_ProcInit( GFL_PROC * proc, int * seq, void *
 	CCLocal_MessagePut(cs, CCBMPWIN_TALK, cs->strbuf_win[CCBMPWIN_TALK], 0, 0);
 	
 	//ゲーム中の赤外線通信用にここでIRCオーバーレイ読み込み　※check 暫定処理
-	GFL_OVERLAY_Load(FS_OVERLAY_ID(dev_irc));
-	CompatiIrc_Init(&cs->ircsys);
+//	GFL_OVERLAY_Load(FS_OVERLAY_ID(dev_irc));
+	CompatiIrc_Init(&cs->ircsys, &cs->commsys);
 	
 	return GFL_PROC_RES_FINISH;
 }
@@ -426,7 +427,7 @@ static GFL_PROC_RESULT CompatiCheck_ProcEnd( GFL_PROC * proc, int * seq, void * 
 	COMPATI_PARENTWORK *cppw = pwk;
 
 	//IRCオーバーレイ解放　※check
-	GFL_OVERLAY_Unload(FS_OVERLAY_ID(dev_irc));
+//	GFL_OVERLAY_Unload(FS_OVERLAY_ID(dev_irc));
 	
 	//得点結果をパレントワークに格納
 	cppw->point = cs->ccts.total_len / CC_POINT_DOT;
@@ -887,28 +888,27 @@ static int CCSeq_Main(COMPATI_SYS *cs)
 {
 	int pal_addr, i;
 	int before_point, after_point;
-	BOOL irc_ret;
+	int irc_ret;
 	
-	irc_ret = CompatiIrc_Main(&cs->ircsys);
-	if(cs->before_irc_ret == TRUE && irc_ret == TRUE){
+	irc_ret = CompatiIrc_Main(&cs->ircsys, &cs->commsys);
+	if(cs->before_irc_ret == TRUE && irc_ret == COMPATIIRC_RESULT_CONNECT){
 		cs->irc_time_count++;
 		if(cs->irc_time_count > cs->irc_time_count_max){
 			cs->irc_time_count_max++;
 		}
 	}
-	else if(irc_ret == FALSE){
+	else if(irc_ret == COMPATIIRC_RESULT_FALSE){
 		cs->irc_time_count = 0;
 	}
 	cs->before_irc_ret = irc_ret;
 	
 	cs->local_timer++;
 	if(cs->local_timer > CC_TIMEUP * 60){
-		if(irc_ret == TRUE){
-			CompatiIRC_Shoutdown(&cs->ircsys);
-			return SEQ_CONTINUE;
+		if(irc_ret == COMPATIIRC_RESULT_EXIT){
+			return SEQ_NEXT;
 		}
 		else{
-			return SEQ_NEXT;
+			CompatiIrc_Shoutdown(&cs->ircsys, &cs->commsys);
 		}
 	}
 	
@@ -934,7 +934,7 @@ static int CCSeq_Main(COMPATI_SYS *cs)
 	}
 	
 	//赤外線で繋がっていれば背景色変更
-	if(irc_ret == TRUE){
+	if(irc_ret == COMPATIIRC_RESULT_CONNECT){
 		u16 set_color = BG_COLOR_IRC;
 		GFL_STD_MemCopy16(&set_color, (void*)(HW_BG_PLTT + BG_COLOR_IRC_COLOR_POS), 2);
 		GFL_STD_MemCopy16(&set_color, (void*)(HW_DB_BG_PLTT + BG_COLOR_IRC_COLOR_POS), 2);

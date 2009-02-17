@@ -723,7 +723,7 @@ static int CRSeq_StartMain(COMPATI_RESULT_SYS *crs)
 			&crs->commsys.send_first_param->circle_package, sizeof(CC_CIRCLE_PACKAGE));
 		OS_GetMacAddress(crs->commsys.send_first_param->macAddress);
 		
-		if(CompatiComm_Init(&crs->commsys) == TRUE){
+		if(CompatiComm_Init(&crs->commsys, IRC_TIMEOUT_STANDARD) == TRUE){
 			crs->local_seq++;
 		}
 		break;
@@ -747,12 +747,17 @@ static int CRSeq_StartMain(COMPATI_RESULT_SYS *crs)
 		break;
 	case 3:
 		if(CompatiComm_Shoutdown(&crs->commsys) == TRUE){
+			crs->local_seq++;
+		}
+		break;
+	case 4:
+		if(CompatiComm_Exit(&crs->commsys) == TRUE){
 			GFL_MSG_GetString(crs->mm, COMPATI_STR_001, crs->strbuf_win[CRBMPWIN_TALK]);
 			CRSLocal_MessagePut(crs, CRBMPWIN_TALK, crs->strbuf_win[CRBMPWIN_TALK], 0, 0);
 			crs->local_seq++;
 		}
 		break;
-	case 4:
+	case 5:
 		crs->local_timer++;
 		if(crs->local_timer > 60){
 			return SEQ_END;
@@ -778,7 +783,7 @@ static int CRSeq_ResultMain(COMPATI_RESULT_SYS *crs)
 		crs->commsys.send_result_param->point = crs->cppw->point;
 		crs->commsys.send_result_param->irc_time_count_max = crs->cppw->irc_time_count_max;
 		
-		if(CompatiComm_Init(&crs->commsys) == TRUE){
+		if(CompatiComm_Init(&crs->commsys, IRC_TIMEOUT_STANDARD) == TRUE){
 			crs->local_seq++;
 		}
 		break;
@@ -803,19 +808,24 @@ static int CRSeq_ResultMain(COMPATI_RESULT_SYS *crs)
 		break;
 	case 3:
 		if(CompatiComm_Shoutdown(&crs->commsys) == TRUE){
+			crs->local_seq++;
+		}
+		break;
+	case 4:
+		if(CompatiComm_Exit(&crs->commsys) == TRUE){
 			GFL_MSG_GetString(crs->mm, COMPATI_STR_001, crs->strbuf_win[CRBMPWIN_TALK]);
 			CRSLocal_MessagePut(crs, CRBMPWIN_TALK, crs->strbuf_win[CRBMPWIN_TALK], 0, 0);
 			crs->local_seq++;
 		}
 		break;
-	case 4:
+	case 5:
 		crs->local_timer++;
 		if(crs->local_timer > 60){
 			crs->local_timer = 0;
 			crs->local_seq++;
 		}
 		break;
-	case 5:
+	case 6:
 		{
 			int my_point, partner_point, total_point;
 			int msg_id;
@@ -849,7 +859,7 @@ static int CRSeq_ResultMain(COMPATI_RESULT_SYS *crs)
 		}
 		crs->local_seq++;
 		break;
-	case 6:
+	case 7:
 		if(GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))){
 			return SEQ_END;
 		}

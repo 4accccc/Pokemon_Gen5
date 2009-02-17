@@ -13,9 +13,10 @@
 //==============================================================================
 //	äOïîä÷êîêÈåæ
 //==============================================================================
-extern BOOL CompatiComm_Init(COMPATI_CONNECT_SYS *commsys);
+extern BOOL CompatiComm_Init(COMPATI_CONNECT_SYS *commsys, u32 irc_timeout);
 extern BOOL CompatiComm_Connect(COMPATI_CONNECT_SYS *commsys);
 extern BOOL CompatiComm_Shoutdown(COMPATI_CONNECT_SYS *commsys);
+extern BOOL CompatiComm_Exit(COMPATI_CONNECT_SYS *commsys);
 extern BOOL CompatiComm_FirstSend(COMPATI_CONNECT_SYS *commsys);
 extern BOOL CompatiComm_ResultSend(COMPATI_CONNECT_SYS *commsys);
 

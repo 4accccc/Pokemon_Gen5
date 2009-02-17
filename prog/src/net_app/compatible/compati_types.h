@@ -124,6 +124,8 @@ typedef struct{
 	u8 receive_ok;
 	u8 connect_ok;
 	u8 connect_bit;		///<Ú‘±‚µ‚Ä‚¢‚énetID‚ðƒrƒbƒgŠÇ—
+	u8 lib_finish;
+	u8 padding[3];
 }COMPATI_CONNECT_SYS;
 
 

@@ -22,6 +22,7 @@ static void* _netBeaconGetFunc(void* pWork);
 static int _netBeaconGetSizeFunc(void* pWork);
 static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
 static void _initCallBack(void* pWork);
+static void _CommSystemEndCallback(void* pWork);
 static void _connectCallBack(void* pWork, int netID);
 static void _endCallBack(void* pWork);
 static void _RecvFirstData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -41,7 +42,7 @@ enum{
 	NET_CMD_RESULT,
 };
 
-#define _MAXNUM   (4)         // 最大接続人数
+#define _MAXNUM   (2)         // 最大接続人数
 #define _MAXSIZE  (32)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
@@ -80,7 +81,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     _BCON_GET_NUM,    // 最大ビーコン収集数
     TRUE,     // CRC計算
     FALSE,     // MP通信＝親子型通信モードかどうか
-    GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
+    GFL_NET_TYPE_WIRELESS,  //wifi通信を行うかどうか
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_COMPATI_CHECK,  //GameServiceID
 #if GFL_NET_IRC
@@ -96,11 +97,19 @@ static const GFLNetInitializeStruct aGFLNetInit = {
  * @retval  TRUE:処理完了　FALSE:処理継続中
  */
 //--------------------------------------------------------------
-BOOL CompatiComm_Init(COMPATI_CONNECT_SYS *commsys)
+BOOL CompatiComm_Init(COMPATI_CONNECT_SYS *commsys, u32 irc_timeout)
 {
 	switch(commsys->seq){
 	case 0:
-		GFL_NET_Init(&aGFLNetInit, _initCallBack, commsys);	//通信初期化
+		{
+			GFLNetInitializeStruct net_ini = aGFLNetInit;
+			
+			net_ini.irc_timeout = irc_timeout;
+			if(irc_timeout == IRC_TIMEOUT_STANDARD){
+//				net_ini.bNetType = GFL_NET_TYPE_IRC;
+			}
+			GFL_NET_Init(&net_ini, _initCallBack, commsys);	//通信初期化
+		}
 		commsys->seq++;
 		break;
 	case 1:
@@ -169,12 +178,44 @@ BOOL CompatiComm_Shoutdown(COMPATI_CONNECT_SYS *commsys)
 		break;
 	case 1:	//通信終了待ち
 		if(commsys->connect_ok == FALSE){
+			commsys->seq = 0;
 			return TRUE;
 		}
 		break;
 	}
 	
 	return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   通信システム終了
+ *
+ * @param   commsys		
+ *
+ * @retval  TRUE:処理完了　FALSE:処理継続中
+ */
+//--------------------------------------------------------------
+BOOL CompatiComm_Exit(COMPATI_CONNECT_SYS *commsys)
+{
+#if 0
+	return TRUE;
+#else
+	switch(commsys->seq){
+	case 0:
+		GFL_NET_Exit(_CommSystemEndCallback);
+		commsys->seq++;
+		break;
+	case 1:
+		if(commsys->lib_finish == TRUE){
+			commsys->seq = 0;
+			return TRUE;
+		}
+		break;
+	}
+	
+	return FALSE;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -292,6 +333,21 @@ static void _initCallBack(void* pWork)
 	return;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   通信システム終了コールバック
+ * @param   pCtl    デバッグワーク
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void _CommSystemEndCallback(void* pWork)
+{
+	COMPATI_CONNECT_SYS *commsys = pWork;
+	
+	OS_TPrintf("通信システム終了コールバックが呼び出された\n");
+	commsys->lib_finish = TRUE;
+}
+
 //==============================================================================
 //	
 //==============================================================================
@@ -320,7 +376,7 @@ static void _endCallBack(void* pWork)
 {
 	COMPATI_CONNECT_SYS *commsys = pWork;
 
-    NET_PRINT("endCallBack終了\n");
+    OS_TPrintf("endCallBack終了\n");
     commsys->connect_ok = FALSE;
     commsys->connect_bit = 0;
 }
