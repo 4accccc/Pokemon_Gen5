@@ -27,8 +27,10 @@ extern "C" {
 #include "areaman.h"
 #include "procsys.h"
 
-#include "bg_sys.h"
 #include "display.h"
+#include "disputil.h"
+
+#include "bg_sys.h"
 #include "strbuf.h"
 #include "msgdata.h"
 #include "bmp.h"
