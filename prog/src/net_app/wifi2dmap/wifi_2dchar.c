@@ -1081,7 +1081,7 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
     p_wk->p_clwk = GFL_CLACT_WK_Create(p_sys->p_unit,
                                        p_sys->res[ char_no ].resid[ 0 ],
                                        p_sys->res[ char_no ].resid[ 1 ],
-                                       p_sys->res[ char_no ].resid[ 2 ], &cellInitData, 0, heap );
+                                       p_sys->res[ char_no ].resid[ 2 ], &cellInitData, CLSYS_DEFREND_MAIN, heap );
 //	CLACT_BGPriorityChg( p_wk->p_clwk, cp_data->bgpri );
     GFL_CLACT_WK_SetBgPri( p_wk->p_clwk, cp_data->bgpri );
 
@@ -1140,7 +1140,7 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
                                              //WF_2DC_ARC_CONTCHARID+p_sys->hero_no,
                                              p_sys->shadowres.resid[2],
                                              &cellInitData,
-                                             0,heap );
+                                             CLSYS_DEFREND_MAIN,heap );
 
         
 //		CLACT_BGPriorityChg( p_wk->p_shadow, cp_data->bgpri );
@@ -1226,7 +1226,7 @@ void WF_2DC_WkMatrixSet( WF_2DCWK* p_wk, s16 x, s16 y )
 
         mat.x += WF_2DC_SHADOW_MAT_OFS_X;
         mat.y += WF_2DC_SHADOW_MAT_OFS_Y;
-        GFL_CLACT_WK_SetWldPos( p_wk->p_clwk, &mat );
+        GFL_CLACT_WK_SetWldPos( p_wk->p_shadow, &mat );
 
     }
 }
@@ -2640,6 +2640,10 @@ static BOOL WF_2DC_WkCleanCheck( const WF_2DCWK* cp_wk )
 //-----------------------------------------------------------------------------
 static void WF_2DC_PFDPalSet( WF_2DCSYS* p_sys, u32 resid, u32 num )
 {
+
+
+
+    
 #if 0  // ‚â‚è‚Ì‚±‚µk.ohno
 	NNSG2dPaletteData* p_paldata;
 	u32 pal_no[2];

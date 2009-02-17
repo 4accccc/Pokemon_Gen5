@@ -1138,7 +1138,7 @@ static void WcrObjDrawExit( WIFI_MATCHROOM* p_mcr )
 static void WcrScrnDrawInit( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 map_no )
 {
 	WF2DMAP_SCRDRAWINIT init = {
-		CLSYS_DEFREND_MAIN,
+		CLSYS_DRAW_MAIN,
 		GFL_BG_FRAME0_M,
 		GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0xe000,
@@ -1154,20 +1154,27 @@ static void WcrScrnDrawInit( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_han
     ///	独自レンダラー作成用
     /// サーフェースデータ構造体
     //=====================================
-    GFL_REND_SURFACE_INIT sini = {
+    GFL_REND_SURFACE_INIT sini[] ={
+    {
         0,0,			// サーフェース左上ｘ座標			// サーフェース左上ｙ座標
-        256,				// サーフェース幅
+        255,				// サーフェース幅
         192,				// サーフェース高さ
         CLSYS_DRAW_MAIN,	// サーフェースタイプ(CLSYS_DRAW_TYPE)
-    };
+    },
+    {
+        0,MCR_CLACTSUBSURFACE_Y,			// サーフェース左上ｘ座標			// サーフェース左上ｙ座標
+        255,				// サーフェース幅
+        192,				// サーフェース高さ
+        CLSYS_DRAW_SUB,	// サーフェースタイプ(CLSYS_DRAW_TYPE)
+    }};
 
 	// グラフィックデータを設定
 	init.dataid_scrn += map_no;
  //   p_mcr->clact.renddata = GFL_CLACT_USERREND_Create(sizeof(GFL_CLSYS_REND));
 
-     p_mcr->clact.renddata =  GFL_CLACT_USERREND_Create( &sini, 1, heapID );
+     p_mcr->clact.renddata =  GFL_CLACT_USERREND_Create( sini, NELEMS(sini), heapID );
+    GFL_CLACT_UNIT_SetUserRend(p_mcr->clact.clactSet, p_mcr->clact.renddata);
 
-    
 	p_mcr->p_scrdraw = WF2DMAP_SCRDrawSysInit( 
 			p_mcr->clact.renddata, p_mcr->p_bgl, &init, heapID );
 }
@@ -1227,6 +1234,12 @@ static void WcrClactInit( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 	p_clact->clactSet  = GFL_CLACT_UNIT_Create( CELL_MAX , 0, heapID );
 	GFL_CLACT_UNIT_SetDefaultRend( p_clact->clactSet );
 
+    // セルアクターセット作成
+//    CLACT_U_SetSubSurfaceMatrix( &p_clact->renddata, 0, MCR_CLACTSUBSURFACE_Y );
+    {
+   //     GFL_CLACTPOS cp_pos = {0, MCR_CLACTSUBSURFACE_Y};
+    //    GFL_CLACT_USERREND_SetSurfacePos( p_clact->renddata, 0, &cp_pos);
+    }
 
 	// 人物リソース読み込みとキャラクタパレットの転送
 	// エフェクトリソース読み込みとキャラクタパレットの転送

@@ -372,7 +372,7 @@ void mydwc_free()
 //==============================================================================
 int mydwc_connect()
 {
-    OS_TPrintf("mydwc_connect %d\n",_dWork->state);
+//    OS_TPrintf("mydwc_connect %d\n",_dWork->state);
     switch( _dWork->state )
 	{
 		case MDSTATE_INIT:

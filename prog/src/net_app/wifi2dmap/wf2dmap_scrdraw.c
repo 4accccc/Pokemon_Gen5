@@ -163,7 +163,13 @@ void WF2DMAP_SCRDrawSysMain( WF2DMAP_SCRDRAW* p_sys, const WF2DMAP_SCROLL* cp_sc
         GFL_CLACT_USERREND_SetSurfacePos(p_sys->p_render, 0, &pos);
 	}
 #else
-    GFL_CLACT_USERREND_SetSurfacePos(p_sys->p_render, 0, &pos);
+	if( p_sys->surface_type == CLSYS_DRAW_MAIN ){
+        GFL_CLACT_USERREND_SetSurfacePos(p_sys->p_render, 0, &pos);
+    }
+    else{
+        pos.y += SUB_SURFACE_Y_INTEGER;
+        GFL_CLACT_USERREND_SetSurfacePos(p_sys->p_render, 1, &pos);
+    }
 #endif
 
 	// BGL
