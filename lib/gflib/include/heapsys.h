@@ -133,45 +133,40 @@ extern void
 
 extern void*
 	GFL_HEAP_AllocMemoryblock	//Ç±ÇÃä÷êîÇíºê⁄åƒÇ—èoÇ∑ÇÃÇÕã÷é~
-		( HEAPID heapID, u32 size );
+		( HEAPID heapID, u32 size, BOOL clearFlag );
 
 #define GFL_HEAP_AllocMemory( heapID, size ) \
-			GFL_HEAP_AllocMemoryblock( heapID, size )
+			GFL_HEAP_AllocMemoryblock( heapID, size, FALSE )
 
 #define GFL_HEAP_AllocMemoryLo( heapID, size )	\
-			GFL_HEAP_AllocMemoryblock( GetHeapLowID(heapID), size )
+			GFL_HEAP_AllocMemoryblock( GFL_HEAP_LOWID(heapID), size, FALSE )
+
+#define GFL_HEAP_AllocClearMemory( heapID, size )	\
+		GFL_HEAP_AllocMemoryblock( heapID, size, TRUE )
+
+#define GFL_HEAP_AllocClearMemoryLo( heapID, size )	\
+		GFL_HEAP_AllocMemoryblock( GFL_HEAP_LOWID(heapID), size )
 
 #else
 
 extern void*
 	GFL_HEAP_AllocMemoryblock	//Ç±ÇÃä÷êîÇíºê⁄åƒÇ—èoÇ∑ÇÃÇÕã÷é~
-		( HEAPID heapID, u32 size, const char* filename, u16 linenum );
+		( HEAPID heapID, u32 size, BOOL clearFlag, const char* filename, u16 linenum );
 
 #define GFL_HEAP_AllocMemory( heapID, size )	\
-			GFL_HEAP_AllocMemoryblock( heapID, size, __FILE__, __LINE__)
+			GFL_HEAP_AllocMemoryblock( heapID, size, FALSE, __FILE__, __LINE__)
 
 #define GFL_HEAP_AllocMemoryLo( heapID, size )	\
-			GFL_HEAP_AllocMemoryblock( GetHeapLowID(heapID), size, __FILE__, __LINE__)
+			GFL_HEAP_AllocMemoryblock( GFL_HEAP_LOWID(heapID), size, FALSE, __FILE__, __LINE__)
 
-#endif
+#define GFL_HEAP_AllocClearMemory( heapID, size )	\
+		GFL_HEAP_AllocMemoryblock( heapID, size, TRUE, __FILE__, __LINE__)
 
-inline  void*
-	GFL_HEAP_AllocClearMemory
-		( HEAPID heapID, u32 size )
-{
-	void* memory = GFL_HEAP_AllocMemory( heapID, size );
-	GFL_STD_MemClear32( memory, size );
-	return memory;
-}
+#define GFL_HEAP_AllocClearMemoryLo( heapID, size )	\
+		GFL_HEAP_AllocMemoryblock( GFL_HEAP_LOWID(heapID), size, TRUE, __FILE__, __LINE__)
 
-inline  void*
-	GFL_HEAP_AllocClearMemoryLo
-		( HEAPID heapID, u32 size )
-{
-	void* memory = GFL_HEAP_AllocMemory( GetHeapLowID(heapID), size );
-	GFL_STD_MemClear32( memory, size );
-	return memory;
-}
+#endif	// #ifndef HEAPSYS_DEBUG
+
 
 //------------------------------------------------------------------
 /**
