@@ -177,7 +177,7 @@ BOOL	SampleMain( void )
 		//NNS_SndArcLoadBank(BANK_BASIC, soundHeap);
 		voiceNo = 1;
 		seNo = SEQ_SE_PL_W012;
-		bgmNo = SEQ_GS_TITLE;
+		bgmNo = SEQ_WB_TITLE;
 		//bgmNo = SEQ_GS_EYE_K_AYASHII;
 		NNS_SndHandleInit(&bgmHandle);
 		NNS_SndHandleInit(&seHandle);
