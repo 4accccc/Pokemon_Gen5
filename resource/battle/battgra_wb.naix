@@ -20,8 +20,9 @@ enum {
 	NARC_battgra_wb_batt_field01_nsbmd = 6,
 	NARC_battgra_wb_batt_stage01_nsbmd = 7,
 	NARC_battgra_wb_batt_stage01_nsbca = 8,
-	NARC_battgra_wb_shadow_NCBR = 9,
-	NARC_battgra_wb_shadow_NCLR = 10
+	NARC_battgra_wb_batt_stage02_nsbmd = 9,
+	NARC_battgra_wb_shadow_NCBR = 10,
+	NARC_battgra_wb_shadow_NCLR = 11
 };
 
 /* NARC_BATTGRA_WB_NAIX_ */
