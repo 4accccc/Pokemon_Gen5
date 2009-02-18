@@ -31,9 +31,10 @@
 
 #include "test/performance.h"
 
-#define MCS_ENABLE		//MCSを使用する
+//#define MCS_ENABLE		//MCSを使用する
 #define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
 //#define	SCALE_CHECK		//透視射影と正射影でスケールの誤差を修正するテストモードの起動
+#define POKE_MCSS_1vs1		//1vs1描画
 
 #define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
@@ -296,6 +297,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
 		G3X_AlphaBlend( TRUE );
 		G3X_EdgeMarking( TRUE );
+		G3X_AntiAlias( TRUE );
 		GFL_BG_SetBGControl3D( 1 );
 	}
 
@@ -617,12 +619,18 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			}
 #endif
 			if( pad & PAD_BUTTON_START ){
-				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_ON );
-				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_ON );
+//				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_ON );
+//				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_ON );
+//				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_VANISH_ON );
+//				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_VANISH_ON );
+				G3X_AntiAlias( FALSE );
 			}
 			else{
-				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_OFF );
-				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_OFF );
+//				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_OFF );
+//				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_OFF );
+//				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_VANISH_OFF );
+//				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_VANISH_OFF );
+				G3X_AntiAlias( TRUE );
 			}
 			if( tp == TRUE ){
 				wk->ortho_mode ^= 1;
@@ -693,10 +701,15 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 		if( wk->timer_flag ){
 			VecFx32	scale;
 
+#ifdef POKE_MCSS_1vs1
+			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_AA );
+			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_BB );
+#else 
 			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_A );
 			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_B );
 			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_C );
 			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_D );
+#endif
 			wk->mons_no = MONSNO_HUSIGIDANE;
 			wk->position = 0;
 			wk->scale.x = 0x0800;
@@ -959,28 +972,23 @@ static	void	set_pokemon( SOGA_WORK *wk )
 		POKE_MCSS_Add( wk->pmw, pp, pokemon_pos_table[ wk->position ][ 1 ] );
 	}
 	else{
-		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
-		PP_Put( pp, ID_PARA_id_no, 0x10 );
-#if 0
+#ifdef POKE_MCSS_1vs1
 //1vs1
+		PP_Put( pp, ID_PARA_monsno, MONSNO_RIZAADON );
+		PP_Put( pp, ID_PARA_id_no, 0x10 );
 		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_AA );
-		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
 		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_BB );
 #else
 //2vs2
 		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
-//		PP_Put( pp, ID_PARA_monsno, MONSNO_RIZAADO );
 		PP_Put( pp, ID_PARA_id_no, 0x10 );
 		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_A );
 		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_B );
 		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
-//		PP_Put( pp, ID_PARA_monsno, MONSNO_KAMEERU );
 		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_C );
 		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_D );
-//		BTL_EFFECT_SetPokemon( wk->pp, POKE_MCSS_POS_E );
-//		BTL_EFFECT_SetPokemon( wk->pp, POKE_MCSS_POS_F );
-	}
 #endif
+	}
 	GFL_HEAP_FreeMemory( pp );
 }
 
