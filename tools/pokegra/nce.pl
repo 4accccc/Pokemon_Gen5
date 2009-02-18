@@ -125,6 +125,7 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 		$min_y		= 256;
 		$max_y		= -256;
 		$min_max_flag = 0;
+		$dress_up_cell = 0;
 		for( $obj = 0 ; $obj < $objs ; $obj++ ){
 			#OBJデータ読み込み
 			read READ_NCE, $obj_data, OBJ_SIZE;
@@ -187,6 +188,10 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 					}
 				}
 				$mepachi++;
+			}
+			#カラーパレットが0以外のときは、ドレスアップ用セル
+			elsif( $oam_color_param ){
+				$dress_up_cell = $oam_color_param;
 			}
 			else{
 				#OBJのサイズを見て各座標の最小値と最大値を求めておく
@@ -257,8 +262,8 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 		$mepachi_tex_s = ( ( $mepachi_char % 32 ) * 8 ) << 12;
 		$mepachi_tex_t = ( ( $mepachi_char >> 5 ) * 8 ) << 12;
 
-		#セルの情報を書き出す
-		$write = pack "l l l l l l l l l l l l", $min_x, $min_y, $size_x, $size_y, $tex_s, $tex_t, $mepachi_min_x, $mepachi_min_y, $mepachi_size_x, $mepachi_size_y, $mepachi_tex_s, $mepachi_tex_t;
+		#セルの情報を書き出す(dress_up_cellはu8だけど、4バイト境界のためにlで出力してます）
+		$write = pack "l l l l l l l l l l l l l", $min_x, $min_y, $size_x, $size_y, $tex_s, $tex_t, $mepachi_min_x, $mepachi_min_y, $mepachi_size_x, $mepachi_size_y, $mepachi_tex_s, $mepachi_tex_t, $dress_up_cell;
 		print WRITE_NCE $write;
 #=cut
 	}
