@@ -62,7 +62,7 @@ do-build: $(notdir $(NMCFILE:.nmc=.NMCR))
 	perl $(PERL_DIR)nmc.pl $< $(CNV_DIR)
 
 do-build: $(notdir $(NMCFILE:.nmc=.NCEC))
-%.NCEC: $(RES_DIR)%.nce
+%.NCEC: $(RES_DIR)%.nce $(PERL_DIR)nce.pl
 	perl $(PERL_DIR)nce.pl $(RES_DIR)$*.nce $(CNV_DIR)
 
 do-build: $(notdir $(NCGCFILE:.ncg=.NCBR))
