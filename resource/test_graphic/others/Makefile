@@ -34,7 +34,11 @@ TARGET_NAMES	= \
 	d_goto.naix \
 	d_goto.narc \
 	config_gra.narc \
-	config_gra.naix
+	config_gra.naix \
+	wifi_earth.narc \
+	wifi_earth.naix \
+	wifi_earth_place.narc \
+	wifi_earth_place.naix
 
 TARGETS	= $(addprefix $(TARGET_DIR)/,$(TARGET_NAMES))
 

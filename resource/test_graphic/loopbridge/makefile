@@ -29,7 +29,6 @@ include $(PROJECT_RSCDIR)\macro_define
 
 #依存対象が複数ある
 MAPNSBMDS	:= $(wildcard *.nsbmd)
-MAPNSBTXS	:= $(wildcard *.nsbtx)
 #MAPNSBTPS	:= $(wildcard *.nsbtp)
 MAP3DMDS	:= $(wildcard *.3dmd)
 MAPBHCS		:= $(wildcard *.bhc)
@@ -41,14 +40,13 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .imd.nsbmd:
 	g3dcvtr $< -emdl
-	g3dcvtr $< -etex
 
 #データからの生成ルール
 .nsbmd.3dppack:
 .nsbtx.3dppack:
 .3dmd.3dppack:
 .bhc.3dppack:
-	$(BINLINKER) $*.nsbmd $*.nsbtx $*.bhc $*.3dmd $*.3dppack BR
+	$(BINLINKER) $*.nsbmd $*.bhc $*.3dmd $*.3dppack BR
 
 endif
 
@@ -65,7 +63,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(NARCNAME):	$(MAP3DPPACKS)  $(MAP3DMDS) $(MAPNSBMDS) $(MAPNSBTXS) $(MAPBHCS) #$(MAPNSBTPS)
+$(NARCNAME):	$(MAP3DPPACKS)  $(MAP3DMDS) $(MAPNSBMDS) $(MAPBHCS) #$(MAPNSBTPS)
 	nnsarc -c -l -n -i $(NARCNAME) -S data.list
 	$(NAIXCUT) $(NAIXNAME)
 
@@ -87,4 +85,5 @@ endif
 height:
 	ls *.imd |sed -e 's/\.imd//' > height_data.lst
 	echo \#END >> height_data.lst
-	heightcnv/imdcnv01 height_data.lst
+	$(PROJECT_ROOT)tools/heightcnv/imdcnv01 height_data.lst
+#	heightcnv/imdcnv01 height_data.lst

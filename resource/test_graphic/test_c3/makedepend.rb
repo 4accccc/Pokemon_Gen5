@@ -22,7 +22,8 @@ File.open(ARGV[0]){|file|
 		if name == '#END' then break end
 				#データ連結ルール
 		dependfile.puts "#{name}.#{TARGETEXT}: #{name}.nsbmd #{name}.bhc #{name}.3dmd"
-		dependfile.puts "	$(BINLINKER) $*.nsbmd $*.nsbtx $*.bhc $*.3dmd $*.#{TARGETEXT} BR"
+		#dependfile.puts "	$(BINLINKER) $*.nsbmd $*.nsbtx $*.bhc $*.3dmd $*.#{TARGETEXT} BR"
+		dependfile.puts "	$(BINLINKER) $*.nsbmd $*.bhc $*.3dmd $*.#{TARGETEXT} BR"
 		dependfile.puts ""
 				#高さデータコンバートルール
 		dependfile.puts "#{name}.bhc: #{name}h.imd"

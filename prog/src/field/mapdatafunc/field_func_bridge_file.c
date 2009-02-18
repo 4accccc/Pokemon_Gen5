@@ -18,7 +18,7 @@ typedef struct {
     u16 DataID;         ////< DP3PACK_HEADER
     u16 dummy1;
     u32 nsbmdOffset;    ///< ファイルの先頭からnsbmdの場所までのOFFSET
-    u32 nsbtxOffset;    ///< ファイルの先頭からnsbtxの場所までのOFFSET
+    //u32 nsbtxOffset;    ///< ファイルの先頭からnsbtxの場所までのOFFSET
     u32 bhcOffset;	    ///< ファイルの先頭からbhcの場所までのOFFSET
     u32 positionOffset; ///< ファイルの先頭からポジションの場所までのOFFSET
     u32 endPos;         ///< ファイルの先頭からポジションの最後までのOFFSET

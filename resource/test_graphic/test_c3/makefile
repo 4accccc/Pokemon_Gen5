@@ -32,7 +32,7 @@ HEIGHTRETFILE = $(PROJECT_ROOT)tools/heightcnv/return.txt
 
 #依存対象が複数ある
 MAPNSBMDS	:= $(wildcard *.nsbmd)
-MAPNSBTXS	:= $(wildcard *.nsbtx)
+#MAPNSBTXS	:= $(wildcard *.nsbtx)
 #MAPNSBTPS	:= $(wildcard *.nsbtp)
 MAP3DMDS	:= $(wildcard *.3dmd)
 MAPBHCS		:= $(wildcard *.bhc)
@@ -41,7 +41,7 @@ MAPBHCS		:= $(wildcard *.bhc)
 
 .imd.nsbmd:
 	g3dcvtr $< -emdl
-	g3dcvtr $< -etex
+	#g3dcvtr $< -etex
 
 .PHONY:	do-build clean
 
@@ -87,7 +87,8 @@ clean:
 	-rm -f $(TARGETNAME).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	-rm -f arcfilelist dependfile heightlist.lst
-	-rm -f *.nsbtx *.nsbmd
+	#-rm -f *.nsbtx
+	-rm -f *.nsbmd
 	-rm -f *.bhc
 	-rm -f *.$(EXTNAME)
 endif
