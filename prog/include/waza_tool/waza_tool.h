@@ -39,7 +39,7 @@
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
 #ifndef	__ASM_NO_DEF_
 
-typedef struct _ARCHANDLE  ARCHANDLE;
+#include "arc_tool.h"
 
 ///<技パラメータの構造体
 typedef struct waza_table_data WAZA_TABLE_DATA;
