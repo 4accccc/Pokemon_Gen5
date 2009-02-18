@@ -105,7 +105,7 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap )
 			//モデルリソース設定
 			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
 			//テクスチャリソース設定
-			GFL_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + fileHeader->nsbtxOffset)); 
+			//>>GFL_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + fileHeader->nsbtxOffset)); 
 			//配置オブジェクト設定
 			if( fileHeader->positionOffset != fileHeader->endPos ){
 				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
@@ -140,14 +140,15 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap )
 					(MHI_PTR)((u8*)mem - sizeof(MAP_HEIGHT_INFO))
 					);
 		}
-		GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
+		//>>GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
 		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
 
 		ldst->seq = TEX_TRANS;
 		break;
 
 	case TEX_TRANS:
-		if( GFL_G3D_MAP_TransVram(g3Dmap) == FALSE ){
+		//>>if( GFL_G3D_MAP_TransVram(g3Dmap) == FALSE )
+		{
 			ldst->seq = GFL_G3D_MAP_LOAD_IDLING;
 			return FALSE;
 		}

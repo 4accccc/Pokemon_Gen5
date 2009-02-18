@@ -163,7 +163,7 @@ static void readerHeader(const void **mem, READ_INFO *outInfo)
 	//ポリゴンインデックス実データ
 	reader(&outInfo->TotalPolyIDListSize, 4, mem);
 
-#if 1
+#if 0
 OS_Printf("VtxNum				%d\n", outInfo->VtxNum );
 OS_Printf("NrmNum				%d\n", outInfo->NrmNum);
 OS_Printf("PolygonNum			%d\n", outInfo->PolygonNum);
@@ -351,7 +351,7 @@ void CheckHeightData(const void *mem, MHI_PTR outMHI)
 //	BOOL			LoadOK;
 	BOOL			DataValid;		//データ有効有無
 #endif
-#if 1
+#if 0
 	//頂点データ
 	OS_Printf("VertexArray=%08x\n", outMHI->VertexArray );
 	//法線データ
