@@ -931,7 +931,7 @@ static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx
 static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx )
 {
 	DRESSUP_INIT_WORK *initWork = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof(DRESSUP_INIT_WORK));
-	initWork->pokePara = PP_Create( MONSNO_PIKATYUU , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
+	initWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
 	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &DressUp_ProcData, initWork);
 	return TRUE;
 }

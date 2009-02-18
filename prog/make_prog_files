@@ -104,6 +104,7 @@ SRCS	+=		$(SOUNDSRC) \
 				system/pms_word.c \
 				musical/musical_system.c \
 				musical/mus_poke_draw.c \
+				musical/mus_poke_data.c \
 				musical/mus_item_draw.c \
 				musical/dressup/dressup_system.c \
 				musical/dressup/dup_fitting.c \

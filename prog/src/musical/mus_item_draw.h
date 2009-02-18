@@ -43,8 +43,15 @@ GFL_G3D_RES* MUS_ITEM_DRAW_LoadResource( u16 itemIdx );
 void MUS_ITEM_DRAW_DeleteResource( GFL_G3D_RES *res );
 //番号から追加と、読み込み済みリソースから追加
 MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddItemId( MUS_ITEM_DRAW_SYSTEM* work , u16 itemIdx , VecFx32 *pos );
-MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddResource( MUS_ITEM_DRAW_SYSTEM* work , GFL_G3D_RES* g3DresTex, VecFx32 *pos );
+MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddResource( MUS_ITEM_DRAW_SYSTEM* work ,  u16 itemIdx ,GFL_G3D_RES* g3DresTex, VecFx32 *pos );
 void MUS_ITEM_DRAW_DelItem( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork );
+
+//アイテム番号からARCの番号を調べる
+u16 MUS_ITEM_DRAW_GetArcIdx( const u16 itemIdx );
+void MUS_ITEM_DRAW_GetPicSize( const u16 fileId , GFL_BBD_TEXSIZ *texSize , u8 *sizeXRate , u8 *sizeYRate );
+
+//絵の変更
+void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u16 newId ,  GFL_G3D_RES *newRes);
 
 //値変換
 void MUS_ITEM_DRAW_SetDrawEnable( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , BOOL flg );

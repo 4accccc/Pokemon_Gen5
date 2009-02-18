@@ -10,6 +10,7 @@
 #define MUS_POKE_DRAW_H__
 
 #include "musical/musical_system.h"
+#include "mus_poke_data.h"
 
 //======================================================================
 //	define
@@ -48,5 +49,7 @@ void MUS_POKE_DRAW_SetPosition( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *pos );
 void MUS_POKE_DRAW_GetPosition( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *pos );
 void MUS_POKE_DRAW_SetScale( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *scale );
 void MUS_POKE_DRAW_GetScale( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *scale );
+
+MUS_POKE_DATA_WORK*	MUS_POKE_DRAW_GetPokeData( MUS_POKE_DRAW_WORK *drawWork );
 
 #endif MUS_POKE_DRAW_H__

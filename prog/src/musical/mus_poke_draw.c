@@ -37,6 +37,8 @@ struct _MUS_POKE_DRAW_WORK
 {
 	BOOL enable;
 	MCSS_WORK	*mcss;
+	
+	MUS_POKE_DATA_WORK *pokeData;
 };
 
 //描画システム
@@ -61,6 +63,7 @@ MUS_POKE_DRAW_SYSTEM*	MUS_POKE_DRAW_InitSystem( HEAPID heapId )
 	int i;
 	MUS_POKE_DRAW_SYSTEM *work = GFL_HEAP_AllocMemory( heapId , sizeof(MUS_POKE_DRAW_SYSTEM) );
 	
+	work->heapId = heapId;
 	work->mcssSys = MCSS_Init( MUS_POKE_DRAW_MAX , heapId );
 	for( i=0;i<MUS_POKE_DRAW_MAX;i++ )
 	{
@@ -121,7 +124,10 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 			 FX32_ONE );
 
 	MUS_POKE_DRAW_SetScale( &work->musMcss[i], &scale );
-
+	
+	//装備箇所データなど読み込み
+	work->musMcss[i].pokeData = MUS_POKE_DATA_LoadMusPokeData( musPoke , work->heapId );
+	
 	return &work->musMcss[i];
 }
 
@@ -151,3 +157,7 @@ void MUS_POKE_DRAW_GetScale( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *scale )
 	MCSS_GetScale( drawWork->mcss , scale );
 }
 
+MUS_POKE_DATA_WORK*	MUS_POKE_DRAW_GetPokeData( MUS_POKE_DRAW_WORK *drawWork )
+{
+	return drawWork->pokeData;
+}

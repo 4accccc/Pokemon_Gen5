@@ -34,7 +34,15 @@ enum {
 	NARC_musical_item_item21_nsbtx = 20,
 	NARC_musical_item_item22_nsbtx = 21,
 	NARC_musical_item_item23_nsbtx = 22,
-	NARC_musical_item_item24_nsbtx = 23
+	NARC_musical_item_item24_nsbtx = 23,
+	NARC_musical_item_item25_nsbtx = 24,
+	NARC_musical_item_item26_nsbtx = 25,
+	NARC_musical_item_item27_nsbtx = 26,
+	NARC_musical_item_item28_nsbtx = 27,
+	NARC_musical_item_item29_nsbtx = 28,
+	NARC_musical_item_item30_nsbtx = 29,
+	NARC_musical_item_item31_nsbtx = 30,
+	NARC_musical_item_item32_nsbtx = 31
 };
 
 /* NARC_MUSICAL_ITEM_NAIX_ */

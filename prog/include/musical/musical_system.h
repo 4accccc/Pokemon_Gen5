@@ -14,15 +14,14 @@
 //	define
 //======================================================================
 //ミュージカルの装備アイテムの最大個数
-#define MUSICAL_ITEM_MAX (128)
-
+#define MUSICAL_ITEM_MAX (240)
 
 //======================================================================
 //	enum
 //======================================================================
 
 //ミュージカルポケモンの装備箇所
-enum MUS_POKE_EQUIP_POS
+typedef enum
 {
 	MUS_POKE_EQU_EAR_R,		//右耳
 	MUS_POKE_EQU_EAR_L,		//左耳
@@ -35,7 +34,9 @@ enum MUS_POKE_EQUIP_POS
 	MUS_POKE_EQU_TAIL,		//尻尾
 
 	MUS_POKE_EQUIP_MAX,
-};
+	
+	MUS_POKE_EQU_INVALID,	//無効値
+}MUS_POKE_EQUIP_POS;
 
 //======================================================================
 //	typedef struct

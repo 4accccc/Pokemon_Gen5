@@ -161,6 +161,8 @@ extern int	GFL_BBD_AddObject
 			const VecFx32* trans, const u8 alpha, const GFL_BBD_LIGHTMASK lightMask );
 //	ビルボードオブジェクト破棄
 extern void	GFL_BBD_RemoveObject( GFL_BBD_SYS* billboardSys, int objIdx );
+//	ビルボードオブジェクト破棄 Vramのみ
+extern void	GFL_BBD_RemoveResourceVram( GFL_BBD_SYS* billboardSys, int resIdx );
 
 //------------------------------------------------------------------
 /**
