@@ -15,6 +15,7 @@
 #include "btl_string.h"
 #include "btl_action.h"
 
+#include "poke_mcss.h"
 #include "btlv_core.h"
 #include "btlv_scd.h"
 
@@ -55,6 +56,27 @@ enum {
 
 //--------------------------------------------------------------
 /**
+ *	ワザ対象の選択／確認画面用パラメータ
+ */
+//--------------------------------------------------------------
+enum {
+	STW_CONFIRM_POKE,
+	STW_CONFIRM_FIELD,
+};
+typedef u8 StwConfirmType;
+
+typedef struct {
+
+	u8 selectablePokeCount;				///< 選択できるポケモンの候補数（0なら選択不可->確認モード）
+	u8 confirmCount;							///< 確認モード対象の数
+	StwConfirmType	confirmType;	///< 確認モード対象タイプ（0:ポケモン, 1:場）
+
+	u8 pos[ BTL_POS_MAX ];		///< 選択・確認するポケモンの位置
+
+}SEL_TARGET_WORK;
+
+//--------------------------------------------------------------
+/**
  *
  */
 //--------------------------------------------------------------
@@ -62,8 +84,8 @@ struct _BTLV_SCD {
 
 	GFL_BMPWIN*			win;
 	GFL_BMP_DATA*		bmp;
-	GFL_FONT*			font;
-	STRBUF*				strbuf;
+	GFL_FONT*				font;
+	STRBUF*					strbuf;
 
 	PRINT_QUE*			printQue;
 	PRINT_UTIL			printUtil;
@@ -73,12 +95,13 @@ struct _BTLV_SCD {
 	u32						subProcStackPtr;
 
 	const BTL_POKEPARAM*	bpp;
-	BTL_ACTION_PARAM		selAction;
-	BTL_ACTION_PARAM*		destActionParam;
+	BTL_ACTION_PARAM*			destActionParam;
 
 	const BTL_POKESELECT_PARAM*		pokesel_param;
 	BTL_POKESELECT_RESULT*				pokesel_result;
-	
+
+	SEL_TARGET_WORK		selTargetWork;
+	u8								selTargetDone;
 
 	const BTLV_CORE* vcore;
 	const BTL_MAIN_MODULE* mainModule;
@@ -94,8 +117,22 @@ static void spstack_push( BTLV_SCD* wk, BPFunc initFunc, BPFunc loopFunc );
 static BOOL spstack_call( BTLV_SCD* wk );
 static void printBtn( BTLV_SCD* wk, u16 posx, u16 posy, u16 sizx, u16 sizy, u16 col, u16 strID );
 static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str );
+static void printCommWait( BTLV_SCD* wk );
 static BOOL selectAction_init( int* seq, void* wk_adrs );
 static BOOL selectAction_loop( int* seq, void* wk_adrs );
+static void stw_init( SEL_TARGET_WORK* stw );
+static void stw_convert_pos_to_index( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, u8 num );
+static void stw_setSelectablePoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
+static void stw_setConfirmPoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
+static void stw_setConfirmField( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
+static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MAIN_MODULE* mainModule, u8* target_idx );
+static inline u8 stwdraw_vpos_to_tblidx( u8 vpos );
+static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk );
+static void stw_draw( const SEL_TARGET_WORK* stw, BTLV_SCD* work );
+static BOOL stw_draw_wait( BTLV_SCD* wk );
+static BOOL selectTarget_init( int* seq, void* wk_adrs );
+static BOOL selectTarget_loop( int* seq, void* wk_adrs );
+static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk );
 static BOOL selectPokemon_init( int* seq, void* wk_adrs );
 static BOOL selectPokemon_loop( int* seq, void* wk_adrs );
 
@@ -120,7 +157,6 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 
 	return wk;
 }
-
 
 void BTLV_SCD_Setup( BTLV_SCD* wk )
 {
@@ -152,7 +188,6 @@ void BTLV_SCD_Setup( BTLV_SCD* wk )
 	GFL_BMPWIN_TransVramCharacter( wk->win );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 }
-
 
 void BTLV_SCD_Delete( BTLV_SCD* wk )
 {
@@ -239,6 +274,7 @@ static const struct {
 	{ 128, 96, 128, 96 },
 };
 
+
 static void printBtn( BTLV_SCD* wk, u16 posx, u16 posy, u16 sizx, u16 sizy, u16 col, u16 strID )
 {
 	u32 strWidth, drawX, drawY;
@@ -269,6 +305,19 @@ static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str )
 	strWidth = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
 	drawX = posx + (sizx - strWidth) / 2;
 	drawY = posy + (sizy - 32) / 2;
+	PRINT_UTIL_Print( &wk->printUtil, wk->printQue, drawX, drawY, wk->strbuf, wk->font );
+}
+
+static void printCommWait( BTLV_SCD* wk )
+{
+	u32 strWidth, drawX, drawY;
+
+	GFL_BMP_Clear( wk->bmp, 0x0f );
+
+	BTL_STR_GetUIString( wk->strbuf, BTLSTR_UI_COMM_WAIT );
+	strWidth = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
+	drawX = (256 - strWidth) / 2;
+	drawY = (192 - 16) / 2;
 	PRINT_UTIL_Print( &wk->printUtil, wk->printQue, drawX, drawY, wk->strbuf, wk->font );
 }
 
@@ -304,6 +353,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 	enum {
 		SEQ_START = 0,
 		SEQ_SEL_FIGHT = 100,
+		SEQ_SEL_FIGHT_FINISH = 180,
 		SEQ_SEL_ITEM = 200,
 		SEQ_SEL_POKEMON = 300,
 		SEQ_SEL_ESCAPE = 400,
@@ -373,28 +423,49 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 
 				if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE )
 				{
-					return TRUE;
+					(*seq) = SEQ_SEL_FIGHT_FINISH;
 				}
 				else
 				{
+					spstack_push( wk, selectTarget_init, selectTarget_loop );
 					(*seq)++;
 				}
 			}
 			break;
 		case SEQ_SEL_FIGHT+3:
+			if( wk->selTargetDone )
 			{
-			// @@@ダブル時の選択処理 書きかけ。
-//				u8 wazaIdx = wk->destActionParam.wazaIdx;
-//				u8 targetIdx = 0;
 				return TRUE;
+			}
+			else
+			{
+				(*seq) = SEQ_SEL_FIGHT;
 			}
 			break;
 		}
 		break;
 
+	case SEQ_SEL_FIGHT_FINISH:
+		if( BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE )
+		{
+			return TRUE;
+		}
+		else
+		{
+			printCommWait( wk );
+			(*seq)++;
+		}
+		break;
+
+	case SEQ_SEL_FIGHT_FINISH+1:
+		PRINTSYS_QUE_Main( wk->printQue );
+		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
+		{
+			return TRUE;
+		}
+		break;
 
 	case SEQ_SEL_POKEMON:
-//		spstack_push( wk, selectPokemon_init, selectPokemon_loop );
 		BTL_ACTION_SetChangeBegin( wk->destActionParam );
 		return TRUE;
 
@@ -409,6 +480,301 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 	return FALSE;
 }
 
+//--------------------------------------------------------------------------------------
+// ターゲット選択画面描画処理
+//--------------------------------------------------------------------------------------
+enum {
+// 2vs2
+//		D B
+//
+// A C
+	STW_BTN_WIDTH = 14,
+	STW_BTN_HEIGHT = 10,
+
+	STW_BTNPOS_D_X = 1,
+	STW_BTNPOS_D_Y = 1,
+	STW_BTNPOS_B_X = STW_BTNPOS_D_X + STW_BTN_WIDTH + 1,
+	STW_BTNPOS_B_Y = STW_BTNPOS_D_Y,
+	STW_BTNPOS_A_X = STW_BTNPOS_D_X,
+	STW_BTNPOS_A_Y = STW_BTNPOS_D_Y + STW_BTN_HEIGHT + 1,
+	STW_BTNPOS_C_X = STW_BTNPOS_B_X,
+	STW_BTNPOS_C_Y = STW_BTNPOS_A_Y,
+
+};
+// 描画位置に対応したボタンタッチ位置テーブル
+static const GFL_UI_TP_HITTBL STW_HitTbl[] = {
+	{ STW_BTNPOS_A_Y*8, (STW_BTNPOS_A_Y+STW_BTN_HEIGHT)*8, STW_BTNPOS_A_X*8, (STW_BTNPOS_A_X+STW_BTN_WIDTH)*8 },
+	{ STW_BTNPOS_B_Y*8, (STW_BTNPOS_B_Y+STW_BTN_HEIGHT)*8, STW_BTNPOS_B_X*8, (STW_BTNPOS_B_X+STW_BTN_WIDTH)*8 },
+	{ STW_BTNPOS_C_Y*8, (STW_BTNPOS_C_Y+STW_BTN_HEIGHT)*8, STW_BTNPOS_C_X*8, (STW_BTNPOS_C_X+STW_BTN_WIDTH)*8 },
+	{ STW_BTNPOS_D_Y*8, (STW_BTNPOS_D_Y+STW_BTN_HEIGHT)*8, STW_BTNPOS_D_X*8, (STW_BTNPOS_D_X+STW_BTN_WIDTH)*8 },
+};
+// ↑描画位置から上記テーブルインデックスを引くためのテーブル
+static const u8 STW_HitTblIndex[] = {
+	POKE_MCSS_POS_A,
+	POKE_MCSS_POS_B,
+	POKE_MCSS_POS_C,
+	POKE_MCSS_POS_D,
+};
+
+/*
+typedef struct {
+
+	u8 selectablePokeCount;		///< 選択できるポケモンの候補数（0なら選択不可->確認モード）
+	u8 confirmCount;					///< 確認モード対象の数
+	u8 confirmType;						///< 確認モード対象タイプ（0:ポケモン, 1:場）
+
+	u8 pos[ BTL_POS_MAX ];		///< 選択・確認するポケモンの位置
+
+}SEL_TARGET_WORK;
+*/
+// 構造体初期化
+static void stw_init( SEL_TARGET_WORK* stw )
+{
+	GFL_STD_MemClear( stw, sizeof( *stw ) );
+}
+// pos(戦闘位置）配列を、ポケモン選択インターフェイス用のインデックスに変換
+static void stw_convert_pos_to_index( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, u8 num )
+{
+	u8 i;
+
+	for(i=0; i<num; ++i)
+	{
+		stw->pos[i] = BTL_MAIN_BtlPosToViewPos( mainModule, stw->pos[i] );
+	}
+}
+// 選択可能ポケモンをセット
+static void stw_setSelectablePoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos )
+{
+	u8 num = BTL_MAIN_ExpandBtlPos( mainModule, exPos, stw->pos );
+	stw->selectablePokeCount = num;
+}
+// 確認のみ（ポケモン）をセット
+static void stw_setConfirmPoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos )
+{
+	u8 num = BTL_MAIN_ExpandBtlPos( mainModule, exPos, stw->pos );
+	stw->confirmCount = num;
+	stw->confirmType = STW_CONFIRM_POKE;
+}
+// 確認のみ（場）をセット
+static void stw_setConfirmField( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos )
+{
+	u8 num = BTL_MAIN_ExpandBtlPos( mainModule, exPos, stw->pos );
+	stw->confirmCount = num;
+	stw->confirmType = STW_CONFIRM_FIELD;
+}
+//
+static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MAIN_MODULE* mainModule, u8* target_idx )
+{
+	GF_ASSERT(hitPos<NELEMS(STW_HitTblIndex));
+
+	if( stw->selectablePokeCount )
+	{
+		u8 hitVpos = STW_HitTblIndex[ hitPos ];
+		u8 vpos, i;
+
+		for(i=0; i<stw->selectablePokeCount; ++i)
+		{
+			vpos = BTL_MAIN_BtlPosToViewPos( mainModule, stw->pos[i] );
+			if( vpos == hitVpos )
+			{
+				*target_idx = i;
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+	else
+	{
+		// 確認のみモードの場合、どこをタッチしてもOKにしておく
+		*target_idx = 0;
+		return TRUE;
+	}
+}
+// 
+static inline u8 stwdraw_vpos_to_tblidx( u8 vpos )
+{
+	u8 i;
+	for(i=0; i<NELEMS(STW_HitTblIndex); ++i)
+	{
+		if( STW_HitTblIndex[i] == vpos )
+		{
+			return i;
+		}
+	}
+	GF_ASSERT(0);
+	return 0;
+}
+// ボタン描画
+static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
+{
+	static const struct {
+		u8 back;
+		u8 letter;
+		u8 shadow;
+	}color_tbl[] = {
+		{ 0x0e, 0x01, 0x02 },
+		{ 0x06, 0x01, 0x02 },
+		{ 0x0a, 0x01, 0x02 },
+	};
+	const BTL_POKEPARAM* bpp;
+	const POKEMON_PARAM* pp;
+
+	u16 x, y, width, height, str_x, str_y, str_width;
+	u8 vpos, idx;
+
+	while( count-- )
+	{
+		bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, *pos );
+		pp  = BTL_POKEPARAM_GetSrcData( bpp );
+		vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, *pos );
+		idx = stwdraw_vpos_to_tblidx( vpos );
+
+		x = STW_HitTbl[idx].rect.left;
+		y = STW_HitTbl[idx].rect.top;
+		width = (STW_HitTbl[idx].rect.right - STW_HitTbl[idx].rect.left);
+		height = (STW_HitTbl[idx].rect.bottom - STW_HitTbl[idx].rect.top);
+
+		GFL_BMP_Fill( wk->bmp, x, y, width, height, color_tbl[format].back );
+		PP_Get( pp, ID_PARA_nickname, wk->strbuf );
+		str_width = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
+		str_x = x + (width - str_width) / 2;
+		str_y = y + (height - 16) / 2;
+
+		GFL_FONTSYS_SetColor( color_tbl[format].letter, color_tbl[format].shadow, color_tbl[format].back );
+		PRINT_UTIL_Print( &wk->printUtil, wk->printQue, str_x, str_y, wk->strbuf, wk->font );
+		pos++;
+	}
+	GFL_FONTSYS_SetDefaultColor();
+}
+static void stw_draw( const SEL_TARGET_WORK* stw, BTLV_SCD* work )
+{
+	GFL_BMP_Clear( work->bmp, 0x0f );
+
+	// ポケモン選択モード
+	if( stw->selectablePokeCount )
+	{
+		stwdraw_button( stw->pos, stw->selectablePokeCount, 0, work );
+	}
+	// 確認のみ
+	else
+	{
+		GF_ASSERT(stw->confirmCount);
+		if( stw->confirmType == STW_CONFIRM_POKE )
+		{
+			stwdraw_button( stw->pos, stw->confirmCount, 1, work );
+		}
+		else
+		{
+			stwdraw_button( stw->pos, stw->confirmCount, 2, work );
+		}
+	}
+}
+static BOOL stw_draw_wait( BTLV_SCD* wk )
+{
+	PRINTSYS_QUE_Main( wk->printQue );
+	return PRINT_UTIL_Trans( &wk->printUtil, wk->printQue );
+}
+
+
+//=============================================================================================
+//	ワザターゲット選択（確認）処理
+//=============================================================================================
+static BOOL selectTarget_init( int* seq, void* wk_adrs )
+{
+	BTLV_SCD* wk = wk_adrs;
+
+	switch( *seq ){
+	case 0:
+		seltgt_init_setup_work( &wk->selTargetWork, wk );
+		stw_draw( &wk->selTargetWork, wk );
+		(*seq)++;
+		break;
+	case 1:
+		if( stw_draw_wait(wk) )
+		{
+			(*seq)++;
+			return TRUE;
+		}
+		break;
+	default:
+		return TRUE;
+	}
+	return FALSE;
+}
+static BOOL selectTarget_loop( int* seq, void* wk_adrs )
+{
+	BTLV_SCD* wk = wk_adrs;
+
+	switch( *seq ){
+	case 0:
+		{
+			int hit = GFL_UI_TP_HitTrg( STW_HitTbl );
+			if( hit != GFL_UI_TP_HIT_NONE )
+			{
+				u8 target_idx;
+				if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &target_idx ) )
+				{
+					BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.wazaIdx, target_idx );
+					wk->selTargetDone = TRUE;
+					return TRUE;
+				}
+			}
+
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+			{
+				wk->selTargetDone = FALSE;
+				return TRUE;
+			}
+		}
+		break;
+	}
+	return FALSE;
+}
+
+static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
+{
+	WazaID waza = BTL_POKEPARAM_GetWazaNumber( wk->bpp, wk->destActionParam->fight.wazaIdx );
+	WazaTarget target = WAZADATA_GetTarget( waza );
+	BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, BTL_POKEPARAM_GetID(wk->bpp) );
+
+	stw_init( stw );
+
+	switch( target ){
+	case WAZA_TARGET_SINGLE:				///< 自分以外の１体（選択）
+		stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_WITHOUT_ME, basePos) );
+		break;
+	case WAZA_TARGET_SINGLE_ENEMY:	///< 敵１体（選択）
+		stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, basePos) );
+		break;
+
+	case WAZA_TARGET_ENEMY2:				///< 敵側２体
+	case WAZA_TARGET_RANDOM:				///< 敵ランダム
+		stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, basePos) );
+		break;
+	case WAZA_TARGET_OTHER_ALL:			///< 自分以外全部
+		stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_WITHOUT_ME, basePos) );
+		break;
+	case WAZA_TARGET_ONLY_USER:			///< 自分１体のみ
+		stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_DEFAULT, basePos) );
+		break;
+
+	case WAZA_TARGET_TEAM_USER:			///< 自分側陣地
+		stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_MYSIDE_ALL, basePos) );
+		break;
+
+	case WAZA_TARGET_TEAM_ENEMY:		///< 敵側陣地
+		stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, basePos) );
+		break;
+
+	case WAZA_TARGET_FIELD:					///< 場に効く（天候系など）
+		stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_ALL, basePos) );
+		break;
+
+	default:
+		GF_ASSERT_MSG(0, "illegal target(%d)", target);
+		break;
+	}
+}
 
 
 //=============================================================================================

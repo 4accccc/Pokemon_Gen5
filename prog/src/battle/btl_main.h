@@ -73,15 +73,16 @@ static inline BtlPokePos BTL_MAINUTIL_GetSidePos( BtlSide side, u8 idx )
 
 //-------------------------------------------------------------------------------
 /**
- *	特殊クライアントID指定子
+ *	特殊位置ID指定子
  */
 //-------------------------------------------------------------------------------
 typedef enum {
 
 	BTL_EXPOS_DEFAULT = 0,		///< 自分だけ
 	BTL_EXPOS_ENEMY_ALL,			///< 相手全部
-	BTL_EXPOS_ENEMY_RANDOM,		///< 相手ランダム１体
 	BTL_EXPOS_WITHOUT_ME,			///< 自分以外全部
+	BTL_EXPOS_MYSIDE_ALL,			///< 味方全部
+	BTL_EXPOS_ALL,						///< 敵・味方全部
 
 }BtlExPosType;
 

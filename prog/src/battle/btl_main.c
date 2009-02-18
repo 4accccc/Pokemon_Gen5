@@ -921,10 +921,16 @@ static u8 expandPokePos_single( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
 		GF_ASSERT(0);
 		/* fallthru */
 	case BTL_EXPOS_ENEMY_ALL:
-	case BTL_EXPOS_ENEMY_RANDOM:
 	case BTL_EXPOS_WITHOUT_ME:
 		dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
 		break;
+	case BTL_EXPOS_MYSIDE_ALL:
+		dst[0] = basePos;
+		break;
+	case BTL_EXPOS_ALL:
+		dst[0] = BTL_POS_1ST_0;
+		dst[1] = BTL_POS_2ND_0;
+		return 2;
 	}
 	return 1;
 }
@@ -939,14 +945,27 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
 		dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
 		dst[1] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
 		return 2;
-	case BTL_EXPOS_ENEMY_RANDOM:
-		dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, GFL_STD_MtRand(1) );
-		return 1;
 	case BTL_EXPOS_WITHOUT_ME:
 		dst[0] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 0 );
 		dst[1] = BTL_MAIN_GetOpponentPokePos( wk, basePos, 1 );
-		dst[2] = (basePos&1) + (~(basePos/2))*2;
+		dst[2] = BTL_MAIN_GetNextPokePos( wk, basePos );
 		return 3;
+	case BTL_EXPOS_MYSIDE_ALL:
+		dst[0] = basePos;
+		dst[1] = BTL_MAIN_GetNextPokePos( wk, basePos );
+		if( dst[0] > dst[1] )
+		{
+			u8 tmp = dst[0];
+			dst[0] = dst[1];
+			dst[1] = tmp;
+		}
+		return 2;
+	case BTL_EXPOS_ALL:
+		dst[0] = BTL_POS_1ST_0;
+		dst[1] = BTL_POS_2ND_0;
+		dst[2] = BTL_POS_1ST_1;
+		dst[3] = BTL_POS_2ND_1;
+		return 4;
 	}
 }
 //
