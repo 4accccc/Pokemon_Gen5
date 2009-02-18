@@ -11,10 +11,11 @@
 #include <gflib.h>
 
 #include "system/gfl_use.h"
+#include "system/vm_cmd.h"
 
 #include "btl_effect.h"
-
 #include "btl_efftool.h"
+#include "btl_effect_def.h"
 
 #include "arc_def.h"
 #include "spa.naix"
@@ -39,22 +40,16 @@ struct _BTL_EFFECT_WORK
 	//最終的にはエフェクトで使用するTCBをPOKE_MCSS、BTL_CAMERA、BTL_EFFECTでシェアする形にする
 	GFL_TCBSYS			*tcb_sys;
 	void				*tcb_work;
+	VMHANDLE			*vm_core;
 	POKE_MCSS_WORK		*pmw;
 	BTL_STAGE_WORK		*bsw;
 	BTL_FIELD_WORK		*bfw;
 	BTL_CAMERA_WORK		*bcw;
-	GFL_PTC_PTR			ptc;
-	u8					spa_work[ PARTICLE_LIB_HEAP_SIZE ];
+	GFL_PTC_PTR			ptc[ PARTICLE_GLOBAL_MAX ];
+	u16					ptc_no[ PARTICLE_GLOBAL_MAX ];
 	int					execute_flag;
 	HEAPID				heapID;
 };
-
-typedef struct
-{
-	void			*resource;
-	int				seq_no;
-	int				wait;
-}BTL_EFFECT_TCB;
 
 //============================================================================================
 /**
@@ -74,35 +69,8 @@ BTL_CAMERA_WORK	*BTL_EFFECT_GetCameraWork( void );
 
 static	BTL_EFFECT_WORK	*bew = NULL;
 
-//暫定で作ったTCBVerの技エフェクトシーケンス
-static	void	BTL_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work );
-static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work );
-static	void	BTL_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work );
-static	void	BTL_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work );
-
-static	void	BTL_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work );
-static	void	BTL_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work );
-static	void	BTL_EFFECT_TCB_A2BMizudeppou( GFL_TCB *tcb, void *work );
-static	void	BTL_EFFECT_TCB_B2AMizudeppou( GFL_TCB *tcb, void *work );
-
-static	void	BTL_EFFECT_InitPTCAA( GFL_EMIT_PTR emit );
-static	void	BTL_EFFECT_InitPTCBB( GFL_EMIT_PTR emit );
-static	void	BTL_EFFECT_InitPTCA( GFL_EMIT_PTR emit );
-static	void	BTL_EFFECT_InitPTCB( GFL_EMIT_PTR emit );
-static	void	BTL_EFFECT_TCB_End( GFL_TCB *tcb, BTL_EFFECT_TCB *bet );
-
-
-
-static	GFL_TCB_FUNC * const btl_effect_tcb_table[]={
-	&BTL_EFFECT_TCB_AA2BBGanseki,
-	&BTL_EFFECT_TCB_BB2AAGanseki,
-	&BTL_EFFECT_TCB_AA2BBMizudeppou,
-	&BTL_EFFECT_TCB_BB2AAMizudeppou,
-	&BTL_EFFECT_TCB_A2BGanseki,
-	&BTL_EFFECT_TCB_B2AGanseki,
-	&BTL_EFFECT_TCB_A2BMizudeppou,
-	&BTL_EFFECT_TCB_B2AMizudeppou,
-};
+static	VMHANDLE	*BTL_EFFVM_Init( HEAPID heapID );
+static	void		BTL_EFFVM_Exit( VMHANDLE *core );
 
 //============================================================================================
 /**
@@ -123,6 +91,8 @@ void	BTL_EFFECT_Init( int index, HEAPID heapID )
 	//最終的にはエフェクトで使用するTCBをPOKE_MCSS、BTL_CAMERA、BTL_EFFECTでシェアする形にする
 	bew->tcb_work = GFL_HEAP_AllocClearMemory( heapID, GFL_TCB_CalcSystemWorkSize( BTL_EFFECT_TCB_MAX ) );
 	bew->tcb_sys = GFL_TCB_Init( BTL_EFFECT_TCB_MAX, bew->tcb_work );
+
+	bew->vm_core = BTL_EFFVM_Init( heapID );
 
 	bew->pmw = POKE_MCSS_Init( bew->tcb_sys, heapID );
 	bew->bsw = BTL_STAGE_Init( index, heapID );
@@ -148,6 +118,7 @@ void	BTL_EFFECT_Exit( void )
 	BTL_FIELD_Exit( bew->bfw );
 	BTL_CAMERA_Exit( bew->bcw );
 	GFL_PTC_Exit();
+	BTL_EFFVM_Exit( bew->vm_core );
 	GFL_TCB_Exit( bew->tcb_sys );
 	GFL_HEAP_FreeMemory( bew->tcb_work );
 	GFL_HEAP_FreeMemory( bew );
@@ -207,36 +178,6 @@ void	BTL_EFFECT_Main( void )
 //=============================================================================================
 void BTL_EFFECT_AddByPos( PokeMcssPos from, PokeMcssPos to, WazaID waza )
 {
-	static const u16 effnoTbl[] = {
-		BTL_EFFECT_AA2BBGANSEKI,
-		BTL_EFFECT_BB2AAGANSEKI,
-		BTL_EFFECT_A2BGANSEKI,
-		BTL_EFFECT_B2AGANSEKI,
-
-		BTL_EFFECT_AA2BBMIZUDEPPOU,
-		BTL_EFFECT_BB2AAMIZUDEPPOU,
-		BTL_EFFECT_A2BMIZUDEPPOU,
-		BTL_EFFECT_B2AMIZUDEPPOU
-	};
-
-	enum {
-		POS_PATTERNS = 4,	// @@@ ホントはもっとある。
-	};
-
-	// from C, D および to C, D は用意されていないので
-	// C -> A , D->B になるように加工する
-	// @@@ C D が用意されたらこの処理は不要。taya
-	while( from >= POKE_MCSS_POS_C ){  from -= 2; }
-	while( to >= POKE_MCSS_POS_C ) { to -= 2; }
-
-	// ワザが２種類しか用意されていないのでワザナンバー 0-1 になるように加工。
-	// @@@ ワザが揃うのに合わせて適宜、修正。taya
-	waza = waza & 1;
-
-	{
-		int idx = waza * POS_PATTERNS + from;
-		BTL_EFFECT_Add( effnoTbl[idx] );
-	}
 }
 
 //============================================================================================
@@ -248,22 +189,6 @@ void BTL_EFFECT_AddByPos( PokeMcssPos from, PokeMcssPos to, WazaID waza )
 //============================================================================================
 void	BTL_EFFECT_Add( int eff_no )
 {
-	BTL_EFFECT_TCB	*bet = GFL_HEAP_AllocMemory( bew->heapID, sizeof( BTL_EFFECT_TCB ) );
-
-	bet->seq_no = 0;
-	bet->wait = 0;
-
-	GFL_TCB_AddTask( bew->tcb_sys, btl_effect_tcb_table[ eff_no ], bet, 0 );
-
-	GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
-	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
-
-	if( eff_no < BTL_EFFECT_A2BGANSEKI){
-		bew->execute_flag = 1;
-	}
-	else{
-		bew->execute_flag = 2;
-	}
 }
 
 //============================================================================================
@@ -315,7 +240,179 @@ BTL_CAMERA_WORK	*BTL_EFFECT_GetCameraWork( void )
 	return bew->bcw;
 }
 
+//============================================================================================
+/**
+ *	スクリプト解析
+ */
+//============================================================================================
+//============================================================================================
+/**
+ *	プロトタイプ宣言
+ */
+//============================================================================================
+//スクリプトコマンド
+static VMCMD_RESULT WS_CAMERA_MOVE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT WS_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT WS_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT WS_PARTICLE_PLAY_WITH_POS( VMHANDLE *vmh, void *context_work );
+
+//VM_WAIT_FUNC群
+static	BOOL	VWF_CAMERA_MOVE_CHECK( VMHANDLE *vmh, void *context_work );
+
+//============================================================================================
+/**
+ *	スクリプトテーブル
+ */
+//============================================================================================
+static const VMCMD_FUNC btl_effect_command_table[]={
+	WS_CAMERA_MOVE,
+	WS_PARTICLE_LOAD,
+	WS_PARTICLE_PLAY,
+	WS_PARTICLE_PLAY_WITH_POS,
+};
+
+//============================================================================================
+/**
+ *	VMイニシャライザーテーブル
+ */
+//============================================================================================
+static	const VM_INITIALIZER	vm_init={
+	BTL_EFFVM_STACK_SIZE,				//u16 stack_size;	///<使用するスタックのサイズ
+	BTL_EFFVM_REG_SIZE,					//u16 reg_size;		///<使用するレジスタの数
+	btl_effect_command_table,			//const VMCMD_FUNC * command_table;	///<使用する仮想マシン命令の関数テーブル
+	NELEMS( btl_effect_command_table ),	//const u32 command_max;			///<使用する仮想マシン命令定義の最大数
+};
+
+//============================================================================================
+/**
+ *	VM初期化
+ *
+ * @param[in]	heapID			ヒープID
+ */
+//============================================================================================
+VMHANDLE	*BTL_EFFVM_Init( HEAPID heapID )
+{
+	VMHANDLE	*core;
+
+	core = VM_Create( heapID, &vm_init );
+	VM_Init( core, NULL );
+
+	return core;
+}
+
+//============================================================================================
+/**
+ *	VM終了
+ *
+ * @param[in]	core	仮想マシン制御構造体へのポインタ
+ */
+//============================================================================================
+void	BTL_EFFVM_Exit( VMHANDLE *core )
+{
+	VM_Delete( core );
+}
+
+//============================================================================================
+/**
+ *	カメラ移動
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT WS_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
+{
+	VecFx32		cam_pos,cam_target;
+	//カメラタイプ読み込み
+	int			cam_type = ( int )VMGetU32( vmh );
+	int			frame,brake;
+
+	//カメラ移動先位置を読み込み
+	cam_pos.x = ( fx32 )VMGetU32( vmh );
+	cam_pos.y = ( fx32 )VMGetU32( vmh );
+	cam_pos.z = ( fx32 )VMGetU32( vmh );
+	//カメラ移動先ターゲットを読み込み
+	cam_target.x = ( fx32 )VMGetU32( vmh );
+	cam_target.y = ( fx32 )VMGetU32( vmh );
+	cam_target.z = ( fx32 )VMGetU32( vmh );
+	//移動フレーム数を読み込み
+	frame = ( int )VMGetU32( vmh );
+	//ブレーキフレーム数を読み込み
+	brake = ( int )VMGetU32( vmh );
+
+	//カメラタイプから移動先を計算
+	switch( cam_type ){
+	case BTL_CAMERA_MOVE_INIT:			//初期位置
+		BTL_CAMERA_GetDefaultCameraPosition( &cam_pos, &cam_target );
+		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &cam_pos, &cam_target, frame, brake );
+		break;
+	case BTL_CAMERA_MOVE_DIRECT:		//ダイレクト
+		BTL_CAMERA_MoveCameraPosition( bew->bcw, &cam_pos, &cam_target );
+		break;
+	case BTL_CAMERA_MOVE_INTERPOLATION:	//追従
+		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &cam_pos, &cam_target, frame, brake );
+		break;
+	}
+	VMCMD_SetWait( vmh, VWF_CAMERA_MOVE_CHECK );
+
+	return VMCMD_RESULT_SUSPEND;
+}
+
+//============================================================================================
+/**
+ *	パーティクルリソースロード
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT WS_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
+{
+	return VMCMD_RESULT_SUSPEND;
+}
+
+//============================================================================================
+/**
+ *	パーティクル再生
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT WS_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
+{
+	return VMCMD_RESULT_SUSPEND;
+}
+
+//============================================================================================
+/**
+ *	パーティクル再生（座標指定あり）
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT WS_PARTICLE_PLAY_WITH_POS( VMHANDLE *vmh, void *context_work )
+{
+	return VMCMD_RESULT_SUSPEND;
+}
+
+//VM_WAIT_FUNC群
+//============================================================================================
+/**
+ *	カメラ移動終了チェック
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static	BOOL	VWF_CAMERA_MOVE_CHECK( VMHANDLE *vmh, void *context_work )
+{
+	return ( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE );
+}
+
 //本来はスクリプトエンジンを載せて、動作させるが、暫定でTCBを利用する
+#if 0
 //============================================================================================
 /**
  *	エフェクトシーケンス
@@ -1108,6 +1205,7 @@ static	void	BTL_EFFECT_TCB_End( GFL_TCB *tcb, BTL_EFFECT_TCB *bet )
 	GFL_HEAP_FreeMemory( bet );
 	GFL_TCB_DeleteTask( tcb );
 }
+#endif
 
 //管理構造体のポインタを返すバージョン
 #if 0

@@ -62,8 +62,10 @@ void			BTL_STAGE_Draw( BTL_STAGE_WORK *bsw );
  */
 //============================================================================================
 static	const	VecFx32	stage_pos_table[]={
-	{ FX_F32_TO_FX32( -3.845f ), 0, FX_F32_TO_FX32(   4.702f ) },
-	{ FX_F32_TO_FX32(  4.964f ), 0, FX_F32_TO_FX32( -12.540f ) },
+//	{ FX_F32_TO_FX32( -3.845f ), 0, FX_F32_TO_FX32(   4.702f ) },
+//	{ FX_F32_TO_FX32(  4.964f ), 0, FX_F32_TO_FX32( -12.540f ) },
+	{ 0, FX_F32_TO_FX32( -0.45f ), FX_F32_TO_FX32( 8.3f ) },
+	{ 0, FX_F32_TO_FX32( -0.45f ), FX_F32_TO_FX32( -14.4f ) },
 };
 
 //============================================================================================
@@ -73,7 +75,8 @@ static	const	VecFx32	stage_pos_table[]={
 //============================================================================================
 //モデルデータ
 static	const	int	stage_resource_table[]={
-	NARC_battgra_wb_batt_stage01_nsbmd,
+//	NARC_battgra_wb_batt_stage01_nsbmd,
+	NARC_battgra_wb_batt_stage02_nsbmd,
 };
 
 //アニメデータ
@@ -114,13 +117,14 @@ BTL_STAGE_WORK	*BTL_STAGE_Init( int index, HEAPID heapID )
 	bsw->stage_render = GFL_G3D_RENDER_Create( bsw->stage_resource, 0, bsw->stage_resource );
 
 	//ANIME生成
-	bsw->stage_anm = GFL_G3D_ANIME_Create( bsw->stage_render, bsw->stage_anm_resource, BTL_STAGE_ANM_MAX ); 
+//	bsw->stage_anm = GFL_G3D_ANIME_Create( bsw->stage_render, bsw->stage_anm_resource, BTL_STAGE_ANM_MAX ); 
 
 	//OBJ生成
-	bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, &bsw->stage_anm, BTL_STAGE_ANMTBL_MAX );
+//	bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, &bsw->stage_anm, BTL_STAGE_ANMTBL_MAX );
+	bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, NULL, 0 );
 
 	//ANIME起動
-	GFL_G3D_OBJECT_EnableAnime( bsw->stage_obj, BTL_STAGE_ANM_NO );
+//	GFL_G3D_OBJECT_EnableAnime( bsw->stage_obj, BTL_STAGE_ANM_NO );
 
 	//自分側お盆
 	bsw->stage_status[ BTL_STAGE_MINE ].trans.x = stage_pos_table[ BTL_STAGE_MINE ].x;
@@ -156,7 +160,7 @@ BTL_STAGE_WORK	*BTL_STAGE_Init( int index, HEAPID heapID )
 void	BTL_STAGE_Exit( BTL_STAGE_WORK *bsw )
 {
 	GFL_G3D_OBJECT_Delete( bsw->stage_obj );
-	GFL_G3D_ANIME_Delete( bsw->stage_anm );
+//	GFL_G3D_ANIME_Delete( bsw->stage_anm );
 	GFL_G3D_RENDER_Delete( bsw->stage_render );
 	GFL_G3D_DeleteResource( bsw->stage_resource );
 	GFL_G3D_DeleteResource( bsw->stage_anm_resource );
@@ -173,7 +177,7 @@ void	BTL_STAGE_Exit( BTL_STAGE_WORK *bsw )
 //============================================================================================
 void	BTL_STAGE_Main( BTL_STAGE_WORK *bsw )
 {
-	GFL_G3D_OBJECT_LoopAnimeFrame( bsw->stage_obj, BTL_STAGE_ANM_NO, BTL_STAGE_ANM_WAIT ); 
+//	GFL_G3D_OBJECT_LoopAnimeFrame( bsw->stage_obj, BTL_STAGE_ANM_NO, BTL_STAGE_ANM_WAIT ); 
 }
 
 //============================================================================================

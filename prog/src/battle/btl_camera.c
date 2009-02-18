@@ -74,7 +74,11 @@ static	void	BTL_CAMERA_UpdateCameraAngle( BTL_CAMERA_WORK *bcw );
  */
 //============================================================================================
 
-static const VecFx32 cam_pos = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 7.8f ), FX_F32_TO_FX32( 21.0f ) };
+//static const VecFx32 cam_pos = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 7.8f ), FX_F32_TO_FX32( 21.0f ) };
+//static const VecFx32 cam_target = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 2.6f ), FX_F32_TO_FX32( 0.0f ) };
+//static const VecFx32 cam_up = { 0, FX32_ONE, 0 };
+
+static const VecFx32 cam_pos = { FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 17.3f ) };
 static const VecFx32 cam_target = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 2.6f ), FX_F32_TO_FX32( 0.0f ) };
 static const VecFx32 cam_up = { 0, FX32_ONE, 0 };
 
@@ -96,10 +100,10 @@ BTL_CAMERA_WORK	*BTL_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
 	bcw->camera = GFL_G3D_CAMERA_Create( GFL_G3D_PRJPERS, 
 										 FX32_SIN13,
 										 FX32_COS13,
-										 FX_F32_TO_FX32( 1.33f ),
+										 FX_F32_TO_FX32( 1.35f ),
 										 NULL,
 										 FX32_ONE,
-										 FX32_ONE * 180,
+										 FX32_ONE * 200,
 										 NULL,
 										 &cam_pos,
 										 &cam_up,

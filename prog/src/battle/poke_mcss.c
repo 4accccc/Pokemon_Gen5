@@ -99,6 +99,7 @@ static	void	TCB_POKE_MCSS_Scale( GFL_TCB *tcb, void *work );
  *	ポケモンの立ち位置テーブル
  */
 //============================================================================================
+/*
 static	const	VecFx32	poke_pos_table[]={
 	{ FX_F32_TO_FX32( -2.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.0f ) },		//POS_AA
 	{ FX_F32_TO_FX32(  4.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_BB
@@ -109,6 +110,19 @@ static	const	VecFx32	poke_pos_table[]={
 	{ FX_F32_TO_FX32( -2.5f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(  10.0f ) },		//POS_E
 	{ FX_F32_TO_FX32(  4.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_F
 };
+*/
+
+
+static	const	VecFx32	poke_pos_table[]={
+	{ FX_F32_TO_FX32( -2.5f + 3.500f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.0f ) },		//POS_AA
+	{ FX_F32_TO_FX32(  4.5f - 4.200f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_BB
+	{ FX_F32_TO_FX32( -3.5f + 3.500f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   8.5f ) },		//POS_A
+	{ FX_F32_TO_FX32(  6.0f - 4.200f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  -9.0f ) },		//POS_B
+	{ FX_F32_TO_FX32( -0.5f + 3.845f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   9.0f ) },		//POS_C
+	{ FX_F32_TO_FX32(  2.0f - 4.964f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -11.0f ) },		//POS_D
+	{ FX_F32_TO_FX32( -2.5f + 3.845f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(  10.0f ) },		//POS_E
+	{ FX_F32_TO_FX32(  4.5f - 4.964f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_F
+};
 
 //============================================================================================
 /**
@@ -117,23 +131,23 @@ static	const	VecFx32	poke_pos_table[]={
 //============================================================================================
 static	const	fx32	poke_scale_table[2][POKE_MCSS_POS_MAX]={
 	{
-		0x08c4,	//POS_AA
+		0x08c4 * 2,	//POS_AA
 		0x1386,	//POS_BB
-		0x0873,	//POS_A
+		0x0873 * 2,	//POS_A
 		0x1322,	//POS_B
-		0x0831,	//POS_C
+		0x0831 * 2,	//POS_C
 		0x141e,	//POS_D
-		0x1000,	//POS_E
+		0x1000 * 2,	//POS_E
 		0x1000,	//POS_F
 	},
 	{
+		FX32_ONE * 16 * 2,
 		FX32_ONE * 16,
+		FX32_ONE * 16 * 2,
 		FX32_ONE * 16,
+		FX32_ONE * 16 * 2,
 		FX32_ONE * 16,
-		FX32_ONE * 16,
-		FX32_ONE * 16,
-		FX32_ONE * 16,
-		FX32_ONE * 16,
+		FX32_ONE * 16 * 2,
 		FX32_ONE * 16,
 	}
 };
