@@ -95,14 +95,15 @@ typedef struct {
 
 	V_MENU_CTRL		menuCtrl;
 
+	void*			arignDmy;
 	u8				genericWork[ GENERIC_WORK_SIZE ];
 
 //	PRINT_STREAM_HANDLE	psHandle;
 
-	GFLNetInitializeStruct		netInitWork;
-	int							netTestSeq;
-	GFL_NETHANDLE*				netHandle;
-	BOOL						ImParent;
+	GFLNetInitializeStruct	netInitWork;
+	int											netTestSeq;
+	GFL_NETHANDLE*					netHandle;
+	BOOL										ImParent;
 
 	TEST_PACKET			packet;
 
@@ -518,7 +519,7 @@ static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl )
 	u16 selPos, writePos;
 	u16 ypos;
 
-	u8 colB, colL, colS;
+	u8 fontCol;
 
 	selPos = VMENU_GetSelPos( menuCtrl );
 	writePos = VMENU_GetWritePos( menuCtrl );
@@ -531,16 +532,21 @@ static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl )
 	{
 		GFL_MSG_GetString( wk->mm, MainMenuTbl[writePos].strID, wk->strbuf );
 
-		colB = (writePos == selPos)? 0x0e : 0x0f;
-		switch( MainMenuTbl[writePos].quickKey ){
-		case PAD_BUTTON_X: colL = 0x03; break;
-		case PAD_BUTTON_Y: colL = 0x09; break;
-		case PAD_BUTTON_B: colL = 0x03; break;
-		default: colL = 0x01; break;
+		if( writePos == selPos )
+		{
+			fontCol = 0x03;
+		}
+		else
+		{
+			switch( MainMenuTbl[writePos].quickKey ){
+			case PAD_BUTTON_X: fontCol = 0x05; break;
+			case PAD_BUTTON_Y: fontCol = 0x09; break;
+			case PAD_BUTTON_B: fontCol = 0x0b; break;
+			default: fontCol = 0x01; break;
+			}
 		}
 
-//		if( writePos == selPos ){ GFL_FONTSYS_SetColor( 4, 5, 0 ); }
-		GFL_FONTSYS_SetColor( colL, 2, colB );
+		GFL_FONTSYS_SetColor( fontCol, 2, 0x0f );
 
 		PRINTSYS_Print( wk->bmp, MAINMENU_PRINT_OX, ypos, wk->strbuf, wk->fontHandle );
 		GFL_FONTSYS_SetDefaultColor();
@@ -560,6 +566,10 @@ static void* getGenericWork( MAIN_WORK* mainWork, u32 size )
 {
 	GF_ASSERT(size<GENERIC_WORK_SIZE);
 	GFL_STD_MemClear( mainWork->genericWork, size );
+	{
+		u32 adrs = (u32)(&mainWork->genericWork[0]);
+		GF_ASSERT(adrs%4==0);
+	}
 	return mainWork->genericWork;
 }
 
@@ -780,57 +790,6 @@ static const GFLNetInitializeStruct testNetInitParam = {
 	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
 #endif
 };
-
-#if 0
-//--------------------------------------------------------------
-//	子機で親機を探している状態
-//--------------------------------------------------------------
-static	void FIELD_COMM_FUNC_UpdateSearchParent( FIELD_COMM_FUNC *commFunc )
-{
-	u8 bcnIdx = 0;
-	int targetIdx = -1;
-	FIELD_COMM_BEACON *bcnData;
-	const FIELD_COMM_BEACON *selfBcn = FIELD_COMM_FUNC_GetBeaconData((void*)commFunc);
-	while( GFL_NET_GetBeaconData(bcnIdx) != NULL )
-	{
-		
-		bcnData = GFL_NET_GetBeaconData( bcnIdx );
-		if( selfBcn->mode_ == 1 || bcnData->mode_ == 1 )
-		{
-			//接続条件を満たした。
-			if( targetIdx == -1 )
-			{
-				targetIdx = bcnIdx;
-			}
-			else
-			{
-				//すでに他のビーコンが接続候補にあるので比較
-				const FIELD_COMM_BEACON *compBcn = GFL_NET_GetBeaconData(targetIdx);
-				const u8 result = FIELD_COMM_FUNC_CompareBeacon( bcnData , compBcn );
-				if( result == 1 )
-				{
-					targetIdx = bcnIdx;
-				}
-			}
-		}
-		bcnIdx++;
-	}
-	if( targetIdx != -1 && commFunc->commMode_ != FIELD_COMM_MODE_TRY_CONNECT)
-	{
-		//ビーコンがあった
-		u8 *macAdr = GFL_NET_GetBeaconMacAddress(targetIdx);
-		if( macAdr != NULL )
-		{
-			GFL_NET_ConnectToParent( macAdr ); 
-			commFunc->commMode_ = FIELD_COMM_MODE_CONNECTING;
-		//	commFunc->seqNo_ = 0;
-		//	ARI_TPrintf("Connect!(Child)\n");
-		}
-	}
-
-}
-#endif
-
 
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
@@ -1254,10 +1213,13 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
 			TAYA_Printf("[D_TAYA] マルチシンクロ開始します ... \n");
 			(*seq)++;
 		}
-		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+		else
 		{
-			u8 n = GFL_NET_GetConnectNum();
-			TAYA_Printf("[D_TAYA] Oya? %d, num=%d\n", wk->subArg, n);
+			if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+			{
+				u8 n = GFL_NET_GetConnectNum();
+				TAYA_Printf("SubArg=%d, conNum=%d\n", wk->subArg, n);
+			}
 		}
 		break;
 
