@@ -36,6 +36,7 @@ extern	void			BTL_EFFECT_Exit( void );
 extern	void			BTL_EFFECT_Main( void );
 extern	void			BTL_EFFECT_Add( int eff_no );
 extern	void			BTL_EFFECT_AddByPos( PokeMcssPos from, PokeMcssPos to, WazaID waza );
+extern	void			BTL_EFFECT_Damage( PokeMcssPos target );
 
 extern	BOOL			BTL_EFFECT_CheckExecute( void );
 extern	void			BTL_EFFECT_SetPokemon( const POKEMON_PARAM *pp, int position );

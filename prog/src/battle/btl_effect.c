@@ -28,6 +28,9 @@
 
 #define	BTL_EFFECT_TCB_MAX	( 10 )		//使用するTCBのMAX
 
+#define	BTL_EFFECT_BLINK_TIME	( 3 )
+#define	BTL_EFFECT_BLINK_WAIT	( 4 )
+
 //============================================================================================
 /**
  *	構造体宣言
@@ -51,6 +54,14 @@ struct _BTL_EFFECT_WORK
 	HEAPID				heapID;
 };
 
+typedef	struct
+{
+	PokeMcssPos	target;
+	int			seq_no;
+	int			work;
+	int			wait;
+}BTL_EFFECT_TCB;
+
 //============================================================================================
 /**
  *	プロトタイプ宣言
@@ -71,6 +82,8 @@ static	BTL_EFFECT_WORK	*bew = NULL;
 
 static	VMHANDLE	*BTL_EFFVM_Init( HEAPID heapID );
 static	void		BTL_EFFVM_Exit( VMHANDLE *core );
+
+static	void	BTL_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work );
 
 //============================================================================================
 /**
@@ -168,7 +181,7 @@ void	BTL_EFFECT_Main( void )
 
 //=============================================================================================
 /**
- * エフェクト起動（発動位置、受動位置、ワザナンバーからエフェクトナンバーを自動判定）
+ * 技エフェクト起動（発動位置、受動位置、ワザナンバーからエフェクトナンバーを自動判定）
  *
  * @param   from		発動位置
  * @param   to			受動位置
@@ -178,6 +191,28 @@ void	BTL_EFFECT_Main( void )
 //=============================================================================================
 void BTL_EFFECT_AddByPos( PokeMcssPos from, PokeMcssPos to, WazaID waza )
 {
+}
+
+//=============================================================================================
+/**
+ * ダメージエフェクト起動
+ *
+ * @param   target		発動位置
+ *
+ */
+//=============================================================================================
+void BTL_EFFECT_Damage( PokeMcssPos target )
+{
+	BTL_EFFECT_TCB	*bet = GFL_HEAP_AllocMemory( bew->heapID, sizeof( BTL_EFFECT_TCB ) );
+
+	bet->seq_no = 0;
+	bet->target = target;
+	bet->work = BTL_EFFECT_BLINK_TIME;
+	bet->wait = 0;
+
+	bew->execute_flag = 1;
+
+	GFL_TCB_AddTask( bew->tcb_sys, BTL_EFFECT_TCB_Damage, bet, 0 );
 }
 
 //============================================================================================
@@ -409,6 +444,38 @@ static VMCMD_RESULT WS_PARTICLE_PLAY_WITH_POS( VMHANDLE *vmh, void *context_work
 static	BOOL	VWF_CAMERA_MOVE_CHECK( VMHANDLE *vmh, void *context_work )
 {
 	return ( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE );
+}
+
+//============================================================================================
+/**
+ *	ダメージエフェクトシーケンス（仮でTCBで作成）
+ */
+//============================================================================================
+static	void	BTL_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
+{
+	BTL_EFFECT_TCB	*bet = (BTL_EFFECT_TCB*)work;
+
+	if( bet->wait ){
+		bet->wait--;
+		return;
+	}
+	switch( bet->seq_no ){
+	case 0:
+		bet->seq_no ^= 1;
+		POKE_MCSS_SetVanishFlag( bew->pmw, bet->target, POKE_MCSS_VANISH_ON );
+		bet->wait = BTL_EFFECT_BLINK_WAIT;
+		break;
+	case 1:
+		bet->seq_no ^= 1;
+		POKE_MCSS_SetVanishFlag( bew->pmw, bet->target, POKE_MCSS_VANISH_OFF );
+		bet->wait = BTL_EFFECT_BLINK_WAIT;
+		if( --bet->work == 0 ){
+			bew->execute_flag = 0;
+			GFL_HEAP_FreeMemory( bet );
+			GFL_TCB_DeleteTask( tcb );
+		}
+		break;
+	}
 }
 
 //本来はスクリプトエンジンを載せて、動作させるが、暫定でTCBを利用する
