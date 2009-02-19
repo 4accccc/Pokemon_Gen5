@@ -124,7 +124,7 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 			 FX32_ONE );
 
 	MUS_POKE_DRAW_SetScale( &work->musMcss[i], &scale );
-	
+	MCSS_SetAnmStopFlag( work->musMcss[i].mcss );
 	//‘•”õ‰ÓŠƒf[ƒ^‚È‚Ç“Ç‚Ýž‚Ý
 	work->musMcss[i].pokeData = MUS_POKE_DATA_LoadMusPokeData( musPoke , work->heapId );
 	

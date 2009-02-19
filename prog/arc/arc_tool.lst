@@ -113,4 +113,5 @@
 	ARCID_PMSI_GRAPHIC	"pmsi.narc"		#簡易文入力画面素材
 	ARCID_COMPATI_CHECK	"compati_check.narc"	#相性チェック
 	ARCID_MUSICAL_ITEM	"musical_item.narc"		#ミュージカル装備品
+	ARCID_DRESSUP_GRA	"dressup_gra.narc"		#ミュージカル　ドレスアップ
 

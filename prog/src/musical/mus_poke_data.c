@@ -54,19 +54,19 @@ MUS_POKE_DATA_WORK* MUS_POKE_DATA_LoadMusPokeData( MUSICAL_POKE_PARAM *musPoke ,
 		pokeData->equipPos[i].y = 0;
 	}
 	pokeData->isEquip[MUS_POKE_EQU_HEAD] = TRUE;
-	pokeData->equipPos[MUS_POKE_EQU_HEAD].x = 0;
-	pokeData->equipPos[MUS_POKE_EQU_HEAD].y = -40;
+	pokeData->equipPos[MUS_POKE_EQU_HEAD].x =  2;
+	pokeData->equipPos[MUS_POKE_EQU_HEAD].y = -44;
 
 	pokeData->isEquip[MUS_POKE_EQU_BODY] = TRUE;
-	pokeData->equipPos[MUS_POKE_EQU_BODY].x = -2;
+	pokeData->equipPos[MUS_POKE_EQU_BODY].x =  2;
 	pokeData->equipPos[MUS_POKE_EQU_BODY].y = -18;
 
 	pokeData->isEquip[MUS_POKE_EQU_HAND_R] = TRUE;
-	pokeData->equipPos[MUS_POKE_EQU_HAND_R].x = -22;
+	pokeData->equipPos[MUS_POKE_EQU_HAND_R].x = -20;
 	pokeData->equipPos[MUS_POKE_EQU_HAND_R].y = -28;
 
 	pokeData->isEquip[MUS_POKE_EQU_HAND_L] = TRUE;
-	pokeData->equipPos[MUS_POKE_EQU_HAND_L].x = 18;
+	pokeData->equipPos[MUS_POKE_EQU_HAND_L].x = 22;
 	pokeData->equipPos[MUS_POKE_EQU_HAND_L].y = -26;
 
 	return pokeData;

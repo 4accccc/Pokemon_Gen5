@@ -13,6 +13,7 @@
 
 #include "arc_def.h"
 #include "musical_item.naix"
+#include "dressup_gra.naix"
 
 #include "test/ariizumi/ari_debug.h"
 #include "musical/mus_poke_draw.h"
@@ -73,8 +74,9 @@ static const float LIST_TPHIT_RATIO_MAX = (float)LIST_TPHIT_MAX_Y/(float)LIST_TP
 static const float LIST_TPHIT_RATIO_MIN = (float)LIST_TPHIT_MIN_Y/(float)LIST_TPHIT_MIN_X;
 //縮小が始まる位置(90度)/消え始める位置(155度)/消える位置(170度)
 static const u16 LIST_SIZE_DEPTH[3] = {0x4000,0x6E00,0x78E0};
-//回転を始める角度(u16)
-static const u16 LIST_ROTATE_ANGLE = DEG_TO_U16(2);
+//リストの回転制御
+static const u16 LIST_ROTATE_ANGLE = DEG_TO_U16(1.25);
+static const u16 LIST_ROTATE_LIMIT = DEG_TO_U16(90);
 
 //アイテム1個の間隔
 static const u16 LIST_ONE_ANGLE = 0x10000/ITEM_LIST_NUM;
@@ -175,6 +177,8 @@ struct _FITTING_WORK
 static void DUP_FIT_VBlankFunc(GFL_TCB *, void * );
 
 static void DUP_FIT_SetupGraphic( FITTING_WORK *work );
+static void DUP_FIT_SetupBg( FITTING_WORK *work );
+static void	DUP_FIT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane );
 static void DUP_FIT_SetupPokemon( FITTING_WORK *work );
 static void DUP_FIT_SetupItem( FITTING_WORK *work );
 static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle );
@@ -239,11 +243,13 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 	work->listTotalMove = LIST_FULL_ANGLE-0x8000;	//半回転の位置からスタート
 	work->snapPos = MUS_POKE_EQU_INVALID;
 	DUP_FIT_SetupGraphic( work );
+	DUP_FIT_SetupBg( work );
 	DUP_FIT_SetupPokemon( work );
 	DUP_FIT_SetupItem( work );
 	
 	GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
 	
+	//フェードないので仮処理
 	GX_SetMasterBrightness(0);	
 	GXS_SetMasterBrightness(0);
 	return work;
@@ -257,6 +263,11 @@ void	DUP_FIT_TermFitting( FITTING_WORK *work )
 	GFL_TCB_DeleteTask( work->vBlankTcb );
 	GFL_G3D_CAMERA_Delete( work->camera );
 	GFL_G3D_Exit();
+	GFL_BG_FreeBGControl( FIT_FRAME_MAIN_3D );
+	GFL_BG_FreeBGControl( FIT_FRAME_MAIN_CASE );
+	GFL_BG_FreeBGControl( FIT_FRAME_MAIN_BG );
+	GFL_BG_FreeBGControl( FIT_FRAME_SUB_BG );
+	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();
 	GFL_HEAP_FreeMemory( work );
 }
@@ -352,6 +363,7 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 	GFL_DISP_SetBank( &vramBank );
 	
 	GFL_BG_Init( work->heapId );
+	GFL_BMPWIN_Init( work->heapId );
 	
 	//Vram割り当ての設定
 	{
@@ -384,10 +396,10 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 
 		GFL_BG_SetBGMode( &sys_data );
 		GFL_BG_SetBGControl3D( 1 );
-		GFL_BG_SetBGControl( FIT_FRAME_MAIN_CASE,  &header_main2, GFL_BG_MODE_TEXT );
-		GFL_BG_SetBGControl( FIT_FRAME_MAIN_BG,  &header_main3, GFL_BG_MODE_TEXT );
+		DUP_FIT_SetupBgFunc( &header_main2, FIT_FRAME_MAIN_CASE);
+		DUP_FIT_SetupBgFunc( &header_main3, FIT_FRAME_MAIN_BG);
 
-		GFL_BG_SetBGControl( FIT_FRAME_SUB_BG, &header_sub3, GFL_BG_MODE_TEXT );
+		DUP_FIT_SetupBgFunc( &header_sub3 , FIT_FRAME_SUB_BG );
 		
 		GFL_BG_SetVisible( FIT_FRAME_MAIN_3D , TRUE );
 	}
@@ -453,6 +465,47 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 		//ビルボードシステム構築
 		work->bbdSys = GFL_BBD_CreateSys( &bbdSetup , work->heapId );
 	}
+}
+
+//--------------------------------------------------------------
+//	BGの初期化
+//--------------------------------------------------------------
+static void DUP_FIT_SetupBg( FITTING_WORK *work )
+{
+	
+	ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , work->heapId );
+
+	GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_NCLR , 
+										PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_NCGR ,
+										FIT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
+	GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_d_NSCR , 
+										FIT_FRAME_MAIN_BG ,  0 , 0, FALSE , work->heapId );
+
+	GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_NCLR , 
+										PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_NCGR ,
+										FIT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
+	GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_u_NSCR , 
+										FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+
+
+	GFL_ARC_CloseDataHandle(arcHandle);
+
+	GFL_BG_LoadScreenReq(FIT_FRAME_MAIN_BG);
+	GFL_BG_LoadScreenReq(FIT_FRAME_SUB_BG);
+
+
+}
+//--------------------------------------------------------------------------
+//	Bg初期化 機能部
+//--------------------------------------------------------------------------
+static void	DUP_FIT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane )
+{
+	GFL_BG_SetBGControl( bgPlane, bgCont, GFL_BG_MODE_TEXT );
+	GFL_BG_SetVisible( bgPlane, VISIBLE_ON );
+	GFL_BG_ClearFrame( bgPlane );
+	GFL_BG_LoadScreenReq( bgPlane );
 }
 
 //--------------------------------------------------------------
@@ -691,8 +744,10 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
 				{
 					//円の内側も許可
 					if( work->holdItemType == IG_LIST &&
-						work->holdItem != NULL )
+						work->holdItem != NULL && 
+						MATH_ABS(work->listSpeed) < DEG_TO_U16(2) )
 					{
+						ARI_TPrintf("[%d]\n",U16_TO_DEG(MATH_ABS(work->listSpeed)));
 						DUP_FIT_CreateItemListToField( work );
 					}
 				}
@@ -755,7 +810,8 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
 		{ 
 			work->listSpeed = 0;
 		}
-	}	
+	}
+	
 }
 //--------------------------------------------------------------
 //タッチペン操作更新リスト
@@ -765,9 +821,14 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 	//回転は楕円なので角度で見ないほうが良いかも
 	//でも角度じゃないと回せない・・・
 	const u16 angle = FX_Atan2Idx(subX*FX32_ONE,subY*FX32_ONE);
+	const s32 subAngle = work->listBefAngle - angle;
+
+	work->listHoldMove += MATH_ABS(subAngle);
 	
 	//つかみチェック
-	if( work->tpIsTrg == TRUE )
+	//移動しすぎたのでアイテム保持解除
+	if( work->tpIsTrg == TRUE ||
+		work->listHoldMove >= DEG_TO_U16(10) )
 	{
 		FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
 		//ついでに初期化
@@ -799,12 +860,11 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 	{
 		u8 i;
 		//前回とのリストに対する角度差
-		const s32 subAngle = work->listBefAngle - angle;
 		//前回の座標からどっちに動いたか？の角度
 		//const u16 moveAngle = FX_Atan2Idx((work->tpx-work->befTpx)*FX32_ONE,(work->tpy-work->befTpy)*FX32_ONE);
 		//回転チェック
-		if( subAngle > LIST_ROTATE_ANGLE ||
-			subAngle < -LIST_ROTATE_ANGLE )
+		if( MATH_ABS(subAngle) > LIST_ROTATE_ANGLE &&
+			MATH_ABS(subAngle) < LIST_ROTATE_LIMIT )
 		{
 			s32 tempAngle = (s32)work->listAngle+0x10000-subAngle;
 			if( tempAngle < 0 )
@@ -823,7 +883,8 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 			{
 				work->listSpeed = subAngle;
 			}
-
+/*
+			//移動後もはずせるように修正。ただし、アイテムは選びなおすため、上のTrg処理と統合
 			work->listHoldMove += MATH_ABS(subAngle);
 			if( work->listHoldMove >= DEG_TO_U16(10) )
 			{
@@ -831,6 +892,7 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 				work->holdItem = NULL;
 				work->holdItemType = IG_NONE;
 			}
+*/
 		}
 		else
 		{

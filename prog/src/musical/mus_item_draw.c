@@ -220,19 +220,25 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 	const BOOL flg = TRUE;
 	GFL_BBD_TEXSIZ texSize;
 	u8 sizeX,sizeY;
+	u16 newResId;
 	
 	itemWork->arcIdx = MUS_ITEM_DRAW_GetArcIdx( newId );
 	MUS_ITEM_DRAW_GetPicSize( itemWork->arcIdx , &texSize , &sizeX , &sizeY );
-	GFL_BBD_GetObjectTrans( work->bbdSys , itemWork->bbdIdx , &pos );
-	GFL_BBD_GetObjectSiz( work->bbdSys , itemWork->bbdIdx , &scaleX , &scaleY );
-	MUS_ITEM_DRAW_DelItem( work , itemWork );
-	itemWork->resIdx = GFL_BBD_AddResource( work->bbdSys , newRes , 
+//	GFL_BBD_GetObjectTrans( work->bbdSys , itemWork->bbdIdx , &pos );
+//	GFL_BBD_GetObjectSiz( work->bbdSys , itemWork->bbdIdx , &scaleX , &scaleY );
+//	MUS_ITEM_DRAW_DelItem( work , itemWork );
+	newResId = GFL_BBD_AddResource( work->bbdSys , newRes , 
 							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
+	GFL_BBD_SetObjectResIdx( work->bbdSys , itemWork->bbdIdx , &newResId );
+	GFL_BBD_RemoveResourceVram( work->bbdSys , itemWork->resIdx );
+	itemWork->resIdx = newResId;
+//	itemWork->resIdx = GFL_BBD_AddResource( work->bbdSys , newRes , 
+//							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
 	
-	itemWork->bbdIdx = GFL_BBD_AddObject( work->bbdSys , itemWork->resIdx ,
-											FX16_ONE,FX16_ONE , &pos , 31 ,GFL_BBD_LIGHT_NONE);
-	GFL_BBD_SetObjectDrawEnable( work->bbdSys , itemWork->bbdIdx , &flg );
-	GFL_BBD_SetObjectSiz( work->bbdSys , itemWork->bbdIdx , &scaleX , &scaleY );
+//	itemWork->bbdIdx = GFL_BBD_AddObject( work->bbdSys , itemWork->resIdx ,
+//											FX16_ONE,FX16_ONE , &pos , 31 ,GFL_BBD_LIGHT_NONE);
+//	GFL_BBD_SetObjectDrawEnable( work->bbdSys , itemWork->bbdIdx , &flg );
+//	GFL_BBD_SetObjectSiz( work->bbdSys , itemWork->bbdIdx , &scaleX , &scaleY );
 	itemWork->enable = TRUE;
 }
 
