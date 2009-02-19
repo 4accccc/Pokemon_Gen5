@@ -125,7 +125,8 @@ typedef struct{
 	u8 connect_ok;
 	u8 connect_bit;		///<Ú‘±‚µ‚Ä‚¢‚énetID‚ðƒrƒbƒgŠÇ—
 	u8 lib_finish;
-	u8 padding[3];
+	u8 err_seq;
+	u8 padding[2];
 }COMPATI_CONNECT_SYS;
 
 

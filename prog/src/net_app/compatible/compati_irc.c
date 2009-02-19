@@ -41,12 +41,22 @@ void CompatiIrc_Init(COMPATI_IRC_SYS *ircsys, COMPATI_CONNECT_SYS *commsys)
 //--------------------------------------------------------------
 int CompatiIrc_Main(COMPATI_IRC_SYS *ircsys, COMPATI_CONNECT_SYS *commsys)
 {
-	if(ircsys->shutdown_req == COMPATIIRC_RESULT_CONNECT && ircsys->seq < 100){
+	//エラーチェック
+	if(CompatiComm_ErrorCheck(commsys) == TRUE){
+		ircsys->seq = 0;
+		return COMPATIIRC_RESULT_ERROR;
+	}
+	
+	if(ircsys->shutdown_req == TRUE && ircsys->seq > 1 && ircsys->seq < 100){
 		if(GFL_NET_GetConnectNum() > 1){
 			ircsys->seq = 100;
+			commsys->seq = 0;
+			OS_TPrintf("shutdown seqへ\n");
 		}
 		else{
 			ircsys->seq = 101;
+			commsys->seq = 0;
+			OS_TPrintf("comm exit seqへ\n");
 		}
 	}
 	
@@ -56,7 +66,7 @@ int CompatiIrc_Main(COMPATI_IRC_SYS *ircsys, COMPATI_CONNECT_SYS *commsys)
 		ircsys->seq++;
 		//break;
 	case 1:
-		if(CompatiComm_Init(commsys, 30) == TRUE){
+		if(CompatiComm_Init(commsys, 0) == TRUE){
 			ircsys->seq++;
 		}
 		break;

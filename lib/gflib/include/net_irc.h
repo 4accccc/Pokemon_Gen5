@@ -49,6 +49,7 @@ extern void GFL_NET_IRC_Send(u8 *buf, u8 size, u8 command);
 extern void GFL_NET_IRC_CommandContinue(void);
 extern void GFL_NET_IRC_ParentMacAddressSet(const u8 *mac_address);
 extern u8 * GFL_NET_IRC_ParentMacAddressGet(void);
+extern BOOL GFL_NET_IRC_ErrorCheck(void);
 extern void GFL_NET_IRC_FirstConnect(void);
 extern BOOL GFL_NET_IRC_IsSender(void);
 extern BOOL GFL_NET_IRC_IsConnect(void);

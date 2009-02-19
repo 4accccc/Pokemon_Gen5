@@ -19,6 +19,7 @@ extern BOOL CompatiComm_Shoutdown(COMPATI_CONNECT_SYS *commsys);
 extern BOOL CompatiComm_Exit(COMPATI_CONNECT_SYS *commsys);
 extern BOOL CompatiComm_FirstSend(COMPATI_CONNECT_SYS *commsys);
 extern BOOL CompatiComm_ResultSend(COMPATI_CONNECT_SYS *commsys);
+extern BOOL CompatiComm_ErrorCheck(COMPATI_CONNECT_SYS *commsys);
 
 
 

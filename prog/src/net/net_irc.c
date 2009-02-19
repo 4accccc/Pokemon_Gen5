@@ -42,6 +42,14 @@
 #define SEND_CHECK_VALUE_RANGE		(0xf)	//4bit内の数値にする事!!
 
 
+//--------------------------------------------------------------
+//	エラーコード
+//--------------------------------------------------------------
+enum{
+	IRC_ERRCODE_NULL,		///<エラーなし
+	IRC_ERRCODE_SHUTDOWN,	///<切断エラー
+};
+
 //==============================================================================
 //	構造体定義
 //==============================================================================
@@ -68,7 +76,11 @@ typedef struct{
 	u8 my_value;		///<自分が送信してきたvalue値。何か送信する度にインクリメント
 	u8 last_value;		///<最後に受信したvalue値
 	u8 retry_send_reserve;	///<再接続した時に送信中のデータがあった場合、送信予約する
-	u8 pading;
+	u8 err_code;			///<エラーコード
+	
+	u8 my_unit_number;		///<自分のユニットナンバー
+	u8 target_unit_number;	///<通信相手のユニットナンバー
+	u8 padding_2[2];
 }NET_IRC_SYS;
 
 
@@ -105,8 +117,10 @@ void GFL_NET_IRC_Init(u32 irc_timeout)
 {
 	GFL_STD_MemClear(&NetIrcSys, sizeof(NET_IRC_SYS));
 	NetIrcSys.timeout = irc_timeout;
+	NetIrcSys.my_unit_number = WM_GetNextTgid() & 0xff;
 	IRC_Init();
 	IRC_SetRecvCallback(IRC_ReceiveCallback);
+	IRC_SetUnitNumber(NetIrcSys.my_unit_number);
 //	GFL_NET_SystemIrcModeInit();
 }
 
@@ -122,7 +136,9 @@ void GFL_NET_IRC_Init(u32 irc_timeout)
 void GFL_NET_IRC_Exit(void)
 {
 	OS_TPrintf("IRC Exit 受信\n");
-    IRC_Shutdown();
+	if(NetIrcSys.initialize == TRUE){
+		IRC_Shutdown();
+	}
 #if 0	//※check
 	GF_ASSERT(NetIrcSys.initialize == TRUE);
 #endif
@@ -394,6 +410,30 @@ u8 * GFL_NET_IRC_ParentMacAddressGet(void)
 
 //--------------------------------------------------------------
 /**
+ * @brief   エラーが発生しているか
+ *
+ * @retval  TRUE:エラーが発生している
+ * @retval  FALSE:エラーなし
+ */
+//--------------------------------------------------------------
+BOOL GFL_NET_IRC_ErrorCheck(void)
+{
+	if(NetIrcSys.initialize == FALSE){
+		return FALSE;	//システムの初期化自体されていないのでエラー検知以前の問題
+	}
+	if(NetIrcSys.err_code != IRC_ERRCODE_NULL){
+		OS_TPrintf("赤外線エラー：err_code = %d\n", NetIrcSys.err_code);
+		return TRUE;
+	}
+	if(NetIrcSys.connect == TRUE && GFL_NET_IRC_IsConnect() == FALSE){
+		OS_TPrintf("赤外線エラー：GFL_NET_IRC_IsConnect\n");
+		return TRUE;
+	}
+	return FALSE;	//エラーなし
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   初めての接続後のワーク設定
  */
 //--------------------------------------------------------------
@@ -403,6 +443,7 @@ void GFL_NET_IRC_FirstConnect(void)
 	NetIrcSys.isSender = IRC_IsSender();
 	NetIrcSys.my_value = 0;
 	NetIrcSys.last_value = SEND_CHECK_VALUE_RANGE-1;	//最初のデータをちゃんと受け取れるようにmy_valueと違えば何でもよい
+	NetIrcSys.target_unit_number = IRC_GetUnitNumber();
 	if(NetIrcSys.isSender == TRUE){
 		OS_TPrintf("赤外線：親機になった\n");
 	}
@@ -411,6 +452,7 @@ void GFL_NET_IRC_FirstConnect(void)
 		//レシーバーから最初の通信を始める
 		NetIrcSys.send_turn = TRUE;
 	}
+	OS_TPrintf("自分のユニットNo=%d, 相手のユニットNo=%d\n", NetIrcSys.my_unit_number, NetIrcSys.target_unit_number);
 }
 
 //--------------------------------------------------------------
@@ -435,9 +477,13 @@ BOOL GFL_NET_IRC_IsSender(void)
 BOOL GFL_NET_IRC_IsConnect(void)
 {
 	if(IRC_IsConnect() == TRUE){
-		return TRUE;
+		if(IRC_GetUnitNumber() == NetIrcSys.target_unit_number){
+			return TRUE;
+		}
+		OS_TPrintf("接続チェック：ターゲットユニットナンバーが違う\n");
+		return FALSE;	//切断した直後に接続されるとこの状況がありえる
 	}
-	if(NetIrcSys.retry_time < NetIrcSys.timeout){
+	if((NetIrcSys.retry_time < NetIrcSys.timeout) || (NetIrcSys.retry_time == 0 && NetIrcSys.timeout == 0)){
 		return TRUE;	//再接続中
 	}
 	return FALSE;
@@ -464,13 +510,21 @@ void GFL_NET_IRC_Move(void)
 {
 	NET_IRC_SYS *nis = &NetIrcSys;
 
-	if(nis->connect == FALSE && nis->retry_time >= nis->timeout){
+	if(nis->connect == FALSE && (nis->retry_time >= nis->timeout && nis->retry_time > 0)){
 		//再接続も失敗して完全に終了状態。IRC_Moveを動かすとまだ相手がリトライをかけていた場合
 		//こちらは完全終了に移行したのに向こうが繋がる、となってしまうのでここでreturnする
 		return;
 	}
 	
 	if(nis->retry_time == 0){
+#if 0
+		if(GFL_NET_IRC_IsConnect() == FALSE){
+			IRC_Shutdown();
+		//	GFL_NET_ErrorFunc(1);
+			GFL_NET_StateSetError(1);
+			OS_TPrintf("エラーセット\n");
+		}
+#endif
 		IRC_Move();
 	}
 	
@@ -503,12 +557,15 @@ void GFL_NET_IRC_Move(void)
 				else if(nis->retry_time == NET_IRC_RETRY_START_WAIT){
 					IRC_Init();
 					IRC_SetRecvCallback(IRC_ReceiveCallback);
+					IRC_SetUnitNumber(NetIrcSys.my_unit_number);
 					nis->retry_time++;
 					return;
 				}
 
+				IRC_Move();
 				if(nis->retry_time < nis->timeout){
 					if(nis->isSender == TRUE && nis->retry_time % NET_IRC_CONNECT_REQ_WAIT == 0){
+						OS_TPrintf("赤外線：再接続Connect実行\n");
 						IRC_Connect();
 					}
 					nis->retry_time++;
@@ -516,17 +573,26 @@ void GFL_NET_IRC_Move(void)
 				else{	//再接続の時間切れ
 					OS_TPrintf("赤外線：再接続の時間切れ\n");
 					nis->connect = FALSE;
+					nis->err_code = IRC_ERRCODE_SHUTDOWN;
 					IRC_Shutdown();
 				}
-				IRC_Move();
 			}
 		}
 		else{
 			//繋がっている
 			if(IRC_IsConnect() == FALSE){
-				OS_TPrintf("赤外線：切断した。再接続します\n");
-				IRC_Shutdown();
-				nis->retry_time = 1;	//再接続へ
+				if(nis->timeout > 0){
+					OS_TPrintf("赤外線：切断した。再接続します\n");
+					IRC_Shutdown();
+					nis->retry_time = 1;	//再接続へ
+				}
+				else{	//再接続なし
+					OS_TPrintf("赤外線：切断した。再接続はしません\n");
+					nis->connect = FALSE;
+					nis->err_code = IRC_ERRCODE_SHUTDOWN;
+					nis->retry_time = 0xffff;
+					IRC_Shutdown();
+				}
 			}
 		}
 	}

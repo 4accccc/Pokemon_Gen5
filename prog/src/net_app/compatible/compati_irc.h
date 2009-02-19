@@ -16,6 +16,7 @@
 enum{
 	COMPATIIRC_RESULT_FALSE,		///<接続していない
 	COMPATIIRC_RESULT_CONNECT,		///<接続している
+	COMPATIIRC_RESULT_ERROR,		///<エラー発生中
 	COMPATIIRC_RESULT_EXIT,			///<通信システム終了
 };
 

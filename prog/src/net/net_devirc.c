@@ -38,9 +38,9 @@ static BOOL _DevIsConnectFunc(void); ///<DevIsConnect               相手と接続し
 static BOOL _DevIsIdleFunc(void); ///<アイドル状態かどうか
 static u32 _DevGetBitmapFunc(void); ///<DevGetBitmap               接続状態をBITMAPで返す
 static u32 _DevGetCurrentIDFunc(void); ///<DevGetCurrentID            自分の接続IDを返す
+static int _DevGetErrorFunc(void);
 
 
-static int _DevGetError(void);  ///< エラーを得る
 static void _DevSetNoChildErrorSet(BOOL bOn);
 static void _DevIrcMoveFunc(void);
 static BOOL _DevIsSendDataFunc(void);
@@ -89,7 +89,7 @@ static GFLNetDevTable netDevTbl={
     NULL, //_DevGetBitmapFunc,
     _DevGetCurrentIDFunc,
     NULL,
-    NULL, //_DevGetError,
+    _DevGetErrorFunc, //_DevGetError,
     NULL, //_DevSetNoChildErrorSet,
     NULL, //_DevIsConnectable
     NULL, //_DevIsVChat
@@ -118,6 +118,7 @@ static BOOL _DevInitFunc(HEAPID heapID, GFL_NETSYS* pNet,NetDevEndCallback callb
 
 static BOOL _DevStartFunc(NetDevEndCallback callback)
 {
+	OS_TPrintf("IRC_Connect実行\n");
     IRC_Connect();
     return TRUE;
 }
@@ -194,6 +195,11 @@ static u32 _DevGetCurrentIDFunc(void) ///<DevGetCurrentID            自分の接続I
         return GFL_NET_IRC_System_GetCurrentAid();
     }
     return GFL_NET_NO_PARENTMACHINE;
+}
+
+static int _DevGetErrorFunc(void)
+{
+	return GFL_NET_IRC_ErrorCheck();
 }
 
 static void _DevIrcMoveFunc(void)

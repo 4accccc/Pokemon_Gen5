@@ -831,6 +831,15 @@ extern void GFL_NET_ChangeInitStruct(const GFLNetInitializeStruct* pNetInit);
 //----------------------------------------------------------------
 extern BOOL GFL_NET_SystemGetWifiConnect(void);
 
+//==============================================================================
+/**
+ * エラー状態かどうか
+ * @param   none
+ * @retval  エラーNo(エラーでない場合は0)
+ */
+//==============================================================================
+extern int GFL_NET_SystemIsError(void);
+
 
 #include "net_devicetbl.h"
 

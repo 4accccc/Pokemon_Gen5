@@ -81,7 +81,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     _BCON_GET_NUM,    // 最大ビーコン収集数
     TRUE,     // CRC計算
     FALSE,     // MP通信＝親子型通信モードかどうか
-    GFL_NET_TYPE_WIRELESS,  //wifi通信を行うかどうか
+    GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_COMPATI_CHECK,  //GameServiceID
 #if GFL_NET_IRC
@@ -172,7 +172,13 @@ BOOL CompatiComm_Shoutdown(COMPATI_CONNECT_SYS *commsys)
 {
 	switch(commsys->seq){
 	case 0:	//通信終了
-		if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_CMD_EXIT_REQ, 0, NULL)){
+		if(GFL_NET_IsParentMachine() == TRUE){
+			OS_TPrintf("親機：GFL_NET_CMD_EXIT_REQ送信\n");
+			if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_CMD_EXIT_REQ, 0, NULL)){
+				commsys->seq++;
+			}
+		}
+		else{
 			commsys->seq++;
 		}
 		break;
@@ -203,8 +209,12 @@ BOOL CompatiComm_Exit(COMPATI_CONNECT_SYS *commsys)
 #else
 	switch(commsys->seq){
 	case 0:
-		GFL_NET_Exit(_CommSystemEndCallback);
-		commsys->seq++;
+		if(GFL_NET_Exit(_CommSystemEndCallback) == TRUE){
+			commsys->seq++;
+		}
+		else{
+			return TRUE;
+		}
 		break;
 	case 1:
 		if(commsys->lib_finish == TRUE){
@@ -216,6 +226,43 @@ BOOL CompatiComm_Exit(COMPATI_CONNECT_SYS *commsys)
 	
 	return FALSE;
 #endif
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   通信エラーチェック
+ *
+ * @param   commsys		
+ *
+ * @retval  TRUE:通信エラー発生中。FALSEが戻ってくるまで他のCompatiComm_???を呼んではいけない
+ * 			FALSE:エラーなし
+ */
+//--------------------------------------------------------------
+BOOL CompatiComm_ErrorCheck(COMPATI_CONNECT_SYS *commsys)
+{
+	switch(commsys->err_seq){
+	case 0:
+		if(GFL_NET_IsInit() == TRUE && GFL_NET_SystemIsError() != 0){
+			OS_TPrintf("通信エラーが発生\n");
+			if(GFL_NET_Exit(_CommSystemEndCallback) == TRUE){
+				commsys->err_seq++;
+			}
+			else{
+				commsys->err_seq = 100;
+			}
+			return TRUE;
+		}
+		break;
+	case 1:
+		if(commsys->lib_finish == TRUE){
+			commsys->err_seq = 100;
+		}
+		return TRUE;
+	case 100:
+		GFL_STD_MemClear(commsys, sizeof(COMPATI_CONNECT_SYS));
+		return FALSE;
+	}
+	return FALSE;
 }
 
 //--------------------------------------------------------------
