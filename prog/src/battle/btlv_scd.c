@@ -613,8 +613,8 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 		u8 shadow;
 	}color_tbl[] = {
 		{ 0x0e, 0x01, 0x02 },
-		{ 0x06, 0x01, 0x02 },
-		{ 0x0a, 0x01, 0x02 },
+		{ 0x06, 0x0f, 0x02 },
+		{ 0x0a, 0x0f, 0x02 },
 	};
 	const BTL_POKEPARAM* bpp;
 	const POKEMON_PARAM* pp;

@@ -91,6 +91,7 @@ typedef struct {
 
 	pSubProc		subProc;
 	int				subSeq;
+	u16				subArg;
 
 	V_MENU_CTRL		menuCtrl;
 
@@ -137,8 +138,8 @@ static void* btlBeaconGetFunc( void* pWork );
 static int btlBeaconGetSizeFunc( void* pWork );
 static BOOL btlBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
 static void btlAutoConnectCallback( void* pWork );
-static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
-static BOOL SUBPROC_CommBattleMulti( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static void setup_party( HEAPID heapID, POKEPARTY* party, ... );
 static BOOL SUBPROC_KanjiMode( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
@@ -161,17 +162,21 @@ static void bmt_updateEffect( npPARTICLECOMPOSITE* pComp,npU32 renew );
 /*--------------------------------------------------------------------------*/
 /* Menu Table                                                               */
 /*--------------------------------------------------------------------------*/
+
 static const struct {
-	u32			strID;
+	u32				strID;
 	pSubProc	subProc;
+	u16				subArg;
+	u16				quickKey;
 }MainMenuTbl[] = {
-	{ DEBUG_TAYA_MENU1,		SUBPROC_GoBattle			},
-	{ DEBUG_TAYA_MENU2,		SUBPROC_KanjiMode			},
-	{ DEBUG_TAYA_MENU3,		SUBPROC_CommBattleParent	},
-	{ DEBUG_TAYA_MENU4,		SUBPROC_CommBattleMulti	},
-	{ DEBUG_TAYA_MENU5,		SUBPROC_NetPrintTest		},
-	{ DEBUG_TAYA_MENU6,		SUBPROC_BlendMagic			},
-	{ DEBUG_TAYA_MENU7,		SUBPROC_PrintTest			},
+	{ DEBUG_TAYA_MENU1,		SUBPROC_GoBattle,				0, 0 },
+	{ DEBUG_TAYA_MENU2,		SUBPROC_CommBattle,	 		0, 0 },
+	{ DEBUG_TAYA_MENU3,		SUBPROC_MultiBattle,		1, PAD_BUTTON_X },
+	{ DEBUG_TAYA_MENU4,		SUBPROC_MultiBattle,		0, PAD_BUTTON_Y },
+	{ DEBUG_TAYA_MENU5,		SUBPROC_KanjiMode,			0, 0 },
+	{ DEBUG_TAYA_MENU6,		SUBPROC_NetPrintTest,		0, 0 },
+	{ DEBUG_TAYA_MENU7,		SUBPROC_BlendMagic,			0, 0 },
+	{ DEBUG_TAYA_MENU8,		SUBPROC_PrintTest,			0, 0 },
 };
 
 enum {
@@ -202,7 +207,9 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 
 	VMENU_Init( &wk->menuCtrl, MAINMENU_DISP_MAX, NELEMS(MainMenuTbl) );
 	wk->seq = 0;
+	wk->subArg = 0;
 	wk->subProc = NULL;
+
 
 	return GFL_PROC_RES_FINISH;
 
@@ -377,8 +384,35 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 		{
 			u16 p = VMENU_GetSelPos( &wk->menuCtrl );
 			wk->subProc = MainMenuTbl[p].subProc;
+			wk->subArg = MainMenuTbl[p].subArg;
 			wk->subSeq = 0;
 			(*seq)++;
+		}
+		else
+		{
+			u16 key = GFL_UI_KEY_GetTrg();
+
+			if( key & PAD_BUTTON_B ){ key = PAD_BUTTON_B; }
+			else if( key & PAD_BUTTON_X ){ key = PAD_BUTTON_X; }
+			else if( key & PAD_BUTTON_Y ){ key = PAD_BUTTON_Y; }
+			else{ key = 0; }
+
+			if( key )
+			{
+				int i;
+				for(i=0; i<NELEMS(MainMenuTbl); ++i)
+				{
+					if( MainMenuTbl[i].quickKey == key )
+					{
+						wk->subProc = MainMenuTbl[i].subProc;
+						wk->subArg = MainMenuTbl[i].subArg;
+						wk->subSeq = 0;
+						(*seq)++;
+						break;
+					}
+				}
+			}
+
 		}
 		break;
 
@@ -484,6 +518,8 @@ static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl )
 	u16 selPos, writePos;
 	u16 ypos;
 
+	u8 colB, colL, colS;
+
 	selPos = VMENU_GetSelPos( menuCtrl );
 	writePos = VMENU_GetWritePos( menuCtrl );
 
@@ -495,15 +531,24 @@ static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl )
 	{
 		GFL_MSG_GetString( wk->mm, MainMenuTbl[writePos].strID, wk->strbuf );
 
-		if( writePos == selPos ){ GFL_FONTSYS_SetColor( 4, 5, 0 ); }
+		colB = (writePos == selPos)? 0x0e : 0x0f;
+		switch( MainMenuTbl[writePos].quickKey ){
+		case PAD_BUTTON_X: colL = 0x03; break;
+		case PAD_BUTTON_Y: colL = 0x09; break;
+		case PAD_BUTTON_B: colL = 0x03; break;
+		default: colL = 0x01; break;
+		}
+
+//		if( writePos == selPos ){ GFL_FONTSYS_SetColor( 4, 5, 0 ); }
+		GFL_FONTSYS_SetColor( colL, 2, colB );
 
 		PRINTSYS_Print( wk->bmp, MAINMENU_PRINT_OX, ypos, wk->strbuf, wk->fontHandle );
-
-		if( writePos == selPos ){ GFL_FONTSYS_SetDefaultColor(); }
+		GFL_FONTSYS_SetDefaultColor();
 
 		ypos += (GFL_FONT_GetLineHeight(wk->fontHandle)+2);
 		writePos++;
 	}
+	GFL_FONTSYS_SetDefaultColor();
 
 	GFL_BMPWIN_TransVramCharacter( wk->win );
 }
@@ -673,6 +718,8 @@ enum {
 	TEST_COMM_SEND_SIZE_MAX	= 100,
 	TEST_COMM_BCON_MAX		= 1,
 
+	TEST_MULTI_BCON_MAX = 4,
+
 	TEST_TIMINGID_INIT		= 11,
 	TEST_TIMINGID_PRINT,
 
@@ -733,6 +780,57 @@ static const GFLNetInitializeStruct testNetInitParam = {
 	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
 #endif
 };
+
+#if 0
+//--------------------------------------------------------------
+//	子機で親機を探している状態
+//--------------------------------------------------------------
+static	void FIELD_COMM_FUNC_UpdateSearchParent( FIELD_COMM_FUNC *commFunc )
+{
+	u8 bcnIdx = 0;
+	int targetIdx = -1;
+	FIELD_COMM_BEACON *bcnData;
+	const FIELD_COMM_BEACON *selfBcn = FIELD_COMM_FUNC_GetBeaconData((void*)commFunc);
+	while( GFL_NET_GetBeaconData(bcnIdx) != NULL )
+	{
+		
+		bcnData = GFL_NET_GetBeaconData( bcnIdx );
+		if( selfBcn->mode_ == 1 || bcnData->mode_ == 1 )
+		{
+			//接続条件を満たした。
+			if( targetIdx == -1 )
+			{
+				targetIdx = bcnIdx;
+			}
+			else
+			{
+				//すでに他のビーコンが接続候補にあるので比較
+				const FIELD_COMM_BEACON *compBcn = GFL_NET_GetBeaconData(targetIdx);
+				const u8 result = FIELD_COMM_FUNC_CompareBeacon( bcnData , compBcn );
+				if( result == 1 )
+				{
+					targetIdx = bcnIdx;
+				}
+			}
+		}
+		bcnIdx++;
+	}
+	if( targetIdx != -1 && commFunc->commMode_ != FIELD_COMM_MODE_TRY_CONNECT)
+	{
+		//ビーコンがあった
+		u8 *macAdr = GFL_NET_GetBeaconMacAddress(targetIdx);
+		if( macAdr != NULL )
+		{
+			GFL_NET_ConnectToParent( macAdr ); 
+			commFunc->commMode_ = FIELD_COMM_MODE_CONNECTING;
+		//	commFunc->seqNo_ = 0;
+		//	ARI_TPrintf("Connect!(Child)\n");
+		}
+	}
+
+}
+#endif
+
 
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
@@ -862,6 +960,7 @@ typedef struct{
 }BTL_BCON;
 
 static BTL_BCON btlBcon = { WB_NET_BATTLE_SERVICEID };
+static BTL_BCON MultiBcon = { WB_NET_BATTLE_SERVICEID };
 
 ///< ビーコンデータ取得関数
 static void* btlBeaconGetFunc( void* pWork )
@@ -884,10 +983,10 @@ static BOOL btlBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
 }
 
 static const GFLNetInitializeStruct btlNetInitParam = {
-	BtlRecvFuncTable,		// 受信関数テーブル
-	5,									// 受信テーブル要素数
-	NULL,									///< ハードで接続した時に呼ばれる
-	NULL,									///< ネゴシエーション完了時にコール
+	BtlRecvFuncTable,			// 受信関数テーブル
+	5,										// 受信テーブル要素数
+	NULL,									// ハードで接続した時に呼ばれる
+	NULL,									// ネゴシエーション完了時にコール
 	NULL,									// ユーザー同士が交換するデータのポインタ取得関数
 	NULL,									// ユーザー同士が交換するデータのサイズ取得関数
 	btlBeaconGetFunc,			// ビーコンデータ取得関数
@@ -895,16 +994,16 @@ static const GFLNetInitializeStruct btlNetInitParam = {
 	btlBeaconCompFunc,		// ビーコンのサービスを比較して繋いで良いかどうか判断する
 	NULL,									// 普通のエラーが起こった場合 通信終了
 	FatalError_Disp,			// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-	NULL,						// 通信切断時に呼ばれる関数
-	NULL,						// オート接続で親になった場合
+	NULL,									// 通信切断時に呼ばれる関数
+	NULL,									// オート接続で親になった場合
 #if GFL_NET_WIFI
-    NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
-    NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-    NULL,  ///< wifiフレンドリスト削除コールバック
-    NULL,   ///< DWC形式の友達リスト	
-    NULL,  ///< DWCのユーザデータ（自分のデータ）
-    0,   ///< DWCへのHEAPサイズ
-    TRUE,        ///< デバック用サーバにつなぐかどうか
+	NULL,	///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+	NULL,	///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+	NULL,	///< wifiフレンドリスト削除コールバック
+	NULL,	///< DWC形式の友達リスト	
+	NULL,	///< DWCのユーザデータ（自分のデータ）
+	0,		///< DWCへのHEAPサイズ
+	TRUE,	///< デバック用サーバにつなぐかどうか
 #endif
 	TEST_GGID,						// ggid  DP=0x333,RANGER=0x178,WII=0x346
 	GFL_HEAPID_APP,				//元になるheapid
@@ -957,13 +1056,13 @@ static const GFLNetInitializeStruct btlMultiNetInitParam = {
 	GFL_WICON_POSX,				// 通信アイコンXY位置
 	GFL_WICON_POSY,
 	TEST_MULTI_MEMBER_MAX,		// 最大接続人数
-	TEST_COMM_SEND_SIZE_MAX,// 最大送信バイト数
-	TEST_COMM_BCON_MAX,			// 最大ビーコン収集数
-	TRUE,										// CRC計算
-	FALSE,									// MP通信＝親子型通信モードかどうか
-	GFL_NET_TYPE_WIRELESS,	/// 使用する通信を指定
-	TRUE,										// 親が再度初期化した場合、つながらないようにする場合TRUE
-	WB_NET_BATTLE_SERVICEID,//GameServiceID
+	TEST_COMM_SEND_SIZE_MAX,	// 最大送信バイト数
+	TEST_MULTI_BCON_MAX,			// 最大ビーコン収集数
+	TRUE,											// CRC計算
+	FALSE,										// MP通信＝親子型通信モードかどうか
+	GFL_NET_TYPE_WIRELESS,		// 使用する通信を指定
+	TRUE,											// 親が再度初期化した場合、つながらないようにする場合TRUE
+	WB_NET_BATTLE_SERVICEID,	//GameServiceID
 #if GFL_NET_IRC
 	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
 #endif
@@ -981,7 +1080,7 @@ static void btlAutoConnectCallback( void* pWork )
 //----------------------------------
 // 通信（通常）
 //----------------------------------
-static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	MAIN_WORK* wk = mywk;
 
@@ -1061,7 +1160,7 @@ static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void*
 //----------------------------------
 // 通信（マルチ）
 //----------------------------------
-static BOOL SUBPROC_CommBattleMulti( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	enum {
 		MULTI_TIMING_NUMBER = 24,
@@ -1086,34 +1185,93 @@ static BOOL SUBPROC_CommBattleMulti( GFL_PROC* proc, int* seq, void* pwk, void* 
 		}
 		if( GFL_NET_IsInit() )
 		{
-			wk->netTestSeq = 0;
-			GFL_NET_ChangeoverConnect( btlAutoConnectCallback ); // 自動接続
 			(*seq)++;
 		}
 		break;
 	case 3:
-		if( wk->netTestSeq )
+		// subArg!=0 -> 親機に
+		if( wk->subArg )
 		{
-			if( GFL_NET_GetConnectNum() == TEST_MULTI_MEMBER_MAX )
-			{
-				GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), MULTI_TIMING_NUMBER );
-				TAYA_Printf("[DTAYA] Multi Timing Sync Start ... \n");
-				(*seq)++;
-			}
+			TAYA_Printf("[D_TAYA] マルチ親機になります\n");
+			GFL_NET_InitServer();
+			(*seq)++;
+		}
+		// 子機ならビーコンをひろいまくる
+		else
+		{
+			GFL_NET_StartBeaconScan();
+			(*seq)++;
 		}
 		break;
 	case 4:
+		if( wk->subArg )
+		{
+			(*seq)++;
+		}
+		else
+		{
+			int i;
+			BTL_BCON* bcon;
+
+			TAYA_Printf("[D_TAYA] 子機なのでビーコンひろいます\n");
+			for(i=0; i<TEST_MULTI_BCON_MAX; ++i)
+			{
+				bcon = GFL_NET_GetBeaconData(i);
+				if( bcon )
+				{
+					if( bcon->gameNo == MultiBcon.gameNo )
+					{
+						break;
+					}
+				}
+			}
+			if( i != TEST_MULTI_BCON_MAX )
+			{
+				u8* macAdrs = GFL_NET_GetBeaconMacAddress( i );
+				if( macAdrs != NULL )
+				{
+					TAYA_Printf("[D_TAYA] 子機がマルチ親機を見つけた\n");
+					GFL_NET_ConnectToParent( macAdrs );
+					(*seq)++;
+				}
+			}
+		}
+		break;
+
+	case 5:
+		if( GFL_NET_HANDLE_RequestNegotiation() )
+		{
+			TAYA_Printf("[D_TAYA] ネゴシエーション成功したので次へ \n");
+			(*seq)++;
+		}
+		break;
+
+	// ４台つながったらシンクロ開始
+	case 6:
+		if( GFL_NET_GetConnectNum() == TEST_MULTI_MEMBER_MAX )
+		{
+			GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), MULTI_TIMING_NUMBER );
+			TAYA_Printf("[D_TAYA] マルチシンクロ開始します ... \n");
+			(*seq)++;
+		}
+		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+		{
+			u8 n = GFL_NET_GetConnectNum();
+			TAYA_Printf("[D_TAYA] Oya? %d, num=%d\n", wk->subArg, n);
+		}
+		break;
+
+	case 7:
 		if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), MULTI_TIMING_NUMBER) )
 		{
 			BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
-
-			TAYA_Printf("[DTAYA] Multi Timing Sync Finish! \n");
 
 			para->engine = BTL_ENGINE_ALONE;
 			para->rule = BTL_RULE_DOUBLE;
 			para->competitor = BTL_COMPETITOR_COMM;
 
 			para->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+			TAYA_Printf("[DTAYA] Multi Timing Sync Finish! NetHandle=%p\n", para->netHandle);
 			para->netID = GFL_NET_GetNetID( para->netHandle );
 			para->commMode = BTL_COMM_DS;
 			para->commPos = para->netID;
@@ -1144,7 +1302,8 @@ static BOOL SUBPROC_CommBattleMulti( GFL_PROC* proc, int* seq, void* pwk, void* 
 			(*seq)++;
 		}
 		break;
-	case 5:
+
+	case 8:
 		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
 		initGraphicSystems( wk );
 		createTemporaryModules( wk );

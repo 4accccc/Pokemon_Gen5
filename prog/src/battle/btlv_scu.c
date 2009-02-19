@@ -634,6 +634,8 @@ void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, u16 damage, B
 		twk->hpMinusVal = FX32_CONST(twk->statWin->hp - twk->hpEnd) / twk->timer;
 	}
 
+	BTL_EFFECT_Damage( BTL_MAIN_BtlPosToViewPos(wk->mainModule, defPos) );
+
 	(*(twk->taskCounter))++;
 }
 
@@ -650,6 +652,7 @@ BOOL BTLV_SCU_WaitWazaDamageAct( BTLV_SCU* wk )
 {
 	return wk->taskCounter[TASKTYPE_WAZA_DAMAGE] == 0;
 }
+
 static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs )
 {
 	DMG_EFF_TASK_WORK* wk = wk_adrs;
@@ -659,17 +662,25 @@ static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs )
 		u16 hp;
 		u8 col;
 
-		wk->timer--;
-		wk->hpVal -= wk->hpMinusVal;
-		hp = wk->hpVal >> FX32_SHIFT;
-		col = ((wk->timer % 16) <= 7)? TEST_STATWIN_BGCOL : TEST_STATWIN_BGCOL_FLASH;
-		statwin_update( wk->statWin, hp, col );
+		if( --(wk->timer) )
+		{
+			wk->hpVal -= wk->hpMinusVal;
+			hp = wk->hpVal >> FX32_SHIFT;
+			col = ((wk->timer % 16) <= 7)? TEST_STATWIN_BGCOL : TEST_STATWIN_BGCOL_FLASH;
+			statwin_update( wk->statWin, hp, col );
+		}
+		else
+		{
+			statwin_update( wk->statWin, wk->hpEnd, TEST_STATWIN_BGCOL );
+		}
 	}
 	else
 	{
-		statwin_update( wk->statWin, wk->hpEnd, TEST_STATWIN_BGCOL );
-		(*(wk->taskCounter))--;
-		GFL_TCBL_Delete( tcbl );
+		if( !BTL_EFFECT_CheckExecute() )
+		{
+			(*(wk->taskCounter))--;
+			GFL_TCBL_Delete( tcbl );
+		}
 	}
 }
 
