@@ -338,6 +338,7 @@ SRCS_OVERLAY_BALLOON =	net_app/balloon/balloon.c \
 						net_app/balloon/balloon_send_recv.c
 
 # ƒoƒgƒ‹
+#===> SRCS_OVERLAY_TAYA_DEBUG
 #===> SRCS_OVERLAY_SOGABE_DEBUG
 SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_server.c \
