@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-02-12T18:49:27"/>
+	<create user="taya" host="W00146" date="2009-02-19T18:24:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,31 +294,36 @@
 	</row>
 
 	<row id="DEBUG_TAYA_MENU2">
-		<language name="JPN" width="256">かんじモードきりかえ</language>
-		<language name="JPN_KANJI" width="256">漢字モード切りかえ</language>
-	</row>
-
-	<row id="DEBUG_TAYA_MENU3">
 		<language name="JPN" width="256">つうしんバトル</language>
 		<language name="JPN_KANJI" width="256">通信バトル</language>
 	</row>
 
+	<row id="DEBUG_TAYA_MENU3">
+		<language name="JPN" width="256">マルチバトル　おや</language>
+		<language name="JPN_KANJI" width="256">マルチバトル　親</language>
+	</row>
+
 	<row id="DEBUG_TAYA_MENU4">
-		<language name="JPN" width="256">マルチバトル</language>
-		<language name="JPN_KANJI" width="256">マルチバトル</language>
+		<language name="JPN" width="256">マルチバトル　こ</language>
+		<language name="JPN_KANJI" width="256">マルチバトル　子</language>
 	</row>
 
 	<row id="DEBUG_TAYA_MENU5">
+		<language name="JPN" width="256">かんじモードきりかえ</language>
+		<language name="JPN_KANJI" width="256">漢字モード切りかえ</language>
+	</row>
+
+	<row id="DEBUG_TAYA_MENU6">
 		<language name="JPN" width="256">つうしん　しながら　かんじテスト</language>
 		<language name="JPN_KANJI" width="256">通信しながら漢字テスト</language>
 	</row>
 
-	<row id="DEBUG_TAYA_MENU6">
+	<row id="DEBUG_TAYA_MENU7">
 		<language name="JPN" width="256">BlendMagic どうさテスト</language>
 		<language name="JPN_KANJI" width="256">BlendMagic 動作テスト</language>
 	</row>
 
-	<row id="DEBUG_TAYA_MENU7">
+	<row id="DEBUG_TAYA_MENU8">
 		<language name="JPN" width="256">スタンドアロンかんじテスト</language>
 		<language name="JPN_KANJI" width="256">スタンドアロン漢字テスト</language>
 	</row>
