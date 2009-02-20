@@ -76,14 +76,24 @@ typedef void (*pPut1CharFunc)( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* 
  */
 //--------------------------------------------------------------------------
 typedef struct {
+	#if 0
 	u16   org_x;			///< 書き込み開始Ｘ座標
 	u16   org_y;			///< 書き込み開始Ｙ座標
 	u16   write_x;		///< 書き込み中のＸ座標
 	u16   write_y;		///< 書き込み中のＹ座標
-
 	u8    colorLetter;			///< 描画色（文字）
 	u8    colorShadow;			///< 描画色（影）
 	u8    colorBackGround;	///< 描画色（背景）
+	#endif
+
+	u32		org_x : 10;
+	u32		org_y : 10;
+	u32		write_x : 10;
+	u32		write_y : 10;
+	u32		jobColorEnable : 1;
+
+	PRINTSYS_LSB		defColor;
+	PRINTSYS_LSB		jobColor;
 
 	GFL_FONT*				fontHandle;		///< フォントハンドル
 	GFL_BMP_DATA*		dst;					///< 書き込み先 Bitmap
@@ -100,15 +110,18 @@ typedef struct {
 //--------------------------------------------------------------------------
 struct _PRINT_QUE {
 
-	PRINT_JOB*		runningJob;
-	const STRCODE*	sp;
-
-	OSTick	limitPerFrame;
-
 	u16		bufTopPos;
 	u16		bufEndPos;
 	u16		bufSize;
-	u16		dmy;
+	u8		colorChanged;
+	u8		job_colorChanged;
+
+	PRINTSYS_LSB	defColor;
+
+	OSTick				limitPerFrame;
+
+	PRINT_JOB*		runningJob;
+	const STRCODE*	sp;
 
 	u8   buf[0];
 };
@@ -166,7 +179,10 @@ static struct {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static inline BOOL IsNetConnecting( void );
-static void setupPrintJob( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y );
+static void PrintQue_Core( PRINT_QUE* que, PRINT_JOB* job, const STRBUF* str );
+static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y );
+static void printJob_setColor( PRINT_JOB* wk, PRINTSYS_LSB color );
+static void printJob_finish( PRINT_JOB* job, const STRBUF* str );
 static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp );
 static void put1char_normal( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
 static void put1char_16to256( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
@@ -253,6 +269,8 @@ PRINT_QUE* PRINTSYS_QUE_CreateEx( u16 buf_size, HEAPID heapID )
 	que->limitPerFrame = QUE_DEFAULT_TICK;
 	que->runningJob = NULL;
 	que->sp = NULL;
+	que->colorChanged = FALSE;
+	que->job_colorChanged = FALSE;
 
 	que->bufTopPos = 0;
 	que->bufEndPos = buf_size;
@@ -310,6 +328,25 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 
 		start = OS_GetTick();
 
+		if( que->runningJob->jobColorEnable && que->job_colorChanged == FALSE )
+		{
+			u8 colL, colS, colB;
+
+			PRINTSYS_LSB_GetLSB( que->runningJob->jobColor, &colL, &colS, &colB );
+			if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) )
+			{
+				if( que->colorChanged == FALSE )
+				{
+					u8 defL, defS, defB;
+					GFL_FONTSYS_GetColor( &defL, &defS, &defB );
+					que->defColor = PRINTSYS_LSB_Make( defL, defS, defB );
+					que->colorChanged = TRUE;
+				}
+				GFL_FONTSYS_SetColor( colL, colS, colB );
+				que->job_colorChanged = TRUE;
+			}
+		}
+
 		while( que->runningJob )
 		{
 			while( *(que->sp) != EOM_CODE )
@@ -333,6 +370,7 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 					pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB) );
 					pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB*) );
 					que->sp = Que_BufPosToAdrs( que, pos );
+					que->job_colorChanged = FALSE;
 				}
 			}
 
@@ -343,12 +381,19 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 		if( que->runningJob )
 		{
 			que->bufEndPos = Que_AdrsToBufPos( que, que->sp );
+			que->job_colorChanged = FALSE;
 			return FALSE;
 		}
 
 		que->bufTopPos = 0;
 		que->bufEndPos = que->bufSize;
+	}
 
+	if( que->colorChanged )
+	{
+		u8 colL, colS, colB;
+		PRINTSYS_LSB_GetLSB( que->defColor, &colL, &colS, &colB );
+		GFL_FONTSYS_SetColor( colL, colS, colB );
 	}
 
 	return TRUE;
@@ -427,7 +472,7 @@ static inline BOOL IsNetConnecting( void )
 
 //==============================================================================================
 /**
- * プリントキューを介した文字列描画処理
+ * プリントキューを介した文字列描画処理リクエスト
  *
  * @param   que		[out] プリントキュー
  * @param   dst		[out] 描画先Bitmap
@@ -447,28 +492,65 @@ void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, c
 
 	{
 		PRINT_JOB* job = &SystemWork.printJob;
-		setupPrintJob( job, font, dst, xpos, ypos );
+		printJob_setup( job, font, dst, xpos, ypos );
 
-		if( !IsNetConnecting() )
+		PrintQue_Core( que, job, str );
+	}
+}
+//=============================================================================================
+/**
+ * プリントキューを介した文字列描画処理リクエスト（色変更に対応）
+ *
+ * @param   que			
+ * @param   dst			
+ * @param   xpos		
+ * @param   ypos		
+ * @param   str			
+ * @param   font		
+ * @param   col			
+ *
+ */
+//=============================================================================================
+void PRINTSYS_PrintQueColor( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color )
+{
+	GF_ASSERT(que);
+	GF_ASSERT(dst);
+	GF_ASSERT(str);
+	GF_ASSERT(font);
+
+	{
+		PRINT_JOB* job = &SystemWork.printJob;
+
+		printJob_setup( job, font, dst, xpos, ypos );
+		printJob_setColor( job, color );
+
+		PrintQue_Core( que, job, str );
+	}
+}
+//--------------------------------------------------------------------------
+/**
+ * プリントキューを介した文字列描画処理リクエスト共通処理部分
+ *
+ * @param   job		
+ *
+ */
+//--------------------------------------------------------------------------
+static void PrintQue_Core( PRINT_QUE* que, PRINT_JOB* job, const STRBUF* str )
+{
+	if( !IsNetConnecting() )
+	{
+		printJob_finish( job, str );
+	}
+	else
+	{
+		u32  size = Que_CalcUseBufSize( str );
+		if( size <= Que_GetFreeSize( que ) )
 		{
-			const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
-			while( *sp != EOM_CODE )
-			{
-				sp = print_next_char( job, sp );
-			}
+			Que_StoreNewJob( que, job, str );
 		}
 		else
 		{
-			u32  size = Que_CalcUseBufSize( str );
-
-			if( size <= Que_GetFreeSize( que ) )
-			{
-				Que_StoreNewJob( que, job, str );
-			}
-			else
-			{
-				GF_ASSERT_MSG(0, "[PRINT_QUE] buffer over ... strsize = %d\n", size);
-			}
+			GF_ASSERT_MSG(0, "[PRINT_QUE] buffer over ... strsize = %d\n", size);
 		}
 	}
 }
@@ -490,12 +572,8 @@ void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, G
 	PRINT_JOB* job = &SystemWork.printJob;
 	const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
 
-	setupPrintJob( job, font, dst, xpos, ypos );
-
-	while( *sp != EOM_CODE )
-	{
-		sp = print_next_char( job, sp );
-	}
+	printJob_setup( job, font, dst, xpos, ypos );
+	printJob_finish( job, str );
 }
 
 
@@ -511,7 +589,7 @@ void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, G
  *
  */
 //------------------------------------------------------------------
-static void setupPrintJob( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y )
+static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y )
 {
 	wk->dst = dst;
 	wk->put1charFunc = (GFL_BMP_GetColorFormat(dst) == GFL_BMP_16_COLOR)?
@@ -519,8 +597,70 @@ static void setupPrintJob( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16
 	wk->fontHandle = font;
 	wk->org_x = wk->write_x = org_x;
 	wk->org_y = wk->write_y = org_y;
-	GFL_FONTSYS_GetColor( &wk->colorLetter, &wk->colorShadow, &wk->colorBackGround );
+	wk->jobColorEnable = FALSE;
+
+	{
+		u8 letter, shadow, back;
+		GFL_FONTSYS_GetColor( &letter, &shadow, &back );
+		wk->defColor = PRINTSYS_LSB_Make( letter, shadow, back );
+	}
 }
+//--------------------------------------------------------------------------
+/**
+ * 処理ワーク単位で使用色を変更するリクエスト
+ *
+ * @param   wk		
+ *
+ */
+//--------------------------------------------------------------------------
+static void printJob_setColor( PRINT_JOB* wk, PRINTSYS_LSB color )
+{
+	wk->jobColor = color;
+	wk->jobColorEnable = TRUE;
+}
+//--------------------------------------------------------------------------
+/**
+ * 描画処理ワークの処理内容を１回で実行する
+ *
+ * @param   job		描画処理ワーク
+ * @param   str		処理文字列
+ *
+ */
+//--------------------------------------------------------------------------
+static void printJob_finish( PRINT_JOB* job, const STRBUF* str )
+{
+	const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
+
+	u8 defColorL, defColorS, defColorB, colorChanged;
+
+	defColorL = defColorS = defColorB = 0;
+	colorChanged = FALSE;
+
+	if( job->jobColorEnable )
+	{
+		u8 colL, colS, colB;
+
+		PRINTSYS_LSB_GetLSB( job->jobColor, &colL, &colS, &colB );
+		if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) )
+		{
+			GFL_FONTSYS_GetColor( &defColorL, &defColorS, &defColorB );
+			GFL_FONTSYS_SetColor( colL, colS, colB );
+			colorChanged = TRUE;
+		}
+	}
+
+	while( *sp != EOM_CODE )
+	{
+		sp = print_next_char( job, sp );
+	}
+
+	if( colorChanged )
+	{
+		GFL_FONTSYS_SetColor( defColorL, defColorS, defColorB );
+	}
+}
+
+
 //------------------------------------------------------------------
 /**
  * 改行および汎用コントロールがあれば処理し、
@@ -642,7 +782,11 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
 		break;
 
 	case CTRL_GENERAL_RESET_COLOR:
-		GFL_FONTSYS_SetColor( wk->colorLetter, wk->colorShadow, wk->colorBackGround );
+		{
+			u8 colL, colS, colB;
+			PRINTSYS_LSB_GetLSB( wk->defColor, &colL, &colS, &colB );
+			GFL_FONTSYS_SetColor( colL, colS, colB );
+		}
 		break;
 
 	case CTRL_GENERAL_X_RIGHTFIT:
@@ -697,8 +841,12 @@ static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp )
 	switch( ctrlCode ){
 	case CTRL_SYSTEM_COLOR:
 		{
-			u8  color = STR_TOOL_GetTagParam( sp, 0 );
-			GFL_FONTSYS_SetColor( color*2+1, color*2+2, wk->colorBackGround );
+			u8  colorIdx;
+			u8  bgcolor;
+
+			colorIdx = STR_TOOL_GetTagParam( sp, 0 );
+			bgcolor = PRINTSYS_LSB_GetB( wk->defColor );
+			GFL_FONTSYS_SetColor( colorIdx*2+1, colorIdx*2+2, bgcolor );
 		}
 		break;
 
@@ -774,7 +922,7 @@ PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
 	stwk = GFL_TCBL_GetWork( tcb );
 	stwk->tcb = tcb;
 
-	setupPrintJob( &stwk->printJob, font, dstBmp, xpos, ypos );
+	printJob_setup( &stwk->printJob, font, dstBmp, xpos, ypos );
 
 	stwk->sp = GFL_STR_GetStringCodePointer( str );
 	stwk->org_wait = wait;
@@ -1098,6 +1246,45 @@ u32 PRINTSYS_GetStrWidth( const STRBUF* str, GFL_FONT* font, u16 margin )
 
 	return max;
 }
+
+//=============================================================================================
+/**
+ * 文字列をBitmap表示する際の高さ（ドット数）を計算
+ *
+ * @param   str			
+ * @param   font		
+ *
+ * @retval  u32			ドット数
+ */
+//=============================================================================================
+u32 PRINTSYS_GetStrHeight( const STRBUF* str, GFL_FONT* font )
+{
+	const STRCODE* sp;
+	u16 numCR;
+
+	sp = GFL_STR_GetStringCodePointer( str );
+	numCR = 0;
+
+	while( *sp != EOM_CODE )
+	{
+		if( *sp == CR_CODE )
+		{
+			++numCR;
+		}
+		if( *sp == SPCODE_TAG_START_ )
+		{
+			sp = STR_TOOL_SkipTag( sp );
+		}
+		else
+		{
+			++sp;
+		}
+	}
+
+	return GFL_FONT_GetLineHeight( font ) * numCR;
+}
+
+
 //=============================================================================================
 /**
  * 文字列の中に含まれる、単語タグの数をカウントして返す

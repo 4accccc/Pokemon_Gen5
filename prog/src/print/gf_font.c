@@ -808,6 +808,13 @@ void GFL_FONTSYS_GetColor( u8* letter, u8* shadow, u8* back )
 	*back = CurrentColor.back;
 }
 
+BOOL GFL_FONTSYS_IsDifferentColor( u8 letter, u8 shadow, u8 back )
+{
+	return 			(letter != CurrentColor.letter)
+					||	(shadow != CurrentColor.shadow)
+					||	(back != CurrentColor.back);
+}
+
 static inline void ExpandFontData( const void* src_p, void* dst_p )
 {
 	const u8* src;
@@ -825,10 +832,6 @@ static inline void ExpandFontData( const void* src_p, void* dst_p )
 	*dst++ = DotTbl[ *src++ ];
 	*dst++ = DotTbl[ *src++ ];
 }
-
-
-
-
 
 static inline void BitReader_Init( BIT_READER* br, const u8* src )
 {
@@ -857,7 +860,6 @@ static inline u8 BitReader_Read( BIT_READER* br, u8 bits )
 		0xfe,
 		0xff
 	};
-
 
 #if 1
 	u8 ret_u, ret_d, ret, shift;

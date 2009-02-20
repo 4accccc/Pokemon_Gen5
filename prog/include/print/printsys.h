@@ -47,6 +47,38 @@ typedef struct _PRINT_STREAM	PRINT_STREAM;
 typedef void (*pPrintCallBack)(u32);
 
 
+//--------------------------------------------------------------------------
+/**
+ *	Print System で用いる描画色データ
+ *	文字(Letter)、影(Shadow)、背景色(Background) の番号各5bitをパックしたもの
+ */
+//--------------------------------------------------------------------------
+typedef u16		PRINTSYS_LSB;
+
+
+static inline PRINTSYS_LSB PRINTSYS_LSB_Make( u8 l, u8 s, u8 b )
+{
+	return (l<<10) | (s<<5) | b;
+}
+static inline u8 PRINTSYS_LSB_GetL( PRINTSYS_LSB color )
+{
+	return (color >> 10) & 0x1f;
+}
+static inline u8 PRINTSYS_LSB_GetS( PRINTSYS_LSB color )
+{
+	return (color >> 5) & 0x1f;
+}
+static inline u8 PRINTSYS_LSB_GetB( PRINTSYS_LSB color )
+{
+	return (color & 0x1f);
+}
+static inline void PRINTSYS_LSB_GetLSB( PRINTSYS_LSB color, u8* l, u8* s, u8* b )
+{
+	*l = PRINTSYS_LSB_GetL( color );
+	*s = PRINTSYS_LSB_GetS( color );
+	*b = PRINTSYS_LSB_GetB( color );
+}
+
 //============================================================================================================
 // Consts
 
@@ -168,6 +200,22 @@ extern BOOL PRINTSYS_QUE_IsExistTarget( const PRINT_QUE* que, const GFL_BMP_DATA
  */
 //==============================================================================================
 extern void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font );
+
+//==============================================================================================
+/**
+ * プリントキューを介した文字列描画（色変更に対応）
+ *
+ * @param   que		[out] 描画処理内容を記録するためのプリントキュー
+ * @param   dst		[out] 描画先Bitmap
+ * @param   xpos	[in]  描画開始Ｘ座標（ドット）
+ * @param   ypos	[in]  描画開始Ｙ座標（ドット）
+ * @param   str		[in]  文字列
+ * @param   font	[in]  フォント
+ * @param   color	[in]  色番号
+ *
+ */
+//==============================================================================================
+extern void PRINTSYS_PrintQueColor( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font, PRINTSYS_LSB color );
 
 //=============================================================================================
 /**
@@ -299,8 +347,6 @@ extern void PRINTSYS_PrintStreamDelete( PRINT_STREAM* handle );
 //==============================================================================================
 extern void PRINTSYS_PrintStreamShortWait( PRINT_STREAM* handle, u16 wait );
 
-
-
 //==============================================================================================
 /**
  * 文字列をBitmap表示する際の幅（ドット数）を計算
@@ -315,6 +361,17 @@ extern void PRINTSYS_PrintStreamShortWait( PRINT_STREAM* handle, u16 wait );
 //==============================================================================================
 extern u32 PRINTSYS_GetStrWidth( const STRBUF* str, GFL_FONT* font, u16 margin );
 
+//=============================================================================================
+/**
+ * 文字列をBitmap表示する際の幅（ドット数）を計算
+ *
+ * @param   str			文字列
+ * @param   font		フォントハンドラ
+ *
+ * @retval  u32			文字列高さ（ドット）
+ */
+//=============================================================================================
+extern u32 PRINTSYS_GetStrHeight( const STRBUF* str, GFL_FONT* font );
 
 //=============================================================================================
 /**
@@ -380,6 +437,25 @@ inline void PRINT_UTIL_Setup( PRINT_UTIL* wk, GFL_BMPWIN* win )
 inline void PRINT_UTIL_Print( PRINT_UTIL* wk, PRINT_QUE* que, u16 xpos, u16 ypos, const STRBUF* buf, GFL_FONT* font )
 {
 	PRINTSYS_PrintQue( que, GFL_BMPWIN_GetBmp(wk->win), xpos, ypos, buf, font );
+	wk->transReq = TRUE;
+}
+//--------------------------------------------------------------------------------------
+/**
+ * ユーティリティを介してBitmap文字列描画（色変更に対応）
+ *
+ * @param   wk			
+ * @param   que			
+ * @param   xpos		
+ * @param   ypos		
+ * @param   buf			
+ * @param   font		
+ * @param   color		
+ *
+ */
+//--------------------------------------------------------------------------------------
+inline void PRINT_UTIL_PrintColor( PRINT_UTIL* wk, PRINT_QUE* que, u16 xpos, u16 ypos, const STRBUF* buf, GFL_FONT* font, PRINTSYS_LSB color )
+{
+	PRINTSYS_PrintQueColor( que, GFL_BMPWIN_GetBmp(wk->win), xpos, ypos, buf, font, color );
 	wk->transReq = TRUE;
 }
 

@@ -34,6 +34,12 @@ typedef enum {
 }GFL_FONT_LOADTYPE;
 
 
+
+//=============================================================================================
+/**
+ * システム初期化（プログラム起動後に１回のみ）
+ */
+//=============================================================================================
 extern void GFL_FONTSYS_Init( void );
 
 //=============================================================================================
@@ -64,6 +70,7 @@ extern void GFL_FONT_Delete( GFL_FONT* wk );
 extern void GFL_FONTSYS_SetDefaultColor( void );
 extern void GFL_FONTSYS_SetColor( u8 letterColor, u8 shadowColor, u8 backColor );
 extern void GFL_FONTSYS_GetColor( u8* letter, u8* shadow, u8* back );
+extern BOOL GFL_FONTSYS_IsDifferentColor( u8 letter, u8 shadow, u8 back );
 
 
 //=========================================================================
