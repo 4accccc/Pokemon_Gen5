@@ -114,4 +114,5 @@
 	ARCID_COMPATI_CHECK	"compati_check.narc"	#相性チェック
 	ARCID_MUSICAL_ITEM	"musical_item.narc"		#ミュージカル装備品
 	ARCID_DRESSUP_GRA	"dressup_gra.narc"		#ミュージカル　ドレスアップ
-
+	ARCID_FLDMMDL_PARAM "fieldmap/fldmmdl_mdlparam.narc" #動作モデル パラメータ
+	ARCID_FLDMMDL_RES	"fieldmap/fldmmdl_mdlres.narc" #動作モデル リソース
