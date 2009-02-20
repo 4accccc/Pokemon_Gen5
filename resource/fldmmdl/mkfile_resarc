@@ -1,0 +1,62 @@
+#======================================================================
+#	mkfile_reslist
+#	動作モデルリソースファイル　リソースアーカイブ化
+#======================================================================
+include mkdefine
+include $(PROJECT_RSCDIR)/macro_define
+
+TARGET_RES_ARC = fldmmdl_mdlres.narc
+TARGET_RES_ARCIDX = $(TARGET_RES_ARC:.narc=.naix)
+
+#FMMDL_RESLIST
+-include $(FMMDLLIST_RES)
+
+#G3Dコンバータ
+G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
+
+#---------------------------------------------------------------
+#	リスト置き換え
+#---------------------------------------------------------------
+#拡張子imdからnsbtxに置き換え
+RESLIST_NSBTX = $(notdir $(FMMDL_RESLIST:.imd=.nsbtx))
+#リソースディレクトリ　リソースファイル一覧
+RESDATA_IMD = $(addprefix $(DIR_RES)/,$(FMMDL_RESLIST))
+#テンポラリディレクトリ　リソースファイル一覧
+RESDATA_NSBTX = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBTX))
+
+#---------------------------------------------------------------
+#	拡張子別処理
+#---------------------------------------------------------------
+#imd --> nsbtxへの変換ルール定義
+$(DIR_TMP)/%.nsbtx: $(DIR_RES)/%.imd
+	@echo Texture Data Convert: $^ → $@
+	@$(G3DCVTR) $^ -o $@ -etex
+
+#---------------------------------------------------------------
+#	ターゲット
+#---------------------------------------------------------------
+.PHONY: do-build clean
+
+#---------------------------------------------------------------
+#	build
+#---------------------------------------------------------------
+do-build: $(DIR_TARGET_COPY)/$(TARGET_RES_ARC)
+
+$(DIR_TARGET_COPY)/$(TARGET_RES_ARC): $(TARGET_RES_ARC)
+	$(COPY) $(TARGET_RES_ARC) $(DIR_TARGET_COPY)
+	$(COPY) $(TARGET_RES_ARCIDX) $(DIR_TARGET_COPY)
+
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+$(TARGET_RES_ARC): $(RESDATA_NSBTX)
+	nnsarc -i -c -l -n $(TARGET_RES_ARC) $(RESDATA_NSBTX) > arc_result_res.txt
+	$(NAIXCUT) $(TARGET_RES_ARCIDX)
+endif
+
+clean:
+	rm -f $(DIR_TARGET_COPY)/$(TARGET_RES_ARC)
+	rm -f $(DIR_TARGET_COPY)/$(TARGET_RES_ARCIDX)
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+	rm -f $(TARGET_RES_ARC)
+	rm -f $(TARGET_RES_ARCIDX)
+	rm -f $(RESDATA_NSBTX)
+endif

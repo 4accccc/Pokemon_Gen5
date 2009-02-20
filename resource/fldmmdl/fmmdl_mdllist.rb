@@ -1,0 +1,387 @@
+#=======================================================================
+#	fmmdl_mdllist.rb
+#	フィールド動作モデル　モデルリスト作成
+#	引数 fmmdl_mdllist.rb xlstxt residx binfilename codefilename
+#	xlstxt 動作モデルリスト表 テキスト変換済みファイル名
+#	residx リソースアーカイブデータインデックスファイル名
+#	binfilename 作成するバイナリファイル名
+#	codefilename 作成するOBJコードファイル名
+#=======================================================================
+$KCODE = "SJIS"
+
+#=======================================================================
+#	フォーマット
+#	0-3 モデル総数
+#	4-  以下総数分のモデルパラメータ
+#
+#	パラメーターフォーマット
+#	0-1 OBJコード
+#	2-3 リソースアーカイブインデックス 
+#=======================================================================
+
+#=======================================================================
+#	定数
+#=======================================================================
+#戻り値
+RET_TRUE = (1)
+RET_FALSE = (0)
+RET_ERROR = (0xfffffffe)
+
+#リスト変換用ヘッダーファイル
+FLDMMDL_LIST_H = "fldmmdl_list.h"
+
+#固定文字列
+STR_NULL = ""
+STR_END = "#END"
+STR_CODEMAX = "OBJCODEMAX"
+
+#管理表文字位置 名称
+STRPRMNO_CODENAME = (3)
+#管理表文字位置 表示コード
+STRPRMNO_CODE = (7)
+#管理表文字位置 モデルファイル名
+STRPRMNO_MDLFILENAME = (8)
+#管理表文字位置 表示タイプ
+STRPRMNO_DRAWTYPE = (9)
+#管理表文字位置 処理関数
+STRPRMNO_DRAWPROC = (10)
+#管理表文字位置 影表示
+STRPRMNO_SHADOW = (11)
+#管理表文字位置 足跡種類
+STRPRMNO_FOOTMARK = (12)
+#管理表文字位置 映り込み
+STRPRMNO_REFLECT = (13)
+#管理表文字位置 モデルサイズ
+STRPRMNO_MDLSIZE = (14)
+#管理表文字位置 テクスチャサイズ
+STRPRMNO_TEXSIZE = (15)
+#管理表文字位置 アニメーションID
+STRPRMNO_ANMID = (16)
+
+#=======================================================================
+#	関数
+#=======================================================================
+#-----------------------------------------------------------------------
+#	異常終了
+#-----------------------------------------------------------------------
+def error_end(
+	path_delfile0, path_delfile1, file0, file1, file2, file3, file4 )
+	printf( "ERROR fldmmdl list convert\n" )
+	file0.close
+	file1.close
+	file2.close
+	file3.close
+	file4.close
+	File.delete( path_delfile0 )
+	File.delete( path_delfile1 )
+end
+
+#-----------------------------------------------------------------------
+#	モデルリスト用ヘッダーファイル内検索
+#	search 検索文字列
+#	戻り値 指定文字列の数値 RET_ERROR=ヒット無し
+#-----------------------------------------------------------------------
+def hfile_search( hfile, search )
+	pos = hfile.pos
+	hfile.pos = 0
+	num = RET_ERROR
+	
+	search = search.strip #先頭末尾の空白、改行削除
+	
+	while line = hfile.gets
+		if( line =~ /\A#define/ )
+			len = line.length
+			str = line.split() #空白文字以外羅列
+			
+			if( str[1] == search )	#1 シンボル名
+				str_num = str[2]	#2 数値
+				
+				if( str_num =~ /\A0x/ ) #16進表記
+					/([\A0x0-9a-fA-F]+)/ =~ str_num
+					str_num = $1
+					num = str_num.hex
+				else					#10進表記
+					/([\A0-9]+)/ =~ str_num
+					str_num = $1
+					num = str_num.to_i
+				end
+				
+				break
+			end
+		end
+	end
+	
+	hfile.pos = pos
+	return num
+end
+
+#-----------------------------------------------------------------------
+#	モデルリスト用アーカイブインデックスファイル内検索
+#	search 検索文字列
+#	戻り値 指定文字列の数値 RET_ERROR=ヒット無し
+#-----------------------------------------------------------------------
+def arcidx_search( idxfile, search )
+	pos = idxfile.pos
+	idxfile.pos = 0
+	num = RET_ERROR
+	
+	search = search.strip #先頭末尾の空白、改行削除
+	check = sprintf( "_%s_", search )
+	
+	while line = idxfile.gets
+		if( line =~ /^enum.*\{/ )
+			while line = idxfile.gets
+				if( line.index(check) != @nil )
+					/(\s[0-9]+)/ =~ line
+					str = $1
+					num = str.to_i
+					break
+				end
+			end
+			
+			break
+		end
+	end
+	
+	idxfile.pos = pos
+	return num
+end
+
+#=======================================================================
+#	コードファイル作成
+#=======================================================================
+#-----------------------------------------------------------------------
+#	コードファイル記述
+#	戻り値　RET_FALSE=異常終了
+#-----------------------------------------------------------------------
+def codefile_write( codefile, txtfile )
+	no = 0
+	pos = txtfile.pos
+	txtfile.pos = 0 #先頭に
+	line = txtfile.gets #一行飛ばし
+	
+	codefile.printf( "//動作モデル OBJコード定義\n\n" );
+	
+	loop{
+		line = txtfile.gets
+		
+		if( line == @nil )
+			return RET_FALSE
+		end
+		
+		if( line.include?(STR_END) )
+			break
+		end
+		
+		str = line.split( "," )
+		
+		codefile.printf( "#define %s (0x%x) //%d %s\n",
+			str[STRPRMNO_CODE], no, no, str[STRPRMNO_CODENAME] );
+		
+		no = no + 1
+	}
+	
+	if( no == 0 )
+		printf( "OBJコードが定義されていません\n" );
+		return RET_FALSE
+	end
+	
+	codefile.printf(
+		"#define %s (0x%x) //%d %s", STR_CODEMAX, no, no, "最大" );
+	
+	txtfile.pos = pos
+	return RET_TRUE
+end
+
+#=======================================================================
+#	動作モデルパラメタコンバート
+#=======================================================================
+#-----------------------------------------------------------------------
+#	動作モデルデータ一行コンバート
+#-----------------------------------------------------------------------
+def convert_line( no, line, wfile, idxfile, symfile )
+	str = line.split( "," )
+	
+	#OBJコード 2
+	ary = Array( no )
+	wfile.write( ary.pack("S*") )
+	
+	#アーカイブインデックス テクスチャ 2 (4)
+	word = str[STRPRMNO_MDLFILENAME]
+	/(\A.*[^\.imd])/ =~ word
+	mdlname = $1
+	ret = arcidx_search( idxfile, mdlname )
+	if( ret == RET_ERROR )
+		printf( "ERROR モデルファイル名異常 %s\n", word )
+		return RET_FALSE
+	end
+	ary = Array( ret )
+	wfile.write( ary.pack("S*") )
+	
+	#表示タイプ 1 (5)
+	word = str[STRPRMNO_DRAWTYPE]
+	ret = hfile_search( symfile, word )
+	if( ret == RET_ERROR )
+		printf( "ERROR 表示タイプ異常 %s\n", word )
+		return RET_FALSE
+	end
+	ary = Array( ret )
+	wfile.write( ary.pack("C*") )
+	
+	#処理関数 1 (6)
+	word = str[STRPRMNO_DRAWPROC]
+	ret = hfile_search( symfile, word )
+	if( ret == RET_ERROR )
+		printf( "ERROR 処理関数異常異常 %s\n", word )
+		return RET_FALSE
+	end
+	ary = Array( ret )
+	wfile.write( ary.pack("C*") )
+	
+	#影表示 1 (7)
+	word = str[STRPRMNO_SHADOW]
+	if( word != "○" )
+		ret = 0
+	else
+		ret = 1
+	end
+	ary = Array( ret )
+	wfile.write( ary.pack("C*") )
+	
+	#足跡種類 1 (8)
+	word = str[STRPRMNO_FOOTMARK]
+	ret = hfile_search( symfile, word )
+	if( ret == RET_ERROR )
+		printf( "ERROR 足跡種類異常 %s\n", word )
+		return RET_FALSE
+	end
+	ary = Array( ret )
+	wfile.write( ary.pack("C*") )
+	
+	#映り込み 1 (9)
+	word = str[STRPRMNO_REFLECT]
+	if( word != "○" )
+		ret = 0
+	else
+		ret = 1
+	end
+	ary = Array( ret )
+	wfile.write( ary.pack("C*") )
+	
+	#モデルサイズ 1 (10)
+	word = str[STRPRMNO_MDLSIZE]
+	ret = hfile_search( symfile, word )
+	if( ret == RET_ERROR )
+		printf( "ERROR モデルサイズ異常 %s\n", word )
+		return RET_FALSE
+	end
+	ary = Array( ret )
+	wfile.write( ary.pack("C*") )
+	
+	#テクスチャサイズ 1 (11)
+	word = str[STRPRMNO_TEXSIZE]
+	ret = hfile_search( symfile, word )
+	if( ret == RET_ERROR )
+		printf( "ERROR テクスチャサイズ異常 %s\n", word )
+		return RET_FALSE
+	end
+	ary = Array( ret )
+	wfile.write( ary.pack("C*") )
+	
+	#アニメID 1 (12)
+	word = str[STRPRMNO_ANMID]
+	ret = hfile_search( symfile, word )
+	if( ret == RET_ERROR )
+		printf( "ERROR アニメID異常 _%s_\n", word )
+		return RET_FALSE
+	end
+	ary = Array( ret )
+	wfile.write( ary.pack("C*") )
+	
+	return RET_TRUE
+end
+
+#=======================================================================
+#	モデルリスト作成
+#=======================================================================
+xlstxt_filename = ARGV[0]
+
+if( xlstxt_filename == @nil )
+	printf( "ERROR fmmdl_mdllist xlstxt filename\n" )
+	exit 1
+end
+
+residx_filename = ARGV[1]
+
+if( xlstxt_filename == @nil )
+	printf( "ERROR fmmdl_mdllist residx filename\n" )
+	exit 1
+end
+
+bin_filename = ARGV[2]
+
+if( bin_filename == @nil )
+	printf( "ERROR fmmdl_mdllist bin filename\n" )
+	exit 1
+end
+
+code_filename = ARGV[3]
+
+if( code_filename == @nil )
+	printf( "ERROR fmmdl_mdllist code filename\n" )
+	exit 1
+end
+
+symbol_filename = ARGV[4]
+
+if( symbol_filename == @nil )
+	printf( "ERROR fmmdl_mdllist symbol filename\n" )
+	exit 1
+end
+
+txtfile = File.open( xlstxt_filename, "r" );
+residxfile = File.open( residx_filename, "r" );
+binfile = File.open( bin_filename, "wb" );
+codefile = File.open( code_filename, "w" );
+symfile = File.open( symbol_filename, "r" );
+
+ret = codefile_write( codefile, txtfile ) #表示コードヘッダーファイル作成
+
+if( ret == RET_FALSE )
+	error_end( bin_filename, code_filename,
+		 txtfile, residxfile, binfile, codefile, symfile )
+	exit 1
+end
+
+no = 0
+ary = Array( no )
+binfile.write( ary.pack("I*") )
+
+ret = RET_FALSE
+line = txtfile.gets #先頭行抜かし
+
+while line = txtfile.gets			#パラメタコンバート
+	if( line.include?(STR_END) )
+		break
+	end
+	
+	ret = convert_line( no, line, binfile, residxfile, symfile )
+	
+	if( ret == RET_FALSE )
+		error_end( bin_filename, code_filename,
+			 txtfile, residxfile, binfile, codefile, symfile )
+		exit 1
+	end
+
+	no = no + 1
+end
+
+binfile.pos = 0
+ary = Array( no )
+binfile.write( ary.pack("I*") ) #総数
+
+txtfile.close
+residxfile.close
+binfile.close
+codefile.close
+symfile.close

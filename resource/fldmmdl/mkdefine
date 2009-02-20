@@ -1,0 +1,39 @@
+#======================================================================
+#	mkdefine
+#	動作モデル　共通define
+#======================================================================
+#コンバート対象ユーザー定義
+#
+USERS = tamada
+
+#対象ディレクトリ
+#
+DIR_TARGET_COPY = $(PROJECT_ROOT)/prog/arc/fieldmap
+
+#リソース格納ディレクトリ
+#
+DIR_RES = ./mmdl_res
+
+#テンポラリディレクトリ
+#
+DIR_TMP = ./mmdl_tmp
+
+#管理表
+#
+FMMDLLIST_XLS = fldmmdl_list.xls
+
+#管理表テキストファイル
+#
+FMMDLLIST_CSV = fldmmdl_list.csv
+
+#管理表から生成されるリソース一覧
+#
+FMMDLLIST_RES = fldmmdl_list_res
+
+#ダミーモデルリソースファイル
+#
+FMMDL_DMYFILE = dmymdl.imd
+
+#リスト用シンボル定義ヘッダーファイル
+#
+SYMBOL_H = fldmmdl_list_symbol.h

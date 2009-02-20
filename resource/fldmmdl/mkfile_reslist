@@ -1,0 +1,34 @@
+#======================================================================
+#	mkfile_reslist
+#	動作モデル　リソースファイル　リスト作成
+#======================================================================
+include mkdefine
+include $(PROJECT_RSCDIR)/macro_define
+
+RUBY_LIST_RES = fmmdl_restbl.rb
+EXCELCONV = $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
+
+#---------------------------------------------------------------
+#	ターゲット
+#---------------------------------------------------------------
+.PHONY: do-build clean
+
+#---------------------------------------------------------------
+#	build
+#---------------------------------------------------------------
+do-build: $(FMMDLLIST_RES)
+
+#リソースリスト作成
+$(FMMDLLIST_RES): $(FMMDLLIST_XLS)
+	$(EXCELCONV) -o $(FMMDLLIST_CSV) -p 1 -s csv $(FMMDLLIST_XLS)
+	ruby $(RUBY_LIST_RES) $(FMMDLLIST_CSV) $(FMMDLLIST_RES) $(DIR_RES)
+
+#dmyres
+dmyres:
+	$(EXCELCONV) -o $(FMMDLLIST_CSV) -p 1 -s csv $(FMMDLLIST_XLS)
+	ruby $(RUBY_LIST_RES) $(FMMDLLIST_CSV) $(FMMDLLIST_RES) $(DIR_RES) $(FMMDL_DMYFILE)
+
+#clean
+clean:
+	rm -f $(FMMDLLIST_CSV)
+	rm -f $(FMMDLLIST_RES)

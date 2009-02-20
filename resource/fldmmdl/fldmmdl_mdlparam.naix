@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fldmmdl_mdlparam.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FLDMMDL_MDLPARAM_NAIX_
+#define NARC_FLDMMDL_MDLPARAM_NAIX_
+
+enum {
+	NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin = 0
+};
+
+/* NARC_FLDMMDL_MDLPARAM_NAIX_ */
+#endif

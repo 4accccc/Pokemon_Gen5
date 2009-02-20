@@ -1,0 +1,26 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fldmmdl_mdlres.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FLDMMDL_MDLRES_NAIX_
+#define NARC_FLDMMDL_MDLRES_NAIX_
+
+enum {
+	NARC_fldmmdl_mdlres_hero_nsbtx = 0,
+	NARC_fldmmdl_mdlres_boy1_nsbtx = 1,
+	NARC_fldmmdl_mdlres_girl1_nsbtx = 2,
+	NARC_fldmmdl_mdlres_man1_nsbtx = 3,
+	NARC_fldmmdl_mdlres_woman1_nsbtx = 4,
+	NARC_fldmmdl_mdlres_middleman1_nsbtx = 5,
+	NARC_fldmmdl_mdlres_middlew1_nsbtx = 6,
+	NARC_fldmmdl_mdlres_oldman1_nsbtx = 7,
+	NARC_fldmmdl_mdlres_oldwoman1_nsbtx = 8
+};
+
+/* NARC_FLDMMDL_MDLRES_NAIX_ */
+#endif

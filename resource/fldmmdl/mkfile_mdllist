@@ -1,0 +1,53 @@
+#======================================================================
+#	mkfile_mdllist
+#	動作モデル　動作モデルリストコンバート
+#======================================================================
+include mkdefine
+include $(PROJECT_RSCDIR)/macro_define
+
+#ターゲット　モデルパラメタアーカイブデータ
+TARGET_MDLPRM_ARC = fldmmdl_mdlparam.narc
+TARGET_MDLPRM_ARCIDX = $(TARGET_MDLPRM_ARC:.narc=.naix)
+TARGET_MDLRPM_BIN = $(TARGET_MDLPRM_ARC:.narc=.bin)
+
+#ターゲット　OBJコードヘッダー
+TARGET_OBJCODE_H = fldmmdl_objcode.h
+
+#モデルリソースアーカイブインデックス
+RES_ARCIDX = fldmmdl_mdlres.naix
+
+#コンバート用rubyファイル
+RUBY_MDLLIST = fmmdl_mdllist.rb
+
+#---------------------------------------------------------------
+#	ターゲット
+#---------------------------------------------------------------
+.PHONY: do-build clean
+
+#---------------------------------------------------------------
+#	build
+#---------------------------------------------------------------
+do-build: $(DIR_TARGET_COPY)/$(TARGET_MDLPRM_ARC)
+
+$(DIR_TARGET_COPY)/$(TARGET_MDLPRM_ARC): $(TARGET_MDLPRM_ARC)
+	$(COPY) $(TARGET_MDLPRM_ARC) $(DIR_TARGET_COPY)
+	$(COPY) $(TARGET_MDLPRM_ARCIDX) $(DIR_TARGET_COPY)
+	$(COPY) $(TARGET_OBJCODE_H) $(DIR_TARGET_COPY)
+
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+$(TARGET_MDLPRM_ARC): $(FMMDLLIST_CSV) $(SYMBOL_H)
+	ruby $(RUBY_MDLLIST) $(FMMDLLIST_CSV) $(RES_ARCIDX) $(TARGET_MDLRPM_BIN) $(TARGET_OBJCODE_H) $(SYMBOL_H)
+	nnsarc -i -c -l -n $(TARGET_MDLPRM_ARC) $(TARGET_MDLRPM_BIN) > arc_result_list.txt
+	$(NAIXCUT) $(TARGET_MDLPRM_ARCIDX)
+endif
+
+clean:
+	rm -f $(DIR_TARGET_COPY)/$(TARGET_MDLPRM_ARC)
+	rm -f $(DIR_TARGET_COPY)/$(TARGET_MDLPRM_ARCIDX)
+	rm -f $(DIR_TARGET_COPY)/$(TARGET_OBJCODE_H)
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+	rm -f $(TARGET_MDLPRM_ARC)
+	rm -f $(TARGET_MDLPRM_ARCIDX)
+	rm -f $(TARGET_MDLRPM_BIN)
+	rm -f $(TARGET_OBJCODE_H)
+endif
