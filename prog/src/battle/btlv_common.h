@@ -11,6 +11,16 @@
 #define __BTLV_COMMON_H__
 
 /**
+ *	画面サイズ／レイアウト関連定数
+ */
+enum {
+	BTLV_LCD_HEIGHT = 192,
+	BTLV_LCD_WIDTH  = 256,
+};
+
+
+
+/**
  *	描画処理用タスクプライオリティ
  */
 typedef enum {

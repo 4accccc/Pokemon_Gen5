@@ -28,6 +28,7 @@ typedef  struct _BTLV_CORE		BTLV_CORE;
 #include "btl_calc.h"
 #include "btl_string.h"
 #include "btl_pokeselect.h"
+#include "btlv_common.h"
 
 //----------------------------------------------------------------------
 /**

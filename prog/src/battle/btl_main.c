@@ -128,7 +128,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
 			setSubProcForSetup( &wk->subProc, wk, setup_param );
 
-		WAZADATA_PrintDebug();
+//			WAZADATA_PrintDebug();
 			(*seq)++;
 		}
 		break;
@@ -138,6 +138,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 			BTL_MAIN_MODULE* wk = mywk;
 			if( BTL_UTIL_CallProc(&wk->subProc) )
 			{
+				BTL_Printf("Proc Init done\n");
 				return GFL_PROC_RES_FINISH;
 			}
 		}

@@ -15,9 +15,9 @@
 #include "btl_string.h"
 #include "btl_action.h"
 
-#include "poke_mcss.h"
 #include "btlv_core.h"
 #include "btlv_scd.h"
+#include "poke_mcss.h"
 
 #include "arc_def.h"
 #include "font/font.naix"
@@ -507,6 +507,8 @@ static const GFL_UI_TP_HITTBL STW_HitTbl[] = {
 	{ STW_BTNPOS_B_Y*8, (STW_BTNPOS_B_Y+STW_BTN_HEIGHT)*8, STW_BTNPOS_B_X*8, (STW_BTNPOS_B_X+STW_BTN_WIDTH)*8 },
 	{ STW_BTNPOS_C_Y*8, (STW_BTNPOS_C_Y+STW_BTN_HEIGHT)*8, STW_BTNPOS_C_X*8, (STW_BTNPOS_C_X+STW_BTN_WIDTH)*8 },
 	{ STW_BTNPOS_D_Y*8, (STW_BTNPOS_D_Y+STW_BTN_HEIGHT)*8, STW_BTNPOS_D_X*8, (STW_BTNPOS_D_X+STW_BTN_WIDTH)*8 },
+
+	{ GFL_UI_KEY_END, 0, 0 }
 };
 // ↑描画位置から上記テーブルインデックスを引くためのテーブル
 static const u8 STW_HitTblIndex[] = {
@@ -565,7 +567,7 @@ static void stw_setConfirmField( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* ma
 //
 static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MAIN_MODULE* mainModule, u8* target_idx )
 {
-	GF_ASSERT(hitPos<NELEMS(STW_HitTblIndex));
+	GF_ASSERT_MSG(hitPos<NELEMS(STW_HitTblIndex), "hitPos=%d", hitPos);
 
 	if( stw->selectablePokeCount )
 	{
@@ -621,6 +623,10 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 
 	u16 x, y, width, height, str_x, str_y, str_width;
 	u8 vpos, idx;
+	PRINTSYS_LSB printColor;
+
+//	GFL_FONTSYS_SetColor( color_tbl[format].letter, color_tbl[format].shadow, color_tbl[format].back );
+	printColor = PRINTSYS_LSB_Make( color_tbl[format].letter, color_tbl[format].shadow, color_tbl[format].back );
 
 	while( count-- )
 	{
@@ -640,11 +646,10 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 		str_x = x + (width - str_width) / 2;
 		str_y = y + (height - 16) / 2;
 
-		GFL_FONTSYS_SetColor( color_tbl[format].letter, color_tbl[format].shadow, color_tbl[format].back );
-		PRINT_UTIL_Print( &wk->printUtil, wk->printQue, str_x, str_y, wk->strbuf, wk->font );
+		PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, str_x, str_y, wk->strbuf, wk->font, printColor );
 		pos++;
 	}
-	GFL_FONTSYS_SetDefaultColor();
+//	GFL_FONTSYS_SetDefaultColor();
 }
 static void stw_draw( const SEL_TARGET_WORK* stw, BTLV_SCD* work )
 {
@@ -716,7 +721,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 				{
 					BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.wazaIdx, target_idx );
 					wk->selTargetDone = TRUE;
-					return TRUE;
+					(*seq)++;
 				}
 			}
 
@@ -725,6 +730,27 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 				wk->selTargetDone = FALSE;
 				return TRUE;
 			}
+		}
+		break;
+
+	case 1:
+		{
+			u16 x, y;
+
+			GFL_BMP_Clear( wk->bmp, 0x0f );
+			BTL_STR_GetUIString( wk->strbuf, BTLSTR_UI_COMM_WAIT );
+			x = (BTLV_LCD_WIDTH  - PRINTSYS_GetStrWidth(wk->strbuf, wk->font, 0)) / 2;
+			y = (BTLV_LCD_HEIGHT - GFL_FONT_GetLineHeight(wk->font)) / 2;
+			PRINT_UTIL_Print( &wk->printUtil, wk->printQue, x, y, wk->strbuf, wk->font );
+			(*seq)++;
+		}
+		break;
+
+	case 2:
+		PRINTSYS_QUE_Main( wk->printQue );
+		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
+		{
+			return TRUE;
 		}
 		break;
 	}

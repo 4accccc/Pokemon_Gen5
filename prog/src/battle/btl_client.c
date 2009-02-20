@@ -1030,7 +1030,7 @@ static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
-	TAYA_Printf("[CL] OP - RankDown PokePos=%d, ppDat=%p\n", args[0], pp);
+	BTL_Printf(" OP - RankDown PokePos=%d, ppDat=%p\n", args[0], pp);
 	BTL_POKEPARAM_RankDown( pp, args[1], args[2] );
 	return TRUE;
 }
@@ -1044,7 +1044,6 @@ static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 //------------------------------------------------------------------------------------------------------
 // ŠO•”ƒ‚ƒWƒ…[ƒ‹‚©‚ç‚Ìî•ñŽæ“¾ˆ—
 //------------------------------------------------------------------------------------------------------
-
 u8 BTL_CLIENT_GetClientID( const BTL_CLIENT* client )
 {
 	return client->myID;
@@ -1115,5 +1114,4 @@ WazaID  BTL_CLIENT_WEP_GetWazaNumber( const BTL_WAZA_EXE_PARAM* wep )
 {
 	return wep->waza;
 }
-
 

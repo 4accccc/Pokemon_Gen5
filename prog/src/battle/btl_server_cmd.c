@@ -25,7 +25,7 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
 		scque_put2byte( que, scType );
 		scque_put2byte( que, strID );
 
-		TAYA_Printf("[PUT MSG] SC=%d, StrID=%d\n arg= ", scType, strID);
+		BTL_Printf(" PUT MSG SC=%d, StrID=%d\n arg= ", scType, strID);
 
 		do {
 			arg = va_arg( list, int );
@@ -44,7 +44,7 @@ void SCQUE_READ_Msg( BTL_SERVER_CMD_QUE* que, int* args )
 {
 	args[0] = scque_read2byte( que );
 
-	TAYA_Printf("READ MSG strID=%d\n", args[0]);
+	BTL_Printf("READ MSG strID=%d\n", args[0]);
 
 	{
 		int i = 0;
@@ -54,7 +54,7 @@ void SCQUE_READ_Msg( BTL_SERVER_CMD_QUE* que, int* args )
 			if( i < BTL_SERVERCMD_ARG_MAX )
 			{
 				args[i] = scque_read1byte( que );
-				TAYA_Printf(" msg arg[%d] = %d\n", i-1, args[i]);
+				BTL_Printf(" msg arg[%d] = %d\n", i-1, args[i]);
 			}
 			else
 			{
