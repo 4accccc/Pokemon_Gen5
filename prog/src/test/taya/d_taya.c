@@ -1189,7 +1189,15 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
 				u8* macAdrs = GFL_NET_GetBeaconMacAddress( i );
 				if( macAdrs != NULL )
 				{
-					TAYA_Printf("[D_TAYA] 子機がマルチ親機を見つけた\n");
+					TAYA_Printf("[D_TAYA] 子機がマルチ親機を見つけた! macAdrs=");
+					{
+						u8 x;
+						for(x=0; x<8; ++x)
+						{
+							TAYA_Printf("%02x.", macAdrs[0]);
+						}
+						TAYA_Printf("\n");
+					}
 					GFL_NET_ConnectToParent( macAdrs );
 					(*seq)++;
 				}
@@ -1200,7 +1208,11 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
 	case 5:
 		if( GFL_NET_HANDLE_RequestNegotiation() )
 		{
-			TAYA_Printf("[D_TAYA] ネゴシエーション成功したので次へ \n");
+			TAYA_Printf("[D_TAYA] ネゴシエーション成功\n");
+		}
+		if( GFL_NET_GetConnectNum() == TEST_MULTI_MEMBER_MAX )
+		{
+			TAYA_Printf("[D_TAYA] %d台そろったので次へ \n", TEST_MULTI_MEMBER_MAX);
 			(*seq)++;
 		}
 		break;
@@ -1218,7 +1230,16 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
 			if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
 			{
 				u8 n = GFL_NET_GetConnectNum();
-				TAYA_Printf("SubArg=%d, conNum=%d\n", wk->subArg, n);
+				NetID netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+				TAYA_Printf("SubArg=%d, conNum=%d, myNetID=%d : ", wk->subArg, n, netID);
+				for(netID=0; netID<TEST_MULTI_MEMBER_MAX; ++netID)
+				{
+					if( GFL_NET_IsConnectMember(netID) )
+					{
+						TAYA_Printf("%d,", netID);
+					}
+				}
+				TAYA_Printf("\n");
 			}
 		}
 		break;
