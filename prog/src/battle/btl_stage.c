@@ -64,8 +64,8 @@ void			BTL_STAGE_Draw( BTL_STAGE_WORK *bsw );
 static	const	VecFx32	stage_pos_table[]={
 //	{ FX_F32_TO_FX32( -3.845f ), 0, FX_F32_TO_FX32(   4.702f ) },
 //	{ FX_F32_TO_FX32(  4.964f ), 0, FX_F32_TO_FX32( -12.540f ) },
-	{ 0, FX_F32_TO_FX32( -0.45f ), FX_F32_TO_FX32( 8.3f ) },
-	{ 0, FX_F32_TO_FX32( -0.45f ), FX_F32_TO_FX32( -14.4f ) },
+	{ 0, 0, FX_F32_TO_FX32( 3.345f ) },
+	{ 0, 0, FX_F32_TO_FX32( -14.395f ) },
 };
 
 //============================================================================================
