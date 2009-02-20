@@ -274,7 +274,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     _BCON_GET_NUM,    // 最大ビーコン収集数
     TRUE,     // CRC計算
     FALSE,     // MP通信＝親子型通信モードかどうか
-    GFL_NET_TYPE_WIRELESS,//GFL_NET_TYPE_IRC,	//GFL_NET_TYPE_IRC_WIRELESS,//GFL_NET_TYPE_WIRELESS,//GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
+    GFL_NET_TYPE_IRC,	//GFL_NET_TYPE_IRC_WIRELESS,//GFL_NET_TYPE_WIRELESS,//GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_DEBUG_MATSUDA_SERVICEID,  //GameServiceID
 #if GFL_NET_IRC
@@ -360,7 +360,9 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 		}
 		
 		if(wk->send_key & PAD_BUTTON_B){
-			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_HUGE, 0x1000, &wk->huge_data);
+			//ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_HUGE, 0x1000, &wk->huge_data);
+			ret = GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER,
+				NET_CMD_HUGE, 0x1000, &wk->huge_data, TRUE, FALSE, TRUE);
 		}
 		
 		if(ret == FALSE){
