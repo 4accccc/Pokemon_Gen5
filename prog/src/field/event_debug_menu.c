@@ -26,6 +26,7 @@
 
 #include "field_comm/field_comm_main.h"
 #include "field_comm/field_comm_debug.h"
+#include "ircbattle/ircbattlemenu.h"
 
 //======================================================================
 //	define
@@ -103,6 +104,7 @@ static BOOL DMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL DMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk );
 
 static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -143,6 +145,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR07, DMenuCallProc_CameraList },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
+	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
 //	{ DEBUG_FIELD_STR01, NULL },
 //	{ DEBUG_FIELD_STR01, NULL },
 };
@@ -402,6 +405,35 @@ static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
 
 	return( TRUE );
 }
+
+
+//--------------------------------------------------------------
+/**
+ * IRCBATTLEメニュー呼びだし
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk )
+{
+	GMEVENT *event = wk->gmEvent;
+	const HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	GAMESYS_WORK	*gameSys	= wk->gmSys;
+	IRC_BATTLE_MENU *work;
+	
+	GMEVENT_Change( event,
+		IRCBATTLE_MENU_Main, IRCBATTLE_MENU_GetWorkSize() );
+	
+	work = GMEVENT_GetEventWork( event );
+	IRCBATTLE_MENU_InitWork( heapID , gameSys , fieldWork , event , work );
+
+	return( TRUE );
+}
+
+
+
+
 
 //======================================================================
 //	デバッグメニュー どこでもジャンプ

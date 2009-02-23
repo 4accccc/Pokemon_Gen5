@@ -178,10 +178,10 @@ SRCS	+=		$(SOUNDSRC) \
 #LIB=>					libwcm.a
 #LIB=>					libstubsmd5.a
 SRCS_OVERLAY_DEV_WIFI		= net/net_devwifi.c \
+								net/dwc_rap.c \
 								net/dwc_rapinitialize.c \
 								net/dwc_rapcommon.c \
 								net/dwc_rapfriend.c \
-								net/dwc_rap.c \
 								net/vchat.c
 
 
@@ -206,7 +206,7 @@ SRCS_OVERLAY_WIFI_UTIL	= net/dwc_raputil.c
 
 
 # field
-#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_FIELDMAP		=	field/fieldmap_proc.c \
 				field/fieldmap.c \
 				field/field_g3d_mapper.c \
@@ -223,6 +223,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/fieldmap_proc.c \
 				field/field_comm/field_comm_main.c \
 				field/field_comm/field_comm_menu.c \
 				field/field_comm/field_comm_debug.c \
+				field/ircbattle/ircbattlemenu.c \
 				field/fldmmdl_draw.c \
 				field/fldmmdl_acmd.c \
 				field/fldmmdl_move_0.c \

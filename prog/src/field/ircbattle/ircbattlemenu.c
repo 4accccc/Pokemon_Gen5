@@ -72,24 +72,24 @@ typedef struct {
 } _WINDOWPOS;
 
 
-static _WINDOWPOS wind3[]={
+static _WINDOWPOS wind4[]={
+    { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*4), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
     { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*3), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
     { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*2), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
     { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
 };
 
 
-static void* winPattern[] = {
-    &wind3,
-    &wind3,
-    &wind3,
-};
-
-
 static const GFL_UI_TP_HITTBL bttndata[] = {
-    {	0*8,		0x08*8,		0,     0x20*8  },
-    {	0x09*8,		0x10*8,		0,		0x20*8 },
-    {	0x11*8,		0x18*8,	0,		0x20*8 },
+    //上下左右
+    {	((0x18-(2+_BUTTON_WIN_HEIGHT)*4)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*4)*8)+_BUTTON_WIN_HEIGHT*8)-1,
+        (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
+    {	((0x18-(2+_BUTTON_WIN_HEIGHT)*3)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*3)*8)+_BUTTON_WIN_HEIGHT*8)-1,
+        (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
+    {	((0x18-(2+_BUTTON_WIN_HEIGHT)*2)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*2)*8)+_BUTTON_WIN_HEIGHT*8)-1,
+        (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
+    {	((0x18-(2+_BUTTON_WIN_HEIGHT)*1)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*1)*8)+_BUTTON_WIN_HEIGHT*8)-1,
+        (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
     {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 	};
 
@@ -118,6 +118,7 @@ enum _IBMODE_ENTRY {
     _ENTRYMODE_SINGLE = 0,
     _ENTRYMODE_DOUBLE,
     _ENTRYMODE_MULTI,
+    _ENTRYMODE_EXIT
 };
 
 
@@ -140,7 +141,7 @@ struct _IRC_BATTLE_MENU {
     GFL_FONT* pFontHandle;
     STRBUF* pStrBuf;
     BMPWINFRAME_AREAMANAGER_POS aPos;
-
+    int windowNum;
 };
 
 
@@ -244,9 +245,10 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
     
 //        BmpWinFrame_CgxSet(GFL_BG_FRAME2_S, _BUTTON_WIN_CGX, MENU_TYPE_SYSTEM, pWork->heapID);
 //    OS_TPrintf("cgxoff %d\n",cgx);
+    pWork->windowNum = num;
     
     for(i=0;i < num;i++){
-        _WINDOWPOS* pos = winPattern[num-1];
+        _WINDOWPOS* pos = wind4;
         
         pWork->buttonWin[i] = GFL_BMPWIN_Create(
             frame,
@@ -284,6 +286,30 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
  *	@param	p_work		ワーク
  */
 //-----------------------------------------------------------------------------
+
+static void _buttonWindowDelete(IRC_BATTLE_MENU* pWork)
+{
+    int i;
+
+    GFL_BMN_Delete(pWork->pButton);
+    pWork->pButton = NULL;
+    for(i=0;i < pWork->windowNum;i++){
+        GFL_BMPWIN_Delete(pWork->buttonWin[i]);
+        pWork->buttonWin[i] = NULL;
+    }
+    pWork->windowNum = 0;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンイベントコールバック
+ *
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
 static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 {
 	IRC_BATTLE_MENU *pWork = p_work;
@@ -307,6 +333,28 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 	}
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   モードセレクト全体の初期化
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeInit(IRC_BATTLE_MENU* pWork)
+{
+    _createSubBg(pWork);
+
+    pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+	pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
+    pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_ircbattle_dat, pWork->heapID );
+    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+    BmpWinFrame_GraphicSetAM(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID, &pWork->aPos);
+
+    _CHANGE_STATE(pWork,_modeSelectMenuInit);
+}
+
+
+
+
 
 
 
@@ -320,14 +368,6 @@ static void _modeSelectMenuInit(IRC_BATTLE_MENU* pWork)
 {
     int aMsgBuff[]={IRCBTL_STR_01,IRCBTL_STR_02,IRCBTL_STR_03};
     
-    _createSubBg(pWork);
-
-    pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
-	pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
-    pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_ircbattle_dat, pWork->heapID );
-    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
-    BmpWinFrame_GraphicSetAM(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID, &pWork->aPos);
-
     _buttonWindowCreate(3, aMsgBuff, pWork);
 
     pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
@@ -338,11 +378,11 @@ static void _modeSelectMenuInit(IRC_BATTLE_MENU* pWork)
 
 static void _workEnd(IRC_BATTLE_MENU* pWork)
 {
+    _buttonWindowDelete(pWork);
     GFL_MSG_Delete( pWork->pMsgData );
     WORDSET_Delete( pWork->pWordSet );
     GFL_STR_DeleteBuffer(pWork->pStrBuf);
 	GFL_FONT_Delete(pWork->pFontHandle);
-    GFL_BMN_Delete(pWork->pButton);
 }
 
 
@@ -357,11 +397,13 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
     switch( bttnid ){
       case _SELECTMODE_BATTLE:
-        _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
-        return TRUE;
-        break;
       case _SELECTMODE_POKE_CHANGE:
-        break;
+        _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
+        _buttonWindowDelete(pWork);
+        return TRUE;
+      case _SELECTMODE_EXIT:
+        _CHANGE_STATE(pWork,NULL);        // 終わり
+        return TRUE;
       default:
         break;
     }
@@ -410,12 +452,16 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
     switch(bttnid){
       case _ENTRYMODE_SINGLE:
+      case _ENTRYMODE_DOUBLE:
+      case _ENTRYMODE_MULTI:
+        pWork->selectType = bttnid;
+        _buttonWindowDelete(pWork);
         _CHANGE_STATE(pWork,_modeReportInit);
         return TRUE;
-        break;
-      case _ENTRYMODE_DOUBLE:
-        break;
-      case _ENTRYMODE_MULTI:
+      case _ENTRYMODE_EXIT:
+        _buttonWindowDelete(pWork);
+        _CHANGE_STATE(pWork,_modeSelectMenuInit);
+        return TRUE;
       default:
         break;
     }
@@ -432,8 +478,7 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectEntryNumWait(IRC_BATTLE_MENU* pWork)
 {
-
-
+    GFL_BMN_Main( pWork->pButton );
 }
 
 
@@ -445,6 +490,9 @@ static void _modeSelectEntryNumWait(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeReportInit(IRC_BATTLE_MENU* pWork)
 {
+
+
+
     _CHANGE_STATE(pWork,_modeReportWait);
 }
 
@@ -492,7 +540,7 @@ void IRCBATTLE_MENU_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys ,
 {
     GFL_STD_MemClear(pWork,sizeof(IRC_BATTLE_MENU));
     pWork->heapID = heapID;
-    _CHANGE_STATE( pWork, _modeSelectMenuInit);
+    _CHANGE_STATE( pWork, _modeInit);
 
 //	pWork->gameSys_ = gameSys;
 //	pWork->fieldWork_ = fieldWork;

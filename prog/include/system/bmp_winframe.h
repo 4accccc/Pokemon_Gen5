@@ -34,6 +34,13 @@ enum {
 	MENU_TYPE_UG			// 地下メニュー
 };
 
+
+typedef struct{
+  u32 pos;
+  u32 size;
+} BMPWINFRAME_AREAMANAGER_POS;
+
+
 //======================================================================
 //	プロトタイプ宣言
 //======================================================================
@@ -79,6 +86,23 @@ extern u32 BmpWinFrame_WinPalArcGet(void);
 //--------------------------------------------------------------
 extern void BmpWinFrame_GraphicSet(
 	u8 frmnum, u16 cgx, u8 pal, u8 win_num, u32 heap );
+
+//--------------------------------------------------------------
+/**
+ * エリアマネージャーを使ってメニューウィンドウのグラフィックをセット
+ *
+ * @param	ini			BGLデータ
+ * @param	frmnum		BGフレーム
+ * @param	pal			パレット番号
+ * @param	win_num		ウィンドウ番号
+ * @param	heap		ヒープID
+ * @param	pPos		エリアマネージャーの返すposとsize
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+extern void BmpWinFrame_GraphicSetAM(
+	u8 frmnum, u8 pal, u8 win_num, u32 heap, BMPWINFRAME_AREAMANAGER_POS* pPos );
 
 //--------------------------------------------------------------
 /**

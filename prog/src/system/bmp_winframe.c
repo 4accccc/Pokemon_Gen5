@@ -117,6 +117,52 @@ void BmpWinFrame_GraphicSet(
 	}
 }
 
+
+//--------------------------------------------------------------
+/**
+ * エリアマネージャーを使ってメニューウィンドウのグラフィックをセット
+ *
+ * @param	ini			BGLデータ
+ * @param	frmnum		BGフレーム
+ * @param	pal			パレット番号
+ * @param	win_num		ウィンドウ番号
+ * @param	heap		ヒープID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+void BmpWinFrame_GraphicSetAM(
+	u8 frmnum, u8 pal, u8 win_num, u32 heap, BMPWINFRAME_AREAMANAGER_POS* pPos )
+{
+	u32	arc,pos;
+	
+	// キャラ
+	if( win_num == MENU_TYPE_SYSTEM ){
+		arc = NARC_winframe_system_ncgr;
+	}else{
+		arc = NARC_winframe_fmenu_ncgr;
+	}
+
+	pPos->pos = GFL_ARC_UTIL_TransVramBgCharacterAreaMan(
+		ARCID_FLDMAP_WINFRAME, arc, frmnum, 0, 0, heap );
+    pPos->size = GFL_ARC_GetDataSize(ARCID_FLDMAP_WINFRAME, arc);
+	
+	// パレット
+	if( win_num == MENU_TYPE_UG ){
+		arc = NARC_winframe_ugmenu_win_nclr;
+	}else{
+		arc = NARC_winframe_system_nclr;
+	}
+
+	if( frmnum < GFL_BG_FRAME0_S ){
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FLDMAP_WINFRAME,
+			arc, PALTYPE_MAIN_BG, pal*0x20, 0x20, heap );
+	}else{
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FLDMAP_WINFRAME,
+			arc, PALTYPE_SUB_BG, pal*0x20, 0x20, heap );
+	}
+}
+
 //--------------------------------------------------------------
 /**
  *	メニューウインドウ描画メイン
