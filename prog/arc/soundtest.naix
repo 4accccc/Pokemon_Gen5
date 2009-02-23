@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: soundtest.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-02-19T19:36:47
+ *****************************************************************************/
+
+#ifndef NARC_SOUNDTEST_NAIX_
+#define NARC_SOUNDTEST_NAIX_
+
+enum {
+	NARC_soundtest_soundtest_NCGR = 0,
+	NARC_soundtest_soundtest_NCLR = 1,
+	NARC_soundtest_soundtest_NSCR = 2
+};
+
+/* NARC_SOUNDTEST_NAIX_ */
+#endif
