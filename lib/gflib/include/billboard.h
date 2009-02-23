@@ -197,6 +197,10 @@ extern void	GFL_BBD_SetObjectFlipS
 				( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* flipS );
 extern void	GFL_BBD_SetObjectFlipT
 				( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* flipT );
+extern void	GFL_BBD_SetObjectRotate
+				( GFL_BBD_SYS* billboardSys, int objIdx, const u16* rotZ );
+extern void	GFL_BBD_GetObjectRotate
+				( GFL_BBD_SYS* billboardSys, int objIdx, u16 *rotZ );
 
 //------------------------------------------------------------------
 /**

@@ -534,6 +534,8 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
 	wk->sub_seq = 0;
 	wk->edit_pos = 0;
 
+	wk->touch_button = TOUCH_BUTTON_NULL;
+
 	ChangeMainProc(wk, MainProc_EditArea);
 	SetSubProc( wk, SubProc_FadeIn );
 
@@ -886,7 +888,7 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 {
 	int ret,num,i;
 	u32 tpx,tpy;
-	GFL_UI_TP_HITTBL tbl;
+	GFL_UI_TP_HITTBL tbl[2] = { {GFL_UI_TP_HIT_END,0,0,0}, {GFL_UI_TP_HIT_END,0,0,0} };
 
 	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
@@ -909,8 +911,8 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 	//TODO Cont? Trg?
 	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
 	for(i = 0;i < num;i++){
-		PMSIView_GetSentenceWordArea( wk->vwk ,&tbl,i);
-		if(GFL_UI_TP_HitSelf( &tbl, tpx , tpy )){
+		PMSIView_GetSentenceWordArea( wk->vwk ,&tbl[0],i);
+		if(GFL_UI_TP_HitSelf( tbl, tpx , tpy ) != GFL_UI_TP_HIT_NONE ){
 			return i+4;
 		}
 
@@ -1402,6 +1404,10 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 	case SEQ_EDS_KEYWAIT:
 	case SEQ_EDS_BUTTON_KEYWAIT:
 		ret = edit_sentence_touch(wk);
+		if( ret != GFL_UI_TP_HIT_NONE )
+		{
+			ARI_TPrintf("[%d]\n",ret);
+		}
 		
 		switch(ret){
 		case 0:	//Œˆ’è
@@ -1830,7 +1836,7 @@ static int category_touch_group(PMS_INPUT_WORK* wk)
 {
 	int i,j;
 	u32 tpx,tpy;
-	GFL_UI_TP_HITTBL tbl;
+	GFL_UI_TP_HITTBL tbl[2] = { {GFL_UI_TP_HIT_END,0,0,0}, {GFL_UI_TP_HIT_END,0,0,0} };
 
 	if(GFL_UI_TP_GetTrg() == 0){
 		return -1;
@@ -1838,13 +1844,13 @@ static int category_touch_group(PMS_INPUT_WORK* wk)
 	//TODO Cont? Trg?
 	GFL_UI_TP_GetPointTrg( &tpx,&tpy );
 	for(i = 0;i < 4;i++){
-		tbl.rect.top = TPCA_GMA_PY+TPCA_GMA_OY*i - CATEGORY_BG_ENABLE_YOFS;
-		tbl.rect.bottom = tbl.rect.top + TPCA_GMA_SY;
+		tbl[0].rect.top = TPCA_GMA_PY+TPCA_GMA_OY*i - CATEGORY_BG_ENABLE_YOFS;
+		tbl[0].rect.bottom = tbl[0].rect.top + TPCA_GMA_SY;
 		for(j = 0;j < 3;j++){
-			tbl.rect.left = TPCA_GMA_PX+TPCA_GMA_OX*j - GROUPMODE_BG_XOFS;
-			tbl.rect.right = tbl.rect.left + TPCA_GMA_SX;
+			tbl[0].rect.left = TPCA_GMA_PX+TPCA_GMA_OX*j - GROUPMODE_BG_XOFS;
+			tbl[0].rect.right = tbl[0].rect.left + TPCA_GMA_SX;
 			
-			if(GFL_UI_TP_HitSelf( &tbl, tpx,tpy)){
+			if(GFL_UI_TP_HitSelf( tbl, tpx,tpy) != GFL_UI_TP_HIT_NONE ){
 				return i*3+j;
 			}
 		}
@@ -2347,7 +2353,7 @@ static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 	int ret,i,j;
 	u32 tpx,tpy;
 	u16	pos,end_f;
-	GFL_UI_TP_HITTBL tbl;
+	GFL_UI_TP_HITTBL tbl[2] = { {GFL_UI_TP_HIT_END,0,0,0}, {GFL_UI_TP_HIT_END,0,0,0} };
 
 	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //		{0,191,0,255}, ty,by,lx,rx
@@ -2369,13 +2375,13 @@ static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 	pos = wk->word_win.line*2;
 	end_f = 0;
 	for(i = 0;i < 5;i++){
-		tbl.rect.top = i*TPWD_WORD_OY+TPWD_WORD_PY;
-		tbl.rect.bottom = tbl.rect.top+TPWD_WORD_SY;
+		tbl[0].rect.top = i*TPWD_WORD_OY+TPWD_WORD_PY;
+		tbl[0].rect.bottom = tbl[0].rect.top+TPWD_WORD_SY;
 		for(j = 0;j < 2;j++){
-			tbl.rect.left = j*TPWD_WORD_OX+TPWD_WORD_PX;
-			tbl.rect.right = tbl.rect.left+TPWD_WORD_SX;
+			tbl[0].rect.left = j*TPWD_WORD_OX+TPWD_WORD_PX;
+			tbl[0].rect.right = tbl[0].rect.left+TPWD_WORD_SX;
 		
-			if(GFL_UI_TP_HitSelf( &tbl, tpx,tpy)){
+			if(GFL_UI_TP_HitSelf( tbl, tpx,tpy) != GFL_UI_TP_HIT_NONE ){
 				wk->word_win.touch_pos = pos;
 
 				ARI_TPrintf(" Select Pos = %d -> %d\n",i*2+j , pos);

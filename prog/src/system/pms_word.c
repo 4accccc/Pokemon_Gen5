@@ -18,9 +18,7 @@
 #define __PMS_WORD_RES__
 #include "pms_word.res"
 
-
 #define    WORDNUM_MASK		(0x0fff)	// 上位4bitはローカライズ用／下位12bitが単語ナンバー
-
 
 struct _PMSW_MAN {
 	u32 heapID;
@@ -283,6 +281,9 @@ PMSW_SAVEDATA* SaveData_GetPMSW( SAVE_CONTROL_WORK* sv )
 //------------------------------------------------------------------
 BOOL PMSW_GetNankaiFlag( const PMSW_SAVEDATA* saveData, u32 id )
 {
+#if PMS_ALLOPEN
+	return TRUE;
+#endif
 	return ((saveData->nankaiBit >> id) & 1);
 }
 
@@ -339,6 +340,9 @@ u32 PMSW_SetNewNankaiWord( PMSW_SAVEDATA* saveData )
 BOOL PMSW_CheckNankaiWordComplete( PMSW_SAVEDATA* saveData )
 {
 	u32 i;
+#if PMS_ALLOPEN
+	return TRUE;
+#endif
 	for(i=0; i<PMSW_NANKAI_WORD_MAX; i++)
 	{
 		if( ((saveData->nankaiBit >> i) & 1) == 0 )

@@ -139,6 +139,9 @@ struct _PMSIV_CATEGORY {
 	GFL_CLWK		*cursor_actor;
 
 	int*			p_key_mode;
+	
+	GFL_BMPWIN		*winGroup[CATEGORY_GROUP_MAX];
+	GFL_BMPWIN		*winInitial;
 };
 
 
@@ -191,9 +194,21 @@ PMSIV_CATEGORY*  PMSIV_CATEGORY_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WOR
 //------------------------------------------------------------------
 void PMSIV_CATEGORY_Delete( PMSIV_CATEGORY* wk )
 {
+	u8 i;
 	if( wk->cursor_actor )
 	{
 		GFL_CLACT_WK_Remove( wk->cursor_actor );
+	}
+	for( i=0;i<CATEGORY_GROUP_MAX;i++ )
+	{
+		if( wk->winGroup[i] != NULL )
+		{
+			GFL_BMPWIN_Delete( wk->winGroup[i] );
+		}
+	}
+	if( wk->winInitial != NULL )
+	{
+		GFL_BMPWIN_Delete( wk->winInitial );
 	}
 	GFL_HEAP_FreeMemory( wk );
 }
@@ -216,7 +231,7 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
 										GX_WND_PLANEMASK_BG3|
 										GX_WND_PLANEMASK_OBJ);
 
-	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_pmsi_pms_bg_main3_NSCR,
+	GFL_ARCHDL_UTIL_TransVramScreen(p_handle, NARC_pmsi_pms_bg_main1_NSCR,
 		FRM_MAIN_CATEGORY, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 
 	charpos = GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main1_NCGR,
@@ -224,6 +239,7 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
 	charpos /= 0x20;
 
 	//TODO こいつはキャラのアドレスを固定してやらないと、解放後に上書きされるかも
+	//BMPWINを保持するように変更
 	charpos = setup_group_window( wk, charpos );
 	charpos = setup_initial_window( wk, charpos );
 	setup_back_window( wk, charpos );
@@ -305,7 +321,8 @@ static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 		GFL_BMPWIN_TransVramCharacter( win );
 
 		GFL_STR_DeleteBuffer(str);
-		GFL_BMPWIN_Delete(win);
+//		GFL_BMPWIN_Delete(win);
+		wk->winGroup[i] = win;
 
 		charpos += CATEGORY_WIN_CHARSIZE;
 		x += (CATEGORY_WIN_WIDTH+CATEGORY_WIN_X_MARGIN);
@@ -368,14 +385,15 @@ static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos )
 	GFL_BMPWIN_MakeScreen(win);
 
 	GFL_STR_DeleteBuffer(buf);
-	GFL_BMPWIN_Delete(win);
+//	GFL_BMPWIN_Delete(win);
+	wk->winInitial = win;
 
 	return charpos;
 }
 
 static u32 setup_back_window( PMSIV_CATEGORY* wk, u32 charpos )
 {
-#if 0
+#if 0	//元がコメントアウト
 	static const struct {
 		u16  x;
 		u16  y;
@@ -407,7 +425,7 @@ static u32 setup_back_window( PMSIV_CATEGORY* wk, u32 charpos )
 		GF_BGL_BmpWinMakeScrn(&win);
 		GF_BGL_BmpWinCgxOn(&win);
 
-		GF_BGL_BmpWinDel(&win);
+//		GF_BGL_BmpWinDel(&win);
 
 		charpos += BACK_WIN_CHARSIZE;
 	}

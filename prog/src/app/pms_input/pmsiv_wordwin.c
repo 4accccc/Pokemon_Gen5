@@ -334,7 +334,7 @@ void PMSIV_WORDWIN_StartFadeIn( PMSIV_WORDWIN* wk )
 	wk->winout_backup = G2_GetWndOutsidePlane();
 	wk->win_visible_backup = GX_GetVisibleWnd();
 	G2_SetWndOutsidePlane(PMSVI_PLANEMASK_ALL^FRM_MAIN_WORDWIN_WNDMASK, TRUE);
-	G2_SetWnd1Position(0,46,255,176);
+	G2_SetWnd1Position(0,46,255,160);
 	GX_SetVisibleWnd( GX_WNDMASK_W1 );
 
 	wk->eff_seq = 0;
@@ -525,6 +525,7 @@ void PMSIV_WORDWIN_StartScroll( PMSIV_WORDWIN* wk, int vector )
 	wk->write_word_idx = next_word_idx;
 
 	GFL_BMPWIN_TransVramCharacter( wk->win );
+	GFL_BMPWIN_MakeScreen( wk->win );
 
 	PMSIV_TOOL_SetupScrollWork( &(wk->scroll_work), FRM_MAIN_WORDWIN, PMSIV_TOOL_SCROLL_DIRECTION_Y,
 		vector*WORDWIN_WRITE_Y_MARGIN, scroll_wait );
@@ -598,7 +599,7 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
 //					WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN, v_line, MSG_NO_PUT,
 //					GF_PRINTCOLOR_MAKE(WORD_COL_LETTER, WORD_COL_SHADOW, WORD_COL_GROUND),
 //					NULL);
-		PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->tmp_win ) , 
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->win ) , 
 						WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN, 
 						v_line,
 						wk->tmpbuf,
@@ -606,9 +607,10 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
 	}
 	else
 	{
+		//スクロールをまたがるとき、仮Winに描画してから切れ目にコピー
 		u32  write_v_range = WORDWIN_WRITE_LINE_MAX - v_line;
 //		GF_BGL_BmpWinDataFill( &wk->tmp_win, WORD_COL_GROUND );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win ), WORD_COL_GROUND);
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->tmp_win ), WORD_COL_GROUND);
 
 //		GF_STR_PrintColor( &wk->tmp_win, PMSI_FONT_WORDWIN, wk->tmpbuf,
 //					0, 0, MSG_NO_PUT,
@@ -629,6 +631,12 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
 				WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   0,
 				WORD_TMPWIN_WIDTH*8, (WORD_TMPWIN_HEIGHT*8) - write_v_range );
 */
+		GFL_BMP_Print( GFL_BMPWIN_GetBmp(wk->tmp_win), GFL_BMPWIN_GetBmp(wk->win), 0, 0,
+				WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   v_line,
+				WORD_TMPWIN_WIDTH*8, write_v_range , GF_BMPPRT_NOTNUKI);
+		GFL_BMP_Print( GFL_BMPWIN_GetBmp(wk->tmp_win), GFL_BMPWIN_GetBmp(wk->win), 0, write_v_range,
+				WORDWIN_WRITE_OX + (wordnum&1)*WORDWIN_WRITE_X_MARGIN,   0,
+				WORD_TMPWIN_WIDTH*8, (WORD_TMPWIN_HEIGHT*8) - write_v_range , GF_BMPPRT_NOTNUKI);
 	}
 
 

@@ -79,7 +79,7 @@ enum {
 enum {
 	WIN_COL_LETTER = 0x01,
 	WIN_COL_SHADOW = 0x02,
-	WIN_COL_GROUND = 0x0e,
+	WIN_COL_GROUND = 0x0f,
 };
 
 //======================================================================
@@ -283,6 +283,8 @@ void PMSIV_BUTTON_UpdateButton( PMSIV_BUTTON* wk,BOOL draw_f,BOOL cur_f)
 //			NULL);
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win[i]), siz/2,0,
 				wk->str[i],fontHandle );
+		GFL_BMPWIN_MakeScreen( wk->win[i] );
+		GFL_BMPWIN_TransVramCharacter( wk->win[i] );
 	}
 	GFL_BG_LoadScreenReq(FRM_MAIN_BUTTON);
 }
@@ -320,6 +322,8 @@ void PMSIV_BUTTON_UpdateRetButton( PMSIV_BUTTON* wk,u8 draw_mode)
 //		NULL);
 	PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win[2]), siz/2,0,
 			wk->str[2],fontHandle );
+	GFL_BMPWIN_MakeScreen( wk->win[2] );
+	GFL_BMPWIN_TransVramCharacter( wk->win[2] );
 	GFL_BG_LoadScreenV_Req(FRM_MAIN_BUTTON);
 }
 

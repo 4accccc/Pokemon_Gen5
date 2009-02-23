@@ -198,7 +198,18 @@ static u32 CountupGruopPokemon( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u
 
 	return cnt;
 */
-	return 20;
+
+	u32 i, cnt;
+
+	cnt = 0;
+	for(i=0; i<tbl_elems; i++)
+	{
+		SetWordEnableFlag( pmsi, src_tbl[i] );
+		*dst_tbl++ = src_tbl[i];
+		cnt++;
+	}
+
+	return cnt;
 }
 
 static u32 CountupGruopSkill( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
@@ -206,7 +217,11 @@ static u32 CountupGruopSkill( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u3
 	u32 i;
 
 	// ƒNƒŠƒA‚µ‚Ä‚½‚ç‘S•”OK
+#if PMS_ALLOPEN
+	if( TRUE )
+#else
 	if( PMSI_PARAM_GetGameClearFlag(pmsi->input_param) )
+#endif
 	{
 		for(i=0; i<tbl_elems; i++)
 		{

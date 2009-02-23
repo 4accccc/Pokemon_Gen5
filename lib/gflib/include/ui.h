@@ -104,7 +104,7 @@ typedef enum {
  <BR>		{PAD_BUTTON_SELECT,PAD_BUTTON_START,GFL_UI_KEY_CHANGE},		//START SELECT 交換
  <BR>		{PAD_BUTTON_L,PAD_BUTTON_A,GFL_UI_KEY_COPY},		//LをA扱いに
  <BR>		{PAD_BUTTON_R,0,GFL_UI_KEY_RESET},		//LをA扱いに
- <BR>		{GFL_UI_KEY_END,0,0},		// 終了データ
+ <BR>		{GFL_UI_TP_HIT_END,0,0},		// 終了データ
  <BR> };
  */
 typedef struct{
@@ -123,7 +123,7 @@ typedef struct{
  <BR>		{32,94,129,200},
  <BR>		{0,191,0,255},
  <BR>       {TP_USE_CIRCLE, 100, 80, 16 },	 円形として使う。
- <BR>		{TP_HIT_END,0,0,0},		 終了データ
+ <BR>		{GFL_UI_TP_HIT_END,0,0,0},		 終了データ
  <BR>  };
  * 
  */

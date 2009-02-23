@@ -23,6 +23,8 @@
 #include "pms_input_prv.h"
 #include "pms_input_view.h"
 
+#include "test/ariizumi/ari_debug.h"
+
 //======================================================================
 enum {
 	INPUTAREA_PALTYPE_MAX = 10,
@@ -347,7 +349,8 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 		FRM_SUB_EDITAREA, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	charpos /= 0x20;
 
-
+	//↑までのcharaposはBmpWinを保持して後方確保なので無視
+	charpos = 0;
 // BitmapWindow setup
 //	GF_BGL_BmpWinAdd(	bgl, &wk->win_edit[0], FRM_MAIN_EDITAREA, 
 //						EDITAREA_WIN_X, EDITAREA_WIN_Y, EDITAREA_WIN_WIDTH, EDITAREA_WIN_HEIGHT,
@@ -361,7 +364,7 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	wk->win_edit[1] = GFL_BMPWIN_Create( FRM_SUB_EDITAREA, EDITAREA_WIN_X, EDITAREA_WIN_Y, 
 						EDITAREA_WIN_WIDTH, EDITAREA_WIN_HEIGHT, 
 						PALNUM_MAIN_EDITAREA,GFL_BMP_CHRAREA_GET_B );
-//	charpos += EDITAREA_WIN_CHARSIZE;
+	charpos += EDITAREA_WIN_CHARSIZE;
 
 //	GF_BGL_BmpWinAdd(	bgl, &wk->win_msg[0], FRM_MAIN_EDITAREA, 
 //						MESSAGE_WIN_X, MESSAGE_WIN_Y, MESSAGE_WIN_WIDTH, MESSAGE_WIN_HEIGHT,
@@ -375,7 +378,7 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	wk->win_msg[1] = GFL_BMPWIN_Create( FRM_MAIN_EDITAREA, MESSAGE_WIN_X, MESSAGE_WIN_Y,
 						MESSAGE_WIN_WIDTH-8, MESSAGE_WIN_HEIGHT, 
 						PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
-//	charpos += MESSAGE_WIN_CHARSIZE;
+	charpos += MESSAGE_WIN_CHARSIZE;
 
 
 //	GF_BGL_BmpWinAdd(	bgl, &wk->win_yesno, FRM_MAIN_EDITAREA, 
@@ -385,7 +388,7 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 						YESNO_WIN_WIDTH, YESNO_WIN_HEIGHT, 
 						PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
 	wk->yesno_win_cgx = charpos;
-//	charpos += TOUCH_SW_USE_CHAR_NUM;//YESNO_WIN_CHARSIZE;
+	charpos += TOUCH_SW_USE_CHAR_NUM;//YESNO_WIN_CHARSIZE;
 
 	//YesNoボタンシステムワーク確保
 	wk->ynbtn_wk = TOUCH_SW_AllocWork(HEAPID_PMS_INPUT_VIEW);
@@ -406,7 +409,7 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 //						HEAPID_PMS_INPUT_VIEW );
 
 	wk->msgwin_cgx = charpos;
-	BmpWinFrame_GraphicSet( FRM_MAIN_EDITAREA,charpos,PALNUM_MAIN_SYSWIN,
+	BmpWinFrame_GraphicSet( FRM_MAIN_EDITAREA,charpos,PALNUM_MAIN_TALKWIN,
 							MENU_TYPE_SYSTEM,HEAPID_PMS_INPUT_VIEW );
 
 	wk->win_message = &wk->win_msg[0];
@@ -447,6 +450,10 @@ void PMSIV_EDIT_ScrollSet( PMSIV_EDIT* wk,u8 scr_dir)
 	wk->scr_ct = 0;
 	wk->scr_dir = scr_dir;
 
+	if( wk->hBlankTask != NULL )
+	{
+		GFL_TCB_DeleteTask( wk->hBlankTask );
+	}
 	wk->hBlankTask = GFUser_HIntr_CreateTCB( pmsiv_edit_hblank, wk , 1);
 }
 
@@ -470,13 +477,13 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
 	GFL_BG_SetScroll( FRM_SUB_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->sub_scr);
 	
 //	CATS_ObjectPosMove(wk->cursor_actor[0],0,-dir);
-	posY = GFL_CLACT_WK_GetWldTypePos( wk->cursor_actor[0] , CLSYS_MAT_Y );
-	posY =-dir ;
-	GFL_CLACT_WK_SetWldTypePos( wk->cursor_actor[0] , posY , CLSYS_MAT_Y );
+	posY = GFL_CLACT_WK_GetTypePos( wk->cursor_actor[0] , CLSYS_DEFREND_MAIN, CLSYS_MAT_Y );
+	posY -=dir ;
+	GFL_CLACT_WK_SetTypePos( wk->cursor_actor[0] , posY , CLSYS_DEFREND_MAIN, CLSYS_MAT_Y );
 //	CATS_ObjectPosMove(wk->cursor_actor[1],0,-dir);
-	posY = GFL_CLACT_WK_GetWldTypePos( wk->cursor_actor[1] , CLSYS_MAT_Y );
-	posY =-dir ;
-	GFL_CLACT_WK_SetWldTypePos( wk->cursor_actor[1] , posY , CLSYS_MAT_Y );
+	posY = GFL_CLACT_WK_GetTypePos( wk->cursor_actor[1] , CLSYS_DEFREND_SUB, CLSYS_MAT_Y );
+	posY -=dir ;
+	GFL_CLACT_WK_SetTypePos( wk->cursor_actor[1] , posY , CLSYS_DEFREND_SUB, CLSYS_MAT_Y );
 
 	wk->scr_ct++;
 
@@ -578,13 +585,13 @@ static void setup_obj( PMSIV_EDIT* wk )
 		actpos.y = ALLCOVER_CURSOR_YPOS;
 	}
 
+	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_SUB, BGPRI_MAIN_EDITAREA );
+	wk->cursor_actor[1] = PMSIView_AddActor( wk->vwk, &header, actpos.x, actpos.y+192,
+			ACTPRI_EDITAREA_CURSOR, NNS_G2D_VRAM_TYPE_2DSUB );
+	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[1], 1);
 	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_MAIN, BGPRI_MAIN_EDITAREA );
 	wk->cursor_actor[0] = PMSIView_AddActor( wk->vwk, &header, actpos.x, actpos.y,
 			ACTPRI_EDITAREA_CURSOR, NNS_G2D_VRAM_TYPE_2DMAIN );
-	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_SUB, BGPRI_MAIN_EDITAREA );
-	wk->cursor_actor[1] = PMSIView_AddActor( wk->vwk, &header, actpos.x, actpos.y-wk->sub_scr,
-			ACTPRI_EDITAREA_CURSOR, NNS_G2D_VRAM_TYPE_2DSUB );
-	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor[1], 1);
 
 	set_cursor_anm( wk, TRUE );
 
@@ -649,7 +656,7 @@ void PMSIV_EDIT_UpdateEditArea( PMSIV_EDIT* wk )
 			break;
 		case PMSI_MODE_SENTENCE:
 			wk->word_pos_max = print_sentence( wk ,wk->win_edit[i]);
-			OS_TPrintf("word max:%d\n", wk->word_pos_max);
+//			OS_TPrintf("word max:%d\n", wk->word_pos_max);
 			break;
 		}
 
@@ -974,6 +981,7 @@ void PMSIV_EDIT_SetSystemMessage( PMSIV_EDIT* wk, u32 msg_type )
 	}
 
 //	GF_BGL_BmpWinOn( wk->win_message );
+	GFL_BMPWIN_MakeScreen( *wk->win_message );
 	GFL_BMPWIN_TransVramCharacter( *wk->win_message );
 }
 
@@ -1040,8 +1048,8 @@ void PMSIV_EDIT_MoveCursor( PMSIV_EDIT* wk, int pos )
 //		CLACT_SetMatrix( wk->cursor_actor, &mtx );
 	}
 	GFL_CLACT_WK_SetPos( wk->cursor_actor[0], &clPos , CLSYS_DEFREND_MAIN );
-//	clPos.y += 192-wk->sub_scr;
-	clPos.y -= wk->sub_scr;
+	clPos.y += 192;
+//	clPos.y -= wk->sub_scr;
 	GFL_CLACT_WK_SetPos( wk->cursor_actor[1], &clPos , CLSYS_DEFREND_SUB );
 	set_cursor_anm( wk, TRUE );
 }

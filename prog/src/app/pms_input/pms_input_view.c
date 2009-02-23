@@ -177,6 +177,8 @@ PMS_INPUT_VIEW*  PMSIView_Create(const PMS_INPUT_WORK* main_wk, const PMS_INPUT_
 
 		GFL_BG_Init( HEAPID_PMS_INPUT_VIEW );
 		GFL_BMPWIN_Init( HEAPID_PMS_INPUT_VIEW );
+		GX_SetMasterBrightness( -16 );
+		GXS_SetMasterBrightness( -16 );
 		
 		vwk->mainTask = GFL_TCB_AddTask( PMSI_GetTcbSystem(main_wk) ,PMSIView_MainTask, vwk, TASKPRI_VIEW_MAIN );
 		vwk->vintrTask = PMSIView_AddVTask( PMSIView_VintrTask, vwk, VTASKPRI_MAIN );
@@ -675,6 +677,7 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 
 	for(i = 0;i < 6;i++){
 		GFL_BG_ClearScreen(GFL_BG_FRAME0_M+i);
+		GFL_BG_SetVisible(GFL_BG_FRAME0_M+i,TRUE);
 	}
 
 	//ボタンフォント読み出し
@@ -1643,16 +1646,12 @@ GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 x, u
 
 	if(drawArea == NNS_G2D_VRAM_TYPE_2DSUB ){
 		setsf = CLSYS_DEFREND_SUB;
-		add.pos_y = y-192;
 	}
 	else
 	{
 		setsf = CLSYS_DEFREND_MAIN;
 	}
 
-	ARI_TPrintf("pos[%d:%d]sur[%d]\n",add.pos_x,add.pos_y,drawArea);
-	add.pos_x = 128;
-	add.pos_y = 96;
 	oldIntr = OS_DisableInterrupts();
 	act = GFL_CLACT_WK_Add( vwk->cellUnit , &add , header , setsf , HEAPID_PMS_INPUT_VIEW);
 	OS_RestoreInterrupts( oldIntr );
