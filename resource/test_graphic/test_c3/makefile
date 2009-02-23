@@ -18,6 +18,7 @@ NARCNAME	= $(TARGETNAME).narc
 NAIXNAME	= $(TARGETNAME).naix
 
 EXTNAME		= 3dppack
+OUTDIR		= output
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
@@ -31,16 +32,16 @@ HEIGHTCNV =	$(PROJECT_ROOT)tools/heightcnv/imdcnv01
 HEIGHTRETFILE = $(PROJECT_ROOT)tools/heightcnv/return.txt
 
 #依存対象が複数ある
-MAPNSBMDS	:= $(wildcard *.nsbmd)
+#MAPNSBMDS	:= $(wildcard *.nsbmd)
 #MAPNSBTXS	:= $(wildcard *.nsbtx)
 #MAPNSBTPS	:= $(wildcard *.nsbtp)
-MAP3DMDS	:= $(wildcard *.3dmd)
-MAPBHCS		:= $(wildcard *.bhc)
+#MAP3DMDS	:= $(wildcard *.3dmd)
+#MAPBHCS		:= $(wildcard *.bhc)
 
 #MAP3DPPACKS = $(subst .nsbmd,.$(EXTNAME),$(MAPNSBMDS))
 
-.imd.nsbmd:
-	g3dcvtr $< -emdl
+#.imd.nsbmd:
+	#g3dcvtr $< -emdl
 	#g3dcvtr $< -etex
 
 .PHONY:	do-build clean
@@ -90,6 +91,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	#-rm -f *.nsbtx
 	-rm -f *.nsbmd
 	-rm -f *.bhc
+	-rm -f $(OUTDIR)/*.bhc
+	-rm -f $(OUTDIR)/*.nsbmd
 	-rm -f *.$(EXTNAME)
 endif
 

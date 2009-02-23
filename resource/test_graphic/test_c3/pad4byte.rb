@@ -1,8 +1,10 @@
 #4ƒoƒCƒg‹«ŠE‚É‡‚í‚¹‚Ä‚O‚ğ‚Â‚ß‚é
-wname = ARGV[0].sub(/h\.bhc/,"\.bhc")
+rname = ARGV[0]
+wname = ARGV[1]
+
 
 File.open(wname, "wb") {|wf|
-	File.open(ARGV[0],"rb") {|f|
+	File.open(rname,"rb") {|f|
 		wf.write(f.read)
 		padding = File.size(ARGV[0]) % 4
 		if padding != 0 then
