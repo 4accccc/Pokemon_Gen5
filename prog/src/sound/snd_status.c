@@ -188,6 +188,7 @@ void	GFL_SNDSTATUS_SetControlEnable( GFL_SNDSTATUS* gflSndStatus, u16 flag )
 	if( gflSndStatus == NULL ) return;
 
 	gflSndStatus->setup.controlFlag = flag;
+	makeEventSwitchTable( gflSndStatus );
 }
 
 //============================================================================================
