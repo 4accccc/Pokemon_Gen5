@@ -866,10 +866,10 @@ static BOOL TESTMODE_ITEM_SelectFuncSave( TESTMODE_WORK *work , const int idx )
 
 //SOUND
 FS_EXTERN_OVERLAY(sound_debug);
-extern const GFL_PROC_DATA DebugSoundProcData;
+extern const GFL_PROC_DATA SoundTest2ProcData;
 static BOOL TESTMODE_ITEM_SelectFuncSound( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(sound_debug), &DebugSoundProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(sound_debug), &SoundTest2ProcData, NULL);
 	return TRUE;
 }
 

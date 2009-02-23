@@ -42,7 +42,6 @@ static	void	GameExit(void);
 static void DEBUG_StackOverCheck(void);
 #endif
 
-
 //------------------------------------------------------------------
 /**
  * @brief	メイン処理
@@ -180,8 +179,17 @@ static	void	GameInit(void)
 
 	//サウンドストリーミング再生システム
 	SND_STRM_Init(GFL_HEAPID_SYSTEM);
-    //サウンドの初期化
-    SOUND_Init(NULL,NULL);
+    //サウンドの設定
+    //SOUND_Init(NULL,NULL);
+	{
+		NNSSndHeapHandle soundHeap = GFL_SOUND_GetSoundHeap();
+		int size1, size2;
+
+		size1 = NNS_SndHeapGetFreeSize(soundHeap);
+		GFL_SOUND_LoadFilePathData("wb_sound_data.sdat");	
+		size2 = NNS_SndHeapGetFreeSize(soundHeap);
+		OS_Printf("setup sound data size(%x) heap_remains(%x)\n", size1 - size2, size2);
+	}
 
 	//キーコントロールモード設定
 	CONFIG_SYSTEM_KyeControlTblSetting();
@@ -205,7 +213,7 @@ static	void	GameMain(void)
 		NetErr_ErrorSet();
 	}
 	SND_STRM_Main();
-    SOUND_Main();
+    //SOUND_Main();
 }
 
 //------------------------------------------------------------------
@@ -216,7 +224,7 @@ static	void	GameMain(void)
 static	void	GameExit(void)
 {
 	SND_STRM_Exit();
-    SOUND_Exit();
+    //SOUND_Exit();
 }
 
 //--------------------------------------------------------------

@@ -19,6 +19,8 @@ BOOL	SampleMain( void );
 #include "g3d_mapper.h"
 #include "sample_net.h"
 
+#include "sound/snd_status.h"
+
 #include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 //============================================================================================
 /**
@@ -87,6 +89,11 @@ static const GFL_SKB_SETUP skbData= {
 	GFL_SKB_MODE_HIRAGANA, TRUE, PAD_BUTTON_START,
 	GFL_DISPUT_BGID_M1, GFL_DISPUT_PALID_14, GFL_DISPUT_PALID_15,
 };
+static const GFL_SNDSTATUS_SETUP sndStatusData= {
+	PAD_BUTTON_SELECT,
+	GFL_DISPUT_BGID_M1, GFL_DISPUT_PALID_15,
+	NULL, NULL, NULL, GFL_SNDSTATUS_CONTOROL_BGM | GFL_SNDSTATUS_CONTOROL_EXIT,
+};
 //------------------------------------------------------------------
 /**
  * @brief	構造体定義
@@ -107,7 +114,8 @@ typedef struct {
 	int				mapNum;
 
 	GFL_SKB*		gflSkb;
-	BOOL			gflSkbSw;
+	GFL_SNDSTATUS*	gflSndStatus;
+	BOOL			subProcSw;
 
 	void*			skbStrBuf;
 
@@ -204,7 +212,7 @@ BOOL	SampleMain( void )
 			SetPlayerActTrans( sampleWork->pcActCont, &pos );
 			SetPlayerActDirection( sampleWork->pcActCont, &dir );
 		}
-		sampleWork->gflSkbSw = FALSE;
+		sampleWork->subProcSw = FALSE;
 		sampleWork->seq++;
 
 		{
@@ -235,12 +243,23 @@ BOOL	SampleMain( void )
 		break;
 
 	case 2:
-		if( sampleWork->gflSkbSw == TRUE ){
-			if( GFL_SKB_Main( sampleWork->gflSkb ) == FALSE ){	
-				OS_Printf( sampleWork->skbStrBuf );
-				OS_Printf("\n");
-				GFL_SKB_Delete(	sampleWork->gflSkb );
-				sampleWork->gflSkbSw = FALSE;
+		if( sampleWork->subProcSw == TRUE ){
+			if(sampleWork->gflSkb != NULL ){
+				if( GFL_SKB_Main( sampleWork->gflSkb ) == FALSE ){	
+					OS_Printf( sampleWork->skbStrBuf );
+					OS_Printf("\n");
+					GFL_SKB_Delete(	sampleWork->gflSkb );
+					sampleWork->subProcSw = FALSE;
+					sampleWork->gflSkb = NULL;
+				} 
+			} else if(sampleWork->gflSndStatus != NULL ){
+				if( GFL_SNDSTATUS_Main( sampleWork->gflSndStatus ) == FALSE ){	
+					GFL_SNDSTATUS_Delete( sampleWork->gflSndStatus );
+					sampleWork->subProcSw = FALSE;
+					sampleWork->gflSndStatus = NULL;
+				}
+			} else {
+				sampleWork->subProcSw = FALSE;
 			}
 		} else {
 			if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
@@ -257,6 +276,18 @@ BOOL	SampleMain( void )
 				break;
 			}
 			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
+#if 1
+				GFL_SNDSTATUS_SETUP sndStatusSetup;
+
+				sndStatusSetup = sndStatusData;
+				sndStatusSetup.pBgmHandle = &bgmHandle;
+				sndStatusSetup.pSeHandle = &seHandle;
+				sndStatusSetup.pVoiceHandle = &voiceHandle;
+
+				sampleWork->gflSndStatus = GFL_SNDSTATUS_Create
+											( &sndStatusSetup, sampleWork->heapID );
+				sampleWork->subProcSw = TRUE;
+#else
 				NNS_SndPlayerStopSeq(&seHandle, 0);
 				NNS_SndHandleInit(&seHandle);
 
@@ -268,13 +299,14 @@ BOOL	SampleMain( void )
 					OS_Printf("sound_Effect seq start Error\n");
 				}
 				seNo++;
+#endif
 				break;
 			}
 			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
 #if 1
-				sampleWork->gflSkb = GFL_SKB_Create(	sampleWork->skbStrBuf, &skbData,
-														sampleWork->heapID );
-				sampleWork->gflSkbSw = TRUE;
+				sampleWork->gflSkb = GFL_SKB_Create
+										( sampleWork->skbStrBuf, &skbData, sampleWork->heapID );
+				sampleWork->subProcSw = TRUE;
 #else
 				NNS_SndPlayerStopSeq(&voiceHandle, 0);
 				NNS_SndHandleInit(&voiceHandle);

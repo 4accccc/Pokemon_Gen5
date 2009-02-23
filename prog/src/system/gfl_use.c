@@ -51,7 +51,7 @@ static const HEAP_INIT_HEADER hih[]={
 	{ HEAPSIZE_APP,		OS_ARENA_MAIN },
 };
 
-#define	SOUND_HEAP_SIZE	(0x40000)
+#define	SOUND_HEAP_SIZE	(0x0b0000)
 
 static GFL_USE_WORK *	gfl_work = NULL;
 static int				GFL_USE_VintrCounter;

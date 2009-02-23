@@ -131,6 +131,7 @@ LLIBARIES += libcrypto$(NITRO_LIBSUFFIX).a
 #ロムファイル指定(GFL)
 GFL_FILE_TREE	=	titledemo.narc \
 					skb.narc \
+					soundstatus.narc \
 					wb_sound_data.sdat \
 					pm_battle.swav	\
 					mh.swav	\

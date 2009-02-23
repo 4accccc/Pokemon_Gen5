@@ -1,0 +1,251 @@
+//==============================================================================================
+//
+//
+//	データテーブル
+//
+//
+//==============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	配列ＩＮＤＥＸ
+ */
+//------------------------------------------------------------------
+enum{
+	IDX_BGM = 0,
+	IDX_SE,
+	IDX_VOICE,
+
+	IDX_MAX,								//最大数
+};
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	ディスプレイ環境データ
+ */
+//------------------------------------------------------------------
+///ＶＲＡＭバンク設定構造体
+static const GFL_DISP_VRAM dispVram = {
+	GX_VRAM_BG_128_A,				//メイン2DエンジンのBGに割り当て 
+	GX_VRAM_BGEXTPLTT_NONE,			//メイン2DエンジンのBG拡張パレットに割り当て
+	GX_VRAM_SUB_BG_32_H,			//サブ2DエンジンのBGに割り当て
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		//サブ2DエンジンのBG拡張パレットに割り当て
+	GX_VRAM_OBJ_64_E,				//メイン2DエンジンのOBJに割り当て
+	GX_VRAM_OBJEXTPLTT_NONE,		//メイン2DエンジンのOBJ拡張パレットにに割り当て
+	GX_VRAM_SUB_OBJ_NONE,			//サブ2DエンジンのOBJに割り当て
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	//サブ2DエンジンのOBJ拡張パレットにに割り当て
+	GX_VRAM_TEX_NONE,				//テクスチャイメージスロットに割り当て
+	GX_VRAM_TEXPLTT_NONE,			//テクスチャパレットスロットに割り当て
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+};
+
+
+//------------------------------------------------------------------
+/**
+ * @brief		ＢＧ設定
+ */
+//------------------------------------------------------------------
+static const GFL_BG_SYS_HEADER bgsysHeader = {
+	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+};	
+
+static const GFL_BG_BGCNT_HEADER BGcont = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_128x128,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
+static const GFL_BG_BGCNT_HEADER Textcont = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x3800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_128x128,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
+static const GFL_BG_BGCNT_HEADER Statuscont = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x3800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_128x128,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
+#define BG_FRAME		(GFL_BG_FRAME3_M)
+#define TEXT_FRAME		(GFL_BG_FRAME2_M)
+#define STATUS_FRAME	(GFL_BG_FRAME0_S)
+
+//------------------------------------------------------------------
+/**
+ * @brief		ＢＧデータ
+ */
+//------------------------------------------------------------------
+#define PLTT_1	(0x20)
+#define CHAR_1	(0x20)
+#define SCRN_1	(2)
+
+#define BG_PLTTID	(0)	//0番～3本使用
+#define TEXT_PLTTID	(1)	//0番～3本使用
+#define BG_PLTTNUM	(3)
+#define BG_CHARID	(0)	//0番～255キャラ使用
+#define BG_CHARNUM	(32*8)
+#define BG_SCRNNUM	(32*32)
+
+#define BGM_BMPWIN_PX		(5)
+#define BGM_BMPWIN_PY		(4)
+#define SE_BMPWIN_PX		(5)
+#define SE_BMPWIN_PY		(4+7)
+#define VOICE_BMPWIN_PX		(5)
+#define VOICE_BMPWIN_PY		(4+7+7)
+#define NUMBMP_SX			(4)
+#define NUMBMP_SY			(2)
+
+static const u8 bmpWinSt[][4] = {	//px, py, sx, sy
+	{BGM_BMPWIN_PX, BGM_BMPWIN_PY, NUMBMP_SX, NUMBMP_SY },
+	{SE_BMPWIN_PX, SE_BMPWIN_PY, NUMBMP_SX, NUMBMP_SY },
+	{VOICE_BMPWIN_PX, VOICE_BMPWIN_PY, NUMBMP_SX, NUMBMP_SY },
+};
+
+#define SNUM_PRINT_OFFS (2)
+
+//------------------------------------------------------------------
+/**
+ * @brief	ソフトウエアキーボード設定
+ */
+//------------------------------------------------------------------
+static const GFL_SKB_SETUP skbData= {
+	GFL_SKB_STRLEN_MAX, GFL_SKB_STRTYPE_SJIS,
+	GFL_SKB_MODE_HIRAGANA, TRUE, PAD_BUTTON_START,
+	GFL_DISPUT_BGID_M1, GFL_DISPUT_PALID_14, GFL_DISPUT_PALID_15,
+};
+
+//------------------------------------------------------------------
+/**
+ * @brief	サウンドステータス設定
+ */
+//------------------------------------------------------------------
+static const GFL_SNDSTATUS_SETUP sndStatusData= {
+	0,
+	GFL_DISPUT_BGID_S0, GFL_DISPUT_PALID_15,
+	NULL, NULL, NULL, GFL_SNDSTATUS_CONTOROL_BGM | GFL_SNDSTATUS_CONTOROL_SE,
+};
+
+//------------------------------------------------------------------
+/**
+ * @brief	タッチパネル判定テーブル
+ */
+//------------------------------------------------------------------
+#define BUTTON1_SX	(18)
+#define BUTTON1_SY	(18)
+#define BUTTON2_SX	(23)
+#define BUTTON2_SY	(23)
+#define PANEL_SX	(104-1)
+#define PANEL_SY	(48-1)
+
+#define BGM_PANEL_PX	(8)
+#define BGM_PANEL_PY	(16)
+#define SE_PANEL_PX		(8)
+#define SE_PANEL_PY		(72)
+#define V_PANEL_PX		(9)
+#define V_PANEL_PY		(128)
+#define EXIT_PX			(232)
+#define EXIT_PY			(172)
+
+#define NUMSET_U (15)
+#define NUMSET_D (NUMSET_U + 11)
+#define NUMSET_L (31)
+#define NUMSET_R (NUMSET_L + 33)
+
+#define NUMUP_U (8)
+#define NUMUP_D (NUMUP_U + BUTTON1_SY)
+#define NUMUP_L (96+1)
+#define NUMUP_R (NUMUP_L + BUTTON1_SX)
+
+#define NUMDOWN_U (8)
+#define NUMDOWN_D (NUMDOWN_U + BUTTON1_SY)
+#define NUMDOWN_L (72+1)
+#define NUMDOWN_R (NUMDOWN_L + BUTTON1_SX)
+
+#define PLAY_U (16)
+#define PLAY_D (PLAY_U + BUTTON2_SY)
+#define PLAY_L (128+1)
+#define PLAY_R (PLAY_L + BUTTON2_SX)
+
+#define STOP_U (16)
+#define STOP_D (STOP_U + BUTTON2_SY)
+#define STOP_L (160+1)
+#define STOP_R (STOP_L + BUTTON2_SX)
+
+#define PAUSE_U (16)
+#define PAUSE_D (PAUSE_U + BUTTON2_SY)
+#define PAUSE_L (192+1)
+#define PAUSE_R (PAUSE_L + BUTTON2_SX)
+
+//------------------------------------------------------------------
+enum {
+	SOUNDTEST_TPEV_BGM_NUMUP = 0,
+	SOUNDTEST_TPEV_BGM_NUMDOWN,
+	SOUNDTEST_TPEV_BGM_NUMSET,
+	SOUNDTEST_TPEV_BGM_PLAY,
+	SOUNDTEST_TPEV_BGM_STOP,
+	SOUNDTEST_TPEV_BGM_PAUSE,
+	SOUNDTEST_TPEV_BGM_WINDOW,
+
+	SOUNDTEST_TPEV_SE_NUMUP,
+	SOUNDTEST_TPEV_SE_NUMDOWN,
+	SOUNDTEST_TPEV_SE_NUMSET,
+	SOUNDTEST_TPEV_SE_PLAY,
+	SOUNDTEST_TPEV_SE_STOP,
+	SOUNDTEST_TPEV_SE_PAUSE,
+	SOUNDTEST_TPEV_SE_WINDOW,
+
+	SOUNDTEST_TPEV_VOICE_NUMUP,
+	SOUNDTEST_TPEV_VOICE_NUMDOWN,
+	SOUNDTEST_TPEV_VOICE_NUMSET,
+	SOUNDTEST_TPEV_VOICE_PLAY,
+	SOUNDTEST_TPEV_VOICE_STOP,
+	SOUNDTEST_TPEV_VOICE_PAUSE,
+	SOUNDTEST_TPEV_VOICE_WINDOW,
+
+	SOUNDTEST_TPEV_EXIT,
+};
+
+static const GFL_UI_TP_HITTBL eventTouchPanelTable[] = {
+{ BGM_PANEL_PY+NUMUP_U, BGM_PANEL_PY+NUMUP_D, BGM_PANEL_PX+NUMUP_L, BGM_PANEL_PX+NUMUP_R },
+{ BGM_PANEL_PY+NUMDOWN_U, BGM_PANEL_PY+NUMDOWN_D, BGM_PANEL_PX+NUMDOWN_L, BGM_PANEL_PX+NUMDOWN_R },
+{ BGM_PANEL_PY+NUMSET_U, BGM_PANEL_PY+NUMSET_D, BGM_PANEL_PX+NUMSET_L, BGM_PANEL_PX+NUMSET_R },
+{ BGM_PANEL_PY+PLAY_U, BGM_PANEL_PY+PLAY_D, BGM_PANEL_PX+PLAY_L, BGM_PANEL_PX+PLAY_R },
+{ BGM_PANEL_PY+STOP_U, BGM_PANEL_PY+STOP_D, BGM_PANEL_PX+STOP_L, BGM_PANEL_PX+STOP_R },
+{ BGM_PANEL_PY+PAUSE_U, BGM_PANEL_PY+PAUSE_D, BGM_PANEL_PX+PAUSE_L, BGM_PANEL_PX+STOP_R },
+{ BGM_PANEL_PY, BGM_PANEL_PY+PANEL_SY, BGM_PANEL_PX, BGM_PANEL_PX+PANEL_SX },
+
+{ SE_PANEL_PY+NUMUP_U, SE_PANEL_PY+NUMUP_D, SE_PANEL_PX+NUMUP_L, SE_PANEL_PX+NUMUP_R },
+{ SE_PANEL_PY+NUMDOWN_U, SE_PANEL_PY+NUMDOWN_D, SE_PANEL_PX+NUMDOWN_L, SE_PANEL_PX+NUMDOWN_R },
+{ SE_PANEL_PY+NUMSET_U, SE_PANEL_PY+NUMSET_D, SE_PANEL_PX+NUMSET_L, SE_PANEL_PX+NUMSET_R },
+{ SE_PANEL_PY+PLAY_U, SE_PANEL_PY+PLAY_D, SE_PANEL_PX+PLAY_L, SE_PANEL_PX+PLAY_R },
+{ SE_PANEL_PY+STOP_U, SE_PANEL_PY+STOP_D, SE_PANEL_PX+STOP_L, SE_PANEL_PX+STOP_R },
+{ SE_PANEL_PY+PAUSE_U, SE_PANEL_PY+PAUSE_D, SE_PANEL_PX+PAUSE_L, SE_PANEL_PX+STOP_R },
+{ SE_PANEL_PY, SE_PANEL_PY+PANEL_SY, SE_PANEL_PX, SE_PANEL_PX+PANEL_SX },
+
+{ V_PANEL_PY+NUMUP_U, V_PANEL_PY+NUMUP_D, V_PANEL_PX+NUMUP_L, V_PANEL_PX+NUMUP_R },
+{ V_PANEL_PY+NUMDOWN_U, V_PANEL_PY+NUMDOWN_D, V_PANEL_PX+NUMDOWN_L, V_PANEL_PX+NUMDOWN_R },
+{ V_PANEL_PY+NUMSET_U, V_PANEL_PY+NUMSET_D, V_PANEL_PX+NUMSET_L, V_PANEL_PX+NUMSET_R },
+{ V_PANEL_PY+PLAY_U, V_PANEL_PY+PLAY_D, V_PANEL_PX+PLAY_L, V_PANEL_PX+PLAY_R },
+{ V_PANEL_PY+STOP_U, V_PANEL_PY+STOP_D, V_PANEL_PX+STOP_L, V_PANEL_PX+STOP_R },
+{ V_PANEL_PY+PAUSE_U, V_PANEL_PY+PAUSE_D, V_PANEL_PX+PAUSE_L, V_PANEL_PX+STOP_R },
+{ V_PANEL_PY, V_PANEL_PY+PANEL_SY, V_PANEL_PX, V_PANEL_PX+PANEL_SX },
+
+{ EXIT_PY, EXIT_PY+15, EXIT_PX, EXIT_PX+23 },
+
+{GFL_UI_TP_HIT_END,0,0,0},			//終了データ
+};
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	試聴データ
+ */
+//------------------------------------------------------------------
+#define SOUDTEST_BGM_START		(SEQ_WB_TITLE)
+#define SOUDTEST_BGM_END		(SEQ_BGM_END)
+#define SOUDTEST_SE_START		(SEQ_SE_PL_W012)
+#define SOUDTEST_SE_END			(SEQ_SE_END)
+#define SOUDTEST_VOICE_START	(1)
+#define SOUDTEST_VOICE_END		(151)

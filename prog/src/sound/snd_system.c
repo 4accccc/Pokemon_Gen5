@@ -45,7 +45,8 @@ struct _SND_WORK{
 	//システム関連
 	NNSSndArc arc;									//サウンドアーカイブ
 	NNSSndHeapHandle heap;							//サウンドヒープハンドル
-	u8 sndHeap[ SOUND_HEAP_SIZE ];					//サウンドヒープ
+	//u8 sndHeap[ SOUND_HEAP_SIZE ];					//サウンドヒープ
+	u8 sndHeap[ 16 ];					//サウンドヒープ
 	NNSSndHandle Handle[ SND_HANDLE_MAX ];			//サウンドハンドル
 	NNSSndWaveOutHandle sWaveOutHandle[2];			//波形ハンドル
 	const NNSSndArcBankInfo* info;					//バンク情報構造体

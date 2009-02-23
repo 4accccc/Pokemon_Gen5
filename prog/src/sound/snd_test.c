@@ -1104,7 +1104,7 @@ static GFL_PROC_RESULT SoundTestProc_Init(GFL_PROC * proc, int * seq, void * pwk
 	SND_TEST_WORK* wk = NULL;
 
 
-    SOUND_ChangeHeap(GFL_HEAPID_APP, DEBUG_SOUND_HEAP_SIZE);
+    //SOUND_ChangeHeap(GFL_HEAPID_APP, DEBUG_SOUND_HEAP_SIZE);
 
 	wk = GFL_PROC_AllocWork(proc, sizeof(SND_TEST_WORK), GFL_HEAPID_APP);
 
@@ -1124,7 +1124,7 @@ static GFL_PROC_RESULT SoundTestProc_Main(GFL_PROC * proc, int * seq, void * pwk
 	SND_TEST_WORK *wk;
 	wk = mywk;
 
-	SndTestTable[wk->seq](wk);
+	//SndTestTable[wk->seq](wk);
 
 	PRINTSYS_QUE_Main( wk->printQue );
 	PRINT_UTIL_Trans( &wk->printUtil ,wk->printQue );
@@ -1149,7 +1149,7 @@ static GFL_PROC_RESULT SoundTestProc_End(GFL_PROC * proc, int * seq, void * pwk,
 	//OS_InitReset();
 //	OS_ResetSystem(0);									//ソフトリセット
 
-    SOUND_RestoreHeap();
+    //SOUND_RestoreHeap();
     return GFL_PROC_RES_FINISH;
 }
 
