@@ -243,9 +243,9 @@ static const GFL_UI_TP_HITTBL eventTouchPanelTable[] = {
  * @brief	ééíÆÉfÅ[É^
  */
 //------------------------------------------------------------------
-#define SOUDTEST_BGM_START		(SEQ_WB_TITLE)
-#define SOUDTEST_BGM_END		(SEQ_BGM_END)
-#define SOUDTEST_SE_START		(SEQ_SE_PL_W012)
-#define SOUDTEST_SE_END			(SEQ_SE_END)
+#define SOUDTEST_BGM_START		(SEQ_MUS_GS_BICYCLE)
+#define SOUDTEST_BGM_END		(SEQ_MUS_WB_WIN4)
+#define SOUDTEST_SE_START		(SEQ_SE_DP_000)
+#define SOUDTEST_SE_END			(SEQ_TEST_TITLE)
 #define SOUDTEST_VOICE_START	(1)
 #define SOUDTEST_VOICE_END		(151)
