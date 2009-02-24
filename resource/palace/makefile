@@ -31,6 +31,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
+bmpsources:=$(wildcard *.bmp)
 imdsources:=$(wildcard *.imd)
 
 # リソースが吐き出すファイルを自動でつくる
@@ -63,7 +64,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lsources) $(gsources) $(ssources) $(imdsources)
+$(targetname).narc: $(lsources) $(gsources) $(ssources) $(imdsources) $(bmpsources) cnv.bat makefile
 	cnv.bat
 	$(NAIXCUT) $(targetname).naix
 endif

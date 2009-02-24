@@ -464,4 +464,10 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
 				musical/dressup/dup_fitting.c \
 				musical/dressup/dup_fitting_item.c
 
+#ƒpƒŒƒX
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
+			app/palace/palace_draw.c
 

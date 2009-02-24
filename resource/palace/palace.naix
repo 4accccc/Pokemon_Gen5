@@ -11,7 +11,9 @@
 #define NARC_PALACE_NAIX_
 
 enum {
-	NARC_palace_cube_nsbmd = 0
+	NARC_palace_cube_nsbmd = 0,
+	NARC_palace_block_tex16_ntfp = 1,
+	NARC_palace_block_tex16_ntft = 2
 };
 
 /* NARC_PALACE_NAIX_ */

@@ -45,6 +45,7 @@
 FS_EXTERN_OVERLAY(matsuda_debug);
 FS_EXTERN_OVERLAY(balloon);
 FS_EXTERN_OVERLAY(compati_check);
+FS_EXTERN_OVERLAY(palace);
 
 //==============================================================================
 //	構造体定義
@@ -116,12 +117,19 @@ extern const GFL_PROC_DATA DebugSaveProcData;
 extern const GFL_PROC_DATA PalaceBlockProcData;
 extern const GFL_PROC_DATA PalaceHandProcData;
 extern const GFL_PROC_DATA DebugMatsudaBeaconProcData;
+extern const GFL_PROC_DATA PalaceEditProcData;
 
 //==============================================================================
 //	データ
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
+	{//パレス編集
+		DM_MSG_MENU013, 
+		&PalaceEditProcData,			
+		NULL,
+		FS_OVERLAY_ID(palace)
+	},
 	{//相性チェック
 		DM_MSG_MENU012, 
 		&CompatiControlProcData,
