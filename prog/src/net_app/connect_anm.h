@@ -14,6 +14,7 @@
 
 #include "net_app/connect_anm_types.h"
 #include "system/gfl_use.h"
+#include "system/palanm.h"
 
 static inline void ConnectBGPalAnm_TblCreate(CONNECT_BG_PALANM *cbp);
 static inline void ConnectBGPalAnm_IntrTCB(GFL_TCB* tcb, void *work);

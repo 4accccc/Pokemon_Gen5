@@ -96,13 +96,11 @@ extern void BmpWinFrame_GraphicSet(
  * @param	pal			パレット番号
  * @param	win_num		ウィンドウ番号
  * @param	heap		ヒープID
- * @param	pPos		エリアマネージャーの返すposとsize
  *
- * @return	none
+ * @return	GFL_ARCUTIL_TRANSINFO
  */
 //--------------------------------------------------------------
-extern void BmpWinFrame_GraphicSetAM(
-	u8 frmnum, u8 pal, u8 win_num, u32 heap, BMPWINFRAME_AREAMANAGER_POS* pPos );
+extern GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_num, u32 heap );
 
 //--------------------------------------------------------------
 /**

@@ -12,6 +12,7 @@
 #include "arc_def.h"
 
 #include "ircbattlemenu.h"
+#include "ircbattlematch.h"
 #include "system/main.h"
 
 #include "message.naix"
@@ -27,10 +28,9 @@
 #include "system/bmp_menu.h"
 
 #include "msg/msg_ircbattle.h"
-
+#include "../event_fieldmap_control.h"	//EVENT_FieldSubProc
 
 #define _NET_DEBUG (1)  //デバッグ時は１
-#define _TASK_PRI_ANYWHERE (1)  // プライオリティーはどこでもいい
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
 
 // サウンドが出来るまでの仮想
@@ -38,6 +38,7 @@
 #define _SE_CANCEL (0)
 static void Snd_SePlay(int a){}
 
+FS_EXTERN_OVERLAY(ircbattlematch);
 
 //--------------------------------------------
 // 画面構成定義
@@ -140,8 +141,13 @@ struct _IRC_BATTLE_MENU {
     WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
     GFL_FONT* pFontHandle;
     STRBUF* pStrBuf;
-    BMPWINFRAME_AREAMANAGER_POS aPos;
+    u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
+//    BMPWINFRAME_AREAMANAGER_POS aPos;
     int windowNum;
+    BOOL IsIrc;
+    GAMESYS_WORK *gameSys_;
+    FIELD_MAIN_WORK *fieldWork_;
+    GMEVENT* event_;
 };
 
 
@@ -158,7 +164,6 @@ static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork);
 static void _modeSelectEntryNumWait(IRC_BATTLE_MENU* pWork);
 static void _modeReportInit(IRC_BATTLE_MENU* pWork);
 static void _modeReportWait(IRC_BATTLE_MENU* pWork);
-static void _ircConnectInit(IRC_BATTLE_MENU* pWork);
 static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
 static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
 
@@ -253,7 +258,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
         GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
         GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
         GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-        BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, pWork->aPos.pos, _BUTTON_WIN_PAL );
+        BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
         // システムウインドウ枠描画
 
@@ -331,12 +336,13 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 static void _modeInit(IRC_BATTLE_MENU* pWork)
 {
     _createSubBg(pWork);
+    pWork->IsIrc=FALSE;
 
     pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
 	pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
     pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_ircbattle_dat, pWork->heapID );
 //    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
-    BmpWinFrame_GraphicSetAM(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID, &pWork->aPos);
+    pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
 }
 
@@ -364,7 +370,8 @@ static void _workEnd(IRC_BATTLE_MENU* pWork)
 
 //    _buttonWindowDelete(pWork);
     GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
-    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,pWork->aPos.pos,pWork->aPos.size);
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
+                             GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
     GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
     GFL_MSG_Delete( pWork->pMsgData );
 	GFL_FONT_Delete(pWork->pFontHandle);
@@ -423,7 +430,7 @@ static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork)
     _buttonWindowCreate(3,aMsgBuff,pWork);
 
     pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-    pWork->touch = &_modeSelectMenuButtonCallback;
+    pWork->touch = &_modeSelectEntryNumButtonCallback;
 
     _CHANGE_STATE(pWork,_modeSelectEntryNumWait);
 
@@ -492,26 +499,9 @@ static void _modeReportInit(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeReportWait(IRC_BATTLE_MENU* pWork)
 {
-    _CHANGE_STATE(pWork,_ircConnectInit);
+    pWork->IsIrc = TRUE;  //赤外線接続開始
+    _CHANGE_STATE(pWork,NULL);
 }
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   赤外線ワイヤレス通信初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _ircConnectInit(IRC_BATTLE_MENU* pWork)
-{
-   // _CHANGE_STATE(pWork,_ircConnectWait);
-}
-
-
-
-
-
 
 //--------------------------------------------------------------
 //	ワークサイズ取得
@@ -532,9 +522,9 @@ void IRCBATTLE_MENU_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys ,
     _CHANGE_STATE( pWork, _modeInit);
 //    _CHANGE_STATE( pWork, NULL);
 
-//	pWork->gameSys_ = gameSys;
-//	pWork->fieldWork_ = fieldWork;
-//	pWork->event_ = event;
+	pWork->gameSys_ = gameSys;
+	pWork->fieldWork_ = fieldWork;
+	pWork->event_ = event;
 }
 
 //--------------------------------------------------------------
@@ -551,6 +541,16 @@ GMEVENT_RESULT IRCBATTLE_MENU_Main( GMEVENT *event , int *seq , void *work )
     }
     _workEnd(pWork);
 
-    return GMEVENT_RES_FINISH;
+    if(pWork->IsIrc){
+//		GAMESYSTEM_EVENT_EntryCheckFunc(pWork->gameSys_, EventIrcBattleCheck, pWork->fieldWork_);
+
+        GMEVENT * newEvent;
+        newEvent = EVENT_FieldSubProc(pWork->gameSys_, pWork->fieldWork_,
+                                      FS_OVERLAY_ID(ircbattlematch), &IrcBattleMatchProcData, NULL);
+        GMEVENT_CallEvent(event, newEvent);
+
+    }
+    
+    return GMEVENT_RES_CONTINUE; //changeするからfinishをかえさない
 }
 

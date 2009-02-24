@@ -389,6 +389,9 @@ SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
 							net_app/wifi2dmap/wf2dmap_scrdraw.c \
 							net_app/wifi2dmap/wf2dmap_cmdq.c
 
+# IRCBATTLEマッチング
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_IRCBATTLEMATCH = field/ircbattle/ircbattlematch.c
 
 # 不思議な贈り物
 #===> SRCS_OVERLAY_DEV_WIFI

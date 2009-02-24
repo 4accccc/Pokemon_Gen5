@@ -128,13 +128,13 @@ void BmpWinFrame_GraphicSet(
  * @param	win_num		ウィンドウ番号
  * @param	heap		ヒープID
  *
- * @return	none
+ * @return	GFL_ARCUTIL_TRANSINFO
  */
 //--------------------------------------------------------------
-void BmpWinFrame_GraphicSetAM(
-	u8 frmnum, u8 pal, u8 win_num, u32 heap, BMPWINFRAME_AREAMANAGER_POS* pPos )
+GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_num, u32 heap )
 {
 	u32	arc,pos;
+    GFL_ARCUTIL_TRANSINFO bgchar;
 	
 	// キャラ
 	if( win_num == MENU_TYPE_SYSTEM ){
@@ -143,17 +143,7 @@ void BmpWinFrame_GraphicSetAM(
 		arc = NARC_winframe_fmenu_ncgr;
 	}
 
-    {
-        void* arcData = GFL_ARC_UTIL_Load( ARCID_FLDMAP_WINFRAME, arc, 0, heap );
-        NNSG2dCharacterData* charData;
-
-        if( NNS_G2dGetUnpackedBGCharacterData( arcData, &charData ) )
-        {
-            pPos->size = charData->szByte;
-        }
-        GFL_HEAP_FreeMemory( arcData );
-    }
-	pPos->pos = GFL_ARC_UTIL_TransVramBgCharacterAreaMan(
+	bgchar = GFL_ARC_UTIL_TransVramBgCharacterAreaMan(
         ARCID_FLDMAP_WINFRAME, arc, frmnum, 0, 0, heap );
 	
 	// パレット
@@ -170,6 +160,7 @@ void BmpWinFrame_GraphicSetAM(
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FLDMAP_WINFRAME,
 			arc, PALTYPE_SUB_BG, pal*0x20, 0x20, heap );
 	}
+    return bgchar;
 }
 
 //--------------------------------------------------------------
