@@ -15,6 +15,7 @@
 #include "musical_item.naix"
 #include "dressup_gra.naix"
 
+#include "infobar/infobar.h"
 #include "test/ariizumi/ari_debug.h"
 #include "musical/mus_poke_draw.h"
 #include "musical/mus_item_draw.h"
@@ -27,9 +28,12 @@
 #pragma mark [> define
 
 #define FIT_FRAME_MAIN_3D	GFL_BG_FRAME0_M
+#define FIT_FRAME_MAIN_INFO	GFL_BG_FRAME1_M
 #define FIT_FRAME_MAIN_CASE	GFL_BG_FRAME2_M
 #define FIT_FRAME_MAIN_BG	GFL_BG_FRAME3_M
 #define FIT_FRAME_SUB_BG	GFL_BG_FRAME3_S
+
+#define FIT_PAL_INFO		(0xE)
 
 #define DEG_TO_U16(val) ((val)*0x10000/360)
 #define U16_TO_DEG(val) ((val)*360/0x10000)
@@ -247,6 +251,7 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 	DUP_FIT_SetupPokemon( work );
 	DUP_FIT_SetupItem( work );
 	
+	INFOBAR_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,initWork->heapId);
 	GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
 	
 	//ÉtÉFÅ[ÉhÇ»Ç¢ÇÃÇ≈âºèàóù
@@ -261,9 +266,11 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 void	DUP_FIT_TermFitting( FITTING_WORK *work )
 {
 	GFL_TCB_DeleteTask( work->vBlankTcb );
+	INFOBAR_Term();
 	GFL_G3D_CAMERA_Delete( work->camera );
 	GFL_G3D_Exit();
 	GFL_BG_FreeBGControl( FIT_FRAME_MAIN_3D );
+	GFL_BG_FreeBGControl( FIT_FRAME_MAIN_INFO );
 	GFL_BG_FreeBGControl( FIT_FRAME_MAIN_CASE );
 	GFL_BG_FreeBGControl( FIT_FRAME_MAIN_BG );
 	GFL_BG_FreeBGControl( FIT_FRAME_SUB_BG );
@@ -311,6 +318,8 @@ FITTING_RETURN	DUP_FIT_LoopFitting( FITTING_WORK *work )
 	DUP_FIT_UpdateItemAnime( work );
 
 	MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
+	
+	INFOBAR_Update();
 
 	//3Dï`âÊ	
 	GFL_G3D_DRAW_Start();
@@ -371,19 +380,26 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 				GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
 		};
 		
+		// BG1 MAIN (InfoÉoÅ[
+		static const GFL_BG_BGCNT_HEADER header_main1 = {
+			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x10000,0x1000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+		};
 		// BG2 MAIN (äW
 		static const GFL_BG_BGCNT_HEADER header_main2 = {
 			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x6000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 		};
 		// BG3 MAIN (îwåi
 		static const GFL_BG_BGCNT_HEADER header_main3 = {
 			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
-			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 		};
 
 		// BG3 SUB (îwåi
@@ -395,7 +411,8 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 		};
 
 		GFL_BG_SetBGMode( &sys_data );
-		GFL_BG_SetBGControl3D( 1 );
+		GFL_BG_SetBGControl3D( 2 );
+		DUP_FIT_SetupBgFunc( &header_main1, FIT_FRAME_MAIN_INFO);
 		DUP_FIT_SetupBgFunc( &header_main2, FIT_FRAME_MAIN_CASE);
 		DUP_FIT_SetupBgFunc( &header_main3, FIT_FRAME_MAIN_BG);
 
