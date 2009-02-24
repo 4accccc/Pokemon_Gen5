@@ -6,6 +6,7 @@
  * @data	08.09.29
  */
 //======================================================================
+#if 0 //•s—v‚Æ‚È‚Á‚½‚Ì‚Å‚Ð‚Æ‚Ü‚¸–³Œø‰»
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "arc_def.h"
@@ -950,4 +951,4 @@ static void DEBUG_SetMenuWorkZoneIDName(
 	
 	GFL_HEAP_FreeMemory( strBuf );
 }
-
+#endif

@@ -167,8 +167,10 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
 {
 	int i = 0;
 	FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
+	
+//	GFL_BG_FreeCharacterArea( fmb->bgFrame, 0x00, 0x20 );
+	GFL_BG_FillCharacterRelease( fmb->bgFrame, 0x00, 0x20 );
 
-	GFL_BG_FreeCharacterArea( fmb->bgFrame, 0x00, 0x20 );
 	GFL_BG_FreeBGControl( fmb->bgFrame );
 	
 	do{
