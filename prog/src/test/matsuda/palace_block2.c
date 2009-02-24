@@ -192,7 +192,7 @@ GFL_PROC_RESULT PalaceHandProcInit( GFL_PROC * proc, int * seq, void * pwk, void
 	tw = GFL_PROC_AllocWork( proc, sizeof(TITLE_WORK), HEAPID_PALACE );
 	GFL_STD_MemClear(tw, sizeof(TITLE_WORK));
 	tw->block_max = 1;
-	tw->base_size = 16;
+	tw->base_size = 8;
 
 	// è„â∫âÊñ ê›íË
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );

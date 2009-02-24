@@ -873,7 +873,8 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		clsys_init.oamst_main = 1;	//通信アイコンの分
 		clsys_init.oamnum_main = 128-1;
 		clsys_init.tr_cell = 32;	//セルVram転送管理数
-		clsys_init.CGR_RegisterMax = 96;
+		clsys_init.CGR_RegisterMax = BALLOON_OAMRESOURCE_CHAR_MAX;
+		clsys_init.CELL_RegisterMax = BALLOON_OAMRESOURCE_CELL_MAX;
 		GFL_CLACT_SYS_Create(&clsys_init, &BalloonVramSetTable, HEAPID_BALLOON);
 		
 		game->clunit = GFL_CLACT_UNIT_Create(128+128, 0, HEAPID_BALLOON);
@@ -942,8 +943,10 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	game->sns = Sonas_Init(game);
 	
 	// 輝度変更セット
+#if WB_TEMP_FIX
 	WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_DOORIN, WIPE_TYPE_DOORIN, WIPE_FADE_BLACK, 
 		WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_BALLOON);
+#endif
 
 	game->update_tcb = GFL_TCB_AddTask(game->tcbsys, BalloonUpdate, game, TCBPRI_BALLOON_UPDATE);
 
@@ -1202,7 +1205,6 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 	game->main_frame++;
 	
 	GFL_TCB_Main(game->tcbsys);
-	GFL_CLACT_SYS_Main();
 	return GFL_PROC_RES_CONTINUE;
 }
 

@@ -32,6 +32,7 @@
 #include "arc_def.h"
 
 
+//#define OSP_BALLOON_ON
 //==============================================================================
 //	’è”’è‹`
 //==============================================================================
@@ -166,8 +167,8 @@ typedef struct _SONANS_SYS{
 	VERTEX_LIST vertex_list[SONANS_QUAD_STRIP_NUM];
 	TEX_COORD_LIST tex_coord_list[SONANS_QUAD_STRIP_NUM];
 	
-	u32 tp_x;
-	u32 tp_y;
+	s32 tp_x;
+	s32 tp_y;
 	BOOL tp_cont;
 	BOOL tp_trg;
 	
@@ -475,7 +476,7 @@ void Sonans_Update(BALLOON_GAME_PTR game, SONANS_SYS_PTR sns)
 		sns->tp_trg = 0;
 	}
 	else{
-		sns->tp_cont = GFL_UI_TP_GetPointCont(&sns->tp_x, &sns->tp_y);
+		sns->tp_cont = GFL_UI_TP_GetPointCont((u32*)&sns->tp_x, (u32*)&sns->tp_y);
 		sns->tp_trg = GFL_UI_TP_GetTrg();
 	}
 

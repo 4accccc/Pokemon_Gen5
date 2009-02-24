@@ -124,6 +124,12 @@ extern const GFL_PROC_DATA PalaceEditProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
+	{//風船ミニゲーム
+		DM_MSG_MENU011, 
+		&BalloonProcData,	
+		_BalloonParentWorkCreate,
+		FS_OVERLAY_ID(balloon)
+	},
 	{//パレス編集
 		DM_MSG_MENU013, 
 		&PalaceEditProcData,			
@@ -135,12 +141,6 @@ static const D_MENULIST DebugMenuList[] = {
 		&CompatiControlProcData,
 		NULL,
 		FS_OVERLAY_ID(compati_check)
-	},
-	{//風船ミニゲーム
-		DM_MSG_MENU011, 
-		&BalloonProcData,	
-		_BalloonParentWorkCreate,
-		FS_OVERLAY_ID(balloon)
 	},
 	{//巨大ビーコン送受信テスト
 		DM_MSG_MENU010, 

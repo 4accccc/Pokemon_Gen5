@@ -2591,12 +2591,10 @@ static int BoosterMove_Normal(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 	
 	if(booster->frame > 0){
 		GFL_CLACT_WK_AddAnmFrame(move->cap, (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame);
-//		OS_TPrintf("seq_num = %d\n", CATS_ObjectAnimeSeqGetCap( move->cap ));
-		OS_TPrintf("booster anime frame = %d, lap = %d, frame = %d\n", (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame, booster->lap, booster->frame);
+	//	OS_TPrintf("booster anime frame = %d, lap = %d, frame = %d\n", (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame, booster->lap, booster->frame);
 	}
 	else{
-//		OS_TPrintf("0 seq_num = %d\n", CATS_ObjectAnimeSeqGetCap( move->cap ));
-		OS_TPrintf("0 booster anime frame = %d, lap = %d, frame = %d\n", (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame, booster->lap, booster->frame);
+	//	OS_TPrintf("0 booster anime frame = %d, lap = %d, frame = %d\n", (BOOSTER_ANIME_FRAME_JUMP_TOTAL << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame, booster->lap, booster->frame);
 		GFL_CLACT_WK_SetAnmFrame(move->cap, 0);
 	}
 	
@@ -2607,7 +2605,7 @@ static int BoosterMove_Normal(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 	base_y = 196/2 + (-FX_Mul(Cos360FX(booster->theta + move->start_theta), BOOSTER_FURIHABA_Y));
 	pos.x = base_x;
 	pos.y = base_y + BOOSTER_OFFSET_Y + offset_y;
-	OS_TPrintf("pos.x = %d, y = %d\n", pos.x, pos.y);
+//	OS_TPrintf("pos.x = %d, y = %d\n", pos.x, pos.y);
 	GFL_CLACT_WK_SetPos(move->cap, &pos, CLSYS_DEFREND_SUB);
 	
 	//‰e
