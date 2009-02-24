@@ -571,8 +571,7 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			if(NNS_SndArcPlayerStartSeq(&sw->bgmHandle, sw->bgmNum) == FALSE){
 				OS_Printf("sound BGM seq start Error\n");
 			}
-			OS_Printf("sound heap remains %x\n", 
-						NNS_SndHeapGetFreeSize(sw->soundHeap));
+			OS_Printf("sound heap remains %x\n", NNS_SndHeapGetFreeSize(sw->soundHeap));
 			sw->seHeapLv = NNS_SndHeapSaveState(sw->soundHeap);
 			break;
 		case SOUNDTEST_TPEV_BGM_STOP:
