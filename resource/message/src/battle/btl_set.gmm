@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-01-30T19:19:21"/>
+	<create user="taya" host="W00146" date="2009-02-24T21:32:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="277"/>
+		<comment position="1" width="181"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="380"/>
@@ -710,6 +710,48 @@
 あたらなかった！</language>
 		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　には
 当たらなかった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DokuDamage">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+どく　のダメージを　うけた！</language>
+		<language name="JPN_KANJI">[1:01:ニックネーム:0]　は
+毒のダメージを受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DokuDamage_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+どく　のダメージを　うけた！</language>
+		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　は
+毒のダメージを受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DokuDamage_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+どく　のダメージを　うけた！</language>
+		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　は
+毒のダメージを受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_YakedoDamage">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+やけど　のダメージを　うけた！</language>
+		<language name="JPN_KANJI">[1:01:ニックネーム:0]　は
+火傷のダメージを受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_YakedoDamage_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+やけど　のダメージを　うけた！</language>
+		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　は
+火傷のダメージを受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_YakedoDamage_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+やけど　のダメージを　うけた！</language>
+		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　は
+火傷のダメージを受けた！</language>
 	</row>
 
 	<flowchart-group-list>
