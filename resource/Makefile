@@ -28,6 +28,7 @@ SUBDIRS	=	wmi \
 			mystery\
 			startmenu \
 			palace \
+			ircbattle \
 			wificlub \
 			wifi_union_obj \
 			wifi_2dchar \
