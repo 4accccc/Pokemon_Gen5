@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: ircbattle.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_IRCBATTLE_NAIX_
+#define NARC_IRCBATTLE_NAIX_
+
+enum {
+	NARC_ircbattle_connect_NCLR = 0,
+	NARC_ircbattle_connect_anm_NCLR = 1,
+	NARC_ircbattle_connect_NCGR = 2,
+	NARC_ircbattle_connect_01_NSCR = 3
+};
+
+/* NARC_IRCBATTLE_NAIX_ */
+#endif
