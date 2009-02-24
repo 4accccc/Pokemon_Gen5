@@ -539,13 +539,13 @@ static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus )
 #define TRACK7_PX		(96)
 #define TRACK8_PX		(112)
 #define TRACK9_PX		(128)
-#define TRACK10_PX	(144)
-#define TRACK11_PX	(160)
-#define TRACK12_PX	(176)
-#define TRACK13_PX	(192)
-#define TRACK14_PX	(208)
-#define TRACK15_PX	(224)
-#define TRACK16_PX	(240)
+#define TRACK10_PX		(144)
+#define TRACK11_PX		(160)
+#define TRACK12_PX		(176)
+#define TRACK13_PX		(192)
+#define TRACK14_PX		(208)
+#define TRACK15_PX		(224)
+#define TRACK16_PX		(240)
 
 #define MTRACK_SWITCH_PY	(128)
 #define MTRACK_VOLUME_PX	(8)
@@ -684,16 +684,16 @@ static BOOL checkTouchPanelEvent( GFL_SNDSTATUS* gflSndStatus )
 			}
 		}
 		if((tblPos >= TOUCH_BUTTON_TR1)&&(tblPos <= TOUCH_BUTTON_TR16)){
-			int chNo = tblPos - TOUCH_BUTTON_TR1;
-			u16	bitMask = 0x0001 << chNo;
+			int trNo = tblPos - TOUCH_BUTTON_TR1;
+			u16	bitMask = 0x0001 << trNo;
 
-			if( gflSndStatus->bgmTrackStatus[chNo].active == TRUE ){
-				if( gflSndStatus->bgmTrackStatus[chNo].enable == TRUE ){
+			if( gflSndStatus->bgmTrackStatus[trNo].active == TRUE ){
+				if( gflSndStatus->bgmTrackStatus[trNo].enable == TRUE ){
 					NNS_SndPlayerSetTrackMute( gflSndStatus->setup.pBgmHandle, bitMask, TRUE );
-					gflSndStatus->bgmTrackStatus[chNo].enable = FALSE;
+					gflSndStatus->bgmTrackStatus[trNo].enable = FALSE;
 				} else {
 					NNS_SndPlayerSetTrackMute( gflSndStatus->setup.pBgmHandle, bitMask, FALSE );
-					gflSndStatus->bgmTrackStatus[chNo].enable = TRUE;
+					gflSndStatus->bgmTrackStatus[trNo].enable = TRUE;
 				}
 			}
 		}

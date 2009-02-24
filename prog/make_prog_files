@@ -1,11 +1,11 @@
 # プログラム追加ファイル
 
 # サウンド関連
-SOUNDSRC = 		sound/snd_strm.c \
-				sound/snd_system.c \
-				sound/snd_tool.c \
-				sound/snd_play.c \
-				sound/snd_perap.c
+SOUNDSRC = 		sound/snd_strm.c
+#				sound/snd_system.c \
+#				sound/snd_tool.c \
+#				sound/snd_play.c \
+#				sound/snd_perap.c
 
 
 #				sound/fld_bgm.c \
