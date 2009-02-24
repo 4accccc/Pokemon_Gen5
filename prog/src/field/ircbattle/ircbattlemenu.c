@@ -214,12 +214,13 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
 			0, 0, 0, FALSE
 		};
 		
-		GFL_BG_SetBGControl(
-			frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+        GFL_BG_SetBGControl(
+            frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
 		GFL_BG_SetVisible( frame, VISIBLE_ON );
 		GFL_BG_SetPriority( frame, 0 );
 		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+        
 		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( frame );
 	}
@@ -237,14 +238,8 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
 {
     int i;
     u32 cgx;
-//    BMPWINFRAME_AREAMANAGER_POS aPos;
     int frame = GFL_BG_FRAME1_S;
 
-   // GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-     //                             0x20*_BUTTON_WIN_PAL, 0x20,  pWork->heapID);
-    
-//        BmpWinFrame_CgxSet(GFL_BG_FRAME2_S, _BUTTON_WIN_CGX, MENU_TYPE_SYSTEM, pWork->heapID);
-//    OS_TPrintf("cgxoff %d\n",cgx);
     pWork->windowNum = num;
     
     for(i=0;i < num;i++){
@@ -256,7 +251,6 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
             pos[i].width, pos[i].height,
             _BUTTON_WIN_PAL, GFL_BMP_CHRAREA_GET_F);
         GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
-//        GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
         GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
         GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
         BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, pWork->aPos.pos, _BUTTON_WIN_PAL );
@@ -264,16 +258,11 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
         // システムウインドウ枠描画
 
         GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
-        GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );//        GFL_FONTSYS_SetDefaultColor();
+        GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
         PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
         GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
 
 
-    }
-//    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
-
-    for(i=0;i < num;i++){
-//        BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, aPos.pos, _BUTTON_WIN_PAL );
     }
 }
 
@@ -346,17 +335,10 @@ static void _modeInit(IRC_BATTLE_MENU* pWork)
     pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
 	pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
     pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_ircbattle_dat, pWork->heapID );
-    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+//    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
     BmpWinFrame_GraphicSetAM(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID, &pWork->aPos);
-
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
 }
-
-
-
-
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -378,11 +360,17 @@ static void _modeSelectMenuInit(IRC_BATTLE_MENU* pWork)
 
 static void _workEnd(IRC_BATTLE_MENU* pWork)
 {
-    _buttonWindowDelete(pWork);
+    GFL_FONTSYS_SetDefaultColor();
+
+//    _buttonWindowDelete(pWork);
+    GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,pWork->aPos.pos,pWork->aPos.size);
+    GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
     GFL_MSG_Delete( pWork->pMsgData );
-    WORDSET_Delete( pWork->pWordSet );
-    GFL_STR_DeleteBuffer(pWork->pStrBuf);
 	GFL_FONT_Delete(pWork->pFontHandle);
+    GFL_STR_DeleteBuffer(pWork->pStrBuf);
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+
 }
 
 
@@ -491,7 +479,7 @@ static void _modeSelectEntryNumWait(IRC_BATTLE_MENU* pWork)
 static void _modeReportInit(IRC_BATTLE_MENU* pWork)
 {
 
-
+//    GAMEDATA_Save(GAMESYSTEM_GetGameData(GMEVENT_GetGameSysWork(event)));
 
     _CHANGE_STATE(pWork,_modeReportWait);
 }
@@ -538,9 +526,11 @@ int IRCBATTLE_MENU_GetWorkSize(void)
 void IRCBATTLE_MENU_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys ,
                               FIELD_MAIN_WORK *fieldWork , GMEVENT *event , IRC_BATTLE_MENU *pWork )
 {
+
     GFL_STD_MemClear(pWork,sizeof(IRC_BATTLE_MENU));
     pWork->heapID = heapID;
     _CHANGE_STATE( pWork, _modeInit);
+//    _CHANGE_STATE( pWork, NULL);
 
 //	pWork->gameSys_ = gameSys;
 //	pWork->fieldWork_ = fieldWork;
@@ -560,6 +550,7 @@ GMEVENT_RESULT IRCBATTLE_MENU_Main( GMEVENT *event , int *seq , void *work )
         return GMEVENT_RES_CONTINUE;
     }
     _workEnd(pWork);
+
     return GMEVENT_RES_FINISH;
 }
 

@@ -81,6 +81,7 @@ typedef enum {
 typedef enum {
     GFL_UI_TP_HIT_END = 0xff,			///< テーブル終了コード
     GFL_UI_TP_USE_CIRCLE = 0xfe,			///< 円形として使う
+    GFL_UI_TP_SKIP = 0xfd,			///< スキップする
     GFL_UI_TP_HIT_NONE = -1	///< あたったテーブルなし
 } GF_UI_TP_CUSTOM_e;
 

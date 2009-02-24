@@ -143,9 +143,18 @@ void BmpWinFrame_GraphicSetAM(
 		arc = NARC_winframe_fmenu_ncgr;
 	}
 
+    {
+        void* arcData = GFL_ARC_UTIL_Load( ARCID_FLDMAP_WINFRAME, arc, 0, heap );
+        NNSG2dCharacterData* charData;
+
+        if( NNS_G2dGetUnpackedBGCharacterData( arcData, &charData ) )
+        {
+            pPos->size = charData->szByte;
+        }
+        GFL_HEAP_FreeMemory( arcData );
+    }
 	pPos->pos = GFL_ARC_UTIL_TransVramBgCharacterAreaMan(
-		ARCID_FLDMAP_WINFRAME, arc, frmnum, 0, 0, heap );
-    pPos->size = GFL_ARC_GetDataSize(ARCID_FLDMAP_WINFRAME, arc);
+        ARCID_FLDMAP_WINFRAME, arc, frmnum, 0, 0, heap );
 	
 	// ƒpƒŒƒbƒg
 	if( win_num == MENU_TYPE_UG ){
