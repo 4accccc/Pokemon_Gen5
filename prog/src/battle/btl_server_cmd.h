@@ -65,6 +65,7 @@ typedef enum {
 	SC_ACT_RANKDOWN,		///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
 	SC_ACT_DEAD,				///< 【ポケモンひんし】[ ClientID ]
 	SC_ACT_MEMBER_IN,		///< 【ポケモンイン】[ ClientID, pokeIdx ]
+	SC_ACT_SICK_DMG,		///<  アクション／ターンチェック時の状態異常ダメージ
 
 	SC_TOKWIN_IN,				///< とくせいウィンドウ表示イン [ClientID]
 	SC_TOKWIN_OUT,			///< とくせいウィンドウ表示アウト [ClientID]
@@ -380,6 +381,19 @@ static inline void SCQUE_READ_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, int* args )
 	args[1] = scque_read1byte( que );
 }
 
+static inline void SCQUE_PUT_SickDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 sick, u8 damage )
+{
+	scque_put2byte( que, SC_ACT_SICK_DMG );
+	scque_put1byte( que, pokeID );
+	scque_put1byte( que, sick );
+	scque_put1byte( que, damage );
+}
+static inline void SCQUE_READ_SickDamage( BTL_SERVER_CMD_QUE* que, int* args )
+{
+	args[0] = scque_read1byte( que );
+	args[1] = scque_read1byte( que );
+	args[2] = scque_read1byte( que );
+}
 
 
 static inline void SCQUE_PUT_TOKWIN_IN( BTL_SERVER_CMD_QUE* que, u8 clientID )
@@ -445,6 +459,7 @@ static inline ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 	case SC_ACT_RANKDOWN:		SCQUE_READ_ACT_RankDown( que, args ); break;
 	case SC_ACT_DEAD:				SCQUE_READ_ACT_Dead( que, args ); break;
 	case SC_ACT_MEMBER_IN:	SCQUE_READ_ACT_MemberIn( que, args ); break;
+	case SC_ACT_SICK_DMG:		SCQUE_READ_SickDamage( que, args ); break;
 	case SC_TOKWIN_IN:			SCQUE_READ_TOKWIN( que, args ); break;
 	case SC_TOKWIN_OUT:			SCQUE_READ_TOKWIN( que, args ); break;
 	case SC_MSG_STD:				SCQUE_READ_Msg( que, args ); break;

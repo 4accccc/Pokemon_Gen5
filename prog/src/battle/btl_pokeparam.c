@@ -9,6 +9,7 @@
 //=============================================================================================
 #include <gflib.h>
 #include "poke_tool/poke_tool.h"
+#include "waza_tool/wazadata.h"
 
 #include "btl_common.h"
 #include "btl_calc.h"
@@ -37,18 +38,18 @@ enum {
 //--------------------------------------------------------------
 typedef struct {
 
-	u16	monsno;			///< ポケモンナンバー
+	u16	monsno;				///< ポケモンナンバー
 
-	u8	hpMax;			///< 最大HP
-	u8	attack;			///< こうげき
-	u8	defence;		///< ぼうぎょ
+	u8	hpMax;				///< 最大HP
+	u8	attack;				///< こうげき
+	u8	defence;			///< ぼうぎょ
 	u8	sp_attack;		///< とくこう
 	u8	sp_defence;		///< とくぼう
-	u8	agility;		///< すばやさ
+	u8	agility;			///< すばやさ
 
-	u8  level;			///< レベル
-	u8  type1;
-	u8  type2;
+	u8  level;				///< レベル
+	u8  type1;				///< タイプ１
+	u8  type2;				///< タイプ２
 
 }BPP_BASE_PARAM;
 
@@ -59,14 +60,14 @@ typedef struct {
 //--------------------------------------------------------------
 typedef struct {
 
-	s8	attack;		///< こうげき
-	s8	defence;	///< ぼうぎょ
+	s8	attack;			///< こうげき
+	s8	defence;		///< ぼうぎょ
 	s8	sp_attack;	///< とくこう
 	s8	sp_defence;	///< とくぼう
-	s8	agility;	///< すばやさ
-	s8	hit;		///< 命中率
-	s8	avoid;		///< 回避率
-	s8	critical;	///< クリティカル率
+	s8	agility;		///< すばやさ
+	s8	hit;				///< 命中率
+	s8	avoid;			///< 回避率
+	s8	critical;		///< クリティカル率
 
 }BPP_VARIABLE_PARAM;
 
@@ -77,11 +78,11 @@ typedef struct {
 //--------------------------------------------------------------
 typedef struct {
 
-	u16	attack;			///< こうげき
-	u16	defence;		///< ぼうぎょ
+	u16	attack;				///< こうげき
+	u16	defence;			///< ぼうぎょ
 	u16	sp_attack;		///< とくこう
 	u16	sp_defence;		///< とくぼう
-	u16	agility;		///< すばやさ
+	u16	agility;			///< すばやさ
 	u16	dmy;
 
 }BPP_REAL_PARAM;
@@ -100,17 +101,20 @@ typedef struct {
 
 struct _BTL_POKEPARAM {
 
-	BPP_BASE_PARAM		baseParam;
+	BPP_BASE_PARAM			baseParam;
 	BPP_VARIABLE_PARAM	varyParam;
-	BPP_REAL_PARAM		realParam;
-	BPP_WAZA			waza[ PTL_WAZA_MAX ];
+	BPP_REAL_PARAM			realParam;
+	BPP_WAZA						waza[ PTL_WAZA_MAX ];
 
 	u16  item;
 	u16  tokusei;
 	u16  hp;
 
-	u8	wazaCnt;
 	u8	myID;
+	u8	wazaCnt;
+	u8	pokeSick;
+	u8	pokeSickCounter;
+
 
 	const POKEMON_PARAM*	ppSrc;
 };
@@ -189,6 +193,8 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->tokusei = PP_Get( pp, ID_PARA_speabino, 0 );
 	bpp->hp = PP_Get( pp, ID_PARA_hp, 0 );
 	bpp->myID = pokeID;
+	bpp->pokeSick = PP_GetSick( pp );
+	bpp->pokeSickCounter = 0;
 
 	bpp->ppSrc = pp;
 
@@ -302,7 +308,7 @@ int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
 	case BPP_CRITICAL_RATIO:	return pp->varyParam.critical;
 
 	case BPP_LEVEL:			return pp->baseParam.level;
-	case BPP_HP:			return pp->hp;
+	case BPP_HP:				return pp->hp;
 	case BPP_MAX_HP:		return pp->baseParam.hpMax;
 
 	case BPP_TOKUSEI:		return pp->tokusei;
@@ -348,6 +354,21 @@ BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp )
 {
 	return BTL_POKEPARAM_GetValue( pp, BPP_HP ) == 0;
 }
+
+//=============================================================================================
+/**
+ * ポケモン状態異常にかかっているかチェック
+ *
+ * @param   pp		
+ *
+ * @retval  PokeSick		かかっている状態異常の識別子（かかっていない場合 POKESICK_NULL）
+ */
+//=============================================================================================
+PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp )
+{
+	return pp->pokeSick;
+}
+
 //=============================================================================================
 /**
  * 特定の状態異常にかかっているかチェック
@@ -363,7 +384,39 @@ BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
 	return FALSE;
 }
 
+//=============================================================================================
+/**
+ * 状態異常のターンチェックで減るHPの量を計算
+ *
+ * @param   pp		
+ *
+ * @retval  int		
+ */
+//=============================================================================================
+int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp )
+{
+	switch( pp->pokeSick ){
+	case POKESICK_DOKU:
+		// カウンタが0なら通常の「どく」
+		if( pp->pokeSickCounter == 0 )
+		{
+			return pp->baseParam.hpMax / 8;
+		}
+		// カウンタが1～なら「どくどく」
+		else
+		{
+			return (pp->baseParam.hpMax / 16) * pp->pokeSickCounter;
+		}
+		break;
 
+	
+	case POKESICK_YAKEDO:
+			return pp->baseParam.hpMax / 8;
+
+	default:
+		return 0;
+	}
+}
 
 //-----------------------------
 

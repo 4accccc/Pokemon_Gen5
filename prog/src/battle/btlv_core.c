@@ -466,7 +466,7 @@ typedef struct {
 
 //=============================================================================================
 /**
- * 単体ダメージエフェクト開始
+ * 単体ワザダメージエフェクト開始
  *
  * @param   wk					
  * @param   defPokePos	
@@ -488,7 +488,7 @@ void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, BtlPokePos defPokePos, u1
 }
 //=============================================================================================
 /**
- * 単体ダメージエフェクト終了待ち
+ * 単体ワザダメージエフェクト終了待ち
  *
  * @param   wk		
  *
@@ -546,7 +546,7 @@ typedef struct {
 
 //=============================================================================================
 /**
- * ２体同時ダメージエフェクト開始
+ * ２体同時ワザダメージエフェクト開始
  *
  * @param   wk					
  * @param   defPokePos	
@@ -571,7 +571,7 @@ void BTLV_ACT_DamageEffectDouble_Start( BTLV_CORE* wk, BtlPokePos defPokePos1, B
 }
 //=============================================================================================
 /**
- * ２体同時ダメージエフェクト終了待ち
+ * ２体同時ワザダメージエフェクト終了待ち
  *
  * @param   wk		
  *
@@ -615,6 +615,26 @@ static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs )
 
 	}
 	return FALSE;
+}
+
+//=============================================================================================
+/**
+ * シンプルHPエフェクト開始
+ * ※HPメーターのみ変動。状態異常や天候ダメージに使う
+ *
+ * @param   wk				
+ * @param   pokePos		
+ * @param   value			HP増減値
+ *
+ */
+//=============================================================================================
+void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos, int value )
+{
+	BTLV_SCU_StartHPGauge( wk->scrnU, pokePos, value );
+}
+BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk )
+{
+	return BTLV_SCU_WaitHPGauge( wk->scrnU );
 }
 
 

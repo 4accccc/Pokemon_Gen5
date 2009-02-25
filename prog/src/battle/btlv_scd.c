@@ -427,6 +427,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 				}
 				else
 				{
+					BTL_Printf("ワザターゲット選択（確認）へ\n");
 					spstack_push( wk, selectTarget_init, selectTarget_loop );
 					(*seq)++;
 				}
@@ -435,7 +436,8 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 		case SEQ_SEL_FIGHT+3:
 			if( wk->selTargetDone )
 			{
-				return TRUE;
+				BTL_Printf("ちゃんと選んだど\n");
+				(*seq) = SEQ_SEL_FIGHT_FINISH;
 			}
 			else
 			{
@@ -448,10 +450,12 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 	case SEQ_SEL_FIGHT_FINISH:
 		if( BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE )
 		{
+			BTL_Printf("通信じゃないのですぐ返る\n");
 			return TRUE;
 		}
 		else
 		{
+			BTL_Printf("通信なので待機中表示\n");
 			printCommWait( wk );
 			(*seq)++;
 		}
@@ -508,7 +512,7 @@ static const GFL_UI_TP_HITTBL STW_HitTbl[] = {
 	{ STW_BTNPOS_C_Y*8, (STW_BTNPOS_C_Y+STW_BTN_HEIGHT)*8, STW_BTNPOS_C_X*8, (STW_BTNPOS_C_X+STW_BTN_WIDTH)*8 },
 	{ STW_BTNPOS_D_Y*8, (STW_BTNPOS_D_Y+STW_BTN_HEIGHT)*8, STW_BTNPOS_D_X*8, (STW_BTNPOS_D_X+STW_BTN_WIDTH)*8 },
 
-	{ GFL_UI_KEY_END, 0, 0 }
+	{ GFL_UI_TP_HIT_END, 0, 0 }
 };
 // ↑描画位置から上記テーブルインデックスを引くためのテーブル
 static const u8 STW_HitTblIndex[] = {

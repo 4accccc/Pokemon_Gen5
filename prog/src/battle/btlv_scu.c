@@ -42,6 +42,7 @@ typedef enum {
 
 	TASKTYPE_DEFAULT = 0,
 	TASKTYPE_WAZA_DAMAGE,
+	TASKTYPE_HP_GAUGE,
 	TASKTYPE_MAX,
 
 }TaskType;
@@ -102,6 +103,7 @@ static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
+static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs );
 static void statwin_setupAll( BTLV_SCU* wk );
 static void statwin_cleanupAll( BTLV_SCU* wk );
 static void tokwin_setupAll( BTLV_SCU* wk );
@@ -866,6 +868,109 @@ static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs )
 	}
 }
 
+//--------------------------------------------------------
+// HPゲージ増減エフェクト
+//--------------------------------------------------------
+typedef struct {
+
+	STATUS_WIN*  statWin;
+	fx32		hpVal;
+	fx32		hpAddVal;
+	u16			hpEnd;
+	u16			timer;
+	u8*			taskCounter;
+
+}HP_GAUGE_EFFECT;
+
+
+//=============================================================================================
+/**
+ * HPゲージ増減エフェクト開始
+ *
+ * @param   wk		
+ * @param   pos		
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos, int value )
+{
+	enum {
+		DAMAGE_FRAME_MIN = 40,
+	};
+
+	GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskHPGauge, sizeof(HP_GAUGE_EFFECT), BTLV_TASKPRI_DAMAGE_EFFECT );
+	HP_GAUGE_EFFECT* twk = GFL_TCBL_GetWork( tcbl );
+
+	twk->taskCounter = &(wk->taskCounter[TASKTYPE_HP_GAUGE]);
+	twk->statWin = &wk->statusWin[pos];
+	twk->hpEnd = BTL_POKEPARAM_GetValue( twk->statWin->bpp, BPP_HP );
+	twk->hpVal = FX32_CONST( twk->statWin->hp );
+	{
+		u16 max, min, range;
+
+		max = twk->statWin->hp;
+		min = twk->hpEnd;
+		if( max < min )
+		{
+			u16 tmp = max;
+			max = min;
+			min = max;
+		}
+		range = max - min;
+		twk->timer = (range * 180) / 100;
+		if( twk->timer < DAMAGE_FRAME_MIN )
+		{
+			twk->timer = DAMAGE_FRAME_MIN;
+		}
+
+		twk->hpAddVal = FX32_CONST(max - min) / twk->timer;
+	}
+
+	(*(twk->taskCounter))++;
+
+}
+//=============================================================================================
+/**
+ * HPゲージ増減エフェクト終了待ち
+ *
+ * @param   wk		
+ * @param   pos		
+ *
+ */
+//=============================================================================================
+BOOL BTLV_SCU_WaitHPGauge( BTLV_SCU* wk )
+{
+	return wk->taskCounter[TASKTYPE_HP_GAUGE] == 0;
+}
+
+static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs )
+{
+	HP_GAUGE_EFFECT* wk = wk_adrs;
+	if( wk->timer )
+	{
+		u16 hp;
+		u8 col;
+
+		if( --(wk->timer) )
+		{
+			wk->hpVal += wk->hpAddVal;
+			hp = wk->hpVal >> FX32_SHIFT;
+			statwin_update( wk->statWin, hp, TEST_STATWIN_BGCOL );
+		}
+		else
+		{
+			statwin_update( wk->statWin, wk->hpEnd, TEST_STATWIN_BGCOL );
+		}
+	}
+	else
+	{
+		if( !BTL_EFFECT_CheckExecute() )
+		{
+			(*(wk->taskCounter))--;
+			GFL_TCBL_Delete( tcbl );
+		}
+	}
+}
 
 
 //----------------------------

@@ -111,8 +111,9 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static u8 calc_empty_pos( BTL_CLIENT* wk );
 static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos );
 static u8 calc_puttable_pokemons( BTL_CLIENT* wk, u8* list );
-static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param );
+static u8 calc_front_dead_pokemons( BTL_CLIENT* wk, u8* list );
 static void setup_pokesel_param_change( BTL_CLIENT* wk, BTL_POKESELECT_PARAM* param );
+static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param );
 static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
 static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
@@ -129,6 +130,7 @@ static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -671,6 +673,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_WAZA_DMG_DBL,scProc_ACT_WazaDmg_Dbl			},
 		{	SC_ACT_DEAD,				scProc_ACT_Dead				},
 		{	SC_ACT_RANKDOWN,		scProc_ACT_RankDownEffect	},
+		{	SC_ACT_SICK_DMG,		scProc_ACT_SickDamage	},
 		{	SC_TOKWIN_IN,				scProc_TOKWIN_In			},
 		{	SC_TOKWIN_OUT,			scProc_TOKWIN_Out			},
 		{	SC_OP_HP_MINUS,			scProc_OP_HpMinus			},
@@ -981,6 +984,42 @@ static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args
 {
 	BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
 	return TRUE;
+}
+
+static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		{
+			BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+			PokeSick sick = args[1];
+			int damage = args[2];
+			u16 msgID;
+
+			switch( sick ){
+			default:
+				GF_ASSERT(0);
+				/* fallthru */
+			case POKESICK_DOKU:		msgID = BTL_STRID_SET_DokuDamage; break;
+				break;
+			case POKESICK_YAKEDO:	msgID = BTL_STRID_SET_YakedoDamage; break;
+				break;
+			}
+
+			BTLV_StartMsgSet( wk->viewCore, msgID, args );	// この先ではargs[0]しか参照しないハズ…
+			BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos, damage );
+			(*seq)++;
+		}
+		break;
+	case 1:
+		if( BTLV_WaitMsg(wk->viewCore)
+		&&	BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore)
+		){
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
 }
 
 

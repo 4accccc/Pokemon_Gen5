@@ -30,6 +30,8 @@
 /*--------------------------------------------------------------------------*/
 enum {
 	SERVER_CMD_SIZE_MAX = 1024,
+
+	CLIENT_DISABLE_ID = 0xff,
 };
 
 //--------------------------------------------------------------
@@ -99,6 +101,9 @@ typedef struct {
 
 	u8		decPP;						///< 減少PP値
 
+	PokeSick	sick;					///< 状態異常
+	int				sickDamage;		///< 状態異常ダメージ値
+
 }FIGHT_EVENT_PARAM;
 
 typedef struct {
@@ -116,7 +121,7 @@ typedef struct {
 //--------------------------------------------------------------
 struct _BTL_SERVER {
 	BTL_MAIN_MODULE*	mainModule;
-	CLIENT_WORK			client[ BTL_CLIENT_MAX ];
+	CLIENT_WORK				client[ BTL_CLIENT_MAX ];
 //	u8					actionOrder[ BTL_POS_MAX ];
 	ACTION_ORDER_WORK	actOrder[ BTL_POS_MAX ];
 	u8					numActPokemon;
@@ -166,6 +171,7 @@ static void scput_Fight_Damage(
 	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
 static BTL_POKEPARAM* svflowsub_get_opponent_pokeparam( BTL_SERVER* server, BtlPokePos pos, u8 pokeSideIdx );
 static BTL_POKEPARAM* svflowsub_get_next_pokeparam( BTL_SERVER* server, BtlPokePos pos );
+static void svflowsub_check_and_make_dead_command( BTL_SERVER* server, BTL_POKEPARAM* poke );
 static void scput_Fight_Damage_Single(
 	 BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza, CLIENT_WORK* atClient,
 	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
@@ -185,6 +191,8 @@ static void svflowsub_damage_act_enemy_all_atonce( BTL_SERVER* server, FIGHT_EVE
 static BOOL svflowsub_hitcheck_singular( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza );
 static u16 svflowsub_damage_calc_core( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BtlTypeAff typeAff );
 static void svflowsub_set_waza_effect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, WazaID waza );
+static void scput_TurnCheck( BTL_SERVER* server );
+static void scput_turncheck_sick( BTL_SERVER* server );
 static inline int roundValue( int val, int min, int max );
 static void initFightEventParams( FIGHT_EVENT_PARAM* fep );
 static BOOL scEvent_CheckConf( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const CLIENT_WORK* atClient );
@@ -227,8 +235,15 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, HEAPID heapID )
 	sv->mainModule = mainModule;
 	sv->numClient = 0;
 	sv->heapID = heapID;
-
 	sv->que = &sv->queBody;
+
+	{
+		int i;
+		for(i=0; i<BTL_CLIENT_MAX; ++i)
+		{
+			sv->client[i].myID = CLIENT_DISABLE_ID;
+		}
+	}
 
 	setMainProc( sv, ServerMain_WaitReady );
 
@@ -260,6 +275,7 @@ void BTL_SERVER_Delete( BTL_SERVER* wk )
 //--------------------------------------------------------------------------------------
 void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL_PARTY* party, u8 clientID, u8 numCoverPos )
 {
+	GF_ASSERT(clientID < BTL_CLIENT_MAX);
 	GF_ASSERT(server->client[clientID].adapter==NULL);
 
 	{
@@ -288,6 +304,7 @@ void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL
 //--------------------------------------------------------------------------------------
 void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, BTL_PARTY* party, u8 clientID, u8 numCoverPos )
 {
+	GF_ASSERT(clientID < BTL_CLIENT_MAX);
 	GF_ASSERT(server->client[clientID].adapter==NULL);
 
 	{
@@ -825,9 +842,12 @@ static BOOL createServerCommand( BTL_SERVER* server )
 		}
 	}
 
+	// ターンチェック処理
+	scput_TurnCheck( server );
+
 	// 死んだポケモンがいる場合の処理
 	numPokeAlive = countAlivePokemon( server );
-	BTL_Printf("ポケモン数 %d -> %d ...\n", numPokeBegin, numPokeAlive);
+	BTL_Printf( "ポケモン数 %d -> %d ...\n", numPokeBegin, numPokeAlive );
 	if( numPokeBegin > numPokeAlive )
 	{
 		return TRUE;
@@ -884,9 +904,9 @@ static void scput_MemberOut( BTL_SERVER* server, u8 clientID, const BTL_ACTION_P
 {
 	scEvent_MemberOut( server, &server->changeEventParams, clientID, action->change.posIdx );
 }
-//----------------------------------------------------------------------
+//==============================================================================
 // サーバーフロー：「たたかう」ルート
-//----------------------------------------------------------------------
+//==============================================================================
 static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action )
 {
 	CLIENT_WORK *atClient;
@@ -1405,7 +1425,6 @@ static u16 svflowsub_damage_calc_core( BTL_SERVER* server, FIGHT_EVENT_PARAM* fe
 //---------------------------------------------------------------------------------------------
 // １度のワザ処理にて、エフェクト発動コマンドを１回しか作成しないための仕組み
 //---------------------------------------------------------------------------------------------
-
 static void svflowsub_set_waza_effect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, WazaID waza )
 {
 	if( SCQUE_GetFlag( que, QUEFLG_WAZAEFFECT_ADDED) == FALSE )
@@ -1417,6 +1436,118 @@ static void svflowsub_set_waza_effect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 
 	else
 	{
 		BTL_Printf("ワザエフェクトコマンド生成済みなので無視, ワザナンバ%d\n", waza);
+	}
+}
+
+//==============================================================================
+// サーバーフロー：ターンチェックルート
+//==============================================================================
+static void scput_TurnCheck( BTL_SERVER* server )
+{
+	scput_turncheck_sick( server );
+//	scput_turncheck_weather( server );
+}
+
+//--------------------------------------------------------------
+/**
+ *	戦闘に出ているポケモンデータに順番にアクセスする処理のワーク
+ */
+//--------------------------------------------------------------
+typedef struct {
+	u8 clientIdx;
+	u8 pokeIdx;
+	u8 endFlag;
+}FRONT_POKE_SEEK_WORK;
+
+static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SERVER* server )
+{
+	fpsw->clientIdx = 0;
+	fpsw->pokeIdx = 0;
+	fpsw->endFlag = TRUE;
+
+	{
+		CLIENT_WORK* cw;
+		u8 i, j;
+
+		for(i=0; i<BTL_CLIENT_MAX; ++i)
+		{
+			cw = &server->client[i];
+			if( cw->myID == CLIENT_DISABLE_ID ){ continue; }
+
+			for(j=0; j<cw->numCoverPos; ++j)
+			{
+				if( !BTL_POKEPARAM_IsDead(cw->frontMember[j]) )
+				{
+					fpsw->clientIdx = i;
+					fpsw->pokeIdx = j;
+					fpsw->endFlag = FALSE;
+					return;
+				}
+			}
+		}
+	}
+}
+static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SERVER* server, BTL_POKEPARAM** bpp )
+{
+	if( fpsw->endFlag )
+	{
+		return FALSE;
+	}
+	else
+	{
+		CLIENT_WORK* cw = &server->client[ fpsw->clientIdx ];
+		BTL_POKEPARAM* nextPoke = NULL;
+
+		*bpp = cw->frontMember[ fpsw->pokeIdx++ ];
+
+		while( fpsw->clientIdx < BTL_CLIENT_MAX )
+		{
+			cw = &server->client[ fpsw->clientIdx ];
+			while( fpsw->pokeIdx < cw->numCoverPos )
+			{
+				nextPoke = cw->frontMember[ fpsw->pokeIdx ];
+				if( !BTL_POKEPARAM_IsDead(nextPoke) )
+				{
+					return TRUE;
+				}
+				fpsw->pokeIdx++;
+			}
+			fpsw->clientIdx++;
+			fpsw->pokeIdx = 0;
+		}
+		fpsw->endFlag = TRUE;
+		return TRUE;
+	}
+}
+
+
+//------------------------------------------------------------------
+// サーバーフロー下請け： ターンチェック > 状態異常
+//------------------------------------------------------------------
+static void scput_turncheck_sick( BTL_SERVER* server )
+{
+	FIGHT_EVENT_PARAM* fep;
+	FRONT_POKE_SEEK_WORK  fpsw;
+	BTL_POKEPARAM* bpp;
+
+	fep = &server->fightEventParams;
+	FRONT_POKE_SEEK_InitWork( &fpsw, server );
+
+	while( FRONT_POKE_SEEK_GetNext( &fpsw, server, &bpp ) )
+	{
+		fep->sick = BTL_POKEPARAM_GetPokeSick( bpp );
+		fep->sickDamage = BTL_POKEPARAM_CalcSickDamage( bpp );
+		if( fep->sick != POKESICK_NULL && fep->sickDamage )
+		{
+			BTL_EVENT_CallHandlers( server, BTL_EVENT_SICK_DAMAGE );
+			if( fep->sickDamage > 0 )
+			{
+				u8 pokeID = BTL_POKEPARAM_GetID( bpp );
+				BTL_POKEPARAM_HpMinus( bpp, fep->sickDamage );
+				SCQUE_PUT_OP_HpMinus( server->que, pokeID, fep->sickDamage );
+				SCQUE_PUT_SickDamage( server->que, pokeID, fep->sick, fep->sickDamage );
+			}
+		}
 	}
 }
 

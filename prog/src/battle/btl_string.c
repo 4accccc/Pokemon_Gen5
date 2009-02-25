@@ -113,6 +113,7 @@ static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID );
 static void ms_put_single_enemy_arg( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID );
 static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args );
+static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
 static void ms_sp_waza_dead( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
@@ -401,11 +402,13 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 		u16		strID;
 		void	(* func)( STRBUF*, u16, const int* );
 	}funcTbl[] = {
-		{ BTL_STRID_SET_Dead,					ms_sp_waza_dead			},
+		{ BTL_STRID_SET_Dead,					ms_set_std			},
 		{ BTL_STRID_SET_Rankup_ATK,		ms_set_rankup			},
 		{ BTL_STRID_SET_Rankdown_ATK,	ms_set_rankdown			},
 		{ BTL_STRID_SET_RankdownFail,	ms_set_rankdown_fail	},
 		{ BTL_STRID_SET_WazaAvoid,		ms_set_waza_avoid	},
+		{ BTL_STRID_SET_DokuDamage,		ms_set_std },
+		{ BTL_STRID_SET_YakedoDamage,	ms_set_std },
 	};
 
 	int i;
@@ -419,11 +422,24 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 		}
 	}
 
-	BTL_Printf("SET 用意されていない文字列 %d\n", strID);
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], 0, buf );
 }
 
+//--------------------------------------------------------------
+/**
+ *	標準処理（args[0] にポケモンID）
+ */
+//--------------------------------------------------------------
+static void ms_set_std( STRBUF* dst, u16 strID, const int* args )
+{
+	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( SysWork.mainModule, args[0] );
 
+	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
+	strID = get_setStrID( pokePos, strID );
+
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
 //--------------------------------------------------------------
 /**
  *	××は倒れた！

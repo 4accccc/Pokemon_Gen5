@@ -73,6 +73,9 @@ extern int BTL_POKEPARAM_GetValueCriticalHit( const BTL_POKEPARAM* pp, BppValueI
 extern BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType );
 
+extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
+extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
+
 //-------------------------
 extern BOOL BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
 extern BOOL BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
