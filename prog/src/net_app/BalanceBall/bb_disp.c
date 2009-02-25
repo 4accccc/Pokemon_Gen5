@@ -845,8 +845,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 
 	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_SUB, HEAPID_BB);
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
-	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
-		hdl, ncl, CLSYS_DRAW_SUB, 0, 0, palnum, HEAPID_BB);
+	wk->pltt_id[id] = PLTTSLOT_ResourceSet(
+		wk->plttslot, hdl, ncl, CLSYS_DRAW_SUB, palnum, HEAPID_BB);
 	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_SUB) / 0x20;
 	PaletteWorkSet_VramCopy(pfd, FADE_SUB_OBJ, dest_palno*16, palnum * 0x20);
 	
@@ -861,8 +861,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 
 	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
-	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
-		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+	wk->pltt_id[id] = PLTTSLOT_ResourceSet(
+		wk->plttslot, hdl, ncl, CLSYS_DRAW_MAIN, palnum, HEAPID_BB);
 	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
 	PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 	
@@ -876,8 +876,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 
 	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
-	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
-		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+	wk->pltt_id[id] = PLTTSLOT_ResourceSet(
+		wk->plttslot, hdl, ncl, CLSYS_DRAW_MAIN, palnum, HEAPID_BB);
 	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
 	PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 	
@@ -891,8 +891,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 
 	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
-	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
-		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+	wk->pltt_id[id] = PLTTSLOT_ResourceSet(
+		wk->plttslot, hdl, ncl, CLSYS_DRAW_MAIN, palnum, HEAPID_BB);
 	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
 	PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 	
@@ -907,8 +907,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 
 	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
-	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
-		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+	wk->pltt_id[id] = PLTTSLOT_ResourceSet(
+		wk->plttslot, hdl, ncl, CLSYS_DRAW_MAIN, palnum, HEAPID_BB);
 	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
 	PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 	
@@ -922,8 +922,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 
 	wk->cgr_id[id] = GFL_CLGRP_CGR_Register(hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
 	wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(hdl, nce, nca, HEAPID_BB);
-	wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
-		hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+	wk->pltt_id[id] = PLTTSLOT_ResourceSet(
+		wk->plttslot, hdl, ncl, CLSYS_DRAW_MAIN, palnum, HEAPID_BB);
 	dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
 	PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 	
@@ -939,8 +939,8 @@ void BB_disp_ResourceLoad( BB_WORK* wk )
 		palnum = 2;
 		wk->cgr_id[id] = GFL_CLGRP_CGR_Register(res_hdl, ncg, FALSE, CLSYS_DRAW_MAIN, HEAPID_BB);
 		wk->cell_id[id] = GFL_CLGRP_CELLANIM_Register(res_hdl, nce, nca, HEAPID_BB);
-		wk->pltt_id[id] = GFL_CLGRP_PLTT_RegisterEx(
-			res_hdl, ncl, CLSYS_DRAW_MAIN, 0, 0, palnum, HEAPID_BB);
+		wk->pltt_id[id] = PLTTSLOT_ResourceSet(
+			wk->plttslot, res_hdl, ncl, CLSYS_DRAW_MAIN, palnum, HEAPID_BB);
 		dest_palno = GFL_CLGRP_PLTT_GetAddr(wk->pltt_id[id], CLSYS_DRAW_MAIN) / 0x20;
 		PaletteWorkSet_VramCopy(pfd, FADE_MAIN_OBJ, dest_palno*16, palnum * 0x20);
 

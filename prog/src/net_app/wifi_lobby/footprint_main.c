@@ -1411,9 +1411,9 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	u16 color_code;
 	
 	//-- メイン画面OBJ常駐パレット --//
-	fps->pltt_id[PLTTID_OBJ_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
-		hdl, NARC_footprint_board_a_board_eff_NCLR,
-		CLSYS_DRAW_MAIN, 0, 0, FOOTPRINT_COMMON_PAL_NUM, HEAPID_FOOTPRINT);
+	fps->pltt_id[PLTTID_OBJ_COMMON] = PLTTSLOT_ResourceSet(
+		fps->plttslot, hdl, NARC_footprint_board_a_board_eff_NCLR,
+		CLSYS_DRAW_MAIN, FOOTPRINT_COMMON_PAL_NUM, HEAPID_FOOTPRINT);
 	pal_pos = GFL_CLGRP_PLTT_GetAddr(fps->pltt_id[PLTTID_OBJ_COMMON], CLSYS_DRAW_MAIN) / 0x20;
 	PaletteWorkSet_VramCopy(fps->pfd, FADE_MAIN_OBJ, pal_pos*16, FOOTPRINT_COMMON_PAL_NUM*0x20);
 
@@ -1435,9 +1435,9 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	//インクの上に配置する足跡のパレット(データはダミー。領域だけ確保)
 	//ダミーグラフィックは7、足跡データは4番のカラーで書かれているので、
 	//一本確保して、足跡用に割り当ててしまう。全てのカラーを足跡の色で埋める
-	fps->pltt_id[PLTTID_OBJ_INK_FOOT] = GFL_CLGRP_PLTT_RegisterEx(
-		hdl_main, NARC_footprint_board_a_board_eff_NCLR,
-		CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_FOOTPRINT);
+	fps->pltt_id[PLTTID_OBJ_INK_FOOT] = PLTTSLOT_ResourceSet(
+		wk->plttslot, hdl_main, NARC_footprint_board_a_board_eff_NCLR,
+		CLSYS_DRAW_MAIN, 1, HEAPID_FOOTPRINT);
 	pal_pos = GFL_CLGRP_PLTT_GetAddr( fps->pltt_id[PLTTID_OBJ_INK_FOOT], CLSYS_DRAW_MAIN ) / 0x20;
 	PaletteWorkSet_VramCopy(fps->pfd, FADE_MAIN_OBJ, pal_pos*16, 1*0x20);
 	if(fps->parent_work->board_type == FOOTPRINT_BOARD_TYPE_WHITE){
@@ -1457,8 +1457,8 @@ static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 		NARC_footprint_board_a_board_eff_NANR, HEAPID_FOOTPRINT);
 		
 	//-- FONTOAM --//
-	fps->pltt_id[PLTTID_OBJ_FONTOAM] = GFL_CLGRP_PLTT_RegisterEx(hdl_main, 
-		NARC_footprint_board_a_board_font_b_NCLR, CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_FOOTPRINT);
+	fps->pltt_id[PLTTID_OBJ_FONTOAM] = PLTTSLOT_ResourceSet(wk->plttslot, hdl_main, 
+		NARC_footprint_board_a_board_font_b_NCLR, CLSYS_DRAW_MAIN, 1, HEAPID_FOOTPRINT);
 	fps->yameru_pal_pos 
 		= GFL_CLGRP_PLTT_GetAddr(fps->pltt_id[PLTTID_OBJ_FONTOAM], CLSYS_DRAW_MAIN) / 0x20;
 	PaletteWorkSet_VramCopy(fps->pfd, FADE_MAIN_OBJ, fps->yameru_pal_pos*16, 1*0x20);
@@ -1563,9 +1563,9 @@ static void DefaultResourceSet_Sub(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main)
 	int i, pal_pos;
 	
 	//-- サブ画面OBJ常駐パレット --//
-	fps->pltt_id[PLTTID_SUB_OBJ_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
-		hdl_main, NARC_footprint_board_ashiato_frame_NCLR,
-		CLSYS_DRAW_SUB, 0, 0, FOOTPRINT_SUB_COMMON_PAL_NUM, HEAPID_FOOTPRINT);
+	fps->pltt_id[PLTTID_SUB_OBJ_COMMON] = PLTTSLOT_ResourceSet(
+		wk->plttslot, hdl_main, NARC_footprint_board_ashiato_frame_NCLR,
+		CLSYS_DRAW_SUB, FOOTPRINT_SUB_COMMON_PAL_NUM, HEAPID_FOOTPRINT);
 	pal_pos = GFL_CLGRP_PLTT_GetAddr(fps->pltt_id[PLTTID_SUB_OBJ_COMMON], CLSYS_DRAW_SUB) / 0x20;
 	PaletteWorkSet_VramCopy(fps->pfd, FADE_SUB_OBJ, pal_pos*16, FOOTPRINT_SUB_COMMON_PAL_NUM*0x20);
 

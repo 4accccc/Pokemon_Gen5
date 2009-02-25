@@ -1679,8 +1679,8 @@ static void Aim_ResourceLoad(BALLOON_GAME_PTR game)
 	//ハンドルオープン
 	hdl  = GFL_ARC_OpenDataHandle(ARCID_BALLOON_GRA,  HEAPID_BALLOON); 
 
-	game->pltt_id[PLTTID_OBJ_AIM] = GFL_CLGRP_PLTT_RegisterEx(hdl, AIM_NCLR,
-		CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
+	game->pltt_id[PLTTID_OBJ_AIM] = PLTTSLOT_ResourceSet(game->plttslot, hdl, AIM_NCLR,
+		CLSYS_DRAW_MAIN, 1, HEAPID_BALLOON);
 	dest_palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_OBJ_AIM], CLSYS_DRAW_MAIN) / 0x20;
 	PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, dest_palno*16, 1*0x20);
 
@@ -1703,7 +1703,7 @@ static void Aim_ResourceLoad(BALLOON_GAME_PTR game)
 static void Aim_ResourceFree(BALLOON_GAME_PTR game)
 {
 	GFL_CLGRP_CGR_Release(game->cgr_id[CHARID_BALLOON_AIM]);
-	GFL_CLGRP_PLTT_Release(game->pltt_id[PLTTID_OBJ_AIM]);
+	PLTTSLOT_ResourceFree(game->plttslot, game->pltt_id[PLTTID_OBJ_AIM], CLSYS_DRAW_MAIN);
 	GFL_CLGRP_CELLANIM_Release(game->cell_id[CELLID_BALLOON_AIM]);
 }
 

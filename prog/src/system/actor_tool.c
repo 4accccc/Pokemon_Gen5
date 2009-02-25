@@ -7,7 +7,7 @@
  */
 //==============================================================================
 #include <gflib.h>
-//#include "system/actor_tool.h"
+#include "system/actor_tool.h"
 
 
 //==============================================================================
@@ -25,7 +25,7 @@ void ACTORTOOL_Init(int heap_id, const GFL_CLSYS_INIT *clsysinit, const GFL_DISP
 
 
 
-#if 0
+#if 1
 //==============================================================================
 //
 //	パレットスロット管理
@@ -173,12 +173,12 @@ static void PLTTSLOT_Free(PLTTSLOT_SYS_PTR pssp, u32 pal_no, GFL_VRAM_TYPE vram_
  * @retval  登録INDEX(パレット番号ではありません。削除時に必要になります)
  */
 //--------------------------------------------------------------
-u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, int pltt_num, GFL_VRAM_TYPE vram_type, int heap_id)
+u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, GFL_VRAM_TYPE vram_type, int pltt_num, int heap_id)
 {
 	int pal_no, index;
 	
 	pal_no = PLTTSLOT_Get(pssp, pltt_num, vram_type);
-	index = GFL_OBJGRP_RegisterPlttEx(
+	index = GFL_CLGRP_PLTT_RegisterEx(
 		handle, data_id, vram_type, pal_no * 0x20, 0, pltt_num, heap_id);
 	return index;
 }
@@ -193,16 +193,7 @@ u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, 
 //--------------------------------------------------------------
 u32 PLTTSLOT_GetPalNo(PLTTSLOT_SYS_PTR pssp, u32 index, GFL_VRAM_TYPE vram_type)
 {
-	int offset, nitro_vramtype;
-	NNSG2dImagePaletteProxy proxy;
-	
-	nitro_vramtype = ((vram_type == GFL_VRAM_2D_MAIN) ? NNS_G2D_VRAM_TYPE_2DMAIN : NNS_G2D_VRAM_TYPE_2DSUB);
-	
-	GFL_OBJGRP_GetPlttProxy(index, &proxy);
-	offset =  NNS_G2dGetImagePaletteLocation(&proxy, nitro_vramtype);
-	GF_ASSERT(offset != NNS_G2D_VRAM_ADDR_NOT_INITIALIZED);
-	
-	return offset / 0x20;
+	return GFL_CLGRP_PLTT_GetAddr(index, vram_type) / 0x20;
 }
 
 //--------------------------------------------------------------
@@ -219,8 +210,8 @@ void PLTTSLOT_ResourceFree(PLTTSLOT_SYS_PTR pssp, u32 index, GFL_VRAM_TYPE vram_
 	
 	pal_no = PLTTSLOT_GetPalNo(pssp, index, vram_type);
 	PLTTSLOT_Free(pssp, pal_no, vram_type);
+	GFL_CLGRP_PLTT_Release(index);
 }
-
 
 #endif
 

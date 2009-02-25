@@ -259,6 +259,7 @@ static void BalloonDefaultBGDel_Sub(BALLOON_GAME_WORK *game);
 static void BalloonDefault3DSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl);
 static void BalloonDefault3DDel(BALLOON_GAME_WORK *game);
 static void Balloon_CameraInit(BALLOON_GAME_WORK *game);
+static void SetCamPosByTarget_Dist_Ang(VecFx32 *pos, u16 angle_x, u16 angle_y, u16 angle_z, fx32 distance, VecFx32 *target);
 static void Balloon_CameraExit(BALLOON_GAME_WORK *game);
 BOOL Balloon_ServerCheck(BALLOON_GAME_PTR game);
 void BalloonSio_RecvBufferSet(BALLOON_GAME_PTR game, int net_id, const BALLOON_SIO_PLAY_WORK *src);
@@ -879,6 +880,8 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		
 		game->clunit = GFL_CLACT_UNIT_Create(128+128, 0, HEAPID_BALLOON);
 		GFL_CLACT_UNIT_SetDefaultRend(game->clunit);
+
+		game->plttslot = PLTTSLOT_Init(HEAPID_BALLOON, 16, 16);
 	}
 #endif
 
@@ -1276,7 +1279,8 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	//アクターシステム削除
 	GFL_CLACT_UNIT_Delete(game->clunit);
 	GFL_CLACT_SYS_Delete();
-
+	PLTTSLOT_Exit(game->plttslot);
+	
 #if WB_TEMP_FIX
 	//Vram転送マネージャー削除
 	DellVramTransferManager();
@@ -1438,22 +1442,44 @@ static void Balloon_CameraInit(BALLOON_GAME_WORK *game)
 	GFC_SetCameraClip( BALLOON_CAMERA_NEAR, BALLOON_CAMERA_FAR, game->camera);
 
 	GFC_AttachCamera(game->camera);
-
-	//3Dモデル用カメラ
-	game->camera_3d = GFC_AllocCamera( HEAPID_BALLOON );
-	GFC_InitCameraTDA(&target, MODEL_3D_CAMERA_DISTANCE, &BalloonCameraAngle,
-						BALLOON_CAMERA_PERSPWAY, GF_CAMERA_ORTHO, FALSE, game->camera_3d);
-	GFC_SetCameraClip( BALLOON_CAMERA_NEAR, BALLOON_CAMERA_FAR, game->camera_3d);
 #else
 	fovySin  = FX_SinIdx( BALLOON_CAMERA_PERSPWAY );
 	fovyCos  = FX_CosIdx( BALLOON_CAMERA_PERSPWAY );
 	aspect = FX32_ONE * 4 / 3;
 	height = FX_Mul(FX_Div(fovySin, fovyCos), BALLOON_CAMERA_DISTANCE);
 	width  = FX_Mul(height, aspect);
+	SetCamPosByTarget_Dist_Ang(&pos, 
+		FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(0), 
+		BALLOON_CAMERA_DISTANCE, &target);
 	game->camera = GFL_G3D_CAMERA_CreateOrtho(height, -height, -width, width, 
 			BALLOON_CAMERA_NEAR, BALLOON_CAMERA_FAR, 0, 
 			&pos, &camup, &target, HEAPID_BALLOON);
+	GFL_G3D_CAMERA_Switching(game->camera);
 #endif
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	カメラ位置を注視点、距離、アングルから算出する
+ * 
+ * プラチナのcamera.cから移植
+ */
+//---------------------------------------------------------------------------
+static void SetCamPosByTarget_Dist_Ang(VecFx32 *pos, u16 angle_x, u16 angle_y, u16 angle_z, fx32 distance, VecFx32 *target)
+{
+	u16 f_angle_x;
+	
+	//仰角⇒地面からの傾きに変換
+	f_angle_x = -angle_x;
+	/*== カメラ座標を求める ==*/
+	pos->x = FX_Mul( FX_Mul( FX_SinIdx(angle_y), distance ), FX_CosIdx( angle_x ) );
+	
+	pos->z = FX_Mul(FX_Mul(FX_CosIdx(angle_y), distance), FX_CosIdx(angle_x));
+	
+	pos->y = FX_Mul( FX_SinIdx( f_angle_x ), distance );
+
+	/*== 視点からの距離にする ==*/
+	VEC_Add(pos, target, pos);
 }
 
 //--------------------------------------------------------------
@@ -1980,8 +2006,8 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		STRBUF *str0, *str1;
 		int i;
 		
-		game->pltt_id[PLTTID_COUNTER] = GFL_CLGRP_PLTT_RegisterEx(hdl, MINI_FUSEN_CCOBJ_NCLR,
-			CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
+		game->pltt_id[PLTTID_COUNTER] = PLTTSLOT_ResourceSet(game->plttslot, hdl, 
+			MINI_FUSEN_CCOBJ_NCLR, CLSYS_DRAW_MAIN, 1, HEAPID_BALLOON);
 		palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_COUNTER], CLSYS_DRAW_MAIN) / 0x20;
 		PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, palno*16, 1*0x20);
 
@@ -2019,8 +2045,8 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		CounterDummyNumber_ActorCreate(game);
 
 		//BGの下に敷くアクター
-		game->pltt_id[PLTTID_COUNTER_WIN] = GFL_CLGRP_PLTT_RegisterEx(hdl, MINI_FUSEN_CCOBJ_NCLR,
-			CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
+		game->pltt_id[PLTTID_COUNTER_WIN] = PLTTSLOT_ResourceSet(game->plttslot, hdl, 
+			MINI_FUSEN_CCOBJ_NCLR, CLSYS_DRAW_MAIN, 1, HEAPID_BALLOON);
 		palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_COUNTER_WIN], CLSYS_DRAW_MAIN) / 0x20;
 		PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, palno*16, 1*0x20);
 		game->cgr_id[CHARID_COUNTER_WIN] = GFL_CLGRP_CGR_Register(
@@ -2036,8 +2062,8 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		
 		hdl_pen = GFL_ARC_OpenDataHandle(ARCID_WLMNGM_TOOL_GRA, HEAPID_BALLOON);
 		
-		game->pltt_id[PLTTID_TOUCH_PEN] = GFL_CLGRP_PLTT_RegisterEx(hdl_pen, 
-			NARC_wlmngm_tool_touchpen_NCLR, CLSYS_DRAW_MAIN, 0, 0, 1, HEAPID_BALLOON);
+		game->pltt_id[PLTTID_TOUCH_PEN] = PLTTSLOT_ResourceSet(game->plttslot, hdl_pen, 
+			NARC_wlmngm_tool_touchpen_NCLR, CLSYS_DRAW_MAIN, 1, HEAPID_BALLOON);
 		palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_TOUCH_PEN], CLSYS_DRAW_MAIN) / 0x20;
 		PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, palno*16, 1*0x20);
 		game->cgr_id[CHARID_TOUCH_PEN] = GFL_CLGRP_CGR_Register(hdl_pen, 
@@ -2085,9 +2111,9 @@ static void BalloonDefaultOBJSet_Sub(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 	int palno;
 	
 	//常駐OBJパレットロード
-	game->pltt_id[PLTTID_SUB_OBJ_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
-		hdl, MINI_FUSEN_OBJ_NCLR,
-		CLSYS_DRAW_SUB, 0, 0, BALLOON_SUB_COMMON_PAL_NUM, HEAPID_BALLOON);
+	game->pltt_id[PLTTID_SUB_OBJ_COMMON] = PLTTSLOT_ResourceSet(
+		game->plttslot, hdl, MINI_FUSEN_OBJ_NCLR,
+		CLSYS_DRAW_SUB, BALLOON_SUB_COMMON_PAL_NUM, HEAPID_BALLOON);
 	palno = GFL_CLGRP_PLTT_GetAddr(game->pltt_id[PLTTID_SUB_OBJ_COMMON], CLSYS_DRAW_SUB) / 0x20;
 	PaletteWorkSet_VramCopy(game->pfd, FADE_SUB_OBJ, palno*16, BALLOON_SUB_COMMON_PAL_NUM*0x20);
 	

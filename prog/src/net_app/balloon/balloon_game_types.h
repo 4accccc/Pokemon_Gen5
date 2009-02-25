@@ -14,6 +14,7 @@
 #include <tcb.h>
 #include <g3d_camera.h>
 #include "balloon_id.h"
+#include "system/actor_tool.h"
 
 
 //==============================================================================
@@ -587,6 +588,8 @@ typedef struct _BALLOON_GAME_WORK{
 
 	u16 g3DutilUnitIdx;
 	u16 g3DutilUnitIdx_Pipe;
+	
+	PLTTSLOT_SYS_PTR plttslot;
 }BALLOON_GAME_WORK;
 
 
