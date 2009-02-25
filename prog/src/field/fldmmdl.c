@@ -9,6 +9,9 @@
 #include "fldmmdl.h"
 #include "fldmmdl_procdraw.h"
 
+#include "arc_def.h"
+#include "arc/fieldmap/fldmmdl_mdlparam.naix"
+
 //======================================================================
 //	define
 //======================================================================
@@ -46,6 +49,9 @@ struct _TAG_FLDMMDLSYS
 	ARCHANDLE *pArcHandle;			///<アーカイブハンドル
 	
 	const FLDMAPPER *pG3DMapper;	///<FLDMAPPER
+	
+	u8 *pOBJCodeParamBuf;			///<OBJCODE_PARAMバッファ
+	const OBJCODE_PARAM *pOBJCodeParamTbl; ///<OBJCODE_PARAM
 };
 
 #define FLDMMDLSYS_SIZE (sizeof(FLDMMDLSYS)) ///<FLDMMDLSYSサイズ
@@ -174,10 +180,15 @@ static void FldMMdl_ChangeAliesOBJ(
 static void FldMMdl_ChangeOBJAlies(
 	FLDMMDL * fmmdl, int zone_id, const FLDMMDL_HEADER *head );
 
+//OBJCODE_PARAM
+static void FldMMdlSys_InitOBJCodeParam( FLDMMDLSYS *fmmdlsys );
+static void FldMMdlSys_DeleteOBJCodeParam( FLDMMDLSYS *fmmdlsys );
+
 //parts
 static u16 WorkOBJCode_GetOBJCode( void *fsys, int code );
 static const FLDMMDL_MOVE_PROC_LIST * MoveProcList_GetList( u16 code );
-static const FLDMMDL_DRAW_PROC_LIST * DrawProcList_GetList( u16 code );
+static const FLDMMDL_DRAW_PROC_LIST * DrawProcList_GetList(
+		FLDMMDL_DRAWPROCNO no );
 static BOOL FldMMdlHeader_CheckAlies( const FLDMMDL_HEADER *head );
 static int FldMMdlHeader_GetAliesZoneID( const FLDMMDL_HEADER *head );
 
@@ -203,6 +214,8 @@ FLDMMDLSYS * FLDMMDLSYS_Create(
 	fos->heapID = heapID;
 	fos->pG3DMapper = pG3DMapper;
 	
+	FldMMdlSys_InitOBJCodeParam( fos );
+
 	fos->pTCBSysWork = GFL_HEAP_AllocMemory(
 		heapID, GFL_TCB_CalcSystemWorkSize(max) );
 	fos->pTCBSys = GFL_TCB_Init( max, fos->pTCBSysWork );
@@ -218,6 +231,7 @@ FLDMMDLSYS * FLDMMDLSYS_Create(
 //--------------------------------------------------------------
 void FLDMMDLSYS_Delete( FLDMMDLSYS *fos )
 {
+	FldMMdlSys_DeleteOBJCodeParam( fos );
 	GFL_TCB_Exit( fos->pTCBSys );
 	GFL_HEAP_FreeMemory( fos->pTCBSysWork );
 	GFL_HEAP_FreeMemory( fos->pFldMMdlBuf );
@@ -3114,14 +3128,9 @@ static void FldMMdl_InitDrawWork( FLDMMDL *fmmdl )
 static void FldMMdl_InitCallDrawProcWork( FLDMMDL * fmmdl )
 {
 	const FLDMMDL_DRAW_PROC_LIST *list;
-	u32 code = FLDMMDL_GetOBJCode( fmmdl );
-	
-	if( code == NONDRAW ){
-		list = &DATA_FLDMMDL_DRAWPROCLIST_Non;
-	}else{
-		list = DrawProcList_GetList( code );
-	}
-	
+	u16 code = FLDMMDL_GetOBJCode( fmmdl );
+	const OBJCODE_PARAM *prm = FLDMMDL_GetOBJCodeParam( fmmdl, code );
+	list = DrawProcList_GetList( prm->draw_proc_no );
 	fmmdl->draw_proc_list = list;
 }
 
@@ -3367,6 +3376,67 @@ BOOL FLDMMDL_CheckSameIDCode(
 }
 
 //======================================================================
+//	OBJCODE_PARAM
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS OBJCODE_PARAM 初期化
+ * @param	fmmdlsys	FLDMMDLSYS
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FldMMdlSys_InitOBJCodeParam( FLDMMDLSYS *fmmdlsys )
+{
+	u8 *p = GFL_ARC_LoadDataAlloc( ARCID_FLDMMDL_PARAM, 
+			NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
+			fmmdlsys->heapID );
+	fmmdlsys->pOBJCodeParamBuf = p;
+	fmmdlsys->pOBJCodeParamTbl = (const OBJCODE_PARAM*)(&p[OBJCODE_PARAM_TOTAL_NUMBER_SIZE]);
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS OBJCODE_PARAM 削除
+ * @param	fmmdlsys	FLDMMDLSYS
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FldMMdlSys_DeleteOBJCodeParam( FLDMMDLSYS *fmmdlsys )
+{
+	GFL_HEAP_FreeMemory( fmmdlsys->pOBJCodeParamBuf );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS OBJCODE_PARAM 取得
+ * @param	fmmdlsys	FLDMMDLSYS *
+ * @param	code	取得するOBJコード
+ * @retval	OBJCODE_PARAM*
+ */
+//--------------------------------------------------------------
+const OBJCODE_PARAM * FLDMMDLSYS_GetOBJCodeParam(
+		const FLDMMDLSYS *fmmdlsys, u16 code )
+{
+	GF_ASSERT( code < OBJCODEMAX );
+	return( &(fmmdlsys->pOBJCodeParamTbl[code]) );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL OBJCODE_PARAM 取得
+ * @param	fmmdl	FLDMMDL*
+ * @param	code	取得するOBJコード
+ * @retval	OBJCODE_PARAM*
+ */
+//--------------------------------------------------------------
+const OBJCODE_PARAM * FLDMMDL_GetOBJCodeParam(
+		const FLDMMDL *fmmdl, u16 code )
+{
+	const FLDMMDLSYS *fmmdlsys = FLDMMDL_GetFldMMdlSys( fmmdl );
+	return( FLDMMDLSYS_GetOBJCodeParam(fmmdlsys,code) );
+}
+
+//======================================================================
 //	parts
 //======================================================================
 //--------------------------------------------------------------
@@ -3380,14 +3450,14 @@ BOOL FLDMMDL_CheckSameIDCode(
 //--------------------------------------------------------------
 static u16 WorkOBJCode_GetOBJCode( void *fsys, int code )
 {
+	#ifndef FLDMMDL_PL_NULL
 	if( code >= WKOBJCODE_ORG && code <= WKOBJCODE_END ){
-		#ifndef FLDMMDL_PL_NULL
 		code -= WKOBJCODE_ORG;
 		code = GetEvDefineObjCode( fsys, code );
-		#else
-		GF_ASSERT( 0 );
-		#endif
 	}
+	#else
+//	GF_ASSERT( 0 );
+	#endif
 	
 	return( code );
 }
@@ -3412,32 +3482,11 @@ static const FLDMMDL_MOVE_PROC_LIST * MoveProcList_GetList( u16 code )
  * @retval	FLDMMDL_DRAW_PROC_LIST*
  */
 //--------------------------------------------------------------
-static const FLDMMDL_DRAW_PROC_LIST * DrawProcList_GetList( u16 code )
+static const FLDMMDL_DRAW_PROC_LIST * DrawProcList_GetList(
+		FLDMMDL_DRAWPROCNO no )
 {
-#ifndef FLDMMDL_PL_NULL
-	const FIELD_OBJ_DRAW_PROC_LIST_REG *tbl;
-	tbl = DATA_FieldOBJDrawProcListRegTbl;
-	
-	do{
-		if( tbl->code == code ){
-			return( tbl->list );
-		}
-		tbl++;
-	}while( tbl->code != OBJCODEMAX );
-	
-	GF_ASSERT( 0 );
-	return( NULL );
-#else //仮
-	u32 no = 0;
-	
-	if( code == HERO ){
-		no = 0;
-	}else{
-		no = 1;
-	}
-	
+	GF_ASSERT( no < FLDMMDL_DRAWPROCNO_MAX );
 	return( DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[no] );
-#endif
 }
 
 //--------------------------------------------------------------

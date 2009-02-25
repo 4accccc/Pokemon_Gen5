@@ -161,7 +161,7 @@ PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )
 static const FLDMMDL_HEADER DATA_JikiHeader =
 {
 	0xff,	///<識別ID
-	0,	///<表示するOBJコード
+	HERO,	///<表示するOBJコード
 	0,	///<動作コード
 	0,	///<イベントタイプ
 	0,	///<イベントフラグ

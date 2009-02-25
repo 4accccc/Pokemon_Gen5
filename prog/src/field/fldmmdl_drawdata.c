@@ -16,8 +16,10 @@
 //--------------------------------------------------------------
 ///	フィールド動作モデル　描画関数テーブル
 //--------------------------------------------------------------
-const FLDMMDL_DRAW_PROC_LIST * const DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[] =
+const FLDMMDL_DRAW_PROC_LIST * const
+	DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[FLDMMDL_DRAWPROCNO_MAX] =
 {
+	&DATA_FLDMMDL_DRAWPROCLIST_Non,		//描画無し
 	&DATA_FLDMMDL_DRAWPROCLIST_Hero,	//自機
 	&DATA_FLDMMDL_DRAWPROCLIST_BlAct,	//通常ビルボードアクター
 };
@@ -359,13 +361,15 @@ static const GFL_BBDACT_ANM * DATA_BlActHeroTbl[DRAW_STA_MAXDIR4_HERO] = {
 const FLDMMDL_BBDACT_ANMTBL
 	DATA_FLDMMDL_BBDACT_ANM_ListTable[FLDMMDL_BLACT_ANMTBLNO_MAX] =
 {
-	{DATA_BlActAnm00Tbl,DRAW_STA_MAXDIR4},//FLDMMDL_BLACT_ANMTBLNO_BLACT
+	{NULL,0},//FLDMMDL_BLACT_ANMTBLNO_NON
 	{DATA_BlActHeroTbl,DRAW_STA_MAXDIR4_HERO},//FLDMMDL_BLACT_ANMTBLNO_HERO
+	{DATA_BlActAnm00Tbl,DRAW_STA_MAXDIR4},//FLDMMDL_BLACT_ANMTBLNO_BLACT
 };
 
 //======================================================================
 //	OBJコードステータスデータ
 //======================================================================
+#ifndef FLDMMDL_PL_NULL
 //--------------------------------------------------------------
 //	OBJコード別描画ステータス　並びは不順
 //--------------------------------------------------------------
@@ -633,3 +637,4 @@ const OBJCODE_STATE DATA_FieldOBJCodeDrawStateTbl[] =
 
  {OBJCODEMAX,0,0,0,0,0},
 };
+#endif

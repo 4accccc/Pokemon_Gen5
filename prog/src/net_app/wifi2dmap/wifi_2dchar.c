@@ -16,7 +16,7 @@
 #include "arc_def.h"
 #include "wifi2dchar.naix"
 #include "wifi_unionobj.naix"
-#include "src/field/fldmmdl_code.h"
+#include "src/field/fldmmdl_pl_code.h"
 
 #include "net_app/wifi2dmap/wifi_2dchar.h"
 

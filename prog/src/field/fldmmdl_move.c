@@ -49,61 +49,61 @@ static void FldMMdl_MapAttrProc_MoveEnd( FLDMMDL * fmmdl );
 static void FldMMdl_MapAttrProc_MoveEndJump( FLDMMDL * fmmdl );
 
 static void FldMMdl_MapAttrHeight_02(
-		FLDMMDL * fmmdl,MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl,MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrGrassProc_0(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 static void FldMMdl_MapAttrGrassProc_12(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrFootMarkProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrSplashProc_012(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 static void FldMMdl_MapAttrSplashProc_Jump1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrShadowProc_0(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 static void FldMMdl_MapAttrShadowProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 static void FldMMdl_MapAttrShadowProc_2(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrGroundSmokeProc_2(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrLGrassProc_0(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 static void FldMMdl_MapAttrLGrassProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrNGrassProc_0(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 static void FldMMdl_MapAttrNGrassProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrPoolProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 static void FldMMdl_MapAttrPoolProc_2(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrSwampProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 static void FldMMdl_MapAttrSwampProc_2(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrReflect_01(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 static void FldMMdl_MapAttrReflect_2(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrBridgeProc_01(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static void FldMMdl_MapAttrSEProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state );
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static u32 FldMMdl_HitCheckMoveCurrent(
 	const FLDMMDL * fmmdl, s16 x, s16 y, s16 z, u16 dir );
@@ -309,15 +309,17 @@ static void FldMMdl_MapAttrProc_MoveStartFirst( FLDMMDL * fmmdl )
 	if( FLDMMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
 		MATR now = FLDMMDL_GetMapAttr( fmmdl );
 		MATR old = FLDMMDL_GetMapAttrOld( fmmdl );
-		const OBJCODE_STATE *state = FLDMMDL_GetOBJCodeState( fmmdl );
-		FldMMdl_MapAttrBridgeProc_01( fmmdl, now, old, state );
-		FldMMdl_MapAttrGrassProc_0( fmmdl, now, old, state );
-		FldMMdl_MapAttrSplashProc_012( fmmdl, now, old, state );
-		FldMMdl_MapAttrShadowProc_0( fmmdl, now, old, state );
-		FldMMdl_MapAttrHeight_02( fmmdl, now, old, state );
-		FldMMdl_MapAttrLGrassProc_0( fmmdl, now, old, state );
-		FldMMdl_MapAttrNGrassProc_0( fmmdl, now, old, state );
-		FldMMdl_MapAttrReflect_01( fmmdl, now, old, state );
+		const OBJCODE_PARAM *prm =
+			FLDMMDL_GetOBJCodeParam( fmmdl, FLDMMDL_GetOBJCode(fmmdl) );
+		
+		FldMMdl_MapAttrBridgeProc_01( fmmdl, now, old, prm );
+		FldMMdl_MapAttrGrassProc_0( fmmdl, now, old, prm );
+		FldMMdl_MapAttrSplashProc_012( fmmdl, now, old, prm );
+		FldMMdl_MapAttrShadowProc_0( fmmdl, now, old, prm );
+		FldMMdl_MapAttrHeight_02( fmmdl, now, old, prm );
+		FldMMdl_MapAttrLGrassProc_0( fmmdl, now, old, prm );
+		FldMMdl_MapAttrNGrassProc_0( fmmdl, now, old, prm );
+		FldMMdl_MapAttrReflect_01( fmmdl, now, old, prm );
 	}
 }
 
@@ -335,20 +337,21 @@ static void FldMMdl_MapAttrProc_MoveStartSecond( FLDMMDL * fmmdl )
 	if( FLDMMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
 		MATR now = FLDMMDL_GetMapAttr( fmmdl );
 		MATR old = FLDMMDL_GetMapAttrOld( fmmdl );
-		const OBJCODE_STATE *state = FLDMMDL_GetOBJCodeState( fmmdl );
+		const OBJCODE_PARAM *prm =
+			FLDMMDL_GetOBJCodeParam( fmmdl, FLDMMDL_GetOBJCode(fmmdl) );
 
-		FldMMdl_MapAttrBridgeProc_01( fmmdl, now, old, state );
-		FldMMdl_MapAttrGrassProc_12( fmmdl, now, old, state );
-		FldMMdl_MapAttrFootMarkProc_1( fmmdl, now, old, state );
-		FldMMdl_MapAttrSplashProc_012( fmmdl, now, old, state );
-		FldMMdl_MapAttrShadowProc_1( fmmdl, now, old, state );
-		FldMMdl_MapAttrLGrassProc_1( fmmdl, now, old, state );
-		FldMMdl_MapAttrNGrassProc_1( fmmdl, now, old, state );
-		FldMMdl_MapAttrPoolProc_1( fmmdl, now, old, state );
-		FldMMdl_MapAttrSwampProc_1( fmmdl, now, old, state );
-		FldMMdl_MapAttrReflect_01( fmmdl, now, old, state );
+		FldMMdl_MapAttrBridgeProc_01( fmmdl, now, old, prm );
+		FldMMdl_MapAttrGrassProc_12( fmmdl, now, old, prm );
+		FldMMdl_MapAttrFootMarkProc_1( fmmdl, now, old, prm );
+		FldMMdl_MapAttrSplashProc_012( fmmdl, now, old, prm );
+		FldMMdl_MapAttrShadowProc_1( fmmdl, now, old, prm );
+		FldMMdl_MapAttrLGrassProc_1( fmmdl, now, old, prm );
+		FldMMdl_MapAttrNGrassProc_1( fmmdl, now, old, prm );
+		FldMMdl_MapAttrPoolProc_1( fmmdl, now, old, prm );
+		FldMMdl_MapAttrSwampProc_1( fmmdl, now, old, prm );
+		FldMMdl_MapAttrReflect_01( fmmdl, now, old, prm );
 		
-		FldMMdl_MapAttrSEProc_1( fmmdl, now, old, state ); //描画関係ない?
+		FldMMdl_MapAttrSEProc_1( fmmdl, now, old, prm ); //描画関係ない?
 	}
 }
 
@@ -366,13 +369,14 @@ static void FldMMdl_MapAttrProc_MoveStartJumpSecond( FLDMMDL * fmmdl )
 	if( FLDMMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
 		MATR now = FLDMMDL_GetMapAttr( fmmdl );
 		MATR old = FLDMMDL_GetMapAttrOld( fmmdl );
-		const OBJCODE_STATE *state = FLDMMDL_GetOBJCodeState( fmmdl );
+		const OBJCODE_PARAM *prm =
+			FLDMMDL_GetOBJCodeParam( fmmdl, FLDMMDL_GetOBJCode(fmmdl) );
 
-		FldMMdl_MapAttrBridgeProc_01( fmmdl, now, old, state );
-		FldMMdl_MapAttrShadowProc_1( fmmdl, now, old, state );
-		FldMMdl_MapAttrReflect_01( fmmdl, now, old, state );
-		FldMMdl_MapAttrSplashProc_Jump1( fmmdl, now, old, state );
-		FldMMdl_MapAttrSEProc_1( fmmdl, now, old, state );//描画関係ない?
+		FldMMdl_MapAttrBridgeProc_01( fmmdl, now, old, prm );
+		FldMMdl_MapAttrShadowProc_1( fmmdl, now, old, prm );
+		FldMMdl_MapAttrReflect_01( fmmdl, now, old, prm );
+		FldMMdl_MapAttrSplashProc_Jump1( fmmdl, now, old, prm );
+		FldMMdl_MapAttrSEProc_1( fmmdl, now, old, prm );//描画関係ない?
 	}
 }
 
@@ -390,15 +394,16 @@ static void FldMMdl_MapAttrProc_MoveEnd( FLDMMDL * fmmdl )
 	if( FLDMMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
 		MATR now = FLDMMDL_GetMapAttr( fmmdl );
 		MATR old = FLDMMDL_GetMapAttrOld( fmmdl );
-		const OBJCODE_STATE *state = FLDMMDL_GetOBJCodeState( fmmdl );
+		const OBJCODE_PARAM *prm =
+			FLDMMDL_GetOBJCodeParam( fmmdl, FLDMMDL_GetOBJCode(fmmdl) );
 		
 		//終了　アトリビュート処理
-		FldMMdl_MapAttrHeight_02( fmmdl, now, old, state );
-		FldMMdl_MapAttrPoolProc_2( fmmdl, now, old, state );
-		FldMMdl_MapAttrSwampProc_2( fmmdl, now, old, state );
-		FldMMdl_MapAttrSplashProc_012( fmmdl, now, old, state );
-		FldMMdl_MapAttrReflect_2( fmmdl, now, old, state );
-		FldMMdl_MapAttrShadowProc_2( fmmdl, now, old, state );
+		FldMMdl_MapAttrHeight_02( fmmdl, now, old, prm );
+		FldMMdl_MapAttrPoolProc_2( fmmdl, now, old, prm );
+		FldMMdl_MapAttrSwampProc_2( fmmdl, now, old, prm );
+		FldMMdl_MapAttrSplashProc_012( fmmdl, now, old, prm );
+		FldMMdl_MapAttrReflect_2( fmmdl, now, old, prm );
+		FldMMdl_MapAttrShadowProc_2( fmmdl, now, old, prm );
 	}
 }
 
@@ -416,17 +421,18 @@ static void FldMMdl_MapAttrProc_MoveEndJump( FLDMMDL * fmmdl )
 	if( FLDMMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
 		MATR now = FLDMMDL_GetMapAttr( fmmdl );
 		MATR old = FLDMMDL_GetMapAttrOld( fmmdl );
-		const OBJCODE_STATE *state = FLDMMDL_GetOBJCodeState( fmmdl );
+		const OBJCODE_PARAM *prm =
+			FLDMMDL_GetOBJCodeParam( fmmdl, FLDMMDL_GetOBJCode(fmmdl) );
 		
 		//終了　アトリビュート処理
-		FldMMdl_MapAttrHeight_02( fmmdl, now, old, state );
-		FldMMdl_MapAttrPoolProc_2( fmmdl, now, old, state );
-		FldMMdl_MapAttrSwampProc_2( fmmdl, now, old, state );
-		FldMMdl_MapAttrSplashProc_012( fmmdl, now, old, state );
-		FldMMdl_MapAttrReflect_2( fmmdl, now, old, state );
-		FldMMdl_MapAttrShadowProc_2( fmmdl, now, old, state );
-		FldMMdl_MapAttrGrassProc_12( fmmdl, now, old, state );
-		FldMMdl_MapAttrGroundSmokeProc_2( fmmdl, now, old, state );
+		FldMMdl_MapAttrHeight_02( fmmdl, now, old, prm );
+		FldMMdl_MapAttrPoolProc_2( fmmdl, now, old, prm );
+		FldMMdl_MapAttrSwampProc_2( fmmdl, now, old, prm );
+		FldMMdl_MapAttrSplashProc_012( fmmdl, now, old, prm );
+		FldMMdl_MapAttrReflect_2( fmmdl, now, old, prm );
+		FldMMdl_MapAttrShadowProc_2( fmmdl, now, old, prm );
+		FldMMdl_MapAttrGrassProc_12( fmmdl, now, old, prm );
+		FldMMdl_MapAttrGroundSmokeProc_2( fmmdl, now, old, prm );
 	}
 }
 
@@ -439,12 +445,12 @@ static void FldMMdl_MapAttrProc_MoveEndJump( FLDMMDL * fmmdl )
  * @param	fmmdl		FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrHeight_02(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( FLDMMDL_CheckStatusBitAttrOffsetOFF(fmmdl) == FALSE ){
@@ -496,12 +502,12 @@ static void FldMMdl_MapAttrHeight_02(
  * @param	fmmdl		FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrGrassProc_0(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsGrass(now) == TRUE ){
@@ -516,12 +522,12 @@ static void FldMMdl_MapAttrGrassProc_0(
  * @param	fmmdl	FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrGrassProc_12(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsGrass(now) == TRUE ){
@@ -543,25 +549,25 @@ static void FldMMdl_MapAttrGrassProc_12(
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrFootMarkProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
-	if( state->type_footmark == FLDMMDL_FOOTMARK_NON ){
+	if( prm->footmark_type == FLDMMDL_FOOTMARK_NON ){
 		return;
 	}
 	
 	if( MATR_IsShadowOnSnow(old) == TRUE ){
-		if( state->type_footmark == FLDMMDL_FOOTMARK_NORMAL ){
+		if( prm->footmark_type == FLDMMDL_FOOTMARK_NORMAL ){
 			FE_fmmdlFootMarkShadowSnow_Add( fmmdl );
-		}else if( state->type_footmark == FLDMMDL_FOOTMARK_CYCLE ){
+		}else if( prm->footmark_type == FLDMMDL_FOOTMARK_CYCLE ){
 			FE_fmmdlFootMarkShadowSnowCycle_Add( fmmdl );
 		}
 	}
 	
 	if(	FldMMdl_CheckMapAttrKind_Sand(fmmdl,old) == TRUE ){
-		if( state->type_footmark == FLDMMDL_FOOTMARK_NORMAL ){
+		if( prm->footmark_type == FLDMMDL_FOOTMARK_NORMAL ){
 			FE_fmmdlFootMarkNormal_Add( fmmdl );
-		}else if( state->type_footmark == FLDMMDL_FOOTMARK_CYCLE ){
+		}else if( prm->footmark_type == FLDMMDL_FOOTMARK_CYCLE ){
 			FE_fmmdlFootMarkCycle_Add( fmmdl );
 		}
 		return;
@@ -593,7 +599,7 @@ static void FldMMdl_MapAttrFootMarkProc_1(
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrSplashProc_012(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsShoal(now) == TRUE ){
@@ -617,7 +623,7 @@ static void FldMMdl_MapAttrSplashProc_012(
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrSplashProc_Jump1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	FLDMMDL_SetStatusBitShoalEffect( fmmdl, FALSE );
 }
@@ -635,9 +641,9 @@ static void FldMMdl_MapAttrSplashProc_Jump1(
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrShadowProc_0(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
-	FldMMdl_MapAttrShadowProc_1( fmmdl, now, old, state );
+	FldMMdl_MapAttrShadowProc_1( fmmdl, now, old, prm );
 }
 
 //--------------------------------------------------------------
@@ -650,7 +656,7 @@ static void FldMMdl_MapAttrShadowProc_0(
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrShadowProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	{
@@ -661,7 +667,7 @@ static void FldMMdl_MapAttrShadowProc_1(
 		}
 	}
 	
-	if( state->type_shadow == FLDMMDL_SHADOW_NON ){
+	if( prm->shadow_type == FLDMMDL_SHADOW_NON ){
 		return;
 	}
 
@@ -694,7 +700,7 @@ static void FldMMdl_MapAttrShadowProc_1(
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrShadowProc_2(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	{
@@ -705,7 +711,7 @@ static void FldMMdl_MapAttrShadowProc_2(
 		}
 	}
 	
-	if( state->type_shadow == FLDMMDL_SHADOW_NON ){
+	if( prm->shadow_type == FLDMMDL_SHADOW_NON ){
 		return;
 	}
 	
@@ -738,7 +744,7 @@ static void FldMMdl_MapAttrShadowProc_2(
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrGroundSmokeProc_2(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( FldMMdl_CheckMapAttrKind_Water(fmmdl,now) == TRUE ||
@@ -763,12 +769,12 @@ static void FldMMdl_MapAttrGroundSmokeProc_2(
  * @param	fmmdl		FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrLGrassProc_0(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsLongGrass(now) == TRUE ){
@@ -783,12 +789,12 @@ static void FldMMdl_MapAttrLGrassProc_0(
  * @param	fmmdl	FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrLGrassProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsLongGrass(now) == TRUE ){
@@ -806,12 +812,12 @@ static void FldMMdl_MapAttrLGrassProc_1(
  * @param	fmmdl		FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrNGrassProc_0(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsSwampGrass(now) == TRUE ){
@@ -826,12 +832,12 @@ static void FldMMdl_MapAttrNGrassProc_0(
  * @param	fmmdl	FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrNGrassProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsSwampGrass(now) == TRUE ){
@@ -849,12 +855,12 @@ static void FldMMdl_MapAttrNGrassProc_1(
  * @param	fmmdl	FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrPoolProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsPoolCheck(old) == TRUE ){
@@ -872,12 +878,12 @@ static void FldMMdl_MapAttrPoolProc_1(
  * @param	fmmdl	FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrPoolProc_2(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsPoolCheck(now) == TRUE ){
@@ -898,12 +904,12 @@ static void FldMMdl_MapAttrPoolProc_2(
  * @param	fmmdl	FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrSwampProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsSwamp(old) == TRUE ){
@@ -921,12 +927,12 @@ static void FldMMdl_MapAttrSwampProc_1(
  * @param	fmmdl	FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrSwampProc_2(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsSwamp(now) == TRUE ){
@@ -947,15 +953,15 @@ static void FldMMdl_MapAttrSwampProc_2(
  * @param	fmmdl	FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrReflect_01(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
-	if( state->type_reflect == FLDMMDL_REFLECT_NON ){
+	if( prm->reflect_type == FLDMMDL_REFLECT_NON ){
 		return;
 	}
 	
@@ -998,15 +1004,15 @@ static void FldMMdl_MapAttrReflect_01(
  * @param	fmmdl	FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrReflect_2(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
-	if( state->type_reflect == FLDMMDL_REFLECT_NON ||
+	if( prm->reflect_type == FLDMMDL_REFLECT_NON ||
 		FLDMMDL_CheckStatusBitReflect(fmmdl) == FALSE ){
 		return;
 	}
@@ -1030,12 +1036,12 @@ static void FldMMdl_MapAttrReflect_2(
  * @param	fmmdl		FLDMMDL *
  * @param	now			現在のアトリビュート
  * @param	old			過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	prm		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrBridgeProc_01(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsBridgeFlag(now) == TRUE ){
@@ -1057,12 +1063,12 @@ static void FldMMdl_MapAttrBridgeProc_01(
  * @param	fmmdl	FLDMMDL *
  * @param	now		現在のアトリビュート
  * @param	old		過去のアトリビュート
- * @param	state		OBJCODE_STATE
+ * @param	param		OBJCODE_PARAM
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void FldMMdl_MapAttrSEProc_1(
-		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_STATE *state )
+		FLDMMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef FLDMMDL_PL_NULL
 	if( MATR_IsSnow(now) ){

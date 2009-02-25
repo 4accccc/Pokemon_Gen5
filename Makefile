@@ -14,7 +14,7 @@ ARC_DIR = ./prog/arc
 LIB_DIR = ./lib
 
 
-.PHONY : do-build clean	prog resource arc test
+.PHONY : do-build clean	prog resource arc test landdata dmyfmmdl
 
 #  makeした場合にすべて作られるように記述してください
 #--------------------------------------- ----------------------------
@@ -61,3 +61,10 @@ landdata:
 	$(MAKE) -C $(FLD_LAND_DATA_DIR) clean
 	$(MAKE) -C $(FLD_LAND_DATA_DIR)
 	$(MAKE)
+
+# フィールド動作モデル　ダミーモデル作成
+#--------------------------------------------------------------------
+FLD_MMDL_DATA_DIR = $(RESOURCE_DIR)/fldmmdl/
+
+fmmdldmy:
+	$(MAKE) -C $(FLD_MMDL_DATA_DIR) dmyres

@@ -145,6 +145,7 @@ void FLDMMDL_UpdateDraw( FLDMMDL * fmmdl )
 //======================================================================
 //	フィールド動作モデル 描画ステータス
 //======================================================================
+#ifndef FLDMMDL_PL_NULL
 //--------------------------------------------------------------
 /**
  * OBJコードから描画ステータス取得
@@ -178,6 +179,7 @@ const OBJCODE_STATE * FLDMMDL_GetOBJCodeState( const FLDMMDL *fmmdl )
 {
 	return( FLDMMDL_TOOL_GetOBJCodeState(FLDMMDL_GetOBJCode(fmmdl)) );
 }
+#endif
 
 //======================================================================
 //	parts

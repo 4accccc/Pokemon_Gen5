@@ -20,6 +20,8 @@
 
 #include "field_g3d_mapper.h"
 
+//#include "arc/fieldmap/fldmmdl_mdlres.naix"		//ARCID_FLDMMDL
+
 //======================================================================
 //	define
 //======================================================================
@@ -239,7 +241,7 @@ typedef enum
 typedef enum
 {
 	FLDMMDL_FOOTMARK_NON = 0,		///<足跡無し
-	FLDMMDL_FOOTMARK_NORMAL,			///<２本足
+	FLDMMDL_FOOTMARK_NORMAL,		///<２本足
 	FLDMMDL_FOOTMARK_CYCLE,			///<自転車
 }FLDMMDL_FOOTMARKTYPE;
 
@@ -248,9 +250,31 @@ typedef enum
 //--------------------------------------------------------------
 typedef enum
 {
-	FLDMMDL_REFLECT_NON = 0,			///<映りこみ無し
+	FLDMMDL_REFLECT_NON = 0,		///<映りこみ無し
 	FLDMMDL_REFLECT_BLACT,			///<ビルボード映りこみ
 }FLDMMDL_REFLECTTYPE;
+
+//--------------------------------------------------------------
+///	ビルボードアクターアニメーション種類
+//--------------------------------------------------------------
+typedef enum
+{
+	FLDMMDL_BLACT_ANMTBLNO_NON,		///<アニメ無し
+	FLDMMDL_BLACT_ANMTBLNO_HERO,	///<自機専用
+	FLDMMDL_BLACT_ANMTBLNO_BLACT,	///<汎用アニメ
+	FLDMMDL_BLACT_ANMTBLNO_MAX,		///<最大
+}FLDMMDL_BLACT_ANMTBLNO;
+
+//--------------------------------------------------------------
+///	描画関数番号
+//--------------------------------------------------------------
+typedef enum
+{
+	FLDMMDL_DRAWPROCNO_NON,		///<描画無し
+	FLDMMDL_DRAWPROCNO_HERO,	///<自機専用
+	FLDMMDL_DRAWPROCNO_BLACT,	///<ビルボード汎用
+	FLDMMDL_DRAWPROCNO_MAX,		///<最大
+}FLDMMDL_DRAWPROCNO;
 
 //--------------------------------------------------------------
 ///	フィールド動作モデル動作プライオリティオフセット
@@ -276,7 +300,7 @@ typedef struct _TAG_FLDMMDL FLDMMDL;
 typedef struct _TAG_FLDMMDL_BLACTCONT FLDMMDL_BLACTCONT;
 
 //--------------------------------------------------------------
-///	アトリビュート型
+///	アトリビュート型 元:map_attr.h
 //--------------------------------------------------------------
 typedef u32 MATR;
 
@@ -350,6 +374,7 @@ typedef struct
 //--------------------------------------------------------------
 ///	OBJCODE_STATE構造体
 //--------------------------------------------------------------
+#ifndef FLDMMDL_PL_NULL
 typedef struct
 {
 	int code;				///<OBJコード
@@ -359,6 +384,36 @@ typedef struct
 	u32 type_reflect:2;		///<FLDMMDL_REFLECTTYPE
 	u32 dmy:20;				///<bit余り
 }OBJCODE_STATE;
+#endif
+
+//--------------------------------------------------------------
+///	OBJCODE_PARAM構造体　外部データと一致
+//	0-1 OBJコード
+//	2-3 リソースアーカイブインデックス 
+//	4	表示タイプ
+//	5	処理関数
+//	6	影表示
+//	7	足跡種類
+//	8	映り込み
+//	9	モデルサイズ
+//	10	テクスチャサイズ
+//	11	アニメID
+//--------------------------------------------------------------
+typedef struct
+{
+	u16 code;			///<OBJコード
+	u16 res_idx;		///<リソースインデックス
+	u8 draw_type;		///<FLDMMDL_DRAWTYPE
+	u8 draw_proc_no;	///<FLDMMDL_DRAWPROCNO
+	u8 shadow_type;		///<FLDMMDL_SHADOWTYPE
+	u8 footmark_type;	///<FLDMMDL_FOOTMARKTYPE
+	u8 reflect_type;	///<LDMMDL_REFLECTTYPE
+	u8 mdl_size;		///<モデルサイズ
+	u8 tex_size;		///<テクスチャサイズ
+	u8 anm_id;			///<FLDMMDL_BLACT_ANMTBLNO
+}OBJCODE_PARAM;
+
+#define OBJCODE_PARAM_TOTAL_NUMBER_SIZE (sizeof(u32))
 
 //--------------------------------------------------------------
 ///	FLDMMDL_BBDACT_ANMTBL構造体
@@ -585,6 +640,11 @@ extern BOOL FLDMMDL_CheckSameID(
 extern BOOL FLDMMDL_CheckSameIDCode(
 	const FLDMMDL * fmmdl, u16 code, u16 obj_id, int zone_id );
 
+extern const OBJCODE_PARAM * FLDMMDLSYS_GetOBJCodeParam(
+		const FLDMMDLSYS *fmmdlsys, u16 code );
+extern const OBJCODE_PARAM * FLDMMDL_GetOBJCodeParam(
+		const FLDMMDL *fmmdl, u16 code );
+
 extern void FLDMMDL_MoveInitProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_MoveProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_MoveDeleteProcDummy( FLDMMDL * fmmdl );
@@ -612,12 +672,15 @@ extern const int * const DATA_AcmdCodeDirChangeTbl[];
 //--------------------------------------------------------------
 //	fldmmdl_drawdata.c
 //--------------------------------------------------------------
-extern const FLDMMDL_DRAW_PROC_LIST * const DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[];
+extern const FLDMMDL_DRAW_PROC_LIST * const
+	DATA_FLDMMDL_DRAW_PROC_LIST_Tbl[FLDMMDL_DRAWPROCNO_MAX];
 
 extern const FLDMMDL_BBDACT_ANMTBL
 	DATA_FLDMMDL_BBDACT_ANM_ListTable[FLDMMDL_BLACT_ANMTBLNO_MAX];
 
+#ifndef FLDMMDL_PL_NULL
 extern const OBJCODE_STATE DATA_FieldOBJCodeDrawStateTbl[];
+#endif
 
 #ifndef FLDMMDL_PL_NULL
 extern const FLDMMDL_DRAW_PROC_LIST DATA_FieldOBJDraw_Non;
@@ -696,8 +759,10 @@ extern void FLDMMDLSYS_DeleteDraw( FLDMMDLSYS *fos );
 
 extern void FLDMMDL_UpdateDraw( FLDMMDL * fmmdl );
 
+#ifndef FLDMMDL_PL_NULL
 extern const OBJCODE_STATE * FLDMMDL_TOOL_GetOBJCodeState( u16 code );
 extern const OBJCODE_STATE * FLDMMDL_GetOBJCodeState( const FLDMMDL *fmmdl );
+#endif
 
 extern BOOL FLDMMDL_CheckDrawPause( const FLDMMDL * fmmdl );
 extern void * FLDMMDL_DrawArcDataAlloc(
@@ -729,12 +794,15 @@ extern BOOL FLDMMDL_ActionLocalAcmd( FLDMMDL * fmmdl );
 //--------------------------------------------------------------
 ///	fldmmdl_blact.c
 //--------------------------------------------------------------
-extern void FLDMMDL_BLACTCONT_Setup(
-	FLDMMDLSYS *fmmdlsys, GFL_BBDACT_SYS *pBbdActSys );
+extern void FLDMMDL_BLACTCONT_Setup( FLDMMDLSYS *fmmdlsys,
+	GFL_BBDACT_SYS *pBbdActSys, int res_max );
 extern void FLDMMDL_BLACTCONT_Release( FLDMMDLSYS *fmmdlsys );
 
+void FLDMMDL_BLACTCONT_AddResourceTex(
+	FLDMMDLSYS *fmmdlsys, const u16 *code, int max );
+
 extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor(
-		FLDMMDL *fmmdl, u32 resID );
+		FLDMMDL *fmmdl, u32 code );
 extern void FLDMMDL_BLACTCONT_DeleteActor( FLDMMDL *fmmdl, u32 actID );
 
 extern GFL_BBDACT_SYS * FLDMMDL_BLACTCONT_GetBbdActSys(

@@ -40,8 +40,7 @@
 #include "msg/msg_wifi_lobby.h"
 #include "msg/msg_wifi_system.h"
 
-#include "field/fldmmdl_code.h"  //クリーチャー
-
+#include "field/fldmmdl_pl_code.h" //クリーチャー
 
 // 置き換える必要があるがまだない関数  @@OO
 #define SND_HANDLE_FIELD (0)

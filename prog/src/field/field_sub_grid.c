@@ -52,6 +52,13 @@ typedef enum
 
 #define MAPHIT_HEIGHT_OVER (FX32_ONE*17)
 
+const u16 TestOBJCodeTbl[];
+const TestOBJCodeMax;
+
+const u16 TestOBJCodeTbl[] =
+{HERO,BOY1,GIRL1,MAN1,WOMAN1,MIDDLEMAN1,KABI32,OLDWOMAN1};
+const int TestOBJCodeMax = NELEMS( TestOBJCodeTbl );
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -190,8 +197,14 @@ static void GridMoveCreate(
 		fieldWork->fldMMdlSys = FLDMMDLSYS_Create( 256,
 				fieldWork->heapID, GetFieldG3Dmapper(fieldWork->gs) );
 		FLDMMDLSYS_InitDraw( fieldWork->fldMMdlSys );
-		FLDMMDL_BLACTCONT_Setup(
-				fieldWork->fldMMdlSys, GetBbdActSys(fieldWork->gs) );
+		
+		{
+			FLDMMDL_BLACTCONT_Setup(
+				fieldWork->fldMMdlSys,
+				GetBbdActSys(fieldWork->gs), 32 );
+			FLDMMDL_BLACTCONT_AddResourceTex(
+				fieldWork->fldMMdlSys, TestOBJCodeTbl, TestOBJCodeMax );
+		}
 		
 		if( ZONEDATA_DEBUG_IsSampleObjUse(zone_id) == TRUE ){
 		//	GridMap_SetupNPC( fieldWork );
@@ -1513,17 +1526,19 @@ static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
 			
 			if( GetMapAttr(mapper,&pos,&attr) == TRUE ){
 				if( attr == 0 ){
+					int no;
 					head = DATA_NpcHeader;
 					head.id = i + 1;
-					head.obj_code = 1 + GFUser_GetPublicRand( 7 );
+					do{
+						no = GFUser_GetPublicRand( TestOBJCodeMax );
+						head.obj_code = TestOBJCodeTbl[no];
+					}while( head.obj_code == HERO ||
+							head.obj_code == NONDRAW );
+					OS_Printf( "%d Code %d\n", i, head.obj_code );
 					head.gx = gx;
 					head.gz = gz;
 					fmmdl = FLDMMDLSYS_AddFldMMdl(
 						fieldWork->fldMMdlSys, &head, 0 );
-#if 0
-					FLDMMDL_SetBlActID( fmmdl,
-						FLDMMDL_BLACTCONT_AddActor(fmmdl,head.obj_code) );
-#endif
 					break;
 				}
 			}
