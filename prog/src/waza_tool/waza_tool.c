@@ -22,6 +22,19 @@
  * 定数宣言
  */
 //============================================================================================
+enum {
+	WSEQ_SINMPLESICK_NEMURI = 1,
+	WSEQ_DAMAGESICK_DOKU = 2,
+	WSEQ_DAMAGESICK_YAKEDO = 4,
+	WSEQ_DAMAGESICK_KOORI = 5,
+	WSEQ_DAMAGESICK_MAHI = 6,
+	WSEQ_SIMPLEEFF_ATK = 10,
+	WSEQ_SIMPLEEFF_DEF = 11,
+	WSEQ_SIMPLEEFF_SPATK = 13,
+	WSEQ_SIMPLEEFF_AVOID = 16,
+	
+};
+
 
 typedef struct{
 	u16	monsno;
@@ -290,7 +303,7 @@ u8 WAZADATA_GetHitRatio( WazaID id )
 // 必中フラグ。つばめがえしなどがTRUEを返す。
 BOOL WAZADATA_IsAlwaysHit( WazaID id )
 {
-	return FALSE;
+	return WAZADATA_GetHitRatio(id) == HITRATIO_MUST;
 }
 
 // ダメージワザかどうか
