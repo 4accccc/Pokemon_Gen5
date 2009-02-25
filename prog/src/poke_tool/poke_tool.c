@@ -597,7 +597,6 @@ void	PPP_Add( POKEMON_PASO_PARAM *ppp, int id, int value )
 }
 
 
-
 //==============================================================================
 /**
  * @brief   POKEMON_PARAMからレアかどうかを判定する
@@ -642,6 +641,7 @@ BOOL	POKETOOL_CheckRare( u32 id, u32 rnd )
 {
 	return ( ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0xffff ) ^ ( ( rnd & 0xffff0000 ) >> 16 ) ^ ( rnd & 0xffff ) ) < 8 );
 }
+
 
 //============================================================================================
 /**
@@ -717,6 +717,33 @@ u8 POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd )
 	{
 		return PTL_SEX_MALE;
 	}
+}
+
+//=============================================================================================
+/**
+ * ポケモンの状態異常を取得
+ *
+ * @param[in]   pp ポケモンパラメータ構造体
+ *
+ * @retval  PokeSick		状態異常ID（異常が無い場合 POKESICK_NULL）
+ */
+//=============================================================================================
+PokeSick PP_GetSick( const POKEMON_PARAM* pp )
+{
+	return PP_Get( pp, ID_PARA_condition, NULL );
+}
+//=============================================================================================
+/**
+ * ポケモンの状態異常を設定
+ *
+ * @param   pp			ポケモンパラメータ構造体
+ * @param   sick		状態異常ID（異常を無くす場合 POKESICK_NULL）
+ *
+ */
+//=============================================================================================
+void PP_SetSick( POKEMON_PARAM* pp, PokeSick sick )
+{
+	PP_Put( pp, ID_PARA_condition, sick );
 }
 
 
@@ -939,7 +966,6 @@ void	PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
 		PPP_Put( ppp, ID_PARA_pp1 + pos, pp );
 	}
 }
-
 //============================================================================================
 /**
  *	ポケモンデータからポケモンのレベルを取得

@@ -11,25 +11,25 @@
 
 #include <heapsys.h>
 
+#include "poke_tool\poketype.h"
+
 
 // 性別
-#define	PTL_SEX_MALE	(0)		///<オス
+#define	PTL_SEX_MALE		(0)		///<オス
 #define	PTL_SEX_FEMALE	(1)		///<メス
 #define	PTL_SEX_UNKNOWN	(2)		///<性別なし
 
-
-
-#define	PTL_LEVEL_MAX			(100)		//レベルMAX
-#define	PTL_WAZA_MAX			(4)			///<1体のポケモンがもてる技の最大値
+#define	PTL_LEVEL_MAX					(100)		//レベルMAX
+#define	PTL_WAZA_MAX					(4)			///<1体のポケモンがもてる技の最大値
 #define	PTL_WAZAPP_COUNT_MAX	(3)			//pp_countMAX値
 
 #define	PTL_FRIEND_MAX			(255)		//なつき度MAX値
-#define	PTL_STYLE_MAX			(255)		//かっこよさMAX値
+#define	PTL_STYLE_MAX				(255)		//かっこよさMAX値
 #define	PTL_BEAUTIFUL_MAX		(255)		//うつくしさMAX値
-#define	PTL_CUTE_MAX			(255)		//かわいさMAX値
+#define	PTL_CUTE_MAX				(255)		//かわいさMAX値
 #define	PTL_CLEVER_MAX			(255)		//かしこさMAX値
 #define	PTL_STRONG_MAX			(255)		//たくましさMAX値
-#define	PTL_FUR_MAX				(255)		//毛艶MAX値
+#define	PTL_FUR_MAX					(255)		//毛艶MAX値
 
 #define	PTL_FORM_NO_NONE		( 0	)		//別フォルムなし
 
@@ -583,14 +583,15 @@ extern	u8		PP_GetSeikaku( const POKEMON_PARAM *pp );
 extern	u8		PPP_GetSeikaku( const POKEMON_PASO_PARAM *ppp );
 extern	BOOL	PP_CheckRare( const POKEMON_PARAM *pp );
 extern	BOOL	PPP_CheckRare( const POKEMON_PASO_PARAM *pp );
+extern  PokeSick PP_GetSick( const POKEMON_PARAM* pp );
 
-// パラメータ（汎用）設定系
+// パラメータ設定系（汎用）
 extern	void	PP_Put( POKEMON_PARAM *pp, int id, u32 arg );
 extern	void	PPP_Put( POKEMON_PASO_PARAM *ppp, int id, u32 arg );
 extern	void	PP_Add( POKEMON_PARAM *pp, int id, int value);
 extern	void	PPP_Add( POKEMON_PASO_PARAM *ppp, int id, int value);
 
-// パラメータ（ワザ）設定系
+// パラメータ設定系（ワザ）
 extern	u16		PP_SetWaza( POKEMON_PARAM *pp, u16 wazano );
 extern	u16		PPP_SetWaza( POKEMON_PASO_PARAM *ppp, u16 wazano );
 extern	void	PP_SetWazaDefault( POKEMON_PARAM *pp );
@@ -599,6 +600,10 @@ extern	void	PP_SetWazaPush( POKEMON_PARAM *pp, u16 wazano );
 extern	void	PPP_SetWazaPush( POKEMON_PASO_PARAM *ppp, u16 wazano );
 extern	void	PP_SetWazaPos( POKEMON_PARAM *pp, u16 wazano, u8 pos );
 extern	void	PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos );
+
+// パラメータ設定系（その他）
+extern  void  PP_SetSick( POKEMON_PARAM* pp, PokeSick sick );
+
 
 // 領域初期化
 extern	void	PP_Clear( POKEMON_PARAM *pp );
