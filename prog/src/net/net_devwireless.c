@@ -133,12 +133,16 @@ GFLNetDevTable *NET_GetWirelessDeviceTable(void)
 
 static BOOL _DevInitFunc(HEAPID heapID, GFL_NETSYS* pNet,NetDevEndCallback callback, void* pUserWork)
 {
+	GFLNetInitializeStruct* initStruct;
+	BOOL isScanOnly;
     if(_pWork){
         return FALSE;  //‚·‚Å‚É‰Šú‰»Ï‚Ý
     }
     _pWork = GFL_HEAP_AllocClearMemory(heapID, sizeof(NetWork));
     _pWork->pNet = pNet;
-    return GFL_NET_WLInitialize(heapID, callback, pUserWork);
+    initStruct = GFL_NET_GetNETInitStruct();
+    isScanOnly = (initStruct->bNetType == GFL_NET_TYPE_WIRELESS_SCANONLY ? TRUE : FALSE );
+    return GFL_NET_WLInitialize(heapID, callback, pUserWork,isScanOnly);
 }
 
 

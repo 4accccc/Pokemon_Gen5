@@ -12,6 +12,7 @@
 #include "system/net_err.h"
 #include "net/network_define.h"
 
+#include "infowin/infowin.h"
 #include "gamesystem/playerwork.h"
 #include "field_comm_main.h"
 #include "field_comm_func.h"
@@ -206,7 +207,14 @@ FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID )
 			commFunc_->pktBuffData_[i].type_ = FCPBT_INVALID;
 		}
 	}
-	commFunc_->isInitCommSystem_ = GFL_NET_IsInit();
+	if( GFL_NET_IsInit() && INFOWIN_IsStartComm() == FALSE )
+	{
+		commFunc_->isInitCommSystem_ = TRUE;
+	}
+	else
+	{
+		commFunc_->isInitCommSystem_ = FALSE;
+	}
 	//通信が初期化されていたならアイコンをリロードする
 	if( commFunc_->isInitCommSystem_ == TRUE )
 		GFL_NET_ReloadIcon();
@@ -304,7 +312,6 @@ void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc )
 	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
 #endif
 	};
-
 	GFL_NET_Init( &aGFLNetInit , FIELD_COMM_FUNC_FinishInitCallback , (void*)commFunc );
 	commFunc->commMode_ = FIELD_COMM_MODE_NONE;
 }

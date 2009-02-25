@@ -129,6 +129,10 @@ FIELD_MAIN_WORK* fieldWork;
 
 static void fieldMainCommActorFree( FIELD_MAIN_WORK *fieldWork );
 static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork );
+//情報バーの初期化と開放
+static void Field_InitInfoBar(HEAPID heapId);
+static void Field_TermInfoBar(void);
+static void Field_UpdateInfoBar(void);
 
 
 //------------------------------------------------------------------
@@ -272,6 +276,10 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			fieldWork->ftbl->create_func( fieldWork, &fieldWork->now_pos, dir );
 			FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
 		}
+		
+		
+		//情報バーの初期化
+		Field_InitInfoBar(fieldWork->heapID);
 
 		fieldWork->seq++;
 		break;
@@ -286,7 +294,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 		//フィールドマップ用イベント起動チェックをセットする
 		GAMESYSTEM_EVENT_EntryCheckFunc(gsys, FieldEventCheck, fieldWork);
-		
+
 		fieldWork->gamemode = GAMEMODE_NORMAL;
 		fieldWork->seq++;
 		break;
@@ -311,8 +319,9 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 		//通信用処理(プレイヤーの座標の設定とか
 		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
-
+		
 		MainGameSystem( fieldWork->gs );
+		Field_UpdateInfoBar();
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 		break;
 
@@ -329,6 +338,9 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		//通信用アクター削除
 		fieldMainCommActorFree( fieldWork );
 		
+		//情報バーの開放
+		Field_TermInfoBar();
+
 		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);
 
@@ -1151,4 +1163,44 @@ void FIELDMAP_ForceUpdate( FIELD_MAIN_WORK *fieldWork )
 	FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
 }
 
+
+//--------------------------------------------------------------
+//情報バーの初期化と開放
+//--------------------------------------------------------------
+#include "infowin/infowin.h"
+//BG面とパレット番号(仮設定
+static const u8 FIELD_INFOWIN_BGPLANE = GFL_BG_FRAME3_S;
+static const u8 FIELD_INFOWIN_PALLET = 0xE;
+static void Field_InitInfoBar(HEAPID heapId)
+{
+
+	// BG3 SUB (インフォバー
+	static const GFL_BG_BGCNT_HEADER header_sub3 = {
+		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x6000,
+		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+	};
+
+	GFL_BG_SetBGControl( FIELD_INFOWIN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
+	GFL_BG_SetVisible( FIELD_INFOWIN_BGPLANE, VISIBLE_ON );
+	GFL_BG_ClearFrame( FIELD_INFOWIN_BGPLANE );
+	
+	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
+
+	INFOWIN_Init( FIELD_INFOWIN_BGPLANE , FIELD_INFOWIN_PALLET , heapId);
+	if( INFOWIN_IsStartComm() == TRUE )
+	{
+		GFL_NET_ReloadIcon();
+	}
+}
+static void Field_UpdateInfoBar(void)
+{
+	INFOWIN_Update();
+}
+static void Field_TermInfoBar(void)
+{
+	INFOWIN_Term();
+	GFL_BG_FreeBGControl(FIELD_INFOWIN_BGPLANE);
+}
 

@@ -7,6 +7,9 @@
  */
 //======================================================================
 
+#ifndef INFOWIN_H__
+#define INFOWIN_H__
+
 //======================================================================
 //	define
 //======================================================================
@@ -27,7 +30,13 @@
 //	@param bgplane	BG面
 //	@param bgOfs	NCGの読み込むVRAMアドレス(0x1000必要)
 //	@param heapId	ヒープID
-void	INFOBAR_Init( u8 bgplane , u8 pltNo, HEAPID heapId );
-void	INFOBAR_Update( void );
-void	INFOBAR_Term( void );
+void	INFOWIN_Init( u8 bgplane , u8 pltNo, HEAPID heapId );
+void	INFOWIN_Update( void );
+void	INFOWIN_Term( void );
 
+void	INFOWIN_StartComm( void );
+const BOOL	INFOWIN_IsStartComm( void );
+const BOOL	INFOWIN_IsStopComm( void );
+void	INFOWIN_StopComm( void );
+
+#endif //INFOWIN_H__

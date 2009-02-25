@@ -31,11 +31,12 @@ extern void* GFL_NET_WLGetHandle(HEAPID heapID, GameServiceID serviceNo, u8 num)
 /**
  * @brief   接続クラスの初期化
  * @param   heapID   ワーク確保ID
+ * @param   isScanOnly   Scan専用モード(電源ランプ非点滅)
  * @retval  _COMM_WORKのポインタ
  */
 //==============================================================================
 //extern void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp);
-extern BOOL GFL_NET_WLInitialize(HEAPID heapID, NetDevEndCallback callback, void* pUserWork);
+extern BOOL GFL_NET_WLInitialize(HEAPID heapID, NetDevEndCallback callback, void* pUserWork, const BOOL isScanOnly);
 
 //==============================================================================
 /**

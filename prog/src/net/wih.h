@@ -511,7 +511,7 @@ extern u16 WH_GetMeasureChannel(void);
    Arguments:   None.
    Returns:     シーケンス開始に成功すれば真。
    ---------------------------------------------------------------------- */
-extern BOOL WH_Initialize(HEAPID heapID, NetDevEndCallback callback);
+extern BOOL WH_Initialize(HEAPID heapID, NetDevEndCallback callback, const BOOL isScanOnly );
 extern void WH_FreeMemory(void);
 
 

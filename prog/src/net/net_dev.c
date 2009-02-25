@@ -52,6 +52,7 @@ GFLNetDevTable* NET_DeviceLoad(int deviceNo)
 #endif
 #if SUPPORT_WIRELESS_
       case GFL_NET_TYPE_WIRELESS:
+      case GFL_NET_TYPE_WIRELESS_SCANONLY:
 #if SUPPORT_OVERLAY_
         GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wireless ) );
 #endif
@@ -90,6 +91,7 @@ void NET_DeviceUnload(int deviceNo)
 #endif
 #if SUPPORT_WIRELESS_
       case GFL_NET_TYPE_WIRELESS:
+      case GFL_NET_TYPE_WIRELESS_SCANONLY:
 #if SUPPORT_OVERLAY_
         GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wireless ) );
 #endif

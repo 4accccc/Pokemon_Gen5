@@ -237,7 +237,7 @@ static void _changeStateDebug(GFL_NETWL* pState,PTRStateFunc state, int line)
  */
 //-------------------------------------------------------------
 
-BOOL GFL_NET_WLInitialize(HEAPID heapID,NetDevEndCallback callback, void* pUserWork)
+BOOL GFL_NET_WLInitialize(HEAPID heapID,NetDevEndCallback callback, void* pUserWork, const BOOL isScanOnly)
 {
     GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
     int i;
@@ -252,7 +252,7 @@ BOOL GFL_NET_WLInitialize(HEAPID heapID,NetDevEndCallback callback, void* pUserW
 
     pNetWL->keepChannel = 0xff;
 
-    if(FALSE == WH_Initialize( heapID, callback)){
+    if(FALSE == WH_Initialize( heapID, callback, isScanOnly)){
         return FALSE;
     }
     // WH ‰Šúİ’è
@@ -538,6 +538,7 @@ BOOL GFL_NET_WLChildInit(BOOL bBconInit)
             return TRUE;
         }
     }
+    NET_PRINT("IDLEó‘Ô‚Å‚Í‚È‚¢‚½‚ß‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½\n");
     return FALSE;
 }
 

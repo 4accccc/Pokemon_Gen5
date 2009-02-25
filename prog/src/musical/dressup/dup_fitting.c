@@ -15,7 +15,7 @@
 #include "musical_item.naix"
 #include "dressup_gra.naix"
 
-#include "infobar/infobar.h"
+#include "infowin/infowin.h"
 #include "test/ariizumi/ari_debug.h"
 #include "musical/mus_poke_draw.h"
 #include "musical/mus_item_draw.h"
@@ -251,7 +251,7 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 	DUP_FIT_SetupPokemon( work );
 	DUP_FIT_SetupItem( work );
 	
-	INFOBAR_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,initWork->heapId);
+	INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,initWork->heapId);
 	GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
 	
 	//フェードないので仮処理
@@ -266,7 +266,7 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 void	DUP_FIT_TermFitting( FITTING_WORK *work )
 {
 	GFL_TCB_DeleteTask( work->vBlankTcb );
-	INFOBAR_Term();
+	INFOWIN_Term();
 	GFL_G3D_CAMERA_Delete( work->camera );
 	GFL_G3D_Exit();
 	GFL_BG_FreeBGControl( FIT_FRAME_MAIN_3D );
@@ -319,7 +319,7 @@ FITTING_RETURN	DUP_FIT_LoopFitting( FITTING_WORK *work )
 
 	MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
 	
-	INFOBAR_Update();
+	INFOWIN_Update();
 
 	//3D描画	
 	GFL_G3D_DRAW_Start();

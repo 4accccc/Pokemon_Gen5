@@ -41,7 +41,7 @@ SUBDIRS	=	wmi \
 			compatible \
 			musical \
 			fldmmdl \
-			infobar \
+			infowin \
 			fontoam
 
 

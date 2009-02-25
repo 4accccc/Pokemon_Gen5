@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
+#include "infowin/infowin.h"
 #include "gamesystem/gamesystem.h"
 #include "test/ariizumi/ari_debug.h"
 #include "field_comm_main.h"
@@ -359,13 +360,30 @@ const BOOL	FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys )
 		}
 		break;
 	case 1:
+		if( INFOWIN_IsStartComm() == TRUE )
+		{
+			INFOWIN_StopComm();
+			commSys->menuSeq_++;
+		}
+		else
+		{
+			commSys->menuSeq_ = 3;
+		}
+		break;
+	case 2:
+		if( INFOWIN_IsStopComm() == TRUE )
+		{
+			commSys->menuSeq_++;
+		}
+		break;
+	case 3:
 		//–¢‰Šú‰»‚Ì‚Æ‚«‚¾‚¯‰Šú‰»‚·‚é
 		if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commFunc_ ) == FALSE ){
 			FIELD_COMM_FUNC_InitCommSystem( commSys->commFunc_ );
 		}
 		commSys->menuSeq_++;
 		break;
-	case 2:
+	case 4:
 		if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE ){
 			FIELD_COMM_FUNC_StartCommWait( commSys->commFunc_ );
 			commSys->menuSeq_++;
@@ -423,13 +441,30 @@ const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 		}
 		break;
 	case 1:
+		if( INFOWIN_IsStartComm() == TRUE )
+		{
+			INFOWIN_StopComm();
+			commSys->menuSeq_++;
+		}
+		else
+		{
+			commSys->menuSeq_ = 3;
+		}
+		break;
+	case 2:
+		if( INFOWIN_IsStopComm() == TRUE )
+		{
+			commSys->menuSeq_++;
+		}
+		break;
+	case 3:
 		//–¢‰Šú‰»‚Ì‚Æ‚«‚¾‚¯‰Šú‰»‚·‚é
 		if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commFunc_ ) == FALSE ){
 			FIELD_COMM_FUNC_InitCommSystem( commSys->commFunc_ );
 		}
 		commSys->menuSeq_++;
 		break;
-	case 2:
+	case 4:
 		if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE ){
 			FIELD_COMM_FUNC_StartCommSearch( commSys->commFunc_ );
 			commSys->menuSeq_++;

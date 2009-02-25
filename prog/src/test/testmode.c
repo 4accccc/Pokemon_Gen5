@@ -24,6 +24,7 @@
 #include "gamesystem/game_init.h"
 #include "savedata/mystatus.h"
 #include "app/config_panel.h"		//ConfigPanelProcData参照
+#include "infowin/infowin.h"
 
 //======================================================================
 //	define
@@ -140,6 +141,7 @@ static void TESTMODE_COMMAND_StartGame( TESTMODE_WORK *work , TESTMODE_INITGAME_
 //メニュー決定時の関数群
 static BOOL TESTMODE_ITEM_SelectFuncDebugStart( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncContinue( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncContinueComm( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncChangeSelectName( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncWatanabe( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncTamada( TESTMODE_WORK *work , const int idx );
@@ -190,6 +192,7 @@ static TESTMODE_MENU_LIST topMenu[] =
 	//汎用
 	{L"デバッグ開始"		,TESTMODE_ITEM_SelectFuncDebugStart },
 	{L"続きから"			,TESTMODE_ITEM_SelectFuncContinue },
+	{L"続きから(通信)"		,TESTMODE_ITEM_SelectFuncContinueComm },
 	{L"名前を選んで開始"	,TESTMODE_ITEM_SelectFuncChangeSelectName },
 	{L"RTC調整"				,TESTMODE_ITEM_SelectFuncRTCEdit },
 	{L"セーブ破かい"		,TESTMODE_ITEM_SelectFuncSave },
@@ -769,6 +772,13 @@ static BOOL TESTMODE_ITEM_SelectFuncDebugStart( TESTMODE_WORK *work , const int 
 //続きから
 static BOOL TESTMODE_ITEM_SelectFuncContinue( TESTMODE_WORK *work , const int idx )
 {
+	TESTMODE_COMMAND_StartGame( work , TMI_CONTINUE );
+	return TRUE;
+}
+//続きから
+static BOOL TESTMODE_ITEM_SelectFuncContinueComm( TESTMODE_WORK *work , const int idx )
+{
+	INFOWIN_StartComm();
 	TESTMODE_COMMAND_StartGame( work , TMI_CONTINUE );
 	return TRUE;
 }

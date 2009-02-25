@@ -580,7 +580,7 @@ NULL;
 static void WH_IndicateHandler(void *arg);
 
 /* (stateless) -> READY -> STOP -> IDLE */
-static BOOL WH_StateInInitialize(NetDevEndCallback callback);
+static BOOL WH_StateInInitialize(NetDevEndCallback callback, const BOOL isScanOnly );
 
 //#ifndef WH_USE_DETAILED_INITIALIZE
 static void WH_StateOutInitialize(void *arg);
@@ -2933,7 +2933,7 @@ static s16 SelectChannel(u16 bitmap)
    Arguments:   None.
    Returns:     シーケンス開始に成功すれば真。
    ---------------------------------------------------------------------- */
-BOOL WH_Initialize(HEAPID heapID, NetDevEndCallback callback)
+BOOL WH_Initialize(HEAPID heapID, NetDevEndCallback callback,const BOOL isScanOnly )
 {
     if(_pWmInfo != NULL){
         return FALSE;
@@ -2947,7 +2947,7 @@ BOOL WH_Initialize(HEAPID heapID, NetDevEndCallback callback)
     _pWmInfo->heapID = heapID;
 
     // 初期化シーケンス開始。
-    if (!WH_StateInInitialize(callback))
+    if (!WH_StateInInitialize(callback,isScanOnly))
     {
         return FALSE;
     }
@@ -2991,7 +2991,7 @@ static void WH_IndicateHandler(void *arg)
 /* ----------------------------------------------------------------------
    state : Initialize
    ---------------------------------------------------------------------- */
-static BOOL WH_StateInInitialize(NetDevEndCallback callback)
+static BOOL WH_StateInInitialize(NetDevEndCallback callback,const BOOL isScanOnly )
 {
     // 初期化シーケンスを開始します。
     WMErrCode result;
@@ -2999,7 +2999,14 @@ static BOOL WH_StateInInitialize(NetDevEndCallback callback)
 
 #ifndef WH_USE_DETAILED_INITIALIZE
     WH_ChangeSysState(WH_SYSSTATE_BUSY);
-    result = WM_Initialize(&_pWmInfo->sWmBuffer, WH_StateOutInitialize, WH_DMA_NO);
+    if( isScanOnly == FALSE )
+    {
+		result = WM_Initialize(&_pWmInfo->sWmBuffer, WH_StateOutInitialize, WH_DMA_NO);
+	}
+	else
+	{
+		result = WM_InitializeForListening(&_pWmInfo->sWmBuffer, WH_StateOutInitialize, WH_DMA_NO,FALSE);
+	}
     if (result != WM_ERRCODE_OPERATING)
     {
         WH_REPORT_FAILURE(result);

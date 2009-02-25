@@ -1,19 +1,19 @@
 /*****************************************************************************
 	Archive file index definition.
-	File: infobar.naix
+	File: infowin.naix
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
 
  *****************************************************************************/
 
-#ifndef NARC_INFOBAR_NAIX_
-#define NARC_INFOBAR_NAIX_
+#ifndef NARC_INFOWIN_NAIX_
+#define NARC_INFOWIN_NAIX_
 
 enum {
-	NARC_infobar_infobar_NCLR = 0,
-	NARC_infobar_infobar_NCGR = 1
+	NARC_infowin_infobar_NCLR = 0,
+	NARC_infowin_infobar_NCGR = 1
 };
 
-/* NARC_INFOBAR_NAIX_ */
+/* NARC_INFOWIN_NAIX_ */
 #endif
