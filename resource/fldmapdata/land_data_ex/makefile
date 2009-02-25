@@ -22,7 +22,7 @@ OUTDIR		= output
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR	= $(PROJECT_ARCDIR)/fieldmap
+TARGETDIR	= $(PROJECT_ARCDIR)fieldmap
 
 
 #共通ルールファイルのインクルード
@@ -53,13 +53,13 @@ $(OUTDIR)/dependfile:	list
 endif
 
 
-$(TARGETDIR)/$(NARCNAME):	$(OUTDIR)/$(NARCNAME)
-	$(COPY)	$(OUTDIR)/$(NARCNAME) $(TARGETDIR)
-	$(COPY) $(OUTDIR)/$(NAIXNAME) $(TARGETDIR)
+$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
+	$(COPY)	$(NARCNAME) $(TARGETDIR)
+	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(OUTDIR)/$(NARCNAME):	$(MAP3DPPACKS)  
-	nnsarc -c -l -n -i $(OUTDIR)/$(NARCNAME) -S $(OUTDIR)/arcfilelist
-	$(NAIXCUT) $(OUTDIR)/$(NAIXNAME)
+$(NARCNAME):	$(MAP3DPPACKS)  
+	nnsarc -c -l -n -i $(NARCNAME) -S $(OUTDIR)/arcfilelist
+	$(NAIXCUT) $(NAIXNAME)
 
 
 #------------------------------------------------------------------------------

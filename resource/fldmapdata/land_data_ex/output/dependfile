@@ -1,0 +1,233 @@
+output/h01a_00_01.3dppack: output/h01a_00_01.nsbmd output/h01a_00_01.bhc srcdata/h01a_00_01.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_01.3dmd $*.3dppack BR
+
+output/h01a_00_01.nsbmd: srcdata/h01a_00_01.imd
+	g3dcvtr srcdata/h01a_00_01.imd -emdl -o output/h01a_00_01.nsbmd
+
+srcdata/h01a_00_01h.imd:
+	@echo h01a_00_01.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_00_01h.imd
+
+output/h01a_00_01.bhc: srcdata/h01a_00_01h.imd
+	@echo srcdata/h01a_00_01h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_00_01h.bhc output/h01a_00_01.bhc
+	rm srcdata/h01a_00_01h.bhc
+
+srcdata/h01a_00_01.3dmd:
+	@echo h01a_00_01.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_00_01.3dmd
+output/h01a_00_02.3dppack: output/h01a_00_02.nsbmd output/h01a_00_02.bhc srcdata/h01a_00_02.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_02.3dmd $*.3dppack BR
+
+output/h01a_00_02.nsbmd: srcdata/h01a_00_02.imd
+	g3dcvtr srcdata/h01a_00_02.imd -emdl -o output/h01a_00_02.nsbmd
+
+srcdata/h01a_00_02h.imd:
+	@echo h01a_00_02.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_00_02h.imd
+
+output/h01a_00_02.bhc: srcdata/h01a_00_02h.imd
+	@echo srcdata/h01a_00_02h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_00_02h.bhc output/h01a_00_02.bhc
+	rm srcdata/h01a_00_02h.bhc
+
+srcdata/h01a_00_02.3dmd:
+	@echo h01a_00_02.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_00_02.3dmd
+output/h01a_00_03.3dppack: output/h01a_00_03.nsbmd output/h01a_00_03.bhc srcdata/h01a_00_03.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_03.3dmd $*.3dppack BR
+
+output/h01a_00_03.nsbmd: srcdata/h01a_00_03.imd
+	g3dcvtr srcdata/h01a_00_03.imd -emdl -o output/h01a_00_03.nsbmd
+
+srcdata/h01a_00_03h.imd:
+	@echo h01a_00_03.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_00_03h.imd
+
+output/h01a_00_03.bhc: srcdata/h01a_00_03h.imd
+	@echo srcdata/h01a_00_03h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_00_03h.bhc output/h01a_00_03.bhc
+	rm srcdata/h01a_00_03h.bhc
+
+srcdata/h01a_00_03.3dmd:
+	@echo h01a_00_03.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_00_03.3dmd
+output/h01a_00_04.3dppack: output/h01a_00_04.nsbmd output/h01a_00_04.bhc srcdata/h01a_00_04.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_04.3dmd $*.3dppack BR
+
+output/h01a_00_04.nsbmd: srcdata/h01a_00_04.imd
+	g3dcvtr srcdata/h01a_00_04.imd -emdl -o output/h01a_00_04.nsbmd
+
+srcdata/h01a_00_04h.imd:
+	@echo h01a_00_04.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_00_04h.imd
+
+output/h01a_00_04.bhc: srcdata/h01a_00_04h.imd
+	@echo srcdata/h01a_00_04h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_00_04h.bhc output/h01a_00_04.bhc
+	rm srcdata/h01a_00_04h.bhc
+
+srcdata/h01a_00_04.3dmd:
+	@echo h01a_00_04.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_00_04.3dmd
+output/h01a_01_00.3dppack: output/h01a_01_00.nsbmd output/h01a_01_00.bhc srcdata/h01a_01_00.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_00.3dmd $*.3dppack BR
+
+output/h01a_01_00.nsbmd: srcdata/h01a_01_00.imd
+	g3dcvtr srcdata/h01a_01_00.imd -emdl -o output/h01a_01_00.nsbmd
+
+srcdata/h01a_01_00h.imd:
+	@echo h01a_01_00.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_01_00h.imd
+
+output/h01a_01_00.bhc: srcdata/h01a_01_00h.imd
+	@echo srcdata/h01a_01_00h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_01_00h.bhc output/h01a_01_00.bhc
+	rm srcdata/h01a_01_00h.bhc
+
+srcdata/h01a_01_00.3dmd:
+	@echo h01a_01_00.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_01_00.3dmd
+output/h01a_01_01.3dppack: output/h01a_01_01.nsbmd output/h01a_01_01.bhc srcdata/h01a_01_01.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_01.3dmd $*.3dppack BR
+
+output/h01a_01_01.nsbmd: srcdata/h01a_01_01.imd
+	g3dcvtr srcdata/h01a_01_01.imd -emdl -o output/h01a_01_01.nsbmd
+
+srcdata/h01a_01_01h.imd:
+	@echo h01a_01_01.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_01_01h.imd
+
+output/h01a_01_01.bhc: srcdata/h01a_01_01h.imd
+	@echo srcdata/h01a_01_01h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_01_01h.bhc output/h01a_01_01.bhc
+	rm srcdata/h01a_01_01h.bhc
+
+srcdata/h01a_01_01.3dmd:
+	@echo h01a_01_01.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_01_01.3dmd
+output/h01a_01_02.3dppack: output/h01a_01_02.nsbmd output/h01a_01_02.bhc srcdata/h01a_01_02.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_02.3dmd $*.3dppack BR
+
+output/h01a_01_02.nsbmd: srcdata/h01a_01_02.imd
+	g3dcvtr srcdata/h01a_01_02.imd -emdl -o output/h01a_01_02.nsbmd
+
+srcdata/h01a_01_02h.imd:
+	@echo h01a_01_02.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_01_02h.imd
+
+output/h01a_01_02.bhc: srcdata/h01a_01_02h.imd
+	@echo srcdata/h01a_01_02h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_01_02h.bhc output/h01a_01_02.bhc
+	rm srcdata/h01a_01_02h.bhc
+
+srcdata/h01a_01_02.3dmd:
+	@echo h01a_01_02.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_01_02.3dmd
+output/h01a_01_03.3dppack: output/h01a_01_03.nsbmd output/h01a_01_03.bhc srcdata/h01a_01_03.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_03.3dmd $*.3dppack BR
+
+output/h01a_01_03.nsbmd: srcdata/h01a_01_03.imd
+	g3dcvtr srcdata/h01a_01_03.imd -emdl -o output/h01a_01_03.nsbmd
+
+srcdata/h01a_01_03h.imd:
+	@echo h01a_01_03.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_01_03h.imd
+
+output/h01a_01_03.bhc: srcdata/h01a_01_03h.imd
+	@echo srcdata/h01a_01_03h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_01_03h.bhc output/h01a_01_03.bhc
+	rm srcdata/h01a_01_03h.bhc
+
+srcdata/h01a_01_03.3dmd:
+	@echo h01a_01_03.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_01_03.3dmd
+output/h01a_01_04.3dppack: output/h01a_01_04.nsbmd output/h01a_01_04.bhc srcdata/h01a_01_04.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_01_04.3dmd $*.3dppack BR
+
+output/h01a_01_04.nsbmd: srcdata/h01a_01_04.imd
+	g3dcvtr srcdata/h01a_01_04.imd -emdl -o output/h01a_01_04.nsbmd
+
+srcdata/h01a_01_04h.imd:
+	@echo h01a_01_04.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_01_04h.imd
+
+output/h01a_01_04.bhc: srcdata/h01a_01_04h.imd
+	@echo srcdata/h01a_01_04h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_01_04h.bhc output/h01a_01_04.bhc
+	rm srcdata/h01a_01_04h.bhc
+
+srcdata/h01a_01_04.3dmd:
+	@echo h01a_01_04.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_01_04.3dmd
+output/h01a_02_00.3dppack: output/h01a_02_00.nsbmd output/h01a_02_00.bhc srcdata/h01a_02_00.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_02_00.3dmd $*.3dppack BR
+
+output/h01a_02_00.nsbmd: srcdata/h01a_02_00.imd
+	g3dcvtr srcdata/h01a_02_00.imd -emdl -o output/h01a_02_00.nsbmd
+
+srcdata/h01a_02_00h.imd:
+	@echo h01a_02_00.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_02_00h.imd
+
+output/h01a_02_00.bhc: srcdata/h01a_02_00h.imd
+	@echo srcdata/h01a_02_00h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_02_00h.bhc output/h01a_02_00.bhc
+	rm srcdata/h01a_02_00h.bhc
+
+srcdata/h01a_02_00.3dmd:
+	@echo h01a_02_00.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_02_00.3dmd
+output/h01a_02_04.3dppack: output/h01a_02_04.nsbmd output/h01a_02_04.bhc srcdata/h01a_02_04.3dmd
+	$(BINLINKER) $*.nsbmd $*.bhc output/h01a_02_04.3dmd $*.3dppack BR
+
+output/h01a_02_04.nsbmd: srcdata/h01a_02_04.imd
+	g3dcvtr srcdata/h01a_02_04.imd -emdl -o output/h01a_02_04.nsbmd
+
+srcdata/h01a_02_04h.imd:
+	@echo h01a_02_04.imdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy_h.imd srcdata/h01a_02_04h.imd
+
+output/h01a_02_04.bhc: srcdata/h01a_02_04h.imd
+	@echo srcdata/h01a_02_04h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE)
+	ruby scripts/pad4byte.rb srcdata/h01a_02_04h.bhc output/h01a_02_04.bhc
+	rm srcdata/h01a_02_04h.bhc
+
+srcdata/h01a_02_04.3dmd:
+	@echo h01a_02_04.3dmdが存在しないためダミーデータを生成します
+	cp dummy_file/dummy.3dmd srcdata/h01a_02_04.3dmd
+
+ARCDEPENDS	= \
+	output/h01a_00_01.3dppack \
+	output/h01a_00_02.3dppack \
+	output/h01a_00_03.3dppack \
+	output/h01a_00_04.3dppack \
+	output/h01a_01_00.3dppack \
+	output/h01a_01_01.3dppack \
+	output/h01a_01_02.3dppack \
+	output/h01a_01_03.3dppack \
+	output/h01a_01_04.3dppack \
+	output/h01a_02_00.3dppack \
+	output/h01a_02_04.3dppack \
