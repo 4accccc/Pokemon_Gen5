@@ -52,6 +52,41 @@ typedef enum {
 	CHAR_MAP_2D,		// 2D
 }CHAR_MAPPING_TYPE;
 
+
+//------------------------------------------------------------------
+/**
+ *  データ転送位置情報
+ */
+//------------------------------------------------------------------
+typedef u32 GFL_ARCUTIL_TRANSINFO;
+
+enum {
+	GFL_ARCUTIL_TRANSINFO_FAIL = 0,	///< 転送失敗時に返る
+};
+
+/**
+ *  転送位置情報：生成
+ */
+static inline GFL_ARCUTIL_TRANSINFO  GFL_ARCUTIL_TRANSINFO_Make( u16 pos, u16 size )
+{
+	return (size << 16) | pos;
+}
+/**
+ *  転送位置情報：位置取り出し
+ */
+static inline u16 GFL_ARCUTIL_TRANSINFO_GetPos( GFL_ARCUTIL_TRANSINFO info )
+{
+	return info & 0xffff;
+}
+/**
+ *  転送位置情報：サイズ取り出し
+ */
+static inline u16 GFL_ARCUTIL_TRANSINFO_GetSize( GFL_ARCUTIL_TRANSINFO info )
+{
+	return (info >> 16) & 0xffff;
+}
+
+
 //------------------------------------------------------------------
 /**
  * BGｷｬﾗﾃﾞｰﾀの VRAM 転送
@@ -81,11 +116,11 @@ extern u32 GFL_ARCHDL_UTIL_TransVramBgCharacter(ARCHANDLE *handle, ARCDATID datI
  * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
  * @param   heapID			ﾃﾞｰﾀ読み込み・解凍ﾃﾝﾎﾟﾗﾘとして使うﾋｰﾌﾟID
  *
- * @return  転送した位置
+ * @return  確保した領域情報（bg_sys）
  */
 //------------------------------------------------------------------
-extern	u32 GFL_ARC_UTIL_TransVramBgCharacterAreaMan(ARCID arcID, ARCDATID datID, u32 frm, u32 transSize, BOOL compressedFlag, HEAPID heapID);
-extern u32 GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern	GFL_ARCUTIL_TRANSINFO  GFL_ARC_UTIL_TransVramBgCharacterAreaMan(ARCID arcID, ARCDATID datID, u32 frm, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern	GFL_ARCUTIL_TRANSINFO  GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**

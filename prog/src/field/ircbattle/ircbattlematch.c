@@ -120,6 +120,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork);
 static void _fadeInWait(IRC_BATTLE_MATCH* pWork);
 static void _ircInitWait(IRC_BATTLE_MATCH* pWork);
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork);
+static void _ircStartTiming(IRC_BATTLE_MATCH* pWork);
 static void _modeSelectEntryNumInit(IRC_BATTLE_MATCH* pWork);
 static void _modeSelectEntryNumWait(IRC_BATTLE_MATCH* pWork);
 static void _modeReportInit(IRC_BATTLE_MATCH* pWork);
@@ -218,6 +219,12 @@ typedef struct{
 } _testBeaconStruct;
 
 static _testBeaconStruct _testBeacon = { WB_NET_COMPATI_CHECK };
+
+
+enum{
+    _START_TIMING=12,
+};
+
 
 
 
@@ -420,7 +427,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MATCH* pWork)
         GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
         GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
         GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-        BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, pWork->aPos.pos, _BUTTON_WIN_PAL );
+        BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2), _BUTTON_WIN_PAL );
 
         // システムウインドウ枠描画
 
@@ -546,7 +553,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
         GFL_NET_Init(&net_ini_data, NULL, pWork);	//通信初期化
     }
     
-    _CHANGE_STATE(pWork,_ircMatchWait);
+    _CHANGE_STATE(pWork,_ircInitWait);
 }
 
 static void _workEnd(IRC_BATTLE_MATCH* pWork)
@@ -589,14 +596,12 @@ static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
 //------------------------------------------------------------------------------
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 {
-    int aMsgBuff[]={IRCBTL_STR_04,IRCBTL_STR_05,IRCBTL_STR_03};
-
-    _buttonWindowCreate(3,aMsgBuff,pWork);
-
-
-    _CHANGE_STATE(pWork,_modeSelectEntryNumWait);
-
     
+    if(pWork->connect_ok == TRUE){
+		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_START_TIMING);
+        _CHANGE_STATE(pWork,_ircStartTiming);
+    }
+
 }
 
 //------------------------------------------------------------------------------
@@ -605,8 +610,15 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-static void _modeSelectEntryNumWait(IRC_BATTLE_MATCH* pWork)
+static void _ircStartTiming(IRC_BATTLE_MATCH* pWork)
 {
+
+    if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_START_TIMING) == TRUE){
+        OS_TPrintf("タイミング取り成功\n");
+        OS_TPrintf("接続人数 = %d\n", GFL_NET_GetConnectNum());
+    }
+
+
 }
 
 //--------------------------------------------------------------
