@@ -41,7 +41,9 @@ SUBDIRS	=	wmi \
 			compatible \
 			musical \
 			fldmmdl \
-			infobar
+			infobar \
+			fontoam
+
 
 include $(RESOURCE_MACRO)
 
