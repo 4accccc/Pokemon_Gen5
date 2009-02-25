@@ -51,17 +51,6 @@ LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a
 
 #----------------------------------------------------------------------------
-# BlendMagic ライブラリ追加  taya
-#----------------------------------------------------------------------------
-LINCLUDES	+= $(BMDS_SDK_ROOT)/include \
-		   $(NITROSDK_ROOT)/include/nitro
-LLIBRARY_DIRS	+= $(BMDS_SDK_ROOT)/lib
-LLIBRARIES	+=	npfxd.a \
-			nplibcd.a \
-			nputild.a
-
-
-#----------------------------------------------------------------------------
 #	バージョン定義
 #----------------------------------------------------------------------------
 VER_FILE	=	version
@@ -136,14 +125,6 @@ GFL_FILE_TREE	=	titledemo.narc \
 					pm_battle.swav	\
 					mh.swav	\
 					gfl_font.dat \
-					BMSample/aura_02.bph \
-					BMSample/aura_02.bpc \
-					BMSample/aura_01.ntft \
-					BMSample/aura_01.ntfp \
-					BMSample/sphere_06.ntft \
-					BMSample/sphere_06.ntfp \
-					BMSample/sphere_hole_01.ntft \
-					BMSample/sphere_hole_01.ntfp \
 					dl_rom/child.srl \
 					dl_rom/icon.char \
 					dl_rom/icon.plt
