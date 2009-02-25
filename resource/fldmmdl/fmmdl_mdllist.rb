@@ -17,6 +17,14 @@ $KCODE = "SJIS"
 #	パラメーターフォーマット
 #	0-1 OBJコード
 #	2-3 リソースアーカイブインデックス 
+#	4	表示タイプ
+#	5	処理関数
+#	6	影表示
+#	7	足跡種類
+#	8	映り込み
+#	9	モデルサイズ
+#	10	テクスチャサイズ
+#	11	アニメID
 #=======================================================================
 
 #=======================================================================
@@ -207,13 +215,18 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	wfile.write( ary.pack("S*") )
 	
 	#アーカイブインデックス テクスチャ 2 (4)
-	word = str[STRPRMNO_MDLFILENAME]
-	/(\A.*[^\.imd])/ =~ word
-	mdlname = $1
-	ret = arcidx_search( idxfile, mdlname )
-	if( ret == RET_ERROR )
-		printf( "ERROR モデルファイル名異常 %s\n", word )
-		return RET_FALSE
+	word = str[STRPRMNO_DRAWTYPE]
+	if( word == "DRAWTYPE_NON" ) #表示タイプ　無し
+		ret = 0
+	else
+		word = str[STRPRMNO_MDLFILENAME]
+		/(\A.*[^\.imd])/ =~ word
+		mdlname = $1
+		ret = arcidx_search( idxfile, mdlname )
+		if( ret == RET_ERROR )
+			printf( "ERROR モデルファイル名異常 %s\n", word )
+			return RET_FALSE
+		end
 	end
 	ary = Array( ret )
 	wfile.write( ary.pack("S*") )
@@ -241,9 +254,9 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	#影表示 1 (7)
 	word = str[STRPRMNO_SHADOW]
 	if( word != "○" )
-		ret = 0
-	else
 		ret = 1
+	else
+		ret = 0
 	end
 	ary = Array( ret )
 	wfile.write( ary.pack("C*") )
@@ -261,9 +274,9 @@ def convert_line( no, line, wfile, idxfile, symfile )
 	#映り込み 1 (9)
 	word = str[STRPRMNO_REFLECT]
 	if( word != "○" )
-		ret = 0
-	else
 		ret = 1
+	else
+		ret = 0
 	end
 	ary = Array( ret )
 	wfile.write( ary.pack("C*") )

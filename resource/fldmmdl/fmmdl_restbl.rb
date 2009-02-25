@@ -24,6 +24,12 @@ $KCODE = "SJIS"
 #=======================================================================
 RESFILE_NAME_NO = (8) #リストファイル　リソースファイル名記述箇所
 
+STR_ERROR = "ERROR"
+STR_END = "#END"
+
+RET_FALSE = (0)
+RET_TRUE = (1)
+
 #=======================================================================
 #	異常終了
 #=======================================================================
@@ -42,6 +48,74 @@ def file_copy( srcpath, copypath )
 			output.write( input.read )
 		}
 	}
+end
+
+#=======================================================================
+#	指定番号のリソースファイル名を取得
+#	戻り値 nil=無し,STR_ERROR=エラー,STR_END=終了
+#=======================================================================
+def xlstxt_get_resfile_name( xlstxt_file, no )
+	xlstxt_file.pos = 0
+	line = xlstxt_file.gets #一行目飛ばし
+	
+	if( line == nil )
+		return STR_ERROR
+	end
+	
+	while line = xlstxt_file.gets
+		str = line.split( "," )
+		
+		if( str[0] == STR_END )
+			return str[0]
+		end
+		
+		if( no <= 0 )	#指定位置
+			if( str[RESFILE_NAME_NO] != "" && str[RESFILE_NAME_NO] != nil )
+				return str[RESFILE_NAME_NO]
+			else
+				break
+			end
+		end
+		
+		no = no - 1
+	end
+	
+	return nil
+end
+
+#=======================================================================
+#	指定番号より前リソースファイル名を検索し重複チェック
+#	戻り値 RET_TRUE=指定ファイル名が存在している RET_FALSE=無し
+#	戻り値 nil=無し,STR_ERROR=エラー,STR_END=終了
+#=======================================================================
+def xlstxt_check_resfile_name( xlstxt_file, check_no, check_str )
+	no = 0
+	xlstxt_file.pos = 0
+	line = xlstxt_file.gets #一行目飛ばし
+	
+	if( line == nil )
+		return RET_FALSE
+	end
+	
+	while line = xlstxt_file.gets
+		str = line.split( "," )
+		
+		if( str[0] == STR_END )
+			break
+		end
+		
+		if( no < check_no )	#指定位置より前
+			if( str[RESFILE_NAME_NO] != "" && str[RESFILE_NAME_NO] != nil )
+				if( str[RESFILE_NAME_NO] == check_str )
+					return RET_TRUE
+				end
+			end
+		end
+		
+		no = no + 1
+	end
+	
+	return RET_FALSE
 end
 
 #=======================================================================
@@ -86,44 +160,45 @@ end
 xlstxt_file = File.open( xlstxt_filename, "r" )
 restbl_file = File.open( restbl_filename, "w" )
 
-line = xlstxt_file.gets #一行目飛ばし
-
-if( line == nil )
-	printf( "ERROR!! fmmdl_restbl.rb %sが異常です\n", xlstxt_filename )
-	error_end( restbl_filename, xlstxt_file, restbl_file )
-	exit 1
-end
-
+no = 0
 flag = 0
 restbl_file.printf( "FMMDL_RESLIST =" )
 
 loop{
-	line = xlstxt_file.gets
-	str = line.split( "," )
+	str = xlstxt_get_resfile_name( xlstxt_file, no )
 	
-	if( str[0] == "#END" )
+	if( str == STR_ERROR )
+		printf( "ERROR!! fmmdl_restbl.rb %sが異常です\n", xlstxt_filename )
+		error_end( restbl_filename, xlstxt_file, restbl_file )
+		exit 1
+	end
+	
+	if( str == STR_END )
 		break
 	end
 	
-	restbl_file.printf( " \\\n" )
-	
-	if( str[RESFILE_NAME_NO] != "" && str[RESFILE_NAME_NO] != nil )
-		path = sprintf( "%s\/%s", resdir_path, str[RESFILE_NAME_NO] )
+	if( str != nil )
+		if( xlstxt_check_resfile_name(xlstxt_file,no,str) == RET_FALSE )
+			restbl_file.printf( " \\\n" )
+			path = sprintf( "%s\/%s", resdir_path, str )
 		
-		if( FileTest.exist?(path) != true )
-			if( dmyfile != nil )
-				file_copy( dmyfile, path )
-				printf( "%sをダミーファイルから作成しました\n", path )
-			else
-				printf( "ERROR!! %s がありません\n", str[RESFILE_NAME_NO] )
-				error_end( restbl_filename, xlstxt_file, restbl_file )
-				exit 1
+			if( FileTest.exist?(path) != true )
+				if( dmyfile != nil )
+					file_copy( dmyfile, path )
+					printf( "%sをダミーファイルから作成しました\n", path )
+				else
+					printf( "ERROR!! %s がありません\n", str )
+					error_end( restbl_filename, xlstxt_file, restbl_file )
+					exit 1
+				end
 			end
+			
+			restbl_file.printf( "\t%s", str )
+			flag = 1
 		end
-		
-		restbl_file.printf( "\t%s", str[RESFILE_NAME_NO] )
-		flag = 1
 	end
+	
+	no = no + 1
 }
 
 if( flag == 0 )
