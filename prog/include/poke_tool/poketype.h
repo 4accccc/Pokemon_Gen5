@@ -63,13 +63,14 @@ typedef enum {
 //------------------------------------------------------------------------------
 typedef enum {
 
-	POKESICK_ORIGIN = 0,
+	POKESICK_NULL = 0,
+	POKESICK_ORIGIN = 1,
 
-	POKESICK_DOKU = POKESICK_ORIGIN,///< ‚Ç‚­
-	POKESICK_MAHI,					///< ‚Ü‚Ð
-	POKESICK_NEMURI,				///< ‚Ë‚Þ‚è
-	POKESICK_KOORI,					///< ‚±‚¨‚è
-	POKESICK_YAKEDO,				///< ‚â‚¯‚Ç
+	POKESICK_MAHI = POKESICK_ORIGIN,	///< ‚Ü‚Ð
+	POKESICK_NEMURI,		///< ‚Ë‚Þ‚è
+	POKESICK_KOORI,			///< ‚±‚¨‚è
+	POKESICK_YAKEDO,		///< ‚â‚¯‚Ç
+	POKESICK_DOKU,			///< ‚Ç‚­
 
 	POKESICK_MAX,
 
