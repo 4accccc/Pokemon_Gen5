@@ -102,6 +102,16 @@ typedef enum{
 	CLSYS_DEFREND_NUM
 } CLSYS_DEFREND_TYPE;
 
+//-------------------------------------
+///	パレットオフセット設定モード
+//=====================================
+typedef enum{
+	CLWK_PLTTOFFS_MODE_OAM_COLOR,		// OamAttr.c_paramからのオフセット設定
+	CLWK_PLTTOFFS_MODE_PLTT_TOP,		// パレットの０番からのオフセット設定
+
+	CLWK_PLTTOFFS_MODE_NUM
+} CLWK_PLTTOFFS_MODE;
+
 
 //-------------------------------------
 ///	設定サーフェース　絶対座標指定
@@ -1214,12 +1224,36 @@ extern BOOL GFL_CLACT_WK_GetMosaic( const GFL_CLWK* cp_wk );
  *
  *	@param	p_wk		セルアクターワーク
  *	@param	pal_offs	パレットオフセット
+ *	@param	mode		オフセット設定モード
  *
- *	パレットプロクシアドレス+pal_offs+OamAttr.c_paramの
- *	パレット番号を使用するようになります。
+ *	CLWK_PLTTOFFS_MODE_PLTT_TOP
+ *		パレットプロクシアドレス+pal_offsの
+ *		パレット番号を使用するようになります。
+ * 
+ *	CLWK_PLTTOFFS_MODE_OAM_COLOR
+ *		パレットプロクシアドレス+pal_offs+OamAttr.c_paramの
+ *		パレット番号を使用するようになります。
  */
 //-----------------------------------------------------------------------------
-extern void GFL_CLACT_WK_SetPlttOffs( GFL_CLWK* p_wk, u8 pal_offs );
+extern void GFL_CLACT_WK_SetPlttOffs( GFL_CLWK* p_wk, u8 pal_offs, CLWK_PLTTOFFS_MODE mode );
+//----------------------------------------------------------------------------
+/**
+ *	@brief	パレットオフセット設定モードの取得
+ *
+ *	@param	cp_wk		セルアクターワーク
+ *
+ *	@return	パレットオフセット設定モード
+ *
+ *	CLWK_PLTTOFFS_MODE_PLTT_TOP
+ *		パレットプロクシアドレス+pal_offsの
+ *		パレット番号を使用するようになります。
+ * 
+ *	CLWK_PLTTOFFS_MODE_OAM_COLOR
+ *		パレットプロクシアドレス+pal_offs+OamAttr.c_paramの
+ *		パレット番号を使用するようになります。
+ */
+//-----------------------------------------------------------------------------
+extern CLWK_PLTTOFFS_MODE GFL_CLACT_WK_GetPlttOffsMode( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	パレットオフセット取得

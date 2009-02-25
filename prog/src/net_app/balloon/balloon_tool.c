@@ -1311,7 +1311,7 @@ static GFL_CLWK* Air_ActorCreate(BALLOON_GAME_PTR game, const AIR_POSITION_DATA 
 	cap = GFL_CLACT_WK_CreateAffine( game->clunit, game->cgr_id[CHARID_SUB_BALLOON_MIX], 
 		game->pltt_id[PLTTID_SUB_OBJ_COMMON], 
 		game->cell_id[CELLID_SUB_BALLOON_MIX], &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
-	GFL_CLACT_WK_SetPlttOffs(cap, air_posdata->pal_ofs);
+	GFL_CLACT_WK_SetPlttOffs(cap, air_posdata->pal_ofs, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 	
 	GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 	return cap;
@@ -1377,7 +1377,7 @@ static void Exploded_ActorCreate(BALLOON_GAME_PTR game, EXPLODED_PARAM *exploded
 				break;
 			}
 			GFL_CLACT_WK_SetAnmSeq( cap, anmseq );
-			GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_EXPLODED);
+			GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_EXPLODED, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 			GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 			
 			storm->furihaba = GFUser_GetPublicRand(0x2000) + 0x2000;
@@ -1402,7 +1402,7 @@ static void Exploded_ActorCreate(BALLOON_GAME_PTR game, EXPLODED_PARAM *exploded
 			break;
 		}
 		GFL_CLACT_WK_SetAnmSeq( cap, MIXOBJ_ANMSEQ_EXPLODED_SMOKE_1 + GFUser_GetPublicRand(3) );
-		GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_EXPLODED_SMOKE);
+		GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_EXPLODED_SMOKE, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 		GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 		
 		smoke->furihaba = GFUser_GetPublicRand(0x2000) + 0x2000;
@@ -1425,7 +1425,7 @@ static void Exploded_ActorCreate(BALLOON_GAME_PTR game, EXPLODED_PARAM *exploded
 			break;
 		}
 		GFL_CLACT_WK_SetAnmSeq( cap, MIXOBJ_ANMSEQ_BALLOON_EXPLODED);
-		GFL_CLACT_WK_SetPlttOffs(cap, ExplodedChipPalNo[bst->level]);
+		GFL_CLACT_WK_SetPlttOffs(cap, ExplodedChipPalNo[bst->level], CLWK_PLTTOFFS_MODE_PLTT_TOP);
 		GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 		
 		chip->furihaba = GFUser_GetPublicRand(0x2000) + 0x2000;
@@ -1638,7 +1638,7 @@ static GFL_CLWK* IconBalloon_ActorCreate(BALLOON_GAME_PTR game, int icon_type, i
 	cap = GFL_CLACT_WK_Create(game->clunit, game->cgr_id[CHARID_SUB_BALLOON_MIX], 
 		game->pltt_id[PLTTID_SUB_OBJ_COMMON], game->cell_id[CELLID_SUB_BALLOON_MIX], 
 		&act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
-	GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_ICON_BALLOON);
+	GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_ICON_BALLOON, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 	
 	GFL_CLACT_WK_SetAnmSeq(cap, MIXOBJ_ANMSEQ_ICON_BALLOON_1 + icon_type);
 	
@@ -2170,7 +2170,7 @@ void Joint_ActorCreateAll(BALLOON_GAME_PTR game, JOINT_WORK *joint)
 		joint->cap[i] = GFL_CLACT_WK_Create(game->clunit, 
 			game->cgr_id[CHARID_SUB_BALLOON_MIX], game->pltt_id[PLTTID_SUB_OBJ_COMMON], 
 			game->cell_id[CELLID_SUB_BALLOON_MIX], &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
-		GFL_CLACT_WK_SetPlttOffs(joint->cap[i], PALOFS_SUB_JOINT);
+		GFL_CLACT_WK_SetPlttOffs(joint->cap[i], PALOFS_SUB_JOINT, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 		GFL_CLACT_WK_SetAnmSeq(joint->cap[i], MIXOBJ_ANMSEQ_JOINT_UD + i/2);
 		GFL_CLACT_WK_AddAnmFrame(joint->cap[i], FX32_ONE);
 	}
@@ -2231,7 +2231,7 @@ void Booster_ActorCreateAll(BALLOON_GAME_PTR game, BOOSTER_WORK *booster)
 		booster->move[i].cap = GFL_CLACT_WK_Create(game->clunit, 
 			game->cgr_id[CHARID_SUB_BALLOON_MIX], game->pltt_id[PLTTID_SUB_OBJ_COMMON], 
 			game->cell_id[CELLID_SUB_BALLOON_MIX], &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
-		GFL_CLACT_WK_SetPlttOffs(booster->move[i].cap, PALOFS_SUB_BOOSTER_RED);
+		GFL_CLACT_WK_SetPlttOffs(booster->move[i].cap, PALOFS_SUB_BOOSTER_RED, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 		GFL_CLACT_WK_SetAnmSeq(booster->move[i].cap, 
 			BoosterType_StartSeqAnimeNo[i + BOOSTER_TYPE_NORMAL]);
 		GFL_CLACT_WK_AddAnmFrame(booster->move[i].cap, FX32_ONE);
@@ -2242,7 +2242,7 @@ void Booster_ActorCreateAll(BALLOON_GAME_PTR game, BOOSTER_WORK *booster)
 			game->cgr_id[CHARID_SUB_BALLOON_MIX], game->pltt_id[PLTTID_SUB_OBJ_COMMON], 
 			game->cell_id[CELLID_SUB_BALLOON_MIX], 
 			&BoosterHitObjParam, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
-		GFL_CLACT_WK_SetPlttOffs(booster->move[i].hit_cap, PALOFS_SUB_BOOSTER_HIT);
+		GFL_CLACT_WK_SetPlttOffs(booster->move[i].hit_cap, PALOFS_SUB_BOOSTER_HIT, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 		GFL_CLACT_WK_SetAnmSeq(booster->move[i].hit_cap, MIXOBJ_ANMSEQ_BOOSTER_HIT_EFF);
 		GFL_CLACT_WK_AddAnmFrame(booster->move[i].hit_cap, FX32_ONE);
 		GFL_CLACT_WK_SetDrawEnable(booster->move[i].hit_cap, FALSE);
@@ -2255,7 +2255,7 @@ void Booster_ActorCreateAll(BALLOON_GAME_PTR game, BOOSTER_WORK *booster)
 			game->cgr_id[CHARID_SUB_BALLOON_MIX], game->pltt_id[PLTTID_SUB_OBJ_COMMON], 
 			game->cell_id[CELLID_SUB_BALLOON_MIX], 
 			&aff_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
-		GFL_CLACT_WK_SetPlttOffs(booster->move[i].shadow_cap, PALOFS_SUB_BOOSTER_SHADOW);
+		GFL_CLACT_WK_SetPlttOffs(booster->move[i].shadow_cap, PALOFS_SUB_BOOSTER_SHADOW, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 		GFL_CLACT_WK_SetObjMode(booster->move[i].shadow_cap, GX_OAM_MODE_XLU);	//半透明ON
 		GFL_CLACT_WK_SetAnmSeq(booster->move[i].shadow_cap, MIXOBJ_ANMSEQ_BOOSTER_SHADOW + i);
 		GFL_CLACT_WK_AddAnmFrame(booster->move[i].shadow_cap, FX32_ONE);
@@ -2779,14 +2779,14 @@ void SioBooster_ActorCreateAll(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_boos
 		sio_booster->move[i].cap = GFL_CLACT_WK_Create(game->clunit, 
 			game->cgr_id[CHARID_SUB_BALLOON_MIX], game->pltt_id[PLTTID_SUB_OBJ_COMMON], 
 			game->cell_id[CELLID_SUB_BALLOON_MIX], &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
-		GFL_CLACT_WK_SetPlttOffs(sio_booster->move[i].cap, PALOFS_SUB_BOOSTER_RED);
+		GFL_CLACT_WK_SetPlttOffs(sio_booster->move[i].cap, PALOFS_SUB_BOOSTER_RED, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 		GFL_CLACT_WK_SetDrawEnable(sio_booster->move[i].cap, FALSE);
 		
 		//ヒットエフェクト
 		sio_booster->move[i].hit_cap = GFL_CLACT_WK_Create(game->clunit, 
 			game->cgr_id[CHARID_SUB_BALLOON_MIX], game->pltt_id[PLTTID_SUB_OBJ_COMMON], 
 			game->cell_id[CELLID_SUB_BALLOON_MIX], &act_head, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
-		GFL_CLACT_WK_SetPlttOffs(sio_booster->move[i].hit_cap, PALOFS_SUB_BOOSTER_HIT);
+		GFL_CLACT_WK_SetPlttOffs(sio_booster->move[i].hit_cap, PALOFS_SUB_BOOSTER_HIT, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 		GFL_CLACT_WK_SetAnmSeq(sio_booster->move[i].hit_cap, MIXOBJ_ANMSEQ_BOOSTER_HIT_EFF);
 		GFL_CLACT_WK_AddAnmFrame(sio_booster->move[i].hit_cap, FX32_ONE);
 		GFL_CLACT_WK_SetDrawEnable(sio_booster->move[i].hit_cap, FALSE);
@@ -2845,7 +2845,7 @@ void SioBooster_Appear(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_booster, int
 	player_pos = Balloon_NetID_to_PlayerPos(game, net_id);
 	pal_ofs = PlayerNoPalOfs_Booster[game->bsw->player_max][player_pos];
 //	CATS_ObjectPaletteOffsetSetCap(sio_move->cap, pal_ofs);
-	GFL_CLACT_WK_SetPlttOffs(sio_move->cap, pal_ofs);
+	GFL_CLACT_WK_SetPlttOffs(sio_move->cap, pal_ofs, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 	
 	//アニメ設定
 	GFL_CLACT_WK_SetAnmSeq(sio_move->cap, 
@@ -3476,7 +3476,7 @@ static void BoosterLandSmoke_ActorCreate(BALLOON_GAME_PTR game, BOOSTER_LAND_SMO
 			game->pltt_id[PLTTID_SUB_OBJ_COMMON], 
 			game->cell_id[CELLID_SUB_BALLOON_MIX], 
 			&BoosterLandSmokeObjParam, CLSYS_DEFREND_SUB, HEAPID_BALLOON);
-		GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_BOOSTER_LAND_SMOKE);
+		GFL_CLACT_WK_SetPlttOffs(cap, PALOFS_SUB_BOOSTER_LAND_SMOKE, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 		GFL_CLACT_WK_SetAnmSeq(cap, MIXOBJ_ANMSEQ_BOOSTER_LAND_SMOKE);
 		GFL_CLACT_WK_SetObjMode(cap, GX_OAM_MODE_XLU);	//半透明ON
 		GFL_CLACT_WK_SetDrawEnable(cap, FALSE);

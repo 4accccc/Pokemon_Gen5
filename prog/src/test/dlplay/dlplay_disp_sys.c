@@ -232,7 +232,7 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 			GFL_CLACT_WK_SetAutoAnmSpeed( dispSys->cellBox_[i], FX32_ONE );
 			GFL_CLACT_WK_SetAutoAnmFlag( dispSys->cellBox_[i], TRUE );
 			
-			GFL_CLACT_WK_SetPlttOffs( dispSys->cellBox_[i] , pltNo );
+			GFL_CLACT_WK_SetPlttOffs( dispSys->cellBox_[i] , pltNo, CLWK_PLTTOFFS_MODE_OAM_COLOR );
 			
 			loadNum++;
 			dispSys->isUseBoxData_[i] = TRUE;

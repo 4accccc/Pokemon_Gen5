@@ -1096,7 +1096,7 @@ static void Local_PokeIconAdd(D_MATSU_WORK *wk, int monsno, int net_id)
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->clwk[net_id], TRUE);
 	
 	//ƒpƒŒƒbƒgNoÝ’è
-	GFL_CLACT_WK_SetPlttOffs(wk->clwk[net_id], POKEICON_GetPalNum(monsno, 0, FALSE));
+	GFL_CLACT_WK_SetPlttOffs(wk->clwk[net_id], POKEICON_GetPalNum(monsno, 0, FALSE), CLWK_PLTTOFFS_MODE_OAM_COLOR);
 }
 
 
