@@ -102,7 +102,7 @@ GMEVENT * DEBUG_EVENT_Battle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 	GMEVENT * event;
 	BATTLE_SETUP_PARAM * para;
 	DEBUG_BATTLE_WORK * dbw;
-	event = GMEVENT_Create(gsys, NULL, DebugBattleEvent, sizeof(BATTLE_SETUP_PARAM));
+	event = GMEVENT_Create(gsys, NULL, DebugBattleEvent, sizeof(DEBUG_BATTLE_WORK));
 	dbw = GMEVENT_GetEventWork(event);
 	dbw->gsys = gsys;
 	dbw->fieldmap = fieldmap;
