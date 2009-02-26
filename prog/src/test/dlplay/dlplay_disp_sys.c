@@ -29,6 +29,13 @@
 //======================================================================
 //	typedef struct
 //======================================================================
+typedef struct
+{
+	u32 pltIdx;
+	u32 ncgIdx[BOX_MONS_NUM];
+	u32 anmIdx;
+}DLPLAY_CELL_RES;
+
 struct _DLPLAY_DISP_SYS
 { 
 	int		heapID_;
@@ -42,11 +49,7 @@ struct _DLPLAY_DISP_SYS
 	GFL_TCB		*vblankTcb_;
 	BOOL		isUseBoxData_[BOX_MONS_NUM];
 
-	NNSG2dImagePaletteProxy	boxPltProxy_;
-	NNSG2dCellDataBank	*boxCellData_;
-	NNSG2dAnimBankData	*boxAnmData_;
-	void	*boxCellRes_;
-	void	*boxAnmRes_;
+	DLPLAY_CELL_RES	resCell_;
 };
 
 //======================================================================
@@ -62,7 +65,7 @@ static	void	DLPlayDispSys_InitObj( DLPLAY_DISP_SYS *dispSys , const GFL_DISP_VRA
 static	void	DLPlayDispSys_TermObj( DLPLAY_DISP_SYS *dispSys );
 static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , DLPLAY_DISP_SYS *dispSys );
 static	void	DLPlayDispSys_TermBoxIcon( DLPLAY_DISP_SYS *dispSys );
-static	u8		DLPlayDispSys_SetPokemonImgProxy( NNSG2dImageProxy *imgProxy , u32 offs , HEAPID heapID , const u16 pokeNo , const u8 formNo ,const u8 isEgg);
+static	u8	DLPlayDispSys_SetPokemonImgProxy( HEAPID heapID ,const u16 pokeNo , const u8 formNo , const u8 isEgg , ARCHANDLE *p_handle, u32 *resIdx );
 
 //======================================================================
 DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID , const GFL_DISP_VRAM *vramBank )
@@ -74,11 +77,10 @@ DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID , const GFL_DISP_VRAM *vra
 	dispSys->anmCnt_ = 0;
 	//dispSys->isInit_	= FALSE;	//InitObjでTRUEにするから初期化はいいか・・・
 	dispSys->isInitBox_ = FALSE;
-	dispSys->boxCellRes_ = NULL;
-	dispSys->boxAnmRes_ = NULL;
 	for( i=0;i<BOX_MONS_NUM;i++ )
 	{
 		dispSys->isUseBoxData_[i] = FALSE;
+		dispSys->resCell_.ncgIdx[i] = GFL_CLGRP_REGISTER_FAILED;
 	}
 
 	DLPlayDispSys_InitObj( dispSys ,vramBank );
@@ -149,8 +151,8 @@ static	void	DLPlayDispSys_TermObj( DLPLAY_DISP_SYS *dispSys )
 		if( dispSys->isInitBox_ == TRUE )
 		{
 			DLPlayDispSys_TermBoxIcon( dispSys );
-			GFL_HEAP_FreeMemory( dispSys->boxCellRes_ );
-			GFL_HEAP_FreeMemory( dispSys->boxAnmRes_ );
+			GFL_CLGRP_PLTT_Release( dispSys->resCell_.pltIdx );
+			GFL_CLGRP_CELLANIM_Release( dispSys->resCell_.anmIdx );
 		}
 		
 		GFL_CLACT_UNIT_Delete( dispSys->cellUnit_ );
@@ -178,19 +180,13 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 	//キャラクタファイルのみ読み替え
 	u8 i;
 	u8 loadNum;
-	NNSG2dImageProxy	imgProxy;
 	
+	ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , dispSys->heapID_ );
+
 	if( dispSys->isInitBox_ == FALSE )
 	{
-		NNS_G2dInitImagePaletteProxy( &dispSys->boxPltProxy_ );
-		GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID_POKEICON , POKEICON_GetPalArcIndex() , 
-				NNS_G2D_VRAM_TYPE_2DMAIN , 0 , dispSys->heapID_ , &dispSys->boxPltProxy_ );
-		
-		dispSys->boxCellRes_ = GFL_ARC_UTIL_LoadCellBank( ARCID_POKEICON , POKEICON_GetCellArcIndex() , 
-					FALSE , &dispSys->boxCellData_ , dispSys->heapID_ );
-	
-		dispSys->boxAnmRes_ = GFL_ARC_UTIL_LoadAnimeBank( ARCID_POKEICON , POKEICON_GetAnmArcIndex() ,
-					FALSE , &dispSys->boxAnmData_ , dispSys->heapID_ );
+		dispSys->resCell_.pltIdx = GFL_CLGRP_PLTT_RegisterComp( p_handle , POKEICON_GetPalArcIndex() , CLSYS_DRAW_MAIN , 0 , dispSys->heapID_ );
+		dispSys->resCell_.anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle , POKEICON_GetCellArcIndex() , POKEICON_GetAnmArcIndex(), dispSys->heapID_ );
 	}
 	
 	loadNum = 0;
@@ -199,7 +195,6 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 		int	fileNo;
 		if( boxData->pokeData_[trayNo][i].pokeNo_ != 0 )	//ポケモンがいるかのチェック
 		{
-			GFL_CLWK_RES	cellRes;
 			GFL_CLWK_DATA	cellInitData;
 			static const u8	iconSize = 24;
 			static const u8 iconTop = 16;
@@ -207,19 +202,10 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 			u8	pltNo;
 
 			fileNo = 495;	//テスト(egg
-			NNS_G2dInitImageProxy( &imgProxy );
-			pltNo = DLPlayDispSys_SetPokemonImgProxy( &imgProxy , 0x800+(loadNum*0x400) , dispSys->heapID_ , 
+			pltNo = DLPlayDispSys_SetPokemonImgProxy( dispSys->heapID_ , 
 						boxData->pokeData_[trayNo][i].pokeNo_ , boxData->pokeData_[trayNo][i].form_ , 
-						boxData->pokeData_[trayNo][i].isEgg_ );
+						boxData->pokeData_[trayNo][i].isEgg_ , p_handle , &dispSys->resCell_.ncgIdx[loadNum] );
 
-						
-/*
-			GFL_ARC_UTIL_TransVramCharacterMakeProxy( ARCID_POKEICON , fileNo , FALSE ,
-						CHAR_MAP_1D , 0 , NNS_G2D_VRAM_TYPE_2DMAIN , 0x1000+(loadNum*0x400) ,
-						dispSys->heapID_ , &imgProxy );
-*/
-			GFL_CLACT_WK_SetCellResData( &cellRes , &imgProxy , &dispSys->boxPltProxy_ ,
-						dispSys->boxCellData_ , dispSys->boxAnmData_ );
 
 			cellInitData.pos_x = (i%6) * iconSize + iconLeft;
 			cellInitData.pos_y = (i/6) * iconSize + iconTop;
@@ -227,8 +213,10 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 			cellInitData.softpri = 0;
 			cellInitData.bgpri = 0;
 
-			dispSys->cellBox_[i] = GFL_CLACT_WK_Add( dispSys->cellUnit_ , &cellInitData ,
-						&cellRes , CLWK_SETSF_NONE , dispSys->heapID_ );
+			dispSys->cellBox_[i] = GFL_CLACT_WK_Create( dispSys->cellUnit_ , dispSys->resCell_.ncgIdx[loadNum] ,
+											dispSys->resCell_.pltIdx , dispSys->resCell_.anmIdx ,
+											&cellInitData ,CLWK_SETSF_NONE , dispSys->heapID_ );
+
 			GFL_CLACT_WK_SetAutoAnmSpeed( dispSys->cellBox_[i], FX32_ONE );
 			GFL_CLACT_WK_SetAutoAnmFlag( dispSys->cellBox_[i], TRUE );
 			
@@ -238,6 +226,7 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 			dispSys->isUseBoxData_[i] = TRUE;
 		}
 	}
+	GFL_ARC_CloseDataHandle( p_handle );
 }
  
 static	void	DLPlayDispSys_TermBoxIcon( DLPLAY_DISP_SYS *dispSys )
@@ -250,6 +239,11 @@ static	void	DLPlayDispSys_TermBoxIcon( DLPLAY_DISP_SYS *dispSys )
 			GFL_CLACT_WK_Remove( dispSys->cellBox_[i] );
 			dispSys->isUseBoxData_[i] = FALSE;
 		}
+		if( dispSys->resCell_.ncgIdx[i] != GFL_CLGRP_REGISTER_FAILED )
+		{
+			GFL_CLGRP_CGR_Release( dispSys->resCell_.ncgIdx[i] );
+			dispSys->resCell_.ncgIdx[i] = GFL_CLGRP_REGISTER_FAILED;
+		}
 	}
 	//ごみが出るのを防ぐため一回OAMをクリア
 	//本来は1ループ間を空けるべき
@@ -258,29 +252,19 @@ static	void	DLPlayDispSys_TermBoxIcon( DLPLAY_DISP_SYS *dispSys )
 
 //ポケモンの番号とフォルムからファイル名を識別し、イメージプロキシを設定。
 //戻り値はパレット番号
-static	u8	DLPlayDispSys_SetPokemonImgProxy( NNSG2dImageProxy *imgProxy , u32 offs , HEAPID heapID ,const u16 pokeNo , const u8 formNo , const u8 isEgg )
+static	u8	DLPlayDispSys_SetPokemonImgProxy( HEAPID heapID ,const u16 pokeNo , const u8 formNo , const u8 isEgg , ARCHANDLE *p_handle, u32 *resIdx )
 {
 	const	ARCID arcID = ARCID_POKEICON;
 	ARCDATID datID;
 	const	BOOL compressedFlag = FALSE;
 	const	CHAR_MAPPING_TYPE mapType = CHAR_MAP_1D;
-	const	NNS_G2D_VRAM_TYPE vramType = NNS_G2D_VRAM_TYPE_2DMAIN;
+	const	CLSYS_DRAW_TYPE vramType = CLSYS_DRAW_MAIN;
 	void* arcData;
 	
 	datID = POKEICON_GetCgxArcIndexByMonsNumber( pokeNo , formNo , isEgg );	
 
-	arcData = GFL_ARC_UTIL_Load( arcID, datID, compressedFlag, GetHeapLowID(heapID) );
+	*resIdx = GFL_CLGRP_CGR_Register( p_handle , datID , FALSE , vramType , heapID );
 
-	if( arcData != NULL )
-	{
-		NNSG2dCharacterData* charData;
-
-		if( NNS_G2dGetUnpackedCharacterData( arcData, &charData ) )
-		{
-			NNS_G2dLoadImage1DMapping( charData, offs, vramType, imgProxy );
-		}
-		GFL_HEAP_FreeMemory( arcData );
-	}
 	return POKEICON_GetPalNum(pokeNo, formNo, isEgg);
 }
 

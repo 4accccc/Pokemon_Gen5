@@ -53,13 +53,8 @@ struct _PMS_INPUT_VIEW {
 
 	GFL_CLUNIT				*cellUnit;
 
-	// メインとサブで２つずつ
-	NNSG2dImageProxy			obj_image_proxy[2];
-	NNSG2dImagePaletteProxy		obj_pltt_proxy[2];
-	NNSG2dCellDataBank*			cellbank[2];
-	NNSG2dCellAnimBankData*		anmbank[2];
-	void*						cell_load_ptr[2];
-	void*						anm_load_ptr[2];
+	// メインとサブで２つずつ	
+	PMSIV_CELL_RES	resCell[2];
 
 	PMSIV_EDIT*			edit_wk;
 	PMSIV_BUTTON*		button_wk;
@@ -511,29 +506,9 @@ static void setup_obj_graphic( COMMAND_WORK* cwk, ARCHANDLE* p_handle )
 	PMS_INPUT_VIEW* vwk = cwk->vwk;
 
 	for(i = 0;i < 2;i++){
-		NNS_G2dInitImagePaletteProxy( &(vwk->obj_pltt_proxy[i]) );
-		NNS_G2dInitImageProxy( &(vwk->obj_image_proxy[i]) );
-
-		GFL_ARCHDL_UTIL_TransVramCharacterMakeProxy( p_handle , NARC_pmsi_pms_obj_main_NCGR, 
-					FALSE, 0, 0, NNS_G2D_VRAM_TYPE_2DMAIN+i, 0,  HEAPID_PMS_INPUT_VIEW ,
-					&(vwk->obj_image_proxy[i]) );
-//		ArcUtil_HDL_CharSysLoad(p_handle, NARC_pmsi_obj_main_lz_ncgr, TRUE, CHAR_MAP_1D, 0,
-//					NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, HEAPID_PMS_INPUT_VIEW, &(vwk->obj_image_proxy[i]) );
-
-		GFL_ARCHDL_UTIL_TransVramPaletteMakeProxy( p_handle , NARC_pmsi_pms_obj_main_NCLR ,
-					NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, HEAPID_PMS_INPUT_VIEW , &(vwk->obj_pltt_proxy[i]));
-//		ArcUtil_HDL_PalSysLoad(p_handle, NARC_pmsi_obj_main_nclr, NNS_G2D_VRAM_TYPE_2DMAIN+i, 0, 
-//					HEAPID_PMS_INPUT_VIEW, &(vwk->obj_pltt_proxy[i]));
-
-		vwk->cell_load_ptr[i] = GFL_ARCHDL_UTIL_LoadCellBank( p_handle,
-				NARC_pmsi_pms_obj_main_NCER, FALSE ,&(vwk->cellbank[i]),HEAPID_PMS_INPUT_VIEW );
-//		vwk->cell_load_ptr[i] = ArcUtil_HDL_CellBankDataGet(p_handle, NARC_pmsi_obj_main_lz_ncer,
-//				TRUE,&(vwk->cellbank[i]), HEAPID_PMS_INPUT_VIEW );
-		
-		vwk->anm_load_ptr[i] = GFL_ARCHDL_UTIL_LoadAnimeBank( p_handle,
-				NARC_pmsi_pms_obj_main_NANR, FALSE, &(vwk->anmbank[i]), HEAPID_PMS_INPUT_VIEW );
-//		vwk->anm_load_ptr[i] = ArcUtil_HDL_AnimBankDataGet(p_handle, NARC_pmsi_obj_main_lz_nanr, TRUE,
-//				&(vwk->anmbank[i]), HEAPID_PMS_INPUT_VIEW );
+		vwk->resCell[i].pltIdx = GFL_CLGRP_PLTT_Register( p_handle , NARC_pmsi_pms_obj_main_NCLR , CLSYS_DRAW_MAIN+i , 0 , HEAPID_PMS_INPUT_VIEW );
+		vwk->resCell[i].ncgIdx = GFL_CLGRP_CGR_Register( p_handle , NARC_pmsi_pms_obj_main_NCGR , FALSE , CLSYS_DRAW_MAIN+i , HEAPID_PMS_INPUT_VIEW );
+		vwk->resCell[i].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle , NARC_pmsi_pms_obj_main_NCER , NARC_pmsi_pms_obj_main_NANR, HEAPID_PMS_INPUT_VIEW );
 	
 	}
 }
@@ -573,14 +548,9 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 
 			for(i=0; i<2; i++)
 			{
-				if( vwk->cell_load_ptr[i] != NULL )
-				{
-					GFL_HEAP_FreeMemory( vwk->cell_load_ptr[i] );
-				}
-				if( vwk->anm_load_ptr[i] != NULL )
-				{
-					GFL_HEAP_FreeMemory( vwk->anm_load_ptr[i] );
-				}
+				GFL_CLGRP_PLTT_Release( cwk->vwk->resCell[i].pltIdx );
+				GFL_CLGRP_CGR_Release( cwk->vwk->resCell[i].ncgIdx );
+				GFL_CLGRP_CELLANIM_Release( cwk->vwk->resCell[i].anmIdx );
 			}
 			GFL_FONT_Delete(vwk->fontHandle);
 			
@@ -1602,7 +1572,7 @@ GFL_FONT*  PMSIView_GetFontHandle( PMS_INPUT_VIEW* vwk )
 {
 	return vwk->fontHandle;
 }
-
+/*
 NNSG2dImageProxy* PMSIView_GetObjImageProxy( PMS_INPUT_VIEW* vwk, int lcd )
 {
 	return &(vwk->obj_image_proxy[lcd]);
@@ -1611,8 +1581,9 @@ NNSG2dImagePaletteProxy* PMSIView_GetObjPaletteProxy( PMS_INPUT_VIEW* vwk, int l
 {
 	return &(vwk->obj_pltt_proxy[lcd]);
 }
+*/
 
-void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 lcd, u32 bgpri )
+void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 lcd, u32 bgpri )
 {
 #if 0
 	header->pImageProxy   = &vwk->obj_image_proxy[lcd];
@@ -1626,11 +1597,10 @@ void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, 
 	header->pMCABank = NULL;
 	header->flag = FALSE;
 #endif
-	GFL_CLACT_WK_SetCellResData( header , &vwk->obj_image_proxy[lcd],
-				&vwk->obj_pltt_proxy[lcd], vwk->cellbank[lcd], vwk->anmbank[lcd] );
+	*header = vwk->resCell[lcd];
 }
 
-GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 x, u32 y, u32 actpri, int drawArea )
+GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 x, u32 y, u32 actpri, int drawArea )
 {
 	GFL_CLWK_DATA	add;
 	GFL_CLWK*		act = NULL;
@@ -1653,7 +1623,8 @@ GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 x, u
 	}
 
 	oldIntr = OS_DisableInterrupts();
-	act = GFL_CLACT_WK_Add( vwk->cellUnit , &add , header , setsf , HEAPID_PMS_INPUT_VIEW);
+	act = GFL_CLACT_WK_Create( vwk->cellUnit , header->ncgIdx , header->pltIdx ,header->anmIdx ,
+								&add , setsf , HEAPID_PMS_INPUT_VIEW);
 	OS_RestoreInterrupts( oldIntr );
 
 	if( act )

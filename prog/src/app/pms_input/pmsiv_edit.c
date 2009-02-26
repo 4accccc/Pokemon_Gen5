@@ -572,7 +572,7 @@ static void setup_wordarea_pos( PMSIV_EDIT* wk )
 
 static void setup_obj( PMSIV_EDIT* wk )
 {
-	GFL_CLWK_RES  header;
+	PMSIV_CELL_RES  header;
 	POS  actpos;
 
 	if( wk->word_pos_max )

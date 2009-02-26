@@ -48,6 +48,13 @@ typedef struct {
 
 
 // セルアクター制御系
+typedef struct
+{
+	u32 pltIdx;
+	u32 ncgIdx;
+	u32 anmIdx;
+}MYSTERY_CELL_RES;
+
 typedef struct {
 #if 0
 	CLACT_SET_PTR	clactSet;				// セルアクターセット 
@@ -67,13 +74,7 @@ typedef struct {
 	GFL_CLUNIT	*cellUnit;
 
 	//リソース群(上下２画面分
-	NNSG2dImagePaletteProxy	pltProxy[2];
-	NNSG2dImageProxy	imgProxy[2];
-	NNSG2dCellDataBank	*cellData[2];
-	NNSG2dAnimBankData	*anmData[2];
-	void	*cellRes[2];
-	void	*anmRes[2];
-	
+	MYSTERY_CELL_RES	resCell[2];
 
 	int dummy;
 } MYSTERY_CLACT;

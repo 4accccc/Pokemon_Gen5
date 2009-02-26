@@ -403,30 +403,7 @@ void MysteryLib_InitClactSystem(void)
 	const u8 CELL_MAX = 16;
 	int i;
 	MYSTERYLIB_WORK *wk = GetMysteryLibWorkPtr();
-	/*
 
-	// OAMマネージャーの初期化
-	NNS_G2dInitOamManagerModule();
-	// 共有OAMマネージャ作成
-	// レンダラ用OAMマネージャ作成
-	// ここで作成したOAMマネージャをみんなで共有する
-	REND_OAMInit(0, 126,		// メイン画面OAM管理領域
-				 0, 32,		// メイン画面アフィン管理領域
-				 0, 126,		// サブ画面OAM管理領域
-				 0, 32,		// サブ画面アフィン管理領域
-				 wk->heapid);
-	
-	// セルアクター初期化
-	wk->clact.clactSet = CLACT_U_SetEasyInit( 128, &wk->clact.renddata, wk->heapid);	///< 70 -> 128
-	CLACT_U_SetSubSurfaceMatrix(&wk->clact.renddata, 0, (256*FX32_ONE));
-
-	wk->sub_add = SUB_SURFACE_Y;
-	
-	//リソースマネージャー初期化
-	for(i = 0; i < CLACT_U_RES_MAX; i++){		//リソースマネージャー作成
-		wk->clact.resMan[i] = CLACT_U_ResManagerInit( 32, i, wk->heapid);	/// 3 -> 32
-	}
-	*/
 	
 	GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
 	cellSysInitData.oamst_main = 1; //通信アイコンの分
@@ -437,6 +414,14 @@ void MysteryLib_InitClactSystem(void)
 	GFL_CLACT_SYS_Create( &cellSysInitData , &vramSetTable, wk->heapid );
 	wk->clact.cellUnit  = GFL_CLACT_UNIT_Create( CELL_MAX , 0,wk->heapid );
 	GFL_CLACT_UNIT_SetDefaultRend( wk->clact.cellUnit );
+	
+	//リソースに空インデックス設定
+	for( i=0;i<2;i++ )
+	{
+		wk->clact.resCell[i].pltIdx = GFL_CLGRP_REGISTER_FAILED;
+		wk->clact.resCell[i].ncgIdx = GFL_CLGRP_REGISTER_FAILED;
+		wk->clact.resCell[i].anmIdx = GFL_CLGRP_REGISTER_FAILED;
+	}
 
 	wk->isInitClact = TRUE;
 }
@@ -475,8 +460,9 @@ void MysteryLib_InitClact(int arcfile, int arcchar, int arcpal, int arccell, int
 {
 	
 	MYSTERYLIB_WORK *wk = GetMysteryLibWorkPtr();
-	int hwscreen = (screen == GFL_BG_MAIN_DISP ? NNS_G2D_VRAM_TYPE_2DMAIN : NNS_G2D_VRAM_TYPE_2DSUB);
+	int hwscreen = (screen == GFL_BG_MAIN_DISP ? CLSYS_DRAW_MAIN : CLSYS_DRAW_SUB);
 	int comp;
+	ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( arcfile , wk->heapid );
 
 	//  OS_TPrintf("%d, %d, %d, %d, %d, %d\n", arcfile, arcchar, arcpal, arccell, arcanim, screen);
 
@@ -487,76 +473,19 @@ void MysteryLib_InitClact(int arcfile, int arcchar, int arcpal, int arccell, int
 	//chara読み込み
 	if(arcchar != -1)
 	{
-//		wk->clact.resObjTbl[screen][CLACT_U_CHAR_RES] =
-//			CLACT_U_ResManagerResAddArcChar(wk->clact.resMan[CLACT_U_CHAR_RES],
-//							arcfile, arcchar, comp, screen, hwscreen, wk->heapid);
-
-		NNS_G2dInitImageProxy( &wk->clact.imgProxy[screen] );
-		GFL_ARC_UTIL_TransVramCharacterMakeProxy( arcfile , arcchar , 
-					FALSE , 0 , 0 , hwscreen , 0 , wk->heapid , &wk->clact.imgProxy[screen] );
-		/*
-		void* arcData;
-		NNSG2dCharacterData* charData;
-		NNS_G2dInitImageProxy( &wk->clact.imgProxy[screen] );
-
-		arcData = GFL_ARC_UTIL_Load( arcfile, arcchar, comp , (wk->heapid) );
-
-		GF_ASSERT( arcData != NULL );
-		if( NNS_G2dGetUnpackedCharacterData( arcData, &charData ) == FALSE )
-		{
-			GF_ASSERT( NULL );
-		}
-		//オフセットはとりあえず通信アイコン分(0x800
-		NNS_G2dLoadImage1DMapping( charData, 0x800, hwscreen, &wk->clact.imgProxy[screen] );
-		GFL_HEAP_FreeMemory( arcData );
-		*/
+		wk->clact.resCell[screen].ncgIdx = GFL_CLGRP_CGR_Register( p_handle , arcchar , FALSE , hwscreen , wk->heapid );
 	}
 	//pal読み込み
 	if(arcpal != -1)
 	{
-//		wk->clact.resObjTbl[screen][CLACT_U_PLTT_RES] =
-//			CLACT_U_ResManagerResAddArcPltt(wk->clact.resMan[CLACT_U_PLTT_RES],
-//							arcfile, arcpal, 0, screen, hwscreen, 3, wk->heapid);
-		NNS_G2dInitImagePaletteProxy( &wk->clact.pltProxy[screen] );
-		GFL_ARC_UTIL_TransVramPaletteMakeProxy( arcfile , arcpal , 
-				hwscreen , 0 , wk->heapid , &wk->clact.pltProxy[screen] );
-
-
+		wk->clact.resCell[screen].pltIdx = GFL_CLGRP_PLTT_Register( p_handle , arcpal , hwscreen , 0 , wk->heapid );
 	}
 	//cell読み込み
-	if(arccell != -1)
+	if(arccell != -1 && arcanim != -1 )
 	{
-//		wk->clact.resObjTbl[screen][CLACT_U_CELL_RES] =
-//			CLACT_U_ResManagerResAddArcKindCell(wk->clact.resMan[CLACT_U_CELL_RES],
-//						arcfile, arccell, comp, screen, CLACT_U_CELL_RES,wk->heapid);
-		wk->clact.cellRes[screen] = GFL_ARC_UTIL_LoadCellBank( arcfile , arccell , 
-											FALSE , &wk->clact.cellData[screen] , wk->heapid );
-	}
-	//同じ関数でanim読み込み
-	if(arcanim != -1)
-	{
-//		wk->clact.resObjTbl[screen][CLACT_U_CELLANM_RES] =
-//			CLACT_U_ResManagerResAddArcKindCell(wk->clact.resMan[CLACT_U_CELLANM_RES],
-//						arcfile, arcanim, comp, screen, CLACT_U_CELLANM_RES,wk->heapid);
-		wk->clact.anmRes[screen] = GFL_ARC_UTIL_LoadAnimeBank( arcfile , arcanim , 
-											FALSE , &wk->clact.anmData[screen] , wk->heapid );
+		wk->clact.resCell[screen].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle , arccell , arcanim, wk->heapid );
 	}
 
-	// Chara転送
-//  CLACT_U_CharManagerSetAreaCont(wk->clact.resObjTbl[screen][CLACT_U_CHAR_RES]);
-//	CLACT_U_CharManagerSet(wk->clact.resObjTbl[screen][CLACT_U_CHAR_RES]);
-	// パレット転送
-//	CLACT_U_PlttManagerSetCleanArea(wk->clact.resObjTbl[screen][CLACT_U_PLTT_RES]);
-
-	// セルアクターヘッダ作成
-//	CLACT_U_MakeHeader(&wk->clact.clActHeader[screen], screen, screen, screen, screen,
-//				 CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
-//				 0, 0,
-//				 wk->clact.resMan[CLACT_U_CHAR_RES],
-//				 wk->clact.resMan[CLACT_U_PLTT_RES],
-//				 wk->clact.resMan[CLACT_U_CELL_RES],
-//				 wk->clact.resMan[CLACT_U_CELLANM_RES],
-//				 NULL,NULL);
 //	//まだ何も転送していないから
 	if(screen == GFL_BG_MAIN_DISP)
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );	//メイン画面OBJ面ＯＮ
@@ -566,6 +495,7 @@ void MysteryLib_InitClact(int arcfile, int arcchar, int arcpal, int arccell, int
 //	sys_VBlankFuncChange(MysteryLib_VBlankFunc, NULL);
 	wk->vblankFuncTcb = GFUser_VIntr_CreateTCB( MysteryLib_VBlankFunc , (void*)wk , 0 );
 
+	GFL_ARC_CloseDataHandle( p_handle );
 	
 }
 
@@ -661,39 +591,19 @@ GFL_CLWK* MysteryLib_MakeCLACT(int screen, GFL_CLWK *anim, int sx, int sy, int a
 {
 	MYSTERYLIB_WORK *wk = GetMysteryLibWorkPtr();
 	GFL_CLWK *cellWork;
-/* old
-	if(anim == NULL){
-		CLACT_ADD add;
-		add.ClActSet	= wk->clact.clactSet;
-		add.ClActHeader	= &wk->clact.clActHeader[screen];
-		add.mat.z		= 0;
-		add.sca.x		= FX32_ONE;
-		add.sca.y		= FX32_ONE;
-		add.sca.z		= FX32_ONE;
-		add.rot		= 0;
-		add.mat.x		= FX32_ONE * sx;
-		add.mat.y		= FX32_ONE * sy;
-		add.pri		= 10;
-		add.DrawArea	= screen == GF_BGL_MAIN_DISP ? NNS_G2D_VRAM_TYPE_2DMAIN : NNS_G2D_VRAM_TYPE_2DSUB;
-		add.heap		= wk->heapid;
-		if(add.DrawArea == NNS_G2D_VRAM_TYPE_2DSUB)
-			add.mat.y += wk->sub_add;
-		anim = CLACT_Add(&add);
-	}
-*/
+
 	if( anim == NULL )
 	{
-		GFL_CLWK_RES	cellRes;
 		GFL_CLWK_DATA	cellInitData;
-		GFL_CLACT_WK_SetCellResData( &cellRes , &wk->clact.imgProxy[screen] ,
-				&wk->clact.pltProxy[screen] , wk->clact.cellData[screen] , wk->clact.anmData[screen] );
 		cellInitData.pos_x = sx;
 		cellInitData.pos_y = sy;
 		cellInitData.anmseq = anum;
 		cellInitData.softpri = 0;
 		cellInitData.bgpri = 0;
-		cellWork = GFL_CLACT_WK_Add( wk->clact.cellUnit , &cellInitData ,
-					&cellRes , (screen==GFL_BG_MAIN_DISP?CLSYS_DEFREND_MAIN:CLSYS_DEFREND_SUB) , wk->heapid );
+		cellWork = GFL_CLACT_WK_Create( wk->clact.cellUnit , wk->clact.resCell[screen].ncgIdx , 
+										wk->clact.resCell[screen].pltIdx , wk->clact.resCell[screen].anmIdx , 
+										&cellInitData , (screen==GFL_BG_MAIN_DISP?CLSYS_DEFREND_MAIN:CLSYS_DEFREND_SUB) ,
+										wk->heapid );
 	}
 	else
 	{
@@ -725,25 +635,24 @@ void MysteryLib_RemoveClact(void)
 		GFL_CLACT_WK_Remove(wk->giftact);
 		wk->giftact = NULL;
 	}
-	//FIXME
-#if 0 
-	// キャラ転送マネージャー破棄
-	if(act->resObjTbl[GF_BGL_MAIN_DISP][CLACT_U_CHAR_RES])
-		CLACT_U_CharManagerDelete(act->resObjTbl[GF_BGL_MAIN_DISP][CLACT_U_CHAR_RES]);
-	if(act->resObjTbl[GF_BGL_SUB_DISP ][CLACT_U_CHAR_RES])
-		CLACT_U_CharManagerDelete(act->resObjTbl[GF_BGL_SUB_DISP ][CLACT_U_CHAR_RES]);
-	// パレット転送マネージャー破棄
-	if(act->resObjTbl[GF_BGL_MAIN_DISP][CLACT_U_PLTT_RES])
-		CLACT_U_PlttManagerDelete(act->resObjTbl[GF_BGL_MAIN_DISP][CLACT_U_PLTT_RES]);
-	if(act->resObjTbl[GF_BGL_SUB_DISP ][CLACT_U_PLTT_RES])
-		CLACT_U_PlttManagerDelete(act->resObjTbl[GF_BGL_SUB_DISP ][CLACT_U_PLTT_RES]);
-
-	// キャラ・パレット・セル・セルアニメのリソースマネージャー破棄
-	for(i = 0; i < CLACT_U_RES_MAX; i++){
-		CLACT_U_ResManagerDelete(act->resMan[i]);
-		act->resMan[i] = NULL;
+	for( i=0;i<2;i++ )
+	{
+		if( act->resCell[i].pltIdx != GFL_CLGRP_REGISTER_FAILED )
+		{
+			GFL_CLGRP_PLTT_Release( act->resCell[i].pltIdx );
+			act->resCell[i].pltIdx = GFL_CLGRP_REGISTER_FAILED;
+		}
+		if( act->resCell[i].ncgIdx != GFL_CLGRP_REGISTER_FAILED )
+		{
+			GFL_CLGRP_CGR_Release( act->resCell[i].ncgIdx );
+			act->resCell[i].ncgIdx = GFL_CLGRP_REGISTER_FAILED;
+		}
+		if( act->resCell[i].anmIdx != GFL_CLGRP_REGISTER_FAILED )
+		{
+			GFL_CLGRP_CELLANIM_Release( act->resCell[i].anmIdx );
+			act->resCell[i].anmIdx = GFL_CLGRP_REGISTER_FAILED;
+		}
 	}
-#endif
 
 	GFL_CLACT_UNIT_Delete( wk->clact.cellUnit );
 	GFL_CLACT_SYS_Delete();
@@ -752,6 +661,8 @@ void MysteryLib_RemoveClact(void)
 	{
 		GFL_TCB_DeleteTask( wk->vblankFuncTcb );
 	}
+	
+	
 
 /* old
 	// セルアクターセット破棄

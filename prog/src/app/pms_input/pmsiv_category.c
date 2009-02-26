@@ -438,7 +438,7 @@ static u32 setup_back_window( PMSIV_CATEGORY* wk, u32 charpos )
 
 static void setup_actor( PMSIV_CATEGORY* wk )
 {
-	GFL_CLWK_RES  header;
+	PMSIV_CELL_RES  header;
 
 	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_MAIN, /*BGPRI_MAIN_CATEGORY*/BGPRI_MAIN_EDITAREA);
 	wk->cursor_actor = PMSIView_AddActor( wk->vwk, &header, CATEGORY_CURSOR_OX, CATEGORY_CURSOR_OY,

@@ -236,7 +236,7 @@ void PMSIV_WORDWIN_SetupGraphicDatas( PMSIV_WORDWIN* wk )
 
 static void setup_actor( PMSIV_WORDWIN* wk )
 {
-	GFL_CLWK_RES  header;
+	PMSIV_CELL_RES  header;
 
 	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_MAIN, BGPRI_MAIN_EDITAREA );
 	wk->cursor_actor = PMSIView_AddActor( wk->vwk, &header, CURSOR_OX, CURSOR_OY,

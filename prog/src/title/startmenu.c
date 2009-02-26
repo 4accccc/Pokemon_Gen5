@@ -104,11 +104,9 @@ typedef struct
 
 	GFL_CLUNIT	*cellUnit_;
 	GFL_CLWK	*cellCursor_[2];
-	NNSG2dImagePaletteProxy	cursorPltProxy_;
-	NNSG2dCellDataBank	*cursorCellData_;
-	NNSG2dAnimBankData	*cursorAnmData_;
-	void	*cursorCellRes_;
-	void	*cursorAnmRes_;
+	u32			pltIdx;
+	u32			ncgIdx;
+	u32			anmIdx;
 
 	START_MENU_ITEM_WORK itemWork_[SMI_MAX];
 }START_MENU_WORK;
@@ -264,8 +262,11 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 
 		GFL_CLACT_WK_Remove( work->cellCursor_[0] );
 		GFL_CLACT_WK_Remove( work->cellCursor_[1] );
-		GFL_HEAP_FreeMemory( work->cursorCellRes_ );
-		GFL_HEAP_FreeMemory( work->cursorAnmRes_ );
+		
+		GFL_CLGRP_PLTT_Release( work->pltIdx );
+		GFL_CLGRP_CGR_Release( work->ncgIdx );
+		GFL_CLGRP_CELLANIM_Release( work->anmIdx );
+		
 		GFL_CLACT_UNIT_Delete( work->cellUnit_ );
 		GFL_CLACT_SYS_Delete();
 
@@ -414,6 +415,8 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	};
 	
+	ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_STARTMENU , work->heapId_ );
+
 	GX_SetMasterBrightness(-16);	
 	GXS_SetMasterBrightness(-16);
 	GFL_DISP_GX_SetVisibleControlDirect(0);		//‘SBG&OBJ‚Ì•\Ž¦OFF
@@ -430,8 +433,6 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 	
 	//OBJŒn
 	{
-		NNSG2dImageProxy	imgProxy;
-		GFL_CLWK_RES	cellRes;
 		GFL_CLWK_DATA	cellInitData;
 
 		GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
@@ -441,24 +442,12 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 		work->cellUnit_  = GFL_CLACT_UNIT_Create( 2 , 0, work->heapId_ );
 		GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit_ );
 
-		NNS_G2dInitImagePaletteProxy( &work->cursorPltProxy_ );
-		NNS_G2dInitImageProxy( &imgProxy );
 		//ŠeŽí‘fÞ‚Ì“Ç‚Ýž‚Ý
-		GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID_STARTMENU , NARC_startmenu_title_cursor_NCLR , 
-				NNS_G2D_VRAM_TYPE_2DMAIN , 0 , work->heapId_ , &work->cursorPltProxy_ );
-		
-		work->cursorCellRes_ = GFL_ARC_UTIL_LoadCellBank( ARCID_STARTMENU , NARC_startmenu_title_cursor_NCER , 
-					FALSE , &work->cursorCellData_ , work->heapId_ );
-	
-		work->cursorAnmRes_ = GFL_ARC_UTIL_LoadAnimeBank( ARCID_STARTMENU , NARC_startmenu_title_cursor_NANR ,
-					FALSE , &work->cursorAnmData_ , work->heapId_ );
-		
-		GFL_ARC_UTIL_TransVramCharacterMakeProxy( ARCID_STARTMENU , NARC_startmenu_title_cursor_NCGR , 
-					FALSE , 0 , 0 , NNS_G2D_VRAM_TYPE_2DMAIN , 0 , work->heapId_ , &imgProxy );
+		work->pltIdx = GFL_CLGRP_PLTT_Register( p_handle , NARC_startmenu_title_cursor_NCLR , CLSYS_DRAW_MAIN , 0 , work->heapId_  );
+		work->ncgIdx = GFL_CLGRP_CGR_Register( p_handle , NARC_startmenu_title_cursor_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId_  );
+		work->anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle , NARC_startmenu_title_cursor_NCER , NARC_startmenu_title_cursor_NANR, work->heapId_  );
 
 		//ƒZƒ‹‚Ì¶¬
-		GFL_CLACT_WK_SetCellResData( &cellRes , &imgProxy , &work->cursorPltProxy_ ,
-					work->cursorCellData_ , work->cursorAnmData_ );
 
 		cellInitData.pos_x = 128;
 		cellInitData.pos_y =  8;
@@ -466,8 +455,8 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 		cellInitData.softpri = 0;
 		cellInitData.bgpri = 0;
 		//ª–îˆó
-		work->cellCursor_[0] = GFL_CLACT_WK_Add( work->cellUnit_ , &cellInitData ,
-					&cellRes , CLSYS_DEFREND_MAIN , work->heapId_ );
+		work->cellCursor_[0] = GFL_CLACT_WK_Create( work->cellUnit_ ,work->ncgIdx,work->pltIdx,work->anmIdx,
+							 		&cellInitData ,CLSYS_DEFREND_MAIN , work->heapId_ );
 		GFL_CLACT_WK_SetAutoAnmSpeed( work->cellCursor_[0], FX32_ONE );
 		GFL_CLACT_WK_SetAutoAnmFlag( work->cellCursor_[0], TRUE );
 		GFL_CLACT_WK_SetDrawEnable( work->cellCursor_[0], FALSE );
@@ -475,8 +464,8 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 		//«–îˆó
 		cellInitData.pos_y =  192-8;
 		cellInitData.anmseq = 1;
-		work->cellCursor_[1] = GFL_CLACT_WK_Add( work->cellUnit_ , &cellInitData ,
-					&cellRes , CLSYS_DEFREND_MAIN , work->heapId_ );
+		work->cellCursor_[1] = GFL_CLACT_WK_Create( work->cellUnit_ ,work->ncgIdx,work->pltIdx,work->anmIdx,
+							 		&cellInitData ,CLSYS_DEFREND_MAIN , work->heapId_ );
 		GFL_CLACT_WK_SetAutoAnmSpeed( work->cellCursor_[1], FX32_ONE );
 		GFL_CLACT_WK_SetAutoAnmFlag( work->cellCursor_[1], TRUE );
 		GFL_CLACT_WK_SetDrawEnable( work->cellCursor_[1], FALSE );
@@ -484,6 +473,7 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
 	}
 
+	GFL_ARC_CloseDataHandle( p_handle );
 }
 
 //--------------------------------------------------------------------------

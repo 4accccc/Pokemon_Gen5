@@ -393,7 +393,7 @@ static void setup_button_win( PMSIV_BUTTON* wk)
 
 static void setup_obj( PMSIV_BUTTON* wk )
 {
-	GFL_CLWK_RES  header;
+	PMSIV_CELL_RES  header;
 
 	PMSIView_SetupDefaultActHeader( wk->vwk, &header, PMSIV_LCD_MAIN, BGPRI_MAIN_BUTTON );
 	wk->cursor_actor = PMSIView_AddActor( wk->vwk, &header, DECIDE_CURSOR_XPOS, DECIDE_CURSOR_YPOS,

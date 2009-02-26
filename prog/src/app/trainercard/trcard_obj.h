@@ -34,6 +34,12 @@ enum{
 		TR_CARD_GRATE_STAR_ACT_MAX+TR_CARD_BTNEFF_ACT_MAX)
 
 ///typedef struct TR_CARD_OBJ_WORK_tag *TR_CARD_OBJ_PTR;
+typedef struct
+{
+	u32 pltIdx;
+	u32 ncgIdx;
+	u32 anmIdx;
+}TRCARD_CELL_RES;
 
 typedef struct TR_CARD_OBJ_WORK_tag
 {
@@ -53,12 +59,7 @@ typedef struct TR_CARD_OBJ_WORK_tag
 	GFL_CLWK	*ClActWork[TR_CARD_ACT_MAX];		// セルアクターワークポインタ配列
 	GFL_CLWK	*ClActWorkS[TR_CARD_SUB_ACT_MAX];	// セルアクターワークポインタ配列
 	
-	NNSG2dImageProxy		charaProxy[2];
-	NNSG2dCellDataBank		*cellData[2];
-	NNSG2dAnimBankData		*anmData[2];
-	NNSG2dImagePaletteProxy	pltProxy[2];
-	void*		ResObjTbl[2][RESOURCE_NUM];		// リソースオブジェテーブル(上下画面)
-
+	TRCARD_CELL_RES	resCell[2];
 
 	void *badgePalBuf[TR_CARD_BADGE_ACT_MAX];		//パレットデータTR_CARD_BADGE_ACT_MAX分
 	NNSG2dPaletteData *badgePalData[TR_CARD_BADGE_ACT_MAX];	//パレットデータTR_CARD_BADGE_ACT_MAX分

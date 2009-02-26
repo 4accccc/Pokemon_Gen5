@@ -162,15 +162,20 @@ enum {
 	ANM_WORD_SCR_D02,
 };
 
+typedef struct
+{
+	u32 pltIdx;
+	u32 ncgIdx;
+	u32 anmIdx;
+}PMSIV_CELL_RES;
 
 extern GFL_TCB* PMSIView_AddVTask( GFL_TCB_FUNC func, void* wk, int pri );
 extern GFL_CLUNIT*  PMSIView_GetActSys( PMS_INPUT_VIEW* vwk );
 GFL_FONT*  PMSIView_GetFontHandle( PMS_INPUT_VIEW* vwk );
-extern NNSG2dImageProxy*  PMSIView_GetObjImageProxy( PMS_INPUT_VIEW* vwk, int lcd );
-extern NNSG2dImagePaletteProxy*  PMSIView_GetObjPaletteProxy( PMS_INPUT_VIEW* vwk, int lcd );
-extern void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 lcd, u32 bgpri );
-extern GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, GFL_CLWK_RES* header, u32 x, u32 y, u32 actpri, int drawArea );
-
+//extern NNSG2dImageProxy*  PMSIView_GetObjImageProxy( PMS_INPUT_VIEW* vwk, int lcd );
+//extern NNSG2dImagePaletteProxy*  PMSIView_GetObjPaletteProxy( PMS_INPUT_VIEW* vwk, int lcd );
+extern void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 lcd, u32 bgpri );
+extern GFL_CLWK* PMSIView_AddActor( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 x, u32 y, u32 actpri, int drawArea );
 
 //================================================================================
 //  ì¸óÕóìèàóù
