@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-02-26T12:08:35"/>
+	<create user="taya" host="W00146" date="2009-02-26T23:28:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -880,6 +880,27 @@
 こおって動けない！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_KoriMelt">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
+こおり　が　とけた！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
+こおり　が　とけた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KoriMelt_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
+こおり　が　とけた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
+こおり　が　とけた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KoriMelt_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
+こおり　が　とけた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
+こおり　が　とけた！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_NemuriGet">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
 ねむってしまった！</language>
@@ -920,6 +941,27 @@
 ねむっている！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
 ねむっている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NemuriWake">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+めを　さました！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+目を　さました！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NemuriWake_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+めを　さました！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+目を　さました！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NemuriWake_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+めを　さました！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+目を　さました！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_KonranGet">
