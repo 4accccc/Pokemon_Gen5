@@ -10,11 +10,11 @@ del *.nsbmd
 del *.nsbca
 
 echo g2dコンバート
-g2dcvtr fontoam_dummy32x16.nce -ncn
+g2dcvtr bmpoam_dummy32x16.nce -ncn
 
 
 echo narc作成
-nnsarc -c -l -n -i fontoam -S fontoam.lst
+nnsarc -c -l -n -i bmpoam -S bmpoam.lst
 
 
 del *.N??R

@@ -42,7 +42,7 @@ SUBDIRS	=	wmi \
 			musical \
 			fldmmdl \
 			infowin \
-			fontoam
+			bmpoam
 
 
 include $(RESOURCE_MACRO)

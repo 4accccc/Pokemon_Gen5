@@ -120,6 +120,6 @@
 	ARCID_FLDMMDL_PARAM "fieldmap/fldmmdl_mdlparam.narc" #動作モデル パラメータ
 	ARCID_FLDMMDL_RES	"fieldmap/fldmmdl_mdlres.narc" #動作モデル リソース
 	ARCID_INFOWIN		"infowin.narc"		#情報ウィンドウ
-	ARCID_FONTOAM		"fontoam.narc"			#フォントOAM
+	ARCID_BMPOOAM		"bmpoam.narc"			#BMPOAM
 
 
