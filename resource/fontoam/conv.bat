@@ -10,7 +10,7 @@ del *.nsbmd
 del *.nsbca
 
 echo g2dコンバート
-g2dcvtr fontoam_dummy32x16.nce
+g2dcvtr fontoam_dummy32x16.nce -ncn
 
 
 echo narc作成

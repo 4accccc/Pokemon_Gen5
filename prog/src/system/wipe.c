@@ -992,7 +992,7 @@ void WIPE_V_HBlankInit(WIPE_HBLANK* p_wipehb, void* work, pHBFunc func, int disp
 	data->work = work;
 	data->func = func;
 	data->disp = disp;
-	GFUser_HIntr_CreateTCB( scchg_v_HBlankInit, data, WIPE_HBLANK_INIT_TCB);
+	GFUser_VIntr_CreateTCB( scchg_v_HBlankInit, data, WIPE_HBLANK_INIT_TCB);
 	//VWaitTCB_Add( scchg_v_HBlankInit, data, WIPE_HBLANK_INIT_TCB);
 }
 
@@ -1014,7 +1014,7 @@ void WIPE_V_HBlankDelete(WIPE_HBLANK* p_wipehb, int disp, int heap)
 	WIPE_V_DELHBLANK* p_delhb = GFL_HEAP_AllocMemoryLo(heap, sizeof(WIPE_V_DELHBLANK));
 	p_delhb->p_wipehb	= p_wipehb;
 	p_delhb->disp		= disp;
-	GFUser_HIntr_CreateTCB( scchg_v_HBlankDelete, p_delhb, WIPE_HBLANK_DELETE_TCB);
+	GFUser_VIntr_CreateTCB( scchg_v_HBlankDelete, p_delhb, WIPE_HBLANK_DELETE_TCB);
 	//VWaitTCB_Add( scchg_v_HBlankDelete, p_delhb, WIPE_HBLANK_DELETE_TCB);
 }
 
@@ -1154,7 +1154,7 @@ static void resetMstBrightnessCheck_Do( WIPE_SYS_WIPE_WORK* p_data )
 		((p_data->color == WIPE_FADE_WHITE) || (p_data->color == WIPE_FADE_BLACK)) &&
 		(p_data->wnd_br == WIPE_USE_WND) ){
 
-		GFUser_HIntr_CreateTCB( resetMstBrightnessVblank, p_data, WIPE_VBLANK_BR_RESET_TCB);
+		GFUser_VIntr_CreateTCB( resetMstBrightnessVblank, p_data, WIPE_VBLANK_BR_RESET_TCB);
 		//VWaitTCB_Add( resetMstBrightnessVblank, p_data, WIPE_VBLANK_BR_RESET_TCB );
 	}
 }

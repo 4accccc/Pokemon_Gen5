@@ -290,7 +290,7 @@ void WNDP_V_SetVisibleWnd(WNDP_SYS_PTR sys, int window, int disp)
 	wvp = &sys->visible[disp];
 	wvp->wnd = window;
 	wvp->disp = disp;
-	GFUser_HIntr_CreateTCB(wndp_v_SetVisibleWnd, wvp, 1);
+	GFUser_VIntr_CreateTCB(wndp_v_SetVisibleWnd, wvp, 1);
 	//VWaitTCB_Add(wndp_v_SetVisibleWnd,wvp,1);
 }
 
@@ -319,7 +319,7 @@ void WNDP_V_SetWndInsidePlane(WNDP_SYS_PTR sys, int wnd, BOOL effect, int wnd_no
 	wip->effect = effect;
 	wip->wnd_no	= wnd_no;
 	wip->disp	= disp;
-	GFUser_HIntr_CreateTCB(wndp_v_SetWndInsidePlane, wip, 1);
+	GFUser_VIntr_CreateTCB(wndp_v_SetWndInsidePlane, wip, 1);
 	//VWaitTCB_Add( wndp_v_SetWndInsidePlane, wip, 1);
 }
 
@@ -346,7 +346,7 @@ void WNDP_V_SetWndOutsidePlane(WNDP_SYS_PTR sys, int wnd, BOOL effect, int disp)
 	wop->wnd	= wnd;
 	wop->effect = effect;
 	wop->disp	= disp;
-	GFUser_HIntr_CreateTCB(wndp_v_SetWndOutsidePlane, wop, 1);
+	GFUser_VIntr_CreateTCB(wndp_v_SetWndOutsidePlane, wop, 1);
 	//VWaitTCB_Add(wndp_v_SetWndOutsidePlane, wop, 1);
 }
 
@@ -373,7 +373,7 @@ void WNDP_V_SetWndOBJInsidePlane(WNDP_SYS_PTR sys, int wnd, BOOL effect, int dis
 	woip->wnd	= wnd;
 	woip->effect = effect;
 	woip->disp	= disp;
-	GFUser_HIntr_CreateTCB(wndp_v_SetWndOBJInsidePlane, woip, 1);
+	GFUser_VIntr_CreateTCB(wndp_v_SetWndOBJInsidePlane, woip, 1);
 	//VWaitTCB_Add(wndp_v_SetWndOBJInsidePlane, woip, 1);
 }
 
@@ -406,7 +406,7 @@ void WNDP_V_SetWndPosition(WNDP_SYS_PTR sys, int x1, int y1, int x2, int y2, int
 	wpp->y2		= y2;
 	wpp->wnd_no	= wnd_no;
 	wpp->disp	= disp;
-	GFUser_HIntr_CreateTCB(wndp_v_SetWndPosition, wpp, 1);
+	GFUser_VIntr_CreateTCB(wndp_v_SetWndPosition, wpp, 1);
 	//VWaitTCB_Add(wndp_v_SetWndPosition, wpp, 1);
 }
 

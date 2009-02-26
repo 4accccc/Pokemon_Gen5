@@ -133,6 +133,9 @@ typedef struct {
 	void	*icon_cell_res;
 	void	*icon_anm_res;
 	GFL_TCB *vintr_tcb;
+	u32 icon_cgr_id;
+	u32 icon_pltt_id;
+	u32 icon_cell_id;
 }D_MATSU_WORK;
 
 
@@ -1016,18 +1019,17 @@ static void Local_MessagePut(D_MATSU_WORK *wk, int win_index, STRBUF *strbuf, in
 //--------------------------------------------------------------
 static void Local_PokeIconCommonDataSet(D_MATSU_WORK *wk)
 {
-	//パレット
-	NNS_G2dInitImagePaletteProxy( &wk->icon_pal_proxy );
-	GFL_ARC_UTIL_TransVramPaletteMakeProxy(ARCID_POKEICON, POKEICON_GetPalArcIndex(), 
-		NNS_G2D_VRAM_TYPE_2DMAIN, D_MATSU_ICON_PALNO, HEAPID_MATSUDA_DEBUG, &wk->icon_pal_proxy);
+	ARCHANDLE *hdl;
+
+	hdl = GFL_ARC_OpenDataHandle(ARCID_POKEICON, HEAPID_MATSUDA_DEBUG);
 	
-	//セル
-	wk->icon_cell_res = GFL_ARC_UTIL_LoadCellBank(ARCID_POKEICON, POKEICON_GetCellArcIndex(), 
-		FALSE, &wk->icon_cell_data, HEAPID_MATSUDA_DEBUG);
-	
-	//セルアニメ
-	wk->icon_anm_res = GFL_ARC_UTIL_LoadAnimeBank(ARCID_POKEICON , POKEICON_GetAnmArcIndex(),
-		FALSE, &wk->icon_anm_data, HEAPID_MATSUDA_DEBUG);
+	wk->icon_pltt_id = GFL_CLGRP_PLTT_RegisterEx(
+		hdl, POKEICON_GetPalArcIndex(), CLSYS_DRAW_MAIN, 
+		D_MATSU_ICON_PALNO * 0x20, 0, 1, HEAPID_MATSUDA_DEBUG);
+	wk->icon_cell_id = GFL_CLGRP_CELLANIM_Register(hdl, 
+		POKEICON_GetCellArcIndex(), POKEICON_GetAnmArcIndex(), HEAPID_MATSUDA_DEBUG);
+
+	GFL_ARC_CloseDataHandle(hdl);
 }
 
 //--------------------------------------------------------------
@@ -1066,30 +1068,27 @@ static void Local_PokeIconAdd(D_MATSU_WORK *wk, int monsno, int net_id)
 	NNSG2dImageProxy imgProxy;
 	u32 icon_index;
 	u32 vram_offset = 0;	//byte単位
-	
+	ARCHANDLE *hdl;
+
 	GF_ASSERT(wk->clwk[net_id] == NULL);
+
+	hdl = GFL_ARC_OpenDataHandle(ARCID_POKEICON, HEAPID_MATSUDA_DEBUG);
 
 	vram_offset = POKEICON_SIZE_CGX * net_id;
 	
 	OS_TPrintf("monsno = %d\n", monsno);
 	
 	//キャラクタ設定
-	NNS_G2dInitImageProxy(&imgProxy);
 	icon_index = POKEICON_GetCgxArcIndexByMonsNumber(monsno, 0, FALSE);
-	//VRAM転送&イメージプロキシ作成
-	GFL_ARC_UTIL_TransVramCharacterMakeProxy(ARCID_POKEICON, icon_index, FALSE, CHAR_MAP_1D, 0, 
-		NNS_G2D_VRAM_TYPE_2DMAIN, vram_offset, HEAPID_MATSUDA_DEBUG, &imgProxy);
-	
-	//セルアニメ用リソースデータ作成
-	GFL_CLACT_WK_SetCellResData(&clwk_res, &imgProxy, &wk->icon_pal_proxy, 
-		wk->icon_cell_data, wk->icon_anm_data);
-	
+	wk->icon_cgr_id = GFL_CLGRP_CGR_Register(
+		hdl, icon_index, FALSE, CLSYS_DRAW_MAIN, HEAPID_MATSUDA_DEBUG);
+
 	//アクター登録
 	clwk_data = PokeIconClwkData;
 	clwk_data.pos_x = 120;
 	clwk_data.pos_y = 24 + net_id*32;
-	wk->clwk[net_id] = GFL_CLACT_WK_Add(
-		wk->clunit, &clwk_data, &clwk_res, CLWK_SETSF_NONE, HEAPID_MATSUDA_DEBUG);
+	wk->clwk[net_id] = GFL_CLACT_WK_Create(wk->clunit, wk->icon_cgr_id, wk->icon_pltt_id, 
+		wk->icon_cell_id, &clwk_data, CLWK_SETSF_NONE, HEAPID_MATSUDA_DEBUG);
 	
 	//アニメオート設定
 	GFL_CLACT_WK_SetAutoAnmSpeed(wk->clwk[net_id], FX32_ONE);
@@ -1097,6 +1096,8 @@ static void Local_PokeIconAdd(D_MATSU_WORK *wk, int monsno, int net_id)
 	
 	//パレットNo設定
 	GFL_CLACT_WK_SetPlttOffs(wk->clwk[net_id], POKEICON_GetPalNum(monsno, 0, FALSE), CLWK_PLTTOFFS_MODE_OAM_COLOR);
+
+	GFL_ARC_CloseDataHandle(hdl);
 }
 
 

@@ -12,7 +12,8 @@
 
 enum {
 	NARC_fontoam_fontoam_dummy32x16_NCER = 0,
-	NARC_fontoam_fontoam_dummy32x16_NANR = 1
+	NARC_fontoam_fontoam_dummy32x16_NANR = 1,
+	NARC_fontoam_fontoam_dummy32x16_NCGR = 2
 };
 
 /* NARC_FONTOAM_NAIX_ */

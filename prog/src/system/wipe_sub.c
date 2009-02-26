@@ -3009,7 +3009,7 @@ static void scchg_h_VMoveWndInit( WIPE_TYPE_WND_VMOVE* p_wnddata, int disp, int 
 //-----------------------------------------------------------------------------
 static void scchg_h_VMoveWnd_SwapReq( WIPE_TYPE_WND_VMOVE* p_wnddata )
 {
-	GFUser_HIntr_CreateTCB( scchg_h_VMoveWnd_Swap, p_wnddata, WIPE_VBLANK_WND_SWAP_TCB);
+	GFUser_VIntr_CreateTCB( scchg_h_VMoveWnd_Swap, p_wnddata, WIPE_VBLANK_WND_SWAP_TCB);
 	//VWaitTCB_Add(scchg_h_VMoveWnd_Swap, p_wnddata, WIPE_VBLANK_WND_SWAP_TCB );
 }
 
@@ -3500,7 +3500,7 @@ static void scchg_WndCircleInit(WIPE_TYPE_WND_CIRCLE* data, const WIPE_TYPE_WND_
 	data->fade_flg			= param->fade_flg;
 	
 	scchg_WndCircleSum(data);	// 1回計算する
-	GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb_circle, WIPE_VBLANK_WND_SWAP_TCB);
+	GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb_circle, WIPE_VBLANK_WND_SWAP_TCB);
 	//VWaitTCB_Add(scchg_WndSwap,&data->hb_circle, WIPE_VBLANK_WND_SWAP_TCB );
 
 	// ウィンドウ設定
@@ -3543,7 +3543,7 @@ static BOOL scchg_WndCircleMain(WIPE_TYPE_WND_CIRCLE* data)
 			data->a_count--;
 			data->r += data->add_r;	
 			scchg_WndCircleSum(data);
-			GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb_circle, WIPE_VBLANK_WND_SWAP_TCB);
+			GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb_circle, WIPE_VBLANK_WND_SWAP_TCB);
 			//VWaitTCB_Add(scchg_WndSwap,&data->hb_circle, WIPE_VBLANK_WND_SWAP_TCB );
 		}else{
 
@@ -3768,7 +3768,7 @@ static void scchg_WndCurtainInit(WIPE_TYPE_WND_CURTAIN* data, const WIPE_TYPE_WN
 	data->fade_flg	= param->fade_flg;
 	
 	scchg_WndCurtainSum(data);	// 1回計算する
-	GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb_c, WIPE_VBLANK_WND_SWAP_TCB);
+	GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb_c, WIPE_VBLANK_WND_SWAP_TCB);
 	//VWaitTCB_Add(scchg_WndSwap,&data->hb_c, WIPE_VBLANK_WND_SWAP_TCB );
 
 	// ウィンドウ表示設定
@@ -3813,7 +3813,7 @@ static BOOL scchg_WndCurtainMain(WIPE_TYPE_WND_CURTAIN* data)
 			data->a_count--;
 			data->rota += data->rota_add;
 			scchg_WndCurtainSum(data);		// 計算
-			GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb_c, WIPE_VBLANK_WND_SWAP_TCB);
+			GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb_c, WIPE_VBLANK_WND_SWAP_TCB);
 			//VWaitTCB_Add(scchg_WndSwap,&data->hb_c, WIPE_VBLANK_WND_SWAP_TCB );
 		}else{
 			// 処理終了
@@ -3974,7 +3974,7 @@ static void scchg_WndDoorInit(WIPE_TYPE_WND_DOOR* data, const WIPE_TYPE_WND_DOOR
 
 	// ドア計算
 	scchg_WndDoorSum(data);
-	GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb_d, WIPE_VBLANK_WND_SWAP_TCB);
+	GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb_d, WIPE_VBLANK_WND_SWAP_TCB);
 	//VWaitTCB_Add(scchg_WndSwap,&data->hb_d, WIPE_VBLANK_WND_SWAP_TCB );
 	
 	// ウィンドウ設定
@@ -4018,7 +4018,7 @@ static BOOL scchg_WndDoorMain(WIPE_TYPE_WND_DOOR* data)
 			data->a_count--;
 			data->open_r += data->open_r_a;
 			scchg_WndDoorSum(data);		// 計算
-			GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb_d, WIPE_VBLANK_WND_SWAP_TCB);
+			GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb_d, WIPE_VBLANK_WND_SWAP_TCB);
 			//VWaitTCB_Add(scchg_WndSwap, &data->hb_d, WIPE_VBLANK_WND_SWAP_TCB );
 		}else{
 			// 処理終了
@@ -4219,7 +4219,7 @@ static void scchg_WndDivisionInit(WIPE_TYPE_WND_DIVI* data, const WIPE_TYPE_WND_
 
 	// 分割計算
 	scchg_WndDivisionSum(data);
-	GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb_divi, WIPE_VBLANK_WND_SWAP_TCB);
+	GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb_divi, WIPE_VBLANK_WND_SWAP_TCB);
 	//VWaitTCB_Add(scchg_WndSwap,&data->hb_divi, WIPE_VBLANK_WND_SWAP_TCB );
 	
 	// ウィンドウ設定
@@ -4267,7 +4267,7 @@ static BOOL scchg_WndDivisionMain(WIPE_TYPE_WND_DIVI* data)
 			scchg_WndDivisionMainSub(data);			
 			
 			scchg_WndDivisionSum(data);		// 計算
-			GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb_divi, WIPE_VBLANK_WND_SWAP_TCB);
+			GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb_divi, WIPE_VBLANK_WND_SWAP_TCB);
 			//VWaitTCB_Add(scchg_WndSwap,&data->hb_divi, WIPE_VBLANK_WND_SWAP_TCB );
 		}else{
 			// 処理終了
@@ -4491,7 +4491,7 @@ static void scchg_WndScrewInit(WIPE_TYPE_WND_SCREW* data, WIPE_TYPE_WND_SCREW_FP
 	
 	scchg_WndScrewOneAdd(&data->screw, data->a_count, data->a_count_max);
 	scchg_WndScrewSum(data);	// 1回計算する
-	GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb, WIPE_VBLANK_WND_SWAP_TCB);
+	GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb, WIPE_VBLANK_WND_SWAP_TCB);
 	//VWaitTCB_Add(scchg_WndSwap,&data->hb, WIPE_VBLANK_WND_SWAP_TCB );
 
 	// ウィンドウ設定
@@ -4534,7 +4534,7 @@ static BOOL scchg_WndScrewMain(WIPE_TYPE_WND_SCREW* data)
 			// 動かす
 			scchg_WndScrewOneAdd(&data->screw, data->a_count, data->a_count_max);
 			scchg_WndScrewSum(data);		// 計算
-			GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb, WIPE_VBLANK_WND_SWAP_TCB);
+			GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb, WIPE_VBLANK_WND_SWAP_TCB);
 			//VWaitTCB_Add(scchg_WndSwap,&data->hb, WIPE_VBLANK_WND_SWAP_TCB );
 		}else{
 			// 処理終了
@@ -4768,7 +4768,7 @@ static void scchg_WndFlashFourInit(WIPE_TYPE_WND_FLASH_FOUR* data, WIPE_TYPE_WND
 	data->fade_flg			= param->fade_flg;
 	
 	scchg_WndFlashFourSum(data);	// 1回計算する
-	GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb, WIPE_VBLANK_WND_SWAP_TCB);
+	GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb, WIPE_VBLANK_WND_SWAP_TCB);
 	//VWaitTCB_Add(scchg_WndSwap,&data->hb, WIPE_VBLANK_WND_SWAP_TCB );
 
 	// ウィンドウ設定
@@ -4811,7 +4811,7 @@ static BOOL scchg_WndFlashFourMain(WIPE_TYPE_WND_FLASH_FOUR* data)
 			// 動かす
 			scchg_WndFlashFourOneAdd(&data->screw, data->a_count, data->a_count_max);
 			scchg_WndFlashFourSum(data);		// 計算
-			GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb, WIPE_VBLANK_WND_SWAP_TCB);
+			GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb, WIPE_VBLANK_WND_SWAP_TCB);
 			//VWaitTCB_Add(scchg_WndSwap,&data->hb, WIPE_VBLANK_WND_SWAP_TCB );
 		}else{
 			// 処理終了
@@ -5514,7 +5514,7 @@ static void scchg_WndRoundInit(WIPE_TYPE_WND_ROUND* data, const WIPE_TYPE_WND_RO
 	data->turn_flg			= TRUE;
 	
 	scchg_WndRoundSum(data);	// 1回計算する
-	GFUser_HIntr_CreateTCB(scchg_WndSwap, &data->hb_round, WIPE_VBLANK_WND_SWAP_TCB);
+	GFUser_VIntr_CreateTCB(scchg_WndSwap, &data->hb_round, WIPE_VBLANK_WND_SWAP_TCB);
 	//VWaitTCB_Add(scchg_WndSwap,&data->hb_round, WIPE_VBLANK_WND_SWAP_TCB );
 
 	// ウィンドウ設定
@@ -5579,7 +5579,7 @@ static BOOL scchg_WndRoundMain(WIPE_TYPE_WND_ROUND* data)
 				OS_Printf("反転:%d\n", data->turn_flg);
 			}
 			scchg_WndRoundSum(data);
-			GFUser_HIntr_CreateTCB( scchg_WndSwap, &data->hb_round, WIPE_VBLANK_WND_SWAP_TCB);
+			GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb_round, WIPE_VBLANK_WND_SWAP_TCB);
 			//VWaitTCB_Add(scchg_WndSwap,&data->hb_round, WIPE_VBLANK_WND_SWAP_TCB );
 		}else{
 
