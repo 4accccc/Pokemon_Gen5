@@ -1064,7 +1064,7 @@ static void Local_PokeIconCommonDataFree(D_MATSU_WORK *wk)
 static void Local_PokeIconAdd(D_MATSU_WORK *wk, int monsno, int net_id)
 {
 	GFL_CLWK_DATA clwk_data;
-	GFL_CLWK_RES clwk_res;
+//	GFL_CLWK_RES clwk_res;
 	NNSG2dImageProxy imgProxy;
 	u32 icon_index;
 	u32 vram_offset = 0;	//byte’PˆÊ

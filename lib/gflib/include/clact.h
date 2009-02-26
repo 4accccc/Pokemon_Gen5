@@ -208,25 +208,6 @@ typedef struct {
 	CLSYS_DRAW_TYPE	type;	// サーフェースタイプ(CLSYS_DRAW_TYPE)
 } GFL_REND_SURFACE_INIT;
 
-//-------------------------------------
-///	GFL_CLWK初期化リソースデータ
-//	それぞれのアニメ方法のデータを設定する関数も用意されています。
-//	・セルアニメ			GFL_CLACT_WK_SetCellResData(...)
-//	・Vram転送セルアニメ	GFL_CLACT_WK_SetTrCellResData(...)
-//	・マルチセルアニメ		GFL_CLACT_WK_SetMCellResData(...)
-//=====================================
-typedef struct {
-	const NNSG2dImageProxy*			cp_img;		// イメージプロクシ
-	const NNSG2dImagePaletteProxy*	cp_pltt;	// パレットプロクシ
-	NNSG2dCellDataBank*				p_cell;		// セルデータ
-    const NNSG2dCellAnimBankData*   cp_canm;	// セルアニメーション
-
-	// 以下は必要なときだけ値を入れる
-	const NNSG2dMultiCellDataBank*  cp_mcell;	// マルチセルデータ		（無いときNULL）
-    const NNSG2dMultiCellAnimBankData* cp_mcanm;// マルチセルアニメーション（無いときNULL）
-	const NNSG2dCharacterData*		cp_char;	// Vram転送セルアニメ以外はNULL
-} GFL_CLWK_RES;
-
 
 //-------------------------------------
 ///	GFL_CLWK初期化基本データ
@@ -815,90 +796,6 @@ extern GFL_CLWK* GFL_CLACT_WK_CreateAffine( GFL_CLUNIT* actUnit, u32 cgrIndex, u
 
 extern GFL_CLWK* GFL_CLACT_WK_CreateVTAffine( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
 	  const GFL_CLWK_AFFINEDATA* param, u16 setSerface, HEAPID heapID );
-
-// 初期化リソースデータ設定関数
-//----------------------------------------------------------------------------
-/**
- *	@brief	セルアニメ用リソースデータ作成
- *
- *	@param	p_res			リソースデータ格納先
- *	@param	cp_img			イメージプロクシ
- *	@param	cp_pltt			パレットプロクシ
- *	@param	p_cell			セルデータバンク
- *	@param	cp_canm			セルアニメーションデータバンク
- */
-//-----------------------------------------------------------------------------
-extern void GFL_CLACT_WK_SetCellResData( GFL_CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm );
-//----------------------------------------------------------------------------
-/**
- *	@brief	Vram転送セルアニメーション用リソースデータ作成
- *
- *	@param	p_res		リソースデータ格納先
- *	@param	cp_img		イメージプロクシ
- *	@param	cp_pltt     パレットプロクシ
- *	@param	p_cell      セルデータバンク
- *	@param	cp_canm     セルアニメーションデータバンク
- *	@param	cp_char     キャラクタデータ
- */
-//-----------------------------------------------------------------------------
-extern void GFL_CLACT_WK_SetTrCellResData( GFL_CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dCharacterData* cp_char );
-//----------------------------------------------------------------------------
-/**
- *	@brief	マルチセルアニメーション　リソースデータ作成
- *
- *	@param	p_res			リソースデータ格納先
- *	@param	cp_img			イメージプロクシ
- *	@param	cp_pltt         パレットプロクシ
- *	@param	p_cell          セルデータバンク
- *	@param	cp_canm         セルアニメーションデータバンク
- *	@param	cp_mcell		マルチセルデータバンク
- *	@param	cp_mcanm		マルチセルアニメーションデータバンク
- */
-//-----------------------------------------------------------------------------
-extern void GFL_CLACT_WK_SetMCellResData( GFL_CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dMultiCellDataBank* cp_mcell, const NNSG2dMultiCellAnimBankData* cp_mcanm );
-
-// 外部読み込みリソースの登録
-//----------------------------------------------------------------------------
-/**
- *	@brief	セルアクターの登録
- *
- *	@param	p_unit			セルアクターユニット
- *	@param	cp_data			セルアクターデータ
- *	@param	cp_res			セルアクターリソース
- *	@param	setsf			設定サーフェース
- *	@param	heapID			ヒープID
- *
- *	@return	登録したセルアクターワーク
- *
- *	【setsfの説明】
- *		GFL_CLUNITの使用するレンダラーシステムを変更していないときは
- *		CLSYS_DEFREND_TYPEの値を指定する
- *		・CLSYS_DEFREND_MAIN指定時	pos_x/yがメイン画面左上座標からの相対座標になる。
- *		・CLSYS_DEFREND_SUB指定時	pos_x/yがサブ画面左上座標からの相対座標になる。
- *		
- *		独自のレンダラーシステムをGFL_CLUNITに設定しているときは、
- *		サーフェースの要素数を指定することで、
- *		指定されたサーフェース左上座標からの相対座標になる。
- *
- *		通常/独自レンダラーシステム共通で、
- *		CLWK_SETSF_NONEを指定すると絶対座標設定になる
- */
-//-----------------------------------------------------------------------------
-extern GFL_CLWK* GFL_CLACT_WK_Add( GFL_CLUNIT* p_unit, const GFL_CLWK_DATA* cp_data, const GFL_CLWK_RES* cp_res, u16 setsf, HEAPID heapID );
-//----------------------------------------------------------------------------
-/**
- *	@brief	セルアクターの登録	アフィン変換バージョン
- *
- *	@param	p_unit			セルアクターユニット
- *	@param	cp_data			セルアクターデータ　アフィンバージョン
- *	@param	cp_res			セルアクターリソース
- *	@param	setsf			サーフェースインデックス
- *	@param	heapID			ヒープID
- *
- *	@return	登録したセルアクターワーク
- */
-//-----------------------------------------------------------------------------
-extern GFL_CLWK* GFL_CLACT_WK_AddAffine( GFL_CLUNIT* p_unit, const GFL_CLWK_AFFINEDATA* cp_data, const GFL_CLWK_RES* cp_res, u16 setsf, HEAPID heapID );
 
 
 //----------------------------------------------------------------------------

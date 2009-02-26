@@ -363,7 +363,7 @@ typedef struct {
     
 	u32					drawtype;	// 転送先
 	WF_2DC_MOVETYPE		movetype;	// 動作タイプ
-	GFL_CLWK_RES		header;		// アクターヘッダー
+//	GFL_CLWK_RES		header;		// アクターヘッダー
 } WF_2DCRES;
 
 /*
@@ -403,7 +403,7 @@ typedef struct {
 typedef struct {
 //	void* resobj[4];	//リソースオブジェ
     u32 resid[4];	//影リソース
-	GFL_CLWK_RES	header;		// アクターヘッダー
+//	GFL_CLWK_RES	header;		// アクターヘッダー
 } WF_2DCSH_RES;
 
 
@@ -422,7 +422,7 @@ typedef struct {
 	WF_2DCSH_RES	shadowres;
 	u32				shadow_pri;		// 陰のソフト優先順位開始位置
 //	CLACT_U_RES_MANAGER_PTR p_res_man[ WF_2DC_RESMAN_NUM ];
-    GFL_CLWK_RES* p_res_man[ WF_2DC_RESMAN_NUM ];
+//    GFL_CLWK_RES* p_res_man[ WF_2DC_RESMAN_NUM ];
 //	void* p_unionpltt;
     u32 unionplttid;
 	ARCHANDLE*	p_handle[WF_2DC_ARCHANDLE_NUM];

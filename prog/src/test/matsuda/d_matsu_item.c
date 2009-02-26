@@ -501,7 +501,7 @@ static void Local_ItemIconCommonDataFree(D_MATSU_WORK *wk)
 static void Local_ItemIconAdd(D_MATSU_WORK *wk, int item_no)
 {
 	GFL_CLWK_DATA clwk_data;
-	GFL_CLWK_RES clwk_res;
+//	GFL_CLWK_RES clwk_res;
 	NNSG2dImageProxy imgProxy;
 	u32 icon_index;
 	u32 vram_offset = 0;	//byte’PˆÊ
