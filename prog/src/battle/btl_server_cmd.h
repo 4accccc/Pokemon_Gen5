@@ -410,6 +410,8 @@ static inline void SCQUE_PUT_TOKWIN_OUT( BTL_SERVER_CMD_QUE* que, u8 clientID )
 	scque_put2byte( que, SC_TOKWIN_OUT );
 	scque_put1byte( que, clientID );
 }
+
+
 //=====================================================
 typedef u8 ScMsgArg;
 enum { 

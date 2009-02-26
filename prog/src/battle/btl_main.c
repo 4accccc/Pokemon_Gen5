@@ -84,7 +84,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static BOOL setup_alone_single( int* seq, void* work );
-static BOOL cleanup_alone_single( int* seq, void* work );
+static BOOL cleanup_common( int* seq, void* work );
 static BOOL setup_comm_single( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
 static BOOL cleanup_alone_double( int* seq, void* work );
@@ -155,6 +155,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
 
 	if( wk->mainLoop( wk ) )
 	{
+		BTL_Printf("バトルメインプロセス終了します\n");
 		return GFL_PROC_RES_FINISH;
 	}
 
@@ -168,6 +169,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 
 	switch( *seq ){
 	case 0:
+		BTL_Printf("クリーンアッププロセス１\n");
 		setSubProcForClanup( &wk->subProc, wk, wk->setupParam );
 		(*seq)++;
 		break;
@@ -175,17 +177,22 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 	case 1:
 		if( BTL_UTIL_CallProc(&wk->subProc) )
 		{
+			BTL_Printf("クリーンアッププロセス２－１\n");
 			BTL_ADAPTERSYS_Quit();
+			BTL_Printf("クリーンアッププロセス２－２\n");
 			BTL_NET_QuitSystem();
+			BTL_Printf("クリーンアッププロセス２－３\n");
 			(*seq)++;
 		}
 		break;
 
 	case 2:
+		BTL_Printf("クリーンアッププロセス３\n");
 		GFL_PROC_FreeWork( proc );
 		GFL_HEAP_DeleteHeap( HEAPID_BTL_VIEW );
 		GFL_HEAP_DeleteHeap( HEAPID_BTL_NET );
 		GFL_HEAP_DeleteHeap( HEAPID_BTL_SYSTEM );
+		BTL_Printf("クリーンアッププロセス終了\n");
 		return GFL_PROC_RES_FINISH;
 	}
 
@@ -249,14 +256,14 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 	{
 		switch( setup_param->rule ){
 		case BTL_RULE_SINGLE:
-			BTL_UTIL_SetupProc( bp, wk, cleanup_alone_single, NULL );
+			BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
 			break;
 		case BTL_RULE_DOUBLE:
 			BTL_UTIL_SetupProc( bp, wk, cleanup_alone_double, NULL );
 			break;
 		default:
 			GF_ASSERT(0);
-			BTL_UTIL_SetupProc( bp, wk, cleanup_alone_single, NULL );
+			BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
 			break;
 		}
 	}
@@ -264,14 +271,14 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 	{
 		switch( setup_param->rule ){
 		case BTL_RULE_SINGLE:
-			BTL_UTIL_SetupProc( bp, wk, cleanup_alone_single, NULL );
+			BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
 			break;
 		case BTL_RULE_DOUBLE:
-			BTL_UTIL_SetupProc( bp, wk, cleanup_alone_double, NULL );
+			BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
 			break;
 		default:
 			GF_ASSERT(0);
-			BTL_UTIL_SetupProc( bp, wk, cleanup_alone_single, NULL );
+			BTL_UTIL_SetupProc( bp, wk, cleanup_common, NULL );
 			break;
 		}
 	}
@@ -322,22 +329,39 @@ static BOOL setup_alone_single( int* seq, void* work )
 
 	return TRUE;
 }
-static BOOL cleanup_alone_single( int* seq, void* work )
+static BOOL cleanup_common( int* seq, void* work )
 {
 	BTL_MAIN_MODULE* wk = work;
 	const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+	int i;
+
+	BTL_Printf("クリーンアップ 1-1\n");
 
 	BTLV_Delete( wk->viewCore );
 
-	BTL_CLIENT_Delete( wk->client[0] );
-	BTL_CLIENT_Delete( wk->client[1] );
-	BTL_SERVER_Delete( wk->server );
+	BTL_Printf("クリーンアップ 1-2\n");
 
-	cleanupPokeParams( &wk->party[0] );
-	cleanupPokeParams( &wk->party[1] );
-	cleanupPokeParams( &wk->partyForServerCalc[0] );
-	cleanupPokeParams( &wk->partyForServerCalc[1] );
+	for(i=0; i<NELEMS(wk->client); ++i)
+	{
+		if( wk->client[i] )
+		{
+			BTL_CLIENT_Delete( wk->client[i] );
+		}
+	}
 
+	BTL_Printf("クリーンアップ 1-3\n");
+	for(i=0; i<BTL_CLIENT_MAX; ++i)
+	{
+		cleanupPokeParams( &wk->party[i] );
+		cleanupPokeParams( &wk->partyForServerCalc[i] );
+	}
+
+	if( wk->server )
+	{
+		BTL_SERVER_Delete( wk->server );
+	}
+
+	BTL_Printf("クリーンアップ 1-4\n");
 
 	return TRUE;
 }
@@ -763,63 +787,67 @@ static void cleanupPokeParams( BTL_PARTY* party )
 
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk )
 {
+	BOOL quitFlag = FALSE;
 	int i;
 
-	if( BTL_SERVER_Main( wk->server ) )
-	{
-		BTL_Printf("server end msg recved\n");
-		return TRUE;
-	}
+	BTL_SERVER_Main( wk->server );
 
 	for(i=0; i<2; i++)
 	{
-		BTL_CLIENT_Main( wk->client[i] );
+		if( BTL_CLIENT_Main(wk->client[i]) )
+		{
+			quitFlag = TRUE;
+		}
 	}
 
 	BTLV_CORE_Main( wk->viewCore );
 
-	return FALSE;
+	return quitFlag;
 }
 
 
 static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 {
+	BOOL quitFlag = FALSE;
 	int i;
 
-	if( BTL_SERVER_Main( wk->server ) )
-	{
-		BTL_Printf("server end msg recved\n");
-		return TRUE;
-	}
+	BTL_SERVER_Main( wk->server );
 
 	for(i=0; i<wk->numClients; i++)
 	{
 		if( wk->client[i] )
 		{
-			BTL_CLIENT_Main( wk->client[i] );
+			if( BTL_CLIENT_Main(wk->client[i]) )
+			{
+				quitFlag = TRUE;
+			}
 		}
 	}
 
 	BTLV_CORE_Main( wk->viewCore );
 
-	return FALSE;
+	return quitFlag;
 }
 
 static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
 {
+	BOOL quitFlag = FALSE;
 	int i;
 
 	for(i=0; i<wk->numClients; i++)
 	{
 		if( wk->client[i] )
 		{
-			BTL_CLIENT_Main( wk->client[i] );
+			if( BTL_CLIENT_Main(wk->client[i]) )
+			{
+				quitFlag = TRUE;
+			}
 		}
 	}
 
 	BTLV_CORE_Main( wk->viewCore );
 
-	return FALSE;
+	return quitFlag;
 }
 
 
@@ -881,6 +909,20 @@ BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk )
 BtlCommMode BTL_MAIN_GetCommMode( const BTL_MAIN_MODULE* wk )
 {
 	return wk->setupParam->commMode;
+}
+//=============================================================================================
+/**
+ * 「にげる」を選択した時の反応タイプ
+ *
+ * @param   wk		
+ *
+ * @retval  BtlEscapeMode		反応タイプ
+ */
+//=============================================================================================
+BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
+{
+	// @@@ いまのところ常に許可する
+	return BTL_ESCAPE_MODE_OK;
 }
 
 

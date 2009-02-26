@@ -824,6 +824,28 @@ void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 clientID, BppValueID statusType
 }
 
 
+//=============================================================================================
+/**
+ * 「つうしんたいきちゅう…」メッセージを表示
+ *
+ * @param   wk		
+ *
+ */
+//=============================================================================================
+void BTLV_StartCommWait( BTLV_CORE* wk )
+{
+	BTLV_SCD_StartCommWaitInfo( wk->scrnD );
+}
+BOOL BTLV_WaitCommWait( BTLV_CORE* wk )
+{
+	return BTLV_SCD_WaitCommWaitInfo( wk->scrnD );
+}
+void BTLV_ResetCommWaitInfo( BTLV_CORE* wk )
+{
+	BTLV_SCD_ClearCommWaitInfo( wk->scrnD );
+}
+
+
 //-------------------------------------------
 
 static void setup_core( BTLV_CORE* wk, HEAPID heapID )

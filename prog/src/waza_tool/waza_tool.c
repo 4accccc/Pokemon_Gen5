@@ -12,28 +12,9 @@
 
 #include	"waza_tool/waza_tool.h"
 #include	"waza_tool/wazano_def.h"
+#include	"waza_tool/wazadata.h"
 
 #include	"waza_tool_def.h"
-
-
-
-//============================================================================================
-/**
- * 定数宣言
- */
-//============================================================================================
-enum {
-	WSEQ_SINMPLESICK_NEMURI = 1,
-	WSEQ_DAMAGESICK_DOKU = 2,
-	WSEQ_DAMAGESICK_YAKEDO = 4,
-	WSEQ_DAMAGESICK_KOORI = 5,
-	WSEQ_DAMAGESICK_MAHI = 6,
-	WSEQ_SIMPLEEFF_ATK = 10,
-	WSEQ_SIMPLEEFF_DEF = 11,
-	WSEQ_SIMPLEEFF_SPATK = 13,
-	WSEQ_SIMPLEEFF_AVOID = 16,
-	
-};
 
 
 typedef struct{
@@ -245,8 +226,6 @@ static	void	WT_WazaDataGet( int waza_no, WAZA_TABLE_DATA *wtd )
  */
 //=============================================================================================
 
-
-
 #include "waza_tool/wazadata.h"
 
 
@@ -254,14 +233,105 @@ enum {
 	HITRATIO_MUST = 101,
 };
 
+//------------------------------------------------------------------------------
+/**
+ * 定数宣言
+ */
+//------------------------------------------------------------------------------
+enum {
+	WSEQ_SINMPLESICK_NEMURI = 1,
+	WSEQ_SINMPLESICK_DOKU = 66,
+	WSEQ_SINMPLESICK_MAHI = 67,
+	WSEQ_DAMAGESICK_DOKU = 2,
+	WSEQ_DAMAGESICK_YAKEDO = 4,
+	WSEQ_DAMAGESICK_KOORI = 5,
+	WSEQ_DAMAGESICK_MAHI = 6,
+	WSEQ_SIMPLEEFF_ATK = 10,
+	WSEQ_SIMPLEEFF_DEF = 11,
+	WSEQ_SIMPLEEFF_SPATK = 13,
+	WSEQ_SIMPLEEFF_AVOID = 16,
+};
 
+// @@@ 旧バージョンのワザデータシーケンスを、新バージョンのデータテーブルとして扱うための
+// 一時的な変換用テーブル
+typedef struct {
+	u16 wseq;
+	u16 category;
+
+	WazaSick  sick;
+	struct {
+		WazaRankEffect	type;
+		s8							value;
+	}rankEff[2];
+}SEQ_PARAM;
+
+
+static const SEQ_PARAM* getSeqParam( WazaID waza )
+{
+	static const SEQ_PARAM SeqParamTable[] = {
+		{
+			WSEQ_SINMPLESICK_NEMURI, WAZADATA_CATEGORY_SIMPLE_SICK, POKESICK_NEMURI, 
+			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+		},{
+			WSEQ_SINMPLESICK_DOKU, WAZADATA_CATEGORY_SIMPLE_SICK, POKESICK_DOKU, 
+			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+		},{
+			WSEQ_SINMPLESICK_MAHI, WAZADATA_CATEGORY_SIMPLE_SICK, POKESICK_MAHI, 
+			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+		},{
+			WSEQ_DAMAGESICK_DOKU, WAZADATA_CATEGORY_DAMAGE_SICK, POKESICK_DOKU, 
+			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+		},{
+			WSEQ_DAMAGESICK_YAKEDO, WAZADATA_CATEGORY_DAMAGE_SICK, POKESICK_YAKEDO, 
+			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+		},{
+			WSEQ_DAMAGESICK_KOORI, WAZADATA_CATEGORY_DAMAGE_SICK, POKESICK_KOORI, 
+			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+		},{
+			WSEQ_DAMAGESICK_MAHI, WAZADATA_CATEGORY_DAMAGE_SICK, POKESICK_MAHI, 
+			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+		},{
+			WSEQ_SIMPLEEFF_ATK, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_ATTACK, 1 }, { WAZA_RANKEFF_NULL, 0 } },
+		},{
+			WSEQ_SIMPLEEFF_DEF, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_DEFENCE, 1 }, { WAZA_RANKEFF_NULL, 0 } },
+		},{
+			WSEQ_SIMPLEEFF_SPATK, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_SP_ATTACK, 1 }, { WAZA_RANKEFF_NULL, 0 } },
+		},{
+			WSEQ_SIMPLEEFF_AVOID, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_AVOID, 1 }, { WAZA_RANKEFF_NULL, 0 } },
+		},
+	};
+	u16 seq = WT_WazaDataParaGet( waza, ID_WTD_battleeffect );
+	u16 i;
+
+	for(i=0; i<NELEMS(SeqParamTable); ++i)
+	{
+		if( SeqParamTable[i].wseq == seq )
+		{
+			return &SeqParamTable[i];
+		}
+	}
+	return NULL;
+}
+
+// ワザ優先度
 s8   WAZADATA_GetPriority( WazaID id )
 {
 	return WT_WazaDataParaGet( id, ID_WTD_attackpri );
 }
-
+// ワザカテゴリ
 WazaCategory  WAZADATA_GetCategory( WazaID id )
 {
+	const SEQ_PARAM* seqparam = getSeqParam( id );
+
+	if( seqparam )
+	{
+		return seqparam->category;
+	}
+
 	if( WAZADATA_IsDamage(id) )
 	{
 		return WAZADATA_CATEGORY_SIMPLE_DAMAGE;
@@ -270,7 +340,6 @@ WazaCategory  WAZADATA_GetCategory( WazaID id )
 	{
 		return WAZADATA_CATEGORY_OTHERS;
 	}
-	
 }
 
 PokeType WAZADATA_GetType( WazaID id )
@@ -362,6 +431,16 @@ WazaTarget WAZADATA_GetTarget( WazaID id )
 	return WAZA_TARGET_SINGLE;///< 自分以外の１体（選択）
 }
 
+// 追加効果の状態異常を返す
+PokeSick WAZADATA_GetSick( WazaID id )
+{
+	const SEQ_PARAM* seq = getSeqParam( id );
+	if( seq ){
+		return seq->sick;
+	}
+	return POKESICK_NULL;
+}
+
 
 
 #ifdef PM_DEBUG
@@ -371,15 +450,15 @@ void WAZADATA_PrintDebug( void )
 		const char* name;
 		u16 id;
 	}tbl[] = {
-		{ "みずでっぽう（通常）",		WAZANO_MIZUDEPPOU },
-		{ "ねっぷう（相手２体）",				WAZANO_NEPPUU },
-		{ "なみのり（３体）",				WAZANO_NAMINORI },
-		{ "かげぶんしん（自分）",		WAZANO_KAGEBUNSIN },
-		{ "くろいきり（場）",			WAZANO_KUROIKIRI },
-		{ "げきりん（ランダム）",				WAZANO_KUROIKIRI },
-		{ "あまごい（場）",							WAZANO_AMAGOI },
-		{ "あばれる（ランダム）",				WAZANO_ABARERU },
-		{ "アロマセラピー（味方２体）",	WAZANO_AROMASERAPII },
+		{ "みずでっぽう（通常）",			WAZANO_MIZUDEPPOU },
+		{ "ねっぷう（相手２体）",			WAZANO_NEPPUU },
+		{ "なみのり（３体）",					WAZANO_NAMINORI },
+		{ "かげぶんしん（自分）",			WAZANO_KAGEBUNSIN },
+		{ "くろいきり（場）",					WAZANO_KUROIKIRI },
+		{ "げきりん（ランダム）",			WAZANO_KUROIKIRI },
+		{ "あまごい（場）",						WAZANO_AMAGOI },
+		{ "あばれる（ランダム）",			WAZANO_ABARERU },
+		{ "アロマセラピー（味方２体）",WAZANO_AROMASERAPII },
 		{ "まきびし（まきびし）",				WAZANO_MAKIBISI },
 		{ "てだすけ（てだすけ）",				WAZANO_TEDASUKE },
 		{ "つぼつく（つぼつく）",				WAZANO_TUBOWOTUKU },

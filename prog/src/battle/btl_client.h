@@ -46,7 +46,7 @@ extern BTL_ADAPTER* BTL_CLIENT_GetAdapter( BTL_CLIENT* client );
 
 extern void BTL_CLIENT_AttachViewCore( BTL_CLIENT* wk, BTLV_CORE* viewCore );
 
-extern void BTL_CLIENT_Main( BTL_CLIENT* client );
+extern BOOL BTL_CLIENT_Main( BTL_CLIENT* client );
 
 
 extern u8 BTL_CLIENT_GetClientID( const BTL_CLIENT* client );

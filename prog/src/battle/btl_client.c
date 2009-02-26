@@ -94,6 +94,7 @@ struct _BTL_CLIENT {
 	u8	myID;
 	u8	myType;
 	u8	myState;
+	u8	commWaitInfoOn;
 
 };
 
@@ -163,6 +164,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
 	wk->cmdQue = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER_CMD_QUE) );
 
 	wk->myState = 0;
+	wk->commWaitInfoOn = FALSE;
 
 	return wk;
 }
@@ -188,18 +190,21 @@ BTL_ADAPTER* BTL_CLIENT_GetAdapter( BTL_CLIENT* wk )
 }
 
 
-void BTL_CLIENT_Main( BTL_CLIENT* wk )
+BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
 {
 	switch( wk->myState ){
 	case 0:
 		{
 			BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd(wk->adapter);
+			if( cmd == BTL_ACMD_QUIT_BTL )
+			{
+				return TRUE;
+			}
 			if( cmd != BTL_ACMD_NONE )
 			{
 				wk->subProc = getSubProc( wk, cmd );
 				wk->subSeq = 0;
 				wk->myState = 1;
-//				BTL_Printf("%d, コマンド%dを受け取りました\n", wk->myID, cmd);
 			}
 		}
 		break;
@@ -209,10 +214,11 @@ void BTL_CLIENT_Main( BTL_CLIENT* wk )
 		{
 			BTL_ADAPTER_ReturnCmd( wk->adapter, wk->returnDataPtr, wk->returnDataSize );
 			wk->myState = 0;
-//			BTL_Printf("%d, 返信しました\n", wk->myID );
+			BTL_Printf("ID[%d], 返信しました\n", wk->myID );
 		}
 		break;
 	}
+	return FALSE;
 }
 
 
@@ -292,6 +298,10 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 		SEQ_CHECK_ACTION,
 		SEQ_SELECT_POKEMON,
 		SEQ_CHECK_DONE,
+		SEQ_CHECK_ESCAPE,
+		SEQ_CANT_ESCAPE,
+		SEQ_RETURN_START,
+		SEQ_RETURN_COMM_WAIT,
 	};
 
 	switch( *seq ){
@@ -310,11 +320,17 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 		if( BTLV_UI_SelectAction_Wait(wk->viewCore) )
 		{
 			// 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
-			if( BTL_ACTION_GetAction( &wk->actionParam[wk->procPokeIdx] ) == BTL_ACTION_CHANGE )
+			u8 action = BTL_ACTION_GetAction( &wk->actionParam[wk->procPokeIdx] );
+			if( action == BTL_ACTION_CHANGE )
 			{
 				BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, &wk->pokeSelResult );
 				(*seq) = SEQ_SELECT_POKEMON;
 				break;
+			}
+			// 「にげる」を選んだら、反応の条件分岐へ
+			else if( action == BTL_ACTION_ESCAPE )
+			{
+				(*seq) = SEQ_CHECK_ESCAPE;
 			}
 			// それ以外は担当分の選択を終えてるかチェックへ
 			else
@@ -341,11 +357,57 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 		{
 			wk->returnDataPtr = &(wk->actionParam[0]);
 			wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
-			return TRUE;
+			(*seq) = SEQ_RETURN_START;
 		}
 		else
 		{
 			(*seq) = SEQ_SELECT_ACTION;
+		}
+		break;
+
+	case SEQ_CHECK_ESCAPE:
+		{
+			BtlEscapeMode esc = BTL_MAIN_GetEscapeMode( wk->mainModule );
+			switch( esc ){
+			case BTL_ESCAPE_MODE_OK:
+			default:
+				wk->returnDataPtr = &(wk->actionParam[wk->procPokeIdx]);
+				wk->returnDataSize = sizeof(wk->actionParam[0]);
+				(*seq) = SEQ_RETURN_START;
+				break;
+
+			case BTL_ESCAPE_MODE_NG:
+				BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_EscapeCant, NULL );
+				(*seq) = SEQ_CANT_ESCAPE;
+				break;
+			}
+		}
+		break;
+
+	case SEQ_CANT_ESCAPE:
+		if( BTLV_WaitMsg(wk->viewCore) )
+		{
+			(*seq) = SEQ_SELECT_ACTION;
+		}
+		break;
+
+	case SEQ_RETURN_START:
+		if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE )
+		{
+			wk->commWaitInfoOn = TRUE;
+			BTLV_StartCommWait( wk->viewCore );
+			(*seq) = SEQ_RETURN_COMM_WAIT;
+		}
+		else
+		{
+			return TRUE;
+		}
+		break;
+
+	case SEQ_RETURN_COMM_WAIT:
+		if( BTLV_WaitCommWait(wk->viewCore) )
+		{
+			return TRUE;
 		}
 		break;
 	}
@@ -662,29 +724,26 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		u32				cmd;
 		ServerCmdProc	proc;
 	}scprocTbl[] = {
-		{	SC_DATA_WAZA_EXE,		scProc_DATA_WazaExe			},
-		{	SC_DATA_MEMBER_OUT,	scProc_DATA_MemberOut		},
-		{	SC_DATA_MEMBER_IN,	scProc_DATA_MemberIn		},
-		{	SC_MSG_STD,					scProc_MSG_Std				},
-		{	SC_MSG_SET,					scProc_MSG_Set				},
-		{	SC_MSG_WAZA,				scProc_MSG_Waza				},
+		{	SC_DATA_WAZA_EXE,		scProc_DATA_WazaExe				},
+		{	SC_DATA_MEMBER_OUT,	scProc_DATA_MemberOut			},
+		{	SC_DATA_MEMBER_IN,	scProc_DATA_MemberIn			},
+		{	SC_MSG_STD,					scProc_MSG_Std						},
+		{	SC_MSG_SET,					scProc_MSG_Set						},
+		{	SC_MSG_WAZA,				scProc_MSG_Waza						},
 		{	SC_ACT_WAZA_EFFECT,	scProc_ACT_WazaEffect			},
-		{	SC_ACT_WAZA_DMG,		scProc_ACT_WazaDmg			},
-		{	SC_ACT_WAZA_DMG_DBL,scProc_ACT_WazaDmg_Dbl			},
-		{	SC_ACT_DEAD,				scProc_ACT_Dead				},
+		{	SC_ACT_WAZA_DMG,		scProc_ACT_WazaDmg				},
+		{	SC_ACT_WAZA_DMG_DBL,scProc_ACT_WazaDmg_Dbl		},
+		{	SC_ACT_DEAD,				scProc_ACT_Dead						},
 		{	SC_ACT_RANKDOWN,		scProc_ACT_RankDownEffect	},
-		{	SC_ACT_SICK_DMG,		scProc_ACT_SickDamage	},
-		{	SC_TOKWIN_IN,				scProc_TOKWIN_In			},
-		{	SC_TOKWIN_OUT,			scProc_TOKWIN_Out			},
-		{	SC_OP_HP_MINUS,			scProc_OP_HpMinus			},
-		{	SC_OP_HP_PLUS,			scProc_OP_HpPlus			},
-		{	SC_OP_PP_MINUS,			scProc_OP_PPMinus			},
-		{	SC_OP_PP_PLUS,			scProc_OP_PPPlus			},
-		{	SC_OP_RANK_DOWN,		scProc_OP_RankDown			},
+		{	SC_ACT_SICK_DMG,		scProc_ACT_SickDamage			},
+		{	SC_TOKWIN_IN,				scProc_TOKWIN_In					},
+		{	SC_TOKWIN_OUT,			scProc_TOKWIN_Out					},
+		{	SC_OP_HP_MINUS,			scProc_OP_HpMinus					},
+		{	SC_OP_HP_PLUS,			scProc_OP_HpPlus					},
+		{	SC_OP_PP_MINUS,			scProc_OP_PPMinus					},
+		{	SC_OP_PP_PLUS,			scProc_OP_PPPlus					},
+		{	SC_OP_RANK_DOWN,		scProc_OP_RankDown				},
 	};
-
-
-
 
 restart:
 
@@ -696,6 +755,12 @@ restart:
 
 			cmdSize = BTL_ADAPTER_GetRecvData( wk->adapter, &cmdBuf );
 			SCQUE_Setup( wk->cmdQue, cmdBuf, cmdSize );
+
+			if( wk->commWaitInfoOn )
+			{
+				wk->commWaitInfoOn = FALSE;
+				BTLV_ResetCommWaitInfo( wk->viewCore );
+			}
 			(*seq)++;
 		}
 		/* fallthru */

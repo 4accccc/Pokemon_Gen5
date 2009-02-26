@@ -42,6 +42,9 @@ extern BOOL BTLV_SCD_WaitPokemonSelect( BTLV_SCD* wk );
 extern void BTLV_SCD_PokeSelect_Start( BTLV_SCD* wk, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
 extern BOOL BTLV_SCD_PokeSelect_Wait( BTLV_SCD* wk );
 
+extern void BTLV_SCD_StartCommWaitInfo( BTLV_SCD* wk );
+extern BOOL BTLV_SCD_WaitCommWaitInfo( BTLV_SCD* wk );
+extern void BTLV_SCD_ClearCommWaitInfo( BTLV_SCD* wk );
 
 
 #endif

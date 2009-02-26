@@ -30,7 +30,6 @@ typedef enum {
 	WAZADATA_CATEGORY_DAMAGE_SICK,
 	WAZADATA_CATEGORY_DAMAGE_EFFECT,
 	WAZADATA_CATEGORY_DAMAGE_EFFECT_USER,
-	WAZADATA_CATEGORY_DAMAGE_RECOVER,
 	WAZADATA_CATEGORY_ICHIGEKI,
 	WAZADATA_CATEGORY_BIND,
 	WAZADATA_CATEGORY_GUARD,
@@ -89,20 +88,20 @@ typedef enum {
 //------------------------------------------------------------------------------
 typedef enum {
 
-	WAZA_ADDITION_NULL = 0,
-	WAZA_ADDITION_ORIGIN = 1,
+	WAZA_RANKEFF_NULL = 0,
+	WAZA_RANKEFF_ORIGIN = 1,
 
-	WAZA_ADDITION_ATTACK = WAZA_ADDITION_ORIGIN,
-	WAZA_ADDITION_DEFENCE,
-	WAZA_ADDITION_SP_ATTACK,
-	WAZA_ADDITION_SP_DEFENCE,
-	WAZA_ADDITION_AGILITY,
-	WAZA_ADDITION_HIT,
-	WAZA_ADDITION_AVOID,
+	WAZA_RANKEFF_ATTACK = WAZA_RANKEFF_ORIGIN,
+	WAZA_RANKEFF_DEFENCE,
+	WAZA_RANKEFF_SP_ATTACK,
+	WAZA_RANKEFF_SP_DEFENCE,
+	WAZA_RANKEFF_AGILITY,
+	WAZA_RANKEFF_HIT,
+	WAZA_RANKEFF_AVOID,
 
-	WAZA_ADDITION_MAX,
+	WAZA_RANKEFF_MAX,
 
-}WazaAddition;
+}WazaRankEffect;
 
 
 typedef enum {
@@ -165,13 +164,6 @@ extern u16  WAZADATA_GetContiniusCount( WazaID id );
 // きゅうしょに当たるランク
 extern u16  WAZADATA_GetCriticalRatio( WazaID id );
 
-// 通常攻撃ワザであり、追加効果を含む場合は追加効果値が返る。
-// 状態異常のみを起こすワザ（例えば催眠術など）は、WAZASICK_NULL が返る。
-extern WazaSick  WAZADATA_GetAdditionalSick( WazaID id );
-
-// 同上。こちらは追加効果の確率が返る。
-extern u8  WAZADATA_GetAdditionalSickRatio( WazaID id );
-
 // 必中フラグ。つばめがえしなどがTRUEを返す。
 extern BOOL WAZADATA_IsAlwaysHit( WazaID id );
 
@@ -189,6 +181,13 @@ extern u8 WAZADATA_GetMaxHitCount( WazaID id );
 
 // 効果範囲
 extern WazaTarget WAZADATA_GetTarget( WazaID id );
+
+// 状態異常効果を取得
+extern PokeSick WAZADATA_GetSick( WazaID id );
+
+// 同上。こちらは追加効果の確率が返る。
+extern u8  WAZADATA_GetSickRatio( WazaID id );
+
 
 /*-----------------------------------------------------------------
 

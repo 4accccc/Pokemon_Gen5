@@ -34,6 +34,12 @@ enum {
 	CLIENT_DISABLE_ID = 0xff,
 };
 
+enum {
+	QUITSTEP_NONE = 0,		///
+	QUITSTEP_REQ,
+	QUITSTEP_CORE,
+};
+
 //--------------------------------------------------------------
 /**
  *	サーバメインループ関数型  - バトル終了時のみ TRUE を返す -
@@ -51,6 +57,7 @@ typedef struct {
 	BTL_POKEPARAM*	frontMember[ BTL_POSIDX_MAX ];
 	u8				memberCount;
 	u8				numCoverPos;
+	u8				isLocalClient;
 	u8				myID;
 
 }CLIENT_WORK;
@@ -127,7 +134,7 @@ struct _BTL_SERVER {
 	u8					numActPokemon;
 	u8					numClient;
 	u8					pokeDeadFlag;
-	u8					endFlag;
+	u8					quitStep;
 	u8					wazaEffectPuttedFlag;
 
 	ServerMainProc		mainProc;
@@ -236,6 +243,7 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, HEAPID heapID )
 	sv->numClient = 0;
 	sv->heapID = heapID;
 	sv->que = &sv->queBody;
+	sv->quitStep = QUITSTEP_NONE;
 
 	{
 		int i;
@@ -259,6 +267,17 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, HEAPID heapID )
 //--------------------------------------------------------------------------------------
 void BTL_SERVER_Delete( BTL_SERVER* wk )
 {
+	int i;
+	for(i=0; i<BTL_CLIENT_MAX; ++i)
+	{
+		if( (wk->client[i].myID != CLIENT_DISABLE_ID)
+		&&	(wk->client[i].isLocalClient == FALSE)
+		){
+			// 同一マシン上にあるクライアントでなければ、
+			// サーバがアダプタを用意したハズなので自分で削除
+			BTL_ADAPTER_Delete( wk->client[i].adapter );
+		}
+	}
 	GFL_HEAP_FreeMemory( wk );
 }
 //--------------------------------------------------------------------------------------
@@ -285,6 +304,8 @@ void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL
 
 		client->adapter = adapter;
 		client->myID = clientID;
+		client->isLocalClient = TRUE;
+
 		setup_client_members( client, party, numCoverPos );
 	}
 
@@ -315,6 +336,7 @@ void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GF
 
 		client->adapter = BTL_ADAPTER_Create( netHandle, server->heapID, clientID );
 		client->myID = clientID;
+		client->isLocalClient = FALSE;
 
 		setup_client_members( client, party, numCoverPos );
 	}
@@ -398,19 +420,25 @@ static inline void setup_client_members( CLIENT_WORK* client, BTL_PARTY* party, 
 /**
  * サーバメインループ
  *
- * @param   server		サーバハンドラ
+ * @param   sv			サーバハンドラ
  *
  * @retval  BOOL		終了時 TRUE を返す
  */
 //--------------------------------------------------------------------------------------
-BOOL BTL_SERVER_Main( BTL_SERVER* server )
+void BTL_SERVER_Main( BTL_SERVER* sv )
 {
-	return callMainProc( server );
-}
-
-static BOOL callMainProc( BTL_SERVER* sv )
-{
-	return sv->mainProc( sv, &sv->seq );
+	if( sv->quitStep != QUITSTEP_CORE )
+	{
+		if( sv->mainProc( sv, &sv->seq ) )
+		{
+			SetAdapterCmd( sv, BTL_ACMD_QUIT_BTL );
+			sv->quitStep = QUITSTEP_CORE;
+		}
+	}
+	else
+	{
+		WaitAdapterCmd( sv );
+	}
 }
 
 static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc )
@@ -486,7 +514,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 	case 2:
 		BTL_Printf("アクション選択コマンド発行\n");
 		SetAdapterCmd( server, BTL_ACMD_SELECT_ACTION );
-		server->endFlag = FALSE;
 		(*seq)++;
 		break;
 
@@ -495,6 +522,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 		{
 			ResetAdapterCmd( server );
 			server->numActPokemon = sortClientAction( server, server->actOrder );
+			BTL_Printf("全クライアントのアクションソート完了。処理アクション数=%d\n", server->numActPokemon);
 			SCQUE_Init( server->que );
 			server->pokeDeadFlag = createServerCommand( server );
 			if( server->pokeDeadFlag )
@@ -512,8 +540,9 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 			BTL_Printf("コマンド再生おわりました\n");
 			BTL_MAIN_SyncServerCalcData( server->mainModule );
 			ResetAdapterCmd( server );
-			if( server->endFlag )
+			if( server->quitStep )
 			{
+				BTL_Printf("サーバー終了\n");
 				return TRUE;
 			}
 			else if( server->pokeDeadFlag )
@@ -561,12 +590,12 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 				// 勝敗決定
 				if( loseClientCount == 1 )
 				{
-					server->endFlag = TRUE;
+					server->quitStep = QUITSTEP_REQ;
 				}
 				// 引き分け
 				else
 				{
-					server->endFlag = TRUE;
+					server->quitStep = QUITSTEP_REQ;
 				}
 				return TRUE;
 			}
@@ -592,7 +621,7 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 			ResetAdapterCmd( server );
 			BTL_MAIN_SyncServerCalcData( server->mainModule );
 
-			if( server->endFlag )
+			if( server->quitStep )
 			{
 				return TRUE;
 			}
@@ -835,9 +864,10 @@ static BOOL createServerCommand( BTL_SERVER* server )
 				break;
 			case BTL_ACTION_ESCAPE:
 				BTL_Printf("【にげる】を処理。\n");
+				// @@@ 今は即座に逃げられるようにしている
 				SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_EscapeSuccess, clientID );
-				server->endFlag = TRUE;
-				break;
+				server->quitStep = QUITSTEP_REQ;
+				return FALSE;
 			}
 		}
 	}
@@ -970,7 +1000,6 @@ static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const
 		case WAZADATA_CATEGORY_DAMAGE_SICK:
 		case WAZADATA_CATEGORY_DAMAGE_EFFECT:
 		case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
-		case WAZADATA_CATEGORY_DAMAGE_RECOVER:
 			scput_Fight_Damage( server, fep, waza, atClient, attacker, atPos, action );
 			break;
 

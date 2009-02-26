@@ -308,18 +308,6 @@ static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str )
 	PRINT_UTIL_Print( &wk->printUtil, wk->printQue, drawX, drawY, wk->strbuf, wk->font );
 }
 
-static void printCommWait( BTLV_SCD* wk )
-{
-	u32 strWidth, drawX, drawY;
-
-	GFL_BMP_Clear( wk->bmp, 0x0f );
-
-	BTL_STR_GetUIString( wk->strbuf, BTLSTR_UI_COMM_WAIT );
-	strWidth = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
-	drawX = (256 - strWidth) / 2;
-	drawY = (192 - 16) / 2;
-	PRINT_UTIL_Print( &wk->printUtil, wk->printQue, drawX, drawY, wk->strbuf, wk->font );
-}
 
 static BOOL selectAction_init( int* seq, void* wk_adrs )
 {
@@ -448,26 +436,8 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 		break;
 
 	case SEQ_SEL_FIGHT_FINISH:
-		if( BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE )
-		{
-			BTL_Printf("通信じゃないのですぐ返る\n");
-			return TRUE;
-		}
-		else
-		{
-			BTL_Printf("通信なので待機中表示\n");
-			printCommWait( wk );
-			(*seq)++;
-		}
-		break;
+		return TRUE;
 
-	case SEQ_SEL_FIGHT_FINISH+1:
-		PRINTSYS_QUE_Main( wk->printQue );
-		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
-		{
-			return TRUE;
-		}
-		break;
 
 	case SEQ_SEL_POKEMON:
 		BTL_ACTION_SetChangeBegin( wk->destActionParam );
@@ -479,7 +449,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 
 	case SEQ_SEL_ESCAPE:
 		BTL_ACTION_SetEscapeParam( wk->destActionParam );
-		break;
+		return TRUE;
 	}
 	return FALSE;
 }
@@ -1032,7 +1002,39 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
 	return FALSE;
 }
 
+//=============================================================================================
+//	「通信待機中」表示オン・オフ
+//=============================================================================================
 
+void BTLV_SCD_StartCommWaitInfo( BTLV_SCD* wk )
+{
+	printCommWait( wk );
+}
+BOOL BTLV_SCD_WaitCommWaitInfo( BTLV_SCD* wk )
+{
+	PRINTSYS_QUE_Main( wk->printQue );
+	if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+void BTLV_SCD_ClearCommWaitInfo( BTLV_SCD* wk )
+{
+	GFL_BMP_Clear( wk->bmp, 0x0f );
+	GFL_BMPWIN_TransVramCharacter( wk->win );
+}
 
+static void printCommWait( BTLV_SCD* wk )
+{
+	u32 strWidth, drawX, drawY;
 
+	GFL_BMP_Clear( wk->bmp, 0x0f );
+
+	BTL_STR_GetUIString( wk->strbuf, BTLSTR_UI_COMM_WAIT );
+	strWidth = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
+	drawX = (256 - strWidth) / 2;
+	drawY = (192 - 16) / 2;
+	PRINT_UTIL_Print( &wk->printUtil, wk->printQue, drawX, drawY, wk->strbuf, wk->font );
+}
 
