@@ -13,7 +13,6 @@
 
 typedef struct
 {
-	int				position;
 	int				move_type;
 	VecFx32			start_value;
 	VecFx32			end_value;

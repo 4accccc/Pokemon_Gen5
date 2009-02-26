@@ -16,7 +16,9 @@
 #include "btl_effect.h"
 #include "btl_efftool.h"
 #include "btl_effect_def.h"
+#include "btl_effvm.h"
 
+//暫定で戻し
 #include "arc_def.h"
 #include "spa.naix"
 
@@ -48,14 +50,17 @@ struct _BTL_EFFECT_WORK
 	BTL_STAGE_WORK		*bsw;
 	BTL_FIELD_WORK		*bfw;
 	BTL_CAMERA_WORK		*bcw;
-	GFL_PTC_PTR			ptc[ PARTICLE_GLOBAL_MAX ];
-	u16					ptc_no[ PARTICLE_GLOBAL_MAX ];
 	int					execute_flag;
 	HEAPID				heapID;
+
+	//暫定で戻し
+	GFL_PTC_PTR			ptc;
+	u8					spa_work[ PARTICLE_LIB_HEAP_SIZE ];
 };
 
 typedef	struct
 {
+	void		*resource;
 	PokeMcssPos	target;
 	int			seq_no;
 	int			work;
@@ -80,10 +85,35 @@ BTL_CAMERA_WORK	*BTL_EFFECT_GetCameraWork( void );
 
 static	BTL_EFFECT_WORK	*bew = NULL;
 
-static	VMHANDLE	*BTL_EFFVM_Init( HEAPID heapID );
-static	void		BTL_EFFVM_Exit( VMHANDLE *core );
-
 static	void	BTL_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work );
+static	void	BTL_EFFECT_TCB_CameraWork( GFL_TCB *tcb, void *work );
+
+//暫定で作ったTCBVerの技エフェクトシーケンス
+static	void	BTL_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work );
+static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work );
+static	void	BTL_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work );
+static	void	BTL_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work );
+static	void	BTL_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work );
+static	void	BTL_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work );
+static	void	BTL_EFFECT_TCB_A2BMizudeppou( GFL_TCB *tcb, void *work );
+static	void	BTL_EFFECT_TCB_B2AMizudeppou( GFL_TCB *tcb, void *work );
+
+static	void	BTL_EFFECT_InitPTCAA( GFL_EMIT_PTR emit );
+static	void	BTL_EFFECT_InitPTCBB( GFL_EMIT_PTR emit );
+static	void	BTL_EFFECT_InitPTCAA2( GFL_EMIT_PTR emit );
+static	void	BTL_EFFECT_InitPTCBB2( GFL_EMIT_PTR emit );
+static	void	BTL_EFFECT_InitPTCA( GFL_EMIT_PTR emit );
+static	void	BTL_EFFECT_InitPTCB( GFL_EMIT_PTR emit );
+static	void	BTL_EFFECT_TCB_End( GFL_TCB *tcb, BTL_EFFECT_TCB *bet );
+
+
+static	GFL_TCB_FUNC * const btl_effect_tcb_table[]={
+	&BTL_EFFECT_TCB_AA2BBGanseki,
+	&BTL_EFFECT_TCB_BB2AAGanseki,
+	&BTL_EFFECT_TCB_AA2BBMizudeppou,
+	&BTL_EFFECT_TCB_BB2AAMizudeppou,
+	&BTL_EFFECT_TCB_CameraWork,
+};
 
 //============================================================================================
 /**
@@ -109,7 +139,7 @@ void	BTL_EFFECT_Init( int index, HEAPID heapID )
 
 	bew->pmw = POKE_MCSS_Init( bew->tcb_sys, heapID );
 	bew->bsw = BTL_STAGE_Init( index, heapID );
-	bew->bfw = BTL_FIELD_Init( index, heapID );
+	bew->bfw = BTL_FIELD_Init( bew->tcb_sys, index, heapID );
 	bew->bcw = BTL_CAMERA_Init( bew->tcb_sys, heapID );
 
 	POKE_MCSS_SetOrthoMode( bew->pmw );
@@ -224,6 +254,17 @@ void BTL_EFFECT_Damage( PokeMcssPos target )
 //============================================================================================
 void	BTL_EFFECT_Add( int eff_no )
 {
+	BTL_EFFECT_TCB	*bet = GFL_HEAP_AllocMemory( bew->heapID, sizeof( BTL_EFFECT_TCB ) );
+
+	bet->seq_no = 0;
+	bet->wait = 0;
+
+	GFL_TCB_AddTask( bew->tcb_sys, btl_effect_tcb_table[ eff_no ], bet, 0 );
+
+	GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
+	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
+
+	bew->execute_flag = 1;
 }
 
 //============================================================================================
@@ -277,177 +318,6 @@ BTL_CAMERA_WORK	*BTL_EFFECT_GetCameraWork( void )
 
 //============================================================================================
 /**
- *	スクリプト解析
- */
-//============================================================================================
-//============================================================================================
-/**
- *	プロトタイプ宣言
- */
-//============================================================================================
-//スクリプトコマンド
-static VMCMD_RESULT WS_CAMERA_MOVE( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT WS_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT WS_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT WS_PARTICLE_PLAY_WITH_POS( VMHANDLE *vmh, void *context_work );
-
-//VM_WAIT_FUNC群
-static	BOOL	VWF_CAMERA_MOVE_CHECK( VMHANDLE *vmh, void *context_work );
-
-//============================================================================================
-/**
- *	スクリプトテーブル
- */
-//============================================================================================
-static const VMCMD_FUNC btl_effect_command_table[]={
-	WS_CAMERA_MOVE,
-	WS_PARTICLE_LOAD,
-	WS_PARTICLE_PLAY,
-	WS_PARTICLE_PLAY_WITH_POS,
-};
-
-//============================================================================================
-/**
- *	VMイニシャライザーテーブル
- */
-//============================================================================================
-static	const VM_INITIALIZER	vm_init={
-	BTL_EFFVM_STACK_SIZE,				//u16 stack_size;	///<使用するスタックのサイズ
-	BTL_EFFVM_REG_SIZE,					//u16 reg_size;		///<使用するレジスタの数
-	btl_effect_command_table,			//const VMCMD_FUNC * command_table;	///<使用する仮想マシン命令の関数テーブル
-	NELEMS( btl_effect_command_table ),	//const u32 command_max;			///<使用する仮想マシン命令定義の最大数
-};
-
-//============================================================================================
-/**
- *	VM初期化
- *
- * @param[in]	heapID			ヒープID
- */
-//============================================================================================
-VMHANDLE	*BTL_EFFVM_Init( HEAPID heapID )
-{
-	VMHANDLE	*core;
-
-	core = VM_Create( heapID, &vm_init );
-	VM_Init( core, NULL );
-
-	return core;
-}
-
-//============================================================================================
-/**
- *	VM終了
- *
- * @param[in]	core	仮想マシン制御構造体へのポインタ
- */
-//============================================================================================
-void	BTL_EFFVM_Exit( VMHANDLE *core )
-{
-	VM_Delete( core );
-}
-
-//============================================================================================
-/**
- *	カメラ移動
- *
- * @param[in]	vmh				仮想マシン制御構造体へのポインタ
- * @param[in]	context_work	コンテキストワークへのポインタ
- */
-//============================================================================================
-static VMCMD_RESULT WS_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
-{
-	VecFx32		cam_pos,cam_target;
-	//カメラタイプ読み込み
-	int			cam_type = ( int )VMGetU32( vmh );
-	int			frame,brake;
-
-	//カメラ移動先位置を読み込み
-	cam_pos.x = ( fx32 )VMGetU32( vmh );
-	cam_pos.y = ( fx32 )VMGetU32( vmh );
-	cam_pos.z = ( fx32 )VMGetU32( vmh );
-	//カメラ移動先ターゲットを読み込み
-	cam_target.x = ( fx32 )VMGetU32( vmh );
-	cam_target.y = ( fx32 )VMGetU32( vmh );
-	cam_target.z = ( fx32 )VMGetU32( vmh );
-	//移動フレーム数を読み込み
-	frame = ( int )VMGetU32( vmh );
-	//ブレーキフレーム数を読み込み
-	brake = ( int )VMGetU32( vmh );
-
-	//カメラタイプから移動先を計算
-	switch( cam_type ){
-	case BTL_CAMERA_MOVE_INIT:			//初期位置
-		BTL_CAMERA_GetDefaultCameraPosition( &cam_pos, &cam_target );
-		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &cam_pos, &cam_target, frame, brake );
-		break;
-	case BTL_CAMERA_MOVE_DIRECT:		//ダイレクト
-		BTL_CAMERA_MoveCameraPosition( bew->bcw, &cam_pos, &cam_target );
-		break;
-	case BTL_CAMERA_MOVE_INTERPOLATION:	//追従
-		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &cam_pos, &cam_target, frame, brake );
-		break;
-	}
-	VMCMD_SetWait( vmh, VWF_CAMERA_MOVE_CHECK );
-
-	return VMCMD_RESULT_SUSPEND;
-}
-
-//============================================================================================
-/**
- *	パーティクルリソースロード
- *
- * @param[in]	vmh				仮想マシン制御構造体へのポインタ
- * @param[in]	context_work	コンテキストワークへのポインタ
- */
-//============================================================================================
-static VMCMD_RESULT WS_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
-{
-	return VMCMD_RESULT_SUSPEND;
-}
-
-//============================================================================================
-/**
- *	パーティクル再生
- *
- * @param[in]	vmh				仮想マシン制御構造体へのポインタ
- * @param[in]	context_work	コンテキストワークへのポインタ
- */
-//============================================================================================
-static VMCMD_RESULT WS_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
-{
-	return VMCMD_RESULT_SUSPEND;
-}
-
-//============================================================================================
-/**
- *	パーティクル再生（座標指定あり）
- *
- * @param[in]	vmh				仮想マシン制御構造体へのポインタ
- * @param[in]	context_work	コンテキストワークへのポインタ
- */
-//============================================================================================
-static VMCMD_RESULT WS_PARTICLE_PLAY_WITH_POS( VMHANDLE *vmh, void *context_work )
-{
-	return VMCMD_RESULT_SUSPEND;
-}
-
-//VM_WAIT_FUNC群
-//============================================================================================
-/**
- *	カメラ移動終了チェック
- *
- * @param[in]	vmh				仮想マシン制御構造体へのポインタ
- * @param[in]	context_work	コンテキストワークへのポインタ
- */
-//============================================================================================
-static	BOOL	VWF_CAMERA_MOVE_CHECK( VMHANDLE *vmh, void *context_work )
-{
-	return ( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE );
-}
-
-//============================================================================================
-/**
  *	ダメージエフェクトシーケンス（仮でTCBで作成）
  */
 //============================================================================================
@@ -478,8 +348,68 @@ static	void	BTL_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
 	}
 }
 
+//============================================================================================
+/**
+ *	カメラワーク（仮でTCBで作成）
+ */
+//============================================================================================
+static	void	BTL_EFFECT_TCB_CameraWork( GFL_TCB *tcb, void *work )
+{
+	BTL_EFFECT_TCB	*bet = (BTL_EFFECT_TCB *)work;
+	VecFx32			pos,target;
+	VecFx32	aa_value = { FX32_ONE * 16, FX32_ONE * 16, 0 };
+	VecFx32	bb_value = { FX32_ONE * 16 / 2, FX32_ONE * 16 / 2, 0 };
+	VecFx32	AA_value = { FX32_ONE * 16 * 2, FX32_ONE * 16 * 2, 0 };
+	VecFx32	BB_value = { FX32_ONE * 16, FX32_ONE * 16, 0 };
+
+
+	switch( bet->seq_no ){
+	//カメラAAに移動
+	case 0:
+		BTL_CAMERA_GetDefaultCameraPosition( &pos, &target );
+		target.x += FX32_ONE * 4;
+		target.y += FX32_ONE * 1;
+		target.z += FX32_ONE * 16;
+		pos.x += FX32_ONE * 4;
+		pos.y += FX32_ONE * 1;
+		pos.z += FX32_ONE * 16;
+		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 32, 32 );
+		POKE_MCSS_MoveScale( bew->pmw, POKE_MCSS_POS_AA, EFFTOOL_CALCTYPE_INTERPOLATION, &aa_value, 12, 2, 50 );
+		POKE_MCSS_MoveScale( bew->pmw, POKE_MCSS_POS_BB, EFFTOOL_CALCTYPE_INTERPOLATION, &bb_value, 12, 2, 50 );
+		bet->seq_no++;
+		break;
+	case 1:
+		if( ( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ) &&
+			( POKE_MCSS_CheckTCBExecute( bew->pmw, POKE_MCSS_POS_AA ) == FALSE ) &&
+			( POKE_MCSS_CheckTCBExecute( bew->pmw, POKE_MCSS_POS_BB ) == FALSE ) ){
+			bet->wait = 80;
+			bet->seq_no++;
+		}
+		break;
+	case 2:
+		if( --bet->wait <= 0 ){
+			BTL_CAMERA_GetDefaultCameraPosition( &pos, &target );
+			BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 32, 32 );
+			POKE_MCSS_MoveScale( bew->pmw, POKE_MCSS_POS_AA, EFFTOOL_CALCTYPE_INTERPOLATION, &AA_value, 12, 2, 50 );
+			POKE_MCSS_MoveScale( bew->pmw, POKE_MCSS_POS_BB, EFFTOOL_CALCTYPE_INTERPOLATION, &BB_value, 12, 2, 50 );
+			bet->seq_no++;
+		}
+		break;
+	//カメラデフォルト位置に移動
+	case 3:
+		if( ( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ) &&
+			( POKE_MCSS_CheckTCBExecute( bew->pmw, POKE_MCSS_POS_AA ) == FALSE ) &&
+			( POKE_MCSS_CheckTCBExecute( bew->pmw, POKE_MCSS_POS_BB ) == FALSE ) ){
+			bew->execute_flag = 0;
+			GFL_HEAP_FreeMemory( bet );
+			GFL_TCB_DeleteTask( tcb );
+		}
+		break;
+	}
+}
+
 //本来はスクリプトエンジンを載せて、動作させるが、暫定でTCBを利用する
-#if 0
+#if 1
 //============================================================================================
 /**
  *	エフェクトシーケンス
@@ -858,11 +788,12 @@ static	void	BTL_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 	switch( bet->seq_no ){
 	//カメラBBに移動
 	case 0:
-		target.x -= FX32_ONE * 2;
-		target.z -= FX32_ONE * 10;
-		pos.x = target.x;
-		pos.y = target.y + FX32_ONE * 8;
-		pos.z = target.z + FX32_ONE * 30;
+		pos.x = 0x6994;
+		pos.y = 0x6f33;
+		pos.z = 0x6e79;
+		target.x = 0xfffffe61;
+		target.y = 0x00002d9a;
+		target.z = 0xffff59ac;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
 		POKE_MCSS_ResetOrthoMode( bew->pmw );
 		bet->seq_no++;
@@ -883,14 +814,14 @@ static	void	BTL_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		bet->seq_no++;
 		break;
 	case 4:
-		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 0, &BTL_EFFECT_InitPTCBB2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 1, &BTL_EFFECT_InitPTCBB2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 2, &BTL_EFFECT_InitPTCBB2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 3, &BTL_EFFECT_InitPTCBB2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 4, &BTL_EFFECT_InitPTCBB2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 5, &BTL_EFFECT_InitPTCBB2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 6, &BTL_EFFECT_InitPTCBB2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 7, &BTL_EFFECT_InitPTCBB2, NULL );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -924,6 +855,7 @@ static	void	BTL_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 	case 7:
 		if( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ){
 			BTL_EFFECT_TCB_End( tcb, bet );
+			POKE_MCSS_SetOrthoMode( bew->pmw );
 		}
 		break;
 	}
@@ -938,11 +870,12 @@ static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 	switch( bet->seq_no ){
 	//カメラAAに移動
 	case 0:
-		target.x += FX32_ONE * 1;
-		target.z -= FX32_ONE * 8;
-		pos.x = target.x;
-		pos.y = target.y + FX32_ONE * 7;
-		pos.z = target.z + FX32_ONE * 16;
+		pos.x = 0x00005ca6;
+		pos.y = 0x00005f33;
+		pos.z = 0x00013cc3;
+		target.x = 0xfffff173;
+		target.y = 0x00001d9a;
+		target.z = 0x000027f6;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
 		bet->seq_no++;
 		break;
@@ -962,14 +895,14 @@ static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		bet->seq_no++;
 		break;
 	case 4:
-		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 0, &BTL_EFFECT_InitPTCAA2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 1, &BTL_EFFECT_InitPTCAA2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 2, &BTL_EFFECT_InitPTCAA2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 3, &BTL_EFFECT_InitPTCAA2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 4, &BTL_EFFECT_InitPTCAA2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 5, &BTL_EFFECT_InitPTCAA2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 6, &BTL_EFFECT_InitPTCAA2, NULL );
+		GFL_PTC_CreateEmitterCallback( bew->ptc, 7, &BTL_EFFECT_InitPTCAA2, NULL );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -1003,8 +936,8 @@ static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 	//カメラデフォルト位置に移動
 	case 7:
 		if( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ){
-			POKE_MCSS_SetOrthoMode( bew->pmw );
 			BTL_EFFECT_TCB_End( tcb, bet );
+			POKE_MCSS_SetOrthoMode( bew->pmw );
 		}
 		break;
 	}
@@ -1018,12 +951,20 @@ static	void	BTL_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work )
 	switch( bet->seq_no ){
 	//カメラAAに移動
 	case 0:
+#if 0
 		POKE_MCSS_GetPokeDefaultPos( &target, POKE_MCSS_POS_AA );
 		target.x += FX32_ONE * 1;
 		target.z -= FX32_ONE * 8;
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 7;
 		pos.z = target.z + FX32_ONE * 16;
+#endif
+		pos.x = 0x00005ca6;
+		pos.y = 0x00005f33;
+		pos.z = 0x00013cc3;
+		target.x = 0xfffff173;
+		target.y = 0x00001d9a;
+		target.z = 0x000027f6;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
 		POKE_MCSS_ResetOrthoMode( bew->pmw );
 		bet->seq_no++;
@@ -1049,11 +990,19 @@ static	void	BTL_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work )
 		break;
 	case 5:
 		POKE_MCSS_GetPokeDefaultPos( &target, POKE_MCSS_POS_BB );
+#if 0
 		target.x -= FX32_ONE * 2;
 		target.z -= FX32_ONE * 10;
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 8;
 		pos.z = target.z + FX32_ONE * 30;
+#endif
+		pos.x = 0x6994;
+		pos.y = 0x6f33;
+		pos.z = 0x6e79;
+		target.x = 0xfffffe61;
+		target.y = 0x00002d9a;
+		target.z = 0xffff59ac;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 30, 28 );
 		bet->seq_no++;
 		bet->wait = 12;
@@ -1105,12 +1054,20 @@ static	void	BTL_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 	switch( bet->seq_no ){
 	//カメラBBに移動
 	case 0:
+#if 0
 		POKE_MCSS_GetPokeDefaultPos( &target, POKE_MCSS_POS_BB );
 		target.x -= FX32_ONE * 2;
 		target.z -= FX32_ONE * 10;
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 8;
 		pos.z = target.z + FX32_ONE * 30;
+#endif
+		pos.x = 0x6994;
+		pos.y = 0x6f33;
+		pos.z = 0x6e79;
+		target.x = 0xfffffe61;
+		target.y = 0x00002d9a;
+		target.z = 0xffff59ac;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
 		POKE_MCSS_ResetOrthoMode( bew->pmw );
 		bet->seq_no++;
@@ -1135,12 +1092,20 @@ static	void	BTL_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 		bet->seq_no++;
 		break;
 	case 5:
+#if 0
 		POKE_MCSS_GetPokeDefaultPos( &target, POKE_MCSS_POS_AA );
 		target.x += FX32_ONE * 1;
 		target.z -= FX32_ONE * 8;
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 7;
 		pos.z = target.z + FX32_ONE * 16;
+#endif
+		pos.x = 0x00005ca6;
+		pos.y = 0x00005f33;
+		pos.z = 0x00013cc3;
+		target.x = 0xfffff173;
+		target.y = 0x00001d9a;
+		target.z = 0x000027f6;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 30, 28 );
 		bet->seq_no++;
 		bet->wait = 12;
@@ -1202,6 +1167,17 @@ static	void	BTL_EFFECT_InitPTCAA( GFL_EMIT_PTR emit )
 	GFL_PTC_SetEmitterAxis( emit, &dir );
 }
 
+static	void	BTL_EFFECT_InitPTCAA2( GFL_EMIT_PTR emit )
+{
+	VecFx32			src,dst;
+	VecFx16			dir;
+
+	POKE_MCSS_GetPokeDefaultPos( &src, POKE_MCSS_POS_AA );
+	src.y += FX32_ONE * 2;
+	src.z -= 0x1600;
+	GFL_PTC_SetEmitterPosition( emit, &src );
+}
+
 static	void	BTL_EFFECT_InitPTCBB( GFL_EMIT_PTR emit )
 {
 	VecFx32			src,dst;
@@ -1216,6 +1192,16 @@ static	void	BTL_EFFECT_InitPTCBB( GFL_EMIT_PTR emit )
 	VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
 	GFL_PTC_SetEmitterPosition( emit, &src );
 	GFL_PTC_SetEmitterAxis( emit, &dir );
+}
+
+static	void	BTL_EFFECT_InitPTCBB2( GFL_EMIT_PTR emit )
+{
+	VecFx32			src,dst;
+	VecFx16			dir;
+
+	POKE_MCSS_GetPokeDefaultPos( &src, POKE_MCSS_POS_BB );
+	src.y += FX32_ONE * 3;
+	GFL_PTC_SetEmitterPosition( emit, &src );
 }
 
 static	void	BTL_EFFECT_InitPTCA( GFL_EMIT_PTR emit )

@@ -41,13 +41,16 @@ struct _POKE_MCSS_WORK
 	MCSS_SYS_WORK			*mcss_sys;
 	MCSS_WORK				*mcss[ POKE_MCSS_POS_MAX ];
 	u32						poke_mcss_ortho_mode	:1;
-	u32												:31;
+	u32												:7;
+	u32						poke_mcss_tcb_execute	:8;
+	u32												:16;
 	HEAPID					heapID;
 };
 
 typedef struct
 {
 	POKE_MCSS_WORK		*pmw;
+	int					position;
 	EFFTOOL_MOVE_WORK	emw;
 }POKE_MCSS_TCB_WORK;
 
@@ -87,6 +90,7 @@ void			POKE_MCSS_SetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
 
 void			POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int speed, int wait, int count );
 void			POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *scale, int speed, int wait, int count );
+BOOL			POKE_MCSS_CheckTCBExecute( POKE_MCSS_WORK *pmw, int position );
 
 static	void	POKE_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
 static	void	POKE_MCSS_SetDefaultScale( POKE_MCSS_WORK *pmw, int position );
@@ -114,7 +118,7 @@ static	const	VecFx32	poke_pos_table[]={
 
 
 static	const	VecFx32	poke_pos_table[]={
-	{ FX_F32_TO_FX32( -2.5f + 3.500f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.0f ) },		//POS_AA
+	{ FX_F32_TO_FX32( -2.5f + 2.500f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   8.0f ) },		//POS_AA
 	{ FX_F32_TO_FX32(  4.5f - 4.200f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_BB
 	{ FX_F32_TO_FX32( -3.5f + 3.500f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   8.5f ) },		//POS_A
 	{ FX_F32_TO_FX32(  6.0f - 4.200f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  -9.0f ) },		//POS_B
@@ -131,14 +135,14 @@ static	const	VecFx32	poke_pos_table[]={
 //============================================================================================
 static	const	fx32	poke_scale_table[2][POKE_MCSS_POS_MAX]={
 	{
-		0x08c4 * 2,	//POS_AA
-		0x1386,	//POS_BB
+		0x0780 * 2,	//POS_AA
+		0x1280,		//POS_BB
 		0x0873 * 2,	//POS_A
-		0x1322,	//POS_B
+		0x1322,		//POS_B
 		0x0831 * 2,	//POS_C
-		0x141e,	//POS_D
+		0x141e,		//POS_D
 		0x1000 * 2,	//POS_E
-		0x1000,	//POS_F
+		0x1000,		//POS_F
 	},
 	{
 		FX32_ONE * 16 * 2,
@@ -431,7 +435,8 @@ void	POKE_MCSS_SetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale )
  *							EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION	移動先
  *							EFFTOOL_CALCTYPE_ROUNDTRIP　往復の長さ
  * @param[in]	speed		移動スピード
- * @param[in]	count		往復カウント（POKEMCSS_CALCYUPE_ROUNDTRIPでしか意味のないパラメータ）
+ * @param[in]	wait		移動ウエイト
+ * @param[in]	count		往復カウント（POKEMCSS_CALCTYPE_ROUNDTRIPでしか意味のないパラメータ）
  */
 //============================================================================================
 void	POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int speed, int wait, int count )
@@ -439,7 +444,7 @@ void	POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, V
 	POKE_MCSS_TCB_WORK	*pmtw = GFL_HEAP_AllocMemory( pmw->heapID, sizeof( POKE_MCSS_TCB_WORK ) );
 
 	pmtw->pmw				= pmw;
-	pmtw->emw.position		= position;
+	pmtw->position			= position;
 	pmtw->emw.move_type		= move_type;
 	pmtw->emw.vec_time		= speed;
 	pmtw->emw.vec_time_tmp	= speed;
@@ -488,9 +493,10 @@ void	POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, V
 void	POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *scale, int speed, int wait, int count )
 {
 	POKE_MCSS_TCB_WORK	*pmtw = GFL_HEAP_AllocMemory( pmw->heapID, sizeof( POKE_MCSS_TCB_WORK ) );
+	static	u8 bit_table[]={ 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
 
 	pmtw->pmw				= pmw;
-	pmtw->emw.position		= position;
+	pmtw->position			= position;
 	pmtw->emw.move_type		= move_type;
 	pmtw->emw.vec_time		= speed;
 	pmtw->emw.vec_time_tmp	= speed;
@@ -518,7 +524,25 @@ void	POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, int move_type, VecF
 		break;
 	}
 
+	pmw->poke_mcss_tcb_execute |= bit_table[ position ];
+
 	GFL_TCB_AddTask( pmw->tcb_sys, TCB_POKE_MCSS_Scale, pmtw, 0 );
+}
+
+//============================================================================================
+/**
+ *	タスクが起動中かチェック
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	position	ポケモンの立ち位置
+ *
+ * @retval: TRUE:起動中　FALSE:終了
+ */
+//============================================================================================
+BOOL	POKE_MCSS_CheckTCBExecute( POKE_MCSS_WORK *pmw, int position )
+{
+	static	u8 bit_table[]={ 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
+	return ( pmw->poke_mcss_tcb_execute & bit_table[ position ] );
 }
 
 //============================================================================================
@@ -558,7 +582,7 @@ static	void	POKE_MCSS_SetDefaultScale( POKE_MCSS_WORK *pmw, int position )
 
 	VEC_Set( &scale, 
 			 poke_scale_table[ 0 ][ position ], 
-			 poke_scale_table[ 0 ][ position ],
+			 poke_scale_table[ 0 ][ position ] / 2,
 			 FX32_ONE );
 
 	MCSS_SetShadowScale( pmw->mcss[ position ], &scale );
@@ -576,9 +600,9 @@ static	void	TCB_POKE_MCSS_Move( GFL_TCB *tcb, void *work )
 	VecFx32	now_pos;
 	BOOL	ret;
 
-	MCSS_GetPosition( pmw->mcss[ pmtw->emw.position ], &now_pos );
+	MCSS_GetPosition( pmw->mcss[ pmtw->position ], &now_pos );
 	ret = BTL_EFFTOOL_CalcParam( &pmtw->emw, &now_pos );
-	MCSS_SetPosition( pmw->mcss[ pmtw->emw.position ], &now_pos );
+	MCSS_SetPosition( pmw->mcss[ pmtw->position ], &now_pos );
 	if( ret == TRUE ){
 		GFL_HEAP_FreeMemory( work );
 		GFL_TCB_DeleteTask( tcb );
@@ -596,11 +620,13 @@ static	void	TCB_POKE_MCSS_Scale( GFL_TCB *tcb, void *work )
 	POKE_MCSS_WORK *pmw = pmtw->pmw;
 	VecFx32	now_scale;
 	BOOL	ret;
+	static	u8 bit_table[]={ 0x01^0xff, 0x02^0xff, 0x04^0xff, 0x08^0xff, 0x10^0xff, 0x20^0xff, 0x40^0xff, 0x80^0xff };
 
-	MCSS_GetScale( pmw->mcss[ pmtw->emw.position ], &now_scale );
+	MCSS_GetScale( pmw->mcss[ pmtw->position ], &now_scale );
 	ret = BTL_EFFTOOL_CalcParam( &pmtw->emw, &now_scale );
-	MCSS_SetScale( pmw->mcss[ pmtw->emw.position ], &now_scale );
+	MCSS_SetScale( pmw->mcss[ pmtw->position ], &now_scale );
 	if( ret == TRUE ){
+		pmw->poke_mcss_tcb_execute &= bit_table[ pmtw->position ];
 		GFL_HEAP_FreeMemory( work );
 		GFL_TCB_DeleteTask( tcb );
 	}
