@@ -82,6 +82,7 @@
 	ARCID_ALLBUILDMODEL	"fieldmap/all_build_model.narc"	#全配置モデルデータ
 	ARCID_AREADATA		"fieldmap/area_data.bin"		#エリア毎設定データ
 	ARCID_AREA_MAPTEX	"fieldmap/area_map_tex.narc"	#エリア毎地形テクスチャデータ
+	ARCID_FLDMAP_LAND_EX "fieldmap/nogrid_mapblock.narc" #非グリッド地形データ
 	ARCID_PERSONAL		"personal/personal.narc"		#パーソナルデータ
 	ARCID_GROW_TBL		"personal/growtbl.narc"			#成長曲線テーブル
 	ARCID_WOTBL			"personal/wotbl.narc"			#技覚えテーブル
