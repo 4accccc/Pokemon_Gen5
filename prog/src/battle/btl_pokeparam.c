@@ -194,7 +194,14 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->hp = PP_Get( pp, ID_PARA_hp, 0 );
 	bpp->myID = pokeID;
 	bpp->pokeSick = PP_GetSick( pp );
-	bpp->pokeSickCounter = 0;
+	if( bpp->pokeSick != POKESICK_NEMURI )
+	{
+		bpp->pokeSickCounter = 0;
+	}
+	else
+	{
+		bpp->pokeSickCounter = BTL_NEMURI_TURN_MIN + GFL_STD_MtRand(BTL_NEMURI_TURN_RANGE);
+	}
 
 	bpp->ppSrc = pp;
 
@@ -595,6 +602,30 @@ void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
 	}
 }
 
+//=============================================================================================
+/**
+ * ƒ|ƒPƒ‚ƒ“ó‘ÔˆÙí‚ðÝ’è
+ *
+ * @param   pp		
+ * @param   sick		
+ * @param   turn		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_SetPokeSick( BTL_POKEPARAM* pp, PokeSick sick, u8 turn )
+{
+	if( sick == POKESICK_NULL )
+	{
+		pp->pokeSick = POKESICK_NULL;
+		pp->pokeSickCounter = 0;
+	}
+	else
+	{
+		GF_ASSERT(pp->pokeSick == POKESICK_NULL);
+		pp->pokeSick = sick;
+		pp->pokeSickCounter = turn;
+	}
+}
 
 //--------------------------------------------------------------------------
 /**

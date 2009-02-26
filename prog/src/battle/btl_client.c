@@ -394,12 +394,14 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 	case SEQ_RETURN_START:
 		if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE )
 		{
+			BTL_Printf("通信中なので待機中メッセージだすよ\n");
 			wk->commWaitInfoOn = TRUE;
 			BTLV_StartCommWait( wk->viewCore );
 			(*seq) = SEQ_RETURN_COMM_WAIT;
 		}
 		else
 		{
+			BTL_Printf("通信中じゃないなので待機中メッセージだしません\n");
 			return TRUE;
 		}
 		break;

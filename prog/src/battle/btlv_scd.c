@@ -695,7 +695,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 				{
 					BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.wazaIdx, target_idx );
 					wk->selTargetDone = TRUE;
-					(*seq)++;
+					return TRUE;
 				}
 			}
 
@@ -704,27 +704,6 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 				wk->selTargetDone = FALSE;
 				return TRUE;
 			}
-		}
-		break;
-
-	case 1:
-		{
-			u16 x, y;
-
-			GFL_BMP_Clear( wk->bmp, 0x0f );
-			BTL_STR_GetUIString( wk->strbuf, BTLSTR_UI_COMM_WAIT );
-			x = (BTLV_LCD_WIDTH  - PRINTSYS_GetStrWidth(wk->strbuf, wk->font, 0)) / 2;
-			y = (BTLV_LCD_HEIGHT - GFL_FONT_GetLineHeight(wk->font)) / 2;
-			PRINT_UTIL_Print( &wk->printUtil, wk->printQue, x, y, wk->strbuf, wk->font );
-			(*seq)++;
-		}
-		break;
-
-	case 2:
-		PRINTSYS_QUE_Main( wk->printQue );
-		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
-		{
-			return TRUE;
 		}
 		break;
 	}

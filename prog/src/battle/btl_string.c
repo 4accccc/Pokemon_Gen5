@@ -422,7 +422,9 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 		}
 	}
 
-	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], 0, buf );
+//	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], 0, buf );
+	BTL_Printf(" msgID=%d\n", strID);
+	ms_set_std( buf, strID, args );
 }
 
 //--------------------------------------------------------------

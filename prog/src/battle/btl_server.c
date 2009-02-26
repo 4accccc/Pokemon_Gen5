@@ -22,6 +22,7 @@
 #include "btl_string.h"
 #include "handler/hand_tokusei.h"
 
+#include "btl_server_local.h"
 #include "btl_server.h"
 
 
@@ -120,6 +121,17 @@ typedef struct {
 
 }CHANGE_EVENT_PARAM;
 
+//--------------------------------------------------------------
+/**
+ *	戦闘に出ているポケモンデータに順番にアクセスする処理のワーク
+ */
+//--------------------------------------------------------------
+typedef struct {
+	u8 clientIdx;
+	u8 pokeIdx;
+	u8 endFlag;
+}FRONT_POKE_SEEK_WORK;
+
 
 //--------------------------------------------------------------
 /**
@@ -157,7 +169,6 @@ struct _BTL_SERVER {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static inline void setup_client_members( CLIENT_WORK* client, BTL_PARTY* party, u8 numCoverPos );
-static BOOL callMainProc( BTL_SERVER* sv );
 static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
@@ -173,6 +184,7 @@ static BOOL createServerCommandAfterPokeSelect( BTL_SERVER* server );
 static void scput_MemberIn( BTL_SERVER* server, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scput_MemberOut( BTL_SERVER* server, u8 clientID, const BTL_ACTION_PARAM* action );
 static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action );
+static void cof_put_wazafail_msg_cmd( BTL_SERVER* server, const BTL_POKEPARAM* attacker, u8 wazaFailReason );
 static void scput_Fight_Damage(
 	 BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, WazaID waza, CLIENT_WORK* atClient,
 	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
@@ -199,12 +211,14 @@ static BOOL svflowsub_hitcheck_singular( BTL_SERVER* server, FIGHT_EVENT_PARAM* 
 static u16 svflowsub_damage_calc_core( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BtlTypeAff typeAff );
 static void svflowsub_set_waza_effect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, WazaID waza );
 static void scput_TurnCheck( BTL_SERVER* server );
+static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SERVER* server );
+static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SERVER* server, BTL_POKEPARAM** bpp );
 static void scput_turncheck_sick( BTL_SERVER* server );
 static inline int roundValue( int val, int min, int max );
 static void initFightEventParams( FIGHT_EVENT_PARAM* fep );
 static BOOL scEvent_CheckConf( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const CLIENT_WORK* atClient );
 static u16 scEvent_CalcConfDamage( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker );
-static BOOL scEvent_CheckWazaExecute( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const CLIENT_WORK* atClient );
+static BOOL scEvent_CheckWazaExecute( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, const CLIENT_WORK* atClient );
 static BOOL scEvent_checkHit( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BtlTypeAff scEvent_checkAffinity( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static void scEvent_decrementPP( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, u8 wazaIdx );
@@ -980,7 +994,7 @@ static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const
 // ワザ出し成功判定
 	if( !scEvent_CheckWazaExecute(server, fep, attacker, atClient ) )
 	{
-		SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaFail );
+		cof_put_wazafail_msg_cmd( server, attacker, fep->wazaFailReason );
 		return;
 	}
 	else
@@ -1015,6 +1029,29 @@ static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const
 			break;
 		}
 		scEvent_decrementPP( server, fep, attacker, action->fight.wazaIdx );
+	}
+}
+// ワザだし失敗メッセージ表示コマンドをセット
+static void cof_put_wazafail_msg_cmd( BTL_SERVER* server, const BTL_POKEPARAM* attacker, u8 wazaFailReason )
+{
+	u8 pokeID = BTL_POKEPARAM_GetID( attacker );
+
+	switch( wazaFailReason ){
+	case SV_WAZAFAIL_NEMURI:
+		SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_NemuriAct, pokeID );
+		break;
+
+	case SV_WAZAFAIL_MAHI:
+		SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_MahiAct, pokeID );
+		break;
+
+	case SV_WAZAFAIL_KOORI:
+		SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_KoriAct, pokeID );
+		break;
+
+	default:
+		SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaFail, pokeID );
+		break;
 	}
 }
 //----------------------------------------------------------------------
@@ -1477,16 +1514,6 @@ static void scput_TurnCheck( BTL_SERVER* server )
 //	scput_turncheck_weather( server );
 }
 
-//--------------------------------------------------------------
-/**
- *	戦闘に出ているポケモンデータに順番にアクセスする処理のワーク
- */
-//--------------------------------------------------------------
-typedef struct {
-	u8 clientIdx;
-	u8 pokeIdx;
-	u8 endFlag;
-}FRONT_POKE_SEEK_WORK;
 
 static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SERVER* server )
 {
@@ -1709,13 +1736,54 @@ static u16 scEvent_CalcConfDamage( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, c
 }
 
 // ワザだせるか判定
-static BOOL scEvent_CheckWazaExecute( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const CLIENT_WORK* atClient )
+static BOOL scEvent_CheckWazaExecute( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, const CLIENT_WORK* atClient )
 {
 	// @@@ ひるみ、まひ、メロメロ等
+	WazaSick  sick;
 	fep->wazaExecuteFlag = TRUE;
-	fep->wazaFailReason = 0;
+	fep->wazaFailReason = SV_WAZAFAIL_NULL;
+
+	do {
+		sick = BTL_POKEPARAM_GetPokeSick( attacker );
+		if( sick == POKESICK_NEMURI )
+		{
+			fep->wazaExecuteFlag = FALSE;
+			fep->wazaFailReason = SV_WAZAFAIL_NEMURI;
+			break;
+		}
+		if( sick == POKESICK_MAHI )
+		{
+			if( GFL_STD_MtRand(100) < 25 )
+			{
+				fep->wazaExecuteFlag = FALSE;
+				fep->wazaFailReason = SV_WAZAFAIL_MAHI;
+				break;
+			}
+		}
+		if( sick == POKESICK_KOORI )
+		{
+			if( GFL_STD_MtRand(100) >= 25 )
+			{
+				fep->wazaExecuteFlag = FALSE;
+				fep->wazaFailReason = SV_WAZAFAIL_KOORI;
+				break;
+			}
+
+			{
+				u8 pokeID = BTL_POKEPARAM_GetID( attacker );
+				BTL_POKEPARAM_SetPokeSick( attacker, POKESICK_NULL, 0 );
+				SCQUE_PUT_OP_SetSick( server->que, pokeID, POKESICK_NULL, 0 );
+				SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_KoriMelt, pokeID );
+			}
+		}
+
+		fep->wazaExecuteFlag = TRUE;
+		fep->wazaFailReason = SV_WAZAFAIL_NULL;
+
+	}while(0);
 
 	BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_EXECUTE );
+
 	return fep->wazaExecuteFlag;
 }
 

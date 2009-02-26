@@ -12,6 +12,7 @@
 
 #include "../btl_pokeparam.h"
 #include "../btl_event_factor.h"
+#include "../btl_server_local.h"
 
 extern BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp );
 

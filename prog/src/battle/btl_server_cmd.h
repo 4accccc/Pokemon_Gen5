@@ -53,6 +53,7 @@ typedef enum {
 	SC_OP_PP_PLUS,			///< 【計算】PPプラス    [ClientID, プラス量]
 	SC_OP_RANK_UP,			///< 【計算】ステータスランクアップ  [ClientID, StatusType, プラス量]
 	SC_OP_RANK_DOWN,		///< 【計算】ステータスランクダウン  [ClientID, StatusType, マイナス量]
+	SC_OP_SICK_SET,			///< 【計算】状態異常 [PokeID, Sick, Turn]
 
 	SC_DATA_WAZA_EXE,		///< 【データセット】ワザ発動 [ AtClientID, wazaIdx, DefPokeNum, DefClientID1, ... ]
 	SC_DATA_MEMBER_OUT,	///< 【データセット】フロントメンバーアウト[ CliendID ]
@@ -232,6 +233,20 @@ static inline void SCQUE_READ_OP_RankDown( BTL_SERVER_CMD_QUE* que, int *args )
 {
 	args[0] = scque_read1byte( que );
 	args[1] = scque_read1byte( que );
+	args[2] = scque_read1byte( que );
+}
+
+static inline void SCQUE_PUT_OP_SetSick( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 sick, u8 turn )
+{
+	scque_put2byte( que, SC_OP_SICK_SET );
+	scque_put2byte( que, sick );
+	scque_put1byte( que, pokeID );
+	scque_put1byte( que, turn );
+}
+static inline void SCQUE_READ_OP_SetSick( BTL_SERVER_CMD_QUE* que, int* args )
+{
+	args[1] = scque_read2byte( que );
+	args[0] = scque_read1byte( que );
 	args[2] = scque_read1byte( que );
 }
 
@@ -451,6 +466,7 @@ static inline ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 	case SC_OP_PP_MINUS:		SCQUE_READ_OP_PPMinus( que, args ); break;
 	case SC_OP_RANK_UP:			SCQUE_READ_OP_RankUp( que, args ); break;
 	case SC_OP_RANK_DOWN:		SCQUE_READ_OP_RankDown( que, args ); break;
+	case SC_OP_SICK_SET:		SCQUE_READ_OP_SetSick( que, args ); break;
 	case SC_DATA_WAZA_EXE:	SCQUE_READ_DATA_WazaExe( que, args ); break;
 	case SC_DATA_MEMBER_IN:	SCQUE_READ_DATA_MemberIn( que, args ); break;
 	case SC_DATA_MEMBER_OUT:SCQUE_READ_DATA_MemberOut( que, args ); break;

@@ -875,6 +875,11 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 				// ‚Ç‚­‚É‚µ‚Ä‚Ý‚é
 				POKEMON_PARAM* pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
 				PP_SetSick( pp, POKESICK_DOKU );
+
+				// ‚Ü‚Ð‚É‚µ‚Ä‚Ý‚é
+				pp = PokeParty_GetMemberPointer( para->partyPlayer, 0 );
+				PP_SetSick( pp, POKESICK_MAHI );
+
 			}
 		#else
 			setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_AUSU + 2, MONSNO_AUSU + 1, 0 );

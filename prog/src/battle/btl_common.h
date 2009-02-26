@@ -33,6 +33,11 @@ enum {
 	BTL_CLIENT_MAX = 4,				///< 稼働するクライアント数
 	BTL_POSIDX_MAX = 3,				///< クライアントが管理する最大の戦闘位置数
 	BTL_PARTY_MEMBER_MAX = 6,	///< パーティのメンバー最大数
+
+	BTL_NEMURI_TURN_MIN = 2,
+	BTL_NEMURI_TURN_MAX = 7,
+	BTL_NEMURI_TURN_RANGE = (BTL_NEMURI_TURN_MAX - BTL_NEMURI_TURN_MIN + 1),
+
 };
 
 //--------------------------------------------------------------
