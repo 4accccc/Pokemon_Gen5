@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: bmpoam.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_BMPOAM_NAIX_
+#define NARC_BMPOAM_NAIX_
+
+enum {
+	NARC_bmpoam_bmpoam_dummy32x16_NCER = 0,
+	NARC_bmpoam_bmpoam_dummy32x16_NANR = 1,
+	NARC_bmpoam_bmpoam_dummy32x16_NCGR = 2
+};
+
+/* NARC_BMPOAM_NAIX_ */
+#endif
