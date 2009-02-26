@@ -293,11 +293,23 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 
 	//3DŠÖ˜A‰Šú‰»
 	{
+		int i;
+		u32 fog_table[8];
+
 		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, wk->heapID, NULL );
 		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
 		G3X_AlphaBlend( TRUE );
 		G3X_EdgeMarking( TRUE );
 		G3X_AntiAlias( TRUE );
+		/*
+		G3X_SetFog( TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x0020, 0 );
+		G3X_SetFogColor( GX_RGB( 31, 31, 31 ), 0 );
+
+        for ( i=0; i<8; i++ ){
+            fog_table[i] = (u32)(((i*16)<<0) | ((i*16+4)<<8) | ((i*16+8)<<16) | ((i*16+12)<<24));
+        }
+		G3X_SetFogTable( &fog_table[0] );
+		*/
 		GFL_BG_SetBGControl3D( 1 );
 	}
 
@@ -623,14 +635,14 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 //				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_ON );
 //				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_VANISH_ON );
 //				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_VANISH_ON );
-				G3X_AntiAlias( FALSE );
+//				G3X_AntiAlias( FALSE );
 			}
 			else{
 //				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_OFF );
 //				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_OFF );
 //				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_VANISH_OFF );
 //				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_VANISH_OFF );
-				G3X_AntiAlias( TRUE );
+//				G3X_AntiAlias( TRUE );
 			}
 			if( tp == TRUE ){
 				wk->ortho_mode ^= 1;
@@ -676,27 +688,32 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 #endif
 			}
 		}
-		if( trg & PAD_BUTTON_DEBUG ){
-			wk->timer_flag ^= 2;
-		}
+//		if( trg & PAD_BUTTON_DEBUG ){
+//			wk->timer_flag ^= 2;
+//		}
 	}
 	else{
 		MoveCamera( wk );
 
 		if( (trg & PAD_BUTTON_X ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-			BTL_EFFECT_Add( BTL_EFFECT_A2BGANSEKI );
+			BTL_EFFECT_Add( BTL_EFFECT_AA2BBGANSEKI );
 		}
 		if( (trg & PAD_BUTTON_Y ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-			BTL_EFFECT_Add( BTL_EFFECT_B2AGANSEKI );
+			BTL_EFFECT_Add( BTL_EFFECT_BB2AAGANSEKI );
 		}
 		if( (trg & PAD_BUTTON_A ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-			BTL_EFFECT_Add( BTL_EFFECT_A2BMIZUDEPPOU );
+			BTL_EFFECT_Add( BTL_EFFECT_AA2BBMIZUDEPPOU );
 		}
 		if( (trg & PAD_BUTTON_B ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-			BTL_EFFECT_Add( BTL_EFFECT_B2AMIZUDEPPOU );
+			BTL_EFFECT_Add( BTL_EFFECT_BB2AAMIZUDEPPOU );
+		}
+		if( (trg & PAD_BUTTON_SELECT ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
+			BTL_EFFECT_Add( BTL_EFFECT_A2BGANSEKI );
 		}
 	}
+
 	if( trg & PAD_BUTTON_SELECT ){
+#if 0
 		wk->timer_flag ^= 1;
 		if( wk->timer_flag ){
 			VecFx32	scale;
@@ -731,6 +748,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
 			DEBUG_PerformanceSetActive( TRUE );
 		}
+#endif
 	}
 #else
 	MoveCamera( wk );
@@ -955,6 +973,13 @@ static	void	MoveCamera( SOGA_WORK *wk )
 		camTarget.z += ofsx.z + ofsz.z;
 
 		BTL_CAMERA_MoveCameraPosition( wk->bcw, &camPos, &camTarget );
+		OS_TPrintf("pos_x:%08x pos_y:%08x pos_z:%08x tar_x:%08x tar_y:%08x tar_z:%08x\n",
+			camPos.x,
+			camPos.y,
+			camPos.z,
+			camTarget.x,
+			camTarget.y,
+			camTarget.z );
 	}
 
 }
