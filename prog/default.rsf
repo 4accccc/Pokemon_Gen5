@@ -120,7 +120,7 @@ Property
 	# BANNER FILE: generated from Banner Spec File
 	#
 	#BannerFile		./etc/myGameBanner.bnr
-	BannerFile		./spec/default.bnr
+	BannerFile		./spec/pokemon_WB.bnr
 
 	###
 	###
