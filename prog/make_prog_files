@@ -363,6 +363,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_camera.c \
 			battle/btl_effect.c \
 			battle/btl_efftool.c \
+			battle/btl_effvm.c \
 			battle/btl_pokeselect.c \
 			battle/handler/hand_tokusei.c \
 			battle/handler/tokusei/hand_tok_ikaku.c \
