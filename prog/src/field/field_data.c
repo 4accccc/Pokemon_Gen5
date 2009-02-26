@@ -164,6 +164,30 @@ static const FLDMAPPER_MAPDATA sampleMap2[] = {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+#define	NARC_nogrid_mapblock_h01a_dummy	NARC_nogrid_mapblock_h01a_00_01_3dppack
+#include "fieldmap/nogrid_mapblock.naix"
+static const FLDMAPPER_MAPDATA newbridgemap[] = {
+	{ NARC_nogrid_mapblock_h01a_dummy },
+	{ NARC_nogrid_mapblock_h01a_01_00_3dppack },
+	{ NARC_nogrid_mapblock_h01a_02_00_3dppack },
+
+	{ NARC_nogrid_mapblock_h01a_00_01_3dppack },
+	{ NARC_nogrid_mapblock_h01a_01_01_3dppack },
+	{ NARC_nogrid_mapblock_h01a_dummy },
+
+	{ NARC_nogrid_mapblock_h01a_00_02_3dppack },
+	{ NARC_nogrid_mapblock_h01a_01_02_3dppack },
+	{ NARC_nogrid_mapblock_h01a_dummy },
+
+	{ NARC_nogrid_mapblock_h01a_00_03_3dppack },
+	{ NARC_nogrid_mapblock_h01a_01_03_3dppack },
+	{ NARC_nogrid_mapblock_h01a_dummy },
+
+	{ NARC_nogrid_mapblock_h01a_00_04_3dppack },
+	{ NARC_nogrid_mapblock_h01a_01_04_3dppack },
+	{ NARC_nogrid_mapblock_h01a_02_04_3dppack },
+};
+
 #include "test_graphic/loopbridge.naix"
 
 static const FLDMAPPER_MAPDATA loopbridgemap[] = {
@@ -186,12 +210,16 @@ static const FLDMAPPER_MAPDATA loopbridgemap[] = {
 };
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-#include "test_graphic/test_c3.naix"
+//#include "test_graphic/test_c3.naix"
 static const FLDMAPPER_MAPDATA test_c3map[] = {
-	{ NARC_test_c3_C3_00_01_3dppack },
-	{ NARC_test_c3_C3_00_02_3dppack },
-	{ NARC_test_c3_C3_01_01_3dppack },
-	{ NARC_test_c3_C3_01_02_3dppack },
+	{ NARC_nogrid_mapblock_C3_00_01_3dppack },
+	{ NARC_nogrid_mapblock_C3_00_02_3dppack },
+	{ NARC_nogrid_mapblock_C3_01_01_3dppack },
+	{ NARC_nogrid_mapblock_C3_01_02_3dppack },
+//	{ NARC_test_c3_C3_00_01_3dppack },
+//	{ NARC_test_c3_C3_00_02_3dppack },
+//	{ NARC_test_c3_C3_01_01_3dppack },
+//	{ NARC_test_c3_C3_01_02_3dppack },
 };
 
 //------------------------------------------------------------------
@@ -263,12 +291,15 @@ const SCENE_DATA resistMapTbl[] = {
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
-			ARCID_LOOPBRIDGE,
+			ARCID_FLDMAP_LAND_EX,
+//			ARCID_LOOPBRIDGE,
 			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
 			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
 
-			4,  4, NELEMS(loopbridgemap),
-			loopbridgemap, 
+			3,	5, NELEMS(newbridgemap),
+			newbridgemap,
+			//4,  4, NELEMS(loopbridgemap),
+			//loopbridgemap, 
 		}, 
 		&FieldNoGridFunctions,
 		FALSE,
@@ -320,7 +351,8 @@ const SCENE_DATA resistMapTbl[] = {
 		{	
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
-			ARCID_TEST_C3,
+			ARCID_FLDMAP_LAND_EX,
+			//ARCID_TEST_C3,
 			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
 			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
 
