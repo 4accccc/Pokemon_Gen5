@@ -45,6 +45,7 @@ struct _GAMEDATA{
 	LOCATION *special_loc;
 	MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
 	POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
+	FLDMMDL_BUFFER *fldmmdl_buffer;
 };
 
 //==============================================================================
@@ -94,7 +95,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	gd->evdata = EVENTDATA_SYS_Create(heapID);
 	EVENTDATA_SYS_Clear(gd->evdata);
 
-	//
+	//動作モデル
+	gd->fldmmdl_buffer = SaveControl_DataPtrGet( gd->sv_control_ptr, GMDATA_ID_FLDMMDL );
+	
 	gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
 	gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
 	
@@ -215,6 +218,16 @@ MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata)
 	return &((GAMEDATA_GetMyPlayerWork(gamedata))->mystatus);
 }
 
+//--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+FLDMMDL_BUFFER * GAMEDATA_GetFldMMdlBuffer( GAMEDATA *gamedata )
+{
+	return gamedata->fldmmdl_buffer;
+}
 
 //============================================================================================
 //
@@ -282,8 +295,6 @@ u16 PLAYERWORK_getDirection(const PLAYER_WORK * player)
 {
 	return player->direction;
 }
-
-
 
 //==============================================================================
 //	ゲームデータが持つ情報を元にセーブ

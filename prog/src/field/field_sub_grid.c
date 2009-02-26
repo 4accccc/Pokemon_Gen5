@@ -196,6 +196,7 @@ static void GridMoveCreate(
 		
 		fieldWork->fldMMdlSys = FLDMMDLSYS_Create( 256,
 				fieldWork->heapID, GetFieldG3Dmapper(fieldWork->gs) );
+		
 		FLDMMDLSYS_InitDraw( fieldWork->fldMMdlSys );
 		
 		{
@@ -207,7 +208,7 @@ static void GridMoveCreate(
 		}
 		
 		if( ZONEDATA_DEBUG_IsSampleObjUse(zone_id) == TRUE ){
-		//	GridMap_SetupNPC( fieldWork );
+			GridMap_SetupNPC( fieldWork );
 		}
 	}
 	
@@ -239,6 +240,16 @@ static void GridMoveCreate(
 		VecFx32 offs = { -FX32_ONE*8, 0, FX32_ONE*8 };
 		FLDMAPPER_SetDrawOffset(
 			GetFieldG3Dmapper(fieldWork->gs), &offs );
+	}
+	
+	{
+		u32 i = 0, j = 0;
+		FLDMMDL *fmmdl;
+		while( FLDMMDLSYS_SearchUseFldMMdl(fieldWork->fldMMdlSys,&fmmdl,&i) ){
+			j++;
+		}
+
+		OS_Printf( "“®ìƒ‚ƒfƒ‹’Ç‰ÁŒã‚Ìl”‚Í%d‚Å‚·\n", j );
 	}
 }
 
@@ -307,6 +318,7 @@ static void GridMoveMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	switch( pGridCont->proc_switch ){
 	case GRIDPROC_INIT:
 		{
+#if 0
 			GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 			PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 			int zone_id = PLAYERWORK_getZoneID( player );
@@ -314,6 +326,7 @@ static void GridMoveMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 			if( ZONEDATA_DEBUG_IsSampleObjUse(zone_id) == TRUE ){
 				GridMap_SetupNPC( fieldWork );
 			}
+#endif
 		}
 		pGridCont->proc_switch = GRIDPROC_MAIN;
 	case GRIDPROC_MAIN: 
@@ -347,6 +360,13 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 #endif
 	}
 	
+	{
+		GAMESYS_WORK *gsys = fieldWork->gsys;
+		GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+		FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(gdata);
+		FLDMMDL_BUFFER_SaveBuffer( buf, fieldWork->fldMMdlSys );
+	}
+
 	FLDMMDLSYS_DeleteAll( fieldWork->fldMMdlSys );
 }
 
@@ -1510,6 +1530,7 @@ static const FLDMMDL_HEADER DATA_NpcHeader =
 //--------------------------------------------------------------
 static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
 {
+#if 0
 	u32 attr;
 	int i,gx,gy,gz;
 	FLDMMDL *fmmdl;
@@ -1544,6 +1565,11 @@ static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
 			}
 		}while( 1 );
 	}
+#else
+	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
+	FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(gdata);
+	FLDMMDL_BUFFER_LoadBuffer( buf, fieldWork->fldMMdlSys );
+#endif
 }
 
 //======================================================================

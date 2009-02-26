@@ -162,7 +162,7 @@ static const FLDMMDL_HEADER DATA_JikiHeader =
 {
 	0xff,	///<識別ID
 	HERO,	///<表示するOBJコード
-	0,	///<動作コード
+	MV_DMY,	///<動作コード
 	0,	///<イベントタイプ
 	0,	///<イベントフラグ
 	0,	///<イベントID
@@ -191,11 +191,15 @@ PC_ACTCONT * CreatePlayerActGrid(
 	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
 	
 	//FLDMMDLセットアップ
-	head = DATA_JikiHeader;
-	head.gx = SIZE_GRID_FX32( pos->x );
-	head.gz = SIZE_GRID_FX32( pos->z );
-	head.gy = pos->y;
-	pcActCont->pFldMMdl = FLDMMDLSYS_AddFldMMdl( pFldMMdlSys, &DATA_JikiHeader, 0 );
+	pcActCont->pFldMMdl = FLDMMDLSYS_SearchOBJID( pFldMMdlSys, 0xff );
+
+	if( pcActCont->pFldMMdl == NULL ){
+		head = DATA_JikiHeader;
+		head.gx = SIZE_GRID_FX32( pos->x );
+		head.gz = SIZE_GRID_FX32( pos->z );
+		head.gy = pos->y;
+		pcActCont->pFldMMdl = FLDMMDLSYS_AddFldMMdl( pFldMMdlSys, &DATA_JikiHeader, 0 );
+	}
 	
 #if 0
 	//BLACTセットアップ

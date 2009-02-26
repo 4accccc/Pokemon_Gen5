@@ -25,7 +25,7 @@
 #include "savedata/system_data.h"
 #include "savedata/record.h"
 #include "system/pms_word.h"
-
+#include "field/fldmmdl_buff.h"
 
 //==============================================================================
 //	íËêîíËã`
@@ -197,6 +197,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_PMS,
 		(FUNC_GET_SIZE)PMSW_GetSaveDataSize,
 		(FUNC_INIT_WORK)PMSW_InitSaveData,
+	},
+	{
+		GMDATA_ID_FLDMMDL,
+		(FUNC_GET_SIZE)FLDMMDL_BUFFER_GetWorkSize,
+		(FUNC_INIT_WORK)FLDMMDL_BUFFER_InitBuffer,
 	},
 };
 

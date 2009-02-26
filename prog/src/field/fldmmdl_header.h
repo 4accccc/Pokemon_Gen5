@@ -51,6 +51,7 @@ typedef struct
 //--------------------------------------------------------------
 ///	FLDMMDL_SAVEDATA構造体
 //--------------------------------------------------------------
+#if 0
 typedef struct
 {
 	u32 status_bit;			///<ステータスビット
@@ -84,5 +85,6 @@ typedef struct
 
 ///<FLDMMDL_SAVE_DATA size
 #define FLDMMDL_SAVE_DATA_SIZE (sizeof(FLDMMDL_SAVE_DATA))
+#endif
 
 #endif //FLDMMDL_HEADER_FILE

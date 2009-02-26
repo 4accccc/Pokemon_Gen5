@@ -18,6 +18,8 @@
 #include "fldmmdl_header.h"
 #include "fldmmdl_code.h"
 
+#include "fldmmdl_buff.h"
+
 #include "field_g3d_mapper.h"
 
 //#include "arc/fieldmap/fldmmdl_mdlres.naix"		//ARCID_FLDMMDL
@@ -191,6 +193,7 @@ typedef enum
 	FLDMMDL_MOVEBIT_SHADOW_SET=(1<<0),///<影をセットした
 	FLDMMDL_MOVEBIT_GRASS_SET=(1<<1),///<草をセットした
 	FLDMMDL_MOVEBIT_ATTR_GET_OFF=(1<<2),///<アトリビュート取得を一切行わない
+	FLDMMDL_MOVEBIT_MOVE_PROC_INIT=(1<<3),///<動作初期化を行った
 }FLDMMDL_MOVEBIT;
 
 //--------------------------------------------------------------
@@ -655,6 +658,13 @@ extern void FLDMMDL_DrawProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawDeleteProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawPushProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl );
+
+extern FLDMMDL * FLDMMDL_BUFFER_AddFldMMdl(
+	FLDMMDL_BUFFER *buf, const FLDMMDL_HEADER *header, int buf_no );
+extern FLDMMDL * FLDMMDL_BUFFER_LoadFldMMdl(
+	FLDMMDL_BUFFER *buf, FLDMMDLSYS *fos, int no );
+extern void FLDMMDL_BUFFER_LoadBuffer( FLDMMDL_BUFFER *buf, FLDMMDLSYS *fos );
+extern void FLDMMDL_BUFFER_SaveBuffer( FLDMMDL_BUFFER *buf, FLDMMDLSYS *fos );
 
 //仮
 //extern FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork(FLDMMDLSYS *fmmdlsys);

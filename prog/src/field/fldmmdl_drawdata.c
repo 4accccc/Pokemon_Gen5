@@ -8,7 +8,7 @@
 //======================================================================
 #include "fldmmdl.h"
 #include "fldmmdl_procdraw.h"
-#include "../../arc/test_graphic/mmodel.naix"
+//#include "../../arc/test_graphic/mmodel.naix"
 
 //======================================================================
 //	フィールド動作モデル　描画関数テーブル
@@ -131,99 +131,6 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnm00Tbl[DRAW_STA_MAXDIR4] =
 //--------------------------------------------------------------
 ///	自機アニメ
 //--------------------------------------------------------------
-//----
-#ifdef FLDMMDL_BLACT_HEAD3_TEST	//三頭身テスト
-//----
-static const GFL_BBDACT_ANM DATA_BlActHero_StopU[] = {
-	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{GFL_BBDACT_ANMCOM_END,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_StopD[] = {
-	{9,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{GFL_BBDACT_ANMCOM_END,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_StopL[] = {
-	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{GFL_BBDACT_ANMCOM_END,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_StopR[] = {
-	{4,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{GFL_BBDACT_ANMCOM_END,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_WalkU8F[] = {
-	{7,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{8,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_WalkD8F[] = {
-	{10,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{9,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{11,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{9,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_WalkL8F[] = {
-	{1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{3,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_WalkR8F[] = {
-	{5,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{4,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{6,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{4,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-
-static const GFL_BBDACT_ANM * DATA_BlActHeroTbl[DRAW_STA_MAXDIR4_HERO] = { 
-	DATA_BlActHero_StopU,	//DRAW_STA_STOP
-	DATA_BlActHero_StopD,
-	DATA_BlActHero_StopL,
-	DATA_BlActHero_StopR,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_32F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_16F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_8F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_4F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_2F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_6F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_3F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_7F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_DASH_4F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-};
-//----
-#else	//二頭身
-//----
 static const GFL_BBDACT_ANM DATA_BlActHero_StopU[] = {
 	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
 	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
@@ -351,9 +258,6 @@ static const GFL_BBDACT_ANM * DATA_BlActHeroTbl[DRAW_STA_MAXDIR4_HERO] = {
 	DATA_BlActHero_DashL4F,
 	DATA_BlActHero_DashR4F,
 };
-//----
-#endif //FLDMMDL_BLACT_HEAD3_TEST
-//----
 
 //--------------------------------------------------------------
 //	ビルボードアクター　アニメーション　リストテーブル
@@ -369,7 +273,7 @@ const FLDMMDL_BBDACT_ANMTBL
 //======================================================================
 //	OBJコードステータスデータ
 //======================================================================
-#ifndef FLDMMDL_PL_NULL
+#if 0
 //--------------------------------------------------------------
 //	OBJコード別描画ステータス　並びは不順
 //--------------------------------------------------------------
@@ -636,5 +540,98 @@ const OBJCODE_STATE DATA_FieldOBJCodeDrawStateTbl[] =
  {GSTPOKEHEROINE,FLDMMDL_DRAWTYPE_BLACT,FLDMMDL_SHADOW_NON,FLDMMDL_FOOTMARK_NORMAL,FLDMMDL_REFLECT_BLACT,0},
 
  {OBJCODEMAX,0,0,0,0,0},
+};
+#endif
+
+//======================================================================
+//	test
+//======================================================================
+#if 0 //三頭身テスト
+static const GFL_BBDACT_ANM DATA_BlActHero_StopU[] = {
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_StopD[] = {
+	{9,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_StopL[] = {
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_StopR[] = {
+	{4,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_WalkU8F[] = {
+	{7,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{8,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_WalkD8F[] = {
+	{10,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{9,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{11,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{9,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_WalkL8F[] = {
+	{1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{3,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_WalkR8F[] = {
+	{5,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{4,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{6,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{4,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * DATA_BlActHeroTbl[DRAW_STA_MAXDIR4_HERO] = { 
+	DATA_BlActHero_StopU,	//DRAW_STA_STOP
+	DATA_BlActHero_StopD,
+	DATA_BlActHero_StopL,
+	DATA_BlActHero_StopR,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_32F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_16F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_8F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_4F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_2F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_6F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_3F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_7F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_DASH_4F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
 };
 #endif

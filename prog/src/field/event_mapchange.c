@@ -17,11 +17,13 @@
 #include "field/fieldmap.h"
 #include "field/location.h"
 #include "field/eventdata_sxy.h"
+#include "field/fldmmdl.h"
 
 #include "./event_fieldmap_control.h"
 #include "event_mapchange.h"
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
+static void CreateFldMMdlBuffer( FLDMMDL_BUFFER *buf );
 
 //============================================================================================
 //
@@ -81,9 +83,17 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 			game_init_work->pos.x, game_init_work->pos.y, game_init_work->pos.z);
 		break;
 	case GAMEINIT_MODE_FIRST:
+		{
+			FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(fmw->gamedata);
+			CreateFldMMdlBuffer( buf );
+		}
 		LOCATION_SetGameStart(&fmw->loc_req);
 		break;
 	case GAMEINIT_MODE_DEBUG:
+		{
+			FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(fmw->gamedata);
+			CreateFldMMdlBuffer( buf );
+		}
 		LOCATION_DEBUG_SetDefaultPos(&fmw->loc_req, game_init_work->mapid);
 		break;
 	}
@@ -329,10 +339,11 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
 	PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(gamedata);
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
+	FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(gamedata);
 
 	//イベント起動データの読み込み
 	EVENTDATA_SYS_Load(evdata, loc_req->zone_id);
-
+	
 	//開始位置セット
 	MakeNewLocation(evdata, loc_req, &loc);
 
@@ -355,5 +366,36 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 	GAMEDATA_SetStartLocation(gamedata, &loc);
 }
 
-
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void CreateFldMMdlBuffer( FLDMMDL_BUFFER *buf )
+{
+	int i;
+	u16 code[] = { BOY1,GIRL1,MAN1,WOMAN1,KABI32,OLDWOMAN1};
+	FLDMMDL_HEADER head = {
+			0,	///<識別ID
+			0,	///<表示するOBJコード
+			MV_RND,	///<動作コード
+			0,	///<イベントタイプ
+			0,	///<イベントフラグ
+			0,	///<イベントID
+			0,	///<指定方向
+			0,	///<指定パラメタ 0
+			0,	///<指定パラメタ 1
+			0,	///<指定パラメタ 2
+			4,	///<X方向移動制限
+			4,	///<Z方向移動制限
+			0,	///<グリッドX
+			0,	///<グリッドZ
+			0,	///<Y値 fx32型
+		};
+	
+	for( i = 0; i < FLDMMDL_BUFFER_MAX-1; i++ ){
+		head.id = i;
+		head.gx = GFUser_GetPublicRand( 128 );
+		head.gz = GFUser_GetPublicRand( 128 );
+		head.obj_code = code[GFUser_GetPublicRand(NELEMS(code))];
+		FLDMMDL_BUFFER_AddFldMMdl( buf, &head, i );
+	}
+}
 

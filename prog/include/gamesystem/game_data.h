@@ -21,6 +21,7 @@
 #include "field/location.h"
 #include "savedata/myitem_savedata.h"
 #include "poke_tool/pokeparty.h"
+#include "field/fldmmdl_buff.h"
 
 //============================================================================================
 //============================================================================================
@@ -168,6 +169,15 @@ extern POKEPARTY * GAMEDATA_GetMyPokemon(const GAMEDATA * gamedata);
  */
 //--------------------------------------------------------------
 extern MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+extern FLDMMDL_BUFFER * GAMEDATA_GetFldMMdlBuffer( GAMEDATA *gamedata );
 
 //--------------------------------------------------------------
 /**

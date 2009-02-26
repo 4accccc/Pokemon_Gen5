@@ -23,9 +23,12 @@
 #include "app/config_panel.h"		//ConfigPanelProcData
 #include "app/trainer_card.h"		//TrainerCardSysProcData
 #include "fieldmap_local.h"
+#include "fldmmdl.h"
 
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
 extern const GFL_PROC_DATA TrainerCardProcData;
+
+extern FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
 
 //======================================================================
 //	define
@@ -105,7 +108,7 @@ static GMEVENT * createFMenuMsgWinEvent(
 static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk );
 
 static GMEVENT * createFMenuReportEvent(
-	GAMESYS_WORK *gsys, u32 heapID, FLDMSGBG *msgBG );
+	GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG );
 static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk );
 
 //--------------------------------------------------------------
@@ -191,7 +194,7 @@ GMEVENT * EVENT_FieldMapMenu(
 	mwk->gmEvent = event;
 	mwk->fieldWork = fieldWork;
 	mwk->heapID = heapID;
-
+	
 	return event;
 }
 
@@ -365,7 +368,7 @@ static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk )
 {
-	GMEVENT * subevent = createFMenuReportEvent( mwk->gmSys, mwk->heapID,
+	GMEVENT * subevent = createFMenuReportEvent( mwk->gmSys, mwk->fieldWork, mwk->heapID,
 			FIELDMAP_GetFLDMSGBG(mwk->fieldWork) );
 	GMEVENT_CallEvent(mwk->gmEvent, subevent);
 	return( TRUE );
@@ -474,21 +477,25 @@ typedef struct
 	FLDMSGBG *msgBG;
 	GFL_MSGDATA *msgData;
 	FLDMSGWIN *msgWin;
+	GAMESYS_WORK *gsys;
+	FIELD_MAIN_WORK *fieldWork;
 }FMENU_REPORT_EVENT_WORK;
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static GMEVENT * createFMenuReportEvent(GAMESYS_WORK *gsys, u32 heapID, FLDMSGBG *msgBG )
+static GMEVENT * createFMenuReportEvent(GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG )
 {
 	GMEVENT * msgEvent;
 	FMENU_REPORT_EVENT_WORK *work;
-	
+
 	msgEvent = GMEVENT_Create(
 		gsys, NULL, FMenuReportEvent, sizeof(FMENU_REPORT_EVENT_WORK));
 	work = GMEVENT_GetEventWork( msgEvent );
 	MI_CpuClear8( work, sizeof(FMENU_REPORT_EVENT_WORK) );
 	work->msgBG = msgBG;
 	work->heapID = heapID;
+	work->gsys = gsys;
+	work->fieldWork = fieldWork;
 	return msgEvent;
 }
 
@@ -517,6 +524,14 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
 		}	
 		break;
 	case 2:
+		{
+			FLDMMDLSYS *fmmdlsys = FIELDMAP_GetFldMMdlSys(work->fieldWork);
+			if( fmmdlsys != NULL ){
+				GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gsys );
+				FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(gdata);
+				FLDMMDL_BUFFER_SaveBuffer( buf, fmmdlsys );
+			}
+		}
 		GAMEDATA_Save(GAMESYSTEM_GetGameData(GMEVENT_GetGameSysWork(event)));
 		(*seq)++;
 		break;

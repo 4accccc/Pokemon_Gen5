@@ -57,7 +57,7 @@ struct _TAG_FLDMMDLSYS
 #define FLDMMDLSYS_SIZE (sizeof(FLDMMDLSYS)) ///<FLDMMDLSYSサイズ
 
 //--------------------------------------------------------------
-///	FLDMMDL構造体
+///	FLDMMDL構造体	224
 //--------------------------------------------------------------
 struct _TAG_FLDMMDL
 {
@@ -193,6 +193,24 @@ static BOOL FldMMdlHeader_CheckAlies( const FLDMMDL_HEADER *head );
 static int FldMMdlHeader_GetAliesZoneID( const FLDMMDL_HEADER *head );
 
 //======================================================================
+//	フィールド動作モデル　セーブ用バッファ
+//======================================================================
+struct _TAG_FLDMMDL_BUFFER
+{
+	FLDMMDL fldMMdlBuf[FLDMMDL_BUFFER_MAX];
+};
+
+u32 FLDMMDL_BUFFER_GetWorkSize( void )
+{
+	return( sizeof(FLDMMDL_BUFFER) );
+}
+
+void FLDMMDL_BUFFER_InitBuffer( void *p )
+{
+	MI_CpuClear8( p, FLDMMDL_BUFFER_GetWorkSize() );
+}
+
+//======================================================================
 //	フィールド動作モデル　システム
 //======================================================================
 //--------------------------------------------------------------
@@ -274,7 +292,7 @@ void FLDMMDLSYS_UpdateMove( FLDMMDLSYS *fos )
 /**
  * FLDMMDLSYS フィールド動作モデルを追加
  * @param	fos			FLDMMDLSYS *
- * @param	head		追加する情報を纏めたFLDMMDL_HEADER *
+ * @param	header		追加する情報を纏めたFLDMMDL_HEADER *
  * @param	zone_id		ゾーンID
  * @retval	FLDMMDL	追加されたFLDMMDL *
  */
@@ -283,8 +301,8 @@ FLDMMDL * FLDMMDLSYS_AddFldMMdl(
 	const FLDMMDLSYS *fos, const FLDMMDL_HEADER *header, int zone_id )
 {
 	FLDMMDL *fmmdl;
-	FLDMMDL_HEADER headdata = *header;
-	FLDMMDL_HEADER *head = &headdata;
+	FLDMMDL_HEADER header_data = *header;
+	const FLDMMDL_HEADER *head = &header_data;
 	
 	fmmdl = FldMMdlSys_SearchSpaceFldMMdl( fos );
 	GF_ASSERT( fmmdl != NULL );
@@ -302,6 +320,134 @@ FLDMMDL * FLDMMDLSYS_AddFldMMdl(
 	FldMMdlSys_IncrementOBJCount( (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys(fmmdl) );
 	
 	return( fmmdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_BUFFER フィールド動作モデルをバッファへ追加
+ * @param	buf			FLDMMDL_BUFFER*
+ * @param	header		追加する情報を纏めたFLDMMDL_HEADER *
+ * @param	buf_no		反映するバッファの位置。要素数
+ * @retval	FLDMMDL		追加されたFLDMMDL *
+ */
+//--------------------------------------------------------------
+FLDMMDL * FLDMMDL_BUFFER_AddFldMMdl(
+	FLDMMDL_BUFFER *buf, const FLDMMDL_HEADER *header, int buf_no )
+{
+	FLDMMDL *fmmdl;
+	FLDMMDL_HEADER header_data = *header;
+	const FLDMMDL_HEADER *head = &header_data;
+	
+	OS_Printf( "FLDMMDL BUFFER No %d Add\n", buf_no );
+
+	fmmdl = &buf->fldMMdlBuf[buf_no];
+	
+	FldMMdl_SetHeader( fmmdl, head, NULL );
+	/*
+	FldMMdl_InitWork( fmmdl, NULL );
+	*/
+	{
+		FLDMMDL_OnStatusBit( fmmdl,
+			FLDMMDL_STABIT_USE |				//使用中
+			FLDMMDL_STABIT_HEIGHT_GET_ERROR |	//高さ取得が必要
+			FLDMMDL_STABIT_ATTR_GET_ERROR );	//アトリビュート取得が必要
+	
+		if( FLDMMDL_CheckAliesEventID(fmmdl) == TRUE ){
+			FLDMMDL_SetStatusBitAlies( fmmdl, TRUE );
+		}
+
+//		fmmdl->pFldMMdlSys = sys;
+		FLDMMDL_SetForceDirDisp( fmmdl, FLDMMDL_GetDirHeader(fmmdl) );
+		FLDMMDL_SetDirMove( fmmdl, FLDMMDL_GetDirHeader(fmmdl) );
+//		FLDMMDL_FreeAcmd( fmmdl );
+	}
+	
+	FLDMMDL_SetZoneID( fmmdl, 0 );
+	
+//	FldMMdl_InitMoveWork( fmmdl );
+//	FldMMdl_InitDrawWork( fmmdl );
+	
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START );
+	
+//	FldMMdlSys_AddFldMMdlTCB( fos, fmmdl );
+//	FldMMdlSys_IncrementOBJCount( (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys(fmmdl) );
+	return( fmmdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_BUFFER フィールド動作モデルバッファからロード
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+FLDMMDL * FLDMMDL_BUFFER_LoadFldMMdl(
+	FLDMMDL_BUFFER *buf, FLDMMDLSYS *fos, int no )
+{
+	FLDMMDL *fmmdl;
+	
+	fmmdl = FldMMdlSys_SearchSpaceFldMMdl( fos );
+	GF_ASSERT( fmmdl != NULL );
+	
+	OS_Printf( "FLDMMDL LoadNo %d\n", no );
+	
+	*fmmdl = buf->fldMMdlBuf[no];
+	
+	FldMMdl_InitWork( fmmdl, fos );
+	
+	if( (fmmdl->move_bit&FLDMMDL_MOVEBIT_MOVE_PROC_INIT) == 0 ){
+		FldMMdl_InitMoveWork( fmmdl );
+	}else{
+		FldMMdl_InitCallMoveProcWork( fmmdl );
+	}
+	
+	FLDMMDL_OffStatusBitCompletedDrawInit( fmmdl );
+	FldMMdl_InitDrawWork( fmmdl );
+	
+	FldMMdlSys_AddFldMMdlTCB( fos, fmmdl );
+	FldMMdlSys_IncrementOBJCount( (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys(fmmdl) );
+	
+	return( fmmdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_BUFFER フィールド動作モデルバッファからロード
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void FLDMMDL_BUFFER_LoadBuffer( FLDMMDL_BUFFER *buf, FLDMMDLSYS *fos )
+{
+	int i;
+	FLDMMDL *fmmdl;
+
+	for( i = 0; i < FLDMMDL_BUFFER_MAX; i++ ){
+		fmmdl = &buf->fldMMdlBuf[i];
+		if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_USE) ){
+			FLDMMDL_BUFFER_LoadFldMMdl( buf, fos, i );
+		}
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_BUFFER フィールド動作モデルバッファへセーブ
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void FLDMMDL_BUFFER_SaveBuffer( FLDMMDL_BUFFER *buf, FLDMMDLSYS *fos )
+{
+	FLDMMDL *fmmdl;
+	u32 i = 0, no = 0;
+	
+	FLDMMDL_BUFFER_InitBuffer( buf );
+	while( FLDMMDLSYS_SearchUseFldMMdl(fos,&fmmdl,&i) == TRUE ){
+		OS_Printf( "FLDMMDL BUFFER WorkNo %d, BufferNo %d Save\n", i-1, no );
+		buf->fldMMdlBuf[no] = *fmmdl;
+		no++;
+	}
 }
 
 //--------------------------------------------------------------
@@ -456,6 +602,7 @@ static void FldMMdl_InitMoveWork( FLDMMDL * fmmdl )
 {
 	FldMMdl_InitCallMoveProcWork( fmmdl );
 	FLDMMDL_InitMoveProc( fmmdl );
+	fmmdl->move_bit |= FLDMMDL_MOVEBIT_MOVE_PROC_INIT;
 }
 
 //======================================================================
