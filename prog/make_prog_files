@@ -105,7 +105,8 @@ SRCS	+=		$(SOUNDSRC) \
 				musical/musical_system.c \
 				musical/dressup/dressup_system.c \
 				infowin/infowin.c \
-				system/actor_tool.c
+				system/actor_tool.c \
+				system/bmp_oam.c
 
 
 #================================================
