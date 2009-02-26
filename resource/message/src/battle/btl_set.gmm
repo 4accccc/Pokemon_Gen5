@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-02-24T21:32:46"/>
+	<create user="taya" host="W00146" date="2009-02-26T12:08:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,10 +307,10 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="181"/>
+		<comment position="1" width="277"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="380"/>
+			<message position="2" width="302"/>
 			<font default=" 0:large" position="4" width="100">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -321,7 +321,7 @@
 			<line position="8" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="382"/>
+			<message position="3" width="301"/>
 			<font default=" 0:large" position="9" width="100">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -363,395 +363,607 @@
 
 	<row id="BTL_STRID_SET_Dead">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]は　たおれた！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]は　たおれた！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]は　たおれた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Dead_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]は　たおれた！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]は　たおれた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]は　たおれた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Dead_E" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]は　たおれた！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]は　たおれた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]は　たおれた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_ATK" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 こうげき　が　あがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 こうげき　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_ATK_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 こうげき　が　あがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 こうげき　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_ATK_E" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 こうげき　が　あがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 こうげき　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_DEF" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 ぼうぎょ　が　あがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 防御　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_DEF_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 ぼうぎょ　が　あがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 防御　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_DEF_E" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 ぼうぎょ　が　あがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 防御　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPATK" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 とくこう　が　あがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 とくこうが上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPATK_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 とくこう　が　あがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 とくこうが上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPATK_E" back-color="#ffff00,#ffff00,,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 とくこう　が　あがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 とくこうが上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPDEF">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 とくぼう　が　あがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 特防　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 とくぼう　が　あがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 特防　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 とくぼう　が　あがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 特防　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_AGI">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 すばやさ　が　あがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 素早さ　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 すばやさ　が　あがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 素早さ　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_AGI_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 すばやさ　が　あがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 素早さ　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_HIT">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 めいちゅうりつ　が　あがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 命中率が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 めいちゅうりつ　が　あがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 命中率が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_HIT_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 めいちゅうりつ　が　あがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 命中率が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_AVOID">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 かいひりつ　が　あがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 かいひ率が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 かいひりつ　が　あがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 かいひ率が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 かいひりつ　が　あがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 かいひ率が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_ATK" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 こうげき　が　さがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 こうげき　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_ATK_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 こうげき　が　さがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 こうげき　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_ATK_E" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 こうげき　が　さがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 こうげき　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_DEF" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 ぼうぎょ　が　さがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 防御　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_DEF_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 ぼうぎょ　が　さがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 防御　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_DEF_E" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 ぼうぎょ　が　さがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 防御　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_SPATK" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 とくこう　が　さがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 とくこう　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_SPATK_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 とくこう　が　さがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 とくこう　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_SPATK_E" back-color="#ffff00,#ffff00,,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 とくこう　が　さがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 とくこう　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_SPDEF">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 とくぼう　が　さがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 特防　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 とくぼう　が　さがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 特防　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 とくぼう　が　さがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 特防　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_AGI">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 すばやさ　が　さがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 素早さ　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_AGI_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 すばやさ　が　さがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 素早さ　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_AGI_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 すばやさ　が　さがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 素早さ　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_HIT">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 めいちゅうりつ　が　さがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 命中率が下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_HIT_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 めいちゅうりつ　が　さがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 命中率が下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_HIT_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 めいちゅうりつ　が　さがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 命中率が下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_AVOID">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 かいひりつ　が　さがった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 かいひ率が下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 かいひりつ　が　さがった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 かいひ率が下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 かいひりつ　が　さがった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 かいひ率が下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownFail">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 のうりょくは　さがらない！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　の
 能力は　下がらない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownFail_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 のうりょくは　さがらない！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　の
 能力は　下がらない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownFail_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 のうりょくは　さがらない！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　の
 能力は　下がらない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_WazaAvoid">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　には
 あたらなかった！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　には
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　には
 当たらなかった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_WazaAvoid_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　には
 あたらなかった！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　には
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　には
 当たらなかった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_WazaAvoid_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　には
 あたらなかった！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　には
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　には
 当たらなかった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DokuGet">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+どく　を　あびた！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+毒を浴びた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DokuGet_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+どく　を　あびた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+毒を浴びた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_DokuGet_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+どく　を　あびた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+毒を浴びた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_DokuDamage">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
 どく　のダメージを　うけた！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　は
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
 毒のダメージを受けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_DokuDamage_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
 どく　のダメージを　うけた！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　は
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
 毒のダメージを受けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_DokuDamage_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
 どく　のダメージを　うけた！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　は
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
 毒のダメージを受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_YakedoGet">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+やけど　を　した！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+火傷をした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_YakedoGet_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+やけど　を　した！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+火傷をした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_YakedoGet_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+やけど　を　した！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+火傷をした！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoDamage">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
 やけど　のダメージを　うけた！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]　は
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
 火傷のダメージを受けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoDamage_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
 やけど　のダメージを　うけた！</language>
-		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　は
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
 火傷のダメージを受けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_YakedoDamage_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
 やけど　のダメージを　うけた！</language>
-		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　は
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
 火傷のダメージを受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MahiGet">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+からだが　まひ　した！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+体がマヒした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MahiGet_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+からだが　まひ　した！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+体がマヒした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MahiGet_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+からだが　まひ　した！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+体がマヒした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MahiAct">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+からだが　しびれて　うごかない！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+体がしびれて動かない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MahiAct_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+からだが　しびれて　うごかない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+体がしびれて動かない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MahiAct_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+からだが　しびれて　うごかない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+体がしびれて動かない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KoriGet">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+こおってしまった！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+こおってしまった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KoriGet_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+こおってしまった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+こおってしまった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KoriGet_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+こおってしまった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+こおってしまった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KoriAct">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+こおって　うごけない！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+こおって動けない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KoriAct_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+こおって　うごけない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+こおって動けない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KoriAct_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+こおって　うごけない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+こおって動けない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NemuriGet">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+ねむってしまった！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+ねむってしまった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NemuriGet_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+ねむってしまった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+ねむってしまった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NemuriGet_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+ねむってしまった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+ねむってしまった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NemuriAct">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+ねむっている！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+ねむっている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NemuriAct_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+ねむっている！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+ねむっている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NemuriAct_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+ねむっている！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+ねむっている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KonranGet">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+こんらん　した！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+混乱した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KonranGet_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+こんらん　した！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+混乱した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KonranGet_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+こんらん　した！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+混乱した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KonranAct">
+		<comment>この後、「わけも　わからず　じぶんを…」と
+続きます。</comment>
+		<language name="JPN" width="216">[1:01:ニックネーム:0]　は
+こんらん　している！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]　は
+混乱している！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KonranAct_Y">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　は
+こんらん　している！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:01:ニックネーム:0]　は
+混乱している！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KonranAct_E">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　は
+こんらん　している！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:01:ニックネーム:0]　は
+混乱している！</language>
 	</row>
 
 	<flowchart-group-list>

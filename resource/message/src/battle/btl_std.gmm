@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-02-03T22:10:34"/>
+	<create user="taya" host="W00146" date="2009-02-26T16:20:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,25 +298,25 @@
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="351"/>
-			<font default=" 0:large" position="5" width="100">
+			<font default=" 0:large" position="4" width="107">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
-			<size position="4" width="100"/>
-			<space position="7" width="100"/>
-			<width position="8" width="100"/>
-			<line position="9" width="100"/>
+			<size position="12" width="100"/>
+			<space position="8" width="93"/>
+			<width position="6" width="85"/>
+			<line position="10" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
 			<message position="3" width="323"/>
-			<font default=" 0:large" position="6" width="100">
+			<font default=" 0:large" position="5" width="107">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
-			<size position="10" width="100"/>
-			<space position="11" width="100"/>
-			<width position="12" width="100"/>
-			<line position="13" width="100"/>
+			<size position="13" width="100"/>
+			<space position="9" width="92"/>
+			<width position="7" width="83"/>
+			<line position="11" width="100"/>
 		</language>
 	</columns>
 
@@ -350,82 +350,89 @@
 
 	<row id="BTL_STRID_STD_NULL">
 		<language name="JPN" width="216">●よういされていないメッセージ●</language>
-		<language name="JPN_KANJI">●用意されていないメッセージ●</language>
+		<language name="JPN_KANJI" width="216">●用意されていないメッセージ●</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Encount" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あっ！　やせいの　[1:01:ポケモン種族名:0]　が
 とびだした！</language>
-		<language name="JPN_KANJI">あっ！　野生の　[1:01:ポケモン種族名:0]　が
+		<language name="JPN_KANJI" width="216">あっ！　野生の　[1:01:ポケモン種族名:0]　が
 飛び出した！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Encount_Double" back-color="#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あっ！　やせいの　[1:01:ポケモン種族名:0]　と
 [1:01:ポケモン種族名:1]　が　とびだした！</language>
-		<language name="JPN_KANJI">あっ！　野生の　[1:01:ポケモン種族名:0]　と
+		<language name="JPN_KANJI" width="216">あっ！　野生の　[1:01:ポケモン種族名:0]　と
 [1:01:ポケモン種族名:1]　が　飛び出した！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_PutSingle" back-color="#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">ゆけっ！　[1:00:トレーナー名:0]！</language>
-		<language name="JPN_KANJI">行けっ！　[1:00:トレーナー名:0]！</language>
+		<language name="JPN_KANJI" width="216">行けっ！　[1:00:トレーナー名:0]！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_PutDouble" back-color="#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">ゆけっ！　[1:01:ポケモン種族名:0]！
 [1:01:ポケモン種族名:1]！</language>
-		<language name="JPN_KANJI">行けっ！　[1:01:ポケモン種族名:0]！
+		<language name="JPN_KANJI" width="216">行けっ！　[1:01:ポケモン種族名:0]！
 [1:01:ポケモン種族名:1]！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_PutSingle_Enemy" back-color="#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あいてのトレーナーは
 [1:00:トレーナー名:0]を　くりだした！</language>
-		<language name="JPN_KANJI">相手のトレーナーは
+		<language name="JPN_KANJI" width="216">相手のトレーナーは
 [1:00:トレーナー名:0]を　くり出してきた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_MemberOut1" back-color="#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">[1:01:ポケモン種族名:0]　もどれ！</language>
-		<language name="JPN_KANJI">[1:01:ポケモン種族名:0]　もどれ！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ポケモン種族名:0]　もどれ！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_SelectAction" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">[1:01:ポケモン種族名:0]　は　どうする？</language>
-		<language name="JPN_KANJI">[1:01:ポケモン種族名:0]　は　どうする？</language>
+		<language name="JPN_KANJI" width="216">[1:01:ポケモン種族名:0]　は　どうする？</language>
 	</row>
 
 	<row id="BTL_STRID_STD_WazaFail">
 		<language name="JPN" width="216">[BE:09:特殊ウェイト:60:1:0]・・・しっぱい！！</language>
-		<language name="JPN_KANJI">[BE:09:特殊ウェイト:60:1:0]・・・失敗！！</language>
+		<language name="JPN_KANJI" width="216">[BE:09:特殊ウェイト:60:1:0]・・・失敗！！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_EscapeSuccess">
 		<language name="JPN" width="216">うまく　にげきれた！</language>
-		<language name="JPN_KANJI">うまく　逃げ切れた！</language>
+		<language name="JPN_KANJI" width="216">うまく　にげ切れた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_EscapeFail">
 		<language name="JPN" width="216">にげられない！</language>
-		<language name="JPN_KANJI">逃げられない！</language>
+		<language name="JPN_KANJI" width="216">逃げられない！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_EscapeCant">
 		<language name="JPN" width="216">ダメだ！　しょうぶのさいちゅうに
 あいてに　せなかを　みせられない！</language>
-		<language name="JPN_KANJI">ダメだ！　勝負の最中に
+		<language name="JPN_KANJI" width="216">ダメだ！　勝負の最中に
 相手に背中を見せられない！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_AffGood">
 		<language name="JPN" width="216">こうかは　ばつぐんだ！</language>
-		<language name="JPN_KANJI">効果はバツグンだ！</language>
+		<language name="JPN_KANJI" width="216">効果はバツグンだ！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_AffBad">
 		<language name="JPN" width="216">こうかは　いまひとつ　のようだ・・・</language>
-		<language name="JPN_KANJI">効果は今ひとつのようだ・・・</language>
+		<language name="JPN_KANJI" width="216">効果は今ひとつのようだ・・・</language>
+	</row>
+
+	<row id="BTL_STRID_STD_KonranExe">
+		<language name="JPN" width="216">わけも　わからず
+じぶんを　こうげきした！</language>
+		<language name="JPN_KANJI" width="216">わけも　分からず
+自分を　こうげきした！</language>
 	</row>
 
 	<flowchart-group-list>
