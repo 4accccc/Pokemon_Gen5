@@ -45,9 +45,6 @@ struct _MCSS_NCEC
 	fx32	mepachi_size_y;		//セルサイズY
 	fx32	mepachi_tex_s;		//テクスチャs値
 	fx32	mepachi_tex_t;		//テクスチャt値
-
-	u8		dress_up_cell_no;
-	u8		dummy[3];
 };
 
 struct _MCSS_NCEC_WORK
