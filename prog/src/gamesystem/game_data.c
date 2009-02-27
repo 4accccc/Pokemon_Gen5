@@ -310,15 +310,22 @@ u16 PLAYERWORK_getDirection(const PLAYER_WORK * player)
 //--------------------------------------------------------------
 static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
 {
-	PLAYER_WORK *pw;
-
 	if(SaveControl_NewDataFlagGet(gamedata->sv_control_ptr) == TRUE){
 		return;	//セーブデータが無いので何も読み込まない
 	}
 	
-	pw = GAMEDATA_GetMyPlayerWork(gamedata);
-	SaveData_PlayerDataLoad(gamedata->sv_control_ptr, pw);
-	SaveData_SituationDataLoad(gamedata->sv_control_ptr, pw);
+	{	//PLAYER_WORK
+		PLAYER_WORK *pw;
+		pw = GAMEDATA_GetMyPlayerWork(gamedata);
+		SaveData_PlayerDataLoad(gamedata->sv_control_ptr, pw);
+		SaveData_SituationDataLoad(gamedata->sv_control_ptr, pw);
+	}
+	
+	{	//FLDMMDL
+		FLDMMDLSYS *fldmmdlsys = GAMEDATA_GetFldMMdlSys(gamedata);
+		FLDMMDL_SAVEDATA *pw = SaveControl_DataPtrGet(gamedata->sv_control_ptr,GMDATA_ID_FLDMMDL);
+		FLDMMDL_SAVEDATA_Load( fldmmdlsys, pw );
+	}
 }
 
 //--------------------------------------------------------------
@@ -340,7 +347,8 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
 
 	{	//FLDMMDL
 		FLDMMDLSYS *fldmmdlsys = GAMEDATA_GetFldMMdlSys(gamedata);
-		//save
+		FLDMMDL_SAVEDATA *pw = SaveControl_DataPtrGet(gamedata->sv_control_ptr,GMDATA_ID_FLDMMDL);
+		FLDMMDL_SAVEDATA_Save( fldmmdlsys, pw );
 	}
 }
 

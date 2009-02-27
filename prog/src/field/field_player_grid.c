@@ -197,7 +197,7 @@ PC_ACTCONT * CreatePlayerActGrid(
 		head = DATA_JikiHeader;
 		head.gx = SIZE_GRID_FX32( pos->x );
 		head.gz = SIZE_GRID_FX32( pos->z );
-		head.gy = pos->y;
+		head.y = pos->y;
 		pcActCont->pFldMMdl = FLDMMDLSYS_AddFldMMdl( pFldMMdlSys, &DATA_JikiHeader, 0 );
 	}
 	

@@ -20,6 +20,14 @@
 //--------------------------------------------------------------
 
 //--------------------------------------------------------------
+//	FLDMMDL 動作、描画関数ワークサイズ (byte size)
+//--------------------------------------------------------------
+#define FLDMMDL_MOVE_WORK_SIZE		(16)	///<動作関数用ワークサイズ
+#define FLDMMDL_MOVE_SUB_WORK_SIZE	(16)	///<動作サブ関数用ワークサイズ
+#define FLDMMDL_MOVE_CMD_WORK_SIZE	(16)	///<動作コマンド用ワークサイズ
+#define FLDMMDL_DRAW_WORK_SIZE		(32)	///<描画関数用ワークサイズ
+
+//--------------------------------------------------------------
 ///	エイリアスシンボル
 //--------------------------------------------------------------
 enum
@@ -120,9 +128,9 @@ struct _TAG_FLDMMDL
 #define FLDMMDL_SIZE (sizeof(FLDMMDL)) ///<FLDMMDLサイズ 224
 
 //--------------------------------------------------------------
-///	FLDMMDL_SAVEDATA構造体 size 80
+///	FLDMMDL_SAVEWORK構造体 size 80
 //--------------------------------------------------------------
-struct _TAG_FLDMMDL_SAVEDATA
+typedef struct
 {
 	u32 status_bit;			///<ステータスビット
 	u32 move_bit;			///<動作ビット
@@ -154,6 +162,14 @@ struct _TAG_FLDMMDL_SAVEDATA
 	fx32 fx32_y;			///<fx32型の高さ値
 	u8 move_proc_work[FLDMMDL_MOVE_WORK_SIZE];///<動作関数用ワーク
 	u8 move_sub_proc_work[FLDMMDL_MOVE_SUB_WORK_SIZE];///<動作サブ関数用ワーク
+}FLDMMDL_SAVEWORK;
+
+//--------------------------------------------------------------
+///	FLDMMDL_SAVEDATA構造体
+//--------------------------------------------------------------
+struct _TAG_FLDMMDL_SAVEDATA
+{
+	FLDMMDL_SAVEWORK SaveWorkBuf[FLDMMDL_SAVEMMDL_MAX];
 };
 
 //======================================================================
@@ -175,6 +191,12 @@ static void FldMMdlSys_CheckSetInitDrawWork( FLDMMDLSYS *fos );
 //FLDMMDL 動作関数
 static void FldMMdl_TCB_MoveProc( GFL_TCB * tcb, void *work );
 static void FldMMdl_TCB_DrawProc( FLDMMDL * fmmdl );
+
+//FLDMMDL_SAVEDATA
+static void FldMMdl_SaveData_SaveFldMMdl(
+	const FLDMMDL *fmmdl, FLDMMDL_SAVEWORK *save );
+static void FldMMdl_SaveData_LoadFldMMdl(
+	FLDMMDL *fmmdl, const FLDMMDL_SAVEWORK *save, const FLDMMDLSYS *fos );
 
 //FLDMMDLSYS 設定、参照
 static void FldMMdlSys_OnStatusBit(
@@ -219,25 +241,6 @@ static const FLDMMDL_DRAW_PROC_LIST * DrawProcList_GetList(
 		FLDMMDL_DRAWPROCNO no );
 static BOOL FldMMdlHeader_CheckAlies( const FLDMMDL_HEADER *head );
 static int FldMMdlHeader_GetAliesZoneID( const FLDMMDL_HEADER *head );
-
-//======================================================================
-//	フィールド動作モデル　セーブ用バッファ
-//======================================================================
-struct _TAG_FLDMMDL_BUFFER
-{
-	FLDMMDL fldMMdlBuf[FLDMMDL_BUFFER_MAX];
-};
-
-u32 FLDMMDL_BUFFER_GetWorkSize( void )
-{
-	OS_Printf( "FLDMMDL_SAVEDATA size = %d\n", sizeof(FLDMMDL_SAVEDATA) );
-	return( sizeof(FLDMMDL_BUFFER) );
-}
-
-void FLDMMDL_BUFFER_InitBuffer( void *p )
-{
-	MI_CpuClear8( p, FLDMMDL_BUFFER_GetWorkSize() );
-}
 
 //======================================================================
 //	フィールド動作モデル　システム
@@ -391,6 +394,7 @@ FLDMMDL * FLDMMDLSYS_AddFldMMdl(
 	
 	if( FLDMMDLSYS_CheckStatusBit(fos,FLDMMDLSYS_STABIT_MOVE_INIT_COMP) ){
 		FldMMdl_InitMoveWork( fos, fmmdl );
+		FLDMMDL_InitMoveProc( fmmdl );
 	}
 	
 	if( FLDMMDLSYS_CheckStatusBit(fos,FLDMMDLSYS_STABIT_DRAW_INIT_COMP) ){
@@ -418,7 +422,7 @@ void FLDMMDL_Delete( FLDMMDL * fmmdl )
 		FLDMMDL_CallDrawDeleteProc( fmmdl );
 	}
 	
-	if( FLDMMDL_CheckMoveBit(fmmdl,FLDMMDL_MOVEBIT_MOVE_PROC_INIT) ){
+	if( FLDMMDL_CheckMoveBit(fmmdl,FLDMMDL_MOVEBIT_MOVEPROC_INIT) ){
 		FLDMMDL_CallMoveDeleteProc( fmmdl );
 		GFL_TCB_DeleteTask( fmmdl->pTCB );
 	}
@@ -491,7 +495,7 @@ static void FldMMdl_SetHeaderPos( FLDMMDL *fmmdl, const FLDMMDL_HEADER *head )
 	FLDMMDL_SetOldGridPosX( fmmdl, pos );
 	FLDMMDL_SetGridPosX( fmmdl, pos );
 	
-	pos = head->gy;		//pos設定はfx32型で来る。
+	pos = head->y;		//pos設定はfx32型で来る。
 	vec.y = (fx32)pos;
 	pos = SIZE_GRID_FX32( pos );
 	FLDMMDL_SetInitGridPosY( fmmdl, pos );
@@ -555,11 +559,10 @@ static void FldMMdl_InitCallMoveProcWork( FLDMMDL * fmmdl )
 static void FldMMdl_InitMoveWork( const FLDMMDLSYS *fos, FLDMMDL *fmmdl )
 {
 	FldMMdl_InitCallMoveProcWork( fmmdl );
-	FLDMMDL_InitMoveProc( fmmdl );
 	
 	FldMMdlSys_AddFldMMdlTCB( fos, fmmdl );
 	
-	FLDMMDL_OnMoveBit( fmmdl, FLDMMDL_MOVEBIT_MOVE_PROC_INIT );
+	FLDMMDL_OnMoveBit( fmmdl, FLDMMDL_MOVEBIT_MOVEPROC_INIT );
 	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START );
 }
 
@@ -576,8 +579,18 @@ static void FldMMdlSys_CheckSetInitMoveWork( FLDMMDLSYS *fos )
 	FLDMMDL *fmmdl;
 	
 	while( FLDMMDLSYS_SearchUseFldMMdl(fos,&fmmdl,&i) == TRUE ){
-		if( FLDMMDL_CheckMoveBit(fmmdl,FLDMMDL_MOVEBIT_MOVE_PROC_INIT) == 0 ){
-			FldMMdl_InitMoveWork( fos, fmmdl );
+		FldMMdl_InitMoveWork( fos, fmmdl );
+		
+		if( FLDMMDL_CheckMoveBit(fmmdl,	//初期化関数呼び出しまだ
+			FLDMMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
+			FLDMMDL_InitMoveProc( fmmdl );
+		}
+			
+		if( FLDMMDL_CheckMoveBit(fmmdl, //復元関数呼び出しが必要
+			FLDMMDL_MOVEBIT_NEED_MOVEPROC_RECOVER) ){
+			FLDMMDL_CallMovePopProc( fmmdl );
+			FLDMMDL_OffMoveBit( fmmdl,
+				FLDMMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
 		}
 	}
 }
@@ -753,9 +766,222 @@ BOOL FLDMMDL_EndAcmd( FLDMMDL * fmmdl )
 void FLDMMDL_FreeAcmd( FLDMMDL * fmmdl )
 {
 	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD );
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );	//ローカルコマンドフラグ
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END ); //ローカルコマンドフラグ
 	FLDMMDL_SetAcmdCode( fmmdl, ACMD_NOT );
 	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
+}
+
+//======================================================================
+//	FLDMMDL PUSH POP
+//======================================================================
+
+//======================================================================
+//	FLDMMDL_SAVEDATA
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_SAVEDATA セーブデータ バッファサイズ取得
+ * @param	nothing
+ * @retval	u32	サイズ
+ */
+//--------------------------------------------------------------
+u32 FLDMMDL_SAVEDATA_GetWorkSize( void )
+{
+	return( sizeof(FLDMMDL_SAVEDATA) );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_SAVEDATA セーブデータ バッファ初期化
+ * @param	p	FLDMMDL_SAVEDATA
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_SAVEDATA_Init( void *p )
+{
+	MI_CpuClear8( p, FLDMMDL_SAVEDATA_GetWorkSize() );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_SAVEDATA 動作モデルセーブ
+ * @param	fmmdlsys セーブするFLDMMDLSYS
+ * @param	savedata LDMMDL_SAVEDATA
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_SAVEDATA_Save(
+	FLDMMDLSYS *fmmdlsys, FLDMMDL_SAVEDATA *savedata )
+{
+	u32 no = 0;
+	FLDMMDL *fmmdl;
+	FLDMMDL_SAVEWORK *save = savedata->SaveWorkBuf;
+	
+	while( FLDMMDLSYS_SearchUseFldMMdl(fmmdlsys,&fmmdl,&no) == TRUE ){
+		FldMMdl_SaveData_SaveFldMMdl( fmmdl, save );
+		save++;
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_SAVEDATA 動作モデルロード
+ * @param	fmmdlsys	FLDMMDLSYS
+ * @param	save	ロードするFLDMMDL_SAVEWORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_SAVEDATA_Load(
+	FLDMMDLSYS *fmmdlsys, FLDMMDL_SAVEDATA *savedata )
+{
+	u32 no = 0;
+	FLDMMDL *fmmdl;
+	FLDMMDL_SAVEWORK *save = savedata->SaveWorkBuf;
+	
+	while( no < FLDMMDL_SAVEMMDL_MAX ){
+		if( (save->status_bit&FLDMMDL_STABIT_USE) ){
+			fmmdl = FldMMdlSys_SearchSpaceFldMMdl( fmmdlsys );
+			FldMMdl_SaveData_LoadFldMMdl( fmmdl, save, fmmdlsys );
+		}
+		save++;
+		no++;
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_SAVEDATA 動作モデル　セーブ
+ * @param	fldmmdl		セーブするFLDMMDL*
+ * @param	save FLDMMDL_SAVEWORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FldMMdl_SaveData_SaveFldMMdl(
+	const FLDMMDL *fmmdl, FLDMMDL_SAVEWORK *save )
+{
+	save->status_bit = FLDMMDL_GetStatusBit( fmmdl );
+	save->move_bit = FLDMMDL_GetMoveBit( fmmdl );
+	save->obj_id = FLDMMDL_GetOBJID( fmmdl );
+	save->zone_id = FLDMMDL_GetZoneID( fmmdl );
+	save->obj_code = FLDMMDL_GetOBJCode( fmmdl );
+	save->move_code = FLDMMDL_GetMoveCode( fmmdl );
+	save->event_type = FLDMMDL_GetEventType( fmmdl );
+	save->event_flag = FLDMMDL_GetEventFlag( fmmdl );
+	save->event_id = FLDMMDL_GetEventID( fmmdl );
+	save->dir_head = FLDMMDL_GetDirHeader( fmmdl );
+	save->dir_disp = FLDMMDL_GetDirDisp( fmmdl );
+	save->dir_move = FLDMMDL_GetDirMove( fmmdl );
+	save->param0 = FLDMMDL_GetParam( fmmdl, FLDMMDL_PARAM_0 );
+	save->param1 = FLDMMDL_GetParam( fmmdl, FLDMMDL_PARAM_1 );
+	save->param2 = FLDMMDL_GetParam( fmmdl, FLDMMDL_PARAM_2 );
+	save->move_limit_x = FLDMMDL_GetMoveLimitX( fmmdl );
+	save->move_limit_z = FLDMMDL_GetMoveLimitZ( fmmdl );
+	save->gx_init = FLDMMDL_GetInitGridPosX( fmmdl );
+	save->gy_init = FLDMMDL_GetInitGridPosY( fmmdl );
+	save->gz_init = FLDMMDL_GetInitGridPosZ( fmmdl );
+	save->gx_now = FLDMMDL_GetGridPosX( fmmdl );
+	save->gy_now = FLDMMDL_GetGridPosY( fmmdl );
+	save->gz_now = FLDMMDL_GetGridPosZ( fmmdl );
+	save->fx32_y = FLDMMDL_GetVectorPosY( fmmdl );
+	
+	MI_CpuCopy8( FLDMMDL_GetMoveProcWork((FLDMMDL*)fmmdl),
+		save->move_proc_work, FLDMMDL_MOVE_WORK_SIZE );
+	MI_CpuCopy8( FLDMMDL_GetMoveSubProcWork((FLDMMDL*)fmmdl),
+		save->move_sub_proc_work, FLDMMDL_MOVE_SUB_WORK_SIZE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL_SAVEDATA 動作モデル　ロード
+ * @param	fldmmdl		セーブするFLDMMDL*
+ * @param	save FLDMMDL_SAVEWORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FldMMdl_SaveData_LoadFldMMdl(
+	FLDMMDL *fmmdl, const FLDMMDL_SAVEWORK *save, const FLDMMDLSYS *fos )
+{
+	FldMMdl_ClearWork( fmmdl );
+
+	fmmdl->status_bit = save->status_bit;
+	fmmdl->move_bit = save->move_bit;
+	FLDMMDL_SetOBJID( fmmdl, save->obj_id );
+	FLDMMDL_SetZoneID( fmmdl, save->zone_id );
+	FLDMMDL_SetOBJCode( fmmdl, save->obj_code ); 
+	FLDMMDL_SetMoveCode( fmmdl, save->move_code );
+	FLDMMDL_SetEventType( fmmdl, save->event_type );
+	FLDMMDL_SetEventFlag( fmmdl, save->event_flag );
+	FLDMMDL_SetEventID( fmmdl, save->event_id );
+	fmmdl->dir_head = save->dir_head;
+	FLDMMDL_SetForceDirDisp( fmmdl, save->dir_disp );
+	FLDMMDL_SetDirMove( fmmdl, save->dir_move );
+	FLDMMDL_SetParam( fmmdl, save->param0, FLDMMDL_PARAM_0 );
+	FLDMMDL_SetParam( fmmdl, save->param1, FLDMMDL_PARAM_1 );
+	FLDMMDL_SetParam( fmmdl, save->param2, FLDMMDL_PARAM_2 );
+	FLDMMDL_SetMoveLimitX( fmmdl, save->move_limit_x );
+	FLDMMDL_SetMoveLimitZ( fmmdl, save->move_limit_z );
+	FLDMMDL_SetInitGridPosX( fmmdl, save->gx_init );
+	FLDMMDL_SetInitGridPosY( fmmdl, save->gy_init );
+	FLDMMDL_SetInitGridPosZ( fmmdl, save->gz_init );
+	FLDMMDL_SetGridPosX( fmmdl, save->gx_now );
+	FLDMMDL_SetGridPosY( fmmdl, save->gy_now );
+	FLDMMDL_SetGridPosZ( fmmdl, save->gz_now );
+	
+	MI_CpuCopy8( save->move_proc_work,
+		FLDMMDL_GetMoveProcWork((FLDMMDL*)fmmdl), FLDMMDL_MOVE_WORK_SIZE );
+	MI_CpuCopy8( save->move_sub_proc_work,
+		FLDMMDL_GetMoveSubProcWork((FLDMMDL*)fmmdl), FLDMMDL_MOVE_SUB_WORK_SIZE );
+	
+	fmmdl->pFldMMdlSys = fos;
+	
+	{ //座標復帰
+		s16 grid;
+		VecFx32 pos = {0,0,0};
+		
+		grid = FLDMMDL_GetGridPosX( fmmdl );
+		FLDMMDL_SetOldGridPosX( fmmdl, grid );
+		pos.x = GRID_SIZE_FX32( grid ) + FLDMMDL_VEC_X_GRID_OFFS_FX32;
+		
+		grid = FLDMMDL_GetGridPosY( fmmdl );
+		FLDMMDL_SetOldGridPosY( fmmdl, grid );
+		pos.y = save->fx32_y; //セーブ時の高さを信用する
+	
+		grid = FLDMMDL_GetGridPosZ( fmmdl );
+		FLDMMDL_SetOldGridPosZ( fmmdl, grid );
+		pos.z = GRID_SIZE_FX32( grid ) + FLDMMDL_VEC_Z_GRID_OFFS_FX32;
+	
+		FLDMMDL_SetVectorPos( fmmdl, &pos );
+	}
+
+	{ //ステータスビット復帰
+		FLDMMDL_OnStatusBit( fmmdl,
+			FLDMMDL_STABIT_USE |
+//			FLDMMDL_STABIT_HEIGHT_GET_NEED | //セーブ時の高さを信用する
+			FLDMMDL_STABIT_MOVE_START );
+		
+		FLDMMDL_OffStatusBit( fmmdl,
+			FLDMMDL_STABIT_PAUSE_MOVE |
+			FLDMMDL_STABIT_VANISH |
+			FLDMMDL_STABIT_DRAW_PROC_INIT_COMP |
+			FLDMMDL_STABIT_JUMP_START |
+			FLDMMDL_STABIT_JUMP_END |
+			FLDMMDL_STABIT_MOVE_END |
+			FLDMMDL_STABIT_FELLOW_HIT_NON |
+			FLDMMDL_STABIT_TALK_OFF |
+			FLDMMDL_STABIT_DRAW_PUSH |
+			FLDMMDL_STABIT_BLACT_ADD_PRAC |
+			FLDMMDL_STABIT_HEIGHT_GET_OFF );
+		
+		FLDMMDL_OffStatusBit( fmmdl,
+			FLDMMDL_STABIT_SHADOW_SET |
+			FLDMMDL_STABIT_SHADOW_VANISH |
+			FLDMMDL_STABIT_EFFSET_SHOAL	 |
+			FLDMMDL_STABIT_REFLECT_SET );
+		
+		if( FLDMMDL_CheckMoveBit(fmmdl,FLDMMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
+			FLDMMDL_OnMoveBit( fmmdl, FLDMMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
+		}
+	}
 }
 
 //======================================================================
@@ -1645,8 +1871,8 @@ void FLDMMDL_CallMoveDeleteProc( FLDMMDL * fmmdl )
 void FLDMMDL_CallMovePopProc( FLDMMDL * fmmdl )
 {
 	GF_ASSERT( fmmdl->move_proc_list );
-	GF_ASSERT( fmmdl->move_proc_list->return_proc );
-	fmmdl->move_proc_list->return_proc( fmmdl );
+	GF_ASSERT( fmmdl->move_proc_list->recover_proc );
+	fmmdl->move_proc_list->recover_proc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -3885,7 +4111,7 @@ FLDMMDL * FLDMMDL_BUFFER_LoadFldMMdl(
 	
 	FldMMdl_InitWork( fmmdl, fos );
 	
-	if( FLDMMDL_CheckMoveBit(fmmdl,FLDMMDL_MOVEBIT_MOVE_PROC_INIT) == 0 ){
+	if( FLDMMDL_CheckMoveBit(fmmdl,FLDMMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
 		FldMMdl_InitMoveWork( fmmdl );
 	}else{
 		FldMMdl_InitCallMoveProcWork( fmmdl );

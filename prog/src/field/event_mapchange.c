@@ -79,7 +79,6 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 	fmw->game_init_work = game_init_work;
 	switch(game_init_work->mode){
 	case GAMEINIT_MODE_CONTINUE:
-		CreateFldMMdl(GAMEDATA_GetFldMMdlSys(fmw->gamedata),0);
 		LOCATION_SetDirect(&fmw->loc_req, game_init_work->mapid, game_init_work->dir, 
 			game_init_work->pos.x, game_init_work->pos.y, game_init_work->pos.z);
 		break;
@@ -385,7 +384,7 @@ static void CreateFldMMdl( FLDMMDLSYS *fldmmdlsys, u16 zone_id )
 			0,	///<Y’l fx32Œ^
 		};
 	
-	for( i = 0; i < FLDMMDL_BUFFER_MAX-1; i++ ){
+	for( i = 0; i < FLDMMDL_SAVEMMDL_MAX-2; i++ ){
 		head.id = i;
 		head.gx = GFUser_GetPublicRand( 128 );
 		head.gz = GFUser_GetPublicRand( 128 );

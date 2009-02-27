@@ -15,10 +15,9 @@
 #include "system/gfl_use.h"
 #include "arc_def.h"
 
-#include "fldmmdl_header.h"
-#include "fldmmdl_code.h"
-
 #include "field_g3d_mapper.h"
+
+#include "fldmmdl_code.h"
 
 //======================================================================
 //	define
@@ -170,7 +169,7 @@ typedef enum
 	FLDMMDL_STABIT_FELLOW_HIT_NON=(1<<18),///<OBJ同士の当たり判定無効
 	FLDMMDL_STABIT_TALK_OFF=(1<<19),///<話しかけ無効
 	FLDMMDL_STABIT_SHADOW_VANISH=(1<<20),///<影表示、非表示
-	FLDMMDL_STABIT_DRAW_PUSE=(1<<21),///<描画処理を退避
+	FLDMMDL_STABIT_DRAW_PUSH=(1<<21),///<描画処理を退避
 	FLDMMDL_STABIT_BLACT_ADD_PRAC=(1<<22),///<ビルボードアクター追加中
 	FLDMMDL_STABIT_HEIGHT_GET_OFF=(1<<23),///<高さ取得をしない
 	FLDMMDL_STABIT_REFLECT_SET=(1<<24),///<映り込みをセットした
@@ -190,7 +189,8 @@ typedef enum
 	FLDMMDL_MOVEBIT_SHADOW_SET=(1<<0),///<影をセットした
 	FLDMMDL_MOVEBIT_GRASS_SET=(1<<1),///<草をセットした
 	FLDMMDL_MOVEBIT_ATTR_GET_OFF=(1<<2),///<アトリビュート取得を一切行わない
-	FLDMMDL_MOVEBIT_MOVE_PROC_INIT=(1<<3),///<動作初期化を行った
+	FLDMMDL_MOVEBIT_MOVEPROC_INIT=(1<<3),///<動作初期化を行った
+	FLDMMDL_MOVEBIT_NEED_MOVEPROC_RECOVER=(1<<4),///<動作復帰関数を呼ぶ必要
 }FLDMMDL_MOVEBIT;
 
 //--------------------------------------------------------------
@@ -287,10 +287,9 @@ enum
 };
 
 //--------------------------------------------------------------
-///	バッファ要素数
+///	セーブ用ワーク要素数
 //--------------------------------------------------------------
-#define FLDMMDL_BUFFER_MAX (20)
-#define FLDMMDL_SAVEDATA_MAX (20)
+#define FLDMMDL_SAVEMMDL_MAX (20)
 
 //--------------------------------------------------------------
 //	モデル最大数
@@ -309,8 +308,6 @@ typedef struct _TAG_FLDMMDLSYS FLDMMDLSYS;
 typedef struct _TAG_FLDMMDL FLDMMDL;
 ///FLDMMDL_BLACTCONT
 typedef struct _TAG_FLDMMDL_BLACTCONT FLDMMDL_BLACTCONT;
-///FLDMMDL_BUFFER
-typedef struct _TAG_FLDMMDL_BUFFER FLDMMDL_BUFFER;
 ///FLDMMDL_SAVEDATA
 typedef struct _TAG_FLDMMDL_SAVEDATA FLDMMDL_SAVEDATA;
 
@@ -325,13 +322,35 @@ typedef u32 MATR;
 typedef void (*FLDMMDL_MOVE_PROC_INIT)(FLDMMDL*);///<動作初期化関数
 typedef void (*FLDMMDL_MOVE_PROC)(FLDMMDL*);///<動作関数
 typedef void (*FLDMMDL_MOVE_PROC_DEL)(FLDMMDL*);///<動作削除関数
-typedef void (*FLDMMDL_MOVE_PROC_RET)(FLDMMDL*);///<動作復帰関数
+typedef void (*FLDMMDL_MOVE_PROC_RECOVER)(FLDMMDL*);///<動作復帰関数
 typedef void (*FLDMMDL_DRAW_PROC_INIT)(FLDMMDL*);///<描画初期化関数
 typedef void (*FLDMMDL_DRAW_PROC)(FLDMMDL*);///<描画関数
 typedef void (*FLDMMDL_DRAW_PROC_DEL)(FLDMMDL*);///<描画削除関数
 typedef void (*FLDMMDL_DRAW_PROC_PUSH)(FLDMMDL*);///<描画退避関数
 typedef void (*FLDMMDL_DRAW_PROC_POP)(FLDMMDL*);///<描画復帰関数
 typedef u32 (*FLDMMDL_DRAW_PROC_GET)(FLDMMDL*,u32);///<描画取得関数
+
+//--------------------------------------------------------------
+///	FLDMMDL_HEADER構造体
+//--------------------------------------------------------------
+typedef struct
+{
+	unsigned short id;			///<識別ID
+	unsigned short obj_code;	///<表示するOBJコード
+	unsigned short move_code;	///<動作コード
+	unsigned short event_type;	///<イベントタイプ
+	unsigned short event_flag;	///<イベントフラグ
+	unsigned short event_id;	///<イベントID
+	short dir;					///<指定方向
+	unsigned short param0;		///<指定パラメタ 0
+	unsigned short param1;		///<指定パラメタ 1
+	unsigned short param2;		///<指定パラメタ 2
+	short move_limit_x;			///<X方向移動制限
+	short move_limit_z;			///<Z方向移動制限
+	unsigned short gx;			///<グリッドX
+	unsigned short gz;			///<グリッドZ
+	int y;						///<Y値 fx32型
+}FLDMMDL_HEADER;
 
 //--------------------------------------------------------------
 ///	FLDMMDL_MOVE_PROC_LIST構造体
@@ -342,7 +361,7 @@ typedef struct
 	FLDMMDL_MOVE_PROC_INIT init_proc;///<初期化関数
 	FLDMMDL_MOVE_PROC move_proc;///<動作関数
 	FLDMMDL_MOVE_PROC_DEL delete_proc;///<削除関数
-	FLDMMDL_MOVE_PROC_RET return_proc;///<動作復帰関数
+	FLDMMDL_MOVE_PROC_RECOVER recover_proc;///<動作復元関数
 }FLDMMDL_MOVE_PROC_LIST;
 
 ///FLDMMDL_MOVE_PROC_LISTサイズ
@@ -469,6 +488,13 @@ extern void FLDMMDL_SetLocalAcmd( FLDMMDL * fmmdl, u16 code );
 extern BOOL FLDMMDL_CheckEndAcmd( const FLDMMDL * fmmdl );
 extern BOOL FLDMMDL_EndAcmd( FLDMMDL * fmmdl );
 extern void FLDMMDL_FreeAcmd( FLDMMDL * fmmdl );
+
+extern u32 FLDMMDL_SAVEDATA_GetWorkSize( void );
+extern void FLDMMDL_SAVEDATA_Init( void *p );
+extern void FLDMMDL_SAVEDATA_Save(
+	FLDMMDLSYS *fmmdlsys, FLDMMDL_SAVEDATA *savedata );
+extern void FLDMMDL_SAVEDATA_Load(
+	FLDMMDLSYS *fmmdlsys, FLDMMDL_SAVEDATA *savedata );
 
 extern u32 FLDMMDLSYS_CheckStatusBit(
 	const FLDMMDLSYS *fmmdlsys, FLDMMDLSYS_STABIT bit );
@@ -684,19 +710,6 @@ extern void FLDMMDL_DrawProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawDeleteProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawPushProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl );
-
-extern FLDMMDL * FLDMMDL_BUFFER_AddFldMMdl(
-	FLDMMDL_BUFFER *buf, const FLDMMDL_HEADER *header, int buf_no );
-extern FLDMMDL * FLDMMDL_BUFFER_LoadFldMMdl(
-	FLDMMDL_BUFFER *buf, FLDMMDLSYS *fos, int no );
-extern void FLDMMDL_BUFFER_LoadBuffer( FLDMMDL_BUFFER *buf, FLDMMDLSYS *fos );
-extern void FLDMMDL_BUFFER_SaveBuffer( FLDMMDL_BUFFER *buf, FLDMMDLSYS *fos );
-
-//仮
-//extern FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork(FLDMMDLSYS *fmmdlsys);
-//extern void FLDMMDL_SetBlActID(
-//	FLDMMDL *fmmdl, GFL_BBDACT_ACTUNIT_ID blActID );
-//extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fmmdl );
 
 //--------------------------------------------------------------
 //	fldmmdl_movedata.c
