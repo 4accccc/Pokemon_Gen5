@@ -17,11 +17,7 @@
 #include "arc_def.h"
 
 #include "system\gfl_use.h"
-#include "battle/poke_mcss.h"
-#include "battle/btl_stage.h"
-#include "battle/btl_field.h"
-#include "battle/btl_camera.h"
-#include "battle/btl_effect.h"
+#include "battle/btlv/btlv_effect.h"
 #include "pokegra/pokegra_wb.naix"
 #include "battgra/battgra_wb.naix"
 #include "spa.naix"
@@ -34,7 +30,7 @@
 //#define MCS_ENABLE		//MCSを使用する
 #define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
 //#define	SCALE_CHECK		//透視射影と正射影でスケールの誤差を修正するテストモードの起動
-#define POKE_MCSS_1vs1		//1vs1描画
+#define BTLV_MCSS_1vs1		//1vs1描画
 
 #define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
@@ -113,8 +109,8 @@ typedef struct
 typedef struct
 {
 	int					seq_no;
-	BTL_CAMERA_WORK		*bcw;
-//	BTL_EFFECT_WORK		*bew;
+	BTLV_CAMERA_WORK	*bcw;
+//	BTLV_EFFECT_WORK	*bew;
 	HEAPID				heapID;
 	NNSSndStrm			strm;
 	u8					FS_strmBuffer[STRM_BUF_SIZE];
@@ -139,7 +135,7 @@ typedef struct
 	GFL_BMPWIN			*bmpwin[ BMPWIN_MAX ];
 	GFL_TEXT_PRINTPARAM	*textParam;
 	int					position;
-	POKE_MCSS_WORK		*pmw;
+	BTLV_MCSS_WORK		*bmw;
 	int					key_repeat_speed;
 	int					key_repeat_wait;
 	int					ortho_mode;
@@ -187,9 +183,9 @@ static	void	set_pokemon( SOGA_WORK *wk );
 static	void	del_pokemon( SOGA_WORK *wk );
 
 static	const	int	pokemon_pos_table[][2]={ 
-	{ POKE_MCSS_POS_AA, POKE_MCSS_POS_BB },
-	{ POKE_MCSS_POS_A, POKE_MCSS_POS_B },
-	{ POKE_MCSS_POS_C, POKE_MCSS_POS_D }
+	{ BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB },
+	{ BTLV_MCSS_POS_A, BTLV_MCSS_POS_B },
+	{ BTLV_MCSS_POS_C, BTLV_MCSS_POS_D }
 };
 
 static	const	char	num_char_table[][1]={
@@ -316,16 +312,16 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	wk->seq_no = 0;
 #if 1
 	{
-		BTL_EFFECT_Init( 0, wk->heapID );
-		wk->bcw = BTL_EFFECT_GetCameraWork();
+		BTLV_EFFECT_Init( 0, wk->heapID );
+		wk->bcw = BTLV_EFFECT_GetCameraWork();
 	}
 
 	set_pokemon( wk );
 
 #else
 	{
-		wk->bew = BTL_EFFECT_Init( 0, wk->heapID );
-		wk->bcw = BTL_EFFECT_GetCameraWork( wk->bew );
+		wk->bew = BTLV_EFFECT_Init( 0, wk->heapID );
+		wk->bcw = BTLV_EFFECT_GetCameraWork( wk->bew );
 	}
 
 	set_pokemon( wk );
@@ -387,8 +383,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 			GFL_BG_LoadPalette( GFL_BG_FRAME2_M, &plt, 16*2, 0 );
 		}
 
-		wk->pmw = POKE_MCSS_Init( NULL, wk->heapID );
-		POKE_MCSS_SetOrthoMode( wk->pmw );
+		wk->bmw = BTLV_MCSS_Init( NULL, wk->heapID );
+		BTLV_MCSS_SetOrthoMode( wk->bmw );
 		wk->ortho_mode = 1;
 	}
 #endif
@@ -402,7 +398,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 							   GX_WND_PLANEMASK_OBJ,
 							   FALSE );
 		G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
-		G2_SetWnd0Position( 1, 0, 255, 192 );
+		G2_SetWnd0Position( 1, 1, 255, 191 );
 		GX_SetVisibleWnd( GX_WNDMASK_W0 );
 	}
 
@@ -491,9 +487,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 #else
 	if( trg & PAD_BUTTON_START ){
 		VecFx32	pos,target;
-		BTL_CAMERA_GetDefaultCameraPosition( &pos, &target );
-//		BTL_CAMERA_MoveCameraPosition( wk->bcw, &pos, &target );
-		BTL_CAMERA_MoveCameraInterpolation( wk->bcw, &pos, &target, 20, 20 );
+		BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
+//		BTLV_CAMERA_MoveCameraPosition( wk->bcw, &pos, &target );
+		BTLV_CAMERA_MoveCameraInterpolation( wk->bcw, &pos, &target, 20, 20 );
 	}
 #endif
 
@@ -510,8 +506,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 #ifndef SCALE_CHECK
 			VecFx32 scale_m, scale_e;
 	
-			POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
-			POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
+			BTLV_MCSS_GetScale( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
+			BTLV_MCSS_GetScale( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
 #endif
 	
 			if( trg & PAD_BUTTON_R ){
@@ -631,30 +627,30 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			}
 #endif
 			if( pad & PAD_BUTTON_START ){
-//				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_ON );
-//				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_ON );
-//				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_VANISH_ON );
-//				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_VANISH_ON );
+//				BTLV_MCSS_SetMepachiFlag( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ], BTLV_MCSS_MEPACHI_ON );
+//				BTLV_MCSS_SetMepachiFlag( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ], BTLV_MCSS_MEPACHI_ON );
+//				BTLV_MCSS_SetVanishFlag( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ], BTLV_MCSS_VANISH_ON );
+//				BTLV_MCSS_SetVanishFlag( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ], BTLV_MCSS_VANISH_ON );
 //				G3X_AntiAlias( FALSE );
 			}
 			else{
-//				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_OFF );
-//				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_OFF );
-//				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_VANISH_OFF );
-//				POKE_MCSS_SetVanishFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_VANISH_OFF );
+//				BTLV_MCSS_SetMepachiFlag( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ], BTLV_MCSS_MEPACHI_OFF );
+//				BTLV_MCSS_SetMepachiFlag( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ], BTLV_MCSS_MEPACHI_OFF );
+//				BTLV_MCSS_SetVanishFlag( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ], BTLV_MCSS_VANISH_OFF );
+//				BTLV_MCSS_SetVanishFlag( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ], BTLV_MCSS_VANISH_OFF );
 //				G3X_AntiAlias( TRUE );
 			}
 			if( tp == TRUE ){
 				wk->ortho_mode ^= 1;
 				TextPrint( wk, wk->ortho_mode, BMPWIN_PROJECTION );
 				if( wk->ortho_mode ){
-					POKE_MCSS_SetOrthoMode( wk->pmw );
+					BTLV_MCSS_SetOrthoMode( wk->bmw );
 				}
 				else{
-					POKE_MCSS_ResetOrthoMode( wk->pmw );
+					BTLV_MCSS_ResetOrthoMode( wk->bmw );
 #ifdef SCALE_CHECK
-//					POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &wk->scale );
-//					POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &wk->scale );
+//					BTLV_MCSS_SetScale( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ], &wk->scale );
+//					BTLV_MCSS_SetScale( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ], &wk->scale );
 #endif
 				}
 			}
@@ -668,20 +664,20 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 					set_pokemon( wk );
 #ifndef SCALE_CHECK
 					if( pos == TRUE ){
-						POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
-						POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
+						BTLV_MCSS_GetScale( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
+						BTLV_MCSS_GetScale( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
 					}
 #endif
 				}
 #ifndef SCALE_CHECK
-				POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
-				POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
+				BTLV_MCSS_SetScale( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
+				BTLV_MCSS_SetScale( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
 				NumPrint( wk, wk->mons_no, BMPWIN_MONSNO );
 				Num16Print( wk, scale_m.x, BMPWIN_SCALE_M );
 				Num16Print( wk, scale_e.x, BMPWIN_SCALE_E );
 #else
-				POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &wk->scale );
-				POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &wk->scale );
+				BTLV_MCSS_SetScale( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ], &wk->scale );
+				BTLV_MCSS_SetScale( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ], &wk->scale );
 				NumPrint( wk, wk->mons_no, BMPWIN_MONSNO );
 				Num16Print( wk, wk->scale.x, BMPWIN_SCALE_M );
 				Num16Print( wk, wk->scale.x, BMPWIN_SCALE_E );
@@ -695,20 +691,20 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	else{
 		MoveCamera( wk );
 
-		if( (trg & PAD_BUTTON_X ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-			BTL_EFFECT_Add( BTL_EFFECT_AA2BBGANSEKI );
+		if( (trg & PAD_BUTTON_X ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+			BTLV_EFFECT_Add( BTLV_EFFECT_AA2BBGANSEKI );
 		}
-		if( (trg & PAD_BUTTON_Y ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-			BTL_EFFECT_Add( BTL_EFFECT_BB2AAGANSEKI );
+		if( (trg & PAD_BUTTON_Y ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+			BTLV_EFFECT_Add( BTLV_EFFECT_BB2AAGANSEKI );
 		}
-		if( (trg & PAD_BUTTON_A ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-			BTL_EFFECT_Add( BTL_EFFECT_AA2BBMIZUDEPPOU );
+		if( (trg & PAD_BUTTON_A ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+			BTLV_EFFECT_Add( BTLV_EFFECT_AA2BBMIZUDEPPOU );
 		}
-		if( (trg & PAD_BUTTON_B ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-			BTL_EFFECT_Add( BTL_EFFECT_BB2AAMIZUDEPPOU );
+		if( (trg & PAD_BUTTON_B ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+			BTLV_EFFECT_Add( BTLV_EFFECT_BB2AAMIZUDEPPOU );
 		}
-		if( (trg & PAD_BUTTON_SELECT ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-			BTL_EFFECT_Add( BTL_EFFECT_A2BGANSEKI );
+		if( (trg & PAD_BUTTON_SELECT ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+			BTLV_EFFECT_Add( BTLV_EFFECT_A2BGANSEKI );
 		}
 	}
 
@@ -718,14 +714,14 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 		if( wk->timer_flag ){
 			VecFx32	scale;
 
-#ifdef POKE_MCSS_1vs1
-			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_AA );
-			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_BB );
+#ifdef BTLV_MCSS_1vs1
+			BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_AA );
+			BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_BB );
 #else 
-			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_A );
-			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_B );
-			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_C );
-			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_D );
+			BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_A );
+			BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_B );
+			BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_C );
+			BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_D );
 #endif
 			wk->mons_no = MONSNO_HUSIGIDANE;
 			wk->position = 0;
@@ -735,9 +731,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			set_pokemon( wk );
 			TextPrint( wk, wk->ortho_mode, BMPWIN_PROJECTION );
 			NumPrint( wk, wk->mons_no, BMPWIN_MONSNO );
-			POKE_MCSS_GetScale( wk->pmw, POKE_MCSS_POS_BB, &scale );
+			BTLV_MCSS_GetScale( wk->bmw, BTLV_MCSS_POS_BB, &scale );
 			Num16Print( wk, scale.x, BMPWIN_SCALE_E );
-			POKE_MCSS_GetScale( wk->pmw, POKE_MCSS_POS_AA, &scale );
+			BTLV_MCSS_GetScale( wk->bmw, BTLV_MCSS_POS_AA, &scale );
 			Num16Print( wk, scale.x, BMPWIN_SCALE_M );
 			GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_ON );
 			DEBUG_PerformanceSetActive( FALSE );
@@ -753,17 +749,17 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 #else
 	MoveCamera( wk );
 
-	if( (trg & PAD_BUTTON_X ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-		BTL_EFFECT_Add( BTL_EFFECT_A2BGANSEKI );
+	if( (trg & PAD_BUTTON_X ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+		BTLV_EFFECT_Add( BTLV_EFFECT_A2BGANSEKI );
 	}
-	if( (trg & PAD_BUTTON_Y ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-		BTL_EFFECT_Add( BTL_EFFECT_B2AGANSEKI );
+	if( (trg & PAD_BUTTON_Y ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+		BTLV_EFFECT_Add( BTLV_EFFECT_B2AGANSEKI );
 	}
-	if( (trg & PAD_BUTTON_A ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-		BTL_EFFECT_Add( BTL_EFFECT_A2BMIZUDEPPOU );
+	if( (trg & PAD_BUTTON_A ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+		BTLV_EFFECT_Add( BTLV_EFFECT_A2BMIZUDEPPOU );
 	}
-	if( (trg & PAD_BUTTON_B ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
-		BTL_EFFECT_Add( BTL_EFFECT_B2AMIZUDEPPOU );
+	if( (trg & PAD_BUTTON_B ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+		BTLV_EFFECT_Add( BTLV_EFFECT_B2AMIZUDEPPOU );
 	}
 	if( trg & PAD_BUTTON_SELECT ){
 		wk->timer_flag ^= 1;
@@ -772,12 +768,12 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 
 #ifdef	POKEGRA_CHECK
 	if( wk->timer_flag ){
-		POKE_MCSS_Main( wk->pmw );
-		POKE_MCSS_Draw( wk->pmw );
+		BTLV_MCSS_Main( wk->bmw );
+		BTLV_MCSS_Draw( wk->bmw );
 	}
 #endif
 
-	BTL_EFFECT_Main();
+	BTLV_EFFECT_Main();
 
 	if( pad == PAD_BUTTON_EXIT ){
 //		NNS_SndStrmStop(&wk->strm);
@@ -812,11 +808,11 @@ static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void
 		}
 	}
 	GFL_HEAP_FreeMemory( wk->textParam );
-	POKE_MCSS_Exit( wk->pmw );
+	BTLV_MCSS_Exit( wk->bmw );
 #endif
 
-	BTL_EFFECT_Exit();
-//	BTL_EFFECT_Exit( wk->bew );
+	BTLV_EFFECT_Exit();
+//	BTLV_EFFECT_Exit( wk->bew );
 
 //    NNS_SndStrmFreeChannel( &wk->strm );
 
@@ -914,20 +910,20 @@ static	void	MoveCamera( SOGA_WORK *wk )
 
 	if( pad & PAD_BUTTON_L ){
 		if( pad & PAD_KEY_LEFT ){
-			BTL_CAMERA_MoveCameraAngle( wk->bcw, 0, -ROTATE_SPEED );
+			BTLV_CAMERA_MoveCameraAngle( wk->bcw, 0, -ROTATE_SPEED );
 		}
 		if( pad & PAD_KEY_RIGHT ){
-			BTL_CAMERA_MoveCameraAngle( wk->bcw, 0,  ROTATE_SPEED );
+			BTLV_CAMERA_MoveCameraAngle( wk->bcw, 0,  ROTATE_SPEED );
 		}
 		if( pad & PAD_KEY_UP ){
-			BTL_CAMERA_MoveCameraAngle( wk->bcw, -ROTATE_SPEED, 0 );
+			BTLV_CAMERA_MoveCameraAngle( wk->bcw, -ROTATE_SPEED, 0 );
 		}
 		if( pad & PAD_KEY_DOWN ){
-			BTL_CAMERA_MoveCameraAngle( wk->bcw,  ROTATE_SPEED, 0 );
+			BTLV_CAMERA_MoveCameraAngle( wk->bcw,  ROTATE_SPEED, 0 );
 		}
 	}
 	else{
-		BTL_CAMERA_GetCameraPosition( wk->bcw, &camPos, &camTarget );
+		BTLV_CAMERA_GetCameraPosition( wk->bcw, &camPos, &camTarget );
 
 		if( pad & PAD_KEY_LEFT ){
 			xofs = -MOVE_SPEED;
@@ -972,7 +968,7 @@ static	void	MoveCamera( SOGA_WORK *wk )
 		camTarget.y += ofsx.y + ofsz.y;
 		camTarget.z += ofsx.z + ofsz.z;
 
-		BTL_CAMERA_MoveCameraPosition( wk->bcw, &camPos, &camTarget );
+		BTLV_CAMERA_MoveCameraPosition( wk->bcw, &camPos, &camTarget );
 		OS_TPrintf("pos_x:%08x pos_y:%08x pos_z:%08x tar_x:%08x tar_y:%08x tar_z:%08x\n",
 			camPos.x,
 			camPos.y,
@@ -993,25 +989,25 @@ static	void	set_pokemon( SOGA_WORK *wk )
 	if( wk->timer_flag ){
 		PP_Put( pp, ID_PARA_monsno, wk->mons_no );
 		PP_Put( pp, ID_PARA_id_no, 0x10 );
-		POKE_MCSS_Add( wk->pmw, pp, pokemon_pos_table[ wk->position ][ 0 ] );
-		POKE_MCSS_Add( wk->pmw, pp, pokemon_pos_table[ wk->position ][ 1 ] );
+		BTLV_MCSS_Add( wk->bmw, pp, pokemon_pos_table[ wk->position ][ 0 ] );
+		BTLV_MCSS_Add( wk->bmw, pp, pokemon_pos_table[ wk->position ][ 1 ] );
 	}
 	else{
-#ifdef POKE_MCSS_1vs1
+#ifdef BTLV_MCSS_1vs1
 //1vs1
 		PP_Put( pp, ID_PARA_monsno, MONSNO_RIZAADON );
 		PP_Put( pp, ID_PARA_id_no, 0x10 );
-		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_AA );
-		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_BB );
+		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
+		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
 #else
 //2vs2
 		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
 		PP_Put( pp, ID_PARA_id_no, 0x10 );
-		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_A );
-		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_B );
+		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_A );
+		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_B );
 		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
-		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_C );
-		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_D );
+		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_C );
+		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_D );
 #endif
 	}
 	GFL_HEAP_FreeMemory( pp );
@@ -1019,8 +1015,8 @@ static	void	set_pokemon( SOGA_WORK *wk )
 
 static	void	del_pokemon( SOGA_WORK *wk )
 {
-	POKE_MCSS_Del( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ] );
-	POKE_MCSS_Del( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ] );
+	BTLV_MCSS_Del( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ] );
+	BTLV_MCSS_Del( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ] );
 }
 
 #if 0
