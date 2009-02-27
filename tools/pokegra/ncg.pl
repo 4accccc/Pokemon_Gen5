@@ -1,16 +1,25 @@
 
 #====================================================================================
 #
+#	12×12で描かれたNCGキャラを1Dフォーマットにコンバートして吐き出す
+#
+#====================================================================================
+
+#====================================================================================
+#
 #	処理開始
 #
 #====================================================================================
 use File::Basename;
 
-use constant NCG_HEAD_SIZE	=>	4 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 4 + 4 + 4;
-use constant NCG_LINE_SIZE	=>	0x200;
+use constant NCG_HEAD_SIZE			=>	4 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 4 + 4 + 4;
+use constant NCG_LINE_SIZE			=>	0x180;
+use constant NCG_LINE_SIZE_AMARI	=>	0x400 - NCG_LINE_SIZE;
+use constant NCG_X	=>	12;
+use constant NCG_Y	=>	12;
 
 	@NCGRHead = ( 0x52,0x47,0x43,0x4e,0xff,0xfe,0x01,0x01,0x30,0x20,0x00,0x00,0x10,0x00,0x01,0x00,
-				  0x52,0x41,0x48,0x43,0x20,0x20,0x00,0x00,0x10,0x00,0x10,0x00,0x03,0x00,0x00,0x00,
+				  0x52,0x41,0x48,0x43,0x20,0x20,0x00,0x00,NCG_X,0x00,NCG_Y,0x00,0x03,0x00,0x00,0x00,
 				  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x20,0x00,0x00,0x18,0x00,0x00,0x00 );
 
 	$argc = @ARGV;
@@ -56,10 +65,10 @@ sub NCGRMake
 	#ヘッダーデータを読み込み
 	read NCG, $header, NCG_HEAD_SIZE; 
 
-	for( $i = 0 ; $i < 16 ; $i++ ){
-		read NCG, $data, NCG_LINE_SIZE; 
+	for( $i = 0 ; $i < NCG_X ; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE;
 		print NCGR $data;
-		read NCG, $data, NCG_LINE_SIZE; 
+		read NCG, $data, NCG_LINE_SIZE_AMARI;
 	}
 
 	close( NCG );
