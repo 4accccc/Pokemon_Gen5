@@ -13,7 +13,6 @@ SUBDIRS	=	wmi \
 			message\
 			fldmapdata\
 			test3dp\
-			test3dp2\
 			pokegra\
 			battle\
 			personal\
