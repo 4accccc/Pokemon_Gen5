@@ -136,7 +136,7 @@ diff_output:
 diff:
 	@$(MAKE) cp_output
 	@echo コンバート
-	@$(EXCEL2TAB) $(DATAFILE)
+	#@$(EXCEL2TAB) $(DATAFILE)
 	@$(CONVERTER) $(DATAFILE:.xls=.txt)
 	@-echo "#差分は以下の通り" > diff.txt
 	@$(MAKE) diff_output

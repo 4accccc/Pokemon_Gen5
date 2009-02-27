@@ -19,7 +19,8 @@ class ColumnID
 	attr :cMAPRSC_ID, true
 	attr :cAREA_ID, true
 	attr :cMOVEMODEL, true
-	attr :cMATRIX, true
+	attr :cMATRIXARC, true
+	attr :cMATRIXID, true
 	attr :cSX, true
 	attr :cSY, true
 	attr :cSZ, true
@@ -53,8 +54,10 @@ class ColumnID
 				@cAREA_ID = c_count
 			when "MOVE_MODEL"
 				@cMOVEMODEL = c_count
-			when "MATRIX"
-				@cMATRIX = c_count
+			when "MATRIXARC"
+				@cMATRIXARC = c_count
+			when "MATRIXID"
+				@cMATRIXID = c_count
 			when "SX"
 				@cSX = c_count
 			when "SY"
@@ -226,7 +229,8 @@ class ZoneDataFile < OutputFile
 			exit 1
 		end
 		movemodel = column[@cl.cMOVEMODEL]
-		matrix = "MATRIX_ID_#{column[@cl.cMATRIX]}".upcase
+		matrixArc = "MATRIX_ARC_#{column[@cl.cMATRIXARC]}".upcase
+		matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
 
 		event_id = column[@cl.cEVENT] == "›" ? "NARC_zone_event_zone_#{id.downcase}_total_bin" : "event_dummy"
 		script = column[@cl.cSCRIPT] == "›" ? "NARC_scr_seq_#{id.downcase}_bin" : "scr_dummy"
@@ -264,7 +268,8 @@ class ZoneDataFile < OutputFile
 		#{maprsc.upcase},
 		#{area.upcase},
 		#{movemodel.upcase},
-		#{matrix},
+		#{matrixArc},
+		#{matrixId},
 		#{script},
 		#{sp_script},	//#{sp_script},
 		#{msg},

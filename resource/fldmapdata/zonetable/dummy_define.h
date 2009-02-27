@@ -44,6 +44,9 @@ enum {
 	PLACE_WIN_SEE	=	0x80,
 	PLACE_WIN_CITY	=	0x81,
 
+	MATRIX_ARC_MAPMATRIX = 0,
+	MATRIX_ARC_NGMATRIX = 1,
+
 	MATRIX_ID_SINOU	=	1,
 	MATRIX_ID_TEST0 =	0,
 	MATRIX_ID_TEST1 =	1,
@@ -66,6 +69,8 @@ enum {
 	//NO_GRID_SAMPLE = 2,
 	GRID_GS_SAMPLE = 3,
 	TEST_C3_SAMPLE = 4,
+
+	RSC_TYPE_END
 };
 #include "../area_data/area_id.h"
 
