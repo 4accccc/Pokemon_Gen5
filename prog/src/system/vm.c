@@ -215,6 +215,7 @@ BOOL VM_Control( VMHANDLE * core )
 				break;
 			}
 		}
+		break;
 	default:
 		VM_ERROR("vm error status %02x\n", core->status);
 		core->status = VMSTAT_HALT;
