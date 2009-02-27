@@ -58,7 +58,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
 $(NARCNAME):	$(MAP3DPPACKS)  
-	nnsarc -c -l -n -i $(NARCNAME) -S $(OUTDIR)/arcfilelist
+	nnsarc -c -l -n -i $(NARCNAME) -S $(OUTDIR)/arcfilelist > arcresult
 	$(NAIXCUT) $(NAIXNAME)
 
 
@@ -75,7 +75,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	-rm -f $(OUTDIR)/arcfilelist $(OUTDIR)/dependfile heightlist.lst
 	-rm -f $(OUTDIR)/*.bhc
 	-rm -f $(OUTDIR)/*.nsbmd
-	-rm -f *.$(EXTNAME)
+	-rm -f $(OUTDIR)/*.$(EXTNAME)
 endif
 
 
