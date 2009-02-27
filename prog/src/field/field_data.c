@@ -145,25 +145,6 @@ static const FLDMAPPER_MAPDATA sampleMap[] = {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-#include "test_graphic/test3dp2.naix"
-
-static const FLDMAPPER_MAPDATA sampleMap2[] = {
-	{ NARC_test3dp2_m_test_01_01c_3dppack },
-	{ NARC_test3dp2_m_test_02_01c_3dppack },
-	{ NARC_test3dp2_m_test_01_02c_3dppack },
-	{ NARC_test3dp2_m_test_02_02c_3dppack },
-	{ NARC_test3dp2_m_test_01_03c_3dppack },
-	{ NARC_test3dp2_m_test_02_03c_3dppack },
-	{ NARC_test3dp2_m_test_01_04c_3dppack },
-	{ NARC_test3dp2_m_test_02_04c_3dppack },
-	{ NARC_test3dp2_m_test_01_05c_3dppack },
-	{ NARC_test3dp2_m_test_02_05c_3dppack },
-	{ NARC_test3dp2_m_test_01_06c_3dppack },
-	{ NARC_test3dp2_m_test_02_06c_3dppack },
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 #define	NARC_nogrid_mapblock_h01a_dummy	NARC_nogrid_mapblock_h01a_00_01_3dppack
 #include "fieldmap/nogrid_mapblock.naix"
 static const FLDMAPPER_MAPDATA newbridgemap[] = {
@@ -188,38 +169,49 @@ static const FLDMAPPER_MAPDATA newbridgemap[] = {
 	{ NARC_nogrid_mapblock_h01a_02_04_3dppack },
 };
 
-#include "test_graphic/loopbridge.naix"
-
-static const FLDMAPPER_MAPDATA loopbridgemap[] = {
-	{ NARC_loopbridge_m_test2_01_01c_3dppack },
-	{ NARC_loopbridge_m_test2_02_01c_3dppack },
-	{ NARC_loopbridge_m_test2_03_01c_3dppack },
-	{ NARC_loopbridge_m_test2_04_01c_3dppack },
-	{ NARC_loopbridge_m_test2_01_02c_3dppack },
-	{ NARC_loopbridge_m_test2_02_02c_3dppack },
-	{ NARC_loopbridge_m_test2_03_02c_3dppack },
-	{ NARC_loopbridge_m_test2_04_02c_3dppack },
-	{ NARC_loopbridge_m_test2_01_03c_3dppack },
-	{ NARC_loopbridge_m_test2_02_03c_3dppack },
-	{ NARC_loopbridge_m_test2_03_03c_3dppack },
-	{ NARC_loopbridge_m_test2_04_03c_3dppack },
-	{ NARC_loopbridge_m_test2_01_04c_3dppack },
-	{ NARC_loopbridge_m_test2_02_04c_3dppack },
-	{ NARC_loopbridge_m_test2_03_04c_3dppack },
-	{ NARC_loopbridge_m_test2_04_04c_3dppack },
-};
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-//#include "test_graphic/test_c3.naix"
 static const FLDMAPPER_MAPDATA test_c3map[] = {
 	{ NARC_nogrid_mapblock_C3_00_01_3dppack },
 	{ NARC_nogrid_mapblock_C3_00_02_3dppack },
 	{ NARC_nogrid_mapblock_C3_01_01_3dppack },
 	{ NARC_nogrid_mapblock_C3_01_02_3dppack },
-//	{ NARC_test_c3_C3_00_01_3dppack },
-//	{ NARC_test_c3_C3_00_02_3dppack },
-//	{ NARC_test_c3_C3_01_01_3dppack },
-//	{ NARC_test_c3_C3_01_02_3dppack },
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const FLDMAPPER_MAPDATA loopbridgemap[] = {
+	{ NARC_nogrid_mapblock_m_test2_01_01_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_02_01_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_03_01_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_04_01_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_01_02_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_02_02_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_03_02_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_04_02_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_01_03_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_02_03_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_03_03_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_04_03_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_01_04_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_02_04_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_03_04_3dppack },
+	{ NARC_nogrid_mapblock_m_test2_04_04_3dppack },
+};
+
+static const FLDMAPPER_MAPDATA samplebridge[] = {
+	{ NARC_nogrid_mapblock_m_test_01_01_3dppack },
+	{ NARC_nogrid_mapblock_m_test_02_01_3dppack },
+	{ NARC_nogrid_mapblock_m_test_01_02_3dppack },
+	{ NARC_nogrid_mapblock_m_test_02_02_3dppack },
+	{ NARC_nogrid_mapblock_m_test_01_03_3dppack },
+	{ NARC_nogrid_mapblock_m_test_02_03_3dppack },
+	{ NARC_nogrid_mapblock_m_test_01_04_3dppack },
+	{ NARC_nogrid_mapblock_m_test_02_04_3dppack },
+	{ NARC_nogrid_mapblock_m_test_01_05_3dppack },
+	{ NARC_nogrid_mapblock_m_test_02_05_3dppack },
+	{ NARC_nogrid_mapblock_m_test_01_06_3dppack },
+	{ NARC_nogrid_mapblock_m_test_02_06_3dppack },
 };
 
 //------------------------------------------------------------------
@@ -298,8 +290,8 @@ const SCENE_DATA resistMapTbl[] = {
 
 			3,	5, NELEMS(newbridgemap),
 			newbridgemap,
-			//4,  4, NELEMS(loopbridgemap),
-			//loopbridgemap, 
+		//	4,  4, NELEMS(loopbridgemap),
+		//	loopbridgemap, 
 		}, 
 		&FieldNoGridFunctions,
 		FALSE,
@@ -326,8 +318,8 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
 			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
 
-			2,  6, NELEMS(sampleMap2),
-			sampleMap2, 
+			2,  6, NELEMS(samplebridge),
+			samplebridge, 
 		}, 
 		&FieldNoGridFunctions,
 		FALSE,
