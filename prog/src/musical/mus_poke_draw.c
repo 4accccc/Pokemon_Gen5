@@ -16,7 +16,7 @@
 #include "arc_def.h"
 #include "poke_tool/poke_tool.h"
 
-#include "battle/poke_mcss.h"
+//#include "battle/poke_mcss.h"
 
 #include "musical/mus_poke_draw.h"
 
