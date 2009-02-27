@@ -37,6 +37,7 @@ include $(PROJECT_RSCDIR)macro_define
 #	ツールへのパス指定
 #----------------------------------------------------------------------------
 
+XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
 ELF2BIN		= $(PROJECT_ROOT)/tools/celf2bin.exe
 
@@ -107,7 +108,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #	--(コンパイル＆elf2bin)-->	zonetable.bin
 #	--(nnsarc)-->	zonedata.narc/.naix
 $(NARCNAME): $(DATAFILE) $(DEPFILES)
-	$(EXCEL2TAB) $(DATAFILE)
+	#$(EXCEL2TAB) $(DATAFILE)
+	$(XLS2TAB) $(DATAFILE) > $(DATAFILE:.xls=.txt)
 	$(CONVERTER) $(DATAFILE:.xls=.txt)
 	$(MAKE) makebin				#Ｃソース→バイナリ変換して
 	nnsarc -i -c -l -n $(NARCNAME) *.bin > arc_result.txt	#アーカイブ作成

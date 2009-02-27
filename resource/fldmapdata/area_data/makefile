@@ -61,8 +61,8 @@ SUBDIRS		=	area_map_tex
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
 
-EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
-
+#EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
+XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 
 #----------------------------------------------------------------------------
 #
@@ -115,7 +115,8 @@ $(TARGETDIR)/$(TARGET):	$(TARGET)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 $(TARGET):	$(SRC_XLS_FILE)
 	#エクセルコンバート
-	$(EXCEL2TAB) $(SRC_XLS_FILE)
+	#$(EXCEL2TAB) $(SRC_XLS_FILE)
+	$(XLS2TAB) $(SRC_XLS_FILE) > $(SRC_TXT_FILE)
 	#エリアデータコンバート＋各種定義リスト生成
 	ruby area.rb $(SRC_TXT_FILE)
 	#地形モデルテクスチャコンバート用定義生成
@@ -127,7 +128,8 @@ endif
 
 $(TARGET_ARC): $(XLS)
 	#エクセルコンバート
-	$(EXCEL2TAB) $(SRC_XLS_FILE)
+	#$(EXCEL2TAB) $(SRC_XLS_FILE)
+	$(XLS2TAB) $(SRC_XLS_FILE) > $(SRC_TXT_FILE)
 	#$(MAKE) convert				#コンバート
 	ruby area.rb $(SRC_TXT_FILE)
 	#$(MAKE) mkabmlst			#エリア配置モデルファイルリスト作成
