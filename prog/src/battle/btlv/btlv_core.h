@@ -22,12 +22,12 @@ typedef  struct _BTLV_CORE		BTLV_CORE;
 //----------------------------------------------------------------------
 // éQè∆ÉwÉbÉ_ include 
 //----------------------------------------------------------------------
-#include "btl_main.h"
-#include "btl_client.h"
-#include "btl_action.h"
-#include "btl_calc.h"
-#include "btl_string.h"
-#include "btl_pokeselect.h"
+#include "battle/btl_main.h"
+#include "battle/btl_client.h"
+#include "battle/btl_action.h"
+#include "battle/btl_calc.h"
+#include "battle/btl_string.h"
+#include "battle/btl_pokeselect.h"
 #include "btlv_common.h"
 
 //----------------------------------------------------------------------

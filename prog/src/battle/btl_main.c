@@ -11,7 +11,7 @@
 
 #include "system/main.h"
 #include "battle/battle.h"
-#include "poke_mcss.h"
+#include "btlv/btlv_mcss.h"
 
 #include "btl_common.h"
 #include "btl_server.h"
@@ -21,7 +21,7 @@
 #include "btl_net.h"
 #include "btl_util.h"
 
-#include "btlv_core.h"
+#include "btlv/btlv_core.h"
 
 #include "btl_main.h"
 
@@ -1375,13 +1375,13 @@ u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
 
 	if( wk->setupParam->rule == BTL_RULE_SINGLE )
 	{
-		return (isPlayerSide)? POKE_MCSS_POS_AA : POKE_MCSS_POS_BB;
+		return (isPlayerSide)? BTLV_MCSS_POS_AA : BTLV_MCSS_POS_BB;
 	}
 	else
 	{
 		static const u8 vpos[2][BTL_POSIDX_MAX] = {
-			{ POKE_MCSS_POS_B, POKE_MCSS_POS_D, POKE_MCSS_POS_F },
-			{ POKE_MCSS_POS_A, POKE_MCSS_POS_C, POKE_MCSS_POS_E },
+			{ BTLV_MCSS_POS_B, BTLV_MCSS_POS_D, BTLV_MCSS_POS_F },
+			{ BTLV_MCSS_POS_A, BTLV_MCSS_POS_C, BTLV_MCSS_POS_E },
 		};
 		u8 posIdx = btlPos_to_sidePosIdx( pos );
 		return vpos[ isPlayerSide ][ posIdx ];

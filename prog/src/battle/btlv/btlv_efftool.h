@@ -1,15 +1,15 @@
 
 //============================================================================================
 /**
- * @file	btl_efftool.h
+ * @file	btlv_efftool.h
  * @brief	戦闘エフェクトツール
  * @author	soga
  * @date	2008.11.14
  */
 //============================================================================================
 
-#ifndef	__BTL_EFFTOOL_H_
-#define	__BTL_EFFTOOL_H_
+#ifndef	__BTLV_EFFTOOL_H_
+#define	__BTLV_EFFTOOL_H_
 
 typedef struct
 {
@@ -32,8 +32,9 @@ enum{
 	EFFTOOL_CALCTYPE_ROUNDTRIP_LONG,	//指定した区間を往復計算（スタート地点を基準に＋－方向の往復）
 };
 
-extern	void	BTL_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame );
-extern	void	BTL_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret );
-extern	BOOL	BTL_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_param );
+extern	void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame );
+extern	void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret );
+extern	BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_param );
+extern	u8		BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos no );
 
-#endif	//__BTL_EFFTOOL_H_
+#endif	//__BTLV_EFFTOOL_H_

@@ -20,10 +20,10 @@ typedef struct _BTLV_SCD	BTLV_SCD;
 #include <tcbl.h>
 #include "print/gf_font.h"
 
-#include "btl_main.h"
-#include "btl_pokeparam.h"
-#include "btl_action.h"
-#include "btl_pokeselect.h"
+#include "battle/btl_main.h"
+#include "battle/btl_pokeparam.h"
+#include "battle/btl_action.h"
+#include "battle/btl_pokeselect.h"
 #include "btlv_core.h"
 
 

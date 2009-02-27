@@ -11,9 +11,9 @@
 
 #include "print/printsys.h"
 
-#include "btl_common.h"
-#include "btl_util.h"
-#include "btl_string.h"
+#include "battle/btl_common.h"
+#include "battle/btl_util.h"
+#include "battle/btl_string.h"
 #include "btlv_common.h"
 #include "btlv_core.h"
 #include "btlv_scu.h"
@@ -22,7 +22,7 @@
 #include "message.naix"
 #include "font/font.naix"
 
-#include "btl_effect.h"	//soga
+#include "btlv_effect.h"	//soga
 #include "poke_tool/monsno_def.h"
 
 /*--------------------------------------------------------------------------*/
@@ -281,13 +281,13 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 			//soga
 			{
 				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_2ND_0 );
-				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), POKE_MCSS_POS_BB );
+				BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTLV_MCSS_POS_BB );
 			}
 			(*seq)++;
 		}
 		break;
 	case 2:
-		if( !BTL_EFFECT_CheckExecute() )
+		if( !BTLV_EFFECT_CheckExecute() )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle );
 			BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
@@ -301,13 +301,13 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 			//soga
 			{
 				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_1ST_0 );
-				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), POKE_MCSS_POS_AA );
+				BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTLV_MCSS_POS_AA );
 			}
 			(*seq)++;
 		}
 		break;
 	case 4:
-		if( !BTL_EFFECT_CheckExecute() )
+		if( !BTLV_EFFECT_CheckExecute() )
 		{
 			return TRUE;
 		}
@@ -346,13 +346,13 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 			BTL_Printf("Ž©•ªClientID=%d, Ž©•ªPOS:%d, ‘ŠŽè0”ÔPOS:%d->v(%d)\n", wk->playerClientID, myPos, pos, viewPos );
 
 			bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
-			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
+			BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
 			statwin_disp_start( &wk->statusWin[ pos ] );
 			(*seq)++;
 		}
 		break;
 	case 2:
-		if( !BTL_EFFECT_CheckExecute() )
+		if( !BTLV_EFFECT_CheckExecute() )
 		{
 			const BTL_POKEPARAM* bpp;
 			BtlPokePos  pos, myPos;
@@ -365,14 +365,14 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 			BTL_Printf("Ž©•ªClientID=%d, Ž©•ªPOS:%d, ‘ŠŽè1”ÔPOS:%d->v(%d)\n", wk->playerClientID, myPos, pos, viewPos );
 
 			bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
-			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), viewPos );
+			BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), viewPos );
 
 			statwin_disp_start( &wk->statusWin[ pos ] );
 			(*seq)++;
 		}
 		break;
 	case 3:
-		if( !BTL_EFFECT_CheckExecute() )
+		if( !BTLV_EFFECT_CheckExecute() )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutDouble );
 			BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
@@ -394,7 +394,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 
 			BTL_Printf("–¡•û0”ÔPOS:%d->v(%d)\n", pos, vpos );
 
-			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), vpos );
+			BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), vpos );
 
 			statwin_disp_start( &wk->statusWin[ pos ] );
 
@@ -402,7 +402,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 		}
 		break;
 	case 5:
-		if( !BTL_EFFECT_CheckExecute() )
+		if( !BTLV_EFFECT_CheckExecute() )
 		{
 			const BTL_POKEPARAM* bpp;
 			BtlSide     side;
@@ -416,14 +416,14 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 
 			BTL_Printf("–¡•û1”ÔPOS:%d->v(%d)\n", pos, vpos );
 
-			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), vpos );
+			BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), vpos );
 
 			statwin_disp_start( &wk->statusWin[ pos ] );
 			(*seq)++;
 		}
 		break;
 	case 6:
-		if( !BTL_EFFECT_CheckExecute() )
+		if( !BTLV_EFFECT_CheckExecute() )
 		{
 			return TRUE;
 		}
@@ -571,7 +571,7 @@ void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlPokePos atPos, BtlPokePos defPos
 
 	atViewPos  = BTL_MAIN_BtlPosToViewPos( wk->mainModule, atPos );
 	defViewPos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPos );
-	BTL_EFFECT_AddByPos( atViewPos, defViewPos, waza );
+	BTLV_EFFECT_AddByPos( atViewPos, defViewPos, waza );
 }
 //=============================================================================================
 /**
@@ -584,7 +584,7 @@ void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlPokePos atPos, BtlPokePos defPos
 //=============================================================================================
 BOOL BTLV_SCU_WaitWazaEffect( BTLV_SCU* wk )
 {
-	return BTL_EFFECT_CheckExecute() == FALSE;
+	return BTLV_EFFECT_CheckExecute() == FALSE;
 }
 
 //==============================================================================
@@ -636,7 +636,7 @@ void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, u16 damage, B
 		twk->hpMinusVal = FX32_CONST(twk->statWin->hp - twk->hpEnd) / twk->timer;
 	}
 
-	BTL_EFFECT_Damage( BTL_MAIN_BtlPosToViewPos(wk->mainModule, defPos) );
+	BTLV_EFFECT_Damage( BTL_MAIN_BtlPosToViewPos(wk->mainModule, defPos) );
 
 	(*(twk->taskCounter))++;
 }
@@ -678,7 +678,7 @@ static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs )
 	}
 	else
 	{
-		if( !BTL_EFFECT_CheckExecute() )
+		if( !BTLV_EFFECT_CheckExecute() )
 		{
 			(*(wk->taskCounter))--;
 			GFL_TCBL_Delete( tcbl );
@@ -720,7 +720,7 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
 	*(twk->endFlag) = FALSE;
 
 	//soga
-	BTL_EFFECT_DelPokemon( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
+	BTLV_EFFECT_DelPokemon( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
 
 }
 //=============================================================================================
@@ -790,7 +790,7 @@ static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
 	switch( wk->seq ){
 	case 0:
 		statwin_hide( wk->statWin );
-		BTL_EFFECT_DelPokemon( wk->viewpos );
+		BTLV_EFFECT_DelPokemon( wk->viewpos );
 		wk->seq++;
 		break;
 	case 1:
@@ -838,7 +838,7 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
 		const BTL_POKEPARAM* bpp = BTL_MAIN_GetClientPokeDataConst( wk->mainModule, clientID, memberIdx );
 		{
 			u8 vpos =  BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos);
-			BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), vpos );
+			BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), vpos );
 		}
 	}
 }
@@ -964,7 +964,7 @@ static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs )
 	}
 	else
 	{
-		if( !BTL_EFFECT_CheckExecute() )
+		if( !BTLV_EFFECT_CheckExecute() )
 		{
 			(*(wk->taskCounter))--;
 			GFL_TCBL_Delete( tcbl );

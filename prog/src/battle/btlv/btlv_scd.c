@@ -10,14 +10,14 @@
 #include <ui.h>
 #include "print/printsys.h"
 
-#include "btl_common.h"
-#include "btl_util.h"
-#include "btl_string.h"
-#include "btl_action.h"
+#include "battle/btl_common.h"
+#include "battle/btl_util.h"
+#include "battle/btl_string.h"
+#include "battle/btl_action.h"
 
 #include "btlv_core.h"
 #include "btlv_scd.h"
-#include "poke_mcss.h"
+#include "btlv_mcss.h"
 
 #include "arc_def.h"
 #include "font/font.naix"
@@ -486,10 +486,10 @@ static const GFL_UI_TP_HITTBL STW_HitTbl[] = {
 };
 // ↑描画位置から上記テーブルインデックスを引くためのテーブル
 static const u8 STW_HitTblIndex[] = {
-	POKE_MCSS_POS_A,
-	POKE_MCSS_POS_B,
-	POKE_MCSS_POS_C,
-	POKE_MCSS_POS_D,
+	BTLV_MCSS_POS_A,
+	BTLV_MCSS_POS_B,
+	BTLV_MCSS_POS_C,
+	BTLV_MCSS_POS_D,
 };
 
 /*

@@ -14,18 +14,18 @@
 #include "arc_def.h"
 #include "font/font.naix"
 
-#include "btl_common.h"
-#include "btl_main.h"
-#include "btl_action.h"
-#include "btl_calc.h"
-#include "btl_util.h"
+#include "battle/btl_common.h"
+#include "battle/btl_main.h"
+#include "battle/btl_action.h"
+#include "battle/btl_calc.h"
+#include "battle/btl_util.h"
 
 #include "btlv_scu.h"
 #include "btlv_scd.h"
 
 #include "btlv_core.h"
 
-#include "btl_effect.h"	//soga
+#include "btlv_effect.h"	//soga
 #include "waza_tool/wazano_def.h"		//soga
 
 
@@ -137,7 +137,7 @@ void BTLV_Delete( BTLV_CORE* core )
 	BTL_STR_QuitSystem();
 
 	//エフェクト削除 soga
-	BTL_EFFECT_Exit();
+	BTLV_EFFECT_Exit();
 
 	BTLV_SCD_Delete( core->scrnD );
 	BTLV_SCU_Delete( core->scrnU );
@@ -161,7 +161,7 @@ void BTLV_CORE_Main( BTLV_CORE* core )
 {
 	GFL_UI_TP_Main();
 	GFL_TCBL_Main( core->tcbl );
-	BTL_EFFECT_Main();		//soga
+	BTLV_EFFECT_Main();		//soga
 }
 
 
@@ -246,7 +246,7 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 		setup_core( core, core->heapID );
 		BTLV_SCU_Setup( core->scrnU );
 		BTLV_SCD_Setup( core->scrnD );
-		BTL_EFFECT_Init( 0, core->heapID );		//soga
+		BTLV_EFFECT_Init( 0, core->heapID );		//soga
 		(*seq)++;
 		break;
 
@@ -912,6 +912,7 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
 		G3X_AlphaBlend( TRUE );
 		G3X_EdgeMarking( TRUE );
+		G3X_AntiAlias( FALSE );
 		G2_SetBG0Priority( 1 );
 	}
 	//ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）soga

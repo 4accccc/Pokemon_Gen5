@@ -1,7 +1,7 @@
 
 //============================================================================================
 /**
- * @file	btl_camera.c
+ * @file	btlv_camera.c
  * @brief	戦闘画面カメラ制御
  * @author	soga
  * @date	2008.11.20
@@ -10,8 +10,7 @@
 
 #include <gflib.h>
 
-#include "btl_efftool.h"
-#include "btl_camera.h"
+#include "btlv_effect.h"
 
 //============================================================================================
 /**
@@ -33,7 +32,7 @@
  */
 //============================================================================================
 
-struct _BTL_CAMERA_WORK
+struct _BTLV_CAMERA_WORK
 {
 	GFL_TCBSYS			*tcb_sys;
 	GFL_G3D_CAMERA		*camera;
@@ -55,18 +54,18 @@ struct _BTL_CAMERA_WORK
  */
 //============================================================================================
 
-BTL_CAMERA_WORK	*BTL_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
-void			BTL_CAMERA_Exit( BTL_CAMERA_WORK *bcw );
-void			BTL_CAMERA_Main( BTL_CAMERA_WORK *bcw );
-void			BTL_CAMERA_MoveCameraPosition( BTL_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target );
-void			BTL_CAMERA_MoveCameraAngle( BTL_CAMERA_WORK *bcw, int phi, int theta );
-void			BTL_CAMERA_MoveCameraInterpolation( BTL_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int flame, int brake );
-void			BTL_CAMERA_GetCameraPosition( BTL_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target );
-void			BTL_CAMERA_GetDefaultCameraPosition( VecFx32 *pos, VecFx32 *target );
-BOOL			BTL_CAMERA_CheckExecute( BTL_CAMERA_WORK *bcw );
+BTLV_CAMERA_WORK	*BTLV_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
+void				BTLV_CAMERA_Exit( BTLV_CAMERA_WORK *bcw );
+void				BTLV_CAMERA_Main( BTLV_CAMERA_WORK *bcw );
+void				BTLV_CAMERA_MoveCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target );
+void				BTLV_CAMERA_MoveCameraAngle( BTLV_CAMERA_WORK *bcw, int phi, int theta );
+void				BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int flame, int brake );
+void				BTLV_CAMERA_GetCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target );
+void				BTLV_CAMERA_GetDefaultCameraPosition( VecFx32 *pos, VecFx32 *target );
+BOOL				BTLV_CAMERA_CheckExecute( BTLV_CAMERA_WORK *bcw );
 
-static	void	BTL_CAMERA_Move( BTL_CAMERA_WORK *bcw );
-static	void	BTL_CAMERA_UpdateCameraAngle( BTL_CAMERA_WORK *bcw );
+static	void		BTLV_CAMERA_Move( BTLV_CAMERA_WORK *bcw );
+static	void		BTLV_CAMERA_UpdateCameraAngle( BTLV_CAMERA_WORK *bcw );
 
 //============================================================================================
 /**
@@ -90,9 +89,9 @@ static const VecFx32 cam_up = { 0, FX32_ONE, 0 };
  * @param[in]	heapID	ヒープID
  */
 //============================================================================================
-BTL_CAMERA_WORK	*BTL_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
+BTLV_CAMERA_WORK	*BTLV_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
 {
-	BTL_CAMERA_WORK *bcw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTL_CAMERA_WORK ) );
+	BTLV_CAMERA_WORK *bcw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_CAMERA_WORK ) );
 
 	bcw->heapID = heapID;
 	bcw->tcb_sys = tcb_sys;
@@ -110,7 +109,7 @@ BTL_CAMERA_WORK	*BTL_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
 										 &cam_target,
 										 heapID );
 
-	BTL_CAMERA_UpdateCameraAngle( bcw );
+	BTLV_CAMERA_UpdateCameraAngle( bcw );
 
 	GFL_G3D_CAMERA_Switching( bcw->camera );
 
@@ -121,10 +120,10 @@ BTL_CAMERA_WORK	*BTL_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
 /**
  *	システム終了
  *
- * @param[in]	bcw	BTL_CAMERA管理ワークへのポインタ
+ * @param[in]	bcw	BTLV_CAMERA管理ワークへのポインタ
  */
 //============================================================================================
-void	BTL_CAMERA_Exit( BTL_CAMERA_WORK *bcw )
+void	BTLV_CAMERA_Exit( BTLV_CAMERA_WORK *bcw )
 {
 	GFL_G3D_CAMERA_Delete( bcw->camera );
 	GFL_HEAP_FreeMemory( bcw );
@@ -134,24 +133,24 @@ void	BTL_CAMERA_Exit( BTL_CAMERA_WORK *bcw )
 /**
  *	システムメイン
  *
- * @param[in]	bcw	BTL_CAMERA管理ワークへのポインタ
+ * @param[in]	bcw	BTLV_CAMERA管理ワークへのポインタ
  */
 //============================================================================================
-void	BTL_CAMERA_Main( BTL_CAMERA_WORK *bcw )
+void	BTLV_CAMERA_Main( BTLV_CAMERA_WORK *bcw )
 {
-	BTL_CAMERA_Move( bcw );
+	BTLV_CAMERA_Move( bcw );
 }
 
 //============================================================================================
 /**
  *	カメラ移動（位置、ターゲット指定）
  *
- * @param[in]	bcw		BTL_CAMERA管理ワークへのポインタ
+ * @param[in]	bcw		BTLV_CAMERA管理ワークへのポインタ
  * @param[in]	pos		移動先カメラ位置
  * @param[in]	target	移動先カメラターゲット
  */
 //============================================================================================
-void	BTL_CAMERA_MoveCameraPosition( BTL_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target )
+void	BTLV_CAMERA_MoveCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target )
 {
 	if( pos != NULL ){
 		GFL_G3D_CAMERA_SetPos( bcw->camera, pos );
@@ -160,19 +159,19 @@ void	BTL_CAMERA_MoveCameraPosition( BTL_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 
 		GFL_G3D_CAMERA_SetTarget( bcw->camera, target );
 	}
 	GFL_G3D_CAMERA_Switching( bcw->camera );
-	BTL_CAMERA_UpdateCameraAngle( bcw );
+	BTLV_CAMERA_UpdateCameraAngle( bcw );
 }
 
 //============================================================================================
 /**
  *	カメラ移動（角度指定）
  *
- * @param[in]	bcw		BTL_CAMERA管理ワークへのポインタ
+ * @param[in]	bcw		BTLV_CAMERA管理ワークへのポインタ
  * @param[in]	phi		X軸方向の移動量
  * @param[in]	theta	Y軸方向の移動量
  */
 //============================================================================================
-void	BTL_CAMERA_MoveCameraAngle( BTL_CAMERA_WORK *bcw, int phi, int theta )
+void	BTLV_CAMERA_MoveCameraAngle( BTLV_CAMERA_WORK *bcw, int phi, int theta )
 {
 	VecFx32	pos, target;
 
@@ -208,14 +207,14 @@ void	BTL_CAMERA_MoveCameraAngle( BTL_CAMERA_WORK *bcw, int phi, int theta )
 /**
  *	カメラ移動（移動先を指定して、間を補間する）
  *
- * @param[in]	bcw		BTL_CAMERA管理ワークへのポインタ
+ * @param[in]	bcw		BTLV_CAMERA管理ワークへのポインタ
  * @param[in]	pos		移動先カメラ位置
  * @param[in]	target	移動先カメラターゲット
  * @param[in]	flame	移動フレーム数
  * @param[in]	brake	移動にブレーキをかけるフレーム数
  */
 //============================================================================================
-void	BTL_CAMERA_MoveCameraInterpolation( BTL_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int flame, int brake )
+void	BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int flame, int brake )
 {
 	VecFx32	now_pos, now_target;
 
@@ -228,14 +227,14 @@ void	BTL_CAMERA_MoveCameraInterpolation( BTL_CAMERA_WORK *bcw, VecFx32 *pos, Vec
 		bcw->move_pos.x = pos->x;
 		bcw->move_pos.y = pos->y;
 		bcw->move_pos.z = pos->z;
-		BTL_EFFTOOL_CalcMoveVector( &now_pos, pos, &bcw->vec_pos, FX32_CONST( flame ) );
+		BTLV_EFFTOOL_CalcMoveVector( &now_pos, pos, &bcw->vec_pos, FX32_CONST( flame ) );
 		bcw->move_flag |= CAMERA_POS_MOVE_FLAG;
 	}
 	if( target != NULL ){
 		bcw->move_target.x = target->x;
 		bcw->move_target.y = target->y;
 		bcw->move_target.z = target->z;
-		BTL_EFFTOOL_CalcMoveVector( &now_target, target, &bcw->vec_target, FX32_CONST( flame ) );
+		BTLV_EFFTOOL_CalcMoveVector( &now_target, target, &bcw->vec_target, FX32_CONST( flame ) );
 		bcw->move_flag |= CAMERA_TARGET_MOVE_FLAG;
 	}
 }
@@ -244,12 +243,12 @@ void	BTL_CAMERA_MoveCameraInterpolation( BTL_CAMERA_WORK *bcw, VecFx32 *pos, Vec
 /**
  *	カメラ位置を取得
  *
- * @param[in]	bcw		BTL_CAMERA管理ワークへのポインタ
+ * @param[in]	bcw		BTLV_CAMERA管理ワークへのポインタ
  * @param[in]	pos		取得したカメラ位置を格納するワークへのポインタ
  * @param[in]	target	取得したカメラターゲットを格納するワークへのポインタ
  */
 //============================================================================================
-void	BTL_CAMERA_GetCameraPosition( BTL_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target )
+void	BTLV_CAMERA_GetCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target )
 {
 	GFL_G3D_CAMERA_GetPos( bcw->camera, pos );
 	GFL_G3D_CAMERA_GetTarget( bcw->camera, target );
@@ -263,7 +262,7 @@ void	BTL_CAMERA_GetCameraPosition( BTL_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *
  * @param[in]	target	取得したカメラターゲットを格納するワークへのポインタ
  */
 //============================================================================================
-void	BTL_CAMERA_GetDefaultCameraPosition( VecFx32 *pos, VecFx32 *target )
+void	BTLV_CAMERA_GetDefaultCameraPosition( VecFx32 *pos, VecFx32 *target )
 {
 	pos->x = cam_pos.x;
 	pos->y = cam_pos.y;
@@ -278,12 +277,12 @@ void	BTL_CAMERA_GetDefaultCameraPosition( VecFx32 *pos, VecFx32 *target )
 /**
  *	カメラ移動が実行されているかチェック
  *
- * @param[in]	bcw		BTL_CAMERA管理ワークへのポインタ
+ * @param[in]	bcw		BTLV_CAMERA管理ワークへのポインタ
  *
  * @retval	FALSE:移動していない　TRUE:移動中
  */
 //============================================================================================
-BOOL	BTL_CAMERA_CheckExecute( BTL_CAMERA_WORK *bcw )
+BOOL	BTLV_CAMERA_CheckExecute( BTLV_CAMERA_WORK *bcw )
 {
 	return ( bcw->move_flag != 0 );
 }
@@ -292,10 +291,10 @@ BOOL	BTL_CAMERA_CheckExecute( BTL_CAMERA_WORK *bcw )
 /**
  *	カメラ移動処理
  *
- * @param[in]	bcw		BTL_CAMERA管理ワークへのポインタ
+ * @param[in]	bcw		BTLV_CAMERA管理ワークへのポインタ
  */
 //============================================================================================
-static	void	BTL_CAMERA_Move( BTL_CAMERA_WORK *bcw )
+static	void	BTLV_CAMERA_Move( BTLV_CAMERA_WORK *bcw )
 {
 	BOOL ret = TRUE;
 	VecFx32	pos, target;
@@ -318,17 +317,17 @@ static	void	BTL_CAMERA_Move( BTL_CAMERA_WORK *bcw )
 	GFL_G3D_CAMERA_GetTarget( bcw->camera, &target );
 
 	if( bcw->move_flag & CAMERA_POS_MOVE_FLAG ){
-		BTL_EFFTOOL_CheckMove( &pos.x, &bcw->vec_pos.x, &bcw->move_pos.x, &ret );
-		BTL_EFFTOOL_CheckMove( &pos.y, &bcw->vec_pos.y, &bcw->move_pos.y, &ret );
-		BTL_EFFTOOL_CheckMove( &pos.z, &bcw->vec_pos.z, &bcw->move_pos.z, &ret );
+		BTLV_EFFTOOL_CheckMove( &pos.x, &bcw->vec_pos.x, &bcw->move_pos.x, &ret );
+		BTLV_EFFTOOL_CheckMove( &pos.y, &bcw->vec_pos.y, &bcw->move_pos.y, &ret );
+		BTLV_EFFTOOL_CheckMove( &pos.z, &bcw->vec_pos.z, &bcw->move_pos.z, &ret );
 		if( ret == TRUE ){
 			bcw->move_flag &= CAMERA_POS_MOVE_FLAG_OFF;
 		}
 	}
 	if( bcw->move_flag & CAMERA_TARGET_MOVE_FLAG ){
-		BTL_EFFTOOL_CheckMove( &target.x, &bcw->vec_target.x, &bcw->move_target.x, &ret );
-		BTL_EFFTOOL_CheckMove( &target.y, &bcw->vec_target.y, &bcw->move_target.y, &ret );
-		BTL_EFFTOOL_CheckMove( &target.z, &bcw->vec_target.z, &bcw->move_target.z, &ret );
+		BTLV_EFFTOOL_CheckMove( &target.x, &bcw->vec_target.x, &bcw->move_target.x, &ret );
+		BTLV_EFFTOOL_CheckMove( &target.y, &bcw->vec_target.y, &bcw->move_target.y, &ret );
+		BTLV_EFFTOOL_CheckMove( &target.z, &bcw->vec_target.z, &bcw->move_target.z, &ret );
 		if( ret == TRUE ){
 			bcw->move_flag &= CAMERA_TARGET_MOVE_FLAG_OFF;
 		}
@@ -336,17 +335,17 @@ static	void	BTL_CAMERA_Move( BTL_CAMERA_WORK *bcw )
 	GFL_G3D_CAMERA_SetPos( bcw->camera, &pos );
 	GFL_G3D_CAMERA_SetTarget( bcw->camera, &target );
 	GFL_G3D_CAMERA_Switching( bcw->camera );
-	BTL_CAMERA_UpdateCameraAngle( bcw );
+	BTLV_CAMERA_UpdateCameraAngle( bcw );
 }
 
 //============================================================================================
 /**
  *	現在のカメラ位置とターゲット位置からカメラ角度を計算して更新
  *
- * @param[in]	bcw		BTL_CAMERA管理ワークへのポインタ
+ * @param[in]	bcw		BTLV_CAMERA管理ワークへのポインタ
  */
 //============================================================================================
-static	void	BTL_CAMERA_UpdateCameraAngle( BTL_CAMERA_WORK *bcw )
+static	void	BTLV_CAMERA_UpdateCameraAngle( BTLV_CAMERA_WORK *bcw )
 {
 	VecFx32	pos, target;
 

@@ -1,7 +1,7 @@
 
 //============================================================================================
 /**
- * @file	btl_efftool.c
+ * @file	btlv_efftool.c
  * @brief	戦闘エフェクトツール
  * @author	soga
  * @date	2008.11.27
@@ -10,7 +10,7 @@
 
 #include <gflib.h>
 
-#include "btl_efftool.h"
+#include "btlv_effect.h"
 
 //============================================================================================
 /**
@@ -18,9 +18,10 @@
  */
 //============================================================================================
 
-void	BTL_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame );
-void	BTL_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret );
-BOOL	BTL_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value );
+void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame );
+void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret );
+BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value );
+u8		BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos no );
 
 //============================================================================================
 /**
@@ -32,7 +33,7 @@ BOOL	BTL_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value );
  * @param[in]	flame	移動フレーム数
  */
 //============================================================================================
-void	BTL_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame )
+void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame )
 {
 	out->x = 0;
 	out->y = 0;
@@ -67,7 +68,7 @@ void	BTL_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx3
  *	@param[out]	ret			移動したかどうかを返す（FALSE:移動しない）
  */
 //============================================================================================
-void	BTL_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret )
+void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret )
 {
 	*now_pos += *vec;
 
@@ -99,7 +100,7 @@ void	BTL_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret 
  *	@retval	FALSE:計算継続　TRUE:計算終了
  */
 //============================================================================================
-BOOL	BTL_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value )
+BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value )
 {
 	BOOL	ret = TRUE;
 
@@ -112,9 +113,9 @@ BOOL	BTL_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value )
 	case EFFTOOL_CALCTYPE_INTERPOLATION:	//指定値までを補間しながら計算
 		if( emw->wait == 0 ){
 			emw->wait = emw->wait_tmp;
-			BTL_EFFTOOL_CheckMove( &now_value->x, &emw->vector.x, &emw->end_value.x, &ret );
-			BTL_EFFTOOL_CheckMove( &now_value->y, &emw->vector.y, &emw->end_value.y, &ret );
-			BTL_EFFTOOL_CheckMove( &now_value->z, &emw->vector.z, &emw->end_value.z, &ret );
+			BTLV_EFFTOOL_CheckMove( &now_value->x, &emw->vector.x, &emw->end_value.x, &ret );
+			BTLV_EFFTOOL_CheckMove( &now_value->y, &emw->vector.y, &emw->end_value.y, &ret );
+			BTLV_EFFTOOL_CheckMove( &now_value->z, &emw->vector.z, &emw->end_value.z, &ret );
 		}
 		else{
 			emw->wait--;
@@ -149,5 +150,23 @@ BOOL	BTL_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value )
 		break;
 	}
 	return ret;
+}
+
+//============================================================================================
+/**
+ *	ポケモンの立ち位置をビットに変換
+ *
+ *	@param[in]	pos	ポケモンの立ち位置
+ *
+ *	@retval	変換したビット
+ */
+//============================================================================================
+u8	BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos pos )
+{
+	static	u8 bit_table[ BTLV_MCSS_POS_MAX ]={ 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
+
+	GF_ASSERT( pos < BTLV_MCSS_POS_MAX );
+
+	return bit_table[ pos ];
 }
 

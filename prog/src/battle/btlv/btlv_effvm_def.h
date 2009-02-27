@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	btl_effvm_def.h
+ * @file	btlv_effvm_def.h
  * @brief	エフェクトシーケンス用のマクロ定義ファイル
  * @author	HisashiSogabe
  * @date	2009.02.12
@@ -13,11 +13,11 @@
  */
 //====================================================================================
 
-#ifndef __BTL_EFFVM_DEF_H_
-#define __BTL_EFFVM_DEF_H_
+#ifndef __BTLV_EFFVM_DEF_H_
+#define __BTLV_EFFVM_DEF_H_
 
-#define	BTL_EFFVM_STACK_SIZE	( 16 )	///<使用するスタックのサイズ
-#define	BTL_EFFVM_REG_SIZE		( 8 )	///<使用するレジスタの数
+#define	BTLV_EFFVM_STACK_SIZE	( 16 )	///<使用するスタックのサイズ
+#define	BTLV_EFFVM_REG_SIZE		( 8 )	///<使用するレジスタの数
 
 //スクリプトアドレステーブル用定義
 #define	BTLEFF_AA_SAME			( 0xffffffff )		//立ち位置AAと同じ
@@ -55,6 +55,7 @@
 #define	BTLEFF_POKEMON_SIDE_ATTACK_PAIR			( 1 )		//攻撃側ペア
 #define	BTLEFF_POKEMON_SIDE_DEFENCE				( 2 )		//防御側
 #define	BTLEFF_POKEMON_SIDE_DEFENCE_PAIR		( 3 )		//防御側ペア
+
 #define	BTLEFF_POKEMON_MOVE_DIRECT				( EFFTOOL_CALCTYPE_DIRECT )
 #define	BTLEFF_POKEMON_MOVE_INTERPOLATION		( EFFTOOL_CALCTYPE_INTERPOLATION )
 #define	BTLEFF_POKEMON_MOVE_ROUNDTRIP			( EFFTOOL_CALCTYPE_ROUNDTRIP )
@@ -73,8 +74,7 @@
 #define	BTLEFF_ANM_STOP							( POKE_MCSS_ANM_STOP_ON )
 #define	BTLEFF_ANM_START						( POKE_MCSS_ANM_STOP_OFF )
 
-
-#endif //__BTL_EFFVM_DEF_H_
+#endif //__BTLV_EFFVM_DEF_H_
 
 //====================================================================================
 /**
@@ -246,7 +246,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	type		移動タイプ
  * @param	move_pos_x	移動先X座標
  * @param	move_pos_y	移動先Y座標
- * @param	speed		移動スピード
+ * @param	frame		移動フレーム数（目的地まで何フレームで到達するか）
  * @param	wait		移動ウエイト
  * @param	count		往復カウント（移動タイプが往復のときだけ有効）
  *
@@ -261,13 +261,13 @@ def_cmd_count = ( def_cmd_count + 1 )
  * #param	VALUE_INT
  */
 //======================================================================
-	.macro	POKEMON_MOVE	pos, type, move_pos_x, move_pos_y, speed, wait, count
+	.macro	POKEMON_MOVE	pos, type, move_pos_x, move_pos_y, frame, wait, count
 	.short	EC_POKEMON_MOVE
 	.long	\pos
 	.long	\type
 	.long	\move_pos_x
 	.long	\move_pos_y
-	.long	\speed
+	.long	\frame
 	.long	\wait
 	.long	\count
 	.endm
@@ -281,7 +281,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	type		拡縮タイプ
  * @param	scale_x		X方向拡縮率
  * @param	scale_y		Y方向拡縮率
- * @param	speed		拡縮スピード
+ * @param	frame		拡縮フレーム数（設定した拡縮値まで何フレームで到達するか）
  * @param	wait		拡縮ウエイト
  * @param	count		往復カウント（拡縮タイプが往復のときだけ有効）
  *
@@ -296,13 +296,13 @@ def_cmd_count = ( def_cmd_count + 1 )
  * #param	VALUE_INT
  */
 //======================================================================
-	.macro	POKEMON_SCALE	pos, type, scale_x, scale_y, speed, wait, count
+	.macro	POKEMON_SCALE	pos, type, scale_x, scale_y, frame, wait, count
 	.short	EC_POKEMON_SCALE
 	.long	\pos
 	.long	\type
 	.long	\scale_x
 	.long	\scale_y
-	.long	\speed
+	.long	\frame
 	.long	\wait
 	.long	\count
 	.endm
@@ -315,7 +315,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	pos			回転させるポケモンの立ち位置
  * @param	type		回転タイプ
  * @param	rotate		回転角度
- * @param	speed		回転スピード
+ * @param	frame		回転フレーム数（設定した回転値まで何フレームで到達するか）
  * @param	wait		回転ウエイト
  * @param	count		往復カウント（回転タイプが往復のときだけ有効）
  *
@@ -329,12 +329,12 @@ def_cmd_count = ( def_cmd_count + 1 )
  * #param	VALUE_INT
  */
 //======================================================================
-	.macro	POKEMON_ROTATE	pos, type, rotate, speed, wait, count
+	.macro	POKEMON_ROTATE	pos, type, rotate, frame, wait, count
 	.short	EC_POKEMON_ROTATE
 	.long	\pos
 	.long	\type
 	.long	\rotate
-	.long	\speed
+	.long	\frame
 	.long	\wait
 	.long	\count
 	.endm

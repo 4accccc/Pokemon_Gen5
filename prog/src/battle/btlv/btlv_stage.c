@@ -1,7 +1,7 @@
 
 //============================================================================================
 /**
- * @file	btl_stage.c
+ * @file	btlv_stage.c
  * @brief	戦闘画面描画用関数（お盆）
  * @author	soga
  * @date	2008.11.18
@@ -9,7 +9,7 @@
 //============================================================================================
 #include <gflib.h>
 
-#include "btl_stage.h"
+#include "btlv_stage.h"
 
 #include "arc_def.h"
 #include "battgra/battgra_wb.naix"
@@ -20,13 +20,13 @@
  */
 //============================================================================================
 
-#define	BTL_STAGE_DEFAULT_SCALE		( FX32_ONE )	//お盆のデフォルトスケール値
-#define	BTL_STAGE_ANM_MAX			( 0 )			//お盆のアニメーション数
+#define	BTLV_STAGE_DEFAULT_SCALE		( FX32_ONE )	//お盆のデフォルトスケール値
+#define	BTLV_STAGE_ANM_MAX			( 0 )			//お盆のアニメーション数
 													//（初期化関数から１の時は０を要求されているので実際は１）
-#define	BTL_STAGE_ANMTBL_MAX		( 1 )			//お盆のアニメーションテーブル数
+#define	BTLV_STAGE_ANMTBL_MAX		( 1 )			//お盆のアニメーションテーブル数
 
-#define	BTL_STAGE_ANM_NO			( 0 )			//お盆のアニメーションナンバー
-#define	BTL_STAGE_ANM_WAIT			( FX32_ONE )	//お盆のアニメーションウェイト
+#define	BTLV_STAGE_ANM_NO			( 0 )			//お盆のアニメーションナンバー
+#define	BTLV_STAGE_ANM_WAIT			( FX32_ONE )	//お盆のアニメーションウェイト
 
 //============================================================================================
 /**
@@ -34,14 +34,14 @@
  */
 //============================================================================================
 
-struct _BTL_STAGE_WORK
+struct _BTLV_STAGE_WORK
 {
 	GFL_G3D_RES			*stage_resource;
 	GFL_G3D_RES			*stage_anm_resource;
 	GFL_G3D_ANM			*stage_anm;
 	GFL_G3D_RND			*stage_render;
 	GFL_G3D_OBJ			*stage_obj;
-	GFL_G3D_OBJSTATUS	stage_status[ BTL_STAGE_MAX ];
+	GFL_G3D_OBJSTATUS	stage_status[ BTLV_STAGE_MAX ];
 	HEAPID				heapID;
 };
 
@@ -51,10 +51,10 @@ struct _BTL_STAGE_WORK
  */
 //============================================================================================
 
-BTL_STAGE_WORK	*BTL_STAGE_Init( int index, HEAPID heapID );
-void			BTL_STAGE_Exit( BTL_STAGE_WORK *bsw );
-void			BTL_STAGE_Main( BTL_STAGE_WORK *bsw );
-void			BTL_STAGE_Draw( BTL_STAGE_WORK *bsw );
+BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, HEAPID heapID );
+void			BTLV_STAGE_Exit( BTLV_STAGE_WORK *bsw );
+void			BTLV_STAGE_Main( BTLV_STAGE_WORK *bsw );
+void			BTLV_STAGE_Draw( BTLV_STAGE_WORK *bsw );
 
 //============================================================================================
 /**
@@ -81,7 +81,8 @@ static	const	int	stage_resource_table[]={
 
 //アニメデータ
 static	const	int	stage_anm_resource_table[]={
-	NARC_battgra_wb_batt_stage01_nsbca,
+//	NARC_battgra_wb_batt_stage01_nsbca,
+	NARC_battgra_wb_batt_stage02_nsbca,
 };
 
 //エッジマーキングカラー
@@ -97,9 +98,9 @@ static	const	GXRgb stage_edge_color_table[][8]={
  * @param[in]	heapID	ヒープID
  */
 //============================================================================================
-BTL_STAGE_WORK	*BTL_STAGE_Init( int index, HEAPID heapID )
+BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, HEAPID heapID )
 {
-	BTL_STAGE_WORK *bsw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTL_STAGE_WORK ) );
+	BTLV_STAGE_WORK *bsw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_STAGE_WORK ) );
 	BOOL	ret;
 
 	GF_ASSERT( index < NELEMS( stage_resource_table ) );
@@ -117,32 +118,31 @@ BTL_STAGE_WORK	*BTL_STAGE_Init( int index, HEAPID heapID )
 	bsw->stage_render = GFL_G3D_RENDER_Create( bsw->stage_resource, 0, bsw->stage_resource );
 
 	//ANIME生成
-//	bsw->stage_anm = GFL_G3D_ANIME_Create( bsw->stage_render, bsw->stage_anm_resource, BTL_STAGE_ANM_MAX ); 
+	bsw->stage_anm = GFL_G3D_ANIME_Create( bsw->stage_render, bsw->stage_anm_resource, BTLV_STAGE_ANM_MAX ); 
 
 	//OBJ生成
-//	bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, &bsw->stage_anm, BTL_STAGE_ANMTBL_MAX );
-	bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, NULL, 0 );
+	bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, &bsw->stage_anm, BTLV_STAGE_ANMTBL_MAX );
 
 	//ANIME起動
-//	GFL_G3D_OBJECT_EnableAnime( bsw->stage_obj, BTL_STAGE_ANM_NO );
+	GFL_G3D_OBJECT_EnableAnime( bsw->stage_obj, BTLV_STAGE_ANM_NO );
 
 	//自分側お盆
-	bsw->stage_status[ BTL_STAGE_MINE ].trans.x = stage_pos_table[ BTL_STAGE_MINE ].x;
-	bsw->stage_status[ BTL_STAGE_MINE ].trans.y = stage_pos_table[ BTL_STAGE_MINE ].y;
-	bsw->stage_status[ BTL_STAGE_MINE ].trans.z = stage_pos_table[ BTL_STAGE_MINE ].z;
-	bsw->stage_status[ BTL_STAGE_MINE ].scale.x = BTL_STAGE_DEFAULT_SCALE;
-	bsw->stage_status[ BTL_STAGE_MINE ].scale.y = BTL_STAGE_DEFAULT_SCALE;
-	bsw->stage_status[ BTL_STAGE_MINE ].scale.z = BTL_STAGE_DEFAULT_SCALE;
-	MTX_Identity33( &bsw->stage_status[ BTL_STAGE_MINE ].rotate );
+	bsw->stage_status[ BTLV_STAGE_MINE ].trans.x = stage_pos_table[ BTLV_STAGE_MINE ].x;
+	bsw->stage_status[ BTLV_STAGE_MINE ].trans.y = stage_pos_table[ BTLV_STAGE_MINE ].y;
+	bsw->stage_status[ BTLV_STAGE_MINE ].trans.z = stage_pos_table[ BTLV_STAGE_MINE ].z;
+	bsw->stage_status[ BTLV_STAGE_MINE ].scale.x = BTLV_STAGE_DEFAULT_SCALE;
+	bsw->stage_status[ BTLV_STAGE_MINE ].scale.y = BTLV_STAGE_DEFAULT_SCALE;
+	bsw->stage_status[ BTLV_STAGE_MINE ].scale.z = BTLV_STAGE_DEFAULT_SCALE;
+	MTX_Identity33( &bsw->stage_status[ BTLV_STAGE_MINE ].rotate );
 
 	//相手側お盆
-	bsw->stage_status[ BTL_STAGE_ENEMY ].trans.x = stage_pos_table[ BTL_STAGE_ENEMY ].x;
-	bsw->stage_status[ BTL_STAGE_ENEMY ].trans.y = stage_pos_table[ BTL_STAGE_ENEMY ].y;
-	bsw->stage_status[ BTL_STAGE_ENEMY ].trans.z = stage_pos_table[ BTL_STAGE_ENEMY ].z;
-	bsw->stage_status[ BTL_STAGE_ENEMY ].scale.x = BTL_STAGE_DEFAULT_SCALE;
-	bsw->stage_status[ BTL_STAGE_ENEMY ].scale.y = BTL_STAGE_DEFAULT_SCALE;
-	bsw->stage_status[ BTL_STAGE_ENEMY ].scale.z = BTL_STAGE_DEFAULT_SCALE;
-	MTX_Identity33( &bsw->stage_status[ BTL_STAGE_ENEMY ].rotate );
+	bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.x = stage_pos_table[ BTLV_STAGE_ENEMY ].x;
+	bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.y = stage_pos_table[ BTLV_STAGE_ENEMY ].y;
+	bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.z = stage_pos_table[ BTLV_STAGE_ENEMY ].z;
+	bsw->stage_status[ BTLV_STAGE_ENEMY ].scale.x = BTLV_STAGE_DEFAULT_SCALE;
+	bsw->stage_status[ BTLV_STAGE_ENEMY ].scale.y = BTLV_STAGE_DEFAULT_SCALE;
+	bsw->stage_status[ BTLV_STAGE_ENEMY ].scale.z = BTLV_STAGE_DEFAULT_SCALE;
+	MTX_Identity33( &bsw->stage_status[ BTLV_STAGE_ENEMY ].rotate );
 
 	//エッジマーキングカラーセット
 	G3X_SetEdgeColorTable( &stage_edge_color_table[ index ][ 0 ] );
@@ -154,13 +154,13 @@ BTL_STAGE_WORK	*BTL_STAGE_Init( int index, HEAPID heapID )
 /**
  *	システム終了
  *
- * @param[in]	bsw	BTL_STAGE管理ワークへのポインタ
+ * @param[in]	bsw	BTLV_STAGE管理ワークへのポインタ
  */
 //============================================================================================
-void	BTL_STAGE_Exit( BTL_STAGE_WORK *bsw )
+void	BTLV_STAGE_Exit( BTLV_STAGE_WORK *bsw )
 {
 	GFL_G3D_OBJECT_Delete( bsw->stage_obj );
-//	GFL_G3D_ANIME_Delete( bsw->stage_anm );
+	GFL_G3D_ANIME_Delete( bsw->stage_anm );
 	GFL_G3D_RENDER_Delete( bsw->stage_render );
 	GFL_G3D_DeleteResource( bsw->stage_resource );
 	GFL_G3D_DeleteResource( bsw->stage_anm_resource );
@@ -172,26 +172,26 @@ void	BTL_STAGE_Exit( BTL_STAGE_WORK *bsw )
 /**
  *	システムメイン
  *
- * @param[in]	bsw	BTL_STAGE管理ワークへのポインタ
+ * @param[in]	bsw	BTLV_STAGE管理ワークへのポインタ
  */
 //============================================================================================
-void	BTL_STAGE_Main( BTL_STAGE_WORK *bsw )
+void	BTLV_STAGE_Main( BTLV_STAGE_WORK *bsw )
 {
-//	GFL_G3D_OBJECT_LoopAnimeFrame( bsw->stage_obj, BTL_STAGE_ANM_NO, BTL_STAGE_ANM_WAIT ); 
+	GFL_G3D_OBJECT_LoopAnimeFrame( bsw->stage_obj, BTLV_STAGE_ANM_NO, BTLV_STAGE_ANM_WAIT ); 
 }
 
 //============================================================================================
 /**
  *	描画
  *
- * @param[in]	bsw	BTL_STAGE管理ワークへのポインタ
+ * @param[in]	bsw	BTLV_STAGE管理ワークへのポインタ
  */
 //============================================================================================
-void	BTL_STAGE_Draw( BTL_STAGE_WORK *bsw )
+void	BTLV_STAGE_Draw( BTLV_STAGE_WORK *bsw )
 {
 	int	i;
 
-	for( i = 0 ; i < BTL_STAGE_MAX ; i++ ){
+	for( i = 0 ; i < BTLV_STAGE_MAX ; i++ ){
 		GFL_G3D_DRAW_DrawObject( bsw->stage_obj, &bsw->stage_status[ i ] );
 	}
 }

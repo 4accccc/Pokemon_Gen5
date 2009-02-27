@@ -32,7 +32,7 @@ typedef struct _BTL_WAZA_EXE_PARAM	BTL_WAZA_EXE_PARAM;
 #include "btl_main.h"
 #include "btl_adapter.h"
 #include "btl_pokeparam.h"
-#include "btlv_core.h"
+#include "btlv/btlv_core.h"
 
 
 extern BTL_CLIENT* BTL_CLIENT_Create(

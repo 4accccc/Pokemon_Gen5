@@ -16,7 +16,7 @@
 #include "btl_action.h"
 #include "btl_pokeselect.h"
 #include "btl_server_cmd.h"
-#include "btlv_core.h"
+#include "btlv/btlv_core.h"
 
 #include "btl_client.h"
 

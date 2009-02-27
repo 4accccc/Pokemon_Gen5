@@ -1,7 +1,7 @@
 
 //============================================================================================
 /**
- * @file	btl_effvm.c
+ * @file	btlv_effvm.c
  * @brief	戦闘エフェクトスクリプトコマンド解析
  * @author	soga
  * @date	2008.11.21
@@ -11,8 +11,7 @@
 #include <gflib.h>
 #include "system/vm_cmd.h"
 
-#include "btl_effect.h"
-#include "btl_effvm.h"
+#include "btlv_effect.h"
 
 #include "arc_def.h"
 #include "spa.naix"
@@ -37,14 +36,16 @@ typedef struct{
 	u32									:31;
 	GFL_PTC_PTR	ptc[ PARTICLE_GLOBAL_MAX ];
 	u16			ptc_no[ PARTICLE_GLOBAL_MAX ];
-}BTL_EFFVM_WORK;
+	BtlvMcssPos	attack_pos;
+	BtlvMcssPos	defence_pos;
+}BTLV_EFFVM_WORK;
 
 typedef struct{
 	VMHANDLE	*vmh;
 	int			src;
 	int			dst;
 	fx32		angle;
-}BTL_EFFVM_EMIT_INIT_WORK;
+}BTLV_EFFVM_EMIT_INIT_WORK;
 
 //============================================================================================
 /**
@@ -52,8 +53,8 @@ typedef struct{
  */
 //============================================================================================
 
-VMHANDLE	*BTL_EFFVM_Init( HEAPID heapID );
-void		BTL_EFFVM_Exit( VMHANDLE *core );
+VMHANDLE	*BTLV_EFFVM_Init( HEAPID heapID );
+void		BTLV_EFFVM_Exit( VMHANDLE *core );
 
 //エフェクトコマンド
 static VMCMD_RESULT EC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work );
@@ -72,9 +73,10 @@ static VMCMD_RESULT EC_SEQ_END( VMHANDLE *vmh, void *context_work );
 static	BOOL	VWF_CAMERA_MOVE_CHECK( VMHANDLE *vmh, void *context_work );
 
 //非公開関数群
-static	int		EFFVM_ConvPosition( VMHANDLE *vmh, PokeMcssPos position );
-static	int		EFFVM_RegistPtcNo( BTL_EFFVM_WORK *bevw, ARCDATID datID );
-static	int		EFFVM_GetPtcNo( BTL_EFFVM_WORK *bevw, ARCDATID datID );
+static	int		EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag );
+static	int		EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position );
+static	int		EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
+static	int		EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
 static	void	EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
 
 //============================================================================================
@@ -82,7 +84,7 @@ static	void	EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
  *	スクリプトテーブル
  */
 //============================================================================================
-static const VMCMD_FUNC btl_effect_command_table[]={
+static const VMCMD_FUNC btlv_effect_command_table[]={
 	EC_CAMERA_MOVE,
 	EC_PARTICLE_LOAD,
 	EC_PARTICLE_PLAY,
@@ -102,10 +104,10 @@ static const VMCMD_FUNC btl_effect_command_table[]={
  */
 //============================================================================================
 static	const VM_INITIALIZER	vm_init={
-	BTL_EFFVM_STACK_SIZE,				//u16 stack_size;	///<使用するスタックのサイズ
-	BTL_EFFVM_REG_SIZE,					//u16 reg_size;		///<使用するレジスタの数
-	btl_effect_command_table,			//const VMCMD_FUNC * command_table;	///<使用する仮想マシン命令の関数テーブル
-	NELEMS( btl_effect_command_table ),	//const u32 command_max;			///<使用する仮想マシン命令定義の最大数
+	BTLV_EFFVM_STACK_SIZE,					//u16 stack_size;	///<使用するスタックのサイズ
+	BTLV_EFFVM_REG_SIZE,					//u16 reg_size;		///<使用するレジスタの数
+	btlv_effect_command_table,				//const VMCMD_FUNC * command_table;	///<使用する仮想マシン命令の関数テーブル
+	NELEMS( btlv_effect_command_table ),	//const u32 command_max;			///<使用する仮想マシン命令定義の最大数
 };
 
 //============================================================================================
@@ -115,11 +117,11 @@ static	const VM_INITIALIZER	vm_init={
  * @param[in]	heapID			ヒープID
  */
 //============================================================================================
-VMHANDLE	*BTL_EFFVM_Init( HEAPID heapID )
+VMHANDLE	*BTLV_EFFVM_Init( HEAPID heapID )
 {
 	int			i;
 	VMHANDLE	*core;
-	BTL_EFFVM_WORK	*bevw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTL_EFFVM_WORK ) );
+	BTLV_EFFVM_WORK	*bevw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_EFFVM_WORK ) );
 
 	bevw->heapID = heapID;
 
@@ -140,7 +142,7 @@ VMHANDLE	*BTL_EFFVM_Init( HEAPID heapID )
  * @param[in]	core	仮想マシン制御構造体へのポインタ
  */
 //============================================================================================
-void	BTL_EFFVM_Exit( VMHANDLE *core )
+void	BTLV_EFFVM_Exit( VMHANDLE *core )
 {
 	GFL_HEAP_FreeMemory (VM_GetContext( core ) );
 	VM_Delete( core );
@@ -198,7 +200,7 @@ static VMCMD_RESULT EC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 		break;
 	case BTLEFF_CAMERA_POS_INIT:
 	default:
-		BTL_CAMERA_GetDefaultCameraPosition( &cam_pos, &cam_target );
+		BTLV_CAMERA_GetDefaultCameraPosition( &cam_pos, &cam_target );
 		break;
 	}
 	//移動フレーム数を読み込み
@@ -209,10 +211,10 @@ static VMCMD_RESULT EC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 	//カメラタイプから移動先を計算
 	switch( cam_type ){
 	case BTLEFF_CAMERA_MOVE_DIRECT:		//ダイレクト
-		BTL_CAMERA_MoveCameraPosition( BTL_EFFECT_GetCameraWork(), &cam_pos, &cam_target );
+		BTLV_CAMERA_MoveCameraPosition( BTLV_EFFECT_GetCameraWork(), &cam_pos, &cam_target );
 		break;
 	case BTLEFF_CAMERA_MOVE_INTERPOLATION:	//追従
-		BTL_CAMERA_MoveCameraInterpolation( BTL_EFFECT_GetCameraWork(), &cam_pos, &cam_target, frame, brake );
+		BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &cam_pos, &cam_target, frame, brake );
 		break;
 	}
 	VMCMD_SetWait( vmh, VWF_CAMERA_MOVE_CHECK );
@@ -230,7 +232,7 @@ static VMCMD_RESULT EC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT EC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
 {
-	BTL_EFFVM_WORK	*bevw = ( BTL_EFFVM_WORK* )context_work;
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	void			*heap;
 	void			*resource;
 	ARCDATID		datID = ( ARCDATID )VMGetU32( vmh );
@@ -253,8 +255,8 @@ static VMCMD_RESULT EC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT EC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 {
-	BTL_EFFVM_WORK	*bevw = ( BTL_EFFVM_WORK* )context_work;
-	BTL_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTL_EFFVM_EMIT_INIT_WORK ) );
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	BTLV_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
 	ARCDATID	datID = ( ARCDATID )VMGetU32( vmh );
 	int			ptc_no = EFFVM_GetPtcNo( bevw, datID );
 	int			index = ( int )VMGetU32( vmh );
@@ -277,8 +279,8 @@ static VMCMD_RESULT EC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT EC_PARTICLE_PLAY_WITH_DIR( VMHANDLE *vmh, void *context_work )
 {
-	BTL_EFFVM_WORK	*bevw = ( BTL_EFFVM_WORK* )context_work;
-	BTL_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTL_EFFVM_EMIT_INIT_WORK ) );
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	BTLV_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
 	ARCDATID	datID = ( ARCDATID )VMGetU32( vmh );
 	int			ptc_no = EFFVM_GetPtcNo( bevw, datID );
 	int			index = ( int )VMGetU32( vmh );
@@ -303,26 +305,30 @@ static VMCMD_RESULT EC_PARTICLE_PLAY_WITH_DIR( VMHANDLE *vmh, void *context_work
 //============================================================================================
 static VMCMD_RESULT	EC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
 {
-#if 0
-	BTL_EFFVM_WORK	*bevw = ( BTL_EFFVM_WORK* )context_work;
-	int	pos = ( int )VMGetU32( vmh );
- * @param	type		移動タイプ
- * @param	move_pos_x	移動先X座標
- * @param	move_pos_y	移動先Y座標
- * @param	speed		移動スピード
- * @param	wait		移動ウエイト
- * @param	count		往復カウント（移動タイプが往復のときだけ有効）
- *
- * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア　防御側　防御側ペア
- * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
- * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
- * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_MOVE_DIRECT	BTLEFF_POKEMON_MOVE_INTERPOLATION	BTLEFF_POKEMON_MOVE_ROUNDTRIP	BTLEFF_POKEMON_MOVE_ROUNDTRIP_LONG
- * #param	VALUE_FX32
- * #param	VALUE_FX32
- * #param	VALUE_INT
- * #param	VALUE_INT
- * #param	VALUE_INT
-#endif
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	int		position;
+	int		type;
+	VecFx32	move_pos;
+	int		frame;
+	int		wait;
+	int		count;
+
+	position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+
+	//立ち位置情報がエラーのときは、コマンド実行しない
+	if( position != BTLV_MCSS_POS_ERROR ){
+		type	   = ( int )VMGetU32( vmh );
+		move_pos.x = ( fx32 )VMGetU32( vmh ); 
+		move_pos.y = ( fx32 )VMGetU32( vmh ); 
+		move_pos.z = 0;
+		frame	   = ( int )VMGetU32( vmh );
+		wait	   = ( int )VMGetU32( vmh );
+		count	   = ( int )VMGetU32( vmh );
+
+		BTLV_MCSS_MovePosition( BTLV_EFFECT_GetMcssWork(), position, type, &move_pos, frame, wait, count );
+	}
+
+	return VMCMD_RESULT_SUSPEND;
 }
 
 //============================================================================================
@@ -335,6 +341,30 @@ static VMCMD_RESULT	EC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT	EC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
 {
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	int		position;
+	int		type;
+	VecFx32	scale;
+	int		frame;
+	int		wait;
+	int		count;
+
+	position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+
+	//立ち位置情報がエラーのときは、コマンド実行しない
+	if( position != BTLV_MCSS_POS_ERROR ){
+		type	   = ( int )VMGetU32( vmh );
+		scale.x = ( fx32 )VMGetU32( vmh ); 
+		scale.y = ( fx32 )VMGetU32( vmh ); 
+		scale.z = FX32_ONE;
+		frame	   = ( int )VMGetU32( vmh );
+		wait	   = ( int )VMGetU32( vmh );
+		count	   = ( int )VMGetU32( vmh );
+
+		BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), position, type, &scale, frame, wait, count );
+	}
+
+	return VMCMD_RESULT_SUSPEND;
 }
 
 //============================================================================================
@@ -347,6 +377,33 @@ static VMCMD_RESULT	EC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT	EC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
 {
+	//未実装
+#if 0
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	int		position;
+	int		type;
+	VecFx32	rotate;
+	int		frame;
+	int		wait;
+	int		count;
+
+	position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+
+	//立ち位置情報がエラーのときは、コマンド実行しない
+	if( position != BTLV_MCSS_POS_ERROR ){
+		type	   = ( int )VMGetU32( vmh );
+		rotate.x   = 0;
+		rotate.y   = 0;
+		rotate.z   = ( fx32 )VMGetU32( vmh ); 
+		frame	   = ( int )VMGetU32( vmh );
+		wait	   = ( int )VMGetU32( vmh );
+		count	   = ( int )VMGetU32( vmh );
+
+		BTLV_MCSS_MoveRotate( BTLV_EFFECT_GetMcssWork(), position, type, &rotate, frame, wait, count );
+	}
+#endif
+
+	return VMCMD_RESULT_SUSPEND;
 }
 
 //============================================================================================
@@ -359,6 +416,7 @@ static VMCMD_RESULT	EC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT	EC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_work )
 {
+	return VMCMD_RESULT_SUSPEND;
 }
 
 //============================================================================================
@@ -371,6 +429,7 @@ static VMCMD_RESULT	EC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_wo
 //============================================================================================
 static VMCMD_RESULT	EC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work )
 {
+	return VMCMD_RESULT_SUSPEND;
 }
 
 //============================================================================================
@@ -383,7 +442,7 @@ static VMCMD_RESULT	EC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT EC_SEQ_END( VMHANDLE *vmh, void *context_work )
 {
-	BTL_EFFVM_WORK	*bevw = ( BTL_EFFVM_WORK* )context_work;
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	int	i;
 
 	//解放されていないパーティクルがあったら解放しておく
@@ -412,10 +471,62 @@ static VMCMD_RESULT EC_SEQ_END( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static	BOOL	VWF_CAMERA_MOVE_CHECK( VMHANDLE *vmh, void *context_work )
 {
-	return ( BTL_CAMERA_CheckExecute( BTL_EFFECT_GetCameraWork() ) == FALSE );
+	return ( BTLV_CAMERA_CheckExecute( BTLV_EFFECT_GetCameraWork() ) == FALSE );
 }
 
 //非公開関数群
+//============================================================================================
+/**
+ *	立ち位置情報の取得
+ *
+ * @param[in]	vmh			仮想マシン制御構造体へのポインタ
+ * @param[in]	pos_flag	取得したいポジションフラグ
+ *
+ * @retval	適切な立ち位置
+ */
+//============================================================================================
+static	int		EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
+{
+	int	position;
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+
+	switch( pos_flag ){
+	case BTLEFF_POKEMON_SIDE_ATTACK:		//攻撃側
+		position = bevw->attack_pos;
+		break;
+	case BTLEFF_POKEMON_SIDE_ATTACK_PAIR:	//攻撃側ペア
+		if( bevw->attack_pos > BTLV_MCSS_POS_BB ){
+			position = bevw->attack_pos ^ BTLV_MCSS_POS_PAIR_BIT;
+		}
+		else{
+			position = BTLV_MCSS_POS_ERROR;
+		}
+		break;
+	case BTLEFF_POKEMON_SIDE_DEFENCE:		//防御側
+		position = bevw->defence_pos;
+		break;
+	case BTLEFF_POKEMON_SIDE_DEFENCE_PAIR:	//防御側ペア
+		if( bevw->attack_pos > BTLV_MCSS_POS_BB ){
+			position = bevw->defence_pos ^ BTLV_MCSS_POS_PAIR_BIT;
+		}
+		else{
+			position = BTLV_MCSS_POS_ERROR;
+		}
+		break;
+	}
+
+	if( position != BTLV_MCSS_POS_ERROR ){
+		if( BTLV_EFFECT_CheckExistPokemon( position ) == TRUE ){
+			position = EFFVM_ConvPosition( vmh, position );
+		}
+		else{
+			position = BTLV_MCSS_POS_ERROR;
+		}
+	}
+
+	return position;
+}
+
 //============================================================================================
 /**
  *	立ち位置情報の変換（反転フラグを見て適切な立ち位置を返す）
@@ -425,9 +536,9 @@ static	BOOL	VWF_CAMERA_MOVE_CHECK( VMHANDLE *vmh, void *context_work )
  * @retval	適切な立ち位置
  */
 //============================================================================================
-static	int		EFFVM_ConvPosition( VMHANDLE *vmh, PokeMcssPos position )
+static	int		EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position )
 {
-	BTL_EFFVM_WORK *bevw = (BTL_EFFVM_WORK *)VM_GetContext( vmh );
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 
 	if( bevw->position_reverse_flag ){
 		position ^= 1;
@@ -446,7 +557,7 @@ static	int		EFFVM_ConvPosition( VMHANDLE *vmh, PokeMcssPos position )
  * @retval	登録したptc配列の添え字No
  */
 //============================================================================================
-static	int	EFFVM_RegistPtcNo( BTL_EFFVM_WORK *bevw, ARCDATID datID )
+static	int	EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
 {
 	int	i;
 
@@ -480,7 +591,7 @@ static	int	EFFVM_RegistPtcNo( BTL_EFFVM_WORK *bevw, ARCDATID datID )
  * @retval	ptc配列の添え字No
  */
 //============================================================================================
-static	int	EFFVM_GetPtcNo( BTL_EFFVM_WORK *bevw, ARCDATID datID )
+static	int	EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
 {
 	int	i;
 
@@ -504,15 +615,15 @@ static	int	EFFVM_GetPtcNo( BTL_EFFVM_WORK *bevw, ARCDATID datID )
 //============================================================================================
 static	void	EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 {
-	BTL_EFFVM_EMIT_INIT_WORK	*beeiw = ( BTL_EFFVM_EMIT_INIT_WORK* )GFL_PTC_GetTempPtr();
+	BTLV_EFFVM_EMIT_INIT_WORK	*beeiw = ( BTLV_EFFVM_EMIT_INIT_WORK* )GFL_PTC_GetTempPtr();
 	VecFx32	src,dst;
 	VecFx16	dir;
 
 	beeiw->src = EFFVM_ConvPosition( beeiw->vmh, beeiw->src );
 	beeiw->dst = EFFVM_ConvPosition( beeiw->vmh, beeiw->dst );
 
-	POKE_MCSS_GetPokeDefaultPos( &src, beeiw->src );
-	POKE_MCSS_GetPokeDefaultPos( &dst, beeiw->dst );
+	BTLV_MCSS_GetPokeDefaultPos( &src, beeiw->src );
+	BTLV_MCSS_GetPokeDefaultPos( &dst, beeiw->dst );
 
 	//srcとdstが一緒のときは、方向なし
 	if( beeiw->src == beeiw->dst ){

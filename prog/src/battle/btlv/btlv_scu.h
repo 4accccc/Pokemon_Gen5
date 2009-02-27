@@ -32,7 +32,7 @@ enum {
 
 #include <tcbl.h>
 #include "print/gf_font.h"
-#include  "btl_main.h"
+#include  "battle/btl_main.h"
 #include  "btlv_core.h"
 
 
