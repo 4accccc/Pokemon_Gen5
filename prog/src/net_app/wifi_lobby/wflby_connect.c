@@ -1270,7 +1270,7 @@ static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GF_BGL_INI* p_bgl, u32 fo
 #endif
 
 	p_wk->win = GFL_BMPWIN_Create( 
-			sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], x, y, sizx, sizy, WFLBY_MAIN_PLTT_TALKFONT, GFL_BMP_CHRAREA_GET_B );
+			sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], x, y, sizx, sizy, WFLBY_MAIN_PLTT_TALKFONT, GFL_BMP_CHRAREA_GET_F );
 	GFL_BMPWIN_MakeScreen(p_wk->win);
 }
 

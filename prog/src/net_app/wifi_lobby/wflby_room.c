@@ -1091,8 +1091,8 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_TrView_Init( WFLBY_TR_CARD* p_wk, WFLBY_G
 static void WFLBY_ROOM_UNDERWIN_TrCard_TrView_Exit( WFLBY_TR_CARD* p_wk, WFLBY_GRAPHICCONT* p_sys );
 static void WFLBY_ROOM_UNDERWIN_TrCard_TrView_PallColorChange( NNSG2dPaletteData* p_pltt );
 static void WFLBY_ROOM_UNDERWIN_TrCard_WinClear( WFLBY_TR_CARD* p_wk );
-static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrint( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg, u32 winno, u32 strid, u8 x, u8 y, GF_PRINTCOLOR col );
-static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrintRightSide( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg, u32 winno, u32 strid, u8 x, u8 y, GF_PRINTCOLOR col );
+static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrint( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg, u32 winno, u32 strid, u8 x, u8 y, PRINTSYS_LSB col );
+static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrintRightSide( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg, u32 winno, u32 strid, u8 x, u8 y, PRINTSYS_LSB col );
 static void WFLBY_ROOM_UNDERWIN_TrCard_WinOn( WFLBY_TR_CARD* p_wk, u32 idx );
 static void WFLBY_ROOM_UNDERWIN_TrCard_WinSetName( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg,const MYSTATUS* cp_mystatus );
 static void WFLBY_ROOM_UNDERWIN_TrCard_WinSetCountry( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg,const WFLBY_USER_PROFILE* cp_profile );
@@ -3414,7 +3414,7 @@ static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT
 				sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN],
 				WFLBY_TALKWIN_X, WFLBY_TALKWIN_Y,
 				WFLBY_TALKWIN_SIZX, WFLBY_TALKWIN_SIZY, WFLBY_ROOM_BGPL_TALKFONT_CL,
-				GFL_BMP_CHRAREA_GET_B );
+				GFL_BMP_CHRAREA_GET_F );
 
 	// クリーン
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
@@ -4048,7 +4048,7 @@ static void WFLBY_ROOM_ListWin_Start( WFLBY_ROOM_LISTWIN* p_wk, const BMPLIST_HE
 				sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN],
 				cx, cy,
 				szcx, cp_data->line*2, WFLBY_ROOM_BGPL_SYSFONT_CL,
-				GFL_BMP_CHRAREA_GET_B );
+				GFL_BMP_CHRAREA_GET_F );
 
 	// クリーン
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
@@ -4238,7 +4238,7 @@ static void WFLBY_ROOM_SubWin_Start( WFLBY_ROOM_SUBWIN* p_wk, WFLBY_GRAPHICCONT*
 				sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN],
 				cx, cy,
 				szcx, szcy, WFLBY_ROOM_BGPL_SYSFONT_CL,
-				GFL_BMP_CHRAREA_GET_B );
+				GFL_BMP_CHRAREA_GET_F );
 
     BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, WFLBY_SYSWINGRA_CGX, WFLBY_ROOM_BGPL_SYSWIN );
 
@@ -4382,7 +4382,7 @@ static void WFLBY_ROOM_ErrWin_Init( WFLBY_ROOM_ERRMSG* p_wk, WFLBY_GRAPHICCONT* 
 				sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN],
 				WFLBY_ERRWIN_X, WFLBY_ERRWIN_Y,
 				WFLBY_ERRWIN_SIZX, WFLBY_ERRWIN_SIZY, WFLBY_ROOM_BGPL_SYSFONT_CL,
-				GFL_BMP_CHRAREA_GET_B );
+				GFL_BMP_CHRAREA_GET_F );
 
 	// クリーン
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
@@ -5539,7 +5539,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_Init( WFLBY_TR_CARD* p_wk, WFLBY_GRAPHICC
 			p_wk->win[i] = GFL_BMPWIN_Create( sc_WFLBY_TRCARD_WIN_DATA[i].frm_num,
 				sc_WFLBY_TRCARD_WIN_DATA[i].pos_x, sc_WFLBY_TRCARD_WIN_DATA[i].pos_y,
 				sc_WFLBY_TRCARD_WIN_DATA[i].siz_x, sc_WFLBY_TRCARD_WIN_DATA[i].siz_y,
-				sc_WFLBY_TRCARD_WIN_DATA[i].palnum, GFL_BMP_CHRAREA_GET_B );
+				sc_WFLBY_TRCARD_WIN_DATA[i].palnum, GFL_BMP_CHRAREA_GET_F );
 			GFL_BMPWIN_MakeScreen(p_wk->win[i]);
 		}
 	}
@@ -5604,7 +5604,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_Main( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_TAL
 //-----------------------------------------------------------------------------
 static void WFLBY_ROOM_UNDERWIN_TrCard_Start( WFLBY_UNDER_WIN* p_ugwk, WFLBY_ROOM_TALKMSG* p_boardwin, WFLBY_TR_CARD* p_wk, WFLBY_GRAPHICCONT* p_sys, WFLBY_ROOM_DEFMSG* p_msg, BOOL mydata, ARCHANDLE* p_handle, u32 heapID, const WFLBY_USER_PROFILE* cp_profile, const WFLBY_USER_PROFILE* cp_myprofile, BOOL vip, BOOL aikotoba, const WFLBY_AIKOTOBA_DATA* cp_aikotoba, BOOL item_draw )
 {
-	GF_PRINTCOLOR col;
+	PRINTSYS_LSB col;
 	MYSTATUS* p_mystatus;
 
 	// ワードセットの中身クリア
@@ -6287,7 +6287,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WinClear( WFLBY_TR_CARD* p_wk )
  *	@param	col			カラー
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrint( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg, u32 winno, u32 strid, u8 x, u8 y, GF_PRINTCOLOR col )
+static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrint( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg, u32 winno, u32 strid, u8 x, u8 y, PRINTSYS_LSB col )
 {
 	STRBUF* p_str;
 	
@@ -6297,7 +6297,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrint( WFLBY_TR_CARD* p_wk, WFLBY_ROOM
 			x, y, MSG_NO_PUT, col, NULL );
 }
 // 右端表示バージョン
-static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrintRightSide( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg, u32 winno, u32 strid, u8 x, u8 y, GF_PRINTCOLOR col )
+static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrintRightSide( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg, u32 winno, u32 strid, u8 x, u8 y, PRINTSYS_LSB col )
 {
 	STRBUF* p_str;
 	u32 strsize;
@@ -6644,7 +6644,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_Init( WFLBY_GADGET_BTTN* p_wk, WFLBY_GRAP
 	// ビットマップウィンドウ初期化
 	p_wk->win = GFL_BMPWIN_Create( sc_WFLBY_BTTN_WIN_DATA.frm_num,
 		sc_WFLBY_BTTN_WIN_DATA.pos_x, sc_WFLBY_BTTN_WIN_DATA.pos_y, sc_WFLBY_BTTN_WIN_DATA.palnum,
-		GFL_BMP_CHRAREA_GET_B );
+		GFL_BMP_CHRAREA_GET_F );
 	GFL_BMPWIN_MakeScreen(p_wk->win);
 	
 	// 各スクリーンデータを読み込む

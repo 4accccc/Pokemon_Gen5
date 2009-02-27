@@ -83,7 +83,7 @@ void FootPrintTool_NameDraw(GFL_MSGDATA *msgman, WORDSET *wordset, GFL_BMPWIN *w
 	int expand_len = 64;	//ワードセット展開バッファのサイズ。適当に大きく
 	int sex;
 	u32 user_index, main_idx;
-	GF_PRINTCOLOR print_color;
+	PRINTSYS_LSB print_color;
 	
 	//サブチャンネルのユーザーIDからメインのユーザーIndexを取得する(道のり)
 	user_index = DWC_LOBBY_SUBCHAN_GetUserIDIdx(user_id);
@@ -113,7 +113,7 @@ void FootPrintTool_NameDraw(GFL_MSGDATA *msgman, WORDSET *wordset, GFL_BMPWIN *w
 	sex = MyStatus_GetMySex(my_status);
 	
 	WORDSET_RegisterWord(wordset, 0, name_src, sex, TRUE, PM_LANG);
-	message_src = MSGMAN_AllocString(msgman, msg_footprint_name);
+	message_src = GFL_MSG_CreateString(msgman, msg_footprint_name);
 	expand_src = GFL_STR_CreateBuffer(expand_len, HEAPID_FOOTPRINT);
 	WORDSET_ExpandStr(wordset, expand_src, message_src);
 

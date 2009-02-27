@@ -594,7 +594,7 @@ void BB_disp_Manene_OAM_Del( BB_CLIENT* wk )
 void BB_disp_InfoWinAdd( BB_CLIENT* wk )
 {
 	GF_BGL_BmpWinInit( &wk->win );
-	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_S, 2, 19, 28, 4, 14, GFL_BMP_CHRAREA_GET_B );
+	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_S, 2, 19, 28, 4, 14, GFL_BMP_CHRAREA_GET_F );
 	GFL_BMPWIN_MakeScreen(wk->win);
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win), 0xFF );	
 	{
@@ -602,7 +602,7 @@ void BB_disp_InfoWinAdd( BB_CLIENT* wk )
 		STRBUF* str;
 			
 		man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_minigame_bb_dat, HEAPID_BB );
-		str	= MSGMAN_AllocString( man, 0 );
+		str	= GFL_MSG_CreateString( man, 0 );
 		
 		GF_STR_PrintSimple( &wk->win, FONT_SYSTEM, str, 0, 0, 0, NULL );
 
@@ -752,7 +752,7 @@ void BB_disp_NameWinAdd( BB_WORK* bwk, BB_CLIENT* wk )
 		y = win_dat[ wk->comm_num - 2 ][ no ][ 1 ];
 		w = win_dat[ wk->comm_num - 2 ][ no ][ 2 ];
 		h = win_dat[ wk->comm_num - 2 ][ no ][ 3 ];
-		wk->win_name[ no ] = GFL_BMPWIN_Create( GFL_BG_FRAME3_S, x, y, w, h, 14, GFL_BMP_CHRAREA_GET_B );
+		wk->win_name[ no ] = GFL_BMPWIN_Create( GFL_BG_FRAME3_S, x, y, w, h, 14, GFL_BMP_CHRAREA_GET_F );
 		GFL_BMPWIN_MakeScreen(wk->win_name[no]);
 		ofs += ( w * h );
 

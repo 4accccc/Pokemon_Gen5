@@ -474,7 +474,7 @@ enum{
 #define MNGM_TITLELOGO_BMP_SIZY	(10)
 #define MNGM_TITLELOGO_BMP_PAL	(8)
 #define MNGM_TITLELOGO_BMP_CGX	(MNGM_ENTRY_BMP_CGX)
-static const GF_PRINTCOLOR sc_MNGM_TITLELOGO_BMP_COL[ WFLBY_GAME_P2PGAME_NUM ] = {
+static const PRINTSYS_LSB sc_MNGM_TITLELOGO_BMP_COL[ WFLBY_GAME_P2PGAME_NUM ] = {
 	GF_PRINTCOLOR_MAKE( 7,8,9 ),
 	GF_PRINTCOLOR_MAKE( 4,5,6 ),
 	GF_PRINTCOLOR_MAKE( 1,2,3 ),
@@ -1178,7 +1178,7 @@ static void MNGM_MSG_GetStr( MNGM_MSG* p_wk, STRBUF* p_str, u32 msgidx );
 static void MNGM_MSG_Print( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y );
 static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y );
 static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF* p_str, u32 wait );
-static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y, GF_PRINTCOLOR col );
+static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y, PRINTSYS_LSB col );
 
 // 会話ウィンドウ
 static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVE_CONTROL_WORK* p_save, BOOL vip, u32 heapID );
@@ -2864,7 +2864,7 @@ static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF*
  *	@param	col			色
  */
 //-----------------------------------------------------------------------------
-static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y, GF_PRINTCOLOR col )
+static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y, PRINTSYS_LSB col )
 {
 	MSGMAN_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
@@ -2914,7 +2914,7 @@ static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVE_CONTROL
 		p_wk->win[i] = GFL_BMPWIN_Create( frame,
 				MNGM_TALKWIN_BMP_X, y,
 				MNGM_TALKWIN_BMP_SIZX, MNGM_TALKWIN_BMP_SIZY,
-				MNGM_TALKWIN_BMP_PAL, GFL_BMP_CHRAREA_GET_B);
+				MNGM_TALKWIN_BMP_PAL, GFL_BMP_CHRAREA_GET_F);
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[i]), 0 );
 		GFL_BMPWIN_MakeScreen(p_wk->win[i]);
 
@@ -3632,7 +3632,7 @@ static void MNGM_PLATE_PLAYERTBL_Init( MNGM_PLATE_PLAYER* p_player, u32 player_n
 				MNGM_ENTRY_BMP_X, 
 				MNGM_ENTRY_BMP_Y + sc_MNGM_PLAYER_PLATE_DATA[ player_num-1 ].top[ player_idx ], 
 				MNGM_ENTRY_BMP_SIZX, MNGM_ENTRY_BMP_SIZY, MNGM_ENTRY_BMP_PAL,
-				GFL_BMP_CHRAREA_GET_B);
+				GFL_BMP_CHRAREA_GET_F);
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_player->win), 0 );
 	GFL_BMPWIN_MakeScreen(p_player->win);
 
@@ -4200,7 +4200,7 @@ static void MNGM_TITLELOGO_Init( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk, MNGM_
 	p_wk->bmp = GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
 			MNGM_TITLELOGO_BMP_X, MNGM_TITLELOGO_BMP_Y,
 			MNGM_TITLELOGO_BMP_SIZX, MNGM_TITLELOGO_BMP_SIZY,
-			MNGM_TITLELOGO_BMP_PAL, GFL_BMP_CHRAREA_GET_B);
+			MNGM_TITLELOGO_BMP_PAL, GFL_BMP_CHRAREA_GET_F);
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp), 0 );
 	GFL_BMPWIN_MakeScreen(p_wk->bmp);
 

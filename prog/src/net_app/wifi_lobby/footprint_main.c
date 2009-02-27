@@ -543,7 +543,7 @@ static void Footprint_SelectInkPaletteFade(FOOTPRINT_SYS_PTR fps, int hit_pos);
 static void Footprint_TouchEffUpdate(FOOTPRINT_SYS_PTR fps);
 static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *fps);
 static void Sub_FontOamCreate(FOOTPRINT_SYS_PTR fps, FONT_ACTOR *font_actor, const STRBUF *str, 
-	FONT_TYPE font_type, GF_PRINTCOLOR color, int pal_offset, int pal_id, 
+	FONT_TYPE font_type, PRINTSYS_LSB color, int pal_offset, int pal_id, 
 	int x, int y, int pos_center);
 static void Sub_FontOamDelete(FONT_ACTOR *font_actor);
 static void FontLenGet(const STRBUF *str, 
@@ -1510,7 +1510,7 @@ static void DefaultActorSet_Main(FOOTPRINT_SYS *fps)
 	{
 		STRBUF *str_ptr;
 		
-		str_ptr = MSGMAN_AllocString(fps->msgman, msg_footprint_exit);
+		str_ptr = GFL_MSG_CreateString(fps->msgman, msg_footprint_exit);
 		
 		Sub_FontOamCreate(fps, &fps->fontoam_exit, str_ptr, FONT_BUTTON,
 			GF_PRINTCOLOR_MAKE(1,2,3), 0, 
@@ -1923,7 +1923,7 @@ static void BmpWinInit( FOOTPRINT_SYS *fps )
 	
 	//-- ƒƒCƒ“‰æ–Ê --//
 	fps->talk_win = GFL_BMPWIN_Create(FOOT_FRAME_WIN,
-		2, 1, 27, 4, FOOT_MAINBG_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+		2, 1, 27, 4, FOOT_MAINBG_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_F);
 	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->talk_win), 0xf);
 	GFL_BMPWIN_MakeScreen(fps->talk_win);
 	
@@ -1933,7 +1933,7 @@ static void BmpWinInit( FOOTPRINT_SYS *fps )
 		fps->name_win[i] = GFL_BMPWIN_Create(FOOT_SUBFRAME_WIN,
 			NameBmpwinPos[i][0], NameBmpwinPos[i][1], 
 			WINCGX_SUB_NAME_SIZE_X, WINCGX_SUB_NAME_SIZE_Y,
-			FOOT_SUBBG_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+			FOOT_SUBBG_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_F);
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->name_win[i]), 0x00);
 		GFL_BMPWIN_MakeScreen(fps->name_win[i]);
 	}
@@ -2362,7 +2362,7 @@ static void Footprint_TouchEffUpdate(FOOTPRINT_SYS_PTR fps)
  */
 //--------------------------------------------------------------
 static void Sub_FontOamCreate(FOOTPRINT_SYS_PTR fps, FONT_ACTOR *font_actor, const STRBUF *str, 
-	FONT_TYPE font_type, GF_PRINTCOLOR color, int pal_offset, int pal_id, 
+	FONT_TYPE font_type, PRINTSYS_LSB color, int pal_offset, int pal_id, 
 	int x, int y, int pos_center)
 {
 	FONTOAM_INIT finit;

@@ -2989,7 +2989,7 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
 #if WB_TEMP_FIX
 void BalloonTool_FontOamCreate(CATS_RES_PTR crp, 
 	FONTOAM_SYS_PTR fontoam_sys, BALLOON_FONTACT *fontact, const STRBUF *str, 
-	FONT_TYPE font_type, GF_PRINTCOLOR color, int pal_offset, int pal_id, 
+	FONT_TYPE font_type, PRINTSYS_LSB color, int pal_offset, int pal_id, 
 	int x, int y, int pos_center, int bg_pri, int soft_pri, int y_char_len)
 {
 	FONTOAM_INIT finit;
@@ -3316,7 +3316,7 @@ void CounterDummyNumber_ActorCreate(BALLOON_GAME_PTR game)
 	number = game->my_total_air;
 	for(i = 0; i < BALLOON_COUNTER_KETA_MAX; i++){
 		GF_ASSERT(game->counter.fontact_dummy[i].fontoam == NULL);
-		str0 = MSGMAN_AllocString(game->msgman, msg_balloon_num0 + (number % 10));
+		str0 = GFL_MSG_CreateString(game->msgman, msg_balloon_num0 + (number % 10));
 		number /= 10;
 		BalloonTool_FontOamCreate(game->crp, game->fontoam_sys,
 			&game->counter.fontact_dummy[i], str0, FONT_SYSTEM, 

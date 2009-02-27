@@ -1997,7 +1997,7 @@ void WFLBY_SYSTEM_GetProfileMyStatus( const WFLBY_USER_PROFILE* cp_profile, MYST
 		GFL_MSGDATA*  p_msgman;
 		STRBUF* p_str;
 		p_msgman	= GFL_MSG_Create( MSGMAN_TYPE_DIRECT, ARCID_MESSAGE, NARC_message_wifi_hiroba_dat, heapID );
-		p_str		= MSGMAN_AllocString( p_msgman, msg_hiroba_profile_15 );
+		p_str		= GFL_MSG_CreateString( p_msgman, msg_hiroba_profile_15 );
 		MyStatus_SetMyNameFromString( p_buff, p_str );
 		GFL_STR_DeleteBuffer( p_str );
 		GFL_MSG_Delete( p_msgman );

@@ -589,8 +589,8 @@ static void ANKETO_LOCAL_OUTPUT_Exit( ANKETO_LOCAL_WK* p_wk, ANKETO_MSGMAN* p_ms
 static void ANKETO_OUTPUT_Init( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_DRAWSYS* p_drawsys, ANKETO_PARAM* p_param, u32 heapID );
 static BOOL ANKETO_OUTPUT_Main( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_DRAWSYS* p_drawsys, ANKETO_TALKWIN* p_talkwin, ANKETO_PARAM* p_param, u32 heapID );
 static void ANKETO_OUTPUT_Exit( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_DRAWSYS* p_drawsys );
-static void ANKETO_OUTPUT_DrawTitle( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, u32 msgidx, GF_PRINTCOLOR col );
-static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION_DATA* cp_data, ANKETO_MSGMAN* p_msg, ANKETO_DRAWSYS* p_drawsys, const WFLBY_ANKETO* cp_answer, u32 heapID, GF_PRINTCOLOR col, GF_PRINTCOLOR vipcol, BOOL vip );
+static void ANKETO_OUTPUT_DrawTitle( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, u32 msgidx, PRINTSYS_LSB col );
+static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION_DATA* cp_data, ANKETO_MSGMAN* p_msg, ANKETO_DRAWSYS* p_drawsys, const WFLBY_ANKETO* cp_answer, u32 heapID, PRINTSYS_LSB col, PRINTSYS_LSB vipcol, BOOL vip );
 static void ANKETO_OUTPUT_DrawBarStart( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION_RESULT* cp_data, ANKETO_DRAWSYS* p_drawsys, u32 palno );
 static BOOL ANKETO_OUTPUT_DrawBarMain( ANKETO_OUTPUT* p_wk, ANKETO_DRAWSYS* p_drawsys );
 static void ANKETO_OUTPUT_SetLastWeekGraphic( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_DRAWSYS* p_drawsys, u32 heapID );
@@ -1425,7 +1425,7 @@ static void ANKETO_INPUT_Init( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 			p_wk->win[i] = GFL_BMPWIN_Create( sc_ANKETO_INPUT_BMPDAT[i].frm_num,
 				sc_ANKETO_INPUT_BMPDAT[i].pos_x, sc_ANKETO_INPUT_BMPDAT[i].pos_y,
 				sc_ANKETO_INPUT_BMPDAT[i].siz_x, sc_ANKETO_INPUT_BMPDAT[i].siz_y,
-				sc_ANKETO_INPUT_BMPDAT[i].palnum, GFL_BMP_CHRAREA_GET_B);
+				sc_ANKETO_INPUT_BMPDAT[i].palnum, GFL_BMP_CHRAREA_GET_F);
 			GFL_BMPWIN_MakeScreen(p_wk->win[i]);
 		}
 	}
@@ -1763,7 +1763,7 @@ static void ANKETO_TalkWin_Init( ANKETO_TALKWIN* p_wk, ANKETO_DRAWSYS* p_sys, SA
 				ANKETO_TALK_TALKWIN_X, ANKETO_TALK_TALKWIN_Y,
 				ANKETO_TALK_TALKWIN_SIZX, ANKETO_TALK_TALKWIN_SIZY,
 				ANKETO_PLTT_MAIN_TALKFONT,
-				GFL_BMP_CHRAREA_GET_B );
+				GFL_BMP_CHRAREA_GET_F );
 	GFL_BMPWIN_MakeScreen(p_wk->win);
 
 	// クリーン
@@ -2052,7 +2052,7 @@ static void ANKETO_OUTPUT_Init( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 			p_wk->win[i] = GFL_BMPWIN_Create( sc_ANKETO_OUTPUT_BMPDAT[i].frm_num,
 				sc_ANKETO_OUTPUT_BMPDAT[i].pos_x, sc_ANKETO_OUTPUT_BMPDAT[i].pos_y, 
 				sc_ANKETO_OUTPUT_BMPDAT[i].siz_x, sc_ANKETO_OUTPUT_BMPDAT[i].siz_y,
-				sc_ANKETO_OUTPUT_BMPDAT[i].palnum, GFL_BMP_CHRAREA_GET_B);
+				sc_ANKETO_OUTPUT_BMPDAT[i].palnum, GFL_BMP_CHRAREA_GET_F);
 			GFL_BMPWIN_MakeScreen(p_wk->win[i]);
 		}
 	}
@@ -2468,7 +2468,7 @@ static void ANKETO_OUTPUT_Exit( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
  *	@param	msgidx		メッセージIDX
  */
 //-----------------------------------------------------------------------------
-static void ANKETO_OUTPUT_DrawTitle( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, u32 msgidx, GF_PRINTCOLOR col )
+static void ANKETO_OUTPUT_DrawTitle( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, u32 msgidx, PRINTSYS_LSB col )
 {
 	STRBUF* p_str;
 	u32 width;
@@ -2503,7 +2503,7 @@ static void ANKETO_OUTPUT_DrawTitle( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, 
  *	@param	vip			VIP
  */
 //-----------------------------------------------------------------------------
-static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION_DATA* cp_data, ANKETO_MSGMAN* p_msg, ANKETO_DRAWSYS* p_drawsys, const WFLBY_ANKETO* cp_answer, u32 heapID, GF_PRINTCOLOR col, GF_PRINTCOLOR vipcol, BOOL vip )
+static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION_DATA* cp_data, ANKETO_MSGMAN* p_msg, ANKETO_DRAWSYS* p_drawsys, const WFLBY_ANKETO* cp_answer, u32 heapID, PRINTSYS_LSB col, PRINTSYS_LSB vipcol, BOOL vip )
 {
 	STRBUF* p_str;
 
@@ -2530,7 +2530,7 @@ static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION
 	if( (cp_answer->anketo_no == cp_data->anketo_no) && (cp_answer->select < ANKETO_ANSWER_NUM) ){	// 通し番号が一致するかチェック
 		s32 str_width;
 		s32 write_x;
-		GF_PRINTCOLOR mycol;
+		PRINTSYS_LSB mycol;
 
 		if( vip == TRUE ){
 			mycol = vipcol;	

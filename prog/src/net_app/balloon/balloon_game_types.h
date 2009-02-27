@@ -15,6 +15,7 @@
 #include <g3d_camera.h>
 #include "balloon_id.h"
 #include "system/actor_tool.h"
+#include "system/bmp_oam.h"
 
 
 //==============================================================================
@@ -509,7 +510,8 @@ typedef struct _BALLOON_GAME_WORK{
 	CATS_SYS_PTR		csp;
 	CATS_RES_PTR		crp;
 #endif
-	GFL_BMPWIN* win[BALLOON_BMPWIN_MAX];
+	GFL_BMPWIN *win[BALLOON_BMPWIN_MAX];
+	PRINT_UTIL printUtil[BALLOON_BMPWIN_MAX];
 	GFL_MSGDATA *msgman;		///<メッセージデータマネージャのポインタ
 	WORDSET *wordset;				///<Allocしたメッセージ用単語バッファへのポインタ
 	STRBUF *msg_buf;				///<Allocした文字列バッファへのポインタ
@@ -518,6 +520,10 @@ typedef struct _BALLOON_GAME_WORK{
 	FONTOAM_SYS_PTR fontoam_sys;	///<FONTOAMシステム
 #endif
 
+	PRINT_QUE		*printQue;
+	GFL_FONT		*fontHandle;
+	BMPOAM_SYS_PTR bsp;
+	
 	GFL_TCB* update_tcb;
 
 	GFL_G3D_CAMERA * camera;			///<カメラへのポインタ
@@ -590,6 +596,7 @@ typedef struct _BALLOON_GAME_WORK{
 	u16 g3DutilUnitIdx_Pipe;
 	
 	PLTTSLOT_SYS_PTR plttslot;
+	GFL_ARCUTIL_TRANSINFO sysmenu_charno;	///<システムメニューのキャラクタ転送位置
 }BALLOON_GAME_WORK;
 
 

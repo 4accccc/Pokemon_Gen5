@@ -42,7 +42,7 @@ BOOL Debug_GameSetup( BB_WORK* work )
 	if ( wk->seq == 0 ) {
 		
 		GF_BGL_BmpWinInit( wk->win );
-		wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, 1, 1, 30, 22, 14, GFL_BMP_CHRAREA_GET_B );
+		wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, 1, 1, 30, 22, 14, GFL_BMP_CHRAREA_GET_F );
 		GFL_BMPWIN_MakeScreen(wk->win);
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win), 0xFF );
 		GF_BGL_BmpWinOn( wk->win );

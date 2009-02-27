@@ -1449,7 +1449,7 @@ static BOOL NEWS_TOPIC_GetSTRConnect( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp
 	WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[1], 0, TRUE, CasetteLanguage );	// –¼‘O
 
 	// “WŠJ‚·‚é•¶Žš—ñì¬
-	p_tmpstr = MSGMAN_AllocString( p_msgman, wflby_topic_03 );
+	p_tmpstr = GFL_MSG_CreateString( p_msgman, wflby_topic_03 );
 
 	// “WŠJ
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
@@ -1474,7 +1474,7 @@ static BOOL NEWS_TOPIC_GetSTRItem( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vi
 	WORDSET_RegisterWiFiLobbyItemName( p_wordset, 2, p_obj->work[ NEWS_TOPIC_WK_ITEMNO ] );
 
 	// “WŠJ‚·‚é•¶Žš—ñì¬
-	p_tmpstr = MSGMAN_AllocString( p_msgman, wflby_topic_04 );
+	p_tmpstr = GFL_MSG_CreateString( p_msgman, wflby_topic_04 );
 
 	// “WŠJ
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
@@ -1529,7 +1529,7 @@ static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
 		default:
 			return FALSE;	// •¶Žš—ñì¬•s‰Â”\
 		}
-		p_tmpstr = MSGMAN_AllocString( p_msgman, msgidx );
+		p_tmpstr = GFL_MSG_CreateString( p_msgman, msgidx );
 	}else{
 
 		WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, CasetteLanguage );	// –¼‘O
@@ -1537,7 +1537,7 @@ static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
 				1, NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
 
 		// “WŠJ‚·‚é•¶Žš—ñì¬
-		p_tmpstr = MSGMAN_AllocString( p_msgman, wflby_topic_01 );
+		p_tmpstr = GFL_MSG_CreateString( p_msgman, wflby_topic_01 );
 	}
 
 	// “WŠJ
@@ -1565,7 +1565,7 @@ static BOOL NEWS_TOPIC_GetSTRFoot( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vi
 			1, NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
 
 	// “WŠJ‚·‚é•¶Žš—ñì¬
-	p_tmpstr = MSGMAN_AllocString( p_msgman, wflby_topic_05 );
+	p_tmpstr = GFL_MSG_CreateString( p_msgman, wflby_topic_05 );
 
 	// “WŠJ
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
@@ -1601,7 +1601,7 @@ static BOOL NEWS_TOPIC_GetSTRWldTimer( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
 	}
 
 	// “WŠJ‚·‚é•¶Žš—ñì¬
-	p_tmpstr = MSGMAN_AllocString( p_msgman, wflby_topic_06+(WFLBY_MINIGAME_MAX - p_obj->work[NEWS_TOPIC_WK_WLDT_PLAYNUM]) );
+	p_tmpstr = GFL_MSG_CreateString( p_msgman, wflby_topic_06+(WFLBY_MINIGAME_MAX - p_obj->work[NEWS_TOPIC_WK_WLDT_PLAYNUM]) );
 
 	// “WŠJ
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
@@ -1646,7 +1646,7 @@ static BOOL NEWS_TOPIC_GetSTREvent( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_v
 	}
 
 	// “WŠJ‚·‚é•¶Žš—ñì¬
-	p_tmpstr = MSGMAN_AllocString( p_msgman, stridx );
+	p_tmpstr = GFL_MSG_CreateString( p_msgman, stridx );
 
 	// “WŠJ
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
@@ -1719,10 +1719,10 @@ static BOOL NEWS_TOPIC_GetSTRMgResultIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG*
 	}
 	if( (p_obj->work[NEWS_TOPIC_WK_MGRESULT_NO] == WFLBY_GAME_BALLSLOW) ||
 		(p_obj->work[NEWS_TOPIC_WK_MGRESULT_NO] == WFLBY_GAME_BALANCEBALL) ){
-		p_tmpstr = MSGMAN_AllocString( p_msgman, 
+		p_tmpstr = GFL_MSG_CreateString( p_msgman, 
 				sc_NEWS_TOPIC_BALLSLOWBALANCE_MSG[ p_obj->work[NEWS_TOPIC_WK_MGRESULT_PLAYNUM]-1] );
 	}else{
-		p_tmpstr = MSGMAN_AllocString( p_msgman, 
+		p_tmpstr = GFL_MSG_CreateString( p_msgman, 
 				sc_NEWS_TOPIC_BALLOON_MSG[ p_obj->work[NEWS_TOPIC_WK_MGRESULT_PLAYNUM]-1 ] );
 	}
 

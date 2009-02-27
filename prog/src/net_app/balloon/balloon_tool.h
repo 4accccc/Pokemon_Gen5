@@ -48,7 +48,7 @@ extern void SioBooster_Update(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_boost
 #if WB_TEMP_FIX
 extern void BalloonTool_FontOamCreate(CATS_RES_PTR crp, 
 	FONTOAM_SYS_PTR fontoam_sys, BALLOON_FONTACT *fontact, const STRBUF *str, 
-	FONT_TYPE font_type, GF_PRINTCOLOR color, int pal_offset, int pal_id, 
+	FONT_TYPE font_type, PRINTSYS_LSB color, int pal_offset, int pal_id, 
 	int x, int y, int pos_center, int bg_pri, int soft_pri, int y_char_len);
 #endif
 extern void Balloon_FontOamDelete(BALLOON_FONTACT *fontact);

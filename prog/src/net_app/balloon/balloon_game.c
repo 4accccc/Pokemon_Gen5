@@ -239,6 +239,7 @@ static const CAMERA_ANGLE BalloonCameraAngle = {
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
+static void _BalloonLocal_SystemUpdate(BALLOON_GAME_WORK *game);
 static void BalloonVBlank(GFL_TCB *tcb, void *work);
 static void Balloon_3D_Init(int heap_id);
 static void BalloonSimpleSetUp(void);
@@ -887,9 +888,13 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 
 	BalloonParticleInit(game);	//パーティクル初期化
 
+
 	//メッセージマネージャ作成
 	game->msgman = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_balloon_dat, 
 		HEAPID_BALLOON);
+	game->fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BALLOON);
+	game->printQue = PRINTSYS_QUE_Create(HEAPID_BALLOON);
 
 	game->wordset = WORDSET_Create(HEAPID_BALLOON);	//単語バッファ作成
 	game->msg_buf = GFL_STR_CreateBuffer(BALLOON_MESSAGE_BUF_SIZE, HEAPID_BALLOON);//文字列バッファ作成
@@ -1049,7 +1054,7 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 			break;
 		}
 
-		GFL_TCB_Main(game->tcbsys);
+		_BalloonLocal_SystemUpdate(game);
 		return GFL_PROC_RES_CONTINUE;
 	}
 	
@@ -1207,7 +1212,7 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 #endif
 	game->main_frame++;
 	
-	GFL_TCB_Main(game->tcbsys);
+	_BalloonLocal_SystemUpdate(game);
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -1256,7 +1261,7 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	
 	//BMP開放
 	for(i = 0; i < BALLOON_BMPWIN_MAX; i++){
-		GFL_BMPWIN_Delete(game->win[i]);
+		GFL_BMPWIN_Delete(game->printUtil[i].win);
 	}
 	
 	//メイン画面BG削除
@@ -1297,6 +1302,8 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	GFL_STR_DeleteBuffer(game->msg_buf);
 	WORDSET_Delete(game->wordset);
 	GFL_MSG_Delete(game->msgman);
+	GFL_FONT_Delete(game->fontHandle);
+	PRINTSYS_QUE_Delete(game->printQue);
 
 	//BGL開放
 	GFL_BG_Exit();
@@ -1334,6 +1341,25 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 #endif
 	
 	return GFL_PROC_RES_FINISH;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   メインループで回すシステム系の更新処理
+ *
+ * @param   game		
+ */
+//--------------------------------------------------------------
+static void _BalloonLocal_SystemUpdate(BALLOON_GAME_WORK *game)
+{
+	BOOL que_ret;
+	int i;
+	
+	GFL_TCB_Main(game->tcbsys);
+	que_ret = PRINTSYS_QUE_Main(game->printQue );
+	for(i = 0; i < BALLOON_BMPWIN_MAX; i++){
+		PRINT_UTIL_Trans(&game->printUtil[i], game->printQue);
+	}
 }
 
 //--------------------------------------------------------------
@@ -1758,32 +1784,40 @@ static void BalloonSys_VramBankSet(void)
 static void BalloonSys_DefaultBmpWinAdd(BALLOON_GAME_WORK *game)
 {
 	int i;
+	GFL_BMPWIN *win;
 	
-	game->win[BALLOON_BMPWIN_TALK] = GFL_BMPWIN_Create( BALLOON_FRAME_WIN, 11, 0x13, 20, 4, 
-		BMPWIN_TALK_COLOR, GFL_BMP_CHRAREA_GET_B);
-	GFL_BMPWIN_MakeScreen(game->win[BALLOON_BMPWIN_TALK]);
+	win = GFL_BMPWIN_Create(BALLOON_FRAME_WIN, 11, 0x13, 20, 4, 
+		BMPWIN_TALK_COLOR, GFL_BMP_CHRAREA_GET_F);
+	PRINT_UTIL_Setup(&game->printUtil[BALLOON_BMPWIN_TALK], win);
+	GFL_BMPWIN_MakeScreen(game->printUtil[BALLOON_BMPWIN_TALK].win);
 	
 	
 	//-- サブ画面用 --//
-	game->win[BALLOON_BMPWIN_NAME_1] = GFL_BMPWIN_Create(BALLOON_SUBFRAME_WIN, 
-		0x12, 1, 10, 2, BMPWIN_SUB_TALK_COLOR, GFL_BMP_CHRAREA_GET_B);
-	game->win[BALLOON_BMPWIN_NAME_2] = GFL_BMPWIN_Create(BALLOON_SUBFRAME_WIN, 
-		0x15, 0xe, 10, 2, BMPWIN_SUB_TALK_COLOR, GFL_BMP_CHRAREA_GET_B);
-	game->win[BALLOON_BMPWIN_NAME_3] = GFL_BMPWIN_Create(BALLOON_SUBFRAME_WIN, 
-		1, 14, 10, 2, BMPWIN_SUB_TALK_COLOR, GFL_BMP_CHRAREA_GET_B);
+	win = GFL_BMPWIN_Create(BALLOON_SUBFRAME_WIN, 
+		0x12, 1, 10, 2, BMPWIN_SUB_TALK_COLOR, GFL_BMP_CHRAREA_GET_F);
+	PRINT_UTIL_Setup(&game->printUtil[BALLOON_BMPWIN_NAME_1], win);
+	
+	win = GFL_BMPWIN_Create(BALLOON_SUBFRAME_WIN, 
+		0x15, 0xe, 10, 2, BMPWIN_SUB_TALK_COLOR, GFL_BMP_CHRAREA_GET_F);
+	PRINT_UTIL_Setup(&game->printUtil[BALLOON_BMPWIN_NAME_2], win);
+	
+	win = GFL_BMPWIN_Create(BALLOON_SUBFRAME_WIN, 
+		1, 14, 10, 2, BMPWIN_SUB_TALK_COLOR, GFL_BMP_CHRAREA_GET_F);
+	PRINT_UTIL_Setup(&game->printUtil[BALLOON_BMPWIN_NAME_3], win);
 
-	GFL_BMPWIN_MakeScreen(game->win[BALLOON_BMPWIN_NAME_1]);
-	GFL_BMPWIN_MakeScreen(game->win[BALLOON_BMPWIN_NAME_2]);
-	GFL_BMPWIN_MakeScreen(game->win[BALLOON_BMPWIN_NAME_3]);
-	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->win[BALLOON_BMPWIN_NAME_1]), 0xf);
-	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->win[BALLOON_BMPWIN_NAME_2]), 0xf);
-	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->win[BALLOON_BMPWIN_NAME_3]), 0xf);
+	GFL_BMPWIN_MakeScreen(game->printUtil[BALLOON_BMPWIN_NAME_1].win);
+	GFL_BMPWIN_MakeScreen(game->printUtil[BALLOON_BMPWIN_NAME_2].win);
+	GFL_BMPWIN_MakeScreen(game->printUtil[BALLOON_BMPWIN_NAME_3].win);
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->printUtil[BALLOON_BMPWIN_NAME_1].win), 0xf);
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->printUtil[BALLOON_BMPWIN_NAME_2].win), 0xf);
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->printUtil[BALLOON_BMPWIN_NAME_3].win), 0xf);
 
 	//システムウィンドウ
-	game->win[BALLOON_BMPWIN_SUB_TALK] = GFL_BMPWIN_Create(BALLOON_SUBFRAME_WIN, 
-		2, 0x13, 0x1c, 4, BMPWIN_SUB_TALK_COLOR, GFL_BMP_CHRAREA_GET_B);
-	GFL_BMPWIN_MakeScreen(game->win[BALLOON_BMPWIN_SUB_TALK]);
-	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->win[BALLOON_BMPWIN_SUB_TALK]), 0xf);
+	win = GFL_BMPWIN_Create(BALLOON_SUBFRAME_WIN, 
+		2, 0x13, 0x1c, 4, BMPWIN_SUB_TALK_COLOR, GFL_BMP_CHRAREA_GET_F);
+	PRINT_UTIL_Setup(&game->printUtil[BALLOON_BMPWIN_SUB_TALK], win);
+	GFL_BMPWIN_MakeScreen(game->printUtil[BALLOON_BMPWIN_SUB_TALK].win);
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(game->printUtil[BALLOON_BMPWIN_SUB_TALK].win), 0xf);
 }
 
 //--------------------------------------------------------------
@@ -1797,17 +1831,15 @@ static void GameStartMessageDraw(BALLOON_GAME_WORK *game)
 {
 	STRBUF *message;
 	
-	BmpWinFrame_Write(game->win[BALLOON_BMPWIN_SUB_TALK], WINDOW_TRANS_OFF, 
-		BMPWIN_SUB_CGX_OFFSET_SYSTEM, BMPWIN_SUB_SYSTEM_WIN_COLOR);
-
-#if WB_TEMP_FIX
-	message = MSGMAN_AllocString(game->msgman, msg_balloon_start);
-	GF_STR_PrintColor(&game->win[BALLOON_BMPWIN_SUB_TALK], 
-		FONT_SYSTEM, message, 0, 0, MSG_ALLPUT, BMPWIN_SUB_STR_PRINTCOLOR, NULL);
-	GFL_STR_DeleteBuffer(message);
+	GFL_BMPWIN_MakeFrameScreen(game->printUtil[BALLOON_BMPWIN_SUB_TALK].win, 
+		game->sysmenu_charno, BMPWIN_SUB_SYSTEM_WIN_COLOR);
+	BmpWinFrame_Write(game->printUtil[BALLOON_BMPWIN_SUB_TALK].win, WINDOW_TRANS_OFF, 
+		game->sysmenu_charno, BMPWIN_SUB_SYSTEM_WIN_COLOR);
 	
-	GF_BGL_BmpWinOnVReq(&game->win[BALLOON_BMPWIN_SUB_TALK]);
-#endif
+	message = GFL_MSG_CreateString(game->msgman, msg_balloon_start);
+	PRINT_UTIL_Print(&game->printUtil[BALLOON_BMPWIN_SUB_TALK], game->printQue, 
+		0, 0, message, game->fontHandle);
+	GFL_STR_DeleteBuffer(message);
 }
 
 //--------------------------------------------------------------
@@ -1819,8 +1851,6 @@ static void GameStartMessageDraw(BALLOON_GAME_WORK *game)
 //--------------------------------------------------------------
 static void GameStartMessageErase(BALLOON_GAME_WORK *game)
 {
-//	GF_BGL_BmpWinOffVReq(&game->win[BALLOON_BMPWIN_SUB_TALK]);
-
 	GFL_BG_FillScreen(BALLOON_SUBFRAME_WIN, 
 		1023, 2-1, 0x13-1, 0x1c+2, 4+2, GFL_BG_SCRWRT_PALIN);
 	GFL_BG_LoadScreenV_Req(BALLOON_SUBFRAME_WIN);
@@ -1840,7 +1870,7 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 	MYSTATUS *mystatus;
 	STRBUF *name;
 	int current_id;
-	GF_PRINTCOLOR print_color;
+	PRINTSYS_LSB print_color;
 	int dot_len, draw_x_offset;
 	
 #ifdef PM_DEBUG
@@ -1868,12 +1898,12 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 				draw_x_offset--;
 			}
 			OS_TPrintf("name dot_len (bmp_pos=%d) = %d, x_offset = %d\n", bmp_pos, dot_len, draw_x_offset);
-		#if WB_TEMP_FIX
+			PRINT_UTIL_PrintColor(&game->printUtil[BalloonPlayerSortBmpNamePosTbl[game->bsw->player_max][bmp_pos]], game->printQue, 
+				draw_x_offset, 0, name, game->fontHandle);
 			GF_STR_PrintColor(
-				&game->win[BalloonPlayerSortBmpNamePosTbl[game->bsw->player_max][bmp_pos]], 
+				&game->printUtil[BalloonPlayerSortBmpNamePosTbl[game->bsw->player_max][bmp_pos]].win, 
 				FONT_SYSTEM, name, draw_x_offset, 0, MSG_ALLPUT, print_color, NULL);
 			GFL_HEAP_FreeMemory(name);
-		#endif
 		}
 	}
 #endif
@@ -2012,8 +2042,8 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, palno*16, 1*0x20);
 
 	#if WB_TEMP_FIX
-		str0 = MSGMAN_AllocString(game->msgman, msg_balloon_counter001);
-		str1 = MSGMAN_AllocString(game->msgman, msg_balloon_counter002);
+		str0 = GFL_MSG_CreateString(game->msgman, msg_balloon_counter001);
+		str1 = GFL_MSG_CreateString(game->msgman, msg_balloon_counter002);
 		for(i = 0; i < BALLOON_COUNTER_KETA_MAX; i++){
 			BalloonTool_FontOamCreate(game->crp, game->fontoam_sys,
 				&game->counter.fontact[i][BALLOON_COUNTER_0], str0, FONT_SYSTEM, 
@@ -2030,7 +2060,7 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 		GFL_STR_DeleteBuffer(str1);
 		
 		//CC
-		str0 = MSGMAN_AllocString(game->msgman, msg_balloon_cc);
+		str0 = GFL_MSG_CreateString(game->msgman, msg_balloon_cc);
 		BalloonTool_FontOamCreate(game->crp, game->fontoam_sys,
 			&game->counter.fontact_cc, str0, FONT_SYSTEM, 
 			COUNTER_FONT_COLOR, 0, PLTTID_COUNTER, 
@@ -2210,6 +2240,7 @@ static void BalloonDefaultBGSet_Sub(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 	GFL_ARCHDL_UTIL_TransVramScreen(hdl, MINI_FUSEN_BG_NSCR, 
 		BALLOON_SUBFRAME_BACK, 0, 0, 0, HEAPID_BALLOON);
 
+
 	//パイプ
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, MINI_FUSEN_WINDOW_NCGR, 
 		BALLOON_SUBFRAME_PIPE, 0, 0, 0, HEAPID_BALLOON);
@@ -2229,8 +2260,11 @@ static void BalloonDefaultBGSet_Sub(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 	}
 
 	//ウィンドウ面
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, MINI_FUSEN_WINDOW_NCGR, 
-		BALLOON_SUBFRAME_WIN, 0, 0, 0, HEAPID_BALLOON);
+//	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, MINI_FUSEN_WINDOW_NCGR, 
+//		BALLOON_SUBFRAME_WIN, 0, 0, 0, HEAPID_BALLOON);
+	//BMPウィンドウがCGXの確保をしてくるのでBGキャラも領域確保にする
+	GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(hdl, MINI_FUSEN_WINDOW_NCGR, 
+		BALLOON_SUBFRAME_WIN, 0, 0, HEAPID_BALLOON);
 	GFL_ARCHDL_UTIL_TransVramScreen(hdl, MINI_FUSEN_WINDOW_NSCR, 
 		BALLOON_SUBFRAME_WIN, 0, 0, 0, HEAPID_BALLOON);
 
@@ -2240,8 +2274,10 @@ static void BalloonDefaultBGSet_Sub(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 	BalloonTool_NameWindowPalNoSwap(game);
 
 	//システムウィンドウを登録
-	BmpWinFrame_GraphicSet(BALLOON_SUBFRAME_WIN, BMPWIN_SUB_CGX_OFFSET_SYSTEM, 
+	game->sysmenu_charno = BmpWinFrame_GraphicSetAreaMan(
+		BALLOON_SUBFRAME_WIN, //BMPWIN_SUB_CGX_OFFSET_SYSTEM, 
 		BMPWIN_SUB_SYSTEM_WIN_COLOR, MENU_TYPE_SYSTEM, HEAPID_BALLOON);
+	PaletteWorkSet_VramCopy(game->pfd, FADE_SUB_BG, BMPWIN_SUB_SYSTEM_WIN_COLOR * 16, 0x20);
 	
 	//バックグラウンドに黒のカラーを入れる
 	PaletteWork_Clear(game->pfd, FADE_SUB_BG, FADEBUF_ALL, 0x0000, 0, 1);
