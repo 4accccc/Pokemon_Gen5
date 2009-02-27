@@ -1,1 +1,0 @@
-MAP_3DPPACKLIST = test_t02.3dppack
