@@ -66,7 +66,6 @@ SRCS	+=		$(SOUNDSRC) \
 				field/field_comm/field_comm_event.c \
 				system/mcss.c \
 				system/mcss_tool.c \
-				battle/poke_mcss.c \
 				poke_tool/poke_tool.c \
 				poke_tool/pokeparty.c \
 				poke_tool/poke_personal.c \
@@ -356,19 +355,20 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_net.c \
 			battle/btl_string.c \
 			battle/btl_util.c \
-			battle/btlv_core.c \
-			battle/btlv_scu.c \
-			battle/btlv_scd.c \
-			battle/btl_stage.c \
-			battle/btl_field.c \
-			battle/btl_camera.c \
-			battle/btl_effect.c \
-			battle/btl_efftool.c \
-			battle/btl_effvm.c \
 			battle/btl_pokeselect.c \
 			battle/handler/hand_tokusei.c \
 			battle/handler/tokusei/hand_tok_ikaku.c \
-			battle/handler/tokusei/hand_tok_clearbody.c
+			battle/handler/tokusei/hand_tok_clearbody.c \
+			battle/btlv/btlv_core.c \
+			battle/btlv/btlv_scu.c \
+			battle/btlv/btlv_scd.c \
+			battle/btlv/btlv_stage.c \
+			battle/btlv/btlv_field.c \
+			battle/btlv/btlv_camera.c \
+			battle/btlv/btlv_effect.c \
+			battle/btlv/btlv_efftool.c \
+			battle/btlv/btlv_effvm.c \
+			battle/btlv/btlv_mcss.c
 
 # WIFICLUB
 #===> SRCS_OVERLAY_DEV_WIFI
