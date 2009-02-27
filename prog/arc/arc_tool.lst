@@ -51,9 +51,6 @@
 	ARCID_GSMAP			"test_graphic/land_data.narc"	#
 	ARCID_GSTEX			"test_graphic/map_tex_set.narc"	#
 	ARCID_TEST3DP		"test_graphic/test3dp.narc"	#
-	ARCID_TEST3DP2		"test_graphic/test3dp2.narc"	#
-	ARCID_LOOPBRIDGE	"test_graphic/loopbridge.narc"
-	ARCID_TEST_C3		"test_graphic/test_c3.narc"		#
 	ARCID_SNDSTRM			"snd_strm.narc"	# サウンドストリーミング
 	ARCID_WMI			"wmi.narc"	# 通信アイコン
 	ARCID_LAYOUT		"layout.narc"	# レイアウトエディタから吐き出したもの
