@@ -18,11 +18,7 @@
 #include "fldmmdl_header.h"
 #include "fldmmdl_code.h"
 
-#include "fldmmdl_buff.h"
-
 #include "field_g3d_mapper.h"
-
-//#include "arc/fieldmap/fldmmdl_mdlres.naix"		//ARCID_FLDMMDL
 
 //======================================================================
 //	define
@@ -144,6 +140,7 @@ typedef enum
 	FLDMMDLSYS_STABIT_MOVE_PROC_STOP = (1<<1),///<動作処理停止
 	FLDMMDLSYS_STABIT_DRAW_PROC_STOP = (1<<2),///<描画処理停止
 	FLDMMDLSYS_STABIT_SHADOW_JOIN_NOT = (1<<3),///<影を付けない
+	FLDMMDLSYS_STABIT_MOVE_INIT_COMP = (1<<4),///<動作処理初期化完了
 }FLDMMDLSYS_STABIT;
 
 //--------------------------------------------------------------
@@ -289,6 +286,17 @@ enum
 	FLDMMDL_TCBPRI_OFFS_AFTER,			///<フィールド動作モデルよりも後
 };
 
+//--------------------------------------------------------------
+///	バッファ要素数
+//--------------------------------------------------------------
+#define FLDMMDL_BUFFER_MAX (20)
+#define FLDMMDL_SAVEDATA_MAX (20)
+
+//--------------------------------------------------------------
+//	モデル最大数
+//--------------------------------------------------------------
+#define FLDMMDL_MDL_MAX (20)
+
 //======================================================================
 //	struct
 //======================================================================
@@ -301,6 +309,10 @@ typedef struct _TAG_FLDMMDLSYS FLDMMDLSYS;
 typedef struct _TAG_FLDMMDL FLDMMDL;
 ///FLDMMDL_BLACTCONT
 typedef struct _TAG_FLDMMDL_BLACTCONT FLDMMDL_BLACTCONT;
+///FLDMMDL_BUFFER
+typedef struct _TAG_FLDMMDL_BUFFER FLDMMDL_BUFFER;
+///FLDMMDL_SAVEDATA
+typedef struct _TAG_FLDMMDL_SAVEDATA FLDMMDL_SAVEDATA;
 
 //--------------------------------------------------------------
 ///	アトリビュート型 元:map_attr.h
@@ -433,16 +445,30 @@ typedef struct
 //--------------------------------------------------------------
 ///	fldmmdl.h
 //--------------------------------------------------------------
-extern FLDMMDLSYS * FLDMMDLSYS_Create(
-	int max, HEAPID heapID, const FLDMAPPER *pG3DMapper );
-extern void FLDMMDLSYS_Delete( FLDMMDLSYS *fos );
-extern void FLDMMDLSYS_DeleteAll( FLDMMDLSYS *fos );
-extern void FLDMMDLSYS_UpdateMove( FLDMMDLSYS *fos );
+extern u32 FLDMMDL_BUFFER_GetWorkSize( void );
+extern void FLDMMDL_BUFFER_InitBuffer( void *p );
+
+extern FLDMMDLSYS * FLDMMDLSYS_CreateSystem( HEAPID heapID, u32 max );
+extern void FLDMMDLSYS_FreeSystem( FLDMMDLSYS *fos );
+
+extern void FLDMMDLSYS_SetupProc(
+	FLDMMDLSYS *fos, HEAPID heapID, const FLDMAPPER *pG3DMapper );
+extern void FLDMMDLSYS_DeleteProc( FLDMMDLSYS *fos );
+extern void FLDMMDLSYS_UpdateProc( FLDMMDLSYS *fos );
+
+extern void FLDMMDLSYS_SetupDrawProc( FLDMMDLSYS *fos );
 
 extern FLDMMDL * FLDMMDLSYS_AddFldMMdl(
 	const FLDMMDLSYS *fos, const FLDMMDL_HEADER *header, int zone_id );
 extern void FLDMMDL_Delete( FLDMMDL * fmmdl );
 extern void FLDMMDLSYS_DeleteMMdl( const FLDMMDLSYS *fos );
+
+extern BOOL FLDMMDL_CheckPossibleAcmd( const FLDMMDL * fmmdl );
+extern void FLDMMDL_SetAcmd( FLDMMDL * fmmdl, u16 code );
+extern void FLDMMDL_SetLocalAcmd( FLDMMDL * fmmdl, u16 code );
+extern BOOL FLDMMDL_CheckEndAcmd( const FLDMMDL * fmmdl );
+extern BOOL FLDMMDL_EndAcmd( FLDMMDL * fmmdl );
+extern void FLDMMDL_FreeAcmd( FLDMMDL * fmmdl );
 
 extern u32 FLDMMDLSYS_CheckStatusBit(
 	const FLDMMDLSYS *fmmdlsys, FLDMMDLSYS_STABIT bit );
@@ -463,12 +489,12 @@ extern const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos );
 
 extern void FLDMMDL_OnStatusBit( FLDMMDL *fmmdl, FLDMMDL_STABIT bit );
 extern void FLDMMDL_OffStatusBit( FLDMMDL *fmmdl, FLDMMDL_STABIT bit );
-extern u32 FLDMMDL_GetStatusBit( const FLDMMDL * fmmdl );
+extern FLDMMDL_STABIT FLDMMDL_GetStatusBit( const FLDMMDL * fmmdl );
 extern u32 FLDMMDL_CheckStatusBit(const FLDMMDL *fmmdl, FLDMMDL_STABIT bit);
-extern u32 FLDMMDL_GetMoveBit( const FLDMMDL * fmmdl );
-extern void FLDMMDL_OnMoveBit( FLDMMDL * fmmdl, u32 bit );
-extern void FLDMMDL_OffMoveBit( FLDMMDL * fmmdl, u32 bit );
-extern u32 FLDMMDL_CheckMoveBit( const FLDMMDL * fmmdl, u32 bit );
+extern FLDMMDL_MOVEBIT FLDMMDL_GetMoveBit( const FLDMMDL * fmmdl );
+extern void FLDMMDL_OnMoveBit( FLDMMDL * fmmdl, FLDMMDL_MOVEBIT bit );
+extern void FLDMMDL_OffMoveBit( FLDMMDL * fmmdl, FLDMMDL_MOVEBIT bit );
+extern u32 FLDMMDL_CheckMoveBit(const FLDMMDL *fmmdl,FLDMMDL_MOVEBIT bit);
 extern void FLDMMDL_SetOBJID( FLDMMDL * fmmdl, u16 obj_id );
 extern u16 FLDMMDL_GetOBJID( const FLDMMDL * fmmdl );
 extern void FLDMMDL_SetZoneID( FLDMMDL * fmmdl, u16 zone_id );
@@ -783,13 +809,6 @@ extern void FLDMMDL_GetDrawVectorPos(
 //--------------------------------------------------------------
 //	fldmmdl_acmd.c
 //--------------------------------------------------------------
-extern BOOL FLDMMDL_CheckPossibleAcmd( const FLDMMDL * fmmdl );
-extern void FLDMMDL_SetAcmd( FLDMMDL * fmmdl, u16 code );
-extern void FLDMMDL_SetLocalAcmd( FLDMMDL * fmmdl, u16 code );
-extern BOOL FLDMMDL_CheckEndAcmd( const FLDMMDL * fmmdl );
-extern BOOL FLDMMDL_EndAcmd( FLDMMDL * fmmdl );
-extern void FLDMMDL_FreeAcmd( FLDMMDL * fmmdl );
-
 extern GFL_TCB * FLDMMDL_SetAcmdList(
 	FLDMMDL * fmmdl, const FLDMMDL_ACMD_LIST *list );
 extern BOOL FLDMMDL_CheckEndAcmdList( GFL_TCB * tcb );

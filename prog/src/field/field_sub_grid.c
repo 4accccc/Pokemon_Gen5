@@ -192,12 +192,12 @@ static void GridMoveCreate(
 	{
 		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 		PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+		FLDMMDLSYS *fmmdlsys = GAMEDATA_GetFldMMdlSys( gdata );
 		int zone_id = PLAYERWORK_getZoneID( player );
 		
-		fieldWork->fldMMdlSys = FLDMMDLSYS_Create( 256,
-				fieldWork->heapID, GetFieldG3Dmapper(fieldWork->gs) );
-		
-		FLDMMDLSYS_InitDraw( fieldWork->fldMMdlSys );
+		fieldWork->fldMMdlSys = fmmdlsys;
+		FLDMMDLSYS_SetupProc( fmmdlsys,
+			fieldWork->heapID, GetFieldG3Dmapper(fieldWork->gs) );
 		
 		{
 			FLDMMDL_BLACTCONT_Setup(
@@ -206,6 +206,8 @@ static void GridMoveCreate(
 			FLDMMDL_BLACTCONT_AddResourceTex(
 				fieldWork->fldMMdlSys, TestOBJCodeTbl, TestOBJCodeMax );
 		}
+		
+		FLDMMDLSYS_SetupDrawProc( fieldWork->fldMMdlSys );
 		
 		if( ZONEDATA_DEBUG_IsSampleObjUse(zone_id) == TRUE ){
 			GridMap_SetupNPC( fieldWork );
@@ -240,16 +242,6 @@ static void GridMoveCreate(
 		VecFx32 offs = { -FX32_ONE*8, 0, FX32_ONE*8 };
 		FLDMAPPER_SetDrawOffset(
 			GetFieldG3Dmapper(fieldWork->gs), &offs );
-	}
-	
-	{
-		u32 i = 0, j = 0;
-		FLDMMDL *fmmdl;
-		while( FLDMMDLSYS_SearchUseFldMMdl(fieldWork->fldMMdlSys,&fmmdl,&i) ){
-			j++;
-		}
-
-		OS_Printf( "“®ìƒ‚ƒfƒ‹’Ç‰ÁŒã‚Ìl”‚Í%d‚Å‚·\n", j );
 	}
 }
 
@@ -360,14 +352,7 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 #endif
 	}
 	
-	{
-		GAMESYS_WORK *gsys = fieldWork->gsys;
-		GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-		FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(gdata);
-		FLDMMDL_BUFFER_SaveBuffer( buf, fieldWork->fldMMdlSys );
-	}
-
-	FLDMMDLSYS_DeleteAll( fieldWork->fldMMdlSys );
+	FLDMMDLSYS_DeleteProc( fieldWork->fldMMdlSys );
 }
 
 //======================================================================
@@ -402,7 +387,7 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		FLD_MainFieldActSys( fieldWork->fldActCont );
 	}
 	
-	FLDMMDLSYS_UpdateMove( fieldWork->fldMMdlSys );
+	FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
 	Jiki_UpdatePlayerWork( fieldWork );
 
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
@@ -1565,10 +1550,6 @@ static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
 			}
 		}while( 1 );
 	}
-#else
-	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
-	FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(gdata);
-	FLDMMDL_BUFFER_LoadBuffer( buf, fieldWork->fldMMdlSys );
 #endif
 }
 

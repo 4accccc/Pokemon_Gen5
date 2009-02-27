@@ -1,289 +1,289 @@
 //--------------------------------------------------------------
 //	プラチナ　フィールド動作モデル 表示コード
 //--------------------------------------------------------------
-#define HERO			0x0000		///<主人公
-#define BABYBOY1		0x0001		///<男の子
-#define BABYGIRL1		0x0002		///<女の子
-#define BOY1			0x0003		///<少年
-#define BOY2			0x0004		///<活発少年
-#define BOY3			0x0005		///<麦わら少年
-#define GIRL1			0x0006		///<少女
-#define GIRL2			0x0007		///<活発少女
-#define GIRL3			0x0008		///<お洒落少女
-#define MAN1			0x0009		///<お兄さん
-#define MAN2			0x000a		///<ツッパリお兄さん
-#define MAN3			0x000b		///<トレーナーお兄さん
-#define WOMAN1			0x000c		///<お姉さん
-#define WOMAN2			0x000d		///<お洒落お姉さん
-#define WOMAN3			0x000e		///<トレーナーお姉さん
-#define MIDDLEMAN1		0x000f		///<おじさん
-#define MIDDLEWOMAN1	0x0010		///<おばさん
-#define OLDMAN1			0x0011		///<和風爺さん
-#define OLDWOMAN1		0x0012		///<和風婆さん
-#define BIGMAN			0x0013		///<太ったお兄さん
-#define MOUNT			0x0014		///<山男
-#define CYCLEHERO		0x0015		///<主人公自転車
-#define REPORTER		0x0016		///<
-#define CAMERAMAN		0x0017		///<
-#define SHOPM1			0x0018		///<
-#define SHOPW1			0x0019		///<
-#define PCWOMAN1		0x001a		///<
-#define PCWOMAN2		0x001b		///<
-#define PCWOMAN3		0x001c		///<
-#define ASSISTANTM		0x001d		///<
-#define ASSISTANTW		0x001e		///<
-#define BADMAN			0x001f		///<
-#define SKIERM			0x0020		///<
-#define SKIERW			0x0021		///<
-#define POLICEMAN		0x0022		///<
-#define IDOL			0x0023		///<
-#define GENTLEMAN		0x0024		///<
-#define LADY			0x0025		///<
-#define CYCLEM			0x0026		///<
-#define CYCLEW			0x0027		///<
-#define WORKMAN			0x0028		///<
-#define FARMER			0x0029		///<
-#define COWGIRL			0x002a		///<
-#define CLOWN			0x002b		///<
-#define ARTIST			0x002c		///<
-#define SPORTSMAN		0x002d		///<
-#define SWIMMERM		0x002e		///<
-#define SWIMMERW		0x002f		///<
-#define BEACHGIRL		0x0030		///<
-#define BEACHBOY		0x0031		///<
-#define EXPLORE			0x0032		///<
-#define FIGHTER			0x0033		///<
-#define CAMPBOY			0x0034		///<
-#define PICNICGIRL		0x0035		///<
-#define FISHING			0x0036		///<
-#define AMBRELLA		0x0037		///<
-#define SEAMAN			0x0038		///<
-#define BRINGM			0x0039		///<
-#define BRINGW			0x003a		///<
-#define WAITER			0x003b		///<
-#define WAITRESS		0x003c		///<
-#define VETERAN			0x003d		///<
-#define GORGGEOUSM		0x003e		///<
-#define GORGGEOUSW		0x003f		///<
-#define BOY4			0x0040		///<
-#define GIRL4			0x0041		///<
-#define MAN4			0x0042		///<
-#define WOMAN4			0x0043		///<
-#define MAN5			0x0044		///<
-#define WOMAN5			0x0045		///<
-#define MYSTERY			0x0046		///<
-#define PIKACHU			0x0047		///<
-#define PIPPI			0x0048		///<
-#define PURIN			0x0049		///<
-#define KODUCK			0x004a		///<
-#define PRASLE			0x004b		///<
-#define MINUN			0x004c		///<
-#define MARIL			0x004d		///<
-#define ACHAMO			0x004e		///<
-#define ENECO			0x004f		///<
-#define GONBE			0x0050		///<
-#define BABY			0x0051		///<
-#define MIDDLEMAN2		0x0052		///<
-#define MIDDLEWOMAN2	0x0053		///<
-#define ROCK			0x0054		///<
-#define BREAKROCK		0x0055		///<
-#define TREE			0x0056		///<
-#define MONATERBALL		0x0057		///<
-#define SHADOW			0x0058		///<
-#define BOUGH			0x0059		///<
-#define FALLTREE		0x005a		///<
-#define BOARD_A			0x005b		///<看板
-#define BOARD_B			0x005c		///<看板
-#define BOARD_C			0x005d		///<看板
-#define BOARD_D			0x005e		///<看板
-#define BOARD_E			0x005f		///<看板
-#define BOARD_F			0x0060		///<看板
-#define HEROINE			0x0061		///<
-#define CYCLEHEROINE	0x0062		///<
-#define DOCTOR			0x0063
-#define SEED			0x0064
-#define WKOBJCODE00		0x0065
-#define WKOBJCODE01		0x0066
-#define WKOBJCODE02		0x0067
-#define WKOBJCODE03		0x0068
-#define WKOBJCODE04		0x0069
-#define WKOBJCODE05		0x006a
-#define WKOBJCODE06		0x006b
-#define WKOBJCODE07		0x006c
-#define WKOBJCODE08		0x006d
-#define WKOBJCODE09		0x006e
-#define WKOBJCODE10		0x006f
-#define WKOBJCODE11		0x0070
-#define WKOBJCODE12		0x0071
-#define WKOBJCODE13		0x0072
-#define WKOBJCODE14		0x0073
-#define WKOBJCODE15		0x0074
-#define BANCODE			0x0075	//コード追加ミス　使用禁止
-#define SNOWBALL		0x0076
-#define GINGABOSS		0x0078
-#define GKANBU1			0x0079
-#define GKANBU2			0x007a
-#define GKANBU3			0x007b
-#define GINGAM			0x007c
-#define GINGAW			0x007d
-#define LEADER1			0x007e
-#define LEADER2			0x007f
-#define LEADER3			0x0080
-#define LEADER4			0x0081
-#define LEADER5			0x0082
-#define LEADER6			0x0083
-#define LEADER7			0x0084
-#define LEADER8			0x0085
-#define BIGFOUR1		0x0086
-#define BIGFOUR2		0x0087
-#define BIGFOUR3		0x0088
-#define BIGFOUR4		0x0089
-#define CHAMPION		0x008a
-#define PAPA			0x008b
-#define MAMA			0x008c
-#define SEVEN1			0x008d
-#define SEVEN2			0x008e
-#define SEVEN3			0x008f
-#define SEVEN4			0x0090
-#define SEVEN5			0x0091
-#define SEVEN6			0x0092
-#define SEVEN7			0x0093
-#define RIVEL			0x0094
-#define BOAT			0x0095
-#define TRAIN			0x0096
-#define SPPOKE1			0x0097
-#define SPPOKE2			0x0098
-#define SPPOKE3			0x0099
-#define SPPOKE4			0x009a
-#define SPPOKE5			0x009b
-#define SPPOKE6			0x009c
-#define SPPOKE7			0x009d
-#define SPPOKE8			0x009e
-#define SPPOKE9			0x009f
-#define SPPOKE10		0x00a0
-#define SPPOKE11		0x00a1
-#define OBAKE			0x00a2
-#define WOMAN6			0x00a3
-#define OLDMAN2			0x00a4
-#define OLDWOMAN2		0x00a5
-#define OOKIDO			0x00a6
-#define MIKAN			0x00a7
-#define SUNGLASSES		0x00a8
-#define TOWERBOSS		0x00a9
-#define SNOWCOVER		0x00aa
-#define TREECOVER		0x00ab
-#define ROCKCOVER		0x00ac
-#define BIRD			0x00ad
-#define BAG				0x00ae
-#define MAID			0x00af
-#define SPHERO			0x00b0
-#define SPHEROINE		0x00b1
-#define	SWIMHERO		0x00b2
-#define SWIMHEROINE		0x00b3
-#define WATERHERO		0x00b4
-#define WATERHEROINE	0x00b5
-#define VENTHOLE		0x00b6
-#define BOOK			0x00b7
-#define SPPOKE12		0x00b8
-#define BALLOON			0x00b9
-#define CONTESTHERO		0x00ba
-#define CONTESTHEROINE	0x00bb
-#define FISHINGHERO		0x00bc
-#define FISHINGHEROINE	0x00bd
-#define MOSS			0x00be
-#define FREEZES			0x00bf
-#define POLE			0x00c0
-#define DELIVERY		0x00c1
-#define DSBOY			0x00c2
-#define KOIKING			0x00c3
-#define POKEHERO		0x00c4
-#define POKEHEROINE		0x00c5
-#define SAVEHERO		0x00c6
-#define SAVEHEROINE		0x00c7
-#define BANZAIHERO		0x00c8
-#define BANZAIHEROINE	0x00c9
-#define DOOR			0x00ca
-#define MONUMENT		0x00cb
-#define PATIRITUSU		0x00cc
-#define KINOCOCO		0x00cd
-#define MIMITUTO		0x00ce
-#define KOLUCKY			0x00cf
-#define WANRIKY			0x00d0
-#define DOOR2			0x00d1
-#define GHOSTHERO		0x00d2
-#define GHOSTHEROINE	0x00d3
-#define RTHERO			0x00d4
-#define ICPO			0x00d5
-#define GKANBU4			0x00d6
-#define BRAINS1			0x00d7
-#define BRAINS2			0x00d8
-#define BRAINS3			0x00d9
-#define BRAINS4			0x00da
-#define PRINCESS		0x00db
-#define NAETLE			0x00dc
-#define HAYASHIGAME		0x00dd
-#define DODAITOSE		0x00de
-#define HIKOZARU		0x00df
-#define MOUKAZARU		0x00e0
-#define GOUKAZARU		0x00e1
-#define POCHAMA			0x00e2
-#define POTTAISHI		0x00e3
-#define EMPERTE			0x00e4
-#define GUREGGRU		0x00e5
-#define GIRATINAORIGIN	0x00e6
-#define BFSM			0x00e7
-#define BFSW1			0x00e8
-#define BFSW2			0x00e9
-#define WIFISM			0x00ea
-#define WIFISW			0x00eb
-#define ROTOM			0x00ec
-#define ROTOMF			0x00ed
-#define ROTOMS			0x00ee
-#define ROTOMI			0x00ef
-#define ROTOMW			0x00f0
-#define ROTOMG			0x00f1
-#define DIRECTOR		0x00f2
-#define FIREBOX			0x00f3
-#define SKYBOX			0x00f4
-#define ICEBOX			0x00f5
-#define WATERBOX		0x00f6
-#define GRASSBOX		0x00f7
-#define GSET1			0x00f8
-#define GSET2			0x00f9
-#define MONUMENT2A		0x00fa
-#define MONUMENT2B		0x00fb
-#define DPHERO			0x00fc
-#define DPHEROINE		0x00fd
-#define DPCONTESTHERO	0x00fe
-#define DPCONTESTHEROINE	0x00ff
-#define BSHERO			0x0100
-#define BSHEROINE		0x0101
-#define SWIMHERORT		0x0102
-#define SWIMHEROINERT	0x0103
-#define SPHERORT		0x0104
-#define SPHEROINERT		0x0105
-#define ROTOMWALL		0x0106
-#define RTHEROINE		0x0107
-#define BLDAGUNOMU		0x0108
-#define TW7YUKUSHI		0x0109
-#define TW7EMULIT		0x010a
-#define TW7AGUNOMU		0x010b
-#define SAVEHERORT		0x010c
-#define SAVEHEROINERT	0x010d
-#define POKEHERORT		0x010e
-#define POKEHEROINERT	0x010f
-#define GSTSAVEHERO		0x0110
-#define GSTSAVEHEROINE	0x0111
-#define GSTPOKEHERO		0x0112
-#define GSTPOKEHEROINE	0x0113
+#define PLHERO			0x0000		///<主人公
+#define PLBABYBOY1		0x0001		///<男の子
+#define PLBABYGIRL1		0x0002		///<女の子
+#define PLBOY1			0x0003		///<少年
+#define PLBOY2			0x0004		///<活発少年
+#define PLBOY3			0x0005		///<麦わら少年
+#define PLGIRL1			0x0006		///<少女
+#define PLGIRL2			0x0007		///<活発少女
+#define PLGIRL3			0x0008		///<お洒落少女
+#define PLMAN1			0x0009		///<お兄さん
+#define PLMAN2			0x000a		///<ツッパリお兄さん
+#define PLMAN3			0x000b		///<トレーナーお兄さん
+#define PLWOMAN1			0x000c		///<お姉さん
+#define PLWOMAN2			0x000d		///<お洒落お姉さん
+#define PLWOMAN3			0x000e		///<トレーナーお姉さん
+#define PLMIDDLEMAN1		0x000f		///<おじさん
+#define PLMIDDLEWOMAN1	0x0010		///<おばさん
+#define PLOLDMAN1			0x0011		///<和風爺さん
+#define PLOLDWOMAN1		0x0012		///<和風婆さん
+#define PLBIGMAN			0x0013		///<太ったお兄さん
+#define PLMOUNT			0x0014		///<山男
+#define PLCYCLEHERO		0x0015		///<主人公自転車
+#define PLREPORTER		0x0016		///<
+#define PLCAMERAMAN		0x0017		///<
+#define PLSHOPM1			0x0018		///<
+#define PLSHOPW1			0x0019		///<
+#define PLPCWOMAN1		0x001a		///<
+#define PLPCWOMAN2		0x001b		///<
+#define PLPCWOMAN3		0x001c		///<
+#define PLASSISTANTM		0x001d		///<
+#define PLASSISTANTW		0x001e		///<
+#define PLBADMAN			0x001f		///<
+#define PLSKIERM			0x0020		///<
+#define PLSKIERW			0x0021		///<
+#define PLPOLICEMAN		0x0022		///<
+#define PLIDOL			0x0023		///<
+#define PLGENTLEMAN		0x0024		///<
+#define PLLADY			0x0025		///<
+#define PLCYCLEM			0x0026		///<
+#define PLCYCLEW			0x0027		///<
+#define PLWORKMAN			0x0028		///<
+#define PLFARMER			0x0029		///<
+#define PLCOWGIRL			0x002a		///<
+#define PLCLOWN			0x002b		///<
+#define PLARTIST			0x002c		///<
+#define PLSPORTSMAN		0x002d		///<
+#define PLSWIMMERM		0x002e		///<
+#define PLSWIMMERW		0x002f		///<
+#define PLBEACHGIRL		0x0030		///<
+#define PLBEACHBOY		0x0031		///<
+#define PLEXPLORE			0x0032		///<
+#define PLFIGHTER			0x0033		///<
+#define PLCAMPBOY			0x0034		///<
+#define PLPICNICGIRL		0x0035		///<
+#define PLFISHING			0x0036		///<
+#define PLAMBRELLA		0x0037		///<
+#define PLSEAMAN			0x0038		///<
+#define PLBRINGM			0x0039		///<
+#define PLBRINGW			0x003a		///<
+#define PLWAITER			0x003b		///<
+#define PLWAITRESS		0x003c		///<
+#define PLVETERAN			0x003d		///<
+#define PLGORGGEOUSM		0x003e		///<
+#define PLGORGGEOUSW		0x003f		///<
+#define PLBOY4			0x0040		///<
+#define PLGIRL4			0x0041		///<
+#define PLMAN4			0x0042		///<
+#define PLWOMAN4			0x0043		///<
+#define PLMAN5			0x0044		///<
+#define PLWOMAN5			0x0045		///<
+#define PLMYSTERY			0x0046		///<
+#define PLPIKACHU			0x0047		///<
+#define PLPIPPI			0x0048		///<
+#define PLPURIN			0x0049		///<
+#define PLKODUCK			0x004a		///<
+#define PLPRASLE			0x004b		///<
+#define PLMINUN			0x004c		///<
+#define PLMARIL			0x004d		///<
+#define PLACHAMO			0x004e		///<
+#define PLENECO			0x004f		///<
+#define PLGONBE			0x0050		///<
+#define PLBABY			0x0051		///<
+#define PLMIDDLEMAN2		0x0052		///<
+#define PLMIDDLEWOMAN2	0x0053		///<
+#define PLROCK			0x0054		///<
+#define PLBREAKROCK		0x0055		///<
+#define PLTREE			0x0056		///<
+#define PLMONATERBALL		0x0057		///<
+#define PLSHADOW			0x0058		///<
+#define PLBOUGH			0x0059		///<
+#define PLFALLTREE		0x005a		///<
+#define PLBOARD_A			0x005b		///<看板
+#define PLBOARD_B			0x005c		///<看板
+#define PLBOARD_C			0x005d		///<看板
+#define PLBOARD_D			0x005e		///<看板
+#define PLBOARD_E			0x005f		///<看板
+#define PLBOARD_F			0x0060		///<看板
+#define PLHEROINE			0x0061		///<
+#define PLCYCLEHEROINE	0x0062		///<
+#define PLDOCTOR			0x0063
+#define PLSEED			0x0064
+#define PLWKOBJCODE00		0x0065
+#define PLWKOBJCODE01		0x0066
+#define PLWKOBJCODE02		0x0067
+#define PLWKOBJCODE03		0x0068
+#define PLWKOBJCODE04		0x0069
+#define PLWKOBJCODE05		0x006a
+#define PLWKOBJCODE06		0x006b
+#define PLWKOBJCODE07		0x006c
+#define PLWKOBJCODE08		0x006d
+#define PLWKOBJCODE09		0x006e
+#define PLWKOBJCODE10		0x006f
+#define PLWKOBJCODE11		0x0070
+#define PLWKOBJCODE12		0x0071
+#define PLWKOBJCODE13		0x0072
+#define PLWKOBJCODE14		0x0073
+#define PLWKOBJCODE15		0x0074
+#define PLBANCODE			0x0075	//コード追加ミス　使用禁止
+#define PLSNOWBALL		0x0076
+#define PLGINGABOSS		0x0078
+#define PLGKANBU1			0x0079
+#define PLGKANBU2			0x007a
+#define PLGKANBU3			0x007b
+#define PLGINGAM			0x007c
+#define PLGINGAW			0x007d
+#define PLLEADER1			0x007e
+#define PLLEADER2			0x007f
+#define PLLEADER3			0x0080
+#define PLLEADER4			0x0081
+#define PLLEADER5			0x0082
+#define PLLEADER6			0x0083
+#define PLLEADER7			0x0084
+#define PLLEADER8			0x0085
+#define PLBIGFOUR1		0x0086
+#define PLBIGFOUR2		0x0087
+#define PLBIGFOUR3		0x0088
+#define PLBIGFOUR4		0x0089
+#define PLCHAMPION		0x008a
+#define PLPAPA			0x008b
+#define PLMAMA			0x008c
+#define PLSEVEN1			0x008d
+#define PLSEVEN2			0x008e
+#define PLSEVEN3			0x008f
+#define PLSEVEN4			0x0090
+#define PLSEVEN5			0x0091
+#define PLSEVEN6			0x0092
+#define PLSEVEN7			0x0093
+#define PLRIVEL			0x0094
+#define PLBOAT			0x0095
+#define PLTRAIN			0x0096
+#define PLSPPOKE1			0x0097
+#define PLSPPOKE2			0x0098
+#define PLSPPOKE3			0x0099
+#define PLSPPOKE4			0x009a
+#define PLSPPOKE5			0x009b
+#define PLSPPOKE6			0x009c
+#define PLSPPOKE7			0x009d
+#define PLSPPOKE8			0x009e
+#define PLSPPOKE9			0x009f
+#define PLSPPOKE10		0x00a0
+#define PLSPPOKE11		0x00a1
+#define PLOBAKE			0x00a2
+#define PLWOMAN6			0x00a3
+#define PLOLDMAN2			0x00a4
+#define PLOLDWOMAN2		0x00a5
+#define PLOOKIDO			0x00a6
+#define PLMIKAN			0x00a7
+#define PLSUNGLASSES		0x00a8
+#define PLTOWERBOSS		0x00a9
+#define PLSNOWCOVER		0x00aa
+#define PLTREECOVER		0x00ab
+#define PLROCKCOVER		0x00ac
+#define PLBIRD			0x00ad
+#define PLBAG				0x00ae
+#define PLMAID			0x00af
+#define PLSPHERO			0x00b0
+#define PLSPHEROINE		0x00b1
+#define PLSWIMHERO		0x00b2
+#define PLSWIMHEROINE		0x00b3
+#define PLWATERHERO		0x00b4
+#define PLWATERHEROINE	0x00b5
+#define PLVENTHOLE		0x00b6
+#define PLBOOK			0x00b7
+#define PLSPPOKE12		0x00b8
+#define PLBALLOON			0x00b9
+#define PLCONTESTHERO		0x00ba
+#define PLCONTESTHEROINE	0x00bb
+#define PLFISHINGHERO		0x00bc
+#define PLFISHINGHEROINE	0x00bd
+#define PLMOSS			0x00be
+#define PLFREEZES			0x00bf
+#define PLPOLE			0x00c0
+#define PLDELIVERY		0x00c1
+#define PLDSBOY			0x00c2
+#define PLKOIKING			0x00c3
+#define PLPOKEHERO		0x00c4
+#define PLPOKEHEROINE		0x00c5
+#define PLSAVEHERO		0x00c6
+#define PLSAVEHEROINE		0x00c7
+#define PLBANZAIHERO		0x00c8
+#define PLBANZAIHEROINE	0x00c9
+#define PLDOOR			0x00ca
+#define PLMONUMENT		0x00cb
+#define PLPATIRITUSU		0x00cc
+#define PLKINOCOCO		0x00cd
+#define PLMIMITUTO		0x00ce
+#define PLKOLUCKY			0x00cf
+#define PLWANRIKY			0x00d0
+#define PLDOOR2			0x00d1
+#define PLGHOSTHERO		0x00d2
+#define PLGHOSTHEROINE	0x00d3
+#define PLRTHERO			0x00d4
+#define PLICPO			0x00d5
+#define PLGKANBU4			0x00d6
+#define PLBRAINS1			0x00d7
+#define PLBRAINS2			0x00d8
+#define PLBRAINS3			0x00d9
+#define PLBRAINS4			0x00da
+#define PLPRINCESS		0x00db
+#define PLNAETLE			0x00dc
+#define PLHAYASHIGAME		0x00dd
+#define PLDODAITOSE		0x00de
+#define PLHIKOZARU		0x00df
+#define PLMOUKAZARU		0x00e0
+#define PLGOUKAZARU		0x00e1
+#define PLPOCHAMA			0x00e2
+#define PLPOTTAISHI		0x00e3
+#define PLEMPERTE			0x00e4
+#define PLGUREGGRU		0x00e5
+#define PLGIRATINAORIGIN	0x00e6
+#define PLBFSM			0x00e7
+#define PLBFSW1			0x00e8
+#define PLBFSW2			0x00e9
+#define PLWIFISM			0x00ea
+#define PLWIFISW			0x00eb
+#define PLROTOM			0x00ec
+#define PLROTOMF			0x00ed
+#define PLROTOMS			0x00ee
+#define PLROTOMI			0x00ef
+#define PLROTOMW			0x00f0
+#define PLROTOMG			0x00f1
+#define PLDIRECTOR		0x00f2
+#define PLFIREBOX			0x00f3
+#define PLSKYBOX			0x00f4
+#define PLICEBOX			0x00f5
+#define PLWATERBOX		0x00f6
+#define PLGRASSBOX		0x00f7
+#define PLGSET1			0x00f8
+#define PLGSET2			0x00f9
+#define PLMONUMENT2A		0x00fa
+#define PLMONUMENT2B		0x00fb
+#define PLDPHERO			0x00fc
+#define PLDPHEROINE		0x00fd
+#define PLDPCONTESTHERO	0x00fe
+#define PLDPCONTESTHEROINE	0x00ff
+#define PLBSHERO			0x0100
+#define PLBSHEROINE		0x0101
+#define PLSWIMHERORT		0x0102
+#define PLSWIMHEROINERT	0x0103
+#define PLSPHERORT		0x0104
+#define PLSPHEROINERT		0x0105
+#define PLROTOMWALL		0x0106
+#define PLRTHEROINE		0x0107
+#define PLBLDAGUNOMU		0x0108
+#define PLTW7YUKUSHI		0x0109
+#define PLTW7EMULIT		0x010a
+#define PLTW7AGUNOMU		0x010b
+#define PLSAVEHERORT		0x010c
+#define PLSAVEHEROINERT	0x010d
+#define PLPOKEHERORT		0x010e
+#define PLPOKEHEROINERT	0x010f
+#define PLGSTSAVEHERO		0x0110
+#define PLGSTSAVEHEROINE	0x0111
+#define PLGSTPOKEHERO		0x0112
+#define PLGSTPOKEHEROINE	0x0113
 
-#define OBJCODEMAX		0xffff		///<OBJコード最大
+#define PLOBJCODEMAX		0xffff		///<OBJコード最大
 
 //--------------------------------------------------------------
 ///	ワーク参照型OBJコード　チェックシンボル
 //--------------------------------------------------------------
-#define WKOBJCODE_ORG	(WKOBJCODE00)
-#define WKOBJCODE_END	(WKOBJCODE15)
+#define PLWKOBJCODE_ORG	(WKOBJCODE00)
+#define PLWKOBJCODE_END	(WKOBJCODE15)
 
 //--------------------------------------------------------------
 ///	木の実専用OBJコード　通常のOBJコードに重ならない様、注意
@@ -488,5 +488,5 @@
 ///	特殊OBJコード
 /// ※マップエディタでの配置は禁止
 //--------------------------------------------------------------
-#define NONDRAW			(0x2000)
+#define PLNONDRAW			(0x2000)
 

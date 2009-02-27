@@ -23,12 +23,9 @@
 #include "app/config_panel.h"		//ConfigPanelProcData
 #include "app/trainer_card.h"		//TrainerCardSysProcData
 #include "fieldmap_local.h"
-#include "fldmmdl.h"
 
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
 extern const GFL_PROC_DATA TrainerCardProcData;
-
-extern FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
 
 //======================================================================
 //	define
@@ -524,14 +521,6 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
 		}	
 		break;
 	case 2:
-		{
-			FLDMMDLSYS *fmmdlsys = FIELDMAP_GetFldMMdlSys(work->fieldWork);
-			if( fmmdlsys != NULL ){
-				GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gsys );
-				FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(gdata);
-				FLDMMDL_BUFFER_SaveBuffer( buf, fmmdlsys );
-			}
-		}
 		GAMEDATA_Save(GAMESYSTEM_GetGameData(GMEVENT_GetGameSysWork(event)));
 		(*seq)++;
 		break;

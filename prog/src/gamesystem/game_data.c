@@ -45,7 +45,7 @@ struct _GAMEDATA{
 	LOCATION *special_loc;
 	MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
 	POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
-	FLDMMDL_BUFFER *fldmmdl_buffer;
+	FLDMMDLSYS *fldmmdlsys;
 };
 
 //==============================================================================
@@ -96,7 +96,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	EVENTDATA_SYS_Clear(gd->evdata);
 
 	//動作モデル
-	gd->fldmmdl_buffer = SaveControl_DataPtrGet( gd->sv_control_ptr, GMDATA_ID_FLDMMDL );
+	gd->fldmmdlsys = FLDMMDLSYS_CreateSystem( heapID, FLDMMDL_MDL_MAX );
 	
 	gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
 	gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
@@ -112,6 +112,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+	FLDMMDLSYS_FreeSystem(gamedata->fldmmdlsys);
 	EVENTDATA_SYS_Delete(gamedata->evdata);
 	GFL_HEAP_FreeMemory(gamedata);
 }
@@ -220,13 +221,14 @@ MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata)
 
 //--------------------------------------------------------------
 /**
- * @param
- * @retval
+ * @brief	FLDMMDLSYSへのポインタ取得
+ * @param	gamedata	GAMEDATAへのポインタ
+ * @retval	FLDMMDLSYSへのポインタ
  */
 //--------------------------------------------------------------
-FLDMMDL_BUFFER * GAMEDATA_GetFldMMdlBuffer( GAMEDATA *gamedata )
+FLDMMDLSYS * GAMEDATA_GetFldMMdlSys(GAMEDATA *gamedata)
 {
-	return gamedata->fldmmdl_buffer;
+	return gamedata->fldmmdlsys;
 }
 
 //============================================================================================
@@ -330,10 +332,16 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
 //--------------------------------------------------------------
 static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
 {
-	PLAYER_WORK *pw = GAMEDATA_GetMyPlayerWork(gamedata);
-	
-	SaveData_PlayerDataUpdate(gamedata->sv_control_ptr, pw);
-	SaveData_SituationDataUpdate(gamedata->sv_control_ptr, pw);
+	{	//PLAYER_WORK
+		PLAYER_WORK *pw = GAMEDATA_GetMyPlayerWork(gamedata);
+		SaveData_PlayerDataUpdate(gamedata->sv_control_ptr, pw);
+		SaveData_SituationDataUpdate(gamedata->sv_control_ptr, pw);
+	}
+
+	{	//FLDMMDL
+		FLDMMDLSYS *fldmmdlsys = GAMEDATA_GetFldMMdlSys(gamedata);
+		//save
+	}
 }
 
 //--------------------------------------------------------------

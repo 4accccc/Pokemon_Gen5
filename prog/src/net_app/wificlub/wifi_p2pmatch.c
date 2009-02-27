@@ -3378,10 +3378,10 @@ static int _readFriendMatchStatus(WIFIP2PMATCH_WORK* wk)
 				p_status = WifiFriendMatchStatusGet( wk, i );
 
 				status = _WifiMyStatusGet( wk, p_status );
-	//			if( (status != WIFI_STATUS_UNKNOWN) && (p_status->trainer_view != HERO) ){
+	//			if( (status != WIFI_STATUS_UNKNOWN) && (p_status->trainer_view != PLHERO) ){
 				if( (status != WIFI_STATUS_NONE) && 
 					(status != WIFI_STATUS_PLAY_OTHER) &&
-					(p_status->trainer_view != HERO) ){
+					(p_status->trainer_view != PLHERO) ){
 					wk->index2No[num] = i+1;
 					num++;
 				}else{
@@ -4357,38 +4357,38 @@ static void DEBUG_DummyObjIn( WIFIP2PMATCH_WORK *wk, int num )
 	int i;
 	MCR_MOVEOBJ* p_moveobj;
 	static const u8 view_list[ 32 ][2] = {
-		{ BOY1, PM_MALE },
-		{ BOY3, PM_MALE }, 
-		{ MAN3, PM_MALE }, 
-		{ BADMAN, PM_MALE }, 
-		{ EXPLORE, PM_MALE }, 
-		{ FIGHTER, PM_MALE },
-		{ GORGGEOUSM, PM_MALE }, 
-		{ MYSTERY, PM_MALE },   
-		{ GIRL1, PM_FEMALE }, 
-		{ GIRL2, PM_FEMALE }, 
-		{ WOMAN2, PM_FEMALE }, 
-		{ WOMAN3, PM_FEMALE }, 
-		{ IDOL, PM_FEMALE }, 
-		{ LADY, PM_FEMALE }, 
-		{ COWGIRL, PM_FEMALE }, 
-		{ GORGGEOUSW, PM_FEMALE },
-		{ BOY1, PM_MALE },
-		{ BOY3, PM_MALE }, 
-		{ MAN3, PM_MALE }, 
-		{ BADMAN, PM_MALE }, 
-		{ EXPLORE, PM_MALE }, 
-		{ FIGHTER, PM_MALE },
-		{ GORGGEOUSM, PM_MALE }, 
-		{ MYSTERY, PM_MALE },   
-		{ GIRL1, PM_FEMALE }, 
-		{ GIRL2, PM_FEMALE }, 
-		{ WOMAN2, PM_FEMALE }, 
-		{ WOMAN3, PM_FEMALE }, 
-		{ IDOL, PM_FEMALE }, 
-		{ LADY, PM_FEMALE }, 
-		{ COWGIRL, PM_FEMALE }, 
-		{ GORGGEOUSW, PM_FEMALE },
+		{ PLBOY1, PM_MALE },
+		{ PLBOY3, PM_MALE }, 
+		{ PLMAN3, PM_MALE }, 
+		{ PLBADMAN, PM_MALE }, 
+		{ PLEXPLORE, PM_MALE }, 
+		{ PLFIGHTER, PM_MALE },
+		{ PLGORGGEOUSM, PM_MALE }, 
+		{ PLMYSTERY, PM_MALE },   
+		{ PLGIRL1, PM_FEMALE }, 
+		{ PLGIRL2, PM_FEMALE }, 
+		{ PLWOMAN2, PM_FEMALE }, 
+		{ PLWOMAN3, PM_FEMALE }, 
+		{ PLIDOL, PM_FEMALE }, 
+		{ PLLADY, PM_FEMALE }, 
+		{ PLCOWGIRL, PM_FEMALE }, 
+		{ PLGORGGEOUSW, PM_FEMALE },
+		{ PLBOY1, PM_MALE },
+		{ PLBOY3, PM_MALE }, 
+		{ PLMAN3, PM_MALE }, 
+		{ PLBADMAN, PM_MALE }, 
+		{ PLEXPLORE, PM_MALE }, 
+		{ PLFIGHTER, PM_MALE },
+		{ PLGORGGEOUSM, PM_MALE }, 
+		{ PLMYSTERY, PM_MALE },   
+		{ PLGIRL1, PM_FEMALE }, 
+		{ PLGIRL2, PM_FEMALE }, 
+		{ PLWOMAN2, PM_FEMALE }, 
+		{ PLWOMAN3, PM_FEMALE }, 
+		{ PLIDOL, PM_FEMALE }, 
+		{ PLLADY, PM_FEMALE }, 
+		{ PLCOWGIRL, PM_FEMALE }, 
+		{ PLGORGGEOUSW, PM_FEMALE },
 	};
 
 	for( i=0; i<num; i++ ){
@@ -4535,9 +4535,9 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 	if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == FALSE ){
 
 		if( wk->pMatch->myMatchStatus.sex == PM_MALE ){
-			obj_code = HERO;
+			obj_code = PLHERO;
 		}else{
-			obj_code = HEROINE;
+			obj_code = PLHEROINE;
 		}
 		
 		// マッチングルーム初期化

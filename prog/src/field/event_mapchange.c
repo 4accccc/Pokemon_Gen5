@@ -23,7 +23,7 @@
 #include "event_mapchange.h"
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
-static void CreateFldMMdlBuffer( FLDMMDL_BUFFER *buf );
+static void CreateFldMMdl( FLDMMDLSYS *fldmmdlsys, u16 zone_id );
 
 //============================================================================================
 //
@@ -79,21 +79,16 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 	fmw->game_init_work = game_init_work;
 	switch(game_init_work->mode){
 	case GAMEINIT_MODE_CONTINUE:
+		CreateFldMMdl(GAMEDATA_GetFldMMdlSys(fmw->gamedata),0);
 		LOCATION_SetDirect(&fmw->loc_req, game_init_work->mapid, game_init_work->dir, 
 			game_init_work->pos.x, game_init_work->pos.y, game_init_work->pos.z);
 		break;
 	case GAMEINIT_MODE_FIRST:
-		{
-			FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(fmw->gamedata);
-			CreateFldMMdlBuffer( buf );
-		}
+		CreateFldMMdl(GAMEDATA_GetFldMMdlSys(fmw->gamedata),0);
 		LOCATION_SetGameStart(&fmw->loc_req);
 		break;
 	case GAMEINIT_MODE_DEBUG:
-		{
-			FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(fmw->gamedata);
-			CreateFldMMdlBuffer( buf );
-		}
+		CreateFldMMdl(GAMEDATA_GetFldMMdlSys(fmw->gamedata),0);
 		LOCATION_DEBUG_SetDefaultPos(&fmw->loc_req, game_init_work->mapid);
 		break;
 	}
@@ -339,7 +334,6 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
 	PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(gamedata);
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
-	FLDMMDL_BUFFER *buf = GAMEDATA_GetFldMMdlBuffer(gamedata);
 
 	//イベント起動データの読み込み
 	EVENTDATA_SYS_Load(evdata, loc_req->zone_id);
@@ -367,8 +361,9 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 }
 
 //--------------------------------------------------------------
+//	test
 //--------------------------------------------------------------
-static void CreateFldMMdlBuffer( FLDMMDL_BUFFER *buf )
+static void CreateFldMMdl( FLDMMDLSYS *fldmmdlsys, u16 zone_id )
 {
 	int i;
 	u16 code[] = { BOY1,GIRL1,MAN1,WOMAN1,KABI32,OLDWOMAN1};
@@ -395,7 +390,7 @@ static void CreateFldMMdlBuffer( FLDMMDL_BUFFER *buf )
 		head.gx = GFUser_GetPublicRand( 128 );
 		head.gz = GFUser_GetPublicRand( 128 );
 		head.obj_code = code[GFUser_GetPublicRand(NELEMS(code))];
-		FLDMMDL_BUFFER_AddFldMMdl( buf, &head, i );
+		FLDMMDLSYS_AddFldMMdl( fldmmdlsys, &head, zone_id );
 	}
 }
 

@@ -25,7 +25,7 @@
 #include "savedata/system_data.h"
 #include "savedata/record.h"
 #include "system/pms_word.h"
-#include "field/fldmmdl_buff.h"
+#include "field/fldmmdl.h"
 
 //==============================================================================
 //	’è”’è‹`
