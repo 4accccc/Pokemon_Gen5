@@ -50,7 +50,7 @@
 	ARCID_SAMPLEMAP		"test_graphic/sample_map.narc"	#
 	ARCID_GSMAP			"test_graphic/land_data.narc"	#
 	ARCID_GSTEX			"test_graphic/map_tex_set.narc"	#
-	ARCID_TEST3DP		"test_graphic/test3dp.narc"	#
+	ARCID_TEST3DP		"test_graphic/test3dp.narc"		#3D表示テスト用データ
 	ARCID_SNDSTRM			"snd_strm.narc"	# サウンドストリーミング
 	ARCID_WMI			"wmi.narc"	# 通信アイコン
 	ARCID_LAYOUT		"layout.narc"	# レイアウトエディタから吐き出したもの
@@ -68,7 +68,6 @@
 	ARCID_FLDMAP_WINFRAME "test_graphic/winframe.narc"   # ウィンドウフレーム
 	ARCID_FLDMAP_MENU_GRA "test_graphic/menu_gra.narc"   # メニューグラフィック
 	ARCID_FLDMAP_TESTGRIDMAP_ATTR "test_graphic/testgridmap_a.narc" #テストマップ
-	ARCID_FLDMAP_TEST3DP	"test_graphic/fldmap3dp.narc" #テストマップ
 	ARCID_PTC			"spa.narc" #ニンテンパーティクル
 	ARCID_POKEICON		"poke_icon.narc"				#ポケモンアイコン
 	ARCID_MB_TEST		"test_graphic/mb_test.narc"		#マルチブートテスト用(親
