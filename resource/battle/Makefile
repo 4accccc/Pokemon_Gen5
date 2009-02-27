@@ -62,7 +62,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(NARCNAME):	$(IMDFILE:.imd=.nsbmd) $(ICAFILE:.ica=.nsbca)
+$(NARCNAME):	$(IMDFILE:.imd=.nsbmd) $(ICAFILE:.ica=.nsbca) battgra_wb.scr
 	nnsarc -c -l -n -i $(NARCNAME) -S battgra_wb.scr > error
 	$(NAIXCUT) $(NAIXNAME)
 
