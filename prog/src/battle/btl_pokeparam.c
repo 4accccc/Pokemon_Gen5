@@ -626,6 +626,59 @@ void BTL_POKEPARAM_SetPokeSick( BTL_POKEPARAM* pp, PokeSick sick, u8 turn )
 		pp->pokeSickCounter = turn;
 	}
 }
+//=============================================================================================
+/**
+ * 「ねむり」ターン進行　※ポケモン状態異常チェックは、「たたかう」を選んだ場合にのみ行う
+ *
+ * @param   pp			
+ *
+ * @retval  BOOL		目が覚めた場合はTrue
+ */
+//=============================================================================================
+BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp )
+{
+	GF_ASSERT(pp->pokeSick == POKESICK_NEMURI);
+
+	{
+		u8 n = 1;
+		if( pp->tokusei == POKETOKUSEI_HAYAOKI )
+		{
+			n = 2;
+		}
+
+		if( pp->pokeSickCounter > n )
+		{
+			pp->pokeSickCounter--;
+		}
+		else
+		{
+			pp->pokeSickCounter = 0;
+		}
+	}
+
+	return pp->pokeSickCounter == 0;
+}
+//=============================================================================================
+/**
+ * 全状態異常のターンチェック処理
+ *
+ * @param   pp		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
+{
+	switch( pp->pokeSick ){
+	case POKESICK_DOKU:
+		if( (pp->pokeSickCounter!=0) && (pp->pokeSickCounter < BTL_MOUDOKU_COUNT_MAX) )
+		{
+			pp->pokeSickCounter++;
+		}
+		break;
+	}
+}
+
+
 
 //--------------------------------------------------------------------------
 /**

@@ -31,7 +31,6 @@
 /*--------------------------------------------------------------------------*/
 enum {
 	SERVER_CMD_SIZE_MAX = 1024,
-
 	CLIENT_DISABLE_ID = 0xff,
 };
 
@@ -40,6 +39,7 @@ enum {
 	QUITSTEP_REQ,
 	QUITSTEP_CORE,
 };
+
 
 //--------------------------------------------------------------
 /**
@@ -991,6 +991,7 @@ static void scput_Fight( BTL_SERVER* server, u8 attackClientID, u8 posIdx, const
 			}
 		}
 	}
+
 // ワザ出し成功判定
 	if( !scEvent_CheckWazaExecute(server, fep, attacker, atClient ) )
 	{
@@ -1475,12 +1476,20 @@ static u16 svflowsub_damage_calc_core( BTL_SERVER* server, FIGHT_EVENT_PARAM* fe
 	// タイプ相性計算
 	fep->realDamage = BTL_CALC_AffDamage( fep->rawDamage, typeAff );
 
+	// やけど補正
+	if( fep->wazaDamageType == WAZADATA_DMG_PHYSIC )
+	{
+		if( BTL_POKEPARAM_GetPokeSick(attacker) == POKESICK_YAKEDO )
+		{
+			fep->realDamage = (fep->realDamage * BTL_YAKEDO_DAMAGE_RATIO) / 100;
+		}
+	}
+
 	// 最低、１はダメージを与える
 	if( fep->realDamage == 0 )
 	{
 		fep->realDamage = 1;
 	}
-
 
 	BTL_Printf("タイプ相性:%02d -> ダメージ値：%d\n", typeAff, fep->realDamage);
 
@@ -1591,6 +1600,7 @@ static void scput_turncheck_sick( BTL_SERVER* server )
 
 	while( FRONT_POKE_SEEK_GetNext( &fpsw, server, &bpp ) )
 	{
+		BTL_POKEPARAM_WazaSick_TurnCheck( bpp );
 		fep->sick = BTL_POKEPARAM_GetPokeSick( bpp );
 		fep->sickDamage = BTL_POKEPARAM_CalcSickDamage( bpp );
 		if( fep->sick != POKESICK_NULL && fep->sickDamage )
@@ -1745,40 +1755,37 @@ static BOOL scEvent_CheckWazaExecute( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep
 
 	do {
 		sick = BTL_POKEPARAM_GetPokeSick( attacker );
-		if( sick == POKESICK_NEMURI )
-		{
-			fep->wazaExecuteFlag = FALSE;
-			fep->wazaFailReason = SV_WAZAFAIL_NEMURI;
+
+		switch( sick ){
+		case POKESICK_NEMURI:
+			if( !BTL_POKEPARAM_Nemuri_CheckWake(attacker) )
+			{
+				fep->wazaExecuteFlag = FALSE;
+				fep->wazaFailReason = SV_WAZAFAIL_NEMURI;
+			}
 			break;
-		}
-		if( sick == POKESICK_MAHI )
-		{
-			if( GFL_STD_MtRand(100) < 25 )
+		case POKESICK_MAHI:
+			if( GFL_STD_MtRand(100) < BTL_MAHI_EXE_RATIO )
 			{
 				fep->wazaExecuteFlag = FALSE;
 				fep->wazaFailReason = SV_WAZAFAIL_MAHI;
-				break;
 			}
-		}
-		if( sick == POKESICK_KOORI )
-		{
-			if( GFL_STD_MtRand(100) >= 25 )
+			break;
+		case POKESICK_KOORI:
+			if( GFL_STD_MtRand(100) >= BTL_KORI_MELT_RATIO )
 			{
 				fep->wazaExecuteFlag = FALSE;
 				fep->wazaFailReason = SV_WAZAFAIL_KOORI;
-				break;
 			}
-
+			else
 			{
 				u8 pokeID = BTL_POKEPARAM_GetID( attacker );
 				BTL_POKEPARAM_SetPokeSick( attacker, POKESICK_NULL, 0 );
 				SCQUE_PUT_OP_SetSick( server->que, pokeID, POKESICK_NULL, 0 );
 				SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_KoriMelt, pokeID );
 			}
+			break;
 		}
-
-		fep->wazaExecuteFlag = TRUE;
-		fep->wazaFailReason = SV_WAZAFAIL_NULL;
 
 	}while(0);
 
