@@ -104,17 +104,85 @@ def FileWrite(bin_file, data, code)
 	bin_file.write(pack_str)
 end
 
+
+##	エラーを定義
+class DataTypeError < Exception; end
+
+##	エリアID生成用
+class AreaIDMaker
+	def initialize(filename)
+		@area_count = 0
+		@area_names = {}
+		@before_name = ""
+		@season_count = 0
+
+		@wf = File.open(filename, "w")
+		@wf.printf("//このファイルはコンバータにより生成されます\n")
+		@wf.printf("enum {\n")
+	end
+
+	def close
+		@wf.printf("\tAREA_ID_MAX\n");
+		@wf.printf("};")
+		@wf.close
+	end
+
+	def putLine(name)
+		raise DataTypeError, "#{name}が多重定義されています" if @area_names.has_key?(name)
+		@area_names[name] = @area_count
+		@wf.printf("\t%-24s = %3d,\n",name.upcase, @area_count)
+	end
+
+	def putAreaName(column)
+		area_id = column[COL_AREANAME]
+		season_id = column[COL_SEASONID]
+		case season_id
+		when "SPRING"
+			raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい" if @season_count != 0
+			putLine(area_id)
+			putLine(area_id + "_" + season_id)
+			@season_count += 1
+			@before_name = area_id
+		when "SUMMER"
+			raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい" if @season_count != 1
+			raise DataTypeError, "#{area_id}指定は#{season_id}に不要です" if area_id != ""
+			putLine(@before_name + "_" + season_id)
+			@season_count += 1
+		when "AUTUMN"
+			raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい" if @season_count != 2
+			raise DataTypeError, "#{area_id}指定は#{season_id}に不要です" if area_id != ""
+			putLine(@before_name + "_" + season_id)
+			@season_count += 1
+		when "WINTER"
+			raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい" if @season_count != 3
+			raise DataTypeError, "#{area_id}指定は#{season_id}に不要です" if area_id != ""
+			putLine(@before_name + "_" + season_id)
+			@season_count = 0
+			@before_name = ""
+		when "NO"
+			raise DataTypeError, "#{area_id}の直前がおかしい" if @season_count != 0
+			putLine(area_id)
+			@season_count = 0
+			@before_name = ""
+		else
+			raise DataTypeError, "季節指定に使えない'#{season_id}'が#{area_id}にありました"
+		end
+		@area_count += 1
+	end
+
+end
+
+
 #------------------------------------------------------------------------------
 #	コンバート本体
 #------------------------------------------------------------------------------
 
 area_tbl_file = File.open(ARGV[0],"r")
-area_id_h = File.open(TARGET_HEADER_FILENAME, "w")
+#area_id_h = File.open(TARGET_HEADER_FILENAME, "w")
+id_file = AreaIDMaker.new(TARGET_HEADER_FILENAME)
+#area_id_h.printf("//このファイルはコンバータにより生成されます\n")
+#area_id_h.printf("enum {\n")
 
-area_id_h.printf("//このファイルはコンバータにより生成されます\n")
-area_id_h.printf("enum {\n")
-
-area_vec =[]
 build_vec = []
 tex_vec = []
 g_anm_vec = []
@@ -131,13 +199,11 @@ area_count = 0
 while line = area_tbl_file.gets
 	column = line.split "\t"
 
+	#area_name = getAreaName(column)
 	#エリアＩＤ列挙
-	area_id_h.printf("\t%-24s = %3d,\n",column[COL_AREANAME].upcase, area_count)
+	#area_id_h.printf("\t%-24s = %3d,\n",area_name.upcase, area_count)
+	id_file.putAreaName(column)
 
-	#小文字化
-	bin_file_name = "#{column[COL_AREANAME]}.bin".downcase
-	#エントリ
-	EntryVec(area_vec, bin_file_name)
 	#binファイル作成
 	#データ書き込み
 	bm_id = EntryVec(build_vec,column[COL_BMNAME])	#モデル
@@ -166,8 +232,9 @@ end
 total_bin_file.close
 total_txt_file.close
 #テイル作成
-area_id_h.printf("\tAREA_ID_MAX\n");
-area_id_h.printf("};")
+#area_id_h.printf("\tAREA_ID_MAX\n");
+#area_id_h.printf("};")
+id_file.close
 
 #	//配置
 MakeScript(build_vec, "build_list.txt", "dat" );

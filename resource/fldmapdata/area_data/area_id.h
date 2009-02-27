@@ -2,6 +2,7 @@
 enum {
 	AREA_ID_FIELD            =   0,
 	AREA_ID_ROOM             =   1,
+	AREA_ID_OUT01            =   2,
 	AREA_ID_OUT01_SPRING     =   2,
 	AREA_ID_OUT01_SUMMER     =   3,
 	AREA_ID_OUT01_AUTUMN     =   4,
