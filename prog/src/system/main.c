@@ -127,6 +127,9 @@ static	void	SkeltonHBlankFunc(void)
 //------------------------------------------------------------------
 static	void	SkeltonVBlankFunc(void)
 {
+	CPContext context;
+	CP_SaveContext( &context );	// œZŠí‚Ìó‘Ô‚ğ•Û‘¶
+
 	OS_SetIrqCheckFlag(OS_IE_V_BLANK);
 
 	MI_WaitDma(GX_DEFAULT_DMAID);
@@ -141,6 +144,7 @@ static	void	SkeltonVBlankFunc(void)
 #ifdef PM_DEBUG
 	DEBUG_PerformanceEndLine(PERFORMANCE_ID_VBLANK);
 #endif
+	CP_RestoreContext( &context );	// œZŠí‚Ìó‘Ô‚ğ•œŒ³
 }
 
 //------------------------------------------------------------------
