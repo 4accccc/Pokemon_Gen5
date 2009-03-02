@@ -18,11 +18,11 @@
 //==============================================================================
 /// 色番号指定 PRINT のための定数・マクロ定義
 
-typedef u32		GF_PRINTCOLOR;
+typedef u16		GF_PRINTCOLOR;
 
 #define  GF_PRINTCOLOR_MASK			(0xff)
-#define  GF_PRINTCOLOR_LETTER_SHIFT	(16)
-#define  GF_PRINTCOLOR_SHADOW_SHIFT	(8)
+#define  GF_PRINTCOLOR_LETTER_SHIFT	(10)
+#define  GF_PRINTCOLOR_SHADOW_SHIFT	(5)
 #define  GF_PRINTCOLOR_GROUND_SHIFT	(0)
 
 // GF_MSG_PrintColor の引数 GF_PRINT_COLOR を作成するためのマクロ（ 文字色、影色、背景色の順に番号を渡す ）

@@ -33,9 +33,9 @@ g2dcvtr mini_fusen_window.nsc
 g2dcvtr mini_fusen_obj.nce -br -ncn
 g2dcvtr mini_fusen_obj.ncl
 g2dcvtr mini_fusen_ccobj.nce -br -ncn
-g2dcvtr mini_fusen_ccobj.ncl -pcm
+g2dcvtr mini_fusen_ccobj.ncl
 g2dcvtr aim.nce -br -ncn
-g2dcvtr aim.ncl -pcm
+g2dcvtr aim.ncl
 
 
 echo g3dコンバート

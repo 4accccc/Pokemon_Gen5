@@ -60,7 +60,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lsources) $(gsources) $(esources) $(ssources) $(isources) $(icasources)
+$(targetname).narc: $(lsources) $(gsources) $(esources) $(ssources) $(isources) $(icasources) conv.bat makefile *.lst
 	conv.bat
 	$(NAIXCUT) $(targetname)_def.h
 endif

@@ -692,7 +692,7 @@ void BR_ColorChange( BB_WORK* wk, int id )
 
 static int BR_print_x_Get( GFL_BMPWIN* win, STRBUF* str )
 {
-	int len = FontProc_GetPrintStrWidth( FONT_SYSTEM, str, 0 );
+	int len = PRINTSYS_GetStrWidth( str, GFL_FONT* font/*FONT_SYSTEM*/, 0 );
 	int x	= ( GF_BGL_BmpWinGet_SizeX( win ) * 8 - len ) / 2;
 	
 	return x;

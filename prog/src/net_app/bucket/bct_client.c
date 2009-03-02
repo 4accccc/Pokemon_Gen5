@@ -2847,7 +2847,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 				GF_BGL_BmpWinSet_PosX( &namebmpwin, name_x );	// 位置設定
 				GF_BGL_BmpWinSet_PosY( &namebmpwin, name_y );
 				namebmpwin.chrofs = namebmp_cgx;				// cgx設定
-				namestrsize = FontProc_GetPrintStrWidth( FONT_SYSTEM, p_namestr, 0 );	// 表示位置設定
+				namestrsize = PRINTSYS_GetStrWidth( p_namestr, GFL_FONT* font/*FONT_SYSTEM*/, 0 );	// 表示位置設定
 				draw_x		= ((BCT_START_NAME_BMP_WINSIZ_X*8) - namestrsize) / 2;	// 中央表示
 				GF_STR_PrintColor( &namebmpwin, FONT_SYSTEM, p_namestr, 
 						draw_x, 0,

@@ -2819,7 +2819,7 @@ static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, 
 	MSGMAN_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
-	strsize = FontProc_GetPrintStrWidth( FONT_SYSTEM, p_wk->p_str, 0 );
+	strsize = PRINTSYS_GetStrWidth( p_wk->p_str, GFL_FONT* font/*FONT_SYSTEM*/, 0 );
 	draw_x = x - strsize;
 	if( draw_x < 0 ){
 		draw_x = 0;
@@ -4268,7 +4268,7 @@ static void MNGM_TITLELOGO_InStart( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk, u3
 	FontProc_LoadFont( FONT_BUTTON, heapID );	//ボタンフォントのロード
 
 	// 中央に表示する
-	x_size	= FontProc_GetPrintStrWidth( FONT_BUTTON, p_wk->p_str, 0 );
+	x_size	= PRINTSYS_GetStrWidth( p_wk->p_str, GFL_FONT* font/*FONT_BUTTON*/, 0 );
 	draw_x	= (MNGM_TITLELOGO_BMP_SIZXDOT/2) - (x_size/2);
 
 	GF_STR_PrintColor(

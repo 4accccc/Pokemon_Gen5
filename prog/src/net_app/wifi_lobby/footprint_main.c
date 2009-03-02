@@ -2452,7 +2452,7 @@ static void FontLenGet(const STRBUF *str, FONT_TYPE font_type, int *ret_dot_len,
 	int dot_len, char_len;
 	
 	//文字列のドット幅から、使用するキャラ数を算出する
-	dot_len = FontProc_GetPrintStrWidth(font_type, str, 0);
+	dot_len = PRINTSYS_GetStrWidth(str, GFL_FONT* font/*font_type*/, 0);
 	char_len = dot_len / 8;
 	if(FX_ModS32(dot_len, 8) != 0){
 		char_len++;

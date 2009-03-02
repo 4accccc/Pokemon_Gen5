@@ -6306,7 +6306,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrintRightSide( WFLBY_TR_CARD* p_wk, W
 	// •\Ž¦
 	p_str = WFLBY_ROOM_Msg_Get( p_msg, WFLBY_DEFMSG_TYPE_HIROBA, strid );
 
-	strsize = FontProc_GetPrintStrWidth( FONT_SYSTEM, p_str, 0 );
+	strsize = PRINTSYS_GetStrWidth( p_str, GFL_FONT* font/*FONT_SYSTEM*/, 0 );
 
 	draw_x = x - strsize;
 	if( draw_x < 0 ){

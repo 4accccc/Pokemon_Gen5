@@ -2480,7 +2480,7 @@ static void ANKETO_OUTPUT_DrawTitle( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, 
 	p_str = ANKETO_MsgManGetStr( p_msg, ANKETO_MSGMAN_MSG, msgidx );
 
 	// ƒZƒ“ƒ^ƒŠƒ“ƒO
-	width = FontProc_GetPrintStrWidth( FONT_TALK, p_str, 0 );
+	width = PRINTSYS_GetStrWidth( p_str, GFL_FONT* font/*FONT_TALK*/, 0 );
 	x = ((ANKETO_OUTPUTWIN_TITLE_SIZX*8) - width) / 2;
 	GF_STR_PrintColor( &p_wk->win[ANKETO_OUTPUT_BMP_TITLE], 
 			FONT_TALK, p_str, x, 4,
@@ -2540,7 +2540,7 @@ static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION
 		
 		ANKETO_MsgManSetMyName( p_msg, 0, heapID );
 		p_str = ANKETO_MsgManGetStr( p_msg, ANKETO_MSGMAN_MSG, msg_survey_monitor_a_04_pselect );
-		str_width	= FontProc_GetPrintStrWidth( FONT_TALK, p_str, 0 );
+		str_width	= PRINTSYS_GetStrWidth( p_str, GFL_FONT* font/*FONT_TALK*/, 0 );
 		write_x		= ((ANKETO_OUTPUTWIN_MY_NAME_WRITE_SIZE_X - str_width) / 2);
 		
 		GF_STR_PrintColor( &p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY], 
@@ -2549,7 +2549,7 @@ static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION
 
 		// “š‚¦‚Ì•¶Žš—ñ‚ð‘‚«ž‚Þ
 		p_str = ANKETO_QUESTION_DATA_GetAnswerStr( cp_data, p_msg, cp_answer->select );
-		str_width	= FontProc_GetPrintStrWidth( FONT_TALK, p_str, 0 );
+		str_width	= PRINTSYS_GetStrWidth( p_str, GFL_FONT* font/*FONT_TALK*/, 0 );
 		write_x		= ((ANKETO_OUTPUTWIN_MY_ANSWER_WRITE_SIZE_X - str_width) / 2);
 		
 		GF_STR_PrintColor( &p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY], 

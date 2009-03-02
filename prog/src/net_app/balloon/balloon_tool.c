@@ -410,10 +410,18 @@ static const GFL_CLWK_DATA CounterWindowObjParam = {
 };
 
 ///タッチペンのアクターヘッダ(メイン画面用)
-static const GFL_CLWK_DATA TouchPenObjParam = {
-	0, 0,		//pos_x, pos_y
-	0, 			//anmseq
-	BALLOON_SOFTPRI_TOUCH_PEN, BALLOON_BGPRI_TOUCH_PEN,	//softpri, bgpri
+static const GFL_CLWK_AFFINEDATA TouchPenObjParam = {
+	{//GFL_CLWK_DATA clwkdata;		// 基本データ
+		0, 0,		//pos_x, pos_y
+		0, 			//anmseq
+		BALLOON_SOFTPRI_TOUCH_PEN, BALLOON_BGPRI_TOUCH_PEN,	//softpri, bgpri
+	},
+	0,								// アフィンｘ座標
+	0,								// アフィンｙ座標
+	FX32_ONE/2,						// 拡大ｘ値
+	FX32_ONE/2,						// 拡大ｙ値
+	0,								// 回転角度(0～0xffff 0xffffが360度)
+	CLSYS_AFFINETYPE_DOUBLE,		// 上書きアフィンタイプ（CLSYS_AFFINETYPE）
 };
 
 //--------------------------------------------------------------
@@ -2986,89 +2994,74 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
  * @param   y_char_len		BMPのYサイズ(キャラ単位)
  */
 //--------------------------------------------------------------
-#if WB_TEMP_FIX
-void BalloonTool_FontOamCreate(CATS_RES_PTR crp, 
-	FONTOAM_SYS_PTR fontoam_sys, BALLOON_FONTACT *fontact, const STRBUF *str, 
-	FONT_TYPE font_type, PRINTSYS_LSB color, int pal_offset, int pal_id, 
-	int x, int y, int pos_center, int bg_pri, int soft_pri, int y_char_len)
+void BalloonTool_FontOamCreate(PRINT_QUE *printQue, BMPOAM_SYS_PTR bsp, 
+	BALLOON_FONTACT *fontact, const STRBUF *str, GFL_FONT *font, 
+	PRINTSYS_LSB color, u32 pltt_index, u32 pal_offset, int x, int y, int pos_center,
+	u8 bg_pri, u8 soft_pri, int y_char_len)
 {
-	FONTOAM_INIT finit;
-	GFL_BMPWIN* bmpwin;
-	CHAR_MANAGER_ALLOCDATA cma;
-	int vram_size;
-	FONTOAM_OBJ_PTR fontoam;
+	BMPOAM_ACT_DATA head;
+	GFL_BMP_DATA *bmp;
 	int font_len, char_len;
-	int margin = 0;
 	
 	//文字列のドット幅から、使用するキャラ数を算出する
-	{
-		font_len = FontProc_GetPrintStrWidth(font_type, str, margin);
-		char_len = font_len / 8;
-		if(FX_ModS32(font_len, 8) != 0){
-			char_len++;
-		}
+	font_len = PRINTSYS_GetStrWidth(str, font, 0);
+	char_len = font_len / 8;
+	if(FX_ModS32(font_len, 8) != 0){
+		char_len++;
 	}
 
 	//BMP作成
-	{
-		GF_BGL_BmpWinInit(&bmpwin);
-		GF_BGL_BmpWinObjAdd(&bmpwin, char_len, y_char_len, 0, 0);
-		GF_STR_PrintExpand(&bmpwin, font_type, str, 0, 0, MSG_NO_PUT, color, 
-			margin, 0, NULL);
-//		GF_STR_PrintColor(&bmpwin, font_type, str, 0, 0, MSG_NO_PUT, color, NULL );
-	}
+	bmp = GFL_BMP_Create(char_len, y_char_len, GFL_BMP_16_COLOR, HEAPID_BALLOON);
+	PRINTSYS_PrintQueColor(printQue, bmp, 0, 0, str, font, color);
 
-	vram_size = FONTOAM_NeedCharSize(&bmpwin, NNS_G2D_VRAM_TYPE_2DMAIN,  HEAPID_BALLOON);
-	CharVramAreaAlloc(vram_size, CHARM_CONT_AREACONT, NNS_G2D_VRAM_TYPE_2DMAIN, &cma);
-	
 	//座標位置修正
 	if(pos_center == TRUE){
 		x -= font_len / 2;
 	}
-	y += MAIN_SURFACE_Y_INTEGER;// - 8;
 	
-	finit.fontoam_sys = fontoam_sys;
-	finit.bmp = &bmpwin;
-	finit.clact_set = CATS_GetClactSetPtr(crp);
-	finit.pltt = CATS_PlttProxy(crp, pal_id);
-	finit.parent = NULL;
-	finit.char_ofs = cma.alloc_ofs;
-	finit.x = x;
-	finit.y = y;
-	finit.bg_pri = bg_pri;
-	finit.soft_pri = soft_pri;
-	finit.draw_area = NNS_G2D_VRAM_TYPE_2DMAIN;
-	finit.heap = HEAPID_BALLOON;
-	
-	fontoam = FONTOAM_Init(&finit);
-	if(pal_offset != 0){
-		FONTOAM_SetPaletteOffset(fontoam, pal_offset);
-	}
-	FONTOAM_SetMat(fontoam, x, y);
-	
-	//解放処理
-	GFL_BMPWIN_Delete(&bmpwin);
-	
-	fontact->fontoam = fontoam;
-	fontact->cma = cma;
-	fontact->len = font_len;
+	//フォントアクター作成
+	head.bmp = bmp;
+	head.x = x;
+	head.y = y;
+	head.pltt_index = pltt_index;
+	head.pal_offset = pal_offset;
+	head.soft_pri = soft_pri;
+	head.bg_pri = bg_pri;
+	head.setSerface = CLWK_SETSF_NONE;
+	head.draw_type = CLSYS_DRAW_MAIN;
+	fontact->bact = BmpOam_ActorAdd(bsp, &head);
+	fontact->bmp = bmp;
 }
-#endif
 
 //--------------------------------------------------------------
 /**
- * @brief   フォントOAMを削除する
- * @param   fontact		フォントアクターへのポインタ
+ * @brief   フォントOAMを削除
+ * @param   fontact		フォントOAMへのポインタ
  */
 //--------------------------------------------------------------
 void Balloon_FontOamDelete(BALLOON_FONTACT *fontact)
 {
-#if WB_TEMP_FIX
-	FONTOAM_Delete(fontact->fontoam);
-	CharVramAreaFree(&fontact->cma);
-	
-	fontact->fontoam = NULL;
-#endif
+	BmpOam_ActorDel(fontact->bact);
+	if(fontact->bmp != NULL){
+		GFL_BMP_Delete(fontact->bmp);
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   フォントOAMのBMP転送処理
+ *
+ * @param   game		
+ * @param   fontact		フォントOAMへのポインタ
+ */
+//--------------------------------------------------------------
+void Balloon_FontOamBmpTrans(BALLOON_GAME_PTR game, BALLOON_FONTACT *fontact)
+{
+	if(fontact->bmp != NULL && PRINTSYS_QUE_IsExistTarget(game->printQue, fontact->bmp) == FALSE){
+		BmpOam_ActorBmpTrans(fontact->bact);
+		GFL_BMP_Delete(fontact->bmp);
+		fontact->bmp = NULL;
+	}
 }
 
 //--------------------------------------------------------------
@@ -3082,7 +3075,8 @@ void Balloon_CounterPosUpdate(BALLOON_COUNTER *counter)
 {
 	int i, dot_pos;
 	int act_len = 16*5;	//1つのアクターの長さ
-	int x, y, y0, y1;
+	s16 x, y;
+	int y0, y1;
 	
 	for(i = 0; i < BALLOON_COUNTER_KETA_MAX; i++){
 		dot_pos = counter->number[i];
@@ -3102,11 +3096,9 @@ void Balloon_CounterPosUpdate(BALLOON_COUNTER *counter)
 			y0 = act_len - 16 - (dot_pos - 160);
 			y1 = y0 - act_len;
 		}
-	#if WB_TEMP_FIX
-		FONTOAM_GetMat(counter->fontact[i][BALLOON_COUNTER_0].fontoam, &x, &y);
-		FONTOAM_SetMat(counter->fontact[i][BALLOON_COUNTER_0].fontoam, x, COUNTER_Y - y0);
-		FONTOAM_SetMat(counter->fontact[i][BALLOON_COUNTER_1].fontoam, x, COUNTER_Y - y1);
-	#endif
+		BmpOam_ActorGetPos(counter->fontact[i][BALLOON_COUNTER_0].bact, &x, &y);
+		BmpOam_ActorSetPos(counter->fontact[i][BALLOON_COUNTER_0].bact, x, COUNTER_Y - y0);
+		BmpOam_ActorSetPos(counter->fontact[i][BALLOON_COUNTER_1].bact, x, COUNTER_Y - y1);
 	}
 }
 
@@ -3307,7 +3299,6 @@ GFL_CLWK* CounterWindow_ActorCreate(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 void CounterDummyNumber_ActorCreate(BALLOON_GAME_PTR game)
 {
-#if WB_TEMP_FIX
 	//-- カウンター --//
 	STRBUF *str0;
 	int i;
@@ -3315,17 +3306,17 @@ void CounterDummyNumber_ActorCreate(BALLOON_GAME_PTR game)
 	
 	number = game->my_total_air;
 	for(i = 0; i < BALLOON_COUNTER_KETA_MAX; i++){
-		GF_ASSERT(game->counter.fontact_dummy[i].fontoam == NULL);
+		GF_ASSERT(game->counter.fontact_dummy[i].bact == NULL);
 		str0 = GFL_MSG_CreateString(game->msgman, msg_balloon_num0 + (number % 10));
 		number /= 10;
-		BalloonTool_FontOamCreate(game->crp, game->fontoam_sys,
-			&game->counter.fontact_dummy[i], str0, FONT_SYSTEM, 
-			COUNTER_FONT_COLOR, 0, PLTTID_COUNTER, 
+		BalloonTool_FontOamCreate(game->printQue, game->bsp, 
+			&game->counter.fontact_dummy[i], str0, game->fontHandle, 
+			COUNTER_FONT_COLOR, game->pltt_id[PLTTID_COUNTER], 0, 
 			(COUNTER_BASE_X + COUNTER_X_SPACE * (BALLOON_COUNTER_KETA_MAX-1)) - i*COUNTER_X_SPACE,
-			COUNTER_Y, FALSE, BALLOON_BGPRI_DUMMY_COUNTER, BALLOON_SOFTPRI_COUNTER, 2*1);
+			COUNTER_Y, FALSE,
+			BALLOON_BGPRI_DUMMY_COUNTER, BALLOON_SOFTPRI_COUNTER, 2*1);
 		GFL_STR_DeleteBuffer(str0);
 	}
-#endif
 }
 
 //--------------------------------------------------------------
@@ -3337,15 +3328,13 @@ void CounterDummyNumber_ActorCreate(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 void CounterDummyNumber_ActorDelete(BALLOON_GAME_PTR game)
 {
-#if WB_TEMP_FIX
 	int i;
 	
 	for(i = 0; i < BALLOON_COUNTER_KETA_MAX; i++){
-		if(game->counter.fontact_dummy[i].fontoam != NULL){
+		if(game->counter.fontact_dummy[i].bact != NULL){
 			Balloon_FontOamDelete(&game->counter.fontact_dummy[i]);
 		}
 	}
-#endif
 }
 
 //--------------------------------------------------------------
@@ -3371,7 +3360,7 @@ GFL_CLWK* TouchPen_ActorCreate(BALLOON_GAME_PTR game)
 {
 	GFL_CLWK* cap;
 
-	cap = GFL_CLACT_WK_Create(game->clunit, game->cgr_id[CHARID_TOUCH_PEN], 
+	cap = GFL_CLACT_WK_CreateAffine(game->clunit, game->cgr_id[CHARID_TOUCH_PEN], 
 		game->pltt_id[PLTTID_TOUCH_PEN], 
 		game->cell_id[CELLID_TOUCH_PEN], &TouchPenObjParam, CLSYS_DEFREND_MAIN, HEAPID_BALLOON);
 	GFL_CLACT_WK_SetDrawEnable(cap, FALSE);

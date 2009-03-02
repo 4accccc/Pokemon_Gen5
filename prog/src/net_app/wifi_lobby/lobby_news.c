@@ -2127,7 +2127,7 @@ static void NEWSDRAW_TopicStart( NEWSDRAW_TOPIC* p_wk, const STRBUF* cp_str, u32
 // BTS通信バグ601の対処	tomoya
 //	p_wk->count_max	= speed * STRBUF_GetLen( cp_str );	// 文字数から最大カウントを求める
 	p_wk->count_max	= speed;
-	p_wk->str_siz	= FontProc_GetPrintStrWidth( FONT_TALK, cp_str, 0 );
+	p_wk->str_siz	= PRINTSYS_GetStrWidth( cp_str, GFL_FONT* font/*FONT_TALK*/, 0 );
 	p_wk->str_siz	+= NEWSDRAW_TOPIC_YOHAKU;	// 上の余白部分
 
 	// 文字列長さオーバー

@@ -389,13 +389,8 @@ typedef struct{
 
 ///フォントOAM用の構造体定義
 typedef struct{
-#if WB_TEMP_FIX
-	FONTOAM_OBJ_PTR fontoam;		///<フォントOAM
-	CHAR_MANAGER_ALLOCDATA cma;		///<フォントOAMキャラ領域データ
-	u16 len;						///<フォントのドット長
-#else
-	u32 temp;
-#endif
+	BMPOAM_ACT_PTR bact;
+	GFL_BMP_DATA *bmp;
 }BALLOON_FONTACT;
 
 ///カウンター制御構造体定義
