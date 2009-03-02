@@ -418,8 +418,8 @@ static const GFL_CLWK_AFFINEDATA TouchPenObjParam = {
 	},
 	0,								// アフィンｘ座標
 	0,								// アフィンｙ座標
-	FX32_ONE/2,						// 拡大ｘ値
-	FX32_ONE/2,						// 拡大ｙ値
+	FX32_ONE,						// 拡大ｘ値
+	FX32_ONE,						// 拡大ｙ値
 	0,								// 回転角度(0～0xffff 0xffffが360度)
 	CLSYS_AFFINETYPE_DOUBLE,		// 上書きアフィンタイプ（CLSYS_AFFINETYPE）
 };
@@ -3360,9 +3360,15 @@ GFL_CLWK* TouchPen_ActorCreate(BALLOON_GAME_PTR game)
 {
 	GFL_CLWK* cap;
 
+#if 1
 	cap = GFL_CLACT_WK_CreateAffine(game->clunit, game->cgr_id[CHARID_TOUCH_PEN], 
 		game->pltt_id[PLTTID_TOUCH_PEN], 
 		game->cell_id[CELLID_TOUCH_PEN], &TouchPenObjParam, CLSYS_DEFREND_MAIN, HEAPID_BALLOON);
+#else
+	cap = GFL_CLACT_WK_Create(game->clunit, game->cgr_id[CHARID_TOUCH_PEN], 
+		game->pltt_id[PLTTID_TOUCH_PEN], 
+		game->cell_id[CELLID_TOUCH_PEN], &TouchPenObjParam.clwkdata, CLSYS_DEFREND_MAIN, HEAPID_BALLOON);
+#endif
 	GFL_CLACT_WK_SetDrawEnable(cap, FALSE);
 	GFL_CLACT_WK_AddAnmFrame(cap, FX32_ONE);
 	return cap;
