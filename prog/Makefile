@@ -98,9 +98,16 @@ ifeq	($(USERNAME),ohno)
 CCFLAGS_MSGSTYLE	?= -msgstyle gcc
 endif
 
+#----------------------------------------------------------------------------
 # コンパイル時の警告抑止
+#----------------------------------------------------------------------------
+ifeq	($(USERNAME),tamada)
+CCFLAGS_WARNING	= -w all,noerr,nounusedarg,noextracomma,\
+	nonotused,nofilecaps,nosysfilecaps,noimpl_signedunsigned
+else
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
+endif
 
 #------------------------------------------------------#
 # イクニューモンコンポーネントを追加 by Mori 2005.7.27
@@ -224,7 +231,7 @@ CCFLAGS +=	-thumb
 #	ソースのみのリコンパイル
 #----------------------------------------------------------------------------
 source:
-	-@$(RM) $(GDIRT_CLEAN)
+	-$(RM) $(GDIRT_CLEAN)
 	-$(RM) $(DEPENDDIR)/*.d
 	$(MAKE)
 
@@ -240,4 +247,12 @@ analyze:
 overlaymap:
 	../tools/analyze/overlaymap/overlaymap $(PROJECT_PROGDIR)/bin/$(NITRO_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap
 	#dot -Tpng ../tools/analyze/overlaymap/overlaymap.dot >overlaymap.png
+
+#----------------------------------------------------------------------------
+#	警告フィルタの適用
+#----------------------------------------------------------------------------
+warning:
+	#$(MAKE) source > result.txt
+	$(MAKE) > result.txt
+	ruby ../tools/warning/filter.rb result.txt > fresult.txt
 
