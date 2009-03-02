@@ -127,10 +127,13 @@ include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #----------------------------------------------------------------------------
 #	WiFi定義
 #----------------------------------------------------------------------------
-#include	$(NITRODWC_ROOT)/build/buildtools/commondefs
-#include	$(NITRODWC_ROOT)/build/buildtools/modulerules
+ifeq	($(TWLSDK_PLATFORM),TWL)
+include	$(NITRODWC_ROOT)/build/buildtools/commondefs
+include	$(NITRODWC_ROOT)/build/buildtools/modulerules
+else
 include	$(NITROVCT_ROOT)/build/buildtools/commondefs
 include	$(NITROVCT_ROOT)/build/buildtools/modulerules
+endif
 
 #----------------------------------------------------------------------------
 #	makefileがインクルードするファイルが更新されたらmakelcfが動作するようにした

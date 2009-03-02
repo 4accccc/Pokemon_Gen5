@@ -60,6 +60,7 @@ SRCS	+=		$(SOUNDSRC) \
 				field/event_fieldmap_menu.c \
 				field/event_debug_menu.c \
 				field/event_battle.c \
+				field/event_ircbattle.c \
 				field/field_player.c \
 				field/field_comm/field_comm_data.c \
 				field/field_comm/field_comm_func.c \

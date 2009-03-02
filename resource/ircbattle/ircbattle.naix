@@ -14,7 +14,9 @@ enum {
 	NARC_ircbattle_connect_NCLR = 0,
 	NARC_ircbattle_connect_anm_NCLR = 1,
 	NARC_ircbattle_connect_NCGR = 2,
-	NARC_ircbattle_connect_01_NSCR = 3
+	NARC_ircbattle_connect_sub_NCGR = 3,
+	NARC_ircbattle_connect_01_NSCR = 4,
+	NARC_ircbattle_connect_sub_NSCR = 5
 };
 
 /* NARC_IRCBATTLE_NAIX_ */

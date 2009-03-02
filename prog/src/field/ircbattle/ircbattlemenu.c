@@ -29,6 +29,7 @@
 
 #include "msg/msg_ircbattle.h"
 #include "../event_fieldmap_control.h"	//EVENT_FieldSubProc
+#include "../event_ircbattle.h"
 
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
@@ -503,6 +504,8 @@ static void _modeReportWait(IRC_BATTLE_MENU* pWork)
     _CHANGE_STATE(pWork,NULL);
 }
 
+
+#if 0
 //--------------------------------------------------------------
 //	ワークサイズ取得
 //--------------------------------------------------------------
@@ -542,15 +545,93 @@ GMEVENT_RESULT IRCBATTLE_MENU_Main( GMEVENT *event , int *seq , void *work )
     _workEnd(pWork);
 
     if(pWork->IsIrc){
-//		GAMESYSTEM_EVENT_EntryCheckFunc(pWork->gameSys_, EventIrcBattleCheck, pWork->fieldWork_);
-
-        GMEVENT * newEvent;
-        newEvent = EVENT_FieldSubProc(pWork->gameSys_, pWork->fieldWork_,
-                                      FS_OVERLAY_ID(ircbattlematch), &IrcBattleMatchProcData, NULL);
-        GMEVENT_CallEvent(event, newEvent);
+//        GMEVENT * newEvent;
+  //      newEvent = EVENT_FieldSubProc(pWork->gameSys_, pWork->fieldWork_,
+        //                              FS_OVERLAY_ID(ircbattlematch), &IrcBattleMatchProcData, NULL);
+    //    GMEVENT_CallEvent(event, newEvent);
+      //  return GMEVENT_RES_CONTINUE; //changeするからfinishをかえさない
+        GAMESYSTEM_SetEvent(pWork->gameSys_, EVENT_IrcBattle(pWork->gameSys_, pWork->fieldWork_));
+        return GMEVENT_RES_CONTINUE;
 
     }
+    return GMEVENT_RES_FINISH;
     
-    return GMEVENT_RES_CONTINUE; //changeするからfinishをかえさない
 }
+
+#endif
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   PROCスタート
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x8000 );
+
+    {
+        IRC_BATTLE_MENU *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_BATTLE_MENU ), HEAPID_IRCBATTLE );
+        GFL_STD_MemClear(pWork, sizeof(IRC_BATTLE_MENU));
+        pWork->heapID = HEAPID_IRCBATTLE;
+        _CHANGE_STATE( pWork, _modeInit);
+    }
+    return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   PROCMain
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+    IRC_BATTLE_MENU* pWork = mywk;
+    GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
+
+    StateFunc* state = pWork->state;
+    if(state != NULL){
+        state(pWork);
+        retCode = GFL_PROC_RES_CONTINUE;
+    }
+//	ConnectBGPalAnm_Main(&pWork->cbp);
+
+    return retCode;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   PROCEnd
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+    IRC_BATTLE_MENU* pWork = mywk;
+    EVENT_IRCBATTLE_WORK* pParentWork =pwk;
+    
+    _workEnd(pWork);
+
+//	ConnectBGPalAnm_End(&pWork->cbp);
+	GFL_PROC_FreeWork(proc);
+	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
+    EVENT_IrcBattle_SetEnd(pParentWork);
+
+    return GFL_PROC_RES_FINISH;
+}
+
+//----------------------------------------------------------
+/**
+ *
+ */
+//----------------------------------------------------------
+const GFL_PROC_DATA IrcBattleMenuProcData = {
+	IrcBattleMenuProcInit,
+	IrcBattleMenuProcMain,
+	IrcBattleMenuProcEnd,
+};
+
 

@@ -86,7 +86,7 @@ static GFLNetDevTable netDevTbl={
     _DevIsStartFunc,
     _DevIsConnectFunc,
     _DevIsIdleFunc,
-    NULL, //_DevGetBitmapFunc,
+    _DevGetBitmapFunc, //_DevGetBitmapFunc,
     _DevGetCurrentIDFunc,
     NULL,
     _DevGetErrorFunc, //_DevGetError,
@@ -240,6 +240,21 @@ static BOOL _DevIsIdleFunc(void)
     return GFL_NET_IRC_InitializeFlagGet();
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   BITMAPÇï‘Ç∑
+            ê‘äOê¸ÇÕÇPvsÇPÇ»ÇÃÇ≈
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static u32 _DevGetBitmapFunc(void)
+{
+    if(GFL_NET_IRC_IsConnect()){
+        return 0x03;
+    }
+    return 0;
+}
 
 static BOOL _DevGetSendLockFlagFunc(void)
 {

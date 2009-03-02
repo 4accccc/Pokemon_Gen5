@@ -1093,7 +1093,7 @@ static void WH_StateOutStartParent(void *arg)
         //-----------------------------------
         // ビーコン送信通知
       case WM_STATECODE_BEACON_SENT:
-        NET_PRINT("BEACON_SENT\n");
+//        NET_PRINT("BEACON_SENT\n");
         _pWmInfo->beaconSendNum++;
         break;
 

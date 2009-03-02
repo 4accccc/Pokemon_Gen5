@@ -20,9 +20,12 @@
 
 typedef struct _IRC_BATTLE_MENU  IRC_BATTLE_MENU;
 
-extern int IRCBATTLE_MENU_GetWorkSize(void);
-extern void IRCBATTLE_MENU_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys , FIELD_MAIN_WORK *fieldWork , GMEVENT *event , IRC_BATTLE_MENU *pWork );
-extern GMEVENT_RESULT IRCBATTLE_MENU_Main( GMEVENT *event , int *seq , void *work );
+//extern int IRCBATTLE_MENU_GetWorkSize(void);
+//extern void IRCBATTLE_MENU_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys , FIELD_MAIN_WORK *fieldWork , GMEVENT *event , IRC_BATTLE_MENU *pWork );
+//extern GMEVENT_RESULT IRCBATTLE_MENU_Main( GMEVENT *event , int *seq , void *work );
+
+extern const GFL_PROC_DATA IrcBattleMenuProcData;
+
 
 #endif //IRCBATTLEMENU_H__
 

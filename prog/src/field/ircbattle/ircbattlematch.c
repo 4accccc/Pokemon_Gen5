@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-#include <nitro.h>
 #include <gflib.h>
 #include "arc_def.h"
 #include "net/network_define.h"
@@ -30,11 +29,12 @@
 #include "msg/msg_ircbattle.h"
 #include "ircbattle.naix"
 #include "net_app/connect_anm.h"
+#include "../event_ircbattle.h"
 
 
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
-#define _BRIGHTNESS_SYNC (1)  // フェードのＳＹＮＣは要調整
+#define _BRIGHTNESS_SYNC (2)  // フェードのＳＹＮＣは要調整
 
 // サウンドが出来るまでの仮想
 #define _SE_DESIDE (0)
@@ -52,8 +52,8 @@ static void Snd_SePlay(int a){}
 #define _BUTTON_WIN_CENTERX (16)   // 真ん中
 #define _BUTTON_WIN_CENTERY (13)   // 
 #define _BUTTON_WIN_WIDTH (22)    // ウインドウ幅
-#define _BUTTON_WIN_HEIGHT (3)    // ウインドウ高さ
-#define _BUTTON_WIN_PAL   (12)  // ウインドウ
+#define _BUTTON_WIN_HEIGHT (5)    // ウインドウ高さ
+#define _BUTTON_WIN_PAL   (14)  // ウインドウ
 #define _BUTTON_MSG_PAL   (13)  // メッセージフォント
 
 #define	_BUTTON_WIN_CGX_SIZE   ( 18+12 )
@@ -135,25 +135,25 @@ static void _RecvResultData(const int netID, const int size, const void* pData, 
 // 内部ワーク
 //--------------------------------------------
 ///通信コマンドテーブル
-static const NetRecvFuncTable _CompatiCommPacketTbl[] = {
+static const NetRecvFuncTable _PacketTbl[] = {
     {_RecvFirstData,         NULL},    ///NET_CMD_FIRST
     {_RecvResultData,          NULL},  ///NET_CMD_RESULT
 };
 
-#define _MAXNUM   (4)         // 最大接続人数
+#define _MAXNUM   (2)         // 最大接続人数
 #define _MAXSIZE  (32)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
 static const GFLNetInitializeStruct aGFLNetInit = {
-    _CompatiCommPacketTbl,  // 受信関数テーブル
-    NELEMS(_CompatiCommPacketTbl), // 受信テーブル要素数
+    _PacketTbl,  // 受信関数テーブル
+    NELEMS(_PacketTbl), // 受信テーブル要素数
     NULL,    ///< ハードで接続した時に呼ばれる
     _connectCallBack,    ///< ネゴシエーション完了時にコール
     NULL,   // ユーザー同士が交換するデータのポインタ取得関数
     NULL,   // ユーザー同士が交換するデータのサイズ取得関数
-    _netBeaconGetFunc,  // ビーコンデータ取得関数
-    _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
-    _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
+    IrcBattleBeaconGetFunc,  // ビーコンデータ取得関数
+    IrcBattleBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
+    IrcBattleBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
     NULL,            // 普通のエラーが起こった場合 通信終了
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     _endCallBack,  // 通信切断時に呼ばれる関数
@@ -210,15 +210,10 @@ struct _IRC_BATTLE_MATCH {
     u32 receive_first_param;
     GFL_ARCUTIL_TRANSINFO bgchar;
     GFL_ARCUTIL_TRANSINFO bgchar2;
+    GFL_ARCUTIL_TRANSINFO subchar;
 	CONNECT_BG_PALANM cbp;		// Wifi接続画面のBGパレットアニメ制御構造体
 };
 
-
-typedef struct{
-    int gameNo;   ///< ゲーム種類
-} _testBeaconStruct;
-
-static _testBeaconStruct _testBeacon = { WB_NET_COMPATI_CHECK };
 
 
 enum{
@@ -265,38 +260,6 @@ static void _changeStateDebug(IRC_BATTLE_MATCH* pWork,StateFunc state, int line)
 }
 #endif
 
-//--------------------------------------------------------------
-/**
- * @brief   ビーコンデータ取得関数
- * @param   netID      送ってきたID
- * @param   size       パケットサイズ
- * @param   pData      データ
- * @param   pWork      ワークエリア
- * @param   pHandle    受け取る側の通信ハンドル
- * @retval  none  
- */
-//--------------------------------------------------------------
-
-static void* _netBeaconGetFunc(void* pWork)
-{
-	return &_testBeacon;
-}
-
-///< ビーコンデータサイズ取得関数
-static int _netBeaconGetSizeFunc(void* pWork)
-{
-	return sizeof(_testBeacon);
-}
-
-///< ビーコンデータ取得関数
-static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
-{
-    if(myNo != beaconNo){
-        return FALSE;
-    }
-    return TRUE;
-}
-
 static void _endCallBack(void* pWork)
 {
 	IRC_BATTLE_MATCH *commsys = pWork;
@@ -328,6 +291,16 @@ static void _connectCallBack(void* pWk, int netID)
 }
 
 
+static void _wirelessConnectCallback(void* pWk)
+{
+	IRC_BATTLE_MATCH *pWork = pWk;
+
+    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, _BRIGHTNESS_SYNC);
+    _CHANGE_STATE(pWork,_ircStartTiming);
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   BG領域設定
@@ -344,11 +317,11 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
 		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
 		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJEXTPLTT_0_F,			// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
 		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_0123_E,			// テクスチャパレットスロット
+		GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
 		GX_OBJVRAMMODE_CHAR_1D_32K,	// メインOBJマッピングモード
 		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 	};
@@ -374,29 +347,39 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
 		
 		GFL_BG_SetBGControl(
 			frame, &bgcntText, GFL_BG_MODE_TEXT );
-		GFL_BG_SetVisible( frame, VISIBLE_ON );
-		GFL_BG_SetPriority( frame, 0 );
 		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
 		GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( frame );
 	}
     {
+        int frame = GFL_BG_FRAME0_S;
+		GFL_BG_BGCNT_HEADER TextBgCntDat = {
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+			3, 0, 0, FALSE
+		};
+        GFL_BG_SetBGControl(
+            frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+		GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+//		GFL_BG_LoadScreenReq( frame );
+//        GFL_BG_ClearFrame(frame);
+	}
+    {
         int frame = GFL_BG_FRAME1_S;
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 		};
 		
         GFL_BG_SetBGControl(
             frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
-		GFL_BG_SetVisible( frame, VISIBLE_ON );
-		GFL_BG_SetPriority( frame, 0 );
-		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-        
+//		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
 		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-		GFL_BG_LoadScreenReq( frame );
+//		GFL_BG_LoadScreenReq( frame );
+//        GFL_BG_ClearFrame(frame);
 	}
 }
 
@@ -408,35 +391,32 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MATCH* pWork)
+static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork)
 {
-    int i;
+    int i=0;
     u32 cgx;
     int frame = GFL_BG_FRAME1_S;
+    _WINDOWPOS* pos = wind4;
+//    GFL_FONTSYS_SetColor( 1, 1, 1 );
 
-    pWork->windowNum = num;
+    GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 
+                                  0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+
     
-    for(i=0;i < num;i++){
-        _WINDOWPOS* pos = wind4;
-        
-        pWork->buttonWin[i] = GFL_BMPWIN_Create(
-            frame,
-            pos[i].leftx, pos[i].lefty,
-            pos[i].width, pos[i].height,
-            _BUTTON_WIN_PAL, GFL_BMP_CHRAREA_GET_F);
-        GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
-        GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
-        GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-        BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2), _BUTTON_WIN_PAL );
+    pWork->buttonWin[i] = GFL_BMPWIN_Create(
+        frame,
+        ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT,
+        _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
+    GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
+    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+    BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2), _BUTTON_WIN_PAL );
 
-        // システムウインドウ枠描画
+    GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
+//    GFL_FONTSYS_SetColor( 1, 1, 1 );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
+    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
 
-        GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
-        GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
-        PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
-        GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-
-    }
 }
 
 //----------------------------------------------------------------------------
@@ -453,11 +433,7 @@ static void _buttonWindowDelete(IRC_BATTLE_MATCH* pWork)
 {
     int i;
 
-    for(i=0;i < pWork->windowNum;i++){
-        GFL_BMPWIN_Delete(pWork->buttonWin[i]);
-        pWork->buttonWin[i] = NULL;
-    }
-    pWork->windowNum = 0;
+    GFL_BMPWIN_Delete(pWork->buttonWin[0]);
 }
 
 
@@ -484,6 +460,7 @@ static void _graphicEnd(IRC_BATTLE_MATCH* pWork)
 //------------------------------------------------------------------------------
 static void _modeInit(IRC_BATTLE_MATCH* pWork)
 {
+    GFL_FONTSYS_SetDefaultColor();
     _graphicInit(pWork);
     _createBg(pWork);
 
@@ -496,6 +473,8 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
         
         GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_connect_NCLR,
                                           PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
+        GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_connect_NCLR,
+                                          PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
         // メイン画面BG2キャラ転送
         pWork->bgchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle,
                                                                      NARC_ircbattle_connect_NCGR, 
@@ -505,6 +484,17 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
                                                   GFL_BG_FRAME1_M, 0,
                                                   GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), 0, 0,
                                                   pWork->heapID);
+        // サブ画面BG0キャラ転送
+        pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_ircbattle_connect_sub_NCGR,
+                                                                      GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
+
+        // サブ画面BG0スクリーン転送
+        GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_connect_sub_NSCR,
+                                                  GFL_BG_FRAME0_S, 0,
+                                                  GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                                  pWork->heapID);
+
+
         //パレットアニメシステム作成
         ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_ircbattle_connect_anm_NCLR, pWork->heapID);
 		GFL_ARC_CloseDataHandle( p_handle );
@@ -515,6 +505,16 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
     pWork->bgchar2 = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
 
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
+
+    {
+        int aMsgBuff[]={IRCBTL_STR_09};
+        _msgWindowCreate(aMsgBuff, pWork);
+    }
+    
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+
     
     _CHANGE_STATE(pWork,_fadeInWait);
 }
@@ -542,9 +542,6 @@ static void _fadeInWait(IRC_BATTLE_MATCH* pWork)
 //------------------------------------------------------------------------------
 static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
 {
-    int aMsgBuff[]={IRCBTL_STR_09};
-    
-    _buttonWindowCreate(1, aMsgBuff, pWork);
 
     {
         GFLNetInitializeStruct net_ini_data;
@@ -560,7 +557,7 @@ static void _workEnd(IRC_BATTLE_MATCH* pWork)
 {
     GFL_FONTSYS_SetDefaultColor();
 
-//    _buttonWindowDelete(pWork);
+    _buttonWindowDelete(pWork);
     GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
     GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2),
                              GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar2));
@@ -583,7 +580,7 @@ static void _workEnd(IRC_BATTLE_MATCH* pWork)
 static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
 {
     if(GFL_NET_IsInit() == TRUE){	//初期化終了待ち
-        GFL_NET_ChangeoverConnect(NULL); // 自動接続
+        GFL_NET_ChangeoverConnect(_wirelessConnectCallback); // 自動接続
         _CHANGE_STATE(pWork,_ircMatchWait);
     }
 }
@@ -597,10 +594,10 @@ static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 {
     
-    if(pWork->connect_ok == TRUE){
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_START_TIMING);
-        _CHANGE_STATE(pWork,_ircStartTiming);
-    }
+   // if(pWork->connect_ok == TRUE){
+//		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_START_TIMING);
+       // _CHANGE_STATE(pWork,_ircStartTiming);
+//    }
 
 }
 
@@ -613,11 +610,14 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 static void _ircStartTiming(IRC_BATTLE_MATCH* pWork)
 {
 
-    if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_START_TIMING) == TRUE){
-        OS_TPrintf("タイミング取り成功\n");
-        OS_TPrintf("接続人数 = %d\n", GFL_NET_GetConnectNum());
+  //  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_START_TIMING) == TRUE){
+    //    OS_TPrintf("タイミング取り成功\n");
+      //  OS_TPrintf("接続人数 = %d\n", GFL_NET_GetConnectNum());
+//    }
+	// ワイプ終了待ち
+	if( GFL_FADE_CheckFade() ){
+        _CHANGE_STATE(pWork,NULL);
     }
-
 
 }
 
@@ -727,11 +727,16 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
 static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
     IRC_BATTLE_MATCH* pWork = mywk;
+    EVENT_IRCBATTLE_WORK* pParentWork = pwk;
+
     _workEnd(pWork);
 
 	ConnectBGPalAnm_End(&pWork->cbp);
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
+
+    EVENT_IrcBattle_SetEnd(pParentWork);
+
 
     return GFL_PROC_RES_FINISH;
 }

@@ -27,6 +27,7 @@
 #include "field_comm/field_comm_main.h"
 #include "field_comm/field_comm_debug.h"
 #include "ircbattle/ircbattlemenu.h"
+#include "event_ircbattle.h"
 
 //======================================================================
 //	define
@@ -422,12 +423,34 @@ static BOOL DMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
 	IRC_BATTLE_MENU *work;
 	
-	GMEVENT_Change( event,
-		IRCBATTLE_MENU_Main, IRCBATTLE_MENU_GetWorkSize() );
+//	GMEVENT_Change( event,
+//		IRCBATTLE_MENU_Main, IRCBATTLE_MENU_GetWorkSize() );
+	
+//	work = GMEVENT_GetEventWork( event );
+	//IRCBATTLE_MENU_InitWork( heapID , gameSys , fieldWork , event , work );
+//    GAMESYSTEM_SetEvent(gameSys, EVENT_IrcBattle(gameSys, fieldWork));
+
+
+ //   GMEVENT_CallEvent(event, EVENT_IrcBattle(gameSys, fieldWork));
+
+    EVENT_IrcBattle(gameSys, fieldWork, event);
+
+#if 0
+	GMEVENT *event = wk->gmEvent;
+	const HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	GAMESYS_WORK	*gameSys	= wk->gmSys;
+	FIELD_COMM_DEBUG_WORK *work;
+	
+	GMEVENT_Change( event,FIELD_COMM_DEBUG_CommDebugMenu, FIELD_COMM_DEBUG_GetWorkSize() );
 	
 	work = GMEVENT_GetEventWork( event );
-	IRCBATTLE_MENU_InitWork( heapID , gameSys , fieldWork , event , work );
+	FIELD_COMM_DEBUG_InitWork( heapID , gameSys , fieldWork , event , work );
 
+#endif
+
+
+    
 	return( TRUE );
 }
 
