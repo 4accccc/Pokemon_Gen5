@@ -28,6 +28,14 @@ typedef struct _MUS_POKE_DRAW_SYSTEM MUS_POKE_DRAW_SYSTEM;
 //ï`âÊÇPïCï™
 typedef struct _MUS_POKE_DRAW_WORK MUS_POKE_DRAW_WORK;
 
+//ëïîıâ”èäÇÃà íuèÓïÒ
+typedef struct 
+{
+	BOOL	isEnable;
+	VecFx32 pos;
+	u16		rot;
+}MUS_POKE_EQUIP_DATA;
+
 //======================================================================
 //	proto
 //======================================================================
@@ -49,6 +57,7 @@ void MUS_POKE_DRAW_SetPosition( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *pos );
 void MUS_POKE_DRAW_GetPosition( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *pos );
 void MUS_POKE_DRAW_SetScale( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *scale );
 void MUS_POKE_DRAW_GetScale( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *scale );
+MUS_POKE_EQUIP_DATA *MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , const MUS_POKE_EQUIP_POS pos );
 
 MUS_POKE_DATA_WORK*	MUS_POKE_DRAW_GetPokeData( MUS_POKE_DRAW_WORK *drawWork );
 

@@ -278,3 +278,13 @@ void MUS_ITEM_DRAW_GetSize( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *ite
 	*sizeY /= rateY;
 }
 
+void MUS_ITEM_DRAW_SetRotation( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u16 rotZ )
+{
+	GFL_BBD_SetObjectRotate( work->bbdSys , itemWork->bbdIdx , &rotZ );
+}
+
+void MUS_ITEM_DRAW_GetRotation( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u16 *rotZ )
+{
+	GFL_BBD_GetObjectRotate( work->bbdSys , itemWork->bbdIdx , rotZ );
+}
+

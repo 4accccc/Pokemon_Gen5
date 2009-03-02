@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	item dressup
+SUBDIRS	=	item dressup pokegra_mus
 
 .PHONY:	do-build clean
 

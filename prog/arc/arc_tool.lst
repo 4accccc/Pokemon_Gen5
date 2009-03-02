@@ -117,5 +117,6 @@
 	ARCID_FLDMMDL_RES	"fieldmap/fldmmdl_mdlres.narc" #動作モデル リソース
 	ARCID_INFOWIN		"infowin.narc"		#情報ウィンドウ
 	ARCID_BMPOAM		"bmpoam.narc"			#BMPOAM
+	ARCID_POKEGRA_MUS	"pokegra_mus.narc"	#ミュージカル用ポケグラ
 
 

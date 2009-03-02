@@ -1,0 +1,39 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pokegra_mus.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_POKEGRA_MUS_NAIX_
+#define NARC_POKEGRA_MUS_NAIX_
+
+enum {
+	NARC_pokegra_mus_pfwb_500_m_NCGR = 0,
+	NARC_pokegra_mus_pfwb_500_f_NCGR = 1,
+	NARC_pokegra_mus_pfwb_500c_m_NCBR = 2,
+	NARC_pokegra_mus_pfwb_500c_f_NCBR = 3,
+	NARC_pokegra_mus_pfwb_500_NCER = 4,
+	NARC_pokegra_mus_pfwb_500_NANR = 5,
+	NARC_pokegra_mus_pfwb_500_NMCR = 6,
+	NARC_pokegra_mus_pfwb_500_NMAR = 7,
+	NARC_pokegra_mus_pfwb_500_NCEC = 8,
+	NARC_pokegra_mus_pmwb_500_n_NCLR = 9,
+	NARC_pokegra_mus_pmwb_500_r_NCLR = 10,
+	NARC_pokegra_mus_pfwb_501_m_NCGR = 11,
+	NARC_pokegra_mus_pfwb_501_f_NCGR = 12,
+	NARC_pokegra_mus_pfwb_501c_m_NCBR = 13,
+	NARC_pokegra_mus_pfwb_501c_f_NCBR = 14,
+	NARC_pokegra_mus_pfwb_501_NCER = 15,
+	NARC_pokegra_mus_pfwb_501_NANR = 16,
+	NARC_pokegra_mus_pfwb_501_NMCR = 17,
+	NARC_pokegra_mus_pfwb_501_NMAR = 18,
+	NARC_pokegra_mus_pfwb_501_NCEC = 19,
+	NARC_pokegra_mus_pmwb_501_n_NCLR = 20,
+	NARC_pokegra_mus_pmwb_501_r_NCLR = 21
+};
+
+/* NARC_POKEGRA_MUS_NAIX_ */
+#endif

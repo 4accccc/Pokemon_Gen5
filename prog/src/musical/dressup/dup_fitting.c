@@ -198,6 +198,7 @@ static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work );
 
 static const BOOL DUP_FIT_CheckIsEquipItem( FITTING_WORK *work , const MUS_POKE_EQUIP_POS pos);
+static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work  , GFL_POINT *pos , u16 *len );
 static void DUP_FIT_UpdateItemAnime( FITTING_WORK *work );
 static void DUP_FIT_CreateItemListToField( FITTING_WORK *work );
 
@@ -976,18 +977,27 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work )
 	GFL_POINT pokePosSub;
 	VecFx32 pos = {0,0,HOLD_ITEM_DEPTH};
 	fx16 scaleX,scaleY;
+	u16	rotZ;
 	MUS_ITEM_DRAW_WORK *itemDrawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
 	
 	pokePosSub.x = work->tpx - FIT_POKE_POS_X;
 	pokePosSub.y = work->tpy - FIT_POKE_POS_Y;
-	work->snapPos = MUS_POKE_DATA_SearchEquipPosition( work->pokeData , &pokePosSub , &snapLen );
+	work->snapPos = DUP_FIT_SearchEquipPosition( work , &pokePosSub , &snapLen );
 	if( work->snapPos != MUS_POKE_EQU_INVALID &&
 		DUP_FIT_CheckIsEquipItem( work , work->snapPos ) == FALSE )
 	{
-		
+		MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , work->snapPos );
+		dispPos.x = (int)F32_CONST(equipData->pos.x)+128;
+		dispPos.y = (int)F32_CONST(equipData->pos.y)+ 96;
+		rotZ = equipData->rot;
+		OS_TPrintf("[%d]\n",rotZ);
+/*		
 		dispPos = *MUS_POKE_DATA_GetEquipPosition( work->pokeData , work->snapPos );
 		dispPos.x += FIT_POKE_POS_X;
 		dispPos.y += FIT_POKE_POS_Y;
+*/
+//		dispPos.x += FIT_POKE_POS_X;
+//		dispPos.y += FIT_POKE_POS_Y;
 	}
 	else
 	{
@@ -1000,6 +1010,7 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work )
 	pos.y = FIT_POS_Y(dispPos.y);
 	MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , itemDrawWork , &pos );
 	DUP_FIT_ITEM_SetPosition( work->holdItem , &dispPos );
+	MUS_ITEM_DRAW_SetRotation( work->itemDrawSys , DUP_FIT_ITEM_GetItemDrawWork(work->holdItem) , rotZ );
 	
 	MUS_ITEM_DRAW_GetSize( work->itemDrawSys , itemDrawWork ,&scaleX,&scaleY );
 	if( scaleX < FX16_ONE || scaleY < FX16_ONE )
@@ -1161,6 +1172,36 @@ static const BOOL DUP_FIT_CheckIsEquipItem( FITTING_WORK *work , const MUS_POKE_
 		item = DUP_FIT_ITEM_GetNextItem(item);
 	}
 	return FALSE;
+}
+//--------------------------------------------------------------
+//指定点から近い位置を探す(相対座標にして渡してください
+//--------------------------------------------------------------
+static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work  , GFL_POINT *pos , u16 *len )
+{
+	MUS_POKE_EQUIP_POS i;
+	u16 minLen = (*len)*(*len);	//あらかじめ最小距離に指定距離を入れておく
+	MUS_POKE_EQUIP_POS minPos = MUS_POKE_EQU_INVALID;
+	for( i=0; i<MUS_POKE_EQUIP_MAX ;i++ )
+	{
+		MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , i );
+		if( equipData->isEnable == TRUE )
+//		if( pokeData->isEquip[i] == TRUE )
+		{
+			const int equipPosX = (int)F32_CONST(equipData->pos.x)+128-FIT_POKE_POS_X;
+			const int equipPosY = (int)F32_CONST(equipData->pos.y)+96 -FIT_POKE_POS_Y;
+			const int subX = pos->x - equipPosX;
+			const int subY = pos->y - equipPosY;
+			const int subLen = (subX*subX)+(subY*subY);
+			if( subLen < minLen )
+			{
+				minLen = subLen;
+				minPos = i;
+			}
+		}
+		
+	}
+	*len = minLen;
+	return minPos;
 }
 
 //--------------------------------------------------------------
