@@ -118,6 +118,8 @@ static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk );
+
 //--------------------------------------------------------------
 ///	デバッグメニューリスト　汎用
 //--------------------------------------------------------------
@@ -144,11 +146,11 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
 	{ DEBUG_FIELD_STR06, DMenuCallProc_MapSeasonSelect},
 	{ DEBUG_FIELD_STR07, DMenuCallProc_CameraList },
-	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, DMenuCallProc_FldMMdlList },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
-//	{ DEBUG_FIELD_STR01, NULL },
-//	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
 };
 
 //--------------------------------------------------------------
@@ -1060,6 +1062,9 @@ typedef struct
 //--------------------------------------------------------------
 static GMEVENT_RESULT DMenuTestCameraListEvent(
 		GMEVENT *event, int *seq, void *work );
+static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code );
+static void DEBUG_SetMenuWorkFldMMdlList(
+		FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
 
 ///カメラリスト最大
 #define TESTCAMERALISTMAX (4)
@@ -1190,4 +1195,202 @@ static GMEVENT_RESULT DMenuTestCameraListEvent(
 	}
 	
 	return( GMEVENT_RES_CONTINUE );
+}
+
+//======================================================================
+//	デバッグメニュー　動作モデル一覧
+//======================================================================
+//--------------------------------------------------------------
+///	DEBUG_FLDMMDL_LIST_EVENT_WORK 動作モデルリスト処理用ワーク
+//--------------------------------------------------------------
+typedef struct
+{
+	int seq_no;
+	HEAPID heapID;
+	GAMESYS_WORK *gmSys;
+	GMEVENT *gmEvent;
+	FIELD_MAIN_WORK *fieldWork;
+	GFL_MSGDATA *msgData;
+	FLDMENUFUNC *menuFunc;
+}DEBUG_FLDMMDLLIST_EVENT_WORK;
+
+//--------------------------------------------------------------
+///	proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuFldMMdlListEvent(
+		GMEVENT *event, int *seq, void *wk );
+
+///	動作モデルリスト メニューヘッダー
+static const FLDMENUFUNC_HEADER DATA_DebugMenuList_FldMMdlList =
+{
+	1,		//リスト項目数
+	10,		//表示最大項目数
+	0,		//ラベル表示Ｘ座標
+	13,		//項目表示Ｘ座標
+	0,		//カーソル表示Ｘ座標
+	0,		//表示Ｙ座標
+	1,		//表示文字色
+	15,		//表示背景色
+	2,		//表示文字影色
+	0,		//文字間隔Ｘ
+	1,		//文字間隔Ｙ
+	FLDMENUFUNC_SKIP_LRKEY,	//ページスキップタイプ
+	12,		//文字サイズX(ドット
+	12,		//文字サイズY(ドット
+	0,		//表示座標X キャラ単位
+	0,		//表示座標Y キャラ単位
+	0,		//表示サイズX キャラ単位
+	0,		//表示サイズY キャラ単位
+};
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　動作モデル一覧
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk )
+{
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	DEBUG_FLDMMDLLIST_EVENT_WORK *work;
+	
+	GMEVENT_Change( event,
+		DMenuFldMMdlListEvent, sizeof(DEBUG_FLDMMDLLIST_EVENT_WORK) );
+	
+	work = GMEVENT_GetEventWork( event );
+	MI_CpuClear8( work, sizeof(DEBUG_FLDMMDLLIST_EVENT_WORK) );
+	
+	work->gmSys = gsys;
+	work->gmEvent = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：動作モデル一覧
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuFldMMdlListEvent(
+		GMEVENT *event, int *seq, void *wk )
+{
+	DEBUG_FLDMMDLLIST_EVENT_WORK *work = wk;
+	
+	switch( (*seq) ){
+	case 0:
+		{
+			FLDMSGBG *msgBG;
+			u32 max = OBJCODEMAX;
+			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_FldMMdlList;
+			FLDMENUFUNC_LISTDATA *pMenuListData;
+			
+			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+			work->msgData = FLDMSGBG_CreateMSGDATA(
+					msgBG, NARC_message_d_field_dat );
+			pMenuListData = FLDMENUFUNC_CreateListData( max, work->heapID );
+			DEBUG_SetMenuWorkFldMMdlList( pMenuListData, work->heapID );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 11, 16 );
+			
+			work->menuFunc = FLDMENUFUNC_AddMenu(
+					msgBG, &menuH, pMenuListData );
+			GFL_MSG_Delete( work->msgData );
+		}
+		
+		(*seq)++;
+		break;
+	case 1:
+		{
+			u32 ret;
+			ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+			
+			if( ret == FLDMENUFUNC_NULL ){	//操作無し
+				break;
+			}
+			
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			
+			if( ret == FLDMENUFUNC_CANCEL ){	//キャンセル
+				return( GMEVENT_RES_FINISH );
+			}
+			
+			return( GMEVENT_RES_FINISH );		//決定
+		}
+		break;
+	}
+	
+	return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 動作モデルOBJコード->STRCODE
+ * @param	heapID	文字列バッファ確保用ヒープID
+ * @param	code	文字列を取得したいOBJコード
+ * @retval	u16*	文字列が格納されたu16*(開放が必要
+ */
+//--------------------------------------------------------------
+static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code )
+{
+	int i;
+	u16 utf16,utf16_eom;
+	u16 *pStrBuf;
+	u8 *name8;
+	
+	pStrBuf = GFL_HEAP_AllocClearMemory( heapID,
+			sizeof(u16)*DEBUG_OBJCODE_STR_LENGTH );
+	name8 = DEBUG_FLDMMDL_GetOBJCodeString( code, heapID );
+	utf16_eom = GFL_STR_GetEOMCode();
+	OS_Printf( "変換 %s\n", name8 );
+	
+	for( i = 0; i < DEBUG_OBJCODE_STR_LENGTH; i++ ){
+		utf16 = DEBUG_ASCIICODE_UTF16( name8[i] );
+		pStrBuf[i] = utf16;
+		if( utf16 == utf16_eom ){
+			break;
+		}
+	}
+
+	GFL_HEAP_FreeMemory( name8 );
+	
+	if( i >= DEBUG_OBJCODE_STR_LENGTH ){ //文字数オーバー
+		GF_ASSERT( 0 );
+		pStrBuf[DEBUG_OBJCODE_STR_LENGTH-1] = utf16_eom;
+	}
+	
+	return( pStrBuf );
+}
+
+//--------------------------------------------------------------
+/**
+ * 動作モデルリスト用BMP_MENULIST_DATAセット
+ * @param	list	セット先BMP_MENULIST_DATA
+ * @param	heapID	文字列バッファ確保用HEAPID
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DEBUG_SetMenuWorkFldMMdlList(
+		FLDMENUFUNC_LISTDATA *list, HEAPID heapID )
+{
+	u16 *str;
+	int id,max = OBJCODEMAX;
+	STRBUF *strBuf = GFL_STR_CreateBuffer( DEBUG_OBJCODE_STR_LENGTH, heapID );
+	
+	for( id = 0; id < max; id++ ){
+		GFL_STR_ClearBuffer( strBuf );
+		str = DEBUG_GetOBJCodeStrBuf( heapID, id );
+		GFL_STR_SetStringCode( strBuf, str );
+		GFL_HEAP_FreeMemory( str );
+		FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+	}
+	
+	GFL_HEAP_FreeMemory( strBuf );
 }

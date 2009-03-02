@@ -27,6 +27,13 @@
 //--------------------------------------------------------------
 #define FLDMMDL_PL_NULL	//定義でプラチナで行っていた処理無効化
 //#define FLDMMDL_BLACT_HEAD3_TEST //定義で三頭身テスト
+#define DEBUG_FLDMMDL	//定義でデバッグ機能有効
+
+#ifdef DEBUG_FLDMMDL
+#define DEBUG_FLDMMDL_PRINT //定義でデバッグ出力有効
+#endif
+
+#define DEBUG_OBJCODE_STR_LENGTH (32) //動作モデルOBJコード文字列長さ
 
 //--------------------------------------------------------------
 //	fx
@@ -482,12 +489,8 @@ extern FLDMMDL * FLDMMDLSYS_AddFldMMdl(
 extern void FLDMMDL_Delete( FLDMMDL * fmmdl );
 extern void FLDMMDLSYS_DeleteMMdl( const FLDMMDLSYS *fos );
 
-extern BOOL FLDMMDL_CheckPossibleAcmd( const FLDMMDL * fmmdl );
-extern void FLDMMDL_SetAcmd( FLDMMDL * fmmdl, u16 code );
-extern void FLDMMDL_SetLocalAcmd( FLDMMDL * fmmdl, u16 code );
-extern BOOL FLDMMDL_CheckEndAcmd( const FLDMMDL * fmmdl );
-extern BOOL FLDMMDL_EndAcmd( FLDMMDL * fmmdl );
-extern void FLDMMDL_FreeAcmd( FLDMMDL * fmmdl );
+extern void FLDMMDLSYS_Push( FLDMMDLSYS *fmmdlsys );
+extern void FLDMMDLSYS_Pop( FLDMMDLSYS *fmmdlsys );
 
 extern u32 FLDMMDL_SAVEDATA_GetWorkSize( void );
 extern void FLDMMDL_SAVEDATA_Init( void *p );
@@ -495,6 +498,16 @@ extern void FLDMMDL_SAVEDATA_Save(
 	FLDMMDLSYS *fmmdlsys, FLDMMDL_SAVEDATA *savedata );
 extern void FLDMMDL_SAVEDATA_Load(
 	FLDMMDLSYS *fmmdlsys, FLDMMDL_SAVEDATA *savedata );
+
+extern void FLDMMDLSYS_Push( FLDMMDLSYS *fmmdlsys );
+extern void FLDMMDLSYS_Pop( FLDMMDLSYS *fmmdlsys );
+
+extern BOOL FLDMMDL_CheckPossibleAcmd( const FLDMMDL * fmmdl );
+extern void FLDMMDL_SetAcmd( FLDMMDL * fmmdl, u16 code );
+extern void FLDMMDL_SetLocalAcmd( FLDMMDL * fmmdl, u16 code );
+extern BOOL FLDMMDL_CheckEndAcmd( const FLDMMDL * fmmdl );
+extern BOOL FLDMMDL_EndAcmd( FLDMMDL * fmmdl );
+extern void FLDMMDL_FreeAcmd( FLDMMDL * fmmdl );
 
 extern u32 FLDMMDLSYS_CheckStatusBit(
 	const FLDMMDLSYS *fmmdlsys, FLDMMDLSYS_STABIT bit );
@@ -710,6 +723,10 @@ extern void FLDMMDL_DrawProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawDeleteProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawPushProcDummy( FLDMMDL * fmmdl );
 extern void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl );
+
+#ifdef DEBUG_FLDMMDL
+extern u8 * DEBUG_FLDMMDL_GetOBJCodeString( u16 code, HEAPID heapID );
+#endif
 
 //--------------------------------------------------------------
 //	fldmmdl_movedata.c

@@ -228,8 +228,8 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_Hero =
 	DrawHero_Init,
 	DrawHero_Draw,
 	DrawHero_Delete,
-	FLDMMDL_DrawPushProcDummy,
-	FLDMMDL_DrawPopProcDummy,
+	DrawHero_Delete,	//本当は退避
+	DrawHero_Init,		//本当は復帰
 	DrawHero_GetBlActID,
 };
 
@@ -352,7 +352,7 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FLDMMDL_DRAWPROCLIST_BlAct =
 	DrawBlAct_Init,
 	DrawBlAct_Draw,
 	DrawBlAct_Delete,
-	FLDMMDL_DrawPushProcDummy,
-	FLDMMDL_DrawPopProcDummy,
+	DrawBlAct_Delete,	//本当は退避
+	DrawBlAct_Init,		//本当は復帰
 	DrawBlAct_GetBlActID,
 };

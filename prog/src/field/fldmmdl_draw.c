@@ -78,6 +78,7 @@ void FLDMMDLSYS_DeleteDraw( FLDMMDLSYS *fos )
 	if( FLDMMDLSYS_GetBlActCont(fos) != NULL ){
 		FLDMMDL_BLACTCONT_Release( fos );
 	}
+	FLDMMDLSYS_SetCompleteDrawInit( fos, FALSE );
 	#endif
 }
 

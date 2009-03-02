@@ -185,8 +185,10 @@ static void FldMMdl_SetHeaderPos(FLDMMDL *fmmdl,const FLDMMDL_HEADER *head);
 static void FldMMdl_InitWork( FLDMMDL * fmmdl, const FLDMMDLSYS *sys );
 static void FldMMdl_InitCallMoveProcWork( FLDMMDL * fmmdl );
 static void FldMMdl_InitMoveWork( const FLDMMDLSYS *fos, FLDMMDL * fmmdl );
+#if 0
 static void FldMMdlSys_CheckSetInitMoveWork( FLDMMDLSYS *fos );
 static void FldMMdlSys_CheckSetInitDrawWork( FLDMMDLSYS *fos );
+#endif
 
 //FLDMMDL 動作関数
 static void FldMMdl_TCB_MoveProc( GFL_TCB * tcb, void *work );
@@ -210,10 +212,10 @@ static void FldMMdlSys_DecrementOBJCount( FLDMMDLSYS *fmmdlsys );
 static FLDMMDL * FldMMdlSys_SearchSpaceFldMMdl( const FLDMMDLSYS *sys );
 static FLDMMDL * FldMMdlSys_SearchAlies(
 	const FLDMMDLSYS *fos, int obj_id, int zone_id );
-static void FldMMdlSys_AddFldMMdlTCB(
-	const FLDMMDLSYS *sys, FLDMMDL * fmmdl );
 
 //FLDMMDL ツール
+static void FldMMdl_AddTCB( FLDMMDL *fmmdl, const FLDMMDLSYS *sys );
+static void FldMMdl_DeleteTCB( FLDMMDL *fmmdl );
 static void FldMMdl_InitDrawWork( FLDMMDL *fmmdl );
 static void FldMMdl_InitCallDrawProcWork( FLDMMDL * fmmdl );
 static void FldMMdl_InitDrawEffectFlag( FLDMMDL * fmmdl );
@@ -281,7 +283,7 @@ void FLDMMDLSYS_FreeSystem( FLDMMDLSYS *fos )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * FLDMMDLSYS システム　プロセスセットアップ
+ * FLDMMDLSYS システム 動作プロセスセットアップ
  * @param	fos	FLDMMDLSYS*
  * @param	heapID	プロセス用HEAPID
  * @param	pG3DMapper FLDMAPPER
@@ -301,13 +303,11 @@ void FLDMMDLSYS_SetupProc(
 	fos->pTCBSys = GFL_TCB_Init( fos->fmmdl_max, fos->pTCBSysWork );
 	
 	FldMMdlSys_OnStatusBit( fos, FLDMMDLSYS_STABIT_MOVE_INIT_COMP );
-	
-	FldMMdlSys_CheckSetInitMoveWork( fos );
 }
 
 //--------------------------------------------------------------
 /**
- * FLDMMDLSYS システム　プロセス削除
+ * FLDMMDLSYS システム　動作プロセス削除
  * @param	fos		FLDMMDLSYS *
  * @retval	nothing
  */
@@ -322,14 +322,14 @@ static void FldMMdlSys_DeleteProc( FLDMMDLSYS *fos )
 
 //--------------------------------------------------------------
 /**
- * FLDMMDLSYS プロセス削除
+ * FLDMMDLSYS 全てのプロセス削除
  * @param	fos		FLDMMDLSYS *
  * @retval	nothing
  */
 //--------------------------------------------------------------
 void FLDMMDLSYS_DeleteProc( FLDMMDLSYS *fos )
 {
-	FLDMMDLSYS_DeleteMMdl( fos );
+//	FLDMMDLSYS_DeleteMMdl( fos );
 	FLDMMDLSYS_DeleteDraw( fos );
 	FldMMdlSys_DeleteProc( fos );
 }
@@ -363,7 +363,6 @@ void FLDMMDLSYS_UpdateProc( FLDMMDLSYS *fos )
 void FLDMMDLSYS_SetupDrawProc( FLDMMDLSYS *fos )
 {
 	FLDMMDLSYS_SetCompleteDrawInit( fos, TRUE );
-	FldMMdlSys_CheckSetInitDrawWork( fos );
 }
 
 //======================================================================
@@ -424,7 +423,7 @@ void FLDMMDL_Delete( FLDMMDL * fmmdl )
 	
 	if( FLDMMDL_CheckMoveBit(fmmdl,FLDMMDL_MOVEBIT_MOVEPROC_INIT) ){
 		FLDMMDL_CallMoveDeleteProc( fmmdl );
-		GFL_TCB_DeleteTask( fmmdl->pTCB );
+		FldMMdl_DeleteTCB( fmmdl );
 	}
 	
 	FldMMdlSys_DecrementOBJCount( (FLDMMDLSYS*)(fmmdl->pFldMMdlSys) );
@@ -434,7 +433,7 @@ void FLDMMDL_Delete( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * FLDMMDLSYS 現在発生しているフィールド動作モデルを全て削除
- * @param	fmmdl		削除するFLDMMDL * 
+ * @param	fos	FLDMMDLSYS
  * @retval	nothing
  */
 //--------------------------------------------------------------
@@ -559,9 +558,7 @@ static void FldMMdl_InitCallMoveProcWork( FLDMMDL * fmmdl )
 static void FldMMdl_InitMoveWork( const FLDMMDLSYS *fos, FLDMMDL *fmmdl )
 {
 	FldMMdl_InitCallMoveProcWork( fmmdl );
-	
-	FldMMdlSys_AddFldMMdlTCB( fos, fmmdl );
-	
+	FldMMdl_AddTCB( fmmdl, fos );
 	FLDMMDL_OnMoveBit( fmmdl, FLDMMDL_MOVEBIT_MOVEPROC_INIT );
 	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START );
 }
@@ -573,27 +570,20 @@ static void FldMMdl_InitMoveWork( const FLDMMDLSYS *fos, FLDMMDL *fmmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
+#if 0
 static void FldMMdlSys_CheckSetInitMoveWork( FLDMMDLSYS *fos )
 {
 	u32 i = 0;
 	FLDMMDL *fmmdl;
 	
 	while( FLDMMDLSYS_SearchUseFldMMdl(fos,&fmmdl,&i) == TRUE ){
-		FldMMdl_InitMoveWork( fos, fmmdl );
-		
 		if( FLDMMDL_CheckMoveBit(fmmdl,	//初期化関数呼び出しまだ
 			FLDMMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
 			FLDMMDL_InitMoveProc( fmmdl );
 		}
-			
-		if( FLDMMDL_CheckMoveBit(fmmdl, //復元関数呼び出しが必要
-			FLDMMDL_MOVEBIT_NEED_MOVEPROC_RECOVER) ){
-			FLDMMDL_CallMovePopProc( fmmdl );
-			FLDMMDL_OffMoveBit( fmmdl,
-				FLDMMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
-		}
 	}
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -602,6 +592,7 @@ static void FldMMdlSys_CheckSetInitMoveWork( FLDMMDLSYS *fos )
  * @retval	nothing
  */
 //--------------------------------------------------------------
+#if 0
 static void FldMMdlSys_CheckSetInitDrawWork( FLDMMDLSYS *fos )
 {
 	u32 i = 0;
@@ -613,167 +604,84 @@ static void FldMMdlSys_CheckSetInitDrawWork( FLDMMDLSYS *fos )
 		}
 	}
 }
+#endif
 
 //======================================================================
-//	FLDMMDL 動作関数
+//	FLDMMDLSYS PUSH POP
 //======================================================================
 //--------------------------------------------------------------
 /**
- * FLDMMDL TCB 動作関数
- * @param	tcb		GFL_TCB *
- * @param	work	tcb work
+ * FLDMMDLSYS 動作モデル 退避
+ * @param	fmmdlsys	FLDMMDLSYS
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void FldMMdl_TCB_MoveProc( GFL_TCB * tcb, void *work )
+void FLDMMDLSYS_Push( FLDMMDLSYS *fmmdlsys )
 {
-	FLDMMDL *fmmdl = (FLDMMDL *)work;
-	FLDMMDL_UpdateMove( fmmdl );
+	u32 no = 0;
+	FLDMMDL *fmmdl;
 	
-	if( FLDMMDL_CheckStatusBitUse(fmmdl) == TRUE ){
-		FldMMdl_TCB_DrawProc( fmmdl );
+	#ifdef DEBUG_FLDMMDL_PRINT
+	if( FLDMMDLSYS_CheckCompleteDrawInit(fmmdlsys) == FALSE ){
+		GF_ASSERT( 0 && "WARNING!! 動作モデル 描画未初期化\n" );
+	}
+	#endif
+	
+	while( FLDMMDLSYS_SearchUseFldMMdl(fmmdlsys,&fmmdl,&no) == TRUE ){
+		{ //動作処理の退避
+			FldMMdl_DeleteTCB( fmmdl );
+			FLDMMDL_OnMoveBit( fmmdl,
+				FLDMMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
+		}
+		
+		{ //描画処理の退避
+			FLDMMDL_CallDrawPushProc( fmmdl );
+			FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_DRAW_PUSH );
+		}
 	}
 }
 
 //--------------------------------------------------------------
 /**
- * FLDMMDL TCB 動作関数から呼ばれる描画関数
- * @param	fmmdl	FLDMMDL *
+ * FLDMMDLSYS 動作モデル復帰
+ * @param	fmmdlsys	FLDMMDLSYS
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void FldMMdl_TCB_DrawProc( FLDMMDL * fmmdl )
+void FLDMMDLSYS_Pop( FLDMMDLSYS *fmmdlsys )
 {
-	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys(fmmdl);
+	u32 no = 0;
+	FLDMMDL *fmmdl;
 	
-	if( FLDMMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
-		FLDMMDL_UpdateDraw( fmmdl );
+	while( FLDMMDLSYS_SearchUseFldMMdl(fmmdlsys,&fmmdl,&no) == TRUE ){
+		{	//動作処理復帰
+			FldMMdl_InitMoveWork( fmmdlsys, fmmdl ); //ワーク初期化
+			
+			if( FLDMMDL_CheckMoveBit(fmmdl,	//初期化関数呼び出しまだ
+				FLDMMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
+				FLDMMDL_InitMoveProc( fmmdl );
+			}
+			
+			if( FLDMMDL_CheckMoveBit(fmmdl, //復元関数呼び出しが必要
+				FLDMMDL_MOVEBIT_NEED_MOVEPROC_RECOVER) ){
+				FLDMMDL_CallMovePopProc( fmmdl );
+				FLDMMDL_OffMoveBit( fmmdl,
+					FLDMMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
+			}
+		}
+		
+		{	//描画処理復帰
+			if( FLDMMDL_CheckStatusBitCompletedDrawInit(fmmdl) == FALSE ){
+				FldMMdl_InitDrawWork( fmmdl );
+			}
+			
+			if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_DRAW_PUSH) ){
+				FLDMMDL_CallDrawPopProc( fmmdl );
+				FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_DRAW_PUSH );
+			}
+		}
 	}
 }
-
-//======================================================================
-//	FLDMMDL アニメーションコマンド
-//======================================================================
-//--------------------------------------------------------------
-/**
- * アニメーションコマンドが可能かチェック
- * @param	fmmdl		対象となるFLDMMDL * 
- * @retval	int			TRUE=可能。FALSE=無理
- */
-//--------------------------------------------------------------
-BOOL FLDMMDL_CheckPossibleAcmd( const FLDMMDL * fmmdl )
-{
-	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_USE) == 0 ){
-		return( FALSE );
-	}
-	
-	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_MOVE) ){
-		return( FALSE );
-	}
-	
-	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD) &&
-		FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
-		return( FALSE );
-	}
-	
-	return( TRUE );
-}
-
-//--------------------------------------------------------------
-/**
- * アニメーションコマンドセット
- * @param	fmmdl		対象となるFLDMMDL * 
- * @param	code		実行するコード。AC_DIR_U等
- * @retval	nothing
- */
-//--------------------------------------------------------------
-void FLDMMDL_SetAcmd( FLDMMDL * fmmdl, u16 code )
-{
-	GF_ASSERT( code < ACMD_MAX );
-	FLDMMDL_SetAcmdCode( fmmdl, code );
-	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD );
-	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
-}
-
-//--------------------------------------------------------------
-/**
- * コマンドセット
- * @param	fmmdl		対象となるFLDMMDL * 
- * @param	code		実行するコード。AC_DIR_U等
- * @retval	nothing
- */
-//--------------------------------------------------------------
-void FLDMMDL_SetLocalAcmd( FLDMMDL * fmmdl, u16 code )
-{
-	FLDMMDL_SetAcmdCode( fmmdl, code );
-	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
-	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
-}
-
-//--------------------------------------------------------------
-/**
- * アニメーションコマンド終了チェック。
- * @param	fmmdl		対象となるFLDMMDL * 
- * @retval	int			TRUE=終了
- */
-//--------------------------------------------------------------
-BOOL FLDMMDL_CheckEndAcmd( const FLDMMDL * fmmdl )
-{
-	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD) == 0 ){
-		return( TRUE );
-	}
-	
-	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
-		return( FALSE );
-	}
-	
-	return( TRUE );
-}
-
-//--------------------------------------------------------------
-/**
- * アニメーションコマンド終了チェックと開放。
- * アニメーションコマンドが終了していない場合は開放されない。
- * @param	fmmdl		対象となるFLDMMDL * 
- * @retval	BOOL	TRUE=終了している。
- */
-//--------------------------------------------------------------
-BOOL FLDMMDL_EndAcmd( FLDMMDL * fmmdl )
-{
-	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD) == 0 ){
-		return( TRUE );
-	}
-	
-	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
-		return( FALSE );
-	}
-	
-	FLDMMDL_OffStatusBit(
-		fmmdl, FLDMMDL_STABIT_ACMD|FLDMMDL_STABIT_ACMD_END );
-	
-	return( TRUE );
-}
-
-//--------------------------------------------------------------
-/**
- * アニメーションコマンド開放。
- * アニメーションコマンドが終了していなくとも強制開放。
- * @param	fmmdl		対象となるFLDMMDL * 
- * @retval	nothing
- */
-//--------------------------------------------------------------
-void FLDMMDL_FreeAcmd( FLDMMDL * fmmdl )
-{
-	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD );
-	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END ); //ローカルコマンドフラグ
-	FLDMMDL_SetAcmdCode( fmmdl, ACMD_NOT );
-	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
-}
-
-//======================================================================
-//	FLDMMDL PUSH POP
-//======================================================================
 
 //======================================================================
 //	FLDMMDL_SAVEDATA
@@ -982,6 +890,164 @@ static void FldMMdl_SaveData_LoadFldMMdl(
 			FLDMMDL_OnMoveBit( fmmdl, FLDMMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
 		}
 	}
+}
+
+
+//======================================================================
+//	FLDMMDL 動作関数
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * FLDMMDL TCB 動作関数
+ * @param	tcb		GFL_TCB *
+ * @param	work	tcb work
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FldMMdl_TCB_MoveProc( GFL_TCB * tcb, void *work )
+{
+	FLDMMDL *fmmdl = (FLDMMDL *)work;
+	FLDMMDL_UpdateMove( fmmdl );
+	
+	if( FLDMMDL_CheckStatusBitUse(fmmdl) == TRUE ){
+		FldMMdl_TCB_DrawProc( fmmdl );
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDL TCB 動作関数から呼ばれる描画関数
+ * @param	fmmdl	FLDMMDL *
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FldMMdl_TCB_DrawProc( FLDMMDL * fmmdl )
+{
+	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys(fmmdl);
+	
+	if( FLDMMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
+		FLDMMDL_UpdateDraw( fmmdl );
+	}
+}
+
+//======================================================================
+//	FLDMMDL アニメーションコマンド
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * アニメーションコマンドが可能かチェック
+ * @param	fmmdl		対象となるFLDMMDL * 
+ * @retval	int			TRUE=可能。FALSE=無理
+ */
+//--------------------------------------------------------------
+BOOL FLDMMDL_CheckPossibleAcmd( const FLDMMDL * fmmdl )
+{
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_USE) == 0 ){
+		return( FALSE );
+	}
+	
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_MOVE) ){
+		return( FALSE );
+	}
+	
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD) &&
+		FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
+		return( FALSE );
+	}
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アニメーションコマンドセット
+ * @param	fmmdl		対象となるFLDMMDL * 
+ * @param	code		実行するコード。AC_DIR_U等
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_SetAcmd( FLDMMDL * fmmdl, u16 code )
+{
+	GF_ASSERT( code < ACMD_MAX );
+	FLDMMDL_SetAcmdCode( fmmdl, code );
+	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD );
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
+}
+
+//--------------------------------------------------------------
+/**
+ * コマンドセット
+ * @param	fmmdl		対象となるFLDMMDL * 
+ * @param	code		実行するコード。AC_DIR_U等
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_SetLocalAcmd( FLDMMDL * fmmdl, u16 code )
+{
+	FLDMMDL_SetAcmdCode( fmmdl, code );
+	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END );
+}
+
+//--------------------------------------------------------------
+/**
+ * アニメーションコマンド終了チェック。
+ * @param	fmmdl		対象となるFLDMMDL * 
+ * @retval	int			TRUE=終了
+ */
+//--------------------------------------------------------------
+BOOL FLDMMDL_CheckEndAcmd( const FLDMMDL * fmmdl )
+{
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD) == 0 ){
+		return( TRUE );
+	}
+	
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
+		return( FALSE );
+	}
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アニメーションコマンド終了チェックと開放。
+ * アニメーションコマンドが終了していない場合は開放されない。
+ * @param	fmmdl		対象となるFLDMMDL * 
+ * @retval	BOOL	TRUE=終了している。
+ */
+//--------------------------------------------------------------
+BOOL FLDMMDL_EndAcmd( FLDMMDL * fmmdl )
+{
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD) == 0 ){
+		return( TRUE );
+	}
+	
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_ACMD_END) == 0 ){
+		return( FALSE );
+	}
+	
+	FLDMMDL_OffStatusBit(
+		fmmdl, FLDMMDL_STABIT_ACMD|FLDMMDL_STABIT_ACMD_END );
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アニメーションコマンド開放。
+ * アニメーションコマンドが終了していなくとも強制開放。
+ * @param	fmmdl		対象となるFLDMMDL * 
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_FreeAcmd( FLDMMDL * fmmdl )
+{
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ACMD );
+	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ACMD_END ); //ローカルコマンドフラグ
+	FLDMMDL_SetAcmdCode( fmmdl, ACMD_NOT );
+	FLDMMDL_SetAcmdSeq( fmmdl, 0 );
 }
 
 //======================================================================
@@ -3446,16 +3512,18 @@ static FLDMMDL * FldMMdlSys_SearchAlies(
 	return( NULL );
 }
 
+//======================================================================
+//	FLDMMDL ツール
+//======================================================================
 //--------------------------------------------------------------
 /**
- * FLDMMDLSYS フィールド動作モデル　TCB動作関数追加
- * @param	sys		FLDMMDLSYS*
+ * FLDMMDL フィールド動作モデル　TCB動作関数追加
  * @param	fmmdl	FLDMMDL*
+ * @param	sys		FLDMMDLSYS*
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void FldMMdlSys_AddFldMMdlTCB(
-	const FLDMMDLSYS *sys, FLDMMDL * fmmdl )
+static void FldMMdl_AddTCB( FLDMMDL *fmmdl, const FLDMMDLSYS *sys )
 {
 	int pri,code;
 	GFL_TCB * tcb;
@@ -3474,9 +3542,20 @@ static void FldMMdlSys_AddFldMMdlTCB(
 	fmmdl->pTCB = tcb;
 }
 
-//======================================================================
-//	FLDMMDL ツール
-//======================================================================
+//--------------------------------------------------------------
+/**
+ * FLDMMDL フィールド動作モデル　TCB動作関数削除
+ * @param	fmmdl	FLDMMDL*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FldMMdl_DeleteTCB( FLDMMDL *fmmdl )
+{
+	GF_ASSERT( fmmdl->pTCB );
+	GFL_TCB_DeleteTask( fmmdl->pTCB );
+	fmmdl->pTCB = NULL;
+}
+
 //--------------------------------------------------------------
 /**
  * FLDMMDL 現在発生しているフィールド動作モデルのOBJコードを参照
@@ -4086,6 +4165,35 @@ void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl )
 {
 }
 
+//======================================================================
+//	debug
+//======================================================================
+//----
+#ifdef DEBUG_FLDMMDL
+//----
+//--------------------------------------------------------------
+/**
+ * 動作モデル　OBJコード文字列を取得(ASCII)
+ * @param	code OBJコード
+ * @param	heapID buf領域確保用HEAPID
+ * @retval	u8* 文字列が格納されたu8*。使用後GFL_HEAP_FreeMemory()が必要。
+ * 文字列長はDEBUG_OBJCODE_STR_LENGTH。
+ */
+//--------------------------------------------------------------
+u8 * DEBUG_FLDMMDL_GetOBJCodeString( u16 code, HEAPID heapID )
+{
+	u8 *buf;
+	GF_ASSERT( code < OBJCODEMAX );
+	buf = GFL_HEAP_AllocClearMemoryLo(
+			heapID, DEBUG_OBJCODE_STR_LENGTH );
+	GFL_ARC_LoadDataOfs( buf, ARCID_FLDMMDL_PARAM,
+			NARC_fldmmdl_mdlparam_fldmmdl_objcodestr_bin,
+			DEBUG_OBJCODE_STR_LENGTH * code, DEBUG_OBJCODE_STR_LENGTH );
+	return( buf );
+}
+//----
+#endif //DEBUG_FLDMMDL
+//----
 //======================================================================
 //
 //======================================================================

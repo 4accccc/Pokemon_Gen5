@@ -196,21 +196,23 @@ static void GridMoveCreate(
 		int zone_id = PLAYERWORK_getZoneID( player );
 		
 		fieldWork->fldMMdlSys = fmmdlsys;
-		FLDMMDLSYS_SetupProc( fmmdlsys,
+		
+		FLDMMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
 			fieldWork->heapID, GetFieldG3Dmapper(fieldWork->gs) );
 		
-		{
-			FLDMMDL_BLACTCONT_Setup(
-				fieldWork->fldMMdlSys,
-				GetBbdActSys(fieldWork->gs), 32 );
-			FLDMMDL_BLACTCONT_AddResourceTex(
-				fieldWork->fldMMdlSys, TestOBJCodeTbl, TestOBJCodeMax );
-		}
+		FLDMMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
+			fieldWork->fldMMdlSys,
+			GetBbdActSys(fieldWork->gs), 32 );
+		FLDMMDL_BLACTCONT_AddResourceTex(
+			fieldWork->fldMMdlSys, TestOBJCodeTbl, TestOBJCodeMax );
 		
-		FLDMMDLSYS_SetupDrawProc( fieldWork->fldMMdlSys );
+		FLDMMDLSYS_SetupDrawProc(		//動作モデル描画　セットアップ
+				fieldWork->fldMMdlSys );
+		
+		FLDMMDLSYS_Pop( fieldWork->fldMMdlSys ); //動作モデル　復帰
 		
 		if( ZONEDATA_DEBUG_IsSampleObjUse(zone_id) == TRUE ){
-			GridMap_SetupNPC( fieldWork );
+	//		GridMap_SetupNPC( fieldWork );
 		}
 	}
 	
@@ -352,6 +354,7 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 #endif
 	}
 	
+	FLDMMDLSYS_Push( fieldWork->fldMMdlSys );
 	FLDMMDLSYS_DeleteProc( fieldWork->fldMMdlSys );
 }
 
