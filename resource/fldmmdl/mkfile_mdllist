@@ -13,6 +13,9 @@ TARGET_MDLRPM_BIN = $(TARGET_MDLPRM_ARC:.narc=.bin)
 #ターゲット　OBJコードヘッダー
 TARGET_OBJCODE_H = fldmmdl_objcode.h
 
+#生成するOBJコード文字列ファイル
+OBJCODE_STR_FILE = fldmmdl_objcodestr.bin
+
 #モデルリソースアーカイブインデックス
 RES_ARCIDX = fldmmdl_mdlres.naix
 
@@ -36,8 +39,8 @@ $(DIR_TARGET_COPY)/$(TARGET_MDLPRM_ARC): $(TARGET_MDLPRM_ARC)
 
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
 $(TARGET_MDLPRM_ARC): $(FMMDLLIST_CSV) $(SYMBOL_H)
-	ruby $(RUBY_MDLLIST) $(FMMDLLIST_CSV) $(RES_ARCIDX) $(TARGET_MDLRPM_BIN) $(TARGET_OBJCODE_H) $(SYMBOL_H)
-	nnsarc -i -c -l -n $(TARGET_MDLPRM_ARC) $(TARGET_MDLRPM_BIN) > arc_result_list.txt
+	ruby $(RUBY_MDLLIST) $(FMMDLLIST_CSV) $(RES_ARCIDX) $(TARGET_MDLRPM_BIN) $(TARGET_OBJCODE_H) $(OBJCODE_STR_FILE) $(SYMBOL_H)
+	nnsarc -i -c -l -n $(TARGET_MDLPRM_ARC) $(TARGET_MDLRPM_BIN) $(OBJCODE_STR_FILE) > arc_result_list.txt
 	$(NAIXCUT) $(TARGET_MDLPRM_ARCIDX)
 endif
 

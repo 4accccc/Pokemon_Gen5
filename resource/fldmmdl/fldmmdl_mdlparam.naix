@@ -11,7 +11,8 @@
 #define NARC_FLDMMDL_MDLPARAM_NAIX_
 
 enum {
-	NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin = 0
+	NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin = 0,
+	NARC_fldmmdl_mdlparam_fldmmdl_objcodestr_bin = 1
 };
 
 /* NARC_FLDMMDL_MDLPARAM_NAIX_ */

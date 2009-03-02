@@ -1,11 +1,13 @@
 #=======================================================================
 #	fmmdl_mdllist.rb
 #	フィールド動作モデル　モデルリスト作成
-#	引数 fmmdl_mdllist.rb xlstxt residx binfilename codefilename
+#	引数 fmmdl_mdllist.rb xlstxt residx binfilename codefilename codestrfilename
 #	xlstxt 動作モデルリスト表 テキスト変換済みファイル名
 #	residx リソースアーカイブデータインデックスファイル名
 #	binfilename 作成するバイナリファイル名
 #	codefilename 作成するOBJコードファイル名
+#	codestrfilename 作成するOBJコード文字列ファイル名
+#	symbolfilename 読み込むシンボルファイル名
 #=======================================================================
 $KCODE = "SJIS"
 
@@ -66,6 +68,9 @@ STRPRMNO_TEXSIZE = (15)
 #管理表文字位置 アニメーションID
 STRPRMNO_ANMID = (16)
 
+#表示コード文字列 一文字列最長
+CODESTRBUF = (32)
+
 #=======================================================================
 #	関数
 #=======================================================================
@@ -73,15 +78,18 @@ STRPRMNO_ANMID = (16)
 #	異常終了
 #-----------------------------------------------------------------------
 def error_end(
-	path_delfile0, path_delfile1, file0, file1, file2, file3, file4 )
+	path_delfile0, path_delfile1, path_delfile2,
+	file0, file1, file2, file3, file4, file5 )
 	printf( "ERROR fldmmdl list convert\n" )
 	file0.close
 	file1.close
 	file2.close
 	file3.close
 	file4.close
+	file5.close
 	File.delete( path_delfile0 )
 	File.delete( path_delfile1 )
+	File.delete( path_delfile2 )
 end
 
 #-----------------------------------------------------------------------
@@ -139,7 +147,7 @@ def arcidx_search( idxfile, search )
 	while line = idxfile.gets
 		if( line =~ /^enum.*\{/ )
 			while line = idxfile.gets
-				if( line.index(check) != @nil )
+				if( line.index(check) != nil )
 					/(\s[0-9]+)/ =~ line
 					str = $1
 					num = str.to_i
@@ -162,8 +170,9 @@ end
 #	コードファイル記述
 #	戻り値　RET_FALSE=異常終了
 #-----------------------------------------------------------------------
-def codefile_write( codefile, txtfile )
+def codefile_write( codefile, codestrfile, txtfile )
 	no = 0
+	
 	pos = txtfile.pos
 	txtfile.pos = 0 #先頭に
 	line = txtfile.gets #一行飛ばし
@@ -173,7 +182,7 @@ def codefile_write( codefile, txtfile )
 	loop{
 		line = txtfile.gets
 		
-		if( line == @nil )
+		if( line == nil )
 			return RET_FALSE
 		end
 		
@@ -185,6 +194,23 @@ def codefile_write( codefile, txtfile )
 		
 		codefile.printf( "#define %s (0x%x) //%d %s\n",
 			str[STRPRMNO_CODE], no, no, str[STRPRMNO_CODENAME] );
+		
+		codestr = Array.new( CODESTRBUF );
+		codestr.fill( "\000".unpack('C*'), 0..CODESTRBUF )
+		
+		i = 0
+		strbuf = str[STRPRMNO_CODE]
+		while strbuf[i]
+			codestr[i] = strbuf[i]
+			i = i + 1
+		end
+		
+		i = 0
+		while i < CODESTRBUF
+			c = Array( codestr[i] )
+			codestrfile.write( c.pack("C*") )
+			i = i + 1
+		end
 		
 		no = no + 1
 	}
@@ -319,35 +345,42 @@ end
 #=======================================================================
 xlstxt_filename = ARGV[0]
 
-if( xlstxt_filename == @nil )
+if( xlstxt_filename == nil )
 	printf( "ERROR fmmdl_mdllist xlstxt filename\n" )
 	exit 1
 end
 
 residx_filename = ARGV[1]
 
-if( xlstxt_filename == @nil )
+if( xlstxt_filename == nil )
 	printf( "ERROR fmmdl_mdllist residx filename\n" )
 	exit 1
 end
 
 bin_filename = ARGV[2]
 
-if( bin_filename == @nil )
+if( bin_filename == nil )
 	printf( "ERROR fmmdl_mdllist bin filename\n" )
 	exit 1
 end
 
 code_filename = ARGV[3]
 
-if( code_filename == @nil )
+if( code_filename == nil )
 	printf( "ERROR fmmdl_mdllist code filename\n" )
 	exit 1
 end
 
-symbol_filename = ARGV[4]
+codestr_filename = ARGV[4]
 
-if( symbol_filename == @nil )
+if( codestr_filename == nil )
+	printf( "ERROR fmmdl_mdllist code str filename\n" )
+	exit 1
+end
+
+symbol_filename = ARGV[5]
+
+if( symbol_filename == nil )
 	printf( "ERROR fmmdl_mdllist symbol filename\n" )
 	exit 1
 end
@@ -356,13 +389,14 @@ txtfile = File.open( xlstxt_filename, "r" );
 residxfile = File.open( residx_filename, "r" );
 binfile = File.open( bin_filename, "wb" );
 codefile = File.open( code_filename, "w" );
+codestrfile = File.open( codestr_filename, "wb" );
 symfile = File.open( symbol_filename, "r" );
 
-ret = codefile_write( codefile, txtfile ) #表示コードヘッダーファイル作成
+ret = codefile_write( codefile, codestrfile, txtfile ) #表示コードヘッダー作成
 
 if( ret == RET_FALSE )
-	error_end( bin_filename, code_filename,
-		 txtfile, residxfile, binfile, codefile, symfile )
+	error_end( bin_filename, code_filename, codestr_filename,
+		 txtfile, residxfile, binfile, codefile, codestrfile, symfile )
 	exit 1
 end
 
@@ -381,8 +415,8 @@ while line = txtfile.gets			#パラメタコンバート
 	ret = convert_line( no, line, binfile, residxfile, symfile )
 	
 	if( ret == RET_FALSE )
-		error_end( bin_filename, code_filename,
-			 txtfile, residxfile, binfile, codefile, symfile )
+		error_end( bin_filename, code_filename, codestr_filename,
+			 txtfile, residxfile, binfile, codefile, codestrfile, symfile )
 		exit 1
 	end
 
@@ -397,4 +431,5 @@ txtfile.close
 residxfile.close
 binfile.close
 codefile.close
+codestrfile.close
 symfile.close
