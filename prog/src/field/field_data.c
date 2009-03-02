@@ -13,7 +13,6 @@
 #include "map_matrix.h"
 
 #include "fieldmap/area_id.h"
-//#include "test_graphic/fieldmap_map.naix"
 
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
@@ -84,7 +83,7 @@ void FIELDDATA_SetMapperData(
 				AREADATA_GetInnerOuterSwitch(area_id),
 				AREADATA_GetLightType(area_id));
 	}
-#if 0
+#if 1
 	{
 		int x,z;
 		for (z = 0; z < map_res->sizez; z++) {
@@ -224,13 +223,15 @@ static const FLDMAPPER_RESISTOBJDATA resistObjTbl2[] = {
 	{ NARC_all_build_model_t2_house01_nsbmd, NON_LOWQ},
 };
 
-#include "test_graphic/fieldmap_sample.naix"
+#include "test_graphic/fieldmap_sample.naix"	//resistDDobjTblのために残している
+#if 0
 static const FLDMAPPER_RESISTOBJDATA	resistObjTbl[] = {
 	// high quality model, low quality model のセットを登録する
 	// high quality model, NON_LOWQでもOKらしい
 	{ NARC_fieldmap_sample_pc_01_h_nsbmd, NARC_fieldmap_sample_pc_01_l_nsbmd },
 	{ NARC_fieldmap_sample_buil_01_h_nsbmd, NARC_fieldmap_sample_buil_01_l_nsbmd },
 };
+#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -284,7 +285,6 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LAND_EX,
-//			ARCID_LOOPBRIDGE,
 			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
 			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
 
@@ -344,7 +344,6 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LAND_EX,
-			//ARCID_TEST_C3,
 			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
 			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
 
