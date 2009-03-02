@@ -72,6 +72,14 @@ u16 ZONEDATA_GetAreaID(u16 zone_id)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+u8 ZONEDATA_GetMapArc(u16 zone_id)
+{
+	ZONEDATA zdbuf;
+	getZoneData(&zdbuf, zone_id);
+	return zdbuf.matrix_arc;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 u16 ZONEDATA_GetMatrixID(u16 zone_id)
 {
 	ZONEDATA zdbuf;
