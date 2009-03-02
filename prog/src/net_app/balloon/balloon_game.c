@@ -47,6 +47,7 @@
 #include "system/gfl_use.h"
 #include <calctool.h>
 #include "system/bmp_winframe.h"
+#include "infowin/infowin.h"
 
 
 
@@ -135,6 +136,11 @@ static const CAMERA_ANGLE BalloonCameraAngle = {
 #define BMPWIN_SUB_CGX_OFFSET_SYSTEM	(BMPWIN_SUB_CGX_OFFSET_NAME_3 + BMPWIN_SUB_CGX_NAME_SIZE)
 #define BMPWIN_SUB_CGX_OFFSET_SUB_TALK	(BMPWIN_SUB_CGX_OFFSET_SYSTEM + MENU_WIN_CGX_SIZ)
 
+//--------------------------------------------------------------
+//	情報バー
+//--------------------------------------------------------------
+#define INFOWIN_COLOR			(0xf)
+
 
 //--------------------------------------------------------------
 //	CL_ACT用の定数定義
@@ -194,8 +200,8 @@ static const CAMERA_ANGLE BalloonCameraAngle = {
 #define BALLOON_MAIN_OBJPAL_COLOR_NUM		(BALLOON_MAIN_OBJPAL_NUM * 16)
 ///OBJパレット：バイトサイズ
 #define BALLOON_MAIN_OBJPAL_SIZE			(BALLOON_MAIN_OBJPAL_COLOR_NUM * sizeof(u16))
-///OBJパレット：フェードbit
-//#define BALLOON_MAIN_OBJPAL_FADEBIT			(0x3fff)
+///BGパレット：バイトサイズ
+#define BALLOON_MAIN_BGPAL_SIZE			((16 - 1) * 0x20)	//-1 = 情報バー
 
 //--------------------------------------------------------------
 //	
@@ -833,7 +839,7 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	//パレットフェードシステム作成
 	game->pfd = PaletteFadeInit(HEAPID_BALLOON);
 	PaletteTrans_AutoSet(game->pfd, TRUE);
-	PaletteFadeWorkAllocSet(game->pfd, FADE_MAIN_BG, 0x200, HEAPID_BALLOON);
+	PaletteFadeWorkAllocSet(game->pfd, FADE_MAIN_BG, BALLOON_MAIN_BGPAL_SIZE, HEAPID_BALLOON);
 	PaletteFadeWorkAllocSet(game->pfd, FADE_SUB_BG, 0x200, HEAPID_BALLOON);
 	PaletteFadeWorkAllocSet(game->pfd, FADE_MAIN_OBJ, BALLOON_MAIN_OBJPAL_SIZE, HEAPID_BALLOON);
 	PaletteFadeWorkAllocSet(game->pfd, FADE_SUB_OBJ, 0x200, HEAPID_BALLOON);
@@ -1663,6 +1669,8 @@ static void BalloonUpdate(GFL_TCB* tcb, void *work)
 			G3X_GetRenderedLineCount());
 	}
 #endif
+
+	INFOWIN_Update();
 }
 
 //--------------------------------------------------------------
@@ -1792,11 +1800,12 @@ static void BalloonSys_DefaultBmpWinAdd(BALLOON_GAME_WORK *game)
 	int i;
 	GFL_BMPWIN *win;
 	
+#if WB_TEMP_FIX
 	win = GFL_BMPWIN_Create(BALLOON_FRAME_WIN, 11, 0x13, 20, 4, 
 		BMPWIN_TALK_COLOR, GFL_BMP_CHRAREA_GET_F);
 	PRINT_UTIL_Setup(&game->printUtil[BALLOON_BMPWIN_TALK], win);
 	GFL_BMPWIN_MakeScreen(game->printUtil[BALLOON_BMPWIN_TALK].win);
-	
+#endif
 	
 	//-- サブ画面用 --//
 	win = GFL_BMPWIN_Create(BALLOON_SUBFRAME_WIN, 
@@ -2192,7 +2201,7 @@ static void BalloonDefaultBGSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 {
 	//BG共通パレット
 	PaletteWorkSet_Arc(game->pfd, ARCID_BALLOON_GRA, MINI_FUSEN_BOTTOM_NCLR, 
-		HEAPID_BALLOON, FADE_MAIN_BG, 0, 0);
+		HEAPID_BALLOON, FADE_MAIN_BG, BALLOON_MAIN_BGPAL_SIZE, 0);
 
 	//背景
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(hdl, MINI_FUSEN_BOTTOM_NCGR, 
@@ -2205,6 +2214,8 @@ static void BalloonDefaultBGSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 	GFL_ARCHDL_UTIL_TransVramScreen(hdl, MINI_FUSEN_CCWIN_NSCR, 
 		BALLOON_FRAME_EFF, 0, 0, 0, HEAPID_BALLOON);
 
+	//情報ウィンドウ
+	INFOWIN_Init(BALLOON_FRAME_WIN, INFOWIN_COLOR, HEAPID_BALLOON);
 	
 	//バックグラウンドに黒のカラーを入れる
 	PaletteWork_Clear(game->pfd, FADE_MAIN_BG, FADEBUF_ALL, 0x0000, 0, 1);
@@ -2218,7 +2229,7 @@ static void BalloonDefaultBGSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 //--------------------------------------------------------------
 static void BalloonDefaultBGDel(BALLOON_GAME_WORK *game)
 {
-	return;
+	INFOWIN_Term();
 }
 
 //--------------------------------------------------------------

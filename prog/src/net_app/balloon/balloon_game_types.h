@@ -60,7 +60,7 @@ enum{
 //	BMPウィンドウ
 //--------------------------------------------------------------
 enum{
-	BALLOON_BMPWIN_TALK,		///<会話ウィンドウ
+//	BALLOON_BMPWIN_TALK,		///<会話ウィンドウ
 
 	BALLOON_BMPWIN_NAME_1,		///<プレイヤー名
 	BALLOON_BMPWIN_NAME_2,		///<プレイヤー名
