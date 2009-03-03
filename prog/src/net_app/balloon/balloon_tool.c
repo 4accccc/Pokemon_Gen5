@@ -3360,7 +3360,7 @@ GFL_CLWK* TouchPen_ActorCreate(BALLOON_GAME_PTR game)
 {
 	GFL_CLWK* cap;
 
-#if 1
+#if 0
 	cap = GFL_CLACT_WK_CreateAffine(game->clunit, game->cgr_id[CHARID_TOUCH_PEN], 
 		game->pltt_id[PLTTID_TOUCH_PEN], 
 		game->cell_id[CELLID_TOUCH_PEN], &TouchPenObjParam, CLSYS_DEFREND_MAIN, HEAPID_BALLOON);

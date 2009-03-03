@@ -10,7 +10,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
 #include "print\gf_font.h"
 //#include "system/fontproc.h"

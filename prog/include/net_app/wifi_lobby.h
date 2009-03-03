@@ -14,7 +14,7 @@
 
 #include <procsys.h>
 #include "savedata/save_control.h"
-#include "field/wflby_counter.h"
+#include "net_app/wflby_counter.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -42,10 +42,14 @@ typedef struct {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern GFL_PROC_RESULT WFLBYProc_Init( PROC* p_proc, int* p_seq );
-extern GFL_PROC_RESULT WFLBYProc_Main( PROC* p_proc, int* p_seq );
-extern GFL_PROC_RESULT WFLBYProc_Exit( PROC* p_proc, int* p_seq );
+extern GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq , void * pwk, void * mywk);
+extern GFL_PROC_RESULT WFLBYProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk );
+extern GFL_PROC_RESULT WFLBYProc_Exit( GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk );
 
+//==============================================================================
+//	データ
+//==============================================================================
+extern const GFL_PROC_DATA WFLBY_PROC;
 
 
 #endif		// __WIFI_LOBBY_H__

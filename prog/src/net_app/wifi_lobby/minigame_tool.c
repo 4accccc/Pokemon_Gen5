@@ -3163,7 +3163,7 @@ static MNGM_ENTRYWK* MNGM_ENTRY_CommonInit( const MNGM_ENRES_PARAM* cp_commparam
 
 	// タスク生成
 	p_wk->tcb		= GFL_TCB_AddTask( p_wk->tcbsys, MNGM_ENTRY_Tcb, p_wk, 0 );
-	p_wk->tcb_vwait = VWaitTCB_Add( MNGM_ENTRY_VWaitTcb, p_wk, 0 );
+	p_wk->tcb_vwait = GFUser_VIntr_CreateTCB( MNGM_ENTRY_VWaitTcb, p_wk, 0 );
 
 	// VCHAT ON
 	if( p_wk->comm_param.vchat ){
@@ -4620,7 +4620,7 @@ static MNGM_RESULTWK* MNGM_RESULT_CommonInit( const MNGM_ENRES_PARAM* cp_commpar
 		break;
 	}
 		
-	p_wk->tcb_vwait = VWaitTCB_Add( MNGM_RESULT_VWaitTcb, p_wk, 0 );
+	p_wk->tcb_vwait = GFUser_VIntr_CreateTCB( MNGM_RESULT_VWaitTcb, p_wk, 0 );
 
 	// VCHAT ON
 	if( p_wk->comm_param.vchat ){
@@ -6461,7 +6461,7 @@ static void MNGM_COUNT_MskExit( MNGM_COUNT_MSKWK* p_wk )
 	}
 
 	// HBLANK破棄
-	sys_HBlankIntrStop();
+	//sys_HBlankIntrStop();
 
 	// ウィンドウマスク破棄
 	GX_SetVisibleWnd( p_wk->def_wnd1 );
@@ -6489,7 +6489,7 @@ static void MNGM_COUNT_MskSetMsk( MNGM_COUNT_MSKWK* p_wk )
 	
 	if( p_wk->p_tcb == NULL ){
 		
-		p_wk->p_tcb = VWaitTCB_Add( MNGM_COUNT_MskSetMskVBlank, p_wk, 0 );
+		p_wk->p_tcb = GFUser_VIntr_CreateTCB( MNGM_COUNT_MskSetMskVBlank, p_wk, 0 );
 	}
 }
 

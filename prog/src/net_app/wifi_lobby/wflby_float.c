@@ -10,9 +10,9 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
-#include  "poketool/monsno.h"
+#include  "poke_tool/monsno.h"
 
 #include "wflby_snd.h"
 

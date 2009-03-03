@@ -11,7 +11,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 #include "system/wipe.h"
 //#include "system/snd_tool.h"
 //#include "system/arc_util.h"
@@ -306,7 +306,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 
 		// Vƒuƒ‰ƒ“ƒNHƒuƒ‰ƒ“ƒNŠÖ”Ý’è
 		p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(BCT_VBlank, p_wk, 200);
-		sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
+		//sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
 
 		// ŠeŽíƒtƒ‰ƒO‚Ì‰Šú‰»
 		p_wk->start		= FALSE;
@@ -561,7 +561,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		p_wk->p_client = NULL;
 
 		GFL_TCB_DeleteTask(p_wk->vintr_tcb);
-		sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
+		//sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
 
 #if WB_TEMP_FIX
 		//
@@ -1028,7 +1028,7 @@ static void BCT_GAMEDATA_Release( BUCKET_WK* p_wk )
 static void BCT_ErrAllSysEnd( BUCKET_WK* p_wk, BUCKET_PROC_WORK* pp )
 {
 	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
-	sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
+	//sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
 
 	// ‘Sƒƒ‚ƒŠ”jŠü
 	if( p_wk->p_entry != NULL ){

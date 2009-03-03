@@ -6,7 +6,7 @@
  * @date	2008.01.18(金)
  */
 //==============================================================================
-#include "common.h"
+#include <gflib.h>
 //#include "system/snd_tool.h"
 #include "system/bmp_list.h"
 #include "print\printsys.h"
@@ -21,7 +21,7 @@
 #include "system/wordset.h"
 #include "message.naix"
 //#include "system/fontproc.h"
-#include "gflib/strbuf_family.h"
+//#include "gflib/strbuf_family.h"
 #include "msg/msg_wflby_footprint.h"
 #include "system\font_arc.h"
 #include "savedata/config.h"
@@ -41,9 +41,9 @@
 #include "footprint_snd_def.h"
 
 #include "battle/battle_common.h"	//POKEMON_TEMOTI_MAX定義
-#include "poketool/poke_tool.h"
-#include "poketool/pokeparty.h"
-#include "poketool/pokefoot.h"	//POKEFOOT_ARC_CHAR_DMMY定義の為
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/pokeparty.h"
+#include "poke_tool/pokefoot.h"	//POKEFOOT_ARC_CHAR_DMMY定義の為
 #include "system/touch_subwindow.h"
 #include <tcb.h>
 #include "print\gf_font.h"
@@ -584,7 +584,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 {
 	FOOTPRINT_SYS *fps;
 	
-	sys_HBlankIntrStop();	//HBlank割り込み停止
+	//sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
 	GFL_DISP_GXS_SetVisibleControlDirect(0);
@@ -1081,7 +1081,7 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 	GFL_ARC_CloseDataHandle( fps->handle_footmark );
 
 	GFL_TCB_DeleteTask(fps->vintr_tcb);
-	sys_HBlankIntrStop();	//HBlank割り込み停止
+	//sys_HBlankIntrStop();	//HBlank割り込み停止
 
 #if WB_TEMP_FIX
 	//Vram転送マネージャー削除

@@ -10,7 +10,7 @@
  */
 //==============================================================================
 
-#include "common.h"
+#include <gflib.h>
 #include "system/wipe.h"
 
 #include "net_app/balance_ball.h"
@@ -94,7 +94,7 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 	BB_SystemInit( wk );
 	
 	wk->vintr_tcb = GFUser_VIntr_CreateTCB(BB_VBlank, wk, 200);
-	sys_HBlankIntrStop();
+	//sys_HBlankIntrStop();
 
 #if WB_FIX
 	initVramTransferManagerHeap( BB_TRANSFER_NUM, HEAPID_BB );	
@@ -765,7 +765,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 static void MainResource_Delete( BB_WORK* wk )
 {
 	GFL_TCB_DeleteTask(wk->vintr_tcb);
-	sys_HBlankIntrStop();
+	//sys_HBlankIntrStop();
 #if WB_TEMP_FIX
 	DellVramTransferManager();
 #endif

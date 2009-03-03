@@ -34,6 +34,7 @@
 
 #include "net_app/balloon.h"
 #include "net_app/compati_control.h"
+#include "net_app/wifi_lobby.h"
 
 
 //==============================================================================
@@ -46,6 +47,8 @@ FS_EXTERN_OVERLAY(matsuda_debug);
 FS_EXTERN_OVERLAY(balloon);
 FS_EXTERN_OVERLAY(compati_check);
 FS_EXTERN_OVERLAY(palace);
+//FS_EXTERN_OVERLAY(wifilobby_common);
+
 
 //==============================================================================
 //	構造体定義
@@ -103,6 +106,7 @@ typedef struct{
 //==============================================================================
 static BOOL DebugMatsuda_ItemDebug(D_MATSU_WORK *wk);
 static void * _BalloonParentWorkCreate(D_MATSU_WORK *wk);
+static void * _WifiLobbyParentWorkCreate(D_MATSU_WORK *wk);
 
 
 //==============================================================================
@@ -124,6 +128,14 @@ extern const GFL_PROC_DATA PalaceEditProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
+#if 0
+	{//WIFI広場
+		DM_MSG_MENU014, 
+		&WFLBY_PROC,
+		_WifiLobbyParentWorkCreate,
+		FS_OVERLAY_ID(wifilobby_common),
+	},
+#endif
 	{//風船ミニゲーム
 		DM_MSG_MENU011, 
 		&BalloonProcData,	
@@ -513,6 +525,21 @@ static void * _BalloonParentWorkCreate(D_MATSU_WORK *wk)
 	balloon_pwk = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(BALLOON_PROC_WORK));
 	balloon_pwk->debug_offline = TRUE;
 	return balloon_pwk;
+}
+
+//==============================================================================
+//	
+//==============================================================================
+static void * _WifiLobbyParentWorkCreate(D_MATSU_WORK *wk)
+{
+	WFLBY_PROC_PARAM *wflby_pwk;
+	
+	wflby_pwk = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WFLBY_PROC_PARAM));
+	wflby_pwk->p_wflby_counter 
+		= GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WFLBY_COUNTER_TIME));
+	wflby_pwk->p_save = NULL;
+	wflby_pwk->check_skip = FALSE;
+	return wflby_pwk;
 }
 
 

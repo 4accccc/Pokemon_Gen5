@@ -6,7 +6,7 @@
  * @date	2008.01.22(‰Î)
  */
 //==============================================================================
-#include "common.h"
+#include <gflib.h>
 //#include "system/snd_tool.h"
 #include "system/bmp_list.h"
 #include "print\printsys.h"
@@ -21,7 +21,7 @@
 #include "system/wordset.h"
 #include "message.naix"
 //#include "system/fontproc.h"
-#include "gflib/strbuf_family.h"
+//#include "gflib/strbuf_family.h"
 #include "msg/msg_wflby_footprint.h"
 #include "system\font_arc.h"
 #include "savedata/config.h"
@@ -30,7 +30,7 @@
 //#include "system/d3dobj.h"
 #include "system/bmp_list.h"
 #include "system/bmp_menu.h"
-#include "gflib/strbuf_family.h"
+//#include "gflib/strbuf_family.h"
 #include "gflib/touchpanel.h"
 
 #include "net_app/wifi_lobby/wflby_system_def.h"

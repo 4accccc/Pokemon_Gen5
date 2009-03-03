@@ -10,7 +10,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
 #include "wflby_def.h"
 #include "wflby_event.h"

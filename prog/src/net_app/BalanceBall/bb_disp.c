@@ -10,7 +10,7 @@
  */
 //==============================================================================
 
-#include "common.h"
+#include <gflib.h>
 #include "bb_common.h"
 #include "print\gf_font.h"
 #include "font/font.naix"

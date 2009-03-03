@@ -48,9 +48,9 @@ typedef struct {
 */
 //-----------------------------------------------------------------------------
 
-extern GFL_PROC_RESULT BucketProc_Init( PROC * p_proc, int * p_seq );
-extern GFL_PROC_RESULT BucketProc_Main( PROC* p_proc, int* p_seq );
-extern GFL_PROC_RESULT BucketProc_End( PROC* p_proc, int* p_seq );
+extern GFL_PROC_RESULT BucketProc_Init( GFL_PROC * p_proc, int * p_seq );
+extern GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq );
+extern GFL_PROC_RESULT BucketProc_End( GFL_PROC* p_proc, int* p_seq );
 
 
 #endif		// __BUCKET_H__

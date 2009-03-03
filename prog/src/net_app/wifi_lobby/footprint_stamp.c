@@ -6,7 +6,7 @@
  * @date	2008.01.20(“ú)
  */
 //==============================================================================
-#include "common.h"
+#include <gflib.h>
 //#include "system/snd_tool.h"
 #include <arc_tool.h>
 //#include "system/arc_util.h"
@@ -15,8 +15,8 @@
 #include "footprint_common.h"
 #include "graphic/footprint_board.naix"
 #include "footprint_stamp.h"
-#include "poketool/monsno.h"
-#include "poketool/pokefoot.h"	//POKEFOOT_ARC_CHAR_DMMY’è‹`‚Ìˆ×
+#include "poke_tool/monsno.h"
+#include "poke_tool/pokefoot.h"	//POKEFOOT_ARC_CHAR_DMMY’è‹`‚Ìˆ×
 #include <procsys.h>
 #include "net_app/footprint_main.h"
 #include "system/wipe.h"

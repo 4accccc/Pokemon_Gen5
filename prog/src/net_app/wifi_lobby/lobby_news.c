@@ -10,7 +10,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
 #include "strbuf.h"
 #include "gflib/msg_print.h"
@@ -738,7 +738,7 @@ GFL_PROC_RESULT NEWS_DRAW_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * 
 
 	// Š„‚è‚İİ’è
 	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(NEWSDRAW_WkVBlank, p_wk, 200);
-	sys_HBlankIntrStop();	//HBlankŠ„‚è‚İ’â~
+	//sys_HBlankIntrStop();	//HBlankŠ„‚è‚İ’â~
 
 	
 	return GFL_PROC_RES_FINISH;
@@ -878,7 +878,7 @@ GFL_PROC_RESULT NEWS_DRAW_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * 
 
 	// Š„‚è‚İİ’è
 	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
-	sys_HBlankIntrStop();	//HBlankŠ„‚è‚İ’â~
+	//sys_HBlankIntrStop();	//HBlankŠ„‚è‚İ’â~
 
 
 	// •`‰æƒVƒXƒeƒ€”jŠü

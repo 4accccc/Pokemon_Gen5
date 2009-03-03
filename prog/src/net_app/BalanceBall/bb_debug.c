@@ -1,7 +1,7 @@
 
 #ifdef PM_DEBUG
 
-#include "common.h"
+#include <gflib.h>
 #include "system/wipe.h"
 
 #include "net_app/balance_ball.h"

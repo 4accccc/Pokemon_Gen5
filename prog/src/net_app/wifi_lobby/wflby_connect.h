@@ -16,7 +16,7 @@
 
 #include "savedata/save_control.h"
 
-#include "field/wflby_counter.h"
+#include "net_app/wflby_counter.h"
 
 #include "wflby_system_def.h"
 

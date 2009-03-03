@@ -10,7 +10,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
 #include "gflib/blact.h"
 #include "gflib/res_manager.h"
@@ -20,7 +20,7 @@
 //#include "system/arc_util.h"
 //#include "system/d3dobj.h"
 
-#include "field/fieldobj_code.h"
+#include "field/fldmmdl_pl_code.h"
 
 #include "data/mmodel/mmodel.naix"
 
@@ -242,104 +242,104 @@ static const BLACT_ANIME_TBL WFLBY_3DOBJ_ANM_TR_FRAME_DATA[] =
 static const WFLBY_3DMDL_DATA	sc_WFLBY_3DMDL_DATA[ WFLBY_3DMDL_DATA_NUM ] = {
 	// 主人公2
 	{
-		HERO,
+		PLHERO,
 		NARC_mmodel_hero_nsbtx,
 		TRUE
 	},
 	{
-		HEROINE,
+		PLHEROINE,
 		NARC_mmodel_heroine_nsbtx,
 		TRUE
 	},
 
 	// ユニオンキャラクタ16
 	{
-		BOY1,
+		PLBOY1,
 		NARC_mmodel_boy1_nsbtx,
 		FALSE
 	},
 	{
-		BOY3,
+		PLBOY3,
 		NARC_mmodel_boy3_nsbtx,
 		FALSE
 	},
 	{
-		MAN3,
+		PLMAN3,
 		NARC_mmodel_man3_nsbtx,
 		FALSE
 	},
 	{
-		BADMAN,
+		PLBADMAN,
 		NARC_mmodel_badman_nsbtx,
 		FALSE
 	},
 	{
-		EXPLORE,
+		PLEXPLORE,
 		NARC_mmodel_explore_nsbtx,
 		FALSE
 	},
 	{
-		FIGHTER,
+		PLFIGHTER,
 		NARC_mmodel_fighter_nsbtx,
 		FALSE
 	},
 	{
-		GORGGEOUSM,
+		PLGORGGEOUSM,
 		NARC_mmodel_gorggeousm_nsbtx,
 		FALSE
 	},
 	{
-		MYSTERY,
+		PLMYSTERY,
 		NARC_mmodel_mystery_nsbtx,
 		FALSE
 	},
 	{
-		GIRL1,
+		PLGIRL1,
 		NARC_mmodel_girl1_nsbtx,
 		FALSE
 	},
 	{
-		GIRL2,
+		PLGIRL2,
 		NARC_mmodel_girl2_nsbtx,
 		FALSE
 	},
 	{
-		WOMAN2,
+		PLWOMAN2,
 		NARC_mmodel_woman2_nsbtx,
 		FALSE
 	},
 	{
-		WOMAN3,
+		PLWOMAN3,
 		NARC_mmodel_woman3_nsbtx,
 		FALSE
 	},
 	{
-		IDOL,
+		PLIDOL,
 		NARC_mmodel_idol_nsbtx,
 		FALSE
 	},
 	{
-		LADY,	
+		PLLADY,	
 		NARC_mmodel_lady_nsbtx,
 		FALSE
 	},
 	{
-		COWGIRL,
+		PLCOWGIRL,
 		NARC_mmodel_cowgirl_nsbtx,
 		FALSE
 	},
 	{
-		GORGGEOUSW,
+		PLGORGGEOUSW,
 		NARC_mmodel_gorggeousw_nsbtx,
 		FALSE
 	},
 	{
-		WIFISW,
+		PLWIFISW,
 		NARC_mmodel_wifisw_nsbtx,
 		FALSE
 	},
 	{
-		WIFISM,
+		PLWIFISM,
 		NARC_mmodel_wifism_nsbtx,
 		FALSE
 	},

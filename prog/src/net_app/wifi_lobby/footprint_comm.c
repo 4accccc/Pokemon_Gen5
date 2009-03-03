@@ -6,7 +6,7 @@
  * @date	2008.01.21(ŒŽ)
  */
 //==============================================================================
-#include "common.h"
+#include <gflib.h>
 #include <arc_tool.h>
 #include "net_app/wifi_lobby/wflby_system_def.h"
 #include "footprint_common.h"

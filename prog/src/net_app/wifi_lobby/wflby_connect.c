@@ -10,7 +10,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
 #include "gflib/msg_print.h"
 
@@ -440,7 +440,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 
 	// VBlankŠÖ”Ý’è
 	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(WFLBY_CONNECT_VBlank, p_wk, 200);
-	sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
+	//sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -808,7 +808,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 
 	// Š„‚èž‚ÝÝ’è
 	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
-	sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
+	//sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
 
 	ConnectBGPalAnm_End(&p_wk->cbp);
 
@@ -888,7 +888,7 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 
 	// VBlankŠÖ”Ý’è
 	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(WFLBY_CONNECT_VBlank, p_wk, 200);
-	sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
+	//sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -1048,7 +1048,7 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 
 	// Š„‚èž‚ÝÝ’è
 	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
-	sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
+	//sys_HBlankIntrStop();	//HBlankŠ„‚èž‚Ý’âŽ~
 
 	ConnectBGPalAnm_End(&p_wk->cbp);
 

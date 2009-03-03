@@ -11,15 +11,15 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 
-#include "common.h"
+#include <gflib.h>
 
 
-#include "gflib/strbuf_family.h"	// îCà”éøñ‚Ç≈égóp
+//#include "gflib/strbuf_family.h"	// îCà”éøñ‚Ç≈égóp
 
 #include "system/clact_util.h"
 #include "system/wipe.h"
 #include "system/render_oam.h"
-#include "system/pm_overlay.h"
+//#include "system/pm_overlay.h"
 //#include "system/fontproc.h"
 #include "print\gf_font.h"
 #include "system/window.h"
@@ -737,7 +737,7 @@ GFL_PROC_RESULT ANKETO_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * myw
 
 	// äÑÇËçûÇ›ê›íË
 	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(ANKETO_VBlank, p_wk, 200);
-	sys_HBlankIntrStop();	//HBlankäÑÇËçûÇ›í‚é~
+	//sys_HBlankIntrStop();	//HBlankäÑÇËçûÇ›í‚é~
 
 	return	GFL_PROC_RES_FINISH;
 }
@@ -840,7 +840,7 @@ GFL_PROC_RESULT ANKETO_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * myw
 
 	// äÑÇËçûÇ›ê›íË
 	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
-	sys_HBlankIntrStop();	//HBlankäÑÇËçûÇ›í‚é~
+	//sys_HBlankIntrStop();	//HBlankäÑÇËçûÇ›í‚é~
 
 
 	// ÇªÇÍÇºÇÍÇÃîjä¸

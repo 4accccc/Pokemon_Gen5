@@ -10,12 +10,12 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
 #include "gflib/button_man.h"
 
 #include "system/wipe.h"
-#include "system/pm_overlay.h"
+//#include "system/pm_overlay.h"
 #include "system/window.h"
 //#include "system/fontproc.h"
 #include "system/wordset.h"
@@ -465,26 +465,26 @@ typedef struct {
 } WFLBY_TRCARD_TRTYPE;
 #define WFLBY_TRCARD_TRTYPE_NUM	( 18 )
 static const WFLBY_TRCARD_TRTYPE sc_WFLBY_TRCARD_TRTYPE[WFLBY_TRCARD_TRTYPE_NUM]={
-	{  HERO,		TRTYPE_BOY,		33,	35 },
-	{  HEROINE,		TRTYPE_GIRL,	38,	36 },
+	{  PLHERO,		TRTYPE_BOY,		33,	35 },
+	{  PLHEROINE,		TRTYPE_GIRL,	38,	36 },
 
-	{  BOY1,		TRTYPE_SCHOOLB,	38,	25 },
-	{  BOY3,		TRTYPE_MUSHI,	44,	32 },
-	{  MAN3,		TRTYPE_ELITEM,	38,	44 },
-	{  BADMAN,		TRTYPE_HEADS,	40,	40 },
-	{  EXPLORE,		TRTYPE_ISEKI,	44,	26 },
-	{  FIGHTER,		TRTYPE_KARATE,	44,	37 },
-	{  GORGGEOUSM,	TRTYPE_PRINCE,	29,	40 },
-	{  MYSTERY,		TRTYPE_ESPM,	42,	44 },
+	{  PLBOY1,		TRTYPE_SCHOOLB,	38,	25 },
+	{  PLBOY3,		TRTYPE_MUSHI,	44,	32 },
+	{  PLMAN3,		TRTYPE_ELITEM,	38,	44 },
+	{  PLBADMAN,		TRTYPE_HEADS,	40,	40 },
+	{  PLEXPLORE,		TRTYPE_ISEKI,	44,	26 },
+	{  PLFIGHTER,		TRTYPE_KARATE,	44,	37 },
+	{  PLGORGGEOUSM,	TRTYPE_PRINCE,	29,	40 },
+	{  PLMYSTERY,		TRTYPE_ESPM,	42,	44 },
 
-	{  GIRL1,		TRTYPE_MINI,	39,	34 },
-	{  GIRL2,		TRTYPE_BATTLEG,	40,	36 },
-	{  WOMAN2,		TRTYPE_SISTER,	38,	41 },
-	{  WOMAN3,		TRTYPE_ELITEW,	36,	42 },
-	{  IDOL,		TRTYPE_IDOL,	38,	38 },
-	{  LADY,		TRTYPE_MADAM,	38,	39 },
-	{  COWGIRL,		TRTYPE_COWGIRL,	38,	35 },
-	{  GORGGEOUSW,	TRTYPE_PRINCESS,40,	44 },
+	{  PLGIRL1,		TRTYPE_MINI,	39,	34 },
+	{  PLGIRL2,		TRTYPE_BATTLEG,	40,	36 },
+	{  PLWOMAN2,		TRTYPE_SISTER,	38,	41 },
+	{  PLWOMAN3,		TRTYPE_ELITEW,	36,	42 },
+	{  PLIDOL,		TRTYPE_IDOL,	38,	38 },
+	{  PLLADY,		TRTYPE_MADAM,	38,	39 },
+	{  PLCOWGIRL,		TRTYPE_COWGIRL,	38,	35 },
+	{  PLGORGGEOUSW,	TRTYPE_PRINCESS,40,	44 },
 };
 // 履歴リソース
 enum{
@@ -1120,8 +1120,8 @@ GFL_PROC_RESULT WFLBY_ROOM_InitDebug(GFL_PROC* p_proc, int* p_seq, void * pwk, v
 	FS_EXTERN_OVERLAY(wifilobby_common);
 	FS_EXTERN_OVERLAY(wifi_2dmapsys);
 
-	Overlay_Load( FS_OVERLAY_ID(wifilobby_common), OVERLAY_LOAD_NOT_SYNCHRONIZE);
-	Overlay_Load( FS_OVERLAY_ID(wifi_2dmapsys), OVERLAY_LOAD_NOT_SYNCHRONIZE);
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(wifilobby_common) );
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi_2dmapsys) );
 
 	return WFLBY_ROOM_Init( p_proc, p_seq );
 }
@@ -1135,8 +1135,8 @@ GFL_PROC_RESULT WFLBY_ROOM_ExitDebug(GFL_PROC* p_proc, int* p_seq, void * pwk, v
 
 	result  = WFLBY_ROOM_Exit( p_proc, p_seq );
 
-	Overlay_UnloadID( FS_OVERLAY_ID(wifilobby_common) );
-	Overlay_UnloadID( FS_OVERLAY_ID(wifi_2dmapsys) );
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifilobby_common) );
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi_2dmapsys) );
 
 	return result;
 }
@@ -1270,7 +1270,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 
 	// VBlank関数設定
 	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(WFLBY_ROOM_VBlank, p_wk, 200);
-	sys_HBlankIntrStop();	//HBlank割り込み停止
+	//sys_HBlankIntrStop();	//HBlank割り込み停止
 	
 	return	GFL_PROC_RES_FINISH;
 }
@@ -1579,7 +1579,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 
 	// 割り込み設定
 	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
-	sys_HBlankIntrStop();	//HBlank割り込み停止
+	//sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	// タイムイベント破棄
 	WFLBY_TIMEEVENT_Exit( p_wk->p_timeevent );
@@ -5381,7 +5381,7 @@ static void WFLBY_ROOM_UNDERWIN_PalTrans( WFLBY_UNDER_WIN* p_wk, WFLBY_GRAPHICCO
 	p_wk->dataidx	= dataidx;
 	p_wk->heapID	= heapID;
 	// タスク生成
-	VWaitTCB_Add( WFLBY_ROOM_UNDERWIN_PalTransVTcb, p_wk, 0 );
+	GFUser_VIntr_CreateTCB( WFLBY_ROOM_UNDERWIN_PalTransVTcb, p_wk, 0 );
 }
 
 //----------------------------------------------------------------------------

@@ -10,13 +10,13 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
 //#include "system/d3dobj.h"
 #include "system/clact_util.h"
 #include "system/wipe.h"
 #include "system/render_oam.h"
-#include "system/pm_overlay.h"
+//#include "system/pm_overlay.h"
 //#include "system/fontproc.h"
 #include "print\gf_font.h"
 #include "system/window.h"
@@ -1422,7 +1422,7 @@ GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 	
 	// 割り込み設定
 	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(WLDTIMER_WkVBlank, p_wk, 200);
-	sys_HBlankIntrStop();	//HBlank割り込み停止
+	//sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	return	GFL_PROC_RES_FINISH;
 }
@@ -1526,7 +1526,7 @@ GFL_PROC_RESULT WLDTIMER_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 
 	// 割り込み設定
 	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
-	sys_HBlankIntrStop();	//HBlank割り込み停止
+	//sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	// ビューアー破棄
 	WLDTIMER_ViewerExit( &p_wk->view, &p_wk->drawsys );
@@ -4473,7 +4473,7 @@ static void WLDTIMER_ViewerWndInit( WLDTIMER_VWND* p_wk )
 	WLDTIMER_ViewerWnd1SetPos( p_wk, 0, 0 );
 
 	// ウィンドウデータ設定タスク
-	p_wk->p_tcb = VWaitTCB_Add( WLDTIMER_ViewerWndTcb, p_wk, 0 );
+	p_wk->p_tcb = GFUser_VIntr_CreateTCB( WLDTIMER_ViewerWndTcb, p_wk, 0 );
 }
 
 //----------------------------------------------------------------------------

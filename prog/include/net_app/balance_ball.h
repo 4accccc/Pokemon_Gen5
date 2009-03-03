@@ -27,9 +27,9 @@ typedef struct {
 } BB_PROC_WORK;
 
 
-extern GFL_PROC_RESULT BalanceBallProc_Init( PROC* proc, int* seq );
-extern GFL_PROC_RESULT BalanceBallProc_Main( PROC* proc, int* seq );
-extern GFL_PROC_RESULT BalanceBallProc_Exit( PROC* proc, int* seq );
+extern GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq );
+extern GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq );
+extern GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq );
 
 
 #endif		// __BUCKET_H__

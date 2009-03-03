@@ -10,7 +10,7 @@
  */
 //==============================================================================
 
-#include "common.h"
+#include <gflib.h>
 #include "net\network_define.h"
 
 

@@ -10,9 +10,9 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
-#include "system/pm_overlay.h"
+//#include "system/pm_overlay.h"
 
 #include "savedata/save_control.h"
 
@@ -20,12 +20,16 @@
 
 #include "net\network_define.h"
 
-#include "wifi/dwc_overlay.h"
+//#include "wifi/dwc_overlay.h"
 
 #include "wflby_system.h"
 #include "wflby_apl.h"
 
 #include <ppwlobby/ppw_lobby.h>
+
+#include "net_app\wifi_lobby.h"
+#include "system/main.h"
+#include "system/gfl_use.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -77,6 +81,21 @@ typedef struct {
 static void WFLBY_VBlankFunc( GFL_TCB* p_tcb, void* p_work );
 
 
+//==============================================================================
+//	データ
+//==============================================================================
+const GFL_PROC_DATA WFLBY_PROC = {	
+	WFLBYProc_Init,
+	WFLBYProc_Main,
+	WFLBYProc_Exit,
+};
+
+//==============================================================================
+//	
+//==============================================================================
+FS_EXTERN_OVERLAY(dpw_common);
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	初期化処理
@@ -96,13 +115,19 @@ GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq , void * pwk, void 
 	{
 		// オーバーレイ
 		FS_EXTERN_OVERLAY(wifi_2dmapsys);
-		Overlay_Load( FS_OVERLAY_ID(wifi_2dmapsys), OVERLAY_LOAD_NOT_SYNCHRONIZE);
+		GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi_2dmapsys) );
 
+	#if WB_FIX
 		// WiFiオーバーレイ開始
 		DwcOverlayStart();
+	#endif
 
 		// 世界交換（ghttpライブラリのため）
+	#if WB_FIX
 		DpwCommonOverlayStart();
+	#else
+		GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common) );
+	#endif
 	}
 	
 	// ヒープ作成
@@ -124,11 +149,11 @@ GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq , void * pwk, void 
 			p_param->p_wflby_counter, p_wk->p_commsys, HEAPID_WFLOBBY );
 
 	// VブランクHブランク関数設定
-	sys_HBlankIntrStop();	//HBlank割り込み停止
+	//sys_HBlankIntrStop();	//HBlank割り込み停止
 
 
 	// 常時動作VBLANKタスク生成
-	p_wk->p_vtcb = VWaitTCB_Add( WFLBY_VBlankFunc, p_wk, 0 );
+	p_wk->p_vtcb = GFUser_VIntr_CreateTCB( WFLBY_VBlankFunc, p_wk, 0 );
 
 	// プロック開始
 	WFLBY_APL_Start( p_wk->p_apl );
@@ -189,8 +214,8 @@ GFL_PROC_RESULT WFLBYProc_Exit( GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	GFL_TCB_DeleteTask( p_wk->p_vtcb );
 	
 	// VブランクHブランク関数設定
-	sys_VBlankFuncChange( NULL, NULL );	// VBlankセット
-	sys_HBlankIntrStop();	//HBlank割り込み停止
+//	sys_VBlankFuncChange( NULL, NULL );	// VBlankセット
+	//sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	// アプリシステム破棄
 	WFLBY_APL_Exit( p_wk->p_apl );
@@ -207,13 +232,19 @@ GFL_PROC_RESULT WFLBYProc_Exit( GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	// ２Dマップシステムをオーバーレイを破棄
 	{
 		FS_EXTERN_OVERLAY(wifi_2dmapsys);
-		Overlay_UnloadID( FS_OVERLAY_ID(wifi_2dmapsys) );
+		GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi_2dmapsys) );
 
 		// 世界交換（ghttpライブラリのため）
+	#if WB_FIX
 		DpwCommonOverlayEnd();
-
+	#else
+		GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common) );
+	#endif
+	
+	#if WB_FIX
 		// WiFiオーバーレイ終了
 		DwcOverlayEnd();
+	#endif
 	}
 
 	return GFL_PROC_RES_FINISH;

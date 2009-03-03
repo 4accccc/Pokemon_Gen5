@@ -26,6 +26,7 @@
 #include "savedata/record.h"
 #include "system/pms_word.h"
 #include "field/fldmmdl.h"
+#include "savedata/wifi_hiroba_save.h"
 
 //==============================================================================
 //	íËêîíËã`
@@ -202,6 +203,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_FLDMMDL,
 		(FUNC_GET_SIZE)FLDMMDL_SAVEDATA_GetWorkSize,
 		(FUNC_INIT_WORK)FLDMMDL_SAVEDATA_Init,
+	},
+	{	//WiÅ|FiÇ–ÇÎÇŒ
+		GMDATA_ID_WFHIROBA,
+		(FUNC_GET_SIZE)SAVEDATA_WFLBY_GetWorkSize,
+		(FUNC_INIT_WORK)SAVEDATA_WFLBY_InitWork,
 	},
 };
 

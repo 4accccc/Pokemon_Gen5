@@ -10,10 +10,10 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
 #include <procsys.h>
-#include "system/pm_overlay.h"
+//#include "system/pm_overlay.h"
 
 #include "net_app/bucket.h"
 #include "net_app/balloon.h"
@@ -993,7 +993,7 @@ static void WFLBY_APLDATA_BS_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	};
 
 	// ミニゲーム共通オーバーレイを読み込む
-	Overlay_Load( FS_OVERLAY_ID(minigame_common), OVERLAY_LOAD_NOT_SYNCHRONIZE);
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(minigame_common) );
 
 	{
 		BUCKET_PROC_WORK* p_param;
@@ -1018,7 +1018,7 @@ static WFLBY_APL_RET WFLBY_APLDATA_BS_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 
 	// ミニゲーム共通オーバーレイ破棄
 	FS_EXTERN_OVERLAY(minigame_common);
-	Overlay_UnloadID( FS_OVERLAY_ID(minigame_common) );
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(minigame_common) );
 
 
 	// ガジェットがアップデートされている可能性があるのでチェック
@@ -1102,7 +1102,7 @@ static void WFLBY_APLDATA_BB_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	};
 
 	// ミニゲーム共通オーバーレイを読み込む
-	Overlay_Load( FS_OVERLAY_ID(minigame_common), OVERLAY_LOAD_NOT_SYNCHRONIZE);
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(minigame_common) );
 
 	{
 		BB_PROC_WORK* p_param;
@@ -1125,7 +1125,7 @@ static WFLBY_APL_RET WFLBY_APLDATA_BB_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 {
 	// ミニゲーム共通オーバーレイ破棄
 	FS_EXTERN_OVERLAY(minigame_common);
-	Overlay_UnloadID( FS_OVERLAY_ID(minigame_common) );
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(minigame_common) );
 
 	// ガジェットがアップデートされている可能性があるのでチェック
 	{
@@ -1207,7 +1207,7 @@ static void WFLBY_APLDATA_BL_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	};
 
 	// ミニゲーム共通オーバーレイを読み込む
-	Overlay_Load( FS_OVERLAY_ID(minigame_common), OVERLAY_LOAD_NOT_SYNCHRONIZE);
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(minigame_common) );
 
 	{
 		BALLOON_PROC_WORK* p_param;
@@ -1231,7 +1231,7 @@ static WFLBY_APL_RET WFLBY_APLDATA_BL_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 {
 	// ミニゲーム共通オーバーレイ破棄
 	FS_EXTERN_OVERLAY(minigame_common);
-	Overlay_UnloadID( FS_OVERLAY_ID(minigame_common) );
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(minigame_common) );
 
 	// ガジェットがアップデートされている可能性があるのでチェック
 	{

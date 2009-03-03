@@ -11,7 +11,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
 #include "net_app/wifi_2dmap/wf2dmap_obj.h"
 #include "net_app/wifi_2dmap/wf2dmap_cmdq.h"

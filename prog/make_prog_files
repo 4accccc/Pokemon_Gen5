@@ -29,7 +29,8 @@ SAVEDATASRC = 	savedata/save_tbl.c \
 				savedata/record.c \
 				savedata/wifihistory.c \
 				savedata/wifilist.c \
-				savedata/mystery_data.c
+				savedata/mystery_data.c \
+				savedata/wifi_hiroba_save.c
 
 #’ÊM‚Ìí’“
 NETWORKSRC =	net/net_icondata.c \
@@ -109,7 +110,8 @@ SRCS	+=		$(SOUNDSRC) \
 				musical/stage/sta_acting.c \
 				infowin/infowin.c \
 				system/actor_tool.c \
-				system/bmp_oam.c
+				system/bmp_oam.c \
+				net_app/wifi_earth/wifi_country.c
 
 
 #================================================
@@ -480,4 +482,5 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 			app/palace/palace_draw.c
+
 

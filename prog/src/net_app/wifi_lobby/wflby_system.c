@@ -11,9 +11,9 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
-#include "gflib/strbuf_family.h"
+//#include "gflib/strbuf_family.h"
 
 #include "print\gf_font.h"
 //#include "system/fontproc.h"
@@ -22,16 +22,20 @@
 #include "msg/msg_wifi_hiroba.h"
 
 #include "savedata/mystatus.h"
+
+#if WB_TEMP_FIX
 #include "savedata/zukanwork.h"
+#include "savedata/fnote_mem.h"
+#endif
+
 #include "savedata/wifihistory.h"
 #include "savedata/gametime.h"
-#include "savedata/fnote_mem.h"
 #include "savedata/record.h"
 #include "savedata/wifi_hiroba_save.h"
 
-#include "field/fieldobj_code.h"
+#include "field/fldmmdl_pl_code.h"
 
-#include "poketool/pokeparty.h"
+#include "poke_tool/pokeparty.h"
 
 #include "net_app/dwc_lobbylib.h"
 
@@ -449,67 +453,67 @@ typedef struct {
 static const WFLBY_SYSTEM_TRTYPE_SEX sc_WFLBY_SYSTEM_TRTYPE_SEX[WFLBY_SYSTEMUNICHAR_NUM] = {
 	// ユニオンキャラクタ16
 	{
-		BOY1,
+		PLBOY1,
 		PM_MALE,
 	},
 	{
-		BOY3,
+		PLBOY3,
 		PM_MALE,
 	},
 	{
-		MAN3,
+		PLMAN3,
 		PM_MALE,
 	},
 	{
-		BADMAN,
+		PLBADMAN,
 		PM_MALE,
 	},
 	{
-		EXPLORE,
+		PLEXPLORE,
 		PM_MALE,
 	},
 	{
-		FIGHTER,
+		PLFIGHTER,
 		PM_MALE,
 	},
 	{
-		GORGGEOUSM,
+		PLGORGGEOUSM,
 		PM_MALE,
 	},
 	{
-		MYSTERY,
+		PLMYSTERY,
 		PM_MALE,
 	},
 	{
-		GIRL1,
+		PLGIRL1,
 		PM_FEMALE,
 	},
 	{
-		GIRL2,
+		PLGIRL2,
 		PM_FEMALE,
 	},
 	{
-		WOMAN2,
+		PLWOMAN2,
 		PM_FEMALE,
 	},
 	{
-		WOMAN3,
+		PLWOMAN3,
 		PM_FEMALE,
 	},
 	{
-		IDOL,
+		PLIDOL,
 		PM_FEMALE,
 	},
 	{
-		LADY,	
+		PLLADY,	
 		PM_FEMALE,
 	},
 	{
-		COWGIRL,
+		PLCOWGIRL,
 		PM_FEMALE,
 	},
 	{
-		GORGGEOUSW,
+		PLGORGGEOUSW,
 		PM_FEMALE,
 	},
 };
@@ -2300,9 +2304,9 @@ u32 WFLBY_SYSTEM_GetProfileTrType( const WFLBY_USER_PROFILE* cp_profile )
 	
 	// 表示できないので、出来るものに置き換える
 	if( WFLBY_SYSTEM_GetProfileSex( cp_profile ) == PM_MALE ){
-		return BOY1;
+		return PLBOY1;
 	}
-	return GIRL1;
+	return PLGIRL1;
 }
 
 //----------------------------------------------------------------------------

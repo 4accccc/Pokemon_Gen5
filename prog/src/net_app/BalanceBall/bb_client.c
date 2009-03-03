@@ -10,7 +10,7 @@
  */
 //==============================================================================
 
-#include "common.h"
+#include <gflib.h>
 #include "bb_client.h"
 #include "bb_comm_cmd.h"
 
