@@ -122,6 +122,7 @@ static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk );
 
 //--------------------------------------------------------------
 ///	デバッグメニューリスト　汎用
+///	データを追加する事でメニューの項目も増えます。
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
@@ -136,7 +137,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 };
 
 //--------------------------------------------------------------
-///	デバッグメニューリスト	グリッド実験マップ用
+///	デバッグメニューリスト	グリッド実験マップ用。
+///	データを追加する事でメニューの項目も増えます。
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 {
@@ -149,7 +151,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR01, DMenuCallProc_FldMMdlList },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
-	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -790,7 +791,7 @@ static u16 * DEBUG_GetZoneNameUTF16( u32 heapID, u32 zoneID )
 	pStrBuf = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16)*128 );
 	ZONEDATA_GetZoneName( heapID, name8, zoneID );
 	utf16_eom = GFL_STR_GetEOMCode();
-	OS_Printf( "変換 %s\n", name8 );
+//	OS_Printf( "変換 %s\n", name8 );
 	
 	for( i = 0; i < 128; i++ ){
 		utf16 = DEBUG_ASCIICODE_UTF16( name8[i] );
@@ -1062,9 +1063,6 @@ typedef struct
 //--------------------------------------------------------------
 static GMEVENT_RESULT DMenuTestCameraListEvent(
 		GMEVENT *event, int *seq, void *work );
-static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code );
-static void DEBUG_SetMenuWorkFldMMdlList(
-		FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
 
 ///カメラリスト最大
 #define TESTCAMERALISTMAX (4)
@@ -1212,6 +1210,11 @@ typedef struct
 	FIELD_MAIN_WORK *fieldWork;
 	GFL_MSGDATA *msgData;
 	FLDMENUFUNC *menuFunc;
+	FLDMMDLSYS *fldmmdlsys;
+
+	u16 obj_code;
+	u16 res_add;
+	FLDMMDL *fmmdl;
 }DEBUG_FLDMMDLLIST_EVENT_WORK;
 
 //--------------------------------------------------------------
@@ -1219,6 +1222,9 @@ typedef struct
 //--------------------------------------------------------------
 static GMEVENT_RESULT DMenuFldMMdlListEvent(
 		GMEVENT *event, int *seq, void *wk );
+static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code );
+static void DEBUG_SetMenuWorkFldMMdlList(
+		FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
 
 ///	動作モデルリスト メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DebugMenuList_FldMMdlList =
@@ -1268,6 +1274,12 @@ static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk )
 	work->gmEvent = event;
 	work->heapID = heapID;
 	work->fieldWork = fieldWork;
+	
+	{
+		GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+		work->fldmmdlsys = GAMEDATA_GetFldMMdlSys( gdata );
+	}
+
 	return( TRUE );
 }
 
@@ -1316,15 +1328,68 @@ static GMEVENT_RESULT DMenuFldMMdlListEvent(
 				break;
 			}
 			
-			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			
-			if( ret == FLDMENUFUNC_CANCEL ){	//キャンセル
+			if( ret == FLDMENUFUNC_CANCEL || ret == NONDRAW ){ //キャンセル
+				FLDMENUFUNC_DeleteMenu( work->menuFunc );
 				return( GMEVENT_RES_FINISH );
 			}
 			
-			return( GMEVENT_RES_FINISH );		//決定
+			work->obj_code = ret;
+			work->res_add = FLDMMDL_BLACTCONT_AddOBJCodeRes(
+					work->fldmmdlsys, work->obj_code );
+			
+			{
+				VecFx32 pos;
+				FLDMMDL *jiki;
+				FLDMMDL_HEADER head = {
+					0,	///<識別ID
+					0,	///<表示するOBJコード
+					MV_RND,	///<動作コード
+					0,	///<イベントタイプ
+					0,	///<イベントフラグ
+					0,	///<イベントID
+					0,	///<指定方向
+					0,	///<指定パラメタ 0
+					0,	///<指定パラメタ 1
+					0,	///<指定パラメタ 2
+					4,	///<X方向移動制限
+					4,	///<Z方向移動制限
+					0,	///<グリッドX
+					0,	///<グリッドZ
+					0,	///<Y値 fx32型
+				};
+				
+				jiki = FLDMMDLSYS_SearchOBJID(
+					work->fldmmdlsys, FLDMMDL_ID_PLAYER );
+				
+				head.id = 250;
+				head.gx = FLDMMDL_GetGridPosX( jiki ) + 2;
+				head.gz = FLDMMDL_GetGridPosZ( jiki );
+				head.y = FLDMMDL_GetVectorPosY( jiki );
+				head.obj_code = work->obj_code;
+				work->fmmdl = FLDMMDLSYS_AddFldMMdl(
+					work->fldmmdlsys, &head, 0 );
+			}
+			
+			(*seq)++;
+			break;
+		case 2:
+			{
+				int key_trg = GFL_UI_KEY_GetTrg();
+				FLDMMDL_UpdateMoveProc( work->fmmdl );
+
+				if( (key_trg & PAD_BUTTON_B) ){
+					FLDMMDL_Delete( work->fmmdl );
+					
+					if( work->res_add == TRUE ){
+						FLDMMDL_BLACTCONT_DeleteOBJCodeRes(
+								work->fldmmdlsys, work->obj_code );
+					}
+					
+					(*seq) = 1;
+				}
+			}
+			break;
 		}
-		break;
 	}
 	
 	return( GMEVENT_RES_CONTINUE );
@@ -1349,7 +1414,7 @@ static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code )
 			sizeof(u16)*DEBUG_OBJCODE_STR_LENGTH );
 	name8 = DEBUG_FLDMMDL_GetOBJCodeString( code, heapID );
 	utf16_eom = GFL_STR_GetEOMCode();
-	OS_Printf( "変換 %s\n", name8 );
+//	OS_Printf( "変換 %s\n", name8 );
 	
 	for( i = 0; i < DEBUG_OBJCODE_STR_LENGTH; i++ ){
 		utf16 = DEBUG_ASCIICODE_UTF16( name8[i] );
@@ -1358,7 +1423,7 @@ static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code )
 			break;
 		}
 	}
-
+	
 	GFL_HEAP_FreeMemory( name8 );
 	
 	if( i >= DEBUG_OBJCODE_STR_LENGTH ){ //文字数オーバー

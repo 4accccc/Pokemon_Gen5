@@ -502,6 +502,8 @@ extern void FLDMMDL_SAVEDATA_Load(
 extern void FLDMMDLSYS_Push( FLDMMDLSYS *fmmdlsys );
 extern void FLDMMDLSYS_Pop( FLDMMDLSYS *fmmdlsys );
 
+extern void FLDMMDL_UpdateMoveProc( FLDMMDL *fmmdl );
+
 extern BOOL FLDMMDL_CheckPossibleAcmd( const FLDMMDL * fmmdl );
 extern void FLDMMDL_SetAcmd( FLDMMDL * fmmdl, u16 code );
 extern void FLDMMDL_SetLocalAcmd( FLDMMDL * fmmdl, u16 code );
@@ -868,5 +870,10 @@ extern GFL_BBDACT_SYS * FLDMMDL_BLACTCONT_GetBbdActSys(
 		FLDMMDL_BLACTCONT *pBlActCont );
 extern GFL_BBDACT_RESUNIT_ID FLDMMDL_BLACTCONT_GetResUnitID(
 		FLDMMDL_BLACTCONT *pBlActCont );
+
+extern BOOL FLDMMDL_BLACTCONT_CheckOBJCodeRes(
+		FLDMMDLSYS *fmmdlsys, u16 code );
+extern BOOL FLDMMDL_BLACTCONT_AddOBJCodeRes( FLDMMDLSYS *fmmdlsys, u16 code );
+extern void FLDMMDL_BLACTCONT_DeleteOBJCodeRes( FLDMMDLSYS *fmmdlsys, u16 code );
 
 #endif //FLDMMDL_H_FILE

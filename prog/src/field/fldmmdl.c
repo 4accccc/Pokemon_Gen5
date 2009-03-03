@@ -898,6 +898,22 @@ static void FldMMdl_SaveData_LoadFldMMdl(
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * FLDMMDL 動作部分実行
+ * @param	fmmdl	FLDMMDL*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_UpdateMoveProc( FLDMMDL *fmmdl )
+{
+	FLDMMDL_UpdateMove( fmmdl );
+	
+	if( FLDMMDL_CheckStatusBitUse(fmmdl) == TRUE ){
+		FldMMdl_TCB_DrawProc( fmmdl );
+	}
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMMDL TCB 動作関数
  * @param	tcb		GFL_TCB *
  * @param	work	tcb work
@@ -907,11 +923,7 @@ static void FldMMdl_SaveData_LoadFldMMdl(
 static void FldMMdl_TCB_MoveProc( GFL_TCB * tcb, void *work )
 {
 	FLDMMDL *fmmdl = (FLDMMDL *)work;
-	FLDMMDL_UpdateMove( fmmdl );
-	
-	if( FLDMMDL_CheckStatusBitUse(fmmdl) == TRUE ){
-		FldMMdl_TCB_DrawProc( fmmdl );
-	}
+	FLDMMDL_UpdateMoveProc( fmmdl );
 }
 
 //--------------------------------------------------------------
@@ -4173,7 +4185,7 @@ void FLDMMDL_DrawPopProcDummy( FLDMMDL * fmmdl )
 //----
 //--------------------------------------------------------------
 /**
- * 動作モデル　OBJコード文字列を取得(ASCII)
+ * デバッグ　動作モデル　OBJコード文字列を取得(ASCII)
  * @param	code OBJコード
  * @param	heapID buf領域確保用HEAPID
  * @retval	u8* 文字列が格納されたu8*。使用後GFL_HEAP_FreeMemory()が必要。
@@ -4191,6 +4203,16 @@ u8 * DEBUG_FLDMMDL_GetOBJCodeString( u16 code, HEAPID heapID )
 			DEBUG_OBJCODE_STR_LENGTH * code, DEBUG_OBJCODE_STR_LENGTH );
 	return( buf );
 }
+
+//--------------------------------------------------------------
+/**
+ * デバッグ　動作モデル　追加
+ * @param	code	OBJコード
+ * @param	heapID
+ * @retval
+ */
+//--------------------------------------------------------------
+
 //----
 #endif //DEBUG_FLDMMDL
 //----

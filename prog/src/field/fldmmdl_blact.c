@@ -505,6 +505,59 @@ static u16 BBDResUnitIndex_SearchResID( FLDMMDLSYS *fmmdlsys, u16 obj_code )
 	return( IDCodeIndex_SearchCode(&pBlActCont->BBDResUnitIdx,obj_code) );
 }
 
+//--------------------------------------------------------------
+/**
+ * IDCODEIDX BBDACT 指定コードのリソースIDが追加済みかチェック
+ * @param	fmmdlsys	FLDMMDLSYS
+ * @param	code OBJコード
+ * @retval	BOOL	TRUE=追加済み FALSE=追加まだ
+ */
+//--------------------------------------------------------------
+BOOL FLDMMDL_BLACTCONT_CheckOBJCodeRes( FLDMMDLSYS *fmmdlsys, u16 code )
+{
+	u16 res;
+	FLDMMDL_BLACTCONT *pBlActCont = FLDMMDLSYS_GetBlActCont( fmmdlsys );
+	
+	res = IDCodeIndex_SearchCode( &pBlActCont->BBDResUnitIdx, code );
+
+	if( res == REGIDCODE_MAX ){
+		return( FALSE );
+	}
+
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * IDCODEIDX BBDACT 指定コードのリソースを追加
+ * @param	fmmdlssy	FLDMMDLSYS
+ * @param	code	OBJコード
+ * @retval	BOOL	TRUE=追加した。FALSE=既に追加済み
+ */
+//--------------------------------------------------------------
+BOOL FLDMMDL_BLACTCONT_AddOBJCodeRes( FLDMMDLSYS *fmmdlsys, u16 code )
+{
+	if( FLDMMDL_BLACTCONT_CheckOBJCodeRes(fmmdlsys,code) == FALSE ){
+		BBDResUnitIndex_AddResUnit( fmmdlsys, code );
+		return( TRUE );
+	}
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * IDCODEIDX BBDACT 指定コードのリソースを削除
+ * @param	fmmdlssy	FLDMMDLSYS
+ * @param	code	OBJコード
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_BLACTCONT_DeleteOBJCodeRes( FLDMMDLSYS *fmmdlsys, u16 code )
+{
+	BBDResUnitIndex_RemoveResUnit( fmmdlsys, code );
+}
+
 //======================================================================
 //	parts
 //======================================================================
