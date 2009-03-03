@@ -37,7 +37,7 @@
 #define DEBUG_MENU_PANO	(14)
 #define DEBUG_FONT_PANO	(15)
 
-#define D_MENU_CHARSIZE_X (8)		//メニュー横幅
+#define D_MENU_CHARSIZE_X (12)		//メニュー横幅
 #define D_MENU_CHARSIZE_Y (16)		//メニュー縦幅
 
 //--------------------------------------------------------------
@@ -148,7 +148,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
 	{ DEBUG_FIELD_STR06, DMenuCallProc_MapSeasonSelect},
 	{ DEBUG_FIELD_STR07, DMenuCallProc_CameraList },
-	{ DEBUG_FIELD_STR01, DMenuCallProc_FldMMdlList },
+	{ DEBUG_FIELD_STR13, DMenuCallProc_FldMMdlList },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
 	{ DEBUG_FIELD_STR01, NULL },
@@ -166,8 +166,8 @@ static const DEBUG_MENU_LISTDATA DATA_DebugMenuListTbl[] =
 		DATA_DebugMenuList
 	},
 	{	//実験マップ　グリッド移動
-		12,
-		16,
+		D_MENU_CHARSIZE_X,
+		D_MENU_CHARSIZE_Y,
 		NELEMS(DATA_DebugMenuListGrid),
 		DATA_DebugMenuListGrid
 	},
@@ -178,8 +178,8 @@ static const DEBUG_MENU_LISTDATA DATA_DebugMenuListTbl[] =
 		DATA_DebugMenuList
 	},
 	{	//実験マップ　グリッド移動
-		12,
-		16,
+		D_MENU_CHARSIZE_X,
+		D_MENU_CHARSIZE_Y,
 		NELEMS(DATA_DebugMenuListGrid),
 		DATA_DebugMenuListGrid
 	},
