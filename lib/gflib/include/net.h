@@ -211,6 +211,7 @@ typedef void (*NetModeChangeFunc)(void* pWork, BOOL bResult);   ///< ’ÊMŒ`‘Ô•Ï
 typedef void (*NetEndCallback)(void* pWork);   ///< ’ÊMI—¹Žž‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN
 
 typedef void (*NetStepEndCallback)(void* pWork);   ///< ’ÊM‚Ì‹æØ‚è‚ÉŒÄ‚Î‚ê‚é”Ä—pƒR[ƒ‹ƒoƒbƒNŒ^
+typedef void (*NetPreStepEndCallback)(void* pWork,BOOL bParent);   ///< ’ÊM‚Ì‹æØ‚è‚ÉŒÄ‚Î‚ê‚é”Ä—pƒR[ƒ‹ƒoƒbƒNŒ^
 
 typedef void (*NetConnectHardware)(void* pWork,int hardID);  ///< ‹@ŠB“I‚ÉÚ‘±‚µ‚½Žž‚ÉŒÄ‚Î‚ê‚é
 typedef void (*NetConnectNegotiation)(void* pWork,int netID); ///< ƒlƒSƒVƒG[ƒVƒ‡ƒ“‚ª‚·‚ñ‚¾‚çŒÄ‚Î‚ê‚é
@@ -396,6 +397,16 @@ extern void GFL_NET_InitServer(void);
  */
 //==============================================================================
 extern void GFL_NET_ChangeoverConnect(NetStepEndCallback callback);
+//==============================================================================
+/**
+ * @brief    e‹@Žq‹@‚ðŒJ‚è•Ô‚µA’N‚Å‚à‚¢‚¢‚Ì‚ÅÚ‘±‚·‚é ÔŠOü–³üê—p
+ * @param    callback     Ú‘±ƒR[ƒ‹ƒoƒbƒN
+ * @param    precallback  ˆê‰ñ–Ú‚ÌÔŠOü‚ªI—¹‚µ‚½Žž‚ÌƒR[ƒ‹ƒoƒbƒN
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_ChangeoverConnect_IRCWIRELESS(NetStepEndCallback callback,NetPreStepEndCallback precallback);
+
 //==============================================================================
 /**
  * @brief    e‹@Žq‹@‚ðŒJ‚è•Ô‚·

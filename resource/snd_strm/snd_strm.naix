@@ -11,7 +11,8 @@
 #define NARC_SND_STRM_NAIX_
 
 enum {
-	NARC_snd_strm_Firestarter_swav = 0
+	NARC_snd_strm_Firestarter_swav = 0,
+	NARC_snd_strm_poketari_swav = 1
 };
 
 /* NARC_SND_STRM_NAIX_ */

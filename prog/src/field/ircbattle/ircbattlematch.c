@@ -129,6 +129,7 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MATCH* pWork
 static void _connectCallBack(void* pWork, int netID);
 static void _RecvFirstData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _RecvResultData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _ircPreConnect(IRC_BATTLE_MATCH* pWork);
 
 
 //--------------------------------------------
@@ -182,7 +183,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_COMPATI_CHECK,  //GameServiceID
 #if GFL_NET_IRC
-	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
+	60,	// 赤外線タイムアウト時間
 #endif
 };
 
@@ -212,6 +213,7 @@ struct _IRC_BATTLE_MATCH {
     GFL_ARCUTIL_TRANSINFO bgchar2;
     GFL_ARCUTIL_TRANSINFO subchar;
 	CONNECT_BG_PALANM cbp;		// Wifi接続画面のBGパレットアニメ制御構造体
+    BOOL bParent;
 };
 
 
@@ -300,6 +302,16 @@ static void _wirelessConnectCallback(void* pWk)
 }
 
 
+static void _wirelessPreConnectCallback(void* pWk,BOOL bParent)
+{
+	IRC_BATTLE_MATCH *pWork = pWk;
+
+    pWork->bParent = bParent;
+ //   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, _BRIGHTNESS_SYNC);
+    _CHANGE_STATE(pWork,_ircPreConnect);
+}
+
+
 
 //------------------------------------------------------------------------------
 /**
@@ -329,7 +341,7 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
     }
 	{
 		static const GFL_BG_SYS_HEADER sysHeader = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_2D,
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
 		};
 		GFL_BG_SetBGMode( &sysHeader );
 	}
@@ -378,7 +390,7 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
 
 //		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
 		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-//		GFL_BG_LoadScreenReq( frame );
+		GFL_BG_LoadScreenReq( frame );
 //        GFL_BG_ClearFrame(frame);
 	}
 }
@@ -407,7 +419,7 @@ static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork)
         frame,
         ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT,
         _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
     GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
     GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
     BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2), _BUTTON_WIN_PAL );
@@ -547,6 +559,20 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
         GFLNetInitializeStruct net_ini_data;
         net_ini_data = aGFLNetInit;
         net_ini_data.bNetType = GFL_NET_TYPE_IRC_WIRELESS;
+        switch(pWork->selectType){
+          case EVENTIRCBTL_ENTRYMODE_SINGLE:
+            break;
+          case EVENTIRCBTL_ENTRYMODE_DOUBLE:
+            break;
+          case EVENTIRCBTL_ENTRYMODE_TRI:
+            break;
+          case EVENTIRCBTL_ENTRYMODE_MULTH:
+            net_ini_data.maxConnectNum = 4;
+            break;
+          default:
+            GF_ASSERT(0);
+            break;
+        }
         GFL_NET_Init(&net_ini_data, NULL, pWork);	//通信初期化
     }
     
@@ -580,7 +606,7 @@ static void _workEnd(IRC_BATTLE_MATCH* pWork)
 static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
 {
     if(GFL_NET_IsInit() == TRUE){	//初期化終了待ち
-        GFL_NET_ChangeoverConnect(_wirelessConnectCallback); // 自動接続
+        GFL_NET_ChangeoverConnect_IRCWIRELESS(_wirelessConnectCallback,_wirelessPreConnectCallback); // 専用の自動接続
         _CHANGE_STATE(pWork,_ircMatchWait);
     }
 }
@@ -599,6 +625,27 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
        // _CHANGE_STATE(pWork,_ircStartTiming);
 //    }
 
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _ircPreConnect(IRC_BATTLE_MATCH* pWork)
+{
+    _buttonWindowDelete(pWork);
+
+    if(pWork->bParent){
+        int aMsgBuff[]={IRCBTL_STR_12};
+        _msgWindowCreate(aMsgBuff, pWork);
+    }
+    else{
+        int aMsgBuff[]={IRCBTL_STR_13};
+        _msgWindowCreate(aMsgBuff, pWork);
+    }
+    _CHANGE_STATE(pWork,_ircMatchWait);
 }
 
 //------------------------------------------------------------------------------
@@ -692,6 +739,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcInit( GFL_PROC * proc, int * seq, void 
         IRC_BATTLE_MATCH *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_BATTLE_MATCH ), HEAPID_IRCBATTLE );
         GFL_STD_MemClear(pWork, sizeof(IRC_BATTLE_MATCH));
         pWork->heapID = HEAPID_IRCBATTLE;
+        pWork->selectType =  EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
         _CHANGE_STATE( pWork, _modeInit);
     }
     return GFL_PROC_RES_FINISH;

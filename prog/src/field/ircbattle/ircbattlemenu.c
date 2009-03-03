@@ -44,7 +44,7 @@ FS_EXTERN_OVERLAY(ircbattlematch);
 //--------------------------------------------
 // 画面構成定義
 //--------------------------------------------
-#define _WINDOW_MAXNUM (3)   //ウインドウのパターン数
+#define _WINDOW_MAXNUM (4)   //ウインドウのパターン数
 
 #define _MESSAGE_BUF_NUM	( 100*2 )
 
@@ -117,10 +117,9 @@ enum _IBMODE_SELECT {
 };
 
 enum _IBMODE_ENTRY {
-    _ENTRYMODE_SINGLE = 0,
-    _ENTRYMODE_DOUBLE,
-    _ENTRYMODE_MULTI,
-    _ENTRYMODE_EXIT
+    _ENTRYNUM_DOUBLE = 0,
+    _ENTRYNUM_FOUR,
+    _ENTRYNUM_EXIT,
 };
 
 
@@ -167,6 +166,8 @@ static void _modeReportInit(IRC_BATTLE_MENU* pWork);
 static void _modeReportWait(IRC_BATTLE_MENU* pWork);
 static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
 static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
+static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
+static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork);
 
 
    
@@ -435,7 +436,6 @@ static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork)
 
     _CHANGE_STATE(pWork,_modeSelectEntryNumWait);
 
-    
 }
 
 //------------------------------------------------------------------------------
@@ -447,14 +447,16 @@ static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork)
 static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
     switch(bttnid){
-      case _ENTRYMODE_SINGLE:
-      case _ENTRYMODE_DOUBLE:
-      case _ENTRYMODE_MULTI:
-        pWork->selectType = bttnid;
+      case _ENTRYNUM_DOUBLE:
+        _buttonWindowDelete(pWork);
+        _CHANGE_STATE(pWork,_modeSelectBattleTypeInit);
+        return TRUE;
+      case _ENTRYNUM_FOUR:
+        pWork->selectType = EVENTIRCBTL_ENTRYMODE_MULTH;
         _buttonWindowDelete(pWork);
         _CHANGE_STATE(pWork,_modeReportInit);
         return TRUE;
-      case _ENTRYMODE_EXIT:
+      case _ENTRYNUM_EXIT:
         _buttonWindowDelete(pWork);
         _CHANGE_STATE(pWork,_modeSelectMenuInit);
         return TRUE;
@@ -465,6 +467,52 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 }
 
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   人数選択画面初期化
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork)
+{
+    int aMsgBuff[]={IRCBTL_STR_06,IRCBTL_STR_07,IRCBTL_STR_08,IRCBTL_STR_03};
+
+    _buttonWindowCreate(4,aMsgBuff,pWork);
+
+    pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
+    pWork->touch = &_modeSelectBattleTypeButtonCallback;
+
+    _CHANGE_STATE(pWork,_modeSelectEntryNumWait);
+
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   モードセレクト画面タッチ処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
+{
+    switch(bttnid){
+      case EVENTIRCBTL_ENTRYMODE_SINGLE:
+      case EVENTIRCBTL_ENTRYMODE_DOUBLE:
+      case EVENTIRCBTL_ENTRYMODE_TRI:
+        pWork->selectType = bttnid;
+        _buttonWindowDelete(pWork);
+        _CHANGE_STATE(pWork,_modeReportInit);
+        return TRUE;
+      case EVENTIRCBTL_ENTRYMODE_MULTH:
+      case EVENTIRCBTL_ENTRYMODE_EXIT:
+        _buttonWindowDelete(pWork);
+        _CHANGE_STATE(pWork,_modeSelectMenuInit);
+        return TRUE;
+      default:
+        break;
+    }
+    return FALSE;
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -614,6 +662,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
     EVENT_IRCBATTLE_WORK* pParentWork =pwk;
     
     _workEnd(pWork);
+    EVENT_IrcBattleSetType(pParentWork, pWork->selectType);
 
 //	ConnectBGPalAnm_End(&pWork->cbp);
 	GFL_PROC_FreeWork(proc);

@@ -1515,7 +1515,7 @@ static BOOL WH_StateInStartScan(void)
             chan = chan >> 1;
         }
         chan = i+1;
-        OS_TPrintf("channelList %x %x\n",_pWmInfo->sScanExParam.channelList, chan);
+//        NET_PRINT("channelList %x %x\n",_pWmInfo->sScanExParam.channelList, chan);
         while (TRUE)
         {
             chan++;
@@ -1584,7 +1584,7 @@ static void WH_StateOutStartScan(void *arg)
   //  NET_PRINT("WH_StateOutStartScan %d",state);
     switch (state) {
       case WM_STATECODE_PARENT_NOT_FOUND:
-        NET_PRINT("å©Ç¬Ç©ÇÁÇ»Ç©Ç¡ÇΩ\n");
+//        NET_PRINT("å©Ç¬Ç©ÇÁÇ»Ç©Ç¡ÇΩ\n");
         break;
       case WM_STATECODE_PARENT_FOUND:
         // êeã@Ç™å©Ç¬Ç©Ç¡ÇΩèÍçá

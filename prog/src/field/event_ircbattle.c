@@ -64,6 +64,7 @@ struct _EVENT_IRCBATTLE_WORK{
 	FIELD_MAIN_WORK * fieldmap;
 	BATTLE_SETUP_PARAM para;
     BOOL isEndProc;
+    int selectType;
 };
 
 //============================================================================================
@@ -105,7 +106,25 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         dbw->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
         dbw->para.netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
         dbw->para.commPos = dbw->para.netID;
-
+        switch(dbw->selectType){
+          case EVENTIRCBTL_ENTRYMODE_SINGLE:
+            dbw->para.rule = BTL_RULE_SINGLE;
+            break;
+          case EVENTIRCBTL_ENTRYMODE_DOUBLE:
+            dbw->para.rule = BTL_RULE_DOUBLE;
+            break;
+          case EVENTIRCBTL_ENTRYMODE_TRI:
+            dbw->para.rule = BTL_RULE_TRIPLE;
+            break;
+          case EVENTIRCBTL_ENTRYMODE_MULTH:
+            dbw->para.multiMode = 1;
+            dbw->para.rule = BTL_RULE_DOUBLE;
+            NET_PRINT("multiMode\n");
+            break;
+          default:
+            GF_ASSERT(0);
+            break;
+        }
         GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
         GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
@@ -115,6 +134,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         if (GAMESYSTEM_IsProcExists(gsys)){
             break;
         }
+        OS_TPrintf("バトル完了 event_ircbattle\n");
 		(*seq) ++;
 		break;
       case _FIELD_OPEN:
@@ -221,5 +241,24 @@ BOOL IrcBattleBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
         return FALSE;
     }
     return TRUE;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   赤外線モードの設定
+ * @param   pWork      ワークエリア
+ * @param   type       タイプ
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+void EVENT_IrcBattleSetType(EVENT_IRCBATTLE_WORK* pWork, int type)
+{
+    pWork->selectType = type;
+}
+
+int EVENT_IrcBattleGetType(EVENT_IRCBATTLE_WORK* pWork)
+{
+    return pWork->selectType;
 }
 

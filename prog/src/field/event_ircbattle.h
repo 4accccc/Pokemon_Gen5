@@ -16,6 +16,17 @@
 
 typedef struct _EVENT_IRCBATTLE_WORK EVENT_IRCBATTLE_WORK;
 
+
+enum EVENTIRCBTL_IBMODE_ENTRY {
+    EVENTIRCBTL_ENTRYMODE_SINGLE = 0,
+    EVENTIRCBTL_ENTRYMODE_DOUBLE,
+    EVENTIRCBTL_ENTRYMODE_TRI,
+    EVENTIRCBTL_ENTRYMODE_MULTH,
+    EVENTIRCBTL_ENTRYMODE_EXIT
+};
+
+
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -40,3 +51,6 @@ extern void EVENT_IrcBattle_SetEnd(EVENT_IRCBATTLE_WORK* pWk);
 extern void* IrcBattleBeaconGetFunc(void* pWork);
 extern int IrcBattleBeaconGetSizeFunc(void* pWork);
 extern BOOL IrcBattleBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
+extern void EVENT_IrcBattleSetType(EVENT_IRCBATTLE_WORK* pWork, int type);
+extern int EVENT_IrcBattleGetType(EVENT_IRCBATTLE_WORK* pWork);
+

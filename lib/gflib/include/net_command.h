@@ -40,6 +40,7 @@ enum CommCommand_e {
   GFL_NET_CMD_DSMP_CHANGE,            ///< DSモード通信かMPモード通信かに切り替える許可を得る
   GFL_NET_CMD_TIMING_SYNC,            ///< 同期を取るコマンド  8
   GFL_NET_CMD_TIMING_SYNC_END,        ///< 同期が取れたことを返すコマンド
+  GFL_NET_CMD_SEND_MACADDRESS,      ///< 持ってるマックアドレスを送る
 #if GFL_NET_WIFI
   GFL_NET_CMD_WIFI_EXIT,              ///< 子機が親機に終了するように送信
 #endif
