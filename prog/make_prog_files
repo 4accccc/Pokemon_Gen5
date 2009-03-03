@@ -104,7 +104,9 @@ SRCS	+=		$(SOUNDSRC) \
 				system/pms_word.c \
 				musical/musical_system.c \
 				musical/musical_mcss.c \
-				musical/dressup/dressup_system.c \
+				musical/dressup/musical_dressup_sys.c \
+				musical/stage/musical_stage_sys.c \
+				musical/stage/sta_acting.c \
 				infowin/infowin.c \
 				system/actor_tool.c \
 				system/bmp_oam.c

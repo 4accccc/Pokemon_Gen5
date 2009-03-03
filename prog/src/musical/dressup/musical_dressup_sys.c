@@ -11,7 +11,7 @@
 #include "system/gfl_use.h"
 
 #include "musical/musical_system.h"
-#include "musical/dressup_system.h"
+#include "musical/musical_dressup_sys.h"
 #include "dup_fitting.h"
 
 //======================================================================

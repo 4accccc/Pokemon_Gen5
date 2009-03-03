@@ -224,9 +224,9 @@ static const GFL_DISP_VRAM vramBank = {
 //	B テクスチャ
 //	C SubBg
 //	D MainBg
-//	E テクスチャパレット
+//	E None
 //	F テクスチャパレット
-//	G None(OBJ?)
+//	G テクスチャパレット
 //	H None
 //	I None
 
@@ -266,6 +266,10 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 //--------------------------------------------------------------
 void	DUP_FIT_TermFitting( FITTING_WORK *work )
 {
+	//フェードないので仮処理
+	GX_SetMasterBrightness(-16);	
+	GXS_SetMasterBrightness(-16);
+
 	GFL_TCB_DeleteTask( work->vBlankTcb );
 	INFOWIN_Term();
 	GFL_G3D_CAMERA_Delete( work->camera );
@@ -990,7 +994,6 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work )
 		dispPos.x = (int)F32_CONST(equipData->pos.x)+128;
 		dispPos.y = (int)F32_CONST(equipData->pos.y)+ 96;
 		rotZ = equipData->rot;
-		OS_TPrintf("[%d]\n",rotZ);
 /*		
 		dispPos = *MUS_POKE_DATA_GetEquipPosition( work->pokeData , work->snapPos );
 		dispPos.x += FIT_POKE_POS_X;

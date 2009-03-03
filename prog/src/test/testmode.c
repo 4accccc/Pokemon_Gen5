@@ -159,7 +159,10 @@ static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx );
 
 static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_ChangeRTC( TESTMODE_WORK *work , const int idx );
+
+static BOOL TESTMODE_ITEM_ChangeMusicalMenu( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx );
 
 static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int idx );
 
@@ -183,7 +186,8 @@ static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int 
 #elif defined DEBUG_ONLY_FOR_kagaya
 	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncKagaya
 #elif defined DEBUG_ONLY_FOR_ariizumi_nobuhiko
-	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncAri
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncStage
+//	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncAri
 #endif
 
 
@@ -197,7 +201,7 @@ static TESTMODE_MENU_LIST topMenu[] =
 	{L"RTC調整"				,TESTMODE_ITEM_SelectFuncRTCEdit },
 	{L"セーブ破かい"		,TESTMODE_ITEM_SelectFuncSave },
     {L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
-    {L"ドレスアップ"		,TESTMODE_ITEM_SelectFuncDressUp },
+    {L"ミュージカル"		,TESTMODE_ITEM_ChangeMusicalMenu },
 
 	//個人
 	{L"わたなべ　てつや"	,TESTMODE_ITEM_SelectFuncWatanabe },
@@ -224,6 +228,14 @@ static TESTMODE_MENU_LIST menuRTCEdit[] =
 	{L"分　へらす"			,TESTMODE_ITEM_ChangeRTC },
 	{L"秒　ふやす"			,TESTMODE_ITEM_ChangeRTC },
 	{L"秒　へらす"			,TESTMODE_ITEM_ChangeRTC },
+	
+	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
+};
+
+static TESTMODE_MENU_LIST menuMusical[] = 
+{
+	{L"ドレスアップ"		,TESTMODE_ITEM_SelectFuncDressUp },
+	{L"ステージ"			,TESTMODE_ITEM_SelectFuncStage },
 	
 	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
 };
@@ -935,15 +947,31 @@ static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx
 	return TRUE;
 }
 
-#include "musical/dressup_system.h"
+
+//-----------------------------------------------------------------------
+//ミュージカル関係
+#include "musical/musical_dressup_sys.h"
+#include "musical/musical_stage_sys.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 FS_EXTERN_OVERLAY(musical);
+
+//RTC調整
+static BOOL TESTMODE_ITEM_ChangeMusicalMenu( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeMenu( work , menuMusical , NELEMS(menuMusical) );
+	return TRUE;
+}
 static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx )
 {
 	DRESSUP_INIT_WORK *initWork = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof(DRESSUP_INIT_WORK));
 	initWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &DressUp_ProcData, initWork);
+	return TRUE;
+}
+static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &MusicalStage_ProcData, NULL);
 	return TRUE;
 }
 

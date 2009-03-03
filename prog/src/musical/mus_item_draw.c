@@ -52,7 +52,7 @@ struct _MUS_ITEM_DRAW_SYSTEM
 //	proto
 //======================================================================
 static u16 MUS_ITEM_DRAW_SearchEmptyWork( MUS_ITEM_DRAW_SYSTEM* work );
-static MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddFunc( MUS_ITEM_DRAW_SYSTEM* work , u16 idx , VecFx32 *pos );
+static MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddFunc( MUS_ITEM_DRAW_SYSTEM* work , u16 idx , VecFx32 *pos , fx16 sizeX , fx16 sizeY);
 
 //--------------------------------------------------------------
 //システムの初期化と開放
@@ -96,6 +96,7 @@ void MUS_ITEM_DRAW_UpdateSystem( MUS_ITEM_DRAW_SYSTEM* work )
 u16 MUS_ITEM_DRAW_GetArcIdx( const u16 itemIdx )
 {
 	//FIXME 今は32パターンだからループ
+
 	return (NARC_musical_item_item01_nsbtx + itemIdx)%32;
 }
 //ファイルIdxからサイズを調べる
@@ -168,7 +169,7 @@ MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddItemId( MUS_ITEM_DRAW_SYSTEM* work , u16 it
 	work->musItem[i].resIdx = GFL_BBD_AddResourceArc( work->bbdSys , ARCID_MUSICAL_ITEM , work->musItem[i].arcIdx,
 							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
 	
-	MUS_ITEM_DRAW_AddFunc( work , i , pos );
+	MUS_ITEM_DRAW_AddFunc( work , i , pos , sizeX , sizeY );
 	
 	return &work->musItem[i];
 }
@@ -187,17 +188,18 @@ MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddResource( MUS_ITEM_DRAW_SYSTEM* work , u16 
 	work->musItem[i].resIdx = GFL_BBD_AddResource( work->bbdSys , g3DresTex , 
 							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
 	
-	MUS_ITEM_DRAW_AddFunc( work , i , pos );
+	MUS_ITEM_DRAW_AddFunc( work , i , pos , sizeX , sizeY );
 	
 	return &work->musItem[i];
 }
 
-static MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddFunc( MUS_ITEM_DRAW_SYSTEM* work , u16 idx , VecFx32 *pos )
+static MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddFunc( MUS_ITEM_DRAW_SYSTEM* work , u16 idx , VecFx32 *pos , fx16 sizeX , fx16 sizeY)
 {
 	const BOOL flg = TRUE;
 	work->musItem[idx].bbdIdx = GFL_BBD_AddObject( work->bbdSys , work->musItem[idx].resIdx ,
 											FX16_ONE,FX16_ONE , pos , 31 ,GFL_BBD_LIGHT_NONE);
 	GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->musItem[idx].bbdIdx , &flg );
+	GFL_BBD_SetObjectSiz( work->bbdSys , work->musItem[idx].bbdIdx , &sizeX , &sizeX );
 	work->musItem[idx].enable = TRUE;
 	
 	return &work->musItem[idx];

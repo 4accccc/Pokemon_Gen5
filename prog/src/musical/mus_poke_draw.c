@@ -14,6 +14,7 @@
 
 #include "arc_def.h"
 #include "poke_tool/poke_tool.h"
+#include "poke_tool/monsno_def.h"
 
 //#include "battle/poke_mcss.h"
 
@@ -95,19 +96,6 @@ void MUS_POKE_DRAW_TermSystem( MUS_POKE_DRAW_SYSTEM* work )
 void MUS_POKE_DRAW_UpdateSystem( MUS_POKE_DRAW_SYSTEM* work )
 {
 	MUS_MCSS_Main( work->mcssSys );
-
-#if DEB_ARI
-	
-	if(GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-	{
-		MUS_MCSS_SetAnmStopFlag( work->musMcss[0].mcss );
-	}
-	if(GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-	{
-		MUS_MCSS_ResetAnmStopFlag( work->musMcss[0].mcss );
-	}
-#endif
-
 }
 void MUS_POKE_DRAW_DrawSystem( MUS_POKE_DRAW_SYSTEM* work )
 {
@@ -134,7 +122,8 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 	GF_ASSERT_MSG( idx < MUS_POKE_DRAW_MAX , "MusicalPokemon draw max over!!\n");
 	
 	
-	work->musMcss[idx].mcss = MUS_MCSS_Add( work->mcssSys , 0,0,0,&maw , (void*)&work->musMcss[idx] );
+	work->musMcss[idx].enable = TRUE;
+	work->musMcss[idx].mcss = MUS_MCSS_Add( work->mcssSys , 0,0,0,&maw , &work->musMcss[idx] );
 	VEC_Set( &scale, 
 			 FX32_ONE*16, 
 			 FX32_ONE*16,
@@ -176,6 +165,16 @@ void MUS_POKE_DRAW_SetScale( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *scale )
 void MUS_POKE_DRAW_GetScale( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *scale )
 {
 	MUS_MCSS_GetScale( drawWork->mcss , scale );
+}
+
+void MUS_POKE_DRAW_StartAnime( MUS_POKE_DRAW_WORK *drawWork )
+{
+	MUS_MCSS_ResetAnmStopFlag( drawWork->mcss );
+}
+
+void MUS_POKE_DRAW_StopAnime( MUS_POKE_DRAW_WORK *drawWork )
+{
+	MUS_MCSS_SetAnmStopFlag( drawWork->mcss );
 }
 
 MUS_POKE_EQUIP_DATA *MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , const MUS_POKE_EQUIP_POS pos )
@@ -228,10 +227,20 @@ enum{
 	MUS_POKEGRA_NMAR,
 	MUS_POKEGRA_NCEC
 };
+static const u16 musPokeArr[]=
+{
+	MONSNO_PIKATYUU,
+	MONSNO_RAITYUU,
+	MONSNO_PIKUSII,
+	MONSNO_EREBUU,
+	500,
+	501,
+	0xFFFF,
+};
 static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WORK *maw)
 {
 	const POKEMON_PASO_PARAM *ppp = PP_GetPPPPointerConst( musPoke->pokePara );
-	int	mons_no = PPP_Get( ppp, ID_PARA_monsno,	NULL ) - 1;
+	int	mons_no = PPP_Get( ppp, ID_PARA_monsno,	NULL );
 	int	form_no = PPP_Get( ppp, ID_PARA_form_no,NULL );
 	int	sex		= PPP_Get( ppp, ID_PARA_sex,	NULL );
 	int	rare	= PPP_CheckRare( ppp );
@@ -239,7 +248,20 @@ static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WO
 	int	file_offset;
 	
 	//FIXME mons_noの変換を行う！
-	mons_no = 1;
+	{
+		int i;
+		i = 0;
+		while( mons_no != musPokeArr[i] )
+		{
+			i++;
+			if( musPokeArr[i] == 0xFFFF )
+			{
+				i--;
+				break;
+			}
+		}
+		mons_no = i;
+	}
 
 	file_start = MUS_POKEGRA_FILE_MAX * mons_no;	//ポケモンナンバーからファイルのオフセットを計算
 

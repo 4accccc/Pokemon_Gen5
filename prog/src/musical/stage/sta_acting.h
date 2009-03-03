@@ -1,13 +1,13 @@
 //======================================================================
 /**
  * @file	dressup_system.h
- * @brief	ミュージカルのドレスアップProc
+ * @brief	ステージ 演技メイン
  * @author	ariizumi
- * @data	09/02/10
+ * @data	09/03/02
  */
 //======================================================================
-#ifndef DRESSUP_SYSTEM_H__
-#define DRESSUP_SYSTEM_H__
+#ifndef STA_ACTING_H__
+#define STA_ACTING_H__
 
 #include "musical/musical_system.h"
 
@@ -18,24 +18,35 @@
 //======================================================================
 //	enum
 //======================================================================
+typedef enum
+{
+	ACT_RET_CONTINUE,
+	ACT_RET_GO_END,
+}ACTING_RETURN;
 
 //======================================================================
 //	typedef struct
 //======================================================================
 
+typedef struct _ACTING_WORK ACTING_WORK;
+
 typedef struct
 {
-	POKEMON_PARAM *pokePara;
-}DRESSUP_INIT_WORK;
+	HEAPID heapId;
+	MUSICAL_POKE_PARAM musPoke[MUSICAL_POKE_MAX];
+	u16		repertorie;	//演目
+}ACTING_INIT_WORK;
 
 //======================================================================
 //	proto
 //======================================================================
 
-extern GFL_PROC_DATA DressUp_ProcData;
+ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork );
+void	STA_ACT_TermActing( ACTING_WORK *work );
+ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work );
 
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
 
-#endif DRESSUP_SYSTEM_H__
+#endif STA_ACTING_H__
