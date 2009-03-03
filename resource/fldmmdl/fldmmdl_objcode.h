@@ -1,4 +1,6 @@
 //動作モデル OBJコード定義
+#ifndef _FLDMMDL_OBJCODE_
+#define _FLDMMDL_OBJCODE_
 
 #define NONDRAW (0x0) //0 描画無し
 #define HERO (0x1) //1 主人公男
@@ -12,3 +14,5 @@
 #define OLDWOMAN1 (0x9) //9 お婆さん
 #define KABI32 (0xa) //10 テスト三頭身
 #define OBJCODEMAX (0xb) //11 最大
+
+#endif

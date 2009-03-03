@@ -177,7 +177,13 @@ def codefile_write( codefile, codestrfile, txtfile )
 	txtfile.pos = 0 #先頭に
 	line = txtfile.gets #一行飛ばし
 	
-	codefile.printf( "//動作モデル OBJコード定義\n\n" );
+	codefile.printf( "//動作モデル OBJコード定義\n" );
+	
+	path = codefile.path
+	name = File.basename( path, "\.*" )
+	name = name.upcase
+	name = sprintf( "_%s_", name )
+	codefile.printf( "#ifndef %s\n#define %s\n\n", name, name );
 	
 	loop{
 		line = txtfile.gets
@@ -221,7 +227,9 @@ def codefile_write( codefile, codestrfile, txtfile )
 	end
 	
 	codefile.printf(
-		"#define %s (0x%x) //%d %s", STR_CODEMAX, no, no, "最大" );
+		"#define %s (0x%x) //%d %s\n\n", STR_CODEMAX, no, no, "最大" );
+	
+	codefile.printf( "#endif" );
 	
 	txtfile.pos = pos
 	return RET_TRUE
