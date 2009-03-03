@@ -518,10 +518,15 @@ static void Local_ItemIconAdd(D_MATSU_WORK *wk, int item_no)
 	}
 	
 	//パレット
+#if 0
 	wk->icon_pltt_id = GFL_CLGRP_PLTT_RegisterEx(
 		hdl, ITEM_GetIndex(item_no, ITEM_GET_ICON_PAL), CLSYS_DRAW_MAIN, 
 		D_MATSU_ICON_PALNO * 0x20, 0, 1, HEAPID_MATSUDA_DEBUG);
-	
+#else
+	wk->icon_pltt_id = GFL_CLGRP_PLTT_RegisterComp(hdl, ITEM_GetIndex(item_no, ITEM_GET_ICON_PAL),
+		CLSYS_DRAW_MAIN, D_MATSU_ICON_PALNO * 0x20, HEAPID_MATSUDA_DEBUG);
+#endif
+
 	//キャラクタ設定
 	icon_index = ITEM_GetIndex(item_no, ITEM_GET_ICON_CGX);
 	wk->icon_cgr_id = GFL_CLGRP_CGR_Register(
