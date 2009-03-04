@@ -72,6 +72,26 @@ typedef enum {
 }BtlCommMode;
 
 
+//--------------------------------------------------------------
+/**
+ *	“VŒó
+ */
+//--------------------------------------------------------------
+typedef enum {
+
+	BTL_WEATHER_NONE = 0,		///< “VŒó‚È‚µ
+
+	BTL_WEATHER_SHINE,			///< ‚Í‚ê
+	BTL_WEATHER_RAIN,				///< ‚ ‚ß
+	BTL_WEATHER_SNOW,				///< ‚ ‚ç‚ê
+	BTL_WEATHER_SANDSTORM,	///< ‚·‚È‚ ‚ç‚µ
+	BTL_WEATHER_MIST,				///< ‚«‚è
+
+	BTL_WEATHER_MAX,
+
+}BtlWeather;
+
+
 typedef struct {
 
 	BtlEngineType		engine;
