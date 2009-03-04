@@ -12,7 +12,7 @@
 $KCODE = "SJIS"
 
 #=======================================================================
-#	フォーマット
+#	パラメタフォーマット
 #	0-3 モデル総数
 #	4-  以下総数分のモデルパラメータ
 #
@@ -27,6 +27,13 @@ $KCODE = "SJIS"
 #	9	モデルサイズ
 #	10	テクスチャサイズ
 #	11	アニメID
+#=======================================================================
+
+#=======================================================================
+#	作成されるOBJコード文字列ファイル構造
+#	32byte単位でコードの数分格納されている。
+#	0..31  コード0番のコード文字列 32byte ASCII 終端ヌル文字
+#	32..63 コード1番文字列
 #=======================================================================
 
 #=======================================================================
@@ -201,18 +208,18 @@ def codefile_write( codefile, codestrfile, txtfile )
 		codefile.printf( "#define %s (0x%x) //%d %s\n",
 			str[STRPRMNO_CODE], no, no, str[STRPRMNO_CODENAME] );
 		
-		codestr = Array.new( CODESTRBUF );
-		codestr.fill( "\000".unpack('C*'), 0..CODESTRBUF )
+		codestr = Array.new( CODESTRBUF );	#文字列バッファ
+		codestr.fill( "\000".unpack('C*'), 0..CODESTRBUF ) #ヌル文字で埋め尽くし
 		
 		i = 0
 		strbuf = str[STRPRMNO_CODE]
-		while strbuf[i]
+		while strbuf[i]				#コード文字列を文字列バッファにコピー
 			codestr[i] = strbuf[i]
 			i = i + 1
 		end
 		
 		i = 0
-		while i < CODESTRBUF
+		while i < CODESTRBUF		#バイト単位でバッファ長分書き込み
 			c = Array( codestr[i] )
 			codestrfile.write( c.pack("C*") )
 			i = i + 1
