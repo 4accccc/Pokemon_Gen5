@@ -625,8 +625,8 @@ static void CRSLocal_ActorSetting(COMPATI_RESULT_SYS *crs)
 {
 	GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
 	
-	clsys_init.oamst_main = 1;	//通信アイコンの分
-	clsys_init.oamnum_main = 128-1;
+	clsys_init.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL;	//通信アイコンの分
+	clsys_init.oamnum_main = 128-GFL_CLSYS_OAMMAN_INTERVAL;
 	clsys_init.tr_cell = CR_ACT_MAX;
 	GFL_CLACT_SYS_Create(&clsys_init, &CompatiVramBank, HEAPID_COMPATI);
 	

@@ -878,8 +878,8 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	{
 		GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
 		
-		clsys_init.oamst_main = 1;	//通信アイコンの分
-		clsys_init.oamnum_main = 128-1;
+		clsys_init.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL;	//通信アイコンの分
+		clsys_init.oamnum_main = 128-GFL_CLSYS_OAMMAN_INTERVAL;
 		clsys_init.tr_cell = 32;	//セルVram転送管理数
 		clsys_init.CGR_RegisterMax = BALLOON_OAMRESOURCE_CHAR_MAX;
 		clsys_init.CELL_RegisterMax = BALLOON_OAMRESOURCE_CELL_MAX;
