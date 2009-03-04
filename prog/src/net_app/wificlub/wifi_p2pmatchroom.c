@@ -1225,8 +1225,8 @@ static void WcrClactInit( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_handle )
 	const u8 CELL_MAX = 16;
 	GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
 
-    cellSysInitData.oamst_main = 1; //通信アイコンの分
-	cellSysInitData.oamnum_main = 64-1;
+    cellSysInitData.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL; //通信アイコンの分
+	cellSysInitData.oamnum_main = 64-GFL_CLSYS_OAMMAN_INTERVAL;
 	cellSysInitData.oamst_sub = 16; 
 	cellSysInitData.oamnum_sub = 128-16;
 	

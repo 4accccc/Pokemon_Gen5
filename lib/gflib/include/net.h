@@ -272,13 +272,16 @@ typedef struct{
 
 //==============================================================================
 /**
- * @brief    通信のブート時初期化
- * @param    heapID  使用するtempメモリID
- * @param    errorFunc  エラー時に呼び出す画面表示関数
+ * @brief    boot時の通信初期化
+ *           WIFIのIPL初期設定が起動時に必要な為
+ * @param    heapID    使用するtempメモリID
+ * @param    errorFunc エラー時に呼び出す関数
+ * @param    fixHeapID 最初から通信領域をとる場合   親ID
+ * @param    childHeapID 最初から通信領域をとる場合 子供ID  この二つが一緒の場合、ここで確保をしない
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_Boot(HEAPID heapID, NetErrorFunc errorFunc);
+extern void GFL_NET_Boot(HEAPID heapID, NetErrorFunc errorFunc, HEAPID fixHeapID, HEAPID childHeapID);
 //==============================================================================
 /**
  * @brief   通信初期化

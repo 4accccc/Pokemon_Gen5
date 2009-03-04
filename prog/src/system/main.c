@@ -160,7 +160,7 @@ static	void	GameInit(void)
 	SaveControl_SystemInit(GFL_HEAPID_APP);	//※check 使用しているヒープIDは暫定
 	
     // 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
-    GFL_NET_Boot( GFL_HEAPID_APP, NULL );
+    GFL_NET_Boot( GFL_HEAPID_APP, NULL, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);
 	/* 起動プロセスの設定 */
 #if 0
 	TestModeSet();	//←サンプルデバッグモード

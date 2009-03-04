@@ -145,6 +145,15 @@ typedef enum{
 #define GFL_CLGRP_EXPLTT_OFFSET		(0x200)			// 拡張パレット指定
 
 
+//-------------------------------------
+///	OAM管理数　ルール
+//
+//	OAMバッファを一括転送するために、以下２つのルールを守る必要があります。
+//	１．管理開始位置を4の倍数にする
+//	２．管理数を4の倍数にする	
+//=====================================
+#define GFL_CLSYS_OAMMAN_INTERVAL	( 4 )
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -183,10 +192,10 @@ typedef struct {
 	s16 surface_main_top;	// メイン　サーフェースの左上座標
 	s16 surface_sub_left;	// サブ　サーフェースの左上座標
 	s16 surface_sub_top;	// サブ　サーフェースの左上座標
-	u8	oamst_main;			// メイン画面OAM管理開始位置
-	u8	oamnum_main;		// メイン画面OAM管理数
-	u8	oamst_sub;			// サブ画面OAM管理開始位置
-	u8	oamnum_sub;			// サブ画面OAM管理数
+	u8	oamst_main;			// メイン画面OAM管理開始位置 4の倍数
+	u8	oamnum_main;		// メイン画面OAM管理数		 4の倍数
+	u8	oamst_sub;			// サブ画面OAM管理開始位置	 4の倍数
+	u8	oamnum_sub;			// サブ画面OAM管理数		 4の倍数
 	u32	tr_cell;			// セルVram転送管理数
 
 	u16  CGR_RegisterMax;			///< 登録できるキャラデータ数
