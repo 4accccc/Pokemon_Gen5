@@ -120,9 +120,8 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
-static BOOL scProc_DATA_WazaExe( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_DATA_MemberOut( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_DATA_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
@@ -726,9 +725,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		u32				cmd;
 		ServerCmdProc	proc;
 	}scprocTbl[] = {
-		{	SC_DATA_WAZA_EXE,		scProc_DATA_WazaExe				},
-		{	SC_DATA_MEMBER_OUT,	scProc_DATA_MemberOut			},
-		{	SC_DATA_MEMBER_IN,	scProc_DATA_MemberIn			},
 		{	SC_MSG_STD,					scProc_MSG_Std						},
 		{	SC_MSG_SET,					scProc_MSG_Set						},
 		{	SC_MSG_WAZA,				scProc_MSG_Waza						},
@@ -736,6 +732,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_WAZA_DMG,		scProc_ACT_WazaDmg				},
 		{	SC_ACT_WAZA_DMG_DBL,scProc_ACT_WazaDmg_Dbl		},
 		{	SC_ACT_DEAD,				scProc_ACT_Dead						},
+		{	SC_ACT_MEMBER_OUT,	scProc_ACT_MemberOut			},
+		{	SC_ACT_MEMBER_IN,		scProc_ACT_MemberIn			},
 		{	SC_ACT_RANKDOWN,		scProc_ACT_RankDownEffect	},
 		{	SC_ACT_SICK_DMG,		scProc_ACT_SickDamage			},
 		{	SC_TOKWIN_IN,				scProc_TOKWIN_In					},
@@ -811,6 +809,7 @@ restart:
 
 
 // データ設定：ワザ発動
+#if 0
 static BOOL scProc_DATA_WazaExe( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTL_WAZA_EXE_PARAM* wep;
@@ -832,7 +831,9 @@ static BOOL scProc_DATA_WazaExe( BTL_CLIENT* wk, int* seq, const int* args )
 
 	return TRUE;
 }
-static BOOL scProc_DATA_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
+#endif
+
+static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ){
 	case 0:
@@ -855,7 +856,7 @@ static BOOL scProc_DATA_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
 	}
 	return FALSE;
 }
-static BOOL scProc_DATA_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
+static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ){
 	case 0:
@@ -979,8 +980,8 @@ static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
 		const BTL_POKEPARAM* poke;
 
 		defPokePos	= BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
-		damage		= args[1];
-		affinity	= args[2];
+		affinity	= args[1];
+		damage		= args[2];
 
 		BTLV_ACT_DamageEffectSingle_Start( wk->viewCore, defPokePos, damage, affinity );
 		(*seq)++;
@@ -1008,9 +1009,9 @@ static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args )
 
 		defPokePos1	= BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
 		defPokePos2	= BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[1] );
-		damage1		= args[2];
-		damage2		= args[3];
-		aff				= args[4];
+		aff				= args[2];
+		damage1		= args[3];
+		damage2		= args[4];
 
 		BTLV_ACT_DamageEffectDouble_Start( wk->viewCore, defPokePos1, defPokePos2, damage1, damage2, aff );
 		(*seq)++;
