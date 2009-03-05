@@ -620,17 +620,16 @@ static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs )
 //=============================================================================================
 /**
  * シンプルHPエフェクト開始
- * ※HPメーターのみ変動。状態異常や天候ダメージに使う
+ * ※HPメーターのみ変動。状態異常や天候ダメージに使う。変動後の値は、直接ポケモンデータを参照している。
  *
  * @param   wk				
  * @param   pokePos		
- * @param   value			HP増減値
  *
  */
 //=============================================================================================
-void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos, int value )
+void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos )
 {
-	BTLV_SCU_StartHPGauge( wk->scrnU, pokePos, value );
+	BTLV_SCU_StartHPGauge( wk->scrnU, pokePos );
 }
 BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk )
 {

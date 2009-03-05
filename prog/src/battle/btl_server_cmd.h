@@ -14,7 +14,7 @@
 
 enum {
 	BTL_SERVER_CMD_QUE_SIZE = 384,
-	BTL_SERVERCMD_ARG_MAX = 8,
+	BTL_SERVERCMD_ARG_MAX = 16,
 };
 
 
@@ -45,6 +45,8 @@ typedef enum {
 	SC_ACT_MEMBER_OUT,	///< 【ポケモン退場】[ ClientID, memberIdx ]
 	SC_ACT_MEMBER_IN,		///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
 	SC_ACT_SICK_DMG,		///<  アクション／ターンチェック時の状態異常ダメージ
+	SC_ACT_WEATHER_DMG,	///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
+	SC_ACT_WEATHER_END,	///< ターンチェックで天候終了
 	SC_TOKWIN_IN,				///< とくせいウィンドウ表示イン [ClientID]
 	SC_TOKWIN_OUT,			///< とくせいウィンドウ表示アウト [ClientID]
 
@@ -217,6 +219,16 @@ static inline void SCQUE_PUT_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID,
 {
 	SCQUE_PUT_Common( que, SC_ACT_MEMBER_IN, clientID, posIdx, memberIdx );
 }
+// 天候による一斉ダメージ		weather:天候ID, pokeCnt:ダメージを受けるポケモン数
+static inline void SCQUE_PUT_ACT_WeatherDamage( BTL_SERVER_CMD_QUE* que, u8 weather, u8 pokeCnt )
+{
+	SCQUE_PUT_Common( que, SC_ACT_WEATHER_DMG, weather, pokeCnt );
+}
+
+static inline void SCQUE_PUT_ACT_WeatherEnd( BTL_SERVER_CMD_QUE* que, u8 weather )
+{
+	SCQUE_PUT_Common( que, SC_ACT_WEATHER_END, weather );
+}
 
 static inline void SCQUE_PUT_SickDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 sick, u8 damage )
 {
@@ -254,5 +266,8 @@ extern void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... );
 //=====================================================
 
 extern ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args );
+
+extern void SCQUE_PUT_ArgOnly( BTL_SERVER_CMD_QUE* que, u8 arg );
+extern u8 SCQUE_READ_ArgOnly( BTL_SERVER_CMD_QUE* que );
 
 #endif

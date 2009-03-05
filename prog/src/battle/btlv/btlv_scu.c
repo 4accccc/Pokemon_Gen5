@@ -892,7 +892,7 @@ typedef struct {
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos, int value )
+void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos )
 {
 	enum {
 		DAMAGE_FRAME_MIN = 40,

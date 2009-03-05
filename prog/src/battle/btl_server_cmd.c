@@ -80,6 +80,8 @@ static const u8 ServerCmdToFmtTbl[] = {
 	SC_ARGFMT_4_4bit,						// SC_ACT_MEMBER_OUT
 	SC_ARGFMT_53bit_1byte,			// SC_ACT_MEMBER_IN
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_SICK_DMG
+	SC_ARGFMT_4_4bit,						// SC_ACT_WEATHER_DMG,
+	SC_ARGFMT_1byte,						// SC_ACT_WEATHER_END,
 	SC_ARGFMT_1byte,						// SC_TOKWIN_IN
 	SC_ARGFMT_1byte,						// SC_TOKWIN_OUT
 	SC_ARGFMT_5_3bit,						// SC_MSG_WAZA
@@ -367,6 +369,32 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 	}
 
 	return cmd;
+}
+
+//=============================================================================================
+/**
+ * 特定サーバコマンドの直後、１バイト単位で引数を渡す（可変引数に対処）
+ *
+ * @param   que		
+ * @param   arg		
+ *
+ */
+//=============================================================================================
+void SCQUE_PUT_ArgOnly( BTL_SERVER_CMD_QUE* que, u8 arg )
+{
+	scque_put1byte( que, arg );
+}
+//=============================================================================================
+/**
+ * 特定サーバコマンドの直後、１バイト単位で渡された引数を読み出す
+ *
+ * @param   que		
+ *
+ */
+//=============================================================================================
+u8 SCQUE_READ_ArgOnly( BTL_SERVER_CMD_QUE* que )
+{
+	return scque_read1byte( que );
 }
 
 

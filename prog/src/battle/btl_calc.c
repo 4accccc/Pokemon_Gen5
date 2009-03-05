@@ -233,3 +233,29 @@ u8 BTL_CALC_HitCountMax( u8 numHitMax )
 	}
 }
 
+//=============================================================================================
+/**
+ * 該当の天候によるターンチェックダメージを受けるポケモンタイプかどうかを判定
+ *
+ * @param   bpp			
+ * @param   weather		
+ *
+ * @retval  BOOL		
+ */
+//=============================================================================================
+BOOL BTL_CALC_CheckRecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
+{
+	switch( weather ){
+	case BTL_WEATHER_SAND:
+		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_IWA) ){ break; }
+		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_METAL) ){ break; }
+		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_JIMEN) ){ break; }
+		return TRUE;
+
+	case BTL_WEATHER_SNOW:
+		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_KOORI) ){ break; }
+		return TRUE;
+	}
+	return FALSE;
+}
+

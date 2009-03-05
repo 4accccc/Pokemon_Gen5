@@ -33,21 +33,7 @@ enum {
 	BTL_CLIENT_MAX = 4,				///< 稼働するクライアント数
 	BTL_POSIDX_MAX = 3,				///< クライアントが管理する最大の戦闘位置数
 	BTL_PARTY_MEMBER_MAX = 6,	///< パーティのメンバー最大数
-
-// 状態異常処理関連
-	BTL_NEMURI_TURN_MIN = 3,	///< 「ねむり」最小ターン数
-	BTL_NEMURI_TURN_MAX = 8,	///< 「ねむり」最大ターン数
-	BTL_NEMURI_TURN_RANGE = (BTL_NEMURI_TURN_MAX - BTL_NEMURI_TURN_MIN + 1),
-
-	BTL_MAHI_EXE_RATIO = 25,	///< 「まひ」でしびれて動けない確率
-	BTL_KORI_MELT_RATIO = 20,	///< 「こおり」が溶ける確率
-
-	BTL_DOKU_SPLIT_DENOM = 8,					///< 「どく」で最大HPの何分の１減るか
-	BTL_YAKEDO_SPLIT_DENOM = 8,				///< 「やけど」で最大HPの何分の１減るか
-	BTL_YAKEDO_DAMAGE_RATIO = 50,			///< 「やけど」で物理ダメージを減じる率
-	BTL_MOUDOKU_SPLIT_DENOM = 16,			///< もうどく時、最大HPの何分の１減るか（基本値=最小値）
-	BTL_MOUDOKU_COUNT_MAX = BTL_MOUDOKU_SPLIT_DENOM-1,	///< もうどく時、ダメージ倍率をいくつまでカウントアップするか
-
+	BTL_FRONT_POKE_MAX = BTL_POSIDX_MAX*2,	///< バトルに出ているポケモンの最大数
 };
 
 //--------------------------------------------------------------

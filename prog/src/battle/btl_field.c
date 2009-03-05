@@ -10,8 +10,9 @@
 #include <gflib.h>
 
 #include "btl_common.h"
-#include "btl_field.h"
+#include "btl_calc.h"
 
+#include "btl_field.h"
 
 //--------------------------------------------------------------
 /**
@@ -47,14 +48,57 @@ BtlWeather BTL_FIELD_GetWeather( void )
 	return Work.weather;
 }
 
+void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn )
+{
+	Work.weather = weather;
+	Work.weatherTurn = turn;
+}
+
+void BTL_FIELD_ClearWeather( void )
+{
+	Work.weather = BTL_WEATHER_NONE;
+	Work.weatherTurn = 0;
+}
+
+fx32 BTL_FIELD_GetWeatherDmgRatio( WazaID waza )
+{
+	switch( Work.weather ){
+	case BTL_WEATHER_SHINE:
+		{
+			PokeType type = WAZADATA_GetType( waza );
+			if( type == POKETYPE_FIRE ){
+				return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
+			}
+			if( type == POKETYPE_WATER ){
+				return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
+			}
+		}
+		break;
+	case BTL_WEATHER_RAIN:
+		{
+			PokeType type = WAZADATA_GetType( waza );
+			if( type == POKETYPE_FIRE ){
+				return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
+			}
+			if( type == POKETYPE_WATER ){
+				return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+	return BTL_CALC_DMG_WEATHER_RATIO_NONE;
+}
+
 //=============================================================================================
 /**
  * ターンチェック
  *
- * @retval  BOOL		ターンチェックにより終わった効果がある場合TRUE
+ * @retval  BtlWeather		ターンチェックにより終わった天候
  */
 //=============================================================================================
-BOOL BTL_FIELD_TurnCheck( void )
+BtlWeather BTL_FIELD_TurnCheckWeather( void )
 {
 	if( Work.weather != BTL_WEATHER_NONE )
 	{
@@ -63,10 +107,14 @@ BOOL BTL_FIELD_TurnCheck( void )
 			Work.weatherTurn--;
 			if( Work.weatherTurn == 0 )
 			{
-				return TRUE;
+				BtlWeather endWeather = Work.weather;
+				Work.weather = BTL_WEATHER_NONE;
+				return endWeather;
 			}
 		}
 	}
-	return FALSE;
+	return BTL_WEATHER_NONE;
 }
+
+
 

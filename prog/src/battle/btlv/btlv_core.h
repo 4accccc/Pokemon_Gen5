@@ -164,7 +164,7 @@ extern void BTLV_StartDeadAct( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_WaitDeadAct( BTLV_CORE* wk );
 extern void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, u8 clientID, u8 memberIdx );
 extern BOOL BTLV_ACT_MemberOut_Wait( BTLV_CORE* wk );
-extern void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos, int value );
+extern void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk );
 
 

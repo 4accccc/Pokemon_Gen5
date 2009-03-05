@@ -28,7 +28,11 @@ typedef enum {
 
 extern void BTL_FIELD_Init( BtlWeather weather );
 extern BtlWeather BTL_FIELD_GetWeather( void );
-extern BOOL BTL_FIELD_TurnCheck( void );
+extern void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn );
+extern void BTL_FIELD_ClearWeather( void );
+extern fx32 BTL_FIELD_GetWeatherDmgRatio( WazaID waza );
 
+
+extern BtlWeather BTL_FIELD_TurnCheckWeather( void );
 
 #endif

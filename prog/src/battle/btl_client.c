@@ -11,6 +11,7 @@
 
 #include "poke_tool/pokeparty.h"
 
+#include "battle\battle.h"
 #include "btl_common.h"
 #include "btl_adapter.h"
 #include "btl_action.h"
@@ -131,6 +132,8 @@ static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -736,6 +739,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_MEMBER_IN,		scProc_ACT_MemberIn			},
 		{	SC_ACT_RANKDOWN,		scProc_ACT_RankDownEffect	},
 		{	SC_ACT_SICK_DMG,		scProc_ACT_SickDamage			},
+		{	SC_ACT_WEATHER_DMG,	scProc_ACT_WeatherDmg			},
+		{	SC_ACT_WEATHER_END,	scProc_ACT_WeatherEnd			},
 		{	SC_TOKWIN_IN,				scProc_TOKWIN_In					},
 		{	SC_TOKWIN_OUT,			scProc_TOKWIN_Out					},
 		{	SC_OP_HP_MINUS,			scProc_OP_HpMinus					},
@@ -1053,7 +1058,11 @@ static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args
 	BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
 	return TRUE;
 }
-
+//---------------------------------------------------------------------------------------
+/**
+ *	ターンチェックによる状態異常ダメージ処理
+ */
+//---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ){
@@ -1075,7 +1084,7 @@ static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
 			}
 
 			BTLV_StartMsgSet( wk->viewCore, msgID, args );	// この先ではargs[0]しか参照しないハズ…
-			BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos, damage );
+			BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
 			(*seq)++;
 		}
 		break;
@@ -1089,14 +1098,101 @@ static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
 	}
 	return FALSE;
 }
+//---------------------------------------------------------------------------------------
+/**
+ *	天候による一斉ダメージ処理
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		{
+			BtlWeather weather = args[0];
+			u8 pokeCnt = args[1];
+			u16 msgID;
+			u8 pokeID, pokePos, i;
 
+			switch( weather ){
+			case BTL_WEATHER_SAND:	msgID = BTL_STRID_STD_SandAttack; break;
+			case BTL_WEATHER_SNOW:	msgID = BTL_STRID_STD_SnowAttack; break;
+				break;
+			default:
+				GF_ASSERT(0);
+				return TRUE;
+			}
 
+			BTLV_StartMsgStd( wk->viewCore, msgID, NULL );
+
+			for(i=0; i<pokeCnt; ++i)
+			{
+				pokeID = SCQUE_READ_ArgOnly( wk->cmdQue );
+				pokePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, pokeID );
+				BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pokePos );
+			}
+			(*seq)++;
+		}
+		break;
+	case 1:
+		if( BTLV_WaitMsg(wk->viewCore)
+		&&	BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore)
+		){
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *	ターンチェックによる天候の終了処理
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		{
+			BtlWeather weather = args[0];
+			u16  msgID;
+			switch( weather ){
+			case BTL_WEATHER_SHINE:	msgID = BTL_STRID_STD_ShineEnd; break;
+			case BTL_WEATHER_RAIN:	msgID = BTL_STRID_STD_RainEnd; break;
+			case BTL_WEATHER_SAND:	msgID = BTL_STRID_STD_StormEnd; break;
+			case BTL_WEATHER_SNOW:	msgID = BTL_STRID_STD_SnowEnd; break;
+			case BTL_WEATHER_MIST:	msgID = BTL_STRID_STD_MistEnd; break;
+			default:
+				GF_ASSERT(0);	// おかしな天候ID
+				return TRUE;
+			}
+			BTLV_StartMsgStd( wk->viewCore, msgID, NULL );
+			(*seq)++;
+		}
+		break;
+	case 1:
+		if( BTLV_WaitMsg(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *	とくせいウィンドウ表示オン
+ */
+//---------------------------------------------------------------------------------------
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTLV_StartTokWin( wk->viewCore, args[0] );
 	return TRUE;
 }
-
+//---------------------------------------------------------------------------------------
+/**
+ *	とくせいウィンドウ表示オフ
+ */
+//---------------------------------------------------------------------------------------
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTLV_QuitTokWin( wk->viewCore, args[0] );
