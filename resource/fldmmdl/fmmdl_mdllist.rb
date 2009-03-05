@@ -75,8 +75,8 @@ STRPRMNO_TEXSIZE = (15)
 #管理表文字位置 アニメーションID
 STRPRMNO_ANMID = (16)
 
-#表示コード文字列 一文字列最長
-CODESTRBUF = (32)
+#表示コード文字列 一文字列最長 ヌル文字含む
+CODESTRBUF = (16)
 
 #=======================================================================
 #	関数
@@ -213,9 +213,12 @@ def codefile_write( codefile, codestrfile, txtfile )
 		
 		i = 0
 		strbuf = str[STRPRMNO_CODE]
-		while strbuf[i]				#コード文字列を文字列バッファにコピー
+		while strbuf[i]
 			codestr[i] = strbuf[i]
 			i = i + 1
+			if( i >= (CODESTRBUF-1) )
+				break
+			end
 		end
 		
 		i = 0

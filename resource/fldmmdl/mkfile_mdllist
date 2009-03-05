@@ -53,4 +53,5 @@ ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	rm -f $(TARGET_MDLPRM_ARCIDX)
 	rm -f $(TARGET_MDLRPM_BIN)
 	rm -f $(TARGET_OBJCODE_H)
+	rm -f $(OBJCODE_STR_FILE)
 endif

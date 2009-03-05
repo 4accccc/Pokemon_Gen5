@@ -33,7 +33,7 @@
 #define DEBUG_FLDMMDL_PRINT //定義でデバッグ出力有効
 #endif
 
-#define DEBUG_OBJCODE_STR_LENGTH (32) //動作モデルOBJコード文字列長さ
+#define DEBUG_OBJCODE_STR_LENGTH (16) //動作モデルOBJコード文字列長さ
 
 //--------------------------------------------------------------
 //	fx
