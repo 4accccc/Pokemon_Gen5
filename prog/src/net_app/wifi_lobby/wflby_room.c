@@ -18,7 +18,7 @@
 //#include "system/pm_overlay.h"
 #include "system/window.h"
 //#include "system/fontproc.h"
-#include "system/wordset.h"
+#include "print/wordset.h"
 #include "print\gf_font.h"
 #include "system/arc_tool.dat"
 //#include "system/arc_util.h"
@@ -43,7 +43,7 @@
 #include "graphic/wifi_lobby_other.naix"
 #include "graphic/unionobj2d_onlyfront.naix"
 
-#include "net_app/dwc_lobbylib.h"
+#include "net/dwc_lobbylib.h"
 
 #include "wflby_room_def.h"
 #include "wflby_event.h"
@@ -4546,7 +4546,7 @@ static void WFLBY_ROOM_Msg_Exit( WFLBY_ROOM_DEFMSG* p_wk )
 //-----------------------------------------------------------------------------
 static STRBUF* WFLBY_ROOM_Msg_Get( WFLBY_ROOM_DEFMSG* p_wk, WFLBY_DEFMSG_TYPE type, u32 strid )
 {
-	MSGMAN_GetString( p_wk->p_msgman[type], strid, p_wk->p_tmp );
+	GFL_MSG_GetString( p_wk->p_msgman[type], strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 	return p_wk->p_str;
 }
@@ -4564,7 +4564,7 @@ static STRBUF* WFLBY_ROOM_Msg_Get( WFLBY_ROOM_DEFMSG* p_wk, WFLBY_DEFMSG_TYPE ty
 //-----------------------------------------------------------------------------
 static void WFLBY_ROOM_Msg_SetNumber( WFLBY_ROOM_DEFMSG* p_wk, u32  num, u32 keta, u32 bufid, NUMBER_DISPTYPE disptype )
 {
-	WORDSET_RegisterNumber( p_wk->p_wordset, bufid, num, keta, disptype, NUMBER_CODETYPE_DEFAULT );
+	WORDSET_RegisterNumber( p_wk->p_wordset, bufid, num, keta, disptype, STR_NUM_CODE_DEFAULT );
 }
 
 //----------------------------------------------------------------------------

@@ -2701,7 +2701,7 @@ static void MNGM_MSG_SetAreaName( MNGM_MSG* p_wk, u32 nation, u32 area )
 static void MNGM_MSG_SetScore( MNGM_MSG* p_wk, u32 number, u32 keta )
 {
 	WORDSET_RegisterNumber( p_wk->p_wordset, 0, number,
-			keta, NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
+			keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 }
 
 //----------------------------------------------------------------------------
@@ -2715,7 +2715,7 @@ static void MNGM_MSG_SetScore( MNGM_MSG* p_wk, u32 number, u32 keta )
 static void MNGM_MSG_SetBalloonNum( MNGM_MSG* p_wk, u32 number )
 {
 	WORDSET_RegisterNumber( p_wk->p_wordset, 0, number,
-			2, NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
+			2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 }
 
 //----------------------------------------------------------------------------
@@ -2736,10 +2736,10 @@ static void MNGM_MSG_SetTime( MNGM_MSG* p_wk, u32 time )
 	miri -= sec*MNGM_MSG_TIME_1DATA;
 	
 	WORDSET_RegisterNumber( p_wk->p_wordset, 0, sec,
-			2, NUMBER_DISPTYPE_ZERO, NUMBER_CODETYPE_DEFAULT );
+			2, NUMBER_DISPTYPE_ZERO, STR_NUM_CODE_DEFAULT );
 
 	WORDSET_RegisterNumber( p_wk->p_wordset, 1, miri,
-			2, NUMBER_DISPTYPE_ZERO, NUMBER_CODETYPE_DEFAULT );
+			2, NUMBER_DISPTYPE_ZERO, STR_NUM_CODE_DEFAULT );
 }
 
 //----------------------------------------------------------------------------
@@ -2779,7 +2779,7 @@ static void MNGM_MSG_SetGameName( MNGM_MSG* p_wk, u32 game )
 //-----------------------------------------------------------------------------
 static void MNGM_MSG_GetStr( MNGM_MSG* p_wk, STRBUF* p_str, u32 msgidx )
 {
-	MSGMAN_GetString( p_wk->p_msgman, msgidx, p_wk->p_tmp );
+	GFL_MSG_GetString( p_wk->p_msgman, msgidx, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_str, p_wk->p_tmp );
 }
 
@@ -2816,7 +2816,7 @@ static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, 
 	u32 strsize;
 	s32 draw_x;
 	
-	MSGMAN_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
+	GFL_MSG_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
 	strsize = PRINTSYS_GetStrWidth( p_wk->p_str, GFL_FONT* font/*FONT_SYSTEM*/, 0 );
@@ -2845,7 +2845,7 @@ static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, 
 //-----------------------------------------------------------------------------
 static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF* p_str, u32 wait )
 {
-	MSGMAN_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
+	GFL_MSG_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_str, p_wk->p_tmp );
 	
 	return GF_STR_PrintColor( p_win, FONT_TALK, p_str,
@@ -2866,7 +2866,7 @@ static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF*
 //-----------------------------------------------------------------------------
 static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y, PRINTSYS_LSB col )
 {
-	MSGMAN_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
+	GFL_MSG_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 	
 	GF_STR_PrintColor( p_win, FONT_SYSTEM, p_wk->p_str,

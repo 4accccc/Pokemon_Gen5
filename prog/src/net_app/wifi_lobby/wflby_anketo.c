@@ -23,7 +23,7 @@
 //#include "system/fontproc.h"
 #include "print\gf_font.h"
 #include "system/window.h"
-#include "system/wordset.h"
+#include "print/wordset.h"
 #include "system/bmp_menu.h"
 
 //#include  "communication/wm_icon.h"
@@ -1232,7 +1232,7 @@ static STRBUF* ANKETO_MsgManGetStr( ANKETO_MSGMAN* p_wk, u32 type, u32 msg )
 {
 	GF_ASSERT( type < ANKETO_MSGMAN_NUM );
 	
-	MSGMAN_GetString( p_wk->p_msgman[type], msg, p_wk->p_msgtmp );
+	GFL_MSG_GetString( p_wk->p_msgman[type], msg, p_wk->p_msgtmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_msgstr, p_wk->p_msgtmp );
 	return p_wk->p_msgstr;
 }

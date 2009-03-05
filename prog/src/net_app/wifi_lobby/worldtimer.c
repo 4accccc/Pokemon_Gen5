@@ -20,7 +20,7 @@
 //#include "system/fontproc.h"
 #include "print\gf_font.h"
 #include "system/window.h"
-#include "system/wordset.h"
+#include "print/wordset.h"
 #include "system/touch_subwindow.h"
 
 #include "net\network_define.h"
@@ -5504,7 +5504,7 @@ static void WLDTIMER_MsgManExit( WLDTIMER_MSGMAN* p_wk )
 //-----------------------------------------------------------------------------
 static STRBUF* WLDTIMER_MsgManGetStr( WLDTIMER_MSGMAN* p_wk, u32 msg )
 {
-	MSGMAN_GetString( p_wk->p_msgman, msg, p_wk->p_msgstr );
+	GFL_MSG_GetString( p_wk->p_msgman, msg, p_wk->p_msgstr );
 	return p_wk->p_msgstr;
 }
 
@@ -5519,7 +5519,7 @@ static STRBUF* WLDTIMER_MsgManGetStr( WLDTIMER_MSGMAN* p_wk, u32 msg )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_MsgManGetStrBuff( WLDTIMER_MSGMAN* p_wk, u32 msg, STRBUF* p_str )
 {
-	MSGMAN_GetString( p_wk->p_msgman, msg, p_str );
+	GFL_MSG_GetString( p_wk->p_msgman, msg, p_str );
 }
 
 //----------------------------------------------------------------------------
@@ -5534,7 +5534,7 @@ static void WLDTIMER_MsgManGetStrBuff( WLDTIMER_MSGMAN* p_wk, u32 msg, STRBUF* p
 //-----------------------------------------------------------------------------
 static STRBUF* WLDTIMER_MsgManCountryGetStr( WLDTIMER_MSGMAN* p_wk, u32 nationID )
 {
-	MSGMAN_GetString( p_wk->p_msgman, msg_03, p_wk->p_msgtmp );
+	GFL_MSG_GetString( p_wk->p_msgman, msg_03, p_wk->p_msgtmp );
 	WORDSET_RegisterCountryName( p_wk->p_wordset, 0, nationID );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_msgstr, p_wk->p_msgtmp );
 	return p_wk->p_msgstr;
@@ -5557,7 +5557,7 @@ static STRBUF* WLDTIMER_MsgManPlaceGetStr( WLDTIMER_MSGMAN* p_wk, u32 nationID, 
 	WORDSET_ClearAllBuffer( p_wk->p_wordset );
 #endif
 	
-	MSGMAN_GetString( p_wk->p_msgman, msg_03, p_wk->p_msgtmp );
+	GFL_MSG_GetString( p_wk->p_msgman, msg_03, p_wk->p_msgtmp );
 	WORDSET_RegisterLocalPlaceName( p_wk->p_wordset, 0, nationID, areaID );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_msgstr, p_wk->p_msgtmp );
 	return p_wk->p_msgstr;

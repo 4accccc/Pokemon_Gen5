@@ -23,7 +23,7 @@
 #include "system/wipe_def.h"
 
 //#include "system/msgdata_util.h"
-#include "system/wordset.h"
+#include "print/wordset.h"
 #include "footprint_tool.h"
 #include "footprint_snd_def.h"
 

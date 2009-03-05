@@ -17,7 +17,7 @@
 #include "lobby_news_data.h"
 #include "wflby_def.h"
 
-#include "net_app/dwc_lobbylib.h"
+#include "net/dwc_lobbylib.h"
 
 #include "net_app/wificlub/wifi_p2pmatch_tool.h"
 

@@ -20,7 +20,7 @@
 
 #include "gflib/g3d_system.h"
 
-#include "system/wordset.h"
+#include "print/wordset.h"
 #include "print\gf_font.h"
 #include "system/clact_util.h"
 #include "system/render_oam.h"
@@ -2790,7 +2790,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 
     // メッセージを書き込む
     p_str = GFL_STR_CreateBuffer( BCT_STRBUF_NUM, heapID );
-    MSGMAN_GetString( p_drawsys->p_msgman, msg_a_001, p_str );
+    GFL_MSG_GetString( p_drawsys->p_msgman, msg_a_001, p_str );
     GF_STR_PrintColor( &p_graphic->helpwin, FONT_SYSTEM, p_str, 
             BCT_GRA_STARTWIN_MSGX, BCT_GRA_STARTWIN_MSGY,
             MSG_NO_PUT, BCT_COL_N_BLACK, NULL);
@@ -8517,7 +8517,7 @@ static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT
 	// 数字を書き込んで転送
 	{
 		STRBUF_SetNumber( p_wk->p_str, count, 2, 
-				NUMBER_DISPTYPE_ZERO, NUMBER_CODETYPE_DEFAULT );
+				NUMBER_DISPTYPE_ZERO, STR_NUM_CODE_DEFAULT );
 
 		// ビットマップ
 		GF_BGL_BmpWinObjAdd( p_gra->p_bgl, 
@@ -8585,7 +8585,7 @@ static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIE
 		// 数字を更新
 		{
 			STRBUF_SetNumber( p_wk->p_str, count, 2, 
-					NUMBER_DISPTYPE_ZERO, NUMBER_CODETYPE_DEFAULT );
+					NUMBER_DISPTYPE_ZERO, STR_NUM_CODE_DEFAULT );
 
 			// ビットマップ
 			GF_BGL_BmpWinObjAdd( p_gra->p_bgl, 

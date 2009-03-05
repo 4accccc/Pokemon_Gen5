@@ -11,7 +11,7 @@
 #include "net_app/wifi_lobby/wflby_system_def.h"
 #include "footprint_common.h"
 #include "footprint_stamp.h"
-#include "net_app/dwc_lobbylib.h"
+#include "net/dwc_lobbylib.h"
 #include "footprint_comm.h"
 
 

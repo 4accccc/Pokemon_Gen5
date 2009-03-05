@@ -12,7 +12,7 @@
 
 #include <gflib.h>
 
-#include "system/wordset.h"
+#include "print/wordset.h"
 #include "print\gf_font.h"
 //#include "system/fontproc.h"
 

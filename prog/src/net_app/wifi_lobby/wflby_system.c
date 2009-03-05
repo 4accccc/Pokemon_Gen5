@@ -37,7 +37,7 @@
 
 #include "poke_tool/pokeparty.h"
 
-#include "net_app/dwc_lobbylib.h"
+#include "net/dwc_lobbylib.h"
 
 #include "net_app/wifi_country.h"
 

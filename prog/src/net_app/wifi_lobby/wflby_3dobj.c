@@ -12,7 +12,6 @@
 
 #include <gflib.h>
 
-#include "gflib/blact.h"
 #include "gflib/res_manager.h"
 #include "gflib/texanm_sys.h"
 #include "gflib/bounding_box.h"

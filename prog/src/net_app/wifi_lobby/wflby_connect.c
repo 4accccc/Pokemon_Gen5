@@ -14,7 +14,7 @@
 
 #include "gflib/msg_print.h"
 
-#include "system/wordset.h"
+#include "print/wordset.h"
 #include "print\gf_font.h"
 #include "system/arc_tool.dat"
 #include "system/wipe.h"
@@ -1293,7 +1293,7 @@ static void WFLBY_CONNECT_WIN_Print( WFLBY_WINWK* p_wk, u32 strid )
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
 	// 表示
-	MSGMAN_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
+	GFL_MSG_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
 	GF_STR_PrintSimple(&p_wk->win, FONT_TALK, p_wk->p_str,
@@ -1416,7 +1416,7 @@ static void WFLBY_CONNECT_WIN_PrintWait( WFLBY_WINWK* p_wk, u32 strid )
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
 	// 表示
-	MSGMAN_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
+	GFL_MSG_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
 	p_wk->msgno = GF_STR_PrintSimple(&p_wk->win, FONT_TALK, p_wk->p_str,
@@ -1464,7 +1464,7 @@ static void WFLBY_CONNECT_WIN_PrintTitle( WFLBY_WINWK* p_wk, u32 strid )
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 0 );
 
 	// 表示
-	MSGMAN_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
+	GFL_MSG_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
 	GF_STR_PrintColor(&p_wk->win, FONT_TALK, p_wk->p_str,
@@ -1486,13 +1486,13 @@ static void WFLBY_CONNECT_WIN_PrintTitle( WFLBY_WINWK* p_wk, u32 strid )
 static void WFLBY_CONNECT_WIN_PrintDEBUG( WFLBY_WINWK* p_wk, u32 strid, u32 num )
 {
 	// ワードセットに数字設定
-	WORDSET_RegisterNumber( p_wk->p_wordset, 0, num, 2, NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
+	WORDSET_RegisterNumber( p_wk->p_wordset, 0, num, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 
 	// ウィンドウのクリーン
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
 	// 表示
-	MSGMAN_GetString( p_wk->p_debug_msgman, strid, p_wk->p_tmp );
+	GFL_MSG_GetString( p_wk->p_debug_msgman, strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
 	GF_STR_PrintSimple(&p_wk->win, FONT_TALK, p_wk->p_str,
@@ -1517,7 +1517,7 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 ite
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
 	// 表示
-	MSGMAN_GetString( p_wk->p_debug_msgman, strid, p_wk->p_tmp );
+	GFL_MSG_GetString( p_wk->p_debug_msgman, strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
 	GF_STR_PrintSimple(&p_wk->win, FONT_TALK, p_wk->p_str,
@@ -1546,5 +1546,5 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 ite
 static void WFLBY_CONNECT_WIN_SetErrNumber( WFLBY_WINWK* p_wk, u32 number )
 {
     WORDSET_RegisterNumber( p_wk->p_wordset, 0, number,
-                           5, NUMBER_DISPTYPE_ZERO, NUMBER_CODETYPE_DEFAULT);
+                           5, NUMBER_DISPTYPE_ZERO, STR_NUM_CODE_DEFAULT);
 }

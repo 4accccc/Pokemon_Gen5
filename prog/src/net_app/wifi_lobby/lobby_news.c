@@ -20,7 +20,7 @@
 #include "system/render_oam.h"
 //#include "system/fontproc.h"
 #include "print\gf_font.h"
-#include "system/wordset.h"
+#include "print/wordset.h"
 
 #include "net\network_define.h"
 
@@ -2272,7 +2272,7 @@ static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp[i]), 0 );
 
 		// ƒ^ƒCƒgƒ‹‚ğ‘‚«‚Ş
-		MSGMAN_GetString( p_msgman, wflby_news_00+i, p_str );
+		GFL_MSG_GetString( p_msgman, wflby_news_00+i, p_str );
 		
 
 /*

@@ -15,13 +15,14 @@
 #include "strbuf.h"
 
 #include "buflen.h"
-#include "system/wordset.h"
+#include "print/wordset.h"
 #include "print\gf_font.h"
 
 #include "message.naix"
 #include "msg/msg_wflby_news.h"
 
 #include "lobby_news_data.h"
+#include "arc_def.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -1534,7 +1535,7 @@ static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
 
 		WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, CasetteLanguage );	// 名前
 		WORDSET_RegisterNumber( p_wordset, 2, WFLBY_MINIGAME_MAX - p_obj->work[ NEWS_TOPIC_WK_GAME_PLAYNUM ],
-				1, NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
+				1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 
 		// 展開する文字列作成
 		p_tmpstr = GFL_MSG_CreateString( p_msgman, wflby_topic_01 );
@@ -1562,7 +1563,7 @@ static BOOL NEWS_TOPIC_GetSTRFoot( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vi
 	WORDSET_RegisterWiFiLobbyGameName( p_wordset, 0, p_obj->work[NEWS_TOPIC_WK_FOOT_NO] );
 	WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, CasetteLanguage );	// 名前
 	WORDSET_RegisterNumber( p_wordset, 2, WFLBY_FOOT_MAX - p_obj->work[ NEWS_TOPIC_WK_FOOT_PLAYNUM ],
-			1, NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
+			1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 
 	// 展開する文字列作成
 	p_tmpstr = GFL_MSG_CreateString( p_msgman, wflby_topic_05 );
@@ -1675,7 +1676,7 @@ static BOOL NEWS_TOPIC_GetSTRVipIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_v
 		return FALSE;
 	}
 	
-	MSGMAN_GetString( p_msgman, wflby_topic_17, p_str );
+	GFL_MSG_GetString( p_msgman, wflby_topic_17, p_str );
 
 	return TRUE;
 }

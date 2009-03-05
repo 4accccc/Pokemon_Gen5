@@ -18,7 +18,7 @@
 #include <arc_tool.h>
 //#include "system/arc_util.h"
 //#include "system/msgdata_util.h"
-#include "system/wordset.h"
+#include "print/wordset.h"
 #include "message.naix"
 //#include "system/fontproc.h"
 //#include "gflib/strbuf_family.h"

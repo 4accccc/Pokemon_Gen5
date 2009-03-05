@@ -28,7 +28,7 @@ int mydwc_init(int heapID)
     u8* pWork;
     u8* pTemp;
 
-    pWork = GFL_HEAP_AllocMemory(heapID, DWC_INIT_WORK_SIZE+32);
+    pWork = GFL_HEAP_AllocClearMemory(heapID, DWC_INIT_WORK_SIZE+32);
     pTemp = (u8 *)( ((u32)pWork + 31) / 32 * 32 );
     // DWCƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»
     ret = DWC_Init( pTemp );

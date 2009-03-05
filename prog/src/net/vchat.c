@@ -104,7 +104,7 @@ static void InitFirst()
 
 #if 0
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_VCTTEST, TEST_BUFFER_SIZE + 0x1000 );
-    _test_buffer = sys_AllocMemory(HEAPID_VCTTEST, TEST_BUFFER_SIZE);
+    _test_buffer = GFL_HEAP_AllocClearMemory(HEAPID_VCTTEST, TEST_BUFFER_SIZE);
     MI_CpuClear8( _test_buffer, TEST_BUFFER_SIZE);
     _test_buffer_index = 0;
 #endif
@@ -583,7 +583,7 @@ static void FreeFunc(void *ptr, u32 size)
 
 static void align32Alloc(void** pOrg,void** pAlign,int size,int heapID)
 {
-    *pOrg = GFL_HEAP_AllocMemory( heapID, size + 32 );
+    *pOrg = GFL_HEAP_AllocClearMemory( heapID, size + 32 );
     MI_CpuClear8(*pOrg, size + 32);
     *pAlign = (MYVCT_WORK *) (( (u32)*pOrg + 31 ) / 32 * 32);
 }

@@ -30,9 +30,9 @@ void mydwc_callUtility( HEAPID HeapID )
 	old = OS_DisableInterrupts();
 
 	// WiFi設定メニュー呼び出し（終わるまで帰ってこない)
-	work = sys_AllocMemory( HeapID, DWC_UTILITY_WORK_SIZE );
+	work = GFL_HEAP_AllocClearMemory( HeapID, DWC_UTILITY_WORK_SIZE );
 	(void)DWC_StartUtility( work, DWC_LANGUAGE_JAPANESE, DWC_UTILITY_TOP_MENU_FOR_JPN );
-	sys_FreeMemoryEz( work );
+	GFL_HEAP_FreeMemory( work );
 
 	// 禁止した割り込み処理を復帰
 	OS_RestoreInterrupts( old );

@@ -3,7 +3,7 @@
  *	
  */
 //============================================================================================
-#include "common.h"
+#include <gflib.h>
 
 #include "system/procsys.h"
 #include "system/arc_tool.h"
@@ -25,7 +25,7 @@
 #include "system/window.h"
 #include "system/arc_util.h"
 #include "system/snd_tool.h"
-#include "system/wordset.h"
+#include "print/wordset.h"
 #if PL_T0864_080714_FIX
 #include "system/pmfprint.h"
 #endif
@@ -1452,7 +1452,7 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 		GF_BGL_BmpWinFill(&wk->iconwin,FBMP_COL_WHITE,0,0,
 				EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
 		//文字列の取得（やめる）
-		MSGMAN_GetString(wk->msg_man,mes_earth_02_07,back_str);
+		GFL_MSG_GetString(wk->msg_man,mes_earth_02_07,back_str);
 		//文字列の表示
 		GF_STR_PrintSimple(&wk->iconwin,FONT_BUTTON,back_str,4,0,MSG_NO_PUT,NULL);	// やめる位置をセンターに変更 tomoya 08.04.03
 		STRBUF_Delete(back_str);
@@ -1489,7 +1489,7 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 		wk->msgstr = STRBUF_Create(EARTH_STRBUF_SIZE, wk->heapID);	
 
 		//文字列の取得
-		MSGMAN_GetString(wk->msg_man,msgID,wk->msgstr);
+		GFL_MSG_GetString(wk->msg_man,msgID,wk->msgstr);
 
 		//文字列の表示
 		wk->msgID = GF_STR_PrintSimple(	&wk->msgwin,FONT_TALK,wk->msgstr,0,0,
@@ -1631,7 +1631,7 @@ static void Earth_MyPlaceInfoWinSet( EARTH_DEMO_WORK* wk )
 	WORDSET_RegisterLocalPlaceName( wk->wordset, 1, wk->my_nation, wk->my_area );
 
 	//文字列の取得
-	MSGMAN_GetString(wk->msg_man,mes_earth_03_01,msgtmp);
+	GFL_MSG_GetString(wk->msg_man,mes_earth_03_01,msgtmp);
 	WORDSET_ExpandStr( wk->wordset, msgstr, msgtmp );
 
 	//文字列の表示
@@ -1681,7 +1681,7 @@ static void Earth_PosInfoPut( EARTH_DEMO_WORK* wk )
 
 			GF_BGL_BmpWinFill(	&wk->msgwin,FBMP_COL_WHITE,0,0,
 								EARTH_INFO_WIN_SX*DOTSIZE,EARTH_INFO_WIN_SY*DOTSIZE);
-			MSGMAN_GetString(wk->msg_man,mes_earth_03_02,msgstr);
+			GFL_MSG_GetString(wk->msg_man,mes_earth_03_02,msgstr);
 			GF_STR_PrintSimple(	&wk->msgwin, FONT_TALK, msgstr, 0, 0, MSG_ALLPUT, NULL );
 			STRBUF_Delete( msgstr );
 		}
@@ -2161,7 +2161,7 @@ BOOL	WIFI_NationAreaNameGet(int nationID,int areaID,
 	msg_man = MSGMAN_Create(MSGMAN_TYPE_NORMAL,ARC_MSG,
 							NARC_msg_wifi_place_msg_world_dat,heapID );
 
-	MSGMAN_GetString(msg_man,nationID,nation_str);//国名取得
+	GFL_MSG_GetString(msg_man,nationID,nation_str);//国名取得
 
 	MSGMAN_Delete(msg_man);
 
@@ -2176,7 +2176,7 @@ BOOL	WIFI_NationAreaNameGet(int nationID,int areaID,
 	msg_man = MSGMAN_Create(MSGMAN_TYPE_NORMAL,ARC_MSG,
 							WIFI_COUNTRY_DataIndexToPlaceMsgDataID(areaIndex), heapID );
 
-	MSGMAN_GetString(msg_man,areaID,area_str);//地域名取得
+	GFL_MSG_GetString(msg_man,areaID,area_str);//地域名取得
 	
 	MSGMAN_Delete(msg_man);
 
@@ -2268,9 +2268,9 @@ static void EarthDebugWinRotateInfoWrite( EARTH_DEMO_WORK * wk )
 	STRBUF* str2 = STRBUF_Create(10, HEAPID_BASE_DEBUG);
 
 	STRBUF_SetHexNumber( str1, (u16)wk->rotate.x, 4, 
-						NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
+						STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 	STRBUF_SetHexNumber( str2, (u16)wk->rotate.y, 4, 
-						NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
+						STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 	GF_STR_PrintSimple(&wk->msgwin, FONT_SYSTEM, str1, 0, 0, MSG_NO_PUT, NULL );
 	GF_STR_PrintSimple(&wk->msgwin, FONT_SYSTEM, str2, 0, 16, MSG_ALLPUT, NULL );
 
@@ -2311,9 +2311,9 @@ static void EarthDebugWinNameInfoWrite( EARTH_DEMO_WORK * wk )
 		GF_BGL_BmpWinFill(&wk->msgwin,FBMP_COL_WHITE,0,0,
 							EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
 		STRBUF_SetHexNumber( str1, (u16)wk->rotate.x, 4, 
-							NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
+							STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 		STRBUF_SetHexNumber( str2, (u16)wk->rotate.y, 4, 
-							NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
+							STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 		GF_STR_PrintSimple(&wk->msgwin, FONT_SYSTEM, str1, 0, 0, MSG_NO_PUT, NULL );
 		GF_STR_PrintSimple(&wk->msgwin, FONT_SYSTEM, str2, 0, 16, MSG_ALLPUT, NULL );
 

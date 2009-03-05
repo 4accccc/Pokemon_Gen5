@@ -18,7 +18,7 @@
 #include <arc_tool.h>
 //#include "system/arc_util.h"
 //#include "system/msgdata_util.h"
-#include "system/wordset.h"
+#include "print/wordset.h"
 #include "message.naix"
 //#include "system/fontproc.h"
 //#include "gflib/strbuf_family.h"
@@ -854,7 +854,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 		BmpTalkWinWrite(&fps->talk_win, WINDOW_TRANS_ON, 
 			WINCGX_TALKWIN_START, FOOT_MAINBG_TALKWIN_PAL);
 		//メッセージ表示
-		MSGMAN_GetString(fps->msgman, msg_footprint_exit_select, fps->talk_strbuf);
+		GFL_MSG_GetString(fps->msgman, msg_footprint_exit_select, fps->talk_strbuf);
 		fps->msg_index = GF_STR_PrintSimple(&fps->talk_win, FONT_TALK, 
 			fps->talk_strbuf, 0, 0, 
 			CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(fps->sv)), NULL);
@@ -916,7 +916,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 		BmpTalkWinWrite(&fps->talk_win, WINDOW_TRANS_ON, 
 			WINCGX_TALKWIN_START, FOOT_MAINBG_TALKWIN_PAL);
 		//メッセージ表示
-		MSGMAN_GetString(fps->msgman, msg_footprint_timeup, fps->talk_strbuf);
+		GFL_MSG_GetString(fps->msgman, msg_footprint_timeup, fps->talk_strbuf);
 		fps->msg_index = GF_STR_PrintSimple(&fps->talk_win, FONT_TALK, 
 			fps->talk_strbuf, 0, 0, 
 			CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(fps->sv)), NULL);
