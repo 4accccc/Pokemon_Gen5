@@ -954,7 +954,7 @@ static void NEWSDRAW_WkDraw( NEWSDRAW_WK* p_wk, const WFLBY_SYSTEM* cp_system )
 static void NEWSDRAW_DrawSysInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 {
 	// アーカイブハンドル
-	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARC_LOBBY_NEWS, heapID );
+	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARCID_LOBBY_NEWS, heapID );
 
 #if WB_FIX
 	// Vram転送マネージャ作成

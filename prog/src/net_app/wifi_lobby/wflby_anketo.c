@@ -1041,9 +1041,9 @@ static void ANKETO_BgInit( ANKETO_DRAWSYS* p_wk, CONFIG* p_config, u32 heapID )
 
 	// した画面に、Wi－Fiマークを出す
 	{
-		ArcUtil_BgCharSet(ARC_LOBBY_NEWS, NARC_lobby_news_wifi_mark_bg_NCGR, p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
-		ArcUtil_ScrnSet(ARC_LOBBY_NEWS, NARC_lobby_news_wifi_mark_bg_NSCR, p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
-		ArcUtil_PalSet( ARC_LOBBY_NEWS, NARC_lobby_news_lobby_news_bg_NCLR, PALTYPE_SUB_BG, 0, 0, heapID );
+		ArcUtil_BgCharSet(ARCID_LOBBY_NEWS, NARC_lobby_news_wifi_mark_bg_NCGR, p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
+		ArcUtil_ScrnSet(ARCID_LOBBY_NEWS, NARC_lobby_news_wifi_mark_bg_NSCR, p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
+		ArcUtil_PalSet( ARCID_LOBBY_NEWS, NARC_lobby_news_lobby_news_bg_NCLR, PALTYPE_SUB_BG, 0, 0, heapID );
 	}
 }
 
