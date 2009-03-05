@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-02-26T16:20:48"/>
+	<create user="taya" host="W00146" date="2009-03-05T18:59:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -433,6 +433,31 @@
 じぶんを　こうげきした！</language>
 		<language name="JPN_KANJI" width="216">わけも　分からず
 自分を　こうげきした！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_ShineEnd">
+		<language name="JPN" width="216">ひざしが　もとに　もどった！</language>
+		<language name="JPN_KANJI" width="216">日差しが　もとにもどった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_RainEnd">
+		<language name="JPN" width="216">あめが　あがった！</language>
+		<language name="JPN_KANJI" width="216">雨があがった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_StormEnd">
+		<language name="JPN" width="216">すなあらしが　やんだ！</language>
+		<language name="JPN_KANJI" width="216">砂あらしが止んだ！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SnowEnd">
+		<language name="JPN" width="216">あられが　やんだ！</language>
+		<language name="JPN_KANJI" width="216">あられが　やんだ！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_MistEnd">
+		<language name="JPN" width="216">きりが　はれた！</language>
+		<language name="JPN_KANJI" width="216">きりが晴れた！</language>
 	</row>
 
 	<flowchart-group-list>
