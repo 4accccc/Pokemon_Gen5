@@ -15,7 +15,7 @@
 //#include "system/arc_util.h"
 //#include "system/d3dobj.h"
 
-#include "graphic/wifi_lobby_other.naix"
+#include "wifi_lobby_other.naix"
 
 #include "wflby_gadget.h"
 #include "wflby_3dmapobj.h"
@@ -1433,7 +1433,7 @@ WFLBY_GADGET* WFLBY_GADGET_Init( WFLBY_SYSTEM* p_system, WFLBY_MAPCONT* p_mapcon
 	// リソース読み込み
 	{
 		ARCHANDLE* p_handle;
-		p_handle = GFL_ARC_OpenDataHandle( ARC_WIFILOBBY_OTHER_GRA, heapID );
+		p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFILOBBY_OTHER_GRA, heapID );
 
 		// アロケータ作成
 		sys_InitAllocator( &p_sys->allocator, gheapID, 4 );

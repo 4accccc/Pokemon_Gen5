@@ -12,18 +12,18 @@
 
 #include <gflib.h>
 
-#include "gflib/res_manager.h"
-#include "gflib/texanm_sys.h"
-#include "gflib/bounding_box.h"
+//#include "gflib/res_manager.h"
+//#include "gflib/texanm_sys.h"
+//#include "gflib/bounding_box.h"
 
 //#include "system/arc_util.h"
 //#include "system/d3dobj.h"
 
 #include "field/fldmmdl_pl_code.h"
 
-#include "data/mmodel/mmodel.naix"
+#include "test_graphic/mmodel.naix"
 
-#include "graphic/wifi_lobby_other.naix"
+#include "wifi_lobby_other.naix"
 
 #include "wflby_def.h"
 #include "wflby_3dmatrix.h"
@@ -463,8 +463,8 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 		void* p_file;
 		int i;
 		
-		p_handle		= GFL_ARC_OpenDataHandle( ARC_MMODEL, heapID );
-		p_handle_other	= GFL_ARC_OpenDataHandle( ARC_WIFILOBBY_OTHER_GRA, heapID );
+		p_handle		= GFL_ARC_OpenDataHandle( ARCID_FLDMMLD, heapID );
+		p_handle_other	= GFL_ARC_OpenDataHandle( ARCID_WIFILOBBY_OTHER_GRA, heapID );
 
 		// ƒ‚ƒfƒ‹
 		{

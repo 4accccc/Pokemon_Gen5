@@ -40,7 +40,7 @@
 #include "msg/msg_wifi_Special_answers_c.h"
 #include "msg/msg_wifi_Special_questions.h"
 
-#include "graphic/wifi_lobby_other.naix"
+#include "wifi_lobby_other.naix"
 #include "graphic/lobby_news.naix"
 
 #include "savedata/config.h"
@@ -910,7 +910,7 @@ static void ANKETO_InitGraphic( ANKETO_DRAWSYS* p_wk, SAVE_CONTROL_WORK* p_save,
 	p_config = SaveData_GetConfig( p_save );
 	
 	// アーカイブハンドル初期化
-	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARC_WIFILOBBY_OTHER_GRA, heapID );
+	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFILOBBY_OTHER_GRA, heapID );
 
 #if WB_FIX
 	// Vram転送マネージャ作成

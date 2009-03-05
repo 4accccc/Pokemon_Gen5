@@ -40,7 +40,7 @@
 #include "msg/msg_wifi_system.h"
 #include "message.naix"
 
-#include "graphic/wifi_lobby_other.naix"
+#include "wifi_lobby_other.naix"
 #include "graphic/unionobj2d_onlyfront.naix"
 
 #include "net/dwc_lobbylib.h"
@@ -2962,7 +2962,7 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 			BOARD_TYPE_INFO, 0, heapID );
 
 		// パレットだけ、ロビー用パレットを使用する
-		ArcUtil_PalSet( ARC_WIFILOBBY_OTHER_GRA, NARC_wifi_lobby_other_lobby_board_NCLR, 
+		ArcUtil_PalSet( ARCID_WIFILOBBY_OTHER_GRA, NARC_wifi_lobby_other_lobby_board_NCLR, 
 				PALTYPE_MAIN_BG, WFLBY_ROOM_BGPL_BOARDWIN*32, 32, heapID );
 	}
 
@@ -4710,7 +4710,7 @@ static void WFLBY_ROOM_UNDERWIN_Init( WFLBY_UNDER_WIN* p_wk, const WFLBY_ROOM_SA
 	// 性別取得
 	sex = MyStatus_GetMySex( cp_mystatus );
 	
-	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARC_WIFILOBBY_OTHER_GRA, heapID );
+	p_wk->p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFILOBBY_OTHER_GRA, heapID );
 	WFLBY_ROOM_UNDERWIN_Common_Init( p_wk, p_sys, p_wk->p_handle, sex, heapID );
 
 	// トレーナカード
@@ -6431,7 +6431,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_InitRireki( WFLBY_TR_CARD* p_wk, WFLBY_GR
 	const WFLBY_TRCARD_RIREKI_CHAR* cp_chardata;
 	static const u16 sc_PAL[ WFLBY_TRCARD_RIREKI_RES_NUM ][3] = {
 		{ ARC_2DUNIONOBJ_FRONT, NARC_unionobj2d_onlyfront_wf_match_top_trainer_NCLR, 8 },
-		{ ARC_WIFILOBBY_OTHER_GRA, NARC_wifi_lobby_other_profile_icon_NCLR, 2 },
+		{ ARCID_WIFILOBBY_OTHER_GRA, NARC_wifi_lobby_other_profile_icon_NCLR, 2 },
 		{ ARC_2DUNIONOBJ_FRONT, NARC_unionobj2d_onlyfront_pl_boy01_NCLR, 1 },
 		{ ARC_2DUNIONOBJ_FRONT, NARC_unionobj2d_onlyfront_pl_girl01_NCLR, 1 },
 	};
