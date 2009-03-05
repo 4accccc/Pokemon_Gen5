@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-03-05T18:59:24"/>
+	<create user="taya" host="W00146" date="2009-03-05T21:06:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -436,6 +436,7 @@
 	</row>
 
 	<row id="BTL_STRID_STD_ShineEnd">
+		<comment>天候が元に戻った時のメッセージ群</comment>
 		<language name="JPN" width="216">ひざしが　もとに　もどった！</language>
 		<language name="JPN_KANJI" width="216">日差しが　もとにもどった！</language>
 	</row>
@@ -458,6 +459,21 @@
 	<row id="BTL_STRID_STD_MistEnd">
 		<language name="JPN" width="216">きりが　はれた！</language>
 		<language name="JPN_KANJI" width="216">きりが晴れた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SandAttack">
+		<language name="JPN" width="216">すなあらしが　ふきあれる！</language>
+		<language name="JPN_KANJI" width="216">砂あらしが　ふきあれる！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SnowAttack">
+		<language name="JPN" width="216">あられが　ふきすさぶ！</language>
+		<language name="JPN_KANJI" width="216">あられが　ふきすさぶ！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_MistEnd0004">
+		<language name="JPN" width="216"></language>
+		<language name="JPN_KANJI" width="216"></language>
 	</row>
 
 	<flowchart-group-list>
