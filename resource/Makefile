@@ -42,7 +42,8 @@ SUBDIRS	=	wmi \
 			fldmmdl \
 			infowin \
 			bmpoam \
-			wifi_lobby_other
+			wifi_lobby_other \
+			wifi_lobby
 
 
 include $(RESOURCE_MACRO)

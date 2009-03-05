@@ -378,7 +378,7 @@ void WFLBY_3DMAPOBJ_ResLoad( WFLBY_3DMAPOBJ* p_sys, WFLBY_ROOM_TYPE room, WFLBY_
 	p_data = WFLBY_3DMAPOBJ_MDLRES_DATA_Init( room, season, heapID );
 	
 	// シーズンの各リソースを読み込む
-	p_handle = GFL_ARC_OpenDataHandle( ARC_WFLBY_GRA, heapID );	// ハンドルオープン
+	p_handle = GFL_ARC_OpenDataHandle( ARCID_WFLBY_GRA, heapID );	// ハンドルオープン
 
 	// アロケータを作成
 	sys_InitAllocator( &p_sys->allocator, gheapID, 4 );
