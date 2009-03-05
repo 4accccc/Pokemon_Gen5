@@ -41,7 +41,7 @@
 #include "message.naix"
 
 #include "wifi_lobby_other.naix"
-#include "graphic/unionobj2d_onlyfront.naix"
+#include "unionobj2d_onlyfront.naix"
 
 #include "net/dwc_lobbylib.h"
 
@@ -6430,10 +6430,10 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_InitRireki( WFLBY_TR_CARD* p_wk, WFLBY_GR
 	CLACT_HEADER	 header;
 	const WFLBY_TRCARD_RIREKI_CHAR* cp_chardata;
 	static const u16 sc_PAL[ WFLBY_TRCARD_RIREKI_RES_NUM ][3] = {
-		{ ARC_2DUNIONOBJ_FRONT, NARC_unionobj2d_onlyfront_wf_match_top_trainer_NCLR, 8 },
+		{ ARCID_2DUNIONOBJ_FRONT, NARC_unionobj2d_onlyfront_wf_match_top_trainer_NCLR, 8 },
 		{ ARCID_WIFILOBBY_OTHER_GRA, NARC_wifi_lobby_other_profile_icon_NCLR, 2 },
-		{ ARC_2DUNIONOBJ_FRONT, NARC_unionobj2d_onlyfront_pl_boy01_NCLR, 1 },
-		{ ARC_2DUNIONOBJ_FRONT, NARC_unionobj2d_onlyfront_pl_girl01_NCLR, 1 },
+		{ ARCID_2DUNIONOBJ_FRONT, NARC_unionobj2d_onlyfront_pl_boy01_NCLR, 1 },
+		{ ARCID_2DUNIONOBJ_FRONT, NARC_unionobj2d_onlyfront_pl_girl01_NCLR, 1 },
 	};
 	static const u16 sc_CELL[ WFLBY_TRCARD_RIREKI_RES_NUM ] = {
 		NARC_unionobj2d_onlyfront_only_front00_NCER,
@@ -6450,7 +6450,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_InitRireki( WFLBY_TR_CARD* p_wk, WFLBY_GR
 
 
 	// ユニオンオブジェ　表向きのアーカイブハンドルオープン
-	p_union_handle = GFL_ARC_OpenDataHandle( ARC_2DUNIONOBJ_FRONT, heapID );
+	p_union_handle = GFL_ARC_OpenDataHandle( ARCID_2DUNIONOBJ_FRONT, heapID );
 
 
 	// 自分のユーザIDX取得
@@ -6480,7 +6480,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_InitRireki( WFLBY_TR_CARD* p_wk, WFLBY_GR
 			}
 		}
 
-		if( sc_PAL[i][0] == ARC_2DUNIONOBJ_FRONT ){
+		if( sc_PAL[i][0] == ARCID_2DUNIONOBJ_FRONT ){
 			p_work_handle = p_union_handle;
 		}else{
 			p_work_handle = p_handle;

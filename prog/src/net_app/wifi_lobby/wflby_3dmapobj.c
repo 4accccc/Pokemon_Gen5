@@ -14,7 +14,7 @@
 
 #include <arc_tool.h>
 
-#include "graphic/wifi_lobby.naix"
+#include "wifi_lobby.naix"
 
 #include "wflby_3dmapobj.h"
 #include "wflby_3dmatrix.h"

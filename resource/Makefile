@@ -43,7 +43,8 @@ SUBDIRS	=	wmi \
 			infowin \
 			bmpoam \
 			wifi_lobby_other \
-			wifi_lobby
+			wifi_lobby \
+			wifi_lobby_front_unionobj
 
 
 include $(RESOURCE_MACRO)
