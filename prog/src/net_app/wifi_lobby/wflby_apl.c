@@ -91,7 +91,7 @@ typedef struct {
 ///	WiFiロビー　アプリ管理システム
 //=====================================
 typedef struct _WFLBY_APL{
-	GFL_PROC*			p_proc;					// アプリプロック
+	GFL_PROCSYS*			p_proc;					// アプリプロック
 	WFLBY_APLDATA	apldata[WFLBY_APL_NUM];	// 動作アプリ分のパラメータ
 	u8				aplno;					// 実行中のアプリナンバー
 	u8				check_skip;				// 接続画面接続確認をスキップするか
@@ -108,7 +108,7 @@ typedef struct _WFLBY_APL{
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-static void WFLBY_APL_PROC_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data, const GFL_PROC_DATA* cp_pdata );
+static void WFLBY_APL_PROC_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data, const GFL_PROC_DATA* cp_pdata, FSOverlayID ov_id );
 
 // アプリデータ関連
 static void WFLBY_APLDATA_Init( WFLBY_APL* p_sys, u32 idx,  u32 heapID );
@@ -277,9 +277,9 @@ WFLBY_APL_RET WFLBY_APL_Main( WFLBY_APL* p_wk )
 	u32 ret = WFLBY_APL_RET_NONE;
 	
 	if( p_wk->p_proc ){
-		result = ProcMain( p_wk->p_proc );
-		if( result ){
-			PROC_Delete( p_wk->p_proc );
+		result = GFL_PROC_LOCAL_Main( p_wk->p_proc );
+		if( result == FALSE ){
+			GFL_PROC_LOCAL_Exit( p_wk->p_proc );
 			p_wk->p_proc = NULL;
 			
 			//  そのアプリの終了処理
@@ -316,10 +316,15 @@ void WFLBY_APL_VBlank( WFLBY_APL* p_wk )
  *	@param	cp_pdata	プロックデータ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_APL_PROC_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data, const GFL_PROC_DATA* cp_pdata )
+static void WFLBY_APL_PROC_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data, const GFL_PROC_DATA* cp_pdata, FSOverlayID ov_id )
 {
 	GF_ASSERT( p_sys->p_proc == NULL );
+#if WB_FIX
 	p_sys->p_proc = PROC_Create( cp_pdata, p_data->p_param, p_sys->heapID );
+#else
+	p_sys->p_proc = GFL_PROC_LOCAL_boot(p_sys->heapID);
+	GFL_PROC_LOCAL_CallProc(p_sys->p_proc, ov_id, cp_pdata, p_data->p_param);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -572,12 +577,11 @@ static void WFLBY_APLDATA_ROOM_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		WFLBY_ROOM_Init,
 		WFLBY_ROOM_Main,
 		WFLBY_ROOM_Exit,
-		FS_OVERLAY_ID(wifilobby_room)
 	};
 	p_param				= p_data->p_param;
 	p_param->season		= WFLBY_SYSTEM_GetSeason( p_sys->p_system );
 	p_param->room		= WFLBY_SYSTEM_GetRoomType( p_sys->p_system );
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(wifilobby_room) );
 }
 
 //----------------------------------------------------------------------------
@@ -712,7 +716,6 @@ static void WFLBY_APLDATA_WORLDTIMER_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_d
 		WLDTIMER_Init,
 		WLDTIMER_Main,
 		WLDTIMER_Exit,
-		FS_OVERLAY_ID(worldtimer)
 	};
 
 	p_param = p_data->p_param;
@@ -720,7 +723,7 @@ static void WFLBY_APLDATA_WORLDTIMER_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_d
 	p_param->cp_data	= WFLBY_SYSTEM_GetWldTimer( p_sys->p_system );
 	p_param->worldtime	= *(WFLBY_SYSTEM_GetWldTime( p_sys->p_system ));
 
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(worldtimer) );
 }
 
 //----------------------------------------------------------------------------
@@ -802,10 +805,9 @@ static void WFLBY_APLDATA_TOPIC_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		NEWS_DRAW_Init,
 		NEWS_DRAW_Main,
 		NEWS_DRAW_Exit,
-		FS_OVERLAY_ID(lobbynews)
 	};
 
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(lobbynews) );
 }
 
 //----------------------------------------------------------------------------
@@ -889,10 +891,9 @@ static void WFLBY_APLDATA_LOGIN_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		WFLBY_CONNECT_Init,
 		WFLBY_CONNECT_Main,
 		WFLBY_CONNECT_Exit,
-		FS_OVERLAY_ID(wifilobby_connect)
 	};
 
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(wifilobby_connect) );
 }
 
 //----------------------------------------------------------------------------
@@ -982,6 +983,7 @@ static void WFLBY_APLDATA_BS_Exit( WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_BS_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
+#if WB_TEMP_FIX		//ボール投げはまだ移植していないのでリンクもしていない
 	FS_EXTERN_OVERLAY(bucket);
 	FS_EXTERN_OVERLAY(minigame_common);
 	// プロセス定義データ
@@ -989,7 +991,6 @@ static void WFLBY_APLDATA_BS_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		BucketProc_Init,
 		BucketProc_Main,
 		BucketProc_End,
-		FS_OVERLAY_ID(bucket),
 	};
 
 	// ミニゲーム共通オーバーレイを読み込む
@@ -1002,7 +1003,8 @@ static void WFLBY_APLDATA_BS_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		WFLBY_APL_MINIGAME_InitWk( &p_param->lobby_wk, p_sys->p_system, p_sys->heapID );
 	}
 	
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(bucket) );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1091,6 +1093,7 @@ static void WFLBY_APLDATA_BB_Exit( WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_BB_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
+#if WB_TEMP_FIX	//バランスボールはまだ移植していないのでリンクもしていない
 	FS_EXTERN_OVERLAY(balance_ball);
 	FS_EXTERN_OVERLAY(minigame_common);
 	// プロセス定義データ
@@ -1098,7 +1101,6 @@ static void WFLBY_APLDATA_BB_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		BalanceBallProc_Init,
 		BalanceBallProc_Main,
 		BalanceBallProc_Exit,
-		FS_OVERLAY_ID(balance_ball),
 	};
 
 	// ミニゲーム共通オーバーレイを読み込む
@@ -1110,7 +1112,8 @@ static void WFLBY_APLDATA_BB_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		WFLBY_APL_MINIGAME_InitWk( &p_param->lobby_wk, p_sys->p_system, p_sys->heapID );
 	}
 	
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(balance_ball) );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1203,7 +1206,6 @@ static void WFLBY_APLDATA_BL_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		BalloonProc_Init,
 		BalloonProc_Main,
 		BalloonProc_End,
-		FS_OVERLAY_ID(balloon),
 	};
 
 	// ミニゲーム共通オーバーレイを読み込む
@@ -1216,7 +1218,7 @@ static void WFLBY_APLDATA_BL_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		
 	}
 	
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(balloon) );
 }
 
 //----------------------------------------------------------------------------
@@ -1323,13 +1325,12 @@ static void WFLBY_APLDATA_FOOT1_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		FootPrintProc_Init,
 		FootPrintProc_Main,
 		FootPrintProc_End,
-		FS_OVERLAY_ID(footprint_board),
 	};
 
 	p_param = p_data->p_param;
 	p_param->board_type		= FOOTPRINT_BOARD_TYPE_WHITE;
 
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(footprint_board) );
 }
 
 //----------------------------------------------------------------------------
@@ -1350,15 +1351,14 @@ static void WFLBY_APLDATA_FOOT2_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 		FootPrintProc_Init,
 		FootPrintProc_Main,
 		FootPrintProc_End,
-		FS_OVERLAY_ID(footprint_board),
 	};
 
 	p_param = p_data->p_param;
 	p_param->board_type		= FOOTPRINT_BOARD_TYPE_BLACK;
 
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(footprint_board) );
 }
-	
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1440,7 +1440,6 @@ static void WFLBY_APLDATA_Logout_StartDef( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 		WFLBY_DISCONNECT_Init,
 		WFLBY_DISCONNECT_Main,
 		WFLBY_DISCONNECT_Exit,
-		FS_OVERLAY_ID(wifilobby_connect)
 	};
 
 	{
@@ -1449,7 +1448,7 @@ static void WFLBY_APLDATA_Logout_StartDef( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 		p_param->timeout = timeout;
 	}
 
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(wifilobby_connect) );
 }
 
 //----------------------------------------------------------------------------
@@ -1535,10 +1534,9 @@ static void WFLBY_APLDATA_ANKETO_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data 
 		ANKETO_Init,
 		ANKETO_Main,
 		ANKETO_Exit,
-		FS_OVERLAY_ID(wifilobby_anketo)
 	};
 
-	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc );
+	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(wifilobby_anketo) );
 }
 
 //----------------------------------------------------------------------------

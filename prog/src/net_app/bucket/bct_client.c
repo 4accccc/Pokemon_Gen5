@@ -964,8 +964,8 @@ typedef struct {
 /// マルノーム描画データ
 //=====================================
 typedef struct {
-    D3DOBJ      obj[BCT_MARUNOMU_MDL_NUM];
-    D3DOBJ_MDL  mdl[BCT_MARUNOMU_MDL_NUM];
+    GFL_G3D_OBJSTATUS      obj[BCT_MARUNOMU_MDL_NUM];
+    GFL_G3D_OBJ  mdl[BCT_MARUNOMU_MDL_NUM];
     D3DOBJ_ANM  anm[BCT_MARUNOMU_ANM_NUM];
 
 	u16 set_mouthanm;	// 現在設定している口の動きのアニメデータ
@@ -1022,8 +1022,8 @@ typedef struct {
 /// 木の実描画データ
 //=====================================
 typedef struct {
-    D3DOBJ_MDL  mdl[ BCT_NUTSRES_MDLNUM ];
-    D3DOBJ_MDL  shadowmdl;	// 影
+    GFL_G3D_OBJ  mdl[ BCT_NUTSRES_MDLNUM ];
+    GFL_G3D_OBJ  shadowmdl;	// 影
 
     CLACT_U_RES_OBJ_PTR     resobj[4];      // 読み込んだりソースのオブジェクト
     CLACT_HEADER            header;         // アクター作成用ヘッダー
@@ -1035,8 +1035,8 @@ typedef struct {
 //=====================================
 typedef struct {
     CLACT_WORK_PTR p_clwk;
-    D3DOBJ      obj;
-    D3DOBJ      shadow;	// かげよう
+    GFL_G3D_OBJSTATUS      obj;
+    GFL_G3D_OBJSTATUS      shadow;	// かげよう
     BOOL draw2d;                    // 2d描画させるか
     const BCT_CLIENT_NUTS* cp_data;
 	u16 rota_x;
@@ -1098,8 +1098,8 @@ typedef struct {
 ///	背景表示グラフィック
 //=====================================
 typedef struct {
-    D3DOBJ      obj[BCT_MAINBACK_MDL_NUM];
-    D3DOBJ_MDL  mdl[BCT_MAINBACK_MDL_NUM];
+    GFL_G3D_OBJSTATUS      obj[BCT_MAINBACK_MDL_NUM];
+    GFL_G3D_OBJ  mdl[BCT_MAINBACK_MDL_NUM];
 	D3DOBJ_ANM	anm[BCT_MAINBACK_ANM_NUM];
 	fx32 anm_speed;
 	u8 fever;
@@ -1309,8 +1309,8 @@ typedef struct _BCT_CLIENT{
 /// 当たり判定位置表示オブジェクト
 //=====================================
 typedef struct {
-    D3DOBJ_MDL  mdl;
-    D3DOBJ      obj[4];
+    GFL_G3D_OBJ  mdl;
+    GFL_G3D_OBJSTATUS      obj[4];
 } BCT_DEBUG_POSITION;
 
 static BCT_DEBUG_POSITION BCT_DPD;
@@ -1542,7 +1542,7 @@ static void BCT_CLIENT_NutsDrawEnd( BCT_CLIENT_NUTS_DRAW* p_data );
 static BCT_CLIENT_NUTS_DRAW* BCT_CLIENT_NutsDrawWkGet( BCT_CLIENT_GRAPHIC* p_wk );
 static BOOL BCT_CLIENT_NutsDrawMatrixSet( BCT_CLIENT_NUTS_DRAW* p_data, const BCT_CLIENT_NUTS* cp_data, u32 comm_num );
 static void BCT_CLIENT_Nuts3DDrawOn( BCT_CLIENT_NUTS_DRAW* p_data, BCT_CLIENT_GRAPHIC* p_wk );
-static D3DOBJ_MDL* BCT_CLIENT_Nuts3DMdlGet( const BCT_CLIENT_NUTS* cp_data, BCT_CLIENT_NUTS_RES* p_nutsres );
+static GFL_G3D_OBJ* BCT_CLIENT_Nuts3DMdlGet( const BCT_CLIENT_NUTS* cp_data, BCT_CLIENT_NUTS_RES* p_nutsres );
 static void BCT_CLIENT_NutsDrawRotaSet( BCT_CLIENT_NUTS_DRAW* p_data );
 
 static void BCT_CLIENT_HandNutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_HANDNUTS_DRAW* p_nuts, u32 plno, u32 heapID );
@@ -4446,19 +4446,19 @@ static void BCT_CLIENT_NutsAwayStartPowerReq( BCT_CLIENT_NUTS* p_nuts, BCT_CLIEN
 
 		if( move_side ){
 
-			rand  = gf_mtRand();
+			rand  = GFUser_GetPublicRand(2);
 			
 			// ちょっと方向をゆがます	出来るだけ横に切れていく	普通横は小さいので小さいほうを大きくしちゃう
 			if( MATH_ABS( p_nuts->data.way.x ) <= MATH_ABS( p_nuts->data.way.z ) ){
 				power = FX_Mul( p_nuts->data.way.z, BCT_NUTS_AWAYWAY_MUL );
-				if( (rand % 2) == 1 ){	// 遇奇数で方向を変えちゃう　この辺は適当でOK
+				if( rand & 1 ){	// 遇奇数で方向を変えちゃう　この辺は適当でOK
 					p_nuts->data.way.x = -power;
 				}else{
 					p_nuts->data.way.x = power;
 				}
 			}else{
 				power = FX_Mul( p_nuts->data.way.x, BCT_NUTS_AWAYWAY_MUL );
-				if( (rand % 2) == 1 ){	// 遇奇数で方向を変えちゃう　この辺は適当でOK
+				if( rand & 1 ){	// 遇奇数で方向を変えちゃう　この辺は適当でOK
 					p_nuts->data.way.z = -power;
 				}else{
 					p_nuts->data.way.z = power;
@@ -7263,7 +7263,7 @@ static void BCT_CLIENT_NutsDrawStartNoOam( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_
 static void BCT_CLIENT_NutsDrawMain( BCT_CLIENT_NUTS_DRAW* p_data, BCT_CLIENT_GRAPHIC* p_wk, u32 comm_num )
 {
     BOOL result;
-	D3DOBJ_MDL* p_mdl;
+	GFL_G3D_OBJ* p_mdl;
 
     // 2D表示か３d表示か
     if( p_data->draw2d == TRUE ){
@@ -7467,7 +7467,7 @@ static BOOL BCT_CLIENT_NutsDrawMatrixSet( BCT_CLIENT_NUTS_DRAW* p_data, const BC
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_Nuts3DDrawOn( BCT_CLIENT_NUTS_DRAW* p_data, BCT_CLIENT_GRAPHIC* p_wk )
 {
-	D3DOBJ_MDL* p_mdl;
+	GFL_G3D_OBJ* p_mdl;
 	
     CLACT_SetDrawFlag( p_data->p_clwk, FALSE );
     p_data->draw2d = FALSE;
@@ -7493,7 +7493,7 @@ static void BCT_CLIENT_Nuts3DDrawOn( BCT_CLIENT_NUTS_DRAW* p_data, BCT_CLIENT_GR
  *	@return	モデルワーク
  */
 //-----------------------------------------------------------------------------
-static D3DOBJ_MDL* BCT_CLIENT_Nuts3DMdlGet( const BCT_CLIENT_NUTS* cp_data, BCT_CLIENT_NUTS_RES* p_nutsres )
+static GFL_G3D_OBJ* BCT_CLIENT_Nuts3DMdlGet( const BCT_CLIENT_NUTS* cp_data, BCT_CLIENT_NUTS_RES* p_nutsres )
 {
 	u32 mdlno;
 
@@ -9068,7 +9068,7 @@ static void BCT_DEBUG_PositionExit( void )
 static void BCT_DEBUG_AutoSlow( BCT_CLIENT* p_wk )
 {
 	// 玉発射間隔カウント
-	p_wk->slow.time += 1+(gf_mtRand()%4);
+	p_wk->slow.time += 1+(GFUser_GetPublicRand(4));
 
 	// 発射間隔
 	if( p_wk->slow.time < BCT_NUTS_SLOW_RENSYA_TIME_AUTOSLOW ){

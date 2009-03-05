@@ -148,8 +148,8 @@ typedef struct {
 
 ///< 3D ball
 typedef struct {	
-    D3DOBJ				obj;
-    D3DOBJ_MDL			mdl;
+    GFL_G3D_OBJSTATUS				obj;
+    GFL_G3D_OBJ			mdl;
     D3DOBJ_ANM			anm[ 10 ];			///< とりあえず10個        
 	QUATERNION_MTX44	rt;					///< 計算用マトリックス
 	QUATERNION			tq;					///< クォータニオン
@@ -513,7 +513,7 @@ extern int NetID_To_PlayerNo( BB_WORK* wk, int net_id );
 extern BOOL Quaternion_Rotation( BB_3D_MODEL* wk, int x, int y, int ox, int oy, f32 pow, BOOL pow_get_set );
 extern BOOL Quaternion_Rotation_Pow( BB_3D_MODEL* wk, f32 pow );
 
-extern void BB_disp_3DModelDraw( D3DOBJ* obj, MtxFx43* mat43, VecFx32* pos );
+extern void BB_disp_3DModelDraw( GFL_G3D_OBJSTATUS* obj, MtxFx43* mat43, VecFx32* pos );
 extern void BB_disp_Model_Load( BB_3D_MODEL* wk, ARCHANDLE* p_handle, int id );
 extern void BB_disp_Model_Init( BB_3D_MODEL* wk, int flag );
 extern void BB_disp_Model_Delete( BB_3D_MODEL* wk );

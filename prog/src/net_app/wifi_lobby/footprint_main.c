@@ -224,8 +224,8 @@ enum{
 //==============================================================================
 ///ボード制御構造体
 typedef struct{
-	D3DOBJ_MDL  mdl;
-	D3DOBJ      obj;
+	GFL_G3D_OBJ  mdl;
+	GFL_G3D_OBJSTATUS      obj;
 }BOARD_PARAM;
 
 ///フォントアクターワーク
@@ -2080,11 +2080,11 @@ static void Footprint_Temoti_to_StampParam(int board_type, SAVE_CONTROL_WORK * s
 	poke_max = PokeParty_GetPokeCount(party);
 	for(i = 0; i < poke_max; i++){
 		pp = PokeParty_GetMemberPointer(party, i);
-		stamp_array[i].monsno = PokeParaGet(pp, ID_PARA_monsno_egg, NULL);
-		stamp_array[i].personal_rnd = PokeParaGet(pp, ID_PARA_personal_rnd, NULL);
-		stamp_array[i].form_no = PokeParaGet(pp, ID_PARA_form_no, NULL);
+		stamp_array[i].monsno = PP_Get(pp, ID_PARA_monsno_egg, NULL);
+		stamp_array[i].personal_rnd = PP_Get(pp, ID_PARA_personal_rnd, NULL);
+		stamp_array[i].form_no = PP_Get(pp, ID_PARA_form_no, NULL);
 		stamp_array[i].color 
-			= FootprintTool_StampColorGet(board_type, PokeParaGet(pp, ID_PARA_id_no, NULL));
+			= FootprintTool_StampColorGet(board_type, PP_Get(pp, ID_PARA_id_no, NULL));
 	#ifdef PM_DEBUG
 		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_B){	//ランダムで色を変える
 			stamp_array[i].color = FootprintTool_StampColorGet(board_type, GFUser_GetPublicRand(0x10000));

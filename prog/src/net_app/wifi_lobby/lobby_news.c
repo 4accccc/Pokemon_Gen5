@@ -2502,7 +2502,7 @@ static void NEWSDRAW_DEBUG_TopicMake( NEWSDRAW_WK* p_wk, WFLBY_SYSTEM* p_system,
 	case NEWS_TOPICTYPE_MINIGAME:		// É~ÉjÉQÅ[ÉÄ
 		{
 			NEWS_DATA_SET_MINIGAME data;
-			data.minigame = gf_mtRand() % 3;
+			data.minigame = GFUser_GetPublicRand(3);
 			data.num	= 4;
 			data.cp_p1	= p_status;
 			data.cp_p2	= p_status;

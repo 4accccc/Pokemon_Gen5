@@ -41,7 +41,7 @@ static void BB_disp_COAP_SimpleInit( TCATS_OBJECT_ADD_PARAM_S* coap, s16 x, s16 
  *
  */
 //--------------------------------------------------------------
-void BB_disp_3DModelDraw( D3DOBJ* obj, MtxFx43* mat43, VecFx32* pos )
+void BB_disp_3DModelDraw( GFL_G3D_OBJSTATUS* obj, MtxFx43* mat43, VecFx32* pos )
 {
 	if( obj->draw_flg ){
 		NNS_G3dGlbFlush();

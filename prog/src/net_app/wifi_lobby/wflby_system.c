@@ -47,6 +47,10 @@
 #include "wflby_3dmatrix.h"
 
 #include "wflby_snd.h"
+#include "arc_def.h"
+#include "system/main.h"
+#include "system/gfl_use.h"
+#include "poke_tool/monsno_def.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -916,8 +920,8 @@ void WFLBY_SYSTEM_Main( WFLBY_SYSTEM* p_wk )
 		profile.status		= WFLBY_STATUS_LOGIN;		// プレイヤーステータス
 		for( i=1; i<20; i++ ){
 			profile.userid		= i;						//  ロビー内ユーザID
-			profile.sex			= gf_mtRand() % PM_NEUTRAL;	// 性別
-			profile.tr_type		= gf_mtRand() % NELEMS(tr_type);	// トレーナの見た目
+			profile.sex			= GFUser_GetPublicRand(PM_NEUTRAL);	// 性別
+			profile.tr_type		= GFUser_GetPublicRand(NELEMS(tr_type));	// トレーナの見た目
 			DWC_LOBBY_DEBUG_PlayerIN( &profile, i );
 		}
 
@@ -1581,15 +1585,19 @@ void WFLBY_SYSTEM_SetNowBGM( const WFLBY_SYSTEM* cp_wk )
 {
 	if( (cp_wk->event.parade == TRUE) && (cp_wk->event.parade_count <= 0) ){
 
+	#if WB_TEMP_FIX
 		Snd_DataSetByScene( SND_SCENE_WIFI_LOBBY_HIROBA, SEQ_PL_WIFIPARADE, 0 );	// パレード
-
+	#endif
+	
 		// ボリューム設定
 		WFLBY_SYSTEM_EVENT_SetBgmVolume( &cp_wk->event );
 	}else{
 
 		// BGMチェンジ
+	#if WB_TEMP_FIX
 		Snd_DataSetByScene( SND_SCENE_WIFI_LOBBY_HIROBA, SEQ_PL_WIFIUNION, 0 );	//wifiロビー再生
-
+	#endif
+	
 		// ボリューム設定
 		WFLBY_SYSTEM_EVENT_SetBgmVolume( &cp_wk->event );
 	}
@@ -1981,11 +1989,12 @@ void WFLBY_SYSTEM_GetProfileMyStatus( const WFLBY_USER_PROFILE* cp_profile, MYST
 			p_name_tmp	= GFL_STR_CreateBuffer( (PERSON_NAME_SIZE + EOM_SIZE)*4, heapID );
 			p_name		= GFL_STR_CreateBuffer( (PERSON_NAME_SIZE + EOM_SIZE)*4, heapID );
 			MyStatus_CopyNameString( p_buff, p_name );
+		#if WB_TEMP_FIX
 			result = FontProc_ErrorStrCheck( FONT_SYSTEM, p_name, p_name_tmp );
 			if( result == FALSE ){
 				set_dummy = TRUE;
 			}
-			
+		#endif
 			GFL_STR_DeleteBuffer( p_name_tmp );
 			GFL_STR_DeleteBuffer( p_name );
 		}
@@ -2000,7 +2009,7 @@ void WFLBY_SYSTEM_GetProfileMyStatus( const WFLBY_USER_PROFILE* cp_profile, MYST
 	if( set_dummy ){
 		GFL_MSGDATA*  p_msgman;
 		STRBUF* p_str;
-		p_msgman	= GFL_MSG_Create( MSGMAN_TYPE_DIRECT, ARCID_MESSAGE, NARC_message_wifi_hiroba_dat, heapID );
+		p_msgman	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_hiroba_dat, heapID );
 		p_str		= GFL_MSG_CreateString( p_msgman, msg_hiroba_profile_15 );
 		MyStatus_SetMyNameFromString( p_buff, p_str );
 		GFL_STR_DeleteBuffer( p_str );
@@ -2200,7 +2209,7 @@ u32 WFLBY_SYSTEM_GetProfileSex( const WFLBY_USER_PROFILE* cp_profile )
 		// 知らない性別なのでトレーナタイプに合わせる
 		// 表示できるトレーナタイプかチェック
 		tr_type = WFLBY_UNIONCHARNO_TRTYPE_Get( cp_profile->tr_type );
-		if( tr_type != OBJCODEMAX ){
+		if( tr_type != PLOBJCODEMAX ){
 			for( i=0; i<NELEMS(sc_WFLBY_SYSTEM_TRTYPE_SEX); i++ ){
 				if( sc_WFLBY_SYSTEM_TRTYPE_SEX[i].tr_type == cp_profile->tr_type ){
 					sex = sc_WFLBY_SYSTEM_TRTYPE_SEX[i].tr_type;
@@ -2298,7 +2307,7 @@ u32 WFLBY_SYSTEM_GetProfileTrType( const WFLBY_USER_PROFILE* cp_profile )
 	trtype = WFLBY_UNIONCHARNO_TRTYPE_Get( cp_profile->tr_type );
 	
 	// 表示できるトレーナタイプかチェック
-	if( trtype != OBJCODEMAX ){
+	if( trtype != PLOBJCODEMAX ){
 		return trtype;
 	}
 	
@@ -3538,9 +3547,11 @@ void WFLBY_SYSTEM_FNOTE_SetTalk( WFLBY_SYSTEM* p_wk, u32 plidx )
 	WFLBY_USER_PROFILE* p_profile;
 	MYSTATUS* p_mystatus;
 	void* p_buf;
+#if WB_TEMP_FIX
 	FNOTE_DATA* p_fnote;
 
 	p_fnote		= SaveData_GetFNote( p_wk->p_save );
+#endif
 	p_profile	= (WFLBY_USER_PROFILE*)WFLBY_SYSTEM_GetUserProfile( p_wk, plidx );
 	
 	if( p_profile != NULL ){
@@ -3548,9 +3559,11 @@ void WFLBY_SYSTEM_FNOTE_SetTalk( WFLBY_SYSTEM* p_wk, u32 plidx )
 		p_mystatus = MyStatus_AllocWork( HEAPID_WFLBY_ROOM );
 		WFLBY_SYSTEM_GetProfileMyStatus( p_profile, p_mystatus, HEAPID_WFLBY_ROOM );
 
+	#if WB_TEMP_FIX
 		p_buf = FNOTE_Sio_ID_Name_DataMake( MyStatus_GetMyName( p_mystatus ), p_profile->sex, 
 				HEAPID_WFLBY_ROOM, FNOTE_ID_PL_LOBBY_CHAT );
 		FNOTE_DataSave( p_fnote, p_buf, FNOTE_TYPE_SIO );
+	#endif
 
 		GFL_HEAP_FreeMemory( p_mystatus );
 	}
@@ -3569,9 +3582,11 @@ void WFLBY_SYSTEM_FNOTE_SetGetGadget( WFLBY_SYSTEM* p_wk, u32 plidx )
 	WFLBY_USER_PROFILE* p_profile;
 	MYSTATUS* p_mystatus;
 	void* p_buf;
+#if WB_TEMP_FIX
 	FNOTE_DATA* p_fnote;
 
 	p_fnote		= SaveData_GetFNote( p_wk->p_save );
+#endif
 	p_profile	= (WFLBY_USER_PROFILE*)WFLBY_SYSTEM_GetUserProfile( p_wk, plidx );
 	
 	if( p_profile != NULL ){
@@ -3579,9 +3594,11 @@ void WFLBY_SYSTEM_FNOTE_SetGetGadget( WFLBY_SYSTEM* p_wk, u32 plidx )
 		p_mystatus = MyStatus_AllocWork( HEAPID_WFLBY_ROOM );
 		WFLBY_SYSTEM_GetProfileMyStatus( p_profile, p_mystatus, HEAPID_WFLBY_ROOM );
 
+	#if WB_TEMP_FIX
 		p_buf = FNOTE_Sio_ID_Name_DataMake( MyStatus_GetMyName( p_mystatus ), p_profile->sex,
 				HEAPID_WFLBY_ROOM, FNOTE_ID_PL_LOBBY_TOY_GET );
 		FNOTE_DataSave( p_fnote, p_buf, FNOTE_TYPE_SIO );
+	#endif
 
 		GFL_HEAP_FreeMemory( p_mystatus );
 	}
@@ -3597,6 +3614,7 @@ void WFLBY_SYSTEM_FNOTE_SetGetGadget( WFLBY_SYSTEM* p_wk, u32 plidx )
 //-----------------------------------------------------------------------------
 void WFLBY_SYSTEM_FNOTE_SetPlayMinigame( WFLBY_SYSTEM* p_wk, WFLBY_GAMETYPE minigame )
 {
+#if WB_TEMP_FIX
 	void* p_buf;
 	FNOTE_DATA* p_fnote;
 
@@ -3635,6 +3653,7 @@ void WFLBY_SYSTEM_FNOTE_SetPlayMinigame( WFLBY_SYSTEM* p_wk, WFLBY_GAMETYPE mini
 	if( p_buf ){
 		FNOTE_DataSave( p_fnote, p_buf, FNOTE_TYPE_SIO );
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -3646,12 +3665,14 @@ void WFLBY_SYSTEM_FNOTE_SetPlayMinigame( WFLBY_SYSTEM* p_wk, WFLBY_GAMETYPE mini
 //-----------------------------------------------------------------------------
 void WFLBY_SYSTEM_FNOTE_SetParade( WFLBY_SYSTEM* p_wk )
 {
+#if WB_TEMP_FIX
 	void* p_buf;
 	FNOTE_DATA* p_fnote;
 
 	p_fnote		= SaveData_GetFNote( p_wk->p_save );
 	p_buf = FNOTE_SioIDOnlyDataMake( HEAPID_WFLBY_ROOM, FNOTE_ID_PL_LOBBY_PARADE );
 	FNOTE_DataSave( p_fnote, p_buf, FNOTE_TYPE_SIO );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -3929,6 +3950,7 @@ void WFLBY_SYSTEM_DEBUG_SetLangCode( WFLBY_USER_PROFILE* p_profile, u32 code )
 //-----------------------------------------------------------------------------
 static BOOL WFLBY_SYSTEM_CheckStrEOMCode( const STRCODE* cp_str, u32 len )
 {
+#if WB_TEMP_FIX
 	int i;
 
 	for( i=0; i<len; i++ ){
@@ -3937,6 +3959,9 @@ static BOOL WFLBY_SYSTEM_CheckStrEOMCode( const STRCODE* cp_str, u32 len )
 		}
 	}
 	return FALSE;
+#else
+	return TRUE;
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -4056,7 +4081,7 @@ static void WFLBY_SYSTEM_CallbackUserIn( s32 userid, const void* cp_profile, voi
 		WFLBY_SYSTEM_VIPFLAG_Set( &p_wk->vipflag, idx, TRUE );
 		{
 //			WFLBY_SYSTEM_AIKOTOBABUFF_SetData( &p_wk->aikotoba, idx, TRUE, 1849019343  );
-			WFLBY_SYSTEM_AIKOTOBABUFF_SetData( &p_wk->aikotoba, idx, TRUE, gf_mtRand() );
+			WFLBY_SYSTEM_AIKOTOBABUFF_SetData( &p_wk->aikotoba, idx, TRUE, GFUser_GetPublicRand(GFL_STD_RAND_MAX) );
 		}
 
 		//VIPが入ってきたトピック生成
@@ -4558,14 +4583,18 @@ static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVE_CO
 	MYSTATUS* p_mystatus;
 	POKEPARTY* p_pokeparty;
 	WIFI_HISTORY* p_history;
+#if WB_TEMP_FIX
 	ZUKAN_WORK* p_zukan;
+#endif
 	GMTIME* p_time;
 
 	// セーブデータ取得
 	{
 		p_mystatus		= SaveData_GetMyStatus( p_save );
 		p_pokeparty		= SaveData_GetTemotiPokemon( p_save );
+	#if WB_TEMP_FIX
 		p_zukan			= SaveData_GetZukanWork( p_save );
+	#endif
 		p_history		= SaveData_GetWifiHistory( p_save );
 		p_time			= SaveData_GetGameTime( p_save );
 	}
@@ -4575,8 +4604,8 @@ static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVE_CO
 		STRBUF* p_name;
 		p_name = MyStatus_CreateNameString( p_mystatus, heapID );
 		// 送受信するプロフィールの名前
-		STRBUF_GetStringCode( p_name, p_myprofile->profile.name, PERSON_NAME_SIZE + EOM_SIZE );
-		STRBUF_GetStringCode( p_name, p_myprofile->def_name, PERSON_NAME_SIZE + EOM_SIZE );
+		GFL_STR_GetStringCode( p_name, p_myprofile->profile.name, PERSON_NAME_SIZE + EOM_SIZE );
+		GFL_STR_GetStringCode( p_name, p_myprofile->def_name, PERSON_NAME_SIZE + EOM_SIZE );
 		GFL_STR_DeleteBuffer( p_name );
 	}
 	p_myprofile->profile.userid		= DWC_LOBBY_INVALID_USER_ID;
@@ -4590,9 +4619,9 @@ static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVE_CO
 		for( i=0; i<TEMOTI_POKEMAX; i++ ){
 			if( i< pokemax ){
 				p_pokemon				= PokeParty_GetMemberPointer( p_pokeparty, i );
-				p_myprofile->profile.monsno[i]	= PokeParaGet( p_pokemon, ID_PARA_monsno, NULL );
-				p_myprofile->profile.formid[i]	= PokeParaGet( p_pokemon, ID_PARA_form_no, NULL );
-				p_myprofile->profile.tamago[i]	= PokeParaGet( p_pokemon, ID_PARA_tamago_flag, NULL );
+				p_myprofile->profile.monsno[i]	= PP_Get( p_pokemon, ID_PARA_monsno, NULL );
+				p_myprofile->profile.formid[i]	= PP_Get( p_pokemon, ID_PARA_form_no, NULL );
+				p_myprofile->profile.tamago[i]	= PP_Get( p_pokemon, ID_PARA_tamago_flag, NULL );
 			}else{
 				p_myprofile->profile.monsno[i]	= MONSNO_MAX;
 			}
@@ -4605,7 +4634,9 @@ static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVE_CO
 	p_myprofile->profile.nation			= WIFIHISTORY_GetMyNation( p_history );
 	p_myprofile->profile.area			= WIFIHISTORY_GetMyArea( p_history );
 
+#if WB_TEMP_FIX
 	p_myprofile->profile.zukan_zenkoku	= ZukanWork_GetZenkokuZukanFlag( p_zukan );
+#endif
 	p_myprofile->profile.game_clear		= MyStatus_GetDpClearFlag( p_mystatus );
 	p_myprofile->profile.item			= WFLBY_ITEM_INIT;
 	p_myprofile->profile.status			= WFLBY_STATUS_NONE;
@@ -4685,8 +4716,7 @@ static void WFLBY_SYSTEM_DWC_SetMyProfile( WFLBY_SYSTEM* p_wk )
 //-----------------------------------------------------------------------------
 static void WFLBY_SYSTEM_MyProfile_SetCrc( WFLBY_USER_MYPROFILE* p_myprofile, const SAVE_CONTROL_WORK* cp_save )
 {
-	p_myprofile->crc_check = SaveData_CalcCRC( cp_save, &p_myprofile->profile, sizeof(WFLBY_USER_PROFILE) );
-//	OS_TPrintf( "crc set %d\n", p_myprofile->crc_check );
+	p_myprofile->crc_check = GFL_STD_CrcCalc(&p_myprofile->profile, sizeof(WFLBY_USER_PROFILE));
 }
 
 //----------------------------------------------------------------------------
@@ -4705,7 +4735,7 @@ static BOOL WFLBY_SYSTEM_MyProfile_CheckCrc( const WFLBY_USER_MYPROFILE* cp_mypr
 	u32 check_crc;
 
 	// CRCチェック
-	check_crc = SaveData_CalcCRC( cp_save, &cp_myprofile->profile, sizeof(WFLBY_USER_PROFILE) );
+	check_crc = GFL_STD_CrcCalc( &cp_myprofile->profile, sizeof(WFLBY_USER_PROFILE) );
 //	OS_TPrintf( "crc check %d==%d\n", check_crc, cp_myprofile->crc_check );
 	if( check_crc != cp_myprofile->crc_check ){
 		GF_ASSERT_MSG( 0, "lobby crc error\n" );
@@ -4836,7 +4866,9 @@ static void WFLBY_SYSTEM_EVENT_Count( WFLBY_SYSTEM_EVENT* p_wk, WFLBY_SYSTEM_FLA
 
 		if( p_wk->end_count == WFLBY_END_BGMFADEOUT ){
 			//フェードアウト開始
+		#if WB_TEMP_FIX
 			Snd_BgmFadeOut( BGM_VOL_MIN, WFLBY_END_BGM_FADEOUT_FRAME );
+		#endif
 			p_wk->bgm_fadeout = TRUE;	// フェードアウト中
 		}
 	}else if( p_wk->end_count == 0 ){
@@ -4874,7 +4906,9 @@ static void WFLBY_SYSTEM_EVENT_Count( WFLBY_SYSTEM_EVENT* p_wk, WFLBY_SYSTEM_FLA
 
 		// BGM変更
 		if( p_wk->bgm_lock == FALSE ){
+		#if WB_TEMP_FIX
 			Snd_BgmPlay( SEQ_PL_WIFIPARADE );	// サウンドデータロード
+		#endif
 		}
 		p_wk->parade		= TRUE;
 		p_flag->event_on	|= 1 << WFLBY_EVENT_CHG_PARADE;
@@ -4918,7 +4952,9 @@ static void WFLBY_SYSTEM_EVENT_Init( WFLBY_SYSTEM_EVENT* p_wk )
 static void WFLBY_SYSTEM_EVENT_PlayBgm( const WFLBY_SYSTEM_EVENT* cp_wk,  u32 bgm )
 {
 	if( cp_wk->bgm_lock == FALSE ){
+	#if WB_TEMP_FIX
 		Snd_BgmPlay( bgm );	// サウンドデータロード
+	#endif
 
 		// おと下げ中なら下げておく
 		WFLBY_SYSTEM_EVENT_SetBgmVolume( cp_wk );
@@ -4941,11 +4977,13 @@ static void WFLBY_SYSTEM_EVENT_SetBgmVolume( const WFLBY_SYSTEM_EVENT* cp_wk )
 	if( cp_wk->bgm_fadeout == FALSE ){
 #endif
 		
+	#if WB_TEMP_FIX
 		if( cp_wk->bgm_vl_down == TRUE ){
 			Snd_PlayerSetPlayerVolume( PLAYER_BGM, BGM_VOL_HIROBA_APP );
 		}else{
 			Snd_PlayerSetPlayerVolume( PLAYER_BGM, BGM_VOL_MAX );
 		}
+	#endif
 	}
 }
 
@@ -5035,7 +5073,7 @@ static void WFLBY_SYSTEM_MG_SetMyStatus( WFLBY_SYSTEM_MG* p_wk, const WFLBY_USER
 
 	// バッファ作成
 	p_buff = GFL_HEAP_AllocMemory( heapID,  sizeof(WFLBY_USER_PROFILE) );
-	GFL_STD_MemCopyFast( &cp_profile->profile, p_buff, sizeof(WFLBY_USER_PROFILE) );
+	GFL_STD_MemCopy( &cp_profile->profile, p_buff, sizeof(WFLBY_USER_PROFILE) );
 
 	// 名前をライブラリのデータにある物に書き換えてからMYSTATUSを取得する
 	GFL_STD_MemCopy( cp_profile->comm_name, p_buff->name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
@@ -6490,7 +6528,7 @@ static WFLBY_ITEMTYPE WFLBY_SYSTEM_GADGETRATE_GetRandItem( const WFLBY_SYSTEM_GA
 		rate_max += cp_wk->rate[i];
 	}
 
-	rand = gf_mtRand() % rate_max;
+	rand = GFUser_GetPublicRand(rate_max);
 	
 	// 乱数の値がガジェットレートのグループの値の範囲内なら
 	// そのガジェットのレベル１の値を返す
@@ -7013,7 +7051,7 @@ static s32 WFLBY_SYSTEM_LASTACTQ_GetUserID( WFLBY_LASTACTION_CUE* p_wk, u32 idx 
 //-----------------------------------------------------------------------------
 static void WFLBY_SYSTEM_LASTACTQ_SetCrc( WFLBY_LASTACTION_CUE* p_wk )
 {
-	p_wk->crc_check = SaveData_CalcCRC( p_wk->cp_save, p_wk, WFLBY_LASTACTION_CUE_CRC_DATASIZE );
+	p_wk->crc_check = GFL_STD_CrcCalc( p_wk, WFLBY_LASTACTION_CUE_CRC_DATASIZE );
 //	OS_TPrintf( "lastactQ crc set %d\n", p_wk->crc_check );
 
 }
@@ -7030,7 +7068,7 @@ static void WFLBY_SYSTEM_LASTACTQ_CheckCrc( WFLBY_LASTACTION_CUE* p_wk )
 	u32 check_crc;
 
 	// CRCチェック
-	check_crc = SaveData_CalcCRC( p_wk->cp_save, p_wk, WFLBY_LASTACTION_CUE_CRC_DATASIZE );
+	check_crc = GFL_STD_CrcCalc( p_wk, WFLBY_LASTACTION_CUE_CRC_DATASIZE );
 //	OS_TPrintf( "lastactQ crc check %d==%d\n", check_crc, p_wk->crc_check );
 	if( check_crc != p_wk->crc_check ){
 		GF_ASSERT_MSG( 0, "lobby lastactQ crc error\n" );
@@ -7084,7 +7122,7 @@ static u32 WFLBY_TRTYPE_UNIONCHARNO_Get( u32 tr_type )
  *
  *	@param	union_char_no ユニオンキャラクタナンバー
  *
- *	@retval	OBJCODEMAX		不正なデータ
+ *	@retval	PLOBJCODEMAX		不正なデータ
  *	@retval	その他			トレーナID
  */
 //-----------------------------------------------------------------------------
@@ -7093,5 +7131,5 @@ static u32 WFLBY_UNIONCHARNO_TRTYPE_Get( u32 union_char_no )
 	if( union_char_no < WFLBY_SYSTEMUNICHAR_NUM ){
 		return sc_WFLBY_SYSTEM_TRTYPE_SEX[ union_char_no ].tr_type;
 	}
-	return OBJCODEMAX;
+	return PLOBJCODEMAX;
 }

@@ -19,7 +19,7 @@
 
 #include "net_app/dwc_lobbylib.h"
 
-//#include "net_app/wifi_p2pmatch_tool.h"
+#include "net_app/wificlub/wifi_p2pmatch_tool.h"
 
 //-----------------------------------------------------------------------------
 /**

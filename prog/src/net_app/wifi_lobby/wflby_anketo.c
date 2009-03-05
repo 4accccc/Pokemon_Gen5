@@ -1503,7 +1503,7 @@ static BOOL ANKETO_INPUT_Main( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 
 	case ANKETO_INPUT_SEQ_ANKETO_RECVWAIT:	// 受信中
 
-		if( (gf_mtRand() % 100) == 0 ){
+		if( (GFUser_GetPublicRand(100)) == 0 ){
 
 			Snd_SePlay( ANKETO_SND_RECV );
 
@@ -2119,7 +2119,7 @@ static BOOL ANKETO_OUTPUT_Main( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 	case ANKETO_OUTPUT_SEQ_ANKETO_RECVWAIT:		// アンケート受信中
 
 		// 受信完了
-		if( (gf_mtRand() % 100) == 0 ){
+		if( (GFUser_GetPublicRand(100)) == 0 ){
 
 			Snd_SePlay( ANKETO_SND_RECV );
 
@@ -2699,8 +2699,8 @@ static void ANKETO_OUTPUT_SetLastWeekGraphic( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN
 //-----------------------------------------------------------------------------
 static void ANKETO_QUESTION_DATA_DebugInit( ANKETO_QUESTION_DATA* p_wk )
 {
-	p_wk->special			= gf_mtRand() % 2;
-	p_wk->question_no		= gf_mtRand() % (ANKETO_NORMAL_Q_NUM+ANKETO_SPECIAL_Q_NUM);
+	p_wk->special			= GFUser_GetPublicRand(2);
+	p_wk->question_no		= GFUser_GetPublicRand(ANKETO_NORMAL_Q_NUM+ANKETO_SPECIAL_Q_NUM);
 	p_wk->anketo_no			= 0;
 	p_wk->make_question		= 0;
 }
@@ -2815,7 +2815,7 @@ static void ANKETO_QUESTION_RESULT_DebugInit( ANKETO_QUESTION_RESULT* p_wk )
 	
 	p_wk->ans_all = 0;
 	for( i=0; i<ANKETO_ANSWER_NUM; i++ ){
-		p_wk->ans[i] = gf_mtRand() % 0xffffffff;
+		p_wk->ans[i] = GFUser_GetPublicRand(0xffffffff);
 		p_wk->ans_all += p_wk->ans[i];
 	}
 }

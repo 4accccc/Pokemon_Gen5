@@ -1313,7 +1313,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 			GFL_UI_KEY_GetTrg()		|= PAD_KEY_RIGHT;
 			GFL_UI_KEY_GetCont()	|= PAD_KEY_RIGHT;
 
-			if( (gf_mtRand() % 200) == 0 ){
+			if( GFUser_GetPublicRand(200) == 0 ){
 				GFL_UI_KEY_GetTrg()		|= PAD_BUTTON_A;
 				GFL_UI_KEY_GetCont()	|= PAD_BUTTON_A;
 			}
@@ -1322,7 +1322,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 
 #ifdef WFLBY_DEBUG_ROOM_MINIGAME_AUTO
 		if( WFLBY_DEBUG_ROOM_MINIGAME_AUTO_FLAG == TRUE ){
-			if( (gf_mtRand() % 10) == 0 ){
+			if( GFUser_GetPublicRand(10) == 0 ){
 				GFL_UI_KEY_GetTrg()		|= (PAD_KEY_LEFT | PAD_BUTTON_A);
 				GFL_UI_KEY_GetCont()	|= PAD_KEY_LEFT;
 			}
@@ -4513,7 +4513,7 @@ static void WFLBY_ROOM_Msg_Init( WFLBY_ROOM_DEFMSG* p_wk, u32 heapID )
 	
 	p_wk->p_wordset = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, heapID );
 	for( i=0; i<WFLBY_DEFMSG_TYPE_NUM; i++ ){
-		p_wk->p_msgman[i]	= GFL_MSG_Create( MSGMAN_TYPE_DIRECT, ARCID_MESSAGE, sc_DEFMSG_INX[i], heapID );
+		p_wk->p_msgman[i]	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, sc_DEFMSG_INX[i], heapID );
 	}
 	p_wk->p_str		= GFL_STR_CreateBuffer( WFLBY_DEFMSG_STRNUM, heapID );
 	p_wk->p_tmp		= GFL_STR_CreateBuffer( WFLBY_DEFMSG_STRNUM, heapID );

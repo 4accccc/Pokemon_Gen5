@@ -13,7 +13,7 @@
 #define __BALANCE_BALL_H__
 
 #include <procsys.h>
-#include "savedata/savedata_local.h"
+#include "savedata/save_control.h"
 #include "net_app/wifi_lobby/minigame_tool.h"
 
 typedef struct {
@@ -27,9 +27,9 @@ typedef struct {
 } BB_PROC_WORK;
 
 
-extern GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq );
-extern GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq );
-extern GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq );
+extern GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq, void * pwk, void * mywk );
+extern GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void * mywk );
+extern GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq, void * pwk, void * mywk );
 
 
 #endif		// __BUCKET_H__

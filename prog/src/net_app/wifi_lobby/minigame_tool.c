@@ -3521,7 +3521,7 @@ static MNGM_RAREGAME_TYPE MNGM_ENTRY_RareGameSelect( const u8* cp_ParTbl, u32 nu
 	u32 check;
 	int i;
 
-	rand = gf_mtRand() % 100;
+	rand = GFUser_GetPublicRand(100);
 
 //	OS_TPrintf( "rand %d\n", rand );
 	

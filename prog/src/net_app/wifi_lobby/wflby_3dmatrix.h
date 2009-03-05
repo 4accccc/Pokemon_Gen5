@@ -15,7 +15,7 @@
 //#include "system/d3dobj.h"
 //#include "system/arc_util.h"
 
-#include "net_app/wifi_2dmap/wf2dmap_common.h"
+#include "net_app/wifi2dmap/wf2dmap_common.h"
 
 
 //-----------------------------------------------------------------------------
@@ -53,7 +53,9 @@ extern void WFLBY_3DMATRIX_GetVecPos( const VecFx32* cp_vec, WF2DMAP_POS* p_pos 
 // 汎用関数
 // テクスチャ読み込み	テクスチャ転送後破棄バージョン
 extern  void WFLBY_3DMAPOBJ_TEX_LoatCutTex( void** pp_in, ARCHANDLE* p_handle, u32 data_idx, u32 gheapID );
-extern BOOL WFLBY_3DMAPOBJ_MDL_BOXCheck( const D3DOBJ_MDL* cp_mdl, const D3DOBJ* cp_obj );
+#if WB_FIX
+extern BOOL WFLBY_3DMAPOBJ_MDL_BOXCheck( const GFL_G3D_OBJ* cp_mdl, const GFL_G3D_OBJSTATUS* cp_obj );
+#endif
 
 
 

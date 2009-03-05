@@ -889,8 +889,8 @@ typedef struct {
 	VecFx32	rotate;
 
 	// グラフィック
-    D3DOBJ	obj;
-	D3DOBJ_MDL	mdl;
+    GFL_G3D_OBJSTATUS	obj;
+	GFL_G3D_OBJ	mdl;
 	
 } WLDTIMER_EARTH;
 
@@ -904,8 +904,8 @@ typedef struct {
 
 	// 表示データ
 	VecFx32	list_scale;
-    D3DOBJ	obj[WLDTIMER_PLACE_COL_NUM];
-	D3DOBJ_MDL	mdl[WLDTIMER_PLACE_COL_NUM];
+    GFL_G3D_OBJSTATUS	obj[WLDTIMER_PLACE_COL_NUM];
+	GFL_G3D_OBJ	mdl[WLDTIMER_PLACE_COL_NUM];
 } WLDTIMER_PLACE;
 
 //-------------------------------------

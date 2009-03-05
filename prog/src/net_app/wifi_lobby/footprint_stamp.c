@@ -134,7 +134,7 @@ typedef struct{
 
 ///消滅エフェクト：はじけ
 typedef struct{
-	D3DOBJ		child_obj[HAJIKE_OBJ_CHILD_NUM];	///<描画OBJ
+	GFL_G3D_OBJSTATUS		child_obj[HAJIKE_OBJ_CHILD_NUM];	///<描画OBJ
 	u16 frame;
 	u8 seq;
 	STAMP_HIT_RECT rect[HAJIKE_OBJ_CHILD_NUM + 1];	// +1 = 親の分
@@ -159,7 +159,7 @@ typedef struct{
 
 ///消滅エフェクト：軌跡
 typedef struct{
-	D3DOBJ		child_obj[KISEKI_OBJ_CHILD_NUM];	///<描画OBJ
+	GFL_G3D_OBJSTATUS		child_obj[KISEKI_OBJ_CHILD_NUM];	///<描画OBJ
 	u16 frame;
 	u8 drop_no;
 	u8 obj_hit;			///<TRUE:他OBJと衝突した
@@ -186,7 +186,7 @@ typedef struct{
 
 ///消滅エフェクト：ブラーX
 typedef struct{
-	D3DOBJ		child_obj[BRAR_X_OBJ_CHILD_NUM];	///<描画OBJ
+	GFL_G3D_OBJSTATUS		child_obj[BRAR_X_OBJ_CHILD_NUM];	///<描画OBJ
 	fx32 theta;
 	u16 alpha;
 	u8 polygon_id;
@@ -196,7 +196,7 @@ typedef struct{
 
 ///消滅エフェクト：ブラーY
 typedef struct{
-	D3DOBJ		child_obj[BRAR_Y_OBJ_CHILD_NUM];	///<描画OBJ
+	GFL_G3D_OBJSTATUS		child_obj[BRAR_Y_OBJ_CHILD_NUM];	///<描画OBJ
 	fx32 theta;
 	u16 alpha;
 	u8 polygon_id;
@@ -239,8 +239,8 @@ typedef union{
 typedef struct _STAMP_MOVE_WORK{
 	STAMP_PARAM param;		///<スタンプパラメータ
 
-	D3DOBJ_MDL	mdl;
-	D3DOBJ		obj;
+	GFL_G3D_OBJ	mdl;
+	GFL_G3D_OBJSTATUS		obj;
 	
 	ERASE_EFF_WORK erase_eff;	///<消滅エフェクト動作ワーク
 	
@@ -259,7 +259,7 @@ static STAMP_MOVE_PTR Stamp_Create(FOOTPRINT_SYS_PTR fps, STAMP_SYSTEM_WORK *ssw
 static void Stamp_Free(STAMP_MOVE_PTR move);
 static void Stamp_DeletePack(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move, int stamp_no);
 static void Stamp_PosConvert(FOOTPRINT_SYS_PTR fps, int x, int y, fx32 *ret_x, fx32 *ret_y);
-static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, D3DOBJ_MDL *p_mdl, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg);
+static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, GFL_G3D_OBJ *p_mdl, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg);
 static void Stamp_TexRewrite(NNSG3dResTex *pTex, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg);
 static void Stamp_TexDotErase(NNSG3dResTex *pTex, int move_type);
 static void Stamp_TexDotFlip(NNSG3dResTex *pTex, int move_type);
@@ -271,7 +271,7 @@ static BOOL StampMoveTool_MoveTypeSet(STAMP_MOVE_PTR move, int move_type);
 static u8 StampMoveTool_MoveTypeGet(const STAMP_PARAM *param);
 static int Stamp_PolygonIDGet(STAMP_SYSTEM_WORK *ssw);
 static void Stamp_PolygonIDFree(STAMP_SYSTEM_WORK *ssw, int polygon_id);
-static void Stamp_HitRectCreate(D3DOBJ *obj, const STAMP_PARAM *param, STAMP_HIT_RECT *rect, int affine_flag);
+static void Stamp_HitRectCreate(GFL_G3D_OBJSTATUS *obj, const STAMP_PARAM *param, STAMP_HIT_RECT *rect, int affine_flag);
 static BOOL Stamp_RectHitCheck(const STAMP_HIT_RECT *rect0, const STAMP_HIT_RECT *rect1);
 static void Stamp_ChainWorkGet(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move);
 static int Stamp_ChainAdd(STAMP_SYSTEM_WORK *ssw, int chain_work_no, int move_type);
@@ -453,8 +453,8 @@ static const s32 StampPosBaseY[] = {
 //--------------------------------------------------------------
 #ifdef PM_DEBUG
 static struct{
-	D3DOBJ_MDL	mdl;
-	D3DOBJ		obj[4];
+	GFL_G3D_OBJ	mdl;
+	GFL_G3D_OBJSTATUS		obj[4];
 }DebugStamp;
 
 static u8 debug_sp_eff = 0;
@@ -812,7 +812,7 @@ static STAMP_MOVE_PTR Stamp_Create(FOOTPRINT_SYS_PTR fps, STAMP_SYSTEM_WORK *ssw
  *	D3DOBJ_MdlLoadH関数の中身を抜き出して必要な部分をカスタマイズしたもの
  */
 //--------------------------------------------------------------
-static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, D3DOBJ_MDL *p_mdl, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg)
+static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, GFL_G3D_OBJ *p_mdl, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg)
 {
 	// モデルﾃﾞｰﾀ読み込み
 	p_mdl->pResMdl = ArcUtil_HDL_Load(hdl_main, NARC_footprint_board_ashiato_nsbmd, 
@@ -857,7 +857,7 @@ static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, D3DOBJ_MDL *p_mdl, ARCHANDLE 
 				if(p_mdl->pResMdl){
 					GFL_HEAP_FreeMemory( p_mdl->pResMdl );
 				}
-				GFL_STD_MemFill( p_mdl, 0, sizeof(D3DOBJ_MDL) );
+				GFL_STD_MemFill( p_mdl, 0, sizeof(GFL_G3D_OBJ) );
 
 				OS_TPrintf("!!!!!VRAM or TCBの確保失敗!!!!!! vram_ret = %d\n", vram_ret);
 				return FALSE;
@@ -1316,7 +1316,7 @@ static void Stamp_PolygonIDFree(STAMP_SYSTEM_WORK *ssw, int polygon_id)
  * @param   affine_flag		TRUE:拡縮をしている。FALSEにすると拡縮率の計算を省く為、軽くなります
  */
 //--------------------------------------------------------------
-static void Stamp_HitRectCreate(D3DOBJ *obj, const STAMP_PARAM *param, STAMP_HIT_RECT *rect, int affine_flag)
+static void Stamp_HitRectCreate(GFL_G3D_OBJSTATUS *obj, const STAMP_PARAM *param, STAMP_HIT_RECT *rect, int affine_flag)
 {
 	fx32 fx_x, fx_y, fx_z;
 	fx32 scale_x, scale_y, scale_z;

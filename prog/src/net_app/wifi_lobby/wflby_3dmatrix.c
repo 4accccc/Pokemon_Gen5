@@ -149,7 +149,8 @@ void WFLBY_3DMAPOBJ_TEX_LoatCutTex( void** pp_in, ARCHANDLE* p_handle, u32 data_
  *	@retval	FALSE	•`‰æ‚µ‚È‚¢
  */
 //-----------------------------------------------------------------------------
-BOOL WFLBY_3DMAPOBJ_MDL_BOXCheck( const D3DOBJ_MDL* cp_mdl, const D3DOBJ* cp_obj )
+#if WB_FIX
+BOOL WFLBY_3DMAPOBJ_MDL_BOXCheck( const GFL_G3D_OBJ* cp_mdl, const GFL_G3D_OBJSTATUS* cp_obj )
 {
 	VecFx32 matrix;
 	VecFx32 scale;
@@ -158,7 +159,6 @@ BOOL WFLBY_3DMAPOBJ_MDL_BOXCheck( const D3DOBJ_MDL* cp_mdl, const D3DOBJ* cp_obj
 	u32 rot_x;
 	u32 rot_y;
 	u32 rot_z;
-
 
 	D3DOBJ_GetMatrix( cp_obj,  &matrix.x, &matrix.y, &matrix.z );
 	D3DOBJ_GetScale( cp_obj,  &scale.x, &scale.y, &scale.z );
@@ -181,4 +181,4 @@ BOOL WFLBY_3DMAPOBJ_MDL_BOXCheck( const D3DOBJ_MDL* cp_mdl, const D3DOBJ* cp_obj
 				&mtx,
 				&scale );
 }
-		
+#endif

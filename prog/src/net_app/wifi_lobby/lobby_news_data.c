@@ -855,7 +855,7 @@ BOOL NEWS_DSET_GetTopicData( const NEWS_DATA* cp_wk, const WFLBY_VIPFLAG* cp_vip
 	p_obj = cp_wk->topic.topic_top.p_next;
 
 	// メッセージデータ初期化
-	p_msgman	= GFL_MSG_Create(MSGMAN_TYPE_DIRECT,ARCID_MESSAGE,NARC_message_wflby_news_dat,heapID );
+	p_msgman	= GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_MESSAGE,NARC_message_wflby_news_dat,heapID );
 	p_wordset	= WORDSET_Create( heapID );
 
 	// 文字列作成

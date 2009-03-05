@@ -102,6 +102,15 @@ static const u8	sc_WFLBY_3DOBJ_ANM_WAY[ WF2DMAP_WAY_NUM ] = {
 */
 //-----------------------------------------------------------------------------
 
+typedef struct BOUNDING_BOX_tag{
+	fx16 w;
+	fx16 h;
+	fx16 d;
+	int ScaleW;
+	int ScaleH;
+	int ScaleD;
+}BOUNDING_BOX;
+
 //-------------------------------------
 ///	人物３Dオブジェクトデータ
 //=====================================
@@ -116,7 +125,7 @@ typedef struct {
 ///	アクターで表示できない３Dオブジェリソース
 //=====================================
 typedef struct {
-	D3DOBJ_MDL			mdlres;
+	GFL_G3D_OBJ			mdlres;
 	u32					alpha;
 } WFLBY_3DMDLRES;
 
@@ -136,7 +145,7 @@ typedef struct _WFLBY_3DOBJWK{
 	
 	const WF2DMAP_OBJWK*	cp_objwk;	// 参照オブジェクトデータ
 	BLACT_WORK_PTR			p_act;		// 描画アクター
-	D3DOBJ					shadow;		// 影モデル
+	GFL_G3D_OBJSTATUS					shadow;		// 影モデル
 
 	u8	lastst;			// 1つ前の状態
 	u8	lastanm;		// 1つ前の保存アニメ(BLACT アニメオフセット)
@@ -372,7 +381,7 @@ static void WFLBY_3DMDL_RES_Load( WFLBY_3DMDLRES* p_wk, ARCHANDLE* p_handle, u32
 static void WFLBY_3DMDL_RES_Delete( WFLBY_3DMDLRES* p_wk );
 static void WFLBY_3DMDL_RES_SetAlpha( WFLBY_3DMDLRES* p_wk, u32 alpha );
 static u32 WFLBY_3DMDL_RES_GetAlpha( const WFLBY_3DMDLRES* cp_wk );
-static void WFLBY_3DMDL_RES_InitD3DOBJ( WFLBY_3DMDLRES* p_wk, D3DOBJ* p_obj );
+static void WFLBY_3DMDL_RES_InitD3DOBJ( WFLBY_3DMDLRES* p_wk, GFL_G3D_OBJSTATUS* p_obj );
 
 
 //-------------------------------------
@@ -396,6 +405,9 @@ static void WFLBY_3DOBJWK_CheckCulling( WFLBY_3DOBJWK* p_wk );
 static void WFLBY_3DOBJWK_ContBlactDrawFlag( WFLBY_3DOBJWK* p_wk );
 static void WFLBY_3DOBJWK_CallBack_BlactDraw( BLACT_WORK_PTR p_act ,void* p_work );
 static BOOL WFLBY_3DOBJWK_CheckCullingBlact( BLACT_WORK_PTR p_act );
+
+static u32	BB_CullingCheck3DModelNonResQuick(	const VecFx32* trans_p, const BOUNDING_BOX *inBox);
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1111,7 +1123,7 @@ static void WFLBY_3DMDL_RES_Load( WFLBY_3DMDLRES* p_wk, ARCHANDLE* p_handle, u32
 	//  モデルデータ読み込み＆テクスチャ転送＆テクスチャ実データ破棄
 	WFLBY_3DMAPOBJ_TEX_LoatCutTex( &p_mdl, p_handle, dataidx, gheapID );
 
-	// モデルのリソースをD3DOBJ_MDLの形に形成
+	// モデルのリソースをGFL_G3D_OBJの形に形成
 	p_wk->mdlres.pResMdl	= p_mdl;
 	p_wk->mdlres.pModelSet	= NNS_G3dGetMdlSet( p_wk->mdlres.pResMdl );
 	p_wk->mdlres.pModel		= NNS_G3dGetMdlByIdx( p_wk->mdlres.pModelSet, 0 );
@@ -1170,7 +1182,7 @@ static u32 WFLBY_3DMDL_RES_GetAlpha( const WFLBY_3DMDLRES* cp_wk )
  *	@param	p_obj		表示オブジェクト
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DMDL_RES_InitD3DOBJ( WFLBY_3DMDLRES* p_wk, D3DOBJ* p_obj )
+static void WFLBY_3DMDL_RES_InitD3DOBJ( WFLBY_3DMDLRES* p_wk, GFL_G3D_OBJSTATUS* p_obj )
 {
 	D3DOBJ_Init( p_obj, &p_wk->mdlres );
 }
@@ -1684,5 +1696,144 @@ static BOOL WFLBY_3DOBJWK_CheckCullingBlact( BLACT_WORK_PTR p_act )
 		return FALSE;
 	}
 	return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	バウンディングボックスセット
+ *
+ *@param	x		基準X座標
+ *@param	y		基準Y座標
+ *@param	z		基準Z座標
+ *@param	width	幅
+ *@param	height	高さ
+ *@param	depth	奥行き
+ *@param	outBox	ボックステスト用パラメータ格納アドレス
+ *
+ *@return	なし 
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SetBoxSize( const fx16 x,
+						const fx16 y,
+						const fx16 z,
+						const fx16 width,
+						const fx16 height,
+						const fx16 depth,
+						GXBoxTestParam *outBox)
+{
+	//
+	// パラメータをセット
+	//
+	outBox->x		= x;				// 左上のｘ座標	
+	outBox->y		= y;				// 左上のｙ座標
+	outBox->z		= z;				// 左上のｚ座標
+	outBox->width	= width;			// 四角の幅
+	outBox->height	= height;			// 四角の高さ
+	outBox->depth	= depth;			// 立方体の奥行き
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	ボックスチェック
+ *
+ *@param	inBox	ボックステスト用パラメータへのポインタ
+ *
+ *@return	u32		0以外の値であれば、ボックスの一部または全部が視体積内
+ *					0であれば、ボックスの全てが視体積外 
+ *
+ */
+//-----------------------------------------------------------------------------
+static u32 CheckBoundingBox( const GXBoxTestParam	*inBox )
+{
+	s32 result = 1;			// 結果
+
+	// ポリゴン設定を行う
+	NNS_G3dGePolygonAttr(
+			GX_LIGHTMASK_0,         
+			GX_POLYGONMODE_MODULATE,
+			GX_CULL_NONE,           
+			0,                      
+			0,                      
+			GX_POLYGON_ATTR_MISC_FAR_CLIPPING
+			| GX_POLYGON_ATTR_MISC_DISP_1DOT
+			);
+
+	//ポリゴンアトリビュート反映 
+	NNS_G3dGeBegin( GX_BEGIN_TRIANGLES );							
+	NNS_G3dGeEnd();	
+
+	//
+	// ボックステスト
+	//
+	NNS_G3dGeBoxTest( inBox );
+
+	//
+	// 同期を取る
+	//
+	NNS_G3dGeFlushBuffer();
+
+	//
+	// 今設定されているボックスが視体積内かチェック
+	//
+	while ( G3X_GetBoxTestResult(&result) != 0 ) ;
+
+	return result;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	カリングチェック(リソースを使用しない)
+ *
+ *@param	trans_p			平行移動値
+ *@param	rot_p			回転行列
+ *@param	scale_p			拡縮値
+ *
+ *@return	u32			0以外の値であれば、ボックスの一部または全部が視体積内
+ *						0であれば、ボックスの全てが視体積外
+ *
+ */
+//-----------------------------------------------------------------------------
+static u32	BB_CullingCheck3DModelNonResQuick(	const VecFx32* trans_p, const BOUNDING_BOX *inBox)
+{
+	u32 check_ret;		// チェックの戻り値用
+	GXBoxTestParam bounding_box;
+
+	SetBoxSize( 
+			0,
+			0,
+			0,
+			inBox->w,	// 幅
+			inBox->h,	// 高さ
+			inBox->d,	// 奥行き
+			&bounding_box);
+
+	//
+	// 座標をセット
+	//
+	// 位置設定
+	NNS_G3dGlbSetBaseTrans(trans_p);
+	// 角度設定
+	///NNS_G3dGlbSetBaseRot(rot_p);
+	// スケール設定
+	///NNS_G3dGlbSetBaseScale(scale_p);
+	
+	NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
+
+	// 上のボックステストの箱の値をposScaleでかけることにより本当の値になる
+	NNS_G3dGePushMtx();
+	NNS_G3dGeScale( inBox->ScaleW*FX32_ONE,
+					inBox->ScaleH*FX32_ONE,
+					inBox->ScaleD*FX32_ONE );
+
+	check_ret = CheckBoundingBox(&bounding_box);	// チェック
+
+	NNS_G3dGePopMtx(1);
+	
+	return check_ret;
+
 }
 

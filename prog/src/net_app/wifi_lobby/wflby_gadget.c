@@ -719,7 +719,7 @@ typedef struct {
 	u8	seq;
 	WFLBY_GADGET_MV_STRAIGHT	st[WFLBY_GADGET_ONPU_OBJ_NUM];
 	WFLBY_GADGET_MV_SINCURVE	cv[WFLBY_GADGET_ONPU_OBJ_NUM];
-	D3DOBJ*	p_obj[WFLBY_GADGET_ONPU_OBJ_NUM];
+	GFL_G3D_OBJSTATUS*	p_obj[WFLBY_GADGET_ONPU_OBJ_NUM];
 	const WFLBY_3DPERSON* cp_person;
 } WFLBY_GADGET_ONPU;
 
@@ -816,7 +816,7 @@ typedef struct {
 	///	それぞれの初期化関数で設定するデータ
 	//=====================================
 	// 描画オブジェ
-	D3DOBJ		obj[ WFLBY_GADGET_OBJ_MAX ];
+	GFL_G3D_OBJSTATUS		obj[ WFLBY_GADGET_OBJ_MAX ];
 	// 動作中のオブジェデータ
 	const WFLBY_GADGET_RES*	cp_objres[ WFLBY_GADGET_OBJ_MAX ];
 	// アニメーションフレーム
@@ -840,7 +840,7 @@ typedef struct _WFLBY_GADGET{
 
 
 	// 各リソース
-	D3DOBJ_MDL	mdl[ WFLBY_GADGET_MDL_NUM ];		// モデル
+	GFL_G3D_OBJ	mdl[ WFLBY_GADGET_MDL_NUM ];		// モデル
 	void*		p_texres[ WFLBY_GADGET_TEX_NUM ];	// テクスチャ
 	D3DOBJ_ANM	anm[ WFLBY_GADGET_ANM_NUM ];		// アニメ
 
@@ -1390,7 +1390,7 @@ static void WFLBY_GADGET_ONPU_Cont_Init( WFLBY_GADGET_OBJWK* p_wk, const WFLBY_G
 static WFLBY_GADGET_ONPU_MAIN_RET WFLBY_GADGET_ONPU_Cont_Main( WFLBY_GADGET_OBJWK* p_wk, u32 count );
 
 // 音符ここの動き
-static void WFLBY_GADGET_OnpuMove_Init( WFLBY_GADGET_ONPU* p_wk, D3DOBJ* p_obj0, D3DOBJ* p_obj1, D3DOBJ* p_obj2, D3DOBJ* p_obj3, const WFLBY_3DPERSON* cp_person, u32 anm_type );
+static void WFLBY_GADGET_OnpuMove_Init( WFLBY_GADGET_ONPU* p_wk, GFL_G3D_OBJSTATUS* p_obj0, GFL_G3D_OBJSTATUS* p_obj1, GFL_G3D_OBJSTATUS* p_obj2, GFL_G3D_OBJSTATUS* p_obj3, const WFLBY_3DPERSON* cp_person, u32 anm_type );
 static void WFLBY_GADGET_OnpuMove_Start( WFLBY_GADGET_ONPU* p_wk, u32 num );
 static BOOL WFLBY_GADGET_OnpuMove_Main( WFLBY_GADGET_ONPU* p_wk );
 //ベル
@@ -2140,7 +2140,7 @@ static BOOL WFLBY_GADGET_OBJ_CheckRes( const WFLBY_GADGET_OBJ* cp_wk, u32 idx )
  *
  *	@param	p_sys		システムワーク
  *	@param	p_wk		ワーク
- *	@param	idx			D3DOBJ　インデックス
+ *	@param	idx			GFL_G3D_OBJSTATUS　インデックス
  *	@param	cp_resdata	リソース構成データ
  */
 //-----------------------------------------------------------------------------
@@ -2168,7 +2168,7 @@ static void WFLBY_GADGET_OBJ_SetRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	１D3DOBJの描画処理
+ *	@brief	１GFL_G3D_OBJSTATUSの描画処理
  *
  *	@param	p_sys	システムワーク
  *	@param	p_wk	ワーク
@@ -2179,7 +2179,7 @@ static void WFLBY_GADGET_OBJ_DrawRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 {
 	BOOL result;
 	void* p_tex;
-	D3DOBJ_MDL* p_mdl;
+	GFL_G3D_OBJ* p_mdl;
 	D3DOBJ_ANM* p_anm;
 	int i;
 
@@ -4393,7 +4393,7 @@ static WFLBY_GADGET_ONPU_MAIN_RET WFLBY_GADGET_ONPU_Cont_Main( WFLBY_GADGET_OBJW
  *	@param	anm_type	アニメタイプ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_GADGET_OnpuMove_Init( WFLBY_GADGET_ONPU* p_wk, D3DOBJ* p_obj0, D3DOBJ* p_obj1, D3DOBJ* p_obj2, D3DOBJ* p_obj3, const WFLBY_3DPERSON* cp_person, u32 anm_type )
+static void WFLBY_GADGET_OnpuMove_Init( WFLBY_GADGET_ONPU* p_wk, GFL_G3D_OBJSTATUS* p_obj0, GFL_G3D_OBJSTATUS* p_obj1, GFL_G3D_OBJSTATUS* p_obj2, GFL_G3D_OBJSTATUS* p_obj3, const WFLBY_3DPERSON* cp_person, u32 anm_type )
 {
 	GF_ASSERT( anm_type < WFLBY_GADGET_ONPU_MOVE_NUM );
 

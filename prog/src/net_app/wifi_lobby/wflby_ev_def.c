@@ -1299,7 +1299,7 @@ static void WFLBY_EV_DEF_DONDON_Start( WFLBY_EV_DEF_DONDON* p_wk )
 	p_wk->y			= 0;
 	p_wk->count		= 0;
 	p_wk->seq		= WFLBY_EV_DEF_DONDON_SEQ_WAIT;
-	p_wk->next_wait	= gf_mtRand() % WFLBY_EV_DEF_DONDON_NEXT_WAIT_MAX;
+	p_wk->next_wait	= GFUser_GetPublicRand(WFLBY_EV_DEF_DONDON_NEXT_WAIT_MAX);
 	p_wk->next_ok	= TRUE;
 }
 	
@@ -1340,7 +1340,7 @@ static fx32 WFLBY_EV_DEF_DONDON_Main( WFLBY_EV_DEF_DONDON* p_wk )
 				// ë“Çøéûä‘ê›íË
 				p_wk->count		= 0;
 				p_wk->seq		= WFLBY_EV_DEF_DONDON_SEQ_WAIT;
-				p_wk->next_wait	= gf_mtRand() % WFLBY_EV_DEF_DONDON_NEXT_WAIT_MAX;
+				p_wk->next_wait	= GFUser_GetPublicRand(WFLBY_EV_DEF_DONDON_NEXT_WAIT_MAX);
 
 			}else{
 				// èIóπ

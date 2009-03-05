@@ -4312,7 +4312,7 @@ static void WFLBY_EV_TALK_WK_InitBmpListRandom( WFLBY_EV_TALK_BMPLIST* p_wk, WFL
 				// 
 				// èdï°ÇµÇ»Ç¢çÄñ⁄Ç™Ç≈ÇÈÇ‹Ç≈
 				do{
-					sel_msg		= gf_mtRand() % allnum;
+					sel_msg		= GFUser_GetPublicRand(allnum);
 					msg_param	= sel_msg;
 					result		= WFLBY_ROOM_LISTWIN_CheckBmpListParam( p_rmwk, msg_param );
 				}while( result == TRUE );
@@ -4324,7 +4324,7 @@ static void WFLBY_EV_TALK_WK_InitBmpListRandom( WFLBY_EV_TALK_BMPLIST* p_wk, WFL
 			// 
 			// èdï°ÇµÇ»Ç¢çÄñ⁄Ç™Ç≈ÇÈÇ‹Ç≈
 			do{
-				sel_msg		= gf_mtRand() % allnum;
+				sel_msg		= GFUser_GetPublicRand(allnum);
 				msg_param	= sel_msg;
 				result		= WFLBY_ROOM_LISTWIN_CheckBmpListParam( p_rmwk, msg_param );
 			}while( result == TRUE );

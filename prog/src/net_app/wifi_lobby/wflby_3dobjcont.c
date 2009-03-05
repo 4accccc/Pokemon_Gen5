@@ -13,9 +13,9 @@
 
 #include <gflib.h>
 
-#include "net_app/wifi_2dmap/wf2dmap_obj.h"
-#include "net_app/wifi_2dmap/wf2dmap_cmdq.h"
-#include "net_app/wifi_2dmap/wf2dmap_judge.h"
+#include "net_app/wifi2dmap/wf2dmap_obj.h"
+#include "net_app/wifi2dmap/wf2dmap_cmdq.h"
+#include "net_app/wifi2dmap/wf2dmap_judge.h"
 
 #include "wflby_def.h"
 #include "wflby_3dobjcont.h"
@@ -1399,7 +1399,7 @@ static void WFLBY_3DOBJCONT_REQCMD_Set( WFLBY_3DOBJCONT* p_sys, s32 cmd, s32 way
 static u8 WFLBY_3DOBJCONT_GetRndTbl( const u8* cp_tbl, u32 tblnum )
 {
 	int idx;
-	idx = gf_mtRand() % tblnum;
+	idx = GFUser_GetPublicRand(tblnum);
 	return cp_tbl[idx];
 }
 
