@@ -32,6 +32,7 @@ gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
 imdres:=$(wildcard *.imd)
+spares:=$(wildcard *.spa)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -47,7 +48,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .nsbtx .imd
 
 .ncl.NCLR:
-	g2dcvtr $<
+	g2dcvtr $< -pcm
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
@@ -80,7 +81,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(imdobj)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(imdobj) $(spares)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif

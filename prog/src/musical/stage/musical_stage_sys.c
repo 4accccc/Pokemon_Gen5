@@ -28,6 +28,7 @@
 enum	//メインシーケンス
 {
 	STA_SEQ_INIT_ACTING,	//ステージ演技部分
+	STA_SEQ_INIT2_ACTING,	//エフェクトの読み込み用
 	STA_SEQ_LOOP_ACTING,
 	STA_SEQ_TERM_ACTING,
 };
@@ -111,6 +112,11 @@ static GFL_PROC_RESULT MusicalStageProc_Main( GFL_PROC * proc, int * seq , void 
 	{
 	case STA_SEQ_INIT_ACTING:
 		work->actWork = STA_ACT_InitActing( work->actInitWork );
+		*seq = STA_SEQ_INIT2_ACTING;
+		break;
+		
+	case STA_SEQ_INIT2_ACTING:
+//		STA_ACT_InitActing_2nd( work->actWork );
 		*seq = STA_SEQ_LOOP_ACTING;
 		break;
 		

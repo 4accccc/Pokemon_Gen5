@@ -19,6 +19,7 @@
 #include "test/ariizumi/ari_debug.h"
 #include "musical/mus_poke_draw.h"
 #include "musical/mus_item_draw.h"
+#include "musical/musical_camera_def.h"
 #include "dup_fitting.h"
 #include "dup_fitting_item.h"
 
@@ -49,7 +50,7 @@ static const int FIT_POKE_POS_X = 128;
 static const int FIT_POKE_POS_Y = 112;
 static const fx32 FIT_POKE_POS_X_FX = FIT_POS_X( FIT_POKE_POS_X );
 static const fx32 FIT_POKE_POS_Y_FX = FIT_POS_Y( FIT_POKE_POS_Y );
-static const fx32 FIT_POKE_POS_Z_FX = FX32_CONST(-40000.0f);
+static const fx32 FIT_POKE_POS_Z_FX = FX32_CONST(40.0f);
 
 //アイテム表示個数
 static const u16 ITEM_LIST_NUM = 14;
@@ -86,17 +87,19 @@ static const u16 LIST_ROTATE_LIMIT = DEG_TO_U16(90);
 static const u16 LIST_ONE_ANGLE = 0x10000/ITEM_LIST_NUM;
 static const u32 LIST_FULL_ANGLE = LIST_ONE_ANGLE*MUSICAL_ITEM_MAX;
 
+//リストのZ座標
+static const fx32 LIST_DEPTH_BASE = FX32_CONST( 20.0f );
 
 //フィールド(置いてある)アイテム系
-static const fx32 FIELD_ITEM_DEPTH = FX32_CONST(-10);	//リストは0～8
+static const fx32 FIELD_ITEM_DEPTH = FX32_CONST(10.0f);	//リストは0～8
 
 //持ってるアイテム系
-static const fx32 HOLD_ITEM_DEPTH = FX32_CONST(10.0f);
-static const fx32 RETURN_LIST_ITEM_DEPTH = FX32_CONST(9.0f);
+static const fx32 HOLD_ITEM_DEPTH = FX32_CONST(60.0f);
+static const fx32 RETURN_LIST_ITEM_DEPTH = FX32_CONST(30.0f);
 
 //装備アイテム系
 static const u16 HOLD_ITEM_SNAP_LENGTH = 12;
-static const fx32 EQUIP_ITEM_DEPTH = FX32_CONST(8.5f);
+static const fx32 EQUIP_ITEM_DEPTH = FX32_CONST(50.5f);
 
 
 //リストに戻るアニメーション
@@ -427,11 +430,9 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 	}
 	
 	{	//3D系の設定
-//		static const VecFx32 cam_pos = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 7.8f ), FX_F32_TO_FX32( 21.0f ) };
-//		static const VecFx32 cam_target = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 2.6f ), FX_F32_TO_FX32( 0.0f ) };
-		static const VecFx32 cam_pos = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 101.0f ) };
-		static const VecFx32 cam_target = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 0.0f ) };
-		static const VecFx32 cam_up = { 0, FX32_ONE, 0 };
+		static const VecFx32 cam_pos = MUSICAL_CAMERA_POS;
+		static const VecFx32 cam_target = MUSICAL_CAMERA_TRG;
+		static const VecFx32 cam_up = MUSICAL_CAMERA_UP;
 		//エッジマーキングカラー
 		static	const	GXRgb stage_edge_color_table[8]=
 			{ GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
@@ -458,8 +459,8 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 											 0,
 											 0,
 											 FX32_ONE*16.0f,
-											 FX32_ONE,
-											 FX32_ONE * 180,
+											 MUSICAL_CAMERA_NEAR,
+											 MUSICAL_CAMERA_FAR,
 											 NULL,
 											 &cam_pos,
 											 &cam_up,
@@ -638,7 +639,7 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
 		dispPos.y = F32_CONST(posY);
 		pos.x = FIT_POS_X_FX(posX);
 		pos.y = FIT_POS_Y_FX(posY);
-		pos.z = 0x8000-depth;
+		pos.z = LIST_DEPTH_BASE + (0x8000-depth);
 	
 		MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , itemDrawWork , &pos );
 		DUP_FIT_ITEM_SetPosition( item , &dispPos );

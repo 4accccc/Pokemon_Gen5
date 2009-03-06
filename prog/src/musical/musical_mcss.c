@@ -18,6 +18,7 @@
 #include "musical_mcss_def.h"
 #include "musical_local.h"
 #include "test/ariizumi/ari_debug.h"
+#include "musical/musical_camera_def.h"
 
 #define	MUS_MCSS_DEFAULT_SHIFT		( FX32_SHIFT - 4 )		//ポリゴン１辺の基準の長さにするシフト値
 #define	MUS_MCSS_DEFAULT_LINE		( 1 << MUS_MCSS_DEFAULT_SHIFT )	//ポリゴン１辺の基準の長さ
@@ -231,11 +232,20 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 	else{
 		// カメラ行列を設定します。
 		// 単位行列と等価
+/*
 		VecFx32 Eye    = { 0, 0, 0 };          // Eye position
 		VecFx32 vUp    = { 0, FX32_ONE, 0 };  // Up
 		VecFx32 at     = { 0, 0, -FX32_ONE }; // Viewpoint
 
 		G3_LookAt( &Eye, &vUp, &at, NULL );
+*/
+
+		static const VecFx32 cam_pos = MUSICAL_CAMERA_POS;
+		static const VecFx32 cam_target = MUSICAL_CAMERA_TRG;
+		static const VecFx32 cam_up = MUSICAL_CAMERA_UP;
+
+		G3_LookAt( &cam_pos, &cam_up, &cam_target, NULL );
+
 	}
 
 	//ビルボード回転行列を求める
@@ -294,6 +304,8 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 				anim_pos.y = MUS_MCSS_CONST( -anim_SRT_mc.py );
 			}
 			else{
+				
+				
 				MtxFx44	mtx,vp;
 				fx32	w;
 
@@ -316,7 +328,6 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 
 				MTX_Copy43To44( NNS_G3dGlbGetCameraMtx(), &mtx );
 				MTX_Concat44( &mtx, NNS_G3dGlbGetProjectionMtx(), &mtx );
-
 				MTX_MultVec44( &pos, &mtx, &pos, &w );
 
 				pos.x = FX_Div( pos.x, w );
@@ -327,6 +338,8 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 				anim_pos.x = FX32_CONST( anim_SRT_mc.px );
 				anim_pos.y = FX32_CONST( -anim_SRT_mc.py );
 			}
+			//Z値は戻す！
+			pos.z = mcss->pos.z;
 
 			//前もって、不変なマルチセルデータをカレント行列にかけておく
 			G3_Translate( pos.x, pos.y, pos.z );
@@ -340,7 +353,7 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 			G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->scale.y ), FX32_ONE );
 
 			G3_StoreMtx( MUS_MCSS_NORMAL_MTX );
-
+/*
 			//影描画用の行列生成
 			G3_LookAt( NNS_G3dGlbGetCameraPos(), NNS_G3dGlbGetCameraUp(), NNS_G3dGlbGetCameraTarget(), NULL );
 
@@ -354,7 +367,7 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 			G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->shadow_scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->shadow_scale.y ), FX32_ONE );
 
 			G3_StoreMtx( MUS_MCSS_SHADOW_MTX );
-
+*/
 			MUS_MCSS_MaterialSetup();
 
 			G3_TexImageParam(image_p->attr.fmt,
@@ -531,14 +544,14 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 	VecFx32	pos;
 
 	if( mcss_ortho_mode ){
-		G3_OrthoW( FX32_CONST( 96 ),
-				   -FX32_CONST( 96 ),
-				   -FX32_CONST( 128 ),
-				   FX32_CONST( 128 ),
-				   FX32_ONE * -1024,
-				   FX32_ONE * 1024,
-				   FX32_ONE,
-				   NULL );
+		G3_OrthoW(	FX32_CONST( 96 ),
+					-FX32_CONST( 96 ),
+					-FX32_CONST( 128 ),
+					FX32_CONST( 128 ),
+					MUSICAL_CAMERA_NEAR,
+					MUSICAL_CAMERA_FAR,
+					FX32_ONE,
+					NULL );
 		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
 	}
 
@@ -582,6 +595,7 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 	G3_MtxMode( GX_MTXMODE_PROJECTION );
 	G3_RestoreMtx( 0 );
 	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
+/*
 	G3_RestoreMtx( MUS_MCSS_SHADOW_MTX );
 
 	G3_TexPlttBase(mus_shadow_palette.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
@@ -614,6 +628,7 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 	G3_TexCoord( tex_s,				tex_t + scale_y );
 	G3_Vtx( 0, -MUS_MCSS_DEFAULT_LINE, 0 );
 	G3_End();
+*/
 
 	if( mcss_ortho_mode == 0 ){
 		*pos_z_default -= MUS_MCSS_DEFAULT_Z;
@@ -621,7 +636,9 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 	else{
 		*pos_z_default -= MUS_MCSS_DEFAULT_Z_ORTHO;
 	}
+
 }
+
 
 //--------------------------------------------------------------------------
 /**

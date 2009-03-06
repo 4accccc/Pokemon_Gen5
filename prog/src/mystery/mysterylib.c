@@ -406,8 +406,8 @@ void MysteryLib_InitClactSystem(void)
 
 	
 	GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
-	cellSysInitData.oamst_main = 1; //通信アイコンの分
-	cellSysInitData.oamnum_main = 64-1;
+	cellSysInitData.oamst_main = 4; //通信アイコンの分(4の倍数！
+	cellSysInitData.oamnum_main = 64-4;
 	cellSysInitData.oamst_sub = 16; 
 	cellSysInitData.oamnum_sub = 128-16;
 	

@@ -104,10 +104,6 @@ SRCS	+=		$(SOUNDSRC) \
 				system/pms_data.c \
 				system/pms_word.c \
 				musical/musical_system.c \
-				musical/musical_mcss.c \
-				musical/dressup/musical_dressup_sys.c \
-				musical/stage/musical_stage_sys.c \
-				musical/stage/sta_acting.c \
 				infowin/infowin.c \
 				system/actor_tool.c \
 				system/bmp_oam.c \
@@ -475,7 +471,14 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
 				musical/mus_poke_data.c \
 				musical/mus_item_draw.c \
 				musical/dressup/dup_fitting.c \
-				musical/dressup/dup_fitting_item.c
+				musical/dressup/dup_fitting_item.c \
+				musical/musical_mcss.c \
+				musical/dressup/musical_dressup_sys.c \
+				musical/stage/musical_stage_sys.c \
+				musical/stage/sta_acting.c \
+				musical/stage/sta_act_effect.c \
+				musical/stage/sta_act_poke.c \
+				musical/stage/sta_act_obj.c
 
 #ƒpƒŒƒX
 #===> SRCS_OVERLAY_DEV_WIFI
