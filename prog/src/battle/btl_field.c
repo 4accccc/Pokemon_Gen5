@@ -37,6 +37,9 @@ static struct {
 
 
 
+
+
+
 void BTL_FIELD_Init( BtlWeather weather )
 {
 	Work.weather = weather;
@@ -60,6 +63,15 @@ void BTL_FIELD_ClearWeather( void )
 	Work.weatherTurn = 0;
 }
 
+//=============================================================================================
+/**
+ * 天候によってダメージが増加・減少するワザの増減率を返す
+ *
+ * @param   waza		ワザID
+ *
+ * @retval  fx32		増減率（パーセンテージ）
+ */
+//=============================================================================================
 fx32 BTL_FIELD_GetWeatherDmgRatio( WazaID waza )
 {
 	switch( Work.weather ){

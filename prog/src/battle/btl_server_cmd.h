@@ -44,6 +44,7 @@ typedef enum {
 	SC_ACT_DEAD,				///< 【ポケモンひんし】[ ClientID ]
 	SC_ACT_MEMBER_OUT,	///< 【ポケモン退場】[ ClientID, memberIdx ]
 	SC_ACT_MEMBER_IN,		///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
+	SC_ACT_SICK_SET,		///<  状態異常をくらった
 	SC_ACT_SICK_DMG,		///<  アクション／ターンチェック時の状態異常ダメージ
 	SC_ACT_WEATHER_DMG,	///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
 	SC_ACT_WEATHER_END,	///< ターンチェックで天候終了
@@ -228,6 +229,11 @@ static inline void SCQUE_PUT_ACT_WeatherDamage( BTL_SERVER_CMD_QUE* que, u8 weat
 static inline void SCQUE_PUT_ACT_WeatherEnd( BTL_SERVER_CMD_QUE* que, u8 weather )
 {
 	SCQUE_PUT_Common( que, SC_ACT_WEATHER_END, weather );
+}
+
+static inline void SCQUE_PUT_ACT_SickSet( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 sick )
+{
+	SCQUE_PUT_Common( que, SC_ACT_SICK_DMG, pokeID, sick );
 }
 
 static inline void SCQUE_PUT_SickDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 sick, u8 damage )

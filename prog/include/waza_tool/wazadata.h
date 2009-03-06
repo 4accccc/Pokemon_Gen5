@@ -186,7 +186,7 @@ extern WazaTarget WAZADATA_GetTarget( WazaID id );
 extern PokeSick WAZADATA_GetSick( WazaID id );
 
 // “¯ãB‚±‚¿‚ç‚Í’Ç‰ÁŒø‰Ê‚ÌŠm—¦‚ª•Ô‚éB
-extern u8  WAZADATA_GetSickRatio( WazaID id );
+extern u32 WAZADATA_GetSickPer( WazaID id );
 
 
 /*-----------------------------------------------------------------

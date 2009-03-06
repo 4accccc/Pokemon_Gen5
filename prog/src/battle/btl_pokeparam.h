@@ -23,8 +23,6 @@
 //--------------------------------------------------------------
 typedef struct _BTL_POKEPARAM	BTL_POKEPARAM;
 
-
-
 //--------------------------------------------------------------
 /**
  *	Žæ“¾‚Å‚«‚é’l
@@ -76,6 +74,7 @@ extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType 
 extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
 extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetPokeSick( BTL_POKEPARAM* pp, PokeSick sick, u8 turn );
+extern void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, u8 turn );
 extern BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
 

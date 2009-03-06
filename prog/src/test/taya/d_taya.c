@@ -870,7 +870,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 
 		#ifdef DEBUG_ONLY_FOR_taya
 			setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
-			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_HITOKAGE, MONSNO_BAKUUDA, MONSNO_SUTAAMII, 0 );
+			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_HITOKAGE, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
 			{
 				// ‚Ç‚­‚É‚µ‚Ä‚İ‚é
 				POKEMON_PARAM* pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );

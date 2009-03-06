@@ -15,6 +15,7 @@
 
 #include "btl_common.h"
 #include "btl_server.h"
+#include "btl_field.h"
 #include "btl_client.h"
 #include "btl_adapter.h"
 #include "btl_pokeparam.h"
@@ -27,24 +28,40 @@
 
 
 
-
+/*--------------------------------------------------------------------------*/
+/* Consts                                                                   */
+/*--------------------------------------------------------------------------*/
 enum {
 	PARENT_HEAP_ID = GFL_HEAPID_APP,
 
 	BTL_COMMITMENT_POKE_MAX = BTL_CLIENT_MAX * TEMOTI_POKEMAX,
 };
 
-
-
+/*--------------------------------------------------------------------------*/
+/* Typedefs                                                                 */
+/*--------------------------------------------------------------------------*/
 typedef BOOL (*pMainLoop)(BTL_MAIN_MODULE*);
+
+
+/*--------------------------------------------------------------------------*/
+/* Tables                                                                   */
+/*--------------------------------------------------------------------------*/
+static const u8 ClientBasePokeID[] = {
+	0,									// Client 0 のポケモンID 開始値
+	TEMOTI_POKEMAX*2,		// Client 1 のポケモンID 開始値
+	TEMOTI_POKEMAX*1,		// Client 2 のポケモンID 開始値
+	TEMOTI_POKEMAX*3,		// Client 3 のポケモンID 開始値
+};
+
+/*--------------------------------------------------------------------------*/
+/* Prototypes                                                               */
+/*--------------------------------------------------------------------------*/
 
 
 struct _BTL_PARTY {
 	BTL_POKEPARAM*  member[ TEMOTI_POKEMAX ];
 	u8  memberCount;
 };
-
-
 
 struct _BTL_MAIN_MODULE {
 
@@ -105,6 +122,19 @@ static void BTL_PARTY_Cleanup( BTL_PARTY* party );
 static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member );
 
 
+//--------------------------------------------------------------
+/**
+ *	Proc Data
+ */
+//--------------------------------------------------------------
+const GFL_PROC_DATA BtlProcData = {
+	BTL_PROC_Init,
+	BTL_PROC_Main,
+	BTL_PROC_Quit,
+};
+
+
+
 static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	switch( *seq ){
@@ -125,6 +155,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
 			BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
 			BTL_ADAPTERSYS_Init( setup_param->commMode );
+			BTL_FIELD_Init( BTL_WEATHER_SHINE );
 
 			setSubProcForSetup( &wk->subProc, wk, setup_param );
 
@@ -297,11 +328,11 @@ static BOOL setup_alone_single( int* seq, void* work )
 	const BATTLE_SETUP_PARAM* sp = wk->setupParam;
 
 	// バトル用ポケモンパラメータ＆パーティデータを生成
-	setupPokeParams( &wk->party[0], &wk->pokeParam[0], sp->partyPlayer, 0 );
-	setupPokeParams( &wk->party[1], &wk->pokeParam[TEMOTI_POKEMAX], sp->partyEnemy1, TEMOTI_POKEMAX );
+	setupPokeParams( &wk->party[0], &wk->pokeParam[0], sp->partyPlayer, ClientBasePokeID[0] );
+	setupPokeParams( &wk->party[1], &wk->pokeParam[0], sp->partyEnemy1, ClientBasePokeID[1] );
 
-	setupPokeParams( &wk->partyForServerCalc[0], &wk->pokeParamForServerCalc[0], sp->partyPlayer, 0 );
-	setupPokeParams( &wk->partyForServerCalc[1], &wk->pokeParamForServerCalc[TEMOTI_POKEMAX], sp->partyEnemy1, TEMOTI_POKEMAX );
+	setupPokeParams( &wk->partyForServerCalc[0], &wk->pokeParamForServerCalc[0], sp->partyPlayer, ClientBasePokeID[0] );
+	setupPokeParams( &wk->partyForServerCalc[1], &wk->pokeParamForServerCalc[0], sp->partyEnemy1, ClientBasePokeID[1] );
 
 	// Server 作成
 	wk->server = BTL_SERVER_Create( wk, wk->heapID );
@@ -430,16 +461,16 @@ static BOOL setup_comm_single( int* seq, void* work )
 		if( BTL_NET_IsCompleteNotifyPartyData() )
 		{
 			BTL_Printf("パーティデータ相互受信できました。\n");
-			setupPokeParams( &wk->party[0], &wk->pokeParam[0], BTL_NET_GetPartyData(0), 0 );
-			setupPokeParams( &wk->party[1], &wk->pokeParam[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
+			setupPokeParams( &wk->party[0], &wk->pokeParam[0], BTL_NET_GetPartyData(0), ClientBasePokeID[0] );
+			setupPokeParams( &wk->party[1], &wk->pokeParam[0], BTL_NET_GetPartyData(1), ClientBasePokeID[1] );
 			(*seq)++;
 		}
 		break;
 	case 4:
 		if( BTL_NET_IsServer() )
 		{
-			setupPokeParams( &wk->partyForServerCalc[0], &wk->pokeParamForServerCalc[0], BTL_NET_GetPartyData(0), 0 );
-			setupPokeParams( &wk->partyForServerCalc[1], &wk->pokeParamForServerCalc[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
+			setupPokeParams( &wk->partyForServerCalc[0], &wk->pokeParamForServerCalc[0], BTL_NET_GetPartyData(0), ClientBasePokeID[0] );
+			setupPokeParams( &wk->partyForServerCalc[1], &wk->pokeParamForServerCalc[0], BTL_NET_GetPartyData(1), ClientBasePokeID[1] );
 		}
 		(*seq)++;
 		break;
@@ -509,11 +540,11 @@ static BOOL setup_alone_double( int* seq, void* work )
 	const BATTLE_SETUP_PARAM* sp = wk->setupParam;
 
 	// バトル用ポケモンパラメータ＆パーティデータを生成
-	setupPokeParams( &wk->party[0], &wk->pokeParam[0], sp->partyPlayer, 0 );
-	setupPokeParams( &wk->party[1], &wk->pokeParam[TEMOTI_POKEMAX], sp->partyEnemy1, TEMOTI_POKEMAX );
+	setupPokeParams( &wk->party[0], &wk->pokeParam[0], sp->partyPlayer, ClientBasePokeID[0] );
+	setupPokeParams( &wk->party[1], &wk->pokeParam[0], sp->partyEnemy1, ClientBasePokeID[1] );
 
-	setupPokeParams( &wk->partyForServerCalc[0], &wk->pokeParamForServerCalc[0], sp->partyPlayer, 0 );
-	setupPokeParams( &wk->partyForServerCalc[1], &wk->pokeParamForServerCalc[TEMOTI_POKEMAX], sp->partyEnemy1, TEMOTI_POKEMAX );
+	setupPokeParams( &wk->partyForServerCalc[0], &wk->pokeParamForServerCalc[0], sp->partyPlayer, ClientBasePokeID[0] );
+	setupPokeParams( &wk->partyForServerCalc[1], &wk->pokeParamForServerCalc[0], sp->partyEnemy1, ClientBasePokeID[1] );
 
 	// Server 作成
 	wk->server = BTL_SERVER_Create( wk, wk->heapID );
@@ -635,33 +666,23 @@ static BOOL setup_comm_double( int* seq, void* work )
 		if( BTL_NET_IsCompleteNotifyPartyData() )
 		{
 			u8 i;
-
 			BTL_Printf("パーティデータ相互受信できました。\n");
-			#if 0
-			setupPokeParams( &wk->party[0], &wk->pokeParam[0], BTL_NET_GetPartyData(0), 0 );
-			setupPokeParams( &wk->party[1], &wk->pokeParam[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
-			#else
 			for(i=0; i<wk->numClients; ++i)
 			{
-				setupPokeParams( &wk->party[i], &wk->pokeParam[i*TEMOTI_POKEMAX], BTL_NET_GetPartyData(i), i*TEMOTI_POKEMAX );
+				setupPokeParams( &wk->party[i], &wk->pokeParam[0], BTL_NET_GetPartyData(i), ClientBasePokeID[i] );
 			}
-			#endif
 			(*seq)++;
 		}
 		break;
 	case 4:
 		if( BTL_NET_IsServer() )
 		{
-			#if 0
-			setupPokeParams( &wk->partyForServerCalc[0], &wk->pokeParamForServerCalc[0], BTL_NET_GetPartyData(0), 0 );
-			setupPokeParams( &wk->partyForServerCalc[1], &wk->pokeParamForServerCalc[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
-			#else
 			u8 i;
 			for(i=0; i<wk->numClients; ++i)
 			{
-				setupPokeParams( &wk->partyForServerCalc[i], &wk->pokeParamForServerCalc[i*TEMOTI_POKEMAX], BTL_NET_GetPartyData(i), i*TEMOTI_POKEMAX );
+				setupPokeParams( &wk->partyForServerCalc[i], &wk->pokeParamForServerCalc[0], BTL_NET_GetPartyData(i),
+									ClientBasePokeID[i] );
 			}
-			#endif
 		}
 		(*seq)++;
 		break;
@@ -768,6 +789,7 @@ static void setupPokeParams( BTL_PARTY* dstParty, BTL_POKEPARAM** dstParams, con
 	int i, max = PokeParty_GetPokeCount( party );
 
 	BTL_PARTY_Initialize( dstParty );
+	dstParams += pokeID_Origin;
 	for(i=0; i<max; i++)
 	{
 		dstParams[i] = BTL_POKEPARAM_Create( PokeParty_GetMemberPointer(party, i), pokeID_Origin+i, HEAPID_BTL_SYSTEM );
@@ -849,19 +871,6 @@ static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
 
 	return quitFlag;
 }
-
-
-//--------------------------------------------------------------
-/**
- *	Proc Data
- */
-//--------------------------------------------------------------
-const GFL_PROC_DATA BtlProcData = {
-	BTL_PROC_Init,
-	BTL_PROC_Main,
-	BTL_PROC_Quit,
-};
-
 
 
 
@@ -1230,6 +1239,22 @@ static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos )
 {
 	return pos / 2;
 }
+// ポケモンID -> クライアントID変換
+static inline u8 PokeID_to_ClientID( u8 pokeID )
+{
+	u8 i, min, max;
+	for(i=0; i<NELEMS(ClientBasePokeID); ++i)
+	{
+		min = ClientBasePokeID[i];
+		max = min + TEMOTI_POKEMAX - 1;
+		if( (pokeID >= min) && (pokeID <= max) )
+		{
+			return i;
+		}
+	}
+	GF_ASSERT_MSG(0, "Illegal PokeID[%d]", pokeID);
+	return 0;
+}
 
 //=============================================================================================
 /**
@@ -1296,7 +1321,8 @@ BTL_POKEPARAM* BTL_MAIN_GetClientPokeData( BTL_MAIN_MODULE* wk, u8 clientID, u8 
 //=============================================================================================
 const BTL_POKEPARAM* BTL_MAIN_GetClientPokeDataConst( const BTL_MAIN_MODULE* wk, u8 clientID, u8 memberIdx )
 {
-	return wk->pokeParam[ clientID * TEMOTI_POKEMAX + memberIdx ];
+	u8 pokeID = ClientBasePokeID[ clientID ] + memberIdx;
+	return wk->pokeParam[ pokeID ];
 }
 
 //=============================================================================================
@@ -1312,7 +1338,7 @@ const BTL_POKEPARAM* BTL_MAIN_GetClientPokeDataConst( const BTL_MAIN_MODULE* wk,
 BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, u8 pokeID )
 {
 	const BTL_POKEPARAM* bpp = wk->pokeParam[ pokeID ];
-	u8 clientID = pokeID / BTL_PARTY_MEMBER_MAX;
+	u8 clientID = PokeID_to_ClientID( pokeID );
 	s16 idx = BTL_PARTY_FindMember( &wk->party[clientID], bpp );
 	if( idx >= 0 )
 	{
@@ -1356,7 +1382,6 @@ void BTL_MAIN_BtlPosToClientID_and_PokeIdx( const BTL_MAIN_MODULE* wk, BtlPokePo
 	btlPos_to_cliendID_and_posIdx( wk, pos, clientID, pokeIdx );
 }
 
-
 //=============================================================================================
 /**
  * 戦闘位置 -> 描画位置変換
@@ -1386,6 +1411,23 @@ u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
 		u8 posIdx = btlPos_to_sidePosIdx( pos );
 		return vpos[ isPlayerSide ][ posIdx ];
 	}
+}
+
+//=============================================================================================
+/**
+ * 味方同士のポケモンIDかどうかを判定する
+ *
+ * @param   pokeID1		
+ * @param   pokeID2		
+ *
+ * @retval  BOOL		味方同士ならTRUE
+ */
+//=============================================================================================
+BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 )
+{
+	u8 side1 = (pokeID1 < (TEMOTI_POKEMAX*2));
+	u8 side2 = (pokeID2 < (TEMOTI_POKEMAX*2));
+	return side1 == side2;
 }
 
 //======================================================================================================
@@ -1484,7 +1526,6 @@ BTL_POKEPARAM* BTL_MAIN_GetPokeParam( BTL_MAIN_MODULE* wk, u8 pokeID )
 {
 	GF_ASSERT(pokeID<BTL_COMMITMENT_POKE_MAX);
 	GF_ASSERT(wk->pokeParam[pokeID]);
-
 	return wk->pokeParam[ pokeID ];
 }
 

@@ -26,10 +26,24 @@ typedef enum {
 }BtlFieldState;
 
 
+/*--------------------------------------------------------------------------*/
+/* Prototypes                                                               */
+/*--------------------------------------------------------------------------*/
+
 extern void BTL_FIELD_Init( BtlWeather weather );
 extern BtlWeather BTL_FIELD_GetWeather( void );
 extern void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn );
 extern void BTL_FIELD_ClearWeather( void );
+
+//=============================================================================================
+/**
+ * 天候によってダメージが増加・減少するワザの増減率を返す
+ *
+ * @param   waza		ワザID
+ *
+ * @retval  fx32		増減率（パーセンテージ）
+ */
+//=============================================================================================
 extern fx32 BTL_FIELD_GetWeatherDmgRatio( WazaID waza );
 
 

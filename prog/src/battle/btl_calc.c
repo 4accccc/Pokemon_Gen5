@@ -258,4 +258,21 @@ BOOL BTL_CALC_CheckRecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weath
 	}
 	return FALSE;
 }
+//=============================================================================================
+/**
+ * 状態異常の継続ターン数を決定する
+ *
+ * @param   sick		状態異常ID
+ *
+ * @retval  u8			継続ターン数（永続する異常の場合は0）
+ */
+//=============================================================================================
+u8 BTL_CALC_DecideSickTurn( WazaSick sick )
+{
+	switch( sick ){
+	case WAZASICK_NEMURI: return BTL_NEMURI_TURN_MIN + (GFL_STD_MtRand(BTL_NEMURI_TURN_RANGE));
+	case WAZASICK_KONRAN: return BTL_CONF_TURN_MIN + (GFL_STD_MtRand(BTL_CONF_TURN_RANGE));
+	}
+	return BTL_CALC_SICK_TURN_PERMANENT;
+}
 

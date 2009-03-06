@@ -131,6 +131,7 @@ static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
@@ -141,6 +142,7 @@ static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 
 
 
@@ -738,6 +740,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_MEMBER_OUT,	scProc_ACT_MemberOut			},
 		{	SC_ACT_MEMBER_IN,		scProc_ACT_MemberIn			},
 		{	SC_ACT_RANKDOWN,		scProc_ACT_RankDownEffect	},
+		{	SC_ACT_SICK_SET,		scProc_ACT_SickSet				},
 		{	SC_ACT_SICK_DMG,		scProc_ACT_SickDamage			},
 		{	SC_ACT_WEATHER_DMG,	scProc_ACT_WeatherDmg			},
 		{	SC_ACT_WEATHER_END,	scProc_ACT_WeatherEnd			},
@@ -748,6 +751,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_OP_PP_MINUS,			scProc_OP_PPMinus					},
 		{	SC_OP_PP_PLUS,			scProc_OP_PPPlus					},
 		{	SC_OP_RANK_DOWN,		scProc_OP_RankDown				},
+		{	SC_OP_SICK_SET,			scProc_OP_SickSet					},
 	};
 
 restart:
@@ -1060,6 +1064,44 @@ static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args
 }
 //---------------------------------------------------------------------------------------
 /**
+ *	状態異常にさせられた時の処理
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		{
+			u8 pokeID = args[0];
+			WazaSick sick = args[1];
+			u16 msgID;
+
+			switch( sick ){
+			case WAZASICK_DOKU:		msgID = BTL_STRID_SET_DokuGet; break;
+			case WAZASICK_YAKEDO:	msgID = BTL_STRID_SET_YakedoGet; break;
+			case WAZASICK_MAHI:		msgID = BTL_STRID_SET_MahiGet; break;
+			case WAZASICK_KOORI:	msgID = BTL_STRID_SET_KoriGet; break;
+			case WAZASICK_NEMURI:	msgID = BTL_STRID_SET_NemuriGet; break;
+			case WAZASICK_KONRAN:	msgID = BTL_STRID_SET_KonranGet; break;
+			default:
+				GF_ASSERT(0);
+				return TRUE;
+			}
+			BTLV_StartMsgSet( wk->viewCore, msgID, args );	// この先ではargs[0]しか参照しないハズ…
+			(*seq)++;
+		}
+		break;
+	case 1:
+		if( BTLV_WaitMsg(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
  *	ターンチェックによる状態異常ダメージ処理
  */
 //---------------------------------------------------------------------------------------
@@ -1237,7 +1279,12 @@ static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 	BTL_POKEPARAM_RankDown( pp, args[1], args[2] );
 	return TRUE;
 }
-
+static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_MAIN_GetPokeParam( wk->mainModule, args[0] );
+	BTL_POKEPARAM_SetWazaSick( pp, args[1], args[2] );
+	return TRUE;
+}
 
 
 

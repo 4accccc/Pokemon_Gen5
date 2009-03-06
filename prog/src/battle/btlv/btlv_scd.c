@@ -693,7 +693,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 				u8 target_idx;
 				if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &target_idx ) )
 				{
-					BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.wazaIdx, target_idx );
+					BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.wazaIdx, hit );
 					wk->selTargetDone = TRUE;
 					return TRUE;
 				}

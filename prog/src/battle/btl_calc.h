@@ -17,11 +17,11 @@ enum {
 	BTL_CALC_CRITICAL_MAX = 4,
 
 // ダメージ計算関連
-	BTL_CALC_DMG_TARGET_RATIO_PLURAL = FX32_CONST(75),				///< 複数体が対象ワザのダメージ補正率
-	BTL_CALC_DMG_TARGET_RATIO_NONE   = FX32_CONST(100),				///< 対象によるダメージ補正なし
-	BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE = FX32_CONST(150),		///< ワザタイプ＆天候の組み合わせで有利な場合の補正率
-	BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE = FX32_CONST(50),	///< ワザタイプ＆天候の組み合わせで不利な場合の補正率
-	BTL_CALC_DMG_WEATHER_RATIO_NONE = FX32_CONST(100),				///< ワザタイプ＆天候の組み合わせによる補正なし
+	BTL_CALC_DMG_TARGET_RATIO_PLURAL = FX32_CONST(0.75f),			///< 複数体が対象ワザのダメージ補正率
+	BTL_CALC_DMG_TARGET_RATIO_NONE   = FX32_CONST(1),					///< 対象によるダメージ補正なし
+	BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE = FX32_CONST(1.5f),		///< ワザタイプ＆天候の組み合わせで有利な場合の補正率
+	BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE = FX32_CONST(0.5f),	///< ワザタイプ＆天候の組み合わせで不利な場合の補正率
+	BTL_CALC_DMG_WEATHER_RATIO_NONE = FX32_CONST(1),						///< ワザタイプ＆天候の組み合わせによる補正なし
 
 
 // 状態異常処理関連
@@ -39,6 +39,11 @@ enum {
 	BTL_MOUDOKU_COUNT_MAX = BTL_MOUDOKU_SPLIT_DENOM-1,	///< もうどく時、ダメージ倍率をいくつまでカウントアップするか
 
 	BTL_CONF_EXE_RATIO = 30,		///< 混乱時の自爆確率
+	BTL_CONF_TURN_MIN = 2,
+	BTL_CONF_TURN_MAX = 5,
+	BTL_CONF_TURN_RANGE = (BTL_CONF_TURN_MAX - BTL_CONF_TURN_MIN)+1,
+
+	BTL_CALC_SICK_TURN_PERMANENT = 0xff,	///< 継続ターン数を設定しない（永続する）場合の指定値
 
 	// 天候関連
 	BTL_CALC_WEATHER_MIST_HITRATIO = FX32_CONST(75),		///< 「きり」の時の命中率補正率
@@ -109,6 +114,17 @@ extern u32 BTL_CALC_AffDamage( u32 rawDamage, BtlTypeAff aff );
 extern u8 BTL_CALC_HitCountMax( u8 numHitMax );
 extern BOOL BTL_CALC_CheckRecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather );
 
+
+//=============================================================================================
+/**
+ * 状態異常の継続ターン数を決定する
+ *
+ * @param   sick		状態異常ID
+ *
+ * @retval  u8			継続ターン数（永続する異常の場合は0）
+ */
+//=============================================================================================
+extern u8 BTL_CALC_DecideSickTurn( WazaSick sick );
 
 #endif
 

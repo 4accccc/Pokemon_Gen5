@@ -53,6 +53,7 @@ typedef enum {
 	BTL_EVENT_MEMBER_COMP,			///< 全参加ポケ登場後
 	BTL_EVENT_BEFORE_RANKDOWN,	///< 能力下げる（前）
 	BTL_EVENT_AFTER_RANKDOWN,		///< 能力下げる（後）
+	BTL_EVENT_ADD_SICK,					///< 状態異常にさせられる
 	BTL_EVENT_SICK_DAMAGE,			///< 状態異常によるダメージ計算
 
 

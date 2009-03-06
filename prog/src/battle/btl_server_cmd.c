@@ -28,7 +28,7 @@ static inline SC_ARGFMT_GetArgCount( u8 fmt )
 
 //--------------------------------------------------------------
 /**
- *		サーバコマンド引数型定義
+ *		サーバコマンド引数型定義（引数の個数ごとに16パターンまで増やせる）
  */
 //--------------------------------------------------------------
 typedef enum {
@@ -45,12 +45,13 @@ typedef enum {
 	SC_ARGFMT_53bit_1byte = SC_ARGFMT(3,0),
 	SC_ARGFMT_5_5_5bit    = SC_ARGFMT(3,1),
 	SC_ARGFMT_5_5_14bit   = SC_ARGFMT(3,2),
+	SC_ARGFMT_112byte     = SC_ARGFMT(3,3),
 
 	// 引数５個の型
 	SC_ARGFMT_5_5_5bit_22byte = SC_ARGFMT(5,0),
 
 	// メッセージ型（可変引数）
-	SC_ARGFMT_MSG = SC_ARGFMT(15,15),
+	SC_ARGFMT_MSG = SC_ARGFMT(0,0),
 
 }ScArgFormat;
 
@@ -69,7 +70,7 @@ static const u8 ServerCmdToFmtTbl[] = {
 	SC_ARGFMT_53bit_1byte,			// SC_OP_PP_PLUS
 	SC_ARGFMT_53bit_1byte,			// SC_OP_RANK_UP
 	SC_ARGFMT_53bit_1byte,			// SC_OP_RANK_DOWN
-	SC_ARGFMT_5_5_14bit,				// SC_OP_SICK_SET
+	SC_ARGFMT_112byte,					// SC_OP_SICK_SET
 	SC_ARGFMT_1byte,						// SC_OP_WAZASICK_TURNCHECK
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_WAZA_EFFECT
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_WAZA_DMG
@@ -79,6 +80,7 @@ static const u8 ServerCmdToFmtTbl[] = {
 	SC_ARGFMT_1byte,						// SC_ACT_DEAD
 	SC_ARGFMT_4_4bit,						// SC_ACT_MEMBER_OUT
 	SC_ARGFMT_53bit_1byte,			// SC_ACT_MEMBER_IN
+	SC_ARGFMT_12byte,						// SC_ACT_SICK_SET
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_SICK_DMG
 	SC_ARGFMT_4_4bit,						// SC_ACT_WEATHER_DMG,
 	SC_ARGFMT_1byte,						// SC_ACT_WEATHER_END,
@@ -225,6 +227,13 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
 			scque_put3byte( que, pack );
 		}
 		break;
+	case SC_ARGFMT_112byte:
+		{
+			scque_put1byte( que, args[0] );
+			scque_put1byte( que, args[1] );
+			scque_put2byte( que, args[2] );
+		}
+		break;
 	case SC_ARGFMT_5_5_5bit_22byte:
 		{
 			u16 pack = pack_3args( 2, args[0],args[1],args[2], 5,5,5 );
@@ -287,6 +296,13 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
 		{
 			u32 pack = scque_read3byte( que );
 			unpack_3args( 3, pack, 5,5,14, args, 0 );
+		}
+		break;
+	case SC_ARGFMT_112byte:
+		{
+			args[0] = scque_read1byte( que );
+			args[1] = scque_read1byte( que );
+			args[2] = scque_read2byte( que );
 		}
 		break;
 	case SC_ARGFMT_5_5_5bit_22byte:

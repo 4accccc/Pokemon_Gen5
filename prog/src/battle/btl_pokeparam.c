@@ -105,6 +105,7 @@ struct _BTL_POKEPARAM {
 	BPP_VARIABLE_PARAM	varyParam;
 	BPP_REAL_PARAM			realParam;
 	BPP_WAZA						waza[ PTL_WAZA_MAX ];
+	const POKEMON_PARAM*	ppSrc;
 
 	u16  item;
 	u16  tokusei;
@@ -115,8 +116,7 @@ struct _BTL_POKEPARAM {
 	u8	pokeSick;
 	u8	pokeSickCounter;
 
-
-	const POKEMON_PARAM*	ppSrc;
+	u8	wazaSickCounter[ WAZASICK_MAX ];
 };
 
 
@@ -188,6 +188,8 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 		}
 	}
 
+	// ワザ系状態異常のカウンタゼロクリア
+	GFL_STD_MemClear( bpp->wazaSickCounter, sizeof(bpp->wazaSickCounter) );
 
 	bpp->item = 0;
 	bpp->tokusei = PP_Get( pp, ID_PARA_speabino, 0 );
@@ -376,6 +378,8 @@ PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp )
 	return pp->pokeSick;
 }
 
+
+
 //=============================================================================================
 /**
  * 特定の状態異常にかかっているかチェック
@@ -388,7 +392,9 @@ PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp )
 //=============================================================================================
 BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
 {
-	return FALSE;
+	GF_ASSERT(sickType < NELEMS(pp->wazaSickCounter));
+
+	return pp->wazaSickCounter[ sickType ] != 0;
 }
 
 //=============================================================================================
@@ -626,6 +632,29 @@ void BTL_POKEPARAM_SetPokeSick( BTL_POKEPARAM* pp, PokeSick sick, u8 turn )
 		pp->pokeSickCounter = turn;
 	}
 }
+//=============================================================================================
+/**
+ * ワザ系状態異常を設定
+ *
+ * @param   pp			
+ * @param   sick		
+ * @param   turn		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, u8 turn )
+{
+	if( sick < POKESICK_MAX )
+	{
+		BTL_POKEPARAM_SetPokeSick( pp, sick, turn );
+	}
+	else
+	{
+		GF_ASSERT(turn);
+		pp->wazaSickCounter[sick] = turn;
+	}
+}
+
 //=============================================================================================
 /**
  * 「ねむり」ターン進行　※ポケモン状態異常チェックは、「たたかう」を選んだ場合にのみ行う
