@@ -107,7 +107,8 @@ SRCS	+=		$(SOUNDSRC) \
 				infowin/infowin.c \
 				system/actor_tool.c \
 				system/bmp_oam.c \
-				net_app/wifi_earth/wifi_country.c
+				net_app/wifi_earth/wifi_country.c \
+				field/field_script.c
 
 
 #================================================
