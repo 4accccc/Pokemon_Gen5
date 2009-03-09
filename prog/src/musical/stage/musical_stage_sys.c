@@ -82,6 +82,7 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 		work->actInitWork->musPoke[2].equip[ePos].type = MUSICAL_ITEM_INVALID;
 		work->actInitWork->musPoke[3].equip[ePos].type = MUSICAL_ITEM_INVALID;
 	}
+	
 	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HAND_R].type = 13;
 	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HEAD].type = 16;
 	
@@ -100,6 +101,14 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 
 static GFL_PROC_RESULT MusicalStageProc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
+	STAGE_LOCAL_WORK *work = mywk;
+	
+	GFL_HEAP_FreeMemory( work->actInitWork->musPoke[0].pokePara );
+	GFL_HEAP_FreeMemory( work->actInitWork->musPoke[1].pokePara );
+	GFL_HEAP_FreeMemory( work->actInitWork->musPoke[2].pokePara );
+	GFL_HEAP_FreeMemory( work->actInitWork->musPoke[3].pokePara );
+	GFL_HEAP_FreeMemory( work->actInitWork );
+	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STAGE );
 
 	return GFL_PROC_RES_FINISH;

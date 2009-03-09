@@ -144,6 +144,7 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 void MUS_POKE_DRAW_Del( MUS_POKE_DRAW_SYSTEM* work , MUS_POKE_DRAW_WORK *drawWork )
 {
 	MUS_MCSS_Del( work->mcssSys , drawWork->mcss );
+	GFL_HEAP_FreeMemory( drawWork->pokeData );
 	drawWork->enable = FALSE;
 }
 

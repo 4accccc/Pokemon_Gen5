@@ -38,8 +38,9 @@ void	STA_OBJ_ExitSystem( STA_OBJ_SYS *work );
 //システム系
 void	STA_OBJ_System_SetScrollOffset( STA_OBJ_SYS *work , const u16 scrOfs );
 
-//ポケ単体系
-STA_OBJ_WORK *STA_OBJ_AddObject( STA_OBJ_SYS *work , const u16 itemId );
+//OBJ単体系
+STA_OBJ_WORK *STA_OBJ_CreateObject( STA_OBJ_SYS *work , const u16 itemId );
+void STA_OBJ_DeleteObject( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork );
 void STA_OBJ_SetPosition( STA_OBJ_SYS *work , STA_OBJ_WORK *pokeWork , const VecFx32 *pos );
 
 #endif STA_ACT_OBJ_H__

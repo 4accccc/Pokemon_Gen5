@@ -684,6 +684,7 @@ void	MUS_MCSS_Del( MUS_MCSS_SYS_WORK *mcss_sys, MUS_MCSS_WORK *mcss )
 	GFL_HEAP_FreeMemory( mcss->mcss_nmar_buf );
 	GFL_HEAP_FreeMemory( mcss->mcss_mcanim_buf );
 	GFL_HEAP_FreeMemory( mcss->mcss_ncec );
+//	GFL_HEAP_FreeMemory( mcss->musInfo );	//こいつはmcss_ncecからオフセットで取っているので開放無し
 
 	mcss_sys->mcss[ mcss->index ] = NULL;
 	GFL_HEAP_FreeMemory( mcss );

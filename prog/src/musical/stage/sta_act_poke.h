@@ -40,7 +40,8 @@ void	STA_POKE_System_SetScrollOffset( STA_POKE_SYS *work , const u16 scrOfs );
 
 
 //ƒ|ƒP’P‘ÌŒn
-STA_POKE_WORK *STA_POKE_AddPoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *musPoke );
+STA_POKE_WORK *STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *musPoke );
+void STA_POKE_DeletePoke( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
 void STA_POKE_SetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const VecFx32 *pos );
 
 #endif STA_ACT_POKE_H__

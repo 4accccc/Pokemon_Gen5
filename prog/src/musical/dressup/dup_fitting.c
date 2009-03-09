@@ -188,6 +188,7 @@ static void DUP_FIT_SetupBg( FITTING_WORK *work );
 static void	DUP_FIT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane );
 static void DUP_FIT_SetupPokemon( FITTING_WORK *work );
 static void DUP_FIT_SetupItem( FITTING_WORK *work );
+static void DUP_FIT_TermItem( FITTING_WORK *work );
 static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle );
 static void DUP_FIT_OpenItemList( FITTING_WORK *work );
 static void DUP_FIT_CloseItemList( FITTING_WORK *work );
@@ -256,7 +257,7 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 	DUP_FIT_SetupItem( work );
 	
 	INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,initWork->heapId);
-	GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
+	work->vBlankTcb = GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
 	
 	//フェードないので仮処理
 	GX_SetMasterBrightness(0);	
@@ -272,9 +273,15 @@ void	DUP_FIT_TermFitting( FITTING_WORK *work )
 	//フェードないので仮処理
 	GX_SetMasterBrightness(-16);	
 	GXS_SetMasterBrightness(-16);
+	
+	INFOWIN_Term();
+
+	DUP_FIT_TermItem( work );
+	MUS_POKE_DRAW_Del( work->drawSys , work->drawWork );
+	MUS_POKE_DRAW_TermSystem( work->drawSys );
 
 	GFL_TCB_DeleteTask( work->vBlankTcb );
-	INFOWIN_Term();
+	GFL_BBD_DeleteSys( work->bbdSys );
 	GFL_G3D_CAMERA_Delete( work->camera );
 	GFL_G3D_Exit();
 	GFL_BG_FreeBGControl( FIT_FRAME_MAIN_3D );
@@ -338,6 +345,11 @@ FITTING_RETURN	DUP_FIT_LoopFitting( FITTING_WORK *work )
 	}
 	GFL_G3D_DRAW_End();
 
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
+		GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
+	{
+		return FIT_RET_GO_END;
+	}
 	return FIT_RET_CONTINUE;
 }
 
@@ -572,6 +584,54 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
 	work->isOpenList = TRUE;
 }
 
+static void DUP_FIT_TermItem( FITTING_WORK *work )
+{
+	int i;
+	FIT_ITEM_WORK *nextItem;
+	FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
+	while( item != NULL )
+	{
+		nextItem = DUP_FIT_ITEM_GetNextItem(item);
+		DUP_FIT_ITEM_DeleteItem( item , work->itemDrawSys );
+		item = nextItem;
+	}
+
+	item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupField );
+	while( item != NULL )
+	{
+		nextItem = DUP_FIT_ITEM_GetNextItem(item);
+		DUP_FIT_ITEM_DeleteItem( item , work->itemDrawSys );
+		item = nextItem;
+	}
+
+	item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
+	while( item != NULL )
+	{
+		nextItem = DUP_FIT_ITEM_GetNextItem(item);
+		DUP_FIT_ITEM_DeleteItem( item , work->itemDrawSys );
+		item = nextItem;
+	}
+
+	item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupAnime );
+	while( item != NULL )
+	{
+		nextItem = DUP_FIT_ITEM_GetNextItem(item);
+		DUP_FIT_ITEM_DeleteItem( item , work->itemDrawSys );
+		item = nextItem;
+	}
+
+	for( i=0;i<MUSICAL_ITEM_MAX;i++ )
+	{
+		MUS_ITEM_DRAW_DeleteResource( work->itemRes[i] );
+	}
+	
+	DUP_FIT_ITEMGROUP_DeleteGroup( work->itemGroupList );
+	DUP_FIT_ITEMGROUP_DeleteGroup( work->itemGroupField );
+	DUP_FIT_ITEMGROUP_DeleteGroup( work->itemGroupEquip );
+	DUP_FIT_ITEMGROUP_DeleteGroup( work->itemGroupAnime );
+	
+	MUS_ITEM_DRAW_TermSystem( work->itemDrawSys );
+}
 //--------------------------------------------------------------
 //アイテムリストの位置・サイズ計算
 //--------------------------------------------------------------

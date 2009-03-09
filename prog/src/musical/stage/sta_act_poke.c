@@ -94,6 +94,14 @@ STA_POKE_SYS* STA_POKE_InitSystem( HEAPID heapId , MUS_POKE_DRAW_SYSTEM* drawSys
 
 void	STA_POKE_ExitSystem( STA_POKE_SYS *work )
 {
+	int idx;
+	for( idx=0 ; idx<MUSICAL_POKE_MAX ; idx++ )
+	{
+		if( work->pokeWork[idx].isEnable == TRUE )
+		{
+			STA_POKE_DeletePoke( work , &work->pokeWork[idx] );
+		}
+	}
 	GFL_HEAP_FreeMemory( work );
 }
 
@@ -184,7 +192,7 @@ void	STA_POKE_System_SetScrollOffset( STA_POKE_SYS *work , const u16 scrOfs )
 }
 
 
-STA_POKE_WORK* STA_POKE_AddPoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *musPoke )
+STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *musPoke )
 {
 	u8 idx;
 	u8 ePos;	//equipPos
@@ -227,6 +235,24 @@ STA_POKE_WORK* STA_POKE_AddPoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *musPok
 	}
 	
 	return pokeWork;
+}
+
+void STA_POKE_DeletePoke( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+	u8 ePos;	//equipPos
+	for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
+	{
+		if( pokeWork->itemWork[ePos] != NULL )
+		{
+			MUS_ITEM_DRAW_DelItem( work->itemDrawSys , pokeWork->itemWork[ePos] );
+			MUS_ITEM_DRAW_DeleteResource( pokeWork->itemRes[ePos] );
+
+			pokeWork->itemRes[ePos] = NULL;
+			pokeWork->itemWork[ePos] = NULL;
+		}
+	}
+	MUS_POKE_DRAW_Del( work->drawSys , pokeWork->drawWork );
+	pokeWork->isEnable = FALSE;
 }
 
 void STA_POKE_SetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const VecFx32 *pos )

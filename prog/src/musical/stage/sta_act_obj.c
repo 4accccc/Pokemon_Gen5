@@ -89,6 +89,16 @@ STA_OBJ_SYS* STA_OBJ_InitSystem( HEAPID heapId , GFL_BBD_SYS* bbdSys )
 
 void	STA_OBJ_ExitSystem( STA_OBJ_SYS *work )
 {
+	u8 idx;
+	
+	for( idx=0 ; idx<ACT_OBJECT_MAX ; idx++ )
+	{
+		if( work->objWork[idx].isEnable == TRUE )
+		{
+			STA_OBJ_DeleteObject( work , &work->objWork[idx] );
+		}
+	}
+
 	GFL_HEAP_FreeMemory( work );
 }
 
@@ -140,7 +150,7 @@ void	STA_OBJ_System_SetScrollOffset( STA_OBJ_SYS *work , const u16 scrOfs )
 }
 
 
-STA_OBJ_WORK* STA_OBJ_AddObject( STA_OBJ_SYS *work , const u16 objId )
+STA_OBJ_WORK* STA_OBJ_CreateObject( STA_OBJ_SYS *work , const u16 objId )
 {
 	u8 idx;
 	STA_OBJ_WORK *objWork;
@@ -171,6 +181,12 @@ STA_OBJ_WORK* STA_OBJ_AddObject( STA_OBJ_SYS *work , const u16 objId )
 	GFL_BBD_SetObjectDrawEnable( work->bbdSys , objWork->bbdIdx , &flg );
 
 	return objWork;
+}
+void STA_OBJ_DeleteObject( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork )
+{
+	GFL_BBD_RemoveObject( work->bbdSys , objWork->bbdIdx );
+	GFL_BBD_RemoveResource( work->bbdSys , objWork->resIdx );
+	objWork->isEnable = FALSE;
 }
 
 void STA_OBJ_SetPosition( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork , const VecFx32 *pos )

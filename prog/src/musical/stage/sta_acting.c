@@ -54,8 +54,6 @@
 
 #define ACT_OBJECT_IVALID (-1)
 
-#define ACT_EFFECT_MAX (3)
-
 #define ACT_BG_SCROLL_MAX (256)
 #define ACT_MAKU_SCROLL_MAX (256)
 
@@ -201,6 +199,8 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 	SND_STRM_Stop();
 	SND_STRM_Release();
 	
+	INFOWIN_Term();
+
 	GFL_BMPWIN_Delete( work->msgWin );
 	GFL_FONT_Delete( work->fontHandle );
 	GFL_TCBL_Exit( work->tcblSys );
@@ -209,6 +209,10 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 	STA_OBJ_ExitSystem( work->objSys );
 	STA_POKE_ExitSystem( work->pokeSys );
 
+	MUS_POKE_DRAW_TermSystem( work->drawSys );
+	MUS_ITEM_DRAW_TermSystem( work->itemDrawSys );
+
+	GFL_BBD_DeleteSys( work->bbdSys );
 	GFL_G3D_CAMERA_Delete( work->camera );
 	GFL_G3D_Exit();
 	GFL_BG_FreeBGControl( ACT_FRAME_MAIN_3D );
@@ -221,6 +225,7 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 	GFL_BG_Exit();
 
 	GFL_HEAP_FreeMemory( work );
+	
 }
 
 ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
@@ -262,7 +267,12 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 	}
 	GFL_G3D_DRAW_End();
 
-#
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
+		GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
+	{
+		return ACT_RET_GO_END;
+	}
+
 	return ACT_RET_CONTINUE;
 }
 
@@ -309,7 +319,7 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
 		};
 		// BG3 MAIN (îwåi 256*16êF
 		static const GFL_BG_BGCNT_HEADER header_main3 = {
-			0, 0, 0x1000, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+			0, 0, 0x2000, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 			GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_256,
 			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x10000,0x10000,
 			GX_BG_EXTPLTT_23, 3, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
@@ -334,8 +344,6 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
 		STA_ACT_SetupBgFunc( &header_main1, ACT_FRAME_MAIN_FONT , GFL_BG_MODE_TEXT);
 		STA_ACT_SetupBgFunc( &header_main2, ACT_FRAME_MAIN_CURTAIN , GFL_BG_MODE_TEXT);
 		STA_ACT_SetupBgFunc( &header_main3, ACT_FRAME_MAIN_BG , GFL_BG_MODE_256X16);
-
-
 		STA_ACT_SetupBgFunc( &header_sub1 , ACT_FRAME_SUB_BG , GFL_BG_MODE_TEXT);
 		STA_ACT_SetupBgFunc( &header_sub3 , ACT_FRAME_SUB_INFO , GFL_BG_MODE_TEXT);
 		
@@ -477,7 +485,7 @@ static void STA_ACT_SetupPokemon( ACTING_WORK *work )
 	for( i=0;i<MUSICAL_POKE_MAX;i++ )
 	{
 		pos.x = XBase*(i+1);
-		work->pokeWork[i] = STA_POKE_AddPoke( work->pokeSys , &work->initWork->musPoke[i] );
+		work->pokeWork[i] = STA_POKE_CreatePoke( work->pokeSys , &work->initWork->musPoke[i] );
 		STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
 
 		pos.z -= FX32_CONST(30.0f);	//Ç–Ç∆ÉLÉÉÉâÇÃå˙Ç›ÇÕ30Ç∆å©ÇÈ
@@ -504,19 +512,19 @@ static void STA_ACT_SetupItem( ACTING_WORK *work )
 		pos.x = FX32_CONST(448.0f );
 		pos.y = FX32_CONST( 96.0f );
 		pos.z = FX32_CONST( 50.0f);
-		work->objWork[0] = STA_OBJ_AddObject( work->objSys , 0 );
+		work->objWork[0] = STA_OBJ_CreateObject( work->objSys , 0 );
 		STA_OBJ_SetPosition( work->objSys , work->objWork[0] , &pos );
 
 		pos.x = FX32_CONST( 192.0f );
 		pos.y = FX32_CONST( 100.0f );
 		pos.z = FX32_CONST( 50.0f );
-		work->objWork[1] = STA_OBJ_AddObject( work->objSys , 1 );
+		work->objWork[1] = STA_OBJ_CreateObject( work->objSys , 1 );
 		STA_OBJ_SetPosition( work->objSys , work->objWork[1] , &pos );
 
 		pos.x = FX32_CONST(  80.0f );
 		pos.y = FX32_CONST( 160.0f );
 		pos.z = FX32_CONST( 180.0f );
-		work->objWork[2] = STA_OBJ_AddObject( work->objSys , 1 );
+		work->objWork[2] = STA_OBJ_CreateObject( work->objSys , 1 );
 		STA_OBJ_SetPosition( work->objSys , work->objWork[2] , &pos );
 	}
 

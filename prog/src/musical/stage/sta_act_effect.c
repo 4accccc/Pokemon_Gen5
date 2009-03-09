@@ -16,6 +16,7 @@
 #include "test/ariizumi/ari_debug.h"
 
 #include "sta_act_effect.h"
+#include "sta_local_def.h"
 #include "eff_def/mus_eff.h"
 
 //======================================================================
@@ -38,6 +39,7 @@
 #pragma mark [> struct
 struct _STA_EFF_WORK
 {
+	BOOL			isEnable;
 	u8				effWork[ PARTICLE_LIB_HEAP_SIZE ];
 //	void			*effWork;
 	GFL_PTC_PTR		ptcWork;
@@ -48,7 +50,7 @@ struct _STA_EFF_SYS
 {
 	HEAPID heapId;
 	
-	STA_EFF_WORK *effWork;
+	STA_EFF_WORK effWork[ACT_EFFECT_MAX];
 };
 
 //======================================================================
@@ -61,18 +63,34 @@ struct _STA_EFF_SYS
 //--------------------------------------------------------------
 STA_EFF_SYS* STA_EFF_InitSystem( HEAPID heapId )
 {
+	u8 i;
 	STA_EFF_SYS *work;
 	
 	work = GFL_HEAP_AllocMemory( heapId , sizeof( STA_EFF_SYS ));
 	work->heapId = heapId;
 	GFL_PTC_Init( heapId );
 	
+	for( i=0;i<ACT_EFFECT_MAX;i++ )
+	{
+		work->effWork[i].isEnable = FALSE;
+	}
+	
 	return work;
 }
 
 void	STA_EFF_ExitSystem( STA_EFF_SYS *work )
 {
+	u8 i;
+	for( i=0;i<ACT_EFFECT_MAX;i++ )
+	{
+		if( work->effWork[i].isEnable == TRUE )
+		{
+			STA_EFF_DeleteEffect( work , &work->effWork[i] );
+		}
+	}
+
 	GFL_PTC_Exit();
+	GFL_HEAP_FreeMemory( work );
 }
 
 void	STA_EFF_UpdateSystem( STA_EFF_SYS *work )
@@ -87,18 +105,37 @@ void	STA_EFF_DrawSystem( STA_EFF_SYS *work )
 
 STA_EFF_WORK*	STA_EFF_CreateEffect( STA_EFF_SYS *work , int fileIdx )
 {
-	STA_EFF_WORK *effWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(STA_EFF_WORK) );
+	u8 i;
+	STA_EFF_WORK *effWork = NULL;
 	void *effRes;
 
+	for( i=0;i<ACT_EFFECT_MAX;i++ )
+	{
+		if( work->effWork[i].isEnable == FALSE )
+		{
+			effWork = &work->effWork[i];
+		}
+	}
+	
+	GF_ASSERT_MSG( effWork != NULL ,"Stage acting effect work is full!!\n" );
+
 	//まずマネージャの作成
-//	effWork->effWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PARTICLE_LIB_HEAP_SIZE) );
 	effWork->ptcWork = GFL_PTC_Create( effWork->effWork,PARTICLE_LIB_HEAP_SIZE,FALSE,work->heapId);
 	//リソース読み込み
 	effRes = GFL_PTC_LoadArcResource( ARCID_STAGE_GRA , fileIdx , work->heapId );
 	//リソースとマネージャの関連付け
 	GFL_PTC_SetResource( effWork->ptcWork , effRes , FALSE , GFUser_VIntr_GetTCBSYS() );
 	
+	effWork->isEnable = TRUE;
+	
 	return effWork;
+}
+
+void	STA_EFF_DeleteEffect( STA_EFF_SYS *work , STA_EFF_WORK *effWork )
+{
+	effWork->isEnable = FALSE;
+	GFL_PTC_DeleteEmitterAll( effWork->ptcWork );
+	GFL_PTC_Delete( effWork->ptcWork );
 }
 
 void	STA_EFF_CreateEmmitter( STA_EFF_WORK *effWork , u16 emmitNo , VecFx32 *pos )

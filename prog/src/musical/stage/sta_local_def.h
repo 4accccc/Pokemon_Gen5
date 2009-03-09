@@ -18,4 +18,7 @@
 //オブジェクト関係
 #define ACT_OBJECT_MAX (5)
 
+//エフェクト関係
+#define ACT_EFFECT_MAX (3)
+
 #endif STA_LOCAL_DEF_H__
