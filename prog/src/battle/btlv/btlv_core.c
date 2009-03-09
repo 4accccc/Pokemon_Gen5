@@ -47,9 +47,10 @@ typedef BOOL (*pCmdProc)( BTLV_CORE*, int*, void* );
 /*--------------------------------------------------------------------------*/
 struct _BTLV_CORE {
 
-	BTL_MAIN_MODULE*	mainModule;
-	const BTL_CLIENT*	myClient;
-	u8								myClientID;
+	BTL_MAIN_MODULE*					mainModule;
+	const BTL_CLIENT*					myClient;
+	const BTL_POKE_CONTAINER*	pokeCon;
+	u8												myClientID;
 
 	BtlvCmd		processingCmd;
 	pCmdProc	mainProc;
@@ -95,12 +96,13 @@ static void cleanup_core( BTLV_CORE* wk );
  * @retval  BTLV_CORE*		生成された描画メインモジュールのハンドラ
  */
 //=============================================================================================
-BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, HEAPID heapID )
+BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, const BTL_POKE_CONTAINER* pokeCon, HEAPID heapID )
 {
 	BTLV_CORE* core = GFL_HEAP_AllocMemory( heapID, sizeof(BTLV_CORE) );
 
 	core->mainModule = mainModule;
 	core->myClient = client;
+	core->pokeCon = pokeCon;
 	core->myClientID = BTL_CLIENT_GetClientID( client );
 	core->processingCmd = BTLV_CMD_NULL;
 	core->heapID = heapID;
@@ -110,13 +112,13 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 
 
 	core->tcbl = GFL_TCBL_Init( heapID, heapID, 64, 128 );
-	core->scrnU = BTLV_SCU_Create( core, core->mainModule, core->tcbl, core->fontHandle, core->myClientID, heapID );
-	core->scrnD = BTLV_SCD_Create( core, core->mainModule, core->tcbl, core->fontHandle, core->myClientID, heapID );
+	core->scrnU = BTLV_SCU_Create( core, core->mainModule, pokeCon, core->tcbl, core->fontHandle, core->myClientID, heapID );
+	core->scrnD = BTLV_SCD_Create( core, core->mainModule, pokeCon, core->tcbl, core->fontHandle, core->myClientID, heapID );
 
 	core->mainProc = NULL;
 	core->mainSeq = 0;
 
-	BTL_STR_InitSystem( mainModule, client, heapID );
+	BTL_STR_InitSystem( mainModule, client, pokeCon, heapID );
 	GFL_UI_TP_Init( heapID );
 
 

@@ -84,7 +84,8 @@ typedef enum {
 static struct {
 
 	const BTL_MAIN_MODULE*	mainModule;		///< メインモジュール
-	const BTL_CLIENT*				client;					///< UIクライアント
+	const BTL_CLIENT*				client;				///< UIクライアント
+	const BTL_POKE_CONTAINER*	pokeCon;		///< ポケモンコンテナ
 	WORDSET*					wset;								///< WORDSET
 	STRBUF*						tmpBuf;							///< 文字列一時展開用バッファ
 	GFL_MSGDATA*			msg[ MSGDATA_MAX ];	///< メッセージデータハンドル
@@ -133,7 +134,7 @@ static void ms_set_waza_avoid( STRBUF* dst, u16 strID, const int* args );
  *
  */
 //=============================================================================================
-void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, HEAPID heapID )
+void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, const BTL_POKE_CONTAINER* pokeCon, HEAPID heapID )
 {
 	static const u16 msgDataID[] = {
 		NARC_message_btl_std_dat,
@@ -147,6 +148,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* cl
 
 	SysWork.mainModule = mainModule;
 	SysWork.client = client;
+	SysWork.pokeCon = pokeCon;
 	SysWork.heapID = heapID;
 	SysWork.clientID = BTL_CLIENT_GetClientID( client );
 
@@ -186,7 +188,7 @@ static inline void register_PokeNickname( BtlPokePos pos, WordBufID bufID )
 	const BTL_POKEPARAM* bpp;
 	const POKEMON_PARAM* pp;
 
-	bpp = BTL_MAIN_GetFrontPokeDataConst( SysWork.mainModule, pos );
+	bpp = BTL_POKECON_GetFrontPokeDataConst( SysWork.pokeCon, pos );
 	pp = BTL_POKEPARAM_GetSrcData( bpp );
 
 	WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );

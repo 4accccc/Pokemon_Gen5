@@ -41,10 +41,11 @@ static void print_file_info( const char* filename, int line )
 		{ "btl_string.c",			"STR" },
 		{ "btl_net.c",				"NET" },
 		{ "btl_pokeparam.c",	"BPP" },
-		{ "btl_server_cmd.c", "SVC" },
-		{ "btlv_core.c",			"VCR" },
-		{ "btlv_scu.c",				"SCU" },
-		{ "btlv_scd.c",				"SCD" },
+		{ "btl_server_cmd.c", "CMD" },
+		{ "btl_server_flow.c","FLW" },
+		{ "btlv_core.c",			"VIW" },
+		{ "btlv_scu.c",				"scU" },
+		{ "btlv_scd.c",				"scD" },
 		{ NULL,								"OTR" },
 	};
 	u32 i;

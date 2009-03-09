@@ -8,22 +8,17 @@
 
 typedef struct _BTL_MAIN_MODULE		BTL_MAIN_MODULE;
 
-typedef struct _BTL_PARTY		BTL_PARTY;
-
+typedef struct _BTL_PARTY						BTL_PARTY;
+typedef struct _BTL_POKE_CONTAINER	BTL_POKE_CONTAINER;
 
 extern BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk );
 extern BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk );
 extern BtlCommMode BTL_MAIN_GetCommMode( const BTL_MAIN_MODULE* wk );
-extern const BTL_PARTY* BTL_MAIN_GetPartyDataConst( const BTL_MAIN_MODULE* wk, u32 clientID );
 extern BtlPokePos BTL_MAIN_GetClientPokePos( const BTL_MAIN_MODULE* wk, u8 clientID, u8 posIdx );
 extern BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos, u8 idx );
 extern BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos );
 extern BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, u8 pokeID );
 extern BOOL BTL_MAIN_IsOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID1, u8 clientID2 );
-extern const BTL_POKEPARAM* BTL_MAIN_GetPokeParamConst( const BTL_MAIN_MODULE* wk, u8 pokeID );
-extern const BTL_POKEPARAM* BTL_MAIN_GetFrontPokeDataConst( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
-extern BTL_POKEPARAM* BTL_MAIN_GetFrontPokeData( BTL_MAIN_MODULE* wk, BtlPokePos pos );
-extern BTL_POKEPARAM* BTL_MAIN_GetClientPokeData( BTL_MAIN_MODULE* wk, u8 clientID, u8 memberIdx );
 extern u8 BTL_MAIN_BtlPosToClientID( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern BtlSide BTL_MAIN_GetClientSide( const BTL_MAIN_MODULE* wk, u8 clientID );
@@ -31,10 +26,7 @@ extern BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk );
 extern BOOL BTL_MAIN_IsFriendPokeID( const BTL_MAIN_MODULE* wk, u8 pokeID1, u8 pokeID2 );
 
 //-------------------------
-extern void BTL_MAIN_CLIENTDATA_SwapPartyMembers( BTL_MAIN_MODULE* wk, u8 clientID, u8 idx1, u8 idx2 );
 extern void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk );
-extern const BTL_POKEPARAM* BTL_MAIN_GetClientPokeDataConst( const BTL_MAIN_MODULE* wk, u8 clientID, u8 memberIdx );
-extern BTL_POKEPARAM* BTL_MAIN_GetPokeParam( BTL_MAIN_MODULE* wk, u8 pokeID );
 
 //=========================================================
 // for server only
@@ -50,6 +42,23 @@ extern s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* pa
 //-------------------------
 extern BTL_POKEPARAM* BTL_PARTY_GetMemberData( BTL_PARTY* party, u8 idx );
 extern void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 );
+
+//-------------------------------------------------------------------------------
+/**
+ *	POKEMON_CONTAINER ŠÖ˜A
+ */
+//-------------------------------------------------------------------------------
+extern BTL_POKEPARAM* BTL_POKECON_GetFrontPokeData( BTL_POKE_CONTAINER* wk, BtlPokePos pos );
+extern const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER* wk, BtlPokePos pos );
+
+extern BTL_POKEPARAM* BTL_POKECON_GetClientPokeData( BTL_POKE_CONTAINER* wk, u8 clientID, u8 memberIdx );
+extern const BTL_POKEPARAM* BTL_POKECON_GetClientPokeDataConst( const BTL_POKE_CONTAINER* wk, u8 clientID, u8 memberIdx );
+
+extern BTL_POKEPARAM* BTL_POKECON_GetPokeParam( BTL_POKE_CONTAINER* wk, u8 pokeID );
+extern const BTL_POKEPARAM* BTL_POKECON_GetPokeParamConst( const BTL_POKE_CONTAINER* wk, u8 pokeID );
+
+extern BTL_PARTY* BTL_POKECON_GetPartyData( BTL_POKE_CONTAINER* wk, u32 clientID );
+extern const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER* wk, u32 clientID );
 
 
 //-------------------------------------------------------------------------------

@@ -11,6 +11,7 @@
 #define __BTL_EVENT_H__
 
 
+#include "btl_server_flow.h"
 #include "btl_server.h"
 
 //--------------------------------------------------------------
@@ -90,7 +91,7 @@ typedef enum {
 
 
 extern void BTL_EVENT_InitSystem( void );
-extern void BTL_EVENT_CallHandlers( BTL_SERVER* server, BtlEventType type );
+extern void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* server, BtlEventType type );
 
 
 #endif

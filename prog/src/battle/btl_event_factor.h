@@ -11,6 +11,7 @@
 #define __BTL_EVENT_FACTOR_H__
 
 #include "btl_event.h"
+#include "btl_server_flow.h"
 #include "btl_server.h"
 #include "btl_pokeparam.h"
 
@@ -28,7 +29,7 @@ enum {
 *	work	ワーク用配列（要素数はEVENT_HANDLER_WORK_ELEMS, 初回呼び出し時ゼロクリアが保証される）
 */
 //--------------------------------------------------------------
-typedef void (*BtlEventHandler)( BTL_SERVER* sv, u8 pokeID, int* work );
+typedef void (*BtlEventHandler)( BTL_SVFLOW_WORK* sv, u8 pokeID, int* work );
 
 //--------------------------------------------------------------
 /**

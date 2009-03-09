@@ -62,7 +62,7 @@ static BTL_EVENT_FACTOR* popFactor( void );
 static void pushFactor( BTL_EVENT_FACTOR* factor );
 static void clearFactorWork( BTL_EVENT_FACTOR* factor );
 static inline u32 calcFactorPriority( BtlEventFactor factorType, u16 subPri );
-static void callHandlers( const BtlEventHandlerTable* tbl, BtlEventType type, BTL_SERVER* server, u8 pokeID, int* work );
+static void callHandlers( const BtlEventHandlerTable* tbl, BtlEventType type, BTL_SVFLOW_WORK* flowWork, u8 pokeID, int* work );
 
 
 
@@ -199,27 +199,27 @@ void BTL_EVENT_RemoveFactor( BTL_EVENT_FACTOR* factor )
 	pushFactor( factor );
 }
 
-static void callHandlers( const BtlEventHandlerTable* tbl, BtlEventType type, BTL_SERVER* server, u8 pokeID, int* work )
+static void callHandlers( const BtlEventHandlerTable* tbl, BtlEventType type, BTL_SVFLOW_WORK* flowWork, u8 pokeID, int* work )
 {
 	int i;
 	for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
 	{
 		if( tbl[i].eventType == type )
 		{
-			tbl[i].handler( server, pokeID, work );
+			tbl[i].handler( flowWork, pokeID, work );
 		}
 	}
 }
 
 
 
-void BTL_EVENT_CallHandlers( BTL_SERVER* server, BtlEventType eventID )
+void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
 	BTL_EVENT_FACTOR* factor;
 
 	for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
 	{
-		callHandlers( factor->handlerTable, eventID, server, factor->pokeID, factor->work );
+		callHandlers( factor->handlerTable, eventID, flowWork, factor->pokeID, factor->work );
 	}
 }
 

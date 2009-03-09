@@ -88,6 +88,7 @@ struct _BTLV_SCU {
 	BTL_PROC					proc;
 	const BTLV_CORE*	vcore;
 	const BTL_MAIN_MODULE*	mainModule;
+	const BTL_POKE_CONTAINER*	pokeCon;
 	HEAPID				heapID;
 	u8						printSeq;
 	u8						playerClientID;
@@ -123,12 +124,15 @@ static void tokwin_hide( TOK_WIN* tokwin );
 
 
 
-BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, GFL_TCBLSYS* tcbl, GFL_FONT* defaultFont, u8 playerClientID, HEAPID heapID )
+BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
+	const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, 
+	GFL_TCBLSYS* tcbl, GFL_FONT* defaultFont, u8 playerClientID, HEAPID heapID )
 {
 	BTLV_SCU* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTLV_SCU) );
 
 	wk->vcore = vcore;
 	wk->mainModule = mainModule;
+	wk->pokeCon = pokeCon;
 	wk->heapID = heapID;
 	wk->playerClientID = playerClientID;
 
@@ -280,7 +284,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 			statwin_disp_start( &wk->statusWin[ BTL_POS_2ND_0 ] );
 			//soga
 			{
-				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_2ND_0 );
+				const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_POS_2ND_0 );
 				BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTLV_MCSS_POS_BB );
 			}
 			(*seq)++;
@@ -300,7 +304,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 			statwin_disp_start( &wk->statusWin[ BTL_POS_1ST_0 ] );
 			//soga
 			{
-				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_1ST_0 );
+				const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_POS_1ST_0 );
 				BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTLV_MCSS_POS_AA );
 			}
 			(*seq)++;
@@ -345,7 +349,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 
 			BTL_Printf("Ž©•ªClientID=%d, Ž©•ªPOS:%d, ‘ŠŽè0”ÔPOS:%d->v(%d)\n", wk->playerClientID, myPos, pos, viewPos );
 
-			bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
+			bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
 			BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
 			statwin_disp_start( &wk->statusWin[ pos ] );
 			(*seq)++;
@@ -364,7 +368,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 
 			BTL_Printf("Ž©•ªClientID=%d, Ž©•ªPOS:%d, ‘ŠŽè1”ÔPOS:%d->v(%d)\n", wk->playerClientID, myPos, pos, viewPos );
 
-			bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
+			bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
 			BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), viewPos );
 
 			statwin_disp_start( &wk->statusWin[ pos ] );
@@ -389,7 +393,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 
 			side = BTL_MAIN_GetClientSide( wk->mainModule, wk->playerClientID );
 			pos = BTL_MAINUTIL_GetSidePos( side, 0 );
-			bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
+			bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
 			vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
 
 			BTL_Printf("–¡•û0”ÔPOS:%d->v(%d)\n", pos, vpos );
@@ -411,7 +415,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 
 			side = BTL_MAIN_GetClientSide( wk->mainModule, wk->playerClientID );
 			pos = BTL_MAINUTIL_GetSidePos( side, 1 );
-			bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pos );
+			bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
 			vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
 
 			BTL_Printf("–¡•û1”ÔPOS:%d->v(%d)\n", pos, vpos );
@@ -835,7 +839,7 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
 
 	//soga
 	{
-		const BTL_POKEPARAM* bpp = BTL_MAIN_GetClientPokeDataConst( wk->mainModule, clientID, memberIdx );
+		const BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, clientID, memberIdx );
 		{
 			u8 vpos =  BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos);
 			BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), vpos );
@@ -1087,7 +1091,7 @@ static void statwin_reset_data( STATUS_WIN* stwin )
 {
 	BTLV_SCU* wk = stwin->parentWk;
 
-	stwin->bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, stwin->pokePos );
+	stwin->bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, stwin->pokePos );
 	stwin->hp = BTL_POKEPARAM_GetValue( stwin->bpp, BPP_HP );
 
 	GFL_BMP_Clear( stwin->bmp, TEST_STATWIN_BGCOL );
@@ -1182,7 +1186,7 @@ static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, u8 clientID )
 		u16 xpos;
 
 		msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tokusei_dat, GFL_HEAP_LOWID(wk->heapID) );
-		bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
+		bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, clientID );
 		tokusei = BTL_POKEPARAM_GetValue( bpp, BPP_TOKUSEI );
 		GFL_MSG_GetString( msg, tokusei, wk->strBuf );
 		xpos = (TEST_TOKWIN_DOT_WIDTH - PRINTSYS_GetStrWidth(wk->strBuf, wk->defaultFont, 0)) / 2;

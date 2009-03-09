@@ -105,6 +105,7 @@ struct _BTLV_SCD {
 
 	const BTLV_CORE* vcore;
 	const BTL_MAIN_MODULE* mainModule;
+	const BTL_POKE_CONTAINER* pokeCon;
 	HEAPID	heapID;
 };
 
@@ -141,12 +142,14 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs );
 
 
 
-BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID )
+BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, 
+				const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID )
 {
 	BTLV_SCD* wk = GFL_HEAP_AllocMemory( heapID, sizeof(BTLV_SCD) );
 
 	wk->vcore = vcore;
 	wk->mainModule = mainModule;
+	wk->pokeCon = pokeCon;
 	wk->heapID = heapID;
 	wk->font = font;
 	wk->strbuf = GFL_STR_CreateBuffer( 128, heapID );
@@ -604,7 +607,7 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 
 	while( count-- )
 	{
-		bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, *pos );
+		bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, *pos );
 		pp  = BTL_POKEPARAM_GetSrcData( bpp );
 		vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, *pos );
 		idx = stwdraw_vpos_to_tblidx( vpos );

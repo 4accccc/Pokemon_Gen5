@@ -349,6 +349,7 @@ SRCS_OVERLAY_BALLOON =	net_app/balloon/balloon.c \
 #===> SRCS_OVERLAY_SOGABE_DEBUG
 SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_server.c \
+			battle/btl_server_flow.c \
 			battle/btl_server_cmd.c \
 			battle/btl_client.c \
 			battle/btl_adapter.c \

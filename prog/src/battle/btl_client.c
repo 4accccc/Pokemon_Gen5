@@ -62,6 +62,7 @@ struct _BTL_WAZA_EXE_PARAM {
 struct _BTL_CLIENT {
 
 	BTL_MAIN_MODULE*	mainModule;
+	BTL_POKE_CONTAINER* pokeCon;
 
 	BTL_ADAPTER*	adapter;
 	BTLV_CORE*		viewCore;
@@ -147,8 +148,8 @@ static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 
 
 BTL_CLIENT* BTL_CLIENT_Create(
-	BTL_MAIN_MODULE* mainModule, BtlCommMode commMode, GFL_NETHANDLE* netHandle,
-	u16 clientID, u16 numCoverPos, BtlThinkerType clientType, HEAPID heapID )
+	BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon, BtlCommMode commMode,
+	GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos, BtlThinkerType clientType, HEAPID heapID )
 {
 	BTL_CLIENT* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_CLIENT) );
 	int i;
@@ -156,8 +157,9 @@ BTL_CLIENT* BTL_CLIENT_Create(
 	wk->myID = clientID;
 	wk->myType = clientType;
 	wk->adapter = BTL_ADAPTER_Create( netHandle, heapID, clientID );
-	wk->myParty = BTL_MAIN_GetPartyDataConst( mainModule, clientID );
+	wk->myParty = BTL_POKECON_GetPartyDataConst( pokecon, clientID );
 	wk->mainModule = mainModule;
+	wk->pokeCon = pokecon;
 	wk->numCoverPos = numCoverPos;
 	wk->procPokeIdx = 0;
 	wk->basePos = clientID;
@@ -447,7 +449,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 			for(j=0; j<CHECK_MAX; ++j)
 			{
 				targetpos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, j );
-				targetPoke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, targetpos );
+				targetPoke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, targetpos );
 				if( !BTL_POKEPARAM_IsDead(targetPoke) )
 				{
 					alivePokeIdx[ aliveCnt++ ] = j;
@@ -816,32 +818,6 @@ restart:
 	return FALSE;
 }
 
-
-// データ設定：ワザ発動
-#if 0
-static BOOL scProc_DATA_WazaExe( BTL_CLIENT* wk, int* seq, const int* args )
-{
-	BTL_WAZA_EXE_PARAM* wep;
-	const BTL_POKEPARAM* poke;
-	int i;
-	u8 userPos;
-
-	userPos = args[0];
-	wep = &wk->wazaExeParam[ userPos ];
-	wep->userPokeParam = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, userPos );
-	poke = wep->userPokeParam;
-	wep->waza = BTL_POKEPARAM_GetWazaNumber( poke, args[1] );
-	wep->numTargetClients = args[2];
-
-	for(i=0; i<wep->numTargetClients; i++)
-	{
-		wep->targetClientID[i] = args[3 + i];
-	}
-
-	return TRUE;
-}
-#endif
-
 static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ){
@@ -876,7 +852,10 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 			BtlPokePos  pokePos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
 
 			BTL_Printf("MEMBER IN .... myParty:%p, client=%d, posIdx=%d, memberIdx=%d\n", wk->myParty, clientID, posIdx, memberIdx);
-			BTL_MAIN_CLIENTDATA_SwapPartyMembers( wk->mainModule, clientID, posIdx, memberIdx );
+			{
+				BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+				BTL_PARTY_SwapMembers( party, posIdx, memberIdx );
+			}
 
 			BTLV_StartMemberChangeAct( wk->viewCore, pokePos, clientID, memberIdx );
 			(*seq)++;
@@ -931,7 +910,7 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args )
 		{
 			u8  pokePos = args[0];
 			u16 wazaIdx  = args[1];
-			const BTL_POKEPARAM* poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, pokePos );
+			const BTL_POKEPARAM* poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pokePos );
 			wazaIdx = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
 			BTLV_StartMsgWaza( wk->viewCore, pokePos, wazaIdx );
 		}
@@ -959,7 +938,7 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
 		atPokePos		= BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
 		defPokePos	= BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[1] );
 		waza			= args[2];
-		poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, atPokePos );
+		poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
 		BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza );
 		(*seq)++;
 	}
@@ -1243,13 +1222,13 @@ static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args )
 
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTL_POKEPARAM* pp = BTL_MAIN_GetPokeParam( wk->mainModule, args[0] );
+	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 	BTL_POKEPARAM_HpMinus( pp, args[1] );
 	return TRUE;
 }
 static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTL_POKEPARAM* pp = BTL_MAIN_GetPokeParam( wk->mainModule, args[0] );
+	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 	BTL_POKEPARAM_HpPlus( pp, args[1] );
 	return TRUE;
 }
@@ -1260,7 +1239,7 @@ static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args )
 	u8 value = args[2];
 	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, pokeID );
 
-	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, pokePos );
+	BTL_POKEPARAM* pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, pokePos );
 	BTL_POKEPARAM_PPMinus( pp, wazaIdx, value );
 	BTL_Printf("ポケモンのPP 減らします pokeID=%d, waza=%d, val=%d\n", pokeID, wazaIdx, value);
 
@@ -1268,20 +1247,20 @@ static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args )
 }
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
+	BTL_POKEPARAM* pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, args[0] );
 	BTL_POKEPARAM_PPPlus( pp, args[1], args[2] );
 	return TRUE;
 }
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
+	BTL_POKEPARAM* pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, args[0] );
 	BTL_Printf(" OP - RankDown PokePos=%d, ppDat=%p\n", args[0], pp);
 	BTL_POKEPARAM_RankDown( pp, args[1], args[2] );
 	return TRUE;
 }
 static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTL_POKEPARAM* pp = BTL_MAIN_GetPokeParam( wk->mainModule, args[0] );
+	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 	BTL_POKEPARAM_SetWazaSick( pp, args[1], args[2] );
 	return TRUE;
 }
