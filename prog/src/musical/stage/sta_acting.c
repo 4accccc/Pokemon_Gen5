@@ -199,7 +199,7 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 	SND_STRM_Stop();
 	SND_STRM_Release();
 	
-	INFOWIN_Term();
+	INFOWIN_Exit();
 
 	GFL_BMPWIN_Delete( work->msgWin );
 	GFL_FONT_Delete( work->fontHandle );

@@ -1200,7 +1200,7 @@ static void Field_UpdateInfoBar(void)
 }
 static void Field_TermInfoBar(void)
 {
-	INFOWIN_Term();
+	INFOWIN_Exit();
 	GFL_BG_FreeBGControl(FIELD_INFOWIN_BGPLANE);
 }
 

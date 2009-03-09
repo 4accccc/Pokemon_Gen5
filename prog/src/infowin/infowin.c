@@ -230,7 +230,7 @@ void	INFOWIN_Update( void )
 	}
 }
 
-void	INFOWIN_Term( void )
+void	INFOWIN_Exit( void )
 {
 	GF_ASSERT_MSG(infoWk != NULL ,"Infobar is not initialize!!\n");
 	

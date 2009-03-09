@@ -32,7 +32,7 @@
 //	@param heapId	ÉqÅ[ÉvID
 void	INFOWIN_Init( u8 bgplane , u8 pltNo, HEAPID heapId );
 void	INFOWIN_Update( void );
-void	INFOWIN_Term( void );
+void	INFOWIN_Exit( void );
 
 void	INFOWIN_StartComm( void );
 const BOOL	INFOWIN_IsStartComm( void );

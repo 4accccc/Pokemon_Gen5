@@ -274,7 +274,7 @@ void	DUP_FIT_TermFitting( FITTING_WORK *work )
 	GX_SetMasterBrightness(-16);	
 	GXS_SetMasterBrightness(-16);
 	
-	INFOWIN_Term();
+	INFOWIN_Exit();
 
 	DUP_FIT_TermItem( work );
 	MUS_POKE_DRAW_Del( work->drawSys , work->drawWork );

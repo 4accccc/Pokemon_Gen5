@@ -2229,7 +2229,7 @@ static void BalloonDefaultBGSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 //--------------------------------------------------------------
 static void BalloonDefaultBGDel(BALLOON_GAME_WORK *game)
 {
-	INFOWIN_Term();
+	INFOWIN_Exit();
 }
 
 //--------------------------------------------------------------
