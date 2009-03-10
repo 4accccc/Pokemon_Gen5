@@ -1,33 +1,49 @@
 # CXls2Xml.rb
 # Excel(Open Office)で編集された.xlsファイルを、xml形式に変換するためのクラス
+# .xlsからXMLへの変換は、poiライブラリを使用したjavaで行っている
+# UTF-8からShiftJISへの変換は、NKFを使用している
+# 
 
-# .xlsからXMLへの変換は、xlhtmlというツールを使用している
-#    xlHtml.org Home Page --- http://www.xlhtml.org/
-#    (ココで公開されているソースをcygwin上でmakeして使用)
-# UTF-8からShiftJISへの変換は、UTF-8対応の nkf.exe を使用している
-#    NKF32.exe --- http://hp.vector.co.jp/authors/VA002468/nkf32.htm
+COLUMM_A = 0
+COLUMM_B = 1
+COLUMM_C = 2
+COLUMM_D = 3
+COLUMM_E = 4
+COLUMM_F = 5
+COLUMM_G = 6
+COLUMM_H = 7
+COLUMM_I = 8
+COLUMM_J = 9
+COLUMM_K = 10
+COLUMM_L = 11
+COLUMM_M = 12
+COLUMM_N = 13
+COLUMM_O = 14
+COLUMM_P = 15
+COLUMM_Q = 16
+COLUMM_R = 17
+COLUMM_S = 18
+COLUMM_T = 19
+COLUMM_U = 20
+COLUMM_V = 21
+COLUMM_W = 22
+COLUMM_X = 23
+COLUMM_Y = 24
+COLUMM_Z = 25
 
-# .xlsからXMLへの変換は、中條君の作った xls2xml というjavaのツールを
-# 使用するように変更した。パスの通った場所に java コマンドがインストール
-# されている必要がある。 xls2xml自体は、POIというライブラリを使用している。
-# 出力する漢字コードはオプションで変更できるので、ShiftJIS を指定してある。
+
 
 
 
 ### 定数定義
 #
-#CMD_PATH = File.dirname($0)
-CMD_PATH = File.dirname(__FILE__).gsub(/\\/,"/")
+CMD_PATH = File.dirname($0)
+
 
 # .xls を .xml に変換するためのコマンド式
-#CMD_XLS2XML = "#{CMD_PATH}/xlhtml.exe -xml "
-# ShiftJISに変換するためのパイプコマンド
-#CMD_2SJIS = " | #{CMD_PATH}/nkf.exe -WsLw"
-
-# .xls を .xml に変換するためのコマンド式
-CMD_XLS2XML = "java -Xmx512M -jar #{CMD_PATH}/xls2xml.jar -s -windows "
-# JavaがOutOfMemoryエラーを出したら、 -Xmx512M など、大きめの数値を指定する
 #CMD_XLS2XML = "java -Xmx512M -jar #{CMD_PATH}/xls2xml.jar -s -windows "
+#CMD_XLS2XML = "java -Xmx512M -jar #{CMD_PATH}/poidom.jar -s -windows "
+CMD_XLS2XML = "java -classpath xls2xml.jar XLS2XML "
 CMD_2SJIS = ""
 #CMD_2SJIS = " | #{CMD_PATH}/nkf.exe -SsLw"
 
@@ -72,8 +88,7 @@ class CXls2Xml
   def xls2xml(xlsFileName)
     begin
       raise FileNotFoundException, xlsFileName if ! FileTest::exist? xlsFileName
-      # fukuzawa:このやり方ではエラーをチェックできない
-      out = open("|" + CMD_XLS2XML + xlsFileName + CMD_2SJIS)
+      out = open("|" + CMD_XLS2XML + xlsFileName)
       lines = out.readlines
       out.close
       return lines
@@ -102,7 +117,8 @@ class CXls2Xml
 	### row,colデータを得る
 	if line.include?("</sheet>")
 	  mode = 0
-	  iSheet += 1
+          iSheet += 1
+          p iSheet
 	end
 	row, col = getRowCol(line)
 	if (row != -1) and (col != -1)
