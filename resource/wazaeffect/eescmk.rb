@@ -1,0 +1,375 @@
+#========================================================================
+#
+#	エフェクトエディタで生成したデータからスクリプトファイルを生成
+#
+#========================================================================
+
+#	コマンドリストクラス
+class	CommandList
+	def initialize
+		@com = []
+	end
+
+	def	add_com
+		@com << Command.new
+	end
+
+	def get_com_str( str )
+		for i in 0..( @com.size - 1 )
+			if @com[ i ].get_com_str == str
+				break
+			end
+		end
+		@com[ i ]
+	end
+
+	def get_com_num( num )
+		@com[num]
+	end
+end
+
+#	コマンドクラス
+class	Command
+	def	initialize
+		@com_str				#コマンド名（全角文字で書かれたもの）
+		@com_label				#コマンド名（.sファイルに吐き出す#defineで定義されたもの）
+		@param = []				#パラメータ
+		@combobox_text = []		#コンボボックスで表示されていたリスト
+		@combobox_value = []	#コンボボックスで表示されていたリストに対応するラベル定義
+		@fd_ext_num = []		#FILE_DIALOGの拡張子指定をしたパラメータ番号
+		@fd_ext = []			#FILE_DIALOGの拡張子
+		@fdc_ext_num = []		#FILE_DIALOG_COMBOBOXの拡張子指定をしたパラメータ番号
+		@fdc_ext = []			#FILE_DIALOG_COMBOBOXの拡張子
+	end
+
+	def	set_com_str( str )
+		@com_str = str
+	end
+
+	def set_com_label( label )
+		@com_label = label
+	end
+
+	def	get_com_str
+		@com_str
+	end
+
+	def get_com_label
+		@com_label
+	end
+
+	def	add_param( param )
+		@param << param
+	end
+
+	def	add_combobox_text( text )
+		@combobox_text << text
+	end
+
+	def	add_combobox_value( value )
+		@combobox_value << value
+	end
+
+	def add_fd_ext( num, ext )
+		@fd_ext_num << num
+		@fd_ext << ext
+	end
+
+	def add_fdc_ext( num, ext )
+		@fdc_ext_num << num
+		@fdc_ext << ext
+	end
+
+	def get_param
+		@param
+	end
+
+	def get_combobox_text( num )
+		if num > @combobox_text.size
+			print "combobox_text配列サイズより大きい値が設定されています\n"
+			exit( 1 )
+		end
+		@combobox_text[ num ]
+	end
+
+	def get_combobox_value( num )
+		if num > @combobox_value.size
+			print "combobox_value配列サイズより大きい値が設定されています\n"
+			exit( 1 )
+		end
+		@combobox_value[ num ]
+	end
+
+	def get_fd_ext( num )
+		find = -1
+		@fd_ext_num.each { |no|
+			if @fd_ext_num[ no ] == num
+				find = no
+				break
+			end
+		}
+		if find == -1
+			print "設定されていない拡張子が指定されています\n"
+		end
+		@fd_ext[ find ]
+	end
+
+	def get_fdc_ext( num )
+		find = -1
+		@fdc_ext_num.each { |no|
+			if @fdc_ext_num[ no ] == num
+				find = no
+				break
+			end
+		}
+		if find == -1
+			print "設定されていない拡張子が指定されています\n"
+		end
+		@fdc_ext[ find ]
+	end
+
+	def search_param( param )
+		for num in 0..@param.size
+			if @param[ num ] == param
+				break
+			end
+		end
+		num
+	end
+
+	def search_combobox_text( text )
+		for num in 0..@combobox_text.size
+			if @combobox_text[ num ] == text
+				break
+			end
+		end
+		num
+	end
+
+	def search_combobox_value( value )
+		for num in 0..@combobox_value.size
+			if @combobox_value[ num ] == value
+				break
+			end
+		end
+		num
+	end
+
+end
+
+#	メインルーチン
+	if ARGV.size < 2
+		print "error: ruby eescmk.rb def_file esf_file\n";
+		print "def_file: スクリプト命令マクロが記述されたヘッダーファイル\n";
+		print "esf_file: エフェクトエディタで作成されたesfファイル\n";
+		exit( 1 )
+	end
+
+	$KCODE = "Shift-JIS"
+
+	com_list = CommandList.new
+	com_num = 0
+	param_num = 0
+	param_num_max = 0
+	combobox_text = 0
+
+	fp_r = open( ARGV[ 0 ] )
+	data = fp_r.readlines
+	fp_r.close
+
+	seq_no = 0
+
+	#コマンドクラスを生成
+	SEQ_INIT_CMD_SEARCH = 0
+	SEQ_BRIEF_SEARCH = 1
+	SEQ_PARAM_NUM_SEARCH = 2
+	SEQ_PARAM_SEARCH = 3
+	SEQ_MACRO_SEARCH = 4
+
+	#SEQ_INIT_CMD_SEARCH
+	INIT_CMD_POS = 2
+
+	#SEQ_BRIEF_SEARCH
+	BRIEF_POS = 2
+	COM_STR_POS = 3
+
+	#SEQ_PARAM_NUM_SEARCH
+	PARAM_NUM_POS = 2
+	PARAM_NUM_VALUE = 3
+
+	#SEQ_PARAM_SEARCH
+	PARAM_POS = 2
+	PARAM_VALUE = 3
+
+	#SEQ_MACRO_SEARCH
+	MACRO_POS = 1
+	COM_LABEL_POS = 2
+
+	data.size.times { |i|
+		split_data = data[i].split(/\s+/)
+		case seq_no
+		when SEQ_INIT_CMD_SEARCH
+			if split_data[ INIT_CMD_POS ] == "INIT_CMD"
+				seq_no = SEQ_BRIEF_SEARCH
+			end
+		when SEQ_BRIEF_SEARCH
+			if split_data[ BRIEF_POS ] == "@brief"
+				com_list.add_com
+				com_list.get_com_num( com_num ).set_com_str( split_data[ COM_STR_POS ] );
+				seq_no = SEQ_PARAM_NUM_SEARCH
+			end
+		when SEQ_PARAM_NUM_SEARCH
+			if split_data[ PARAM_NUM_POS ] == "#param_num"
+				param_num_max = split_data[ PARAM_NUM_VALUE ].to_i;
+				param_num = 0
+				seq_no = SEQ_PARAM_SEARCH
+			end
+		when SEQ_PARAM_SEARCH
+			if split_data[ PARAM_POS ] == "#param"
+				case split_data[ PARAM_VALUE ]
+				when "COMBOBOX_TEXT"
+					combobox_text = 1
+					com_list.get_com_num( com_num ).add_param( split_data[ PARAM_VALUE ] )
+					for i in (PARAM_VALUE + 1)..(split_data.size - 1)
+						com_list.get_com_num( com_num ).add_combobox_text( split_data[ i ] )
+					end
+				when "COMBOBOX_VALUE"
+					if combobox_text == 0
+						print "syntax error command:" + com_list.get_com_num( com_num ).get_com_str
+						print "\nCOBOBOX_VALUEを使用するときは、COMBOBOX_TEXTと併記してください\n"
+						exit( 1 )
+					end
+					for i in (PARAM_VALUE + 1)..(split_data.size - 1)
+						com_list.get_com_num( com_num ).add_combobox_value( split_data[ i ] )
+					end
+					combobox_text = 0
+					param_num = param_num + 1
+				when "FILE_DIALOG"
+					combobox_text = 0
+					com_list.get_com_num( com_num ).add_param( split_data[ PARAM_VALUE ] )
+					com_list.get_com_num( com_num ).add_fd_ext( param_num, split_data[ PARAM_VALUE + 1 ] )
+					param_num = param_num + 1
+				when "FILE_DIALOG_COMBOBOX"
+					combobox_text = 0
+					com_list.get_com_num( com_num ).add_param( split_data[ PARAM_VALUE ] )
+					com_list.get_com_num( com_num ).add_fdc_ext( param_num, split_data[ PARAM_VALUE + 1 ] )
+					param_num = param_num + 1
+				else
+					combobox_text = 0
+					com_list.get_com_num( com_num ).add_param( split_data[ PARAM_VALUE ] )
+					param_num = param_num + 1
+				end
+			end
+			if param_num == param_num_max
+				seq_no = SEQ_MACRO_SEARCH
+			end
+		when SEQ_MACRO_SEARCH
+			if split_data[ MACRO_POS ] == ".macro"
+				com_list.get_com_num( com_num ).set_com_label( split_data[ COM_LABEL_POS ] )
+				com_num = com_num + 1
+				seq_no = SEQ_BRIEF_SEARCH
+			end
+		end
+	}
+
+	#esfファイルから.sファイルを生成
+	fp_r = open( ARGV[ 1 ] )
+	data = fp_r.readlines
+	fp_r.close
+
+	seq_no = 0
+	seq_table = []
+	sequence = []
+	dir_table = [ "AA2BB", "BB2AA", "A2B", "A2C", "A2D", "B2A", "B2C", "B2D", "C2A", "C2B", "C2D", "D2A", "D2B", "D2C" ]
+	num_str = ""
+
+	SEQ_EFFNO_SEARCH = 0
+	SEQ_MAKE_DATA = 1
+
+	EFFNO_POS = 0
+	ESF_COM_STR_POS = 0
+
+	data.size.times { |i|
+		split_data = data[i].split(/\s+/)
+		case seq_no
+		when SEQ_EFFNO_SEARCH
+			if split_data[ EFFNO_POS ][ 0 ].chr == "#"
+				num_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr + split_data[ EFFNO_POS ][ 3 ].chr
+				seq_table.clear
+				sequence.clear
+				dir_table.size.times { |dir|
+					seq_table << "\t.long\t" + "WE_" + num_str + "_00\t//" + dir_table[ dir ] + "\n"
+				}
+				seq_no = SEQ_MAKE_DATA
+			end
+		when SEQ_MAKE_DATA
+			if split_data[ EFFNO_POS ][ 0 ].chr == "#"
+				i -= 1
+				seq_no = SEQ_EFFNO_SEARCH
+			elsif split_data[ EFFNO_POS ][ 0 ].chr == "&"
+				write_file = "we_" + num_str + ".s"
+				fp_w = open( write_file, "w" )
+				fp_w.print("//===================================================\n")
+				fp_w.print("//	エフェクトシーケンス\n")
+				fp_w.print("//===================================================\n")
+				fp_w.print("\n")
+				fp_w.print("\t.text\n")
+				fp_w.print("\n")
+				fp_w.print("#define	__ASM_NO_DEF_\n")
+				fp_w.print("\t.include	../../prog/src/battle/btlv/btlv_efftool.h\n")
+				fp_w.print("\t.include	../../prog/src/battle/btlv/btlv_effvm_def.h\n")
+				fp_w.print("\t.include	../../prog/arc/spa_def.h\n")
+				fp_w.print("\n")
+				seq_table.size.times { |seq|
+					fp_w.print seq_table[ seq ]
+				}
+				sequence.size.times { |seq|
+					fp_w.print sequence[ seq ]
+				}
+				fp_w.close
+			elsif split_data[ EFFNO_POS ][ 0 ].chr == "%"
+				dir_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr
+				seq_str = "\nWE_" + num_str + "_" + dir_str + ":\n"
+				sequence << seq_str
+				seq_table[ dir_str.to_i ] = "\t.long\t" + "WE_" + num_str + "_" + dir_str + "\t//" + dir_table[ dir_str.to_i ] + "\n"
+			else
+				str = ""
+				str += "\t" + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_com_label + "\t"
+				param_num = 1
+				com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_param.each {|param|
+					if param_num != 1
+						str += ",\t"
+					end
+					case param
+					when "COMBOBOX_TEXT"
+						num = com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).search_combobox_text( split_data[ param_num ] )
+						str += com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_combobox_value( num )
+					when "VALUE_FX32"
+						f = split_data[ param_num ].to_f
+						if f > 0
+							f = f * ( 1 << 12 ) + 0.5
+						else
+							f = f * ( 1 << 12 ) - 0.5
+						end
+						str += format("0x%08x",f)
+					when "VALUE_INT"
+						str += split_data[ param_num ]
+					when "FILE_DIALOG"
+						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ) 
+						file_dialog = file_dialog.sub( ".", "_" ).upcase
+						str += file_dialog
+					when "FILE_DIALOG_COMBOBOX"
+						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fdc_ext( param_num -1 ) 
+						file_dialog = file_dialog.sub( ".", "_" ).upcase
+						str += file_dialog
+					when "COMBOBOX_HEADER"
+						str += split_data[ param_num ]
+					end
+					param_num = param_num + 1
+				}
+				str += "\n"
+				sequence << str
+			end
+		end
+	}
+
