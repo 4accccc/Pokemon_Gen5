@@ -72,6 +72,7 @@ $(TARGET_DIR)/$(TARGET_NARC): $(TARGET_NARC)
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 $(TARGET_NARC): $(SCRSRCS:.ev=.bin)
 	nnsarc -i -c -l -n $(TARGET_NARC) $(SCRSRCS:.ev=.bin) > arc_result.txt
+	$(NAIXCUT) $(TARGET_NAIX)
 endif
 
 mklst:
