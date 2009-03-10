@@ -37,7 +37,7 @@
 
 #include "net_app/wifi_lobby/worldtimer.h"
 #include "net_app/wifi_lobby/wldtimer_snd.h"
-#include "net_app/wifi_earth/wifi_earth_place.naix"
+#include "wifi_earth_place.naix"
 #include "net_app/wifi_earth/wifi_earth.naix"
 #include "net_app/wifi_country.h"
 

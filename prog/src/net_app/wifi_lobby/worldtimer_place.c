@@ -15,8 +15,9 @@
 //#include "system/arc_util.h"
 
 #include "net_app/wifi_country.h"
-#include "net_app/wifi_earth/wifi_earth_place.naix"
+#include "wifi_earth_place.naix"
 #include "net_app/wifi_lobby/worldtimer_place.h"
+#include "arc_def.h"
 
 //-----------------------------------------------------------------------------
 /**
