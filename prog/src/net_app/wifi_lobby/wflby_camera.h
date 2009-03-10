@@ -49,6 +49,7 @@ extern void WFLBY_CAMERA_SetTargetPerson3D( WFLBY_CAMERA* p_sys, fx32 x, fx32 y,
 extern void WFLBY_CAMERA_SetTargetPerson( WFLBY_CAMERA* p_sys, const WFLBY_3DPERSON* cp_person );
 extern const WFLBY_3DPERSON* WFLBY_CAMERA_GetTargetPerson( const WFLBY_CAMERA* cp_sys );
 extern void WFLBY_CAMERA_ResetTargetPerson( WFLBY_CAMERA* p_sys );
+extern GFL_G3D_CAMERA * WFLBY_CAMERA_Get(WFLBY_CAMERA *p_sys);
 
 #ifdef WFLBY_CAMERA_DEBUG
 extern WFLBY_CAMERA* WFLBY_CAMERA_DEBUG_CameraInit( u32 heapID );

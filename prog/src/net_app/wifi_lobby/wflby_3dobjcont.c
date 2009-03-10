@@ -497,9 +497,9 @@ void WFLBY_3DOBJCONT_ReqMove( WFLBY_3DOBJCONT* p_sys )
  *	@param	p_sys		システムワーク
  */
 //-----------------------------------------------------------------------------
-void WFLBY_3DOBJCONT_Draw( WFLBY_3DOBJCONT* p_sys )
+void WFLBY_3DOBJCONT_Draw( WFLBY_3DOBJCONT* p_sys, GFL_G3D_CAMERA *p_camera )
 {
-	WFLBY_3DOBJSYS_Draw( p_sys->p_drawsys );
+	WFLBY_3DOBJSYS_Draw( p_sys->p_drawsys, p_camera );
 }
 
 //----------------------------------------------------------------------------

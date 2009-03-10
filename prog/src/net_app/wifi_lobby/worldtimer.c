@@ -1602,7 +1602,7 @@ GFL_PROC_RESULT WLDTIMER_DebugExit(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 //-----------------------------------------------------------------------------
 static void WLDTIMER_EarthListLoad( WLDTIMER_PLACE* p_wk, const WFLBY_WLDTIMER* cp_data, u32 heapID )
 {
-	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARC_WIFI_EARCH_PLACE, heapID );
+	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFI_EARTH_PLACE, heapID );
 	
 	//地点リスト総数初期化
 	p_wk->placelist.listcount = 0;
@@ -1613,8 +1613,8 @@ static void WLDTIMER_EarthListLoad( WLDTIMER_PLACE* p_wk, const WFLBY_WLDTIMER* 
 		u32	size;
 		int	i,listcount;
 
-		filep = ArcUtil_HDL_LoadEx( p_handle, NARC_wifi_earth_place_place_pos_wrd_dat, 
-								FALSE, heapID, ALLOC_TOP, &size );
+		filep = GFL_ARCHDL_UTIL_LoadEx( p_handle, NARC_wifi_earth_place_place_pos_wrd_dat, 
+								FALSE, heapID, &size );
 
 		listp = (EARTH_DATA_NATION*)filep;	//ファイル読み込み用に変換
 		listcount = size/6;				//地点数取得（データ長：１地点につき６バイト）
@@ -1642,8 +1642,8 @@ static void WLDTIMER_EarthListLoad( WLDTIMER_PLACE* p_wk, const WFLBY_WLDTIMER* 
 		while(index < datLen){
 
 			data_id = WIFI_COUNTRY_DataIndexToPlaceDataID( index );
-			filep = ArcUtil_HDL_LoadEx( p_handle, data_id, FALSE, 
-									heapID, ALLOC_TOP, &size );
+			filep = GFL_ARCHDL_UTIL_LoadEx( p_handle, data_id, FALSE, 
+									heapID, &size );
 
 			listp = (EARTH_DATA_AREA*)filep;	//ファイル読み込み用に変換
 			listcount = size/4;		//地点数取得（データ長：１地点につき４バイト）

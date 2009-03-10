@@ -78,7 +78,7 @@ WFLBY_TIME WFLBY_WORLDTIMER_PLACE_GetPlaceTime( u16 nation, u8 area, WFLBY_TIME 
 	WFLBY_TIME time;
 	ARCHANDLE* p_handle;
 
-	p_handle = GFL_ARC_OpenDataHandle( ARC_WIFI_EARCH_PLACE, heapID );
+	p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFI_EARTH_PLACE, heapID );
 	
 
 	// GMT地域の回転角度取得
@@ -140,8 +140,8 @@ static void WLDTIMER_EarthListGetNationData( ARCHANDLE* p_handle, u32 heapID, u1
 		u32	size;
 		int	listcount;
 
-		filep = ArcUtil_HDL_LoadEx( p_handle, NARC_wifi_earth_place_place_pos_wrd_dat, 
-								FALSE, heapID, ALLOC_TOP, &size );
+		filep = GFL_ARCHDL_UTIL_LoadEx( p_handle, NARC_wifi_earth_place_place_pos_wrd_dat, 
+								FALSE, heapID, &size );
 
 		listp = (EARTH_DATA_NATION*)filep;	//ファイル読み込み用に変換
 		listcount = size/6;				//地点数取得（データ長：１地点につき６バイト）
@@ -166,8 +166,8 @@ static void WLDTIMER_EarthListGetNationData( ARCHANDLE* p_handle, u32 heapID, u1
 		index = WIFI_COUNTRY_CountryCodeToDataIndex( nation );	//1orgin
 
 		data_id = WIFI_COUNTRY_DataIndexToPlaceDataID( index );
-		filep = ArcUtil_HDL_LoadEx( p_handle, data_id, FALSE, 
-								heapID, ALLOC_TOP, &size );
+		filep = GFL_ARCHDL_UTIL_LoadEx( p_handle, data_id, FALSE, 
+								heapID, &size );
 
 		listp = (EARTH_DATA_AREA*)filep;	//ファイル読み込み用に変換
 		listcount = size/4;		//地点数取得（データ長：１地点につき４バイト）

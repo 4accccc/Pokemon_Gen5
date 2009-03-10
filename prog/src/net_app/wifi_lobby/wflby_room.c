@@ -3332,7 +3332,7 @@ static void WFLBY_ROOM_RoomDraw( WFLBY_ROOMWK* p_wk )
 #endif
 	
 	// 人物の表示
-	WFLBY_3DOBJCONT_Draw( p_wk->p_objcont );
+	WFLBY_3DOBJCONT_Draw( p_wk->p_objcont, WFLBY_CAMERA_Get(p_wk->p_camera) );
 	WFLBY_DEBUG_ROOM_PRINT_TIME_TICK_PRINT_DRAW( __LINE__ );
 
 	//プロジェクションマトリクスを元に戻す
@@ -5882,9 +5882,9 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WriteWazaType( WFLBY_UNDER_WIN* p_ugwk, W
 			bt_type = WFLBY_BattleWazaType_Get( type );
 
 			// キャラクタ展開
-			p_char = ArcUtil_Load( WazaTypeIcon_ArcIDGet(),
+			p_char = GFL_ARC_UTIL_Load( WazaTypeIcon_ArcIDGet(),
 					WazaTypeIcon_CgrIDGet( bt_type ),
-					TRUE, heapID, ALLOC_BOTTOM );
+					TRUE, GFL_HEAP_LOWID(heapID) );
 			NNS_G2dGetUnpackedCharacterData( p_char, &p_chardata );
 			GF_BGL_LoadCharacter(p_sys->p_bgl, 
 					sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG],

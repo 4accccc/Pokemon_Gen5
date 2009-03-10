@@ -91,8 +91,9 @@ void WFLBY_3DMATRIX_GetVecPos( const VecFx32* cp_vec, WF2DMAP_POS* p_pos )
  *	@param	gheapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-void WFLBY_3DMAPOBJ_TEX_LoatCutTex( void** pp_in, ARCHANDLE* p_handle, u32 data_idx, u32 gheapID )
+void WFLBY_3DMAPOBJ_TEX_LoatCutTex( GFL_G3D_RES** pp_in, ARCHANDLE* p_handle, u32 data_idx, u32 gheapID )
 {
+#if WB_FIX
 	u32 tex_cut_size;
 	void* p_file;
 	NNSGfdTexKey	texKey;		// テクスチャキー
@@ -101,7 +102,7 @@ void WFLBY_3DMAPOBJ_TEX_LoatCutTex( void** pp_in, ARCHANDLE* p_handle, u32 data_
 	NNSG3dResTex*	p_tex;
 
 	// まず普通にモデルを読み込む
-	p_file = ArcUtil_HDL_Load( p_handle, data_idx, FALSE, gheapID, ALLOC_BOTTOM );
+	p_file = GFL_ARCHDL_UTIL_Load( p_handle, data_idx, FALSE, GFL_HEAP_LOWID(gheapID) );
 
 	// VRAMに展開
 	{
@@ -135,6 +136,27 @@ void WFLBY_3DMAPOBJ_TEX_LoatCutTex( void** pp_in, ARCHANDLE* p_handle, u32 data_
 
 	// 一時ファイルを破棄
 	GFL_HEAP_FreeMemory( p_file );
+#else
+	GFL_G3D_RES *g3dres;
+	NNSG3dResTex*	p_tex;
+	u8* texImgStartAddr;
+	u32 newSize;
+	
+	// まず普通にモデルを読み込む
+	g3dres = GFL_G3D_CreateResourceHandle(p_handle, data_idx);
+	
+	//VRAMに展開
+	GFL_G3D_TransVramTexture(g3dres);
+	
+	//テクスチャイメージをVRAMへ展開し終わったので、実体を破棄
+	p_tex = GFL_G3D_GetResTex(g3dres);
+	GF_ASSERT(p_tex->texInfo.ofsTex != 0);
+	texImgStartAddr = (u8*)p_tex + p_tex->texInfo.ofsTex;
+	newSize = (u32)(texImgStartAddr - (u8*)p_file);	//ヒープの頭からテクスチャイメージまでのサイズ
+	GFL_HEAP_ResizeMemory(p_file, newSize);
+	
+	*pp_in = g3dres;
+#endif
 }
 
 

@@ -66,7 +66,7 @@ extern WFLBY_3DOBJCONT* WFLBY_3DOBJCONT_Init( u32 objnum, u32 hero_sex, const WF
 extern void WFLBY_3DOBJCONT_Exit( WFLBY_3DOBJCONT* p_sys );
 extern void WFLBY_3DOBJCONT_Move( WFLBY_3DOBJCONT* p_sys );
 extern void WFLBY_3DOBJCONT_ReqMove( WFLBY_3DOBJCONT* p_sys );
-extern void WFLBY_3DOBJCONT_Draw( WFLBY_3DOBJCONT* p_sys );
+extern void WFLBY_3DOBJCONT_Draw( WFLBY_3DOBJCONT* p_sys, GFL_G3D_CAMERA *p_camera );
 extern void WFLBY_3DOBJCONT_VBlank( WFLBY_3DOBJCONT* p_sys );
 
 // âeëÄçÏ

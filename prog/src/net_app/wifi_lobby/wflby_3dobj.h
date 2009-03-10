@@ -55,7 +55,7 @@ typedef struct _WFLBY_3DOBJWK WFLBY_3DOBJWK;
 extern WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 gheapID );
 extern void WFLBY_3DOBJSYS_Exit( WFLBY_3DOBJSYS* p_sys );
 extern void WFLBY_3DOBJSYS_Updata( WFLBY_3DOBJSYS* p_sys );
-extern void WFLBY_3DOBJSYS_Draw( WFLBY_3DOBJSYS* p_sys );
+extern void WFLBY_3DOBJSYS_Draw( WFLBY_3DOBJSYS* p_sys, GFL_G3D_CAMERA *p_camera );
 extern void WFLBY_3DOBJSYS_VBlank( WFLBY_3DOBJSYS* p_sys );
 
 // 出せるトレーナタイプなのかチェック

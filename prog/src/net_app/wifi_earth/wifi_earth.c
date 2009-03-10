@@ -1145,7 +1145,7 @@ static void Earth_BGsysSet(void )
 //----------------------------------
 static void EarthListLoad( EARTH_DEMO_WORK * wk )
 {
-	ARCHANDLE* p_handle = ArchiveDataHandleOpen( ARC_WIFI_EARCH_PLACE, wk->heapID );
+	ARCHANDLE* p_handle = ArchiveDataHandleOpen( ARCID_WIFI_EARTH_PLACE, wk->heapID );
 	
 	//地点リスト総数初期化
 	wk->placelist.listcount = 0;
@@ -1156,8 +1156,8 @@ static void EarthListLoad( EARTH_DEMO_WORK * wk )
 		u32	size;
 		int	i,listcount;
 
-		filep = ArcUtil_HDL_LoadEx( p_handle, NARC_wifi_earth_place_place_pos_wrd_dat, 
-								FALSE, wk->heapID, ALLOC_TOP, &size );
+		filep = GFL_ARCHDL_UTIL_LoadEx( p_handle, NARC_wifi_earth_place_place_pos_wrd_dat, 
+								FALSE, wk->heapID, &size );
 
 		listp = (EARTH_DATA_NATION*)filep;	//ファイル読み込み用に変換
 		listcount = size/6;				//地点数取得（データ長：１地点につき６バイト）
@@ -1184,8 +1184,8 @@ static void EarthListLoad( EARTH_DEMO_WORK * wk )
 		while(index < datLen){
 
 			data_id = WIFI_COUNTRY_DataIndexToPlaceDataID( index );
-			filep = ArcUtil_HDL_LoadEx( p_handle, data_id, FALSE, 
-									wk->heapID, ALLOC_TOP, &size );
+			filep = GFL_ARCHDL_UTIL_LoadEx( p_handle, data_id, FALSE, 
+									wk->heapID, &size );
 
 			listp = (EARTH_DATA_AREA*)filep;	//ファイル読み込み用に変換
 			listcount = size/4;		//地点数取得（データ長：１地点につき４バイト）

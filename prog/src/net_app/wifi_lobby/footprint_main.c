@@ -1718,16 +1718,16 @@ static BOOL OBJFootCharRewrite(int monsno, int form_no, GFL_CLWK cap, ARCHANDLE 
 	
 	OS_TPrintf("書き換えmonsno = %d\n", monsno);
 	if(FootprintTool_FootDispCheck(monsno, form_no, arceus_flg) == TRUE){
-		pSrc = ArcUtil_HDL_Load(hdl_mark, POKEFOOT_ARC_CHAR_DMMY + monsno, //足跡
-			TRUE, HEAPID_FOOTPRINT, ALLOC_BOTTOM);
+		pSrc = GFL_ARCHDL_UTIL_Load(hdl_mark, POKEFOOT_ARC_CHAR_DMMY + monsno, //足跡
+			TRUE, GFL_HEAP_LOWID(HEAPID_FOOTPRINT));
 		NNS_G2dGetUnpackedCharacterData(pSrc, &pChar);
 		DC_FlushRange(pChar->pRawData, 0x20 * 8);
 		read_up = &((u8*)pChar->pRawData)[0x20 * 4];	//128Kマッピングで空白が入っているので
 		read_bottom = pChar->pRawData;
 	}
 	else{	//足跡が無いのでWifiマーク
-		pSrc = ArcUtil_HDL_Load(hdl_main, NARC_footprint_board_wifi_mark_NCGR, //WIFIマーク
-			FALSE, HEAPID_FOOTPRINT, ALLOC_BOTTOM);
+		pSrc = GFL_ARCHDL_UTIL_Load(hdl_main, NARC_footprint_board_wifi_mark_NCGR, //WIFIマーク
+			FALSE, GFL_HEAP_LOWID(HEAPID_FOOTPRINT));
 		NNS_G2dGetUnpackedCharacterData(pSrc, &pChar);
 		DC_FlushRange(pChar->pRawData, 0x20 * 4);
 		read_up = pChar->pRawData;

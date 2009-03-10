@@ -1177,9 +1177,9 @@ static WFLBY_3DMAPOBJ_MDL_DATA* WFLBY_3DMAPOBJ_MDLRES_DATA_Init( WFLBY_ROOM_TYPE
 
 	GF_ASSERT( idx < (WFLBY_SEASON_NUM*WFLBY_ROOM_NUM) );
 	
-	p_data = ArcUtil_Load( ARC_WFLBY_MAP, 
+	p_data = GFL_ARC_UTIL_Load( ARC_WFLBY_MAP, 
 			NARC_wflby_map_wflby_3dmapobj_data_0_dat+idx,
-			FALSE, heapID, ALLOC_BOTTOM);
+			FALSE, GFL_HEAP_LOWID(heapID));
 
 	return p_data;
 }
@@ -1603,8 +1603,8 @@ static void WFLBY_3DMAPOBJ_FLOAT_Load( WFLBY_3DMAPOBJ_FLOATRES* p_wk, ARCHANDLE*
 		for( i=0; i<WFLBY_3DMAPOBJ_FLOAT_NUM; i++ ){
 
 			// モデルを読み込み
-			p_wk->mdl[i].pResMdl	= ArcUtil_HDL_Load( p_handle, 
-						cp_data->float_idx[i], FALSE, gheapID, ALLOC_TOP );
+			p_wk->mdl[i].pResMdl	= GFL_ARCHDL_UTIL_Load( p_handle, 
+						cp_data->float_idx[i], FALSE, gheapID );
 			p_wk->mdl[i].pModelSet	= NNS_G3dGetMdlSet( p_wk->mdl[i].pResMdl );
 			p_wk->mdl[i].pModel		= NNS_G3dGetMdlByIdx( p_wk->mdl[i].pModelSet, 0 );
 
@@ -1854,7 +1854,7 @@ static void WFLBY_3DMAPOBJ_WK_Load( WFLBY_3DMAPOBJ_WKRES* p_wk, ARCHANDLE* p_han
 			
 			// オブジェのIDと同じなら読み込まない
 			if( cp_data->obj_anm[i][j] != cp_data->obj_idx[i] ){
-				p_wk->p_anm[i][j] = ArcUtil_HDL_Load( p_handle, cp_data->obj_anm[i][j], FALSE, gheapID, ALLOC_TOP );
+				p_wk->p_anm[i][j] = GFL_ARCHDL_UTIL_Load( p_handle, cp_data->obj_anm[i][j], FALSE, gheapID );
 //				OS_TPrintf( "wk load anm idx = %d\n",  cp_data->obj_anm[i][j] );
 /*				D3DOBJ_AnmLoadH( &p_wk->anm[i][j], &p_wk->mdl[i],
 						p_handle, 

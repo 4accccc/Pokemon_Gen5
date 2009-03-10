@@ -123,4 +123,5 @@
 	ARCID_WFLBY_GRA		"wifi_lobby.narc"	#WiFiロビーグラフィック
 	ARCID_2DUNIONOBJ_FRONT	"unionobj2d_onlyfront.narc"	#２Dのユニオン人物　表向きグラフィックのみ
 	ARCID_LOBBY_NEWS		"lobby_news.narc"		#WiFiロビーニュースグラフィック
+	ARCID_WIFI_EARTH_PLACE	"wifi_earth_place.narc"	#WI-FI地球画面の地域データ
 

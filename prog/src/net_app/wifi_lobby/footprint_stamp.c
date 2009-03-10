@@ -815,8 +815,8 @@ static STAMP_MOVE_PTR Stamp_Create(FOOTPRINT_SYS_PTR fps, STAMP_SYSTEM_WORK *ssw
 static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, GFL_G3D_OBJ *p_mdl, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg)
 {
 	// モデルﾃﾞｰﾀ読み込み
-	p_mdl->pResMdl = ArcUtil_HDL_Load(hdl_main, NARC_footprint_board_ashiato_nsbmd, 
-		FALSE, HEAPID_FOOTPRINT, ALLOC_TOP );
+	p_mdl->pResMdl = GFL_ARCHDL_UTIL_Load(hdl_main, NARC_footprint_board_ashiato_nsbmd, 
+		FALSE, HEAPID_FOOTPRINT );
 
 	// モデルデータ設定＆テクスチャ転送
 	{
@@ -995,13 +995,13 @@ static void Stamp_TexRewrite(NNSG3dResTex *pTex, ARCHANDLE *hdl_main, ARCHANDLE 
 
 	pDest = (u8*)((u8*)pTex + pTex->texInfo.ofsTex);	//テクスチャ領域
 	if(foot_disp == TRUE){
-		pSrc = ArcUtil_HDL_Load(hdl_mark, POKEFOOT_ARC_CHAR_DMMY + param->monsno, //足跡
-			TRUE, HEAPID_FOOTPRINT, ALLOC_BOTTOM);
+		pSrc = GFL_ARCHDL_UTIL_Load(hdl_mark, POKEFOOT_ARC_CHAR_DMMY + param->monsno, //足跡
+			TRUE, GFL_HEAP_LOWID(HEAPID_FOOTPRINT));
 		NNS_G2dGetUnpackedCharacterData(pSrc, &pChar); 
 	}
 	else{
-		pSrc = ArcUtil_HDL_Load(hdl_main, NARC_footprint_board_wifi_mark_NCGR, //WIFIマーク
-			FALSE, HEAPID_FOOTPRINT, ALLOC_BOTTOM);
+		pSrc = GFL_ARCHDL_UTIL_Load(hdl_main, NARC_footprint_board_wifi_mark_NCGR, //WIFIマーク
+			FALSE, GFL_HEAP_LOWID(HEAPID_FOOTPRINT));
 		NNS_G2dGetUnpackedCharacterData(pSrc, &pChar);
 	}
 	

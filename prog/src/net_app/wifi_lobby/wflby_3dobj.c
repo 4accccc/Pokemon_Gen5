@@ -30,6 +30,7 @@
 #include "wflby_def.h"
 
 #include "wflby_3dobj.h"
+#include "arc_def.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -63,8 +64,11 @@
 //-------------------------------------
 ///	振り向き動作、１歩前動作描画フレーム
 //=====================================
+#if WB_FIX
 #define WFLBY_3DOBJ_TRUN_FIRST_FRAME	(4)
-
+#else
+#define WFLBY_3DOBJ_TRUN_FIRST_FRAME	(1)
+#endif
 
 
 //-------------------------------------
@@ -124,7 +128,7 @@ typedef struct {
 ///	アクターで表示できない３Dオブジェリソース
 //=====================================
 typedef struct {
-	GFL_G3D_OBJ			mdlres;
+	GFL_G3D_RES			*mdlres;
 	u32					alpha;
 } WFLBY_3DMDLRES;
 
@@ -143,11 +147,18 @@ typedef struct _WFLBY_3DOBJWK{
 	u8						anmspeed;	// アニメスピード
 	
 	const WF2DMAP_OBJWK*	cp_objwk;	// 参照オブジェクトデータ
+#if WB_FIX
 	BLACT_WORK_PTR			p_act;		// 描画アクター
-	GFL_G3D_OBJSTATUS					shadow;		// 影モデル
+#endif
+	GFL_G3D_OBJ				*shadow;		// 影モデル
+	GFL_G3D_OBJSTATUS		shadow_st;		// 影ステータス
+	BOOL					shadow_draw_flag;	// TRUE:影描画　FALSE:描画しない
+	
+	GFL_BBDACT_SYS			*p_blact;
+	GFL_BBDACT_ACTUNIT_ID	act_idx;
 
-	u8	lastst;			// 1つ前の状態
-	u8	lastanm;		// 1つ前の保存アニメ(BLACT アニメオフセット)
+	u16	lastst;			// 1つ前の状態
+	u16	lastanm;		// 1つ前の保存アニメ(BLACT アニメオフセット)
 	u16 lastfrm;		// 1つ前のフレーム
 	fx32 lastframe;		// 1つ前の保存アニメ終了フレーム(BLACT frame)
 
@@ -159,13 +170,20 @@ typedef struct _WFLBY_3DOBJWK{
 //=====================================
 typedef struct _WFLBY_3DOBJSYS{
 
+#if WB_FIX
 	// リソースマネージャ
 	RES_MANAGER_PTR		p_mdlresman;
 	RES_MANAGER_PTR		p_anmresman;
 	TEXRES_MANAGER_PTR	p_texresman;
+#endif
 
 	// ビルボードアクターシステム
+#if WB_FIX
 	BLACT_SET_PTR		p_blact;
+#else
+	GFL_BBDACT_SYS		*p_blact;
+	GFL_BBDACT_RESUNIT_ID resunit_id;
+#endif
 
 	// 描画オブジェクトテーブル
 	WFLBY_3DOBJWK*		p_obj;
@@ -173,7 +191,9 @@ typedef struct _WFLBY_3DOBJSYS{
 
 	// 影モデルリソースデータ
 	WFLBY_3DMDLRES		shadowres;	
-
+	//モデルデータ(カリングチェック用
+	void *idx_file;
+	
 	// ライトマスク
 	int					mdl_light_msk;
 
@@ -223,6 +243,7 @@ enum{
 #define WFLBY_3DOBJ_ONEANM_FRAME		( 16 )
 #define WFLBY_3DOBJ_ONEANM_HFRAME		( 8 )	// 半分
 #define WFLBY_3DOBJ_ONEANM_RUNFRAME		( 4 )	// 半分
+#if WB_FIX
 static const BLACT_ANIME_TBL WFLBY_3DOBJ_ANM_TR_FRAME_DATA[] =
 {
 	{ 0, 15, BLACT_ANIM_LOOP },
@@ -237,6 +258,146 @@ static const BLACT_ANIME_TBL WFLBY_3DOBJ_ANM_TR_FRAME_DATA[] =
 	
 	{ 0, 0, BLACT_ANIM_CMD_MAX },
 };
+#else
+static const GFL_BBDACT_ANM DATA_BlActHero_StopU[] = {
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_StopD[] = {
+	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_StopL[] = {
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_StopR[] = {
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_WalkU8F[] = {
+	{9,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{9,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_WalkD8F[] = {
+	{22,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{23,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_WalkL8F[] = {
+	{1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{3,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_WalkR8F[] = {
+	{1,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{3,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_DashU4F[] = {
+	{8,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{7,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{10,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{7,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_DashD4F[] = {
+	{12,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{11,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{13,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{11,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_DashL4F[] = {
+	{15,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{14,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{16,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{14,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+static const GFL_BBDACT_ANM DATA_BlActHero_DashR4F[] = {
+	{15,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{14,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{16,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{14,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * DATA_BlActHeroTbl[] = {
+#if 1	//WiFi広場用に移植元とアニメの並びを合わせた
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_32F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_DashU4F,	//DRAW_STA_DASH_4F
+	DATA_BlActHero_DashD4F,
+	DATA_BlActHero_DashL4F,
+	DATA_BlActHero_DashR4F,
+#else	//フィールドと同じアニメ順
+	DATA_BlActHero_StopU,	//DRAW_STA_STOP
+	DATA_BlActHero_StopD,
+	DATA_BlActHero_StopL,
+	DATA_BlActHero_StopR,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_32F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_16F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_8F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_4F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_2F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_6F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_3F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_7F
+	DATA_BlActHero_WalkD8F,
+	DATA_BlActHero_WalkL8F,
+	DATA_BlActHero_WalkR8F,
+	DATA_BlActHero_DashU4F,	//DRAW_STA_DASH_4F
+	DATA_BlActHero_DashD4F,
+	DATA_BlActHero_DashL4F,
+	DATA_BlActHero_DashR4F,
+#endif
+};
+#endif	//WB_FIX
 
 
 
@@ -246,6 +407,7 @@ static const BLACT_ANIME_TBL WFLBY_3DOBJ_ANM_TR_FRAME_DATA[] =
  */
 //-----------------------------------------------------------------------------
 #define WFLBY_3DMDL_DATA_NUM		( 20 )	// ユニオン16+主人公2+おねえさん+おにいさん
+#define WFLBY_3DMDL_USE_DATA_NUM	( 19 )	// 使用しない主人公1を抜いた人数
 #define WFLBY_3DMDL_DATA_HERO_NUM	( 2 )
 static const WFLBY_3DMDL_DATA	sc_WFLBY_3DMDL_DATA[ WFLBY_3DMDL_DATA_NUM ] = {
 	// 主人公2
@@ -353,6 +515,7 @@ static const WFLBY_3DMDL_DATA	sc_WFLBY_3DMDL_DATA[ WFLBY_3DMDL_DATA_NUM ] = {
 	},
 };
 
+
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -364,6 +527,7 @@ static const WFLBY_3DMDL_DATA	sc_WFLBY_3DMDL_DATA[ WFLBY_3DMDL_DATA_NUM ] = {
 ///	　人物ファイルデータ
 //=====================================
 static const WFLBY_3DMDL_DATA* WFLBY_3DOBJ_GetMdlData( u32 objid );
+static u16 WFLBY_3DOBJ_GetResID( WFLBY_3DOBJSYS* p_sys, u32 objid );
 
 
 //-------------------------------------
@@ -380,7 +544,7 @@ static void WFLBY_3DMDL_RES_Load( WFLBY_3DMDLRES* p_wk, ARCHANDLE* p_handle, u32
 static void WFLBY_3DMDL_RES_Delete( WFLBY_3DMDLRES* p_wk );
 static void WFLBY_3DMDL_RES_SetAlpha( WFLBY_3DMDLRES* p_wk, u32 alpha );
 static u32 WFLBY_3DMDL_RES_GetAlpha( const WFLBY_3DMDLRES* cp_wk );
-static void WFLBY_3DMDL_RES_InitD3DOBJ( WFLBY_3DMDLRES* p_wk, GFL_G3D_OBJSTATUS* p_obj );
+static void WFLBY_3DMDL_RES_InitD3DOBJ( WFLBY_3DMDLRES* p_wk, GFL_G3D_OBJ** p_obj );
 
 
 //-------------------------------------
@@ -400,12 +564,11 @@ static void WFLBY_3DOBJWK_Anm_Rota( WFLBY_3DOBJWK* p_wk );
 static void WFLBY_3DOBJWK_Anm_Jump( WFLBY_3DOBJWK* p_wk );
 static void WFLBY_3DOBJWK_Anm_BataBata( WFLBY_3DOBJWK* p_wk );
 static BOOL WFLBY_3DOBJWK_GetAnmSave( u32 st );
-static void WFLBY_3DOBJWK_CheckCulling( WFLBY_3DOBJWK* p_wk );
+static void WFLBY_3DOBJWK_CheckCulling( WFLBY_3DOBJSYS* p_sys, WFLBY_3DOBJWK* p_wk );
 static void WFLBY_3DOBJWK_ContBlactDrawFlag( WFLBY_3DOBJWK* p_wk );
-static void WFLBY_3DOBJWK_CallBack_BlactDraw( BLACT_WORK_PTR p_act ,void* p_work );
-static BOOL WFLBY_3DOBJWK_CheckCullingBlact( BLACT_WORK_PTR p_act );
-
+static BOOL WFLBY_3DOBJWK_CheckCullingBlact(WFLBY_3DOBJSYS* p_sys, GFL_BBDACT_SYS *p_blact,GFL_BBDACT_ACTUNIT_ID act_idx);
 static u32	BB_CullingCheck3DModelNonResQuick(	const VecFx32* trans_p, const BOUNDING_BOX *inBox);
+static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz );
 
 
 //----------------------------------------------------------------------------
@@ -440,13 +603,16 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 		}
 	}
 
+#if WB_FIX
 	// リソースオブジェを作成
 	p_sys->p_mdlresman = RESM_Init( WFLBY_3DMDL_MDLDATA_NUM, heapID );
 	p_sys->p_anmresman = RESM_Init( WFLBY_3DMDL_ANMDATA_NUM, heapID );
 	p_sys->p_texresman = TEXRESM_Init( WFLBY_3DMDL_DATA_NUM, heapID );
+#endif
 
 	// ビルボードアクター作成
 	{
+	#if WB_FIX
 		BLACT_SETDATA	setdata;
 
 		BLACT_InitSys( 1, heapID );
@@ -454,6 +620,11 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 		setdata.WorkNum = objnum;
 		setdata.heap	= heapID;
 		p_sys->p_blact = BLACT_InitSet( &setdata );
+	#else
+		p_sys->p_blact = GFL_BBDACT_CreateSys(
+			WFLBY_3DMDL_MDLDATA_NUM + WFLBY_3DMDL_ANMDATA_NUM + WFLBY_3DMDL_DATA_NUM, 
+			objnum, g3d_trans_BBD, heapID);
+	#endif
 	}
 
 	// 読み込み処理
@@ -468,8 +639,12 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 
 		// モデル
 		{
-			p_file = ArcUtil_HDL_Load( p_handle_other, WFLBY_3DMDL_MDLDATA_IDX, FALSE, gheapID, ALLOC_TOP );
+			p_file = GFL_ARCHDL_UTIL_Load( p_handle_other, WFLBY_3DMDL_MDLDATA_IDX, FALSE, gheapID );
+		#if WB_FIX
 			RESM_AddResNormal( p_sys->p_mdlresman, p_file, WFLBY_3DMDL_MDLDATA_IDX );
+		#else
+			p_sys->idx_file = p_file;
+		#endif
 			WFLBY_LIGHT_SetUpMdl( p_file );
 
 			// モデルデータからライトデータを取得する
@@ -484,20 +659,25 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 
 		}
 
+	#if WB_FIX
 		// アニメデータ
 		{
 			for( i=0; i<WFLBY_3DMDL_ANMDATA_NUM; i++ ){
-				p_file = ArcUtil_HDL_Load( p_handle, sc_WFLBY_ANMDATA[i], FALSE, gheapID, ALLOC_TOP );
+				p_file = GFL_ARCHDL_UTIL_Load( p_handle, sc_WFLBY_ANMDATA[i], FALSE, gheapID );
 				RESM_AddResNormal( p_sys->p_anmresman, p_file, sc_WFLBY_ANMDATA[i] );
 			}
 		}
+	#endif
 
 		// テクスチャデータ
 		{
-			TEXRES_OBJ_PTR p_tex;
 			int				skip;
-			BOOL			tex_cut;
-
+			GFL_BBDACT_RESDATA *bbdres;
+			int tblno = 0;
+			
+			bbdres = GFL_HEAP_AllocClearMemory(
+				gheapID, sizeof(GFL_BBDACT_RESDATA) * WFLBY_3DMDL_USE_DATA_NUM);
+			
 			// 主人公の登録をスキップ
 			if( hero_sex == PM_MALE ){
 				skip = 1;	// 女のリソースをスキップ
@@ -509,14 +689,15 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 				if( skip == i ){
 					continue;
 				}
-
+				
+			#if WB_FIX
 				if( sc_WFLBY_3DMDL_DATA[i].anm == FALSE ){
 					tex_cut = TRUE;
 				}else{
 					tex_cut = FALSE;
 				}
 
-				p_file = ArcUtil_HDL_Load( p_handle, sc_WFLBY_3DMDL_DATA[i].tex, FALSE, gheapID, ALLOC_TOP );
+				p_file = GFL_ARCHDL_UTIL_Load( p_handle, sc_WFLBY_3DMDL_DATA[i].tex, FALSE, gheapID );
 				p_tex = TEXRESM_AddResNormal( p_sys->p_texresman, p_file, sc_WFLBY_3DMDL_DATA[i].tex, tex_cut, gheapID );
 				// 転送とテクスチャ領域をカット
 				if( tex_cut == TRUE ){	
@@ -524,7 +705,23 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 					TEXRESM_TexLoadPTR( p_tex );
 					TEXRESM_CutTexPTR( p_tex );
 				}
+			#else
+				bbdres[tblno].arcID = ARCID_FLDMMLD;
+				bbdres[tblno].datID = sc_WFLBY_3DMDL_DATA[i].tex;
+				bbdres[tblno].texFmt = GFL_BBD_TEXFMT_PAL16;
+				bbdres[tblno].texSiz = GFL_BBD_TEXSIZ_32x512;
+				bbdres[tblno].celSizX = 32;
+				bbdres[tblno].celSizY = 32;
+				if(i < WFLBY_3DMDL_DATA_HERO_NUM){
+					bbdres[tblno].dataCut = GFL_BBDACT_RESTYPE_TRANSSRC;
+				}
+				else{
+					bbdres[tblno].dataCut = GFL_BBDACT_RESTYPE_DATACUT;
+				}
+				tblno++;
+			#endif
 			}
+			p_sys->resunit_id = GFL_BBDACT_AddResourceUnit(p_sys->p_blact, bbdres, tblno);
 		}
 
 
@@ -535,6 +732,19 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 		GFL_ARC_CloseDataHandle( p_handle_other );
 	}
 	return p_sys;
+}
+
+//BBD用VRAM転送関数
+static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz )
+{
+	NNS_GFD_DST_TYPE transType;
+
+	if( type == GFL_BBDACT_TRANSTYPE_DATA ){
+		transType = NNS_GFD_DST_3D_TEX_VRAM;
+	} else {
+		transType = NNS_GFD_DST_3D_TEX_PLTT;
+	}
+	NNS_GfdRegisterNewVramTransferTask( transType, dst, (void*)src, siz );
 }
 
 //----------------------------------------------------------------------------
@@ -549,21 +759,32 @@ void WFLBY_3DOBJSYS_Exit( WFLBY_3DOBJSYS* p_sys )
 	// 読み込んだリソースを破棄する
 	{
 		WFLBY_3DMDL_RES_Delete( &p_sys->shadowres );
+	#if WB_FIX
 		TEXRESM_DeleteAllRes( p_sys->p_texresman );
 		RESM_DeleteAllRes( p_sys->p_mdlresman );
 		RESM_DeleteAllRes( p_sys->p_anmresman );
+	#else
+		GFL_BBDACT_RemoveResourceUnit(p_sys->p_blact, p_sys->resunit_id, WFLBY_3DMDL_USE_DATA_NUM);
+		GFL_HEAP_FreeMemory(p_sys->idx_file);
+	#endif
 	}
 
 	// ビルボードアクター破棄
 	{
+	#if WB_FIX
 		BLACT_DestSet( p_sys->p_blact );
 		BLACT_DestSys();
+	#else
+		GFL_BBDACT_DeleteSys(p_sys->p_blact);
+	#endif
 	}
 
+#if WB_FIX
 	// リソースマネージャの破棄
 	TEXRESM_Delete( p_sys->p_texresman );
 	RESM_Delete( p_sys->p_mdlresman );
 	RESM_Delete( p_sys->p_anmresman );
+#endif
 
 	// モデルデータ破棄
 	GFL_HEAP_FreeMemory( p_sys->p_obj );
@@ -589,7 +810,7 @@ void WFLBY_3DOBJSYS_Updata( WFLBY_3DOBJSYS* p_sys )
 		// p_obj->updataがFALSEでp_obj->anmflagがTRUEなら特殊アニメのデータが反映されます。
 		WFLBY_3DOBJWK_Updata( &p_sys->p_obj[i] );		// 通常アップデート
 		WFLBY_3DOBJWK_AnmUpdata( &p_sys->p_obj[i] );	// 特殊アニメアップデート
-		WFLBY_3DOBJWK_CheckCulling( &p_sys->p_obj[i] );	// カリングチェック
+		WFLBY_3DOBJWK_CheckCulling( p_sys, &p_sys->p_obj[i] );	// カリングチェック
 	}
 }
 
@@ -600,13 +821,17 @@ void WFLBY_3DOBJSYS_Updata( WFLBY_3DOBJSYS* p_sys )
  *	@param	p_sys		システム
  */
 //-----------------------------------------------------------------------------
-void WFLBY_3DOBJSYS_Draw( WFLBY_3DOBJSYS* p_sys )
+void WFLBY_3DOBJSYS_Draw( WFLBY_3DOBJSYS* p_sys, GFL_G3D_CAMERA *p_camera )
 {
 	int i;
 
 	
 	// ビルボードアクター表示
+#if WB_FIX
 	BLACT_DrawSys();
+#else
+	GFL_BBDACT_Draw(p_sys->p_blact, p_camera, NULL);
+#endif
 
 
 	// 影の描画
@@ -629,9 +854,10 @@ void WFLBY_3DOBJSYS_Draw( WFLBY_3DOBJSYS* p_sys )
 //-----------------------------------------------------------------------------
 void WFLBY_3DOBJSYS_VBlank( WFLBY_3DOBJSYS* p_sys )
 {
-
+#if WB_FIX	//g3d_trans_BBDで転送されるのでこの関数の代わりさえいらないはず
 	// ビルボードアクター
 	BLACT_VBlankFunc( p_sys->p_blact );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -700,31 +926,38 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 
 	// 空いているワークを取得
 	p_wk = WFLBY_3DOBJSYS_GetCleanWk( p_sys );
-
+	p_wk->p_blact = p_sys->p_blact;
+	
 	// 参照先オブジェクトポインタ保存
 	p_wk->cp_objwk = cp_objwk;
 
 	// アクター生成
 	{
 		const WFLBY_3DMDL_DATA* cp_data;
+	#if WB_FIX
 		BLACT_HEADER	header;
 		BLACT_ADD		add;
 		RES_OBJ_PTR		p_resobj;
 		TEXRES_OBJ_PTR	p_texresobj;
-		u32				objid;
 		void*			p_imd;
 		const NNSG3dResTex* cp_itx;
 		TEXANM_DATATBL texanm;
 		NNSGfdTexKey	texkey;
 		NNSGfdTexKey	tex4x4key;
 		NNSGfdPlttKey	plttkey;
-		VecFx32			matrix = {0,0,0};
 		VecFx32			scale = {FX32_ONE,FX32_ONE,FX32_ONE};
-
+	#endif
+		u32				objid;
+		VecFx32			matrix = {0,0,0};
+		u16 res_id;
+		GFL_BBDACT_ACTDATA actdata;
+		
 		// オブジェクト構成データ取得
 		objid	= WF2DMAP_OBJWkDataGet( cp_objwk, WF2DMAP_OBJPM_CHARA );
 		cp_data = WFLBY_3DOBJ_GetMdlData( objid );
+		res_id = WFLBY_3DOBJ_GetResID( p_sys, objid );
 
+	#if WB_FIX
 		// モデルデータ取得
 		{
 			p_resobj = RESM_GetResObj( p_sys->p_mdlresman, WFLBY_3DMDL_MDLDATA_IDX );
@@ -762,7 +995,8 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 			plttkey		= TEXRESM_GetPlttKeyPTR( p_texresobj );
 			BLACT_MakeHeaderNormalAnm( &header, p_imd, cp_itx, WFLBY_3DOBJ_ANM_TR_FRAME_DATA, &texanm, texkey, tex4x4key, plttkey  );
 		}
-
+	#endif
+	
 		// 座標を設定
 		{
 			WF2DMAP_POS pos;
@@ -772,24 +1006,49 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 		}
 
 		// ワークを作成
+	#if WB_FIX
 		add.blact_s = p_sys->p_blact;
 		add.pHeader	= &header;
 		add.matrix	= matrix;
 		add.scale	= scale;
 		p_wk->p_act = BLACT_Add( &add );
-
+	#else
+		actdata.resID = res_id;
+		actdata.sizX = FX16_ONE*8-1;
+		actdata.sizY = FX16_ONE*8-1;
+		actdata.alpha = 31;
+		actdata.drawEnable = TRUE;
+		actdata.lightMask = p_sys->mdl_light_msk;
+		actdata.trans = matrix;
+		actdata.func = NULL;
+		actdata.work = NULL;
+		p_wk->act_idx = GFL_BBDACT_AddAct(p_sys->p_blact, p_sys->resunit_id, &actdata, 1);
+		GFL_BBDACT_SetAnimeTable(
+			p_sys->p_blact, p_wk->act_idx, DATA_BlActHeroTbl, NELEMS(DATA_BlActHeroTbl));
+		GFL_BBDACT_SetAnimeIdxOn(p_sys->p_blact, p_wk->act_idx, 0);
+	#endif
+	
+	#if WB_FIX
 		// コールバックの設定
 		BLACT_DrawBeforeProcSet( p_wk->p_act, WFLBY_3DOBJWK_CallBack_BlactDraw, p_wk );
-
+	#endif
+	
 
 		// 影を作成
 		WFLBY_3DMDL_RES_InitD3DOBJ( &p_sys->shadowres, &p_wk->shadow );
+		p_wk->shadow_draw_flag = TRUE;
 
 		// 座標をあわせる
+	#if WB_FIX
 		D3DOBJ_SetMatrix( &p_wk->shadow, 
 				matrix.x + WFLBY_3DOBJ_SHADOW_OFS_X,
 				WFLBY_3DOBJ_SHADOW_MAT_Y,
 				matrix.z + WFLBY_3DOBJ_SHADOW_OFS_Z );
+	#else
+		p_wk->shadow_st.trans.x = matrix.x + WFLBY_3DOBJ_SHADOW_OFS_X;
+		p_wk->shadow_st.trans.y = WFLBY_3DOBJ_SHADOW_MAT_Y;
+		p_wk->shadow_st.trans.z = matrix.z + WFLBY_3DOBJ_SHADOW_OFS_Z;
+	#endif
 	}
 
 	
@@ -817,7 +1076,13 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 //-----------------------------------------------------------------------------
 void WFLBY_3DOBJWK_Del( WFLBY_3DOBJWK* p_wk )
 {
+#if WB_FIX
 	BLACT_Delete( p_wk->p_act );
+#else
+	GFL_BBDACT_RemoveAct(p_wk->p_blact, p_wk->act_idx, 1);
+	GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(p_wk->shadow));
+	GFL_G3D_OBJECT_Delete(p_wk->shadow);
+#endif
 	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_3DOBJWK) );
 }
 
@@ -908,9 +1173,15 @@ void WFLBY_3DOBJWK_SetMatrix( WFLBY_3DOBJWK* p_wk, const WF2DMAP_POS* cp_pos )
 //-----------------------------------------------------------------------------
 void WFLBY_3DOBJWK_GetMatrix( const WFLBY_3DOBJWK* cp_wk, WF2DMAP_POS* p_pos )
 {
+#if WB_FIX
 	const VecFx32* cp_vec;
 	cp_vec = BLACT_MatrixGet( cp_wk->p_act );
 	WFLBY_3DMATRIX_GetVecPos( cp_vec, p_pos );
+#else
+	VecFx32 trans;
+	GFL_BBD_GetObjectTrans(GFL_BBDACT_GetBBDSystem(cp_wk->p_blact), cp_wk->act_idx, &trans);
+	WFLBY_3DMATRIX_GetVecPos( &trans, p_pos );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -923,11 +1194,20 @@ void WFLBY_3DOBJWK_GetMatrix( const WFLBY_3DOBJWK* cp_wk, WF2DMAP_POS* p_pos )
 //-----------------------------------------------------------------------------
 void WFLBY_3DOBJWK_Set3DMatrix( WFLBY_3DOBJWK* p_wk, const VecFx32* cp_vec )
 {
+#if WB_FIX
 	BLACT_MatrixSet( p_wk->p_act, cp_vec );
 
 	// 影に反映ただし、影はのY位置は常に定位置
 	D3DOBJ_SetMatrix( &p_wk->shadow, cp_vec->x + WFLBY_3DOBJ_SHADOW_OFS_X,
 			WFLBY_3DOBJ_SHADOW_MAT_Y, cp_vec->z + WFLBY_3DOBJ_SHADOW_OFS_Z );
+#else
+	GFL_BBD_SetObjectTrans(GFL_BBDACT_GetBBDSystem(p_wk->p_blact), p_wk->act_idx, cp_vec);
+
+	// 影に反映ただし、影はのY位置は常に定位置
+	p_wk->shadow_st.trans.x = cp_vec->x + WFLBY_3DOBJ_SHADOW_OFS_X;
+	p_wk->shadow_st.trans.y = WFLBY_3DOBJ_SHADOW_MAT_Y;
+	p_wk->shadow_st.trans.z = cp_vec->z + WFLBY_3DOBJ_SHADOW_OFS_Z;
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -940,10 +1220,14 @@ void WFLBY_3DOBJWK_Set3DMatrix( WFLBY_3DOBJWK* p_wk, const VecFx32* cp_vec )
 //-----------------------------------------------------------------------------
 void WFLBY_3DOBJWK_Get3DMatrix( const WFLBY_3DOBJWK* cp_wk, VecFx32* p_vec )
 {
+#if WB_FIX
 	const VecFx32* cp_vec;
 	
 	cp_vec = BLACT_MatrixGet( cp_wk->p_act );
 	*p_vec = *cp_vec;
+#else
+	GFL_BBD_GetObjectTrans(GFL_BBDACT_GetBBDSystem(cp_wk->p_blact), cp_wk->act_idx, p_vec);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -958,8 +1242,13 @@ void WFLBY_3DOBJWK_SetWay( WFLBY_3DOBJWK* p_wk, WF2DMAP_WAY way )
 {
 	u32 anm;
 	anm = WFLBY_3DMDL_ANM_GetAnmOffs( TRUE, way );
+#if WB_FIX
 	BLACT_AnmOffsChg( p_wk->p_act, anm );
 	BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
+#else
+	GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+	GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1063,6 +1352,34 @@ static const WFLBY_3DMDL_DATA* WFLBY_3DOBJ_GetMdlData( u32 objid )
 	return NULL;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	objidに対応したGFL_BBDACT_RESUNIT_IDを取得する
+ *
+ *  @param  p_sys		
+ *	@param	objid		オブジェクトID
+ *
+ *	@return	GFL_BBDACT_RESUNIT_ID
+ */
+//-----------------------------------------------------------------------------
+static u16 WFLBY_3DOBJ_GetResID( WFLBY_3DOBJSYS* p_sys, u32 objid )
+{
+	int i;
+
+	for( i=0; i<WFLBY_3DMDL_DATA_NUM; i++ ){
+		if( sc_WFLBY_3DMDL_DATA[i].objid == objid ){
+			if(i < WFLBY_3DMDL_DATA_HERO_NUM){
+				return p_sys->resunit_id;	//主人公リソースは必ず先頭
+			}
+			else{
+				return p_sys->resunit_id + i - 1;	//居ない主人公1分、-1
+			}
+		}
+	}
+	GF_ASSERT(0);
+	return p_sys->resunit_id;
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1117,6 +1434,7 @@ static fx32 WFLBY_3DMDL_ANM_GetAnmFrame( u16 frame_max, u16 now_frame, u32 anm_f
 //-----------------------------------------------------------------------------
 static void WFLBY_3DMDL_RES_Load( WFLBY_3DMDLRES* p_wk, ARCHANDLE* p_handle, u32 dataidx, u32 gheapID )
 {
+#if WB_FIX
 	void* p_mdl;
 	
 	//  モデルデータ読み込み＆テクスチャ転送＆テクスチャ実データ破棄
@@ -1133,6 +1451,20 @@ static void WFLBY_3DMDL_RES_Load( WFLBY_3DMDLRES* p_wk, ARCHANDLE* p_handle, u32
 
 	// ぽりごんID を設定
 	NNS_G3dMdlSetMdlPolygonIDAll( p_wk->mdlres.pModel, WFLBY_3DOBJ_SHADOW_OBJID );
+#else
+	//  モデルデータ読み込み＆テクスチャ転送＆テクスチャ実データ破棄
+	WFLBY_3DMAPOBJ_TEX_LoatCutTex( &p_wk->mdlres, p_handle, dataidx, gheapID );
+
+	//ポリゴンID を設定
+	{
+		NNSG3dResFileHeader *file_head;
+		NNSG3dResMdl *pMdl;
+		
+		file_head = GFL_G3D_GetResourceFileHeader(p_wk->mdlres);
+		pMdl = NNS_G3dGetMdlByIdx(NNS_G3dGetMdlSet(file_head), 0);
+		NNS_G3dMdlSetMdlPolygonIDAll( pMdl, WFLBY_3DOBJ_SHADOW_OBJID );
+	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1144,7 +1476,11 @@ static void WFLBY_3DMDL_RES_Load( WFLBY_3DMDLRES* p_wk, ARCHANDLE* p_handle, u32
 //-----------------------------------------------------------------------------
 static void WFLBY_3DMDL_RES_Delete( WFLBY_3DMDLRES* p_wk )
 {
+#if WB_FIX
 	D3DOBJ_MdlDelete( &p_wk->mdlres );
+#else
+	GFL_G3D_FreeVramTexture(p_wk->mdlres);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1157,8 +1493,19 @@ static void WFLBY_3DMDL_RES_Delete( WFLBY_3DMDLRES* p_wk )
 //-----------------------------------------------------------------------------
 static void WFLBY_3DMDL_RES_SetAlpha( WFLBY_3DMDLRES* p_wk, u32 alpha )
 {
+#if WB_FIX
 	p_wk->alpha = alpha;
 	NNS_G3dMdlSetMdlAlphaAll( p_wk->mdlres.pModel, p_wk->alpha );
+#else
+	NNSG3dResFileHeader *file_head;
+	NNSG3dResMdl *pMdl;
+	
+	p_wk->alpha = alpha;
+
+	file_head = GFL_G3D_GetResourceFileHeader(p_wk->mdlres);
+	pMdl = NNS_G3dGetMdlByIdx(NNS_G3dGetMdlSet(file_head), 0);
+	NNS_G3dMdlSetMdlAlphaAll( pMdl, p_wk->alpha );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1181,9 +1528,16 @@ static u32 WFLBY_3DMDL_RES_GetAlpha( const WFLBY_3DMDLRES* cp_wk )
  *	@param	p_obj		表示オブジェクト
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DMDL_RES_InitD3DOBJ( WFLBY_3DMDLRES* p_wk, GFL_G3D_OBJSTATUS* p_obj )
+static void WFLBY_3DMDL_RES_InitD3DOBJ( WFLBY_3DMDLRES* p_wk, GFL_G3D_OBJ** p_obj )
 {
+#if WB_FIX
 	D3DOBJ_Init( p_obj, &p_wk->mdlres );
+#else
+	GFL_G3D_RND* g3drnd;
+	
+	g3drnd = GFL_G3D_RENDER_Create( p_wk->mdlres, 0, p_wk->mdlres );
+	*p_obj = GFL_G3D_OBJECT_Create( g3drnd, NULL, 0 );
+#endif
 }
 
 
@@ -1251,7 +1605,13 @@ static void WFLBY_3DOBJWK_CleanWk( WFLBY_3DOBJWK* p_wk )
 static void WFLBY_3DOBJWK_Draw( WFLBY_3DOBJWK* p_wk )
 {
 	// 影の描画
+#if WB_FIX
 	D3DOBJ_Draw( &p_wk->shadow );
+#else
+	if(p_wk->shadow_draw_flag == TRUE){
+		GFL_G3D_DRAW_DrawObject(p_wk->shadow, &p_wk->shadow_st);
+	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1294,8 +1654,13 @@ static void WFLBY_3DOBJWK_Updata( WFLBY_3DOBJWK* p_wk )
 	if( (p_wk->lastfrm > frame) || (p_wk->lastst != st) ){
 		if( WFLBY_3DOBJWK_GetAnmSave( p_wk->lastst ) == TRUE ){
 			// アニメフレームを保存する
+		#if WB_FIX
 			p_wk->lastanm	= BLACT_AnmOffsGet( p_wk->p_act );
 			p_wk->lastframe = BLACT_AnmFrameGetOffs( p_wk->p_act );
+		#else
+			p_wk->lastanm	= GFL_BBDACT_GetAnimeIdx(p_wk->p_blact, p_wk->act_idx);
+			p_wk->lastframe = GFL_BBDACT_GetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx);
+		#endif
 		}
 		p_wk->lastst = st;
 	}
@@ -1326,8 +1691,13 @@ static void WFLBY_3DOBJWK_Updata_Normal( WFLBY_3DOBJWK* p_wk )
 	anm = WFLBY_3DMDL_ANM_GetAnmOffs( TRUE, way );
 
 	// アクターに設定
+#if WB_FIX
 	BLACT_AnmOffsChg( p_wk->p_act, anm );
 	BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
+#else
+	GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+	GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1355,9 +1725,14 @@ static void WFLBY_3DOBJWK_Updata_Walk( WFLBY_3DOBJWK* p_wk )
 	frame = WFLBY_3DMDL_ANM_GetAnmFrame( frame_max, now_frame, WFLBY_3DOBJ_ONEANM_HFRAME );
 
 	// アクターに設定
+#if WB_FIX
 	BLACT_AnmOffsChg( p_wk->p_act, anm );
+#else
+	GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+#endif
 
 	// 前のアニメと一緒なら前のフレームから続ける
+#if WB_FIX
 	if( p_wk->lastanm == anm ){
 		BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
 		BLACT_AnmFrameChg( p_wk->p_act, frame+p_wk->lastframe );
@@ -1365,6 +1740,15 @@ static void WFLBY_3DOBJWK_Updata_Walk( WFLBY_3DOBJWK* p_wk )
 		BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
 		BLACT_AnmFrameChg( p_wk->p_act, frame );
 	}
+#else
+	if( p_wk->lastanm == anm ){
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, frame+p_wk->lastframe);
+	}else{
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, frame);
+	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1382,7 +1766,11 @@ static void WFLBY_3DOBJWK_Updata_Turn( WFLBY_3DOBJWK* p_wk )
 	now_frame = WF2DMAP_OBJWkDataGet( p_wk->cp_objwk, WF2DMAP_OBJPM_FRAME );
 
 	if( now_frame < WFLBY_3DOBJ_TRUN_FIRST_FRAME ){
+	#if WB_FIX
 		BLACT_AnmFrameSetOffs( p_wk->p_act, WFLBY_3DOBJ_TRUN_FIRST_FRAME*FX32_ONE );	// 1歩前に
+	#else
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, WFLBY_3DOBJ_TRUN_FIRST_FRAME );	// 1歩前に
+	#endif
 	}else{
 		// WAYの方向にあるく
 		way	= WF2DMAP_OBJWkDataGet( p_wk->cp_objwk, WF2DMAP_OBJPM_WAY );
@@ -1391,8 +1779,13 @@ static void WFLBY_3DOBJWK_Updata_Turn( WFLBY_3DOBJWK* p_wk )
 		anm = WFLBY_3DMDL_ANM_GetAnmOffs( TRUE, way );
 
 		// アクターに設定
+	#if WB_FIX
 		BLACT_AnmOffsChg( p_wk->p_act, anm );
 		BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
+	#else
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
+	#endif
 	}
 }
 
@@ -1421,9 +1814,14 @@ static void WFLBY_3DOBJWK_Updata_Run( WFLBY_3DOBJWK* p_wk )
 	frame = WFLBY_3DMDL_ANM_GetAnmFrame( frame_max, now_frame, WFLBY_3DOBJ_ONEANM_RUNFRAME );
 
 	// アクターに設定
+#if WB_FIX
 	BLACT_AnmOffsChg( p_wk->p_act, anm );
+#else
+	GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+#endif
 
 	// 前のアニメと一緒なら前のフレームから続ける
+#if WB_FIX
 	if( p_wk->lastanm == anm ){
 		BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
 		BLACT_AnmFrameChg( p_wk->p_act, frame+p_wk->lastframe );
@@ -1431,6 +1829,15 @@ static void WFLBY_3DOBJWK_Updata_Run( WFLBY_3DOBJWK* p_wk )
 		BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
 		BLACT_AnmFrameChg( p_wk->p_act, frame );
 	}
+#else
+	if( p_wk->lastanm == anm ){
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, frame+p_wk->lastframe);
+	}else{
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, frame);
+	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1466,8 +1873,13 @@ static void WFLBY_3DOBJWK_Anm_Rota( WFLBY_3DOBJWK* p_wk )
 		// アニメ変更
 		anmidx = p_wk->anmframe / WFLBY_3DOBJ_ANM_ROTA_1SYNC;
 		blact_anm = WFLBY_3DMDL_ANM_GetAnmOffs( TRUE, sc_WFLBY_3DOBJ_ANM_WAY[ anmidx ] );
+	#if WB_FIX
 		BLACT_AnmOffsChg( p_wk->p_act, blact_anm );
 		BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
+	#else
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, blact_anm);
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
+	#endif
 	}
 	if( (p_wk->anmframe + p_wk->anmspeed) < (WFLBY_3DOBJ_ANM_ROTA_1SYNC*WF2DMAP_WAY_NUM) ){
 		p_wk->anmframe += p_wk->anmspeed;
@@ -1500,9 +1912,13 @@ static void WFLBY_3DOBJWK_Anm_Jump( WFLBY_3DOBJWK* p_wk )
 		anm = WFLBY_3DMDL_ANM_GetAnmOffs( TRUE, way );
 
 		// アクターに設定
+	#if WB_FIX
 		BLACT_AnmOffsChg( p_wk->p_act, anm );
 		BLACT_AnmFrameSetOffs( p_wk->p_act, WFLBY_3DOBJ_TRUN_FIRST_FRAME*FX32_ONE );
-
+	#else
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, WFLBY_3DOBJ_TRUN_FIRST_FRAME);
+	#endif
 		p_wk->anmframe++;
 	}
 }
@@ -1527,9 +1943,13 @@ static void WFLBY_3DOBJWK_Anm_BataBata( WFLBY_3DOBJWK* p_wk )
 		anm = WFLBY_3DMDL_ANM_GetAnmOffs( TRUE, way );
 
 		// アクターに設定
+	#if WB_FIX
 		BLACT_AnmOffsChg( p_wk->p_act, anm );
 		BLACT_AnmFrameSetOffs( p_wk->p_act, WFLBY_3DOBJ_TRUN_FIRST_FRAME*FX32_ONE );
-
+	#else
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, WFLBY_3DOBJ_TRUN_FIRST_FRAME);
+	#endif
 	}else if( p_wk->anmframe == WFLBY_3DOBJ_ANM_BATA_FRAME ){
 
 		// 向いている方向に歩くアニメの3こま目を設定
@@ -1539,8 +1959,13 @@ static void WFLBY_3DOBJWK_Anm_BataBata( WFLBY_3DOBJWK* p_wk )
 		anm = WFLBY_3DMDL_ANM_GetAnmOffs( TRUE, way );
 
 		// アクターに設定
+	#if WB_FIX
 		BLACT_AnmOffsChg( p_wk->p_act, anm );
 		BLACT_AnmFrameSetOffs( p_wk->p_act, (WFLBY_3DOBJ_TRUN_FIRST_FRAME*3)*FX32_ONE );
+	#else
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, (WFLBY_3DOBJ_TRUN_FIRST_FRAME*3) );
+	#endif
 	}
 
 	p_wk->anmframe = (p_wk->anmframe + 1) % (WFLBY_3DOBJ_ANM_BATA_FRAME*2);
@@ -1580,14 +2005,14 @@ static BOOL WFLBY_3DOBJWK_GetAnmSave( u32 st )
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DOBJWK_CheckCulling( WFLBY_3DOBJWK* p_wk )
+static void WFLBY_3DOBJWK_CheckCulling( WFLBY_3DOBJSYS* p_sys, WFLBY_3DOBJWK* p_wk )
 {
 	BOOL result;
 
 
 	if( WFLBY_3DOBJWK_CheckMove( p_wk ) ){
 		
-		result = WFLBY_3DOBJWK_CheckCullingBlact( p_wk->p_act );
+		result = WFLBY_3DOBJWK_CheckCullingBlact( p_sys, p_wk->p_blact, p_wk->act_idx );
 		
 		if( result == FALSE ){
 			p_wk->culling = TRUE;
@@ -1611,12 +2036,22 @@ static void WFLBY_3DOBJWK_ContBlactDrawFlag( WFLBY_3DOBJWK* p_wk )
 {
 	if( (p_wk->culling == FALSE) && (p_wk->objdraw == TRUE) ){
 		// 表示ON
+	#if WB_FIX
 		BLACT_ObjDrawFlagSet( p_wk->p_act, TRUE );
 		D3DOBJ_SetDraw( &p_wk->shadow, TRUE );
+	#else
+		GFL_BBDACT_SetDrawEnable(p_wk->p_blact, p_wk->act_idx, TRUE);
+		p_wk->shadow_draw_flag = TRUE;
+	#endif
 	}else{
 		// 表示OFF
+	#if WB_FIX
 		BLACT_ObjDrawFlagSet( p_wk->p_act, FALSE );
 		D3DOBJ_SetDraw( &p_wk->shadow, FALSE );
+	#else
+		GFL_BBDACT_SetDrawEnable(p_wk->p_blact, p_wk->act_idx, FALSE);
+		p_wk->shadow_draw_flag = FALSE;
+	#endif
 	}
 }
 
@@ -1628,7 +2063,8 @@ static void WFLBY_3DOBJWK_ContBlactDrawFlag( WFLBY_3DOBJWK* p_wk )
  *	@param	p_work		ワーク
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DOBJWK_CallBack_BlactDraw( BLACT_WORK_PTR p_act ,void* p_work )
+#if WB_FIX
+static void WFLBY_3DOBJWK_CallBack_BlactDraw( GFL_BBDACT_ACTUNIT_ID p_act ,void* p_work )
 {
 	WFLBY_3DOBJWK* p_wk = p_work;
 	NNSG3dResMdl*  p_mdl;
@@ -1636,6 +2072,7 @@ static void WFLBY_3DOBJWK_CallBack_BlactDraw( BLACT_WORK_PTR p_act ,void* p_work
 	p_mdl = BLACT_ResMdlGet( p_act );
 	NNS_G3dMdlSetMdlLightEnableFlagAll( p_mdl, p_wk->set_light_msk );
 }
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -1648,22 +2085,30 @@ static void WFLBY_3DOBJWK_CallBack_BlactDraw( BLACT_WORK_PTR p_act ,void* p_work
  *	@retval	FALSE	描画しない
  */
 //-----------------------------------------------------------------------------
-static BOOL WFLBY_3DOBJWK_CheckCullingBlact( BLACT_WORK_PTR p_act )
+static BOOL WFLBY_3DOBJWK_CheckCullingBlact(WFLBY_3DOBJSYS* p_sys, GFL_BBDACT_SYS *p_blact, GFL_BBDACT_ACTUNIT_ID act_idx)
 {
 	BOOL ret;
 	VecFx32 matrix;
 	NNSG3dResMdlInfo*	p_mdlinfo;	
-	NNSG3dResMdl*		p_mdl;
 	BOUNDING_BOX		box;
 	MtxFx33				mtx;
+	NNSG3dResMdl*		p_mdlres;
 	
 	// リソース取得
-	p_mdl = BLACT_MdlResGet( p_act );
-	p_mdlinfo = NNS_G3dGetMdlInfo( p_mdl );			// モデルリソースインフォデータ取得
+#if WB_FIX
+	p_mdlres = BLACT_MdlResGet( p_act );
+	p_mdlinfo = NNS_G3dGetMdlInfo( p_mdlres );		// モデルリソースインフォデータ取得
+#else
+	p_mdlres = NNS_G3dGetMdlByIdx( NNS_G3dGetMdlSet( p_sys->idx_file ), 0 );
+	p_mdlinfo = NNS_G3dGetMdlInfo( p_mdlres );		// モデルリソースインフォデータ取得
+#endif
 
 	// 座標
+#if WB_FIX
 	matrix = *BLACT_MatrixGet(p_act);
-
+#else
+	GFL_BBD_GetObjectTrans(GFL_BBDACT_GetBBDSystem(p_blact), act_idx, &matrix);
+#endif
 
 	// ビルボードは板なのでモデルとしては奥行きがないが、
 	// カメラの方向を向くように回転するので、
@@ -1686,7 +2131,14 @@ static BOOL WFLBY_3DOBJWK_CheckCullingBlact( BLACT_WORK_PTR p_act )
 	NNS_G3dGlbSetBaseRot( &mtx );
 	
 	// スケール設定
+#if WB_FIX
 	NNS_G3dGlbSetBaseScale( BLACT_ScaleGet(p_act) );
+#else
+	{
+		VecFx32 scale = {FX32_ONE, FX32_ONE, FX32_ONE};
+		NNS_G3dGlbSetBaseScale( &scale );
+	}
+#endif
 
 	ret = BB_CullingCheck3DModelNonResQuick( &matrix, &box );
 

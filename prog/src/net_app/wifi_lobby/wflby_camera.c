@@ -126,6 +126,19 @@ void WFLBY_CAMERA_Exit( WFLBY_CAMERA* p_sys )
 	GFL_HEAP_FreeMemory( p_sys );
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   カメラへのポインタを取得
+ * @param   p_sys		
+ * @retval  カメラへのポインタ
+ */
+//--------------------------------------------------------------
+GFL_G3D_CAMERA * WFLBY_CAMERA_Get(WFLBY_CAMERA *p_sys)
+{
+	GF_ASSERT(p_sys->p_camera != NULL);
+	return p_sys->p_camera;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	カメラ描画

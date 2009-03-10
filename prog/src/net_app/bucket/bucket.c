@@ -993,7 +993,7 @@ static void BCT_GAMEDATA_Load( BUCKET_WK* p_wk, u32 heapID )
 	u32 size;
 	int i;
 	
-	p_wk->gamedata.p_tbl	= ArcUtil_LoadEx( ARC_BUCKET_DATA, NARC_ballslow_data_bucket_data_bin, FALSE, heapID, ALLOC_TOP, &size );
+	p_wk->gamedata.p_tbl	= GFL_ARC_UTIL_LoadEx( ARC_BUCKET_DATA, NARC_ballslow_data_bucket_data_bin, FALSE, heapID, &size );
 	p_wk->gamedata.tblnum	= size / sizeof(BCT_GAMEDATA_ONE);
 
 	// MYSTATUSTBL

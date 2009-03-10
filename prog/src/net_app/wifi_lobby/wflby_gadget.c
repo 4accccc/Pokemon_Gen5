@@ -1748,9 +1748,9 @@ static void WFLBY_GADGET_LoadMdl( WFLBY_GADGET* p_sys, ARCHANDLE* p_handle, u32 
 	int i;
 
 	for( i=0; i<WFLBY_GADGET_MDL_NUM; i++ ){
-		p_sys->mdl[i].pResMdl	= ArcUtil_HDL_Load( p_handle, 
+		p_sys->mdl[i].pResMdl	= GFL_ARCHDL_UTIL_Load( p_handle, 
 					WFLBY_GADGET_MDL_FILE_START + i,
-					FALSE, gheapID, ALLOC_TOP );
+					FALSE, gheapID );
 		p_sys->mdl[i].pModelSet	= NNS_G3dGetMdlSet( p_sys->mdl[i].pResMdl );
 		p_sys->mdl[i].pModel	= NNS_G3dGetMdlByIdx( p_sys->mdl[i].pModelSet, 0 );
 
