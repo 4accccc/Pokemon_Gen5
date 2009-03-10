@@ -11,15 +11,15 @@
 #include "arc_def.h"
 #include "system/main.h"
 
-#include "../../pokemon_wb/prog/src/test/dlplay/dlplay_comm_func.h"
-#include "../../pokemon_wb/prog/src/test/dlplay/dlplay_func.h"
-#include "../../pokemon_wb/prog/src/test/ariizumi/ari_debug.h"
+#include "../prog/src/test/dlplay/dlplay_comm_func.h"
+#include "../prog/src/test/dlplay/dlplay_func.h"
+#include "../prog/src/test/ariizumi/ari_debug.h"
 #include "dlplay_data_main.h"
 #include "print/printsys.h"
 
 #include "mb_test.naix"
 #include "message_dl.naix"
-#include "../../pokemon_wb/prog/arc/font/font.naix"
+#include "../prog/arc/font/font.naix"
 //======================================================================
 //	define
 //======================================================================

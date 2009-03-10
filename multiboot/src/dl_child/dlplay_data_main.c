@@ -15,9 +15,9 @@
 #include "system/gfl_use.h"
 #include "savedata_def.h"
 
-#include "../../pokemon_wb/prog/src/test/ariizumi/ari_debug.h"
-#include "../../pokemon_wb/prog/src/test/dlplay/dlplay_func.h"
-#include "../../pokemon_wb/prog/src/test/dlplay/dlplay_comm_func.h"
+#include "../prog/src/test/ariizumi/ari_debug.h"
+#include "../prog/src/test/dlplay/dlplay_func.h"
+#include "../prog/src/test/dlplay/dlplay_comm_func.h"
 
 #include "dlplay_child_common.h"
 #include "dlplay_data_main.h"
