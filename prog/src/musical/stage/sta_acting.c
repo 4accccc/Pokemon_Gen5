@@ -32,6 +32,7 @@
 #include "sta_act_effect.h"
 #include "sta_act_poke.h"
 #include "sta_act_obj.h"
+#include "script/sta_act_script.h"
 
 #include "eff_def/mus_eff.h"
 
@@ -51,11 +52,11 @@
 #define ACT_PAL_INFO		(0xE)
 #define ACT_PAL_FONT		(0xF)
 
+#define ACT_SPOT_NUM	(2)
 
 #define ACT_OBJECT_IVALID (-1)
 
 #define ACT_BG_SCROLL_MAX (256)
-#define ACT_MAKU_SCROLL_MAX (256)
 
 //Msg系
 #define ACT_MSG_POS_X ( 4 )
@@ -67,13 +68,28 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
-
+typedef enum
+{
+	AST_NONE,	//無効
+	AST_CIRCLE,	//円形
+	AST_SHINES,	//台形
+}ACT_SPOT_TYPE;
 
 //======================================================================
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
-
+//スポットライト
+typedef struct
+{
+	ACT_SPOT_TYPE	type;	//有効フラグ兼
+	GXRgb	color;
+	u8		alpha;
+	fx32	posX;
+	fx32	posY;
+	fx32	val1;	//半径 or 上の幅(半分
+	fx32	val2;	//無効 or 下の幅(半分
+}ACT_SPOT_WORK;
 
 struct _ACTING_WORK
 {
@@ -95,9 +111,13 @@ struct _ACTING_WORK
 
 	STA_EFF_SYS			*effSys;
 	STA_EFF_WORK		*effWork[ACT_EFFECT_MAX];
+	
+	ACT_SPOT_WORK		spotWork[ACT_SPOT_NUM];
 
 	GFL_G3D_CAMERA		*camera;
 	GFL_BBD_SYS			*bbdSys;
+	
+	STA_SCRIPT_SYS		*scriptSys;
 	
 	GFL_TCBLSYS			*tcblSys;
 	GFL_BMPWIN			*msgWin;
@@ -110,7 +130,6 @@ struct _ACTING_WORK
 //======================================================================
 #pragma mark [> proto
 ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork );
-void	STA_ACT_InitActing_2nd( ACTING_WORK *work );
 void	STA_ACT_TermActing( ACTING_WORK *work );
 ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work );
 
@@ -125,6 +144,9 @@ static void STA_ACT_SetupMessage( ACTING_WORK *work );
 static void STA_ACT_UpdateItem( ACTING_WORK *work );
 static void STA_ACT_UpdateScroll( ACTING_WORK *work );
 static void STA_ACT_UpdateMessage( ACTING_WORK *work );
+static void STA_ACT_DrawSpotLight( ACTING_WORK *work );
+static void STA_ACT_DrawSpotLight_Circle( ACTING_WORK *work , ACT_SPOT_WORK *spotWork );
+static void STA_ACT_DrawSpotLight_Shines( ACTING_WORK *work , ACT_SPOT_WORK *spotWork );
 
 
 
@@ -156,20 +178,30 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
+#include "script/script_table.h"	//↓のスクリプト定義用
+#include "script/script_test.dat"	//スクリプトテストデータ
 ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
 {
+	u8 i;
 	ACTING_WORK *work = GFL_HEAP_AllocMemory( initWork->heapId , sizeof( ACTING_WORK ));
 	
 	work->heapId = initWork->heapId;
 	work->initWork = initWork;
 	work->scrollOffset = 0;
-	work->makuOffset = 256;
+	work->makuOffset = 0;
 	STA_ACT_SetupGraphic( work );
 	STA_ACT_SetupBg( work );
 	STA_ACT_SetupMessage( work);
 	STA_ACT_SetupPokemon( work );
 	STA_ACT_SetupItem( work );
 	STA_ACT_SetupEffect( work );
+	
+	for( i=0;i<ACT_SPOT_NUM;i++ )
+	{
+		work->spotWork[i].type = AST_NONE;
+	}
+	
+	work->scriptSys = STA_SCRIPT_InitSystem( work->heapId , work );
 	
 	INFOWIN_Init( ACT_FRAME_SUB_INFO,ACT_PAL_INFO,work->heapId);
 
@@ -183,13 +215,6 @@ ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
 	return work;
 }
 
-void	STA_ACT_InitActing_2nd( ACTING_WORK *work )
-{
-	VecFx32 pos = {ACT_POS_X(128.0f),ACT_POS_X(96.0f),FX32_CONST(190.0f)};
-	STA_EFF_CreateEmmitter( work->effWork[0] , MUS_EFF_00_OP_TITLE01 , &pos );
-	STA_EFF_CreateEmmitter( work->effWork[1] , MUS_EFF_01_OP_DEMOBG2_BUBBLE1 , &pos );
-}
-
 void	STA_ACT_TermActing( ACTING_WORK *work )
 {
 	//フェードないので仮処理
@@ -200,6 +225,8 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 	SND_STRM_Release();
 	
 	INFOWIN_Exit();
+	
+	STA_SCRIPT_ExitSystem( work->scriptSys );
 
 	GFL_BMPWIN_Delete( work->msgWin );
 	GFL_FONT_Delete( work->fontHandle );
@@ -234,8 +261,26 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_R &&
 		(GFL_UI_KEY_GetCont() & PAD_BUTTON_L) == 0)
 	{
-		STA_ACT_InitActing_2nd( work );
+		VecFx32 pos = {ACT_POS_X(128.0f),ACT_POS_X(96.0f),FX32_CONST(190.0f)};
+		STA_EFF_CreateEmmitter( work->effWork[0] , MUS_EFF_00_OP_TITLE01 , &pos );
+		STA_EFF_CreateEmmitter( work->effWork[1] , MUS_EFF_01_OP_DEMOBG2_BUBBLE1 , &pos );
 	}
+	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+	{
+		STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData );
+	}
+	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+	{
+		u8 i;
+		VecFx32 scale;
+		for( i=0;i<MUSICAL_POKE_MAX;i++ )
+		{
+			STA_POKE_GetScale( work->pokeSys , work->pokeWork[i] , &scale );
+			scale.x *= -1;
+			STA_POKE_SetScale( work->pokeSys , work->pokeWork[i] , &scale );
+		}
+	}
+
 #endif
 
 	INFOWIN_Update();
@@ -246,6 +291,8 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 		GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
 #endif
 	{
+		STA_SCRIPT_UpdateSystem( work->scriptSys );
+
 		STA_POKE_UpdateSystem( work->pokeSys );
 		STA_OBJ_UpdateSystem( work->objSys );
 		STA_EFF_UpdateSystem( work->effSys );
@@ -258,6 +305,7 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
 	{
+		STA_ACT_DrawSpotLight( work );
 //		STA_POKE_DrawSystem( work->pokeSys );
 		MUS_POKE_DRAW_DrawSystem( work->drawSys ); 
 //		STA_OBJ_DrawSystem( work->objSys );
@@ -642,13 +690,13 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 	
 	if(	GFL_UI_KEY_GetCont() & PAD_KEY_UP )
 	{
-		if( work->makuOffset + spd < ACT_MAKU_SCROLL_MAX )
+		if( work->makuOffset + spd < ACT_CURTAIN_SCROLL_MAX )
 		{
 			work->makuOffset += spd;
 		}
 		else
 		{
-			work->makuOffset = ACT_MAKU_SCROLL_MAX;
+			work->makuOffset = ACT_CURTAIN_SCROLL_MAX;
 		}
 	}
 	if(	GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
@@ -701,3 +749,194 @@ static void STA_ACT_UpdateMessage( ACTING_WORK *work )
 	}
 #endif
 }
+
+//描画のときfx16しか使えないので座標計算の倍率を変える
+#define ACT_SPOT_POS_X(val)	((val)/16/4)
+#define ACT_SPOT_POS_Y(val)	(FX32_CONST(192.0f)-(val))/16/4
+static void STA_ACT_DrawSpotLight( ACTING_WORK *work )
+{
+	u8 i;
+	for( i=0;i<ACT_SPOT_NUM;i++ )
+	{
+		switch( work->spotWork[i].type )
+		{
+		case AST_CIRCLE:
+			STA_ACT_DrawSpotLight_Circle( work , & work->spotWork[i] );
+			break;
+		case AST_SHINES:
+			STA_ACT_DrawSpotLight_Shines( work , & work->spotWork[i] );
+			break;
+		}
+	}
+	
+#if DEB_ARI
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+	{
+		static u8 idx=0;
+		if( work->spotWork[0].type == AST_NONE )
+		{
+			VecFx32 pos;
+			STA_POKE_GetPosition( work->pokeSys , work->pokeWork[idx] , &pos );
+			work->spotWork[0].type = AST_CIRCLE;
+			work->spotWork[0].color = GX_RGB(31,31,0);
+			work->spotWork[0].alpha = 15;
+			work->spotWork[0].posX = pos.x;
+			work->spotWork[0].posY = pos.y;
+			work->spotWork[0].val1 = FX32_CONST(48.0f);
+			
+		}
+		else
+		if( work->spotWork[0].type == AST_CIRCLE )
+		{
+			VecFx32 pos;
+			STA_POKE_GetPosition( work->pokeSys , work->pokeWork[idx] , &pos );
+			work->spotWork[0].type = AST_SHINES;
+			work->spotWork[0].color = GX_RGB(31,31,0);
+			work->spotWork[0].alpha = 15;
+			work->spotWork[0].posX = pos.x;
+			work->spotWork[0].posY = pos.y+FX32_CONST(16.0f);
+			work->spotWork[0].val1 = FX32_CONST(12.0f);
+			work->spotWork[0].val2 = FX32_CONST(40.0f);
+			
+		}
+		else
+		if( work->spotWork[0].type == AST_SHINES )
+		{
+			work->spotWork[0].type = AST_NONE;
+			idx = (idx+1)%MUSICAL_POKE_MAX;
+		}
+	}
+#endif
+}
+
+static void STA_ACT_DrawSpotLight_Circle( ACTING_WORK *work , ACT_SPOT_WORK *spotWork )
+{
+	u32 i;
+	u16 add = 0x800;
+	const fx32 posX = spotWork->posX - FX32_CONST(work->scrollOffset);
+	fx16 rad = ACT_SPOT_POS_X(spotWork->val1);
+	G3_PushMtx();
+	G3_PolygonAttr(GX_LIGHTMASK_NONE,  // no lights
+				   GX_POLYGONMODE_MODULATE, 	// modulation mode
+				   GX_CULL_NONE,	   // cull none
+				   0,				   // polygon ID(0 - 63)
+				   spotWork->alpha,	   // alpha(0 - 31)
+				   GX_POLYGON_ATTR_MISC_XLU_DEPTH_UPDATE				   // OR of GXPolygonAttrMisc's value
+		);
+
+	G3_Translate( 0,0,FX32_CONST(199.0f));
+	G3_Scale( FX32_ONE*4,FX32_ONE*4,FX32_ONE);
+	G3_Begin(GX_BEGIN_TRIANGLES);
+	{
+		G3_Color(spotWork->color);
+		for( i=0;i<0x10000;i+=0x800)
+		{
+			G3_Vtx(ACT_SPOT_POS_X(posX),ACT_SPOT_POS_Y(spotWork->posY),0);
+			G3_Vtx(	ACT_SPOT_POS_X(posX) + FX_Mul(FX_SinIdx((u16)i),rad) ,
+					ACT_SPOT_POS_Y(spotWork->posY) + FX_Mul(FX_CosIdx((u16)i),rad) ,
+					0);
+			G3_Vtx(	ACT_SPOT_POS_X(posX) + FX_Mul(FX_SinIdx((u16)(i+add)),rad) ,
+					ACT_SPOT_POS_Y(spotWork->posY) + FX_Mul(FX_CosIdx((u16)(i+add)),rad) ,
+					0);
+			
+		}
+	}
+	G3_End();
+	G3_PopMtx(1);
+}
+
+static void STA_ACT_DrawSpotLight_Shines( ACTING_WORK *work , ACT_SPOT_WORK *spotWork )
+{
+	const fx32 posX = spotWork->posX - FX32_CONST(work->scrollOffset);
+	G3_PushMtx();
+	G3_PolygonAttr(GX_LIGHTMASK_NONE,  // no lights
+				   GX_POLYGONMODE_MODULATE, 	// modulation mode
+				   GX_CULL_NONE,	   // cull none
+				   0,				   // polygon ID(0 - 63)
+				   spotWork->alpha,	   // alpha(0 - 31)
+				   GX_POLYGON_ATTR_MISC_XLU_DEPTH_UPDATE				   // OR of GXPolygonAttrMisc's value
+		);
+
+	G3_Translate( 0,0,FX32_CONST(199.0f));
+	G3_Scale( FX32_ONE*4,FX32_ONE*4,FX32_ONE);
+	G3_Begin(GX_BEGIN_QUADS);
+	{
+		G3_Color(spotWork->color);
+		G3_Vtx(ACT_SPOT_POS_X(posX - spotWork->val1),ACT_SPOT_POS_Y(0),0);
+		G3_Vtx(ACT_SPOT_POS_X(posX + spotWork->val1),ACT_SPOT_POS_Y(0),0);
+		G3_Vtx(ACT_SPOT_POS_X(posX + spotWork->val2),ACT_SPOT_POS_Y(spotWork->posY),0);
+		G3_Vtx(ACT_SPOT_POS_X(posX - spotWork->val2),ACT_SPOT_POS_Y(spotWork->posY),0);
+	}
+	G3_End();
+	G3_End();
+	G3_PopMtx(1);
+}
+
+#pragma mark [> offer func
+//--------------------------------------------------------------
+//	スクリプト用に外部提供関数
+//--------------------------------------------------------------
+STA_POKE_SYS* STA_ACT_GetPokeSys( ACTING_WORK *work )
+{
+	return work->pokeSys;
+}
+STA_POKE_WORK* STA_ACT_GetPokeWork( ACTING_WORK *work , const u8 idx )
+{
+	GF_ASSERT( idx < MUSICAL_POKE_MAX );
+	return work->pokeWork[idx];
+}
+void STA_ACT_SetPokeWork( ACTING_WORK *work , STA_POKE_WORK *pokeWork , const u8 idx )
+{
+	GF_ASSERT( idx < MUSICAL_POKE_MAX );
+	work->pokeWork[idx] = pokeWork;
+}
+
+STA_OBJ_SYS* STA_ACT_GetObjectSys( ACTING_WORK *work )
+{
+	return work->objSys;
+}
+STA_OBJ_WORK* STA_ACT_GetObjectWork( ACTING_WORK *work , const u8 idx )
+{
+	GF_ASSERT( idx < ACT_OBJECT_MAX );
+	return work->objWork[idx];
+}
+void STA_ACT_SetObjectWork( ACTING_WORK *work , STA_OBJ_WORK *objWork , const u8 idx )
+{
+	GF_ASSERT( idx < ACT_OBJECT_MAX );
+	work->objWork[idx] = objWork;
+}
+
+STA_EFF_SYS* STA_ACT_GetEffectSys( ACTING_WORK *work )
+{
+	return work->effSys;
+}
+STA_EFF_WORK* STA_ACT_GetEffectWork( ACTING_WORK *work , const u8 idx )
+{
+	GF_ASSERT( idx < ACT_EFFECT_MAX );
+	return work->effWork[idx];
+}
+void STA_ACT_SetEffectWork( ACTING_WORK *work , STA_EFF_WORK *effWork , const u8 idx )
+{
+	GF_ASSERT( idx < ACT_EFFECT_MAX );
+	work->effWork[idx] = effWork;
+}
+
+u16		STA_ACT_GetCurtainHeight( ACTING_WORK *work )
+{
+	return work->makuOffset;
+}
+void	STA_ACT_SetCurtainHeight( ACTING_WORK *work , const u16 height )
+{
+	work->makuOffset = height;
+}
+u16		STA_ACT_GetStageScroll( ACTING_WORK *work )
+{
+	return work->scrollOffset;
+}
+void	STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll )
+{
+	work->scrollOffset = scroll;
+}
+
+
+

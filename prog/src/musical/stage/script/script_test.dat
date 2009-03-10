@@ -1,0 +1,26 @@
+//スクリプトテストデータ
+//とりあえずデータはすべてs32と仮定し、打っていく
+
+//スクリプト命令
+enum
+{
+	SCRIPT_FINISH,
+	SCRIPT_WAIT,
+};
+
+#define POKE_BASE_HEIGHT (FX32_CONST(160.0f))
+#define POKE_BASE_DEPTH(val) FX32_CONST( 80.0f+val*30.0f)
+
+s32 musicalScriptTestData[] =
+{
+	SCRIPT_ENUM_UpCurtain,
+	SCRIPT_ENUM_FrameWait , 120 ,
+	SCRIPT_ENUM_MovePoke , 0 , 0 , FX32_CONST(-80.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_ShowPoke , 0 , 1 ,
+	SCRIPT_ENUM_MovePoke , 0 , 240 , FX32_CONST(120.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_FrameWait , 240 ,
+	SCRIPT_ENUM_DownCurtain ,
+	SCRIPT_ENUM_FrameWait , 120 ,
+	SCRIPT_ENUM_ScriptFinish 
+};
+

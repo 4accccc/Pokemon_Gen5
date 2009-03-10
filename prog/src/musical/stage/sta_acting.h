@@ -42,12 +42,7 @@ typedef struct
 //======================================================================
 
 ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork );
-void	STA_ACT_InitActing_2nd( ACTING_WORK *work );
 void	STA_ACT_TermActing( ACTING_WORK *work );
 ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work );
-
-//--------------------------------------------------------------
-//	
-//--------------------------------------------------------------
 
 #endif STA_ACTING_H__

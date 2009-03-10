@@ -9,6 +9,9 @@
 #ifndef STA_ACT_POKE_H__
 #define STA_ACT_POKE_H__
 
+#include "musical/mus_poke_draw.h"
+#include "musical/mus_item_draw.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -42,6 +45,11 @@ void	STA_POKE_System_SetScrollOffset( STA_POKE_SYS *work , const u16 scrOfs );
 //ƒ|ƒP’P‘ÌŒn
 STA_POKE_WORK *STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *musPoke );
 void STA_POKE_DeletePoke( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_GetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *pos );
 void STA_POKE_SetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const VecFx32 *pos );
+void STA_POKE_GetScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *scale );
+void STA_POKE_SetScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *scale );
+void STA_POKE_DRAW_SetShowFlg( STA_POKE_WORK *drawWork , const BOOL flg );
+BOOL STA_POKE_DRAW_GetShowFlg( STA_POKE_WORK *drawWork );
 
 #endif STA_ACT_POKE_H__

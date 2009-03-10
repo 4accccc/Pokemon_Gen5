@@ -28,7 +28,6 @@
 enum	//メインシーケンス
 {
 	STA_SEQ_INIT_ACTING,	//ステージ演技部分
-	STA_SEQ_INIT2_ACTING,	//エフェクトの読み込み用
 	STA_SEQ_LOOP_ACTING,
 	STA_SEQ_TERM_ACTING,
 };
@@ -82,7 +81,7 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 		work->actInitWork->musPoke[2].equip[ePos].type = MUSICAL_ITEM_INVALID;
 		work->actInitWork->musPoke[3].equip[ePos].type = MUSICAL_ITEM_INVALID;
 	}
-	
+/*	
 	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HAND_R].type = 13;
 	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HEAD].type = 16;
 	
@@ -94,7 +93,7 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 	
 	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HAND_R].type = 30;
 	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HEAD].type = 21;
-	
+*/	
 	
 	return GFL_PROC_RES_FINISH;
 }
@@ -121,11 +120,6 @@ static GFL_PROC_RESULT MusicalStageProc_Main( GFL_PROC * proc, int * seq , void 
 	{
 	case STA_SEQ_INIT_ACTING:
 		work->actWork = STA_ACT_InitActing( work->actInitWork );
-		*seq = STA_SEQ_INIT2_ACTING;
-		break;
-		
-	case STA_SEQ_INIT2_ACTING:
-//		STA_ACT_InitActing_2nd( work->actWork );
 		*seq = STA_SEQ_LOOP_ACTING;
 		break;
 		

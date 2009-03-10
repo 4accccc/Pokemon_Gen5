@@ -1,0 +1,14 @@
+//これを読む場所の前にSCRIPT_FUNC_DEFを定義して、後ろでundefしてやることで
+//展開文字列を変更し、関数テーブル・関数定義に利用する
+
+SCRIPT_FUNC_DEF( ScriptFinish )		//スクリプトの終了
+SCRIPT_FUNC_DEF( FrameWait )	//1	//指定フレームウェイト
+//カーテン系
+SCRIPT_FUNC_DEF( UpCurtain )		//カーテンを上げる
+SCRIPT_FUNC_DEF( DownCurtain )		//カーテンを下げる
+SCRIPT_FUNC_DEF( MoveCurtain )	//2	//カーテンを移動させる
+
+//ポケモン系
+SCRIPT_FUNC_DEF( ShowPoke )		//2	//ポケモンの表示・非表示制御
+SCRIPT_FUNC_DEF( MovePoke )		//5	//ポケモン移動
+

@@ -21,4 +21,9 @@
 //エフェクト関係
 #define ACT_EFFECT_MAX (3)
 
+//幕関係
+#define ACT_CURTAIN_SCROLL_SPEED (2)
+#define ACT_CURTAIN_SCROLL_MIN (0)
+#define ACT_CURTAIN_SCROLL_MAX (224)
+
 #endif STA_LOCAL_DEF_H__

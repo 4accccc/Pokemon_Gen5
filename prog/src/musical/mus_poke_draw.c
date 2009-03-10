@@ -168,6 +168,30 @@ void MUS_POKE_DRAW_GetScale( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *scale )
 	MUS_MCSS_GetScale( drawWork->mcss , scale );
 }
 
+void MUS_POKE_DRAW_SetShowFlg( MUS_POKE_DRAW_WORK *drawWork , const BOOL flg )
+{
+	if( flg == TRUE )
+	{
+		MUS_MCSS_ResetVanishFlag( drawWork->mcss );
+	}
+	else
+	{
+		MUS_MCSS_SetVanishFlag( drawWork->mcss );
+	}
+}
+BOOL MUS_POKE_DRAW_GetShowFlg( MUS_POKE_DRAW_WORK *drawWork )
+{
+	const int flg = MUS_MCSS_GetVanishFlag( drawWork->mcss );
+	if( flg == MUS_MCSS_VANISH_ON )
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
 void MUS_POKE_DRAW_StartAnime( MUS_POKE_DRAW_WORK *drawWork )
 {
 	MUS_MCSS_ResetAnmStopFlag( drawWork->mcss );
@@ -178,7 +202,7 @@ void MUS_POKE_DRAW_StopAnime( MUS_POKE_DRAW_WORK *drawWork )
 	MUS_MCSS_SetAnmStopFlag( drawWork->mcss );
 }
 
-MUS_POKE_EQUIP_DATA *MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , const MUS_POKE_EQUIP_POS pos )
+MUS_POKE_EQUIP_DATA* MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , const MUS_POKE_EQUIP_POS pos )
 {
 	return &drawWork->equipData[pos];
 }

@@ -13,8 +13,6 @@
 #include "arc_def.h"
 #include "stage_gra.naix"
 
-#include "musical/mus_poke_draw.h"
-#include "musical/mus_item_draw.h"
 
 #include "sta_local_def.h"
 #include "sta_act_poke.h"
@@ -217,6 +215,7 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
 	pokeWork->pokePos.y= 0;
 	pokeWork->pokePos.z= 0;
 	MUS_POKE_DRAW_StartAnime( pokeWork->drawWork );
+	MUS_POKE_DRAW_SetShowFlg( pokeWork->drawWork , FALSE );
 
 	for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
 	{
@@ -254,6 +253,12 @@ void STA_POKE_DeletePoke( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 	MUS_POKE_DRAW_Del( work->drawSys , pokeWork->drawWork );
 	pokeWork->isEnable = FALSE;
 }
+void STA_POKE_GetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *pos )
+{
+	pos->x = pokeWork->pokePos.x;
+	pos->y = pokeWork->pokePos.y;
+	pos->z = pokeWork->pokePos.z;
+}
 
 void STA_POKE_SetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const VecFx32 *pos )
 {
@@ -262,6 +267,25 @@ void STA_POKE_SetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const 
 	pokeWork->pokePos.z = pos->z;
 	
 	pokeWork->isUpdate = TRUE;
+}
+
+void STA_POKE_GetScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *scale )
+{
+	MUS_POKE_DRAW_GetScale( pokeWork->drawWork , scale );
+}
+
+void STA_POKE_SetScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *scale )
+{
+	MUS_POKE_DRAW_SetScale( pokeWork->drawWork , scale );
+}
+
+void STA_POKE_DRAW_SetShowFlg( STA_POKE_WORK *pokeWork , const BOOL flg )
+{
+	MUS_POKE_DRAW_SetShowFlg( pokeWork->drawWork , flg );
+}
+BOOL STA_POKE_DRAW_GetShowFlg( STA_POKE_WORK *pokeWork )
+{
+	return MUS_POKE_DRAW_GetShowFlg( pokeWork->drawWork );
 }
 
 

@@ -37,6 +37,10 @@
 
 #define	SHADOW_OFFSET	( -0x1000 )	//影位置のZ方向のオフセット値
 
+#define MUS_MCSS_FLIP_NONE	(0)
+#define MUS_MCSS_FLIP_X		(1)
+#define MUS_MCSS_FLIP_Y		(2)
+
 //--------------------------------------------------------------------------
 /**
  * 構造体宣言
@@ -94,7 +98,8 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 							  NNSG2dAnimDataSRT *anim_SRT_mc,
 							  int node,
 							  u32 mcss_ortho_mode,
-							  fx32 *pos_z_default );
+							  fx32 *pos_z_default ,
+							  const u8 isFlip );
 
 static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_MCSS_ADD_WORK *maw );
 static	void	MUS_MCSS_GetNewMultiCellAnimation(MUS_MCSS_WORK *mcss, NNSG2dMCType	mcType );
@@ -218,6 +223,7 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 	VecFx32						pos,anim_pos;
 	MtxFx44						inv_camera;
 	u8 							musCellArr;
+	u8							flipFlg;
 	
 	G3_PushMtx();
 	G3_MtxMode( GX_MTXMODE_PROJECTION );
@@ -351,6 +357,16 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 			G3_Translate( anim_pos.x, anim_pos.y, 0 );
 			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ ), FX_CosIdx( anim_SRT_mc.rotZ ) );
 			G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->scale.y ), FX32_ONE );
+			
+			flipFlg = MUS_MCSS_FLIP_NONE;
+			if( mcss->scale.x < 0 )
+			{
+				flipFlg += MUS_MCSS_FLIP_X;
+			}
+			if( mcss->scale.y < 0 )
+			{
+				flipFlg += MUS_MCSS_FLIP_Y;
+			}
 
 			G3_StoreMtx( MUS_MCSS_NORMAL_MTX );
 /*
@@ -374,7 +390,7 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 							 GX_TEXGEN_TEXCOORD,
 							 image_p->attr.sizeS,
 							 image_p->attr.sizeT,
-							 GX_TEXREPEAT_ST,
+							 GX_TEXREPEAT_NONE,
 							 GX_TEXFLIP_NONE,
 							 image_p->attr.plttUse,
 							 image_p->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN]);
@@ -421,7 +437,8 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
 									  &anim_SRT, &anim_SRT_mc, node,
 									  mcss_sys->mcss_ortho_mode,
-									  &pos_z_default );
+									  &pos_z_default ,
+									  flipFlg );
 					}
 					else{
 						MUS_MCSS_DrawAct( mcss,
@@ -433,7 +450,8 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 									  ncec->mepachi_tex_t,
 									  &anim_SRT, &anim_SRT_mc, node,
 									  mcss_sys->mcss_ortho_mode,
-									  &pos_z_default );
+									  &pos_z_default ,
+									  flipFlg );
 					}
 				}
 				MUS_MCSS_DrawAct( mcss,
@@ -445,7 +463,8 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 							  ncec->tex_t,
 							  &anim_SRT, &anim_SRT_mc, node,
 							  mcss_sys->mcss_ortho_mode,
-							  &pos_z_default );
+							  &pos_z_default ,
+							  flipFlg );
 				
 				//ミュージカルセル用処理
 #if 1
@@ -539,7 +558,8 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 							  NNSG2dAnimDataSRT *anim_SRT_mc,
 							  int node,
 							  u32 mcss_ortho_mode,
-							  fx32 *pos_z_default )
+							  fx32 *pos_z_default ,
+							  const u8 isFlip )
 {
 	VecFx32	pos;
 
@@ -580,6 +600,17 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 	G3_Translate( pos_x, pos_y, 0 );
 
 	G3_Scale( scale_x, scale_y, FX32_ONE );
+	
+	//反転による調整
+	if( isFlip & MUS_MCSS_FLIP_X )
+	{
+		tex_s -= FX32_ONE;
+	}
+	if( isFlip & MUS_MCSS_FLIP_Y )
+	{
+		tex_t -= FX32_ONE;
+	}
+	
 
 	G3_Begin(GX_BEGIN_QUADS);
 	G3_TexCoord( tex_s,				tex_t );

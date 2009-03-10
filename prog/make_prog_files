@@ -480,7 +480,10 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
 				musical/stage/sta_acting.c \
 				musical/stage/sta_act_effect.c \
 				musical/stage/sta_act_poke.c \
-				musical/stage/sta_act_obj.c
+				musical/stage/sta_act_obj.c \
+				musical/stage/script/sta_act_script.c \
+				musical/stage/script/script_command.c \
+				musical/stage/script/script_table.c
 
 #ƒpƒŒƒX
 #===> SRCS_OVERLAY_DEV_WIFI
