@@ -1,0 +1,4 @@
+SCRSRCS	=\
+	common_scr.ev	\
+	dummy.ev	\
+	dummy_scr.ev	

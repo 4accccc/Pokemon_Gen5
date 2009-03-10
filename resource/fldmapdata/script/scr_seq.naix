@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: scr_seq.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-03-10T20:03:58
+ *****************************************************************************/
+
+#ifndef NARC_SCR_SEQ_NAIX_
+#define NARC_SCR_SEQ_NAIX_
+
+enum {
+	NARC_scr_seq_common_scr_bin = 0,
+	NARC_scr_seq_dummy_bin = 1,
+	NARC_scr_seq_dummy_scr_bin = 2
+};
+
+/* NARC_SCR_SEQ_NAIX_ */
+#endif
