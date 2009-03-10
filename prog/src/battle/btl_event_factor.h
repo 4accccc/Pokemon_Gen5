@@ -22,14 +22,22 @@ enum {
 
 //--------------------------------------------------------------
 /**
+*	イベント実体型
+*/
+//--------------------------------------------------------------
+typedef struct _BTL_EVENT_FACTOR	BTL_EVENT_FACTOR;
+
+//--------------------------------------------------------------
+/**
 *	イベントハンドラ型
 *
-*	sv 		サーバモジュールポインタ
+*	factor	自身削除用のハンドル
+*	flowWk 	サーバフローワーク
 *	pokeID	主体となるポケモンのID
 *	work	ワーク用配列（要素数はEVENT_HANDLER_WORK_ELEMS, 初回呼び出し時ゼロクリアが保証される）
 */
 //--------------------------------------------------------------
-typedef void (*BtlEventHandler)( BTL_SVFLOW_WORK* sv, u8 pokeID, int* work );
+typedef void (*BtlEventHandler)( BTL_EVENT_FACTOR* factor, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 //--------------------------------------------------------------
 /**
@@ -41,12 +49,6 @@ typedef struct {
 	BtlEventHandler		handler;
 }BtlEventHandlerTable;
 
-//--------------------------------------------------------------
-/**
-*	イベント実体型
-*/
-//--------------------------------------------------------------
-typedef struct _BTL_EVENT_FACTOR	BTL_EVENT_FACTOR;
 
 
 

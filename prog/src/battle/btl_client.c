@@ -131,7 +131,7 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
@@ -740,8 +740,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_WAZA_DMG_DBL,scProc_ACT_WazaDmg_Dbl		},
 		{	SC_ACT_DEAD,				scProc_ACT_Dead						},
 		{	SC_ACT_MEMBER_OUT,	scProc_ACT_MemberOut			},
-		{	SC_ACT_MEMBER_IN,		scProc_ACT_MemberIn			},
-		{	SC_ACT_RANKDOWN,		scProc_ACT_RankDownEffect	},
+		{	SC_ACT_MEMBER_IN,		scProc_ACT_MemberIn				},
+		{	SC_ACT_RANKDOWN,		scProc_ACT_RankDown				},
 		{	SC_ACT_SICK_SET,		scProc_ACT_SickSet				},
 		{	SC_ACT_SICK_DMG,		scProc_ACT_SickDamage			},
 		{	SC_ACT_WEATHER_DMG,	scProc_ACT_WeatherDmg			},
@@ -1036,7 +1036,7 @@ static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
 	return FALSE;
 }
 
-static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args )
+static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
 	return TRUE;
@@ -1253,8 +1253,7 @@ static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
 }
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTL_POKEPARAM* pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, args[0] );
-	BTL_Printf(" OP - RankDown PokePos=%d, ppDat=%p\n", args[0], pp);
+	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 	BTL_POKEPARAM_RankDown( pp, args[1], args[2] );
 	return TRUE;
 }

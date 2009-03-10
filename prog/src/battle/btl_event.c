@@ -13,28 +13,21 @@
 #include "btl_event.h"
 #include "btl_event_factor.h"
 
-//--------------------------------------------------------------
-/**
-*	イベントハンドラテーブル
-*/
-//--------------------------------------------------------------
-/*
-typedef struct {
-	BtlEventType	eventType;
-	void*			handlerAdrs;
-}BtlEventHandler;
-*/
-
+/*--------------------------------------------------------------------------*/
+/* Consts                                                                   */
+/*--------------------------------------------------------------------------*/
 enum {
-	FACTOR_REGISTER_MAX = 32,
-	FACTOR_COUNTER_MAX = 10000,
+	FACTOR_REGISTER_MAX = 32,			///< 登録できるイベントファクター最大数
+	EVENTVAL_STACK_DEPTH = 128,		///< イベント変数スタックの容量
 };
 
-//--------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
+/* Structures                                                               */
+/*--------------------------------------------------------------------------*/
+
 /**
 *	イベントデータ実体
 */
-//--------------------------------------------------------------
 struct _BTL_EVENT_FACTOR {
 	BTL_EVENT_FACTOR*	prev;
 	BTL_EVENT_FACTOR*	next;
@@ -45,14 +38,24 @@ struct _BTL_EVENT_FACTOR {
 	u8				pokeID;
 };
 
-
-
+/*--------------------------------------------------------------------------*/
+/* Globals                                                                  */
+/*--------------------------------------------------------------------------*/
 static BTL_EVENT_FACTOR  Factors[ FACTOR_REGISTER_MAX ];
 static BTL_EVENT_FACTOR* FactorStack[ FACTOR_REGISTER_MAX ];
 static BTL_EVENT_FACTOR* FirstFactorPtr;
 static u16 StackPtr;
 
+/**
+*	イベント変数スタック
+*/
+typedef struct {
+	u32 sp;
+	u16 label[ EVENTVAL_STACK_DEPTH ];
+	u32 value[ EVENTVAL_STACK_DEPTH ];
+}VAR_STACK;
 
+static VAR_STACK VarStack = {0};
 
 
 /*--------------------------------------------------------------------------*/
@@ -62,7 +65,8 @@ static BTL_EVENT_FACTOR* popFactor( void );
 static void pushFactor( BTL_EVENT_FACTOR* factor );
 static void clearFactorWork( BTL_EVENT_FACTOR* factor );
 static inline u32 calcFactorPriority( BtlEventFactor factorType, u16 subPri );
-static void callHandlers( const BtlEventHandlerTable* tbl, BtlEventType type, BTL_SVFLOW_WORK* flowWork, u8 pokeID, int* work );
+static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork );
+static void varStack_Init( void );
 
 
 
@@ -79,6 +83,8 @@ void BTL_EVENT_InitSystem( void )
 
 	FirstFactorPtr = NULL;
 	StackPtr = 0;
+
+	varStack_Init();
 }
 
 
@@ -199,14 +205,16 @@ void BTL_EVENT_RemoveFactor( BTL_EVENT_FACTOR* factor )
 	pushFactor( factor );
 }
 
-static void callHandlers( const BtlEventHandlerTable* tbl, BtlEventType type, BTL_SVFLOW_WORK* flowWork, u8 pokeID, int* work )
+static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork )
 {
+	const BtlEventHandlerTable* tbl = factor->handlerTable;
+
 	int i;
 	for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
 	{
-		if( tbl[i].eventType == type )
+		if( tbl[i].eventType == eventType )
 		{
-			tbl[i].handler( flowWork, pokeID, work );
+			tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
 		}
 	}
 }
@@ -219,8 +227,122 @@ void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 
 	for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
 	{
-		callHandlers( factor->handlerTable, eventID, flowWork, factor->pokeID, factor->work );
+//		callHandlers( factor->handlerTable, eventID, flowWork, factor->pokeID, factor->work );
+		callHandlers( factor, eventID, flowWork );
 	}
 }
+
+
+//======================================================================================================
+//	イベント変数スタック構造
+//======================================================================================================
+
+
+static void varStack_Init( void )
+{
+	VAR_STACK* stack = &VarStack;
+	int i;
+
+	stack->label[0] = BTL_EVAR_SYS_SEPARATE;
+	stack->sp = 0;
+	for(i=0; i<NELEMS(stack->label); ++i)
+	{
+		stack->label[i] = BTL_EVAR_NULL;
+	}
+}
+
+
+void BTL_EVENTVAR_Push( void )
+{
+	VAR_STACK* stack = &VarStack;
+
+	if( stack->sp < NELEMS(stack->label) )
+	{
+		stack->label[ stack->sp++ ] = BTL_EVAR_SYS_SEPARATE;
+		#ifdef PM_DEBUG
+		if( stack->sp >= (NELEMS(stack->label)/8*7) )
+		{
+			BTL_Printf("Var Stack sp=%d 危険水域です！！\n", stack->sp);
+		}
+		#endif
+	}
+	else
+	{
+		GF_ASSERT(0);		// stack overflow
+	}
+}
+
+void BTL_EVENTVAR_Pop( void )
+{
+	VAR_STACK* stack = &VarStack;
+
+	while( stack->sp )
+	{
+		stack->sp--;
+		if( stack->label[stack->sp] == BTL_EVAR_SYS_SEPARATE ){ break; }
+	}
+}
+
+void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, u32 value )
+{
+	GF_ASSERT(label!=BTL_EVAR_NULL);
+	GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);
+
+	{
+		VAR_STACK* stack = &VarStack;
+
+		int p = stack->sp;
+		while( p < NELEMS(stack->label) )
+		{
+			if( (stack->label[p] == BTL_EVAR_NULL)
+			||	(stack->label[p] == label)
+			){
+				break;
+			}
+			++p;
+		}
+		if( p < NELEMS(stack->value) )
+		{
+			stack->label[p] = label;
+			stack->value[p] = value;
+			#ifdef PM_DEBUG
+			if( p >= (NELEMS(stack->label)/8*7) )
+			{
+				BTL_Printf("Var Stack sp=%d 危険水域です！！\n", p);
+			}
+			#endif
+		}
+		else
+		{
+			GF_ASSERT(0);	// stack overflow
+		}
+	}
+}
+
+u32 BTL_EVENTVAR_GetValue( BtlEvVarLabel label )
+{
+	GF_ASSERT(label!=BTL_EVAR_NULL);
+	GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);
+	{
+		VAR_STACK* stack = &VarStack;
+
+		int p = stack->sp;
+		while( p < NELEMS(stack->label) )
+		{
+			if( stack->label[p] == label ){
+				return stack->value[p];
+			}
+			if( stack->label[p] == BTL_EVAR_NULL ){
+				break;
+			}
+			++p;
+		}
+		GF_ASSERT_MSG(0,"label=%d",label);	// label not found
+		return 0;
+	}
+}
+
+
+
 
 

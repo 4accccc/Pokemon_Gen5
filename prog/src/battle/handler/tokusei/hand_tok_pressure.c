@@ -13,7 +13,7 @@
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void handler_decPP( BTL_SERVER* server, u8 pokeID, int* work );
+static void handler_decPP( BTL_EVENT_FACTOR* myHandle, BTL_SERVER* server, u8 pokeID, int* work );
 
 
 
@@ -34,7 +34,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Pressure( u16 pri, u8 pokeID )
 }
 
 // BTL_EVENT_DECREMENT_PP:ワザを使ったポケモンのPPデクリメント計算
-static void handler_decPP( BTL_SERVER* server, u8 pokeID, int* work )
+static void handler_decPP( BTL_EVENT_FACTOR* myHandle, BTL_SERVER* server, u8 pokeID, int* work )
 {
 	// work[0] を発動フラグとして使用
 	if( work[0] == 0 )

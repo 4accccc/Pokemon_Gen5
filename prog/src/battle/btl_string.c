@@ -481,7 +481,7 @@ static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args )
 //--------------------------------------------------------------
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args )
 {
-	u8 pokePos = args[0];
+	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( SysWork.mainModule, args[0] );
 	u8 statusType = args[1];
 
 	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
@@ -496,8 +496,10 @@ static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args )
 //--------------------------------------------------------------
 static void ms_set_rankdown_fail( STRBUF* dst, u16 strID, const int* args )
 {
-	register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-	strID = get_setStrID( args[0], strID );
+	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( SysWork.mainModule, args[0] );
+
+	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
+	strID = get_setStrID( pokePos, strID );
 
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );

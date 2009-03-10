@@ -819,7 +819,7 @@ void BTLV_QuitTokWin( BTLV_CORE* wk, BtlPokePos pos )
 }
 
 
-void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 clientID, BppValueID statusType )
+void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 pokeID, BppValueID statusType )
 {
 //	printf("Å´Å´Å´Ç–Ç„ÇÈÇÈÅc\n");
 }

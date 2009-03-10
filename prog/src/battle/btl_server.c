@@ -543,7 +543,7 @@ static void ResetAdapterCmd( BTL_SERVER* server )
 
 //--------------------------------------------------------------------------------------
 /**
- * サーバ保持用クライアントワークへのポインタを返す
+ * サーバ保持用クライアントワークへのポインタを返す（存在しないとASSERT失敗）
  *
  * @param   server				
  * @param   clientID			
@@ -557,6 +557,16 @@ SVCL_WORK* BTL_SERVER_GetClientWork( BTL_SERVER* server, u8 clientID )
 	GF_ASSERT_MSG(server->client[clientID].myID != CLIENT_DISABLE_ID, "clientID=%d", clientID);
 	return &(server->client[clientID]);
 }
+//--------------------------------------------------------------------------------------
+/**
+ * サーバ保持用クライアントワークへのポインタを返す（存在しなければNULLを返す）
+ *
+ * @param   server		
+ * @param   clientID		
+ *
+ * @retval  SVCL_WORK*		
+ */
+//--------------------------------------------------------------------------------------
 SVCL_WORK* BTL_SERVER_GetClientWorkIfEnable( BTL_SERVER* server, u8 clientID )
 {
 	if( server->client[clientID].myID != CLIENT_DISABLE_ID )

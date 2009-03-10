@@ -73,7 +73,39 @@ enum {
 
 	BTL_EVARG_MAX = 16,
 };
+//--------------------------------------------------------------
+/**
+*	イベント変数ラベル
+*/
+//--------------------------------------------------------------
+typedef enum {
+	BTL_EVAR_NULL = 0,
+	BTL_EVAR_SYS_SEPARATE,
+	//---ここから上はシステム予約領域-------------------------
+	BTL_EVAR_POKEID,
+	BTL_EVAR_POKEID_USER,
+	BTL_EVAR_STATUS_TYPE,
+	BTL_EVAR_POKE_TYPE,
+	BTL_EVAR_POKE_TYPE_PAIR,
+	BTL_EVAL_VOLUME,
+	BTL_EVAR_FAIL_FLAG,
+	BTL_EVAR_RANDOM_FLAG,
 
+
+	BTL_EVAR_MAX,
+
+}BtlEvVarLabel;
+
+
+//--------------------------------------------------------------
+/**
+*	イベント変数スタック
+*/
+//--------------------------------------------------------------
+extern void BTL_EVENTVAR_Push( void );
+extern void BTL_EVENTVAR_Pop( void );
+extern void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, u32 value );
+extern u32 BTL_EVENTVAR_GetValue( BtlEvVarLabel label );
 
 
 //--------------------------------------------------------------

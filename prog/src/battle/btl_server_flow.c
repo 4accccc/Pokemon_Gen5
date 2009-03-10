@@ -121,7 +121,6 @@ struct _BTL_SVFLOW_WORK {
 	FIGHT_EVENT_PARAM		fightEventParams;
 	CHANGE_EVENT_PARAM	changeEventParams;
 
-	int					eventArgs[ BTL_EVARG_MAX ];
 	u8					flowFlags[ FLOWFLG_BYTE_MAX ];
 
 };
@@ -147,79 +146,79 @@ static inline void FlowFlg_Set( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline void FlowFlg_Clear( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline BOOL FlowFlg_Get( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline void FlowFlg_ClearAll( BTL_SVFLOW_WORK* wk );
-static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* server );
-static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* server, BTL_POKEPARAM** bpp );
+static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk );
+static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk, BTL_POKEPARAM** bpp );
 static inline void TargetPokeRec_Clear( TARGET_POKE_REC* rec );
 static inline void TargetPokeRec_Add( TARGET_POKE_REC* rec, BTL_POKEPARAM* pp );
 static inline u32 TargetPokeRec_GetCount( const TARGET_POKE_REC* rec );
 static inline BTL_POKEPARAM* TargetPokeRec_Get( TARGET_POKE_REC* rec, u32 idx );
 static inline int TargetPokeRec_SeekFriendIdx( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, u32 start_idx );
 static void scput_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx );
-static void scput_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, const BTL_ACTION_PARAM* action );
-static void scput_Fight( BTL_SVFLOW_WORK* server, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action );
-static void cof_put_wazafail_msg_cmd( BTL_SVFLOW_WORK* server, const BTL_POKEPARAM* attacker, u8 wazaFailReason );
-static u8 svflowsub_register_waza_targets( BTL_SVFLOW_WORK* server, BtlPokePos atPos, WazaID waza, const BTL_ACTION_PARAM* action, TARGET_POKE_REC* rec );
-static void scput_Fight_Damage( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, WazaID waza, SVCL_WORK* atClient,
+static void scput_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx );
+static void scput_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action );
+static void cof_put_wazafail_msg_cmd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8 wazaFailReason );
+static u8 svflowsub_register_waza_targets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos, WazaID waza, const BTL_ACTION_PARAM* action, TARGET_POKE_REC* rec );
+static void scput_Fight_Damage( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, WazaID waza, SVCL_WORK* atClient,
 	 BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
-static BTL_POKEPARAM* svflowsub_get_opponent_pokeparam( BTL_SVFLOW_WORK* server, BtlPokePos pos, u8 pokeSideIdx );
-static BTL_POKEPARAM* svflowsub_get_next_pokeparam( BTL_SVFLOW_WORK* server, BtlPokePos pos );
+static BTL_POKEPARAM* svflowsub_get_opponent_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos, u8 pokeSideIdx );
+static BTL_POKEPARAM* svflowsub_get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos );
 static void svflowsub_check_and_make_dead_command( BTL_SVFLOW_WORK* server, BTL_POKEPARAM* poke );
 static void scput_Fight_Damage_Single( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scput_Fight_Damage_Enemy2(
 	 BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, WazaID waza, 
 	 BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scput_Fight_Damage_OtherAll(
-	 BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, WazaID waza,
+	 BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, WazaID waza,
 	 BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
-static void svflowsub_damage_singular( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep,
+static void svflowsub_damage_singular( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep,
 			BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza, fx32 targetDmgRatio );
-static void svflowsub_damage_enemy_all( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep,
+static void svflowsub_damage_enemy_all( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep,
 	BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender1, BTL_POKEPARAM* defender2, WazaID waza, fx32 targetDmgRatio );
 static void svflowsub_damage_act_singular(
-		BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep,
+		BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep,
 		BTL_POKEPARAM* attacker,  BTL_POKEPARAM* defender,
 		WazaID waza,   BtlTypeAff aff,   fx32 targetDmgRatio );
-static void svflowsub_damage_act_enemy_all( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep,
+static void svflowsub_damage_act_enemy_all( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep,
 		BTL_POKEPARAM* attacker,  BTL_POKEPARAM* def1,  BTL_POKEPARAM* def2,
 		BtlTypeAff aff1,  BtlTypeAff aff2,  WazaID waza,
 		fx32 targetDmgRatio );
-static void svflowsub_damage_act_enemy_all_atonce( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep,
+static void svflowsub_damage_act_enemy_all_atonce( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep,
 		BTL_POKEPARAM* attacker, BTL_POKEPARAM* def1, BTL_POKEPARAM* def2,
 		BtlTypeAff aff, WazaID waza, fx32 targetDmgRatio );
-static BOOL svflowsub_hitcheck_singular( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza );
-static u16 svflowsub_damage_calc_core( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep,
+static BOOL svflowsub_hitcheck_singular( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza );
+static u16 svflowsub_damage_calc_core( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep,
 		const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BtlTypeAff typeAff,
 		fx32 targetDmgRatio );
-static void svflowsub_set_waza_effect( BTL_SVFLOW_WORK* server, u8 atPokeID, u8 defPokeID, WazaID waza );
-static void scput_Fight_AddSick( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, WazaID waza, BTL_POKEPARAM* attacker );
-static void scput_Fight_SimpleSick( BTL_SVFLOW_WORK* server, WazaID waza, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
-static void scEvent_addSick( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep,
+static void svflowsub_set_waza_effect( BTL_SVFLOW_WORK* wk, u8 atPokeID, u8 defPokeID, WazaID waza );
+static void scput_Fight_AddSick( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, WazaID waza, BTL_POKEPARAM* attacker );
+static void scput_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
+static void scEvent_addSick( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep,
 	BTL_POKEPARAM* receiver, BTL_POKEPARAM* attacker, WazaID waza );
-static void scput_TurnCheck( BTL_SVFLOW_WORK* server );
-static void scput_turncheck_sick( BTL_SVFLOW_WORK* server );
-static void scput_turncheck_weather( BTL_SVFLOW_WORK* server );
+static void scput_TurnCheck( BTL_SVFLOW_WORK* wk );
+static void scput_turncheck_sick( BTL_SVFLOW_WORK* wk );
+static void scput_turncheck_weather( BTL_SVFLOW_WORK* wk );
 static inline int roundValue( int val, int min, int max );
 static void initFightEventParams( FIGHT_EVENT_PARAM* fep );
-static BOOL scEvent_CheckConf( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const SVCL_WORK* atClient );
-static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker );
-static BOOL scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, const SVCL_WORK* atClient );
-static BOOL scEvent_checkHit( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
-static BtlTypeAff scEvent_checkAffinity( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
-static void scEvent_decrementPP( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, u8 wazaIdx );
-static u8 scEvent_getHitRatio( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, WazaID waza );
-static u8 scEvent_GetHitCount( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, u8 hitCountMax );
-static u8 scEvent_getCriticalRank( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, WazaID waza );
-static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, WazaID waza );
-static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, WazaID waza );
-static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* defender, WazaID waza );
-static u16 scEvent_getDamageDenom( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep );
-static PokeType scEvent_getWazaPokeType( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, WazaID waza );
-static PokeTypePair scEvent_getAttackerPokeType( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker );
-static PokeTypePair scEvent_getDefenderPokeType( BTL_SVFLOW_WORK* server, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* defender );
-static void scEvent_MemberOut( BTL_SVFLOW_WORK* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx );
-static void scEvent_MemberIn( BTL_SVFLOW_WORK* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx );
-static void scEvent_PokeComp( BTL_SVFLOW_WORK* server );
-static void scEvent_RankDown( BTL_SVFLOW_WORK* server, u8 pokeID, BtlPokePos pokePos, BppValueID statusType, u8 volume );
+static BOOL scEvent_CheckConf( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const SVCL_WORK* atClient );
+static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker );
+static BOOL scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, BTL_POKEPARAM* attacker, const SVCL_WORK* atClient );
+static BOOL scEvent_checkHit( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
+static BtlTypeAff scEvent_checkAffinity( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
+static void scEvent_decrementPP( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, u8 wazaIdx );
+static u8 scEvent_getHitRatio( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, WazaID waza );
+static u8 scEvent_GetHitCount( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, u8 hitCountMax );
+static u8 scEvent_getCriticalRank( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, WazaID waza );
+static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, WazaID waza );
+static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker, WazaID waza );
+static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* defender, WazaID waza );
+static u16 scEvent_getDamageDenom( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep );
+static PokeType scEvent_getWazaPokeType( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, WazaID waza );
+static PokeTypePair scEvent_getAttackerPokeType( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* attacker );
+static PokeTypePair scEvent_getDefenderPokeType( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, const BTL_POKEPARAM* defender );
+static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx );
+static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx );
+static void scEvent_PokeComp( BTL_SVFLOW_WORK* wk );
+static void scEvent_RankDown( BTL_SVFLOW_WORK* wk, u8 pokeID, BppValueID statusType, u8 volume, BOOL fRandom );
 
 
 
@@ -290,7 +289,7 @@ BOOL BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 				break;
 			case BTL_ACTION_CHANGE:
 				BTL_Printf("【ポケモン】を処理。位置%d <- ポケ%d \n", action->change.posIdx, action->change.memberIdx);
-				scput_MemberOut( wk, clientID, action );
+				scput_MemberOut( wk, clientID, action->change.memberIdx );
 				scput_MemberIn( wk, clientID, action->change.posIdx, action->change.memberIdx );
 				break;
 			case BTL_ACTION_ESCAPE:
@@ -318,9 +317,7 @@ BOOL BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 	}
 
 	return FALSE;
-
 }
-
 //--------------------------------------------------------------------------
 /**
  * １ターン分サーバコマンド生成（ポケモン選択後）
@@ -433,8 +430,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
 			pri[p] = MakePriValue( actionPri, wazaPri, agility );
 			order[p].clientID = i;
 			order[p].pokeIdx = j;
-
-			p++;
+			++p;
 		}
 	}
 // プライオリティ値ソートに伴ってクライアントID配列もソート
@@ -467,14 +463,13 @@ static u8 countAlivePokemon( BTL_SVFLOW_WORK* wk )
 {
 	SVCL_WORK* clwk;
 	const BTL_POKEPARAM* bpp;
-	u16 numCoverPos, i, j;
+	u16 i, j;
 	u8 cnt = 0;
 
 	for(i=0; i<wk->numClient; ++i)
 	{
 		clwk = BTL_SERVER_GetClientWork( wk->server, i );
-		numCoverPos = BTL_SVCL_GetNumCoverPos( clwk );
-		for(j=0; j<numCoverPos; ++j)
+		for(j=0; j<clwk->numCoverPos; ++j)
 		{
 			bpp = BTL_SVCL_GetFrontPokeData( clwk, j );
 			if( bpp != NULL )
@@ -515,6 +510,10 @@ static inline void FlowFlg_ClearAll( BTL_SVFLOW_WORK* wk )
 //----------------------------------------------------------------------------------------------
 // 戦闘に出ているポケモンデータ順番アクセス処理
 //----------------------------------------------------------------------------------------------
+
+/**
+ *	順番アクセス：ワーク初期化
+ */
 static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk )
 {
 	fpsw->clientIdx = 0;
@@ -543,6 +542,9 @@ static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WOR
 		}
 	}
 }
+/**
+ *	順番アクセス：次のポケモンデータを取得（FALSEが返ったら終了）
+ */
 static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk, BTL_POKEPARAM** bpp )
 {
 	if( fpsw->endFlag )
@@ -627,9 +629,13 @@ static inline int TargetPokeRec_SeekFriendIdx( const TARGET_POKE_REC* rec, const
 	return -1;
 }
 
-//----------------------------------------------------------------------------------------------
+//======================================================================================================
 // サーバーフロー処理
-//----------------------------------------------------------------------------------------------
+//======================================================================================================
+
+//-----------------------------------------------------------------------------------
+// サーバーフロー：フロントメンバー入れ替え
+//-----------------------------------------------------------------------------------
 static void scput_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx )
 {
 	SVCL_WORK* clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
@@ -637,14 +643,14 @@ static void scput_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next
 	scEvent_MemberIn( wk, &wk->changeEventParams, clientID, posIdx, nextPokeIdx );
 }
 
-static void scput_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, const BTL_ACTION_PARAM* action )
+static void scput_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx )
 {
-	scEvent_MemberOut( wk, &wk->changeEventParams, clientID, action->change.posIdx );
+	scEvent_MemberOut( wk, &wk->changeEventParams, clientID, posIdx );
 }
 
-//==============================================================================
+//-----------------------------------------------------------------------------------
 // サーバーフロー：「たたかう」ルート
-//==============================================================================
+//-----------------------------------------------------------------------------------
 static void scput_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action )
 {
 	SVCL_WORK *atClient;
@@ -1960,48 +1966,52 @@ static void scEvent_PokeComp( BTL_SVFLOW_WORK* wk )
 	BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_COMP );
 }
 
-// 能力を下げる
-static void scEvent_RankDown( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlPokePos pokePos, BppValueID statusType, u8 volume )
+//--------------------------------------------------------------------------
+/**
+ * [Event] 対象ポケモンの能力ランクを下げる
+ *
+ * @param   wk					
+ * @param   pokeID			対象ポケモンのID
+ * @param   pokePos			
+ * @param   statusType	
+ * @param   volume			
+ * @param   fRandom			追加効果など乱数可否によって発生した場合はTRUE
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_RankDown( BTL_SVFLOW_WORK* wk, u8 pokeID, BppValueID statusType, u8 volume, BOOL fRandom )
 {
-	wk->eventArgs[ BTL_EVARG_COMMON_POKEPOS ] = pokePos;
-	wk->eventArgs[ BTL_EVARG_COMMON_POKEID ] = pokeID;
-	wk->eventArgs[ BTL_EVARG_RANKDOWN_STATUS_TYPE ] = statusType;
-	wk->eventArgs[ BTL_EVARG_RANKDOWN_VOLUME ] = volume;
-	wk->eventArgs[ BTL_EVARG_RANKDOWN_FAIL_FLAG ] = FALSE;
+	BTL_EVENTVAR_Push();
+//	BtlEventArg_Push();
+
+	BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
+	BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, statusType );
+	BTL_EVENTVAR_SetValue( BTL_EVAR_RANDOM_FLAG, fRandom );
+
+	BTL_EVENTVAR_SetValue( BTL_EVAL_VOLUME, volume );
+	BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
 
 	BTL_EVENT_CallHandlers( wk, BTL_EVENT_BEFORE_RANKDOWN );
 
-	if( wk->eventArgs[ BTL_EVARG_RANKDOWN_FAIL_FLAG ] == FALSE )
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_FLAG) == FALSE )
 	{
-		volume = wk->eventArgs[ BTL_EVARG_RANKDOWN_VOLUME ];
+		volume = BTL_EVENTVAR_GetValue( BTL_EVAL_VOLUME );
 		BTL_POKEPARAM_RankDown(
-				BTL_POKECON_GetFrontPokeData(wk->pokeCon, pokePos ),
-				statusType, 
+				BTL_POKECON_GetPokeParam(wk->pokeCon, pokeID),
+				statusType,
 				volume
 		);
-
-		SCQUE_PUT_OP_RankDown( wk->que, pokePos, statusType, volume );
-		SCQUE_PUT_ACT_RankDown( wk->que, pokePos, statusType, volume );
-		SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankdown_ATK, pokePos, statusType, volume );
+		SCQUE_PUT_OP_RankDown( wk->que, pokeID, statusType, volume );
+		SCQUE_PUT_ACT_RankDown( wk->que, pokeID, statusType, volume );
+		SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankdown_ATK, pokeID, statusType, volume );
 	}
+
+	BTL_EVENTVAR_Pop();
 }
 
 //----------------------------------------------------------------------------------------------------------
 // 以下、ハンドラからの応答受信関数とユーティリティ群
 //----------------------------------------------------------------------------------------------------------
-
-int BTL_SERVER_RECEPT_GetEventArg( const BTL_SVFLOW_WORK* wk, u8 idx )
-{
-	GF_ASSERT(idx < BTL_EVARG_MAX);
-	return wk->eventArgs[ idx ];
-}
-
-void BTL_SERVER_RECEPT_SetEventArg( BTL_SVFLOW_WORK* wk, u8 idx, int value )
-{
-	GF_ASSERT(idx < BTL_EVARG_MAX);
-	wk->eventArgs[ idx ] = value;
-}
-
 
 //--------------------------------------------------------------------------------------
 /**
@@ -2046,9 +2056,9 @@ BtlPokePos BTL_SVFLOW_CheckExistFrontPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
  *
  */
 //=============================================================================================
-void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SVFLOW_WORK* wk, u8 clientID )
+void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SVFLOW_WORK* wk, BtlPokePos pokePos )
 {
-	SCQUE_PUT_TOKWIN_IN( wk->que, clientID );
+	SCQUE_PUT_TOKWIN_IN( wk->que, pokePos );
 }
 //=============================================================================================
 /**
@@ -2059,9 +2069,9 @@ void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SVFLOW_WORK* wk, u8 clientID )
  *
  */
 //=============================================================================================
-void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SVFLOW_WORK* wk, u8 clientID )
+void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SVFLOW_WORK* wk, BtlPokePos pokePos )
 {
-	SCQUE_PUT_TOKWIN_OUT( wk->que, clientID );
+	SCQUE_PUT_TOKWIN_OUT( wk->que, pokePos );
 }
 
 void BTL_SERVER_RECTPT_SetMessage( BTL_SVFLOW_WORK* wk, u16 msgID, BtlPokePos pokePos )
@@ -2088,11 +2098,11 @@ void BTL_SERVER_RECEPT_RankDownEffect( BTL_SVFLOW_WORK* wk, BtlExPos exPos, BppV
 
 	numPokemons = BTL_MAIN_ExpandBtlPos( wk->mainModule, exPos, targetPos );
 	BTL_Printf("ランクさげ効果：タイプ=%d,  対象ポケモン数=%d\n", statusType, numPokemons );
-	for(i=0; i<numPokemons; i++)
+	for(i=0; i<numPokemons; ++i)
 	{
 		pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos[i] );
 		pokeID = BTL_POKEPARAM_GetID( pp );
-		scEvent_RankDown( wk, pokeID, targetPos[i], statusType, volume );
+		scEvent_RankDown( wk, pokeID, statusType, volume, FALSE );
 	}
 }
 //=============================================================================================
