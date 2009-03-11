@@ -185,8 +185,11 @@ extern WazaTarget WAZADATA_GetTarget( WazaID id );
 // 状態異常効果を取得
 extern PokeSick WAZADATA_GetSick( WazaID id );
 
-// 同上。こちらは追加効果の確率が返る。
+// 追加効果で状態異常になる確率
 extern u32 WAZADATA_GetSickPer( WazaID id );
+
+// 追加効果でひるむ確率
+extern u32 WAZADATA_GetShrinkPer( WazaID id );
 
 
 /*-----------------------------------------------------------------

@@ -251,6 +251,7 @@ enum {
 	WSEQ_SIMPLEEFF_DEF = 11,
 	WSEQ_SIMPLEEFF_SPATK = 13,
 	WSEQ_SIMPLEEFF_AVOID = 16,
+	WSEQ_SHRINK = 31,
 
 };
 
@@ -265,6 +266,9 @@ typedef struct {
 		WazaRankEffect	type;
 		s8							value;
 	}rankEff[2];
+
+	u8 shrinkFlg;
+
 }SEQ_PARAM;
 
 
@@ -274,36 +278,51 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
 		{
 			WSEQ_SINMPLESICK_NEMURI, WAZADATA_CATEGORY_SIMPLE_SICK, POKESICK_NEMURI, 
 			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
 		},{
 			WSEQ_SINMPLESICK_DOKU, WAZADATA_CATEGORY_SIMPLE_SICK, POKESICK_DOKU, 
 			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
 		},{
 			WSEQ_SINMPLESICK_MAHI, WAZADATA_CATEGORY_SIMPLE_SICK, POKESICK_MAHI, 
 			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
 		},{
 			WSEQ_DAMAGESICK_DOKU, WAZADATA_CATEGORY_DAMAGE_SICK, POKESICK_DOKU, 
 			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
 		},{
 			WSEQ_DAMAGESICK_YAKEDO, WAZADATA_CATEGORY_DAMAGE_SICK, POKESICK_YAKEDO, 
 			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
 		},{
 			WSEQ_DAMAGESICK_KOORI, WAZADATA_CATEGORY_DAMAGE_SICK, POKESICK_KOORI, 
 			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
 		},{
 			WSEQ_DAMAGESICK_MAHI, WAZADATA_CATEGORY_DAMAGE_SICK, POKESICK_MAHI, 
 			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
 		},{
 			WSEQ_SIMPLEEFF_ATK, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
 			{ { WAZA_RANKEFF_ATTACK, 1 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
 		},{
 			WSEQ_SIMPLEEFF_DEF, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
 			{ { WAZA_RANKEFF_DEFENCE, 1 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
 		},{
 			WSEQ_SIMPLEEFF_SPATK, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
 			{ { WAZA_RANKEFF_SP_ATTACK, 1 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
 		},{
 			WSEQ_SIMPLEEFF_AVOID, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
 			{ { WAZA_RANKEFF_AVOID, 1 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE,
+		},{
+				WSEQ_SHRINK, WAZADATA_CATEGORY_SIMPLE_DAMAGE, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+			TRUE,
 		},
 	};
 	u16 seq = WT_WazaDataParaGet( waza, ID_WTD_battleeffect );
@@ -456,6 +475,24 @@ u32 WAZADATA_GetSickPer( WazaID id )
 {
 	// @@@ 今はてきとうに
 	return 90;
+}
+
+//=============================================================================================
+/**
+ * 追加の「ひるみ」率を返す
+ *
+ * @param   id		ワザID
+ *
+ * @retval  u32		発生率（パーセンテージ = 0～100）
+ */
+//=============================================================================================
+u32 WAZADATA_GetShrinkPer( WazaID id )
+{
+	const SEQ_PARAM* seq = getSeqParam( id );
+	if( seq && seq->shrinkFlg ){
+		return WT_WazaDataParaGet( id, ID_WTD_addeffect );
+	}
+	return 0;
 }
 
 
