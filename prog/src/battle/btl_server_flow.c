@@ -1982,6 +1982,46 @@ static void scEvent_RankDown( BTL_SVFLOW_WORK* wk, u8 pokeID, BppValueID statusT
 }
 //--------------------------------------------------------------------------
 /**
+ * [Event] 対象ポケモンの能力ランクを上げる
+ *
+ * @param   wk		
+ * @param   pp		
+ * @param   statusType		
+ * @param   volume		
+ * @param   fRandom			追加効果など乱数可否によって発生した場合はTRUE
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_RankUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* pp, BppValueID statusType, u8 volume, BOOL fRandom )
+{
+	BTL_EVENTVAR_Push();
+
+	{
+		u8 pokeID = BTL_POKEPARAM_GetID( pp );
+
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, statusType );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_RANDOM_FLAG, fRandom );
+
+		BTL_EVENTVAR_SetValue( BTL_EVAL_VOLUME, volume );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
+
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_BEFORE_RANKDOWN );
+
+		if( BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_FLAG) == FALSE )
+		{
+			volume = BTL_EVENTVAR_GetValue( BTL_EVAL_VOLUME );
+			BTL_POKEPARAM_RankUp( pp, statusType, volume );
+			SCQUE_PUT_OP_RankUp( wk->que, pokeID, statusType, volume );
+			SCQUE_PUT_ACT_RankUp( wk->que, pokeID, statusType, volume );
+			SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankup_ATK, pokeID, statusType, volume );
+		}
+	}
+
+	BTL_EVENTVAR_Pop();
+}
+//--------------------------------------------------------------------------
+/**
  * [Event] 対象ポケモンをひるませる
  *
  * @param   wk					
@@ -2104,6 +2144,35 @@ void BTL_SERVER_RECEPT_RankDownEffect( BTL_SVFLOW_WORK* wk, BtlExPos exPos, BppV
 		scEvent_RankDown( wk, pokeID, statusType, volume, FALSE );
 	}
 }
+//=============================================================================================
+/**
+ * [ハンドラ受信] ステータスのランクダウン効果
+ *
+ * @param   wk			
+ * @param   exPos					対象ポケモン位置
+ * @param   statusType		ステータスタイプ
+ * @param   volume		
+ *
+ */
+//=============================================================================================
+void BTL_SERVER_RECEPT_RankUpEffect( BTL_SVFLOW_WORK* wk, BtlExPos exPos, BppValueID statusType, u8 volume )
+{
+	BTL_POKEPARAM* pp;
+	u8 targetPos[ BTL_POSIDX_MAX ];
+	u8 numPokemons, i;
+
+	numPokemons = BTL_MAIN_ExpandBtlPos( wk->mainModule, exPos, targetPos );
+	BTL_Printf("ランクあげ効果：タイプ=%d,  対象ポケモン数=%d\n", statusType, numPokemons );
+	for(i=0; i<numPokemons; ++i)
+	{
+		pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos[i] );
+		scEvent_RankUp( wk, pp, statusType, volume, FALSE );
+	}
+}
+
+
+
+
 //=============================================================================================
 /**
  * [ハンドラ受信] 減少PP値の修正

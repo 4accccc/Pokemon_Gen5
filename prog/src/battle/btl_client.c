@@ -133,6 +133,7 @@ static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
@@ -743,6 +744,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_DEAD,				scProc_ACT_Dead						},
 		{	SC_ACT_MEMBER_OUT,	scProc_ACT_MemberOut			},
 		{	SC_ACT_MEMBER_IN,		scProc_ACT_MemberIn				},
+		{	SC_ACT_RANKUP,			scProc_ACT_RankUp					},
 		{	SC_ACT_RANKDOWN,		scProc_ACT_RankDown				},
 		{	SC_ACT_SICK_SET,		scProc_ACT_SickSet				},
 		{	SC_ACT_SICK_DMG,		scProc_ACT_SickDamage			},
@@ -1069,6 +1071,15 @@ static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
  */
 static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 {
+	BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
+	return TRUE;
+}
+/**
+ * 【アクション】能力ランクアップ
+ */
+static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	// @@@ まだです
 	BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
 	return TRUE;
 }
