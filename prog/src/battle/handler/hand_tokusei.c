@@ -26,8 +26,10 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		PokeTokusei				tokusei;
 		pTokuseiEventAddFunc	func;
 	}funcTbl[] = {
-		{ POKETOKUSEI_IKAKU,		HAND_TOK_ADD_Ikaku },
-		{ POKETOKUSEI_KURIABODY,	HAND_TOK_ADD_ClearBody },
+		{ POKETOKUSEI_IKAKU,				HAND_TOK_ADD_Ikaku },
+		{ POKETOKUSEI_KURIABODY,		HAND_TOK_ADD_ClearBody },
+		{ POKETOKUSEI_SIROIKEMURI,	HAND_TOK_ADD_ClearBody },	// しろいけむり=クリアボディと等価
+		{ POKETOKUSEI_SEISINRYOKU,	HAND_TOK_ADD_Seisinryoku },	// しろいけむり=クリアボディと等価
 	};
 
 	int i;

@@ -56,6 +56,8 @@ typedef enum {
 	BTL_EVENT_AFTER_RANKDOWN,		///< 能力下げる（後）
 	BTL_EVENT_ADD_SICK,					///< 状態異常にさせられる
 	BTL_EVENT_SICK_DAMAGE,			///< 状態異常によるダメージ計算
+	BTL_EVENT_SHRINK_CHECK,			///< ひるみ計算
+	BTL_EVENT_SHRINK_FIX,				///< ひるみ確定後
 
 
 }BtlEventType;
@@ -84,13 +86,19 @@ typedef enum {
 	//---ここから上はシステム予約領域-------------------------
 	BTL_EVAR_POKEID,
 	BTL_EVAR_POKEID_USER,
+	BTL_EVAR_WAZAID,
+	BTL_EVAR_SICKID,
 	BTL_EVAR_STATUS_TYPE,
 	BTL_EVAR_POKE_TYPE,
 	BTL_EVAR_POKE_TYPE_PAIR,
 	BTL_EVAL_VOLUME,
 	BTL_EVAR_FAIL_FLAG,
 	BTL_EVAR_RANDOM_FLAG,
-
+	BTL_EVAR_CONF_DMG,
+	BTL_EVAR_FAIL_REASON,
+	BTL_EVAR_TURN_COUNT,
+	BTL_EVAR_ALMOST_FLAG,
+	BTL_EVAR_ADD_PER,
 
 	BTL_EVAR_MAX,
 

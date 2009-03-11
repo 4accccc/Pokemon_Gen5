@@ -73,11 +73,7 @@ extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType 
 
 extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
 extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
-extern void BTL_POKEPARAM_SetPokeSick( BTL_POKEPARAM* pp, PokeSick sick, u8 turn );
-extern void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, u8 turn );
-extern BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp );
-extern void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
-
+extern BOOL BTL_POKEPARAM_IsShrink( const BTL_POKEPARAM* pp );
 
 //-------------------------
 extern BOOL BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
@@ -86,5 +82,11 @@ extern void BTL_POKEPARAM_HpMinus( BTL_POKEPARAM* pp, u16 value );
 extern void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value );
 extern void BTL_POKEPARAM_PPMinus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
 extern void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
+extern void BTL_POKEPARAM_SetPokeSick( BTL_POKEPARAM* pp, PokeSick sick, u8 turn );
+extern void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, u8 turn );
+extern BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp );
+extern void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
+extern void BTL_POKEPARAM_SetShrink( BTL_POKEPARAM* pp );
+
 
 #endif

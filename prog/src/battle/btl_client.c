@@ -130,6 +130,7 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
@@ -738,6 +739,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_WAZA_EFFECT,	scProc_ACT_WazaEffect			},
 		{	SC_ACT_WAZA_DMG,		scProc_ACT_WazaDmg				},
 		{	SC_ACT_WAZA_DMG_DBL,scProc_ACT_WazaDmg_Dbl		},
+		{	SC_ACT_CONF_DMG,		scProc_ACT_ConfDamage			},
 		{	SC_ACT_DEAD,				scProc_ACT_Dead						},
 		{	SC_ACT_MEMBER_OUT,	scProc_ACT_MemberOut			},
 		{	SC_ACT_MEMBER_IN,		scProc_ACT_MemberIn				},
@@ -985,7 +987,9 @@ static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
 	}
 	return FALSE;
 }
-
+/**
+ * 【アクション】２体同時ダメージ処理
+ */
 static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ) {
@@ -1015,7 +1019,32 @@ static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args )
 	}
 	return FALSE;
 }
+/**
+ * 【アクション】こんらん自爆ダメージ
+ */
+static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ) {
+	case 0:
+		{
+			BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+			BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
+			(*seq)++;
+		}
+		break;
 
+	case 1:
+		if( BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+/**
+ * 【アクション】ポケモンひんし
+ */
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ){
@@ -1035,17 +1064,17 @@ static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
 	}
 	return FALSE;
 }
-
+/**
+ * 【アクション】能力ランクダウン
+ */
 static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
 	return TRUE;
 }
-//---------------------------------------------------------------------------------------
 /**
- *	状態異常にさせられた時の処理
+ *	【アクション】状態異常にさせられた時の処理
  */
-//---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ){
@@ -1079,11 +1108,9 @@ static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
 	}
 	return FALSE;
 }
-//---------------------------------------------------------------------------------------
 /**
- *	ターンチェックによる状態異常ダメージ処理
+ *	【アクション】ターンチェックによる状態異常ダメージ処理
  */
-//---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ){
@@ -1119,11 +1146,9 @@ static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
 	}
 	return FALSE;
 }
-//---------------------------------------------------------------------------------------
 /**
- *	天候による一斉ダメージ処理
+ *	【アクション】天候による一斉ダメージ処理
  */
-//---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	switch( *seq ){

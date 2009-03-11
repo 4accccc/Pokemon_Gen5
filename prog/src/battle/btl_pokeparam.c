@@ -115,6 +115,7 @@ struct _BTL_POKEPARAM {
 	u8	wazaCnt;
 	u8	pokeSick;
 	u8	pokeSickCounter;
+	u8	shrinkFlag;
 
 	u8	wazaSickCounter[ WAZASICK_MAX ];
 };
@@ -141,7 +142,7 @@ static void update_RealParam( BTL_POKEPARAM* pp, BppValueID rankType );
 //=============================================================================================
 BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID heapID )
 {
-	BTL_POKEPARAM* bpp = GFL_HEAP_AllocMemory( heapID, sizeof(BTL_POKEPARAM) );
+	BTL_POKEPARAM* bpp = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_POKEPARAM) );
 	int i;
 	u16 monsno;
 
@@ -195,6 +196,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->tokusei = PP_Get( pp, ID_PARA_speabino, 0 );
 	bpp->hp = PP_Get( pp, ID_PARA_hp, 0 );
 	bpp->myID = pokeID;
+	bpp->shrinkFlag = FALSE;
 	bpp->pokeSick = PP_GetSick( pp );
 	if( bpp->pokeSick != POKESICK_NEMURI )
 	{
@@ -378,8 +380,6 @@ PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp )
 	return pp->pokeSick;
 }
 
-
-
 //=============================================================================================
 /**
  * 特定の状態異常にかかっているかチェック
@@ -429,6 +429,20 @@ int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp )
 	default:
 		return 0;
 	}
+}
+
+//=============================================================================================
+/**
+ * ひるまされたかチェック
+ *
+ * @param   pp		
+ *
+ * @retval  BOOL		
+ */
+//=============================================================================================
+BOOL BTL_POKEPARAM_IsShrink( const BTL_POKEPARAM* pp )
+{
+	return pp->shrinkFlag;
 }
 
 //-----------------------------
@@ -657,6 +671,19 @@ void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, u8 turn )
 
 //=============================================================================================
 /**
+ * ひるみ状態をセット
+ *
+ * @param   pp			
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_SetShrink( BTL_POKEPARAM* pp )
+{
+	pp->shrinkFlag = TRUE;
+}
+
+//=============================================================================================
+/**
  * 「ねむり」ターン進行　※ポケモン状態異常チェックは、「たたかう」を選んだ場合にのみ行う
  *
  * @param   pp			
@@ -705,6 +732,8 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
 		}
 		break;
 	}
+
+	pp->shrinkFlag = FALSE;
 }
 
 

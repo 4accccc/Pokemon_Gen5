@@ -38,7 +38,8 @@ typedef enum {
 	SC_OP_WAZASICK_TURNCHECK,
 	SC_ACT_WAZA_EFFECT,
 	SC_ACT_WAZA_DMG,		///< 【ワザ発動：ダメージ】[ AtClient, DefClient, wazaIdx, Affinity ]
-	SC_ACT_WAZA_DMG_DBL,
+	SC_ACT_WAZA_DMG_DBL,///< 【アクション】２体同時ダメージ処理 [ pokeID ]
+	SC_ACT_CONF_DMG,		///< 【アクション】こんらん自爆ダメージ [ pokeID ]
 	SC_ACT_RANKUP,			///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
 	SC_ACT_RANKDOWN,		///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
 	SC_ACT_DEAD,				///< 【ポケモンひんし】[ ClientID ]
@@ -191,36 +192,42 @@ static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 defPoke
 {
 	SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG, defPokeID, affinity, damage );
 }
-
+// 【アクション】２体同時ダメージ処理
 static inline void SCQUE_PUT_ACT_WazaDamageDbl( BTL_SERVER_CMD_QUE* que, u8 defPokeID1, u8 defPokeID2, u16 damage1, u16 damage2, u8 aff  )
 {
 	SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG_DBL, defPokeID1, defPokeID2, aff, damage1, damage2 );
 }
-
+// 【アクション】こんらん自爆ダメージ
+static inline void SCQUE_PUT_ACT_ConfDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+	SCQUE_PUT_Common( que, SC_ACT_CONF_DMG, pokeID );
+}
+// 【アクション】能力ランクアップ
 static inline void SCQUE_PUT_ACT_RankUp( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 statusType, u8 volume )
 {
 	SCQUE_PUT_Common( que, SC_ACT_RANKUP, clientID, statusType, volume );
 }
-
+// 【アクション】能力ランクダウン
 static inline void SCQUE_PUT_ACT_RankDown( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 statusType, u8 volume )
 {
 	SCQUE_PUT_Common( que, SC_ACT_RANKDOWN, clientID, statusType, volume );
 }
-
+// 【アクション】ポケモンひんし
 static inline void SCQUE_PUT_ACT_Dead( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
 	SCQUE_PUT_Common( que, SC_ACT_DEAD, pokeID );
 }
-// メンバー入れ替えデータ
+// 【アクション】ポケモン退場
 static inline void SCQUE_PUT_ACT_MemberOut( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 memberIdx )
 {
 	SCQUE_PUT_Common( que, SC_ACT_MEMBER_OUT, clientID, memberIdx );
 }
+// 【アクション】ポケモン入場
 static inline void SCQUE_PUT_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx, u8 memberIdx )
 {
 	SCQUE_PUT_Common( que, SC_ACT_MEMBER_IN, clientID, posIdx, memberIdx );
 }
-// 天候による一斉ダメージ		weather:天候ID, pokeCnt:ダメージを受けるポケモン数
+// 【アクション】天候による一斉ダメージ		weather:天候ID, pokeCnt:ダメージを受けるポケモン数
 static inline void SCQUE_PUT_ACT_WeatherDamage( BTL_SERVER_CMD_QUE* que, u8 weather, u8 pokeCnt )
 {
 	SCQUE_PUT_Common( que, SC_ACT_WEATHER_DMG, weather, pokeCnt );
