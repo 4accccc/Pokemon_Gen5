@@ -118,7 +118,6 @@ class CXls2Xml
 	if line.include?("</sheet>")
 	  mode = 0
           iSheet += 1
-          p iSheet
 	end
 	row, col = getRowCol(line)
 	if (row != -1) and (col != -1)
