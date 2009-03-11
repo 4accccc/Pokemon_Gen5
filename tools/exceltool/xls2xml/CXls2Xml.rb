@@ -43,7 +43,7 @@ CMD_PATH = File.dirname($0)
 # .xls を .xml に変換するためのコマンド式
 #CMD_XLS2XML = "java -Xmx512M -jar #{CMD_PATH}/xls2xml.jar -s -windows "
 #CMD_XLS2XML = "java -Xmx512M -jar #{CMD_PATH}/poidom.jar -s -windows "
-CMD_XLS2XML = "java -classpath #{CMD_PATH}/xls2xml.jar XLS2XML "
+CMD_XLS2XML = "java -Xmx512M -classpath #{CMD_PATH}/xls2xml.jar XLS2XML "
 CMD_2SJIS = ""
 #CMD_2SJIS = " | #{CMD_PATH}/nkf.exe -SsLw"
 
@@ -116,7 +116,7 @@ class CXls2Xml
       when 1
 	### row,colデータを得る
 	if line.include?("</sheet>")
-	  mode = 0
+          mode = 0
           iSheet += 1
 	end
 	row, col = getRowCol(line)

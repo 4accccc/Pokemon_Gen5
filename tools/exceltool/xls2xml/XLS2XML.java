@@ -72,6 +72,9 @@ public class XLS2XML {
 
             for (int i = min; i < max; i++) {
                 HSSFRow row = sheet.getRow(i);
+              if(row==null){
+                continue;
+              }
 
                 if (i == min) {
 
@@ -170,7 +173,16 @@ public class XLS2XML {
             content.setText(String.valueOf(cell.getCellFormula()).trim());
             break;
           case HSSFCell.CELL_TYPE_NUMERIC:
-            content.setText(String.valueOf(cell.getNumericCellValue()).trim());
+            double dx = cell.getNumericCellValue();
+            Double dc = new Double(dx);
+            Integer intc = new Integer(dc.intValue());
+            double mod = dx - intc.doubleValue();
+            if(mod != 0.0){
+              content.setText(String.valueOf(cell.getNumericCellValue()).trim());
+            }
+            else{
+              content.setText(String.valueOf(intc.intValue()).trim());
+            }
             break;
           case HSSFCell.CELL_TYPE_STRING:
             content.setText(String.valueOf(cell.getStringCellValue()).trim());
