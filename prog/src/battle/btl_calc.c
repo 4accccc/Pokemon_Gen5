@@ -201,7 +201,7 @@ u32 BTL_CALC_AffDamage( u32 rawDamage, BtlTypeAff aff )
 u8 BTL_CALC_HitCountMax( u8 numHitMax )
 {
 	enum {
-		HIT_COUNT_MIN = 2,
+		HIT_COUNT_MIN = 1,
 		HIT_COUNT_MAX = 5,
 
 		HIT_COUNT_RANGE = HIT_COUNT_MAX - HIT_COUNT_MIN + 1,
@@ -212,6 +212,7 @@ u8 BTL_CALC_HitCountMax( u8 numHitMax )
 
 	{
 		static const u8 perTbl[ HIT_COUNT_RANGE ][ HIT_COUNT_RANGE ] = {
+/* 1 */			{  100, 100, 100, 100 },
 /* 2 */			{  100, 100, 100, 100 },
 /* 3 */			{    0, 100, 100, 100 },
 /* 4 */			{   35,  70, 100, 100 },
