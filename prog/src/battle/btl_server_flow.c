@@ -1218,6 +1218,10 @@ static u16 svflowsub_damage_calc_core( BTL_SVFLOW_WORK* wk,
 	PokeType  waza_type = scEvent_getWazaPokeType( wk, attacker, waza );
 
 	BTL_EVENTVAR_Push();
+
+
+	BTL_EVENTVAR_SetValue( BTL_EVAR_TYPEAFF, typeAff );
+
 	{
 		BOOL criticalFlag = FALSE;
 		u16 atkPower, defGuard, wazaPower;
