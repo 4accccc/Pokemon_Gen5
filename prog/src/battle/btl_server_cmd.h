@@ -240,7 +240,7 @@ static inline void SCQUE_PUT_ACT_WeatherEnd( BTL_SERVER_CMD_QUE* que, u8 weather
 
 static inline void SCQUE_PUT_ACT_SickSet( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 sick )
 {
-	SCQUE_PUT_Common( que, SC_ACT_SICK_DMG, pokeID, sick );
+	SCQUE_PUT_Common( que, SC_ACT_SICK_SET, pokeID, sick );
 }
 
 static inline void SCQUE_PUT_SickDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 sick, u8 damage )

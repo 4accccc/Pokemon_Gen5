@@ -12,7 +12,7 @@
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void handler_ShrinkFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWork, u8 pokeID, int* work );
+static void handler_WazaExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //--------------------------------------------------------------
@@ -21,7 +21,7 @@ static void handler_ShrinkFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 */
 //--------------------------------------------------------------
 static const BtlEventHandlerTable HandlerTable[] = {
-	{ BTL_EVENT_SHRINK_FIX, handler_ShrinkFix },
+	{ BTL_EVENT_WAZA_EXECUTE_FIX, handler_WazaExeFix },
 	{ BTL_EVENT_NULL, NULL },
 };
 //BTL_EVENT_RemoveFactor
@@ -32,15 +32,18 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Fukutsuno( u16 pri, u8 pokeID )
 }
 
 
-// BTL_EVENT_SHRINK_FIX:ひるみ確定
-static void handler_ShrinkFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// BTL_EVENT_WAZA_EXECUTE_FIX:ワザ出し成功判定確定
+static void handler_WazaExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-	{
+	// ワザ失敗理由=ひるみ, 対象ポケ=自分で発動
+	if( (BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_REASON) == SV_WAZAFAIL_SHRINK)
+	&&	(BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+	){
 		BtlPokePos myPos = BTL_SVFLOW_CheckExistFrontPokeID( flowWk, pokeID );
 		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, myPos );
 		BTL_SERVER_RECEPT_RankUpEffect( flowWk, myPos, BPP_AGILITY, 1 );
 		BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, myPos );
+		BTL_Printf("ポケ[%d] ひるまされたので ふくつのこころ 発生\n", pokeID);
 	}
 }
 

@@ -25,6 +25,7 @@ typedef enum {
 	BTL_EVENT_CHECK_CONF,				///< 混乱チェック
 	BTL_EVENT_CALC_CONF_DAMAGE,	///< 混乱ダメージ計算
 	BTL_EVENT_WAZA_EXECUTE,			///< ワザ実行チェック
+	BTL_EVENT_WAZA_EXECUTE_FIX,	///< ワザ実行チェック確定
 
 	BTL_EVENT_WAZA_HIT_RATIO,		///< ワザの命中率補正ハンドラ
 	BTL_EVENT_WAZA_HIT_COUNT,		///< ヒット回数決定（複数回ヒットワザのみ）

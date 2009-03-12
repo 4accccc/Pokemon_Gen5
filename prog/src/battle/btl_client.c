@@ -1135,7 +1135,7 @@ static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
 
 			switch( sick ){
 			default:
-				GF_ASSERT_MSG(0, "Illegal sick ID:%d\n", sick);
+				GF_ASSERT_MSG(0, "poke[%d], Illegal sick ID:%d\n", args[0], sick);
 				/* fallthru */
 			case POKESICK_DOKU:		msgID = BTL_STRID_SET_DokuDamage; break;
 				break;

@@ -12,6 +12,7 @@
 
 #include "btl_event.h"
 #include "btl_server_flow.h"
+#include "btl_server_local.h"
 #include "btl_server.h"
 #include "btl_pokeparam.h"
 

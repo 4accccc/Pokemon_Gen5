@@ -25,7 +25,7 @@ typedef struct _BTL_POKEPARAM	BTL_POKEPARAM;
 
 //--------------------------------------------------------------
 /**
- *	取得できる値
+ *	取得できる能力値
  */
 //--------------------------------------------------------------
 typedef enum {
@@ -50,6 +50,22 @@ typedef enum {
 
 }BppValueID;
 
+//--------------------------------------------------------------
+/**
+ *	ターンごとにクリアされるフラグセット
+ */
+//--------------------------------------------------------------
+typedef enum {
+
+	BPP_TURNFLG_ACTION_EXE,	///< 行動した
+	BPP_TURNFLG_SHRINK,			///< ひるまされた
+
+	BPP_TURNFLG_MAX,
+
+}BppTurnFlag;
+
+
+
 
 extern BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 id, HEAPID heapID );
 extern void BTL_POKEPARAM_Delete( BTL_POKEPARAM* bpp );
@@ -73,7 +89,8 @@ extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType 
 
 extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
 extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
-extern BOOL BTL_POKEPARAM_IsShrink( const BTL_POKEPARAM* pp );
+extern BOOL BTL_POKEPARAM_GetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID );
+
 
 //-------------------------
 extern BOOL BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
@@ -87,6 +104,7 @@ extern void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, u8 turn
 extern BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetShrink( BTL_POKEPARAM* pp );
-
+extern void BTL_POKEPARAM_SetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID );
+extern void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp );
 
 #endif

@@ -27,6 +27,8 @@ enum {
 	RANK_CRITICAL_MIN = 0,
 	RANK_CRITICAL_MAX = 4,
 	RANK_CRITICAL_DEF = 0,
+
+	TURNFLG_BUF_SIZE = (BPP_TURNFLG_MAX/8)+(BPP_TURNFLG_MAX%8!=0)
 };
 
 
@@ -107,6 +109,8 @@ struct _BTL_POKEPARAM {
 	BPP_WAZA						waza[ PTL_WAZA_MAX ];
 	const POKEMON_PARAM*	ppSrc;
 
+	u8	wazaSickCounter[ WAZASICK_MAX ];
+
 	u16  item;
 	u16  tokusei;
 	u16  hp;
@@ -115,9 +119,9 @@ struct _BTL_POKEPARAM {
 	u8	wazaCnt;
 	u8	pokeSick;
 	u8	pokeSickCounter;
-	u8	shrinkFlag;
+	u8	turnFlag[ TURNFLG_BUF_SIZE ];
 
-	u8	wazaSickCounter[ WAZASICK_MAX ];
+
 };
 
 
@@ -126,6 +130,9 @@ struct _BTL_POKEPARAM {
 /*--------------------------------------------------------------------------*/
 static void Effrank_Init( BPP_VARIABLE_PARAM* rank );
 static void update_RealParam( BTL_POKEPARAM* pp, BppValueID rankType );
+static inline void turnflg_clear( BTL_POKEPARAM* bpp );
+static inline void turnflg_set( BTL_POKEPARAM* bpp, BppTurnFlag flagID );
+static inline BOOL turnflg_get( BTL_POKEPARAM* bpp, BppTurnFlag flagID );
 
 
 
@@ -196,7 +203,6 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->tokusei = PP_Get( pp, ID_PARA_speabino, 0 );
 	bpp->hp = PP_Get( pp, ID_PARA_hp, 0 );
 	bpp->myID = pokeID;
-	bpp->shrinkFlag = FALSE;
 	bpp->pokeSick = PP_GetSick( pp );
 	if( bpp->pokeSick != POKESICK_NEMURI )
 	{
@@ -208,6 +214,8 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	}
 
 	bpp->ppSrc = pp;
+
+	turnflg_clear( bpp );
 
 	return bpp;
 }
@@ -329,7 +337,6 @@ int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
 		return 0;
 	};
 }
-
 //=============================================================================================
 /**
  * クリティカルヒット時のパラメータ取得（攻撃側に不利なランク補正をフラットにする）
@@ -352,6 +359,7 @@ int BTL_POKEPARAM_GetValueCriticalHit( const BTL_POKEPARAM* pp, BppValueID vid )
 		return BTL_POKEPARAM_GetValue( pp, vid );
 	}
 }
+
 //=============================================================================================
 /**
  * ひんし状態かチェック
@@ -365,7 +373,6 @@ BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp )
 {
 	return BTL_POKEPARAM_GetValue( pp, BPP_HP ) == 0;
 }
-
 //=============================================================================================
 /**
  * ポケモン状態異常にかかっているかチェック
@@ -379,7 +386,6 @@ PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp )
 {
 	return pp->pokeSick;
 }
-
 //=============================================================================================
 /**
  * 特定の状態異常にかかっているかチェック
@@ -396,7 +402,6 @@ BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType )
 
 	return pp->wazaSickCounter[ sickType ] != 0;
 }
-
 //=============================================================================================
 /**
  * 状態異常のターンチェックで減るHPの量を計算
@@ -422,7 +427,6 @@ int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp )
 		}
 		break;
 
-	
 	case POKESICK_YAKEDO:
 			return pp->baseParam.hpMax / 8;
 
@@ -430,19 +434,19 @@ int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp )
 		return 0;
 	}
 }
-
 //=============================================================================================
 /**
- * ひるまされたかチェック
+ * ターンフラグ値取得
  *
  * @param   pp		
+ * @param   flagID		
  *
  * @retval  BOOL		
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_IsShrink( const BTL_POKEPARAM* pp )
+BOOL BTL_POKEPARAM_GetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID )
 {
-	return pp->shrinkFlag;
+	return turnflg_get( pp, flagID );
 }
 
 //-----------------------------
@@ -668,18 +672,18 @@ void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, u8 turn )
 		pp->wazaSickCounter[sick] = turn;
 	}
 }
-
 //=============================================================================================
 /**
- * ひるみ状態をセット
+ * １ターン有効フラグのセット
  *
- * @param   pp			
+ * @param   pp		
+ * @param   flagID		
  *
  */
 //=============================================================================================
-void BTL_POKEPARAM_SetShrink( BTL_POKEPARAM* pp )
+void BTL_POKEPARAM_SetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID )
 {
-	pp->shrinkFlag = TRUE;
+	turnflg_set( pp, flagID );
 }
 
 //=============================================================================================
@@ -732,11 +736,19 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
 		}
 		break;
 	}
-
-	pp->shrinkFlag = FALSE;
 }
-
-
+//=============================================================================================
+/**
+ * １ターン有効フラグのクリア
+ *
+ * @param   pp		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp )
+{
+	turnflg_clear( pp );
+}
 
 //--------------------------------------------------------------------------
 /**
@@ -770,5 +782,31 @@ static void update_RealParam( BTL_POKEPARAM* pp, BppValueID rankType )
 	}
 
 }
+//---------------------------------------------------------------------------------------------
+// １ターンのみ有効フラグ処理
+//---------------------------------------------------------------------------------------------
+static inline void turnflg_clear( BTL_POKEPARAM* bpp )
+{
+	GFL_STD_MemClear( bpp->turnFlag, sizeof(bpp->turnFlag) );
+}
+static inline void turnflg_set( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
+{
+	GF_ASSERT(flagID<BPP_TURNFLG_MAX);
+	{
+		u8 byte = flagID / 8;
+		u8 bit = (1 << (flagID%8));
+		bpp->turnFlag[ byte ] |= bit;
+	}
+}
+static inline BOOL turnflg_get( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
+{
+	GF_ASSERT(flagID<BPP_TURNFLG_MAX);
+	{
+		u8 byte = flagID / 8;
+		u8 bit = (1 << (flagID%8));
+		return (bpp->turnFlag[ byte ] & bit) != 0;
+	}
+}
 
 
+	
