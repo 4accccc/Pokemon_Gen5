@@ -492,7 +492,9 @@ u32 WAZADATA_GetShrinkPer( WazaID id )
 	if( seq && seq->shrinkFlg ){
 		return WT_WazaDataParaGet( id, ID_WTD_addeffect );
 	}
-	return 0;
+	// @@@ ç°ÇÕÇ©ÇËÇ…
+	return 100;
+//	return 0;
 }
 
 

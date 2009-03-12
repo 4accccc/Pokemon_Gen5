@@ -47,7 +47,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		}
 	}
 
-	BTL_Printf("‚Æ‚­‚¹‚¢(%d)‚Í–¢ŽÀ‘•\n", tokusei);
+	BTL_Printf("‚Æ‚­‚¹‚¢(%d)‚Íƒnƒ“ƒhƒ‰‚ª—pˆÓ‚³‚ê‚Ä‚¢‚È‚¢\n", tokusei);
 	return NULL;
 
 //	BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, agi, pokeID, 

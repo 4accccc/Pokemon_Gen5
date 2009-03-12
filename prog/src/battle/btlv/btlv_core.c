@@ -789,7 +789,7 @@ void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args )
 void BTLV_StartMsgWaza( BTLV_CORE* wk, BtlPokePos pokePos, u16 waza )
 {
 	BTL_STR_MakeStringWaza( wk->strBuf, pokePos, waza );
-	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
+	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 }
 
 BOOL BTLV_WaitMsg( BTLV_CORE* wk )

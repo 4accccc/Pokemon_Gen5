@@ -220,7 +220,8 @@ static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, CHANGE_EVENT_PARAM* cep, u8 
 static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scEvent_PokeComp( BTL_SVFLOW_WORK* wk );
 static void scEvent_RankDown( BTL_SVFLOW_WORK* wk, u8 pokeID, BppValueID statusType, u8 volume, BOOL fRandom );
-static void scEvent_CheckShrink( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u8 per );
+static void scEvent_RankUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* pp, BppValueID statusType, u8 volume, BOOL fRandom );
+static void scEvent_AddShrink( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u8 per );
 
 
 
@@ -247,17 +248,17 @@ void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
 }
 
 
-BOOL BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
+SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
 {
 	SCQUE_Init( wk->que );
 
 	scEvent_PokeComp( wk );
 
 	// @@@ しぬこともあるかも
-	return FALSE;
+	return SVFLOW_RESULT_DEFAULT;
 }
 
-BOOL BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
+SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 {
 	const BTL_POKEPARAM* bpp;
 	SVCL_WORK* clwk;
@@ -280,10 +281,10 @@ BOOL BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 		{
 			const BTL_ACTION_PARAM* action = BTL_SVCL_GetPokeAction( clwk, pokeIdx );
 
-			BTL_Printf("Client(%d) の ", clientID);
+			BTL_Printf("Client(%d) の %d 番目のポケモンのアクション\n", clientID, pokeIdx);
 			switch( action->gen.cmd ){
 			case BTL_ACTION_FIGHT:
-				BTL_Printf("【たたかう】を処理。%d番目のワザを、%d番の相手に。\n", action->fight.wazaIdx, action->fight.targetIdx);
+				BTL_Printf("【たたかう】を処理。%d番目のワザを、%d番の相手に。\n", action->fight.wazaIdx, action->fight.targetPos);
 				scput_Fight( wk, clientID, pokeIdx, action );
 				break;
 			case BTL_ACTION_ITEM:
@@ -301,7 +302,7 @@ BOOL BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 
 				// @@@ これは元来、server本体で行う処理
 		//				server->quitStep = QUITSTEP_REQ;
-				return FALSE;
+				return SVFLOW_RESULT_BTL_QUIT;
 			}
 		}
 	}
@@ -315,10 +316,10 @@ BOOL BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 	BTL_Printf( "ポケモン数 %d -> %d ...\n", alivePokeBefore, alivePokeAfter );
 	if( alivePokeBefore > alivePokeAfter )
 	{
-		return TRUE;
+		return SVFLOW_RESULT_POKE_DEAD;
 	}
 
-	return FALSE;
+	return SVFLOW_RESULT_DEFAULT;
 }
 //--------------------------------------------------------------------------
 /**
@@ -326,10 +327,10 @@ BOOL BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
  *
  * @param   wk		
  *
- * @retval  BOOL		ターン中、瀕死になったポケモンがいる場合はTRUE／それ以外FALSE
+ * @retval  SvflowResult		
  */
 //--------------------------------------------------------------------------
-BOOL BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk )
+SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk )
 {
 	const BTL_ACTION_PARAM* action;
 	SVCL_WORK* clwk;
@@ -359,7 +360,7 @@ BOOL BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk )
 	}
 
 	// @@@ 今は確実にFALSEだが、入れ替えた時にまきびしとかで死ぬこともある
-	return FALSE;
+	return SVFLOW_RESULT_DEFAULT;
 }
 
 //--------------------------------------------------------------------------
@@ -751,6 +752,10 @@ static void cof_put_wazafail_msg_cmd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 		SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriAct, pokeID );
 		break;
 
+	case SV_WAZAFAIL_SHRINK:
+		SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ShrinkExe, pokeID );
+		break;
+
 	default:
 		SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail, pokeID );
 		break;
@@ -806,15 +811,11 @@ static u8 svflowsub_register_waza_targets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos
 	{
 		switch( targetType ){
 		case WAZA_TARGET_SINGLE:				///< 自分以外の１体（選択）
-			if( action->fight.targetIdx < 2 ){
-				bpp = svflowsub_get_opponent_pokeparam( wk, atPos, action->fight.targetIdx );
-			}else{
-				bpp = svflowsub_get_next_pokeparam( wk, atPos );
-			}
+			bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, action->fight.targetPos );
 			TargetPokeRec_Add( rec, bpp );
 			return 1;
 		case WAZA_TARGET_SINGLE_ENEMY:	///< 敵１体（選択）
-			bpp = svflowsub_get_opponent_pokeparam( wk, atPos, action->fight.targetIdx );
+			bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, action->fight.targetPos );
 			TargetPokeRec_Add( rec, bpp );
 			return 1;
 		case WAZA_TARGET_RANDOM:				///< 敵ランダム
@@ -871,7 +872,7 @@ static void scput_Fight_Damage( BTL_SVFLOW_WORK* wk, FIGHT_EVENT_PARAM* fep, Waz
 	{
 		{
 			WazaTarget  type = WAZADATA_GetTarget( waza );
-			BTL_Printf("ダブルです。ワザナンバー=%d, ワザターゲットタイプ=%d\n", waza, type);
+			BTL_Printf("ダブルです。ワザナンバー=%d, ワザターゲットタイプ=%d, ターゲット数=%d\n", waza, type, targetCnt);
 		}
 		switch( targetCnt ) {
 		case 1:
@@ -1253,7 +1254,7 @@ static void scput_Fight_Damage_After_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, B
 
 		while( (bpp = TargetPokeRec_Get(targets, i++)) != NULL )
 		{
-			scEvent_CheckShrink( wk, bpp, per );
+			scEvent_AddShrink( wk, bpp, per );
 		}
 	}
 }
@@ -1663,7 +1664,7 @@ static SV_WazaFailReason scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKE
 	do {
 		WazaSick sick = BTL_POKEPARAM_GetPokeSick( attacker );
 
-		// @@@ ひるみ、メロメロ等のチェックがまだです（メロメロは相手が確定してからか）
+		// 状態異常による失敗チェック
 		switch( sick ){
 		case POKESICK_NEMURI:
 			if( !BTL_POKEPARAM_Nemuri_CheckWake(attacker) ){
@@ -1690,6 +1691,16 @@ static SV_WazaFailReason scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKE
 				SCQUE_PUT_OP_SetSick( wk->que, pokeID, POKESICK_NULL, 0 );
 				SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriMelt, pokeID );
 			}
+			break;
+		}
+		if( BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_REASON) != SV_WAZAFAIL_NULL )
+		{
+			break;
+		}
+		// ひるみによる失敗チェック
+		if( BTL_POKEPARAM_IsShrink(attacker) )
+		{
+			BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_REASON, SV_WAZAFAIL_SHRINK );
 			break;
 		}
 
@@ -2030,7 +2041,7 @@ static void scEvent_RankUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* pp, BppValueID s
  *
  */
 //--------------------------------------------------------------------------
-static void scEvent_CheckShrink( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u8 per )
+static void scEvent_AddShrink( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u8 per )
 {
 	BTL_EVENTVAR_Push();
 
@@ -2038,8 +2049,10 @@ static void scEvent_CheckShrink( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u8 
 	BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(target) );
 	BTL_EVENT_CallHandlers( wk, BTL_EVENT_SHRINK_CHECK );
 	per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
+	BTL_Printf("ひるみチェック ... 確率=%d\n", per );
 	if( perOccur(per) )
 	{
+		BTL_Printf("  ->ひるみました\n");
 		BTL_POKEPARAM_SetShrink( target );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_SHRINK_FIX );
 	}

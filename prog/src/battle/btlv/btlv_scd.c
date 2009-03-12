@@ -556,7 +556,7 @@ static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MA
 			vpos = BTL_MAIN_BtlPosToViewPos( mainModule, stw->pos[i] );
 			if( vpos == hitVpos )
 			{
-				*target_idx = i;
+				*target_idx = stw->pos[i];
 				return TRUE;
 			}
 		}
@@ -696,7 +696,8 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 				u8 target_idx;
 				if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &target_idx ) )
 				{
-					BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.wazaIdx, hit );
+					BTL_Printf("ターゲット決定 ... hitBtn=%d, hitPos=%d, target_idx=%d\n", hit, wk->selTargetWork.pos[hit], target_idx);
+					BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.wazaIdx, target_idx );
 					wk->selTargetDone = TRUE;
 					return TRUE;
 				}

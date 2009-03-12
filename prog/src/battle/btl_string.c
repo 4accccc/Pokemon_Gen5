@@ -9,18 +9,19 @@
 //=============================================================================================
 #include <gflib.h>
 
-#include "print/wordset.h"
+#include "print\wordset.h"
+#include "waza_tool\wazadata.h"
 
 #include "btl_common.h"
 #include "btl_string.h"
 
 #include "arc_def.h"
 #include "message.naix"
-#include "msg/msg_btl_std.h"
-#include "msg/msg_btl_set.h"
-#include "msg/msg_btl_attack.h"
-#include "msg/msg_btl_ui.h"
-#include "msg/msg_wazaname.h"
+#include "msg\msg_btl_std.h"
+#include "msg\msg_btl_set.h"
+#include "msg\msg_btl_attack.h"
+#include "msg\msg_btl_ui.h"
+#include "msg\msg_wazaname.h"
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -462,12 +463,18 @@ static void ms_sp_waza_dead( STRBUF* dst, u16 strID, const int* args )
 //--------------------------------------------------------------
 /**
  *	››‚Ì~~‚ª‚ ‚ª‚Á‚½I
+ *  args... [0]:pokeID,  [1]:statusType, [2]:volume
  */
 //--------------------------------------------------------------
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args )
 {
-	u8 pokePos = args[0];
+	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( SysWork.mainModule, args[0] );
 	u8 statusType = args[1];
+
+	if( args[2] > 1 )
+	{
+		strID += (SETTYPE_MAX * WAZA_RANKEFF_NUMS);
+	}
 
 	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
 	strID = get_setPtnStrID( pokePos, strID, statusType );
@@ -477,12 +484,18 @@ static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args )
 //--------------------------------------------------------------
 /**
  *	››‚Ì~~‚ª‚³‚ª‚Á‚½I
+ *  args... [0]:pokeID,  [1]:statusType, [2]:volume
  */
 //--------------------------------------------------------------
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args )
 {
 	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( SysWork.mainModule, args[0] );
 	u8 statusType = args[1];
+
+	if( args[2] > 1 )
+	{
+		strID += (SETTYPE_MAX * WAZA_RANKEFF_NUMS);
+	}
 
 	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
 	strID = get_setPtnStrID( pokePos, strID, statusType );

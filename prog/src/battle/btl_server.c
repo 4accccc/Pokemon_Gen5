@@ -65,9 +65,10 @@ struct _BTL_SERVER {
 	BTL_POKE_CONTAINER*		pokeCon;
 	SVCL_WORK					client[ BTL_CLIENT_MAX ];
 	BTL_SVFLOW_WORK*	flowWork;
+	SvflowResult			flowResult;
 	u8					numClient;
-	u8					pokeDeadFlag;
 	u8					quitStep;
+
 
 	BTL_SERVER_CMD_QUE	queBody;
 	BTL_SERVER_CMD_QUE*	que;
@@ -374,17 +375,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 		if( WaitAdapterCmd(server) )
 		{
 			ResetAdapterCmd( server );
-			/*
-			server->numActPokemon = sortClientAction( server, server->actOrder );
-			BTL_Printf("全クライアントのアクションソート完了。処理アクション数=%d\n", server->numActPokemon);
-			SCQUE_Init( server->que );
-			server->pokeDeadFlag = ServerFlow_Start( server );
-			*/
-			server->pokeDeadFlag = BTL_SVFLOW_Start( server->flowWork );
-			if( server->pokeDeadFlag )
-			{
-				BTL_Printf(" **** ポケモンしにました\n");
-			}
+			server->flowResult = BTL_SVFLOW_Start( server->flowWork );
 			SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
 			(*seq)++;
 		}
@@ -396,18 +387,20 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 			BTL_Printf("コマンド再生おわりました\n");
 			BTL_MAIN_SyncServerCalcData( server->mainModule );
 			ResetAdapterCmd( server );
-			if( server->quitStep )
-			{
-				BTL_Printf("サーバー終了\n");
-				return TRUE;
-			}
-			else if( server->pokeDeadFlag )
-			{
+
+			switch( server->flowResult ){
+			case SVFLOW_RESULT_DEFAULT:
+				(*seq)=2;
+				break;
+			case SVFLOW_RESULT_POKE_DEAD:
 				setMainProc( server, ServerMain_SelectPokemon );
-			}
-			else
-			{
-				(*seq) = 2;
+				break;
+			default:
+				GF_ASSERT(0);
+				/* fallthru */
+			case SVFLOW_RESULT_BTL_QUIT:
+				BTL_Printf("バトル終了\n");
+				return TRUE;
 			}
 		}
 		break;
@@ -463,7 +456,7 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 		{
 			ResetAdapterCmd( server );
 			SCQUE_Init( server->que );
-			server->pokeDeadFlag = BTL_SVFLOW_StartAfterPokeSelect( server->flowWork );
+			server->flowResult = BTL_SVFLOW_StartAfterPokeSelect( server->flowWork );
 			SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
 			(*seq)++;
 		}
@@ -479,7 +472,7 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 			{
 				return TRUE;
 			}
-			else if( server->pokeDeadFlag )
+			else if( server->flowResult == SVFLOW_RESULT_POKE_DEAD )
 			{
 				(*seq) = 0;
 			}

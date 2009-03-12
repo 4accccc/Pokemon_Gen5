@@ -203,14 +203,14 @@ static inline void SCQUE_PUT_ACT_ConfDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID 
 	SCQUE_PUT_Common( que, SC_ACT_CONF_DMG, pokeID );
 }
 // 【アクション】能力ランクアップ
-static inline void SCQUE_PUT_ACT_RankUp( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 statusType, u8 volume )
+static inline void SCQUE_PUT_ACT_RankUp( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 statusType, u8 volume )
 {
-	SCQUE_PUT_Common( que, SC_ACT_RANKUP, clientID, statusType, volume );
+	SCQUE_PUT_Common( que, SC_ACT_RANKUP, pokeID, statusType, volume );
 }
 // 【アクション】能力ランクダウン
-static inline void SCQUE_PUT_ACT_RankDown( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 statusType, u8 volume )
+static inline void SCQUE_PUT_ACT_RankDown( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 statusType, u8 volume )
 {
-	SCQUE_PUT_Common( que, SC_ACT_RANKDOWN, clientID, statusType, volume );
+	SCQUE_PUT_Common( que, SC_ACT_RANKDOWN, pokeID, statusType, volume );
 }
 // 【アクション】ポケモンひんし
 static inline void SCQUE_PUT_ACT_Dead( BTL_SERVER_CMD_QUE* que, u8 pokeID )

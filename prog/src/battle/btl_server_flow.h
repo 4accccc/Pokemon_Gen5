@@ -16,8 +16,23 @@
 #include "btl_server_cmd.h"
 
 /*--------------------------------------------------------------------------*/
+/* Consts                                                                   */
+/*--------------------------------------------------------------------------*/
+typedef enum {
+	SVFLOW_RESULT_DEFAULT = 0,	///< そのまま続行
+	SVFLOW_RESULT_POKE_DEAD,		///< ポケモン死んだので入れ替えフェーズ->バトル継続
+	SVFLOW_RESULT_BTL_QUIT,			///< バトル終了
+}SvflowResult;
+
+
+/*--------------------------------------------------------------------------*/
 /* Structures                                                               */
 /*--------------------------------------------------------------------------*/
+
+/**
+ *	サーバ本体、サーバフロー双方から参照するクライアントパラメータ
+ */
+
 struct _SVCL_WORK {
 
 	BTL_ADAPTER*		adapter;
@@ -37,6 +52,7 @@ struct _SVCL_WORK {
 typedef struct _BTL_SVFLOW_WORK		BTL_SVFLOW_WORK;
 typedef struct _SVCL_WORK					SVCL_WORK;
 
+
 // server -> server_flow
 extern BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem( 
 	BTL_SERVER* server, BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon,
@@ -44,9 +60,9 @@ extern BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 
 extern void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk );
 
-extern BOOL BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk );
-extern BOOL BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk );
-extern BOOL BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk );
 
 
 

@@ -144,6 +144,7 @@ static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 
@@ -428,14 +429,14 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
 	const BTL_POKEPARAM* pp;
-	u8 wazaCount, wazaIdx, targetIdx, i;
+	u8 wazaCount, wazaIdx, mypos, targetPos, i;
 
 	for(i=0; i<wk->numCoverPos; ++i)
 	{
 		pp = BTL_CLIENT_GetFrontPokeData( wk, i );
 		wazaCount = BTL_POKEPARAM_GetWazaCount( pp );
 		wazaIdx = GFL_STD_MtRand(wazaCount);
-		targetIdx = 0;
+		targetPos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, 0 );
 		// シングルでなければ、対象をランダムで決定する処理
 		if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
 		{
@@ -443,27 +444,26 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 				CHECK_MAX = 2,
 			};
 			const BTL_POKEPARAM* targetPoke;
-			BtlPokePos mypos, targetpos;
-			u8 j, aliveCnt;
-			u8 alivePokeIdx[ CHECK_MAX ];
+			u8 j, p, aliveCnt;
+			u8 alivePokePos[ CHECK_MAX ];
 			mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
 			aliveCnt = 0;
 			for(j=0; j<CHECK_MAX; ++j)
 			{
-				targetpos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, j );
-				targetPoke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, targetpos );
+				p = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, j );
+				targetPoke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, p );
 				if( !BTL_POKEPARAM_IsDead(targetPoke) )
 				{
-					alivePokeIdx[ aliveCnt++ ] = j;
+					alivePokePos[ aliveCnt++ ] = p;
 				}
 			}
 			if( aliveCnt )
 			{
 				u8 rndIdx = GFL_STD_MtRand(aliveCnt);
-				targetIdx = alivePokeIdx[ rndIdx ];
+				targetPos = alivePokePos[ rndIdx ];
 			}
 		}
-		BTL_ACTION_SetFightParam( &wk->actionParam[i], wazaIdx, targetIdx );
+		BTL_ACTION_SetFightParam( &wk->actionParam[i], wazaIdx, targetPos );
 	}
 	wk->returnDataPtr = &(wk->actionParam[0]);
 	wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
@@ -756,6 +756,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_OP_HP_PLUS,			scProc_OP_HpPlus					},
 		{	SC_OP_PP_MINUS,			scProc_OP_PPMinus					},
 		{	SC_OP_PP_PLUS,			scProc_OP_PPPlus					},
+		{	SC_OP_RANK_UP,			scProc_OP_RankUp					},
 		{	SC_OP_RANK_DOWN,		scProc_OP_RankDown				},
 		{	SC_OP_SICK_SET,			scProc_OP_SickSet					},
 	};
@@ -800,7 +801,7 @@ restart:
 
 			if( i == NELEMS(scprocTbl) )
 			{
-				BTL_Printf("用意されていないコマンド処理！\n");
+				BTL_Printf("用意されていないコマンドNo[%d]！\n", wk->serverCmd);
 				return TRUE;
 			}
 
@@ -1080,7 +1081,7 @@ static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	// @@@ まだです
-	BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
+//	BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
 	return TRUE;
 }
 /**
@@ -1134,7 +1135,7 @@ static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
 
 			switch( sick ){
 			default:
-				GF_ASSERT(0);
+				GF_ASSERT_MSG(0, "Illegal sick ID:%d\n", sick);
 				/* fallthru */
 			case POKESICK_DOKU:		msgID = BTL_STRID_SET_DokuDamage; break;
 				break;
@@ -1285,6 +1286,12 @@ static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTL_POKEPARAM* pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, args[0] );
 	BTL_POKEPARAM_PPPlus( pp, args[1], args[2] );
+	return TRUE;
+}
+static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+	BTL_POKEPARAM_RankUp( pp, args[1], args[2] );
 	return TRUE;
 }
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
