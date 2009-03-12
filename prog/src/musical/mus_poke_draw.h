@@ -33,6 +33,7 @@ typedef struct
 {
 	BOOL	isEnable;
 	VecFx32 pos;
+	VecFx32 scale;
 	u16		rot;
 }MUS_POKE_EQUIP_DATA;
 
@@ -61,6 +62,7 @@ void MUS_POKE_DRAW_SetShowFlg( MUS_POKE_DRAW_WORK *drawWork , const BOOL flg );
 BOOL MUS_POKE_DRAW_GetShowFlg( MUS_POKE_DRAW_WORK *drawWork );
 void MUS_POKE_DRAW_StartAnime( MUS_POKE_DRAW_WORK *drawWork );
 void MUS_POKE_DRAW_StopAnime( MUS_POKE_DRAW_WORK *drawWork );
+void MUS_POKE_DRAW_ChangeAnime( MUS_POKE_DRAW_WORK *drawWork , const u8 anmIdx );
 
 MUS_POKE_EQUIP_DATA *MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , const MUS_POKE_EQUIP_POS pos );
 

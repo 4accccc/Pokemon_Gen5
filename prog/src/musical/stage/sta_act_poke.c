@@ -42,6 +42,8 @@ struct _STA_POKE_WORK
 	BOOL		isUpdate;	//座標計算が発生したか？
 	
 	VecFx32					pokePos;
+	VecFx32					scale;
+	STA_POKE_DIR			dir;
 	MUS_POKE_DRAW_WORK		*drawWork;
 	MUS_POKE_DATA_WORK		*pokeData;
 
@@ -132,11 +134,23 @@ static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 	if( pokeWork->isUpdate == TRUE )
 	{
 		VecFx32 musPos;
+		VecFx32 musScale;
+		
 		musPos.x = ACT_POS_X_FX(pokeWork->pokePos.x - FX32_CONST(work->scrollOffset));
 		musPos.y = ACT_POS_Y_FX(pokeWork->pokePos.y);
 		musPos.z = pokeWork->pokePos.z;
 		
 		MUS_POKE_DRAW_SetPosition( pokeWork->drawWork , &musPos);
+		
+		musScale.x = pokeWork->scale.x * 16;
+		musScale.y = pokeWork->scale.y * 16;
+		musScale.z = pokeWork->scale.z * 16;
+		if( pokeWork->dir == SPD_RIGHT )
+		{
+			musScale.x *= -1;
+		}
+		MUS_POKE_DRAW_SetScale( pokeWork->drawWork , &musScale );
+
 		
 		//アイテムの更新要る？
 		pokeWork->isUpdate = FALSE;
@@ -154,6 +168,8 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 			MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( pokeWork->drawWork , ePos );
 			if( equipData->isEnable == TRUE )
 			{
+				const BOOL flipS = ( equipData->scale.x < 0 ? TRUE : FALSE);
+				const u16 rot = ( flipS==TRUE ? 0x10000-equipData->rot : equipData->rot);
 				pos.x = ACT_POS_X_FX(equipData->pos.x+FX32_CONST(128.0f));
 				pos.y = ACT_POS_Y_FX(equipData->pos.y+FX32_CONST(96.0f));
 				pos.z = pokeWork->pokePos.z+FX32_HALF;	//とりあえずポケの前に出す
@@ -163,8 +179,14 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 											&pos );
 				MUS_ITEM_DRAW_SetRotation(	work->itemDrawSys , 
 											pokeWork->itemWork[ePos] ,
-											equipData->rot );
-				
+											rot );
+				MUS_ITEM_DRAW_SetSize(		work->itemDrawSys , 
+											pokeWork->itemWork[ePos] ,
+											equipData->scale.x /16 ,
+											equipData->scale.y /16 );
+				MUS_ITEM_DRAW_SetFlipS( work->itemDrawSys , 
+										pokeWork->itemWork[ePos] ,
+										flipS );
 			}
 		}
 	}
@@ -214,8 +236,12 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
 	pokeWork->pokePos.x= 0;
 	pokeWork->pokePos.y= 0;
 	pokeWork->pokePos.z= 0;
-	MUS_POKE_DRAW_StartAnime( pokeWork->drawWork );
-	MUS_POKE_DRAW_SetShowFlg( pokeWork->drawWork , FALSE );
+	pokeWork->scale.x= FX32_ONE;
+	pokeWork->scale.y= FX32_ONE;
+	pokeWork->scale.z= FX32_ONE;
+//	MUS_POKE_DRAW_StartAnime( pokeWork->drawWork );
+	//リソース読み込みのTCBでTRUEにされるので・・・
+//	MUS_POKE_DRAW_SetShowFlg( pokeWork->drawWork , FALSE );
 
 	for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
 	{
@@ -271,21 +297,61 @@ void STA_POKE_SetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const 
 
 void STA_POKE_GetScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *scale )
 {
-	MUS_POKE_DRAW_GetScale( pokeWork->drawWork , scale );
+	scale->x = pokeWork->scale.x;
+	scale->y = pokeWork->scale.y;
+	scale->z = pokeWork->scale.z;
 }
 
 void STA_POKE_SetScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *scale )
 {
-	MUS_POKE_DRAW_SetScale( pokeWork->drawWork , scale );
+	pokeWork->scale.x = scale->x;
+	pokeWork->scale.y = scale->y;
+	pokeWork->scale.z = scale->z;
+	
+	pokeWork->isUpdate = TRUE;
 }
 
-void STA_POKE_DRAW_SetShowFlg( STA_POKE_WORK *pokeWork , const BOOL flg )
+void STA_POKE_StartAnime( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
-	MUS_POKE_DRAW_SetShowFlg( pokeWork->drawWork , flg );
+#pragma unused(work)
+	MUS_POKE_DRAW_StartAnime( pokeWork->drawWork );
 }
-BOOL STA_POKE_DRAW_GetShowFlg( STA_POKE_WORK *pokeWork )
+
+void STA_POKE_StopAnime( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+	MUS_POKE_DRAW_StopAnime( pokeWork->drawWork );
+}
+
+void STA_POKE_ChangeAnime( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const u8 anmIdx )
+{
+	MUS_POKE_DRAW_ChangeAnime( pokeWork->drawWork , anmIdx );
+}
+
+void STA_POKE_SetShowFlg( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const BOOL flg )
+{
+	int ePos;
+	MUS_POKE_DRAW_SetShowFlg( pokeWork->drawWork , flg );
+	for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
+	{
+		if( pokeWork->itemWork[ePos] != NULL )
+		{
+			MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , pokeWork->itemWork[ePos] , flg );
+		}
+	}
+}
+BOOL STA_POKE_GetShowFlg( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
 	return MUS_POKE_DRAW_GetShowFlg( pokeWork->drawWork );
 }
 
+STA_POKE_DIR STA_POKE_GetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+	return pokeWork->dir;
+}
+
+void STA_POKE_SetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const STA_POKE_DIR dir )
+{
+	pokeWork->dir = dir;
+	pokeWork->isUpdate = TRUE;
+}
 

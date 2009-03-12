@@ -202,6 +202,11 @@ void MUS_POKE_DRAW_StopAnime( MUS_POKE_DRAW_WORK *drawWork )
 	MUS_MCSS_SetAnmStopFlag( drawWork->mcss );
 }
 
+void MUS_POKE_DRAW_ChangeAnime( MUS_POKE_DRAW_WORK *drawWork , const u8 anmIdx )
+{
+	MUS_MCSS_ChangeAnm( drawWork->mcss , anmIdx );
+}
+
 MUS_POKE_EQUIP_DATA* MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , const MUS_POKE_EQUIP_POS pos )
 {
 	return &drawWork->equipData[pos];
@@ -218,6 +223,7 @@ static void MUS_POKE_MCSS_CallBack( const MUS_POKE_EQUIP_POS pos , MUS_MCSS_CELL
 	drawWork->equipData[pos].isEnable = TRUE;
 	VEC_Add( &cellData->pos , &cellData->ofs , &drawWork->equipData[pos].pos );
 	drawWork->equipData[pos].rot = cellData->rotZ+cellData->itemRotZ;
+	drawWork->equipData[pos].scale = cellData->scale;
 	
 //	OS_TPrintf("[%d:%d]:[%d:%d]\n"	,(int)F32_CONST(cellData->pos->x),(int)F32_CONST(cellData->pos->y)
 //									,(int)F32_CONST(cellData->ofs.x),(int)F32_CONST(cellData->ofs.y)	);

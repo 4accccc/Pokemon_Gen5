@@ -290,3 +290,8 @@ void MUS_ITEM_DRAW_GetRotation( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK 
 	GFL_BBD_GetObjectRotate( work->bbdSys , itemWork->bbdIdx , rotZ );
 }
 
+void MUS_ITEM_DRAW_SetFlipS( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , const BOOL flipS )
+{
+	GFL_BBD_SetObjectFlipS( work->bbdSys , itemWork->bbdIdx , &flipS );
+}
+

@@ -83,6 +83,7 @@ void			MUS_MCSS_SetMepachiFlag( MUS_MCSS_WORK *mcss );
 void			MUS_MCSS_ResetMepachiFlag( MUS_MCSS_WORK *mcss );
 void			MUS_MCSS_SetAnmStopFlag( MUS_MCSS_WORK *mcss );
 void			MUS_MCSS_ResetAnmStopFlag( MUS_MCSS_WORK *mcss );
+void			MUS_MCSS_ChangeAnm( MUS_MCSS_WORK *mcss , const u8 anmIdx );
 int				MUS_MCSS_GetVanishFlag( MUS_MCSS_WORK *mcss );
 void			MUS_MCSS_SetVanishFlag( MUS_MCSS_WORK *mcss );
 void			MUS_MCSS_ResetVanishFlag( MUS_MCSS_WORK *mcss );
@@ -365,7 +366,7 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 			}
 			if( mcss->scale.y < 0 )
 			{
-				flipFlg += MUS_MCSS_FLIP_Y;
+				//Y反転は取りあえず保留
 			}
 
 			G3_StoreMtx( MUS_MCSS_NORMAL_MTX );
@@ -390,8 +391,8 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 							 GX_TEXGEN_TEXCOORD,
 							 image_p->attr.sizeS,
 							 image_p->attr.sizeT,
-							 GX_TEXREPEAT_NONE,
-							 GX_TEXFLIP_NONE,
+							 GX_TEXREPEAT_ST,
+							 GX_TEXFLIP_ST,
 							 image_p->attr.plttUse,
 							 image_p->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN]);
 			for( node = 0 ; node < mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].numNodes ; node++ ){
@@ -482,10 +483,11 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 						//OS_TPrintf("mcss[%d:%d]:[%d:%d]:[%d:%d]\n",ofsx,ofsy,(int)F32_CONST(itemOfsx),(int)F32_CONST(itemOfsy),anim_SRT.px,anim_SRT.py);
 						cellData.pos = pos;
 						cellData.pos.y = -cellData.pos.y;
-						cellData.ofs.x	= FX32_CONST(ofsx + anim_SRT.px) + itemOfsx;
-						cellData.ofs.y	= FX32_CONST(ofsy + anim_SRT.py) + itemOfsy;
+						cellData.ofs.x	= FX_Mul( FX32_CONST(ofsx + anim_SRT.px) + itemOfsx , mcss->scale.x/16 );
+						cellData.ofs.y	= FX_Mul( FX32_CONST(ofsy + anim_SRT.py) + itemOfsy , mcss->scale.y/16 );
 						cellData.ofs.z	= pos_z_default;
 						cellData.rotZ	= anim_SRT.rotZ;
+						cellData.scale	= mcss->scale;
 						cellData.itemRotZ = MUS_POKE_GRP_TO_ROT( mcss->musInfo[clIdx].grpNo );
 						
 						musCellCb(	MUS_POKE_PLT_TO_POS(mcss->musInfo[clIdx].pltNo) ,
@@ -595,23 +597,32 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 
 	G3_RotZ( -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
 
-	G3_Scale( anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
+	if( isFlip == MUS_MCSS_FLIP_NONE )
+	{
+		G3_Scale( anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
 
-	G3_Translate( pos_x, pos_y, 0 );
+		G3_Translate( pos_x, pos_y, 0 );
 
-	G3_Scale( scale_x, scale_y, FX32_ONE );
-	
-	//反転による調整
+		G3_Scale( scale_x, scale_y, FX32_ONE );
+	}
+	else
 	if( isFlip & MUS_MCSS_FLIP_X )
 	{
-		tex_s -= FX32_ONE;
+		//反転による調整
+		G3_Scale(-anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
+
+		G3_Translate( -pos_x, pos_y, 0 );
+
+		G3_Scale( scale_x, scale_y, FX32_ONE );
+		G3_Translate( -MUS_MCSS_DEFAULT_LINE, 0, 0 );
+		//テクスチャのリピートでフリップした所を使う
+		tex_s = FX32_CONST(256.0f) + FX32_CONST(256.0f) - tex_s - scale_x;
 	}
 	if( isFlip & MUS_MCSS_FLIP_Y )
 	{
-		tex_t -= FX32_ONE;
+		//Y反転は取りあえず保留
 	}
 	
-
 	G3_Begin(GX_BEGIN_QUADS);
 	G3_TexCoord( tex_s,				tex_t );
 	G3_Vtx( 0, 0, 0 );
@@ -839,6 +850,26 @@ void	MUS_MCSS_SetAnmStopFlag( MUS_MCSS_WORK *mcss )
 void	MUS_MCSS_ResetAnmStopFlag( MUS_MCSS_WORK *mcss )
 {
 	mcss->anm_stop_flag = MUS_MCSS_ANM_STOP_OFF;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * アニメ変更
+ */
+//--------------------------------------------------------------------------
+void	MUS_MCSS_ChangeAnm( MUS_MCSS_WORK *mcss , const u8 anmIdx )
+{
+	const NNSG2dMultiCellAnimSequence* pSequence;
+
+	// 再生するシーケンスを取得
+	pSequence = NNS_G2dGetAnimSequenceByIdx( mcss->mcss_nmar, anmIdx );
+	GF_ASSERT( pSequence != NULL );
+
+	// マルチセルアニメーションを構築
+	MUS_MCSS_GetNewMultiCellAnimation( mcss, NNS_G2D_MCTYPE_SHARE_CELLANIM );
+
+	// マルチセルアニメーションに再生するシーケンスをセット
+	NNS_G2dSetAnimSequenceToMCAnimation( &mcss->mcss_mcanim, pSequence );
 }
 
 //--------------------------------------------------------------------------

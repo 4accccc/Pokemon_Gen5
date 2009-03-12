@@ -1,50 +1,106 @@
-#pragma once
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		billboard.h
+ *	@brief		ビルボードアクターシステム
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifndef __BILLBOARD_H__
+#define __BILLBOARD_H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-//============================================================================================
+//=============================================================================
 /**
- * @file	
- * @brief	
- * @date	
- */
-//============================================================================================
-typedef struct _GFL_BBD_SYS		GFL_BBD_SYS;
-
+ *					定数宣言
+*/
+//=============================================================================
+//-------------------------------------
+///	テクスチャフォーマット
+//=====================================
 typedef enum {
-	GFL_BBD_TEXFMT_PAL16 = 0,
-	GFL_BBD_TEXFMT_PAL256,
-	GFL_BBD_TEXFMT_PAL4,
+	GFL_BBD_TEXFMT_PAL16 = 0,	//16色パレット
+	GFL_BBD_TEXFMT_PAL256,		//256色パレット
+	GFL_BBD_TEXFMT_PAL4,		//4色パレット
 	GFL_BBD_TEXFMT_ERROR,
 }GFL_BBD_TEXFMT;
 
+//-------------------------------------
+///	ビルボードテクスチャサイズ
+//=====================================
 typedef enum {
 	GFL_BBD_TEXSIZ_8x8 = 0,
+	GFL_BBD_TEXSIZ_8x16,
+	GFL_BBD_TEXSIZ_8x32,
+	GFL_BBD_TEXSIZ_8x64,
+	GFL_BBD_TEXSIZ_8x128,
+	GFL_BBD_TEXSIZ_8x256,
+	GFL_BBD_TEXSIZ_8x512,
+	GFL_BBD_TEXSIZ_8x1024,
 	GFL_BBD_TEXSIZ_16x8,
 	GFL_BBD_TEXSIZ_16x16,
 	GFL_BBD_TEXSIZ_16x32,
+	GFL_BBD_TEXSIZ_16x64,
+	GFL_BBD_TEXSIZ_16x128,
+	GFL_BBD_TEXSIZ_16x256,
+	GFL_BBD_TEXSIZ_16x512,
+	GFL_BBD_TEXSIZ_16x1024,
+	GFL_BBD_TEXSIZ_32x8,
 	GFL_BBD_TEXSIZ_32x16,
 	GFL_BBD_TEXSIZ_32x32,
 	GFL_BBD_TEXSIZ_32x64,
+	GFL_BBD_TEXSIZ_32x128,
+	GFL_BBD_TEXSIZ_32x256,
+	GFL_BBD_TEXSIZ_32x512,
+	GFL_BBD_TEXSIZ_32x1024,
+	GFL_BBD_TEXSIZ_64x8,
+	GFL_BBD_TEXSIZ_64x16,
 	GFL_BBD_TEXSIZ_64x32,
 	GFL_BBD_TEXSIZ_64x64,
 	GFL_BBD_TEXSIZ_64x128,
+	GFL_BBD_TEXSIZ_64x256,
+	GFL_BBD_TEXSIZ_64x512,
+	GFL_BBD_TEXSIZ_64x1024,
+	GFL_BBD_TEXSIZ_128x8,
+	GFL_BBD_TEXSIZ_128x16,
+	GFL_BBD_TEXSIZ_128x32,
 	GFL_BBD_TEXSIZ_128x64,
 	GFL_BBD_TEXSIZ_128x128,
 	GFL_BBD_TEXSIZ_128x256,
+	GFL_BBD_TEXSIZ_128x512,
+	GFL_BBD_TEXSIZ_128x1024,
+	GFL_BBD_TEXSIZ_256x8,
+	GFL_BBD_TEXSIZ_256x16,
+	GFL_BBD_TEXSIZ_256x32,
+	GFL_BBD_TEXSIZ_256x64,
 	GFL_BBD_TEXSIZ_256x128,
 	GFL_BBD_TEXSIZ_256x256,
 	GFL_BBD_TEXSIZ_256x512,
+	GFL_BBD_TEXSIZ_256x1024,
+	GFL_BBD_TEXSIZ_512x8,
+	GFL_BBD_TEXSIZ_512x16,
+	GFL_BBD_TEXSIZ_512x32,
+	GFL_BBD_TEXSIZ_512x64,
+	GFL_BBD_TEXSIZ_512x128,
 	GFL_BBD_TEXSIZ_512x256,
 	GFL_BBD_TEXSIZ_512x512,
 	GFL_BBD_TEXSIZ_512x1024,
+	GFL_BBD_TEXSIZ_1024x8,
+	GFL_BBD_TEXSIZ_1024x16,
+	GFL_BBD_TEXSIZ_1024x32,
+	GFL_BBD_TEXSIZ_1024x64,
+	GFL_BBD_TEXSIZ_1024x128,
+	GFL_BBD_TEXSIZ_1024x256,
 	GFL_BBD_TEXSIZ_1024x512,
 	GFL_BBD_TEXSIZ_1024x1024,
-	GFL_BBD_TEXSIZ_32x512,
-	GFL_BBD_TEXSIZ_32x1024,
 	GFL_BBD_TEXSIZ_ERROR,
 }GFL_BBD_TEXSIZ;
 
+//-------------------------------------
+///	ライトマスク
+//=====================================
 typedef enum {
 	GFL_BBD_LIGHT_NONE = 0,
 	GFL_BBD_LIGHTMASK_0,	// = 1
@@ -64,6 +120,24 @@ typedef enum {
 	GFL_BBD_LIGHTMASK_0123,
 }GFL_BBD_LIGHTMASK;
 
+//-------------------------------------
+///	アルファなし定義
+//=====================================
+#define GFL_BBD_NON_ALPHA	(31)
+
+//=============================================================================
+/**
+ *					構造体宣言
+*/
+//=============================================================================
+//-------------------------------------
+///	ビルボードシステム不完全型
+//=====================================
+typedef struct _GFL_BBD_SYS		GFL_BBD_SYS;
+
+//-------------------------------------
+///	ビルボードシステム設定用構造体
+//=====================================
 typedef struct {
 	u16							resCountMax;
 	u16							objCountMax;
@@ -75,9 +149,16 @@ typedef struct {
 	u8							polID;
 }GFL_BBD_SETUP;
 
+//-------------------------------------
+///	デフォルト設定用構造体
+//=====================================
 extern const GFL_BBD_SETUP defaultSetup;
 
-#define GFL_BBD_NON_ALPHA	(31)
+//=============================================================================
+/**
+ *					プロトタイプ宣言
+*/
+//=============================================================================
 //------------------------------------------------------------------
 /**
  *
@@ -104,6 +185,9 @@ extern void	GFL_BBD_GetEmission( GFL_BBD_SYS* billboardSys, GXRgb* emission );
 extern void	GFL_BBD_SetEmission( GFL_BBD_SYS* billboardSys, GXRgb* emission );
 extern void	GFL_BBD_GetPolID( GFL_BBD_SYS* billboardSys, u8* polID );
 extern void	GFL_BBD_SetPolID( GFL_BBD_SYS* billboardSys, u8* polID );
+
+//GFL_BBD_TEXSIZからSとTの実数値を取得
+extern void GFL_BBD_GetTexSize( GFL_BBD_TEXSIZ texSiz, u16 * s, u16 * t );
 
 //------------------------------------------------------------------
 /**
@@ -189,18 +273,30 @@ extern void	GFL_BBD_GetObjectAlpha
 				( GFL_BBD_SYS* billboardSys, int objIdx, u8* alpha );
 extern void	GFL_BBD_SetObjectAlpha
 				( GFL_BBD_SYS* billboardSys, int objIdx, const u8* alpha );
+extern BOOL	GFL_BBD_GetObjectDrawEnable
+				( const GFL_BBD_SYS* billboardSys, int objIdx );
 extern void	GFL_BBD_SetObjectDrawEnable
 				( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* drawEnable );
+extern GFL_BBD_LIGHTMASK	GFL_BBD_GetObjectLightMask
+				( const GFL_BBD_SYS* billboardSys, int objIdx );
 extern void	GFL_BBD_SetObjectLightMask
 				( GFL_BBD_SYS* billboardSys, int objIdx, const GFL_BBD_LIGHTMASK* lightMask );
+extern void	GFL_BBD_OnObjectLightMask
+				( GFL_BBD_SYS* billboardSys, int objIdx, GFL_BBD_LIGHTMASK lightMask );
+extern void	GFL_BBD_OffObjectLightMask
+				( GFL_BBD_SYS* billboardSys, int objIdx, GFL_BBD_LIGHTMASK lightMask );
+extern BOOL	GFL_BBD_GetObjectFlipS
+				( const GFL_BBD_SYS* billboardSys, int objIdx );
 extern void	GFL_BBD_SetObjectFlipS
 				( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* flipS );
+extern BOOL	GFL_BBD_GetObjectFlipT
+				( const GFL_BBD_SYS* billboardSys, int objIdx );
 extern void	GFL_BBD_SetObjectFlipT
 				( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* flipT );
-extern void	GFL_BBD_SetObjectRotate
-				( GFL_BBD_SYS* billboardSys, int objIdx, const u16* rotZ );
 extern void	GFL_BBD_GetObjectRotate
 				( GFL_BBD_SYS* billboardSys, int objIdx, u16 *rotZ );
+extern void	GFL_BBD_SetObjectRotate
+				( GFL_BBD_SYS* billboardSys, int objIdx, const u16* rotZ );
 
 //------------------------------------------------------------------
 /**
@@ -212,7 +308,8 @@ extern void	GFL_BBD_GetObjectRotate
 extern void	GFL_BBD_Draw
 		( GFL_BBD_SYS* billboardSys, GFL_G3D_CAMERA* g3Dcamera, GFL_G3D_LIGHTSET* g3Dlightset );
 
-
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
+
+#endif		// __BILLBOARD_H__

@@ -19,6 +19,13 @@
 //======================================================================
 //	enum
 //======================================================================
+//ポケモンの向き(バトルベースなのでデフォは左向き
+typedef enum
+{
+	SPD_LEFT,	//左向き
+	SPD_RIGHT,	//右向き
+}STA_POKE_DIR;
+
 
 //======================================================================
 //	typedef struct
@@ -49,7 +56,12 @@ void STA_POKE_GetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx3
 void STA_POKE_SetPosition( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const VecFx32 *pos );
 void STA_POKE_GetScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *scale );
 void STA_POKE_SetScale( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , VecFx32 *scale );
-void STA_POKE_DRAW_SetShowFlg( STA_POKE_WORK *drawWork , const BOOL flg );
-BOOL STA_POKE_DRAW_GetShowFlg( STA_POKE_WORK *drawWork );
+void STA_POKE_StartAnime( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_StopAnime( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_ChangeAnime( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const u8 anmIdx );
+void STA_POKE_SetShowFlg( STA_POKE_SYS *work , STA_POKE_WORK *drawWork , const BOOL flg );
+BOOL STA_POKE_GetShowFlg( STA_POKE_SYS *work , STA_POKE_WORK *drawWork );
+STA_POKE_DIR STA_POKE_GetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+void STA_POKE_SetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const STA_POKE_DIR dir );
 
 #endif STA_ACT_POKE_H__

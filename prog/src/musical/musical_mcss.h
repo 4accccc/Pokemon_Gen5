@@ -38,6 +38,7 @@ typedef struct
 {
 	VecFx32	pos;	//マルチセルの位置
 	VecFx32	ofs;	//差分(回転前
+	VecFx32	scale;	//全体の拡縮
 	u16		rotZ;	//回転(セルの回転
 	u16		itemRotZ;	//回転(装備箇所に設定された回転
 	
@@ -80,6 +81,7 @@ extern	void			MUS_MCSS_SetMepachiFlag( MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_ResetMepachiFlag( MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_SetAnmStopFlag( MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_ResetAnmStopFlag( MUS_MCSS_WORK *mcss );
+extern	void			MUS_MCSS_ChangeAnm( MUS_MCSS_WORK *mcss , const u8 anmIdx );
 extern	int				MUS_MCSS_GetVanishFlag( MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_SetVanishFlag( MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_ResetVanishFlag( MUS_MCSS_WORK *mcss );

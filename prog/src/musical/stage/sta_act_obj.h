@@ -41,6 +41,9 @@ void	STA_OBJ_System_SetScrollOffset( STA_OBJ_SYS *work , const u16 scrOfs );
 //OBJ’P‘ÌŒn
 STA_OBJ_WORK *STA_OBJ_CreateObject( STA_OBJ_SYS *work , const u16 itemId );
 void STA_OBJ_DeleteObject( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork );
-void STA_OBJ_SetPosition( STA_OBJ_SYS *work , STA_OBJ_WORK *pokeWork , const VecFx32 *pos );
+void STA_OBJ_SetPosition( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork , const VecFx32 *pos );
+void STA_OBJ_GetPosition( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork , VecFx32 *pos );
+void STA_OBJ_SetShowFlg( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork , const BOOL flg );
+BOOL STA_OBJ_GetShowFlg( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork );
 
 #endif STA_ACT_OBJ_H__

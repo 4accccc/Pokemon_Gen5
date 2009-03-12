@@ -15,6 +15,7 @@
 #include "../sta_act_effect.h"
 #include "../sta_act_poke.h"
 #include "../sta_act_obj.h"
+#include "../sta_act_light.h"
 
 //======================================================================
 //	define
@@ -46,6 +47,7 @@ typedef struct
 	void	*scriptData;
 	void	*loadPos;
 	
+	u32		frame;
 	u16		waitCnt;
 	
 }STA_SCRIPT_WORK;
@@ -55,6 +57,7 @@ struct _STA_SCRIPT_SYS
 {
 	HEAPID heapId;
 	
+	
 	GFL_TCBSYS	*tcbSys;
 	void		*tcbWork;
 	STA_SCRIPT_WORK *scriptWork[SCRIPT_NUM];
@@ -63,6 +66,12 @@ struct _STA_SCRIPT_SYS
 
 
 typedef SCRIPT_FINISH_TYPE(*STA_SCRIPT_FUNC)(STA_SCRIPT_SYS *work,STA_SCRIPT_WORK *scriptWork);
+
+//--------------------------------------------------------------
+//	スクリプト用にメッセージ関係
+//--------------------------------------------------------------
+void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd );
+void STA_ACT_HideMessage( ACTING_WORK *work );
 
 //--------------------------------------------------------------
 //	スクリプト用に外部提供関数
@@ -76,10 +85,11 @@ void			STA_ACT_SetObjectWork( ACTING_WORK *work , STA_OBJ_WORK *objWork , const 
 STA_EFF_SYS*	STA_ACT_GetEffectSys( ACTING_WORK *work );
 STA_EFF_WORK*	STA_ACT_GetEffectWork( ACTING_WORK *work , const u8 idx );
 void			STA_ACT_SetEffectWork( ACTING_WORK *work , STA_EFF_WORK *effWork , const u8 idx );
+STA_LIGHT_SYS* 	STA_ACT_GetLightSys( ACTING_WORK *work );
+STA_LIGHT_WORK* STA_ACT_GetLightWork( ACTING_WORK *work , const u8 idx );
+void 			STA_ACT_SetLightWork( ACTING_WORK *work , STA_LIGHT_WORK *lightWork , const u8 idx );
 
 u16		STA_ACT_GetCurtainHeight( ACTING_WORK *work );
 void	STA_ACT_SetCurtainHeight( ACTING_WORK *work , const u16 height );
-u16		STA_ACT_GetStageScroll( ACTING_WORK *work );
-void	STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll );
 
 #endif STA_ACT_SCRIPT_DEF_H__

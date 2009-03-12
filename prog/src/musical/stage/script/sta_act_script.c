@@ -111,6 +111,7 @@ void STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData )
 	work->scriptWork[i]->scriptData = scriptData;
 	work->scriptWork[i]->loadPos = work->scriptWork[i]->scriptData;
 	work->scriptWork[i]->waitCnt = 0;
+	work->scriptWork[i]->frame = 0;
 }
 
 static BOOL STA_SCRIPT_UpdateScript( STA_SCRIPT_SYS *work , STA_SCRIPT_WORK *scriptWork )
@@ -120,7 +121,8 @@ static BOOL STA_SCRIPT_UpdateScript( STA_SCRIPT_SYS *work , STA_SCRIPT_WORK *scr
 	{
 		scriptWork->waitCnt--;
 	}
-	else
+
+	if( scriptWork->waitCnt == 0 )
 	{
 		while( ret == SFT_CONTINUE )
 		{
@@ -137,6 +139,7 @@ static BOOL STA_SCRIPT_UpdateScript( STA_SCRIPT_SYS *work , STA_SCRIPT_WORK *scr
 			return TRUE;
 		}
 	}
+	scriptWork->frame++;
 	return FALSE;
 }
 

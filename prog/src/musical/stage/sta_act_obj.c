@@ -198,4 +198,19 @@ void STA_OBJ_SetPosition( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork , const VecF
 	objWork->isUpdate = TRUE;
 }
 
+void STA_OBJ_GetPosition( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork , VecFx32 *pos )
+{
+	pos->x = objWork->pos.x;
+	pos->y = objWork->pos.y;
+	pos->z = objWork->pos.z;
+}
 
+void STA_OBJ_SetShowFlg( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork , const BOOL flg )
+{
+	GFL_BBD_SetObjectDrawEnable( work->bbdSys , objWork->bbdIdx , &flg );
+}
+
+BOOL STA_OBJ_GetShowFlg( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork )
+{
+	return GFL_BBD_GetObjectDrawEnable( work->bbdSys , objWork->bbdIdx );
+}

@@ -15,6 +15,7 @@
 #include "arc_def.h"
 #include "musical_item.naix"
 #include "stage_gra.naix"
+#include "message.naix"
 #include "print/printsys.h"
 
 #include "sound/snd_strm.h"
@@ -32,6 +33,7 @@
 #include "sta_act_effect.h"
 #include "sta_act_poke.h"
 #include "sta_act_obj.h"
+#include "sta_act_light.h"
 #include "script/sta_act_script.h"
 
 #include "eff_def/mus_eff.h"
@@ -52,8 +54,6 @@
 #define ACT_PAL_INFO		(0xE)
 #define ACT_PAL_FONT		(0xF)
 
-#define ACT_SPOT_NUM	(2)
-
 #define ACT_OBJECT_IVALID (-1)
 
 #define ACT_BG_SCROLL_MAX (256)
@@ -68,33 +68,18 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
-typedef enum
-{
-	AST_NONE,	//無効
-	AST_CIRCLE,	//円形
-	AST_SHINES,	//台形
-}ACT_SPOT_TYPE;
 
 //======================================================================
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
 //スポットライト
-typedef struct
-{
-	ACT_SPOT_TYPE	type;	//有効フラグ兼
-	GXRgb	color;
-	u8		alpha;
-	fx32	posX;
-	fx32	posY;
-	fx32	val1;	//半径 or 上の幅(半分
-	fx32	val2;	//無効 or 下の幅(半分
-}ACT_SPOT_WORK;
 
 struct _ACTING_WORK
 {
 	HEAPID heapId;
 	
+	BOOL	updateScroll;
 	u16		scrollOffset;
 	u16		makuOffset;
 	
@@ -112,17 +97,20 @@ struct _ACTING_WORK
 	STA_EFF_SYS			*effSys;
 	STA_EFF_WORK		*effWork[ACT_EFFECT_MAX];
 	
-	ACT_SPOT_WORK		spotWork[ACT_SPOT_NUM];
+	STA_LIGHT_SYS		*lightSys;
+	STA_LIGHT_WORK		*lightWork[ACT_LIGHT_MAX];
 
 	GFL_G3D_CAMERA		*camera;
 	GFL_BBD_SYS			*bbdSys;
 	
 	STA_SCRIPT_SYS		*scriptSys;
 	
+	//メッセージ用
 	GFL_TCBLSYS			*tcblSys;
 	GFL_BMPWIN			*msgWin;
 	GFL_FONT			*fontHandle;
 	PRINT_STREAM		*printHandle;
+	GFL_MSGDATA			*msgHandle;
 };
 
 //======================================================================
@@ -141,12 +129,8 @@ static void STA_ACT_SetupItem( ACTING_WORK *work );
 static void STA_ACT_SetupEffect( ACTING_WORK *work );
 static void STA_ACT_SetupMessage( ACTING_WORK *work );
 
-static void STA_ACT_UpdateItem( ACTING_WORK *work );
 static void STA_ACT_UpdateScroll( ACTING_WORK *work );
 static void STA_ACT_UpdateMessage( ACTING_WORK *work );
-static void STA_ACT_DrawSpotLight( ACTING_WORK *work );
-static void STA_ACT_DrawSpotLight_Circle( ACTING_WORK *work , ACT_SPOT_WORK *spotWork );
-static void STA_ACT_DrawSpotLight_Shines( ACTING_WORK *work , ACT_SPOT_WORK *spotWork );
 
 
 
@@ -187,6 +171,7 @@ ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
 	
 	work->heapId = initWork->heapId;
 	work->initWork = initWork;
+	work->updateScroll = FALSE;
 	work->scrollOffset = 0;
 	work->makuOffset = 0;
 	STA_ACT_SetupGraphic( work );
@@ -195,12 +180,8 @@ ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
 	STA_ACT_SetupPokemon( work );
 	STA_ACT_SetupItem( work );
 	STA_ACT_SetupEffect( work );
-	
-	for( i=0;i<ACT_SPOT_NUM;i++ )
-	{
-		work->spotWork[i].type = AST_NONE;
-	}
-	
+
+	work->lightSys = STA_LIGHT_InitSystem(work->heapId , work );
 	work->scriptSys = STA_SCRIPT_InitSystem( work->heapId , work );
 	
 	INFOWIN_Init( ACT_FRAME_SUB_INFO,ACT_PAL_INFO,work->heapId);
@@ -228,10 +209,12 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 	
 	STA_SCRIPT_ExitSystem( work->scriptSys );
 
+	GFL_MSG_Delete( work->msgHandle );
 	GFL_BMPWIN_Delete( work->msgWin );
 	GFL_FONT_Delete( work->fontHandle );
 	GFL_TCBL_Exit( work->tcblSys );
 	
+	STA_LIGHT_ExitSystem( work->lightSys );
 	STA_EFF_ExitSystem( work->effSys );
 	STA_OBJ_ExitSystem( work->objSys );
 	STA_POKE_ExitSystem( work->pokeSys );
@@ -265,20 +248,9 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 		STA_EFF_CreateEmmitter( work->effWork[0] , MUS_EFF_00_OP_TITLE01 , &pos );
 		STA_EFF_CreateEmmitter( work->effWork[1] , MUS_EFF_01_OP_DEMOBG2_BUBBLE1 , &pos );
 	}
-	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
 	{
 		STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData );
-	}
-	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-	{
-		u8 i;
-		VecFx32 scale;
-		for( i=0;i<MUSICAL_POKE_MAX;i++ )
-		{
-			STA_POKE_GetScale( work->pokeSys , work->pokeWork[i] , &scale );
-			scale.x *= -1;
-			STA_POKE_SetScale( work->pokeSys , work->pokeWork[i] , &scale );
-		}
 	}
 
 #endif
@@ -299,13 +271,16 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 		STA_ACT_UpdateMessage( work );
 		
 		MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
+
+		//ポケとかに追従する可能性もあるので最後
+		STA_LIGHT_UpdateSystem( work->lightSys );
 	}
 
 	//3D描画	
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
 	{
-		STA_ACT_DrawSpotLight( work );
+		STA_LIGHT_DrawSystem( work->lightSys );
 //		STA_POKE_DrawSystem( work->pokeSys );
 		MUS_POKE_DRAW_DrawSystem( work->drawSys ); 
 //		STA_OBJ_DrawSystem( work->objSys );
@@ -557,19 +532,19 @@ static void STA_ACT_SetupItem( ACTING_WORK *work )
 	{
 		work->objSys = STA_OBJ_InitSystem( work->heapId , work->bbdSys );
 
-		pos.x = FX32_CONST(448.0f );
+		pos.x = FX32_CONST( 64.0f );
 		pos.y = FX32_CONST( 96.0f );
 		pos.z = FX32_CONST( 50.0f);
 		work->objWork[0] = STA_OBJ_CreateObject( work->objSys , 0 );
 		STA_OBJ_SetPosition( work->objSys , work->objWork[0] , &pos );
 
-		pos.x = FX32_CONST( 192.0f );
+		pos.x = FX32_CONST( 448.0f );
 		pos.y = FX32_CONST( 100.0f );
 		pos.z = FX32_CONST( 50.0f );
 		work->objWork[1] = STA_OBJ_CreateObject( work->objSys , 1 );
 		STA_OBJ_SetPosition( work->objSys , work->objWork[1] , &pos );
 
-		pos.x = FX32_CONST(  80.0f );
+		pos.x = FX32_CONST( 192.0f );
 		pos.y = FX32_CONST( 160.0f );
 		pos.z = FX32_CONST( 180.0f );
 		work->objWork[2] = STA_OBJ_CreateObject( work->objSys , 1 );
@@ -593,67 +568,10 @@ static void STA_ACT_SetupEffect( ACTING_WORK *work )
 	work->effWork[1] = STA_EFF_CreateEffect( work->effSys , NARC_stage_gra_mus_eff_01_spa );
 }
 
-static void STA_ACT_SetupMessage( ACTING_WORK *work )
-{
-	//メッセージ用処理
-	work->msgWin = GFL_BMPWIN_Create( ACT_FRAME_MAIN_FONT , ACT_MSG_POS_X , ACT_MSG_POS_Y ,
-									ACT_MSG_POS_WIDTH , ACT_MSG_POS_HEIGHT , ACT_PAL_FONT ,
-									GFL_BMP_CHRAREA_GET_B );
-	GFL_BMPWIN_TransVramCharacter( work->msgWin );
-	GFL_BMPWIN_MakeScreen( work->msgWin );
-	GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_FONT);
-	
-	
-	//フォント読み込み
-	work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
-
-	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , ACT_PAL_FONT*0x20, 16*1, work->heapId );
-	
-	work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 3 , 0x100 );
-	work->printHandle = NULL;
-}
-
-
-
-static void STA_ACT_UpdateItem( ACTING_WORK *work )
-{
-	int i;
-	int ePos;
-	VecFx32 pos;
-/*	
-	for( i=0;i<MUSICAL_POKE_MAX;i++ )
-	{
-		VecFx32 pokePos;
-		MUS_POKE_DRAW_GetPosition( work->drawWork[i] , &pokePos);
-		for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
-		{
-			if( work->itemWork[i][ePos] != NULL )
-			{
-				MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork[i] , ePos );
-				if( equipData->isEnable == TRUE )
-				{
-					pos.x = ACT_POS_X_FX(equipData->pos.x+FX32_CONST(128.0f));
-					pos.y = ACT_POS_Y_FX(equipData->pos.y+FX32_CONST(96.0f));
-					pos.z = pokePos.z+FX32_HALF;	//とりあえずポケの前に出す
-					//OS_Printf("[%.2f][%.2f]\n",F32_CONST(equipData->pos.z),F32_CONST(pokePos.z));
-					MUS_ITEM_DRAW_SetPosition(	work->itemDrawSys , 
-												work->itemWork[i][ePos] ,
-												&pos );
-					MUS_ITEM_DRAW_SetRotation(	work->itemDrawSys , 
-												work->itemWork[i][ePos] ,
-												equipData->rot );
-					
-				}
-			}
-		}
-	}
-*/
-}
-
 static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 {
-	BOOL isUpdate = FALSE;
 	const u8 spd = 2;
+#if DEB_ARI
 	if(	GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
 	{
 		if( work->scrollOffset + spd < ACT_BG_SCROLL_MAX )
@@ -664,7 +582,7 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 		{
 			work->scrollOffset = ACT_BG_SCROLL_MAX;
 		}
-		isUpdate = TRUE;
+		work->updateScroll = TRUE;
 	}
 	if(	GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
 	{
@@ -677,10 +595,11 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 			work->scrollOffset = 0;
 		}
 		
-		isUpdate = TRUE;
+		work->updateScroll = TRUE;
 	}
+#endif
 	
-	if( isUpdate == TRUE )
+	if( work->updateScroll == TRUE )
 	{
 		GFL_BG_SetScroll( ACT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , work->scrollOffset );
 		GFL_BG_SetScroll( ACT_FRAME_MAIN_CURTAIN , GFL_BG_SCROLL_X_SET , work->scrollOffset );
@@ -688,6 +607,7 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 		STA_OBJ_System_SetScrollOffset( work->objSys , work->scrollOffset ); 
 	}
 	
+#if DEB_ARI
 	if(	GFL_UI_KEY_GetCont() & PAD_KEY_UP )
 	{
 		if( work->makuOffset + spd < ACT_CURTAIN_SCROLL_MAX )
@@ -711,10 +631,37 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 		}
 		
 	}
+#endif
 	GFL_BG_SetScroll( ACT_FRAME_MAIN_CURTAIN , GFL_BG_SCROLL_Y_SET , work->makuOffset );
 }
 
-#include <wchar.h>	//wcslen
+#pragma mark [> message func
+//--------------------------------------------------------------
+//	メッセージ関係
+//--------------------------------------------------------------
+static void STA_ACT_SetupMessage( ACTING_WORK *work )
+{
+	//メッセージ用処理
+	work->msgWin = GFL_BMPWIN_Create( ACT_FRAME_MAIN_FONT , ACT_MSG_POS_X , ACT_MSG_POS_Y ,
+									ACT_MSG_POS_WIDTH , ACT_MSG_POS_HEIGHT , ACT_PAL_FONT ,
+									GFL_BMP_CHRAREA_GET_B );
+	GFL_BMPWIN_TransVramCharacter( work->msgWin );
+	GFL_BMPWIN_MakeScreen( work->msgWin );
+	GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_FONT);
+	
+	
+	//フォント読み込み
+	work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+	
+	//メッセージ
+	work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_00_dat , work->heapId );
+
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , ACT_PAL_FONT*0x20, 16*2, work->heapId );
+	
+	work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 3 , 0x100 );
+	work->printHandle = NULL;
+}
+
 static void STA_ACT_UpdateMessage( ACTING_WORK *work )
 {
 	GFL_TCBL_Main( work->tcblSys );
@@ -727,149 +674,40 @@ static void STA_ACT_UpdateMessage( ACTING_WORK *work )
 			work->printHandle = NULL;
 		}
 	}
-
-#if DEB_ARI
-	if( work->printHandle == NULL )
-	{
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
-		{
-			STRCODE str[48] = L"文字列表示テスト";
-			STRBUF	*testStr = GFL_STR_CreateBuffer( 48 , work->heapId );
-			const u16 strLen = wcslen(str);
-			
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
-			
-			str[strLen] = GFL_STR_GetEOMCode();
-			GFL_STR_SetStringCode( testStr , str );
-
-			work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, testStr ,work->fontHandle ,
-													1 , work->tcblSys , 2 , work->heapId , 0 );
-			GFL_STR_DeleteBuffer( testStr );
-		}
-	}
-#endif
 }
 
-//描画のときfx16しか使えないので座標計算の倍率を変える
-#define ACT_SPOT_POS_X(val)	((val)/16/4)
-#define ACT_SPOT_POS_Y(val)	(FX32_CONST(192.0f)-(val))/16/4
-static void STA_ACT_DrawSpotLight( ACTING_WORK *work )
+void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd )
 {
-	u8 i;
-	for( i=0;i<ACT_SPOT_NUM;i++ )
+	if( work->printHandle != NULL )
 	{
-		switch( work->spotWork[i].type )
-		{
-		case AST_CIRCLE:
-			STA_ACT_DrawSpotLight_Circle( work , & work->spotWork[i] );
-			break;
-		case AST_SHINES:
-			STA_ACT_DrawSpotLight_Shines( work , & work->spotWork[i] );
-			break;
-		}
+		GF_ASSERT_MSG( NULL , "Message is not finish!!\n" )
+		PRINTSYS_PrintStreamDelete( work->printHandle );
+		work->printHandle = NULL;
 	}
-	
-#if DEB_ARI
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+
 	{
-		static u8 idx=0;
-		if( work->spotWork[0].type == AST_NONE )
-		{
-			VecFx32 pos;
-			STA_POKE_GetPosition( work->pokeSys , work->pokeWork[idx] , &pos );
-			work->spotWork[0].type = AST_CIRCLE;
-			work->spotWork[0].color = GX_RGB(31,31,0);
-			work->spotWork[0].alpha = 15;
-			work->spotWork[0].posX = pos.x;
-			work->spotWork[0].posY = pos.y;
-			work->spotWork[0].val1 = FX32_CONST(48.0f);
-			
-		}
-		else
-		if( work->spotWork[0].type == AST_CIRCLE )
-		{
-			VecFx32 pos;
-			STA_POKE_GetPosition( work->pokeSys , work->pokeWork[idx] , &pos );
-			work->spotWork[0].type = AST_SHINES;
-			work->spotWork[0].color = GX_RGB(31,31,0);
-			work->spotWork[0].alpha = 15;
-			work->spotWork[0].posX = pos.x;
-			work->spotWork[0].posY = pos.y+FX32_CONST(16.0f);
-			work->spotWork[0].val1 = FX32_CONST(12.0f);
-			work->spotWork[0].val2 = FX32_CONST(40.0f);
-			
-		}
-		else
-		if( work->spotWork[0].type == AST_SHINES )
-		{
-			work->spotWork[0].type = AST_NONE;
-			idx = (idx+1)%MUSICAL_POKE_MAX;
-		}
+		STRBUF	*str = GFL_STR_CreateBuffer( 128 , work->heapId );
+		
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
+		
+		GFL_MSG_GetString( work->msgHandle , msgNo , str );
+		GFL_FONTSYS_SetColor( 15,0,0 );
+		work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, str ,work->fontHandle ,
+												msgSpd , work->tcblSys , 2 , work->heapId , 0 );
+		GFL_STR_DeleteBuffer( str );
 	}
-#endif
 }
 
-static void STA_ACT_DrawSpotLight_Circle( ACTING_WORK *work , ACT_SPOT_WORK *spotWork )
+void STA_ACT_HideMessage( ACTING_WORK *work )
 {
-	u32 i;
-	u16 add = 0x800;
-	const fx32 posX = spotWork->posX - FX32_CONST(work->scrollOffset);
-	fx16 rad = ACT_SPOT_POS_X(spotWork->val1);
-	G3_PushMtx();
-	G3_PolygonAttr(GX_LIGHTMASK_NONE,  // no lights
-				   GX_POLYGONMODE_MODULATE, 	// modulation mode
-				   GX_CULL_NONE,	   // cull none
-				   0,				   // polygon ID(0 - 63)
-				   spotWork->alpha,	   // alpha(0 - 31)
-				   GX_POLYGON_ATTR_MISC_XLU_DEPTH_UPDATE				   // OR of GXPolygonAttrMisc's value
-		);
-
-	G3_Translate( 0,0,FX32_CONST(199.0f));
-	G3_Scale( FX32_ONE*4,FX32_ONE*4,FX32_ONE);
-	G3_Begin(GX_BEGIN_TRIANGLES);
+	if( work->printHandle != NULL )
 	{
-		G3_Color(spotWork->color);
-		for( i=0;i<0x10000;i+=0x800)
-		{
-			G3_Vtx(ACT_SPOT_POS_X(posX),ACT_SPOT_POS_Y(spotWork->posY),0);
-			G3_Vtx(	ACT_SPOT_POS_X(posX) + FX_Mul(FX_SinIdx((u16)i),rad) ,
-					ACT_SPOT_POS_Y(spotWork->posY) + FX_Mul(FX_CosIdx((u16)i),rad) ,
-					0);
-			G3_Vtx(	ACT_SPOT_POS_X(posX) + FX_Mul(FX_SinIdx((u16)(i+add)),rad) ,
-					ACT_SPOT_POS_Y(spotWork->posY) + FX_Mul(FX_CosIdx((u16)(i+add)),rad) ,
-					0);
-			
-		}
+		GF_ASSERT_MSG( NULL , "Message is not finish!!\n" )
+		PRINTSYS_PrintStreamDelete( work->printHandle );
+		work->printHandle = NULL;
 	}
-	G3_End();
-	G3_PopMtx(1);
-}
-
-static void STA_ACT_DrawSpotLight_Shines( ACTING_WORK *work , ACT_SPOT_WORK *spotWork )
-{
-	const fx32 posX = spotWork->posX - FX32_CONST(work->scrollOffset);
-	G3_PushMtx();
-	G3_PolygonAttr(GX_LIGHTMASK_NONE,  // no lights
-				   GX_POLYGONMODE_MODULATE, 	// modulation mode
-				   GX_CULL_NONE,	   // cull none
-				   0,				   // polygon ID(0 - 63)
-				   spotWork->alpha,	   // alpha(0 - 31)
-				   GX_POLYGON_ATTR_MISC_XLU_DEPTH_UPDATE				   // OR of GXPolygonAttrMisc's value
-		);
-
-	G3_Translate( 0,0,FX32_CONST(199.0f));
-	G3_Scale( FX32_ONE*4,FX32_ONE*4,FX32_ONE);
-	G3_Begin(GX_BEGIN_QUADS);
-	{
-		G3_Color(spotWork->color);
-		G3_Vtx(ACT_SPOT_POS_X(posX - spotWork->val1),ACT_SPOT_POS_Y(0),0);
-		G3_Vtx(ACT_SPOT_POS_X(posX + spotWork->val1),ACT_SPOT_POS_Y(0),0);
-		G3_Vtx(ACT_SPOT_POS_X(posX + spotWork->val2),ACT_SPOT_POS_Y(spotWork->posY),0);
-		G3_Vtx(ACT_SPOT_POS_X(posX - spotWork->val2),ACT_SPOT_POS_Y(spotWork->posY),0);
-	}
-	G3_End();
-	G3_End();
-	G3_PopMtx(1);
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
+	GFL_BMPWIN_TransVramCharacter( work->msgWin );
 }
 
 #pragma mark [> offer func
@@ -921,6 +759,21 @@ void STA_ACT_SetEffectWork( ACTING_WORK *work , STA_EFF_WORK *effWork , const u8
 	work->effWork[idx] = effWork;
 }
 
+STA_LIGHT_SYS* STA_ACT_GetLightSys( ACTING_WORK *work )
+{
+	return work->lightSys;
+}
+STA_LIGHT_WORK* STA_ACT_GetLightWork( ACTING_WORK *work , const u8 idx )
+{
+	GF_ASSERT( idx < ACT_LIGHT_MAX );
+	return work->lightWork[idx];
+}
+void STA_ACT_SetLightWork( ACTING_WORK *work , STA_LIGHT_WORK *lightWork , const u8 idx )
+{
+	GF_ASSERT( idx < ACT_LIGHT_MAX );
+	work->lightWork[idx] = lightWork;
+}
+
 u16		STA_ACT_GetCurtainHeight( ACTING_WORK *work )
 {
 	return work->makuOffset;
@@ -936,6 +789,7 @@ u16		STA_ACT_GetStageScroll( ACTING_WORK *work )
 void	STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll )
 {
 	work->scrollOffset = scroll;
+	work->updateScroll = TRUE;
 }
 
 
