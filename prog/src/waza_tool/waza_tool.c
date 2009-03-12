@@ -474,7 +474,7 @@ PokeSick WAZADATA_GetSick( WazaID id )
 u32 WAZADATA_GetSickPer( WazaID id )
 {
 	// @@@ ç°ÇÕÇƒÇ´Ç∆Ç§Ç…
-	return 90;
+	return WT_WazaDataParaGet( id, ID_WTD_addeffect );
 }
 
 //=============================================================================================
@@ -492,9 +492,7 @@ u32 WAZADATA_GetShrinkPer( WazaID id )
 	if( seq && seq->shrinkFlg ){
 		return WT_WazaDataParaGet( id, ID_WTD_addeffect );
 	}
-	// @@@ ç°ÇÕÇ©ÇËÇ…
-	return 100;
-//	return 0;
+	return 0;
 }
 
 
