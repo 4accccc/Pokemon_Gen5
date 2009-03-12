@@ -40,7 +40,6 @@ static void handler_decPP( BTL_EVENT_FACTOR* myHandle, BTL_SERVER* server, u8 po
 	if( work[0] == 0 )
 	{
 		BtlPokePos myPos = BTL_SERVER_CheckExistFrontPokeID( server, pokeID );
-//	BTL_SERVER_RECEPT_SetDecrementPP( server, 2 );
 		BTL_SERVER_RECEPT_TokuseiWinIn( server, myPos );
 		BTL_SERVER_RECEPT_RankDownEffect( server, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, myPos), BPP_ATTACK, 1 );
 		BTL_SERVER_RECEPT_TokuseiWinOut( server, myPos );

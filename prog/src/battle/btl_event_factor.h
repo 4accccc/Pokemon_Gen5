@@ -10,6 +10,8 @@
 #ifndef __BTL_EVENT_FACTOR_H__
 #define __BTL_EVENT_FACTOR_H__
 
+#include "waza_tool\wazadata.h"
+
 #include "btl_event.h"
 #include "btl_server_flow.h"
 #include "btl_server_local.h"

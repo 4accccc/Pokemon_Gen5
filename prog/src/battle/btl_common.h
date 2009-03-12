@@ -34,6 +34,7 @@ enum {
 	BTL_POSIDX_MAX = 3,				///< クライアントが管理する最大の戦闘位置数
 	BTL_PARTY_MEMBER_MAX = 6,	///< パーティのメンバー最大数
 	BTL_FRONT_POKE_MAX = BTL_POSIDX_MAX*2,	///< バトルに出ているポケモンの最大数
+	BTL_POKEID_NULL = 31,
 };
 
 //--------------------------------------------------------------

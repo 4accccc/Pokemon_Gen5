@@ -52,7 +52,7 @@ static u16 StackPtr;
 typedef struct {
 	u32 sp;
 	u16 label[ EVENTVAL_STACK_DEPTH ];
-	u32 value[ EVENTVAL_STACK_DEPTH ];
+	int value[ EVENTVAL_STACK_DEPTH ];
 }VAR_STACK;
 
 static VAR_STACK VarStack = {0};
@@ -283,7 +283,7 @@ void BTL_EVENTVAR_Pop( void )
 	}
 }
 
-void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, u32 value )
+void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value )
 {
 	GF_ASSERT(label!=BTL_EVAR_NULL);
 	GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);
@@ -319,7 +319,7 @@ void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, u32 value )
 	}
 }
 
-u32 BTL_EVENTVAR_GetValue( BtlEvVarLabel label )
+int BTL_EVENTVAR_GetValue( BtlEvVarLabel label )
 {
 	GF_ASSERT(label!=BTL_EVAR_NULL);
 	GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);

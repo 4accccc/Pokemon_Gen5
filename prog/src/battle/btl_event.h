@@ -86,13 +86,21 @@ typedef enum {
 	BTL_EVAR_SYS_SEPARATE,
 	//---Ç±Ç±Ç©ÇÁè„ÇÕÉVÉXÉeÉÄó\ñÒóÃàÊ-------------------------
 	BTL_EVAR_POKEID,
-	BTL_EVAR_POKEID_USER,
+	BTL_EVAR_POKEID_ATK,
+	BTL_EVAR_POKEID_DEF,
+	BTL_EVAR_DAMAGED_POKECNT,
+	BTL_EVAR_POKEID_DAMAGED1,
+	BTL_EVAR_POKEID_DAMAGED2,
+	BTL_EVAR_POKEID_DAMAGED3,
+	BTL_EVAR_POKEID_DAMAGED4,
+	BTL_EVAR_POKEID_DAMAGED5,
+	BTL_EVAR_POKEID_DAMAGED6,
 	BTL_EVAR_WAZAID,
 	BTL_EVAR_SICKID,
 	BTL_EVAR_STATUS_TYPE,
 	BTL_EVAR_POKE_TYPE,
-	BTL_EVAR_POKE_TYPE_PAIR,
-	BTL_EVAL_VOLUME,
+	BTL_EVAR_WAZA_TYPE,
+	BTL_EVAR_VOLUME,
 	BTL_EVAR_FAIL_FLAG,
 	BTL_EVAR_RANDOM_FLAG,
 	BTL_EVAR_CONF_DMG,
@@ -100,6 +108,15 @@ typedef enum {
 	BTL_EVAR_TURN_COUNT,
 	BTL_EVAR_ALMOST_FLAG,
 	BTL_EVAR_ADD_PER,
+	BTL_EVAR_HITCOUNT_MAX,
+	BTL_EVAR_HITCOUNT,
+	BTL_EVAR_CRITICAL_RANK,
+	BTL_EVAR_CRITICAL_FLAG,
+	BTL_EVAR_WAZA_POWER,
+	BTL_EVAR_DAMAGE,
+	BTL_EVAR_POWER,
+	BTL_EVAR_GUARD,
+	BTL_EVAR_RATIO,
 
 	BTL_EVAR_MAX,
 
@@ -113,8 +130,8 @@ typedef enum {
 //--------------------------------------------------------------
 extern void BTL_EVENTVAR_Push( void );
 extern void BTL_EVENTVAR_Pop( void );
-extern void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, u32 value );
-extern u32 BTL_EVENTVAR_GetValue( BtlEvVarLabel label );
+extern void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value );
+extern int BTL_EVENTVAR_GetValue( BtlEvVarLabel label );
 
 
 //--------------------------------------------------------------
