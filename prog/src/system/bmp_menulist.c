@@ -125,6 +125,8 @@ BMPMENULIST_WORK * BmpMenuList_Set(
 	// BMPカーソル色変更
 //	BMPCURSOR_ChangeColor( lw->cursor,
 //		GF_PRINTCOLOR_MAKE(lw->hed.f_col,lw->hed.s_col,lw->hed.b_col) );
+
+	PRINT_UTIL_Setup( lw->hed.print_util, lw->hed.win );
 	
 	// リストキャラデータ初期化
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(lw->hed.win), lw->hed.b_col );
