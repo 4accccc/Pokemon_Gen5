@@ -37,10 +37,16 @@ extern "C" {
 // デバッグ用決まり文句----------------------
 #if defined(DEBUG_ONLY_FOR_ohno)
 #define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
+#elif defined(DEBUG_ONLY_FOR_matsuda)
+#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_LOBBY_DEBUG	(1)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
 #elif defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
 #else
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
 #endif
 
 //#if defined(DEBUG_ONLY_FOR_ohno)
@@ -75,6 +81,19 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 #else   //GFL_IRC_DEBUG
 #define IRC_PRINT(...)           ((void) 0)
 #endif  // GFL_IRC_DEBUG
+#endif
+
+#ifndef LOBBY_PRINT
+#if GFL_LOBBY_DEBUG
+#define LOBBY_PRINT(...) \
+  (void) ((OS_TPrintf(__VA_ARGS__)))
+#else   //GFL_LOBBY_DEBUG
+#define LOBBY_PRINT(...)           ((void) 0)
+#endif  // GFL_LOBBY_DEBUG
+#endif
+
+#ifdef PM_DEBUG
+#define COMMST_DEBUG_WFLBY_START	//デバッグ：広場入室部屋任意に指定可
 #endif
 
 
@@ -167,6 +186,7 @@ typedef enum {
 enum {
 	GFL_NET_TYPE_WIRELESS,		///<ワイヤレス通信
 	GFL_NET_TYPE_WIFI,			///<WIFI通信
+	GFL_NET_TYPE_WIFI_LOBBY,	///<WIFI広場通信
 	GFL_NET_TYPE_IRC,			///<赤外線通信
 	GFL_NET_TYPE_IRC_WIRELESS,	///<赤外線通信でマッチング後、ワイヤレス通信へ移行
 	GFL_NET_TYPE_WIRELESS_SCANONLY,	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
@@ -854,6 +874,17 @@ extern BOOL GFL_NET_SystemGetWifiConnect(void);
  */
 //==============================================================================
 extern int GFL_NET_SystemIsError(void);
+
+//--------------------------------------------------------------
+/**
+ * @brief   Wi-Fi広場の独自エラーが発生しているか
+ * @param   none		
+ * @retval  エラーNo(エラーでない場合は0)
+ */
+//--------------------------------------------------------------
+extern int GFL_NET_SystemIsLobbyError(void);
+
+
 
 
 #include "net_devicetbl.h"

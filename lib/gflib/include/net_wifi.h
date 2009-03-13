@@ -298,6 +298,36 @@ extern BOOL GFL_NET_StateIsWifiLoginMatchState(void);
 //==============================================================================
 extern void GFL_NET_StateSendWifiMatchEnd(GFL_NETHANDLE* pNet);
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WiFiロビー専用	ログイン関数
+ *
+ *	@param	p_save				セーブデータ
+ *	@param	cp_initprofile		初期化プロフィールデータ(ポインタを保持する為、実体は外側で解放しないように)
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_NET_StateWifiLobbyLogin( const void* cp_initprofile );
+#ifdef PM_DEBUG
+extern void GFL_NET_StateWifiLobbyLogin_Debug( const void* cp_initprofile, u32 season, u32 room );
+#endif
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WiFiロビーのログアウト
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_NET_StateWifiLobbyLogout( void );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	DWC_LoginAsyncのログインまでが完了したかチェック
+ *	@retval	TRUE	した
+ *	@retval	FALSE	してない
+ */
+//-----------------------------------------------------------------------------
+extern BOOL GFL_NET_StateWifiLobbyDwcLoginCheck( void );
+
+
 
 /// WiFiで使うHeapのサイズ
 #define GFL_NET_DWC_HEAPSIZE        (0x35400)   //WIFIクラブのHEAP量

@@ -79,6 +79,14 @@ typedef BOOL (*DevIsConnectSystemFunc)(void);  ///< 再接続中など関係なく、純粋に
 typedef BOOL (*DevGetSendLockFlagFunc)(void); ///< 送信ロックフラグを取得
 typedef void (*DevConnectWorkInitFunc)(void); ///< 初めての接続後のワーク設定
 
+typedef BOOL (*DevLobbyLoginFunc)(const void* cp_loginprofile); ///<Wi-Fi広場にログイン	DWC_LOBBY_Login
+typedef void (*DevDebugSetRoomFunc)( u32 locktime, u32 random, u8 roomtype, u8 season ); ///<デバッグ用 部屋データ設定DWC_LOBBY_DEBUG_SetRoomData
+typedef BOOL (*DevLobbyUpdateErrorCheckFunc)(void);	///<DWC_LOBBY_UpdateErrorCheck
+typedef BOOL (*DevLobbyLoginWaitFunc)(void);	///<DWC_LOBBY_LoginWait
+typedef void (*DevLobbyLogoutFunc)(void);	///<DWC_LOBBY_Logout
+typedef BOOL (*DevLobbyLogoutWaitFunc)(void);	///<DWC_LOBBY_LogoutWait
+
+
 /// @brief デバイスアクセス用構造体
 typedef struct{
   DevBootFunc DevBoot;
@@ -131,7 +139,15 @@ typedef struct{
   DevGetSendLockFlagFunc DevGetSendLockFlag;  ///< 送信ロックフラグを取得
   DevConnectWorkInitFunc DevConnectWorkInit;           ///<初めての接続後のワーク設定
 
+  //-- 以下、Wi-Fi広場専用
+  DevLobbyLoginFunc DevLobbyLogin;		///<Wi-Fi広場にログイン	DWC_LOBBY_Login
+  DevDebugSetRoomFunc DevDebugSetRoom;	///<デバッグ用 部屋データ設定 DWC_LOBBY_DEBUG_SetRoomData
+  DevLobbyUpdateErrorCheckFunc DevLobbyUpdateErrorCheck;	///<DWCロビー更新 DWC_LOBBY_UpdateErrorCheck
+  DevLobbyLoginWaitFunc DevLobbyLoginWait;	///<DWC_LOBBY_LoginWait
+  DevLobbyLogoutFunc DevLobbyLogout;	///<DWC_LOBBY_Logout
+  DevLobbyLogoutWaitFunc DevLobbyLogoutWait;	///<DWC_LOBBY_LogoutWait
 
+  
 } GFLNetDevTable;
 
 
