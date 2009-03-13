@@ -660,12 +660,14 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			break;
 		case SOUNDTEST_TPEV_VOICE_STOP:
 			//NNS_SndPlayerStopSeq(&sw->voiceHandle, 0);
+			PMSNDSYS_PauseBGM(TRUE);
 			PMSNDSYS_PushBGM();
 			break;
 		case SOUNDTEST_TPEV_VOICE_PAUSE:
 			//OS_Printf("pressed voice pause\n");
 			PMSNDSYS_PopBGM();
 			GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSNDSYS_GetBGMhandlePointer());
+			PMSNDSYS_PauseBGM(FALSE);
 			break;
 		case SOUNDTEST_TPEV_VOICE_WINDOW:
 			OS_Printf("pressed voice window\n");

@@ -127,30 +127,32 @@ static void PMSNDSYS_DeletePlayerUnit
 //============================================================================================
 void	PMSNDSYS_Init( void )
 {
-	// サウンドストリーミング再生システム
-	//SND_STRM_Init(GFL_HEAPID_SYSTEM);
-    // サウンドシステム初期化
-	//SOUNDSYS_Init("wb_sound_data.sdat", &pmHierarchyPlayerData );
+	u32 size1, size2;
+
 
     // サウンドシステム初期化
  	NNS_SndInit();
 	PmSndHeapHandle = NNS_SndHeapCreate(PmSoundHeap, SOUND_HEAP_SIZE);
+	size1 = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
+
     // サウンドの設定
 	NNS_SndArcInitWithResult( &PmSoundArc, "wb_sound_data.sdat", PmSndHeapHandle, FALSE );
+	size2 = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
+
     // サウンド管理初期化
 	SOUNDMAN_Init(&PmSndHeapHandle);
     // サウンド階層構造初期化
 	SOUNDMAN_InitHierarchyPlayer(&pmHierarchyPlayerData);
 
-//	PmSndHeapHandle = SOUNDSYS_GetSndHeapHandle();
-
     // サウンドの設定
 	playerNumber = 0;
-
 	PMSNDSYS_CreatePlayerUnit(systemPlayer, &systemPlayerUnit);
+
 	// 常駐サウンドデータ読み込み
 	systemPresetHandle = SOUNDMAN_PresetSoundTbl
 							(systemPresetSoundIdxTbl, NELEMS(systemPresetSoundIdxTbl));
+
+	OS_Printf("setup SoundData size(%x) heapRemains(%x)\n", size1 - size2, size2);
 }
 
 //============================================================================================
@@ -162,8 +164,6 @@ void	PMSNDSYS_Init( void )
 //============================================================================================
 void	PMSNDSYS_Main( void )
 {
-	//SND_STRM_Main();
-	//SOUNDSYS_Main();
 	NNS_SndMain();
 }
 
@@ -180,8 +180,6 @@ void	PMSNDSYS_Exit( void )
 
 	PMSNDSYS_DeletePlayerUnit(&systemPlayerUnit);
 	NNS_SndHeapDestroy(PmSndHeapHandle);
-	//SOUNDSYS_Exit();
-	//SND_STRM_Exit();
 }
 
 //============================================================================================
@@ -211,6 +209,7 @@ static void PMSNDSYS_CreatePlayerUnit
 {
 	BOOL result;
 	int playerNo;
+	u32 playerSize;
 	int i;
 
 	// プレーヤーユニット削除の際に復帰するヒープ状態ＬＶを保存
@@ -227,13 +226,12 @@ static void PMSNDSYS_CreatePlayerUnit
 
 	for( i=0; i<playerUnit->playerNum; i++ ){
 		playerNo = i + playerNumber;
+		playerSize = setupTbl[i].size;
 		// プレーヤー作成
-#if 0
-		result = NNS_SndPlayerCreateHeap(playerNo, PmSndHeapHandle, setupTbl[i].size);
-		if( result == FALSE ){
-			GF_ASSERT(0);
+		if(playerSize){
+			result = NNS_SndPlayerCreateHeap(playerNo, PmSndHeapHandle, playerSize);
+			GF_ASSERT( result == TRUE );
 		}
-#endif
 		// チャンネル設定
 		NNS_SndPlayerSetAllocatableChannel(playerNo, setupTbl[i].channelBit);
 		NNS_SndPlayerSetPlayableSeqCount(playerNo, setupTbl[i].playableNum);
@@ -323,29 +321,27 @@ void	PMSNDSYS_StopBGM( void )
 //------------------------------------------------------------------
 void	PMSNDSYS_PauseBGM( BOOL pauseFlag )
 {
-	SOUNDMAN_PauseHierarchyPlayer(pauseFlag);
+	NNS_SndPlayerPause(SOUNDMAN_GetHierarchyPlayerSndHandle(), pauseFlag);
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	サウンド一時停止→上位ＢＧＭ
+ * @brief	サウンド状態保管
  */
 //------------------------------------------------------------------
 void	PMSNDSYS_PushBGM( void )
 {
-	SOUNDMAN_PauseHierarchyPlayer(TRUE);
 	SOUNDMAN_PushHierarchyPlayer();
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	サウンド停止→下位ＢＧＭ
+ * @brief	サウンド状態取り出し
  */
 //------------------------------------------------------------------
 void	PMSNDSYS_PopBGM( void )
 {
 	SOUNDMAN_PopHierarchyPlayer();
-	SOUNDMAN_PauseHierarchyPlayer(FALSE);
 }
 
 

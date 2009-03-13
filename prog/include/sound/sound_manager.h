@@ -45,7 +45,6 @@ extern NNSSndHandle*	SOUNDMAN_GetHierarchyPlayerSndHandle( void );
 // 階層プレーヤーサウンド操作
 extern BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx );
 extern void	SOUNDMAN_StopHierarchyPlayer( void );
-extern void	SOUNDMAN_PauseHierarchyPlayer( BOOL pauseFlag );
 extern BOOL	SOUNDMAN_PushHierarchyPlayer( void );
 extern BOOL	SOUNDMAN_PopHierarchyPlayer( void );
 

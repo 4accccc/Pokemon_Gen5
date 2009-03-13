@@ -51,11 +51,8 @@ static const HEAP_INIT_HEADER hih[]={
 	{ HEAPSIZE_APP,		OS_ARENA_MAIN },
 };
 
-//#define	SOUND_HEAP_SIZE	(0x0b0000)
-
 static GFL_USE_WORK *	gfl_work = NULL;
 static int				GFL_USE_VintrCounter;
-//static	u8				sndHeap[SOUND_HEAP_SIZE];
 
 static void GFUser_PublicRandInit(void);
 static void gfluse_AssertFinish( void );

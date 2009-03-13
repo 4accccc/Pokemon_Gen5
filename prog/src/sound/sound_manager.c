@@ -266,21 +266,6 @@ void	SOUNDMAN_StopHierarchyPlayer( void )
 //--------------------------------------------------------------------------------------------
 /**
  *
- * @brief	サウンド一時停止
- *
- */
-//--------------------------------------------------------------------------------------------
-void	SOUNDMAN_PauseHierarchyPlayer( BOOL pauseFlag )
-{
-	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
-
-	// pauseFlag: TRUE = サウンドの一時停止, FALSE = サウンドの復帰
-	NNS_SndPlayerPause(&player->sndHandle, pauseFlag);
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- *
  * @brief	サウンド階層操作
  *
  */
