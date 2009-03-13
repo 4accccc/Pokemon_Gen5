@@ -9,6 +9,7 @@
 #include "gflib.h"
 #include "arc_def.h"
 
+#include "sound/pm_sndsys.h"
 #include "sound/snd_status.h"
 //============================================================================================
 /**
@@ -189,6 +190,13 @@ void	GFL_SNDSTATUS_SetControlEnable( GFL_SNDSTATUS* gflSndStatus, u16 flag )
 
 	gflSndStatus->setup.controlFlag = flag;
 	makeEventSwitchTable( gflSndStatus );
+}
+
+void	GFL_SNDSTATUS_ChangeSndHandle( GFL_SNDSTATUS* gflSndStatus, NNSSndHandle* pBgmHandle )
+{
+	if( gflSndStatus == NULL ) return;
+
+	gflSndStatus->setup.pBgmHandle = pBgmHandle;
 }
 
 //============================================================================================
@@ -492,10 +500,8 @@ static void SetScrnMasterTrackStatus( GFL_SNDSTATUS* gflSndStatus )
 static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus )
 {
 	NNSSndHandle*	pBgmHandle = gflSndStatus->setup.pBgmHandle;
-	NNSSndHandle*	pSeHandle = gflSndStatus->setup.pSeHandle;
 	BOOL result;
 	int i;
-	int num;
 
 	// サウンドドライバ情報更新
 	NNS_SndUpdateDriverInfo();
@@ -505,10 +511,15 @@ static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus )
 		NNS_SndReadDriverChannelInfo( i, &gflSndStatus->channelInfo[i]); 
 	}
 	// 更新されたトラック情報取得
-	num = 0;
-	for( i=0; i<TRACK_NUM; i++ ){
-		gflSndStatus->bgmTrackStatus[i].active = 
-			NNS_SndPlayerReadDriverTrackInfo( pBgmHandle, i, &gflSndStatus->bgmTrackInfo[i]);
+	if( pBgmHandle != NULL ){
+		for( i=0; i<TRACK_NUM; i++ ){
+			gflSndStatus->bgmTrackStatus[i].active = 
+				NNS_SndPlayerReadDriverTrackInfo( pBgmHandle, i, &gflSndStatus->bgmTrackInfo[i]);
+		}
+	} else {
+		for( i=0; i<TRACK_NUM; i++ ){
+			gflSndStatus->bgmTrackStatus[i].active = FALSE;
+		}
 	}
 	SetScrnChannelStatus( gflSndStatus );
 	SetScrnTrackStatus( gflSndStatus );
@@ -836,20 +847,20 @@ static void SNDSTATUS_SwitchParamSet( GFL_SNDSTATUS* gflSndStatus, SWITCH_ID swI
 
 	case SWITCH_SE_VOL:
 		// volume幅 0～127
-		value = gflSndStatus->switchStatus[SWITCH_SE_VOL].valOffs * 4;
-		if(value > 127){ value = 127; }
-		NNS_SndPlayerSetVolume( gflSndStatus->setup.pSeHandle, value );
+		//value = gflSndStatus->switchStatus[SWITCH_SE_VOL].valOffs * 4;
+		//if(value > 127){ value = 127; }
+		//NNS_SndPlayerSetVolume( gflSndStatus->setup.pSeHandle, value );
 		break;
 	case SWITCH_SE_PAN:
 		break;
 	case SWITCH_SE_TEMPO:
-		value = tempoRatioTable[gflSndStatus->switchStatus[SWITCH_SE_TEMPO].valOffs];
-		NNS_SndPlayerSetTempoRatio( gflSndStatus->setup.pSeHandle, value );
+		//value = tempoRatioTable[gflSndStatus->switchStatus[SWITCH_SE_TEMPO].valOffs];
+		//NNS_SndPlayerSetTempoRatio( gflSndStatus->setup.pSeHandle, value );
 		break;
 	case SWITCH_SE_PITCH:
 		// pitch幅 -32768～32767
-		value = (gflSndStatus->switchStatus[SWITCH_SE_PITCH].valOffs - SWITCH_VAL_ZERO) * 64;
-		NNS_SndPlayerSetTrackPitch( gflSndStatus->setup.pSeHandle, 0xffff, value );
+		//value = (gflSndStatus->switchStatus[SWITCH_SE_PITCH].valOffs - SWITCH_VAL_ZERO) * 64;
+		//NNS_SndPlayerSetTrackPitch( gflSndStatus->setup.pSeHandle, 0xffff, value );
 		break;
 	}
 }

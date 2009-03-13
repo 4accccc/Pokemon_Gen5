@@ -92,7 +92,7 @@ static const GFL_SKB_SETUP skbData= {
 static const GFL_SNDSTATUS_SETUP sndStatusData= {
 	PAD_BUTTON_SELECT,
 	GFL_DISPUT_BGID_M1, GFL_DISPUT_PALID_15,
-	NULL, NULL, NULL, GFL_SNDSTATUS_CONTOROL_BGM | GFL_SNDSTATUS_CONTOROL_EXIT,
+	NULL, GFL_SNDSTATUS_CONTOROL_BGM | GFL_SNDSTATUS_CONTOROL_EXIT,
 };
 //------------------------------------------------------------------
 /**
@@ -281,8 +281,6 @@ BOOL	SampleMain( void )
 
 				sndStatusSetup = sndStatusData;
 				sndStatusSetup.pBgmHandle = &bgmHandle;
-				sndStatusSetup.pSeHandle = &seHandle;
-				sndStatusSetup.pVoiceHandle = &voiceHandle;
 
 				sampleWork->gflSndStatus = GFL_SNDSTATUS_Create
 											( &sndStatusSetup, sampleWork->heapID );

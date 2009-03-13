@@ -10,7 +10,6 @@
 #include "system/gfl_use.h"
 #include "textprint.h"
 #include "arc_def.h"
-
 #include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 
 #include "message.naix"
@@ -30,6 +29,7 @@
 #include "print/str_tool.h"
 
 #include "sound/snd_status.h"
+#include "sound/pm_sndsys.h"
 
 #include "arc/soundtest.naix"
 //============================================================================================
@@ -73,20 +73,13 @@ typedef struct {
 	PRINT_QUE			*printQue;
 	GFL_FONT 			*fontHandle;
 
-	GFL_BMPWIN*				bmpwin[IDX_MAX];	
+	GFL_BMPWIN*			bmpwin[IDX_MAX];	
 
 	GFL_TCB*			g2dVintr;		//2Dシステム用vIntrTaskハンドル
 
 	int					bgmNum;
 	int					seNum;
 	int					voiceNum;
-
-	NNSSndHandle		bgmHandle;
-	NNSSndHandle		seHandle;
-	NNSSndHandle		voiceHandle;
-	NNSSndHeapHandle	soundHeap;
-	int					soundHeapLv;
-	int					seHeapLv;
 
 	int					mode;
 }SOUNDTEST_WORK;
@@ -125,13 +118,6 @@ static void	SoundWorkInitialize(SOUNDTEST_WORK* sw)
 	sw->seNum		= SOUDTEST_SE_START;
 	sw->voiceNum	= SOUDTEST_VOICE_START;
 
-	NNS_SndHandleInit(&sw->bgmHandle);
-	NNS_SndHandleInit(&sw->seHandle);
-	NNS_SndHandleInit(&sw->voiceHandle);
-	sw->soundHeap = GFL_SOUND_GetSoundHeap();
-	sw->soundHeapLv = NNS_SndHeapSaveState(sw->soundHeap);
-	sw->seHeapLv = 0xff;
-
 	sw->mode = MODE_SOUND_SELECT;
 }
 
@@ -160,9 +146,7 @@ static GFL_PROC_RESULT SoundTest2Proc_Init(GFL_PROC * proc, int * seq, void * pw
 		GFL_SNDSTATUS_SETUP sndStatusSetup;
 
 		sndStatusSetup = sndStatusData;
-		sndStatusSetup.pBgmHandle = &sw->bgmHandle;
-		sndStatusSetup.pSeHandle = &sw->seHandle;
-		sndStatusSetup.pVoiceHandle = &sw->voiceHandle;
+		sndStatusSetup.pBgmHandle = PMSNDSYS_GetBGMhandlePointer();
 
 		sw->gflSndStatus = GFL_SNDSTATUS_Create( &sndStatusSetup, sw->heapID );
 	}
@@ -533,6 +517,68 @@ static void printNum(GFL_BMPWIN* bmpwin, int num, u8 y_lineoffs)
  *
  */
 //============================================================================================
+#define SEQ_VARIABLE_NUM (16)
+typedef struct {
+	s16		val;
+	BOOL	enable;
+}SEQ_BACKUP_STATUS;
+
+typedef struct {
+	SEQ_BACKUP_STATUS	localVariable[SEQ_VARIABLE_NUM];
+	SEQ_BACKUP_STATUS	globalVariable[SEQ_VARIABLE_NUM];
+}SEQ_BACKUP_PARAM;
+
+static SEQ_BACKUP_PARAM seqBackupParam;
+
+static void SeqBackup( NNSSndHandle* handle )
+{
+	int		i;
+	s16		val;
+	BOOL	enable;
+
+	for( i=0; i<SEQ_VARIABLE_NUM; i++ ){
+		enable = NNS_SndPlayerReadVariable( handle, i, &val ); 
+		seqBackupParam.localVariable[i].enable = enable;
+		seqBackupParam.localVariable[i].val = val;
+		if( enable == TRUE ){
+			OS_Printf("read success varNum = %d\n", i);
+		} else {
+			OS_Printf("read failed varNum = %d\n", i);
+		}
+	}
+	for( i=0; i<SEQ_VARIABLE_NUM; i++ ){
+		enable = NNS_SndPlayerReadGlobalVariable( i, &val ); 
+		seqBackupParam.globalVariable[i].enable = enable;
+		seqBackupParam.globalVariable[i].val = val;
+	}
+}
+
+static void SeqRecover( NNSSndHandle* handle )
+{
+	int		i;
+	s16		val;
+	BOOL	result;
+
+	for( i=0; i<SEQ_VARIABLE_NUM; i++ ){
+		if( seqBackupParam.localVariable[i].enable == TRUE ){
+			val = seqBackupParam.localVariable[i].val;
+			result = NNS_SndPlayerWriteVariable( handle, i, val ); 
+			if( result == TRUE ){
+				OS_Printf("write success varNum = %d\n", i);
+			} else {
+				OS_Printf("write failed varNum = %d\n", i);
+			}
+		}
+	}
+	for( i=0; i<SEQ_VARIABLE_NUM; i++ ){
+		if( seqBackupParam.globalVariable[i].enable == TRUE ){
+			val = seqBackupParam.globalVariable[i].val;
+			NNS_SndPlayerWriteGlobalVariable( i, val ); 
+		}
+	}
+}
+
+static BOOL pauseSw = FALSE;
 //------------------------------------------------------------------
 /**
  * @brief	タッチパネルイベント判定
@@ -556,33 +602,23 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			OS_Printf("pressed bgm num_set\n");
 			break;
 		case SOUNDTEST_TPEV_BGM_PLAY:
-			NNS_SndPlayerStopSeq(&sw->bgmHandle, 0);
-			GFL_SNDSTATUS_InitControl( sw->gflSndStatus );
-
-			NNS_SndHandleInit(&sw->bgmHandle);
-
-			NNS_SndHeapLoadState(sw->soundHeap, sw->soundHeapLv);
-			OS_Printf("sound heap recover state remains %x\n", 
-						NNS_SndHeapGetFreeSize(sw->soundHeap));
-			OS_Printf("sound BGM start seqnum %d\n", sw->bgmNum);
-			if(NNS_SndArcLoadSeq(sw->bgmNum, sw->soundHeap) == FALSE){
-				OS_Printf("sound BGM Load Error\n");
-			}
-			if(NNS_SndArcPlayerStartSeq(&sw->bgmHandle, sw->bgmNum) == FALSE){
-				OS_Printf("sound BGM seq start Error\n");
-			}
-			OS_Printf("sound heap remains %x\n", NNS_SndHeapGetFreeSize(sw->soundHeap));
-			sw->seHeapLv = NNS_SndHeapSaveState(sw->soundHeap);
+			PMSNDSYS_PlayBGM(sw->bgmNum);
+			GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSNDSYS_GetBGMhandlePointer());
+			pauseSw = FALSE;
 			break;
 		case SOUNDTEST_TPEV_BGM_STOP:
-			if(sw->seHeapLv != 0xff){
-				NNS_SndPlayerStopSeq(&sw->bgmHandle, 0);
-				NNS_SndHeapLoadState(sw->soundHeap, sw->seHeapLv);
-				sw->seHeapLv = 0xff;
-			}
+			PMSNDSYS_StopBGM();
 			break;
 		case SOUNDTEST_TPEV_BGM_PAUSE:
-			OS_Printf("pressed bgm pause\n");
+			if( pauseSw == FALSE ){
+				PMSNDSYS_PauseBGM(TRUE);
+				//PMSNDSYS_PushBGM();
+				pauseSw = TRUE;
+			} else {
+				//PMSNDSYS_PopBGM();
+				PMSNDSYS_PauseBGM(FALSE);
+				pauseSw = FALSE;
+			}
 			break;
 		case SOUNDTEST_TPEV_BGM_WINDOW:
 			OS_Printf("pressed bgm window\n");
@@ -598,21 +634,10 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			OS_Printf("pressed se num_se\n");
 			break;
 		case SOUNDTEST_TPEV_SE_PLAY:
-			NNS_SndPlayerStopSeq(&sw->seHandle, 0);
-			NNS_SndHandleInit(&sw->seHandle);
-
-			if(sw->seHeapLv != 0xff){
-				NNS_SndHeapLoadState(sw->soundHeap, sw->seHeapLv);
-			}
-			if(NNS_SndArcLoadSeq(sw->seNum, sw->soundHeap) == FALSE){
-				OS_Printf("sound_Effect load Error\n");
-			}
-			if(NNS_SndArcPlayerStartSeq(&sw->seHandle, sw->seNum) == FALSE){
-				OS_Printf("sound_Effect seq start Error\n");
-			}
+			PMSNDSYS_PlaySE(sw->seNum);
 			break;
 		case SOUNDTEST_TPEV_SE_STOP:
-			NNS_SndPlayerStopSeq(&sw->seHandle, 0);
+			//NNS_SndPlayerStopSeq(&sw->seHandle, 0);
 			break;
 		case SOUNDTEST_TPEV_SE_PAUSE:
 			OS_Printf("pressed se pause\n");
@@ -631,19 +656,16 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			OS_Printf("pressed voice num_set\n");
 			break;
 		case SOUNDTEST_TPEV_VOICE_PLAY:
-			NNS_SndPlayerStopSeq(&sw->voiceHandle, 0);
-			NNS_SndHandleInit(&sw->voiceHandle);
-
-			if(NNS_SndArcPlayerStartSeqEx
-					(&sw->voiceHandle, -1, sw->voiceNum, -1, SEQ_PV) == FALSE){
-				OS_Printf("voice seq start Error\n");
-			}
+			PMSNDSYS_PlayVoice(sw->voiceNum);
 			break;
 		case SOUNDTEST_TPEV_VOICE_STOP:
-			NNS_SndPlayerStopSeq(&sw->voiceHandle, 0);
+			//NNS_SndPlayerStopSeq(&sw->voiceHandle, 0);
+			PMSNDSYS_PushBGM();
 			break;
 		case SOUNDTEST_TPEV_VOICE_PAUSE:
-			OS_Printf("pressed voice pause\n");
+			//OS_Printf("pressed voice pause\n");
+			PMSNDSYS_PopBGM();
+			GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSNDSYS_GetBGMhandlePointer());
 			break;
 		case SOUNDTEST_TPEV_VOICE_WINDOW:
 			OS_Printf("pressed voice window\n");

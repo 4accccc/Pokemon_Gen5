@@ -51,11 +51,11 @@ static const HEAP_INIT_HEADER hih[]={
 	{ HEAPSIZE_APP,		OS_ARENA_MAIN },
 };
 
-#define	SOUND_HEAP_SIZE	(0x0b0000)
+//#define	SOUND_HEAP_SIZE	(0x0b0000)
 
 static GFL_USE_WORK *	gfl_work = NULL;
 static int				GFL_USE_VintrCounter;
-static	u8				sndHeap[SOUND_HEAP_SIZE];
+//static	u8				sndHeap[SOUND_HEAP_SIZE];
 
 static void GFUser_PublicRandInit(void);
 static void gfluse_AssertFinish( void );
@@ -130,7 +130,7 @@ void GFLUser_Init(void)
     GFL_FADE_Init(GFL_HEAPID_SYSTEM);
 
     //サウンドシステム初期化
-    GFL_SOUND_Init(&sndHeap[0],SOUND_HEAP_SIZE);
+    //GFL_SOUND_Init(&sndHeap[0],SOUND_HEAP_SIZE);
 
 	//バックアップシステム初期化
 	GFL_BACKUP_Init(GFL_HEAPID_APP, GFL_HEAPID_APP);
@@ -159,7 +159,7 @@ void GFLUser_Main(void)
 	
 	GFL_PROC_Main();
     GFL_FADE_Main();
-	GFL_SOUND_Main();
+	//GFL_SOUND_Main();
 }
 
 //------------------------------------------------------------------
@@ -184,7 +184,7 @@ void GFLUser_Exit(void)
 {
 	GFL_TEXT_DeleteSystem();
 	GFL_BACKUP_Exit();
-	GFL_SOUND_Exit();
+	//GFL_SOUND_Exit();
 	GFL_FADE_Exit();
 	GFL_PROC_Exit();
 	GFL_TCB_Exit(gfl_work->TCBSysVintr);

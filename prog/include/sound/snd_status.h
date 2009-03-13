@@ -30,8 +30,6 @@ typedef struct {
 	GFL_DISPUT_PALID	bgPalID;		//使用BGパレットID
 
 	NNSSndHandle*		pBgmHandle;
-	NNSSndHandle*		pSeHandle;
-	NNSSndHandle*		pVoiceHandle;
 
 	u16					controlFlag;	//GFL_SNDSTATUS_CONTROLの組み合わせ
 
@@ -48,5 +46,6 @@ extern GFL_SNDSTATUS*	GFL_SNDSTATUS_Create( const GFL_SNDSTATUS_SETUP* setup, HE
 extern void				GFL_SNDSTATUS_Delete( GFL_SNDSTATUS* gflSndStatus );
 extern BOOL				GFL_SNDSTATUS_Main( GFL_SNDSTATUS* gflSndStatus );	//FALSEで終了
 
-extern void				GFL_SNDSTATUS_InitControl( GFL_SNDSTATUS* gflSndStatus );
-extern void				GFL_SNDSTATUS_SetControlEnable( GFL_SNDSTATUS* gflSndStatus, u16 flag );
+extern void	GFL_SNDSTATUS_InitControl( GFL_SNDSTATUS* gflSndStatus );
+extern void	GFL_SNDSTATUS_SetControlEnable( GFL_SNDSTATUS* gflSndStatus, u16 flag );
+extern void	GFL_SNDSTATUS_ChangeSndHandle( GFL_SNDSTATUS* gflSndStatus, NNSSndHandle* pBgmHandle );
