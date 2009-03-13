@@ -325,7 +325,8 @@ void	PMSNDSYS_ChangeBGMtrack( u16 trackBit )
 
 	NNS_SndPlayerSetTrackMute(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0xffff, FALSE );
 	if(bitMask){
-		NNS_SndPlayerSetTrackMute(SOUNDMAN_GetHierarchyPlayerSndHandle(), bitMask, TRUE );
+		NNS_SndPlayerSetTrackMuteEx
+			(SOUNDMAN_GetHierarchyPlayerSndHandle(), bitMask, NNS_SND_SEQ_MUTE_NO_STOP );
 	}
 }
 
