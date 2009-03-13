@@ -80,7 +80,11 @@ wflby_3dmapobj_data_0.dat: $(GRA_NAIX_FILE) $(GRA_DATA_FILE)
 
 else
 do-build:
-
+	$(COPY) wflby_mapdata.h $(PROJECT_ROOT)/prog/src/net_app/wifi_lobby/
+	$(COPY) wflby_maparc.h $(PROJECT_ROOT)/prog/src/net_app/wifi_lobby/
+	$(COPY) wflby_3dmapobj_data.h $(PROJECT_ROOT)/prog/src/net_app/wifi_lobby/
+	$(COPY) $(targetname).narc $(TARGETDIR)
+	$(COPY) $(targetname).naix $(TARGETDIR)
 endif
 
 #------------------------------------------------------------------------------
