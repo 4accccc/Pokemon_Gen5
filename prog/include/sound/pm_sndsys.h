@@ -27,8 +27,12 @@ extern void	PMSNDSYS_Exit( void );
 extern NNSSndHandle* PMSNDSYS_GetBGMhandlePointer( void );
 
 extern BOOL	PMSNDSYS_PlayBGM( u32 soundIdx );
+extern BOOL	PMSNDSYS_PlayBGM_EX( u32 soundIdx, u16 trackBit );
+extern void	PMSNDSYS_ChangeBGMtrack( u16 trackBit );
+
 extern void	PMSNDSYS_StopBGM( void );
 extern void	PMSNDSYS_PauseBGM( BOOL pauseFlag );
+
 extern void	PMSNDSYS_PushBGM( void );
 extern void	PMSNDSYS_PopBGM( void );
 

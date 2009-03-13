@@ -70,7 +70,7 @@ enum {
 
 static const PMSNDSYS_PLSETUP systemPlayer[] = {
 	{ 0x6000, 0x0000, 1 },
-	{ 0x6000, 0x0000, 1 },
+	{ 0x0000, 0x0000, 1 },
 //	{ 0x6000, PLAYER_MUSIC_CH, 1 },
 //	{ 0x6000, PLAYER_PMVOICE_CH, 2 },
 
@@ -137,7 +137,6 @@ void	PMSNDSYS_Init( void )
 
     // サウンドの設定
 	NNS_SndArcInitWithResult( &PmSoundArc, "wb_sound_data.sdat", PmSndHeapHandle, FALSE );
-	size2 = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
 
     // サウンド管理初期化
 	SOUNDMAN_Init(&PmSndHeapHandle);
@@ -149,10 +148,13 @@ void	PMSNDSYS_Init( void )
 	PMSNDSYS_CreatePlayerUnit(systemPlayer, &systemPlayerUnit);
 
 	// 常駐サウンドデータ読み込み
-	systemPresetHandle = SOUNDMAN_PresetSoundTbl
-							(systemPresetSoundIdxTbl, NELEMS(systemPresetSoundIdxTbl));
+	//systemPresetHandle = SOUNDMAN_PresetSoundTbl
+	//						(systemPresetSoundIdxTbl, NELEMS(systemPresetSoundIdxTbl));
+	systemPresetHandle = SOUNDMAN_PresetGroup(GROUP_GLOBAL);
 
-	OS_Printf("setup SoundData size(%x) heapRemains(%x)\n", size1 - size2, size2);
+	size2 = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
+
+	OS_Printf("setup Sound... size(%x) heapRemains(%x)\n", size1 - size2, size2);
 }
 
 //============================================================================================
@@ -303,6 +305,29 @@ BOOL	PMSNDSYS_PlayBGM( u32 soundIdx )
 
 	return result;
 }
+//------------------------------------------------------------------
+BOOL	PMSNDSYS_PlayBGM_EX( u32 soundIdx, u16 trackBit )
+{
+	BOOL	result;
+
+	SOUNDMAN_StopHierarchyPlayer();
+	result = SOUNDMAN_PlayHierarchyPlayer(soundIdx);
+
+	PMSNDSYS_ChangeBGMtrack( trackBit );
+
+	return result;
+}
+//------------------------------------------------------------------
+// 再生トラック変更
+void	PMSNDSYS_ChangeBGMtrack( u16 trackBit )
+{
+	u16		bitMask = trackBit^0xffff;
+
+	NNS_SndPlayerSetTrackMute(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0xffff, FALSE );
+	if(bitMask){
+		NNS_SndPlayerSetTrackMute(SOUNDMAN_GetHierarchyPlayerSndHandle(), bitMask, TRUE );
+	}
+}
 
 //------------------------------------------------------------------
 /**
@@ -343,6 +368,7 @@ void	PMSNDSYS_PopBGM( void )
 {
 	SOUNDMAN_PopHierarchyPlayer();
 }
+
 
 
 //============================================================================================

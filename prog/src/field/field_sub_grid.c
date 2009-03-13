@@ -11,6 +11,7 @@
 //======================================================================
 #include "arc/test_graphic/testgridmap_a.naix"
 
+#include "sound/pm_sndsys.h"
 //======================================================================
 //	define
 //======================================================================
@@ -786,6 +787,12 @@ static void FGridPlayer_Move(
 		else if( (key_cont&PAD_KEY_RIGHT) ){ dir = DIR_RIGHT; }
 		
 		if( dir == DIR_NOT ){
+			//　↓ サウンドテスト（停止）
+			{
+				u16 trackBit = 0xfcff; // track 9,10 OFF
+				PMSNDSYS_ChangeBGMtrack(trackBit);
+			}
+			//　↑
 			dir = FLDMMDL_GetDirDisp( fmmdl );
 			code = FLDMMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
 		}else{
@@ -801,6 +808,12 @@ static void FGridPlayer_Move(
 			//--
 			
 			if( hit == FLDMMDL_MOVEHITBIT_NON ){
+				//　↓ サウンドテスト（移動）
+				{
+					u16 trackBit = 0xffff; // 全track ON
+					PMSNDSYS_ChangeBGMtrack(trackBit);
+				}
+				//　↑
 				#if 1 //debug移動
 				if( (key_cont&PAD_BUTTON_R) ){
 					code = FLDMMDL_ChangeDirAcmdCode( dir, AC_WALK_U_2F );

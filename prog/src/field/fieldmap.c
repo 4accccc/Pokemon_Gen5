@@ -45,6 +45,8 @@
 
 #include "fldmmdl.h"
 
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 extern FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
 
 //============================================================================================
@@ -187,9 +189,17 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 	//通信用処理
 	fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID , GFL_HEAPID_APP );
     //サウンド用処理
+#if 0
 	SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_Firestarter_swav, SND_STRM_PCM8, SND_STRM_8KHZ, GFL_HEAPID_APP );
     SND_STRM_Play();
+#else
+    //テスト
+	{
+		u16 trackBit = 0xfcff;	// track 9,10 OFF
 	
+		PMSNDSYS_PlayBGM_EX(SEQ_MUS_WB_R_F, trackBit);
+	}
+#endif
 	return fieldWork;
 }
 

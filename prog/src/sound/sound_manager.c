@@ -210,8 +210,8 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 
 	if( player->active == FALSE ){
 		createHierarchyPlayer();
-		OS_Printf("create player no = %d, heapRemains = %x resetLv = %d, ", 
-				player->playerNo, NNS_SndHeapGetFreeSize(*pSndHeapHandle), player->heapLvReset);
+		//OS_Printf("create player no = %d, heapRemains = %x resetLv = %d, ", 
+		//		player->playerNo, NNS_SndHeapGetFreeSize(*pSndHeapHandle), player->heapLvReset);
 	}
 	// Œ»Ý‚ÌŠK‘w‚ÉŠÖ˜A•t‚¯‚³‚ê‚Ä‚¢‚éƒTƒEƒ“ƒh‚Ì’âŽ~
 	SOUNDMAN_StopHierarchyPlayer();
@@ -232,8 +232,8 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 			(&player->sndHandle, player->playerNo, -1, -1, soundIdx);
 	if( result == FALSE){ return FALSE; }
 
-	OS_Printf("sound hierarchy start playerno = %d, pushLv = %d\n",
-				player->playerNo, player->heapLvPush);
+	//OS_Printf("sound hierarchy start playerno = %d, pushLv = %d\n",
+	//			player->playerNo, player->heapLvPush);
 
 	player->soundIdx = soundIdx;
 	return result;
