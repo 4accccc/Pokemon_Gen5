@@ -34,7 +34,8 @@ extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Fukutsuno( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_AtuiSibou( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_KairikiBasami( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tikaramoti( u16 pri, u8 pokeID );
-
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Iromegane( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kasoku( u16 pri, u8 pokeID );
 
 
 #endif

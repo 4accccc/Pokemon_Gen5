@@ -708,6 +708,8 @@ void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 m
 	subwk->memberIdx = memberIdx;
 	subwk->pokePos = pos;
 
+	BTL_Printf("ƒƒ“ƒo[“üê client=%d, pokePos=%d, memberIdx=%d\n", clientID, pos, memberIdx );
+
 	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMemberIn );
 }
 

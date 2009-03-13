@@ -65,13 +65,12 @@ struct _BTL_SVFLOW_WORK {
 	const BTL_MAIN_MODULE*  mainModule;
 	BTL_POKE_CONTAINER*			pokeCon;
 	BTL_SERVER_CMD_QUE*			que;
+	u32											turnCount;
 	u8                      numClient;
 
 	ACTION_ORDER_WORK		actOrder[ BTL_POS_MAX ];
 	TARGET_POKE_REC			damagedPokemon;
 	TARGET_POKE_REC			targetPokemon;
-
-	CHANGE_EVENT_PARAM	changeEventParams;
 
 	u8					flowFlags[ FLOWFLG_BYTE_MAX ];
 
@@ -171,8 +170,8 @@ static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 static PokeType scEvent_getWazaPokeType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaID waza );
 static PokeTypePair scEvent_getAttackerPokeType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static PokeTypePair scEvent_getDefenderPokeType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
-static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx );
-static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx );
+static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx );
+static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scEvent_PokeComp( BTL_SVFLOW_WORK* wk );
 static void scEvent_RankDown( BTL_SVFLOW_WORK* wk, u8 pokeID, BppValueID statusType, u8 volume, BOOL fRandom );
 static void scEvent_RankUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* pp, BppValueID statusType, u8 volume, BOOL fRandom );
@@ -191,6 +190,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 	wk->pokeCon = pokeCon;
 	wk->mainModule = mainModule;
 	wk->numClient = numClient;
+	wk->turnCount = 0;
 	wk->que = que;
 
 	return wk;
@@ -597,12 +597,12 @@ static void scput_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next
 {
 	SVCL_WORK* clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
 	clwk->frontMember[ posIdx ] = clwk->member[ nextPokeIdx ];
-	scEvent_MemberIn( wk, &wk->changeEventParams, clientID, posIdx, nextPokeIdx );
+	scEvent_MemberIn( wk, clientID, posIdx, nextPokeIdx );
 }
 
 static void scput_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx )
 {
-	scEvent_MemberOut( wk, &wk->changeEventParams, clientID, posIdx );
+	scEvent_MemberOut( wk, clientID, posIdx );
 }
 
 //-----------------------------------------------------------------------------------
@@ -1218,9 +1218,9 @@ static u16 svflowsub_damage_calc_core( BTL_SVFLOW_WORK* wk,
 	PokeType  waza_type = scEvent_getWazaPokeType( wk, attacker, waza );
 
 	BTL_EVENTVAR_Push();
-
-
 	BTL_EVENTVAR_SetValue( BTL_EVAR_TYPEAFF, typeAff );
+	BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+	BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
 
 	{
 		BOOL criticalFlag = FALSE;
@@ -1421,6 +1421,8 @@ static void scput_TurnCheck( BTL_SVFLOW_WORK* wk )
 	scput_turncheck_sick( wk );
 	scput_turncheck_weather( wk );
 
+	BTL_EVENT_CallHandlers( wk, BTL_EVENT_TURNCHECK );
+
 	{
 		FRONT_POKE_SEEK_WORK  fps;
 		BTL_POKEPARAM* bpp;
@@ -1430,6 +1432,8 @@ static void scput_TurnCheck( BTL_SVFLOW_WORK* wk )
 			BTL_POKEPARAM_ClearTurnFlag( bpp );
 		}
 	}
+
+	wk->turnCount++;
 }
 //------------------------------------------------------------------
 // サーバーフロー下請け： ターンチェック > 状態異常
@@ -1979,27 +1983,28 @@ static PokeTypePair scEvent_getDefenderPokeType( BTL_SVFLOW_WORK* wk, const BTL_
 }
 
 // メンバーバトル場から退出
-static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx )
+static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx )
 {
-	cep->outPokeParam = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, posIdx );
+	BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, posIdx );
 
-	SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_MemberOut1, clientID, posIdx );
+	BTL_EVENTVAR_Push();
 
-	BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_OUT );
-	// ここで死ぬこともある
-
-	if( !BTL_POKEPARAM_IsDead(cep->outPokeParam) )
-	{
-		SCQUE_PUT_ACT_MemberOut( wk->que, clientID, posIdx );
-	}
+		SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_MemberOut1, clientID, posIdx );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_OUT );
+		// ここで死ぬこともある
+		if( !BTL_POKEPARAM_IsDead(bpp) )
+		{
+			SCQUE_PUT_ACT_MemberOut( wk->que, clientID, posIdx );
+		}
+	BTL_EVENTVAR_Pop();
 }
 
 // メンバー新規参加
-static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 posIdx, u8 nextPokeIdx )
+static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx )
 {
-//	cep->inPokeParam = BTL_MAIN_GetPokeParam
+		BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+		BTL_PARTY_SwapMembers( party, posIdx, nextPokeIdx );
 		SCQUE_PUT_ACT_MemberIn( wk->que, clientID, posIdx, nextPokeIdx );
-//	SCQUE_PUT_ACT_MemberIn( wk->que, clientID, memberIdx );
 }
 
 // ポケモン出そろった直後
@@ -2075,7 +2080,7 @@ static void scEvent_RankUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* pp, BppValueID s
 		BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
 
-		BTL_EVENT_CallHandlers( wk, BTL_EVENT_BEFORE_RANKDOWN );
+//		BTL_EVENT_CallHandlers( wk, BTL_EVENT_BEFORE_RANKDOWN );
 
 		if( BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_FLAG) == FALSE )
 		{
@@ -2236,7 +2241,10 @@ void BTL_SERVER_RECEPT_RankUpEffect( BTL_SVFLOW_WORK* wk, BtlExPos exPos, BppVal
 	for(i=0; i<numPokemons; ++i)
 	{
 		pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos[i] );
-		scEvent_RankUp( wk, pp, statusType, volume, FALSE );
+		if( !BTL_POKEPARAM_IsDead(pp) )
+		{
+			scEvent_RankUp( wk, pp, statusType, volume, FALSE );
+		}
 	}
 }
 

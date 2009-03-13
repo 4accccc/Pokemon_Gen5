@@ -111,7 +111,7 @@ static BOOL SubProc_UI_Initialize( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_Initialize( BTL_CLIENT* wk, int *seq );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
-static u8 calc_empty_pos( BTL_CLIENT* wk );
+static u8 calc_empty_pos( BTL_CLIENT* wk, u8* posIdxList );
 static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos );
 static u8 calc_puttable_pokemons( BTL_CLIENT* wk, u8* list );
 static u8 calc_front_dead_pokemons( BTL_CLIENT* wk, u8* list );
@@ -147,6 +147,7 @@ static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
 
 
 
@@ -475,7 +476,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 //---------------------------------------------------
 
 // 瀕死になって、次のポケモンを出さなければならない担当位置数を返す
-static u8 calc_empty_pos( BTL_CLIENT* wk )
+static u8 calc_empty_pos( BTL_CLIENT* wk, u8* posIdxList )
 {
 	u8 cnt, i;
 	for(i=0, cnt=0; i<wk->numCoverPos; ++i)
@@ -485,7 +486,11 @@ static u8 calc_empty_pos( BTL_CLIENT* wk )
 			const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
 			if( BTL_POKEPARAM_IsDead(bpp) )
 			{
-				cnt++;
+				if( posIdxList )
+				{
+					posIdxList[cnt] = i;
+				}
+				++cnt;
 			}
 		}
 	}
@@ -623,7 +628,8 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 	switch( *seq ){
 	case 0:
 		{
-			u8 numEmpty = calc_empty_pos( wk );
+			u8 numEmpty;
+			numEmpty = calc_empty_pos( wk, NULL );
 			if( numEmpty )
 			{
 				u8 numPuttable = calc_puttable_pokemons( wk, NULL );
@@ -649,6 +655,7 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 					BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
 					wk->returnDataPtr = &(wk->actionParam[0]);
 					wk->returnDataSize = sizeof(wk->actionParam[0]);
+					return TRUE;
 				}
 			}
 			else
@@ -675,7 +682,9 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 }
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 {
-	u8 numEmpty = calc_empty_pos( wk );
+	u8 numEmpty;
+	u8 emptyPosList[ BTL_POSIDX_MAX ];
+	numEmpty = calc_empty_pos( wk, emptyPosList );
 	if( numEmpty )
 	{
 		u8 numPuttable;
@@ -696,7 +705,7 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 			BTL_Printf("myID=%d 戦闘ポケが死んだのでポケモン%d体選択\n", wk->myID, numSelect);
 			for(i=0; i<numSelect; i++)
 			{
-				BTL_ACTION_SetChangeParam( &wk->actionParam[i], i, puttableList[i] );
+				BTL_ACTION_SetChangeParam( &wk->actionParam[i], emptyPosList[i], puttableList[i] );
 			}
 			wk->returnDataPtr = &(wk->actionParam[0]);
 			wk->returnDataSize = sizeof(wk->actionParam[0]) * numSelect;
@@ -759,6 +768,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_OP_RANK_UP,			scProc_OP_RankUp					},
 		{	SC_OP_RANK_DOWN,		scProc_OP_RankDown				},
 		{	SC_OP_SICK_SET,			scProc_OP_SickSet					},
+		{	SC_OP_WAZASICK_TURNCHECK, scProc_OP_WSTurnCheck },
 	};
 
 restart:
@@ -802,7 +812,9 @@ restart:
 			if( i == NELEMS(scprocTbl) )
 			{
 				BTL_Printf("用意されていないコマンドNo[%d]！\n", wk->serverCmd);
-				return TRUE;
+				(*seq)=1;
+				goto restart;
+//				return TRUE;
 			}
 
 			BTL_Printf( "serverCmd=%d\n", wk->serverCmd );
@@ -1306,7 +1318,12 @@ static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
 	BTL_POKEPARAM_SetWazaSick( pp, args[1], args[2] );
 	return TRUE;
 }
-
+static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+	BTL_POKEPARAM_WazaSick_TurnCheck( pp );
+	return TRUE;
+}
 
 
 

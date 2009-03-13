@@ -59,7 +59,7 @@ typedef enum {
 	BTL_EVENT_SICK_DAMAGE,			///< 状態異常によるダメージ計算
 	BTL_EVENT_SHRINK_CHECK,			///< ひるみ計算
 	BTL_EVENT_SHRINK_FIX,				///< ひるみ確定後
-
+	BTL_EVENT_TURNCHECK,				///< ターンチェック
 
 }BtlEventType;
 

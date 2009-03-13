@@ -439,12 +439,12 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 				// Ÿ”sŒˆ’è
 				if( loseClientCount == 1 )
 				{
-					server->quitStep = QUITSTEP_REQ;
+//					server->quitStep = QUITSTEP_REQ;
 				}
 				// ˆø‚«•ª‚¯
 				else
 				{
-					server->quitStep = QUITSTEP_REQ;
+//					server->quitStep = QUITSTEP_REQ;
 				}
 				return TRUE;
 			}
@@ -468,11 +468,7 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 			ResetAdapterCmd( server );
 			BTL_MAIN_SyncServerCalcData( server->mainModule );
 
-			if( server->quitStep )
-			{
-				return TRUE;
-			}
-			else if( server->flowResult == SVFLOW_RESULT_POKE_DEAD )
+			if( server->flowResult == SVFLOW_RESULT_POKE_DEAD )
 			{
 				(*seq) = 0;
 			}
