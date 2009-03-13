@@ -53,8 +53,10 @@ typedef enum {
 	BTL_EVENT_MEMBER_OUT,				///< 個別ポケ退場直前
 	BTL_EVENT_MEMBER_IN,				///< 個別ポケ入場直後
 	BTL_EVENT_MEMBER_COMP,			///< 全参加ポケ登場後
+	BTL_EVENT_BEFORE_RANKUP,		///< 能力上げる（前）
+	BTL_EVENT_AFTER_RANKUP,			///< 能力上げた（後）
 	BTL_EVENT_BEFORE_RANKDOWN,	///< 能力下げる（前）
-	BTL_EVENT_AFTER_RANKDOWN,		///< 能力下げる（後）
+	BTL_EVENT_AFTER_RANKDOWN,		///< 能力下げた（後）
 	BTL_EVENT_ADD_SICK,					///< 状態異常にさせられる
 	BTL_EVENT_SICK_DAMAGE,			///< 状態異常によるダメージ計算
 	BTL_EVENT_SHRINK_CHECK,			///< ひるみ計算

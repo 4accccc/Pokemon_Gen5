@@ -2081,7 +2081,7 @@ static void scEvent_RankUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* pp, BppValueID s
 		BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
 
-//		BTL_EVENT_CallHandlers( wk, BTL_EVENT_BEFORE_RANKDOWN );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_BEFORE_RANKUP );
 
 		if( BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_FLAG) == FALSE )
 		{

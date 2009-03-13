@@ -31,6 +31,8 @@ static void handler_Sinryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static void handler_MusinoSirase( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Konjou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SkillLink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Surudoime( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tanjun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -58,7 +60,9 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		{ POKETOKUSEI_SINRYOKU,				HAND_TOK_ADD_Sinryoku },
 		{ POKETOKUSEI_MUSINOSIRASE,		HAND_TOK_ADD_MusinoSirase },
 		{ POKETOKUSEI_KONJOU,					HAND_TOK_ADD_Konjou },
-		{ POKETOKUSEI_SUKIRURINKU,		HAND_TOK_ADD_SkillLink }
+		{ POKETOKUSEI_SUKIRURINKU,		HAND_TOK_ADD_SkillLink },
+		{ POKETOKUSEI_SURUDOIME,			HAND_TOK_ADD_Surudoime },
+		{ POKETOKUSEI_TANJUN,					HAND_TOK_ADD_Tanjun },
 
 	};
 
@@ -304,6 +308,58 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_SkillLink( u16 pri, u8 pokeID )
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
 
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「するどいめ」
+ */
+//------------------------------------------------------------------------------
+// ランクダウン直前処理のハンドラ
+static void handler_Surudoime( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+	&&	(BTL_EVENTVAR_GetValue(BTL_EVAR_STATUS_TYPE) ==  WAZA_RANKEFF_HIT)
+	){
+		u8 myPos = BTL_SVFLOW_CheckExistFrontPokeID( flowWk, pokeID );
+
+		BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, TRUE );
+		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, myPos );
+		BTL_SERVER_RECTPT_SetMessage( flowWk, BTL_STRID_SET_RankdownFail_HIT, pokeID );
+		BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, myPos );
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Surudoime( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_BEFORE_RANKDOWN, handler_Surudoime },	// ランクダウン直前処理のハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「たんじゅん」
+ */
+//------------------------------------------------------------------------------
+// ランクダウン直前＆ランクアップ直前のハンドラ
+static void handler_Tanjun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+	{
+		u8 volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+		volume *= 2;
+		BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
+		BTL_Printf("ポケ[%d]の たんじゅん により効果倍増\n");
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tanjun( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_BEFORE_RANKDOWN, handler_Tanjun },	// ランクダウン直前処理のハンドラ
+		{ BTL_EVENT_BEFORE_RANKUP, handler_Tanjun },		// ランクアップ直前処理のハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
 
 
 
