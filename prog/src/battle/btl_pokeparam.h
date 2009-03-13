@@ -64,7 +64,18 @@ typedef enum {
 
 }BppTurnFlag;
 
+//--------------------------------------------------------------
+/**
+ *	HP残量めやす
+ */
+//--------------------------------------------------------------
+typedef enum {
 
+	BPP_HPBORDER_GREEN = 0,		///< 通常
+	BPP_HPBORDER_YELLOW,			///< 1/3以下
+	BPP_HPBORDER_RED,					///< 1/8以下
+
+}BppHpBorder;
 
 
 extern BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 id, HEAPID heapID );
@@ -89,7 +100,31 @@ extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType 
 
 extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
 extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
-extern BOOL BTL_POKEPARAM_GetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID );
+extern BOOL BTL_POKEPARAM_GetTurnFlag( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
+
+//=============================================================================================
+/**
+ * 指定HPの値から、HP残量のめやす（普通・半減・ピンチとか）を返す
+ *
+ * @param   pp		
+ * @param   hp		
+ *
+ * @retval  BppHpBorder		
+ */
+//=============================================================================================
+BppHpBorder BTL_POKEPARAM_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp );
+
+//=============================================================================================
+/**
+ * 現在のHP残量のめやす（普通・半減・ピンチとか）を返す
+ *
+ * @param   pp		
+ *
+ * @retval  BppHpBorder		
+ */
+//=============================================================================================
+BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp );
+
 
 
 //-------------------------

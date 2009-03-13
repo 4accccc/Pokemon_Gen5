@@ -132,7 +132,7 @@ static void Effrank_Init( BPP_VARIABLE_PARAM* rank );
 static void update_RealParam( BTL_POKEPARAM* pp, BppValueID rankType );
 static inline void turnflg_clear( BTL_POKEPARAM* bpp );
 static inline void turnflg_set( BTL_POKEPARAM* bpp, BppTurnFlag flagID );
-static inline BOOL turnflg_get( BTL_POKEPARAM* bpp, BppTurnFlag flagID );
+static inline BOOL turnflg_get( const BTL_POKEPARAM* bpp, BppTurnFlag flagID );
 
 
 
@@ -444,9 +444,43 @@ int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp )
  * @retval  BOOL		
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_GetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID )
+BOOL BTL_POKEPARAM_GetTurnFlag( const BTL_POKEPARAM* pp, BppTurnFlag flagID )
 {
 	return turnflg_get( pp, flagID );
+}
+//=============================================================================================
+/**
+ * HP残量のめやす（普通・半減・ピンチとか）を返す
+ *
+ * @param   pp		
+ *
+ * @retval  BppHpBorder		
+ */
+//=============================================================================================
+BppHpBorder BTL_POKEPARAM_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp )
+{
+	if( hp <= (pp->baseParam.hpMax / 8) )
+	{
+		return BPP_HPBORDER_RED;
+	}
+	if( hp <= (pp->baseParam.hpMax / 3) )
+	{
+		return BPP_HPBORDER_YELLOW;
+	}
+	return BPP_HPBORDER_GREEN;
+}
+//=============================================================================================
+/**
+ * HP残量のめやす（普通・半減・ピンチとか）を返す
+ *
+ * @param   pp		
+ *
+ * @retval  BppHpBorder		
+ */
+//=============================================================================================
+BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp )
+{
+	return BTL_POKEPARAM_CheckHPBorder( pp, pp->hp );
 }
 
 //-----------------------------
@@ -798,7 +832,7 @@ static inline void turnflg_set( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
 		bpp->turnFlag[ byte ] |= bit;
 	}
 }
-static inline BOOL turnflg_get( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
+static inline BOOL turnflg_get( const BTL_POKEPARAM* bpp, BppTurnFlag flagID )
 {
 	GF_ASSERT(flagID<BPP_TURNFLG_MAX);
 	{
