@@ -640,6 +640,36 @@ DWC_LOBBY_CHANNEL_STATE DWC_LOBBY_Update( void )
 	return DWC_LOBBY_GetState();
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   DWCロビーを更新し、戻り値でエラー発生をTRUEorFALSEで返す
+ *
+ * @retval  TRUE:正常。　FALSE:エラー
+ */
+//--------------------------------------------------------------
+BOOL DWC_LOBBY_UpdateErrorCheck( void )
+{
+	DWC_LOBBY_CHANNEL_STATE lobby_err;
+	BOOL ret = TRUE;
+	
+	lobby_err = DWC_LOBBY_Update();
+	switch( lobby_err ){
+	//  正常
+    case DWC_LOBBY_CHANNEL_STATE_NONE:           // チャンネルに入っていない。
+    case DWC_LOBBY_CHANNEL_STATE_LOGINWAIT:		// チャンネルに入室中。
+    case DWC_LOBBY_CHANNEL_STATE_CONNECT:		// チャンネルに入室済み。
+    case DWC_LOBBY_CHANNEL_STATE_LOGOUTWAIT:     // チャンネルに退室中。
+		break;
+	
+	// エラー処理
+	case DWC_LOBBY_CHANNEL_STATE_ERROR:           // チャンネル状態を取得できませんでした。
+		ret = FALSE;
+		break;
+	}
+	
+	return ret;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief		現在起こっているエラーを取得する
@@ -2312,10 +2342,10 @@ void DWC_LOBBY_MG_EndConnect( void )
 }
 
 
-#ifdef PM_DEBUG
 // デバック用スケジュール設定
 void DWC_LOBBY_DEBUG_SetRoomData( u32 locktime, u32 random, u8 roomtype, u8 season )
 {
+#ifdef PM_DEBUG
 	PPW_LobbySchedule* p_schedule = (PPW_LobbySchedule*)p_DWC_LOBBYLIB_WK->schedulebuff;
 	PPW_LOBBY_RESULT result;
 
@@ -2388,6 +2418,7 @@ void DWC_LOBBY_DEBUG_SetRoomData( u32 locktime, u32 random, u8 roomtype, u8 seas
 	result = PPW_LobbySetSchedule( p_schedule, 
 			sizeof(PPW_LobbySchedule) + (sizeof(PPW_LobbyScheduleRecord) * (p_schedule->scheduleRecordNum - 1)) );
 	GF_ASSERT( DWC_LOBBY_CheckCommonErr( result ) );
+#endif
 }
 
 
@@ -2403,6 +2434,7 @@ void DWC_LOBBY_DEBUG_SetRoomData( u32 locktime, u32 random, u8 roomtype, u8 seas
 //-----------------------------------------------------------------------------
 void DWC_LOBBY_DEBUG_PlayerIN( const void* cp_data, s32 userid )
 {
+#ifdef PM_DEBUG
 	PPW_LobbySystemProfile system;
 
 	system.subChannelKind	= PPW_LOBBY_CHANNEL_KIND_INVALID;
@@ -2410,7 +2442,7 @@ void DWC_LOBBY_DEBUG_PlayerIN( const void* cp_data, s32 userid )
 
 	// いることにしてみる
 	DWC_LOBBY_CallBack_Connect( userid, &system, cp_data, p_DWC_LOBBYLIB_WK->profilesize );
-	
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2423,9 +2455,10 @@ void DWC_LOBBY_DEBUG_PlayerIN( const void* cp_data, s32 userid )
 //-----------------------------------------------------------------------------
 void DWC_LOBBY_DEBUG_SetProfile( const void* cp_data, u32 userid )
 {
+#ifdef PM_DEBUG
 	DWC_LOBBY_CallBack_UserProfileUpdate( userid, cp_data, p_DWC_LOBBYLIB_WK->profilesize );
-}
 #endif
+}
 
 
 

@@ -867,7 +867,7 @@ typedef struct{
 //=====================================
 typedef struct {
 	// BG
-	GF_BGL_INI*				p_bgl;
+	//GF_BGL_INI*				p_bgl;
 
 	// OAM
     GFL_CLUNIT*           p_clactset;		// セルアクターセット
@@ -2712,17 +2712,17 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
 	// トークウィンドウ
 	{
 		u8 win_num = CONFIG_GetWindowType( p_config );
-		TalkWinGraphicSet( p_wk->p_bgl, GFL_BG_FRAME0_S,
+		TalkWinFrame_GraphicSet( p_wk->p_bgl, GFL_BG_FRAME0_S,
 				WLDTIMER_SUB_TALKWIN_CGX, WLDTIMER_SUB_TALKWIN_PAL,
 				win_num, heapID );
 
-		TalkWinGraphicSet( p_wk->p_bgl, GFL_BG_FRAME1_M,
+		TalkWinFrame_GraphicSet( p_wk->p_bgl, GFL_BG_FRAME1_M,
 				WLDTIMER_MAIN_TALKWIN_CGX, WLDTIMER_MAIN_TALKWIN_PAL,
 				win_num, heapID );
 	}
 
 	// バックグラウンドカラー設定
-	GF_BGL_BackGroundColorSet( GFL_BG_FRAME0_M, 0x72ca );
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x72ca );
 }
 static void WLDTIMER_DrawSysBgExit( WLDTIMER_DRAWSYS* p_wk )
 {
@@ -3457,7 +3457,7 @@ static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsy
 		p_str = WLDTIMER_MsgManGetStr( p_msgman, msg_01 );
 
 		FontProc_LoadFont( FONT_BUTTON, heapID );	//ボタンフォントのロード
-		GF_STR_PrintColor(&p_wk->bttn,FONT_BUTTON,p_str,
+		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/&p_wk->bttn,FONT_BUTTON,p_str,
 				4,0,MSG_NO_PUT, WLDTIMER_TOUCH_END_MSG_COL, NULL);
 		FontProc_UnloadFont( FONT_BUTTON );				//ボタンフォントの破棄
 	}
@@ -3584,8 +3584,8 @@ static int WLDTIMER_TouchGetParam( const WLDTIMER_TOUCH* cp_touch, u32 type )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_TouchBttnOff( WLDTIMER_TOUCH* p_wk )
 {
-	BmpMenuWinClear( &p_wk->bttn, WINDOW_TRANS_OFF );
-	GF_BGL_BmpWinOffVReq( &p_wk->bttn );
+	BmpWinFrame_Clear( p_wk->bttn, WINDOW_TRANS_OFF );
+	BmpWinFrame_TransScreen( p_wk->bttn ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -3597,7 +3597,7 @@ static void WLDTIMER_TouchBttnOff( WLDTIMER_TOUCH* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_TouchBttnOn( WLDTIMER_TOUCH* p_wk )
 {
-	GF_BGL_BmpWinOnVReq( &p_wk->bttn );
+	BmpWinFrame_TransScreen( p_wk->bttn ,WINDOW_TRANS_ON_V);
 	BmpWinFrame_Write(p_wk->bttn,WINDOW_TRANS_ON,
 			WLDTIMER_MAIN_SYSTEMWIN_CGX,WLDTIMER_MAIN_SYSTEMWIN_PAL);
 }
@@ -3680,11 +3680,11 @@ static void WLDTIMER_EndMsgStart( WLDTIMER_END_MSG* p_wk )
 {
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 	// ボタンとメッセージ表示
-	BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
+	TalkWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 			WLDTIMER_MAIN_TALKWIN_CGX, WLDTIMER_MAIN_TALKWIN_PAL );
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 
-	p_wk->msg_no = GF_STR_PrintSimple(&p_wk->win,FONT_TALK,p_wk->p_str,
+	p_wk->msg_no = PRINTSYS_PrintStream(/*引数内はまだ未対応*/&p_wk->win,FONT_TALK,p_wk->p_str,
 			0,0,p_wk->msg_wait, NULL);
 
 	p_wk->seq = 0;
@@ -3734,8 +3734,8 @@ static void WLDTIMER_EndMsgEnd( WLDTIMER_END_MSG* p_wk )
 {
 	TOUCH_SW_Reset( p_wk->p_touch_sw );
 
-	BmpTalkWinClear( &p_wk->win, WINDOW_TRANS_OFF );
-	GF_BGL_BmpWinOffVReq( &p_wk->win );
+	TalkWinFrame_Clear( p_wk->win, WINDOW_TRANS_OFF );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 
@@ -3781,7 +3781,7 @@ static void WLDTIMER_ViewerInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_draw
 		p_str = WLDTIMER_MsgManGetStr( p_msgman, msg_00 );
 		GF_STR_PrintSimple(&p_wk->talkwin,FONT_TALK,p_str,0,0,MSG_NO_PUT,NULL);
 
-		BmpTalkWinWrite( &p_wk->talkwin, WINDOW_TRANS_ON, 
+		TalkWinFrame_Write( p_wk->talkwin, WINDOW_TRANS_ON, 
 				WLDTIMER_SUB_TALKWIN_CGX, WLDTIMER_SUB_TALKWIN_PAL );
 	}
 
@@ -3904,8 +3904,8 @@ static void WLDTIMER_ViewerMain( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgma
 //-----------------------------------------------------------------------------
 static void WLDTIMER_ViewerTalkWinOff( WLDTIMER_VIEWER* p_wk )
 {
-	BmpTalkWinClear( &p_wk->talkwin, WINDOW_TRANS_OFF );
-	GF_BGL_BmpWinOffVReq( &p_wk->talkwin );
+	TalkWinFrame_Clear( p_wk->talkwin, WINDOW_TRANS_OFF );
+	BmpWinFrame_TransScreen( p_wk->talkwin ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -3917,8 +3917,8 @@ static void WLDTIMER_ViewerTalkWinOff( WLDTIMER_VIEWER* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_ViewerTalkWinOn( WLDTIMER_VIEWER* p_wk )
 {
-	GF_BGL_BmpWinOnVReq( &p_wk->talkwin );
-	BmpTalkWinWrite( &p_wk->talkwin, WINDOW_TRANS_OFF, 
+	BmpWinFrame_TransScreen( p_wk->talkwin ,WINDOW_TRANS_ON_V);
+	TalkWinFrame_Write( p_wk->talkwin, WINDOW_TRANS_OFF, 
 			WLDTIMER_SUB_TALKWIN_CGX, WLDTIMER_SUB_TALKWIN_PAL );
 }
 
@@ -4633,7 +4633,7 @@ static void WLDTIMER_ViewerMsgWrite( WLDTIMER_VIEWER* p_wk, u32 drawtype, const 
 	// タイトル表示
 	{
 		p_str = WLDTIMER_MsgManGetStr( p_msgman, msg_02 );
-		GF_STR_PrintColor(p_bmp,FONT_TALK,p_str,
+		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/p_bmp,FONT_TALK,p_str,
 				WLDTIMER_VIEWER_MSG_TITLE_X,WLDTIMER_VIEWER_MSG_TITLE_Y,
 				MSG_NO_PUT, WLDTIMER_VIEWER_MSG_TITLE_COL[ zonetype ], NULL);
 	}
@@ -4641,7 +4641,7 @@ static void WLDTIMER_ViewerMsgWrite( WLDTIMER_VIEWER* p_wk, u32 drawtype, const 
 	// 国表示
 	{
 		p_str = WLDTIMER_MsgManCountryGetStr( p_msgman, cp_data->nation );
-		GF_STR_PrintColor(p_bmp,FONT_TALK,p_str,
+		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/p_bmp,FONT_TALK,p_str,
 				WLDTIMER_VIEWER_MSG_NATION_X,WLDTIMER_VIEWER_MSG_NATION_Y,
 				MSG_NO_PUT, WLDTIMER_VIEWER_MSG_NATION_COL, NULL);
 	}
@@ -4649,7 +4649,7 @@ static void WLDTIMER_ViewerMsgWrite( WLDTIMER_VIEWER* p_wk, u32 drawtype, const 
 	// 地域表示
 	{
 		p_str = WLDTIMER_MsgManPlaceGetStr( p_msgman, cp_data->nation, cp_data->area );
-		GF_STR_PrintColor(p_bmp,FONT_TALK,p_str,
+		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/p_bmp,FONT_TALK,p_str,
 				WLDTIMER_VIEWER_MSG_AREA_X,WLDTIMER_VIEWER_MSG_AREA_Y,
 				MSG_NO_PUT, WLDTIMER_VIEWER_MSG_NATION_COL, NULL);
 	}

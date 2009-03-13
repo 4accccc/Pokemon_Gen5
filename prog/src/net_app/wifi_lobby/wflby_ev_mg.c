@@ -1253,7 +1253,7 @@ BOOL WFLBY_EV_MG_End( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		CommStateSetErrorCheck(FALSE,FALSE);
 
 		// í êMêÿíf
-		if( CommStateIsWifiLoginMatchState() == FALSE ){	// LoginèÛë‘Ç∂Ç·Ç»Ç©Ç¡ÇΩÇÁÇ‚ÇÈ
+		if( GFL_NET_StateIsWifiLoginMatchState() == FALSE ){	// LoginèÛë‘Ç∂Ç·Ç»Ç©Ç¡ÇΩÇÁÇ‚ÇÈ
 			// InfoèIóπ
 			CommInfoFinalize();
 			CommStateWifiP2PEnd();
@@ -1264,7 +1264,7 @@ BOOL WFLBY_EV_MG_End( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		
 	// êÿífë“Çø
 	case WFLBY_EV_MG_END_WAIT:
-		if( CommStateIsWifiLoginMatchState() == TRUE ){
+		if( GFL_NET_StateIsWifiLoginMatchState() == TRUE ){
 			return TRUE;
 		}
 		break;

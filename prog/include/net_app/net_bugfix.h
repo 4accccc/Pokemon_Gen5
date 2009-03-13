@@ -37,6 +37,48 @@ typedef u16		GF_PRINTCOLOR;
 
 
 
+//==============================================================================
+//	inline関数
+//==============================================================================
+#include "arc_def.h"
+#include "font/font.naix"
+
+//--------------------------------------------------------------
+/**
+ * @brief   システムフォントパレット転送
+ *
+ * @param   type		
+ * @param   offs		
+ * @param   heap		
+ *
+ * 現時点ではシステムフォントや会話フォントといったものが存在するかは不明なので
+ * 移植する場合はここに集約しておく
+ */
+//--------------------------------------------------------------
+static inline void SystemFontPaletteLoad(u32 type, u32 offs, u32 heap)
+{
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+		offs, 0x20, heap);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   会話フォントパレット転送
+ *
+ * @param   type		
+ * @param   offs		
+ * @param   heap		
+ *
+ * 現時点ではシステムフォントや会話フォントといったものが存在するかは不明なので
+ * 移植する場合はここに集約しておく
+ */
+//--------------------------------------------------------------
+static inline void TalkFontPaletteLoad(u32 type, u32 offs, u32 heap)
+{
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+		offs, 0x20, heap);
+}
+
 
 #endif	//__NET_BUGFIX_H__
 

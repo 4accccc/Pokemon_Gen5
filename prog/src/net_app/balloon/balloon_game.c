@@ -18,7 +18,6 @@
 #include "system/main.h"
 #include "print\gf_font.h"
 #include "font/font.naix"
-#include "font/font.naix"
 
 #include "balloon_common.h"
 #include "balloon_comm_types.h"

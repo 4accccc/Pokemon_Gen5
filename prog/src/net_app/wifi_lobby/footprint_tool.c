@@ -124,7 +124,7 @@ void FootPrintTool_NameDraw(GFL_MSGDATA *msgman, WORDSET *wordset, GFL_BMPWIN *w
 	else{
 		print_color = GF_PRINTCOLOR_MAKE(1,2,0);
 	}
-	GF_STR_PrintColor(&win[user_index], FONT_SYSTEM, expand_src, 0, 0, 
+	PRINT_UTIL_PrintColor(/*à¯êîì‡ÇÕÇ‹Çæñ¢à⁄êA*/&win[user_index], FONT_SYSTEM, expand_src, 0, 0, 
 		MSG_ALLPUT, print_color, NULL);
 	GF_BGL_BmpWinOn(&win[user_index]);
 	

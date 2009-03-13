@@ -851,11 +851,11 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 	case SEQ_EXIT_SELECT_INIT:
 		//会話ウィンドウ描画
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->talk_win), 0xf);
-		BmpTalkWinWrite(&fps->talk_win, WINDOW_TRANS_ON, 
+		TalkWinFrame_Write(fps->talk_win, WINDOW_TRANS_ON, 
 			WINCGX_TALKWIN_START, FOOT_MAINBG_TALKWIN_PAL);
 		//メッセージ表示
 		GFL_MSG_GetString(fps->msgman, msg_footprint_exit_select, fps->talk_strbuf);
-		fps->msg_index = GF_STR_PrintSimple(&fps->talk_win, FONT_TALK, 
+		fps->msg_index = PRINTSYS_PrintStream(/*引数内はまだ未対応*/&fps->talk_win, FONT_TALK, 
 			fps->talk_strbuf, 0, 0, 
 			CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(fps->sv)), NULL);
 		(*seq)++;
@@ -887,7 +887,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 			case TOUCH_SW_RET_YES:
 				TOUCH_SW_Reset(fps->yesno_button);
 				fps->yesno_button_use = 0;
-				BmpTalkWinClear(&fps->talk_win, WINDOW_TRANS_ON);
+				TalkWinFrame_Clear(fps->talk_win, WINDOW_TRANS_ON);
 				//SoftFadePfd(fps->pfd, FADE_MAIN_BG, EXIT_BUTTON_COLOR_POS, 1, 
 				//	0, EXIT_BUTTON_COLOR_CODE);
 				//SoftFadePfd(fps->pfd, FADE_MAIN_OBJ, fps->yameru_pal_pos * 16, 16, 
@@ -900,7 +900,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 			case TOUCH_SW_RET_NO:
 				TOUCH_SW_Reset(fps->yesno_button);
 				fps->yesno_button_use = 0;
-				BmpTalkWinClear(&fps->talk_win, WINDOW_TRANS_ON);
+				TalkWinFrame_Clear(fps->talk_win, WINDOW_TRANS_ON);
 				SoftFadePfd(fps->pfd, FADE_MAIN_BG, EXIT_BUTTON_COLOR_POS, 1, 
 					0, EXIT_BUTTON_COLOR_CODE);
 				SoftFadePfd(fps->pfd, FADE_MAIN_OBJ, fps->yameru_pal_pos * 16, 16, 
@@ -913,11 +913,11 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 	case SEQ_TIMEUP_INIT:
 		//会話ウィンドウ描画
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->talk_win), 0xf);
-		BmpTalkWinWrite(&fps->talk_win, WINDOW_TRANS_ON, 
+		TalkWinFrame_Write(fps->talk_win, WINDOW_TRANS_ON, 
 			WINCGX_TALKWIN_START, FOOT_MAINBG_TALKWIN_PAL);
 		//メッセージ表示
 		GFL_MSG_GetString(fps->msgman, msg_footprint_timeup, fps->talk_strbuf);
-		fps->msg_index = GF_STR_PrintSimple(&fps->talk_win, FONT_TALK, 
+		fps->msg_index = PRINTSYS_PrintStream(/*引数内はまだ未対応*/&fps->talk_win, FONT_TALK, 
 			fps->talk_strbuf, 0, 0, 
 			CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(fps->sv)), NULL);
 		(*seq)++;
@@ -1378,7 +1378,7 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 		PaletteWorkSet_Arc(fps->pfd, ARC_WINFRAME, TalkWinPalArcGet(win_type), HEAPID_FOOTPRINT, 
 			FADE_MAIN_BG, 0x20, FOOT_MAINBG_TALKWIN_PAL * 16);
 		// 会話ウインドウグラフィック転送
-		TalkWinGraphicSet(FOOT_FRAME_WIN, WINCGX_TALKWIN_START, 
+		TalkWinFrame_GraphicSet(FOOT_FRAME_WIN, WINCGX_TALKWIN_START, 
 			FOOT_MAINBG_TALKWIN_PAL,  win_type, HEAPID_FOOTPRINT);
 
 		//システムフォントパレット転送

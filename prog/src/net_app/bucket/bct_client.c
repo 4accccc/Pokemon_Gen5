@@ -41,7 +41,7 @@
 #include "gflib/calctool.h"
 
 #include "message.naix"
-#include "msg/msg_debug_tomoya.h"
+#include "msg/msg_debug_hiroba.h"
 #include "msg/msg_lobby_minigame1.h"
 //#include "system/snd_tool.h"
 #include "print\gf_font.h"
@@ -1201,7 +1201,7 @@ typedef struct {
 /// 描画システム
 //=====================================
 typedef struct {
-    GF_BGL_INI*         p_bgl;              // GF_BGL_INI
+    //GF_BGL_INI*         p_bgl;              // //GF_BGL_INI
     WORDSET*            p_wordset;          // メッセージ展開用ワークマネージャー
     GFL_MSGDATA*    p_msgman;           // メッセージデータマネージャー
     STRBUF*             p_msgstr;           // メッセージ用文字列バッファ
@@ -2791,7 +2791,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
     // メッセージを書き込む
     p_str = GFL_STR_CreateBuffer( BCT_STRBUF_NUM, heapID );
     GFL_MSG_GetString( p_drawsys->p_msgman, msg_a_001, p_str );
-    GF_STR_PrintColor( &p_graphic->helpwin, FONT_SYSTEM, p_str, 
+    PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_graphic->helpwin, FONT_SYSTEM, p_str, 
             BCT_GRA_STARTWIN_MSGX, BCT_GRA_STARTWIN_MSGY,
             MSG_NO_PUT, BCT_COL_N_BLACK, NULL);
     GFL_STR_DeleteBuffer( p_str );
@@ -2849,7 +2849,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 				namebmpwin.chrofs = namebmp_cgx;				// cgx設定
 				namestrsize = PRINTSYS_GetStrWidth( p_namestr, GFL_FONT* font/*FONT_SYSTEM*/, 0 );	// 表示位置設定
 				draw_x		= ((BCT_START_NAME_BMP_WINSIZ_X*8) - namestrsize) / 2;	// 中央表示
-				GF_STR_PrintColor( &namebmpwin, FONT_SYSTEM, p_namestr, 
+				PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &namebmpwin, FONT_SYSTEM, p_namestr, 
 						draw_x, 0,
 						MSG_ALLPUT, col, NULL);
 
@@ -2943,8 +2943,8 @@ static BOOL BCT_CLIENT_StartSysCountDown( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLI
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_StartSysDrawOff( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys )
 {
-    BmpMenuWinClear( &p_graphic->helpwin, WINDOW_TRANS_OFF );
-    GF_BGL_BmpWinOffVReq( &p_graphic->helpwin );
+    BmpWinFrame_Clear( p_graphic->helpwin, WINDOW_TRANS_OFF );
+    BmpWinFrame_TransScreen( p_graphic->helpwin ,WINDOW_TRANS_ON_V);
 
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
 
@@ -8526,7 +8526,7 @@ static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT
 				0, 0 );
 
 		// 書き込む
-		GF_STR_PrintColor( &p_wk->objbmp, FONT_SYSTEM, p_wk->p_str,
+		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->objbmp, FONT_SYSTEM, p_wk->p_str,
 				0, 0, MSG_NO_PUT, BCT_COL_OAM_BLACK, NULL );
 
 		// 転送
@@ -8594,7 +8594,7 @@ static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIE
 					0, 0 );
 
 			// 書き込む
-			GF_STR_PrintColor( &p_wk->objbmp, FONT_SYSTEM, p_wk->p_str,
+			PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->objbmp, FONT_SYSTEM, p_wk->p_str,
 					0, 0, MSG_NO_PUT, BCT_COL_OAM_BLACK, NULL );
 
 			// 転送

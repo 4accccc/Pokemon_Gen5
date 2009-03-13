@@ -55,6 +55,7 @@
 #include "system/gfl_use.h"
 #include "system/bmp_winframe.h"
 
+#include "net_app/net_bugfix.h"
 
 
 //-----------------------------------------------------------------------------
@@ -606,7 +607,7 @@ static const BMPWIN_DAT sc_WFLBY_BTTN_WIN_DATA = {
 //=====================================
 typedef struct {
 	// BG
-	GF_BGL_INI*				p_bgl;
+	//GF_BGL_INI*				p_bgl;
 
 	// OAM
     GFL_CLUNIT*           p_clactset;		// セルアクターセット
@@ -1389,11 +1390,11 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 			WFLBY_ROOM_SubWin_End( &p_wk->subwin );
 			WFLBY_ROOM_YesNoWin_Exit( &p_wk->yesnowin );
 			
-			if( CommStateIsWifiError() ){
+			if( GFL_NET_SystemIsError() ){
 				// DWC系エラー
 				WFLBY_ROOM_ErrWin_DrawDwcErr( &p_wk->errwin, &p_wk->def_msg);
 			}
-			else if( CommStateWifiLobbyError() ){
+			else if( GFL_NET_SystemIsLobbyError() ){
 				// ロビー系エラー
 				WFLBY_ROOM_ErrWin_DrawLobbyErr( &p_wk->errwin, &p_wk->def_msg, 
 						DWC_LOBBY_GetErr() );
@@ -2915,7 +2916,7 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 
 	// バックグラウンドを黒にする
 	{
-		GF_BGL_BackGroundColorSet( GFL_BG_FRAME0_M, 0 );
+		GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0 );
 	}
 
 	// BGL
@@ -2953,7 +2954,7 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 		BmpWinFrame_GraphicSet(
 				sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN], WFLBY_SYSWINGRA_CGX,
 				WFLBY_ROOM_BGPL_SYSWIN, 0, heapID );
-		TalkWinGraphicSet(
+		TalkWinFrame_GraphicSet(
 				p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN], WFLBY_TALKWINGRA_CGX, 
 				WFLBY_ROOM_BGPL_TALKWIN, winnum, heapID );
 		BoardWinGraphicSet(
@@ -2962,7 +2963,7 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 			BOARD_TYPE_INFO, 0, heapID );
 
 		// パレットだけ、ロビー用パレットを使用する
-		ArcUtil_PalSet( ARCID_WIFILOBBY_OTHER_GRA, NARC_wifi_lobby_other_lobby_board_NCLR, 
+		GFL_ARC_UTIL_TransVramPalette( ARCID_WIFILOBBY_OTHER_GRA, NARC_wifi_lobby_other_lobby_board_NCLR, 
 				PALTYPE_MAIN_BG, WFLBY_ROOM_BGPL_BOARDWIN*32, 32, heapID );
 	}
 
@@ -3473,11 +3474,11 @@ static void WFLBY_ROOM_TalkWin_Print( WFLBY_ROOM_TALKMSG* p_wk, const STRBUF* cp
 	
 	// 文字列コピー
 	STRBUF_Copy( p_wk->p_str, cp_str );
-	p_wk->msgno = GF_STR_PrintColor( &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
+	p_wk->msgno = PRINTSYS_PrintStreamColor(/*引数内はまだ未対応*/ &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
 			p_wk->msgwait, WFLBY_TALKWIN_MSGCOL, NULL );
 
 	// ウィンドウを書き込む
-	BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, WFLBY_TALKWINGRA_CGX, WFLBY_ROOM_BGPL_TALKWIN );
+	TalkWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, WFLBY_TALKWINGRA_CGX, WFLBY_ROOM_BGPL_TALKWIN );
 }
 
 //----------------------------------------------------------------------------
@@ -3500,12 +3501,12 @@ static void WFLBY_ROOM_TalkWin_PrintAll( WFLBY_ROOM_TALKMSG* p_wk, const STRBUF*
 	
 	// 文字列コピー
 	STRBUF_Copy( p_wk->p_str, cp_str );
-	GF_STR_PrintColor( &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
 			MSG_NO_PUT, WFLBY_TALKWIN_MSGCOL, NULL );
 
 	// ウィンドウを書き込む
-	BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, WFLBY_TALKWINGRA_CGX, WFLBY_ROOM_BGPL_TALKWIN );
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	TalkWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, WFLBY_TALKWINGRA_CGX, WFLBY_ROOM_BGPL_TALKWIN );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -3606,10 +3607,10 @@ static void WFLBY_ROOM_TalkWin_Off( WFLBY_ROOM_TALKMSG* p_wk )
 	WFLBY_ROOM_TalkWin_StopTimeWait_NoTrans( p_wk );
 
 	// 全体を消す
-	BmpTalkWinClear( &p_wk->win, WINDOW_TRANS_OFF );
+	TalkWinFrame_Clear( p_wk->win, WINDOW_TRANS_OFF );
 
 	// Vリクエスト
-	GF_BGL_BmpWinOffVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 
@@ -3663,7 +3664,7 @@ static void WFLBY_ROOM_TalkWin_Board_Print( WFLBY_ROOM_TALKMSG* p_wk, const STRB
 	
 	// 文字列コピー
 	STRBUF_Copy( p_wk->p_str, cp_str );
-	p_wk->msgno = GF_STR_PrintSimple( &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
+	p_wk->msgno = PRINTSYS_PrintStream(/*引数内はまだ未対応*/ &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
 			p_wk->msgwait, NULL );
 
 	// ウィンドウを書き込む
@@ -3695,7 +3696,7 @@ static void WFLBY_ROOM_TalkWin_Board_PrintAll( WFLBY_ROOM_TALKMSG* p_wk, const S
 
 	// ウィンドウを書き込む
 	BmpBoardWinWrite( &p_wk->win, WINDOW_TRANS_OFF, WFLBY_BOARDWINGRA_CGX, WFLBY_ROOM_BGPL_BOARDWIN, BOARD_TYPE_INFO );
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -3719,7 +3720,7 @@ static void WFLBY_ROOM_TalkWin_Board_Off( WFLBY_ROOM_TALKMSG* p_wk )
 	BmpBoardWinClear( &p_wk->win, BOARD_TYPE_INFO, WINDOW_TRANS_OFF );
 
 	// Vリクエスト
-	GF_BGL_BmpWinOffVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -3769,7 +3770,7 @@ static void WFLBY_ROOM_TalkWin_Board_OnVReq( WFLBY_ROOM_TALKMSG* p_wk )
 {
 	// ウィンドウを書き込む
 	BmpBoardWinWrite( &p_wk->win, WINDOW_TRANS_OFF, WFLBY_BOARDWINGRA_CGX, WFLBY_ROOM_BGPL_BOARDWIN, BOARD_TYPE_INFO );
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -4059,7 +4060,7 @@ static void WFLBY_ROOM_ListWin_Start( WFLBY_ROOM_LISTWIN* p_wk, const BMPLIST_HE
     BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, WFLBY_SYSWINGRA_CGX, WFLBY_ROOM_BGPL_SYSWIN );
 
 	// 表示
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -4118,8 +4119,8 @@ static void WFLBY_ROOM_ListWin_End( WFLBY_ROOM_LISTWIN* p_wk, u16* p_list_p, u16
 	p_wk->p_listwk = NULL;
 
 	// ウィンドウを破棄
-    BmpMenuWinClear( &p_wk->win, WINDOW_TRANS_OFF );
-	GF_BGL_BmpWinOffVReq( &p_wk->win );
+    BmpWinFrame_Clear( p_wk->win, WINDOW_TRANS_OFF );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 	GFL_BMPWIN_Delete( &p_wk->win );
 
 	// OAM非表示
@@ -4247,7 +4248,7 @@ static void WFLBY_ROOM_SubWin_Start( WFLBY_ROOM_SUBWIN* p_wk, WFLBY_GRAPHICCONT*
 	GFL_BMPWIN_MakeScreen(p_wk->win);
 	
 	// 表示
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -4262,8 +4263,8 @@ static void WFLBY_ROOM_SubWin_End( WFLBY_ROOM_SUBWIN* p_wk )
 	// ウィンドウを書きしていなければ破棄する
 	if( GF_BGL_BmpWinAddCheck( &p_wk->win ) == TRUE ){
 		// ウィンドウを破棄
-		BmpMenuWinClear( &p_wk->win, WINDOW_TRANS_OFF );
-		GF_BGL_BmpWinOffVReq( &p_wk->win );
+		BmpWinFrame_Clear( p_wk->win, WINDOW_TRANS_OFF );
+		BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 		GFL_BMPWIN_Delete( &p_wk->win );
 	}
 }
@@ -4281,10 +4282,10 @@ static void WFLBY_ROOM_SubWin_End( WFLBY_ROOM_SUBWIN* p_wk )
 static void WFLBY_ROOM_SubWin_PrintAll( WFLBY_ROOM_SUBWIN* p_wk, const STRBUF* cp_str, u8 x, u8 y )
 {
 	// 表示
-	GF_STR_PrintColor( &p_wk->win, FONT_SYSTEM, cp_str, x, y,
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win, FONT_SYSTEM, cp_str, x, y,
 			MSG_NO_PUT, WFLBY_SUBWIN_MSGCOL, NULL );
 
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -4412,12 +4413,12 @@ static void WFLBY_ROOM_ErrWin_Exit( WFLBY_ROOM_ERRMSG* p_wk )
 //-----------------------------------------------------------------------------
 static void WFLBY_ROOM_ErrWin_DrawErr( WFLBY_ROOM_ERRMSG* p_wk, const STRBUF* cp_str )
 {
-	GF_STR_PrintColor( &p_wk->win, FONT_SYSTEM, cp_str, 0, 0,
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win, FONT_SYSTEM, cp_str, 0, 0,
 			MSG_NO_PUT, WFLBY_ERRWIN_MSGCOL, NULL );
 
 	// ウィンドウを書き込む
 	BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, WFLBY_SYSWINGRA_CGX, WFLBY_ROOM_BGPL_SYSWIN );
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -4433,9 +4434,9 @@ static void WFLBY_ROOM_ErrWin_DrawDwcErr( WFLBY_ROOM_ERRMSG* p_wk, WFLBY_ROOM_DE
 {
 	u32 msgno;
 	STRBUF*  p_str;
-    COMMSTATE_DWCERROR* pErr;
+    GFL_NETSTATE_DWCERROR* pErr;
 
-    pErr = CommStateGetWifiError();
+    pErr = GFL_NET_StateGetWifiError();
 	// メッセージ取得
 	msgno = WFLBY_ERR_GetStrID(  pErr->errorCode,  pErr->errorType );	// メッセージＮＯ取得
 	WFLBY_ROOM_Msg_SetNumber( p_msg, pErr->errorCode, 5, 0, NUMBER_DISPTYPE_ZERO );	// ＥＲＲＮＯ設定
@@ -4726,7 +4727,7 @@ static void WFLBY_ROOM_UNDERWIN_Init( WFLBY_UNDER_WIN* p_wk, const WFLBY_ROOM_SA
 		p_wk->seq = WFLBY_UNDERWIN_SEQ_STARTWAIT;
 
 		// バックパレットカラーを黒にしておく
-		GF_BGL_BackGroundColorSet( GFL_BG_FRAME0_S, 0 );
+		GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
 		
 		// サブ面全部非表示
 		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
@@ -5412,7 +5413,7 @@ static void WFLBY_ROOM_UNDERWIN_PalTransVTcb( GFL_TCB* p_tcb, void* p_work )
 
 	// 技タイプ書き込み用パレット
 	{
-		ArcUtil_PalSet( WazaTypeIcon_ArcIDGet(), 
+		GFL_ARC_UTIL_TransVramPalette( WazaTypeIcon_ArcIDGet(), 
 				WazaTypeIcon_PlttIDGet(), PALTYPE_SUB_BG, WFLBY_ROOM_BGSPL_WAZATYPE0*32, 3*32, p_wk->heapID );
 	}
 
@@ -6293,7 +6294,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrint( WFLBY_TR_CARD* p_wk, WFLBY_ROOM
 	
 	// 表示
 	p_str = WFLBY_ROOM_Msg_Get( p_msg, WFLBY_DEFMSG_TYPE_HIROBA, strid );
-	GF_STR_PrintColor( &p_wk->win[ winno ], FONT_SYSTEM, p_str, 
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ winno ], FONT_SYSTEM, p_str, 
 			x, y, MSG_NO_PUT, col, NULL );
 }
 // 右端表示バージョン
@@ -6313,7 +6314,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrintRightSide( WFLBY_TR_CARD* p_wk, W
 		draw_x = 0;
 	}
 
-	GF_STR_PrintColor( &p_wk->win[ winno ], FONT_SYSTEM, p_str, 
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ winno ], FONT_SYSTEM, p_str, 
 			draw_x, y, MSG_NO_PUT, col, NULL );
 }
 
@@ -6334,7 +6335,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrintRightSide( WFLBY_TR_CARD* p_wk, W
 //-----------------------------------------------------------------------------
 static void WFLBY_ROOM_UNDERWIN_TrCard_WinOn( WFLBY_TR_CARD* p_wk, u32 idx )
 {
-	GF_BGL_BmpWinOnVReq( &p_wk->win[idx] );
+	BmpWinFrame_TransScreen( p_wk->win[idx] ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -6796,7 +6797,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_Start( WFLBY_GADGET_BTTN* p_wk, WFLBY_GRA
 		// 表示
 		p_str = WFLBY_ROOM_Msg_Get( p_msg, WFLBY_DEFMSG_TYPE_HIROBA, msg_hiroba_profile_14 );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 0 );
-		GF_STR_PrintColor( &p_wk->win, FONT_SYSTEM, p_str, 
+		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win, FONT_SYSTEM, p_str, 
 				0, 4, MSG_ALLPUT, GF_PRINTCOLOR_MAKE( 15, 14, 0 ), NULL );
 	}
 

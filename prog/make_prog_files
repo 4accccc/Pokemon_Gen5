@@ -501,3 +501,32 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 			app/palace/palace_draw.c
 
 
+#WIFI ¢ŠE ‹¤’Ê
+#===> SRCS_OVERLAY_DEV_WIFI
+#LIB=>					libdwcgsghttp.a
+#LIB=>					libdwcnd.a
+#LIB=>					libdwcnhttp.a
+SRCS_OVERLAY_DPW_COMMON		= libdpw\dpwi_encrypt.c \
+				  		libdpw\dpwi_session.c
+
+#Wi-FiLê
+#===> main
+#LIB=>					libdwcbm.a
+#LIB=>					libdwcaccount.a
+#LIB=>					libdwcgschat.a
+#LIB=>					libdwcppwlobby.a
+#LIB=>					libdwcilobby.a
+#LIB=>					libdwcenc.a
+SRCS_OVERLAY_WIFILOBBY_COMMON		=	net_app\wifi_lobby\wifi_lobby.c \
+										net_app\wifi_lobby\wflby_system.c \
+										net_app\wifi_lobby\wflby_apl.c \
+										net_app\wifi_lobby\wflby_def.c \
+										net_app\wifi_lobby\lobby_news_data.c \
+										net\dwc_lobbylib.c \
+										net_app\wifi_lobby\wflby_3dobj.c \
+										net_app\wifi_lobby\worldtimer_place.c
+
+#WIFILOBBY
+#===>SRCS_OVERLAY_WIFILOBBY_COMMON
+SRCS_OVERLAY_WIFILOBBY_CONNECT		=	net_app\wifi_lobby\wflby_connect.c
+

@@ -606,7 +606,7 @@ typedef struct{
 	GFL_BG_BGCNT_HEADER	cnt;
 } MNGM_BGL_DATA;
 typedef struct {
-	GF_BGL_INI*				p_bgl;	// bgl
+	//GF_BGL_INI*				p_bgl;	// bgl
 	const MNGM_BGL_DATA*	cp_tbl;	// bglデータテーブル 
 	u32						tblnum;	// データテーブル数
 } MNGM_BGL;
@@ -1895,7 +1895,7 @@ BOOL MNGM_ERROR_DisconnectWait( const MNGM_ENRES_PARAM* cp_commparam )
 	}else{
 
 		// 切断完了
-		if( CommStateIsWifiLoginMatchState() == TRUE ){
+		if( GFL_NET_StateIsWifiLoginMatchState() == TRUE ){
 			return TRUE;
 		}
 	}
@@ -2825,7 +2825,7 @@ static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, 
 		draw_x = 0;
 	}
 	
-	GF_STR_PrintColor( p_win, FONT_SYSTEM, p_wk->p_str,
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ p_win, FONT_SYSTEM, p_wk->p_str,
 			draw_x,y,MSG_NO_PUT, MNGM_MSG_COLOR, NULL);
 }
 
@@ -2848,7 +2848,7 @@ static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF*
 	GFL_MSG_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_str, p_wk->p_tmp );
 	
-	return GF_STR_PrintColor( p_win, FONT_TALK, p_str,
+	return PRINTSYS_PrintStreamColor(/*引数内はまだ未対応*/ p_win, FONT_TALK, p_str,
 			0, 0, wait, MNGM_MSG_TALKCOLOR, NULL);
 }
 
@@ -2869,7 +2869,7 @@ static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x
 	GFL_MSG_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 	
-	GF_STR_PrintColor( p_win, FONT_SYSTEM, p_wk->p_str,
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ p_win, FONT_SYSTEM, p_wk->p_str,
 			x,y,MSG_NO_PUT, col, NULL);
 }
 
@@ -2895,10 +2895,10 @@ static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVE_CONTROL
 	ConTool_MsgPrintFlagSet( TRUE );
 	
 	// トークウィンドウのウィンドウを転送
-    TalkWinGraphicSet(
+    TalkWinFrame_GraphicSet(
             p_bgl->p_bgl, GFL_BG_FRAME2_M, MNGM_TALKWIN_CGX, 
 			MNGM_TALKWIN_PAL,  type, heapID );
-    TalkWinGraphicSet(
+    TalkWinFrame_GraphicSet(
             p_bgl->p_bgl, GFL_BG_FRAME0_S, MNGM_TALKWIN_CGX, 
 			MNGM_TALKWIN_PAL,  type, heapID );
 
@@ -2984,10 +2984,10 @@ static void MNGM_TALKWIN_MsgPrint( MNGM_TALKWIN* p_wk, MNGM_MSG* p_msg, u32 msgi
 			p_wk->p_str[idx], MNGM_TALKWIN_MSG_SPEED );
 
 	// ウインドウを書き込む
-    BmpTalkWinWrite(&p_wk->win[idx], WINDOW_TRANS_OFF, MNGM_TALKWIN_CGX, MNGM_TALKWIN_PAL );
+    TalkWinFrame_Write(p_wk->win[idx], WINDOW_TRANS_OFF, MNGM_TALKWIN_CGX, MNGM_TALKWIN_PAL );
 
 	// 転送リクエスト
-	GF_BGL_BmpWinOnVReq( &p_wk->win[idx] );
+	BmpWinFrame_TransScreen( p_wk->win[idx] ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -3005,8 +3005,8 @@ static void MNGM_TALKWIN_MsgOff( MNGM_TALKWIN* p_wk, u32 idx )
 	if( GF_MSG_PrintEndCheck( p_wk->msg_no[idx] ) ){
 		GF_STR_PrintForceStop( p_wk->msg_no[idx] );
 	}
-	BmpTalkWinClear( &p_wk->win[idx], WINDOW_TRANS_OFF );
-	GF_BGL_BmpWinOffVReq( &p_wk->win[idx] );
+	TalkWinFrame_Clear( p_wk->win[idx], WINDOW_TRANS_OFF );
+	BmpWinFrame_TransScreen( p_wk->win[idx] ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -3795,7 +3795,7 @@ static void MNGM_PLATE_PLAYERTBL_DrawTime( MNGM_PLATE_PLAYER* p_player, MNGM_MSG
 //-----------------------------------------------------------------------------
 static void MNGM_PLATE_PLAYERTBL_BgWriteVReq( MNGM_PLATE_PLAYER* p_player, MNGM_BGL* p_bgl )
 {
-	GF_BGL_BmpWinOnVReq( &p_player->win );
+	BmpWinFrame_TransScreen( p_player->win ,WINDOW_TRANS_ON_V);
 	GFL_BG_LoadScreenV_Req( p_bgl->p_bgl, GFL_BG_FRAME1_M );
 }
 
@@ -4271,7 +4271,7 @@ static void MNGM_TITLELOGO_InStart( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk, u3
 	x_size	= PRINTSYS_GetStrWidth( p_wk->p_str, GFL_FONT* font/*FONT_BUTTON*/, 0 );
 	draw_x	= (MNGM_TITLELOGO_BMP_SIZXDOT/2) - (x_size/2);
 
-	GF_STR_PrintColor(
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/
 		&p_wk->bmp, FONT_BUTTON, p_wk->p_str, draw_x,
 		0, MSG_ALLPUT, sc_MNGM_TITLELOGO_BMP_COL[ p_wk->gametype ], NULL );
 

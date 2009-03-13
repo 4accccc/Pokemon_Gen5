@@ -12,18 +12,17 @@
 
 #include <gflib.h>
 
-#include "gflib/msg_print.h"
+#include "print\printsys.h"
 
 #include "print/wordset.h"
 #include "print\gf_font.h"
-#include "system/arc_tool.dat"
+#include "arc_def.h"
 #include "system/wipe.h"
 #include "system/bmp_menu.h"
-#include "system/window.h"
 //#include "system/fontproc.h"
-#include "system/pm_rtc.h"
+//#include "system/pm_rtc.h"
 
-#include "communication/comm_state.h"
+//#include "communication/comm_state.h"
 
 #include "savedata/config.h"
 #include "savedata/record.h"
@@ -33,7 +32,7 @@
 #include "msg/msg_wifi_lobby.h"
 #include "msg/msg_wifi_hiroba.h"
 #include "msg/msg_wifi_system.h"
-#include "msg/msg_debug_tomoya.h"
+#include "msg/msg_debug_hiroba.h"
 
 //#include  "communication/wm_icon.h"
 
@@ -43,8 +42,13 @@
 
 #include "net_app/connect_anm.h"
 
+#include "system/main.h"
+#include "font/font.naix"
+#include "net_app/net_bugfix.h"
+#include "arc_def.h"
+
 // ダミーグラフィックです
-#include "net_app/wifi_p2pmatch/wifip2pmatch.naix"
+#include "wifip2pmatch.naix"
 #include "system/gfl_use.h"
 #include "system/bmp_winframe.h"
 
@@ -225,7 +229,10 @@ enum{
 #define WFLBY_TITLEWIN_CGXEND	( WFLBY_TITLEWIN_CGX+(WFLBY_TITLEWIN_SIZX*WFLBY_TITLEWIN_SIZY) )
 #define WFLBY_TITLEWIN_COL		( GF_PRINTCOLOR_MAKE( 15, 14, 0 ) )
 
-
+enum{
+	FONTID_SYSTEM,
+	FONTID_TALK,
+};
 
 
 
@@ -245,10 +252,18 @@ typedef struct {
 	GFL_BMPWIN*		win;		// 会話ウィンドウ
 	STRBUF*				p_str;		// 文字列バッファ
 	STRBUF*				p_tmp;		// 文字列バッファ
+	GFL_FONT*			font_handle;	// フォントハンドル
 	u32					fontid;		// メッセージのフォントID	
 	void*				p_timewait;	// タイムウエイト
 	u32					msgspeed;
+#if WB_FIX
 	u32					msgno;
+#else
+	PRINT_STREAM*		msg_stream;
+	GFL_TCBLSYS *tcbl;
+	PRINT_QUE *printQue;
+	PRINT_UTIL print_util;
+#endif
 
 #ifdef WFLBY_CONNECT_DEBUG_START
 	GFL_MSGDATA*	p_debug_msgman;	// ワードセット
@@ -263,7 +278,7 @@ typedef struct {
 	SAVE_CONTROL_WORK*			p_save;		// セーブデータ
 	u32					seq;		// シーケンス
 	u32					wait;		// 汎用ウエイト
-	GF_BGL_INI*			p_bgl;		// bglコントロール
+	//GF_BGL_INI*			p_bgl;		// bglコントロール
 	WFLBY_WINWK			title;		// タイトルウィンドウ
 	WFLBY_WINWK			talk;		// 会話ウィンドウ
 	WFLBY_WINWK			talk_system;// 会話ウィンドウ
@@ -273,6 +288,12 @@ typedef struct {
 	CONNECT_BG_PALANM	cbp;		// Wifi接続BGパレットアニメ制御
 
 	GFL_TCB *vintr_tcb;
+	
+	GFL_FONT *fontHandle_talk;
+	GFL_FONT *fontHandle_system;
+	
+	GFL_TCBLSYS *tcbl;
+	PRINT_QUE *printQue;
 } WFLBY_CONNECTWK;
 
 
@@ -296,7 +317,7 @@ static const GFL_DISP_VRAM sc_WFLBY_BANK = {
 	GX_VRAM_SUB_OBJ_NONE,			// サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
+	GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 };
@@ -335,9 +356,9 @@ static const GFL_BG_BGCNT_HEADER sc_WFLBY_BGCNT_DATA[ WFLBY_BGCNT_NUM ] = {
 		0, 0, 0, FALSE
 	},
 };
-static const BMPWIN_DAT	sc_WFLBY_BMPWIN_DAT_YESNO = {
+static const BMPWIN_YESNO_DAT sc_WFLBY_BMPWIN_DAT_YESNO = {
 	GFL_BG_FRAME1_M, WFLBY_YESNOWIN_X, WFLBY_YESNOWIN_Y,
-	WFLBY_YESNOWIN_SIZX, WFLBY_YESNOWIN_SIZY, 
+//	WFLBY_YESNOWIN_SIZX, WFLBY_YESNOWIN_SIZY, 
 	WFLBY_MAIN_PLTT_SYSFONT, WFLBY_YESNOWIN_CGX,
 };
 
@@ -356,7 +377,7 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID );
 static void WFLBY_CONNECT_GraphicExit( WFLBY_CONNECTWK* p_wk );
 static void WFLBY_CONNECT_GraphicVBlank( WFLBY_CONNECTWK* p_wk );
 
-static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GF_BGL_INI* p_bgl, u32 fontid, u32 msgid, u32 x, u32 y, u32 sizx, u32 sizy, u32 cgx, SAVE_CONTROL_WORK* p_save, u32 heapID );
+static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GFL_FONT *font_handle, GFL_TCBLSYS *tcbl, PRINT_QUE *printQue, u32 fontid, u32 msgid, u32 x, u32 y, u32 sizx, u32 sizy, u32 cgx, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void WFLBY_CONNECT_WIN_Print( WFLBY_WINWK* p_wk, u32 strid );
 static void WFLBY_CONNECT_WIN_Off( WFLBY_WINWK* p_wk );
 static void WFLBY_CONNECT_WIN_StartTimeWait( WFLBY_WINWK* p_wk );
@@ -364,7 +385,6 @@ static void WFLBY_CONNECT_WIN_EndTimeWait( WFLBY_WINWK* p_wk );
 static void WFLBY_CONNECT_WIN_SetErrNumber( WFLBY_WINWK* p_wk, u32 number );
 static void WFLBY_CONNECT_WIN_Exit( WFLBY_WINWK* p_wk );
 static void WFLBY_CONNECT_WIN_PrintWait( WFLBY_WINWK* p_wk, u32 strid );
-static BOOL WFLBY_CONNECT_WIN_PrintEndWait( const WFLBY_WINWK* cp_wk );
 
 static void WFLBY_CONNECT_WIN_PrintTitle( WFLBY_WINWK* p_wk, u32 strid );
 
@@ -403,9 +423,15 @@ GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	p_param	= pwk;
 	p_wk->p_save		= p_param->p_save;
 
-
+	//TCBL作成
+	p_wk->tcbl = GFL_TCBL_Init( HEAPID_WFLBY_ROOM, HEAPID_WFLBY_ROOM, 4, 32);
+	//PrintQue作成
+	p_wk->printQue = PRINTSYS_QUE_Create(HEAPID_WFLBY_ROOM);
+	
 	// BGMチェンジ
+#if WB_TEMP_FIX
 	Snd_DataSetByScene( SND_SCENE_P2P, SEQ_WIFILOBBY, 0 );	//wifiロビー再生
+#endif
 
 	// このプロック内で設定するパラメータを初期化
 	p_param->enter			= FALSE;
@@ -414,21 +440,36 @@ GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	// グラフィック初期化
 	WFLBY_CONNECT_GraphicInit( p_wk, HEAPID_WFLBY_ROOM );
 
+	// フォント作成	※check PLのように会話フォント、システムフォントといったものがまだ無いので
+	//						どちらも同じフォントを読み込んでいる 2009.03.10(火) matsuda
+	p_wk->fontHandle_talk = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WFLBY_ROOM);
+	p_wk->fontHandle_system = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WFLBY_ROOM);
+
 	// ウィンドウシステム初期化
-	WFLBY_CONNECT_WIN_Init( &p_wk->talk, p_wk->p_bgl, FONT_TALK, NARC_message_wifi_lobby_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->talk, p_wk->fontHandle_talk, 
+			p_wk->tcbl, p_wk->printQue,
+			FONTID_TALK, NARC_message_wifi_lobby_dat,
 			WFLBY_TALKWIN_X, WFLBY_TALKWIN_Y, 
 			WFLBY_TALKWIN_SIZX, WFLBY_TALKWIN_SIZY,
 			WFLBY_TALKWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
-	WFLBY_CONNECT_WIN_Init( &p_wk->talk_system, p_wk->p_bgl, FONT_TALK, NARC_message_wifi_system_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->talk_system, p_wk->fontHandle_talk, 
+			p_wk->tcbl, p_wk->printQue,
+			FONTID_TALK, NARC_message_wifi_system_dat,
 			WFLBY_TALKWIN_X, WFLBY_TALKWIN_Y, 
 			WFLBY_TALKWIN_SIZX, WFLBY_TALKWIN_SIZY,
 			WFLBY_TALKWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
-	WFLBY_CONNECT_WIN_Init( &p_wk->system, p_wk->p_bgl, FONT_SYSTEM, NARC_message_wifi_system_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->system, p_wk->fontHandle_system, 
+			p_wk->tcbl, p_wk->printQue,
+			FONTID_SYSTEM, NARC_message_wifi_system_dat,
 			WFLBY_SYSTEMWIN_X, WFLBY_SYSTEMWIN_Y,
 			WFLBY_SYSTEMWIN_SIZX, WFLBY_SYSTEMWIN_SIZY,
 			WFLBY_SYSTEMWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
 
-	WFLBY_CONNECT_WIN_Init( &p_wk->title, p_wk->p_bgl, FONT_TALK, NARC_message_wifi_lobby_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->title, p_wk->fontHandle_talk, 
+			p_wk->tcbl, p_wk->printQue,
+			FONTID_TALK, NARC_message_wifi_lobby_dat,
 			WFLBY_TITLEWIN_X, WFLBY_TITLEWIN_Y, 
 			WFLBY_TITLEWIN_SIZX, WFLBY_TITLEWIN_SIZY,
 			WFLBY_TITLEWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
@@ -458,7 +499,12 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	p_wk	= mywk;
 	p_param	= pwk;
 
-
+	PRINTSYS_QUE_Main(p_wk->printQue);
+	PRINT_UTIL_Trans(&p_wk->title.print_util, p_wk->printQue);
+	PRINT_UTIL_Trans(&p_wk->talk.print_util, p_wk->printQue);
+	PRINT_UTIL_Trans(&p_wk->talk_system.print_util, p_wk->printQue);
+	PRINT_UTIL_Trans(&p_wk->system.print_util, p_wk->printQue);
+	
 	switch( *p_seq ){
 	// フェードイン
 	case WFLBY_CONNECT_SEQ_FADEIN:
@@ -478,8 +524,8 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	case WFLBY_CONNECT_SEQ_LOGIN_CHECK:
 		if( p_param->check_skip == FALSE ){
 			WFLBY_CONNECT_WIN_Print( &p_wk->talk_system, dwc_message_0002 );
-			p_wk->p_yesno = BmpYesNoSelectInit( p_wk->p_bgl, &sc_WFLBY_BMPWIN_DAT_YESNO, 
-					WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN, HEAPID_WFLBY_ROOM );
+			p_wk->p_yesno = BmpMenu_YesNoSelectInit( &sc_WFLBY_BMPWIN_DAT_YESNO, 
+					WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN, 0, HEAPID_WFLBY_ROOM );
 			(*p_seq)++;
 		}else{
 #ifdef WFLBY_CONNECT_DEBUG_START
@@ -499,7 +545,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	case WFLBY_CONNECT_SEQ_LOGIN_CHECK_WAIT:
 		{
 			u32 result;
-			result = BmpYesNoSelectMain( p_wk->p_yesno, HEAPID_WFLBY_ROOM );
+			result = BmpMenu_YesNoSelectMain( p_wk->p_yesno);
 			switch( result ){
 			// YES
 			case 0:	
@@ -603,14 +649,14 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 			if( D_Tomoya_WiFiLobby_DebugStart == TRUE ){
 				WFLBY_SYSTEM_DEBUG_SetItem( p_param->p_system, DEBUG_SEL_ITEM );
 				p_profile = WFLBY_SYSTEM_GetMyProfileLocal( p_param->p_system );
-				CommStateWifiLobbyLogin_Debug( p_wk->p_save, p_profile, DEBUG_SEL_SEASON, DEBUG_SEL_ROOM );
+				GFL_NET_StateWifiLobbyLogin_Debug( p_profile, DEBUG_SEL_SEASON, DEBUG_SEL_ROOM );
 			}else{
 				p_profile = WFLBY_SYSTEM_GetMyProfileLocal( p_param->p_system );
-				CommStateWifiLobbyLogin( p_wk->p_save, p_profile );
+				GFL_NET_StateWifiLobbyLogin( p_profile );
 			}
 #else
 			p_profile = WFLBY_SYSTEM_GetMyProfileLocal( p_param->p_system );
-			CommStateWifiLobbyLogin( p_wk->p_save, p_profile );
+			GFL_NET_StateWifiLobbyLogin( p_profile );
 #endif
 		}
 
@@ -622,12 +668,12 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	// DWC ログイン待ち
 	case WFLBY_CONNECT_SEQ_LOGIN_WAIT_DWC:
 		// エラー処理
-		if( CommStateIsWifiError() || CommStateWifiLobbyError() ){
+		if( GFL_NET_SystemIsError() || GFL_NET_SystemIsLobbyError() ){
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk_system );
 			(*p_seq) = WFLBY_CONNECT_SEQ_ERRON;
 		}
 
-		if( CommStateWifiLobbyDwcLoginCheck() == TRUE ){	// DWC_LoginAsyncの接続完了
+		if( GFL_NET_StateWifiLobbyDwcLoginCheck() == TRUE ){	// DWC_LoginAsyncの接続完了
 			// WiFiクラブでの状態をNONEにする処理
 			WFLBY_SYSTEM_WiFiClubBuff_Init( p_param->p_system );
 			(*p_seq)++;
@@ -638,12 +684,12 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	case WFLBY_CONNECT_SEQ_LOGIN_WAIT:
 		
 		// エラー処理
-		if( CommStateIsWifiError() || CommStateWifiLobbyError() ){
+		if( GFL_NET_SystemIsError() || GFL_NET_SystemIsLobbyError() ){
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk_system );
 			(*p_seq) = WFLBY_CONNECT_SEQ_ERRON;
 		}
 
-		if( CommStateIsWifiLoginState() ){
+		if( GFL_NET_StateIsWifiLoginState() ){
 
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk_system );
 
@@ -656,7 +702,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 
 			// ログインした時間を保存
 			{
-				p_param->p_wflby_counter->time = GF_RTC_GetDateTimeBySecond();
+				p_param->p_wflby_counter->time = GFL_RTC_GetDateTimeBySecond();
 			}
 			
 			p_param->enter = TRUE;	// 入場完了
@@ -667,10 +713,10 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	// エラー表示
 	case WFLBY_CONNECT_SEQ_ERRON:
 		{
-			COMMSTATE_DWCERROR* pErr;
+			GFL_NETSTATE_DWCERROR* pErr;
 			int msgno,err_no;
-			if( CommStateIsWifiError() ){
-				pErr = CommStateGetWifiError();
+			if( GFL_NET_SystemIsError() ){
+				pErr = GFL_NET_StateGetWifiError();
 				msgno = WFLBY_ERR_GetStrID( pErr->errorCode,  pErr->errorType);
                 err_no = pErr->errorCode;
 			}else{
@@ -696,8 +742,8 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 			WFLBY_ERR_TYPE err_type;
 			int err_no;
 
-			if( CommStateIsWifiError() ){
-				COMMSTATE_DWCERROR* pErr = CommStateGetWifiError();
+			if( GFL_NET_SystemIsError() ){
+				GFL_NETSTATE_DWCERROR* pErr = GFL_NET_StateGetWifiError();
 				err_type = WFLBY_ERR_GetErrType( pErr->errorCode, pErr->errorType );
 				if( err_type == WFLBY_ERR_TYPE_RETRY ){
 					// 再接続
@@ -720,8 +766,8 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 		WFLBY_CONNECT_WIN_Off( &p_wk->system );
 		WFLBY_CONNECT_WIN_Print( &p_wk->talk, msg_wifilobby_052 );
 
-		p_wk->p_yesno = BmpYesNoSelectInit( p_wk->p_bgl, &sc_WFLBY_BMPWIN_DAT_YESNO, 
-				WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN, HEAPID_WFLBY_ROOM );
+		p_wk->p_yesno = BmpMenu_YesNoSelectInit( &sc_WFLBY_BMPWIN_DAT_YESNO, 
+				WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN, 0, HEAPID_WFLBY_ROOM );
 		(*p_seq)++;
 		break;
 	
@@ -729,12 +775,12 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	case WFLBY_CONNECT_SEQ_RETRYWAIT:
 		{
 			u32 result;
-			result = BmpYesNoSelectMain( p_wk->p_yesno, HEAPID_WFLBY_ROOM );
+			result = BmpMenu_YesNoSelectMain( p_wk->p_yesno );
 			switch( result ){
 			// YES
 			case 0:	
 				// いったんログアウト
-				CommStateWifiLobbyLogout();
+				GFL_NET_StateWifiLobbyLogout();
 				(*p_seq) = WFLBY_CONNECT_SEQ_RETRYLOGOUTWAIT;
 				break;
 
@@ -748,7 +794,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 
 	// 再接続時のログアウト待ち
 	case WFLBY_CONNECT_SEQ_RETRYLOGOUTWAIT:
-		if( CommStateIsInitialize() == FALSE ){
+		if( GFL_NET_IsInit() == FALSE ){
 			(*p_seq) = WFLBY_CONNECT_SEQ_LOGIN;
 		}
 		break;
@@ -758,13 +804,13 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 		WFLBY_CONNECT_WIN_Off( &p_wk->talk );
 		WFLBY_CONNECT_WIN_Off( &p_wk->talk_system );
 		WFLBY_CONNECT_WIN_Off( &p_wk->system );
-		CommStateWifiLobbyLogout();
+		GFL_NET_StateWifiLobbyLogout();
 		(*p_seq)++;
 		break;
 		
 	// ログアウトまち
 	case WFLBY_CONNECT_SEQ_LOGOUTWAIT:
-		if( CommStateIsInitialize() == FALSE ){
+		if( GFL_NET_IsInit() == FALSE ){
 			WFLBY_CONNECT_WIN_Off( &p_wk->talk );
 			WFLBY_CONNECT_WIN_Off( &p_wk->talk_system );
 			(*p_seq) = WFLBY_CONNECT_SEQ_FADEOUT;
@@ -811,6 +857,11 @@ GFL_PROC_RESULT WFLBY_CONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	//sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	ConnectBGPalAnm_End(&p_wk->cbp);
+
+	//TCBL破棄
+	GFL_TCBL_Exit(p_wk->tcbl);
+	//PrintQue破棄
+	PRINTSYS_QUE_Delete(p_wk->printQue);
 
 	// ウィンドウシステム破棄
 	WFLBY_CONNECT_WIN_Exit( &p_wk->talk );
@@ -860,17 +911,23 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 	WFLBY_CONNECT_GraphicInit( p_wk, HEAPID_WFLBY_ROOM );
 
 	// ウィンドウシステム初期化
-	WFLBY_CONNECT_WIN_Init( &p_wk->talk, p_wk->p_bgl, FONT_TALK, NARC_message_wifi_system_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->talk, p_wk->fontHandle_talk, 
+			p_wk->tcbl, p_wk->printQue,
+			FONTID_TALK, NARC_message_wifi_system_dat,
 			WFLBY_TALKWIN_X, WFLBY_TALKWIN_Y, 
 			WFLBY_TALKWIN_SIZX, WFLBY_TALKWIN_SIZY,
 			WFLBY_TALKWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
-	WFLBY_CONNECT_WIN_Init( &p_wk->system, p_wk->p_bgl, FONT_SYSTEM, NARC_message_wifi_system_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->system, p_wk->fontHandle_system, 
+			p_wk->tcbl, p_wk->printQue,
+			FONTID_SYSTEM, NARC_message_wifi_system_dat,
 			WFLBY_SYSTEMWIN_X, WFLBY_SYSTEMWIN_Y,
 			WFLBY_SYSTEMWIN_SIZX, WFLBY_SYSTEMWIN_SIZY,
 			WFLBY_SYSTEMWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
 
 
-	WFLBY_CONNECT_WIN_Init( &p_wk->title, p_wk->p_bgl, FONT_TALK, NARC_message_wifi_lobby_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->title, p_wk->fontHandle_talk, 
+			p_wk->tcbl, p_wk->printQue,
+			FONTID_TALK, NARC_message_wifi_lobby_dat,
 			WFLBY_TITLEWIN_X, WFLBY_TITLEWIN_Y, 
 			WFLBY_TITLEWIN_SIZX, WFLBY_TITLEWIN_SIZY,
 			WFLBY_TITLEWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
@@ -927,26 +984,11 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 		}
 		break;
 
-#if 0	// タイムアウトメッセージは広場内で出すことになった
-	// タイムアウト退室時メッセージ表示
-	case WFLBY_DISCONNECT_SEQ_TIMEOUT_MSG:
-		WFLBY_CONNECT_WIN_PrintWait( &p_wk->talk, msg_hiroba_end_01 );
-		(*p_seq) = WFLBY_DISCONNECT_SEQ_TIMEOUT_MSG_WAIT;
-		break;
-
-	// タイムアウト退室時メッセージ表示待ち
-	case WFLBY_DISCONNECT_SEQ_TIMEOUT_MSG_WAIT:
-		if( WFLBY_CONNECT_WIN_PrintEndWait( &p_wk->talk ) ){
-			(*p_seq) = WFLBY_DISCONNECT_SEQ_LOGOUT_MSG;
-		}
-		break;
-#endif
-
 	// 退室メッセージ表示
 	case WFLBY_DISCONNECT_SEQ_LOGOUT_MSG:
 		WFLBY_CONNECT_WIN_Print( &p_wk->talk, dwc_message_0011 );
 		// エラーチェック
-		if( CommStateIsWifiError() || CommStateWifiLobbyError() ){
+		if( GFL_NET_SystemIsError() || GFL_NET_SystemIsLobbyError() ){
 			// エラーならすぐにLOGOUT
 			(*p_seq) = WFLBY_DISCONNECT_SEQ_LOGOUT;
 			WFLBY_CONNECT_WIN_StartTimeWait( &p_wk->talk );
@@ -978,12 +1020,12 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 
 	// ログアウト処理
 	case WFLBY_DISCONNECT_SEQ_LOGOUT:
-		CommStateWifiLobbyLogout();
+		GFL_NET_StateWifiLobbyLogout();
 		(*p_seq) = WFLBY_DISCONNECT_SEQ_LOGOUT_WAIT;
 		break;
 
 	case WFLBY_DISCONNECT_SEQ_LOGOUT_WAIT:
-		if( CommStateIsInitialize() == FALSE ){
+		if( GFL_NET_IsInit() == FALSE ){
 
 			// タイムアウト終了
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk_system );
@@ -1091,8 +1133,6 @@ static void WFLBY_CONNECT_VBlank(GFL_TCB *tcb, void *p_work)
 	WFLBY_CONNECTWK* p_wk = p_work;
 
 	WFLBY_CONNECT_GraphicVBlank( p_wk );
-	
-	ConnectBGPalAnm_VBlank(&p_wk->cbp);
 }
 
 //----------------------------------------------------------------------------
@@ -1114,7 +1154,7 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID )
 
 	// バックグラウンドを黒にする
 	{
-		GF_BGL_BackGroundColorSet( sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_BACK], 0 );
+		GFL_BG_SetBackGroundColor( sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_BACK], 0 );
 	}
 	
 
@@ -1153,8 +1193,8 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID )
 		BmpWinFrame_GraphicSet(
 				sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], WFLBY_SYSWINGRA_CGX,
 				WFLBY_MAIN_PLTT_SYSWIN, 0, heapID );
-		TalkWinGraphicSet(
-				p_wk->p_bgl, sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], WFLBY_TALKWINGRA_CGX, 
+		TalkWinFrame_GraphicSet(
+				sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], WFLBY_TALKWINGRA_CGX, 
 				WFLBY_MAIN_PLTT_TALKWIN, winnum, heapID );
 	}
 
@@ -1162,28 +1202,28 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID )
 	// バックグラフィックを書き込む
 	{
 		// カラーパレット
-		ArcUtil_PalSet( ARC_WIFIP2PMATCH_GRA, 
+		GFL_ARC_UTIL_TransVramPalette( ARCID_WIFIP2PMATCH, 
 				NARC_wifip2pmatch_conect_NCLR, 
 				PALTYPE_MAIN_BG, WFLBY_MAIN_PLTT_BACKSTART, 
 				WFLBY_MAIN_PLTT_BACKEND*32, heapID );
-		ArcUtil_PalSet( ARC_WIFIP2PMATCH_GRA, 
+		GFL_ARC_UTIL_TransVramPalette( ARCID_WIFIP2PMATCH, 
 				NARC_wifip2pmatch_conect_NCLR, 
 				PALTYPE_SUB_BG, WFLBY_MAIN_PLTT_BACKSTART, 
 				WFLBY_MAIN_PLTT_BACKEND*32, heapID );
 
 		// キャラクタ
-		ArcUtil_BgCharSet( ARC_WIFIP2PMATCH_GRA, 
-				NARC_wifip2pmatch_conect_NCGR, p_wk->p_bgl, 
+		GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WIFIP2PMATCH, 
+				NARC_wifip2pmatch_conect_NCGR, 
 				sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_BACK], 0, 0, FALSE, heapID );
-		ArcUtil_BgCharSet( ARC_WIFIP2PMATCH_GRA, 
-				NARC_wifip2pmatch_conect_sub_NCGR, p_wk->p_bgl, 
+		GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WIFIP2PMATCH, 
+				NARC_wifip2pmatch_conect_sub_NCGR, 
 				sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_SUB_BACK], 0, 0, FALSE, heapID );
 
 		// スクリーン
-		ArcUtil_ScrnSet( ARC_WIFIP2PMATCH_GRA, NARC_wifip2pmatch_conect_01_NSCR,
-				p_wk->p_bgl, sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_BACK], 0, 0, FALSE, heapID );
-		ArcUtil_ScrnSet( ARC_WIFIP2PMATCH_GRA, NARC_wifip2pmatch_conect_sub_NSCR,
-				p_wk->p_bgl, sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_SUB_BACK], 0, 0, FALSE, heapID );
+		GFL_ARC_UTIL_TransVramScreen( ARCID_WIFIP2PMATCH, NARC_wifip2pmatch_conect_01_NSCR,
+				sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_BACK], 0, 0, FALSE, heapID );
+		GFL_ARC_UTIL_TransVramScreen( ARCID_WIFIP2PMATCH, NARC_wifip2pmatch_conect_sub_NSCR,
+				sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_SUB_BACK], 0, 0, FALSE, heapID );
 	}
 
 	// 通信グラフィックON
@@ -1191,7 +1231,7 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID )
 	
 	{
 		ARCHANDLE* p_handle;
-		p_handle = GFL_ARC_OpenDataHandle( ARC_WIFIP2PMATCH_GRA, heapID );
+		p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFIP2PMATCH, heapID );
 
 		//Wifi接続BGパレットアニメシステム初期化
 		ConnectBGPalAnm_Init(&p_wk->cbp, p_handle, 
@@ -1215,7 +1255,7 @@ static void WFLBY_CONNECT_GraphicExit( WFLBY_CONNECTWK* p_wk )
 		int i;
 
 		for( i=0; i<WFLBY_BGCNT_NUM; i++ ){
-			GFL_BG_FreeBGControl( p_wk->p_bgl, sc_WFLBY_BGCNT_FRM[i] );
+			GFL_BG_FreeBGControl( sc_WFLBY_BGCNT_FRM[i] );
 		}
 
 		// BGL破棄
@@ -1234,7 +1274,7 @@ static void WFLBY_CONNECT_GraphicExit( WFLBY_CONNECTWK* p_wk )
 static void WFLBY_CONNECT_GraphicVBlank( WFLBY_CONNECTWK* p_wk )
 {
 	// BGLVBLANK
-    GFL_BG_VBlankFunc( p_wk->p_bgl );
+    GFL_BG_VBlankFunc( );
 }
 
 
@@ -1243,7 +1283,6 @@ static void WFLBY_CONNECT_GraphicVBlank( WFLBY_CONNECTWK* p_wk )
  *	@brief	ウィンドウオブジェ初期化
  *	
  *	@param	p_wk		ワーク
- *	@param	p_bgl		BGL
  *	@param	fontid		フォントID
  *	@param	msgid		メッセージID
  *	@param	x			ｘ座標
@@ -1255,23 +1294,31 @@ static void WFLBY_CONNECT_GraphicVBlank( WFLBY_CONNECTWK* p_wk )
  *	@param	heapID		ヒープ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GF_BGL_INI* p_bgl, u32 fontid, u32 msgid, u32 x, u32 y, u32 sizx, u32 sizy, u32 cgx, SAVE_CONTROL_WORK* p_save, u32 heapID )
+static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GFL_FONT *font_handle, GFL_TCBLSYS *tcbl, PRINT_QUE *printQue, u32 fontid, u32 msgid, u32 x, u32 y, u32 sizx, u32 sizy, u32 cgx, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	p_wk->p_wordset = WORDSET_Create( heapID );
 	p_wk->p_msgman	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msgid, heapID );
 	p_wk->p_str		= GFL_STR_CreateBuffer( WFLBY_WINSYS_STRBUFNUM, heapID );
 	p_wk->p_tmp		= GFL_STR_CreateBuffer( WFLBY_WINSYS_STRBUFNUM, heapID );
+	p_wk->font_handle = font_handle;
 	p_wk->fontid	= fontid;
 	p_wk->msgspeed	= CONFIG_GetMsgPrintSpeed( SaveData_GetConfig( p_save ) );
+#if WB_FIX
 	p_wk->msgno		= 0;
+#else
+	p_wk->msg_stream = NULL;
+	p_wk->tcbl = tcbl;
+	p_wk->printQue = printQue;
+#endif
 
 #ifdef WFLBY_CONNECT_DEBUG_START
-	p_wk->p_debug_msgman	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debug_tomoya_dat, heapID );;	// ワードセット
+	p_wk->p_debug_msgman	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debug_hiroba_dat, heapID );	// ワードセット
 #endif
 
 	p_wk->win = GFL_BMPWIN_Create( 
 			sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], x, y, sizx, sizy, WFLBY_MAIN_PLTT_TALKFONT, GFL_BMP_CHRAREA_GET_F );
 	GFL_BMPWIN_MakeScreen(p_wk->win);
+	PRINT_UTIL_Setup( &p_wk->print_util, p_wk->win );
 }
 
 //----------------------------------------------------------------------------
@@ -1285,10 +1332,17 @@ static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GF_BGL_INI* p_bgl, u32 fo
 static void WFLBY_CONNECT_WIN_Print( WFLBY_WINWK* p_wk, u32 strid )
 {
 	// メッセージ表示中なら消す
+#if WB_FIX
 	if( GF_MSG_PrintEndCheck( p_wk->msgno ) ){
 		GF_STR_PrintForceStop( p_wk->msgno );
 	}
-	
+#else
+	if(p_wk->msg_stream != NULL){
+		PRINTSYS_PrintStreamDelete(p_wk->msg_stream);
+		p_wk->msg_stream = NULL;
+	}
+#endif
+
 	// ウィンドウのクリーン
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
@@ -1296,17 +1350,21 @@ static void WFLBY_CONNECT_WIN_Print( WFLBY_WINWK* p_wk, u32 strid )
 	GFL_MSG_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
-	GF_STR_PrintSimple(&p_wk->win, FONT_TALK, p_wk->p_str,
+#if WB_FIX
+	GF_STR_PrintSimple(&p_wk->win, FONTID_TALK, p_wk->p_str,
 			0,0,MSG_NO_PUT,NULL);
-	
-	if( p_wk->fontid == FONT_SYSTEM ){	
+#else
+	PRINT_UTIL_Print( &p_wk->print_util, p_wk->printQue, 0, 0, p_wk->p_str, p_wk->font_handle );
+#endif
+
+	if( p_wk->fontid == FONTID_SYSTEM ){	
 		BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN );
 	}else{
-		BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
+		TalkWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_TALKWINGRA_CGX, WFLBY_MAIN_PLTT_TALKWIN );
 	}
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -1319,20 +1377,27 @@ static void WFLBY_CONNECT_WIN_Print( WFLBY_WINWK* p_wk, u32 strid )
 static void WFLBY_CONNECT_WIN_Off( WFLBY_WINWK* p_wk )
 {
 	// メッセージ表示中なら消す
+#if WB_FIX
 	if( GF_MSG_PrintEndCheck( p_wk->msgno ) ){
 		GF_STR_PrintForceStop( p_wk->msgno );
 	}
+#else
+	if(p_wk->msg_stream != NULL){
+		PRINTSYS_PrintStreamDelete(p_wk->msg_stream);
+		p_wk->msg_stream = NULL;
+	}
+#endif
 
-	if( p_wk->fontid == FONT_SYSTEM ){
-		BmpMenuWinClear( &p_wk->win, WINDOW_TRANS_OFF );
-		GF_BGL_BmpWinOffVReq( &p_wk->win );
+	if( p_wk->fontid == FONTID_SYSTEM ){
+		BmpWinFrame_Clear( p_wk->win, WINDOW_TRANS_OFF );
+		BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 	}else{
 		if( p_wk->p_timewait ){
 			WFLBY_CONNECT_WIN_EndTimeWait( p_wk );
 		}
 
-		BmpTalkWinClear( &p_wk->win, WINDOW_TRANS_OFF );
-		GF_BGL_BmpWinOffVReq( &p_wk->win );
+		TalkWinFrame_Clear( p_wk->win, WINDOW_TRANS_OFF );
+		BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 	}
 }
 
@@ -1345,9 +1410,11 @@ static void WFLBY_CONNECT_WIN_Off( WFLBY_WINWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WFLBY_CONNECT_WIN_StartTimeWait( WFLBY_WINWK* p_wk )
 {
-	if( p_wk->fontid == FONT_TALK ){
+	if( p_wk->fontid == FONTID_TALK ){
 		GF_ASSERT( p_wk->p_timewait == NULL );
+	#if WB_TEMP_FIX
 		p_wk->p_timewait = TimeWaitIconAdd( &p_wk->win, WFLBY_TALKWINGRA_CGX );
+	#endif
 	}
 }
 
@@ -1360,10 +1427,12 @@ static void WFLBY_CONNECT_WIN_StartTimeWait( WFLBY_WINWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WFLBY_CONNECT_WIN_EndTimeWait( WFLBY_WINWK* p_wk )
 {
-	if( p_wk->fontid == FONT_TALK ){
+	if( p_wk->fontid == FONTID_TALK ){
+	#if WB_TEMP_FIX
 		GF_ASSERT( p_wk->p_timewait != NULL );
 		TimeWaitIconDel( p_wk->p_timewait );
 		p_wk->p_timewait = NULL;
+	#endif
 	}
 }
 
@@ -1377,15 +1446,22 @@ static void WFLBY_CONNECT_WIN_EndTimeWait( WFLBY_WINWK* p_wk )
 static void WFLBY_CONNECT_WIN_Exit( WFLBY_WINWK* p_wk )
 {
 	// メッセージ表示中なら消す
+#if WB_FIX
 	if( GF_MSG_PrintEndCheck( p_wk->msgno ) ){
 		GF_STR_PrintForceStop( p_wk->msgno );
 	}
+#else
+	if(p_wk->msg_stream != NULL){
+		PRINTSYS_PrintStreamDelete(p_wk->msg_stream);
+		p_wk->msg_stream = NULL;
+	}
+#endif
 
 	if( p_wk->p_timewait ){
 		WFLBY_CONNECT_WIN_EndTimeWait( p_wk );
 	}
 	
-	GFL_BMPWIN_Delete( &p_wk->win );
+	GFL_BMPWIN_Delete( p_wk->win );
 
 	GFL_STR_DeleteBuffer( p_wk->p_tmp );
 	GFL_STR_DeleteBuffer( p_wk->p_str );
@@ -1408,10 +1484,17 @@ static void WFLBY_CONNECT_WIN_Exit( WFLBY_WINWK* p_wk )
 static void WFLBY_CONNECT_WIN_PrintWait( WFLBY_WINWK* p_wk, u32 strid )
 {
 	// メッセージ表示中なら消す
+#if WB_FIX
 	if( GF_MSG_PrintEndCheck( p_wk->msgno ) ){
 		GF_STR_PrintForceStop( p_wk->msgno );
 	}
-	
+#else
+	if(p_wk->msg_stream != NULL){
+		PRINTSYS_PrintStreamDelete(p_wk->msg_stream);
+		p_wk->msg_stream = NULL;
+	}
+#endif
+
 	// ウィンドウのクリーン
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
@@ -1419,35 +1502,22 @@ static void WFLBY_CONNECT_WIN_PrintWait( WFLBY_WINWK* p_wk, u32 strid )
 	GFL_MSG_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
-	p_wk->msgno = GF_STR_PrintSimple(&p_wk->win, FONT_TALK, p_wk->p_str,
+#if WB_FIX
+	p_wk->msgno = GF_STR_PrintSimple(&p_wk->win, FONTID_TALK, p_wk->p_str,
 			0,0, p_wk->msgspeed,NULL);
-	
-	if( p_wk->fontid == FONT_SYSTEM ){	
+#else
+	p_wk->msg_stream = PRINTSYS_PrintStream(p_wk->win, 0, 0, p_wk->p_str, p_wk->font_handle,
+		p_wk->msgspeed, p_wk->tcbl, 10, HEAPID_WFLBY_ROOM, 0xff);
+#endif
+
+	if( p_wk->fontid == FONTID_SYSTEM ){	
 		BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN );
 	}else{
-		BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
+		TalkWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_TALKWINGRA_CGX, WFLBY_MAIN_PLTT_TALKWIN );
 	}
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	メッセージが終了したかチェック
- *
- *	@param	cp_wk		ワーク
- *
- *	@retval	TRUE	終了
- 	@retval	FALSE	途中
- */
-//-----------------------------------------------------------------------------
-static BOOL WFLBY_CONNECT_WIN_PrintEndWait( const WFLBY_WINWK* cp_wk )
-{
-	if( GF_MSG_PrintEndCheck( cp_wk->msgno ) == 0 ){
-		return TRUE;
-	}
-	return FALSE;
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -1467,9 +1537,13 @@ static void WFLBY_CONNECT_WIN_PrintTitle( WFLBY_WINWK* p_wk, u32 strid )
 	GFL_MSG_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
-	GF_STR_PrintColor(&p_wk->win, FONT_TALK, p_wk->p_str,
+#if WB_FIX
+	GF_STR_PrintColor(&p_wk->win, FONTID_TALK, p_wk->p_str,
 			0,0, MSG_ALLPUT, WFLBY_TITLEWIN_COL, NULL);
-
+#else
+	PRINT_UTIL_PrintColor( &p_wk->print_util, p_wk->printQue, 0, 0, 
+		p_wk->p_str, p_wk->font_handle, WFLBY_TITLEWIN_COL );
+#endif
 }
 
 
@@ -1495,17 +1569,21 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG( WFLBY_WINWK* p_wk, u32 strid, u32 num 
 	GFL_MSG_GetString( p_wk->p_debug_msgman, strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
-	GF_STR_PrintSimple(&p_wk->win, FONT_TALK, p_wk->p_str,
+#if WB_FIX
+	GF_STR_PrintSimple(&p_wk->win, FONTID_TALK, p_wk->p_str,
 			0,0,MSG_NO_PUT,NULL);
-	
-	if( p_wk->fontid == FONT_SYSTEM ){	
+#else
+	PRINT_UTIL_Print( &p_wk->print_util, p_wk->printQue, 0, 0, p_wk->p_str, p_wk->font_handle );
+#endif
+
+	if( p_wk->fontid == FONTID_SYSTEM ){	
 		BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN );
 	}else{
-		BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
+		TalkWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_TALKWINGRA_CGX, WFLBY_MAIN_PLTT_TALKWIN );
 	}
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 item )
@@ -1520,17 +1598,21 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 ite
 	GFL_MSG_GetString( p_wk->p_debug_msgman, strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
-	GF_STR_PrintSimple(&p_wk->win, FONT_TALK, p_wk->p_str,
+#if WB_FIX
+	GF_STR_PrintSimple(&p_wk->win, FONTID_TALK, p_wk->p_str,
 			0,0,MSG_NO_PUT,NULL);
-	
-	if( p_wk->fontid == FONT_SYSTEM ){	
+#else
+	PRINT_UTIL_Print( &p_wk->print_util, p_wk->printQue, 0, 0, p_wk->p_str, p_wk->font_handle );
+#endif
+
+	if( p_wk->fontid == FONTID_SYSTEM ){	
 		BmpWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_SYSWINGRA_CGX, WFLBY_MAIN_PLTT_SYSWIN );
 	}else{
-		BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
+		TalkWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, 
 				WFLBY_TALKWINGRA_CGX, WFLBY_MAIN_PLTT_TALKWIN );
 	}
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 #endif
 
@@ -1546,5 +1628,5 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 ite
 static void WFLBY_CONNECT_WIN_SetErrNumber( WFLBY_WINWK* p_wk, u32 number )
 {
     WORDSET_RegisterNumber( p_wk->p_wordset, 0, number,
-                           5, NUMBER_DISPTYPE_ZERO, STR_NUM_CODE_DEFAULT);
+                           5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
 }

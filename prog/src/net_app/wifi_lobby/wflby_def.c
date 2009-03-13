@@ -475,7 +475,7 @@ WFLBY_ERR_TYPE WFLBY_ERR_GetErrType( int errno,int errtype )
 BOOL WFLBY_ERR_CheckError( void )
 {
 #if WB_FIX
-	if( CommStateIsWifiError() || CommStateWifiLobbyError() ){
+	if( GFL_NET_SystemIsError() || GFL_NET_SystemIsLobbyError() ){
 #else
 	if(GFL_NET_SystemIsError() != 0){
 #endif

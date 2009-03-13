@@ -146,10 +146,10 @@ enum {
 #define ANKETO_TALK_YESNOWIN_SIZY	( 4 )
 #define ANKETO_TALK_YESNOWIN_CGX		( ANKETO_TALK_TALKWIN_CGXEND )
 #define ANKETO_TALK_YESNOWIN_CGXEND	( ANKETO_TALK_YESNOWIN_CGX+(ANKETO_TALK_YESNOWIN_SIZX*ANKETO_TALK_YESNOWIN_SIZY) )
-static const BMPWIN_DAT sc_YESNO_BMPDAT = {
+static const BMPWIN_YESNO_DAT sc_YESNO_BMPDAT = {
 	GFL_BG_FRAME1_M,
 	ANKETO_TALK_YESNOWIN_X,		ANKETO_TALK_YESNOWIN_Y,
-	ANKETO_TALK_YESNOWIN_SIZX,	ANKETO_TALK_YESNOWIN_SIZY,
+//	ANKETO_TALK_YESNOWIN_SIZX,	ANKETO_TALK_YESNOWIN_SIZY,
 	ANKETO_PLTT_MAIN_TALKFONT,	ANKETO_TALK_YESNOWIN_CGX,
 };
 
@@ -493,7 +493,7 @@ typedef struct {
 //=====================================
 typedef struct {
 	// BG
-	GF_BGL_INI*				p_bgl;
+	//GF_BGL_INI*				p_bgl;
 
 	// OAM
     GFL_CLUNIT*           p_clactset;		// セルアクターセット
@@ -1028,7 +1028,7 @@ static void ANKETO_BgInit( ANKETO_DRAWSYS* p_wk, CONFIG* p_config, u32 heapID )
 	// トークウィンドウ
 	{
 		u8 win_num = CONFIG_GetWindowType( p_config );
-		TalkWinGraphicSet( p_wk->p_bgl, GFL_BG_FRAME1_M,
+		TalkWinFrame_GraphicSet( p_wk->p_bgl, GFL_BG_FRAME1_M,
 				ANKETO_TALKWIN_CGX, ANKETO_TALKWIN_PAL,
 				win_num, heapID );
 	}
@@ -1041,9 +1041,9 @@ static void ANKETO_BgInit( ANKETO_DRAWSYS* p_wk, CONFIG* p_config, u32 heapID )
 
 	// した画面に、Wi－Fiマークを出す
 	{
-		ArcUtil_BgCharSet(ARCID_LOBBY_NEWS, NARC_lobby_news_wifi_mark_bg_NCGR, p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
-		ArcUtil_ScrnSet(ARCID_LOBBY_NEWS, NARC_lobby_news_wifi_mark_bg_NSCR, p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
-		ArcUtil_PalSet( ARCID_LOBBY_NEWS, NARC_lobby_news_lobby_news_bg_NCLR, PALTYPE_SUB_BG, 0, 0, heapID );
+		GFL_ARC_UTIL_TransVramBgCharacter(ARCID_LOBBY_NEWS, NARC_lobby_news_wifi_mark_bg_NCGR, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
+		GFL_ARC_UTIL_TransVramScreen(ARCID_LOBBY_NEWS, NARC_lobby_news_wifi_mark_bg_NSCR, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
+		GFL_ARC_UTIL_TransVramPalette( ARCID_LOBBY_NEWS, NARC_lobby_news_lobby_news_bg_NCLR, PALTYPE_SUB_BG, 0, 0, heapID );
 	}
 }
 
@@ -1708,21 +1708,21 @@ static void ANKETO_INPUT_DrawAnswer( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, A
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[ANKETO_INPUT_BMP_ANS]), 0 );
 
 	p_str = ANKETO_QUESTION_DATA_GetAnswerStr( &p_wk->question_now, p_msg, ANKETO_ANSWER_A );
-	GF_STR_PrintColor( &p_wk->win[ANKETO_INPUT_BMP_ANS], 
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ANKETO_INPUT_BMP_ANS], 
 			FONT_TALK, p_str, 0, ANKETO_INPUTWIN_ANS00_Y,
 			MSG_NO_PUT, ANKETO_INPUT_ANSWER_COL, NULL );
 
 	p_str = ANKETO_QUESTION_DATA_GetAnswerStr( &p_wk->question_now, p_msg, ANKETO_ANSWER_B );
-	GF_STR_PrintColor( &p_wk->win[ANKETO_INPUT_BMP_ANS], 
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ANKETO_INPUT_BMP_ANS], 
 			FONT_TALK, p_str, 0, ANKETO_INPUTWIN_ANS01_Y,
 			MSG_NO_PUT, ANKETO_INPUT_ANSWER_COL, NULL );
 
 	p_str = ANKETO_QUESTION_DATA_GetAnswerStr( &p_wk->question_now, p_msg, ANKETO_ANSWER_C );
-	GF_STR_PrintColor( &p_wk->win[ANKETO_INPUT_BMP_ANS], 
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ANKETO_INPUT_BMP_ANS], 
 			FONT_TALK, p_str, 0, ANKETO_INPUTWIN_ANS02_Y,
 			MSG_NO_PUT, ANKETO_INPUT_ANSWER_COL, NULL );
 
-	GF_BGL_BmpWinOnVReq( &p_wk->win[ANKETO_INPUT_BMP_ANS] );
+	BmpWinFrame_TransScreen( p_wk->win[ANKETO_INPUT_BMP_ANS] ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -1825,11 +1825,11 @@ static void ANKETO_TalkWin_Print( ANKETO_TALKWIN* p_wk, const STRBUF* cp_str )
 	
 	// 文字列コピー
 	STRBUF_Copy( p_wk->p_str, cp_str );
-	p_wk->msgno = GF_STR_PrintColor( &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
+	p_wk->msgno = PRINTSYS_PrintStreamColor(/*引数内はまだ未対応*/ &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
 			p_wk->msgwait, ANKETO_TALK_COL, NULL );
 
 	// ウィンドウを書き込む
-	BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, ANKETO_TALKWIN_CGX, ANKETO_TALKWIN_PAL );
+	TalkWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, ANKETO_TALKWIN_CGX, ANKETO_TALKWIN_PAL );
 }
 
 //----------------------------------------------------------------------------
@@ -1852,12 +1852,12 @@ static void ANKETO_TalkWin_PrintAll( ANKETO_TALKWIN* p_wk, const STRBUF* cp_str 
 	
 	// 文字列コピー
 	STRBUF_Copy( p_wk->p_str, cp_str );
-	GF_STR_PrintColor( &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
 			MSG_NO_PUT, ANKETO_TALK_COL, NULL );
 
 	// ウィンドウを書き込む
-	BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, ANKETO_TALKWIN_CGX, ANKETO_TALKWIN_PAL );
-	GF_BGL_BmpWinOnVReq( &p_wk->win );
+	TalkWinFrame_Write( p_wk->win, WINDOW_TRANS_OFF, ANKETO_TALKWIN_CGX, ANKETO_TALKWIN_PAL );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -1943,10 +1943,10 @@ static void ANKETO_TalkWin_Off( ANKETO_TALKWIN* p_wk )
 	ANKETO_TalkWin_StopTimeWait( p_wk );
 
 	// 全体を消す
-	BmpTalkWinClear( &p_wk->win, WINDOW_TRANS_OFF );
+	TalkWinFrame_Clear( p_wk->win, WINDOW_TRANS_OFF );
 
 	// Vリクエスト
-	GF_BGL_BmpWinOffVReq( &p_wk->win );
+	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -1961,8 +1961,8 @@ static void ANKETO_TalkWin_Off( ANKETO_TALKWIN* p_wk )
 static void ANKETO_TalkWin_StartYesNo( ANKETO_TALKWIN* p_wk, ANKETO_DRAWSYS* p_sys, u32 heapID )
 {
 	GF_ASSERT( p_wk->p_yesno == NULL );
-	p_wk->p_yesno = BmpYesNoSelectInit( p_sys->p_bgl, &sc_YESNO_BMPDAT, 
-			ANKETO_SYSTEMWIN_CGX, ANKETO_SYSTEMWIN_PAL, heapID );
+	p_wk->p_yesno = BmpMenu_YesNoSelectInit( &sc_YESNO_BMPDAT, 
+			ANKETO_SYSTEMWIN_CGX, ANKETO_SYSTEMWIN_PAL, 0, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -1979,7 +1979,7 @@ static void ANKETO_TalkWin_StartYesNo( ANKETO_TALKWIN* p_wk, ANKETO_DRAWSYS* p_s
 static u32	ANKETO_TalkWin_MainYesNo( ANKETO_TALKWIN* p_wk, u32 heapID )
 {
 	u32 ret;
-	ret = BmpYesNoSelectMain( p_wk->p_yesno, heapID );
+	ret = BmpMenu_YesNoSelectMain( p_wk->p_yesno );
 	if( ret != BMPMENU_NULL ){
 		p_wk->p_yesno = NULL;
 	}
@@ -1997,7 +1997,7 @@ static u32	ANKETO_TalkWin_MainYesNo( ANKETO_TALKWIN* p_wk, u32 heapID )
 static void ANKETO_TalkWin_EndYesNo( ANKETO_TALKWIN* p_wk, u32 heapID )
 {
 	if( p_wk->p_yesno != NULL ){
-		BmpYesNoWinDel( p_wk->p_yesno, heapID );
+		BmpMenu_YesNoWinDel( p_wk->p_yesno, heapID );
 		p_wk->p_yesno = NULL;
 	}
 }
@@ -2482,11 +2482,11 @@ static void ANKETO_OUTPUT_DrawTitle( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, 
 	// センタリング
 	width = PRINTSYS_GetStrWidth( p_str, GFL_FONT* font/*FONT_TALK*/, 0 );
 	x = ((ANKETO_OUTPUTWIN_TITLE_SIZX*8) - width) / 2;
-	GF_STR_PrintColor( &p_wk->win[ANKETO_OUTPUT_BMP_TITLE], 
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ANKETO_OUTPUT_BMP_TITLE], 
 			FONT_TALK, p_str, x, 4,
 			MSG_NO_PUT, col, NULL );
 
-	GF_BGL_BmpWinOnVReq( &p_wk->win[ANKETO_OUTPUT_BMP_TITLE] );
+	BmpWinFrame_TransScreen( p_wk->win[ANKETO_OUTPUT_BMP_TITLE] ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -2512,17 +2512,17 @@ static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY]), 0 );
 
 	p_str = ANKETO_QUESTION_DATA_GetAnswerStr( cp_data, p_msg, ANKETO_ANSWER_A );
-	GF_STR_PrintColor( &p_wk->win[ANKETO_OUTPUT_BMP_ANS], 
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ANKETO_OUTPUT_BMP_ANS], 
 			FONT_TALK, p_str, 0, ANKETO_OUTPUTWIN_ANS00_Y,
 			MSG_NO_PUT, col, NULL );
 
 	p_str = ANKETO_QUESTION_DATA_GetAnswerStr( cp_data, p_msg, ANKETO_ANSWER_B );
-	GF_STR_PrintColor( &p_wk->win[ANKETO_OUTPUT_BMP_ANS], 
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ANKETO_OUTPUT_BMP_ANS], 
 			FONT_TALK, p_str, 0, ANKETO_OUTPUTWIN_ANS01_Y,
 			MSG_NO_PUT, col, NULL );
 
 	p_str = ANKETO_QUESTION_DATA_GetAnswerStr( cp_data, p_msg, ANKETO_ANSWER_C );
-	GF_STR_PrintColor( &p_wk->win[ANKETO_OUTPUT_BMP_ANS], 
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ANKETO_OUTPUT_BMP_ANS], 
 			FONT_TALK, p_str, 0, ANKETO_OUTPUTWIN_ANS02_Y,
 			MSG_NO_PUT, col, NULL );
 
@@ -2543,7 +2543,7 @@ static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION
 		str_width	= PRINTSYS_GetStrWidth( p_str, GFL_FONT* font/*FONT_TALK*/, 0 );
 		write_x		= ((ANKETO_OUTPUTWIN_MY_NAME_WRITE_SIZE_X - str_width) / 2);
 		
-		GF_STR_PrintColor( &p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY], 
+		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY], 
 				FONT_TALK, p_str, write_x, 0,
 				MSG_NO_PUT, mycol, NULL );
 
@@ -2552,14 +2552,14 @@ static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION
 		str_width	= PRINTSYS_GetStrWidth( p_str, GFL_FONT* font/*FONT_TALK*/, 0 );
 		write_x		= ((ANKETO_OUTPUTWIN_MY_ANSWER_WRITE_SIZE_X - str_width) / 2);
 		
-		GF_STR_PrintColor( &p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY], 
+		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY], 
 				FONT_TALK, p_str, ANKETO_OUTPUTWIN_MY_ANSWER_X+write_x, 0,
 				MSG_NO_PUT, col, NULL );
 	}
 	
 
-	GF_BGL_BmpWinOnVReq( &p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY] );
-	GF_BGL_BmpWinOnVReq( &p_wk->win[ANKETO_OUTPUT_BMP_ANS] );
+	BmpWinFrame_TransScreen( p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY] ,WINDOW_TRANS_ON_V);
+	BmpWinFrame_TransScreen( p_wk->win[ANKETO_OUTPUT_BMP_ANS] ,WINDOW_TRANS_ON_V);
 }
 
 //----------------------------------------------------------------------------
@@ -2645,7 +2645,7 @@ static BOOL ANKETO_OUTPUT_DrawBarMain( ANKETO_OUTPUT* p_wk, ANKETO_DRAWSYS* p_dr
 					ANKETO_BAR_WRITE_X+draw_start+j, 0,
 					ANKETO_BAR_CG_SIZX, ANKETO_BAR_CG_SIZY );
 		}
-		GF_BGL_BmpWinOnVReq( &p_wk->win[ ANKETO_OUTPUT_BMP_ANS_BAR00+i ] );
+		BmpWinFrame_TransScreen( p_wk->win[ ANKETO_OUTPUT_BMP_ANS_BAR00+i ] ,WINDOW_TRANS_ON_V);
 	}
 
 	// 全部終わってたら終わり

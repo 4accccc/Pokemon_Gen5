@@ -40,6 +40,8 @@
 
 #include "wifi_earth_snd.h"
 
+#include "net_app/net_bugfix.h"
+
 //============================================================================================
 //	定数定義
 //============================================================================================
@@ -301,7 +303,7 @@ typedef struct EARTH_DEMO_WORK_tag
 	EARTH_DEMO_LIST	placelist;
 
 	//ＢＧシステムポインタ
-	GF_BGL_INI*			bgl;
+	//GF_BGL_INI*			bgl;
 	GF_BGL_BMPWIN		msgwin;
 	GF_BGL_BMPWIN		listwin;
 	GF_BGL_BMPWIN		iconwin;
@@ -504,11 +506,11 @@ static const BMPWIN_DAT EarthMsgWinData =
 	EARTH_MSG_WIN_CGX,	//ウインドウキャラ領域の開始キャラクタナンバー
 };
 
-static const BMPWIN_DAT EarthYesNoWinData =
+static const BMPWIN_YESNO_DAT EarthYesNoWinData =
 {
 	EARTH_TEXT_PLANE,	//ウインドウ使用フレーム
 	EARTH_YESNO_WIN_PX,EARTH_YESNO_WIN_PY,//ウインドウ領域の左上XY座標（キャラ単位指定）
-	EARTH_YESNO_WIN_SX,EARTH_YESNO_WIN_SY,//ウインドウ領域のXYサイズ（キャラ単位指定）
+//	EARTH_YESNO_WIN_SX,EARTH_YESNO_WIN_SY,//ウインドウ領域のXYサイズ（キャラ単位指定）
 	EARTH_YESNO_WIN_PAL,	//ウインドウ領域のパレットナンバー 
 	EARTH_YESNO_WIN_CGX,	//ウインドウキャラ領域の開始キャラクタナンバー
 };
@@ -771,16 +773,16 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 
 		if(Earth_MsgPrint(wk,mes_earth_01_03,A_BUTTON_NOWAIT) == TRUE){
 			//はい/いいえウィンドウ表示
-			wk->yesnowin = BmpYesNoSelectInit(wk->bgl,&EarthYesNoWinData,
+			wk->yesnowin = BmpMenu_YesNoSelectInit(&EarthYesNoWinData,
 											EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL,
-											wk->heapID);
+											0, wk->heapID);
 			*seq = EARTHDEMO_SEQ_REGISTRATIONMENU_SELECT;	//選択モードへ
 		}
 		break;
 
 	case EARTHDEMO_SEQ_REGISTRATIONMENU_SELECT:	//登録メニュー選択モード
 		{
-			u32 list_result = BmpYesNoSelectMain(wk->yesnowin,wk->heapID);
+			u32 list_result = BmpMenu_YesNoSelectMain(wk->yesnowin);
 
 			switch(list_result){
 			case 0:		//「はい」
@@ -893,16 +895,16 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 
 		if(Earth_MsgPrint(wk,mes_earth_01_06,A_BUTTON_NOWAIT) == TRUE){
 			//はい/いいえウィンドウ表示
-			wk->yesnowin = BmpYesNoSelectInit(wk->bgl,&EarthYesNoWinData,
+			wk->yesnowin = BmpMenu_YesNoSelectInit(&EarthYesNoWinData,
 											EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL,
-											wk->heapID);
+											0, wk->heapID);
 			*seq = EARTHDEMO_SEQ_FINAL_REGISTRATION_SELECT;	//登録最終確認選択モードへ
 		}
 		break;
 
 	case EARTHDEMO_SEQ_FINAL_REGISTRATION_SELECT:	//登録最終確認選択モード
 		{
-			u32 list_result = BmpYesNoSelectMain(wk->yesnowin,wk->heapID);
+			u32 list_result = BmpMenu_YesNoSelectMain(wk->yesnowin);
 
 			switch(list_result){
 			case 0:		//「はい」
@@ -969,7 +971,7 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 			//終了判定
 			if((sys.trg & PAD_BUTTON_B)||(wk->tp_result & PAD_BUTTON_B)){
 				//「やめる」アイコンＯＦＦ
-				BmpMenuWinClear(&wk->iconwin,WINDOW_TRANS_ON);
+				BmpWinFrame_Clear(wk->iconwin,WINDOW_TRANS_ON);
 				Snd_SePlay( WIFIEARTH_SND_YAMERU );
 
 				GF_BGL_BmpWinFill(&wk->msgwin,FBMP_COL_WHITE,0,0,
@@ -1385,7 +1387,7 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 						EARTH_BACK_S_PLANE,0,0,0,wk->heapID);
 
 	//メッセージウインドウキャラ＆パレット読み込み（ウインドウ外側）
-	TalkWinGraphicSet(	wk->bgl,EARTH_TEXT_PLANE,
+	TalkWinFrame_GraphicSet(	wk->bgl,EARTH_TEXT_PLANE,
 						EARTH_TALKWINCHR_NUM,EARTH_TALKWIN_PAL,
 						CONFIG_GetWindowType(wk->config),wk->heapID);
 	//メニューウインドウキャラ＆パレット読み込み（ウインドウ外側）
@@ -1396,14 +1398,14 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 	SystemFontPaletteLoad( PALTYPE_SUB_BG, EARTH_SYSFONT_PAL*PALSIZE, wk->heapID );
 	//NULLキャラ＆パレット設定
 	GF_BGL_ClearCharSet( EARTH_TEXT_PLANE, 32, 0, wk->heapID );
-	GF_BGL_BackGroundColorSet( EARTH_TEXT_PLANE,EARTH_NULL_PALETTE );
+	GFL_BG_SetBackGroundColor( EARTH_TEXT_PLANE,EARTH_NULL_PALETTE );
 
 	//メッセージウインドウビットマップ作成（ウインドウ内側）
 	GF_BGL_BmpWinAddEx(wk->bgl,&wk->msgwin,&EarthMsgWinData );
 	GF_BGL_BmpWinFill(&wk->msgwin,FBMP_COL_WHITE,0,0,//bmp,col,startX,startY,sizeX,sizeY
 			EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
 	//メッセージウインドウ初期表示
-	BmpTalkWinWrite(&wk->msgwin,WINDOW_TRANS_ON,EARTH_TALKWINCHR_NUM,EARTH_TALKWIN_PAL);
+	TalkWinFrame_Write(wk->msgwin,WINDOW_TRANS_ON,EARTH_TALKWINCHR_NUM,EARTH_TALKWIN_PAL);
 
 	//メッセージシステム初期化
 	wk->msgseq = MSGSET;
@@ -1429,7 +1431,7 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 	SystemFontPaletteLoad( PALTYPE_MAIN_BG, EARTH_SYSFONT_PAL*PALSIZE, wk->heapID );
 	//NULLキャラ＆パレット設定
 	GF_BGL_ClearCharSet( EARTH_ICON_PLANE, 32, 0, wk->heapID );
-	GF_BGL_BackGroundColorSet( EARTH_ICON_PLANE,0x0000 );
+	GFL_BG_SetBackGroundColor( EARTH_ICON_PLANE,0x0000 );
 	{
 		STRBUF* back_str = STRBUF_Create(16, wk->heapID);
 
@@ -1492,7 +1494,7 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 		GFL_MSG_GetString(wk->msg_man,msgID,wk->msgstr);
 
 		//文字列の表示
-		wk->msgID = GF_STR_PrintSimple(	&wk->msgwin,FONT_TALK,wk->msgstr,0,0,
+		wk->msgID = PRINTSYS_PrintStream(/*引数内はまだ未対応*/	&wk->msgwin,FONT_TALK,wk->msgstr,0,0,
 										CONFIG_GetMsgPrintSpeed( wk->config ),NULL);
 
 		wk->msgseq = MSGDRAW;
@@ -1608,7 +1610,7 @@ static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk,
 static void Earth_BmpListDel( EARTH_DEMO_WORK* wk )
 {
 	//選択リスト削除処理
-	BmpMenuWinClear(&wk->listwin,WINDOW_TRANS_ON);
+	BmpWinFrame_Clear(wk->listwin,WINDOW_TRANS_ON);
 	GF_BGL_BmpWinDel(&wk->listwin);
 	BmpListExit(wk->bmplist,NULL,NULL);
 	BMP_MENULIST_Delete(wk->bmplistdata);
@@ -1666,7 +1668,7 @@ static void Earth_MyPlaceInfoWinSet2( EARTH_DEMO_WORK* wk, int nation, int area 
 
 static void Earth_MyPlaceInfoWinRelease( EARTH_DEMO_WORK* wk )
 {
-	BmpMenuWinClear(&wk->infowin,WINDOW_TRANS_ON);
+	BmpWinFrame_Clear(wk->infowin,WINDOW_TRANS_ON);
 	GF_BGL_BmpWinDel(&wk->infowin);
 }
 

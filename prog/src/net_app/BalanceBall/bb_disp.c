@@ -627,7 +627,7 @@ void BB_disp_InfoWinAdd( BB_CLIENT* wk )
 void BB_disp_InfoWinDel( BB_CLIENT* wk )
 {
 	if( GF_BGL_BmpWinAddCheck( &wk->win ) == TRUE ){
-		BmpMenuWinClear( &wk->win, WINDOW_TRANS_OFF );
+		BmpWinFrame_Clear( wk->win, WINDOW_TRANS_OFF );
 		GF_BGL_BmpWinOff( &wk->win );
 		GFL_BMPWIN_Delete( &wk->win );
 	}
@@ -794,7 +794,7 @@ void BB_disp_NameWinDel( BB_CLIENT* wk )
 		
 
 		if( GF_BGL_BmpWinAddCheck( &wk->win_name[ no ] ) == TRUE ){
-			BmpMenuWinClear( &wk->win_name[ no ], WINDOW_TRANS_OFF );
+			BmpWinFrame_Clear( wk->win_name[ no ], WINDOW_TRANS_OFF );
 		    GF_BGL_BmpWinOff( &wk->win_name[ no ] );
 			GFL_BMPWIN_Delete( &wk->win_name[ no ] );
 		}

@@ -564,7 +564,7 @@ typedef struct {
 //=====================================
 typedef struct {
 	// BG
-	GF_BGL_INI*				p_bgl;
+	//GF_BGL_INI*				p_bgl;
 
 	// OAM
     GFL_CLUNIT*           p_clactset;		// セルアクターセット
@@ -1100,7 +1100,7 @@ static void NEWSDRAW_DrawSysBgInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 
 	// 基本キャラクタパレットフレーム
 	// バックグラウンドカラー設定
-//	GF_BGL_BackGroundColorSet( GFL_BG_FRAME0_M, GX_RGB( 0,0,0 ) );
+//	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, GX_RGB( 0,0,0 ) );
 }
 static void NEWSDRAW_DrawSysBgExit( NEWSDRAW_DRAWSYS* p_wk )
 {
@@ -1927,7 +1927,7 @@ static void NEWSDRAW_TopicWinInit( NEWSDRAW_TOPICWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp[i]), 0 );
 		GFL_BMPWIN_MakeScreen(p_wk->bmp[i]);
 		
-		GF_BGL_BmpWinOnVReq( &p_wk->bmp[i] );
+		BmpWinFrame_TransScreen(p_wk->bmp[i], WINDOW_TRANS_ON_V);
 	}
 
 	// 文字列取得
@@ -2228,7 +2228,7 @@ static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp )
 			wx, 0,						// 書き込み先位置
 			sx, NEWSDRAW_TOPIC_DMBMP_SY*8, 15 );// 書き込みサイズ
 
-	GF_BGL_BmpWinOnVReq( p_bmp );
+	BmpWinFrame_TransScreen( p_bmp ,WINDOW_TRANS_ON_V);
 }
 
 
@@ -2293,17 +2293,17 @@ static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 
 
 		if( i==NEWSDRAW_TITLEWIN_APLNAME ){
-			GF_STR_PrintColor(
+			PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/
 				&p_wk->bmp[i], FONT_SYSTEM, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
 				NEWSDRAW_TITLE_BMPDATA[i].dy, MSG_NO_PUT, NEWSDRAW_TITLEWIN_APL_COL, NULL );
 		}else{
 	
-			GF_STR_PrintColor(
+			PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/
 				&p_wk->bmp[i], FONT_SYSTEM, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
 				NEWSDRAW_TITLE_BMPDATA[i].dy, MSG_NO_PUT, NEWSDRAW_TITLEWIN_COL, NULL );
 		}
 		
-		GF_BGL_BmpWinOnVReq( &p_wk->bmp[i] );
+		BmpWinFrame_TransScreen( p_wk->bmp[i] ,WINDOW_TRANS_ON_V);
 	}
 
 	// メッセージデータ破棄

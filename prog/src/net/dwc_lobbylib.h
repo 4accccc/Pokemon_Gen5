@@ -301,6 +301,8 @@ typedef struct {
 extern void DWC_LOBBY_Init( u32 heapID, SAVE_CONTROL_WORK* p_save, u32 profilesize, const DWC_LOBBY_CALLBACK* cp_callback,  void* p_callbackwork );	// ワークの初期化
 extern void DWC_LOBBY_Exit( void );												// ワークの破棄
 extern DWC_LOBBY_CHANNEL_STATE DWC_LOBBY_Update( void );						// ロビーの更新関数
+extern BOOL DWC_LOBBY_UpdateErrorCheck( void );
+
 extern PPW_LOBBY_ERROR DWC_LOBBY_GetErr( void );								// ロビーエラー状態取得
 extern s32 DWC_LOBBY_GetErrNo( PPW_LOBBY_ERROR error );								// ロビーエラー状態取得
 extern BOOL DWC_LOBBY_Login( const void* cp_loginprofile );						// メインチャンネルへログイン
