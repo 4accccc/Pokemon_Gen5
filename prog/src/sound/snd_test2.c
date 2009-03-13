@@ -604,6 +604,7 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 		case SOUNDTEST_TPEV_BGM_PLAY:
 			PMSNDSYS_PlayBGM(sw->bgmNum);
 			GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSNDSYS_GetBGMhandlePointer());
+			GFL_SNDSTATUS_InitControl(sw->gflSndStatus);
 			pauseSw = FALSE;
 			break;
 		case SOUNDTEST_TPEV_BGM_STOP:

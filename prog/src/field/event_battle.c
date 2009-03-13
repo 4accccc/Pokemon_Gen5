@@ -20,6 +20,8 @@
 #include "./event_fieldmap_control.h"
 #include "./event_battle.h"
 
+#include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
+#include "sound/pm_sndsys.h"
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 #include "battle/battle.h"
@@ -70,10 +72,19 @@ static GMEVENT_RESULT DebugBattleEvent(GMEVENT * event, int *  seq, void * work)
 	switch (*seq) {
 	case 0:
 		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+		// サウンドテスト
+		// ＢＧＭ一時停止→退避
+		PMSNDSYS_PauseBGM(TRUE);
+		PMSNDSYS_PushBGM();
+		//
 		(*seq)++;
 		break;
 	case 1:
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
+		// サウンドテスト
+		// 戦闘用ＢＧＭセット
+		PMSNDSYS_PlayBGM(1074);//(SEQ_MUS_WB_VS_NORAPOKE);
+		//
 		(*seq)++;
 		break;
 	case 2:
@@ -86,6 +97,11 @@ static GMEVENT_RESULT DebugBattleEvent(GMEVENT * event, int *  seq, void * work)
 		break;
 	case 4:
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
+		// サウンドテスト
+		// ＢＧＭ取り出し→再開
+		PMSNDSYS_PopBGM();
+		PMSNDSYS_PauseBGM(FALSE);
+		//
 		(*seq) ++;
 		break;
 	case 5:

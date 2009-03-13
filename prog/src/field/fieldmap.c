@@ -197,7 +197,13 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 	{
 		u16 trackBit = 0xfcff;	// track 9,10 OFF
 	
-		PMSNDSYS_PlayBGM_EX(SEQ_MUS_WB_R_F, trackBit);
+		//サウンドテスト用
+		//※現在マップ切り替わり時のデータ取得と戦闘などSubProcから帰ってくる
+		//　場所が切り分けられていないので仮でフラグ管理する
+		if( debugBGMsetFlag == FALSE ){
+			PMSNDSYS_PlayBGM_EX(SEQ_MUS_WB_R_F, trackBit);
+			debugBGMsetFlag = TRUE;
+		}
 	}
 #endif
 	return fieldWork;
@@ -238,8 +244,10 @@ FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork )
 //------------------------------------------------------------------
 void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )
 {
+#if 0
     SND_STRM_Stop();
     SND_STRM_Release();
+#endif
     GFL_HEAP_FreeMemory( fldWork->pMapMatrixBuf );
 
 	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい

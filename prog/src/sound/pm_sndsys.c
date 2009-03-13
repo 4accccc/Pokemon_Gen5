@@ -26,6 +26,9 @@
  *
  */
 //============================================================================================
+//仮
+BOOL debugBGMsetFlag;
+
 //------------------------------------------------------------------
 /**
  * @brief	プレーヤー定義
@@ -155,6 +158,8 @@ void	PMSNDSYS_Init( void )
 	size2 = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
 
 	OS_Printf("setup Sound... size(%x) heapRemains(%x)\n", size1 - size2, size2);
+
+	debugBGMsetFlag = FALSE;
 }
 
 //============================================================================================
