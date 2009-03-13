@@ -377,9 +377,21 @@
 		<language name="JPN" width="256">MUS-WB-BICYCLE</language>
 		<language name="JPN_KANJI" width="256">MUS-WB-BICYCLE</language>
 	</row>
+	<row id="msg_seq_mus_wb_bld_gts">
+		<language name="JPN" width="256">MUS-WB-BLD-GTS</language>
+		<language name="JPN_KANJI" width="256">MUS-WB-BLD-GTS</language>
+	</row>
+	<row id="msg_seq_mus_wb_bld_wifiparade">
+		<language name="JPN" width="256">MUS-WB-BLD-WIFIPARADE</language>
+		<language name="JPN_KANJI" width="256">MUS-WB-BLD-WIFIPARADE</language>
+	</row>
 	<row id="msg_seq_mus_wb_bld_wifitower">
 		<language name="JPN" width="256">MUS-WB-BLD-WIFITOWER</language>
 		<language name="JPN_KANJI" width="256">MUS-WB-BLD-WIFITOWER</language>
+	</row>
+	<row id="msg_seq_mus_wb_bld_wifiunion">
+		<language name="JPN" width="256">MUS-WB-BLD-WIFIUNION</language>
+		<language name="JPN_KANJI" width="256">MUS-WB-BLD-WIFIUNION</language>
 	</row>
 	<row id="msg_seq_mus_wb_c_01">
 		<language name="JPN" width="256">MUS-WB-C-01</language>
@@ -561,6 +573,22 @@
 		<language name="JPN" width="256">MUS-WB-R-A</language>
 		<language name="JPN_KANJI" width="256">MUS-WB-R-A</language>
 	</row>
+	<row id="msg_seq_mus_wb_r_a_au">
+		<language name="JPN" width="256">MUS-WB-R-A-AU</language>
+		<language name="JPN_KANJI" width="256">MUS-WB-R-A-AU</language>
+	</row>
+	<row id="msg_seq_mus_wb_r_a_sp">
+		<language name="JPN" width="256">MUS-WB-R-A-SP</language>
+		<language name="JPN_KANJI" width="256">MUS-WB-R-A-SP</language>
+	</row>
+	<row id="msg_seq_mus_wb_r_a_su">
+		<language name="JPN" width="256">MUS-WB-R-A-SU</language>
+		<language name="JPN_KANJI" width="256">MUS-WB-R-A-SU</language>
+	</row>
+	<row id="msg_seq_mus_wb_r_a_wi">
+		<language name="JPN" width="256">MUS-WB-R-A-WI</language>
+		<language name="JPN_KANJI" width="256">MUS-WB-R-A-WI</language>
+	</row>
 	<row id="msg_seq_mus_wb_r_b">
 		<language name="JPN" width="256">MUS-WB-R-B</language>
 		<language name="JPN_KANJI" width="256">MUS-WB-R-B</language>
@@ -672,6 +700,10 @@
 	<row id="msg_seq_mus_wb_wifi_present">
 		<language name="JPN" width="256">MUS-WB-WIFI-PRESENT</language>
 		<language name="JPN_KANJI" width="256">MUS-WB-WIFI-PRESENT</language>
+	</row>
+	<row id="msg_seq_mus_wb_wifigame">
+		<language name="JPN" width="256">MUS-WB-WIFIGAME</language>
+		<language name="JPN_KANJI" width="256">MUS-WB-WIFIGAME</language>
 	</row>
 	<row id="msg_seq_mus_wb_win1">
 		<language name="JPN" width="256">MUS-WB-WIN1</language>
