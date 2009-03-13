@@ -9,6 +9,7 @@
 //=============================================================================================
 
 #include "poke_tool/poketype.h"
+#include "poke_tool/monsno_def.h"
 
 #include "../btl_common.h"
 #include "../btl_calc.h"
@@ -23,6 +24,7 @@
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void handler_Iromagane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HardRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kasoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_hpborder_powerup( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType wazaType );
 static void handler_Mouka( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -30,6 +32,7 @@ static void handler_Gekiryu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static void handler_Sinryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MusinoSirase( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Konjou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_FusiginaUroko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SkillLink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Surudoime( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tanjun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -63,7 +66,9 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		{ POKETOKUSEI_SUKIRURINKU,		HAND_TOK_ADD_SkillLink },
 		{ POKETOKUSEI_SURUDOIME,			HAND_TOK_ADD_Surudoime },
 		{ POKETOKUSEI_TANJUN,					HAND_TOK_ADD_Tanjun },
-
+		{ POKETOKUSEI_HAADOROKKU,			HAND_TOK_ADD_HardRock },
+		{ POKETOKUSEI_FUSIGINAUROKO,	HAND_TOK_ADD_FusiginaUroko },
+		{ POKETOKUSEI_TOUSOUSIN,			HAND_TOK_ADD_Tousousin },
 	};
 
 	int i;
@@ -113,6 +118,37 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Iromegane( u16 pri, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
 		{ BTL_EVENT_WAZA_DMG_PROC2, handler_Iromagane },
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「ハードロック」
+ */
+//------------------------------------------------------------------------------
+// ダメージ計算最終段階のハンドラ
+static void handler_HardRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	// 防御側が自分で
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+	{
+		// こうかバツグンの時
+		BtlTypeAffAbout aff = BTL_CALC_TypeAffAbout( BTL_EVENTVAR_GetValue(BTL_EVAR_TYPEAFF) );
+		if( aff == BTL_TYPEAFF_ABOUT_ADVANTAGE )
+		{
+			// ダメージ75％
+			u32 dmg = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
+			dmg = (dmg*75) / 100;
+			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, dmg );
+			BTL_Printf("ポケ[%d]の ハードロック でダメージ75％\n", pokeID);
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_HardRock( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_WAZA_DMG_PROC2, handler_HardRock },
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
@@ -268,7 +304,7 @@ static void handler_Konjou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 				u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
 				pow *= 2;
 				BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, pow );
-				BTL_Printf("ポケ[%d]の こんじょう でダメージ２倍\n", pokeID);
+				BTL_Printf("ポケ[%d]の こんじょう で威力２倍\n", pokeID);
 			}
 		}
 	}
@@ -281,10 +317,87 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Konjou( u16 pri, u8 pokeID )
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「とうそうしん」
+ */
+//------------------------------------------------------------------------------
+// ワザ威力決定のハンドラ
+static void handler_Tousousin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	// 攻撃側が自分
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+	{
+		const BTL_POKEPARAM* myParam = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+		const BTL_POKEPARAM* targetParam = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk,
+					BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
+
+		u8 mySex = BTL_POKEPARAM_GetValue( myParam, BPP_SEX );
+		u8 targetSex = BTL_POKEPARAM_GetValue( targetParam, BPP_SEX );
+
+		// 互いに性別不明じゃない場合
+		if( (mySex!=PTL_SEX_UNKNOWN) && (targetSex!=PTL_SEX_UNKNOWN) )
+		{
+			u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
+			if( mySex == targetSex ){
+				pow = (pow * FX32_CONST(1.25f)) >> FX32_SHIFT;
+			}else{
+				pow = (pow * FX32_CONST(0.75f)) >> FX32_SHIFT;
+			}
+			BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, pow );
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tousousin( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_WAZA_POWER, handler_Tousousin },
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
 
 //------------------------------------------------------------------------------
 /**
- *	とくせい「こんじょう」
+ *	とくせい「ふしぎなうろこ」
+ */
+//------------------------------------------------------------------------------
+///< 防御能力決定のハンドラ
+static void handler_FusiginaUroko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	// 攻撃側が自分で
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+	{
+		// ミロカロスで状態異常で
+		const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+		if( (BTL_POKEPARAM_GetPokeSick(bpp) != POKESICK_NULL)
+		&&	(BTL_POKEPARAM_GetMonsNo(bpp) == MONSNO_MIROKAROSU)
+		){
+			WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+			// ダメージタイプが特殊の時
+			if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
+			{
+				// 防御２倍
+				u32 guard = BTL_EVENTVAR_GetValue( BTL_EVAR_GUARD );
+				guard *= 2;
+				BTL_EVENTVAR_SetValue( BTL_EVAR_GUARD, guard );
+				BTL_Printf("ポケ[%d]の ふしぎなまもり で防御２倍\n", pokeID);
+			}
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_FusiginaUroko( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_DEFENDER_GUARD, handler_FusiginaUroko },	///< 防御能力決定のハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「スキルリンク」
  */
 //------------------------------------------------------------------------------
 // 攻撃回数決定のハンドラ

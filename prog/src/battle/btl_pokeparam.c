@@ -52,6 +52,7 @@ typedef struct {
 	u8  level;				///< レベル
 	u8  type1;				///< タイプ１
 	u8  type2;				///< タイプ２
+	u8	sex;					///< 性別
 
 }BPP_BASE_PARAM;
 
@@ -167,6 +168,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->baseParam.agility = PP_Get( pp, ID_PARA_agi, 0 );
 	bpp->baseParam.type1 = PP_Get( pp, ID_PARA_type1, 0 );
 	bpp->baseParam.type2 = PP_Get( pp, ID_PARA_type2, 0 );
+	bpp->baseParam.sex = PP_GetSex( pp );
 
 	// ランク効果初期化
 	Effrank_Init( &bpp->varyParam );
@@ -343,6 +345,7 @@ int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
 	case BPP_LEVEL:			return pp->baseParam.level;
 	case BPP_HP:				return pp->hp;
 	case BPP_MAX_HP:		return pp->baseParam.hpMax;
+	case BPP_SEX:				return pp->baseParam.sex;
 
 	case BPP_TOKUSEI:		return pp->tokusei;
 

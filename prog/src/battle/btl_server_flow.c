@@ -161,7 +161,7 @@ static void scEvent_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u
 static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8* hitCount );
 static u8 scEvent_getCriticalRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
-static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
+static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
 	const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BOOL criticalFlag );
 static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
@@ -1233,7 +1233,7 @@ static u16 svflowsub_damage_calc_core( BTL_SVFLOW_WORK* wk,
 			BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
 		}
 		// 各種パラメータから素のダメージ値計算
-		wazaPower = scEvent_getWazaPower( wk, attacker, waza );
+		wazaPower = scEvent_getWazaPower( wk, attacker, defender, waza );
 		atkPower  = scEvent_getAttackPower( wk, attacker, defender, waza, criticalFlag );
 		defGuard  = scEvent_getDefenderGuard( wk, attacker, defender, waza, criticalFlag );
 		{
@@ -1823,17 +1823,19 @@ static u8 scEvent_getCriticalRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 }
 
 // ワザ威力取得
-static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
+static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
+	u16 power = WAZADATA_GetPower( waza );
+
 	BTL_EVENTVAR_Push();
-	BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(attacker) );
-	BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, WAZADATA_GetPower(waza) );
-	BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_POWER );
-	{
-		u16 power = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
-		BTL_EVENTVAR_Pop();
-		return power;
-	}
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, power );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_POWER );
+		power = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
+	BTL_EVENTVAR_Pop();
+
+	return power;
 }
 
 
