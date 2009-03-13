@@ -1339,7 +1339,6 @@ static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModu
 		pokecon->pokeParam[i] = NULL;
 	}
 }
-
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID )
 {
 	u8 pokeID = ClientBasePokeID[ clientID ];
@@ -1351,6 +1350,8 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* part
 		pokecon->pokeParam[ pokeID ] = BTL_POKEPARAM_Create(
 												PokeParty_GetMemberPointer(party_src, i), pokeID, HEAPID_BTL_SYSTEM
 		);
+		BTL_Printf(" Create PokeParam ID=%d, adrs=%p\n", pokeID, pokecon->pokeParam[i]);
+
 		BTL_PARTY_AddMember( party, pokecon->pokeParam[ pokeID ] );
 	}
 }
@@ -1361,6 +1362,7 @@ static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
 	{
 		if( pokecon->pokeParam[i] )
 		{
+			BTL_Printf(" Delete PokeParam ID=%d, adrs=%p\n", i, pokecon->pokeParam[i]);
 			BTL_POKEPARAM_Delete( pokecon->pokeParam[i] );
 			pokecon->pokeParam[i] = NULL;
 		}
@@ -1570,11 +1572,16 @@ s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
 //=============================================================================================
 void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk )
 {
-	GFL_STD_MemCopy32(
-			wk->pokeconForClient.pokeParam,
-			wk->pokeconForServer.pokeParam,
-			sizeof(wk->pokeconForServer.pokeParam)
-	);
+	u32 i;
+	for(i=0; i<NELEMS(wk->pokeconForServer.pokeParam); ++i)
+	{
+		if( wk->pokeconForServer.pokeParam[i] != NULL )
+		{
+			BTL_POKEPARAM_Copy(
+				wk->pokeconForServer.pokeParam[i], 
+				wk->pokeconForClient.pokeParam[i] );
+		}
+	}
 }
 
 

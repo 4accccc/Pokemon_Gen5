@@ -109,8 +109,6 @@ struct _BTL_POKEPARAM {
 	BPP_WAZA						waza[ PTL_WAZA_MAX ];
 	const POKEMON_PARAM*	ppSrc;
 
-	u8	wazaSickCounter[ WAZASICK_MAX ];
-
 	u16  item;
 	u16  tokusei;
 	u16  hp;
@@ -119,9 +117,11 @@ struct _BTL_POKEPARAM {
 	u8	wazaCnt;
 	u8	pokeSick;
 	u8	pokeSickCounter;
+
+	u8	wazaSickCounter[ WAZASICK_MAX ];
 	u8	turnFlag[ TURNFLG_BUF_SIZE ];
 
-
+	u32 dmy;
 };
 
 
@@ -233,6 +233,20 @@ void BTL_POKEPARAM_Delete( BTL_POKEPARAM* bpp )
 	GFL_HEAP_FreeMemory( bpp );
 }
 
+
+//=============================================================================================
+/**
+ * データコピー
+ *
+ * @param   dst		
+ * @param   src		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_Copy( BTL_POKEPARAM* dst, const BTL_POKEPARAM* src )
+{
+	*dst = *src;
+}
 
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------

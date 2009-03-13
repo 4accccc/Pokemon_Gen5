@@ -1792,17 +1792,18 @@ static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
 {
 	u8 max = WAZADATA_GetMaxHitCount( waza );
 
-	BTL_EVENTVAR_Push();
-
-	BTL_EVENTVAR_SetValue( BTL_EVAR_HITCOUNT_MAX, max );
-	BTL_EVENTVAR_SetValue( BTL_EVAR_HITCOUNT, BTL_CALC_HitCountMax(max) );
-
-	BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_COUNT );
-	*hitCount = BTL_EVENTVAR_GetValue( BTL_EVAR_HITCOUNT );
-
-	BTL_EVENTVAR_Pop();
-
-	return (max > 1);
+	if( max > 1 )
+	{
+		BTL_EVENTVAR_Push();
+			BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_HITCOUNT_MAX, max );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_HITCOUNT, BTL_CALC_HitCountMax(max) );
+			BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_COUNT );
+			*hitCount = BTL_EVENTVAR_GetValue( BTL_EVAR_HITCOUNT );
+		BTL_EVENTVAR_Pop();
+		return TRUE;
+	}
+	return FALSE;
 }
 
 
@@ -2159,6 +2160,11 @@ BtlPokePos BTL_SVFLOW_CheckExistFrontPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
 		}
 	}
 	return BTL_POS_MAX;
+}
+
+const BTL_POKEPARAM* BTL_SVFLOW_RECEPT_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+	return BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
 }
 
 //=============================================================================================
