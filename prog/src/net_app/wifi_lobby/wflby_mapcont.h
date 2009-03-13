@@ -13,7 +13,7 @@
 #define __WFLBY_MAPCONT_H__
 
 #include "net_app/wifi2dmap/wf2dmap_map.h"
-#include "map_conv/wflby_mapdata.h"
+#include "wflby_mapdata.h"
 
 //-----------------------------------------------------------------------------
 /**

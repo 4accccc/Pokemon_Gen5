@@ -141,6 +141,7 @@ void WFLBY_3DMAPOBJ_TEX_LoatCutTex( GFL_G3D_RES** pp_in, ARCHANDLE* p_handle, u3
 	NNSG3dResTex*	p_tex;
 	u8* texImgStartAddr;
 	u32 newSize;
+	void *p_file;
 	
 	// まず普通にモデルを読み込む
 	g3dres = GFL_G3D_CreateResourceHandle(p_handle, data_idx);
@@ -149,6 +150,7 @@ void WFLBY_3DMAPOBJ_TEX_LoatCutTex( GFL_G3D_RES** pp_in, ARCHANDLE* p_handle, u3
 	GFL_G3D_TransVramTexture(g3dres);
 	
 	//テクスチャイメージをVRAMへ展開し終わったので、実体を破棄
+	p_file = GFL_G3D_GetResourceFileHeader(g3dres);
 	p_tex = GFL_G3D_GetResTex(g3dres);
 	GF_ASSERT(p_tex->texInfo.ofsTex != 0);
 	texImgStartAddr = (u8*)p_tex + p_tex->texInfo.ofsTex;

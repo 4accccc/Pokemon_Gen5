@@ -16,13 +16,13 @@
 
 //#include "gflib/strbuf_family.h"	// ”CˆÓŽ¿–â‚ÅŽg—p
 
-#include "system/clact_util.h"
+//#include "system/clact_util.h"
 #include "system/wipe.h"
-#include "system/render_oam.h"
+//#include "system/render_oam.h"
 //#include "system/pm_overlay.h"
 //#include "system/fontproc.h"
 #include "print\gf_font.h"
-#include "system/window.h"
+//#include "system/window.h"
 #include "print/wordset.h"
 #include "system/bmp_menu.h"
 
@@ -41,7 +41,7 @@
 #include "msg/msg_wifi_Special_questions.h"
 
 #include "wifi_lobby_other.naix"
-#include "graphic/lobby_news.naix"
+#include "lobby_news.naix"
 
 #include "savedata/config.h"
 #include "savedata/wifi_hiroba_save.h"

@@ -12,7 +12,7 @@
 #ifndef __WFLBY_3DMAPOBJ_DATA_H__
 #define __WFLBY_3DMAPOBJ_DATA_H__
 
-#include "../wflby_3dmapobj.h"
+#include "wflby_3dmapobj.h"
 
 
 //-----------------------------------------------------------------------------

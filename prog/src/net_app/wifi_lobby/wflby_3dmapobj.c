@@ -18,8 +18,8 @@
 
 #include "wflby_3dmapobj.h"
 #include "wflby_3dmatrix.h"
-#include "map_conv/wflby_3dmapobj_data.h"
-#include "map_conv/wflby_maparc.h"
+#include "wflby_3dmapobj_data.h"
+#include "wflby_maparc.h"
 
 
 //-----------------------------------------------------------------------------
@@ -1177,7 +1177,7 @@ static WFLBY_3DMAPOBJ_MDL_DATA* WFLBY_3DMAPOBJ_MDLRES_DATA_Init( WFLBY_ROOM_TYPE
 
 	GF_ASSERT( idx < (WFLBY_SEASON_NUM*WFLBY_ROOM_NUM) );
 	
-	p_data = GFL_ARC_UTIL_Load( ARC_WFLBY_MAP, 
+	p_data = GFL_ARC_UTIL_Load( ARCID_WFLBY_MAP, 
 			NARC_wflby_map_wflby_3dmapobj_data_0_dat+idx,
 			FALSE, GFL_HEAP_LOWID(heapID));
 

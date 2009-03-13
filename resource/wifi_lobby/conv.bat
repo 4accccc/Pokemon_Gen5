@@ -9,7 +9,7 @@ call convlist.bat
 
 nnsarc -c -i -n wifi_lobby -S list.txt
 
-copy wflby_3dmapobj_data.c ..\..\prog\src\net_app\wifi_lobby\map_conv\
+rem copy wflby_3dmapobj_data.c ..\wifi_lobby_map_conv\
 
-del wflby_3dmapobj_data.c
+rem del wflby_3dmapobj_data.c
 del convlist.bat

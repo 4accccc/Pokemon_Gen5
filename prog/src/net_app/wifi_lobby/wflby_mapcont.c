@@ -15,8 +15,9 @@
 //#include "system/arc_util.h"
 
 #include "wflby_mapcont.h"
-#include "map_conv/wflby_mapdata.h"
-#include "map_conv/wflby_maparc.h"
+#include "wflby_mapdata.h"
+#include "wflby_maparc.h"
+#include "arc_def.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -82,7 +83,7 @@ WFLBY_MAPCONT* WFLBY_MAPCONT_Init( u32 heapID )
 	p_sys->p_map = WF2DMAP_MAPSysInit( WFLBY_MAPSIZE_X,  WFLBY_MAPSIZE_Y, heapID );
 	
 	// マップデータの読み込み
-	p_mapdata = GFL_ARC_UTIL_Load( ARC_WFLBY_MAP, NARC_wflby_map_wflby_map_dat, FALSE, GFL_HEAP_LOWID(heapID));
+	p_mapdata = GFL_ARC_UTIL_Load( ARCID_WFLBY_MAP, NARC_wflby_map_wflby_map_dat, FALSE, GFL_HEAP_LOWID(heapID));
 	WF2DMAP_MAPSysDataSet( p_sys->p_map, p_mapdata );
 
 	GFL_HEAP_FreeMemory( p_mapdata );
