@@ -54,19 +54,19 @@ typedef u16 BtlStrID_SET;
 extern void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args );
 
 
-
 //=============================================================================================
 /**
  * ワザメッセージの生成
  * ※ワザメッセージ：○○の××こうげき！とか。セットメッセージと同様、必ず３つセット。
  *
  * @param   buf		
- * @param   strID		
- * @param   args		
+ * @param   pokeID		
+ * @param   waza		
  *
+ * @retval  extern void		
  */
 //=============================================================================================
-extern void BTL_STR_MakeStringWaza( STRBUF* buf, BtlPokePos pokePos, u16 waza );
+extern void BTL_STR_MakeStringWaza( STRBUF* buf, u8 pokeID, u16 waza );
 
 
 

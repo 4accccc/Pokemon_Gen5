@@ -543,13 +543,14 @@ static void ms_set_waza_avoid( STRBUF* dst, u16 strID, const int* args )
  *
  */
 //=============================================================================================
-void BTL_STR_MakeStringWaza( STRBUF* dst, BtlPokePos pos, u16 waza )
+void BTL_STR_MakeStringWaza( STRBUF* dst, u8 pokeID, u16 waza )
 {
+	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( SysWork.mainModule, pokeID );
 	u16 strID;
 
-	register_PokeNickname( pos, BUFIDX_POKE_1ST );
+	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
 
-	strID = get_setStrID( pos, waza * SETTYPE_MAX );
+	strID = get_setStrID( pokePos, waza * SETTYPE_MAX );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_ATK], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

@@ -47,6 +47,8 @@ enum {
 
 	// 天候関連
 	BTL_CALC_WEATHER_MIST_HITRATIO = FX32_CONST(75),		///< 「きり」の時の命中率補正率
+	BTL_WEATHER_TURN_DEFAULT = 5,					///< ワザによる天候変化の継続ターン数
+	BTL_WEATHER_TURN_PERMANENT = 0xff,
 
 };
 

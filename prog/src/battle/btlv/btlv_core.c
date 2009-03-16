@@ -788,9 +788,9 @@ void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args )
 //	printf( wk->strBuf );
 }
 
-void BTLV_StartMsgWaza( BTLV_CORE* wk, BtlPokePos pokePos, u16 waza )
+void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 pokeID, u16 waza )
 {
-	BTL_STR_MakeStringWaza( wk->strBuf, pokePos, waza );
+	BTL_STR_MakeStringWaza( wk->strBuf, pokeID, waza );
 	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 }
 

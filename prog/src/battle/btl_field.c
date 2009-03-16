@@ -20,7 +20,6 @@
  */
 //--------------------------------------------------------------
 enum {
-	TURN_PERMANENT = -1,
 	TURN_MAX = 16,
 };
 //--------------------------------------------------------------
@@ -31,7 +30,7 @@ enum {
 static struct {
 
 	BtlWeather		weather;
-	s16						weatherTurn;
+	u16						weatherTurn;
 
 }Work;
 
@@ -43,7 +42,7 @@ static struct {
 void BTL_FIELD_Init( BtlWeather weather )
 {
 	Work.weather = weather;
-	Work.weatherTurn = TURN_PERMANENT;
+	Work.weatherTurn = BTL_WEATHER_TURN_PERMANENT;
 }
 
 BtlWeather BTL_FIELD_GetWeather( void )
@@ -51,6 +50,15 @@ BtlWeather BTL_FIELD_GetWeather( void )
 	return Work.weather;
 }
 
+//=============================================================================================
+/**
+ * 
+ *
+ * @param   weather		
+ * @param   turn		
+ *
+ */
+//=============================================================================================
 void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn )
 {
 	Work.weather = weather;
@@ -114,7 +122,7 @@ BtlWeather BTL_FIELD_TurnCheckWeather( void )
 {
 	if( Work.weather != BTL_WEATHER_NONE )
 	{
-		if( Work.weatherTurn != TURN_PERMANENT )
+		if( Work.weatherTurn != BTL_WEATHER_TURN_PERMANENT )
 		{
 			Work.weatherTurn--;
 			if( Work.weatherTurn == 0 )

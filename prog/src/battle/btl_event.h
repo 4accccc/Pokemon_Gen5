@@ -62,6 +62,7 @@ typedef enum {
 	BTL_EVENT_SHRINK_CHECK,			///< ひるみ計算
 	BTL_EVENT_SHRINK_FIX,				///< ひるみ確定後
 	BTL_EVENT_TURNCHECK,				///< ターンチェック
+	BTL_EVENT_WEATHER_CHANGE,		///< 天候の変化
 
 }BtlEventType;
 
@@ -121,6 +122,7 @@ typedef enum {
 	BTL_EVAR_RATIO,
 	BTL_EVAR_TYPEAFF,
 	BTL_EVAR_DAMAGE_TYPE,
+	BTL_EVAR_WEATHER,
 
 	BTL_EVAR_MAX,
 

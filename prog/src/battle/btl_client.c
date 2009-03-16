@@ -137,6 +137,7 @@ static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
@@ -743,31 +744,32 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		u32				cmd;
 		ServerCmdProc	proc;
 	}scprocTbl[] = {
-		{	SC_MSG_STD,					scProc_MSG_Std						},
-		{	SC_MSG_SET,					scProc_MSG_Set						},
-		{	SC_MSG_WAZA,				scProc_MSG_Waza						},
-		{	SC_ACT_WAZA_EFFECT,	scProc_ACT_WazaEffect			},
-		{	SC_ACT_WAZA_DMG,		scProc_ACT_WazaDmg				},
-		{	SC_ACT_WAZA_DMG_DBL,scProc_ACT_WazaDmg_Dbl		},
-		{	SC_ACT_CONF_DMG,		scProc_ACT_ConfDamage			},
-		{	SC_ACT_DEAD,				scProc_ACT_Dead						},
-		{	SC_ACT_MEMBER_OUT,	scProc_ACT_MemberOut			},
-		{	SC_ACT_MEMBER_IN,		scProc_ACT_MemberIn				},
-		{	SC_ACT_RANKUP,			scProc_ACT_RankUp					},
-		{	SC_ACT_RANKDOWN,		scProc_ACT_RankDown				},
-		{	SC_ACT_SICK_SET,		scProc_ACT_SickSet				},
-		{	SC_ACT_SICK_DMG,		scProc_ACT_SickDamage			},
-		{	SC_ACT_WEATHER_DMG,	scProc_ACT_WeatherDmg			},
-		{	SC_ACT_WEATHER_END,	scProc_ACT_WeatherEnd			},
-		{	SC_TOKWIN_IN,				scProc_TOKWIN_In					},
-		{	SC_TOKWIN_OUT,			scProc_TOKWIN_Out					},
-		{	SC_OP_HP_MINUS,			scProc_OP_HpMinus					},
-		{	SC_OP_HP_PLUS,			scProc_OP_HpPlus					},
-		{	SC_OP_PP_MINUS,			scProc_OP_PPMinus					},
-		{	SC_OP_PP_PLUS,			scProc_OP_PPPlus					},
-		{	SC_OP_RANK_UP,			scProc_OP_RankUp					},
-		{	SC_OP_RANK_DOWN,		scProc_OP_RankDown				},
-		{	SC_OP_SICK_SET,			scProc_OP_SickSet					},
+		{	SC_MSG_STD,						scProc_MSG_Std						},
+		{	SC_MSG_SET,						scProc_MSG_Set						},
+		{	SC_MSG_WAZA,					scProc_MSG_Waza						},
+		{	SC_ACT_WAZA_EFFECT,		scProc_ACT_WazaEffect			},
+		{	SC_ACT_WAZA_DMG,			scProc_ACT_WazaDmg				},
+		{	SC_ACT_WAZA_DMG_DBL,	scProc_ACT_WazaDmg_Dbl		},
+		{	SC_ACT_CONF_DMG,			scProc_ACT_ConfDamage			},
+		{	SC_ACT_DEAD,					scProc_ACT_Dead						},
+		{	SC_ACT_MEMBER_OUT,		scProc_ACT_MemberOut			},
+		{	SC_ACT_MEMBER_IN,			scProc_ACT_MemberIn				},
+		{	SC_ACT_RANKUP,				scProc_ACT_RankUp					},
+		{	SC_ACT_RANKDOWN,			scProc_ACT_RankDown				},
+		{	SC_ACT_SICK_SET,			scProc_ACT_SickSet				},
+		{	SC_ACT_SICK_DMG,			scProc_ACT_SickDamage			},
+		{	SC_ACT_WEATHER_DMG,		scProc_ACT_WeatherDmg			},
+		{	SC_ACT_WEATHER_START,	scProc_ACT_WeatherStart		},
+		{	SC_ACT_WEATHER_END,		scProc_ACT_WeatherEnd			},
+		{	SC_TOKWIN_IN,					scProc_TOKWIN_In					},
+		{	SC_TOKWIN_OUT,				scProc_TOKWIN_Out					},
+		{	SC_OP_HP_MINUS,				scProc_OP_HpMinus					},
+		{	SC_OP_HP_PLUS,				scProc_OP_HpPlus					},
+		{	SC_OP_PP_MINUS,				scProc_OP_PPMinus					},
+		{	SC_OP_PP_PLUS,				scProc_OP_PPPlus					},
+		{	SC_OP_RANK_UP,				scProc_OP_RankUp					},
+		{	SC_OP_RANK_DOWN,			scProc_OP_RankDown				},
+		{	SC_OP_SICK_SET,				scProc_OP_SickSet					},
 		{	SC_OP_WAZASICK_TURNCHECK, scProc_OP_WSTurnCheck },
 	};
 
@@ -925,11 +927,9 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args )
 	switch( *seq ){
 	case 0:
 		{
-			u8  pokePos = args[0];
-			u16 wazaIdx  = args[1];
-			const BTL_POKEPARAM* poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pokePos );
-			wazaIdx = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
-			BTLV_StartMsgWaza( wk->viewCore, pokePos, wazaIdx );
+			const BTL_POKEPARAM* poke = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+			WazaID waza = BTL_POKEPARAM_GetWazaNumber( poke, args[1] );
+			BTLV_StartMsgWaza( wk->viewCore, args[0], waza );
 		}
 		(*seq)++;
 		break;
@@ -1207,6 +1207,41 @@ static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args )
 		if( BTLV_WaitMsg(wk->viewCore)
 		&&	BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore)
 		){
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *	天候変化開始
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		{
+			BtlWeather weather = args[0];
+			u16  msgID;
+			switch( weather ){
+			case BTL_WEATHER_SHINE:	msgID = BTL_STRID_STD_ShineStart; break;
+			case BTL_WEATHER_RAIN:	msgID = BTL_STRID_STD_RainStart; break;
+			case BTL_WEATHER_SAND:	msgID = BTL_STRID_STD_StormStart; break;
+			case BTL_WEATHER_SNOW:	msgID = BTL_STRID_STD_SnowStart; break;
+			case BTL_WEATHER_MIST:	msgID = BTL_STRID_STD_MistStart; break;
+			default:
+				GF_ASSERT(0);	// おかしな天候ID
+				return TRUE;
+			}
+			BTLV_StartMsgStd( wk->viewCore, msgID, NULL );
+			(*seq)++;
+		}
+		break;
+	case 1:
+		if( BTLV_WaitMsg(wk->viewCore) )
+		{
 			return TRUE;
 		}
 		break;
