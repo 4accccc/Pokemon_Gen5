@@ -309,7 +309,7 @@ void TalkWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 win_num, u32 heap )
 //--------------------------------------------------------------
 GFL_ARCUTIL_TRANSINFO TalkWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_num, u32 heap )
 {
-	BmpWinFrame_GraphicSetAreaMan(frmnum, pal, 0, heap);
+	return BmpWinFrame_GraphicSetAreaMan(frmnum, pal, 0, heap);
 }
 
 //--------------------------------------------------------------
