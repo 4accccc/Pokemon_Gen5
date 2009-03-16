@@ -578,7 +578,7 @@ BOOL	PMSND_SetPanSEVoice( int pan )
 //============================================================================================
 static void PMSND_InitSystemFade( void )
 {
-	fadeStatus.fadeFrames = 60;
+	fadeStatus.fadeFrames = 180;
 	PMSND_ResetSystemFade();
 }
 
@@ -593,27 +593,35 @@ static void PMSND_ResetSystemFade( void )
 //------------------------------------------------------------------
 static void PMSND_SystemFade( void )
 {
-	u32 nowSoundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
-	BOOL bgmSetFlag = FALSE;
+	NNSSndHandle*	pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
+	u32				nowSoundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
+	BOOL	bgmSetFlag = FALSE;
+	int		restFrames, setFrames;
 
 	if( nowSoundIdx ){
 		if( nowSoundIdx != fadeStatus.nextSoundIdx ){
 			// FadeOut
-			NNS_SndPlayerMoveVolume
-				(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, fadeStatus.fadeFrames );
-			if( fadeStatus.volumeCounter ){
+			restFrames = fadeStatus.volumeCounter;
+			setFrames = restFrames * 128 / fadeStatus.fadeFrames;
+			if( fadeStatus.volumeCounter > 0 ){
+				//NNS_SndPlayerMoveVolume
+				//	(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, fadeStatus.fadeFrames );
+				NNS_SndPlayerMoveVolume(pBgmHandle, 0, setFrames );
 				fadeStatus.volumeCounter--;
 			} else {
 				bgmSetFlag = TRUE; 
 			}
 		} else {
 			// FadeIn
+			restFrames = fadeStatus.fadeFrames - fadeStatus.volumeCounter;
+			setFrames = restFrames * 128 / fadeStatus.fadeFrames;
 			if( fadeStatus.volumeCounter < fadeStatus.fadeFrames ){
-				NNS_SndPlayerMoveVolume
-					(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127, fadeStatus.fadeFrames );
+				//NNS_SndPlayerMoveVolume
+				//	(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127, fadeStatus.fadeFrames );
+				NNS_SndPlayerMoveVolume(pBgmHandle, 127, setFrames);
 				fadeStatus.volumeCounter++;
 			} else {
-				NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127, 0 );
+				NNS_SndPlayerMoveVolume(pBgmHandle, 127, 0 );
 				PMSND_ResetSystemFade();
 			}
 		}
@@ -625,7 +633,7 @@ static void PMSND_SystemFade( void )
 		SOUNDMAN_StopHierarchyPlayer();
 		SOUNDMAN_PlayHierarchyPlayer(fadeStatus.nextSoundIdx);
 		// Œ»Ý‚Ìvolume‚ð‘¦ŽžXV
-		NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, 0);
+		NNS_SndPlayerMoveVolume(pBgmHandle, 0, 0);
 		fadeStatus.volumeCounter = 0;
 
 		if( fadeStatus.nextTrackBit != 0xffff ){
