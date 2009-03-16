@@ -236,28 +236,36 @@ u8 BTL_CALC_HitCountMax( u8 numHitMax )
 
 //=============================================================================================
 /**
- * 該当の天候によるターンチェックダメージを受けるポケモンタイプかどうかを判定
+ * 該当の天候によるターンチェックダメージを計算
  *
  * @param   bpp			
  * @param   weather		
  *
- * @retval  BOOL		
+ * @retval  u16			ダメージ値
  */
 //=============================================================================================
-BOOL BTL_CALC_CheckRecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
+u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
 {
 	switch( weather ){
 	case BTL_WEATHER_SAND:
-		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_IWA) ){ break; }
-		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_METAL) ){ break; }
-		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_JIMEN) ){ break; }
-		return TRUE;
+		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_IWA) ){ return 0; }
+		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_METAL) ){ return 0; }
+		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_JIMEN) ){ return 0; }
+		break;
 
 	case BTL_WEATHER_SNOW:
-		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_KOORI) ){ break; }
-		return TRUE;
+		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_KOORI) ){ return 0; }
+		break;
+
+	default:
+		return 0;
 	}
-	return FALSE;
+
+	{
+		u16 dmg = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / 16;
+		if( dmg == 0 ){ dmg = 1; }
+		return dmg;
+	}
 }
 //=============================================================================================
 /**

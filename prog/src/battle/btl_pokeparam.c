@@ -28,7 +28,8 @@ enum {
 	RANK_CRITICAL_MAX = 4,
 	RANK_CRITICAL_DEF = 0,
 
-	TURNFLG_BUF_SIZE = (BPP_TURNFLG_MAX/8)+(BPP_TURNFLG_MAX%8!=0)
+	TURNFLG_BUF_SIZE = (BPP_TURNFLG_MAX/8)+(BPP_TURNFLG_MAX%8!=0),
+	CONTFLG_BUF_SIZE = (BPP_CONTFLG_MAX/8)+(BPP_CONTFLG_MAX%8!=0),
 };
 
 
@@ -121,6 +122,7 @@ struct _BTL_POKEPARAM {
 
 	u8	wazaSickCounter[ WAZASICK_MAX ];
 	u8	turnFlag[ TURNFLG_BUF_SIZE ];
+	u8	contFlag[ CONTFLG_BUF_SIZE ];
 
 	u32 dmy;
 };
@@ -131,9 +133,10 @@ struct _BTL_POKEPARAM {
 /*--------------------------------------------------------------------------*/
 static void Effrank_Init( BPP_VARIABLE_PARAM* rank );
 static void update_RealParam( BTL_POKEPARAM* pp, BppValueID rankType );
-static inline void turnflg_clear( BTL_POKEPARAM* bpp );
-static inline void turnflg_set( BTL_POKEPARAM* bpp, BppTurnFlag flagID );
-static inline BOOL turnflg_get( const BTL_POKEPARAM* bpp, BppTurnFlag flagID );
+static inline void flgbuf_clear( u8* buf, u32 size );
+static inline void flgbuf_set( u8* buf, u32 flagID );
+static inline void flgbuf_reset( u8* buf, u32 flagID );
+static inline BOOL flgbuf_get( const u8* buf, u32 flagID );
 
 
 
@@ -217,7 +220,8 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 
 	bpp->ppSrc = pp;
 
-	turnflg_clear( bpp );
+	flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
+	flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
 	return bpp;
 }
@@ -463,8 +467,24 @@ int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp )
 //=============================================================================================
 BOOL BTL_POKEPARAM_GetTurnFlag( const BTL_POKEPARAM* pp, BppTurnFlag flagID )
 {
-	return turnflg_get( pp, flagID );
+	return flgbuf_get( pp->turnFlag, flagID );
 }
+//=============================================================================================
+/**
+ * 永続フラグ値取得
+ *
+ * @param   pp			
+ * @param   flagID		
+ *
+ * @retval  BOOL		
+ */
+//=============================================================================================
+BOOL BTL_POKEPARAM_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID )
+{
+	return flgbuf_get( pp->contFlag, flagID );
+}
+
+
 //=============================================================================================
 /**
  * HP残量のめやす（普通・半減・ピンチとか）を返す
@@ -734,7 +754,33 @@ void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, u8 turn )
 //=============================================================================================
 void BTL_POKEPARAM_SetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID )
 {
-	turnflg_set( pp, flagID );
+	flgbuf_set( pp->turnFlag, flagID );
+}
+//=============================================================================================
+/**
+ * 永続フラグのセット
+ *
+ * @param   pp		
+ * @param   flagID		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_SetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID )
+{
+	flgbuf_set( pp->contFlag, flagID );
+}
+//=============================================================================================
+/**
+ * 永続フラグのリセット
+ *
+ * @param   pp		
+ * @param   flagID		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_ResetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID )
+{
+	flgbuf_reset( pp->contFlag, flagID );
 }
 
 //=============================================================================================
@@ -798,8 +844,9 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
 //=============================================================================================
 void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp )
 {
-	turnflg_clear( pp );
+	flgbuf_clear( pp->turnFlag, sizeof(pp->turnFlag) );
 }
+
 
 //--------------------------------------------------------------------------
 /**
@@ -834,28 +881,35 @@ static void update_RealParam( BTL_POKEPARAM* pp, BppValueID rankType )
 
 }
 //---------------------------------------------------------------------------------------------
-// １ターンのみ有効フラグ処理
+// bitフラグバッファ処理
 //---------------------------------------------------------------------------------------------
-static inline void turnflg_clear( BTL_POKEPARAM* bpp )
+static inline void flgbuf_clear( u8* buf, u32 size )
 {
-	GFL_STD_MemClear( bpp->turnFlag, sizeof(bpp->turnFlag) );
+	GFL_STD_MemClear( buf, size );
 }
-static inline void turnflg_set( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
+static inline void flgbuf_set( u8* buf, u32 flagID )
 {
-	GF_ASSERT(flagID<BPP_TURNFLG_MAX);
 	{
 		u8 byte = flagID / 8;
 		u8 bit = (1 << (flagID%8));
-		bpp->turnFlag[ byte ] |= bit;
+		buf[ byte ] |= bit;
 	}
 }
-static inline BOOL turnflg_get( const BTL_POKEPARAM* bpp, BppTurnFlag flagID )
+static inline void flgbuf_reset( u8* buf, u32 flagID )
 {
-	GF_ASSERT(flagID<BPP_TURNFLG_MAX);
 	{
 		u8 byte = flagID / 8;
 		u8 bit = (1 << (flagID%8));
-		return (bpp->turnFlag[ byte ] & bit) != 0;
+		buf[ byte ] &= (~bit);
+	}
+}
+static inline BOOL flgbuf_get( const u8* buf, u32 flagID )
+{
+//	GF_ASSERT(flagID<BPP_TURNFLG_MAX);
+	{
+		u8 byte = flagID / 8;
+		u8 bit = (1 << (flagID%8));
+		return (buf[ byte ] & bit) != 0;
 	}
 }
 

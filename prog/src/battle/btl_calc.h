@@ -114,7 +114,7 @@ extern BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeTypePair defenderType
 extern u32 BTL_CALC_AffDamage( u32 rawDamage, BtlTypeAff aff );
 
 extern u8 BTL_CALC_HitCountMax( u8 numHitMax );
-extern BOOL BTL_CALC_CheckRecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather );
+extern u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather );
 
 
 //=============================================================================================

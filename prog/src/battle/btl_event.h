@@ -63,6 +63,7 @@ typedef enum {
 	BTL_EVENT_SHRINK_FIX,				///< ひるみ確定後
 	BTL_EVENT_TURNCHECK,				///< ターンチェック
 	BTL_EVENT_WEATHER_CHANGE,		///< 天候の変化
+	BTL_EVENT_CALC_WEATHER_DAMAGE,	///< 天候ダメージ計算
 
 }BtlEventType;
 

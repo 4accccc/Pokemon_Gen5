@@ -139,6 +139,7 @@ static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -779,6 +780,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_WEATHER_DMG,		scProc_ACT_WeatherDmg			},
 		{	SC_ACT_WEATHER_START,	scProc_ACT_WeatherStart		},
 		{	SC_ACT_WEATHER_END,		scProc_ACT_WeatherEnd			},
+		{	SC_ACT_SIMPLE_HP,			scProc_ACT_SimpleHP				},
 		{	SC_TOKWIN_IN,					scProc_TOKWIN_In					},
 		{	SC_TOKWIN_OUT,				scProc_TOKWIN_Out					},
 		{	SC_OP_HP_MINUS,				scProc_OP_HpMinus					},
@@ -1301,6 +1303,31 @@ static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args )
 	}
 	return FALSE;
 }
+//---------------------------------------------------------------------------------------
+/**
+ *	シンプルなHPゲージ増減処理
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		{
+			BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+			BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
+			(*seq)++;
+		}
+		break;
+	case 1:
+		if( BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+
 //---------------------------------------------------------------------------------------
 /**
  *	とくせいウィンドウ表示オン

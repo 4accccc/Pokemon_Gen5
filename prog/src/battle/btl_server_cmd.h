@@ -50,6 +50,7 @@ typedef enum {
 	SC_ACT_WEATHER_DMG,	///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
 	SC_ACT_WEATHER_START,///< 天候変化
 	SC_ACT_WEATHER_END,	///< ターンチェックで天候終了
+	SC_ACT_SIMPLE_HP,		///< シンプルなHPゲージ増減処理
 	SC_TOKWIN_IN,				///< とくせいウィンドウ表示イン [ClientID]
 	SC_TOKWIN_OUT,			///< とくせいウィンドウ表示アウト [ClientID]
 
@@ -247,6 +248,11 @@ static inline void SCQUE_PUT_ACT_WeatherEnd( BTL_SERVER_CMD_QUE* que, u8 weather
 static inline void SCQUE_PUT_ACT_SickSet( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 sick )
 {
 	SCQUE_PUT_Common( que, SC_ACT_SICK_SET, pokeID, sick );
+}
+
+static inline void SCQUE_PUT_ACT_SimpleHP( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+	SCQUE_PUT_Common( que, SC_ACT_SIMPLE_HP, pokeID );
 }
 
 static inline void SCQUE_PUT_SickDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 sick, u8 damage )

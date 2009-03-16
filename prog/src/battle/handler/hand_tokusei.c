@@ -48,6 +48,11 @@ static void handler_Yukifurasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static void common_weather_change( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather );
 static void handler_AirLock_Appear( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_AirLock_ChangeWeather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_IceBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_IceBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather );
+static void handler_UruoiBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_PoisonHeal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -99,6 +104,11 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		{ POKETOKUSEI_NOOTENKI,				HAND_TOK_ADD_AirLock },	// ノーてんき = エアロックと等価
 		{ POKETOKUSEI_TEKUNISYAN,			HAND_TOK_ADD_Technician },
 		{ POKETOKUSEI_DONKAN,					HAND_TOK_ADD_Donkan },
+		{ POKETOKUSEI_URUOIBODY,			HAND_TOK_ADD_UruoiBody },
+		{ POKETOKUSEI_POIZUNHIIRU,		HAND_TOK_ADD_PoisonHeal },
+		{ POKETOKUSEI_AISUBODY,				HAND_TOK_ADD_IcoBody },
+		{ POKETOKUSEI_AMEUKEZARA,			HAND_TOK_ADD_AmeukeZara },
+
 	};
 
 	int i;
@@ -748,5 +758,127 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_AirLock( u16 pri, u8 pokeID )
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「アイスボディ」
+ */
+//------------------------------------------------------------------------------
+// 天候ダメージ計算ハンドラ
+static void handler_IceBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	common_weather_recover( flowWk, pokeID, BTL_WEATHER_SNOW );
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_IcoBody( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_CALC_WEATHER_DAMAGE, handler_IceBody },	// 天候ダメージ計算ハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「あめうけざら」
+ */
+//------------------------------------------------------------------------------
+// 天候ダメージ計算ハンドラ
+static void handler_AmeukeZara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	common_weather_recover( flowWk, pokeID, BTL_WEATHER_RAIN );
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_AmeukeZara( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_CALC_WEATHER_DAMAGE, handler_AmeukeZara },	// 天候ダメージ計算ハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
 
+/**
+ *	天候に応じてHP回復するとくせいの共通処理
+ */
+static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather )
+{
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+	{
+		if( BTL_EVENTVAR_GetValue(BTL_EVAR_WEATHER) == weather )
+		{
+			const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+			int recoverHP = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / 8;
+			if( recoverHP == 0 ){ recoverHP = 1; }
+			recoverHP *= -1;
+			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, recoverHP );
+		}
+		BTL_SVFLOW_RECEPT_ChangeWeather( flowWk, weather );
+	}
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「うるおいボディ」
+ */
+//------------------------------------------------------------------------------
+// 状態異常ダメージハンドラ
+static void handler_UruoiBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) )
+	{
+		if( BTL_FIELD_GetWeather() == BTL_WEATHER_RAIN )
+		{
+			WazaSick sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+			if( sick < POKESICK_MAX )
+			{
+				BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, POKESICK_NULL );
+				BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
+				BTL_SERVER_RECTPT_SetMessage( flowWk, BTL_STRID_SET_PokeSick_Cure, pokeID );
+				BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
+			}
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_UruoiBody( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_SICK_DAMAGE,			handler_UruoiBody },	// 状態異常ダメージハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「ポイズンヒール」
+ */
+//------------------------------------------------------------------------------
+// 状態異常ダメージハンドラ
+static void handler_PoisonHeal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) )
+	{
+		WazaSick sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+		if( (sick == WAZASICK_DOKU) || (sick == WAZASICK_MOUDOKU) )
+		{
+			const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+			int recoverHP = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / 8;
+			if( recoverHP == 0 )
+			{
+				recoverHP = 1;
+			}
+			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, 0 );
+			BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
+			BTL_SERVER_RECEPT_HP_Add( flowWk, pokeID, recoverHP );
+			BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_PoisonHeal( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_SICK_DAMAGE,			handler_PoisonHeal },	// 状態異常ダメージハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
 

@@ -60,10 +60,23 @@ typedef enum {
 
 	BPP_TURNFLG_ACTION_EXE,	///< 行動した
 	BPP_TURNFLG_SHRINK,			///< ひるまされた
+	BPP_TURNFLG_DEAD,				///< このターンに死んだ
 
 	BPP_TURNFLG_MAX,
 
 }BppTurnFlag;
+
+//--------------------------------------------------------------
+/**
+ *	永続的に保持されるフラグセット
+ */
+//--------------------------------------------------------------
+typedef enum {
+
+	BPP_CONTFLG_DEAD_IGNORE,	///< 既に死んでいるので場にいないものとして扱う
+	BPP_CONTFLG_MAX,
+
+}BppContFlag;
 
 //--------------------------------------------------------------
 /**
@@ -104,6 +117,7 @@ extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType 
 extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
 extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_GetTurnFlag( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
+extern BOOL BTL_POKEPARAM_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID );
 
 //=============================================================================================
 /**
@@ -144,5 +158,7 @@ extern void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetShrink( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp );
+extern void BTL_POKEPARAM_SetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID );
+extern void BTL_POKEPARAM_ResetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID );
 
 #endif
