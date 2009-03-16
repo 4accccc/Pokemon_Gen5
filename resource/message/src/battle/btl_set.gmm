@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-03-13T19:16:51"/>
+	<create user="taya" host="W00146" date="2009-03-16T13:29:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -426,7 +426,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1054,7 +1054,9 @@
 かいひ率ががくっと下がった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_RankdownFail">
+	<row id="BTL_STRID_SET_RankdownFail" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加効果・状態異常効果などが通用しない時の
+メッセージ群</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
 のうりょくは　さがらない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
@@ -1117,6 +1119,27 @@
 命中率は　下がらない！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_NoEffect">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　には
+こうかが　ない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　には
+効果が　無い！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NoEffect_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　には
+こうかが　ないようだ！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　には
+効果が　無いようだ！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NoEffect_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　には
+こうかが　ないようだ！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　には
+効果が　無いようだ！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_WazaAvoid">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　には
 あたらなかった！</language>
@@ -1138,7 +1161,8 @@
 当たらなかった！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_DokuGet">
+	<row id="BTL_STRID_SET_DokuGet" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>状態異常メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
 どく　を　あびた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
