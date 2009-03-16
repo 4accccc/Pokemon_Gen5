@@ -98,6 +98,7 @@ static void * _wificlubWorkCreate(D_OHNO_WORK *wk);
 //	外部データ
 //==============================================================================
 FS_EXTERN_OVERLAY(wificlub);
+FS_EXTERN_OVERLAY(ohno_debugapp);
 extern const GFL_PROC_DATA WifiClubProcData;
 extern const GFL_PROC_DATA DebugOhnoMainProcData;
 extern const GFL_PROC_DATA DebugLayoutMainProcData;
@@ -117,13 +118,13 @@ static const D_MENULIST DebugMenuList[] = {
 		DEBUG_OHNO_MSG0002, 
 		&DebugLayoutMainProcData,	
 		NULL,
-		NO_OVERLAY_ID
+		FS_OVERLAY_ID(ohno_debugapp)
 	},
 	{//
 		DEBUG_OHNO_MSG0003, 
 		&DebugOhnoMainProcData,	
 		NULL,
-		NO_OVERLAY_ID
+		FS_OVERLAY_ID(ohno_debugapp)
 	},
 	{//
 		DEBUG_OHNO_MSG0004, 
@@ -172,6 +173,19 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
 	};
 
 	D_OHNO_WORK* wk;
+
+
+    {
+        float a = 42.49;
+        float b = -21.99;
+
+        int c = FX32_CONST(a);
+        int d = FX32_CONST(b);
+
+        OS_TPrintf("ans %4x %4x\n",c,d);
+        
+    }
+    
 	
 	DEBUG_PerformanceSetActive(FALSE);
 	

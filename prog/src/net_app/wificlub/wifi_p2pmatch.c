@@ -30,6 +30,7 @@
 #include "system/main.h"
 #include "system/rtc_tool.h"
 #include "poke_tool/monsno_def.h"
+#include "poke_tool/pokeparty.h"
 #include "item/itemsym.h"
 
 #include "font/font.naix"
@@ -99,7 +100,6 @@ static void* SaveData_Get(void* a, int b){ return NULL; }
 static void* SaveData_GetFrontier(void* a){ return NULL; }
 static void EMAILSAVE_Init(void* a){}
 static ZUKAN_WORK* SaveData_GetZukanWork(SAVE_CONTROL_WORK* a){ return NULL; }
-static POKEPARTY* SaveData_GetTemotiPokemon(SAVE_CONTROL_WORK* a){return NULL;}
 static int PokeParaGet( POKEMON_PARAM* poke, int no, void* c ){return 0;}
 static BOOL ZukanWork_GetZenkokuZukanFlag(ZUKAN_WORK* pZukan){ return TRUE; }
 static void CommInfoFinalize(void){}
@@ -2895,7 +2895,7 @@ static void MainMenuMsgInit(WIFIP2PMATCH_WORK *wk)
 
     _BmpWinDel(wk->MyInfoWinBack);
     wk->MyInfoWinBack = GFL_BMPWIN_Create(GFL_BG_FRAME3_M, 5, 1, 22, 2,
-                                          _NUKI_FONT_PALNO,  _CGX_TITLE_BOTTOM );
+                                          _NUKI_FONT_PALNO,  GFL_BMP_CHRAREA_GET_B );
     GFL_BMPWIN_MakeScreen( wk->MyInfoWinBack );
     GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_018, wk->TitleString );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->MyInfoWinBack), 0, 0, wk->TitleString, wk->fontHandle);
@@ -3983,7 +3983,7 @@ static void	_userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
     {
         STRBUF* pSTRBUF = MyStatus_CreateNameString(pMy, HEAPID_WIFIP2PMATCH);
         // 初期化
-        GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MyInfoWin), 0 );
+        GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MyInfoWin), WINCLR_COL(FBMP_COL_WHITE) );
         sex = MyStatus_GetMySex(pMy);
         if( sex == PM_MALE ){
             _COL_N_BLUE;
@@ -4342,13 +4342,16 @@ static void _userDataDisp(WIFIP2PMATCH_WORK* wk)
                      FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B );
 
 	// 初期化
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MyInfoWinBack), 15 );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MyInfoWin), WINCLR_COL(FBMP_COL_WHITE) );
+    GFL_BMPWIN_TransVramCharacter(wk->MyInfoWin);
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MyInfoWinBack), WINCLR_COL(FBMP_COL_WHITE) );
     GFL_BMPWIN_TransVramCharacter(wk->MyInfoWinBack);
 	
 
 	// システムウィンドウ設定
 //	BmpMenuWinWrite( wk->MyInfoWinBack, WINDOW_TRANS_ON, MENU_WIN_CGX_NUM, MENU_WIN_PAL );
-    GFL_BMPWIN_MakeFrameScreen(wk->MyInfoWinBack, MENU_WIN_CGX_NUM, MENU_WIN_PAL);
+//    GFL_BMPWIN_MakeFrameScreen(wk->MyInfoWinBack, MENU_WIN_CGX_NUM, MENU_WIN_PAL);
+	BmpWinFrame_Write( wk->MyInfoWinBack, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
 }
 
 // ダミーオブジェクトを登録しまくる
@@ -5868,12 +5871,20 @@ static int _parentModeSelectMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 
     wk->SubListWin = _BmpWinDel(wk->SubListWin);
     //BMPウィンドウ生成
-    wk->SubListWin = GFL_BMPWIN_Create( 
-                     GFL_BG_FRAME2_M, 16, PARENTMENU_Y, 15, length * 2, FLD_SYSFONT_PAL, FLD_MENU_WIN_CGX - length * 2);
-    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  MENU_WIN_CGX_NUM, MENU_WIN_PAL );
+    wk->SubListWin = GFL_BMPWIN_Create(
+                     GFL_BG_FRAME2_M, 16, PARENTMENU_Y, 15, length * 2, FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+//    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  COMM_TALK_WIN_CGX_NUM, MENU_WIN_PAL );
+	BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
     list_h.list = wk->submenulist;
     list_h.win = wk->SubListWin;
 
+	list_h.print_que = wk->SysMsgQue;
+	PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->SubListWin );
+	list_h.print_util = &wk->SysMsgPrintUtil;
+	list_h.font_handle = wk->fontHandle;
+
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubListWin), WINCLR_COL(FBMP_COL_WHITE) );
+    
     wk->sublw = BmpMenuList_Set(&list_h, 0, wk->battleCur, HEAPID_WIFIP2PMATCH);
     GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
 
@@ -6099,7 +6110,7 @@ static int _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret )
     wk->SubListWin = _BmpWinDel(wk->SubListWin);
     //BMPウィンドウ生成
      wk->SubListWin = GFL_BMPWIN_Create(
-                     GFL_BG_FRAME2_M, 16, 9, 15, length * 2, FLD_SYSFONT_PAL, FLD_MENU_WIN_CGX - length * 2);
+                     GFL_BG_FRAME2_M, 16, 9, 15, length * 2, FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
     GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  MENU_WIN_CGX_NUM, MENU_WIN_PAL );
     list_h.list = wk->submenulist;
     list_h.win = wk->SubListWin;
@@ -6463,7 +6474,7 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
 		//BMPウィンドウ生成
 		wk->SubListWin = GFL_BMPWIN_Create(
 						 GFL_BG_FRAME2_M, 16, 11+ ((3-length)*2), 15  , length * 2,
-						 FLD_SYSFONT_PAL, FLD_MENU_WIN_CGX);
+						 FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
 		GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  MENU_WIN_CGX_NUM, MENU_WIN_PAL );
 		list_h.list = wk->submenulist;
 		list_h.win = wk->SubListWin;
@@ -7866,12 +7877,13 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
 	BmpWinFrame_CgxSet(GFL_BG_FRAME2_M,COMM_TALK_WIN_CGX_NUM, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
 
     GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
-                                  0x20*COMM_MESFRAME_PAL, 0x20, HEAPID_WIFIP2PMATCH);
+                                  0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
     
     // システムウインドウ枠描画
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->MsgWin), WINCLR_COL(FBMP_COL_WHITE) );
-    GFL_BMPWIN_ClearScreen(wk->MsgWin);
     GFL_BMPWIN_MakeScreen(wk->MsgWin);
+    GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
+    
 	BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
 
     //------
@@ -8628,7 +8640,7 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
 				MCV_NAMEWIN_DEFX+(MCV_NAMEWIN_OFSX*x),
 				MCV_NAMEWIN_DEFY+(MCV_NAMEWIN_OFSY*y),
 				MCV_NAMEWIN_SIZX, MCV_NAMEWIN_SIZY,
-				MCV_SYSFONT_PAL, MCV_NAMEWIN_CGX+(MCV_NAMEWIN_CGSIZ*i) );
+				MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B );
 		// 透明にして展開
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.nameWin[i]), 0 );
 		GFL_BMPWIN_TransVramCharacter( wk->view.nameWin[i] );
@@ -8642,7 +8654,7 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
 					MCV_STATUSWIN_DEFY+(MCV_STATUSWIN_OFSY*y),
 					MCV_STATUSWIN_SIZX, MCV_STATUSWIN_SIZY,
 					PLAYER_DISP_ICON_PLTTOFS_SUB, 
-					MCV_STATUSWIN_CGX+(MCV_STATUSWIN_CGSIZ*((i*2)+j)) );
+					GFL_BMP_CHRAREA_GET_B );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.statusWin[i][j]), 0 );
 			GFL_BMPWIN_TransVramCharacter( wk->view.statusWin[i][j] );
 		}
@@ -8652,7 +8664,7 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
 			GFL_BG_FRAME3_S, 
 			MCV_USERWIN_X, MCV_USERWIN_Y,
 			MCV_USERWIN_SIZX, MCV_USERWIN_SIZY,
-			MCV_SYSFONT_PAL, MCV_USERWIN_CGX );
+			MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B );
 	// 透明にして展開
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.userWin), 0 );
 	GFL_BMPWIN_TransVramCharacter( wk->view.userWin );
@@ -9805,7 +9817,7 @@ static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbm
 
 	for( i=0; i<WF_VIEW_STATUS_NUM; i++ ){
 		// 画面クリーン
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_stbmp[i]), 0 );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_stbmp[i]), WINCLR_COL(FBMP_COL_WHITE) );
 		if( i==0 ){
             int	pal = WifiP2PMatchBglFrmIconPalGet( GFL_BMPWIN_GetFrame(p_stbmp[i]) );
             WifiP2PMatchFriendListBmpStIconWrite( p_stbmp[i], &wk->icon, 

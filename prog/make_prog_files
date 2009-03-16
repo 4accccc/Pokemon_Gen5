@@ -451,8 +451,11 @@ SRCS_OVERLAY_DOWNLOAD_PLAY = test/dlplay/dlplay_parent_sample.c \
 
 # 大野デバッグ
 #===> SRCS_OVERLAY_WIFI2DMAP
-SRCS_OVERLAY_OHNO_DEBUG	= test/ohno/debug_ohno.c \
-				test/ohno/d_ohno_list.c \
+SRCS_OVERLAY_OHNO_DEBUG	= test/ohno/d_ohno_list.c
+
+# 大野デバッグ
+#===> SRCS_OVERLAY_OHNO_DEBUG
+SRCS_OVERLAY_OHNO_DEBUGAPP	= test/ohno/debug_ohno.c \
 				test/ohno/fatal_error.c \
 				test/ohno/debug_field.c \
 				test/ohno/test_layout.c

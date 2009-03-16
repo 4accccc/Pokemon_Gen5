@@ -2578,9 +2578,9 @@ u16 WH_GetAllowedChannel(void)
    ---------------------------------------------------------------------- */
 u16 WH_GetBitmap(void)
 {
-    if((_pWmInfo->sConnectMode == WH_CONNECTMODE_DS_CHILD) || (_pWmInfo->sConnectMode == WH_CONNECTMODE_DS_PARENT)){
-        return _pWmInfo->sDSInfo.aidBitmap;
-    }
+//    if((_pWmInfo->sConnectMode == WH_CONNECTMODE_DS_CHILD) || (_pWmInfo->sConnectMode == WH_CONNECTMODE_DS_PARENT)){
+//        return _pWmInfo->sDSInfo.aidBitmap;
+//    }
     return _pWmInfo->sConnectBitmap;
 }
 
