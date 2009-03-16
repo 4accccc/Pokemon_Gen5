@@ -19,7 +19,6 @@
 
 #include "print/gf_font.h"
 
-
 #include "fieldmap_local.h"
 #include "field_common.h"
 #include "field_actor.h"
@@ -201,7 +200,7 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 		//※現在マップ切り替わり時のデータ取得と戦闘などSubProcから帰ってくる
 		//　場所が切り分けられていないので仮でフラグ管理する
 		if( debugBGMsetFlag == FALSE ){
-			PMSNDSYS_PlayBGM_EX(SEQ_MUS_WB_R_F, trackBit);
+			PMSND_PlayNextBGM_EX(SEQ_MUS_WB_R_F, trackBit);
 			debugBGMsetFlag = TRUE;
 		}
 	}

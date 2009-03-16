@@ -504,7 +504,7 @@ static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus )
 	int i;
 
 	// サウンドドライバ情報更新
-	NNS_SndUpdateDriverInfo();
+	//NNS_SndUpdateDriverInfo();
 
 	// 更新されたチャンネル情報取得
 	for( i=0; i<CHANNEL_NUM; i++ ){

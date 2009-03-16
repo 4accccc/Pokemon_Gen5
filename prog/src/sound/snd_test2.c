@@ -146,7 +146,7 @@ static GFL_PROC_RESULT SoundTest2Proc_Init(GFL_PROC * proc, int * seq, void * pw
 		GFL_SNDSTATUS_SETUP sndStatusSetup;
 
 		sndStatusSetup = sndStatusData;
-		sndStatusSetup.pBgmHandle = PMSNDSYS_GetBGMhandlePointer();
+		sndStatusSetup.pBgmHandle = PMSND_GetBGMhandlePointer();
 
 		sw->gflSndStatus = GFL_SNDSTATUS_Create( &sndStatusSetup, sw->heapID );
 	}
@@ -602,22 +602,22 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			OS_Printf("pressed bgm num_set\n");
 			break;
 		case SOUNDTEST_TPEV_BGM_PLAY:
-			PMSNDSYS_PlayBGM(sw->bgmNum);
-			GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSNDSYS_GetBGMhandlePointer());
+			PMSND_PlayNextBGM(sw->bgmNum);
+			GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSND_GetBGMhandlePointer());
 			GFL_SNDSTATUS_InitControl(sw->gflSndStatus);
 			pauseSw = FALSE;
 			break;
 		case SOUNDTEST_TPEV_BGM_STOP:
-			PMSNDSYS_StopBGM();
+			PMSND_StopBGM();
 			break;
 		case SOUNDTEST_TPEV_BGM_PAUSE:
 			if( pauseSw == FALSE ){
-				PMSNDSYS_PauseBGM(TRUE);
-				//PMSNDSYS_PushBGM();
+				PMSND_PauseBGM(TRUE);
+				//PMSND_PushBGM();
 				pauseSw = TRUE;
 			} else {
-				//PMSNDSYS_PopBGM();
-				PMSNDSYS_PauseBGM(FALSE);
+				//PMSND_PopBGM();
+				PMSND_PauseBGM(FALSE);
 				pauseSw = FALSE;
 			}
 			break;
@@ -635,7 +635,7 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			OS_Printf("pressed se num_se\n");
 			break;
 		case SOUNDTEST_TPEV_SE_PLAY:
-			PMSNDSYS_PlaySE(sw->seNum);
+			PMSND_PlaySE(sw->seNum);
 			break;
 		case SOUNDTEST_TPEV_SE_STOP:
 			//NNS_SndPlayerStopSeq(&sw->seHandle, 0);
@@ -657,18 +657,18 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			OS_Printf("pressed voice num_set\n");
 			break;
 		case SOUNDTEST_TPEV_VOICE_PLAY:
-			PMSNDSYS_PlayVoice(sw->voiceNum);
+			PMSND_PlayVoice(sw->voiceNum);
 			break;
 		case SOUNDTEST_TPEV_VOICE_STOP:
 			//NNS_SndPlayerStopSeq(&sw->voiceHandle, 0);
-			PMSNDSYS_PauseBGM(TRUE);
-			PMSNDSYS_PushBGM();
+			PMSND_PauseBGM(TRUE);
+			PMSND_PushBGM();
 			break;
 		case SOUNDTEST_TPEV_VOICE_PAUSE:
 			//OS_Printf("pressed voice pause\n");
-			PMSNDSYS_PopBGM();
-			GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSNDSYS_GetBGMhandlePointer());
-			PMSNDSYS_PauseBGM(FALSE);
+			PMSND_PopBGM();
+			GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSND_GetBGMhandlePointer());
+			PMSND_PauseBGM(FALSE);
 			break;
 		case SOUNDTEST_TPEV_VOICE_WINDOW:
 			OS_Printf("pressed voice window\n");

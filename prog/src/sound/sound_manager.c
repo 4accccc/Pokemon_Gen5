@@ -171,7 +171,7 @@ void	SOUNDMAN_InitHierarchyPlayer( const SOUNDMAN_HIERARCHY_PLAYER_DATA* playerD
  *
  */
 //--------------------------------------------------------------------------------------------
-u16		SOUNDMAN_GetHierarchyPlayerSoundIdx( void )
+u32		SOUNDMAN_GetHierarchyPlayerSoundIdx( void )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 
@@ -180,7 +180,7 @@ u16		SOUNDMAN_GetHierarchyPlayerSoundIdx( void )
 	return player->soundIdx;
 }
 
-u16		SOUNDMAN_GetHierarchyPlayerPlayerNo( void )
+u32		SOUNDMAN_GetHierarchyPlayerPlayerNo( void )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 

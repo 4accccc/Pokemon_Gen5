@@ -38,8 +38,8 @@ typedef struct {
 extern void	SOUNDMAN_InitHierarchyPlayer( const SOUNDMAN_HIERARCHY_PLAYER_DATA* playerData );
 
 // 階層プレーヤー状態取得
-extern u16				SOUNDMAN_GetHierarchyPlayerSoundIdx( void );
-extern u16				SOUNDMAN_GetHierarchyPlayerPlayerNo( void );
+extern u32				SOUNDMAN_GetHierarchyPlayerSoundIdx( void );
+extern u32				SOUNDMAN_GetHierarchyPlayerPlayerNo( void );
 extern NNSSndHandle*	SOUNDMAN_GetHierarchyPlayerSndHandle( void );
 
 // 階層プレーヤーサウンド操作

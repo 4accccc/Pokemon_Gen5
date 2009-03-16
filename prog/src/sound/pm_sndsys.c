@@ -38,21 +38,21 @@ typedef struct {
 	u32 size;
 	u16 channelBit;
 	u8	playableNum;
-}PMSNDSYS_PLSETUP;
+}PMSND_PLSETUP;
 
-#define PMSNDSYS_PLSETUP_TBLEND (0xffffffff)
+#define PMSND_PLSETUP_TBLEND (0xffffffff)
 
 typedef struct {
 	NNSSndHandle	sndHandle;
 	u16				playerNo;
-}PMSNDSYS_PLAYER_DATA;
+}PMSND_PLAYER_DATA;
 
 typedef struct {
-	PMSNDSYS_PLAYER_DATA*	playerDataArray;
+	PMSND_PLAYER_DATA*	playerDataArray;
 	u16						playerNum;
 	int						heapLvDelete;
 	int						heapLvReset;
-}PMSNDSYS_PL_UNIT;
+}PMSND_PL_UNIT;
 
 //------------------------------------------------------------------
 /**
@@ -71,13 +71,13 @@ enum {
 	PLAYER_DEFAULT_MAX,
 };
 
-static const PMSNDSYS_PLSETUP systemPlayer[] = {
-	{ 0x6000, 0x0000, 1 },
+static const PMSND_PLSETUP systemPlayer[] = {
 	{ 0x0000, 0x0000, 1 },
+	{ 0x6000, 0x0000, 1 },
 //	{ 0x6000, PLAYER_MUSIC_CH, 1 },
 //	{ 0x6000, PLAYER_PMVOICE_CH, 2 },
 
-	{ PMSNDSYS_PLSETUP_TBLEND, 0x0000, 0 },	// TABLE END
+	{ PMSND_PLSETUP_TBLEND, 0x0000, 0 },	// TABLE END
 };
 
 #define PLAYER_MUSIC_HEAPSIZ	(0x4000)
@@ -86,6 +86,29 @@ static const PMSNDSYS_PLSETUP systemPlayer[] = {
 static const SOUNDMAN_HIERARCHY_PLAYER_DATA pmHierarchyPlayerData = {
 	PLAYER_MUSIC_HEAPSIZ, PLAYER_DEFAULT_MAX, PLAYER_MUSIC_CH,
 };
+
+//------------------------------------------------------------------
+/**
+ * @brief	プレーヤー情報定義
+ */
+//------------------------------------------------------------------
+typedef struct {
+	SNDPlayerInfo			playerInfo;
+	SNDTrackInfo			trackInfo[16];
+}PMSND_PLAYERSTATUS;
+
+//------------------------------------------------------------------
+/**
+ * @brief	システムフェード構造定義
+ */
+//------------------------------------------------------------------
+typedef struct {
+	BOOL	active;
+	u16		volumeCounter;
+	u16		nextTrackBit;
+	u32		nextSoundIdx;
+	int		fadeFrames;
+}PMSND_FADESTATUS;
 
 //============================================================================================
 /**
@@ -110,17 +133,24 @@ static NNSSndArc		PmSoundArc;
 static NNSSndHeapHandle		PmSndHeapHandle;
 static u32					playerNumber;
 
-static PMSNDSYS_PL_UNIT systemPlayerUnit;
+static PMSND_FADESTATUS	fadeStatus;
+
+static PMSND_PL_UNIT systemPlayerUnit;
 SOUNDMAN_PRESET_HANDLE* systemPresetHandle;
 
 static const u32 systemPresetSoundIdxTbl[] = {
 	1500, 1501, 1504, 1505, 1508, 1509, 1512, 1513,
 };
 
-static void PMSNDSYS_CreatePlayerUnit
-		( const PMSNDSYS_PLSETUP* setupTbl, PMSNDSYS_PL_UNIT* playerUnit );
-static void PMSNDSYS_DeletePlayerUnit
-		( PMSNDSYS_PL_UNIT* playerUnit );
+static PMSND_PLAYERSTATUS bgmPlayerInfo;
+
+static void PMSND_InitSystemFade( void );
+static void PMSND_ResetSystemFade( void );
+static void PMSND_SystemFade( void );
+static void PMSND_CreatePlayerUnit
+		( const PMSND_PLSETUP* setupTbl, PMSND_PL_UNIT* playerUnit );
+static void PMSND_DeletePlayerUnit
+		( PMSND_PL_UNIT* playerUnit );
 //============================================================================================
 /**
  *
@@ -128,10 +158,9 @@ static void PMSNDSYS_DeletePlayerUnit
  *
  */
 //============================================================================================
-void	PMSNDSYS_Init( void )
+void	PMSND_Init( void )
 {
 	u32 size1, size2;
-
 
     // サウンドシステム初期化
  	NNS_SndInit();
@@ -148,7 +177,9 @@ void	PMSNDSYS_Init( void )
 
     // サウンドの設定
 	playerNumber = 0;
-	PMSNDSYS_CreatePlayerUnit(systemPlayer, &systemPlayerUnit);
+	PMSND_CreatePlayerUnit(systemPlayer, &systemPlayerUnit);
+
+	PMSND_InitSystemFade();
 
 	// 常駐サウンドデータ読み込み
 	//systemPresetHandle = SOUNDMAN_PresetSoundTbl
@@ -169,9 +200,23 @@ void	PMSNDSYS_Init( void )
  *
  */
 //============================================================================================
-void	PMSNDSYS_Main( void )
+void	PMSND_Main( void )
 {
+	if( fadeStatus.active == TRUE ){ PMSND_SystemFade(); }
+
 	NNS_SndMain();
+
+	// サウンドドライバ情報更新
+	NNS_SndUpdateDriverInfo();
+	{
+		NNSSndHandle* pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
+		int i;
+
+		NNS_SndPlayerReadDriverPlayerInfo(pBgmHandle, &bgmPlayerInfo.playerInfo);
+		for( i=0; i<16; i++ ){
+			NNS_SndPlayerReadDriverTrackInfo( pBgmHandle, i, &bgmPlayerInfo.trackInfo[i]);
+		}
+	}
 }
 
 //============================================================================================
@@ -181,13 +226,17 @@ void	PMSNDSYS_Main( void )
  *
  */
 //============================================================================================
-void	PMSNDSYS_Exit( void )
+void	PMSND_Exit( void )
 {
 	SOUNDMAN_ReleasePresetData(systemPresetHandle);
 
-	PMSNDSYS_DeletePlayerUnit(&systemPlayerUnit);
+	PMSND_DeletePlayerUnit(&systemPlayerUnit);
 	NNS_SndHeapDestroy(PmSndHeapHandle);
 }
+
+
+
+
 
 //============================================================================================
 /**
@@ -196,7 +245,7 @@ void	PMSNDSYS_Exit( void )
  *
  *
  *
- * @brief	可変プレーヤーシステム
+ * @brief	可変プレーヤーセットアップ
  *
  *
  *
@@ -211,8 +260,8 @@ void	PMSNDSYS_Exit( void )
  *
  */
 //============================================================================================
-static void PMSNDSYS_CreatePlayerUnit
-			( const PMSNDSYS_PLSETUP* setupTbl, PMSNDSYS_PL_UNIT* playerUnit )
+static void PMSND_CreatePlayerUnit
+			( const PMSND_PLSETUP* setupTbl, PMSND_PL_UNIT* playerUnit )
 {
 	BOOL result;
 	int playerNo;
@@ -224,12 +273,12 @@ static void PMSNDSYS_CreatePlayerUnit
 
 	// プレーヤー数カウント
 	i = 0;
-	while(setupTbl[i].size != PMSNDSYS_PLSETUP_TBLEND){ i++; }
+	while(setupTbl[i].size != PMSND_PLSETUP_TBLEND){ i++; }
 	playerUnit->playerNum = i;
 
 	// プレーヤー配列作成
-	playerUnit->playerDataArray = (PMSNDSYS_PLAYER_DATA*)NNS_SndHeapAlloc
-			(PmSndHeapHandle, sizeof(PMSNDSYS_PLAYER_DATA) * playerUnit->playerNum, NULL, 0, 0 );
+	playerUnit->playerDataArray = (PMSND_PLAYER_DATA*)NNS_SndHeapAlloc
+			(PmSndHeapHandle, sizeof(PMSND_PLAYER_DATA) * playerUnit->playerNum, NULL, 0, 0 );
 
 	for( i=0; i<playerUnit->playerNum; i++ ){
 		playerNo = i + playerNumber;
@@ -260,7 +309,7 @@ static void PMSNDSYS_CreatePlayerUnit
  *
  */
 //============================================================================================
-static void PMSNDSYS_DeletePlayerUnit( PMSNDSYS_PL_UNIT* playerUnit )
+static void PMSND_DeletePlayerUnit( PMSND_PL_UNIT* playerUnit )
 {
 	int i;
 
@@ -291,7 +340,7 @@ static void PMSNDSYS_DeletePlayerUnit( PMSNDSYS_PL_UNIT* playerUnit )
  * @brief	サウンドハンドル取得
  */
 //------------------------------------------------------------------
-NNSSndHandle* PMSNDSYS_GetBGMhandlePointer( void )
+NNSSndHandle* PMSND_GetBGMhandlePointer( void )
 {
 	return SOUNDMAN_GetHierarchyPlayerSndHandle();
 }
@@ -301,30 +350,41 @@ NNSSndHandle* PMSNDSYS_GetBGMhandlePointer( void )
  * @brief	サウンド再生
  */
 //------------------------------------------------------------------
-BOOL	PMSNDSYS_PlayBGM( u32 soundIdx )
+BOOL	PMSND_PlayBGM( u32 soundIdx )
 {
-	BOOL result;
-
-	SOUNDMAN_StopHierarchyPlayer();
-	result = SOUNDMAN_PlayHierarchyPlayer(soundIdx);
-
-	return result;
+	return PMSND_PlayBGM_EX(soundIdx, 0xffff);
 }
 //------------------------------------------------------------------
-BOOL	PMSNDSYS_PlayBGM_EX( u32 soundIdx, u16 trackBit )
+BOOL	PMSND_PlayBGM_EX( u32 soundIdx, u16 trackBit )
 {
 	BOOL	result;
 
 	SOUNDMAN_StopHierarchyPlayer();
 	result = SOUNDMAN_PlayHierarchyPlayer(soundIdx);
+	if( trackBit != 0xffff ){ PMSND_ChangeBGMtrack( trackBit ); }
 
-	PMSNDSYS_ChangeBGMtrack( trackBit );
+	PMSND_ResetSystemFade();
 
 	return result;
 }
 //------------------------------------------------------------------
+BOOL	PMSND_PlayNextBGM( u32 soundIdx )
+{
+	return PMSND_PlayNextBGM_EX(soundIdx, 0xffff);
+
+}
+//------------------------------------------------------------------
+BOOL	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit )
+{
+	fadeStatus.nextSoundIdx = soundIdx;
+	fadeStatus.nextTrackBit = trackBit;
+	fadeStatus.active = TRUE;
+
+	return TRUE;
+}
+//------------------------------------------------------------------
 // 再生トラック変更
-void	PMSNDSYS_ChangeBGMtrack( u16 trackBit )
+void	PMSND_ChangeBGMtrack( u16 trackBit )
 {
 	u16		bitMask = trackBit^0xffff;
 
@@ -340,7 +400,7 @@ void	PMSNDSYS_ChangeBGMtrack( u16 trackBit )
  * @brief	サウンド停止
  */
 //------------------------------------------------------------------
-void	PMSNDSYS_StopBGM( void )
+void	PMSND_StopBGM( void )
 {
 	SOUNDMAN_StopHierarchyPlayer();
 }
@@ -350,7 +410,7 @@ void	PMSNDSYS_StopBGM( void )
  * @brief	サウンド一時停止
  */
 //------------------------------------------------------------------
-void	PMSNDSYS_PauseBGM( BOOL pauseFlag )
+void	PMSND_PauseBGM( BOOL pauseFlag )
 {
 	NNS_SndPlayerPause(SOUNDMAN_GetHierarchyPlayerSndHandle(), pauseFlag);
 }
@@ -360,7 +420,7 @@ void	PMSNDSYS_PauseBGM( BOOL pauseFlag )
  * @brief	サウンドフェードイン
  */
 //------------------------------------------------------------------
-void	PMSNDSYS_FadeInBGM( u16 frames )
+void	PMSND_FadeInBGM( u16 frames )
 {
 	// 現在のvolumeを即時更新
 	NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, 0);
@@ -373,7 +433,7 @@ void	PMSNDSYS_FadeInBGM( u16 frames )
  * @brief	サウンドフェードアウト
  */
 //------------------------------------------------------------------
-void	PMSNDSYS_FadeOutBGM( u16 frames )
+void	PMSND_FadeOutBGM( u16 frames )
 {
 	NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, frames);
 }
@@ -383,7 +443,7 @@ void	PMSNDSYS_FadeOutBGM( u16 frames )
  * @brief	サウンド状態保管
  */
 //------------------------------------------------------------------
-void	PMSNDSYS_PushBGM( void )
+void	PMSND_PushBGM( void )
 {
 	SOUNDMAN_PushHierarchyPlayer();
 }
@@ -393,13 +453,35 @@ void	PMSNDSYS_PushBGM( void )
  * @brief	サウンド状態取り出し
  */
 //------------------------------------------------------------------
-void	PMSNDSYS_PopBGM( void )
+void	PMSND_PopBGM( void )
 {
 	SOUNDMAN_PopHierarchyPlayer();
 }
 
 
 
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ * @brief	演出サウンド関数
+ *
+ *
+ *
+ */
+//============================================================================================
+static BOOL playSoundEffect( PMSND_PLAYER_DATA* ppd, u32 soundIdx, u32 channel, int pri )
+{
+	NNS_SndPlayerStopSeq(&ppd->sndHandle, 0);
+	// プレイヤー使用チャンネル設定
+	NNS_SndPlayerSetAllocatableChannel(ppd->playerNo, channel);
+
+	return NNS_SndArcPlayerStartSeqEx(&ppd->sndHandle, ppd->playerNo, -1, pri, soundIdx);
+}
+	
 //============================================================================================
 /**
  *
@@ -411,19 +493,22 @@ void	PMSNDSYS_PopBGM( void )
  *
  */
 //============================================================================================
-BOOL	PMSNDSYS_PlaySE( u32 soundIdx )
+BOOL	PMSND_PlaySystemSE( u32 soundIdx )
 {
-	PMSNDSYS_PLAYER_DATA* playerData = &systemPlayerUnit.playerDataArray[PLAYER_SE];
-	BOOL result;
+	PMSND_PLAYER_DATA* playerData = &systemPlayerUnit.playerDataArray[PLAYER_SYSSE];
 
-	NNS_SndPlayerStopSeq(&playerData->sndHandle, 0);
-	// プレイヤー使用チャンネル設定
-	NNS_SndPlayerSetAllocatableChannel(playerData->playerNo, PLAYER_SE_CH);
+	if( playSoundEffect( playerData, soundIdx, PLAYER_SE_CH, 126) == FALSE ){
+		OS_Printf("system sound_Effect start Error... soundIdx = %d\n", soundIdx);
+		return FALSE;
+	}
+	return TRUE;
+}
 
-	result = NNS_SndArcPlayerStartSeqEx
-				(&playerData->sndHandle, playerData->playerNo, -1, 126, soundIdx);
+BOOL	PMSND_PlaySE( u32 soundIdx )
+{
+	PMSND_PLAYER_DATA* playerData = &systemPlayerUnit.playerDataArray[PLAYER_SE];
 
-	if(result == FALSE){
+	if( playSoundEffect( playerData, soundIdx, PLAYER_SE_CH, 126) == FALSE ){
 		OS_Printf("sound_Effect start Error... soundIdx = %d\n", soundIdx);
 		return FALSE;
 	}
@@ -441,22 +526,104 @@ BOOL	PMSNDSYS_PlaySE( u32 soundIdx )
  *
  */
 //============================================================================================
-BOOL	PMSNDSYS_PlayVoice( u32 pokeNum )
+BOOL	PMSND_PlayVoice( u32 pokeNum )
 {
-	PMSNDSYS_PLAYER_DATA* playerData = &systemPlayerUnit.playerDataArray[PLAYER_SE];
-	BOOL result;
+	PMSND_PLAYER_DATA* playerData = &systemPlayerUnit.playerDataArray[PLAYER_SE];
 
-	NNS_SndPlayerStopSeq(&playerData->sndHandle, 0);
-	// プレイヤー使用チャンネル設定
-	NNS_SndPlayerSetAllocatableChannel(playerData->playerNo, PLAYER_PMVOICE_CH);
-
-	result = NNS_SndArcPlayerStartSeqEx
-				(&playerData->sndHandle, playerData->playerNo, pokeNum, 127, SEQ_PV);
-
-	if(result == FALSE){
+	if( playSoundEffect( playerData, pokeNum, PLAYER_PMVOICE_CH, 127) == FALSE ){
 		OS_Printf("voice start Error... pokeNum = %d\n", pokeNum);
 		return FALSE;
 	}
 	return TRUE;
 }
+
+
+
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	システムフェード
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+static void PMSND_InitSystemFade( void )
+{
+	fadeStatus.fadeFrames = 60;
+	PMSND_ResetSystemFade();
+}
+
+static void PMSND_ResetSystemFade( void )
+{
+	fadeStatus.active = FALSE;
+	fadeStatus.nextTrackBit = 0xffff;
+	fadeStatus.nextSoundIdx = 0;
+	fadeStatus.volumeCounter = fadeStatus.fadeFrames;
+}
+
+//------------------------------------------------------------------
+static void PMSND_SystemFade( void )
+{
+	u32 nowSoundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
+	BOOL bgmSetFlag = FALSE;
+
+	if( nowSoundIdx ){
+		if( nowSoundIdx != fadeStatus.nextSoundIdx ){
+			// FadeOut
+			NNS_SndPlayerMoveVolume
+				(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, fadeStatus.fadeFrames );
+			if( fadeStatus.volumeCounter ){
+				fadeStatus.volumeCounter--;
+			} else {
+				bgmSetFlag = TRUE; 
+			}
+		} else {
+			// FadeIn
+			if( fadeStatus.volumeCounter < fadeStatus.fadeFrames ){
+				NNS_SndPlayerMoveVolume
+					(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127, fadeStatus.fadeFrames );
+				fadeStatus.volumeCounter++;
+			} else {
+				NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127, 0 );
+				PMSND_ResetSystemFade();
+			}
+		}
+	} else {
+		bgmSetFlag = TRUE;
+	}
+
+	if(bgmSetFlag == TRUE){
+		SOUNDMAN_StopHierarchyPlayer();
+		SOUNDMAN_PlayHierarchyPlayer(fadeStatus.nextSoundIdx);
+		// 現在のvolumeを即時更新
+		NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, 0);
+		fadeStatus.volumeCounter = 0;
+
+		if( fadeStatus.nextTrackBit != 0xffff ){
+			PMSND_ChangeBGMtrack(fadeStatus.nextTrackBit);
+		}
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	システムフェードフレーム設定
+ */
+//------------------------------------------------------------------
+void PMSND_SetSystemFadeFrames( int frames )
+{
+	fadeStatus.fadeFrames = frames;
+}
+
+
+
 

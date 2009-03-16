@@ -182,7 +182,7 @@ static	void	GameInit(void)
 	POKETOOL_InitSystem( GFL_HEAPID_SYSTEM );
 
     //サウンドの設定
-	PMSNDSYS_Init();
+	PMSND_Init();
 	//サウンドストリーミング再生システム
 	SND_STRM_Init(GFL_HEAPID_SYSTEM);
 
@@ -208,7 +208,7 @@ static	void	GameMain(void)
 		NetErr_ErrorSet();
 	}
 	SND_STRM_Main();
-	PMSNDSYS_Main();
+	PMSND_Main();
 }
 
 //------------------------------------------------------------------
@@ -219,7 +219,7 @@ static	void	GameMain(void)
 static	void	GameExit(void)
 {
 	SND_STRM_Exit();
-	PMSNDSYS_Exit();
+	PMSND_Exit();
 }
 
 //--------------------------------------------------------------

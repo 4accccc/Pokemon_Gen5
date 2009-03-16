@@ -75,8 +75,8 @@ static GMEVENT_RESULT DebugBattleEvent(GMEVENT * event, int *  seq, void * work)
 		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
 		// サウンドテスト
 		// ＢＧＭ一時停止→退避
-		PMSNDSYS_PauseBGM(TRUE);
-		PMSNDSYS_PushBGM();
+		PMSND_PauseBGM(TRUE);
+		PMSND_PushBGM();
 		//
 		(*seq)++;
 		break;
@@ -84,7 +84,7 @@ static GMEVENT_RESULT DebugBattleEvent(GMEVENT * event, int *  seq, void * work)
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
 		// サウンドテスト
 		// 戦闘用ＢＧＭセット
-		PMSNDSYS_PlayBGM(SEQ_MUS_WB_VS_NORAPOKE);
+		PMSND_PlayBGM(SEQ_MUS_WB_VS_NORAPOKE);
 		//
 		(*seq)++;
 		break;
@@ -93,7 +93,7 @@ static GMEVENT_RESULT DebugBattleEvent(GMEVENT * event, int *  seq, void * work)
 		// サウンドテスト
 		// 戦闘ＢＧＭフェードアウト
 		dbw->timeWait = 60;
-		PMSNDSYS_FadeOutBGM(60);
+		PMSND_FadeOutBGM(60);
 		(*seq) ++;
 		break;
 	case 3:
@@ -108,9 +108,9 @@ static GMEVENT_RESULT DebugBattleEvent(GMEVENT * event, int *  seq, void * work)
 		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
 		// サウンドテスト
 		// ＢＧＭ取り出し→再開
-		PMSNDSYS_PopBGM();
-		PMSNDSYS_PauseBGM(FALSE);
-		PMSNDSYS_FadeInBGM(60);
+		PMSND_PopBGM();
+		PMSND_PauseBGM(FALSE);
+		PMSND_FadeInBGM(60);
 		//
 		(*seq) ++;
 		break;

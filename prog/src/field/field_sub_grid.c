@@ -790,7 +790,7 @@ static void FGridPlayer_Move(
 			//　↓ サウンドテスト（停止）
 			{
 				u16 trackBit = 0xfcff; // track 9,10 OFF
-				PMSNDSYS_ChangeBGMtrack(trackBit);
+				PMSND_ChangeBGMtrack(trackBit);
 			}
 			//　↑
 			dir = FLDMMDL_GetDirDisp( fmmdl );
@@ -811,7 +811,7 @@ static void FGridPlayer_Move(
 				//　↓ サウンドテスト（移動）
 				{
 					u16 trackBit = 0xffff; // 全track ON
-					PMSNDSYS_ChangeBGMtrack(trackBit);
+					PMSND_ChangeBGMtrack(trackBit);
 				}
 				//　↑
 				#if 1 //debug移動

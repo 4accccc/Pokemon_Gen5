@@ -6,6 +6,9 @@
  * @date	
  */
 //============================================================================================
+#ifndef __PMSNDSYS_H__
+#define __PMSNDSYS_H__
+
 //============================================================================================
 /**
  *
@@ -13,9 +16,9 @@
  *
  */
 //============================================================================================
-extern void	PMSNDSYS_Init( void );
-extern void	PMSNDSYS_Main( void );
-extern void	PMSNDSYS_Exit( void );
+extern void	PMSND_Init( void );
+extern void	PMSND_Main( void );
+extern void	PMSND_Exit( void );
 
 //============================================================================================
 /**
@@ -24,25 +27,38 @@ extern void	PMSNDSYS_Exit( void );
  *
  */
 //============================================================================================
-extern NNSSndHandle* PMSNDSYS_GetBGMhandlePointer( void );
+extern NNSSndHandle* PMSND_GetBGMhandlePointer( void );
 
-extern BOOL	PMSNDSYS_PlayBGM( u32 soundIdx );
-extern BOOL	PMSNDSYS_PlayBGM_EX( u32 soundIdx, u16 trackBit );
-extern void	PMSNDSYS_ChangeBGMtrack( u16 trackBit );
+extern BOOL	PMSND_PlayBGM( u32 soundIdx );					//ＢＧＭを再生
+extern BOOL	PMSND_PlayBGM_EX( u32 soundIdx, u16 trackBit );	//上記拡張
+extern BOOL	PMSND_PlayNextBGM( u32 soundIdx );				//ＢＧＭフェードインアウト有りで再生
+extern BOOL	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit );//上記拡張
+extern void	PMSND_ChangeBGMtrack( u16 trackBit );			//ＢＧＭの再生トラック変更
 
-extern void	PMSNDSYS_StopBGM( void );
-extern void	PMSNDSYS_PauseBGM( BOOL pauseFlag );
-extern void	PMSNDSYS_FadeInBGM( u16 frames );
-extern void	PMSNDSYS_FadeOutBGM( u16 frames );
+extern void	PMSND_StopBGM( void );				//現在のＢＧＭを停止
+extern void	PMSND_PauseBGM( BOOL pauseFlag );	//現在のＢＧＭを一時停止(TRUE停止,FALSE再開)
+extern void	PMSND_FadeInBGM( u16 frames );		//現在のＢＧＭをフェードイン
+extern void	PMSND_FadeOutBGM( u16 frames );		//現在のＢＧＭをフェードアウト
 
-extern void	PMSNDSYS_PushBGM( void );
-extern void	PMSNDSYS_PopBGM( void );
+extern void	PMSND_PushBGM( void );				//現在のＢＧＭを退避
+extern void	PMSND_PopBGM( void );				//現在のＢＧＭを復元
 
-extern BOOL	PMSNDSYS_PlaySE( u32 soundNum );
-extern BOOL	PMSNDSYS_PlayVoice( u32 pokeNum );
+extern BOOL	PMSND_PlaySystemSE( u32 soundNum );	//システムＳＥを再生
+extern BOOL	PMSND_PlaySE( u32 soundNum );		//ＳＥを再生
+extern BOOL	PMSND_PlayVoice( u32 pokeNum );		//鳴き声を再生
+
+//============================================================================================
+/**
+ *
+ * @brief	システムフェードフレーム設定（各appから呼び出される）
+ *
+ */
+//============================================================================================
+extern void PMSND_SetSystemFadeFrames( int frames );
 
 //サウンドテスト用
 //※現在マップ切り替わり時のデータ取得と戦闘などSubProcから帰ってくる
 //　場所が切り分けられていないので仮でフラグ管理する
 extern BOOL debugBGMsetFlag;
 
+#endif
