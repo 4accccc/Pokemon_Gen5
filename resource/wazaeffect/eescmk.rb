@@ -4,6 +4,8 @@
 #
 #========================================================================
 
+	$KCODE = "Shift-JIS"
+
 #	コマンドリストクラス
 class	CommandList
 	def initialize
@@ -89,12 +91,23 @@ class	Command
 			print "combobox_text配列サイズより大きい値が設定されています\n"
 			exit( 1 )
 		end
+		if @combobox_text.size != @combobox_value.size
+			print @com_str + "のCOMBOBOX_TEXTとCOMBOBOX_VALUEの数が一致しません\n"
+			print "COMBOBOX_TEXTとCOMBOBOX_VALUEの数が一致しません\n"
+			print "区切り文字に全角スペースが含まれている可能性があります\n"
+			exit( 1 )
+		end
 		@combobox_text[ num ]
 	end
 
 	def get_combobox_value( num )
 		if num > @combobox_value.size
 			print "combobox_value配列サイズより大きい値が設定されています\n"
+			exit( 1 )
+		end
+		if @combobox_text.size != @combobox_value.size
+			print @com_str + "のCOMBOBOX_TEXTとCOMBOBOX_VALUEの数が一致しません\n"
+			print "区切り文字に全角スペースが含まれている可能性があります\n"
 			exit( 1 )
 		end
 		@combobox_value[ num ]
@@ -158,14 +171,19 @@ class	Command
 end
 
 #	メインルーチン
-	if ARGV.size < 2
-		print "error: ruby eescmk.rb def_file esf_file\n";
+	if ARGV.size < 3
+		print "error: ruby eescmk.rb def_file esf_file inc_dir sw\n";
 		print "def_file: スクリプト命令マクロが記述されたヘッダーファイル\n";
 		print "esf_file: エフェクトエディタで作成されたesfファイル\n";
+		print "inc_dir: インクルードするヘッダーファイルのディレクトリ\n";
+		print "sw: MCS用のバイナリデータを生成する（onで生成）\n";
 		exit( 1 )
 	end
 
-	$KCODE = "Shift-JIS"
+	ARGV_DEF_FILE = 0
+	ARGV_ESF_FILE = 1
+	ARGV_INC_DIR = 2
+	ARGV_SW = 3
 
 	com_list = CommandList.new
 	com_num = 0
@@ -173,7 +191,7 @@ end
 	param_num_max = 0
 	combobox_text = 0
 
-	fp_r = open( ARGV[ 0 ] )
+	fp_r = open( ARGV[ ARGV_DEF_FILE ] )
 	data = fp_r.readlines
 	fp_r.close
 
@@ -273,32 +291,62 @@ end
 	}
 
 	#esfファイルから.sファイルを生成
-	fp_r = open( ARGV[ 1 ] )
+	fp_r = open( ARGV[ ARGV_ESF_FILE ] )
 	data = fp_r.readlines
 	fp_r.close
 
 	seq_no = 0
 	seq_table = []
 	sequence = []
+	inc_header = []
 	dir_table = [ "AA2BB", "BB2AA", "A2B", "A2C", "A2D", "B2A", "B2C", "B2D", "C2A", "C2B", "C2D", "D2A", "D2B", "D2C" ]
 	num_str = ""
+	file_list = []
+	bin_list = []
 
-	SEQ_EFFNO_SEARCH = 0
-	SEQ_MAKE_DATA = 1
+	i = 0
+
+	#シーケンス
+	SEQ_SIGNATURE_SEARCH = 0
+	SEQ_FILE_LIST_SEARCH = 1
+	SEQ_EFFNO_SEARCH = 2
+	SEQ_MAKE_DATA = 3
 
 	EFFNO_POS = 0
 	ESF_COM_STR_POS = 0
 
-	data.size.times { |i|
+	while i < data.size
 		split_data = data[i].split(/\s+/)
 		case seq_no
+		when SEQ_SIGNATURE_SEARCH
+			cnt = 0
+			"EFFSEQ".each_byte { |c|
+				if split_data[ 0 ][ cnt ] != c
+					print "このスクリプトで解釈できないファイルです\n"
+					exit( 1 )
+				end
+				cnt += 1
+			}
+			seq_no = SEQ_FILE_LIST_SEARCH
+		when SEQ_FILE_LIST_SEARCH
+			if split_data[ 0 ][ 0 ].chr == "$"
+				file_cnt = split_data[ 0 ][ 1 ].chr + split_data[ 0 ][ 2 ].chr + split_data[ 0 ][ 3 ].chr + split_data[ 0 ][ 4 ].chr
+				file_cnt.to_i.times{
+					i += 1
+					file_list << data[ i ].strip
+				}
+			else
+				i -= 1
+			end
+			seq_no = SEQ_EFFNO_SEARCH
 		when SEQ_EFFNO_SEARCH
 			if split_data[ EFFNO_POS ][ 0 ].chr == "#"
 				num_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr + split_data[ EFFNO_POS ][ 3 ].chr
 				seq_table.clear
 				sequence.clear
+				inc_header.clear
 				dir_table.size.times { |dir|
-					seq_table << "\t.long\t" + "WE_" + num_str + "_00\t//" + dir_table[ dir ] + "\n"
+					seq_table << "\t.long\t" + "WE_" + num_str + "_00 - WE_" + num_str +"\t//" + dir_table[ dir ] + "\n"
 				}
 				seq_no = SEQ_MAKE_DATA
 			end
@@ -316,10 +364,14 @@ end
 				fp_w.print("\t.text\n")
 				fp_w.print("\n")
 				fp_w.print("#define	__ASM_NO_DEF_\n")
-				fp_w.print("\t.include	../../prog/src/battle/btlv/btlv_efftool.h\n")
-				fp_w.print("\t.include	../../prog/src/battle/btlv/btlv_effvm_def.h\n")
-				fp_w.print("\t.include	../../prog/arc/spa_def.h\n")
+				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_efftool.h\n")
+				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_effvm_def.h\n")
+				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/spa_def.h\n")
+				inc_header.size.times { |inc|
+					fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/" + inc_header[ inc ] + "\n")
+				}
 				fp_w.print("\n")
+				fp_w.print( "WE_" + num_str + ":\n" )
 				seq_table.size.times { |seq|
 					fp_w.print seq_table[ seq ]
 				}
@@ -331,7 +383,7 @@ end
 				dir_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr
 				seq_str = "\nWE_" + num_str + "_" + dir_str + ":\n"
 				sequence << seq_str
-				seq_table[ dir_str.to_i ] = "\t.long\t" + "WE_" + num_str + "_" + dir_str + "\t//" + dir_table[ dir_str.to_i ] + "\n"
+				seq_table[ dir_str.to_i ] = "\t.long\t" + "WE_" + num_str + "_" + dir_str + " - WE_" + num_str + "\t//" + dir_table[ dir_str.to_i ] + "\n"
 			else
 				str = ""
 				str += "\t" + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_com_label + "\t"
@@ -356,6 +408,14 @@ end
 						str += split_data[ param_num ]
 					when "FILE_DIALOG"
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ) 
+						inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
+						file_list.size.times {|num|
+							file_name = File::basename( file_list[ num ] )
+							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
+								bin_list << file_list[ num ]
+							end
+						}
+
 						file_dialog = file_dialog.sub( ".", "_" ).upcase
 						str += file_dialog
 					when "FILE_DIALOG_COMBOBOX"
@@ -371,5 +431,29 @@ end
 				sequence << str
 			end
 		end
+		i += 1
+	end
+
+	open( "eebinary.bin", "wb" ) {|file|
+		padding = []
+		offset = bin_list.size * 4
+		#ファイル数書き出し
+		file.write [bin_list.size].pack("L")
+		#ファイルサイズ書き出し
+		bin_list.size.times {|num|
+			fp_r = File::stat( bin_list[ num ] )
+			padding << fp_r.size % 4
+			size = fp_r.size + padding[ num ]
+			file.write [offset].pack("L")
+			offset += size
+		}
+		#ファイルデータ書き出し
+		bin_list.size.times {|num|
+			fp_r = open( bin_list[ num ], "rb" )
+			file.write fp_r.read
+			padding[ num ].times do
+				file.putc( 0 )
+			end
+		}
 	}
 

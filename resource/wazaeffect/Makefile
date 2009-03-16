@@ -27,14 +27,10 @@ TARGETDIR	= $(PROJECT_ARCDIR)wazaeffect
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
-#MWAS = C:/Program\ Files/Freescale/CW\ for\ NINTENDO\ DS\ V2.0/ARM_Tools/Command_Line_Tools/mwasmarm.exe
-
 #共通ルールファイルのインクルード
-include $(PROJECT_RSCDIR)\macro_define
+include $(PROJECT_RSCDIR)/macro_define
 
 include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
-#include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
-#include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ./
@@ -48,14 +44,14 @@ WAZAEFFSRCS	:= $(wildcard $(RES_DIR)*.s)
 .PHONY:	do-build clean subdir
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+
 .SUFFIXES:	.s
 
 do-build: $(notdir $(WAZAEFFSRCS:.s=.bin))
 %.bin: %.s ../../prog/src/battle/btlv/btlv_effvm_def.h
 	$(MWAS) $< -o $*.o
 	$(MWLD) -dis -o $*.elf $*.o
-	../../tools/elf2bin -c $*.elf
-#	../../tools/elf2bin $*.elf
+	../../tools/elf2bin $*.elf
 
 endif
 
