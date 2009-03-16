@@ -168,8 +168,8 @@ extern void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk );
 
 
-extern void BTLV_StartTokWin( BTLV_CORE* wk, BtlPokePos clientID );
-extern void BTLV_QuitTokWin( BTLV_CORE* wk, BtlPokePos clientID );
+extern void BTLV_StartTokWin( BTLV_CORE* wk, BtlPokePos pos );
+extern void BTLV_QuitTokWin( BTLV_CORE* wk, BtlPokePos pos );
 extern void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 pokeID, BppValueID statusType );
 extern void BTLV_StartCommWait( BTLV_CORE* wk );
 extern BOOL BTLV_WaitCommWait( BTLV_CORE* wk );

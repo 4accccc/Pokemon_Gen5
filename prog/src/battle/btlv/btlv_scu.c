@@ -117,7 +117,7 @@ static void statwin_disp( STATUS_WIN* stwin );
 static void statwin_hide( STATUS_WIN* stwin );
 static BOOL statwin_erase( STATUS_WIN* stwin, u8 line );
 static void statwin_update( STATUS_WIN* stwin, u16 hp, u8 col );
-static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, u8 clientID );
+static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos );
 static void tokwin_cleanup( TOK_WIN* tokwin );
 static void tokwin_disp( TOK_WIN* tokwin );
 static void tokwin_hide( TOK_WIN* tokwin );
@@ -1156,24 +1156,31 @@ static void statwin_update( STATUS_WIN* stwin, u16 hp, u8 col )
 
 //----------------------------
 
-static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, u8 clientID )
+static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos)
 {
 	static const struct {
 		u8 x;
 		u8 y;
-	} winpos[2] = {
-		{ 18,  3 },
-		{  4, 14 },
+	} winpos[] = {
+		{  4, 14 },		// VPOS_AA
+		{ 18,  3 },		// VPOS_BB
+		{  2, 14 },		// VPOS_A
+		{ 20,  4 },		// VPOS_B
+		{  6, 15 },		// VPOS_C
+		{ 15,  3 },		// VPOS_D
+		{  4, 16 },		// VPOS_E
+		{ 18,  1 },		// VPOS_F
 	};
 
 	u8 isPlayer, playerClientID, px, py;
+	u8 vpos;
 
 	tokwin->parentWk = wk;
 
 	playerClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
-	isPlayer = !BTL_MAIN_IsOpponentClientID( wk->mainModule, playerClientID, clientID );
-	px = winpos[isPlayer].x;
-	py = winpos[isPlayer].y;
+	vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+	px = winpos[vpos].x;
+	py = winpos[vpos].y;
 
 	tokwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, px, py, TEST_TOKWIN_CHAR_WIDTH, 2, 0, GFL_BMP_CHRAREA_GET_F );
 	tokwin->bmp = GFL_BMPWIN_GetBmp( tokwin->win );
@@ -1186,7 +1193,7 @@ static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, u8 clientID )
 		u16 xpos;
 
 		msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tokusei_dat, GFL_HEAP_LOWID(wk->heapID) );
-		bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, clientID );
+		bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
 		tokusei = BTL_POKEPARAM_GetValue( bpp, BPP_TOKUSEI );
 		GFL_MSG_GetString( msg, tokusei, wk->strBuf );
 		xpos = (TEST_TOKWIN_DOT_WIDTH - PRINTSYS_GetStrWidth(wk->strBuf, wk->defaultFont, 0)) / 2;
