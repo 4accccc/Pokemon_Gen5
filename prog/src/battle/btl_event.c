@@ -69,25 +69,6 @@ static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_
 static void varStack_Init( void );
 
 
-
-
-void BTL_EVENT_InitSystem( void )
-{
-	int i;
-
-	for(i=0; i<NELEMS(Factors); i++)
-	{
-		clearFactorWork( &Factors[i] );
-		FactorStack[i] = &Factors[i];
-	}
-
-	FirstFactorPtr = NULL;
-	StackPtr = 0;
-
-	varStack_Init();
-}
-
-
 static BTL_EVENT_FACTOR* popFactor( void )
 {
 	if( StackPtr == FACTOR_REGISTER_MAX )
@@ -120,6 +101,36 @@ static inline u32 calcFactorPriority( BtlEventFactor factorType, u16 subPri )
 	return (factorType << 16) | subPri;
 }
 
+static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork )
+{
+	const BtlEventHandlerTable* tbl = factor->handlerTable;
+
+	int i;
+	for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
+	{
+		if( tbl[i].eventType == eventType )
+		{
+			tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
+		}
+	}
+}
+
+
+void BTL_EVENT_InitSystem( void )
+{
+	int i;
+
+	for(i=0; i<NELEMS(Factors); i++)
+	{
+		clearFactorWork( &Factors[i] );
+		FactorStack[i] = &Factors[i];
+	}
+
+	FirstFactorPtr = NULL;
+	StackPtr = 0;
+
+	varStack_Init();
+}
 
 BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subPri, u8 pokeID, const BtlEventHandlerTable* handlerTable )
 {
@@ -129,6 +140,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subPri, u8
 	if( newFactor )
 	{
 		newFactor->priority = calcFactorPriority( factorType, subPri );
+		newFactor->factorType = factorType;
 		newFactor->prev = NULL;
 		newFactor->next = NULL;
 		newFactor->handlerTable = handlerTable;
@@ -184,7 +196,6 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subPri, u8
 	}
 }
 
-
 void BTL_EVENT_RemoveFactor( BTL_EVENT_FACTOR* factor )
 {
 	if( factor == FirstFactorPtr )
@@ -205,31 +216,28 @@ void BTL_EVENT_RemoveFactor( BTL_EVENT_FACTOR* factor )
 	pushFactor( factor );
 }
 
-static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork )
-{
-	const BtlEventHandlerTable* tbl = factor->handlerTable;
-
-	int i;
-	for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
-	{
-		if( tbl[i].eventType == eventType )
-		{
-			tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
-		}
-	}
-}
-
-
-
 void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
 	BTL_EVENT_FACTOR* factor;
 
 	for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
 	{
-//		callHandlers( factor->handlerTable, eventID, flowWork, factor->pokeID, factor->work );
 		callHandlers( factor, eventID, flowWork );
 	}
+}
+
+BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactor factorType, u8 pokeID )
+{
+	BTL_EVENT_FACTOR* factor;
+
+	for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
+	{
+		if( (factor->factorType == factorType) && (factor->pokeID == pokeID) )
+		{
+			return factor;
+		}
+	}
+	return NULL;
 }
 
 

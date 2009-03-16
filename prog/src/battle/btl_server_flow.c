@@ -17,6 +17,8 @@
 #include "btl_server_local.h"
 #include "btl_server.h"
 
+#include "handler\hand_tokusei.h"
+
 #include "btl_server_flow.h"
 
 
@@ -207,9 +209,20 @@ void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
 
 SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
 {
+	FRONT_POKE_SEEK_WORK fps;
+	BTL_POKEPARAM* bpp;
+
 	SCQUE_Init( wk->que );
 
-	scEvent_PokeComp( wk );
+	BTL_EVENTVAR_Push();
+		FRONT_POKE_SEEK_InitWork( &fps, wk );
+		while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
+		{
+			BTL_HANDLER_TOKUSEI_Add( bpp );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
+			BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN );
+		}
+	BTL_EVENTVAR_Pop();
 
 	// @@@ しぬこともあるかも
 	return SVFLOW_RESULT_DEFAULT;
@@ -631,12 +644,8 @@ static void scput_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, cons
 		BTL_POKEPARAM_HpMinus( attacker, conf_dmg );
 		SCQUE_PUT_OP_HpMinus( wk->que, atClient->myID, conf_dmg );
 		SCQUE_PUT_ACT_ConfDamage( wk->que, BTL_POKEPARAM_GetID(attacker) );
-		if( BTL_POKEPARAM_IsDead(attacker) )
-		{
-			SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Dead, attacker_pokeID );
-			SCQUE_PUT_ACT_Dead( wk->que, attacker_pokeID );
-			return;
-		}
+		svflowsub_check_and_make_dead_command( wk, attacker );
+		return;
 	}
 // ワザ出し成功判定
 	if( !scEvent_CheckWazaExecute(wk, attacker, waza) ){
@@ -879,6 +888,9 @@ static void svflowsub_check_and_make_dead_command( BTL_SVFLOW_WORK* server, BTL_
 	if( BTL_POKEPARAM_IsDead(poke) )
 	{
 		u8 pokeID = BTL_POKEPARAM_GetID( poke );
+
+		BTL_HANDLER_TOKUSEI_Remove( poke );
+
 		SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, pokeID );
 		SCQUE_PUT_ACT_Dead( server->que, pokeID );
 	}
@@ -1380,6 +1392,10 @@ static void scput_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM
 		svflowsub_set_waza_effect( wk, pokeID, pokeID, waza );
 		SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
 	}
+	else
+	{
+		SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WeatherLocked );
+	}
 }
 //==============================================================================
 // サーバーフロー：ターンチェックルート
@@ -1798,6 +1814,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 	BTL_EVENTVAR_Push();
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, power );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_POWER );
 		power = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
@@ -1958,9 +1975,11 @@ static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx )
 {
 	BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, posIdx );
 
-	BTL_EVENTVAR_Push();
+	BTL_HANDLER_TOKUSEI_Remove( bpp );
 
+	BTL_EVENTVAR_Push();
 		SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_MemberOut1, clientID, posIdx );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_OUT );
 		// ここで死ぬこともある
 		if( !BTL_POKEPARAM_IsDead(bpp) )
@@ -1973,15 +1992,20 @@ static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx )
 // メンバー新規参加
 static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx )
 {
-		BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
-		BTL_PARTY_SwapMembers( party, posIdx, nextPokeIdx );
-		SCQUE_PUT_ACT_MemberIn( wk->que, clientID, posIdx, nextPokeIdx );
-}
+	BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+	BTL_POKEPARAM* bpp;
 
-// ポケモン出そろった直後
-static void scEvent_PokeComp( BTL_SVFLOW_WORK* wk )
-{
-	BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_COMP );
+	BTL_PARTY_SwapMembers( party, posIdx, nextPokeIdx );
+	SCQUE_PUT_ACT_MemberIn( wk->que, clientID, posIdx, nextPokeIdx );
+
+	bpp = BTL_PARTY_GetMemberData( party, posIdx );
+	BTL_HANDLER_TOKUSEI_Add( bpp );
+
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN );
+	BTL_EVENTVAR_Pop();
+
 }
 
 //--------------------------------------------------------------------------
@@ -2097,7 +2121,7 @@ static void scEvent_AddShrink( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u8 pe
  *
  * @param   wk					
  * @param   receiver		状態異常を受ける対象のポケモンパラメータ
- * @param   attacker		状態異常
+ * @param   attacker		状態異常を与える側のポケモンパラメータ
  * @param   sick				状態異常ID
  * @param   fAlmost			ほぼ確定フラグ（※）
  *
@@ -2124,20 +2148,21 @@ static void scEvent_addSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* receiver, BTL_P
 	if( sick != WAZASICK_NULL )
 	{
 		BTL_EVENTVAR_Push();
-		BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
-		BTL_EVENTVAR_SetValue( BTL_EVAR_TURN_COUNT, BTL_CALC_DecideSickTurn(sick) );
-		BTL_EVENTVAR_SetValue( BTL_EVAR_ALMOST_FLAG, fAlmost );
-		BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_SICK );
-		sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
-		if( sick != WAZASICK_NULL )
-		{
-			u8 pokeID = BTL_POKEPARAM_GetID( receiver );
-			u8 turn = BTL_EVENTVAR_GetValue( BTL_EVAR_TURN_COUNT );
-			BTL_Printf("追加効果による状態異常発生 ... 受けたポケID:%d, 状態異常:%d, ターン:%d\n", pokeID, sick, turn );
-			BTL_POKEPARAM_SetWazaSick( receiver, sick, turn );
-			SCQUE_PUT_OP_SetSick( wk->que, pokeID, sick, turn );
-			SCQUE_PUT_ACT_SickSet( wk->que, pokeID, sick );
-		}
+			BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(receiver) );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_TURN_COUNT, BTL_CALC_DecideSickTurn(sick) );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_ALMOST_FLAG, fAlmost );
+			BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_SICK );
+			sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+			if( sick != WAZASICK_NULL )
+			{
+				u8 pokeID = BTL_POKEPARAM_GetID( receiver );
+				u8 turn = BTL_EVENTVAR_GetValue( BTL_EVAR_TURN_COUNT );
+				BTL_Printf("追加効果による状態異常発生 ... 受けたポケID:%d, 状態異常:%d, ターン:%d\n", pokeID, sick, turn );
+				BTL_POKEPARAM_SetWazaSick( receiver, sick, turn );
+				SCQUE_PUT_OP_SetSick( wk->que, pokeID, sick, turn );
+				SCQUE_PUT_ACT_SickSet( wk->que, pokeID, sick );
+			}
 		BTL_EVENTVAR_Pop();
 	}
 }
@@ -2156,13 +2181,20 @@ static BOOL scEvent_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 t
 {
 	GF_ASSERT(weather != BTL_WEATHER_NONE);
 
+	BTL_Printf("天候変化イベント発生\n");
+
 	BTL_EVENTVAR_Push();
 		BTL_EVENTVAR_SetValue( BTL_EVAR_WEATHER, weather );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WEATHER_CHANGE );
 		weather = BTL_EVENTVAR_GetValue( BTL_EVAR_WEATHER );
 		if( weather != BTL_WEATHER_NONE )
 		{
+			BTL_Printf("   天候 -> %d へ変化\n", weather);
 			BTL_FIELD_SetWeather( weather, turn );
+		}
+		else
+		{
+			BTL_Printf("   天候変化 打ち消し！\n");
 		}
 	BTL_EVENTVAR_Pop();
 	return (weather != BTL_WEATHER_NONE);
@@ -2227,13 +2259,13 @@ const BTL_POKEPARAM* BTL_SVFLOW_RECEPT_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pok
  * [ハンドラ受信] とくせいウィンドウ表示イン
  *
  * @param   wk		
- * @param   clientID		
+ * @param   pokeID		
  *
  */
 //=============================================================================================
-void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SVFLOW_WORK* wk, BtlPokePos pokePos )
+void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
-	SCQUE_PUT_TOKWIN_IN( wk->que, pokePos );
+	SCQUE_PUT_TOKWIN_IN( wk->que, pokeID );
 }
 //=============================================================================================
 /**
@@ -2244,9 +2276,9 @@ void BTL_SERVER_RECEPT_TokuseiWinIn( BTL_SVFLOW_WORK* wk, BtlPokePos pokePos )
  *
  */
 //=============================================================================================
-void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SVFLOW_WORK* wk, BtlPokePos pokePos )
+void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
-	SCQUE_PUT_TOKWIN_OUT( wk->que, pokePos );
+	SCQUE_PUT_TOKWIN_OUT( wk->que, pokeID );
 }
 
 void BTL_SERVER_RECTPT_SetMessage( BTL_SVFLOW_WORK* wk, u16 msgID, BtlPokePos pokePos )
@@ -2305,6 +2337,42 @@ void BTL_SERVER_RECEPT_RankUpEffect( BTL_SVFLOW_WORK* wk, BtlExPos exPos, BppVal
 		if( !BTL_POKEPARAM_IsDead(pp) )
 		{
 			scEvent_RankUp( wk, pp, statusType, volume, FALSE );
+		}
+	}
+}
+//=============================================================================================
+/**
+ * [ハンドラ受信] 天候の変化効果
+ *
+ * @param   wk				
+ * @param   weather		変化後の天候指定／天候をフラットにしたい場合は BTL_WEATHER_NONE
+ *
+ */
+//=============================================================================================
+void BTL_SVFLOW_RECEPT_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather )
+{
+	if( weather != BTL_WEATHER_NONE )
+	{
+		if( scEvent_ChangeWeather( wk, weather, BTL_WEATHER_TURN_PERMANENT ) )
+		{
+			SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
+		}
+		else
+		{
+			SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WeatherLocked );
+		}
+	}
+	else
+	{
+		BtlWeather prevWeather = BTL_FIELD_GetWeather();
+		if( prevWeather != BTL_WEATHER_NONE )
+		{
+			BTL_FIELD_ClearWeather();
+			SCQUE_PUT_ACT_WeatherEnd( wk->que, prevWeather );
+		}
+		else
+		{
+			GF_ASSERT(0);
 		}
 	}
 }

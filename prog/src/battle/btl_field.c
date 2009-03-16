@@ -63,12 +63,14 @@ void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn )
 {
 	Work.weather = weather;
 	Work.weatherTurn = turn;
+	BTL_Printf("天候変化=%d\n", weather);
 }
 
 void BTL_FIELD_ClearWeather( void )
 {
 	Work.weather = BTL_WEATHER_NONE;
 	Work.weatherTurn = 0;
+	BTL_Printf("天候フラットに\n");
 }
 
 //=============================================================================================

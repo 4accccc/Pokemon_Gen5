@@ -40,9 +40,9 @@ static void handler_WazaExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 	&&	(BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
 	){
 		BtlPokePos myPos = BTL_SVFLOW_CheckExistFrontPokeID( flowWk, pokeID );
-		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, myPos );
+		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
 		BTL_SERVER_RECEPT_RankUpEffect( flowWk, myPos, BPP_AGILITY, 1 );
-		BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, myPos );
+		BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
 		BTL_Printf("É|ÉP[%d] Ç–ÇÈÇ‹Ç≥ÇÍÇΩÇÃÇ≈ Ç”Ç≠Ç¬ÇÃÇ±Ç±ÇÎ î≠ê∂\n", pokeID);
 	}
 }

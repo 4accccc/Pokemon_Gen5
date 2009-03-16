@@ -321,17 +321,6 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
 			u16 i, p;
 
 			ResetAdapterCmd( server );
-
-			for(i=0; i<server->numClient; i++)
-			{
-				for(p=0; p<server->client[i].numCoverPos; p++)
-				{
-					if( server->client[i].frontMember[p] != NULL )
-					{
-						BTL_HANDLER_TOKUSEI_Add( server->client[i].frontMember[p] );
-					}
-				}
-			}
 			setMainProc( server, ServerMain_SelectAction );
 		}
 		break;

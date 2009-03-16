@@ -37,11 +37,6 @@ static void handler_ShrinkCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
 	{
-//		BtlPokePos myPos = BTL_SVFLOW_CheckExistFrontPokeID( flowWk, pokeID );
-//		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, myPos );
-//		BTL_SERVER_RECEPT_RankDownEffect( flowWk, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, myPos), BPP_ATTACK, 1 );
-//		BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, myPos );
-
 		// î≠ê∂ämó¶Ç0Ç…èëÇ´ä∑Ç¶
 		BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, 0 );
 	}

@@ -254,13 +254,13 @@ static inline void SCQUE_PUT_SickDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 
 	SCQUE_PUT_Common( que, SC_ACT_SICK_DMG, pokeID, sick, damage );
 }
 
-static inline void SCQUE_PUT_TOKWIN_IN( BTL_SERVER_CMD_QUE* que, u8 btlPos )
+static inline void SCQUE_PUT_TOKWIN_IN( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
-	SCQUE_PUT_Common( que, SC_TOKWIN_IN, btlPos );
+	SCQUE_PUT_Common( que, SC_TOKWIN_IN, pokeID );
 }
-static inline void SCQUE_PUT_TOKWIN_OUT( BTL_SERVER_CMD_QUE* que, u8 btlPos )
+static inline void SCQUE_PUT_TOKWIN_OUT( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
-	SCQUE_PUT_Common( que, SC_TOKWIN_OUT, btlPos );
+	SCQUE_PUT_Common( que, SC_TOKWIN_OUT, pokeID );
 }
 
 static inline void SCQUE_PUT_MSG_WAZA( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 wazaIdx )

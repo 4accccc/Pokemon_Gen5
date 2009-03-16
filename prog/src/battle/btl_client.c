@@ -1290,7 +1290,8 @@ static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTLV_StartTokWin( wk->viewCore, args[0] );
+	BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+	BTLV_StartTokWin( wk->viewCore, pos );
 	return TRUE;
 }
 //---------------------------------------------------------------------------------------
@@ -1300,7 +1301,8 @@ static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	BTLV_QuitTokWin( wk->viewCore, args[0] );
+	BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+	BTLV_QuitTokWin( wk->viewCore, pos );
 	return TRUE;
 }
 
