@@ -719,8 +719,10 @@ static void handler_AirLock_Appear( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 {
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
 	{
+		BTL_Printf("ポケ[%d]のエアロック！ 自分出場ハンドラ\n", pokeID);
 		if( BTL_FIELD_GetWeather() != BTL_WEATHER_NONE )
 		{
+			BTL_Printf("  ... 天候をフラットにするよ\n");
 			BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
 			BTL_SVFLOW_RECEPT_ChangeWeather( flowWk, BTL_WEATHER_NONE );
 			BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
@@ -730,10 +732,11 @@ static void handler_AirLock_Appear( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 // 天候変化ハンドラ
 static void handler_AirLock_ChangeWeather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+	BTL_Printf("ポケ[%d]のエアロック！ 天候変化ハンドラ\n", pokeID);
 	BTL_EVENTVAR_SetValue( BTL_EVAR_WEATHER, BTL_WEATHER_NONE );
 
 	BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
-	BTL_SVFLOW_RECEPT_ChangeWeather( flowWk, BTL_WEATHER_NONE );
+	BTL_SERVER_RECTPT_StdMessage( flowWk, BTL_STRID_STD_WeatherLocked );
 	BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
 }
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_AirLock( u16 pri, u8 pokeID )

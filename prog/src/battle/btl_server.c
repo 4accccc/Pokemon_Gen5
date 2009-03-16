@@ -8,7 +8,7 @@
  */
 //=============================================================================================
 #include <gflib.h>
-#include "waza_tool/wazadata.h"
+#include "waza_tool\wazadata.h"
 
 #include "btl_common.h"
 #include "btl_client.h"
@@ -19,7 +19,7 @@
 #include "btl_event.h"
 #include "btl_util.h"
 #include "btl_string.h"
-#include "handler/hand_tokusei.h"
+#include "handler\hand_tokusei.h"
 
 #include "btl_server_cmd.h"
 #include "btl_field.h"
@@ -315,17 +315,35 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
 		BTL_Printf("イニシャライズコマンド発行\n");
 		SetAdapterCmd( server, BTL_ACMD_WAIT_INITIALIZE );
 		(*seq)++;
+		/* fallthru */
 	case 1:
 		if( WaitAdapterCmd(server) )
 		{
-			u16 i, p;
-
 			ResetAdapterCmd( server );
-			setMainProc( server, ServerMain_SelectAction );
+			BTL_SVFLOW_Start_AfterPokemonIn( server->flowWork );
+			if( server->que->writePtr )
+			{
+				BTL_Printf("全ポケ出場後、最初の再生コマンド発行\n");
+				SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+				(*seq)++;
+			}
+			else
+			{
+				(*seq)+=2;
+			}
 		}
 		break;
+	case 2:
+		if( WaitAdapterCmd(server) )
+		{
+			ResetAdapterCmd( server );
+			(*seq)++;
+		}
+		break;
+	case 3:
+		setMainProc( server, ServerMain_SelectAction );
+		break;
 	}
-
 	return FALSE;
 }
 
@@ -333,34 +351,12 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 {
 	switch( *seq ){
 	case 0:
-		BTL_SVFLOW_Start_AfterPokemonIn( server->flowWork );
-		if( server->que->writePtr )
-		{
-			BTL_Printf("再生コマンド発行\n");
-			SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-			(*seq) = 1;
-		}
-		else
-		{
-			(*seq)=2;
-		}
-		break;
-
-	case 1:
-		if( WaitAdapterCmd(server) )
-		{
-			ResetAdapterCmd( server );
-			(*seq)++;
-		}
-		break;
-
-	case 2:
 		BTL_Printf("アクション選択コマンド発行\n");
 		SetAdapterCmd( server, BTL_ACMD_SELECT_ACTION );
 		(*seq)++;
 		break;
 
-	case 3:
+	case 1:
 		if( WaitAdapterCmd(server) )
 		{
 			ResetAdapterCmd( server );
@@ -370,7 +366,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 		}
 		break;
 
-	case 4:
+	case 2:
 		if( WaitAdapterCmd(server) )
 		{
 			BTL_Printf("コマンド再生おわりました\n");
@@ -379,7 +375,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
 			switch( server->flowResult ){
 			case SVFLOW_RESULT_DEFAULT:
-				(*seq)=2;
+				(*seq)=0;
 				break;
 			case SVFLOW_RESULT_POKE_DEAD:
 				setMainProc( server, ServerMain_SelectPokemon );

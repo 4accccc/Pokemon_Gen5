@@ -16,12 +16,12 @@
  */
 //--------------------------------------------------------------
 typedef enum {
+	BTL_ACTION_NULL=0,	///< 何もしない（相手のポケモン選択待ち中など）
+
 	BTL_ACTION_FIGHT,
 	BTL_ACTION_ITEM,
 	BTL_ACTION_CHANGE,
 	BTL_ACTION_ESCAPE,
-
-	BTL_ACTION_NULL,	///< 何もしない（相手のポケモン選択待ち中など）
 }BtlAction;
 
 

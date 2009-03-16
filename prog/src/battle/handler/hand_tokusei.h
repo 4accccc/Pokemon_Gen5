@@ -10,9 +10,9 @@
 #ifndef __HAND_TOKUSEI_H__
 #define __HAND_TOKUSEI_H__
 
-#include "../btl_pokeparam.h"
-#include "../btl_event_factor.h"
-#include "../btl_server_local.h"
+#include "..\btl_pokeparam.h"
+#include "..\btl_event_factor.h"
+#include "..\btl_server_local.h"
 
 extern BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp );
 extern void BTL_HANDLER_TOKUSEI_Remove( const BTL_POKEPARAM* pp );

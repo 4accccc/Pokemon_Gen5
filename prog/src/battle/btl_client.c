@@ -9,7 +9,7 @@
 //=============================================================================================
 #include <gflib.h>
 
-#include "poke_tool/pokeparty.h"
+#include "poke_tool\pokeparty.h"
 
 #include "battle\battle.h"
 #include "btl_common.h"
@@ -17,7 +17,7 @@
 #include "btl_action.h"
 #include "btl_pokeselect.h"
 #include "btl_server_cmd.h"
-#include "btlv/btlv_core.h"
+#include "btlv\btlv_core.h"
 
 #include "btl_client.h"
 
@@ -322,10 +322,21 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 		(*seq) = SEQ_SELECT_ACTION;
 		/* fallthru */
 	case SEQ_SELECT_ACTION:
-		BTL_Printf("アクション選択(%d体目）開始します\n", wk->procPokeIdx);
-//		BTLV_StartCommand( wk->viewCore, BTLV_CMD_SELECT_ACTION );
-		BTLV_UI_SelectAction_Start( wk->viewCore, &wk->actionParam[wk->procPokeIdx] );
-		(*seq) = SEQ_CHECK_ACTION;
+		{
+			BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
+			if( !BTL_POKEPARAM_IsDead(bpp) )
+			{
+				BTL_Printf("アクション選択(%d体目）開始します\n", wk->procPokeIdx );
+				BTLV_UI_SelectAction_Start( wk->viewCore, &wk->actionParam[wk->procPokeIdx] );
+				(*seq) = SEQ_CHECK_ACTION;
+			}
+			else
+			{
+				BTL_Printf("アクション選択(%d体目）しんでるのでスキップします\n", wk->procPokeIdx );
+				BTL_ACTION_SetNULL( &wk->actionParam[wk->procPokeIdx] );
+				(*seq) = SEQ_CHECK_DONE;
+			}
+		}
 		break;
 	case SEQ_CHECK_ACTION:
 		if( BTLV_UI_SelectAction_Wait(wk->viewCore) )
@@ -436,36 +447,43 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 	for(i=0; i<wk->numCoverPos; ++i)
 	{
 		pp = BTL_CLIENT_GetFrontPokeData( wk, i );
-		wazaCount = BTL_POKEPARAM_GetWazaCount( pp );
-		wazaIdx = GFL_STD_MtRand(wazaCount);
-		targetPos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, 0 );
-		// シングルでなければ、対象をランダムで決定する処理
-		if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
+		if( !BTL_POKEPARAM_IsDead(pp) )
 		{
-			enum {
-				CHECK_MAX = 2,
-			};
-			const BTL_POKEPARAM* targetPoke;
-			u8 j, p, aliveCnt;
-			u8 alivePokePos[ CHECK_MAX ];
-			mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
-			aliveCnt = 0;
-			for(j=0; j<CHECK_MAX; ++j)
+			wazaCount = BTL_POKEPARAM_GetWazaCount( pp );
+			wazaIdx = GFL_STD_MtRand(wazaCount);
+			targetPos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, 0 );
+			// シングルでなければ、対象をランダムで決定する処理
+			if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
 			{
-				p = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, j );
-				targetPoke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, p );
-				if( !BTL_POKEPARAM_IsDead(targetPoke) )
+				enum {
+					CHECK_MAX = 2,
+				};
+				const BTL_POKEPARAM* targetPoke;
+				u8 j, p, aliveCnt;
+				u8 alivePokePos[ CHECK_MAX ];
+				mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
+				aliveCnt = 0;
+				for(j=0; j<CHECK_MAX; ++j)
 				{
-					alivePokePos[ aliveCnt++ ] = p;
+					p = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, j );
+					targetPoke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, p );
+					if( !BTL_POKEPARAM_IsDead(targetPoke) )
+					{
+						alivePokePos[ aliveCnt++ ] = p;
+					}
+				}
+				if( aliveCnt )
+				{
+					u8 rndIdx = GFL_STD_MtRand(aliveCnt);
+					targetPos = alivePokePos[ rndIdx ];
 				}
 			}
-			if( aliveCnt )
-			{
-				u8 rndIdx = GFL_STD_MtRand(aliveCnt);
-				targetPos = alivePokePos[ rndIdx ];
-			}
+			BTL_ACTION_SetFightParam( &wk->actionParam[i], wazaIdx, targetPos );
 		}
-		BTL_ACTION_SetFightParam( &wk->actionParam[i], wazaIdx, targetPos );
+		else
+		{
+			BTL_ACTION_SetNULL( &wk->actionParam[i] );
+		}
 	}
 	wk->returnDataPtr = &(wk->actionParam[0]);
 	wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;

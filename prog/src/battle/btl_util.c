@@ -43,6 +43,7 @@ static void print_file_info( const char* filename, int line )
 		{ "btl_pokeparam.c",	"BPP" },
 		{ "btl_server_cmd.c", "CMD" },
 		{ "btl_server_flow.c","FLW" },
+		{ "btl_field.c",			"FLD" },
 		{ "btlv_core.c",			"VIW" },
 		{ "btlv_scu.c",				"scU" },
 		{ "btlv_scd.c",				"scD" },

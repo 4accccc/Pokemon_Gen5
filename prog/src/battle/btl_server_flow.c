@@ -8,7 +8,7 @@
  */
 //=============================================================================================
 #include <gflib.h>
-#include "waza_tool/wazadata.h"
+#include "waza_tool\wazadata.h"
 
 
 #include "btl_event.h"
@@ -264,7 +264,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 				break;
 			case BTL_ACTION_CHANGE:
 				BTL_Printf("【ポケモン】を処理。位置%d <- ポケ%d \n", action->change.posIdx, action->change.memberIdx);
-				scput_MemberOut( wk, clientID, action->change.memberIdx );
+				scput_MemberOut( wk, clientID, action->change.posIdx );
 				scput_MemberIn( wk, clientID, action->change.posIdx, action->change.memberIdx );
 				break;
 			case BTL_ACTION_ESCAPE:
@@ -377,6 +377,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
 			case BTL_ACTION_ITEM:		actionPri = 2; break;
 			case BTL_ACTION_CHANGE:	actionPri = 1; break;
 			case BTL_ACTION_FIGHT:	actionPri = 0; break;
+			case BTL_ACTION_NULL:	continue;
 			default:
 				GF_ASSERT(0);
 				actionPri = 0;
@@ -395,7 +396,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
 			// すばやさ
 			agility = BTL_POKEPARAM_GetValue( bpp, BPP_AGILITY );
 
-			BTL_Printf("Client{%d-%d}'s actionPri=%d, wazaPri=%d, agility=%d\n",
+			BTL_Printf("行動プライオリティ決定！ Client{%d-%d}'s actionPri=%d, wazaPri=%d, agility=%d\n",
 					i, j, actionPri, wazaPri, agility );
 
 			// プライオリティ値とクライアントIDを対にして配列に保存
@@ -1392,10 +1393,6 @@ static void scput_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM
 		svflowsub_set_waza_effect( wk, pokeID, pokeID, waza );
 		SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
 	}
-	else
-	{
-		SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WeatherLocked );
-	}
 }
 //==============================================================================
 // サーバーフロー：ターンチェックルート
@@ -1787,6 +1784,10 @@ static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
 		BTL_EVENTVAR_Pop();
 		return TRUE;
 	}
+	else
+	{
+		*hitCount = 1;
+	}
 	return FALSE;
 }
 
@@ -1969,7 +1970,6 @@ static PokeTypePair scEvent_getDefenderPokeType( BTL_SVFLOW_WORK* wk, const BTL_
 		return type;
 	}
 }
-
 // メンバーバトル場から退出
 static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx )
 {
@@ -1999,6 +1999,11 @@ static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 ne
 	SCQUE_PUT_ACT_MemberIn( wk->que, clientID, posIdx, nextPokeIdx );
 
 	bpp = BTL_PARTY_GetMemberData( party, posIdx );
+	{
+		u8 pokeID = BTL_POKEPARAM_GetID(bpp);
+		BTL_Printf("クライアント[%d] のメンバー[%d] が pos[%d] に出場でハンドラ追加\n",
+					clientID, pokeID, posIdx);
+	}
 	BTL_HANDLER_TOKUSEI_Add( bpp );
 
 	BTL_EVENTVAR_Push();
@@ -2025,27 +2030,27 @@ static void scEvent_RankDown( BTL_SVFLOW_WORK* wk, u8 pokeID, BppValueID statusT
 {
 	BTL_EVENTVAR_Push();
 
-	BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
-	BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, statusType );
-	BTL_EVENTVAR_SetValue( BTL_EVAR_RANDOM_FLAG, fRandom );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, statusType );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_RANDOM_FLAG, fRandom );
 
-	BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
-	BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
 
-	BTL_EVENT_CallHandlers( wk, BTL_EVENT_BEFORE_RANKDOWN );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_BEFORE_RANKDOWN );
 
-	if( BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_FLAG) == FALSE )
-	{
-		volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
-		BTL_POKEPARAM_RankDown(
-				BTL_POKECON_GetPokeParam(wk->pokeCon, pokeID),
-				statusType,
-				volume
-		);
-		SCQUE_PUT_OP_RankDown( wk->que, pokeID, statusType, volume );
-		SCQUE_PUT_ACT_RankDown( wk->que, pokeID, statusType, volume );
-		SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankdown_ATK, pokeID, statusType, volume );
-	}
+		if( BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_FLAG) == FALSE )
+		{
+			volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+			BTL_POKEPARAM_RankDown(
+					BTL_POKECON_GetPokeParam(wk->pokeCon, pokeID),
+					statusType,
+					volume
+			);
+			SCQUE_PUT_OP_RankDown( wk->que, pokeID, statusType, volume );
+			SCQUE_PUT_ACT_RankDown( wk->que, pokeID, statusType, volume );
+			SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankdown_ATK, pokeID, statusType, volume );
+		}
 
 	BTL_EVENTVAR_Pop();
 }
@@ -2181,7 +2186,7 @@ static BOOL scEvent_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 t
 {
 	GF_ASSERT(weather != BTL_WEATHER_NONE);
 
-	BTL_Printf("天候変化イベント発生\n");
+	BTL_Printf("天候変化イベント発生 ... 天候->%d\n", weather);
 
 	BTL_EVENTVAR_Push();
 		BTL_EVENTVAR_SetValue( BTL_EVAR_WEATHER, weather );
@@ -2281,6 +2286,10 @@ void BTL_SERVER_RECEPT_TokuseiWinOut( BTL_SVFLOW_WORK* wk, u8 pokeID )
 	SCQUE_PUT_TOKWIN_OUT( wk->que, pokeID );
 }
 
+void BTL_SERVER_RECTPT_StdMessage( BTL_SVFLOW_WORK* wk, u16 msgID )
+{
+	SCQUE_PUT_MSG_STD( wk->que, msgID );
+}
 void BTL_SERVER_RECTPT_SetMessage( BTL_SVFLOW_WORK* wk, u16 msgID, BtlPokePos pokePos )
 {
 	SCQUE_PUT_MSG_SET( wk->que, msgID, pokePos );
@@ -2356,10 +2365,6 @@ void BTL_SVFLOW_RECEPT_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather )
 		if( scEvent_ChangeWeather( wk, weather, BTL_WEATHER_TURN_PERMANENT ) )
 		{
 			SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
-		}
-		else
-		{
-			SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WeatherLocked );
 		}
 	}
 	else

@@ -60,6 +60,9 @@ typedef struct {
 typedef struct {
 	GFL_BMPWIN*			win;
 	GFL_BMP_DATA*		bmp;
+	u16							tokusei;
+	u8							pokeID;
+	u8							pokePos;
 	BTLV_SCU*			parentWk;
 }TOK_WIN;
 
@@ -118,6 +121,8 @@ static void statwin_hide( STATUS_WIN* stwin );
 static BOOL statwin_erase( STATUS_WIN* stwin, u8 line );
 static void statwin_update( STATUS_WIN* stwin, u16 hp, u8 col );
 static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos );
+static void tokwin_update_cgx( TOK_WIN* tokwin );
+static void tokwin_check_update_cgx( TOK_WIN* tokwin );
 static void tokwin_cleanup( TOK_WIN* tokwin );
 static void tokwin_disp( TOK_WIN* tokwin );
 static void tokwin_hide( TOK_WIN* tokwin );
@@ -446,9 +451,9 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
  *
  */
 //=============================================================================================
-void BTLV_SCU_DispTokWin( BTLV_SCU* wk, u8 clientID )
+void BTLV_SCU_DispTokWin( BTLV_SCU* wk, BtlPokePos pos )
 {
-	tokwin_disp( &wk->tokWin[clientID] );
+	tokwin_disp( &wk->tokWin[pos] );
 }
 //=============================================================================================
 /**
@@ -459,9 +464,9 @@ void BTLV_SCU_DispTokWin( BTLV_SCU* wk, u8 clientID )
  *
  */
 //=============================================================================================
-void BTLV_SCU_HideTokWin( BTLV_SCU* wk, u8 clientID )
+void BTLV_SCU_HideTokWin( BTLV_SCU* wk, BtlPokePos pos )
 {
-	tokwin_hide( &wk->tokWin[clientID] );
+	tokwin_hide( &wk->tokWin[pos] );
 }
 
 //----------------------------------------------
@@ -1156,7 +1161,7 @@ static void statwin_update( STATUS_WIN* stwin, u16 hp, u8 col )
 
 //----------------------------
 
-static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos)
+static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos )
 {
 	static const struct {
 		u8 x;
@@ -1176,6 +1181,7 @@ static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos)
 	u8 vpos;
 
 	tokwin->parentWk = wk;
+	tokwin->pokePos = pos;
 
 	playerClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
 	vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
@@ -1184,25 +1190,48 @@ static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos)
 
 	tokwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, px, py, TEST_TOKWIN_CHAR_WIDTH, 2, 0, GFL_BMP_CHRAREA_GET_F );
 	tokwin->bmp = GFL_BMPWIN_GetBmp( tokwin->win );
-	GFL_BMP_Clear( tokwin->bmp, TEST_TOKWIN_BGCOL );
 
 	{
-		const BTL_POKEPARAM* bpp;
-		GFL_MSGDATA* msg;
-		u16 tokusei;
-		u16 xpos;
-
-		msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tokusei_dat, GFL_HEAP_LOWID(wk->heapID) );
-		bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
-		tokusei = BTL_POKEPARAM_GetValue( bpp, BPP_TOKUSEI );
-		GFL_MSG_GetString( msg, tokusei, wk->strBuf );
-		xpos = (TEST_TOKWIN_DOT_WIDTH - PRINTSYS_GetStrWidth(wk->strBuf, wk->defaultFont, 0)) / 2;
-		PRINTSYS_Print( tokwin->bmp, xpos, 2, wk->strBuf, wk->defaultFont );
-		GFL_MSG_Delete( msg );
+		const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
+		tokwin->tokusei = BTL_POKEPARAM_GetValue( bpp, BPP_TOKUSEI );
+		tokwin->pokeID = BTL_POKEPARAM_GetID( bpp );
 	}
+
+	tokwin_update_cgx( tokwin );
+}
+// CGX更新
+static void tokwin_update_cgx( TOK_WIN* tokwin )
+{
+	BTLV_SCU* wk = tokwin->parentWk;
+	GFL_MSGDATA* msg;
+	u16 xpos;
+
+	msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tokusei_dat, GFL_HEAP_LOWID(wk->heapID) );
+
+	GFL_BMP_Clear( tokwin->bmp, TEST_TOKWIN_BGCOL );
+	GFL_MSG_GetString( msg, tokwin->tokusei, wk->strBuf );
+	xpos = (TEST_TOKWIN_DOT_WIDTH - PRINTSYS_GetStrWidth(wk->strBuf, wk->defaultFont, 0)) / 2;
+	PRINTSYS_Print( tokwin->bmp, xpos, 2, wk->strBuf, wk->defaultFont );
+	GFL_MSG_Delete( msg );
 
 	GFL_BMPWIN_TransVramCharacter( tokwin->win );
 }
+// 更新の必要があればCGX更新
+static void tokwin_check_update_cgx( TOK_WIN* tokwin )
+{
+	BTLV_SCU* wk = tokwin->parentWk;
+	const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, tokwin->pokePos );
+	u8 pokeID = BTL_POKEPARAM_GetID( bpp );
+	u16 tokusei = BTL_POKEPARAM_GetValue( bpp, BPP_TOKUSEI );
+	if( (pokeID != tokwin->pokeID)
+	||	(tokusei != tokwin->tokusei)
+	){
+		tokwin->pokeID = pokeID;
+		tokwin->tokusei = tokusei;
+		tokwin_update_cgx( tokwin );
+	}
+}
+
 
 static void tokwin_cleanup( TOK_WIN* tokwin )
 {
@@ -1211,6 +1240,8 @@ static void tokwin_cleanup( TOK_WIN* tokwin )
 
 static void tokwin_disp( TOK_WIN* tokwin )
 {
+	tokwin_check_update_cgx( tokwin );
+
 	GFL_BMPWIN_MakeScreen( tokwin->win );
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(tokwin->win) );
 }
