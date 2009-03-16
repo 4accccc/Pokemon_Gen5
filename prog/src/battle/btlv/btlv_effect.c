@@ -82,6 +82,7 @@ BOOL	BTLV_EFFECT_CheckExistPokemon( int position );
 
 BTLV_CAMERA_WORK	*BTLV_EFFECT_GetCameraWork( void );
 BTLV_MCSS_WORK		*BTLV_EFFECT_GetMcssWork( void );
+VMHANDLE			*BTLV_EFFECT_GetVMHandle( void );
 
 static	BTLV_EFFECT_WORK	*bew = NULL;
 
@@ -177,6 +178,8 @@ void	BTLV_EFFECT_Main( void )
 {
 	if( bew == NULL ) return;
 
+	bew->execute_flag = VM_Control( bew->vm_core );
+
 	GFL_TCB_Main( bew->tcb_sys );
 
 	BTLV_MCSS_Main( bew->bmw );
@@ -254,6 +257,7 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target )
 //============================================================================================
 void	BTLV_EFFECT_Add( int eff_no )
 {
+#if 1
 	BTLV_EFFECT_TCB	*bet = GFL_HEAP_AllocMemory( bew->heapID, sizeof( BTLV_EFFECT_TCB ) );
 
 	bet->seq_no = 0;
@@ -265,6 +269,9 @@ void	BTLV_EFFECT_Add( int eff_no )
 	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
 
 	bew->execute_flag = 1;
+#else
+	BTLV_EFFVM_Start( bew->vm_core, eff_no & 1, ( eff_no & 1  ) ^ 1, 0 );
+#endif
 }
 
 //============================================================================================
@@ -344,6 +351,18 @@ BTLV_MCSS_WORK	*BTLV_EFFECT_GetMcssWork( void )
 
 //============================================================================================
 /**
+ *	エフェクトで使用されているVMHANDLE管理構造体のポインタを取得
+ *
+ * @retval vm_core VMHANDLE管理構造体
+ */
+//============================================================================================
+VMHANDLE	*BTLV_EFFECT_GetVMHandle( void )
+{
+	return bew->vm_core;
+}
+
+//============================================================================================
+/**
  *	ダメージエフェクトシーケンス（仮でTCBで作成）
  */
 //============================================================================================
@@ -399,7 +418,7 @@ static	void	BTLV_EFFECT_TCB_CameraWork( GFL_TCB *tcb, void *work )
 		pos.x += FX32_ONE * 4;
 		pos.y += FX32_ONE * 1;
 		pos.z += FX32_ONE * 16;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 32, 32 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 32, 0, 32 );
 		BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_INTERPOLATION, &aa_value, 12, 2, 50 );
 		BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_INTERPOLATION, &bb_value, 12, 2, 50 );
 		bet->seq_no++;
@@ -415,7 +434,7 @@ static	void	BTLV_EFFECT_TCB_CameraWork( GFL_TCB *tcb, void *work )
 	case 2:
 		if( --bet->wait <= 0 ){
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 32, 32 );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 32, 0, 32 );
 			BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_INTERPOLATION, &AA_value, 12, 2, 50 );
 			BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_INTERPOLATION, &BB_value, 12, 2, 50 );
 			bet->seq_no++;
@@ -456,7 +475,7 @@ static	void	BTLV_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work )
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 8;
 		pos.z = target.z + FX32_ONE * 30;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 		BTLV_MCSS_ResetOrthoMode( bew->bmw );
 		bet->seq_no++;
 		break;
@@ -515,7 +534,7 @@ static	void	BTLV_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work )
 		if( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ){
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 			bet->seq_no++;
 		}
 		break;
@@ -543,7 +562,7 @@ static	void	BTLV_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work )
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 7;
 		pos.z = target.z + FX32_ONE * 16;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 		BTLV_MCSS_ResetOrthoMode( bew->bmw );
 		bet->seq_no++;
 		break;
@@ -600,7 +619,7 @@ static	void	BTLV_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work )
 		if( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ){
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 			bet->seq_no++;
 		}
 		break;
@@ -628,7 +647,7 @@ static	void	BTLV_EFFECT_TCB_A2BMizudeppou( GFL_TCB *tcb, void *work )
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 7;
 		pos.z = target.z + FX32_ONE * 16;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 		BTLV_MCSS_ResetOrthoMode( bew->bmw );
 		bet->seq_no++;
 		break;
@@ -658,7 +677,7 @@ static	void	BTLV_EFFECT_TCB_A2BMizudeppou( GFL_TCB *tcb, void *work )
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 8;
 		pos.z = target.z + FX32_ONE * 30;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 30, 28 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 30, 0, 28 );
 		bet->seq_no++;
 		bet->wait = 12;
 		break;
@@ -692,7 +711,7 @@ static	void	BTLV_EFFECT_TCB_A2BMizudeppou( GFL_TCB *tcb, void *work )
 			BTLV_MCSS_SetAnmStopFlag( bew->bmw, BTLV_MCSS_POS_D, BTLV_MCSS_ANM_STOP_OFF );
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 			bet->seq_no++;
 		}
 		break;
@@ -720,7 +739,7 @@ static	void	BTLV_EFFECT_TCB_B2AMizudeppou( GFL_TCB *tcb, void *work )
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 8;
 		pos.z = target.z + FX32_ONE * 30;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 		BTLV_MCSS_ResetOrthoMode( bew->bmw );
 		bet->seq_no++;
 		break;
@@ -750,7 +769,7 @@ static	void	BTLV_EFFECT_TCB_B2AMizudeppou( GFL_TCB *tcb, void *work )
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 7;
 		pos.z = target.z + FX32_ONE * 16;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 30, 28 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 30, 0, 28 );
 		bet->seq_no++;
 		bet->wait = 12;
 		break;
@@ -784,7 +803,7 @@ static	void	BTLV_EFFECT_TCB_B2AMizudeppou( GFL_TCB *tcb, void *work )
 			BTLV_MCSS_SetAnmStopFlag( bew->bmw, BTLV_MCSS_POS_C, BTLV_MCSS_ANM_STOP_OFF );
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 			bet->seq_no++;
 		}
 		break;
@@ -820,7 +839,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		target.x = 0xfffffe61;
 		target.y = 0x00002d9a;
 		target.z = 0xffff59ac;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 		BTLV_MCSS_ResetOrthoMode( bew->bmw );
 		bet->seq_no++;
 		break;
@@ -873,7 +892,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		if( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ){
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 			bet->seq_no++;
 		}
 		break;
@@ -902,7 +921,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		target.x = 0xfffff173;
 		target.y = 0x00001d9a;
 		target.z = 0x000027f6;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 		bet->seq_no++;
 		break;
 	case 1:
@@ -955,7 +974,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		if( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ){
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 			bet->seq_no++;
 		}
 		break;
@@ -991,7 +1010,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work )
 		target.x = 0xfffff173;
 		target.y = 0x00001d9a;
 		target.z = 0x000027f6;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 		BTLV_MCSS_ResetOrthoMode( bew->bmw );
 		bet->seq_no++;
 		break;
@@ -1029,7 +1048,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work )
 		target.x = 0xfffffe61;
 		target.y = 0x00002d9a;
 		target.z = 0xffff59ac;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 30, 28 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 30, 0, 28 );
 		bet->seq_no++;
 		bet->wait = 12;
 		break;
@@ -1058,7 +1077,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work )
 			BTLV_MCSS_SetAnmStopFlag( bew->bmw, BTLV_MCSS_POS_BB, BTLV_MCSS_ANM_STOP_OFF );
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 			bet->seq_no++;
 		}
 		break;
@@ -1094,7 +1113,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 		target.x = 0xfffffe61;
 		target.y = 0x00002d9a;
 		target.z = 0xffff59ac;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 		BTLV_MCSS_ResetOrthoMode( bew->bmw );
 		bet->seq_no++;
 		break;
@@ -1132,7 +1151,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 		target.x = 0xfffff173;
 		target.y = 0x00001d9a;
 		target.z = 0x000027f6;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 30, 28 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 30, 0, 28 );
 		bet->seq_no++;
 		bet->wait = 12;
 		break;
@@ -1161,7 +1180,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 			BTLV_MCSS_SetAnmStopFlag( bew->bmw, BTLV_MCSS_POS_AA, BTLV_MCSS_ANM_STOP_OFF );
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 			TAYA_Printf("エフェクト終了直前シーケンス\n");
 			bet->seq_no++;
 		}
@@ -1528,7 +1547,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		pos.x = target.x;
 		pos.y = target.y + FX32_ONE * 8;
 		pos.z = target.z + FX32_ONE * 30;
-		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 		bet->seq_no++;
 		break;
 	case 1:
@@ -1585,7 +1604,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		if( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ){
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
 			bet->seq_no++;
 		}
 		break;
@@ -2304,3 +2323,4 @@ static	void	BTLV_EFFECT_InitPTCBB( GFL_EMIT_PTR emit )
 }
 #endif
 #endif
+

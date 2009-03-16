@@ -47,6 +47,7 @@ extern	void				BTLV_EFFECT_DelPokemon( int position );
 extern	BOOL				BTLV_EFFECT_CheckExistPokemon( int position );
 extern	BTLV_CAMERA_WORK	*BTLV_EFFECT_GetCameraWork( void );
 extern	BTLV_MCSS_WORK		*BTLV_EFFECT_GetMcssWork( void );
+extern	VMHANDLE			*BTLV_EFFECT_GetVMHandle( void );
 
 //管理構造体のポインタを返すバージョン
 #if 0

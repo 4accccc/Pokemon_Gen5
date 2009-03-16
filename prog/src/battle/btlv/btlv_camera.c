@@ -44,6 +44,8 @@ struct _BTLV_CAMERA_WORK
 	VecFx32				move_target;
 	VecFx32				vec_pos;
 	VecFx32				vec_target;
+	int					wait;
+	int					wait_tmp;
 	int					brake_frame;
 	HEAPID				heapID;
 };
@@ -59,7 +61,7 @@ void				BTLV_CAMERA_Exit( BTLV_CAMERA_WORK *bcw );
 void				BTLV_CAMERA_Main( BTLV_CAMERA_WORK *bcw );
 void				BTLV_CAMERA_MoveCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target );
 void				BTLV_CAMERA_MoveCameraAngle( BTLV_CAMERA_WORK *bcw, int phi, int theta );
-void				BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int flame, int brake );
+void				BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int flame, int wait, int brake );
 void				BTLV_CAMERA_GetCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target );
 void				BTLV_CAMERA_GetDefaultCameraPosition( VecFx32 *pos, VecFx32 *target );
 BOOL				BTLV_CAMERA_CheckExecute( BTLV_CAMERA_WORK *bcw );
@@ -72,14 +74,9 @@ static	void		BTLV_CAMERA_UpdateCameraAngle( BTLV_CAMERA_WORK *bcw );
  *	カメラ初期位置
  */
 //============================================================================================
-
-//static const VecFx32 cam_pos = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 7.8f ), FX_F32_TO_FX32( 21.0f ) };
-//static const VecFx32 cam_target = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 2.6f ), FX_F32_TO_FX32( 0.0f ) };
-//static const VecFx32 cam_up = { 0, FX32_ONE, 0 };
-
-static const VecFx32 cam_pos = { FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 17.3f ) };
+static const VecFx32 cam_pos	= { FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 17.3f ) };
 static const VecFx32 cam_target = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 2.6f ), FX_F32_TO_FX32( 0.0f ) };
-static const VecFx32 cam_up = { 0, FX32_ONE, 0 };
+static const VecFx32 cam_up		= { 0,						FX32_ONE,				0 };
 
 //============================================================================================
 /**
@@ -102,7 +99,7 @@ BTLV_CAMERA_WORK	*BTLV_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
 										 FX_F32_TO_FX32( 1.35f ),
 										 NULL,
 										 FX32_ONE,
-										 FX32_ONE * 400,
+										 FX32_ONE * 256,
 										 NULL,
 										 &cam_pos,
 										 &cam_up,
@@ -211,10 +208,11 @@ void	BTLV_CAMERA_MoveCameraAngle( BTLV_CAMERA_WORK *bcw, int phi, int theta )
  * @param[in]	pos		移動先カメラ位置
  * @param[in]	target	移動先カメラターゲット
  * @param[in]	flame	移動フレーム数
+ * @param[in]	wait	移動ウエイト
  * @param[in]	brake	移動にブレーキをかけるフレーム数
  */
 //============================================================================================
-void	BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int flame, int brake )
+void	BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int flame, int wait, int brake )
 {
 	VecFx32	now_pos, now_target;
 
@@ -222,6 +220,8 @@ void	BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, V
 	GFL_G3D_CAMERA_GetTarget( bcw->camera, &now_target );
 
 	bcw->brake_frame = brake;
+	bcw->wait = wait;
+	bcw->wait_tmp = wait;
 
 	if( pos != NULL ){
 		bcw->move_pos.x = pos->x;
@@ -301,41 +301,47 @@ static	void	BTLV_CAMERA_Move( BTLV_CAMERA_WORK *bcw )
 
 	if( bcw->move_flag == 0 ) return;
 
-	if( bcw->brake_frame ){
-		bcw->brake_frame--;
-		if( bcw->brake_frame == 0 ){
-			bcw->vec_pos.x = bcw->vec_pos.x >> 1;
-			bcw->vec_pos.y = bcw->vec_pos.y >> 1;
-			bcw->vec_pos.z = bcw->vec_pos.z >> 1;
-			bcw->vec_target.x = bcw->vec_target.x >> 1;
-			bcw->vec_target.y = bcw->vec_target.y >> 1;
-			bcw->vec_target.z = bcw->vec_target.z >> 1;
+	if( bcw->wait == 0 ){
+		bcw->wait = bcw->wait_tmp;
+		if( bcw->brake_frame ){
+			bcw->brake_frame--;
+			if( bcw->brake_frame == 0 ){
+				bcw->vec_pos.x = bcw->vec_pos.x >> 1;
+				bcw->vec_pos.y = bcw->vec_pos.y >> 1;
+				bcw->vec_pos.z = bcw->vec_pos.z >> 1;
+				bcw->vec_target.x = bcw->vec_target.x >> 1;
+				bcw->vec_target.y = bcw->vec_target.y >> 1;
+				bcw->vec_target.z = bcw->vec_target.z >> 1;
+			}
 		}
-	}
 
-	GFL_G3D_CAMERA_GetPos( bcw->camera, &pos );
-	GFL_G3D_CAMERA_GetTarget( bcw->camera, &target );
+		GFL_G3D_CAMERA_GetPos( bcw->camera, &pos );
+		GFL_G3D_CAMERA_GetTarget( bcw->camera, &target );
 
-	if( bcw->move_flag & CAMERA_POS_MOVE_FLAG ){
-		BTLV_EFFTOOL_CheckMove( &pos.x, &bcw->vec_pos.x, &bcw->move_pos.x, &ret );
-		BTLV_EFFTOOL_CheckMove( &pos.y, &bcw->vec_pos.y, &bcw->move_pos.y, &ret );
-		BTLV_EFFTOOL_CheckMove( &pos.z, &bcw->vec_pos.z, &bcw->move_pos.z, &ret );
-		if( ret == TRUE ){
-			bcw->move_flag &= CAMERA_POS_MOVE_FLAG_OFF;
+		if( bcw->move_flag & CAMERA_POS_MOVE_FLAG ){
+			BTLV_EFFTOOL_CheckMove( &pos.x, &bcw->vec_pos.x, &bcw->move_pos.x, &ret );
+			BTLV_EFFTOOL_CheckMove( &pos.y, &bcw->vec_pos.y, &bcw->move_pos.y, &ret );
+			BTLV_EFFTOOL_CheckMove( &pos.z, &bcw->vec_pos.z, &bcw->move_pos.z, &ret );
+			if( ret == TRUE ){
+				bcw->move_flag &= CAMERA_POS_MOVE_FLAG_OFF;
+			}
 		}
-	}
-	if( bcw->move_flag & CAMERA_TARGET_MOVE_FLAG ){
-		BTLV_EFFTOOL_CheckMove( &target.x, &bcw->vec_target.x, &bcw->move_target.x, &ret );
-		BTLV_EFFTOOL_CheckMove( &target.y, &bcw->vec_target.y, &bcw->move_target.y, &ret );
-		BTLV_EFFTOOL_CheckMove( &target.z, &bcw->vec_target.z, &bcw->move_target.z, &ret );
-		if( ret == TRUE ){
-			bcw->move_flag &= CAMERA_TARGET_MOVE_FLAG_OFF;
+		if( bcw->move_flag & CAMERA_TARGET_MOVE_FLAG ){
+			BTLV_EFFTOOL_CheckMove( &target.x, &bcw->vec_target.x, &bcw->move_target.x, &ret );
+			BTLV_EFFTOOL_CheckMove( &target.y, &bcw->vec_target.y, &bcw->move_target.y, &ret );
+			BTLV_EFFTOOL_CheckMove( &target.z, &bcw->vec_target.z, &bcw->move_target.z, &ret );
+			if( ret == TRUE ){
+				bcw->move_flag &= CAMERA_TARGET_MOVE_FLAG_OFF;
+			}
 		}
+		GFL_G3D_CAMERA_SetPos( bcw->camera, &pos );
+		GFL_G3D_CAMERA_SetTarget( bcw->camera, &target );
+		GFL_G3D_CAMERA_Switching( bcw->camera );
+		BTLV_CAMERA_UpdateCameraAngle( bcw );
 	}
-	GFL_G3D_CAMERA_SetPos( bcw->camera, &pos );
-	GFL_G3D_CAMERA_SetTarget( bcw->camera, &target );
-	GFL_G3D_CAMERA_Switching( bcw->camera );
-	BTLV_CAMERA_UpdateCameraAngle( bcw );
+	else{
+		bcw->wait--;
+	}
 }
 
 //============================================================================================

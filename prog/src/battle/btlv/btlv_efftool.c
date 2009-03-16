@@ -134,12 +134,13 @@ BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_value )
 				emw->vector.y *= -1;
 				emw->vector.z *= -1;
 				emw->vec_time = emw->vec_time_tmp;
+				emw->count--;
 			}
 		}
 		else{
 			emw->wait--;
 		}
-		if( --emw->count ){
+		if( emw->count ){
 			ret = FALSE;
 		}
 		else{

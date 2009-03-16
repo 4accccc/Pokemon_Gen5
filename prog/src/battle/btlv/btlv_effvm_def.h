@@ -38,13 +38,17 @@
 #define	BTLEFF_CAMERA_MOVE_INTERPOLATION	( 1 )		//追従
 
 //カメラ移動先
-#define	BTLEFF_CAMERA_POS_AA		( 0 )
-#define	BTLEFF_CAMERA_POS_BB		( 1 )
-#define	BTLEFF_CAMERA_POS_A			( 2 )
-#define	BTLEFF_CAMERA_POS_B			( 3 )
-#define	BTLEFF_CAMERA_POS_C			( 4 )
-#define	BTLEFF_CAMERA_POS_D			( 5 )
-#define	BTLEFF_CAMERA_POS_INIT		( 6 )
+#define	BTLEFF_CAMERA_POS_AA			( 0 )
+#define	BTLEFF_CAMERA_POS_BB			( 1 )
+#define	BTLEFF_CAMERA_POS_A				( 2 )
+#define	BTLEFF_CAMERA_POS_B				( 3 )
+#define	BTLEFF_CAMERA_POS_C				( 4 )
+#define	BTLEFF_CAMERA_POS_D				( 5 )
+#define	BTLEFF_CAMERA_POS_INIT			( 6 )
+#define	BTLEFF_CAMERA_POS_ATTACK		( 7 )
+#define	BTLEFF_CAMERA_POS_ATTACK_PAIR	( 8 )
+#define	BTLEFF_CAMERA_POS_DEFENCE		( 9 )
+#define	BTLEFF_CAMERA_POS_DEFENCE_PAIR	( 10 )
 
 //パーティクル再生
 #define	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	( 0 )
@@ -68,11 +72,11 @@
 #define	BTLEFF_POKEMON_ROTATE_INTERPOLATION		( EFFTOOL_CALCTYPE_INTERPOLATION )
 #define	BTLEFF_POKEMON_ROTATE_ROUNDTRIP			( EFFTOOL_CALCTYPE_ROUNDTRIP )
 #define	BTLEFF_POKEMON_ROTATE_ROUNDTRIP_LONG	( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
-#define	BTLEFF_MEPACHI_ON						( POKE_MCSS_MEPACHI_ON )
-#define	BTLEFF_MEPACHI_OFF						( POKE_MCSS_MEPACHI_OFF )
+#define	BTLEFF_MEPACHI_ON						( BTLV_MCSS_MEPACHI_ON )
+#define	BTLEFF_MEPACHI_OFF						( BTLV_MCSS_MEPACHI_OFF )
 #define	BTLEFF_MEPACHI_MABATAKI					( 2 )
-#define	BTLEFF_ANM_STOP							( POKE_MCSS_ANM_STOP_ON )
-#define	BTLEFF_ANM_START						( POKE_MCSS_ANM_STOP_OFF )
+#define	BTLEFF_ANM_STOP							( BTLV_MCSS_ANM_STOP_ON )
+#define	BTLEFF_ANM_START						( BTLV_MCSS_ANM_STOP_OFF )
 
 #endif //__BTLV_EFFVM_DEF_H_
 
@@ -86,17 +90,20 @@
 #if 0
 
 ex)
- * #param_num	4
- * @param	type	カメラ移動タイプ
- * @param	pos_x	カメラ移動先X座標
- * @param	pos_y	カメラ移動先Y座標
- * @param	pos_z	カメラ移動先Z座標
+ * #param_num	5
+ * @param	type		カメラ移動タイプ
+ * @param	move_pos	移動先
+ * @param	frame		カメラタイプが追従のとき、何フレームで移動先に到達するかを指定
+ * @param	wait		移動ウエイト
+ * @param	brake		ブレーキをかけはじめるフレームを指定
  *
  * #param	COMBOBOX_TEXT	ダイレクト	追従
  * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_MOVE_DIRECT	BTLEFF_CAMERA_MOVE_INTERPOLATION
- * #param	VALUE_FX32
- * #param	VALUE_FX32
- * #param	VALUE_FX32
+ * #param	COMBOBOX_TEXT	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D	初期位置	攻撃側	防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D	BTLEFF_CAMERA_POS_INIT BTLEFF_CAMERA_POS_ATTACK BTLEFF_CAMERA_POS_DEFENCE
+ * #param	VALUE_INT
+ * #param	VALUE_INT
+ * #param	VALUE_INT
 
 #param_numを書いて、コマンドの引数の数を宣言をします(@paramの総数になります）
 doxygen書式の@paramはそのままツール上のコメントとして表示されます
@@ -112,6 +119,8 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 　ファイルダイアログを表示してファイル選択を促す　選択を絞る拡張子を指定できます
 ・FILE_DIALOG_COMBOBOX
 　ファイルダイアログで選択したファイルをコンボボックスで表示します　選択を絞る拡張子を指定できます
+・COMBOBOX_HEADER
+　FILE_DIALOG_COMBOBOXで選択したファイルの拡張子.hファイルを読み込んでコンボボックスを表示します
 
 #endif
 
@@ -140,6 +149,7 @@ def_cmd_count = ( def_cmd_count + 1 )
 	DEF_CMD	EC_POKEMON_ROTATE
 	DEF_CMD	EC_POKEMON_SET_MEPACHI_FLAG
 	DEF_CMD	EC_POKEMON_SET_ANM_FLAG
+	DEF_CMD	EC_EFFECT_END_WAIT
 
 //終了コマンドは必ず一番下になるようにする
 	DEF_CMD	EC_SEQ_END
@@ -149,25 +159,28 @@ def_cmd_count = ( def_cmd_count + 1 )
 /**
  * @brief		カメラ移動
  *
- * #param_num	4
+ * #param_num	5
  * @param	type		カメラ移動タイプ
  * @param	move_pos	移動先
  * @param	frame		カメラタイプが追従のとき、何フレームで移動先に到達するかを指定
+ * @param	wait		移動ウエイト
  * @param	brake		ブレーキをかけはじめるフレームを指定
  *
  * #param	COMBOBOX_TEXT	ダイレクト	追従
  * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_MOVE_DIRECT	BTLEFF_CAMERA_MOVE_INTERPOLATION
- * #param	COMBOBOX_TEXT	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D	初期位置
- * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D	BTLEFF_CAMERA_POS_INIT
+ * #param	COMBOBOX_TEXT	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D	初期位置	攻撃側	攻撃側ペア	防御側	防御側ペア
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D	BTLEFF_CAMERA_POS_INIT BTLEFF_CAMERA_POS_ATTACK BTLEFF_CAMERA_POS_ATTACK_PAIR	BTLEFF_CAMERA_POS_DEFENCE BTLEFF_CAMERA_POS_DEFENCE_PAIR
+ * #param	VALUE_INT
  * #param	VALUE_INT
  * #param	VALUE_INT
  */
 //======================================================================
-	.macro	CAMERA_MOVE	type, move_pos, frame, brake
+	.macro	CAMERA_MOVE	type, move_pos, frame, wait, brake
 	.short	EC_CAMERA_MOVE
 	.long	\type
 	.long	\move_pos
 	.long	\frame
+	.long	\wait
 	.long	\brake
 	.endm
 
@@ -196,9 +209,9 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	start_pos	パーティクル再生開始立ち位置
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
- * #param	VALUE_INT
- * #param	COMBOBOX_TEXT	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D
- * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D	BTLEFF_CAMERA_POS_INIT
+ * #param	COMBOBOX_HEADER
+ * #param	COMBOBOX_TEXT	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D	攻撃側	攻撃側ペア	防御側	防御側ペア
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D	BTLEFF_CAMERA_POS_ATTACK BTLEFF_CAMERA_POS_ATTACK_PAIR BTLEFF_CAMERA_POS_DEFENCE BTLEFF_CAMERA_POS_DEFENCE_PAIR
  */
 //======================================================================
 	.macro	PARTICLE_PLAY	num, index, start_pos
@@ -220,7 +233,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	dir_angle	パーティクル再生方向Y角度
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
- * #param	VALUE_INT
+ * #param	COMBOBOX_HEADER
  * #param	COMBOBOX_TEXT	攻撃側	防御側
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
  * #param	COMBOBOX_TEXT	攻撃側	防御側
@@ -250,7 +263,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	wait		移動ウエイト
  * @param	count		往復カウント（移動タイプが往復のときだけ有効）
  *
- * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア　防御側　防御側ペア
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
  * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_MOVE_DIRECT	BTLEFF_POKEMON_MOVE_INTERPOLATION	BTLEFF_POKEMON_MOVE_ROUNDTRIP	BTLEFF_POKEMON_MOVE_ROUNDTRIP_LONG
@@ -285,7 +298,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	wait		拡縮ウエイト
  * @param	count		往復カウント（拡縮タイプが往復のときだけ有効）
  *
- * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア　防御側　防御側ペア
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
  * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SCALE_DIRECT	BTLEFF_POKEMON_SCALE_INTERPOLATION	BTLEFF_POKEMON_SCALE_ROUNDTRIP	BTLEFF_POKEMON_SCALE_ROUNDTRIP_LONG
@@ -319,7 +332,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	wait		回転ウエイト
  * @param	count		往復カウント（回転タイプが往復のときだけ有効）
  *
- * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア　防御側　防御側ペア
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
  * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_ROTATE_DIRECT	BTLEFF_POKEMON_ROTATE_INTERPOLATION	BTLEFF_POKEMON_ROTATE_ROUNDTRIP	BTLEFF_POKEMON_ROTATE_ROUNDTRIP_LONG
@@ -349,7 +362,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	wait		メパチウエイト（メパチタイプがまばたきのときだけ有効）
  * @param	count		メパチカウント（メパチタイプがまばたきのときだけ有効）
  *
- * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア　防御側　防御側ペア
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
  * #param	COMBOBOX_TEXT	閉じる	開ける	まばたき
  * #param	COMBOBOX_VALUE	BTLEFF_MEPACHI_ON	BTLEFF_MEPACHI_OFF	BTLEFF_MEPACHI_MABATAKI
@@ -373,7 +386,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	pos			アニメ操作するポケモンの立ち位置
  * @param	flag		アニメフラグ
  *
- * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア　防御側　防御側ペア
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
  * #param	COMBOBOX_TEXT	アニメストップ	アニメスタート
  * #param	COMBOBOX_VALUE	BTLEFF_ANM_STOP	BTLEFF_ANM_START
@@ -383,6 +396,17 @@ def_cmd_count = ( def_cmd_count + 1 )
 	.short	EC_POKEMON_SET_ANM_FLAG
 	.long	\pos
 	.long	\flag
+	.endm
+
+//======================================================================
+/**
+ * @brief	エフェクト終了待ち
+ *
+ * #param_num	0
+ */
+//======================================================================
+	.macro	EFFECT_END_WAIT
+	.short	EC_EFFECT_END_WAIT
 	.endm
 
 //======================================================================
