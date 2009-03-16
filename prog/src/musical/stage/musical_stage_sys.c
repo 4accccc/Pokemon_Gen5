@@ -93,8 +93,17 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 	
 	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HAND_R].type = 30;
 	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HEAD].type = 21;
-	
-	
+
+/*
+	for( ePos=0;ePos<4;ePos++ )
+	{
+		work->actInitWork->musPoke[ePos].equip[MUS_POKE_EQU_HAND_R].type = 30;
+		work->actInitWork->musPoke[ePos].equip[MUS_POKE_EQU_HAND_L].type = 30;
+		work->actInitWork->musPoke[ePos].equip[MUS_POKE_EQU_HEAD].type = 30;
+		work->actInitWork->musPoke[ePos].equip[MUS_POKE_EQU_EAR_L].type = 30;
+		work->actInitWork->musPoke[ePos].equip[MUS_POKE_EQU_BODY].type = 30;
+	}
+*/	
 	return GFL_PROC_RES_FINISH;
 }
 

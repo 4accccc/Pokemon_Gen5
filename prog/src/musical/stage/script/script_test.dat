@@ -5,15 +5,38 @@
 #define POKE_BASE_DEPTH(val) FX32_CONST( 80.0f+val*30.0f)
 
 #define LIGHT_CIRCLE_SIZE (FX32_CONST(48.0f))
+
+//演劇風
 s32 musicalScriptTestData[] =
 {
-	//裏準備
-	SCRIPT_ENUM_PokeMove , 0 , 0 , FX32_CONST(-64.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
-	SCRIPT_ENUM_PokeShow , 0 , 1 ,
+	//基本準備
+	SCRIPT_ENUM_PokeShow , 0 , 0 ,
 	SCRIPT_ENUM_PokeShow , 1 , 0 ,
 	SCRIPT_ENUM_PokeShow , 2 , 0 ,
 	SCRIPT_ENUM_PokeShow , 3 , 0 ,
+	SCRIPT_ENUM_CurtainMove, 0 , 0 ,
+	SCRIPT_ENUM_StageMove , 0 , 0 ,
+	//配置物
+	SCRIPT_ENUM_StageChangeBg , 0 ,
+	SCRIPT_ENUM_FrameWait , 5 ,
+	SCRIPT_ENUM_ObjectCreate , 0 , 0 ,
+	SCRIPT_ENUM_ObjectCreate , 1 , 1 ,
+	SCRIPT_ENUM_ObjectCreate , 2 , 1 ,
+	SCRIPT_ENUM_ObjectShow , 0 ,
+	SCRIPT_ENUM_ObjectShow , 1 ,
+	SCRIPT_ENUM_ObjectShow , 2 ,
+	SCRIPT_ENUM_ObjectMove , 0 , 0 , FX32_CONST( 64.0f) , FX32_CONST( 96.0f) , FX32_CONST( 50.0f) ,
+	SCRIPT_ENUM_ObjectMove , 1 , 0 , FX32_CONST(448.0f) , FX32_CONST(100.0f) , FX32_CONST( 50.0f) ,
+	SCRIPT_ENUM_ObjectMove , 2 , 0 , FX32_CONST(192.0f) , FX32_CONST(160.0f) , FX32_CONST(180.0f) ,
+	SCRIPT_ENUM_FrameWait , 5 ,
+	SCRIPT_ENUM_EffectCreate , 0 , 1 ,
+
+	//裏準備
+	SCRIPT_ENUM_PokeShow , 0 , 1 ,
+	SCRIPT_ENUM_PokeMove , 0 , 0 , FX32_CONST(-64.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
+
 	//あらすじ
+	SCRIPT_ENUM_MessageColor , 1 , 0 , 0 ,
 	SCRIPT_ENUM_MessageShow , 0 , 4 ,
 	SCRIPT_ENUM_FrameWait , 180 ,
 	SCRIPT_ENUM_MessageHide ,
@@ -21,15 +44,19 @@ s32 musicalScriptTestData[] =
 	SCRIPT_ENUM_CurtainUp,
 	SCRIPT_ENUM_FrameWait , 120 ,
 	//入場
+	SCRIPT_ENUM_EffectStart , 0 , 1 , FX32_CONST(128.0f) , FX32_CONST(96.0f) , FX32_CONST(190.0f) ,
 	SCRIPT_ENUM_LightShowCircle , 0 , LIGHT_CIRCLE_SIZE ,
 	SCRIPT_ENUM_LightMove , 0 , 0 , FX32_CONST(-64.0f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f), POKE_BASE_DEPTH(0) ,
 	SCRIPT_ENUM_PokeStartAnime , 0 ,
 	SCRIPT_ENUM_PokeDir	 , 0 , 1 ,
 	SCRIPT_ENUM_PokeMove , 0 ,  120 , FX32_CONST(128.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
 	SCRIPT_ENUM_LightMove , 0 , 120 , FX32_CONST(128.0f) , POKE_BASE_HEIGHT -FX32_CONST(24.0f), POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_PokeActionJump , 0 , 20 , 6 , FX32_CONST( 8.0f ) ,
 	SCRIPT_ENUM_FrameWait , 120 , 
+
 	SCRIPT_ENUM_PokeMove , 0 ,  160 , FX32_CONST(448.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
 	SCRIPT_ENUM_StageMove , 160 , 256 ,
+	SCRIPT_ENUM_PokeActionJump , 0 , 20 , 8 , FX32_CONST( 8.0f ) ,
 	SCRIPT_ENUM_LightHide , 0 ,
 	SCRIPT_ENUM_FrameWait , 80 , 
 	
@@ -37,6 +64,7 @@ s32 musicalScriptTestData[] =
 	SCRIPT_ENUM_PokeShow , 1 , 1 ,
 	SCRIPT_ENUM_PokeMove , 1 , 0 , FX32_CONST( 0.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(1) ,
 	SCRIPT_ENUM_PokeMove , 1 ,80 , FX32_CONST( 352.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(1) ,
+	SCRIPT_ENUM_PokeActionJump , 1 , 15 , 6 , FX32_CONST( 6.0f ) ,
 	SCRIPT_ENUM_PokeStartAnime , 1 ,
 	SCRIPT_ENUM_PokeDir	 , 1 , 1 ,
 	SCRIPT_ENUM_LightShowCircle , 0 , LIGHT_CIRCLE_SIZE ,
@@ -46,6 +74,7 @@ s32 musicalScriptTestData[] =
 	
 	//全員移動完了
 	//大臣台詞
+	SCRIPT_ENUM_MessageColor , 15 , 0 , 0 ,
 	SCRIPT_ENUM_MessageShow , 1 , 1 ,
 	SCRIPT_ENUM_PokeDir	 , 0 , 0 ,
 	SCRIPT_ENUM_PokeStopAnime , 0 ,
@@ -56,6 +85,7 @@ s32 musicalScriptTestData[] =
 	SCRIPT_ENUM_PokeShow , 2 , 1 ,
 	SCRIPT_ENUM_PokeMove , 2 , 0 , FX32_CONST( 128.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(2) ,
 	SCRIPT_ENUM_PokeMove , 2 ,120 , FX32_CONST( 304.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(2) ,
+	SCRIPT_ENUM_PokeActionJump , 2 , 15 , 8 , FX32_CONST( 6.0f ) ,
 	SCRIPT_ENUM_PokeStartAnime , 2 ,
 	SCRIPT_ENUM_PokeDir	 , 2 , 1 ,
 	SCRIPT_ENUM_LightShowCircle , 0 , LIGHT_CIRCLE_SIZE ,
@@ -82,17 +112,263 @@ s32 musicalScriptTestData[] =
 	SCRIPT_ENUM_MessageHide ,
 	SCRIPT_ENUM_PokeDir	 , 0 , 1 ,
 	SCRIPT_ENUM_PokeMove , 0 ,  60 , FX32_CONST(576.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
-	SCRIPT_ENUM_FrameWait , 60 , 
+	SCRIPT_ENUM_PokeActionJump , 0 , 15 , 6 , FX32_CONST( 6.0f ) ,
+	SCRIPT_ENUM_FrameWait , 20 , 
+
+	SCRIPT_ENUM_PokeActionJump , 1 , 30 , 1 , FX32_CONST( 32.0f ) ,
+	SCRIPT_ENUM_PokeActionJump , 2 , 30 , 1 , FX32_CONST( 32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 40 , 
 
 	//追う
 	SCRIPT_ENUM_PokeStartAnime , 1 ,
 	SCRIPT_ENUM_PokeMove , 1 , 120 , FX32_CONST(608.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(1) ,
+	SCRIPT_ENUM_PokeActionJump , 1 , 15 , 8 , FX32_CONST( 6.0f ) ,
 	SCRIPT_ENUM_PokeStartAnime , 2 ,
 	SCRIPT_ENUM_PokeMove , 2 , 120 , FX32_CONST(560.0f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(2) ,
+	SCRIPT_ENUM_PokeActionJump , 2 , 15 , 8 , FX32_CONST( 6.0f ) ,
 	SCRIPT_ENUM_FrameWait , 90 , 
 
+	//閉幕
 	SCRIPT_ENUM_CurtainDown ,
 	SCRIPT_ENUM_FrameWait , 120 ,
+	
+	//後始末
+	SCRIPT_ENUM_ObjectDelete , 0 ,
+	SCRIPT_ENUM_ObjectDelete , 1 ,
+	SCRIPT_ENUM_ObjectDelete , 2 ,
+	SCRIPT_ENUM_EffectDelete , 0 ,
+
+
 	SCRIPT_ENUM_ScriptFinish 
 };
 
+//ミュージカル風
+s32 musicalScriptTestData2[] =
+{
+	//基本準備
+	SCRIPT_ENUM_PokeMove , 0 , 0 , FX32_CONST(51.2f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_PokeMove , 1 , 0 , FX32_CONST(102.4f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(1) ,
+	SCRIPT_ENUM_PokeMove , 2 , 0 , FX32_CONST(153.6f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(2) ,
+	SCRIPT_ENUM_PokeMove , 3 , 0 , FX32_CONST(204.8f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(3) ,
+	SCRIPT_ENUM_PokeShow , 0 , 1 ,
+	SCRIPT_ENUM_PokeShow , 1 , 1 ,
+	SCRIPT_ENUM_PokeShow , 2 , 1 ,
+	SCRIPT_ENUM_PokeShow , 3 , 1 ,
+	SCRIPT_ENUM_PokeDir	 , 0 , 1 ,
+	SCRIPT_ENUM_PokeDir	 , 1 , 1 ,
+	SCRIPT_ENUM_PokeDir	 , 2 , 0 ,
+	SCRIPT_ENUM_PokeDir	 , 3 , 0 ,
+	SCRIPT_ENUM_CurtainMove, 0 , 0 ,
+	SCRIPT_ENUM_StageMove , 0 , 0 ,
+
+	//配置物
+	SCRIPT_ENUM_StageChangeBg , 1 ,
+	SCRIPT_ENUM_FrameWait , 5 ,
+
+	SCRIPT_ENUM_ObjectCreate , 0 , 0 ,
+	SCRIPT_ENUM_ObjectCreate , 1 , 1 ,
+	SCRIPT_ENUM_ObjectCreate , 2 , 1 ,
+	SCRIPT_ENUM_ObjectShow , 0 ,
+	SCRIPT_ENUM_ObjectShow , 1 ,
+	SCRIPT_ENUM_ObjectShow , 2 ,
+	SCRIPT_ENUM_ObjectMove , 0 , 0 , FX32_CONST( 48.0f) , FX32_CONST( 96.0f) , FX32_CONST( 50.0f) ,
+	SCRIPT_ENUM_ObjectMove , 1 , 0 , FX32_CONST(200.0f) , FX32_CONST(100.0f) , FX32_CONST( 50.0f) ,
+	SCRIPT_ENUM_ObjectMove , 2 , 0 , FX32_CONST(128.0f) , FX32_CONST(160.0f) , FX32_CONST(180.0f) ,
+
+	SCRIPT_ENUM_FrameWait , 5 ,
+	SCRIPT_ENUM_EffectCreate , 0 , 1 ,
+	
+	//開幕
+	SCRIPT_ENUM_CurtainUp,
+	SCRIPT_ENUM_FrameWait , 30 ,
+
+	SCRIPT_ENUM_EffectRepeatStart , 0 , 1 , 45 , 16 , 
+			FX32_CONST( 64.0f) , FX32_CONST(256.0f) , 
+			FX32_CONST( 96.0f) , FX32_CONST( 96.0f) ,
+			FX32_CONST(180.0f) , FX32_CONST(180.0f) ,
+	SCRIPT_ENUM_EffectRepeatStart , 0 , 0 , 60 , 12, 
+			FX32_CONST( 32.0f) , FX32_CONST(224.0f) , 
+			FX32_CONST( 32.0f) , FX32_CONST( 64.0f) ,
+			FX32_CONST( 30.0f) , FX32_CONST( 30.0f) ,
+	SCRIPT_ENUM_FrameWait , 90 ,
+
+	SCRIPT_ENUM_PokeStartAnime , 0 ,
+	SCRIPT_ENUM_PokeStartAnime , 3 ,
+	SCRIPT_ENUM_PokeActionJump , 0 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_PokeActionJump , 3 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_LightShowCircle , 0 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightShowCircle , 1 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightMove , 0 , 0 , FX32_CONST(51.2f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_LightMove , 1 , 0 , FX32_CONST(204.8f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(3) ,
+
+//	SCRIPT_ENUM_LightShowCircle , 2 , LIGHT_CIRCLE_SIZE ,
+//	SCRIPT_ENUM_LightMove , 2 , 0 , FX32_CONST(128.0f) , FX32_CONST(32.0f) , POKE_BASE_DEPTH(0) ,
+
+	SCRIPT_ENUM_FrameWait , 30 ,
+	SCRIPT_ENUM_LightHide , 0 ,
+	SCRIPT_ENUM_LightHide , 1 ,
+
+	SCRIPT_ENUM_FrameWait , 15 ,
+	
+	SCRIPT_ENUM_PokeStartAnime , 1 ,
+	SCRIPT_ENUM_PokeStartAnime , 2 ,
+	SCRIPT_ENUM_PokeActionJump , 1 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_PokeActionJump , 2 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_LightShowCircle , 0 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightShowCircle , 1 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightMove , 0 , 0 , FX32_CONST(102.4f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_LightMove , 1 , 0 , FX32_CONST(153.6f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(3) ,
+
+	SCRIPT_ENUM_FrameWait , 30 ,
+	SCRIPT_ENUM_LightHide , 0 ,
+	SCRIPT_ENUM_LightHide , 1 ,
+
+	SCRIPT_ENUM_FrameWait , 15 ,
+
+	SCRIPT_ENUM_PokeStartAnime , 0 ,
+	SCRIPT_ENUM_PokeStartAnime , 3 ,
+	SCRIPT_ENUM_PokeActionJump , 0 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_PokeActionJump , 3 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_LightShowCircle , 0 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightShowCircle , 1 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightMove , 0 , 0 , FX32_CONST(51.2f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_LightMove , 1 , 0 , FX32_CONST(204.8f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(3) ,
+
+	SCRIPT_ENUM_FrameWait , 30 ,
+	SCRIPT_ENUM_LightHide , 0 ,
+	SCRIPT_ENUM_LightHide , 1 ,
+
+	SCRIPT_ENUM_FrameWait , 15 ,
+	
+	SCRIPT_ENUM_PokeStartAnime , 1 ,
+	SCRIPT_ENUM_PokeStartAnime , 2 ,
+	SCRIPT_ENUM_PokeActionJump , 1 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_PokeActionJump , 2 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_LightShowCircle , 0 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightShowCircle , 1 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightMove , 0 , 0 , FX32_CONST(102.4f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_LightMove , 1 , 0 , FX32_CONST(153.6f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(3) ,
+
+	SCRIPT_ENUM_FrameWait , 30 ,
+	SCRIPT_ENUM_LightHide , 0 ,
+	SCRIPT_ENUM_LightHide , 1 ,
+
+	SCRIPT_ENUM_FrameWait , 15 ,
+
+	SCRIPT_ENUM_LightShowCircle , 0 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightMove , 0 , 0 , FX32_CONST(51.2f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_LightMove , 0 ,45 , FX32_CONST(204.8f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+
+	SCRIPT_ENUM_PokeActionJump , 0 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 1 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 2 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 3 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_LightMove , 0 , 45 , FX32_CONST(51.2f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 2 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 1 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 0 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 30 ,
+
+	SCRIPT_ENUM_LightHide , 0 ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+
+	SCRIPT_ENUM_LightShowCircle , 0 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightMove , 0 , 0 , FX32_CONST(204.2f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_LightMove , 0 ,45 , FX32_CONST( 51.8f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_PokeActionJump , 3 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 2 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 1 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 0 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_LightMove , 0 , 45 , FX32_CONST(204.2f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 1 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 2 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 15 ,
+	SCRIPT_ENUM_PokeActionJump , 3 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_FrameWait , 30 ,
+
+	SCRIPT_ENUM_LightHide , 0 ,
+//	SCRIPT_ENUM_LightHide , 2 ,
+	SCRIPT_ENUM_FrameWait , 45 ,
+	SCRIPT_ENUM_PokeActionJump , 0 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_PokeActionJump , 1 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_PokeActionJump , 2 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_PokeActionJump , 3 , 30 , 1 , FX32_CONST(32.0f ) ,
+	SCRIPT_ENUM_LightShowCircle , 0 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightShowCircle , 1 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightShowCircle , 2 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightShowCircle , 3 , LIGHT_CIRCLE_SIZE ,
+	SCRIPT_ENUM_LightMove , 0 , 0 , FX32_CONST(51.2f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_LightMove , 1 , 0 , FX32_CONST(102.4f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_LightMove , 2 , 0 , FX32_CONST(153.6f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(3) ,
+	SCRIPT_ENUM_LightMove , 3 , 0 , FX32_CONST(204.8f) , POKE_BASE_HEIGHT-FX32_CONST(24.0f) , POKE_BASE_DEPTH(3) ,
+
+	SCRIPT_ENUM_FrameWait , 30 ,
+
+	//閉幕
+	SCRIPT_ENUM_CurtainDown ,
+	SCRIPT_ENUM_FrameWait , 120 ,
+	
+	//後始末
+	SCRIPT_ENUM_LightHide , 0 ,
+	SCRIPT_ENUM_LightHide , 1 ,
+	SCRIPT_ENUM_LightHide , 2 ,
+	SCRIPT_ENUM_LightHide , 3 ,
+	SCRIPT_ENUM_ObjectDelete , 0 ,
+	SCRIPT_ENUM_ObjectDelete , 1 ,
+	SCRIPT_ENUM_ObjectDelete , 2 ,
+	SCRIPT_ENUM_EffectDelete , 0 ,
+	
+
+	SCRIPT_ENUM_ScriptFinish 
+};
+
+s32 musicalScriptTestDataAri[] =
+{
+	SCRIPT_ENUM_PokeMove , 0 , 0 , FX32_CONST(51.2f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_PokeMove , 1 , 0 , FX32_CONST(102.4f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(1) ,
+	SCRIPT_ENUM_PokeMove , 2 , 0 , FX32_CONST(153.6f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(2) ,
+	SCRIPT_ENUM_PokeMove , 3 , 0 , FX32_CONST(204.8f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(3) ,
+	SCRIPT_ENUM_PokeShow , 0 , 1 ,
+	SCRIPT_ENUM_PokeShow , 1 , 0 ,
+	SCRIPT_ENUM_PokeShow , 2 , 0 ,
+	SCRIPT_ENUM_PokeShow , 3 , 0 ,
+	SCRIPT_ENUM_PokeStartAnime , 0 ,
+	SCRIPT_ENUM_PokeStartAnime , 1 ,
+	SCRIPT_ENUM_PokeStartAnime , 2 ,
+	SCRIPT_ENUM_PokeStartAnime , 3 ,
+	SCRIPT_ENUM_CurtainMove, 0 , 224 ,
+	SCRIPT_ENUM_StageMove , 0 , 0 ,
+	SCRIPT_ENUM_StageChangeBg , 1 ,
+
+	SCRIPT_ENUM_PokeActionJump , 0 , 20 , 1 , FX32_CONST( 8.0f ) ,
+/*
+	SCRIPT_ENUM_PokeDir	 , 0 , 1 ,
+	SCRIPT_ENUM_PokeMove , 0 , 60 , FX32_CONST(102.4f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_FrameWait , 60 , 
+
+	SCRIPT_ENUM_PokeDir	 , 0 , 0 ,
+	SCRIPT_ENUM_PokeMove , 0 , 60 , FX32_CONST(51.2f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_FrameWait , 60 , 
+
+	SCRIPT_ENUM_PokeDir	 , 0 , 1 ,
+	SCRIPT_ENUM_PokeMove , 0 , 60 , FX32_CONST(102.4f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_FrameWait , 60 , 
+
+	SCRIPT_ENUM_PokeDir	 , 0 , 0 ,
+	SCRIPT_ENUM_PokeMove , 0 , 60 , FX32_CONST(51.2f) , POKE_BASE_HEIGHT , POKE_BASE_DEPTH(0) ,
+	SCRIPT_ENUM_FrameWait , 60 , 
+*/
+
+	SCRIPT_ENUM_ScriptFinish 
+};

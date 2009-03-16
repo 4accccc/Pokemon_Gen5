@@ -11,9 +11,9 @@
 #define MUS_EFF_00_SPAMAX	(3)
 
 //mus_eff_01.hのsprリソース定義
-#define MUS_EFF_01_OP_DEMOBG2_BUBBLE1		0
-#define MUS_EFF_01_OP_DEMOBG2_BUBBLE2		1
-#define MUS_EFF_01_OP_DEMOBG2_BUBBLE3		2
+#define MUS_EFF_01_434_HIT_MARK		0
+#define MUS_EFF_01_434_SHOOTING_STAR1		1
+#define MUS_EFF_01_434_SHOOTING_STAR3		2
 //mus_eff_01.spa内のリソース個数
 #define MUS_EFF_01_SPAMAX	(3)
 

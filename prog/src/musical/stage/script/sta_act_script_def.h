@@ -67,9 +67,11 @@ struct _STA_SCRIPT_SYS
 
 typedef SCRIPT_FINISH_TYPE(*STA_SCRIPT_FUNC)(STA_SCRIPT_SYS *work,STA_SCRIPT_WORK *scriptWork);
 
+
 //--------------------------------------------------------------
-//	スクリプト用にメッセージ関係
+//	スクリプト用機能関数
 //--------------------------------------------------------------
+void	STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo );
 void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd );
 void STA_ACT_HideMessage( ACTING_WORK *work );
 

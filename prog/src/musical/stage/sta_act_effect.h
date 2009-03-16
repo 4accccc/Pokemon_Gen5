@@ -36,6 +36,7 @@ void	STA_EFF_ExitSystem( STA_EFF_SYS *work );
 
 STA_EFF_WORK*	STA_EFF_CreateEffect( STA_EFF_SYS *work , int fileIdx );
 void	STA_EFF_DeleteEffect( STA_EFF_SYS *work , STA_EFF_WORK *effWork );
-void	STA_EFF_CreateEmmitter( STA_EFF_WORK *effWork , u16 emmitNo , VecFx32 *pos );
+void	STA_EFF_CreateEmitter( STA_EFF_WORK *effWork , const u16 emitNo , VecFx32 *pos );
+void	STA_EFF_DeleteEmitter( STA_EFF_WORK *effWork , const u16 emitNo );
 
 #endif STA_ACT_EFFECT_H__

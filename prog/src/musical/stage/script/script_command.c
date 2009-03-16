@@ -10,6 +10,9 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 
+#include "print/gf_font.h"
+
+#include "stage_gra.naix"
 #include "script_table.h"
 #include "../sta_local_def.h"
 #include "test/ariizumi/ari_debug.h"
@@ -32,6 +35,13 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
+typedef enum
+{
+	RMR_WAIT,	//待機
+	RMR_ACTION,	//アクション実行
+	RMR_END,	//終了
+}REPEAT_MNG_RETURN;
+
 
 //======================================================================
 //	typedef struct
@@ -40,6 +50,7 @@
 typedef struct
 {
 	//TODO 精度確保のためにfx32とかでやったほうが良いかも
+	//		現状精度確保のために毎フレーム除算してる
 	ACTING_WORK *actWork;
 	s32 start;
 	s32 end;
@@ -76,6 +87,15 @@ typedef struct
 	MOVE_WORK_VEC moveWork;
 }MOVE_LIGHT_VEC;
 
+//指定回数繰り返す時の管理
+typedef struct
+{
+	ACTING_WORK *actWork;
+	u32 step;
+	u32 interval;
+	u32 num;
+}REPEAT_MNG_WORK;
+
 //======================================================================
 //	proto
 //======================================================================
@@ -91,12 +111,19 @@ typedef struct
 //座標補完移動
 static BOOL SCRIPT_TCB_UpdateMoveS32( MOVE_WORK_S32 *moveWork , s32 *newPos );
 static BOOL SCRIPT_TCB_UpdateMoveVec( MOVE_WORK_VEC *moveWork , VecFx32 *newPos );
+static REPEAT_MNG_RETURN SCRIPT_TCB_UpdateRepeat( REPEAT_MNG_WORK *repeatWork );
 
+//移動系
 static void SCRIPT_TCB_MoveCurtainTCB(  GFL_TCB *tcb, void *work );
 static void SCRIPT_TCB_MoveStageTCB(  GFL_TCB *tcb, void *work );
 static void SCRIPT_TCB_MovePokeTCB(  GFL_TCB *tcb, void *work );
 static void SCRIPT_TCB_MoveObjTCB(  GFL_TCB *tcb, void *work );
 static void SCRIPT_TCB_MoveLightTCB(  GFL_TCB *tcb, void *work );
+
+//アクション系
+static void SCRIPT_TCB_PokeAct_Jump(  GFL_TCB *tcb, void *work );
+
+static void SCRIPT_TCB_EffectRepeat(  GFL_TCB *tcb, void *work );
 
 //------------------------------------------------------------------
 //	汎用関数
@@ -135,6 +162,27 @@ static BOOL SCRIPT_TCB_UpdateMoveVec( MOVE_WORK_VEC *moveWork , VecFx32 *newPos 
 					 &moveWork->start , newPos );
 		return FALSE;
 	}
+}
+
+static REPEAT_MNG_RETURN SCRIPT_TCB_UpdateRepeat( REPEAT_MNG_WORK *repeatWork )
+{
+	repeatWork->step++;
+	
+	if( repeatWork->step >= repeatWork->interval )
+	{
+		repeatWork->num--;
+		repeatWork->step = 0;
+
+		if( repeatWork->num <= 0 )
+		{
+			return RMR_END;
+		}
+		else
+		{
+			return RMR_ACTION;
+		}
+	}
+	return RMR_WAIT;
 }
 
 
@@ -261,6 +309,7 @@ static void SCRIPT_TCB_MoveCurtainTCB(  GFL_TCB *tcb, void *work )
 	STA_ACT_SetCurtainHeight( moveWork->actWork , newPos);
 	if( isFinish == TRUE )
 	{
+		GFL_HEAP_FreeMemory( work );
 		GFL_TCB_DeleteTask( tcb );
 	}
 }
@@ -293,7 +342,8 @@ SCRIPT_FUNC_DEF( StageMove )
 	
 		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveStageTCB , (void*)moveWork , 10 );
 	}
-		SCRIPT_PRINT_LABEL(StageMove);
+
+	SCRIPT_PRINT_LABEL(StageMove);
 	return SFT_CONTINUE;
 }
 
@@ -309,8 +359,20 @@ static void SCRIPT_TCB_MoveStageTCB(  GFL_TCB *tcb, void *work )
 	STA_ACT_SetStageScroll( moveWork->actWork , newPos);
 	if( isFinish == TRUE )
 	{
+		GFL_HEAP_FreeMemory( work );
 		GFL_TCB_DeleteTask( tcb );
 	}
+}
+
+//BG読み替え
+SCRIPT_FUNC_DEF( StageChangeBg )
+{
+	const s32 bgNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	
+	STA_ACT_LoadBg( work->actWork , bgNo );
+
+	SCRIPT_PRINT_LABEL(StageChangeBg);
+	return SFT_CONTINUE;
 }
 
 //------------------------------------------------------------------
@@ -401,6 +463,7 @@ static void SCRIPT_TCB_MovePokeTCB(  GFL_TCB *tcb, void *work )
 	
 	if( isFinish == TRUE )
 	{
+		GFL_HEAP_FreeMemory( work );
 		GFL_TCB_DeleteTask( tcb );
 	}
 }
@@ -446,6 +509,68 @@ SCRIPT_FUNC_DEF( PokeChangeAnime )
 
 	SCRIPT_PRINT_LABEL(PokeChangeAnime);
 	return SFT_CONTINUE;
+}
+
+#pragma mark [>PokemonAction
+//ポケモンアクション・跳ねる
+typedef struct
+{
+	REPEAT_MNG_WORK repeatWork;
+	STA_POKE_WORK *pokeWork;
+	
+	fx32	height;
+}POKE_ACT_JUMP_WORK;
+
+SCRIPT_FUNC_DEF( PokeActionJump )
+{
+	const s32 pokeNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const s32 interval = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const s32 num = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	const fx32 height = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+
+	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
+	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+	POKE_ACT_JUMP_WORK	*jumpWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(POKE_ACT_JUMP_WORK));
+	
+	jumpWork->pokeWork = pokeWork;
+	jumpWork->height = height;
+	
+	jumpWork->repeatWork.actWork = work->actWork;
+	jumpWork->repeatWork.step = 0;
+	jumpWork->repeatWork.interval = interval;
+	jumpWork->repeatWork.num = num;
+	
+	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_PokeAct_Jump , (void*)jumpWork , 10 );
+
+	SCRIPT_PRINT_LABEL(PokeActionJump);
+	return SFT_CONTINUE;
+
+}
+
+//ポケモンアクション　ジャンプ制御
+static void SCRIPT_TCB_PokeAct_Jump(  GFL_TCB *tcb, void *work )
+{
+	POKE_ACT_JUMP_WORK *jumpWork = (POKE_ACT_JUMP_WORK*)work;
+	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( jumpWork->repeatWork.actWork );
+	
+	const REPEAT_MNG_RETURN ret = SCRIPT_TCB_UpdateRepeat( &jumpWork->repeatWork );
+	if( ret == RMR_END )
+	{
+		GFL_HEAP_FreeMemory( work );
+		GFL_TCB_DeleteTask( tcb );
+		return;
+	}
+	else
+	{
+		VecFx32 ofs;
+		
+		ofs.x = 0;
+		ofs.y = -FX_Mul(FX_SinIdx( 0x8000 * jumpWork->repeatWork.step / jumpWork->repeatWork.interval ) , jumpWork->height );
+		ofs.z = 0;
+		
+		STA_POKE_SetPositionOffset( pokeSys , jumpWork->pokeWork , &ofs );
+		
+	}
 }
 
 //------------------------------------------------------------------
@@ -566,7 +691,147 @@ static void SCRIPT_TCB_MoveObjTCB(  GFL_TCB *tcb, void *work )
 	
 	if( isFinish == TRUE )
 	{
+		GFL_HEAP_FreeMemory( work );
 		GFL_TCB_DeleteTask( tcb );
+	}
+}
+
+//------------------------------------------------------------------
+//	エフェクト
+//------------------------------------------------------------------
+#pragma mark [>Effect
+//エフェクト作成
+SCRIPT_FUNC_DEF( EffectCreate )
+{
+	const s32 effectNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const s32 fileNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	
+	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
+	STA_EFF_WORK *effWork = STA_EFF_CreateEffect( effSys , NARC_stage_gra_mus_eff_00_spa + fileNo );
+
+	STA_ACT_SetEffectWork( work->actWork , effWork , effectNo );
+
+	SCRIPT_PRINT_LABEL(EffectCreate);
+	return SFT_CONTINUE;
+}
+
+//エフェクト破棄
+SCRIPT_FUNC_DEF( EffectDelete )
+{
+	const s32 effectNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	
+	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
+	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
+	
+	STA_EFF_DeleteEffect( effSys , effWork );
+
+	SCRIPT_PRINT_LABEL(EffectDelete);
+	return SFT_CONTINUE;
+}
+
+//エフェクト再生
+SCRIPT_FUNC_DEF( EffectStart )
+{
+	const s32 effectNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const s32 emiterNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const fx32 posX = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	const fx32 posY = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	const fx32 posZ = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	VecFx32	pos;
+
+//	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
+	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
+
+	VEC_Set( &pos , ACT_POS_X_FX(posX),ACT_POS_Y_FX(posY),posZ );
+	STA_EFF_CreateEmitter( effWork , emiterNo , &pos );
+
+	SCRIPT_PRINT_LABEL(EffectStart);
+	return SFT_CONTINUE;
+}
+
+//エフェクト停止
+SCRIPT_FUNC_DEF( EffectStop )
+{
+	const s32 effectNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const s32 emiterNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+
+//	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
+	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
+
+	STA_EFF_DeleteEmitter( effWork , emiterNo );
+
+	SCRIPT_PRINT_LABEL(EffectStop);
+	return SFT_CONTINUE;
+}
+
+//エフェクト連続再生
+typedef struct
+{
+	REPEAT_MNG_WORK repeatWork;
+	STA_EFF_WORK	*effWork;
+	VecFx32 pos;
+	VecFx32 range;
+	u16	emitNo;
+}EFFECT_REPEAT_WORK;
+
+SCRIPT_FUNC_DEF( EffectRepeatStart )
+{
+	const s32 effectNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const s32 emiterNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const s32 interval = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const s32 num = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	const fx32 posXStart = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	const fx32 posXEnd = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	const fx32 posYStart = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	const fx32 posYEnd = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	const fx32 posZStart = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	const fx32 posZEnd = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	
+//	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
+	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
+	
+	EFFECT_REPEAT_WORK *effRepeat = GFL_HEAP_AllocMemory( work->heapId , sizeof(EFFECT_REPEAT_WORK));
+	
+	GF_ASSERT( posXStart <= posXEnd );
+	GF_ASSERT( posYStart <= posYEnd );
+	GF_ASSERT( posZStart <= posZEnd );
+
+	effRepeat->effWork = effWork;
+	effRepeat->emitNo = emiterNo;
+	VEC_Set( &effRepeat->pos , posXStart,posYStart,posZStart );
+	VEC_Set( &effRepeat->range , posXEnd-posXStart,posYEnd-posYStart,posZEnd-posZStart );
+	
+	effRepeat->repeatWork.actWork = work->actWork;
+	effRepeat->repeatWork.step = 0;
+	effRepeat->repeatWork.interval = interval;
+	effRepeat->repeatWork.num = num;
+
+	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_EffectRepeat , (void*)effRepeat , 10 );
+
+	SCRIPT_PRINT_LABEL(EffectRepeatStart);
+	return SFT_CONTINUE;
+}
+//エフェクト連続再生制御
+static void SCRIPT_TCB_EffectRepeat(  GFL_TCB *tcb, void *work )
+{
+	EFFECT_REPEAT_WORK *effRepeat = (EFFECT_REPEAT_WORK*)work;
+//	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
+	
+	const REPEAT_MNG_RETURN ret = SCRIPT_TCB_UpdateRepeat( &effRepeat->repeatWork );
+	if( ret == RMR_END )
+	{
+		GFL_HEAP_FreeMemory( work );
+		GFL_TCB_DeleteTask( tcb );
+		return;
+	}
+	else if( ret == RMR_ACTION )
+	{
+		VecFx32 pos;
+		pos.x = ACT_POS_X_FX(effRepeat->pos.x + GFL_STD_MtRand0( effRepeat->range.x ));
+		pos.y = ACT_POS_Y_FX(effRepeat->pos.y + GFL_STD_MtRand0( effRepeat->range.y ));
+		pos.z = effRepeat->pos.z + GFL_STD_MtRand0( effRepeat->range.z );
+
+		STA_EFF_CreateEmitter( effRepeat->effWork , effRepeat->emitNo , &pos );
 	}
 }
 
@@ -684,6 +949,7 @@ static void SCRIPT_TCB_MoveLightTCB(  GFL_TCB *tcb, void *work )
 	
 	if( isFinish == TRUE )
 	{
+		GFL_HEAP_FreeMemory( work );
 		GFL_TCB_DeleteTask( tcb );
 	}
 }
@@ -729,6 +995,18 @@ SCRIPT_FUNC_DEF( MessageHide )
 	
 	STA_ACT_HideMessage( work->actWork );
 	SCRIPT_PRINT_LABEL(MessageHide);
+	return SFT_CONTINUE;
+}
+
+//メッセージ消去
+SCRIPT_FUNC_DEF( MessageColor )
+{
+	const s32 msgCol = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const s32 shadowCol = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	const s32 backNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	GFL_FONTSYS_SetColor( msgCol,shadowCol,backNo );
+
+	SCRIPT_PRINT_LABEL(MessageColor);
 	return SFT_CONTINUE;
 }
 

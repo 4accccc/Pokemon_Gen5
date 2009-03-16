@@ -34,6 +34,7 @@
 #include "sta_act_poke.h"
 #include "sta_act_obj.h"
 #include "sta_act_light.h"
+#include "sta_act_bg.h"
 #include "script/sta_act_script.h"
 
 #include "eff_def/mus_eff.h"
@@ -83,11 +84,15 @@ struct _ACTING_WORK
 	u16		scrollOffset;
 	u16		makuOffset;
 	
+	GFL_TCB		*vblankFuncTcb;
+
 	ACTING_INIT_WORK *initWork;
 
 	MUS_POKE_DRAW_SYSTEM	*drawSys;
 	MUS_ITEM_DRAW_SYSTEM	*itemDrawSys;
 	
+	STA_BG_SYS			*bgSys;
+
 	STA_POKE_SYS		*pokeSys;
 	STA_POKE_WORK		*pokeWork[MUSICAL_POKE_MAX];
 	
@@ -120,6 +125,7 @@ struct _ACTING_WORK
 ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork );
 void	STA_ACT_TermActing( ACTING_WORK *work );
 ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work );
+static void STA_ACT_VBlankFunc(GFL_TCB *tcb,void *work);
 
 static void STA_ACT_SetupGraphic( ACTING_WORK *work );
 static void STA_ACT_SetupBg( ACTING_WORK *work );
@@ -174,6 +180,9 @@ ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
 	work->updateScroll = FALSE;
 	work->scrollOffset = 0;
 	work->makuOffset = 0;
+
+	work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
+
 	STA_ACT_SetupGraphic( work );
 	STA_ACT_SetupBg( work );
 	STA_ACT_SetupMessage( work);
@@ -214,6 +223,7 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 	GFL_FONT_Delete( work->fontHandle );
 	GFL_TCBL_Exit( work->tcblSys );
 	
+	STA_BG_ExitSystem( work->bgSys );
 	STA_LIGHT_ExitSystem( work->lightSys );
 	STA_EFF_ExitSystem( work->effSys );
 	STA_OBJ_ExitSystem( work->objSys );
@@ -222,9 +232,12 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 	MUS_POKE_DRAW_TermSystem( work->drawSys );
 	MUS_ITEM_DRAW_TermSystem( work->itemDrawSys );
 
+	GFL_CLACT_SYS_Delete();
+
 	GFL_BBD_DeleteSys( work->bbdSys );
 	GFL_G3D_CAMERA_Delete( work->camera );
 	GFL_G3D_Exit();
+
 	GFL_BG_FreeBGControl( ACT_FRAME_MAIN_3D );
 	GFL_BG_FreeBGControl( ACT_FRAME_MAIN_FONT );
 	GFL_BG_FreeBGControl( ACT_FRAME_MAIN_CURTAIN );
@@ -234,6 +247,8 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();
 
+	GFL_TCB_DeleteTask( work->vblankFuncTcb );
+
 	GFL_HEAP_FreeMemory( work );
 	
 }
@@ -241,17 +256,37 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 {
 #if DEB_ARI
-	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_R &&
-		(GFL_UI_KEY_GetCont() & PAD_BUTTON_L) == 0)
+	if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
 	{
-		VecFx32 pos = {ACT_POS_X(128.0f),ACT_POS_X(96.0f),FX32_CONST(190.0f)};
-		STA_EFF_CreateEmmitter( work->effWork[0] , MUS_EFF_00_OP_TITLE01 , &pos );
-		STA_EFF_CreateEmmitter( work->effWork[1] , MUS_EFF_01_OP_DEMOBG2_BUBBLE1 , &pos );
+		if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		{
+			
+			//演劇風
+			STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData );
+		}
+		if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+		{
+			//ミュージカル風
+			STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData2 );
+		}
+		if(	(GFL_UI_KEY_GetCont() & PAD_BUTTON_L) && 
+			GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+		{
+			STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestDataAri );
+		}
 	}
-	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
 	{
-		STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData );
+		
+		//演劇風
+		G3X_EdgeMarking( TRUE );
 	}
+	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+	{
+		//ミュージカル風
+		G3X_EdgeMarking( FALSE );
+	}
+
 
 #endif
 
@@ -265,6 +300,7 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 	{
 		STA_SCRIPT_UpdateSystem( work->scriptSys );
 
+		STA_BG_UpdateSystem( work->bgSys );
 		STA_POKE_UpdateSystem( work->pokeSys );
 		STA_OBJ_UpdateSystem( work->objSys );
 		STA_EFF_UpdateSystem( work->effSys );
@@ -276,19 +312,24 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 		STA_LIGHT_UpdateSystem( work->lightSys );
 	}
 
+
 	//3D描画	
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
 	{
 		STA_LIGHT_DrawSystem( work->lightSys );
-//		STA_POKE_DrawSystem( work->pokeSys );
+		STA_POKE_DrawSystem( work->pokeSys );
 		MUS_POKE_DRAW_DrawSystem( work->drawSys ); 
 //		STA_OBJ_DrawSystem( work->objSys );
 		STA_POKE_UpdateSystem_Item( work->pokeSys );	//ポケの描画後に入れること
+		STA_BG_DrawSystem( work->bgSys );
 		GFL_BBD_Draw( work->bbdSys , work->camera , NULL );
 		STA_EFF_DrawSystem( work->effSys );
+
 	}
 	GFL_G3D_DRAW_End();
+	//OBJの更新
+	GFL_CLACT_SYS_Main();
 
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
 		GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
@@ -299,6 +340,13 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 	return ACT_RET_CONTINUE;
 }
 
+//------------------------------------------------------------------
+//	VBLank Function
+//------------------------------------------------------------------
+static void STA_ACT_VBlankFunc(GFL_TCB *tcb,void *work)
+{
+	GFL_CLACT_SYS_VBlankFunc();
+}
 
 //--------------------------------------------------------------
 //	描画系初期化
@@ -430,13 +478,26 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
 			GX_RGB(0,0,0),
 			GX_RGB(0,0,0),
 			GX_RGB(0,0,0),
-			0
+			ACT_POLYID_SHADOW	//影用の
 		};
+		VecFx32 scale ={FX32_ONE*4,FX32_ONE*4,FX32_ONE};
 		//ビルボードシステム構築
 		work->bbdSys = GFL_BBD_CreateSys( &bbdSetup , work->heapId );
+		//背景のために全体を４倍する
+		GFL_BBD_SetScale( work->bbdSys , &scale );
 	}
 	
-	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_BG3 , 31 , 31 );
+	//ライト用OBJ
+	{
+		GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
+		cellSysInitData.oamst_main = 0x10;	//デバッグメータの分
+		cellSysInitData.oamnum_main = 128-0x10;
+		GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
+		
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+	}
+	
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ , GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG3 , 4 , 31 );
 }
 
 //--------------------------------------------------------------
@@ -445,14 +506,14 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
 static void STA_ACT_SetupBg( ACTING_WORK *work )
 {
 	ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
-
-	GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_stage_bg00_NCLR , 
+/*
+	GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_stage_bg01_NCLR , 
 										PALTYPE_MAIN_BG_EX , 0x6000 , 0 , work->heapId );
-	GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_stage_bg00_NCGR ,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_stage_bg01_NCGR ,
 										ACT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
-	GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_stage_bg_NSCR , 
+	GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_stage_bg01_NSCR , 
 										ACT_FRAME_MAIN_BG ,  0 , 0, FALSE , work->heapId );
-
+*/
 	GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_maku_NCLR , 
 										PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_maku_NCGR ,
@@ -471,6 +532,26 @@ static void STA_ACT_SetupBg( ACTING_WORK *work )
 
 	GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_BG);
 	GFL_BG_LoadScreenReq(ACT_FRAME_SUB_BG);
+	
+	work->bgSys = STA_BG_InitSystem( work->heapId , work );
+
+}
+
+void	STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo )
+{
+/*
+	ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
+	GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_stage_bg00_NCLR + bgNo, 
+										PALTYPE_MAIN_BG_EX , 0x6000 , 0 , work->heapId );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_stage_bg00_NCGR  + bgNo,
+										ACT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
+	GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_stage_bg00_NSCR  + bgNo, 
+										ACT_FRAME_MAIN_BG ,  0 , 0, FALSE , work->heapId );
+	GFL_ARC_CloseDataHandle(arcHandle);
+	GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_BG);
+*/
+
+	STA_BG_CreateBg( work->bgSys , ARCID_STAGE_GRA , NARC_stage_gra_back_00_nsbtx + bgNo );
 
 }
 
@@ -497,7 +578,7 @@ static void STA_ACT_SetupPokemon( ACTING_WORK *work )
 	work->drawSys = MUS_POKE_DRAW_InitSystem( work->heapId );
 	work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , MUSICAL_POKE_MAX*MUS_POKE_EQUIP_MAX, work->heapId );
 	
-	work->pokeSys = STA_POKE_InitSystem( work->heapId , work->drawSys , work->itemDrawSys );
+	work->pokeSys = STA_POKE_InitSystem( work->heapId , work->drawSys , work->itemDrawSys , work->bbdSys );
 
 	for( i=0;i<MUSICAL_POKE_MAX;i++ )
 	{
@@ -531,7 +612,7 @@ static void STA_ACT_SetupItem( ACTING_WORK *work )
 	//背景Obj
 	{
 		work->objSys = STA_OBJ_InitSystem( work->heapId , work->bbdSys );
-
+/*
 		pos.x = FX32_CONST( 64.0f );
 		pos.y = FX32_CONST( 96.0f );
 		pos.z = FX32_CONST( 50.0f);
@@ -549,6 +630,7 @@ static void STA_ACT_SetupItem( ACTING_WORK *work )
 		pos.z = FX32_CONST( 180.0f );
 		work->objWork[2] = STA_OBJ_CreateObject( work->objSys , 1 );
 		STA_OBJ_SetPosition( work->objSys , work->objWork[2] , &pos );
+*/
 	}
 
 
@@ -564,8 +646,8 @@ static void STA_ACT_SetupEffect( ACTING_WORK *work )
 		work->effWork[i] = NULL;
 	}
 
-	work->effWork[0] = STA_EFF_CreateEffect( work->effSys , NARC_stage_gra_mus_eff_00_spa );
-	work->effWork[1] = STA_EFF_CreateEffect( work->effSys , NARC_stage_gra_mus_eff_01_spa );
+//	work->effWork[0] = STA_EFF_CreateEffect( work->effSys , NARC_stage_gra_mus_eff_00_spa );
+//	work->effWork[1] = STA_EFF_CreateEffect( work->effSys , NARC_stage_gra_mus_eff_01_spa );
 }
 
 static void STA_ACT_UpdateScroll( ACTING_WORK *work )
@@ -601,8 +683,9 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 	
 	if( work->updateScroll == TRUE )
 	{
-		GFL_BG_SetScroll( ACT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , work->scrollOffset );
+		//GFL_BG_SetScroll( ACT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , work->scrollOffset );
 		GFL_BG_SetScroll( ACT_FRAME_MAIN_CURTAIN , GFL_BG_SCROLL_X_SET , work->scrollOffset );
+		STA_BG_SetScrollOffset( work->bgSys , work->scrollOffset );
 		STA_POKE_System_SetScrollOffset( work->pokeSys , work->scrollOffset ); 
 		STA_OBJ_System_SetScrollOffset( work->objSys , work->scrollOffset ); 
 	}
@@ -691,7 +774,6 @@ void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd 
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
 		
 		GFL_MSG_GetString( work->msgHandle , msgNo , str );
-		GFL_FONTSYS_SetColor( 15,0,0 );
 		work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, str ,work->fontHandle ,
 												msgSpd , work->tcblSys , 2 , work->heapId , 0 );
 		GFL_STR_DeleteBuffer( str );

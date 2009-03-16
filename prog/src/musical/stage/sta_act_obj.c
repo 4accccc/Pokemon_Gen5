@@ -176,7 +176,7 @@ STA_OBJ_WORK* STA_OBJ_CreateObject( STA_OBJ_SYS *work , const u16 objId )
 	objWork->resIdx = GFL_BBD_AddResourceArc( work->bbdSys , ARCID_STAGE_GRA , 
 											NARC_stage_gra_stage_ojb01_nsbtx + objId , GFL_BBD_TEXFMT_PAL256 ,
 											GFL_BBD_TEXSIZ_128x128 , 128 , 128 );
-	objWork->bbdIdx = GFL_BBD_AddObject( work->bbdSys , objWork->resIdx , FX16_CONST(4.0f) , FX16_CONST(4.0f) , 
+	objWork->bbdIdx = GFL_BBD_AddObject( work->bbdSys , objWork->resIdx , ACT_BBD_SIZE(128.0f) , ACT_BBD_SIZE(128.0f) , 
 										&objWork->pos , 31 , GFL_BBD_LIGHT_NONE );
 	GFL_BBD_SetObjectDrawEnable( work->bbdSys , objWork->bbdIdx , &flg );
 

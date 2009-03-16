@@ -11,6 +11,7 @@ SCRIPT_FUNC_DEF( CurtainMove )	//2	//カーテンを移動させる
 
 //舞台系
 SCRIPT_FUNC_DEF( StageMove )	//2	//ステージを移動させる
+SCRIPT_FUNC_DEF( StageChangeBg )//1	//BG読み替え
 
 //ポケモン系
 SCRIPT_FUNC_DEF( PokeShow )		//2	//ポケモンの表示・非表示制御
@@ -19,6 +20,7 @@ SCRIPT_FUNC_DEF( PokeMove )		//5	//ポケモン移動
 SCRIPT_FUNC_DEF( PokeStopAnime )	//1	//ポケモンアニメ停止
 SCRIPT_FUNC_DEF( PokeStartAnime )	//1	//ポケモンアニメ開始
 SCRIPT_FUNC_DEF( PokeChangeAnime )	//2	//ポケモンアニメ変更
+SCRIPT_FUNC_DEF( PokeActionJump )	//4	//ポケモンアクション・跳ねる
 
 //オブジェクト系
 SCRIPT_FUNC_DEF( ObjectCreate )		//2	//オブジェクト作成
@@ -26,6 +28,13 @@ SCRIPT_FUNC_DEF( ObjectDelete )		//1	//オブジェクト破棄
 SCRIPT_FUNC_DEF( ObjectShow )		//1	//オブジェクト表示
 SCRIPT_FUNC_DEF( ObjectHide )		//1	//オブジェクト非表示
 SCRIPT_FUNC_DEF( ObjectMove )		//5	//ポケモン移動
+
+//エフェクト系
+SCRIPT_FUNC_DEF( EffectCreate )		//2	//エフェクト作成
+SCRIPT_FUNC_DEF( EffectDelete )		//1	//エフェクト破棄
+SCRIPT_FUNC_DEF( EffectStart )		//5	//エフェクト再生
+SCRIPT_FUNC_DEF( EffectStop )		//2	//エフェクト停止
+SCRIPT_FUNC_DEF( EffectRepeatStart )//10//エフェクト連続再生
 
 //ライト系
 SCRIPT_FUNC_DEF( LightShowCircle )	//2	//ライトON(円形
@@ -37,4 +46,5 @@ SCRIPT_FUNC_DEF( LightColor )		//3	//ライト色設定
 //メッセージ系
 SCRIPT_FUNC_DEF( MessageShow )		//2	//メッセージ表示
 SCRIPT_FUNC_DEF( MessageHide )			//メッセージ消去
+SCRIPT_FUNC_DEF( MessageColor )		//1	//メッセージ色変え
 

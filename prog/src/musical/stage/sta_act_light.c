@@ -10,6 +10,9 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 
+#include "arc_def.h"
+#include "stage_gra.naix"
+
 #include "sta_acting.h"
 #include "sta_local_def.h"
 #include "sta_act_light.h"
@@ -45,6 +48,9 @@ struct _STA_LIGHT_WORK
 	VecFx32	pos;
 	fx32	val1;	//”¼Œa or ã‚Ì•(”¼•ª
 	fx32	val2;	//–³Œø or ‰º‚Ì•(”¼•ª
+	
+	GFL_CLWK	*lightCell;
+
 };
 
 struct _STA_LIGHT_SYS
@@ -54,6 +60,10 @@ struct _STA_LIGHT_SYS
 
 	STA_LIGHT_WORK	lightWork[ACT_LIGHT_MAX];
 	
+	GFL_CLUNIT	*cellUnit;
+	u32	pltIdx;
+	u32	ncgIdx;
+	u32	anmIdx;
 };
 
 //======================================================================
@@ -81,11 +91,32 @@ STA_LIGHT_SYS* STA_LIGHT_InitSystem( HEAPID heapId , ACTING_WORK* actWork )
 		work->lightWork[i].type = ALT_NONE;
 	}
 	
+	//OBJ—p
+	work->cellUnit  = GFL_CLACT_UNIT_Create( ACT_LIGHT_MAX , 0, work->heapId );
+	GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
+
+	//ŠeŽí‘fÞ‚Ì“Ç‚Ýž‚Ý
+	{
+		ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
+	
+		work->pltIdx = GFL_CLGRP_PLTT_Register( arcHandle , NARC_stage_gra_spotlight_NCLR , CLSYS_DRAW_MAIN , 0 , work->heapId  );
+		work->ncgIdx = GFL_CLGRP_CGR_Register( arcHandle , NARC_stage_gra_spotlight_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+		work->anmIdx = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_stage_gra_spotlight_NCER , NARC_stage_gra_spotlight_NANR, work->heapId  );
+	
+		GFL_ARC_CloseDataHandle(arcHandle);
+	}
+	
 	return work;
 }
 
 void	STA_LIGHT_ExitSystem( STA_LIGHT_SYS *work )
 {
+		
+	GFL_CLGRP_PLTT_Release( work->pltIdx );
+	GFL_CLGRP_CGR_Release( work->ncgIdx );
+	GFL_CLGRP_CELLANIM_Release( work->anmIdx );
+	
+	GFL_CLACT_UNIT_Delete( work->cellUnit );
 	GFL_HEAP_FreeMemory( work );
 }
 
@@ -94,7 +125,7 @@ void	STA_LIGHT_UpdateSystem( STA_LIGHT_SYS *work )
 	int idx;
 	for( idx=0 ; idx<ACT_LIGHT_MAX ; idx++ )
 	{
-		if( work->lightWork[idx].type == ALT_NONE )
+		if( work->lightWork[idx].type != ALT_NONE )
 		{
 			STA_LIGHT_UpdateObjFunc( work,&work->lightWork[idx] );
 		}
@@ -103,6 +134,14 @@ void	STA_LIGHT_UpdateSystem( STA_LIGHT_SYS *work )
 
 static void STA_LIGHT_UpdateObjFunc( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWork )
 {
+	const u16 scrOfs = STA_ACT_GetStageScroll( work->actWork );
+	if( lightWork->type == ALT_CIRCLE )
+	{
+		GFL_CLACTPOS cellPos;
+		cellPos.x = F32_CONST( lightWork->pos.x ) - scrOfs;
+		cellPos.y = F32_CONST( lightWork->pos.y );
+		GFL_CLACT_WK_SetPos( lightWork->lightCell , &cellPos , CLSYS_DEFREND_MAIN );
+	}
 }
 
 void	STA_LIGHT_DrawSystem( STA_LIGHT_SYS *work )
@@ -110,6 +149,7 @@ void	STA_LIGHT_DrawSystem( STA_LIGHT_SYS *work )
 	u8 i;
 	for( i=0;i<ACT_LIGHT_MAX;i++ )
 	{
+		/*
 		switch( work->lightWork[i].type )
 		{
 		case ALT_CIRCLE:
@@ -119,6 +159,7 @@ void	STA_LIGHT_DrawSystem( STA_LIGHT_SYS *work )
 			STA_LIGHT_DrawShines( work , &work->lightWork[i] );
 			break;
 		}
+		*/
 	}
 }
 
@@ -133,10 +174,10 @@ static void STA_LIGHT_DrawCircle( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWor
 	G3_PushMtx();
 	G3_PolygonAttr(GX_LIGHTMASK_NONE,  // no lights
 				   GX_POLYGONMODE_MODULATE, 	// modulation mode
-				   GX_CULL_NONE,	   // cull none
-				   0,				   // polygon ID(0 - 63)
-				   lightWork->alpha,	   // alpha(0 - 31)
-				   GX_POLYGON_ATTR_MISC_XLU_DEPTH_UPDATE				   // OR of GXPolygonAttrMisc's value
+				   GX_CULL_NONE,		// cull none
+				   ACT_POLYID_LIGHT,	// polygon ID(0 - 63)
+				   lightWork->alpha,	// alpha(0 - 31)
+				   0// OR of GXPolygonAttrMisc's value
 		);
 
 	G3_Translate( 0,0,FX32_CONST(199.0f));
@@ -144,7 +185,7 @@ static void STA_LIGHT_DrawCircle( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWor
 	G3_Begin(GX_BEGIN_TRIANGLES);
 	{
 		G3_Color(lightWork->color);
-		for( i=0;i<0x10000;i+=0x800)
+		for( i=0;i<0x10000;i+=add)
 		{
 			G3_Vtx(STA_LIGHT_POS_X(posX),STA_LIGHT_POS_Y(lightWork->pos.y),0);
 			G3_Vtx(	STA_LIGHT_POS_X(posX) + FX_Mul(FX_SinIdx((u16)i),rad) ,
@@ -168,9 +209,9 @@ static void STA_LIGHT_DrawShines( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWor
 	G3_PolygonAttr(GX_LIGHTMASK_NONE,	// no lights
 				   GX_POLYGONMODE_MODULATE, 	// modulation mode
 				   GX_CULL_NONE,		// cull none
-				   0,					// polygon ID(0 - 63)
+				   ACT_POLYID_LIGHT,	// polygon ID(0 - 63)
 				   lightWork->alpha,	// alpha(0 - 31)
-				   GX_POLYGON_ATTR_MISC_XLU_DEPTH_UPDATE	// OR of GXPolygonAttrMisc's value
+				   0// OR of GXPolygonAttrMisc's value
 		);
 
 	G3_Translate( 0,0,FX32_CONST(199.0f));
@@ -192,6 +233,7 @@ STA_LIGHT_WORK* STA_LIGHT_CreateObject( STA_LIGHT_SYS *work , const STA_LIGHT_TY
 	u8 idx;
 	STA_LIGHT_WORK *lightWork;
 	const BOOL flg = TRUE;
+	GFL_CLWK_DATA	cellInitData;
 	
 	for( idx=0 ; idx<ACT_LIGHT_MAX ; idx++ )
 	{
@@ -206,10 +248,22 @@ STA_LIGHT_WORK* STA_LIGHT_CreateObject( STA_LIGHT_SYS *work , const STA_LIGHT_TY
 
 	lightWork->type = type;
 
+	//ƒZƒ‹‚Ì¶¬
+
+	cellInitData.pos_x = 128;
+	cellInitData.pos_y =  96;
+	cellInitData.anmseq = 0;
+	cellInitData.softpri = 0;
+	cellInitData.bgpri = 2;
+	lightWork->lightCell = GFL_CLACT_WK_Create( work->cellUnit ,work->ncgIdx,work->pltIdx,work->anmIdx,
+						 		&cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+	GFL_CLACT_WK_SetDrawEnable( lightWork->lightCell, TRUE );
+
 	return lightWork;
 }
 void STA_LIGHT_DeleteObject( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWork )
 {
+	GFL_CLACT_WK_Remove( lightWork->lightCell );
 	lightWork->type = ALT_NONE;
 }
 

@@ -15,6 +15,10 @@
 #define ACT_POS_X_FX(val)	((val)/16)
 #define ACT_POS_Y_FX(val)	(FX32_CONST(192.0f)-(val))/16
 
+//BBD用サイズ変換
+//BBDが32を単位としてサイズを測る。しかも背景表示のために全体を４ばいしているので
+#define ACT_BBD_SIZE(val) FX16_CONST( val/32.0f/4.0f )
+
 //オブジェクト関係
 #define ACT_OBJECT_MAX (5)
 
@@ -22,8 +26,12 @@
 #define ACT_EFFECT_MAX (3)
 
 //スポットライト関係
-#define ACT_LIGHT_MAX	(2)
+#define ACT_LIGHT_MAX	(4)
 
+//3D関係(ポリゴンID
+#define ACT_POLYID_LIGHT (4)
+#define ACT_POLYID_SHADOW (3)
+//エフェクトは5～63
 
 //幕関係
 #define ACT_CURTAIN_SCROLL_SPEED (2)

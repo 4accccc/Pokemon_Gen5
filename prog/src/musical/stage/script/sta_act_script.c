@@ -143,3 +143,16 @@ static BOOL STA_SCRIPT_UpdateScript( STA_SCRIPT_SYS *work , STA_SCRIPT_WORK *scr
 	return FALSE;
 }
 
+const u8 STA_SCRIPT_GetRunningScriptNum( STA_SCRIPT_SYS *work )
+{
+	u8 i;
+	u8 num = 0;
+	for( i=0;i<SCRIPT_NUM;i++ )
+	{
+		if( work->scriptWork[i] != NULL )
+		{
+			num++;
+		}
+	}
+	return num;	
+}

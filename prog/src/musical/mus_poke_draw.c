@@ -184,11 +184,11 @@ BOOL MUS_POKE_DRAW_GetShowFlg( MUS_POKE_DRAW_WORK *drawWork )
 	const int flg = MUS_MCSS_GetVanishFlag( drawWork->mcss );
 	if( flg == MUS_MCSS_VANISH_ON )
 	{
-		return TRUE;
+		return FALSE;
 	}
 	else
 	{
-		return FALSE;
+		return TRUE;
 	}
 }
 

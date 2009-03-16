@@ -26,6 +26,7 @@
 
 #define STA_EFF_TCB_TASK (4)
 #define STA_EFF_WORK_SIZE (0x2000)
+#define STA_EFF_EMITTER_NUM (4)
 
 //======================================================================
 //	enum
@@ -37,13 +38,19 @@
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
+typedef struct 
+{
+	GFL_EMIT_PTR	emitPtr;
+	VecFx32			pos;
+}STA_EMIT_WORK;
+
 struct _STA_EFF_WORK
 {
 	BOOL			isEnable;
 	u8				effWork[ PARTICLE_LIB_HEAP_SIZE ];
 //	void			*effWork;
 	GFL_PTC_PTR		ptcWork;
-	GFL_EMIT_PTR	emitter;
+	STA_EMIT_WORK	emitWork[STA_EFF_EMITTER_NUM];
 };
 
 struct _STA_EFF_SYS
@@ -126,6 +133,10 @@ STA_EFF_WORK*	STA_EFF_CreateEffect( STA_EFF_SYS *work , int fileIdx )
 	//リソースとマネージャの関連付け
 	GFL_PTC_SetResource( effWork->ptcWork , effRes , FALSE , GFUser_VIntr_GetTCBSYS() );
 	
+	for( i=0;i<STA_EFF_EMITTER_NUM;i++ )
+	{
+		effWork->emitWork[i].emitPtr = NULL;
+	}
 	effWork->isEnable = TRUE;
 	
 	return effWork;
@@ -138,8 +149,27 @@ void	STA_EFF_DeleteEffect( STA_EFF_SYS *work , STA_EFF_WORK *effWork )
 	GFL_PTC_Delete( effWork->ptcWork );
 }
 
-void	STA_EFF_CreateEmmitter( STA_EFF_WORK *effWork , u16 emmitNo , VecFx32 *pos )
+void	STA_EFF_CreateEmitter( STA_EFF_WORK *effWork , const u16 emitNo , VecFx32 *pos )
 {
-	GFL_PTC_CreateEmitter( effWork->ptcWork , emmitNo , pos );
+	const GFL_EMIT_PTR emitPtr = GFL_PTC_CreateEmitter( effWork->ptcWork , emitNo , pos );
+	if( emitPtr != NULL && emitNo >= STA_EFF_EMITTER_NUM )
+	{
+		GF_ASSERT_MSG( NULL , "emmiter work num is over!!\n" );
+		return;
+	}
+	effWork->emitWork[emitNo].emitPtr = emitPtr;
+	VEC_Set( &effWork->emitWork[emitNo].pos , pos->x,pos->y,pos->z );
 	
+}
+
+void	STA_EFF_DeleteEmitter( STA_EFF_WORK *effWork , const u16 emitNo )
+{
+	if( effWork->emitWork[emitNo].emitPtr != NULL )
+	{
+		GFL_PTC_DeleteEmitter( effWork->ptcWork , effWork->emitWork[emitNo].emitPtr );
+	}
+	else
+	{
+		OS_TPrintf("Stage effect emitter[%d] is NULL!!\n",emitNo);
+	}
 }

@@ -36,4 +36,7 @@ void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work );
 
 void STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData );
 
+const u8 STA_SCRIPT_GetRunningScriptNum( STA_SCRIPT_SYS *work );
+
+
 #endif //STA_ACT_SCRIPT_H__
