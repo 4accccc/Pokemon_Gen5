@@ -11,7 +11,7 @@
 #define __WAZADATA_H__
 
 #include "poke_tool/poketype.h"
-
+#include "battle/battle.h"
 
 typedef  unsigned short  WazaID;
 
@@ -33,6 +33,7 @@ typedef enum {
 	WAZADATA_CATEGORY_ICHIGEKI,
 	WAZADATA_CATEGORY_BIND,
 	WAZADATA_CATEGORY_GUARD,
+	WAZADATA_CATEGORY_WEATHER,
 	WAZADATA_CATEGORY_FIELD_EFFECT,
 	WAZADATA_CATEGORY_SIDE_EFFECT,
 	WAZADATA_CATEGORY_OTHERS,
@@ -192,6 +193,8 @@ extern u32 WAZADATA_GetSickPer( WazaID id );
 // ’Ç‰ÁŒø‰Ê‚Å‚Ð‚é‚ÞŠm—¦
 extern u32 WAZADATA_GetShrinkPer( WazaID id );
 
+// “VŒóŒø‰Ê
+extern BtlWeather WAZADATA_GetWeather( WazaID id );
 
 /*-----------------------------------------------------------------
 
