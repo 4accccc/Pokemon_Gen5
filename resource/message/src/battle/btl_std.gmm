@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-03-12T13:01:22"/>
+	<create user="taya" host="W00146" date="2009-03-16T12:52:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -435,10 +435,36 @@
 自分を　こうげきした！</language>
 	</row>
 
+	<row id="BTL_STRID_STD_ShineStart">
+		<comment>天候が変わった時のメッセージ群</comment>
+		<language name="JPN" width="216">ひざしが　つよくなった！</language>
+		<language name="JPN_KANJI" width="216">日差しが　強くなった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_RainStart">
+		<language name="JPN" width="216">あめが　ふりはじめた！</language>
+		<language name="JPN_KANJI" width="216">雨が　降り始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_StormStart">
+		<language name="JPN" width="216">すなあらしが　ふきはじめた！</language>
+		<language name="JPN_KANJI" width="216">砂あらしが　ふき始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SnowStart">
+		<language name="JPN" width="216">あられが　ふりはじめた！</language>
+		<language name="JPN_KANJI" width="216">あられが　降り始めた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_MistStart">
+		<language name="JPN" width="216">きりが　ただよいはじめた！</language>
+		<language name="JPN_KANJI" width="216">きりが　ただよいはじめた！</language>
+	</row>
+
 	<row id="BTL_STRID_STD_ShineEnd">
-		<comment>天候が元に戻った時のメッセージ群</comment>
+		<comment>天候がフラットに戻った時のメッセージ群</comment>
 		<language name="JPN" width="216">ひざしが　もとに　もどった！</language>
-		<language name="JPN_KANJI" width="216">日差しが　もとにもどった！</language>
+		<language name="JPN_KANJI" width="216">日差しが　元にもどった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_RainEnd">
@@ -462,6 +488,7 @@
 	</row>
 
 	<row id="BTL_STRID_STD_SandAttack">
+		<comment>天候による一斉ダメージ時のメッセージ群</comment>
 		<language name="JPN" width="216">すなあらしが　ふきあれる！</language>
 		<language name="JPN_KANJI" width="216">砂あらしが　ふきあれる！</language>
 	</row>
