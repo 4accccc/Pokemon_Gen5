@@ -568,7 +568,7 @@ static VMCMD_RESULT EC_SEQ_END( VMHANDLE *vmh, void *context_work )
 
 			heap = GFL_PTC_GetHeapPtr( bevw->ptc[ i ] );
 			GFL_HEAP_FreeMemory( heap );
-#ifdef PM_DEBUG
+#ifdef DEBUG_ONLY_FOR_sogabe
 			//デバッグモードのときは、専用のDelete関数を呼ぶ
 			if( bevw->debug_flag == TRUE ){
 				GFL_PTC_DeleteDebug( bevw->ptc[ i ] );
