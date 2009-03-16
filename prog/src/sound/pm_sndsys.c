@@ -357,6 +357,29 @@ void	PMSNDSYS_PauseBGM( BOOL pauseFlag )
 
 //------------------------------------------------------------------
 /**
+ * @brief	サウンドフェードイン
+ */
+//------------------------------------------------------------------
+void	PMSNDSYS_FadeInBGM( u16 frames )
+{
+	// 現在のvolumeを即時更新
+	NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, 0);
+	// 再度目標値を設定
+	NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127, frames);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	サウンドフェードアウト
+ */
+//------------------------------------------------------------------
+void	PMSNDSYS_FadeOutBGM( u16 frames )
+{
+	NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, frames);
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	サウンド状態保管
  */
 //------------------------------------------------------------------

@@ -45,6 +45,7 @@ typedef struct {
 	GAMESYS_WORK * gsys;
 	FIELD_MAIN_WORK * fieldmap;
 	BATTLE_SETUP_PARAM para;
+	u16 timeWait;
 }DEBUG_BATTLE_WORK;
 
 //============================================================================================
@@ -83,28 +84,41 @@ static GMEVENT_RESULT DebugBattleEvent(GMEVENT * event, int *  seq, void * work)
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
 		// サウンドテスト
 		// 戦闘用ＢＧＭセット
-		PMSNDSYS_PlayBGM(1074);//(SEQ_MUS_WB_VS_NORAPOKE);
+		PMSNDSYS_PlayBGM(SEQ_MUS_WB_VS_NORAPOKE);
 		//
 		(*seq)++;
 		break;
 	case 2:
 		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		// サウンドテスト
+		// 戦闘ＢＧＭフェードアウト
+		dbw->timeWait = 60;
+		PMSNDSYS_FadeOutBGM(60);
 		(*seq) ++;
 		break;
 	case 3:
-		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-		(*seq) ++;
+		if(dbw->timeWait){
+			dbw->timeWait--;
+		} else {
+			(*seq) ++;
+		}
 		break;
+
 	case 4:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
+		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
 		// サウンドテスト
 		// ＢＧＭ取り出し→再開
 		PMSNDSYS_PopBGM();
 		PMSNDSYS_PauseBGM(FALSE);
+		PMSNDSYS_FadeInBGM(60);
 		//
 		(*seq) ++;
 		break;
 	case 5:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
+		(*seq) ++;
+		break;
+	case 6:
 		return GMEVENT_RES_FINISH;
 	}
 
@@ -140,6 +154,7 @@ GMEVENT * DEBUG_EVENT_Battle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 		para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
 		para->partyEnemy2 = NULL;	///< 2vs2時の２番目敵AI用（不要ならnull）
 
+		dbw->timeWait = 0;
 	}
 
 	return event;
