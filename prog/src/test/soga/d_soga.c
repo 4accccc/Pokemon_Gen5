@@ -27,8 +27,8 @@
 
 #include "test/performance.h"
 
-//#define MCS_ENABLE		//MCSを使用する
-#define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
+#define MCS_ENABLE		//MCSを使用する
+//#define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
 //#define	SCALE_CHECK		//透視射影と正射影でスケールの誤差を修正するテストモードの起動
 #define BTLV_MCSS_1vs1		//1vs1描画
 
@@ -489,7 +489,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 		VecFx32	pos,target;
 		BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
 //		BTLV_CAMERA_MoveCameraPosition( wk->bcw, &pos, &target );
-		BTLV_CAMERA_MoveCameraInterpolation( wk->bcw, &pos, &target, 20, 20 );
+		BTLV_CAMERA_MoveCameraInterpolation( wk->bcw, &pos, &target, 20, 0, 20 );
 	}
 #endif
 
@@ -1285,6 +1285,7 @@ static BOOL MCS_Init( SOGA_WORK *wk )
 
 	// mcsの初期化
 	wk->mcsWorkMem = GFL_HEAP_AllocMemory( wk->heapID, NNS_MCS_WORKMEM_SIZE ); // MCSのワーク用メモリを確保
+	OS_TPrintf("size:%08x\n",NNS_MCS_WORKMEM_SIZE);
 	NNS_McsInit( wk->mcsWorkMem );
 
 	GFUser_VIntr_CreateTCB( MCS_VBlankIntr, NULL, 0 );
