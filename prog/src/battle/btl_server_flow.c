@@ -1441,7 +1441,7 @@ static void scput_Fight_SimpleEffect( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
 			}
 			else
 			{
-				scEvent_RankUp( wk, target, eff, -volume, (per>=100) );
+				scEvent_RankUp( wk, target, eff, volume, (per>=100) );
 			}
 		}
 	}

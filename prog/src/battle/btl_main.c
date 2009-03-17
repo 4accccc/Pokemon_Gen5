@@ -1426,15 +1426,16 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
  *
  * @param   wk		
  * @param   clientID		
- * @param   memberIdx		
+ * @param   posIdx		
  *
  * @retval  const BTL_POKEPARAM*		
  */
 //=============================================================================================
-BTL_POKEPARAM* BTL_POKECON_GetClientPokeData( BTL_POKE_CONTAINER* wk, u8 clientID, u8 memberIdx )
+BTL_POKEPARAM* BTL_POKECON_GetClientPokeData( BTL_POKE_CONTAINER* wk, u8 clientID, u8 posIdx )
 {
-	u8 pokeID = ClientBasePokeID[ clientID ] + memberIdx;
-	return wk->pokeParam[ pokeID ];
+	BTL_PARTY* party;
+	party = &wk->party[ clientID ];
+	return BTL_PARTY_GetMemberData( party, posIdx );
 }
 //=============================================================================================
 /**

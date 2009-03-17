@@ -462,14 +462,14 @@ static void ms_sp_waza_dead( STRBUF* dst, u16 strID, const int* args )
 }
 //--------------------------------------------------------------
 /**
- *	››‚Ì~~‚ª‚ ‚ª‚Á‚½I
+ *	››‚Ì~~‚ªi‚®[‚ñ‚Æj‚ ‚ª‚Á‚½I
  *  args... [0]:pokeID,  [1]:statusType, [2]:volume
  */
 //--------------------------------------------------------------
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args )
 {
 	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( SysWork.mainModule, args[0] );
-	u8 statusType = args[1];
+	u8 statusType = args[1] - WAZA_RANKEFF_ORIGIN;
 
 	if( args[2] > 1 )
 	{
@@ -483,14 +483,14 @@ static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args )
 }
 //--------------------------------------------------------------
 /**
- *	››‚Ì~~‚ª‚³‚ª‚Á‚½I
+ *	››‚Ì~~‚ªi‚ª‚­‚Á‚Æj‚³‚ª‚Á‚½I
  *  args... [0]:pokeID,  [1]:statusType, [2]:volume
  */
 //--------------------------------------------------------------
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args )
 {
 	u8 pokePos = BTL_MAIN_PokeIDtoPokePos( SysWork.mainModule, args[0] );
-	u8 statusType = args[1];
+	u8 statusType = args[1] - WAZA_RANKEFF_ORIGIN;
 
 	if( args[2] > 1 )
 	{
