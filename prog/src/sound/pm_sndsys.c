@@ -644,7 +644,6 @@ static void PMSND_SystemFade( void )
 	NNSSndHandle*	pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
 	u32				nowSoundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
 	BOOL			bgmSetFlag = FALSE;
-	int				volume;
 
 	if(nowSoundIdx){
 		if( nowSoundIdx != fadeStatus.nextSoundIdx ){
@@ -677,7 +676,7 @@ static void PMSND_SystemFade( void )
 			PMSND_ChangeBGMtrack(fadeStatus.nextTrackBit);
 		}
 	} else {
-		volume = fadeStatus.volumeCounter * 127 / fadeStatus.fadeFrames;
+		int volume = fadeStatus.volumeCounter * 127 / fadeStatus.fadeFrames;
 
 		NNS_SndPlayerSetVolume(pBgmHandle, volume);
 	}
