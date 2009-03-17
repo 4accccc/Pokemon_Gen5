@@ -604,7 +604,7 @@ void BB_disp_InfoWinAdd( BB_CLIENT* wk )
 		man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_minigame_bb_dat, HEAPID_BB );
 		str	= GFL_MSG_CreateString( man, 0 );
 		
-		GF_STR_PrintSimple( &wk->win, FONT_SYSTEM, str, 0, 0, 0, NULL );
+		GF_STR_PrintSimple( &wk->win, NET_FONT_SYSTEM, str, 0, 0, 0, NULL );
 
 		GFL_STR_DeleteBuffer( str );
 		GFL_MSG_Delete( man );	
@@ -626,10 +626,15 @@ void BB_disp_InfoWinAdd( BB_CLIENT* wk )
 //--------------------------------------------------------------
 void BB_disp_InfoWinDel( BB_CLIENT* wk )
 {
+#if WB_FIX
 	if( GF_BGL_BmpWinAddCheck( &wk->win ) == TRUE ){
+#else
+	if(wk->win != NULL){
+#endif
 		BmpWinFrame_Clear( wk->win, WINDOW_TRANS_OFF );
 		GF_BGL_BmpWinOff( &wk->win );
-		GFL_BMPWIN_Delete( &wk->win );
+		GFL_BMPWIN_Delete( wk->win );
+		wk->win = NULL;
 	}
 }
 
@@ -692,7 +697,7 @@ void BR_ColorChange( BB_WORK* wk, int id )
 
 static int BR_print_x_Get( GFL_BMPWIN* win, STRBUF* str )
 {
-	int len = PRINTSYS_GetStrWidth( str, GFL_FONT* font/*FONT_SYSTEM*/, 0 );
+	int len = PRINTSYS_GetStrWidth( str, GFL_FONT* font/*NET_FONT_SYSTEM*/, 0 );
 	int x	= ( GF_BGL_BmpWinGet_SizeX( win ) * 8 - len ) / 2;
 	
 	return x;
@@ -766,12 +771,12 @@ void BB_disp_NameWinAdd( BB_WORK* bwk, BB_CLIENT* wk )
 			
 			px = BR_print_x_Get( wk->win_name[ no ], str );
 			
-		//	GF_STR_PrintSimple( wk->win_name[ no ], FONT_SYSTEM, str, 0, 0, 0, NULL );
+		//	GF_STR_PrintSimple( wk->win_name[ no ], NET_FONT_SYSTEM, str, 0, 0, 0, NULL );
 			if ( bVip ){
-				GF_STR_PrintExpand( wk->win_name[ no ], FONT_SYSTEM, str, px, 0, 0, BB_PRINT_COL_VIP, 0, 0, NULL );
+				GF_STR_PrintExpand( wk->win_name[ no ], NET_FONT_SYSTEM, str, px, 0, 0, BB_PRINT_COL_VIP, 0, 0, NULL );
 			}
 			else {
-				GF_STR_PrintExpand( wk->win_name[ no ], FONT_SYSTEM, str, px, 0, 0, BB_PRINT_COL, 0, 0, NULL );
+				GF_STR_PrintExpand( wk->win_name[ no ], NET_FONT_SYSTEM, str, px, 0, 0, BB_PRINT_COL, 0, 0, NULL );
 			}
 
 			GFL_STR_DeleteBuffer( str );
@@ -793,10 +798,15 @@ void BB_disp_NameWinDel( BB_CLIENT* wk )
 		if ( i == wk->netid ){ continue; }		
 		
 
+	#if WB_FIX
 		if( GF_BGL_BmpWinAddCheck( &wk->win_name[ no ] ) == TRUE ){
+	#else
+		if(wk->win_name[no] != NULL){
+	#endif
 			BmpWinFrame_Clear( wk->win_name[ no ], WINDOW_TRANS_OFF );
 		    GF_BGL_BmpWinOff( &wk->win_name[ no ] );
 			GFL_BMPWIN_Delete( &wk->win_name[ no ] );
+			wk->win_name[no] = NULL;
 		}
 		
 		no++;

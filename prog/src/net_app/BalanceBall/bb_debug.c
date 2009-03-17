@@ -58,6 +58,7 @@ BOOL Debug_GameSetup( BB_WORK* work )
 		
 	    GF_BGL_BmpWinOff( wk->win );
 		GFL_BMPWIN_Delete( wk->win );
+		wk->win = NULL;
 		return TRUE;
 	}
 	
