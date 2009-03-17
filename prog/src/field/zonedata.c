@@ -15,6 +15,7 @@
 
 #include "field/zonedata.h"
 #include "zonetableformat.h"
+#include "gamesystem/pm_season.h"
 
 //============================================================================================
 //============================================================================================
@@ -114,6 +115,25 @@ u8 ZONEDATA_GetCameraID(u16 zone_id)
 	ZONEDATA zdbuf;
 	getZoneData(&zdbuf, zone_id);
 	return zdbuf.camera_id;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id)
+{
+	ZONEDATA zdbuf;
+	getZoneData(&zdbuf, zone_id);
+	switch (season_id) {
+	case PMSEASON_SPRING:
+		return zdbuf.bgm_spring_id;
+	case PMSEASON_SUMMER:
+		return zdbuf.bgm_summer_id;
+	case PMSEASON_AUTUMN:
+		return zdbuf.bgm_autumn_id;
+	case PMSEASON_WINTER:
+		return zdbuf.bgm_winter_id;
+	}
+	GF_ASSERT(season_id < PMSEASON_TOTAL);
+	return 0;
 }
 
 //------------------------------------------------------------------

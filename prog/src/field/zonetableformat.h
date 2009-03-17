@@ -22,8 +22,10 @@ typedef struct{
 	u16 script_id;						///<スクリプトファイルのアーカイブID
 	u16 sp_script_id;					///<特殊スクリプトファイルのアーカイブID
 	u16 msg_id;							///<メッセージファイルのアーカイブID
-	u16 bgm_day_id;						///<BGM指定（昼）のID
-	u16 bgm_night_id;					///<BGM指定（夜）のID
+	u16 bgm_spring_id;					///<BGM指定（春）のID
+	u16 bgm_summer_id;					///<BGM指定（夏）のID
+	u16 bgm_autumn_id;					///<BGM指定（秋）のID
+	u16 bgm_winter_id;					///<BGM指定（冬）のID
 	u16 enc_data_id;					///<エンカウント指定
 	u16 event_data_id;					///<イベントデータファイルのアーカイブID
 	u16 placename_id:8;					///<地名メッセージのＩＤ

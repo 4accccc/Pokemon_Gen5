@@ -88,10 +88,20 @@ extern void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos);
 /**
  * @brief	カメラ指定IDの取得
  * @param	zone_id	ゾーン指定ID
- * @param	u8		カメラ指定IDの値
+ * @return	u8		カメラ指定IDの値
  */
 //------------------------------------------------------------------
 extern u8 ZONEDATA_GetCameraID(u16 zone_id);
+
+//------------------------------------------------------------------
+/**
+ * @brief	BGM指定IDの取得
+ * @param	zone_id		ゾーン指定ID
+ * @param	season_id	季節指定ID
+ * @return	u8		BGM指定IDの値
+ */
+//------------------------------------------------------------------
+extern u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id);
 
 //------------------------------------------------------------------
 /**
