@@ -132,7 +132,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 		WazaID waza,   BtlTypeAff aff,   fx32 targetDmgRatio );
 static void svflowsub_damage_act_enemy_all( BTL_SVFLOW_WORK* wk, 
 		BTL_POKEPARAM* attacker,  BTL_POKEPARAM* def1,  BTL_POKEPARAM* def2,
-		BtlTypeAff aff1,  BtlTypeAff aff2,  WazaID waza,
+		BtlTypeAff aff1,  BtlTypeAff aff2,  u8 critical_1, u8 critical_2, WazaID waza,
 		fx32 targetDmgRatio );
 static void svflowsub_damage_act_enemy_all_atonce( BTL_SVFLOW_WORK* wk, 
 		BTL_POKEPARAM* attacker, BTL_POKEPARAM* def1, BTL_POKEPARAM* def2,
@@ -142,7 +142,7 @@ static void scput_Fight_Damage_After_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, B
 static BOOL svflowsub_hitcheck_singular( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza );
 static u16 svflowsub_damage_calc_core( BTL_SVFLOW_WORK* wk, 
 		const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza,
-		BtlTypeAff typeAff, fx32 targetDmgRatio );
+		BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag );
 static void svflowsub_set_waza_effect( BTL_SVFLOW_WORK* wk, u8 atPokeID, u8 defPokeID, WazaID waza );
 static void scput_Fight_AddSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker );
 static void scput_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
@@ -162,11 +162,16 @@ static BOOL scEvent_CheckConf( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacke
 static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scEvent_checkHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
+static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
+static void scEvent_WazaDamageEffect_Single( BTL_SVFLOW_WORK* wk,
+	BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza, BtlTypeAff aff, u32 damage, BOOL criticalFlag );
+static void scEvent_WazaDamageEffect_Double( BTL_SVFLOW_WORK* wk,
+	BTL_POKEPARAM* attacker, BTL_POKEPARAM* def1, BTL_POKEPARAM* def2, WazaID waza, BtlTypeAff aff,
+	u32 dmg1, u32 dmg2 );
 static BtlTypeAff scEvent_checkAffinity( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, PokeType waza_type );
 static void scEvent_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, TARGET_POKE_REC* rec );
 static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8* hitCount );
-static u8 scEvent_getCriticalRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
 	const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BOOL criticalFlag );
@@ -1024,7 +1029,7 @@ static void svflowsub_damage_enemy_all( BTL_SVFLOW_WORK* wk,
 	if( hit1 && hit2 )
 	{
 		BtlTypeAff aff1, aff2;
-		u8 about1, about2;
+		u8 about1, about2, critical1, critical2;
 
 		aff1 = scEvent_checkAffinity( wk, defender1, waza_type );
 		aff2 = scEvent_checkAffinity( wk, defender2, waza_type );
@@ -1032,11 +1037,14 @@ static void svflowsub_damage_enemy_all( BTL_SVFLOW_WORK* wk,
 		about1 = BTL_CALC_TypeAffAbout( aff1 );
 		about2 = BTL_CALC_TypeAffAbout( aff2 );
 
-		// 相性が別々なら、個別の処理
-		if( about1 != about2 )
+		critical1 = scEvent_CheckCritical( wk, attacker, defender1, waza );
+		critical2 = scEvent_CheckCritical( wk, attacker, defender2, waza );
+
+		// 相性が別々 or クリティカルがどちらかに発生なら、個別の処理
+		if( (about1 != about2) || (critical1 || critical2) )
 		{
 			BTL_Printf("２体ともにヒットし、相性べつべつ\n");
-			svflowsub_damage_act_enemy_all( wk, attacker, defender1, defender2, aff1, aff2, waza, targetDmgRatio );
+			svflowsub_damage_act_enemy_all( wk, attacker, defender1, defender2, aff1, aff2, critical1, critical2, waza, targetDmgRatio );
 		}
 		// 相性も同じなら、体力バーを同時に減らすようにコマンド生成する
 		else
@@ -1078,7 +1086,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 	u8 plural_flag = FALSE;	// 複数回ヒットフラグ
 	u8 deadFlag = FALSE;
 	u8 atPokeID, defPokeID;
-	u8 hit_count;
+	u8 hit_count, critical_flag;
 	u32 damage;
 	int i;
 
@@ -1090,7 +1098,8 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 
 	for(i=0; i<hit_count; ++i)
 	{
-		damage = svflowsub_damage_calc_core( wk, attacker, defender, waza, aff, targetDmgRatio );
+		critical_flag = scEvent_CheckCritical( wk, attacker, defender, waza );
+		damage = svflowsub_damage_calc_core( wk, attacker, defender, waza, aff, targetDmgRatio, critical_flag );
 
 		// デバッグを簡単にするため必ず大ダメージにする措置
 		#ifdef PM_DEBUG
@@ -1115,8 +1124,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 		BTL_POKEPARAM_HpMinus( defender, damage );
 		SCQUE_PUT_OP_HpMinus( wk->que, defPokeID, damage );
 		svflowsub_set_waza_effect( wk, atPokeID, defPokeID, waza );
-		SCQUE_PUT_ACT_WazaDamage( wk->que, defPokeID, aff, damage );
-		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_AFTER );
+		scEvent_WazaDamageEffect_Single( wk, attacker, defender, waza, aff, damage, critical_flag );
 
 		if( BTL_POKEPARAM_IsDead(defender) )
 		{
@@ -1142,7 +1150,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 //------------------------------------------------------------------
 static void svflowsub_damage_act_enemy_all( BTL_SVFLOW_WORK* wk, 
 		BTL_POKEPARAM* attacker,  BTL_POKEPARAM* def1,  BTL_POKEPARAM* def2,
-		BtlTypeAff aff1,  BtlTypeAff aff2,  WazaID waza,
+		BtlTypeAff aff1,  BtlTypeAff aff2,  u8 critical_1, u8 critical_2, WazaID waza,
 		fx32 targetDmgRatio )
 {
 	u8 atPokeID, defPokeID1, defPokeID2;
@@ -1152,21 +1160,19 @@ static void svflowsub_damage_act_enemy_all( BTL_SVFLOW_WORK* wk,
 	defPokeID1 = BTL_POKEPARAM_GetID( def1 );
 	defPokeID2 = BTL_POKEPARAM_GetID( def2 );
 
-	dmg1 = svflowsub_damage_calc_core( wk, attacker, def1, waza, aff1, targetDmgRatio );
+	dmg1 = svflowsub_damage_calc_core( wk, attacker, def1, waza, aff1, targetDmgRatio, critical_1 );
 	BTL_POKEPARAM_HpMinus( def1, dmg1 );
 	SCQUE_PUT_OP_HpMinus( wk->que, defPokeID1, dmg1 );
 	TargetPokeRec_Add( &wk->damagedPokemon, def1 );
 
-	dmg2 = svflowsub_damage_calc_core( wk, attacker, def2, waza, aff2, targetDmgRatio );
+	dmg2 = svflowsub_damage_calc_core( wk, attacker, def2, waza, aff2, targetDmgRatio, critical_2 );
 	BTL_POKEPARAM_HpMinus( def2, dmg2 );
 	SCQUE_PUT_OP_HpMinus( wk->que, defPokeID2, dmg2 );
 	TargetPokeRec_Add( &wk->damagedPokemon, def2 );
 
 	svflowsub_set_waza_effect( wk, atPokeID, defPokeID1, waza );
-	SCQUE_PUT_ACT_WazaDamage( wk->que, defPokeID1, aff1, dmg1 );
-	SCQUE_PUT_ACT_WazaDamage( wk->que, defPokeID2, aff2, dmg2 );
-
-	BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_AFTER );
+	scEvent_WazaDamageEffect_Single( wk, attacker, def1, waza, aff1, dmg1, critical_1 );
+	scEvent_WazaDamageEffect_Single( wk, attacker, def2, waza, aff2, dmg2, critical_2 );
 }
 //------------------------------------------------------------------
 // サーバーフロー下請け：敵全体を一斉にダメージ処理（下位）
@@ -1175,6 +1181,7 @@ static void svflowsub_damage_act_enemy_all_atonce( BTL_SVFLOW_WORK* wk,
 		BTL_POKEPARAM* attacker, BTL_POKEPARAM* def1, BTL_POKEPARAM* def2,
 		BtlTypeAff aff, WazaID waza, fx32 targetDmgRatio )
 {
+	// 一斉ダメージ処理は、どちらかにクリティカルが発生したら行わない
 	u8 atPokeID, defPokeID1, defPokeID2;
 	u16 dmg1, dmg2;
 
@@ -1182,19 +1189,18 @@ static void svflowsub_damage_act_enemy_all_atonce( BTL_SVFLOW_WORK* wk,
 	defPokeID1 = BTL_POKEPARAM_GetID( def1 );
 	defPokeID2 = BTL_POKEPARAM_GetID( def2 );
 
-	dmg1 = svflowsub_damage_calc_core( wk, attacker, def1, waza, aff, targetDmgRatio );
+	dmg1 = svflowsub_damage_calc_core( wk, attacker, def1, waza, aff, targetDmgRatio, FALSE );
 	BTL_POKEPARAM_HpMinus( def1, dmg1 );
 	SCQUE_PUT_OP_HpMinus( wk->que, defPokeID1, dmg1 );
 	TargetPokeRec_Add( &wk->damagedPokemon, def1 );
 
-	dmg2 = svflowsub_damage_calc_core( wk, attacker, def2, waza, aff, targetDmgRatio );
+	dmg2 = svflowsub_damage_calc_core( wk, attacker, def2, waza, aff, targetDmgRatio, FALSE );
 	BTL_POKEPARAM_HpMinus( def2, dmg2 );
 	SCQUE_PUT_OP_HpMinus( wk->que, defPokeID2, dmg2 );
 	TargetPokeRec_Add( &wk->damagedPokemon, def2 );
 
 	svflowsub_set_waza_effect( wk, atPokeID, defPokeID1, waza );
-	SCQUE_PUT_ACT_WazaDamageDbl( wk->que, defPokeID1, defPokeID2, dmg1, dmg2, aff );
-	BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_AFTER );
+	scEvent_WazaDamageEffect_Double( wk, attacker, def1, def2, waza, aff, dmg1, dmg2 );
 }
 //------------------------------------------------------------------
 // サーバーフロー：ダメージ受け後の処理
@@ -1249,7 +1255,7 @@ static BOOL svflowsub_hitcheck_singular( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* att
 //------------------------------------------------------------------
 static u16 svflowsub_damage_calc_core( BTL_SVFLOW_WORK* wk, 
 		const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza,
-		BtlTypeAff typeAff, fx32 targetDmgRatio )
+		BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag )
 {
 	u32 rawDamage = 0;
 	PokeType  waza_type = scEvent_getWazaPokeType( wk, attacker, waza );
@@ -1258,17 +1264,11 @@ static u16 svflowsub_damage_calc_core( BTL_SVFLOW_WORK* wk,
 	BTL_EVENTVAR_SetValue( BTL_EVAR_TYPEAFF, typeAff );
 	BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
 	BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
+	BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
 
 	{
-		BOOL criticalFlag = FALSE;
 		u16 atkPower, defGuard, wazaPower;
 
-		// クリティカル発生チェック
-		{
-			u8 critical_rank = scEvent_getCriticalRank( wk, attacker, waza );
-			criticalFlag = BTL_CALC_CheckCritical( critical_rank );
-			BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
-		}
 		// 各種パラメータから素のダメージ値計算
 		wazaPower = scEvent_getWazaPower( wk, attacker, defender, waza );
 		atkPower  = scEvent_getAttackPower( wk, attacker, defender, waza, criticalFlag );
@@ -1842,6 +1842,92 @@ static BOOL scEvent_checkHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
 }
 //--------------------------------------------------------------------------
 /**
+ * [Event] クリティカルヒット発生チェック
+ *
+ * @param   wk		
+ * @param   attacker		
+ * @param   defender		
+ * @param   waza		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------------------
+static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
+{
+	BOOL flag = FALSE;
+	u16  rank = BTL_POKEPARAM_GetValue( attacker, BPP_CRITICAL_RATIO );
+	rank += WAZADATA_GetCriticalRank( waza );
+
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_RANK, rank );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_CRITICAL_CHECK );
+		if( !BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG ) )
+		{
+			rank = BTL_EVENTVAR_GetValue( BTL_EVAR_CRITICAL_RANK );
+			rank = maxValue( rank, BTL_CALC_CRITICAL_MAX );
+			flag = BTL_CALC_CheckCritical( rank );
+		}
+	BTL_EVENTVAR_Pop();
+	return flag;
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] 単体ワザダメージアクション処理
+ *
+ * @param   wk		
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_WazaDamageEffect_Single( BTL_SVFLOW_WORK* wk,
+	BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza, BtlTypeAff aff, u32 damage, BOOL criticalFlag )
+{
+	u8 defPokeID = BTL_POKEPARAM_GetID( defender );
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, defPokeID );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, criticalFlag );
+		SCQUE_PUT_ACT_WazaDamage( wk->que, defPokeID, aff, damage );
+		if( criticalFlag )
+		{
+			SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_CriticalHit );
+		}
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_AFTER );
+	BTL_EVENTVAR_Pop();
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] ２体同時ワザダメージアクション処理
+ *
+ * @param   wk		
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_WazaDamageEffect_Double( BTL_SVFLOW_WORK* wk,
+	BTL_POKEPARAM* attacker, BTL_POKEPARAM* def1, BTL_POKEPARAM* def2, WazaID waza, BtlTypeAff aff,
+	u32 dmg1, u32 dmg2 )
+{
+	u8 defPokeID1 = BTL_POKEPARAM_GetID( def1 );
+	u8 defPokeID2 = BTL_POKEPARAM_GetID( def2 );
+
+	SCQUE_PUT_ACT_WazaDamageDbl( wk->que, defPokeID1, defPokeID2, dmg1, dmg2, aff );
+
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, FALSE );
+
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, defPokeID1 );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_AFTER );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, defPokeID2 );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_AFTER );
+
+	BTL_EVENTVAR_Pop();
+}
+//--------------------------------------------------------------------------
+/**
  * [Event] ワザの相性計算
  *
  * @param   wk		
@@ -1959,21 +2045,6 @@ static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
 		*hitCount = 1;
 	}
 	return FALSE;
-}
-
-// クリティカルランク取得
-static u8 scEvent_getCriticalRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
-{
-	BTL_EVENTVAR_Push();
-	{
-		u8 rank = BTL_POKEPARAM_GetValue( attacker, BPP_CRITICAL_RATIO );
-		rank += WAZADATA_GetCriticalRank( waza );
-		BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_RANK, rank );
-		BTL_EVENT_CallHandlers( wk, BTL_EVENT_CRITICAL_RANK );
-		rank = maxValue( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_RANK), BTL_CALC_CRITICAL_MAX );
-		BTL_EVENTVAR_Pop();
-		return rank;
-	}
 }
 
 // ワザ威力取得

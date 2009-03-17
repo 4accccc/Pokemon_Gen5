@@ -30,7 +30,7 @@ typedef enum {
 
 	BTL_EVENT_WAZA_HIT_RATIO,		///< ワザの命中率補正ハンドラ
 	BTL_EVENT_WAZA_HIT_COUNT,		///< ヒット回数決定（複数回ヒットワザのみ）
-	BTL_EVENT_CRITICAL_RANK,		///< クリティカル率補正ハンドラ
+	BTL_EVENT_CRITICAL_CHECK,		///< クリティカルチェック
 	BTL_EVENT_WAZA_POWER,				///< ワザ威力補正ハンドラ
 	BTL_EVENT_ATTACKER_POWER,		///< 攻撃側の能力値（こうげきorとくこう）補正ハンドラ
 	BTL_EVENT_DEFENDER_GUARD,		///< 防御側の能力値（ぼうぎょorとくぼう）補正ハンドラ
@@ -43,7 +43,8 @@ typedef enum {
 	BTL_EVENT_WAZA_DEF_TYPE,		///< 防御側ポケタイプチェックハンドラ
 	BTL_EVENT_WAZA_DMG_PROC2,		///< タイプ計算後ダメージ補正ハンドラ
 	BTL_EVENT_WAZA_DMG_LAST,		///< 最終ダメージ補正ハンドラ
-	BTL_EVENT_WAZA_DMG_AFTER,		///< ダメージ処理後
+	BTL_EVENT_WAZA_DMG_AFTER,		///< 単体ダメージ処理後
+	BTL_EVENT_WAZA_DMG_AFTER_ATONCE,	///< 一斉ダメージ処理後
 	BTL_EVENT_DECREMENT_PP,			///< 使用ワザのPP値を減少
 
 	BTL_EVENT_WAZA_REFRECT,			///< 反動計算ハンドラ
