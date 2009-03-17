@@ -240,6 +240,18 @@ FLDMMDLSYS * GAMEDATA_GetFldMMdlSys(GAMEDATA *gamedata)
 	return gamedata->fldmmdlsys;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief	季節の取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @return	u8	季節ID（gamesystem/pm_season.h参照）
+ */
+//--------------------------------------------------------------
+u8 GAMEDATA_GetSeasonID(const GAMEDATA *gamedata)
+{
+	return gamedata->season_id;
+}
+
 //============================================================================================
 //
 //
