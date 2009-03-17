@@ -673,7 +673,6 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 		case SOUNDTEST_TPEV_VOICE_WINDOW:
 			OS_Printf("pressed voice window\n");
 			break;
-
 		case SOUNDTEST_TPEV_EXIT:
 			sw->seq++;
 			break;

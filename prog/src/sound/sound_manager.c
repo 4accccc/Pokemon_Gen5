@@ -176,6 +176,7 @@ u32		SOUNDMAN_GetHierarchyPlayerSoundIdx( void )
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 
 	if( player->active == FALSE ){ return 0; }
+	if( player->soundIdx == PLAYER_HIERARCHY_EMPTY ){ return 0; }
 
 	return player->soundIdx;
 }
