@@ -368,7 +368,7 @@ end
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_effvm_def.h\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/spa_def.h\n")
 				inc_header.size.times { |inc|
-					fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/" + inc_header[ inc ] + "\n")
+					fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/particle/wazaeffect" + inc_header[ inc ] + "\n")
 				}
 				fp_w.print("\n")
 				fp_w.print( "WE_" + num_str + ":\n" )
