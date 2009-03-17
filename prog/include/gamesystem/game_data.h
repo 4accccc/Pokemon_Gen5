@@ -181,6 +181,15 @@ extern FLDMMDLSYS * GAMEDATA_GetFldMMdlSys(GAMEDATA *gamedata);
 
 //--------------------------------------------------------------
 /**
+ * @brief	季節の取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @return	u8	季節ID（gamesystem/pm_season.h参照）
+ */
+//--------------------------------------------------------------
+extern u8 GAMEDATA_GetSeasonID(const GAMEDATA *gamedata);
+
+//--------------------------------------------------------------
+/**
  * @brief   ゲームデータが持つ情報を元にセーブを実行
  *
  * @param   gamedata		ゲームデータへのポインタ
@@ -189,3 +198,4 @@ extern FLDMMDLSYS * GAMEDATA_GetFldMMdlSys(GAMEDATA *gamedata);
  */
 //--------------------------------------------------------------
 extern SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata);
+
