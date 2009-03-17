@@ -664,8 +664,7 @@ static void PMSND_SystemFade( void )
 			}
 		}
 	} else {
-		bgmSetFlag = TRUE;
-		fadeStatus.volumeCounter = 0;	// Å‰‚É–Â‚èo‚·ê‡
+		bgmSetFlag = TRUE;	// Å‰‚É–Â‚èo‚·ê‡
 	}
 
 	if(bgmSetFlag == TRUE){
