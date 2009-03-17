@@ -24,9 +24,10 @@
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void handler_Iromagane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Iromegane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_HardRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kasoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tekiouryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_hpborder_powerup( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType wazaType );
 static void handler_Mouka( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gekiryu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -49,9 +50,14 @@ static void common_weather_change( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeathe
 static void handler_AirLock_Appear( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_AirLock_ChangeWeather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_IceBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_IceBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_AmeukeZara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather );
+static void handler_SunPower_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_SunPower_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Rinpun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_TennoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_UruoiBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Dappi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_PoisonHeal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
@@ -93,6 +99,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		{ POKETOKUSEI_SURUDOIME,			HAND_TOK_ADD_Surudoime },
 		{ POKETOKUSEI_TANJUN,					HAND_TOK_ADD_Tanjun },
 		{ POKETOKUSEI_HAADOROKKU,			HAND_TOK_ADD_HardRock },
+		{ POKETOKUSEI_FIRUTAA,				HAND_TOK_ADD_HardRock },	// フィルター = ハードロックと等価
 		{ POKETOKUSEI_FUSIGINAUROKO,	HAND_TOK_ADD_FusiginaUroko },
 		{ POKETOKUSEI_TOUSOUSIN,			HAND_TOK_ADD_Tousousin },
 		{ POKETOKUSEI_RIIFUGAADO,			HAND_TOK_ADD_ReafGuard },
@@ -110,9 +117,10 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		{ POKETOKUSEI_AMEUKEZARA,			HAND_TOK_ADD_AmeukeZara },
 		{ POKETOKUSEI_RINPUN,					HAND_TOK_ADD_Rinpun },
 		{ POKETOKUSEI_TEKIOURYOKU,		HAND_TOK_ADD_Tekiouryoku },
-//		{ POKETOKUSEI_SANPAWAA,		HAND_TOK_ADD_SunPower },
+		{ POKETOKUSEI_TENNOMEGUMI,		HAND_TOK_ADD_TennoMegumi },
+		{ POKETOKUSEI_SANPAWAA,				HAND_TOK_ADD_SunPower },
 //		{ POKETOKUSEI_SUISUI,		HAND_TOK_ADD_Suisui },
-//		{ POKETOKUSEI_DAPPI,		HAND_TOK_ADD_Dappi },
+		{ POKETOKUSEI_DAPPI,		HAND_TOK_ADD_Dappi },
 //		{ POKETOKUSEI_TIDORIASI,		HAND_TOK_ADD_Tidoriasi },
 //		{ POKETOKUSEI_HAYAASI,		HAND_TOK_ADD_Hayaasi },
 //		{ POKETOKUSEI_HARIKIRI,		HAND_TOK_ADD_Harikiri },
@@ -192,7 +200,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Iromegane( u16 pri, u8 pokeID )
 }
 //------------------------------------------------------------------------------
 /**
- *	とくせい「ハードロック」
+ *	とくせい「ハードロック」＆「フィルター」
  */
 //------------------------------------------------------------------------------
 // ダメージ計算最終段階のハンドラ
@@ -239,7 +247,7 @@ static void handler_Kasoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kasoku( u16 pri, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
-		{ BTL_EVENT_TURNCHECK, handler_Kasoku },
+		{ BTL_EVENT_TURNCHECK_END, handler_Kasoku },
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
@@ -271,37 +279,6 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tekiouryoku( u16 pri, u8 pokeID )
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
 
-
-//--------------------------------------------------------------------------
-/**
- * HPが1/3の時に、特定タイプのワザ威力を上げるとくせいの共通処理
- *
- * @param   flowWk		
- * @param   pokeID		
- * @param   wazaType		
- *
- */
-//--------------------------------------------------------------------------
-static void common_hpborder_powerup( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType wazaType )
-{
-	// 攻撃側が自分で
-	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-	{
-		// HP 1/3 以下で
-		const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
-		if( BTL_POKEPARAM_GetHPBorder(bpp) <= BPP_HPBORDER_YELLOW )
-		{
-			// 使うのが指定タイプワザなら
-			if( WAZADATA_GetType( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) ) == wazaType )
-			{
-				// 威力２倍
-				u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
-				pow *= 2;
-				BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, pow );
-			}
-		}
-	}
-}
 //------------------------------------------------------------------------------
 /**
  *	とくせい「もうか」
@@ -374,6 +351,37 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_MusinoSirase( u16 pri, u8 pokeID )
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
+//--------------------------------------------------------------------------
+/**
+ * HPが1/3の時に、特定タイプのワザ威力を上げるとくせいの共通処理
+ *
+ * @param   flowWk		
+ * @param   pokeID		
+ * @param   wazaType		
+ *
+ */
+//--------------------------------------------------------------------------
+static void common_hpborder_powerup( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType wazaType )
+{
+	// 攻撃側が自分で
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+	{
+		// HP 1/3 以下で
+		const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+		if( BTL_POKEPARAM_GetHPBorder(bpp) <= BPP_HPBORDER_YELLOW )
+		{
+			// 使うのが指定タイプワザなら
+			if( WAZADATA_GetType( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) ) == wazaType )
+			{
+				// 威力２倍
+				u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
+				pow *= 2;
+				BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, pow );
+			}
+		}
+	}
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -488,7 +496,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Technician( u16 pri, u8 pokeID )
 ///< 防御能力決定のハンドラ
 static void handler_FusiginaUroko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-	// 攻撃側が自分で
+	// 防御側が自分で
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
 	{
 		// ミロカロスで状態異常で
@@ -848,6 +856,59 @@ static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
 		BTL_SVFLOW_RECEPT_ChangeWeather( flowWk, weather );
 	}
 }
+
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「サンパワー」
+ */
+//------------------------------------------------------------------------------
+// 天候ダメージ計算ハンドラ
+static void handler_SunPower_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+	{
+		// 晴れの時、MAXHPの 1/8 減る
+		if( BTL_EVENTVAR_GetValue(BTL_EVAR_WEATHER) == BTL_WEATHER_SHINE )
+		{
+			const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+			int damage = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / 8;
+			if( damage == 0 ){ damage = 1; }
+			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, damage );
+		}
+	}
+}
+// 攻撃力決定ハンドラ
+static void handler_SunPower_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	// 攻撃側が自分で
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+	{
+		// 天候が晴れで
+		if( BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE )
+		{
+			WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+			// ダメージタイプが特殊の時
+			if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
+			{
+				// 威力1.5倍
+				u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
+				pow = (pow * FX32_CONST(1.5f)) >> FX32_SHIFT;
+				BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, pow );
+				BTL_Printf("ポケ[%d]の サンパワー で威力1.5倍\n", pokeID);
+			}
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_SunPower( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_CALC_WEATHER_DAMAGE, handler_SunPower_Weather },// 天候ダメージ計算ハンドラ
+		{ BTL_EVENT_ATTACKER_POWER,	 handler_SunPower_AtkPower },		// 攻撃力決定ハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+
 //------------------------------------------------------------------------------
 /**
  *	とくせい「りんぷん」
@@ -872,6 +933,32 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Rinpun( u16 pri, u8 pokeID )
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
 
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「てんのめぐみ」
+ */
+//------------------------------------------------------------------------------
+// 追加効果（ひるみ、状態異常，ランク効果共通）ハンドラ
+static void handler_TennoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) )
+	{
+		u16 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER ) * 2;
+		BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
+		BTL_Printf("ポケ[%d]の てんのめぐみ で追加発生率２倍=%d%%\n", pokeID, per);
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_TennoMegumi( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_ADD_SICK,				handler_TennoMegumi },	// 追加効果（状態異常）チェックハンドラ
+		{ BTL_EVENT_ADD_RANK_TARGET,handler_TennoMegumi },	// 追加効果（ランク効果）チェックハンドラ
+		{ BTL_EVENT_SHRINK_CHECK,		handler_TennoMegumi },	// ひるみチェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -890,7 +977,7 @@ static void handler_UruoiBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 			{
 				BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, POKESICK_NULL );
 				BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
-				BTL_SERVER_RECTPT_SetMessage( flowWk, BTL_STRID_SET_PokeSick_Cure, pokeID );
+				BTL_SVFLOW_RECEPT_CurePokeSick( flowWk, pokeID );
 				BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
 			}
 		}
@@ -900,6 +987,34 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_UruoiBody( u16 pri, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
 		{ BTL_EVENT_SICK_DAMAGE,			handler_UruoiBody },	// 状態異常ダメージハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「だっぴ」
+ */
+//------------------------------------------------------------------------------
+// ターンチェック開始ハンドラ
+static void handler_Dappi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+	if( BTL_POKEPARAM_GetPokeSick(bpp) != POKESICK_NULL )
+	{
+		if( GFL_STD_MtRand(100) < 33 )
+		{
+			BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
+			BTL_SVFLOW_RECEPT_CurePokeSick( flowWk, pokeID );
+			BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Dappi( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_TURNCHECK_BEGIN,			handler_Dappi },	// ターンチェック開始
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
@@ -939,4 +1054,5 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_PoisonHeal( u16 pri, u8 pokeID )
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
+
 
