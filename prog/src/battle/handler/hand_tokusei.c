@@ -108,6 +108,15 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		{ POKETOKUSEI_POIZUNHIIRU,		HAND_TOK_ADD_PoisonHeal },
 		{ POKETOKUSEI_AISUBODY,				HAND_TOK_ADD_IcoBody },
 		{ POKETOKUSEI_AMEUKEZARA,			HAND_TOK_ADD_AmeukeZara },
+		{ POKETOKUSEI_RINPUN,					HAND_TOK_ADD_Rinpun },
+		{ POKETOKUSEI_TEKIOURYOKU,		HAND_TOK_ADD_Tekiouryoku },
+//		{ POKETOKUSEI_SANPAWAA,		HAND_TOK_ADD_SunPower },
+//		{ POKETOKUSEI_SUISUI,		HAND_TOK_ADD_Suisui },
+//		{ POKETOKUSEI_DAPPI,		HAND_TOK_ADD_Dappi },
+//		{ POKETOKUSEI_TIDORIASI,		HAND_TOK_ADD_Tidoriasi },
+//		{ POKETOKUSEI_HAYAASI,		HAND_TOK_ADD_Hayaasi },
+//		{ POKETOKUSEI_HARIKIRI,		HAND_TOK_ADD_Harikiri },
+//		{ POKETOKUSEI_FIRUTAA,		HAND_TOK_ADD_Filter },
 
 	};
 
@@ -156,7 +165,7 @@ void BTL_HANDLER_TOKUSEI_Remove( const BTL_POKEPARAM* pp )
  */
 //------------------------------------------------------------------------------
 // ダメージ計算最終段階のハンドラ
-static void handler_Iromagane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_Iromegane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
 	// 攻撃側が自分で
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -176,7 +185,7 @@ static void handler_Iromagane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Iromegane( u16 pri, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
-		{ BTL_EVENT_WAZA_DMG_PROC2, handler_Iromagane },
+		{ BTL_EVENT_WAZA_DMG_PROC2, handler_Iromegane },
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
@@ -231,6 +240,32 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kasoku( u16 pri, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
 		{ BTL_EVENT_TURNCHECK, handler_Kasoku },
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「てきおうりょく」
+ */
+//------------------------------------------------------------------------------
+// タイプ一致補正率計算ハンドラ
+static void handler_Tekiouryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+	{
+		if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) )
+		{
+			BTL_EVENTVAR_SetValue(BTL_EVAR_RATIO, FX32_CONST(2));
+			BTL_Printf("ポケ[%d]の てきおうりょく でタイプ一致補正率２倍に\n", pokeID);
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tekiouryoku( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_TYPEMATCH_RATIO, handler_Tekiouryoku },	// タイプ一致補正率計算ハンドラ
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
@@ -590,7 +625,7 @@ static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_ReafGuard( u16 pri, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
-		{ BTL_EVENT_ADD_SICK, handler_ReafGuard },	// 状態異常くらう前のハンドラ
+		{ BTL_EVENT_MAKE_SICK, handler_ReafGuard },	// 状態異常くらう前のハンドラ
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
@@ -622,7 +657,7 @@ static void handler_Donkan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Donkan( u16 pri, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
-		{ BTL_EVENT_ADD_SICK, handler_Donkan },	// 状態異常くらう前のハンドラ
+		{ BTL_EVENT_MAKE_SICK, handler_Donkan },	// 状態異常くらう前のハンドラ
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
@@ -812,6 +847,29 @@ static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
 		}
 		BTL_SVFLOW_RECEPT_ChangeWeather( flowWk, weather );
 	}
+}
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「りんぷん」
+ */
+//------------------------------------------------------------------------------
+// 追加効果（ひるみ、状態異常，ランク効果共通）ハンドラ
+static void handler_Rinpun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) )
+	{
+		BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, 0 );
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Rinpun( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_ADD_SICK,				handler_Rinpun },	// 追加効果（状態異常）チェックハンドラ
+		{ BTL_EVENT_ADD_RANK_TARGET,handler_Rinpun },	// 追加効果（ランク効果）チェックハンドラ
+		{ BTL_EVENT_SHRINK_CHECK,		handler_Rinpun },	// ひるみチェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
 
 

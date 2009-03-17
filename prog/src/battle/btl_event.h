@@ -33,7 +33,6 @@ typedef enum {
 	BTL_EVENT_WAZA_POWER,				///< ワザ威力補正ハンドラ
 	BTL_EVENT_ATTACKER_POWER,		///< 攻撃側の能力値（こうげきorとくこう）補正ハンドラ
 	BTL_EVENT_DEFENDER_GUARD,		///< 防御側の能力値（ぼうぎょorとくぼう）補正ハンドラ
-	BTL_EVENT_DAMAGE_DENOM,			///< 防御分母補正ハンドラ
 	BTL_EVENT_DAMAGE_PROC1,			///< タイプ計算前ダメージ補正ハンドラ
 	BTL_EVENT_ATTACKER_TYPE,		///< 攻撃側ポケタイプ
 	BTL_EVENT_DEFENDER_TYPE,		///< 防御側ポケタイプ
@@ -47,8 +46,8 @@ typedef enum {
 	BTL_EVENT_DECREMENT_PP,			///< 使用ワザのPP値を減少
 
 	BTL_EVENT_WAZA_REFRECT,			///< 反動計算ハンドラ
-	BTL_EVENT_WAZA_ADD_TARGET,	///< ワザを受けた側への追加効果
-	BTL_EVENT_WAZA_ADD_USER,		///< ワザを使った側への追加効果
+	BTL_EVENT_ADD_RANK_TARGET,	///< ワザを受けた側への追加効果
+	BTL_EVENT_ADD_RANK_USER,		///< ワザを使った側への追加効果
 
 	BTL_EVENT_MEMBER_OUT,				///< 個別ポケ退場直前
 	BTL_EVENT_MEMBER_IN,				///< 個別ポケ入場直後
@@ -57,10 +56,12 @@ typedef enum {
 	BTL_EVENT_AFTER_RANKUP,			///< 能力上げた（後）
 	BTL_EVENT_BEFORE_RANKDOWN,	///< 能力下げる（前）
 	BTL_EVENT_AFTER_RANKDOWN,		///< 能力下げた（後）
-	BTL_EVENT_ADD_SICK,					///< 状態異常にさせられる
+	BTL_EVENT_ADD_SICK,					///< ワザの追加効果による状態異常の発生チェック
+	BTL_EVENT_MAKE_SICK,				///< 状態異常にする
 	BTL_EVENT_SICK_DAMAGE,			///< 状態異常によるダメージ計算
 	BTL_EVENT_SHRINK_CHECK,			///< ひるみ計算
 	BTL_EVENT_SHRINK_FIX,				///< ひるみ確定後
+	
 	BTL_EVENT_TURNCHECK,				///< ターンチェック
 	BTL_EVENT_WEATHER_CHANGE,		///< 天候の変化
 	BTL_EVENT_CALC_WEATHER_DAMAGE,	///< 天候ダメージ計算
@@ -105,10 +106,10 @@ typedef enum {
 	BTL_EVAR_POKE_TYPE,
 	BTL_EVAR_WAZA_TYPE,
 	BTL_EVAR_VOLUME,
+	BTL_EVAR_GEN_FLAG,
 	BTL_EVAR_FAIL_FLAG,
-	BTL_EVAR_RANDOM_FLAG,
-	BTL_EVAR_CONF_DMG,
 	BTL_EVAR_FAIL_REASON,
+	BTL_EVAR_CONF_DMG,
 	BTL_EVAR_TURN_COUNT,
 	BTL_EVAR_ALMOST_FLAG,
 	BTL_EVAR_ADD_PER,

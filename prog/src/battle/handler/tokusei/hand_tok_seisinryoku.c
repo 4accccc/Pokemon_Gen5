@@ -35,7 +35,8 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Seisinryoku( u16 pri, u8 pokeID )
 // BTL_EVENT_SHRINK_CHECK:ひるみ発生チェック
 static void handler_ShrinkCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+	// 自分がひるまされる対象
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
 	{
 		// 発生確率を0に書き換え
 		BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, 0 );

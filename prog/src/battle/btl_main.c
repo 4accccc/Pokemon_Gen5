@@ -318,7 +318,6 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 			break;
 		}
 	}
-
 }
 
 //--------------------------------------------------------------------------

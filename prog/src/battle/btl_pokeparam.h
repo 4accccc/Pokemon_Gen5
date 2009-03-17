@@ -30,6 +30,8 @@ typedef struct _BTL_POKEPARAM	BTL_POKEPARAM;
 //--------------------------------------------------------------
 typedef enum {
 
+	BPP_VALUE_NULL = 0,
+
 	BPP_ATTACK,
 	BPP_DEFENCE,
 	BPP_SP_ATTACK,
