@@ -114,9 +114,9 @@ static void	SoundWorkInitialize(SOUNDTEST_WORK* sw)
 	sw->skbStrBuf = GFL_SKB_CreateSjisCodeBuffer(sw->heapID);
 	sw->seq = 0;
 
-	sw->bgmNum		= SOUDTEST_BGM_START;
-	sw->seNum		= SOUDTEST_SE_START;
-	sw->voiceNum	= SOUDTEST_VOICE_START;
+	sw->bgmNum		= PMSND_BGM_START;
+	sw->seNum		= PMSND_SE_START;
+	sw->voiceNum	= PMSND_VOICE_START;
 
 	sw->mode = MODE_SOUND_SELECT;
 }
@@ -254,6 +254,7 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 	switch(sw->seq){
 	case 0:
 		SetupSoundTestSys(sw);
+		PMSND_EnableSystemEchoChorus( 127, 256, 16 );
 		sw->seq++;
 		break;
 
@@ -593,10 +594,10 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 	} 
 	switch(tblPos){
 		case SOUNDTEST_TPEV_BGM_NUMUP:
-			if(sw->bgmNum < SOUDTEST_BGM_END){ sw->bgmNum++; }
+			if(sw->bgmNum < PMSND_BGM_END){ sw->bgmNum++; }
 			break;
 		case SOUNDTEST_TPEV_BGM_NUMDOWN:
-			if(sw->bgmNum > SOUDTEST_BGM_START){ sw->bgmNum--; }
+			if(sw->bgmNum > PMSND_BGM_START){ sw->bgmNum--; }
 			break;
 		case SOUNDTEST_TPEV_BGM_NUMSET:
 			OS_Printf("pressed bgm num_set\n");
@@ -626,10 +627,10 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			break;
 
 		case SOUNDTEST_TPEV_SE_NUMUP:
-			if(sw->seNum < SOUDTEST_SE_END){ sw->seNum++; }
+			if(sw->seNum < PMSND_SE_END){ sw->seNum++; }
 			break;
 		case SOUNDTEST_TPEV_SE_NUMDOWN:
-			if(sw->seNum > SOUDTEST_SE_START){ sw->seNum--; }
+			if(sw->seNum > PMSND_SE_START){ sw->seNum--; }
 			break;
 		case SOUNDTEST_TPEV_SE_NUMSET:
 			OS_Printf("pressed se num_se\n");
@@ -648,10 +649,10 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			break;
 
 		case SOUNDTEST_TPEV_VOICE_NUMUP:
-			if(sw->voiceNum < SOUDTEST_VOICE_END){ sw->voiceNum++; }
+			if(sw->voiceNum < PMSND_VOICE_END){ sw->voiceNum++; }
 			break;
 		case SOUNDTEST_TPEV_VOICE_NUMDOWN:
-			if(sw->voiceNum > SOUDTEST_VOICE_START){ sw->voiceNum--; }
+			if(sw->voiceNum > PMSND_VOICE_START){ sw->voiceNum--; }
 			break;
 		case SOUNDTEST_TPEV_VOICE_NUMSET:
 			OS_Printf("pressed voice num_set\n");
