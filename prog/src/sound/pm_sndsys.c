@@ -632,6 +632,8 @@ static void PMSND_CancelSystemFade( void )
 		u32	nowSoundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
 		if( nowSoundIdx != fadeStatus.nextSoundIdx ){
 			PMSND_PlayBGM_EX(fadeStatus.nextSoundIdx, fadeStatus.nextTrackBit);
+		} else {
+			PMSND_ResetSystemFade();
 		}
 	}
 }
