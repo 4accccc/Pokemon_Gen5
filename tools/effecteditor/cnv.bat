@@ -42,5 +42,3 @@ REM ##################################################
 
 ruby ../../resource/wazaeffect/eescmk.rb ../../prog/src/battle/btlv/btlv_effvm_def.h we_test.esf ../../ on
 make
-
-pause
