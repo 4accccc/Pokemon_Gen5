@@ -247,10 +247,17 @@ enum {
 	WSEQ_DAMAGESICK_YAKEDO = 4,
 	WSEQ_DAMAGESICK_KOORI = 5,
 	WSEQ_DAMAGESICK_MAHI = 6,
+	WSEQ_DAMAGESICK_KONRAN = 76,
 	WSEQ_SIMPLEEFF_ATK = 10,
 	WSEQ_SIMPLEEFF_DEF = 11,
 	WSEQ_SIMPLEEFF_SPATK = 13,
 	WSEQ_SIMPLEEFF_AVOID = 16,
+	WSEQ_DAMAGE_EFF_ATK = 68,
+	WSEQ_DAMAGE_EFF_DEF = 69,
+	WSEQ_DAMAGE_EFF_AGI = 70,
+	WSEQ_DAMAGE_EFF_SPATK = 71,
+	WSEQ_DAMAGE_EFF_SPDEF = 72,
+	WSEQ_DAMAGE_EFF_AVOID = 73,
 	WSEQ_SHRINK = 31,
 	WSEQ_MUST_SHRINK = 158,
 	WSEQ_WEATHER_RAIN = 136,
@@ -323,6 +330,26 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
 		},{
 			WSEQ_SIMPLEEFF_AVOID, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
 			{ { WAZA_RANKEFF_AVOID, 1 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE, BTL_WEATHER_NONE,
+		},{
+			WSEQ_DAMAGE_EFF_ATK, WAZADATA_CATEGORY_DAMAGE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_ATTACK, -1 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE, BTL_WEATHER_NONE,
+		},{
+			WSEQ_DAMAGE_EFF_DEF, WAZADATA_CATEGORY_DAMAGE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_DEFENCE, -1 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE, BTL_WEATHER_NONE,
+		},{
+			WSEQ_DAMAGE_EFF_SPATK, WAZADATA_CATEGORY_DAMAGE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_SP_ATTACK, -1 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE, BTL_WEATHER_NONE,
+		},{
+			WSEQ_DAMAGE_EFF_SPDEF, WAZADATA_CATEGORY_DAMAGE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_SP_DEFENCE, -1 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE, BTL_WEATHER_NONE,
+		},{
+			WSEQ_DAMAGE_EFF_AVOID, WAZADATA_CATEGORY_DAMAGE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_AVOID, -1 }, { WAZA_RANKEFF_NULL, 0 } },
 			FALSE, BTL_WEATHER_NONE,
 		},{
 				WSEQ_SHRINK, WAZADATA_CATEGORY_SIMPLE_DAMAGE, POKESICK_NULL, 
@@ -490,6 +517,44 @@ PokeSick WAZADATA_GetSick( WazaID id )
 
 //=============================================================================================
 /**
+ * ランク効果を取得
+ *
+ * @param   id				[in] ワザID
+ * @param   volume		[out] ランク効果の程度（+ならアップ, -ならダウン, 戻り値==WAZA_RANKEFF_NULLの時のみ0）
+ *
+ * @retval  WazaRankEffect		ランク効果ID
+ */
+//=============================================================================================
+WazaRankEffect  WAZADATA_GetRankEffect( WazaID id, int* volume )
+{
+	const SEQ_PARAM* seq = getSeqParam( id );
+	if( seq ){
+		if( seq->rankEff[0].type != WAZA_RANKEFF_NULL )
+		{
+			*volume = seq->rankEff[0].value;
+			return seq->rankEff[0].type;
+		}
+	}
+	*volume = 0;
+	return POKESICK_NULL;
+}
+//=============================================================================================
+/**
+ * ランク効果の発生率を返す
+ *
+ * @param   id		ワザID
+ *
+ * @retval  u32		発生率（パーセンテージ = 0～100）
+ */
+//=============================================================================================
+u32 WAZADATA_GetRankEffPer( WazaID id )
+{
+	// @@@ 今はてきとうに
+	return WT_WazaDataParaGet( id, ID_WTD_addeffect );
+}
+
+//=============================================================================================
+/**
  * 追加の状態異常発生率を返す
  *
  * @param   id		ワザID
@@ -536,6 +601,22 @@ BtlWeather WAZADATA_GetWeather( WazaID id )
 		return seq->weather;
 	}
 	return BTL_WEATHER_NONE;
+}
+
+//=============================================================================================
+/**
+ * ワザイメージチェック
+ *
+ * @param   id		ワザID
+ * @param   img		イメージID
+ *
+ * @retval  BOOL		ワザが指定されたイメージに属する場合はTRUE
+ */
+//=============================================================================================
+BOOL WAZADATA_IsImage( WazaID id, WazaImage img )
+{
+	// @@@ 今はてきとー
+	return FALSE;
 }
 
 
