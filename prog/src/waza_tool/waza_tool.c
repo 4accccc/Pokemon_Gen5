@@ -428,7 +428,12 @@ u16 WAZADATA_GetPower( WazaID id )
 
 WazaDamageType WAZADATA_GetDamageType( WazaID id )
 {
-	return WT_WazaDataParaGet( id, ID_WTD_kind );
+//	return WT_WazaDataParaGet( id, ID_WTD_kind );
+	switch( WT_WazaDataParaGet( id, ID_WTD_kind ) ){
+	case 0:		return 	WAZADATA_DMG_PHYSIC;	///< •¨—ƒ_ƒ[ƒW
+	case 1:		return	WAZADATA_DMG_SPECIAL;
+	default:	return WAZADATA_DMG_NONE;
+	}
 }
 
 // –½’†—¦
