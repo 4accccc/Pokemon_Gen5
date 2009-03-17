@@ -33,8 +33,10 @@ class ColumnID
 	attr :cDASH, true
 	attr :cESCAPE, true
 	attr :cFLY, true
-	attr :cBGM_DAY, true
-	attr :cBGM_NIGHT, true
+	attr :cBGM_SPRING, true
+	attr :cBGM_SUMMER, true
+	attr :cBGM_AUTUMN, true
+	attr :cBGM_WINTER, true
 	attr :cWEATHER, true
 	attr :cCAMERA, true
 	attr :cBATTLEBG, true
@@ -82,10 +84,14 @@ class ColumnID
 				@cESCAPE = c_count
 			when "fly"
 				@cFLY = c_count
-			when "BGM_DAY"
-				@cBGM_DAY = c_count
-			when "BGM_NIGHT"
-				@cBGM_NIGHT = c_count
+			when "BGM_SPRING"
+				@cBGM_SPRING = c_count
+			when "BGM_SUMMER"
+				@cBGM_SUMMER = c_count
+			when "BGM_AUTUMN"
+				@cBGM_AUTUMN = c_count
+			when "BGM_WINTER"
+				@cBGM_WINTER = c_count
 			when "WEATHER"
 				@cWEATHER = c_count
 			when "CAMERA"
@@ -236,8 +242,10 @@ class ZoneDataFile < OutputFile
 		script = column[@cl.cSCRIPT] == "›" ? "NARC_scr_seq_#{id.downcase}_bin" : "scr_dummy"
 		sp_script = column[@cl.cSCRIPT] == "›" ? "NARC_scr_seq_sp_#{id.downcase}_bin" : "sp_scr_dummy"
 		msg = column[@cl.cMSG] == "›" ? "NARC_msg_#{id.downcase}_dat" : "msg_dummy"
-		bgm_day = column[@cl.cBGM_DAY]
-		bgm_night = column[@cl.cBGM_NIGHT]
+		bgm_spring = column[@cl.cBGM_SPRING]
+		bgm_summer = column[@cl.cBGM_SUMMER]
+		bgm_autumn = column[@cl.cBGM_AUTUMN]
+		bgm_winter = column[@cl.cBGM_WINTER]
 		weather = "WEATHER_SYS_#{column[@cl.cWEATHER].upcase}"
 		camera = "#{column[@cl.cCAMERA]}"
 		battle_bg = "#{column[@cl.cBATTLEBG]}"
@@ -273,8 +281,10 @@ class ZoneDataFile < OutputFile
 		#{script},
 		#{sp_script},	//#{sp_script},
 		#{msg},
-		#{bgm_day},
-		#{bgm_night},
+		#{bgm_spring},
+		#{bgm_summer},
+		#{bgm_autumn},
+		#{bgm_winter},
 		#{encount_id},
 		#{event_id},
 		#{name},

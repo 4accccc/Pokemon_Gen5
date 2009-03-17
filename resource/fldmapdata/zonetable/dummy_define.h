@@ -73,4 +73,4 @@ enum {
 	RSC_TYPE_END
 };
 #include "../area_data/area_id.h"
-
+#include "..\..\sound\wb_sound_data.sadl"
