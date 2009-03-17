@@ -21,6 +21,7 @@
 
 #include "./event_fieldmap_control.h"
 #include "event_mapchange.h"
+#include "sound/pm_sndsys.h"		//サウンドシステム参照
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void CreateFldMMdl( FLDMMDLSYS *fldmmdlsys, u16 zone_id );
@@ -49,6 +50,13 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	switch (*seq) {
 	case 0:
 		UpdateMapParams(gsys, &fmw->loc_req);
+		{
+			//取り急ぎ。常にフェードインで始まる
+			u16 trackBit = 0xfcff;	// track 9,10 OFF
+			u16 nextBGM = ZONEDATA_GetBGMID(fmw->loc_req.zone_id,
+					GAMEDATA_GetSeasonID(fmw->gamedata));
+			PMSND_PlayNextBGM_EX(nextBGM, trackBit);
+		}
 		(*seq)++;
 		break;
 	case 1:
@@ -165,6 +173,13 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	GAMEDATA * gamedata = mcw->gamedata;
 	switch (*seq) {
 	case 0:
+		{
+			//取り急ぎ。常にフェードインで始まる
+			u16 trackBit = 0xfcff;	// track 9,10 OFF
+			u16 nextBGM = ZONEDATA_GetBGMID(mcw->loc_req.zone_id,
+					GAMEDATA_GetSeasonID(gamedata));
+			PMSND_PlayNextBGM_EX(nextBGM, trackBit);
+		}
 		//フィールドマップをフェードアウト
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
 		(*seq)++;

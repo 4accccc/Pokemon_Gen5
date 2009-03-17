@@ -44,8 +44,6 @@
 
 #include "fldmmdl.h"
 
-#include "sound/pm_sndsys.h"
-#include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 extern FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
 
 //============================================================================================
@@ -187,23 +185,10 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 			heapID, sizeof(FLDMAPPER_MAPDATA) * 32 * 32);
 	//通信用処理
 	fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID , GFL_HEAPID_APP );
-    //サウンド用処理
 #if 0
+    //サウンド用処理
 	SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_Firestarter_swav, SND_STRM_PCM8, SND_STRM_8KHZ, GFL_HEAPID_APP );
     SND_STRM_Play();
-#else
-    //テスト
-	{
-		u16 trackBit = 0xfcff;	// track 9,10 OFF
-	
-		//サウンドテスト用
-		//※現在マップ切り替わり時のデータ取得と戦闘などSubProcから帰ってくる
-		//　場所が切り分けられていないので仮でフラグ管理する
-		if( debugBGMsetFlag == FALSE ){
-			PMSND_PlayNextBGM_EX(SEQ_MUS_WB_R_F, trackBit);
-			debugBGMsetFlag = TRUE;
-		}
-	}
 #endif
 	return fieldWork;
 }
