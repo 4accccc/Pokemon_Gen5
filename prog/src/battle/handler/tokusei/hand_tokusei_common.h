@@ -69,6 +69,7 @@ extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hayaasi( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Harikiri( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Filter( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_TennoMegumi( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Youryokuso( u16 pri, u8 pokeID );
 
 
 #endif

@@ -29,14 +29,16 @@ enum {
 	BTL_NEMURI_TURN_MAX = 8,	///< 「ねむり」最大ターン数
 	BTL_NEMURI_TURN_RANGE = (BTL_NEMURI_TURN_MAX - BTL_NEMURI_TURN_MIN + 1),
 
-	BTL_MAHI_EXE_RATIO = 25,	///< 「まひ」でしびれて動けない確率
-	BTL_KORI_MELT_RATIO = 20,	///< 「こおり」が溶ける確率
+	BTL_MAHI_EXE_RATIO = 25,			///< 「まひ」でしびれて動けない確率
+	BTL_MAHI_AGILITY_RATIO = 25,	///< 「まひ」時のすばやさ減衰率
+	BTL_KORI_MELT_RATIO = 20,			///< 「こおり」が溶ける確率
 
 	BTL_DOKU_SPLIT_DENOM = 8,					///< 「どく」で最大HPの何分の１減るか
 	BTL_YAKEDO_SPLIT_DENOM = 8,				///< 「やけど」で最大HPの何分の１減るか
 	BTL_YAKEDO_DAMAGE_RATIO = 50,			///< 「やけど」で物理ダメージを減じる率
 	BTL_MOUDOKU_SPLIT_DENOM = 16,			///< もうどく時、最大HPの何分の１減るか（基本値=最小値）
 	BTL_MOUDOKU_COUNT_MAX = BTL_MOUDOKU_SPLIT_DENOM-1,	///< もうどく時、ダメージ倍率をいくつまでカウントアップするか
+
 
 	BTL_CONF_EXE_RATIO = 30,		///< 混乱時の自爆確率
 	BTL_CONF_TURN_MIN = 2,
@@ -50,7 +52,16 @@ enum {
 	BTL_WEATHER_TURN_DEFAULT = 5,					///< ワザによる天候変化の継続ターン数
 	BTL_WEATHER_TURN_PERMANENT = 0xff,
 
+	// とくせい関連
+	BTL_CALC_TOK_CHIDORI_HITRATIO = FX32_CONST(0.8f),			/// ちどりあしの減衰命中率
+	BTL_CALC_TOK_HARIKIRI_HITRATIO = FX32_CONST(0.8f),		/// はりきりの命中率変化率
+	BTL_CALC_TOK_HARIKIRI_POWRATIO = FX32_CONST(1.5f),		/// はりきりの攻撃力変化率
 };
+
+static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
+{
+	return (value * ratio) >> FX32_SHIFT;
+}
 
 //--------------------------------------------------------------------
 /**

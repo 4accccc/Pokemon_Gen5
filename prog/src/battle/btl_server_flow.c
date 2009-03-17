@@ -157,6 +157,7 @@ static inline int roundValue( int val, int min, int max );
 static inline int minValue( int val, int min );
 static inline int maxValue( int val, int max );
 static inline BOOL perOccur( u8 per );
+static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckConf( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
@@ -398,7 +399,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
 				wazaPri = 0;
 			}
 			// すばやさ
-			agility = BTL_POKEPARAM_GetValue( bpp, BPP_AGILITY );
+			agility = scEvent_CalcAgility( wk, bpp );
 
 			BTL_Printf("行動プライオリティ決定！ Client{%d-%d}'s actionPri=%d, wazaPri=%d, agility=%d\n",
 					i, j, actionPri, wazaPri, agility );
@@ -1655,7 +1656,46 @@ static inline BOOL perOccur( u8 per )
 // コマンド出力  イベント群
 //---------------------------------------------------------------------------------------------
 
-// こんらん自爆チェック
+//--------------------------------------------------------------------------
+/**
+ * [Event] すばやさ取得
+ *
+ * @param   wk		
+ * @param   attacker		
+ *
+ * @retval  u16		
+ */
+//--------------------------------------------------------------------------
+static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
+{
+	u16 agi = BTL_POKEPARAM_GetValue( attacker, BPP_AGILITY );
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_AGILITY, agi );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(attacker) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, TRUE );	// まひ無視フラグとして使っている
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_AGILITY );
+		agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
+		if( BTL_POKEPARAM_GetPokeSick(attacker) == POKESICK_MAHI )
+		{
+			if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) )
+			{
+				agi = (agi * BTL_MAHI_AGILITY_RATIO) / 100;
+			}
+		}
+	BTL_EVENTVAR_Pop();
+	return agi;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * [Event] こんらん自爆判定
+ *
+ * @param   wk		
+ * @param   attacker		
+ *
+ * @retval  BOOL		自爆したらTRUE
+ */
+//--------------------------------------------------------------------------
 static BOOL scEvent_CheckConf( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
 {
 	if( BTL_POKEPARAM_CheckSick(attacker, WAZASICK_KONRAN) )
@@ -1669,8 +1709,16 @@ static BOOL scEvent_CheckConf( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacke
 	}
 	return FALSE;
 }
-
-// 混乱ダメージ計算
+//--------------------------------------------------------------------------
+/**
+ * [Event] こんらんダメージ計算
+ *
+ * @param   wk		
+ * @param   attacker		
+ *
+ * @retval  u16		ダメージ値
+ */
+//--------------------------------------------------------------------------
 static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
 {
 	u16 dmg = minValue( BTL_POKEPARAM_GetValue(attacker, BPP_MAX_HP)/8, 1 );
@@ -1684,7 +1732,6 @@ static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 	BTL_EVENTVAR_Pop();
 	return dmg;
 }
-
 //--------------------------------------------------------------------------
 /**
  * 【Event】ワザ出し失敗判定 ＆ ねむり・まひ・こおりの回復チェック
@@ -1862,20 +1909,21 @@ static void scEvent_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u
 //--------------------------------------------------------------------------
 static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
-	u8 per = 100;
+	u8 per = WAZADATA_GetHitRatio( waza );
 
 	BTL_EVENTVAR_Push();
-	{
-		per = WAZADATA_GetHitRatio( waza );
 		if( BTL_FIELD_GetWeather() == BTL_WEATHER_MIST )
 		{
 			per = (per * BTL_CALC_WEATHER_MIST_HITRATIO) >> FX32_SHIFT;
 		}
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, per );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_RATIO );
 		per = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
-	}
 	BTL_EVENTVAR_Pop();
+
 	return per;
 }
 
