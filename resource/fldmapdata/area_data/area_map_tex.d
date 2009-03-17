@@ -75,14 +75,14 @@ nsbtx_files/tex_set_out04_spring.nsbtx: src_imd_files/out01_texset_spring.imd
 	@$(COPY) src_imd_files/out01_texset_spring.imd marged_imd_files/tex_set_out04_spring.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_out04_spring.imd -o nsbtx_files/tex_set_out04_spring.nsbtx -etex
 
-nsbtx_files/tex_set_out04_summer.nsbtx: src_imd_files/out01_texset_summer.imd
-	@echo src_imd_files/out01_texset_summer.imd Å® nsbtx_files/tex_set_out04_summer.nsbtx
-	@$(COPY) src_imd_files/out01_texset_summer.imd marged_imd_files/tex_set_out04_summer.imd
+nsbtx_files/tex_set_out04_summer.nsbtx: src_imd_files/h01_texset.imd
+	@echo src_imd_files/h01_texset.imd Å® nsbtx_files/tex_set_out04_summer.nsbtx
+	@$(COPY) src_imd_files/h01_texset.imd marged_imd_files/tex_set_out04_summer.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_out04_summer.imd -o nsbtx_files/tex_set_out04_summer.nsbtx -etex
 
-nsbtx_files/tex_set_out04_autumn.nsbtx: src_imd_files/out01_texset_autumn.imd
-	@echo src_imd_files/out01_texset_autumn.imd Å® nsbtx_files/tex_set_out04_autumn.nsbtx
-	@$(COPY) src_imd_files/out01_texset_autumn.imd marged_imd_files/tex_set_out04_autumn.imd
+nsbtx_files/tex_set_out04_autumn.nsbtx: src_imd_files/h01_texset.imd
+	@echo src_imd_files/h01_texset.imd Å® nsbtx_files/tex_set_out04_autumn.nsbtx
+	@$(COPY) src_imd_files/h01_texset.imd marged_imd_files/tex_set_out04_autumn.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_out04_autumn.imd -o nsbtx_files/tex_set_out04_autumn.nsbtx -etex
 
 nsbtx_files/tex_set_out04_winter.nsbtx: src_imd_files/out01_texset_winter.imd
@@ -600,9 +600,9 @@ nsbtx_files/tex_set_in02.nsbtx: src_imd_files/testroom00_00c.imd
 	@$(COPY) src_imd_files/testroom00_00c.imd marged_imd_files/tex_set_in02.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in02.imd -o nsbtx_files/tex_set_in02.nsbtx -etex
 
-nsbtx_files/tex_set_in03.nsbtx: src_imd_files/testroom00_00c.imd
-	@echo src_imd_files/testroom00_00c.imd Å® nsbtx_files/tex_set_in03.nsbtx
-	@$(COPY) src_imd_files/testroom00_00c.imd marged_imd_files/tex_set_in03.imd
+nsbtx_files/tex_set_in03.nsbtx: src_imd_files/testpc00_00c.imd
+	@echo src_imd_files/testpc00_00c.imd Å® nsbtx_files/tex_set_in03.nsbtx
+	@$(COPY) src_imd_files/testpc00_00c.imd marged_imd_files/tex_set_in03.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in03.imd -o nsbtx_files/tex_set_in03.nsbtx -etex
 
 nsbtx_files/tex_set_in04.nsbtx: src_imd_files/testroom00_00c.imd
