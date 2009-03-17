@@ -28,6 +28,7 @@
 #include "savedata/mystatus.h"
 #include "savedata/situation.h"
 #include "savedata/player_data.h"
+#include "gamesystem/pm_season.h"		//季節定義参照
 
 //============================================================================================
 //============================================================================================
@@ -46,6 +47,7 @@ struct _GAMEDATA{
 	MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
 	POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
 	FLDMMDLSYS *fldmmdlsys;
+	u8 season_id;				///<季節指定ID
 };
 
 //==============================================================================
@@ -75,6 +77,13 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	
 	gd->sv_control_ptr = SaveControl_GetPointer();
 	
+	//季節設定：ゲーム内では1ヶ月＝１シーズン
+	{
+		RTCDate date;
+		GFL_RTC_GetDate(&date);
+		gd->season_id = date.month % PMSEASON_TOTAL;
+	}
+
 	//状況データ
 	st = SaveData_GetSituation(gd->sv_control_ptr);
 	gd->start_loc = Situation_GetStartLocation(st);
