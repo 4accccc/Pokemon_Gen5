@@ -459,6 +459,26 @@ void	PMSND_PopBGM( void )
 
 //------------------------------------------------------------------
 /**
+ * @brief	‚a‚f‚lƒXƒe[ƒ^ƒX•ÏX
+ */
+//------------------------------------------------------------------
+void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan )
+{
+	NNSSndHandle* pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
+
+	if(tempoRatio != PMSND_NOEFFECT){
+		NNS_SndPlayerSetTempoRatio(pBgmHandle, tempoRatio);
+	}
+	if(pitch != PMSND_NOEFFECT){
+		NNS_SndPlayerSetTrackPitch(pBgmHandle, 0xffff, pitch);
+	}
+	if(pan != PMSND_NOEFFECT){
+		NNS_SndPlayerSetTrackPan(pBgmHandle, 0xffff, pan);
+	}
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	‚a‚f‚lI—¹ŒŸo
  */
 //------------------------------------------------------------------
@@ -556,15 +576,22 @@ BOOL	PMSND_CheckPlaySEVoice( void )
 
 //------------------------------------------------------------------
 /**
- * @brief	‚r‚dƒpƒ“Ý’è
+ * @brief	‚r‚dƒXƒe[ƒ^ƒX•ÏX
  */
 //------------------------------------------------------------------
-BOOL	PMSND_SetPanSEVoice( int pan )
+void	PMSND_SetStatusSEVoice( int tempoRatio, int pitch, int pan )
 {
 	PMSND_PLAYER_DATA* playerData = &systemPlayerUnit.playerDataArray[PLAYER_SE];
 
-	NNS_SndPlayerSetTrackPan(&playerData->sndHandle, 0xffff, pan);
-	return TRUE;
+	if(tempoRatio != PMSND_NOEFFECT){
+		NNS_SndPlayerSetTempoRatio(&playerData->sndHandle, tempoRatio);
+	}
+	if(pitch != PMSND_NOEFFECT){
+		NNS_SndPlayerSetTrackPitch(&playerData->sndHandle, 0xffff, pitch);
+	}
+	if(pan != PMSND_NOEFFECT){
+		NNS_SndPlayerSetTrackPan(&playerData->sndHandle, 0xffff, pan);
+	}
 }
 
 
