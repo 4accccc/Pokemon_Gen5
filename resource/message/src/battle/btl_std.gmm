@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-03-16T15:08:58"/>
+	<create user="taya" host="W00146" date="2009-03-17T20:30:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -433,6 +433,11 @@
 じぶんを　こうげきした！</language>
 		<language name="JPN_KANJI" width="216">わけも　分からず
 自分を　こうげきした！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_CriticalHit">
+		<language name="JPN" width="216">きゅうしょに　あたった！</language>
+		<language name="JPN_KANJI" width="216">急所に当たった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_ShineStart">
