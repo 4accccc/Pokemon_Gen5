@@ -46,7 +46,8 @@ SUBDIRS	=	wmi \
 			wifi_lobby \
 			wifi_lobby_map_conv \
 			wifi_lobby_front_unionobj \
-			wifi_lobby_news
+			wifi_lobby_news \
+			field_weather
 
 
 include $(RESOURCE_MACRO)

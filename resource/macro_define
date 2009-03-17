@@ -32,6 +32,8 @@ COPY = cp
 NAIXCUT = ruby $(PROJECT_ROOT)/tools/naixcutstamp.rb
 # バイナリファイルを結合する
 BINLINKER = ruby $(PROJECT_ROOT)/tools/binlinker.rb
+# lsで作成したリストの頭と尻に"を追加する
+ARCLIST_MAKE = perl $(PROJECT_ROOT)tools/arc_list_make.pl
 
 
 #------------------------------------------------------------------------------
