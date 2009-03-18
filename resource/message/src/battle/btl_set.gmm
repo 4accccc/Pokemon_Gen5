@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-03-18T15:23:21"/>
+	<create user="taya" host="W00146" date="2009-03-19T00:27:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -419,9 +419,9 @@
 		</language>
 	</columns>
 
-	<dialog left="240" top="137" right="921" bottom="651" maximized="no" rayout="Vertical2">
+	<dialog left="130" top="-6" right="811" bottom="508" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="365" top="303" right="796" bottom="701" visible="no"/>
+		<tag-palette left="530" top="492" right="961" bottom="890" visible="yes"/>
 		<band id="0" index="0" style="0001" width="506"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
@@ -1520,6 +1520,27 @@
 はんどうによる　ダメージを　うけた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
 反動による　ダメージを　受けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Trace">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+[1:06:とくせい名:1]　を　トレースした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+[1:06:とくせい名:1]　を　トレースした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Trace_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+[1:06:とくせい名:1]　を　トレースした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+[1:06:とくせい名:1]　を　トレースした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Trace_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+[1:06:とくせい名:1]　を　トレースした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+[1:06:とくせい名:1]　を　トレースした！</language>
 	</row>
 
 	<flowchart-group-list>
