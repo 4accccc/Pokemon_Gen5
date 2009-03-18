@@ -24,8 +24,8 @@
 //============================================================================================
 enum {
 	HEAPID_GAMESYS = HEAPID_TAMADA_DEBUG,
-
-	HEAPSIZE_GAMESYS = 0x2000,
+	
+	HEAPSIZE_GAMESYS = 0x4000,
 	//x200000
 };
 

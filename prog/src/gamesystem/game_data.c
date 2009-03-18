@@ -47,6 +47,7 @@ struct _GAMEDATA{
 	MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
 	POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
 	FLDMMDLSYS *fldmmdlsys;
+	EVENTWORK *eventwork;
 	u8 season_id;				///<季節指定ID
 };
 
@@ -103,6 +104,10 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	//イベントデータ
 	gd->evdata = EVENTDATA_SYS_Create(heapID);
 	EVENTDATA_SYS_Clear(gd->evdata);
+	
+	//イベントワーク
+	gd->eventwork = EVENTWORK_AllocWork( heapID );
+	EVENTWORK_Init( gd->eventwork );
 
 	//動作モデル
 	gd->fldmmdlsys = FLDMMDLSYS_CreateSystem( heapID, FLDMMDL_MDL_MAX );
@@ -122,6 +127,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
 	FLDMMDLSYS_FreeSystem(gamedata->fldmmdlsys);
+	EVENTWORK_FreeWork(gamedata->eventwork);
 	EVENTDATA_SYS_Delete(gamedata->evdata);
 	GFL_HEAP_FreeMemory(gamedata);
 }
@@ -238,6 +244,18 @@ MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata)
 FLDMMDLSYS * GAMEDATA_GetFldMMdlSys(GAMEDATA *gamedata)
 {
 	return gamedata->fldmmdlsys;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	EVENTWORKへのポインタ取得
+ * @param	gamedata	GAMEDATAへのポインタ
+ * @retval	EVENTWORKへのポインタ
+ */
+//--------------------------------------------------------------
+EVENTWORK * GAMEDATA_GetEventWork(GAMEDATA *gamedata)
+{
+	return gamedata->eventwork;
 }
 
 //--------------------------------------------------------------
