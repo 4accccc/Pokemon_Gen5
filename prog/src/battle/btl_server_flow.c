@@ -143,6 +143,7 @@ static BOOL svflowsub_hitcheck_singular( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* att
 static u16 svflowsub_damage_calc_core( BTL_SVFLOW_WORK* wk, 
 		const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza,
 		BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag );
+static void svflowsub_reaction_damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u32 damage );
 static void svflowsub_set_waza_effect( BTL_SVFLOW_WORK* wk, u8 atPokeID, u8 defPokeID, WazaID waza );
 static void scput_Fight_AddSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker );
 static void scput_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
@@ -154,8 +155,8 @@ static void scput_turncheck_sick( BTL_SVFLOW_WORK* wk );
 static void scput_turncheck_weather( BTL_SVFLOW_WORK* wk );
 static int scEvent_CalcWeatherDamage( BTL_SVFLOW_WORK* wk, BtlWeather weather, BTL_POKEPARAM* bpp, u8 *tok_cause_flg );
 static inline int roundValue( int val, int min, int max );
-static inline int minValue( int val, int min );
-static inline int maxValue( int val, int max );
+static inline int roundMin( int val, int min );
+static inline int roundMax( int val, int max );
 static inline BOOL perOccur( u8 per );
 static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckConf( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
@@ -1125,6 +1126,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 		SCQUE_PUT_OP_HpMinus( wk->que, defPokeID, damage );
 		svflowsub_set_waza_effect( wk, atPokeID, defPokeID, waza );
 		scEvent_WazaDamageEffect_Single( wk, attacker, defender, waza, aff, damage, critical_flag );
+		svflowsub_reaction_damage( wk, attacker, waza, damage );
 
 		if( BTL_POKEPARAM_IsDead(defender) )
 		{
@@ -1172,7 +1174,9 @@ static void svflowsub_damage_act_enemy_all( BTL_SVFLOW_WORK* wk,
 
 	svflowsub_set_waza_effect( wk, atPokeID, defPokeID1, waza );
 	scEvent_WazaDamageEffect_Single( wk, attacker, def1, waza, aff1, dmg1, critical_1 );
+	svflowsub_reaction_damage( wk, attacker, waza, dmg1 );
 	scEvent_WazaDamageEffect_Single( wk, attacker, def2, waza, aff2, dmg2, critical_2 );
+	svflowsub_reaction_damage( wk, attacker, waza, dmg2 );
 }
 //------------------------------------------------------------------
 // サーバーフロー下請け：敵全体を一斉にダメージ処理（下位）
@@ -1201,6 +1205,7 @@ static void svflowsub_damage_act_enemy_all_atonce( BTL_SVFLOW_WORK* wk,
 
 	svflowsub_set_waza_effect( wk, atPokeID, defPokeID1, waza );
 	scEvent_WazaDamageEffect_Double( wk, attacker, def1, def2, waza, aff, dmg1, dmg2 );
+	svflowsub_reaction_damage( wk, attacker, waza, dmg1+dmg2 );
 }
 //------------------------------------------------------------------
 // サーバーフロー：ダメージ受け後の処理
@@ -1328,6 +1333,30 @@ static u16 svflowsub_damage_calc_core( BTL_SVFLOW_WORK* wk,
 
 	BTL_EVENTVAR_Pop();
 	return rawDamage;
+}
+//---------------------------------------------------------------------------------------------
+// ワザダメージ処理後の反動処理
+//---------------------------------------------------------------------------------------------
+static void svflowsub_reaction_damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u32 damage )
+{
+	u8 ratio = WAZADATA_GetReactionRatio( waza );
+	if( ratio )
+	{
+		u8 pokeID = BTL_POKEPARAM_GetID( attacker );
+		BTL_EVENTVAR_Push();
+			BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, ratio );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, pokeID );
+			BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_REACTION );
+		BTL_EVENTVAR_Pop();
+		if( ratio )
+		{
+			damage = roundMin( (damage*ratio)/100, 1 );
+			BTL_POKEPARAM_HpMinus( attacker, damage );
+			SCQUE_PUT_OP_HpMinus( wk->que, pokeID, damage );
+			SCQUE_PUT_ACT_SimpleHP( wk->que, pokeID );
+			SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ReactionDmg, pokeID );
+		}
+	}
 }
 //---------------------------------------------------------------------------------------------
 // １度のワザ処理にて、エフェクト発動コマンドを１回しか作成しないための仕組み
@@ -1635,12 +1664,12 @@ static inline int roundValue( int val, int min, int max )
 	if( val > max ){ val = max; }
 	return val;
 }
-static inline int minValue( int val, int min )
+static inline int roundMin( int val, int min )
 {
 	if( val < min ){ val = min; }
 	return val;
 }
-static inline int maxValue( int val, int max )
+static inline int roundMax( int val, int max )
 {
 	if( val > max ){ val = max; }
 	return val;
@@ -1721,7 +1750,7 @@ static BOOL scEvent_CheckConf( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacke
 //--------------------------------------------------------------------------
 static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
 {
-	u16 dmg = minValue( BTL_POKEPARAM_GetValue(attacker, BPP_MAX_HP)/8, 1 );
+	u16 dmg = roundMin( BTL_POKEPARAM_GetValue(attacker, BPP_MAX_HP)/8, 1 );
 
 	BTL_EVENTVAR_Push();
 
@@ -1865,8 +1894,7 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_CRITICAL_CHECK );
 		if( !BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG ) )
 		{
-			rank = BTL_EVENTVAR_GetValue( BTL_EVAR_CRITICAL_RANK );
-			rank = maxValue( rank, BTL_CALC_CRITICAL_MAX );
+			rank = roundMax( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_RANK), BTL_CALC_CRITICAL_MAX );
 			flag = BTL_CALC_CheckCritical( rank );
 		}
 	BTL_EVENTVAR_Pop();

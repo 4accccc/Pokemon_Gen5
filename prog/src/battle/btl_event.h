@@ -47,7 +47,7 @@ typedef enum {
 	BTL_EVENT_WAZA_DMG_AFTER_ATONCE,	///< 一斉ダメージ処理後
 	BTL_EVENT_DECREMENT_PP,			///< 使用ワザのPP値を減少
 
-	BTL_EVENT_WAZA_REFRECT,			///< 反動計算ハンドラ
+	BTL_EVENT_CALC_REACTION,		///< 反動計算ハンドラ
 	BTL_EVENT_ADD_RANK_TARGET,	///< ワザを受けた側への追加効果
 	BTL_EVENT_ADD_RANK_USER,		///< ワザを使った側への追加効果
 
