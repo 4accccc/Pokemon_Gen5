@@ -16,4 +16,9 @@ _EVENT_DATA_END						//èIóπ
 /********************************************************************/
 /*ñ¢égóp*/
 ev_common_vm:
+	_NOP
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_common_test_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
 	_END

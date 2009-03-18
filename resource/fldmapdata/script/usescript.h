@@ -177,12 +177,12 @@
 #define SCR_WIPE_DIV				(WIPE_DEF_DIV)
 #define SCR_WIPE_SYNC				(WIPE_DEF_SYNC)
 
-
 //======================================================================
 //
 //	共通メッセージ関連
 //
 //======================================================================
+#include "../../../prog/include/msg/msg_common_scr.h"
 #if 0 //wb null
 #include "../../../include/msgdata/msg_common_scr.h"
 #include "../../../include/msgdata/msg_ev_win.h"

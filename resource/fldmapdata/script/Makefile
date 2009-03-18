@@ -25,7 +25,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 
 #target
 TARGET_DIR = $(PROJECT_ROOT)/prog/arc/fieldmap
-TARGET_NARC = scr_seq.narc
+TARGET_NARC = script_seq.narc
 TARGET_NAIX = $(TARGET_NARC:.narc=.naix)
 
 #Make‚Å¶¬‚³‚ê‚é*.bin/*.narc‚Ímake clean‚Ìíœ‘ÎÛ‚É‚·‚é
