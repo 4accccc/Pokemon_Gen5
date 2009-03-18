@@ -328,7 +328,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 			if( !BTL_POKEPARAM_IsDead(bpp) )
 			{
 				BTL_Printf("アクション選択(%d体目）開始します\n", wk->procPokeIdx );
-				BTLV_UI_SelectAction_Start( wk->viewCore, &wk->actionParam[wk->procPokeIdx] );
+				BTLV_UI_SelectAction_Start( wk->viewCore, BTL_POKEPARAM_GetID(bpp), &wk->actionParam[wk->procPokeIdx] );
 				(*seq) = SEQ_CHECK_ACTION;
 			}
 			else

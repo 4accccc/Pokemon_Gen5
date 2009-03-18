@@ -58,9 +58,10 @@ struct _BTLV_CORE {
 	BTL_PROC	subProc;
 	u8				genericWork[ GENERIC_WORK_SIZE ];
 
-	BTL_ACTION_PARAM*	actionParam;
 	STRBUF*						strBuf;
 	GFL_FONT*					fontHandle;
+	BTL_ACTION_PARAM*	actionParam;
+	u32								procPokeID;
 
 	GFL_TCBLSYS*	tcbl;
 	BTLV_SCU*			scrnU;
@@ -187,7 +188,6 @@ void BTLV_StartCommand( BTLV_CORE* core, BtlvCmd cmd )
 			pCmdProc	proc;
 		}procTbl[] = {
 			{ BTLV_CMD_SETUP,						CmdProc_Setup },
-			{ BTLV_CMD_SELECT_ACTION,		CmdProc_SelectAction },
 			{ BTLV_CMD_SELECT_POKEMON,	CmdProc_SelectPokemon },
 		};
 
@@ -283,6 +283,7 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 		u16 idx1;
 		u16 idx2;
 		u16 maxElems;
+		int printArg;
 	}SEQ_WORK;
 
 	SEQ_WORK* wk = workBufer;
@@ -290,7 +291,8 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 
 	switch( *seq ){
 	case 0:
-		BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction );
+		wk->printArg = core->procPokeID;
+		BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction, 1, core->procPokeID );
 		BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_NONE );
 		(*seq)++;
 		break;
@@ -389,9 +391,10 @@ static BOOL mainproc_call( BTLV_CORE* core )
  *
  */
 //=============================================================================================
-void BTLV_UI_SelectAction_Start( BTLV_CORE* core, BTL_ACTION_PARAM* dest )
+void BTLV_UI_SelectAction_Start( BTLV_CORE* core, u8 pokeID, BTL_ACTION_PARAM* dest )
 {
 	core->actionParam = dest;
+	core->procPokeID = pokeID;
 	mainproc_setup( core, CmdProc_SelectAction );
 }
 //=============================================================================================
@@ -513,12 +516,12 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
 
 		if( subwk->affinity < BTL_TYPEAFF_100 )
 		{
-			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad );
+			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
 			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 		}
 		else if ( subwk->affinity > BTL_TYPEAFF_100 )
 		{
-			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood );
+			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
 			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 		}
 		(*seq)++;
@@ -596,12 +599,12 @@ static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs )
 
 		if( subwk->affinity < BTL_TYPEAFF_100 )
 		{
-			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad );
+			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
 			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 		}
 		else if ( subwk->affinity > BTL_TYPEAFF_100 )
 		{
-			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood );
+			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
 			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 		}
 		(*seq)++;
@@ -684,10 +687,10 @@ BOOL BTLV_ACT_MemberOut_Wait( BTLV_CORE* wk )
 
 //------------------------------------------
 typedef struct {
+	BtlPokePos  pokePos;
 	u8 clientID;
 	u8 memberIdx;
-	BtlPokePos  pokePos;
-	int printArg;
+	u8 pokeID;
 }MEMBER_IN_WORK;
 
 //=============================================================================================
@@ -703,12 +706,15 @@ typedef struct {
 void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 memberIdx )
 {
 	MEMBER_IN_WORK* subwk = getGenericWork( wk, sizeof(MEMBER_IN_WORK) );
+	const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
 
 	subwk->clientID = clientID;
 	subwk->memberIdx = memberIdx;
 	subwk->pokePos = pos;
+	subwk->pokeID = BTL_POKEPARAM_GetID( bpp );
 
-	BTL_Printf("メンバー入場 client=%d, pokePos=%d, memberIdx=%d\n", clientID, pos, memberIdx );
+	BTL_Printf("メンバー入場 client=%d, pokePos=%d, memberIdx=%d, pokeID=%d\n",
+		clientID, pos, memberIdx, subwk->pokeID );
 
 	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMemberIn );
 }
@@ -729,9 +735,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 			u16 strID = BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myClientID, subwk->clientID)?
 					BTL_STRID_STD_PutSingle_Enemy : BTL_STRID_STD_PutSingle;
 
-			subwk->printArg = subwk->pokePos;
-
-			BTL_STR_MakeStringStdWithArgs( wk->strBuf, strID, &subwk->printArg );
+			BTL_STR_MakeStringStd( wk->strBuf, strID, 1, subwk->pokeID );
 			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
 			(*seq)++;
 		}
@@ -764,7 +768,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 //=============================================================================================
 void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 {
-	BTL_STR_MakeStringStdWithArgs( wk->strBuf, strID, args );
+	BTL_STR_MakeStringStdWithArgArray( wk->strBuf, strID, args );
 	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 //	printf( wk->strBuf );
 }

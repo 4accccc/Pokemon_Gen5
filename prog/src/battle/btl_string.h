@@ -34,8 +34,8 @@ enum {
 
 typedef u16 BtlStrID_STD;
 
-extern void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID );
-extern void BTL_STR_MakeStringStdWithArgs( STRBUF* buf, BtlStrID_STD strID, const int* args );
+extern void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID, u32 numArgs, ... );
+extern void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const int* array );
 
 
 //---------------------------------------------------------------------------------------
@@ -82,11 +82,6 @@ extern void BTL_STR_MakeStatusWinStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16
 
 
 
-
-//----------------
-
-extern u16 BTL_STR_GetRankUpStrID( u8 statusType, u8 volume );
-extern u16 BTL_STR_GetRankDownStrID( u8 statusType, u8 volume );
 
 
 #endif

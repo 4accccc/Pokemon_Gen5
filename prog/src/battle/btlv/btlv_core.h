@@ -103,7 +103,7 @@ extern BOOL BTLV_WaitCommand( BTLV_CORE* btlv );
 
 
 
-extern void BTLV_UI_SelectAction_Start( BTLV_CORE* core, BTL_ACTION_PARAM* dest );
+extern void BTLV_UI_SelectAction_Start( BTLV_CORE* core, u8 pokeID, BTL_ACTION_PARAM* dest );
 extern BOOL BTLV_UI_SelectAction_Wait( BTLV_CORE* core );
 
 extern void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 memberIdx );

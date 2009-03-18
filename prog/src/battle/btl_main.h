@@ -24,14 +24,16 @@ extern u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern BtlSide BTL_MAIN_GetClientSide( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk );
 extern BOOL BTL_MAIN_IsFriendPokeID( const BTL_MAIN_MODULE* wk, u8 pokeID1, u8 pokeID2 );
+extern u8 BTL_MAIN_PokeIDtoClientID( const BTL_MAIN_MODULE* wk, u8 pokeID );
 
 //-------------------------
-extern void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk );
+
 
 //=========================================================
 // for server only
 //=========================================================
 extern void BTL_MAIN_BtlPosToClientID_and_PokeIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos, u8* clientID, u8* pokeIdx );
+extern void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk );
 
 //=========================================================
 

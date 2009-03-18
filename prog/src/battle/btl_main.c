@@ -1240,6 +1240,20 @@ BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, u8 pokeID )
 	GF_ASSERT_MSG(0, " not including pokeID [%d] (clientID=%d)", pokeID, clientID );
 	return 0;
 }
+//=============================================================================================
+/**
+ * バトルポケモンIDから、そのポケモンを管理するクライアントIDを取得
+ *
+ * @param   wk		
+ * @param   pokeID		
+ *
+ * @retval  u8		
+ */
+//=============================================================================================
+u8 BTL_MAIN_PokeIDtoClientID( const BTL_MAIN_MODULE* wk, u8 pokeID )
+{
+	return PokeID_to_ClientID( pokeID );
+}
 
 //=============================================================================================
 /**

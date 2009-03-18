@@ -2225,18 +2225,19 @@ static PokeTypePair scEvent_getDefenderPokeType( BTL_SVFLOW_WORK* wk, const BTL_
 static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx )
 {
 	BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, posIdx );
+	u8 pokeID = BTL_POKEPARAM_GetID( bpp );
 
 	BTL_HANDLER_TOKUSEI_Remove( bpp );
 
 	BTL_EVENTVAR_Push();
-		SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_MemberOut1, clientID, posIdx );
-		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_OUT );
 		// ‚±‚±‚ÅŽ€‚Ê‚±‚Æ‚à‚ ‚é
 		if( !BTL_POKEPARAM_IsDead(bpp) )
 		{
 			SCQUE_PUT_ACT_MemberOut( wk->que, clientID, posIdx );
 		}
+		SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_MemberOut1, pokeID );
 	BTL_EVENTVAR_Pop();
 }
 
