@@ -122,10 +122,13 @@ extern	void			GFL_PTC_Delete(GFL_PTC_PTR psys);
 extern	void			GFL_PTC_Exit(void);
 extern	BOOL			GFL_PTC_CheckEnable(void);
 
+extern	void			GFL_PTC_DeleteDebug(GFL_PTC_PTR psys);
+
 //íºê⁄pathéwíËÇÕÇ∆ÇËÇ†Ç¶Ç∏Ç»Çµ
 //extern	void			*Particle_ResourceLoad(int heap_id, const char *path);
 extern	void			*GFL_PTC_LoadArcResource(int file_kind, int index, int heap_id);
 extern	void			GFL_PTC_SetResource(GFL_PTC_PTR psys, void *resource, int tex_at_once, GFL_TCBSYS *tcbsys);
+extern	void			GFL_PTC_SetResourceEx(GFL_PTC_PTR psys, void *resource, int tex_at_once, GFL_TCBSYS *tcbsys);
 extern	GFL_EMIT_PTR	GFL_PTC_CreateEmitter(GFL_PTC_PTR psys, int res_no, const VecFx32 *init_pos);
 extern	void			GFL_PTC_Draw(GFL_PTC_PTR psys);
 extern	void			GFL_PTC_Calc(GFL_PTC_PTR psys);
