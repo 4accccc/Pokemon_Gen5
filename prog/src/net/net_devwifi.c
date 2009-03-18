@@ -163,9 +163,13 @@ static int _DevMainFunc(u16 bitmap)
 //------------------------------------------------------------------------------
 static BOOL _DevEndFunc(BOOL bForce, NetDevEndCallback callback)
 {
-    if(mydwc_disconnect( !bForce )){
-        mydwc_returnLobby();
-        return TRUE;
+    if(mydwc_disconnect( !bForce ) ){
+        if(mydwc_returnLobby()){
+            return TRUE;
+        }
+    }
+    else{
+        mydwc_stepmatch(bForce);
     }
     return FALSE;
 }

@@ -1810,9 +1810,13 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
 //    }
   //  else{
     
-    pParentWork->targetID = GFL_NET_DWC_GetFriendIndex();
+//    pParentWork->targetID = GFL_NET_DWC_GetFriendIndex();
 //    }
-	
+
+    if(GFL_NET_IsInit()){
+        pParentWork->targetID = GFL_NET_DWC_GetFriendIndex();
+    }
+    
     // ワーク解放
     FreeWork( wk );
 
@@ -4326,20 +4330,24 @@ static void _userDataDisp(WIFIP2PMATCH_WORK* wk)
     if(wk->MyInfoWin){
         GFL_BMPWIN_Delete(wk->MyInfoWin);
     }
+
+    GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+                                  0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
+
     wk->MyInfoWinBack = _BmpWinDel(wk->MyInfoWinBack);
 
     wk->MyInfoWin=GFL_BMPWIN_Create(
                      GFL_BG_FRAME3_M, 
 					 WIFIP2PMATCH_PLAYER_DISP_X, WIFIP2PMATCH_PLAYER_DISP_Y,
 					 WIFIP2PMATCH_PLAYER_DISP_SIZX, WIFIP2PMATCH_PLAYER_DISP_SIZY,
-                     FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B );
+                     COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B );
 
 
     wk->MyInfoWinBack=GFL_BMPWIN_Create(
                      GFL_BG_FRAME1_M, 
 					 WIFIP2PMATCH_PLAYER_DISP_X, WIFIP2PMATCH_PLAYER_DISP_Y,
 					 WIFIP2PMATCH_PLAYER_DISP_SIZX, WIFIP2PMATCH_PLAYER_DISP_SIZY,
-                     FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B );
+                     COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B );
 
 	// 初期化
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MyInfoWin), WINCLR_COL(FBMP_COL_WHITE) );
@@ -4351,6 +4359,7 @@ static void _userDataDisp(WIFIP2PMATCH_WORK* wk)
 	// システムウィンドウ設定
 //	BmpMenuWinWrite( wk->MyInfoWinBack, WINDOW_TRANS_ON, MENU_WIN_CGX_NUM, MENU_WIN_PAL );
 //    GFL_BMPWIN_MakeFrameScreen(wk->MyInfoWinBack, MENU_WIN_CGX_NUM, MENU_WIN_PAL);
+	BmpWinFrame_CgxSet(GFL_BG_FRAME1_M,COMM_TALK_WIN_CGX_NUM, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
 	BmpWinFrame_Write( wk->MyInfoWinBack, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
 }
 

@@ -83,13 +83,12 @@
 // WM_SIZE_USER_GAMEINFO  最大 112byte
 // _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
 typedef struct{
+    u16        GGID;               ///< ゲーム固有のID  一致が必須
     u8        FixHead[_BEACON_FIXHEAD_SIZE];         ///< 固定で決めた６バイト部分
     GameServiceID  		serviceNo; ///< 通信サービス番号
     u8        debugAloneTest;      ///< デバッグ用 同じゲームでもビーコンを拾わないように
     u8  	  connectNum;    	   ///< つながっている台数  --> 本親かどうか識別
     u8        pause;               ///< 接続を禁止したい時に使用する
-    u8 dummy1;
-    u8 dummy2;
     u8        aBeaconDataBuff[_BEACON_USER_SIZE_MAX];
 } _GF_BSS_DATA_INFO;
 
@@ -329,6 +328,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
     GFL_NETWL* pNetWL = _pNetWL;
     GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
     int serviceNo = pInit->gsid;
+    u16 ggid = pInit->ggid;
     u8 sBuff[_BEACON_FIXHEAD_SIZE];
 
     // catchした親データ
@@ -347,6 +347,10 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 #endif
     GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
     if(0 != GFL_STD_MemComp(sBuff, pGF->FixHead , _BEACON_FIXHEAD_SIZE)){
+        NET_PRINT("beacon不一致\n");
+        return FALSE;
+    }
+    if(pGF->GGID != ggid){
         NET_PRINT("beacon不一致\n");
         return FALSE;
     }
@@ -982,6 +986,7 @@ void GFI_NET_BeaconSetInfo( void )
     }
     pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
     pGF->serviceNo = pInit->gsid;    // ゲームの番号
+    pGF->GGID = pInit->ggid;
 #if PM_DEBUG
     pGF->debugAloneTest = _DEBUG_ALONETEST;
 #else

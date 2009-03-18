@@ -739,6 +739,7 @@ void BmpMenu_YesNoMenuExit( BMPMENU_WORK * mw )
 
     BmpWinFrame_Clear( mw->hed.win, WINDOW_TRANS_ON );
 	GFL_BMPWIN_Delete( mw->hed.win );
+    GFL_FONT_Delete( mw->hed.font_handle );
 	BmpMenuWork_ListDelete( (BMPMENU_DATA*)mw->hed.menu );
 
     BmpMenu_Exit( mw, NULL );

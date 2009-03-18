@@ -183,9 +183,13 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
         ep2p->seq ++;
 		break;
       case P2P_SELECT:
-        if( mydwc_checkMyGSID() ){  // コード取得に成功
-//            SysFlag_WifiUseSet(SaveData_GetEventWork(fsys->savedata));
+        if(GFL_NET_IsInit()){
+            if( mydwc_checkMyGSID() ){  // コード取得に成功
+                // きっと置きなおす
+                //            SysFlag_WifiUseSet(SaveData_GetEventWork(fsys->savedata));
+            }
         }
+        NET_PRINT("P2P_SELECT %d %d\n",ep2p->seq,ep2p->pMatchParam->seq);
         ep2p->seq = aNextMatchKindTbl[ep2p->pMatchParam->seq].kind;
         ep2p->lvLimit = aNextMatchKindTbl[ep2p->pMatchParam->seq].lvLimit;
         ep2p->bSingle = aNextMatchKindTbl[ep2p->pMatchParam->seq].bSingle;
