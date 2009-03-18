@@ -464,7 +464,12 @@ static void BBDResUnitIndex_AddResUnit( FLDMMDLSYS *fmmdlsys, u16 obj_code )
 	data.arcID = ARCID_FLDMMDL_RES;
 	data.datID = prm->res_idx;
 	data.texFmt = GFL_BBD_TEXFMT_PAL16;
-	data.texSiz = prm->tex_size;
+//	data.texSiz = prm->tex_size;	//å√Ç¢íl éÿÇËÇΩÇ¢èë
+	if( obj_code == HERO ){
+		data.texSiz = GFL_BBD_TEXSIZ_32x1024;
+	}else{
+		data.texSiz = GFL_BBD_TEXSIZ_32x512;
+	}
 	data.celSizX = 32;	//Ç¢Ç∏ÇÍmdl_sizeÇ©ÇÁ
 	data.celSizY = 32;
 	data.dataCut = GFL_BBDACT_RESTYPE_DATACUT;

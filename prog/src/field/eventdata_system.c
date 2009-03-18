@@ -59,6 +59,7 @@ extern const CONNECT_DATA SampleConnectData_testroom[];
 extern const int SampleConnectDataCount_testroom;
 extern const CONNECT_DATA SampleConnectData_4season[];
 extern const int SampleConnectDataCount_4season;
+
 //============================================================================================
 //
 //	イベント起動データシステム関連

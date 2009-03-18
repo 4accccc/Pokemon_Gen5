@@ -1034,65 +1034,14 @@ static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
 	return 0;
 }
 
-#if 0
-	GFL_MSGDATA *msgData;
-	FLDMSGWIN *msgWin;
-	SCRCMD_WORK *work = wk;
-	FLDMSGBG *msgBG = SCRCMD_WORK_GetFldMsgBG( work );
-	
-	msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
-	FLDMSGWIN_Print( msgWin, 0, 0, DEBUG_FIELD_STR01 );
-	
-	SCRCMD_WORK_SetMsgData( work, msgData );
-	SCRCMD_WORK_SetMsgWin( work, msgWin );
-	VMCMD_SetWait( core, EvWaitTalk );
-	return VMCMD_RESULT_SUSPEND;
-}
-#endif
-
+//======================================================================
+//	アニメーションコマンド
+//======================================================================
 //--------------------------------------------------------------
 /**
- * 会話ウィンドウ表示
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
+ *
+ * @param
+ * @retval
  */
 //--------------------------------------------------------------
-#if 0
-static VMCMD_RESULT EvCmdFldTalkWindow( VMHANDLE *core, void *wk )
-{
-#if 0
-	GFL_MSGDATA *msgData;
-	FLDMSGWIN *msgWin;
-	SCRCMD_WORK *work = wk;
-	FLDMSGBG *msgBG = SCRCMD_WORK_GetFldMsgBG( work );
-	
-	msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
-	msgWin = FLDMSGWIN_AddTalkWin( msgBG, msgData );
-	FLDMSGWIN_Print( msgWin, 0, 0, DEBUG_FIELD_STR01 );
-	
-	SCRCMD_WORK_SetMsgData( work, msgData );
-	SCRCMD_WORK_SetMsgWin( work, msgWin );
-	VMCMD_SetWait( core, EvWaitTalk );
-#endif
-	return VMCMD_RESULT_SUSPEND;
-}
-#endif
-
-#if 0
-static BOOL EvWaitTalk(VMHANDLE * core, void *wk )
-{
-	SCRCMD_WORK *work = wk;
-	int trg = GFL_UI_KEY_GetTrg();
-	
-	if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-		GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-		FLDMSGWIN *msgWin = SCRCMD_WORK_GetFldMsgWin( work );
-		FLDMSGWIN_Delete( msgWin );
-		GFL_MSG_Delete( msgData );
-		return 1;
-	}
-	
-	return 0;
-}
-#endif
 
