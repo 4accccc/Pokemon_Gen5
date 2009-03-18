@@ -22,6 +22,7 @@
 #include "savedata/myitem_savedata.h"
 #include "poke_tool/pokeparty.h"
 #include "field/fldmmdl.h"
+#include "field/eventwork.h"
 
 //============================================================================================
 //============================================================================================
@@ -199,3 +200,11 @@ extern u8 GAMEDATA_GetSeasonID(const GAMEDATA *gamedata);
 //--------------------------------------------------------------
 extern SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata);
 
+//--------------------------------------------------------------
+/**
+ * @brief	EVENTWORKへのポインタ取得
+ * @param	gamedata	GAMEDATAへのポインタ
+ * @retval	EVENTWORKへのポインタ
+ */
+//--------------------------------------------------------------
+extern EVENTWORK * GAMEDATA_GetEventWork(GAMEDATA *gamedata);

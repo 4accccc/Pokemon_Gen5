@@ -110,7 +110,10 @@ SRCS	+=		$(SOUNDSRC) \
 				system/actor_tool.c \
 				system/bmp_oam.c \
 				net_app/wifi_earth/wifi_country.c \
-				field/field_script.c \
+				field/script.c \
+				field/scrcmd.c \
+				field/eventwork.c \
+				field/scrcmd_work.c \
 				test/ariizumi/debug_pause.c
 
 
