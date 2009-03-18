@@ -42,7 +42,7 @@ typedef struct{
 #ifdef PM_DEBUG
 	const	DEBUG_PARTICLE_DATA	*dpd;
 	BOOL						debug_flag;
-	u16			dat_id[ PARTICLE_GLOBAL_MAX ];
+	ARCDATID	dat_id[ PARTICLE_GLOBAL_MAX ];
 	u32			dat_id_cnt;
 #endif
 }BTLV_EFFVM_WORK;
@@ -334,7 +334,7 @@ static VMCMD_RESULT EC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
 		ofs = bevw->dpd->adrs[ BTLV_EFFVM_GetDPDNo( bevw, datID ) ];
 		OS_TPrintf("ofs:%d\n",ofs);
 		resource = (void *)&bevw->dpd->adrs[ ofs ];
-		GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
+		GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
 		return VMCMD_RESULT_SUSPEND;
 	}
 #endif
@@ -568,17 +568,7 @@ static VMCMD_RESULT EC_SEQ_END( VMHANDLE *vmh, void *context_work )
 
 			heap = GFL_PTC_GetHeapPtr( bevw->ptc[ i ] );
 			GFL_HEAP_FreeMemory( heap );
-#ifdef DEBUG_ONLY_FOR_sogabe
-			//デバッグモードのときは、専用のDelete関数を呼ぶ
-			if( bevw->debug_flag == TRUE ){
-				GFL_PTC_DeleteDebug( bevw->ptc[ i ] );
-			}
-			else{
-				GFL_PTC_Delete( bevw->ptc[ i ] );
-			}
-#else
 			GFL_PTC_Delete( bevw->ptc[ i ] );
-#endif
 			bevw->ptc[ i ] = NULL;
 		}
 		bevw->ptc_no[ i ] = EFFVM_PTCNO_NONE; 
@@ -840,8 +830,18 @@ static	void	EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 		dst.y -= src.y;
 		dst.z -= src.z;
 
+//ベクトルを正規化して方向を求めるバージョン
+#if 0
 		VEC_Normalize( &dst, &dst );
 		VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
+#endif
+//ベクトルから角度を求めて方向を計算するバージョン
+		OS_TPrintf("angle:%08x\n",FX_Atan2Idx( dst.z, dst.x ));
+		dir.x = FX_CosIdx( FX_Atan2Idx( dst.z, dst.x ) );
+		dir.y = 0;
+		dir.z = FX_SinIdx( FX_Atan2Idx( dst.z, dst.x ) );
+		OS_TPrintf("dir_x:%08x dir_y:%08x dir_z:%08x\n",dir.x,dir.y,dir.z);
+
 		GFL_PTC_SetEmitterAxis( emit, &dir );
 	}
 
@@ -864,6 +864,13 @@ void	BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, con
 {
 	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 	int	*start_ofs = (int *)&start[ script_table[ from ][ to ] * 4 ] ;
+	int	i;
+
+	bevw->dat_id_cnt = 0;
+	for( i = 0 ; i < PARTICLE_GLOBAL_MAX ; i++ ){
+		bevw->dat_id[ i ] = 0xffffffff;
+	}
+
 	bevw->attack_pos = from;
 	bevw->defence_pos = to;
 	bevw->dpd = dpd;

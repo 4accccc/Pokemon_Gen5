@@ -486,7 +486,7 @@ static	void	BTLV_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -573,7 +573,7 @@ static	void	BTLV_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -850,7 +850,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -931,7 +931,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -1557,7 +1557,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -1642,7 +1642,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
