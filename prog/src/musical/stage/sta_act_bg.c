@@ -27,7 +27,7 @@
 #define ACT_BG_TEX_FMT (GX_TEXFMT_PLTT256)
 
 #define ACT_BG_SIZE_X (FX32_CONST(512.0f))
-#define ACT_BG_SIZE_Y (FX32_CONST(196.0f))
+#define ACT_BG_SIZE_Y (FX32_CONST(192.0f))
 
 //======================================================================
 //	enum
@@ -123,9 +123,8 @@ void	STA_BG_DrawSystem( STA_BG_SYS *work )
 */
 
 	G3_PushMtx();
-
 	{
-		VecFx32 trans;
+		VecFx32 trans={0,0,0};
 		//trans.x = FX_Div( obj->trans.x, p_setup->scale.x );
 		//trans.y = FX_Div( obj->trans.y, p_setup->scale.y );
 		//trans.z = FX_Div( obj->trans.z, p_setup->scale.z );
@@ -151,17 +150,20 @@ void	STA_BG_DrawSystem( STA_BG_SYS *work )
 							);
 
 	G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16),		// specular
-							GX_RGB( 0,  0,  0),		// emission
-                            FALSE					// use shininess table if TRUE
-                            );
+							GX_RGB( 0,	0,	0),		// emission
+							FALSE					// use shininess table if TRUE
+							);
+	//ポリゴンIDはクリアカラーと一緒
+	//そうしないと画面境界にエッジが入る
 	G3_PolygonAttr(		GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 
-						0, 31 , 0 );
+						63, 31 , 0 );
+//						0, 0 , 0 );
 
 	{
 		VecFx32 trans = {0,0,0};
 //		G3_MultTransMtx33( &mtxBillboard, &trans );
 	}
-	G3_Translate( ACT_POS_X(-work->scrollOffset), ACT_POS_Y(3.0f), 0);
+	G3_Translate( ACT_POS_X(-work->scrollOffset), ACT_POS_Y(0.0f), 0);
 //	G3_Scale( ACT_POS_X_FX(ACT_BG_SIZE_X), ACT_POS_Y_FX(ACT_BG_SIZE_X), FX32_ONE );
 	G3_Scale( FX32_ONE*32, FX32_ONE*12, FX32_ONE );
 //	G3_Scale( FX32_ONE*8, FX32_ONE*4, FX32_ONE );

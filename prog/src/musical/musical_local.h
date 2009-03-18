@@ -14,6 +14,9 @@
 //ミュージカルポケモンの装備箇所(パレット対応
 typedef enum
 {
+	MUS_POKE_PLT_SHADOW		=0x04,	//影用座標
+	MUS_POKE_PLT_ROTATE		=0x05,	//回転用座標
+	
 	MUS_POKE_PLT_HEAD		=0x08,	//頭
 	MUS_POKE_PLT_EAR_R		=0x09,	//右耳
 	MUS_POKE_PLT_EAR_L		=0x0A,	//左耳

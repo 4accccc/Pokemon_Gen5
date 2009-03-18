@@ -19,6 +19,7 @@
 //#include "battle/poke_mcss.h"
 
 #include "musical/mus_poke_draw.h"
+#include "musical_local.h"
 
 #include "test/ariizumi/ari_debug.h"
 //======================================================================
@@ -42,6 +43,8 @@ struct _MUS_POKE_DRAW_WORK
 	
 	MUS_POKE_DATA_WORK *pokeData;
 	MUS_POKE_EQUIP_DATA	equipData[MUS_POKE_EQUIP_MAX];
+	VecFx32 shadowOfs;
+	VecFx32 rotateOfs;
 };
 
 //描画システム
@@ -56,7 +59,7 @@ struct _MUS_POKE_DRAW_SYSTEM
 //	proto
 //======================================================================
 static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WORK *maw);
-static void MUS_POKE_MCSS_CallBack( const MUS_POKE_EQUIP_POS pos , MUS_MCSS_CELL_DATA *cellData , void* work );
+static void MUS_POKE_MCSS_CallBack( const u8 pltNo , MUS_MCSS_CELL_DATA *cellData , void* work );
 
 
 //--------------------------------------------------------------
@@ -132,7 +135,9 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 	{
 		work->musMcss[idx].equipData[i].isEnable = FALSE;
 	}
-
+	VEC_Set( &work->musMcss[idx].shadowOfs ,0,0,0);
+	VEC_Set( &work->musMcss[idx].rotateOfs ,0,0,0);
+	
 	MUS_POKE_DRAW_SetScale( &work->musMcss[idx], &scale );
 	MUS_MCSS_SetAnmStopFlag( work->musMcss[idx].mcss );
 	//装備箇所データなど読み込み
@@ -166,6 +171,16 @@ void MUS_POKE_DRAW_SetScale( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *scale )
 void MUS_POKE_DRAW_GetScale( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *scale )
 {
 	MUS_MCSS_GetScale( drawWork->mcss , scale );
+}
+
+void MUS_POKE_DRAW_SetRotation( MUS_POKE_DRAW_WORK *drawWork , u16 rot )
+{
+	MUS_MCSS_SetRotation( drawWork->mcss , rot );
+}
+
+void MUS_POKE_DRAW_GetRotation( MUS_POKE_DRAW_WORK *drawWork , u16 *rot )
+{
+	MUS_MCSS_GetRotation( drawWork->mcss , rot );
 }
 
 void MUS_POKE_DRAW_SetShowFlg( MUS_POKE_DRAW_WORK *drawWork , const BOOL flg )
@@ -211,22 +226,48 @@ MUS_POKE_EQUIP_DATA* MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , 
 {
 	return &drawWork->equipData[pos];
 }
+VecFx32 *MUS_POKE_DRAW_GetShadowOfs( MUS_POKE_DRAW_WORK *drawWork )
+{
+	return &drawWork->shadowOfs;
+}
+
+VecFx32 *MUS_POKE_DRAW_GetRotateOfs( MUS_POKE_DRAW_WORK *drawWork )
+{
+	return &drawWork->rotateOfs;
+}
 
 MUS_POKE_DATA_WORK*	MUS_POKE_DRAW_GetPokeData( MUS_POKE_DRAW_WORK *drawWork )
 {
 	return drawWork->pokeData;
 }
 
-static void MUS_POKE_MCSS_CallBack( const MUS_POKE_EQUIP_POS pos , MUS_MCSS_CELL_DATA *cellData , void* work )
+static void MUS_POKE_MCSS_CallBack( const u8 pltNo , MUS_MCSS_CELL_DATA *cellData , void* work )
 {
 	MUS_POKE_DRAW_WORK *drawWork = work;
-	drawWork->equipData[pos].isEnable = TRUE;
-	VEC_Add( &cellData->pos , &cellData->ofs , &drawWork->equipData[pos].pos );
-	drawWork->equipData[pos].rot = cellData->rotZ+cellData->itemRotZ;
-	drawWork->equipData[pos].scale = cellData->scale;
 	
-//	OS_TPrintf("[%d:%d]:[%d:%d]\n"	,(int)F32_CONST(cellData->pos->x),(int)F32_CONST(cellData->pos->y)
-//									,(int)F32_CONST(cellData->ofs.x),(int)F32_CONST(cellData->ofs.y)	);
+	if( pltNo >= MUS_POKE_PLT_HEAD )
+	{
+		const MUS_POKE_EQUIP_POS pos = MUS_POKE_PLT_TO_POS(pltNo);
+		
+		drawWork->equipData[pos].isEnable = TRUE;
+		drawWork->equipData[pos].pos = cellData->pos;
+		drawWork->equipData[pos].ofs = cellData->ofs;
+		drawWork->equipData[pos].rot = cellData->rotZ;
+		drawWork->equipData[pos].itemRot = cellData->itemRotZ;
+		drawWork->equipData[pos].scale = cellData->scale;
+		drawWork->equipData[pos].rotOfs = cellData->rotOfs;
+	}
+	else if( pltNo == MUS_POKE_PLT_SHADOW )
+	{
+		VEC_Set( &drawWork->shadowOfs , cellData->ofs.x ,cellData->ofs.y ,0 );
+	}
+	else if( pltNo == MUS_POKE_PLT_ROTATE )
+	{
+		VEC_Set( &drawWork->rotateOfs , cellData->ofs.x ,cellData->ofs.y ,0 );
+	}
+	
+	//	OS_TPrintf("[%d:%d]:[%d:%d]\n"	,(int)F32_CONST(cellData->pos->x),(int)F32_CONST(cellData->pos->y)
+	//									,(int)F32_CONST(cellData->ofs.x),(int)F32_CONST(cellData->ofs.y)	);
 }
 
 //ミュージカル専用ポケモンMCSS読み込み

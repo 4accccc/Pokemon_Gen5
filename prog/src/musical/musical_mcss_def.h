@@ -91,6 +91,9 @@ struct _MUS_MCSS_WORK
 	int							index;					//登録INDEX
 	int							heapID;					//使用するヒープID
 	void						*work;					//ワーク(コールバックにしよう
+	u16							rotZ;
+	VecFx32						rotOfsBase;
+	VecFx32						rotOfs;
 };
 
 struct _MUS_MCSS_SYS_WORK

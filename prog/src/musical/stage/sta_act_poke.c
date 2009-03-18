@@ -148,11 +148,20 @@ void	STA_POKE_UpdateSystem_Item( STA_POKE_SYS *work )
 
 static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+	{
+		u16 rot;
+		MUS_POKE_DRAW_GetRotation( pokeWork->drawWork , &rot);
+		rot += 0x800;
+		MUS_POKE_DRAW_SetRotation( pokeWork->drawWork , rot);
+		
+	}
 	if( pokeWork->isUpdate == TRUE )
 	{
 		VecFx32 musPos;
 		VecFx32 musScale;
 		
+		//ポケモンの座標
 		VEC_Add( &pokeWork->pokePos , &pokeWork->posOfs , &musPos );
 		
 		musPos.x = ACT_POS_X_FX(musPos.x - FX32_CONST(work->scrollOffset));
@@ -161,11 +170,8 @@ static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 		
 		MUS_POKE_DRAW_SetPosition( pokeWork->drawWork , &musPos);
 
-		musPos.x = ACT_POS_X_FX(pokeWork->pokePos.x - FX32_CONST(work->scrollOffset));
-		musPos.y = ACT_POS_Y_FX(pokeWork->pokePos.y);
-		musPos.z = 5.0f;
-		GFL_BBD_SetObjectTrans( work->bbdSys , pokeWork->shadowBbdIdx , &musPos );
 		
+		//スケールの調整と向きの確認
 		musScale.x = pokeWork->scale.x * 16;
 		musScale.y = pokeWork->scale.y * 16;
 		musScale.z = pokeWork->scale.z * 16;
@@ -174,7 +180,6 @@ static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 			musScale.x *= -1;
 		}
 		MUS_POKE_DRAW_SetScale( pokeWork->drawWork , &musScale );
-
 		
 		//アイテムの更新要る？
 		pokeWork->isUpdate = FALSE;
@@ -193,17 +198,31 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 			if( equipData->isEnable == TRUE )
 			{
 				const BOOL flipS = ( equipData->scale.x < 0 ? TRUE : FALSE);
-				const u16 rot = ( flipS==TRUE ? 0x10000-equipData->rot : equipData->rot);
-				pos.x = ACT_POS_X_FX(equipData->pos.x+FX32_CONST(128.0f));
-				pos.y = ACT_POS_Y_FX(equipData->pos.y+FX32_CONST(96.0f));
+				const u16 itemRot = ( flipS==TRUE ? 0x10000-equipData->itemRot : equipData->itemRot);
+				const u16 rotZ = 0x10000-equipData->rot;//( flipS==TRUE ? 0x10000-equipData->rot : equipData->rot);
+
+				MtxFx33 rotWork;
+				VecFx32 rotOfs;
+				VecFx32 ofs;
+				MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
+				MTX_MultVec33( &equipData->ofs , &rotWork , &ofs );
+				
+				{
+					MTX_MultVec33( &equipData->rotOfs , &rotWork , &rotOfs );
+					VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
+				}
+
+				pos.x = ACT_POS_X_FX(equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
+				pos.y = ACT_POS_Y_FX(equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
 				pos.z = pokeWork->pokePos.z+FX32_HALF;	//とりあえずポケの前に出す
+
 				//OS_Printf("[%.2f][%.2f]\n",F32_CONST(equipData->pos.z),F32_CONST(pokePos.z));
 				MUS_ITEM_DRAW_SetPosition(	work->itemDrawSys , 
 											pokeWork->itemWork[ePos] ,
 											&pos );
 				MUS_ITEM_DRAW_SetRotation(	work->itemDrawSys , 
 											pokeWork->itemWork[ePos] ,
-											rot );
+											itemRot-rotZ );
 				MUS_ITEM_DRAW_SetSize(		work->itemDrawSys , 
 											pokeWork->itemWork[ePos] ,
 											equipData->scale.x /16 /4,
@@ -213,6 +232,17 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 										flipS );
 			}
 		}
+	}
+
+	//追従なのでここで一緒にやる
+	//影の座標
+	{
+		VecFx32 *shadowOfs;	//影差分
+		shadowOfs = MUS_POKE_DRAW_GetShadowOfs( pokeWork->drawWork );
+		pos.x = ACT_POS_X_FX(pokeWork->pokePos.x - FX32_CONST(work->scrollOffset) + shadowOfs->x );
+		pos.y = ACT_POS_Y_FX(pokeWork->pokePos.y + shadowOfs->y );
+		pos.z = 5.0f;
+		GFL_BBD_SetObjectTrans( work->bbdSys , pokeWork->shadowBbdIdx , &pos );
 	}
 }
 

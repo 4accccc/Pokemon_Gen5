@@ -78,6 +78,8 @@ void			MUS_MCSS_GetPosition( MUS_MCSS_WORK *mcss, VecFx32 *pos );
 void			MUS_MCSS_SetPosition( MUS_MCSS_WORK *mcss, VecFx32 *pos );
 void			MUS_MCSS_GetScale( MUS_MCSS_WORK *mcss, VecFx32 *scale );
 void			MUS_MCSS_SetScale( MUS_MCSS_WORK *mcss, VecFx32 *scale );
+void			MUS_MCSS_GetRotation( MUS_MCSS_WORK *mcss, u16 *rot );
+void			MUS_MCSS_SetRotation( MUS_MCSS_WORK *mcss, u16 rot );
 void			MUS_MCSS_SetShadowScale( MUS_MCSS_WORK *mcss, VecFx32 *scale );
 void			MUS_MCSS_SetMepachiFlag( MUS_MCSS_WORK *mcss );
 void			MUS_MCSS_ResetMepachiFlag( MUS_MCSS_WORK *mcss );
@@ -368,8 +370,33 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 			{
 				//Y反転は取りあえず保留
 			}
+			
+			//回転処理用のオフセットを出しておく
+			{
+				u16 rotZ;
+				MtxFx33 rotWork;
+				rotZ = mcss->rotZ;
+				/*
+				if( flipFlg == MUS_MCSS_FLIP_NONE )
+				{
+					rotZ = mcss->rotZ;
+				}
+				else
+				if( isFlip & MUS_MCSS_FLIP_X )
+				{
+					rotZ = (u16)(0x10000-mcss->rotZ);
+				}
+				*/
+				MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
+				MTX_MultVec33( &mcss->rotOfsBase , &rotWork , &mcss->rotOfs );
+				VEC_Subtract( &mcss->rotOfsBase , &mcss->rotOfs , &mcss->rotOfs );
+				mcss->rotOfs.x = FX_Div( mcss->rotOfs.x , mcss->scale.x );
+				mcss->rotOfs.y = FX_Div( mcss->rotOfs.y , mcss->scale.y );
+			}
+
 
 			G3_StoreMtx( MUS_MCSS_NORMAL_MTX );
+			
 /*
 			//影描画用の行列生成
 			G3_LookAt( NNS_G3dGlbGetCameraPos(), NNS_G3dGlbGetCameraUp(), NNS_G3dGlbGetCameraTarget(), NULL );
@@ -486,12 +513,21 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 						cellData.ofs.x	= FX_Mul( FX32_CONST(ofsx + anim_SRT.px) + itemOfsx , mcss->scale.x/16 );
 						cellData.ofs.y	= FX_Mul( FX32_CONST(ofsy + anim_SRT.py) + itemOfsy , mcss->scale.y/16 );
 						cellData.ofs.z	= pos_z_default;
-						cellData.rotZ	= anim_SRT.rotZ;
+//						cellData.rotOfs.x = FX_Mul( mcss->rotOfs.x , mcss->scale.x );
+//						cellData.rotOfs.y = FX_Mul( mcss->rotOfs.y , mcss->scale.y );
+//						cellData.rotOfs.z = 0;
+						cellData.rotOfs = mcss->rotOfsBase;
+						cellData.rotZ	= mcss->rotZ;
 						cellData.scale	= mcss->scale;
-						cellData.itemRotZ = MUS_POKE_GRP_TO_ROT( mcss->musInfo[clIdx].grpNo );
+						cellData.itemRotZ = anim_SRT.rotZ + MUS_POKE_GRP_TO_ROT( mcss->musInfo[clIdx].grpNo );
 						
-						musCellCb(	MUS_POKE_PLT_TO_POS(mcss->musInfo[clIdx].pltNo) ,
+						musCellCb(	mcss->musInfo[clIdx].pltNo ,
 									&cellData , mcss->work );
+						
+						if( mcss->musInfo[clIdx].pltNo == MUS_POKE_PLT_ROTATE )
+						{
+							VEC_Set( &mcss->rotOfsBase , cellData.ofs.x , cellData.ofs.y , 0 );
+						}
 					}
 					else
 					{
@@ -592,9 +628,25 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 	//マルチセルデータから取得した位置で書き出し
 	pos.x = MUS_MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posX ) + MUS_MCSS_CONST( anim_SRT_c->px );
 	pos.y = MUS_MCSS_CONST( -mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posY ) + MUS_MCSS_CONST( -anim_SRT_c->py );
+	{
+		u16 rotZ;
+		if( isFlip == MUS_MCSS_FLIP_NONE )
+		{
+			rotZ = mcss->rotZ;
+		}
+		else
+		if( isFlip & MUS_MCSS_FLIP_X )
+		{
+			rotZ = (u16)(0x10000-mcss->rotZ);
+		}
+		
+		
+		G3_RotZ( -FX_SinIdx( rotZ ), FX_CosIdx( rotZ ) );
+	}
 
 	G3_Translate( pos.x, pos.y, *pos_z_default );
 
+	G3_Translate( -mcss->rotOfs.x, mcss->rotOfs.y, 0 );
 	G3_RotZ( -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
 
 	if( isFlip == MUS_MCSS_FLIP_NONE )
@@ -699,6 +751,7 @@ MUS_MCSS_WORK*	MUS_MCSS_Add( MUS_MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y
 			mcss_sys->mcss[ count ]->pos.x = pos_x;
 			mcss_sys->mcss[ count ]->pos.y = pos_y;
 			mcss_sys->mcss[ count ]->pos.z = pos_z;
+			mcss_sys->mcss[ count ]->rotZ = 0;
 			mcss_sys->mcss[ count ]->scale.x = FX32_ONE;
 			mcss_sys->mcss[ count ]->scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->scale.z = FX32_ONE;
@@ -798,6 +851,16 @@ void	MUS_MCSS_SetScale( MUS_MCSS_WORK *mcss, VecFx32 *scale )
 	mcss->scale.x = scale->x;
 	mcss->scale.y = scale->y;
 	mcss->scale.z = scale->z;
+}
+
+void			MUS_MCSS_GetRotation( MUS_MCSS_WORK *mcss, u16 *rotZ )
+{
+	*rotZ = mcss->rotZ;
+}
+
+void			MUS_MCSS_SetRotation( MUS_MCSS_WORK *mcss, u16 rotZ )
+{
+	mcss->rotZ = rotZ;
 }
 
 //--------------------------------------------------------------------------

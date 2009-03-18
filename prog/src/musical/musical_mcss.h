@@ -39,12 +39,13 @@ typedef struct
 	VecFx32	pos;	//マルチセルの位置
 	VecFx32	ofs;	//差分(回転前
 	VecFx32	scale;	//全体の拡縮
+	VecFx32 rotOfs;	//本体の回転差分
 	u16		rotZ;	//回転(セルの回転
 	u16		itemRotZ;	//回転(装備箇所に設定された回転
 	
 }MUS_MCSS_CELL_DATA;
 
-typedef void (*MusicalCellCallBack)( const MUS_POKE_EQUIP_POS pos , MUS_MCSS_CELL_DATA *cellData , void* work );
+typedef void (*MusicalCellCallBack)( const u8 pltNo , MUS_MCSS_CELL_DATA *cellData , void* work );
 
 typedef struct
 {
@@ -76,6 +77,8 @@ extern	void			MUS_MCSS_GetPosition( MUS_MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MUS_MCSS_SetPosition( MUS_MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MUS_MCSS_GetScale( MUS_MCSS_WORK *mcss, VecFx32 *scale );
 extern	void			MUS_MCSS_SetScale( MUS_MCSS_WORK *mcss, VecFx32 *scale );
+extern	void			MUS_MCSS_GetRotation( MUS_MCSS_WORK *mcss, u16 *rot );
+extern	void			MUS_MCSS_SetRotation( MUS_MCSS_WORK *mcss, u16 rot );
 extern	void			MUS_MCSS_SetShadowScale( MUS_MCSS_WORK *mcss, VecFx32 *scale );
 extern	void			MUS_MCSS_SetMepachiFlag( MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_ResetMepachiFlag( MUS_MCSS_WORK *mcss );
