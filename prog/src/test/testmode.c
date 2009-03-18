@@ -839,11 +839,12 @@ static BOOL TESTMODE_ITEM_SelectFuncTamada( TESTMODE_WORK *work , const int idx 
 	return TRUE;
 }
 
-extern const GFL_PROC_DATA DebugSogabeMainProcData;
+//extern const GFL_PROC_DATA DebugSogabeMainProcData;
+extern const GFL_PROC_DATA EffectViewerProcData;
 FS_EXTERN_OVERLAY(sogabe_debug);
 static BOOL TESTMODE_ITEM_SelectFuncSogabe( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(sogabe_debug), &DebugSogabeMainProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(sogabe_debug), &EffectViewerProcData, NULL);
 	return TRUE;
 }
 
