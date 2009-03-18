@@ -28,6 +28,7 @@
 #include "sound\pm_sndsys.h"
 #ifdef PM_DEBUG
 #include "test/performance.h"
+#include "test/debug_pause.h"
 #endif //PM_DEBUG
 
 #include "title/title.h"
@@ -71,6 +72,7 @@ void NitroMain(void)
 
 #ifdef PM_DEBUG
 	DEBUG_PerformanceInit();
+	DEBUG_PAUSE_Init();
 #endif
 
 	while(TRUE){

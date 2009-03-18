@@ -293,24 +293,18 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 	INFOWIN_Update();
 	STA_ACT_UpdateScroll(work);
 
-#if DEB_ARI
-	if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) == 0 ||
-		GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
-#endif
-	{
-		STA_SCRIPT_UpdateSystem( work->scriptSys );
+	STA_SCRIPT_UpdateSystem( work->scriptSys );
 
-		STA_BG_UpdateSystem( work->bgSys );
-		STA_POKE_UpdateSystem( work->pokeSys );
-		STA_OBJ_UpdateSystem( work->objSys );
-		STA_EFF_UpdateSystem( work->effSys );
-		STA_ACT_UpdateMessage( work );
-		
-		MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
+	STA_BG_UpdateSystem( work->bgSys );
+	STA_POKE_UpdateSystem( work->pokeSys );
+	STA_OBJ_UpdateSystem( work->objSys );
+	STA_EFF_UpdateSystem( work->effSys );
+	STA_ACT_UpdateMessage( work );
+	
+	MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
 
-		//ƒ|ƒP‚Æ‚©‚É’Ç]‚·‚é‰Â”\«‚à‚ ‚é‚Ì‚ÅÅŒã
-		STA_LIGHT_UpdateSystem( work->lightSys );
-	}
+	//ƒ|ƒP‚Æ‚©‚É’Ç]‚·‚é‰Â”\«‚à‚ ‚é‚Ì‚ÅÅŒã
+	STA_LIGHT_UpdateSystem( work->lightSys );
 
 
 	//3D•`‰æ	

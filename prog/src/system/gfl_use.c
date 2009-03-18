@@ -25,6 +25,11 @@
 
 #include "textprint.h"
 
+#ifdef PM_DEBUG
+#include "test/debug_pause.h"
+#endif //PM_DEBUG
+
+
 //=============================================================================================
 //=============================================================================================
 //------------------------------------------------------------------
@@ -154,8 +159,14 @@ void GFLUser_Main(void)
 	GFL_UI_Main();
     GFL_NET_Main();  //キーの処理の後すぐに通信を処理したい為ここに配置
 	
-	GFL_PROC_Main();
-    GFL_FADE_Main();
+#ifdef PM_DEBUG
+	//Lを押している間停止。L押しながらRで1コマ送る
+	if( DEBUG_PAUSE_Update() == TRUE )
+#endif
+	{
+		GFL_PROC_Main();
+		GFL_FADE_Main();
+	}
 	//GFL_SOUND_Main();
 }
 
