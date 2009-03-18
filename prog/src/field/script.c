@@ -10,8 +10,21 @@
  * 05.04.25 Hiroyuki Nakamura
  */
 //======================================================================
-#include "field_script.h"
-#include "field_scroffs.h" //スクリプトIDオフセット
+#include <gflib.h>
+#include "gamesystem/gamesystem.h"
+#include "gamesystem/game_event.h"
+#include "system/vm.h"
+#include "system/vm_cmd.h"
+
+#include "message.naix"
+
+#include "script.h"
+#include "scriptid_offset.h" 	//スクリプトIDオフセット
+#include "scrcmd.h"
+#include "scrcmd_work.h"
+#include "eventwork_def.h"
+
+#include "arc/fieldmap/script_seq.naix"
 
 //======================================================================
 //	デバック
@@ -23,16 +36,13 @@
 //======================================================================
 #define SCR_MSG_BUF_SIZE	(1024)				//メッセージバッファサイズ
 
-#ifndef FLDSCRIPT_PL_NULL
-typedef void (*fsysFunc)(FLDCOMMON_WORK* fsys);		//関数ポインタ型
-#else
-typedef void (*FLDSCRIPT_EVENTFUNC)(GMEVENT *ev);
-#endif
+//関数ポインタ型
+typedef void (*SCRIPT_EVENTFUNC)(GMEVENT *fsys);
 
 //--------------------------------------------------------------
 //	スクリプト制御ワーク構造体
 //--------------------------------------------------------------
-struct _TAG_FLDSCRIPT
+struct _TAG_SCRIPT_WORK
 {
 	u32 magic_no;			//イベントのワークがスクリプト制御ワークかを判別
 	
@@ -47,16 +57,15 @@ struct _TAG_FLDSCRIPT
 	
 	BOOL win_flag;			///<戦闘結果保持用ワーク
 	
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	//イベントウィンドウ
 	EV_WIN_WORK* ev_win;			//イベントウィンドウワークへのポインタ
-	
 	//会話ウィンドウ
 	GF_BGL_BMPWIN MsgWinDat;		//ビットマップウィンドウデータ
 	BMPMENU_WORK* mw;				//ビットマップメニューワーク
 #endif
 	
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	int player_dir;					//イベント起動時の主人公の向き
 	FIELD_OBJ_PTR target_obj;		//話しかけ対象のOBJのポインタ
 	FIELD_OBJ_PTR dummy_obj;		//透明ダミーOBJのポインタ
@@ -69,40 +78,44 @@ struct _TAG_FLDSCRIPT
 	u16 *ret_script_wk;			//スクリプト結果を代入するワークのポインタ
 	VMHANDLE *vm[VMHANDLE_MAX];	//仮想マシンへのポインタ
 
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	WORDSET* wordset;				//単語セット
 	STRBUF* msg_buf;				//メッセージバッファポインタ
 	STRBUF* tmp_buf;				//テンポラリバッファポインタ
 	void * waiticon;				///<待機アイコンのポインタ
 #endif
 	
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	//トレーナー視線情報
 	EV_TRAINER_EYE_HITDATA eye_hitdata[TRAINER_EYE_HITMAX];
 #endif
 	
 	u16 work[EVSCR_WORK_MAX];		//ワーク(ANSWORK,TMPWORKなどの代わり)
 	
-	FLDSCRIPT_EVENTFUNC next_func;		//スクリプト終了時に呼び出される関数
+	SCRIPT_EVENTFUNC next_func;		//スクリプト終了時に呼び出される関数
 	
 	void * subproc_work; //サブプロセスとのやりとりに使用するワークへの*
 	void * pWork;					//ワークへの汎用ポインタ
 
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	EOA_PTR eoa;		//主にフィールドエフェクトのポインタとして使う
 #endif
 
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	TCB_PTR player_tcb;				//自機形態レポートTCB
-
+	
 	GF_BGL_BMPWIN CoinWinDat;		//ビットマップウィンドウデータ
 	GF_BGL_BMPWIN GoldWinDat;		//ビットマップウィンドウデータ
-
+	
 	REPORT_INFO * riw;				///<レポート情報用ウィンドウ制御ワーク
 #endif
 	
-	HEAPID heapID;
+	//WB
 	GAMESYS_WORK *gsys;
+	HEAPID heapID;
+	FLDMSGBG *msgBG;
+
+	SCRIPT_FLDPARAM fld_param;
 };
 
 enum
@@ -114,7 +127,7 @@ enum
 //======================================================================
 //	隠しアイテムデータ
 //======================================================================
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 typedef struct{
 	u16 itemno;									//アイテムナンバー
 	u8	num;									//個数
@@ -129,31 +142,31 @@ typedef struct{
 //======================================================================
 //	プロトタイプ宣言
 //======================================================================
-static FLDSCRIPT* EvScriptWork_Alloc( HEAPID heapID );
+static SCRIPT_WORK* EvScriptWork_Alloc( HEAPID heapID );
 static void script_del( VMHANDLE* core );
-static void EvScriptWork_Init( FLDSCRIPT *sc, GAMESYS_WORK *gsys,
+static void EvScriptWork_Init( SCRIPT_WORK *sc, GAMESYS_WORK *gsys,
 	u16 scr_id, FLDMMDL *obj, void* ret_wk);
 
 static void InitScript(
-	FLDCOMMON_WORK* fsys, VMHANDLE* core, u16 id, u8 type );
-static u16 SetScriptDataSub( FLDCOMMON_WORK* fsys, VMHANDLE* core, u16 id );
+	SCRCMD_WORK *work, VMHANDLE* core, u16 id, u8 type, HEAPID heapID );
+static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u16 id, HEAPID heapID );
 static void SetScriptData(
-	FLDCOMMON_WORK* fsys, VMHANDLE* core, int index, u32 dat_id );
+	SCRCMD_WORK *work, VMHANDLE* core, int index, u32 dat_id, HEAPID heapID );
 static void SetZoneScriptData( FLDCOMMON_WORK* fsys, VMHANDLE* core );
 
-//FLDSCRIPTのメンバーアクセス
+//SCRIPTのメンバーアクセス
 static void EventDataIDJump( VMHANDLE * core, u16 ev_id );
 
 static void * LoadZoneScriptFile(int zone_id);
 static u32 LoadZoneMsgNo(int zone_id);
 
 //イベント
-static GMEVENT * FldScript_CreateControlEvent( FLDSCRIPT *sc );
-static void FldScript_CallControlEvent( FLDSCRIPT *sc, GMEVENT *event );
-static GMEVENT * FldScript_ChangeControlEvent( FLDSCRIPT *sc, GMEVENT *event );
+static GMEVENT * FldScript_CreateControlEvent( SCRIPT_WORK *sc );
+static void FldScript_CallControlEvent( SCRIPT_WORK *sc, GMEVENT *event );
+static GMEVENT * FldScript_ChangeControlEvent( SCRIPT_WORK *sc, GMEVENT *event );
 
 //イベントワーク、スクリプトワークアクセス関数
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 u16 * GetEventWorkAdrs( FLDCOMMON_WORK* fsys, u16 work_no );
 u16 GetEventWorkValue( FLDCOMMON_WORK* fsys, u16 work_no );
 BOOL SetEventWorkValue( FLDCOMMON_WORK* fsys, u16 work_no, u16 value );
@@ -163,7 +176,7 @@ BOOL SetEvDefineObjCode( FLDCOMMON_WORK* fsys, u16 no, u16 obj_code );
 #endif
 
 //イベントフラグ
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 BOOL CheckEventFlag( FLDCOMMON_WORK* fsys, u16 flag_no);
 void SetEventFlag( FLDCOMMON_WORK* fsys, u16 flag_no);
 void ResetEventFlag( FLDCOMMON_WORK* fsys, u16 flag_no);
@@ -173,7 +186,7 @@ void TimeEventFlagClear( FLDCOMMON_WORK* fsys );
 #endif
 
 //トレーナー関連
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 u16 GetTrainerIdByScriptId( u16 scr_id );
 BOOL GetTrainerLRByScriptId( u16 scr_id );
 BOOL CheckTrainer2vs2Type( u16 tr_id );
@@ -183,34 +196,26 @@ void ResetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id );
 #endif
 
 //隠しアイテム
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 u16 GetHideItemFlagNoByScriptId( u16 scr_id );
 u16 GetHideItemFlagIndexByScriptId( u16 scr_id );
 u8 GetHideItemResponseByScriptId( u16 scr_id );
-static BOOL HideItemParamSet( FLDSCRIPT* sc, u16 scr_id );
+static BOOL HideItemParamSet( SCRIPT_WORK* sc, u16 scr_id );
 void HideItemFlagOneDayClear( FLDCOMMON_WORK* fsys );
 #endif
 
 //特殊スクリプト
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 void GameStartScriptInit( FLDCOMMON_WORK* fsys );
 void SpScriptStart( FLDCOMMON_WORK* fsys, u16 scr_id );
 BOOL SpScriptSearch( FLDCOMMON_WORK* fsys, u8 key );
 static u16 SpScriptSearch_Sub( const u8 * p, u8 key );
 #endif
 
-//仮
-const VMCMD_FUNC ScriptCmdTbl[] =
-{
-	NULL,
-};
-
-const u32 ScriptCmdMax = NELEMS( ScriptCmdTbl );
-
 //======================================================================
 //	グローバル変数
 //======================================================================
-#define FLDSCRIPT_MAGIC_NO		(0x3643f)
+#define SCRIPT_MAGIC_NO		(0x3643f)
 
 //========================================================================
 //
@@ -244,12 +249,16 @@ const u32 ScriptCmdMax = NELEMS( ScriptCmdTbl );
  * @retval	none
  */
 //--------------------------------------------------------------
-void FLDSCRIPT_SetupScript(
-	GAMESYS_WORK *gsys, u16 scr_id, FLDMMDL *obj, HEAPID heapID )
+GMEVENT * SCRIPT_SetScript( GAMESYS_WORK *gsys, u16 scr_id, FLDMMDL *obj,
+		HEAPID heapID, const SCRIPT_FLDPARAM *fparam )
 {
-	FLDSCRIPT* sc = EvScriptWork_Alloc( heapID );		//ワーク確保
+	GMEVENT *event;
+	
+	SCRIPT_WORK *sc = EvScriptWork_Alloc( heapID );		//ワーク確保
+	sc->fld_param = *fparam;
 	EvScriptWork_Init( sc, gsys, scr_id, obj, NULL );	//初期設定
-	FldScript_CreateControlEvent( sc );
+	event = FldScript_CreateControlEvent( sc );
+	return( event );
 }
 
 //--------------------------------------------------------------
@@ -262,10 +271,10 @@ void FLDSCRIPT_SetupScript(
  * @retval	none
  */
 //--------------------------------------------------------------
-void FLDSCRIPT_CallScript( GMEVENT *event,
+void SCRIPT_CallScript( GMEVENT *event,
 	u16 scr_id, FLDMMDL *obj, void *ret_script_wk, HEAPID heapID )
 {
-	FLDSCRIPT *sc = EvScriptWork_Alloc( heapID );	//ワーク確保
+	SCRIPT_WORK *sc = EvScriptWork_Alloc( heapID );	//ワーク確保
 	EvScriptWork_Init( sc, GMEVENT_GetGameSysWork(event), scr_id, obj, ret_script_wk );	//初期設定
 	FldScript_CallControlEvent( sc, event );
 }
@@ -283,10 +292,10 @@ void FLDSCRIPT_CallScript( GMEVENT *event,
  * 他のイベントからスクリプトへの切替を行う
  */
 //--------------------------------------------------------------
-void FLDSCRIPT_ChangeScript( GMEVENT *event,
+void SCRIPT_ChangeScript( GMEVENT *event,
 		u16 scr_id, FLDMMDL *obj, HEAPID heapID )
 {
-	FLDSCRIPT *sc = EvScriptWork_Alloc( heapID );	//ワーク確保
+	SCRIPT_WORK *sc = EvScriptWork_Alloc( heapID );	//ワーク確保
 	EvScriptWork_Init( sc, GMEVENT_GetGameSysWork(event), scr_id, obj, NULL );	//初期設定
 	FldScript_ChangeControlEvent( sc, event );
 }
@@ -302,13 +311,13 @@ void FLDSCRIPT_ChangeScript( GMEVENT *event,
  * @retval	"TRUE = スクリプト実行終了"
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 static BOOL GMEVENT_ControlScript(GMEVENT_CONTROL * event)
 {
 	int i;
 	fsysFunc func;
 	VMHANDLE* core = NULL;
-	FLDSCRIPT * sc = FieldEvent_GetSpecialWork( event );
+	SCRIPT_WORK * sc = FieldEvent_GetSpecialWork( event );
 	FLDCOMMON_WORK* fsys = FieldEvent_GetFieldSysWork( event );
 
 	switch(sc->seq){
@@ -387,16 +396,16 @@ static BOOL GMEVENT_ControlScript(GMEVENT_CONTROL * event)
  * @retval	"スクリプト制御ワークのアドレス"
  */
 //--------------------------------------------------------------
-static FLDSCRIPT * EvScriptWork_Alloc( HEAPID heapID )
+static SCRIPT_WORK * EvScriptWork_Alloc( HEAPID heapID )
 {
-	FLDSCRIPT *sc;
+	SCRIPT_WORK *sc;
 	
-	sc = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDSCRIPT) );
+	sc = GFL_HEAP_AllocClearMemory( heapID, sizeof(SCRIPT_WORK) );
 	
 	//デバック処理
 	//debug_script_flag = 1;
 	
-	sc->magic_no = FLDSCRIPT_MAGIC_NO;
+	sc->magic_no = SCRIPT_MAGIC_NO;
 	sc->heapID = heapID;
 	return sc;
 }
@@ -412,12 +421,15 @@ static FLDSCRIPT * EvScriptWork_Alloc( HEAPID heapID )
 //--------------------------------------------------------------
 static void script_del( VMHANDLE *core )
 {
-	#ifndef FLDSCRIPT_PL_NULL
+	#ifndef SCRIPT_PL_NULL
 	MSGMAN_Delete( core->msgman );
-	sys_FreeMemoryEz( core->pScript );			//スクリプトデータ
+	sys_FreeMemoryEz( core->pScript );	//スクリプトデータ
 	sys_FreeMemoryEz( core );
 	return;
 	#else
+	SCRCMD_WORK *cmd = VM_GetContext( core );
+	SCRCMD_WORK_Delete( cmd );
+	GFL_HEAP_FreeMemory( core->pScript );
 	VM_Delete( core );
 	#endif
 }
@@ -427,7 +439,7 @@ static void script_del( VMHANDLE *core )
  * @brief	スクリプト制御ワーク初期設定
  *
  * @param	fsys		FLDCOMMON_WORK型のポインタ
- * @param	sc			FLDSCRIPT型のポインタ
+ * @param	sc			SCRIPT型のポインタ
  * @param	scr_id		スクリプトID
  * @param	obj			話しかけ対象OBJのポインタ
  * @param	ret_wk		スクリプト結果を代入するワークのポインタ
@@ -435,16 +447,16 @@ static void script_del( VMHANDLE *core )
  * @retval	"スクリプト制御ワークのアドレス"
  */
 //--------------------------------------------------------------
-static void EvScriptWork_Init( FLDSCRIPT *sc,
+static void EvScriptWork_Init( SCRIPT_WORK *sc,
 	GAMESYS_WORK *gsys,	u16 scr_id, FLDMMDL *obj, void *ret_wk )
 {
 	u16 *objid;
 	
 	sc->gsys = gsys;
-	objid = FLDSCRIPT_GetSubMemberWork( sc, ID_EVSCR_WK_TARGET_OBJID );
+	objid = SCRIPT_GetSubMemberWork( sc, ID_EVSCR_WK_TARGET_OBJID );
 	
 	//DIR_NOT = -1
-	#ifndef FLDSCRIPT_PL_NULL
+	#ifndef SCRIPT_PL_NULL
 	sc->player_dir = Player_DirGet( fsys->player ); //起動時の自機向きセット
 	#endif
 	sc->target_obj = obj;		//話しかけ対象OBJのポインタセット
@@ -455,14 +467,14 @@ static void EvScriptWork_Init( FLDSCRIPT *sc,
 		*objid = FLDMMDL_GetOBJID( obj ); //話しかけ対象OBJIDのセット
 	}
 
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	//隠しアイテムのスクリプトIDだったら(あとで移動する予定)
 	if( (scr_id >= ID_HIDE_ITEM_OFFSET) &&
 		(scr_id <= ID_HIDE_ITEM_OFFSET_END) ){
 		HideItemParamSet( sc, scr_id );
 	}
 	
-	#ifdef DEBUG_FLDSCRIPT
+	#ifdef DEBUG_SCRIPT
 	OS_Printf( "ZONE:%s SCRID:%d\n",
 		ZoneData_GetZoneName(fsys->location->zone_id), scr_id);
 	#endif
@@ -479,20 +491,41 @@ static void EvScriptWork_Init( FLDSCRIPT *sc,
  * @retval	none
  */
 //--------------------------------------------------------------
-VMHANDLE * FLDSCRIPT_AddVMachine(
-	FLDCOMMON_WORK *fsys, HEAPID heapID, u16 scr_id )
+VMHANDLE * SCRIPT_AddVMachine(
+		GAMESYS_WORK *gsys,
+		SCRIPT_WORK *sc,
+		HEAPID heapID,
+		u16 scr_id )
 {
+	SCRCMD_WORK_HEADER head;
 	VMHANDLE *core;
 	VM_INITIALIZER init;
+	SCRCMD_WORK *work;
+	
+	head.gsys = gsys;
+	head.gdata = GAMESYSTEM_GetGameData( gsys );
+	head.fldmmdlsys = GAMEDATA_GetFldMMdlSys( head.gdata );
+	head.script = sc;
+	
+	work = SCRCMD_WORK_Create( &head, heapID );
 	
 	init.stack_size = 0x0100;
 	init.reg_size = 0x0100;
 	init.command_table = ScriptCmdTbl;
-//	init.command_max = ScriptCmdMax;
+	
+	#if 0	//command_maxがconstの為初期化出来ない
+	init.command_max  = ScriptCmdMax;
+	#else
+	{
+		u32 *max = (u32*)(&init.command_max);
+		*max = ScriptCmdMax;
+	}
+	#endif
+	
 	core = VM_Create( heapID, &init );	//仮想マシン初期化
 	
-	VM_Init( core, NULL );
-	InitScript( fsys, core, scr_id, 0 );//ローカルスクリプト初期化
+	VM_Init( core, work );
+	InitScript( work, core, scr_id, 0, heapID );//ローカルスクリプト初期化
 	return core;
 }
 
@@ -507,18 +540,14 @@ VMHANDLE * FLDSCRIPT_AddVMachine(
  */
 //--------------------------------------------------------------
 static void InitScript(
-	FLDCOMMON_WORK* fsys, VMHANDLE* core, u16 id, u8 type )
+	SCRCMD_WORK *work, VMHANDLE* core, u16 id, u8 type, HEAPID heapID )
 {
-#ifndef FLDSCRIPT_PL_NULL
 	u16 scr_id;
-	core->fsys = fsys;
-	scr_id = SetScriptDataSub( fsys, core, id ); //スクリプトデータ、メッセージデータ読み込み
+	scr_id = SetScriptDataSub( work, core, id, heapID ); //スクリプトデータ、メッセージデータ読み込み
 	VM_Start( core, core->pScript ); //仮想マシンにコード設定
 	EventDataIDJump( core, scr_id );
-	VM_SetWork( core, (void *)fsys->event ); //コマンドなどで参照するワークセット
+//	VM_SetWork(core,(void *)fsys->event); //コマンドなどで参照するワークセット
 	return;
-#else
-#endif
 }
 
 //--------------------------------------------------------------
@@ -530,11 +559,40 @@ static void InitScript(
  * @retval	"スクリプトIDからオフセットを引いた値"
  */
 //--------------------------------------------------------------
-static u16 SetScriptDataSub( FLDCOMMON_WORK* fsys, VMHANDLE* core, u16 id )
+static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u16 id, HEAPID heapID )
 {
-#ifndef FLDSCRIPT_PL_NULL
 	u16 scr_id = id;
 	
+	if( scr_id >= ID_COMMON_SCR_OFFSET ){		//共通スクリプトID
+		SetScriptData( work, core,
+			NARC_script_seq_common_scr_bin,
+			NARC_message_common_scr_dat,
+			heapID );
+		scr_id -= ID_COMMON_SCR_OFFSET;
+	}else if( scr_id >= ID_START_SCR_OFFSET ){ //ローカルスクリプトID
+		#ifndef SCRIPT_PL_NULL
+		SetZoneScriptData( fsys, core );	//ゾーンスクリプトデータセット
+		scr_id -= ID_START_SCR_OFFSET;
+		#else
+		GF_ASSERT( 0 );
+		#endif
+	}else{										//SCRID_NULL(0)が渡された時
+		SetScriptData( work, core,
+			NARC_script_seq_dummy_scr_bin,
+			NARC_message_common_scr_dat,
+			heapID );
+		scr_id = 0;
+	}
+	
+	return scr_id;
+}
+
+#if 0 //SCRIPT_PL_NULL
+static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u16 id )
+{
+	u16 scr_id = id;
+	
+
 	//スクラッチスクリプトのIDが渡された時
 	if( scr_id >= ID_SCRATCH_OFFSET ){
 		SetScriptData(
@@ -699,10 +757,8 @@ static u16 SetScriptDataSub( FLDCOMMON_WORK* fsys, VMHANDLE* core, u16 id )
 	}
 
 	return scr_id;
-#else
-	return 0;
-#endif
 }
+#endif
 
 //----------------------------------------------------------------
 /**
@@ -713,17 +769,25 @@ static u16 SetScriptDataSub( FLDCOMMON_WORK* fsys, VMHANDLE* core, u16 id )
  * @param	dat_id		メッセージデータのID
  */
 //----------------------------------------------------------------
-static void SetScriptData(
-	FLDCOMMON_WORK *fsys, VMHANDLE *core, int index, u32 dat_id )
+#define SCRIPT_MSG_NON (0xffffffff)
+
+static void SetScriptData( SCRCMD_WORK *work,
+	VMHANDLE *core, int index, u32 dat_id, HEAPID heapID )
 {
-#ifndef FLDSCRIPT_PL_NULL
 	//共通スクリプトデータロード
-	VM_CODE* script = ArchiveDataLoadMalloc(ARC_SCRIPT, index , HEAPID_WORLD);
-	core->pScript = (VM_CODE *)script;
+	VM_CODE *script = GFL_ARC_UTIL_Load( ARCID_SCRSEQ, index, 0, heapID );
+	core->pScript = (VM_CODE*)script;
 	
+#ifndef SCRIPT_PL_NULL
 	//メッセージデータマネージャー作成
-	core->msgman = MSGMAN_Create( MSGMAN_TYPE_DIRECT, ARC_MSG, dat_id, HEAPID_WORLD );
-	return;
+	script->msgman = GFL_MSG_Create(
+		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, dat_id, heapID );
+	core->msgman = MSGMAN_Create(
+		MSGMAN_TYPE_DIRECT, ARC_MSG, dat_id, HEAPID_WORLD );
+#else
+	if( dat_id != SCRIPT_MSG_NON ){
+		SCRCMD_WORK_CreateMsgData( work, dat_id );
+	}
 #endif
 }
 
@@ -735,7 +799,7 @@ static void SetScriptData(
 //----------------------------------------------------------------
 static void SetZoneScriptData( FLDCOMMON_WORK* fsys, VMHANDLE* core )
 {
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	//ゾーンIDからロードするスクリプトバイナリを取得
 	VM_CODE* script = LoadZoneScriptFile(fsys->location->zone_id);
 	core->pScript	= (VM_CODE*)script;
@@ -745,6 +809,8 @@ static void SetZoneScriptData( FLDCOMMON_WORK* fsys, VMHANDLE* core )
 									LoadZoneMsgNo(fsys->location->zone_id), HEAPID_WORLD );
 	
 	return;
+#else
+	GF_ASSERT( 0 );
 #endif
 }
 
@@ -755,14 +821,14 @@ static void SetZoneScriptData( FLDCOMMON_WORK* fsys, VMHANDLE* core )
 //--------------------------------------------------------------
 /**
  * スクリプト制御ワークのメンバーアドレス取得
- * @param	sc		FLDSCRIPT型のポインタ
+ * @param	sc		SCRIPT型のポインタ
  * @param	id		取得するメンバID(script.h参照)
  * @return	"アドレス"
  */
 //--------------------------------------------------------------
-void * FLDSCRIPT_GetSubMemberWork( FLDSCRIPT *sc, u32 id )
+void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 {
-	#ifndef FLDSCRIPT_PL_NULL
+	#ifndef SCRIPT_PL_NULL
 	EV_TRAINER_EYE_HITDATA *eye;
 	#endif
 	
@@ -833,7 +899,16 @@ void * FLDSCRIPT_GetSubMemberWork( FLDSCRIPT *sc, u32 id )
 	//話しかけ対象OBJID
 	case ID_EVSCR_WK_TARGET_OBJID:
 		return &sc->work[ id - ID_EVSCR_WK_START ];
-#ifndef FLDSCRIPT_PL_NULL
+	//GAMESYS_WORK wb
+	case ID_EVSCR_WK_GAMESYS_WORK:
+		return &sc->gsys;
+	//HEAPID wb
+	case ID_EVSCR_WK_HEAPID:
+		return &sc->heapID;
+	//SCRIPT_FLDPARAM wb
+	case ID_EVSCR_WK_FLDPARAM:
+		return &sc->fld_param;
+#ifndef SCRIPT_PL_NULL
 	//イベントウィンドウワークのポインタ
 	case ID_EVSCR_EVWIN:
 		return &sc->ev_win;
@@ -944,14 +1019,14 @@ void * FLDSCRIPT_GetSubMemberWork( FLDSCRIPT *sc, u32 id )
  * @return	"アドレス"
  */
 //--------------------------------------------------------------
-void * FLDSCRIPT_GetMemberWork( FLDSCRIPT *sc, u32 id )
+void * SCRIPT_GetMemberWork( SCRIPT_WORK *sc, u32 id )
 {
-	if( sc->magic_no != FLDSCRIPT_MAGIC_NO ){
+	if( sc->magic_no != SCRIPT_MAGIC_NO ){
 		GF_ASSERT( (0) &&
 		"起動(確保)していないスクリプトのワークにアクセスしています！" );
 	}
 	
-	return FLDSCRIPT_GetSubMemberWork( sc, id );
+	return SCRIPT_GetSubMemberWork( sc, id );
 }
 
 //--------------------------------------------------------------
@@ -963,11 +1038,11 @@ void * FLDSCRIPT_GetMemberWork( FLDSCRIPT *sc, u32 id )
  * 流れが把握しずらくなるので、汎用的に使えないようにしている！
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
-void FLDSCRIPT_SetNextScript( FLDCOMMON_WORK *fsys )
+#ifndef SCRIPT_PL_NULL
+void SCRIPT_SetNextScript( FLDCOMMON_WORK *fsys )
 {
-	FLDSCRIPT *sc = FieldEvent_GetSpecialWork( fsys->event );
-
+	SCRIPT_WORK *sc = FieldEvent_GetSpecialWork( fsys->event );
+	
 	if( FieldMenuCallCheck( fsys ) == TRUE ){	//「なぞのばしょ」チェック 2006/10/24 by nakahiro
 		sc->next_func = FieldMenuEvChg;
 	}
@@ -985,11 +1060,9 @@ void FLDSCRIPT_SetNextScript( FLDCOMMON_WORK *fsys )
 //--------------------------------------------------------------
 static void EventDataIDJump( VMHANDLE * core, u16 ev_id )
 {
-#ifndef FLDSCRIPT_PL_NULL
-	core->PC += (ev_id * 4);			//ID分進める(adrsがlongなので*4)
-	core->PC += VMGetU32( core );		//ラベルオフセット分進める
+	core->adrs += (ev_id * 4);			//ID分進める(adrsがlongなので*4)
+	core->adrs += VMGetU32( core );		//ラベルオフセット分進める
 	return;
-#endif
 }
 
 //--------------------------------------------------------------
@@ -1001,7 +1074,7 @@ static void EventDataIDJump( VMHANDLE * core, u16 ev_id )
 //--------------------------------------------------------------
 static void * LoadZoneScriptFile(int zone_id)
 {
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	return ArchiveDataLoadMalloc(ARC_SCRIPT, ZoneData_GetScriptArchiveID(zone_id), HEAPID_WORLD);
 #else
 	return NULL;
@@ -1027,7 +1100,7 @@ void * LoadZoneMsgFile(int zone_id)
 //--------------------------------------------------------------
 static u32 LoadZoneMsgNo(int zone_id)
 {
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	return ZoneData_GetMsgArchiveID(zone_id);
 #else
 	return 0;
@@ -1042,7 +1115,8 @@ static u32 LoadZoneMsgNo(int zone_id)
 //--------------------------------------------------------------
 typedef struct
 {
-	FLDSCRIPT *sc;
+	SCRIPT_WORK *sc;
+	SCRCMD_WORK *cmd_wk;
 }EVENT_SCRIPT_WORK;
 
 //--------------------------------------------------------------
@@ -1060,17 +1134,17 @@ static GMEVENT_RESULT FldScriptEvent_ControlScript(
 	int i;
 	VMHANDLE *core = NULL;
 	EVENT_SCRIPT_WORK *ev_wk = wk;
-	FLDSCRIPT *sc = ev_wk->sc;
+	SCRIPT_WORK *sc = ev_wk->sc;
 	
 	switch( *seq ){
 	case 0:
 		//仮想マシン追加
-		sc->vm[VMHANDLE_MAIN] =
-			FLDSCRIPT_AddVMachine( NULL, sc->heapID, sc->script_id );
+		sc->vm[VMHANDLE_MAIN] = SCRIPT_AddVMachine(
+				sc->gsys, sc, sc->heapID, sc->script_id );
 		sc->vm_machine_count = 1;
 		
 		//メッセージ関連
-		#ifndef FLDSCRIPT_PL_NULL
+		#ifndef SCRIPT_PL_NULL
 		sc->wordset = WORDSET_CreateEx(
 			WORDSET_SCRIPT_SETNUM, WORDSET_SCRIPT_BUFLEN, HEAPID_WORLD);
 		sc->msg_buf = STRBUF_Create( SCR_MSG_BUF_SIZE, HEAPID_WORLD );
@@ -1098,9 +1172,9 @@ static GMEVENT_RESULT FldScriptEvent_ControlScript(
 
 		//仮想マシンの数をチェック
 		if( sc->vm_machine_count <= 0 ){
-			FLDSCRIPT_EVENTFUNC func = sc->next_func;		//退避
+			SCRIPT_EVENTFUNC func = sc->next_func;		//退避
 			
-			#ifndef FLDSCRIPT_PL_NULL
+			#ifndef SCRIPT_PL_NULL
 			WORDSET_Delete( sc->wordset );
 			STRBUF_Delete( sc->msg_buf );
 			STRBUF_Delete( sc->tmp_buf );
@@ -1110,7 +1184,7 @@ static GMEVENT_RESULT FldScriptEvent_ControlScript(
 			//debug_script_flag = 0;
 			
 			sc->magic_no = 0;
-			GFL_HEAP_FreeMemory( event );		//スクリプトワーク
+			GFL_HEAP_FreeMemory( sc );		//スクリプトワーク
 			
 			//スクリプト終了時に呼び出される関数実行
 			if( func != NULL ){
@@ -1129,16 +1203,16 @@ static GMEVENT_RESULT FldScriptEvent_ControlScript(
 //--------------------------------------------------------------
 /**
  * スクリプトイベントセット
- * @param	sc	FLDSCRIPT*
+ * @param	sc	SCRIPT_WORK*
  * @param	
  * @retval
  */
 //--------------------------------------------------------------
-static GMEVENT * FldScript_CreateControlEvent( FLDSCRIPT *sc )
+static GMEVENT * FldScript_CreateControlEvent( SCRIPT_WORK *sc )
 {
 	GMEVENT *event;
 	EVENT_SCRIPT_WORK *ev_sc;
-
+	
 	event = GMEVENT_Create( sc->gsys, NULL,
 		FldScriptEvent_ControlScript, sizeof(EVENT_SCRIPT_WORK) );
 	ev_sc = GMEVENT_GetEventWork( event );
@@ -1151,12 +1225,12 @@ static GMEVENT * FldScript_CreateControlEvent( FLDSCRIPT *sc )
 //--------------------------------------------------------------
 /**
  * スクリプトイベントコール
- * @param	sc	FLDSCRIPT*
+ * @param	sc	SCRIPT_WORK*
  * @param	
  * @retval
  */
 //--------------------------------------------------------------
-static void FldScript_CallControlEvent( FLDSCRIPT *sc, GMEVENT *event )
+static void FldScript_CallControlEvent( SCRIPT_WORK *sc, GMEVENT *event )
 {
 	GMEVENT *sc_event;
 	sc_event = FldScript_CreateControlEvent( sc );
@@ -1166,12 +1240,12 @@ static void FldScript_CallControlEvent( FLDSCRIPT *sc, GMEVENT *event )
 //--------------------------------------------------------------
 /**
  * スクリプトイベントチェンジ
- * @param	sc	FLDSCRIPT*
+ * @param	sc	SCRIPT_WORK*
  * @param	
  * @retval
  */
 //--------------------------------------------------------------
-static GMEVENT * FldScript_ChangeControlEvent( FLDSCRIPT *sc, GMEVENT *event )
+static GMEVENT * FldScript_ChangeControlEvent( SCRIPT_WORK *sc, GMEVENT *event )
 {
 	EVENT_SCRIPT_WORK *ev_sc;
 	
@@ -1200,25 +1274,23 @@ static GMEVENT * FldScript_ChangeControlEvent( FLDSCRIPT *sc, GMEVENT *event )
  * @li	work_no >= 0x8000	スクリプト制御ワークの中に確保しているワーク
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
-u16 * FLDSCRIPT_GetEventWork( FLDCOMMON_WORK *fsys, u16 work_no )
+u16 * SCRIPT_GetEventWork( SCRIPT_WORK *sc, GAMEDATA *gdata, u16 work_no )
 {
-	EVENTWORK* ev;
-	ev = SaveData_GetEventWork( fsys->savedata );
+	EVENTWORK *ev;
+	ev = GAMEDATA_GetEventWork( gdata );
 	
 	if( work_no < SVWK_START ){
 		return NULL;
 	}
 	
 	if( work_no < SCWK_START ){
-		return EventWork_GetEventWorkAdrs(ev,work_no);
+		return EVENTWORK_GetEventWorkAdrs(ev,work_no);
 	}
 	
 	//スクリプト制御ワークの中で、ANSWORKなどのワークを確保しています
-	return FLDSCRIPT_GetMemberWork(
-		fsys, (ID_EVSCR_WK_START + work_no - SCWK_START) );
+	return SCRIPT_GetMemberWork(
+		sc, (ID_EVSCR_WK_START + work_no - SCWK_START) );
 }
-#endif
 
 //------------------------------------------------------------------
 /**
@@ -1230,14 +1302,12 @@ u16 * FLDSCRIPT_GetEventWork( FLDCOMMON_WORK *fsys, u16 work_no )
  * @return	"ワークの値"
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
-u16 FLDSCRIPT_GetEventWorkValue( FLDSCRIPT *sc, u16 work_no )
+u16 SCRIPT_GetEventWorkValue( SCRIPT_WORK *sc, GAMEDATA *gdata, u16 work_no )
 {
-	u16* res = GetEventWorkAdrs( fsys, work_no );
+	u16 *res = SCRIPT_GetEventWork( sc, gdata, work_no );
 	if( res == NULL ){ return work_no; }
 	return *res;
 }
-#endif
 
 //------------------------------------------------------------------
 /**
@@ -1250,9 +1320,9 @@ u16 FLDSCRIPT_GetEventWorkValue( FLDSCRIPT *sc, u16 work_no )
  * @return	"TRUE=セット出来た、FALSE=セット出来なかった"
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
-BOOL FLDSCRIPT_SetEventWorkValue(
-	FLDSCRIPT *sc, u16 work_no, u16 value )
+#ifndef SCRIPT_PL_NULL
+BOOL SCRIPT_SetEventWorkValue(
+	SCRIPT_WORK *sc, u16 work_no, u16 value )
 {
 	u16* res = GetEventWorkAdrs( fsys, work_no );
 	if( res == NULL ){ return FALSE; }
@@ -1269,7 +1339,7 @@ BOOL FLDSCRIPT_SetEventWorkValue(
  * @return	"OBJキャラコード"
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 u16 GetEvDefineObjCode( FLDCOMMON_WORK* fsys, u16 no )
 {
 	GF_ASSERT( (no < OBJCHR_WORK_MAX) && "引数が不正です！" );
@@ -1288,7 +1358,7 @@ u16 GetEvDefineObjCode( FLDCOMMON_WORK* fsys, u16 no )
  * @return	"TRUE=セット出来た、FALSE=セット出来なかった"
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 BOOL SetEvDefineObjCode( FLDCOMMON_WORK* fsys, u16 no, u16 obj_code )
 {
 	GF_ASSERT( (no < OBJCHR_WORK_MAX) && "引数が不正です！" );
@@ -1308,7 +1378,7 @@ BOOL SetEvDefineObjCode( FLDCOMMON_WORK* fsys, u16 no, u16 obj_code )
  * @retval	"0 = フラグOFF"
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 BOOL CheckEventFlag( FLDCOMMON_WORK* fsys, u16 flag_no)
 {
 	return EventWork_CheckEventFlag( SaveData_GetEventWork(fsys->savedata),	flag_no );
@@ -1323,7 +1393,7 @@ BOOL CheckEventFlag( FLDCOMMON_WORK* fsys, u16 flag_no)
  * @return	none
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 void SetEventFlag( FLDCOMMON_WORK* fsys, u16 flag_no)
 {
 	EventWork_SetEventFlag( SaveData_GetEventWork(fsys->savedata),flag_no );
@@ -1339,7 +1409,7 @@ void SetEventFlag( FLDCOMMON_WORK* fsys, u16 flag_no)
  * @return	none
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 void ResetEventFlag( FLDCOMMON_WORK* fsys, u16 flag_no)
 {
 	EventWork_ResetEventFlag( SaveData_GetEventWork(fsys->savedata), flag_no );
@@ -1354,7 +1424,7 @@ void ResetEventFlag( FLDCOMMON_WORK* fsys, u16 flag_no)
  * @return	none
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 void LocalEventFlagClear( FLDCOMMON_WORK* fsys )
 {
 	int i;
@@ -1401,7 +1471,7 @@ void LocalEventFlagClear( FLDCOMMON_WORK* fsys )
  * @return	none
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 void TimeEventFlagClear( FLDCOMMON_WORK* fsys )
 {
 	EVENTWORK* event;
@@ -1428,15 +1498,13 @@ void TimeEventFlagClear( FLDCOMMON_WORK* fsys )
  * @param	prm3	パラメータ３（SCWK_PARAM3）
  */
 //--------------------------------------------------------------
-void FLDSCRIPT_SetParam(
-	FLDCOMMON_WORK *fsys, u16 prm0, u16 prm1, u16 prm2, u16 prm3 )
+void SCRIPT_SetParam(
+	SCRIPT_WORK *sc, u16 prm0, u16 prm1, u16 prm2, u16 prm3 )
 {
-#ifndef FLDSCRIPT_PL_NULL
-	*(u16*)FLDSCRIPT_GetMemberWork( fsys, ID_EVSCR_WK_PARAM0 ) = prm0;
-	*(u16*)FLDSCRIPT_GetMemberWork( fsys, ID_EVSCR_WK_PARAM1 ) = prm1;
-	*(u16*)FLDSCRIPT_GetMemberWork( fsys, ID_EVSCR_WK_PARAM2 ) = prm2;
-	*(u16*)FLDSCRIPT_GetMemberWork( fsys, ID_EVSCR_WK_PARAM3 ) = prm3;
-#endif
+	*(u16*)SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_PARAM0 ) = prm0;
+	*(u16*)SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_PARAM1 ) = prm1;
+	*(u16*)SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_PARAM2 ) = prm2;
+	*(u16*)SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_PARAM3 ) = prm3;
 }
 
 //======================================================================
@@ -1455,7 +1523,7 @@ void FLDSCRIPT_SetParam(
  * @retval  "トレーナーID = フラグインデックス"
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 u16 GetTrainerIdByScriptId( u16 scr_id )
 {
 	if( scr_id < ID_TRAINER_2VS2_OFFSET ){
@@ -1473,7 +1541,7 @@ u16 GetTrainerIdByScriptId( u16 scr_id )
  * @retval  "0=左、1=右"
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 BOOL GetTrainerLRByScriptId( u16 scr_id )
 {
 	if( scr_id < ID_TRAINER_2VS2_OFFSET ){
@@ -1491,7 +1559,7 @@ BOOL GetTrainerLRByScriptId( u16 scr_id )
  * @retval  "0=シングルバトル、1=ダブルバトル"
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 BOOL CheckTrainer2vs2Type( u16 tr_id )
 {
 	if( TT_TrainerDataParaGet(tr_id, ID_TD_fight_type) == FIGHT_TYPE_1vs1 ){	//1vs1
@@ -1515,7 +1583,7 @@ BOOL CheckTrainer2vs2Type( u16 tr_id )
  * @retval	"0 = フラグOFF"
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 BOOL CheckEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id )
 {
 	return EventWork_CheckEventFlag( 
@@ -1535,7 +1603,7 @@ BOOL CheckEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id )
 //------------------------------------------------------------------
 void SetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id )
 {
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 	EventWork_SetEventFlag( SaveData_GetEventWork(fsys->savedata), GET_TRAINER_FLAG(tr_id) );
 	return;
 #endif
@@ -1551,7 +1619,7 @@ void SetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id )
  * @return	none
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 void ResetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id )
 {
 	EventWork_ResetEventFlag( SaveData_GetEventWork(fsys->savedata), GET_TRAINER_FLAG(tr_id) );
@@ -1572,7 +1640,7 @@ void ResetEventFlagTrainer( FLDCOMMON_WORK* fsys, u16 tr_id )
  * @retval  "フラグナンバー"
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 u16 GetHideItemFlagNoByScriptId( u16 scr_id )
 {
 	return (scr_id - ID_HIDE_ITEM_OFFSET + FH_FLAG_START);
@@ -1586,7 +1654,7 @@ u16 GetHideItemFlagNoByScriptId( u16 scr_id )
  * @retval  "フラグインデックス"
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 u16 GetHideItemFlagIndexByScriptId( u16 scr_id )
 {
 	return (scr_id - ID_HIDE_ITEM_OFFSET);
@@ -1602,7 +1670,7 @@ u16 GetHideItemFlagIndexByScriptId( u16 scr_id )
  * 現状の形でOKだそうです。(08.06.25)
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 static u16 oneday_hide_item1[][2] = {		//鋼鉄島
 	{ ZONE_ID_D24R0103, 52 },
 	{ ZONE_ID_D24R0104, 53 },
@@ -1619,7 +1687,7 @@ static u16 oneday_hide_item2[] = {			//ソノオの花園
 #define ONEDAY_HIDE_ITEM2_MAX	( NELEMS(oneday_hide_item2) )
 #endif
 
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 void HideItemFlagOneDayClear( FLDCOMMON_WORK* fsys )
 {
 	u8 index;
@@ -1659,7 +1727,7 @@ void HideItemFlagOneDayClear( FLDCOMMON_WORK* fsys )
  * 隠しアイテムのスクリプトを見つけたら呼ぶようにする！
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 u8 GetHideItemResponseByScriptId( u16 scr_id )
 {
 	int i;
@@ -1690,7 +1758,7 @@ u8 GetHideItemResponseByScriptId( u16 scr_id )
 /**
  * 隠しアイテムパラメータをワークにセット
  *
- * @param   sc			FLDSCRIPT型のポインタ
+ * @param   sc			SCRIPT型のポインタ
  * @param   scr_id		スクリプトID
  *
  * @retval  "0=セット失敗、1=セット成功"
@@ -1701,15 +1769,15 @@ u8 GetHideItemResponseByScriptId( u16 scr_id )
  * SCWK_PARAM2
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
-static BOOL HideItemParamSet( FLDSCRIPT* sc, u16 scr_id )
+#ifndef SCRIPT_PL_NULL
+static BOOL HideItemParamSet( SCRIPT_WORK* sc, u16 scr_id )
 {
 	int i;
 	u16	index;
 	const HIDE_ITEM_DATA* data;
-	u16* param0 = FLDSCRIPT_GetSubMemberWork( sc, ID_EVSCR_WK_PARAM0 );
-	u16* param1 = FLDSCRIPT_GetSubMemberWork( sc, ID_EVSCR_WK_PARAM1 );
-	u16* param2 = FLDSCRIPT_GetSubMemberWork( sc, ID_EVSCR_WK_PARAM2 );
+	u16* param0 = SCRIPT_GetSubMemberWork( sc, ID_EVSCR_WK_PARAM0 );
+	u16* param1 = SCRIPT_GetSubMemberWork( sc, ID_EVSCR_WK_PARAM1 );
+	u16* param2 = SCRIPT_GetSubMemberWork( sc, ID_EVSCR_WK_PARAM2 );
 
 	data	= &hide_item_data[0];
 	index	= GetHideItemFlagIndexByScriptId(scr_id);		//フラグインデックス取得
@@ -1748,7 +1816,7 @@ static BOOL HideItemParamSet( FLDSCRIPT* sc, u16 scr_id )
  * 解放処理を忘れずに！
  */
 //--------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 HIDE_ITEM_LIST * HideItem_CreateList( FLDCOMMON_WORK * fsys, int heapid )
 {
 	HIDE_ITEM_LIST* list;
@@ -1880,7 +1948,7 @@ HIDE_ITEM_LIST * HideItem_CreateList( FLDCOMMON_WORK * fsys, int heapid )
  * @return	none
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 void GameStartScriptInit( FLDCOMMON_WORK* fsys )
 {
 	SpScriptStart( fsys, SCRID_INIT_SCRIPT );
@@ -1905,7 +1973,7 @@ void GameStartScriptInit( FLDCOMMON_WORK* fsys )
  * @return	none
  *
  * 注意！
- * FLDSCRIPTを確保していないので、
+ * SCRIPTを確保していないので、
  * SCWK_ANSWERなどのワークは使用することが出来ない！
  * LOCALWORK0などを使用するようにする！
  *
@@ -1918,7 +1986,7 @@ void GameStartScriptInit( FLDCOMMON_WORK* fsys )
  * 片方は、ゾーンでことたりるもの、片方は、共通スクリプトのIDを指定？。。。
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 void SpScriptStart( FLDCOMMON_WORK* fsys, u16 scr_id )
 {
 	VMHANDLE*core = VMMachineAdd( fsys, scr_id );
@@ -1936,7 +2004,7 @@ void SpScriptStart( FLDCOMMON_WORK* fsys, u16 scr_id )
  * @return	"TRUE=特殊スクリプト実行、FALSE=何もしない"
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 BOOL SpScriptSearch( FLDCOMMON_WORK* fsys, u8 key )
 {
 	u16 scr_id;
@@ -1975,7 +2043,7 @@ BOOL SpScriptSearch( FLDCOMMON_WORK* fsys, u8 key )
  * @return	"スクリプトID"
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 static u16 SpScriptSearch_Sub(const u8 * p, u8 key )
 {
 	while( 1 ){
@@ -2009,7 +2077,7 @@ static u16 SpScriptSearch_Sub(const u8 * p, u8 key )
  * 0のため、SP_SCRIPT_ENDとして処理されてしまっていた。
  */
 //------------------------------------------------------------------
-#ifndef FLDSCRIPT_PL_NULL
+#ifndef SCRIPT_PL_NULL
 static u16 SpScriptSearch_Sub2( FLDCOMMON_WORK* fsys, const u8 * p, u8 key )
 {
 	u16 work1,work2;
@@ -2157,7 +2225,7 @@ u8 CheckScriptStatus(void)
 //--------------------------------------------------------------
 void VMMachineAddTCB(FLDCOMMON_WORK* fsys, u16 id, const VM_CMD* start, const VM_CMD* end)
 {
-	FLDSCRIPT * sc;
+	SCRIPT_WORK * sc;
 	VMHANDLE* core = NULL;
 
 	sc = FieldEvent_GetSpecialWork( fsys->event );
@@ -2193,7 +2261,7 @@ static void VMMachineControlTCB( TCB_PTR tcb, void* wk )
 {
 	VMHANDLE *core;
 	FLDCOMMON_WORK* fsys;
-	FLDSCRIPT * sc;
+	SCRIPT_WORK * sc;
 
 	core = (VMHANDLE *)wk;
 	fsys = FieldEvent_GetFieldSysWork( core->event_work );
@@ -2233,7 +2301,7 @@ u8 EvScriptWork_VMEmptySearch(GMEVENT_CONTROL * event);
 u8 EvScriptWork_VMEmptySearch(GMEVENT_CONTROL * event)
 {
 	VMHANDLE* core = NULL;
-	FLDSCRIPT * sc = FieldEvent_GetSpecialWork( event );
+	SCRIPT_WORK * sc = FieldEvent_GetSpecialWork( event );
 
 	for( i=0; i < VMHANDLE_MAX; i++ ){
 

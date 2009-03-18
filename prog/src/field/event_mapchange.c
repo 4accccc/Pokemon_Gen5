@@ -399,7 +399,15 @@ static void CreateFldMMdl( FLDMMDLSYS *fldmmdlsys, u16 zone_id )
 			0,	///<Y’l fx32Œ^
 		};
 	
-	for( i = 0; i < FLDMMDL_SAVEMMDL_MAX-2; i++ ){
+	i = 0;
+	head.id = i;
+	head.gx = 91;
+	head.gz = 85;
+	head.obj_code = code[GFUser_GetPublicRand(NELEMS(code))];
+	FLDMMDLSYS_AddFldMMdl( fldmmdlsys, &head, zone_id );
+	i++;
+	
+	for( ; i < FLDMMDL_SAVEMMDL_MAX-2; i++ ){
 		head.id = i;
 		head.gx = GFUser_GetPublicRand( 128 );
 		head.gz = GFUser_GetPublicRand( 128 );

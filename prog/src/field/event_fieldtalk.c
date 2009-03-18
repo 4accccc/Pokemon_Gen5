@@ -12,10 +12,14 @@
 #include "system/gfl_use.h"
 #include "arc_def.h"
 
-#include "event_fieldtalk.h"
-
 #include "message.naix"
 #include "msg/msg_d_field.h"	//‰¼
+
+#include "script.h"
+#include "event_fieldtalk.h"
+
+
+#include "../../../resource/fldmapdata/script/common_scr_def.h"
 
 extern FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
 
@@ -66,6 +70,20 @@ GMEVENT * EVENT_FieldTalk(
 		GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 scr_id,
 		FLDMMDL *fmmdl_player, FLDMMDL *fmmdl_talk, HEAPID heapID )
 {
+	GMEVENT *event;
+	SCRIPT_FLDPARAM fparam;
+	FLDMSGBG *msgBG = FIELDMAP_GetFLDMSGBG( fieldWork );
+	
+	fparam.msgBG = msgBG;
+	event = SCRIPT_SetScript( gsys, SCRID_COMMON_VM, NULL, heapID, &fparam );
+	return( event );
+}
+
+#if 0
+GMEVENT * EVENT_FieldTalk(
+		GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 scr_id,
+		FLDMMDL *fmmdl_player, FLDMMDL *fmmdl_talk, HEAPID heapID )
+{
 	FLDTALK_EVENT_WORK *ftalk_wk;
 	GMEVENT *event;
 	
@@ -83,6 +101,7 @@ GMEVENT * EVENT_FieldTalk(
 	
 	return( event );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
