@@ -53,17 +53,36 @@ enum {
 	BTL_WEATHER_TURN_PERMANENT = 0xff,
 
 	// とくせい関連
-	BTL_CALC_TOK_CHIDORI_HITRATIO = FX32_CONST(0.8f),			/// ちどりあしの減衰命中率
-	BTL_CALC_TOK_HARIKIRI_HITRATIO = FX32_CONST(0.8f),		/// はりきりの命中率変化率
-	BTL_CALC_TOK_HARIKIRI_POWRATIO = FX32_CONST(1.5f),		/// はりきりの攻撃力変化率
-	BTL_CALC_TOK_TETUNOKOBUSI_POWRATIO = FX32_CONST(1.2f),		/// てつのこぶしの攻撃力変化率
-	BTL_CALC_TOK_FUKUGAN_HITRATIO = FX32_CONST(1.3f),			/// ふくがんの命中変化率
+	BTL_CALC_TOK_CHIDORI_HITRATIO = FX32_CONST(0.8f),			/// 「ちどりあし」の減衰命中率
+	BTL_CALC_TOK_HARIKIRI_HITRATIO = FX32_CONST(0.8f),		/// 「はりきり」の命中率変化率
+	BTL_CALC_TOK_FUKUGAN_HITRATIO = FX32_CONST(1.3f),			/// 「ふくがん」の命中変化率
+	BTL_CALC_TOK_SUNAGAKURE_HITRATIO = FX32_CONST(0.8f),	/// 「すながくれ」の命中率変化率
+	BTL_CALC_TOK_YUKIGAKURE_HITRATIO = FX32_CONST(0.8f),	/// 「ゆきがくれ」の命中変化率
+	BTL_CALC_TOK_HARIKIRI_POWRATIO = FX32_CONST(1.5f),		/// 「はりきり」の攻撃力変化率
+	BTL_CALC_TOK_TETUNOKOBUSI_POWRATIO = FX32_CONST(1.2f),/// 「てつのこぶし」の攻撃力変化率
+	BTL_CALC_TOK_SUTEMI_POWRATIO = FX32_CONST(1.2f),			/// 「すてみ」の攻撃力変化率
+	BTL_CALC_TOK_PLUS_POWRATIO = FX32_CONST(1.5f),				/// 「プラス」の攻撃力変化率
+	BTL_CALC_TOK_MINUS_POWRATIO = FX32_CONST(1.5f),				/// 「マイナス」の攻撃力変化率
+
+	BTL_CALC_TOK_DOKUNOTOGE_PER   = 30,		///「どくのトゲ」発生確率
+	BTL_CALC_TOK_HONONOKARADA_PER = 30,		///「ほのおのからだ」発生確率
+	BTL_CALC_TOK_SEIDENKI_PER     = 30,		///「せいでんき」発生確率
+	BTL_CALC_TOK_HOUSI_PER        = 30,		///「ほうし」発生確率
+	BTL_CALC_TOK_MEROMEROBODY_PER = 30,		///「メロメロボディ」発生確率
+
+
 };
 
 static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
 {
 	return (value * ratio) >> FX32_SHIFT;
 }
+
+static inline u32 BTL_CALC_IsOccurPer( u32 per )
+{
+	return (GFL_STD_MtRand(100) < per);
+}
+
 
 //--------------------------------------------------------------------
 /**
@@ -130,6 +149,8 @@ extern u8 BTL_CALC_HitCountMax( u8 numHitMax );
 extern u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather );
 
 
+
+
 //=============================================================================================
 /**
  * 状態異常の継続ターン数を決定する
@@ -140,6 +161,18 @@ extern u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weat
  */
 //=============================================================================================
 extern u8 BTL_CALC_DecideSickTurn( WazaSick sick );
+
+
+//=============================================================================================
+/**
+ * 「トレース」によってコピーできないとくせい判定
+ *
+ * @param   tok		
+ *
+ * @retval  BOOL		コピーできない場合はTRUE
+ */
+//=============================================================================================
+extern BOOL BTL_CALC_TOK_IsUntracable( PokeTokusei tok );
 
 #endif
 

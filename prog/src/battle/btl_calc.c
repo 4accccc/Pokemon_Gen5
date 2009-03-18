@@ -285,3 +285,31 @@ u8 BTL_CALC_DecideSickTurn( WazaSick sick )
 	return BTL_CALC_SICK_TURN_PERMANENT;
 }
 
+
+//=============================================================================================
+/**
+ * 「トレース」によってコピーできないとくせい判定
+ *
+ * @param   tok		
+ *
+ * @retval  BOOL		コピーできない場合はTRUE
+ */
+//=============================================================================================
+BOOL BTL_CALC_TOK_IsUntracable( PokeTokusei tok )
+{
+	static const u16 prohibits[] = {
+		POKETOKUSEI_TOREESU, POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_MARUTITAIPU,
+		POKETOKUSEI_ATODASI, POKETOKUSEI_SUROOSUTAATO, POKETOKUSEI_TENKIYA,
+		POKETOKUSEI_HENSYOKU,
+	};
+	u16 i;
+	for(i=0; i<NELEMS(prohibits); ++i)
+	{
+		if( prohibits[i] == tok )
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+

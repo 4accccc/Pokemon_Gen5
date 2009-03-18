@@ -952,7 +952,6 @@ static void scput_Fight_Damage_Enemy2(
 
 	svflowsub_damage_enemy_all( server, attacker, defpoke1, defpoke2, waza, targetDmgRatio );
 }
-
 //----------------------------------------------------------------------
 // サーバーフロー：「たたかう」> ダメージワザ系 > ３体（自分以外）対象
 //----------------------------------------------------------------------
@@ -2204,19 +2203,18 @@ static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 	return ratio;
 }
 // ワザタイプ取得
-static PokeType scEvent_getWazaPokeType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaID waza )
+static PokeType scEvent_getWazaPokeType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
 {
+	PokeType type = WAZADATA_GetType( waza );
+
 	BTL_EVENTVAR_Push();
-
-	BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, WAZADATA_GetType(waza) );
-	BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_TYPE );
-	{
-		PokeType type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
-		BTL_EVENTVAR_Pop();
-		return type;
-	}
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, WAZADATA_GetType(waza) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_TYPE );
+		type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
+	BTL_EVENTVAR_Pop();
+	return type;
 }
-
 // 攻撃側タイプ取得
 static PokeTypePair scEvent_getAttackerPokeType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
 {
@@ -2597,6 +2595,54 @@ BtlPokePos BTL_SVFLOW_CheckExistFrontPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
 }
 //--------------------------------------------------------------------------------------
 /**
+ * 場に出ている全ポケモンのIDを配列に格納する
+ *
+ * @param   wk		
+ * @param   dst		
+ *
+ * @retval  u8		場に出ているポケモン数
+ */
+//--------------------------------------------------------------------------------------
+u8 BTL_SVFLOW_RECEPT_GetAllFrontPokeID( BTL_SVFLOW_WORK* wk, u8* dst )
+{
+	FRONT_POKE_SEEK_WORK fps;
+	BTL_POKEPARAM* bpp;
+	u8 cnt = 0;
+
+	FRONT_POKE_SEEK_InitWork( &fps, wk );
+	while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
+	{
+		dst[ cnt++ ] = BTL_POKEPARAM_GetID( bpp );
+	}
+	return cnt;
+}
+
+//--------------------------------------------------------------------------------------
+/**
+ * 指定のとくせいを持つポケモンが戦闘に出ているかチェック
+ *
+ * @param   wk		
+ * @param   tokusei		
+ *
+ * @retval  BOOL		出ていたらTRUE
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFLOW_RECEPT_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei tokusei )
+{
+	FRONT_POKE_SEEK_WORK fps;
+	BTL_POKEPARAM* bpp;
+	FRONT_POKE_SEEK_InitWork( &fps, wk );
+	while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
+	{
+		if( BTL_POKEPARAM_GetValue(bpp, BPP_TOKUSEI) == tokusei )
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+//--------------------------------------------------------------------------------------
+/**
  * 指定IDのポケモンパラメータを返す
  *
  * @param   wk		
@@ -2609,6 +2655,7 @@ const BTL_POKEPARAM* BTL_SVFLOW_RECEPT_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pok
 {
 	return BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
 }
+
 
 //=============================================================================================
 /**
@@ -2731,6 +2778,27 @@ void BTL_SERVER_RECEPT_HP_Add( BTL_SVFLOW_WORK* wk, u8 pokeID, int value )
 }
 //=============================================================================================
 /**
+ * [ハンドラ受信] ポケモン系状態をくらわす処理
+ *
+ * @param   wk						
+ * @param   targetPokeID	くらう相手のポケモンID
+ * @param   attackPokeID	くらわせる側の（とくせい持ちなど）ポケモンID
+ * @param   sick					
+ * @param   fAlmost				
+ *
+ */
+//=============================================================================================
+void BTL_SVFLOW_RECEPT_MakePokeSick( BTL_SVFLOW_WORK* wk, u8 targetPokeID, u8 attackPokeID, PokeSick sick, BOOL fAlmost )
+{
+	BTL_POKEPARAM* ppTarget = BTL_POKECON_GetPokeParam( wk->pokeCon, targetPokeID );
+	if( !BTL_POKEPARAM_IsDead(ppTarget) )
+	{
+		BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, attackPokeID );
+		scEvent_MakeSick( wk, ppTarget, attacker, sick, fAlmost );
+	}
+}
+//=============================================================================================
+/**
  * [ハンドラ受信] ポケモン系状態異常の回復処理
  *
  * @param   wk		
@@ -2779,5 +2847,26 @@ void BTL_SVFLOW_RECEPT_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather )
 			GF_ASSERT(0);
 		}
 	}
+}
+//=============================================================================================
+/**
+ * [ハンドラ受信] とくせい「トレース」処理
+ *
+ * @param   wk						
+ * @param   pokeID				トレース使う側ポケモンID
+ * @param   targetPokeID	トレースされる側ポケモンID
+ *
+ */
+//=============================================================================================
+void BTL_SVFLOW_RECEPT_TraceTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 targetPokeID )
+{
+	BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+	BTL_POKEPARAM* bppTgt = BTL_POKECON_GetPokeParam( wk->pokeCon, targetPokeID );
+	PokeTokusei tok = BTL_POKEPARAM_GetValue( bppTgt, BPP_TOKUSEI );
+
+	BTL_Printf("トレースで書き換えるとくせい=%d\n", tok);
+	BTL_POKEPARAM_ChangeTokusei( bpp, tok );
+	SCQUE_PUT_ACT_TokTrace( wk->que, pokeID, targetPokeID, tok );
+	BTL_HANDLER_TOKUSEI_Add( bpp );
 }
 

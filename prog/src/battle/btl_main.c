@@ -1363,6 +1363,13 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* part
 		pokecon->pokeParam[ pokeID ] = BTL_POKEPARAM_Create(
 												PokeParty_GetMemberPointer(party_src, i), pokeID, HEAPID_BTL_SYSTEM
 		);
+		#ifdef PM_DEBUG
+		// 超デバッグ措置
+		if (pokeID == 0 )
+		{
+			BTL_POKEPARAM_ChangeTokusei( pokecon->pokeParam[ pokeID ], POKETOKUSEI_TOREESU );
+		}
+		#endif
 		BTL_Printf(" Create PokeParam ID=%d, adrs=%p\n", pokeID, pokecon->pokeParam[i]);
 
 		BTL_PARTY_AddMember( party, pokecon->pokeParam[ pokeID ] );

@@ -24,9 +24,6 @@
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
-enum {
-	FRONTPOKE_EMPTY = 0xff,		///< 戦闘ポケのインデックスとして無効（死亡時などに使用）
-};
 
 
 /*--------------------------------------------------------------------------*/
@@ -90,9 +87,6 @@ struct _BTL_CLIENT {
 	BTL_POKESELECT_PARAM		pokeSelParam;
 	BTL_POKESELECT_RESULT		pokeSelResult;
 
-
-	BTL_WAZA_EXE_PARAM	wazaExeParam[ BTL_POS_MAX ];
-
 	u8	myID;
 	u8	myType;
 	u8	myState;
@@ -140,6 +134,7 @@ static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -781,6 +776,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_WEATHER_START,	scProc_ACT_WeatherStart		},
 		{	SC_ACT_WEATHER_END,		scProc_ACT_WeatherEnd			},
 		{	SC_ACT_SIMPLE_HP,			scProc_ACT_SimpleHP				},
+		{	SC_ACT_TRACE_TOKUSEI,	scProc_ACT_TraceTokusei		},
 		{	SC_TOKWIN_IN,					scProc_TOKWIN_In					},
 		{	SC_TOKWIN_OUT,				scProc_TOKWIN_Out					},
 		{	SC_OP_HP_MINUS,				scProc_OP_HpMinus					},
@@ -1327,7 +1323,56 @@ static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args )
 	}
 	return FALSE;
 }
+//---------------------------------------------------------------------------------------
+/**
+ *	とくせい「トレース」の発動処理
+ *  args .. [0]:トレース持ちのポケID  [1]:コピー対象のポケID  [2]:コピーするとくせい
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	u8 pokeID = args[0];
+	BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, pokeID );
 
+	switch( *seq ){
+	case 0:
+		{
+			BTLV_StartTokWin( wk->viewCore, pos );
+			(*seq)++;
+		}
+		break;
+	case 1:
+		if( BTLV_StartTokWinWait( wk->viewCore, pos ) )
+		{
+			BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+			BTL_POKEPARAM_ChangeTokusei( bpp, args[2] );
+			BTL_Printf("トレースでとくせい変更->%d\n", args[2]);
+			BTLV_TokWin_Renew_Start( wk->viewCore, pos );
+			(*seq)++;
+		}
+		break;
+	case 2:
+		if( BTLV_TokWin_Renew_Wait( wk->viewCore, pos ) )
+		{
+			BTLV_StartMsgSet( wk->viewCore, BTL_STRID_SET_Trace, args );
+			(*seq)++;
+		}
+		break;
+	case 3:
+		if( BTLV_WaitMsg(wk->viewCore) )
+		{
+			BTLV_QuitTokWin( wk->viewCore, pos );
+			(*seq)++;
+		}
+		break;
+	case 4:
+		if( BTLV_QuitTokWinWait(wk->viewCore, pos) )
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
 //---------------------------------------------------------------------------------------
 /**
  *	とくせいウィンドウ表示オン
@@ -1468,20 +1513,6 @@ const BTL_POKEPARAM* BTL_CLIENT_GetFrontPokeData( const BTL_CLIENT* client, u8 p
 
 
 
-const BTL_WAZA_EXE_PARAM* BTL_CLIENT_GetWazaExeParam( const BTL_CLIENT* client, u8 clientID )
-{
-	return &client->wazaExeParam[ clientID ];
-}
 
-//----------
 
-const BTL_POKEPARAM*  BTL_CLIENT_WEP_GetUserPokeParam( const BTL_WAZA_EXE_PARAM* wep )
-{
-	return wep->userPokeParam;
-}
-
-WazaID  BTL_CLIENT_WEP_GetWazaNumber( const BTL_WAZA_EXE_PARAM* wep )
-{
-	return wep->waza;
-}
 

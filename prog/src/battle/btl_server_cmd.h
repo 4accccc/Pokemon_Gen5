@@ -51,6 +51,7 @@ typedef enum {
 	SC_ACT_WEATHER_START,///< 天候変化
 	SC_ACT_WEATHER_END,	///< ターンチェックで天候終了
 	SC_ACT_SIMPLE_HP,		///< シンプルなHPゲージ増減処理
+	SC_ACT_TRACE_TOKUSEI,	///< とくせいトレース[ pokeID, targetPokeID, tokusei ]
 	SC_TOKWIN_IN,				///< とくせいウィンドウ表示イン [ClientID]
 	SC_TOKWIN_OUT,			///< とくせいウィンドウ表示アウト [ClientID]
 
@@ -95,23 +96,16 @@ static inline void scque_put1byte( BTL_SERVER_CMD_QUE* que, u8 data )
 	GF_ASSERT(que->writePtr < BTL_SERVER_CMD_QUE_SIZE);
 	que->buffer[ que->writePtr++ ] = data;
 }
+static inline u8 scque_read1byte( BTL_SERVER_CMD_QUE* que )
+{
+	GF_ASSERT(que->readPtr < que->writePtr);
+	return que->buffer[ que->readPtr++ ];
+}
 static inline void scque_put2byte( BTL_SERVER_CMD_QUE* que, u16 data )
 {
 	GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-1));
 	que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
 	que->buffer[ que->writePtr++ ] = (data & 0xff);
-}
-static inline void scque_put3byte( BTL_SERVER_CMD_QUE* que, u32 data )
-{
-	GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-2));
-	que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
-	que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
-	que->buffer[ que->writePtr++ ] = (data & 0xff);
-}
-static inline u8 scque_read1byte( BTL_SERVER_CMD_QUE* que )
-{
-	GF_ASSERT(que->readPtr < que->writePtr);
-	return que->buffer[ que->readPtr++ ];
 }
 static inline u16 scque_read2byte( BTL_SERVER_CMD_QUE* que )
 {
@@ -121,6 +115,13 @@ static inline u16 scque_read2byte( BTL_SERVER_CMD_QUE* que )
 		que->readPtr += 2;
 		return data;
 	}
+}
+static inline void scque_put3byte( BTL_SERVER_CMD_QUE* que, u32 data )
+{
+	GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-2));
+	que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
+	que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
+	que->buffer[ que->writePtr++ ] = (data & 0xff);
 }
 static inline u32 scque_read3byte( BTL_SERVER_CMD_QUE* que )
 {
@@ -254,6 +255,14 @@ static inline void SCQUE_PUT_ACT_SimpleHP( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
 	SCQUE_PUT_Common( que, SC_ACT_SIMPLE_HP, pokeID );
 }
+
+static inline void SCQUE_PUT_ACT_TokTrace( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 targetPokeID, PokeTokusei tok )
+{
+	SCQUE_PUT_Common( que, SC_ACT_TRACE_TOKUSEI, pokeID, targetPokeID, tok );
+}
+
+
+
 
 static inline void SCQUE_PUT_SickDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 sick, u8 damage )
 {

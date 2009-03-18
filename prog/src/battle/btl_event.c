@@ -184,9 +184,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subPri, u8
 				newFactor->prev = last;
 			}
 		}
-
 		return newFactor;
-
 	}
 	// スタックから見つからない
 	else
@@ -215,14 +213,16 @@ void BTL_EVENT_RemoveFactor( BTL_EVENT_FACTOR* factor )
 
 	pushFactor( factor );
 }
-
 void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
 	BTL_EVENT_FACTOR* factor;
+	BTL_EVENT_FACTOR* next_factor;
 
-	for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
+	for( factor=FirstFactorPtr; factor!=NULL; )
 	{
+		next_factor = factor->next;
 		callHandlers( factor, eventID, flowWork );
+		factor = next_factor;
 	}
 }
 

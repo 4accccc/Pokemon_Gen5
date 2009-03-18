@@ -846,6 +846,19 @@ void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp )
 {
 	flgbuf_clear( pp->turnFlag, sizeof(pp->turnFlag) );
 }
+//=============================================================================================
+/**
+ * ‚Æ‚­‚¹‚¢‘‚«Š·‚¦
+ *
+ * @param   pp		
+ * @param   tok		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok )
+{
+	pp->tokusei = tok;
+}
 
 
 //--------------------------------------------------------------------------

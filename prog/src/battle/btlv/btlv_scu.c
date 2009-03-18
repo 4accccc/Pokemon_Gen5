@@ -9,21 +9,21 @@
 //=============================================================================================
 #include <gflib.h>
 
+#include "poke_tool/monsno_def.h"
 #include "print/printsys.h"
+#include "arc_def.h"
+#include "message.naix"
+#include "font/font.naix"
 
 #include "battle/btl_common.h"
 #include "battle/btl_util.h"
 #include "battle/btl_string.h"
 #include "btlv_common.h"
 #include "btlv_core.h"
+#include "btlv_effect.h"	//soga
+
 #include "btlv_scu.h"
 
-#include "arc_def.h"
-#include "message.naix"
-#include "font/font.naix"
-
-#include "btlv_effect.h"	//soga
-#include "poke_tool/monsno_def.h"
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -64,6 +64,7 @@ typedef struct {
 	u16							tokusei;
 	u8							pokeID;
 	u8							pokePos;
+	u8							renewingFlag;
 	BTLV_SCU*			parentWk;
 }TOK_WIN;
 
@@ -103,8 +104,10 @@ struct _BTLV_SCU {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static inline void* Scu_GetProcWork( BTLV_SCU* wk, u32 size );
 static BOOL btlin_wild_single( int* seq, void* wk_adrs );
 static BOOL btlin_wild_double( int* seq, void* wk_adrs );
+static void tokwinRenewTask( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
@@ -126,8 +129,9 @@ static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos );
 static void tokwin_update_cgx( TOK_WIN* tokwin );
 static void tokwin_check_update_cgx( TOK_WIN* tokwin );
 static void tokwin_cleanup( TOK_WIN* tokwin );
-static void tokwin_disp( TOK_WIN* tokwin );
+static void tokwin_disp_first( TOK_WIN* tokwin );
 static void tokwin_hide( TOK_WIN* tokwin );
+static void tokwin_disp( TOK_WIN* tokwin );
 
 
 
@@ -325,7 +329,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 	case 2:
 		if( !BTLV_EFFECT_CheckExecute() )
 		{
-			subwk->pokePos = BTL_POS_2ND_0;
+			subwk->pokePos = BTL_POS_1ST_0;
 			subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
 			subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
 
@@ -459,7 +463,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 //=============================================================================================
 void BTLV_SCU_DispTokWin( BTLV_SCU* wk, BtlPokePos pos )
 {
-	tokwin_disp( &wk->tokWin[pos] );
+	tokwin_disp_first( &wk->tokWin[pos] );
 }
 //=============================================================================================
 /**
@@ -473,6 +477,76 @@ void BTLV_SCU_DispTokWin( BTLV_SCU* wk, BtlPokePos pos )
 void BTLV_SCU_HideTokWin( BTLV_SCU* wk, BtlPokePos pos )
 {
 	tokwin_hide( &wk->tokWin[pos] );
+}
+
+//----------------------------------------------
+
+typedef struct {
+
+	TOK_WIN*  tokwin;
+	u16				seq;
+	u16				timer;
+	u16				count;
+
+}TOKWIN_RENEW_WORK;
+
+//=============================================================================================
+/**
+ * とくせいウィンドウの内容更新（開始）
+ *
+ * @param   wk		
+ * @param   pos		
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_TokWin_Renew_Start( BTLV_SCU* wk, BtlPokePos pos )
+{
+	GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, tokwinRenewTask, sizeof(TOKWIN_RENEW_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+	TOKWIN_RENEW_WORK* twk = GFL_TCBL_GetWork( tcbl );
+
+	twk->tokwin = &wk->tokWin[pos];
+	twk->tokwin->renewingFlag = TRUE;
+	twk->seq = 0;
+	twk->timer = 0;
+	twk->count = 0;
+}
+//=============================================================================================
+/**
+ * とくせいウィンドウの内容更新（終了待ち）
+ *
+ * @param   wk		
+ * @param   pos		
+ *
+ * @retval  BOOL		終了したらTRUE
+ */
+//=============================================================================================
+BOOL BTLV_SCU_TokWin_Renew_Wait( BTLV_SCU* wk, BtlPokePos pos )
+{
+	return (wk->tokWin[pos].renewingFlag == FALSE);
+}
+
+// とくせいウィンドウの内容更新タスク
+static void tokwinRenewTask( GFL_TCBL* tcbl, void* wk_adrs )
+{
+	TOKWIN_RENEW_WORK* wk = wk_adrs;
+
+	if( ++(wk->timer) > 4 )
+	{
+		wk->timer = 0;
+		wk->count++;
+		if( wk->count & 1 ){
+			tokwin_hide( wk->tokwin );
+			if( wk->count == 11 ){
+				tokwin_check_update_cgx( wk->tokwin );
+			}
+		}else{
+			tokwin_disp( wk->tokwin );
+			if( wk->count == 20 ){
+				wk->tokwin->renewingFlag = FALSE;
+				GFL_TCBL_Delete( tcbl );
+			}
+		}
+	}
 }
 
 //----------------------------------------------
@@ -1188,6 +1262,7 @@ static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos )
 
 	tokwin->parentWk = wk;
 	tokwin->pokePos = pos;
+	tokwin->renewingFlag = FALSE;
 
 	playerClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
 	vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
@@ -1232,28 +1307,32 @@ static void tokwin_check_update_cgx( TOK_WIN* tokwin )
 	if( (pokeID != tokwin->pokeID)
 	||	(tokusei != tokwin->tokusei)
 	){
+		BTL_Printf("とくせいウィンドウ書き換わり pos=%d, tok=%d -> %d\n", tokwin->pokePos, tokwin->tokusei, tokusei );
 		tokwin->pokeID = pokeID;
 		tokwin->tokusei = tokusei;
+
 		tokwin_update_cgx( tokwin );
 	}
 }
-
 
 static void tokwin_cleanup( TOK_WIN* tokwin )
 {
 	GFL_BMPWIN_Delete( tokwin->win );
 }
-
-static void tokwin_disp( TOK_WIN* tokwin )
+static void tokwin_disp_first( TOK_WIN* tokwin )
 {
 	tokwin_check_update_cgx( tokwin );
-
-	GFL_BMPWIN_MakeScreen( tokwin->win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(tokwin->win) );
+	tokwin_disp( tokwin );
 }
-
 static void tokwin_hide( TOK_WIN* tokwin )
 {
 	GFL_BMPWIN_ClearScreen( tokwin->win );
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(tokwin->win) );
 }
+
+static void tokwin_disp( TOK_WIN* tokwin )
+{
+	GFL_BMPWIN_MakeScreen( tokwin->win );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(tokwin->win) );
+}
+

@@ -56,10 +56,6 @@ extern BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client );
 extern const BTL_POKEPARAM* BTL_CLIENT_GetFrontPokeData( const BTL_CLIENT* client, u8 posIdx );
 
 
-//---- wep ------
-extern const BTL_WAZA_EXE_PARAM* BTL_CLIENT_GetWazaExeParam( const BTL_CLIENT* client, u8 clientID );
-extern const BTL_POKEPARAM* BTL_CLIENT_WEP_GetUserPokeParam( const BTL_WAZA_EXE_PARAM* wep );
-extern WazaID BTL_CLIENT_WEP_GetWazaNumber( const BTL_WAZA_EXE_PARAM* wep );
 
 
 

@@ -111,15 +111,14 @@ static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID );
 static void ms_encount( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_single( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_put_single_arg( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID, const int* args );
-static void ms_put_single_enemy_arg( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_out_member1( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_trace( STRBUF* dst, u16 strID, const int* args );
 
 
 
@@ -401,6 +400,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 	}funcTbl[] = {
 		{ BTL_STRID_SET_Rankup_ATK,		ms_set_rankup			},
 		{ BTL_STRID_SET_Rankdown_ATK,	ms_set_rankdown			},
+		{ BTL_STRID_SET_Trace,				ms_set_trace },
 	};
 
 	int i;
@@ -463,6 +463,20 @@ static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args )
 	}
 	register_PokeNickname( args[0], BUFIDX_POKE_1ST );
 	strID = get_setPtnStrID( args[0], strID, statusType );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+//--------------------------------------------------------------
+/**
+ *	○○の××をトレースした！
+ *  args... [0]:pokeID,  [1]:targetPokeID, [2]:tokusei
+ */
+//--------------------------------------------------------------
+static void ms_set_trace( STRBUF* dst, u16 strID, const int* args )
+{
+	register_PokeNickname( args[1], BUFIDX_POKE_1ST );
+	WORDSET_RegisterTokuseiName( SysWork.wset, 1, args[2] );
+	strID = get_setStrID( args[1], strID );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

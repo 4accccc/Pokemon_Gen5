@@ -42,8 +42,6 @@ extern void BTLV_SCU_Delete( BTLV_SCU* wk );
 extern void BTLV_SCU_Setup( BTLV_SCU* wk );
 extern void BTLV_SCU_StartBtlIn( BTLV_SCU* wk );
 extern BOOL BTLV_SCU_WaitBtlIn( BTLV_SCU* wk );
-extern void BTLV_SCU_DispTokWin( BTLV_SCU* wk, BtlPokePos pos );
-extern void BTLV_SCU_HideTokWin( BTLV_SCU* wk, BtlPokePos pos );
 extern void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, u16 damage, BtlTypeAff affinity, BOOL playSE );
 extern BOOL BTLV_SCU_WaitWazaDamageAct( BTLV_SCU* wk );
 extern void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos );
@@ -57,6 +55,12 @@ extern BOOL BTLV_SCU_WaitHPGauge( BTLV_SCU* wk );
 
 extern void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlPokePos atPos, BtlPokePos defPos, WazaID waza );
 extern BOOL BTLV_SCU_WaitWazaEffect( BTLV_SCU* wk );
+
+extern void BTLV_SCU_DispTokWin( BTLV_SCU* wk, BtlPokePos pos );
+extern void BTLV_SCU_HideTokWin( BTLV_SCU* wk, BtlPokePos pos );
+extern void BTLV_SCU_TokWin_Renew_Start( BTLV_SCU* wk, BtlPokePos pos );
+extern BOOL BTLV_SCU_TokWin_Renew_Wait( BTLV_SCU* wk, BtlPokePos pos );
+
 
 //=============================================================================================
 /**

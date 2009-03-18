@@ -87,6 +87,7 @@ static const u8 ServerCmdToFmtTbl[] = {
 	SC_ARGFMT_1byte,						// SC_ACT_WEATHER_START,
 	SC_ARGFMT_1byte,						// SC_ACT_WEATHER_END,
 	SC_ARGFMT_1byte,						// SC_ACT_SIMPLE_HP
+	SC_ARGFMT_5_5_14bit,				// SC_ACT_TRACE_TOKUSEI
 	SC_ARGFMT_1byte,						// SC_TOKWIN_IN
 	SC_ARGFMT_1byte,						// SC_TOKWIN_OUT
 	SC_ARGFMT_5_3bit,						// SC_MSG_WAZA
@@ -227,6 +228,7 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
 	case SC_ARGFMT_5_5_14bit:
 		{
 			u32 pack = pack_3args( 3, args[0],args[1],args[2], 5,5,14 );
+			BTL_Printf(" 5 5 14 put pack = %08x\n", pack);
 			scque_put3byte( que, pack );
 		}
 		break;
@@ -298,6 +300,7 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
 	case SC_ARGFMT_5_5_14bit:
 		{
 			u32 pack = scque_read3byte( que );
+			BTL_Printf(" 5 5 14 read pack = %08x\n", pack);
 			unpack_3args( 3, pack, 5,5,14, args, 0 );
 		}
 		break;

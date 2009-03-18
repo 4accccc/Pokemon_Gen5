@@ -818,11 +818,50 @@ void BTLV_StartTokWin( BTLV_CORE* wk, BtlPokePos pos )
 {
 	BTLV_SCU_DispTokWin( wk->scrnU, pos );
 }
+BOOL BTLV_StartTokWinWait( BTLV_CORE* wk, BtlPokePos pos )
+{
+	// @@@ 今はすぐ終わってる
+	return TRUE;
+}
 
 void BTLV_QuitTokWin( BTLV_CORE* wk, BtlPokePos pos )
 {
 	BTLV_SCU_HideTokWin( wk->scrnU, pos );
 }
+BOOL BTLV_QuitTokWinWait( BTLV_CORE* wk, BtlPokePos pos )
+{
+	// @@@ 今はすぐ終わってる
+	return TRUE;
+}
+
+//=============================================================================================
+/**
+ * とくせいウィンドウの内容更新（開始）
+ *
+ * @param   wk		
+ * @param   pos		
+ *
+ */
+//=============================================================================================
+void BTLV_TokWin_Renew_Start( BTLV_CORE* wk, BtlPokePos pos )
+{
+	BTLV_SCU_TokWin_Renew_Start( wk->scrnU, pos );
+}
+//=============================================================================================
+/**
+ * とくせいウィンドウの内容更新（終了待ち）
+ *
+ * @param   wk		
+ * @param   pos		
+ *
+ * @retval  BOOL		
+ */
+//=============================================================================================
+BOOL BTLV_TokWin_Renew_Wait( BTLV_CORE* wk, BtlPokePos pos )
+{
+	return BTLV_SCU_TokWin_Renew_Wait( wk->scrnU, pos );
+}
+
 
 
 void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 pokeID, BppValueID statusType )
