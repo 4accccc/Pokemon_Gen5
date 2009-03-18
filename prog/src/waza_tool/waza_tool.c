@@ -531,6 +531,7 @@ BOOL WAZADATA_IsAlwaysHit( WazaID id )
 // ダメージワザかどうか
 BOOL WAZADATA_IsDamage( WazaID id )
 {
+	// @@@ いまはてきとー
 	return WAZADATA_GetPower(id) != 0;
 }
 
@@ -544,6 +545,13 @@ u8 WAZADATA_GetCriticalRank( WazaID id )
 u8 WAZADATA_GetMaxHitCount( WazaID id )
 {
 	return 1;
+}
+
+// 接触ワザかどうか
+BOOL WAZADATA_IsTouch( WazaID id )
+{
+	// @@@ いまはてきとー
+	return WAZADATA_IsTouch( id );
 }
 
 // 効果範囲
@@ -662,7 +670,6 @@ u32 WAZADATA_GetSickPer( WazaID id )
 	// @@@ 今はてきとうに
 	return WT_WazaDataParaGet( id, ID_WTD_addeffect );
 }
-
 //=============================================================================================
 /**
  * 追加の「ひるみ」率を返す

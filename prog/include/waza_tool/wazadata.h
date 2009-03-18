@@ -178,14 +178,14 @@ extern u8  WAZADATA_GetHitRatio( WazaID id );
 // 複数回連続攻撃ワザの最大回数。
 extern u16  WAZADATA_GetContiniusCount( WazaID id );
 
-// きゅうしょに当たるランク
-extern u16  WAZADATA_GetCriticalRatio( WazaID id );
-
 // 必中フラグ。つばめがえしなどがTRUEを返す。
 extern BOOL WAZADATA_IsAlwaysHit( WazaID id );
 
 // ダメージワザかどうか
 extern BOOL WAZADATA_IsDamage( WazaID id );
+
+// 接触ワザかどうか
+extern BOOL WAZADATA_IsTouch( WazaID id );
 
 // ダメージタイプ
 extern WazaDamageType  WAZADATA_GetDamageType( WazaID id );
