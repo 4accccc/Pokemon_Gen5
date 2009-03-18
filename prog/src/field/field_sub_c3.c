@@ -27,7 +27,7 @@ static u16 v_len;
 //------------------------------------------------------------------
 static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
-	fieldWork->camera_control = FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
+	fieldWork->camera_control = FIELD_CAMERA_Create( fieldWork->gs, fieldWork->heapID );
 	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
 	//FLDACT_TestSetup( fieldWork->fldActCont );
 	fieldWork->pcActCont = CreatePlayerAct( fieldWork->gs, fieldWork->heapID );
@@ -101,7 +101,7 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	MainPlayerAct_C3( fieldWork->pcActCont, fieldWork->key_cont, pos_angle );
 	FLD_MainFieldActSys( fieldWork->fldActCont );
 	
-	FLD_MainCamera( fieldWork->camera_control, fieldWork->key_cont );
+	FIELD_CAMERA_Main( fieldWork->camera_control, fieldWork->key_cont );
 
 	if (tp_dir == FLDEASYTP_TCHDIR_CENTER) {
 		TAMADA_Printf("LEN %04x vec:%04x\n", player_len, v_len);
@@ -118,7 +118,7 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 static void TestC3Delete( FIELD_MAIN_WORK* fieldWork )
 {
 	DeletePlayerAct( fieldWork->pcActCont );
-	FLD_DeleteCamera( fieldWork->camera_control );
+	FIELD_CAMERA_Delete( fieldWork->camera_control );
 	//FLDACT_TestRelease( fieldWork->fldActCont );
 	FLD_DeleteFieldActSys( fieldWork->fldActCont );
 }

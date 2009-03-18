@@ -127,7 +127,8 @@ static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk );
 static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
-	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
+	//{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
@@ -1028,7 +1029,7 @@ static GMEVENT_RESULT DMenuControlCamera(
 						work->pStrBuf, ucode, len );
 				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 23, work->pStrBuf );
 				
-				FLD_MainCamera( camera, 0 );
+				FIELD_CAMERA_Main( camera, 0 );
 			}
 		}
 		break;

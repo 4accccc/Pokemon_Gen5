@@ -19,7 +19,7 @@
 //------------------------------------------------------------------
 static void NormalCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
-	fieldWork->camera_control = FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
+	fieldWork->camera_control = FIELD_CAMERA_Create( fieldWork->gs, fieldWork->heapID );
 	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
 	FLDACT_TestSetup( fieldWork->fldActCont );
 	fieldWork->pcActCont = CreatePlayerAct( fieldWork->gs, fieldWork->heapID );
@@ -45,7 +45,7 @@ static void NormalMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
 	//FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 
-	FLD_MainCamera( fieldWork->camera_control, fieldWork->key_cont );
+	FIELD_CAMERA_Main( fieldWork->camera_control, fieldWork->key_cont );
 }
 
 //------------------------------------------------------------------
@@ -56,7 +56,7 @@ static void NormalMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 static void NormalDelete( FIELD_MAIN_WORK* fieldWork )
 {
 	DeletePlayerAct( fieldWork->pcActCont );
-	FLD_DeleteCamera( fieldWork->camera_control );
+	FIELD_CAMERA_Delete( fieldWork->camera_control );
 	FLDACT_TestRelease( fieldWork->fldActCont );
 	FLD_DeleteFieldActSys( fieldWork->fldActCont );
 }

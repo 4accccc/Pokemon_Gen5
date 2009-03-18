@@ -33,7 +33,7 @@ struct _FIELD_CAMERA {
  * @brief	‰Šú‰»
  */
 //------------------------------------------------------------------
-FIELD_CAMERA*	FLD_CreateCamera( FIELD_SETUP*	gs, HEAPID heapID )
+FIELD_CAMERA*	FIELD_CAMERA_Create( FIELD_SETUP*	gs, HEAPID heapID )
 {
 	FIELD_CAMERA* camera = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_CAMERA) );
 
@@ -53,7 +53,7 @@ FIELD_CAMERA*	FLD_CreateCamera( FIELD_SETUP*	gs, HEAPID heapID )
  * @brief	I—¹
  */
 //------------------------------------------------------------------
-void	FLD_DeleteCamera( FIELD_CAMERA* camera )
+void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 {
 	GFL_HEAP_FreeMemory( camera );
 }
@@ -67,7 +67,7 @@ void	FLD_DeleteCamera( FIELD_CAMERA* camera )
 //#define RT_SPEED		(FX32_ONE/8)
 //#define	CAMERA_TARGET_HEIGHT	(4)//(8)
 
-void	FLD_MainCamera( FIELD_CAMERA* camera, int key )
+void	FIELD_CAMERA_Main( FIELD_CAMERA* camera, int key )
 {
 	GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(camera->gs);
 	VecFx32	pos, target, trans;
@@ -75,13 +75,13 @@ void	FLD_MainCamera( FIELD_CAMERA* camera, int key )
 	VecFx32	vecUD = { 0, 0, 0 };
 	BOOL	mvFlag = FALSE;
 
-#if 0
 	if( key & PAD_BUTTON_R ){
-		camera->direction -= RT_SPEED;
+		camera->direction -= RT_SPEED/2;
 	}
 	if( key & PAD_BUTTON_L ){
-		camera->direction += RT_SPEED;
+		camera->direction += RT_SPEED/2;
 	}
+#if 0
 	if( key & PAD_BUTTON_B ){
 		if( camera->cameraLength > 8 ){
 			camera->cameraLength -= 8;
@@ -131,6 +131,13 @@ static void	FriendCursor( FIELD_CAMERA* camera )
 								&camera->trans );
 }
 #endif
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera)
+{
+	return GetG3Dcamera(camera->gs);
+}
 
 //------------------------------------------------------------------
 /**

@@ -188,7 +188,7 @@ static void GridMoveCreate(
 	FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir )
 {
 	fieldWork->camera_control =
-		FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
+		FIELD_CAMERA_Create( fieldWork->gs, fieldWork->heapID );
 	
 	{
 		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
@@ -253,7 +253,7 @@ static void GridMoveCreate(
 	FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
 	fieldWork->camera_control =
-		FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
+		FIELD_CAMERA_Create( fieldWork->gs, fieldWork->heapID );
 	
 	{
 		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
@@ -346,7 +346,7 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 	FGridCont_Delete( fieldWork );
 	
 	DeletePlayerActGrid( fieldWork->pcActCont );
-	FLD_DeleteCamera( fieldWork->camera_control );
+	FIELD_CAMERA_Delete( fieldWork->camera_control );
 	
 	if( fieldWork->fldActCont != NULL ){
 #if 0
@@ -403,7 +403,7 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		int key = fieldWork->key_cont;
 //		key &= ~(PAD_BUTTON_L|PAD_BUTTON_R);
 		key = 0;
-		FLD_MainCamera( fieldWork->camera_control, key );
+		FIELD_CAMERA_Main( fieldWork->camera_control, key );
 	}
 }
 
@@ -488,7 +488,7 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 			int key = fieldWork->key_cont;
 	//		key &= ~(PAD_BUTTON_L|PAD_BUTTON_R);
 			key = 0;
-			FLD_MainCamera( fieldWork->camera_control, key );
+			FIELD_CAMERA_Main( fieldWork->camera_control, key );
 		}
 	}
 }
@@ -568,7 +568,7 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
-	FLD_MainCamera( fieldWork->camera_control, 0 );
+	FIELD_CAMERA_Main( fieldWork->camera_control, 0 );
 }
 
 //======================================================================

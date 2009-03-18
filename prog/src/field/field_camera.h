@@ -1,9 +1,9 @@
 #pragma once
 
 typedef struct _FIELD_CAMERA	FIELD_CAMERA;
-extern FIELD_CAMERA*		FLD_CreateCamera( FIELD_SETUP*	gs, HEAPID heapID );
-extern void				FLD_DeleteCamera( FIELD_CAMERA* camera );
-extern void				FLD_MainCamera( FIELD_CAMERA* camera, int key);
+extern FIELD_CAMERA*		FIELD_CAMERA_Create( FIELD_SETUP*	gs, HEAPID heapID );
+extern void				FIELD_CAMERA_Delete( FIELD_CAMERA* camera );
+extern void				FIELD_CAMERA_Main( FIELD_CAMERA* camera, int key);
 //extern void             FriendCursor( FIELD_CAMERA* camera );
 extern void				FLD_SetCameraTrans( FIELD_CAMERA* camera, const VecFx32* trans );
 extern void				FLD_GetCameraTrans( FIELD_CAMERA* camera, VecFx32* trans );
@@ -16,3 +16,7 @@ extern void	FLD_SetCameraHeight( FIELD_CAMERA *camera, fx32 height );
 extern void	FLD_GetCameraHeight( FIELD_CAMERA *camera, fx32 *height );
 extern void	FLD_SetCameraTransOffset(
 		FIELD_CAMERA *camera, const VecFx32 *offs );
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera);
