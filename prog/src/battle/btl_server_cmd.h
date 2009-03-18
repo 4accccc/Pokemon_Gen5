@@ -127,7 +127,7 @@ static inline u32 scque_read3byte( BTL_SERVER_CMD_QUE* que )
 {
 	GF_ASSERT(que->readPtr < (que->writePtr-2));
 	{
-		u32 data = ( (que->buffer[que->readPtr]<<16) | (que->buffer[que->readPtr+1]<<8) | (que->buffer[que->readPtr]) );
+		u32 data = ( (que->buffer[que->readPtr]<<16) | (que->buffer[que->readPtr+1]<<8) | (que->buffer[que->readPtr+2]) );
 		que->readPtr += 3;
 		return data;
 	}
