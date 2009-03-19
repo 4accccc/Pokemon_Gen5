@@ -76,6 +76,13 @@ extern void	PMSND_SetStatusSEVoice
 				( int tempoRatio, int pitch, int pan );//ＳＥ＆鳴き声ステータス変更
 extern BOOL	PMSND_SetEchoChorus( u32 wait, int pitch );
 
+// 鳴き声をエフェクト付きで再生（使用箇所は技、イベントを想定）
+// ※データをサウンドヒープにロードし共有することでコーラス効果を実現
+// 　サウンドヒープの状態復元が必要なので
+// 　開始→終了待ちを実行し、間にＢＧＭ操作を入れないようにすること
+extern BOOL	PMSND_PlayVoiceChorus( u32 pokeNum, int pitch );
+extern BOOL	PMSND_WaitVoiceChorus( void );
+
 //============================================================================================
 /**
  *
@@ -84,16 +91,6 @@ extern BOOL	PMSND_SetEchoChorus( u32 wait, int pitch );
  */
 //============================================================================================
 extern void PMSND_SetSystemFadeFrames( int frames );
-
-//============================================================================================
-/**
- *
- * @brief	システムエコー＆コーラス設定（各appから呼び出される）
- *
- */
-//============================================================================================
-extern void PMSND_EnableSystemEchoChorus( int volume, int pitch, int waitFrames );
-extern void PMSND_DisableSystemEchoChorus( void );
 
 //サウンドテスト用
 //※現在マップ切り替わり時のデータ取得と戦闘などSubProcから帰ってくる

@@ -82,6 +82,8 @@ typedef struct {
 	int					voiceNum;
 
 	int					mode;
+
+	BOOL				soundTestFlag;
 }SOUNDTEST_WORK;
 
 enum {
@@ -254,13 +256,24 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 	switch(sw->seq){
 	case 0:
 		SetupSoundTestSys(sw);
-		PMSND_EnableSystemEchoChorus( 127, 256, 16 );
+		sw->soundTestFlag = FALSE;
 		sw->seq++;
 		break;
 
 	case 1:
 		MainSoundTestSys(sw);
 		checkControlChange(sw);
+
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			sw->seq = 100;
+			break;
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+			if( PMSND_PlaySystemSE(sw->seNum) == FALSE ){
+				OS_Printf("system SE play error...\n");
+			}
+			break;
+		}
 
 		if( sw->mode == MODE_SOUND_SELECT ){
 			checkTouchPanelEvent(sw);
@@ -270,6 +283,17 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 	case 2:
 		RemoveSoundTestSys(sw);
 		return FALSE;
+//---------------------
+	case 100:
+		PMSND_PlayVoiceChorus( sw->voiceNum, 20 );
+		sw->seq++;
+		break;
+	case 101:
+		if( PMSND_WaitVoiceChorus() == TRUE ){
+			sw->seq = 1;
+		}
+		break;
+//---------------------
 	}
 	return TRUE;
 }
