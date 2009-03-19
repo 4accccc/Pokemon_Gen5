@@ -390,7 +390,9 @@ enum{
 #define COMM_MESFONT_PAL      ( 12 )         //  メッセージフォント
 #define COMM_SYSFONT_PAL	  ( 13 )         //  システムフォント
 #define	COMM_TALK_WIN_CGX_SIZE	( 18+12 )
-#define	COMM_TALK_WIN_CGX_NUM	( 512 - COMM_TALK_WIN_CGX_SIZE)
+//#define	COMM_TALK_WIN_CGX_NUM	( 512 - COMM_TALK_WIN_CGX_SIZE)
+#define	COMM_TALK_WIN_CGX_NUM	( 48 )
+
 #define	COMM_MSG_WIN_PX		( 2 )
 #define	COMM_MSG_WIN_PY		( 19 )
 #define	COMM_MSG_WIN_SX		( 27 )
@@ -1946,7 +1948,7 @@ static void BgInit(HEAPID heapID )
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
             GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,
-            0x8000,
+            0x10000,
             GX_BG_EXTPLTT_01,
             0, 0, 0, FALSE
             };
@@ -3303,7 +3305,7 @@ static int WifiP2PMatch_ConnectingInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
     GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
     GFL_BG_SetPriority(GFL_BG_FRAME1_M , 1);   // yesno win
-    GFL_BG_SetPriority(GFL_BG_FRAME3_M , 0);  // メッセージ
+    GFL_BG_SetPriority(GFL_BG_FRAME3_M , 2);  // メッセージ
     GFL_BG_SetPriority(GFL_BG_FRAME2_M , 0);   //
     wk->seq = WIFIP2PMATCH_CONNECTING;
     return seq;
@@ -3984,6 +3986,7 @@ static void	_userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
     if(!wk->MyInfoWin){
         return;
     }
+    GFL_FONTSYS_SetDefaultColor();
     {
         STRBUF* pSTRBUF = MyStatus_CreateNameString(pMy, HEAPID_WIFIP2PMATCH);
         // 初期化
@@ -4038,7 +4041,10 @@ static void	_userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
 			PLAYER_DISP_VCTICON_POS_X, PLAYER_DISP_VCTICON_POS_Y,
 			vct_icon, 0 );
 	
+    GFL_BMPWIN_ClearScreen(wk->MyInfoWin);
+    GFL_BMPWIN_MakeScreen(wk->MyInfoWin);
     GFL_BMPWIN_TransVramCharacter(wk->MyInfoWin);
+    GFL_BG_LoadScreenReq(GFL_BG_FRAME3_M);
 }
 
 //------------------------------------------------------------------
@@ -5895,8 +5901,10 @@ static int _parentModeSelectMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubListWin), WINCLR_COL(FBMP_COL_WHITE) );
     
     wk->sublw = BmpMenuList_Set(&list_h, 0, wk->battleCur, HEAPID_WIFIP2PMATCH);
-    GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
 
+    GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
+    GFL_BMPWIN_MakeScreen(wk->SubListWin);
+    GFL_BG_LoadScreenReq(GFL_BG_FRAME2_M);
 
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_006, FALSE);
 
@@ -6118,14 +6126,24 @@ static int _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret )
     }
     wk->SubListWin = _BmpWinDel(wk->SubListWin);
     //BMPウィンドウ生成
-     wk->SubListWin = GFL_BMPWIN_Create(
+    wk->SubListWin = GFL_BMPWIN_Create(
                      GFL_BG_FRAME2_M, 16, 9, 15, length * 2, FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
-    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  MENU_WIN_CGX_NUM, MENU_WIN_PAL );
+    //GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  MENU_WIN_CGX_NUM, MENU_WIN_PAL );
+	BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
     list_h.list = wk->submenulist;
     list_h.win = wk->SubListWin;
 //    wk->sublw = BmpMenuWork_ListCreate(length,HEAPID_WIFIP2PMATCH);
+
+	list_h.print_que = wk->SysMsgQue;
+	PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->SubListWin );
+	list_h.print_util = &wk->SysMsgPrintUtil;
+	list_h.font_handle = wk->fontHandle;
+
     wk->sublw = BmpMenuList_Set(&list_h, 0, wk->singleCur[wk->bSingle], HEAPID_WIFIP2PMATCH);
     GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
+
+    GFL_BMPWIN_MakeScreen(wk->SubListWin);
+    GFL_BG_LoadScreenReq(GFL_BG_FRAME2_M);
 
 //    WifiP2PMatchMessagePrint(wk, msg_wifilobby_006, FALSE);
 
