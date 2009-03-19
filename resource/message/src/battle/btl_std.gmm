@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-03-17T20:30:49"/>
+	<create user="taya" host="W00146" date="2009-03-19T18:25:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -507,6 +507,16 @@
 		<comment>天候が変化できない場合のメッセージ</comment>
 		<language name="JPN" width="216">てんきは　かわらなかった！</language>
 		<language name="JPN_KANJI" width="216">天気は　変わらなかった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Ichigeki">
+		<language name="JPN" width="216">いちげきひっさつ！</language>
+		<language name="JPN_KANJI" width="216">いちげき必殺！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_WeatherLocked0003">
+		<language name="JPN" width="216">いちげきひっさつ！</language>
+		<language name="JPN_KANJI" width="216"></language>
 	</row>
 
 	<flowchart-group-list>
