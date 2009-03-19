@@ -125,4 +125,5 @@
 	ARCID_LOBBY_NEWS		"lobby_news.narc"		#WiFiロビーニュースグラフィック
 	ARCID_WIFI_EARTH_PLACE	"wifi_earth_place.narc"	#WI-FI地球画面の地域データ
 	ARCID_WFLBY_MAP		"wflby_map.narc"	#WiFiロビーマップデータ
+	ARCID_FIELD_WEATHER	"field_weather.narc"	#フィールド天気グラフィック
 	ARCID_SCRSEQ		"fieldmap/script_seq.narc"		#スクリプトシーケンス

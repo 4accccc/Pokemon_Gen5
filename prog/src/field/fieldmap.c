@@ -27,6 +27,8 @@
 #include "field_data.h"
 #include "field/field_msgbg.h"
 
+#include "weather.h"
+
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_event.h"
@@ -94,6 +96,9 @@ struct _FIELD_MAIN_WORK
 	PC_ACTCONT*		pcActCont;
 	FLD_ACTCONT*	fldActCont;
 	VecFx32			now_pos;
+
+
+	FIELD_WEATHER*	weather_sys;
 	
 	int				key_cont;
 	
@@ -278,7 +283,11 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			fieldWork->ftbl->create_func( fieldWork, &fieldWork->now_pos, dir );
 			FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
 		}
-		
+
+		// 天気システム生成
+		fieldWork->weather_sys = FIELD_WEATHER_Init( fieldWork->camera_control, fieldWork->heapID );
+
+		// 初期天気の設定
 		
 		//情報バーの初期化
 		Field_InitInfoBar(fieldWork->heapID);
@@ -327,6 +336,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		
 		MainGameSystem( fieldWork->gs );
 		Field_UpdateInfoBar();
+		FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 		
 		if( fieldWork->fldMMdlSys != NULL ){
@@ -348,6 +358,10 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		
 		//情報バーの開放
 		Field_TermInfoBar();
+
+		// 天気システム生成
+		FIELD_WEATHER_Exit( fieldWork->weather_sys );
+		fieldWork->weather_sys = NULL;
 
 		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);
@@ -617,6 +631,26 @@ static const GFL_DISP_VRAM dispVram = {
 	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 };
 
+
+//-----------------------------------------------------------------------------
+/**
+ *			セルアクターシステム
+ */
+//-----------------------------------------------------------------------------
+#define FIELD_CLSYS_RESOUCE_MAX		( 64 )
+static const GFL_CLSYS_INIT CLSYS_Init = {
+	0, 0,
+	0, 512,
+	0, 128,
+	0, 128,
+	0,
+	FIELD_CLSYS_RESOUCE_MAX,
+	FIELD_CLSYS_RESOUCE_MAX,
+	FIELD_CLSYS_RESOUCE_MAX,
+	FIELD_CLSYS_RESOUCE_MAX
+};
+
+
 //------------------------------------------------------------------
 /**
  * @brief	アーカイブテーブル
@@ -706,6 +740,9 @@ static FIELD_SETUP*	SetupGameSystem( HEAPID heapID )
 	//BG初期化
 	bg_init( gs );
 	
+	// CLACT初期化
+	GFL_CLACT_SYS_Create( &CLSYS_Init, &dispVram, heapID );
+
 	//BMP初期化
 	GFL_BMPWIN_Init( heapID );
 	
@@ -728,6 +765,10 @@ static void	RemoveGameSystem( FIELD_SETUP* gs )
 {
 	GFL_TCB_DeleteTask( gs->g3dVintr );
 	g3d_unload( gs );	//３Ｄデータ破棄
+
+
+	// CLACT破棄
+	GFL_CLACT_SYS_Delete();
 	
 	GFL_BMPWIN_Exit();
 
@@ -745,6 +786,9 @@ static void	MainGameSystem( FIELD_SETUP* gs )
 {
 	g3d_control( gs );
 	g3d_draw( gs );
+
+	// CLSYSメイン
+	GFL_CLACT_SYS_Main();
 }
 
 //------------------------------------------------------------------
@@ -910,6 +954,9 @@ static void g3d_unload( FIELD_SETUP* gs )
 static void	g3d_vblank( GFL_TCB* tcb, void* work )
 {
 	FIELD_SETUP* gs =  (FIELD_SETUP*)work;
+
+	// セルアクターVBlank
+	GFL_CLACT_SYS_VBlankFunc();	
 }
 
 //BBD用VRAM転送関数

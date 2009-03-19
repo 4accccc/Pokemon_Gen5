@@ -1,0 +1,261 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *	GAME FREAK inc.
+ *
+ *	@file		weather_task.h
+ *	@brief		１天気　動作管理
+ *	@author		tomoya takahshi
+ *	@data		2009.03.18
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef _cplusplus
+extern "C"{
+#endif
+
+#ifndef __WEATHER_TASK_H__
+#define __WEATHER_TASK_H__
+
+#include <gflib.h>
+
+#include "fieldmap_local.h"
+#include "field_common.h"
+#include "field_camera.h"
+
+//-----------------------------------------------------------------------------
+/**
+ *					定数宣言
+*/
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	初期化モード
+//=====================================
+typedef enum {
+	WEATHER_TASK_INIT_NORMAL,		// 通常読み込み
+	WEATHER_TASK_INIT_DIV,			// 分割読み込み
+
+	WEATHER_TASK_INIT_MODE_NUM,		// システム内部で使用
+} WEATEHR_TASK_INIT_MODE;
+
+
+//-------------------------------------
+///	タスク情報
+//=====================================
+typedef enum {
+	WEATHER_TASK_INFO_NONE,				// 情報なし
+	WEATHER_TASK_INFO_LOADING,			// 読み込み中
+	WEATHER_TASK_INFO_FADEIN,			// フェードイン中
+	WEATHER_TASK_INFO_MAIN,				// メイン動作中
+	WEATHER_TASK_INFO_FADEOUT,			// フェードアウト中
+	WEATHER_TASK_INFO_DEST,				// 破棄中
+
+
+	WEATHER_TASK_INFO_NUM,				// システム内で使用
+} WEATHER_TASK_INFO;
+
+//-------------------------------------
+///	管理関数の戻り値
+//=====================================
+typedef enum {
+	WEATHER_TASK_FUNC_RESULT_CONTINUE,	// つづく
+	WEATHER_TASK_FUNC_RESULT_FINISH,	// 次へ
+
+
+	WEATHER_TASK_FUNC_RESULT_NUM,		// システム内で使用
+} WEATHER_TASK_FUNC_RESULT;
+
+
+//-------------------------------------
+///	リソース情報
+//=====================================
+#define WEATHER_TASK_GRAPHIC_OAM_PLTT_NUM_MAX	( 1 )		// パレットのサイズ
+#define WEATHER_TASK_GRAPHIC_OAM_PLTT_OFS		( 0*32 )	// パレットの転送位置
+
+
+//-------------------------------------
+///	天気オブジェ保持、ワークサイズ
+//=====================================
+#define WEATHER_OBJ_WORK_USE_WORKSIZE	( sizeof(s32) * 10 )
+
+
+//-----------------------------------------------------------------------------
+/**
+ *					構造体宣言
+*/
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	天気タスク
+//=====================================
+typedef struct _WEATHER_TASK WEATHER_TASK;
+
+//-------------------------------------
+///	天気１オブジェ（雪の粒など用　OAM）
+//=====================================
+typedef struct _WEATHER_OBJ_WORK WEATHER_OBJ_WORK;
+
+
+//-------------------------------------
+///	天気管理関数
+//=====================================
+typedef WEATHER_TASK_FUNC_RESULT (WEATHER_TASK_FUNC)( WEATHER_TASK* p_wk, BOOL fog_cont );
+
+
+//-------------------------------------
+///	１オブジェ動作関数
+//=====================================
+typedef void (WEATHER_OBJ_WORK_FUNC)( WEATHER_OBJ_WORK* p_wk );
+
+//-------------------------------------
+///	天気追加情報
+//=====================================
+typedef struct {
+	// アークID
+	// BGとOAM共用
+	u16	arc_id;				
+	u8	use_oam;			// OAMを使用するか？ TRUE or FALSE
+	u8	use_bg;				// BGを使用するか？ TRUE or FALSE
+	
+	// OAM情報
+	u16 oam_cg;				
+	u16 oam_pltt;			// パレットは1本です。
+	u16 oam_cell;
+	u16 oam_cellanm;
+	
+	// BG情報
+	// （２つの天気を同時に管理する場合、BGの反映は後勝ち）
+	u16 bg_cg;				
+	u16 bg_pltt;
+	u16 bg_scrn;
+	
+	// ワーク領域サイズ
+	u32 work_byte;
+	
+	// 管理関数
+	WEATHER_TASK_FUNC* p_f_init;			// 初期化処理
+	WEATHER_TASK_FUNC* p_f_fadein;			// フェードイン処理
+	WEATHER_TASK_FUNC* p_f_nofade;			// フェードなしの場合の処理
+	WEATHER_TASK_FUNC* p_f_main;			// メイン処理
+	WEATHER_TASK_FUNC* p_f_fadeout;			// フェードアウト処理
+	WEATHER_TASK_FUNC* p_f_dest;			// 破棄処理
+
+	
+	//  動作オブジェ動作関数
+	WEATHER_OBJ_WORK_FUNC* p_f_objmove;	
+	
+} WEATHER_TASK_DATA;
+
+
+//-------------------------------------
+///	線形動作ワーク
+//=====================================
+typedef struct {
+	int x;
+	int s_x;
+	int d_x;
+
+	u32 count_max;
+} WT_MOVE_WORK;
+
+//-----------------------------------------------------------------------------
+/**
+ *					プロトタイプ宣言
+*/
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+/**
+ *		WEATHER_TASK	管理関数
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	システム生成・破棄・メイン
+//=====================================
+extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, u32 heapID );
+extern void WEATHER_TASK_Exit( WEATHER_TASK* p_wk );
+extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID );
+
+//-------------------------------------
+///	発動・停止管理
+//=====================================
+extern void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, BOOL fog_cont, u32 heapID );
+extern void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, BOOL fog_cont );
+extern void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk );
+
+//-------------------------------------
+///	情報の取得
+//=====================================
+extern WEATHER_TASK_INFO WEATHER_TASK_GetInfo( const WEATHER_TASK* cp_wk );
+extern void* WEATHER_TASK_GetWorkData( const WEATHER_TASK* cp_wk );		//WEATHER_TASK_DATA.work_byte分のワーク
+
+
+//-------------------------------------
+///	動作オブジェの追加・破棄
+//=====================================
+extern WEATHER_OBJ_WORK* WEATHER_TASK_CreateObj( WEATHER_TASK* p_wk, u32 heapID );
+extern void WEATHER_TASK_DeleteObj( WEATHER_OBJ_WORK* p_obj );
+
+
+//-------------------------------------
+///	動作オブジェの追加フェード処理
+//=====================================
+typedef void (WEATHER_TASK_OBJADD_FUNC)( WEATHER_TASK* p_wk, int num );
+extern void WEATHER_TASK_ObjFade_Init( WEATHER_TASK* p_wk, s32 objAddTmgMax, s32 objAddNum, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum_tmg, s32 obj_add_num_sum, WEATHER_TASK_OBJADD_FUNC* p_addfunc );
+extern void WEATHER_TASK_ObjFade_SetOut( WEATHER_TASK* p_wk, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum );
+extern BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk );
+
+//-------------------------------------
+///	動作オブジェを乱数で分布させる
+//=====================================
+extern void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_func, int num, int dust_div_num, int dust_div_move );
+
+//-------------------------------------
+///	フォグフェード処理
+//=====================================
+extern void WEATHER_TASK_FogFade_Init( WEATHER_TASK* p_wk, int fog_slope, int fog_offs, GXRgb color, int timing );
+extern BOOL WEATHER_TASK_FogFade_Main( WEATHER_TASK* p_wk );
+
+//-------------------------------------
+///　スクロール管理
+//=====================================
+extern void WEATHER_TASK_GetScrollDist( WEATHER_TASK* p_wk, int* p_x, int* p_y );
+extern void WEATHER_TASK_ScrollObj( WEATHER_TASK* p_wk, int x, int y );
+extern void WEATHER_TASK_ScrollBg( WEATHER_TASK* p_wk, int x, int y );
+
+//-------------------------------------
+///	サウンド管理
+//=====================================
+extern void WEATHER_TASK_PlayLoopSnd( WEATHER_TASK* p_wk, int snd_no );
+extern void WEATHER_TASK_StopLoopSnd( WEATHER_TASK* p_wk );
+
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *		WEATHER_OBJ_WORK	管理関数
+ *
+ *		天気オブジェの持っているワークサイズは固定です。
+ *		WEATHER_OBJ_WORK_USE_WORKSIZE
+ */
+//-----------------------------------------------------------------------------
+extern void* WEATHER_OBJ_WORK_GetWork( const WEATHER_OBJ_WORK* cp_wk );
+extern GFL_CLWK* WEATHER_OBJ_WORK_GetClWk( const WEATHER_OBJ_WORK* cp_wk );
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *		動作計算ツール
+ */
+//-----------------------------------------------------------------------------
+extern void WT_MOVE_WORK_Init( WT_MOVE_WORK* p_wk, int s_x, int e_x, u32 count_max );
+extern BOOL	WT_MOVE_WORK_Main( WT_MOVE_WORK* p_wk, u32 count );
+
+
+
+#endif		// __WEATHER_TASK_H__
+
+#ifdef _cplusplus
+}/* extern "C" */
+#endif
+
