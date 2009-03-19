@@ -12,10 +12,14 @@
 //======================================================================
 //	define
 //======================================================================
+#define SCRCMD_ACMD_MAX (8)
 
 //======================================================================
 //	struct
 //======================================================================
+//--------------------------------------------------------------
+///	SCRCMD_WORK
+//--------------------------------------------------------------
 struct _TAG_SCRCMD_WORK
 {
 	HEAPID heapID;
@@ -23,6 +27,8 @@ struct _TAG_SCRCMD_WORK
 	
 	GFL_MSGDATA *msgData;
 	FLDMSGWIN *msgWin;
+	
+	GFL_TCB *tcb_anm_tbl[SCRCMD_ACMD_MAX];
 };
 
 //======================================================================
@@ -32,6 +38,38 @@ struct _TAG_SCRCMD_WORK
 //======================================================================
 //	SCRCMD_WORK èâä˙âªÅAçÌèú
 //======================================================================
+//--------------------------------------------------------------
+//
+//--------------------------------------------------------------
+void SCRCMD_WORK_SetFldMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb )
+{
+	int i;
+	for( i = 0; i < SCRCMD_ACMD_MAX; i++ ){
+		if( work->tcb_anm_tbl[i] == NULL ){
+			work->tcb_anm_tbl[i] = tcb;
+			return;
+		}
+	}
+	GF_ASSERT( 0 );
+}
+
+BOOL SCRCMD_WORK_CheckFldMMdlAnmTCB( SCRCMD_WORK *work )
+{
+	BOOL flag = FALSE;
+	int i;
+	for( i = 0; i < SCRCMD_ACMD_MAX; i++ ){
+		if( work->tcb_anm_tbl[i] != NULL ){
+			if( FLDMMDL_CheckEndAcmdList(work->tcb_anm_tbl[i]) == TRUE ){
+				FLDMMDL_EndAcmdList( work->tcb_anm_tbl[i] );
+				work->tcb_anm_tbl[i] = NULL;
+			}else{
+				flag = TRUE;
+			}
+		}
+	}
+	return( flag );
+}
+
 //--------------------------------------------------------------
 /**
  * SCRCMD_WORK çÏê¨

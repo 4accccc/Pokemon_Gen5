@@ -17,7 +17,10 @@
 
 #include "field/location.h"
 
+#include "fldmmdl.h"
+
 #include "fieldmap/zone_id.h"
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -37,11 +40,11 @@ struct _EVDATA_SYS {
 
 	u16 now_zone_id;
 	u16 bg_count;
-	//u16 npc_count;
+	u16 npc_count;
 	u16 connect_count;
 	u16 pos_count;
 	const BG_TALK_DATA * bg_data;
-	//const FIELDOBJ * npc_data;
+	const FLDMMDL_HEADER *npc_data;
 	const CONNECT_DATA * connect_data;
 	const POS_EVENT_DATA * pos_data;
 
@@ -59,6 +62,9 @@ extern const CONNECT_DATA SampleConnectData_testroom[];
 extern const int SampleConnectDataCount_testroom;
 extern const CONNECT_DATA SampleConnectData_4season[];
 extern const int SampleConnectDataCount_4season;
+extern const FLDMMDL_HEADER SampleFldMMdlHeader_4season[];
+extern const int SampleFldMMdlHeaderCount_4season;
+
 //============================================================================================
 //
 //	イベント起動データシステム関連
@@ -84,11 +90,11 @@ void EVENTDATA_SYS_Delete(EVENTDATA_SYSTEM * evdata)
 void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata)
 {
 	evdata->bg_count = 0;
-	//evdata->npc_count = 0;
+	evdata->npc_count = 0;
 	evdata->connect_count = 0;
 	evdata->pos_count = 0;
 	evdata->bg_data = NULL;
-	//evdata->npc_data = NULL;
+	evdata->npc_data = NULL;
 	evdata->connect_data = NULL;
 	evdata->pos_data = NULL;
 	GFL_STD_MemClear(evdata->load_buffer, EVDATA_SIZE);
@@ -121,8 +127,9 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 	case ZONE_ID_MAPWINTER:
 		evdata->connect_count = SampleConnectDataCount_4season;
 		evdata->connect_data = SampleConnectData_4season;
+		evdata->npc_count = SampleFldMMdlHeaderCount_4season;
+		evdata->npc_data = SampleFldMMdlHeader_4season;
 		break;
-
 	}
 }
 
@@ -230,6 +237,33 @@ void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc)
 }
 
 //============================================================================================
+//		動作モデル関連
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	動作モデルヘッダーを取得
+ * @param	evdata		イベントデータへのポインタ
+ * @retval	FLDMMDL_HEADER*
+ */
+//------------------------------------------------------------------
+const FLDMMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata )
+{
+	return( evdata->npc_data );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	動作モデル総数を取得
+ * @param	evdata		イベントデータへのポインタ
+ * @retval	u16
+ */
+//------------------------------------------------------------------
+u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata )
+{
+	return( evdata->npc_count );
+}
+
+//============================================================================================
 //
 //		サンプルデータ
 //		※実際には外部でコンバートされたものをファイルから読み込む
@@ -318,6 +352,28 @@ const CONNECT_DATA SampleConnectData_testroom[] = {
 	},
 };
 const int SampleConnectDataCount_testroom = NELEMS(SampleConnectData_testroom);
+
+const FLDMMDL_HEADER SampleFldMMdlHeader_4season[] = {
+	{
+		0,		///<識別ID
+		KABI32,	///<表示するOBJコード
+		MV_DIR_RND,	///<動作コード
+		0,	///<イベントタイプ
+		0,	///<イベントフラグ
+		0,	///<イベントID
+		DIR_DOWN,	///<指定方向
+		0,	///<指定パラメタ 0
+		0,	///<指定パラメタ 1
+		0,	///<指定パラメタ 2
+		4,	///<X方向移動制限
+		4,	///<Z方向移動制限
+		91,	///<グリッドX
+		85,	///<グリッドZ
+		0,	///<Y値 fx32型
+	},
+};
+
+const int SampleFldMMdlHeaderCount_4season = NELEMS(SampleFldMMdlHeader_4season);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

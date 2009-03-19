@@ -17,6 +17,7 @@
 
 #include "field_g3d_mapper.h"
 
+#include "arc/fieldmap/fldmmdl_objcode.h"
 #include "fldmmdl_code.h"
 
 //======================================================================
@@ -486,6 +487,8 @@ extern void FLDMMDLSYS_SetupDrawProc( FLDMMDLSYS *fos );
 
 extern FLDMMDL * FLDMMDLSYS_AddFldMMdl(
 	const FLDMMDLSYS *fos, const FLDMMDL_HEADER *header, int zone_id );
+extern void FLDMMDLSYS_SetFldMMdl( const FLDMMDLSYS *fos,
+	const FLDMMDL_HEADER *header, int zone_id, int count );
 extern void FLDMMDL_Delete( FLDMMDL * fmmdl );
 extern void FLDMMDLSYS_DeleteMMdl( const FLDMMDLSYS *fos );
 

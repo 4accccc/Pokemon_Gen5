@@ -357,6 +357,7 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 	
 	FLDMMDLSYS_Push( fieldWork->fldMMdlSys );
 	FLDMMDLSYS_DeleteProc( fieldWork->fldMMdlSys );
+	fieldWork->fldMMdlSys = NULL;
 }
 
 //======================================================================
@@ -391,7 +392,7 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		FLD_MainFieldActSys( fieldWork->fldActCont );
 	}
 	
-	FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
+//	FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );	//ƒƒCƒ“‚ÉˆÚ“®
 	Jiki_UpdatePlayerWork( fieldWork );
 
 	GetPlayerActTrans( fieldWork->pcActCont, pos );

@@ -20,6 +20,7 @@
 
 #include "script.h"
 #include "scriptid_offset.h" 	//スクリプトIDオフセット
+#include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 #include "eventwork_def.h"

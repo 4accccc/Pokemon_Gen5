@@ -289,6 +289,9 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 	case 2:
 		MainGameSystem( fieldWork->gs );
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+		if( fieldWork->fldMMdlSys != NULL ){
+			FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
+		}
 
 		if (FLDMAPPER_CheckTrans(GetFieldG3Dmapper(fieldWork->gs)) == FALSE) {
 			break;
@@ -325,8 +328,11 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		MainGameSystem( fieldWork->gs );
 		Field_UpdateInfoBar();
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+		
+		if( fieldWork->fldMMdlSys != NULL ){
+			FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
+		}
 		break;
-
 	case 4:
 		//イベント起動チェックを停止する
 		GAMESYSTEM_EVENT_EntryCheckFunc(gsys, NULL, NULL);

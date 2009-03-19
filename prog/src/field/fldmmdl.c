@@ -18,6 +18,18 @@
 //--------------------------------------------------------------
 //	debug
 //--------------------------------------------------------------
+#if 0
+
+#define TEST_A (1)
+#define TEST_B (1)
+
+#if (TEST_A-TEST_B)
+#error Test
+#else
+//OK
+#endif
+
+#endif
 
 //--------------------------------------------------------------
 //	FLDMMDL 動作、描画関数ワークサイズ (byte size)
@@ -402,6 +414,29 @@ FLDMMDL * FLDMMDLSYS_AddFldMMdl(
 	
 	FldMMdlSys_IncrementOBJCount( (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys(fmmdl) );
 	return( fmmdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS フィールド動作モデルを追加　複数
+ * @param	fos			FLDMMDLSYS *
+ * @param	header		追加する情報を纏めたFLDMMDL_HEADER *
+ * @param	zone_id		ゾーンID
+ * @param	count		header要素数
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDLSYS_SetFldMMdl( const FLDMMDLSYS *fos,
+	const FLDMMDL_HEADER *header, int zone_id, int count )
+{
+	GF_ASSERT( count > 0 );
+	GF_ASSERT( header != NULL );
+	
+	do{
+		FLDMMDLSYS_AddFldMMdl( fos, header, zone_id );
+		header++;
+		count--;
+	}while( count );
 }
 
 //--------------------------------------------------------------

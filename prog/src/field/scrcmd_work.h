@@ -62,6 +62,10 @@ extern GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetFldMsgWin( SCRCMD_WORK *work, FLDMSGWIN *msgWin );
 extern FLDMSGWIN * SCRCMD_WORK_GetFldMsgWin( SCRCMD_WORK *work );
 
+//アニメーションコマンド
+extern void SCRCMD_WORK_SetFldMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb );
+extern BOOL SCRCMD_WORK_CheckFldMMdlAnmTCB( SCRCMD_WORK *work );
+
 //その他
 extern void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID );
 #endif //SCRCMD_WORK_H_FILE

@@ -14,6 +14,8 @@
 #include "system/vm_cmd.h"
 
 #include "script.h"
+#include "script_def.h"
+
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 
@@ -81,7 +83,9 @@ static VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk );
 
-//static VMCMD_RESULT EvCmdFldTalkWindow( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdObjAnimeWait( VMHANDLE * core, void *wk );
+static BOOL EvObjAnimeWait(VMHANDLE * core, void *wk);
 
 //======================================================================
 //	グローバル変数
@@ -148,6 +152,9 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
 	
 	EvCmdTalkWinOpen,
 	EvCmdTalkWinClose,
+	
+	EvCmdObjAnime,
+	EvCmdObjAnimeWait,
 };
 
 //--------------------------------------------------------------
@@ -1036,4 +1043,140 @@ static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
 //======================================================================
 //	動作モデル	
 //======================================================================
+static FLDMMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id );
+static void EvAnmSetTCB(
+	SCRCMD_WORK *work, GFL_TCB *anm_tcb, FLDMMDL_ACMD_LIST *list );
+
+//--------------------------------------------------------------
+/**
+ * アニメーション
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
+{
+	u8 *num;
+	VM_CODE *p;
+	GFL_TCB *anm_tcb;
+	FLDMMDL *fmmdl; //対象のフィールドOBJのポインタ
+	SCRCMD_WORK *work = wk;
+	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	u16 obj_id = VMGetWorkValue(core,work); //obj ID
+	u32 pos = VMGetU32(core); //list pos
+	
+	fmmdl = FieldObjPtrGetByObjId( work, obj_id );
+	
+	//エラーチェック
+	if( fmmdl == NULL ){
+		OS_Printf( "obj_id = %d\n", obj_id );
+		GF_ASSERT( (0) && "対象のフィールドOBJのポインタ取得失敗！" );
+		return 0;				//08.06.12 プラチナで追加
+	}
+	
+	//アニメーションコマンドリストセット
+	p = (VM_CODE*)(core->adrs+pos);
+	anm_tcb = FLDMMDL_SetAcmdList( fmmdl, (FLDMMDL_ACMD_LIST*)p );
+	
+	//アニメーションの数を足す
+	num = SCRIPT_GetMemberWork( sc, ID_EVSCR_ANMCOUNT );
+	(*num)++;
+	
+	//TCBセット
+	EvAnmSetTCB( work, anm_tcb, NULL );
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * アニメーション終了待ち
+ *
+ * @param	core		仮想マシン制御構造体へのポインタ
+ *
+ * @return	"1"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdObjAnimeWait( VMHANDLE * core, void *wk )
+{
+	VMCMD_SetWait( core, EvObjAnimeWait );
+	return 1;
+}
+
+//return 1 = 終了
+static BOOL EvObjAnimeWait(VMHANDLE * core, void *wk )
+{
+	SCRCMD_WORK *work = wk;
+	
+	if( SCRCMD_WORK_CheckFldMMdlAnmTCB(work) == FALSE ){
+		return 1;
+	}
+	
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_OBJ_PTRを取得
+ *
+ * @param	fsys	FIELDSYS_WORK型のポインタ
+ * @param	obj_id	OBJID
+ *
+ * @return	"FIELD_OBJ_PTR"
+ */
+//--------------------------------------------------------------
+static FLDMMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
+{
+	FLDMMDL *dummy;
+	FLDMMDL *fmmdl;
+	FLDMMDLSYS *fmmdlsys;
+	
+	fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
+	
+	//連れ歩きOBJ判別IDが渡された時
+	if( obj_id == SCR_OBJID_MV_PAIR ){
+		fmmdl = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+	//透明ダミーOBJ判別IDが渡された時
+	}else if( obj_id == SCR_OBJID_DUMMY ){
+		SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+		dummy = SCRIPT_GetMemberWork( sc, ID_EVSCR_DUMMY_OBJ );
+	//対象のフィールドOBJのポインタ取得
+	}else{
+		fmmdl = FLDMMDLSYS_SearchOBJID( fmmdlsys, obj_id );
+	}
+	
+	return fmmdl;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	アニメ終了監視TCB セット
+ *
+ * @param	fsys	FIELDSYS_WORK型のポインタ
+ * @param	anm_tcb	TCB_PTR型
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+static void EvAnmSetTCB(
+	SCRCMD_WORK *work, GFL_TCB *anm_tcb, FLDMMDL_ACMD_LIST *list )
+{
+#if 0
+	EV_ANM_WORK* wk = NULL;
+	wk = sys_AllocMemory(HEAPID_FIELD, sizeof(EV_ANM_WORK));
+
+	if( wk == NULL ){
+		GF_ASSERT( (0) && "scrcmd.c メモリ確保失敗！" );
+		return;
+	}
+
+	wk->fsys	= fsys;
+	wk->anm_tcb	= anm_tcb;
+	wk->list	= list;
+	wk->tcb		= TCB_Add( EvAnmMainTCB, wk, 0 );
+	return;
+#else
+	SCRCMD_WORK_SetFldMMdlAnmTCB( work, anm_tcb );
+#endif
+}
+
 

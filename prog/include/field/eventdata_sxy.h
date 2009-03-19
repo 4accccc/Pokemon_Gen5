@@ -14,6 +14,7 @@
 
 #include "field/eventdata_system.h"
 #include "field/location.h"
+#include "field/fldmmdl.h"
 
 //============================================================================================
 //============================================================================================
@@ -112,4 +113,30 @@ extern void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION *
 //------------------------------------------------------------------
 extern BOOL CONNECTDATA_IsSpecialExit(const CONNECT_DATA * connect);
 
+//------------------------------------------------------------------
+/**
+ * @brief	動作モデルヘッダーを取得
+ * @param	evdata		イベントデータへのポインタ
+ * @retval	FLDMMDL_HEADER*
+ */
+//------------------------------------------------------------------
+extern const FLDMMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata );
+
+//------------------------------------------------------------------
+/**
+ * @brief	動作モデルヘッダーを取得
+ * @param	evdata		イベントデータへのポインタ
+ * @retval	FLDMMDL_HEADER*
+ */
+//------------------------------------------------------------------
+extern const FLDMMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata );
+
+//------------------------------------------------------------------
+/**
+ * @brief	動作モデル総数を取得
+ * @param	evdata		イベントデータへのポインタ
+ * @retval	u16
+ */
+//------------------------------------------------------------------
+extern u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata );
 

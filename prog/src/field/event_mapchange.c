@@ -24,7 +24,7 @@
 #include "sound/pm_sndsys.h"		//サウンドシステム参照
 
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
-static void CreateFldMMdl( FLDMMDLSYS *fldmmdlsys, u16 zone_id );
+static void SetFldMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
 
 //============================================================================================
 //
@@ -50,12 +50,20 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	switch (*seq) {
 	case 0:
 		UpdateMapParams(gsys, &fmw->loc_req);
+		SetFldMMdl( gsys, &fmw->loc_req, game_init_work->mode );
+		
 		{
 			//取り急ぎ。常にフェードインで始まる
 			u16 trackBit = 0xfcff;	// track 9,10 OFF
 			u16 nextBGM = ZONEDATA_GetBGMID(fmw->loc_req.zone_id,
 					GAMEDATA_GetSeasonID(fmw->gamedata));
 			PMSND_PlayNextBGM_EX(nextBGM, trackBit);
+		}
+		
+		switch(game_init_work->mode){
+		case GAMEINIT_MODE_FIRST:
+		case GAMEINIT_MODE_DEBUG:
+			break;
 		}
 		(*seq)++;
 		break;
@@ -91,11 +99,9 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 			game_init_work->pos.x, game_init_work->pos.y, game_init_work->pos.z);
 		break;
 	case GAMEINIT_MODE_FIRST:
-		CreateFldMMdl(GAMEDATA_GetFldMMdlSys(fmw->gamedata),0);
 		LOCATION_SetGameStart(&fmw->loc_req);
 		break;
 	case GAMEINIT_MODE_DEBUG:
-		CreateFldMMdl(GAMEDATA_GetFldMMdlSys(fmw->gamedata),0);
 		LOCATION_DEBUG_SetDefaultPos(&fmw->loc_req, game_init_work->mapid);
 		break;
 	}
@@ -377,42 +383,17 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 //--------------------------------------------------------------
 //	test
 //--------------------------------------------------------------
-static void CreateFldMMdl( FLDMMDLSYS *fldmmdlsys, u16 zone_id )
+static void SetFldMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode )
 {
-	int i;
-	u16 code[] = { BOY1,GIRL1,MAN1,WOMAN1,KABI32,OLDWOMAN1};
-	FLDMMDL_HEADER head = {
-			0,	///<識別ID
-			0,	///<表示するOBJコード
-			MV_RND,	///<動作コード
-			0,	///<イベントタイプ
-			0,	///<イベントフラグ
-			0,	///<イベントID
-			0,	///<指定方向
-			0,	///<指定パラメタ 0
-			0,	///<指定パラメタ 1
-			0,	///<指定パラメタ 2
-			4,	///<X方向移動制限
-			4,	///<Z方向移動制限
-			0,	///<グリッドX
-			0,	///<グリッドZ
-			0,	///<Y値 fx32型
-		};
-	
-	i = 0;
-	head.id = i;
-	head.gx = 91;
-	head.gz = 85;
-	head.obj_code = code[GFUser_GetPublicRand(NELEMS(code))];
-	FLDMMDLSYS_AddFldMMdl( fldmmdlsys, &head, zone_id );
-	i++;
-	
-	for( ; i < FLDMMDL_SAVEMMDL_MAX-2; i++ ){
-		head.id = i;
-		head.gx = GFUser_GetPublicRand( 128 );
-		head.gz = GFUser_GetPublicRand( 128 );
-		head.obj_code = code[GFUser_GetPublicRand(NELEMS(code))];
-		FLDMMDLSYS_AddFldMMdl( fldmmdlsys, &head, zone_id );
+	if(	mode == GAMEINIT_MODE_FIRST || mode == GAMEINIT_MODE_DEBUG ){
+		GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+		EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
+		u16 count = EVENTDATA_GetNpcCount( evdata );
+		
+		if( count ){
+			FLDMMDLSYS *fmmdlsys = GAMEDATA_GetFldMMdlSys( gamedata );
+			const FLDMMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
+			FLDMMDLSYS_SetFldMMdl( fmmdlsys, header, loc_req->zone_id, count );
+		}
 	}
 }
-
