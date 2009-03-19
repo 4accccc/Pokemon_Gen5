@@ -5,6 +5,7 @@
 
 	.text
 	.include	"scr_seq_def.h"
+	.include	"../eventdata/zone_test00evc.h"
 
 //--------------------------------------------------------------------
 //					     スクリプト本体
@@ -17,8 +18,19 @@ _EVENT_DATA_END						//終了
 /*未使用*/
 ev_common_vm:
 	_NOP
+	_OBJ_ANIME TEST00_KABI32, anm_test
+	_OBJ_ANIME_WAIT
+	
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_common_test_01
 	_AB_KEYWAIT
 	_TALKWIN_CLOSE
 	_END
+
+_ANIME_LABEL	anm_test
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA ACMD_END,0

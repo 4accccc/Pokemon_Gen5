@@ -99,6 +99,8 @@
 //======================================================================
 #include "common_scr_def.h"							//共通スクリプトデータID
 
+#include "../../../prog/src/field/fldmmdl_code.h"
+
 #if 0 //wb null
 #include "saveflag.h"								//フラグ、ワーク定義
 #include "savework.h"
