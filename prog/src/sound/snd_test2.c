@@ -264,6 +264,16 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 		MainSoundTestSys(sw);
 		checkControlChange(sw);
 
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+			if( sw->soundTestFlag == FALSE ){
+				PMSND_EnableCaptureReverb( 16000, 63, 0 );
+				sw->soundTestFlag = TRUE;
+			} else {
+				PMSND_DisableCaptureReverb();
+				sw->soundTestFlag = FALSE;
+			}
+			break;
+		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
 			sw->seq = 100;
 			break;

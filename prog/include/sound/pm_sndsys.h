@@ -92,9 +92,24 @@ extern BOOL	PMSND_WaitVoiceChorus( void );
 //============================================================================================
 extern void PMSND_SetSystemFadeFrames( int frames );
 
+//============================================================================================
+/**
+ *
+ * @brief	キャプチャー関数
+ *
+ */
+//============================================================================================
+//	リバーブ設定
+extern void PMSND_EnableCaptureReverb( u32 samplingRate, int volume, int stopFrames );
+extern void PMSND_DisableCaptureReverb( void );
+
+
+
+
+
+
 //サウンドテスト用
 //※現在マップ切り替わり時のデータ取得と戦闘などSubProcから帰ってくる
 //　場所が切り分けられていないので仮でフラグ管理する
 extern BOOL debugBGMsetFlag;
-
 #endif

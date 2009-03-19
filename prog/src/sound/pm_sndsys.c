@@ -107,6 +107,18 @@ typedef struct {
 	int		fadeFrames;
 }PMSND_FADESTATUS;
 
+//------------------------------------------------------------------
+/**
+ * @brief	リバーブ構造定義
+ */
+//------------------------------------------------------------------
+typedef struct {
+	BOOL	active;
+	u32		samplingRate;
+	u16		volume;
+	int		stopFrames;
+}PMSND_REVERB;
+
 //============================================================================================
 /**
  *
@@ -123,18 +135,22 @@ typedef struct {
  */
 //============================================================================================
 #define	SOUND_HEAP_SIZE	(0x0b0000)
+#define CAPTURE_BUFSIZE (0x2000)
 
 static u8				PmSoundHeap[SOUND_HEAP_SIZE];
 static NNSSndArc		PmSoundArc;
 
-static NNSSndHeapHandle		PmSndHeapHandle;
-static u32					playerNumber;
+static NNSSndHeapHandle	PmSndHeapHandle;
+static u32				playerNumber;
 
-static u32					bgmFadeCounter;
+static u8				captureBuffer[ CAPTURE_BUFSIZE ] ATTRIBUTE_ALIGN(32);
 
-static PMSND_FADESTATUS			fadeStatus;
+static u32				bgmFadeCounter;
 
-static PMSND_PL_UNIT systemPlayerUnit;
+static PMSND_FADESTATUS	fadeStatus;
+static PMSND_REVERB		reverbStatus;
+
+static PMSND_PL_UNIT	systemPlayerUnit;
 SOUNDMAN_PRESET_HANDLE* systemPresetHandle;
 
 static PMSND_PLAYERSTATUS bgmPlayerInfo;
@@ -149,6 +165,7 @@ static void PMSND_ResetSystemFadeBGM( void );
 static void PMSND_CancelSystemFadeBGM( void );
 static void PMSND_SystemFadeBGM( void );
 
+static void PMSND_InitCaptureReverb( void );
 //============================================================================================
 /**
  *
@@ -178,6 +195,7 @@ void	PMSND_Init( void )
 	PMSND_CreatePlayerUnit(systemPlayer, &systemPlayerUnit);
 
 	PMSND_InitSystemFadeBGM();
+	PMSND_InitCaptureReverb();
 
 	bgmFadeCounter = 0;
 
@@ -257,13 +275,13 @@ void	PMSND_Exit( void )
  *
  */
 //============================================================================================
-//============================================================================================
+//------------------------------------------------------------------
 /**
  *
  * @brief	プレーヤーユニット作成
  *
  */
-//============================================================================================
+//------------------------------------------------------------------
 static void PMSND_CreatePlayerUnit
 			( const PMSND_PLSETUP* setupTbl, PMSND_PL_UNIT* playerUnit )
 {
@@ -312,13 +330,13 @@ static void PMSND_CreatePlayerUnit
 	SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
 }
 
-//============================================================================================
+//------------------------------------------------------------------
 /**
  *
  * @brief	プレーヤーユニット削除
  *
  */
-//============================================================================================
+//------------------------------------------------------------------
 static void PMSND_DeletePlayerUnit( PMSND_PL_UNIT* playerUnit )
 {
 	int i;
@@ -786,6 +804,65 @@ static void PMSND_SystemFadeBGM( void )
 void PMSND_SetSystemFadeFrames( int frames )
 {
 	fadeStatus.fadeFrames = frames;
+}
+
+
+
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	キャプチャー関数
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+static void PMSND_InitCaptureReverb( void )
+{
+	reverbStatus.active = FALSE;
+	reverbStatus.samplingRate = 16000;
+	reverbStatus.volume = 0;
+	reverbStatus.stopFrames = 0;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	リバーブ設定
+ */
+//------------------------------------------------------------------
+void PMSND_EnableCaptureReverb( u32 samplingRate, int volume, int stopFrames )
+{
+	BOOL result;
+
+	if(reverbStatus.active == TRUE){ return; }
+
+	reverbStatus.samplingRate = samplingRate;
+	if(volume > 63) volume = 63;
+	reverbStatus.volume = volume;
+	reverbStatus.stopFrames = stopFrames;
+
+	result = NNS_SndCaptureStartReverb(	captureBuffer, 
+										CAPTURE_BUFSIZE, 
+										NNS_SND_CAPTURE_FORMAT_PCM16, 
+										reverbStatus.samplingRate,
+										reverbStatus.volume);
+	if(result == TRUE){ reverbStatus.active = TRUE; }
+}
+
+void PMSND_DisableCaptureReverb( void )
+{
+	if(reverbStatus.active == FALSE){ return; }
+
+	NNS_SndCaptureStopReverb(reverbStatus.stopFrames);
+	reverbStatus.active = FALSE;
 }
 
 
