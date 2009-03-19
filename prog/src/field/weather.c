@@ -17,6 +17,9 @@
 
 #include "weather.h"
 
+// 各天気
+#include "weather_sunny.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					コーディング規約
@@ -135,8 +138,8 @@ typedef struct {
 } FIELD_WEATHER_DATA;
 static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 	{
-		NULL,
-		NO_OVERLAY_ID
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
 	},
 };
 

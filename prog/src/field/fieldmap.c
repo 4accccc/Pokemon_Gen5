@@ -286,8 +286,8 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 		// 天気システム生成
 		fieldWork->weather_sys = FIELD_WEATHER_Init( fieldWork->camera_control, fieldWork->heapID );
-
-		// 初期天気の設定
+		// 天気晴れ
+		FIELD_WEATHER_Set( fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
 		
 		//情報バーの初期化
 		Field_InitInfoBar(fieldWork->heapID);

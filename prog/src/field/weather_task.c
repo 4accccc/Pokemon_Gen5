@@ -209,6 +209,7 @@ static WEATHER_TASK_INFO WEATHER_TASK_WK_GetInfo( const WEATHER_TASK* cp_wk );
 static WEATHER_OBJ_WORK* WEATHER_TASK_WK_GetClearObj( WEATHER_TASK* p_wk );
 static void WEATHER_TASK_WK_PushObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_obj );
 static void WEATHER_TASK_WK_PopObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_obj );
+static void WEATHER_TASK_WK_MainObjList( WEATHER_TASK* p_wk );
 static void WEATHER_TASK_WK_InitOam( WEATHER_TASK* p_wk, u32 heapID );
 static void WEATHER_TASK_WK_ExitOam( WEATHER_TASK* p_wk );
 static void WEATHER_TASK_WK_InitBg( WEATHER_TASK* p_wk, u32 heapID );
@@ -366,6 +367,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_fadein ) ){
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_MAIN;
 		}
+		WEATHER_TASK_WK_MainObjList( p_wk );
 		break;
 
 	// 管理関数	 フェードなし	呼び出し
@@ -379,6 +381,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 	case WEATHER_TASK_SEQ_CALL_MAIN:		
 		// *外部的なリクエストで、終了する
 		WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_main );
+		WEATHER_TASK_WK_MainObjList( p_wk );
 		break;
 
 	// 管理関数　フェードアウト 呼び出し
@@ -386,6 +389,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_fadeout ) ){
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_DEST;
 		}
+		WEATHER_TASK_WK_MainObjList( p_wk );
 		break;
 
 	// 管理関数　破棄			呼び出し
@@ -1156,6 +1160,38 @@ static void WEATHER_TASK_WK_PopObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_
 	p_obj->p_next = NULL;
 	p_obj->p_last = NULL;
 
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	オブジェリスト　メイン処理
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_TASK_WK_MainObjList( WEATHER_TASK* p_wk )
+{
+	WEATHER_OBJ_WORK* p_objwk;
+
+	// オブジェ有無チェック
+	if( !p_wk->p_objlist ){
+		return ;
+	}
+
+	// 関数があるか？
+	if( !p_wk->cp_data->p_f_objmove ){
+		return ;
+	}
+	
+	p_objwk = p_wk->p_objlist;
+	do{
+
+		// メイン関数をまわす
+		p_wk->cp_data->p_f_objmove( p_objwk );
+
+		p_objwk = p_objwk->p_next;
+	}while( (u32)p_objwk == (u32)p_wk->p_objlist );
 }
 
 
