@@ -76,8 +76,6 @@ extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_IkarinoTubo( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Sniper( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_TetunoKobusi( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Fukugan( u16 pri, u8 pokeID );
-
-
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Isiatama( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Sutemi( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Sunagakure( u16 pri, u8 pokeID );
@@ -91,6 +89,15 @@ extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_MeromeroBody( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Housi( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Plus( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Minus( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Samehada( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_SizenKaifuku( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Syncro( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_DownLoad( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Ganjou( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tainetu( u16 pri, u8 pokeID );
+
+
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tennen( u16 pri, u8 pokeID );
 
 
 

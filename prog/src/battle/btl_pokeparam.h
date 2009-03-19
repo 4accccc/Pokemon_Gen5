@@ -151,6 +151,7 @@ extern BOOL BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 vol
 extern BOOL BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
 extern void BTL_POKEPARAM_HpMinus( BTL_POKEPARAM* pp, u16 value );
 extern void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value );
+extern void BTL_POKEPARAM_HpZero( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_PPMinus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
 extern void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
 extern void BTL_POKEPARAM_SetPokeSick( BTL_POKEPARAM* pp, PokeSick sick, u8 turn );

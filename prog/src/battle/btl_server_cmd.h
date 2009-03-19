@@ -30,6 +30,7 @@ typedef enum {
 
 	SC_OP_HP_MINUS,			///< yŒvŽZzHPƒ}ƒCƒiƒX  [ClientID, ƒ}ƒCƒiƒX—Ê]
 	SC_OP_HP_PLUS,			///< yŒvŽZzHPƒvƒ‰ƒX    [ClientID, ƒvƒ‰ƒX—Ê]
+	SC_OP_HP_ZERO,			///< yŒvŽZzHP0 ‚É‚·‚é [ pokeID ]
 	SC_OP_PP_MINUS,			///< yŒvŽZzPPƒ}ƒCƒiƒX  [ClientID, ƒ}ƒCƒiƒX—Ê]
 	SC_OP_PP_PLUS,			///< yŒvŽZzPPƒvƒ‰ƒX    [ClientID, ƒvƒ‰ƒX—Ê]
 	SC_OP_RANK_UP,			///< yŒvŽZzƒXƒe[ƒ^ƒXƒ‰ƒ“ƒNƒAƒbƒv  [ClientID, StatusType, ƒvƒ‰ƒX—Ê]
@@ -39,6 +40,7 @@ typedef enum {
 	SC_ACT_WAZA_EFFECT,
 	SC_ACT_WAZA_DMG,		///< yƒƒU”­“®Fƒ_ƒ[ƒWz[ AtClient, DefClient, wazaIdx, Affinity ]
 	SC_ACT_WAZA_DMG_DBL,///< yƒAƒNƒVƒ‡ƒ“z‚Q‘Ì“¯Žžƒ_ƒ[ƒWˆ— [ pokeID ]
+	SC_ACT_WAZA_ICHIGEKI,///< yƒAƒNƒVƒ‡ƒ“zˆêŒ‚ƒƒUˆ—
 	SC_ACT_CONF_DMG,		///< yƒAƒNƒVƒ‡ƒ“z‚±‚ñ‚ç‚ñŽ©”šƒ_ƒ[ƒW [ pokeID ]
 	SC_ACT_RANKUP,			///< yƒ‰ƒ“ƒNƒAƒbƒvŒø‰Êz ››‚Ì~~~‚ª‚ ‚ª‚Á‚½I[ ClientID, statusType, volume ]
 	SC_ACT_RANKDOWN,		///< yƒ‰ƒ“ƒNƒ_ƒEƒ“Œø‰Êz ››‚Ì~~~‚ª‚³‚ª‚Á‚½I[ ClientID, statusType, volume ]
@@ -155,6 +157,10 @@ static inline void SCQUE_PUT_OP_HpPlus( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 
 {
 	SCQUE_PUT_Common( que, SC_OP_HP_PLUS, pokeID, value );
 }
+static inline void SCQUE_PUT_OP_HpZero( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+	SCQUE_PUT_Common( que, SC_OP_HP_ZERO, pokeID );
+}
 
 static inline void SCQUE_PUT_OP_PPMinus( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 wazaIdx, u8 value )
 {
@@ -200,6 +206,12 @@ static inline void SCQUE_PUT_ACT_WazaDamageDbl( BTL_SERVER_CMD_QUE* que, u8 defP
 {
 	SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG_DBL, defPokeID1, defPokeID2, aff, damage1, damage2 );
 }
+// yƒAƒNƒVƒ‡ƒ“zˆêŒ‚•KŽEƒƒUˆ—
+static inline void SCQUE_PUT_ACT_WazaIchigeki( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+	SCQUE_PUT_Common( que, SC_ACT_WAZA_ICHIGEKI, pokeID );
+}
+
 // yƒAƒNƒVƒ‡ƒ“z‚±‚ñ‚ç‚ñŽ©”šƒ_ƒ[ƒW
 static inline void SCQUE_PUT_ACT_ConfDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {

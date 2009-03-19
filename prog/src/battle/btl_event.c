@@ -36,6 +36,7 @@ struct _BTL_EVENT_FACTOR {
 	u32				priority;
 	int				work[ EVENT_HANDLER_WORK_ELEMS ];
 	u8				pokeID;
+	u8				callingFlag;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -103,18 +104,22 @@ static inline u32 calcFactorPriority( BtlEventFactor factorType, u16 subPri )
 
 static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork )
 {
-	const BtlEventHandlerTable* tbl = factor->handlerTable;
-
-	int i;
-	for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
+	if( factor->callingFlag == FALSE )
 	{
-		if( tbl[i].eventType == eventType )
+		const BtlEventHandlerTable* tbl = factor->handlerTable;
+
+		int i;
+		for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
 		{
-			tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
+			if( tbl[i].eventType == eventType )
+			{
+				factor->callingFlag = TRUE;
+				tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
+				factor->callingFlag = FALSE;
+			}
 		}
 	}
 }
-
 
 void BTL_EVENT_InitSystem( void )
 {
@@ -145,6 +150,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subPri, u8
 		newFactor->next = NULL;
 		newFactor->handlerTable = handlerTable;
 		newFactor->pokeID = pokeID;
+		newFactor->callingFlag = FALSE;
 		GFL_STD_MemClear( newFactor->work, sizeof(newFactor->work) );
 
 		// Å‰‚Ì“o˜^

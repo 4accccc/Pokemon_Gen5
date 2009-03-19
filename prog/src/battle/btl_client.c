@@ -124,6 +124,7 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
@@ -140,6 +141,7 @@ static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_HpZero( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
@@ -764,6 +766,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_WAZA_EFFECT,		scProc_ACT_WazaEffect			},
 		{	SC_ACT_WAZA_DMG,			scProc_ACT_WazaDmg				},
 		{	SC_ACT_WAZA_DMG_DBL,	scProc_ACT_WazaDmg_Dbl		},
+		{	SC_ACT_WAZA_ICHIGEKI,	scProc_ACT_WazaIchigeki		},
 		{	SC_ACT_CONF_DMG,			scProc_ACT_ConfDamage			},
 		{	SC_ACT_DEAD,					scProc_ACT_Dead						},
 		{	SC_ACT_MEMBER_OUT,		scProc_ACT_MemberOut			},
@@ -781,6 +784,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_TOKWIN_OUT,				scProc_TOKWIN_Out					},
 		{	SC_OP_HP_MINUS,				scProc_OP_HpMinus					},
 		{	SC_OP_HP_PLUS,				scProc_OP_HpPlus					},
+		{	SC_OP_HP_ZERO,				scProc_OP_HpZero					},
 		{	SC_OP_PP_MINUS,				scProc_OP_PPMinus					},
 		{	SC_OP_PP_PLUS,				scProc_OP_PPPlus					},
 		{	SC_OP_RANK_UP,				scProc_OP_RankUp					},
@@ -1043,6 +1047,45 @@ static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args )
 
 	case 1:
 		if( BTLV_ACT_DamageEffectDouble_Wait(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+/**
+ * 【アクション】一撃必殺ワザ処理
+ */
+static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ) {
+	case 0:
+	{
+		BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+		BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
+		(*seq)++;
+	}
+	break;
+
+	case 1:
+		if( BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore) )
+		{
+			BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
+			BTLV_StartDeadAct( wk->viewCore, pos );
+			(*seq)++;
+		}
+		break;
+
+	case 2:
+		if( BTLV_WaitDeadAct( wk->viewCore ) )
+		{
+			BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_Ichigeki, args );
+		}
+		break;
+
+	case 3:
+		if( BTLV_WaitMsg(wk->viewCore) )
 		{
 			return TRUE;
 		}
@@ -1402,6 +1445,8 @@ static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args )
 	BTL_POKEPARAM_HpMinus( pp, args[1] );
 	return TRUE;
 }
+
+
 static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
@@ -1419,6 +1464,12 @@ static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args )
 	BTL_POKEPARAM_PPMinus( pp, wazaIdx, value );
 	BTL_Printf("ポケモンのPP 減らします pokeID=%d, waza=%d, val=%d\n", pokeID, wazaIdx, value);
 
+	return TRUE;
+}
+static BOOL scProc_OP_HpZero( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+	BTL_POKEPARAM_HpZero( pp );
 	return TRUE;
 }
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
