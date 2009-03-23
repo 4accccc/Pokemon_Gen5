@@ -186,7 +186,7 @@ static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int 
 #elif defined DEBUG_ONLY_FOR_kagaya
 	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncKagaya
 #elif defined DEBUG_ONLY_FOR_ariizumi_nobuhiko
-	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncStage
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncDressUp
 //	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncAri
 #endif
 

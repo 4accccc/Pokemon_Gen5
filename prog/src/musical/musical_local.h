@@ -27,6 +27,9 @@ typedef enum
 	MUS_POKE_PLT_TAIL		=0x0F,	//尻尾
 }MUS_POKE_EQUIP_PLT;
 
+//装備の最大傾斜
+#define MUS_POKE_EQUIP_ANGLE_MAX (15*0x10000/360)
+
 //パレット番号から装備箇所へ変換
 #define MUS_POKE_PLT_TO_POS(val) ((MUS_POKE_EQUIP_POS)(val-MUS_POKE_PLT_HEAD))
 //グループ番号から回転へ変換(32等分)

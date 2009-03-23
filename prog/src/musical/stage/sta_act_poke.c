@@ -144,6 +144,7 @@ void	STA_POKE_UpdateSystem_Item( STA_POKE_SYS *work )
 			STA_POKE_UpdateItemFunc( work , &work->pokeWork[idx] );
 		}
 	}
+	MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
 }
 
 static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
@@ -212,8 +213,8 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 					VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
 				}
 
-				pos.x = ACT_POS_X_FX(equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
-				pos.y = ACT_POS_Y_FX(equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
+				pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
+				pos.y = (equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
 				pos.z = pokeWork->pokePos.z+FX32_HALF;	//とりあえずポケの前に出す
 
 				//OS_Printf("[%.2f][%.2f]\n",F32_CONST(equipData->pos.z),F32_CONST(pokePos.z));
@@ -358,7 +359,7 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
 
 	for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
 	{
-		const u16 itemNo = musPoke->equip[ePos].type;
+		const u16 itemNo = musPoke->equip[ePos].itemNo;
 		if( itemNo != MUSICAL_ITEM_INVALID )
 		{
 			pokeWork->itemRes[ePos] = MUS_ITEM_DRAW_LoadResource( itemNo );

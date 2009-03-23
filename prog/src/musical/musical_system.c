@@ -26,7 +26,7 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID
 	
 	for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
 	{
-		musPara->equip[i].type = 0;
+		musPara->equip[i].itemNo = MUSICAL_ITEM_INVALID;
 		musPara->equip[i].angle = 0;
 	}
 	

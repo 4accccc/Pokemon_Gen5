@@ -18,6 +18,12 @@ targetname = musical_item
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
 
+#管理表
+#
+XLS2TAB		= ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out.rb
+ITEMDATA_XLS = item_data.xls
+
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
@@ -40,7 +46,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .imd.nsbtx:
 	g3dcvtr $< -etex
 
-
 endif
 
 .PHONY:	do-build clean subdir
@@ -59,10 +64,16 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+
+$(ITEMDATA_XLS:.xls=.bin): $(ITEMDATA_XLS)
+	$(XLS2TAB) $(ITEMDATA_XLS) > $(ITEMDATA_XLS:.xls=.txt)
+	ruby item_conv.rb $(ITEMDATA_XLS:.xls=.txt) $(ITEMDATA_XLS:.xls=.bin)
+
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(imdobj)
+$(targetname).narc: $(imdobj) $(ITEMDATA_XLS:.xls=.bin)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
+
 endif
 
 #------------------------------------------------------------------------------

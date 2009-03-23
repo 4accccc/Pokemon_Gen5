@@ -17,6 +17,7 @@
 
 #include "infowin/infowin.h"
 #include "test/ariizumi/ari_debug.h"
+#include "musical/musical_local.h"
 #include "musical/mus_poke_draw.h"
 #include "musical/mus_item_draw.h"
 #include "musical/musical_camera_def.h"
@@ -26,24 +27,28 @@
 //======================================================================
 //	define
 //======================================================================
-#pragma mark [> define
+#pragma mark [> define fitting
 
-#define FIT_FRAME_MAIN_3D	GFL_BG_FRAME0_M
-#define FIT_FRAME_MAIN_INFO	GFL_BG_FRAME1_M
-#define FIT_FRAME_MAIN_CASE	GFL_BG_FRAME2_M
-#define FIT_FRAME_MAIN_BG	GFL_BG_FRAME3_M
-#define FIT_FRAME_SUB_BG	GFL_BG_FRAME3_S
+#define FIT_FRAME_MAIN_3D		GFL_BG_FRAME0_M
+#define FIT_FRAME_MAIN_INFO		GFL_BG_FRAME1_M
+#define FIT_FRAME_MAIN_CASE		GFL_BG_FRAME2_M	//読み替えて共用？もしくは3D
+#define FIT_FRAME_MAIN_MIRROR	GFL_BG_FRAME2_M	//読み替えて共用？
+#define FIT_FRAME_MAIN_BG		GFL_BG_FRAME3_M
+#define FIT_FRAME_SUB_BG		GFL_BG_FRAME3_S
 
 #define FIT_PAL_INFO		(0xE)
+
+#define FIT_ANIME_SPD	(6)
+#define FIT_ANIME_MAX	(192)
 
 #define DEG_TO_U16(val) ((val)*0x10000/360)
 #define U16_TO_DEG(val) ((val)*360/0x10000)
 
 //BBD用座標変換(カメラの幅から計算
-#define FIT_POS_X(val)	FX32_CONST((val)/16.0f)
-#define FIT_POS_Y(val)	FX32_CONST((192.0f-(val))/16.0f)
-#define FIT_POS_X_FX(val)	((val)/16)
-#define FIT_POS_Y_FX(val)	(FX32_CONST(192.0f)-(val))/16
+#define FIT_POS_X(val)		MUSICAL_POS_X(val)	
+#define FIT_POS_Y(val)		MUSICAL_POS_Y(val)	
+#define FIT_POS_X_FX(val)	MUSICAL_POS_X_FX(val)
+#define FIT_POS_Y_FX(val)	MUSICAL_POS_Y_FX(val)
 
 //ポケモン表示位置
 static const int FIT_POKE_POS_X = 128;
@@ -66,10 +71,10 @@ static const int LIST_CENTER_Y = 80;
 static const int LIST_CENTER_X_FX = FX32_CONST(LIST_CENTER_X);
 static const int LIST_CENTER_Y_FX = FX32_CONST(LIST_CENTER_Y);
 //サイズ
-static const int LIST_SIZE_X = 72;
-static const int LIST_SIZE_Y = 48;
-//FX32_CONST(LIST_SIZE_Y/LIST_SIZE_X)を手動計算
-static const float LIST_SIZE_RATIO = 0.66f;
+static const u16 LIST_SIZE_X = 72;
+static const u16 LIST_SIZE_Y = 48;
+static const float LIST_SIZE_RATIO = ((float)LIST_SIZE_Y/(float)LIST_SIZE_X);
+
 //サイズ
 static const int LIST_TPHIT_MAX_X = LIST_SIZE_X+20;
 static const int LIST_TPHIT_MIN_X = LIST_SIZE_X-20;
@@ -116,10 +121,29 @@ static const u16 ITEM_RETURN_ANIME_CNT = 30;
 //ポケモン				-40000	//たぶんmcssで座標変換が入ってる・・・これで一番下に出る
 //↓
 
+#pragma mark [> define check
+//チェック画面
+#define BUTTON_SIZE_X (64)
+#define BUTTON_SIZE_Y (64)
+
+#define BUTTON_ASSEPT_POS_X (BUTTON_SIZE_X/2)
+#define BUTTON_ASSEPT_POS_Y (192-BUTTON_SIZE_Y/2)
+#define BUTTON_RETURN_POS_X (256-BUTTON_SIZE_X/2)
+#define BUTTON_RETURN_POS_Y (192-BUTTON_SIZE_Y/2)
+
 //======================================================================
 //	enum
 //======================================================================
 #pragma mark [> enum
+typedef enum
+{
+	DUS_FITTING_MAIN,
+	DUS_GO_CHECK,
+	DUS_CHECK_MAIN,
+	DUS_RETURN_FITTING,
+	
+}DUP_STATE;
+
 typedef enum
 {
 	IG_NONE,
@@ -129,6 +153,14 @@ typedef enum
 	IG_ANIME,
 }ITEM_GROUPE;
 
+typedef enum
+{
+	DOR_BUTTON_PLT,
+	DOR_BUTTON_NCG,
+	DOR_BUTTON_ANM,
+	
+	DUP_OBJ_RES_MAX,
+}DUP_OBJ_RES;
 
 //======================================================================
 //	typedef struct
@@ -142,13 +174,16 @@ struct _FITTING_WORK
 	MUS_POKE_DATA_WORK	*pokeData;
 	GFL_TCB *vBlankTcb;
 	
+	DUP_STATE	state;
+	int			animeCnt;	
+	
 	//TP系
 	BOOL tpIsTrg;
 	BOOL tpIsTouch;
 	u32 tpx,tpy;
 	u32 befTpx,befTpy;
-	u16 listBefAngle;
-	BOOL listAngleEnable;	//↑の変数の有効性
+	u16 befAngle;
+	BOOL befAngleEnable;	//↑の変数の有効性
 	BOOL isOpenList;		//リストの表示状態
 	MUS_POKE_EQUIP_POS	snapPos;	//装備に吸着してる状態
 	
@@ -168,6 +203,12 @@ struct _FITTING_WORK
 	u16	listHoldMove;	//持っているときの移動量
 	s32	listTotalMove;	//リスト全体の移動量
 	
+	//Obj系
+	GFL_CLUNIT	*cellUnit;
+	GFL_CLWK	*buttonCell[2];
+	u32			objResIdx[DUP_OBJ_RES_MAX];
+
+	
 	//3D描画に関わる物
 	MUS_POKE_DRAW_SYSTEM	*drawSys;
 	MUS_POKE_DRAW_WORK		*drawWork;
@@ -179,19 +220,19 @@ struct _FITTING_WORK
 //======================================================================
 //	proto
 //======================================================================
-#pragma mark [> proto
+#pragma mark [> proto Fitting
+
+static void DUP_FIT_FittingMain(  FITTING_WORK *work );
 
 static void DUP_FIT_VBlankFunc(GFL_TCB *, void * );
 
 static void DUP_FIT_SetupGraphic( FITTING_WORK *work );
-static void DUP_FIT_SetupBg( FITTING_WORK *work );
+static void DUP_FIT_SetupBgObj( FITTING_WORK *work );
 static void	DUP_FIT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane );
 static void DUP_FIT_SetupPokemon( FITTING_WORK *work );
 static void DUP_FIT_SetupItem( FITTING_WORK *work );
 static void DUP_FIT_TermItem( FITTING_WORK *work );
-static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle );
-static void DUP_FIT_OpenItemList( FITTING_WORK *work );
-static void DUP_FIT_CloseItemList( FITTING_WORK *work );
+static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle , u16 sizeX , u16 sizeY );
 
 static void DUP_FIT_UpdateTpMain( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY );
@@ -202,20 +243,25 @@ static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work );
 
 static const BOOL DUP_FIT_CheckIsEquipItem( FITTING_WORK *work , const MUS_POKE_EQUIP_POS pos);
-static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work  , GFL_POINT *pos , u16 *len );
+static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition( FITTING_WORK *work , MUS_ITEM_DRAW_WORK *itemDrawWork , GFL_POINT *pos , u16 *len );
 static void DUP_FIT_UpdateItemAnime( FITTING_WORK *work );
 static void DUP_FIT_CreateItemListToField( FITTING_WORK *work );
 
-
 static BOOL DUP_FIT_CheckPointInOval( s16 subX , s16 subY , s16 size , float ratioYX );
 
+static void	DUP_FIT_ChangeStateAnime( FITTING_WORK *work );
+
+#pragma mark [> proto Check
+static FITTING_RETURN DUP_CHECK_CheckMain( FITTING_WORK *work );
+static void DUP_CHECK_UpdateTpMain( FITTING_WORK *work );
+static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
 	GX_VRAM_BG_128_D,				// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
 	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-	GX_VRAM_OBJ_NONE,				// メイン2DエンジンのOBJ
+	GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 	GX_VRAM_SUB_OBJ_NONE,			// サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
@@ -228,7 +274,7 @@ static const GFL_DISP_VRAM vramBank = {
 //	B テクスチャ
 //	C SubBg
 //	D MainBg
-//	E None
+//	E MainObj
 //	F テクスチャパレット
 //	G テクスチャパレット
 //	H None
@@ -244,15 +290,17 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 
 	work->heapId = initWork->heapId;
 	work->initWork = initWork;
+	work->state = DUS_FITTING_MAIN;
+	work->animeCnt = 0;
 	work->tpIsTrg = FALSE;
 	work->tpIsTouch = FALSE;
-	work->listAngleEnable = FALSE;
+	work->befAngleEnable = FALSE;
 	work->holdItem = NULL;
 	work->holdItemType = IG_NONE;
 	work->listTotalMove = LIST_FULL_ANGLE-0x8000;	//半回転の位置からスタート
 	work->snapPos = MUS_POKE_EQU_INVALID;
 	DUP_FIT_SetupGraphic( work );
-	DUP_FIT_SetupBg( work );
+	DUP_FIT_SetupBgObj( work );
 	DUP_FIT_SetupPokemon( work );
 	DUP_FIT_SetupItem( work );
 	
@@ -275,6 +323,14 @@ void	DUP_FIT_TermFitting( FITTING_WORK *work )
 	GXS_SetMasterBrightness(-16);
 	
 	INFOWIN_Exit();
+
+	GFL_CLACT_WK_Remove( work->buttonCell[0] );
+	GFL_CLACT_WK_Remove( work->buttonCell[1] );
+	GFL_CLGRP_PLTT_Release( work->objResIdx[DOR_BUTTON_PLT] );
+	GFL_CLGRP_CGR_Release( work->objResIdx[DOR_BUTTON_NCG] );
+	GFL_CLGRP_CELLANIM_Release( work->objResIdx[DOR_BUTTON_ANM] );
+	GFL_CLACT_UNIT_Delete( work->cellUnit );
+	GFL_CLACT_SYS_Delete();
 
 	DUP_FIT_TermItem( work );
 	MUS_POKE_DRAW_Del( work->drawSys , work->drawWork );
@@ -299,42 +355,47 @@ void	DUP_FIT_TermFitting( FITTING_WORK *work )
 //--------------------------------------------------------------
 FITTING_RETURN	DUP_FIT_LoopFitting( FITTING_WORK *work )
 {
+	FITTING_RETURN ret = FIT_RET_CONTINUE;
+	switch( work->state )
+	{
+	case DUS_FITTING_MAIN:
+		DUP_FIT_FittingMain(work);
+		break;
 
-#if DEB_ARI
-	VecFx32 scale,pos;
-	GFL_BBD_GetScale( work->bbdSys , &scale );
-	GFL_BBD_SetScale( work->bbdSys , &scale );
-	MUS_POKE_DRAW_GetPosition( work->drawWork , &pos);
-	MUS_POKE_DRAW_SetPosition( work->drawWork , &pos);
-	if(GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
-	{
-		work->listAngle += 0x100;
-		DUP_FIT_CalcItemListAngle( work , work->listAngle , -0x100 );
-	}
-	if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
-	{
-		work->listAngle -= 0x100;
-		DUP_FIT_CalcItemListAngle( work , work->listAngle , +0x100 );
-	}
-	if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
-	{
-		if( work->isOpenList == TRUE )
+	case DUS_GO_CHECK:
+		work->animeCnt += FIT_ANIME_SPD;
+		if( work->animeCnt >= FIT_ANIME_MAX )
 		{
-			DUP_FIT_CloseItemList( work);
+			work->animeCnt = FIT_ANIME_MAX;
+			work->state = DUS_CHECK_MAIN;
 		}
-		else
-		{
-			DUP_FIT_OpenItemList( work);
-		}
-	}
-#endif
+		DUP_FIT_ChangeStateAnime(work);
+		
+		break;
 
-	DUP_FIT_UpdateTpMain( work );
-	DUP_FIT_UpdateItemAnime( work );
+	case DUS_RETURN_FITTING:
+		work->animeCnt -= FIT_ANIME_SPD;
+		if( work->animeCnt < 0 )
+		{
+			work->animeCnt = 0;
+			work->state = DUS_FITTING_MAIN;
+		}
+		DUP_FIT_ChangeStateAnime(work);
+		
+		break;
+
+	case DUS_CHECK_MAIN:
+		ret = DUP_CHECK_CheckMain( work );
+		break;
+	}
 
 	MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
+	MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
 	
 	INFOWIN_Update();
+
+	//OBJの更新
+	GFL_CLACT_SYS_Main();
 
 	//3D描画	
 	GFL_G3D_DRAW_Start();
@@ -345,12 +406,14 @@ FITTING_RETURN	DUP_FIT_LoopFitting( FITTING_WORK *work )
 	}
 	GFL_G3D_DRAW_End();
 
+#if DEB_ARI
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
 		GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
 	{
 		return FIT_RET_GO_END;
 	}
-	return FIT_RET_CONTINUE;
+#endif //DEB_ARI
+	return ret;
 }
 
 static void DUP_FIT_VBlankFunc(GFL_TCB *tcb, void *wk )
@@ -369,10 +432,13 @@ static void DUP_FIT_VBlankFunc(GFL_TCB *tcb, void *wk )
 			DUP_FIT_ITEM_SetItemIdx( item , newId );
 		}
 		
-		
 		item = DUP_FIT_ITEM_GetNextItem(item);
 	}
+
+	GFL_CLACT_SYS_VBlankFunc();
 }
+
+
 
 //--------------------------------------------------------------
 //	描画系初期化
@@ -391,56 +457,7 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 	GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
 	GFL_DISP_SetBank( &vramBank );
 	
-	GFL_BG_Init( work->heapId );
-	GFL_BMPWIN_Init( work->heapId );
-	
-	//Vram割り当ての設定
-	{
-		static const GFL_BG_SYS_HEADER sys_data = {
-				GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
-		};
-		
-		// BG1 MAIN (Infoバー
-		static const GFL_BG_BGCNT_HEADER header_main1 = {
-			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x10000,0x1000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
-		};
-		// BG2 MAIN (蓋
-		static const GFL_BG_BGCNT_HEADER header_main2 = {
-			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x6000,
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
-		};
-		// BG3 MAIN (背景
-		static const GFL_BG_BGCNT_HEADER header_main3 = {
-			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
-			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
-		};
 
-		// BG3 SUB (背景
-		static const GFL_BG_BGCNT_HEADER header_sub3 = {
-			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
-		};
-
-		GFL_BG_SetBGMode( &sys_data );
-		GFL_BG_SetBGControl3D( 2 );
-		DUP_FIT_SetupBgFunc( &header_main1, FIT_FRAME_MAIN_INFO);
-		DUP_FIT_SetupBgFunc( &header_main2, FIT_FRAME_MAIN_CASE);
-		DUP_FIT_SetupBgFunc( &header_main3, FIT_FRAME_MAIN_BG);
-
-		DUP_FIT_SetupBgFunc( &header_sub3 , FIT_FRAME_SUB_BG );
-		
-		GFL_BG_SetVisible( FIT_FRAME_MAIN_3D , TRUE );
-	}
-	
 	{	//3D系の設定
 		static const VecFx32 cam_pos = MUSICAL_CAMERA_POS;
 		static const VecFx32 cam_target = MUSICAL_CAMERA_TRG;
@@ -487,6 +504,68 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 		
 		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
 	}
+	
+	GFL_BG_Init( work->heapId );
+	GFL_BMPWIN_Init( work->heapId );
+	
+	//Vram割り当ての設定
+	{
+		static const GFL_BG_SYS_HEADER sys_data = {
+				GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+		};
+		
+		// BG1 MAIN (Infoバー
+		static const GFL_BG_BGCNT_HEADER header_main1 = {
+			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000,0x1000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+		};
+		// BG2 MAIN (蓋・鏡
+		static const GFL_BG_BGCNT_HEADER header_main2 = {
+			0, 0, 0x1000, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+			GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x6000,
+			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+		};
+		// BG3 MAIN (背景
+		static const GFL_BG_BGCNT_HEADER header_main3 = {
+			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
+			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+		};
+
+		// BG3 SUB (背景
+		static const GFL_BG_BGCNT_HEADER header_sub3 = {
+			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+		};
+
+		GFL_BG_SetBGMode( &sys_data );
+		GFL_BG_SetBGControl3D( 1 );
+		DUP_FIT_SetupBgFunc( &header_main1, FIT_FRAME_MAIN_INFO);
+		DUP_FIT_SetupBgFunc( &header_main2, FIT_FRAME_MAIN_CASE);
+		DUP_FIT_SetupBgFunc( &header_main3, FIT_FRAME_MAIN_BG);
+
+		DUP_FIT_SetupBgFunc( &header_sub3 , FIT_FRAME_SUB_BG );
+		
+		GFL_BG_SetVisible( FIT_FRAME_MAIN_3D , TRUE );
+	}
+
+	{	//OBJの初期化
+		GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
+		cellSysInitData.oamst_main = 0x10;	//デバッグメータの分
+		cellSysInitData.oamnum_main = 128-0x10;
+		GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
+		
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+		work->cellUnit  = GFL_CLACT_UNIT_Create( 2 , 0, work->heapId );
+		GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
+	}
+
 	{
 		GFL_BBD_SETUP bbdSetup = {
 			128,128,
@@ -505,7 +584,7 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 //--------------------------------------------------------------
 //	BGの初期化
 //--------------------------------------------------------------
-static void DUP_FIT_SetupBg( FITTING_WORK *work )
+static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
 {
 	
 	ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , work->heapId );
@@ -517,6 +596,11 @@ static void DUP_FIT_SetupBg( FITTING_WORK *work )
 	GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_d_NSCR , 
 										FIT_FRAME_MAIN_BG ,  0 , 0, FALSE , work->heapId );
 
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_bg_mirror_NCGR ,
+										FIT_FRAME_MAIN_MIRROR , 0 , 0, FALSE , work->heapId );
+	GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_bg_mirror_NSCR , 
+										FIT_FRAME_MAIN_MIRROR ,  0 , 0, FALSE , work->heapId );
+
 	GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_NCLR , 
 										PALTYPE_SUB_BG , 0 , 0 , work->heapId );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_test_bg_NCGR ,
@@ -524,10 +608,42 @@ static void DUP_FIT_SetupBg( FITTING_WORK *work )
 	GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_u_NSCR , 
 										FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
 
+	//Obj用Res
+	work->objResIdx[DOR_BUTTON_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_obj_button_NCLR , CLSYS_DRAW_MAIN , 0 , work->heapId  );
+	work->objResIdx[DOR_BUTTON_NCG] = GFL_CLGRP_CGR_Register( arcHandle , NARC_dressup_gra_obj_button_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+	work->objResIdx[DOR_BUTTON_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_dressup_gra_obj_button_NCER , NARC_dressup_gra_obj_button_NANR, work->heapId  );
+	
+	{
+	//セルの生成
+		GFL_CLWK_DATA	cellInitData;
+		cellInitData.pos_x = BUTTON_ASSEPT_POS_X;
+		cellInitData.pos_y = BUTTON_ASSEPT_POS_Y+BUTTON_SIZE_Y;
+		cellInitData.anmseq = 0;
+		cellInitData.softpri = 0;
+		cellInitData.bgpri = 2;
+		work->buttonCell[0] = GFL_CLACT_WK_Create( work->cellUnit ,
+							work->objResIdx[DOR_BUTTON_NCG],
+							work->objResIdx[DOR_BUTTON_PLT],
+							work->objResIdx[DOR_BUTTON_ANM],
+							&cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+
+		cellInitData.pos_x = BUTTON_RETURN_POS_X;
+		cellInitData.pos_y = BUTTON_RETURN_POS_Y+BUTTON_SIZE_Y;
+		cellInitData.anmseq = 1;
+		work->buttonCell[1] = GFL_CLACT_WK_Create( work->cellUnit ,
+							work->objResIdx[DOR_BUTTON_NCG],
+							work->objResIdx[DOR_BUTTON_PLT],
+							work->objResIdx[DOR_BUTTON_ANM],
+					 		&cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+
+		GFL_CLACT_WK_SetDrawEnable( work->buttonCell[0], TRUE );
+		GFL_CLACT_WK_SetDrawEnable( work->buttonCell[1], TRUE );
+	}
 
 	GFL_ARC_CloseDataHandle(arcHandle);
 
 	GFL_BG_LoadScreenReq(FIT_FRAME_MAIN_BG);
+	GFL_BG_LoadScreenReq(FIT_FRAME_MAIN_MIRROR);
 	GFL_BG_LoadScreenReq(FIT_FRAME_SUB_BG);
 
 
@@ -579,8 +695,9 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
 		
 		item = DUP_FIT_ITEM_CreateItem( work->heapId , work->itemDrawSys , i , work->itemRes[i] , &pos );
 		DUP_FIT_ITEMGROUP_AddItem( work->itemGroupList,item );
+		MUS_ITEM_DRAW_SetUseOffset( work->itemDrawSys , DUP_FIT_ITEM_GetItemDrawWork( item ) , FALSE );
 	}
-	DUP_FIT_CalcItemListAngle( work , 0 , 0 );
+	DUP_FIT_CalcItemListAngle( work , 0 , 0 , LIST_SIZE_X , LIST_SIZE_Y );
 	work->isOpenList = TRUE;
 }
 
@@ -632,10 +749,34 @@ static void DUP_FIT_TermItem( FITTING_WORK *work )
 	
 	MUS_ITEM_DRAW_TermSystem( work->itemDrawSys );
 }
+
+#pragma mark [> FittingFunc
+
+static void DUP_FIT_FittingMain(  FITTING_WORK *work )
+{
+
+#if DEB_ARI
+	if(GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
+	{
+		work->listAngle += 0x100;
+		DUP_FIT_CalcItemListAngle( work , work->listAngle , -0x100 , LIST_SIZE_X , LIST_SIZE_Y );
+	}
+	if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
+	{
+		work->listAngle -= 0x100;
+		DUP_FIT_CalcItemListAngle( work , work->listAngle , +0x100 , LIST_SIZE_X , LIST_SIZE_Y );
+	}
+#endif
+
+	DUP_FIT_UpdateTpMain( work );
+	DUP_FIT_UpdateItemAnime( work );	
+}
+
+
 //--------------------------------------------------------------
 //アイテムリストの位置・サイズ計算
 //--------------------------------------------------------------
-static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle )
+static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle , u16 sizeX , u16 sizeY )
 {
 	//円は下が手前で0度として、depthは下で0x8000 上が0x0000
 	int i = 0;
@@ -661,8 +802,8 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
 		MUS_ITEM_DRAW_WORK *itemDrawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
 		const fx32 sin = (fx32)FX_SinIdx( oneAngle );
 		const fx32 cos = (fx32)FX_CosIdx( oneAngle );
-		const fx32 posX = LIST_CENTER_X_FX+sin*LIST_SIZE_X;
-		const fx32 posY = LIST_CENTER_Y_FX+cos*LIST_SIZE_Y;
+		const fx32 posX = LIST_CENTER_X_FX+sin*sizeX;
+		const fx32 posY = LIST_CENTER_Y_FX+cos*sizeY;
 		
 		//絵の読み替え処理とか
 		{
@@ -697,8 +838,8 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
 		}
 		dispPos.x = F32_CONST(posX);
 		dispPos.y = F32_CONST(posY);
-		pos.x = FIT_POS_X_FX(posX);
-		pos.y = FIT_POS_Y_FX(posY);
+		pos.x = posX;
+		pos.y = posY;
 		pos.z = LIST_DEPTH_BASE + (0x8000-depth);
 	
 		MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , itemDrawWork , &pos );
@@ -744,49 +885,6 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
 }
 
 //--------------------------------------------------------------
-//アイテムリストの表示(開始
-//--------------------------------------------------------------
-static void DUP_FIT_OpenItemList( FITTING_WORK *work )
-{
-	FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
-	GF_ASSERT( work->isOpenList == FALSE );
-	//リストの角度計算内で表示非表示もやっているので、ここで全アイテムを対象にした処理はない
-/*
-	while( item != NULL )
-	{
-		MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
-		
-		MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , drawWork , FALSE );
-
-		item = DUP_FIT_ITEM_GetNextItem(item);
-	}
-*/
-	DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 );
-	
-	work->isOpenList = TRUE;
-
-}
-//--------------------------------------------------------------
-//アイテムリストの非表示(開始
-//--------------------------------------------------------------
-static void DUP_FIT_CloseItemList( FITTING_WORK *work )
-{
-	FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
-	GF_ASSERT( work->isOpenList == TRUE );
-	while( item != NULL )
-	{
-		MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
-		
-		MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , drawWork , FALSE );
-
-		item = DUP_FIT_ITEM_GetNextItem(item);
-	}
-
-	work->isOpenList = FALSE;
-	
-}
-
-//--------------------------------------------------------------
 //タッチペン操作更新メイン
 //--------------------------------------------------------------
 static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
@@ -798,47 +896,64 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
 	work->tpIsTouch = GFL_UI_TP_GetPointCont( &work->tpx,&work->tpy );
 	if( work->tpIsTrg || work->tpIsTouch )
 	{
-		
-		if( work->holdItemType == IG_FIELD && work->holdItem != NULL )
+		if( work->tpIsTrg && (work->tpy > 192-16) )
 		{
-			//アイテム保持中の処理
-			DUP_FIT_UpdateTpHoldingItem( work );
+			work->state = DUS_GO_CHECK;
+			work->animeCnt = 0;
 		}
-		else if( work->isOpenList == TRUE )
+		else
 		{
-			//アイテムリストの中か？
-			//X座標には比をかけてYのサイズで計算する
-			const s16 subX = work->tpx - LIST_CENTER_X;
-			const s16 subY = work->tpy - LIST_CENTER_Y;
-			const u32 centerLen = F32_CONST(FX_Sqrt(FX32_CONST(subX*subX+subY*subY)));
-			//内側の円に居るか？
-			BOOL hitMinOval,hitMaxOval;
-			hitMinOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MIN_Y,LIST_TPHIT_RATIO_MIN );
-			hitMaxOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MAX_Y,LIST_TPHIT_RATIO_MAX );
-			if( hitMinOval == FALSE && hitMaxOval == TRUE )
+			//取り合えずInfoBarとチェックボタンにかぶらない処理
+			if( work->tpy > 192-16 )
 			{
-				isTouchList = TRUE;
-				DUP_FIT_UpdateTpList( work , subX , subY );
+				work->tpy = 192-16;
 			}
-			else if( (hitMinOval == FALSE && hitMaxOval == FALSE )||
-					 (hitMinOval == TRUE && hitMaxOval == TRUE ))
+			if( work->tpy < 16 )
 			{
-				if( DUP_FIT_ITEMGROUP_IsItemMax(work->itemGroupField) == FALSE )
+				work->tpy = 16;
+			}
+			
+			if( work->holdItemType == IG_FIELD && work->holdItem != NULL )
+			{
+				//アイテム保持中の処理
+				DUP_FIT_UpdateTpHoldingItem( work );
+			}
+			else if( work->isOpenList == TRUE )
+			{
+				//アイテムリストの中か？
+				//X座標には比をかけてYのサイズで計算する
+				const s16 subX = work->tpx - LIST_CENTER_X;
+				const s16 subY = work->tpy - LIST_CENTER_Y;
+				const u32 centerLen = F32_CONST(FX_Sqrt(FX32_CONST(subX*subX+subY*subY)));
+				//内側の円に居るか？
+				BOOL hitMinOval,hitMaxOval;
+				hitMinOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MIN_Y,LIST_TPHIT_RATIO_MIN );
+				hitMaxOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MAX_Y,LIST_TPHIT_RATIO_MAX );
+				if( hitMinOval == FALSE && hitMaxOval == TRUE )
 				{
-					//円の内側も許可
-					if( work->holdItemType == IG_LIST &&
-						work->holdItem != NULL && 
-						MATH_ABS(work->listSpeed) < DEG_TO_U16(2) )
+					isTouchList = TRUE;
+					DUP_FIT_UpdateTpList( work , subX , subY );
+				}
+				else if( (hitMinOval == FALSE && hitMaxOval == FALSE )||
+						 (hitMinOval == TRUE && hitMaxOval == TRUE ))
+				{
+					if( DUP_FIT_ITEMGROUP_IsItemMax(work->itemGroupField) == FALSE )
 					{
-						ARI_TPrintf("[%d]\n",U16_TO_DEG(MATH_ABS(work->listSpeed)));
-						DUP_FIT_CreateItemListToField( work );
+						//円の内側も許可
+						if( work->holdItemType == IG_LIST &&
+							work->holdItem != NULL && 
+							MATH_ABS(work->listSpeed) < DEG_TO_U16(2) )
+						{
+							ARI_TPrintf("[%d]\n",U16_TO_DEG(MATH_ABS(work->listSpeed)));
+							DUP_FIT_CreateItemListToField( work );
+						}
 					}
 				}
 			}
-		}
-		if( isTouchList == FALSE && work->tpIsTrg == TRUE )
-		{
-			DUP_FIT_UpdateTpHoldItem(work);
+			if( isTouchList == FALSE && work->tpIsTrg == TRUE )
+			{
+				DUP_FIT_UpdateTpHoldItem(work);
+			}
 		}
 	}
 	else
@@ -870,7 +985,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
 			}
 		}
 		
-		work->listAngleEnable = FALSE;
+		work->befAngleEnable = FALSE;
 		work->holdItem = NULL;
 		work->holdItemType = IG_NONE;
 		work->snapPos = MUS_POKE_EQU_INVALID;
@@ -884,7 +999,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
 		if( tempAngle >= 0x10000 )
 			tempAngle -= 0x10000;
 		work->listAngle = tempAngle;
-		DUP_FIT_CalcItemListAngle( work , work->listAngle , work->listSpeed );
+		DUP_FIT_CalcItemListAngle( work , work->listAngle , work->listSpeed , LIST_SIZE_X , LIST_SIZE_Y );
 		if( work->listSpeed > 0x80 || work->listSpeed < -0x80 )
 		{
 			work->listSpeed *= 0.75f;
@@ -903,8 +1018,8 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 {
 	//回転は楕円なので角度で見ないほうが良いかも
 	//でも角度じゃないと回せない・・・
-	const u16 angle = FX_Atan2Idx(subX*FX32_ONE,subY*FX32_ONE);
-	const s32 subAngle = work->listBefAngle - angle;
+	const u16 angle = FX_Atan2Idx(FX32_CONST(subX),FX32_CONST(subY));
+	const s32 subAngle = work->befAngle - angle;
 
 	work->listHoldMove += MATH_ABS(subAngle);
 	
@@ -939,7 +1054,7 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 		}
 	}
 	//回転処理
-	if( work->listAngleEnable == TRUE )
+	if( work->befAngleEnable == TRUE )
 	{
 		u8 i;
 		//前回とのリストに対する角度差
@@ -955,7 +1070,7 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 			if( tempAngle >= 0x10000 )
 				tempAngle -= 0x10000;
 			work->listAngle = tempAngle;
-			DUP_FIT_CalcItemListAngle( work , work->listAngle , subAngle );
+			DUP_FIT_CalcItemListAngle( work , work->listAngle , subAngle , LIST_SIZE_X , LIST_SIZE_Y );
 			
 			if( ( work->listSpeed>0 && work->listSpeed<0) ||
 				( work->listSpeed<0 && work->listSpeed>0) )
@@ -982,8 +1097,8 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 			work->listSpeed = 0;
 		}
 	}
-	work->listBefAngle = angle;
-	work->listAngleEnable = TRUE;
+	work->befAngle = angle;
+	work->befAngleEnable = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -993,10 +1108,14 @@ static void DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work )
 {
 	BOOL isEquipList = TRUE;
 	FIT_ITEM_WORK* item;
+	
+	//装備アイテムのリストを調べた後に、同じルーチンでフィールドのリストを調べる
+	
 	item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
 	if( item == NULL || DUP_FIT_ITEMGROUP_IsItemMax(work->itemGroupField) == TRUE )
 	{
 		//フィールドのアイテムがいっぱいなら装備アイテムは拾えない
+		//即フィールドのリストに
 		item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupField );
 		isEquipList = FALSE;
 	}
@@ -1015,6 +1134,7 @@ static void DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work )
 			item = DUP_FIT_ITEM_GetNextItem(item);
 			if( item == NULL && isEquipList == TRUE )
 			{
+				//装備のリストがなくなったのでフィールドのリストに切り替え
 				item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupField );
 				isEquipList = FALSE;
 			}
@@ -1042,26 +1162,19 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work )
 	GFL_POINT pokePosSub;
 	VecFx32 pos = {0,0,HOLD_ITEM_DEPTH};
 	fx16 scaleX,scaleY;
-	u16	rotZ;
+	u16	rotZ = 0;
 	MUS_ITEM_DRAW_WORK *itemDrawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
 	
 	pokePosSub.x = work->tpx - FIT_POKE_POS_X;
 	pokePosSub.y = work->tpy - FIT_POKE_POS_Y;
-	work->snapPos = DUP_FIT_SearchEquipPosition( work , &pokePosSub , &snapLen );
+	work->snapPos = DUP_FIT_SearchEquipPosition( work ,itemDrawWork, &pokePosSub , &snapLen );
 	if( work->snapPos != MUS_POKE_EQU_INVALID &&
 		DUP_FIT_CheckIsEquipItem( work , work->snapPos ) == FALSE )
 	{
 		MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , work->snapPos );
-		dispPos.x = (int)F32_CONST(equipData->pos.x)+128;
-		dispPos.y = (int)F32_CONST(equipData->pos.y)+ 96;
-		rotZ = equipData->rot;
-/*		
-		dispPos = *MUS_POKE_DATA_GetEquipPosition( work->pokeData , work->snapPos );
-		dispPos.x += FIT_POKE_POS_X;
-		dispPos.y += FIT_POKE_POS_Y;
-*/
-//		dispPos.x += FIT_POKE_POS_X;
-//		dispPos.y += FIT_POKE_POS_Y;
+		dispPos.x = (int)F32_CONST(equipData->pos.x+equipData->ofs.x)+128;
+		dispPos.y = (int)F32_CONST(equipData->pos.y+equipData->ofs.y)+ 96;
+		rotZ = equipData->itemRot;
 	}
 	else
 	{
@@ -1070,8 +1183,8 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work )
 		dispPos.y = work->tpy;
 	}
 
-	pos.x = FIT_POS_X(dispPos.x);
-	pos.y = FIT_POS_Y(dispPos.y);
+	pos.x = FX32_CONST(dispPos.x);
+	pos.y = FX32_CONST(dispPos.y);
 	MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , itemDrawWork , &pos );
 	DUP_FIT_ITEM_SetPosition( work->holdItem , &dispPos );
 	MUS_ITEM_DRAW_SetRotation( work->itemDrawSys , DUP_FIT_ITEM_GetItemDrawWork(work->holdItem) , rotZ );
@@ -1240,7 +1353,7 @@ static const BOOL DUP_FIT_CheckIsEquipItem( FITTING_WORK *work , const MUS_POKE_
 //--------------------------------------------------------------
 //指定点から近い位置を探す(相対座標にして渡してください
 //--------------------------------------------------------------
-static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work  , GFL_POINT *pos , u16 *len )
+static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work , MUS_ITEM_DRAW_WORK *itemDrawWork , GFL_POINT *pos , u16 *len )
 {
 	MUS_POKE_EQUIP_POS i;
 	u16 minLen = (*len)*(*len);	//あらかじめ最小距離に指定距離を入れておく
@@ -1248,11 +1361,12 @@ static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work  , GF
 	for( i=0; i<MUS_POKE_EQUIP_MAX ;i++ )
 	{
 		MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , i );
-		if( equipData->isEnable == TRUE )
+		if( equipData->isEnable == TRUE && 
+			MUS_ITEM_DRAW_CanEquipPos( itemDrawWork , i ) == TRUE )
 //		if( pokeData->isEquip[i] == TRUE )
 		{
-			const int equipPosX = (int)F32_CONST(equipData->pos.x)+128-FIT_POKE_POS_X;
-			const int equipPosY = (int)F32_CONST(equipData->pos.y)+96 -FIT_POKE_POS_Y;
+			const int equipPosX = (int)F32_CONST(equipData->pos.x+equipData->ofs.x)+128-FIT_POKE_POS_X;
+			const int equipPosY = (int)F32_CONST(equipData->pos.y+equipData->ofs.y)+96 -FIT_POKE_POS_Y;
 			const int subX = pos->x - equipPosX;
 			const int subY = pos->y - equipPosY;
 			const int subLen = (subX*subX)+(subY*subY);
@@ -1310,4 +1424,174 @@ static BOOL DUP_FIT_CheckPointInOval( s16 subX , s16 subY , s16 size , float rat
 		return TRUE;
 	else
 		return FALSE;
+}
+
+#pragma mark [> StateChangeAnime
+//--------------------------------------------------------------
+//ステート変更のアニメ
+//--------------------------------------------------------------
+static void	DUP_FIT_ChangeStateAnime( FITTING_WORK *work )
+{
+	FIT_ITEM_WORK *item;
+	//リストのアイテム
+	DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X+work->animeCnt , LIST_SIZE_Y+work->animeCnt*LIST_SIZE_RATIO );
+	
+	//フィールドのアイテム
+	item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupField );
+	while( item != NULL )
+	{
+		VecFx32 pos;
+		GFL_POINT* dispPos = DUP_FIT_ITEM_GetPosition( item );
+		MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
+		
+		//中心からの角度を求める
+		const s16 subX = dispPos->x - LIST_CENTER_X;
+		const s16 subY = dispPos->y - LIST_CENTER_Y;
+		const fx32 len = FX_Sqrt( FX32_CONST( subX*subX+subY*subY ));
+		const u16 angle = FX_Atan2Idx(FX32_CONST(subY),FX32_CONST(subX));
+		
+		MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , drawWork , &pos );
+
+		pos.x = (FX_Mul(FX_CosIdx( angle ),( len + FX32_CONST(work->animeCnt) )) 				  + LIST_CENTER_X_FX);
+		pos.y = (FX_Mul(FX_SinIdx( angle ),( len + FX32_CONST(work->animeCnt*LIST_SIZE_RATIO ) )) + LIST_CENTER_Y_FX);
+		//Zはそのまま
+		MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , drawWork , &pos );
+		
+		item = DUP_FIT_ITEM_GetNextItem(item);
+	}
+	
+	//BG
+	GFL_BG_SetScroll( FIT_FRAME_MAIN_MIRROR , GFL_BG_SCROLL_Y_SET , -work->animeCnt );
+
+	//OBJ(ボタン)
+	{
+		GFL_CLACTPOS cellPos;
+		cellPos.x = BUTTON_ASSEPT_POS_X;
+		cellPos.y = BUTTON_ASSEPT_POS_Y+( FIT_ANIME_MAX-work->animeCnt < BUTTON_SIZE_Y ?
+						  FIT_ANIME_MAX-work->animeCnt : BUTTON_SIZE_Y );
+		GFL_CLACT_WK_SetPos( work->buttonCell[0] , &cellPos , CLSYS_DEFREND_MAIN );
+
+		cellPos.x = BUTTON_RETURN_POS_X;
+		cellPos.y = BUTTON_RETURN_POS_Y+( FIT_ANIME_MAX-work->animeCnt < BUTTON_SIZE_Y ?
+						  FIT_ANIME_MAX-work->animeCnt : BUTTON_SIZE_Y );
+		GFL_CLACT_WK_SetPos( work->buttonCell[1] , &cellPos , CLSYS_DEFREND_MAIN );
+	}
+
+}
+
+#pragma mark [> CheckFunc
+//--------------------------------------------------------------
+//チェック画面
+//--------------------------------------------------------------
+
+static FITTING_RETURN DUP_CHECK_CheckMain(  FITTING_WORK *work )
+{
+	GFL_UI_TP_HITTBL buttonHitTbl[3] =
+	{
+		{
+			BUTTON_ASSEPT_POS_Y - BUTTON_SIZE_Y/2 ,
+			BUTTON_ASSEPT_POS_Y + BUTTON_SIZE_Y/2 ,
+			BUTTON_ASSEPT_POS_X - BUTTON_SIZE_X/2 ,
+			BUTTON_ASSEPT_POS_X + BUTTON_SIZE_X/2 ,
+		},{
+			BUTTON_RETURN_POS_Y - BUTTON_SIZE_Y/2 ,
+			BUTTON_RETURN_POS_Y + BUTTON_SIZE_Y/2 ,
+			BUTTON_RETURN_POS_X - BUTTON_SIZE_X/2 ,
+			BUTTON_RETURN_POS_X + BUTTON_SIZE_X/2 ,
+		},{
+			GFL_UI_TP_HIT_END,0,0,0
+		}
+	};
+	int hitRet;
+	
+	hitRet = GFL_UI_TP_HitTrg( buttonHitTbl );
+	switch( hitRet )
+	{
+	case 0:	//決定ボタン
+		return FIT_RET_GO_END;
+		break;
+	case 1:	//戻るボタン
+		work->state = DUS_RETURN_FITTING;
+		work->animeCnt = FIT_ANIME_MAX;
+		break;
+	case GFL_UI_TP_HIT_NONE:
+		DUP_CHECK_UpdateTpMain( work );
+		break;
+	}
+	
+	return FIT_RET_CONTINUE;
+}
+
+static void DUP_CHECK_UpdateTpMain( FITTING_WORK *work )
+{
+	work->befTpx = work->tpx;
+	work->befTpy = work->tpy;
+	work->tpIsTrg = GFL_UI_TP_GetTrg();
+	work->tpIsTouch = GFL_UI_TP_GetPointCont( &work->tpx,&work->tpy );
+	
+	if( work->tpIsTrg == TRUE )
+	{
+		//装備品との当たり判定
+		FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
+		while( item != NULL )
+		{
+			if( DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE )
+			{
+				work->holdItem = item;
+				ARI_TPrintf("Equip Item Hold[%d]\n",DUP_FIT_ITEM_GetItemIdx(item));
+			}
+			item = DUP_FIT_ITEM_GetNextItem(item);
+		}
+	}
+	
+	if( work->tpIsTouch == TRUE && work->holdItem != NULL )
+	{
+		DUP_CHECK_UpdateTpHoldingItem( work );
+		
+	}
+	if( work->tpIsTouch == FALSE )
+	{
+		work->befAngleEnable = FALSE;
+		work->holdItem = NULL;
+	}
+}
+
+static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work )
+{
+	fx32 subX;
+	fx32 subY;
+	u16 angle;
+
+	GFL_POINT *itemPos = DUP_FIT_ITEM_GetPosition( work->holdItem );
+	subX = FX32_CONST((s32)work->tpx - itemPos->x);
+	subY = FX32_CONST((s32)work->tpy - itemPos->y);
+	angle = FX_Atan2Idx(subX,subY);
+	
+	if( work->befAngleEnable == TRUE )
+	{
+		u16 rot;
+		s32 subAngle = work->befAngle - angle;
+		u16 equipPos = DUP_FIT_ITEM_GetCount( work->holdItem );
+		s16 angle = work->initWork->musPoke->equip[equipPos].angle;
+		MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , equipPos );
+		
+		angle += subAngle;
+		
+		if( angle < -MUS_POKE_EQUIP_ANGLE_MAX )
+		{
+			angle = -MUS_POKE_EQUIP_ANGLE_MAX;
+		}
+		if( angle >  MUS_POKE_EQUIP_ANGLE_MAX )
+		{
+			angle =  MUS_POKE_EQUIP_ANGLE_MAX;
+		}
+			
+		rot = equipData->itemRot+angle;
+		MUS_ITEM_DRAW_SetRotation( work->itemDrawSys , DUP_FIT_ITEM_GetItemDrawWork(work->holdItem) , rot );
+		
+		work->initWork->musPoke->equip[equipPos].angle = angle;
+	}
+	work->befAngle = angle;
+	work->befAngleEnable = TRUE;
+	
 }

@@ -282,7 +282,7 @@ const BOOL DUP_FIT_ITEM_CheckHit( FIT_ITEM_WORK *item , u32 posX , u32 posY )
 	const s16 subX = item->pos.x - posX;
 	const s16 subY = item->pos.y - posY;
 	u16 arcIdx = MUS_ITEM_DRAW_GetArcIdx( item->itemId );
-	MUS_ITEM_DRAW_GetPicSize( arcIdx , &texSize , &xRate,&yRate );
+	MUS_ITEM_DRAW_GetPicSize( item->itemWork , &xRate,&yRate );
 
 	if( subX < ITEM_HIT_SIZE*xRate &&
 		subX >-ITEM_HIT_SIZE*xRate &&

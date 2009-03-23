@@ -14,13 +14,18 @@
 // ヘッダとして定義。
 // static const で宣言するとメモリ食うのでdefineで数値を設定する
 
-
-
-#endif MUSICAL_CAMERA_DEF_H__
-
 #define MUSICAL_CAMERA_POS {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(301.0f)}
 #define MUSICAL_CAMERA_TRG {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(0.0f)}
 #define MUSICAL_CAMERA_UP  {0,FX32_ONE,0}
 
 #define MUSICAL_CAMERA_NEAR (FX32_ONE)
 #define MUSICAL_CAMERA_FAR  (FX32_ONE*300)
+
+//BBD用座標変換(カメラの幅から計算
+#define MUSICAL_POS_X(val)		FX32_CONST((val)/16.0f)
+#define MUSICAL_POS_Y(val)		FX32_CONST((192.0f-(val))/16.0f)
+#define MUSICAL_POS_X_FX(val)	((val)/16)
+#define MUSICAL_POS_Y_FX(val)	(FX32_CONST(192.0f)-(val))/16
+
+#endif MUSICAL_CAMERA_DEF_H__
+

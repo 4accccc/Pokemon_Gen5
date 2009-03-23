@@ -494,6 +494,7 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
 SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
 				musical/mus_poke_data.c \
 				musical/mus_item_draw.c \
+				musical/mus_item_data.c \
 				musical/dressup/dup_fitting.c \
 				musical/dressup/dup_fitting_item.c \
 				musical/musical_mcss.c \

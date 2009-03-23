@@ -76,23 +76,23 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 	work->actInitWork->musPoke[3].pokePara = PP_Create( MONSNO_RUKARIO , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_STAGE );
 	for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
 	{
-		work->actInitWork->musPoke[0].equip[ePos].type = MUSICAL_ITEM_INVALID;
-		work->actInitWork->musPoke[1].equip[ePos].type = MUSICAL_ITEM_INVALID;
-		work->actInitWork->musPoke[2].equip[ePos].type = MUSICAL_ITEM_INVALID;
-		work->actInitWork->musPoke[3].equip[ePos].type = MUSICAL_ITEM_INVALID;
+		work->actInitWork->musPoke[0].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
+		work->actInitWork->musPoke[1].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
+		work->actInitWork->musPoke[2].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
+		work->actInitWork->musPoke[3].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
 	}
 	
-	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HAND_R].type = 13;
-	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HEAD].type = 16;
+	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HAND_R].itemNo = 13;
+	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HEAD].itemNo = 16;
 	
-	work->actInitWork->musPoke[1].equip[MUS_POKE_EQU_EAR_L].type = 7;
-	work->actInitWork->musPoke[1].equip[MUS_POKE_EQU_BODY].type = 9;
+	work->actInitWork->musPoke[1].equip[MUS_POKE_EQU_EAR_L].itemNo = 7;
+	work->actInitWork->musPoke[1].equip[MUS_POKE_EQU_BODY].itemNo = 9;
 	
-	work->actInitWork->musPoke[2].equip[MUS_POKE_EQU_HAND_R].type = 31;
-	work->actInitWork->musPoke[2].equip[MUS_POKE_EQU_HEAD].type = 15;
+	work->actInitWork->musPoke[2].equip[MUS_POKE_EQU_HAND_R].itemNo = 31;
+	work->actInitWork->musPoke[2].equip[MUS_POKE_EQU_HEAD].itemNo = 15;
 	
-	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HAND_R].type = 30;
-	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HEAD].type = 21;
+	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HAND_R].itemNo = 30;
+	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HEAD].itemNo = 21;
 
 /*
 	for( ePos=0;ePos<4;ePos++ )

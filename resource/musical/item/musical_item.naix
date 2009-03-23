@@ -42,7 +42,9 @@ enum {
 	NARC_musical_item_item29_nsbtx = 28,
 	NARC_musical_item_item30_nsbtx = 29,
 	NARC_musical_item_item31_nsbtx = 30,
-	NARC_musical_item_item32_nsbtx = 31
+	NARC_musical_item_item32_nsbtx = 31,
+	NARC_musical_item_item33_nsbtx = 32,
+	NARC_musical_item_item_data_bin = 33
 };
 
 /* NARC_MUSICAL_ITEM_NAIX_ */

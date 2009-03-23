@@ -89,6 +89,7 @@ static GFL_PROC_RESULT DressUpProc_Term( GFL_PROC * proc, int * seq , void *pwk,
 
 static GFL_PROC_RESULT DressUpProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
+	//‰æ–Ê‘JˆÚ‚ª‚È‚¢‚Ì‚ÅFitting“à‚ÅŠ®Œ‹‚·‚é‚½‚ß–³‘Ê‚Èˆ—H
 	DRESSUP_LOCAL_WORK *work = mywk;
 	switch( *seq )
 	{

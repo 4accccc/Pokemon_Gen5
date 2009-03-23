@@ -325,11 +325,13 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 	//OBJÇÃçXêV
 	GFL_CLACT_SYS_Main();
 
+#if DEB_ARI
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
 		GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
 	{
 		return ACT_RET_GO_END;
 	}
+#endif //DEB_ARI
 
 	return ACT_RET_CONTINUE;
 }

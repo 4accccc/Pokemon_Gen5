@@ -17,6 +17,10 @@
 #include "musical_item.naix"
 
 #include "musical/mus_item_draw.h"
+#include "musical/mus_item_data.h"
+#include "musical/musical_camera_def.h"
+
+#include "test/ariizumi/ari_debug.h"
 
 //======================================================================
 //	define
@@ -33,9 +37,16 @@
 struct _MUS_ITEM_DRAW_WORK
 {
 	BOOL	enable;
+	BOOL	isUpdate;
+	BOOL	useOffset;	//アイテムのオフセットを利用するか？
 	int		resIdx;
 	int		bbdIdx;
 	u32		arcIdx;
+	VecFx32 pos;
+	fx16	sizeX;
+	fx16	sizeY;
+	u16		rotZ;
+	MUS_ITEM_DATA_WORK *itemData;
 };
 
 //描画システム
@@ -44,6 +55,7 @@ struct _MUS_ITEM_DRAW_SYSTEM
 	HEAPID heapId;
 	GFL_BBD_SYS			*bbdSys;
 	MUS_ITEM_DRAW_WORK	*musItem;
+	MUS_ITEM_DATA_SYS	*itemDataSys;
 
 	u16	itemMax;
 };
@@ -68,7 +80,9 @@ MUS_ITEM_DRAW_SYSTEM*	MUS_ITEM_DRAW_InitSystem( GFL_BBD_SYS *bbdSys , u16 itemMa
 	for( i=0;i<work->itemMax;i++ )
 	{
 		work->musItem[i].enable = FALSE;
+		work->musItem[i].isUpdate = FALSE;
 	}
+	work->itemDataSys = MUS_ITEM_DATA_InitSystem( heapId );
 	
 	return work;
 }
@@ -76,6 +90,7 @@ MUS_ITEM_DRAW_SYSTEM*	MUS_ITEM_DRAW_InitSystem( GFL_BBD_SYS *bbdSys , u16 itemMa
 void MUS_ITEM_DRAW_TermSystem( MUS_ITEM_DRAW_SYSTEM* work )
 {
 	int i;
+	MUS_ITEM_DATA_ExitSystem( work->itemDataSys );
 	for( i=0;i<work->itemMax;i++ )
 	{
 		if( work->musItem[i].enable == TRUE )
@@ -90,6 +105,48 @@ void MUS_ITEM_DRAW_TermSystem( MUS_ITEM_DRAW_SYSTEM* work )
 //更新
 void MUS_ITEM_DRAW_UpdateSystem( MUS_ITEM_DRAW_SYSTEM* work )
 {
+	int i;
+	for( i=0;i<work->itemMax;i++ )
+	{
+		if( work->musItem[i].enable == TRUE &&
+			work->musItem[i].isUpdate == TRUE )
+		{
+			MUS_ITEM_DRAW_WORK *itemWork = &work->musItem[i];
+			GFL_BBD_TEXSIZ texSize;
+			fx16 workX,workY;
+			u8	rateX,rateY;
+			GFL_POINT ofsPos;
+			VecFx32 dispPos;
+			fx32 rotOfsX,rotOfsY;
+			
+ 			if( itemWork->useOffset == TRUE )
+			{
+	 			MUS_ITEM_DATA_GetDispOffset( itemWork->itemData , &ofsPos );
+				rotOfsX = FX_CosIdx( itemWork->rotZ ) * ofsPos.x - FX_SinIdx( itemWork->rotZ ) * ofsPos.y;
+				rotOfsY = FX_SinIdx( itemWork->rotZ ) * ofsPos.x + FX_CosIdx( itemWork->rotZ ) * ofsPos.y;
+			}
+			else
+			{
+				rotOfsX = 0;
+				rotOfsY = 0;
+			}
+			
+			dispPos.x = MUSICAL_POS_X_FX( itemWork->pos.x - rotOfsX);
+			dispPos.y = MUSICAL_POS_Y_FX( itemWork->pos.y - rotOfsY);
+			dispPos.z = itemWork->pos.z;
+			
+			GFL_BBD_SetObjectTrans( work->bbdSys , itemWork->bbdIdx , &dispPos );
+
+			MUS_ITEM_DRAW_GetPicSize( itemWork , &rateX,&rateY );
+			workX = itemWork->sizeX*rateX;
+			workY = itemWork->sizeY*rateY;
+			GFL_BBD_SetObjectSiz( work->bbdSys , itemWork->bbdIdx , &workX , &workY );
+
+			GFL_BBD_SetObjectRotate( work->bbdSys , itemWork->bbdIdx , &itemWork->rotZ );
+			
+			work->musItem[i].isUpdate = FALSE; 
+		}
+	}
 }
 
 //アイテム番号からARCの番号を調べる
@@ -97,30 +154,23 @@ u16 MUS_ITEM_DRAW_GetArcIdx( const u16 itemIdx )
 {
 	//FIXME 今は32パターンだからループ
 
-	return (NARC_musical_item_item01_nsbtx + itemIdx)%32;
+	return (NARC_musical_item_item01_nsbtx + itemIdx)%33;
 }
 //ファイルIdxからサイズを調べる
-void MUS_ITEM_DRAW_GetPicSize( const u16 fileId , GFL_BBD_TEXSIZ *texSize , u8 *sizeXRate , u8 *sizeYRate )
+void MUS_ITEM_DRAW_GetPicSize( MUS_ITEM_DRAW_WORK *itemWork , u8 *sizeXRate , u8 *sizeYRate )
 {
-	if( fileId >= NARC_musical_item_item29_nsbtx )
-	{
-		*texSize = GFL_BBD_TEXSIZ_32x64;
-		*sizeXRate = 1;
-		*sizeYRate = 2;
-	}
-	else
-	if( fileId >= NARC_musical_item_item25_nsbtx )
-	{
-		*texSize = GFL_BBD_TEXSIZ_64x32;
-		*sizeXRate = 2;
-		*sizeYRate = 1;
-	}
-	else
-	{
-		*texSize = GFL_BBD_TEXSIZ_32x32;
-		*sizeXRate = 1;
-		*sizeYRate = 1;
-	}
+	GFL_BBD_TEXSIZ texSize = MUS_ITEM_DATA_GetTexType( itemWork->itemData );
+	u16 sizeX,sizeY;
+	
+	GFL_BBD_GetTexSize( texSize , &sizeX , &sizeY );
+	
+	*sizeXRate = sizeX/32;
+	*sizeYRate = sizeY/32;
+}
+//指定箇所に装備できるか?
+const BOOL MUS_ITEM_DRAW_CanEquipPos( MUS_ITEM_DRAW_WORK *itemWork , const MUS_POKE_EQUIP_POS pos )
+{
+	return MUS_ITEM_DATA_CanEquipPos( itemWork->itemData , pos );
 }
 
 
@@ -164,7 +214,10 @@ MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddItemId( MUS_ITEM_DRAW_SYSTEM* work , u16 it
 	u8 sizeX,sizeY;
 	
 	work->musItem[i].arcIdx = MUS_ITEM_DRAW_GetArcIdx( itemIdx );
-	MUS_ITEM_DRAW_GetPicSize( work->musItem[i].arcIdx , &texSize , &sizeX , &sizeY );
+	work->musItem[i].itemData = MUS_ITEM_DATA_LoadMusItemData( work->itemDataSys , work->musItem[i].arcIdx , work->heapId );
+
+	texSize = MUS_ITEM_DATA_GetTexType( work->musItem[i].itemData );
+	MUS_ITEM_DRAW_GetPicSize( &work->musItem[i] , &sizeX , &sizeY );
 
 	work->musItem[i].resIdx = GFL_BBD_AddResourceArc( work->bbdSys , ARCID_MUSICAL_ITEM , work->musItem[i].arcIdx,
 							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
@@ -183,7 +236,11 @@ MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddResource( MUS_ITEM_DRAW_SYSTEM* work , u16 
 	u8 sizeX,sizeY;
 	
 	work->musItem[i].arcIdx = MUS_ITEM_DRAW_GetArcIdx( itemIdx );
-	MUS_ITEM_DRAW_GetPicSize( work->musItem[i].arcIdx , &texSize , &sizeX , &sizeY );
+	work->musItem[i].itemData = MUS_ITEM_DATA_LoadMusItemData( work->itemDataSys , work->musItem[i].arcIdx , work->heapId );
+
+	texSize = MUS_ITEM_DATA_GetTexType( work->musItem[i].itemData );
+	MUS_ITEM_DRAW_GetPicSize( &work->musItem[i] , &sizeX , &sizeY );
+
 	
 	work->musItem[i].resIdx = GFL_BBD_AddResource( work->bbdSys , g3DresTex , 
 							GFL_BBD_TEXFMT_PAL16 , texSize , sizeX*32 , sizeY*32 );
@@ -199,8 +256,16 @@ static MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddFunc( MUS_ITEM_DRAW_SYSTEM* work , u
 	work->musItem[idx].bbdIdx = GFL_BBD_AddObject( work->bbdSys , work->musItem[idx].resIdx ,
 											FX16_ONE,FX16_ONE , pos , 31 ,GFL_BBD_LIGHT_NONE);
 	GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->musItem[idx].bbdIdx , &flg );
-	GFL_BBD_SetObjectSiz( work->bbdSys , work->musItem[idx].bbdIdx , &sizeX , &sizeX );
 	work->musItem[idx].enable = TRUE;
+	work->musItem[idx].isUpdate = TRUE;
+	work->musItem[idx].useOffset = TRUE;
+
+	work->musItem[idx].pos.x = pos->x;
+	work->musItem[idx].pos.y = pos->y;
+	work->musItem[idx].pos.z = pos->z;
+	work->musItem[idx].sizeX = sizeX;
+	work->musItem[idx].sizeY = sizeY;
+	work->musItem[idx].rotZ = 0;
 	
 	return &work->musItem[idx];
 }
@@ -210,6 +275,7 @@ void MUS_ITEM_DRAW_DelItem( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *ite
 	GFL_BBD_RemoveObject( work->bbdSys , itemWork->bbdIdx );
 	GFL_BBD_RemoveResourceVram( work->bbdSys , itemWork->resIdx );
 	itemWork->enable = FALSE;
+	itemWork->isUpdate = FALSE;
 }
 
 //--------------------------------------------------------------
@@ -225,7 +291,10 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 	u16 newResId;
 	
 	itemWork->arcIdx = MUS_ITEM_DRAW_GetArcIdx( newId );
-	MUS_ITEM_DRAW_GetPicSize( itemWork->arcIdx , &texSize , &sizeX , &sizeY );
+	itemWork->itemData = MUS_ITEM_DATA_LoadMusItemData( work->itemDataSys , itemWork->arcIdx , work->heapId );
+
+	texSize = MUS_ITEM_DATA_GetTexType( itemWork->itemData );
+	MUS_ITEM_DRAW_GetPicSize( itemWork , &sizeX , &sizeY );
 //	GFL_BBD_GetObjectTrans( work->bbdSys , itemWork->bbdIdx , &pos );
 //	GFL_BBD_GetObjectSiz( work->bbdSys , itemWork->bbdIdx , &scaleX , &scaleY );
 //	MUS_ITEM_DRAW_DelItem( work , itemWork );
@@ -248,50 +317,55 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 void MUS_ITEM_DRAW_SetDrawEnable( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , BOOL flg )
 {
 	GFL_BBD_SetObjectDrawEnable( work->bbdSys , itemWork->bbdIdx , &flg );
+	itemWork->isUpdate = TRUE;
 }
 void MUS_ITEM_DRAW_SetPosition( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , VecFx32 *pos )
 {
-	GFL_BBD_SetObjectTrans( work->bbdSys , itemWork->bbdIdx , pos );
+	itemWork->pos.x = pos->x;
+	itemWork->pos.y = pos->y;
+	itemWork->pos.z = pos->z;
+	itemWork->isUpdate = TRUE;
 }
 
 void MUS_ITEM_DRAW_GetPosition( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , VecFx32 *pos )
 {
-	GFL_BBD_GetObjectTrans( work->bbdSys , itemWork->bbdIdx , pos );
+	pos->x = itemWork->pos.x;
+	pos->y = itemWork->pos.y;
+	pos->z = itemWork->pos.z;
 }
 
 void MUS_ITEM_DRAW_SetSize( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , fx16 sizeX , fx16 sizeY )
 {
-	GFL_BBD_TEXSIZ texSize;
-	fx16 workX,workY;
-	u8	rateX,rateY;
-	MUS_ITEM_DRAW_GetPicSize( itemWork->arcIdx , &texSize , &rateX,&rateY );
-	workX = sizeX*rateX;
-	workY = sizeY*rateY;
-	GFL_BBD_SetObjectSiz( work->bbdSys , itemWork->bbdIdx , &workX , &workY );
+	itemWork->sizeX = sizeX;
+	itemWork->sizeY = sizeY;
+	itemWork->isUpdate = TRUE;
 }
 
 void MUS_ITEM_DRAW_GetSize( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , fx16 *sizeX , fx16 *sizeY )
 {
-	GFL_BBD_TEXSIZ texSize;
-	u8	rateX,rateY;
-	MUS_ITEM_DRAW_GetPicSize( itemWork->arcIdx , &texSize , &rateX,&rateY );
-	GFL_BBD_GetObjectSiz( work->bbdSys , itemWork->bbdIdx , sizeX , sizeY );
-	*sizeX /= rateX;
-	*sizeY /= rateY;
+	*sizeX = itemWork->sizeX;
+	*sizeY = itemWork->sizeY;
 }
 
 void MUS_ITEM_DRAW_SetRotation( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u16 rotZ )
 {
-	GFL_BBD_SetObjectRotate( work->bbdSys , itemWork->bbdIdx , &rotZ );
+	itemWork->rotZ = rotZ;
+	itemWork->isUpdate = TRUE;
 }
 
 void MUS_ITEM_DRAW_GetRotation( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u16 *rotZ )
 {
-	GFL_BBD_GetObjectRotate( work->bbdSys , itemWork->bbdIdx , rotZ );
+	*rotZ = itemWork->rotZ;
 }
 
 void MUS_ITEM_DRAW_SetFlipS( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , const BOOL flipS )
 {
 	GFL_BBD_SetObjectFlipS( work->bbdSys , itemWork->bbdIdx , &flipS );
+	itemWork->isUpdate = TRUE;
+}
+
+void MUS_ITEM_DRAW_SetUseOffset( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , const BOOL flg )
+{
+	itemWork->useOffset = flg;
 }
 

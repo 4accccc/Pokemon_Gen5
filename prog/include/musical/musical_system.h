@@ -46,8 +46,8 @@ typedef enum
 
 typedef struct
 {
-	u16	type;	//アイテムの種類
-	u8	angle;	//アイテムの傾き
+	u16	itemNo;	//アイテムの種類
+	s16	angle;	//アイテムの傾き
 }MUSICAL_POKE_EQUIP;
 
 typedef struct
