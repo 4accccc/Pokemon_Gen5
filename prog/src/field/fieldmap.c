@@ -333,6 +333,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 		//通信用処理(プレイヤーの座標の設定とか
 		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
+
 		
 		MainGameSystem( fieldWork->gs );
 		Field_UpdateInfoBar();
@@ -742,6 +743,8 @@ static FIELD_SETUP*	SetupGameSystem( HEAPID heapID )
 	
 	// CLACT初期化
 	GFL_CLACT_SYS_Create( &CLSYS_Init, &dispVram, heapID );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
 	//BMP初期化
 	GFL_BMPWIN_Init( heapID );

@@ -51,6 +51,7 @@ enum{
 	WEATHER_TASK_SEQ_CALL_FADEIN,		// 管理関数  フェードイン	呼び出し
 	WEATHER_TASK_SEQ_CALL_NOFADE,		// 管理関数	 フェードなし	呼び出し
 	WEATHER_TASK_SEQ_CALL_MAIN,			// 管理関数　メイン			呼び出し
+	WEATHER_TASK_SEQ_CALL_FADEOUT_INIT,	// 管理関数　フェードアウト 呼び出し
 	WEATHER_TASK_SEQ_CALL_FADEOUT,		// 管理関数　フェードアウト 呼び出し
 	WEATHER_TASK_SEQ_CALL_DEST,			// 管理関数　破棄			呼び出し
 	WEATHER_TASK_SEQ_DELETE_ALL,		// 全情報の破棄
@@ -68,7 +69,7 @@ enum{
 //-------------------------------------
 ///	天気オブジェ定数
 //=====================================
-#define WEATHER_OBJ_WORK_BG_PRI		( 1 )
+#define WEATHER_OBJ_WORK_BG_PRI		( 0 )
 #define WEATHER_OBJ_WORK_SOFT_PRI	( 64 )
 #define WEATHER_OBJ_WORK_SERFACE_NO	( CLSYS_DEFREND_MAIN )
 
@@ -192,6 +193,7 @@ struct _WEATHER_TASK {
 	// 動作オブジェワーク
 	WEATHER_OBJ_WORK	objbuff[ WEATHER_TASK_OBJBUFF_MAX ];
 	WEATHER_OBJ_WORK*	p_objlist;
+	u32					active_objnum;
 
 };
 
@@ -204,7 +206,7 @@ struct _WEATHER_TASK {
 ///	システム管理
 //=====================================
 static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk );
-static WEATHER_TASK_FUNC_RESULT WEATHER_TASK_WK_CallFunc( WEATHER_TASK* p_wk, WEATHER_TASK_FUNC* p_func );
+static WEATHER_TASK_FUNC_RESULT WEATHER_TASK_WK_CallFunc( WEATHER_TASK* p_wk, WEATHER_TASK_FUNC* p_func, u32 heapID );
 static WEATHER_TASK_INFO WEATHER_TASK_WK_GetInfo( const WEATHER_TASK* cp_wk );
 static WEATHER_OBJ_WORK* WEATHER_TASK_WK_GetClearObj( WEATHER_TASK* p_wk );
 static void WEATHER_TASK_WK_PushObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_obj );
@@ -236,7 +238,8 @@ static void WEATHER_TASK_GRAPHIC_ExitBg( WEATHER_TASK_GRAPHIC* p_wk );
 static void WEATHER_OBJ_FADE_InitFade( WEATHER_TASK_OBJ_FADE* p_wk, WEATHER_TASK* p_sys, s32 objAddTmgMax, s32 objAddNum, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum_tmg, s32 obj_add_num_sum, WEATHER_TASK_OBJADD_FUNC* p_addfunc );
 
 static void WEATHER_OBJ_FADE_SetFadeOut( WEATHER_TASK_OBJ_FADE* p_wk, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum );
-static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk );
+static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk, u32 heapID );
+static void WEATHER_TASK_OBJ_FADE_NoFadeMain( WEATHER_TASK_OBJ_FADE* p_wk, u32 heapID );
 
 
 //-------------------------------------
@@ -353,7 +356,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 
 	// 管理関数　初期化	　		呼び出し
 	case WEATHER_TASK_SEQ_CALL_INIT:		
-		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_init ) ){
+		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_init, heapID ) ){
 			if( p_wk->fade ){
 				p_wk->seq = WEATHER_TASK_SEQ_CALL_FADEIN;
 			}else{
@@ -364,7 +367,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 
 	// 管理関数  フェードイン	呼び出し
 	case WEATHER_TASK_SEQ_CALL_FADEIN:		
-		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_fadein ) ){
+		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_fadein, heapID ) ){
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_MAIN;
 		}
 		WEATHER_TASK_WK_MainObjList( p_wk );
@@ -372,7 +375,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 
 	// 管理関数	 フェードなし	呼び出し
 	case WEATHER_TASK_SEQ_CALL_NOFADE:		
-		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_nofade ) ){
+		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_nofade, heapID ) ){
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_MAIN;
 		}
 		break;
@@ -380,13 +383,21 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 	// 管理関数　メイン			呼び出し
 	case WEATHER_TASK_SEQ_CALL_MAIN:		
 		// *外部的なリクエストで、終了する
-		WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_main );
+		WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_main, heapID );
+		WEATHER_TASK_WK_MainObjList( p_wk );
+		break;
+
+	// 管理関数　フェードアウト 呼び出し
+	case WEATHER_TASK_SEQ_CALL_FADEOUT_INIT:
+		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_init_fadeout, heapID ) ){
+			p_wk->seq = WEATHER_TASK_SEQ_CALL_FADEOUT;
+		}
 		WEATHER_TASK_WK_MainObjList( p_wk );
 		break;
 
 	// 管理関数　フェードアウト 呼び出し
 	case WEATHER_TASK_SEQ_CALL_FADEOUT:		
-		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_fadeout ) ){
+		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_fadeout, heapID ) ){
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_DEST;
 		}
 		WEATHER_TASK_WK_MainObjList( p_wk );
@@ -397,7 +408,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 	case WEATHER_TASK_SEQ_CALL_DEST:
 		{
 			WEATHER_TASK_FUNC_RESULT result;
-			result = WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_dest );
+			result = WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_dest, heapID );
 
 			// 破棄処理は１シンクで終わる必要があります。
 			GF_ASSERT( result == WEATHER_TASK_FUNC_RESULT_FINISH );
@@ -492,7 +503,7 @@ void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, BOOL fog_cont )
 	p_wk->fade		= fade;
 	p_wk->fog_cont	= fog_cont;
 	if( p_wk->fade ){
-		p_wk->seq = WEATHER_TASK_SEQ_CALL_FADEOUT;
+		p_wk->seq = WEATHER_TASK_SEQ_CALL_FADEOUT_INIT;
 	}else{
 		p_wk->seq = WEATHER_TASK_SEQ_CALL_DEST;
 	}
@@ -511,7 +522,8 @@ void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk )
 		// callback dest
 		if( p_wk->seq <= WEATHER_TASK_SEQ_CALL_DEST ){
 			WEATHER_TASK_FUNC_RESULT result;
-			result = WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_dest );
+			// さすがに破棄処理でヒープ確保はしないだろう
+			result = WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_dest, 0 );
 
 			// 破棄処理は１シンクで終わる必要があります。
 			GF_ASSERT( result == WEATHER_TASK_FUNC_RESULT_FINISH );
@@ -558,6 +570,20 @@ WEATHER_TASK_INFO WEATHER_TASK_GetInfo( const WEATHER_TASK* cp_wk )
 void* WEATHER_TASK_GetWorkData( const WEATHER_TASK* cp_wk )
 {
 	return  cp_wk->p_user_work;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	動作しているオブジェクトの数を取得
+ *
+ *	@param	cp_wk		ワーク
+ *
+ *	@return	動作しているオブジェクトの数
+ */
+//-----------------------------------------------------------------------------
+u32 WEATHER_TASK_GetActiveObjNum( const WEATHER_TASK* cp_wk )
+{
+	return cp_wk->active_objnum;
 }
 
 
@@ -616,8 +642,8 @@ void WEATHER_TASK_DeleteObj( WEATHER_OBJ_WORK* p_obj )
  *	@brief	オブジェ追加フェード　フェードイン開始
  *
  *	@param	p_wk						システムワーク
- *	@param	objAddTmgMax				オブジェ追加タイミングマックス
  *	@param	objAddNum					オブジェ追加数
+ *	@param	objAddTmgMax				オブジェ追加タイミングマックス
  *	@param	obj_add_num_end				オブジェ追加数　終了値
  *	@param	obj_add_tmg_end				オブジェ追加タイミング　終了値
  *	@param	obj_add_tmg_sum				オブジェ追加タイミング　足し算値
@@ -626,7 +652,7 @@ void WEATHER_TASK_DeleteObj( WEATHER_OBJ_WORK* p_obj )
  *	@param	p_addfunc					追加関数
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_ObjFade_Init( WEATHER_TASK* p_wk, s32 objAddTmgMax, s32 objAddNum, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum_tmg, s32 obj_add_num_sum, WEATHER_TASK_OBJADD_FUNC* p_addfunc )
+void WEATHER_TASK_ObjFade_Init( WEATHER_TASK* p_wk, s32 objAddNum, s32 objAddTmgMax, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum_tmg, s32 obj_add_num_sum, WEATHER_TASK_OBJADD_FUNC* p_addfunc )
 {
 	WEATHER_OBJ_FADE_InitFade( &p_wk->obj_fade, p_wk, objAddTmgMax, objAddNum, obj_add_num_end, obj_add_tmg_end, obj_add_tmg_sum, obj_add_num_sum_tmg, obj_add_num_sum, p_addfunc );
 }
@@ -657,9 +683,21 @@ void WEATHER_TASK_ObjFade_SetOut( WEATHER_TASK* p_wk, s32 obj_add_num_end, s32 o
  *	@retval	FALSE	途中
  */
 //-----------------------------------------------------------------------------
-BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk )
+BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk, u32 heapID )
 {
-	return WEATHER_OBJ_FADE_Main( &p_wk->obj_fade );
+	return WEATHER_OBJ_FADE_Main( &p_wk->obj_fade, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フェードはせず、オブジェの同じ登録タイミングで、同じ数　オブジェを登録します。
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_ObjFade_NoFadeMain( WEATHER_TASK* p_wk, u32 heapID )
+{
+	WEATHER_TASK_OBJ_FADE_NoFadeMain( &p_wk->obj_fade, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -680,7 +718,7 @@ BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk )
  * ....
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_func, int num, int dust_div_num, int dust_div_move )
+void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_func, int num, int dust_div_num, int dust_div_move, u32 heapID )
 {
 	int i, j;
 	int move_num;
@@ -688,7 +726,7 @@ void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_f
 	WEATHER_OBJ_WORK* p_obj_next;
 	
 	// オブジェクト登録
-	p_add_func( p_wk, num );
+	p_add_func( p_wk, num, heapID );
 
 
 	// オブジェクトを進める
@@ -755,6 +793,28 @@ BOOL WEATHER_TASK_FogFade_Main( WEATHER_TASK* p_wk )
 	return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロール距離　計算ワーク　初期化
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_InitScrollDist( WEATHER_TASK* p_wk )
+{
+	VecFx32	now_mat;				// 今の座標
+	const GFL_G3D_CAMERA* cp_camera;// カメラ情報
+
+	if( !p_wk->cp_camera ){
+		return;
+	}
+
+	//  カメラ情報の取得
+	cp_camera = FIELD_CAMERA_GetCameraPtr( p_wk->cp_camera );
+	GFL_G3D_CAMERA_GetTarget( cp_camera, &now_mat );
+
+	p_wk->scroll.last_target = now_mat;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -775,6 +835,12 @@ void WEATHER_TASK_GetScrollDist( WEATHER_TASK* p_wk, int* p_x, int* p_y )
 	int	mark;						// 符号
 	const GFL_G3D_CAMERA* cp_camera;// カメラ情報
 	fx32 camera_dist;			// カメラ距離
+
+	if( !p_wk->cp_camera ){
+		*p_x = 0;
+		*p_y = 0;
+		return;
+	}
 
 	//  カメラ情報の取得
 	cp_camera = FIELD_CAMERA_GetCameraPtr( p_wk->cp_camera );
@@ -864,7 +930,7 @@ void WEATHER_TASK_ScrollObj( WEATHER_TASK* p_wk, int x, int y )
 		GFL_CLACT_WK_SetWldPos( p_clwk, &pos );
 
 		p_objwk = p_objwk->p_next;
-	}while( (u32)p_objwk == (u32)p_wk->p_objlist );
+	}while( (u32)p_objwk != (u32)p_wk->p_objlist );
 }
 
 //----------------------------------------------------------------------------
@@ -945,6 +1011,20 @@ void* WEATHER_OBJ_WORK_GetWork( const WEATHER_OBJ_WORK* cp_wk )
 GFL_CLWK* WEATHER_OBJ_WORK_GetClWk( const WEATHER_OBJ_WORK* cp_wk )
 {
 	return WEATHER_OBJ_WK_GetClWk( cp_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	おやワークの取得
+ *
+ *	@param	cp_wk	ワーク
+ *
+ *	@return	親の天気ワーク
+ */
+//-----------------------------------------------------------------------------
+const WEATHER_TASK* WEATHER_OBJ_WORK_GetParent( const WEATHER_OBJ_WORK* cp_wk )
+{
+	return cp_wk->p_parent;
 }
 
 
@@ -1038,10 +1118,10 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
  *	@param	p_func		関数
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_TASK_WK_CallFunc( WEATHER_TASK* p_wk, WEATHER_TASK_FUNC* p_func )
+static WEATHER_TASK_FUNC_RESULT WEATHER_TASK_WK_CallFunc( WEATHER_TASK* p_wk, WEATHER_TASK_FUNC* p_func, u32 heapID )
 {
 	if( p_func ){
-		return p_func( p_wk, p_wk->fog_cont );
+		return p_func( p_wk, p_wk->fog_cont, heapID );
 	}
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1068,6 +1148,7 @@ static WEATHER_TASK_INFO WEATHER_TASK_WK_GetInfo( const WEATHER_TASK* cp_wk )
 		WEATHER_TASK_INFO_FADEIN,	// WEATHER_TASK_SEQ_CALL_FADEIN,		// 管理関数  フェードイン	呼び出し
 		WEATHER_TASK_INFO_FADEIN,	// WEATHER_TASK_SEQ_CALL_NOFADE,		// 管理関数	 フェードなし	呼び出し
 		WEATHER_TASK_INFO_MAIN,		// WEATHER_TASK_SEQ_CALL_MAIN,			// 管理関数　メイン			呼び出し
+		WEATHER_TASK_INFO_FADEOUT,	// WEATHER_TASK_SEQ_CALL_FADEOUT_INIT,		// 管理関数　フェードアウト 呼び出し
 		WEATHER_TASK_INFO_FADEOUT,	// WEATHER_TASK_SEQ_CALL_FADEOUT,		// 管理関数　フェードアウト 呼び出し
 		WEATHER_TASK_INFO_DEST,		// WEATHER_TASK_SEQ_CALL_DEST,			// 管理関数　破棄			呼び出し
 		WEATHER_TASK_INFO_DEST,		// WEATHER_TASK_SEQ_DELETE_ALL,		// 全情報の破棄
@@ -1113,6 +1194,8 @@ static WEATHER_OBJ_WORK* WEATHER_TASK_WK_GetClearObj( WEATHER_TASK* p_wk )
 static void WEATHER_TASK_WK_PushObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_obj )
 {
 	WEATHER_OBJ_WORK* p_last;
+
+	p_wk->active_objnum ++;
 	
 	// 先頭チェック
 	if( !p_wk->p_objlist ){
@@ -1143,6 +1226,9 @@ static void WEATHER_TASK_WK_PushObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p
 //-----------------------------------------------------------------------------
 static void WEATHER_TASK_WK_PopObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_obj )
 {
+
+	p_wk->active_objnum --;
+	
 	// 自分が先頭かチェック
 	if( p_wk->p_objlist == p_obj ){
 		// 自分の次も自分だったら終わり
@@ -1173,6 +1259,7 @@ static void WEATHER_TASK_WK_PopObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_
 static void WEATHER_TASK_WK_MainObjList( WEATHER_TASK* p_wk )
 {
 	WEATHER_OBJ_WORK* p_objwk;
+	WEATHER_OBJ_WORK* p_objwk_next;
 
 	// オブジェ有無チェック
 	if( !p_wk->p_objlist ){
@@ -1185,13 +1272,15 @@ static void WEATHER_TASK_WK_MainObjList( WEATHER_TASK* p_wk )
 	}
 	
 	p_objwk = p_wk->p_objlist;
+	p_objwk_next = p_objwk->p_next;
 	do{
 
 		// メイン関数をまわす
 		p_wk->cp_data->p_f_objmove( p_objwk );
 
-		p_objwk = p_objwk->p_next;
-	}while( (u32)p_objwk == (u32)p_wk->p_objlist );
+		p_objwk = p_objwk_next;
+		p_objwk_next = p_objwk->p_next;
+	}while( ((u32)p_objwk != (u32)p_wk->p_objlist) && (p_wk->p_objlist != NULL) );
 }
 
 
@@ -1460,7 +1549,7 @@ static void WEATHER_OBJ_FADE_SetFadeOut( WEATHER_TASK_OBJ_FADE* p_wk, s32 obj_ad
  *	@retval	FALSE	途中
  */
 //-----------------------------------------------------------------------------
-static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk )
+static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk, u32 heapID )
 {
 	int fade_flag;
 	int ret = 0;
@@ -1514,7 +1603,7 @@ static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk )
 	if(p_wk->obj_addtmg <= 0){
 
 		// 登録
-		p_wk->p_addfunc(p_wk->p_parent, p_wk->obj_addnum);
+		p_wk->p_addfunc(p_wk->p_parent, p_wk->obj_addnum, heapID);
 
 		p_wk->obj_addtmg = p_wk->obj_addtmg_max;			// 登録タイミングセット
 		
@@ -1535,6 +1624,27 @@ static BOOL WEATHER_OBJ_FADE_Main( WEATHER_TASK_OBJ_FADE* p_wk )
 	}
 
 	return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フェードはせず、オブジェの同じ登録タイミングで、同じ数　オブジェを登録します。
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_TASK_OBJ_FADE_NoFadeMain( WEATHER_TASK_OBJ_FADE* p_wk, u32 heapID )
+{
+
+	// タイミングカウンタが最小になるまでカウント作業
+	p_wk->obj_addtmg--;
+	if(p_wk->obj_addtmg <= 0){
+
+		// 登録
+		p_wk->p_addfunc(p_wk->p_parent, p_wk->obj_addnum, heapID);
+
+		p_wk->obj_addtmg = p_wk->obj_addtmg_max;			// 登録タイミングセット
+	}
 }
 
 

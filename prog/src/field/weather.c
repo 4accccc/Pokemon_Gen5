@@ -19,6 +19,7 @@
 
 // 各天気
 #include "weather_sunny.h"
+#include "weather_snow.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -137,10 +138,79 @@ typedef struct {
 	FSOverlayID					overlay_id;			// オーバーレイID
 } FIELD_WEATHER_DATA;
 static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
+	// 晴れ
 	{
 		&c_WEATHER_TASK_DATA_SUNNY,
 		FS_OVERLAY_ID(field_weather_sunny)
 	},
+
+	// 曇り
+	{
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
+	},
+
+	// 雨
+	{
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
+	},
+
+	// 大雨
+	{
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
+	},
+
+	// 雷雨
+	{
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
+	},
+
+
+	// 雪
+	{
+		&c_WEATHER_TASK_DATA_SNOW,
+		FS_OVERLAY_ID(field_weather_snow)
+	},
+
+	// 吹雪
+	{
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
+	},
+
+	// 猛吹雪
+	{
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
+	},
+
+	// 霧大
+	{
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
+	},
+
+	// 火山灰
+	{
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
+	},
+
+	// 砂嵐
+	{
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
+	},
+
+	// スノーダスト
+	{
+		&c_WEATHER_TASK_DATA_SUNNY,
+		FS_OVERLAY_ID(field_weather_sunny)
+	},
+
 };
 
 

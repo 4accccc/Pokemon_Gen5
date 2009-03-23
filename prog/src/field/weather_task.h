@@ -78,6 +78,14 @@ typedef enum {
 #define WEATHER_OBJ_WORK_USE_WORKSIZE	( sizeof(s32) * 10 )
 
 
+//-------------------------------------
+/// DP　から移植　基本情報	
+//=====================================
+#define		WEATHER_FOG_DEPTH_DEFAULT	( 0x6F6F )	// フォグデフォルト値
+#define		WEATHER_FOG_SLOPE_DEFAULT	( 3 )
+
+
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -97,7 +105,7 @@ typedef struct _WEATHER_OBJ_WORK WEATHER_OBJ_WORK;
 //-------------------------------------
 ///	天気管理関数
 //=====================================
-typedef WEATHER_TASK_FUNC_RESULT (WEATHER_TASK_FUNC)( WEATHER_TASK* p_wk, BOOL fog_cont );
+typedef WEATHER_TASK_FUNC_RESULT (WEATHER_TASK_FUNC)( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID );
 
 
 //-------------------------------------
@@ -135,6 +143,7 @@ typedef struct {
 	WEATHER_TASK_FUNC* p_f_fadein;			// フェードイン処理
 	WEATHER_TASK_FUNC* p_f_nofade;			// フェードなしの場合の処理
 	WEATHER_TASK_FUNC* p_f_main;			// メイン処理
+	WEATHER_TASK_FUNC* p_f_init_fadeout;	// フェードアウト初期化処理
 	WEATHER_TASK_FUNC* p_f_fadeout;			// フェードアウト処理
 	WEATHER_TASK_FUNC* p_f_dest;			// 破棄処理
 
@@ -176,6 +185,7 @@ extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID );
 
 //-------------------------------------
 ///	発動・停止管理
+// *現在FOG処理未実装
 //=====================================
 extern void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, BOOL fog_cont, u32 heapID );
 extern void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, BOOL fog_cont );
@@ -186,6 +196,7 @@ extern void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk );
 //=====================================
 extern WEATHER_TASK_INFO WEATHER_TASK_GetInfo( const WEATHER_TASK* cp_wk );
 extern void* WEATHER_TASK_GetWorkData( const WEATHER_TASK* cp_wk );		//WEATHER_TASK_DATA.work_byte分のワーク
+extern u32 WEATHER_TASK_GetActiveObjNum( const WEATHER_TASK* cp_wk );
 
 
 //-------------------------------------
@@ -195,18 +206,23 @@ extern WEATHER_OBJ_WORK* WEATHER_TASK_CreateObj( WEATHER_TASK* p_wk, u32 heapID 
 extern void WEATHER_TASK_DeleteObj( WEATHER_OBJ_WORK* p_obj );
 
 
+
+
 //-------------------------------------
 ///	動作オブジェの追加フェード処理
 //=====================================
-typedef void (WEATHER_TASK_OBJADD_FUNC)( WEATHER_TASK* p_wk, int num );
-extern void WEATHER_TASK_ObjFade_Init( WEATHER_TASK* p_wk, s32 objAddTmgMax, s32 objAddNum, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum_tmg, s32 obj_add_num_sum, WEATHER_TASK_OBJADD_FUNC* p_addfunc );
+typedef void (WEATHER_TASK_OBJADD_FUNC)( WEATHER_TASK* p_wk, int num, u32 heapID );
+extern void WEATHER_TASK_ObjFade_Init( WEATHER_TASK* p_wk, s32 objAddNum, s32 objAddTmgMax, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum_tmg, s32 obj_add_num_sum, WEATHER_TASK_OBJADD_FUNC* p_addfunc );
 extern void WEATHER_TASK_ObjFade_SetOut( WEATHER_TASK* p_wk, s32 obj_add_num_end, s32 obj_add_tmg_end, s32 obj_add_tmg_sum, s32 obj_add_num_sum );
-extern BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk );
+extern BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk, u32 heapID );
+
+// フェードはせず、オブジェの同じ登録タイミングで、同じ数　オブジェを登録します。
+extern void WEATHER_TASK_ObjFade_NoFadeMain( WEATHER_TASK* p_wk, u32 heapID );
 
 //-------------------------------------
 ///	動作オブジェを乱数で分布させる
 //=====================================
-extern void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_func, int num, int dust_div_num, int dust_div_move );
+extern void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_func, int num, int dust_div_num, int dust_div_move, u32 heapID );
 
 //-------------------------------------
 ///	フォグフェード処理
@@ -217,6 +233,7 @@ extern BOOL WEATHER_TASK_FogFade_Main( WEATHER_TASK* p_wk );
 //-------------------------------------
 ///　スクロール管理
 //=====================================
+extern void WEATHER_TASK_InitScrollDist( WEATHER_TASK* p_wk );
 extern void WEATHER_TASK_GetScrollDist( WEATHER_TASK* p_wk, int* p_x, int* p_y );
 extern void WEATHER_TASK_ScrollObj( WEATHER_TASK* p_wk, int x, int y );
 extern void WEATHER_TASK_ScrollBg( WEATHER_TASK* p_wk, int x, int y );
@@ -240,6 +257,7 @@ extern void WEATHER_TASK_StopLoopSnd( WEATHER_TASK* p_wk );
 //-----------------------------------------------------------------------------
 extern void* WEATHER_OBJ_WORK_GetWork( const WEATHER_OBJ_WORK* cp_wk );
 extern GFL_CLWK* WEATHER_OBJ_WORK_GetClWk( const WEATHER_OBJ_WORK* cp_wk );
+extern const WEATHER_TASK* WEATHER_OBJ_WORK_GetParent( const WEATHER_OBJ_WORK* cp_wk );
 
 
 

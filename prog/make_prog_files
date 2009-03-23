@@ -253,6 +253,9 @@ SRCS_OVERLAY_FIELDMAP		=	field/fieldmap_proc.c \
 #===> SRCS_OVERLAY_FIELDMAP
 SRCS_OVERLAY_FIELD_WEATHER_SUNNY = field/weather_sunny.c
 
+#===> SRCS_OVERLAY_FIELDMAP
+SRCS_OVERLAY_FIELD_WEATHER_SNOW = field/weather_snow.c
+
 # マッパーサンプル
 #===> main
 SRCS_OVERLAY_WATANABE_SAMPLE	= test/tetsu/game/gamemain.c \
