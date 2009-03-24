@@ -66,6 +66,7 @@ typedef struct {
 	GXRgb		ambient;
 	GXRgb		specular;
 	GXRgb		emission;
+	GXRgb		fog_color;
 } LIGHT_DATA;
 
 //-------------------------------------
@@ -107,6 +108,7 @@ typedef struct {
 	RGB_FADE		ambient;
 	RGB_FADE		specular;
 	RGB_FADE		emission;
+	RGB_FADE		fog_color;
 
 	u16				count;
 	u16				count_max;
@@ -117,6 +119,9 @@ typedef struct {
 ///	フィールドライトシステム
 //=====================================
 struct _FIELD_LIGHT {
+	// FOGシステム
+	FIELD_FOG_WORK* p_fog;
+	
 	// データバッファ
 	u32			data_num;			// データ数
 	LIGHT_DATA* p_data;				// データ
@@ -145,7 +150,7 @@ struct _FIELD_LIGHT {
 //-------------------------------------
 ///	システム
 //=====================================
-static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys );
+static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog );
 static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 season, u32 heapID );
 static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID );
 static void FIELD_LIGHT_ReleaseData( FIELD_LIGHT* p_sys );
@@ -186,12 +191,13 @@ static void LIGHT_FADE_GetData( const LIGHT_FADE* cp_wk, LIGHT_DATA* p_data );
  *	@param	light_no		ライトナンバー
  *	@param	season			季節
  *	@param	rtc_second		秒数
+ *	@param	p_fog			フォグシステム
  *	@param	heapID			ヒープ
  *	
  *	@return	システムワーク
  */
 //-----------------------------------------------------------------------------
-FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, u32 season, int rtc_second, u32 heapID )
+FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, u32 season, int rtc_second, FIELD_FOG_WORK* p_fog, u32 heapID )
 {
 	FIELD_LIGHT* p_sys;
 
@@ -210,6 +216,9 @@ FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, u32 season, int rtc_second, u32 h
 	// データ反映
 	GFL_STD_MemCopy( &p_sys->p_data[p_sys->now_index], &p_sys->reflect_data, sizeof(LIGHT_DATA) );
 	p_sys->change = TRUE;
+
+	// フォグシステムを保存
+	p_sys->p_fog = p_fog;
 
 	return p_sys;
 }
@@ -276,7 +285,7 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 
 	// データ設定処理へ
 	if( p_sys->change ){
-		FIELD_LIGHT_Reflect( p_sys );
+		FIELD_LIGHT_Reflect( p_sys, p_sys->p_fog );
 		p_sys->change = FALSE;
 	}
 
@@ -401,7 +410,7 @@ BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys )
  *	@param	cp_sys	システムワーク
  */
 //-----------------------------------------------------------------------------
-static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys )
+static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog )
 {
 	int i;
 	
@@ -428,6 +437,8 @@ static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys )
 
 		NNS_G3dGlbMaterialColorSpecEmi( cp_sys->reflect_data.specular,
 				cp_sys->reflect_data.emission, FALSE );
+
+		FIELD_FOG_SetColorRgb( p_fog, cp_sys->reflect_data.fog_color );
 	}
 }
 
@@ -630,6 +641,7 @@ static void LIGHT_FADE_Init( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, const
 	RGB_FADE_Init( &p_wk->ambient, cp_start->ambient, cp_end->ambient );
 	RGB_FADE_Init( &p_wk->specular, cp_start->specular, cp_end->specular );
 	RGB_FADE_Init( &p_wk->emission, cp_start->emission, cp_end->emission );
+	RGB_FADE_Init( &p_wk->fog_color, cp_start->fog_color, cp_end->fog_color );
 
 }
 
@@ -690,6 +702,7 @@ static void LIGHT_FADE_GetData( const LIGHT_FADE* cp_wk, LIGHT_DATA* p_data )
 	p_data->ambient		= RGB_FADE_Calc( &cp_wk->ambient, cp_wk->count, cp_wk->count_max );
 	p_data->specular	= RGB_FADE_Calc( &cp_wk->specular, cp_wk->count, cp_wk->count_max );
 	p_data->emission	= RGB_FADE_Calc( &cp_wk->emission, cp_wk->count, cp_wk->count_max );
+	p_data->fog_color	= RGB_FADE_Calc( &cp_wk->fog_color, cp_wk->count, cp_wk->count_max );
 
 }
 

@@ -16,6 +16,7 @@
 extern "C"{
 #endif
 
+#include "field_fog.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -42,7 +43,7 @@ typedef struct _FIELD_LIGHT FIELD_LIGHT;
 //-------------------------------------
 ///	システム作成・破棄
 //=====================================
-extern FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, u32 season, int rtc_second, u32 heapID );
+extern FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, u32 season, int rtc_second, FIELD_FOG_WORK* p_fog, u32 heapID );
 extern void FIELD_LIGHT_Delete( FIELD_LIGHT* p_sys );
 
 //-------------------------------------

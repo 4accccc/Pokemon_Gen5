@@ -28,6 +28,8 @@
 #include "field/field_msgbg.h"
 
 #include "weather.h"
+#include "field_fog.h"
+#include "field_light.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
@@ -98,6 +100,8 @@ struct _FIELD_MAIN_WORK
 	VecFx32			now_pos;
 
 
+//	FIELD_LIGHT*	light;
+	FIELD_FOG_WORK*	fog;
 	FIELD_WEATHER*	weather_sys;
 	
 	int				key_cont;
@@ -288,6 +292,9 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		fieldWork->weather_sys = FIELD_WEATHER_Init( fieldWork->camera_control, fieldWork->heapID );
 		// 天気晴れ
 		FIELD_WEATHER_Set( fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
+
+		// フォグシステム生成
+		fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
 		
 		//情報バーの初期化
 		Field_InitInfoBar(fieldWork->heapID);
@@ -338,6 +345,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		MainGameSystem( fieldWork->gs );
 		Field_UpdateInfoBar();
 		FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
+		FIELD_FOG_Main( fieldWork->fog );
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 		
 		if( fieldWork->fldMMdlSys != NULL ){
@@ -360,7 +368,10 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		//情報バーの開放
 		Field_TermInfoBar();
 
-		// 天気システム生成
+		// フォグシステム破棄
+		FIELD_FOG_Delete( fieldWork->fog );
+
+		// 天気システム破棄
 		FIELD_WEATHER_Exit( fieldWork->weather_sys );
 		fieldWork->weather_sys = NULL;
 

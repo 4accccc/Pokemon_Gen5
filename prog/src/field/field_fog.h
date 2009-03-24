@@ -111,8 +111,8 @@ extern void FIELD_FOG_TBL_SetUpDefault( FIELD_FOG_WORK* p_wk );
 //-------------------------------------
 ///	フェードリクエスト
 //=====================================
-extern void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, GXRgb color_end, u8 alpha_end, u32 count_max );
-extern void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, u16 offset_start, u16 offset_end, GXRgb color_start, GXRgb color_end, u8 alpha_start, u8 alpha_end, u16 count_max  );
+extern void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, u32 count_max );
+extern void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, u16 offset_start, u16 offset_end, u16 count_max  );
 extern BOOL FIELD_FOG_FADE_IsFade( const FIELD_FOG_WORK* cp_wk );
 
 

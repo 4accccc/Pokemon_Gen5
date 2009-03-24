@@ -55,15 +55,6 @@ typedef struct {
 	u32	offset_start;
 	s32	offset_dist;
 
-	u16	r_start;
-	s16	r_dist;
-	u16	g_start;
-	s16	g_dist;
-	u16	b_start;
-	s16	b_dist;
-
-	u16 alpha_start;
-	s16 alpha_dist;
 } FADE_WORK;
 
 
@@ -97,11 +88,10 @@ struct _FIELD_FOG_WORK {
 ///	フェードシステム
 //=====================================
 static BOOL FADE_WORK_IsFade( const FADE_WORK* cp_wk );
-static void FADE_WORK_Init( FADE_WORK* p_wk, u16 offset_start, u16 offset_end, GXRgb color_start, GXRgb color_end, u8 alpha_start, u8 alpha_end, u16 count_max );
+static void FADE_WORK_Init( FADE_WORK* p_wk, u16 offset_start, u16 offset_end, u16 count_max );
 static void FADE_WORK_Main( FADE_WORK* p_wk );
 static u16 FADE_WORK_GetOffset( const FADE_WORK* cp_wk );
-static GXRgb FADE_WORK_GetColorRgb( const FADE_WORK* cp_wk );
-static u8 FADE_WORK_GetColorA( const FADE_WORK* cp_wk );
+
 
 
 
@@ -159,8 +149,6 @@ void FIELD_FOG_Main( FIELD_FOG_WORK* p_wk )
 
 		// フェード情報を設定
 		p_wk->offset	= FADE_WORK_GetOffset( &p_wk->fade );
-		p_wk->rgb		= FADE_WORK_GetColorRgb( &p_wk->fade );
-		p_wk->alpha		= FADE_WORK_GetColorA( &p_wk->fade );
 		p_wk->change	= TRUE;	// データ設定
 	}
 
@@ -445,15 +433,13 @@ void FIELD_FOG_TBL_SetUpDefault( FIELD_FOG_WORK* p_wk )
  *
  *	@param	p_wk			ワーク
  *	@param	offset_end		オフセット終了
- *	@param	color_end		色終了
- *	@param	alpha_end		アルファ終了
  *	@param	count_max		フェードシンク数
  */
 //-----------------------------------------------------------------------------
-void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, GXRgb color_end, u8 alpha_end, u32 count_max )
+void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, u32 count_max )
 {
 	GF_ASSERT( p_wk );
-	FADE_WORK_Init( &p_wk->fade, p_wk->offset, offset_end, p_wk->rgb, color_end, p_wk->alpha, alpha_end, count_max );
+	FADE_WORK_Init( &p_wk->fade, p_wk->offset, offset_end, count_max );
 }
 
 //----------------------------------------------------------------------------
@@ -463,17 +449,13 @@ void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, GXRgb color_end,
  *	@param	p_wk			ワーク
  *	@param	offset_start	オフセット開始値
  *	@param	offset_end		オフセット終了値
- *	@param	color_start		色開始値
- *	@param	color_end		色終了値
- *	@param	alpha_start		アルファ開始値
- *	@param	alpha_end		アルファ終了値
  *	@param	count_max		フェードに使用するシンク数
  */
 //-----------------------------------------------------------------------------
-void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, u16 offset_start, u16 offset_end, GXRgb color_start, GXRgb color_end, u8 alpha_start, u8 alpha_end, u16 count_max  )
+void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, u16 offset_start, u16 offset_end, u16 count_max  )
 {
 	GF_ASSERT( p_wk );
-	FADE_WORK_Init( &p_wk->fade, offset_start, offset_end, color_start, color_end, alpha_start, alpha_end, count_max );
+	FADE_WORK_Init( &p_wk->fade, offset_start, offset_end, count_max );
 }
 
 //----------------------------------------------------------------------------
@@ -537,23 +519,13 @@ static BOOL FADE_WORK_IsFade( const FADE_WORK* cp_wk )
  *	@param	count_max		フェードに使用するシンク数
  */
 //-----------------------------------------------------------------------------
-static void FADE_WORK_Init( FADE_WORK* p_wk, u16 offset_start, u16 offset_end, GXRgb color_start, GXRgb color_end, u8 alpha_start, u8 alpha_end, u16 count_max )
+static void FADE_WORK_Init( FADE_WORK* p_wk, u16 offset_start, u16 offset_end, u16 count_max )
 {
 	p_wk->count			= 0;
 	p_wk->count_max		= count_max;
 
 	p_wk->offset_start	= offset_start;
 	p_wk->offset_dist	= offset_end - offset_start;
-
-	p_wk->r_start		= (color_start & GX_RGB_R_MASK )>> GX_RGB_R_SHIFT;
-	p_wk->r_dist		= ((color_end & GX_RGB_R_MASK )>> GX_RGB_R_SHIFT) - p_wk->r_start;
-	p_wk->g_start		= (color_start & GX_RGB_G_MASK )>> GX_RGB_G_SHIFT;
-	p_wk->g_dist		= ((color_end & GX_RGB_G_MASK )>> GX_RGB_G_SHIFT) - p_wk->g_start;
-	p_wk->b_start		= (color_start & GX_RGB_B_MASK )>> GX_RGB_B_SHIFT;
-	p_wk->b_dist		= ((color_end & GX_RGB_B_MASK )>> GX_RGB_B_SHIFT) - p_wk->b_start;
-
-	p_wk->alpha_start	= alpha_start;
-	p_wk->alpha_dist	= alpha_end - alpha_start;
 }
 
 //----------------------------------------------------------------------------
@@ -587,48 +559,6 @@ static u16 FADE_WORK_GetOffset( const FADE_WORK* cp_wk )
 	ans += cp_wk->offset_start;
 
 	return ans;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	カラーの値を取得
- *
- *	@param	cp_wk	ワーク
- *
- *	@return	カラー
- */
-//-----------------------------------------------------------------------------
-static GXRgb FADE_WORK_GetColorRgb( const FADE_WORK* cp_wk )
-{
-	u8 r, g, b;
-
-	r = (cp_wk->r_dist * cp_wk->count) / cp_wk->count_max;
-	r += cp_wk->r_start;
-	g = (cp_wk->g_dist * cp_wk->count) / cp_wk->count_max;
-	g += cp_wk->g_start;
-	b = (cp_wk->b_dist * cp_wk->count) / cp_wk->count_max;
-	b += cp_wk->b_start;
-
-	return GX_RGB( r, g, b );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	アルファ値を取得
- *
- *	@param	cp_wk	ワーク
- *
- *	@return	アルファ値
- */
-//-----------------------------------------------------------------------------
-static u8 FADE_WORK_GetColorA( const FADE_WORK* cp_wk )
-{
-	u8 a;
-
-	a = (cp_wk->alpha_dist * cp_wk->count) / cp_wk->count_max;
-	a += cp_wk->alpha_start;
-
-	return a;
 }
 
 
