@@ -95,10 +95,18 @@ extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Syncro( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_DownLoad( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Ganjou( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tainetu( u16 pri, u8 pokeID );
-
-
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tennen( u16 pri, u8 pokeID );
 
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kansouhada( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tikuden( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tyosui( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_DenkiEngine( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Juunan( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Fumin( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_MyPace( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_MagumaNoYoroi( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Meneki( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_NoGuard( u16 pri, u8 pokeID );
 
 
 #endif

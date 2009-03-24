@@ -10,7 +10,7 @@
 #include <tcbl.h>
 
 #include "print/gf_font.h"
-
+#include "waza_tool/wazano_def.h"		//soga
 #include "arc_def.h"
 #include "font/font.naix"
 
@@ -22,11 +22,9 @@
 
 #include "btlv_scu.h"
 #include "btlv_scd.h"
+#include "btlv_effect.h"	//soga
 
 #include "btlv_core.h"
-
-#include "btlv_effect.h"	//soga
-#include "waza_tool/wazano_def.h"		//soga
 
 
 /*--------------------------------------------------------------------------*/
@@ -512,17 +510,17 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
 
 	switch( *seq ){
 	case 0:
-		BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos, subwk->damage, subwk->affinity, TRUE );
+		BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos );
 
 		if( subwk->affinity < BTL_TYPEAFF_100 )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
-			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 		}
 		else if ( subwk->affinity > BTL_TYPEAFF_100 )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
-			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 		}
 		(*seq)++;
 		break;
@@ -561,13 +559,11 @@ typedef struct {
  */
 //=============================================================================================
 void BTLV_ACT_DamageEffectDouble_Start( BTLV_CORE* wk, BtlPokePos defPokePos1, BtlPokePos defPokePos2,
-		u16 damage1, u16 damage2, BtlTypeAff aff )
+		BtlTypeAff aff )
 {
 	WAZA_DMG2_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_DMG2_ACT_WORK));
 
 	subwk->affinity = aff;
-	subwk->damage1 = damage1;
-	subwk->damage2 = damage2;
 	subwk->defPokePos1 = defPokePos1;
 	subwk->defPokePos2 = defPokePos2;
 	subwk->timer = 0;
@@ -594,8 +590,8 @@ static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs )
 
 	switch( *seq ){
 	case 0:
-		BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos1, subwk->damage1, subwk->affinity, TRUE );
-		BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos2, subwk->damage2, subwk->affinity, FALSE );
+		BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos1 );
+		BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos2 );
 
 		if( subwk->affinity < BTL_TYPEAFF_100 )
 		{
@@ -620,6 +616,69 @@ static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs )
 
 	}
 	return FALSE;
+}
+
+//--------------------------------------
+typedef struct {
+	u8  pokePos[ BTL_POS_MAX ];
+	u8  pokeCnt;
+	u16 seq;
+	BtlTypeAffAbout  affAbout;
+}DMG_PLURAL_ACT_WORK;
+
+
+void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAbout affAbout, const u8* pokeID )
+{
+	DMG_PLURAL_ACT_WORK* subwk = getGenericWork(wk, sizeof(DMG_PLURAL_ACT_WORK));
+
+	subwk->affAbout = affAbout;
+	subwk->pokeCnt = pokeCnt;
+	BTL_Printf("複数体ダメージ処理 (%d体)\n", pokeCnt);
+	subwk->seq = 0;
+	{
+		u32 i;
+		for(i=0; i<pokeCnt; ++i)
+		{
+			BTL_Printf("  対象ポケID=%d\n", pokeID[i]);
+			subwk->pokePos[i] = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, pokeID[i] );
+		}
+	}
+}
+BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
+{
+	DMG_PLURAL_ACT_WORK* subwk = getGenericWork(wk, sizeof(DMG_PLURAL_ACT_WORK));
+
+	switch( subwk->seq ){
+	case 0:
+		{
+			u32 i;
+			for(i=0; i<subwk->pokeCnt; ++i)
+			{
+				BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->pokePos[i] );
+			}
+			switch( subwk->affAbout ){
+			case BTL_TYPEAFF_ABOUT_ADVANTAGE:
+				BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
+				BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
+				break;
+			case BTL_TYPEAFF_ABOUT_DISADVANTAGE:
+				BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
+				BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
+				break;
+			}
+			subwk->seq++;
+		}
+		break;
+	case 1:
+		if(	BTLV_SCU_WaitWazaDamageAct(wk->scrnU)
+		&&	BTLV_SCU_WaitMsg(wk->scrnU)
+		){
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+
 }
 
 //=============================================================================================

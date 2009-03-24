@@ -124,6 +124,7 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
@@ -760,37 +761,38 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		u32				cmd;
 		ServerCmdProc	proc;
 	}scprocTbl[] = {
-		{	SC_MSG_STD,						scProc_MSG_Std						},
-		{	SC_MSG_SET,						scProc_MSG_Set						},
-		{	SC_MSG_WAZA,					scProc_MSG_Waza						},
-		{	SC_ACT_WAZA_EFFECT,		scProc_ACT_WazaEffect			},
-		{	SC_ACT_WAZA_DMG,			scProc_ACT_WazaDmg				},
-		{	SC_ACT_WAZA_DMG_DBL,	scProc_ACT_WazaDmg_Dbl		},
-		{	SC_ACT_WAZA_ICHIGEKI,	scProc_ACT_WazaIchigeki		},
-		{	SC_ACT_CONF_DMG,			scProc_ACT_ConfDamage			},
-		{	SC_ACT_DEAD,					scProc_ACT_Dead						},
-		{	SC_ACT_MEMBER_OUT,		scProc_ACT_MemberOut			},
-		{	SC_ACT_MEMBER_IN,			scProc_ACT_MemberIn				},
-		{	SC_ACT_RANKUP,				scProc_ACT_RankUp					},
-		{	SC_ACT_RANKDOWN,			scProc_ACT_RankDown				},
-		{	SC_ACT_SICK_SET,			scProc_ACT_SickSet				},
-		{	SC_ACT_SICK_DMG,			scProc_ACT_SickDamage			},
-		{	SC_ACT_WEATHER_DMG,		scProc_ACT_WeatherDmg			},
-		{	SC_ACT_WEATHER_START,	scProc_ACT_WeatherStart		},
-		{	SC_ACT_WEATHER_END,		scProc_ACT_WeatherEnd			},
-		{	SC_ACT_SIMPLE_HP,			scProc_ACT_SimpleHP				},
-		{	SC_ACT_TRACE_TOKUSEI,	scProc_ACT_TraceTokusei		},
-		{	SC_TOKWIN_IN,					scProc_TOKWIN_In					},
-		{	SC_TOKWIN_OUT,				scProc_TOKWIN_Out					},
-		{	SC_OP_HP_MINUS,				scProc_OP_HpMinus					},
-		{	SC_OP_HP_PLUS,				scProc_OP_HpPlus					},
-		{	SC_OP_HP_ZERO,				scProc_OP_HpZero					},
-		{	SC_OP_PP_MINUS,				scProc_OP_PPMinus					},
-		{	SC_OP_PP_PLUS,				scProc_OP_PPPlus					},
-		{	SC_OP_RANK_UP,				scProc_OP_RankUp					},
-		{	SC_OP_RANK_DOWN,			scProc_OP_RankDown				},
-		{	SC_OP_SICK_SET,				scProc_OP_SickSet					},
-		{	SC_OP_WAZASICK_TURNCHECK, scProc_OP_WSTurnCheck },
+		{	SC_MSG_STD,							scProc_MSG_Std						},
+		{	SC_MSG_SET,							scProc_MSG_Set						},
+		{	SC_MSG_WAZA,						scProc_MSG_Waza						},
+		{	SC_ACT_WAZA_EFFECT,			scProc_ACT_WazaEffect			},
+		{	SC_ACT_WAZA_DMG,				scProc_ACT_WazaDmg				},
+		{	SC_ACT_WAZA_DMG_DBL,		scProc_ACT_WazaDmg_Dbl		},
+		{	SC_ACT_WAZA_DMG_PLURAL,	scProc_ACT_WazaDmg_Plural	},
+		{	SC_ACT_WAZA_ICHIGEKI,		scProc_ACT_WazaIchigeki		},
+		{	SC_ACT_CONF_DMG,				scProc_ACT_ConfDamage			},
+		{	SC_ACT_DEAD,						scProc_ACT_Dead						},
+		{	SC_ACT_MEMBER_OUT,			scProc_ACT_MemberOut			},
+		{	SC_ACT_MEMBER_IN,				scProc_ACT_MemberIn				},
+		{	SC_ACT_RANKUP,					scProc_ACT_RankUp					},
+		{	SC_ACT_RANKDOWN,				scProc_ACT_RankDown				},
+		{	SC_ACT_SICK_SET,				scProc_ACT_SickSet				},
+		{	SC_ACT_SICK_DMG,				scProc_ACT_SickDamage			},
+		{	SC_ACT_WEATHER_DMG,			scProc_ACT_WeatherDmg			},
+		{	SC_ACT_WEATHER_START,		scProc_ACT_WeatherStart		},
+		{	SC_ACT_WEATHER_END,			scProc_ACT_WeatherEnd			},
+		{	SC_ACT_SIMPLE_HP,				scProc_ACT_SimpleHP				},
+		{	SC_ACT_TRACE_TOKUSEI,		scProc_ACT_TraceTokusei		},
+		{	SC_TOKWIN_IN,						scProc_TOKWIN_In					},
+		{	SC_TOKWIN_OUT,					scProc_TOKWIN_Out					},
+		{	SC_OP_HP_MINUS,					scProc_OP_HpMinus					},
+		{	SC_OP_HP_PLUS,					scProc_OP_HpPlus					},
+		{	SC_OP_HP_ZERO,					scProc_OP_HpZero					},
+		{	SC_OP_PP_MINUS,					scProc_OP_PPMinus					},
+		{	SC_OP_PP_PLUS,					scProc_OP_PPPlus					},
+		{	SC_OP_RANK_UP,					scProc_OP_RankUp					},
+		{	SC_OP_RANK_DOWN,				scProc_OP_RankDown				},
+		{	SC_OP_SICK_SET,					scProc_OP_SickSet					},
+		{	SC_OP_WAZASICK_TURNCHECK,scProc_OP_WSTurnCheck },
 	};
 
 restart:
@@ -1040,13 +1042,42 @@ static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args )
 		damage1		= args[3];
 		damage2		= args[4];
 
-		BTLV_ACT_DamageEffectDouble_Start( wk->viewCore, defPokePos1, defPokePos2, damage1, damage2, aff );
+		BTLV_ACT_DamageEffectDouble_Start( wk->viewCore, defPokePos1, defPokePos2, aff );
 		(*seq)++;
 	}
 	break;
 
 	case 1:
 		if( BTLV_ACT_DamageEffectDouble_Wait(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+/**
+ * 【アクション】複数体一斉ダメージ処理
+ */
+static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ) {
+	case 0:
+	{
+		u16 poke_cnt = args[0];
+		BtlTypeAffAbout aff_about = BTL_CALC_TypeAffAbout( args[1] );
+		u8 pokeID[ BTL_POS_MAX ];
+		u8 i;
+		for(i=0; i<poke_cnt; ++i){
+			pokeID[i] = SCQUE_READ_ArgOnly( wk->cmdQue );
+		}
+		BTLV_ACT_DamageEffectPlural_Start( wk->viewCore, poke_cnt, aff_about, pokeID );
+		(*seq)++;
+	}
+	break;
+
+	case 1:
+		if( BTLV_ACT_DamageEffectPlural_Wait(wk->viewCore) )
 		{
 			return TRUE;
 		}
@@ -1243,15 +1274,15 @@ static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args )
 			u8 pokeID, pokePos, i;
 
 			switch( weather ){
-			case BTL_WEATHER_SAND:	msgID = BTL_STRID_STD_SandAttack; break;
-			case BTL_WEATHER_SNOW:	msgID = BTL_STRID_STD_SnowAttack; break;
+			case BTL_WEATHER_SAND:
+				BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_SandAttack, NULL );
+				break;
+			case BTL_WEATHER_SNOW:
+				BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_SnowAttack, NULL );
 				break;
 			default:
-				GF_ASSERT(0);
-				return TRUE;
+				break;
 			}
-
-			BTLV_StartMsgStd( wk->viewCore, msgID, NULL );
 
 			for(i=0; i<pokeCnt; ++i)
 			{

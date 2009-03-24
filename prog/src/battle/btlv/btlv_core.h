@@ -156,9 +156,23 @@ extern BOOL BTLV_ACT_WazaEffect_Wait( BTLV_CORE* wk );
 extern void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, BtlPokePos defPokePos, u16 damage, BtlTypeAff aff );
 extern BOOL BTLV_ACT_DamageEffectSingle_Wait( BTLV_CORE* wk );
 
-extern void BTLV_ACT_DamageEffectDouble_Start( BTLV_CORE* wk, BtlPokePos defPokePos1, BtlPokePos defPokePos2,
-		u16 damage1, u16 damage2, BtlTypeAff aff );
+extern void BTLV_ACT_DamageEffectDouble_Start( BTLV_CORE* wk,
+	BtlPokePos defPokePos1, BtlPokePos defPokePos2, BtlTypeAff aff );
 extern BOOL BTLV_ACT_DamageEffectDouble_Wait( BTLV_CORE* wk );
+
+//=============================================================================================
+/**
+ * 複数体一斉ダメージ処理 開始
+ *
+ * @param   wk				
+ * @param   pokeCnt		ポケモン数
+ * @param   affAbout	相性ID
+ * @param   pokeID		対象となるポケモンID配列
+ */
+//=============================================================================================
+extern void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAbout affAbout, const u8* pokeID );
+extern BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk );
+
 
 extern void BTLV_StartDeadAct( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_WaitDeadAct( BTLV_CORE* wk );

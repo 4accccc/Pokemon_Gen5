@@ -38,8 +38,9 @@ typedef enum {
 	SC_OP_SICK_SET,			///< yŒvŽZzó‘ÔˆÙí [PokeID, Sick, Turn]
 	SC_OP_WAZASICK_TURNCHECK,
 	SC_ACT_WAZA_EFFECT,
-	SC_ACT_WAZA_DMG,		///< yƒƒU”­“®Fƒ_ƒ[ƒWz[ AtClient, DefClient, wazaIdx, Affinity ]
+	SC_ACT_WAZA_DMG,		///< yƒAƒNƒVƒ‡ƒ“z[ AtClient, DefClient, wazaIdx, Affinity ]
 	SC_ACT_WAZA_DMG_DBL,///< yƒAƒNƒVƒ‡ƒ“z‚Q‘Ì“¯Žžƒ_ƒ[ƒWˆ— [ pokeID ]
+	SC_ACT_WAZA_DMG_PLURAL,	///< yƒAƒNƒVƒ‡ƒ“z•¡”‘Ì“¯Žžƒ_ƒ[ƒWˆ— [ pokeCnt, affAbout, ... ]
 	SC_ACT_WAZA_ICHIGEKI,///< yƒAƒNƒVƒ‡ƒ“zˆêŒ‚ƒƒUˆ—
 	SC_ACT_CONF_DMG,		///< yƒAƒNƒVƒ‡ƒ“z‚±‚ñ‚ç‚ñŽ©”šƒ_ƒ[ƒW [ pokeID ]
 	SC_ACT_RANKUP,			///< yƒ‰ƒ“ƒNƒAƒbƒvŒø‰Êz ››‚Ì~~~‚ª‚ ‚ª‚Á‚½I[ ClientID, statusType, volume ]
@@ -197,6 +198,7 @@ static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokeI
 	SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT, atPokeID, defPokeID, waza );
 }
 
+// yƒAƒNƒVƒ‡ƒ“z’P‘Ìƒ_ƒ[ƒWˆ—
 static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 defPokeID, u8 affinity, u16 damage )
 {
 	SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG, defPokeID, affinity, damage );
@@ -206,6 +208,12 @@ static inline void SCQUE_PUT_ACT_WazaDamageDbl( BTL_SERVER_CMD_QUE* que, u8 defP
 {
 	SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG_DBL, defPokeID1, defPokeID2, aff, damage1, damage2 );
 }
+// yƒAƒNƒVƒ‡ƒ“z•¡”‘Ì“¯Žžƒ_ƒ[ƒWˆ—
+static inline void SCQUE_PUT_ACT_WazaDamagePlural( BTL_SERVER_CMD_QUE* que, u8 pokeCnt, u8 affAbout )
+{
+	SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG_PLURAL, pokeCnt, affAbout );
+}
+
 // yƒAƒNƒVƒ‡ƒ“zˆêŒ‚•KŽEƒƒUˆ—
 static inline void SCQUE_PUT_ACT_WazaIchigeki( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {

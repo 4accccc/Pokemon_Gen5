@@ -360,6 +360,33 @@ int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
 }
 //=============================================================================================
 /**
+ * ランク補正フラットな状態のパラメータ取得
+ *
+ * @param   pp		
+ * @param   vid		
+ *
+ * @retval  int		
+ */
+//=============================================================================================
+int BTL_POKEPARAM_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid )
+{
+	switch( vid ){
+	case BPP_ATTACK:		return pp->baseParam.attack;
+	case BPP_DEFENCE:		return pp->baseParam.defence;
+	case BPP_SP_ATTACK:		return pp->baseParam.sp_attack;
+	case BPP_SP_DEFENCE:	return pp->baseParam.sp_defence;
+	case BPP_AGILITY:		return pp->baseParam.agility;
+
+	case BPP_HIT_RATIO:			return RANK_STATUS_DEF;
+	case BPP_AVOID_RATIO:		return RANK_STATUS_DEF;
+	case BPP_CRITICAL_RATIO:	return RANK_CRITICAL_DEF;
+
+	default:
+		return BTL_POKEPARAM_GetValue( pp, vid );
+	};
+}
+//=============================================================================================
+/**
  * クリティカルヒット時のパラメータ取得（攻撃側に不利なランク補正をフラットにする）
  *
  * @param   pp		
@@ -368,7 +395,7 @@ int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
  * @retval  int
  */
 //=============================================================================================
-int BTL_POKEPARAM_GetValueCriticalHit( const BTL_POKEPARAM* pp, BppValueID vid )
+int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
 {
 	switch( vid ){
 	case BPP_ATTACK:	return (pp->varyParam.attack < 0)? pp->baseParam.attack : pp->realParam.attack;
@@ -393,6 +420,19 @@ int BTL_POKEPARAM_GetValueCriticalHit( const BTL_POKEPARAM* pp, BppValueID vid )
 BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp )
 {
 	return BTL_POKEPARAM_GetValue( pp, BPP_HP ) == 0;
+}
+//=============================================================================================
+/**
+ * 
+ *
+ * @param   pp		
+ *
+ * @retval  BOOL		
+ */
+//=============================================================================================
+BOOL BTL_POKEPARAM_IsFullHP( const BTL_POKEPARAM* pp )
+{
+	return BTL_POKEPARAM_GetValue(pp, BPP_HP) == BTL_POKEPARAM_GetValue(pp, BPP_MAX_HP);
 }
 //=============================================================================================
 /**

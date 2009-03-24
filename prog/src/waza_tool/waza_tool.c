@@ -263,6 +263,10 @@ enum {
 	WSEQ_SIMPLEEFFEX_DOWN_DEF = 59,
 	WSEQ_SIMPLEEFFEX_DOWN_AGI = 60,
 	WSEQ_SIMPLEEFFEX_DOWN_SPDEF = 62,
+	WSEQ_SIMPLEEFFCOMP_ATK_DEF = 208,
+	WSEQ_SIMPLEEFFCOMP_DEF_SPDEF = 206,
+	WSEQ_SIMPLEEFFCOMP_SPATK_SPDEF = 211,
+	WSEQ_SIMPLEEFFCOMP_ATK_AGI = 212,
 
 	WSEQ_DAMAGE_EFF_ATK = 68,
 	WSEQ_DAMAGE_EFF_DEF = 69,
@@ -278,6 +282,7 @@ enum {
 	WSEQ_WEATHER_SNOW = 164,
 	WSEQ_CRITICAL_UP = 43,
 	WSEQ_ICHIGEKI = 38,
+
 
 	WSEQ_REACT_A1 = 48,		/// 1/4反動	
 	WSEQ_REACT_B1 = 198,	/// 1/3反動	
@@ -296,7 +301,7 @@ typedef struct {
 	struct {
 		WazaRankEffect	type;
 		s8							value;
-	}rankEff[2];
+	}rankEff[WAZA_RANKEFF_NUM_MAX];
 
 	u8 shrinkFlg;
 	u8 weather;
@@ -372,6 +377,22 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
 		},{
 			WSEQ_SIMPLEEFFEX_SPDEF, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
 			{ { WAZA_RANKEFF_SP_DEFENCE, 2 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE, BTL_WEATHER_NONE, 0, 0,
+		},{
+			WSEQ_SIMPLEEFFCOMP_ATK_DEF, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_ATTACK, 1 }, { WAZA_RANKEFF_DEFENCE, 1 } },
+			FALSE, BTL_WEATHER_NONE, 0, 0,
+		},{
+			WSEQ_SIMPLEEFFCOMP_DEF_SPDEF, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_DEFENCE, 1 }, { WAZA_RANKEFF_SP_DEFENCE, 1 } },
+			FALSE, BTL_WEATHER_NONE, 0, 0,
+		},{
+			WSEQ_SIMPLEEFFCOMP_SPATK_SPDEF, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_SP_ATTACK, 1 }, { WAZA_RANKEFF_SP_DEFENCE, 1 } },
+			FALSE, BTL_WEATHER_NONE, 0, 0,
+		},{
+			WSEQ_SIMPLEEFFCOMP_ATK_AGI, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
+			{ { WAZA_RANKEFF_ATTACK, 1 }, { WAZA_RANKEFF_AGILITY, 1 } },
 			FALSE, BTL_WEATHER_NONE, 0, 0,
 		},{
 			WSEQ_SIMPLEEFFEX_DOWN_ATK, WAZADATA_CATEGORY_SIMPLE_EFFECT, POKESICK_NULL, 
@@ -636,26 +657,50 @@ u8 WAZADATA_GetReactionRatio( WazaID id )
 }
 //=============================================================================================
 /**
+ * ランク効果の種類数を返す
+ *
+ * @param   id		
+ *
+ * @retval  u8		
+ */
+//=============================================================================================
+u8 WAZADATA_GetRankEffectCount( WazaID id )
+{
+	const SEQ_PARAM* seq = getSeqParam( id );
+	if( seq ){
+		u8 cnt = 0;
+		if( seq->rankEff[0].type != WAZA_RANKEFF_NULL ){ ++cnt; }
+		if( seq->rankEff[1].type != WAZA_RANKEFF_NULL ){ ++cnt; }
+		return cnt;
+	}
+	return 0;
+}
+//=============================================================================================
+/**
  * ランク効果を取得
  *
  * @param   id				[in] ワザID
+ * @param   idx				[in] 何番目のランク効果か？（0～）
  * @param   volume		[out] ランク効果の程度（+ならアップ, -ならダウン, 戻り値==WAZA_RANKEFF_NULLの時のみ0）
  *
  * @retval  WazaRankEffect		ランク効果ID
  */
 //=============================================================================================
-WazaRankEffect  WAZADATA_GetRankEffect( WazaID id, int* volume )
+WazaRankEffect WAZADATA_GetRankEffect( WazaID id, u32 idx, int* volume )
 {
-	const SEQ_PARAM* seq = getSeqParam( id );
-	if( seq ){
-		if( seq->rankEff[0].type != WAZA_RANKEFF_NULL )
-		{
-			*volume = seq->rankEff[0].value;
-			return seq->rankEff[0].type;
+	GF_ASSERT(idx < WAZA_RANKEFF_NUM_MAX);
+	{
+		const SEQ_PARAM* seq = getSeqParam( id );
+		if( seq ){
+			if( seq->rankEff[idx].type != WAZA_RANKEFF_NULL )
+			{
+				*volume = seq->rankEff[idx].value;
+				return seq->rankEff[idx].type;
+			}
 		}
+		*volume = 0;
+		return WAZA_RANKEFF_NULL;
 	}
-	*volume = 0;
-	return POKESICK_NULL;
 }
 //=============================================================================================
 /**

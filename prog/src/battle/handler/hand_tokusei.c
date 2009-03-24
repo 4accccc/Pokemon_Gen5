@@ -88,6 +88,20 @@ static void handler_Isiatama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static void handler_NormalSkin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SizenKaifuku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Download( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Ganjou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tennen_hitRank( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tennen_AtkRank( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tennen_DefRank( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tainetsu_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tainetsu_SickDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BOOL common_DmgRecover_Calc( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType wazaType, u8 denomHP, u32* recoverHP );
+static void common_DmgRecover_Put( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 recoverHP );
+static void handler_Kandouhada_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kandouhada_DmgRecover( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tyosui( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tikuden( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DenkiEngine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -180,8 +194,18 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		{ POKETOKUSEI_DAUNROODO,			HAND_TOK_ADD_DownLoad },
 		{ POKETOKUSEI_GANJOU,					HAND_TOK_ADD_Ganjou },
 		{ POKETOKUSEI_TAINETU,				HAND_TOK_ADD_Tainetu },
-
 		{ POKETOKUSEI_TENNEN,					HAND_TOK_ADD_Tennen },
+		{ POKETOKUSEI_KANSOUHADA,			HAND_TOK_ADD_Kansouhada },
+		{ POKETOKUSEI_TIKUDEN,				HAND_TOK_ADD_Tikuden },
+		{ POKETOKUSEI_TYOSUI,					HAND_TOK_ADD_Tyosui },
+		{ POKETOKUSEI_DENKIENJIN,			HAND_TOK_ADD_DenkiEngine },
+		{ POKETOKUSEI_JUUNAN,					HAND_TOK_ADD_Juunan },
+		{ POKETOKUSEI_FUMIN,					HAND_TOK_ADD_Fumin },
+		{ POKETOKUSEI_MAIPEESU,				HAND_TOK_ADD_MyPace },
+		{ POKETOKUSEI_MAGUMANOYOROI,	HAND_TOK_ADD_MagumaNoYoroi },
+		{ POKETOKUSEI_MENEKI,					HAND_TOK_ADD_Meneki },
+		{ POKETOKUSEI_NOOGAADO,				HAND_TOK_ADD_NoGuard },
+
 	};
 
 	int i;
@@ -1298,8 +1322,7 @@ static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
 		if( BTL_EVENTVAR_GetValue(BTL_EVAR_WEATHER) == weather )
 		{
 			const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
-			int recoverHP = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / 8;
-			if( recoverHP == 0 ){ recoverHP = 1; }
+			int recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 ) * -1;
 			recoverHP *= -1;
 			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, recoverHP );
 		}
@@ -1321,8 +1344,7 @@ static void handler_SunPower_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 		if( BTL_EVENTVAR_GetValue(BTL_EVAR_WEATHER) == BTL_WEATHER_SHINE )
 		{
 			const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
-			int damage = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / 8;
-			if( damage == 0 ){ damage = 1; }
+			int damage = BTL_CALC_QuotMaxHP( bpp, 8 );
 			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, damage );
 		}
 	}
@@ -1484,11 +1506,7 @@ static void handler_PoisonHeal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 		if( (sick == WAZASICK_DOKU) || (sick == WAZASICK_MOUDOKU) )
 		{
 			const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
-			int recoverHP = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / 8;
-			if( recoverHP == 0 )
-			{
-				recoverHP = 1;
-			}
+			int recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );
 			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, 0 );
 			BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
 			BTL_SERVER_RECEPT_HP_Add( flowWk, pokeID, recoverHP );
@@ -1735,8 +1753,7 @@ static void handler_Samehada( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 		{
 			u8 attackerPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
 			const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, attackerPokeID );
-			int dmg = -(BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / 16);
-			if( dmg == 0 ){ dmg = -1; }
+			int dmg = BTL_CALC_QuotMaxHP( bpp, 16 ) * -1;
 			BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
 			BTL_SERVER_RECEPT_HP_Add( flowWk, attackerPokeID, dmg );
 			BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
@@ -1842,6 +1859,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 
 		targetCnt = 0;
 		pokeCnt = BTL_SVFLOW_RECEPT_GetAllOpponentFrontPokeID( flowWk, pokeID, allPokeID );
+		BTL_Printf("トレースハンドラです：相手ポケ数=%d\n", pokeCnt);
 		for(i=0; i<pokeCnt; ++i)
 		{
 			const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, allPokeID[i] );
@@ -1854,6 +1872,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 		if( targetCnt )
 		{
 			u8 idx = (targetCnt==1)? 0 : GFL_STD_MtRand( targetCnt );
+			BTL_Printf("トレースハンドラです：対象ポケ数=%d, ランダム結果=%d\n", targetCnt, idx);
 			BTL_SVFLOW_RECEPT_TraceTokusei( flowWk, pokeID, targetPokeID[idx] );
 			BTL_EVENT_RemoveFactor( myHandle );
 		}
@@ -1935,7 +1954,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_DownLoad( u16 pri, u8 pokeID )
 		{ BTL_EVENT_MEMBER_IN, handler_Download },		// メンバー入場ハンドラ
 		{ BTL_EVENT_NULL, NULL },
 	};
-	return NULL;
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
 //------------------------------------------------------------------------------
 /**
@@ -1956,15 +1975,324 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Ganjou( u16 pri, u8 pokeID )
 		{ BTL_EVENT_ICHIGEKI_CHECK, handler_Ganjou },		// 一撃チェックハンドラ
 		{ BTL_EVENT_NULL, NULL },
 	};
-	return NULL;
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }
-
-
-BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tainetu( u16 pri, u8 pokeID )
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「てんねん」
+ */
+//------------------------------------------------------------------------------
+// 命中率・回避率チェックハンドラ
+static void handler_Tennen_hitRank( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-	return NULL;
+	// 自分が攻撃側の時、防御側の回避率をフラットに
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+	{
+		BTL_EVENTVAR_SetValue( BTL_EVAR_AVOID_RANK, BTL_CALC_HITRATIO_MID );
+	}
+	// 自分が防御側の時、攻撃側の命中率をフラットに
+	else if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+	{
+		BTL_EVENTVAR_SetValue( BTL_EVAR_HIT_RANK, BTL_CALC_HITRATIO_MID );
+	}
+}
+// 攻撃ランクチェックハンドラ
+static void handler_Tennen_AtkRank( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	// 自分が防御側の時、攻撃側のランクをフラットに
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+	{
+		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, TRUE );
+	}
+}
+// 防御ランクチェックハンドラ
+static void handler_Tennen_DefRank( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	// 自分が攻撃側の時、防御側のランクをフラットに
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+	{
+		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, TRUE );
+	}
 }
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tennen( u16 pri, u8 pokeID )
 {
-	return NULL;
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_ICHIGEKI_CHECK, handler_Tennen_hitRank },		// 命中率・回避率チェックハンドラ
+		{ BTL_EVENT_ATTACKER_POWER_PREV, handler_Tennen_AtkRank }, // 攻撃ランクチェックハンドラ
+		{ BTL_EVENT_DEFENDER_GUARD_PREV, handler_Tennen_DefRank }, // 防御ランクチェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「たいねつ」
+ */
+//------------------------------------------------------------------------------
+// ワザ威力計算ハンドラ
+static void handler_Tainetsu_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	// 自分が防御側の時、炎ワザの威力を半分に
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+	{
+		WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+		if( WAZADATA_GetType(waza) == POKETYPE_FIRE )
+		{
+			u32 pow = BTL_CALC_Roundup( BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER ) / 2, 1 );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, pow );
+		}
+	}
+}
+// 状態異常ダメージ計算ハンドラ
+static void handler_Tainetsu_SickDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	// 自分が喰らう時、やけどならダメージ半分に
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+	{
+		WazaSick sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+		if( sick == WAZASICK_YAKEDO )
+		{
+			u32 dmg = BTL_CALC_Roundup( BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE ) / 2, 1 );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, dmg );
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tainetu( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_WAZA_POWER,		handler_Tainetsu_WazaPow },		// ワザ威力計算ハンドラ
+		{ BTL_EVENT_SICK_DAMAGE,	handler_Tainetsu_SickDmg },		// 状態異常ダメージ計算ハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+
+
+
+//--------------------------------------------------------------------------
+/**
+ * ダメージワザ無効化＆回復するとくせいの共通処理 - 計算
+ *
+ * @param   flowWk		
+ * @param   pokeID		
+ * @param   type			対象ワザタイプ
+ * @param   denomHP		MAXHPの何分の１回復するか？
+ * @param   recoverHP	[out] 回復するHP量
+ *
+ * @retval  BOOL			無効化する場合はTRUE
+ */
+//--------------------------------------------------------------------------
+static BOOL common_DmgRecover_Calc( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType wazaType, u8 denomHP, u32* recoverHP )
+{
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+	{
+		WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+		if( WAZADATA_GetType(waza) == wazaType )
+		{
+			const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+
+			BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, TRUE );
+			if( !BTL_POKEPARAM_IsFullHP( bpp ) ){
+				*recoverHP = BTL_CALC_QuotMaxHP( bpp, denomHP );
+			}
+			else{
+				*recoverHP = 0;
+			}
+			return TRUE;
+		}
+	}
+	*recoverHP = 0;
+	return FALSE;
+}
+//--------------------------------------------------------------------------
+/**
+ * ダメージワザ無効化＆回復するとくせいの共通処理 - コマンド出力
+ *
+ * @param   flowWk		
+ * @param   pokeID		
+ * @param   recoverHP		
+ *
+ */
+//--------------------------------------------------------------------------
+static void common_DmgRecover_Put( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 recoverHP )
+{
+	if( recoverHP )
+	{
+		BTL_SERVER_RECEPT_HP_Add( flowWk, pokeID, recoverHP );
+		BTL_SERVER_RECTPT_SetMessage( flowWk, BTL_STRID_SET_HP_Recover, pokeID );
+	}
+	else
+	{
+		BTL_SERVER_RECTPT_SetMessage( flowWk, BTL_STRID_SET_NoEffect, pokeID );
+	}
+}
+
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「かんそうはだ」
+ */
+//------------------------------------------------------------------------------
+// 天候ダメージ計算ハンドラ
+static void handler_Kandouhada_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+	{
+		const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+		int damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+		BtlWeather weather = BTL_EVENTVAR_GetValue( BTL_EVAR_WEATHER );
+
+		// 晴れの時、MAXHPの 1/8 減る
+		if( weather == BTL_WEATHER_SHINE ){
+			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, damage );
+		// 雨の時、MAXHPの 1/8 回復
+		}else if( weather == BTL_WEATHER_RAIN ) {
+			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE, -damage );
+		}
+	}
+}
+// ダメージワザ回復化チェックハンドラ
+static void handler_Kandouhada_DmgRecover( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	u32 recoverHP;
+
+	if( common_DmgRecover_Calc(flowWk, pokeID, POKETYPE_WATER, 4, &recoverHP) )
+	{
+		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
+		common_DmgRecover_Put( flowWk, pokeID, recoverHP );
+		BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kansouhada( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_CALC_WEATHER_DAMAGE,	handler_Kandouhada_Weather },			// 天候ダメージ計算ハンドラ
+		{ BTL_EVENT_DMG_TO_RECOVER,				handler_Kandouhada_DmgRecover },	// ダメージワザ回復チェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「ちょすい」
+ */
+//------------------------------------------------------------------------------
+// ダメージワザ回復化チェックハンドラ
+static void handler_Tyosui( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	u32 recoverHP;
+	if( common_DmgRecover_Calc(flowWk, pokeID, POKETYPE_WATER, 4, &recoverHP) )
+	{
+		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
+		common_DmgRecover_Put( flowWk, pokeID, recoverHP );
+		BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tyosui( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_DMG_TO_RECOVER,				handler_Tyosui },	// ダメージワザ回復チェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「ちくでん」
+ */
+//------------------------------------------------------------------------------
+// ダメージワザ回復化チェックハンドラ
+static void handler_Tikuden( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	u32 recoverHP;
+	if( common_DmgRecover_Calc(flowWk, pokeID, POKETYPE_ELECTRIC, 4, &recoverHP) )
+	{
+		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
+		common_DmgRecover_Put( flowWk, pokeID, recoverHP );
+		BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tikuden( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_DMG_TO_RECOVER,				handler_Tikuden },	// ダメージワザ回復チェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「でんきエンジン」
+ */
+//------------------------------------------------------------------------------
+// ダメージワザ回復化チェックハンドラ
+static void handler_DenkiEngine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	u32 recoverHP;
+	if( common_DmgRecover_Calc(flowWk, pokeID, POKETYPE_ELECTRIC, 4, &recoverHP) )
+	{
+		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
+		common_DmgRecover_Put( flowWk, pokeID, recoverHP );
+		{
+			BtlPokePos myPos = BTL_SVFLOW_CheckExistFrontPokeID( flowWk, pokeID );
+			BTL_SERVER_RECEPT_RankUpEffect( flowWk, myPos, BPP_AGILITY, 1 );
+		}
+		BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_DenkiEngine( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_DMG_TO_RECOVER,		handler_DenkiEngine },	// ダメージワザ回復チェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Juunan( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_DMG_TO_RECOVER,				handler_Kandouhada_DmgRecover },	// ダメージワザ回復チェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Fumin( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_DMG_TO_RECOVER,				handler_Kandouhada_DmgRecover },	// ダメージワザ回復チェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_MyPace( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_DMG_TO_RECOVER,				handler_Kandouhada_DmgRecover },	// ダメージワザ回復チェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_MagumaNoYoroi( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_DMG_TO_RECOVER,				handler_Kandouhada_DmgRecover },	// ダメージワザ回復チェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Meneki( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_DMG_TO_RECOVER,				handler_Kandouhada_DmgRecover },	// ダメージワザ回復チェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_NoGuard( u16 pri, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_DMG_TO_RECOVER,				handler_Kandouhada_DmgRecover },	// ダメージワザ回復チェックハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
 }

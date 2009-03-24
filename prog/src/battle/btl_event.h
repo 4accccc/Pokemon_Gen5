@@ -27,13 +27,18 @@ typedef enum {
 	BTL_EVENT_CALC_CONF_DAMAGE,	///< 混乱ダメージ計算
 	BTL_EVENT_WAZA_EXECUTE,			///< ワザ実行チェック
 	BTL_EVENT_WAZA_EXECUTE_FIX,	///< ワザ実行チェック確定
-
+	BTL_EVENT_NOEFFECT_TYPE_CHECK,///< ワザ無効化（タイプによる）チェックハンドラ
+	BTL_EVENT_NOEFFECT_CHECK,			///< ワザ無効化最終チェックハンドラ
+	BTL_EVENT_DMG_TO_RECOVER,		///< ワザダメージ->回復化チェックハンドラ
+	BTL_EVENT_WAZA_HIT_RANK,		///< 命中率・回避率の決定ハンドラ
 	BTL_EVENT_WAZA_HIT_RATIO,		///< ワザの命中率補正ハンドラ
 	BTL_EVENT_WAZA_HIT_COUNT,		///< ヒット回数決定（複数回ヒットワザのみ）
 	BTL_EVENT_CRITICAL_CHECK,		///< クリティカルチェック
 	BTL_EVENT_WAZA_POWER,				///< ワザ威力補正ハンドラ
-	BTL_EVENT_ATTACKER_POWER,		///< 攻撃側の能力値（こうげきorとくこう）補正ハンドラ
-	BTL_EVENT_DEFENDER_GUARD,		///< 防御側の能力値（ぼうぎょorとくぼう）補正ハンドラ
+	BTL_EVENT_ATTACKER_POWER_PREV,	///< 攻撃側の能力値（こうげきorとくこう）取得前ハンドラ
+	BTL_EVENT_DEFENDER_GUARD_PREV,	///< 防御側の能力値（ぼうぎょorとくぼう）取得前ハンドラ
+	BTL_EVENT_ATTACKER_POWER,				///< 攻撃側の能力値（こうげきorとくこう）補正ハンドラ
+	BTL_EVENT_DEFENDER_GUARD,				///< 防御側の能力値（ぼうぎょorとくぼう）補正ハンドラ
 	BTL_EVENT_DAMAGE_PROC1,			///< タイプ計算前ダメージ補正ハンドラ
 	BTL_EVENT_ATTACKER_TYPE,		///< 攻撃側ポケタイプ
 	BTL_EVENT_DEFENDER_TYPE,		///< 防御側ポケタイプ
@@ -109,6 +114,7 @@ typedef enum {
 	BTL_EVAR_STATUS_TYPE,
 	BTL_EVAR_POKE_TYPE,
 	BTL_EVAR_WAZA_TYPE,
+	BTL_EVAR_NOEFFECT_FLAG,
 	BTL_EVAR_VOLUME,
 	BTL_EVAR_GEN_FLAG,
 	BTL_EVAR_FAIL_FLAG,
@@ -117,6 +123,8 @@ typedef enum {
 	BTL_EVAR_TURN_COUNT,
 	BTL_EVAR_ALMOST_FLAG,
 	BTL_EVAR_ADD_PER,
+	BTL_EVAR_HIT_RANK,
+	BTL_EVAR_AVOID_RANK,
 	BTL_EVAR_HITCOUNT_MAX,
 	BTL_EVAR_HITCOUNT,
 	BTL_EVAR_CRITICAL_RANK,

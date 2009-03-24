@@ -153,6 +153,7 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 	wk->heapID = heapID;
 	wk->font = font;
 	wk->strbuf = GFL_STR_CreateBuffer( 128, heapID );
+	wk->pokesel_param = NULL;
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 

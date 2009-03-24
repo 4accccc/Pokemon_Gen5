@@ -160,6 +160,14 @@ typedef enum {
 	WAZA_IMG_MAX,
 }WazaImage;
 
+//------------------------------------------------------------------------------
+/**
+ *	ワザ関連定数
+ */
+//------------------------------------------------------------------------------
+enum {
+	WAZA_RANKEFF_NUM_MAX = 2,		///< １つのワザに割り当てられるランク効果の種類数最大値
+};
 
 extern u16  WAZADATA_GetPower( WazaID id );
 extern s8   WAZADATA_GetPriority( WazaID id );
@@ -211,9 +219,10 @@ extern u32 WAZADATA_GetShrinkPer( WazaID id );
 // 天候効果
 extern BtlWeather WAZADATA_GetWeather( WazaID id );
 
+
 //=============================================================================================
 /**
- * ランク効果を取得
+ * ランク効果の種類数を取得
  *
  * @param   id				[in] ワザID
  * @param   volume		[out] ランク効果の程度（+ならアップ, -ならダウン, 戻り値==WAZA_RANKEFF_NULLの時のみ0）
@@ -221,7 +230,20 @@ extern BtlWeather WAZADATA_GetWeather( WazaID id );
  * @retval  WazaRankEffect		ランク効果ID
  */
 //=============================================================================================
-extern WazaRankEffect  WAZADATA_GetRankEffect( WazaID id, int* volume );
+extern u8 WAZADATA_GetRankEffectCount( WazaID id );
+
+//=============================================================================================
+/**
+ * ランク効果を取得
+ *
+ * @param   id				[in] ワザID
+ * @param   idx				[in] 何番目のランク効果か？（0～）
+ * @param   volume		[out] ランク効果の程度（+ならアップ, -ならダウン, 戻り値==WAZA_RANKEFF_NULLの時のみ0）
+ *
+ * @retval  WazaRankEffect		ランク効果ID
+ */
+//=============================================================================================
+extern WazaRankEffect  WAZADATA_GetRankEffect( WazaID id, u32 idx, int* volume );
 
 // ランク効果の発生確率（0-100）
 extern u32 WAZADATA_GetRankEffPer( WazaID id );

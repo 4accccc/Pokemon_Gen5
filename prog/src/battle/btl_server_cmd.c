@@ -76,6 +76,7 @@ static const u8 ServerCmdToFmtTbl[] = {
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_WAZA_EFFECT
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_WAZA_DMG
 	SC_ARGFMT_5_5_5bit_22byte,	// SC_ACT_WAZA_DMG_DBL
+	SC_ARGFMT_4_4bit,						// SC_ACT_WAZA_DMG_PLURAL
 	SC_ARGFMT_1byte,						// 1C_ACT_WAZA_DMG_ICHIGEKI
 	SC_ARGFMT_1byte,						// SC_ACT_CONF_DMG
 	SC_ARGFMT_5_5_5bit,					// SC_ACT_RANKUP

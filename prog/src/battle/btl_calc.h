@@ -83,6 +83,18 @@ static inline u32 BTL_CALC_IsOccurPer( u32 per )
 	return (GFL_STD_MtRand(100) < per);
 }
 
+static inline int BTL_CALC_Roundup( int value, int min )
+{
+	if( value < min ){ value = min; }
+	return value;
+}
+
+static inline u32 BTL_CALC_QuotMaxHP( const BTL_POKEPARAM* bpp, u32 denom )
+{
+	u32 ret = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP ) / denom;
+	if( ret == 0 ){ ret = 1; }
+	return ret;
+}
 
 //--------------------------------------------------------------------
 /**

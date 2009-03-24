@@ -689,19 +689,17 @@ typedef struct {
 }DMG_EFF_TASK_WORK;
 
 
+
 //=============================================================================================
 /**
- * ダメージエフェクト発動
+ * 
  *
- * @param   wk->scrnU			
- * @param   atClientID		
- * @param   defClientID		
- * @param   waza					
- * @param   affinity			
+ * @param   wk		
+ * @param   defPos		
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, u16 damage, BtlTypeAff affinity, BOOL playSE )
+void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos )
 {
 	enum {
 		DAMAGE_FRAME_MIN = 40,
