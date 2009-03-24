@@ -278,11 +278,22 @@ const BOOL DUP_FIT_ITEM_CheckHit( FIT_ITEM_WORK *item , u32 posX , u32 posY )
 {
 	GFL_BBD_TEXSIZ texSize;
 	u8 xRate,yRate;
-	
-	const s16 subX = item->pos.x - posX;
-	const s16 subY = item->pos.y - posY;
+	GFL_POINT ofsPos;
+	s16 subX,subY;
+
 	u16 arcIdx = MUS_ITEM_DRAW_GetArcIdx( item->itemId );
 	MUS_ITEM_DRAW_GetPicSize( item->itemWork , &xRate,&yRate );
+	MUS_ITEM_DRAW_GetOffsetPos( item->itemWork , &ofsPos );
+	if( MUS_ITEM_DRAW_GetUseOffset( NULL , item->itemWork ) == TRUE )
+	{
+		subX = (item->pos.x-ofsPos.x) - posX;
+		subY = (item->pos.y-ofsPos.y) - posY;
+	}
+	else
+	{
+		subX = item->pos.x - posX;
+		subY = item->pos.y - posY;
+	}
 
 	if( subX < ITEM_HIT_SIZE*xRate &&
 		subX >-ITEM_HIT_SIZE*xRate &&

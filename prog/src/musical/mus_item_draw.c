@@ -16,15 +16,17 @@
 #include "arc_def.h"
 #include "musical_item.naix"
 
+#include "test/ariizumi/ari_debug.h"
 #include "musical/mus_item_draw.h"
 #include "musical/mus_item_data.h"
 #include "musical/musical_camera_def.h"
 
-#include "test/ariizumi/ari_debug.h"
 
 //======================================================================
 //	define
 //======================================================================
+//影用のVRAM転送Task
+#define VRAM_TRANS_TASK_NUM (2)
 
 //======================================================================
 //	enum
@@ -58,6 +60,9 @@ struct _MUS_ITEM_DRAW_SYSTEM
 	MUS_ITEM_DATA_SYS	*itemDataSys;
 
 	u16	itemMax;
+	//影用パレット
+	u16 shadowPallet[16];
+	NNSGfdVramTransferTask vramTransTask[VRAM_TRANS_TASK_NUM];
 };
 
 //======================================================================
@@ -84,12 +89,22 @@ MUS_ITEM_DRAW_SYSTEM*	MUS_ITEM_DRAW_InitSystem( GFL_BBD_SYS *bbdSys , u16 itemMa
 	}
 	work->itemDataSys = MUS_ITEM_DATA_InitSystem( heapId );
 	
+	//影用VRAM転送Mng
+	NNS_GfdInitVramTransferManager( work->vramTransTask , VRAM_TRANS_TASK_NUM );
+	for( i=0;i<16;i++ )
+	{
+		work->shadowPallet[i] = 0x5a56;
+	}
+	
 	return work;
 }
 
 void MUS_ITEM_DRAW_TermSystem( MUS_ITEM_DRAW_SYSTEM* work )
 {
 	int i;
+	
+	NNS_GfdClearVramTransferManagerTask();
+
 	MUS_ITEM_DATA_ExitSystem( work->itemDataSys );
 	for( i=0;i<work->itemMax;i++ )
 	{
@@ -147,6 +162,11 @@ void MUS_ITEM_DRAW_UpdateSystem( MUS_ITEM_DRAW_SYSTEM* work )
 			work->musItem[i].isUpdate = FALSE; 
 		}
 	}
+}
+
+void MUS_ITEM_DRAW_UpdateSystem_VBlank( MUS_ITEM_DRAW_SYSTEM* work )
+{
+	NNS_GfdDoVramTransfer();
 }
 
 //アイテム番号からARCの番号を調べる
@@ -313,6 +333,48 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 	itemWork->enable = TRUE;
 }
 
+void MUS_ITEM_DRAW_SetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes )
+{
+	u32 pltAdr;
+	NNSG3dPlttKey pltKey;
+	u32 pltSize;
+	
+	//同じ16色パレットでも使用色数で配置サイズが変わるのでPltKeyからサイズを取得する
+	GFL_BBD_GetResourceTexPlttAdrs( work->bbdSys , itemWork->resIdx , &pltAdr );
+	pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
+	pltSize = NNS_GfdGetPlttKeySize( pltKey );
+	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT , pltAdr , (void*)work->shadowPallet , pltSize );
+}
+
+//影用に各数値をコピーする
+void MUS_ITEM_DRAW_CopyItemDataToShadow( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *baseItem , MUS_ITEM_DRAW_WORK *shadowItem)
+{
+	shadowItem->pos.x = baseItem->pos.x+FX32_CONST(2.0f);
+	shadowItem->pos.y = baseItem->pos.y+FX32_CONST(2.0f);
+	shadowItem->pos.z = baseItem->pos.z-FX32_CONST(0.5f);
+	shadowItem->sizeX = baseItem->sizeX;
+	shadowItem->sizeY = baseItem->sizeY;
+	shadowItem->rotZ  = baseItem->rotZ;
+	shadowItem->useOffset = baseItem->useOffset;
+	//フリップ未対応
+#if 0	//点滅影(べっこ転送命令が必要
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
+	{
+		u8 i;
+		static u8 rgb = 0;
+		for( i=0;i<16;i++ )
+		{
+			work->shadowPallet[i] = GX_RGB(rgb,rgb,rgb);
+		}
+		rgb++;
+		if( rgb >= 32 )
+		{
+			rgb = 0;
+		}
+	}
+#endif
+}
+
 
 void MUS_ITEM_DRAW_SetDrawEnable( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , BOOL flg )
 {
@@ -358,6 +420,12 @@ void MUS_ITEM_DRAW_GetRotation( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK 
 	*rotZ = itemWork->rotZ;
 }
 
+void MUS_ITEM_DRAW_SetAlpha( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u8 alpha )
+{
+	GFL_BBD_SetObjectAlpha( work->bbdSys , itemWork->bbdIdx , &alpha );
+	
+}
+
 void MUS_ITEM_DRAW_SetFlipS( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , const BOOL flipS )
 {
 	GFL_BBD_SetObjectFlipS( work->bbdSys , itemWork->bbdIdx , &flipS );
@@ -369,3 +437,21 @@ void MUS_ITEM_DRAW_SetUseOffset( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK
 	itemWork->useOffset = flg;
 }
 
+const BOOL MUS_ITEM_DRAW_GetUseOffset( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork )
+{
+	return itemWork->useOffset;
+}
+
+void MUS_ITEM_DRAW_GetOffsetPos( MUS_ITEM_DRAW_WORK *itemWork , GFL_POINT *ofsPos )
+{
+	MUS_ITEM_DATA_GetDispOffset( itemWork->itemData , ofsPos );
+}
+
+#if DEB_ARI
+void MUS_ITEM_DRAW_Debug_DumpResData( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork )
+{
+	u32 pltAdr;
+	GFL_BBD_GetResourceTexPlttAdrs( work->bbdSys , itemWork->resIdx , &pltAdr );
+	OS_TPrintf("[%2d][%8x]\n",itemWork->resIdx,pltAdr);
+}
+#endif
