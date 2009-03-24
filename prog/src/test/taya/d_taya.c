@@ -841,6 +841,19 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 
 	switch( *seq ){
 	case 0:
+
+		GFL_STD_MtRandInit(0);
+		{
+			u32 i, result;
+			u32 cnt[2];
+			cnt[0] = cnt[1] = 0;
+			for(i=0; i<10000; ++i){
+				result = GFL_STD_MtRand(2);
+				cnt[result]++;
+			}
+			TAYA_Printf("ランダム発生テスト: 0->%d,  1->%d\n", cnt[0], cnt[1]);
+		}
+
 		deleteTemporaryModules( wk );
 		quitGraphicSystems( wk );
 		GFL_HEAP_DeleteHeap( HEAPID_TEMP );
@@ -869,8 +882,8 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 			para->partyEnemy2 = NULL;	///< 2vs2時の２番目敵AI用（不要ならnull）
 
 		#ifdef DEBUG_ONLY_FOR_taya
-			setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_SAANAITO, MONSNO_PIKATYUU, MONSNO_PORIGON2, 0 );
-			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_GYARADOSU, MONSNO_METAGUROSU, MONSNO_REKKUUZA, 0 );
+			setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_SAANAITO, MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
+			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_GYARADOSU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
 			{
 				#if 0
 				// どくにしてみる
