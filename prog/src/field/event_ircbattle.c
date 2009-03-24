@@ -2,8 +2,8 @@
 /**
  * @file	event_ircbattle.c
  * @brief	イベント：赤外線バトル
- * @author	tamada GAMEFREAK inc.
- * @date	2008.01.19
+ * @author	k.ohno
+ * @date	2009.03.24
  */
 //============================================================================================
 
@@ -25,6 +25,7 @@
 //------------------------------------------------------------------
 #include "ircbattle/ircbattlematch.h"
 #include "ircbattle/ircbattlemenu.h"
+#include "ircbattle/ircbattlefriend.h"
 #include "battle/battle.h"
 #include "poke_tool/monsno_def.h"
 #include "system/main.h"			//GFL_HEAPID_APP参照
@@ -54,6 +55,10 @@ enum _EVENT_IRCBATTLE {
     _WAIT_IRCBATTLE_MATCH,
     _CALL_BATTLE,
     _WAIT_BATTLE,
+    _CALL_IRCBATTLE_FRIEND,
+    _WAIT_IRCBATTLE_FRIEND,
+    _CALL_NET_END,
+    _WAIT_NET_END,
     _FIELD_OPEN,
     _FIELD_FADEIN,
     _FIELD_END
@@ -62,7 +67,8 @@ enum _EVENT_IRCBATTLE {
 struct _EVENT_IRCBATTLE_WORK{
 	GAMESYS_WORK * gsys;
 	FIELD_MAIN_WORK * fieldmap;
-	BATTLE_SETUP_PARAM para;
+    SAVE_CONTROL_WORK *ctrl;
+    BATTLE_SETUP_PARAM para;
     BOOL isEndProc;
     int selectType;
 };
@@ -83,7 +89,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 		(*seq)++;
 		break;
       case _WAIT_IRCBATTLE_MENU:
-      //  if (GAMESYSTEM_IsProcExists(gsys)){
         if(dbw->isEndProc){
             (*seq) ++;
         }
@@ -98,14 +103,11 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 		(*seq)++;
 		break;
       case _WAIT_IRCBATTLE_MATCH:
-        if(dbw->isEndProc){
+        if (!GAMESYSTEM_IsProcExists(gsys)){
             (*seq) ++;
         }
 		break;
       case _CALL_BATTLE:
-        dbw->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-        dbw->para.netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
-        dbw->para.commPos = dbw->para.netID;
         switch(dbw->selectType){
           case EVENTIRCBTL_ENTRYMODE_SINGLE:
             dbw->para.rule = BTL_RULE_SINGLE;
@@ -121,10 +123,16 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
             dbw->para.rule = BTL_RULE_DOUBLE;
             NET_PRINT("multiMode\n");
             break;
+          case EVENTIRCBTL_ENTRYMODE_FRIEND:
+            *seq = _CALL_IRCBATTLE_FRIEND;
+            return GMEVENT_RES_CONTINUE;
           default:
-            GF_ASSERT(0);
-            break;
+            //キャンセル終了
+            return GMEVENT_RES_FINISH;
         }
+        dbw->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+        dbw->para.netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+        dbw->para.commPos = dbw->para.netID;
         GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
         GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
@@ -134,14 +142,37 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         if (GAMESYSTEM_IsProcExists(gsys)){
             break;
         }
-        OS_TPrintf("バトル完了 event_ircbattle\n");
-		(*seq) ++;
+        NET_PRINT("バトル完了 event_ircbattle\n");
+		(*seq) = _CALL_NET_END;
 		break;
+      case _CALL_IRCBATTLE_FRIEND:  //  ともだちコード交換
+		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ircbattlematch), &IrcBattleFriendProcData, dbw);
+		(*seq)++;
+		break;
+      case _WAIT_IRCBATTLE_FRIEND:
+        if (!GAMESYSTEM_IsProcExists(gsys)){
+            NET_PRINT("ともだちコード交換おわり\n");
+            (*seq) = _CALL_NET_END;
+        }
+		break;
+      case _CALL_NET_END:
+        if(GFL_NET_IsParentMachine()){
+            GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL);
+        }
+		(*seq) ++;
+        break;
+      case _WAIT_NET_END:
+        if(GFL_NET_IsExit()){
+            (*seq) ++;
+        }
+        break;
       case _FIELD_OPEN:
+        OS_TPrintf("_FIELD_OPEN\n");
 		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
 		(*seq) ++;
 		break;
       case _FIELD_FADEIN:
+        OS_TPrintf("_FIELD_FADEIN\n");
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
 		(*seq) ++;
 		break;
@@ -158,16 +189,19 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 //------------------------------------------------------------------
 void EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * event)
 {
-//	GMEVENT * event;
+	GMEVENT * child_event;
 	BATTLE_SETUP_PARAM * para;
 	EVENT_IRCBATTLE_WORK * dbw;
-    
-//	event = GMEVENT_Create(gsys, NULL, DebugBattleEvent, sizeof(EVENT_IRCBATTLE_WORK));
-	GMEVENT_Change( event,EVENT_IrcBattleMain, sizeof(EVENT_IRCBATTLE_WORK) );
 
-   // work = GMEVENT_GetEventWork( event );
-
+#if 0
+    child_event = GMEVENT_Create(gsys, event, EVENT_IrcBattleMain, sizeof(EVENT_IRCBATTLE_WORK));
+    GMEVENT_CallEvent(event,child_event);
+    dbw = GMEVENT_GetEventWork(child_event);
+#else
+    GMEVENT_Change( event,EVENT_IrcBattleMain, sizeof(EVENT_IRCBATTLE_WORK) );
     dbw = GMEVENT_GetEventWork(event);
+#endif
+    dbw->ctrl = SaveControl_GetPointer();
 	dbw->gsys = gsys;
 	dbw->fieldmap = fieldmap;
 	para = &dbw->para;
@@ -185,8 +219,6 @@ void EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * e
         para->partyEnemy2 = NULL;		///< 2vs2時の２番目敵AI用（不要ならnull）
 
 		PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->partyPlayer);
-
-        
 	}
 
 	
@@ -261,4 +293,30 @@ int EVENT_IrcBattleGetType(EVENT_IRCBATTLE_WORK* pWork)
 {
     return pWork->selectType;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   EVENT_IRCBATTLE_WORKからGAMESYS_WORKを得る
+ * @param   pWork      EVENT_IRCBATTLE_WORK
+ * @retval  GAMESYS_WORK
+ */
+//--------------------------------------------------------------
+GAMESYS_WORK* IrcBattle_GetGAMESYS_WORK(EVENT_IRCBATTLE_WORK* pWork)
+{
+    return pWork->gsys;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   EVENT_IRCBATTLE_WORKからSAVE_CONTROL_WORKをえる
+ * @param   pWork      EVENT_IRCBATTLE_WORK
+ * @retval  SAVE_CONTROL_WORK
+ */
+//--------------------------------------------------------------
+SAVE_CONTROL_WORK* IrcBattle_GetSAVE_CONTROL_WORK(EVENT_IRCBATTLE_WORK* pWork)
+{
+    return pWork->ctrl;
+}
+
+
 

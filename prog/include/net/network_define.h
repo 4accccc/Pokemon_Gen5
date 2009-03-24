@@ -77,6 +77,7 @@ enum NetworkServiceID_e {
   WB_NET_BALANCEBALL,				///<バランスボール(マネネ)
   WB_NET_WIFICLUB,                 ///<WIFICLUB
   WB_NET_COMPATI_CHECK,				///<相性チェック
+  WB_NET_IRCBATTLE,               ///< IRC>WIRELESS>接続
   WB_NET_SERVICEID_MAX   // 終端
 };
 
@@ -98,6 +99,7 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_BALANCEBALL = (WB_NET_BALANCEBALL<<8),		///<バランスボール
   GFL_NET_CMD_WIFICLUB = (WB_NET_WIFICLUB<<8),				///<WIFICLUB
   GFL_NET_CMD_COMPATI_CHECK = (WB_NET_COMPATI_CHECK<<8),	///<相性チェック
+  GFL_NET_CMD_IRCBATTLE = (WB_NET_IRCBATTLE<<8),  ///< IRC>WIRELESS>接続
 
 };
 

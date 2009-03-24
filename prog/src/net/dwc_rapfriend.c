@@ -14,6 +14,7 @@
 #if GFL_NET_WIFI
 
 #include "dwc_rapfriend.h"
+#include "savedata/wifilist.h"
 
 
 //==============================================================================
@@ -145,5 +146,71 @@ int GFL_NET_DWC_FriendAutoInputCheck( DWCFriendData* pFriend )
     }
     return  hit;
 }
+
+//------------------------------------------------------------------
+/**
+ * $brief   ñ≥ê¸ópìoò^ä÷êî
+ * @param   wk		
+ * @param   seq		
+ * @retval  int 	
+ */
+//------------------------------------------------------------------
+void GFL_NET_DWC_FriendDataWrite(SAVE_CONTROL_WORK* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int addListIndex, int heapID, int overWrite)
+{
+    WIFI_LIST* pList = SaveData_GetWifiListData(pSaveData);
+    DWCFriendData *keyList  = WifiList_GetDwcDataPtr(pList, addListIndex);
+    STRBUF* pBuf;
+
+    if(overWrite != 2){
+//        pFriend = CommInfoGetDWCFriendCode(netID);
+        MI_CpuCopy8(pFriend, keyList, sizeof(DWCFriendData));
+    }
+    if(overWrite == 0){  // è„èëÇ´éûÇ…ÇÕñºëOÇèëÇ´ä∑Ç¶Ç»Ç¢
+        pBuf = MyStatus_CreateNameString(pMyStatus, heapID);
+        WifiList_SetFriendName(pList, addListIndex, pBuf);
+        GFL_STR_DeleteBuffer(pBuf);
+        WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_SEX, MyStatus_GetMySex(pMyStatus));
+        WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_ID, MyStatus_GetID(pMyStatus));
+    }
+    else if(overWrite == 1){
+        // è„èëÇ´ÇæÇØÇ«ê´ï Ç™Ç‹Çæñ≥Ç¢èÛë‘ÇÃèÍçáèëÇ≠
+        if(WifiList_GetFriendInfo(pList,addListIndex,WIFILIST_FRIEND_SEX) == PM_NEUTRAL){
+            WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_SEX, MyStatus_GetMySex(pMyStatus));
+            WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_ID, MyStatus_GetID(pMyStatus));
+        }
+    }
+    pBuf =  GFL_STR_CreateBuffer(120, heapID );
+    //GFL_STR_SetStringCode(pBuf, CommInfoGetGroupName(netID));
+    //WifiList_SetFriendGroupName(pList, addListIndex, pBuf);
+    GFL_STR_DeleteBuffer(pBuf);
+    WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_UNION_GRA, MyStatus_GetTrainerView(pMyStatus));
+    //CommInfoWriteResult( pSaveData );
+
+}
+
+//------------------------------------------------------------------
+/**
+ * $brief   ñ≥ê¸ópÇ∆Ç‡ÇæÇøí«â¡ä÷êî
+ * @param   SAVE_CONTROL_WORK		
+ * @param   MYSTATUS		
+ * @param   DWCFriendData		
+ * @param   heapID		
+ * @retval  int 	
+ */
+//------------------------------------------------------------------
+
+void GFL_NET_DWC_FriendDataAdd(SAVE_CONTROL_WORK* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int heapID)
+{
+    WIFI_LIST* pList = SaveData_GetWifiListData(pSaveData);
+    int i;
+
+    for(i = 0; i < WIFILIST_FRIEND_MAX;i++){
+        if( !WifiList_IsFriendData( pList, i ) ){
+            GFL_NET_DWC_FriendDataWrite(pSaveData, pMyStatus, pFriend, i, heapID, FALSE);
+            break;
+        }
+    }
+}
+
 
 #endif //GFL_NET_WIFI

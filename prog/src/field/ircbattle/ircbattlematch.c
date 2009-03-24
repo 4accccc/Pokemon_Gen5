@@ -157,7 +157,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     IrcBattleBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
     NULL,            // 普通のエラーが起こった場合 通信終了
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-    _endCallBack,  // 通信切断時に呼ばれる関数
+    NULL, //_endCallBack,  // 通信切断時に呼ばれる関数
     NULL,  // オート接続で親になった場合
 #if GFL_NET_WIFI
     NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
@@ -568,6 +568,8 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
             break;
           case EVENTIRCBTL_ENTRYMODE_MULTH:
             net_ini_data.maxConnectNum = 4;
+            break;
+          case EVENTIRCBTL_ENTRYMODE_FRIEND:
             break;
           default:
             GF_ASSERT(0);

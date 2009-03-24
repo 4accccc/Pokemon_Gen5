@@ -28,6 +28,7 @@ typedef struct {
 enum NetDebugOhnoCommand_e {
   NET_CMD_MOVE = GFL_NET_CMD_DEBUG_OHNO,
   NET_CMD_TALK,
+  NET_CMD_FRIENDCODE_DATA,
 };
 
 

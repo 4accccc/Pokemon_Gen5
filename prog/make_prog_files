@@ -37,6 +37,7 @@ SAVEDATASRC = 	savedata/save_tbl.c \
 #通信の常駐
 NETWORKSRC =	net/net_icondata.c \
 				net/net_dev.c \
+				net/dwc_rapfriend.c \
 				system/net_err.c
 
 
@@ -192,7 +193,6 @@ SRCS_OVERLAY_DEV_WIFI		= net/net_devwifi.c \
 								net/dwc_rap.c \
 								net/dwc_rapinitialize.c \
 								net/dwc_rapcommon.c \
-								net/dwc_rapfriend.c \
 								net/vchat.c
 
 
@@ -422,7 +422,8 @@ SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
 
 # IRCBATTLEマッチング
 #===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_IRCBATTLEMATCH = field/ircbattle/ircbattlematch.c
+SRCS_OVERLAY_IRCBATTLEMATCH = field/ircbattle/ircbattlematch.c \
+								field/ircbattle/ircbattlefriend.c
 
 # 不思議な贈り物
 #===> SRCS_OVERLAY_DEV_WIFI

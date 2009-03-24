@@ -271,9 +271,14 @@ STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, int no )
 //==============================================================================
 void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
 {
+    int len = sizeof(list->friendData[no].name);
+    int buflen = GFL_STR_GetBufferLength(pBuf);
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
 
-    GFL_STR_SetStringCodeOrderLength(pBuf, list->friendData[no].name, sizeof(list->friendData[no].name));
+    if(buflen < len){
+        len = buflen;
+    }
+    GFL_STR_SetStringCodeOrderLength(pBuf, list->friendData[no].name, len);
 }
 
 //==============================================================================
@@ -621,7 +626,19 @@ void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
 	GFL_STD_MemClear(&list->friendData[delNo], sizeof(WIFI_FRIEND));
 }
 
+//---------------------------------------------------------------------------
+/**
+ * @brief	相手に送信するふぃれんどコードを得る
+ * @param	pList  WIFIリストポインタ
+ * @param	pFriend  フレンドデータ
+ * @return	WIFI_LIST	WIFIリスト
+ */
+//---------------------------------------------------------------------------
 
+void GFL_NET_DWC_GetMySendedFriendCode( const WIFI_LIST* pList, DWCFriendData* pFriend )
+{
+    DWC_CreateExchangeToken(&pList->my_dwcuser, pFriend);
+}
 
 //---------------------------------------------------------------------------
 /**

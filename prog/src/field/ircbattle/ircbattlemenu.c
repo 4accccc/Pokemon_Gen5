@@ -122,6 +122,11 @@ enum _IBMODE_ENTRY {
     _ENTRYNUM_EXIT,
 };
 
+enum _IBMODE_CHANGE {
+    _CHANGE_FRIENDCHANGE = 0,
+    _CHANGE_EXIT,
+};
+
 
 
 
@@ -168,6 +173,9 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
 static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
 static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
 static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork);
+static BOOL _modeSelectChangeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
+static void _modeSelectChangWait(IRC_BATTLE_MENU* pWork);
+static void _modeSelectChangeInit(IRC_BATTLE_MENU* pWork);
 
 
    
@@ -290,6 +298,8 @@ static void _buttonWindowDelete(IRC_BATTLE_MENU* pWork)
     GFL_BMN_Delete(pWork->pButton);
     pWork->pButton = NULL;
     for(i=0;i < pWork->windowNum;i++){
+        GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
+        GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
         GFL_BMPWIN_Delete(pWork->buttonWin[i]);
         pWork->buttonWin[i] = NULL;
     }
@@ -358,7 +368,7 @@ static void _modeSelectMenuInit(IRC_BATTLE_MENU* pWork)
 {
     int aMsgBuff[]={IRCBTL_STR_01,IRCBTL_STR_02,IRCBTL_STR_03};
     
-    _buttonWindowCreate(3, aMsgBuff, pWork);
+    _buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
 
     pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
     pWork->touch = &_modeSelectMenuButtonCallback;
@@ -394,12 +404,16 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
     switch( bttnid ){
       case _SELECTMODE_BATTLE:
-      case _SELECTMODE_POKE_CHANGE:
         _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
+        _buttonWindowDelete(pWork);
+        return TRUE;
+      case _SELECTMODE_POKE_CHANGE:
+        _CHANGE_STATE(pWork,_modeSelectChangeInit);
         _buttonWindowDelete(pWork);
         return TRUE;
       case _SELECTMODE_EXIT:
         _CHANGE_STATE(pWork,NULL);        // 終わり
+        _buttonWindowDelete(pWork);
         return TRUE;
       default:
         break;
@@ -418,6 +432,63 @@ static void _modeSelectMenuWait(IRC_BATTLE_MENU* pWork)
     GFL_BMN_Main( pWork->pButton );
 
 }
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   交換画面初期化
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeSelectChangeInit(IRC_BATTLE_MENU* pWork)
+{
+    int aMsgBuff[]={IRCBTL_STR_14, IRCBTL_STR_03};
+
+    _buttonWindowCreate(NELEMS(aMsgBuff),aMsgBuff,pWork);
+
+    pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
+    pWork->touch = &_modeSelectChangeButtonCallback;
+
+    _CHANGE_STATE(pWork,_modeSelectChangWait);
+
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   交換画面タッチ処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static BOOL _modeSelectChangeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
+{
+    switch(bttnid){
+      case _CHANGE_FRIENDCHANGE:
+        pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
+        _buttonWindowDelete(pWork);
+        _CHANGE_STATE(pWork,_modeReportInit);
+        return TRUE;
+      default:
+        break;
+    }
+    return FALSE;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   交換画面待機
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeSelectChangWait(IRC_BATTLE_MENU* pWork)
+{
+    GFL_BMN_Main( pWork->pButton );
+
+}
+
+
+
+
+
 
 //------------------------------------------------------------------------------
 /**

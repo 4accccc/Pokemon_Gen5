@@ -323,6 +323,14 @@ extern void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit, NetStepEndCallb
 extern BOOL GFL_NET_IsInit(void);
 //==============================================================================
 /**
+ * @brief  通信が終了したかどうか
+ * @retval TRUE   終了
+ * @retval FALSE  まだ終了していない
+ */
+//==============================================================================
+extern BOOL GFL_NET_IsExit(void);
+//==============================================================================
+/**
  * @brief   通信終了
  * @param   netEndCallback    通信が終了した際に呼ばれるコールバックです
  * @retval  TRUE:終了リクエストを受け付けた

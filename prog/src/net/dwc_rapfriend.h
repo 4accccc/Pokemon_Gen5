@@ -11,6 +11,8 @@
 #define  __DWC_RAPFRIEND_H__
 
 #include <dwc.h>
+#include "savedata/save_control.h"
+#include "savedata/mystatus.h"
 
 //==============================================================================
 /**
@@ -36,5 +38,17 @@ extern int dwc_checkFriendCodeByToken( u64 friend_key, int *index);
 //------------------------------------------------------------------
 
 extern int GFL_NET_DWC_FriendAutoInputCheck( DWCFriendData* pFriend );
+
+//------------------------------------------------------------------
+/**
+ * $brief   ñ≥ê¸ópìoò^ä÷êî
+ * @param   wk		
+ * @param   seq		
+ * @retval  int 	
+ */
+//------------------------------------------------------------------
+extern void GFL_NET_DWC_FriendDataWrite(SAVE_CONTROL_WORK* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int addListIndex, int heapID, int overWrite);
+
+extern void GFL_NET_DWC_FriendDataAdd(SAVE_CONTROL_WORK* pSaveData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int heapID);
 
 #endif //__DWC_RAPFRIEND_H__
