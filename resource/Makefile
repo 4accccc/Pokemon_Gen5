@@ -11,6 +11,7 @@ SUBDIRS	=	wmi \
 			sound \
 			test_graphic\
 			message\
+			fldmmdl \
 			fldmapdata\
 			test3dp\
 			pokegra\
@@ -39,7 +40,6 @@ SUBDIRS	=	wmi \
 			pms_gra \
 			compatible \
 			musical \
-			fldmmdl \
 			infowin \
 			bmpoam \
 			wifi_lobby_other \
