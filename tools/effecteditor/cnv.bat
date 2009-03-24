@@ -40,7 +40,18 @@ REM ##################################################
 
 @ECHO ON
 
-cd %PROJECT_ROOT%/tools/effecteditor
-ruby ../../resource/wazaeffect/eescmk.rb ../../prog/src/battle/btlv/btlv_effvm_def.h we_test.esf ../../ on
+cd C:\home\pokemon_wb_tool\effecteditor\Release
+del we_000.bin
+ruby c:\home\pokemon_wb\resource\wazaeffect\eescmk.rb c:\home\pokemon_wb\prog\src\battle\btlv\btlv_effvm_def.h we_test.esf c:/home/pokemon_wb/ on
+
+if not %ERRORLEVEL%==0 GOTO ERROR
+
 make
 
+if %ERRORLEVEL%==0 GOTO END
+
+:ERROR
+echo ÉGÉâÅ[Ç™î≠ê∂ÇµÇ‹ÇµÇΩ
+pause
+
+:END
