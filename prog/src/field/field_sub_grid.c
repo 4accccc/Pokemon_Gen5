@@ -1,7 +1,6 @@
 //======================================================================
 /**
- * @file	field_
- * return( TRUE );sub_grid.c
+ * @file	field_sub_grid.c
  * @brief	フィールドメイン処理サブ（グリッド移動）
  *
  * このソースはfield_main.cにインクルードされています。
@@ -65,6 +64,16 @@ const int TestOBJCodeMax = NELEMS( TestOBJCodeTbl );
 //======================================================================
 typedef struct _FGRID_CONT		FGRID_CONT;
 typedef struct _FGRID_PLAYER	FGRID_PLAYER;
+
+//--------------------------------------------------------------
+//	MMDL_LIST
+//--------------------------------------------------------------
+#define MMDL_LIST_MAX 64
+typedef struct
+{
+	int count;
+	u16 id_list[MMDL_LIST_MAX];
+}MMDL_LIST;
 
 //--------------------------------------------------------------
 ///	FGRID_CONT
@@ -154,6 +163,8 @@ static void Jiki_UpdatePlayerWork( FIELD_MAIN_WORK *fieldWork );
 
 static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork );
 
+static void MMdlList_Init( MMDL_LIST *mlist, int list_id, HEAPID heapID );
+
 //--------------------------------------------------------------
 ///	data
 //--------------------------------------------------------------
@@ -204,9 +215,20 @@ static void GridMoveCreate(
 		FLDMMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
 			fieldWork->fldMMdlSys,
 			GetBbdActSys(fieldWork->gs), 32 );
+		
+#if 0
 		FLDMMDL_BLACTCONT_AddResourceTex(
 			fieldWork->fldMMdlSys, TestOBJCodeTbl, TestOBJCodeMax );
-		
+#else
+		{
+			int list_area_id = 0;
+			MMDL_LIST mlist;
+			MMdlList_Init( &mlist, list_area_id, fieldWork->heapID );
+			FLDMMDL_BLACTCONT_AddOBJCodeRes( fieldWork->fldMMdlSys, HERO );
+			FLDMMDL_BLACTCONT_AddResourceTex(
+					fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
+		}
+#endif		
 		FLDMMDLSYS_SetupDrawProc(		//動作モデル描画　セットアップ
 				fieldWork->fldMMdlSys );
 		
@@ -1586,4 +1608,28 @@ BOOL FIELDMAP_CheckGridControl( FIELD_MAIN_WORK *fieldWork )
 		return( FALSE );
 	}
 	return( TRUE );
+}
+
+//======================================================================
+//	動作モデルリスト
+//======================================================================
+static void MMdlList_Init( MMDL_LIST *mlist, int list_id, HEAPID heapID )
+{
+	int i = 0;
+	u16 *pList;
+	pList = GFL_ARC_LoadDataAlloc( ARCID_FLDMMDL_LIST, list_id, heapID );
+	mlist->count = 0;
+	
+	while( pList[i] != OBJCODEMAX ){
+		OS_Printf( "モデルリスト　No %d = %d\n", i, pList[i] );
+		mlist->id_list[i] = pList[i];
+		i++;
+		GF_ASSERT( i < MMDL_LIST_MAX );
+	}
+
+	OS_Printf( "モデルリスト総数 %d\n", i );
+	
+	mlist->count = i;
+	mlist->id_list[i] = OBJCODEMAX;
+	GFL_HEAP_FreeMemory( pList );
 }

@@ -208,8 +208,14 @@ GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor( FLDMMDL *fmmdl, u32 code )
 	FLDMMDL_GetDrawVectorPos( fmmdl, &pos );
 	
 	actData.resID = BBDResUnitIndex_SearchResID( fmmdlsys, code );
-	GF_ASSERT( actData.resID != REGIDCODE_MAX );
-
+	
+	#ifdef DEBUG_FLDMMDL
+	if( actData.resID == REGIDCODE_MAX ){
+		OS_Printf( "code 0x%x\n", code );
+		GF_ASSERT( actData.resID != REGIDCODE_MAX );
+	}
+	#endif
+	
 	actData.sizX = FX16_ONE*8-1;
 	actData.sizY = FX16_ONE*8-1;
 	actData.trans = pos;
