@@ -358,6 +358,8 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 			int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
 			if( hit != GFL_UI_TP_HIT_NONE )
 			{
+				hit += 1;
+				BTL_Printf(" アクション選択ボタンタッチ-> (%d)\n", hit);
 				switch( hit ){
 				default:
 				case BTL_ACTION_FIGHT:
