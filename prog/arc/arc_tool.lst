@@ -127,3 +127,4 @@
 	ARCID_WFLBY_MAP		"wflby_map.narc"	#WiFiロビーマップデータ
 	ARCID_FIELD_WEATHER	"field_weather.narc"	#フィールド天気グラフィック
 	ARCID_SCRSEQ		"fieldmap/script_seq.narc"		#スクリプトシーケンス
+	ARCID_FLDMMDL_LIST	"fieldmap/move_model_list.narc" #動作モデルリスト
