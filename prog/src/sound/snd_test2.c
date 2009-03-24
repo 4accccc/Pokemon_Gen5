@@ -279,9 +279,7 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-			if( PMSND_PlaySystemSE(sw->seNum) == FALSE ){
-				OS_Printf("system SE play error...\n");
-			}
+			PMSND_PlaySystemSE(sw->seNum);
 			break;
 		}
 
@@ -295,11 +293,11 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 		return FALSE;
 //---------------------
 	case 100:
-		PMSND_PlayVoiceChorus( sw->voiceNum, 20 );
+		PMSND_PlayVoiceChorus( sw->voiceNum, 16, 110 );
 		sw->seq++;
 		break;
 	case 101:
-		if( PMSND_WaitVoiceChorus() == TRUE ){
+		if( PMSND_CheckPlayVoiceChorus() == FALSE ){
 			sw->seq = 1;
 		}
 		break;

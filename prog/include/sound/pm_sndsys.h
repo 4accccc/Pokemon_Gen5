@@ -41,23 +41,26 @@ extern void	PMSND_Init( void );
 extern void	PMSND_Main( void );
 extern void	PMSND_Exit( void );
 
+//	リバーブ設定
+extern void PMSND_EnableCaptureReverb( u32 samplingRate, int volume, int stopFrames );
+extern void PMSND_DisableCaptureReverb( void );
+
 //============================================================================================
 /**
  *
- * @brief	サウンド関数（各appから呼び出される）
+ * @brief	ＢＧＭサウンド関数（各appから呼び出される）
  *
  */
 //============================================================================================
 extern NNSSndHandle* PMSND_GetBGMhandlePointer( void );
 
-extern BOOL	PMSND_PlayBGM( u32 soundIdx );					//ＢＧＭを再生
-extern BOOL	PMSND_PlayBGM_EX( u32 soundIdx, u16 trackBit );	//上記拡張
-extern BOOL	PMSND_PlayNextBGM( u32 soundIdx );				//ＢＧＭフェードインアウト有りで再生
-extern BOOL	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit );//上記拡張
+extern void	PMSND_PlayBGM_EX( u32 soundIdx, u16 trackBit );				//ＢＧＭを再生
+#define PMSND_PlayBGM( soundIdx ) PMSND_PlayBGM_EX( soundIdx, 0xffff )	//上記簡易版
+extern void	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit );			//ＢＧＭ自動フェード再生
+#define PMSND_PlayNextBGM( soundIdx ) PMSND_PlayNextBGM_EX( soundIdx, 0xffff );	//上記簡易版
+extern BOOL	PMSND_CheckPlayBGM( void );						//ＢＧＭ終了検出(TRUE実行中)
 extern void	PMSND_ChangeBGMtrack( u16 trackBit );			//ＢＧＭの再生トラック変更
-extern BOOL	PMSND_CheckPlayBGM( void );						//ＢＧＭ終了検出
-extern void	PMSND_SetStatusBGM
-				( int tempoRatio, int pitch, int pan );//ＢＧＭステータス変更
+extern void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan );//ＢＧＭステータス変更
 
 extern void	PMSND_StopBGM( void );				//現在のＢＧＭを停止
 extern void	PMSND_PauseBGM( BOOL pauseFlag );	//現在のＢＧＭを一時停止(TRUE停止,FALSE再開)
@@ -68,40 +71,38 @@ extern BOOL	PMSND_CheckFadeOnBGM( void );		//フェード実行チェック(TRUE実行中)
 extern void	PMSND_PushBGM( void );				//現在のＢＧＭを退避
 extern void	PMSND_PopBGM( void );				//現在のＢＧＭを復元
 
-extern BOOL	PMSND_PlaySystemSE( u32 soundNum );	//システムＳＥを再生
-extern BOOL	PMSND_PlaySE( u32 soundNum );		//ＳＥを再生
-extern BOOL	PMSND_PlayVoice( u32 pokeNum );		//鳴き声を再生
-extern BOOL	PMSND_CheckPlaySEVoice( void );		//ＳＥ終了検出
-extern void	PMSND_SetStatusSEVoice
-				( int tempoRatio, int pitch, int pan );//ＳＥ＆鳴き声ステータス変更
-extern BOOL	PMSND_SetEchoChorus( u32 wait, int pitch );
+extern void PMSND_SetSystemFadeFrames( int frames );	//システムフェード（自動）フレーム設定
 
-// 鳴き声をエフェクト付きで再生（使用箇所は技、イベントを想定）
+//============================================================================================
+/**
+ *
+ * @brief	演出サウンド関数（各appから呼び出される）
+ *
+ */
+//============================================================================================
+extern void	PMSND_PlaySystemSE( u32 soundNum );	//システムＳＥを再生
+extern void	PMSND_PlaySE( u32 soundNum );		//ＳＥを再生
+extern BOOL	PMSND_CheckPlaySE( void );			//ＳＥ終了検出(TRUE実行中)
+extern void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan );//ＳＥステータス変更
+
+//============================================================================================
+/**
+ *
+ * @brief	鳴き声サウンド関数（各appから呼び出される）
+ *
+ */
+//============================================================================================
+extern void	PMSND_PlayVoice( u32 pokeNum );		//鳴き声を再生
+extern BOOL	PMSND_CheckPlayVoice( void );		//鳴き声終了検出(TRUE実行中)
+extern void	PMSND_SetStatusVoice( int tempoRatio, int pitch, int pan );//鳴き声ステータス変更
+
+// 鳴き声をコーラス効果付きで再生（使用箇所は技、イベントを想定）
 // ※データをサウンドヒープにロードし共有することでコーラス効果を実現
 // 　サウンドヒープの状態復元が必要なので
 // 　開始→終了待ちを実行し、間にＢＧＭ操作を入れないようにすること
-extern BOOL	PMSND_PlayVoiceChorus( u32 pokeNum, int pitch );
-extern BOOL	PMSND_WaitVoiceChorus( void );
+extern void	PMSND_PlayVoiceChorus( u32 pokeNum, int chorusPitch, int chorusVolume );
+extern BOOL	PMSND_CheckPlayVoiceChorus( void );		//(TRUE実行中)
 
-//============================================================================================
-/**
- *
- * @brief	システムフェードフレーム設定（各appから呼び出される）
- *
- */
-//============================================================================================
-extern void PMSND_SetSystemFadeFrames( int frames );
-
-//============================================================================================
-/**
- *
- * @brief	キャプチャー関数
- *
- */
-//============================================================================================
-//	リバーブ設定
-extern void PMSND_EnableCaptureReverb( u32 samplingRate, int volume, int stopFrames );
-extern void PMSND_DisableCaptureReverb( void );
 
 
 

@@ -11,7 +11,7 @@
 #include "sound/sound_manager.h"
 
 static NNSSndHeapHandle*	pSndHeapHandle = NULL;
-#define STATUS_PRINT
+//#define STATUS_PRINT
 //============================================================================================
 /**
  *
