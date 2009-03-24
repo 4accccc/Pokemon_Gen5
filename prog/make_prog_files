@@ -245,6 +245,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/fieldmap_proc.c \
 				field/fldmmdl_blact.c \
 				field/event_fieldtalk.c \
 				field/fldmmdl_draw_0.c \
+				field/field_fog.c \
 				field/weather.c \
 				field/weather_task.c
 
