@@ -70,7 +70,7 @@ typedef struct {
 //-------------------------------------
 ///	システムワーク
 //=====================================
-typedef struct _FIELD_FOG_WORK {
+struct _FIELD_FOG_WORK {
 	u8		flag;			// on/off (TRUE/FALSE)
 	u8		blendmode;		// フォグモード
 	u8		slope;			// かかり具合
@@ -82,7 +82,10 @@ typedef struct _FIELD_FOG_WORK {
 
 	// フォグフェードシステム
 	FADE_WORK fade;
-}FILED_FOG_WORK;
+
+
+	BOOL	change;		// データが変更された
+};
 
 //-----------------------------------------------------------------------------
 /**
@@ -118,9 +121,6 @@ FIELD_FOG_WORK* FIELD_FOG_Create( u32 heapID )
 	FIELD_FOG_WORK* p_wk;
 
 	p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_FOG_WORK) );
-
-	// パラメータ全初期化
-	
 
 	return p_wk;
 }
@@ -161,8 +161,21 @@ void FIELD_FOG_Main( FIELD_FOG_WORK* p_wk )
 		p_wk->offset	= FADE_WORK_GetOffset( &p_wk->fade );
 		p_wk->rgb		= FADE_WORK_GetColorRgb( &p_wk->fade );
 		p_wk->alpha		= FADE_WORK_GetColorA( &p_wk->fade );
+		p_wk->change	= TRUE;	// データ設定
 	}
+
+	// データが変更されたので、SDKに反映
+	if( p_wk->change ){
+
+		G3X_SetFog( p_wk->flag, p_wk->blendmode,
+				p_wk->slope, p_wk->offset );
 	
+		G3X_SetFogColor( p_wk->rgb, p_wk->alpha );
+	
+		G3X_SetFogTable( (u32*)p_wk->fog_tbl );	
+
+		p_wk->change = FALSE;
+	}
 }
 
 
@@ -177,7 +190,8 @@ void FIELD_FOG_Main( FIELD_FOG_WORK* p_wk )
 void FIELD_FOG_SetFlag( FIELD_FOG_WORK* p_wk, BOOL flag )
 {
 	GF_ASSERT( p_wk );
-	p_wk->flag = flag;
+	p_wk->flag		= flag;
+	p_wk->change	= TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -193,6 +207,7 @@ void FIELD_FOG_SetBlendMode( FIELD_FOG_WORK* p_wk, FIELD_FOG_BLEND blendmode )
 	GF_ASSERT( p_wk );
 	GF_ASSERT( blendmode < FIELD_FOG_BLEND_MAX );
 	p_wk->blendmode = blendmode;
+	p_wk->change	= TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -207,7 +222,8 @@ void FIELD_FOG_SetSlope( FIELD_FOG_WORK* p_wk, FIELD_FOG_SLOPE slope )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( slope < FIELD_FOG_SLOPE_MAX );
-	p_wk->slope = slope;
+	p_wk->slope		= slope;
+	p_wk->change	= TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -222,7 +238,8 @@ void FIELD_FOG_SetOffset( FIELD_FOG_WORK* p_wk, u16 depth_offset )
 {
 	GF_ASSERT( p_wk );
 	FOG_FADE_ASSERT(p_wk);
-	p_wk->offset = depth_offset;
+	p_wk->offset	= depth_offset;
+	p_wk->change	= TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -237,7 +254,8 @@ void FIELD_FOG_SetColorRgb( FIELD_FOG_WORK* p_wk, GXRgb rgb )
 {
 	GF_ASSERT( p_wk );
 	FOG_FADE_ASSERT(p_wk);
-	p_wk->rgb = rgb;
+	p_wk->rgb		= rgb;
+	p_wk->change	= TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -252,7 +270,8 @@ void FIELD_FOG_SetColorA( FIELD_FOG_WORK* p_wk, u8 a )
 {
 	GF_ASSERT( p_wk );
 	FOG_FADE_ASSERT(p_wk);
-	p_wk->alpha = a;
+	p_wk->alpha		= a;
+	p_wk->change	= TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -269,7 +288,8 @@ void FIELD_FOG_SetTbl( FIELD_FOG_WORK* p_wk, u8 index, u8 data )
 	GF_ASSERT( p_wk );
 	GF_ASSERT( index < FIELD_FOG_TBL_MAX );
 	GF_ASSERT( data < 127 );
-	p_wk->fog_tbl[index] = data;
+	p_wk->fog_tbl[index]	= data;
+	p_wk->change			= TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -285,6 +305,7 @@ void FIELD_FOG_SetTblAll( FIELD_FOG_WORK* p_wk, const u8* cp_tbl )
 	GF_ASSERT( p_wk );
 	GF_ASSERT( cp_tbl );
 	GFL_STD_MemCopy32( cp_tbl, p_wk->fog_tbl, sizeof(u8)*FIELD_FOG_TBL_MAX );
+	p_wk->change	= TRUE;
 }
 
 
