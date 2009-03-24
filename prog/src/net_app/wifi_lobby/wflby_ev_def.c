@@ -25,6 +25,8 @@
 #include "wflby_3dmatrix.h"
 #include "wflby_snd.h"
 
+#include "net_app/net_bugfix.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					コーディング規約
@@ -125,7 +127,7 @@ enum{
 	WFLBY_EV_DEF_PLAYERIN_NORMAL_SEQ_END,
 };
 #define WFLBY_EV_DEF_PLAYERIN_NORMAL_MOVEWAIT			( 16 )
-static const BMPLIST_HEADER sc_WFLBY_EV_DEF_WAZATYPE_HEADER = {
+static const BMPMENULIST_HEADER sc_WFLBY_EV_DEF_WAZATYPE_HEADER = {
 	NULL,
 	NULL,
 	NULL,
@@ -142,8 +144,8 @@ static const BMPLIST_HEADER sc_WFLBY_EV_DEF_WAZATYPE_HEADER = {
 	FBMP_COL_BLK_SDW,				//表示文字影色
 	0,								//文字間隔Ｘ
 	16,								//文字間隔Ｙ
-	BMPLIST_LRKEY_SKIP,				//ページスキップタイプ
-	FONT_SYSTEM,					//文字指定(本来は u8 だけど、そんなに作らないと思うので)
+	BMPMENULIST_LRKEY_SKIP,				//ページスキップタイプ
+	NET_FONT_SYSTEM,					//文字指定(本来は u8 だけど、そんなに作らないと思うので)
 	0,								//ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
 
 	NULL
@@ -454,7 +456,7 @@ typedef struct {
 	s32	wait;
 
 	// ビットマップリスト専用
-	BMPLIST_HEADER		bmplist;
+	BMPMENULIST_HEADER		bmplist;
 
 	// 選択した技タイプ
 	u16					type1;	
@@ -1662,11 +1664,11 @@ static BOOL WFLBY_EV_DEF_PlayerInNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMW
 			result = WFLBY_ROOM_LISTWIN_Main( p_rmwk );
 
 			switch( result ){
-			case BMPLIST_NULL:	
+			case BMPMENULIST_NULL:	
 				break;
 
 			// 選ばない
-			case BMPLIST_CANCEL:
+			case BMPMENULIST_CANCEL:
 				Snd_SePlay( SEQ_SE_DP_SELECT );	// CANCEL音
 			case WFLBY_POKEWAZA_TYPE_NONE:
 				p_evwk->type1 = WFLBY_POKEWAZA_TYPE_NONE;
@@ -1773,11 +1775,11 @@ static BOOL WFLBY_EV_DEF_PlayerInNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMW
 			result = WFLBY_ROOM_LISTWIN_Main( p_rmwk );
 
 			switch( result ){
-			case BMPLIST_NULL:	
+			case BMPMENULIST_NULL:	
 				break;
 
 			// 選ばない
-			case BMPLIST_CANCEL:
+			case BMPMENULIST_CANCEL:
 				Snd_SePlay( SEQ_SE_DP_SELECT );	// CANCEL音
 			case WFLBY_POKEWAZA_TYPE_NONE:
 				p_evwk->type2 = WFLBY_POKEWAZA_TYPE_NONE;

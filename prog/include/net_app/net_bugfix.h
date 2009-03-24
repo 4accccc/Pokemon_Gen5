@@ -36,6 +36,40 @@ typedef u16		GF_PRINTCOLOR;
 #define GF_PRINTCOLOR_GET_GROUND(c)		(((c)>>GF_PRINTCOLOR_GROUND_SHIFT)&GF_PRINTCOLOR_MASK)
 
 
+// 通常のフォントカラー
+#define	FBMP_COL_NULL		(0)
+#define	FBMP_COL_BLACK		(1)
+#define	FBMP_COL_BLK_SDW	(2)
+#define	FBMP_COL_RED		(3)
+#define	FBMP_COL_RED_SDW	(4)
+#define	FBMP_COL_GREEN		(5)
+#define	FBMP_COL_GRN_SDW	(6)
+#define	FBMP_COL_BLUE		(7)
+#define	FBMP_COL_BLU_SDW	(8)
+#define	FBMP_COL_PINK		(9)
+#define	FBMP_COL_PNK_SDW	(10)
+#define	FBMP_COL_WHITE		(15)
+
+
+// FONT_SYSTEM, FONT_BUTTON が無くなったので、とりあえずMAKEを通す為に仮置換用
+#define NET_FONT_SYSTEM			(0)
+#define NET_FONT_BUTTON			(0)
+
+
+//==============================================================================
+//	構造体定義
+//==============================================================================
+///BMPWIN_DATがWBでは存在しない為、置換用の構造体
+typedef struct{
+	u8	frm_num;	///<ウインドウ使用フレーム
+	u8	pos_x;		///<ウインドウ領域の左上のX座標（キャラ単位で指定）
+	u8	pos_y;		///<ウインドウ領域の左上のY座標（キャラ単位で指定）
+	u8	siz_x;		///<ウインドウ領域のXサイズ（キャラ単位で指定）
+	u8	siz_y;		///<ウインドウ領域のYサイズ（キャラ単位で指定）
+	u8	palnum;		///<ウインドウ領域のパレットナンバー
+	u16	chrnum;		///<ウインドウキャラ領域の開始キャラクタナンバー
+}NET_BMPWIN_DAT;
+
 
 //==============================================================================
 //	inline関数

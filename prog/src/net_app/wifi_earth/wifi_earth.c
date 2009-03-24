@@ -308,7 +308,7 @@ typedef struct EARTH_DEMO_WORK_tag
 	GF_BGL_BMPWIN		listwin;
 	GF_BGL_BMPWIN		iconwin;
 	GF_BGL_BMPWIN		infowin;
-	BMPLIST_WORK*		bmplist;
+	BMPMENULIST_WORK*		bmplist;
 	BMP_MENULIST_DATA*	bmplistdata;
 	BMPMENU_WORK*		yesnowin;
 
@@ -412,11 +412,11 @@ static void Earth_TouchPanelParamGet
 
 static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode );
 static void Earth_BmpListAdd( EARTH_DEMO_WORK * wk,
-							GF_BGL_BMPWIN* win,const BMPWIN_DAT* windata,
-							const BMPLIST_HEADER* listheader,const EARTH_BMPLIST* list);
+							GF_BGL_BMPWIN* win,const NET_BMPWIN_DAT* windata,
+							const BMPMENULIST_HEADER* listheader,const EARTH_BMPLIST* list);
 static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk,
-							GF_BGL_BMPWIN* win, const BMPWIN_DAT* windata,
-							const BMPLIST_HEADER* listheader,u32 listarcID);
+							GF_BGL_BMPWIN* win, const NET_BMPWIN_DAT* windata,
+							const BMPMENULIST_HEADER* listheader,u32 listarcID);
 static void Earth_BmpListDel( EARTH_DEMO_WORK* wk );
 
 static void Earth_MyPlaceInfoWinSet( EARTH_DEMO_WORK* wk );
@@ -497,7 +497,7 @@ static const GF_BGL_BGCNT_HEADER Earth_Demo_Back_header = {
 	FALSE					//モザイク設定
 };
 
-static const BMPWIN_DAT EarthMsgWinData =
+static const NET_BMPWIN_DAT EarthMsgWinData =
 {
 	EARTH_TEXT_PLANE,	//ウインドウ使用フレーム
 	EARTH_MSG_WIN_PX,EARTH_MSG_WIN_PY,//ウインドウ領域の左上XY座標（キャラ単位指定）
@@ -515,7 +515,7 @@ static const BMPWIN_YESNO_DAT EarthYesNoWinData =
 	EARTH_YESNO_WIN_CGX,	//ウインドウキャラ領域の開始キャラクタナンバー
 };
 
-static const BMPWIN_DAT EarthMenuWinData =
+static const NET_BMPWIN_DAT EarthMenuWinData =
 {
 	EARTH_TEXT_PLANE,	//ウインドウ使用フレーム
 	EARTH_MENU_WIN_PX,EARTH_MENU_WIN_PY,//ウインドウ領域の左上XY座標（キャラ単位指定）
@@ -524,7 +524,7 @@ static const BMPWIN_DAT EarthMenuWinData =
 	EARTH_MENU_WIN_CGX,	//ウインドウキャラ領域の開始キャラクタナンバー
 };
 
-static const BMPWIN_DAT EarthPlaceListWinData =
+static const NET_BMPWIN_DAT EarthPlaceListWinData =
 {
 	EARTH_TEXT_PLANE,	//ウインドウ使用フレーム
 	EARTH_PLACE_WIN_PX,EARTH_PLACE_WIN_PY,//ウインドウ領域の左上XY座標（キャラ単位指定）
@@ -533,7 +533,7 @@ static const BMPWIN_DAT EarthPlaceListWinData =
 	EARTH_PLACE_WIN_CGX,	//ウインドウキャラ領域の開始キャラクタナンバー
 };
 
-static const BMPWIN_DAT EarthInfoWinData =
+static const NET_BMPWIN_DAT EarthInfoWinData =
 {
 	EARTH_TEXT_PLANE,	//ウインドウ使用フレーム
 	EARTH_INFO_WIN_PX,EARTH_INFO_WIN_PY,//ウインドウ領域の左上XY座標（キャラ単位指定）
@@ -542,7 +542,7 @@ static const BMPWIN_DAT EarthInfoWinData =
 	EARTH_INFO_WIN_CGX,	//ウインドウキャラ領域の開始キャラクタナンバー
 };
 
-static const BMPWIN_DAT EarthIconWinData =
+static const NET_BMPWIN_DAT EarthIconWinData =
 {
 	EARTH_ICON_PLANE,	//ウインドウ使用フレーム
 	EARTH_ICON_WIN_PX,EARTH_ICON_WIN_PY,//ウインドウ領域の左上XY座標（キャラ単位指定）
@@ -558,24 +558,24 @@ static const EARTH_BMPLIST MenuList[] =
 	{mes_earth_02_07,MENU_END},
 };
 
-static const BMPLIST_HEADER MenuListHeader = {
+static const BMPMENULIST_HEADER MenuListHeader = {
 	/* 表示文字データポインタ(プログラム設定) */NULL,/* カーソル移動ごとのコールバック関数 */NULL,
 	/* 一列表示ごとのコールバック関数 */NULL,/* 対応ビットマップ(プログラム設定) */NULL,
 	/* リスト項目数 */NELEMS(MenuList),/* 表示最大項目数 */NELEMS(MenuList),		
 	/* ラベル表示Ｘ座標 */0,/* 項目表示Ｘ座標 */12,/* カーソル表示Ｘ座標 */0,/* 表示Ｙ座標 */0,
 	/* 文字色 */FBMP_COL_BLACK,/* 背景色 */FBMP_COL_WHITE,/* 文字影色 */FBMP_COL_BLK_SDW,		
-	/* 文字間隔Ｘ */0,/* 文字間隔Ｙ */16,/* ページスキップタイプ */BMPLIST_NO_SKIP,		
-	/* 文字指定 */FONT_SYSTEM,/*ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)*/0,						
+	/* 文字間隔Ｘ */0,/* 文字間隔Ｙ */16,/* ページスキップタイプ */BMPMENULIST_NO_SKIP,		
+	/* 文字指定 */NET_FONT_SYSTEM,/*ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)*/0,						
 };
 
-static const BMPLIST_HEADER PlaceListHeader = {
+static const BMPMENULIST_HEADER PlaceListHeader = {
 	/* 表示文字データポインタ(プログラム設定) */NULL,/* カーソル移動ごとのコールバック関数 */NULL,
 	/* 一列表示ごとのコールバック関数 */NULL,/* 対応ビットマップ(プログラム設定) */NULL,
 	/* リスト項目数(プログラム設定) */0,/* 表示最大項目数 */7,		
 	/* ラベル表示Ｘ座標 */0,/* 項目表示Ｘ座標 */12,/* カーソル表示Ｘ座標 */0,/* 表示Ｙ座標 */0,
 	/* 文字色 */FBMP_COL_BLACK,/* 背景色 */FBMP_COL_WHITE,/* 文字影色 */FBMP_COL_BLK_SDW,		
-	/* 文字間隔Ｘ */0,/* 文字間隔Ｙ */16,/* ページスキップタイプ */BMPLIST_LRKEY_SKIP,		
-	/* 文字指定 */FONT_SYSTEM,/*ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)*/0,						
+	/* 文字間隔Ｘ */0,/* 文字間隔Ｙ */16,/* ページスキップタイプ */BMPMENULIST_LRKEY_SKIP,		
+	/* 文字指定 */NET_FONT_SYSTEM,/*ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)*/0,						
 };
 
 //============================================================================================
@@ -744,9 +744,9 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 
 	case EARTHDEMO_SEQ_MAINMENU_SELECT:	//メインメニュー選択モード
 		{
-			int list_result = BmpListMain(wk->bmplist);
+			int list_result = BmpMenuList_Main(wk->bmplist);
 
-			if(list_result == BMPLIST_NULL){
+			if(list_result == BMPMENULIST_NULL){
 				break;
 			}
 			Earth_BmpListDel(wk);//選択リスト削除処理
@@ -760,7 +760,7 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 			case MENU_REGISTRATION:	//「とうろく」
 				*seq = EARTHDEMO_SEQ_REGISTRATIONMENU;	//登録メニュー設定へ
 				break;
-			case BMPLIST_CANCEL:
+			case BMPMENULIST_CANCEL:
 			case MENU_END:	//「やめる」
 				*seq = EARTHDEMO_SEQ_END;	//終了処理へ
 				break;
@@ -814,11 +814,11 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 
 	case EARTHDEMO_SEQ_REGISTRATIONLIST_NATION_SELECT:	//国別登録リスト選択モード
 		{
-			int list_result = BmpListMain(wk->bmplist);
+			int list_result = BmpMenuList_Main(wk->bmplist);
 #ifdef WIFI_ERATH_DEBUG
 			EarthDebugNationMarkSet(wk);
 #endif
-			if(list_result == BMPLIST_NULL){
+			if(list_result == BMPMENULIST_NULL){
 				break;
 			}
 			Earth_BmpListDel(wk);//選択リスト削除処理
@@ -839,7 +839,7 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 					}
 				}
 				break;
-			case BMPLIST_CANCEL:	//「いいえ」キャンセル
+			case BMPMENULIST_CANCEL:	//「いいえ」キャンセル
 				//*seq = EARTHDEMO_SEQ_REGISTRATIONMENU;	//登録メニューへ
 				*seq = EARTHDEMO_SEQ_MAINMENU;
 				break;
@@ -860,11 +860,11 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 
 	case EARTHDEMO_SEQ_REGISTRATIONLIST_AREA_SELECT:	//地域別登録リスト選択モード
 		{
-			int list_result = BmpListMain(wk->bmplist);
+			int list_result = BmpMenuList_Main(wk->bmplist);
 #ifdef WIFI_ERATH_DEBUG
 			EarthDebugAreaMarkSet(wk);
 #endif
-			if(list_result == BMPLIST_NULL){
+			if(list_result == BMPMENULIST_NULL){
 				break;
 			}
 			Earth_BmpListDel(wk);//選択リスト削除処理
@@ -875,7 +875,7 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 				wk->my_area_tmp = list_result;			//地域登録
 				*seq = EARTHDEMO_SEQ_FINAL_REGISTRATION;	//国地域登録最終確認へ
 				break;
-			case BMPLIST_CANCEL://キャンセル
+			case BMPMENULIST_CANCEL://キャンセル
 				if(wk->Japan_ROM_mode == TRUE){
 					//*seq = EARTHDEMO_SEQ_REGISTRATIONMENU;	//登録メニューへ(日本版の場合)
 					*seq = EARTHDEMO_SEQ_MAINMENU;
@@ -943,8 +943,8 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 		EarthLightInit(wk);					//ライト初期化
 
 		//メッセージ画面クリア
-		GF_BGL_BmpWinFill(&wk->msgwin,FBMP_COL_WHITE,0,0,
-							EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
+		GFL_BMP_Fill(GFL_BMPWIN_GetBmp(&wk->msgwin),0,0,
+							EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE,FBMP_COL_WHITE);
 		//「やめる」アイコンＯＮ
 		BmpMenuWinWrite(&wk->iconwin,WINDOW_TRANS_ON,EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
 
@@ -974,8 +974,8 @@ PROC_RESULT Earth_Demo_Main(PROC * proc, int * seq)
 				BmpWinFrame_Clear(wk->iconwin,WINDOW_TRANS_ON);
 				Snd_SePlay( WIFIEARTH_SND_YAMERU );
 
-				GF_BGL_BmpWinFill(&wk->msgwin,FBMP_COL_WHITE,0,0,
-							EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
+				GFL_BMP_Fill(GFL_BMPWIN_GetBmp(&wk->msgwin),0,0,
+							EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE,FBMP_COL_WHITE);
 
 				//住んでいる場所入力済？
 				if(wk->my_nation == 0){
@@ -1381,7 +1381,7 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 	GF_BGL_BGControlSet(wk->bgl,EARTH_BACK_S_PLANE,&Earth_Demo_Back_header,GF_BGL_MODE_TEXT);
 	ArcUtil_HDL_BgCharSet(	p_handle,NARC_wifi_earth_earth_bg_NCGR,wk->bgl,
 						EARTH_BACK_S_PLANE,0,0,0,wk->heapID);
-	ArcUtil_HDL_PalSet(		p_handle,NARC_wifi_earth_earth_bg_NCLR,PALTYPE_SUB_BG,
+	GFL_ARCHDL_UTIL_TransVramPalette(		p_handle,NARC_wifi_earth_earth_bg_NCLR,PALTYPE_SUB_BG,
 						EARTH_BACK_PAL*PALSIZE,PALSIZE*4,wk->heapID);
 	ArcUtil_HDL_ScrnSet(	p_handle,NARC_wifi_earth_earth_bg_NSCR,wk->bgl,
 						EARTH_BACK_S_PLANE,0,0,0,wk->heapID);
@@ -1402,8 +1402,8 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 
 	//メッセージウインドウビットマップ作成（ウインドウ内側）
 	GF_BGL_BmpWinAddEx(wk->bgl,&wk->msgwin,&EarthMsgWinData );
-	GF_BGL_BmpWinFill(&wk->msgwin,FBMP_COL_WHITE,0,0,//bmp,col,startX,startY,sizeX,sizeY
-			EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
+	GFL_BMP_Fill(GFL_BMPWIN_GetBmp(&wk->msgwin),0,0,//bmp,col,startX,startY,sizeX,sizeY
+			EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE,FBMP_COL_WHITE);
 	//メッセージウインドウ初期表示
 	TalkWinFrame_Write(wk->msgwin,WINDOW_TRANS_ON,EARTH_TALKWINCHR_NUM,EARTH_TALKWIN_PAL);
 
@@ -1418,7 +1418,7 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 	GF_BGL_BGControlSet(wk->bgl,EARTH_BACK_M_PLANE,&Earth_Demo_Back_header,GF_BGL_MODE_TEXT);
 	ArcUtil_HDL_BgCharSet(	p_handle,NARC_wifi_earth_earth_bg_NCGR,wk->bgl,
 						EARTH_BACK_M_PLANE,0,0,0,wk->heapID);
-	ArcUtil_HDL_PalSet(		p_handle,NARC_wifi_earth_earth_bg_NCLR,PALTYPE_MAIN_BG,
+	GFL_ARCHDL_UTIL_TransVramPalette(		p_handle,NARC_wifi_earth_earth_bg_NCLR,PALTYPE_MAIN_BG,
 						EARTH_BACK_PAL*PALSIZE,PALSIZE*4,wk->heapID);
 	ArcUtil_HDL_ScrnSet(	p_handle,NARC_wifi_earth_earth_bg_NSCR,wk->bgl,
 						EARTH_BACK_M_PLANE,0,0,0,wk->heapID);
@@ -1436,7 +1436,7 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 		STRBUF* back_str = STRBUF_Create(16, wk->heapID);
 
 		//ボタンフォントのロード
-		FontProc_LoadFont( FONT_BUTTON, wk->heapID );
+		FontProc_LoadFont( NET_FONT_BUTTON, wk->heapID );
 		//ボタンフォントパレットのロード
 		{//パレットデータがないので直接作成
 			u16 col1 = 0x4e56;
@@ -1451,16 +1451,16 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
 		}
 		//メッセージウインドウビットマップ作成（ウインドウ内側）
 		GF_BGL_BmpWinAddEx(wk->bgl,&wk->iconwin,&EarthIconWinData );
-		GF_BGL_BmpWinFill(&wk->iconwin,FBMP_COL_WHITE,0,0,
-				EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
+		GFL_BMP_Fill(GFL_BMPWIN_GetBmp(&wk->iconwin),0,0,
+				EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE,FBMP_COL_WHITE);
 		//文字列の取得（やめる）
 		GFL_MSG_GetString(wk->msg_man,mes_earth_02_07,back_str);
 		//文字列の表示
-		GF_STR_PrintSimple(&wk->iconwin,FONT_BUTTON,back_str,4,0,MSG_NO_PUT,NULL);	// やめる位置をセンターに変更 tomoya 08.04.03
+		GF_STR_PrintSimple(&wk->iconwin,NET_FONT_BUTTON,back_str,4,0,MSG_NO_PUT,NULL);	// やめる位置をセンターに変更 tomoya 08.04.03
 		STRBUF_Delete(back_str);
 
 		//ボタンフォントの破棄
-		FontProc_UnloadFont( FONT_BUTTON );
+		FontProc_UnloadFont( NET_FONT_BUTTON );
 	}
 }
 
@@ -1484,8 +1484,8 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 	switch(wk->msgseq){
 	case MSGSET:
 		//領域クリア
-		GF_BGL_BmpWinFill(&wk->msgwin,FBMP_COL_WHITE,0,0,//bmp,col,startX,startY,sizeX,sizeY
-				EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
+		GFL_BMP_Fill(GFL_BMPWIN_GetBmp(&wk->msgwin),0,0,//bmp,col,startX,startY,sizeX,sizeY
+				EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE,FBMP_COL_WHITE);
 
 		//文字列バッファの作成
 		wk->msgstr = STRBUF_Create(EARTH_STRBUF_SIZE, wk->heapID);	
@@ -1521,7 +1521,7 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 //----------------------------------
 //リスト表示用コールバック
 //----------------------------------
-static void Earth_BmpListMoveSeCall(BMPLIST_WORK * wk,u32 param,u8 mode)
+static void Earth_BmpListMoveSeCall(BMPMENULIST_WORK * wk,u32 param,u8 mode)
 {
 	if( mode == 0 ){//初期化時は鳴らさない
 		Snd_SePlay( WIFIEARTH_SND_SELECT );
@@ -1532,19 +1532,19 @@ static void Earth_BmpListMoveSeCall(BMPLIST_WORK * wk,u32 param,u8 mode)
 //リスト表示:BmpList設定参照
 //----------------------------------
 static void Earth_BmpListAdd( EARTH_DEMO_WORK * wk,
-							GF_BGL_BMPWIN* win,const BMPWIN_DAT* windata,
-							const BMPLIST_HEADER* listheader,const EARTH_BMPLIST* list)
+							GF_BGL_BMPWIN* win,const NET_BMPWIN_DAT* windata,
+							const BMPMENULIST_HEADER* listheader,const EARTH_BMPLIST* list)
 {
-	BMPLIST_HEADER	listheader_tmp;
+	BMPMENULIST_HEADER	listheader_tmp;
 	int	i;
 
 	//メニュービットマップ追加
 	GF_BGL_BmpWinAddEx(wk->bgl,win,windata);
 	//メニューリスト用文字列バッファ作成
-	wk->bmplistdata = BMP_MENULIST_Create(listheader->count,wk->heapID);
+	wk->bmplistdata = BmpMenuWork_ListCreate(listheader->count,wk->heapID);
 	//メニューリスト用文字列バッファ取得
 	for( i=0; i<listheader->count; i++ ){
-		BMP_MENULIST_AddArchiveString(wk->bmplistdata,wk->msg_man,list[i].msgID,list[i].retID);
+		BmpMenuWork_ListAddArchiveString(wk->bmplistdata,wk->msg_man,list[i].msgID,list[i].retID);
 	}
 	//メニュービットマップリストヘッダ作成
 	listheader_tmp = *listheader;
@@ -1552,7 +1552,7 @@ static void Earth_BmpListAdd( EARTH_DEMO_WORK * wk,
 	listheader_tmp.win  = win;
 	listheader_tmp.call_back = Earth_BmpListMoveSeCall;
 	//メニュービットマップリスト作成
-	wk->bmplist = BmpListSet(&listheader_tmp,0,0,wk->heapID);
+	wk->bmplist = BmpMenuList_Set(&listheader_tmp,0,0,wk->heapID);
 
 	//ウインドウ（外枠）描画
 	BmpMenuWinWrite(listheader_tmp.win,WINDOW_TRANS_OFF,EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
@@ -1564,10 +1564,10 @@ static void Earth_BmpListAdd( EARTH_DEMO_WORK * wk,
 //リスト表示２:gmmファイル一括、リスト選択返り値はリストの順番と同じ(1orgin)
 //----------------------------------
 static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk,
-							GF_BGL_BMPWIN* win, const BMPWIN_DAT* windata,
-							const BMPLIST_HEADER* listheader,u32 listarcID)
+							GF_BGL_BMPWIN* win, const NET_BMPWIN_DAT* windata,
+							const BMPMENULIST_HEADER* listheader,u32 listarcID)
 {
-	BMPLIST_HEADER	listheader_tmp;
+	BMPMENULIST_HEADER	listheader_tmp;
 	MSGDATA_MANAGER*	msg_man;
 	u32	listcount;
 	int	i;
@@ -1580,11 +1580,11 @@ static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk,
 	listcount = MSGMAN_GetMessageCount(msg_man);
 
 	//メニューリスト用文字列バッファ作成
-	wk->bmplistdata = BMP_MENULIST_Create(listcount,wk->heapID);
+	wk->bmplistdata = BmpMenuWork_ListCreate(listcount,wk->heapID);
 
 	//メニューリスト用文字列バッファ取得
 	for( i=1; i<listcount; i++ ){	//1オリジンのため
-		BMP_MENULIST_AddArchiveString(wk->bmplistdata,msg_man,i,i);//BMP,man,msgID,param
+		BmpMenuWork_ListAddArchiveString(wk->bmplistdata,msg_man,i,i);//BMP,man,msgID,param
 	}
 	//メッセージデータ破棄
 	MSGMAN_Delete(msg_man);
@@ -1596,7 +1596,7 @@ static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk,
 	listheader_tmp.win  = win;
 	listheader_tmp.call_back = Earth_BmpListMoveSeCall;
 	//メニュービットマップリスト作成
-	wk->bmplist = BmpListSet(&listheader_tmp,0,0,wk->heapID);
+	wk->bmplist = BmpMenuList_Set(&listheader_tmp,0,0,wk->heapID);
 
 	//ウインドウ（外枠）描画
 	BmpMenuWinWrite(listheader_tmp.win,WINDOW_TRANS_OFF,EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
@@ -1612,8 +1612,8 @@ static void Earth_BmpListDel( EARTH_DEMO_WORK* wk )
 	//選択リスト削除処理
 	BmpWinFrame_Clear(wk->listwin,WINDOW_TRANS_ON);
 	GF_BGL_BmpWinDel(&wk->listwin);
-	BmpListExit(wk->bmplist,NULL,NULL);
-	BMP_MENULIST_Delete(wk->bmplistdata);
+	BmpMenuList_Exit(wk->bmplist,NULL,NULL);
+	BmpMenuWork_ListDelete(wk->bmplistdata);
 }
 
 //----------------------------------
@@ -1625,8 +1625,8 @@ static void Earth_MyPlaceInfoWinSet( EARTH_DEMO_WORK* wk )
 	STRBUF* msgtmp = STRBUF_Create(EARTH_STRBUF_SIZE, wk->heapID);	
 
 	GF_BGL_BmpWinAddEx(wk->bgl,&wk->infowin,&EarthInfoWinData );
-	GF_BGL_BmpWinFill(	&wk->infowin,FBMP_COL_WHITE,0,0,
-						EARTH_INFO_WIN_SX*DOTSIZE,EARTH_INFO_WIN_SY*DOTSIZE);
+	GFL_BMP_Fill(	GFL_BMPWIN_GetBmp(&wk->infowin),0,0,
+						EARTH_INFO_WIN_SX*DOTSIZE,EARTH_INFO_WIN_SY*DOTSIZE,FBMP_COL_WHITE);
 	BmpMenuWinWrite(&wk->infowin,WINDOW_TRANS_ON,EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
 
 	WORDSET_RegisterCountryName( wk->wordset, 0, wk->my_nation );
@@ -1637,7 +1637,7 @@ static void Earth_MyPlaceInfoWinSet( EARTH_DEMO_WORK* wk )
 	WORDSET_ExpandStr( wk->wordset, msgstr, msgtmp );
 
 	//文字列の表示
-	GF_STR_PrintSimple(	&wk->infowin, FONT_SYSTEM, msgstr, 0, 0, MSG_ALLPUT, NULL );
+	GF_STR_PrintSimple(	&wk->infowin, NET_FONT_SYSTEM, msgstr, 0, 0, MSG_ALLPUT, NULL );
 
 	STRBUF_Delete( msgtmp );
 	STRBUF_Delete( msgstr );
@@ -1651,15 +1651,15 @@ static void Earth_MyPlaceInfoWinSet2( EARTH_DEMO_WORK* wk, int nation, int area 
 	STRBUF* str2 = STRBUF_Create(EARTH_NAME_SIZE, wk->heapID );
 
 	GF_BGL_BmpWinAddEx(wk->bgl,&wk->infowin,&EarthInfoWinData );
-	GF_BGL_BmpWinFill(	&wk->infowin,FBMP_COL_WHITE,0,0,
-						EARTH_INFO_WIN_SX*DOTSIZE,EARTH_INFO_WIN_SY*DOTSIZE);
+	GFL_BMP_Fill(	GFL_BMPWIN_GetBmp(&wk->infowin),0,0,
+						EARTH_INFO_WIN_SX*DOTSIZE,EARTH_INFO_WIN_SY*DOTSIZE,FBMP_COL_WHITE);
 	BmpMenuWinWrite(&wk->infowin,WINDOW_TRANS_ON,EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
 
 	WIFI_NationAreaNameGet(	nation, area, str1, str2, wk->heapID );
 	if( area != 0 ){
-		GF_STR_PrintSimple(&wk->infowin,FONT_SYSTEM,str2,0,16,MSG_NO_PUT,NULL);
+		GF_STR_PrintSimple(&wk->infowin,NET_FONT_SYSTEM,str2,0,16,MSG_NO_PUT,NULL);
 	}
-	GF_STR_PrintSimple(&wk->infowin,FONT_SYSTEM,str1,0,0,MSG_ALLPUT,NULL);
+	GF_STR_PrintSimple(&wk->infowin,NET_FONT_SYSTEM,str1,0,0,MSG_ALLPUT,NULL);
 	STRBUF_Delete(str2);
 	STRBUF_Delete(str1);
 
@@ -1681,8 +1681,8 @@ static void Earth_PosInfoPut( EARTH_DEMO_WORK* wk )
 		{
 			STRBUF* msgstr = STRBUF_Create(EARTH_STRBUF_SIZE, wk->heapID);	
 
-			GF_BGL_BmpWinFill(	&wk->msgwin,FBMP_COL_WHITE,0,0,
-								EARTH_INFO_WIN_SX*DOTSIZE,EARTH_INFO_WIN_SY*DOTSIZE);
+			GFL_BMP_Fill(	GFL_BMPWIN_GetBmp(&wk->msgwin),0,0,
+							EARTH_INFO_WIN_SX*DOTSIZE,EARTH_INFO_WIN_SY*DOTSIZE,FBMP_COL_WHITE);
 			GFL_MSG_GetString(wk->msg_man,mes_earth_03_02,msgstr);
 			GF_STR_PrintSimple(	&wk->msgwin, FONT_TALK, msgstr, 0, 0, MSG_ALLPUT, NULL );
 			STRBUF_Delete( msgstr );
@@ -1728,8 +1728,8 @@ static void Earth_PosInfoPut( EARTH_DEMO_WORK* wk )
 				STRBUF* str1 = STRBUF_Create(EARTH_NAME_SIZE, wk->heapID );
 				STRBUF* str2 = STRBUF_Create(EARTH_NAME_SIZE, wk->heapID );
 
-				GF_BGL_BmpWinFill(	&wk->msgwin,FBMP_COL_WHITE,0,0,
-									EARTH_INFO_WIN_SX*DOTSIZE,EARTH_INFO_WIN_SY*DOTSIZE);
+				GFL_BMP_Fill(	GFL_BMPWIN_GetBmp(&wk->msgwin),0,0,
+							EARTH_INFO_WIN_SX*DOTSIZE,EARTH_INFO_WIN_SY*DOTSIZE,FBMP_COL_WHITE);
 				WIFI_NationAreaNameGet(	wk->placelist.place[minindex].nationID,
 										wk->placelist.place[minindex].areaID,
 										str1,str2,wk->heapID);
@@ -2073,7 +2073,11 @@ static void Earth3D_Draw( EARTH_DEMO_WORK * wk )
 
 	case DRAW3D_BANISH:
 		GF_G3X_Reset();
+	#if WB_FIX
 		GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO,GX_BUFFERMODE_W);
+	#else
+		GFL_G3D_DRAW_End();
+	#endif
 		wk->Draw3Dsw = DRAW3D_DISABLE;
 		break;
 
@@ -2114,7 +2118,11 @@ static void Earth3D_Draw( EARTH_DEMO_WORK * wk )
 				}
 			}
 		}
+	#if WB_FIX
 		GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO,GX_BUFFERMODE_W);
+	#else
+		GFL_G3D_DRAW_End();
+	#endif
 		break;
 	}
 }
@@ -2273,8 +2281,8 @@ static void EarthDebugWinRotateInfoWrite( EARTH_DEMO_WORK * wk )
 						STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 	STRBUF_SetHexNumber( str2, (u16)wk->rotate.y, 4, 
 						STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-	GF_STR_PrintSimple(&wk->msgwin, FONT_SYSTEM, str1, 0, 0, MSG_NO_PUT, NULL );
-	GF_STR_PrintSimple(&wk->msgwin, FONT_SYSTEM, str2, 0, 16, MSG_ALLPUT, NULL );
+	GF_STR_PrintSimple(&wk->msgwin, NET_FONT_SYSTEM, str1, 0, 0, MSG_NO_PUT, NULL );
+	GF_STR_PrintSimple(&wk->msgwin, NET_FONT_SYSTEM, str2, 0, 16, MSG_ALLPUT, NULL );
 
 	STRBUF_Delete(str2);
 	STRBUF_Delete(str1);
@@ -2297,8 +2305,8 @@ static void EarthDebugWinNameInfoWrite( EARTH_DEMO_WORK * wk )
 				WIFI_NationAreaNameGet(	wk->placelist.place[i].nationID,
 										wk->placelist.place[i].areaID,
 										str1,str2,wk->heapID);
-				GF_STR_PrintSimple(&wk->msgwin, FONT_SYSTEM, str1, 16*4, 0, MSG_NO_PUT, NULL );
-				GF_STR_PrintSimple(&wk->msgwin, FONT_SYSTEM, str2, 16*4, 16, MSG_ALLPUT, NULL );
+				GF_STR_PrintSimple(&wk->msgwin, NET_FONT_SYSTEM, str1, 16*4, 0, MSG_NO_PUT, NULL );
+				GF_STR_PrintSimple(&wk->msgwin, NET_FONT_SYSTEM, str2, 16*4, 16, MSG_ALLPUT, NULL );
 
 				STRBUF_Delete(str2);
 				STRBUF_Delete(str1);
@@ -2310,14 +2318,14 @@ static void EarthDebugWinNameInfoWrite( EARTH_DEMO_WORK * wk )
 		str1 = STRBUF_Create(10, HEAPID_BASE_DEBUG);
 		str2 = STRBUF_Create(10, HEAPID_BASE_DEBUG);
 
-		GF_BGL_BmpWinFill(&wk->msgwin,FBMP_COL_WHITE,0,0,
-							EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE);
+		GFL_BMP_Fill(GFL_BMPWIN_GetBmp(&wk->msgwin),0,0,
+							EARTH_MSG_WIN_SX*DOTSIZE,EARTH_MSG_WIN_SY*DOTSIZE,FBMP_COL_WHITE);
 		STRBUF_SetHexNumber( str1, (u16)wk->rotate.x, 4, 
 							STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 		STRBUF_SetHexNumber( str2, (u16)wk->rotate.y, 4, 
 							STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-		GF_STR_PrintSimple(&wk->msgwin, FONT_SYSTEM, str1, 0, 0, MSG_NO_PUT, NULL );
-		GF_STR_PrintSimple(&wk->msgwin, FONT_SYSTEM, str2, 0, 16, MSG_ALLPUT, NULL );
+		GF_STR_PrintSimple(&wk->msgwin, NET_FONT_SYSTEM, str1, 0, 0, MSG_NO_PUT, NULL );
+		GF_STR_PrintSimple(&wk->msgwin, NET_FONT_SYSTEM, str2, 0, 16, MSG_ALLPUT, NULL );
 
 		STRBUF_Delete(str2);
 		STRBUF_Delete(str1);
@@ -2341,7 +2349,7 @@ static void EarthDebugNationMarkSet( EARTH_DEMO_WORK * wk )
 	if(pattern_flag == WIFIHIST_STAT_NODATA){
 		return;
 	}
-	BmpListDirectPosGet(wk->bmplist,&cursor_pos);
+	BmpMenuList_DirectPosGet(wk->bmplist,&cursor_pos);
 
 	nationID = cursor_pos+1;	//1origin
 
@@ -2367,7 +2375,7 @@ static void EarthDebugAreaMarkSet( EARTH_DEMO_WORK * wk )
 	if(pattern_flag == WIFIHIST_STAT_NODATA){
 		return;
 	}
-	BmpListDirectPosGet(wk->bmplist,&cursor_pos);
+	BmpMenuList_DirectPosGet(wk->bmplist,&cursor_pos);
 
 	areaID = cursor_pos+1;	//1origin
 

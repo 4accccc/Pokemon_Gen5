@@ -47,6 +47,7 @@ SUBDIRS	=	wmi \
 			wifi_lobby_map_conv \
 			wifi_lobby_front_unionobj \
 			wifi_lobby_news \
+			shop \
 			field_weather
 
 

@@ -8,7 +8,7 @@
 //==============================================================================
 #include <gflib.h>
 //#include "system/snd_tool.h"
-#include "system/bmp_list.h"
+#include "system/bmp_menulist.h"
 #include "print\printsys.h"
 #include "savedata\system_data.h"
 #include "system/bmp_menu.h"
@@ -28,7 +28,7 @@
 //#include  "communication/wm_icon.h"
 //#include "system/fontoam.h"
 //#include "system/d3dobj.h"
-#include "system/bmp_list.h"
+#include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
 //#include "gflib/strbuf_family.h"
 #include "gflib/touchpanel.h"
@@ -124,7 +124,7 @@ void FootPrintTool_NameDraw(GFL_MSGDATA *msgman, WORDSET *wordset, GFL_BMPWIN *w
 	else{
 		print_color = GF_PRINTCOLOR_MAKE(1,2,0);
 	}
-	PRINT_UTIL_PrintColor(/*à¯êîì‡ÇÕÇ‹Çæñ¢à⁄êA*/&win[user_index], FONT_SYSTEM, expand_src, 0, 0, 
+	PRINT_UTIL_PrintColor(/*à¯êîì‡ÇÕÇ‹Çæñ¢à⁄êA*/&win[user_index], NET_FONT_SYSTEM, expand_src, 0, 0, 
 		MSG_ALLPUT, print_color, NULL);
 	GF_BGL_BmpWinOn(&win[user_index]);
 	

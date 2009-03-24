@@ -35,6 +35,12 @@ enum {
 	MENU_TYPE_UG			// 地下メニュー
 };
 
+// 看板
+#define BOARD_TYPE_TOWN	(0)	// タウンマップ
+#define	BOARD_TYPE_ROAD	(1)	// 標識
+#define	BOARD_TYPE_POST	(2)	// 表札
+#define	BOARD_TYPE_INFO	(3)	// 掲示板
+
 
 typedef struct{
   u32 pos;
@@ -196,6 +202,63 @@ extern void TalkWinFrame_Write( GFL_BMPWIN *win, u8 trans_sw, u16 win_cgx, u8 pa
  */
 //--------------------------------------------------------------
 extern void TalkWinFrame_Clear( GFL_BMPWIN *win, u8 trans_sw );
+
+//--------------------------------------------------------------
+/**
+ * 看板ウィンドウのグラフィックをセット
+ *
+ * @param	ini			BGLデータ
+ * @param	frmnum		BGフレーム
+ * @param	cgx			キャラ転送位置
+ * @param	pal			パレット番号
+ * @param	win_num		ウィンドウ番号
+ * @param	heap		ヒープID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+extern void BoardWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 type, u16 map, u32 heap );
+
+//--------------------------------------------------------------
+/**
+ * エリアマネージャーを使って看板ウィンドウのグラフィックをセット
+ *
+ * @param	ini			BGLデータ
+ * @param	frmnum		BGフレーム
+ * @param	pal			パレット番号
+ * @param	win_num		ウィンドウ番号
+ * @param	heap		ヒープID
+ *
+ * @return	GFL_ARCUTIL_TRANSINFO
+ */
+//--------------------------------------------------------------
+extern GFL_ARCUTIL_TRANSINFO BoardWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 type, u16 map, u32 heap );
+
+//--------------------------------------------------------------
+/**
+ * 看板ウィンドウを描画
+ *
+ * @param	win			BMPウィンドウデータ
+ * @param	trans_sw	転送スイッチ
+ * @param	win_cgx		ウィンドウキャラ位置
+ * @param	pal			パレット
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+extern void BoardWinFrame_Write( GFL_BMPWIN *win, u8 trans_sw, u16 win_cgx, u8 pal, u8 type );
+
+//--------------------------------------------------------------
+/**
+ *	看板ウィンドウをクリア
+ *
+ * @param	win			BMPウィンドウデータ
+ * @param	trans_sw	転送スイッチ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+extern void BoardWinFrame_Clear( GFL_BMPWIN *win, u8 type, u8 trans_sw );
 
 
 #endif	// WINDOW_H

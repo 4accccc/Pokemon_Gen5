@@ -2918,7 +2918,7 @@ static void MainMenuMsgInit(WIFIP2PMATCH_WORK *wk)
 #define YESNO_CHARA_W			(  8 )
 #define YESNO_CHARA_H			(  4 )
 
-/* static const BMPWIN_DAT TouchYesNoBmpDat[2]={
+/* static const NET_BMPWIN_DAT TouchYesNoBmpDat[2]={
  *     {
  *         GFL_BG_FRAME0_M, YESNO_WINDOW_X, YESNO_WINDOW_Y1,
  *         YESNO_CHARA_W, YESNO_CHARA_H, 13, YESNO_CHARA_OFFSET

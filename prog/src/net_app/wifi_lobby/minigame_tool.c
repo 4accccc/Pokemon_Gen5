@@ -2736,10 +2736,10 @@ static void MNGM_MSG_SetTime( MNGM_MSG* p_wk, u32 time )
 	miri -= sec*MNGM_MSG_TIME_1DATA;
 	
 	WORDSET_RegisterNumber( p_wk->p_wordset, 0, sec,
-			2, NUMBER_DISPTYPE_ZERO, STR_NUM_CODE_DEFAULT );
+			2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 
 	WORDSET_RegisterNumber( p_wk->p_wordset, 1, miri,
-			2, NUMBER_DISPTYPE_ZERO, STR_NUM_CODE_DEFAULT );
+			2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 }
 
 //----------------------------------------------------------------------------
@@ -2819,14 +2819,46 @@ static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, 
 	GFL_MSG_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 
-	strsize = PRINTSYS_GetStrWidth( p_wk->p_str, GFL_FONT* font/*FONT_SYSTEM*/, 0 );
+	strsize = PRINTSYS_GetStrWidth( p_wk->p_str, GFL_FONT* font/*NET_FONT_SYSTEM*/, 0 );
 	draw_x = x - strsize;
 	if( draw_x < 0 ){
 		draw_x = 0;
 	}
 	
-	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ p_win, FONT_SYSTEM, p_wk->p_str,
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ p_win, NET_FONT_SYSTEM, p_wk->p_str,
 			draw_x,y,MSG_NO_PUT, MNGM_MSG_COLOR, NULL);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   PRINTSYS_PrintStreamColorをでっちあげる
+ *
+ * @param   dst		
+ * @param   xpos		
+ * @param   ypos		
+ * @param   str		
+ * @param   font		
+ * @param   font_color	
+ *
+ * @retval  
+ */
+//--------------------------------------------------------------
+static PRINT_STREAM * _PrintStreamColor(GFL_BMPWIN* dst, u16 xpos, u16 ypos, 
+	const STRBUF* str, GFL_FONT* font, u16 wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, 
+	HEAPID heapID, u16 clearColor, GF_PRINTCOLOR font_color )
+{
+	u8 letter, u8 shadow, u8 back;
+	PRINT_STREAM *ret_stream;
+	
+	GFL_FONTSYS_GetColor( &letter, &shadow, &back);
+	GFL_FONTSYS_SetColor(GF_PRINTCOLOR_GET_LETTER(font_color), 
+		GF_PRINTCOLOR_GET_SHADOW(font_color), GF_PRINTCOLOR_GET_GROUND(font_color));
+		
+	ret_stream = PRINTSYS_PrintStream(
+		dst, xpos, ypos, str, font, wait, tcbsys, tcbpri, heapID, clearColor);
+	
+	GFL_FONTSYS_SetColor( letter, shadow, back);
+	return ret_stream;
 }
 
 //----------------------------------------------------------------------------
@@ -2848,7 +2880,7 @@ static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF*
 	GFL_MSG_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_str, p_wk->p_tmp );
 	
-	return PRINTSYS_PrintStreamColor(/*引数内はまだ未対応*/ p_win, FONT_TALK, p_str,
+	return _PrintStreamColor(/*引数内はまだ未対応*/ p_win, FONT_TALK, p_str,
 			0, 0, wait, MNGM_MSG_TALKCOLOR, NULL);
 }
 
@@ -2869,7 +2901,7 @@ static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x
 	GFL_MSG_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 	
-	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ p_win, FONT_SYSTEM, p_wk->p_str,
+	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ p_win, NET_FONT_SYSTEM, p_wk->p_str,
 			x,y,MSG_NO_PUT, col, NULL);
 }
 
@@ -2941,6 +2973,7 @@ static void MNGM_TALKWIN_Exit( MNGM_TALKWIN* p_wk )
 		MNGM_TALKWIN_MsgOff( p_wk, i );
 		GFL_STR_DeleteBuffer( p_wk->p_str[i] );
 		GFL_BMPWIN_Delete( &p_wk->win[i] );
+		p_wk->win[i] = NULL;
 	}
 
 	//  オートメッセージ設定破棄
@@ -3188,7 +3221,7 @@ static void MNGM_ENTRY_GraphicLoad( MNGM_ENTRYWK* p_wk, u32 heapID )
 	p_handle = GFL_ARC_OpenDataHandle( ARCID_WLMNGM_TOOL_GRA, heapID );
 
 	// パレット
-	ArcUtil_HDL_PalSet( p_handle, NARC_wlmngm_tool_minigame_win_NCLR,
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wlmngm_tool_minigame_win_NCLR,
 			PALTYPE_MAIN_BG, 0, MNGM_BGPLTT_NUM*32, heapID );
 	
 	// キャラクタ	
@@ -3198,7 +3231,7 @@ static void MNGM_ENTRY_GraphicLoad( MNGM_ENTRYWK* p_wk, u32 heapID )
 			FALSE, heapID );
 
 	// スクリーン
-	p_wk->p_scrnbuf =  ArcUtil_HDL_ScrnDataGet( p_handle,
+	p_wk->p_scrnbuf =  GFL_ARCHDL_UTIL_LoadScreen( p_handle,
 			NARC_wlmngm_tool_minigame_win_bg1_NSCR,
 			FALSE, &p_wk->p_scrn, heapID );
 
@@ -3638,8 +3671,8 @@ static void MNGM_PLATE_PLAYERTBL_Init( MNGM_PLATE_PLAYER* p_player, u32 player_n
 
 
 	// スクリーンを書き込む
-	GF_BGL_ScrWriteExpand(
-				p_bgl->p_bgl, GFL_BG_FRAME1_M,
+	GFL_BG_WriteScreenExpand(
+				GFL_BG_FRAME1_M,
 				0, sc_MNGM_PLAYER_PLATE_DATA[ player_num-1 ].top[ player_idx ], 
 				MNGM_PLAYER_PLATE_SCRN_SIZ_X, MNGM_PLAYER_PLATE_SCRN_SIZ_Y,
 				p_scrn->rawData, 0, 
@@ -3829,8 +3862,13 @@ static void MNGM_PLATE_PLAYERTBL_Delete( MNGM_PLATE_PLAYER* p_player )
 		CLACT_Delete( p_player->p_rank );
 		p_player->p_rank = NULL;
 	}
+#if WB_FIX
 	if( GF_BGL_BmpWinAddCheck( &p_player->win ) == TRUE ){
-		GFL_BMPWIN_Delete( &p_player->win );
+#else
+	if(p_player->win != NULL){
+#endif
+		GFL_BMPWIN_Delete( p_player->win );
+		p_player->win = NULL;
 	}
 }
 
@@ -4233,6 +4271,7 @@ static void MNGM_TITLELOGO_Init( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk, MNGM_
 static void MNGM_TITLELOGO_Exit( MNGM_TITLE_LOGO* p_wk )
 {
 	GFL_BMPWIN_Delete( &p_wk->bmp );
+	p_wk->bmp = NULL;
 
 	GFL_STR_DeleteBuffer( p_wk->p_str );
 }
@@ -4265,17 +4304,17 @@ static void MNGM_TITLELOGO_InStart( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk, u3
 
 	
 	// ボタンフォントで書き込む
-	FontProc_LoadFont( FONT_BUTTON, heapID );	//ボタンフォントのロード
+	FontProc_LoadFont( NET_FONT_BUTTON, heapID );	//ボタンフォントのロード
 
 	// 中央に表示する
-	x_size	= PRINTSYS_GetStrWidth( p_wk->p_str, GFL_FONT* font/*FONT_BUTTON*/, 0 );
+	x_size	= PRINTSYS_GetStrWidth( p_wk->p_str, GFL_FONT* font/*NET_FONT_BUTTON*/, 0 );
 	draw_x	= (MNGM_TITLELOGO_BMP_SIZXDOT/2) - (x_size/2);
 
 	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/
-		&p_wk->bmp, FONT_BUTTON, p_wk->p_str, draw_x,
+		&p_wk->bmp, NET_FONT_BUTTON, p_wk->p_str, draw_x,
 		0, MSG_ALLPUT, sc_MNGM_TITLELOGO_BMP_COL[ p_wk->gametype ], NULL );
 
-	FontProc_UnloadFont( FONT_BUTTON );				//ボタンフォントの破棄
+	FontProc_UnloadFont( NET_FONT_BUTTON );				//ボタンフォントの破棄
 	
 	// 描画ON
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );	
@@ -4646,9 +4685,9 @@ static void MNGM_RESULT_GraphicLoad( MNGM_RESULTWK* p_wk, u32 heapID )
 	p_handle = GFL_ARC_OpenDataHandle( ARCID_WLMNGM_TOOL_GRA, heapID );
 
 	// パレット
-	ArcUtil_HDL_PalSet( p_handle, NARC_wlmngm_tool_minigame_win_NCLR,
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wlmngm_tool_minigame_win_NCLR,
 			PALTYPE_MAIN_BG, 0, MNGM_BGPLTT_NUM*32, heapID );
-	ArcUtil_HDL_PalSet( p_handle, NARC_wlmngm_tool_minigame_win_NCLR,
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wlmngm_tool_minigame_win_NCLR,
 			PALTYPE_SUB_BG, 0, MNGM_BGPLTT_NUM*32, heapID );
 	
 	// キャラクタ	
@@ -4665,7 +4704,7 @@ static void MNGM_RESULT_GraphicLoad( MNGM_RESULTWK* p_wk, u32 heapID )
 	{
 		int i;
 		for( i=0; i<MNGM_RESULT_SCRN_NUM; i++ ){
-			p_wk->p_scrnbuf[i] =  ArcUtil_HDL_ScrnDataGet( p_handle,
+			p_wk->p_scrnbuf[i] =  GFL_ARCHDL_UTIL_LoadScreen( p_handle,
 					NARC_wlmngm_tool_minigame_win_bg1_NSCR+i,
 					FALSE, &p_wk->p_scrn[i], heapID );
 		}
@@ -5877,11 +5916,11 @@ static void MNGM_RESULT_Balloon_GraphicInit( MNGM_BALLOON_WK* p_wk, MNGM_BGL* p_
 
 	//　独自ウィンドウ
 	{
-		ArcUtil_HDL_PalSet( p_handle, NARC_wlmngm_tool_mini_fusen_score_NCLR, PALTYPE_MAIN_BG, 
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wlmngm_tool_mini_fusen_score_NCLR, PALTYPE_MAIN_BG, 
 				MNGM_RESULT_BALLOON_SYSWIN_PAL*32, 32, heapID );
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wlmngm_tool_mini_fusen_score_NCGR,
 				p_bgl->p_bgl, GFL_BG_FRAME2_M, MNGM_RESULT_BALLOON_SYSWIN_CGX, 0, FALSE, heapID );
-		p_wk->p_scrnbuff = ArcUtil_HDL_ScrnDataGet( p_handle, NARC_wlmngm_tool_mini_fusen_score_NSCR, 
+		p_wk->p_scrnbuff = GFL_ARCHDL_UTIL_LoadScreen( p_handle, NARC_wlmngm_tool_mini_fusen_score_NSCR, 
 				FALSE, &p_wk->p_scrn, heapID );
 	}
 
@@ -5983,7 +6022,7 @@ static BOOL MNGM_RESULT_Balloon_Main( MNGM_BALLOON_WK* p_wk, MNGM_BGL* p_bgl )
 	case MNGM_RESULT_BALLOON_SEQ_ON:
 
 		MNGM_SCRN_AddCharOfs( p_wk->p_scrn,  MNGM_RESULT_BALLOON_SYSWIN_CGX ); 
-		GF_BGL_ScrWrite( p_bgl->p_bgl, GFL_BG_FRAME2_M, p_wk->p_scrn->rawData, 
+		GFL_BG_WriteScreen( GFL_BG_FRAME2_M, p_wk->p_scrn->rawData, 
 				0, 0,
 				MNGM_RESULT_BALLOON_SYSWIN_SCRNSIZX, MNGM_RESULT_BALLOON_SYSWIN_SCRNSIZY );
 		GFL_BG_ChangeScreenPalette( p_bgl->p_bgl, GFL_BG_FRAME2_M, 0, 0,

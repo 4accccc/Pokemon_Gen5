@@ -154,7 +154,7 @@ enum{
 //-------------------------------------
 ///	ユーザ基本情報
 //=====================================
-typedef struct _WFLBY_USER_PROFILE{
+struct _WFLBY_USER_PROFILE{
 	s32				userid;						//  ロビー内ユーザID
 	u32				trainerid;					// トレーナーID					
 	STRCODE			name[PERSON_NAME_SIZE + EOM_SIZE];	// ユーザ名
@@ -180,7 +180,7 @@ typedef struct _WFLBY_USER_PROFILE{
 	WFLBY_ANKETO	anketo;						// アンケート選択データ
 
 	// プラチナ以後のシステムはここに追加していく
-} WFLBY_USER_PROFILE;
+};
 
 //-------------------------------------
 ///	自分の基本情報
@@ -398,7 +398,7 @@ typedef struct {
 //-------------------------------------
 ///	WiFiロビー共通システムワーク
 //=====================================
-typedef struct _WFLBY_SYSTEM{
+struct _WFLBY_SYSTEM{
 	SAVE_CONTROL_WORK*				p_save;			// セーブデータ
 	WFLBY_SYSTEM_GLB		glbdata;		// グローバルデータ
 	WFLBY_SYSTEM_FLAG		flag;			// フラグ郡
@@ -420,7 +420,7 @@ typedef struct _WFLBY_SYSTEM{
 	WFLBY_SYSTEM_ANKETO		anketo_result;	// 広場のアンケート結果保存先
 	u32						heapID;			// ヒープID
 	u32						error;			// システム内error
-}WFLBY_SYSTEM;
+};
 
 
 
@@ -1990,7 +1990,7 @@ void WFLBY_SYSTEM_GetProfileMyStatus( const WFLBY_USER_PROFILE* cp_profile, MYST
 			p_name		= GFL_STR_CreateBuffer( (PERSON_NAME_SIZE + EOM_SIZE)*4, heapID );
 			MyStatus_CopyNameString( p_buff, p_name );
 		#if WB_TEMP_FIX
-			result = FontProc_ErrorStrCheck( FONT_SYSTEM, p_name, p_name_tmp );
+			result = FontProc_ErrorStrCheck( NET_FONT_SYSTEM, p_name, p_name_tmp );
 			if( result == FALSE ){
 				set_dummy = TRUE;
 			}

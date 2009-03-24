@@ -1060,7 +1060,7 @@ static void NEWSDRAW_DrawSysBgInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 	// BG設定
 	{
 		// パレット
-		ArcUtil_HDL_PalSet( p_wk->p_handle, NARC_lobby_news_lobby_news_bg_NCLR, 
+		GFL_ARCHDL_UTIL_TransVramPalette( p_wk->p_handle, NARC_lobby_news_lobby_news_bg_NCLR, 
 				PALTYPE_MAIN_BG, 0, 0, heapID );
 
 		//  フォントカラー設定
@@ -1084,7 +1084,7 @@ static void NEWSDRAW_DrawSysBgInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 	// サブ画面設定
 	{
 		// パレット
-		ArcUtil_HDL_PalSet( p_wk->p_handle, NARC_lobby_news_lobby_news_bg_NCLR, 
+		GFL_ARCHDL_UTIL_TransVramPalette( p_wk->p_handle, NARC_lobby_news_lobby_news_bg_NCLR, 
 				PALTYPE_SUB_BG, 0, 0, heapID );
 
 		// キャラクタ
@@ -1208,7 +1208,7 @@ static void NEWSDRAW_DrawSysOamExit( NEWSDRAW_DRAWSYS* p_wk )
 //-----------------------------------------------------------------------------
 static void NEWSDRAW_ScrnSetInit( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSYS* p_draw, u32 heapID )
 {
-	p_wk->p_buff = ArcUtil_HDL_ScrnDataGet( p_draw->p_handle, 
+	p_wk->p_buff = GFL_ARCHDL_UTIL_LoadScreen( p_draw->p_handle, 
 			NARC_lobby_news_lobby_news_chara_NSCR,
 			FALSE, &p_wk->p_scrn, heapID);
 }
@@ -1247,7 +1247,7 @@ static void NEWSDRAW_ScrnSetExit( NEWSDRAW_SCRNSET* p_wk )
 //-----------------------------------------------------------------------------
 static void NEWSDRAW_ScrnWriteTimeBlock( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSYS* p_draw, u32 block_type, u8 x, u8 y )
 {
-	GF_BGL_ScrWriteExpand( p_draw->p_bgl, GFL_BG_FRAME3_M, 
+	GFL_BG_WriteScreenExpand( GFL_BG_FRAME3_M, 
 			NEWSDRAW_TIME_SCRN_DRAWX+(x*NEWSDRAW_TIME_BLOCK_SIZX), 
 			NEWSDRAW_TIME_SCRN_DRAWY+(y*NEWSDRAW_TIME_BLOCK_SIZY),
 			NEWSDRAW_TIME_BLOCK_SIZX, NEWSDRAW_TIME_BLOCK_SIZY,
@@ -1297,7 +1297,7 @@ static void NEWSDRAW_ScrnWritePlayer( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSYS* 
 		r_y ++;
 	}
 	
-	GF_BGL_ScrWriteExpand( p_draw->p_bgl, GFL_BG_FRAME3_M, 
+	GFL_BG_WriteScreenExpand( GFL_BG_FRAME3_M, 
 			NEWSDRAW_PLAYER_SCRN_DRAWX+(x*NEWSDRAW_PLAYER_BLOCK_SIZX), 
 			NEWSDRAW_PLAYER_SCRN_DRAWY+(y*NEWSDRAW_PLAYER_BLOCK_SIZY),
 			NEWSDRAW_PLAYER_BLOCK_SIZX, NEWSDRAW_PLAYER_BLOCK_SIZY,
@@ -2120,7 +2120,7 @@ static void NEWSDRAW_TopicExit( NEWSDRAW_TOPIC* p_wk )
 static void NEWSDRAW_TopicStart( NEWSDRAW_TOPIC* p_wk, const STRBUF* cp_str, u32 speed, const NEWSDRAW_TOPIC_TRCOL* cp_trcol, const NNSG2dPaletteData* cp_pltt )
 {
 	// 文章コピー
-	STRBUF_Copy( p_wk->p_str, cp_str );
+	GFL_STR_CopyBuffer( p_wk->p_str, cp_str );
 	p_wk->move		= TRUE;
 	p_wk->count		= 0;
 
@@ -2215,9 +2215,9 @@ static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp )
 	}
 
 	// ビットマップクリーン
-	GF_BGL_BmpWinFill( p_bmp, 0,
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(p_bmp), 
 			0, 0,
-			255, NEWSDRAW_TOPIC_DMBMP_SY*8 );	
+			255, NEWSDRAW_TOPIC_DMBMP_SY*8, 0 );	
 
 	// 書き込む
 	GF_BGL_BmpWinPrintEx( p_bmp,
@@ -2277,16 +2277,16 @@ static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 
 /*
 		if( i==NEWSDRAW_TITLEWIN_APLNAME ){
-			FontProc_LoadFont( FONT_BUTTON, heapID );	//ボタンフォントのロード
+			FontProc_LoadFont( NET_FONT_BUTTON, heapID );	//ボタンフォントのロード
 			
 			GF_STR_PrintColor(
-				&p_wk->bmp[i], FONT_BUTTON, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
+				&p_wk->bmp[i], NET_FONT_BUTTON, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
 				NEWSDRAW_TITLE_BMPDATA[i].dy, MSG_NO_PUT, NEWSDRAW_TITLEWIN_COL, NULL );
 
-			FontProc_UnloadFont( FONT_BUTTON );				//ボタンフォントの破棄
+			FontProc_UnloadFont( NET_FONT_BUTTON );				//ボタンフォントの破棄
 		}else{
 			GF_STR_PrintColor(
-				&p_wk->bmp[i], FONT_SYSTEM, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
+				&p_wk->bmp[i], NET_FONT_SYSTEM, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
 				NEWSDRAW_TITLE_BMPDATA[i].dy, MSG_NO_PUT, NEWSDRAW_TITLEWIN_COL, NULL );
 		}
 //*/
@@ -2294,12 +2294,12 @@ static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 
 		if( i==NEWSDRAW_TITLEWIN_APLNAME ){
 			PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/
-				&p_wk->bmp[i], FONT_SYSTEM, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
+				&p_wk->bmp[i], NET_FONT_SYSTEM, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
 				NEWSDRAW_TITLE_BMPDATA[i].dy, MSG_NO_PUT, NEWSDRAW_TITLEWIN_APL_COL, NULL );
 		}else{
 	
 			PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/
-				&p_wk->bmp[i], FONT_SYSTEM, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
+				&p_wk->bmp[i], NET_FONT_SYSTEM, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
 				NEWSDRAW_TITLE_BMPDATA[i].dy, MSG_NO_PUT, NEWSDRAW_TITLEWIN_COL, NULL );
 		}
 		

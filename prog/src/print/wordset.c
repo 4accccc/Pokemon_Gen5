@@ -16,6 +16,7 @@
 #include "arc_def.h"
 #include "message.naix"
 
+
 /*----------------------------------*/
 /** 文法性                          */
 /*----------------------------------*/
@@ -562,6 +563,95 @@ void WORDSET_RegisterWiFiLobbyAisatsuSpain( WORDSET* wordset, u32 bufID, u32 tim
 		GFL_MSG_Delete(man);
 	}
 }
+
+//------------------------------------------------------------------
+/**
+ * 指定バッファにポケモン（ワザ）タイプ名を登録
+ *
+ * @param   bufID			バッファID
+ * @param   typeID			タイプID
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterPokeTypeName( WORDSET* wordset, u32 bufID, u32 typeID )
+{
+	GFL_MSGDATA *man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_typename_dat, wordset->heapID);
+	if( man )
+	{
+		GFL_MSG_GetString( man, typeID, wordset->tmpBuf );
+		RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+		GFL_MSG_Delete(man);
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * プレイヤー名を登録
+ *
+ * @param   wordset		単語セットオブジェクト
+ * @param   bufID		バッファID
+ * @param   status		
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterPlayerName( WORDSET* wordset, u32 bufID, const MYSTATUS* my )
+{
+	MyStatus_CopyNameString( my, wordset->tmpBuf );
+	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+}
+
+//------------------------------------------------------------------
+/**
+ * 指定バッファに国名を登録
+ *
+ * @param   wordset		ワードセットオブジェクト
+ * @param   bufID		何番のバッファに登録するか
+ * @param   strID		国ID
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterCountryName( WORDSET* wordset, u32 bufID, u32 countryID )
+{
+	GFL_MSGDATA *man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_place_msg_world_dat, wordset->heapID);
+	if( man )
+	{
+		GFL_MSG_GetString( man, countryID, wordset->tmpBuf );
+		RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+		GFL_MSG_Delete(man);
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * 指定バッファに地域名を登録
+ *
+ * @param   wordset		ワードセットオブジェクト
+ * @param   bufID		何番のバッファに登録するか
+ * @param   countryID	国ID
+ * @param   placeID		地域ID
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterLocalPlaceName( WORDSET* wordset, u32 bufID, u32 countryID, u32 placeID )
+{
+	u32  datID;
+
+	datID = WIFI_COUNTRY_CountryCodeToPlaceMsgDataID(countryID);
+	if( datID )
+	{
+		if( placeID )
+		{
+			GFL_MSGDATA *man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, datID, wordset->heapID);
+			if( man )
+			{
+				GFL_MSG_GetString( man, placeID, wordset->tmpBuf );
+				RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+				GFL_MSG_Delete(man);
+			}
+		}
+	}
+}
+
 
 
 //======================================================================================================

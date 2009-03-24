@@ -56,7 +56,7 @@ typedef struct _PLTTSLOT_SYSTEM{
 //	マクロ
 //==============================================================================
 ///GFL_VRAM_???をVRAMTBLに変換するマクロ
-#define VRAMTBL(vram_type)		((vram_type == GFL_VRAM_2D_MAIN) ? 0 : 1)
+#define VRAMTBL(draw_type)		((draw_type == CLSYS_DRAW_MAIN) ? 0 : 1)
 
 
 //--------------------------------------------------------------
@@ -108,16 +108,16 @@ void PLTTSLOT_Exit(PLTTSLOT_SYS_PTR pssp)
  *
  * @param   pssp			パレットスロットへのポインタ
  * @param   pltt_num		パレット本数
- * @param   vram_type		VRAMタイプ
+ * @param   draw_type		VRAMタイプ
  *
  * @retval  パレット番号
  */
 //--------------------------------------------------------------
-static u32 PLTTSLOT_Get(PLTTSLOT_SYS_PTR pssp, int pltt_num, GFL_VRAM_TYPE vram_type)
+static u32 PLTTSLOT_Get(PLTTSLOT_SYS_PTR pssp, int pltt_num, CLSYS_DRAW_TYPE draw_type)
 {
 	int i, s, tbl;
 	
-	tbl = VRAMTBL(vram_type);
+	tbl = VRAMTBL(draw_type);
 	for(i = 0; i < pssp->pltt_num_max[tbl]; i++){
 		if(pssp->slot[tbl][i] == PLTT_SLOT_FREE){
 			for(s = i; s < i+pltt_num; s++){
@@ -146,14 +146,14 @@ static u32 PLTTSLOT_Get(PLTTSLOT_SYS_PTR pssp, int pltt_num, GFL_VRAM_TYPE vram_
  *
  * @param   pssp			パレットスロットへのポインタ
  * @param   pal_no			パレット番号(PLTTSLOT_Get関数の戻り値)
- * @param   vram_type		VRAMタイプ
+ * @param   draw_type		VRAMタイプ
  */
 //--------------------------------------------------------------
-static void PLTTSLOT_Free(PLTTSLOT_SYS_PTR pssp, u32 pal_no, GFL_VRAM_TYPE vram_type)
+static void PLTTSLOT_Free(PLTTSLOT_SYS_PTR pssp, u32 pal_no, CLSYS_DRAW_TYPE draw_type)
 {
 	int i, tbl;
 	
-	tbl = VRAMTBL(vram_type);
+	tbl = VRAMTBL(draw_type);
 	for(i = pal_no; pssp->slot[tbl][i] == pal_no; i++){
 		pssp->slot[tbl][i] = PLTT_SLOT_FREE;
 	}
@@ -167,19 +167,19 @@ static void PLTTSLOT_Free(PLTTSLOT_SYS_PTR pssp, u32 pal_no, GFL_VRAM_TYPE vram_
  * @param   handle			アーカイブハンドル
  * @param   data_id			実データへのデータIndex
  * @param   pltt_num		転送するパレット本数
- * @param   vram_type		GFL_VRAM_2D_MAIN or GFL_VRAM_2D_SUB (※GFL_VRAM_2D_BOTHは非対応)
+ * @param   draw_type		CLSYS_DRAW_MAIN or CLSYS_DRAW_SUB
  * @param   heap_id			テンポラリで使用するヒープID
  *
  * @retval  登録INDEX(パレット番号ではありません。削除時に必要になります)
  */
 //--------------------------------------------------------------
-u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, GFL_VRAM_TYPE vram_type, int pltt_num, int heap_id)
+u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, CLSYS_DRAW_TYPE draw_type, int pltt_num, int heap_id)
 {
 	int pal_no, index;
 	
-	pal_no = PLTTSLOT_Get(pssp, pltt_num, vram_type);
+	pal_no = PLTTSLOT_Get(pssp, pltt_num, draw_type);
 	index = GFL_CLGRP_PLTT_RegisterEx(
-		handle, data_id, vram_type, pal_no * 0x20, 0, pltt_num, heap_id);
+		handle, data_id, draw_type, pal_no * 0x20, 0, pltt_num, heap_id);
 	return index;
 }
 
@@ -191,9 +191,9 @@ u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, 
  * @retval	パレット番号
  */
 //--------------------------------------------------------------
-u32 PLTTSLOT_GetPalNo(PLTTSLOT_SYS_PTR pssp, u32 index, GFL_VRAM_TYPE vram_type)
+u32 PLTTSLOT_GetPalNo(PLTTSLOT_SYS_PTR pssp, u32 index, CLSYS_DRAW_TYPE draw_type)
 {
-	return GFL_CLGRP_PLTT_GetAddr(index, vram_type) / 0x20;
+	return GFL_CLGRP_PLTT_GetAddr(index, draw_type) / 0x20;
 }
 
 //--------------------------------------------------------------
@@ -204,12 +204,12 @@ u32 PLTTSLOT_GetPalNo(PLTTSLOT_SYS_PTR pssp, u32 index, GFL_VRAM_TYPE vram_type)
  * @param   index		登録INDEX (PLTTSLOT_ResourceSet関数の戻り値)
  */
 //--------------------------------------------------------------
-void PLTTSLOT_ResourceFree(PLTTSLOT_SYS_PTR pssp, u32 index, GFL_VRAM_TYPE vram_type)
+void PLTTSLOT_ResourceFree(PLTTSLOT_SYS_PTR pssp, u32 index, CLSYS_DRAW_TYPE draw_type)
 {
 	int pal_no;
 	
-	pal_no = PLTTSLOT_GetPalNo(pssp, index, vram_type);
-	PLTTSLOT_Free(pssp, pal_no, vram_type);
+	pal_no = PLTTSLOT_GetPalNo(pssp, index, draw_type);
+	PLTTSLOT_Free(pssp, pal_no, draw_type);
 	GFL_CLGRP_PLTT_Release(index);
 }
 

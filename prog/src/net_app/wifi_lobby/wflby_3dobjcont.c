@@ -12,6 +12,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include <gflib.h>
+#include <calctool.h>
 
 #include "net_app/wifi2dmap/wf2dmap_obj.h"
 #include "net_app/wifi2dmap/wf2dmap_cmdq.h"
@@ -23,6 +24,9 @@
 #include "wflby_3dmatrix.h"
 
 #include "wflby_snd.h"
+
+#include "field/fldmmdl_pl_code.h"
+#include "system/gfl_use.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -298,10 +302,10 @@ typedef struct {
 	u8	playid;
 } WFLBY_MAPOBJDATA;
 static const WFLBY_MAPOBJDATA sc_WFLBY_3DPARSON_MAPOBJ[] = {
-	{ WFLBY_MAPOBJID_NPC_SW_IN,		WF2DMAP_WAY_LEFT,	WIFISW, WFLBY_MAPPERSON_ID },
-	{ WFLBY_MAPOBJID_NPC_SW_TOPIC,	WF2DMAP_WAY_DOWN,	WIFISW, WFLBY_MAPPERSON_ID },
-	{ WFLBY_MAPOBJID_NPC_SW_TOPIC2,	WF2DMAP_WAY_DOWN,	WIFISM, WFLBY_MAPPERSON_ID },
-	{ WFLBY_MAPOBJID_ANKETO_MAN,	WF2DMAP_WAY_DOWN,	WIFISM, WFLBY_MAPPERSON_PIERROT_ID },
+	{ WFLBY_MAPOBJID_NPC_SW_IN,		WF2DMAP_WAY_LEFT,	PLWIFISW, WFLBY_MAPPERSON_ID },
+	{ WFLBY_MAPOBJID_NPC_SW_TOPIC,	WF2DMAP_WAY_DOWN,	PLWIFISW, WFLBY_MAPPERSON_ID },
+	{ WFLBY_MAPOBJID_NPC_SW_TOPIC2,	WF2DMAP_WAY_DOWN,	PLWIFISM, WFLBY_MAPPERSON_ID },
+	{ WFLBY_MAPOBJID_ANKETO_MAN,	WF2DMAP_WAY_DOWN,	PLWIFISM, WFLBY_MAPPERSON_PIERROT_ID },
 };
 
 
@@ -607,9 +611,9 @@ WFLBY_3DPERSON* WFLBY_3DOBJCONT_AddPlayerEx( WFLBY_3DOBJCONT* p_sys, u32 plid, u
 		objdata.status	= WF2DMAP_OBJST_NONE;
 		objdata.way		= WF2DMAP_WAY_UP;
 		if( p_sys->hero_sex == PM_MALE ){
-			objdata.charaid	= HERO;
+			objdata.charaid	= PLHERO;
 		}else{
-			objdata.charaid	= HEROINE;
+			objdata.charaid	= PLHEROINE;
 		}
 		p_wk->p_obj = WF2DMAP_OBJWkNew( p_sys->p_objsys, &objdata );
 	}
@@ -1716,8 +1720,9 @@ static void WFLBY_3DOBJCONT_FlyUpMove( WFLBY_3DPERSON* p_wk, WFLBY_3DOBJCONT* p_
 
 
 			// ã‚Á‚Ä‚¢‚­‰¹
+		#if WB_TEMP_FIX
 			Snd_SePlay( WFLBY_SND_PLOUT );
-
+		#endif
 		}
 		break;
 		
@@ -1771,8 +1776,10 @@ static void WFLBY_3DOBJCONT_FlyDownMove( WFLBY_3DPERSON* p_wk, WFLBY_3DOBJCONT* 
 		p_wk->seq ++;
 
 		// —Ž‚¿‚Ä‚­‚é‰¹
+	#if WB_TEMP_FIX
 		Snd_SePlay( WFLBY_SND_PLOUT );
-
+	#endif
+	
 	// “®ìƒƒCƒ“
 	case WFLBY_3DOBJCONT_FLYDOWN_SEQ_MAIN:
 		{

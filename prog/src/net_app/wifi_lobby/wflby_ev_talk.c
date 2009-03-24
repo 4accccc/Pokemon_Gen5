@@ -31,6 +31,8 @@
 
 #include "wflby_ev_talk.h"
 
+#include "net_app/net_bugfix.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					コーディング規約
@@ -405,7 +407,7 @@ enum {
 //=====================================
 typedef struct {
 	// ビットマップリスト専用
-	BMPLIST_HEADER		bmplist;
+	BMPMENULIST_HEADER		bmplist;
 	u32					bmplist_num;	// ビットマップリスト数
 } WFLBY_EV_TALK_BMPLIST;
 
@@ -480,7 +482,7 @@ typedef struct {
 //-------------------------------------
 ///	基本ヘッダー
 //=====================================
-static const BMPLIST_HEADER sc_WFLBY_EV_TALK_HEADER = {
+static const BMPMENULIST_HEADER sc_WFLBY_EV_TALK_HEADER = {
 	NULL,
 	NULL,
 	NULL,
@@ -497,8 +499,8 @@ static const BMPLIST_HEADER sc_WFLBY_EV_TALK_HEADER = {
 	FBMP_COL_BLK_SDW,				//表示文字影色
 	0,								//文字間隔Ｘ
 	16,								//文字間隔Ｙ
-	BMPLIST_NO_SKIP,				//ページスキップタイプ
-	FONT_SYSTEM,					//文字指定(本来は u8 だけど、そんなに作らないと思うので)
+	BMPMENULIST_NO_SKIP,				//ページスキップタイプ
+	NET_FONT_SYSTEM,					//文字指定(本来は u8 だけど、そんなに作らないと思うので)
 	0,								//ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
 
 	NULL
@@ -1652,8 +1654,8 @@ BOOL WFLBY_EV_TALK_StartA( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 				break;
 //*/
 
-			case BMPLIST_NULL:
-			case BMPLIST_CANCEL:
+			case BMPMENULIST_NULL:
+			case BMPMENULIST_CANCEL:
 				WFLBY_EV_TALK_WK_CheckAndPrintSelectWait( p_evwk, p_rmwk );
 				break;
 
@@ -2913,7 +2915,7 @@ BOOL WFLBY_EV_DEF_PlayerA_SWTOPIC_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_DEF_PLAYER_TOPIC_MSGEVE );
 				delete = TRUE;
 				break;
-			case BMPLIST_CANCEL:
+			case BMPMENULIST_CANCEL:
 				Snd_SePlay( SEQ_SE_DP_SELECT );	// CANCEL音
 			case WFLBY_EV_TOPIC_LIST_SEL_END:	
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_DEF_PLAYER_TOPIC_MSGEND );
@@ -2969,7 +2971,7 @@ BOOL WFLBY_EV_DEF_PlayerA_SWTOPIC_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 				delete = TRUE;
 				break;
 
-			case BMPLIST_CANCEL:
+			case BMPMENULIST_CANCEL:
 				Snd_SePlay( SEQ_SE_DP_SELECT );	// CANCEL音
 			case WFLBY_EV_TOPIC_LIST_SEL_MG_END:
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_DEF_PLAYER_TOPIC_MSG01 );
@@ -3070,7 +3072,7 @@ BOOL WFLBY_EV_DEF_PlayerA_SWTOPIC_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 				delete = TRUE;
 				break;
 
-			case BMPLIST_CANCEL:
+			case BMPMENULIST_CANCEL:
 				Snd_SePlay( SEQ_SE_DP_SELECT );	// CANCEL音
 			case WFLBY_EV_TOPIC_LIST_SEL_EVE_END:
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_DEF_PLAYER_TOPIC_MSG01 );

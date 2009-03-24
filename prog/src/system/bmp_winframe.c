@@ -343,3 +343,76 @@ void TalkWinFrame_Clear( GFL_BMPWIN *win, u8 trans_sw )
 {
 	BmpWinFrame_Clear(win, trans_sw);
 }
+
+//--------------------------------------------------------------
+/**
+ * 看板ウィンドウのグラフィックをセット
+ *
+ * @param	ini			BGLデータ
+ * @param	frmnum		BGフレーム
+ * @param	cgx			キャラ転送位置
+ * @param	pal			パレット番号
+ * @param	type		看板タイプ
+ * @param	map			マップ番号（タウンマップ、標識）
+ * @param	heap		ヒープID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+void BoardWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 type, u16 map, u32 heap )
+{
+	BmpWinFrame_GraphicSet(frmnum, cgx, pal, 0, heap);
+}
+
+//--------------------------------------------------------------
+/**
+ * エリアマネージャーを使って看板ウィンドウのグラフィックをセット
+ *
+ * @param	ini			BGLデータ
+ * @param	frmnum		BGフレーム
+ * @param	pal			パレット番号
+ * @param	type		看板タイプ
+ * @param	map			マップ番号（タウンマップ、標識）
+ * @param	heap		ヒープID
+ *
+ * @return	GFL_ARCUTIL_TRANSINFO
+ */
+//--------------------------------------------------------------
+GFL_ARCUTIL_TRANSINFO BoardWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 type, u16 map, u32 heap )
+{
+	return BmpWinFrame_GraphicSetAreaMan(frmnum, pal, 0, heap);
+}
+
+//--------------------------------------------------------------
+/**
+ * 看板ウィンドウを描画
+ *
+ * @param	win			BMPウィンドウデータ
+ * @param	trans_sw	転送スイッチ
+ * @param	win_cgx		ウィンドウキャラ位置
+ * @param	pal			パレット
+ * @param	type		看板タイプ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+void BoardWinFrame_Write( GFL_BMPWIN *win, u8 trans_sw, u16 win_cgx, u8 pal, u8 type )
+{
+	BmpWinFrame_Write(win, trans_sw, win_cgx, pal);
+}
+
+//--------------------------------------------------------------
+/**
+ *	看板ウィンドウをクリア
+ *
+ * @param	win			BMPウィンドウデータ
+ * @param	type		看板タイプ
+ * @param	trans_sw	転送スイッチ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+void BoardWinFrame_Clear( GFL_BMPWIN *win, u8 type, u8 trans_sw )
+{
+	BmpWinFrame_Clear(win, trans_sw);
+}

@@ -1001,7 +1001,7 @@ typedef struct {
 	u8					pokegra[4];		// 描画ポケモン
 
 	// グラフィック
-	CLACT_WORK_PTR		p_act[ WLDTIMER_TIME_POKE_NUM ];
+	GFL_CLWK*		p_act[ WLDTIMER_TIME_POKE_NUM ];
 	CLACT_U_RES_OBJ_PTR	p_res[ WLDTIMER_TIME_POKE_NUM ][ WLDTIMER_RESMAN_NUM ];
 } WLDTIMER_POKEBALLOON;
 
@@ -2671,7 +2671,7 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
 
 	// 基本キャラクタパレットフレーム
 	// サブ画面
-	ArcUtil_HDL_PalSet( p_wk->p_handle, NARC_worldtimer_world_watch_NCLR,
+	GFL_ARCHDL_UTIL_TransVramPalette( p_wk->p_handle, NARC_worldtimer_world_watch_NCLR,
 			PALTYPE_SUB_BG, 0, 0, heapID );
 	
 	// フレーム
@@ -3456,10 +3456,10 @@ static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsy
 		STRBUF* p_str;
 		p_str = WLDTIMER_MsgManGetStr( p_msgman, msg_01 );
 
-		FontProc_LoadFont( FONT_BUTTON, heapID );	//ボタンフォントのロード
-		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/&p_wk->bttn,FONT_BUTTON,p_str,
+		FontProc_LoadFont( NET_FONT_BUTTON, heapID );	//ボタンフォントのロード
+		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/&p_wk->bttn,NET_FONT_BUTTON,p_str,
 				4,0,MSG_NO_PUT, WLDTIMER_TOUCH_END_MSG_COL, NULL);
-		FontProc_UnloadFont( FONT_BUTTON );				//ボタンフォントの破棄
+		FontProc_UnloadFont( NET_FONT_BUTTON );				//ボタンフォントの破棄
 	}
 
 	// ウィンドウ描画
@@ -3791,7 +3791,7 @@ static void WLDTIMER_ViewerInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_draw
 
 	// フェード用スクリーンデータ読み込み
 	{
-		p_wk->p_fadescrnbuff = ArcUtil_HDL_ScrnDataGet(p_drawsys->p_handle, 
+		p_wk->p_fadescrnbuff = GFL_ARCHDL_UTIL_LoadScreen(p_drawsys->p_handle, 
 				NARC_worldtimer_world_watch_roll_NSCR, FALSE,
 				&p_wk->p_fadescrndata, heapID);
 
@@ -4441,8 +4441,8 @@ static BOOL WLDTIMER_ViewerFadeDiv_Main( WLDTIMER_VIEWER* p_wk, u32 idx, WLDTIME
 static void WLDTIMER_ViewerFadeScrn_LineTrans( WLDTIMER_VIEWER* p_wk, u32 y, WLDTIMER_DRAWSYS* p_drawsys )
 {
 
-	GF_BGL_ScrWriteExpand(
-			p_drawsys->p_bgl, GFL_BG_FRAME2_S, 
+	GFL_BG_WriteScreenExpand(
+			GFL_BG_FRAME2_S, 
 			WLDTIMER_VIEWER_SCRN_X, 
 			WLDTIMER_VIEWER_SCRN_Y+y,
 			WLDTIMER_VIEWER_SCRN_SX, 1,
@@ -4749,7 +4749,7 @@ static void WLDTIMER_TimeZoneAnm_Init( WLDTIMER_TIMEZONEANM* p_wk, WLDTIMER_DRAW
 		p_wk->scrnframe = cp_init->scrn_frame;	// 数
 		for( i=0; i<p_wk->scrnframe; i++ ){
 			
-			p_wk->p_scrnbuff[i] = ArcUtil_HDL_ScrnDataGet( 
+			p_wk->p_scrnbuff[i] = GFL_ARCHDL_UTIL_LoadScreen( 
 					p_drawsys->p_handle, cp_init->scrn_idx[i],
 					FALSE, &p_wk->p_scrndata[i], heapID );
 		}
@@ -4819,8 +4819,8 @@ static void WLDTIMER_TimeZoneAnm_Main( WLDTIMER_TIMEZONEANM* p_wk, WLDTIMER_DRAW
 		for( i=0; i<WLDTIMER_VIEWER_DRAWNUM; i++ ){
 			if( p_wk->drawflag[ i ] == TRUE ){
 				// 転送処理
-				GF_BGL_ScrWriteExpand(
-						p_drawsys->p_bgl, GFL_BG_FRAME2_S, 
+				GFL_BG_WriteScreenExpand(
+						GFL_BG_FRAME2_S, 
 						WLDTIMER_VIEWER_SCRN_X, 
 						WLDTIMER_VIEWER_SCRN_Y+(WLDTIMER_VIEWER_SCRN_SY*i),
 						WLDTIMER_VIEWER_SCRN_SX, WLDTIMER_VIEWER_SCRN_SY,
@@ -4896,8 +4896,8 @@ static void WLDTIMER_TimeZoneAnm_LineTrans( WLDTIMER_TIMEZONEANM* p_wk, u32 y, W
 {
 	// フレームのスクリーンデータのYラインだけを転送
 	if( p_wk->scrnframe>0 ){
-		GF_BGL_ScrWriteExpand(
-				p_drawsys->p_bgl, GFL_BG_FRAME2_S, 
+		GFL_BG_WriteScreenExpand(
+				GFL_BG_FRAME2_S, 
 				WLDTIMER_VIEWER_SCRN_X, 
 				WLDTIMER_VIEWER_SCRN_Y+y,
 				WLDTIMER_VIEWER_SCRN_SX, 1,
@@ -5401,7 +5401,7 @@ static void WLDTIMER_PokeBln_WndMskSet( const WLDTIMER_POKEBLN_MOVE* cp_wk, WLDT
 static void WLDTIMER_PokeBln_ActSetMatrix( WLDTIMER_POKEBALLOON* p_wk, u32 drawtype )
 {
 	VecFx32 pos;
-	CLACT_WORK_PTR p_obj;
+	GFL_CLWK* p_obj;
 
 	WLDTIMER_PokeBln_MoveGetPos( &p_wk->move[ drawtype ], &pos );	// 座標設定
 	

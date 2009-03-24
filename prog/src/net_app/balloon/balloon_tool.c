@@ -2982,7 +2982,7 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
  * @param   ret_fontoam		生成したフォントOAM代入先
  * @param   ret_cma			生成したフォントOAMのキャラ領域情報代入先
  * @param   str				文字列
- * @param   font_type		フォントタイプ(FONT_SYSTEM等)
+ * @param   font_type		フォントタイプ(NET_FONT_SYSTEM等)
  * @param   color			フォントカラー構成
  * @param   pal_offset		パレット番号オフセット
  * @param   pal_id			登録開始パレットID

@@ -22,6 +22,8 @@
 #include "wflby_ev_mg.h"
 #include "wflby_snd.h"
 
+#include "net_app/net_bugfix.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					コーディング規約
@@ -196,7 +198,7 @@ typedef struct {
 	
 
 	// ビットマップリスト専用
-	BMPLIST_HEADER		bmplist;
+	BMPMENULIST_HEADER		bmplist;
 	u32					bmplist_num;	// ビットマップリスト数
 
 	// カンバンワーク
@@ -221,7 +223,7 @@ typedef struct {
 //-------------------------------------
 ///	基本ヘッダー
 //=====================================
-static const BMPLIST_HEADER sc_WFLBY_EV_MG_HEADER = {
+static const BMPMENULIST_HEADER sc_WFLBY_EV_MG_HEADER = {
 	NULL,
 	NULL,
 	NULL,
@@ -238,8 +240,8 @@ static const BMPLIST_HEADER sc_WFLBY_EV_MG_HEADER = {
 	FBMP_COL_BLK_SDW,				//表示文字影色
 	0,								//文字間隔Ｘ
 	16,								//文字間隔Ｙ
-	BMPLIST_NO_SKIP,				//ページスキップタイプ
-	FONT_SYSTEM,					//文字指定(本来は u8 だけど、そんなに作らないと思うので)
+	BMPMENULIST_NO_SKIP,				//ページスキップタイプ
+	NET_FONT_SYSTEM,					//文字指定(本来は u8 だけど、そんなに作らないと思うので)
 	0,								//ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
 
 	NULL
@@ -455,7 +457,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			sel = WFLBY_ROOM_LISTWIN_Main( p_rmwk );
 			switch( sel ){
 			// 切断へ
-			case BMPLIST_CANCEL:
+			case BMPMENULIST_CANCEL:
 			case WFLBY_EV_MG_SELLIST_NO:
 				p_param->in_ok = WFLBY_EV_MG_RET_NG_MY;
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_END );
@@ -1805,8 +1807,8 @@ static void WFLBY_EV_MG_MINIGAME_PrintMinigame_Core( WFLBY_EV_MG_KANBANWK* p_evw
 				WFLBY_EV_DEF_PLAYER_KANBAN_SUBWIN_SIZX*8, 32 );
 
 		// 描画
-		WFLBY_ROOM_MSG_SetNumber( p_rmwk, p_evwk->num, 1, 1, NUMBER_DISPTYPE_ZERO );
-		WFLBY_ROOM_MSG_SetNumber( p_rmwk, WFLBY_MINIGAME_MAX - p_evwk->num, 1, 0, NUMBER_DISPTYPE_ZERO );
+		WFLBY_ROOM_MSG_SetNumber( p_rmwk, p_evwk->num, 1, 1, STR_NUM_DISP_ZERO );
+		WFLBY_ROOM_MSG_SetNumber( p_rmwk, WFLBY_MINIGAME_MAX - p_evwk->num, 1, 0, STR_NUM_DISP_ZERO );
 		p_str = WFLBY_ROOM_MSG_Get( p_rmwk, WFLBY_DEFMSG_TYPE_HIROBA, msg_hiroba_bord2_01 );
 		WFLBY_ROOM_SUBWIN_Print( p_rmwk, p_str, 
 				WFLBY_EV_DEF_PLAYER_KANBAN_SUBWIN_PLAYNUM_X,
@@ -1824,7 +1826,7 @@ static void WFLBY_EV_MG_MINIGAME_PrintMinigame_Core( WFLBY_EV_MG_KANBANWK* p_evw
 					WFLBY_EV_DEF_PLAYER_KANBAN_SUBWIN_SIZX*8, 16 );
 
 			// 描画
-			WFLBY_ROOM_MSG_SetNumber( p_rmwk, p_evwk->number, 2, 0, NUMBER_DISPTYPE_ZERO );
+			WFLBY_ROOM_MSG_SetNumber( p_rmwk, p_evwk->number, 2, 0, STR_NUM_DISP_ZERO );
 			p_str = WFLBY_ROOM_MSG_Get( p_rmwk, WFLBY_DEFMSG_TYPE_INFO, msg_wifi_h_info_02_03 );
 			WFLBY_ROOM_SUBWIN_Print( p_rmwk, p_str, 
 					WFLBY_EV_DEF_PLAYER_KANBAN_SUBWIN_COUNT_X,

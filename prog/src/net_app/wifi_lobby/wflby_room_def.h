@@ -14,9 +14,10 @@
 
 #include "strbuf.h"
 
-#include "system/clact_util.h"
-#include "system/render_oam.h"
-#include "system/bmp_list.h"
+//#include "system/clact_util.h"
+//#include "system/render_oam.h"
+#include "system\bmp_menulist.h"
+#include "system\bmp_menuwork.h"
 
 #include "savedata/mystatus.h"
 
@@ -123,7 +124,7 @@ extern BOOL WFBLY_ROOM_CheckNpcInfoDrawBusy( const WFLBY_ROOMWK* cp_wk, u8 plno 
 
 extern void WFLBY_ROOM_TALKWIN_PrintStr( WFLBY_ROOMWK* p_wk, const STRBUF* cp_str );
 extern void WFLBY_ROOM_TALKWIN_PrintStrAllPut( WFLBY_ROOMWK* p_wk, const STRBUF* cp_str );
-extern BOOL WFLBY_ROOM_TALKWIN_WaitEnd( const WFLBY_ROOMWK* cp_wk );
+extern BOOL WFLBY_ROOM_TALKWIN_WaitEnd( WFLBY_ROOMWK* cp_wk );
 extern void WFLBY_ROOM_TALKWIN_StartTimeWait( WFLBY_ROOMWK* p_wk );
 extern void WFLBY_ROOM_TALKWIN_StopTimeWait( WFLBY_ROOMWK* p_wk );
 extern BOOL WFLBY_ROOM_TALKWIN_CheckTimeWait( const WFLBY_ROOMWK* cp_wk );
@@ -132,7 +133,7 @@ extern void WFLBY_ROOM_TALKWIN_Off( WFLBY_ROOMWK* p_wk );
 
 extern void WFLBY_ROOM_BOARDWIN_PrintStr( WFLBY_ROOMWK* p_wk, const STRBUF* cp_str );
 extern void WFLBY_ROOM_BOARDWIN_PrintStrAllPut( WFLBY_ROOMWK* p_wk, const STRBUF* cp_str );
-extern BOOL WFLBY_ROOM_BOARDWIN_WaitEnd( const WFLBY_ROOMWK* cp_wk );
+extern BOOL WFLBY_ROOM_BOARDWIN_WaitEnd( WFLBY_ROOMWK* cp_wk );
 extern void WFLBY_ROOM_BOARDWIN_Off( WFLBY_ROOMWK* p_wk );
 
 
@@ -144,8 +145,8 @@ extern void WFLBY_ROOM_LISTWIN_DeleteBmpList( WFLBY_ROOMWK* p_wk );
 extern void WFLBY_ROOM_LISTWIN_SetBmpListStr( WFLBY_ROOMWK* p_wk, const STRBUF* cp_str, u32 param );
 extern const BMP_MENULIST_DATA* WFLBY_ROOM_LISTWIN_GetBmpList( const WFLBY_ROOMWK* cp_wk );
 extern BOOL WFLBY_ROOM_LISTWIN_CheckBmpListParam( const WFLBY_ROOMWK* cp_wk, u32 param );
-extern void WFLBY_ROOM_LISTWIN_Start( WFLBY_ROOMWK* p_wk, const BMPLIST_HEADER* cp_data, u16 list_p, u16 cursor_p );
-extern void WFLBY_ROOM_LISTWIN_Start_Ex( WFLBY_ROOMWK* p_wk, const BMPLIST_HEADER* cp_data, u16 list_p, u16 cursor_p, u8 cx, u8 cy, u8 szcx );
+extern void WFLBY_ROOM_LISTWIN_Start( WFLBY_ROOMWK* p_wk, const BMPMENULIST_HEADER* cp_data, u16 list_p, u16 cursor_p );
+extern void WFLBY_ROOM_LISTWIN_Start_Ex( WFLBY_ROOMWK* p_wk, const BMPMENULIST_HEADER* cp_data, u16 list_p, u16 cursor_p, u8 cx, u8 cy, u8 szcx );
 extern u32 WFLBY_ROOM_LISTWIN_Main( WFLBY_ROOMWK* p_wk );
 extern void WFLBY_ROOM_LISTWIN_End( WFLBY_ROOMWK* p_wk, u16* p_list_p, u16* p_cursor_p );
 extern void WFLBY_ROOM_LISTWIN_YAZIRUSHI_SetDraw( WFLBY_ROOMWK* p_wk, BOOL flag );
@@ -163,7 +164,7 @@ extern WFLBY_ROOM_YESNO_RET WFLBY_ROOM_YESNOWIN_Main( WFLBY_ROOMWK* p_wk );
 extern void WFLBY_ROOM_YESNOWIN_End( WFLBY_ROOMWK* p_wk );
 
 extern STRBUF* WFLBY_ROOM_MSG_Get( WFLBY_ROOMWK* p_wk, WFLBY_DEFMSG_TYPE type, u32 stridx );
-extern void WFLBY_ROOM_MSG_SetNumber( WFLBY_ROOMWK* p_wk, u32  num, u32 keta, u32 bufid, NUMBER_DISPTYPE disptype );
+extern void WFLBY_ROOM_MSG_SetNumber( WFLBY_ROOMWK* p_wk, u32  num, u32 keta, u32 bufid, StrNumberDispType disptype );
 extern void WFLBY_ROOM_MSG_SetPlayerName( WFLBY_ROOMWK* p_wk, const MYSTATUS* cp_mystatus, u32 bufid );
 extern void WFLBY_ROOM_MSG_SetIdxPlayerName( WFLBY_ROOMWK* p_wk, u32 idx, u32 bufid );
 extern void WFLBY_ROOM_MSG_SetMinigame( WFLBY_ROOMWK* p_wk, WFLBY_GAMETYPE type, u32 bufid );

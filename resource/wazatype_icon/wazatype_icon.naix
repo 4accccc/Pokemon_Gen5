@@ -1,0 +1,46 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: wazatype_icon.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_WAZATYPE_ICON_NAIX_
+#define NARC_WAZATYPE_ICON_NAIX_
+
+enum {
+	NARC_wazatype_icon_p_st_type_beautiful_NCGR = 0,
+	NARC_wazatype_icon_p_st_type_cute_NCGR = 1,
+	NARC_wazatype_icon_p_st_type_dragon_NCGR = 2,
+	NARC_wazatype_icon_p_st_type_ele_NCGR = 3,
+	NARC_wazatype_icon_p_st_type_esp_NCGR = 4,
+	NARC_wazatype_icon_p_st_type_evil_NCGR = 5,
+	NARC_wazatype_icon_p_st_type_fight_NCGR = 6,
+	NARC_wazatype_icon_p_st_type_fire_NCGR = 7,
+	NARC_wazatype_icon_p_st_type_flight_NCGR = 8,
+	NARC_wazatype_icon_p_st_type_ghost_NCGR = 9,
+	NARC_wazatype_icon_p_st_type_ground_NCGR = 10,
+	NARC_wazatype_icon_p_st_type_ice_NCGR = 11,
+	NARC_wazatype_icon_p_st_type_insect_NCGR = 12,
+	NARC_wazatype_icon_p_st_type_intelli_NCGR = 13,
+	NARC_wazatype_icon_p_st_type_grass_NCGR = 14,
+	NARC_wazatype_icon_p_st_type_normal_NCGR = 15,
+	NARC_wazatype_icon_p_st_type_poison_NCGR = 16,
+	NARC_wazatype_icon_p_st_type_ques_NCGR = 17,
+	NARC_wazatype_icon_p_st_type_rock_NCGR = 18,
+	NARC_wazatype_icon_p_st_type_steel_NCGR = 19,
+	NARC_wazatype_icon_p_st_type_strong_NCGR = 20,
+	NARC_wazatype_icon_p_st_type_style_NCGR = 21,
+	NARC_wazatype_icon_p_st_type_water_NCGR = 22,
+	NARC_wazatype_icon_p_st_type_normal_NCER = 23,
+	NARC_wazatype_icon_p_st_type_normal_NANR = 24,
+	NARC_wazatype_icon_st_type_NCLR = 25,
+	NARC_wazatype_icon_p_st_bunrui_buturi_NCGR = 26,
+	NARC_wazatype_icon_p_st_bunrui_henka_NCGR = 27,
+	NARC_wazatype_icon_p_st_bunrui_tokusyu_NCGR = 28
+};
+
+/* NARC_WAZATYPE_ICON_NAIX_ */
+#endif

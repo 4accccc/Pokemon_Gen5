@@ -165,13 +165,13 @@ typedef struct {
 //-------------------------------------
 ///	WiFiロビーニュースデータベース
 //=====================================
-typedef struct _NEWS_DATA {
+struct _NEWS_DATA {
 	WFLBY_TIME		lock_time;					// LOCKタイム
 	BOOL			lock_flag;					// LOCKされているか
 	NEWS_ROOMPLAYER	player;						// 接続プレイヤーバッファ
 	NEWS_TOPICBUF	topic;						// トピックバッファ
 
-} NEWS_DATA;
+};
 
 
 //-----------------------------------------------------------------------------

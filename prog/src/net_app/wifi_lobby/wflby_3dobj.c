@@ -137,7 +137,7 @@ typedef struct {
 //-------------------------------------
 ///	ワーク構造体
 //=====================================
-typedef struct _WFLBY_3DOBJWK{
+struct _WFLBY_3DOBJWK{
 	u8						updata : 4;	// 更新フラグ
 	u8						culling : 2;// カリング
 	u8						objdraw : 2;// アクター表示
@@ -163,12 +163,12 @@ typedef struct _WFLBY_3DOBJWK{
 	fx32 lastframe;		// 1つ前の保存アニメ終了フレーム(BLACT frame)
 
 	int	set_light_msk;	// 設定したライトフラグ
-}WFLBY_3DOBJWK;
+};
 
 //-------------------------------------
 ///	システム構造体
 //=====================================
-typedef struct _WFLBY_3DOBJSYS{
+struct _WFLBY_3DOBJSYS{
 
 #if WB_FIX
 	// リソースマネージャ
@@ -197,7 +197,7 @@ typedef struct _WFLBY_3DOBJSYS{
 	// ライトマスク
 	int					mdl_light_msk;
 
-}WFLBY_3DOBJSYS;
+};
 
 
 

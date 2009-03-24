@@ -115,6 +115,7 @@ SRCS	+=		$(SOUNDSRC) \
 				field/scrcmd.c \
 				field/eventwork.c \
 				field/scrcmd_work.c \
+				system/wazatype_icon.c \
 				test/ariizumi/debug_pause.c
 
 
@@ -561,4 +562,24 @@ SRCS_OVERLAY_WIFILOBBY_CONNECT		=	net_app\wifi_lobby\wflby_connect.c
 ### #WIFILOBBY
 ### #===>SRCS_OVERLAY_WIFILOBBY_COMMON
 ### SRCS_OVERLAY_WORLDTIMER		=	net_app\wifi_lobby\worldtimer.c
+
+#WIFILOBBY
+#===>SRCS_OVERLAY_WIFILOBBY_COMMON
+SRCS_OVERLAY_WIFILOBBY_ROOM		=	net_app\wifi_lobby\wflby_3dmatrix.c \
+									net_app\wifi_lobby\wflby_mapcont.c \
+									net_app\wifi_lobby\wflby_3dobjcont.c \
+									net_app\wifi_lobby\wflby_room.c
+#									net_app\wifi_lobby\wflby_camera.c \
+#									net_app\wifi_lobby\wflby_3dmapobj.c \
+#									net_app\wifi_lobby\wflby_3dmapobj_cont.c \
+#									net_app\wifi_lobby\wflby_event.c \
+#									net_app\wifi_lobby\wflby_ev_def.c \
+#									net_app\wifi_lobby\wflby_ev_mg.c \
+#									net_app\wifi_lobby\wflby_ev_talk.c \
+#									net_app\wifi_lobby\wflby_gadget.c \
+#									net_app\wifi_lobby\wflby_light.c \
+#									net_app\wifi_lobby\wflby_timeevent.c \
+#									net_app\wifi_lobby\wflby_fire.c \
+#									net_app\wifi_lobby\wflby_ev_anketo.c \
+#									net_app\wifi_lobby\wflby_float.c
 

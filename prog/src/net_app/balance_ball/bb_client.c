@@ -1246,24 +1246,24 @@ void BB_Client_GameCore( BB_CLIENT* wk )
 	}
 }
 
-static const TP_HIT_TBL ball_hit_tbl[] = {
+static const GFL_UI_TP_HITTBL ball_hit_tbl[] = {
 	{
-		TP_USE_CIRCLE,
+		GFL_UI_TP_USE_CIRCLE,
 		128,
 		 96 + 32,
 		 48,
 	},
-	{ TP_HIT_END,0,0,0, }
+	{GFL_UI_TP_HIT_END,0,0,0},
 };
 
-static const TP_HIT_TBL ball_hit_tbl2[] = {
+static const GFL_UI_TP_HITTBL ball_hit_tbl2[] = {
 	{
-		TP_USE_CIRCLE,
+		GFL_UI_TP_USE_CIRCLE,
 		128,
 		 96 + 32,
 		 64,
 	},
-	{ TP_HIT_END,0,0,0, }
+	{GFL_UI_TP_HIT_END,0,0,0},
 };
 
 
@@ -1284,7 +1284,7 @@ void BB_Client_TouchPanel_Main( BB_CLIENT* wk )
 		s16 mx, my;
 		BOOL bMove;
 		BOOL bHit = GF_TP_GetPointCont( &x, &y );
-		TP_HIT_TBL* tbl;
+		GFL_UI_TP_HITTBL* tbl;
 		int hitdata;
 
 		wk->game_sys.touch = FALSE;

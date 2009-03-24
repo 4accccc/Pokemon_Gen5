@@ -192,7 +192,7 @@ enum {
 #define ANKETO_INPUTWIN_ANS00_Y		( 0 )
 #define ANKETO_INPUTWIN_ANS01_Y		( 24 )
 #define ANKETO_INPUTWIN_ANS02_Y		( 48 )
-static const BMPWIN_DAT sc_ANKETO_INPUT_BMPDAT[ ANKETO_INPUT_BMP_NUM ] = {
+static const NET_BMPWIN_DAT sc_ANKETO_INPUT_BMPDAT[ ANKETO_INPUT_BMP_NUM ] = {
 	{
 		GFL_BG_FRAME2_M,
 		ANKETO_INPUTWIN_X,		ANKETO_INPUTWIN_Y,
@@ -323,7 +323,7 @@ enum {
 
 
 
-static const BMPWIN_DAT sc_ANKETO_OUTPUT_BMPDAT[ ANKETO_OUTPUT_BMP_NUM ] = {
+static const NET_BMPWIN_DAT sc_ANKETO_OUTPUT_BMPDAT[ ANKETO_OUTPUT_BMP_NUM ] = {
 
 	// TITLE
 	{
@@ -419,7 +419,7 @@ typedef struct {
 typedef struct {
 	GFL_BMPWIN* win[ ANKETO_INPUT_BMP_NUM ];
 	s32 cursor;
-	CLACT_WORK_PTR		p_cursor_act;
+	GFL_CLWK*		p_cursor_act;
 	CLACT_U_RES_OBJ_PTR	p_cursor_res[ANKETO_RESMAN_NUM];
 	u16 seq;
 	u16 ret_seq;
@@ -1347,7 +1347,7 @@ static void ANKETO_INPUT_Init( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 {
 	// 背景設定
 	{
-		ArcUtil_HDL_PalSet( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCLR, PALTYPE_MAIN_BG, ANKETO_PLTT_MAIN_BACK00, ANKETO_PLTT_MAINBACK_PLTTNUM*32, heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCLR, PALTYPE_MAIN_BG, ANKETO_PLTT_MAIN_BACK00, ANKETO_PLTT_MAINBACK_PLTTNUM*32, heapID );
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCGR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
 		GFL_ARCHDL_UTIL_TransVramScreen( p_drawsys->p_handle, NARC_wifi_lobby_other_bg00_NSCR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
 	}
@@ -1805,6 +1805,38 @@ static void ANKETO_TalkWin_Exit( ANKETO_TALKWIN* p_wk, u32 heapID )
 	ANKETO_TalkWin_EndYesNo( p_wk, heapID );
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   PRINTSYS_PrintStreamColorをでっちあげる
+ *
+ * @param   dst		
+ * @param   xpos		
+ * @param   ypos		
+ * @param   str		
+ * @param   font		
+ * @param   font_color	
+ *
+ * @retval  
+ */
+//--------------------------------------------------------------
+static PRINT_STREAM * _PrintStreamColor(GFL_BMPWIN* dst, u16 xpos, u16 ypos, 
+	const STRBUF* str, GFL_FONT* font, u16 wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, 
+	HEAPID heapID, u16 clearColor, GF_PRINTCOLOR font_color )
+{
+	u8 letter, u8 shadow, u8 back;
+	PRINT_STREAM *ret_stream;
+	
+	GFL_FONTSYS_GetColor( &letter, &shadow, &back);
+	GFL_FONTSYS_SetColor(GF_PRINTCOLOR_GET_LETTER(font_color), 
+		GF_PRINTCOLOR_GET_SHADOW(font_color), GF_PRINTCOLOR_GET_GROUND(font_color));
+		
+	ret_stream = PRINTSYS_PrintStream(
+		dst, xpos, ypos, str, font, wait, tcbsys, tcbpri, heapID, clearColor);
+	
+	GFL_FONTSYS_SetColor( letter, shadow, back);
+	return ret_stream;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	会話開始
@@ -1824,8 +1856,8 @@ static void ANKETO_TalkWin_Print( ANKETO_TALKWIN* p_wk, const STRBUF* cp_str )
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 	
 	// 文字列コピー
-	STRBUF_Copy( p_wk->p_str, cp_str );
-	p_wk->msgno = PRINTSYS_PrintStreamColor(/*引数内はまだ未対応*/ &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
+	GFL_STR_CopyBuffer( p_wk->p_str, cp_str );
+	p_wk->msgno = _PrintStreamColor(/*引数内はまだ未対応*/ &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
 			p_wk->msgwait, ANKETO_TALK_COL, NULL );
 
 	// ウィンドウを書き込む
@@ -1851,7 +1883,7 @@ static void ANKETO_TalkWin_PrintAll( ANKETO_TALKWIN* p_wk, const STRBUF* cp_str 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 	
 	// 文字列コピー
-	STRBUF_Copy( p_wk->p_str, cp_str );
+	GFL_STR_CopyBuffer( p_wk->p_str, cp_str );
 	PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->win, FONT_TALK, p_wk->p_str, 0, 0,
 			MSG_NO_PUT, ANKETO_TALK_COL, NULL );
 
@@ -2039,7 +2071,7 @@ static void ANKETO_OUTPUT_Init( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 {
 	// 背景設定
 	{
-		ArcUtil_HDL_PalSet( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCLR, PALTYPE_MAIN_BG, ANKETO_PLTT_MAIN_BACK00, ANKETO_PLTT_MAINBACK_PLTTNUM*32, heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCLR, PALTYPE_MAIN_BG, ANKETO_PLTT_MAIN_BACK00, ANKETO_PLTT_MAINBACK_PLTTNUM*32, heapID );
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_drawsys->p_handle, NARC_wifi_lobby_other_bg_NCGR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
 		GFL_ARCHDL_UTIL_TransVramScreen( p_drawsys->p_handle, NARC_wifi_lobby_other_bg01_NSCR, p_drawsys->p_bgl, GFL_BG_FRAME0_M, 0, 0, FALSE, heapID );
 	}
@@ -2579,7 +2611,7 @@ static void ANKETO_OUTPUT_DrawBarStart( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTI
 	for( i=0; i<ANKETO_ANSWER_NUM; i++ ){
 		p_wk->draw_width[ i ] = 0;
 		p_wk->drawend_width[ i ] = ANKETO_QUESTION_RESULT_GetBerWidth( cp_data, i, ANKETO_BAR_100WIDTH ); 
-		GF_BGL_BmpWinSet_Pal( &p_wk->win[ ANKETO_OUTPUT_BMP_ANS_BAR00+i ], palno );
+		GFL_BMPWIN_SetPalette( &p_wk->win[ ANKETO_OUTPUT_BMP_ANS_BAR00+i ], palno );
 
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[ ANKETO_OUTPUT_BMP_ANS_BAR00+i ]), 0 );
 	}

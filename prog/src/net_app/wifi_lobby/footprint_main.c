@@ -8,7 +8,7 @@
 //==============================================================================
 #include <gflib.h>
 //#include "system/snd_tool.h"
-#include "system/bmp_list.h"
+#include "system/bmp_menulist.h"
 #include "print\printsys.h"
 #include "savedata\system_data.h"
 #include "system/bmp_menu.h"
@@ -650,7 +650,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 #endif
 
 	// ボタン用フォントを読み込み
-	FontProc_LoadFont(FONT_BUTTON, HEAPID_FOOTPRINT);
+	FontProc_LoadFont(NET_FONT_BUTTON, HEAPID_FOOTPRINT);
 
 	//メッセージマネージャ作成
 	fps->wordset		 = WORDSET_Create(HEAPID_FOOTPRINT);
@@ -1041,7 +1041,7 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 	GFL_STR_DeleteBuffer(fps->talk_strbuf);
 	
 	//フォント削除
-	FontProc_UnloadFont(FONT_BUTTON);
+	FontProc_UnloadFont(NET_FONT_BUTTON);
 
 	//フォントOAMシステム削除
 	FONTOAM_SysDelete(fps->fontoam_sys);
@@ -1512,7 +1512,7 @@ static void DefaultActorSet_Main(FOOTPRINT_SYS *fps)
 		
 		str_ptr = GFL_MSG_CreateString(fps->msgman, msg_footprint_exit);
 		
-		Sub_FontOamCreate(fps, &fps->fontoam_exit, str_ptr, FONT_BUTTON,
+		Sub_FontOamCreate(fps, &fps->fontoam_exit, str_ptr, NET_FONT_BUTTON,
 			GF_PRINTCOLOR_MAKE(1,2,3), 0, 
 			PLTTID_OBJ_FONTOAM, 0x1c * 8, 176, FONTOAM_CENTER);
 		FONTOAM_SetDrawFlag(fps->fontoam_exit.fontoam, TRUE);
@@ -2352,7 +2352,7 @@ static void Footprint_TouchEffUpdate(FOOTPRINT_SYS_PTR fps)
  * @param   aci			BIシステムワークへのポインタ
  * @param   font_actor	生成したフォントOAM関連のワーク代入先
  * @param   str			文字列
- * @param   font_type	フォントタイプ(FONT_SYSTEM等)
+ * @param   font_type	フォントタイプ(NET_FONT_SYSTEM等)
  * @param   color		フォントカラー構成
  * @param   pal_offset	パレット番号オフセット
  * @param   pal_id		登録開始パレットID

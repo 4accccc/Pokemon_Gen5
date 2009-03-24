@@ -137,7 +137,7 @@ typedef struct {
 	
 	GFL_G3D_CAMERA *		camera_p;			///< カメラ
 	
-	BUTTON_MAN*			btn;				///< ボタン
+	GFL_BUTTON_MAN*			btn;				///< ボタン
 	
 //	BUTTON_MAN*			btn;				///< ボタン	
 //	RECT_HIT_TBL		rht[ eHRT_MAX ];	///< 当たり判定(managerに登録する)

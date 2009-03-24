@@ -1034,7 +1034,7 @@ typedef struct {
 /// OAM木の実描画
 //=====================================
 typedef struct {
-    CLACT_WORK_PTR p_clwk;
+    GFL_CLWK* p_clwk;
     GFL_G3D_OBJSTATUS      obj;
     GFL_G3D_OBJSTATUS      shadow;	// かげよう
     BOOL draw2d;                    // 2d描画させるか
@@ -1051,7 +1051,7 @@ typedef struct {
 //=====================================
 typedef struct {
     BOOL draw;
-    CLACT_WORK_PTR p_clwk;
+    GFL_CLWK* p_clwk;
 } BCT_CLIENT_HANDNUTS_DRAW;
 
 //-------------------------------------
@@ -1059,7 +1059,7 @@ typedef struct {
 //=====================================
 typedef struct {
     BOOL draw;
-    CLACT_WORK_PTR p_clwk;
+    GFL_CLWK* p_clwk;
 	VecFx32 mat;
 	s32 count;
 	BOOL left;
@@ -1072,7 +1072,7 @@ typedef struct {
 ///	SCOREエフェクトワーク
 //=====================================
 typedef struct {
-	CLACT_WORK_PTR  p_clwk[ BCT_SCORE_EFFECT_BUF ];
+	GFL_CLWK*  p_clwk[ BCT_SCORE_EFFECT_BUF ];
 	u32 count[ BCT_SCORE_EFFECT_BUF ];
 	VecFx32 mat[ BCT_SCORE_EFFECT_BUF ];
 	BOOL  mydata;
@@ -1138,7 +1138,7 @@ typedef struct {
 typedef struct {
     CLACT_U_RES_OBJ_PTR     resobj[4];      // 読み込んだりソースのオブジェクト
     CLACT_HEADER            header;         // アクター作成用ヘッダー
-    CLACT_WORK_PTR p_clwk;
+    GFL_CLWK* p_clwk;
 
 	u8					move;			// 動作フラグ
 	u8					roop;			// ループ数
@@ -1164,7 +1164,7 @@ typedef struct {
 
     CLACT_U_RES_OBJ_PTR     resobj[4];			// 読み込んだりソースのオブジェクト
     CLACT_HEADER            header;				// アクター作成用ヘッダー
-	CLACT_WORK_PTR			p_tblwk;			// テーブルワーク
+	GFL_CLWK*			p_tblwk;			// テーブルワーク
 	
 	GFL_BMPWIN*			objbmp;				// 文字列ビットマップデータ
 	FONTOAM_OBJ_PTR			p_fontoam;			// フォントOAMワーク
@@ -2785,13 +2785,13 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
             BCT_GRA_BGMAIN_PAL_FONT, GFL_BMP_CHRAREA_GET_F );
 
     GFL_BMPWIN_MakeScreen(p_graphic->helpwin);
-    GF_BGL_BmpWinFill( &p_graphic->helpwin, 15, 0, 0, 
-            BCT_GRA_STARTWIN_SIZX*8, BCT_GRA_STARTWIN_SIZY*8 );
+    GFL_BMP_Fill( GFL_BMPWIN_GetBmp(&p_graphic->helpwin), 0, 0, 
+            BCT_GRA_STARTWIN_SIZX*8, BCT_GRA_STARTWIN_SIZY*8, 15 );
 
     // メッセージを書き込む
     p_str = GFL_STR_CreateBuffer( BCT_STRBUF_NUM, heapID );
     GFL_MSG_GetString( p_drawsys->p_msgman, msg_a_001, p_str );
-    PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_graphic->helpwin, FONT_SYSTEM, p_str, 
+    PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_graphic->helpwin, NET_FONT_SYSTEM, p_str, 
             BCT_GRA_STARTWIN_MSGX, BCT_GRA_STARTWIN_MSGY,
             MSG_NO_PUT, BCT_COL_N_BLACK, NULL);
     GFL_STR_DeleteBuffer( p_str );
@@ -2802,7 +2802,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 			p_drawsys->p_bgl, GFL_BG_FRAME2_M, 0, 0, FALSE, heapID );
 	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_ent_win_bg02_NSCR+(commnum-2),
 			p_drawsys->p_bgl, GFL_BG_FRAME2_M, 0, 0, FALSE, heapID);
-	ArcUtil_HDL_PalSet( p_handle, NARC_bucket_ent_win_bg_NCLR,
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bucket_ent_win_bg_NCLR,
 			PALTYPE_MAIN_BG, BCT_GRA_BGMAIN_PAL_NAME_PL00*32, (BCT_GRA_BGMAIN_PAL_NAME_PL03+1)*32,
 			heapID );
 
@@ -2847,9 +2847,9 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 				GF_BGL_BmpWinSet_PosX( &namebmpwin, name_x );	// 位置設定
 				GF_BGL_BmpWinSet_PosY( &namebmpwin, name_y );
 				namebmpwin.chrofs = namebmp_cgx;				// cgx設定
-				namestrsize = PRINTSYS_GetStrWidth( p_namestr, GFL_FONT* font/*FONT_SYSTEM*/, 0 );	// 表示位置設定
+				namestrsize = PRINTSYS_GetStrWidth( p_namestr, GFL_FONT* font/*NET_FONT_SYSTEM*/, 0 );	// 表示位置設定
 				draw_x		= ((BCT_START_NAME_BMP_WINSIZ_X*8) - namestrsize) / 2;	// 中央表示
-				PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &namebmpwin, FONT_SYSTEM, p_namestr, 
+				PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &namebmpwin, NET_FONT_SYSTEM, p_namestr, 
 						draw_x, 0,
 						MSG_ALLPUT, col, NULL);
 
@@ -5962,7 +5962,9 @@ static void BCT_CLIENT_GraphicDrawCore( const BCT_CLIENT* cp_wk, BCT_CLIENT_GRAP
     
 
     GFL_G3D_DRAW_End();
+#if WB_FIX
     GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
+#endif
 
     // セルアクター描画
     CLACT_Draw( p_wk->clactSet );
@@ -6409,7 +6411,7 @@ static void BCT_CLIENT_BgResLoad( BCT_CLIENT_GRAPHIC* p_wk, ARCHANDLE* p_handle,
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg1_NSCR, p_wk->p_bgl,GFL_BG_FRAME2_S, 0, 0, FALSE, heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg2_NSCR, p_wk->p_bgl,GFL_BG_FRAME1_S, 0, 0, FALSE, heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_bucket_tamaire_bg3_NSCR, p_wk->p_bgl,GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
-    ArcUtil_HDL_PalSet( p_handle, NARC_bucket_tamaire_bg_NCLR, PALTYPE_SUB_BG, 0, BCT_GRA_BGSUB_PAL_NUM*32, heapID );
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bucket_tamaire_bg_NCLR, PALTYPE_SUB_BG, 0, BCT_GRA_BGSUB_PAL_NUM*32, heapID );
 
 	// パレットを合わせる
 	GFL_BG_ChangeScreenPalette( p_wk->p_bgl, GFL_BG_FRAME3_S, 0, 0, 32, 32, sc_SubPal[plno] );	
@@ -8517,7 +8519,7 @@ static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT
 	// 数字を書き込んで転送
 	{
 		STRBUF_SetNumber( p_wk->p_str, count, 2, 
-				NUMBER_DISPTYPE_ZERO, STR_NUM_CODE_DEFAULT );
+				STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 
 		// ビットマップ
 		GF_BGL_BmpWinObjAdd( p_gra->p_bgl, 
@@ -8526,7 +8528,7 @@ static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT
 				0, 0 );
 
 		// 書き込む
-		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->objbmp, FONT_SYSTEM, p_wk->p_str,
+		PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->objbmp, NET_FONT_SYSTEM, p_wk->p_str,
 				0, 0, MSG_NO_PUT, BCT_COL_OAM_BLACK, NULL );
 
 		// 転送
@@ -8585,7 +8587,7 @@ static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIE
 		// 数字を更新
 		{
 			STRBUF_SetNumber( p_wk->p_str, count, 2, 
-					NUMBER_DISPTYPE_ZERO, STR_NUM_CODE_DEFAULT );
+					STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 
 			// ビットマップ
 			GF_BGL_BmpWinObjAdd( p_gra->p_bgl, 
@@ -8594,7 +8596,7 @@ static void BCT_CLIENT_NUTS_COUNT_SetData( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIE
 					0, 0 );
 
 			// 書き込む
-			PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->objbmp, FONT_SYSTEM, p_wk->p_str,
+			PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/ &p_wk->objbmp, NET_FONT_SYSTEM, p_wk->p_str,
 					0, 0, MSG_NO_PUT, BCT_COL_OAM_BLACK, NULL );
 
 			// 転送

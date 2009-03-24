@@ -1906,7 +1906,7 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 			else{
 				print_color = BMPWIN_SUB_STR_PRINTCOLOR;
 			}
-			dot_len = PRINTSYS_GetStrWidth(name, GFL_FONT* font/*FONT_SYSTEM*/, 0);
+			dot_len = PRINTSYS_GetStrWidth(name, GFL_FONT* font/*NET_FONT_SYSTEM*/, 0);
 			draw_x_offset = 8*10/2 - dot_len/2;	//ƒZƒ“ƒ^[Šñ‚¹
 			if(dot_len & 1){
 				draw_x_offset--;
@@ -1916,7 +1916,7 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 				draw_x_offset, 0, name, game->fontHandle);
 			GF_STR_PrintColor(
 				&game->printUtil[BalloonPlayerSortBmpNamePosTbl[game->bsw->player_max][bmp_pos]].win, 
-				FONT_SYSTEM, name, draw_x_offset, 0, MSG_ALLPUT, print_color, NULL);
+				NET_FONT_SYSTEM, name, draw_x_offset, 0, MSG_ALLPUT, print_color, NULL);
 			GFL_HEAP_FreeMemory(name);
 		}
 	}

@@ -90,7 +90,7 @@ typedef struct {
 //-------------------------------------
 ///	WiFiロビー　アプリ管理システム
 //=====================================
-typedef struct _WFLBY_APL{
+struct _WFLBY_APL{
 	GFL_PROCSYS*			p_proc;					// アプリプロック
 	WFLBY_APLDATA	apldata[WFLBY_APL_NUM];	// 動作アプリ分のパラメータ
 	u8				aplno;					// 実行中のアプリナンバー
@@ -101,7 +101,7 @@ typedef struct _WFLBY_APL{
 	WFLBY_SYSTEM*		p_system;
 	SAVE_CONTROL_WORK*			p_savedata;
 	WFLBY_COUNTER_TIME* p_wflby_counter;
-}WFLBY_APL;
+};
 
 //-----------------------------------------------------------------------------
 /**

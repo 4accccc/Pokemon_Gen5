@@ -14,6 +14,8 @@
 #include "print/str_tool.h"
 #include "system/pms_word.h"
 #include "net_app/wifi_lobby/wflby_def.h"  //WFLBY_GAMETYPEetc
+#include "savedata/mystatus.h"
+#include "net_app/wifi_country.h"
 
 typedef struct _WORDSET  WORDSET;
 
@@ -21,6 +23,8 @@ typedef struct _WORDSET  WORDSET;
 enum {
 	WORDSET_DEFAULT_SETNUM = 8,		// デフォルトバッファ数
 	WORDSET_DEFAULT_BUFLEN = 32,	// デフォルトバッファ長（文字数）
+
+	WORDSET_COUNTRY_BUFLEN = 64,	// 国地域名用バッファ長（文字数）(WORDSET_CreateExで指定)
 };
 
 
@@ -44,6 +48,10 @@ extern void WORDSET_RegisterWiFiLobbyAisatsuFrance( WORDSET* wordset, u32 bufID,
 extern void WORDSET_RegisterWiFiLobbyAisatsuItaly( WORDSET* wordset, u32 bufID, u32 time_zone );
 extern void WORDSET_RegisterWiFiLobbyAisatsuGerMany( WORDSET* wordset, u32 bufID, u32 time_zone );
 extern void WORDSET_RegisterWiFiLobbyAisatsuSpain( WORDSET* wordset, u32 bufID, u32 time_zone );
+extern void WORDSET_RegisterPokeTypeName( WORDSET* wordset, u32 bufID, u32 typeID );
+extern void WORDSET_RegisterPlayerName( WORDSET* wordset, u32 bufID, const MYSTATUS* my );
+extern void WORDSET_RegisterCountryName( WORDSET* wordset, u32 bufID, u32 countryID );
+extern void WORDSET_RegisterLocalPlaceName(WORDSET* wordset,u32 bufID,u32 countryID,u32 placeID);
 extern void WORDSET_ExpandStr( const WORDSET* wordset, STRBUF* dstbuf, const STRBUF* srcbuf );
 extern void WORDSET_ClearAllBuffer( WORDSET* wordset );
 
