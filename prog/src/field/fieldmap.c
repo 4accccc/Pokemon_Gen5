@@ -100,7 +100,7 @@ struct _FIELD_MAIN_WORK
 	VecFx32			now_pos;
 
 
-//	FIELD_LIGHT*	light;
+	FIELD_LIGHT*	light;
 	FIELD_FOG_WORK*	fog;
 	FIELD_WEATHER*	weather_sys;
 	
@@ -288,13 +288,17 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
 		}
 
+
+		// フォグシステム生成
+		fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
+
+		// ライトシステム生成
+		fieldWork->light = FIELD_LIGHT_Create( 0, 0, 0, fieldWork->fog, GetG3Dlightset( fieldWork->gs ), fieldWork->heapID );
+
 		// 天気システム生成
 		fieldWork->weather_sys = FIELD_WEATHER_Init( fieldWork->camera_control, fieldWork->heapID );
 		// 天気晴れ
 		FIELD_WEATHER_Set( fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
-
-		// フォグシステム生成
-		fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
 		
 		//情報バーの初期化
 		Field_InitInfoBar(fieldWork->heapID);
@@ -346,6 +350,12 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		Field_UpdateInfoBar();
 		FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
 		FIELD_FOG_Main( fieldWork->fog );
+		{
+			static int time;
+			time += 30;
+			time %= 24*3600;
+			FIELD_LIGHT_Main( fieldWork->light, time );
+		}
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 		
 		if( fieldWork->fldMMdlSys != NULL ){
@@ -368,12 +378,15 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		//情報バーの開放
 		Field_TermInfoBar();
 
-		// フォグシステム破棄
-		FIELD_FOG_Delete( fieldWork->fog );
-
 		// 天気システム破棄
 		FIELD_WEATHER_Exit( fieldWork->weather_sys );
 		fieldWork->weather_sys = NULL;
+
+		// ライトシステム破棄
+		FIELD_LIGHT_Delete( fieldWork->light );
+
+		// フォグシステム破棄
+		FIELD_FOG_Delete( fieldWork->fog );
 
 		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);
@@ -1004,6 +1017,11 @@ FLDMAPPER* GetFieldG3Dmapper( FIELD_SETUP* gs )
 GFL_BBDACT_SYS* GetBbdActSys( FIELD_SETUP* gs )
 {
 	return gs->bbdActSys;
+}
+
+GFL_G3D_LIGHTSET* GetG3Dlightset( FIELD_SETUP* gs )
+{
+	return gs->g3Dlightset;
 }
 	
 //============================================================================================

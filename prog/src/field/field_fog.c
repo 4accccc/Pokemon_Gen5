@@ -499,7 +499,7 @@ BOOL FIELD_FOG_FADE_IsFade( const FIELD_FOG_WORK* cp_wk )
 //-----------------------------------------------------------------------------
 static BOOL FADE_WORK_IsFade( const FADE_WORK* cp_wk )
 {
-	if( cp_wk->count <= cp_wk->count_max ){
+	if( cp_wk->count >= cp_wk->count_max ){
 		return FALSE;
 	}
 	return TRUE;

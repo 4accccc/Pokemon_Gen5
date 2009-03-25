@@ -11,6 +11,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include <gflib.h>
+
+#include "arc_def.h"
+
 #include  "field_light.h"
 
 //-----------------------------------------------------------------------------
@@ -39,12 +42,12 @@
 //-------------------------------------
 ///	ライトフェード
 //=====================================
-#define LIGHT_FADE_COUNT_MAX	( 30 )
+#define LIGHT_FADE_COUNT_MAX	( 60 )
 
 //-------------------------------------
 ///	アーカイブデータ
 //=====================================
-#define LIGHT_ARC_ID			( 0 )
+#define LIGHT_ARC_ID			( ARCID_FIELD_LIGHT )
 #define LIGHT_ARC_SEASON_NUM	( 4 )
 
 //-----------------------------------------------------------------------------
@@ -67,6 +70,8 @@ typedef struct {
 	GXRgb		specular;
 	GXRgb		emission;
 	GXRgb		fog_color;
+
+	u16			pad;
 } LIGHT_DATA;
 
 //-------------------------------------
@@ -119,6 +124,9 @@ typedef struct {
 ///	フィールドライトシステム
 //=====================================
 struct _FIELD_LIGHT {
+	// GFLIBライトシステム
+	GFL_G3D_LIGHTSET* p_liblight;
+	
 	// FOGシステム
 	FIELD_FOG_WORK* p_fog;
 	
@@ -150,7 +158,7 @@ struct _FIELD_LIGHT {
 //-------------------------------------
 ///	システム
 //=====================================
-static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog );
+static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight );
 static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 season, u32 heapID );
 static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID );
 static void FIELD_LIGHT_ReleaseData( FIELD_LIGHT* p_sys );
@@ -192,17 +200,20 @@ static void LIGHT_FADE_GetData( const LIGHT_FADE* cp_wk, LIGHT_DATA* p_data );
  *	@param	season			季節
  *	@param	rtc_second		秒数
  *	@param	p_fog			フォグシステム
+ *	@param	p_liblight		ライト管理システム
  *	@param	heapID			ヒープ
  *	
  *	@return	システムワーク
  */
 //-----------------------------------------------------------------------------
-FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, u32 season, int rtc_second, FIELD_FOG_WORK* p_fog, u32 heapID )
+FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, u32 season, int rtc_second, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight, u32 heapID )
 {
 	FIELD_LIGHT* p_sys;
 
 	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_LIGHT) );
 
+	//  1/2で考える
+	rtc_second /= 2;
 
 	// ライト情報読み込み
 	FIELD_LIGHT_LoadData( p_sys, light_no, season, heapID );
@@ -219,6 +230,9 @@ FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, u32 season, int rtc_second, FIELD
 
 	// フォグシステムを保存
 	p_sys->p_fog = p_fog;
+
+	// gflib
+	p_sys->p_liblight = p_liblight;
 
 	return p_sys;
 }
@@ -250,6 +264,9 @@ void FIELD_LIGHT_Delete( FIELD_LIGHT* p_sys )
 void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 {
 	int starttime;
+
+	//  1/2で考える
+	rtc_second /= 2;
 	
 	// ライトデータの有無チェック
 	if( p_sys->data_num == 0 ){
@@ -263,6 +280,8 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 		}else{
 			starttime = p_sys->p_data[ p_sys->now_index-1 ].endtime;
 		}
+
+		OS_TPrintf( "starttime %d endtime %d now %d\n", starttime, p_sys->p_data[ p_sys->now_index ].endtime, rtc_second );
 		
 		// 今のテーブルの範囲内じゃないかチェック
 		if( (starttime > rtc_second) ||
@@ -285,7 +304,7 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 
 	// データ設定処理へ
 	if( p_sys->change ){
-		FIELD_LIGHT_Reflect( p_sys, p_sys->p_fog );
+		FIELD_LIGHT_Reflect( p_sys, p_sys->p_fog, p_sys->p_liblight );
 		p_sys->change = FALSE;
 	}
 
@@ -410,25 +429,22 @@ BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys )
  *	@param	cp_sys	システムワーク
  */
 //-----------------------------------------------------------------------------
-static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog )
+static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight )
 {
 	int i;
+	VecFx16 dummy_vec = {0};
+	u16		dummy_col = 0;
 	
 	if( cp_sys->reflect_flag ){
 
 		for( i=0; i<4; i++ ){
 			if( cp_sys->reflect_data.light_flag[i] ){
-				NNS_G3dGlbLightVector( i, 
-						cp_sys->reflect_data.light_vec[i].x, 
-						cp_sys->reflect_data.light_vec[i].y,
-						cp_sys->reflect_data.light_vec[i].z );
-
-				NNS_G3dGlbLightColor( i, 
-						cp_sys->reflect_data.light_color[i] );
+				GFL_G3D_LIGHT_SetVec( p_liblight, i, (VecFx16*)&cp_sys->reflect_data.light_vec[i] );
+				GFL_G3D_LIGHT_SetColor( p_liblight, i, (u16*)&cp_sys->reflect_data.light_color[i] );
 			}else{
 				
-				NNS_G3dGlbLightVector( i, 0, 0, 0 );
-				NNS_G3dGlbLightColor( i, 0 );
+				GFL_G3D_LIGHT_SetVec( p_liblight, i, &dummy_vec );
+				GFL_G3D_LIGHT_SetColor( p_liblight, i, &dummy_col );
 			}
 		}
 
@@ -470,10 +486,62 @@ static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 season, 
 static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID )
 {
 	u32 size;
+	int i, j;
 	GF_ASSERT( !p_sys->p_data );
 
 	p_sys->p_data	= GFL_ARC_UTIL_LoadEx( arcid, dataid, FALSE, heapID, &size );
 	p_sys->data_num	= size / sizeof(LIGHT_DATA);
+
+	// 方向ベクトルの値を一応単位ベクトルにする。
+	for( i=0; i<p_sys->data_num; i++ ){
+		
+		for( j=0; j<4; j++ ){
+			VEC_Fx16Normalize( &p_sys->p_data[i].light_vec[j], &p_sys->p_data[i].light_vec[j] );
+		}
+
+#if 0
+		// データのデバック表示
+		OS_TPrintf( "data number %d\n", i );
+		OS_TPrintf( "endtime	%d\n", p_sys->p_data[i].endtime );
+		for( j=0; j<4; j++ ){
+			OS_TPrintf( "light_flag %d\n", p_sys->p_data[i].light_flag[i] );
+			OS_TPrintf( "light_color r=%d g=%d b=%d\n", 
+					(p_sys->p_data[i].light_color[i] & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+					(p_sys->p_data[i].light_color[i] & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+					(p_sys->p_data[i].light_color[i] & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+			OS_TPrintf( "light_vec x=0x%x y=0x%x z=0x%x\n", 
+					p_sys->p_data[i].light_vec[i].x,  
+					p_sys->p_data[i].light_vec[i].y,  
+					p_sys->p_data[i].light_vec[i].z );
+		}
+
+		OS_TPrintf( "diffuse r=%d g=%d b=%d\n", 
+				(p_sys->p_data[i].diffuse & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+				(p_sys->p_data[i].diffuse & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+				(p_sys->p_data[i].diffuse & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+
+		OS_TPrintf( "ambient r=%d g=%d b=%d\n", 
+				(p_sys->p_data[i].ambient & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+				(p_sys->p_data[i].ambient & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+				(p_sys->p_data[i].ambient & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+
+		OS_TPrintf( "specular r=%d g=%d b=%d\n", 
+				(p_sys->p_data[i].specular & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+				(p_sys->p_data[i].specular & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+				(p_sys->p_data[i].specular & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+
+		OS_TPrintf( "emission r=%d g=%d b=%d\n", 
+				(p_sys->p_data[i].emission & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+				(p_sys->p_data[i].emission & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+				(p_sys->p_data[i].emission & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+
+		OS_TPrintf( "fog_color r=%d g=%d b=%d\n", 
+				(p_sys->p_data[i].fog_color & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+				(p_sys->p_data[i].fog_color & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+				(p_sys->p_data[i].fog_color & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+#endif
+	}
+	
 }
 
 //----------------------------------------------------------------------------
@@ -671,7 +739,7 @@ static void LIGHT_FADE_Main( LIGHT_FADE* p_wk )
 //-----------------------------------------------------------------------------
 static BOOL LIGHT_FADE_IsFade( const LIGHT_FADE* cp_wk )
 {
-	if( cp_wk->count <= cp_wk->count_max ){
+	if( cp_wk->count >= cp_wk->count_max ){
 		return FALSE;
 	}
 	return TRUE;
