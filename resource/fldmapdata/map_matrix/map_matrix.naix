@@ -1,0 +1,24 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: map_matrix.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-03-25T15:26:32
+ *****************************************************************************/
+
+#ifndef NARC_MAP_MATRIX_NAIX_
+#define NARC_MAP_MATRIX_NAIX_
+
+enum {
+	NARC_map_matrix_wb_mat_bin = 0,
+	NARC_map_matrix_wbspring_mat_bin = 1,
+	NARC_map_matrix_wbsummer_mat_bin = 2,
+	NARC_map_matrix_wbautumn_mat_bin = 3,
+	NARC_map_matrix_wbwinter_mat_bin = 4,
+	NARC_map_matrix_testpc_mat_bin = 5,
+	NARC_map_matrix_testroom_mat_bin = 6
+};
+
+/* NARC_MAP_MATRIX_NAIX_ */
+#endif

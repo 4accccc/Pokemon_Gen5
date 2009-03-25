@@ -5,6 +5,11 @@
 #---------------------------------------------------------------
 
 #---------------------------------------------------------------
+#	コンバート対象ユーザー
+#---------------------------------------------------------------
+USERS = kagaya tamada nakatsui
+
+#---------------------------------------------------------------
 #	共通ルールファイルのインクルード
 #---------------------------------------------------------------
 include $(PROJECT_RSCDIR)/macro_define
@@ -35,8 +40,12 @@ include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
 include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
 #Makeで生成される*.binはmake cleanの削除対象にする
 LDIRT_CLEAN	= $(TARGET_ARC) $(TARGET_ARCIDX) $(ENUM_HEADER) $(TMPDIR_PATH)/$(BINDATA) $(TARGET_DIR)/$(TARGET_ARC) $(TARGET_DIR)/$(TARGET_ARCIDX)
+else
+LDIRT_CLEAN	= $(TARGET_DIR)/$(TARGET_ARC) $(TARGET_DIR)/$(TARGET_ARCIDX)
+endif
 
 LINCLUDES	= $(NITROSDK_ROOT)/include
 LINCLUDES	+= $(dir $<)
@@ -52,14 +61,17 @@ CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 #---------------------------------------------------------------
 do-build: $(TARGET_DIR)/$(TARGET_ARC)
 
-$(TARGET_DIR)/$(TARGET_ARC): $(XLS)
+$(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
+	$(COPY) $(TARGET_ARC) $(TARGET_DIR)
+	$(COPY) $(TARGET_ARCIDX) $(TARGET_DIR)
+
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+$(TARGET_ARC): $(XLS)
 	$(MAKE) mklandlst			#ランドリスト作成
 	$(MAKE) convxls				#エクセルコンバート
 	$(MAKE) mklst				#一覧を作成
 	$(MAKE) convert				#マトリクスコンバート
 	$(MAKE) makearc				#アーカイブ
-	$(COPY) $(TARGET_ARC) $(TARGET_DIR)
-	$(COPY) $(TARGET_ARCIDX) $(TARGET_DIR)
 	
 #ランドリスト作成
 mklandlst:
@@ -76,7 +88,7 @@ convxls:
 	$(CSV_CVTR) -o wb_summer.txt -p 6 map_matrix.xls
 	$(CSV_CVTR) -o wb_autumn.txt -p 7 map_matrix.xls
 	$(CSV_CVTR) -o wb_winter.txt -p 8 map_matrix.xls
-
+	
 #対象ソース一覧作成
 mklst:
 	ruby listmk.rb $(MAPMATRIXTXT)
@@ -88,3 +100,4 @@ convert:
 #アーカイブ作成
 makearc:
 	nnsarc -i -c -l -n $(TARGET_ARC) -S $(ARCLIST)  > arc_result.txt
+endif #CONVERTUSER
