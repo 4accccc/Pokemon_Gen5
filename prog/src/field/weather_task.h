@@ -22,6 +22,9 @@ extern "C"{
 #include "field_common.h"
 #include "field_camera.h"
 
+#include "field_light.h"
+#include "field_fog.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -64,6 +67,18 @@ typedef enum {
 	WEATHER_TASK_FUNC_RESULT_NUM,		// システム内で使用
 } WEATHER_TASK_FUNC_RESULT;
 
+//-------------------------------------
+///	FOG管理フラグ
+//=====================================
+typedef enum {
+	WEATHER_TASK_FOG_NONE,		// フォグ操作を行わない
+	WEATHER_TASK_FOG_USE,		// 新しくフォグを設定する
+	WEATHER_TASK_FOG_WITH,		// 前の設定を引き継ぎつつ設定する
+
+	WEATHER_TASK_FOG_MODE_MAX,	// プログラム内で使用
+} WEATHER_TASK_FOG_MODE;
+
+
 
 //-------------------------------------
 ///	リソース情報
@@ -81,8 +96,9 @@ typedef enum {
 //-------------------------------------
 /// DP　から移植　基本情報	
 //=====================================
-#define		WEATHER_FOG_DEPTH_DEFAULT	( 0x6F6F )	// フォグデフォルト値
-#define		WEATHER_FOG_SLOPE_DEFAULT	( 3 )
+//#define		WEATHER_FOG_DEPTH_DEFAULT	( 0x6F6F )	// フォグデフォルト値
+#define		WEATHER_FOG_DEPTH_DEFAULT	( 0x200 )	// フォグデフォルト値
+#define		WEATHER_FOG_SLOPE_DEFAULT	( 4 )
 
 
 
@@ -105,7 +121,7 @@ typedef struct _WEATHER_OBJ_WORK WEATHER_OBJ_WORK;
 //-------------------------------------
 ///	天気管理関数
 //=====================================
-typedef WEATHER_TASK_FUNC_RESULT (WEATHER_TASK_FUNC)( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID );
+typedef WEATHER_TASK_FUNC_RESULT (WEATHER_TASK_FUNC)( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID );
 
 
 //-------------------------------------
@@ -121,7 +137,8 @@ typedef struct {
 	// BGとOAM共用
 	u16	arc_id;				
 	u8	use_oam;			// OAMを使用するか？ TRUE or FALSE
-	u8	use_bg;				// BGを使用するか？ TRUE or FALSE
+	u8	use_bg:4;			// BGを使用するか？ TRUE or FALSE
+	u8	use_light:4;		// ライトを使用するか？ TRUE or FALSE
 	
 	// OAM情報
 	u16 oam_cg;				
@@ -134,6 +151,9 @@ typedef struct {
 	u16 bg_cg;				
 	u16 bg_pltt;
 	u16 bg_scrn;
+
+	// ライト
+	u16 light_id;
 	
 	// ワーク領域サイズ
 	u32 work_byte;
@@ -179,7 +199,7 @@ typedef struct {
 //-------------------------------------
 ///	システム生成・破棄・メイン
 //=====================================
-extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, u32 heapID );
+extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, u32 heapID );
 extern void WEATHER_TASK_Exit( WEATHER_TASK* p_wk );
 extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID );
 
@@ -187,8 +207,8 @@ extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID );
 ///	発動・停止管理
 // *現在FOG処理未実装
 //=====================================
-extern void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, BOOL fog_cont, u32 heapID );
-extern void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, BOOL fog_cont );
+extern void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID );
+extern void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont );
 extern void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk );
 
 //-------------------------------------
@@ -227,7 +247,10 @@ extern void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* 
 //-------------------------------------
 ///	フォグフェード処理
 //=====================================
-extern void WEATHER_TASK_FogFade_Init( WEATHER_TASK* p_wk, int fog_slope, int fog_offs, GXRgb color, int timing );
+extern void WEATHER_TASK_FogSet( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog_offs, WEATHER_TASK_FOG_MODE mode );
+extern void WEATHER_TASK_FogClear( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE mode );
+extern void WEATHER_TASK_FogFadeIn_Init( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode );
+extern void WEATHER_TASK_FogFadeOut_Init( WEATHER_TASK* p_wk, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode );
 extern BOOL WEATHER_TASK_FogFade_Main( WEATHER_TASK* p_wk );
 
 //-------------------------------------

@@ -38,6 +38,11 @@
  *						小文字と”＿”と数字を使用する 関数の引数もこれと同じ
 */
 //-----------------------------------------------------------------------------
+#ifdef PM_DEBUG
+#define DEBUG_WEATHER_CHAGNE
+#endif
+
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -244,7 +249,7 @@ static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, u32 heapID );
  *	@return	システムワーク
  */
 //-----------------------------------------------------------------------------
-FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, u32 heapID )
+FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, u32 heapID )
 {
 	FIELD_WEATHER* p_sys;
 	int i;
@@ -264,7 +269,7 @@ FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, u32 heapID )
 	
 
 	for( i=0; i<FIELD_WEATHER_WORK_NUM; i++ ){
-		p_sys->p_task[ i ] = WEATHER_TASK_Init( p_sys->p_unit, cp_camera, heapID );
+		p_sys->p_task[ i ] = WEATHER_TASK_Init( p_sys->p_unit, cp_camera, p_light, p_fog, heapID );
 	}
 
 	return p_sys;
@@ -309,6 +314,15 @@ void FIELD_WEATHER_Main( FIELD_WEATHER* p_sys, u32 heapID )
 		FIELD_WEATHER_CHANGE_Normal,
 		FIELD_WEATHER_CHANGE_Multi,
 	};
+
+#ifdef DEBUG_WEATHER_CHAGNE
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+		FIELD_WEATHER_Change( p_sys, WEATHER_NO_SNOW );
+	}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+		FIELD_WEATHER_Change( p_sys, WEATHER_NO_SUNNY );
+	}
+	
+#endif
 
 	// 切り替え処理
 	GF_ASSERT( NELEMS( pFunc ) > p_sys->change_type );
@@ -363,7 +377,7 @@ void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, u32 weather_no, u32 heapID )
 
 		// フェードなし初期化
 		WEATHER_TASK_Start( p_sys->p_task[ FIELD_WEATHER_WORK_NOW ], 
-				sc_FIELD_WEATHER_DATA[ weather_no ].cp_data, WEATHER_TASK_INIT_NORMAL, FALSE, TRUE, heapID );
+				sc_FIELD_WEATHER_DATA[ weather_no ].cp_data, WEATHER_TASK_INIT_NORMAL, FALSE, WEATHER_TASK_FOG_USE, heapID );
 
 		p_sys->now_weather	= weather_no;
 		p_sys->next_weather	= FIELD_WEATHER_NO_NONE;
@@ -491,7 +505,7 @@ static void FIELD_WEATHER_CHANGE_Normal( FIELD_WEATHER* p_sys, u32 heapID )
 		
 	case FIELD_WEATHER_NORMAL_SEQ_NOW_FADEOUT:
 		WEATHER_TASK_End( p_sys->p_task[ FIELD_WEATHER_WORK_NOW ], 
-				TRUE, TRUE );
+				TRUE, WEATHER_TASK_FOG_USE );
 		p_sys->seq = FIELD_WEATHER_NORMAL_SEQ_NOW_FADEOUTWAIT;
 		break;
 
@@ -513,7 +527,7 @@ static void FIELD_WEATHER_CHANGE_Normal( FIELD_WEATHER* p_sys, u32 heapID )
 	case FIELD_WEATHER_NORMAL_SEQ_NEXT_FADEIN:
 		WEATHER_TASK_Start( p_sys->p_task[ FIELD_WEATHER_WORK_NOW ], 
 				sc_FIELD_WEATHER_DATA[ p_sys->next_weather ].cp_data, 
-				WEATHER_TASK_INIT_DIV, TRUE, TRUE, heapID );
+				WEATHER_TASK_INIT_DIV, TRUE, WEATHER_TASK_FOG_USE, heapID );
 
 		// 次への情報を消去
 		p_sys->now_weather	= p_sys->next_weather;
@@ -546,10 +560,10 @@ static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, u32 heapID )
 	case FIELD_WEATHER_MULTI_SEQ_FADE_INOUT:
 		WEATHER_TASK_Start( p_sys->p_task[ FIELD_WEATHER_WORK_NEXT ], 
 				sc_FIELD_WEATHER_DATA[ p_sys->next_weather ].cp_data, 
-				WEATHER_TASK_INIT_DIV, TRUE, FALSE, heapID );
+				WEATHER_TASK_INIT_DIV, TRUE, WEATHER_TASK_FOG_WITH, heapID );
 
 		WEATHER_TASK_End( p_sys->p_task[ FIELD_WEATHER_WORK_NOW ], 
-				TRUE, FALSE );
+				TRUE, WEATHER_TASK_FOG_WITH );
 
 		p_sys->seq = FIELD_WEATHER_MULTI_SEQ_FADE_OUTWAIT;
 		break;

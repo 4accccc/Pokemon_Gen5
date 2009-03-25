@@ -54,11 +54,12 @@
 #define	WEATHER_SNOW_NOFADE_OBJ_START_DUST_MOVE	( 24 )			// ずらして動作させる値
 
 /*== フォグ ==*/
-#define	WEATHER_SNOW_FOG_TIMING		(1)							// に１回フォグテーブルを操作
-#define	WEATHER_SNOW_FOG_TIMING_END	(2)							// に１回フォグテーブルを操作
+#define	WEATHER_SNOW_FOG_TIMING		(400)							// に１回フォグテーブルを操作
+#define	WEATHER_SNOW_FOG_TIMING_END	(300)							// に１回フォグテーブルを操作
 #define WEATHER_SNOW_FOG_START		(16)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_SNOW_FOG_START_END	(32)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_SNOW_FOG_OFS		(0x300)
+#define WEATHER_SNOW_FOG_OFS_START	(0xb00)
 
 /*== 雪オブジェクト ==*/
 #define	WEATHER_SNOW_ADD_TMG_X_BASE	(4)					// 雪のスピードを足すタイミング
@@ -101,13 +102,13 @@ typedef struct {
 //-------------------------------------
 ///	通常の雪
 //=====================================
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Init( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeIn( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_NoFade( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Main( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_InitFadeOut( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeOut( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID ); 
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Exit( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
 static void WEATHER_SNOW_OBJ_Move( WEATHER_OBJ_WORK* p_wk ); 
 static void WEATHER_SNOW_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID ); 
 
@@ -124,6 +125,7 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOW = {
 	ARCID_FIELD_WEATHER,			// アークID
 	TRUE,		// OAMを使用するか？
 	FALSE,		// BGを使用するか？
+	FALSE,		// ライトを使用するか？
 	NARC_field_weather_snow_NCGR,			// OAM CG
 	NARC_field_weather_snow_NCLR,			// OAM PLTT
 	NARC_field_weather_snow_NCER,			// OAM CELL
@@ -131,6 +133,7 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOW = {
 	0,			// BG CG
 	0,			// BG PLTT
 	0,			// BG SCRN
+	0,			// ライト
 
 	// ワークサイズ
 	sizeof(WEATHER_SNOW_WORK),
@@ -172,7 +175,7 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOW = {
  *	@param	fog_cont		フォグが有効か？
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Init( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
 {
 	WEATHER_SNOW_WORK* p_local_wk;
 
@@ -194,13 +197,12 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Init( WEATHER_TASK* p_wk, BOOL fog_
 	p_local_wk->work[1] = 0;							// 雪が１回下まで行ったかのフラグ
 	
 	// フォグの設定
-	if( fog_cont ){
-		WEATHER_TASK_FogFade_Init( p_wk,
-				WEATHER_FOG_SLOPE_DEFAULT, 
-				WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS, 
-				GX_RGB(26,26,26),
-				WEATHER_SNOW_FOG_TIMING );
-	}
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS_START, fog_cont );
+	
+	WEATHER_TASK_FogFadeIn_Init( p_wk,
+			WEATHER_FOG_SLOPE_DEFAULT, 
+			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS, 
+			WEATHER_SNOW_FOG_TIMING, fog_cont );
 	p_local_wk->work[0] = WEATHER_SNOW_FOG_START;	// 同じくフォグ用
 	
 	// スクロール処理の初期化
@@ -217,7 +219,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Init( WEATHER_TASK* p_wk, BOOL fog_
  *	@param	fog_cont	フォグ管理フラグ
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeIn( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
 {
 	BOOL result;
 	BOOL fog_result;
@@ -256,7 +258,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeIn( WEATHER_TASK* p_wk, BOOL fo
  *	@brief	フェードなし初期化
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_NoFade( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
 {
 	WEATHER_SNOW_WORK* p_local_wk;
 
@@ -278,16 +280,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_NoFade( WEATHER_TASK* p_wk, BOOL fo
 	p_local_wk->work[2] = 0;							// 自動破棄フラグ
 	
 	// フォグの設定
-	if(fog_cont){
-		/*
-		// データを設定
-		sys_w->fogFade.Fog = sys_work->pWSysCont->fsys->fog_data;		// フォグ保存先代入
-		weatherSysFogParamSet( sys_w->fogFade.Fog, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS, GX_RGB(26,26,26) );
-
-		// テーブルデータを作成して反映
-		weatherSysFogSet( &sys_w->fogFade );
-		//*/
-	}
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS, fog_cont );
 
 	// オブジェクトを散らばす
 	WEATHER_TASK_DustObj( p_wk, WEATHER_SNOW_OBJ_Add, WEATHER_SNOW_NOFADE_OBJ_START_NUM, WEATHER_SNOW_NOFADE_OBJ_START_DUST_NUM, WEATHER_SNOW_NOFADE_OBJ_START_DUST_MOVE, heapID );
@@ -301,7 +294,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_NoFade( WEATHER_TASK* p_wk, BOOL fo
  *	@brief	雪メイン
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Main( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
 {
 	WEATHER_TASK_ObjFade_NoFadeMain( p_wk, heapID );
 
@@ -320,7 +313,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Main( WEATHER_TASK* p_wk, BOOL fog_
  *	@brief	フェードアウト開始
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_InitFadeOut( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
 {
 	WEATHER_SNOW_WORK* p_local_wk;
 
@@ -335,9 +328,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_InitFadeOut( WEATHER_TASK* p_wk, BO
 			WEATHER_SNOW_TIMING_ADD,
 			-1 );
 	// fog
-	if( fog_cont ){
-//		weatherSysFogFadeInit( &sys_w->fogFade, WEATHER_SNOW_FOG_TIMING_END, FALSE );
-	}
+	WEATHER_TASK_FogFadeOut_Init( p_wk,
+			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS_START, 
+			WEATHER_SNOW_FOG_TIMING_END, fog_cont );
 	p_local_wk->work[0] = WEATHER_SNOW_FOG_START_END;	// 同じくフォグ用
 
 	// スクロール処理
@@ -355,7 +348,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_InitFadeOut( WEATHER_TASK* p_wk, BO
  *	@brief	フェードアウト
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeOut( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
 {
 	WEATHER_SNOW_WORK* p_local_wk;
 	BOOL result;
@@ -407,10 +400,10 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeOut( WEATHER_TASK* p_wk, BOOL f
  *	@brief	破棄処理
  */
 //-----------------------------------------------------------------------------
-static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Exit( WEATHER_TASK* p_wk, BOOL fog_cont, u32 heapID )
+static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
 {
 	// FOG終了
-	
+	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

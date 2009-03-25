@@ -281,7 +281,7 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 			starttime = p_sys->p_data[ p_sys->now_index-1 ].endtime;
 		}
 
-		OS_TPrintf( "starttime %d endtime %d now %d\n", starttime, p_sys->p_data[ p_sys->now_index ].endtime, rtc_second );
+		//OS_TPrintf( "starttime %d endtime %d now %d\n", starttime, p_sys->p_data[ p_sys->now_index ].endtime, rtc_second );
 		
 		// 今のテーブルの範囲内じゃないかチェック
 		if( (starttime > rtc_second) ||

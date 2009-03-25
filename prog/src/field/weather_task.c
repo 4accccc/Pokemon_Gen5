@@ -156,6 +156,24 @@ typedef struct {
 //=====================================
 struct _WEATHER_TASK {
 
+	/* MemClearしないワーク 
+	 * こっちにメンバを増やすときは、
+	 * WEATHER_TASK_WK_Clear関数にコードを追加すること*/
+	// GFL_CLUNIT
+	GFL_CLUNIT* p_unit;
+	
+	// フォグ情報
+	FIELD_FOG_WORK*	p_fog;
+	
+	// ライト情報
+	FIELD_LIGHT* p_light;
+	
+	// カメラ情報
+	const FIELD_CAMERA* cp_camera;
+	
+
+	/* MemClearするワーク */
+	
 	// 天気基本情報
 	const WEATHER_TASK_DATA*	cp_data;
 	u8							fog_cont;	// フォグ操作の許可
@@ -166,15 +184,6 @@ struct _WEATHER_TASK {
 	// グラフィック情報
 	WEATHER_TASK_GRAPHIC graphic;
 	
-	// GFL_CLUNIT
-	GFL_CLUNIT* p_unit;
-	
-	// フォグ情報
-	
-	// ライト情報
-	
-	// カメラ情報
-	const FIELD_CAMERA* cp_camera;
 	
 	// ユーザワーク
 	void*	p_user_work;
@@ -185,8 +194,6 @@ struct _WEATHER_TASK {
 	// 動作オブジェ追加フェードシステム
 	WEATHER_TASK_OBJ_FADE obj_fade;
 
-	// フォグフェードシステム
-	
 	// スクロール管理ワーク
 	WEATHER_TASK_SCROLL_WORK scroll;
 	
@@ -275,12 +282,14 @@ static void TOOL_GetPerspectiveScreenSize( u16 perspway, fx32 dist, fx32 aspect,
  *
  *	@param	p_clunit		セルアクターユニット
  *	@param	cp_camera		フィールドカメラ
+ *	@param	p_light			フィールドライト
+ *	@param	p_fog			フィールドフォグ
  *	@param	heapID			ヒープID
  *	
  *	@return	天気タスクワーク
  */
 //-----------------------------------------------------------------------------
-WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, u32 heapID )
+WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, u32 heapID )
 {
 	WEATHER_TASK* p_wk;
 
@@ -289,6 +298,8 @@ WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_ca
 	// 基本情報設定
 	p_wk->p_unit		= p_clunit;	
 	p_wk->cp_camera		= cp_camera;	
+	p_wk->p_fog			= p_fog;
+	p_wk->p_light		= p_light;
 
 	return p_wk;
 }
@@ -444,11 +455,11 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
  *	@param	cp_data			天気データ
  *	@param	init_mode		初期化モード
  *	@param	fade			フェードの有無	　TRUE：あり　FALSE：なし
- *	@param	fog_cont		フォグ管理の有無　TRUE：あり　FALSE：なし
+ *	@param	fog_cont		フォグ管理のモード
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, BOOL fog_cont, u32 heapID )
+void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
 {
 	GF_ASSERT( p_wk->seq == WEATHER_TASK_SEQ_NONE );
 	
@@ -475,10 +486,10 @@ void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, W
  *
  *	@param	p_wk			ワーク
  *	@param	fade			フェードの有無	　TRUE：あり　FALSE：なし
- *	@param	fog_cont		フォグ管理の有無　TRUE：あり　FALSE：なし
+ *	@param	fog_cont		フォグ管理のモード
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, BOOL fog_cont )
+void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont )
 {
 	u32 info;
 
@@ -497,7 +508,6 @@ void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, BOOL fog_cont )
 		GF_ASSERT( 0 );
 		return ;
 	}
-
 
 	// 破棄へ
 	p_wk->fade		= fade;
@@ -763,19 +773,76 @@ void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_f
 	}
 }
 
+
 //----------------------------------------------------------------------------
 /**
- *	@brief	フォグフェード初期化
+ *	@brief	フォグ状態の設定
  *
- *	@param	p_wk
- *	@param	fog_slope
- *	@param	fog_offs
- *	@param	color
- *	@param	timing 
+ *	@param	p_wk			ワーク
+ *	@param	fog_slope		フォグかかり具合
+ *	@param	fog_offs		フォグオフセット
+ *	@param	mode 
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_FogFade_Init( WEATHER_TASK* p_wk, int fog_slope, int fog_offs, GXRgb color, int timing )
+void WEATHER_TASK_FogSet( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog_offs, WEATHER_TASK_FOG_MODE mode )
 {
+	if( mode == WEATHER_TASK_FOG_USE ){
+
+		FIELD_FOG_SetSlope( p_wk->p_fog, fog_slope );
+		FIELD_FOG_SetOffset( p_wk->p_fog, fog_offs );
+		FIELD_FOG_TBL_SetUpDefault( p_wk->p_fog );
+		FIELD_FOG_SetFlag( p_wk->p_fog, TRUE );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フォグクリア処理
+ *
+ *	@param	p_wk	ワーク
+ *	@param	mode	フォグ管理モード
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_FogClear( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE mode )
+{
+	if( mode == WEATHER_TASK_FOG_USE ){
+		FIELD_FOG_SetFlag( p_wk->p_fog, FALSE );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フォグ	フェードイン開始
+ *
+ *	@param	p_wk			ワーク
+ *	@param	fog_slope		フォグかかり具合
+ *	@param	fog_offs		フォグオフセット
+ *	@param	timing			使用するシンク数
+ *	@param	mode			モード
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_FogFadeIn_Init( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode )
+{
+	if( mode != WEATHER_TASK_FOG_NONE ){
+		FIELD_FOG_FADE_Init( p_wk->p_fog, fog_offs, fog_slope, timing );
+	}
+}
+	
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フォグフェードアウト	開始
+ *
+ *	@param	p_wk		ワーク
+ *	@param	fog_offs	フォグオフセット
+ *	@param	timing		使用するシンク数
+ *	@param	mode		モード
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_FogFadeOut_Init( WEATHER_TASK* p_wk, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode )
+{
+	if( mode == WEATHER_TASK_FOG_USE ){
+		FIELD_FOG_FADE_Init( p_wk->p_fog, fog_offs, FIELD_FOG_GetSlope( p_wk->p_fog ), timing );
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -788,10 +855,15 @@ void WEATHER_TASK_FogFade_Init( WEATHER_TASK* p_wk, int fog_slope, int fog_offs,
  *	@retval	FALSE	途中
  */
 //-----------------------------------------------------------------------------
-BOOL WEATHER_TASK_FogFade_Main( WEATHER_TASK* p_wk )
+extern BOOL WEATHER_TASK_FogFade_Main( WEATHER_TASK* p_wk )
 {
+	if( FIELD_FOG_FADE_IsFade( p_wk->p_fog ) ){
+		return FALSE;	
+	}
 	return TRUE;
 }
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1099,15 +1171,25 @@ BOOL WT_MOVE_WORK_Main( WT_MOVE_WORK* p_wk, u32 count )
 static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 {
 	GFL_CLUNIT* p_unit;
+	FIELD_FOG_WORK*	p_fog;
+	FIELD_LIGHT* p_light;
+	const FIELD_CAMERA* cp_camera;
 
 	// 一時退避
-	p_unit = p_wk->p_unit;
+	p_unit		= p_wk->p_unit;
+	p_fog		= p_wk->p_fog;
+	p_light		= p_wk->p_light;
+	cp_camera	= p_wk->cp_camera;
 
 	// クリア
 	GFL_STD_MemClear( p_wk, sizeof(WEATHER_TASK) );
 
 	// 復帰
-	p_wk->p_unit = p_unit;
+	p_wk->p_unit	= p_unit;
+	p_wk->p_fog		= p_fog;
+	p_wk->p_light	= p_light;
+	p_wk->cp_camera	= cp_camera;
+
 }
 
 //----------------------------------------------------------------------------

@@ -72,6 +72,9 @@ extern BOOL FIELD_LIGHT_GetReflect( const FIELD_LIGHT* cp_sys );
 extern BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys );
 
 
+
+
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

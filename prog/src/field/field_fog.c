@@ -55,6 +55,9 @@ typedef struct {
 	u32	offset_start;
 	s32	offset_dist;
 
+	u32	slope_start;
+	s32	slope_dist;
+
 } FADE_WORK;
 
 
@@ -88,9 +91,10 @@ struct _FIELD_FOG_WORK {
 ///	フェードシステム
 //=====================================
 static BOOL FADE_WORK_IsFade( const FADE_WORK* cp_wk );
-static void FADE_WORK_Init( FADE_WORK* p_wk, u16 offset_start, u16 offset_end, u16 count_max );
+static void FADE_WORK_Init( FADE_WORK* p_wk, u16 offset_start, u16 offset_end, u16 slope_start, u16 slope_end, u16 count_max );
 static void FADE_WORK_Main( FADE_WORK* p_wk );
 static u16 FADE_WORK_GetOffset( const FADE_WORK* cp_wk );
+static u16 FADE_WORK_GetSlope( const FADE_WORK* cp_wk );
 
 
 
@@ -111,6 +115,9 @@ FIELD_FOG_WORK* FIELD_FOG_Create( u32 heapID )
 	FIELD_FOG_WORK* p_wk;
 
 	p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_FOG_WORK) );
+
+	p_wk->blendmode = FIELD_FOG_BLEND_COLOR_ALPHA;
+	p_wk->alpha		= 31;
 
 	return p_wk;
 }
@@ -149,6 +156,7 @@ void FIELD_FOG_Main( FIELD_FOG_WORK* p_wk )
 
 		// フェード情報を設定
 		p_wk->offset	= FADE_WORK_GetOffset( &p_wk->fade );
+		p_wk->slope		= FADE_WORK_GetSlope( &p_wk->fade );
 		p_wk->change	= TRUE;	// データ設定
 	}
 
@@ -433,13 +441,14 @@ void FIELD_FOG_TBL_SetUpDefault( FIELD_FOG_WORK* p_wk )
  *
  *	@param	p_wk			ワーク
  *	@param	offset_end		オフセット終了
+ *	@param	slope_end		かかり具合終了
  *	@param	count_max		フェードシンク数
  */
 //-----------------------------------------------------------------------------
-void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, u32 count_max )
+void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, FIELD_FOG_SLOPE slope_end, u32 count_max )
 {
 	GF_ASSERT( p_wk );
-	FADE_WORK_Init( &p_wk->fade, p_wk->offset, offset_end, count_max );
+	FADE_WORK_Init( &p_wk->fade, p_wk->offset, offset_end, p_wk->slope, slope_end, count_max );
 }
 
 //----------------------------------------------------------------------------
@@ -449,13 +458,15 @@ void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, u32 count_max )
  *	@param	p_wk			ワーク
  *	@param	offset_start	オフセット開始値
  *	@param	offset_end		オフセット終了値
+ *	@param	slope_start		スロープ開始値
+ *	@param	slope_end		スロープ終了値
  *	@param	count_max		フェードに使用するシンク数
  */
 //-----------------------------------------------------------------------------
-void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, u16 offset_start, u16 offset_end, u16 count_max  )
+void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, u16 offset_start, u16 offset_end, FIELD_FOG_SLOPE slope_start, FIELD_FOG_SLOPE slope_end, u16 count_max  )
 {
 	GF_ASSERT( p_wk );
-	FADE_WORK_Init( &p_wk->fade, offset_start, offset_end, count_max );
+	FADE_WORK_Init( &p_wk->fade, offset_start, offset_end, slope_start, slope_end, count_max );
 }
 
 //----------------------------------------------------------------------------
@@ -512,20 +523,21 @@ static BOOL FADE_WORK_IsFade( const FADE_WORK* cp_wk )
  *	@param	p_wk			ワーク
  *	@param	offset_start	オフセット開始値
  *	@param	offset_end		オフセット終了値
- *	@param	color_start		色開始値
- *	@param	color_end		色終了値
- *	@param	alpha_start		アルファ開始値
- *	@param	alpha_end		アルファ終了値
+ *	@param	slope_start		かかり具合開始値
+ *	@param	slope_end		かかり具合終了値
  *	@param	count_max		フェードに使用するシンク数
  */
 //-----------------------------------------------------------------------------
-static void FADE_WORK_Init( FADE_WORK* p_wk, u16 offset_start, u16 offset_end, u16 count_max )
+static void FADE_WORK_Init( FADE_WORK* p_wk, u16 offset_start, u16 offset_end, u16 slope_start, u16 slope_end, u16 count_max )
 {
 	p_wk->count			= 0;
 	p_wk->count_max		= count_max;
 
 	p_wk->offset_start	= offset_start;
 	p_wk->offset_dist	= offset_end - offset_start;
+
+	p_wk->slope_start	= slope_start;
+	p_wk->slope_dist	= slope_end - slope_start;
 }
 
 //----------------------------------------------------------------------------
@@ -561,5 +573,23 @@ static u16 FADE_WORK_GetOffset( const FADE_WORK* cp_wk )
 	return ans;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	かかり具合の取得
+ *
+ *	@param	cp_wk	ワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static u16 FADE_WORK_GetSlope( const FADE_WORK* cp_wk )
+{
+	u16 ans;
+
+	ans = (cp_wk->slope_dist * cp_wk->count) / cp_wk->count_max;
+	ans += cp_wk->slope_start;
+
+	return ans;
+}
 
 

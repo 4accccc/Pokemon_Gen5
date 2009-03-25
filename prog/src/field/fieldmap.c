@@ -296,7 +296,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		fieldWork->light = FIELD_LIGHT_Create( 0, 0, 0, fieldWork->fog, GetG3Dlightset( fieldWork->gs ), fieldWork->heapID );
 
 		// 天気システム生成
-		fieldWork->weather_sys = FIELD_WEATHER_Init( fieldWork->camera_control, fieldWork->heapID );
+		fieldWork->weather_sys = FIELD_WEATHER_Init( fieldWork->camera_control, fieldWork->light, fieldWork->fog, fieldWork->heapID );
 		// 天気晴れ
 		FIELD_WEATHER_Set( fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
 		
