@@ -10,6 +10,10 @@ USERS = kagaya
 #
 DIR_TARGET_COPY = $(PROJECT_ROOT)/prog/arc/fieldmap
 
+#対象ソースディレクトリ
+#
+DIR_TARGET_COPY_SRC = $(PROJECT_ROOT)/prog/include/field
+
 #リソース格納ディレクトリ
 #
 DIR_RES = ./mmdl_res
