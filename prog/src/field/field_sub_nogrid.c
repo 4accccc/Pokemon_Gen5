@@ -33,6 +33,10 @@ static void NoGridCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 		height += 0x0003a000;
 		FLD_SetCameraHeight(fieldWork->camera_control, height);
 	}
+	{
+		fx32 far = 4096 << FX32_SHIFT;
+		GFL_G3D_CAMERA_SetFar(GetG3Dcamera(fieldWork->gs), &far);
+	}
 }
 
 //------------------------------------------------------------------
