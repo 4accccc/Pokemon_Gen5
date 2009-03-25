@@ -206,7 +206,7 @@ void GFL_NET_DWC_FriendDataAdd(SAVE_CONTROL_WORK* pSaveData, MYSTATUS* pMyStatus
 
     for(i = 0; i < WIFILIST_FRIEND_MAX;i++){
         if( !WifiList_IsFriendData( pList, i ) ){
-            GFL_NET_DWC_FriendDataWrite(pSaveData, pMyStatus, pFriend, i, heapID, FALSE);
+            GFL_NET_DWC_FriendDataWrite(pSaveData, pMyStatus, pFriend, i, heapID, 0);
             break;
         }
     }

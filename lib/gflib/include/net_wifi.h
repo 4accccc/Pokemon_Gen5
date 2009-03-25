@@ -234,16 +234,6 @@ extern void GFL_NET_StateWifiMatchEnd(BOOL bAuto);
 extern void GFL_NET_StateWifiEnterLogin(void);
 //==============================================================================
 /**
- * オンラインの友達がサーバにアップしている情報をおさめる配列を指定します。
- * この配列はmydwc_step, mydwc_stepmatchを呼び出した際に更新される可能性があります。
- * @param 	array - データをおさめる配列の先頭
- * @param 	size  - 一人あたりのデータサイズ
- * @retval  none
- */
-//==============================================================================
-extern void GFL_NET_DWC_SetFriendStateBuffer( void *array, int size );
-//==============================================================================
-/**
  * @brief   WIFIでログアウトを行う場合の処
  * @param   none
  * @retval  none

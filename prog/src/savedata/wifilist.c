@@ -271,14 +271,8 @@ STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, int no )
 //==============================================================================
 void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
 {
-    int len = sizeof(list->friendData[no].name);
-    int buflen = GFL_STR_GetBufferLength(pBuf);
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-
-    if(buflen < len){
-        len = buflen;
-    }
-    GFL_STR_SetStringCodeOrderLength(pBuf, list->friendData[no].name, len);
+    GFL_STR_GetStringCode(pBuf, list->friendData[no].name, sizeof(list->friendData[no].name));
 }
 
 //==============================================================================

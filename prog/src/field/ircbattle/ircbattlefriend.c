@@ -149,7 +149,6 @@ static void _recvMystatus(const int netID, const int size, const void* pData, vo
 
     GFL_NET_DWC_FriendDataAdd(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork),
                               (MYSTATUS*)pData, &pWork->friendData, HEAPID_IRCBATTLE);
-
 }
 
 

@@ -2345,29 +2345,32 @@ static BOOL WFP2PMF_CommWiFiMatchStart( u32 friendno, u32 type )
 //-----------------------------------------------------------------------------
 static BOOL WFP2PMF_CheckP2PMatchFriendStatus( const WFP2PMF_WK* cp_wk, const WFP2PMF_INIT* cp_param, int friend )
 {
-	if( friend == WIFILIST_FRIEND_MAX ){
+    _WIFI_MACH_STATUS* pFriendSt;
+
+    if( friend == WIFILIST_FRIEND_MAX ){
 		return TRUE;
 	}
-
+    pFriendSt = (_WIFI_MACH_STATUS*)GFL_NET_DWC_GetFriendInfo( friend );
+    
 	switch( cp_param->type ){
 
 	case WFP2PMF_TYPE_BUCKET:
-		if( (cp_wk->data.p_match->friendMatchStatus[ friend ].status == WIFI_STATUS_BUCKET) ||
-			(cp_wk->data.p_match->friendMatchStatus[ friend ].status == WIFI_STATUS_BUCKET_WAIT) ){
+		if( (pFriendSt->status == WIFI_STATUS_BUCKET) ||
+			(pFriendSt->status == WIFI_STATUS_BUCKET_WAIT) ){
 			return TRUE;
 		}
 		break;
 
 	case WFP2PMF_TYPE_BALANCE_BALL:
-		if( (cp_wk->data.p_match->friendMatchStatus[ friend ].status == WIFI_STATUS_BALANCEBALL) ||
-			(cp_wk->data.p_match->friendMatchStatus[ friend ].status == WIFI_STATUS_BALANCEBALL_WAIT) ){
+		if( (pFriendSt->status == WIFI_STATUS_BALANCEBALL) ||
+			(pFriendSt->status == WIFI_STATUS_BALANCEBALL_WAIT) ){
 			return TRUE;
 		}
 		break;
 
 	case WFP2PMF_TYPE_BALLOON:
-		if( (cp_wk->data.p_match->friendMatchStatus[ friend ].status == WIFI_STATUS_BALLOON) ||
-			(cp_wk->data.p_match->friendMatchStatus[ friend ].status == WIFI_STATUS_BALLOON_WAIT) ){
+		if( (pFriendSt->status == WIFI_STATUS_BALLOON) ||
+			(pFriendSt->status == WIFI_STATUS_BALLOON_WAIT) ){
 			return TRUE;
 		}
 		break;

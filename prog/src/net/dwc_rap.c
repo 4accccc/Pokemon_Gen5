@@ -108,9 +108,8 @@ typedef struct
     
 	void (*fetalErrorCallback)(int);
 	u8 randommatch_query[_MATCHSTRINGNUM];
-	u8 friend_status[FRIENDLIST_MAXSIZE];
-	void *friendinfo;	
-	int infosize;	
+	u8 friend_status[FRIENDLIST_MAXSIZE];   //WC_GetFriendStatusDataの戻り値
+	u8 friendinfo[FRIENDLIST_MAXSIZE][MYDWC_STATUS_DATA_SIZE_MAX]; //WC_GetFriendStatusDataで得られる値
 	u32 friendupdate_index;	
 	
 	int state;
@@ -227,7 +226,7 @@ static void mydwc_releaseRecvBuff(int aid);
 static void mydwc_releaseRecvBuffAll(void);
 static void mydwc_allocRecvBuff(int i);
 
-static void mydwc_updateFriendInfo( );
+static void mydwc_updateFriendInfo( void );
 
 
 //==============================================================================
@@ -306,7 +305,6 @@ int mydwc_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
     DWC_ReportUserData(_dWork->myUserData);
 #endif
 
-	_dWork->friendinfo = NULL;
 	{
 		int i;
 		for( i = 0; i < FRIENDLIST_MAXSIZE; i++ )
@@ -1061,13 +1059,6 @@ static void DeleteFriendListCallback(int deletedIndex, int srcIndex, void* param
         pNetInit->friendDeleteFunc(deletedIndex, srcIndex, GFL_NET_GetWork());
     }
 
-    // 現在はコメント。上記のfriendDeleteFuncに実装する必要がある 2008.12.15 @@OO
-    // 書き戻し
-//    MI_CpuCopy8(_dWork->keyList,WifiList_GetDwcDataPtr(SaveData_GetWifiListData(_dWork->pSaveData), 0),FRIENDLIST_MAXSIZE * sizeof(DWCFriendData));
-//    WifiList_DataMarge(SaveData_GetWifiListData(_dWork->pSaveData),
-//                       deletedIndex, srcIndex);
-	//フレンド毎に持つフロンティアデータもマージする 2008.05.24(土) matsuda
-//	FrontierRecord_DataMarge(SaveData_GetFrontier(_dWork->pSaveData), deletedIndex, srcIndex);
 }
 
 
@@ -1954,49 +1945,36 @@ void mydwc_Logout(void)
     mydwc_free();
 }
 
-
-//==============================================================================
+//-------------------------------------------------------------------------------
 /**
- * オンラインの友達がサーバにアップしている情報をおさめる配列を指定します。
- * この配列はmydwc_step, mydwc_stepmatchを呼び出した際に更新される可能性があります。
- * @param 	array - データをおさめる配列の先頭
- * @param 	size  - 一人あたりのデータサイズ
+ * @brief   １フレームにFRIENDINFO_UPDATA_PERFRAME人分のデータを更新する
+ * @param 	none
  * @retval  none
  */
-//==============================================================================
-void GFL_NET_DWC_SetFriendStateBuffer( void *array, int size )
-{
-	_dWork->friendinfo = array;	
-	_dWork->infosize = size;
-	
+//-------------------------------------------------------------------------------
 
-}
-
-// FRIENDINFO_UPDATA_PERFRAME人分のデータを更新する。
-static void mydwc_updateFriendInfo( )
+static void mydwc_updateFriendInfo( void )
 {
 	int i;
-	if( _dWork->friendinfo == NULL ) return;
+    char buff[MYDWC_STATUS_DATA_SIZE_MAX];
+    
 	for(i = 0; i < FRIENDINFO_UPDATA_PERFRAME; i++)
 	{
 		int index = _dWork->friendupdate_index % FRIENDLIST_MAXSIZE;
 		int size;
 	
-		if( DWC_IsBuddyFriendData( &(_dWork->keyList[index]) ) ) 
-		{
-			_dWork->friend_status[index] = 
-				DWC_GetFriendStatusData( 
-					&_dWork->keyList[ index ], 
-					(void *)(((u32)_dWork->friendinfo) + _dWork->infosize * index),
-					&size
-				);
-				
-			if( size > _dWork->infosize )
-			{
-				MYDWC_DEBUGPRINT("\n!!!!!!!!!!!!!!!size > _dWork->infosize!!!!!!!!!!!!!!!!\n");
-			}
+        if( DWC_IsBuddyFriendData( &(_dWork->keyList[index]) ) ){
+            _dWork->friend_status[index] = DWC_GetFriendStatusData(&_dWork->keyList[ index ],buff,&size);
+#ifdef PM_DEBUG
+            GF_ASSERT( (size <= MYDWC_STATUS_DATA_SIZE_MAX) || (size == -1));
+#endif
+            if(size!=-1){
+                GFL_STD_MemCopy(buff,_dWork->friendinfo[index], MYDWC_STATUS_DATA_SIZE_MAX);
+            }
+            else{
+                GFL_STD_MemClear(_dWork->friendinfo[index], MYDWC_STATUS_DATA_SIZE_MAX);
+            }
 		}
-			
 		_dWork->friendupdate_index = (_dWork->friendupdate_index + 1) % FRIENDLIST_MAXSIZE;
 	}
 }
@@ -2012,6 +1990,7 @@ static void mydwc_updateFriendInfo( )
 BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size )
 {
 	MYDWC_DEBUGPRINT("upload status change(%p, %d)\n", data, size);
+    GF_ASSERT(size < MYDWC_STATUS_DATA_SIZE_MAX);
 	return DWC_SetOwnStatusData( data, size );
 }
 
@@ -2022,9 +2001,9 @@ BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size )
  * @retval  データへのポインタ。中身は書き換えないで下さい。
  */
 //==============================================================================
-void *mydwc_getFriendInfo( int index )
+u8 *GFL_NET_DWC_GetFriendInfo( int index )
 {
-	return (void *)(((u32)_dWork->friendinfo) + _dWork->infosize * index);
+	return _dWork->friendinfo[index];
 }
 
 //==============================================================================

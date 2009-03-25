@@ -1063,7 +1063,7 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
     cellInitData.pos_y = cp_data->y;
     cellInitData.anmseq = 0;
     cellInitData.softpri = cp_data->pri;
-    cellInitData.bgpri = 0;
+    cellInitData.bgpri = cp_data->bgpri;
 
 
     
@@ -1779,7 +1779,7 @@ static void WF_2DC_CharResLoadNml( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 
     p_sys->chrres[ char_no ].resid[ 1 ] = GFL_CLGRP_PLTT_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
                                                                WF_2DC_ARC_GETNCL( char_no ),
-                                                               draw_type, 0, heap);
+                                                               draw_type, 0x20*2, heap);
 
 //	OS_TPrintf( "pltt contid=0x%x  ncl=%d\n", WF_2DC_ARC_CONTCHARID+char_no, WF_2DC_ARC_GETNCL( char_no ) );
 
@@ -2225,7 +2225,7 @@ static void WF_2DC_UniCharPlttResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 heap
 
     p_sys->unionplttid = GFL_CLGRP_PLTT_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
                                                  WF_2DC_ARC_GETUNINCL,
-                                                 draw_type, 0, heap);
+                                                 draw_type, WF_2DC_UNIPLTT_NUM*0x20, heap);
 
 	// パレットフェード設定
 	if( p_sys->p_pfd ){
@@ -2646,7 +2646,7 @@ static void WF_2DC_PFDPalSet( WF_2DCSYS* p_sys, u32 resid, u32 num )
 
 
     
-#if 0  // やりのこしk.ohno
+#if 0  // やりのこしk.ohno @@OO
 	NNSG2dPaletteData* p_paldata;
 	u32 pal_no[2];
 

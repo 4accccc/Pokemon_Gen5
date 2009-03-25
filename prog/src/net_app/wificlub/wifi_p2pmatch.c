@@ -788,7 +788,6 @@ static GFL_DISP_VRAM _defVBTbl = {
 
         };
 
-
 #ifdef WFP2P_DEBUG	// 人をいっぱい出す
 //#define WFP2PM_MANY_OBJ
 #endif
@@ -799,7 +798,7 @@ static int _seqBackup;
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
-static _WIFI_MACH_STATUS* WifiFriendMatchStatusGet( WIFIP2PMATCH_WORK* wk, u32 idx );
+static _WIFI_MACH_STATUS* WifiFriendMatchStatusGet( u32 idx );
 static u8 WifiDwc_getFriendStatus( int idx );
 
 static BOOL WifiP2PMatch_CommWifiBattleStart( WIFIP2PMATCH_WORK* wk, int friendno, int status );
@@ -1013,7 +1012,17 @@ static DWCUserData* _getMyUserData(void* pWork)
 static DWCFriendData* _getFriendData(void* pWork)
 {
     WIFIP2PMATCH_WORK *wk = (WIFIP2PMATCH_WORK*)pWork;
+//    NET_PRINT("Friend %d\n",WifiList_GetFriendDataNum(SaveData_GetWifiListData(wk->pSaveData)));
     return WifiList_GetDwcDataPtr(SaveData_GetWifiListData(wk->pSaveData),0);
+}
+
+static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork)
+{
+    WIFIP2PMATCH_WORK *wk = (WIFIP2PMATCH_WORK*)pWork;
+
+    WifiList_DataMarge(SaveData_GetWifiListData(wk->pSaveData), deletedIndex, srcIndex);
+	//フレンド毎に持つフロンティアデータもマージする 2008.05.24(土) matsuda
+//	FrontierRecord_DataMarge(SaveData_GetFrontier(wk->pSaveData), deletedIndex, srcIndex);
 }
 
 
@@ -1114,7 +1123,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     NULL,  // オート接続で親になった場合
     NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
     NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-    NULL,  ///< wifiフレンドリスト削除コールバック
+    _deleteFriendList,  ///< wifiフレンドリスト削除コールバック
     _getFriendData,   ///< DWC形式の友達リスト	
     _getMyUserData,  ///< DWCのユーザデータ（自分のデータ）
     GFL_NET_DWC_HEAPSIZE,   ///< DWCへのHEAPサイズ
@@ -1995,7 +2004,7 @@ static void BgInit(HEAPID heapID )
             GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x18000,
             0x8000,
             GX_BG_EXTPLTT_23,
-            3, 0, 0, FALSE
+            1, 0, 0, FALSE
             };
         GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
         GFL_BG_ClearFrame( GFL_BG_FRAME3_M);
@@ -2058,7 +2067,7 @@ static void BgInit(HEAPID heapID )
 
     GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
     GFL_BG_SetPriority(GFL_BG_FRAME1_M , 1);   // yesno win　ユーザーデータの背景
-    GFL_BG_SetPriority(GFL_BG_FRAME3_M , 0);  // メッセージ
+    GFL_BG_SetPriority(GFL_BG_FRAME3_M , 1);  // メッセージ
     GFL_BG_SetPriority(GFL_BG_FRAME2_M , 0);   // menuリスト
 
     G2_BlendNone();
@@ -3004,7 +3013,6 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
 	u32 status;
 	
-    NET_PRINT("サウンド書き換え\n");
     if(GFL_NET_IsInit()){       // 接続中
 
         _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
@@ -3056,11 +3064,22 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 
 		Snd_DataSetByScene( SND_SCENE_P2P, SEQ_WIFILOBBY, 1 );
 
+#if PM_DEBUG
+        {
+            int i;
+            NET_PRINT("Friend %d\n",WifiList_GetFriendDataNum(SaveData_GetWifiListData(wk->pSaveData)));
+            for(i=0;i<32;i++){
+                NET_PRINT("Friend %s\n",WifiList_GetFriendNamePtr(SaveData_GetWifiListData(wk->pSaveData),i ));
+            }
+        }
+#endif
+
+        
         MainMenuMsgInit(wk);// BMPWIN登録・描画
         if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(wk->pList) ) ){
             GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
             GFL_BG_SetPriority(GFL_BG_FRAME1_M , 0);   // yesno win
-            GFL_BG_SetPriority(GFL_BG_FRAME3_M , 0);  // メッセージ
+            GFL_BG_SetPriority(GFL_BG_FRAME3_M , 1);  // メッセージ
             GFL_BG_SetPriority(GFL_BG_FRAME2_M , 1);   // menulist
             _systemMessagePrint(wk, dwc_message_0003);
             wk->pYesNoWork =
@@ -3150,7 +3169,7 @@ static int _differMachineInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
     if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
         _systemMessagePrint(wk,dwc_message_0006);
-        GFL_BG_SetPriority(GFL_BG_FRAME3_M , 0);  // メッセージ
+        GFL_BG_SetPriority(GFL_BG_FRAME3_M , 1);  // メッセージ
         GFL_BG_SetPriority(GFL_BG_FRAME2_M , 1);   //
         GFL_BG_SetPriority(GFL_BG_FRAME1_M , 0);   // yesno win
         GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
@@ -3218,7 +3237,7 @@ static int _differMachineOneMore( WIFIP2PMATCH_WORK *wk, int seq )
     else{
 
 		// 優先順位を戻す
-        GFL_BG_SetPriority(GFL_BG_FRAME3_M , 0);  // メッセージ
+        GFL_BG_SetPriority(GFL_BG_FRAME3_M , 1);  // メッセージ
         GFL_BG_SetPriority(GFL_BG_FRAME2_M , 0);   //
         GFL_BG_SetPriority(GFL_BG_FRAME1_M , 1);   // yesno win
         GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
@@ -3270,7 +3289,7 @@ static int _firstYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 		// 表示優先順位を戻す
 		GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
 		GFL_BG_SetPriority(GFL_BG_FRAME1_M , 1);   // yesno win
-		GFL_BG_SetPriority(GFL_BG_FRAME3_M , 0);  // メッセージ
+		GFL_BG_SetPriority(GFL_BG_FRAME3_M , 1);  // メッセージ
 		GFL_BG_SetPriority(GFL_BG_FRAME2_M , 0);   // menulist
 		
         wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
@@ -3305,7 +3324,7 @@ static int WifiP2PMatch_ConnectingInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
     GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
     GFL_BG_SetPriority(GFL_BG_FRAME1_M , 1);   // yesno win
-    GFL_BG_SetPriority(GFL_BG_FRAME3_M , 2);  // メッセージ
+    GFL_BG_SetPriority(GFL_BG_FRAME3_M , 1);  // メッセージ
     GFL_BG_SetPriority(GFL_BG_FRAME2_M , 0);   //
     wk->seq = WIFIP2PMATCH_CONNECTING;
     return seq;
@@ -3327,11 +3346,6 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, int status)
     WIFI_HISTORY* pHistry = SaveData_GetWifiHistory(wk->pSaveData);
     int max,i;
 
-    return;
-    
-    NET_PRINT("_WIFI_STATUS_MAX_SIZE  %d\n",sizeof(_WIFI_MACH_STATUS));
-    GF_ASSERT(_WIFI_STATUS_MAX_SIZE == sizeof(_WIFI_MACH_STATUS));
-
     max = PokeParty_GetPokeCount(pPokeParty);
     for(i = 0;i < max;i++){
         POKEMON_PARAM* poke = PokeParty_GetMemberPointer( pPokeParty, i);
@@ -3352,8 +3366,8 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, int status)
     wk->pMatch->myMatchStatus.vchat = TRUE;
     wk->pMatch->myMatchStatus.vchat_org = TRUE;
 
-    GFL_NET_DWC_SetMyInfo((const char *)&wk->pMatch->myMatchStatus, _WIFI_STATUS_MAX_SIZE);
-    GFL_NET_DWC_SetFriendStateBuffer(&wk->pMatch->friendMatchStatus[0], _WIFI_STATUS_MAX_SIZE);
+    GFL_NET_DWC_SetMyInfo((const char *)&wk->pMatch->myMatchStatus, sizeof(_WIFI_MACH_STATUS));
+    //GFL_NET_DWC_SetFriendStateBuffer(&wk->pMatch->friendMatchStatus[0], sizeof(_WIFI_MACH_STATUS));
 
 }
 
@@ -3381,7 +3395,7 @@ static int _readFriendMatchStatus(WIFIP2PMATCH_WORK* wk)
 			// このチェックを少し進化させる
 			// 最新情報を受信して初めて登録される
 			if(DWC_STATUS_OFFLINE != WifiDwc_getFriendStatus(i)){
-				p_status = WifiFriendMatchStatusGet( wk, i );
+				p_status = WifiFriendMatchStatusGet( i );
 
 				status = _WifiMyStatusGet( wk, p_status );
 	//			if( (status != WIFI_STATUS_UNKNOWN) && (p_status->trainer_view != PLHERO) ){
@@ -3426,7 +3440,7 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
 
     for(i = 0;i < WIFIP2PMATCH_MEMBER_MAX;i++){
 
-		p_status = WifiFriendMatchStatusGet( wk, i );
+		p_status = WifiFriendMatchStatusGet( i );
 		status = _WifiMyStatusGet( wk, p_status );
         if((wk->matchStatusBackup[i]  != status) ||
 			(wk->matchVchatBackup[i]  != p_status->vchat) ){
@@ -4067,7 +4081,7 @@ static void	_lineCallBack(BMPMENULIST_WORK * lw, u32 param, u8 y)
     }
     _COL_N_BLACK;
 
-	p_status = WifiFriendMatchStatusGet( wk, param );
+	p_status = WifiFriendMatchStatusGet( param );
 	status = _WifiMyStatusGet( wk,  p_status );
     switch(status){
       case WIFI_STATUS_VCT:      // VCT中
@@ -4291,7 +4305,7 @@ static void	_iconMenuDisp(WIFIP2PMATCH_WORK * wk, int toppos)
             vchat = 1;
         }
         else{
-			p_status = WifiFriendMatchStatusGet( wk, wk->index2No[pos] - 1 );
+			p_status = WifiFriendMatchStatusGet( wk->index2No[pos] - 1 );
 			status = _WifiMyStatusGet( wk, p_status );
             vchat = p_status->vchat;
         }
@@ -4434,9 +4448,11 @@ static BOOL WIFIP2PModeCheck( int friendIndex ,void* pWork)
     int targetSt;
     WIFIP2PMATCH_WORK *wk = pWork;
     TEST_MATCH_WORK* pMatch = wk->pMatch;
+	_WIFI_MACH_STATUS* p_status = WifiFriendMatchStatusGet( friendIndex);
 
     mySt = pMatch->myMatchStatus.status;
-    targetSt = pMatch->friendMatchStatus[ friendIndex ].status;
+
+    targetSt = p_status->status;
     
     if((mySt == WIFI_STATUS_DBATTLE50_WAIT)&&(targetSt == WIFI_STATUS_DBATTLE50)){
         return TRUE;
@@ -4570,7 +4586,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 		p_moveobj = WIFI_MCR_SetPlayer( &wk->matchroom, obj_code );
 		MCRSYS_SetMoveObjWork( wk, p_moveobj );	// 登録したワークを保存しておく
 #ifdef WFP2PM_MANY_OBJ
-	DEBUG_DummyObjIn( wk, wk->friend_num );
+        DEBUG_DummyObjIn( wk, wk->friend_num );
 #endif
 	}
 	// ビューアー初期化
@@ -4737,7 +4753,7 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
 			}
 			// 前はいなかったので追加
 			if( (match == FALSE) && (wk->index2No[i] != 0) ){
-				p_status = WifiFriendMatchStatusGet( wk, wk->index2No[i]-1 );
+				p_status = WifiFriendMatchStatusGet( wk->index2No[i]-1 );
 
 				p_obj = WIFI_MCR_SetNpc( &wk->matchroom, 
 						p_status->trainer_view, wk->index2No[i] );
@@ -5109,7 +5125,7 @@ static int WifiP2PMatch_VCTConnectInit2( WIFIP2PMATCH_WORK *wk, int seq )       
 	int status;
 
 	// VChatフラグを取得
-	p_status = WifiFriendMatchStatusGet( wk, wk->friendNo - 1 );
+	p_status = WifiFriendMatchStatusGet( wk->friendNo - 1 );
 	vchat	= p_status->vchat;
 	status	= _WifiMyStatusGet( wk, p_status );
 
@@ -5223,7 +5239,7 @@ static int WifiP2PMatch_VCTConnectWait( WIFIP2PMATCH_WORK *wk, int seq )        
 
 	// 080624　追加
 	// statusをチェック
-	p_status = WifiFriendMatchStatusGet( wk, GFL_NET_DWC_GetFriendIndex() );
+	p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
 	status	= _WifiMyStatusGet( wk, p_status );
 	if( (status != WIFI_STATUS_LOGIN_WAIT) && (status != WIFI_STATUS_VCT) ){
 		_friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
@@ -5271,7 +5287,7 @@ static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
 
 	
 	// VChatフラグを取得
-	p_status = WifiFriendMatchStatusGet( wk, GFL_NET_DWC_GetFriendIndex() );
+	p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
 	status	= _WifiMyStatusGet( wk, p_status );
 
 	// 友達が現れたら出す
@@ -6291,6 +6307,8 @@ static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 	u32 way;
 	
 	friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
+    NET_PRINT("_childModeMatchMenuInit %d\n",friendNo);
+    
 	//NPCを自分の方向に向ける
 	p_player = MCRSYS_GetMoveObjWork( wk, 0 );
 	GF_ASSERT( p_player );
@@ -6311,7 +6329,7 @@ static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 
 
 	// 状態保存
-	p_status = WifiFriendMatchStatusGet( wk, friendNo - 1 );
+	p_status = WifiFriendMatchStatusGet( friendNo - 1 );
 	status = _WifiMyStatusGet( wk, p_status );
 	wk->keepStatus = status;
 
@@ -6422,7 +6440,7 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
 		wk->seq = WIFIP2PMATCH_MODE_DISCONNECT;
 		return seq;
 	}else{
-		p_status = WifiFriendMatchStatusGet( wk, friendNo - 1 );
+		p_status = WifiFriendMatchStatusGet( friendNo - 1 );
 		status = _WifiMyStatusGet( wk, p_status );
 
 		// 状態がかわったり
@@ -6452,7 +6470,7 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
 		length = NELEMS(_childMatchMenuList);
 		list_h = _childMatchMenuListHeader;
 		friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
-		p_status = WifiFriendMatchStatusGet( wk, friendNo - 1 );
+		p_status = WifiFriendMatchStatusGet( friendNo - 1 );
 		status = _WifiMyStatusGet( wk, p_status );
 		vchat = p_status->vchat;
 		wk->keepVChat = vchat;
@@ -6646,7 +6664,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 			message = 1;
 			break;
 		}else{
-			p_status = WifiFriendMatchStatusGet( wk, friendNo - 1 );
+			p_status = WifiFriendMatchStatusGet( friendNo - 1 );
 			status = _WifiMyStatusGet( wk, p_status );
 			vchat = p_status->vchat;
 
@@ -6683,7 +6701,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
             if(  friendNo != 0 ){
                 int num = PokeParty_GetBattlePokeNum(wk->pMyPoke);
 
-				p_status = WifiFriendMatchStatusGet( wk, friendNo - 1 );
+				p_status = WifiFriendMatchStatusGet( friendNo - 1 );
                 status = _WifiMyStatusGet( wk, p_status );
                 vchat = p_status->vchat;
 
@@ -6986,7 +7004,7 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 	_WIFI_MACH_STATUS* p_status;
 	int myvchat;
 
-	p_status = WifiFriendMatchStatusGet( wk, GFL_NET_DWC_GetFriendIndex() );
+	p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
     mySt = _WifiMyStatusGet( wk,&wk->pMatch->myMatchStatus );
     targetSt = _WifiMyStatusGet( wk,p_status );
 	myvchat	= wk->pMatch->myMatchStatus.vchat;
@@ -7083,7 +7101,7 @@ static BOOL _connectingErrFunc(WIFIP2PMATCH_WORK *wk)
 			_WIFI_MACH_STATUS* p_status;
 			int myvchat, targetvchat;
 
-			p_status = WifiFriendMatchStatusGet( wk, GFL_NET_DWC_GetFriendIndex() );
+			p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
 			mySt		= _WifiMyStatusGet( wk,&wk->pMatch->myMatchStatus );
 			targetSt_org= _WifiMyStatusGet( wk,p_status );
 			targetSt	= _convertState(targetSt_org);
@@ -7280,7 +7298,7 @@ static int _parentModeCallMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
         
         EndMessageWindowOff(wk);
 
-		p_status = WifiFriendMatchStatusGet( wk, GFL_NET_DWC_GetFriendIndex() );
+		p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
         status = _WifiMyStatusGet( wk, p_status );
         if((status == WIFI_STATUS_TRADE_WAIT) || (status == WIFI_STATUS_TRADE)){
             status = WIFI_STATUS_TRADE;
@@ -7685,7 +7703,7 @@ static int _vchatNegoCheck( WIFIP2PMATCH_WORK *wk, int seq )
 			wk->seq = WIFIP2PMATCH_MODE_DISCONNECT;
 			return seq;
 		}else{
-			p_status = WifiFriendMatchStatusGet( wk, friendNo - 1 );
+			p_status = WifiFriendMatchStatusGet( friendNo - 1 );
 			status = _WifiMyStatusGet( wk, p_status );
 			vchat = p_status->vchat;
 
@@ -7744,7 +7762,7 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
 			wk->seq = WIFIP2PMATCH_MODE_DISCONNECT;
 			return seq;
 		}else{
-			p_status = WifiFriendMatchStatusGet( wk, friendNo - 1 );
+			p_status = WifiFriendMatchStatusGet( friendNo - 1 );
 			status = _WifiMyStatusGet( wk, p_status );
 			vchat = p_status->vchat;
 
@@ -8944,6 +8962,7 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
 			if( bttn_type != MCV_BUTTON_TYPE_NONE ){
 
 				// 名前の表示
+                OS_TPrintf("friendno %d\n",friend_no);
 				MCVSys_BttnWinDraw( wk, wk->view.nameWin[i], friend_no, frame, i );	
 				MCVSys_BttnStatusWinDraw( wk, wk->view.statusWin[i], friend_no, frame, i );
 			}else{
@@ -9056,7 +9075,7 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_NAME_X, MCV_USERD_NAME_Y,
                     wk->TitleString, wk->fontHandle);
 
-	p_status = WifiFriendMatchStatusGet( wk, friendNo );
+	p_status = WifiFriendMatchStatusGet( friendNo );
 	status = _WifiMyStatusGet( wk, p_status );
 
 	// 状態
@@ -9836,7 +9855,7 @@ static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbm
 	_WIFI_MACH_STATUS* p_status;
 	u32 status;
 
-	p_status = WifiFriendMatchStatusGet( wk, friendNo - 1 );
+	p_status = WifiFriendMatchStatusGet( friendNo - 1 );
 	status = _WifiMyStatusGet( wk, p_status );
 
 	// アイコン表示
@@ -10372,14 +10391,15 @@ static void MCVSys_FriendNameSet( WIFIP2PMATCH_WORK* p_wk, int friendno )
  *	@param	idx			インデックス
  */
 //-----------------------------------------------------------------------------
-static _WIFI_MACH_STATUS* WifiFriendMatchStatusGet( WIFIP2PMATCH_WORK* wk, u32 idx )
+static _WIFI_MACH_STATUS* WifiFriendMatchStatusGet( u32 idx )
 {
 	GF_ASSERT( idx < WIFIP2PMATCH_MEMBER_MAX );
 
 #ifdef WFP2PM_MANY_OBJ
 	idx = 0;
 #endif
-	return &wk->pMatch->friendMatchStatus[ idx ];
+    return (_WIFI_MACH_STATUS*)GFL_NET_DWC_GetFriendInfo( idx );
+//	return &wk->pMatch->friendMatchStatus[ idx ];
 }
 
 //----------------------------------------------------------------------------

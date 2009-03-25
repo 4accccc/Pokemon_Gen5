@@ -241,7 +241,6 @@ typedef struct _WIFI_MACH_STATUS_tag{
   u8 vchat_org;
 } _WIFI_MACH_STATUS;
 
-#define _WIFI_STATUS_MAX_SIZE  (sizeof(_WIFI_MACH_STATUS))		// ここを変えるとDPとの互換性がなくなる
 
 //============================================================================================
 //	構造体定義
@@ -249,7 +248,7 @@ typedef struct _WIFI_MACH_STATUS_tag{
 
 typedef struct {
   _WIFI_MACH_STATUS myMatchStatus;   // 自分のマッチング状態データ
-  _WIFI_MACH_STATUS friendMatchStatus[WIFIP2PMATCH_MEMBER_MAX]; // 相手のマッチング状態データ
+  //_WIFI_MACH_STATUS friendMatchStatus[WIFIP2PMATCH_MEMBER_MAX]; // 相手のマッチング状態データ
 } TEST_MATCH_WORK;
 
 //-------------------------------------

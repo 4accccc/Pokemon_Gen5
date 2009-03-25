@@ -35,12 +35,12 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
-// 表示優先順位計算マクロ
-#define WF2DMAP_DRAWPRI_STATR	(20000)	// 表示優先順位開始位置
-#define WF2DMAP_DRAWPRI_MAX		(20000)	//たてに10000ドットサイズの部屋はないだろう
-#define WF2DMAP_DRAWPRI_HERO_GET(y)	( WF2DMAP_DRAWPRI_MAX - (y*2) + WF2DMAP_DRAWPRI_STATR )	// 主人公の表示優先順位
+// 表示優先順位計算マクロ   CLACTプライオリティー減少に伴い修正
+#define WF2DMAP_DRAWPRI_STATR	(0)	// 表示優先順位開始位置
+#define WF2DMAP_DRAWPRI_MAX		(250)	//
+#define WF2DMAP_DRAWPRI_HERO_GET(y)	( WF2DMAP_DRAWPRI_MAX - (y/4) + WF2DMAP_DRAWPRI_STATR )	// 主人公の表示優先順位
 #define WF2DMAP_DRAWPRI_GET(y)	( WF2DMAP_DRAWPRI_HERO_GET(y)+1 )	// NPCの表示優先順位
-#define WF2DMAP_DRAWPRI_SHADOW	( 40001 )
+#define WF2DMAP_DRAWPRI_SHADOW	( 255 )
 
 // 登録デフォルト設定
 #define WF2DMAP_BGPRI_DEF	(2)	// 基本ＢＧ優先順位

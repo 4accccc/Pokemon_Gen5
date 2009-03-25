@@ -375,15 +375,12 @@ static void* _WIFICLUB_CreateWork(int kind)
 {
 //	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldOpenEvent, sizeof(EV_P2PEVENT_WORK));
   //  EV_P2PEVENT_WORK * ep2p = GMEVENT_GetEventWork(event);
+
     SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
     EV_P2PEVENT_WORK* ep2p = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EV_P2PEVENT_WORK));
-
     ep2p->pMatchParam = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WIFIP2PMATCH_PROC_PARAM));
-
     ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(TEST_MATCH_WORK));
-
     ep2p->pMatchParam->pSaveData = saveWork;
-
     ep2p->pWifiList = SaveData_GetWifiListData(saveWork); //クラブに必要な物を移し変え
     ep2p->pMatchParam->seq = kind;
 	return ep2p;

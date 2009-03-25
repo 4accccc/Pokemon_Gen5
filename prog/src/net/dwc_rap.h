@@ -30,6 +30,10 @@ typedef BOOL (*MYDWCConnectModeCheckFunc) (int index);
 #define ERRORCODE_HEAP (STEPMATCH_SUCCESS+6)
 #define STEPMATCH_CONNECT (STEPMATCH_SUCCESS+7)
 */
+
+#define MYDWC_STATUS_DATA_SIZE_MAX (180)   /// WIFIフレンド情報サイズ DWCに189バイト可能とあるが、定義が無いので控えめサイズで決めうち
+
+
 //==============================================================================
 /**
  * ボイスチャットのコーデックを指定します。
@@ -238,7 +242,7 @@ extern BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size );
  * @retval  データへのポインタ。中身は書き換えないで下さい。
  */
 //==============================================================================
-extern void *mydwc_getFriendInfo( int index );
+extern u8 *GFL_NET_DWC_GetFriendInfo( int index );
 
 //==============================================================================
 /**
