@@ -97,6 +97,7 @@ $(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
 $(TARGET_ARC): $(G3D_NSBMD) $(G3D_NSBTX) $(G3D_3DMD) $(G3D_3DPPACK)
 	nnsarc -i -c -l -n $(TARGET_ARC) -S $(LAND_ARCLIST) > arc_result.txt
+	$(NAIXCUT) $(TARGET_ARCIDX)
 endif
 
 #---------------------------------------------------------------
