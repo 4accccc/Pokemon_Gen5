@@ -44,6 +44,9 @@ extern "C" {
 #elif defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
+#elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
 #else
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
