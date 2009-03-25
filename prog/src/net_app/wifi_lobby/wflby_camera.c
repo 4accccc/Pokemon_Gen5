@@ -38,9 +38,11 @@
 */
 //-----------------------------------------------------------------------------
 #define WFLBY_CAMERA_DIST		( 0x29aec1 )			// 距離
+#if WB_FIX
 static const CAMERA_ANGLE sc_WFLBY_CAMERA_ANGLE = {		// アングル
 	-0x29fe,0,0
 };
+#endif	//WB_FIX
 #define WFLBY_CAMERA_TYPE		( GF_CAMERA_PERSPECTIV )// カメラのタイプ
 #define WFLBY_CAMERA_PARS		( 0x05c1 )				// パース
 #define WFLBY_CAMERA_NEAR		( FX32_CONST( 150 ) )	// クリッピング　ニア
@@ -81,11 +83,14 @@ typedef struct _WFLBY_CAMERA {
 WFLBY_CAMERA* WFLBY_CAMERA_Init( u32 heapID )
 {
 	WFLBY_CAMERA* p_wk;
-	VecFx32 target;
-
+	VecFx32 target = {0, 0, 0};
+	VecFx32 camUp = {0, FX32_ONE, 0};
+	VecFx32 camPos = {0, 0, WFLBY_CAMERA_DIST};
+	
 	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_CAMERA) );
 	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_CAMERA) );
 
+#if WB_FIX
 	// メモリ確保
 	p_wk->p_camera = GFC_AllocCamera( heapID );
 
@@ -103,6 +108,12 @@ WFLBY_CAMERA* WFLBY_CAMERA_Init( u32 heapID )
 	
 	//ニア・ファー設定
 	GFC_SetCameraClip( WFLBY_CAMERA_NEAR, WFLBY_CAMERA_FAR, p_wk->p_camera );
+#else
+	p_wk->p_camera = GFL_G3D_CAMERA_CreatePerspective( 
+		WFLBY_CAMERA_PARS, defaultCameraAspect, WFLBY_CAMERA_NEAR, WFLBY_CAMERA_FAR, 0,
+		&camPos, &camUp, &target, heapID );
+	GFL_G3D_CAMERA_Switching(p_wk->p_camera);
+#endif
 
 	OS_TPrintf( "透視射影\n" );
 
@@ -119,8 +130,10 @@ WFLBY_CAMERA* WFLBY_CAMERA_Init( u32 heapID )
 void WFLBY_CAMERA_Exit( WFLBY_CAMERA* p_sys )
 {
 
+#if WB_FIX
 	GFC_PurgeCamera();
-		
+#endif
+
 	GFL_G3D_CAMERA_Delete( p_sys->p_camera );
 
 	GFL_HEAP_FreeMemory( p_sys );
@@ -252,9 +265,11 @@ void WFLBY_CAMERA_ResetTargetPerson( WFLBY_CAMERA* p_sys )
 #ifdef WFLBY_CAMERA_DEBUG
 
 #define WFLBY_CAMERA_DEBUG_DIST		( 0x61b89b )			// 距離
+#if WB_FIX
 static const CAMERA_ANGLE sc_WFLBY_CAMERA_DEBUG_ANGLE = {		// アングル
 	-0x239e,0,0
 };
+#endif
 #define WFLBY_CAMERA_DEBUG_TYPE		( GF_CAMERA_ORTHO )// カメラのタイプ
 #define WFLBY_CAMERA_DEBUG_PARS		( 0x0281 )				// パース
 #define WFLBY_CAMERA_DEBUG_NEAR		( FX32_CONST( 150 ) )	// クリッピング　ニア
@@ -262,6 +277,7 @@ static const CAMERA_ANGLE sc_WFLBY_CAMERA_DEBUG_ANGLE = {		// アングル
 
 WFLBY_CAMERA* WFLBY_CAMERA_DEBUG_CameraInit( u32 heapID )
 {
+#if WB_FIX	//デバッグ機能なので無効化にしてしまう 2009.03.24(火) matsuda
 	WFLBY_CAMERA* p_wk;
 	VecFx32 target;
 
@@ -290,5 +306,9 @@ WFLBY_CAMERA* WFLBY_CAMERA_DEBUG_CameraInit( u32 heapID )
 	OS_TPrintf( "正射影\n" );
 
 	return p_wk;
+#else
+	GF_ASSERT(0);
+	return NULL;
+#endif
 }
 #endif

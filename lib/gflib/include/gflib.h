@@ -22,7 +22,6 @@ extern "C" {
 
 #include "initialize.h"
 #include "heapsys.h"
-#include "filesystem.h"
 #include "arc_tool.h"
 #include "areaman.h"
 #include "procsys.h"

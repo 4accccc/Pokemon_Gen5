@@ -569,8 +569,8 @@ SRCS_OVERLAY_WIFILOBBY_CONNECT		=	net_app\wifi_lobby\wflby_connect.c
 SRCS_OVERLAY_WIFILOBBY_ROOM		=	net_app\wifi_lobby\wflby_3dmatrix.c \
 									net_app\wifi_lobby\wflby_mapcont.c \
 									net_app\wifi_lobby\wflby_3dobjcont.c \
-									net_app\wifi_lobby\wflby_room.c
-#									net_app\wifi_lobby\wflby_camera.c \
+									net_app\wifi_lobby\wflby_room.c \
+									net_app\wifi_lobby\wflby_camera.c
 #									net_app\wifi_lobby\wflby_3dmapobj.c \
 #									net_app\wifi_lobby\wflby_3dmapobj_cont.c \
 #									net_app\wifi_lobby\wflby_event.c \

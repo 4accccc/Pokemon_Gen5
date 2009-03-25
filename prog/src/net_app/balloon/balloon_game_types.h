@@ -444,7 +444,7 @@ typedef struct{
 		int occ;				///<TRUE:データが生成されている
 #if WB_FIX
 		D3DOBJ obj;				///<空気OBJ
-		D3DOBJ_ANM	anm;		///<空気アニメ
+		GFL_G3D_ANM	anm;		///<空気アニメ
 #endif
 		int enable_anm_index;	///<実行中のアニメindex
 		GFL_G3D_OBJSTATUS status;	///<OBJステータス

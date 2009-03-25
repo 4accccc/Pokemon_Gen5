@@ -841,8 +841,9 @@ typedef struct _WFLBY_GADGET{
 
 	// 各リソース
 	GFL_G3D_OBJ	mdl[ WFLBY_GADGET_MDL_NUM ];		// モデル
+	GFL_G3D_RES *res[ WFLBY_GADGET_MDL_NUM ];		// リソース
 	void*		p_texres[ WFLBY_GADGET_TEX_NUM ];	// テクスチャ
-	D3DOBJ_ANM	anm[ WFLBY_GADGET_ANM_NUM ];		// アニメ
+	GFL_G3D_ANM	anm[ WFLBY_GADGET_ANM_NUM ];		// アニメ
 
 	// アロケータ
 	NNSFndAllocator		allocator;
@@ -1748,6 +1749,7 @@ static void WFLBY_GADGET_LoadMdl( WFLBY_GADGET* p_sys, ARCHANDLE* p_handle, u32 
 	int i;
 
 	for( i=0; i<WFLBY_GADGET_MDL_NUM; i++ ){
+	#if WB_FIX
 		p_sys->mdl[i].pResMdl	= GFL_ARCHDL_UTIL_Load( p_handle, 
 					WFLBY_GADGET_MDL_FILE_START + i,
 					FALSE, gheapID );
@@ -1759,6 +1761,9 @@ static void WFLBY_GADGET_LoadMdl( WFLBY_GADGET* p_sys, ARCHANDLE* p_handle, u32 
 
 		// エミッションを明るくする
 		NNS_G3dMdlSetMdlEmiAll( p_sys->mdl[i].pModel, GX_RGB( 31,31,31 ) );
+	#else
+		p_sys->res[i] = GFL_G3D_CreateResourceHandle( p_handle, WFLBY_GADGET_MDL_FILE_START + i ) ;
+	#endif
 	}
 }
 
@@ -2180,7 +2185,7 @@ static void WFLBY_GADGET_OBJ_DrawRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 	BOOL result;
 	void* p_tex;
 	GFL_G3D_OBJ* p_mdl;
-	D3DOBJ_ANM* p_anm;
+	GFL_G3D_ANM* p_anm;
 	int i;
 
 	GF_ASSERT( p_wk->cp_objres[idx] != NULL );
@@ -2224,7 +2229,12 @@ static void WFLBY_GADGET_OBJ_DrawRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 	for( i=0; i<WFLBY_GADGET_ANM_MAX; i++ ){
 		if( p_wk->cp_objres[idx]->anm[i] != WFLBY_GADGET_ANM_NONE ){
 			p_anm = &p_sys->anm[ p_wk->cp_objres[idx]->anm[i] ];
+		#if WB_FIX
 			D3DOBJ_DelAnm( &p_wk->obj[idx], p_anm );
+		#else
+			GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
+			GFL_G3D_OBJECT_RemoveAnime( 引数はまだ未対応 );
+		#endif
 		}else{
 			break;
 		}
@@ -2274,7 +2284,7 @@ static BOOL WFLBY_GADGET_OBJ_NoLoopAnm( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p
 static void WFLBY_GADGET_OBJ_LoopAnm_Sp( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk, u32 objidx, u32 anmidx, fx32 speed )
 {
 	fx32 end_frame;
-	D3DOBJ_ANM* p_anm;
+	GFL_G3D_ANM* p_anm;
 
 	// アニメオブジェ取得
 	p_anm = &p_sys->anm[ p_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
@@ -2298,7 +2308,7 @@ static BOOL WFLBY_GADGET_OBJ_NoLoopAnm_Sp( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ
 {
 	fx32 end_frame;
 	BOOL ret;
-	D3DOBJ_ANM* p_anm;
+	GFL_G3D_ANM* p_anm;
 
 	// アニメオブジェ取得
 	p_anm = &p_sys->anm[ p_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
@@ -2321,7 +2331,7 @@ static BOOL WFLBY_GADGET_OBJ_NoLoopAnm_Sp( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ
 static void WFLBY_GADGET_OBJ_SetFrame( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk, u32 objidx, u32 anmidx, fx32 frame )
 {
 	fx32 end_frame;
-	D3DOBJ_ANM* p_anm;
+	GFL_G3D_ANM* p_anm;
 
 	// アニメオブジェ取得
 	p_anm = &p_sys->anm[ p_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
@@ -2349,7 +2359,7 @@ static void WFLBY_GADGET_OBJ_SetFrame( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_
 static fx32 WFLBY_GADGET_OBJ_GetFrame( const WFLBY_GADGET* cp_sys, const WFLBY_GADGET_OBJ* cp_wk, u32 objidx, u32 anmidx )
 {
 	fx32 end_frame;
-	const D3DOBJ_ANM* cp_anm;
+	const GFL_G3D_ANM* cp_anm;
 
 	// アニメオブジェ取得
 	cp_anm = &cp_sys->anm[ cp_wk->cp_objres[ objidx ]->anm[ anmidx ] ];

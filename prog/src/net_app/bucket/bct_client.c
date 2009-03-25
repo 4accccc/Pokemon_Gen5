@@ -966,13 +966,13 @@ typedef struct {
 typedef struct {
     GFL_G3D_OBJSTATUS      obj[BCT_MARUNOMU_MDL_NUM];
     GFL_G3D_OBJ  mdl[BCT_MARUNOMU_MDL_NUM];
-    D3DOBJ_ANM  anm[BCT_MARUNOMU_ANM_NUM];
+    GFL_G3D_ANM  anm[BCT_MARUNOMU_ANM_NUM];
 
 	u16 set_mouthanm;	// 現在設定している口の動きのアニメデータ
 	u16	walk_anm_flag;
 
 	// カラーアニメ
-	D3DOBJ_ANM	colanm[BCT_MARUNOMU_ANM_COLANM_NUM];// カラーアニメ
+	GFL_G3D_ANM	colanm[BCT_MARUNOMU_ANM_COLANM_NUM];// カラーアニメ
 	fx32 colanm_frame;	// カラーアニメフレーム
 	u16 col_top;		// カラー表示するトップのplno	BCT_PLAYER_NUMなら黒
 	u16 col_rand;		// ランダムカラー表示するのか
@@ -1100,7 +1100,7 @@ typedef struct {
 typedef struct {
     GFL_G3D_OBJSTATUS      obj[BCT_MAINBACK_MDL_NUM];
     GFL_G3D_OBJ  mdl[BCT_MAINBACK_MDL_NUM];
-	D3DOBJ_ANM	anm[BCT_MAINBACK_ANM_NUM];
+	GFL_G3D_ANM	anm[BCT_MAINBACK_ANM_NUM];
 	fx32 anm_speed;
 	u8 fever;
 	u8	fever_anm_seq;
@@ -6751,7 +6751,12 @@ static void BCT_CLIENT_MarunomuDrawSetMouthAnm( BCT_MARUNOMU_DRAW* p_wk, u32 anm
 	
 	if( p_wk->set_mouthanm != anmno ){
 		
+	#if WB_FIX
 		D3DOBJ_DelAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[p_wk->set_mouthanm] ], &p_wk->anm[ p_wk->set_mouthanm ] );
+	#else
+		GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
+		GFL_G3D_OBJECT_RemoveAnime( 引数はまだ未対応 );
+	#endif
 		D3DOBJ_AddAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[anmno] ], &p_wk->anm[ anmno ] );
 
 		D3DOBJ_AnmSet( &p_wk->anm[ anmno ], 0 );
@@ -6819,7 +6824,12 @@ static void BCT_CLIENT_MarunomuDrawSetWalkAnm( BCT_MARUNOMU_DRAW* p_wk, BOOL fla
 		if( flag == TRUE ){
 			D3DOBJ_AddAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_WALK] ], &p_wk->anm[ BCT_MARUNOMU_ANM_WALK ] );
 		}else{
+		#if WB_FIX
 			D3DOBJ_DelAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_WALK] ], &p_wk->anm[ BCT_MARUNOMU_ANM_WALK ] );
+		#else
+			GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
+			GFL_G3D_OBJECT_RemoveAnime( 引数はまだ未対応 );
+		#endif
 		}
 
 		p_wk->walk_anm_flag = flag;

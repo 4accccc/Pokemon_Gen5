@@ -150,7 +150,7 @@ typedef struct {
 typedef struct {	
     GFL_G3D_OBJSTATUS				obj;
     GFL_G3D_OBJ			mdl;
-    D3DOBJ_ANM			anm[ 10 ];			///< とりあえず10個        
+    GFL_G3D_ANM			anm[ 10 ];			///< とりあえず10個        
 	QUATERNION_MTX44	rt;					///< 計算用マトリックス
 	QUATERNION			tq;					///< クォータニオン
 	QUATERNION			cq;					///< クォータニオン
