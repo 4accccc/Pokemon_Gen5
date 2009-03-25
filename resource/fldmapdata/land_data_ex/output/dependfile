@@ -78,6 +78,26 @@ output/C3_01_02.bhc: srcdata/C3_01_02h.imd
 srcdata/C3_01_02.3dmd:
 	@echo C3_01_02.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/C3_01_02.3dmd
+output/h01a_00_00.3dppack: output/h01a_00_00.nsbmd output/h01a_00_00.bhc srcdata/h01a_00_00.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_00.3dmd $*.3dppack BR
+
+output/h01a_00_00.nsbmd: srcdata/h01a_00_00.imd
+	@g3dcvtr srcdata/h01a_00_00.imd -emdl -o output/h01a_00_00.nsbmd
+
+srcdata/h01a_00_00h.imd:
+	@echo h01a_00_00.imdが存在しないためダミーデータを生成します
+	@cp dummy_file/dummy_h.imd srcdata/h01a_00_00h.imd
+
+output/h01a_00_00.bhc: srcdata/h01a_00_00h.imd
+	@echo srcdata/h01a_00_00h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
+	@ruby scripts/pad4byte.rb srcdata/h01a_00_00h.bhc output/h01a_00_00.bhc
+	@rm srcdata/h01a_00_00h.bhc
+
+srcdata/h01a_00_00.3dmd:
+	@echo h01a_00_00.3dmdが存在しないためダミーデータを生成します
+	@cp dummy_file/dummy.3dmd srcdata/h01a_00_00.3dmd
 output/h01a_00_01.3dppack: output/h01a_00_01.nsbmd output/h01a_00_01.bhc srcdata/h01a_00_01.3dmd
 	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_00_01.3dmd $*.3dppack BR
 
@@ -278,6 +298,66 @@ output/h01a_02_00.bhc: srcdata/h01a_02_00h.imd
 srcdata/h01a_02_00.3dmd:
 	@echo h01a_02_00.3dmdが存在しないためダミーデータを生成します
 	@cp dummy_file/dummy.3dmd srcdata/h01a_02_00.3dmd
+output/h01a_02_01.3dppack: output/h01a_02_01.nsbmd output/h01a_02_01.bhc srcdata/h01a_02_01.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_02_01.3dmd $*.3dppack BR
+
+output/h01a_02_01.nsbmd: srcdata/h01a_02_01.imd
+	@g3dcvtr srcdata/h01a_02_01.imd -emdl -o output/h01a_02_01.nsbmd
+
+srcdata/h01a_02_01h.imd:
+	@echo h01a_02_01.imdが存在しないためダミーデータを生成します
+	@cp dummy_file/dummy_h.imd srcdata/h01a_02_01h.imd
+
+output/h01a_02_01.bhc: srcdata/h01a_02_01h.imd
+	@echo srcdata/h01a_02_01h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
+	@ruby scripts/pad4byte.rb srcdata/h01a_02_01h.bhc output/h01a_02_01.bhc
+	@rm srcdata/h01a_02_01h.bhc
+
+srcdata/h01a_02_01.3dmd:
+	@echo h01a_02_01.3dmdが存在しないためダミーデータを生成します
+	@cp dummy_file/dummy.3dmd srcdata/h01a_02_01.3dmd
+output/h01a_02_02.3dppack: output/h01a_02_02.nsbmd output/h01a_02_02.bhc srcdata/h01a_02_02.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_02_02.3dmd $*.3dppack BR
+
+output/h01a_02_02.nsbmd: srcdata/h01a_02_02.imd
+	@g3dcvtr srcdata/h01a_02_02.imd -emdl -o output/h01a_02_02.nsbmd
+
+srcdata/h01a_02_02h.imd:
+	@echo h01a_02_02.imdが存在しないためダミーデータを生成します
+	@cp dummy_file/dummy_h.imd srcdata/h01a_02_02h.imd
+
+output/h01a_02_02.bhc: srcdata/h01a_02_02h.imd
+	@echo srcdata/h01a_02_02h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
+	@ruby scripts/pad4byte.rb srcdata/h01a_02_02h.bhc output/h01a_02_02.bhc
+	@rm srcdata/h01a_02_02h.bhc
+
+srcdata/h01a_02_02.3dmd:
+	@echo h01a_02_02.3dmdが存在しないためダミーデータを生成します
+	@cp dummy_file/dummy.3dmd srcdata/h01a_02_02.3dmd
+output/h01a_02_03.3dppack: output/h01a_02_03.nsbmd output/h01a_02_03.bhc srcdata/h01a_02_03.3dmd
+	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_02_03.3dmd $*.3dppack BR
+
+output/h01a_02_03.nsbmd: srcdata/h01a_02_03.imd
+	@g3dcvtr srcdata/h01a_02_03.imd -emdl -o output/h01a_02_03.nsbmd
+
+srcdata/h01a_02_03h.imd:
+	@echo h01a_02_03.imdが存在しないためダミーデータを生成します
+	@cp dummy_file/dummy_h.imd srcdata/h01a_02_03h.imd
+
+output/h01a_02_03.bhc: srcdata/h01a_02_03h.imd
+	@echo srcdata/h01a_02_03h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	-@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
+	@ruby scripts/pad4byte.rb srcdata/h01a_02_03h.bhc output/h01a_02_03.bhc
+	@rm srcdata/h01a_02_03h.bhc
+
+srcdata/h01a_02_03.3dmd:
+	@echo h01a_02_03.3dmdが存在しないためダミーデータを生成します
+	@cp dummy_file/dummy.3dmd srcdata/h01a_02_03.3dmd
 output/h01a_02_04.3dppack: output/h01a_02_04.nsbmd output/h01a_02_04.bhc srcdata/h01a_02_04.3dmd
 	@$(BINLINKER) $*.nsbmd $*.bhc output/h01a_02_04.3dmd $*.3dppack BR
 
@@ -864,6 +944,7 @@ ARCDEPENDS	= \
 	output/C3_00_02.3dppack \
 	output/C3_01_01.3dppack \
 	output/C3_01_02.3dppack \
+	output/h01a_00_00.3dppack \
 	output/h01a_00_01.3dppack \
 	output/h01a_00_02.3dppack \
 	output/h01a_00_03.3dppack \
@@ -874,6 +955,9 @@ ARCDEPENDS	= \
 	output/h01a_01_03.3dppack \
 	output/h01a_01_04.3dppack \
 	output/h01a_02_00.3dppack \
+	output/h01a_02_01.3dppack \
+	output/h01a_02_02.3dppack \
+	output/h01a_02_03.3dppack \
 	output/h01a_02_04.3dppack \
 	output/m_test2_01_01.3dppack \
 	output/m_test2_01_02.3dppack \
