@@ -3,21 +3,18 @@
 # File:     mkfile_landarc
 # Copyright 2005 GameFreak.inc  All rights reserved.
 #----------------------------------------------------------------------------
-
 #---------------------------------------------------------------
 #	共通ルールファイルのインクルード
 #---------------------------------------------------------------
+include users_def
 include $(PROJECT_RSCDIR)/macro_define
 
 #---------------------------------------------------------------
 #	ターゲット
 #---------------------------------------------------------------
-TARGET_ORG_NAME		= map_land_data
-TARGET_ORG_ARC		= $(TARGET_ORG_NAME).narc
-TARGET_ORG_ARCIDX	= $(TARGET_ORG_NAME).naix
-TARGET_DIR			= $(PROJECT_ARCDIR)/test_graphic/
-TARGET_ARC			= $(TARGET_DIR)/$(TARGET_ORG_ARC)
-TARGET_ARCIDX		= $(TARGET_DIR)/$(TARGET_ORG_ARCIDX)
+TARGET_ARC			= map_land_data.narc
+TARGET_ARCIDX		= $(TARGET_ARC:.narc=.naix)
+TARGET_DIR			= $(PROJECT_ARCDIR)/test_graphic
 
 #---------------------------------------------------------------
 #	各要素
@@ -89,25 +86,29 @@ MK_GROUNDTOOL = mkmapdmy.rb
 #---------------------------------------------------------------
 #	buildルール
 #---------------------------------------------------------------
-do-build: $(TARGET_ARC)
+do-build: $(TARGET_DIR)/$(TARGET_ARC)
 
 #対象コピー
-$(TARGET_ARC): $(LAND_ARCLIST) $(TARGET_ORG_ARC)
-	$(COPY) $(TARGET_ORG_ARC) $(TARGET_DIR)
-	$(COPY) $(TARGET_ORG_ARCIDX) $(TARGET_DIR)
-
+$(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
+	$(COPY) $(TARGET_ARC) $(TARGET_DIR)
+	$(COPY) $(TARGET_ARCIDX) $(TARGET_DIR)
+	
 #コンバート
-$(TARGET_ORG_ARC): $(G3D_NSBMD) $(G3D_NSBTX) $(G3D_3DMD) $(G3D_3DPPACK)
-	nnsarc -i -c -l -n $(TARGET_ORG_ARC) -S $(LAND_ARCLIST) > arc_result.txt
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+$(TARGET_ARC): $(G3D_NSBMD) $(G3D_NSBTX) $(G3D_3DMD) $(G3D_3DPPACK)
+	nnsarc -i -c -l -n $(TARGET_ARC) -S $(LAND_ARCLIST) > arc_result.txt
+endif
 
 #---------------------------------------------------------------
 #	clean
 #---------------------------------------------------------------
 clean:
+	-rm -f $(TARGET_DIR)/$(TARGET_ARC)
+	-rm -f $(TARGET_DIR)/$(TARGET_ARCIDX)
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	-rm -f $(TARGET_ARC)
 	-rm -f $(TARGET_ARCIDX)
-	-rm -f $(TARGET_ORG_ARC)
-	-rm -f $(TARGET_ORG_ARCIDX)
 	-rm -f $(G3D_NSBMD)
 	-rm -f $(G3D_NSBTX)
 	-rm -f $(G3D_3DPPACK)
+endif
