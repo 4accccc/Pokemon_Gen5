@@ -72,7 +72,8 @@ $(TARGET_ARC): $(XLS)
 	$(MAKE) mklst				#一覧を作成
 	$(MAKE) convert				#マトリクスコンバート
 	$(MAKE) makearc				#アーカイブ
-	
+	$(NAIXCUT) $(TARGET_ARCIDX)
+
 #ランドリスト作成
 mklandlst:
 	$(CSV_CVTR) -o $(FLDCSV_FOR_MAT) -p 1 -s csv $(LAND_XLS_DATA)
