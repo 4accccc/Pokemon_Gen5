@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: field_light.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FIELD_LIGHT_NAIX_
+#define NARC_FIELD_LIGHT_NAIX_
+
+enum {
+	NARC_field_light_light00_00_dat = 0,
+	NARC_field_light_light00_01_dat = 1,
+	NARC_field_light_light00_02_dat = 2,
+	NARC_field_light_light00_03_dat = 3
+};
+
+/* NARC_FIELD_LIGHT_NAIX_ */
+#endif

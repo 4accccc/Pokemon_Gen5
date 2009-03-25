@@ -49,7 +49,8 @@ SUBDIRS	=	wmi \
 			wifi_lobby_news \
 			shop \
 			wazatype_icon \
-			field_weather
+			field_weather \
+			field_light
 
 
 include $(RESOURCE_MACRO)
