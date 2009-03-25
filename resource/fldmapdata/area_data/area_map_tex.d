@@ -70,9 +70,9 @@ nsbtx_files/tex_set_out03_winter.nsbtx: src_imd_files/out01_texset_winter.imd
 	@$(COPY) src_imd_files/out01_texset_winter.imd marged_imd_files/tex_set_out03_winter.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_out03_winter.imd -o nsbtx_files/tex_set_out03_winter.nsbtx -etex
 
-nsbtx_files/tex_set_out04_spring.nsbtx: src_imd_files/out01_texset_spring.imd
-	@echo src_imd_files/out01_texset_spring.imd Å® nsbtx_files/tex_set_out04_spring.nsbtx
-	@$(COPY) src_imd_files/out01_texset_spring.imd marged_imd_files/tex_set_out04_spring.imd
+nsbtx_files/tex_set_out04_spring.nsbtx: src_imd_files/h01_texset.imd
+	@echo src_imd_files/h01_texset.imd Å® nsbtx_files/tex_set_out04_spring.nsbtx
+	@$(COPY) src_imd_files/h01_texset.imd marged_imd_files/tex_set_out04_spring.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_out04_spring.imd -o nsbtx_files/tex_set_out04_spring.nsbtx -etex
 
 nsbtx_files/tex_set_out04_summer.nsbtx: src_imd_files/h01_texset.imd
@@ -85,9 +85,9 @@ nsbtx_files/tex_set_out04_autumn.nsbtx: src_imd_files/h01_texset.imd
 	@$(COPY) src_imd_files/h01_texset.imd marged_imd_files/tex_set_out04_autumn.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_out04_autumn.imd -o nsbtx_files/tex_set_out04_autumn.nsbtx -etex
 
-nsbtx_files/tex_set_out04_winter.nsbtx: src_imd_files/out01_texset_winter.imd
-	@echo src_imd_files/out01_texset_winter.imd Å® nsbtx_files/tex_set_out04_winter.nsbtx
-	@$(COPY) src_imd_files/out01_texset_winter.imd marged_imd_files/tex_set_out04_winter.imd
+nsbtx_files/tex_set_out04_winter.nsbtx: src_imd_files/h01_texset.imd
+	@echo src_imd_files/h01_texset.imd Å® nsbtx_files/tex_set_out04_winter.nsbtx
+	@$(COPY) src_imd_files/h01_texset.imd marged_imd_files/tex_set_out04_winter.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_out04_winter.imd -o nsbtx_files/tex_set_out04_winter.nsbtx -etex
 
 nsbtx_files/tex_set_out05_spring.nsbtx: src_imd_files/tex_c3.imd
