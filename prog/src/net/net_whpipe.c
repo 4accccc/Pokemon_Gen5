@@ -665,12 +665,12 @@ static void _commEnd(void)
     GFL_HEAP_FreeMemory(pNetWL);
     _pNetWL = NULL;
 }
-
+#if 0
 void GFL_NET_WHPipeFree(void)
 {
     _commEnd();
 }
-
+#endif
 //-------------------------------------------------------------
 /**
  * @brief   ’T‚·‚±‚Æ‚ª‚Å‚«‚½e‚Ì”‚ğ•Ô‚·

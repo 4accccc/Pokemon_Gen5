@@ -29,6 +29,7 @@ static BOOL _DevSendDataFunc(void* data,int size, int no,NetDevEndCallback callb
 static BOOL _DevSetRecvCallbackFunc(PTRCommRecvLocalFunc recvCallback);
 static BOOL _DevIsStartFunc(void);
 static BOOL _DevIsConnectFunc(void);
+static BOOL _DevIsEndFunc(void);
 static BOOL _DevIsIdleFunc(void); ///<アイドル状態かどうか
 static u32 _DevGetBitmapFunc(void);
 static u32 _DevGetCurrentIDFunc(void);
@@ -74,6 +75,7 @@ static GFLNetDevTable netDevTbl={
     _DevSetRecvCallbackFunc,
     _DevIsStartFunc,
     _DevIsConnectFunc,
+    _DevIsEndFunc,
     _DevIsIdleFunc,
     _DevGetBitmapFunc,
     _DevGetCurrentIDFunc,
@@ -282,6 +284,18 @@ static BOOL _DevIsConnectFunc(void)
 {
     return (MYDWC_NONE_AID != GFL_NET_DWC_GetAid());
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信終了してるかどうか
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static BOOL _DevIsEndFunc(void)
+{
+    return GFL_NET_DWC_IsInit();
+}
+
 
 //------------------------------------------------------------------------------
 /**

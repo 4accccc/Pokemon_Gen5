@@ -63,6 +63,7 @@ typedef BOOL (*DevRecvCallbackFunc)(PTRCommRecvLocalFunc recvCallback); ///<DevR
 
 typedef BOOL (*DevIsStartFunc)(void); ///<DevIsStart                 通信接続してるかどうか
 typedef BOOL (*DevIsConnectFunc)(void); ///<DevIsConnect               相手と接続してるかどうか
+typedef BOOL (*DevIsEndFunc)(void); ///<DevIsEnd                   通信終了してよいかどうか
 typedef BOOL (*DevIsIdleFunc)(void); ///<アイドル状態かどうか
 typedef u32 (*DevGetBitmapFunc)(void); ///<DevGetBitmap               接続状態をBITMAPで返す
 typedef u32 (*DevGetCurrentIDFunc)(void); ///<DevGetCurrentID            自分の接続IDを返す
@@ -123,6 +124,7 @@ typedef struct{
 
   DevIsStartFunc DevIsStart;                 ///<通信接続してるかどうか
   DevIsConnectFunc DevIsConnect;               ///<相手と接続してるかどうか
+  DevIsEndFunc DevIsEnd;                 ///<通信終了してよいかどうか
   DevIsIdleFunc DevIsIdle;   ///< アイドル状態かどうか
   DevGetBitmapFunc DevGetBitmap;               ///<接続状態をBITMAPで返す
   DevGetCurrentIDFunc DevGetCurrentID;            ///<自分の接続IDを返す

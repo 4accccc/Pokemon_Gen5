@@ -46,6 +46,7 @@ static BOOL _DevSetRecvCallbackFunc(PTRCommRecvLocalFunc recvCallback); ///<DevR
 
 static BOOL _DevIsStartFunc(void); ///<DevIsStart                 通信接続してるかどうか
 static BOOL _DevIsConnectFunc(void); ///<DevIsConnect               相手と接続してるかどうか
+static BOOL _DevIsEndFunc(void); ///<DevIsEnd                 通信終了してよいかどうか
 static BOOL _DevIsIdleFunc(void); ///<アイドル状態かどうか
 static u32 _DevGetBitmapFunc(void); ///<DevGetBitmap               接続状態をBITMAPで返す
 static u32 _DevGetCurrentIDFunc(void); ///<DevGetCurrentID            自分の接続IDを返す
@@ -88,6 +89,7 @@ static GFLNetDevTable netDevTbl={
     _DevSetRecvCallbackFunc,
     _DevIsStartFunc,
     _DevIsConnectFunc,
+    _DevIsEndFunc,
     _DevIsIdleFunc,
     _DevGetBitmapFunc,
     _DevGetCurrentIDFunc,
@@ -482,6 +484,16 @@ static BOOL _DevIsStartFunc(void)
 static BOOL _DevIsConnectFunc(void)
 {
     return GFL_NET_WL_IsConnectLowDevice();
+}
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信終了してよいかどうか
+ * @retval  TRUE  通信終了してよい
+ */
+//------------------------------------------------------------------------------
+static BOOL _DevIsEndFunc(void)
+{
+    return !GFL_NET_WLIsInitialize();
 }
 
 
