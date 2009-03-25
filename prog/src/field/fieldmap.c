@@ -1135,16 +1135,9 @@ BOOL CalcSetGroundMove( const FLDMAPPER* g3Dmapper, FLDMAPPER_GRIDINFODATA* grid
 
 //============================================================================================
 //============================================================================================
-#include "field_sub_normal.c"
 #include "field_sub_nogrid.c"
 #include "field_sub_grid.c"
 #include "field_sub_c3.c"
-
-const DEPEND_FUNCTIONS FieldBaseFunctions = {
-	NormalCreate,
-	NormalMain,
-	NormalDelete,
-};
 
 const DEPEND_FUNCTIONS FieldGridFunctions = {
 	GridMoveCreate,
