@@ -147,21 +147,21 @@ static const FLDMAPPER_MAPDATA sampleMap[] = {
 #define	NARC_nogrid_mapblock_h01a_dummy	NARC_nogrid_mapblock_h01a_00_01_3dppack
 #include "fieldmap/nogrid_mapblock.naix"
 static const FLDMAPPER_MAPDATA newbridgemap[] = {
-	{ NARC_nogrid_mapblock_h01a_dummy },
+	{ NARC_nogrid_mapblock_h01a_00_00_3dppack }, //{ NARC_nogrid_mapblock_h01a_dummy },
 	{ NARC_nogrid_mapblock_h01a_01_00_3dppack },
 	{ NARC_nogrid_mapblock_h01a_02_00_3dppack },
 
 	{ NARC_nogrid_mapblock_h01a_00_01_3dppack },
 	{ NARC_nogrid_mapblock_h01a_01_01_3dppack },
-	{ NARC_nogrid_mapblock_h01a_dummy },
+	{ NARC_nogrid_mapblock_h01a_02_01_3dppack }, //{ NARC_nogrid_mapblock_h01a_dummy },
 
 	{ NARC_nogrid_mapblock_h01a_00_02_3dppack },
 	{ NARC_nogrid_mapblock_h01a_01_02_3dppack },
-	{ NARC_nogrid_mapblock_h01a_dummy },
+	{ NARC_nogrid_mapblock_h01a_02_02_3dppack }, //{ NARC_nogrid_mapblock_h01a_dummy },
 
 	{ NARC_nogrid_mapblock_h01a_00_03_3dppack },
 	{ NARC_nogrid_mapblock_h01a_01_03_3dppack },
-	{ NARC_nogrid_mapblock_h01a_dummy },
+	{ NARC_nogrid_mapblock_h01a_02_03_3dppack }, //{ NARC_nogrid_mapblock_h01a_dummy },
 
 	{ NARC_nogrid_mapblock_h01a_00_04_3dppack },
 	{ NARC_nogrid_mapblock_h01a_01_04_3dppack },
