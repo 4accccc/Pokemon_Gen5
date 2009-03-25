@@ -218,6 +218,7 @@ void FIELD_FOG_SetSlope( FIELD_FOG_WORK* p_wk, FIELD_FOG_SLOPE slope )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( slope < FIELD_FOG_SLOPE_MAX );
+	FOG_FADE_ASSERT(p_wk);
 	p_wk->slope		= slope;
 	p_wk->change	= TRUE;
 }
@@ -249,7 +250,6 @@ void FIELD_FOG_SetOffset( FIELD_FOG_WORK* p_wk, u16 depth_offset )
 void FIELD_FOG_SetColorRgb( FIELD_FOG_WORK* p_wk, GXRgb rgb )
 {
 	GF_ASSERT( p_wk );
-	FOG_FADE_ASSERT(p_wk);
 	p_wk->rgb		= rgb;
 	p_wk->change	= TRUE;
 }
@@ -265,7 +265,6 @@ void FIELD_FOG_SetColorRgb( FIELD_FOG_WORK* p_wk, GXRgb rgb )
 void FIELD_FOG_SetColorA( FIELD_FOG_WORK* p_wk, u8 a )
 {
 	GF_ASSERT( p_wk );
-	FOG_FADE_ASSERT(p_wk);
 	p_wk->alpha		= a;
 	p_wk->change	= TRUE;
 }

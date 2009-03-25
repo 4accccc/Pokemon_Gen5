@@ -549,6 +549,34 @@ void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk )
 	}
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	天気用ライト反映
+ *
+ *	@param	p_wk		ワーク
+ *	@param	heapID		ヒープID
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_LIGHT_Change( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 heapID )
+{
+	FIELD_LIGHT_ChangeEx( p_wk->p_light, arcid, dataid, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フィールド用ライトに戻す
+ *
+ *	@param	p_wk		ワーク
+ *	@param	heapID		ヒープID
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk, u32 heapID )
+{
+	FIELD_LIGHT_ReLoadDefault( p_wk->p_light, heapID );
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	天気情報の取得
@@ -855,9 +883,9 @@ void WEATHER_TASK_FogFadeOut_Init( WEATHER_TASK* p_wk, int fog_offs, int timing,
  *	@retval	FALSE	途中
  */
 //-----------------------------------------------------------------------------
-extern BOOL WEATHER_TASK_FogFade_Main( WEATHER_TASK* p_wk )
+extern BOOL WEATHER_TASK_FogFade_IsFade( const WEATHER_TASK* cp_wk )
 {
-	if( FIELD_FOG_FADE_IsFade( p_wk->p_fog ) ){
+	if( FIELD_FOG_FADE_IsFade( cp_wk->p_fog ) ){
 		return FALSE;	
 	}
 	return TRUE;

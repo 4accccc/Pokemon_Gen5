@@ -50,6 +50,7 @@ SUBDIRS	=	wmi \
 			shop \
 			wazatype_icon \
 			field_weather \
+			field_weather_light \
 			field_light
 
 

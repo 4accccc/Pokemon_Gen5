@@ -41,6 +41,7 @@ ITPFILE = $(wildcard *.itp)
 ITAFILE = $(wildcard *.ita)
 
 TXTFILE = $(wildcard *.txt)
+XLSFILE = $(wildcard *.xls)
 
 ##########################################
 #ターゲットファイル
@@ -58,10 +59,14 @@ NSBMAFILE = $(IMAFILE:.ima=.nsbma)
 NSBTPFILE = $(ITPFILE:.itp=.nsbtp)
 NSBTAFILE = $(ITAFILE:.ita=.nsbta)
 
+#DAT
+DATFILE = $(XLSFILE:.xls=.dat)
+
 LIST_FILE 	= list.txt
 OBJ_FILE 	= $(NCLRFILE) $(NCERFILE) $(NSCRFILE) \
 			  $(NSBMDFILE) $(NSBCAFILE) $(NSBVAFILE) \
-			  $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE)
+			  $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE) \
+			  $(DATFILE)
 
 
 
@@ -72,7 +77,7 @@ OBJ_FILE 	= $(NCLRFILE) $(NCERFILE) $(NSCRFILE) \
 ifeq	($(CONVERTUSER),true)	
 
 
-.SUFFIXES: .ncl .nce .nsc .NCLR .NCER .NSCR .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .nsbtp .nsbta
+.SUFFIXES: .ncl .nce .nsc .NCLR .NCER .NSCR .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .nsbtp .nsbta .xls .dat
 
 #コンバート環境
 #2d
@@ -104,6 +109,12 @@ ifeq	($(CONVERTUSER),true)
 .ita.nsbta:
 	g3dcvtr $<
 
+
+#light
+.xls.dat:
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*.csv -p 0 -s csv $<
+	perl ../field_light/conv.pl $*.csv $@
+
 endif
 
 
@@ -129,6 +140,7 @@ ifeq	($(CONVERTUSER),true)
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(OBJ_FILE) $(TXTFILE)
 	-ls *.txt > $(LIST_FILE)
+	-ls *.dat > $(LIST_FILE)
 	-ls *.N*R >> $(LIST_FILE)
 	-ls *.nsb* >> $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
@@ -150,6 +162,8 @@ clean:
 ifeq	($(CONVERTUSER),true)	
 	rm -f *.N*R
 	rm -f *.nsb*
+	rm -f *.dat
+	rm -f *.csv
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc

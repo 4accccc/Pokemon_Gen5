@@ -12,6 +12,7 @@
 
 #include "arc/arc_def.h"
 #include "arc/field_weather.naix"
+#include "arc/field_weather_light.naix"
 
 
 #include "weather_snow.h"
@@ -125,7 +126,6 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOW = {
 	ARCID_FIELD_WEATHER,			// アークID
 	TRUE,		// OAMを使用するか？
 	FALSE,		// BGを使用するか？
-	FALSE,		// ライトを使用するか？
 	NARC_field_weather_snow_NCGR,			// OAM CG
 	NARC_field_weather_snow_NCLR,			// OAM PLTT
 	NARC_field_weather_snow_NCER,			// OAM CELL
@@ -133,7 +133,6 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOW = {
 	0,			// BG CG
 	0,			// BG PLTT
 	0,			// BG SCRN
-	0,			// ライト
 
 	// ワークサイズ
 	sizeof(WEATHER_SNOW_WORK),
@@ -199,14 +198,13 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Init( WEATHER_TASK* p_wk, WEATHER_T
 	// フォグの設定
 	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS_START, fog_cont );
 	
-	WEATHER_TASK_FogFadeIn_Init( p_wk,
-			WEATHER_FOG_SLOPE_DEFAULT, 
-			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS, 
-			WEATHER_SNOW_FOG_TIMING, fog_cont );
 	p_local_wk->work[0] = WEATHER_SNOW_FOG_START;	// 同じくフォグ用
 	
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
+
+	// ライト変更
+	WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat, heapID );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -233,9 +231,16 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeIn( WEATHER_TASK* p_wk, WEATHER
 
 	if(p_local_wk->work[0] > 0){
 		p_local_wk->work[0]--;			// ワーク6が０になったらフォグを動かす
+		if( p_local_wk->work[0] == 0 ){
+
+			WEATHER_TASK_FogFadeIn_Init( p_wk,
+					WEATHER_FOG_SLOPE_DEFAULT, 
+					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS, 
+					WEATHER_SNOW_FOG_TIMING, fog_cont );
+		}
 	}else{
 		
-		fog_result = WEATHER_TASK_FogFade_Main( p_wk );
+		fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
 		
 		// タイミングが最小になったらメインへ
 		if( fog_result && result ){		// フェードリザルトが完了ならばメインへ
@@ -366,7 +371,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeOut( WEATHER_TASK* p_wk, WEATHE
 	}else{
 	
 		if( fog_cont ){
-			fog_result = WEATHER_TASK_FogFade_Main( p_wk );
+			fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
 		}else{
 			fog_result = TRUE;
 		}
@@ -404,6 +409,11 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Exit( WEATHER_TASK* p_wk, WEATHER_T
 {
 	// FOG終了
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
+
+
+	
+	// ライト元に
+	WEATHER_TASK_LIGHT_Back( p_wk, heapID );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

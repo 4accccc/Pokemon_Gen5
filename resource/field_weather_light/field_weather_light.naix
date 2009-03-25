@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: field_weather_light.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FIELD_WEATHER_LIGHT_NAIX_
+#define NARC_FIELD_WEATHER_LIGHT_NAIX_
+
+enum {
+	NARC_field_weather_light_light_show_dat = 0
+};
+
+/* NARC_FIELD_WEATHER_LIGHT_NAIX_ */
+#endif

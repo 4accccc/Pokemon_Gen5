@@ -59,6 +59,9 @@ extern void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second );
 extern void FIELD_LIGHT_Change( FIELD_LIGHT* p_sys, u32 light_no, u32 season, u32 heapID );
 extern void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID );
 
+// FIELD_LIGHT_Create or FIELD_LIGHT_Changeで設定したlight_no seasonのライト情報に戻す
+extern void FIELD_LIGHT_ReLoadDefault( FIELD_LIGHT* p_sys, u32 heapID );
+
 //-------------------------------------
 ///	ライト情報反映のON・OFF
 //=====================================

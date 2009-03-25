@@ -136,9 +136,8 @@ typedef struct {
 	// アークID
 	// BGとOAM共用
 	u16	arc_id;				
-	u8	use_oam;			// OAMを使用するか？ TRUE or FALSE
-	u8	use_bg:4;			// BGを使用するか？ TRUE or FALSE
-	u8	use_light:4;		// ライトを使用するか？ TRUE or FALSE
+	u16	use_oam;			// OAMを使用するか？ TRUE or FALSE
+	u16	use_bg;			// BGを使用するか？ TRUE or FALSE
 	
 	// OAM情報
 	u16 oam_cg;				
@@ -151,9 +150,6 @@ typedef struct {
 	u16 bg_cg;				
 	u16 bg_pltt;
 	u16 bg_scrn;
-
-	// ライト
-	u16 light_id;
 	
 	// ワーク領域サイズ
 	u32 work_byte;
@@ -212,6 +208,14 @@ extern void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, WEATHER_TASK_FOG_MO
 extern void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk );
 
 //-------------------------------------
+///	ライト操作
+//	Change	light_idのライトに変更
+//	Back	基本のライトに変更
+//=====================================
+extern void WEATHER_TASK_LIGHT_Change( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 heapID );
+extern void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk, u32 heapID );
+
+//-------------------------------------
 ///	情報の取得
 //=====================================
 extern WEATHER_TASK_INFO WEATHER_TASK_GetInfo( const WEATHER_TASK* cp_wk );
@@ -251,7 +255,7 @@ extern void WEATHER_TASK_FogSet( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, 
 extern void WEATHER_TASK_FogClear( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE mode );
 extern void WEATHER_TASK_FogFadeIn_Init( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode );
 extern void WEATHER_TASK_FogFadeOut_Init( WEATHER_TASK* p_wk, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode );
-extern BOOL WEATHER_TASK_FogFade_Main( WEATHER_TASK* p_wk );
+extern BOOL WEATHER_TASK_FogFade_IsFade( const WEATHER_TASK* cp_wk );
 
 //-------------------------------------
 ///　スクロール管理

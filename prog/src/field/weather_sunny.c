@@ -54,7 +54,6 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SUNNY = {
 	0,			// アークID
 	FALSE,		// OAMを使用するか？
 	FALSE,		// BGを使用するか？
-	FALSE,		// ライトを使用するか？
 	0,			// OAM CG
 	0,			// OAM PLTT
 	0,			// OAM CELL
@@ -62,7 +61,6 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SUNNY = {
 	0,			// BG CG
 	0,			// BG PLTT
 	0,			// BG SCRN
-	0,			// ライト
 
 	// ワークサイズ
 	0,
