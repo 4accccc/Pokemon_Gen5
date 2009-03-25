@@ -64,7 +64,8 @@ typedef enum {
 	BTL_EVENT_BEFORE_RANKDOWN,	///< 能力下げる（前）
 	BTL_EVENT_AFTER_RANKDOWN,		///< 能力下げた（後）
 	BTL_EVENT_ADD_SICK,					///< ワザの追加効果による状態異常の発生チェック
-	BTL_EVENT_MAKE_SICK,				///< 状態異常にする
+	BTL_EVENT_MAKE_POKESICK,		///< ポケモン系の状態異常にする
+	BTL_EVENT_MAKE_WAZASICK,		///< ワザ系の状態異常にする
 	BTL_EVENT_SICK_DAMAGE,			///< 状態異常によるダメージ計算
 	BTL_EVENT_SHRINK_CHECK,			///< ひるみ計算
 	BTL_EVENT_SHRINK_FIX,				///< ひるみ確定後

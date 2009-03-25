@@ -1081,7 +1081,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tanjun( u16 pri, u8 pokeID )
  *	とくせい「リーフガード」
  */
 //------------------------------------------------------------------------------
-// 状態異常くらう前のハンドラ
+// ポケモン系状態異常処理ハンドラ
 static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
 	// くらう側が自分
@@ -1090,16 +1090,12 @@ static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 		// 天候が晴れ
 		if( BTL_FIELD_GetWeather() == BTL_WEATHER_SHINE )
 		{
-			// 状態異常の種類がポケモン系
-			if( BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) < POKESICK_MAX )
+			BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, POKESICK_NULL );
+			if( BTL_EVENTVAR_GetValue(BTL_EVAR_ALMOST_FLAG) )
 			{
-				BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, POKESICK_NULL );
-				if( BTL_EVENTVAR_GetValue(BTL_EVAR_ALMOST_FLAG) )
-				{
-					BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
-					BTL_SERVER_RECTPT_SetMessage( flowWk, BTL_STRID_SET_NoEffect, pokeID );
-					BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
-				}
+				BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
+				BTL_SERVER_RECTPT_SetMessage( flowWk, BTL_STRID_SET_NoEffect, pokeID );
+				BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
 			}
 		}
 	}
@@ -1107,7 +1103,7 @@ static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_ReafGuard( u16 pri, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
-		{ BTL_EVENT_MAKE_SICK, handler_ReafGuard },	// 状態異常くらう前のハンドラ
+		{ BTL_EVENT_MAKE_POKESICK, handler_ReafGuard },	// ポケモン系状態異常処理ハンドラ
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
@@ -1117,7 +1113,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_ReafGuard( u16 pri, u8 pokeID )
  *	とくせい「どんかん」
  */
 //------------------------------------------------------------------------------
-// 状態異常くらう前のハンドラ
+// ワザ系状態異常ハンドラ
 static void handler_Donkan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
 	// くらう側が自分
@@ -1126,7 +1122,7 @@ static void handler_Donkan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 		// メロメロ
 		if( BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) == WAZASICK_MEROMERO )
 		{
-			BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, WAZASICK_MEROMERO );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, WAZASICK_NULL );
 			if( BTL_EVENTVAR_GetValue(BTL_EVAR_ALMOST_FLAG) )
 			{
 				BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
@@ -1139,7 +1135,7 @@ static void handler_Donkan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Donkan( u16 pri, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
-		{ BTL_EVENT_MAKE_SICK, handler_Donkan },	// 状態異常くらう前のハンドラ
+		{ BTL_EVENT_MAKE_WAZASICK, handler_Donkan },	// ワザ系状態異常ハンドラ
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
@@ -1773,7 +1769,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Samehada( u16 pri, u8 pokeID )
  *	とくせい「シンクロ」
  */
 //------------------------------------------------------------------------------
-// 状態異常ハンドラ
+// ポケモン系状態異常ハンドラ
 static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF)==pokeID )
@@ -1794,7 +1790,7 @@ static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Syncro( u16 pri, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
-		{ BTL_EVENT_MAKE_SICK,			handler_Syncro },	// 状態異常ハンドラ
+		{ BTL_EVENT_MAKE_POKESICK,			handler_Syncro },	// ポケモン系状態異常ハンドラ
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );

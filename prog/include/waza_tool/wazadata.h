@@ -13,7 +13,11 @@
 #include "poke_tool/poketype.h"
 #include "battle/battle.h"
 
-typedef  unsigned short  WazaID;
+//------------------------------------------------------------------------------
+// 
+//------------------------------------------------------------------------------
+typedef  u16  WazaID;
+
 
 //------------------------------------------------------------------------------
 /**
@@ -78,11 +82,41 @@ typedef enum {
 	WAZASICK_SASIOSAE,
 	WAZASICK_KAIHUKUHUUJI,
 	WAZASICK_KANASIBARI,
+	WAZASICK_HOROBINOUTA,
+	WAZASICK_MUSTHIT,
 
 	WAZASICK_MAX,
 	WAZASICK_NULL = POKESICK_NULL,
 
 }WazaSick;
+
+//------------------------------------------------------------------------------
+/**
+ *	状態異常の継続タイプ分類
+ */
+//------------------------------------------------------------------------------
+typedef enum {
+
+	WAZASICK_CONT_PERMANENT,	///< ずっと継続
+	WAZASICK_CONT_TURN,				///< ターン数継続
+	WAZASICK_CONT_POKE,				///< ワザをかけたポケモンが居る間、継続
+
+	WAZASICK_CONT_MAX,
+
+}WazaSickCont;
+
+//------------------------------------------------------
+/**
+ *	状態異常の継続パラメータ
+ */
+//------------------------------------------------------
+typedef struct {
+
+	u16  type    : 4;		///< 継続タイプ（ WazaSickCont ）
+	u16  turnMin : 6;		///< 継続ターン最小
+	u16  turnMax : 6;		///< 継続ターン最大
+
+}WAZA_SICKCONT_PARAM;
 
 //------------------------------------------------------------------------------
 /**
@@ -207,18 +241,20 @@ extern u8 WAZADATA_GetMaxHitCount( WazaID id );
 // 効果範囲
 extern WazaTarget WAZADATA_GetTarget( WazaID id );
 
-// 状態異常効果を取得
-extern PokeSick WAZADATA_GetSick( WazaID id );
-
-// 追加効果で状態異常になる確率
-extern u32 WAZADATA_GetSickPer( WazaID id );
-
 // 追加効果でひるむ確率
 extern u32 WAZADATA_GetShrinkPer( WazaID id );
 
 // 天候効果
 extern BtlWeather WAZADATA_GetWeather( WazaID id );
 
+// 状態異常効果＆継続パラメータ取得
+extern WazaSick WAZADATA_GetSick( WazaID id, WAZA_SICKCONT_PARAM* param );
+
+// 追加効果で状態異常になる確率
+extern u32 WAZADATA_GetSickPer( WazaID id );
+
+
+// 
 
 //=============================================================================================
 /**
