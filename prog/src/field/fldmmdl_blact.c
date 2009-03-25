@@ -470,13 +470,8 @@ static void BBDResUnitIndex_AddResUnit( FLDMMDLSYS *fmmdlsys, u16 obj_code )
 	data.arcID = ARCID_FLDMMDL_RES;
 	data.datID = prm->res_idx;
 	data.texFmt = GFL_BBD_TEXFMT_PAL16;
-//	data.texSiz = prm->tex_size;	//ŒÃ‚¢’l ŽØ‚è‚½‚¢‘
-	if( obj_code == HERO ){
-		data.texSiz = GFL_BBD_TEXSIZ_32x1024;
-	}else{
-		data.texSiz = GFL_BBD_TEXSIZ_32x512;
-	}
-	data.celSizX = 32;	//‚¢‚¸‚êmdl_size‚©‚ç
+	data.texSiz = prm->tex_size;	//ŒÃ‚¢’l ŽØ‚è‚½‚¢‘
+	data.celSizX = 32;				//‚¢‚¸‚êmdl_size‚©‚ç
 	data.celSizY = 32;
 	data.dataCut = GFL_BBDACT_RESTYPE_DATACUT;
 	id = GFL_BBDACT_AddResourceUnit( pBlActCont->pBbdActSys, &data, 1 );
