@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-01-16T18:50:51"/>
+	<create user="kagaya" host="W00143" date="2009-03-26T16:49:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -105,7 +105,7 @@
 		</language>
 	</columns>
 
-	<dialog left="376" top="126" right="1081" bottom="746" maximized="no" rayout="Vertical2">
+	<dialog left="376" top="185" right="1081" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="933" top="204" right="1280" bottom="602" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -139,8 +139,8 @@
 	</row>
 
 	<row id="FLDMAPMENU_STR01">
-		<language name="JPN" font=" 2:lcfont12" width="80">図鑑</language>
-		<language name="JPN_KANJI" width="80">図鑑</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">ずかん</language>
+		<language name="JPN_KANJI" width="80">図かん</language>
 	</row>
 
 	<row id="FLDMAPMENU_STR02">
@@ -154,7 +154,7 @@
 	</row>
 
 	<row id="FLDMAPMENU_STR04">
-		<language name="JPN" font=" 2:lcfont12" width="80">自分</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">じぶん</language>
 		<language name="JPN_KANJI" width="80">自分</language>
 	</row>
 
@@ -164,42 +164,42 @@
 	</row>
 
 	<row id="FLDMAPMENU_STR06">
-		<language name="JPN" font=" 2:lcfont12" width="80">設定</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">せってい</language>
 		<language name="JPN_KANJI" width="80">設定</language>
 	</row>
 
 	<row id="FLDMAPMENU_STR07">
-		<language name="JPN" font=" 2:lcfont12" width="80">閉じる</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">とじる</language>
 		<language name="JPN_KANJI" width="80">閉じる</language>
 	</row>
 
 	<row id="FLDMAPMENU_STR08">
-		<language name="JPN" font=" 2:lcfont12" width="80">図鑑を選択しました</language>
-		<language name="JPN_KANJI" width="80">図鑑を選択しました</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">ずかんを　せんたくしました</language>
+		<language name="JPN_KANJI" width="80">図かんを選択しました</language>
 	</row>
 
 	<row id="FLDMAPMENU_STR09">
-		<language name="JPN" font=" 2:lcfont12" width="80">ポケモンステータスを選択しました</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">ポケモンステータスを　せんたくしました</language>
 		<language name="JPN_KANJI" width="80">ポケモンステータスを選択しました</language>
 	</row>
 
 	<row id="FLDMAPMENU_STR10">
-		<language name="JPN" font=" 2:lcfont12" width="80">バッグを選択しました</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">バッグを　せんたくしました</language>
 		<language name="JPN_KANJI" width="80">バッグを選択しました</language>
 	</row>
 
 	<row id="FLDMAPMENU_STR11">
-		<language name="JPN" font=" 2:lcfont12" width="80">トレーナーカードを選択しました</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">トレーナーカードを　せんたくしました</language>
 		<language name="JPN_KANJI" width="80">トレーナーカードを選択しました</language>
 	</row>
 
 	<row id="FLDMAPMENU_STR12">
-		<language name="JPN" font=" 2:lcfont12" width="80">レポートを選択しました</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">レポートを　せんたくしました</language>
 		<language name="JPN_KANJI" width="80">レポートを選択しました</language>
 	</row>
 
 	<row id="FLDMAPMENU_STR13">
-		<language name="JPN" font=" 2:lcfont12" width="80">設定を選択しました</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">設定を　せんたくしました</language>
 		<language name="JPN_KANJI" width="80">設定を選択しました</language>
 	</row>
 

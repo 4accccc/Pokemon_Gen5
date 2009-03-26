@@ -129,6 +129,8 @@ typedef struct
 //======================================================================
 //	proto
 //======================================================================
+extern FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
+
 static FGRID_CONT * FGridCont_Init(
 	FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos, u16 dir );
 static void FGridCont_Delete( FIELD_MAIN_WORK *fieldWork );
@@ -497,7 +499,7 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		FLD_SetCameraLength( camera, leng );
 		FLD_SetCameraHeight( camera, height );
 	}
-
+	
 	{
 		if( fieldWork->fldActCont != NULL ){
 			FLD_MainFieldActSys( fieldWork->fldActCont );
@@ -734,6 +736,46 @@ static void FGridPlayer_Delete( FGRID_CONT *pGridCont )
 ///デバッグプリント
 static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 {
+	PC_ACTCONT *pcActCont = pJiki->pGridCont->pFieldWork->pcActCont;
+	FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
+	const FLDMAPPER *mapper = 
+		GetFieldG3Dmapper( pJiki->pGridCont->pFieldWork->gs );
+	s16 gx,gz;
+	s16 now_gx = FLDMMDL_GetGridPosX( fmmdl );
+	s16 now_gy = FLDMMDL_GetGridPosY( fmmdl );
+	s16 now_gz = FLDMMDL_GetGridPosZ( fmmdl );
+	VecFx32 pos,attr_pos;
+	FLDMMDL_GetVectorPos( fmmdl, &pos );
+	
+	OS_Printf(
+		"アトリビュート 現在位置 X=%d(0x%xH),Y=%d(0x%xH),Z=%d(0x%xH)\n",
+		now_gx, pos.x, now_gy, pos.y, now_gz, pos.z );
+	
+	for( gz = now_gz-1; gz < (now_gz+2); gz++ ){
+		for( gx = now_gx-1; gx < (now_gx+2); gx++ ){
+			u32 attr = 0;
+			
+			if( gx < 0 || gz < 0 ){
+				OS_Printf( "OVER " );
+			}else{
+				attr_pos.x = GRID_SIZE_FX32( gx );
+				attr_pos.y = pos.y;
+				attr_pos.z = GRID_SIZE_FX32( gz );
+			
+				if( GetMapAttr(mapper,&attr_pos,&attr) == TRUE ){
+					OS_Printf( "%04d ", attr );
+				}else{
+					OS_Printf( "OVER  " ); 
+				}
+			}
+		}
+		OS_Printf( "\n" );
+	}
+}
+
+#if 0
+static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
+{
 	const FLDMAPPER *mapper = 
 		GetFieldG3Dmapper( pJiki->pGridCont->pFieldWork->gs );
 	fx32 now_x = pJiki->vec_pos.x;
@@ -772,6 +814,7 @@ static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 		OS_Printf( "\n" );
 	}
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -780,8 +823,6 @@ static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-extern FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
-
 static void FGridPlayer_Move(
 	FGRID_PLAYER *pJiki, u32 key_trg, u32 key_cont )
 {
