@@ -1973,6 +1973,7 @@ static void mydwc_updateFriendInfo( void )
             }
             else{
                 GFL_STD_MemClear(_dWork->friendinfo[index], MYDWC_STATUS_DATA_SIZE_MAX);
+                NET_PRINT("î•ñ‚ðÁ‚µ‚½ %d\n",index);
             }
 		}
 		_dWork->friendupdate_index = (_dWork->friendupdate_index + 1) % FRIENDLIST_MAXSIZE;
@@ -2639,7 +2640,10 @@ BOOL mydwc_CancelDisable(void)
 //-----------------------------------------------------------------------------
 BOOL mydwc_IsLogin(void)
 {
-    return ( _dWork->state == MDSTATE_LOGIN );
+    if(_dWork){
+        return ( _dWork->state == MDSTATE_LOGIN );
+    }
+    return FALSE;
 }
 
 #endif //GFL_NET_WIFI
