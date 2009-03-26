@@ -87,6 +87,11 @@ static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdObjAnimeWait( VMHANDLE * core, void *wk );
 static BOOL EvObjAnimeWait(VMHANDLE * core, void *wk);
 
+static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk );
+static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdObjPauseClearAll( VMHANDLE *core, void *wk );
+
 //======================================================================
 //	グローバル変数
 //======================================================================
@@ -155,6 +160,10 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
 	
 	EvCmdObjAnime,
 	EvCmdObjAnimeWait,
+	
+	EvCmdObjPauseAll,
+	EvCmdTalkObjPauseAll,
+	EvCmdObjPauseClearAll,
 };
 
 //--------------------------------------------------------------
@@ -167,9 +176,9 @@ const u32 ScriptCmdMax = NELEMS(ScriptCmdTbl);
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @brief	インライン関数：ワークを取得する
+ * インライン関数：ワークを取得する
  * @param	core	仮想マシン制御ワークへのポインタ
- * @return	u16 *	ワークへのポインタ
+ * @retval	u16 *	ワークへのポインタ
  *
  * 次の2バイトをワークを指定するIDとみなして、ワークへのポインタを取得する
  */
@@ -183,9 +192,9 @@ static inline u16 * VMGetWork(VMHANDLE *core, SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
- * @brief	インライン関数：ワークから値を取得する
+ * インライン関数：ワークから値を取得する
  * @param	core	仮想マシン制御ワークへのポインタ
- * @return	u16		値
+ * @retval	u16		値
  *
  * 次の2バイトがSVWK_START（0x4000以下）であれば値として受け取る。
  * それ以上の場合はワークを指定するIDとみなして、そのワークから値を取得する
@@ -199,15 +208,43 @@ static inline u16 VMGetWorkValue(VMHANDLE * core, SCRCMD_WORK *work)
 }
 
 //======================================================================
+///	動作モデル監視に使用するインライン関数定義
+//======================================================================
+#define	PLAYER_BIT			(1<<0)
+#define	PLAYER_PAIR_BIT		(1<<1)
+#define	OTHER_BIT			(1<<2)
+#define	OTHER_PAIR_BIT		(1<<3)
+
+static u8 step_watch_bit;
+
+static inline void InitStepWatchBit(void)
+{
+	step_watch_bit = 0;
+}
+
+static inline BOOL CheckStepWatchBit(int mask)
+{
+	return (step_watch_bit & mask) != 0;
+}
+
+static inline void SetStepWatchBit(int mask)
+{
+	step_watch_bit |= mask;
+}
+
+static inline void ResetStepWatchBit(int mask)
+{
+	step_watch_bit &= (0xff ^ mask);
+}
+
+//======================================================================
 //	基本システム命令
 //======================================================================
 //--------------------------------------------------------------
 /**
  * ＮＯＰ命令（なにもしない）
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdNop( VMHANDLE *core, void *wk )
@@ -218,10 +255,8 @@ static VMCMD_RESULT EvCmdNop( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * 何もしない（デバッガで引っ掛けるための命令）
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdDummy( VMHANDLE *core, void *wk )
@@ -232,10 +267,8 @@ static VMCMD_RESULT EvCmdDummy( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * スクリプトの終了
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdEnd( VMHANDLE *core, void *wk )
@@ -247,10 +280,8 @@ static VMCMD_RESULT EvCmdEnd( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * ウェイト処理
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"1"
+ * @retval	"1"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdTimeWait( VMHANDLE *core, void *wk )
@@ -299,14 +330,11 @@ static VMCMD_RESULT EvCmdDebugWatch(VMHANDLE * core, void *wk )
 //======================================================================
 //	データロード・ストア関連
 //======================================================================
-
 //--------------------------------------------------------------
 /**
  * 仮想マシンの汎用レジスタに1byteの値を格納
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdLoadRegValue( VMHANDLE *core, void *wk )
@@ -319,10 +347,8 @@ static VMCMD_RESULT EvCmdLoadRegValue( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * 仮想マシンの汎用レジスタに4byteの値を格納
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdLoadRegWData( VMHANDLE *core, void *wk )
@@ -339,10 +365,8 @@ static VMCMD_RESULT EvCmdLoadRegWData( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * 仮想マシンの汎用レジスタにアドレスを格納
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdLoadRegAdrs( VMHANDLE *core, void *wk )
@@ -359,10 +383,8 @@ static VMCMD_RESULT EvCmdLoadRegAdrs( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * アドレスの中身に値を代入
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdLoadAdrsValue( VMHANDLE *core, void *wk )
@@ -379,10 +401,8 @@ static VMCMD_RESULT EvCmdLoadAdrsValue( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * アドレスの中身に仮想マシンの汎用レジスタの値を代入
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdLoadAdrsReg( VMHANDLE *core, void *wk )
@@ -399,10 +419,8 @@ static VMCMD_RESULT EvCmdLoadAdrsReg( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * 仮想マシンの汎用レジスタの値を汎用レジスタにコピー
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdLoadRegReg( VMHANDLE *core, void *wk )
@@ -418,10 +436,8 @@ static VMCMD_RESULT EvCmdLoadRegReg( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * アドレスの中身にアドレスの中身を代入
- *  
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdLoadAdrsAdrs( VMHANDLE *core, void *wk )
@@ -435,18 +451,14 @@ static VMCMD_RESULT EvCmdLoadAdrsAdrs( VMHANDLE *core, void *wk )
 	return 0;
 }
 
-
 //======================================================================
 //	比較命令
 //======================================================================
-
 //--------------------------------------------------------------
 /**
  * ２つの値を比較
- *
  * @param	r1		値１
  * @param	r2		値２
- *
  * @retval	"r1 < r2 : MISUS_RESULT"
  * @retval	"r1 = r2 : EQUAL_RESULT"
  * @retval	"r1 > r2 : PLUS_RESULT"
@@ -465,10 +477,8 @@ static VMCMD_RESULT EvCmdCmpMain( u16 r1, u16 r2 )
 //--------------------------------------------------------------
 /**
  * 仮想マシンの汎用レジスタを比較
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdCmpRegReg( VMHANDLE *core, void *wk )
@@ -484,10 +494,8 @@ static VMCMD_RESULT EvCmdCmpRegReg( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * 仮想マシンの汎用レジスタと値を比較
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdCmpRegValue( VMHANDLE *core, void *wk )
@@ -503,10 +511,8 @@ static VMCMD_RESULT EvCmdCmpRegValue( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * 仮想マシンの汎用レジスタとアドレスの中身を比較
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdCmpRegAdrs( VMHANDLE *core, void *wk )
@@ -522,10 +528,8 @@ static VMCMD_RESULT EvCmdCmpRegAdrs( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * アドレスの中身と仮想マシンの汎用レジスタを比較
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdCmpAdrsReg( VMHANDLE *core, void *wk )
@@ -541,10 +545,8 @@ static VMCMD_RESULT EvCmdCmpAdrsReg( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * アドレスの中身と値を比較
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdCmpAdrsValue(VMHANDLE * core, void *wk)
@@ -560,10 +562,8 @@ static VMCMD_RESULT EvCmdCmpAdrsValue(VMHANDLE * core, void *wk)
 //--------------------------------------------------------------
 /**
  * アドレスの中身とアドレスの中身を比較
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdCmpAdrsAdrs(VMHANDLE * core, void *wk)
@@ -582,7 +582,7 @@ static VMCMD_RESULT EvCmdCmpAdrsAdrs(VMHANDLE * core, void *wk)
  *
  * @param	core		仮想マシン制御構造体へのポインタ
  *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdCmpWkValue( VMHANDLE *core, void *wk )
@@ -600,10 +600,8 @@ static VMCMD_RESULT EvCmdCmpWkValue( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * ワークとワークを比較
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdCmpWkWk( VMHANDLE *core, void *wk )
@@ -623,10 +621,8 @@ static VMCMD_RESULT EvCmdCmpWkWk( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * 仮想マシン追加(切り替えはせず、並列で動作します！)
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"1"
+ * @retval	"1"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdVMMachineAdd( VMHANDLE *core, void *wk )
@@ -654,10 +650,8 @@ static VMCMD_RESULT EvCmdVMMachineAdd( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * ローカルスクリプトをウェイト状態にして、共通スクリプトを動作させます
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"1"
+ * @retval	"1"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdChangeCommonScr( VMHANDLE *core, void *wk )
@@ -702,10 +696,8 @@ static BOOL EvChangeCommonScrWait(VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * 共通スクリプトを終了して、ローカルスクリプトを再開させます
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdChangeLocalScr( VMHANDLE *core, void *wk )
@@ -724,17 +716,12 @@ static VMCMD_RESULT EvCmdChangeLocalScr( VMHANDLE *core, void *wk )
 //======================================================================
 //	分岐命令
 //======================================================================
-
 //--------------------------------------------------------------
 /**
  * スクリプトジャンプ
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
- *
+ * @retval	"0"
  * @li	EVCMD_JUMP
- *
  *	表記：	EVCMD_JUMP	JumpOffset(s16)
  */
 //--------------------------------------------------------------
@@ -749,10 +736,8 @@ static VMCMD_RESULT EvCmdGlobalJump( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * 話し掛け対象OBJID比較ジャンプ
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return
+ * @retval
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdObjIDJump( VMHANDLE *core, void *wk )
@@ -782,10 +767,8 @@ static VMCMD_RESULT EvCmdObjIDJump( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * 話し掛け対象BG比較ジャンプ
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return
+ * @retval
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdBgIDJump( VMHANDLE *core, void *wk )
@@ -821,10 +804,8 @@ static VMCMD_RESULT EvCmdBgIDJump( VMHANDLE *core, void *wk )
 /**
  * イベント起動時の主人公の向き比較ジャンプ
  * (現在の向きではないので注意！)
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return
+ * @retval
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdPlayerDirJump( VMHANDLE *core, void *wk )
@@ -856,13 +837,9 @@ static VMCMD_RESULT EvCmdPlayerDirJump( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * スクリプトコール
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
- *
+ * @retval	"0"
  * @li	EVCMD_CALL
- *
  *	表記：	EVCMD_CALL	CallOffset(s16)
  */
 //--------------------------------------------------------------
@@ -876,10 +853,8 @@ static VMCMD_RESULT EvCmdGlobalCall( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * スクリプトリターン
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdRet( VMHANDLE *core, void *wk )
@@ -891,10 +866,8 @@ static VMCMD_RESULT EvCmdRet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * スクリプト条件ジャンプ
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdIfJump( VMHANDLE *core, void *wk )
@@ -914,10 +887,8 @@ static VMCMD_RESULT EvCmdIfJump( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * スクリプト条件コール
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdIfCall( VMHANDLE *core, void *wk )	
@@ -940,10 +911,8 @@ static VMCMD_RESULT EvCmdIfCall( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * キーウェイト
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	常に1
+ * @retval	常に1
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdABKeyWait( VMHANDLE * core, void *wk )
@@ -970,10 +939,8 @@ static BOOL EvWaitABKey( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 /**
  * 登録された単語を使って文字列展開　メッセージ表示(MSG_ALLPUT版)
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
@@ -994,7 +961,7 @@ static VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
 /**
  * 会話ウィンドウ表示
  * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
@@ -1021,7 +988,7 @@ static VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 /**
  * 会話ウィンドウを閉じる
  * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
@@ -1051,7 +1018,7 @@ static void EvAnmSetTCB(
 /**
  * アニメーション
  * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
+ * @retval	"0"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
@@ -1090,10 +1057,8 @@ static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * アニメーション終了待ち
- *
  * @param	core		仮想マシン制御構造体へのポインタ
- *
- * @return	"1"
+ * @retval	"1"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdObjAnimeWait( VMHANDLE * core, void *wk )
@@ -1117,11 +1082,9 @@ static BOOL EvObjAnimeWait(VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 /**
  * FIELD_OBJ_PTRを取得
- *
  * @param	fsys	FIELDSYS_WORK型のポインタ
  * @param	obj_id	OBJID
- *
- * @return	"FIELD_OBJ_PTR"
+ * @retval	"FIELD_OBJ_PTR"
  */
 //--------------------------------------------------------------
 static FLDMMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
@@ -1149,12 +1112,10 @@ static FLDMMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
 
 //--------------------------------------------------------------
 /**
- * @brief	アニメ終了監視TCB セット
- *
+ * アニメ終了監視TCB セット
  * @param	fsys	FIELDSYS_WORK型のポインタ
  * @param	anm_tcb	TCB_PTR型
- *
- * @return	none
+ * @retval	none
  */
 //--------------------------------------------------------------
 static void EvAnmSetTCB(
@@ -1179,4 +1140,206 @@ static void EvAnmSetTCB(
 #endif
 }
 
+//======================================================================
+//	動作モデル　イベント関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機FLDMMDL取得　仮
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static FLDMMDL * PlayerGetFldMMdl( SCRCMD_WORK *work )
+{
+	FLDMMDLSYS *fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
+	FLDMMDL *fmmdl = FLDMMDLSYS_SearchOBJID( fmmdlsys, FLDMMDL_ID_PLAYER );
+	return( fmmdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * 全OBJ動作停止
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @retval	0
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
+{
+	SCRCMD_WORK *work = wk;
+	SCRIPT_WORK *sc;
+	FLDMMDL **fmmdl;
+	
+	sc = SCRCMD_WORK_GetScriptWork( work );
+	fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+	
+	if( (*fmmdl) == NULL ){
+		FLDMMDLSYS *fmmdlsys;
+		fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
+		FLDMMDLSYS_PauseMoveProc( fmmdlsys );
+		
+		#ifndef SCRCMD_PL_NULL
+		//08.06.18
+		//話しかけの対象がいないBGやPOSの時
+		//連れ歩きOBJの移動動作中かのチェックをしていない
+		//
+		//ふれあい広場などで、連れ歩きOBJに対して、
+		//スクリプトでアニメを発行すると、
+		//アニメが行われず終了待ちにいかないでループしてしまう
+
+		{
+			FIELD_OBJ_PTR player_pair =
+				FieldOBJSys_MoveCodeSearch( fsys->fldobjsys, MV_PAIR );
+			//ペアが存在している
+			if (player_pair) {
+				//連れ歩きフラグが立っていて、移動動作中なら
+				if( SysFlag_PairCheck(
+					SaveData_GetEventWork(fsys->savedata)) == 1
+					&& FieldOBJ_StatusBitCheck_Move(player_pair) != 0) {
+					
+					//ペアの動作ポーズ解除
+					FieldOBJ_MovePauseClear( player_pair );
+					
+					//移動動作の終了待ちをセット
+					VM_SetWait( core, EvWaitPairObj );
+					return 1;
+				}
+			}
+		}
+		#endif
+	}else{
+		EvCmdTalkObjPauseAll( core, wk );
+	}
+	
+	return 1;
+}
+
+//--------------------------------------------------------------
+/**
+ * 会話イベント用全OBJ動作停止
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @retval	"1"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
+{
+	SCRCMD_WORK *work = wk;
+	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	FLDMMDLSYS *fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
+	FLDMMDL **fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+	FLDMMDL *player = PlayerGetFldMMdl( work );
+	FLDMMDL *player_pair = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+#ifndef SCRCMD_PL_NULL
+	FLDMMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
+#else
+	FLDMMDL *other_pair = NULL;
+#endif
+
+	InitStepWatchBit();
+	FLDMMDLSYS_PauseMoveProc( fmmdlsys );
+	
+	if( FLDMMDL_CheckEndAcmd(player) == FALSE ){
+		SetStepWatchBit(PLAYER_BIT);
+		FLDMMDL_OffStatusBitMoveProcPause( player );
+	}
+	
+	if( FLDMMDL_CheckStatusBitMove(*fmmdl) == TRUE ){
+		SetStepWatchBit(OTHER_BIT);
+		FLDMMDL_OffStatusBitMoveProcPause( *fmmdl );
+	}
+	
+	if( player_pair ){
+		#ifndef SCRCMD_PL_NULL
+		if( SysFlag_PairCheck(SaveData_GetEventWork(fsys->savedata)) == 1
+				&& FieldOBJ_StatusBitCheck_Move(player_pair) != 0) {
+			SetStepWatchBit(PLAYER_PAIR_BIT);
+			FieldOBJ_MovePauseClear( player_pair );
+		}
+		#else
+		GF_ASSERT( 0 );
+		#endif
+	}
+	
+	if( other_pair ){
+		if( FLDMMDL_CheckStatusBitMove(other_pair) == TRUE ){
+			SetStepWatchBit(OTHER_PAIR_BIT);
+			FLDMMDL_OffStatusBitMoveProcPause( other_pair );
+		}
+	}
+	
+	VMCMD_SetWait( core, EvWaitTalkObj );
+	return 1;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	OBJ動作終了待ち
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk )
+{
+	SCRCMD_WORK *work = wk;
+	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	FLDMMDL **fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+	FLDMMDL *player = PlayerGetFldMMdl( work );
+	FLDMMDLSYS *fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
+
+	//自機動作停止チェック
+	if( CheckStepWatchBit(PLAYER_BIT) &&
+		FLDMMDL_CheckEndAcmd(player) == TRUE ){
+		FLDMMDL_OnStatusBitMoveProcPause( player );
+		ResetStepWatchBit(PLAYER_BIT);
+	}
+	
+	//話しかけ対象動作停止チェック
+	if( CheckStepWatchBit(OTHER_BIT) &&
+		FLDMMDL_CheckStatusBitMove(*fmmdl) == FALSE ){
+		FLDMMDL_OnStatusBitMoveProcPause( *fmmdl );
+		ResetStepWatchBit(OTHER_BIT);
+	}
+	
+	//自機の連れ歩き動作停止チェック
+	if( CheckStepWatchBit(PLAYER_PAIR_BIT) ){
+		FLDMMDL *player_pair = FLDMMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+		
+		if( FLDMMDL_CheckStatusBitMove(player_pair) == FALSE ){
+			FLDMMDL_OnStatusBitMoveProcPause( player_pair );
+			ResetStepWatchBit(PLAYER_PAIR_BIT);
+		}
+	}
+	
+	//話しかけ対象の連れ歩き動作停止チェック
+	if( CheckStepWatchBit(OTHER_PAIR_BIT) ){
+		#ifndef SCRCMD_PL_NULL
+		FLDMMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
+		if (FieldOBJ_StatusBitCheck_Move(other_pair) == 0) {
+			FieldOBJ_MovePause(other_pair);
+			ResetStepWatchBit(OTHER_PAIR_BIT);
+		}
+		#else
+		GF_ASSERT( 0 );
+		#endif
+	}
+	
+	if( step_watch_bit == 0 ){
+		return 1;
+	}
+	
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * 全OBJ動作再開
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"1"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdObjPauseClearAll( VMHANDLE *core, void *wk )
+{
+	SCRCMD_WORK *work = wk;
+	FLDMMDLSYS *fmmdlsys = SCRCMD_WORK_GetFldMMdlSys( work );
+	FLDMMDLSYS_ClearPauseMoveProc( fmmdlsys );
+	return 1;
+}
 

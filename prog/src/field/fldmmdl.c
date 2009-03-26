@@ -582,7 +582,6 @@ static void FldMMdl_InitMoveWork( const FLDMMDLSYS *fos, FLDMMDL *fmmdl )
 {
 	FldMMdl_InitCallMoveProcWork( fmmdl );
 	FldMMdl_AddTCB( fmmdl, fos );
-	FLDMMDL_OnMoveBit( fmmdl, FLDMMDL_MOVEBIT_MOVEPROC_INIT );
 	FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_MOVE_START );
 }
 

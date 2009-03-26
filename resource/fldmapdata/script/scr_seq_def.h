@@ -83,7 +83,10 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	DEF_CMD	EV_SEQ_OBJ_ANIME			
 	DEF_CMD	EV_SEQ_OBJ_ANIME_WAIT
 	
-	
+	DEF_CMD EV_SEQ_OBJ_PAUSE_ALL
+	DEF_CMD EV_SEQ_TALK_OBJ_PAUSE_ALL
+	DEF_CMD EV_SEQ_OBJ_PAUSE_CLEAR_ALL
+
 #if 0 //wb null
 	DEF_CMD	EV_SEQ_FLAG_SET
 	DEF_CMD	EV_SEQ_FLAG_RESET
@@ -1651,6 +1654,32 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	.short	EV_SEQ_OBJ_ANIME_WAIT
 	.endm
 
+//--------------------------------------------------------------
+/**
+ *	動作停止
+ */
+//--------------------------------------------------------------
+	.macro	_OBJ_PAUSE_ALL
+	.short	EV_SEQ_OBJ_PAUSE_ALL
+	.endm
+
+//--------------------------------------------------------------
+/**
+ *	OBJ会話イベント用　動作停止
+ */
+//--------------------------------------------------------------
+	.macro	_TALK_OBJ_PAUSE_ALL
+	.short	EV_SEQ_TALK_OBJ_PAUSE_ALL
+	.endm
+
+//--------------------------------------------------------------
+/**
+ *	動作再開
+ */
+//--------------------------------------------------------------
+	.macro	_OBJ_PAUSE_CLEAR_ALL
+	.short	EV_SEQ_OBJ_PAUSE_CLEAR_ALL
+	.endm
 
 #if 0 //wb null
 //======================================================================

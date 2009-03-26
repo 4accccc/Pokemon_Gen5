@@ -133,6 +133,7 @@ void FLDMMDL_InitMoveProc( FLDMMDL * fmmdl )
 {
 	FLDMMDL_CallMoveInitProc( fmmdl );
 	FLDMMDL_MoveSubProcInit( fmmdl );
+	FLDMMDL_OnMoveBit( fmmdl, FLDMMDL_MOVEBIT_MOVEPROC_INIT );
 }
 
 //--------------------------------------------------------------

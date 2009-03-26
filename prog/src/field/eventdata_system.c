@@ -357,7 +357,7 @@ const FLDMMDL_HEADER SampleFldMMdlHeader_4season[] = {
 	{
 		0,		///<識別ID
 		KABI32,	///<表示するOBJコード
-		MV_DIR_RND,	///<動作コード
+		MV_RND,	///<動作コード
 		0,	///<イベントタイプ
 		0,	///<イベントフラグ
 		0,	///<イベントID
