@@ -269,20 +269,91 @@ u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
 }
 //=============================================================================================
 /**
- * 状態異常の継続ターン数を決定する
+ * ワザデータの状態異常継続パラメータ値から、バトルで使う状態異常継続パラメータ値へ変換
  *
- * @param   sick		状態異常ID
+ * @param   wazaSickCont		
+ * @param   attacker		ワザを使ったポケモン
+ * @param   sickCont		[out]
  *
- * @retval  u8			継続ターン数（永続する異常の場合は0）
  */
 //=============================================================================================
-u8 BTL_CALC_DecideSickTurn( WazaSick sick )
+void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* sickCont )
 {
-	switch( sick ){
-	case WAZASICK_NEMURI: return BTL_NEMURI_TURN_MIN + (GFL_STD_MtRand(BTL_NEMURI_TURN_RANGE));
-	case WAZASICK_KONRAN: return BTL_CONF_TURN_MIN + (GFL_STD_MtRand(BTL_CONF_TURN_RANGE));
+	sickCont->raw = 0;
+	sickCont->type = wazaSickCont.type;
+
+	switch( wazaSickCont.type ){
+	case WAZASICK_CONT_POKE:
+		GF_ASSERT(attacker!=NULL);
+		sickCont->poke.ID = BTL_POKEPARAM_GetID( attacker );
+		break;
+
+	case WAZASICK_CONT_TURN:
+		{
+			sickCont->turn.count = BTL_CALC_RandRange( wazaSickCont.turnMin, wazaSickCont.turnMax );
+		}
+		break;
 	}
-	return BTL_CALC_SICK_TURN_PERMANENT;
+}
+//=============================================================================================
+/**
+ * ポケモン系状態異常の、デフォルトの継続パラメータを作成
+ *
+ * @param   sick		
+ * @param   cont		[out]
+ *
+ */
+//=============================================================================================
+void BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick, BPP_SICK_CONT* cont )
+{
+	cont->raw = 0;
+	switch( sick ){
+	case POKESICK_DOKU:
+	case POKESICK_YAKEDO:
+	case POKESICK_MAHI:
+	case POKESICK_KOORI:
+		cont->type = WAZASICK_CONT_PERMANENT;
+		break;
+	case POKESICK_NEMURI:
+		cont->type = WAZASICK_CONT_TURN;
+		cont->turn.count = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MAX );
+		break;
+	default:
+		GF_ASSERT_MSG(0, "illegal sick ID(%d)\n", sick);
+		break;
+	}
+}
+//=============================================================================================
+/**
+ * ワザ系状態異常の、デフォルトの継続パラメータを作成
+ *
+ * @param   sick		
+ * @param   cont		[out]
+ *
+ */
+//=============================================================================================
+void BTL_CALC_MakeDefaultWazaSickCont( PokeSick sick, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* cont )
+{
+	if( sick < POKESICK_MAX ){
+		BTL_CALC_MakeDefaultPokeSickCont( sick, cont );
+		return;
+	}
+
+	cont->raw = 0;
+
+	switch( sick ){
+	case WAZASICK_MEROMERO:
+		cont->type = WAZASICK_CONT_POKE;
+		cont->poke.ID = BTL_POKEPARAM_GetID( attacker );
+		break;
+	case WAZASICK_KONRAN:
+		cont->type = WAZASICK_CONT_TURN;
+		cont->turn.count = BTL_CALC_RandRange( BTL_CONF_TURN_MIN, BTL_CONF_TURN_MAX );
+		break;
+	default:
+		cont->type = WAZASICK_CONT_PERMANENT;
+		break;
+	}
 }
 
 

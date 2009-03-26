@@ -97,11 +97,12 @@ typedef enum {
 //------------------------------------------------------------------------------
 typedef enum {
 
-	WAZASICK_CONT_PERMANENT,	///< ずっと継続
+	WAZASICK_CONT_PERMANENT = 0,	///< ずっと継続
 	WAZASICK_CONT_TURN,				///< ターン数継続
 	WAZASICK_CONT_POKE,				///< ワザをかけたポケモンが居る間、継続
 
 	WAZASICK_CONT_MAX,
+	WAZASICK_CONT_NONE = WAZASICK_CONT_MAX,
 
 }WazaSickCont;
 
@@ -112,11 +113,17 @@ typedef enum {
 //------------------------------------------------------
 typedef struct {
 
-	u16  type    : 4;		///< 継続タイプ（ WazaSickCont ）
-	u16  turnMin : 6;		///< 継続ターン最小
-	u16  turnMax : 6;		///< 継続ターン最大
+	union {
+		u16 raw;
+		struct {
+			u16  type    : 4;		///< 継続タイプ（ WazaSickCont ）
+			u16  turnMin : 6;		///< 継続ターン最小
+			u16  turnMax : 6;		///< 継続ターン最大
+		};
+	};
 
 }WAZA_SICKCONT_PARAM;
+
 
 //------------------------------------------------------------------------------
 /**

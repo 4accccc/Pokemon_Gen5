@@ -93,6 +93,51 @@ typedef enum {
 
 }BppHpBorder;
 
+//--------------------------------------------------------------
+/**
+ *	ó‘ÔˆÙíŒp‘±ƒpƒ‰ƒ[ƒ^
+ */
+//--------------------------------------------------------------
+typedef struct  {
+
+	union {
+		u16    raw;
+		struct {
+			u16  type : 4;
+			u16  _0   : 12;
+		};
+		struct {
+			u16  type_turn : 4;
+			u16  count     : 6;
+			u16  _1        : 6;
+		}turn;
+		struct {
+			u16  type_poke : 4;
+			u16  ID        : 6;
+			u16  _2        : 6;
+		}poke;
+	};
+
+}BPP_SICK_CONT;
+
+static inline void BPP_SICKCONT_Set_Turn( BPP_SICK_CONT* cont, u8 turns )
+{
+	cont->raw = 0;
+	cont->type = WAZASICK_CONT_TURN;
+	cont->turn.count = turns;
+}
+static inline void BPP_SICKCONT_Set_Poke( BPP_SICK_CONT* cont, u8 pokeID )
+{
+	cont->raw = 0;
+	cont->type = WAZASICK_CONT_POKE;
+	cont->poke.ID = pokeID;
+}
+static inline void BPP_SICKCONT_Set_Permanent( BPP_SICK_CONT* cont )
+{
+	cont->raw = 0;
+	cont->type = WAZASICK_CONT_PERMANENT;
+}
+
 
 extern BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 id, HEAPID heapID );
 extern void BTL_POKEPARAM_Delete( BTL_POKEPARAM* bpp );
@@ -117,7 +162,6 @@ extern int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID 
 extern BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_IsFullHP( const BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType );
-
 
 extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
 extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
@@ -157,8 +201,8 @@ extern void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value );
 extern void BTL_POKEPARAM_HpZero( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_PPMinus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
 extern void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
-extern void BTL_POKEPARAM_SetPokeSick( BTL_POKEPARAM* pp, PokeSick sick, u8 turn );
-extern void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, u8 turn );
+extern void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT contParam );
+extern void BTL_POKEPARAM_CurePokeSick( BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_Nemuri_CheckWake( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetShrink( BTL_POKEPARAM* pp );

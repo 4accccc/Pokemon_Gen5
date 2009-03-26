@@ -35,7 +35,8 @@ typedef enum {
 	SC_OP_PP_PLUS,			///< yŒvŽZzPPƒvƒ‰ƒX    [ClientID, ƒvƒ‰ƒX—Ê]
 	SC_OP_RANK_UP,			///< yŒvŽZzƒXƒe[ƒ^ƒXƒ‰ƒ“ƒNƒAƒbƒv  [ClientID, StatusType, ƒvƒ‰ƒX—Ê]
 	SC_OP_RANK_DOWN,		///< yŒvŽZzƒXƒe[ƒ^ƒXƒ‰ƒ“ƒNƒ_ƒEƒ“  [ClientID, StatusType, ƒ}ƒCƒiƒX—Ê]
-	SC_OP_SICK_SET,			///< yŒvŽZzó‘ÔˆÙí [PokeID, Sick, Turn]
+	SC_OP_SICK_SET,			///< yŒvŽZzó‘ÔˆÙí [PokeID, Sick, contParam]
+	SC_OP_CURE_POKESICK,	///< yŒvŽZzƒ|ƒPƒ‚ƒ“Œnó‘ÔˆÙí‚ð‰ñ•œ [PokeID ]
 	SC_OP_WAZASICK_TURNCHECK,
 	SC_ACT_WAZA_EFFECT,
 	SC_ACT_WAZA_DMG,		///< yƒAƒNƒVƒ‡ƒ“z[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -183,10 +184,16 @@ static inline void SCQUE_PUT_OP_RankDown( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8
 	SCQUE_PUT_Common( que, SC_OP_RANK_DOWN, pokeID, statusType, volume );
 }
 
-static inline void SCQUE_PUT_OP_SetSick( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 sick, u8 turn )
+static inline void SCQUE_PUT_OP_SetSick( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 sick, u16 contParam )
 {
-	SCQUE_PUT_Common( que, SC_OP_SICK_SET, pokeID, turn, sick );
+	SCQUE_PUT_Common( que, SC_OP_SICK_SET, pokeID, sick, contParam );
 }
+
+static inline void SCQUE_PUT_OP_CurePokeSick( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+	SCQUE_PUT_Common( que, SC_OP_CURE_POKESICK, pokeID );
+}
+
 
 static inline void SCQUE_PUT_OP_WazaSickTurnCheck( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {

@@ -95,7 +95,8 @@ extern void BTL_SERVER_RECEPT_RankUpEffect( BTL_SVFLOW_WORK* wk, BtlExPos exPos,
 extern void BTL_SERVER_RECEPT_HP_Add( BTL_SVFLOW_WORK* wk, u8 PokeID, int value );
 extern void BTL_SVFLOW_RECEPT_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather );
 extern void BTL_SVFLOW_RECEPT_CurePokeSick( BTL_SVFLOW_WORK* wk, u8 pokeID );
-extern void BTL_SVFLOW_RECEPT_MakePokeSick( BTL_SVFLOW_WORK* wk, u8 targetPokeID, u8 attackPokeID, PokeSick sick, BOOL fAlmost );
+extern void BTL_SVFLOW_RECEPT_AddSick( BTL_SVFLOW_WORK* wk, u8 targetPokeID, u8 attackPokeID,
+	WazaSick sick, BPP_SICK_CONT contParam, BOOL fAlmost );
 extern void BTL_SVFLOW_RECEPT_TraceTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 targetPokeID );
 
 

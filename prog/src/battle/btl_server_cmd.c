@@ -72,6 +72,7 @@ static const u8 ServerCmdToFmtTbl[] = {
 	SC_ARGFMT_53bit_1byte,			// SC_OP_RANK_UP
 	SC_ARGFMT_53bit_1byte,			// SC_OP_RANK_DOWN
 	SC_ARGFMT_112byte,					// SC_OP_SICK_SET
+	SC_ARGFMT_1byte,						// SC_OP_CURE_POKESICK
 	SC_ARGFMT_1byte,						// SC_OP_WAZASICK_TURNCHECK
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_WAZA_EFFECT
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_WAZA_DMG

@@ -96,6 +96,19 @@ static inline u32 BTL_CALC_QuotMaxHP( const BTL_POKEPARAM* bpp, u32 denom )
 	return ret;
 }
 
+static inline u32 BTL_CALC_RandRange( u32 min, u32 max )
+{
+	if( min > max ){
+		u32 tmp = min;
+		min = max;
+		max = tmp;
+	}
+	{
+		u32 range = 1 + (max-min);
+		return min + GFL_STD_MtRand( range );
+	}
+}
+
 //--------------------------------------------------------------------
 /**
  *	タイプ相性（ 0, 25, 50, 100, 200, 400% の６段階）
@@ -165,15 +178,18 @@ extern u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weat
 
 //=============================================================================================
 /**
- * 状態異常の継続ターン数を決定する
+ * ワザデータの状態異常継続パラメータ値から、バトルで使う状態異常継続パラメータ値へ変換
  *
- * @param   sick		状態異常ID
+ * @param   wazaSickCont		
+ * @param   attacker		ワザを使ったポケモン
+ * @param   sickCont		[out]
  *
- * @retval  u8			継続ターン数（永続する異常の場合は0）
  */
 //=============================================================================================
-extern u8 BTL_CALC_DecideSickTurn( WazaSick sick );
+extern void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* sickCont );
 
+extern void BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick, BPP_SICK_CONT* cont );
+extern void BTL_CALC_MakeDefaultWazaSickCont( PokeSick sick, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* cont );
 
 //=============================================================================================
 /**
