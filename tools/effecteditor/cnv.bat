@@ -40,7 +40,7 @@ REM ##################################################
 
 @ECHO ON
 
-cd C:\home\pokemon_wb_tool\effecteditor\Release
+cd C:\home\pokemon_wb\tools\effecteditor
 del we_000.bin
 ruby c:\home\pokemon_wb\resource\wazaeffect\eescmk.rb c:\home\pokemon_wb\prog\src\battle\btlv\btlv_effvm_def.h we_test.esf c:/home/pokemon_wb/ on
 
