@@ -68,7 +68,6 @@ void		BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
 static VMCMD_RESULT EC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT EC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT EC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT EC_PARTICLE_PLAY_WITH_DIR( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	EC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	EC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	EC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work );
@@ -136,7 +135,6 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
 	EC_CAMERA_MOVE,
 	EC_PARTICLE_LOAD,
 	EC_PARTICLE_PLAY,
-	EC_PARTICLE_PLAY_WITH_DIR,
 	EC_POKEMON_MOVE,
 	EC_POKEMON_SCALE,
 	EC_POKEMON_ROTATE,
@@ -363,33 +361,13 @@ static VMCMD_RESULT EC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 	int			index = ( int )VMGetU32( vmh );
 	
 	beeiw->vmh = vmh;
-	beeiw->src = beeiw->dst = ( int )VMGetU32( vmh );
-
-	GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
-
-	return VMCMD_RESULT_SUSPEND;
-}
-
-//============================================================================================
-/**
- *	パーティクル再生（座標指定あり）
- *
- * @param[in]	vmh				仮想マシン制御構造体へのポインタ
- * @param[in]	context_work	コンテキストワークへのポインタ
- */
-//============================================================================================
-static VMCMD_RESULT EC_PARTICLE_PLAY_WITH_DIR( VMHANDLE *vmh, void *context_work )
-{
-	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
-	BTLV_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
-	ARCDATID	datID = ( ARCDATID )VMGetU32( vmh );
-	int			ptc_no = EFFVM_GetPtcNo( bevw, datID );
-	int			index = ( int )VMGetU32( vmh );
-	
-	beeiw->vmh = vmh;
 	beeiw->src = ( int )VMGetU32( vmh );
 	beeiw->dst = ( int )VMGetU32( vmh );
 	beeiw->angle = ( fx32 )VMGetU32( vmh );
+
+	if( beeiw->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE ){
+		beeiw->dst = beeiw->src;
+	}
 
 	GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
 

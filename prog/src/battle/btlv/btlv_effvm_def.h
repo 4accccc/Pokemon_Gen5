@@ -51,6 +51,7 @@
 #define	BTLEFF_CAMERA_POS_DEFENCE_PAIR	( 10 )
 
 //パーティクル再生
+#define	BTLEFF_PARTICLE_PLAY_SIDE_NONE		( BTLEFF_CAMERA_POS_INIT )
 #define	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	( BTLEFF_CAMERA_POS_ATTACK )
 #define	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	( BTLEFF_CAMERA_POS_DEFENCE )
 
@@ -143,7 +144,6 @@ def_cmd_count = ( def_cmd_count + 1 )
 	DEF_CMD	EC_CAMERA_MOVE
 	DEF_CMD	EC_PARTICLE_LOAD
 	DEF_CMD	EC_PARTICLE_PLAY
-	DEF_CMD	EC_PARTICLE_PLAY_WITH_DIR
 	DEF_CMD	EC_POKEMON_MOVE
 	DEF_CMD	EC_POKEMON_SCALE
 	DEF_CMD	EC_POKEMON_ROTATE
@@ -166,10 +166,10 @@ def_cmd_count = ( def_cmd_count + 1 )
  * @param	wait		移動ウエイト
  * @param	brake		ブレーキをかけはじめるフレームを指定
  *
- * #param	COMBOBOX_TEXT	ダイレクト	追従
- * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_MOVE_DIRECT	BTLEFF_CAMERA_MOVE_INTERPOLATION
- * #param	COMBOBOX_TEXT	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D	初期位置	攻撃側	攻撃側ペア	防御側	防御側ペア
- * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D	BTLEFF_CAMERA_POS_INIT BTLEFF_CAMERA_POS_ATTACK BTLEFF_CAMERA_POS_ATTACK_PAIR	BTLEFF_CAMERA_POS_DEFENCE BTLEFF_CAMERA_POS_DEFENCE_PAIR
+ * #param	COMBOBOX_TEXT	追従	ダイレクト
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_MOVE_INTERPOLATION	BTLEFF_CAMERA_MOVE_DIRECT
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	初期位置	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_ATTACK BTLEFF_CAMERA_POS_ATTACK_PAIR	BTLEFF_CAMERA_POS_DEFENCE BTLEFF_CAMERA_POS_DEFENCE_PAIR	BTLEFF_CAMERA_POS_INIT	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D
  * #param	VALUE_INT
  * #param	VALUE_INT
  * #param	VALUE_INT
@@ -191,7 +191,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  * #param_num	1
  * @param	datID	アーカイブデータのdatID
  *
- * #param	FILE_DIALOG	.spa
+ * #param	FILE_DIALOG_WITH_ADD	.spa	パーティクル再生
  */
 //======================================================================
 	.macro	PARTICLE_LOAD	datID
@@ -202,28 +202,6 @@ def_cmd_count = ( def_cmd_count + 1 )
 //======================================================================
 /**
  * @brief	パーティクル再生
- *
- * #param_num	3
- * @param	num			再生パーティクルナンバー
- * @param	index		spa内インデックスナンバー
- * @param	start_pos	パーティクル再生開始立ち位置
- *
- * #param	FILE_DIALOG_COMBOBOX .spa
- * #param	COMBOBOX_HEADER
- * #param	COMBOBOX_TEXT	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D	攻撃側	攻撃側ペア	防御側	防御側ペア
- * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D	BTLEFF_CAMERA_POS_ATTACK BTLEFF_CAMERA_POS_ATTACK_PAIR BTLEFF_CAMERA_POS_DEFENCE BTLEFF_CAMERA_POS_DEFENCE_PAIR
- */
-//======================================================================
-	.macro	PARTICLE_PLAY	num, index, start_pos
-	.short	EC_PARTICLE_PLAY
-	.long	\num
-	.long	\index
-	.long	\start_pos
-	.endm
-
-//======================================================================
-/**
- * @brief	パーティクル再生（方向指定あり）
  *
  * #param_num	5
  * @param	num			再生パーティクルナンバー
@@ -236,13 +214,13 @@ def_cmd_count = ( def_cmd_count + 1 )
  * #param	COMBOBOX_HEADER
  * #param	COMBOBOX_TEXT	攻撃側	防御側
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
- * #param	COMBOBOX_TEXT	攻撃側	防御側
- * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
+ * #param	COMBOBOX_TEXT	方向無し	攻撃側	防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_NONE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
  * #param	VALUE_FX32
  */
 //======================================================================
-	.macro	PARTICLE_PLAY_WITH_DIR	num, index, start_pos, dir_pos, dir_angle
-	.short	EC_PARTICLE_PLAY_WITH_DIR
+	.macro	PARTICLE_PLAY	num, index, start_pos, dir_pos, dir_angle
+	.short	EC_PARTICLE_PLAY
 	.long	\num
 	.long	\index
 	.long	\start_pos

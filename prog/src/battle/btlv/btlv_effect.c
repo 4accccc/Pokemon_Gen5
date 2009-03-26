@@ -486,7 +486,7 @@ static	void	BTLV_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -499,11 +499,11 @@ static	void	BTLV_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -573,7 +573,7 @@ static	void	BTLV_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -585,11 +585,11 @@ static	void	BTLV_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -850,7 +850,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -862,11 +862,11 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitterCallback( bew->ptc, 0, &BTLV_EFFECT_InitPTCBB2, NULL );
 		GFL_PTC_CreateEmitterCallback( bew->ptc, 1, &BTLV_EFFECT_InitPTCBB2, NULL );
 		GFL_PTC_CreateEmitterCallback( bew->ptc, 2, &BTLV_EFFECT_InitPTCBB2, NULL );
-		GFL_PTC_CreateEmitterCallback( bew->ptc, 3, &BTLV_EFFECT_InitPTCBB2, NULL );
-		GFL_PTC_CreateEmitterCallback( bew->ptc, 4, &BTLV_EFFECT_InitPTCBB2, NULL );
-		GFL_PTC_CreateEmitterCallback( bew->ptc, 5, &BTLV_EFFECT_InitPTCBB2, NULL );
-		GFL_PTC_CreateEmitterCallback( bew->ptc, 6, &BTLV_EFFECT_InitPTCBB2, NULL );
-		GFL_PTC_CreateEmitterCallback( bew->ptc, 7, &BTLV_EFFECT_InitPTCBB2, NULL );
+//		GFL_PTC_CreateEmitterCallback( bew->ptc, 3, &BTLV_EFFECT_InitPTCBB2, NULL );
+//		GFL_PTC_CreateEmitterCallback( bew->ptc, 4, &BTLV_EFFECT_InitPTCBB2, NULL );
+//		GFL_PTC_CreateEmitterCallback( bew->ptc, 5, &BTLV_EFFECT_InitPTCBB2, NULL );
+//		GFL_PTC_CreateEmitterCallback( bew->ptc, 6, &BTLV_EFFECT_InitPTCBB2, NULL );
+//		GFL_PTC_CreateEmitterCallback( bew->ptc, 7, &BTLV_EFFECT_InitPTCBB2, NULL );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -879,7 +879,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 
 				BTLV_MCSS_SetMepachiFlag( bew->bmw, BTLV_MCSS_POS_BB, BTLV_MCSS_MEPACHI_ON );
 				BTLV_MCSS_SetAnmStopFlag( bew->bmw, BTLV_MCSS_POS_BB, BTLV_MCSS_ANM_STOP_ON );
-				BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_ROUNDTRIP, &rt_value, 1, 2, 50 );
+				BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_ROUNDTRIP, &rt_value, 1, 2, 25 );
 			}
 		}
 		else{
@@ -889,7 +889,8 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 6:
-		if( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ){
+		if( ( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ) &&
+			( BTLV_MCSS_CheckTCBExecute( bew->bmw, BTLV_MCSS_POS_BB ) == FALSE ) ){
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
 			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
@@ -922,6 +923,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		target.y = 0x00001d9a;
 		target.z = 0x000027f6;
 		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
+		BTLV_MCSS_ResetOrthoMode( bew->bmw );
 		bet->seq_no++;
 		break;
 	case 1:
@@ -931,7 +933,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -943,11 +945,11 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitterCallback( bew->ptc, 0, &BTLV_EFFECT_InitPTCAA2, NULL );
 		GFL_PTC_CreateEmitterCallback( bew->ptc, 1, &BTLV_EFFECT_InitPTCAA2, NULL );
 		GFL_PTC_CreateEmitterCallback( bew->ptc, 2, &BTLV_EFFECT_InitPTCAA2, NULL );
-		GFL_PTC_CreateEmitterCallback( bew->ptc, 3, &BTLV_EFFECT_InitPTCAA2, NULL );
-		GFL_PTC_CreateEmitterCallback( bew->ptc, 4, &BTLV_EFFECT_InitPTCAA2, NULL );
-		GFL_PTC_CreateEmitterCallback( bew->ptc, 5, &BTLV_EFFECT_InitPTCAA2, NULL );
-		GFL_PTC_CreateEmitterCallback( bew->ptc, 6, &BTLV_EFFECT_InitPTCAA2, NULL );
-		GFL_PTC_CreateEmitterCallback( bew->ptc, 7, &BTLV_EFFECT_InitPTCAA2, NULL );
+//		GFL_PTC_CreateEmitterCallback( bew->ptc, 3, &BTLV_EFFECT_InitPTCAA2, NULL );
+//		GFL_PTC_CreateEmitterCallback( bew->ptc, 4, &BTLV_EFFECT_InitPTCAA2, NULL );
+//		GFL_PTC_CreateEmitterCallback( bew->ptc, 5, &BTLV_EFFECT_InitPTCAA2, NULL );
+//		GFL_PTC_CreateEmitterCallback( bew->ptc, 6, &BTLV_EFFECT_InitPTCAA2, NULL );
+//		GFL_PTC_CreateEmitterCallback( bew->ptc, 7, &BTLV_EFFECT_InitPTCAA2, NULL );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -961,7 +963,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 				VecFx32	rt_value = { 0, FX_F32_TO_FX32( -0.1f ), 0 };
 				BTLV_MCSS_SetMepachiFlag( bew->bmw, BTLV_MCSS_POS_AA, BTLV_MCSS_MEPACHI_ON );
 				BTLV_MCSS_SetAnmStopFlag( bew->bmw, BTLV_MCSS_POS_AA, BTLV_MCSS_ANM_STOP_ON );
-				BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_ROUNDTRIP, &rt_value, 1, 2, 50 );
+				BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_ROUNDTRIP, &rt_value, 1, 2, 25 );
 			}
 		}
 		else{
@@ -971,7 +973,8 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 6:
-		if( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ){
+		if( ( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ) &&
+			( BTLV_MCSS_CheckTCBExecute( bew->bmw, BTLV_MCSS_POS_AA ) == FALSE ) ){
 			GFL_PTC_Delete( bew->ptc );
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
 			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 0, 8 );
@@ -1062,7 +1065,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work )
 				target.y += FX32_ONE * 3;
 				GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 				GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
-				BTLV_MCSS_MovePosition( bew->bmw, BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_ROUNDTRIP, &rt_value, 2, 0, 60 );
+				BTLV_MCSS_MovePosition( bew->bmw, BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_ROUNDTRIP, &rt_value, 2, 0, 30 );
 				BTLV_MCSS_SetMepachiFlag( bew->bmw, BTLV_MCSS_POS_BB, BTLV_MCSS_MEPACHI_ON );
 				BTLV_MCSS_SetAnmStopFlag( bew->bmw, BTLV_MCSS_POS_BB, BTLV_MCSS_ANM_STOP_ON );
 			}
@@ -1072,7 +1075,8 @@ static	void	BTLV_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 7:
-		if( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ){
+		if( ( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ) &&
+			( BTLV_MCSS_CheckTCBExecute( bew->bmw, BTLV_MCSS_POS_BB ) == FALSE ) ){
 			BTLV_MCSS_SetMepachiFlag( bew->bmw, BTLV_MCSS_POS_BB, BTLV_MCSS_MEPACHI_OFF );
 			BTLV_MCSS_SetAnmStopFlag( bew->bmw, BTLV_MCSS_POS_BB, BTLV_MCSS_ANM_STOP_OFF );
 			GFL_PTC_Delete( bew->ptc );
@@ -1165,7 +1169,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 				target.z -= FX32_ONE * 3;
 				GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 				GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
-				BTLV_MCSS_MovePosition( bew->bmw, BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_ROUNDTRIP, &rt_value, 2, 0, 60 );
+				BTLV_MCSS_MovePosition( bew->bmw, BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_ROUNDTRIP, &rt_value, 2, 0, 30 );
 				BTLV_MCSS_SetMepachiFlag( bew->bmw, BTLV_MCSS_POS_AA, BTLV_MCSS_MEPACHI_ON );
 				BTLV_MCSS_SetAnmStopFlag( bew->bmw, BTLV_MCSS_POS_AA, BTLV_MCSS_ANM_STOP_ON );
 			}
@@ -1175,7 +1179,8 @@ static	void	BTLV_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 7:
-		if( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ){
+		if( ( GFL_PTC_GetEmitterNum( bew->ptc ) == 0 ) &&
+			( BTLV_MCSS_CheckTCBExecute( bew->bmw, BTLV_MCSS_POS_AA ) == FALSE ) ){
 			BTLV_MCSS_SetMepachiFlag( bew->bmw, BTLV_MCSS_POS_AA, BTLV_MCSS_MEPACHI_OFF );
 			BTLV_MCSS_SetAnmStopFlag( bew->bmw, BTLV_MCSS_POS_AA, BTLV_MCSS_ANM_STOP_OFF );
 			GFL_PTC_Delete( bew->ptc );
@@ -1557,7 +1562,7 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -1569,11 +1574,11 @@ static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -1642,7 +1647,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_126_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -1654,11 +1659,11 @@ static	void	BTLV_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
-		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
+//		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
