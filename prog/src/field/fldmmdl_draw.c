@@ -136,11 +136,15 @@ void FLDMMDL_UpdateDraw( FLDMMDL * fmmdl )
 	if( FLDMMDL_CheckStatusBitCompletedDrawInit(fmmdl) == FALSE ){
 		return;
 	}
-	
+
+#if 0 //old dp	
 	if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) == FALSE ||
 		FLDMMDL_CheckStatusBitAcmd(fmmdl) ){
 		FLDMMDL_CallDrawProc( fmmdl );
 	}
+#else //wb ポーズ状態でも常に描画関数を呼ぶ様にする。
+	FLDMMDL_CallDrawProc( fmmdl );
+#endif
 }
 
 //======================================================================
@@ -194,14 +198,12 @@ const OBJCODE_STATE * FLDMMDL_GetOBJCodeState( const FLDMMDL *fmmdl )
 //--------------------------------------------------------------
 BOOL FLDMMDL_CheckDrawPause( const FLDMMDL * fmmdl )
 {
-	if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) == TRUE ){
+	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_PAUSE_ANM) ){
+		return( TRUE );
+	}else if( FLDMMDL_CheckStatusBitMoveProcPause(fmmdl) ){
 		if( FLDMMDL_CheckStatusBitAcmd(fmmdl) == FALSE ){
 			return( TRUE );
 		}
-	}
-	
-	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_PAUSE_ANM) ){
-		return( TRUE );
 	}
 	
 	return( FALSE );

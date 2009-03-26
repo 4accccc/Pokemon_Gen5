@@ -196,11 +196,12 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
-	
-	if( FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
-		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, FALSE );
-	}else{
-		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, TRUE );
+	{
+		BOOL flag = TRUE;
+		if( FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
+			flag = FALSE;
+		}
+		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
 	}
 }
 
@@ -320,11 +321,13 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 	
 	GFL_BBD_SetObjectTrans(
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
-	
-	if( FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
-		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, FALSE );
-	}else{
-		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, TRUE );
+
+	{
+		BOOL flag = TRUE;
+		if( FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
+			flag = FALSE;
+		}
+		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
 	}
 }
 
