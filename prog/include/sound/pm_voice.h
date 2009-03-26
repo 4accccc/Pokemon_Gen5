@@ -11,6 +11,17 @@
 
 //------------------------------------------------------------------
 /**
+ * @brief	鳴き声オプション
+ */
+//------------------------------------------------------------------
+enum {
+	PMVOICE_MODE_NORMAL = 0,
+	PMVOICE_MODE_CHORUS = 1,
+	PMVOICE_MODE_REVERSE = 2,
+};
+
+//------------------------------------------------------------------
+/**
  * @brief	データＩＮＤＥＸ有効範囲
  */
 //------------------------------------------------------------------
@@ -32,14 +43,23 @@ extern void	PMVOICE_Exit( void );
 //============================================================================================
 /**
  *
- * @brief	鳴き声サウンド関数（各appから呼び出される）
+ * @brief	システム設定
  *
  */
 //============================================================================================
-#define PMVOICE_ERROR	(-1)
-extern int	PMVOICE_Play( u32 pokeNum );		//鳴き声を再生(return: voicePlayerIdx or error)
-extern void	PMVOICE_Stop( int voicePlayerIdx );
+extern void	PMVOICE_PlayerHeapReserve( int num );	// プレーヤー用waveバッファ事前確保
+extern void	PMVOICE_PlayerHeapRelease( void );		// プレーヤー用waveバッファ開放
 
+//============================================================================================
+/**
+ *
+ * @brief	鳴き声サウンド関数
+ *
+ */
+//============================================================================================
+extern u32	PMVOICE_Play( u32 pokeNum, u16 option );	//鳴き声を再生(return: voicePlayerIdxBit)
+extern void	PMVOICE_Stop( u32 voicePlayerIdxBit );		//鳴き声を停止
+extern BOOL	PMVOICE_CheckPlay( u32 voicePlayerIdxBit );	//鳴き声終了検出(TRUE:再生中)
 
 #endif
 
