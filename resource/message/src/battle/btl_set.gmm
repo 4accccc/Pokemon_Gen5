@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-03-24T18:57:22"/>
+	<create user="taya" host="W00146" date="2009-03-26T18:40:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1583,6 +1583,28 @@
 たいりょく　が　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
 体力が　回復した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SkillSwap">
+		<comment>個別ワザ用メッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
+おたがいの　とくせいを　いれかえた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
+おたがいの　とくせいを　入れかえた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SkillSwap_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
+おたがいの　とくせいを　いれかえた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
+おたがいの　とくせいを　入れかえた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SkillSwap_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
+おたがいの　とくせいを　いれかえた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
+おたがいの　とくせいを　入れかえた！</language>
 	</row>
 
 	<flowchart-group-list>
