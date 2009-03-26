@@ -326,7 +326,9 @@ SRCS_OVERLAY_TAYA_DEBUG		= test/taya/d_taya.c
 #===> SRCS_OVERLAY_DEV_WIFI
 #LIB=>					libnnsmcs.a
 SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
+								  test/soga/d_btltest.c \
 								  test/soga/gf_mcs.c \
+								  test/soga/capture.c \
 								  test/soga/effect_viewer.c
 
 # ƒ^ƒCƒgƒ‹
