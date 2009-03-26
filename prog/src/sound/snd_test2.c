@@ -153,8 +153,8 @@ static GFL_PROC_RESULT SoundTest2Proc_Init(GFL_PROC * proc, int * seq, void * pw
 
 		sw->gflSndStatus = GFL_SNDSTATUS_Create( &sndStatusSetup, sw->heapID );
 	}
+
     return GFL_PROC_RES_FINISH;
-		
 }
 
 //--------------------------------------------------------------
