@@ -18,8 +18,8 @@ _EVENT_DATA_END						//終了
 /*未使用 テストに利用している*/
 ev_common_vm:
 	_TALK_OBJ_PAUSE_ALL
-	_OBJ_ANIME TEST00_KABI32, anm_test
-	_OBJ_ANIME_WAIT
+#	_OBJ_ANIME TEST00_KABI32, anm_test
+#	_OBJ_ANIME_WAIT
 	
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_common_test_01
