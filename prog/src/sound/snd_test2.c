@@ -30,6 +30,7 @@
 
 #include "sound/snd_status.h"
 #include "sound/pm_sndsys.h"
+#include "sound/pm_voice.h"
 
 #include "arc/soundtest.naix"
 //============================================================================================
@@ -118,7 +119,7 @@ static void	SoundWorkInitialize(SOUNDTEST_WORK* sw)
 
 	sw->bgmNum		= PMSND_BGM_START;
 	sw->seNum		= PMSND_SE_START;
-	sw->voiceNum	= PMSND_VOICE_START;
+	sw->voiceNum	= PMVOICE_START;
 
 	sw->mode = MODE_SOUND_SELECT;
 }
@@ -275,7 +276,7 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-			sw->seq = 100;
+			//sw->seq = 100;
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
@@ -293,13 +294,13 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 		return FALSE;
 //---------------------
 	case 100:
-		PMSND_PlayVoiceChorus( sw->voiceNum, 16, 110 );
+		//PMSND_PlayVoiceChorus( sw->voiceNum, 16, 110 );
 		sw->seq++;
 		break;
 	case 101:
-		if( PMSND_CheckPlayVoiceChorus() == FALSE ){
-			sw->seq = 1;
-		}
+		//if( PMSND_CheckPlayVoiceChorus() == FALSE ){
+		//	sw->seq = 1;
+		//}
 		break;
 //---------------------
 	}
@@ -655,7 +656,6 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			}
 			break;
 		case SOUNDTEST_TPEV_BGM_WINDOW:
-			OS_Printf("pressed bgm window\n");
 			break;
 
 		case SOUNDTEST_TPEV_SE_NUMUP:
@@ -672,39 +672,35 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			break;
 		case SOUNDTEST_TPEV_SE_STOP:
 			//NNS_SndPlayerStopSeq(&sw->seHandle, 0);
+			PMSND_PauseBGM(TRUE);
+			PMSND_PushBGM();
 			break;
 		case SOUNDTEST_TPEV_SE_PAUSE:
-			OS_Printf("pressed se pause\n");
+			PMSND_PopBGM();
+			GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSND_GetBGMhandlePointer());
+			PMSND_PauseBGM(FALSE);
 			break;
 		case SOUNDTEST_TPEV_SE_WINDOW:
-			OS_Printf("pressed se window\n");
 			break;
 
 		case SOUNDTEST_TPEV_VOICE_NUMUP:
-			if(sw->voiceNum < PMSND_VOICE_END){ sw->voiceNum++; }
+			if(sw->voiceNum < PMVOICE_END){ sw->voiceNum++; }
 			break;
 		case SOUNDTEST_TPEV_VOICE_NUMDOWN:
-			if(sw->voiceNum > PMSND_VOICE_START){ sw->voiceNum--; }
+			if(sw->voiceNum > PMVOICE_START){ sw->voiceNum--; }
 			break;
 		case SOUNDTEST_TPEV_VOICE_NUMSET:
 			OS_Printf("pressed voice num_set\n");
 			break;
 		case SOUNDTEST_TPEV_VOICE_PLAY:
-			PMSND_PlayVoice(sw->voiceNum);
+			PMVOICE_Play(sw->voiceNum);
 			break;
 		case SOUNDTEST_TPEV_VOICE_STOP:
-			//NNS_SndPlayerStopSeq(&sw->voiceHandle, 0);
-			PMSND_PauseBGM(TRUE);
-			PMSND_PushBGM();
 			break;
 		case SOUNDTEST_TPEV_VOICE_PAUSE:
 			//OS_Printf("pressed voice pause\n");
-			PMSND_PopBGM();
-			GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSND_GetBGMhandlePointer());
-			PMSND_PauseBGM(FALSE);
 			break;
 		case SOUNDTEST_TPEV_VOICE_WINDOW:
-			OS_Printf("pressed voice window\n");
 			break;
 		case SOUNDTEST_TPEV_EXIT:
 			sw->seq++;

@@ -19,9 +19,6 @@
 #define PMSND_BGM_END		(SEQ_MUS_WB_WIN4)
 #define PMSND_SE_START		(SEQ_SE_DP_000)
 #define PMSND_SE_END		(SEQ_TEST_TITLE)
-#define PMSND_VOICE_START	(BANK_PV001)
-#define PMSND_VOICE_END		(BANK_PV516_SKY)
-#define PMSND_POKEVOICE_001	(BANK_PV001)
 
 //------------------------------------------------------------------
 /**
@@ -76,7 +73,7 @@ extern void PMSND_SetSystemFadeFrames( int frames );	//ƒVƒXƒeƒ€ƒtƒF[ƒhi©“®jƒ
 //============================================================================================
 /**
  *
- * @brief	‰‰oƒTƒEƒ“ƒhŠÖ”iŠeapp‚©‚çŒÄ‚Ño‚³‚ê‚éj
+ * @brief	‚r‚dƒTƒEƒ“ƒhŠÖ”iŠeapp‚©‚çŒÄ‚Ño‚³‚ê‚éj
  *
  */
 //============================================================================================
@@ -84,24 +81,6 @@ extern void	PMSND_PlaySystemSE( u32 soundNum );	//ƒVƒXƒeƒ€‚r‚d‚ğÄ¶
 extern void	PMSND_PlaySE( u32 soundNum );		//‚r‚d‚ğÄ¶
 extern BOOL	PMSND_CheckPlaySE( void );			//‚r‚dI—¹ŒŸo(TRUEÀs’†)
 extern void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan );//‚r‚dƒXƒe[ƒ^ƒX•ÏX
-
-//============================================================================================
-/**
- *
- * @brief	–Â‚«ºƒTƒEƒ“ƒhŠÖ”iŠeapp‚©‚çŒÄ‚Ño‚³‚ê‚éj
- *
- */
-//============================================================================================
-extern void	PMSND_PlayVoice( u32 pokeNum );		//–Â‚«º‚ğÄ¶
-extern BOOL	PMSND_CheckPlayVoice( void );		//–Â‚«ºI—¹ŒŸo(TRUEÀs’†)
-extern void	PMSND_SetStatusVoice( int tempoRatio, int pitch, int pan );//–Â‚«ºƒXƒe[ƒ^ƒX•ÏX
-
-// –Â‚«º‚ğƒR[ƒ‰ƒXŒø‰Ê•t‚«‚ÅÄ¶ig—p‰ÓŠ‚Í‹ZAƒCƒxƒ“ƒg‚ğ‘z’èj
-// ¦ƒf[ƒ^‚ğƒTƒEƒ“ƒhƒq[ƒv‚Éƒ[ƒh‚µ‹¤—L‚·‚é‚±‚Æ‚ÅƒR[ƒ‰ƒXŒø‰Ê‚ğÀŒ»
-// @ƒTƒEƒ“ƒhƒq[ƒv‚Ìó‘Ô•œŒ³‚ª•K—v‚È‚Ì‚Å
-// @ŠJn¨I—¹‘Ò‚¿‚ğÀs‚µAŠÔ‚É‚a‚f‚l‘€ì‚ğ“ü‚ê‚È‚¢‚æ‚¤‚É‚·‚é‚±‚Æ
-extern void	PMSND_PlayVoiceChorus( u32 pokeNum, int chorusPitch, int chorusVolume );
-extern BOOL	PMSND_CheckPlayVoiceChorus( void );		//(TRUEÀs’†)
 
 
 

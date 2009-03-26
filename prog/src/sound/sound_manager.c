@@ -11,7 +11,7 @@
 #include "sound/sound_manager.h"
 
 static NNSSndHeapHandle*	pSndHeapHandle = NULL;
-//#define STATUS_PRINT
+#define STATUS_PRINT
 //============================================================================================
 /**
  *
@@ -98,8 +98,10 @@ static void createHierarchyPlayer( int heapLvDelete )
 	// プレーヤー削除の際に復帰するヒープ状態ＬＶを保存
 	player->heapLvDelete = heapLvDelete;
 
-	// プレーヤーリセットの際に復帰するヒープ状態ＬＶを保存
+	// 各復帰ヒープ状態ＬＶを初期化
 	player->heapLvReset = heapLvDelete;
+	player->heapLvPush = heapLvDelete;
+	player->heapLvFull = heapLvDelete;
 
 	// チャンネル設定
 	NNS_SndPlayerSetAllocatableChannel(player->playerNo, playerPlayableChannel);
@@ -326,6 +328,7 @@ BOOL	SOUNDMAN_PushHierarchyPlayer( void )
 	if(player->heapLvPush != PLAYER_HIERARCHY_HEAPLV_NULL){
 		// サウンドデータ（wave）があれば解放
 		NNS_SndHeapLoadState(*pSndHeapHandle, player->heapLvPush);
+		player->heapLvFull = PLAYER_HIERARCHY_HEAPLV_NULL;
 		nextHeapLvDelete = player->heapLvPush;
 	} else {
 		nextHeapLvDelete = player->heapLvReset;

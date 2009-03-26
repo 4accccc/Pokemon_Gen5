@@ -26,6 +26,7 @@
 #include "system/wipe.h"
 
 #include "sound\pm_sndsys.h"
+#include "sound\pm_voice.h"
 #ifdef PM_DEBUG
 #include "test/performance.h"
 #include "test/debug_pause.h"
@@ -185,6 +186,8 @@ static	void	GameInit(void)
 
     //サウンドの設定
 	PMSND_Init();
+    //鳴き声システムの設定
+	PMVOICE_Init(GFL_HEAPID_APP);
 	//サウンドストリーミング再生システム
 	SND_STRM_Init(GFL_HEAPID_SYSTEM);
 
@@ -209,8 +212,9 @@ static	void	GameMain(void)
 	if((GFL_UI_KEY_GetCont() & PAD_BUTTON_L) && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG)){
 		NetErr_ErrorSet();
 	}
-	SND_STRM_Main();
 	PMSND_Main();
+	PMVOICE_Main();
+	SND_STRM_Main();
 }
 
 //------------------------------------------------------------------
@@ -221,6 +225,7 @@ static	void	GameMain(void)
 static	void	GameExit(void)
 {
 	SND_STRM_Exit();
+	PMVOICE_Exit();
 	PMSND_Exit();
 }
 

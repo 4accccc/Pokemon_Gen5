@@ -30,7 +30,7 @@ BOOL debugBGMsetFlag;
 
 //------------------------------------------------------------------
 /**
- * @brief	プレーヤー定義
+ * @brief	プレーヤー設定定義
  */
 //------------------------------------------------------------------
 typedef struct {
@@ -52,37 +52,6 @@ typedef struct {
 	u16					playerNum;
 	int					heapLvDelete;
 }PMSND_PL_UNIT;
-
-//------------------------------------------------------------------
-/**
- * @brief	プレーヤー設定定義
- */
-//------------------------------------------------------------------
-#define PLAYER_PMVOICE_CH	(0xc000)
-#define PLAYER_SE_CH		(0xd800)
-
-enum {
-	PLAYER_SYSSE = 0,
-	PLAYER_SEVOICE,
-	PLAYER_ECHOCHORUS,
-
-	PLAYER_DEFAULT_MAX,
-};
-
-static const PMSND_PLSETUP systemPlayer[] = {
-	{ 0x0000, 0x0000, 1 },	// システムＳＥ
-	{ 0x6000, 0x0000, 2 },	// ＳＥ＆鳴き声。エコーコーラス用に2seq設定
-	{ 0x0000, 0x0000, 1 },	// エコーコーラス用
-
-	{ PMSND_PLSETUP_TBLEND, 0x0000, 0 },	// TABLE END
-};
-
-#define PLAYER_MUSIC_HEAPSIZ	(0x0000)
-#define PLAYER_MUSIC_CH			(0xa7fe)
-// ＢＧＭプレーヤー定義
-static const SOUNDMAN_HIERARCHY_PLAYER_DATA pmHierarchyPlayerData = {
-	PLAYER_MUSIC_HEAPSIZ, PLAYER_DEFAULT_MAX, PLAYER_MUSIC_CH,
-};
 
 //------------------------------------------------------------------
 /**
@@ -119,6 +88,45 @@ typedef struct {
 	int		stopFrames;
 }PMSND_REVERB;
 
+//------------------------------------------------------------------
+/**
+ * @brief	プレーヤー設定データ
+ */
+//------------------------------------------------------------------
+//#define PLAYER_PMVOICE_CH	(0x8000)
+#define PLAYER_SE_CH		(0xd800)
+
+enum {
+	PLAYER_SYSSE = 0,
+	PLAYER_SEVOICE,
+#if 0
+	PLAYER_VOICE1,
+	PLAYER_VOICE2,
+	PLAYER_VOICE3,
+	PLAYER_VOICE4,
+#endif
+	PLAYER_DEFAULT_MAX,
+};
+
+static const PMSND_PLSETUP systemPlayer[] = {
+	{ 0x0000, PLAYER_SE_CH, 1 },	// システムＳＥ(プリセット)
+	{ 0x6000, PLAYER_SE_CH, 1 },	// ＳＥ＆鳴き声(再生時にプレーヤーヒープへ読み込み）
+#if 0
+	{ 0x0000, 0x8000, 1 },	// 鳴き声多重再生用1(再生時にサウンドヒープへ読み込み）
+	{ 0x0000, 0x4000, 1 },	// 鳴き声多重再生用2(再生時にサウンドヒープへ読み込み）
+	{ 0x0000, 0x2000, 1 },	// 鳴き声多重再生用3(再生時にサウンドヒープへ読み込み）
+	{ 0x0000, 0x1000, 1 },	// 鳴き声多重再生用4(再生時にサウンドヒープへ読み込み）
+#endif
+	{ PMSND_PLSETUP_TBLEND, 0x0000, 0 },	// TABLE END
+};
+
+#define PLAYER_MUSIC_HEAPSIZ	(0x0000)
+#define PLAYER_MUSIC_CH			(0xa7fe)
+// ＢＧＭプレーヤー定義
+static const SOUNDMAN_HIERARCHY_PLAYER_DATA pmHierarchyPlayerData = {
+	PLAYER_MUSIC_HEAPSIZ, PLAYER_DEFAULT_MAX, PLAYER_MUSIC_CH,
+};
+
 //============================================================================================
 /**
  *
@@ -138,29 +146,21 @@ typedef struct {
 #define CAPTURE_BUFSIZE (0x2000)
 
 static u8				PmSoundHeap[SOUND_HEAP_SIZE];
+static u8				captureBuffer[ CAPTURE_BUFSIZE ] ATTRIBUTE_ALIGN(32);
 static NNSSndArc		PmSoundArc;
-
 static NNSSndHeapHandle	PmSndHeapHandle;
 static u32				playerNumber;
-
-static u8				captureBuffer[ CAPTURE_BUFSIZE ] ATTRIBUTE_ALIGN(32);
-
 static BOOL				bgmContEnable;
 static u32				bgmFadeCounter;
-
 static PMSND_FADESTATUS	fadeStatus;
 static PMSND_REVERB		reverbStatus;
-
 static PMSND_PL_UNIT	systemPlayerUnit;
-SOUNDMAN_PRESET_HANDLE* systemPresetHandle;
-
 static PMSND_PLAYERSTATUS bgmPlayerInfo;
+static SOUNDMAN_PRESET_HANDLE* systemPresetHandle;
 
-static void PMSND_CreatePlayerUnit
-		( const PMSND_PLSETUP* setupTbl, PMSND_PL_UNIT* playerUnit );
-static void PMSND_DeletePlayerUnit
-		( PMSND_PL_UNIT* playerUnit );
-
+static void	PMSND_WatchDog( void );
+static void PMSND_CreatePlayerUnit( const PMSND_PLSETUP* setupTbl, PMSND_PL_UNIT* playerUnit );
+static void PMSND_DeletePlayerUnit( PMSND_PL_UNIT* playerUnit );
 static void PMSND_InitSystemFadeBGM( void );
 static void PMSND_ResetSystemFadeBGM( void );
 static void PMSND_CancelSystemFadeBGM( void );
@@ -334,18 +334,6 @@ static void PMSND_DeletePlayerUnit( PMSND_PL_UNIT* playerUnit )
 	NNS_SndHeapLoadState(PmSndHeapHandle, playerUnit->heapLvDelete);
 }
 
-//------------------------------------------------------------------
-/**
- * @brief	プレーヤーリセット
- */
-//------------------------------------------------------------------
-static void resetSoundEffect( PMSND_PLAYER_DATA* ppd, u32 channel )
-{
-	NNS_SndPlayerStopSeq(&ppd->sndHandle, 0);
-	// プレイヤー使用チャンネル設定
-	NNS_SndPlayerSetAllocatableChannel(ppd->playerNo, channel);
-}
-	
 //============================================================================================
 /**
  *
@@ -711,7 +699,7 @@ void PMSND_SetSystemFadeFrames( int frames )
  *
  *
  *
- * @brief	演出サウンド関数（各appから呼び出される）
+ * @brief	ＳＥサウンド関数（各appから呼び出される）
  *
  *
  *
@@ -726,7 +714,7 @@ void	PMSND_PlaySystemSE( u32 soundIdx )
 {
 	PMSND_PLAYER_DATA* ppd = &systemPlayerUnit.playerDataArray[PLAYER_SYSSE];
 
-	resetSoundEffect( ppd, PLAYER_SE_CH );
+	NNS_SndPlayerStopSeq(&ppd->sndHandle, 0);
 	ppd->soundIdx = soundIdx;
 
 	NNS_SndArcPlayerStartSeqEx(&ppd->sndHandle, ppd->playerNo, -1, 126, soundIdx);
@@ -741,7 +729,9 @@ void	PMSND_PlaySE( u32 soundIdx )
 {
 	PMSND_PLAYER_DATA* ppd = &systemPlayerUnit.playerDataArray[PLAYER_SEVOICE];
 
-	resetSoundEffect( ppd, PLAYER_SE_CH );
+	NNS_SndPlayerStopSeq(&ppd->sndHandle, 0);
+	// プレイヤー使用チャンネル設定
+	NNS_SndPlayerSetAllocatableChannel(ppd->playerNo, PLAYER_SE_CH);
 	ppd->soundIdx = soundIdx;
 
 	NNS_SndArcPlayerStartSeqEx(&ppd->sndHandle, ppd->playerNo, -1, 126, soundIdx);
@@ -783,113 +773,6 @@ void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan )
 		NNS_SndPlayerSetTrackPan(&ppd->sndHandle, 0xffff, pan);
 	}
 }
-
-
-
-
-
-//============================================================================================
-/**
- *
- *
- *
- * @brief	鳴き声サウンド関数（各appから呼び出される）
- *
- *
- */
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief	鳴き声サウンド関数
- */
-//------------------------------------------------------------------
-void	PMSND_PlayVoice( u32 pokeNum )
-{
-	PMSND_PLAYER_DATA* ppd = &systemPlayerUnit.playerDataArray[PLAYER_SEVOICE];
-
-	resetSoundEffect( ppd, PLAYER_PMVOICE_CH );
-	ppd->soundIdx = pokeNum;
-
-	NNS_SndArcPlayerStartSeqEx(&ppd->sndHandle, ppd->playerNo, pokeNum, 127, SEQ_PV);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	鳴き声終了検出
- */
-//------------------------------------------------------------------
-BOOL	PMSND_CheckPlayVoice( void )
-{
-	return PMSND_CheckPlaySE();	//現状はプレーヤーが同じに設定してあるので同じ動作
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	鳴き声ステータス変更
- */
-//------------------------------------------------------------------
-void	PMSND_SetStatusVoice( int tempoRatio, int pitch, int pan )
-{
-	PMSND_SetStatusSE(tempoRatio, pitch, pan);//現状はプレーヤーが同じに設定してあるので同じ動作
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	鳴き声サウンド関数（コーラス効果付き）
- *			※データをサウンドヒープにロードし共有することでコーラス効果を実現。
- *			　サウンドヒープの状態復元が必要なので
- *			　開始→終了待ちを実行し、間にＢＧＭ操作を入れないようにすること
- */
-//------------------------------------------------------------------
-void	PMSND_PlayVoiceChorus( u32 pokeNum, int chorusPitch, int chorusVolume )
-{
-	PMSND_PLAYER_DATA* ppd1 = &systemPlayerUnit.playerDataArray[PLAYER_SEVOICE];
-	PMSND_PLAYER_DATA* ppd2 = &systemPlayerUnit.playerDataArray[PLAYER_ECHOCHORUS];
-	BOOL result;
-
-	//OS_Printf("soundHeap remains %x\n", NNS_SndHeapGetFreeSize(PmSndHeapHandle));
-
-	resetSoundEffect( ppd1, PLAYER_PMVOICE_CH );
-	resetSoundEffect( ppd2, PLAYER_PMVOICE_CH );
-	ppd1->soundIdx = pokeNum;
-	ppd2->soundIdx = pokeNum;
-
-	// サウンドデータ（seq, bank）読み込み
-	NNS_SndArcLoadSeq(SEQ_PV, PmSndHeapHandle);
-	NNS_SndArcLoadBank(pokeNum, PmSndHeapHandle);
-
-	NNS_SndArcPlayerStartSeqEx(&ppd1->sndHandle, ppd1->playerNo, pokeNum, 127, SEQ_PV);
-	NNS_SndArcPlayerStartSeqEx(&ppd2->sndHandle, ppd2->playerNo, pokeNum, 127, SEQ_PV);
-	NNS_SndPlayerSetTrackPitch(&ppd2->sndHandle, 0xffff, chorusPitch);
-	NNS_SndPlayerSetVolume(&ppd2->sndHandle, chorusVolume);
-
-	// サウンドヒープ一時保護のためＢＧＭ関連操作不能にする
-	bgmContEnable = FALSE;
-}
-
-BOOL	PMSND_CheckPlayVoiceChorus( void )
-{
-	PMSND_PLAYER_DATA* ppd1 = &systemPlayerUnit.playerDataArray[PLAYER_SEVOICE];
-	PMSND_PLAYER_DATA* ppd2 = &systemPlayerUnit.playerDataArray[PLAYER_ECHOCHORUS];
-	int count1 = NNS_SndPlayerCountPlayingSeqByPlayerNo(ppd1->playerNo);
-	int count2 = NNS_SndPlayerCountPlayingSeqByPlayerNo(ppd2->playerNo);
-
-	if(count1 | count2){
-		return TRUE;
-	}
-	NNS_SndPlayerStopSeq(&ppd1->sndHandle, 0);
-	NNS_SndPlayerStopSeq(&ppd2->sndHandle, 0);
-
-	// 階層プレーヤーを現在のＢＧＭ読み込み直後の状態に復元
-	SOUNDMAN_RecoverHierarchyPlayerState();
-
-	// サウンドヒープ一時保護解除
-	bgmContEnable = TRUE;
-	return FALSE;
-}
-
-
-
 
 
 
