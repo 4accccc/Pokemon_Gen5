@@ -267,6 +267,11 @@ end
 					com_list.get_com_num( com_num ).add_param( split_data[ PARAM_VALUE ] )
 					com_list.get_com_num( com_num ).add_fd_ext( param_num, split_data[ PARAM_VALUE + 1 ] )
 					param_num = param_num + 1
+				when "FILE_DIALOG_WITH_ADD"
+					combobox_text = 0
+					com_list.get_com_num( com_num ).add_param( split_data[ PARAM_VALUE ] )
+					com_list.get_com_num( com_num ).add_fd_ext( param_num, split_data[ PARAM_VALUE + 1 ] )
+					param_num = param_num + 1
 				when "FILE_DIALOG_COMBOBOX"
 					combobox_text = 0
 					com_list.get_com_num( com_num ).add_param( split_data[ PARAM_VALUE ] )
@@ -407,6 +412,18 @@ end
 					when "VALUE_INT"
 						str += split_data[ param_num ]
 					when "FILE_DIALOG"
+						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ) 
+						inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
+						file_list.size.times {|num|
+							file_name = File::basename( file_list[ num ] )
+							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
+								bin_list << file_list[ num ]
+							end
+						}
+
+						file_dialog = file_dialog.sub( ".", "_" ).upcase
+						str += file_dialog
+					when "FILE_DIALOG_WITH_ADD"
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ) 
 						inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
 						file_list.size.times {|num|
