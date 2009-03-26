@@ -57,6 +57,7 @@ typedef struct {
 
 extern BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subPri, u8 pokeID, const BtlEventHandlerTable* handlerTable );
 extern BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactor factorType, u8 pokeID );
-extern void BTL_EVENT_RemoveFactor( BTL_EVENT_FACTOR* factor );
+extern void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor );
+extern void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 pri );
 
 #endif

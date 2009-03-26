@@ -9,7 +9,7 @@
 //=============================================================================================
 #include <gflib.h>
 #include "waza_tool\wazadata.h"
-
+#include "waza_tool\wazano_def.h"
 
 #include "btl_event.h"
 #include "btl_server_cmd.h"
@@ -146,10 +146,12 @@ static void scput_Fight_AddSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM
 static void scput_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
 static void scput_Fight_AddEffect_Target( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker );
 static void scput_Fight_SimpleEffect( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
-static void scput_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action );
+static void scput_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void svflowsub_MakeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* receiver, BTL_POKEPARAM* attacker,
 		WazaSick sick, BPP_SICK_CONT contParam, BOOL fAlmost );
 static void scput_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, const BTL_ACTION_PARAM* action );
+static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
+static void scput_Fight_Others_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scput_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scput_turncheck_sick( BTL_SVFLOW_WORK* wk );
 static void scput_turncheck_weather( BTL_SVFLOW_WORK* wk );
@@ -785,7 +787,7 @@ static void scput_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, cons
 			scput_Fight_SimpleSick( wk, waza, attacker, atPos, action );
 			break;
 		case WAZADATA_CATEGORY_ICHIGEKI:
-			scput_Fight_Ichigeki( wk, waza, attacker, atPos, action );
+			scput_Fight_Ichigeki( wk, waza, attacker, &wk->targetPokemon );
 			break;
 		case WAZADATA_CATEGORY_WEATHER:
 			scput_Fight_Weather( wk, waza, attacker, action );
@@ -794,7 +796,9 @@ static void scput_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, cons
 //	case WAZADATA_CATEGORY_GUARD:
 //	case WAZADATA_CATEGORY_FIELD_EFFECT:
 //	case WAZADATA_CATEGORY_SIDE_EFFECT:
-//	case WAZADATA_CATEGORY_OTHERS:
+		case WAZADATA_CATEGORY_OTHERS:
+			scput_Fight_Others( wk, waza, attacker, &wk->targetPokemon );
+			break;
 		default:
 //		SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaAvoid );
 			SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
@@ -1515,17 +1519,15 @@ static void scput_Fight_SimpleEffect( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：一撃ワザ処理
 //---------------------------------------------------------------------------------------------
-static void scput_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_ACTION_PARAM* action )
+static void scput_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
 {
 	BTL_POKEPARAM* target;
 	WazaSick sick;
 	u32 i = 0;
 
-	flowsub_registerWazaTargets( wk, atPos, waza, action, &wk->targetPokemon );
-
 	while( 1 )
 	{
-		target = TargetPokeRec_Get( &wk->targetPokemon, i++ );
+		target = TargetPokeRec_Get( targets, i++ );
 		if( target == NULL ){ break; }
 		if( !BTL_POKEPARAM_IsDead(target) )
 		{
@@ -1564,8 +1566,6 @@ static void svflowsub_MakeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* receiver, BT
 		scEvent_MakeWazaSick( wk, receiver, attacker, sick, contParam, fAlmost );
 	}
 }
-
-
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：ワザによる天候の変化
 //---------------------------------------------------------------------------------------------
@@ -1580,6 +1580,53 @@ static void scput_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM
 		SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
 	}
 }
+//---------------------------------------------------------------------------------------------
+// サーバーフロー：分類しきれないワザ
+//---------------------------------------------------------------------------------------------
+static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
+{
+	switch( waza ){
+	case WAZANO_SUKIRUSUWAPPU:
+		scput_Fight_Others_SkillSwap( wk, attacker, targets );
+		break;
+	default:
+		SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
+		break;
+	}
+}
+// スキルスワップ
+static void scput_Fight_Others_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec )
+{
+	BTL_POKEPARAM* target = TargetPokeRec_Get( targetRec, 0 );
+	PokeTokusei atk_tok, tgt_tok;
+
+	atk_tok = BTL_POKEPARAM_GetValue( attacker, BPP_TOKUSEI );
+	tgt_tok = BTL_POKEPARAM_GetValue( target, BPP_TOKUSEI );
+
+	if( (!BTL_CALC_TOK_CheckCant_Swap(atk_tok)) && (!BTL_CALC_TOK_CheckCant_Swap(tgt_tok)) )
+	{
+		u8 atkPokeID = BTL_POKEPARAM_GetID( attacker );
+		u8 tgtPokeID = BTL_POKEPARAM_GetID( target );
+		svflowsub_set_waza_effect( wk, atkPokeID, tgtPokeID, WAZANO_SUKIRUSUWAPPU );
+		SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_SkillSwap, atkPokeID );
+
+		BTL_POKEPARAM_ChangeTokusei( attacker, tgt_tok );
+		BTL_POKEPARAM_ChangeTokusei( target, atk_tok );
+		BTL_HANDLER_TOKUSEI_Swap( attacker, target );
+
+		BTL_EVENTVAR_Push();
+			BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, atkPokeID );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, tgtPokeID );
+			BTL_EVENT_CallHandlers( wk, BTL_EVENT_SKILL_SWAP );
+		BTL_EVENTVAR_Pop();
+	}
+	else
+	{
+		SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_STD_WazaFail );
+	}
+}
+
+
 //==============================================================================
 // サーバーフロー：ターンチェックルート
 //==============================================================================
@@ -3145,6 +3192,24 @@ void BTL_SVFLOW_RECEPT_CurePokeSick( BTL_SVFLOW_WORK* wk, u8 pokeID )
 	{
 		BTL_POKEPARAM_CurePokeSick( bpp );
 		SCQUE_PUT_OP_CurePokeSick( wk->que, pokeID );
+	}
+}
+//=============================================================================================
+/**
+ * [ハンドラ受信] ワザ系状態異常の回復処理
+ *
+ * @param   wk		
+ * @param   pokeID		
+ *
+ */
+//=============================================================================================
+void BTL_SVFLOW_RECEPT_CureWazaSick( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaSick sick )
+{
+	BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+	if( !BTL_POKEPARAM_IsDead(bpp) )
+	{
+		BTL_POKEPARAM_CureWazaSick( bpp, sick );
+		SCQUE_PUT_OP_CureWazaSick( wk->que, pokeID, sick );
 	}
 }
 //=============================================================================================

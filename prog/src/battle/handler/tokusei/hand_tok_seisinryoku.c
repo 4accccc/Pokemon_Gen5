@@ -24,7 +24,7 @@ static const BtlEventHandlerTable HandlerTable[] = {
 	{ BTL_EVENT_SHRINK_CHECK, handler_ShrinkCheck },
 	{ BTL_EVENT_NULL, NULL },
 };
-//BTL_EVENT_RemoveFactor
+//BTL_EVENT_FACTOR_Remove
 
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Seisinryoku( u16 pri, u8 pokeID )
 {

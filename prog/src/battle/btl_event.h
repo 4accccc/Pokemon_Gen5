@@ -75,6 +75,7 @@ typedef enum {
 	BTL_EVENT_TURNCHECK_END,		///< ターンチェック（終端）
 	BTL_EVENT_WEATHER_CHANGE,		///< 天候の変化
 	BTL_EVENT_CALC_WEATHER_DAMAGE,	///< 天候ダメージ計算
+	BTL_EVENT_SKILL_SWAP,				///< とくせい入れ替え
 
 }BtlEventType;
 

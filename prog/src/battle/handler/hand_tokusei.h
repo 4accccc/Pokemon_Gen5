@@ -16,5 +16,8 @@
 
 extern BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp );
 extern void BTL_HANDLER_TOKUSEI_Remove( const BTL_POKEPARAM* pp );
+extern void BTL_HANDLER_TOKUSEI_Pause( const BTL_POKEPARAM* pp );
+extern void BTL_HANDLER_TOKUSEI_Swap( const BTL_POKEPARAM* pp1, const BTL_POKEPARAM* pp2 );
+
 
 #endif

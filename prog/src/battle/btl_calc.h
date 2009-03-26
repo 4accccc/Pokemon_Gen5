@@ -200,7 +200,19 @@ extern void BTL_CALC_MakeDefaultWazaSickCont( PokeSick sick, const BTL_POKEPARAM
  * @retval  BOOL		コピーできない場合はTRUE
  */
 //=============================================================================================
-extern BOOL BTL_CALC_TOK_IsUntracable( PokeTokusei tok );
+extern BOOL BTL_CALC_TOK_CheckCant_Trace( PokeTokusei tok );
+
+//=============================================================================================
+/**
+ * 「スキルスワップ」によってコピーできないとくせい判定
+ *
+ * @param   tok		
+ *
+ * @retval  BOOL		コピーできない場合はTRUE
+ */
+//=============================================================================================
+extern BOOL BTL_CALC_TOK_CheckCant_Swap( PokeTokusei tok );
+
 
 #endif
 

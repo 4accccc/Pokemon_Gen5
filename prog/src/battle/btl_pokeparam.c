@@ -787,8 +787,32 @@ void BTL_POKEPARAM_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT 
 //=============================================================================================
 void BTL_POKEPARAM_CurePokeSick( BTL_POKEPARAM* pp )
 {
+	if( pp->pokeSick != POKESICK_NULL )
+	{
+		pp->sickCont[ pp->pokeSick ].type = WAZASICK_CONT_NONE;
+	}
 	pp->pokeSick = POKESICK_NULL;
 	pp->pokeSickCounter = 0;
+}
+//=============================================================================================
+/**
+ * ÉèÉUånèÛë‘àŸèÌÇâÒïúÇ≥ÇπÇÈ
+ *
+ * @param   pp		
+ * @param   sick		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
+{
+	if( sick < POKESICK_MAX )
+	{
+		BTL_POKEPARAM_CurePokeSick( pp );
+	}
+	else
+	{
+		pp->sickCont[ sick ].type = WAZASICK_CONT_NONE;
+	}
 }
 //=============================================================================================
 /**

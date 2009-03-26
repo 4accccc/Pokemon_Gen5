@@ -200,7 +200,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subPri, u8
 	}
 }
 
-void BTL_EVENT_RemoveFactor( BTL_EVENT_FACTOR* factor )
+void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
 {
 	if( factor == FirstFactorPtr )
 	{
@@ -219,6 +219,17 @@ void BTL_EVENT_RemoveFactor( BTL_EVENT_FACTOR* factor )
 
 	pushFactor( factor );
 }
+
+void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 pri )
+{
+	const BtlEventHandlerTable* handlerTable = factor->handlerTable;
+	BtlEventFactor type = factor->factorType;
+
+	BTL_EVENT_FACTOR_Remove( factor );
+	BTL_EVENT_AddFactor( type, pri, pokeID, handlerTable );
+}
+
+
 void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
 	BTL_EVENT_FACTOR* factor;
@@ -245,6 +256,8 @@ BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactor factorType, u8 pokeID )
 	}
 	return NULL;
 }
+
+
 
 
 //======================================================================================================

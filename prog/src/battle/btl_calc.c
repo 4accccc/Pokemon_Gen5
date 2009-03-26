@@ -366,7 +366,7 @@ void BTL_CALC_MakeDefaultWazaSickCont( PokeSick sick, const BTL_POKEPARAM* attac
  * @retval  BOOL		コピーできない場合はTRUE
  */
 //=============================================================================================
-BOOL BTL_CALC_TOK_IsUntracable( PokeTokusei tok )
+BOOL BTL_CALC_TOK_CheckCant_Trace( PokeTokusei tok )
 {
 	static const u16 prohibits[] = {
 		POKETOKUSEI_TOREESU, POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_MARUTITAIPU,
@@ -382,5 +382,19 @@ BOOL BTL_CALC_TOK_IsUntracable( PokeTokusei tok )
 		}
 	}
 	return FALSE;
+}
+//=============================================================================================
+/**
+ * 「スキルスワップ」によって交換できないとくせい判定
+ *
+ * @param   tok		
+ *
+ * @retval  BOOL		コピーできない場合はTRUE
+ */
+//=============================================================================================
+BOOL BTL_CALC_TOK_CheckCant_Swap( PokeTokusei tok )
+{
+	// @@@ 今のところトレースと一緒にしておく
+	return BTL_CALC_TOK_CheckCant_Trace( tok );
 }
 
