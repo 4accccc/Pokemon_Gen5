@@ -167,7 +167,8 @@ static BOOL scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
 static BOOL scEvent_checkHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_CheckNotEffect_byType( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
-static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
+static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, u8 lv,
+		const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
 static BOOL scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static void scEvent_WazaDamageEffect_Single( BTL_SVFLOW_WORK* wk,
@@ -980,17 +981,28 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
 		}
 	}
 
-	// 攻撃ポケが必中状態なら、タイプ相性以外の無効化チェックはスキップする
+	// Lv1 無効化チェック（攻撃ポケが必中状態なら負ける）
 	if( BTL_POKEPARAM_CheckSick(attacker, WAZASICK_MUSTHIT) )
 	{
 		TargetPokeRec_GetStart( targets );
 		while( (bpp = TargetPokeRec_GetNext(targets)) != NULL )
 		{
-			if( scEvent_CheckNotEffect(wk, waza, attacker, bpp) )
+			if( scEvent_CheckNotEffect(wk, waza, 0, attacker, bpp) )
 			{
 				TargetPokeRec_Remove( targets, bpp );
 				SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BTL_POKEPARAM_GetID(bpp) );
 			}
+		}
+	}
+
+	// Lv2 無効化チェック（攻撃ポケが必中状態でも無効化）
+	TargetPokeRec_GetStart( targets );
+	while( (bpp = TargetPokeRec_GetNext(targets)) != NULL )
+	{
+		if( scEvent_CheckNotEffect(wk, waza, 1, attacker, bpp) )
+		{
+			TargetPokeRec_Remove( targets, bpp );
+			SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BTL_POKEPARAM_GetID(bpp) );
 		}
 	}
 }
@@ -2112,7 +2124,8 @@ static BOOL scEvent_CheckNotEffect_byType( BTL_SVFLOW_WORK* wk, WazaID waza, con
  * @retval  BOOL		無効な場合TRUE
  */
 //--------------------------------------------------------------------------
-static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
+static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, u8 lv,
+		const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
 {
 	BOOL fNoEffect = FALSE;
 
@@ -2121,7 +2134,7 @@ static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_NOEFFECT_FLAG, fNoEffect );
-		BTL_EVENT_CallHandlers( wk, BTL_EVENT_NOEFFECT_CHECK );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_NOEFFECT_CHECK_L1+lv );
 		fNoEffect = BTL_EVENTVAR_GetValue( BTL_EVAR_NOEFFECT_FLAG );
 	BTL_EVENTVAR_Pop();
 
