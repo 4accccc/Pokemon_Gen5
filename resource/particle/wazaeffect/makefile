@@ -27,7 +27,9 @@ TARGETDIR	= $(PROJECT_ARCDIR)particle/wazaeffect
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 SUBDIRS	= ../../../../pokemon_wb_doc/particle/wazaeffect/
+endif
 
 
 #共通ルールファイルのインクルード
@@ -35,7 +37,7 @@ include $(PROJECT_RSCDIR)\macro_define
 
 #コンバート対象のファイルツリーを生成
 
-.PHONY:	do-build clean subdir
+.PHONY:	do-build clean sub_dir
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:	
@@ -51,10 +53,10 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 	$(COPY) $(HEADNAME) $(TARGETDIR)
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 sub_dir:
 	@$(MAKE_SUBDIR)
 
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 $(NARCNAME): *.spa
 	nnsarc -c -l -n -i $(NARCNAME) *.spa
 	$(NAIXCUT) $(NAIXNAME)
