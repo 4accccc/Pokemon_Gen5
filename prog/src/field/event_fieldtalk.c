@@ -76,7 +76,7 @@ GMEVENT * EVENT_FieldTalk(
 	
 	fparam.msgBG = msgBG;
 	event = SCRIPT_SetScript(
-		gsys, SCRID_COMMON_VM, fmmdl_talk, heapID, &fparam );
+		gsys, scr_id, fmmdl_talk, heapID, &fparam );
 	return( event );
 }
 

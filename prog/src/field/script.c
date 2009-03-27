@@ -574,8 +574,12 @@ static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u16 id, HEAPID h
 		#ifndef SCRIPT_PL_NULL
 		SetZoneScriptData( fsys, core );	//ゾーンスクリプトデータセット
 		scr_id -= ID_START_SCR_OFFSET;
-		#else
-		GF_ASSERT( 0 );
+		#else //test
+		SetScriptData( work, core,
+			NARC_script_seq_c99_bin,
+			NARC_message_c99_dat,
+			heapID );
+		scr_id -= ID_START_SCR_OFFSET;
 		#endif
 	}else{										//SCRID_NULL(0)が渡された時
 		SetScriptData( work, core,

@@ -594,7 +594,7 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 		PLAYER_GRID_GetFrontGridPos( fieldWork->pcActCont, &gx, &gy, &gz );
 		fmmdl_talk = FLDMMDLSYS_SearchGridPos( fieldWork->fldMMdlSys, gx, gz, FALSE );
 		if( fmmdl_talk != NULL ){
-			u32 scr_id = 0;
+			u32 scr_id = FLDMMDL_GetEventID( fmmdl_talk );
 			FLDMMDL *fmmdl_player = Player_GetFldMMdl( fieldWork->pcActCont );
 			return EVENT_FieldTalk( gsys, fieldWork,
 				scr_id, fmmdl_player, fmmdl_talk, fieldWork->heapID );
