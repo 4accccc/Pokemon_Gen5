@@ -43,11 +43,13 @@ void PMWB_GetVoiceWaveIdx(	u32 pokeNo, 		// [in]ポケモンナンバー
 							u32 pokeFormNo,		// [in]ポケモンフォームナンバー
 							u32* waveIdx )		// [out]波形IDX
 {
-	if(( pokeNo < PMVOICE_START)&&( pokeNo > PMVOICE_END) ){
+#if 0
+	if(( pokeNo < MONSNO_HUSIGIDANE)&&( pokeNo > MONSNO_END) ){
 		//指定範囲外
 		*waveIdx = PMVOICE_POKE001;
 		return;
 	}
+#endif
 	if( pokeNo == MONSNO_EURISU ){					//シェイミの時のみ、フォルムチェック
 		if( pokeFormNo == FORMNO_SHEIMI_FLOWER ){	//スカイフォルム
 			*waveIdx = WAVE_ARC_PV516_SKY;
