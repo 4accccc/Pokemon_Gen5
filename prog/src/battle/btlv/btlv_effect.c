@@ -18,7 +18,7 @@
 
 //Žb’è‚Å–ß‚µ
 #include "arc_def.h"
-#include "spa.naix"
+#include "particle/wazaeffect/spa.naix"
 
 //============================================================================================
 /**
