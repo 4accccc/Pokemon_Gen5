@@ -114,6 +114,7 @@ static inline int TargetPokeRec_SeekFriendIdx( const TARGET_POKE_REC* rec, const
 static inline u32 TargetPokeRec_GetCount( const TARGET_POKE_REC* rec );
 static inline u32 TargetPokeRec_CopyFriends( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, TARGET_POKE_REC* dst );
 static inline u32 TargetPokeRec_CopyEnemys( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, TARGET_POKE_REC* dst );
+static BOOL scput_Nigeru( BTL_SVFLOW_WORK* wk, u8 clientID, u8 pokeIdx );
 static void scput_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scput_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx );
 static void scput_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action );
@@ -290,9 +291,13 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 				break;
 			case BTL_ACTION_ESCAPE:
 				BTL_Printf("【にげる】を処理。\n");
-				// @@@ 今は即座に逃げられるようにしている
-				SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeSuccess, clientID );
-				return SVFLOW_RESULT_BTL_QUIT;
+				if( scput_Nigeru( wk, clientID, pokeIdx ) ){
+					SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeSuccess );
+					return SVFLOW_RESULT_BTL_QUIT;
+				}	else {
+					SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail);
+				}
+				break;
 			}
 		}
 	}
@@ -707,6 +712,26 @@ static inline u32 TargetPokeRec_CopyEnemys( const TARGET_POKE_REC* rec, const BT
 // サーバーフロー処理
 //======================================================================================================
 
+//-----------------------------------------------------------------------------------
+// サーバーフロー：「にげる」
+//-----------------------------------------------------------------------------------
+static BOOL scput_Nigeru( BTL_SVFLOW_WORK* wk, u8 clientID, u8 pokeIdx )
+{
+	BOOL fEscape = TRUE;	// @@@ 今は即座に逃げられるようにしている
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, fEscape );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_ESCAPE );
+		fEscape = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+	BTL_EVENTVAR_Pop();
+
+	#ifdef PM_DEBUG
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+		fEscape = TRUE;
+	}
+	#endif
+
+	return fEscape;
+}
 //-----------------------------------------------------------------------------------
 // サーバーフロー：フロントメンバー入れ替え
 //-----------------------------------------------------------------------------------

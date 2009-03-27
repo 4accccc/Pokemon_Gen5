@@ -100,9 +100,8 @@ typedef enum {
 //--------------------------------------------------------------------------
 typedef enum {
 	PRINTSTREAM_PAUSE_LINEFEED = 0,	///< ページ切り替え待ち（改行）
-	PRINTSTREAM_PAUSE_CLEAR,		/// <ページ切り替え待ち（表示クリア）
+	PRINTSTREAM_PAUSE_CLEAR,				/// <ページ切り替え待ち（表示クリア）
 }PRINTSTREAM_PAUSE_TYPE;
-
 
 
 //============================================================================================================
@@ -270,7 +269,7 @@ extern void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF*
 //==============================================================================================
 extern PRINT_STREAM* PRINTSYS_PrintStream(
 		GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
-		u16 wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor );
+		int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor );
 
 //==============================================================================================
 /**
@@ -292,7 +291,7 @@ extern PRINT_STREAM* PRINTSYS_PrintStream(
 //==============================================================================================
 extern PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
 		GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
-		u16 wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor, pPrintCallBack callback );
+		int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor, pPrintCallBack callback );
 
 //==============================================================================================
 /**
@@ -383,14 +382,6 @@ extern u32 PRINTSYS_GetStrHeight( const STRBUF* str, GFL_FONT* font );
  */
 //=============================================================================================
 extern u16 PRINTSYS_GetTagCount( const STRBUF* str );
-
-//--------------------------------------------------------------
-/**
- * プリントキュー用ユーティリティ
- *
- * プリントキューを簡単に使うためのユーティリティ類を用意する予定…
- */
-//--------------------------------------------------------------
 
 
 //--------------------------------------------------------------

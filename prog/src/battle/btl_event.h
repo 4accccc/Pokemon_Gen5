@@ -22,6 +22,8 @@
 typedef enum {
 	BTL_EVENT_NULL = 0,
 
+	BTL_EVENT_CHECK_CHANGE,			///< いれかえチェック
+	BTL_EVENT_CHECK_ESCAPE,			///< にげるチェック
 	BTL_EVENT_CALC_AGILITY,			///< すばやさ計算
 	BTL_EVENT_CHECK_CONF,				///< 混乱チェック
 	BTL_EVENT_CALC_CONF_DAMAGE,	///< 混乱ダメージ計算

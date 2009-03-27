@@ -150,6 +150,7 @@ struct _PRINT_STREAM {
 	u8		pauseReleaseFlag;
 	u8		pauseWait;
 	u8		clearColor;
+	u8		putPerFrame;
 
 	pPrintCallBack	callback_func;
 	u32				org_arg;
@@ -157,9 +158,6 @@ struct _PRINT_STREAM {
 	u32				arg;
 
 	PRINT_JOB	printJob;
-
-
-
 };
 
 
@@ -883,7 +881,7 @@ static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp )
 //==============================================================================================
 PRINT_STREAM* PRINTSYS_PrintStream(
 		GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
-		u16 wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor )
+		int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor )
 {
 	return PRINTSYS_PrintStreamCallBack(
 		dst, xpos, ypos, str, font, wait, tcbsys, tcbpri, heapID, clearColor, NULL
@@ -911,7 +909,7 @@ PRINT_STREAM* PRINTSYS_PrintStream(
 //==============================================================================================
 PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
 		GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
-		u16 wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor, pPrintCallBack callback )
+		int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor, pPrintCallBack callback )
 {
 	PRINT_STREAM* stwk;
 	GFL_TCBL* tcb;
@@ -923,6 +921,16 @@ PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
 	stwk->tcb = tcb;
 
 	printJob_setup( &stwk->printJob, font, dstBmp, xpos, ypos );
+
+	if( wait >= 0 )
+	{
+		stwk->putPerFrame = 1;
+	}
+	else
+	{
+		stwk->putPerFrame = -wait;
+		wait = 0;
+	}
 
 	stwk->sp = GFL_STR_GetStringCodePointer( str );
 	stwk->org_wait = wait;
@@ -1031,38 +1039,42 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
 	case PRINTSTREAM_STATE_RUNNING:
 		if( wk->wait == 0 )
 		{
-			switch( *(wk->sp) ){
-			case EOM_CODE:
-				wk->state = PRINTSTREAM_STATE_DONE;
-				break;
+			int i;
+			for(i=0; i<wk->putPerFrame; ++i)
+			{
+				switch( *(wk->sp) ){
+				case EOM_CODE:
+					wk->state = PRINTSTREAM_STATE_DONE;
+					break;
 
-			case SPCODE_TAG_START_:
-				if( STR_TOOL_GetTagType(wk->sp) == TAGTYPE_STREAM_CTRL )
-				{
-					ctrlStreamTag( wk );
+				case SPCODE_TAG_START_:
+					if( STR_TOOL_GetTagType(wk->sp) == TAGTYPE_STREAM_CTRL )
+					{
+						ctrlStreamTag( wk );
+						break;
+					}
+					/* fallthru */
+				default:
+					wk->sp = print_next_char( &wk->printJob, wk->sp );
+
+					if( wk->callback_func )
+					{
+						wk->callback_func( wk->arg );
+						wk->arg = wk->current_arg;
+					}
+
+					if( *(wk->sp) == EOM_CODE )
+					{
+						wk->state = PRINTSTREAM_STATE_DONE;
+					}
+					else
+					{
+						wk->wait = wk->current_wait;
+					}
+
+					GFL_BMPWIN_TransVramCharacter( wk->dstWin );
 					break;
 				}
-				/* fallthru */
-			default:
-				wk->sp = print_next_char( &wk->printJob, wk->sp );
-
-				if( wk->callback_func )
-				{
-					wk->callback_func( wk->arg );
-					wk->arg = wk->current_arg;
-				}
-
-				if( *(wk->sp) == EOM_CODE )
-				{
-					wk->state = PRINTSTREAM_STATE_DONE;
-				}
-				else
-				{
-					wk->wait = wk->current_wait;
-				}
-
-				GFL_BMPWIN_TransVramCharacter( wk->dstWin );
-				break;
 			}
 		}
 		else

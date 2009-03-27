@@ -568,7 +568,7 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
 	GFL_BMP_Clear( wk->bmp, 0x0f );
 
 	wk->printStream = PRINTSYS_PrintStream(
-				wk->win, 0, 0, str, wk->defaultFont, 0, wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
+				wk->win, 0, 0, str, wk->defaultFont, -2, wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
 				wk->heapID, 0x0f
 	);
 	wk->printSeq = 0;
