@@ -1,0 +1,35 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: code_input.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_CODE_INPUT_NAIX_
+#define NARC_CODE_INPUT_NAIX_
+
+enum {
+	NARC_code_input_code_NCLR = 0,
+	NARC_code_input_code_bg_NCLR = 1,
+	NARC_code_input_code_bg_t_NCLR = 2,
+	NARC_code_input_code_button_NCLR = 3,
+	NARC_code_input_code_cur_NCLR = 4,
+	NARC_code_input_code_NCGR = 5,
+	NARC_code_input_code_bg_NCGR = 6,
+	NARC_code_input_code_bg_t_NCGR = 7,
+	NARC_code_input_code_button_NCGR = 8,
+	NARC_code_input_code_cur_NCGR = 9,
+	NARC_code_input_code_bg_NSCR = 10,
+	NARC_code_input_code_bg_t_NSCR = 11,
+	NARC_code_input_code_NCER = 12,
+	NARC_code_input_code_button_NCER = 13,
+	NARC_code_input_code_cur_NCER = 14,
+	NARC_code_input_code_NANR = 15,
+	NARC_code_input_code_button_NANR = 16,
+	NARC_code_input_code_cur_NANR = 17
+};
+
+/* NARC_CODE_INPUT_NAIX_ */
+#endif

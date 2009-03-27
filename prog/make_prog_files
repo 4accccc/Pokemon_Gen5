@@ -116,8 +116,11 @@ SRCS	+=		$(SOUNDSRC) \
 				field/scrcmd.c \
 				field/eventwork.c \
 				field/scrcmd_work.c \
+				test/ariizumi/debug_pause.c \
 				system/wazatype_icon.c \
-				test/ariizumi/debug_pause.c
+				app/codein/codein.c \
+				app/codein/codein_pv.c \
+				app/codein/codein_disp.c
 
 
 #================================================

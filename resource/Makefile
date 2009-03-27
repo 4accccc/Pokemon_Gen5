@@ -48,6 +48,7 @@ SUBDIRS	=	wmi \
 			wifi_lobby_front_unionobj \
 			wifi_lobby_news \
 			shop \
+			code_input \
 			wazatype_icon \
 			field_weather \
 			field_weather_light \
