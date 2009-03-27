@@ -52,7 +52,8 @@ SUBDIRS	=	wmi \
 			wazatype_icon \
 			field_weather \
 			field_weather_light \
-			field_light
+			field_light \
+			particle/wazaeffect
 
 
 include $(RESOURCE_MACRO)
