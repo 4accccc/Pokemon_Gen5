@@ -39,6 +39,8 @@ extern BMPOAM_SYS_PTR BmpOam_Init(HEAPID heap_id, GFL_CLUNIT* p_unit);
 extern void BmpOam_Exit(BMPOAM_SYS_PTR bsp);
 extern BMPOAM_ACT_PTR BmpOam_ActorAdd(BMPOAM_SYS_PTR bsp, const BMPOAM_ACT_DATA *head);
 extern void BmpOam_ActorDel(BMPOAM_ACT_PTR bact);
+extern void BmpOam_ActorSetDrawEnable(BMPOAM_ACT_PTR bact, BOOL on_off);
+extern BOOL BmpOam_ActorGetDrawEnable(BMPOAM_ACT_PTR bact);
 extern void BmpOam_ActorBmpTrans(BMPOAM_ACT_PTR bact);
 extern void BmpOam_ActorGetPos(BMPOAM_ACT_PTR bact, s16 *x, s16 *y);
 extern void BmpOam_ActorSetPos(BMPOAM_ACT_PTR bact, s16 x, s16 y);

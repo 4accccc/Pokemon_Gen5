@@ -182,6 +182,39 @@ void BmpOam_ActorDel(BMPOAM_ACT_PTR bact)
 
 //--------------------------------------------------------------
 /**
+ * @brief   BMPOAMアクターの表示・非表示フラグ設定
+ *
+ * @param   bact		BMPOAMアクターへのポインタ
+ * @param   on_off		TRUE:表示　FALSE:非表示
+ */
+//--------------------------------------------------------------
+void BmpOam_ActorSetDrawEnable(BMPOAM_ACT_PTR bact, BOOL on_off)
+{
+	u8 x, y;
+	
+	for(y = 0; y < bact->act_num_y; y++){
+		for(x = 0; x < bact->act_num_x; x++){
+			GFL_CLACT_WK_SetDrawEnable(bact->cap[x + y*bact->act_num_x], on_off);
+		}
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   BMPOAMアクターの表示・非表示フラグ取得
+ *
+ * @param   bact		BMPOAMアクターへのポインタ
+ * 
+ * @retval   TRUE:表示　FALSE:非表示
+ */
+//--------------------------------------------------------------
+BOOL BmpOam_ActorGetDrawEnable(BMPOAM_ACT_PTR bact)
+{
+	return GFL_CLACT_WK_GetDrawEnable( bact->cap[0] );
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   BMPOAMアクターに関連付けされているBMPをVRAM転送
  *
  * @param   bact		BMPOAMアクターへのポインタ
