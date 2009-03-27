@@ -1,0 +1,236 @@
+//====================================================================
+//						common_scr
+//						共通・データ
+//====================================================================
+
+	.text
+	.include	"scr_seq_def.h"
+	.include	"../../../prog/include/msg/msg_c99.h"
+	.include	"../eventdata/zone_test00evc.h"
+	
+//--------------------------------------------------------------------
+//					     スクリプト本体
+//--------------------------------------------------------------------
+_EVENT_DATA		ev_talkobj_sample_01
+_EVENT_DATA		ev_talkobj_sample_02
+_EVENT_DATA		ev_talkobj_sample_03
+_EVENT_DATA		ev_talkobj_sample_04
+_EVENT_DATA		ev_talkobj_sample_05
+_EVENT_DATA		ev_talkobj_sample_06
+_EVENT_DATA		ev_talkobj_kabi32_00
+_EVENT_DATA		ev_talkobj_kabi32_01
+_EVENT_DATA		ev_talkobj_kabi32_02
+_EVENT_DATA		ev_talkobj_kabi32_03
+_EVENT_DATA		ev_talkobj_kabi32_04
+
+_EVENT_DATA_END //終了
+
+//--------------------------------------------------------------------
+//	話し掛け サンプル
+//--------------------------------------------------------------------
+ev_talkobj_sample_01:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------------
+//	話し掛け サンプル
+//--------------------------------------------------------------------
+ev_talkobj_sample_02:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_02
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------------
+//	話し掛け サンプル
+//--------------------------------------------------------------------
+ev_talkobj_sample_03:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_03
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------------
+//	話し掛け サンプル
+//--------------------------------------------------------------------
+ev_talkobj_sample_04:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_04
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------------
+//	話し掛け サンプル
+//--------------------------------------------------------------------
+ev_talkobj_sample_05:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_05
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------------
+//	話し掛け サンプル
+//--------------------------------------------------------------------
+ev_talkobj_sample_06:
+	_TALK_OBJ_PAUSE_ALL
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_06
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------------
+//	話し掛け KABI32 00
+//--------------------------------------------------------------------
+ev_talkobj_kabi32_00:
+	_TALK_OBJ_PAUSE_ALL
+	
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_07
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	
+	_OBJ_ANIME 0, anm_kabi32_00
+	_OBJ_ANIME_WAIT
+	
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+	
+//--------------------------------------------------------------------
+//	話し掛け サンプル KABI32 01
+//--------------------------------------------------------------------
+ev_talkobj_kabi32_01:
+	_TALK_OBJ_PAUSE_ALL
+	
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_07
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	
+	_OBJ_ANIME 6, anm_kabi32_01
+	_OBJ_ANIME_WAIT
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------------
+//	話し掛け サンプル KABI32 02
+//--------------------------------------------------------------------
+ev_talkobj_kabi32_02:
+	_TALK_OBJ_PAUSE_ALL
+	
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_07
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME 13, anm_kabi32_02
+	_OBJ_ANIME_WAIT
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------------
+//	話し掛け サンプル KABI32 03
+//--------------------------------------------------------------------
+ev_talkobj_kabi32_03:
+	_TALK_OBJ_PAUSE_ALL
+	
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_07
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	
+	_OBJ_ANIME 20, anm_kabi32_03
+	_OBJ_ANIME_WAIT
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------------
+//	話し掛け サンプル KABI32 04
+//--------------------------------------------------------------------
+ev_talkobj_kabi32_04:
+	_TALK_OBJ_PAUSE_ALL
+	
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_c99_07
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+	
+	_OBJ_ANIME 27, anm_kabi32_04
+	_OBJ_ANIME_WAIT
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------------
+//	アニメーションデータ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_kabi32_00
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL	anm_kabi32_01
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_DIR_U,2
+	_ANIME_DATA AC_DIR_D,2
+	_ANIME_DATA AC_DIR_L,2
+	_ANIME_DATA AC_DIR_R,2
+	_ANIME_DATA AC_DIR_U,3
+	_ANIME_DATA AC_DIR_D,3
+	_ANIME_DATA AC_DIR_L,3
+	_ANIME_DATA AC_DIR_R,3
+	_ANIME_DATA AC_DIR_U,5
+	_ANIME_DATA AC_DIR_D,5
+	_ANIME_DATA AC_DIR_L,5
+	_ANIME_DATA AC_DIR_R,5
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL	anm_kabi32_02
+	_ANIME_DATA AC_JUMP_U_2G_16F,1
+	_ANIME_DATA AC_JUMP_D_2G_16F,1
+	_ANIME_DATA AC_JUMP_L_2G_16F,1
+	_ANIME_DATA AC_JUMP_R_2G_16F,1
+	_ANIME_DATA AC_JUMP_R_2G_16F,1
+	_ANIME_DATA AC_JUMP_L_2G_16F,1
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL	anm_kabi32_03
+	_ANIME_DATA AC_JUMP_U_2G_16F,1
+	_ANIME_DATA AC_JUMP_D_2G_16F,1
+	_ANIME_DATA AC_JUMP_L_2G_16F,1
+	_ANIME_DATA AC_JUMP_R_2G_16F,1
+	_ANIME_DATA AC_JUMP_R_2G_16F,1
+	_ANIME_DATA AC_JUMP_L_2G_16F,1
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL	anm_kabi32_04
+	_ANIME_DATA AC_JUMP_U_2G_16F,1
+	_ANIME_DATA AC_JUMP_D_2G_16F,1
+	_ANIME_DATA AC_JUMP_L_2G_16F,1
+	_ANIME_DATA AC_JUMP_R_2G_16F,1
+	_ANIME_DATA AC_JUMP_R_2G_16F,1
+	_ANIME_DATA AC_JUMP_L_2G_16F,1
+	_ANIME_DATA ACMD_END,0
