@@ -27,6 +27,14 @@
 enum {
 	// 親名，ポケモン名などの処理で使い回す文字列バッファサイズ（海外版も考慮して長めに）
 	STRBUFFER_LEN = 32,
+
+	// 技覚えテーブルに関する定義
+	LEVELUPWAZA_OBOE_MAX = 22,	///<（技20個＋終端コード:1+4バイト境界補正:1）u16の配列でスタティックに確保
+//	LEVELUPWAZA_OBOE_END = 0xffff,
+//	LEVELUPWAZA_LEVEL_MASK = 0xfe00,
+//	LEVELUPWAZA_WAZA_MASK = 0x01ff,
+//	LEVELUPWAZA_LEVEL_SHIFT = 9,
+
 };
 
 /*--------------------------------------------------------------------------*/
@@ -811,7 +819,6 @@ void	PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp )
 		}
 		i++;
 	}
-
 
 	PPP_FastModeOff( ppp, flag );
 }

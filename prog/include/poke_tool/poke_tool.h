@@ -52,13 +52,6 @@
 // マーキングに関する定義
 #define POKEPARA_MARKING_ELEMS_MAX	( 6 )	///< マーキングに使用する記号の総数
 
-// 技覚えテーブルに関する定義
-#define LEVELUPWAZA_OBOE_MAX	( 22     )	///<（技20個＋終端コード:1+4バイト境界補正:1）u16の配列でスタティックに確保
-#define LEVELUPWAZA_OBOE_END	( 0xffff )
-#define LEVELUPWAZA_LEVEL_MASK  ( 0xfe00 )
-#define LEVELUPWAZA_WAZA_MASK   ( 0x01ff )
-#define LEVELUPWAZA_LEVEL_SHIFT (      9 )
-
 //PokeItemSetのrange引数定義
 #define	ITEM_RANGE_NORMAL		( 0 )	//通常確率
 #define	ITEM_RANGE_HUKUGAN		( 1 )	//特性ふくがん効果確率
