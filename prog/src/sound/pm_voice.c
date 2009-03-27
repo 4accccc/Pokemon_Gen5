@@ -434,8 +434,8 @@ static void stopWave( PMVOICE_PLAYER* voicePlayer )
  */
 //------------------------------------------------------------------
 u32		PMVOICE_Play
-		(	u32							pokeNum,		// ポケモンナンバー
-			u32							pokeFormNum,	// ポケモンフォームナンバー
+		(	u32							pokeNo,			// ポケモンナンバー
+			u32							pokeFormNo,		// ポケモンフォームナンバー
 			u8							pan,			// 定位(L:0 - 64 - 127:R)
 			BOOL						chorus,			// コーラス使用フラグ
 			int							chorusVolOfs,	// コーラスボリューム差
@@ -447,10 +447,10 @@ u32		PMVOICE_Play
 	PMVOICE_PLAYER* voicePlayer;
 	u16		voicePlayerIdx;
 	u32		waveIdx;
-	BOOL	result;
+	BOOL	waveLoadFlag;
 
 	// 波形IDX取得
-	pmvSys.CallBackGetWaveIdx(pokeNum, pokeFormNum, &waveIdx);
+	pmvSys.CallBackGetWaveIdx(pokeNo, pokeFormNo, &waveIdx);
 
 	// 再生プレーヤー取得
 	voicePlayerIdx = getPlayerIdx();
@@ -464,13 +464,17 @@ u32		PMVOICE_Play
 		if(voicePlayer->waveData == NULL ){ return 0; }	// バッファポインタ不整合
 	}
 	
-	// 波形データ取得(TRUE: コールバック内で生成された)
-	result = pmvSys.CallBackCustomWave( pokeNum, pokeFormNum,
-										&voicePlayer->waveData, 
-										&voicePlayer->waveSize, 
-										&voicePlayer->waveRate, 
-										&voicePlayer->speed);
-	if( result == FALSE ){ loadWave(voicePlayer, waveIdx); }
+	// 波形データ取得
+	waveLoadFlag = FALSE;
+	if( waveCustom == TRUE ){
+		// 波形データカスタマイズ(TRUE: コールバック内で生成された)
+		waveLoadFlag = pmvSys.CallBackCustomWave(	pokeNo, pokeFormNo,
+													&voicePlayer->waveData, 
+													&voicePlayer->waveSize, 
+													&voicePlayer->waveRate, 
+													&voicePlayer->speed);
+	}
+	if( waveLoadFlag == FALSE ){ loadWave(voicePlayer, waveIdx); }
 
 	if( reverse ){ reverseBuf(voicePlayer->waveData, voicePlayer->waveSize); }
 

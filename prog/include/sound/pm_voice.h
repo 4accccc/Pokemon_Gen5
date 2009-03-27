@@ -26,12 +26,12 @@ enum {
  */
 //------------------------------------------------------------------
 // 波形IDX取得用コールバック
-typedef void (PMVOICE_CB_GET_WVIDX)(	u32 pokeNum, 		// [in]ポケモンナンバー
-										u32 pokeFormNum,	// [in]ポケモンフォームナンバー
+typedef void (PMVOICE_CB_GET_WVIDX)(	u32 pokeNo, 		// [in]ポケモンナンバー
+										u32 pokeFormNo,		// [in]ポケモンフォームナンバー
 										u32* waveIdx );		// [out]波形IDX
 // 波形カスタマイズコールバック(TRUE: コールバック内で生成)　
-typedef BOOL (PMVOICE_CB_GET_WVDAT)(	u32 pokeNum,		// [in]ポケモンナンバー
-										u32 pokeFormNum,	// [in]ポケモンフォームナンバー
+typedef BOOL (PMVOICE_CB_GET_WVDAT)(	u32 pokeNo,			// [in]ポケモンナンバー
+										u32 pokeFormNo,		// [in]ポケモンフォームナンバー
 										void** wave,		// [out]波形データ
 										u32* size,			// [out]波形サイズ
 										int* rate,			// [out]波形再生レート
@@ -76,8 +76,8 @@ extern void	PMVOICE_PlayerHeapRelease( void );		// プレーヤー用waveバッファ開放
  */
 //------------------------------------------------------------------
 extern u32	PMVOICE_Play
-			(	u32							pokeNum,		// ポケモンナンバー
-				u32							pokeFormNum,	// ポケモンフォームナンバー
+			(	u32							pokeNo,			// ポケモンナンバー
+				u32							pokeFormNo,		// ポケモンフォームナンバー
 				u8							pan,			// 定位(L:0 - 64 - 127:R)
 				BOOL						chorus,			// コーラス使用フラグ
 				int							chorusVolOfs,	// コーラスボリューム差

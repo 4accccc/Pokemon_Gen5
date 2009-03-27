@@ -8,6 +8,7 @@
 //============================================================================================
 #include "gflib.h"
 
+#include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 #include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 
@@ -21,17 +22,23 @@
  *
  */
 //============================================================================================
-void PMWB_GetVoiceWaveIdx(	u32 pokeNum, 		// [in]ポケモンナンバー
-							u32 pokeFormNum,	// [in]ポケモンフォームナンバー
+void PMWB_GetVoiceWaveIdx(	u32 pokeNo, 		// [in]ポケモンナンバー
+							u32 pokeFormNo,		// [in]ポケモンフォームナンバー
 							u32* waveIdx )		// [out]波形IDX
 {
-	if(( pokeNum < PMVOICE_START)&&( pokeNum > PMVOICE_END) ){
+	if(( pokeNo < PMVOICE_START)&&( pokeNo > PMVOICE_END) ){
 		//指定範囲外
 		*waveIdx = PMVOICE_POKE001;
 		return;
 	}
+	if( pokeNo == MONSNO_EURISU ){					//シェイミの時のみ、フォルムチェック
+		if( pokeFormNo == FORMNO_SHEIMI_FLOWER ){	//スカイフォルム
+			*waveIdx = WAVE_ARC_PV516_SKY;
+			return;
+		}
+	}
 	// 波形ＩＤＸ取得
-	*waveIdx = (pokeNum-1) + PMVOICE_POKE001;	// 1origin, PMVOICE_POKE001～
+	*waveIdx = (pokeNo-1) + PMVOICE_POKE001;	// 1origin, PMVOICE_POKE001～
 }
 
 //============================================================================================
@@ -43,8 +50,8 @@ void PMWB_GetVoiceWaveIdx(	u32 pokeNum, 		// [in]ポケモンナンバー
  *
  */
 //============================================================================================
-BOOL PMWB_CustomVoiceWave(	u32 pokeNum,		// [in]ポケモンナンバー
-							u32 pokeFormNum,	// [in]ポケモンフォームナンバー
+BOOL PMWB_CustomVoiceWave(	u32 pokeNo,			// [in]ポケモンナンバー
+							u32 pokeFormNo,		// [in]ポケモンフォームナンバー
 							void** wave,		// [out]波形データ
 							u32* size,			// [out]波形サイズ
 							int* rate,			// [out]波形再生レート
