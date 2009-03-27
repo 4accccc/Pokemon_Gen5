@@ -30,7 +30,7 @@
 
 #include "sound/snd_status.h"
 #include "sound/pm_sndsys.h"
-#include "sound/pm_voice.h"
+#include "sound/pm_wb_voice.h"
 
 #include "arc/soundtest.naix"
 //============================================================================================
@@ -693,13 +693,14 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			OS_Printf("pressed voice num_set\n");
 			break;
 		case SOUNDTEST_TPEV_VOICE_PLAY:
-			PMVOICE_Play(sw->voiceNum, PMVOICE_MODE_NORMAL | PMVOICE_MODE_CHORUS);
+			PMWB_PlayVoice(sw->voiceNum, 0);
 			break;
 		case SOUNDTEST_TPEV_VOICE_STOP:
-			PMVOICE_Play(sw->voiceNum, PMVOICE_MODE_REVERSE | PMVOICE_MODE_CHORUS);
+			//PMVOICE_Play(sw->voiceNum, PMVOICE_MODE_REVERSE | PMVOICE_MODE_CHORUS);
+			PMWB_PlayVoiceChorus(sw->voiceNum, 0);
 			break;
 		case SOUNDTEST_TPEV_VOICE_PAUSE:
-			//OS_Printf("pressed voice pause\n");
+			PMWB_PlayVoiceRev(sw->voiceNum, 0);
 			break;
 		case SOUNDTEST_TPEV_VOICE_WINDOW:
 			break;

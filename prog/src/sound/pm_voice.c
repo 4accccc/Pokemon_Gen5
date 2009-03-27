@@ -1,14 +1,13 @@
 //============================================================================================
 /**
- * @file	pm_sndsys.c
- * @brief	
+ * @file	pm_voice.c
+ * @brief	ポケモン鳴き声波形再生基本システム	
  * @author	
  * @date	
  */
 //============================================================================================
 #include "gflib.h"
 
-#include "sound/pm_sndsys.h"
 #include "sound/pm_voice.h"
 //============================================================================================
 /**
@@ -25,28 +24,41 @@
  *
  */
 //============================================================================================
+#define PMVOICE_WAVESIZE_MAX	(26000)
+
+#define VOICE_RATE_DEFAULT		(13379)
+#define VOICE_SPEED_DEFAULT		(25825)	//seqデータ(pm_voice.sseq)内((u16)0x1c)を抜粋
+
+#define VOICE_VOLUME			(120)	//seq設定(sound_data.sarc)内(PV_VOL)を参照
 //------------------------------------------------------------------
 /**
- * @brief	鳴き声プレーヤー定義
+ * @brief	波形プレーヤー定義
  */
 //------------------------------------------------------------------
 typedef struct {
 	BOOL				active;
-	NNSSndWaveOutHandle waveHandle;	
-	u8					volume;
-	u8					channel;
 	void*				waveData;
 	u32					waveSize;
-	BOOL				waveReferred;
+	int					waveRate;
+
+	NNSSndWaveOutHandle waveHandle;	
+	NNSSndWaveOutHandle waveHandleSub;	
+	u8					volume;
+	u8					volumeSub;
+	u8					channel:4;
+	u8					channelSub:4;
+	int					speed;
+	int					speedSub;
+	u8					pan;
+	BOOL				subWaveUse;
 }PMVOICE_PLAYER;
 
-#define PMVOICE_ERROR	(0xffffffff)
 //------------------------------------------------------------------
 /**
  * @brief	システム定義
  */
 //------------------------------------------------------------------
-#define VOICE_PLAYER_NUM (8)
+#define VOICE_PLAYER_NUM (3)
 
 typedef struct {
 	HEAPID			heapID;
@@ -54,6 +66,8 @@ typedef struct {
 	u16				voicePlayerRef;
 	u16				voicePlayerEnableNum;
 	BOOL			voicePlayerHeapReserveFlag;
+	PMVOICE_CB_GET_WVIDX*	CallBackGetWaveIdx;
+	PMVOICE_CB_GET_WVDAT*	CallBackCustomWave;
 }PMVOICE_SYS;
 
 //------------------------------------------------------------------
@@ -62,7 +76,8 @@ typedef struct {
  *				※確保するチャンネルの使用順
  */
 //------------------------------------------------------------------
-static const u16 useChannnelPriority[16] = { 15, 14, 13, 12, 11, 10, 9, 8 };
+static const u16 useChannnelPriority[VOICE_PLAYER_NUM][2] = 
+	{ {15, 14}, {13, 12}, {11, 10} };
 
 //============================================================================================
 /**
@@ -71,7 +86,7 @@ static const u16 useChannnelPriority[16] = { 15, 14, 13, 12, 11, 10, 9, 8 };
  *
  *
  *
- * @brief	ポケモン鳴き声再生（波形再生）
+ * @brief	ポケモン鳴き声波形プレーヤー
  *
  *
  *
@@ -81,8 +96,13 @@ static const u16 useChannnelPriority[16] = { 15, 14, 13, 12, 11, 10, 9, 8 };
 //============================================================================================
 static PMVOICE_SYS pmvSys;
 
+static u16	getPlayerIdx( void );
+static void initPlayerWork( PMVOICE_PLAYER* voicePlayer );
+static BOOL loadWave( PMVOICE_PLAYER* voicePlayer, int waveNo );
 static BOOL playWave( PMVOICE_PLAYER* voicePlayer );
 static void stopWave( PMVOICE_PLAYER* voicePlayer );
+
+static void reverseBuf( u8* buf, u32 size );
 //============================================================================================
 /**
  *
@@ -98,7 +118,11 @@ static void stopWave( PMVOICE_PLAYER* voicePlayer );
  * @brief	初期化
  */
 //============================================================================================
-void	PMVOICE_Init( HEAPID heapID )
+void	PMVOICE_Init
+		( HEAPID heapID,							// 使用heapID 
+		  PMVOICE_CB_GET_WVIDX* CallBackGetWaveIdx,	// waveIdx取得用コールバック
+		  PMVOICE_CB_GET_WVDAT* CallBackCustomWave 	// 波形カスタマイズコールバック
+		)
 {
 	PMVOICE_PLAYER* voicePlayer;
 	int i;
@@ -107,16 +131,34 @@ void	PMVOICE_Init( HEAPID heapID )
 
 	for( i=0; i<VOICE_PLAYER_NUM; i++ ){
 		voicePlayer = &pmvSys.voicePlayer[i];
+
 		voicePlayer->active = FALSE;
-		voicePlayer->volume = 0;
-		voicePlayer->channel = useChannnelPriority[i];
-		voicePlayer->waveData = NULL;
-		voicePlayer->waveSize = 0;
-		voicePlayer->waveReferred = FALSE;
+		voicePlayer->channel = useChannnelPriority[i][0];
+		voicePlayer->channelSub = useChannnelPriority[i][1];
+		initPlayerWork(voicePlayer);
 	}
 	pmvSys.voicePlayerRef = 0;
 	pmvSys.voicePlayerEnableNum = VOICE_PLAYER_NUM;
 	pmvSys.voicePlayerHeapReserveFlag = FALSE;
+
+	pmvSys.CallBackGetWaveIdx = CallBackGetWaveIdx;
+	pmvSys.CallBackCustomWave = CallBackCustomWave;
+}
+
+//============================================================================================
+/**
+ * @brief	リセット
+ */
+//============================================================================================
+void	PMVOICE_Reset( void )
+{
+	PMVOICE_PLAYER* voicePlayer;
+	int i;
+
+	for( i=0; i<VOICE_PLAYER_NUM; i++ ){
+		voicePlayer = &pmvSys.voicePlayer[i];
+		if(voicePlayer->active == TRUE){ stopWave(voicePlayer); }
+	}
 }
 
 //============================================================================================
@@ -127,13 +169,22 @@ void	PMVOICE_Init( HEAPID heapID )
 void	PMVOICE_Main()
 {
 	PMVOICE_PLAYER* voicePlayer;
+	BOOL result, resultSub;
 	int i;
 
 	for( i=0; i<pmvSys.voicePlayerEnableNum; i++ ){
 		voicePlayer = &pmvSys.voicePlayer[i];
 
 		if(voicePlayer->active == TRUE){
-			if(NNS_SndWaveOutIsPlaying(voicePlayer->waveHandle) == FALSE){ 
+			result = NNS_SndWaveOutIsPlaying(voicePlayer->waveHandle);
+
+			if( voicePlayer->subWaveUse == TRUE ){
+				resultSub = NNS_SndWaveOutIsPlaying(voicePlayer->waveHandleSub);
+			} else {
+				resultSub = FALSE;
+			}
+
+			if( (result == FALSE)&&(resultSub == FALSE) ){
 				stopWave(voicePlayer); 
 			}
 		}
@@ -155,10 +206,10 @@ void	PMVOICE_Exit( void )
 
 		if(voicePlayer->active == TRUE){ stopWave(voicePlayer); }
 		// 未開放バッファがあれば開放
-		if(voicePlayer->waveData != NULL){ 
-			GFL_HEAP_FreeMemory(voicePlayer->waveData); 
-			voicePlayer->waveData = NULL;
-		}
+		if(voicePlayer->waveData != NULL){ GFL_HEAP_FreeMemory(voicePlayer->waveData); }
+
+		voicePlayer->active = FALSE;
+		initPlayerWork(voicePlayer);
 	}
 }
 
@@ -167,13 +218,14 @@ void	PMVOICE_Exit( void )
  * @brief	プレーヤー用waveバッファ事前確保
  */
 //============================================================================================
-#define PMVOICE_WAVESIZE_MAX	(26000)
 void	PMVOICE_PlayerHeapReserve( int num )
 {
 	PMVOICE_PLAYER* voicePlayer;
 	int i;
 
-	PMVOICE_Stop( 0xffff );
+	PMVOICE_Reset();
+
+	if( num > VOICE_PLAYER_NUM ){ num = VOICE_PLAYER_NUM; }
 
 	for( i=0; i<num; i++ ){ 
 		voicePlayer = &pmvSys.voicePlayer[i];
@@ -193,7 +245,7 @@ void	PMVOICE_PlayerHeapRelease( void )
 	PMVOICE_PLAYER* voicePlayer;
 	int i;
 
-	PMVOICE_Stop( 0xffff );
+	PMVOICE_Reset();
 
 	for( i=0; i<pmvSys.voicePlayerEnableNum; i++ ){ 
 		voicePlayer = &pmvSys.voicePlayer[i];
@@ -221,7 +273,7 @@ void	PMVOICE_PlayerHeapRelease( void )
  * @brief	プレーヤーＩＤＸ取得
  */
 //------------------------------------------------------------------
-static u16 getEmptyPlayer( void )
+static u16 getPlayerIdx( void )
 {
 	PMVOICE_PLAYER* voicePlayer;
 	u16 voicePlayerIdx = pmvSys.voicePlayerRef;
@@ -239,17 +291,32 @@ static u16 getEmptyPlayer( void )
 
 //------------------------------------------------------------------
 /**
+ * @brief	プレーヤーワーク初期化
+ */
+//------------------------------------------------------------------
+static void initPlayerWork( PMVOICE_PLAYER* voicePlayer )
+{
+	voicePlayer->waveData = NULL;
+	voicePlayer->waveSize = 0;
+	voicePlayer->waveRate = VOICE_RATE_DEFAULT;
+	voicePlayer->volume = 0;
+	voicePlayer->volumeSub = 0;
+	voicePlayer->speed = VOICE_SPEED_DEFAULT;
+	voicePlayer->speedSub = VOICE_SPEED_DEFAULT;
+	voicePlayer->pan = 64;
+	voicePlayer->subWaveUse = FALSE;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	波形ロード
  */
 //------------------------------------------------------------------
-static BOOL loadWave( PMVOICE_PLAYER* voicePlayer, int waveNo, int reverseFlag )
+static BOOL loadWave( PMVOICE_PLAYER* voicePlayer, int waveNo )
 {
-	const NNSSndSeqParam* seqInfo;
 	const NNSSndArcWaveArcInfo* waveArcInfo;
 	u32 waveFileSize;
 	BOOL result;
-
-	if(( waveNo < PMVOICE_START)&&( waveNo > PMVOICE_END) ){ return FALSE; }	//指定範囲外
 
 	// 波形アーカイブ情報構造体ポインタを取得
 	waveArcInfo = NNS_SndArcGetWaveArcInfo(waveNo);
@@ -259,38 +326,14 @@ static BOOL loadWave( PMVOICE_PLAYER* voicePlayer, int waveNo, int reverseFlag )
 	waveFileSize = NNS_SndArcGetFileSize(waveArcInfo->fileId);
 	if( waveFileSize == 0 ){ return FALSE; }	// ファイルＩＤ無効
 
-	// 波形データバッファ確保
-	if( pmvSys.voicePlayerHeapReserveFlag == FALSE ){
-		voicePlayer->waveData = GFL_HEAP_AllocClearMemory(pmvSys.heapID, waveFileSize);
-	} else {
-		if(voicePlayer->waveData == NULL ){ return FALSE; }	// バッファポインタ不整合
-	}
-
 	// 波形データ読み込み
 	result = NNS_SndArcReadFile(waveArcInfo->fileId, voicePlayer->waveData, waveFileSize, 0);
 	if( result == -1 ){ return FALSE; }				// 読み込み失敗
 	if( result != waveFileSize ){ return FALSE; }	// 読み込みサイズ不整合
 
-	if( reverseFlag ){
-		//逆再生用にデータを逆順に入れ替える( [0]-[MAX]、[1]-[MAX-1]... )
-		u8* buf = voicePlayer->waveData;
-		u8	data;
-		int i;
-
-		for( i=0; i<(waveFileSize/2); i++ ){
-			data = buf[i];
-			buf[i] = buf[waveFileSize-1-i];
-			buf[waveFileSize-1-i] = data;
-		}
-	}
 	voicePlayer->waveSize = waveFileSize;
-
-	// シーケンス情報構造体ポインタを取得
-	seqInfo = NNS_SndArcGetSeqParam(SEQ_PV);
-	voicePlayer->volume = seqInfo->volume;
-
-	// 外部参照フラグリセット
-	voicePlayer->waveReferred = FALSE;
+	voicePlayer->waveRate = VOICE_RATE_DEFAULT;
+	voicePlayer->speed = VOICE_SPEED_DEFAULT;
 
 	return TRUE;
 }
@@ -300,9 +343,6 @@ static BOOL loadWave( PMVOICE_PLAYER* voicePlayer, int waveNo, int reverseFlag )
  * @brief	波形再生
  */
 //------------------------------------------------------------------
-#define VOICE_RATE_DEFAULT	(13379)
-#define VOICE_SPEED_DEFAULT (25825)	//seqデータ(pm_voice.sseq)内((u16)0x1c)を抜粋
-
 static BOOL playWave( PMVOICE_PLAYER* voicePlayer )
 {
 	BOOL result;
@@ -319,13 +359,31 @@ static BOOL playWave( PMVOICE_PLAYER* voicePlayer )
 									voicePlayer->waveData,		// 波形データアドレス
 									FALSE, 0,					// ループフラグ,開始位置
 									voicePlayer->waveSize,		// 波形データサンプル数
-									VOICE_RATE_DEFAULT,			// 波形データサンプリングレート
+									voicePlayer->waveRate,		// 波形データサンプリングレート
 									voicePlayer->volume,		// 再生volume
-									VOICE_SPEED_DEFAULT,		// 再生speed
-									64 );						// 再生pan
-	if( result == TRUE ){ voicePlayer->active = TRUE; }
+									voicePlayer->speed,			// 再生speed
+									voicePlayer->pan );			// 再生pan
+	if( result == FALSE ){ return FALSE; }
 
-	return result;
+	if( voicePlayer->subWaveUse == TRUE ){
+		// 使用チャンネル確保
+		voicePlayer->waveHandleSub = NNS_SndWaveOutAllocChannel(voicePlayer->channelSub);		
+		if( voicePlayer->waveHandleSub == NNS_SND_WAVEOUT_INVALID_HANDLE ){ return FALSE; } 
+
+		result = NNS_SndWaveOutStart(	voicePlayer->waveHandleSub,	// 波形再生ハンドル
+										NNS_SND_WAVE_FORMAT_PCM8,	// 波形データフォーマット
+										voicePlayer->waveData,		// 波形データアドレス
+										FALSE, 0,					// ループフラグ,開始位置
+										voicePlayer->waveSize,		// 波形データサンプル数
+										voicePlayer->waveRate,		// 波形データサンプリングレート
+										voicePlayer->volumeSub,		// 再生volume
+										voicePlayer->speedSub,		// 再生speed
+										voicePlayer->pan );			// 再生pan
+		if( result == FALSE ){ return FALSE; }
+	}
+	voicePlayer->active = TRUE;
+
+	return TRUE;
 }
 	
 //------------------------------------------------------------------
@@ -337,17 +395,24 @@ static void stopWave( PMVOICE_PLAYER* voicePlayer )
 {
 	NNS_SndWaveOutStop(voicePlayer->waveHandle);
 	NNS_SndWaveOutWaitForChannelStop(voicePlayer->waveHandle);
-
 	// 使用チャンネル開放
 	NNS_SndWaveOutFreeChannel(voicePlayer->waveHandle);
+
+	if( voicePlayer->subWaveUse == TRUE ){
+		NNS_SndWaveOutStop(voicePlayer->waveHandleSub);
+		NNS_SndWaveOutWaitForChannelStop(voicePlayer->waveHandleSub);
+		// 使用チャンネル開放
+		NNS_SndWaveOutFreeChannel(voicePlayer->waveHandleSub);
+	}
+
 	// 波形データバッファ開放
-	if((voicePlayer->waveData != NULL)&&(voicePlayer->waveReferred == FALSE)){
+	if(voicePlayer->waveData != NULL){
 		if( pmvSys.voicePlayerHeapReserveFlag == FALSE ){
 			GFL_HEAP_FreeMemory(voicePlayer->waveData); 
-			voicePlayer->waveData = NULL;
 		}
 	}
 	voicePlayer->active = FALSE;
+	initPlayerWork(voicePlayer);
 }
 
 
@@ -368,40 +433,59 @@ static void stopWave( PMVOICE_PLAYER* voicePlayer )
  * @brief	鳴き声再生関数
  */
 //------------------------------------------------------------------
-u32		PMVOICE_Play( u32 pokeNum, u16 option )
+u32		PMVOICE_Play
+		(	u32							pokeNum,		// ポケモンナンバー
+			u32							pokeFormNum,	// ポケモンフォームナンバー
+			u8							pan,			// 定位(L:0 - 64 - 127:R)
+			BOOL						chorus,			// コーラス使用フラグ
+			int							chorusVolOfs,	// コーラスボリューム差
+			int							chorusSpOfs,	// 再生速度差
+			BOOL						waveCustom,		// 波形カスタマイズ有効フラグ
+			BOOL						reverse			// 逆再生フラグ
+		)		
 {
 	PMVOICE_PLAYER* voicePlayer;
-	u32 voicePlayerIdxBit = 0;
-	u16 voicePlayerIdx;
+	u16		voicePlayerIdx;
+	u32		waveIdx;
+	BOOL	result;
 
-	voicePlayerIdx = getEmptyPlayer();
-	if(voicePlayerIdx == PMVOICE_ERROR){ return 0; }
+	// 波形IDX取得
+	pmvSys.CallBackGetWaveIdx(pokeNum, pokeFormNum, &waveIdx);
 
+	// 再生プレーヤー取得
+	voicePlayerIdx = getPlayerIdx();
 	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
-	loadWave(voicePlayer, (pokeNum-1) + PMVOICE_POKE001, (option & PMVOICE_MODE_REVERSE));
-	playWave(voicePlayer);
-	voicePlayerIdxBit |= (0x0001<<voicePlayerIdx);
-	
-	if(option & PMVOICE_MODE_CHORUS){
-		PMVOICE_PLAYER* voicePlayerSub;
-		u16 voicePlayerIdxSub = getEmptyPlayer();
-		if(voicePlayerIdxSub == PMVOICE_ERROR){ return voicePlayerIdxBit; }
 
-		voicePlayerSub = &pmvSys.voicePlayer[voicePlayerIdxSub];
-		voicePlayerSub->waveData = voicePlayer->waveData;
-		voicePlayerSub->waveSize = voicePlayer->waveSize;
-		voicePlayerSub->waveReferred = FALSE;
-		voicePlayerSub->volume = voicePlayer->volume -10;
-
-		// 外部参照フラグセット
-		voicePlayer->waveReferred = TRUE;
-
-		playWave(voicePlayerSub);
-		voicePlayerIdxBit |= (0x0001<<voicePlayerIdxSub);
+	// 波形データバッファ確保
+	if( pmvSys.voicePlayerHeapReserveFlag == FALSE ){
+		// 常に最大値で確保（種別によって異なると潜在バグを生む可能性があるため）
+		voicePlayer->waveData = GFL_HEAP_AllocClearMemory(pmvSys.heapID, PMVOICE_WAVESIZE_MAX);
+	} else {
+		if(voicePlayer->waveData == NULL ){ return 0; }	// バッファポインタ不整合
 	}
+	
+	// 波形データ取得(TRUE: コールバック内で生成された)
+	result = pmvSys.CallBackCustomWave( pokeNum, pokeFormNum,
+										&voicePlayer->waveData, 
+										&voicePlayer->waveSize, 
+										&voicePlayer->waveRate, 
+										&voicePlayer->speed);
+	if( result == FALSE ){ loadWave(voicePlayer, waveIdx); }
 
-	OS_Printf("voicePlayerIdxBit = %x\n",voicePlayerIdxBit);
-	return voicePlayerIdxBit;
+	if( reverse ){ reverseBuf(voicePlayer->waveData, voicePlayer->waveSize); }
+
+	// 各種設定
+	voicePlayer->volume = VOICE_VOLUME;
+	voicePlayer->pan = pan;
+	voicePlayer->subWaveUse = chorus;
+	voicePlayer->volumeSub = voicePlayer->volume + chorusVolOfs;
+	voicePlayer->speedSub = voicePlayer->speed + chorusSpOfs;
+
+	// 波形再生
+	if( playWave(voicePlayer) == FALSE ){ stopWave(voicePlayer); };
+	
+	OS_Printf("voicePlayerIdx = %x\n",voicePlayerIdx);
+	return voicePlayerIdx;
 }
 
 //------------------------------------------------------------------
@@ -409,18 +493,12 @@ u32		PMVOICE_Play( u32 pokeNum, u16 option )
  * @brief	鳴き声停止関数
  */
 //------------------------------------------------------------------
-void	PMVOICE_Stop( u32 voicePlayerIdxBit )
+void	PMVOICE_Stop( u32 voicePlayerIdx )
 {
 	PMVOICE_PLAYER* voicePlayer;
-	BOOL req;
-	int i;
 
-	for( i=0; i<pmvSys.voicePlayerEnableNum; i++ ){ 
-		voicePlayer = &pmvSys.voicePlayer[i];
-		req = (voicePlayerIdxBit >> i) & 0x0001;
-
-		if((voicePlayer->active == TRUE)&&(req)){ stopWave(voicePlayer); }
-	}
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	if(voicePlayer->active == TRUE){ stopWave(voicePlayer); }
 }
 
 //------------------------------------------------------------------
@@ -428,66 +506,38 @@ void	PMVOICE_Stop( u32 voicePlayerIdxBit )
  * @brief	鳴き声終了検出
  */
 //------------------------------------------------------------------
-BOOL	PMVOICE_CheckPlay( u32 voicePlayerIdxBit )
+BOOL	PMVOICE_CheckPlay( u32 voicePlayerIdx )
 {
 	PMVOICE_PLAYER* voicePlayer;
-	BOOL req;
+
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	return voicePlayer->active;
+}
+
+
+
+
+
+//============================================================================================
+/**
+ *
+ *
+ * @brief	
+ *
+ *
+ */
+//============================================================================================
+static void reverseBuf( u8* buf, u32 size )
+{
+	u8	data;
 	int i;
 
-	if(voicePlayerIdxBit){ return FALSE; } 
-
-	for( i=0; i<pmvSys.voicePlayerEnableNum; i++ ){ 
-		voicePlayer = &pmvSys.voicePlayer[i];
-		req = (voicePlayerIdxBit >> i) & 0x0001;
-
-		if(voicePlayer->active == TRUE){ return TRUE; }	// 動作中
+	//逆再生用にデータを逆順に入れ替える( [0]-[MAX]、[1]-[MAX-1]... )
+	for( i=0; i<(size/2); i++ ){
+		data = buf[i];
+		buf[i] = buf[size-1-i];
+		buf[size-1-i] = data;
 	}
-	return FALSE;
 }
-
-
-
-
-
-#if 0
-//============================================================================================
-/**
- *
- *
- * @brief	システムプレーヤーを使用した鳴き声サウンド関数（各appから呼び出される）
- *
- *
- */
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief	鳴き声再生関数
- */
-//------------------------------------------------------------------
-void	PMVOICE_PlayVoiceByPlayer( u32 pokeNum )
-{
-	PMSND_PLAYER_DATA* ppd = &systemPlayerUnit.playerDataArray[PLAYER_SEVOICE];
-
-	NNS_SndPlayerStopSeq(&ppd->sndHandle, 0);
-	// プレイヤー使用チャンネル設定
-	NNS_SndPlayerSetAllocatableChannel(ppd->playerNo, PLAYER_PMVOICE_CH);
-	ppd->soundIdx = pokeNum;
-
-	NNS_SndArcPlayerStartSeqEx(&ppd->sndHandle, ppd->playerNo, pokeNum, 127, SEQ_PV);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	鳴き声終了検出
- */
-//------------------------------------------------------------------
-BOOL	PMVOICE_CheckPlayByPlayer( void )
-{
-	return PMSND_CheckPlaySE();	//現状はプレーヤーが同じに設定してあるので同じ動作
-}
-#endif
-
-
-
 
 

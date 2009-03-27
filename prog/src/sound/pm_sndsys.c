@@ -776,5 +776,46 @@ void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan )
 
 
 
+#if 0
+//============================================================================================
+/**
+ *
+ *
+ * @brief	システムプレーヤーを使用した鳴き声サウンド関数（各appから呼び出される）
+ *
+ *
+ */
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	鳴き声再生関数
+ */
+//------------------------------------------------------------------
+void	PMSND_PlayVoiceByPlayer( u32 pokeNum )
+{
+	PMSND_PLAYER_DATA* ppd = &systemPlayerUnit.playerDataArray[PLAYER_SEVOICE];
+
+	NNS_SndPlayerStopSeq(&ppd->sndHandle, 0);
+	// プレイヤー使用チャンネル設定
+	NNS_SndPlayerSetAllocatableChannel(ppd->playerNo, PLAYER_PMVOICE_CH);
+	ppd->soundIdx = pokeNum;
+
+	NNS_SndArcPlayerStartSeqEx(&ppd->sndHandle, ppd->playerNo, pokeNum, 127, SEQ_PV);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	鳴き声終了検出
+ */
+//------------------------------------------------------------------
+BOOL	PMSND_CheckPlayByPlayer( void )
+{
+	return PMSND_CheckPlaySE();	//現状はプレーヤーが同じに設定してあるので同じ動作
+}
+#endif
+
+
+
+
 
 

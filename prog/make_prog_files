@@ -4,7 +4,8 @@
 SOUNDSRC = 		sound/snd_strm.c \
 				sound/sound_manager.c \
 				sound/pm_sndsys.c \
-				sound/pm_voice.c
+				sound/pm_voice.c \
+				sound/pm_wb_voice.c
 #				sound/snd_system.c \
 #				sound/snd_tool.c \
 #				sound/snd_play.c \

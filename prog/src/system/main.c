@@ -27,6 +27,7 @@
 
 #include "sound\pm_sndsys.h"
 #include "sound\pm_voice.h"
+#include "sound\pm_wb_voice.h"
 #ifdef PM_DEBUG
 #include "test/performance.h"
 #include "test/debug_pause.h"
@@ -187,7 +188,7 @@ static	void	GameInit(void)
     //サウンドの設定
 	PMSND_Init();
     //鳴き声システムの設定
-	PMVOICE_Init(GFL_HEAPID_APP);
+	PMVOICE_Init(GFL_HEAPID_APP, PMWB_GetVoiceWaveIdx, PMWB_CustomVoiceWave);
 	//サウンドストリーミング再生システム
 	SND_STRM_Init(GFL_HEAPID_SYSTEM);
 

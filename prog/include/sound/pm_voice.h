@@ -1,7 +1,7 @@
 //============================================================================================
 /**
  * @file	pm_voice.h
- * @brief	ポケモン鳴き声再生システム
+ * @brief	ポケモン鳴き声波形再生基本システム	
  * @author	
  * @date	
  */
@@ -22,12 +22,20 @@ enum {
 
 //------------------------------------------------------------------
 /**
- * @brief	データＩＮＤＥＸ有効範囲
+ * @brief	カスタマイズコールバック用定義
  */
 //------------------------------------------------------------------
-#define PMVOICE_START	(BANK_PV001)
-#define PMVOICE_END		(BANK_PV516_SKY)
-#define PMVOICE_POKE001	(PMVOICE_START)
+// 波形IDX取得用コールバック
+typedef void (PMVOICE_CB_GET_WVIDX)(	u32 pokeNum, 		// [in]ポケモンナンバー
+										u32 pokeFormNum,	// [in]ポケモンフォームナンバー
+										u32* waveIdx );		// [out]波形IDX
+// 波形カスタマイズコールバック(TRUE: コールバック内で生成)　
+typedef BOOL (PMVOICE_CB_GET_WVDAT)(	u32 pokeNum,		// [in]ポケモンナンバー
+										u32 pokeFormNum,	// [in]ポケモンフォームナンバー
+										void** wave,		// [out]波形データ
+										u32* size,			// [out]波形サイズ
+										int* rate,			// [out]波形再生レート
+										int* speed );		// [out]波形再生スピード
 
 //============================================================================================
 /**
@@ -36,7 +44,12 @@ enum {
  *
  */
 //============================================================================================
-extern void	PMVOICE_Init( HEAPID heapID );
+extern void	PMVOICE_Init
+			( HEAPID heapID,							// 使用heapID 
+			  PMVOICE_CB_GET_WVIDX* CallBackGetWaveIdx,	// 波形IDX取得用コールバック
+			  PMVOICE_CB_GET_WVDAT* CallBackCustomWave 	// 波形カスタマイズコールバック
+			);
+extern void	PMVOICE_Reset( void );
 extern void	PMVOICE_Main( void );
 extern void	PMVOICE_Exit( void );
 
@@ -57,9 +70,37 @@ extern void	PMVOICE_PlayerHeapRelease( void );		// プレーヤー用waveバッファ開放
  *
  */
 //============================================================================================
-extern u32	PMVOICE_Play( u32 pokeNum, u16 option );	//鳴き声を再生(return: voicePlayerIdxBit)
-extern void	PMVOICE_Stop( u32 voicePlayerIdxBit );		//鳴き声を停止
-extern BOOL	PMVOICE_CheckPlay( u32 voicePlayerIdxBit );	//鳴き声終了検出(TRUE:再生中)
+//------------------------------------------------------------------
+/**
+ * @brief	鳴き声再生関数(return: voicePlayerIdx)
+ */
+//------------------------------------------------------------------
+extern u32	PMVOICE_Play
+			(	u32							pokeNum,		// ポケモンナンバー
+				u32							pokeFormNum,	// ポケモンフォームナンバー
+				u8							pan,			// 定位(L:0 - 64 - 127:R)
+				BOOL						chorus,			// コーラス使用フラグ
+				int							chorusVolOfs,	// コーラスボリューム差
+				int							chorusSpOfs,	// 再生速度差
+				BOOL						waveCustom,		// 波形カスタマイズ有効フラグ
+				BOOL						reverse			// 逆再生フラグ
+			);		
+//------------------------------------------------------------------
+/**
+ * @brief	鳴き声強制停止関数
+ */
+//------------------------------------------------------------------
+extern void	PMVOICE_Stop( u32 voicePlayerIdx );			//鳴き声を停止
+//------------------------------------------------------------------
+/**
+ * @brief	鳴き声終了検出関数(TRUE: 再生中)
+ */
+//------------------------------------------------------------------
+extern BOOL	PMVOICE_CheckPlay( u32 voicePlayerIdx );	//鳴き声終了検出(TRUE:再生中)
+
+
+
+
 
 #endif
 
