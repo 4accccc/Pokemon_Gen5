@@ -7,12 +7,29 @@
  */
 //============================================================================================
 #include "gflib.h"
+#include "system/gfl_use.h"
+
+#include "savedata/save_control.h"
+#include "savedata/perapvoice.h"
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 #include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 
 #include "sound/pm_wb_voice.h"
+
+//==============================================================================================
+//
+//	ぺラップ用定義
+//
+//==============================================================================================
+#define PERAP_SAMPLING_RATE		(2000)									//サンプリングレート
+#define PERAP_SAMPLING_TIME		(1)										//サンプリング時間
+#define PERAP_SAMPLING_SIZE		(PERAP_SAMPLING_RATE * PERAP_SAMPLING_TIME)	//データ量
+
+#define PERAP_WAVE_SPD			(32768)			//再生スピード(１倍速)
+#define PERAP_WAVE_SPDRAND		(8192)			//再生スピードのランダム
+extern PERAPVOICE * SaveData_GetPerapVoice(SAVE_CONTROL_WORK * sv);
 //============================================================================================
 /**
  *
@@ -45,7 +62,7 @@ void PMWB_GetVoiceWaveIdx(	u32 pokeNo, 		// [in]ポケモンナンバー
 /**
  *
  *
- * @brief	波形データ取得
+ * @brief	波形データカスタマイズ
  *
  *
  */
@@ -57,6 +74,19 @@ BOOL PMWB_CustomVoiceWave(	u32 pokeNo,			// [in]ポケモンナンバー
 							int* rate,			// [out]波形再生レート
 							int* speed )		// [out]波形再生スピード
 {
+	if(( pokeNo == MONSNO_PERAPPU )&&( pokeFormNo == 0 )){
+		PERAPVOICE* perapVoice = SaveData_GetPerapVoice(SaveControl_GetPointer());
+		//録音データ存在判定
+		if( PERAPVOICE_GetExistFlag(perapVoice) == TRUE ){
+			//録音データ展開
+			PERAPVOICE_ExpandVoiceData( *wave, PERAPVOICE_GetVoiceData(perapVoice) );
+			*size = PERAP_SAMPLING_SIZE;
+			*rate = PERAP_SAMPLING_RATE;
+			//ランダムに音程を変える仕様らしい
+			*speed = PERAP_WAVE_SPD + GFUser_GetPublicRand( PERAP_WAVE_SPDRAND );
+			return TRUE;
+		}
+	}
 	return FALSE;
 }
 
