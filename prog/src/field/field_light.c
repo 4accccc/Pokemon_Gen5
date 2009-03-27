@@ -570,6 +570,8 @@ void FIELD_LIGHT_DEBUG_Init( FIELD_LIGHT* p_sys, u32 heapID )
 
 	p_sys->debug_flag = TRUE;
 
+	p_sys->debug_print_req = TRUE;
+
 	GFL_UI_KEY_SetRepeatSpeed( 4,8 );
 }
 
