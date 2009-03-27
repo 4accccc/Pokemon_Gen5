@@ -20,7 +20,6 @@
 #include "battle/btlv/btlv_effect.h"
 #include "pokegra/pokegra_wb.naix"
 #include "battgra/battgra_wb.naix"
-#include "spa.naix"
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"

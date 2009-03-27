@@ -125,6 +125,7 @@ void	MCS_Exit( void )
 {
 	NNS_McsUnregisterRecvResource( MCS_CHANNEL0 );
 
+	GFL_HEAP_FreeMemory( mw->recvBuf2 );
 	GFL_HEAP_FreeMemory( mw->recvBuf );
 	GFL_HEAP_FreeMemory( mw->printBuffer );
 
@@ -133,6 +134,8 @@ void	MCS_Exit( void )
 
 	// デバイスをクローズ
 	(void)NNS_McsClose();
+
+	GFL_HEAP_FreeMemory( mw->mcsWorkMem );
 
 	GFL_HEAP_FreeMemory( mw );
 	mw = NULL;
