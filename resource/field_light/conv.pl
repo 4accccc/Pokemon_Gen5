@@ -310,43 +310,43 @@ foreach $one ( @CSVFILE ){
 				@SPECULAR_B[ $i ] = $line[ $i+1 ]
 			}
 		}
-		elsif( $datacount == 34 ){
+		elsif( $datacount == 37 ){
 
 			for( $i=0; $i<$FRAME_NUM; $i++ ){
 				@EMISSION_R[ $i ] = $line[ $i+1 ]
 			}
 		}
-		elsif( $datacount == 35 ){
+		elsif( $datacount == 38 ){
 
 			for( $i=0; $i<$FRAME_NUM; $i++ ){
 				@EMISSION_G[ $i ] = $line[ $i+1 ]
 			}
 		}
-		elsif( $datacount == 36 ){
+		elsif( $datacount == 39 ){
 
 			for( $i=0; $i<$FRAME_NUM; $i++ ){
 				@EMISSION_B[ $i ] = $line[ $i+1 ]
 			}
 		}
-		elsif( $datacount == 37 ){
+		elsif( $datacount == 40 ){
 
 			for( $i=0; $i<$FRAME_NUM; $i++ ){
 				@FOG_R[ $i ] = $line[ $i+1 ]
 			}
 		}
-		elsif( $datacount == 38 ){
+		elsif( $datacount == 41 ){
 
 			for( $i=0; $i<$FRAME_NUM; $i++ ){
 				@FOG_G[ $i ] = $line[ $i+1 ]
 			}
 		}
-		elsif( $datacount == 39 ){
+		elsif( $datacount == 42 ){
 
 			for( $i=0; $i<$FRAME_NUM; $i++ ){
 				@FOG_B[ $i ] = $line[ $i+1 ]
 			}
 		}
-		elsif( $datacount == 40 ){
+		elsif( $datacount == 43 ){
 			#I—¹
 			$inputdata = 0;
 		}
