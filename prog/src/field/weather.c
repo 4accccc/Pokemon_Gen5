@@ -41,7 +41,7 @@
 */
 //-----------------------------------------------------------------------------
 #ifdef PM_DEBUG
-#define DEBUG_WEATHER_CHAGNE
+//#define DEBUG_WEATHER_CHAGNE	// YXAB‚Å“V‹C‚ð‚©‚¦‚é
 #endif
 
 

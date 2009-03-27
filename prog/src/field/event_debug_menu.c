@@ -32,6 +32,10 @@
 
 #include "font/font.naix"
 
+#include  "field/weather_no.h"
+#include  "weather.h"
+#include  "msg/msg_d_tomoya.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -125,6 +129,8 @@ static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL DMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk );
+
 //--------------------------------------------------------------
 ///	デバッグメニューリスト　汎用
 ///	データを追加する事でメニューの項目も増えます。
@@ -158,6 +164,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
 	{ DEBUG_FIELD_STR15, DMenuCallProc_ControlLight },
+	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -1604,3 +1611,151 @@ static GMEVENT_RESULT DMenuControlLight(
 	
 	return( GMEVENT_RES_CONTINUE );
 }
+
+
+
+
+//======================================================================
+//	デバッグメニュー　てんきリスト
+//======================================================================
+//--------------------------------------------------------------
+///	DEBUG_WEATERLIST_EVENT_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+	int seq_no;
+	HEAPID heapID;
+	GAMESYS_WORK *gmSys;
+	GMEVENT *gmEvent;
+	FIELD_MAIN_WORK *fieldWork;
+	GFL_MSGDATA *msgData;
+	FLDMENUFUNC *menuFunc;
+}DEBUG_WEATERLIST_EVENT_WORK;
+
+#define DEBUG_WEATHERLIST_LIST_MAX	( 4 )
+
+//--------------------------------------------------------------
+///	proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuWeatherListEvent(
+		GMEVENT *event, int *seq, void *work );
+
+///テストカメラリスト メニューヘッダー
+static const FLDMENUFUNC_HEADER DATA_DebugMenuList_WeatherList =
+{
+	1,		//リスト項目数
+	5,		//表示最大項目数
+	0,		//ラベル表示Ｘ座標
+	13,		//項目表示Ｘ座標
+	0,		//カーソル表示Ｘ座標
+	0,		//表示Ｙ座標
+	1,		//表示文字色
+	15,		//表示背景色
+	2,		//表示文字影色
+	0,		//文字間隔Ｘ
+	1,		//文字間隔Ｙ
+	FLDMENUFUNC_SKIP_LRKEY,	//ページスキップタイプ
+	12,		//文字サイズX(ドット
+	12,		//文字サイズY(ドット
+	0,		//表示座標X キャラ単位
+	0,		//表示座標Y キャラ単位
+	0,		//表示サイズX キャラ単位
+	0,		//表示サイズY キャラ単位
+};
+
+///てんきメニューリスト
+static const FLDMENUFUNC_LIST DATA_WeatherMenuList[DEBUG_WEATHERLIST_LIST_MAX] =
+{
+	{ D_TOMOYA_WEATEHR00, (void*)WEATHER_NO_SUNNY },
+	{ D_TOMOYA_WEATEHR01, (void*)WEATHER_NO_SNOW },
+	{ D_TOMOYA_WEATEHR02, (void*)WEATHER_NO_RAIN },
+	{ D_TOMOYA_WEATEHR03, (void*)WEATHER_NO_STORM },
+};
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　天気リスト
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk )
+{
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	DEBUG_WEATERLIST_EVENT_WORK *work;
+	
+	GMEVENT_Change( event,
+		DMenuWeatherListEvent, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
+	
+	work = GMEVENT_GetEventWork( event );
+	MI_CpuClear8( work, sizeof(DEBUG_WEATERLIST_EVENT_WORK) );
+	
+	work->gmSys = gsys;
+	work->gmEvent = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：てんきリスト
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuWeatherListEvent(
+		GMEVENT *event, int *seq, void *wk )
+{
+	DEBUG_ZONESEL_EVENT_WORK *work = wk;
+	
+	switch( (*seq) ){
+	case 0:
+		{
+			FLDMSGBG *msgBG;
+			FLDMENUFUNC_LISTDATA *listdata;
+			u32 max = DEBUG_WEATHERLIST_LIST_MAX;
+			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_WeatherList;
+			
+			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+			work->msgData = FLDMSGBG_CreateMSGDATA(
+				msgBG, NARC_message_d_tomoya_dat );
+			listdata = FLDMENUFUNC_CreateMakeListData(
+				DATA_WeatherMenuList, max, work->msgData, work->heapID );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 8, 7 );
+			
+			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
+			GFL_MSG_Delete( work->msgData );
+		}
+		
+		(*seq)++;
+		break;
+	case 1:
+		{
+			u32 ret;
+			ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+			
+			if( ret == FLDMENUFUNC_NULL ){	//操作無し
+				break;
+			}
+			
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			
+			if( ret != FLDMENUFUNC_CANCEL ){	//決定
+				FIELD_WEATHER_Change( FIELDMAP_GetFieldWeather( work->fieldWork ), ret );
+			}
+			
+			return( GMEVENT_RES_FINISH );
+		}
+		break;
+	}
+	
+	return( GMEVENT_RES_CONTINUE );
+}
+
+

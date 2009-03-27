@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2009-03-27T13:22:17"/>
+	<create user="tomoya_takahashi" host="W00148" date="2009-03-27T19:18:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -370,6 +370,31 @@
 	<row id="D_TOMOYA_FOG">
 		<language name="JPN" width="256">フォグ　Ｒ：[2:01:２桁:0] Ｇ：[2:01:２桁:1] Ｂ：[2:01:２桁:2]</language>
 		<language name="JPN_KANJI" width="256">フォグ　Ｒ：[2:01:２桁:0] Ｇ：[2:01:２桁:1] Ｂ：[2:01:２桁:2]</language>
+	</row>
+
+	<row id="D_TOMOYA_WEATEHR00">
+		<language name="JPN" width="256">はれ</language>
+		<language name="JPN_KANJI" width="256">はれ</language>
+	</row>
+
+	<row id="D_TOMOYA_WEATEHR01">
+		<language name="JPN" width="256">ゆき</language>
+		<language name="JPN_KANJI" width="256">ゆき</language>
+	</row>
+
+	<row id="D_TOMOYA_WEATEHR02">
+		<language name="JPN" width="256">あめ</language>
+		<language name="JPN_KANJI" width="256">あめ</language>
+	</row>
+
+	<row id="D_TOMOYA_WEATEHR03">
+		<language name="JPN" width="256">すなあらし</language>
+		<language name="JPN_KANJI" width="256">すなあらし</language>
+	</row>
+
+	<row id="D_TOMOYA_WEATEHR04">
+		<language name="JPN" width="256">かざんばい</language>
+		<language name="JPN_KANJI" width="256">かざんばい</language>
 	</row>
 
 	<flowchart-group-list>

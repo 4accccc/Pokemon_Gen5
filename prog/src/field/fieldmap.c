@@ -229,6 +229,12 @@ FIELD_FOG_WORK * FIELDMAP_GetFieldFog( FIELD_MAIN_WORK *fieldWork )
 	return ( fieldWork->fog );
 }
 
+// 天気管理ワーク
+FIELD_WEATHER * FIELDMAP_GetFieldWeather( FIELD_MAIN_WORK *fieldWork )
+{
+	return ( fieldWork->weather_sys );
+}
+
 
 FIELD_SETUP * FIELDMAP_GetFieldSetup( FIELD_MAIN_WORK *fieldWork );
 
