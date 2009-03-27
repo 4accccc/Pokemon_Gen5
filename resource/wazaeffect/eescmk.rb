@@ -371,7 +371,7 @@ end
 				fp_w.print("#define	__ASM_NO_DEF_\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_efftool.h\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_effvm_def.h\n")
-				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/spa_def.h\n")
+				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/particle/wazaeffect/spa_def.h\n")
 				inc_header.size.times { |inc|
 					fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/particle/wazaeffect/" + inc_header[ inc ] + "\n")
 				}
