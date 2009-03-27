@@ -1574,6 +1574,7 @@ static GMEVENT_RESULT DMenuControlLight(
 			GFL_BG_LoadScreenReq( FIELD_SUBSCREEN_BGPLANE );
 		}
 
+		FIELD_LIGHT_DEBUG_PrintData( p_light, work->p_win );
 
 		(*seq)++;
 	case 1:
