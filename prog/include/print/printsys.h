@@ -259,12 +259,14 @@ extern void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF*
  * @param   ypos		描画開始Ｙ座標（ドット）
  * @param   str			文字列
  * @param   font		フォントハンドラ
- * @param   wait		１文字描画ごとのウェイトフレーム数
+ * @param   wait		１文字描画ごとのウェイトフレーム数（※）
  * @param   tcbsys		使用するGFL_TCBLシステムポインタ
  * @param   tcbpri		使用するタスクプライオリティ
  * @param   heapID		使用するヒープID
  *
  * @retval	PRINT_STREAM*	ストリームハンドル
+ *
+ * ※ wait に-2 以下の値を設定することで、毎フレーム２文字以上の描画を行う。-2（２文字）, -3（３文字）...
  */
 //==============================================================================================
 extern PRINT_STREAM* PRINTSYS_PrintStream(
@@ -280,13 +282,14 @@ extern PRINT_STREAM* PRINTSYS_PrintStream(
  * @param   ypos		描画開始Ｙ座標（ドット）
  * @param   str			文字列
  * @param   font		フォントハンドラ
- * @param   wait		１文字描画ごとのウェイトフレーム数
+ * @param   wait		１文字描画ごとのウェイトフレーム数（※ 通常版と同じ）
  * @param   tcbsys		使用するGFL_TCBLシステムポインタ
  * @param   tcbpri		使用するタスクプライオリティ
  * @param   heapID		使用するヒープID
  * @param   callback	１文字描画ごとのコールバック関数アドレス
  *
  * @retval	PRINT_STREAM*	ストリームハンドラ
+ *
  */
 //==============================================================================================
 extern PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
