@@ -30,6 +30,7 @@ _EVENT_DATA_END //èIóπ
 //--------------------------------------------------------------------
 ev_talkobj_sample_01:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_01
 	_AB_KEYWAIT
@@ -42,6 +43,7 @@ ev_talkobj_sample_01:
 //--------------------------------------------------------------------
 ev_talkobj_sample_02:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_02
 	_AB_KEYWAIT
@@ -54,6 +56,7 @@ ev_talkobj_sample_02:
 //--------------------------------------------------------------------
 ev_talkobj_sample_03:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_03
 	_AB_KEYWAIT
@@ -66,6 +69,7 @@ ev_talkobj_sample_03:
 //--------------------------------------------------------------------
 ev_talkobj_sample_04:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_04
 	_AB_KEYWAIT
@@ -78,6 +82,7 @@ ev_talkobj_sample_04:
 //--------------------------------------------------------------------
 ev_talkobj_sample_05:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_05
 	_AB_KEYWAIT
@@ -90,6 +95,7 @@ ev_talkobj_sample_05:
 //--------------------------------------------------------------------
 ev_talkobj_sample_06:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_06
 	_AB_KEYWAIT
@@ -102,6 +108,7 @@ ev_talkobj_sample_06:
 //--------------------------------------------------------------------
 ev_talkobj_kabi32_00:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_07
@@ -119,6 +126,7 @@ ev_talkobj_kabi32_00:
 //--------------------------------------------------------------------
 ev_talkobj_kabi32_01:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_07
@@ -135,6 +143,7 @@ ev_talkobj_kabi32_01:
 //--------------------------------------------------------------------
 ev_talkobj_kabi32_02:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_07
@@ -151,6 +160,7 @@ ev_talkobj_kabi32_02:
 //--------------------------------------------------------------------
 ev_talkobj_kabi32_03:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_07
@@ -167,6 +177,7 @@ ev_talkobj_kabi32_03:
 //--------------------------------------------------------------------
 ev_talkobj_kabi32_04:
 	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
 	
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_c99_07

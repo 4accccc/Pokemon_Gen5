@@ -149,6 +149,7 @@ static void DrawHero_Delete( FLDMMDL *fmmdl )
 static void DrawHero_Draw( FLDMMDL *fmmdl )
 {
 	VecFx32 pos;
+	BOOL chg_dir = FALSE;
 	u16 dir,anm_id,status;
 	DRAW_BLACT_WORK *work;
 	GFL_BBDACT_SYS *actSys;
@@ -166,6 +167,7 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 		work->set_anm_dir = dir;
 		work->set_anm_status = status;
 		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+		chg_dir = TRUE;
 	}else if( work->set_anm_status != status ){
 		u16 frame = 0;
 		
@@ -198,7 +200,7 @@ static void DrawHero_Draw( FLDMMDL *fmmdl )
 		GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 	{
 		BOOL flag = TRUE;
-		if( FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
+		if( chg_dir == FALSE && FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
 			flag = FALSE;
 		}
 		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
@@ -277,6 +279,7 @@ static void DrawBlAct_Delete( FLDMMDL *fmmdl )
 static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 {
 	VecFx32 pos;
+	BOOL chg_dir = FALSE;
 	u16 dir,anm_id,status;
 	DRAW_BLACT_WORK *work;
 	GFL_BBDACT_SYS *actSys;
@@ -294,6 +297,7 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 		work->set_anm_dir = dir;
 		work->set_anm_status = status;
 		GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
+		chg_dir = TRUE;
 	}else if( work->set_anm_status != status ){ //ステータス更新
 		u16 frame = 0;
 		switch( work->set_anm_status ){
@@ -324,7 +328,7 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 
 	{
 		BOOL flag = TRUE;
-		if( FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
+		if( chg_dir == FALSE && FLDMMDL_CheckDrawPause(fmmdl) == TRUE ){
 			flag = FALSE;
 		}
 		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );

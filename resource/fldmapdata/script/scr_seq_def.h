@@ -86,6 +86,7 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	DEF_CMD EV_SEQ_OBJ_PAUSE_ALL
 	DEF_CMD EV_SEQ_TALK_OBJ_PAUSE_ALL
 	DEF_CMD EV_SEQ_OBJ_PAUSE_CLEAR_ALL
+	DEF_CMD EV_SEQ_OBJ_TURN
 
 //======================================================================
 /**
@@ -637,6 +638,16 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	.macro	_OBJ_PAUSE_CLEAR_ALL
 	.short	EV_SEQ_OBJ_PAUSE_CLEAR_ALL
 	.endm
+
+//-----------------------------------------------------------------------------
+/**
+ *	òbÇµÇ©ÇØÇΩOBJÇé©ã@ï˚å¸Ç÷êUÇËå¸Ç´
+ */
+//--------------------------------------------------------------
+	.macro	_TURN_HERO_SITE
+	.short	EV_SEQ_OBJ_TURN
+	.endm
+
 
 //======================================================================
 /**

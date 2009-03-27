@@ -91,6 +91,7 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk );
 static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdObjPauseClearAll( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk );
 
 //======================================================================
 //	グローバル変数
@@ -164,6 +165,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
 	EvCmdObjPauseAll,
 	EvCmdTalkObjPauseAll,
 	EvCmdObjPauseClearAll,
+	EvCmdObjTurn,
 };
 
 //--------------------------------------------------------------
@@ -1332,7 +1334,7 @@ static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk )
 /**
  * 全OBJ動作再開
  * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"1"
+ * @retval	"1"
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdObjPauseClearAll( VMHANDLE *core, void *wk )
@@ -1343,3 +1345,30 @@ static VMCMD_RESULT EvCmdObjPauseClearAll( VMHANDLE *core, void *wk )
 	return 1;
 }
 
+//--------------------------------------------------------------
+/**
+ * 話しかけたOBJ自機方向への振り向き
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @retval	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
+{
+	SCRCMD_WORK *work = wk;
+	SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	FLDMMDL *jiki,**fmmdl;
+	u16 dir;
+	
+	jiki = PlayerGetFldMMdl( work );
+	dir = FLDMMDL_GetDirDisp( jiki );
+	
+	dir = FLDMMDL_TOOL_FlipDir( dir );
+	fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+	
+	if( (*fmmdl) == NULL ){
+		return 0;
+	}
+	
+	FLDMMDL_SetDirDisp( *fmmdl, dir );
+	return 0;
+}
