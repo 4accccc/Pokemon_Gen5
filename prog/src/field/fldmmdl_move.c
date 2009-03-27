@@ -1234,7 +1234,7 @@ u32 FLDMMDL_HitCheckMoveDir( const FLDMMDL * fmmdl, u16 dir )
 {
 	s16 x,y,z;
 	x = FLDMMDL_GetGridPosX( fmmdl ) + FLDMMDL_TOOL_GetDirAddValueGridX( dir );
-	y = FLDMMDL_GetGridPosY( fmmdl );
+	y = FLDMMDL_GetHeightGrid( fmmdl );
 	z = FLDMMDL_GetGridPosZ( fmmdl ) + FLDMMDL_TOOL_GetDirAddValueGridZ( dir );
 	return( FldMMdl_HitCheckMoveCurrent(fmmdl,x,y,z,dir) );
 }
@@ -1264,9 +1264,9 @@ BOOL FLDMMDL_HitCheckMoveFellow( const FLDMMDL * fmmdl, s16 x, s16 y, s16 z )
 				cmmdl,FLDMMDL_STABIT_FELLOW_HIT_NON) == 0 ){
 				hx = FLDMMDL_GetGridPosX( cmmdl );
 				hz = FLDMMDL_GetGridPosZ( cmmdl );
-					
+				#if 0
 				if( hx == x && hz == z ){
-					int hy = FLDMMDL_GetGridPosY( cmmdl );
+					int hy = FLDMMDL_GetHeightGrid( cmmdl );
 					int sy = hy - y;
 					if( sy < 0 ){ sy = -sy; }
 					if( sy < H_GRID_FELLOW_SIZE ){
@@ -1278,13 +1278,48 @@ BOOL FLDMMDL_HitCheckMoveFellow( const FLDMMDL * fmmdl, s16 x, s16 y, s16 z )
 				hz = FLDMMDL_GetOldGridPosZ( cmmdl );
 			
 				if( hx == x && hz == z ){
-					int hy = FLDMMDL_GetGridPosY( cmmdl );
+					int hy = FLDMMDL_GetHeightGrid( cmmdl );
 					int sy = hy - y;
 					if( sy < 0 ){ sy = -sy; }
 					if( sy < H_GRID_FELLOW_SIZE ){
 						return( TRUE );
 					}
 				}
+				#else
+				{
+					BOOL debug = FALSE;
+					if( FLDMMDL_GetOBJID(fmmdl) == FLDMMDL_ID_PLAYER ){
+						debug = TRUE;
+					}
+					if( hx == x && hz == z ){
+						int hy = FLDMMDL_GetHeightGrid( cmmdl );
+						int sy = hy - y;
+						if( sy < 0 ){ sy = -sy; }
+						#ifdef DEBUG_ONLY_FOR_kagaya
+						if( debug ){
+							OS_Printf(
+								"HERO %d, %d, %d NPC %d %d %d\n",
+								x, y, z, hx, hy, hz );
+						}
+						#endif
+						if( sy < H_GRID_FELLOW_SIZE ){
+							return( TRUE );
+						}
+					}
+				
+					hx = FLDMMDL_GetOldGridPosX( cmmdl );
+					hz = FLDMMDL_GetOldGridPosZ( cmmdl );
+				
+					if( hx == x && hz == z ){
+						int hy = FLDMMDL_GetHeightGrid( cmmdl );
+						int sy = hy - y;
+						if( sy < 0 ){ sy = -sy; }
+						if( sy < H_GRID_FELLOW_SIZE ){
+							return( TRUE );
+						}
+					}
+				}
+				#endif
 			}
 		}
 	}
@@ -1647,7 +1682,7 @@ BOOL FLDMMDL_GetMapPosHeight(
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 方向で現在座標を更新
+ * 方向で現在座標を更新。高さは更新されない。
  * @param	fmmdl		FLDMMDL * 
  * @param	dir			移動方向
  * @retval	nothing
@@ -1674,7 +1709,7 @@ void FLDMMDL_UpdateGridPosDir( FLDMMDL * fmmdl, u16 dir )
 void FLDMMDL_UpdateGridPosCurrent( FLDMMDL * fmmdl )
 {
 	FLDMMDL_SetOldGridPosX( fmmdl, FLDMMDL_GetGridPosX(fmmdl) );
-	FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetGridPosY(fmmdl) );
+	FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetHeightGrid(fmmdl) );
 	FLDMMDL_SetOldGridPosZ( fmmdl, FLDMMDL_GetGridPosZ(fmmdl) );
 }
 
@@ -1774,7 +1809,7 @@ BOOL FLDMMDL_UpdateCurrentHeight( FLDMMDL * fmmdl )
 		if( ret == TRUE ){
 			vec_pos.y = vec_pos_h.y;
 			FLDMMDL_SetVectorPos( fmmdl, &vec_pos );
-			FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetGridPosY(fmmdl) );
+			FLDMMDL_SetOldGridPosY( fmmdl, FLDMMDL_GetHeightGrid(fmmdl) );
 			FLDMMDL_SetGridPosY( fmmdl, SIZE_H_GRID_FX32(vec_pos.y) );
 			FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_HEIGHT_GET_ERROR );
 		}else{
