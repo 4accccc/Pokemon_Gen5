@@ -20,6 +20,7 @@
 // Še“V‹C
 #include "weather_sunny.h"
 #include "weather_snow.h"
+#include "weather_rain.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -157,8 +158,8 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 
 	// ‰J
 	{
-		&c_WEATHER_TASK_DATA_SUNNY,
-		FS_OVERLAY_ID(field_weather_sunny)
+		&c_WEATHER_TASK_DATA_RAIN,
+		FS_OVERLAY_ID(field_weather_rain)
 	},
 
 	// ‘å‰J
@@ -320,6 +321,8 @@ void FIELD_WEATHER_Main( FIELD_WEATHER* p_sys, u32 heapID )
 		FIELD_WEATHER_Change( p_sys, WEATHER_NO_SNOW );
 	}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		FIELD_WEATHER_Change( p_sys, WEATHER_NO_SUNNY );
+	}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+		FIELD_WEATHER_Change( p_sys, WEATHER_NO_RAIN );
 	}
 	
 #endif

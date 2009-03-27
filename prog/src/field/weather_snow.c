@@ -333,9 +333,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_InitFadeOut( WEATHER_TASK* p_wk, WE
 			WEATHER_SNOW_TIMING_ADD,
 			-1 );
 	// fog
-	WEATHER_TASK_FogFadeOut_Init( p_wk,
-			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS_START, 
-			WEATHER_SNOW_FOG_TIMING_END, fog_cont );
 	p_local_wk->work[0] = WEATHER_SNOW_FOG_START_END;	// 同じくフォグ用
 
 	// スクロール処理
@@ -368,6 +365,12 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeOut( WEATHER_TASK* p_wk, WEATHE
 	// フォグ操作
 	if(p_local_wk->work[0] > 0){
 		p_local_wk->work[0]--;			// ワークが０になったらフォグを動かす
+		if( p_local_wk->work[0] == 0 ){
+
+			WEATHER_TASK_FogFadeOut_Init( p_wk,
+					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS_START, 
+					WEATHER_SNOW_FOG_TIMING_END, fog_cont );
+		}
 	}else{
 	
 		if( fog_cont ){
