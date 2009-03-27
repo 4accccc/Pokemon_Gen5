@@ -158,6 +158,7 @@ extern BOOL BTL_POKEPARAM_IsMatchType( const BTL_POKEPARAM* pp, PokeType type );
 extern int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid );
 extern int BTL_POKEPARAM_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid );
 extern int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid );
+extern u32 BTL_POKEPARAM_GetItem( const BTL_POKEPARAM* pp );
 
 extern BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_IsFullHP( const BTL_POKEPARAM* pp );

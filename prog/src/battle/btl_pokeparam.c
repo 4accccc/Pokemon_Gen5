@@ -209,7 +209,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	}
 	GFL_STD_MemClear( bpp->wazaSickCounter, sizeof(bpp->wazaSickCounter) );
 
-	bpp->item = 0;
+	bpp->item = PP_Get( pp, ID_PARA_item, NULL );
 	bpp->tokusei = PP_Get( pp, ID_PARA_speabino, 0 );
 	bpp->hp = PP_Get( pp, ID_PARA_hp, 0 );
 	bpp->myID = pokeID;
@@ -412,6 +412,20 @@ int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
 		return BTL_POKEPARAM_GetValue( pp, vid );
 	}
 }
+//=============================================================================================
+/**
+ * 所有アイテムIDを返す
+ *
+ * @param   pp		
+ *
+ * @retval  u32		
+ */
+//=============================================================================================
+u32 BTL_POKEPARAM_GetItem( const BTL_POKEPARAM* pp )
+{
+	return pp->item;
+}
+
 
 //=============================================================================================
 /**

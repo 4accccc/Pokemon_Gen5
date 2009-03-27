@@ -3109,6 +3109,10 @@ void BTL_SERVER_RECTPT_SetMessage( BTL_SVFLOW_WORK* wk, u16 msgID, u8 pokeID )
 {
 	SCQUE_PUT_MSG_SET( wk->que, msgID, pokeID );
 }
+void BTL_SERVER_RECTPT_SetMessageEx( BTL_SVFLOW_WORK* wk, u16 msgID, u8 pokeID, int arg )
+{
+	SCQUE_PUT_MSG_SET( wk->que, msgID, pokeID, arg );
+}
 //=============================================================================================
 /**
  * [ハンドラ受信] ステータスのランクダウン効果

@@ -65,6 +65,7 @@ enum {
 	BTL_CALC_TOK_MINUS_POWRATIO = FX32_CONST(1.5f),				/// 「マイナス」の攻撃力変化率
 	BTL_CALC_TOK_FLOWERGIFT_POWRATIO = FX32_CONST(1.5f),	/// 「フラワーギフト」の攻撃力変化率
 	BTL_CALC_TOK_FLOWERGIFT_GUARDRATIO = FX32_CONST(1.5f),/// 「フラワーギフト」の特防変化率
+	BTL_CALC_TOK_MORAIBI_POWRATIO = FX32_CONST(1.5f),			/// 「もらいび」の攻撃力変化率
 
 	BTL_CALC_TOK_DOKUNOTOGE_PER   = 30,		///「どくのトゲ」発生確率
 	BTL_CALC_TOK_HONONOKARADA_PER = 30,		///「ほのおのからだ」発生確率

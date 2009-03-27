@@ -119,6 +119,8 @@ static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_trace( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_yotimu( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_omitoosi( STRBUF* dst, u16 strID, const int* args );
 
 
 
@@ -401,6 +403,8 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 		{ BTL_STRID_SET_Rankup_ATK,		ms_set_rankup			},
 		{ BTL_STRID_SET_Rankdown_ATK,	ms_set_rankdown			},
 		{ BTL_STRID_SET_Trace,				ms_set_trace },
+		{ BTL_STRID_SET_YotimuExe,		ms_set_yotimu	},
+		{ BTL_STRID_SET_Omitoosi,			ms_set_omitoosi },
 	};
 
 	int i;
@@ -477,6 +481,34 @@ static void ms_set_trace( STRBUF* dst, u16 strID, const int* args )
 	register_PokeNickname( args[1], BUFIDX_POKE_1ST );
 	WORDSET_RegisterTokuseiName( SysWork.wset, 1, args[2] );
 	strID = get_setStrID( args[1], strID );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+//--------------------------------------------------------------
+/**
+ *	ÅõÅõÇÕÅ~Å~ÇÇÊÇ›Ç∆Ç¡ÇΩÅI
+ *  args... [0]:pokeID,  [1]:wazaID
+ */
+//--------------------------------------------------------------
+static void ms_set_yotimu( STRBUF* dst, u16 strID, const int* args )
+{
+	register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+	WORDSET_RegisterWazaName( SysWork.wset, 1, args[1] );
+	strID = get_setStrID( args[0], strID );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+//--------------------------------------------------------------
+/**
+ *	ÅõÅõÇÕÅ~Å~ÇÅ@Ç®Ç›Ç∆Ç®ÇµÇæÅI
+ *  args... [0]:pokeID,  [1]:itemID
+ */
+//--------------------------------------------------------------
+static void ms_set_omitoosi( STRBUF* dst, u16 strID, const int* args )
+{
+	register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+	WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );
+	strID = get_setStrID( args[0], strID );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

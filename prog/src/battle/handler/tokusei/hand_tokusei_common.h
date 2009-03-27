@@ -109,10 +109,13 @@ extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Meneki( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_MagumaNoYoroi( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_MizuNoBale( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_MyPace( u16 pri, u8 pokeID );
-
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Nightmare( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_FlowerGift( u16 pri, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_FusiginaMamori( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Moraibi( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Yotimu( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_KikenYoti( u16 pri, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Omitoosi( u16 pri, u8 pokeID );
 
 
 #endif
