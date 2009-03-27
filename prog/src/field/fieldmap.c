@@ -25,6 +25,7 @@
 #include "field_player.h"
 #include "field_camera.h"
 #include "field_data.h"
+#include "field_subscreen.h"
 #include "field/field_msgbg.h"
 
 #include "weather.h"
@@ -138,9 +139,6 @@ FIELD_MAIN_WORK* fieldWork;
 static void fieldMainCommActorFree( FIELD_MAIN_WORK *fieldWork );
 static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork );
 //情報バーの初期化と開放
-static void Field_InitInfoBar(HEAPID heapId);
-static void Field_TermInfoBar(void);
-static void Field_UpdateInfoBar(void);
 
 
 //------------------------------------------------------------------
@@ -218,6 +216,19 @@ FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELD_MAIN_WORK *fieldWork )
 {
 	return( fieldWork->camera_control );
 }
+
+// ライト管理ワーク
+FIELD_LIGHT * FIELDMAP_GetFieldLight( FIELD_MAIN_WORK *fieldWork )
+{
+	return ( fieldWork->light );
+}
+
+// フォグ管理ワーク
+FIELD_FOG_WORK * FIELDMAP_GetFieldFog( FIELD_MAIN_WORK *fieldWork )
+{
+	return ( fieldWork->fog );
+}
+
 
 FIELD_SETUP * FIELDMAP_GetFieldSetup( FIELD_MAIN_WORK *fieldWork );
 
@@ -301,7 +312,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		FIELD_WEATHER_Set( fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
 		
 		//情報バーの初期化
-		Field_InitInfoBar(fieldWork->heapID);
+		FIELD_SUBSCREEN_Init(fieldWork->heapID);
 
 		fieldWork->seq++;
 		break;
@@ -347,7 +358,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 		
 		MainGameSystem( fieldWork->gs );
-		Field_UpdateInfoBar();
+		FIELD_SUBSCREEN_Main();
 		FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
 		FIELD_FOG_Main( fieldWork->fog );
 		{
@@ -376,7 +387,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		fieldMainCommActorFree( fieldWork );
 		
 		//情報バーの開放
-		Field_TermInfoBar();
+		FIELD_SUBSCREEN_Exit();
 
 		// 天気システム破棄
 		FIELD_WEATHER_Exit( fieldWork->weather_sys );
@@ -1243,44 +1254,4 @@ void FIELDMAP_ForceUpdate( FIELD_MAIN_WORK *fieldWork )
 	FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
 }
 
-
-//--------------------------------------------------------------
-//情報バーの初期化と開放
-//--------------------------------------------------------------
-#include "infowin/infowin.h"
-//BG面とパレット番号(仮設定
-static const u8 FIELD_INFOWIN_BGPLANE = GFL_BG_FRAME3_S;
-static const u8 FIELD_INFOWIN_PALLET = 0xE;
-static void Field_InitInfoBar(HEAPID heapId)
-{
-
-	// BG3 SUB (インフォバー
-	static const GFL_BG_BGCNT_HEADER header_sub3 = {
-		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x6000,
-		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
-	};
-
-	GFL_BG_SetBGControl( FIELD_INFOWIN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
-	GFL_BG_SetVisible( FIELD_INFOWIN_BGPLANE, VISIBLE_ON );
-	GFL_BG_ClearFrame( FIELD_INFOWIN_BGPLANE );
-	
-	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
-
-	INFOWIN_Init( FIELD_INFOWIN_BGPLANE , FIELD_INFOWIN_PALLET , heapId);
-	if( INFOWIN_IsStartComm() == TRUE )
-	{
-		GFL_NET_ReloadIcon();
-	}
-}
-static void Field_UpdateInfoBar(void)
-{
-	INFOWIN_Update();
-}
-static void Field_TermInfoBar(void)
-{
-	INFOWIN_Exit();
-	GFL_BG_FreeBGControl(FIELD_INFOWIN_BGPLANE);
-}
 

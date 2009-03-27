@@ -1470,9 +1470,10 @@ static void WEATHER_TASK_WK_InitOther( WEATHER_TASK* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void WEATHER_TASK_WK_ExitOther( WEATHER_TASK* p_wk )
 {
-	GF_ASSERT( p_wk->p_user_work );
-	GFL_HEAP_FreeMemory( p_wk->p_user_work );
-	p_wk->p_user_work = NULL;
+	if( p_wk->p_user_work ){
+		GFL_HEAP_FreeMemory( p_wk->p_user_work );
+		p_wk->p_user_work = NULL;
+	}
 }
 
 

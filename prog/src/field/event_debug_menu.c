@@ -28,6 +28,9 @@
 #include "field_comm/field_comm_debug.h"
 #include "ircbattle/ircbattlemenu.h"
 #include "event_ircbattle.h"
+#include "field_subscreen.h"
+
+#include "font/font.naix"
 
 //======================================================================
 //	define
@@ -120,6 +123,8 @@ static BOOL DMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_FldMMdlList( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk );
+
 //--------------------------------------------------------------
 ///	デバッグメニューリスト　汎用
 ///	データを追加する事でメニューの項目も増えます。
@@ -152,6 +157,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR13, DMenuCallProc_FldMMdlList },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
+	{ DEBUG_FIELD_STR15, DMenuCallProc_ControlLight },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -1459,4 +1465,141 @@ static void DEBUG_SetMenuWorkFldMMdlList(
 	}
 	
 	GFL_HEAP_FreeMemory( strBuf );
+}
+
+
+
+
+//======================================================================
+//	デバッグメニュー　ライト操作
+//======================================================================
+
+//--------------------------------------------------------------
+///	DEBUG_CTLIGHT_WORK ライト操作ワーク
+//--------------------------------------------------------------
+typedef struct
+{
+	GAMESYS_WORK *gsys;
+	GMEVENT *event;
+	HEAPID heapID;
+	FIELD_MAIN_WORK *fieldWork;
+
+	GFL_BMPWIN* p_win;
+}DEBUG_CTLLIGHT_WORK;
+
+//--------------------------------------------------------------
+///	proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuControlLight(
+		GMEVENT *event, int *seq, void *wk );
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　カメラ操作
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk )
+{
+	DEBUG_CTLLIGHT_WORK *work;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	
+	GMEVENT_Change( event, DMenuControlLight, sizeof(DEBUG_CTLLIGHT_WORK) );
+	work = GMEVENT_GetEventWork( event );
+	MI_CpuClear8( work, sizeof(DEBUG_CTLLIGHT_WORK) );
+	
+	work->gsys = gsys;
+	work->event = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：カメラ操作
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuControlLight(
+		GMEVENT *event, int *seq, void *wk )
+{
+	DEBUG_CTLLIGHT_WORK *work = wk;
+	FIELD_LIGHT* p_light;
+
+	// ライト取得
+	p_light = FIELDMAP_GetFieldLight( work->fieldWork );
+	
+	switch( (*seq) ){
+	case 0:
+		// ライト管理開始
+		FIELD_LIGHT_DEBUG_Init( p_light, work->heapID );
+
+		// インフォーバーの非表示
+		FIELD_SUBSCREEN_Exit();
+		GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_OFF );
+
+		// ビットマップウィンドウ初期化
+		{
+			static const GFL_BG_BGCNT_HEADER header_sub3 = {
+				0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+				GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x7000,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+			};
+
+			GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
+			GFL_BG_ClearFrame( FIELD_SUBSCREEN_BGPLANE );
+			GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
+
+			// パレット情報を転送
+			GFL_ARC_UTIL_TransVramPalette(
+				ARCID_FONT, NARC_font_default_nclr,
+				PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
+			
+			// ビットマップウィンドウを作成
+			work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
+				0, 0, 32, 24,
+				FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_F );
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->p_win ), 0xf );
+			GFL_BMPWIN_MakeScreen( work->p_win );
+			GFL_BMPWIN_TransVramCharacter( work->p_win );
+			GFL_BG_LoadScreenReq( FIELD_SUBSCREEN_BGPLANE );
+		}
+
+
+		(*seq)++;
+	case 1:
+		// ライト管理メイン
+		FIELD_LIGHT_DEBUG_Control( p_light );
+		FIELD_LIGHT_DEBUG_PrintData( p_light, work->p_win );
+
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			(*seq)++;
+		}
+		break;
+	case 2:
+		// ライト管理終了
+		FIELD_LIGHT_DEBUG_Exit( p_light );
+
+		// ビットマップウィンドウ破棄
+		{
+			GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
+			GFL_BMPWIN_Delete( work->p_win );
+		}
+
+		// インフォーバーの表示
+		FIELD_SUBSCREEN_Init( work->heapID );
+
+		return( GMEVENT_RES_FINISH );
+	}
+	
+	return( GMEVENT_RES_CONTINUE );
 }

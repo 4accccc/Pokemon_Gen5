@@ -19,6 +19,10 @@ extern "C"{
 #include <gflib.h>
 #include "field_fog.h"
 
+#ifdef PM_DEBUG
+#define DEBUG_FIELD_LIGHT		// フィールドライトのデバック機能を有効にする
+#endif
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -76,7 +80,22 @@ extern BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys );
 
 
 
+#ifdef DEBUG_FIELD_LIGHT
 
+extern void FIELD_LIGHT_DEBUG_Init( FIELD_LIGHT* p_sys, u32 heapID );
+extern void FIELD_LIGHT_DEBUG_Exit( FIELD_LIGHT* p_sys );
+
+extern void FIELD_LIGHT_DEBUG_Control( FIELD_LIGHT* p_sys );
+extern void FIELD_LIGHT_DEBUG_PrintData( FIELD_LIGHT* p_sys, GFL_BMPWIN* p_win );
+
+#else
+
+#define FIELD_LIGHT_DEBUG_Init( a,b )		((void)0)
+#define FIELD_LIGHT_DEBUG_Exit( a )			((void)0)
+#define FIELD_LIGHT_DEBUG_Control( a )		((void)0)
+#define FIELD_LIGHT_DEBUG_PrintData( a,b )	((void)0)
+
+#endif
 
 #ifdef _cplusplus
 }	// extern "C"{

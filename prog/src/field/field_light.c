@@ -13,6 +13,16 @@
 #include <gflib.h>
 
 #include "arc_def.h"
+#include "message.naix"
+
+#include "print/wordset.h"
+#include "print/gf_font.h"
+#include "print/printsys.h"
+
+#include "msg/msg_d_tomoya.h"
+
+#include "font/font.naix"
+
 
 #include  "field_light.h"
 
@@ -49,6 +59,61 @@
 //=====================================
 #define LIGHT_ARC_ID			( ARCID_FIELD_LIGHT )
 #define LIGHT_ARC_SEASON_NUM	( 4 )
+
+
+
+#ifdef DEBUG_FIELD_LIGHT
+// デバック管理シーケンス
+enum{
+	DEBUG_LIGHT_SEQ_LIGHT,
+	DEBUG_LIGHT_SEQ_MATERIAL,
+	DEBUG_LIGHT_SEQ_OTHER,
+
+	DEBUG_LIGHT_SEQ_NUM,
+};
+
+// ライト管理項目数
+enum {
+	DEBUG_CONT_LIGHT00_FLAG,
+	DEBUG_CONT_LIGHT00_RGB,
+	DEBUG_CONT_LIGHT00_VEC,
+
+	DEBUG_CONT_LIGHT01_FLAG,
+	DEBUG_CONT_LIGHT01_RGB,
+	DEBUG_CONT_LIGHT01_VEC,
+
+	DEBUG_CONT_LIGHT02_FLAG,
+	DEBUG_CONT_LIGHT02_RGB,
+	DEBUG_CONT_LIGHT02_VEC,
+
+	DEBUG_CONT_LIGHT03_FLAG,
+	DEBUG_CONT_LIGHT03_RGB,
+	DEBUG_CONT_LIGHT03_VEC,
+
+	DEBUG_CONT_LIGHT_NUM,
+} ;
+
+// マテリアル管理
+enum {
+	DEBUG_CONT_MATERIAL_DEFFUSE,
+	DEBUG_CONT_MATERIAL_AMBIENT,
+	DEBUG_CONT_MATERIAL_SPECULAR,
+	DEBUG_CONT_MATERIAL_EMISSION,
+
+	DEBUG_CONT_MATERIAL_NUM,
+};
+
+// そのた管理
+enum {
+	DEBUG_CONT_OTHER_FOG,
+
+	DEBUG_CONT_OTHER_NUM,
+};
+
+#define DEBUG_PRINT_X	( 10 )
+
+
+#endif	// DEBUG_FIELD_LIGHT
 
 //-----------------------------------------------------------------------------
 /**
@@ -149,6 +214,22 @@ struct _FIELD_LIGHT {
 	// 反映時間
 	s32			time_second;
 
+#ifdef DEBUG_FIELD_LIGHT
+	BOOL	debug_flag;
+	s16		debug_cont_seq;
+	s16		debug_cont_select;
+	s32		debug_print_req;
+
+	u16		debug_rotate_xz;
+	u16		debug_rotate_y;
+
+	WORDSET*		p_debug_wordset;
+	GFL_FONT*		p_debug_font;
+	GFL_MSGDATA*	p_debug_msgdata;
+	STRBUF*			p_debug_strbuff;
+	STRBUF*			p_debug_strbuff_tmp;
+#endif	// DEBUG_FIELD_LIGHT
+
 };
 
 
@@ -162,6 +243,7 @@ struct _FIELD_LIGHT {
 ///	システム
 //=====================================
 static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight );
+static void FIELD_LIGHT_ForceReflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight );
 static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 season, u32 heapID );
 static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID );
 static void FIELD_LIGHT_ReleaseData( FIELD_LIGHT* p_sys );
@@ -190,6 +272,25 @@ static void LIGHT_FADE_GetData( const LIGHT_FADE* cp_wk, LIGHT_DATA* p_data );
 
 
 
+#ifdef DEBUG_FIELD_LIGHT
+//-------------------------------------
+///	ライトデバック機能
+//=====================================
+static void DEBUG_LIGHT_ContLight( FIELD_LIGHT* p_wk );
+static void DEBUG_LIGHT_ContMaterial( FIELD_LIGHT* p_wk );
+static void DEBUG_LIGHT_ContOther( FIELD_LIGHT* p_wk );
+
+static void DEBUG_LIGHT_PrintLight( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win );
+static void DEBUG_LIGHT_PrintMaterial( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win );
+static void DEBUG_LIGHT_PrintOther( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win );
+
+static GXRgb DEBUG_LIGHT_ContRgb( GXRgb rgb );
+static void DEBUG_LIGHT_InitContVec( FIELD_LIGHT* p_wk, const VecFx16* cp_vec );
+static BOOL DEBUG_LIGHT_ContVec( FIELD_LIGHT* p_wk, VecFx16* p_vec );
+
+static void DEBUG_LIGHT_SetWordsetRgb( FIELD_LIGHT* p_wk, u32 bufstart, GXRgb rgb );
+static void DEBUG_LIGHT_SetWordsetVec( FIELD_LIGHT* p_wk, u32 bufstart, const VecFx16* cp_vec );
+#endif // DEBUG_FIELD_LIGHT
 
 
 
@@ -267,6 +368,12 @@ void FIELD_LIGHT_Delete( FIELD_LIGHT* p_sys )
 void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 {
 	int starttime;
+
+#ifdef DEBUG_FIELD_LIGHT
+	if( p_sys->debug_flag ){
+		return;
+	}
+#endif
 
 	//  1/2で考える
 	rtc_second /= 2;
@@ -435,6 +542,657 @@ BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys )
 }
 
 
+#ifdef DEBUG_FIELD_LIGHT
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フィールドライトデバック	初期化
+ *
+ *	@param	p_sys		システムワーク
+ *	@param	heapID		ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_LIGHT_DEBUG_Init( FIELD_LIGHT* p_sys, u32 heapID )
+{
+	GF_ASSERT( !p_sys->p_debug_wordset );
+	GF_ASSERT( !p_sys->p_debug_msgdata );
+	
+	// ワードセット作成
+	p_sys->p_debug_wordset = WORDSET_Create( heapID );
+	p_sys->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tomoya_dat, heapID );
+
+	p_sys->p_debug_strbuff		= GFL_STR_CreateBuffer( 256, heapID );
+	p_sys->p_debug_strbuff_tmp	= GFL_STR_CreateBuffer( 256, heapID );
+
+	// フォントデータ
+	p_sys->p_debug_font = GFL_FONT_Create(
+		ARCID_FONT, NARC_font_large_nftr,
+		GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+
+	p_sys->debug_flag = TRUE;
+
+	GFL_UI_KEY_SetRepeatSpeed( 4,8 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フィールドライト　ワーク破棄
+ */
+//-----------------------------------------------------------------------------
+void FIELD_LIGHT_DEBUG_Exit( FIELD_LIGHT* p_sys )
+{
+	GF_ASSERT( p_sys->p_debug_wordset );
+	GF_ASSERT( p_sys->p_debug_msgdata );
+
+
+	// フォントデータ
+	GFL_FONT_Delete( p_sys->p_debug_font );
+	p_sys->p_debug_font = NULL;
+
+
+	GFL_MSG_Delete( p_sys->p_debug_msgdata );
+	p_sys->p_debug_msgdata = NULL;
+
+	WORDSET_Delete( p_sys->p_debug_wordset );
+	p_sys->p_debug_wordset = NULL;
+
+	GFL_STR_DeleteBuffer( p_sys->p_debug_strbuff );
+	p_sys->p_debug_strbuff = NULL;
+	GFL_STR_DeleteBuffer( p_sys->p_debug_strbuff_tmp );
+	p_sys->p_debug_strbuff_tmp = NULL;
+
+	p_sys->debug_flag = FALSE;
+
+	GFL_UI_KEY_SetRepeatSpeed( 8,15 );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライト情報デバックコントロール
+ *
+ *	@param	p_sys	システム
+ */
+//-----------------------------------------------------------------------------
+void FIELD_LIGHT_DEBUG_Control( FIELD_LIGHT* p_sys )
+{
+	p_sys->debug_print_req = FALSE;
+	
+	// LRでライト情報を交換
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+
+		if( p_sys->now_index > 0 ){
+			p_sys->now_index --;
+		}else{
+			p_sys->now_index = p_sys->data_num-1;
+		}
+		p_sys->debug_print_req = TRUE;
+
+		// データ反映
+		GFL_STD_MemCopy( &p_sys->p_data[p_sys->now_index], &p_sys->reflect_data, sizeof(LIGHT_DATA) );
+		p_sys->change = TRUE;
+		
+	}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+
+		p_sys->now_index = (p_sys->now_index + 1) % p_sys->data_num;
+		p_sys->debug_print_req = TRUE;
+
+		// データ反映
+		GFL_STD_MemCopy( &p_sys->p_data[p_sys->now_index], &p_sys->reflect_data, sizeof(LIGHT_DATA) );
+		p_sys->change = TRUE;
+	}
+
+	// タッチで、項目を変更
+	{
+		u32 x, y;
+		if( GFL_UI_TP_GetPointTrg( &x, &y ) ){
+			
+			if( x<128 ){
+				// 項目モドル
+				if( p_sys->debug_cont_seq > 0 ){
+					p_sys->debug_cont_seq --;
+				}else{
+					p_sys->debug_cont_seq  = DEBUG_LIGHT_SEQ_NUM-1;
+				}
+				p_sys->debug_print_req		= TRUE;
+				p_sys->debug_cont_select	= 0;
+			}else{
+				// 項目ススム
+				p_sys->debug_cont_seq		= (p_sys->debug_cont_seq+1) % DEBUG_LIGHT_SEQ_NUM;
+				p_sys->debug_print_req		= TRUE;
+				p_sys->debug_cont_select	= 0;
+			}
+		}
+	}
+	
+	// ライトコントロール
+	switch( p_sys->debug_cont_seq ){
+	case DEBUG_LIGHT_SEQ_LIGHT:
+		DEBUG_LIGHT_ContLight( p_sys );
+		break;
+	case DEBUG_LIGHT_SEQ_MATERIAL:
+		DEBUG_LIGHT_ContMaterial( p_sys );
+		break;
+	case DEBUG_LIGHT_SEQ_OTHER:
+		DEBUG_LIGHT_ContOther( p_sys );
+		break;
+
+	default:
+		GF_ASSERT(0);
+		break;
+	}
+
+	if( p_sys->change ){
+		FIELD_LIGHT_ForceReflect( p_sys, p_sys->p_fog, p_sys->p_liblight );
+		p_sys->change = FALSE;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	情報をビットマップウィンドウに表示
+ *
+ *	@param	cp_sys	システム
+ *	@param	p_win	ウィンドウ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_LIGHT_DEBUG_PrintData( FIELD_LIGHT* p_sys, GFL_BMPWIN* p_win )
+{
+	if( p_sys->debug_print_req ){
+		// ビットマップクリア
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_win ), 15 );
+
+		//描画 
+		switch( p_sys->debug_cont_seq ){
+		case DEBUG_LIGHT_SEQ_LIGHT:
+			DEBUG_LIGHT_PrintLight( p_sys, p_win );
+			break;
+		case DEBUG_LIGHT_SEQ_MATERIAL:
+			DEBUG_LIGHT_PrintMaterial( p_sys, p_win );
+			break;
+		case DEBUG_LIGHT_SEQ_OTHER:
+			DEBUG_LIGHT_PrintOther( p_sys, p_win );
+			break;
+
+		default:
+			GF_ASSERT(0);
+			break;
+		}
+
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライト管理処理
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_LIGHT_ContLight( FIELD_LIGHT* p_wk )
+{
+	u32 cont_light = 0;
+	GXRgb change_rgb;
+	BOOL vec_cont_init = FALSE;
+	
+	// 上下、選択項目を変える
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+
+		if( p_wk->debug_cont_select > 0 ){
+			p_wk->debug_cont_select --;
+		}else{
+			p_wk->debug_cont_select = DEBUG_CONT_LIGHT_NUM-1;
+		}
+		p_wk->debug_print_req = TRUE;
+
+		// ベクトル管理方法の更新要請
+		vec_cont_init = TRUE;
+		
+	}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+
+		p_wk->debug_cont_select = (p_wk->debug_cont_select + 1) % DEBUG_CONT_LIGHT_NUM;
+		p_wk->debug_print_req = TRUE;
+
+		// ベクトル管理方法の更新要請
+		vec_cont_init = TRUE;
+	}
+
+	// 管理ライト判定
+	cont_light = p_wk->debug_cont_select / 3;
+
+	//  管理
+	switch( p_wk->debug_cont_select ){
+	case DEBUG_CONT_LIGHT00_FLAG:
+	case DEBUG_CONT_LIGHT01_FLAG:
+	case DEBUG_CONT_LIGHT02_FLAG:
+	case DEBUG_CONT_LIGHT03_FLAG:
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+			p_wk->reflect_data.light_flag[ cont_light ] ^= 1;
+			p_wk->change = TRUE;
+			p_wk->debug_print_req = TRUE;
+		}
+		break;
+
+	case DEBUG_CONT_LIGHT00_RGB:
+	case DEBUG_CONT_LIGHT01_RGB:
+	case DEBUG_CONT_LIGHT02_RGB:
+	case DEBUG_CONT_LIGHT03_RGB:
+
+		change_rgb = DEBUG_LIGHT_ContRgb( p_wk->reflect_data.light_color[ cont_light ] );
+		if( change_rgb != p_wk->reflect_data.light_color[ cont_light ] ){
+			p_wk->reflect_data.light_color[ cont_light ] = change_rgb;
+			p_wk->change = TRUE;
+			p_wk->debug_print_req = TRUE;
+		}
+		break;
+
+	case DEBUG_CONT_LIGHT00_VEC:
+	case DEBUG_CONT_LIGHT01_VEC:
+	case DEBUG_CONT_LIGHT02_VEC:
+	case DEBUG_CONT_LIGHT03_VEC:
+		if( vec_cont_init ){
+			DEBUG_LIGHT_InitContVec( p_wk, &p_wk->reflect_data.light_vec[ cont_light ] );
+		}
+		
+		if( DEBUG_LIGHT_ContVec( p_wk, &p_wk->reflect_data.light_vec[ cont_light ] ) ){
+			p_wk->change = TRUE;
+			p_wk->debug_print_req = TRUE;
+		}
+		break;
+
+	default:
+		GF_ASSERT(0);
+		break;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	マテリアル管理処理
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_LIGHT_ContMaterial( FIELD_LIGHT* p_wk )
+{
+	GXRgb change_rgb;
+	
+	// 上下、選択項目を変える
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+
+		if( p_wk->debug_cont_select > 0 ){
+			p_wk->debug_cont_select --;
+		}else{
+			p_wk->debug_cont_select = DEBUG_CONT_MATERIAL_NUM-1;
+		}
+		p_wk->debug_print_req = TRUE;
+		
+	}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+
+		p_wk->debug_cont_select = (p_wk->debug_cont_select + 1) % DEBUG_CONT_MATERIAL_NUM;
+		p_wk->debug_print_req = TRUE;
+	}
+
+	//  管理
+	switch( p_wk->debug_cont_select ){
+	case DEBUG_CONT_MATERIAL_DEFFUSE:
+		change_rgb = DEBUG_LIGHT_ContRgb( p_wk->reflect_data.diffuse );
+		if( change_rgb != p_wk->reflect_data.diffuse ){
+			p_wk->reflect_data.diffuse = change_rgb;
+			p_wk->change = TRUE;
+			p_wk->debug_print_req = TRUE;
+		}
+		break;
+
+	case DEBUG_CONT_MATERIAL_AMBIENT:
+		change_rgb = DEBUG_LIGHT_ContRgb( p_wk->reflect_data.ambient );
+		if( change_rgb != p_wk->reflect_data.ambient ){
+			p_wk->reflect_data.ambient = change_rgb;
+			p_wk->change = TRUE;
+			p_wk->debug_print_req = TRUE;
+		}
+		break;
+
+	case DEBUG_CONT_MATERIAL_SPECULAR:
+		change_rgb = DEBUG_LIGHT_ContRgb( p_wk->reflect_data.specular );
+		if( change_rgb != p_wk->reflect_data.specular ){
+			p_wk->reflect_data.specular = change_rgb;
+			p_wk->change = TRUE;
+			p_wk->debug_print_req = TRUE;
+		}
+		break;
+
+	case DEBUG_CONT_MATERIAL_EMISSION:
+		change_rgb = DEBUG_LIGHT_ContRgb( p_wk->reflect_data.emission );
+		if( change_rgb != p_wk->reflect_data.emission ){
+			p_wk->reflect_data.emission = change_rgb;
+			p_wk->change = TRUE;
+			p_wk->debug_print_req = TRUE;
+		}
+		break;
+
+	default:
+		GF_ASSERT(0);
+		break;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	その他管理処理
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_LIGHT_ContOther( FIELD_LIGHT* p_wk )
+{
+	GXRgb change_rgb;
+	
+	// 上下、選択項目を変える
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+
+		if( p_wk->debug_cont_select > 0 ){
+			p_wk->debug_cont_select --;
+		}else{
+			p_wk->debug_cont_select = DEBUG_CONT_OTHER_NUM-1;
+		}
+		p_wk->debug_print_req = TRUE;
+		
+	}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+
+		p_wk->debug_cont_select = (p_wk->debug_cont_select + 1) % DEBUG_CONT_OTHER_NUM;
+		p_wk->debug_print_req = TRUE;
+	}
+
+	//  管理
+	switch( p_wk->debug_cont_select ){
+	case DEBUG_CONT_OTHER_FOG:
+		change_rgb = DEBUG_LIGHT_ContRgb( p_wk->reflect_data.fog_color );
+		if( change_rgb != p_wk->reflect_data.fog_color ){
+			p_wk->reflect_data.fog_color = change_rgb;
+			p_wk->change = TRUE;
+			p_wk->debug_print_req = TRUE;
+		}
+		break;
+
+	default:
+		GF_ASSERT(0);
+		break;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライト情報の描画
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_LIGHT_PrintLight( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win )
+{
+	int i;
+
+	//  毎回フレーム数を表示
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, p_wk->reflect_data.endtime, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	// プリント
+	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_LIGHT_FRAME, p_wk->p_debug_strbuff_tmp );
+
+	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 160, 0, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+	// ライト情報を書き込む
+	for( i=0; i<4; i++ ){
+
+		// ライトナンバー
+		WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, i, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+		// ライトＯＮ・ＯＦＦ
+		WORDSET_RegisterNumber( p_wk->p_debug_wordset, 1, p_wk->reflect_data.light_flag[i], 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+		// RGB
+		DEBUG_LIGHT_SetWordsetRgb( p_wk, 2, p_wk->reflect_data.light_color[i] );
+
+		// 方向
+		DEBUG_LIGHT_SetWordsetVec( p_wk, 5, &p_wk->reflect_data.light_vec[i] );
+
+		// プリント
+		GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_LIGHT_FLAG, p_wk->p_debug_strbuff_tmp );
+
+		WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, i*(3*16), p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+	}
+
+	// カーソルの描画
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp( p_win ), 1, p_wk->debug_cont_select*16+2, 8, 8, 1 );
+
+	GFL_BMPWIN_TransVramCharacter( p_win );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	マテリアル情報の描画
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_LIGHT_PrintMaterial( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win )
+{
+	//  毎回フレーム数を表示
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, p_wk->reflect_data.endtime, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_LIGHT_FRAME, p_wk->p_debug_strbuff_tmp );
+	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 72, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+
+	
+	//  ディフューズ
+	DEBUG_LIGHT_SetWordsetRgb( p_wk, 0, p_wk->reflect_data.diffuse );
+	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_DIFFUSE, p_wk->p_debug_strbuff_tmp );
+	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 0, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+	//  アンビエント
+	DEBUG_LIGHT_SetWordsetRgb( p_wk, 0, p_wk->reflect_data.ambient );
+	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_AMBIENT, p_wk->p_debug_strbuff_tmp );
+	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 16, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+	//  スペキュラー
+	DEBUG_LIGHT_SetWordsetRgb( p_wk, 0, p_wk->reflect_data.specular );
+	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_SPECULAR, p_wk->p_debug_strbuff_tmp );
+	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 32, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+	//  エミッション
+	DEBUG_LIGHT_SetWordsetRgb( p_wk, 0, p_wk->reflect_data.emission );
+	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_EMISSION, p_wk->p_debug_strbuff_tmp );
+	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 48, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+
+	// カーソル描画
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp( p_win ), 1, p_wk->debug_cont_select*16+2, 8, 8, 1 );
+
+	GFL_BMPWIN_TransVramCharacter( p_win );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	その他情報の描画
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_LIGHT_PrintOther( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win )
+{
+	//  毎回フレーム数を表示
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, p_wk->reflect_data.endtime, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_LIGHT_FRAME, p_wk->p_debug_strbuff_tmp );
+	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 72, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+
+
+	//  フォグ
+	DEBUG_LIGHT_SetWordsetRgb( p_wk, 0, p_wk->reflect_data.fog_color );
+	GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_FOG, p_wk->p_debug_strbuff_tmp );
+	WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 0, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+	// カーソル描画
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp( p_win ), 1, p_wk->debug_cont_select*16+2, 8, 8, 1 );
+
+	GFL_BMPWIN_TransVramCharacter( p_win );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	色管理
+ *
+ *	@param	rgb		色
+ *
+ *	@return	色情報
+ */
+//-----------------------------------------------------------------------------
+static GXRgb DEBUG_LIGHT_ContRgb( GXRgb rgb )
+{
+	u8 r,g,b;
+
+	r = (rgb & GX_RGB_R_MASK )>> GX_RGB_R_SHIFT;
+	g = (rgb & GX_RGB_G_MASK )>> GX_RGB_G_SHIFT;
+	b = (rgb & GX_RGB_B_MASK )>> GX_RGB_B_SHIFT;
+	
+	// R
+	if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_Y ){
+		r = (r+1) % 32;
+	}
+	// G
+	else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_X ){
+		g = (g+1) % 32;
+	}
+	// B
+	else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A ){
+		b = (b+1) % 32;
+	}
+
+	return GX_RGB( r, g, b );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ベクトル管理開始処理
+ *
+ *	@param	p_wk	ワーク
+ *	@param	cp_vec	ベクトル
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_LIGHT_InitContVec( FIELD_LIGHT* p_wk, const VecFx16* cp_vec )
+{
+	fx32 xz_dist;
+
+	p_wk->debug_rotate_xz = FX_Atan2Idx( cp_vec->x, cp_vec->z );
+	xz_dist	  = FX_Sqrt( FX_Mul( cp_vec->z, cp_vec->z ) + FX_Mul( cp_vec->x, cp_vec->x ) );
+	p_wk->debug_rotate_y  = FX_Atan2Idx( cp_vec->y, xz_dist );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ベクトル管理
+ *	
+ *	@param	p_vec	ベクトル
+ */
+//-----------------------------------------------------------------------------
+#define DEBUG_LIGHT_CONT_VEC_ROTATE_ADD	( 182 )
+static BOOL DEBUG_LIGHT_ContVec( FIELD_LIGHT* p_wk, VecFx16* p_vec )
+{
+	BOOL change = FALSE;
+	MtxFx33 mtx_xz, mtx_y;
+
+	// 上下左右回転
+	// X 上
+	if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_X ){
+		// Y方向は、９０度～２７０度までしか動かさない
+		if( p_wk->debug_rotate_y >= ((0xffff/4) + DEBUG_LIGHT_CONT_VEC_ROTATE_ADD) ){
+			p_wk->debug_rotate_y -= DEBUG_LIGHT_CONT_VEC_ROTATE_ADD;
+		}else{
+			p_wk->debug_rotate_y = (0xffff/4);
+		}
+		change = TRUE;
+	}
+	// B 下
+	else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_B ){
+
+		// Y方向は、１８０度～３６０度までしか動かさない
+		if( (p_wk->debug_rotate_y+DEBUG_LIGHT_CONT_VEC_ROTATE_ADD) < ((0xffff/4)*3)  ){
+			p_wk->debug_rotate_y += DEBUG_LIGHT_CONT_VEC_ROTATE_ADD;
+		}else{
+			p_wk->debug_rotate_y = ((0xffff/4)*3);
+		}
+
+		change = TRUE;
+	}
+	// Y 左
+	else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_Y ){
+
+		p_wk->debug_rotate_xz -= DEBUG_LIGHT_CONT_VEC_ROTATE_ADD;
+		change = TRUE;
+	}
+	// A 右
+	else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A ){
+
+		p_wk->debug_rotate_xz += DEBUG_LIGHT_CONT_VEC_ROTATE_ADD;
+		change = TRUE;
+	}
+
+	if( change ){
+
+		p_vec->y = FX_Mul( FX_SinIdx( p_wk->debug_rotate_y ), FX32_ONE );
+		p_vec->x = FX_Mul( FX_CosIdx( p_wk->debug_rotate_y ), FX32_ONE );
+		p_vec->z = FX_Mul( FX_CosIdx( p_wk->debug_rotate_xz ), p_vec->x );
+		p_vec->x = FX_Mul( FX_SinIdx( p_wk->debug_rotate_xz ), p_vec->x );
+	}
+
+	return change;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ワードセットにＲＧＢを入れる
+ *
+ *	@param	p_wk		ワーク
+ *	@param	bufstart	バッファ開始インデックス
+ *	@param	rgb			ＲＧＢ
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_LIGHT_SetWordsetRgb( FIELD_LIGHT* p_wk, u32 bufstart, GXRgb rgb )
+{
+	u8 r,g,b;
+
+	r = (rgb & GX_RGB_R_MASK )>> GX_RGB_R_SHIFT;
+	g = (rgb & GX_RGB_G_MASK )>> GX_RGB_G_SHIFT;
+	b = (rgb & GX_RGB_B_MASK )>> GX_RGB_B_SHIFT;
+
+	// RGBを設定
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, bufstart+0, r, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, bufstart+1, g, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, bufstart+2, b, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ワードセットにベクトルを入れる
+ *
+ *	@param	p_wk		ワーク
+ *	@param	bufstart	バッファ開始インデックス
+ *	@param	cp_vec		ベクトル
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_LIGHT_SetWordsetVec( FIELD_LIGHT* p_wk, u32 bufstart, const VecFx16* cp_vec )
+{
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, bufstart+0, cp_vec->x, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, bufstart+1, cp_vec->y, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( p_wk->p_debug_wordset, bufstart+2, cp_vec->z, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+}
+
+
+
+#endif // DEBUG_FIELD_LIGHT
 
 
 
@@ -481,6 +1239,41 @@ static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fo
 
 		FIELD_FOG_SetColorRgb( p_fog, cp_sys->reflect_data.fog_color );
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	強制ライト反映
+ *
+ *	@param	cp_sys			システムワーク
+ *	@param	p_fog			フォグワーク
+ *	@param	p_liblight		ライトワーク
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_LIGHT_ForceReflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight )
+{
+	int i;
+	VecFx16 dummy_vec = {0};
+	u16		dummy_col = 0;
+	
+	for( i=0; i<4; i++ ){
+		if( cp_sys->reflect_data.light_flag[i] ){
+			GFL_G3D_LIGHT_SetVec( p_liblight, i, (VecFx16*)&cp_sys->reflect_data.light_vec[i] );
+			GFL_G3D_LIGHT_SetColor( p_liblight, i, (u16*)&cp_sys->reflect_data.light_color[i] );
+		}else{
+			
+			GFL_G3D_LIGHT_SetVec( p_liblight, i, &dummy_vec );
+			GFL_G3D_LIGHT_SetColor( p_liblight, i, &dummy_col );
+		}
+	}
+
+	NNS_G3dGlbMaterialColorDiffAmb( cp_sys->reflect_data.diffuse,
+			cp_sys->reflect_data.ambient, TRUE );
+
+	NNS_G3dGlbMaterialColorSpecEmi( cp_sys->reflect_data.specular,
+			cp_sys->reflect_data.emission, FALSE );
+
+	FIELD_FOG_SetColorRgb( p_fog, cp_sys->reflect_data.fog_color );
 }
 
 //----------------------------------------------------------------------------

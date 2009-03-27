@@ -11,6 +11,8 @@
 #include "field/field_msgbg.h"
 
 #include "field_camera.h"
+#include "field_light.h"
+#include "field_fog.h"
 
 #define FLD_COMM_PLAYER_MAX (4)
 #define FLD_COMM_ACTOR_MAX (FLD_COMM_PLAYER_MAX-1)
@@ -18,6 +20,8 @@
 extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );
 extern FLDMSGBG * FIELDMAP_GetFLDMSGBG( FIELD_MAIN_WORK *fieldWork );
 extern FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELD_MAIN_WORK *fieldWork );
+extern FIELD_LIGHT * FIELDMAP_GetFieldLight( FIELD_MAIN_WORK *fieldWork );
+extern FIELD_FOG_WORK * FIELDMAP_GetFieldFog( FIELD_MAIN_WORK *fieldWork );
 
 //field_sub_grid.c
 extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );
