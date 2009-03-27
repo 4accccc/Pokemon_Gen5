@@ -33,10 +33,10 @@ enum {
 /*----------------------------------*/
 typedef struct {
 	u8  def_article;		///< 定冠詞ＩＤ
-	u8  indef_article;		///< 不定冠詞ＩＤ
+	u8  indef_article;	///< 不定冠詞ＩＤ
 	u8  preposition;		///< 前置詞ＩＤ
 	u8  grammer : 7;		///< 文法性
-	u8  form : 1;			///< 単数・複数（0 = 単数）
+	u8  form : 1;				///< 単数・複数（0 = 単数）
 }WORDSET_PARAM;
 
 
@@ -318,6 +318,26 @@ void WORDSET_RegisterWazaName( WORDSET* wordset, u32 bufID, u32 wazaID )
 	if( man )
 	{
 		GFL_MSG_GetString( man, wazaID, wordset->tmpBuf );
+		RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
+		GFL_MSG_Delete( man );
+	}
+}
+//------------------------------------------------------------------
+/**
+ * 指定バッファにアイテム名
+ *
+ * @param   bufID			バッファID
+ * @param   itemID		アイテムID
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterItemName( WORDSET* wordset, u32 bufID, u32 itemID )
+{
+	GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+					NARC_message_itemname_dat, GetHeapLowID(wordset->heapID) );
+	if( man )
+	{
+		GFL_MSG_GetString( man, itemID, wordset->tmpBuf );
 		RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 		GFL_MSG_Delete( man );
 	}

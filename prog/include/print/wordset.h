@@ -36,6 +36,7 @@ extern void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, const POK
 extern void WORDSET_RegisterPokeNickName( WORDSET* wordset, u32 bufID, const POKEMON_PARAM* pp );
 extern void WORDSET_RegisterPokeOyaName( WORDSET* wordset,  u32 bufID, const POKEMON_PARAM* pp );
 extern void WORDSET_RegisterWazaName( WORDSET* wordset, u32 bufID, u32 wazaID );
+extern void WORDSET_RegisterItemName( WORDSET* wordset, u32 bufID, u32 itemID );
 extern void WORDSET_RegisterTokuseiName( WORDSET* wordset, u32 bufID, u32 tokuseiID );
 extern void WORDSET_RegisterNumber( WORDSET* wordset, u32 bufID, s32 number, u32 keta, StrNumberDispType dispType, StrNumberCodeType codeType );
 extern void WORDSET_RegisterPMSWord( WORDSET* wordset, u32 bufID, PMS_WORD word );
