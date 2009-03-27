@@ -1,4 +1,5 @@
 SCRSRCS	=\
+	c99.ev	\
 	common_scr.ev	\
 	dummy.ev	\
 	dummy_scr.ev	
