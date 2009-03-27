@@ -14,6 +14,9 @@
 //	define
 //======================================================================
 
+//NCGを読み込むVRAMサイズ
+#define INFOWIN_CHARAREA_SIZE (0x1000)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -28,8 +31,9 @@
 
 //初期化
 //	@param bgplane	BG面
-//	@param bgOfs	NCGの読み込むVRAMアドレス(0x1000必要)
+//	@param pltNo	パレット番号
 //	@param heapId	ヒープID
+//	VramのCharエリアに INFOWIN_CHARAREA_SIZE の空きが必要です
 void	INFOWIN_Init( u8 bgplane , u8 pltNo, HEAPID heapId );
 void	INFOWIN_Update( void );
 void	INFOWIN_Exit( void );

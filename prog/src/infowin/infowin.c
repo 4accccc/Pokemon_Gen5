@@ -206,6 +206,9 @@ void	INFOWIN_Init( u8 bgplane , u8 pltNo ,HEAPID heapId )
 
 void	INFOWIN_Update( void )
 {
+	if( infoWk == NULL )
+		return;
+	
 	INFOWIN_UpdateTime();
 	//バッテリー
 	infoWk->batteryCnt++;
@@ -236,6 +239,8 @@ void	INFOWIN_Exit( void )
 	
 	GFL_TCB_DeleteTask( infoWk->vblankFunc );
 	
+	GFL_BG_FreeCharacterArea( infoWk->bgplane , infoWk->ncgPos , INFOWIN_CHARAREA_SIZE );
+
 	GFL_HEAP_FreeMemory(infoWk);
 	infoWk = NULL;
 }
@@ -243,6 +248,10 @@ void	INFOWIN_Exit( void )
 static	void	INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
 {
 	BOOL	transReq = FALSE;
+
+	if( infoWk == NULL )
+		return;
+		
 	if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_TIME) )
 	{
 		u8 i;
@@ -432,9 +441,8 @@ static	void	INFOWIN_InitBg( u8 bgplane , u8 pltNo, HEAPID heapId )
 	ARCHANDLE *arcHdl = GFL_ARC_OpenDataHandle(ARCID_INFOWIN,heapId);
 	
 	//領域の確保
-	infoWk->ncgPos = GFL_BG_AllocCharacterArea( bgplane , 0x1000 , GFL_BG_CHRAREA_GET_B );
+	infoWk->ncgPos = GFL_BG_AllocCharacterArea( bgplane , INFOWIN_CHARAREA_SIZE , GFL_BG_CHRAREA_GET_B );
 	GF_ASSERT_MSG( infoWk->ncgPos != AREAMAN_POS_NOTFOUND ,"Infobar生成に必要なキャラＶＲＡＭ領域が足りない\n" );
-
 	//データの読み込み
 	GFL_ARCHDL_UTIL_TransVramPalette( arcHdl,NARC_infowin_infobar_NCLR,palType,pltNo*2*0x10,2*0x10,heapId );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHdl,NARC_infowin_infobar_NCGR,bgplane,infoWk->ncgPos,0,FALSE,heapId );
