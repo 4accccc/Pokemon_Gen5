@@ -11,6 +11,8 @@ del *.nsbca
 
 echo g2dコンバート
 g2dcvtr bmpoam_dummy32x16.nce -ncn
+g2dcvtr bmpoam_dummy32x16_64k.nce -ncn
+g2dcvtr bmpoam_dummy32x16_32k.nce -ncn
 
 
 echo narc作成

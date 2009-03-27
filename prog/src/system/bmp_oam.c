@@ -26,6 +26,16 @@
 #define FACT_ONE_ACT_NUM			(8)
 
 
+///データのマッピングモード毎のアクセスindex
+enum{
+	DATAID_128K,
+	DATAID_64K,
+	DATAID_32K,
+	
+	DATAID_MAX,
+	DATAID_NULL = 0xffffffff,	//未使用
+};
+
 //==============================================================================
 //	構造体定義
 //==============================================================================
@@ -44,16 +54,42 @@ typedef struct _BMPOAM_ACT{
 typedef struct _BMPOAM_SYS{
 	GFL_CLUNIT *clunit;
 	HEAPID heap_id;
-	u32 cell_id;			///<共通セルの登録index
+	u32 cell_id[DATAID_MAX];			///<共通セルの登録index
 }BMPOAM_SYS;
 
 
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-static void _FOLocal_CommonResourceSet(BMPOAM_SYS_PTR bsp);
+static u32 _FOLocal_CellResourceSet(BMPOAM_SYS_PTR bsp, CLSYS_DRAW_TYPE draw_type, ARCHANDLE *hdl);
 static void _FOLocal_CommonResourceFree(BMPOAM_SYS_PTR bsp);
 
+
+//==============================================================================
+//	データ
+//==============================================================================
+///リソースデータのテーブル　　※DATAID_???と並びを同じにしておくこと！
+static const struct{
+	u32 ncgr;
+	u32 ncer;
+	u32 nanr;
+}OamResourceTbl[] = {
+	{
+		NARC_bmpoam_bmpoam_dummy32x16_NCGR,
+		NARC_bmpoam_bmpoam_dummy32x16_NCER,
+		NARC_bmpoam_bmpoam_dummy32x16_NANR,
+	},
+	{
+		NARC_bmpoam_bmpoam_dummy32x16_64k_NCGR,
+		NARC_bmpoam_bmpoam_dummy32x16_64k_NCER,
+		NARC_bmpoam_bmpoam_dummy32x16_64k_NANR,
+	},
+	{
+		NARC_bmpoam_bmpoam_dummy32x16_32k_NCGR,
+		NARC_bmpoam_bmpoam_dummy32x16_32k_NCER,
+		NARC_bmpoam_bmpoam_dummy32x16_32k_NANR,
+	},
+};
 
 //==============================================================================
 //
@@ -73,13 +109,14 @@ static void _FOLocal_CommonResourceFree(BMPOAM_SYS_PTR bsp);
 BMPOAM_SYS_PTR BmpOam_Init(HEAPID heap_id, GFL_CLUNIT* p_unit)
 {
 	BMPOAM_SYS_PTR bsp;
+	int i;
 	
 	bsp = GFL_HEAP_AllocClearMemory(heap_id, sizeof(BMPOAM_SYS));
 	bsp->heap_id = heap_id;
 	bsp->clunit = p_unit;
-	
-	//共通リソース登録
-	_FOLocal_CommonResourceSet(bsp);
+	for(i = 0; i < DATAID_MAX; i++){
+		bsp->cell_id[i] = DATAID_NULL;
+	}
 	
 	return bsp;
 }
@@ -112,6 +149,7 @@ BMPOAM_ACT_PTR BmpOam_ActorAdd(BMPOAM_SYS_PTR bsp, const BMPOAM_ACT_DATA *head)
 	BMPOAM_ACT_PTR bact;
 	u8 num_x, num_y, x, y;
 	ARCHANDLE *hdl;
+	u32 data_index;
 	GFL_CLWK_DATA clwkdata = {
 		0, 0,		//pos_x, pos_y
 		0,			//anmseq
@@ -141,16 +179,18 @@ BMPOAM_ACT_PTR BmpOam_ActorAdd(BMPOAM_SYS_PTR bsp, const BMPOAM_ACT_DATA *head)
 	hdl = GFL_ARC_OpenDataHandle(ARCID_BMPOAM, bsp->heap_id);
 	for(y = 0; y < num_y; y++){
 		for(x = 0; x < num_x; x++){
+			//共通セルリソース登録
+			data_index = _FOLocal_CellResourceSet(bsp, head->draw_type, hdl);
 			//キャラ登録(領域確保)
 			bact->cgr_id[x + y*num_x] = GFL_CLGRP_CGR_Register(hdl, 
-				NARC_bmpoam_bmpoam_dummy32x16_NCGR, FALSE, head->draw_type, bsp->heap_id);
+				OamResourceTbl[data_index].ncgr, FALSE, head->draw_type, bsp->heap_id);
 			//アクター生成
 			clwkdata.pos_x = head->x + x * DUMMY_CELL_SIZE_X;
 			clwkdata.pos_y = head->y + y * DUMMY_CELL_SIZE_Y;
 			clwkdata.softpri = head->soft_pri;
 			clwkdata.bgpri = head->bg_pri;
 			bact->cap[x + y*num_x] = GFL_CLACT_WK_Create(bsp->clunit, 
-				bact->cgr_id[x + y*num_x], head->pltt_index, bsp->cell_id, &clwkdata, 
+				bact->cgr_id[x + y*num_x], head->pltt_index, bsp->cell_id[data_index], &clwkdata, 
 				head->setSerface, bsp->heap_id);
 			GFL_CLACT_WK_SetPlttOffs(bact->cap[x], head->pal_offset, CLWK_PLTTOFFS_MODE_OAM_COLOR);
 		}
@@ -329,19 +369,47 @@ void BmpOam_ActorSetPos(BMPOAM_ACT_PTR bact, s16 x, s16 y)
 /**
  * @brief   共通リソース読み込み
  * @param   bsp		フォントOAMシステムへのポインタ
+ * @param   draw_type
+ * @retval	データIndex
+ *
+ * 既に同じマッピングモードのセルが登録されている場合は、そのIndexを返します
  */
 //--------------------------------------------------------------
-static void _FOLocal_CommonResourceSet(BMPOAM_SYS_PTR bsp)
+static u32 _FOLocal_CellResourceSet(BMPOAM_SYS_PTR bsp, CLSYS_DRAW_TYPE draw_type, ARCHANDLE *hdl)
 {
-	ARCHANDLE *hdl;
+	GXOBJVRamModeChar obj_vram_mode;
+	int index;
 	
-	hdl = GFL_ARC_OpenDataHandle(ARCID_BMPOAM, bsp->heap_id);
+	//マッピングモードを取得し、登録済みかチェック
+	if(draw_type == CLSYS_DRAW_MAIN){
+		obj_vram_mode = GX_GetOBJVRamModeChar();
+	}
+	else{
+		obj_vram_mode = GXS_GetOBJVRamModeChar();
+	}
+	switch(obj_vram_mode){
+	case GX_OBJVRAMMODE_CHAR_1D_128K:
+		index = DATAID_128K;
+		break;
+	case GX_OBJVRAMMODE_CHAR_1D_64K:
+		index = DATAID_64K;
+		break;
+	case GX_OBJVRAMMODE_CHAR_1D_32K:
+		index = DATAID_32K;
+		break;
+	default:
+		GF_ASSERT(0);	//対応していないマッピングモードです
+		index = DATAID_128K;
+		break;
+	}
+	if(bsp->cell_id[index] != DATAID_NULL){
+		return index;		//このマッピングモードのセルは既に登録済み
+	}
 	
 	//セル＆セルアニメ
-	bsp->cell_id = GFL_CLGRP_CELLANIM_Register(hdl, 
-		NARC_bmpoam_bmpoam_dummy32x16_NCER, NARC_bmpoam_bmpoam_dummy32x16_NANR, bsp->heap_id);
-
-	GFL_ARC_CloseDataHandle(hdl);
+	bsp->cell_id[index] = GFL_CLGRP_CELLANIM_Register(hdl, 
+		OamResourceTbl[index].ncer, OamResourceTbl[index].nanr, bsp->heap_id);
+	return index;
 }
 
 //--------------------------------------------------------------
@@ -352,5 +420,12 @@ static void _FOLocal_CommonResourceSet(BMPOAM_SYS_PTR bsp)
 //--------------------------------------------------------------
 static void _FOLocal_CommonResourceFree(BMPOAM_SYS_PTR bsp)
 {
-	GFL_CLGRP_CELLANIM_Release(bsp->cell_id);
+	int i;
+	
+	for(i = 0; i < DATAID_MAX; i++){
+		if(bsp->cell_id[i] != DATAID_NULL){
+			GFL_CLGRP_CELLANIM_Release(bsp->cell_id[i]);
+			bsp->cell_id[i] = DATAID_NULL;
+		}
+	}
 }

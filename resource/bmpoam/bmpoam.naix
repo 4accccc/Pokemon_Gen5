@@ -13,7 +13,13 @@
 enum {
 	NARC_bmpoam_bmpoam_dummy32x16_NCER = 0,
 	NARC_bmpoam_bmpoam_dummy32x16_NANR = 1,
-	NARC_bmpoam_bmpoam_dummy32x16_NCGR = 2
+	NARC_bmpoam_bmpoam_dummy32x16_NCGR = 2,
+	NARC_bmpoam_bmpoam_dummy32x16_64k_NCER = 3,
+	NARC_bmpoam_bmpoam_dummy32x16_64k_NANR = 4,
+	NARC_bmpoam_bmpoam_dummy32x16_64k_NCGR = 5,
+	NARC_bmpoam_bmpoam_dummy32x16_32k_NCER = 6,
+	NARC_bmpoam_bmpoam_dummy32x16_32k_NANR = 7,
+	NARC_bmpoam_bmpoam_dummy32x16_32k_NCGR = 8
 };
 
 /* NARC_BMPOAM_NAIX_ */
