@@ -44,9 +44,9 @@
 //=====================================
 #define	WEATHER_RAIN_TIMING_MIN		(0)							// 雨を出すタイミング最小
 #define WEATHER_RAIN_TIMING_MAX		(8)						// 雨を出すタイミング最大
-#define WEATHER_RAIN_TIMING_ADD		(1)							// タイミングを減らす数
+#define WEATHER_RAIN_TIMING_ADD		(4)							// タイミングを減らす数
 #define WEATHER_RAIN_ADD_START		(1)							// 最初の同時に雨を登録する数
-#define WEATHER_RAIN_ADD_TIMING		(1)							// 雨のタイミングをこれ回変更したら１回増やす
+#define WEATHER_RAIN_ADD_TIMING		(2)							// 雨のタイミングをこれ回変更したら１回増やす
 #define WEATHER_RAIN_ADD			(1)							// 登録する数を増やす数
 #define	WEATHER_RAIN_ADD_MAIN		(2)							// メインシーケンスでの登録する数
 
@@ -57,7 +57,7 @@
 
 /*== フォグ ==*/
 #define	WEATHER_RAIN_FOG_TIMING		(300)							// に１回フォグテーブルを操作
-#define	WEATHER_RAIN_FOG_TIMING_END	(300)							// に１回フォグテーブルを操作
+#define	WEATHER_RAIN_FOG_TIMING_END	(100)							// に１回フォグテーブルを操作
 #define WEATHER_RAIN_FOG_START		(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_RAIN_FOG_START_END	(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_RAIN_FOG_OFS		(0x300)

@@ -241,7 +241,7 @@ extern void WEATHER_TASK_ObjFade_SetOut( WEATHER_TASK* p_wk, s32 obj_add_num_end
 extern BOOL WEATHER_TASK_ObjFade_Main( WEATHER_TASK* p_wk, u32 heapID );
 
 // フェードはせず、オブジェの同じ登録タイミングで、同じ数　オブジェを登録します。
-extern void WEATHER_TASK_ObjFade_NoFadeMain( WEATHER_TASK* p_wk, u32 heapID );
+extern BOOL WEATHER_TASK_ObjFade_NoFadeMain( WEATHER_TASK* p_wk, u32 heapID );
 
 //-------------------------------------
 ///	動作オブジェを乱数で分布させる

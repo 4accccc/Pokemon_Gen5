@@ -21,6 +21,7 @@
 #include "weather_sunny.h"
 #include "weather_snow.h"
 #include "weather_rain.h"
+#include "weather_storm.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -150,10 +151,11 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_sunny)
 	},
 
-	// ì‹ÇË
+
+	// ê·
 	{
-		&c_WEATHER_TASK_DATA_SUNNY,
-		FS_OVERLAY_ID(field_weather_sunny)
+		&c_WEATHER_TASK_DATA_SNOW,
+		FS_OVERLAY_ID(field_weather_snow)
 	},
 
 	// âJ
@@ -162,59 +164,11 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_rain)
 	},
 
-	// ëÂâJ
-	{
-		&c_WEATHER_TASK_DATA_SUNNY,
-		FS_OVERLAY_ID(field_weather_sunny)
-	},
-
-	// óãâJ
-	{
-		&c_WEATHER_TASK_DATA_SUNNY,
-		FS_OVERLAY_ID(field_weather_sunny)
-	},
-
-
-	// ê·
-	{
-		&c_WEATHER_TASK_DATA_SNOW,
-		FS_OVERLAY_ID(field_weather_snow)
-	},
-
-	// êÅê·
-	{
-		&c_WEATHER_TASK_DATA_SUNNY,
-		FS_OVERLAY_ID(field_weather_sunny)
-	},
-
-	// ñ“êÅê·
-	{
-		&c_WEATHER_TASK_DATA_SUNNY,
-		FS_OVERLAY_ID(field_weather_sunny)
-	},
-
-	// ñ∂ëÂ
-	{
-		&c_WEATHER_TASK_DATA_SUNNY,
-		FS_OVERLAY_ID(field_weather_sunny)
-	},
-
-	// âŒéRäD
-	{
-		&c_WEATHER_TASK_DATA_SUNNY,
-		FS_OVERLAY_ID(field_weather_sunny)
-	},
 
 	// çªóí
 	{
-		&c_WEATHER_TASK_DATA_SUNNY,
-		FS_OVERLAY_ID(field_weather_sunny)
-	},
-
-	// ÉXÉmÅ[É_ÉXÉg
-	{
-		&c_WEATHER_TASK_DATA_SUNNY,
-		FS_OVERLAY_ID(field_weather_sunny)
+		&c_WEATHER_TASK_DATA_STORM,
+		FS_OVERLAY_ID(field_weather_storm)
 	},
 
 };
@@ -323,6 +277,8 @@ void FIELD_WEATHER_Main( FIELD_WEATHER* p_sys, u32 heapID )
 		FIELD_WEATHER_Change( p_sys, WEATHER_NO_SUNNY );
 	}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
 		FIELD_WEATHER_Change( p_sys, WEATHER_NO_RAIN );
+	}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		FIELD_WEATHER_Change( p_sys, WEATHER_NO_STORM );
 	}
 	
 #endif

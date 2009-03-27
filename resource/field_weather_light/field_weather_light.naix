@@ -12,7 +12,8 @@
 
 enum {
 	NARC_field_weather_light_light_rain_dat = 0,
-	NARC_field_weather_light_light_show_dat = 1
+	NARC_field_weather_light_light_show_dat = 1,
+	NARC_field_weather_light_light_storm_dat = 2
 };
 
 /* NARC_FIELD_WEATHER_LIGHT_NAIX_ */

@@ -24,6 +24,27 @@ extern "C"{
 //-----------------------------------------------------------------------------
 
 #define		WEATHER_NO_SUNNY			(0)				// 晴れ
+#define		WEATHER_NO_SNOW				(1)				// 雪		
+#define		WEATHER_NO_RAIN				(2)				// 雨		
+#define		WEATHER_NO_STORM			(3)				// 砂嵐		
+
+#define		WEATHER_NO_NUM				(4)			// 天気数
+
+	// 戦闘フィールド状態していよう
+	// バトルファクトリーのルーレット施設で
+	// 実際のフィールドおきる天気以外の状態を
+	// バトルに渡さなくてはいけなくなったため作成。
+	//
+	// PLとGSの通信でも使用される定数なので、
+	// 値は一定にしてください。
+#define		WEATHER_NO_BTONLYSTART (1000)	// バトルオンリーの状態開始定数
+#define		WEATHER_NO_HIGHSUNNY	(1001)	// 日本晴れ
+#define		WEATHER_NO_TRICKROOM	(1002)	// トリックルーム
+
+
+
+#if 0		// プラチナの天気一覧
+#define		WEATHER_NO_SUNNY			(0)				// 晴れ
 #define		WEATHER_NO_CLOUDINESS		(1)				// 曇り		BG	
 #define		WEATHER_NO_RAIN				(2)				// 雨		OAM	FOG
 #define		WEATHER_NO_STRAIN			(3)				// 大雨		OAM FOG 
@@ -59,17 +80,10 @@ extern "C"{
 #define		WEATHER_NO_USUGURAI			(30)			// 薄暗い　FOG
 
 #define		WEATHER_NO_NUM				(31)			// 天気数
+#endif
 
-	// 戦闘フィールド状態していよう
-	// バトルファクトリーのルーレット施設で
-	// 実際のフィールドおきる天気以外の状態を
-	// バトルに渡さなくてはいけなくなったため作成。
-	//
-	// PLとGSの通信でも使用される定数なので、
-	// 値は一定にしてください。
-#define		WEATHER_NO_BTONLYSTART (1000)	// バトルオンリーの状態開始定数
-#define		WEATHER_NO_HIGHSUNNY	(1001)	// 日本晴れ
-#define		WEATHER_NO_TRICKROOM	(1002)	// トリックルーム
+
+
 
 
 #endif		// __WEATHER_NO_H__
