@@ -16,6 +16,7 @@
 #include "savedata/config.h"
 #include "print/wordset.h"
 #include "wifi_p2pmatchroom.h"
+#include "system/bmp_oam.h"
 #include "system/bmp_menu.h"
 #include "system/bmp_menulist.h"
 #include "net_app/connect_anm.h"
@@ -30,7 +31,7 @@
 #define START_WORDPANEL ( 0 )		// 最初の文字入力パネルの番号（０＝ひらがな）
 
 // CLACTで定義しているセルが大きすぎてサブ画面に影響がでてしまうので離してみる
-#define NAMEIN_SUB_ACTOR_DISTANCE 	(256*FX32_ONE)
+#define NAMEIN_SUB_ACTOR_DISTANCE 	(256)
 
 // CellActorに処理させるリソースマネージャの種類の数（＝マルチセル・マルチセルアニメは使用しない）
 #define CLACT_RESOURCE_NUM		(  4 )
@@ -298,16 +299,18 @@ typedef struct {
 	GFL_BMPWIN*	  userWin;
 
 	// ボタン
-//	CLACT_U_RES_OBJ_PTR	button_res[ 4 ];
+	u32	button_res[ 4 ];
   u32 btnCGRid;
   u32 btnCLRid;
   u32 btnCERid;
 
 //	CLACT_WORK_PTR button_act[MCV_USERD_BTTN_NUM];
    GFL_CLWK* button_act[MCV_USERD_BTTN_NUM];
-#if 0 //@@OO
-  CHAR_MANAGER_ALLOCDATA back_fontoam_cg;
-  FONTOAM_OBJ_PTR back_fontoam;	// もどる用FONTOAM
+#if 1
+//  CHAR_MANAGER_ALLOCDATA back_fontoam_cg;
+  BMPOAM_SYS_PTR back_fontoam;	// もどる用FONTOAM
+  BMPOAM_ACT_PTR BmpOamAct;
+  GFL_BMP_DATA*  BmpOamBmp;
 #endif
   u32 buttonact_on;			// ボタン動作モード
 	u32 touch_button;

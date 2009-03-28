@@ -1956,7 +1956,6 @@ void mydwc_Logout(void)
 static void mydwc_updateFriendInfo( void )
 {
 	int i;
-    char buff[MYDWC_STATUS_DATA_SIZE_MAX];
     
 	for(i = 0; i < FRIENDINFO_UPDATA_PERFRAME; i++)
 	{
@@ -1964,17 +1963,10 @@ static void mydwc_updateFriendInfo( void )
 		int size;
 	
         if( DWC_IsBuddyFriendData( &(_dWork->keyList[index]) ) ){
-            _dWork->friend_status[index] = DWC_GetFriendStatusData(&_dWork->keyList[ index ],buff,&size);
+            _dWork->friend_status[index] = DWC_GetFriendStatusData(&_dWork->keyList[ index ],(char*)_dWork->friendinfo[index],&size);
 #ifdef PM_DEBUG
             GF_ASSERT( (size <= MYDWC_STATUS_DATA_SIZE_MAX) || (size == -1));
 #endif
-            if(size!=-1){
-                GFL_STD_MemCopy(buff,_dWork->friendinfo[index], MYDWC_STATUS_DATA_SIZE_MAX);
-            }
-            else{
-                GFL_STD_MemClear(_dWork->friendinfo[index], MYDWC_STATUS_DATA_SIZE_MAX);
-                NET_PRINT("î•ñ‚ðÁ‚µ‚½ %d\n",index);
-            }
 		}
 		_dWork->friendupdate_index = (_dWork->friendupdate_index + 1) % FRIENDLIST_MAXSIZE;
 	}
@@ -1991,6 +1983,7 @@ static void mydwc_updateFriendInfo( void )
 BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size )
 {
 	MYDWC_DEBUGPRINT("upload status change(%p, %d)\n", data, size);
+
     GF_ASSERT(size < MYDWC_STATUS_DATA_SIZE_MAX);
 	return DWC_SetOwnStatusData( data, size );
 }

@@ -379,9 +379,12 @@ static int _DevGetError(void)  ///< ƒGƒ‰[‚ð“¾‚é
     ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
     
     if(ret == DWC_ERROR_NONE){
-        return 1;
+        return 0;
     }
-    return errorCode;  //WIFI‚Å‚Í‚O”Ô‚ª‹A‚é‚±‚Æ‚ª‚ ‚é‚½‚ß
+    else if(errorCode==0){  //WIFI‚Å‚Í‚O”Ô‚ª‹A‚é‚±‚Æ‚ª‚ ‚é‚½‚ß•ÏŠ·‚µ‚Ä•Ô‚·
+        return -10000;
+    }
+    return errorCode;
 }
 
 //------------------------------------------------------------------------------

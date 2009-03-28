@@ -19,17 +19,17 @@
 
 FS_EXTERN_OVERLAY(dev_wifi);
 
-//============================================================================================
-//============================================================================================
+//-----------------------------------------------------------------==============
+//-----------------------------------------------------------------==============
 
 
 
 
-//============================================================================================
+//-----------------------------------------------------------------==============
 //
 //	セーブデータシステムが依存する関数
 //
-//============================================================================================
+//-----------------------------------------------------------------==============
 //----------------------------------------------------------
 /**
  * @brief	自分状態保持ワークのサイズ取得
@@ -71,11 +71,11 @@ void WifiList_Copy(const WIFI_LIST * from, WIFI_LIST * to)
 	GFL_STD_MemCopy(from, to, sizeof(WIFI_LIST));
 }
 
-//============================================================================================
+//-----------------------------------------------------------------==============
 //
 //	WIFI_LIST操作のための関数
 //
-//============================================================================================
+//-----------------------------------------------------------------==============
 //----------------------------------------------------------
 /**
  * @brief			Wifi用ともだちリスト・自分用データの初期化
@@ -95,7 +95,7 @@ void WifiList_Init(WIFI_LIST * list)
 }
 
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   自分のWIFI接続署名情報のポインタを返す
  *
@@ -103,7 +103,7 @@ void WifiList_Init(WIFI_LIST * list)
  *
  * @retval  u8*		
  */
-//==============================================================================
+//-----------------------------------------------------------------
 DWCUserData* WifiList_GetMyUserInfo( WIFI_LIST* list )
 {
 	return &(list->my_dwcuser);
@@ -111,7 +111,7 @@ DWCUserData* WifiList_GetMyUserInfo( WIFI_LIST* list )
 
 
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   WIFI友達情報をタイプ毎に返す
  *
@@ -121,7 +121,7 @@ DWCUserData* WifiList_GetMyUserInfo( WIFI_LIST* list )
  *
  * @retval  u32		
  */
-//==============================================================================
+//-----------------------------------------------------------------
 u32 WifiList_GetFriendInfo( WIFI_LIST* list, int no, int type )
 {
 	u32 result;
@@ -173,7 +173,7 @@ u32 WifiList_GetFriendInfo( WIFI_LIST* list, int no, int type )
 }
 
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   
  *
@@ -184,7 +184,7 @@ u32 WifiList_GetFriendInfo( WIFI_LIST* list, int no, int type )
  *
  * @retval  none	
  */
-//==============================================================================
+//-----------------------------------------------------------------
 void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
@@ -224,7 +224,7 @@ void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value )
 }
 
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   ともだちリストから友達のWIFI用情報構造体のポインタを取得
  *
@@ -233,7 +233,7 @@ void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value )
  *
  * @retval  DWCFriendData	*		
  */
-//==============================================================================
+//-----------------------------------------------------------------
 DWCFriendData	*WifiList_GetDwcDataPtr( WIFI_LIST* list, int no )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
@@ -242,7 +242,7 @@ DWCFriendData	*WifiList_GetDwcDataPtr( WIFI_LIST* list, int no )
 }
 
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   
  *
@@ -251,7 +251,7 @@ DWCFriendData	*WifiList_GetDwcDataPtr( WIFI_LIST* list, int no )
  *
  * @retval  u8 *		
  */
-//==============================================================================
+//-----------------------------------------------------------------
 STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, int no )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
@@ -259,23 +259,35 @@ STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, int no )
 	return list->friendData[no].name;
 }
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
- * $brief   
- *
+ * $brief   セーブエリアの名前をSTRBUFにいれる
  * @param   list	WIFI_LIST構造体のポインタ
  * @param   no		何人目の友達か
- *
- * @retval  u8 *		
+ * @retval  none
  */
-//==============================================================================
+//-----------------------------------------------------------------
+void WifiList_GetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
+{
+	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
+    GFL_STR_SetStringCodeOrderLength(pBuf, list->friendData[no].name, sizeof(list->friendData[no].name));
+}
+
+//-----------------------------------------------------------------
+/**
+ * $brief   STRBUFの中にある名前を、セーブエリアに格納する
+ * @param   list	WIFI_LIST構造体のポインタ
+ * @param   no		何人目の友達か
+ * @retval  none
+ */
+//-----------------------------------------------------------------
 void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
     GFL_STR_GetStringCode(pBuf, list->friendData[no].name, sizeof(list->friendData[no].name));
 }
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   
  *
@@ -284,7 +296,7 @@ void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
  *
  * @retval  u8 *		
  */
-//==============================================================================
+//-----------------------------------------------------------------
 STRCODE *WifiList_GetFriendGroupNamePtr( WIFI_LIST *list, int no )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
@@ -292,14 +304,28 @@ STRCODE *WifiList_GetFriendGroupNamePtr( WIFI_LIST *list, int no )
 	return list->friendData[no].groupName;
 }
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
- * $brief   
+ * $brief   セーブエリアの名前をSTRBUFにいれる
  * @param   list	WIFI_LIST構造体のポインタ
  * @param   no		何人目の友達か
  * @retval  u8 *		
  */
-//==============================================================================
+//-----------------------------------------------------------------
+void WifiList_GetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf )
+{
+	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
+    GFL_STR_SetStringCodeOrderLength(pBuf, list->friendData[no].groupName, sizeof(list->friendData[no].groupName));
+}
+
+//-----------------------------------------------------------------
+/**
+ * $brief   STRBUFの中にある名前を、セーブエリアに格納する
+ * @param   list	WIFI_LIST構造体のポインタ
+ * @param   no		何人目の友達か
+ * @retval  u8 *		
+ */
+//-----------------------------------------------------------------
 void WifiList_SetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
@@ -307,14 +333,14 @@ void WifiList_SetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf )
     GFL_STR_GetStringCode(pBuf, list->friendData[no].groupName, sizeof(list->friendData[no].groupName));
 }
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   データが入っているかどうか
  * @param   list	WIFI_LIST構造体のポインタ
  * @param   no		何人目の友達か
  * @retval  BOOL
  */
-//==============================================================================
+//-----------------------------------------------------------------
 BOOL WifiList_IsFriendData( WIFI_LIST *list, int no )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
@@ -325,14 +351,14 @@ BOOL WifiList_IsFriendData( WIFI_LIST *list, int no )
     return DWC_IsValidFriendData(&list->friend_dwc[no]);
 }
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   入っている人数をかえす
  * @param   list	WIFI_LIST構造体のポインタ
  * @param   no		何人目の友達か
  * @retval  BOOL
  */
-//==============================================================================
+//-----------------------------------------------------------------
 int WifiList_GetFriendDataNum( WIFI_LIST *list )
 {
     int i,num = 0;
@@ -366,14 +392,14 @@ int WifiList_GetFriendDataLastIdx( WIFI_LIST *list )
     return last;
 }
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   フレンドの名前を消す
  * @param   list	WIFI_LIST構造体のポインタ
  * @param   no		何人目の友達か
  * @retval  none
  */
-//==============================================================================
+//-----------------------------------------------------------------
 void WifiList_ResetData( WIFI_LIST *list, int no)
 {
     int i;
@@ -391,7 +417,7 @@ void WifiList_ResetData( WIFI_LIST *list, int no)
 }
 
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   フレンドの名前を移動する
  * @param   list	WIFI_LIST構造体のポインタ
@@ -399,7 +425,7 @@ void WifiList_ResetData( WIFI_LIST *list, int no)
  * @param   moveNo		移動させるデータ
  * @retval  none
  */
-//==============================================================================
+//-----------------------------------------------------------------
 static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
 {
     int i;
@@ -410,7 +436,7 @@ static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
 	GFL_STD_MemClear(&list->friend_dwc[moveNo],sizeof(DWCFriendData));
 }
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   フレンドのデータをコピーする
  * @param   list	WIFI_LIST構造体のポインタ
@@ -418,7 +444,7 @@ static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
  * @param   moveNo		移動させるデータ
  * @retval  none
  */
-//==============================================================================
+//-----------------------------------------------------------------
 #ifdef PM_DEBUG
 void WifiList_CopyData( WIFI_LIST *list, int no, int copyNo)
 {
@@ -442,14 +468,14 @@ void WifiList_SetCountStopNum( WIFI_LIST *list, int no )
 
 #endif
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   フレンドをつめる
  * @param   list	WIFI_LIST構造体のポインタ
  * @param   no		何人目の友達か
  * @retval  none
  */
-//==============================================================================
+//-----------------------------------------------------------------
 void WifiList_FormUpData( WIFI_LIST *list)
 {
     int i,blank = -1;
@@ -471,14 +497,14 @@ void WifiList_FormUpData( WIFI_LIST *list)
     }
 }
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   日時の記録をつける
  * @param   list	WIFI_LIST構造体のポインタ
  * @param   no		何人目の友達か
  * @retval  none
  */
-//==============================================================================
+//-----------------------------------------------------------------
 void WifiList_SetLastPlayDate( WIFI_LIST *list, int no)
 {
     RTCDate	rtc;
@@ -488,7 +514,7 @@ void WifiList_SetLastPlayDate( WIFI_LIST *list, int no)
     list->friendData[no].day = rtc.day;
 }
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   勝ち負けの記録をつける
  * @param   list	WIFI_LIST構造体のポインタ
@@ -498,7 +524,7 @@ void WifiList_SetLastPlayDate( WIFI_LIST *list, int no)
  * @param   trade   交換数
  * @retval  none
  */
-//==============================================================================
+//-----------------------------------------------------------------
 void WifiList_SetResult( WIFI_LIST *list, int no, int winNum, int loseNum,int trade)
 {
     list->friendData[no].battle_win += winNum;
@@ -571,7 +597,7 @@ void WifiList_AddMinigameBalloon( WIFI_LIST *list, int no, int addnum )
 
 
 
-//==============================================================================
+//-----------------------------------------------------------------
 /**
  * $brief   Aの人のデータをBの人にマージする
  * @param   list	WIFI_LIST構造体のポインタ
@@ -581,7 +607,7 @@ void WifiList_AddMinigameBalloon( WIFI_LIST *list, int no, int addnum )
  * @param   trade   交換数
  * @retval  none
  */
-//==============================================================================
+//-----------------------------------------------------------------
 void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
 {
     list->friendData[no].battle_win += list->friendData[delNo].battle_win;

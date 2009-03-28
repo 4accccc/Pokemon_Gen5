@@ -1910,7 +1910,7 @@ static void WF_2DC_CharResLoadUni( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 	// パレットデータ部分にはNULLを入れておく
 	//p_sys->chrres[ char_no ].resobj[1] = NULL;
 
-    p_sys->chrres[ char_no ].resid[ 1 ] = GFL_CLGRP_REGISTER_FAILED;
+    p_sys->chrres[ char_no ].resid[ 1 ] = p_sys->unionplttid;
 
     
 	// 管理パラメータ設定
