@@ -147,6 +147,8 @@ void MyStatus_SetMyName(MYSTATUS * my, const STRCODE * name)
 	len = PM_strlen(name);
 	GF_ASSERT(len < PERSON_NAME_SIZE + EOM_SIZE)
 	PM_strcpy(my->name, name);
+#else
+	GF_ASSERT(0);	//未作成
 #endif
 }
 
@@ -547,19 +549,32 @@ BOOL MyStatus_Compare(const MYSTATUS * my, const MYSTATUS * target)
 //============================================================================================
 //	デバッグ用
 //============================================================================================
-//----------------------------------------------------------
+#ifdef PM_DEBUG
+#include "arc_def.h"
+#include "message.naix"
+#include "msg\msg_d_matsu.h"
+//--------------------------------------------------------------
 /**
- * @brief	デバッグ用：自分状態セット
- * @param	my		自分状態保持ワークへのポインタ
- * @param	name	名前文字列へのポインタ
- * @param	sex		性別指定
+ * @brief   ダミーの名前をセットする
+ *
+ * @param   mystatus		代入先
+ * @param   heap_id			テンポラリヒープ
  */
-//----------------------------------------------------------
-void Debug_MyStatus_Make(MYSTATUS * mystatus, const STRCODE * name, int sex)
+//--------------------------------------------------------------
+void DEBUG_MyStatus_DummyNameSet(MYSTATUS *mystatus, HEAPID heap_id)
 {
-	MyStatus_SetMyName(mystatus, name);
-	MyStatus_SetMySex(mystatus, sex);
+	GFL_MSGDATA *mm;
+	STRBUF *buf;
+	
+	mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_matsu_dat, heap_id );
+	
+	buf = GFL_MSG_CreateString( mm, DM_MSG_DUMMY_NAME );
+	MyStatus_SetMyNameFromString(mystatus, buf);
+	GFL_STR_DeleteBuffer(buf);
+	
+	GFL_MSG_Delete( mm );
 }
+#endif	//PM_DEBUG
 
 // 外部参照インデックスを作る時のみ有効(ゲーム中は無効)
 #ifdef CREATE_INDEX

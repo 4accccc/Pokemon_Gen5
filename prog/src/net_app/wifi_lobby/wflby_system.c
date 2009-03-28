@@ -1979,6 +1979,7 @@ void WFLBY_SYSTEM_GetProfileMyStatus( const WFLBY_USER_PROFILE* cp_profile, MYST
 	set_dummy = FALSE;
 	
 	if( result == TRUE ){
+	#if WB_TEMP_FIX	//WBでは文字がunicodeの為、ここで仮のSTRCODEを入れておく。後々はサーバー側でunicode対応 or ローカルでPLまでのSTRCODEへunicodeの変換、のどちらかが必要
 		// 名前
 		MyStatus_SetMyName( p_buff, cp_profile->name );
 
@@ -1990,15 +1991,16 @@ void WFLBY_SYSTEM_GetProfileMyStatus( const WFLBY_USER_PROFILE* cp_profile, MYST
 			p_name_tmp	= GFL_STR_CreateBuffer( (PERSON_NAME_SIZE + EOM_SIZE)*4, heapID );
 			p_name		= GFL_STR_CreateBuffer( (PERSON_NAME_SIZE + EOM_SIZE)*4, heapID );
 			MyStatus_CopyNameString( p_buff, p_name );
-		#if WB_TEMP_FIX
 			result = FontProc_ErrorStrCheck( NET_FONT_SYSTEM, p_name, p_name_tmp );
 			if( result == FALSE ){
 				set_dummy = TRUE;
 			}
-		#endif
 			GFL_STR_DeleteBuffer( p_name_tmp );
 			GFL_STR_DeleteBuffer( p_name );
 		}
+	#else
+		DEBUG_MyStatus_DummyNameSet(p_buff, heapID);
+	#endif
 		
 	}else{
 		// ダミーの名前設定
@@ -4612,6 +4614,16 @@ static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVE_CO
 		GFL_STR_GetStringCode( p_name, p_myprofile->profile.name, PERSON_NAME_SIZE + EOM_SIZE );
 		GFL_STR_GetStringCode( p_name, p_myprofile->def_name, PERSON_NAME_SIZE + EOM_SIZE );
 		GFL_STR_DeleteBuffer( p_name );
+	#if WB_TEMP_FIX	//WBでは文字がunicodeの為、ここで仮のSTRCODEを入れておく。後々はサーバー側でunicode対応 or ローカルでPLまでのSTRCODEへunicodeの変換、のどちらかが必要
+		p_myprofile->profile.name[0] = 1;
+		p_myprofile->profile.name[2] = 2;
+		p_myprofile->profile.name[3] = 3;
+		p_myprofile->profile.name[4] = 0xff;
+		p_myprofile->def_name[0] = 1;
+		p_myprofile->def_name[2] = 2;
+		p_myprofile->def_name[3] = 3;
+		p_myprofile->def_name[4] = 0xff;
+	#endif
 	}
 	p_myprofile->profile.userid		= DWC_LOBBY_INVALID_USER_ID;
 	p_myprofile->profile.trainerid	= MyStatus_GetID( p_mystatus );
@@ -4645,7 +4657,11 @@ static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVE_CO
 	p_myprofile->profile.game_clear		= MyStatus_GetDpClearFlag( p_mystatus );
 	p_myprofile->profile.item			= WFLBY_ITEM_INIT;
 	p_myprofile->profile.status			= WFLBY_STATUS_NONE;
+#if WB_TEMP_FIX
 	p_myprofile->profile.rom_code		= PM_VERSION;		// 後のWiFi広場のためにVersionはゲームによってかえること
+#else	//プロフィール不正にならないように今はプラチナのバージョンを入れる 2009.03.28(土)
+	p_myprofile->profile.rom_code		= VERSION_PLATINUM;	// 後のWiFi広場のためにVersionはゲームによってかえること
+#endif
 	p_myprofile->profile.start_sec		= p_time->start_sec;
 	{
 		int i;

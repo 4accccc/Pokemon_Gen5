@@ -725,6 +725,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	case WFLBY_CONNECT_SEQ_LOGIN_WAIT_DWC:
 		// エラー処理
 		if( GFL_NET_SystemIsError() || GFL_NET_SystemIsLobbyError() ){
+			OS_TPrintf("エラー発生 aaa %d, %d\n", GFL_NET_SystemIsError(), GFL_NET_SystemIsLobbyError());
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk_system );
 			(*p_seq) = WFLBY_CONNECT_SEQ_ERRON;
 		}
@@ -741,6 +742,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 		
 		// エラー処理
 		if( GFL_NET_SystemIsError() || GFL_NET_SystemIsLobbyError() ){
+			OS_TPrintf("エラー発生 bbb %d, %d\n", GFL_NET_SystemIsError(), GFL_NET_SystemIsLobbyError());
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk_system );
 			(*p_seq) = WFLBY_CONNECT_SEQ_ERRON;
 		}

@@ -39,7 +39,7 @@ extern "C" {
 #define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #define GFL_LOBBY_DEBUG	(0)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
 #elif defined(DEBUG_ONLY_FOR_matsuda)
-#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #define GFL_LOBBY_DEBUG	(1)		///<Wi-Fi広場デバッグ用 0:無効 1:有効
 #elif defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
@@ -578,6 +578,17 @@ extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 
  */
 //==============================================================================
 extern BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet);
+
+
+//----------------------------------------------------------------
+/**
+ * @brief   特定のコマンドを送信し終えたかどうかを調べる
+ * @param[in,out]   NetHandle* pNet  通信ハンドル
+ * @param   command 調べるコマンド
+ * @retval  コマンドが在ったらTRUE
+ */
+//----------------------------------------------------------------
+extern BOOL GFL_NET_IsInSendCommandQueue(GFL_NETHANDLE* pNet,int command);
 
 
 
