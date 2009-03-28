@@ -114,9 +114,11 @@ GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq , void * pwk, void 
 
 	{
 		// オーバーレイ
+	#if WB_TEMP_FIX
 		FS_EXTERN_OVERLAY(wifi_2dmapsys);
 		GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi_2dmapsys) );
-
+	#endif
+	
 	#if WB_FIX
 		// WiFiオーバーレイ開始
 		DwcOverlayStart();
@@ -231,9 +233,11 @@ GFL_PROC_RESULT WFLBYProc_Exit( GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 
 	// ２Dマップシステムをオーバーレイを破棄
 	{
+	#if WB_TEMP_FIX
 		FS_EXTERN_OVERLAY(wifi_2dmapsys);
 		GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi_2dmapsys) );
-
+	#endif
+	
 		// 世界交換（ghttpライブラリのため）
 	#if WB_FIX
 		DpwCommonOverlayEnd();

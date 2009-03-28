@@ -210,6 +210,7 @@ static void WF2DMAP_OBJDrawSysBGCNTSet( GFL_BG_INI* p_bgl, int bg_frame, const W
     GFL_BG_FreeBGControl( bg_frame );
 //	GFL_BG_BGControlSet( p_bgl, bg_frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_SetBGControl( bg_frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+	GFL_BG_SetVisible(bg_frame, VISIBLE_ON);
 //	GF_BGL_ScrClear( p_bgl, bg_frame );
 }	
 

@@ -20,6 +20,7 @@
 #include "net/dwc_lobbylib.h"
 //#include "wifi/dwc_rap.h"
 #include "net/network_define.h"
+#include "test/wflby_debug.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -55,10 +56,6 @@
 //#define DWC_LOBBY_USERENUM			// USERENUM表示
 //#define DWC_LOBBY_ANKETO_DRAW			// アンケート情報のデバック表示
 
-
-// デバック開始情報
-extern BOOL D_Tomoya_WiFiLobby_DebugStart;
-extern BOOL D_Tomoya_WiFiLobby_LockTime_Long;
 
 /*
 #if defined(DEBUG_ONLY_FOR_ohno)	// 大野さん専用

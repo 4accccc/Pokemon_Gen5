@@ -13,6 +13,7 @@
 #include "dwc_rapinitialize.h"
 #include "dwc_rapcommon.h"
 #include "dwc_rapfriend.h"
+#include "net/dwc_lobbylib.h"
 
 extern GFLNetDevTable *NET_GetWifiDeviceTable(void);
 
@@ -39,6 +40,12 @@ static void _DevSetNoChildErrorSet(BOOL bOn);
 static BOOL _DevIsConnectable(int index);
 static BOOL _DevIsVChat(void);
 static BOOL _DevIsNewPlayer(void);
+static BOOL _DevLobbyLogin(const void* cp_loginprofile);
+static void _DevDebugSetRoom( u32 locktime, u32 random, u8 roomtype, u8 season );
+static BOOL _DevLobbyUpdateErrorCheck(void);
+static BOOL _DevLobbyLoginWait(void);
+static void _DevLobbyLogout(void);
+static BOOL _DevLobbyLogoutWait(void);
 
 
 //--------------------------------------------
@@ -86,6 +93,20 @@ static GFLNetDevTable netDevTbl={
     _DevIsVChat,
     _DevIsNewPlayer,
     NULL, //_DevIrcMoveFunc
+
+	NULL,	//DevIsConnectSystemFunc
+	NULL,	//DevGetSendLockFlagFunc
+	NULL,	//DevConnectWorkInitFunc
+	NULL,	//DevGetSendLockFlagFunc
+	NULL,	//DevConnectWorkInitFunc
+
+//-- 以下、Wi-Fi広場専用
+	_DevLobbyLogin,	//DevLobbyLoginFunc
+	_DevDebugSetRoom,	//DevDebugSetRoomFunc
+	_DevLobbyUpdateErrorCheck,	//DevLobbyUpdateErrorCheckFunc
+	_DevLobbyLoginWait,	//DevLobbyLoginWaitFunc
+	_DevLobbyLogout,	//DevLobbyLogoutFunc
+	_DevLobbyLogoutWait,	//DevLobbyLogoutWaitFunc
 };
 
 //--------------------------------------------
@@ -416,6 +437,89 @@ static BOOL _DevIsNewPlayer(void)
 }
 
 
+//--------------------------------------------------------------
+/**
+ * @brief   Wi-Fi広場にログイン	DWC_LOBBY_Login
+ *
+ * @param   cp_loginprofile		
+ *
+ *	@retval	TRUE	成功
+ *	@retval	FALSE	失敗		失敗した場合エラータイプを取得してLogoutしてください
+ */
+//--------------------------------------------------------------
+static BOOL _DevLobbyLogin(const void* cp_loginprofile)
+{
+	return DWC_LOBBY_Login(cp_loginprofile);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   デバッグ用 部屋データ設定DWC_LOBBY_DEBUG_SetRoomData
+ *
+ * @param   locktime		
+ * @param   random		
+ * @param   roomtype		
+ * @param   season		
+ */
+//--------------------------------------------------------------
+static void _DevDebugSetRoom( u32 locktime, u32 random, u8 roomtype, u8 season )
+{
+	DWC_LOBBY_DEBUG_SetRoomData(locktime, random, roomtype, season);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   DWCロビーを更新し、戻り値でエラー発生をTRUEorFALSEで返す DWC_LOBBY_UpdateErrorCheck
+ *
+ * @retval  TRUE：正常　FALSE：エラー
+ */
+//--------------------------------------------------------------
+static BOOL _DevLobbyUpdateErrorCheck(void)
+{
+	return DWC_LOBBY_UpdateErrorCheck();
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ログイン完了待ち	DWC_LOBBY_LoginWait
+ *
+ *	@retval	TRUE	ログイン完了
+ *	@retval	FALSE	ログイン中orログイン以外の状態
+ */
+//--------------------------------------------------------------
+static BOOL _DevLobbyLoginWait(void)
+{
+	return DWC_LOBBY_LoginWait();
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ロビーサーバからログアウト		DWC_LOBBY_Logout
+ */
+//--------------------------------------------------------------
+static void _DevLobbyLogout(void)
+{
+	DWC_LOBBY_Logout();
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ログアウト完了待ち		DWC_LOBBY_LogoutWait
+ *
+ *	@retval		TRUE	完了
+ *	@retval		FALSE	ログアウト中orログアウト状態以外の状態
+ */
+//--------------------------------------------------------------
+static BOOL _DevLobbyLogoutWait(void)
+{
+	return DWC_LOBBY_LogoutWait();
+}
+
+
+
+//==============================================================================
+//	
+//==============================================================================
 //------------------------------------------------------------------------------
 /**
  * @brief   ワイヤレスデバイステーブルを返す
@@ -426,4 +530,3 @@ GFLNetDevTable *NET_GetWifiDeviceTable(void)
 {
     return &netDevTbl;
 }
-

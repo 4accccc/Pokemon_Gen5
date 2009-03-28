@@ -274,7 +274,6 @@ void ManeneAnime_Set( BB_CLIENT* wk, int anime_no )
 	D3DOBJ_DelAnm( &wk->bb3d_mane[ 0 ].obj, &wk->bb3d_mane[ 0 ].anm[ old ] );
 #else
 	GFL_G3D_OBJECT_DisableAnime( ˆø”‚Í‚Ü‚¾–¢‘Î‰ž );
-	GFL_G3D_OBJECT_RemoveAnime( ˆø”‚Í‚Ü‚¾–¢‘Î‰ž );
 #endif
 
 	wk->bb3d_mane[ 0 ].anime_no = anime_no;	///< anime ‚Ì•ÏX

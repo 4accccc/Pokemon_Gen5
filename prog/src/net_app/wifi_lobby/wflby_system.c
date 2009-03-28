@@ -51,6 +51,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "poke_tool/monsno_def.h"
+#include "net_app/net_bugfix.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -73,7 +74,7 @@
 
 #ifdef PM_DEBUG
 //#define WFLBY_DEBUG_NPC_IN
-#define WFLBY_DEBUG_ALL_VIP
+//#define WFLBY_DEBUG_ALL_VIP
 //#define WFLBY_DEBUG_PROFILE_DRAW
 #endif
 
@@ -3886,9 +3887,11 @@ void WFLBY_SYSTEM_WiFiClubBuff_Init( WFLBY_SYSTEM* p_wk )
 	GF_ASSERT( p_wk->p_wificlubbuff == NULL );
 
 	p_mystatus = SaveData_GetMyStatus( p_wk->p_save );
-	
+
+#if WB_TEMP_FIX
 	// WiFiクラブで、
 	p_wk->p_wificlubbuff = WifiP2PMatch_CleanStatus_Set( p_mystatus, p_wk->heapID );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -3903,8 +3906,10 @@ void WFLBY_SYSTEM_WiFiClubBuff_Exit( WFLBY_SYSTEM* p_wk )
 //	GF_ASSERT( p_wk->p_wificlubbuff != NULL );
 	// WiFiクラブで、
 	if( p_wk->p_wificlubbuff != NULL ){
+	#if WB_TEMP_FIX
 		// メモリ確保されていたら、破棄する
 		WifiP2PMatch_CleanStatus_Delete( p_wk->p_wificlubbuff );
+	#endif
 		p_wk->p_wificlubbuff = NULL;
 	}
 }

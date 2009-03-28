@@ -54,7 +54,8 @@ GFLNetDevTable* NET_DeviceLoad(int deviceNo)
 #if SUPPORT_WIFI_
       case GFL_NET_TYPE_WIFI_LOBBY:
 #if SUPPORT_OVERLAY_
-        GFL_OVERLAY_Load( FS_OVERLAY_ID( wifilobby_common ) );
+        GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
+//        GFL_OVERLAY_Load( FS_OVERLAY_ID( wifilobby_common ) );
 #endif
         return NET_GetWifiDeviceTable();
 #endif
@@ -100,7 +101,8 @@ void NET_DeviceUnload(int deviceNo)
 #if SUPPORT_WIFI_
       case GFL_NET_TYPE_WIFI_LOBBY:
 #if SUPPORT_OVERLAY_
-        GFL_OVERLAY_Unload( FS_OVERLAY_ID( wifilobby_common ) );
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
+//        GFL_OVERLAY_Unload( FS_OVERLAY_ID( wifilobby_common ) );
 #endif
         break;
 #endif

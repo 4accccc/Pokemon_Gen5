@@ -963,6 +963,11 @@ static void NEWSDRAW_DrawSysInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 	
 	// バンク設定
 	GFL_DISP_SetBank( &sc_NEWSDRAW_BANK );
+	//VRAMクリア	2009.03.28(土) 追加 matsuda
+	GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 
 	// BG設定
 	NEWSDRAW_DrawSysBgInit( p_wk, heapID );
@@ -1052,6 +1057,7 @@ static void NEWSDRAW_DrawSysBgInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 			GFL_BG_SetBGControl( 
 					sc_NEWSDRAW_BGCNT_FRM[i], &sc_NEWSDRAW_BGCNT_DATA[i],
 					GFL_BG_MODE_TEXT );
+			GFL_BG_SetVisible(sc_NEWSDRAW_BGCNT_FRM[i], VISIBLE_ON);
 			GFL_BG_SetClearCharacter( sc_NEWSDRAW_BGCNT_FRM[i], 32, 0, heapID);
 			GFL_BG_ClearScreen( sc_NEWSDRAW_BGCNT_FRM[i] );
 		}

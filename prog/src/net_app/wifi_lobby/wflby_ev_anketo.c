@@ -103,8 +103,9 @@ BOOL WFLBY_EV_TALK_Piero( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		p_evwk = WFLBY_EVENTWK_AllocWk( p_wk, sizeof(WFLBY_EV_ANKETO_PIERO) );
 
 
+	#if WB_TEMP_FIX
 		Snd_SePlay( WFLBY_SND_STAFF );
-		
+	#endif
 		
 		{
 			u32 way;

@@ -5666,6 +5666,11 @@ static void BCT_CLIENT_BankSet( void )
 		GX_OBJVRAMMODE_CHAR_1D_128K,	// サブOBJマッピングモード
     };
     GFL_DISP_SetBank( &vramSetTable );
+	//VRAMクリア	2009.03.28(土) 追加 matsuda
+	GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 }
 
 //----------------------------------------------------------------------------
@@ -5999,6 +6004,7 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
             };
         GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible(GFL_BG_FRAME1_M, VISIBLE_ON);
         GFL_BG_SetClearCharacter( GFL_BG_FRAME1_M, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
     }
@@ -6011,6 +6017,7 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
             };
         GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible(GFL_BG_FRAME2_M, VISIBLE_ON);
         GFL_BG_SetClearCharacter( GFL_BG_FRAME2_M, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
     }
@@ -6023,6 +6030,7 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
         };
         GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible(GFL_BG_FRAME0_M, VISIBLE_ON);
         GFL_BG_SetClearCharacter( GFL_BG_FRAME0_S, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
     }
@@ -6035,6 +6043,7 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_EXTPLTT_01,1, 0, 0, FALSE
         };
         GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_ON);
         GFL_BG_SetClearCharacter( GFL_BG_FRAME1_S, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME1_S );
     }
@@ -6047,6 +6056,7 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
         };
         GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_ON);
         GFL_BG_SetClearCharacter( GFL_BG_FRAME2_S, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME2_S );
 	}
@@ -6059,6 +6069,7 @@ static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
             GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
         };
         GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible(GFL_BG_FRAME3_S, VISIBLE_ON);
         GFL_BG_SetClearCharacter( GFL_BG_FRAME3_S, 32, 0, heapID);
         GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
 	}
@@ -6755,7 +6766,6 @@ static void BCT_CLIENT_MarunomuDrawSetMouthAnm( BCT_MARUNOMU_DRAW* p_wk, u32 anm
 		D3DOBJ_DelAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[p_wk->set_mouthanm] ], &p_wk->anm[ p_wk->set_mouthanm ] );
 	#else
 		GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
-		GFL_G3D_OBJECT_RemoveAnime( 引数はまだ未対応 );
 	#endif
 		D3DOBJ_AddAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[anmno] ], &p_wk->anm[ anmno ] );
 
@@ -6828,7 +6838,6 @@ static void BCT_CLIENT_MarunomuDrawSetWalkAnm( BCT_MARUNOMU_DRAW* p_wk, BOOL fla
 			D3DOBJ_DelAnm( &p_wk->obj[ sc_BCT_MARUNOMU_ANM_MDL[BCT_MARUNOMU_ANM_WALK] ], &p_wk->anm[ BCT_MARUNOMU_ANM_WALK ] );
 		#else
 			GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
-			GFL_G3D_OBJECT_RemoveAnime( 引数はまだ未対応 );
 		#endif
 		}
 

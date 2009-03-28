@@ -2517,11 +2517,11 @@ static void WLDTIMER_FlagControl( WLDTIMER_WK* p_wk, const WLDTIMER_PARAM* cp_pa
 	p_wk->flag.world = JAPAN_MODE;
 
 	// 日本ROMかチェック
-	if( CasetteLanguage == LANG_JAPAN ){
-		p_wk->flag.japan = TRUE;
-	}else{
-		p_wk->flag.japan = FALSE;
-	}
+#if (PM_LANG == LANG_JAPAN)
+	p_wk->flag.japan = TRUE;
+#else
+	p_wk->flag.japan = FALSE;
+#endif
 
 	// 世界表示モードか調べる
 	if( p_wk->flag.japan == TRUE ){
@@ -2569,6 +2569,11 @@ static void WLDTIMER_DrawSysInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u32 
 	
 	// バンク設定
 	GFL_DISP_SetBank( &sc_WLDTIMER_BANK );
+	//VRAMクリア	2009.03.28(土) 追加 matsuda
+	GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 
 	// BG設定
 	WLDTIMER_DrawSysBgInit( p_wk, p_config, heapID );
@@ -2664,6 +2669,7 @@ static void WLDTIMER_DrawSysBgInit( WLDTIMER_DRAWSYS* p_wk, CONFIG* p_config, u3
 			GFL_BG_SetBGControl( 
 					sc_WLDTIMER_BGCNT_FRM[i], &sc_WLDTIMER_BGCNT_DATA[i],
 					GFL_BG_MODE_TEXT );
+			GFL_BG_SetVisible(sc_WLDTIMER_BGCNT_FRM[i], VISIBLE_ON);
 			GFL_BG_SetClearCharacter( sc_WLDTIMER_BGCNT_FRM[i], 32, 0, heapID);
 			GFL_BG_ClearScreen( sc_WLDTIMER_BGCNT_FRM[i] );
 		}

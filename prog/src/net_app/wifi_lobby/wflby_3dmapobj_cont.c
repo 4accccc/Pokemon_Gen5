@@ -1371,7 +1371,9 @@ static void WFLBY_3DMAPOBJ_DouzouAnm_PlayNormal( WFLBY_3DMAPOBJ_CONT* p_sys, WFL
 
 
 		// “º‘œ“®ì‰¹Ý’è
+	#if WB_TEMP_FIX
 		Snd_SePlay( WFLBY_SND_DOUZOU );
+	#endif
 	}
 }
 // “ÁŽê•”‰®—p
@@ -1394,7 +1396,9 @@ static void WFLBY_3DMAPOBJ_DouzouAnm_PlaySpecial( WFLBY_3DMAPOBJ_CONT* p_sys, WF
 		WFLBY_3DMAPOBJ_DouzouAnm_PlayAnm( p_sys, p_wk );	
 
 		// “º‘œ“®ì‰¹Ý’è
+	#if WB_TEMP_FIX
 		Snd_SePlay( WFLBY_SND_DOUZOU2 );
+	#endif
 	}
 }
 

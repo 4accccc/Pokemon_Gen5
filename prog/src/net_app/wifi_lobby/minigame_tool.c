@@ -1850,7 +1850,15 @@ BOOL MNGM_ERROR_CheckDisconnect( MNGM_ENRES_PARAM* p_commparam )
 		}
 
 		// マッチングエラー
+	#if WB_FIX
 		if( CommWifiIsMatched() >= 2 ){
+	#else
+		switch(GFL_NET_StateGetWifiStatus()){
+		case GFL_NET_STATE_NOTMATCH:		// エラーやCANCEL
+		case GFL_NET_STATE_TIMEOUT:		// タイムアウト
+		case GFL_NET_STATE_DISCONNECTING:		// 切断
+		case GFL_NET_STATE_FAIL:		// 軽度なえらー
+	#endif
 			ret = TRUE;
 		}
 
@@ -2441,6 +2449,7 @@ static void MNGM_BGL_Init( MNGM_BGL* p_wk, const GFL_BG_SYS_HEADER* cp_sys, cons
 			GFL_BG_SetBGControl( 
 					cp_cnt[i].frame, &cp_cnt[i].cnt,
 					GFL_BG_MODE_TEXT );
+			GFL_BG_SetVisible(cp_cnt[i].frame, VISIBLE_ON);
 			GFL_BG_SetClearCharacter( cp_cnt[i].frame, 32, 0, heapID);
 			GFL_BG_ClearScreen( cp_cnt[i].frame );
 
@@ -3156,6 +3165,11 @@ static MNGM_ENTRYWK* MNGM_ENTRY_CommonInit( const MNGM_ENRES_PARAM* cp_commparam
 
 	// バンク設定
 	GFL_DISP_SetBank( &sc_MNGM_ENTRY_BANK );
+	//VRAMクリア	2009.03.28(土) 追加 matsuda
+	GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 
 	// ヒープID保存
 	p_wk->heapID = heapID;
@@ -4589,6 +4603,11 @@ static MNGM_RESULTWK* MNGM_RESULT_CommonInit( const MNGM_ENRES_PARAM* cp_commpar
 
 	// バンク設定
 	GFL_DISP_SetBank( &sc_MNGM_RESULT_BANK );
+	//VRAMクリア	2009.03.28(土) 追加 matsuda
+	GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 
 	// ヒープID保存
 	p_wk->heapID = heapID;

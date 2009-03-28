@@ -21,6 +21,7 @@
 #include "wflby_maparc.h"
 
 #include "arc_def.h"
+#include "system/gfl_use.h"
 
 
 //-----------------------------------------------------------------------------
@@ -80,6 +81,7 @@ static OSTick	WFLBY_DEBUG_3DMAPOBJ_PRINT_TIME_Tick;
 typedef struct _WFLBY_3DMAPOBJ_MAP{
 	BOOL		on;
 	GFL_G3D_OBJSTATUS		objst[ WFLBY_3DMAPOBJ_MAPOBJ_NUM ];
+	VecFx32 objrotate[ WFLBY_3DMAPOBJ_MAPOBJ_NUM ];
 	GFL_G3D_OBJ *g3dobj[ WFLBY_3DMAPOBJ_MAPOBJ_NUM ];
 	BOOL draw_flag[WFLBY_3DMAPOBJ_MAPOBJ_NUM];
 	u32			anm_on[ WFLBY_3DMAPOBJ_MAP_ANM_NUM ];
@@ -90,8 +92,9 @@ typedef struct _WFLBY_3DMAPOBJ_MAP{
 ///	地面リソース
 //=====================================
 typedef struct {
-	GFL_G3D_OBJ	*mdl[ WFLBY_3DMAPOBJ_MAPOBJ_NUM ];
-	GFL_G3D_RES *mdl_res[ WFLBY_3DMAPOBJ_MAPOBJ_NUM ];
+	GFL_G3D_RND *rnder[ WFLBY_3DMAPOBJ_MAPOBJ_NUM ];
+	GFL_G3D_RES *p_mdlres[ WFLBY_3DMAPOBJ_MAPOBJ_NUM ];
+	GFL_G3D_RES	*p_anmres[ WFLBY_3DMAPOBJ_MAP_ANM_NUM ];
 	GFL_G3D_ANM	*anm[ WFLBY_3DMAPOBJ_MAP_ANM_NUM ];
 	BOOL		anm_load[ WFLBY_3DMAPOBJ_MAP_ANM_NUM ];
 } WFLBY_3DMAPOBJ_MAPRES;
@@ -106,6 +109,7 @@ typedef struct _WFLBY_3DMAPOBJ_FLOAT{
 	u8			mdlno;	// モデルナンバー
 	u8			pad;
 	GFL_G3D_OBJSTATUS		objst;
+	VecFx32		objrotate;
 	GFL_G3D_OBJ	*g3dobj;
 	u32			anm_on[ WFLBY_3DMAPOBJ_FLOAT_ANM_NUM ];
 	fx32		anm_frame[ WFLBY_3DMAPOBJ_FLOAT_ANM_NUM ];
@@ -122,7 +126,6 @@ typedef struct {
 	GFL_G3D_RND	*rnder[ WFLBY_3DMAPOBJ_FLOAT_NUM ];
 	GFL_G3D_RES *p_texres[ WFLBY_3DMAPOBJ_FLOAT_NUM ][ WFLBY_3DMAPOBJ_FLOAT_COL_NUM ];
 	GFL_G3D_RES *p_mdlres[ WFLBY_3DMAPOBJ_FLOAT_NUM ];
-	GFL_G3D_RES *p_anmres[ WFLBY_3DMAPOBJ_FLOAT_NUM ];
 	GFL_G3D_RES *p_anmres[ WFLBY_3DMAPOBJ_FLOAT_NUM ][ WFLBY_3DMAPOBJ_FLOAT_ANM_NUM ];
 	GFL_G3D_ANM	*anm[ WFLBY_3DMAPOBJ_FLOAT_NUM ][ WFLBY_3DMAPOBJ_FLOAT_ANM_NUM ];
 } WFLBY_3DMAPOBJ_FLOATRES;
@@ -135,7 +138,9 @@ typedef struct _WFLBY_3DMAPOBJ_WK{
 	u16			on;
 	u16			mdlid;
 	GFL_G3D_OBJSTATUS		objst;
+	VecFx32		objrotate;
 	GFL_G3D_OBJ	*g3dobj;
+	GFL_G3D_ANM	*anm[ WFLBY_3DMAPOBJ_ALL_ANM_MAX ];
 	u8			anm_on[ WFLBY_3DMAPOBJ_ALL_ANM_MAX ];
 	u8			anm_on_pad;
 	u8			play[ WFLBY_3DMAPOBJ_ALL_ANM_MAX ];
@@ -158,9 +163,14 @@ typedef struct _WFLBY_3DMAPOBJ_WK{
 ///	その他の配置オブジェリソース
 //=====================================
 typedef struct {
-	GFL_G3D_OBJ	*mdl[ WFLBY_3DMAPOBJ_WK_NUM ];
-	GFL_G3D_RES *mdl_res[ WFLBY_3DMAPOBJ_WK_NUM ];
+	GFL_G3D_RND *rnder[ WFLBY_3DMAPOBJ_WK_NUM ];
+	GFL_G3D_RES *p_mdlres[ WFLBY_3DMAPOBJ_WK_NUM ];
+#if WB_FIX
 	void*		p_anm[ WFLBY_3DMAPOBJ_WK_NUM ][ WFLBY_3DMAPOBJ_ALL_ANM_MAX ];
+#else
+	GFL_G3D_RES* p_anmres[ WFLBY_3DMAPOBJ_WK_NUM ][ WFLBY_3DMAPOBJ_ALL_ANM_MAX ];
+	GFL_G3D_ANM* anm[ WFLBY_3DMAPOBJ_WK_NUM ][ WFLBY_3DMAPOBJ_ALL_ANM_MAX ];
+#endif
 } WFLBY_3DMAPOBJ_WKRES;
 
 //-------------------------------------
@@ -179,7 +189,9 @@ typedef struct _WFLBY_3DMAPOBJ{
 	WFLBY_3DMAPOBJ_MAPRES		mapres;									// マップワーク	
 	WFLBY_3DMAPOBJ_FLOATRES		floatres;								// フロート
 	WFLBY_3DMAPOBJ_WKRES		objres;									// 配置オブジェ
+#if WB_FIX
 	NNSFndAllocator				allocator;								// アロケータ
+#endif
 }WFLBY_3DMAPOBJ;
 
 
@@ -202,8 +214,8 @@ static void WFLBY_3DMAPOBJ_MDLRES_DATA_Exit( WFLBY_3DMAPOBJ_MDL_DATA* p_data );
 
 
 // 広場用モデル読み込みシステム
-static void WFLBY_3DMAPOBJ_MDL_Load( GFL_G3D_OBJ* p_mdl, ARCHANDLE* p_handle, u32 data_idx, u32 gheapID );
-static void WFLBY_3DMAPOBJ_MDL_Delete( GFL_G3D_OBJ* p_mdl );
+static void WFLBY_3DMAPOBJ_MDL_Load( GFL_G3D_RES** p_res, ARCHANDLE* p_handle, u32 data_idx, u32 gheapID );
+static void WFLBY_3DMAPOBJ_MDL_Delete( GFL_G3D_RES* p_mdl );
 
 // アニメフレーム管理
 static void WFLBY_3DMAPOBJ_ANM_Loop( fx32* p_frame, const GFL_G3D_ANM* cp_anm, fx32 speed );
@@ -212,8 +224,8 @@ static void WFLBY_3DMAPOBJ_ANM_BackLoop( fx32* p_frame, const GFL_G3D_ANM* cp_an
 static BOOL WFLBY_3DMAPOBJ_ANM_BackNoLoop( fx32* p_frame, const GFL_G3D_ANM* cp_anm, fx32 speed );
 
 // マップワーク
-static void WFLBY_3DMAPOBJ_MAP_Load( WFLBY_3DMAPOBJ_MAPRES* p_wk, ARCHANDLE* p_handle, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID, NNSFndAllocator* p_allocator );
-static void WFLBY_3DMAPOBJ_MAP_Release( WFLBY_3DMAPOBJ_MAPRES* p_wk, NNSFndAllocator* p_allocator );
+static void WFLBY_3DMAPOBJ_MAP_Load( WFLBY_3DMAPOBJ_MAPRES* p_wk, ARCHANDLE* p_handle, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID );
+static void WFLBY_3DMAPOBJ_MAP_Release( WFLBY_3DMAPOBJ_MAPRES* p_wk );
 static void WFLBY_3DMAPOBJ_MAP_Add( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MAPRES* p_res );
 static void WFLBY_3DMAPOBJ_MAP_Delete( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MAPRES* p_res );
 static void WFLBY_3DMAPOBJ_MAP_Main( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MAPRES* p_res );
@@ -221,18 +233,20 @@ static void WFLBY_3DMAPOBJ_MAP_Draw( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MA
 
 // フロートワーク
 static WFLBY_3DMAPOBJ_FLOAT* WFLBY_3DMAPOBJ_FLOAT_GetCleanWk( WFLBY_3DMAPOBJ* p_sys );
-static void WFLBY_3DMAPOBJ_FLOAT_Load( WFLBY_3DMAPOBJ_FLOATRES* p_wk, ARCHANDLE* p_handle, NNSFndAllocator* p_allocator, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID );
-static void WFLBY_3DMAPOBJ_FLOAT_Release( WFLBY_3DMAPOBJ_FLOATRES* p_wk, NNSFndAllocator* p_allocator );
+static void WFLBY_3DMAPOBJ_FLOAT_Load( WFLBY_3DMAPOBJ_FLOATRES* p_wk, ARCHANDLE* p_handle, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID );
+static void WFLBY_3DMAPOBJ_FLOAT_Release( WFLBY_3DMAPOBJ_FLOATRES* p_wk );
 static void WFLBY_3DMAPOBJ_FLOAT_Main( WFLBY_3DMAPOBJ_FLOAT* p_wk, WFLBY_3DMAPOBJ_FLOATRES* p_res );
 static void WFLBY_3DMAPOBJ_FLOAT_Draw( WFLBY_3DMAPOBJ_FLOAT* p_wk, WFLBY_3DMAPOBJ_FLOATRES* p_res );
 
 // 配置オブジェクトワーク
 static WFLBY_3DMAPOBJ_WK* WFLBY_3DMAPOBJ_WK_GetCleanWk( WFLBY_3DMAPOBJ* p_sys );
-static void WFLBY_3DMAPOBJ_WK_Load( WFLBY_3DMAPOBJ_WKRES* p_wk, ARCHANDLE* p_handle, NNSFndAllocator* p_allocator, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID );
-static void WFLBY_3DMAPOBJ_WK_Release( WFLBY_3DMAPOBJ_WKRES* p_wk, NNSFndAllocator* p_allocator );
+static void WFLBY_3DMAPOBJ_WK_Load( WFLBY_3DMAPOBJ_WKRES* p_wk, ARCHANDLE* p_handle, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID );
+static void WFLBY_3DMAPOBJ_WK_Release( WFLBY_3DMAPOBJ_WKRES* p_wk );
 static void WFLBY_3DMAPOBJ_WK_Draw( WFLBY_3DMAPOBJ_WKRES* p_res, WFLBY_3DMAPOBJ_WK* p_wk );
 static void WFLBY_3DMAPOBJ_WK_Anm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk );
 
+static void WFLBY_G3DOBJSTATUS_Init(GFL_G3D_OBJSTATUS *status, VecFx32 *rotate);
+static void WFLBY_RotateMtx(VecFx32 *rotate, MtxFx33 *dst_mtx);
 
 
 // システム管理
@@ -400,14 +414,14 @@ void WFLBY_3DMAPOBJ_ResLoad( WFLBY_3DMAPOBJ* p_sys, WFLBY_ROOM_TYPE room, WFLBY_
 #endif
 
 	// マップ
-	WFLBY_3DMAPOBJ_MAP_Load( &p_sys->mapres, p_handle, p_data, gheapID, &p_sys->allocator );
+	WFLBY_3DMAPOBJ_MAP_Load( &p_sys->mapres, p_handle, p_data, gheapID );
 
 	// 配置オブジェクト
-	WFLBY_3DMAPOBJ_WK_Load( &p_sys->objres, p_handle, &p_sys->allocator, p_data, gheapID );
+	WFLBY_3DMAPOBJ_WK_Load( &p_sys->objres, p_handle, p_data, gheapID );
 
 
 	// フロートオブジェクト
-	WFLBY_3DMAPOBJ_FLOAT_Load( &p_sys->floatres, p_handle, &p_sys->allocator, p_data, gheapID );
+	WFLBY_3DMAPOBJ_FLOAT_Load( &p_sys->floatres, p_handle, p_data, gheapID );
 
 	GFL_ARC_CloseDataHandle( p_handle );
 	
@@ -433,13 +447,13 @@ void WFLBY_3DMAPOBJ_ResRelease( WFLBY_3DMAPOBJ* p_sys )
 	WFLBY_3DMAPOBJ_MAP_Delete( &p_sys->map, &p_sys->mapres );
 	
 	// マップワーク
-	WFLBY_3DMAPOBJ_MAP_Release( &p_sys->mapres, &p_sys->allocator );
+	WFLBY_3DMAPOBJ_MAP_Release( &p_sys->mapres );
 	
 	// 配置オブジェワーク
-	WFLBY_3DMAPOBJ_WK_Release( &p_sys->objres, &p_sys->allocator );
+	WFLBY_3DMAPOBJ_WK_Release( &p_sys->objres );
 	
 	// フロートワーク
-	WFLBY_3DMAPOBJ_FLOAT_Release( &p_sys->floatres, &p_sys->allocator );
+	WFLBY_3DMAPOBJ_FLOAT_Release( &p_sys->floatres );
 
 	p_sys->res_load = FALSE;
 }
@@ -464,9 +478,7 @@ void WFLBY_3DMAPOBJ_MAP_OnPoll( WFLBY_3DMAPOBJ* p_sys )
 			u16 anm_idx;
 			p_sys->map.anm_on[ WFLBY_3DMAPOBJ_MAP_ANM_POLL ] = TRUE;
 			//常に1つしかアニメを持たせないようにしているため、必ずindexは0のはず
-			anm_idx = GFL_G3D_OBJECT_AddAnime( p_sys->map.g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAP],  p_sys->mapres.anm[WFLBY_3DMAPOBJ_MAP_ANM_POLL] );
-			GF_ASSERT(anm_idx == 0);
-			GFL_G3D_OBJECT_EnableAnime( p_sys->map.g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], anm_idx );
+			GFL_G3D_OBJECT_EnableAnime( p_sys->map.g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], WFLBY_3DMAPOBJ_MAP_ANM_POLL );
 		#endif
 		}
 	}
@@ -486,8 +498,7 @@ void WFLBY_3DMAPOBJ_MAP_OffPoll( WFLBY_3DMAPOBJ* p_sys )
 		#if WB_FIX
 			D3DOBJ_DelAnm( &p_sys->map.obj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], &p_sys->mapres.anm[WFLBY_3DMAPOBJ_MAP_ANM_POLL] );
 		#else
-			GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
-			GFL_G3D_OBJECT_RemoveAnime( 引数はまだ未対応 );
+			GFL_G3D_OBJECT_DisableAnime( p_sys->map.g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], WFLBY_3DMAPOBJ_MAP_ANM_POLL );
 		#endif
 			p_sys->map.anm_on[ WFLBY_3DMAPOBJ_MAP_ANM_POLL ] = FALSE;
 		}
@@ -528,7 +539,8 @@ WFLBY_3DMAPOBJ_FLOAT* WFLBY_3DMAPOBJ_FLOAT_Add( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DM
 #else
 	// 絵をくっつけてあげる
 	GF_ASSERT(p_wk->g3dobj == NULL);
-	p_wk->g3dobj = GFL_G3D_OBJECT_Create( p_sys->floatres.rnder[ floattype ], NULL, 1 );
+	p_wk->g3dobj = GFL_G3D_OBJECT_Create( p_sys->floatres.rnder[ floattype ], p_sys->floatres.anm[ floattype ], WFLBY_3DMAPOBJ_FLOAT_ANM_NUM );
+	WFLBY_G3DOBJSTATUS_Init(&p_wk->objst, &p_wk->objrotate);
 
 	// 描画開始
 	p_wk->draw_flag = TRUE;
@@ -589,7 +601,11 @@ void WFLBY_3DMAPOBJ_FLOAT_Del( WFLBY_3DMAPOBJ_FLOAT* p_wk )
 void WFLBY_3DMAPOBJ_FLOAT_SetPos( WFLBY_3DMAPOBJ_FLOAT* p_wk, const VecFx32* cp_mat )
 {
 	p_wk->mat	= *cp_mat;
+#if WB_FIX
 	D3DOBJ_SetMatrix( &p_wk->obj, p_wk->mat.x+p_wk->ofs.x, p_wk->mat.y+p_wk->ofs.y, p_wk->mat.z+p_wk->ofs.z );
+#else
+	VEC_Set(&p_wk->objst.trans, p_wk->mat.x+p_wk->ofs.x, p_wk->mat.y+p_wk->ofs.y, p_wk->mat.z+p_wk->ofs.z );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -603,7 +619,11 @@ void WFLBY_3DMAPOBJ_FLOAT_SetPos( WFLBY_3DMAPOBJ_FLOAT* p_wk, const VecFx32* cp_
 void WFLBY_3DMAPOBJ_FLOAT_SetOfsPos( WFLBY_3DMAPOBJ_FLOAT* p_wk, const VecFx32* cp_mat )
 {
 	p_wk->ofs	= *cp_mat;
+#if WB_FIX
 	D3DOBJ_SetMatrix( &p_wk->obj, p_wk->mat.x+p_wk->ofs.x, p_wk->mat.y+p_wk->ofs.y, p_wk->mat.z+p_wk->ofs.z );
+#else
+	VEC_Set(&p_wk->objst.trans, p_wk->mat.x+p_wk->ofs.x, p_wk->mat.y+p_wk->ofs.y, p_wk->mat.z+p_wk->ofs.z );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -616,7 +636,11 @@ void WFLBY_3DMAPOBJ_FLOAT_SetOfsPos( WFLBY_3DMAPOBJ_FLOAT* p_wk, const VecFx32* 
 //-----------------------------------------------------------------------------
 void WFLBY_3DMAPOBJ_FLOAT_GetPos( const WFLBY_3DMAPOBJ_FLOAT* cp_wk, VecFx32* p_mat )
 {
+#if WB_FIX
 	D3DOBJ_GetMatrix( &cp_wk->obj, &p_mat->x, &p_mat->y, &p_mat->z );
+#else
+	*p_mat = cp_wk->objst.trans;
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -703,7 +727,12 @@ BOOL WFLBY_3DMAPOBJ_FLOAT_SetAnmBody( WFLBY_3DMAPOBJ_FLOAT* p_wk )
 //-----------------------------------------------------------------------------
 void WFLBY_3DMAPOBJ_FLOAT_SetRotaX( WFLBY_3DMAPOBJ_FLOAT* p_wk, u16 x )
 {
+#if WB_FIX
 	D3DOBJ_SetRota( &p_wk->obj, x, D3DOBJ_ROTA_WAY_X );
+#else
+	p_wk->objrotate.x = x;
+	WFLBY_RotateMtx(&p_wk->objrotate, &p_wk->objst.rotate);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -765,16 +794,26 @@ WFLBY_3DMAPOBJ_WK* WFLBY_3DMAPOBJ_WK_Add( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_
 	D3DOBJ_Init( &p_wk->obj, &p_sys->objres.mdl[objtype] );
 #else
 	GF_ASSERT(p_wk->g3dobj == NULL);
-	p_wk->g3dobj = GFL_G3D_OBJECT_Create( p_sys->objres.rnder[ objtype ], NULL, 1 );
+	p_wk->g3dobj = GFL_G3D_OBJECT_Create( p_sys->objres.rnder[ objtype ], p_sys->objres.anm[ objtype ], WFLBY_3DMAPOBJ_ALL_ANM_MAX );
+	WFLBY_G3DOBJSTATUS_Init(&p_wk->objst, &p_wk->objrotate);
 #endif
 
 	// アニメオブジェの初期化
 	for( i=0; i<WFLBY_3DMAPOBJ_ALL_ANM_MAX; i++ ){
+	#if WB_FIX
 		if( p_sys->objres.p_anm[objtype][i] != NULL ){
 			// アニメションオブジェの初期化
 			D3DOBJ_AnmLoad_Data( &p_wk->anm[i], &p_sys->objres.mdl[objtype],
-					p_sys->objres.p_anm[objtype][i], &p_sys->allocator );
+					p_sys->objres.p_anm[objtype][i] );
 		}
+	#else
+		if( p_sys->objres.p_anmres[objtype][i] != NULL ){
+			// アニメションオブジェの初期化
+			GF_ASSERT(p_wk->anm[i] == NULL);
+			p_wk->anm[i] = GFL_G3D_ANIME_Create( 
+				p_sys->objres.rnder[ objtype ], p_sys->objres.p_anmres[objtype][i], 0 ); 
+		}
+	#endif
 	}
 	
 	// 描画開始
@@ -832,12 +871,19 @@ void WFLBY_3DMAPOBJ_WK_Del( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk )
 
 	// アニメオブジェの破棄
 	for( i=0; i<WFLBY_3DMAPOBJ_ALL_ANM_MAX; i++ ){
+	#if WB_FIX
 		if( p_sys->objres.p_anm[p_wk->mdlid][i] != NULL ){
 			// アニメションオブジェの初期化
 			D3DOBJ_AnmLoad_Data( &p_wk->anm[i], &p_sys->objres.mdl[p_wk->mdlid],
-					p_sys->objres.p_anm[p_wk->mdlid][i], &p_sys->allocator );
+					p_sys->objres.p_anm[p_wk->mdlid][i] );
 		}
-
+	#else
+		if( p_sys->objres.p_anmres[p_wk->mdlid][i] != NULL ){
+			// アニメションオブジェの初期化
+			GFL_G3D_ANIME_Delete( p_wk->anm[i] );
+			p_wk->anm[i] = NULL;
+		}
+	#endif
 	}
 	
 	p_wk->on = FALSE;
@@ -870,7 +916,11 @@ void WFLBY_3DMAPOBJ_WK_SetPos( WFLBY_3DMAPOBJ_WK* p_wk, WF2DMAP_POS pos )
 	VecFx32 matrix;
 
 	WFLBY_3DMATRIX_GetPosVec( &pos, &matrix );
+#if WB_FIX
 	D3DOBJ_SetMatrix( &p_wk->obj, matrix.x, matrix.y, matrix.z );
+#else
+	VEC_Set( &p_wk->objst.trans, matrix.x, matrix.y, matrix.z );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -887,7 +937,11 @@ WF2DMAP_POS WFLBY_3DMAPOBJ_WK_GetPos( const WFLBY_3DMAPOBJ_WK* cp_wk )
 	VecFx32		matrix;
 	WF2DMAP_POS	pos;
 
+#if WB_FIX
 	D3DOBJ_GetMatrix( &cp_wk->obj, &matrix.x, &matrix.y, &matrix.z );
+#else
+	matrix = cp_wk->objst.trans;
+#endif
 	WFLBY_3DMATRIX_GetVecPos( &matrix, &pos );
 
 	return pos;
@@ -921,24 +975,24 @@ void WFLBY_3DMAPOBJ_WK_AddAnm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk, W
 //-----------------------------------------------------------------------------
 void WFLBY_3DMAPOBJ_WK_AddAnmAnmCallBack( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk, WFLBY_3DMAPOBJ_WK_ANM_TYPE anm, WFLBY_3DMAPOBJ_WK_ANM_PLAY play, pWFLBY_3DMAPOBJ_WK_AnmCallBack p_callback )
 {
+	int get_anmframe, set_anmframe;
 	
 	// そのアニメがあるかチェック
 	GF_ASSERT( anm < WFLBY_3DMAPOBJ_ALL_ANM_MAX );
 	GF_ASSERT( play < WFLBY_3DMAPOBJ_WK_ANM_PLAYNUM );
 	GF_ASSERT( p_wk->mdlid < WFLBY_3DMAPOBJ_WK_NUM );
-	
+
+#if WB_FIX
 	if( (p_sys->objres.p_anm[p_wk->mdlid][anm] != NULL) ){
-		
+#else
+	if( (p_sys->objres.p_anmres[p_wk->mdlid][anm] != NULL) ){
+#endif
 		if( p_wk->anm_on[ anm ] == FALSE ){
 			//  アニメ設定
 		#if WB_FIX
 			D3DOBJ_AddAnm( &p_wk->obj, &p_wk->anm[anm] );
 		#else
-			u16 anm_idx;
-			//常に1つしかアニメを持たせないようにしているため、必ずindexは0のはず
-			anm_idx = GFL_G3D_OBJECT_AddAnime( p_wk->g3dobj,  p_wk->anm[anm] );
-			GF_ASSERT(anm_idx == 0);
-			GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj, anm_idx );
+			GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj, anm );
 		#endif
 		}
 
@@ -955,7 +1009,11 @@ void WFLBY_3DMAPOBJ_WK_AddAnmAnmCallBack( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_
 			break;
 		case WFLBY_3DMAPOBJ_WK_ANM_BACKLOOP:
 		case WFLBY_3DMAPOBJ_WK_ANM_BACKNOLOOP:
+		#if WB_FIX
 			p_wk->anm_frame[ anm ]	= D3DOBJ_AnmGetFrameNum( &p_wk->anm[anm] );
+		#else
+			p_wk->anm_frame[ anm ]	= NNS_G3dAnmObjGetNumFrame(GFL_G3D_ANIME_GetAnmObj(p_wk->anm[anm]));
+		#endif
 			break;
 
 		case WFLBY_3DMAPOBJ_WK_ANM_RANDWAIT:
@@ -969,8 +1027,12 @@ void WFLBY_3DMAPOBJ_WK_AddAnmAnmCallBack( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_
 			break;
 		}
 
+	#if WB_FIX
 		D3DOBJ_AnmSet( &p_wk->anm[anm], p_wk->anm_frame[anm] );
-
+	#else
+		set_anmframe = p_wk->anm_frame[anm];
+		GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, anm, &set_anmframe );
+	#endif
 	}	
 }
 
@@ -989,13 +1051,16 @@ void WFLBY_3DMAPOBJ_WK_DelAnm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk, W
 	GF_ASSERT( anm < WFLBY_3DMAPOBJ_ALL_ANM_MAX );
 	GF_ASSERT( p_wk->mdlid < WFLBY_3DMAPOBJ_WK_NUM );
 
+#if WB_FIX
 	if( (p_sys->objres.p_anm[p_wk->mdlid][anm] != NULL) && (p_wk->anm_on[anm] == TRUE) ){
+#else
+	if( (p_sys->objres.p_anmres[p_wk->mdlid][anm] != NULL) && (p_wk->anm_on[anm] == TRUE) ){
+#endif
 		//  アニメをはがす
 	#if WB_FIX
 		D3DOBJ_DelAnm( &p_wk->obj, &p_wk->anm[ anm ] );
 	#else
-		GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
-		GFL_G3D_OBJECT_RemoveAnime( 引数はまだ未対応 );
+		GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj, anm );
 	#endif
 	
 		p_wk->anm_on[ anm ]		= FALSE;
@@ -1043,7 +1108,11 @@ BOOL WFLBY_3DMAPOBJ_WK_CheckAnm( const WFLBY_3DMAPOBJ* cp_sys, const WFLBY_3DMAP
 	GF_ASSERT( anm < WFLBY_3DMAPOBJ_ALL_ANM_MAX );
 	GF_ASSERT( cp_wk->mdlid < WFLBY_3DMAPOBJ_WK_NUM );
 	
+#if WB_FIX
 	if( cp_sys->objres.p_anm[cp_wk->mdlid][anm] != NULL ){
+#else
+	if( cp_sys->objres.p_anmres[cp_wk->mdlid][anm] != NULL ){
+#endif
 		return cp_wk->anm_on[ anm ];
 	}
 	return FALSE;
@@ -1063,16 +1132,27 @@ BOOL WFLBY_3DMAPOBJ_WK_CheckAnm( const WFLBY_3DMAPOBJ* cp_sys, const WFLBY_3DMAP
 //-----------------------------------------------------------------------------
 void WFLBY_3DMAPOBJ_WK_SetAnmFrame( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk, WFLBY_3DMAPOBJ_WK_ANM_TYPE anm, fx32 frame )
 {
+	int set_anmframe;
+	
 	// そのアニメがあるかチェック
 	GF_ASSERT( anm < WFLBY_3DMAPOBJ_ALL_ANM_MAX );
 	GF_ASSERT( p_wk->mdlid < WFLBY_3DMAPOBJ_WK_NUM );
+#if WB_FIX
 	GF_ASSERT( p_sys->objres.p_anm[p_wk->mdlid][anm] != NULL );
-	
+#else
+	GF_ASSERT( p_sys->objres.p_anmres[p_wk->mdlid][anm] != NULL );
+#endif
+
 	if( p_wk->play[ anm ] != WFLBY_3DMAPOBJ_WK_ANM_NOAUTO ){
 		return ; 	// オートアニメ中なので操作しない
 	}
 	p_wk->anm_frame[ anm ]	= frame;
+#if WB_FIX
 	D3DOBJ_AnmSet( &p_wk->anm[anm], p_wk->anm_frame[anm] );
+#else
+	set_anmframe = p_wk->anm_frame[anm];
+	GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, anm, &set_anmframe );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1156,11 +1236,20 @@ void WFLBY_3DMAPOBJ_WK_SetDraw( WFLBY_3DMAPOBJ_WK* p_wk, BOOL flag )
 //-----------------------------------------------------------------------------
 void WFLBY_3DMAPOBJ_WK_SetLightFlag( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk, u32 light_flag )
 {
+	NNSG3dResMdlSet*		pMdlset;
+	NNSG3dResMdl*			pMdl;
+	
 	// そのアニメがあるかチェック
 	GF_ASSERT( p_wk->mdlid < WFLBY_3DMAPOBJ_WK_NUM );
 
 	// フィールドの設定に変更
+#if WB_FIX
 	NNS_G3dMdlSetMdlLightEnableFlagAll( p_sys->objres.mdl[ p_wk->mdlid ].pModel, light_flag );
+#else
+	pMdlset = NNS_G3dGetMdlSet(GFL_G3D_GetResourceFileHeader(p_sys->objres.p_mdlres[p_wk->mdlid]));
+	pMdl = NNS_G3dGetMdlByIdx( pMdlset, 0 );
+	NNS_G3dMdlSetMdlLightEnableFlagAll( pMdl, light_flag );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1229,7 +1318,11 @@ void WFLBY_3DMAPOBJ_WK_ResetAlpha( WFLBY_3DMAPOBJ_WK* p_wk )
 //-----------------------------------------------------------------------------
 void WFLBY_3DMAPOBJ_WK_SetScale( WFLBY_3DMAPOBJ_WK* p_wk, fx32 x, fx32 y, fx32 z )
 {
+#if WB_FIX
 	D3DOBJ_SetScale( &p_wk->obj, x, y, z );
+#else
+	VEC_Set(&p_wk->objst.scale, x, y, z);
+#endif
 }
 
 
@@ -1305,12 +1398,12 @@ static void WFLBY_3DMAPOBJ_MDL_Load( GFL_G3D_RES** p_res, ARCHANDLE* p_handle, u
 		p_mdl->pModel		= NNS_G3dGetMdlByIdx( p_mdl->pModelSet, 0 );
 		p_mdl->pMdlTex		= NNS_G3dGetTex( nnsg3d_head );
 	}
-#endif
 
 	// テクスチャキーを設定して、モデルにバインドする
 	{
 		BindTexture( p_mdl->pResMdl, p_mdl->pMdlTex );
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1320,9 +1413,14 @@ static void WFLBY_3DMAPOBJ_MDL_Load( GFL_G3D_RES** p_res, ARCHANDLE* p_handle, u
  *	@param	p_mdl		モデルワーク
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DMAPOBJ_MDL_Delete( GFL_G3D_OBJ* p_mdl )
+static void WFLBY_3DMAPOBJ_MDL_Delete( GFL_G3D_RES* p_mdl )
 {
+#if WB_FIX
 	D3DOBJ_MdlDelete( p_mdl );
+#else
+	GFL_G3D_FreeVramTexture(p_mdl);
+	GFL_G3D_DeleteResource(p_mdl);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1337,7 +1435,11 @@ static void WFLBY_3DMAPOBJ_ANM_Loop( fx32* p_frame, const GFL_G3D_ANM* cp_anm, f
 {
 	fx32 end_frame;
 
+#if WB_FIX
 	end_frame = D3DOBJ_AnmGetFrameNum( cp_anm );
+#else
+	end_frame = NNS_G3dAnmObjGetNumFrame(GFL_G3D_ANIME_GetAnmObj(cp_anm));
+#endif
 
 	// アニメを進める
 	if( ((*p_frame) + speed) < end_frame ){
@@ -1363,7 +1465,11 @@ static BOOL WFLBY_3DMAPOBJ_ANM_NoLoop( fx32* p_frame, const GFL_G3D_ANM* cp_anm,
 	fx32 end_frame;
 	BOOL ret;
 
+#if WB_FIX
 	end_frame = D3DOBJ_AnmGetFrameNum( cp_anm );
+#else
+	end_frame = NNS_G3dAnmObjGetNumFrame(GFL_G3D_ANIME_GetAnmObj(cp_anm));
+#endif
 
 	// アニメを進める
 	if( ((*p_frame) + speed) < end_frame ){
@@ -1389,7 +1495,12 @@ static void WFLBY_3DMAPOBJ_ANM_BackLoop( fx32* p_frame, const GFL_G3D_ANM* cp_an
 {
 	fx32 end_frame;
 
+#if WB_FIX
 	end_frame = D3DOBJ_AnmGetFrameNum( cp_anm );
+#else
+	end_frame = NNS_G3dAnmObjGetNumFrame(GFL_G3D_ANIME_GetAnmObj(cp_anm));
+
+#endif
 
 	// アニメを進める
 	if( ((*p_frame) - speed) >= 0 ){
@@ -1437,21 +1548,25 @@ static BOOL WFLBY_3DMAPOBJ_ANM_BackNoLoop( fx32* p_frame, const GFL_G3D_ANM* cp_
  *	@param	p_handle	ハンドル
  *	@param	cp_data		データ
  *	@param	gheapID		ヒープID
- *	@param	p_allocator	アロケータ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DMAPOBJ_MAP_Load( WFLBY_3DMAPOBJ_MAPRES* p_wk, ARCHANDLE* p_handle, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID, NNSFndAllocator* p_allocator )
+static void WFLBY_3DMAPOBJ_MAP_Load( WFLBY_3DMAPOBJ_MAPRES* p_wk, ARCHANDLE* p_handle, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID )
 {
 	int i, j;
 	// モデルリソース読み込み
 	for( i=0; i<WFLBY_3DMAPOBJ_MAPOBJ_NUM; i++ ){
 //		OS_TPrintf( "map load mdl idx = %d\n",  cp_data->map_idx[i] );
-		WFLBY_3DMAPOBJ_MDL_Load( &p_wk->mdl[ i ],
+		WFLBY_3DMAPOBJ_MDL_Load( &p_wk->p_mdlres[ i ],
 				p_handle, cp_data->map_idx[ i ], gheapID );
+		p_wk->rnder[i] = GFL_G3D_RENDER_Create( p_wk->p_mdlres[i], 0, p_wk->p_mdlres[i] );
 
 
 		// ライト設定
+	#if WB_FIX
 		WFLBY_LIGHT_SetUpMdl( p_wk->mdl[ i ].pResMdl );	// ライト反映
+	#else
+		WFLBY_LIGHT_SetUpMdl( GFL_G3D_GetResourceFileHeader(p_wk->p_mdlres[i]) );	// ライト反映
+	#endif
 	}
 
 	// アニメリソースを読み込む
@@ -1467,15 +1582,28 @@ static void WFLBY_3DMAPOBJ_MAP_Load( WFLBY_3DMAPOBJ_MAPRES* p_wk, ARCHANDLE* p_h
 //			OS_TPrintf( "map load anm idx = %d\n",  cp_data->map_anmidx[i] );
 
 			if( i != WFLBY_3DMAPOBJ_MAP_ANM_MAT ){
-			
+			#if WB_FIX
 				D3DOBJ_AnmLoadH( &p_wk->anm[i], &p_wk->mdl[ WFLBY_3DMAPOBJ_MAPOBJ_MAP ],
 						p_handle, 
 						cp_data->map_anmidx[i], gheapID, p_allocator );
+			#else
+				p_wk->p_anmres[i] = GFL_G3D_CreateResourceHandle( 
+					p_handle, cp_data->map_anmidx[i] );
+				p_wk->anm[i] = GFL_G3D_ANIME_Create( 
+					p_wk->rnder[WFLBY_3DMAPOBJ_MAPOBJ_MAP], p_wk->p_anmres[i], 0 ); 
+			#endif
 			}else{
 
+			#if WB_FIX
 				D3DOBJ_AnmLoadH( &p_wk->anm[i], &p_wk->mdl[ WFLBY_3DMAPOBJ_MAPOBJ_MAT ],
 						p_handle, 
 						cp_data->map_anmidx[i], gheapID, p_allocator );
+			#else
+				p_wk->p_anmres[i] = GFL_G3D_CreateResourceHandle( 
+					p_handle, cp_data->map_anmidx[i] );
+				p_wk->anm[i] = GFL_G3D_ANIME_Create( 
+					p_wk->rnder[WFLBY_3DMAPOBJ_MAPOBJ_MAT], p_wk->p_anmres[i], 0 ); 
+			#endif
 			}
 
 #if 0
@@ -1495,24 +1623,29 @@ static void WFLBY_3DMAPOBJ_MAP_Load( WFLBY_3DMAPOBJ_MAPRES* p_wk, ARCHANDLE* p_h
  *	@brief	モデルリソースの破棄
  *
  *	@param	p_wk	ワーク
- *	@param	p_allocator	アロケータ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DMAPOBJ_MAP_Release( WFLBY_3DMAPOBJ_MAPRES* p_wk, NNSFndAllocator* p_allocator )
+static void WFLBY_3DMAPOBJ_MAP_Release( WFLBY_3DMAPOBJ_MAPRES* p_wk )
 {
 	int i;
 
 	// アニメ破棄
 	for( i=0; i<WFLBY_3DMAPOBJ_MAP_ANM_NUM; i++ ){
 		if( p_wk->anm_load[i] ){
+		#if WB_FIX
 			D3DOBJ_AnmDelete( &p_wk->anm[i], p_allocator );
+		#else
+			GFL_G3D_ANIME_Delete( p_wk->anm[i] );
+			GFL_G3D_DeleteResource( p_wk->p_anmres[i] );
+		#endif
 			p_wk->anm_load[i] = FALSE;
 		}
 	}
 
 	//  モデル破棄
 	for( i=0; i<WFLBY_3DMAPOBJ_MAPOBJ_NUM; i++ ){
-		WFLBY_3DMAPOBJ_MDL_Delete( &p_wk->mdl[i] );	
+		WFLBY_3DMAPOBJ_MDL_Delete( p_wk->p_mdlres[i] );	
+		GFL_G3D_RENDER_Delete(p_wk->rnder[i]);
 	}
 }
 
@@ -1536,7 +1669,8 @@ static void WFLBY_3DMAPOBJ_MAP_Add( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MAP
 		// 描画開始
 		D3DOBJ_SetDraw( &p_wk->obj[i], TRUE );
 	#else
-		p_wk->g3dobj[i] = GFL_G3D_OBJECT_Create( p_res->rnder[ i ], NULL, 1 );
+		p_wk->g3dobj[i] = GFL_G3D_OBJECT_Create( p_res->rnder[ i ], p_res->anm, WFLBY_3DMAPOBJ_MAP_ANM_NUM );
+		WFLBY_G3DOBJSTATUS_Init(&p_wk->objst[i], &p_wk->objrotate[i]);
 		// 描画開始
 		p_wk->draw_flag[i] = TRUE;
 	#endif
@@ -1558,22 +1692,14 @@ static void WFLBY_3DMAPOBJ_MAP_Add( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MAP
 				D3DOBJ_AddAnm( &p_wk->obj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], 
 						&p_res->anm[i] );
 			#else
-				u16 anm_idx;
-				//常に1つしかアニメを持たせないようにしているため、必ずindexは0のはず
-				anm_idx = GFL_G3D_OBJECT_AddAnime( p_wk->g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAP],  p_res->anm[i] );
-				GF_ASSERT(anm_idx == 0);
-				GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], anm_idx );
+				GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], i );
 			#endif
 			}else{
 			#if WB_FIX
 				D3DOBJ_AddAnm( &p_wk->obj[WFLBY_3DMAPOBJ_MAPOBJ_MAT], 
 						&p_res->anm[i] );
 			#else
-				u16 anm_idx;
-				//常に1つしかアニメを持たせないようにしているため、必ずindexは0のはず
-				anm_idx = GFL_G3D_OBJECT_AddAnime( p_wk->obj[WFLBY_3DMAPOBJ_MAPOBJ_MAT],  p_res->anm[i] );
-				GF_ASSERT(anm_idx == 0);
-				GFL_G3D_OBJECT_EnableAnime( p_wk->obj[WFLBY_3DMAPOBJ_MAPOBJ_MAT], anm_idx );
+				GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAT], i );
 			#endif
 			}
 		}
@@ -1605,16 +1731,14 @@ static void WFLBY_3DMAPOBJ_MAP_Delete( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_
 				D3DOBJ_DelAnm( &p_wk->obj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], 
 						&p_res->anm[i] );
 			#else
-				GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
-				GFL_G3D_OBJECT_RemoveAnime( 引数はまだ未対応 );
+				GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], i );
 			#endif
 			}else{
 			#if WB_FIX
 				D3DOBJ_DelAnm( &p_wk->obj[WFLBY_3DMAPOBJ_MAPOBJ_MAT], 
 						&p_res->anm[i] );
 			#else
-				GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
-				GFL_G3D_OBJECT_RemoveAnime( 引数はまだ未対応 );
+				GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAT], i );
 			#endif
 			}
 		}
@@ -1636,14 +1760,19 @@ static void WFLBY_3DMAPOBJ_MAP_Delete( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_
 //-----------------------------------------------------------------------------
 static void WFLBY_3DMAPOBJ_MAP_Main( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MAPRES* p_res )
 {
-	int i;
+	int i, set_anmframe;
 
 	// アニメが開始していたらフレームを設定する
 	for( i=0; i<WFLBY_3DMAPOBJ_MAP_ANM_NUM; i++ ){
 		if( p_wk->anm_on[i] ){
-			WFLBY_3DMAPOBJ_ANM_Loop( &p_wk->anm_frame[i], &p_res->anm[i], FX32_ONE );
+			WFLBY_3DMAPOBJ_ANM_Loop( &p_wk->anm_frame[i], p_res->anm[i], FX32_ONE );
 			// フレームをあわせる
+		#if WB_FIX
 			D3DOBJ_AnmSet( &p_res->anm[i], p_wk->anm_frame[i] );
+		#else
+			set_anmframe = p_wk->anm_frame[i];
+			GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj[i], i, &set_anmframe );
+		#endif
 		}
 	}
 }
@@ -1705,12 +1834,11 @@ static WFLBY_3DMAPOBJ_FLOAT* WFLBY_3DMAPOBJ_FLOAT_GetCleanWk( WFLBY_3DMAPOBJ* p_
  *	
  *	@param	p_wk		ワーク
  *	@param	p_handle	ハンドル
- *	@param	p_allocator	アロケータ
  *	@param	cp_data		データ
  *	@param	gheapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DMAPOBJ_FLOAT_Load( WFLBY_3DMAPOBJ_FLOATRES* p_wk, ARCHANDLE* p_handle, NNSFndAllocator* p_allocator, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID )
+static void WFLBY_3DMAPOBJ_FLOAT_Load( WFLBY_3DMAPOBJ_FLOATRES* p_wk, ARCHANDLE* p_handle, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID )
 {
 	int i, j, k;
 
@@ -1764,7 +1892,7 @@ static void WFLBY_3DMAPOBJ_FLOAT_Load( WFLBY_3DMAPOBJ_FLOATRES* p_wk, ARCHANDLE*
 
 				#if WB_FIX
 					D3DOBJ_AnmLoadH( &p_wk->anm[i][j], &p_wk->mdl[i], p_handle, 
-							cp_data->float_anmidx[i][j], gheapID, p_allocator );
+							cp_data->float_anmidx[i][j], gheapID );
 				#else
 					p_wk->p_anmres[i][j] = GFL_G3D_CreateResourceHandle( p_handle, 
 						cp_data->float_anmidx[i][j] ) ;
@@ -1798,10 +1926,9 @@ static void WFLBY_3DMAPOBJ_FLOAT_Load( WFLBY_3DMAPOBJ_FLOATRES* p_wk, ARCHANDLE*
  *	@brief	フロートリソース破棄
  *
  *	@param	p_wk		ワーク
- *	@param	p_allocator	アロケータ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DMAPOBJ_FLOAT_Release( WFLBY_3DMAPOBJ_FLOATRES* p_wk, NNSFndAllocator* p_allocator )
+static void WFLBY_3DMAPOBJ_FLOAT_Release( WFLBY_3DMAPOBJ_FLOATRES* p_wk )
 {
 	int i, j;
 
@@ -1812,7 +1939,7 @@ static void WFLBY_3DMAPOBJ_FLOAT_Release( WFLBY_3DMAPOBJ_FLOATRES* p_wk, NNSFndA
 			#if WB_FIX
 				D3DOBJ_AnmDelete( &p_wk->anm[i][j], p_allocator );
 			#else
-				GFL_G3D_ANIME_Delete( &p_wk->anm[i][j] );
+				GFL_G3D_ANIME_Delete( p_wk->anm[i][j] );
 				GFL_G3D_DeleteResource( p_wk->p_anmres[i][j] );
 			#endif
 			}
@@ -1855,6 +1982,7 @@ static void WFLBY_3DMAPOBJ_FLOAT_Release( WFLBY_3DMAPOBJ_FLOATRES* p_wk, NNSFndA
 			#else
 				//ここで吹っ飛ぶようならWFLBY_3DMAPOBJ_TEX_LoatCutTexでテクスチャヒープを
 				//実体部分の解放をしているからかも 2009.03.25(水) matsuda
+				GFL_G3D_FreeVramTexture(p_wk->p_texres[i][j]);
 				GFL_G3D_DeleteResource(p_wk->p_texres[i][j]);
 			#endif
 			}
@@ -1883,14 +2011,14 @@ static void WFLBY_3DMAPOBJ_FLOAT_Main( WFLBY_3DMAPOBJ_FLOAT* p_wk, WFLBY_3DMAPOB
 				case WFLBY_3DMAPOBJ_FLOAT_ANM_00:
 				case WFLBY_3DMAPOBJ_FLOAT_ANM_02:		// 頭
 //					OS_TPrintf( "anm roop %d=%d  ",  i, p_wk->anm_frame[i] );
-					WFLBY_3DMAPOBJ_ANM_Loop( &p_wk->anm_frame[i], &p_res->anm[ p_wk->mdlno ][ i ], FX32_ONE );
+					WFLBY_3DMAPOBJ_ANM_Loop( &p_wk->anm_frame[i], p_res->anm[ p_wk->mdlno ][ i ], FX32_ONE );
 					break;
 				case WFLBY_3DMAPOBJ_FLOAT_ANM_01:		// 泣き声用
 				case WFLBY_3DMAPOBJ_FLOAT_ANM_03:		// 尻尾
 					{
 						BOOL result;
 //						OS_TPrintf( "anm noroop %d=%d  ",  i, p_wk->anm_frame[i] );
-						result = WFLBY_3DMAPOBJ_ANM_NoLoop( &p_wk->anm_frame[i], &p_res->anm[ p_wk->mdlno ][ i ], FX32_ONE );
+						result = WFLBY_3DMAPOBJ_ANM_NoLoop( &p_wk->anm_frame[i], p_res->anm[ p_wk->mdlno ][ i ], FX32_ONE );
 						if( result == TRUE ){
 							// アニメ停止
 							p_wk->anm_on[i] = FALSE;
@@ -1919,7 +2047,7 @@ static void WFLBY_3DMAPOBJ_FLOAT_Main( WFLBY_3DMAPOBJ_FLOAT* p_wk, WFLBY_3DMAPOB
 static void WFLBY_3DMAPOBJ_FLOAT_Draw( WFLBY_3DMAPOBJ_FLOAT* p_wk, WFLBY_3DMAPOBJ_FLOATRES* p_res )
 {
 	BOOL result;
-	int i;
+	int i, set_anmframe;
 	GFL_G3D_RND *g3dRnd;
 	
 	if( p_wk->on == FALSE ){
@@ -1956,13 +2084,10 @@ static void WFLBY_3DMAPOBJ_FLOAT_Draw( WFLBY_3DMAPOBJ_FLOAT* p_wk, WFLBY_3DMAPOB
 			// フレームをあわせる
 			D3DOBJ_AnmSet( &p_res->anm[ p_wk->mdlno ][ i ], p_wk->anm_frame[i] );
 		#else
-			u16 anm_idx;
-			//常に1つしかアニメを持たせないようにしているため、必ずindexは0のはず
-			anm_idx = GFL_G3D_OBJECT_AddAnime( p_wk->g3dobj,  p_res->anm[p_wk->mdlno][i] );
-			GF_ASSERT(anm_idx == 0);
-			GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj, anm_idx );
+			GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj, i );
 			// フレームをあわせる
-			GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, anm_idx, p_wk->anm_frame[i] );
+			set_anmframe = p_wk->anm_frame[i];
+			GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, i, &set_anmframe );
 		#endif
 		}
 	}
@@ -1981,8 +2106,7 @@ static void WFLBY_3DMAPOBJ_FLOAT_Draw( WFLBY_3DMAPOBJ_FLOAT* p_wk, WFLBY_3DMAPOB
 		#if WB_FIX
 			D3DOBJ_DelAnm( &p_wk->obj, &p_res->anm[ p_wk->mdlno ][ i ] );
 		#else
-			GFL_G3D_OBJECT_DisableAnime(p_wk->g3dobj, 0);
-			GFL_G3D_OBJECT_RemoveAnime(p_wk->g3dobj, 0);
+			GFL_G3D_OBJECT_DisableAnime(p_wk->g3dobj, i);
 		#endif
 		}
 	}
@@ -2029,23 +2153,27 @@ static WFLBY_3DMAPOBJ_WK* WFLBY_3DMAPOBJ_WK_GetCleanWk( WFLBY_3DMAPOBJ* p_sys )
  *
  *	@param	p_wk		ワーク
  *	@param	p_handle	ハンドル
- *	@param	p_allocator	アロケータ
  *	@param	cp_data		データ
  *	@param	gheapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DMAPOBJ_WK_Load( WFLBY_3DMAPOBJ_WKRES* p_wk, ARCHANDLE* p_handle, NNSFndAllocator* p_allocator, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID )
+static void WFLBY_3DMAPOBJ_WK_Load( WFLBY_3DMAPOBJ_WKRES* p_wk, ARCHANDLE* p_handle, const WFLBY_3DMAPOBJ_MDL_DATA* cp_data, u32 gheapID )
 {
 	int i, j;
 
 	for( i=0; i<WFLBY_3DMAPOBJ_WK_NUM; i++ ){
 //		OS_TPrintf( "wk load mdl idx = %d\n",  cp_data->obj_idx[i] );
-		WFLBY_3DMAPOBJ_MDL_Load( &p_wk->mdl_res[i], p_handle, cp_data->obj_idx[i], gheapID );
+		WFLBY_3DMAPOBJ_MDL_Load( &p_wk->p_mdlres[i], p_handle, cp_data->obj_idx[i], gheapID );
+		p_wk->rnder[i] = GFL_G3D_RENDER_Create( p_wk->p_mdlres[i], 0, p_wk->p_mdlres[i] );
 
 		// ライト設定
 		if( (i != WFLBY_3DMAPOBJ_LAMP00) && 
 			(i != WFLBY_3DMAPOBJ_LAMP01) ){
+		#if WB_FIX
 			WFLBY_LIGHT_SetUpMdl( p_wk->mdl[ i ].pResMdl );	// ライト反映
+		#else
+			WFLBY_LIGHT_SetUpMdl( GFL_G3D_GetResourceFileHeader(p_wk->p_mdlres[ i ]) );	// ライト反映
+		#endif
 		}
 
 		// モデル分のアニメを読み込む
@@ -2053,9 +2181,13 @@ static void WFLBY_3DMAPOBJ_WK_Load( WFLBY_3DMAPOBJ_WKRES* p_wk, ARCHANDLE* p_han
 			
 			// オブジェのIDと同じなら読み込まない
 			if( cp_data->obj_anm[i][j] != cp_data->obj_idx[i] ){
+			#if WB_FIX
 				p_wk->p_anm[i][j] = GFL_ARCHDL_UTIL_Load( p_handle, cp_data->obj_anm[i][j], FALSE, gheapID );
+			#else
+				p_wk->p_anmres[i][j] = GFL_G3D_CreateResourceHandle(p_handle, cp_data->obj_anm[i][j]);
+			#endif
 			}else{
-				p_wk->p_anm[i][j] = NULL;
+				p_wk->p_anmres[i][j] = NULL;
 			}
 		}
 	}
@@ -2068,7 +2200,7 @@ static void WFLBY_3DMAPOBJ_WK_Load( WFLBY_3DMAPOBJ_WKRES* p_wk, ARCHANDLE* p_han
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_3DMAPOBJ_WK_Release( WFLBY_3DMAPOBJ_WKRES* p_wk, NNSFndAllocator* p_allocator )
+static void WFLBY_3DMAPOBJ_WK_Release( WFLBY_3DMAPOBJ_WKRES* p_wk )
 {
 	int i, j;
 
@@ -2081,14 +2213,19 @@ static void WFLBY_3DMAPOBJ_WK_Release( WFLBY_3DMAPOBJ_WKRES* p_wk, NNSFndAllocat
 				p_wk->anm[i][j].pResAnm = NULL;
 			}//*/
 
-			if( p_wk->p_anm[i][j] != NULL ){
+			if( p_wk->p_anmres[i][j] != NULL ){
+			#if WB_FIX
 				GFL_HEAP_FreeMemory( p_wk->p_anm[i][j] );
-				p_wk->p_anm[i][j] = NULL;
+			#else
+				GFL_G3D_DeleteResource( p_wk->p_anmres[i][j] );
+			#endif
+				p_wk->p_anmres[i][j] = NULL;
 			}
 
 		}
 		
-		WFLBY_3DMAPOBJ_MDL_Delete( &p_wk->mdl[i] );
+		WFLBY_3DMAPOBJ_MDL_Delete( p_wk->p_mdlres[i] );
+		GFL_G3D_RENDER_Delete(p_wk->rnder[i]);
 	}
 }
 
@@ -2103,6 +2240,8 @@ static void WFLBY_3DMAPOBJ_WK_Release( WFLBY_3DMAPOBJ_WKRES* p_wk, NNSFndAllocat
 static void WFLBY_3DMAPOBJ_WK_Draw( WFLBY_3DMAPOBJ_WKRES* p_res, WFLBY_3DMAPOBJ_WK* p_wk )
 {
 	int i;
+	NNSG3dResMdlSet*		pMdlset;
+	NNSG3dResMdl*			pMdl;
 
 	if( p_wk->on == FALSE ){
 		return ;
@@ -2131,23 +2270,26 @@ static void WFLBY_3DMAPOBJ_WK_Draw( WFLBY_3DMAPOBJ_WKRES* p_res, WFLBY_3DMAPOBJ_
 	WFLBY_DEBUG_3DMAPOBJ_PRINT_TIME_TICK_PRINT( __LINE__ );
 	//*/
 
+	pMdlset = NNS_G3dGetMdlSet(GFL_G3D_GetResourceFileHeader(p_res->p_mdlres[p_wk->mdlid]));
+	pMdl = NNS_G3dGetMdlByIdx( pMdlset, 0 );
+
 	// アルファ値の適用
 	if( p_wk->alpha_flag == TRUE ){
-		NNS_G3dMdlSetMdlAlphaAll( p_res->mdl[p_wk->mdlid].pModel, p_wk->alpha );
+		NNS_G3dMdlSetMdlAlphaAll( pMdl, p_wk->alpha );
 	}
 
 #if WB_FIX
 	D3DOBJ_Draw( &p_wk->obj );
 #else
 	if(p_wk->draw_flag == TRUE){
-		GFL_G3D_DRAW_DrawObjectCullingON(p_res->mdl[ p_wk->mdlid ], &p_wk->obj);
+		GFL_G3D_DRAW_DrawObjectCullingON(p_wk->g3dobj, &p_wk->objst);
 	}
 #endif
 	WFLBY_DEBUG_3DMAPOBJ_PRINT_TIME_TICK_PRINT( __LINE__ );
 
 	// アルファ値を戻す
 	if( p_wk->alpha_flag == TRUE ){
-		NNS_G3dMdlSetMdlAlphaAll( p_res->mdl[p_wk->mdlid].pModel, p_wk->def_alpha );
+		NNS_G3dMdlSetMdlAlphaAll( pMdl, p_wk->def_alpha );
 	}
 
 }
@@ -2163,7 +2305,7 @@ static void WFLBY_3DMAPOBJ_WK_Draw( WFLBY_3DMAPOBJ_WKRES* p_res, WFLBY_3DMAPOBJ_
 //-----------------------------------------------------------------------------
 static void WFLBY_3DMAPOBJ_WK_Anm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk )
 {
-	int i;
+	int i, set_anmframe;
 	BOOL result;
 	pWFLBY_3DMAPOBJ_WK_AnmCallBack p_callback;
 
@@ -2172,14 +2314,24 @@ static void WFLBY_3DMAPOBJ_WK_Anm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_w
 			switch( p_wk->play[i] ){
 			// ループ
 			case WFLBY_3DMAPOBJ_WK_ANM_LOOP:
-				WFLBY_3DMAPOBJ_ANM_Loop( &p_wk->anm_frame[i], &p_wk->anm[i], p_wk->speed );
+				WFLBY_3DMAPOBJ_ANM_Loop( &p_wk->anm_frame[i], p_wk->anm[i], p_wk->speed );
+			#if WB_FIX
 				D3DOBJ_AnmSet( &p_wk->anm[i], p_wk->anm_frame[i] );
+			#else
+				set_anmframe = p_wk->anm_frame[i];
+				GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, i, &set_anmframe );
+			#endif
 				break;
 
 			// ループなし
 			case WFLBY_3DMAPOBJ_WK_ANM_NOLOOP:
-				result = WFLBY_3DMAPOBJ_ANM_NoLoop( &p_wk->anm_frame[i], &p_wk->anm[i], p_wk->speed );
+				result = WFLBY_3DMAPOBJ_ANM_NoLoop( &p_wk->anm_frame[i], p_wk->anm[i], p_wk->speed );
+			#if WB_FIX
 				D3DOBJ_AnmSet( &p_wk->anm[i], p_wk->anm_frame[i] );
+			#else
+				set_anmframe = p_wk->anm_frame[i];
+				GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, i, &set_anmframe );
+			#endif
 				if( result == TRUE ){
 					
 					// 保存
@@ -2198,14 +2350,24 @@ static void WFLBY_3DMAPOBJ_WK_Anm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_w
 
 			// 逆再生ループ
 			case WFLBY_3DMAPOBJ_WK_ANM_BACKLOOP:
-				WFLBY_3DMAPOBJ_ANM_BackLoop( &p_wk->anm_frame[i], &p_wk->anm[i], p_wk->speed );
+				WFLBY_3DMAPOBJ_ANM_BackLoop( &p_wk->anm_frame[i], p_wk->anm[i], p_wk->speed );
+			#if WB_FIX
 				D3DOBJ_AnmSet( &p_wk->anm[i], p_wk->anm_frame[i] );
+			#else
+				set_anmframe = p_wk->anm_frame[i];
+				GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, i, &set_anmframe );
+			#endif
 				break;
 
 			// 逆再生ループなし
 			case WFLBY_3DMAPOBJ_WK_ANM_BACKNOLOOP:
-				result = WFLBY_3DMAPOBJ_ANM_BackNoLoop( &p_wk->anm_frame[i], &p_wk->anm[i], p_wk->speed );
+				result = WFLBY_3DMAPOBJ_ANM_BackNoLoop( &p_wk->anm_frame[i], p_wk->anm[i], p_wk->speed );
+			#if WB_FIX
 				D3DOBJ_AnmSet( &p_wk->anm[i], p_wk->anm_frame[i] );
+			#else
+				set_anmframe = p_wk->anm_frame[i];
+				GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, i, &set_anmframe );
+			#endif
 				if( result == TRUE ){
 					// 保存
 					p_callback = p_wk->p_anmcallback[i];
@@ -2227,13 +2389,18 @@ static void WFLBY_3DMAPOBJ_WK_Anm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_w
 				if( p_wk->wait[i] > 0 ){
 					p_wk->wait[i]--;
 				}else{
-					result = WFLBY_3DMAPOBJ_ANM_NoLoop( &p_wk->anm_frame[i], &p_wk->anm[i], p_wk->speed );
+					result = WFLBY_3DMAPOBJ_ANM_NoLoop( &p_wk->anm_frame[i], p_wk->anm[i], p_wk->speed );
 					if( result == TRUE ){
 						// ループ再生
 						p_wk->wait[i] = GFUser_GetPublicRand(p_wk->wait_def);
 						p_wk->anm_frame[i] = 0;
 					}
+				#if WB_FIX
 					D3DOBJ_AnmSet( &p_wk->anm[i], p_wk->anm_frame[i] );
+				#else
+					set_anmframe = p_wk->anm_frame[i];
+					GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, i, &set_anmframe );
+				#endif
 				}
 				break;
 
@@ -2243,8 +2410,13 @@ static void WFLBY_3DMAPOBJ_WK_Anm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_w
 				if( p_wk->wait[i] > 0 ){
 					p_wk->wait[i]--;
 				}else{
-					WFLBY_3DMAPOBJ_ANM_Loop( &p_wk->anm_frame[i], &p_wk->anm[i], p_wk->speed );
+					WFLBY_3DMAPOBJ_ANM_Loop( &p_wk->anm_frame[i], p_wk->anm[i], p_wk->speed );
+				#if WB_FIX
 					D3DOBJ_AnmSet( &p_wk->anm[i], p_wk->anm_frame[i] );
+				#else
+					set_anmframe = p_wk->anm_frame[i];
+					GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, i, &set_anmframe );
+				#endif
 				}
 				break;
 
@@ -2258,3 +2430,43 @@ static void WFLBY_3DMAPOBJ_WK_Anm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_w
 		}
 	}
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   GFL_G3D_OBJSTATUSの初期パラメータセット
+ *
+ * @param   status		
+ */
+//--------------------------------------------------------------
+static void WFLBY_G3DOBJSTATUS_Init(GFL_G3D_OBJSTATUS *status, VecFx32 *rotate)
+{
+	VEC_Set(&status->trans, 0, 0, 0);
+	VEC_Set(&status->scale, FX32_ONE, FX32_ONE, FX32_ONE);
+	MTX_Identity33(&status->rotate);
+	
+	VEC_Set(rotate, 0, 0, 0);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   回転行列の計算
+ *
+ * @param   status		
+ * @param   rotate		
+ */
+//--------------------------------------------------------------
+static void WFLBY_RotateMtx(VecFx32 *rotate, MtxFx33 *dst_mtx)
+{
+	MtxFx33 mtx, calc_mtx;
+	
+	MTX_Identity33( &mtx );
+	MTX_RotX33( &calc_mtx, FX_SinIdx( rotate->x ), FX_CosIdx( rotate->x ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	MTX_RotZ33( &calc_mtx, FX_SinIdx( rotate->z ), FX_CosIdx( rotate->z ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	MTX_RotY33( &calc_mtx, FX_SinIdx( rotate->y ), FX_CosIdx( rotate->y ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	
+	*dst_mtx = mtx;
+}
+

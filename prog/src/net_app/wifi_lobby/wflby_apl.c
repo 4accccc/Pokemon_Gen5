@@ -29,6 +29,8 @@
 #include "lobby_news.h"
 #include "wflby_connect.h"
 
+#include "net_app/net_bugfix.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					コーディング規約
@@ -706,6 +708,7 @@ static void WFLBY_APLDATA_WORLDTIMER_Exit( WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_WORLDTIMER_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
+#if WB_TEMP_FIX
 	WLDTIMER_PARAM* p_param;
 
 	// オーバーレイID宣言
@@ -724,6 +727,7 @@ static void WFLBY_APLDATA_WORLDTIMER_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_d
 	p_param->worldtime	= *(WFLBY_SYSTEM_GetWldTime( p_sys->p_system ));
 
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(worldtimer) );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -797,6 +801,7 @@ static void WFLBY_APLDATA_TOPIC_Exit( WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_TOPIC_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
+#if WB_TEMP_FIX
 	// オーバーレイID宣言
 	FS_EXTERN_OVERLAY(lobbynews);
 
@@ -808,6 +813,7 @@ static void WFLBY_APLDATA_TOPIC_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	};
 
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(lobbynews) );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1018,6 +1024,7 @@ static void WFLBY_APLDATA_BS_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 static WFLBY_APL_RET WFLBY_APLDATA_BS_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
 
+#if WB_TEMP_FIX
 	// ミニゲーム共通オーバーレイ破棄
 	FS_EXTERN_OVERLAY(minigame_common);
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(minigame_common) );
@@ -1034,7 +1041,9 @@ static WFLBY_APL_RET WFLBY_APLDATA_BS_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 	
 	// 部屋に戻る
 	WFLBY_APLDATA_Start( p_sys, WFLBY_APL_ROOM );
-	
+
+#endif
+
 	return WFLBY_APL_RET_NONE;
 }
 
@@ -1126,6 +1135,7 @@ static void WFLBY_APLDATA_BB_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static WFLBY_APL_RET WFLBY_APLDATA_BB_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
+#if WB_TEMP_FIX
 	// ミニゲーム共通オーバーレイ破棄
 	FS_EXTERN_OVERLAY(minigame_common);
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(minigame_common) );
@@ -1141,6 +1151,7 @@ static WFLBY_APL_RET WFLBY_APLDATA_BB_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 	// 部屋に戻る
 	WFLBY_APLDATA_Start( p_sys, WFLBY_APL_ROOM );
 	
+#endif
 	return WFLBY_APL_RET_NONE;
 }
 
@@ -1199,6 +1210,7 @@ static void WFLBY_APLDATA_BL_Exit( WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_BL_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
+#if WB_TEMP_FIX
 	FS_EXTERN_OVERLAY(balloon);
 	FS_EXTERN_OVERLAY(minigame_common);
 	// プロセス定義データ
@@ -1219,6 +1231,7 @@ static void WFLBY_APLDATA_BL_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	}
 	
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(balloon) );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1231,6 +1244,7 @@ static void WFLBY_APLDATA_BL_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static WFLBY_APL_RET WFLBY_APLDATA_BL_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
+#if WB_TEMP_FIX
 	// ミニゲーム共通オーバーレイ破棄
 	FS_EXTERN_OVERLAY(minigame_common);
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(minigame_common) );
@@ -1247,6 +1261,7 @@ static WFLBY_APL_RET WFLBY_APLDATA_BL_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 	// 部屋に戻る
 	WFLBY_APLDATA_Start( p_sys, WFLBY_APL_ROOM );
 	
+#endif
 	return WFLBY_APL_RET_NONE;
 }
 
@@ -1317,6 +1332,7 @@ static WFLBY_APL_RET WFLBY_APLDATA_FOOT_End( WFLBY_APL* p_sys, WFLBY_APLDATA* p_
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_FOOT1_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
+#if WB_TEMP_FIX
 	FOOTPRINT_PARAM* p_param;
 
 	FS_EXTERN_OVERLAY(footprint_board);
@@ -1331,6 +1347,7 @@ static void WFLBY_APLDATA_FOOT1_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	p_param->board_type		= FOOTPRINT_BOARD_TYPE_WHITE;
 
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(footprint_board) );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1343,6 +1360,7 @@ static void WFLBY_APLDATA_FOOT1_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_FOOT2_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
+#if WB_TEMP_FIX
 	FOOTPRINT_PARAM* p_param;
 
 	FS_EXTERN_OVERLAY(footprint_board);
@@ -1357,6 +1375,7 @@ static void WFLBY_APLDATA_FOOT2_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	p_param->board_type		= FOOTPRINT_BOARD_TYPE_BLACK;
 
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(footprint_board) );
+#endif
 }
 
 
@@ -1526,6 +1545,7 @@ static void WFLBY_APLDATA_ANKETO_Exit( WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_ANKETO_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
+#if WB_TEMP_FIX
 	// オーバーレイID宣言
 	FS_EXTERN_OVERLAY(wifilobby_anketo);
 
@@ -1537,6 +1557,7 @@ static void WFLBY_APLDATA_ANKETO_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data 
 	};
 
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(wifilobby_anketo) );
+#endif
 }
 
 //----------------------------------------------------------------------------

@@ -117,6 +117,7 @@ SRCS	+=		$(SOUNDSRC) \
 				field/scrcmd.c \
 				field/eventwork.c \
 				field/scrcmd_work.c \
+				test/matsuda/wflby_debug.c \
 				test/ariizumi/debug_pause.c \
 				system/wazatype_icon.c \
 				app/codein/codein.c \
@@ -178,8 +179,6 @@ SRCS	+=		$(SOUNDSRC) \
 #LIB=>					libdwcauth.a
 #LIB=>					libdwcbase.a
 #LIB=>					libdwcac.a
-#LIB=>					libdwcaccount.a
-#LIB=>					libdwcbm.a
 #LIB=>					libdwcgscommon.a
 #LIB=>					libdwcgsghttp.a
 #LIB=>					libdwcgsgp.a
@@ -188,7 +187,6 @@ SRCS	+=		$(SOUNDSRC) \
 #LIB=>					libdwcgsnatneg.a
 #LIB=>					libdwcgsqr2.a
 #LIB=>					libdwcgsserverbrowsing.a
-#LIB=>					libdwcgschat.a
 #LIB=>					libvct.a
 #LIB=>					libsoc.a
 #LIB=>					libcps.a
@@ -548,7 +546,7 @@ SRCS_OVERLAY_DPW_COMMON		= libdpw\dpwi_encrypt.c \
 				  		libdpw\dpwi_session.c
 
 #Wi-FiLê
-#===> main
+#===> SRCS_OVERLAY_WIFI2DMAP
 #LIB=>					libdwcbm.a
 #LIB=>					libdwcaccount.a
 #LIB=>					libdwcgschat.a
@@ -584,17 +582,17 @@ SRCS_OVERLAY_WIFILOBBY_ROOM		=	net_app\wifi_lobby\wflby_3dmatrix.c \
 									net_app\wifi_lobby\wflby_mapcont.c \
 									net_app\wifi_lobby\wflby_3dobjcont.c \
 									net_app\wifi_lobby\wflby_room.c \
-									net_app\wifi_lobby\wflby_camera.c
-#									net_app\wifi_lobby\wflby_3dmapobj.c \
-#									net_app\wifi_lobby\wflby_3dmapobj_cont.c \
-#									net_app\wifi_lobby\wflby_event.c \
-#									net_app\wifi_lobby\wflby_ev_def.c \
-#									net_app\wifi_lobby\wflby_ev_mg.c \
-#									net_app\wifi_lobby\wflby_ev_talk.c \
-#									net_app\wifi_lobby\wflby_gadget.c \
-#									net_app\wifi_lobby\wflby_light.c \
-#									net_app\wifi_lobby\wflby_timeevent.c \
-#									net_app\wifi_lobby\wflby_fire.c \
-#									net_app\wifi_lobby\wflby_ev_anketo.c \
-#									net_app\wifi_lobby\wflby_float.c
+									net_app\wifi_lobby\wflby_camera.c \
+									net_app\wifi_lobby\wflby_3dmapobj.c \
+									net_app\wifi_lobby\wflby_3dmapobj_cont.c \
+									net_app\wifi_lobby\wflby_event.c \
+									net_app\wifi_lobby\wflby_ev_def.c \
+									net_app\wifi_lobby\wflby_ev_mg.c \
+									net_app\wifi_lobby\wflby_ev_talk.c \
+									net_app\wifi_lobby\wflby_gadget.c \
+									net_app\wifi_lobby\wflby_light.c \
+									net_app\wifi_lobby\wflby_timeevent.c \
+									net_app\wifi_lobby\wflby_fire.c \
+									net_app\wifi_lobby\wflby_ev_anketo.c \
+									net_app\wifi_lobby\wflby_float.c
 

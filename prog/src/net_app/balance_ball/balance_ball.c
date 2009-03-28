@@ -1105,7 +1105,10 @@ static void BB_VramBankSet( void )
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat[ 1 ], GFL_BG_MODE_TEXT );
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat[ 2 ], GFL_BG_MODE_TEXT );
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &TextBgCntDat[ 3 ], GFL_BG_MODE_TEXT );
-		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+		GFL_BG_SetVisible(GFL_BG_FRAME1_M, VISIBLE_ON);
+		GFL_BG_SetVisible(GFL_BG_FRAME2_M, VISIBLE_ON);
+		GFL_BG_SetVisible(GFL_BG_FRAME3_M, VISIBLE_ON);
+//		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
 		GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
 		GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
 		GFL_BG_ClearScreen( GFL_BG_FRAME3_M );

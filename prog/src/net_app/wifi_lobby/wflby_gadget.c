@@ -22,6 +22,8 @@
 #include "wflby_snd.h"
 #include "wflby_3dmatrix.h"
 #include <calctool.h>
+#include "arc_def.h"
+#include "system/main.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -719,7 +721,9 @@ typedef struct {
 	u8	seq;
 	WFLBY_GADGET_MV_STRAIGHT	st[WFLBY_GADGET_ONPU_OBJ_NUM];
 	WFLBY_GADGET_MV_SINCURVE	cv[WFLBY_GADGET_ONPU_OBJ_NUM];
-	GFL_G3D_OBJSTATUS*	p_obj[WFLBY_GADGET_ONPU_OBJ_NUM];
+	GFL_G3D_OBJSTATUS*	p_objst[WFLBY_GADGET_ONPU_OBJ_NUM];
+	GFL_G3D_OBJ*	p_obj[WFLBY_GADGET_ONPU_OBJ_NUM];
+	BOOL*			p_draw_flag[WFLBY_GADGET_ONPU_OBJ_NUM];
 	const WFLBY_3DPERSON* cp_person;
 } WFLBY_GADGET_ONPU;
 
@@ -816,7 +820,14 @@ typedef struct {
 	///	それぞれの初期化関数で設定するデータ
 	//=====================================
 	// 描画オブジェ
+#if WB_FIX
 	GFL_G3D_OBJSTATUS		obj[ WFLBY_GADGET_OBJ_MAX ];
+#else
+	GFL_G3D_OBJSTATUS		objst[ WFLBY_GADGET_OBJ_MAX ];
+	VecFx32		objrotate[ WFLBY_GADGET_OBJ_MAX ];
+	GFL_G3D_OBJ	*g3dobj[ WFLBY_GADGET_OBJ_MAX ];
+	BOOL draw_flag[ WFLBY_GADGET_OBJ_MAX ];
+#endif
 	// 動作中のオブジェデータ
 	const WFLBY_GADGET_RES*	cp_objres[ WFLBY_GADGET_OBJ_MAX ];
 	// アニメーションフレーム
@@ -840,14 +851,17 @@ typedef struct _WFLBY_GADGET{
 
 
 	// 各リソース
-	GFL_G3D_OBJ	mdl[ WFLBY_GADGET_MDL_NUM ];		// モデル
-	GFL_G3D_RES *res[ WFLBY_GADGET_MDL_NUM ];		// リソース
-	void*		p_texres[ WFLBY_GADGET_TEX_NUM ];	// テクスチャ
-	GFL_G3D_ANM	anm[ WFLBY_GADGET_ANM_NUM ];		// アニメ
+	GFL_G3D_OBJ	*g3dobj[ WFLBY_GADGET_MDL_NUM ];
+	GFL_G3D_RND *rnder[ WFLBY_GADGET_MDL_NUM ];
+	GFL_G3D_RES *p_mdlres[ WFLBY_GADGET_MDL_NUM ];		// リソース
+	GFL_G3D_RES*		p_texres[ WFLBY_GADGET_TEX_NUM ];	// テクスチャ
+	GFL_G3D_RES*		p_anmres[ WFLBY_GADGET_ANM_NUM ];
+	GFL_G3D_ANM	*anm[ WFLBY_GADGET_ANM_NUM ];		// アニメ
 
 	// アロケータ
+#if WB_FIX
 	NNSFndAllocator		allocator;
-	
+#endif
 } WFLBY_GADGET;
 
 
@@ -1391,7 +1405,7 @@ static void WFLBY_GADGET_ONPU_Cont_Init( WFLBY_GADGET_OBJWK* p_wk, const WFLBY_G
 static WFLBY_GADGET_ONPU_MAIN_RET WFLBY_GADGET_ONPU_Cont_Main( WFLBY_GADGET_OBJWK* p_wk, u32 count );
 
 // 音符ここの動き
-static void WFLBY_GADGET_OnpuMove_Init( WFLBY_GADGET_ONPU* p_wk, GFL_G3D_OBJSTATUS* p_obj0, GFL_G3D_OBJSTATUS* p_obj1, GFL_G3D_OBJSTATUS* p_obj2, GFL_G3D_OBJSTATUS* p_obj3, const WFLBY_3DPERSON* cp_person, u32 anm_type );
+static void WFLBY_GADGET_OnpuMove_Init( WFLBY_GADGET_ONPU* p_wk, GFL_G3D_OBJ* p_obj0, GFL_G3D_OBJ* p_obj1, GFL_G3D_OBJ* p_obj2, GFL_G3D_OBJ* p_obj3, GFL_G3D_OBJSTATUS* p_objst0, GFL_G3D_OBJSTATUS* p_objst1, GFL_G3D_OBJSTATUS* p_objst2, GFL_G3D_OBJSTATUS* p_objst3, BOOL* p_draw0, BOOL* p_draw1, BOOL* p_draw2, BOOL* p_draw3, const WFLBY_3DPERSON* cp_person, u32 anm_type );
 static void WFLBY_GADGET_OnpuMove_Start( WFLBY_GADGET_ONPU* p_wk, u32 num );
 static BOOL WFLBY_GADGET_OnpuMove_Main( WFLBY_GADGET_ONPU* p_wk );
 //ベル
@@ -1404,6 +1418,9 @@ static BOOL WFLBY_GADGET_OnpuMove_MainDram( WFLBY_GADGET_ONPU* p_wk );
 static void WFLBY_GADGET_OnpuMove_InitCymbals( WFLBY_GADGET_ONPU* p_wk, const WFLBY_3DPERSON* cp_person );
 static BOOL WFLBY_GADGET_OnpuMove_MainCymbals( WFLBY_GADGET_ONPU* p_wk );
 static void WFLBY_GADGET_OnpuMove_SetCymbalsStParam( WFLBY_GADGET_ONPU* p_wk, u32 idx, const VecFx32* cp_def_matrix, fx32 ofs_x0, fx32 ofs_y0, fx32 ofs_x1, fx32 ofs_y1, u32 sync );
+
+static void WFLBY_GADGET_OBJ_G3DOBJSTATUS_Init(GFL_G3D_OBJSTATUS *status, VecFx32 *rotate);
+static void WFLBY_GADGET_RotateMtx(VecFx32 *rotate, MtxFx33 *dst_mtx);
 
 //----------------------------------------------------------------------------
 /**
@@ -1436,9 +1453,11 @@ WFLBY_GADGET* WFLBY_GADGET_Init( WFLBY_SYSTEM* p_system, WFLBY_MAPCONT* p_mapcon
 		ARCHANDLE* p_handle;
 		p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFILOBBY_OTHER_GRA, heapID );
 
+	#if WB_FIX
 		// アロケータ作成
 		sys_InitAllocator( &p_sys->allocator, gheapID, 4 );
-
+	#endif
+	
 		// モデル読み込み
 		WFLBY_GADGET_LoadMdl( p_sys, p_handle, gheapID );
 
@@ -1726,10 +1745,14 @@ static void WFLBY_GADGET_SePlay( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk, u3
 {
 	// 自分と他人で再生方法を変更
 	if( p_wk->p_person == WFLBY_3DOBJCONT_GetPlayer( p_sys->p_objcont ) ){
+	#if WB_TEMP_FIX
 		Snd_SePlayEx( seno, SND_PLAYER_NO_WIFI_HIROBA );	//自分専用のプレイヤーナンバーで再生
+	#endif
 	}else{
 		if( WFLBY_3DOBJCONT_GetCullingFlag( p_wk->p_person ) == FALSE ){
+		#if WB_TEMP_FIX
 			Snd_SePlay( seno );
+		#endif
 		}
 	}
 }
@@ -1747,6 +1770,8 @@ static void WFLBY_GADGET_SePlay( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk, u3
 static void WFLBY_GADGET_LoadMdl( WFLBY_GADGET* p_sys, ARCHANDLE* p_handle, u32 gheapID )
 {
 	int i;
+	NNSG3dResMdlSet*		pMdlset;
+	NNSG3dResMdl*			pMdl;
 
 	for( i=0; i<WFLBY_GADGET_MDL_NUM; i++ ){
 	#if WB_FIX
@@ -1762,7 +1787,13 @@ static void WFLBY_GADGET_LoadMdl( WFLBY_GADGET* p_sys, ARCHANDLE* p_handle, u32 
 		// エミッションを明るくする
 		NNS_G3dMdlSetMdlEmiAll( p_sys->mdl[i].pModel, GX_RGB( 31,31,31 ) );
 	#else
-		p_sys->res[i] = GFL_G3D_CreateResourceHandle( p_handle, WFLBY_GADGET_MDL_FILE_START + i ) ;
+		p_sys->p_mdlres[i] = GFL_G3D_CreateResourceHandle( p_handle, WFLBY_GADGET_MDL_FILE_START + i ) ;
+		p_sys->rnder[i] = GFL_G3D_RENDER_Create( p_sys->p_mdlres[i], 0, NULL );
+
+		// エミッションを明るくする
+		pMdlset = NNS_G3dGetMdlSet(GFL_G3D_GetResourceFileHeader(p_sys->p_mdlres[i]));
+		pMdl = NNS_G3dGetMdlByIdx( pMdlset, 0 );
+		NNS_G3dMdlSetMdlEmiAll( pMdl, GX_RGB( 31,31,31 ) );
 	#endif
 	}
 }
@@ -1779,7 +1810,11 @@ static void WFLBY_GADGET_DeleteMdl( WFLBY_GADGET* p_sys )
 	int i;
 
 	for( i=0; i<WFLBY_GADGET_MDL_NUM; i++ ){
+	#if WB_FIX
 		GFL_HEAP_FreeMemory( p_sys->mdl[i].pResMdl );
+	#else
+		GFL_G3D_DeleteResource(p_sys->p_mdlres[i]);
+	#endif
 	}
 }
 
@@ -1812,14 +1847,17 @@ static void WFLBY_GADGET_LoadTex( WFLBY_GADGET* p_sys, ARCHANDLE* p_handle, u32 
 static void WFLBY_GADGET_DeleteTex( WFLBY_GADGET* p_sys )
 {
 	int i;
+#if WB_FIX
 	NNSG3dTexKey texKey;
 	NNSG3dTexKey tex4x4Key;
 	NNSG3dPlttKey plttKey;
 	NNSG3dResTex* p_tex;
+#endif
 
 	for( i=0; i<WFLBY_GADGET_TEX_NUM; i++ ){
 
-		p_tex = NNS_G3dGetTex( p_sys->p_texres[i] );
+	#if WB_FIX
+		p_tex = NNS_G3dGetTex( GFL_G3D_GetResourceFileHeader(p_sys->p_texres[i]) );
 		//VramKey破棄
 		NNS_G3dTexReleaseTexKey( p_tex, &texKey, &tex4x4Key );
 		NNS_GfdFreeTexVram( texKey );	
@@ -1827,8 +1865,12 @@ static void WFLBY_GADGET_DeleteTex( WFLBY_GADGET* p_sys )
 
 		plttKey = NNS_G3dPlttReleasePlttKey( p_tex );
 		NNS_GfdFreePlttVram( plttKey );
-
+	
 		GFL_HEAP_FreeMemory( p_sys->p_texres[i] );
+	#else
+		GFL_G3D_FreeVramTexture( p_sys->p_texres[i] );
+		GFL_G3D_DeleteResource( p_sys->p_texres[i] );
+	#endif
 	}
 }
 
@@ -1851,8 +1893,8 @@ static void WFLBY_GADGET_LoadAnm( WFLBY_GADGET* p_sys, ARCHANDLE* p_handle, u32 
 	for( i=0; i<WFLBY_GADGET_OBJ_NUM; i++ ){
 		for( j=0; j<WFLBY_GADGET_ANM_MAX; j++ ){
 			if( sc_WFLBY_GADGET_RES[i].anm[j] != WFLBY_GADGET_ANM_NONE ){
+			#if WB_FIX
 				if( p_sys->anm[ sc_WFLBY_GADGET_RES[i].anm[j] ].pResAnm == NULL ){
-
 					// テクスチャアニメ用に対応するテクスチャをモデルに設定する
 					p_sys->mdl[ sc_WFLBY_GADGET_RES[i].mdl ].pMdlTex = NNS_G3dGetTex( p_sys->p_texres[sc_WFLBY_GADGET_RES[i].tex] );
 					
@@ -1861,6 +1903,18 @@ static void WFLBY_GADGET_LoadAnm( WFLBY_GADGET* p_sys, ARCHANDLE* p_handle, u32 
 							WFLBY_GADGET_ANM_FILE_START + sc_WFLBY_GADGET_RES[i].anm[j], 
 							gheapID, &p_sys->allocator );
 				}
+			#else
+				if( p_sys->p_anmres[ sc_WFLBY_GADGET_RES[i].anm[j] ] == NULL ){
+					// テクスチャアニメ用に対応するテクスチャをモデルに設定する
+					GFL_G3D_RENDER_SetTexture( p_sys->rnder[ sc_WFLBY_GADGET_RES[i].mdl ], 0, p_sys->p_texres[sc_WFLBY_GADGET_RES[i].tex] );
+					
+					p_sys->p_anmres[sc_WFLBY_GADGET_RES[i].anm[j]] = GFL_G3D_CreateResourceHandle( 
+						p_handle, WFLBY_GADGET_ANM_FILE_START + sc_WFLBY_GADGET_RES[i].anm[j] );
+					p_sys->anm[sc_WFLBY_GADGET_RES[i].anm[j]] = GFL_G3D_ANIME_Create( 
+						p_sys->rnder[sc_WFLBY_GADGET_RES[i].mdl], 
+						p_sys->p_anmres[sc_WFLBY_GADGET_RES[i].anm[j]], 0 ); 
+				}
+			#endif
 			}
 		}
 	}
@@ -1878,10 +1932,19 @@ static void WFLBY_GADGET_DeleteAnm( WFLBY_GADGET* p_sys )
 	int i;
 
 	for( i=0; i<WFLBY_GADGET_ANM_NUM; i++ ){
+	#if WB_FIX
 		if( p_sys->anm[i].pResAnm != NULL ){
 			D3DOBJ_AnmDelete( &p_sys->anm[i], &p_sys->allocator );
 			p_sys->anm[i].pResAnm = NULL;
 		}
+	#else
+		if( p_sys->p_anmres[i] != NULL ){
+			GFL_G3D_ANIME_Delete(p_sys->anm[i]);
+			p_sys->anm[i] = NULL;
+			GFL_G3D_DeleteResource(p_sys->p_anmres[i]);
+			p_sys->p_anmres[i] = NULL;
+		}
+	#endif
 	}
 }
 
@@ -1928,6 +1991,7 @@ static void WFLBY_GADGET_OBJ_Start( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk,
 		WFLBY_GADGET_ANM_Init_Balloon02,   // バルーン大
 	};
 	static const u32 sc_SndData[ WFLBY_ITEM_NUM ] = {
+	#if WB_TEMP_FIX		//全てSEのシーケンス番号定義なので、とりあえず0
 		WFLBY_SND_TOUCH_TOY01_1,
 		WFLBY_SND_TOUCH_TOY01_2,
 		WFLBY_SND_TOUCH_TOY01_3,
@@ -1955,6 +2019,35 @@ static void WFLBY_GADGET_OBJ_Start( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk,
 		WFLBY_SND_TOUCH_TOY09_1,
 		WFLBY_SND_TOUCH_TOY09_2,
 		WFLBY_SND_TOUCH_TOY09_3,
+	#else
+		0,		//WFLBY_SND_TOUCH_TOY01_1,
+		0,		//WFLBY_SND_TOUCH_TOY01_2,
+		0,		//WFLBY_SND_TOUCH_TOY01_3,
+		0,		//WFLBY_SND_TOUCH_TOY02_1,
+		0,		//WFLBY_SND_TOUCH_TOY02_2,
+		0,		//WFLBY_SND_TOUCH_TOY02_3,
+		0,		//WFLBY_SND_TOUCH_TOY03_1,
+		0,		//WFLBY_SND_TOUCH_TOY03_2,
+		0,		//WFLBY_SND_TOUCH_TOY03_3,
+		0,		//WFLBY_SND_TOUCH_TOY04_1,
+		0,		//WFLBY_SND_TOUCH_TOY04_2,
+		0,		//WFLBY_SND_TOUCH_TOY04_3,
+		0,		//WFLBY_SND_TOUCH_TOY05_1,
+		0,		//WFLBY_SND_TOUCH_TOY05_2,
+		0,		//WFLBY_SND_TOUCH_TOY05_3,
+		0,		//WFLBY_SND_TOUCH_TOY06_1,
+		0,		//WFLBY_SND_TOUCH_TOY06_2,
+		0,		//WFLBY_SND_TOUCH_TOY06_3,
+		0,		//WFLBY_SND_TOUCH_TOY07_1,
+		0,		//WFLBY_SND_TOUCH_TOY07_2,
+		0,		//WFLBY_SND_TOUCH_TOY07_3,
+		0,		//WFLBY_SND_TOUCH_TOY08_1,
+		0,		//WFLBY_SND_TOUCH_TOY08_2,
+		0,		//WFLBY_SND_TOUCH_TOY08_3,
+		0,		//WFLBY_SND_TOUCH_TOY09_1,
+		0,		//WFLBY_SND_TOUCH_TOY09_2,
+		0,		//WFLBY_SND_TOUCH_TOY09_3,
+	#endif
 	};
 	GF_ASSERT( gadget < WFLBY_ITEM_NUM );
 
@@ -1974,7 +2067,9 @@ static void WFLBY_GADGET_OBJ_Start( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk,
 	pFunc[ p_wk->gadget_type ]( p_sys, p_wk );
 
 	// 画面内に人がいたら音を鳴らす
+#if WB_TEMP_FIX
 	WFLBY_GADGET_SePlay( p_sys, p_wk, sc_SndData[ p_wk->gadget_type ] );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2168,7 +2263,13 @@ static void WFLBY_GADGET_OBJ_SetRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk
 	p_wk->cp_objres[idx] = cp_resdata;
 	
 	// モデルの設定
+#if WB_FIX
 	D3DOBJ_Init( &p_wk->obj[idx], &p_sys->mdl[cp_resdata->mdl] );
+#else
+	p_wk->g3dobj[idx] = GFL_G3D_OBJECT_Create( p_sys->rnder[ cp_resdata->mdl ], p_sys->anm, WFLBY_GADGET_ANM_NUM );
+	WFLBY_GADGET_OBJ_G3DOBJSTATUS_Init(&p_wk->objst[idx], &p_wk->objrotate[idx]);
+	p_wk->draw_flag[idx] = TRUE;
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2183,17 +2284,24 @@ static void WFLBY_GADGET_OBJ_SetRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk
 static void WFLBY_GADGET_OBJ_DrawRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk, u32 idx )
 {
 	BOOL result;
-	void* p_tex;
-	GFL_G3D_OBJ* p_mdl;
-	GFL_G3D_ANM* p_anm;
+	NNSG3dResFileHeader* p_tex, *p_mdl;
 	int i;
-
+	NNSG3dResTex *restex;
+	NNSG3dResMdlSet*		pMdlset;
+	NNSG3dResMdl*			pMdl;
+	int set_anmframe;
+	
 	GF_ASSERT( p_wk->cp_objres[idx] != NULL );
 
+#if WB_FIX
 	if( D3DOBJ_GetDraw( &p_wk->obj[idx] ) == FALSE ){
+#else
+	if( p_wk->draw_flag[idx] == FALSE ){
+#endif
 		return ;
 	}
 
+#if WB_FIX
 	// テクスチャとモデル取得
 	p_tex = p_sys->p_texres[ p_wk->cp_objres[idx]->tex ];
 	p_mdl = &p_sys->mdl[ p_wk->cp_objres[idx]->mdl ];
@@ -2206,34 +2314,62 @@ static void WFLBY_GADGET_OBJ_DrawRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 	// 無理やり貼り付けてみる
 	result = NNS_G3dForceBindMdlPltt( p_mdl->pModel, p_mdl->pMdlTex, 0, 0 );
 	GF_ASSERT( result );
+#else
+	// テクスチャとモデル取得
+	p_tex = GFL_G3D_GetResourceFileHeader(p_sys->p_texres[ p_wk->cp_objres[idx]->tex ]);
+	p_mdl = GFL_G3D_GetResourceFileHeader(p_sys->p_mdlres[ p_wk->cp_objres[idx]->mdl ]);
+	pMdlset = NNS_G3dGetMdlSet(p_mdl);
+	pMdl = NNS_G3dGetMdlByIdx( pMdlset, 0 );
+	
+	// テクスチャバインド
+	restex = NNS_G3dGetTex( p_tex );
+	// 無理やり貼り付けてみる
+	result = NNS_G3dForceBindMdlTex( pMdl, restex, 0, 0 );
+	GF_ASSERT( result );
+	// 無理やり貼り付けてみる
+	result = NNS_G3dForceBindMdlPltt( pMdl, restex, 0, 0 );
+	GF_ASSERT( result );
+#endif
 
 	// アニメの適用
 	for( i=0; i<WFLBY_GADGET_ANM_MAX; i++ ){
 		if( p_wk->cp_objres[idx]->anm[i] != WFLBY_GADGET_ANM_NONE ){
-			p_anm = &p_sys->anm[ p_wk->cp_objres[idx]->anm[i] ];
+		#if WB_FIX
+			p_anm = p_sys->anm[ p_wk->cp_objres[idx]->anm[i] ];
 			D3DOBJ_AddAnm( &p_wk->obj[idx], p_anm );
 			// フレームをあわせる
 			D3DOBJ_AnmSet( p_anm, p_wk->anm_frame[idx][i] );
+		#else
+			GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj[idx], i );
+			// フレームをあわせる
+			set_anmframe = p_wk->anm_frame[idx][i];
+			GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj[idx], i, &set_anmframe );
+		#endif
 		}else{
 			break;
 		}
 	}
 
 	// OBJIDの設定
-	NNS_G3dMdlSetMdlPolygonIDAll( p_mdl->pModel, p_wk->mdl_objid );
+	NNS_G3dMdlSetMdlPolygonIDAll( pMdl, p_wk->mdl_objid );
 
 	// 描画
+#if WB_FIX
 	D3DOBJ_Draw( &p_wk->obj[idx] );	
+#else
+	if(p_wk->draw_flag[idx] == TRUE){
+		GFL_G3D_DRAW_DrawObjectCullingON(p_wk->g3dobj[idx], &p_wk->objst[idx]);
+	}
+#endif
 
 	// アニメを破棄
 	for( i=0; i<WFLBY_GADGET_ANM_MAX; i++ ){
 		if( p_wk->cp_objres[idx]->anm[i] != WFLBY_GADGET_ANM_NONE ){
-			p_anm = &p_sys->anm[ p_wk->cp_objres[idx]->anm[i] ];
 		#if WB_FIX
+			p_anm = &p_sys->anm[ p_wk->cp_objres[idx]->anm[i] ];
 			D3DOBJ_DelAnm( &p_wk->obj[idx], p_anm );
 		#else
-			GFL_G3D_OBJECT_DisableAnime( 引数はまだ未対応 );
-			GFL_G3D_OBJECT_RemoveAnime( 引数はまだ未対応 );
+			GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj[idx], i );
 		#endif
 		}else{
 			break;
@@ -2241,10 +2377,9 @@ static void WFLBY_GADGET_OBJ_DrawRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 	}
 
 	// バインド解除
-	NNS_G3dReleaseMdlTex( p_mdl->pModel );
-	NNS_G3dReleaseMdlPltt( p_mdl->pModel );
+	NNS_G3dReleaseMdlTex( pMdl );
+	NNS_G3dReleaseMdlPltt( pMdl );
 //	NNS_G3dReleaseMdlSet(p_mdl->pModelSet );
-	p_mdl->pMdlTex = NULL;
 }
 
 //----------------------------------------------------------------------------
@@ -2287,9 +2422,13 @@ static void WFLBY_GADGET_OBJ_LoopAnm_Sp( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* 
 	GFL_G3D_ANM* p_anm;
 
 	// アニメオブジェ取得
-	p_anm = &p_sys->anm[ p_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
+	p_anm = p_sys->anm[ p_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
 
+#if WB_FIX
 	end_frame = D3DOBJ_AnmGetFrameNum( p_anm );
+#else
+	end_frame = NNS_G3dAnmObjGetNumFrame(GFL_G3D_ANIME_GetAnmObj(p_anm));
+#endif
 
 	// アニメを進める
 	if( (p_wk->anm_frame[objidx][anmidx] + speed) < end_frame ){
@@ -2311,9 +2450,13 @@ static BOOL WFLBY_GADGET_OBJ_NoLoopAnm_Sp( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ
 	GFL_G3D_ANM* p_anm;
 
 	// アニメオブジェ取得
-	p_anm = &p_sys->anm[ p_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
+	p_anm = p_sys->anm[ p_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
 
+#if WB_FIX
 	end_frame = D3DOBJ_AnmGetFrameNum( p_anm );
+#else
+	end_frame = NNS_G3dAnmObjGetNumFrame(GFL_G3D_ANIME_GetAnmObj(p_anm));
+#endif
 
 	// アニメを進める
 	if( (p_wk->anm_frame[objidx][anmidx] + speed) < end_frame ){
@@ -2334,9 +2477,13 @@ static void WFLBY_GADGET_OBJ_SetFrame( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_
 	GFL_G3D_ANM* p_anm;
 
 	// アニメオブジェ取得
-	p_anm = &p_sys->anm[ p_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
+	p_anm = p_sys->anm[ p_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
 
+#if WB_FIX
 	end_frame = D3DOBJ_AnmGetFrameNum( p_anm );
+#else
+	end_frame = NNS_G3dAnmObjGetNumFrame(GFL_G3D_ANIME_GetAnmObj(p_anm));
+#endif
 
 	if( end_frame < frame ){
 		p_wk->anm_frame[objidx][anmidx] =  end_frame - FX32_HALF;
@@ -2358,13 +2505,19 @@ static void WFLBY_GADGET_OBJ_SetFrame( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_
 //-----------------------------------------------------------------------------
 static fx32 WFLBY_GADGET_OBJ_GetFrame( const WFLBY_GADGET* cp_sys, const WFLBY_GADGET_OBJ* cp_wk, u32 objidx, u32 anmidx )
 {
-	fx32 end_frame;
+#if WB_FIX
 	const GFL_G3D_ANM* cp_anm;
 
 	// アニメオブジェ取得
-	cp_anm = &cp_sys->anm[ cp_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
+	cp_anm = cp_sys->anm[ cp_wk->cp_objres[ objidx ]->anm[ anmidx ] ];
 
 	return D3DOBJ_AnmGet( cp_anm );
+#else
+	int frame;
+
+	GFL_G3D_OBJECT_GetAnimeFrame(cp_wk->g3dobj[objidx], anmidx, &frame);
+	return frame;
+#endif
 }
 
 
@@ -2418,10 +2571,14 @@ static void WFLBY_GADGET_ANM_Init_Signal00( WFLBY_GADGET* p_sys, WFLBY_GADGET_OB
 		matrix.x += WFLBY_GADGET_SIGNAL_ANM_MOVE_X;
 		matrix.z += WFLBY_GADGET_SIGNAL_ANM_MOVE_Z;
 		matrix.y += WFLBY_GADGET_FLOOR_Y + (FX_Mul( FX32_ONE*i, WFLBY_GADGET_SIGNAL_ANM_MOVE_Y ));
-		D3DOBJ_SetMatrix( &p_wk->obj[i], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->objst[i].trans, matrix.x, matrix.y, matrix.z );
 
 		// 非表示
+	#if WB_FIX
 		D3DOBJ_SetDraw( &p_wk->obj[i], FALSE );
+	#else
+		p_wk->draw_flag[i] = FALSE;
+	#endif
 	}
 
 	p_wk->mvwk.signal.lastnum = 0xff;
@@ -2437,7 +2594,11 @@ static void WFLBY_GADGET_ANM_Init_Cracker00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	WFLBY_GADGET_OBJ_SetRes( p_sys, p_wk, WFLBY_GADGET_CRACKEROBJ_FLASH, &sc_WFLBY_GADGET_RES[WFLBY_GADGET_OBJ_FLASH00] );
 
 	// クラッカーの描画OFF
+#if WB_FIX
 	D3DOBJ_SetDraw( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], FALSE );
+#else
+	p_wk->draw_flag[WFLBY_GADGET_CRACKEROBJ_CRACKER] = FALSE;
+#endif
 
 	// 座標をあわせる
 	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
@@ -2456,27 +2617,47 @@ static void WFLBY_GADGET_ANM_Init_Cracker00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	case WF2DMAP_WAY_UP:
 		matrix.z		-= 	WFLBY_GADGET_CRACKER_DISZ;
 		flash_matrix.z	-=	WFLBY_GADGET_FLASH_DIS;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], FX_GET_ROTA_NUM(270), D3DOBJ_ROTA_WAY_Y );
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM(270);
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+	#endif
 		break;
 		
 	case WF2DMAP_WAY_DOWN:
 		matrix.z		+= 	WFLBY_GADGET_CRACKER_DISZUN;
 		flash_matrix.z	+=	WFLBY_GADGET_FLASH_DISUN;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], FX_GET_ROTA_NUM(90), D3DOBJ_ROTA_WAY_Y );
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM(90);
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+	#endif
 		break;
 		
 	case WF2DMAP_WAY_LEFT:
 		matrix.x		-= 	WFLBY_GADGET_CRACKER_DISX;
 		flash_matrix.x	-=	WFLBY_GADGET_FLASH_DISX;
 		flash_matrix.z	+=	WFLBY_GADGET_FLASH_Z;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], FX_GET_ROTA_NUM(0), D3DOBJ_ROTA_WAY_Y );
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM(0);
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+	#endif
 		break;
 		
 	case WF2DMAP_WAY_RIGHT:
 		matrix.x		+= 	WFLBY_GADGET_CRACKER_DISX;
 		flash_matrix.x	+=	WFLBY_GADGET_FLASH_DISX;
 		flash_matrix.z	+=	WFLBY_GADGET_FLASH_Z;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], FX_GET_ROTA_NUM(180), D3DOBJ_ROTA_WAY_Y );
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM(180);
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+	#endif
 		break;
 
 	default:
@@ -2484,8 +2665,8 @@ static void WFLBY_GADGET_ANM_Init_Cracker00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	}
 
 	// 設定
-	D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], matrix.x, matrix.y, matrix.z );
-	D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_FLASH], flash_matrix.x, flash_matrix.y, flash_matrix.z );
+	VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].trans, matrix.x, matrix.y, matrix.z );
+	VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_FLASH].trans, flash_matrix.x, flash_matrix.y, flash_matrix.z );
 }
 // クラッカー２こ
 static void WFLBY_GADGET_ANM_Init_Cracker01( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk )
@@ -2498,7 +2679,11 @@ static void WFLBY_GADGET_ANM_Init_Cracker01( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	WFLBY_GADGET_OBJ_SetRes( p_sys, p_wk, WFLBY_GADGET_CRACKEROBJ_CRACKER01, &sc_WFLBY_GADGET_RES[WFLBY_GADGET_OBJ_CRACLCER01] );
 
 	// クラッカーの描画OFF
+#if WB_FIX
 	D3DOBJ_SetDraw( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], FALSE );
+#else
+	p_wk->draw_flag[WFLBY_GADGET_CRACKEROBJ_CRACKER] = FALSE;
+#endif
 
 	// 座標をあわせる
 	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
@@ -2517,28 +2702,42 @@ static void WFLBY_GADGET_ANM_Init_Cracker01( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	case WF2DMAP_WAY_UP:
 		matrix.z		-= 	WFLBY_GADGET_CRACKER_DISZ;
 		flash_matrix.z	-=	WFLBY_GADGET_FLASH_DIS;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], 
 				FX_GET_ROTA_NUM((270-WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], 
 				FX_GET_ROTA_NUM((270+WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM((270-WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01].y = FX_GET_ROTA_NUM((270+WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].rotate);
+	#endif
 
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], matrix.x + WFLBY_GADGET_CRACKER_ADD_MOV, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].trans, matrix.x + WFLBY_GADGET_CRACKER_ADD_MOV, 
 				matrix.y, matrix.z );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], matrix.x - WFLBY_GADGET_CRACKER_ADD_MOV, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].trans, matrix.x - WFLBY_GADGET_CRACKER_ADD_MOV, 
 				matrix.y, matrix.z );
 		break;
 		
 	case WF2DMAP_WAY_DOWN:
 		matrix.z		+= 	WFLBY_GADGET_CRACKER_DISZUN;
 		flash_matrix.z	+=	WFLBY_GADGET_FLASH_DISUN;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], 
 				FX_GET_ROTA_NUM((90-WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], 
 				FX_GET_ROTA_NUM((90+WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM((90-WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01].y = FX_GET_ROTA_NUM((90+WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].rotate);
+	#endif
 
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], matrix.x - WFLBY_GADGET_CRACKER_ADD_MOV, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].trans, matrix.x - WFLBY_GADGET_CRACKER_ADD_MOV, 
 				matrix.y, matrix.z );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], matrix.x + WFLBY_GADGET_CRACKER_ADD_MOV, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].trans, matrix.x + WFLBY_GADGET_CRACKER_ADD_MOV, 
 				matrix.y, matrix.z );
 		break;
 		
@@ -2546,14 +2745,21 @@ static void WFLBY_GADGET_ANM_Init_Cracker01( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 		matrix.x		-= 	WFLBY_GADGET_CRACKER_DISX;
 		flash_matrix.x	-=	WFLBY_GADGET_FLASH_DISX;
 		flash_matrix.z	+=	WFLBY_GADGET_FLASH_Z;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], 
 				FX_GET_ROTA_NUM((0-WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], 
 				FX_GET_ROTA_NUM((0+WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM((0-WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01].y = FX_GET_ROTA_NUM((0+WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].rotate);
+	#endif
 
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], matrix.x, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].trans, matrix.x, 
 				matrix.y, matrix.z - WFLBY_GADGET_CRACKER_ADD_MOV );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], matrix.x, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].trans, matrix.x, 
 				matrix.y, matrix.z + WFLBY_GADGET_CRACKER_ADD_MOV );
 		break;
 		
@@ -2561,14 +2767,21 @@ static void WFLBY_GADGET_ANM_Init_Cracker01( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 		matrix.x		+= 	WFLBY_GADGET_CRACKER_DISX;
 		flash_matrix.x	+=	WFLBY_GADGET_FLASH_DISX;
 		flash_matrix.z	+=	WFLBY_GADGET_FLASH_Z;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], 
 				FX_GET_ROTA_NUM((180-WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], 
 				FX_GET_ROTA_NUM((180+WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM((180-WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01].y = FX_GET_ROTA_NUM((180+WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].rotate);
+	#endif
 
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], matrix.x, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].trans, matrix.x, 
 				matrix.y, matrix.z + WFLBY_GADGET_CRACKER_ADD_MOV );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], matrix.x, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].trans, matrix.x, 
 				matrix.y, matrix.z - WFLBY_GADGET_CRACKER_ADD_MOV );
 		break;
 
@@ -2577,7 +2790,7 @@ static void WFLBY_GADGET_ANM_Init_Cracker01( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	}
 
 	// 設定
-	D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_FLASH], flash_matrix.x, flash_matrix.y, flash_matrix.z );
+	VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_FLASH].trans, flash_matrix.x, flash_matrix.y, flash_matrix.z );
 }
 // クラッカー３こ
 static void WFLBY_GADGET_ANM_Init_Cracker02( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk )
@@ -2591,7 +2804,11 @@ static void WFLBY_GADGET_ANM_Init_Cracker02( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	WFLBY_GADGET_OBJ_SetRes( p_sys, p_wk, WFLBY_GADGET_CRACKEROBJ_CRACKER02, &sc_WFLBY_GADGET_RES[WFLBY_GADGET_OBJ_CRACLCER02] );
 
 	// クラッカーの描画OFF
+#if WB_FIX
 	D3DOBJ_SetDraw( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], FALSE );
+#else
+	p_wk->draw_flag[WFLBY_GADGET_CRACKEROBJ_CRACKER] = FALSE;
+#endif
 
 	// アルファカウンタ初期化
 	p_wk->mvwk.cracker.alpha_count[0] = WFLBY_GADGET_CRACKER_ALPHA_OUT_SYNC;
@@ -2611,71 +2828,107 @@ static void WFLBY_GADGET_ANM_Init_Cracker02( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	case WF2DMAP_WAY_UP:
 		matrix.z		-= 	WFLBY_GADGET_CRACKER_DISZ;
 		flash_matrix.z	-=	WFLBY_GADGET_FLASH_DIS;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], 
 				FX_GET_ROTA_NUM((270-WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], 
 				FX_GET_ROTA_NUM((270+WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER02], 
 				FX_GET_ROTA_NUM(270), D3DOBJ_ROTA_WAY_Y );
-
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], matrix.x + WFLBY_GADGET_CRACKER_ADD_MOV, 
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM((270-WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01].y = FX_GET_ROTA_NUM((270+WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER02].y = FX_GET_ROTA_NUM(270);
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER02], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER02].rotate);
+	#endif
+	
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].trans, matrix.x + WFLBY_GADGET_CRACKER_ADD_MOV, 
 				matrix.y, matrix.z );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], matrix.x - WFLBY_GADGET_CRACKER_ADD_MOV, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].trans, matrix.x - WFLBY_GADGET_CRACKER_ADD_MOV, 
 				matrix.y, matrix.z );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER02], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER02].trans, matrix.x, matrix.y, matrix.z );
 		break;
 		
 	case WF2DMAP_WAY_DOWN:
 		matrix.z		+= 	WFLBY_GADGET_CRACKER_DISZUN;
 		flash_matrix.z	+=	WFLBY_GADGET_FLASH_DISUN;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], 
 				FX_GET_ROTA_NUM((90-WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], 
 				FX_GET_ROTA_NUM((90+WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER02], 
 				FX_GET_ROTA_NUM(90), D3DOBJ_ROTA_WAY_Y );
-
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], matrix.x - WFLBY_GADGET_CRACKER_ADD_MOV, 
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM((90-WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01].y = FX_GET_ROTA_NUM((90+WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER02].y = FX_GET_ROTA_NUM(90);
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER02], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER02].rotate);
+	#endif
+	
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].trans, matrix.x - WFLBY_GADGET_CRACKER_ADD_MOV, 
 				matrix.y, matrix.z );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], matrix.x + WFLBY_GADGET_CRACKER_ADD_MOV, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].trans, matrix.x + WFLBY_GADGET_CRACKER_ADD_MOV, 
 				matrix.y, matrix.z );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER02], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER02].trans, matrix.x, matrix.y, matrix.z );
 		break;
 		
 	case WF2DMAP_WAY_LEFT:
 		matrix.x		-= 	WFLBY_GADGET_CRACKER_DISX;
 		flash_matrix.x	-=	WFLBY_GADGET_FLASH_DISX;
 		flash_matrix.z	+=	WFLBY_GADGET_FLASH_Z;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], 
 				FX_GET_ROTA_NUM((0-WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], 
 				FX_GET_ROTA_NUM((0+WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER02], 
 				FX_GET_ROTA_NUM(0), D3DOBJ_ROTA_WAY_Y );
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM((0-WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01].y = FX_GET_ROTA_NUM((0+WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER02].y = FX_GET_ROTA_NUM(0);
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER02], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER02].rotate);
+	#endif
 
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], matrix.x, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].trans, matrix.x, 
 				matrix.y, matrix.z - WFLBY_GADGET_CRACKER_ADD_MOV );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], matrix.x, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].trans, matrix.x, 
 				matrix.y, matrix.z + WFLBY_GADGET_CRACKER_ADD_MOV );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER02], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER02].trans, matrix.x, matrix.y, matrix.z );
 		break;
 		
 	case WF2DMAP_WAY_RIGHT:
 		matrix.x		+= 	WFLBY_GADGET_CRACKER_DISX;
 		flash_matrix.x	+=	WFLBY_GADGET_FLASH_DISX;
 		flash_matrix.z	+=	WFLBY_GADGET_FLASH_Z;
+	#if WB_FIX
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], 
 				FX_GET_ROTA_NUM((180-WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], 
 				FX_GET_ROTA_NUM((180+WFLBY_GADGET_CRACKER_ROT_ADD)), D3DOBJ_ROTA_WAY_Y );
 		D3DOBJ_SetRota( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER02], 
 				FX_GET_ROTA_NUM(180), D3DOBJ_ROTA_WAY_Y );
+	#else
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER].y = FX_GET_ROTA_NUM((180-WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01].y = FX_GET_ROTA_NUM((180+WFLBY_GADGET_CRACKER_ROT_ADD));
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER01], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].rotate);
+		p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER02].y = FX_GET_ROTA_NUM(180);
+		WFLBY_GADGET_RotateMtx(&p_wk->objrotate[WFLBY_GADGET_CRACKEROBJ_CRACKER02], &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER02].rotate);
+	#endif
 
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER], matrix.x, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER].trans, matrix.x, 
 				matrix.y, matrix.z + WFLBY_GADGET_CRACKER_ADD_MOV );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER01], matrix.x, 
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER01].trans, matrix.x, 
 				matrix.y, matrix.z - WFLBY_GADGET_CRACKER_ADD_MOV );
-		D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_CRACKER02], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_CRACKER02].trans, matrix.x, matrix.y, matrix.z );
 		break;
 
 	default:
@@ -2683,7 +2936,7 @@ static void WFLBY_GADGET_ANM_Init_Cracker02( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	}
 
 	// 設定
-	D3DOBJ_SetMatrix( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_FLASH], flash_matrix.x, flash_matrix.y, flash_matrix.z );
+	VEC_Set( &p_wk->objst[WFLBY_GADGET_CRACKEROBJ_FLASH].trans, flash_matrix.x, flash_matrix.y, flash_matrix.z );
 }
 
 
@@ -2939,7 +3192,11 @@ static BOOL WFLBY_GADGET_ANM_Main_Rippru00( WFLBY_GADGET* p_sys, WFLBY_GADGET_OB
 	for( i=p_wk->mvwk.ripple.move_num; i<move_num; i++ ){
 		objidx = i % WFLBY_GADGET_RIPPLE_NUM;
 		if( objidx < p_wk->mvwk.ripple.ripple_num ){	// そのオブジェは生成されているかチェック
+		#if WB_FIX
 			D3DOBJ_SetDraw( &p_wk->obj[objidx], TRUE );
+		#else
+			p_wk->draw_flag[objidx] = TRUE;
+		#endif
 		}
 	}
 	p_wk->mvwk.ripple.move_num = move_num;
@@ -2947,10 +3204,18 @@ static BOOL WFLBY_GADGET_ANM_Main_Rippru00( WFLBY_GADGET* p_sys, WFLBY_GADGET_OB
 	// アニメ再生部分
 	result = TRUE;
 	for( i=0; i<p_wk->mvwk.ripple.ripple_num; i++ ){
+	#if WB_FIX
 		if( D3DOBJ_GetDraw( &p_wk->obj[i] ) == TRUE ){
+	#else
+		if( p_wk->draw_flag[i] == TRUE ){
+	#endif
 			result = WFLBY_GADGET_OBJ_NoLoopAnm( p_sys, p_wk, i, 0 );
 			if( result ){
+			#if WB_FIX
 				D3DOBJ_SetDraw( &p_wk->obj[i], FALSE );
+			#else
+				p_wk->draw_flag[i] = FALSE;
+			#endif
 				WFLBY_GADGET_OBJ_SetFrame( p_sys, p_wk, i, 0, 0 );
 			}
 		}
@@ -2994,10 +3259,18 @@ static BOOL WFLBY_GADGET_ANM_Main_Swing00( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ
 
 			// 今まで動いてたやつを非表示
 			if( move_num > 0 ){
+			#if WB_FIX
 				D3DOBJ_SetDraw( &p_wk->obj[move_num-1], FALSE );
+			#else
+				p_wk->draw_flag[move_num-1] = FALSE;
+			#endif
 			}
 			// 動作開始
+		#if WB_FIX
 			D3DOBJ_SetDraw( &p_wk->obj[move_num], TRUE );
+		#else
+			p_wk->draw_flag[move_num] = TRUE;
+		#endif
 		}
 	}
 
@@ -3008,7 +3281,11 @@ static BOOL WFLBY_GADGET_ANM_Main_Swing00( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ
 	// 表示中のオブジェのアニメを進める
 	result = FALSE;
 	for( i=0; i<p_wk->mvwk.swing.objnum; i++ ){
+	#if WB_FIX
 		if( D3DOBJ_GetDraw( &p_wk->obj[i] ) ){
+	#else
+		if( p_wk->draw_flag[i] ){
+	#endif
 			if( i==p_wk->mvwk.swing.objnum-1 ){
 				result = WFLBY_GADGET_OBJ_NoLoopAnm( p_sys, p_wk, i, 0 );
 			}else{
@@ -3032,11 +3309,19 @@ static BOOL WFLBY_GADGET_ANM_Main_Cracker00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	// 光が出きったらクラッカーもなる
 	if( p_wk->mvwk.cracker.wait > 0 ){
 		p_wk->mvwk.cracker.wait --;
+	#if WB_FIX
 		D3DOBJ_SetDraw( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_FLASH], FALSE );			
+	#else
+		p_wk->draw_flag[WFLBY_GADGET_CRACKEROBJ_FLASH] = FALSE;
+	#endif
 	}else{
 		if( p_wk->count < WFLBY_GADGET_CRACKEROBJ_CRACKER_MAX ){
 			if( WFLBY_GADGET_OBJ_CheckRes( p_wk, p_wk->count+WFLBY_GADGET_CRACKEROBJ_CRACKER ) == TRUE ){
+			#if WB_FIX
 				D3DOBJ_SetDraw( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_FLASH], TRUE );
+			#else
+				p_wk->draw_flag[WFLBY_GADGET_CRACKEROBJ_FLASH] = TRUE;
+			#endif
 				result = WFLBY_GADGET_OBJ_NoLoopAnm( p_sys, p_wk, WFLBY_GADGET_CRACKEROBJ_FLASH, 0 );
 				if( result == TRUE ){
 					p_wk->count ++;
@@ -3045,7 +3330,11 @@ static BOOL WFLBY_GADGET_ANM_Main_Cracker00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 						// アニメフレームを元に戻す
 						WFLBY_GADGET_OBJ_SetFrame( p_sys, p_wk, WFLBY_GADGET_CRACKEROBJ_FLASH, 0, 0 );
 					}else{
-						D3DOBJ_SetDraw( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_FLASH], FALSE );			
+					#if WB_FIX
+						D3DOBJ_SetDraw( &p_wk->obj[WFLBY_GADGET_CRACKEROBJ_FLASH], FALSE );
+					#else
+						p_wk->draw_flag[WFLBY_GADGET_CRACKEROBJ_FLASH] = FALSE;
+					#endif
 					}
 				}
 			}
@@ -3059,7 +3348,11 @@ static BOOL WFLBY_GADGET_ANM_Main_Cracker00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 		if( WFLBY_GADGET_OBJ_CheckRes( p_wk, i ) == TRUE ){
 			//  発射タイミングチェック
 			if( p_wk->count > (i-WFLBY_GADGET_CRACKEROBJ_CRACKER) ){
+			#if WB_FIX
 				D3DOBJ_SetDraw( &p_wk->obj[i], TRUE );
+			#else
+				p_wk->draw_flag[i] = TRUE;
+			#endif
 				result = WFLBY_GADGET_OBJ_NoLoopAnm_Sp( p_sys, p_wk, i, 0, FX32_CONST( 2.50f ) );
 				if( result == FALSE ){
 
@@ -3077,10 +3370,24 @@ static BOOL WFLBY_GADGET_ANM_Main_Cracker00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 					if( p_wk->mvwk.cracker.alpha_count[alpha_idx] == 0 ){
 
 						// 終了
+					#if WB_FIX
 						D3DOBJ_SetDraw( &p_wk->obj[i], FALSE );
-
+					#else
+						p_wk->draw_flag[i] = FALSE;
+					#endif
 						// アルファを元に戻す
+					#if WB_FIX
 						NNS_G3dMdlSetMdlAlphaAll( p_sys->mdl[ p_wk->cp_objres[i]->mdl ].pModel, 31 );
+					#else
+						{
+							NNSG3dResMdlSet*		pMdlset;
+							NNSG3dResMdl*			pMdl;
+							
+							pMdlset = NNS_G3dGetMdlSet(GFL_G3D_GetResourceFileHeader(p_sys->p_mdlres[p_wk->cp_objres[i]->mdl]));
+							pMdl = NNS_G3dGetMdlByIdx( pMdlset, 0 );
+							NNS_G3dMdlSetMdlAlphaAll( pMdl, 31 );
+						}
+					#endif
 
 					}else{
 						// アニメが終わったらアルファフェードさせる
@@ -3089,7 +3396,18 @@ static BOOL WFLBY_GADGET_ANM_Main_Cracker00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 						alpha = (p_wk->mvwk.cracker.alpha_count[alpha_idx] * WFLBY_GADGET_CRACKER_ALPHA_OUT_S) / WFLBY_GADGET_CRACKER_ALPHA_OUT_SYNC;
 
 						// アルファを設定
+					#if WB_FIX
 						NNS_G3dMdlSetMdlAlphaAll( p_sys->mdl[p_wk->cp_objres[i]->mdl].pModel, alpha );
+					#else
+						{
+							NNSG3dResMdlSet*		pMdlset;
+							NNSG3dResMdl*			pMdl;
+							
+							pMdlset = NNS_G3dGetMdlSet(GFL_G3D_GetResourceFileHeader(p_sys->p_mdlres[p_wk->cp_objres[i]->mdl]));
+							pMdl = NNS_G3dGetMdlByIdx( pMdlset, 0 );
+							NNS_G3dMdlSetMdlAlphaAll( pMdl, alpha );
+						}
+					#endif
 
 						// 動作中
 						ret = FALSE;
@@ -3151,7 +3469,11 @@ static BOOL WFLBY_GADGET_ANM_Main_Sparkle00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 		move_num = (p_wk->mvwk.sparkle.count * WFLBY_GADGET_SPARKLE_1ROOP_OBJNUM) / WFLBY_GADGET_SPARKLE_1ROOP_SYNC;
 		move_num += p_wk->mvwk.sparkle.roop_count * WFLBY_GADGET_SPARKLE_1ROOP_OBJNUM;
 		for( i=p_wk->mvwk.sparkle.buff_num; i<move_num; i++ ){
+		#if WB_FIX
 			D3DOBJ_SetDraw( &p_wk->obj[i], TRUE );	// 描画開始
+		#else
+			p_wk->draw_flag[i] = TRUE;
+		#endif
 		}
 		p_wk->mvwk.sparkle.buff_num	= move_num; 
 	}
@@ -3159,11 +3481,19 @@ static BOOL WFLBY_GADGET_ANM_Main_Sparkle00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 
 	// 動作
 	for( i=0; i<p_wk->mvwk.sparkle.buff_num; i++ ){
+	#if WB_FIX
 		if( D3DOBJ_GetDraw( &p_wk->obj[i] ) == TRUE ){
+	#else
+		if( p_wk->draw_flag[i] == TRUE ){
+	#endif
 			result = WFLBY_GADGET_Sparkle_OneObj_Main( p_sys, p_wk, i );
 			// アニメ終了後非表示
 			if( result == TRUE ){
+			#if WB_FIX
 				D3DOBJ_SetDraw( &p_wk->obj[i], FALSE );
+			#else
+				p_wk->draw_flag[i] = FALSE;
+			#endif
 			}
 		}
 	}
@@ -3525,8 +3855,12 @@ static void WFLBY_GADGET_Balloon_InitDown_Normal( WFLBY_GADGET* p_sys, WFLBY_GAD
 
 	// 風船の動き設定
 	for( i=0; i<p_wk->mvwk.balloon.balloon_num; i++ ){
+	#if WB_FIX
 		D3DOBJ_GetMatrix( &p_wk->obj[i], &matrix.x, &matrix.y, &matrix.z );
-
+	#else
+		matrix = p_wk->objst[i].trans;
+	#endif
+	
 		anmidx = p_wk->mvwk.balloon.anmidx[i];
 		switch( anmidx ){
 		case WFLBY_GADGET_BALLOON_ANM_CENTER:
@@ -3664,7 +3998,9 @@ static BOOL WFLBY_GADGET_Balloon_MainDown_Normal( WFLBY_GADGET* p_sys, WFLBY_GAD
 				p_wk->mvwk.balloon.don_start_y	= matrix.y;
 
 				// 着地音
+			#if WB_TEMP_FIX
 				WFLBY_GADGET_SePlay( p_sys, p_wk, WFLBY_SND_BALLOON_02 );
+			#endif
 			}
 		}
 		break;
@@ -3721,20 +4057,26 @@ static BOOL WFLBY_GADGET_Balloon_MainDown_Normal( WFLBY_GADGET* p_sys, WFLBY_GAD
 				WFLBY_GADGET_MV_SinCurve_Main( &p_wk->mvwk.balloon.sincurve[i] );
 
 				//  値を設定
+			#if WB_FIX
 				D3DOBJ_GetMatrix( &p_wk->obj[i], &matrix.x, &matrix.y, &matrix.z );
+			#else
+				matrix = p_wk->objst[i].trans;
+			#endif
 				WFLBY_GADGET_MV_Straight_GetNum( &p_wk->mvwk.balloon.straight[i], &matrix.x, &matrix.y, &matrix.z );
 				WFLBY_GADGET_MV_SinCurve_GetNum( &p_wk->mvwk.balloon.sincurve[i], &carve_x );
 
 				matrix.x += carve_x;
 
-				D3DOBJ_SetMatrix( &p_wk->obj[i], matrix.x, matrix.y,  matrix.z );
+				VEC_Set( &p_wk->objst[i].trans, matrix.x, matrix.y,  matrix.z );
 			}else{
 				// 破裂
 				result = WFLBY_GADGET_Balloon_SetAnm( p_sys, p_wk, i, WFLBY_GADGET_BALLOON_ANM_CRASH );
 
 				// 破裂音
 				if( result == TRUE ){
+				#if WB_TEMP_FIX
 					WFLBY_GADGET_SePlay( p_sys, p_wk, WFLBY_SND_BALLOON_01 );
+				#endif
 				}
 			}
 		}
@@ -3756,7 +4098,9 @@ static BOOL WFLBY_GADGET_Balloon_MainDown_Roof( WFLBY_GADGET* p_sys, WFLBY_GADGE
 	
 	switch( p_wk->mvwk.balloon.bl_seq ){
 	case WFLBY_GADGET_BALLOON_DOWNSEQ_BATA_WAIT:		// バタバタ開始まちはなし
+#if WB_TEMP_FIX
 		WFLBY_GADGET_SePlay( p_sys, p_wk, WFLBY_SND_BALLOON_01 );	// 風船が割れた音と風船を割る
+#endif
 		for( i=0; i<p_wk->mvwk.balloon.balloon_num; i++ ){
 			WFLBY_GADGET_Balloon_SetAnm( p_sys, p_wk, i, WFLBY_GADGET_BALLOON_ANM_CRASH );
 		}
@@ -3806,8 +4150,9 @@ static BOOL WFLBY_GADGET_Balloon_MainDown_Roof( WFLBY_GADGET* p_sys, WFLBY_GADGE
 				p_wk->mvwk.balloon.don_start_y	= matrix.y;
 
 				// 着地音
+			#if WB_TEMP_FIX
 				WFLBY_GADGET_SePlay( p_sys, p_wk, WFLBY_SND_BALLOON_02 );
-
+			#endif
 				// 主人公動作更新あり
 				WFLBY_3DOBJCONT_DRAW_SetUpdata( p_wk->p_person, TRUE );	
 
@@ -3846,19 +4191,19 @@ static void WFLBY_GADGET_Balloon_SetObjPos( WFLBY_GADGET_OBJ*  p_wk )
 	
 	switch( p_wk->mvwk.balloon.balloon_num ){
 	case 1:
-		D3DOBJ_SetMatrix( &p_wk->obj[0], 
+		VEC_Set( &p_wk->objst[0].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[2].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[2].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_POS_Z );
 		break;
 		
 	case 2:
-		D3DOBJ_SetMatrix( &p_wk->obj[0], 
+		VEC_Set( &p_wk->objst[0].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[0].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[0].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_POS_Z );
 
-		D3DOBJ_SetMatrix( &p_wk->obj[1], 
+		VEC_Set( &p_wk->objst[1].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[1].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[1].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_POS_Z );
@@ -3866,17 +4211,17 @@ static void WFLBY_GADGET_Balloon_SetObjPos( WFLBY_GADGET_OBJ*  p_wk )
 		
 	default:
 	case 3:
-		D3DOBJ_SetMatrix( &p_wk->obj[0], 
+		VEC_Set( &p_wk->objst[0].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[2].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[2].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_POS_Z );
 
-		D3DOBJ_SetMatrix( &p_wk->obj[1], 
+		VEC_Set( &p_wk->objst[1].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[0].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[0].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_POS_Z );
 
-		D3DOBJ_SetMatrix( &p_wk->obj[2], 
+		VEC_Set( &p_wk->objst[2].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[1].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_POS[1].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_POS_Z );
@@ -3902,19 +4247,19 @@ static void WFLBY_GADGET_Balloon_SetObjPos_Roof( WFLBY_GADGET_OBJ*  p_wk )
 	
 	switch( p_wk->mvwk.balloon.balloon_num ){
 	case 1:
-		D3DOBJ_SetMatrix( &p_wk->obj[0], 
+		VEC_Set( &p_wk->objst[0].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[2].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[2].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_ROOF_POS_Z );
 		break;
 		
 	case 2:
-		D3DOBJ_SetMatrix( &p_wk->obj[0], 
+		VEC_Set( &p_wk->objst[0].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[0].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[0].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_ROOF_POS_Z );
 
-		D3DOBJ_SetMatrix( &p_wk->obj[1], 
+		VEC_Set( &p_wk->objst[1].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[1].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[1].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_ROOF_POS_Z );
@@ -3922,17 +4267,17 @@ static void WFLBY_GADGET_Balloon_SetObjPos_Roof( WFLBY_GADGET_OBJ*  p_wk )
 		
 	default:
 	case 3:
-		D3DOBJ_SetMatrix( &p_wk->obj[0], 
+		VEC_Set( &p_wk->objst[0].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[2].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[2].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_ROOF_POS_Z );
 
-		D3DOBJ_SetMatrix( &p_wk->obj[1], 
+		VEC_Set( &p_wk->objst[1].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[0].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[0].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_ROOF_POS_Z );
 
-		D3DOBJ_SetMatrix( &p_wk->obj[2], 
+		VEC_Set( &p_wk->objst[2].trans, 
 				matrix.x + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[1].x),
 				matrix.y + FX32_CONST(sc_WFLBY_GADGET_BALLOON_OBJ_ROOF_POS[1].y),
 				matrix.z + WFLBY_GADGET_BALLOON_OBJ_ROOF_POS_Z );
@@ -3991,7 +4336,11 @@ static void WFLBY_GADGET_Balloon_Anm( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ*  p_
 			
 				frame = (anmidx*WFLBY_GADGET_BALLOON_ANM_ONEFR);
 			}else{
+			#if WB_FIX
 				D3DOBJ_SetDraw( &p_wk->obj[balloon_idx], FALSE );
+			#else
+				p_wk->draw_flag[balloon_idx] = FALSE;
+			#endif
 			}
 		}
 
@@ -4041,11 +4390,14 @@ static void WFLBY_GADGET_Sparkle_Init( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_
 					&sc_WFLBY_GADGET_SPARKLE_OFFS[ j ], &set_matrix );
 			VEC_Add( &set_matrix, 
 					&sc_WFLBY_GADGET_SPARKLE_MOVE[ j ], &end_matrix );
-			D3DOBJ_SetMatrix( &p_wk->obj[idx], 
+			VEC_Set( &p_wk->objst[idx].trans, 
 					set_matrix.x, set_matrix.y, set_matrix.z );
 
+		#if WB_FIX
 			D3DOBJ_SetDraw( &p_wk->obj[idx], FALSE );
-
+		#else
+			p_wk->draw_flag[idx] = FALSE;
+		#endif
 			// 移動パラメータ設定
 			p_wk->mvwk.sparkle.objcount[idx] = 0;
 			WFLBY_GADGET_MV_Straight_Init( &p_wk->mvwk.sparkle.objstraight[idx],
@@ -4090,7 +4442,7 @@ static BOOL WFLBY_GADGET_Sparkle_OneObj_Main( WFLBY_GADGET* p_sys, WFLBY_GADGET_
 	WFLBY_GADGET_MV_Straight_GetNum( &p_wk->mvwk.sparkle.objstraight[objidx], 
 			&move.x, &move.y, &move.z );
 
-	D3DOBJ_SetMatrix( &p_wk->obj[objidx], move.x, move.y, move.z );
+	VEC_Set( &p_wk->objst[objidx].trans, move.x, move.y, move.z );
 
 	//  アニメループ
 	WFLBY_GADGET_OBJ_LoopAnm( p_sys, p_wk, objidx, 0 );
@@ -4122,10 +4474,14 @@ static void WFLBY_GADGET_Ripple_Init( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 		// 設定
 		matrix.y += WFLBY_GADGET_FLOOR_Y;
 		matrix.z += WFLBY_GADGET_RIPPLE_MAT_Z;
-		D3DOBJ_SetMatrix( &p_wk->obj[i], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->objst[i].trans, matrix.x, matrix.y, matrix.z );
 
 		// 非表示
+	#if WB_FIX
 		D3DOBJ_SetDraw( &p_wk->obj[i], FALSE );
+	#else
+		p_wk->draw_flag[i] = FALSE;
+	#endif
 	}
 
 	p_wk->mvwk.ripple.ripple_num	= ripple_num;
@@ -4158,7 +4514,11 @@ static BOOL WFLBY_GADGET_Signal_Main( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 		// 今まで表示してたのを非表示にする
 		if( move_num > 0 ){
 			data = sc_WFLBY_GADGET_SIGNAL_ANMSEQ[ num ][ move_num-1 ];
+		#if WB_FIX
 			D3DOBJ_SetDraw( &p_wk->obj[data.objidx], FALSE );
+		#else
+			p_wk->draw_flag[data.objidx] = FALSE;
+		#endif
 		}
 
 		data = sc_WFLBY_GADGET_SIGNAL_ANMSEQ[ num ][ move_num ];
@@ -4170,9 +4530,17 @@ static BOOL WFLBY_GADGET_Signal_Main( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 			WFLBY_GADGET_OBJ_SetFrame( p_sys, p_wk, data.objidx, 1, 
 					FX32_CONST( data.anm_data ) );
 
+		#if WB_FIX
 			D3DOBJ_SetDraw( &p_wk->obj[data.objidx], TRUE );
+		#else
+			p_wk->draw_flag[data.objidx] = TRUE;
+		#endif
 		}else{
+		#if WB_FIX
 			D3DOBJ_SetDraw( &p_wk->obj[data.objidx], FALSE );
+		#else
+			p_wk->draw_flag[data.objidx] = FALSE;
+		#endif
 		}
 	}
 	
@@ -4211,10 +4579,14 @@ static void WFLBY_GADGET_Swing_Init( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk
 		WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
 		// 設定
 		matrix.y += WFLBY_GADGET_FLOOR_Y;
-		D3DOBJ_SetMatrix( &p_wk->obj[i], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->objst[i].trans, matrix.x, matrix.y, matrix.z );
 
 		// 非表示
+	#if WB_FIX
 		D3DOBJ_SetDraw( &p_wk->obj[i], FALSE );
+	#else
+		p_wk->draw_flag[i] = FALSE;
+	#endif
 	}
 
 	p_wk->mvwk.swing.lastnum	= 0xff;
@@ -4245,7 +4617,7 @@ static void WFLBY_GADGET_Inazuma_Init( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_
 				WFLBY_GADGET_CYMBALS_INAZUMA_00+i, &sc_WFLBY_GADGET_RES[ WFLBY_GADGET_OBJ_SPARK00+i ] );
 
 		// 座標設定
-		D3DOBJ_SetMatrix( &p_wk->obj[i+WFLBY_GADGET_CYMBALS_INAZUMA_00], 
+		VEC_Set( &p_wk->objst[i+WFLBY_GADGET_CYMBALS_INAZUMA_00].trans, 
 				matrix.x + (i*WFLBY_GADGET_CYMBALS_INAZUMA_DIS_X),
 				matrix.y, matrix.z );
 	}
@@ -4267,7 +4639,11 @@ static void WFLBY_GADGET_Inazuma_Start( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p
 	p_wk->mvwk.onpu.inazuma_count	= 0;
 
 	for( i=0; i<WFLBY_GADGET_CYMBALS_INAZUMA_NUM; i++ ){
+	#if WB_FIX
 		D3DOBJ_SetDraw( &p_wk->obj[i+WFLBY_GADGET_CYMBALS_INAZUMA_00], TRUE );
+	#else
+		p_wk->draw_flag[i+WFLBY_GADGET_CYMBALS_INAZUMA_00] = TRUE;
+	#endif
 	}
 
 }
@@ -4301,7 +4677,11 @@ static void WFLBY_GADGET_Inazuma_Main( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_
 		if( p_wk->mvwk.onpu.inazuma_count < WFLBY_GADGET_CYMBALS_INAZUMA_ANM_SYNC ){
 			WFLBY_GADGET_OBJ_LoopAnm( p_sys, p_wk, i+WFLBY_GADGET_CYMBALS_INAZUMA_00, 0 );
 		}else{
+		#if WB_FIX
 			D3DOBJ_SetDraw( &p_wk->obj[i+WFLBY_GADGET_CYMBALS_INAZUMA_00], FALSE );
+		#else
+			p_wk->draw_flag[i+WFLBY_GADGET_CYMBALS_INAZUMA_00] = FALSE;
+		#endif
 		}
 	}
 
@@ -4331,10 +4711,18 @@ static void WFLBY_GADGET_ONPU_Cont_Init( WFLBY_GADGET_OBJWK* p_wk, const WFLBY_G
 	// 動作パラメータの初期化
 	for( i=0; i<WFLBY_GADGET_MOVE_ONPU_WK_NUM; i++ ){
 		WFLBY_GADGET_OnpuMove_Init( &p_wk->onpu.move[i], 
-				&p_gadget->obj[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+0],
-				&p_gadget->obj[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+1],
-				&p_gadget->obj[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+2],
-				&p_gadget->obj[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+3],
+				p_gadget->g3dobj[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+0],
+				p_gadget->g3dobj[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+1],
+				p_gadget->g3dobj[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+2],
+				p_gadget->g3dobj[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+3],
+				&p_gadget->objst[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+0],
+				&p_gadget->objst[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+1],
+				&p_gadget->objst[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+2],
+				&p_gadget->objst[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+3],
+				&p_gadget->draw_flag[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+0],
+				&p_gadget->draw_flag[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+1],
+				&p_gadget->draw_flag[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+2],
+				&p_gadget->draw_flag[(i*WFLBY_GADGET_ONPU_OBJ_NUM)+3],
 				p_gadget->p_person, anm_type );
 	}
 }
@@ -4403,7 +4791,7 @@ static WFLBY_GADGET_ONPU_MAIN_RET WFLBY_GADGET_ONPU_Cont_Main( WFLBY_GADGET_OBJW
  *	@param	anm_type	アニメタイプ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_GADGET_OnpuMove_Init( WFLBY_GADGET_ONPU* p_wk, GFL_G3D_OBJSTATUS* p_obj0, GFL_G3D_OBJSTATUS* p_obj1, GFL_G3D_OBJSTATUS* p_obj2, GFL_G3D_OBJSTATUS* p_obj3, const WFLBY_3DPERSON* cp_person, u32 anm_type )
+static void WFLBY_GADGET_OnpuMove_Init( WFLBY_GADGET_ONPU* p_wk, GFL_G3D_OBJ* p_obj0, GFL_G3D_OBJ* p_obj1, GFL_G3D_OBJ* p_obj2, GFL_G3D_OBJ* p_obj3, GFL_G3D_OBJSTATUS* p_objst0, GFL_G3D_OBJSTATUS* p_objst1, GFL_G3D_OBJSTATUS* p_objst2, GFL_G3D_OBJSTATUS* p_objst3, BOOL* p_draw0, BOOL* p_draw1, BOOL* p_draw2, BOOL* p_draw3, const WFLBY_3DPERSON* cp_person, u32 anm_type )
 {
 	GF_ASSERT( anm_type < WFLBY_GADGET_ONPU_MOVE_NUM );
 
@@ -4412,6 +4800,16 @@ static void WFLBY_GADGET_OnpuMove_Init( WFLBY_GADGET_ONPU* p_wk, GFL_G3D_OBJSTAT
 	p_wk->p_obj[1] = p_obj1;
 	p_wk->p_obj[2] = p_obj2;
 	p_wk->p_obj[3] = p_obj3;
+
+	p_wk->p_objst[0] = p_objst0;
+	p_wk->p_objst[1] = p_objst1;
+	p_wk->p_objst[2] = p_objst2;
+	p_wk->p_objst[3] = p_objst3;
+
+	p_wk->p_draw_flag[0] = p_draw0;
+	p_wk->p_draw_flag[1] = p_draw1;
+	p_wk->p_draw_flag[2] = p_draw2;
+	p_wk->p_draw_flag[3] = p_draw3;
 
 	p_wk->cp_person = cp_person;
 
@@ -4439,7 +4837,11 @@ static void WFLBY_GADGET_OnpuMove_Start( WFLBY_GADGET_ONPU* p_wk, u32 num )
 
 	// 表示開始
 	for( i=0; i<num; i++ ){
+	#if WB_FIX
 		D3DOBJ_SetDraw( p_wk->p_obj[i], TRUE );
+	#else
+		*(p_wk->p_draw_flag[i]) = TRUE;
+	#endif
 	}
 
 	p_wk->count	= 0;
@@ -4483,7 +4885,11 @@ static BOOL WFLBY_GADGET_OnpuMove_Main( WFLBY_GADGET_ONPU* p_wk )
 	if( result == TRUE ){
 		// 表示OFF
 		for( i=0; i<p_wk->mvnum; i++ ){
+		#if WB_FIX
 			D3DOBJ_SetDraw( p_wk->p_obj[i], FALSE );
+		#else
+			*(p_wk->p_draw_flag[i]) = FALSE;
+		#endif
 		}
 		p_wk->move = FALSE;
 	}
@@ -4548,7 +4954,7 @@ static void WFLBY_GADGET_OnpuMove_InitBell( WFLBY_GADGET_ONPU* p_wk, const WFLBY
 		WFLBY_GADGET_MV_SinCurve_Init( &p_wk->cv[i], 
 				start_rot, WFLBY_GADGET_ONPU_MOVE_BELL_CVSP,
 				WFLBY_GADGET_ONPU_MOVE_BELL_CVX );
-		D3DOBJ_SetMatrix( p_wk->p_obj[i], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->p_objst[i]->trans, matrix.x, matrix.y, matrix.z );
 	}
 }
 
@@ -4580,7 +4986,7 @@ static BOOL WFLBY_GADGET_OnpuMove_MainBell( WFLBY_GADGET_ONPU* p_wk )
 		WFLBY_GADGET_MV_SinCurve_GetNum( &p_wk->cv[i], &cv_num );
 		WFLBY_GADGET_MV_Straight_GetNum( &p_wk->st[i], &matrix.x, &matrix.y, &matrix.z );
 		matrix.x += cv_num;
-		D3DOBJ_SetMatrix( p_wk->p_obj[i], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->p_objst[i]->trans, matrix.x, matrix.y, matrix.z );
 	}
 
 	return result;
@@ -4688,7 +5094,7 @@ static BOOL WFLBY_GADGET_OnpuMove_MainDram( WFLBY_GADGET_ONPU* p_wk )
 		WFLBY_GADGET_MV_SinCurve_GetNum( &p_wk->cv[i], &cv_num );
 		WFLBY_GADGET_MV_Straight_GetNum( &p_wk->st[i], &matrix.x, &matrix.y, &matrix.z );
 		matrix.y += cv_num;
-		D3DOBJ_SetMatrix( p_wk->p_obj[i], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->p_objst[i]->trans, matrix.x, matrix.y, matrix.z );
 
 	}
 
@@ -4752,7 +5158,7 @@ static BOOL WFLBY_GADGET_OnpuMove_MainCymbals( WFLBY_GADGET_ONPU* p_wk )
 
 		// 座標の設定
 		WFLBY_GADGET_MV_Straight_GetNum( &p_wk->st[i], &matrix.x, &matrix.y, &matrix.z );
-		D3DOBJ_SetMatrix( p_wk->p_obj[i], matrix.x, matrix.y, matrix.z );
+		VEC_Set( &p_wk->p_objst[i]->trans, matrix.x, matrix.y, matrix.z );
 
 		// 終了したら次の処理
 		if( result == TRUE ){
@@ -4834,5 +5240,44 @@ static void WFLBY_GADGET_OnpuMove_SetCymbalsStParam( WFLBY_GADGET_ONPU* p_wk, u3
 			cp_def_matrix->z, end_matrix.z,
 			sync );
 
-	D3DOBJ_SetMatrix( p_wk->p_obj[idx], cp_def_matrix->x, cp_def_matrix->y, cp_def_matrix->z );
+	VEC_Set( &p_wk->p_objst[idx]->trans, cp_def_matrix->x, cp_def_matrix->y, cp_def_matrix->z );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   GFL_G3D_OBJSTATUSの初期パラメータセット
+ *
+ * @param   status		
+ */
+//--------------------------------------------------------------
+static void WFLBY_GADGET_OBJ_G3DOBJSTATUS_Init(GFL_G3D_OBJSTATUS *status, VecFx32 *rotate)
+{
+	VEC_Set(&status->trans, 0, 0, 0);
+	VEC_Set(&status->scale, FX32_ONE, FX32_ONE, FX32_ONE);
+	MTX_Identity33(&status->rotate);
+	
+	VEC_Set(rotate, 0, 0, 0);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   回転行列の計算
+ *
+ * @param   status		
+ * @param   rotate		
+ */
+//--------------------------------------------------------------
+static void WFLBY_GADGET_RotateMtx(VecFx32 *rotate, MtxFx33 *dst_mtx)
+{
+	MtxFx33 mtx, calc_mtx;
+	
+	MTX_Identity33( &mtx );
+	MTX_RotX33( &calc_mtx, FX_SinIdx( rotate->x ), FX_CosIdx( rotate->x ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	MTX_RotZ33( &calc_mtx, FX_SinIdx( rotate->z ), FX_CosIdx( rotate->z ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	MTX_RotY33( &calc_mtx, FX_SinIdx( rotate->y ), FX_CosIdx( rotate->y ) );
+	MTX_Concat33( &calc_mtx, &mtx, &mtx );
+	
+	*dst_mtx = mtx;
 }

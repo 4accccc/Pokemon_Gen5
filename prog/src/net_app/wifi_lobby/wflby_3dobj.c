@@ -1045,9 +1045,10 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 				WFLBY_3DOBJ_SHADOW_MAT_Y,
 				matrix.z + WFLBY_3DOBJ_SHADOW_OFS_Z );
 	#else
-		p_wk->shadow_st.trans.x = matrix.x + WFLBY_3DOBJ_SHADOW_OFS_X;
-		p_wk->shadow_st.trans.y = WFLBY_3DOBJ_SHADOW_MAT_Y;
-		p_wk->shadow_st.trans.z = matrix.z + WFLBY_3DOBJ_SHADOW_OFS_Z;
+		VEC_Set(&p_wk->shadow_st.trans, matrix.x + WFLBY_3DOBJ_SHADOW_OFS_X,
+			WFLBY_3DOBJ_SHADOW_MAT_Y, matrix.z + WFLBY_3DOBJ_SHADOW_OFS_Z);
+		VEC_Set(&p_wk->shadow_st.scale, FX32_ONE, FX32_ONE, FX32_ONE);
+		MTX_Identity33(&p_wk->shadow_st.rotate);
 	#endif
 	}
 

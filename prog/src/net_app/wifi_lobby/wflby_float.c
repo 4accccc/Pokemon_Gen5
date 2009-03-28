@@ -11,8 +11,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include <gflib.h>
+#include <calctool.h>
 
-#include  "poke_tool/monsno.h"
+#include  "poke_tool/monsno_def.h"
 
 #include "wflby_snd.h"
 
@@ -166,45 +167,55 @@ static const WFLBY_FLOAT_DATA sc_WFLBY_FLOAT_DATA[WFLBY_ROOM_NUM] = {
 	{ 
 		MONSNO_ATYAMO, MONSNO_RIZAADON, 
 		WFLBY_SND_RIDE_BUTTON_ATYAMO_PV, 
+	#if WB_TEMP_FIX
 		WFLBY_SND_RIDE_BUTTON_ATYAMO_EX,
 		WFLBY_SND_RIDE_BUTTON_RIZAADON_PV, 
 		WFLBY_SND_RIDE_BUTTON_RIZAADON_EX,
+	#endif
 	},
 
 	// 水
 	{ 
 		MONSNO_POTTYAMA, MONSNO_GYARADOSU,
+	#if WB_TEMP_FIX
 		WFLBY_SND_RIDE_BUTTON_POTTYAMA_PV,
 		WFLBY_SND_RIDE_BUTTON_POTTYAMA_EX,
 		WFLBY_SND_RIDE_BUTTON_GYARADOSU_PV,
 		WFLBY_SND_RIDE_BUTTON_GYARADOSU_EX,
+	#endif
 	},
 
 	// 電気
 	{ 
 		MONSNO_PIKATYUU, MONSNO_DEKAKOIRU,
 		WFLBY_SND_RIDE_BUTTON_PIKATYUU_PV,
+	#if WB_TEMP_FIX
 		WFLBY_SND_RIDE_BUTTON_PIKATYUU_EX,
 		WFLBY_SND_RIDE_BUTTON_DEKAKOIRU_PV,
 		WFLBY_SND_RIDE_BUTTON_DEKAKOIRU_EX,
+	#endif
 	},
 
 	// 草
 	{ 
 		MONSNO_HUSIGIDANE, MONSNO_HAEZIGOKU,
+	#if WB_TEMP_FIX
 		WFLBY_SND_RIDE_BUTTON_HUSIGIDANE_PV,
 		WFLBY_SND_RIDE_BUTTON_HUSIGIDANE_EX,
 		WFLBY_SND_RIDE_BUTTON_HAEZIGOKU_PV,
 		WFLBY_SND_RIDE_BUTTON_HAEZIGOKU_EX,
+	#endif
 	},
 
 	// 特殊
 	{ 
 		MONSNO_MYUU, MONSNO_MYUU,
 		WFLBY_SND_RIDE_BUTTON_MYUU_PV,
+	#if WB_TEMP_FIX
 		WFLBY_SND_RIDE_BUTTON_MYUU_EX,
 		WFLBY_SND_RIDE_BUTTON_MYUU_PV_2,
 		WFLBY_SND_RIDE_BUTTON_MYUU_EX,
+	#endif
 	},
 };
 
@@ -529,7 +540,11 @@ static void WFLBY_FLOAT_CONT_SetAnm( WFLBY_FLOAT_CONT* p_sys, u32 idx, BOOL my_f
 					if( anm_result == TRUE ){
 						WFLBY_SYSTEM_CleanFloatAnm( p_sys->p_system, (idx*WFLBY_FLOAT_ON_NUM)+i );	// アニメ再生したのでフラグを落とす
 
+					#if WB_TEMP_FIX
 						WFLBY_FLOAT_CONT_PlaySe( my_float_on, my_float, my_float_offs_chk, WFLBY_SND_RIDE_BUTTON01 );
+					#else
+						WFLBY_FLOAT_CONT_PlaySe( my_float_on, my_float, my_float_offs_chk, 0 );
+					#endif
 						
 					}
 				}
@@ -575,15 +590,21 @@ static void WFLBY_FLOAT_CONT_PlaySe( BOOL my_float_on, BOOL my_float, BOOL my_of
 
 			// さらに自分の座席のＳＥなら自分専用プレイヤーで鳴らす
 			if( my_offs ){
+			#if WB_TEMP_FIX
 				Snd_SePlayEx( se_idx, SND_PLAYER_NO_WIFI_HIROBA );
+			#endif
 			}else{
+			#if WB_TEMP_FIX
 				Snd_SePlay( se_idx );
+			#endif
 			}
 		}
 	}else{
 
 		// 乗っていないときは全部Snd_SePlayで上書き
+	#if WB_TEMP_FIX
 		Snd_SePlay( se_idx );
+	#endif
 	}
 }
 
@@ -599,12 +620,16 @@ static void WFLBY_FLOAT_CONT_PlayMonsVoice( BOOL my_float_on, BOOL my_float, BOO
 		if( my_float ){
 
 			// さらに自分の座席のＳＥなら自分専用プレイヤーで鳴らす
+		#if WB_TEMP_FIX
 			Snd_PMVoicePlay( monsno, 0 );
+		#endif
 		}
 	}else{
 
 		// 乗っていないときは全部上書き
+	#if WB_TEMP_FIX
 		Snd_PMVoicePlay( monsno, 0 );
+	#endif
 	}
 }
 

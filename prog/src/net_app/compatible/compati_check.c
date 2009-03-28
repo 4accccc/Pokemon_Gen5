@@ -480,6 +480,12 @@ static void CCLocal_VramSetting(COMPATI_SYS *cs)
 	GFL_DISP_SetBank( &CompatiVramBank );
 	GFL_BG_Init( HEAPID_COMPATI );
 	GFL_BG_SetBGMode( &CompatiBgSysHeader );
+
+	//VRAMÉNÉäÉA
+	GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 }
 
 //--------------------------------------------------------------

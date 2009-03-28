@@ -610,13 +610,14 @@ PROC_RESULT Earth_Demo_Init(PROC * proc, int * seq)
 	wk->heapID = heapID;
 
 	//日本語版かどうかの判別フラグ
-	if( CasetteLanguage == LANG_JAPAN ){
-		// 日本語バージョンでは日本しか登録できない
-		wk->Japan_ROM_mode = TRUE;
-	} else {
-		// 日本語バージョン以外は最初から地球儀が全部見える
-		wk->Japan_ROM_mode = FALSE;
-	}
+#if (PM_LANG == LANG_JAPAN)
+	// 日本語バージョンでは日本しか登録できない
+	wk->Japan_ROM_mode = TRUE;
+#else
+	// 日本語バージョン以外は最初から地球儀が全部見える
+	wk->Japan_ROM_mode = FALSE;
+#endif
+
 #ifdef PM_DEBUG
 	// Ｌボタンをおしていると入力情報をクリアした上で世界から入力できる
 	if(sys.cont & PAD_BUTTON_L){
@@ -1553,6 +1554,7 @@ static void Earth_BmpListAdd( EARTH_DEMO_WORK * wk,
 	listheader_tmp.call_back = Earth_BmpListMoveSeCall;
 	//メニュービットマップリスト作成
 	wk->bmplist = BmpMenuList_Set(&listheader_tmp,0,0,wk->heapID);
+	BmpMenuList_SetCursorBmp(wk->bmplist, wk->heapID);
 
 	//ウインドウ（外枠）描画
 	BmpMenuWinWrite(listheader_tmp.win,WINDOW_TRANS_OFF,EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
@@ -1597,6 +1599,7 @@ static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk,
 	listheader_tmp.call_back = Earth_BmpListMoveSeCall;
 	//メニュービットマップリスト作成
 	wk->bmplist = BmpMenuList_Set(&listheader_tmp,0,0,wk->heapID);
+	BmpMenuList_SetCursorBmp(wk->bmplist, wk->heapID);
 
 	//ウインドウ（外枠）描画
 	BmpMenuWinWrite(listheader_tmp.win,WINDOW_TRANS_OFF,EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);

@@ -47,7 +47,7 @@ FS_EXTERN_OVERLAY(matsuda_debug);
 FS_EXTERN_OVERLAY(balloon);
 FS_EXTERN_OVERLAY(compati_check);
 FS_EXTERN_OVERLAY(palace);
-//FS_EXTERN_OVERLAY(wifilobby_common);
+FS_EXTERN_OVERLAY(wifilobby_common);
 
 
 //==============================================================================
@@ -128,7 +128,7 @@ extern const GFL_PROC_DATA PalaceEditProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
-#if 0
+#if 1
 	{//WIFI広場
 		DM_MSG_MENU014, 
 		&WFLBY_PROC,
@@ -537,7 +537,7 @@ static void * _WifiLobbyParentWorkCreate(D_MATSU_WORK *wk)
 	wflby_pwk = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WFLBY_PROC_PARAM));
 	wflby_pwk->p_wflby_counter 
 		= GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WFLBY_COUNTER_TIME));
-	wflby_pwk->p_save = NULL;
+	wflby_pwk->p_save = SaveControl_GetPointer();
 	wflby_pwk->check_skip = FALSE;
 	return wflby_pwk;
 }

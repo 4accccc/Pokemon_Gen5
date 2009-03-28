@@ -319,16 +319,20 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		}
 
 		// 通信人数よりエントリー人数が多いときはおかしい
+	#if WB_TEMP_FIX
 		if( p_evwk->match_entry_num > CommGetConnectNum() ){
 			OS_TPrintf( "p_evwk->match_entry_num > CommGetConnectNum() = %d > %d\n", p_evwk->match_entry_num, CommGetConnectNum() );
+	#else
+		if( 0 ){
+	#endif
 			p_param->in_ok = WFLBY_EV_MG_RET_NG_DISCON;
 			WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERREND );
 			break;
 		}
 
 		// 接続が切断されたら終了
-		if( CommStateWifiP2PGetConnectState() == COMMSTATE_WIFIP2P_CONNECT_NONE ){
-			OS_TPrintf( "CommStateWifiP2PGetConnectState() == COMMSTATE_WIFIP2P_CONNECT_NONE\n" );
+		if( GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_NOTMATCH ){
+			OS_TPrintf( "GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_NOTMATCH\n" );
 			p_param->in_ok = WFLBY_EV_MG_RET_NG_DISCON;
 			WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERREND );
 			break;
@@ -366,12 +370,12 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 	case WFLBY_EV_MG_CANCEL_ININ:	// CANCEL処理チェック	INFO_INITに行く
 	case WFLBY_EV_MG_CANCEL_MOKW:	// CANCEL処理チェック	MATCHOKWAITに行く
 		// エラーチェック
-		switch( CommWifiIsMatched() ){
-		case 2:		// エラーやCANCEL
-		case 3:		// タイムアウト
-		case 4:		// 切断
-		case 5:		// 軽度なえらー
-			OS_TPrintf( "err CommWifiIsMatched()==%d\n", CommWifiIsMatched() );
+		switch( GFL_NET_StateGetWifiStatus() ){
+		case GFL_NET_STATE_NOTMATCH:		// エラーやCANCEL
+		case GFL_NET_STATE_TIMEOUT:		// タイムアウト
+		case GFL_NET_STATE_DISCONNECTING:		// 切断
+		case GFL_NET_STATE_FAIL:		// 軽度なえらー
+			OS_TPrintf( "err GFL_NET_StateGetWifiStatus()==%d\n", GFL_NET_StateGetWifiStatus() );
 			p_param->in_ok = WFLBY_EV_MG_RET_NG_DISCON;
 			WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERREND );
 			break;
@@ -425,8 +429,10 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			break;
 		}
 
+	#if WB_TEMP_FIX
 		Snd_SePlay( WFLBY_SND_MINIGAME );
-
+	#endif
+	
 		// シーケンスを進める
 		WFLBY_EVENTWK_AddSeq( p_wk );
 		break;
@@ -548,8 +554,10 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		}
 
 		// P2P接続開始
+	#if WB_TEMP_FIX
 		CommStateWifiP2PStart( p_param->mg_type );
-
+	#endif
+	
 		// 募集開始を教える
 		if( DWC_LOBBY_MG_MyParent() == TRUE ){
 			// 親なら募集開始を教える
@@ -574,7 +582,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			u32 state;
 			u32 con_num;
 
-			state = CommStateWifiP2PGetConnectState();
+			state = GFL_NET_StateGetWifiStatus();
 			con_num = DWC_LOBBY_MG_GetEntryNum( p_param->mg_type );
 
 #ifdef WFLBY_EV_MG_DEBUG_MATCHING_STATE
@@ -606,7 +614,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 
 
 			// マッチング失敗
-			if( state == COMMSTATE_WIFIP2P_CONNECT_NONE ){
+			if( state == GFL_NET_STATE_NOTMATCH ){
 				p_param->in_ok = WFLBY_EV_MG_RET_NG_DISCON;
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERREND );
 				break;
@@ -614,7 +622,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			}
 
 			// マッチング成功
-			if( state == COMMSTATE_WIFIP2P_CONNECT_MATCH ){
+			if( state == GFL_NET_STATE_MATCHED ){
 				
 				p_param->in_ok = WFLBY_EV_MG_RET_OK;
 
@@ -650,8 +658,10 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			if( p_evwk->timelimit_10 == FALSE ){
 				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 
+				#if WB_TEMP_FIX
 					Snd_SePlay( SEQ_SE_DP_SELECT );
-					
+				#endif
+				
 					if( DWC_LOBBY_MG_MyParent() == FALSE ){
 						// 子機用処理
 						p_param->in_ok = WFLBY_EV_MG_RET_NG_BCAN;
@@ -735,7 +745,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			WFLBY_EV_MG_MINIGAME_PrintSetCount( &p_evwk->kanban, 0 );
 			WFLBY_EV_MG_MINIGAME_PrintMinigame_Recruit( &p_evwk->kanban, p_rmwk, FALSE );
 
-			state = CommStateWifiP2PGetConnectState();
+			state = GFL_NET_StateGetWifiStatus();
 			con_num = DWC_LOBBY_MG_GetEntryNum( p_param->mg_type );
 
 #ifdef WFLBY_EV_MG_DEBUG_MATCHING_STATE
@@ -747,9 +757,9 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 #endif
 
 			// エラーチェック
-			switch( CommWifiIsMatched() ){
-			case 3:
-			case 4:
+			switch( GFL_NET_StateGetWifiStatus() ){
+			case GFL_NET_STATE_TIMEOUT:
+			case GFL_NET_STATE_DISCONNECTING:
 				p_param->in_ok = WFLBY_EV_MG_RET_NG_DISCON;
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERREND );
 				break;
@@ -760,7 +770,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			}
 
 			// マッチング失敗
-			if( state == COMMSTATE_WIFIP2P_CONNECT_NONE ){
+			if( state == GFL_NET_STATE_NOTMATCH ){
 				p_param->in_ok = WFLBY_EV_MG_RET_NG_DISCON;
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERREND );
 				break;
@@ -768,7 +778,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			}
 
 			// マッチング成功
-			if( state == COMMSTATE_WIFIP2P_CONNECT_MATCH ){
+			if( state == GFL_NET_STATE_MATCHED ){
 				
 				p_param->in_ok = WFLBY_EV_MG_RET_OK;
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_INFO_INIT );
@@ -802,8 +812,9 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		OS_TPrintf( "matchok netid%d\n", GFL_NET_SystemGetCurrentID() );
 
 		// 4人接続モードにする
+	#if WB_TEMP_FIX
 		CommStateChangeWiFiLobbyMinigame();
-
+	
 		// Info
 		CommInfoInitialize( WFLBY_SYSTEM_GetSaveData( WFLBY_ROOM_GetSystemData( p_rmwk ) ), NULL );
 
@@ -812,6 +823,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 
 		// 同期なし
 		CommSetWifiBothNet(FALSE);
+	#endif
 
 		
 		// 同期開始
@@ -825,12 +837,13 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		WFLBY_EV_MG_MINIGAME_PrintSetCount( &p_evwk->kanban, 0 );
 		WFLBY_EV_MG_MINIGAME_PrintMinigame_Recruit( &p_evwk->kanban, p_rmwk, FALSE );
 
+	#if WB_TEMP_FIX
 		// 自分を教える
 		CommInfoSendPokeData();
 
 		// 自分はエントリー
 		CommInfoSetEntry( GFL_NET_SystemGetCurrentID() );
-
+	#endif
 		// 通信開始命令待ちへ
 		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_STARTWAIT );
 		break;
@@ -844,6 +857,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 
 
 		// 新しく来た人をENTRY状態にする
+	#if WB_TEMP_FIX
 		{
 			int netid;
 			while( (netid = CommInfoGetNewNameID()) != INVALID_NETID ){
@@ -851,7 +865,8 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 				OS_TPrintf( "Entry=%d  EntryNum=%d\n", netid, CommInfoGetEntryNum() );
 			}
 		}
-
+	#endif
+	
 		/*
         if( GFL_NET_SystemGetCurrentID() == 0 ){
             // 新規POKEDATAを受信したらみんなに送信
@@ -859,6 +874,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
         }
 		//*/
 		// 人数がそろったらゲームを開始させる
+	#if WB_TEMP_FIX
 		if( CommInfoGetEntryNum() >= DWC_LOBBY_MG_GetEntryNum( p_param->mg_type ) ){
 			if( DWC_LOBBY_MG_MyParent() == TRUE ){
 				if( p_evwk->start_game_set == FALSE ){
@@ -880,6 +896,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 				OS_TPrintf( "mg not parent commnum_diff\n" );
 			}
 		}
+	#endif
 		break;
 
 	// PLAYER_IDX初期化
@@ -889,7 +906,9 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		WFLBY_EV_MG_MINIGAME_PrintSetCount( &p_evwk->kanban, 0 );
 		WFLBY_EV_MG_MINIGAME_PrintMinigame_Recruit( &p_evwk->kanban, p_rmwk, FALSE );
 
+	#if WB_TEMP_FIX
 		CommToolTempDataReset();
+	#endif
 		WFLBY_SYSTEM_PLIDX_Clear( p_system );	// P2P通信相手ロビー内PLIDXバッファクリア
 		WFLBY_EV_MG_Sync( p_evwk, p_wk, WFLBY_EV_MG_PLIDX_SEND, _TIMING_GAME_CHECK2 );
 		break;
@@ -905,10 +924,12 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 
 
 			p_evwk->tmp_userid = WFLBY_SYSTEM_GetMyUserID( p_system );
+		#if WB_FIX
 			result = CommToolSetTempData( GFL_NET_SystemGetCurrentID(), &p_evwk->tmp_userid );
 			if( result == TRUE ){
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_PLIDX_CHECK );
 			}
+		#endif
 		}
 		break;	
 
@@ -930,8 +951,11 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 
 
 			// エントリー数を取得
+		#if WB_TEMP_FIX
 			con_num = CommInfoGetEntryNum();
-
+		#else
+			con_num = 1;
+		#endif
 			current_id = GFL_NET_SystemGetCurrentID();
 
 			ok_num = 0;
@@ -939,6 +963,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			parent_man  = FALSE;
 			parent_id	= DWC_LOBBY_MG_GetParentUserID();
 
+		#if WB_TEMP_FIX
 			for( i=0; i<con_num; i++ ){
 
 				if( current_id != i ){
@@ -965,6 +990,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 					ok_num ++;
 				}
 			}
+		#endif
 
 
 			// 全員のステータスを受信してチェック結果がOKなら次の処理へ
@@ -986,8 +1012,10 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 	// 通信開始
 	case WFLBY_EV_MG_COMM_START:
 
+	#if WB_TEMP_FIX
 		CommStateSetErrorCheck(FALSE,TRUE);	// 切断はエラーにしない
-
+	#endif
+	
 		// 親ならゲームをしていることを送信
 		if( DWC_LOBBY_MG_MyParent() == TRUE ){
 			int count;
@@ -1171,8 +1199,10 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 	// 通信切断終了
 	case WFLBY_EV_MG_ERREND:
 		// 通信切断
+    #if WB_TEMP_FIX
         CommInfoFinalize();
 		CommStateWifiP2PEnd();
+	#endif
 		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERRENDWAIT );
 		break;
 
@@ -1180,8 +1210,8 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 	case WFLBY_EV_MG_ERRENDWAIT:
 		{
 			u32 status;
-			status = CommStateWifiP2PGetConnectState();
-			if( status == COMMSTATE_WIFIP2P_CONNECT_NONE ){
+			status = GFL_NET_StateGetWifiStatus();
+			if( status == GFL_NET_STATE_NOTMATCH ){
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_END );
 			}
 		}
@@ -1252,13 +1282,17 @@ BOOL WFLBY_EV_MG_End( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 	// 切断リクエスト
 	case WFLBY_EV_MG_END_REQ:
 		// P2P通信を切断する
+	#if WB_TEMP_FIX
 		CommStateSetErrorCheck(FALSE,FALSE);
-
+	#endif
+	
 		// 通信切断
 		if( GFL_NET_StateIsWifiLoginMatchState() == FALSE ){	// Login状態じゃなかったらやる
 			// Info終了
+		#if WB_TEMP_FIX
 			CommInfoFinalize();
 			CommStateWifiP2PEnd();
+		#endif
 		}
 
 		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_END_WAIT );
@@ -1528,19 +1562,19 @@ static BOOL WFLBY_EV_MG_Cancel_MatchWait( WFLBY_EV_MG_WK* p_evwk, WFLBY_ROOMWK* 
 	WFLBY_SYSTEM* p_system;
 
 	p_system = WFLBY_ROOM_GetSystemData( p_rmwk );
-	state	= CommStateWifiP2PGetConnectState();
+	state	= GFL_NET_StateGetWifiStatus();
 	con_num = DWC_LOBBY_MG_GetEntryNum( p_param->mg_type );
 
 
 	// マッチング失敗
-	if( state == COMMSTATE_WIFIP2P_CONNECT_NONE ){
+	if( state == GFL_NET_STATE_NOTMATCH ){
 		p_param->in_ok = WFLBY_EV_MG_RET_NG_DISCON;
 		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERREND );
 		return TRUE;
 	}
 
 	// マッチング成功
-	if( state == COMMSTATE_WIFIP2P_CONNECT_MATCH ){
+	if( state == GFL_NET_STATE_MATCHED ){
 
 		// 今の接続人数を保存
 		p_evwk->match_entry_num	= con_num;

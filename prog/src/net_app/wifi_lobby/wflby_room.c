@@ -1692,7 +1692,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	GFL_TCBL_Exit(p_wk->tcblsys);
 
 	// ワーク破棄
-	GFL_HEAP_FreeMemory( p_wk );
+	GFL_PROC_FreeWork( p_proc );
 
 	// ヒープ破棄
 	GFL_HEAP_DeleteHeap( HEAPID_WFLBY_ROOM );
@@ -2983,6 +2983,11 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 
 	// バンク設定
 	GFL_DISP_SetBank( &sc_WFLBY_ROOM_BANK );
+	//VRAMクリア	2009.03.28(土) 追加 matsuda
+	GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 
 	// 描画面変更
 	// メインとサブを切り替える
@@ -3007,6 +3012,7 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 			GFL_BG_SetBGControl( 
 					sc_WFLBY_ROOM_BGCNT_FRM[i], &sc_WFLBY_ROOM_BGCNT_DATA[i],
 					GFL_BG_MODE_TEXT );
+			GFL_BG_SetVisible(sc_WFLBY_ROOM_BGCNT_FRM[i], VISIBLE_ON);
 			GFL_BG_SetClearCharacter( sc_WFLBY_ROOM_BGCNT_FRM[i], 32, 0, heapID);
 			GFL_BG_ClearScreen( sc_WFLBY_ROOM_BGCNT_FRM[i] );
 		}

@@ -42,10 +42,13 @@
 
 #include "net_app/connect_anm.h"
 
+#include "net/network_define.h"
 #include "system/main.h"
 #include "font/font.naix"
 #include "net_app/net_bugfix.h"
 #include "arc_def.h"
+#include "test/wflby_debug.h"
+#include "savedata/wifilist.h"
 
 // ダミーグラフィックです
 #include "wifip2pmatch.naix"
@@ -77,7 +80,6 @@
 static s32 DEBUG_SEL_ROOM;		// 選択した部屋なりなんなり
 static s32 DEBUG_SEL_SEASON;
 static s32 DEBUG_SEL_ITEM;
-extern BOOL D_Tomoya_WiFiLobby_DebugStart;	// デバック開始情報
 #endif
 
 
@@ -362,9 +364,6 @@ static const BMPWIN_YESNO_DAT sc_WFLBY_BMPWIN_DAT_YESNO = {
 	WFLBY_MAIN_PLTT_SYSFONT, WFLBY_YESNOWIN_CGX,
 };
 
-
-
-
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -393,6 +392,62 @@ static void WFLBY_CONNECT_WIN_PrintTitle( WFLBY_WINWK* p_wk, u32 strid );
 static void WFLBY_CONNECT_WIN_PrintDEBUG( WFLBY_WINWK* p_wk, u32 strid, u32 num );
 static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 item );
 #endif
+
+static DWCUserData* _getMyUserData(void* pWork);
+static DWCFriendData* _getFriendData(void* pWork);
+static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork);
+
+
+//==============================================================================
+//	
+//==============================================================================
+//--------------------------------------------------------------
+//	
+//--------------------------------------------------------------
+#define _MAXNUM   (4)         // 最大接続人数
+#define _MAXSIZE  (80)        // 最大送信バイト数
+#define _BCON_GET_NUM (16)    // 最大ビーコン収集数
+
+static GFLNetInitializeStruct aGFLNetInit = {
+    NULL,  // 受信関数テーブル
+    0, // 受信テーブル要素数
+    NULL,    ///< ハードで接続した時に呼ばれる
+    NULL,    ///< ネゴシエーション完了時にコール
+    NULL,   // ユーザー同士が交換するデータのポインタ取得関数
+    NULL,   // ユーザー同士が交換するデータのサイズ取得関数
+    NULL,  // ビーコンデータ取得関数
+    NULL,  // ビーコンデータサイズ取得関数
+    NULL,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
+    NULL,            // 普通のエラーが起こった場合 通信終了
+    NULL,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+    NULL,  // 通信切断時に呼ばれる関数
+    NULL,  // オート接続で親になった場合
+    NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+    NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+    _deleteFriendList,  ///< wifiフレンドリスト削除コールバック
+    _getFriendData,   ///< DWC形式の友達リスト	
+    _getMyUserData,  ///< DWCのユーザデータ（自分のデータ）
+    GFL_NET_DWC_HEAPSIZE,   ///< DWCへのHEAPサイズ
+    TRUE,        ///< デバック用サーバにつなぐかどうか
+    0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+    GFL_HEAPID_APP,  //元になるheapid
+    HEAPID_NETWORK,  //通信用にcreateされるHEAPID
+    HEAPID_WIFI,  //wifi用にcreateされるHEAPID
+    HEAPID_NETWORK,  //IRC用にcreateされるHEAPID
+    GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
+    _MAXNUM,     // 最大接続人数
+    _MAXSIZE,  //最大送信バイト数
+    _BCON_GET_NUM,    // 最大ビーコン収集数
+    TRUE,     // CRC計算
+    FALSE,     // MP通信＝親子型通信モードかどうか
+    GFL_NET_TYPE_WIFI_LOBBY,  //通信種別
+    TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
+    WB_NET_WIFILOBBY,  //GameServiceID
+#if GFL_NET_IRC
+	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
+#endif
+};
+
 
 
 
@@ -644,7 +699,8 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	case WFLBY_CONNECT_SEQ_LOGIN:
 		{
 			WFLBY_USER_PROFILE* p_profile;
-
+			
+			GFL_NET_Init(&aGFLNetInit, NULL, p_wk);
 #ifdef WFLBY_CONNECT_DEBUG_START
 			if( D_Tomoya_WiFiLobby_DebugStart == TRUE ){
 				WFLBY_SYSTEM_DEBUG_SetItem( p_param->p_system, DEBUG_SEL_ITEM );
@@ -858,6 +914,10 @@ GFL_PROC_RESULT WFLBY_CONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 
 	ConnectBGPalAnm_End(&p_wk->cbp);
 
+	//フォント破棄
+	GFL_FONT_Delete(p_wk->fontHandle_talk);
+	GFL_FONT_Delete(p_wk->fontHandle_system);
+	
 	//TCBL破棄
 	GFL_TCBL_Exit(p_wk->tcbl);
 	//PrintQue破棄
@@ -875,7 +935,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	ConnectBGPalAnm_OccSet(&p_wk->cbp, FALSE);
 
 	// ワーク破棄
-	GFL_HEAP_FreeMemory( p_wk );
+	GFL_PROC_FreeWork(p_proc);
 
 	// ヒープ破棄
 	GFL_HEAP_DeleteHeap( HEAPID_WFLBY_ROOM );
@@ -1105,7 +1165,7 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 	ConnectBGPalAnm_OccSet(&p_wk->cbp, FALSE);
 
 	// ワーク破棄
-	GFL_HEAP_FreeMemory( p_wk );
+	GFL_PROC_FreeWork(p_proc);
 
 	// ヒープ破棄
 	GFL_HEAP_DeleteHeap( HEAPID_WFLBY_ROOM );
@@ -1151,6 +1211,11 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID )
 	
 	// BANK設定
 	GFL_DISP_SetBank( &sc_WFLBY_BANK );
+	//VRAMクリア
+	GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 
 	// バックグラウンドを黒にする
 	{
@@ -1171,8 +1236,10 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID )
 			GFL_BG_SetBGControl( 
 					sc_WFLBY_BGCNT_FRM[i], &sc_WFLBY_BGCNT_DATA[i],
 					GFL_BG_MODE_TEXT );
+			GFL_BG_SetVisible(sc_WFLBY_BGCNT_FRM[i], VISIBLE_ON);
 			GFL_BG_SetClearCharacter( sc_WFLBY_BGCNT_FRM[i], 32, 0, heapID);
 			GFL_BG_ClearScreen( sc_WFLBY_BGCNT_FRM[i] );
+			GFL_BG_SetVisible(sc_WFLBY_BGCNT_FRM[i], VISIBLE_ON);
 		}
 	}
 	
@@ -1629,4 +1696,29 @@ static void WFLBY_CONNECT_WIN_SetErrNumber( WFLBY_WINWK* p_wk, u32 number )
 {
     WORDSET_RegisterNumber( p_wk->p_wordset, 0, number,
                            5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+}
+
+
+//==============================================================================
+//	
+//==============================================================================
+static DWCUserData* _getMyUserData(void* pWork)
+{
+    WFLBY_CONNECTWK *wk = pWork;
+    return WifiList_GetMyUserInfo(SaveData_GetWifiListData(wk->p_save));
+}
+
+static DWCFriendData* _getFriendData(void* pWork)
+{
+    WFLBY_CONNECTWK *wk = pWork;
+    return WifiList_GetDwcDataPtr(SaveData_GetWifiListData(wk->p_save),0);
+}
+
+static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork)
+{
+    WFLBY_CONNECTWK *wk = pWork;
+
+    WifiList_DataMarge(SaveData_GetWifiListData(wk->p_save), deletedIndex, srcIndex);
+	//フレンド毎に持つフロンティアデータもマージする 2008.05.24(土) matsuda
+//	FrontierRecord_DataMarge(SaveData_GetFrontier(wk->pSaveData), deletedIndex, srcIndex);
 }

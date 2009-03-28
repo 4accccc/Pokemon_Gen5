@@ -1446,8 +1446,8 @@ static BOOL NEWS_TOPIC_GetSTRConnect( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp
 {
 	STRBUF*				p_tmpstr;
 
-	WORDSET_RegisterWord( p_wordset, 0,  p_obj->p_name[0], 0, TRUE, CasetteLanguage );	// 名前
-	WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[1], 0, TRUE, CasetteLanguage );	// 名前
+	WORDSET_RegisterWord( p_wordset, 0,  p_obj->p_name[0], 0, TRUE, PM_LANG );	// 名前
+	WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[1], 0, TRUE, PM_LANG );	// 名前
 
 	// 展開する文字列作成
 	p_tmpstr = GFL_MSG_CreateString( p_msgman, wflby_topic_03 );
@@ -1470,8 +1470,8 @@ static BOOL NEWS_TOPIC_GetSTRItem( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vi
 {
 	STRBUF*				p_tmpstr;
 
-	WORDSET_RegisterWord( p_wordset, 0,  p_obj->p_name[0], 0, TRUE, CasetteLanguage );	// 名前
-	WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[1], 0, TRUE, CasetteLanguage );	// 名前
+	WORDSET_RegisterWord( p_wordset, 0,  p_obj->p_name[0], 0, TRUE, PM_LANG );	// 名前
+	WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[1], 0, TRUE, PM_LANG );	// 名前
 	WORDSET_RegisterWiFiLobbyItemName( p_wordset, 2, p_obj->work[ NEWS_TOPIC_WK_ITEMNO ] );
 
 	// 展開する文字列作成
@@ -1507,23 +1507,23 @@ static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
 		// 展開する文字列作成
 		switch( p_obj->work[ NEWS_TOPIC_WK_GAME_PLAYNUM ] ){
 		case 3:
-			WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, CasetteLanguage );	// 名前
-			WORDSET_RegisterWord( p_wordset, 2,  p_obj->p_name[1], 0, TRUE, CasetteLanguage );	// 名前
-			WORDSET_RegisterWord( p_wordset, 3,  p_obj->p_name[2], 0, TRUE, CasetteLanguage );	// 名前
+			WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, PM_LANG );	// 名前
+			WORDSET_RegisterWord( p_wordset, 2,  p_obj->p_name[1], 0, TRUE, PM_LANG );	// 名前
+			WORDSET_RegisterWord( p_wordset, 3,  p_obj->p_name[2], 0, TRUE, PM_LANG );	// 名前
 			msgidx = wflby_topic_14;
 			break;
 
 		case 2:
-			WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, CasetteLanguage );	// 名前
-			WORDSET_RegisterWord( p_wordset, 2,  p_obj->p_name[1], 0, TRUE, CasetteLanguage );	// 名前
+			WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, PM_LANG );	// 名前
+			WORDSET_RegisterWord( p_wordset, 2,  p_obj->p_name[1], 0, TRUE, PM_LANG );	// 名前
 			msgidx = wflby_topic_15;
 			break;
 
 		case 4:
-			WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, CasetteLanguage );	// 名前
-			WORDSET_RegisterWord( p_wordset, 2,  p_obj->p_name[1], 0, TRUE, CasetteLanguage );	// 名前
-			WORDSET_RegisterWord( p_wordset, 3,  p_obj->p_name[2], 0, TRUE, CasetteLanguage );	// 名前
-			WORDSET_RegisterWord( p_wordset, 4,  p_obj->p_name[3], 0, TRUE, CasetteLanguage );	// 名前
+			WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, PM_LANG );	// 名前
+			WORDSET_RegisterWord( p_wordset, 2,  p_obj->p_name[1], 0, TRUE, PM_LANG );	// 名前
+			WORDSET_RegisterWord( p_wordset, 3,  p_obj->p_name[2], 0, TRUE, PM_LANG );	// 名前
+			WORDSET_RegisterWord( p_wordset, 4,  p_obj->p_name[3], 0, TRUE, PM_LANG );	// 名前
 			msgidx = wflby_topic_02;
 			break;
 		
@@ -1533,7 +1533,7 @@ static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
 		p_tmpstr = GFL_MSG_CreateString( p_msgman, msgidx );
 	}else{
 
-		WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, CasetteLanguage );	// 名前
+		WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, PM_LANG );	// 名前
 		WORDSET_RegisterNumber( p_wordset, 2, WFLBY_MINIGAME_MAX - p_obj->work[ NEWS_TOPIC_WK_GAME_PLAYNUM ],
 				1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 
@@ -1561,7 +1561,7 @@ static BOOL NEWS_TOPIC_GetSTRFoot( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vi
 	STRBUF*				p_tmpstr;
 
 	WORDSET_RegisterWiFiLobbyGameName( p_wordset, 0, p_obj->work[NEWS_TOPIC_WK_FOOT_NO] );
-	WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, CasetteLanguage );	// 名前
+	WORDSET_RegisterWord( p_wordset, 1,  p_obj->p_name[0], 0, TRUE, PM_LANG );	// 名前
 	WORDSET_RegisterNumber( p_wordset, 2, WFLBY_FOOT_MAX - p_obj->work[ NEWS_TOPIC_WK_FOOT_PLAYNUM ],
 			1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 
@@ -1591,7 +1591,7 @@ static BOOL NEWS_TOPIC_GetSTRWldTimer( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
 
 	// 名前設定
 	for( i=0; i<p_obj->work[NEWS_TOPIC_WK_WLDT_PLAYNUM]; i++ ){
-		WORDSET_RegisterWord( p_wordset, i,  p_obj->p_name[i], 0, TRUE, CasetteLanguage );	// 名前
+		WORDSET_RegisterWord( p_wordset, i,  p_obj->p_name[i], 0, TRUE, PM_LANG );	// 名前
 	}
 	if( p_obj->type == NEWS_TOPICTYPE_WORLDTIMER ){
 		WORDSET_RegisterWiFiLobbyGameName( p_wordset, 
@@ -1716,7 +1716,7 @@ static BOOL NEWS_TOPIC_GetSTRMgResultIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG*
 	// 人数で文字列を変更
 	// 展開する文字列作成
 	for( i=0; i<p_obj->work[ NEWS_TOPIC_WK_MGRESULT_PLAYNUM ]; i++ ){
-		WORDSET_RegisterWord( p_wordset, i+1,  p_obj->p_name[i], 0, TRUE, CasetteLanguage );	// 名前設定
+		WORDSET_RegisterWord( p_wordset, i+1,  p_obj->p_name[i], 0, TRUE, PM_LANG );	// 名前設定
 	}
 	if( (p_obj->work[NEWS_TOPIC_WK_MGRESULT_NO] == WFLBY_GAME_BALLSLOW) ||
 		(p_obj->work[NEWS_TOPIC_WK_MGRESULT_NO] == WFLBY_GAME_BALANCEBALL) ){
