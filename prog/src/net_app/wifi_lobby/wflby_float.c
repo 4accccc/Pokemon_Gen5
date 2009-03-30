@@ -116,7 +116,7 @@ typedef struct {
 //-------------------------------------
 ///	フロート管理ワーク
 //=====================================
-typedef struct _WFLBY_FLOAT_CONT{
+struct _WFLBY_FLOAT_CONT{
 	WFLBY_ROOMWK* p_rmwk;
 	WFLBY_SYSTEM* p_system;
 	WFLBY_3DMAPOBJ_CONT* p_mapobjcont;
@@ -139,7 +139,7 @@ typedef struct _WFLBY_FLOAT_CONT{
 	// フロート動作距離
 	fx32	float_move_start;
 	fx32	float_move_dis;
-} WFLBY_FLOAT_CONT;
+};
 
 
 //-------------------------------------

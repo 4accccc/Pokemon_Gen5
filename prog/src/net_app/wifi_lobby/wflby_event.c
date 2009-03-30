@@ -78,7 +78,7 @@ typedef struct {
 //-------------------------------------
 ///	イベントワーク
 //=====================================
-typedef struct _WFLBY_EVENTWK{
+struct _WFLBY_EVENTWK{
 	// ヒープID
 	u16				heapID;
 
@@ -93,7 +93,7 @@ typedef struct _WFLBY_EVENTWK{
 
 	// 対比先
 	WFLBY_EVENTWK_LOCAL tmp;
-} WFLBY_EVENTWK;
+};
 
 
 

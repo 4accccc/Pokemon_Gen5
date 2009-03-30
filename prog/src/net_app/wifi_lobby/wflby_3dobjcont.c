@@ -194,7 +194,7 @@ typedef union{
 //-------------------------------------
 ///	ワーク構造体
 //=====================================
-typedef struct _WFLBY_3DPERSON{
+struct _WFLBY_3DPERSON{
 	WF2DMAP_OBJWK* p_obj;
 	WFLBY_3DOBJWK* p_draw;
 
@@ -206,13 +206,13 @@ typedef struct _WFLBY_3DPERSON{
 
 	// 基本動作関数
 	void (*p_func)( struct _WFLBY_3DPERSON* p_wk, WFLBY_3DOBJCONT* p_sys );
-}WFLBY_3DPERSON;
+};
 typedef void (*pWFLBY_3DPARSON_FUNC)( struct _WFLBY_3DPERSON* p_wk, WFLBY_3DOBJCONT* p_sys );
 
 //-------------------------------------
 ///	システム構造体
 //=====================================
-typedef struct _WFLBY_3DOBJCONT{
+struct _WFLBY_3DOBJCONT{
 	WF2DMAP_OBJSYS*		p_objsys;
 	WFLBY_3DOBJSYS*		p_drawsys;
 	WFLBY_3DPERSON*		p_objbuf;
@@ -224,7 +224,7 @@ typedef struct _WFLBY_3DOBJCONT{
 
 	WFLBY_3DPERSON*		p_player;
 	WFLBY_3DPERSON*		p_pierrot;
-}WFLBY_3DOBJCONT;
+};
 
 //-----------------------------------------------------------------------------
 /**

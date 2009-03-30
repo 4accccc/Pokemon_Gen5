@@ -824,7 +824,7 @@ typedef struct {
 //-------------------------------------
 ///	広場ワーク
 //=====================================
-typedef struct _WFLBY_ROOMWK{
+struct _WFLBY_ROOMWK{
 	// 各種フラグ
 	u8 end_flag;		// 終了フラグ
 	u8 end_ret;			// WFLBY_ROOM_RETこれ
@@ -888,7 +888,7 @@ typedef struct _WFLBY_ROOMWK{
 
 	GFL_TCB *vintr_tcb;
 	GFL_TCBLSYS *tcblsys;
-} WFLBY_ROOMWK;
+};
 
 
 //--------------------------------------------------------------

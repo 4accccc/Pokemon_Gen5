@@ -130,7 +130,7 @@ typedef struct {
 //-------------------------------------
 ///	システム構造体
 //=====================================
-typedef struct _WFLBY_3DMAPOBJ_CONT{
+struct _WFLBY_3DMAPOBJ_CONT{
 	const WFLBY_MAPCONT*	cp_mapdata;		// マップデータ
 	WFLBY_3DMAPOBJ*			p_mapobjsys;	// 配置オブジェシステム
 	WFLBY_3DMAPOBJ_WK*		p_mapwkobj[ WFLBY_3DMAPOBJ_CONT_MAPOBJWK_MAX ];	// 配置オブジェ配列
@@ -141,7 +141,7 @@ typedef struct _WFLBY_3DMAPOBJ_CONT{
 	u8						objaddnum;		// 配置オブジェ登録数
 	u8						floataddnum;	// フロート登録数
 
-}WFLBY_3DMAPOBJ_CONT;
+};
 
 
 //-------------------------------------

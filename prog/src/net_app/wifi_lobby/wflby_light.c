@@ -96,13 +96,13 @@ typedef struct {
 //-------------------------------------
 ///	ライトシステム
 //=====================================
-typedef struct _WFLBY_LIGHTWK {
+struct _WFLBY_LIGHTWK {
 	WFLBY_LIGHT_FULL	now;		// 設定値
 	WFLBY_LIGHT_FULL	last;		// 変更前
 	WFLBY_LIGHT_FULL	next;		// 変更後
 	s32					lightcount[WFLBY_LIGHT_LIGHT_NUM];	// 変更カウンタ
 	s32					matcount[WFLBY_LIGHT_MAT_NUM];	// 変更カウンタ
-}WFLBY_LIGHTWK;
+};
 
 
 //-----------------------------------------------------------------------------

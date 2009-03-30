@@ -177,7 +177,7 @@ typedef struct {
 //-------------------------------------
 ///	花火管理システム
 //=====================================
-typedef struct _WFLBY_FIRE_CONT {
+struct _WFLBY_FIRE_CONT {
 	const WFLBY_SYSTEM*		cp_system;
 	WFLBY_3DMAPOBJ_CONT*	p_mapobjcont;
 
@@ -186,7 +186,7 @@ typedef struct _WFLBY_FIRE_CONT {
 	u16 last_hanabi_st;
 
 	WFLBY_FIRECONT_WK move_wk;	// 動作ワーク
-} WFLBY_FIRE_CONT;
+};
 
 //-----------------------------------------------------------------------------
 /**

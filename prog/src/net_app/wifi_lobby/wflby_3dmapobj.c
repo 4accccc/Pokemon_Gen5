@@ -103,7 +103,7 @@ typedef struct {
 //-------------------------------------
 ///	フロートワーク
 //=====================================
-typedef struct _WFLBY_3DMAPOBJ_FLOAT{
+struct _WFLBY_3DMAPOBJ_FLOAT{
 	u8			on;	
 	u8			col;	// 色
 	u8			mdlno;	// モデルナンバー
@@ -117,7 +117,7 @@ typedef struct _WFLBY_3DMAPOBJ_FLOAT{
 	VecFx32		ofs;
 	u8			draw_flag;
 	u8			padding[3];
-}WFLBY_3DMAPOBJ_FLOAT;
+};
 
 //-------------------------------------
 ///	フロートリソース
@@ -134,7 +134,7 @@ typedef struct {
 ///	その他の物ワーク
 //	(表示非表示くらいしか出来ない)
 //=====================================
-typedef struct _WFLBY_3DMAPOBJ_WK{
+struct _WFLBY_3DMAPOBJ_WK{
 	u16			on;
 	u16			mdlid;
 	GFL_G3D_OBJSTATUS		objst;
@@ -157,7 +157,7 @@ typedef struct _WFLBY_3DMAPOBJ_WK{
 	
 	u8			draw_flag;
 	u8			padding[3];
-}WFLBY_3DMAPOBJ_WK;
+};
 
 //-------------------------------------
 ///	その他の配置オブジェリソース
@@ -176,7 +176,7 @@ typedef struct {
 //-------------------------------------
 ///	マップ表示物管理システム
 //=====================================
-typedef struct _WFLBY_3DMAPOBJ{
+struct _WFLBY_3DMAPOBJ{
 	WFLBY_3DMAPOBJ_MAP		map;		// マップワーク	
 	WFLBY_3DMAPOBJ_FLOAT*	p_float;	// フロート
 	WFLBY_3DMAPOBJ_WK*		p_obj;		// 配置オブジェ
@@ -192,7 +192,7 @@ typedef struct _WFLBY_3DMAPOBJ{
 #if WB_FIX
 	NNSFndAllocator				allocator;								// アロケータ
 #endif
-}WFLBY_3DMAPOBJ;
+};
 
 
 

@@ -840,7 +840,7 @@ typedef struct {
 //-------------------------------------
 ///	ガジェットシステム
 //=====================================
-typedef struct _WFLBY_GADGET{
+struct _WFLBY_GADGET{
 	WFLBY_SYSTEM*		p_system;	// システム
 	WFLBY_3DOBJCONT*	p_objcont;	// オブジェ
 	WFLBY_CAMERA*		p_camera;	// カメラオブジェ
@@ -862,7 +862,7 @@ typedef struct _WFLBY_GADGET{
 #if WB_FIX
 	NNSFndAllocator		allocator;
 #endif
-} WFLBY_GADGET;
+};
 
 
 

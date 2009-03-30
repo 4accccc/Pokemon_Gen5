@@ -60,7 +60,7 @@ static s32 s_WFLBY_DEBUG_LIGHT_CONT_FLOOR_COUNT;
 //-------------------------------------
 ///	タイムイベントワーク
 //=====================================
-typedef struct _WFLBY_TIMEEVENT{
+struct _WFLBY_TIMEEVENT{
 	WFLBY_ROOMWK*		p_rmwk;
 	WFLBY_SYSTEM*		p_system;
 	WFLBY_3DMAPOBJ_CONT*p_mapobjcont;
@@ -68,7 +68,7 @@ typedef struct _WFLBY_TIMEEVENT{
 	WFLBY_LIGHTWK*		p_light;
 	WFLBY_FLOAT_CONT*	p_floatcont;
 	WFLBY_FIRE_CONT*	p_firecont;
-}WFLBY_TIMEEVENT;
+};
 
 //-----------------------------------------------------------------------------
 /**
