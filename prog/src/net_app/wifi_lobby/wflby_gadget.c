@@ -2568,8 +2568,8 @@ static void WFLBY_GADGET_ANM_Init_Signal00( WFLBY_GADGET* p_sys, WFLBY_GADGET_OB
 		// À•W‚ð‚ ‚í‚¹‚é
 		WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
 		// Ý’è
-		matrix.x += WFLBY_GADGET_SIGNAL_ANM_MOVE_X;
-		matrix.z += WFLBY_GADGET_SIGNAL_ANM_MOVE_Z;
+		matrix.x = matrix.x + WFLBY_GADGET_SIGNAL_ANM_MOVE_X;
+		matrix.z = matrix.z + WFLBY_GADGET_SIGNAL_ANM_MOVE_Z;
 		matrix.y += WFLBY_GADGET_FLOOR_Y + (FX_Mul( FX32_ONE*i, WFLBY_GADGET_SIGNAL_ANM_MOVE_Y ));
 		VEC_Set( &p_wk->objst[i].trans, matrix.x, matrix.y, matrix.z );
 
