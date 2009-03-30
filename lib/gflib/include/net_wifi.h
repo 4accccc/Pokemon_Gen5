@@ -141,6 +141,19 @@ extern int GFL_NET_DWC_CheckFriendByToken(DWCFriendData *data, int *index);
 
 //==============================================================================
 /**
+ * すでに同じ人が登録されていないか。
+ * @param   index 同じデータが見つかったときの、その場所。
+ * @param         見つからない場合は空いているところを返す
+ * @param         どこも空いていない場合は、-1 
+ * @retval  DWCFRIEND_INLIST … すでに、同じデータがリスト上にある。
+ * @retval  DWCFRIEND_NODATA … 同じデータはリスト上にない。
+ * @retval  DWCFRIEND_INVALID … 受け取ったfriend_keyaが正しくない。
+ */
+//==============================================================================
+extern int GFL_NET_DWC_CheckFriendCodeByToken( u64 friend_key, int *index);
+
+//==============================================================================
+/**
  * エラーコードを保持する
  * @param   none
  * @retval  none
@@ -337,7 +350,7 @@ typedef BOOL (*MYDWCConnectModeCheckFunc) (int index,void* pWork);
 #define DWCRAP_STARTGAME_FIRSTSAVE (-4)
 
 #define STEPMATCH_CONTINUE 0
-#define STEPMATCH_SUCCESS  (DWC_ERROR_NUM)    //DWC_ERROR_NUM は現在21
+#define STEPMATCH_SUCCESS  (DWC_ERROR_NUM)
 #define STEPMATCH_CANCEL (STEPMATCH_SUCCESS+1)
 #define STEPMATCH_FAIL (STEPMATCH_SUCCESS+2)
 #define STEPMATCH_TIMEOUT (STEPMATCH_SUCCESS+3)
