@@ -693,14 +693,14 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			OS_Printf("pressed voice num_set\n");
 			break;
 		case SOUNDTEST_TPEV_VOICE_PLAY:
-			PMWB_PlayVoice(sw->voiceNum, 0);
+			PMV_PlayVoice(sw->voiceNum, 0);
 			break;
 		case SOUNDTEST_TPEV_VOICE_STOP:
 			//PMVOICE_Play(sw->voiceNum, PMVOICE_MODE_REVERSE | PMVOICE_MODE_CHORUS);
-			PMWB_PlayVoiceChorus(sw->voiceNum, 0);
+			PMV_PlayVoiceChorus(sw->voiceNum, 0);
 			break;
 		case SOUNDTEST_TPEV_VOICE_PAUSE:
-			PMWB_PlayVoiceRev(sw->voiceNum, 0);
+			PMV_PlayVoiceRev(sw->voiceNum, 0);
 			break;
 		case SOUNDTEST_TPEV_VOICE_WINDOW:
 			break;

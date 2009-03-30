@@ -434,14 +434,14 @@ static void stopWave( PMVOICE_PLAYER* voicePlayer )
  */
 //------------------------------------------------------------------
 u32		PMVOICE_Play
-		(	u32							pokeNo,			// ポケモンナンバー
-			u32							pokeFormNo,		// ポケモンフォームナンバー
-			u8							pan,			// 定位(L:0 - 64 - 127:R)
-			BOOL						chorus,			// コーラス使用フラグ
-			int							chorusVolOfs,	// コーラスボリューム差
-			int							chorusSpOfs,	// 再生速度差
-			BOOL						waveCustom,		// 波形カスタマイズ有効フラグ
-			BOOL						reverse			// 逆再生フラグ
+		(	u32			pokeNo,			// ポケモンナンバー
+			u32			pokeFormNo,		// ポケモンフォームナンバー
+			u8			pan,			// 定位(L:0 - 64 - 127:R)
+			BOOL		chorus,			// コーラス使用フラグ
+			int			chorusVolOfs,	// コーラスボリューム差
+			int			chorusSpOfs,	// 再生速度差
+			BOOL		reverse,		// 逆再生フラグ
+			u32			userParam		// ユーザーパラメーター	
 		)		
 {
 	PMVOICE_PLAYER* voicePlayer;
@@ -460,22 +460,18 @@ u32		PMVOICE_Play
 	if( pmvSys.voicePlayerHeapReserveFlag == FALSE ){
 		// 常に最大値で確保（種別によって異なると潜在バグを生む可能性があるため）
 		voicePlayer->waveData = GFL_HEAP_AllocClearMemory(pmvSys.heapID, PMVOICE_WAVESIZE_MAX);
-	} else {
-		if(voicePlayer->waveData == NULL ){ return 0; }	// バッファポインタ不整合
 	}
 	
-	// 波形データ取得
-	waveLoadFlag = FALSE;
-	if( waveCustom == TRUE ){
-		// 波形データカスタマイズ(TRUE: コールバック内で生成された)
-		waveLoadFlag = pmvSys.CallBackCustomWave(	pokeNo, pokeFormNo,
+	// 波形データカスタマイズ(TRUE: コールバック内で生成された)
+	waveLoadFlag = pmvSys.CallBackCustomWave(	pokeNo, pokeFormNo, userParam,
 													&voicePlayer->waveData, 
 													&voicePlayer->waveSize, 
 													&voicePlayer->waveRate, 
 													&voicePlayer->speed);
-	}
+	// コールバック内で生成されなかった場合、波形データ取得
 	if( waveLoadFlag == FALSE ){ loadWave(voicePlayer, waveIdx); }
 
+	// 逆再生用データ加工
 	if( reverse ){ reverseBuf(voicePlayer->waveData, voicePlayer->waveSize); }
 
 	// 各種設定

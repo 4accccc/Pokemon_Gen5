@@ -10,7 +10,6 @@
 #include "system/gfl_use.h"
 
 #include "savedata/save_control.h"
-#include "savedata/perapvoice.h"
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
@@ -20,7 +19,7 @@
 
 //==============================================================================================
 //
-//	ぺラップ用定義
+//	サンプリングデータ用定義
 //
 //==============================================================================================
 #define PERAP_SAMPLING_RATE		(2000)									//サンプリングレート
@@ -39,17 +38,15 @@ extern PERAPVOICE * SaveData_GetPerapVoice(SAVE_CONTROL_WORK * sv);
  *
  */
 //============================================================================================
-void PMWB_GetVoiceWaveIdx(	u32 pokeNo, 		// [in]ポケモンナンバー
+void PMV_GetVoiceWaveIdx(	u32 pokeNo, 		// [in]ポケモンナンバー
 							u32 pokeFormNo,		// [in]ポケモンフォームナンバー
 							u32* waveIdx )		// [out]波形IDX
 {
-#if 0
 	if(( pokeNo < MONSNO_HUSIGIDANE)&&( pokeNo > MONSNO_END) ){
 		//指定範囲外
 		*waveIdx = PMVOICE_POKE001;
 		return;
 	}
-#endif
 	if( pokeNo == MONSNO_EURISU ){					//シェイミの時のみ、フォルムチェック
 		if( pokeFormNo == FORMNO_SHEIMI_FLOWER ){	//スカイフォルム
 			*waveIdx = WAVE_ARC_PV516_SKY;
@@ -57,7 +54,7 @@ void PMWB_GetVoiceWaveIdx(	u32 pokeNo, 		// [in]ポケモンナンバー
 		}
 	}
 	// 波形ＩＤＸ取得
-	*waveIdx = (pokeNo-1) + PMVOICE_POKE001;	// 1origin, PMVOICE_POKE001～
+	*waveIdx = (pokeNo-1) + PMVOICE_POKE001;	// pokeNo(1origin)を変換。PMVOICE_POKE001～
 }
 
 //============================================================================================
@@ -69,19 +66,26 @@ void PMWB_GetVoiceWaveIdx(	u32 pokeNo, 		// [in]ポケモンナンバー
  *
  */
 //============================================================================================
-BOOL PMWB_CustomVoiceWave(	u32 pokeNo,			// [in]ポケモンナンバー
+BOOL PMV_CustomVoiceWave(	u32 pokeNo,			// [in]ポケモンナンバー
 							u32 pokeFormNo,		// [in]ポケモンフォームナンバー
+							u32 userParam,		// [in]ユーザーパラメーター
 							void** wave,		// [out]波形データ
-							u32* size,			// [out]波形サイズ
+							u32* size,			// [out]波形サイズ(MAX 26000)
 							int* rate,			// [out]波形再生レート
 							int* speed )		// [out]波形再生スピード
 {
+	PMV_REF* pmvRef;
+
+	if( userParam != NULL ){ return FALSE; }	// 既存waveのみ使用
+
+	//参照ユーザーパラメータ設定
+	pmvRef = (PMV_REF*)userParam;
+
 	if(( pokeNo == MONSNO_PERAPPU )&&( pokeFormNo == 0 )){
-		PERAPVOICE* perapVoice = SaveData_GetPerapVoice(SaveControl_GetPointer());
 		//録音データ存在判定
-		if( PERAPVOICE_GetExistFlag(perapVoice) == TRUE ){
+		if( PERAPVOICE_GetExistFlag(pmvRef->perapVoice) == TRUE ){
 			//録音データ展開
-			PERAPVOICE_ExpandVoiceData( *wave, PERAPVOICE_GetVoiceData(perapVoice) );
+			PERAPVOICE_ExpandVoiceData( *wave, PERAPVOICE_GetVoiceData(pmvRef->perapVoice) );
 			*size = PERAP_SAMPLING_SIZE;
 			*rate = PERAP_SAMPLING_RATE;
 			//ランダムに音程を変える仕様らしい
@@ -91,4 +95,20 @@ BOOL PMWB_CustomVoiceWave(	u32 pokeNo,			// [in]ポケモンナンバー
 	}
 	return FALSE;
 }
+
+//============================================================================================
+/**
+ *
+ *
+ * @brief	参照データ作成（自分のぺラップ用データより）
+ *
+ *
+ */
+//============================================================================================
+void PMV_MakeRefData( PMV_REF* pmvRef )
+{
+	//ぺラップの録音データステータスポインタをセーブデータより取得
+	pmvRef->perapVoice = SaveData_GetPerapVoice(SaveControl_GetPointer());
+}
+
 

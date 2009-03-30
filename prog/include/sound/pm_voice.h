@@ -32,6 +32,7 @@ typedef void (PMVOICE_CB_GET_WVIDX)(	u32 pokeNo, 		// [in]ポケモンナンバー
 // 波形カスタマイズコールバック(TRUE: コールバック内で生成)　
 typedef BOOL (PMVOICE_CB_GET_WVDAT)(	u32 pokeNo,			// [in]ポケモンナンバー
 										u32 pokeFormNo,		// [in]ポケモンフォームナンバー
+										u32 userParam,		// [in]ユーザーパラメーター
 										void** wave,		// [out]波形データ
 										u32* size,			// [out]波形サイズ
 										int* rate,			// [out]波形再生レート
@@ -76,14 +77,14 @@ extern void	PMVOICE_PlayerHeapRelease( void );		// プレーヤー用waveバッファ開放
  */
 //------------------------------------------------------------------
 extern u32	PMVOICE_Play
-			(	u32							pokeNo,			// ポケモンナンバー
-				u32							pokeFormNo,		// ポケモンフォームナンバー
-				u8							pan,			// 定位(L:0 - 64 - 127:R)
-				BOOL						chorus,			// コーラス使用フラグ
-				int							chorusVolOfs,	// コーラスボリューム差
-				int							chorusSpOfs,	// 再生速度差
-				BOOL						waveCustom,		// 波形カスタマイズ有効フラグ
-				BOOL						reverse			// 逆再生フラグ
+			(	u32		pokeNo,			// ポケモンナンバー
+				u32		pokeFormNo,		// ポケモンフォームナンバー
+				u8		pan,			// 定位(L:0 - 64 - 127:R)
+				BOOL	chorus,			// コーラス使用フラグ
+				int		chorusVolOfs,	// コーラスボリューム差
+				int		chorusSpOfs,	// 再生速度差
+				BOOL	reverse,		// 逆再生フラグ
+				u32		userParam		// ユーザーパラメーター	
 			);		
 //------------------------------------------------------------------
 /**

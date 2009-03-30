@@ -10,6 +10,7 @@
 #define __PMWB_VOICE_H__
 
 #include "sound/pm_voice.h"
+#include "savedata/perapvoice.h"
 //------------------------------------------------------------------
 /**
  * @brief	データＩＮＤＥＸ有効範囲
@@ -19,32 +20,72 @@
 #define PMVOICE_END		(BANK_PV516_SKY)
 #define PMVOICE_POKE001	(PMVOICE_START)
 
+//------------------------------------------------------------------
+/**
+ * @brief	鳴き声ユーザーパラメータ構造体
+ */
+//------------------------------------------------------------------
+typedef struct {
+	PERAPVOICE*	perapVoice;
+}PMV_REF;
+
 //============================================================================================
 /**
  * @brief	波形ＩＤＸ取得コールバック
  */
 //============================================================================================
-extern void	PMWB_GetVoiceWaveIdx( u32, u32, u32* );
+extern void	PMV_GetVoiceWaveIdx( u32, u32, u32* );
 //============================================================================================
 /**
- * @brief	波形データ生成コールバック
+ * @brief	波形データカスタマイズコールバック
  */
 //============================================================================================
-extern BOOL	PMWB_CustomVoiceWave( u32, u32, void**, u32*, int*, int* );
+extern BOOL	PMV_CustomVoiceWave( u32, u32, u32, void**, u32*, int*, int* );
 
 //============================================================================================
 /**
- * @brief	鳴き声マクロ
+ * @brief	参照データ作成（自分のぺラップ用データより）
  */
 //============================================================================================
-#define PMWB_PlayVoice( pokeNum, formNum ) \
-		PMVOICE_Play(pokeNum, formNum, 64, FALSE, 0, 0, FALSE, FALSE)
+extern void PMV_MakeRefData( PMV_REF* pmvRef );
 
-#define PMWB_PlayVoiceChorus( pokeNum, formNum ) \
-		PMVOICE_Play(pokeNum, formNum, 64, TRUE, -10, 20, FALSE, FALSE)
+//============================================================================================
+/**
+ * @brief	鳴き声インライン関数
+ */
+//============================================================================================
+// 通常（既存waveのみ使用）
+inline void PMV_PlayVoice( u32 pokeNum, u32 formNum ){
+		PMVOICE_Play(pokeNum, formNum, 64, FALSE, 0, 0, FALSE, 0);
+}
 
-#define PMWB_PlayVoiceRev( pokeNum, formNum ) \
-		PMVOICE_Play(pokeNum, formNum, 64, FALSE, 0, 0, FALSE, TRUE)
+// 手持ちポケモン用再生（参照データは自分のセーブデータ）
+inline void PMV_PlayVoiceMine( u32 pokeNum, u32 formNum ){
+		PMV_REF pmvRef;
+
+		PMV_MakeRefData(&pmvRef);
+		PMVOICE_Play(pokeNum, formNum, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+}
+
+// マルチプレイ用再生（参照データを外部より受け取る）
+inline void PMV_PlayVoiceMulti( u32 pokeNum, u32 formNum, PMV_REF* pmvRef ){
+		PMVOICE_Play(pokeNum, formNum, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+}
+
+//--------------------------------------------------------------------------------------------
+inline void PMV_PlayVoiceChorus( u32 pokeNum, u32 formNum ){
+		PMV_REF pmvRef;
+
+		PMV_MakeRefData(&pmvRef);
+		PMVOICE_Play(pokeNum, formNum, 64, TRUE, -10, 20, FALSE, 0);
+}
+
+inline void PMV_PlayVoiceRev( u32 pokeNum, u32 formNum ){
+		PMV_REF pmvRef;
+
+		PMV_MakeRefData(&pmvRef);
+		PMVOICE_Play(pokeNum, formNum, 64, FALSE, 0, 0, TRUE, 0);
+}
 
 #endif
 

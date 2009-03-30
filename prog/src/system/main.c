@@ -188,7 +188,7 @@ static	void	GameInit(void)
     //サウンドの設定
 	PMSND_Init();
     //鳴き声システムの設定
-	PMVOICE_Init(GFL_HEAPID_APP, PMWB_GetVoiceWaveIdx, PMWB_CustomVoiceWave);
+	PMVOICE_Init(GFL_HEAPID_APP, PMV_GetVoiceWaveIdx, PMV_CustomVoiceWave);
 	//サウンドストリーミング再生システム
 	SND_STRM_Init(GFL_HEAPID_SYSTEM);
 
