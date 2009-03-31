@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-03-30T15:53:46"/>
+	<create user="taya" host="W00146" date="2009-03-31T13:02:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1671,6 +1671,28 @@
 [1:09:どうぐ名:1]　を　おみとおしだ！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
 [1:09:どうぐ名:1]　を　お見通しだ！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Namake">
+		<comment>なまけ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
+なまけていて　わざが　だせない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
+なまけていて　技が　出せない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Namake_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
+なまけていて　わざが　だせない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
+なまけていて　技が　出せない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Namake_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
+なまけていて　わざが　だせない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
+なまけていて　技が　出せない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SkillSwap" back-color=",,,#ffff00,,,,,,,,,,,,,,">
