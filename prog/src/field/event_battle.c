@@ -150,7 +150,7 @@ GMEVENT * DEBUG_EVENT_Battle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 		para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );	///< プレイヤーのパーティ
 		PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->partyPlayer);
 		para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );	///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
-		PokeParty_Add(para->partyEnemy1, PP_Create( MONSNO_AUSU + 1, 15, 3594, HEAPID_CORE));
+		PokeParty_Add(para->partyEnemy1, PP_Create( MONSNO_ARUSEUSU + 1, 15, 3594, HEAPID_CORE));
 		para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
 		para->partyEnemy2 = NULL;	///< 2vs2時の２番目敵AI用（不要ならnull）
 
