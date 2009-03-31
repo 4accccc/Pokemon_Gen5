@@ -24,16 +24,15 @@ HEADNAME	= $(targetname)_def.h
 #------------------------------------------------------------------------------
 TARGETDIR	= $(PROJECT_ARCDIR)particle/wazaeffect
 
+#共通ルールファイルのインクルード
+include $(PROJECT_RSCDIR)\macro_define
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+ifeq ($(CONVERTUSER),true)
 SUBDIRS	= ../../../../pokemon_wb_doc/particle/wazaeffect/
 endif
-
-
-#共通ルールファイルのインクルード
-include $(PROJECT_RSCDIR)\macro_define
 
 #コンバート対象のファイルツリーを生成
 
