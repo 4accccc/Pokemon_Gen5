@@ -279,23 +279,23 @@ static u16 get_personalID( u16 mons_no, u16 form_no )
 			mons_no = DEOKISISU_OTHER_FORM_PERSONAL + form_no;
 		}
 		break;
-	case MONSNO_MINOMESU:
+	case MONSNO_MINOMADAMU:
 		if( ( form_no ) && ( form_no <= FORMNO_MINOMUTTI_MAX ) ){
 			mons_no = MINOMESU_OTHER_FORM_PERSONAL + form_no;
 		}
 		break;
 		
-	case MONSNO_KIMAIRAN:
+	case MONSNO_GIRATHINA:
 		if( ( form_no ) && ( form_no <= FORMNO_GIRATINA_MAX ) ){
 			mons_no = GIRATINA_OTHER_FORM_PERSONAL + form_no;
 		}
 		break;
-	case MONSNO_EURISU:
+	case MONSNO_SHEIMI:
 		if( ( form_no ) && ( form_no <= FORMNO_SHEIMI_MAX ) ){
 			mons_no = SHEIMI_OTHER_FORM_PERSONAL + form_no;
 		}
 		break;
-	case MONSNO_PURAZUMA:
+	case MONSNO_ROTOMU:
 		if( ( form_no ) && ( form_no <= FORMNO_ROTOMU_MAX ) ){
 			mons_no = ROTOMU_OTHER_FORM_PERSONAL + form_no;
 		}

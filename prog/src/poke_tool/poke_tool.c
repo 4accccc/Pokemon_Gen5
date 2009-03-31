@@ -1822,7 +1822,7 @@ static	u32	ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 			break;
 		case ID_PARA_type1:
 		case ID_PARA_type2:
-			if( ( ppp1->monsno == MONSNO_AUSU ) && ( ppp1->speabino == TOKUSYU_MARUTITAIPU ) ){
+			if( ( ppp1->monsno == MONSNO_ARUSEUSU ) && ( ppp1->speabino == TOKUSYU_MARUTITAIPU ) ){
 //ƒAƒCƒeƒ€ˆ—Œn‚ª‚È‚¢‚Å‚·
 #ifdef DEBUG_ONLY_FOR_sogabe
 #warning ITEM_PRM_EQUIP Nothing
