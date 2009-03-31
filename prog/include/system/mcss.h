@@ -8,9 +8,12 @@
  */
 //============================================================================================
 
-#include <gflib.h>
+#ifndef __ASM_NO_DEF_
 
+#include <gflib.h>
 #include "system/gfl_use.h"
+
+#endif
 
 #ifndef	__MCSS_H_
 #define	__MCSS_H_
@@ -23,11 +26,13 @@
 
 #define	MCSS_MEPACHI_ON		( 1 )		//メパチON
 #define	MCSS_MEPACHI_OFF	( 0 )		//メパチOFF
+#define	MCSS_MEPACHI_FLIP	( 2 )		//メパチFLIP
 #define	MCSS_ANM_STOP_ON	( 1 )		//アニメストップON
 #define	MCSS_ANM_STOP_OFF	( 0 )		//アニメストップOFF
 #define	MCSS_VANISH_ON		( 1 )		//バニッシュON
 #define	MCSS_VANISH_OFF		( 0 )		//バニッシュOFF
 
+#ifndef __ASM_NO_DEF_
 //--------------------------------------------------------------------------
 /**
  * 構造体定義
@@ -63,13 +68,18 @@ extern	void			MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale );
 extern	void			MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale );
+extern	void			MCSS_GetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
+extern	void			MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
 extern	void			MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale );
 extern	void			MCSS_SetMepachiFlag( MCSS_WORK *mcss );
 extern	void			MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
+extern	void			MCSS_FlipMepachiFlag( MCSS_WORK *mcss );
 extern	void			MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
 extern	void			MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
 extern	int				MCSS_GetVanishFlag( MCSS_WORK *mcss );
 extern	void			MCSS_SetVanishFlag( MCSS_WORK *mcss );
 extern	void			MCSS_ResetVanishFlag( MCSS_WORK *mcss );
+
+#endif
 
 #endif	//__MCSS_H_
