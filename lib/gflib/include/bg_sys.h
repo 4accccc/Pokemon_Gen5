@@ -185,13 +185,26 @@ extern	void	GFL_BG_Exit( void );
  * エリアマネージャを使用して未使用領域を検索して領域を確保
  *
  * @param	frmnum		ＢＧフレーム番号
- * @param	size		確保するサイズ
- * @param	dir			確保する方向
+ * @param	byteSize	確保するサイズ（バイト単位）
+ * @param	dir				確保する方向
  * 
- * @return	pos			確保した領域のポジション（確保できなかった時はAREAMAN_POS_NOTFOUND）
+ * @return	pos			確保した領域のキャラナンバ（確保できなかった時はAREAMAN_POS_NOTFOUND）
  */
 //--------------------------------------------------------------------------------------------
-extern	u32 GFL_BG_AllocCharacterArea( u32 frmnum, u32 size, u8 dir );
+extern	u32 GFL_BG_AllocCharacterArea( u32 frmnum, u32 byteSize, u8 dir );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * エリアマネージャから指定領域を確保（キャラ単位）
+ *
+ * @param	frmnum				ＢＧフレーム番号
+ * @param	startCharNum	確保する先頭のキャラナンバー
+ * @param	charSize			確保するキャラサイズ
+ * 
+ * @return	BOOL				確保できたらTRUE
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL GFL_BG_ReserveCharacterArea( u32 frmnum, u32 startCharNum, u32 charSize );
 
 //--------------------------------------------------------------------------------------------
 /**
