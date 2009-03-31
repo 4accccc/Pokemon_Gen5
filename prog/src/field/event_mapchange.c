@@ -253,6 +253,22 @@ GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys,
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
+		FIELD_MAIN_WORK * fieldmap, u16 zone_id)
+{
+	MAPCHANGE_WORK * mcw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
+	mcw = GMEVENT_GetEventWork(event);
+	mcw->gsys = gsys;
+	mcw->fieldmap = fieldmap;
+	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
+	LOCATION_DEBUG_SetDefaultPos(&mcw->loc_req, zone_id);
+	return event;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 GMEVENT * EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
 		const LOCATION * loc_req)
 {
@@ -279,7 +295,7 @@ GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fie
 	if (next >= ZONEDATA_GetZoneIDMax()) {
 		next = 0;
 	}
-	return DEBUG_EVENT_ChangeMap(gsys, fieldmap, next, 0);
+	return DEBUG_EVENT_ChangeMapDefaultPos(gsys, fieldmap, next);
 }
 
 //------------------------------------------------------------------
@@ -293,7 +309,7 @@ void DEBUG_EVENT_ChangeEventMapChange(
 		GF_ASSERT( 0 );
 		zone_id = 0;
 	}
-	GMEVENT_ChangeEvent(event, DEBUG_EVENT_ChangeMap(gsys, fieldmap, zone_id, 0));
+	GMEVENT_ChangeEvent(event, DEBUG_EVENT_ChangeMapDefaultPos(gsys, fieldmap, zone_id));
 }	
 
 //============================================================================================
