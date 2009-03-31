@@ -1761,7 +1761,8 @@ static void WFLBY_3DMAPOBJ_MAP_Delete( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_
 static void WFLBY_3DMAPOBJ_MAP_Main( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MAPRES* p_res )
 {
 	int i, set_anmframe;
-
+	int k;
+	
 	// アニメが開始していたらフレームを設定する
 	for( i=0; i<WFLBY_3DMAPOBJ_MAP_ANM_NUM; i++ ){
 		if( p_wk->anm_on[i] ){
@@ -1770,8 +1771,10 @@ static void WFLBY_3DMAPOBJ_MAP_Main( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MA
 		#if WB_FIX
 			D3DOBJ_AnmSet( &p_res->anm[i], p_wk->anm_frame[i] );
 		#else
-			set_anmframe = p_wk->anm_frame[i];
-			GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj[i], i, &set_anmframe );
+			for(k = 0; k < WFLBY_3DMAPOBJ_MAPOBJ_NUM; k++){
+				set_anmframe = p_wk->anm_frame[i];
+				GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj[k], i, &set_anmframe );
+			}
 		#endif
 		}
 	}

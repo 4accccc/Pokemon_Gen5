@@ -565,7 +565,15 @@ static const BMPMENULIST_HEADER MenuListHeader = {
 	/* ラベル表示Ｘ座標 */0,/* 項目表示Ｘ座標 */12,/* カーソル表示Ｘ座標 */0,/* 表示Ｙ座標 */0,
 	/* 文字色 */FBMP_COL_BLACK,/* 背景色 */FBMP_COL_WHITE,/* 文字影色 */FBMP_COL_BLK_SDW,		
 	/* 文字間隔Ｘ */0,/* 文字間隔Ｙ */16,/* ページスキップタイプ */BMPMENULIST_NO_SKIP,		
-	/* 文字指定 */NET_FONT_SYSTEM,/*ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)*/0,						
+	/* 文字指定 */NET_FONT_SYSTEM,/*ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)*/0,						NULL,
+
+	12,		//文字サイズX(ドット
+	16,		//文字サイズY(ドット
+	NULL,	//表示に使用するメッセージバッファ
+	NULL,	//表示に使用するプリントユーティリティ
+	NULL,	//表示に使用するプリントキュー
+	NULL,	//表示に使用するフォントハンドル
+	
 };
 
 static const BMPMENULIST_HEADER PlaceListHeader = {
@@ -575,7 +583,15 @@ static const BMPMENULIST_HEADER PlaceListHeader = {
 	/* ラベル表示Ｘ座標 */0,/* 項目表示Ｘ座標 */12,/* カーソル表示Ｘ座標 */0,/* 表示Ｙ座標 */0,
 	/* 文字色 */FBMP_COL_BLACK,/* 背景色 */FBMP_COL_WHITE,/* 文字影色 */FBMP_COL_BLK_SDW,		
 	/* 文字間隔Ｘ */0,/* 文字間隔Ｙ */16,/* ページスキップタイプ */BMPMENULIST_LRKEY_SKIP,		
-	/* 文字指定 */NET_FONT_SYSTEM,/*ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)*/0,						
+	/* 文字指定 */NET_FONT_SYSTEM,/*ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)*/0,						NULL,
+
+	12,		//文字サイズX(ドット
+	16,		//文字サイズY(ドット
+	NULL,	//表示に使用するメッセージバッファ
+	NULL,	//表示に使用するプリントユーティリティ
+	NULL,	//表示に使用するプリントキュー
+	NULL,	//表示に使用するフォントハンドル
+	
 };
 
 //============================================================================================

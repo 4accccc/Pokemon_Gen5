@@ -1743,11 +1743,11 @@ static void WFLBY_3DOBJWK_Updata_Walk( WFLBY_3DOBJWK* p_wk )
 	}
 #else
 	if( p_wk->lastanm == anm ){
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
-		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, frame+p_wk->lastframe);
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, frame+p_wk->lastframe);
 	}else{
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
-		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, frame);
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, frame);
 	}
 #endif
 }
@@ -1832,11 +1832,11 @@ static void WFLBY_3DOBJWK_Updata_Run( WFLBY_3DOBJWK* p_wk )
 	}
 #else
 	if( p_wk->lastanm == anm ){
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
-		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, frame+p_wk->lastframe);
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, frame+p_wk->lastframe);
 	}else{
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
-		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, frame);
+		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, frame);
 	}
 #endif
 }

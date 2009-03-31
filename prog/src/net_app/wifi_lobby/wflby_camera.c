@@ -42,6 +42,15 @@
 static const CAMERA_ANGLE sc_WFLBY_CAMERA_ANGLE = {		// アングル
 	-0x29fe,0,0
 };
+#else
+static const struct{
+	u16 x;
+	u16 y;
+	u16 z;
+	u16 padding;
+}sc_WFLBY_CAMERA_ANGLE = {		// アングル
+	-0x29fe,0,0
+};
 #endif	//WB_FIX
 #define WFLBY_CAMERA_TYPE		( GF_CAMERA_PERSPECTIV )// カメラのタイプ
 #define WFLBY_CAMERA_PARS		( 0x05c1 )				// パース
@@ -83,7 +92,6 @@ struct _WFLBY_CAMERA {
 WFLBY_CAMERA* WFLBY_CAMERA_Init( u32 heapID )
 {
 	WFLBY_CAMERA* p_wk;
-	VecFx32 target = {0, 0, 0};
 	VecFx32 camUp = {0, FX32_ONE, 0};
 	VecFx32 camPos = {0, 0, WFLBY_CAMERA_DIST};
 	
@@ -109,9 +117,27 @@ WFLBY_CAMERA* WFLBY_CAMERA_Init( u32 heapID )
 	//ニア・ファー設定
 	GFC_SetCameraClip( WFLBY_CAMERA_NEAR, WFLBY_CAMERA_FAR, p_wk->p_camera );
 #else
+	{//カメラ位置を注視点、距離、アングルから算出する
+		u16 angle_x;
+		//仰角⇒地面からの傾きに変換
+		angle_x = -sc_WFLBY_CAMERA_ANGLE.x;
+		/*== カメラ座標を求める ==*/
+		camPos.x = FX_Mul( FX_Mul( FX_SinIdx( sc_WFLBY_CAMERA_ANGLE.y ), WFLBY_CAMERA_DIST ), FX_CosIdx( sc_WFLBY_CAMERA_ANGLE.x ) );
+		
+		camPos.z =
+			FX_Mul(
+				FX_Mul(FX_CosIdx(sc_WFLBY_CAMERA_ANGLE.y),WFLBY_CAMERA_DIST),
+				   FX_CosIdx(sc_WFLBY_CAMERA_ANGLE.x)
+				   );
+		
+		camPos.y = FX_Mul( FX_SinIdx( angle_x ), WFLBY_CAMERA_DIST );
+
+		/*== 視点からの距離にする ==*/
+		VEC_Add(&camPos,&p_wk->target,&camPos);
+	}
 	p_wk->p_camera = GFL_G3D_CAMERA_CreatePerspective( 
 		WFLBY_CAMERA_PARS, defaultCameraAspect, WFLBY_CAMERA_NEAR, WFLBY_CAMERA_FAR, 0,
-		&camPos, &camUp, &target, heapID );
+		&camPos, &camUp, &p_wk->target, heapID );
 	GFL_G3D_CAMERA_Switching(p_wk->p_camera);
 #endif
 

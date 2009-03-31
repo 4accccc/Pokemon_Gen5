@@ -809,8 +809,17 @@ typedef struct {
 
 	// VBlankパレット転送データ
 	// VBLANK転送タスク内でのみ使用可能	その他の場所では不定値
+#if WB_FIX
 	u16					dataidx;
 	u16					heapID;
+#else
+	void				*paldata;
+	void				*paldata_sysfont;
+	void				*paldata_wazatype;
+	NNSG2dPaletteData	*nnspal;
+	NNSG2dPaletteData	*nnspal_sysfont;
+	NNSG2dPaletteData	*nnspal_wazatype;
+#endif
 } WFLBY_UNDER_WIN;
 
 //-------------------------------------
@@ -1034,7 +1043,7 @@ static const BMPMENULIST_HEADER sc_WFLBY_ROOM_YESNO_HEADER = {
 //-----------------------------------------------------------------------------
 static void WFLBY_ROOM_VBlank(GFL_TCB *tcb, void *p_work);
 
-static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID );
+static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID , u32 gheapID);
 static void WFLBY_ROOM_GraphicMain( WFLBY_GRAPHICCONT* p_sys );
 static void WFLBY_ROOM_GraphicExit( WFLBY_GRAPHICCONT* p_sys );
 static void WFLBY_ROOM_GraphicVblank( WFLBY_GRAPHICCONT* p_sys );
@@ -1078,7 +1087,7 @@ static void WFLBY_ROOM_ListWin_DeleteBmpList( WFLBY_ROOM_LISTWIN* p_wk );
 static void WFLBY_ROOM_ListWin_SetBmpListStr( WFLBY_ROOM_LISTWIN* p_wk, const STRBUF* cp_str, u32 param );
 static const  BMP_MENULIST_DATA* WFLBY_ROOM_ListWin_GetBmpList( const WFLBY_ROOM_LISTWIN* cp_wk );
 static BOOL WFLBY_ROOM_ListWin_CheckBmpListParam( const WFLBY_ROOM_LISTWIN* cp_wk, u32 param );
-static void WFLBY_ROOM_ListWin_Start( WFLBY_ROOM_LISTWIN* p_wk, const BMPMENULIST_HEADER* cp_data, WFLBY_GRAPHICCONT* p_sys, u16 list_p, u16 cursor_p, u32 heapID, u8 cx, u8 cy, u8 szcx );
+static void WFLBY_ROOM_ListWin_Start( WFLBY_ROOM_LISTWIN* p_wk, WFLBY_ROOM_DEFMSG* def_msg, const BMPMENULIST_HEADER* cp_data, WFLBY_GRAPHICCONT* p_sys, u16 list_p, u16 cursor_p, u32 heapID, u8 cx, u8 cy, u8 szcx );
 static u32 WFLBY_ROOM_ListWin_Main( WFLBY_ROOM_LISTWIN* p_wk );
 static void WFLBY_ROOM_ListWin_End( WFLBY_ROOM_LISTWIN* p_wk, u16* p_list_p, u16* p_cursor_p );
 static void WFLBY_ROOM_ListWin_CurCallBack( BMPMENULIST_WORK* p_wk,u32 param,u8 mode );
@@ -1229,8 +1238,8 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 
 	// ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOM, 0x3a000 );
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOMGRA, 0x3d000 );
-
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOMGRA, 0x50000);//0x3d000 );
+	
 	// ワーク作成
 	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WFLBY_ROOMWK), HEAPID_WFLBY_ROOM );
 	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_ROOMWK) );
@@ -1260,7 +1269,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	p_wk->tcblsys = GFL_TCBL_Init( HEAPID_WFLBY_ROOM, HEAPID_WFLBY_ROOM, 4, 32 );
 	
 	// グラフィックシステム初期化
-	WFLBY_ROOM_GraphicInit( &p_wk->graphic, p_param->p_save, HEAPID_WFLBY_ROOM );
+	WFLBY_ROOM_GraphicInit( &p_wk->graphic, p_param->p_save, HEAPID_WFLBY_ROOM, HEAPID_WFLBY_ROOMGRA );
 
 	// マップ管理システム作成
 	p_wk->p_mapcont = WFLBY_MAPCONT_Init( HEAPID_WFLBY_ROOM );
@@ -2273,7 +2282,7 @@ BOOL WFLBY_ROOM_LISTWIN_CheckBmpListParam( const WFLBY_ROOMWK* cp_wk, u32 param 
 //-----------------------------------------------------------------------------
 void WFLBY_ROOM_LISTWIN_Start( WFLBY_ROOMWK* p_wk, const BMPMENULIST_HEADER* cp_data, u16 list_p, u16 cursor_p )
 {
-	WFLBY_ROOM_ListWin_Start( &p_wk->listwin, cp_data, &p_wk->graphic, list_p, cursor_p, HEAPID_WFLBY_ROOM, WFLBY_LISTWIN_X, WFLBY_LISTWIN_Y, WFLBY_LISTWIN_SIZX );
+	WFLBY_ROOM_ListWin_Start( &p_wk->listwin, &p_wk->def_msg, cp_data, &p_wk->graphic, list_p, cursor_p, HEAPID_WFLBY_ROOM, WFLBY_LISTWIN_X, WFLBY_LISTWIN_Y, WFLBY_LISTWIN_SIZX );
 }
 
 
@@ -2292,7 +2301,7 @@ void WFLBY_ROOM_LISTWIN_Start( WFLBY_ROOMWK* p_wk, const BMPMENULIST_HEADER* cp_
 //-----------------------------------------------------------------------------
 extern void WFLBY_ROOM_LISTWIN_Start_Ex( WFLBY_ROOMWK* p_wk, const BMPMENULIST_HEADER* cp_data, u16 list_p, u16 cursor_p, u8 cx, u8 cy, u8 szcx )
 {
-	WFLBY_ROOM_ListWin_Start( &p_wk->listwin, cp_data, &p_wk->graphic, list_p, cursor_p, HEAPID_WFLBY_ROOM, cx, cy, szcx );
+	WFLBY_ROOM_ListWin_Start( &p_wk->listwin, &p_wk->def_msg, cp_data, &p_wk->graphic, list_p, cursor_p, HEAPID_WFLBY_ROOM, cx, cy, szcx );
 }
 
 //----------------------------------------------------------------------------
@@ -2419,7 +2428,7 @@ void WFLBY_ROOM_SUBWIN_ClearRect( WFLBY_ROOMWK* p_wk, u16 x, u16 y, u16 sx, u16 
 //-----------------------------------------------------------------------------
 void WFLBY_ROOM_YESNOWIN_Start( WFLBY_ROOMWK* p_wk )
 {
-	WFLBY_ROOM_ListWin_Start( &p_wk->listwin, &p_wk->yesnowin.bmplist, &p_wk->graphic, 
+	WFLBY_ROOM_ListWin_Start( &p_wk->listwin, &p_wk->def_msg, &p_wk->yesnowin.bmplist, &p_wk->graphic, 
 			0, 0, HEAPID_WFLBY_ROOM, 25, 13, 6 );
 }
 
@@ -2432,7 +2441,7 @@ void WFLBY_ROOM_YESNOWIN_Start( WFLBY_ROOMWK* p_wk )
 //-----------------------------------------------------------------------------
 void WFLBY_ROOM_YESNOWIN_StartNo( WFLBY_ROOMWK* p_wk )
 {
-	WFLBY_ROOM_ListWin_Start( &p_wk->listwin, &p_wk->yesnowin.bmplist, &p_wk->graphic, 
+	WFLBY_ROOM_ListWin_Start( &p_wk->listwin, &p_wk->def_msg, &p_wk->yesnowin.bmplist, &p_wk->graphic, 
 			0, WFLBY_ROOM_YESNO_NO, HEAPID_WFLBY_ROOM, 25, 13, 6 );
 }
 
@@ -2969,7 +2978,7 @@ static void WFLBY_ROOM_VBlank(GFL_TCB *tcb, void *p_work)
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID )
+static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID , u32 gheapID)
 {
 
 	// 半透明レジスタOFF
@@ -3128,7 +3137,7 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 	// 3D設定
 	{
 		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
-						0x1000, heapID, WFLBY_ROOM_DrawSys3DSetUp);
+						0x1000, gheapID, WFLBY_ROOM_DrawSys3DSetUp);
 		GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 	}
 }
@@ -4279,7 +4288,7 @@ static BOOL WFLBY_ROOM_ListWin_CheckBmpListParam( const WFLBY_ROOM_LISTWIN* cp_w
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_ListWin_Start( WFLBY_ROOM_LISTWIN* p_wk, const BMPMENULIST_HEADER* cp_data, WFLBY_GRAPHICCONT* p_sys, u16 list_p, u16 cursor_p, u32 heapID, u8 cx, u8 cy, u8 szcx )
+static void WFLBY_ROOM_ListWin_Start( WFLBY_ROOM_LISTWIN* p_wk, WFLBY_ROOM_DEFMSG* def_msg, const BMPMENULIST_HEADER* cp_data, WFLBY_GRAPHICCONT* p_sys, u16 list_p, u16 cursor_p, u32 heapID, u8 cx, u8 cy, u8 szcx )
 {
 	GF_ASSERT( p_wk->p_listwk == NULL );
 	// サイズが間に合っているかチェック
@@ -4303,6 +4312,12 @@ static void WFLBY_ROOM_ListWin_Start( WFLBY_ROOM_LISTWIN* p_wk, const BMPMENULIS
 	PRINT_UTIL_Setup( &p_wk->printUtil, p_wk->win );
 	p_wk->data.win	= p_wk->win;
 	p_wk->data.print_util = &p_wk->printUtil;
+	if(p_wk->data.print_que == NULL){
+		p_wk->data.print_que = def_msg->printQue;
+	}
+	if(p_wk->data.font_handle == NULL){
+		p_wk->data.font_handle = def_msg->fontHandle_system;
+	}
 
 	// クリーン
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
@@ -5662,8 +5677,22 @@ static void WFLBY_ROOM_UNDERWIN_SetBttnStop( WFLBY_UNDER_WIN* p_wk, BOOL stop )
 //-----------------------------------------------------------------------------
 static void WFLBY_ROOM_UNDERWIN_PalTrans( WFLBY_UNDER_WIN* p_wk, WFLBY_GRAPHICCONT* p_sys, u32 dataidx, u32 heapID )
 {
+#if WB_FIX
 	p_wk->dataidx	= dataidx;
 	p_wk->heapID	= heapID;
+#else
+	GF_ASSERT(p_wk->paldata == NULL);
+	GF_ASSERT(p_wk->paldata_sysfont == NULL);
+	GF_ASSERT(p_wk->paldata_wazatype == NULL);
+	
+	p_wk->paldata = GFL_ARCHDL_UTIL_LoadPalette(
+		p_wk->p_handle, dataidx, &p_wk->nnspal, GFL_HEAP_LOWID(heapID));
+	p_wk->paldata_sysfont = GFL_ARC_UTIL_LoadPalette(
+		ARCID_FONT, NARC_font_default_nclr, &p_wk->nnspal_sysfont, GFL_HEAP_LOWID(heapID));
+	p_wk->paldata_wazatype = GFL_ARC_UTIL_LoadPalette(WazaTypeIcon_ArcIDGet(), 
+		WazaTypeIcon_PlttIDGet(), &p_wk->nnspal_wazatype, GFL_HEAP_LOWID(heapID));
+#endif
+
 	// タスク生成
 	GFUser_VIntr_CreateTCB( WFLBY_ROOM_UNDERWIN_PalTransVTcb, p_wk, 0 );
 }
@@ -5682,23 +5711,43 @@ static void WFLBY_ROOM_UNDERWIN_PalTransVTcb( GFL_TCB* p_tcb, void* p_work )
 	
 	// バックグラウンド
 	{
+	#if WB_FIX
 		// カラーパレット
 		GFL_ARCHDL_UTIL_TransVramPalette( p_wk->p_handle, 
 				p_wk->dataidx, 
 				PALTYPE_SUB_BG, 0, 
 				0, p_wk->heapID );
+	#else
+		GXS_LoadBGPltt(p_wk->nnspal->pRawData, 0, p_wk->nnspal->szByte);
+	#endif
 	}
 
 	//  文字書き込み用
 	{
+	#if WB_FIX
 		SystemFontPaletteLoad( PALTYPE_SUB_BG, WFLBY_ROOM_BGSPL_FONTCL*32, p_wk->heapID );
+	#else
+		GXS_LoadBGPltt(p_wk->nnspal_sysfont->pRawData, WFLBY_ROOM_BGSPL_FONTCL*32, 0x20);
+	#endif
 	}
 
 	// 技タイプ書き込み用パレット
 	{
+	#if WB_FIX
 		GFL_ARC_UTIL_TransVramPalette( WazaTypeIcon_ArcIDGet(), 
-				WazaTypeIcon_PlttIDGet(), PALTYPE_SUB_BG, WFLBY_ROOM_BGSPL_WAZATYPE0*32, 3*32, p_wk->heapID );
+				WazaTypeIcon_PlttIDGet(), PALTYPE_SUB_BG, 
+				WFLBY_ROOM_BGSPL_WAZATYPE0*32, 3*32, p_wk->heapID );
+	#else
+		GXS_LoadBGPltt(p_wk->nnspal_wazatype->pRawData, WFLBY_ROOM_BGSPL_WAZATYPE0*32, 0x20*3);
+	#endif
 	}
+	
+	GFL_HEAP_FreeMemory(p_wk->paldata);
+	GFL_HEAP_FreeMemory(p_wk->paldata_sysfont);
+	GFL_HEAP_FreeMemory(p_wk->paldata_wazatype);
+	p_wk->paldata = NULL;
+	p_wk->paldata_sysfont = NULL;
+	p_wk->paldata_wazatype = NULL;
 
 	// タスク破棄
 	GFL_TCB_DeleteTask( p_tcb );
