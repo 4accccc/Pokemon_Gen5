@@ -122,22 +122,22 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, BOOL egg )
 		if( mons == MONSNO_MINOMUTTI ){
 			return ( NARC_poke_icon_poke_icon_455_01_NCGR + form_no - 1 );
 		}
-		if( mons == MONSNO_MINOMESU ){
+		if( mons == MONSNO_MINOMADAMU ){
 			return ( NARC_poke_icon_poke_icon_457_01_NCGR + form_no - 1 );
 		}
-		if( mons == MONSNO_SIIUSI ){
+		if( mons == MONSNO_KARANAKUSI ){
 			return ( NARC_poke_icon_poke_icon_458_01_NCGR + form_no - 1 );
 		}
-		if( mons == MONSNO_SIIDORUGO ){
+		if( mons == MONSNO_TORITODON ){
 			return ( NARC_poke_icon_poke_icon_459_01_NCGR + form_no - 1 );
 		}
-		if( mons == MONSNO_KIMAIRAN ){
+		if( mons == MONSNO_GIRATHINA ){
 			return ( NARC_poke_icon_poke_icon_509_01_NCGR + form_no - 1 );
 		}
-		if( mons == MONSNO_EURISU ){
+		if( mons == MONSNO_SHEIMI ){
 			return ( NARC_poke_icon_poke_icon_516_01_NCGR + form_no - 1 );
 		}
-		if( mons == MONSNO_PURAZUMA ){
+		if( mons == MONSNO_ROTOMU ){
 			return ( NARC_poke_icon_poke_icon_519_01_NCGR + form_no - 1 );
 		}
 	}
@@ -166,12 +166,12 @@ u16 POKEICON_GetCgxForm( const POKEMON_PASO_PARAM* ppp )
 	case MONSNO_ANNOON:
 	case MONSNO_DEOKISISU:
 	case MONSNO_MINOMUTTI:
-	case MONSNO_MINOMESU:
-	case MONSNO_SIIUSI:
-	case MONSNO_SIIDORUGO:
-	case MONSNO_KIMAIRAN:
-	case MONSNO_EURISU:
-	case MONSNO_PURAZUMA:
+	case MONSNO_MINOMADAMU:
+	case MONSNO_KARANAKUSI:
+	case MONSNO_TORITODON:
+	case MONSNO_GIRATHINA:
+	case MONSNO_SHEIMI:
+	case MONSNO_ROTOMU:
 		return PPP_Get( (POKEMON_PASO_PARAM*)ppp, ID_PARA_form_no, NULL );
 
 	default:
@@ -208,17 +208,17 @@ const u8 POKEICON_GetPalNum( u32 mons, u32 form, BOOL egg )
 			mons = POKEICON_GetANNOON + form - 1;
 		}else if( mons == MONSNO_MINOMUTTI ){
 			mons = POKEICON_GetMINOMUTTI + form - 1;
-		}else if( mons == MONSNO_MINOMESU ){
+		}else if( mons == MONSNO_MINOMADAMU ){
 			mons = POKEICON_GetMINOMESU + form - 1;
-		}else if( mons == MONSNO_SIIUSI ){
+		}else if( mons == MONSNO_KARANAKUSI ){
 			mons = POKEICON_GetSIIUSI + form - 1;
-		}else if( mons == MONSNO_SIIDORUGO ){
+		}else if( mons == MONSNO_TORITODON ){
 			mons = POKEICON_GetSIIDORUGO + form - 1;
-		}else if( mons == MONSNO_KIMAIRAN ){
+		}else if( mons == MONSNO_GIRATHINA ){
 			mons = POKEICON_GetGIRATHINA + form - 1;
-		}else if( mons == MONSNO_EURISU ){
+		}else if( mons == MONSNO_SHEIMI ){
 			mons = POKEICON_GetSHEIMI + form - 1;
-		}else if( mons == MONSNO_PURAZUMA ){
+		}else if( mons == MONSNO_ROTOMU ){
 			mons = POKEICON_GetROTOMU + form - 1;
 		}
 	}
