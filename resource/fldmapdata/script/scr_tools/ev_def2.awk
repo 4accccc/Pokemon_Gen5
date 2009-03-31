@@ -22,7 +22,7 @@
 		#next
 	#}
 
-	print "awk -f ev_def.awk " name
+	print "awk -f ./scr_tools/ev_def.awk " name
 }
 
 

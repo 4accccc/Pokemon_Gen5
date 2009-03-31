@@ -15,7 +15,7 @@ BEGIN{
 	#スクリプトオフセット定義ファイル読み込み
 	#
 	#=================================================================
-	SCR_OFFSET_H = "../../../prog/src/field/scriptid_offset.h"
+	SCR_OFFSET_H = "../../../prog/src/field/script_offset_id.h"
 
 	offset_i = 0
 

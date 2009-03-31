@@ -1,1 +1,1 @@
-awk -f dummy.awk dummy.txt
+awk -f ./scr_tools/dummy.awk ./scr_tools/dummy.txt

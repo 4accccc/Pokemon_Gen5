@@ -16,37 +16,48 @@ DEPENDHEADERS = usescript.h
 
 #SCRSRCS
 include	scrfile.lst
+#SCRSRCS_BIN
+SCRSRCS_BIN = $(SCRSRCS:.ev=.bin)
+
 #MSGLIST
-include msg_list
+#include msg_list
 
 #MWAS,MWLD
 include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
 include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
+
+#ModuleÉãÅ[Éã
+include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
+
+#eventdata WB NULL
+#IPATH	=	-I../eventdata
 
 #target
 TARGET_DIR = $(PROJECT_ROOT)/prog/arc/fieldmap
 TARGET_NARC = script_seq.narc
 TARGET_NAIX = $(TARGET_NARC:.narc=.naix)
 
+#----------------------------------------------------------------------------
+#	clean
+#----------------------------------------------------------------------------
 #MakeÇ≈ê∂ê¨Ç≥ÇÍÇÈ*.bin/*.narcÇÕmake cleanÇÃçÌèúëŒè€Ç…Ç∑ÇÈ
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
-LDIRT_CLEAN	= $(SCRSRCS:.ev=.bin) $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX) $(TARGET_NARC)
+LDIRT_CLEAN	= $(SCRSRCS_BIN) $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX) $(TARGET_NARC)
 else
 LDIRT_CLEAN	= $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX)
 endif
 
-#WB NULL
-#IPATH	=	-I../eventdata
-
 #----------------------------------------------------------------------------
-
-include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
-
+#	make
+#----------------------------------------------------------------------------
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
-do-build: $(SCRSRCS:.ev=.bin)
+#*.ev
+do-build: $(SCRSRCS_BIN)
 
-#common_scr.bin:	../../../include/msgdata/msg_common_scr.h
+#common_scr.bin
+#common_scr.bin: ../../../include/msgdata/msg_common_scr.h
 
+#*.bin
 %.bin: %.ev $(DEPENDHEADERS)
 	@echo $<
 	@cp $< temp_$*.s
@@ -54,15 +65,9 @@ do-build: $(SCRSRCS:.ev=.bin)
 	@$(MWLD) -dis -o $*.elf $*.o
 	@elf2bin $*.elf
 	@rm $*.o $*.elf temp_$*.s
-endif
+endif #CONVERTUSER
 
-#	@echo $<
-#	@cp $< temp_$*.s
-#	@$(MWAS) $(IPATH) temp_$*.s -o $*.o
-#	@$(MWLD) -dis -o $*.elf $*.o
-#	@elf2bin $*.elf
-#	@rm $*.o $*.elf temp_$*.s
-
+#narc
 do-build: $(TARGET_DIR)/$(TARGET_NARC)
 
 $(TARGET_DIR)/$(TARGET_NARC): $(TARGET_NARC)
@@ -70,19 +75,28 @@ $(TARGET_DIR)/$(TARGET_NARC): $(TARGET_NARC)
 	$(COPY) $(TARGET_NAIX) $(TARGET_DIR)
 
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
-$(TARGET_NARC): $(SCRSRCS:.ev=.bin)
-	nnsarc -i -c -l -n $(TARGET_NARC) $(SCRSRCS:.ev=.bin) > arc_result.txt
+$(TARGET_NARC): $(SCRSRCS_BIN)
+	nnsarc -i -c -l -n $(TARGET_NARC) $(SCRSRCS_BIN) > arc_result.txt
 	$(NAIXCUT) $(TARGET_NAIX)
 endif
 
+#----------------------------------------------------------------------------
+#	mklst
+#----------------------------------------------------------------------------
 mklst:
 	ls -1 *.ev > temp_$*
 	listmk temp_$* scrfile.lst SCRSRCS
 	rm temp_$*
 
-mkmsglist:
-	cat $(MSGLIST) > msglist.h
+#----------------------------------------------------------------------------
+#	msglist
+#----------------------------------------------------------------------------
+#mkmsglist:
+#	cat $(MSGLIST) > msglist.h
 
+#----------------------------------------------------------------------------
+#	diff
+#----------------------------------------------------------------------------
 diff:
 	-cp $(TARGET_NARC) old.narc
 	$(MAKE)
