@@ -71,7 +71,6 @@ int GFL_NET_DWC_CheckFriendByToken(DWCFriendData *data, int *index)
 //==============================================================================
 /**
  * すでに同じ人が登録されていないか。
- * @param   pSaveData フレンド関係がはいっているセーブデータ
  * @param   index 同じデータが見つかったときの、その場所。
  * @param         見つからない場合は空いているところを返す
  * @param         どこも空いていない場合は、-1 
@@ -80,7 +79,7 @@ int GFL_NET_DWC_CheckFriendByToken(DWCFriendData *data, int *index)
  * @retval  DWCFRIEND_INVALID … 受け取ったfriend_keyaが正しくない。
  */
 //==============================================================================
-int dwc_checkFriendCodeByToken( u64 friend_key, int *index)
+int GFL_NET_DWC_CheckFriendCodeByToken( u64 friend_key, int *index)
 {
 	// すでに同じ人が登録していないか検索
 	int i;
