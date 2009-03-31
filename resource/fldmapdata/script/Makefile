@@ -42,7 +42,7 @@ TARGET_NAIX = $(TARGET_NARC:.narc=.naix)
 #----------------------------------------------------------------------------
 #MakeÇ≈ê∂ê¨Ç≥ÇÍÇÈ*.bin/*.narcÇÕmake cleanÇÃçÌèúëŒè€Ç…Ç∑ÇÈ
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
-LDIRT_CLEAN	= $(SCRSRCS_BIN) $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX) $(TARGET_NARC)
+LDIRT_CLEAN	= $(SCRSRCS_BIN) $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX) $(TARGET_NARC) $(TARGET_NAIX)
 else
 LDIRT_CLEAN	= $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX)
 endif
