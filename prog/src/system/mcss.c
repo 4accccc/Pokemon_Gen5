@@ -72,9 +72,12 @@ void			MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 void			MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 void			MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale );
 void			MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale );
+void			MCSS_GetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
+void			MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
 void			MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale );
 void			MCSS_SetMepachiFlag( MCSS_WORK *mcss );
 void			MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
+void			MCSS_FlipMepachiFlag( MCSS_WORK *mcss );
 void			MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
 void			MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
 int				MCSS_GetVanishFlag( MCSS_WORK *mcss );
@@ -215,6 +218,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	NNSG2dAnimSequenceData		*anim;
 	VecFx32						pos,anim_pos;
 	MtxFx44						inv_camera;
+	u16							rotate;
 
 	G3_PushMtx();
 	G3_MtxMode( GX_MTXMODE_PROJECTION );
@@ -333,8 +337,10 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				G3_MultMtx44( &inv_camera );
 			}
 
+			rotate = mcss->rotate.z >> FX32_SHIFT;
+
 			G3_Translate( anim_pos.x, anim_pos.y, 0 );
-			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ ), FX_CosIdx( anim_SRT_mc.rotZ ) );
+			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ + rotate ), FX_CosIdx( anim_SRT_mc.rotZ + rotate ) );
 			G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->scale.y ), FX32_ONE );
 
 			G3_StoreMtx( MCSS_NORMAL_MTX );
@@ -348,7 +354,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			//影用の回転
 			G3_RotX( FX_SinIdx( 65536 / 64 * 49 ), FX_CosIdx( 65536 / 64 * 49 ) );
 			G3_Translate( MCSS_CONST( anim_SRT_mc.px ), MCSS_CONST( -anim_SRT_mc.py ), 0 );
-			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ ), FX_CosIdx( anim_SRT_mc.rotZ ) );
+			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ + rotate ), FX_CosIdx( anim_SRT_mc.rotZ + rotate ) );
 			G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->shadow_scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->shadow_scale.y ), FX32_ONE );
 
 			G3_StoreMtx( MCSS_SHADOW_MTX );
@@ -517,7 +523,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 				   GX_CULL_NONE,					// cull back
 				   0,								// polygon ID(0 - 63)
 				   31,								// alpha(0 - 31)
-				   0								// OR of GXPolygonAttrMisc's value
+				   GX_POLYGON_ATTR_MISC_FOG			// OR of GXPolygonAttrMisc's value
 				   );
 
 	//マルチセルデータから取得した位置で書き出し
@@ -557,7 +563,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 				   GX_CULL_NONE,					// cull back
 				   1,								// polygon ID(0 - 63)
 				   15,								// alpha(0 - 31)
-				   0								// OR of GXPolygonAttrMisc's value
+				   GX_POLYGON_ATTR_MISC_FOG			// OR of GXPolygonAttrMisc's value
 				   );
 
 	G3_Translate( pos.x, pos.y, 0 );
@@ -707,6 +713,30 @@ void	MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale )
 
 //--------------------------------------------------------------------------
 /**
+ * ローテートゲット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_GetRotate( MCSS_WORK *mcss, VecFx32 *rotate )
+{
+	rotate->x = mcss->rotate.x;
+	rotate->y = mcss->rotate.y;
+	rotate->z = mcss->rotate.z;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * ローテートセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate )
+{
+	mcss->rotate.x = rotate->x;
+	mcss->rotate.y = rotate->y;
+	mcss->rotate.z = rotate->z;
+}
+
+//--------------------------------------------------------------------------
+/**
  * 影描画用スケールセット
  */
 //--------------------------------------------------------------------------
@@ -735,6 +765,16 @@ void	MCSS_SetMepachiFlag( MCSS_WORK *mcss )
 void	MCSS_ResetMepachiFlag( MCSS_WORK *mcss )
 {
 	mcss->mepachi_flag = MCSS_MEPACHI_OFF;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * メパチフラグフリップ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_FlipMepachiFlag( MCSS_WORK *mcss )
+{
+	mcss->mepachi_flag ^= MCSS_MEPACHI_ON;
 }
 
 //--------------------------------------------------------------------------
