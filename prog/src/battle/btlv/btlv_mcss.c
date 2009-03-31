@@ -39,11 +39,15 @@ struct _BTLV_MCSS_WORK
 	GFL_TCBSYS				*tcb_sys;
 	MCSS_SYS_WORK			*mcss_sys;
 	MCSS_WORK				*mcss[ BTLV_MCSS_POS_MAX ];
+
 	u8						poke_mcss_ortho_mode			:1;
 	u8														:7;
 	u8						poke_mcss_tcb_move_execute;
 	u8						poke_mcss_tcb_scale_execute;
 	u8						poke_mcss_tcb_rotate_execute;
+
+	u8						poke_mcss_tcb_blink_execute;
+	u8						dummy;								//padding
 	HEAPID					heapID;
 };
 
@@ -91,6 +95,7 @@ void			BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
 void			BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *pos, int frame, int wait, int count );
 void			BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *scale, int frame, int wait, int count );
 void			BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *rotate, int frame, int wait, int count );
+void			BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count );
 BOOL			BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
 BOOL			BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position );
 
@@ -101,6 +106,7 @@ static	void	BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int type
 static	void	TCB_BTLV_MCSS_Move( GFL_TCB *tcb, void *work );
 static	void	TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work );
 static	void	TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work );
+static	void	TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work );
 
 //============================================================================================
 /**
@@ -311,7 +317,10 @@ void	BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw )
 void	BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag )
 {
 	GF_ASSERT( bmw->mcss[ position ] != NULL );
-	if( flag == BTLV_MCSS_MEPACHI_ON ){
+	if( flag == BTLV_MCSS_MEPACHI_FLIP ){
+		MCSS_FlipMepachiFlag( bmw->mcss[ position ] );
+	}
+	else if( flag == BTLV_MCSS_MEPACHI_ON ){
 		MCSS_SetMepachiFlag( bmw->mcss[ position ] );
 	}
 	else{
@@ -482,9 +491,9 @@ void	BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *
  *
  * @param[in]	bmw			BTLV_MCSS管理ワークへのポインタ
  * @param[in]	position	回転するポケモンの立ち位置
- * @param[in]	rotate_type	回転タイプ
- * @param[in]	scale		回転タイプにより意味が変化
- *							EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION	最終的なスケール値
+ * @param[in]	type		回転タイプ
+ * @param[in]	rotate		回転タイプにより意味が変化
+ *							EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION	最終的な回転値
  *							EFFTOOL_CALCTYPE_ROUNDTRIP　往復の長さ
  * @param[in]	frame		回転フレーム数（設定した回転値まで何フレームで到達するか）
  * @param[in]	wait		回転ウエイト
@@ -493,14 +502,47 @@ void	BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *
 //============================================================================================
 void	BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *rotate, int frame, int wait, int count )
 {
-	//未実装
-#if 0
 	VecFx32	start;
 
 	MCSS_GetRotate( bmw->mcss[ position ], &start );
 	BTLV_MCSS_TCBInitialize( bmw, position, type, &start, rotate, frame, wait, count, TCB_BTLV_MCSS_Rotate );
 	bmw->poke_mcss_tcb_rotate_execute |= BTLV_EFFTOOL_Pos2Bit( position );
-#endif
+}
+
+//============================================================================================
+/**
+ *	ポケモンまばたき
+ *
+ * @param[in]	bmw			BTLV_MCSS管理ワークへのポインタ
+ * @param[in]	position	まばたきるポケモンの立ち位置
+ * @param[in]	type		まばたきイプ
+ * @param[in]	wait		まばたきウエイト
+ * @param[in]	count		まばたきカウント
+ */
+//============================================================================================
+void	BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count )
+{
+	BTLV_MCSS_TCB_WORK	*pmtw = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_TCB_WORK ) );
+
+	pmtw->bmw				= bmw;
+	pmtw->position			= position;
+	pmtw->emw.move_type		= type;
+	pmtw->emw.wait			= 0;
+	pmtw->emw.wait_tmp		= wait;
+	pmtw->emw.count			= count * 2;	//閉じて開くを1回とカウントするために倍しておく
+
+	switch( type ){
+	case BTLEFF_MEPACHI_ON:
+		BTLV_MCSS_SetMepachiFlag( bmw, position, BTLV_MCSS_MEPACHI_ON );
+		break;
+	case BTLEFF_MEPACHI_OFF:
+		BTLV_MCSS_SetMepachiFlag( bmw, position, BTLV_MCSS_MEPACHI_OFF );
+		break;
+	case BTLEFF_MEPACHI_MABATAKI:
+		GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_Blink, pmtw, 0 );
+		bmw->poke_mcss_tcb_blink_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+		break;
+	}
 }
 
 //============================================================================================
@@ -517,7 +559,8 @@ BOOL	BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position )
 {
 	return ( ( bmw->poke_mcss_tcb_move_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
 			 ( bmw->poke_mcss_tcb_scale_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
-			 ( bmw->poke_mcss_tcb_rotate_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) );
+			 ( bmw->poke_mcss_tcb_rotate_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
+			 ( bmw->poke_mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) );
 }
 
 //============================================================================================
@@ -670,21 +713,42 @@ static	void	TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work )
 //============================================================================================
 static	void	TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work )
 {
-	//未実装
-#if 0
 	BTLV_MCSS_TCB_WORK	*pmtw = ( BTLV_MCSS_TCB_WORK * )work;
 	BTLV_MCSS_WORK *bmw = pmtw->bmw;
 	VecFx32	now_rotate;
 	BOOL	ret;
 
 	MCSS_GetRotate( bmw->mcss[ pmtw->position ], &now_rotate );
-	ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_scale );
+	ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_rotate );
 	MCSS_SetRotate( bmw->mcss[ pmtw->position ], &now_rotate );
 	if( ret == TRUE ){
 		bmw->poke_mcss_tcb_rotate_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ 0xff );
 		GFL_HEAP_FreeMemory( work );
 		GFL_TCB_DeleteTask( tcb );
 	}
-#endif
+}
+
+//============================================================================================
+/**
+ *	ポケモンまばたきタスク
+ */
+//============================================================================================
+static	void	TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
+{
+	BTLV_MCSS_TCB_WORK	*pmtw = ( BTLV_MCSS_TCB_WORK * )work;
+	BTLV_MCSS_WORK *bmw = pmtw->bmw;
+
+	if( pmtw->emw.wait == 0 ){
+		pmtw->emw.wait = pmtw->emw.wait_tmp;
+		BTLV_MCSS_SetMepachiFlag( pmtw->bmw, pmtw->position, BTLV_MCSS_MEPACHI_FLIP );
+		if( --pmtw->emw.count == 0 ){
+			bmw->poke_mcss_tcb_blink_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ 0xff );
+			GFL_HEAP_FreeMemory( work );
+			GFL_TCB_DeleteTask( tcb );
+		}
+	}
+	else{
+		pmtw->emw.wait--;
+	}
 }
 

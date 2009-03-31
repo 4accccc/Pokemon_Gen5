@@ -455,8 +455,6 @@ static VMCMD_RESULT	EC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT	EC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
 {
-	//未実装
-#if 0
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	int		position;
 	int		type;
@@ -479,7 +477,6 @@ static VMCMD_RESULT	EC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
 
 		BTLV_MCSS_MoveRotate( BTLV_EFFECT_GetMcssWork(), position, type, &rotate, frame, wait, count );
 	}
-#endif
 
 	return VMCMD_RESULT_SUSPEND;
 }
@@ -494,6 +491,26 @@ static VMCMD_RESULT	EC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT	EC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_work )
 {
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	int		position;
+	int		type;
+	int		wait;
+	int		count;
+
+	position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+
+	//立ち位置情報がエラーのときは、コマンド実行しない
+	if( position != BTLV_MCSS_POS_ERROR ){
+		type	   = ( int )VMGetU32( vmh );
+		wait	   = ( int )VMGetU32( vmh );
+		count	   = ( int )VMGetU32( vmh );
+		//GF_ASSERT( count != 0 );
+		if( count == 0 ){
+			count = 1;
+		}
+		BTLV_MCSS_MoveBlink( BTLV_EFFECT_GetMcssWork(), position, type, wait, count );
+	}
+
 	return VMCMD_RESULT_SUSPEND;
 }
 
@@ -507,6 +524,19 @@ static VMCMD_RESULT	EC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_wo
 //============================================================================================
 static VMCMD_RESULT	EC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work )
 {
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	int		position;
+	int		flag;
+
+	position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+
+	//立ち位置情報がエラーのときは、コマンド実行しない
+	if( position != BTLV_MCSS_POS_ERROR ){
+		flag	   = ( int )VMGetU32( vmh );
+
+		BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), position, flag );
+	}
+
 	return VMCMD_RESULT_SUSPEND;
 }
 
@@ -811,13 +841,14 @@ static	void	EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 #if 0
 		VEC_Normalize( &dst, &dst );
 		VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
-#endif
+#else
 //ベクトルから角度を求めて方向を計算するバージョン
 		OS_TPrintf("angle:%08x\n",FX_Atan2Idx( dst.z, dst.x ));
 		dir.x = FX_CosIdx( FX_Atan2Idx( dst.z, dst.x ) );
 		dir.y = 0;
 		dir.z = FX_SinIdx( FX_Atan2Idx( dst.z, dst.x ) );
 		OS_TPrintf("dir_x:%08x dir_y:%08x dir_z:%08x\n",dir.x,dir.y,dir.z);
+#endif
 
 		GFL_PTC_SetEmitterAxis( emit, &dir );
 	}

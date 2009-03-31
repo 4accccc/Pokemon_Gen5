@@ -48,6 +48,7 @@ typedef enum{
 
 #define	BTLV_MCSS_MEPACHI_ON	( MCSS_MEPACHI_ON )
 #define	BTLV_MCSS_MEPACHI_OFF	( MCSS_MEPACHI_OFF )
+#define	BTLV_MCSS_MEPACHI_FLIP	( MCSS_MEPACHI_FLIP )
 #define	BTLV_MCSS_ANM_STOP_ON	( MCSS_ANM_STOP_ON )
 #define	BTLV_MCSS_ANM_STOP_OFF	( MCSS_ANM_STOP_OFF )
 #define	BTLV_MCSS_VANISH_ON		( MCSS_VANISH_ON )
@@ -73,6 +74,8 @@ extern	void			BTLV_MCSS_GetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *sc
 extern	void			BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
 extern	void			BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int move_type, VecFx32 *pos, int frame, int wait, int count );
 extern	void			BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int move_type, VecFx32 *scale, int frame, int wait, int count );
+extern	void			BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *rotate, int frame, int wait, int count );
+extern	void			BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count );
 extern	BOOL			BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
 extern	BOOL			BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position );
 
