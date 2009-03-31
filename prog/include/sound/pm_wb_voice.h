@@ -29,6 +29,15 @@ typedef struct {
 	PERAPVOICE*	perapVoice;
 }PMV_REF;
 
+//------------------------------------------------------------------
+/**
+ * @brief	pan（定位）設定定義(左:0 - 64 - 127:右)
+ */
+//------------------------------------------------------------------
+#define PMV_PAN_L (0)
+#define PMV_PAN_C (64)
+#define PMV_PAN_R (127)
+
 //============================================================================================
 /**
  * @brief	波形ＩＤＸ取得コールバック
@@ -47,45 +56,159 @@ extern BOOL	PMV_CustomVoiceWave( u32, u32, u32, void**, u32*, int*, int* );
  * @brief	参照データ作成（自分のぺラップ用データより）
  */
 //============================================================================================
-extern void PMV_MakeRefData( PMV_REF* pmvRef );
+extern void PMV_MakeRefDataMine( PMV_REF* pmvRef );
+
+
+
+
 
 //============================================================================================
 /**
- * @brief	鳴き声インライン関数
+ *
+ * @brief	鳴き声操作インライン関数
+ *
  */
 //============================================================================================
-// 通常（既存waveのみ使用）
-inline void PMV_PlayVoice( u32 pokeNum, u32 formNum ){
-		PMVOICE_Play(pokeNum, formNum, 64, FALSE, 0, 0, FALSE, 0);
+// 停止（再生中の全鳴き声が対象）
+inline void PMV_StopVoice( void ){ PMVOICE_Reset(); }
+
+// 終了検出（再生中の全鳴き声が対象）
+inline void PMV_CheckPlay( void ){ PMVOICE_CheckBusy(); }
+
+
+//============================================================================================
+/**
+ * @brief	鳴き声再生インライン関数
+ *
+ *	※インライン関数として３種
+ *	　・無印		：すべて波形データを再生
+ *	　・_forMine	：セーブデータの内容を参照して再生（手持ちポケモンを想定）
+ *	　・_forMulti	：外部から渡された内容を参照して再生（マルチプレイを想定）
+ *	があり。
+ *
+ *	それぞれ
+ *	　・無印		：通常再生
+ *	　・_Pan		：定位設定をして再生
+ *	　・_Chorus		：コーラス設定をして再生
+ *	　・_Reverse	：逆再生
+ *	　・_Custom		：フルカスタマイズ
+ *	となっている。
+ *			
+ *	引数説明
+ *	　・pokeNo		：ポケモンナンバー
+ *	　・formNo		：ポケモンフォームナンバー
+ *	　・pan			：定位(左:0 - 64 - 127:右)
+ *	　・chorus		：コーラス使用フラグ
+ *	　・ch_vol		：コーラスボリューム差(0 = 元の波形との差分なし)
+ *	　・ch_spd		：再生速度差(0 = 元の波形との差分なし)
+ *	　・reverse		：逆再生フラグ
+ *	　・pmvRef		：参照データ
+ */
+//============================================================================================
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	無印
+ */
+//--------------------------------------------------------------------------------------------
+inline void PMV_PlayVoice( u32 pokeNo, u32 formNo )
+{
+	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, FALSE, 0);
 }
-
-// 手持ちポケモン用再生（参照データは自分のセーブデータ）
-inline void PMV_PlayVoiceMine( u32 pokeNum, u32 formNum ){
-		PMV_REF pmvRef;
-
-		PMV_MakeRefData(&pmvRef);
-		PMVOICE_Play(pokeNum, formNum, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_Pan( u32 pokeNo, u32 formNo, u8 pan )
+{
+	PMVOICE_Play(pokeNo, formNo, pan, FALSE, 0, 0, FALSE, 0);
 }
-
-// マルチプレイ用再生（参照データを外部より受け取る）
-inline void PMV_PlayVoiceMulti( u32 pokeNum, u32 formNum, PMV_REF* pmvRef ){
-		PMVOICE_Play(pokeNum, formNum, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_Chorus( u32 pokeNo, u32 formNo, int ch_vol, int ch_spd)
+{
+	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, TRUE, ch_vol, ch_spd, FALSE, 0);
+}
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_Reverse( u32 pokeNo, u32 formNo)
+{
+	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, TRUE, 0);
+}
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_Custom
+	( u32 pokeNo, u32 formNo, u8 pan, BOOL chorus, int ch_vol, int ch_spd, BOOL reverse )
+{
+	PMVOICE_Play(pokeNo, formNo, pan, chorus, ch_vol, ch_spd, reverse, 0);
 }
 
 //--------------------------------------------------------------------------------------------
-inline void PMV_PlayVoiceChorus( u32 pokeNum, u32 formNum ){
-		PMV_REF pmvRef;
-
-		PMV_MakeRefData(&pmvRef);
-		PMVOICE_Play(pokeNum, formNum, 64, TRUE, -10, 20, FALSE, 0);
+/**
+ * @brief	_forMine
+ */
+//--------------------------------------------------------------------------------------------
+inline void PMV_PlayVoice_forMine( u32 pokeNo, u32 formNo )
+{
+	PMV_REF pmvRef;
+	PMV_MakeRefDataMine(&pmvRef);
+	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+}
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_forMine_Pan( u32 pokeNo, u32 formNo, u8 pan )
+{
+	PMV_REF pmvRef;
+	PMV_MakeRefDataMine(&pmvRef);
+	PMVOICE_Play(pokeNo, formNo, pan, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+}
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_forMine_Chorus( u32 pokeNo, u32 formNo, int ch_vol, int ch_spd)
+{
+	PMV_REF pmvRef;
+	PMV_MakeRefDataMine(&pmvRef);
+	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, TRUE, ch_vol, ch_spd, FALSE, (u32)&pmvRef);
+}
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_forMine_Reverse( u32 pokeNo, u32 formNo)
+{
+	PMV_REF pmvRef;
+	PMV_MakeRefDataMine(&pmvRef);
+	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, TRUE, (u32)&pmvRef);
+}
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_forMine_Custom
+	( u32 pokeNo, u32 formNo, u8 pan, BOOL chorus, int ch_vol, int ch_spd, BOOL reverse )
+{
+	PMV_REF pmvRef;
+	PMV_MakeRefDataMine(&pmvRef);
+	PMVOICE_Play(pokeNo, formNo, pan, chorus, ch_vol, ch_spd, reverse, (u32)&pmvRef);
 }
 
-inline void PMV_PlayVoiceRev( u32 pokeNum, u32 formNum ){
-		PMV_REF pmvRef;
-
-		PMV_MakeRefData(&pmvRef);
-		PMVOICE_Play(pokeNum, formNum, 64, FALSE, 0, 0, TRUE, 0);
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	_forMulti
+ */
+//--------------------------------------------------------------------------------------------
+inline void PMV_PlayVoice_forMulti( u32 pokeNo, u32 formNo, PMV_REF* pmvRef )
+{
+	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, FALSE, (u32)&pmvRef);
 }
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_forMulti_Pan( u32 pokeNo, u32 formNo, u8 pan, PMV_REF* pmvRef )
+{
+	PMVOICE_Play(pokeNo, formNo, pan, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+}
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_forMulti_Chorus
+		( u32 pokeNo, u32 formNo, int ch_vol, int ch_spd, PMV_REF* pmvRef)
+{
+	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, TRUE, ch_vol, ch_spd, FALSE, (u32)&pmvRef);
+}
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_forMulti_Reverse( u32 pokeNo, u32 formNo, PMV_REF* pmvRef)
+{
+	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, TRUE, (u32)&pmvRef);
+}
+//--------------------------------------------------------------
+inline void PMV_PlayVoice_forMulti_Custom( u32 pokeNo, u32 formNo, u8 pan, 
+						BOOL chorus, int ch_vol, int ch_spd, BOOL reverse, PMV_REF* pmvRef )
+{
+	PMVOICE_Play(pokeNo, formNo, pan, chorus, ch_vol, ch_spd, reverse, (u32)&pmvRef);
+}
+
 
 #endif
 

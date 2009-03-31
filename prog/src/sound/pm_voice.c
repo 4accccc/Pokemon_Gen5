@@ -215,6 +215,23 @@ void	PMVOICE_Exit( void )
 
 //============================================================================================
 /**
+ * @brief	プレーヤー稼動状態チェック
+ */
+//============================================================================================
+BOOL	PMVOICE_CheckBusy( void )
+{
+	PMVOICE_PLAYER* voicePlayer;
+	int i;
+
+	for( i=0; i<VOICE_PLAYER_NUM; i++ ){
+		voicePlayer = &pmvSys.voicePlayer[i];
+		if(voicePlayer->active == TRUE){ return TRUE; }
+	}
+	return FALSE;
+}
+
+//============================================================================================
+/**
  * @brief	プレーヤー用waveバッファ事前確保
  */
 //============================================================================================
@@ -449,6 +466,9 @@ u32		PMVOICE_Play
 	u32		waveIdx;
 	BOOL	waveLoadFlag;
 
+	GF_ASSERT(pmvSys.CallBackGetWaveIdx);
+	GF_ASSERT(pmvSys.CallBackCustomWave);
+
 	// 波形IDX取得
 	pmvSys.CallBackGetWaveIdx(pokeNo, pokeFormNo, &waveIdx);
 
@@ -486,6 +506,36 @@ u32		PMVOICE_Play
 	
 	OS_Printf("voicePlayerIdx = %x\n",voicePlayerIdx);
 	return voicePlayerIdx;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	鳴き声ステータス変更関数
+ */
+//------------------------------------------------------------------
+void	PMVOICE_SetStatus( u32 voicePlayerIdx, u8 pan, int volOfs, int spdOfs )
+{
+	PMVOICE_PLAYER* voicePlayer;
+
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	if(voicePlayer->active == FALSE){ return; }
+
+	NNS_SndWaveOutSetPan(voicePlayer->waveHandle, pan);
+	if( voicePlayer->subWaveUse == TRUE ){
+		NNS_SndWaveOutSetPan(voicePlayer->waveHandleSub, pan);
+	}
+	if(volOfs){
+		NNS_SndWaveOutSetVolume(voicePlayer->waveHandle, voicePlayer->volume + volOfs);
+		if( voicePlayer->subWaveUse == TRUE ){
+			NNS_SndWaveOutSetVolume(voicePlayer->waveHandleSub, voicePlayer->volumeSub + volOfs);
+		}
+	}
+	if(spdOfs){
+		NNS_SndWaveOutSetSpeed(voicePlayer->waveHandle, voicePlayer->speed + spdOfs);
+		if( voicePlayer->subWaveUse == TRUE ){
+			NNS_SndWaveOutSetSpeed(voicePlayer->waveHandleSub, voicePlayer->speedSub + spdOfs);
+		}
+	}
 }
 
 //------------------------------------------------------------------

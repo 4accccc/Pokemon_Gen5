@@ -53,6 +53,7 @@ extern void	PMVOICE_Init
 extern void	PMVOICE_Reset( void );
 extern void	PMVOICE_Main( void );
 extern void	PMVOICE_Exit( void );
+extern BOOL	PMVOICE_CheckBusy( void );
 
 //============================================================================================
 /**
@@ -86,6 +87,12 @@ extern u32	PMVOICE_Play
 				BOOL	reverse,		// 逆再生フラグ
 				u32		userParam		// ユーザーパラメーター	
 			);		
+//------------------------------------------------------------------
+/**
+ * @brief	鳴き声ステータス変更関数
+ */
+//------------------------------------------------------------------
+extern void	PMVOICE_SetStatus( u32 voicePlayerIdx, u8 pan, int volOfs, int spdOfs );
 //------------------------------------------------------------------
 /**
  * @brief	鳴き声強制停止関数

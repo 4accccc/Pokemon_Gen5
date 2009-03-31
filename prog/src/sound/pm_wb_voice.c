@@ -22,8 +22,9 @@
 //	サンプリングデータ用定義
 //
 //==============================================================================================
-#define PERAP_SAMPLING_RATE		(2000)									//サンプリングレート
-#define PERAP_SAMPLING_TIME		(1)										//サンプリング時間
+// ぺラップ
+#define PERAP_SAMPLING_RATE		(2000)			//サンプリングレート
+#define PERAP_SAMPLING_TIME		(1)				//サンプリング時間
 #define PERAP_SAMPLING_SIZE		(PERAP_SAMPLING_RATE * PERAP_SAMPLING_TIME)	//データ量
 
 #define PERAP_WAVE_SPD			(32768)			//再生スピード(１倍速)
@@ -81,7 +82,7 @@ BOOL PMV_CustomVoiceWave(	u32 pokeNo,			// [in]ポケモンナンバー
 	//参照ユーザーパラメータ設定
 	pmvRef = (PMV_REF*)userParam;
 
-	if(( pokeNo == MONSNO_PERAPPU )&&( pokeFormNo == 0 )){
+	if(( pokeNo == MONSNO_PERAPPU )&&( pokeFormNo == 0 )){	//ぺラップ判定
 		//録音データ存在判定
 		if( PERAPVOICE_GetExistFlag(pmvRef->perapVoice) == TRUE ){
 			//録音データ展開
@@ -105,10 +106,15 @@ BOOL PMV_CustomVoiceWave(	u32 pokeNo,			// [in]ポケモンナンバー
  *
  */
 //============================================================================================
-void PMV_MakeRefData( PMV_REF* pmvRef )
+void PMV_MakeRefDataMine( PMV_REF* pmvRef )
 {
 	//ぺラップの録音データステータスポインタをセーブデータより取得
 	pmvRef->perapVoice = SaveData_GetPerapVoice(SaveControl_GetPointer());
 }
+
+
+
+
+
 
 

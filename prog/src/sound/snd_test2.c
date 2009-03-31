@@ -696,11 +696,10 @@ static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw)
 			PMV_PlayVoice(sw->voiceNum, 0);
 			break;
 		case SOUNDTEST_TPEV_VOICE_STOP:
-			//PMVOICE_Play(sw->voiceNum, PMVOICE_MODE_REVERSE | PMVOICE_MODE_CHORUS);
-			PMV_PlayVoiceChorus(sw->voiceNum, 0);
+			PMV_PlayVoice_Chorus(sw->voiceNum, 0, -10, 20);
 			break;
 		case SOUNDTEST_TPEV_VOICE_PAUSE:
-			PMV_PlayVoiceRev(sw->voiceNum, 0);
+			PMV_PlayVoice_Reverse(sw->voiceNum, 0);
 			break;
 		case SOUNDTEST_TPEV_VOICE_WINDOW:
 			break;
