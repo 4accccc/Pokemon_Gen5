@@ -557,7 +557,7 @@ static	void	set_pokemon( SOGA_WORK *wk )
 		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
 #else
 //2vs2
-		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
+		PP_Put( pp, ID_PARA_monsno, MONSNO_ARUSEUSU + 1 );
 		PP_Put( pp, ID_PARA_id_no, 0x10 );
 		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_A );
 		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_B );
