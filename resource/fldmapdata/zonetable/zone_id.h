@@ -13,6 +13,15 @@
 #define ZONE_ID_LOOPBRIDGE2      (  9)
 #define ZONE_ID_LOOPBRIDGE3      ( 10)
 #define ZONE_ID_TESTC3           ( 11)
-#define ZONE_ID_MAX	(12)
+#define ZONE_ID_T01              ( 12)
+#define ZONE_ID_R01              ( 13)
+#define ZONE_ID_T02              ( 14)
+#define ZONE_ID_R02              ( 15)
+#define ZONE_ID_C01              ( 16)
+#define ZONE_ID_D01              ( 17)
+#define ZONE_ID_R03              ( 18)
+#define ZONE_ID_C02              ( 19)
+#define ZONE_ID_D02              ( 20)
+#define ZONE_ID_MAX	(21)
 #endif // __ZONE_ID_H__
 
