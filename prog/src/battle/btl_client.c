@@ -1704,7 +1704,7 @@ static BOOL _cec_check_arijigoku( BTL_CLIENT* wk )
 // とくせい「じりょく」が自分に効くかチェック
 static BOOL _cec_check_jiryoku( BTL_CLIENT* wk )
 {
-	return countFrontPokeType( wk, POKETYPE_METAL );
+	return countFrontPokeType( wk, POKETYPE_HAGANE );
 }
 
 //------------------------------------------------------------------------------------------------------

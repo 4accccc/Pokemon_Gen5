@@ -24,6 +24,14 @@
 
 
 /*--------------------------------------------------------------------------*/
+/* Globals                                                                  */
+/*--------------------------------------------------------------------------*/
+enum {
+	TOKUSEI_BITTABLE_SIZE = (POKETOKUSEI_MAX/8) + ((POKETOKUSEI_MAX%8)!=0)
+};
+static u8 DisableTokTable[ TOKUSEI_BITTABLE_SIZE ];
+
+/*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void handler_Suisui( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -339,8 +347,17 @@ void BTL_HANDLER_TOKUSEI_Swap( const BTL_POKEPARAM* pp1, const BTL_POKEPARAM* pp
 	}
 }
 
-
-
+//=============================================================================================
+/**
+ * とくせいハンドラ管理用にターンの初回に必ず呼び出される
+ */
+//=============================================================================================
+/*
+void BTL_HANDLER_TOKUSEI_InitTurn( void )
+{
+	GFL_STD_MemClear( DisableTokTable, sizeof(DisableTokTable) );
+}
+*/
 
 //------------------------------------------------------------------------------
 /**
@@ -505,7 +522,7 @@ static void handler_SlowStart_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
 	{
 		const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
-		if( (BTL_POKEPARAM_GetMonsNo(bpp) == MONSNO_REZIKINGU)
+		if( (BTL_POKEPARAM_GetMonsNo(bpp) == MONSNO_REZIGIGASU)
 		&&	(BTL_POKEPARAM_GetTurnCount(bpp) < BTL_CALC_TOK_SLOWSTART_ENABLE_TURN )
 		){
 			u32 agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
@@ -520,7 +537,7 @@ static void handler_SlowStart_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
 	{
 		const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
-		if( (BTL_POKEPARAM_GetMonsNo(bpp) == MONSNO_REZIKINGU)
+		if( (BTL_POKEPARAM_GetMonsNo(bpp) == MONSNO_REZIGIGASU)
 		&&	(BTL_POKEPARAM_GetTurnCount(bpp) < BTL_CALC_TOK_SLOWSTART_ENABLE_TURN )
 		){
 			WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
@@ -770,7 +787,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tekiouryoku( u16 pri, u8 pokeID )
 // 攻撃威力決定のハンドラ
 static void handler_Mouka( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-	common_hpborder_powerup( flowWk, pokeID, POKETYPE_FIRE );
+	common_hpborder_powerup( flowWk, pokeID, POKETYPE_HONOO );
 }
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Mouka( u16 pri, u8 pokeID )
 {
@@ -788,7 +805,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Mouka( u16 pri, u8 pokeID )
 // 攻撃威力決定のハンドラ
 static void handler_Gekiryu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-	common_hpborder_powerup( flowWk, pokeID, POKETYPE_WATER );
+	common_hpborder_powerup( flowWk, pokeID, POKETYPE_MIZU );
 }
 BTL_EVENT_FACTOR*  HAND_TOK_ADD_Gekiryu( u16 pri, u8 pokeID )
 {
@@ -2285,7 +2302,7 @@ static void handler_MultiType( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
 	{
 		const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
-		if( BTL_POKEPARAM_GetMonsNo(bpp) == MONSNO_AUSU )
+		if( BTL_POKEPARAM_GetMonsNo(bpp) == MONSNO_ARUSEUSU )
 		{
 			// @@@ 持っているアイテムでタイプを変える
 			BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, POKETYPE_NORMAL );
@@ -2639,7 +2656,7 @@ static void handler_Tainetsu_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
 	{
 		WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-		if( WAZADATA_GetType(waza) == POKETYPE_FIRE )
+		if( WAZADATA_GetType(waza) == POKETYPE_HONOO )
 		{
 			u32 pow = BTL_CALC_Roundup( BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER ) / 2, 1 );
 			BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, pow );
@@ -2758,7 +2775,7 @@ static void handler_Kandouhada_DmgRecover( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 {
 	u32 recoverHP;
 
-	if( common_DmgRecover_Calc(flowWk, pokeID, POKETYPE_WATER, 4, &recoverHP) )
+	if( common_DmgRecover_Calc(flowWk, pokeID, POKETYPE_MIZU, 4, &recoverHP) )
 	{
 		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
 		common_DmgRecover_Put( flowWk, pokeID, recoverHP );
@@ -2783,7 +2800,7 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Kansouhada( u16 pri, u8 pokeID )
 static void handler_Tyosui( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
 	u32 recoverHP;
-	if( common_DmgRecover_Calc(flowWk, pokeID, POKETYPE_WATER, 4, &recoverHP) )
+	if( common_DmgRecover_Calc(flowWk, pokeID, POKETYPE_MIZU, 4, &recoverHP) )
 	{
 		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
 		common_DmgRecover_Put( flowWk, pokeID, recoverHP );
@@ -3067,7 +3084,7 @@ static void handler_Moraibi_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 		// 炎ワザは無効＆「もらいび」発動
 		WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
 		PokeType waza_type = WAZADATA_GetType( waza );
-		if( waza_type == POKETYPE_FIRE )
+		if( waza_type == POKETYPE_HONOO )
 		{
 			BTL_EVENTVAR_SetValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
 			if( work[0] == 0 )
@@ -3091,7 +3108,7 @@ static void handler_Moraibi_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 		{
 			// 炎ワザの威力1.5倍
 			WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-			if( WAZADATA_GetType(waza) == POKETYPE_FIRE )
+			if( WAZADATA_GetType(waza) == POKETYPE_HONOO )
 			{
 				u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
 				pow = BTL_CALC_MulRatio( pow, BTL_CALC_TOK_MORAIBI_POWRATIO );

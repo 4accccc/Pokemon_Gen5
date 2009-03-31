@@ -41,7 +41,7 @@ static void handler_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 		WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
 		PokeType  type = WAZADATA_GetType( waza );
 		// ワザタイプが氷か炎
-		if( (type == POKETYPE_KOORI) || (type == POKETYPE_FIRE) )
+		if( (type == POKETYPE_KOORI) || (type == POKETYPE_HONOO) )
 		{
 				u32 power = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
 				power /= 2;

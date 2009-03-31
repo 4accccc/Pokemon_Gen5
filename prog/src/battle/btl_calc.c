@@ -249,7 +249,7 @@ u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
 	switch( weather ){
 	case BTL_WEATHER_SAND:
 		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_IWA) ){ return 0; }
-		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_METAL) ){ return 0; }
+		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_HAGANE) ){ return 0; }
 		if( BTL_POKEPARAM_IsMatchType(bpp, POKETYPE_JIMEN) ){ return 0; }
 		break;
 

@@ -88,10 +88,10 @@ fx32 BTL_FIELD_GetWeatherDmgRatio( WazaID waza )
 	case BTL_WEATHER_SHINE:
 		{
 			PokeType type = WAZADATA_GetType( waza );
-			if( type == POKETYPE_FIRE ){
+			if( type == POKETYPE_HONOO ){
 				return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
 			}
-			if( type == POKETYPE_WATER ){
+			if( type == POKETYPE_MIZU ){
 				return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
 			}
 		}
@@ -99,10 +99,10 @@ fx32 BTL_FIELD_GetWeatherDmgRatio( WazaID waza )
 	case BTL_WEATHER_RAIN:
 		{
 			PokeType type = WAZADATA_GetType( waza );
-			if( type == POKETYPE_FIRE ){
+			if( type == POKETYPE_HONOO ){
 				return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
 			}
-			if( type == POKETYPE_WATER ){
+			if( type == POKETYPE_MIZU ){
 				return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
 			}
 		}
