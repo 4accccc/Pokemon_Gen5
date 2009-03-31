@@ -895,8 +895,8 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 				#endif
 			}
 		#else
-			setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_AUSU + 2, MONSNO_AUSU + 1, 0 );
-			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_AUSU + 1, MONSNO_AUSU + 2, 0 );
+			setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_ARUSEUSU + 2, MONSNO_ARUSEUSU + 1, 0 );
+			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_ARUSEUSU + 1, MONSNO_ARUSEUSU + 2, 0 );
 		#endif
 
 			GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
