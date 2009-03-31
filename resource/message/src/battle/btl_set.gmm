@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-03-27T17:38:26"/>
+	<create user="taya" host="W00146" date="2009-03-30T15:53:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -421,7 +421,7 @@
 
 	<dialog left="130" top="0" right="811" bottom="508" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="530" top="492" right="961" bottom="890" visible="no"/>
+		<tag-palette left="530" top="492" right="961" bottom="890" visible="yes"/>
 		<band id="0" index="0" style="0001" width="506"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
@@ -1693,6 +1693,77 @@
 おたがいの　とくせいを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
 おたがいの　とくせいを　入れかえた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_CantEscTok">
+		<comment>逃げることが出来ないメッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+にげることが　できない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+にげることが　できない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_CantEscTok_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+にげることが　できない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+にげることが　できない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_CantEscTok_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+にげることが　できない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+にげることが　できない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_CantChangeTok">
+		<comment>入れ替えることが出来ないメッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+いれかえることが　できない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+入れかえることが　できない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_CantChangeTok_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+いれかえることが　できない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+入れかえることが　できない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_CantChangeTok_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+いれかえることが　できない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の　
+[1:06:とくせい名:1]　で
+入れかえることが　できない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SkillSwap_E0008">
+		<language name="JPN" width="216"></language>
+		<language name="JPN_KANJI" width="216"></language>
+	</row>
+
+	<row id="BTL_STRID_SET_SkillSwap_E0009">
+		<language name="JPN" width="216"></language>
+		<language name="JPN_KANJI" width="216"></language>
+	</row>
+
+	<row id="BTL_STRID_SET_SkillSwap_E0010">
+		<language name="JPN" width="216"></language>
+		<language name="JPN_KANJI" width="216"></language>
 	</row>
 
 	<flowchart-group-list>
