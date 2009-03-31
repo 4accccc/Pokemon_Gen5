@@ -47,7 +47,7 @@ void PMV_GetVoiceWaveIdx(	u32 pokeNo, 		// [in]ポケモンナンバー
 		*waveIdx = PMVOICE_POKE001;
 		return;
 	}
-	if( pokeNo == MONSNO_EURISU ){					//シェイミの時のみ、フォルムチェック
+	if( pokeNo == MONSNO_SHEIMI ){					//シェイミの時のみ、フォルムチェック
 		if( pokeFormNo == FORMNO_SHEIMI_FLOWER ){	//スカイフォルム
 			*waveIdx = WAVE_ARC_PV516_SKY;
 			return;
