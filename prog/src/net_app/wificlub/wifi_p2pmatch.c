@@ -43,6 +43,9 @@
 
 #include "field/fldmmdl_pl_code.h" //クリーチャー
 
+//#include "sound/pm_sndsys.h"
+
+
 // 置き換える必要があるがまだない関数  @@OO
 #define SND_HANDLE_FIELD (0)
 #define BGM_POKECEN_VOL (0)
@@ -1115,7 +1118,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
     WifiP2PMatch_FirstSaving2, //WIFIP2PMATCH_FIRST_SAVING2
 };
 
-#define _MAXNUM   (1)         // 最大接続人数
+#define _MAXNUM   (2)         // 最大接続人数
 #define _MAXSIZE  (80)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
@@ -1460,9 +1463,10 @@ static void _commStateChange(int status)
     }
     else if(status == WIFI_STATUS_LOGIN_WAIT){
 //        GFL_NET_StateChangeWiFiLogin();   // @@OO ログイン用
+		GFL_NET_SetWifiBothNet(FALSE);
         GFL_NET_ChangeInitStruct(&aGFLNetInit);
     }
-    else if( (status == WIFI_STATUS_FRONTIER_WAIT) || (status == WIFI_STATUS_FRONTIER) ){
+    else if( (status == WIFI_STATUS_FRONTIER_WAIT) || (status == WIFI_STATUS_FRONTIER) || (status == WIFI_STATUS_VCT) ){
 		GFL_NET_SetWifiBothNet(FALSE);
 //		GFL_NET_StateChangeWiFiFactory();
     }
@@ -3966,9 +3970,9 @@ static int _firstConnectEndMsg( WIFIP2PMATCH_WORK *wk, int seq )
     EndMessageWindowOff(wk);
     _systemMessagePrint(wk, dwc_message_0004);
     _CHANGESTATE(wk,WIFIP2PMATCH_FIRST_ENDMSG_WAIT);
-#if AFTER_MASTER_070410_WIFIAPP_N22_EUR_FIX
+//#if AFTER_MASTER_070410_WIFIAPP_N22_EUR_FIX
     wk->bInitMessage = FALSE;
-#endif //AFTER_MASTER_070410_WIFIAPP_N22_EUR_FIX
+//#endif //AFTER_MASTER_070410_WIFIAPP_N22_EUR_FIX
     return seq;
 
 }
@@ -7118,7 +7122,7 @@ static BOOL _connectingErrFunc(WIFIP2PMATCH_WORK *wk)
     }
     else{
 
-#if PL_T0857_080711_FIX
+#if 1//PL_T0857_080711_FIX
 		// 友達のSTATUSとVCHATをチェック	違っていたら切断
 		{
 			int mySt;

@@ -29,7 +29,7 @@
 //#define _RANDOMMATCH_TIMEOUT (90)	// 外からしていできるようにした
 
 // 何フレーム送信がないと、KEEP_ALIVEトークンを送るか。
-#define KEEPALIVE_TOKEN_TIME 120
+#define KEEPALIVE_TOKEN_TIME 240
 
 // ボイスチャットを利用する場合は定義する。
 #define MYDWC_USEVCHA
@@ -95,7 +95,6 @@ typedef struct
 	DWCFriendsMatchControl stDwcCnt;    // DWC制御構造体	
     DWCUserData *myUserData;		// DWCのユーザデータ（自分のデータ）
 	DWCInetControl stConnCtrl;
-	
     void *recvPtr[_WIFI_NUM_MAX];  //受信バッファの32バイトアライメントしていないポインタ
     
 	MYDWCReceiverFunc serverCallback;
@@ -271,26 +270,15 @@ int mydwc_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
     
     _dWork = GFL_NET_Align32Alloc(pNetInit->netHeapID, sizeof(MYDWC_WORK));
 
-	_dWork->serverCallback = NULL;
-	_dWork->clientCallback = NULL;	
-	_dWork->fetalErrorCallback = NULL;
 	_dWork->state = MDSTATE_INIT;
-//    GFL_HEAP_CreateHeap( pNetInit->baseHeapID, pNetInit->wifiHeapID, pNetInit->heapSize );
 
     _dWork->vchatcodec = VCHAT_NONE;
 	_dWork->friendindex = -1;
-	_dWork->friendupdate_index = 0;
-//    _dWork->op_aid = -1;
     _dWork->maxConnectNum = pNetInit->maxConnectNum;
-    _dWork->backupBitmap = 0;
-    _dWork->BlockUse_BackupBitmap = 0;
     _dWork->newFriendConnect = -1;
     _dWork->bVChat = TRUE;
     _dWork->bHeapError = FALSE;
-    _dWork->setupErrorCount = 0;
     
-    _dWork->myseqno = 0;
-    _dWork->opseqno = 0;
     _dWork->myvchaton = 1;
     _dWork->opvchaton = 1;
 	_dWork->myvchat_send = 1;
@@ -541,14 +529,12 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
     if(bParent){
         DWC_AddMatchKeyString(1,(const char*)_dWork->randommatch_query,(const char*)_dWork->randommatch_query);
     }
-#if PL_G0197_080710_FIX
 	{
 		int i;
 		for(i=0;i<numEntry; i++){
 			mydwc_allocRecvBuff(i);
 		}
 	}
-#endif
         
     _dWork->state = MDSTATE_MATCHING;
 
@@ -838,7 +824,7 @@ int mydwc_sendToClient(void *data, int size)
 		// 相手に対してデータ送信。
 		if( _dWork->sendbufflag || !_isSendableReliable() ) // 送信バッファをチェック。
 		{
-            MYDWC_DEBUGPRINT("wifi failed %d %d\n",_dWork->sendbufflag,_isSendableReliable());
+//            MYDWC_DEBUGPRINT("wifi failed %d %d\n",_dWork->sendbufflag,_isSendableReliable());
 			// 送信バッファがいっぱいなどで送れない。
 			return 0;
 		}
@@ -898,7 +884,7 @@ int GFL_NET_DWC_SendToOther(void *data, int size)
 		// 相手に対してデータ送信。
 		if( _dWork->sendbufflag || !_isSendableReliable() ) // 送信バッファをチェック。
 		{
-            MYDWC_DEBUGPRINT("wifi failed %d %d\n",_dWork->sendbufflag,_isSendableReliable());
+//            MYDWC_DEBUGPRINT("wifi failed %d %d\n",_dWork->sendbufflag,_isSendableReliable());
 			// 送信バッファがいっぱいなどで送れない。
 			return 0;
 		}
@@ -1124,14 +1110,6 @@ static void setConnectionBuffer(int index)
     
 	_dWork->state = MDSTATE_MATCHED;
 
-#if PL_G0197_080710_FIX
-#else
-    for(i=0,j=0;i< _dWork->maxConnectNum; i++){
-        if(DWC_GetMyAID()!=i){
-            mydwc_allocRecvBuff(i);
-        }
-    }
-#endif
     setTimeoutTime();
 }
 
@@ -1222,7 +1200,8 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size )
 	topcode = (buffer[3] << 24) | (buffer[2] << 16) | (buffer[1] << 8) | buffer[0];
 
     //	MYDWC_DEBUGPRINT("[%d,%d,%d,%d]", buffer[0], buffer[1], buffer[2], buffer[3]);
-
+    NET_PRINT("-受信-\n");
+    
 	// 一度受信してはじめてタイムアウトを設定する。
 	_dWork->timeoutflag = 1;
 
@@ -1557,7 +1536,7 @@ static BOOL sendKeepAlivePacket(int i)
 	{
         MYDWC_DEBUGPRINT("SEND KEEP ALIVE PACKET  %d %d %d\n",_dWork->sendbufflag,_isSendableReliable() , DWC_GetAIDBitmap());
 		_dWork->sendbufflag = 1;
-		*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_KEEPALIVE_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);;
+		*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_KEEPALIVE_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
 
         DWC_SendReliableBitmap(DWC_GetAIDBitmap(), &(_dWork->sendBuffer[0]), 4);
 
@@ -2065,14 +2044,12 @@ int GFL_NET_DWC_StartGame( int target,int maxnum, BOOL bVCT )
     }
     _dWork->setupErrorCount = 0;//リセットしておく
                               
-#if PL_G0197_080710_FIX
 	{
 		int i;
 		for(i=0;i<maxnum; i++){
 			mydwc_allocRecvBuff(i);
 		}
 	}
-#endif
     _dWork->state = MDSTATE_MATCHING;
   
     // 送信コールバックの設定	
@@ -2569,7 +2546,7 @@ void mydwc_allocRecvBuff(int i)
     mydwc_releaseRecvBuff(i);
 
     if(_dWork->recvPtr[i]==NULL){
-        //OHNO_PRINT("_SetRecvBufferメモリ確保 %d\n",i);
+        NET_PRINT("_SetRecvBufferメモリ確保 %d\n",i);
         _dWork->recvPtr[i] = GFL_NET_Align32Alloc(pNetInit->wifiHeapID, SIZE_RECV_BUFFER);
         DWC_SetRecvBuffer( i, _dWork->recvPtr[i], SIZE_RECV_BUFFER );
     }

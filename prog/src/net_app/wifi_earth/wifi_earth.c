@@ -26,7 +26,7 @@
 #include "system/arc_util.h"
 #include "system/snd_tool.h"
 #include "print/wordset.h"
-#if PL_T0864_080714_FIX
+#if 1//PL_T0864_080714_FIX
 #include "system/pmfprint.h"
 #endif
 
@@ -661,7 +661,7 @@ PROC_RESULT Earth_Demo_Init(PROC * proc, int * seq)
 	//キーシステム設定
 	sys_KeyRepeatSpeedSet( SYS_KEYREPEAT_SPEED_DEF, SYS_KEYREPEAT_WAIT_DEF );
 
-#if PL_T0864_080714_FIX
+#if 1//PL_T0864_080714_FIX
 	// メッセージ表示関係を設定
 	MsgPrintSkipFlagSet(MSG_SKIP_ON);
 	MsgPrintAutoFlagSet(MSG_AUTO_OFF);

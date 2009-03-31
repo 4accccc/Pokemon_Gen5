@@ -400,11 +400,13 @@ extern void GFL_NET_DWC_SetConnectModeCheckCallback( MYDWCConnectModeCheckFunc p
 //==============================================================================
 /**
  * 他の相手に送信を行う関数
- * @param   data - 送信するデータへのポインタ。size - 送信するデータのサイズ
+ * @param   data - 送信するデータへのポインタ
+ * @param   size - 送信するデータのサイズ
+ * @param   callback - 送信完了時のコールバック
  * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
  */
 //==============================================================================
-extern int GFL_NET_DWC_SendToOther(void *data, int size);
+extern int GFL_NET_DWC_SendToOther(void *data, int size );
 
 //----------------------------------------------------------------------------
 /**

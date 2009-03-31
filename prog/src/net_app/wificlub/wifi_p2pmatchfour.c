@@ -4233,7 +4233,7 @@ static BOOL WFP2PMF_OyaErrInit01( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 he
 	// みんな切断する
 	WFP2PMF_CommSendAllEntryNg( p_wk );
 
-#if PL_G0255_081217_FIX
+#if 1//PL_G0255_081217_FIX
 	{
 		int ret;
 		WFP2PMF_StatusChange( p_wk, p_init );
@@ -4264,7 +4264,7 @@ static BOOL WFP2PMF_OyaErr( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 heapID )
 {
 	BOOL result;
 
-#if PL_G0255_081217_FIX
+#if 1//PL_G0255_081217_FIX
 	{
 		int ret;
 		ret = GFL_NET_StateGetWifiStatus();
@@ -4428,7 +4428,7 @@ static BOOL WFP2PMF_KoEntryOyaWaitInit( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, 
     GFL_NET_SetNoChildErrorCheck(FALSE);
     GFL_NET_SetAutoErrorCheck(TRUE);
 
-#if PL_G0254_081217_FIX
+#if 1//PL_G0254_081217_FIX
 	// 親まちタイムアウト開始
 	WFP2PMF_TimeOut_Start( p_wk );
 #endif
@@ -4459,7 +4459,7 @@ static BOOL WFP2PMF_KoEntryOyaWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 
 	// 親から切断されたらえらー処理へ
 	if( GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER) == FALSE ){
-#if PL_G0254_081217_FIX
+#if 1//PL_G0254_081217_FIX
 		// 親まちタイムアウト停止
 		WFP2PMF_TimeOut_Stop( p_wk );
 #endif
@@ -4471,7 +4471,7 @@ static BOOL WFP2PMF_KoEntryOyaWait( WFP2PMF_WK* p_wk, WFP2PMF_INIT* p_init, u32 
 
 		// 親のデータが飛んでくるのは待つ
 		if( CommInfoGetEntry( COMM_PARENT_ID ) ){
-#if PL_G0254_081217_FIX
+#if 1//PL_G0254_081217_FIX
 			// 親まちタイムアウト停止
 			WFP2PMF_TimeOut_Stop( p_wk );
 #endif
