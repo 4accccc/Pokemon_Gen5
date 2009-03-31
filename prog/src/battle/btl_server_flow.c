@@ -75,7 +75,7 @@ struct _BTL_SVFLOW_WORK {
 	TARGET_POKE_REC			targetPokemon;
 	TARGET_POKE_REC			targetSubPokemon;
 	TARGET_POKE_REC			damagedPokemon;
-
+	SVFL_WAZAPARAM			wazaParam;
 
 	u8					flowFlags[ FLOWFLG_BYTE_MAX ];
 
@@ -122,6 +122,7 @@ static void cof_put_wazafail_msg_cmd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos, WazaID waza, const BTL_ACTION_PARAM* action, TARGET_POKE_REC* rec );
 static BTL_POKEPARAM* svflowsub_get_opponent_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos, u8 pokeSideIdx );
 static BTL_POKEPARAM* svflowsub_get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos );
+static void flowsub_checkWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, SVFL_WAZAPARAM* param );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scput_Fight_Damage( BTL_SVFLOW_WORK* wk, WazaID waza, SVCL_WORK* atClient,
 	 BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
@@ -717,8 +718,13 @@ static inline u32 TargetPokeRec_CopyEnemys( const TARGET_POKE_REC* rec, const BT
 //-----------------------------------------------------------------------------------
 static BOOL scput_Nigeru( BTL_SVFLOW_WORK* wk, u8 clientID, u8 pokeIdx )
 {
+	SVCL_WORK* clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
+	BTL_POKEPARAM* bpp = clwk->frontMember[ pokeIdx ];
+
 	BOOL fEscape = TRUE;	// @@@ 今は即座に逃げられるようにしている
+
 	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, fEscape );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_ESCAPE );
 		fEscape = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
@@ -790,6 +796,8 @@ static void scput_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, cons
 		TargetPokeRec_Clear( &wk->damagedPokemon );
 		TargetPokeRec_Clear( &wk->targetPokemon );
 
+		flowsub_checkWazaParam( wk, waza, attacker, &wk->wazaParam );
+
 		flowsub_registerWazaTargets( wk, atPos, waza, action, &wk->targetPokemon );
 		flowsub_checkNotEffect( wk, waza, attacker, &wk->targetPokemon );
 
@@ -853,6 +861,10 @@ static void cof_put_wazafail_msg_cmd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 
 	case SV_WAZAFAIL_SHRINK:
 		SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ShrinkExe, pokeID );
+		break;
+
+	case SV_WAZAFAIL_NAMAKE:
+		SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Namake, pokeID );
 		break;
 
 	default:
@@ -979,14 +991,35 @@ static BTL_POKEPARAM* svflowsub_get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPoke
 	return clwk->frontMember[ pokeIdx ];
 }
 
+//--------------------------------------------------------------------------
+/**
+ * 発動するワザのパラメータを構造体にセット
+ *
+ * @param   wk		
+ * @param   waza		
+ * @param   attacker		
+ *
+ */
+//--------------------------------------------------------------------------
+static void flowsub_checkWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, SVFL_WAZAPARAM* param )
+{
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(attacker) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, WAZADATA_GetType(waza) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_USER_TYPE, BTL_POKEPARAM_GetPokeType(attacker) );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_PARAM );
+		param->wazaType = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
+		param->userType = BTL_EVENTVAR_GetValue( BTL_EVAR_USER_TYPE );
+	BTL_EVENTVAR_Pop();
+}
 
 //--------------------------------------------------------------------------
 /**
  * ワザ発動前の、対象別無効化チェック
  *
  * @param   wk				
- * @param   attacker		[in] ワザを出すポケモン
- * @param   targets			[io] ワザ対象ポケモンコンテナ／無効になったポケモンはコンテナから削除される
+ * @param   attacker	[in] ワザを出すポケモン
+ * @param   targets		[io] ワザ対象ポケモンコンテナ／無効になったポケモンはコンテナから削除される
  *
  */
 //--------------------------------------------------------------------------
@@ -1031,6 +1064,7 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
 		}
 	}
 }
+
 //----------------------------------------------------------------------
 // サーバーフロー：「たたかう」> ダメージワザ系
 //----------------------------------------------------------------------
@@ -1691,7 +1725,9 @@ static void scput_TurnCheck( BTL_SVFLOW_WORK* wk )
 		}
 	}
 
-	wk->turnCount++;
+	if( wk->turnCount < BTL_TURNCOUNT_MAX ){
+		wk->turnCount++;
+	}
 }
 //------------------------------------------------------------------
 // サーバーフロー下請け： ターンチェック > 状態異常
@@ -2613,8 +2649,9 @@ static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 ne
 					clientID, pokeID, posIdx);
 	}
 	BTL_HANDLER_TOKUSEI_Add( bpp );
+	BTL_POKEPARAM_SetAppearTurn( bpp, wk->turnCount );
 
-	SCQUE_PUT_ACT_MemberIn( wk->que, clientID, posIdx, nextPokeIdx );
+	SCQUE_PUT_ACT_MemberIn( wk->que, clientID, posIdx, nextPokeIdx, wk->turnCount );
 	BTL_EVENTVAR_Push();
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN );
@@ -3072,14 +3109,25 @@ const BTL_POKEPARAM* BTL_SVFLOW_RECEPT_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pok
 {
 	return BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
 }
-
-
+//=============================================================================================
+/**
+ * 現在の経過ターン数を返す
+ *
+ * @param   wk		
+ *
+ * @retval  u16		
+ */
+//=============================================================================================
+u16 BTL_SVFLOW_GetTurnCount( BTL_SVFLOW_WORK* wk )
+{
+	return wk->turnCount;
+}
 //=============================================================================================
 /**
  * [ハンドラ受信] とくせいウィンドウ表示イン
  *
- * @param   wk		
- * @param   pokeID		
+ * @param   wk			
+ * @param   pokeID	
  *
  */
 //=============================================================================================
@@ -3285,6 +3333,34 @@ void BTL_SVFLOW_RECEPT_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather )
 			GF_ASSERT(0);
 		}
 	}
+}
+//=============================================================================================
+/**
+ * [ハンドラ受信] 逃げ交換禁止コードの追加を全クライアントに通知
+ *
+ * @param   wk						
+ * @param   clientID			禁止コードを発行したポケモンID
+ * @param   code					禁止コード
+ *
+ */
+//=============================================================================================
+void BTL_SVFLOW_RECEPT_CantEscapeAdd( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code )
+{
+	SCQUE_PUT_OP_CantEscape_Add( wk->que, pokeID, code );
+}
+//=============================================================================================
+/**
+ * [ハンドラ受信] 逃げ交換禁止コードの削除を全クライアントに通知
+ *
+ * @param   wk						
+ * @param   clientID			禁止コードを発行したポケモンID
+ * @param   code					禁止コード
+ *
+ */
+//=============================================================================================
+void BTL_SVFLOW_RECEPT_CantEscapeSub( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlCantEscapeCode code )
+{
+	SCQUE_PUT_OP_CantEscape_Sub( wk->que, pokeID, code );
 }
 //=============================================================================================
 /**

@@ -831,8 +831,14 @@ void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 //	printf( wk->strBuf );
 }
-
-
+/*
+yellow
+red
+gray
+purple
+green
+blue
+*/
 
 
 //=============================================================================================

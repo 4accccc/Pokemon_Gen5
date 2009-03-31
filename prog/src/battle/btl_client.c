@@ -15,6 +15,7 @@
 #include "btl_common.h"
 #include "btl_adapter.h"
 #include "btl_action.h"
+#include "btl_field.h"
 #include "btl_pokeselect.h"
 #include "btl_server_cmd.h"
 #include "btlv\btlv_core.h"
@@ -25,6 +26,9 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 
+enum {
+	CANTESC_COUNT_MAX = 8,		///< とりあえず少なめギリギリなとこでASSERTかけてみる
+};
 
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
@@ -35,21 +39,13 @@ typedef BOOL (*ServerCmdProc)( BTL_CLIENT*, int*, const int* );
 /*--------------------------------------------------------------------------*/
 /* Structures                                                               */
 /*--------------------------------------------------------------------------*/
-
-
-//--------------------------------------------------------------
 /**
- *	ワザ発動用パラメータ
+ *	逃げ交換禁止コード管理用構造体
  */
-//--------------------------------------------------------------
-struct _BTL_WAZA_EXE_PARAM {
+typedef struct {
+	u8  counter[ BTL_CANTESC_MAX ][ BTL_POKEID_MAX ];
+}CANT_ESC_CONTROL;
 
-	const BTL_POKEPARAM*	userPokeParam;
-	WazaID	waza;			///< 使うワザナンバー
-	u8		numTargetClients;				///< ターゲットとなるクライアント数
-	u8		targetClientID[BTL_CLIENT_MAX];	///< ターゲットとなるクライアントID
-
-};
 
 //--------------------------------------------------------------
 /**
@@ -67,9 +63,8 @@ struct _BTL_CLIENT {
 	ClientSubProc	subProc;
 	int				subSeq;
 
-	const void*			returnDataPtr;
-	u32					returnDataSize;
-
+	const void*		returnDataPtr;
+	u32						returnDataSize;
 
 	const BTL_PARTY*	myParty;
 	u8					frontPokeEmpty[ BTL_POSIDX_MAX ];				///< 担当している戦闘位置にもう出せない時にTRUEにする
@@ -77,15 +72,16 @@ struct _BTL_CLIENT {
 	u8					procPokeIdx;	///< 処理中ポケモンインデックス
 	BtlPokePos	basePos;			///< 戦闘ポケモンの位置ID
 
-	BTL_ACTION_PARAM	actionParam[ BTL_POSIDX_MAX ];
+	BTL_ACTION_PARAM		actionParam[ BTL_POSIDX_MAX ];
 	BTL_SERVER_CMD_QUE*	cmdQue;
-	int					cmdArgs[ BTL_SERVERCMD_ARG_MAX ];
-	ServerCmd			serverCmd;
+	int							cmdArgs[ BTL_SERVERCMD_ARG_MAX ];
+	ServerCmd				serverCmd;
 	ServerCmdProc		scProc;
-	int					scSeq;
+	int							scSeq;
 
 	BTL_POKESELECT_PARAM		pokeSelParam;
 	BTL_POKESELECT_RESULT		pokeSelResult;
+	CANT_ESC_CONTROL				cantEscCtrl;
 
 	u8	myID;
 	u8	myType;
@@ -104,6 +100,7 @@ static BOOL SubProc_AI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_Initialize( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_Initialize( BTL_CLIENT* wk, int *seq );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
+static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static u8 calc_empty_pos( BTL_CLIENT* wk, u8* posIdxList );
 static void abandon_cover_pos( BTL_CLIENT* wk, u8 numPos );
@@ -149,7 +146,17 @@ static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CurePokeSick( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CureWazaSick( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_EscapeCodeAdd( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_EscapeCodeSub( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
+static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
+static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
+static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
+static BOOL _cec_check_kagefumi( BTL_CLIENT* wk );
+static BOOL _cec_check_arijigoku( BTL_CLIENT* wk );
+static BOOL _cec_check_jiryoku( BTL_CLIENT* wk );
+static u8 countFrontPokeTokusei( BTL_CLIENT* wk, PokeTokusei tokusei );
+static u8 countFrontPokeType( BTL_CLIENT* wk, PokeType type );
 
 
 
@@ -189,6 +196,15 @@ void BTL_CLIENT_Delete( BTL_CLIENT* wk )
 	GFL_HEAP_FreeMemory( wk );
 }
 
+//=============================================================================================
+/**
+ * 描画処理モジュールをアタッチ（UIクライアントのみ）
+ *
+ * @param   wk		
+ * @param   viewCore		
+ *
+ */
+//=============================================================================================
 void BTL_CLIENT_AttachViewCore( BTL_CLIENT* wk, BTLV_CORE* viewCore )
 {
 	wk->viewCore = viewCore;
@@ -390,13 +406,31 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
 	case SEQ_CHECK_ESCAPE:
 		{
+			// 戦闘モード等による禁止チェック（トレーナー戦など）
 			BtlEscapeMode esc = BTL_MAIN_GetEscapeMode( wk->mainModule );
 			switch( esc ){
 			case BTL_ESCAPE_MODE_OK:
 			default:
-				wk->returnDataPtr = &(wk->actionParam[wk->procPokeIdx]);
-				wk->returnDataSize = sizeof(wk->actionParam[0]);
-				(*seq) = SEQ_RETURN_START;
+				{
+					BtlCantEscapeCode  code;
+					u8 pokeID;
+					code = is_prohibit_escape( wk, &pokeID );
+					// とくせい、ワザ効果等による禁止チェック
+					if( code == BTL_CANTESC_NULL )
+					{
+						wk->returnDataPtr = &(wk->actionParam[wk->procPokeIdx]);
+						wk->returnDataSize = sizeof(wk->actionParam[0]);
+						(*seq) = SEQ_RETURN_START;
+					}
+					else
+					{
+						int args[2];
+						args[0] = pokeID;
+						args[1] = code;
+						BTLV_StartMsgSet( wk->viewCore, BTL_STRID_SET_CantEscTok, args );
+						(*seq) = SEQ_CANT_ESCAPE;
+					}
+				}
 				break;
 
 			case BTL_ESCAPE_MODE_NG:
@@ -439,6 +473,33 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
 	return FALSE;
 }
+
+//--------------------------------------------------------------------------
+/**
+ * 
+ *
+ * @param   wk		
+ * @param   pokeID		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------------------
+static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID )
+{
+	BtlCantEscapeCode  code;
+
+	for(code=0; code<BTL_CANTESC_MAX; ++code)
+	{
+		*pokeID = cec_isEnable(&wk->cantEscCtrl, code, wk);
+		if( *pokeID != BTL_POKEID_NULL )
+		{
+			return code;
+		}
+	}
+	
+	return BTL_CANTESC_NULL;
+}
+
 
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
@@ -796,7 +857,9 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_OP_SICK_SET,					scProc_OP_SickSet					},
 		{	SC_OP_CURE_POKESICK,		scProc_OP_CurePokeSick		},
 		{	SC_OP_CURE_WAZASICK,		scProc_OP_CureWazaSick		},
-		{	SC_OP_WAZASICK_TURNCHECK,scProc_OP_WSTurnCheck },
+		{	SC_OP_CANTESCAPE_ADD,		scProc_OP_EscapeCodeAdd		},
+		{	SC_OP_CANTESCAPE_SUB,		scProc_OP_EscapeCodeSub		},
+		{	SC_OP_WAZASICK_TURNCHECK,	scProc_OP_WSTurnCheck		},
 	};
 
 restart:
@@ -899,7 +962,10 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 			BTL_Printf("MEMBER IN .... myParty:%p, client=%d, posIdx=%d, memberIdx=%d\n", wk->myParty, clientID, posIdx, memberIdx);
 			{
 				BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+				BTL_POKEPARAM* bpp;
 				BTL_PARTY_SwapMembers( party, posIdx, memberIdx );
+				bpp = BTL_PARTY_GetMemberData( party, posIdx );
+				BTL_POKEPARAM_SetAppearTurn( bpp, args[3] );
 			}
 
 			BTLV_StartMemberChangeAct( wk->viewCore, pokePos, clientID, memberIdx );
@@ -1545,6 +1611,16 @@ static BOOL scProc_OP_CureWazaSick( BTL_CLIENT* wk, int* seq, const int* args )
 	BTL_POKEPARAM_CureWazaSick( pp, args[1] );
 	return TRUE;
 }
+static BOOL scProc_OP_EscapeCodeAdd( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	cec_addCode( &wk->cantEscCtrl, args[0], args[1] );
+	return TRUE;
+}
+static BOOL scProc_OP_EscapeCodeSub( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	cec_subCode( &wk->cantEscCtrl, args[0], args[1] );
+	return TRUE;
+}
 
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
 {
@@ -1553,8 +1629,113 @@ static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
 	return TRUE;
 }
 
+//------------------------------------------------------------------------------------------------------
+// 逃げ交換禁止管理ワーク
+//------------------------------------------------------------------------------------------------------
 
+static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code )
+{
+	GF_ASSERT(code < BTL_CANTESC_MAX);
+	GF_ASSERT(pokeID < BTL_POKEID_MAX);
 
+	if( ctrl->counter[ code ][ pokeID ] < CANTESC_COUNT_MAX )
+	{
+		ctrl->counter[ code ][ pokeID ]++;
+	}
+	else{
+		GF_ASSERT(0);
+	}
+}
+static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code )
+{
+	GF_ASSERT(code < BTL_CANTESC_MAX);
+	GF_ASSERT(pokeID < BTL_POKEID_MAX);
+
+	if( ctrl->counter[ code ][ pokeID ] )
+	{
+		ctrl->counter[ code ][ pokeID ]--;
+	}
+	else{
+		GF_ASSERT(0);
+	}
+}
+
+static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk )
+{
+	GF_ASSERT(code < BTL_CANTESC_MAX);
+	{
+		int i;
+		for(i=0; i<BTL_POKEID_MAX; ++i)
+		{
+			if( ctrl->counter[code][i] )
+			{
+				u8 clientID = BTL_MAIN_PokeIDtoClientID( wk->mainModule, i );
+				if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myID, clientID) ){ continue; }
+				switch( code ){
+				case BTL_CANTESC_KAGEFUMI:	if( _cec_check_kagefumi(wk) ){ return i; }
+				case BTL_CANTESC_ARIJIGOKU:	if( _cec_check_arijigoku(wk) ){ return i; }
+				case BTL_CANTESC_JIRYOKU:		if( _cec_check_jiryoku(wk) ){ return i; }
+				}
+			}
+		}
+	}
+	return BTL_POKEID_NULL;
+}
+// とくせい「かげふみ」が自分に効くかチェック
+static BOOL _cec_check_kagefumi( BTL_CLIENT* wk )
+{
+	return TRUE;
+}
+// とくせい「ありじごく」が自分に効くかチェック
+static BOOL _cec_check_arijigoku( BTL_CLIENT* wk )
+{
+	if( BTL_FIELD_CheckState(BTL_FLDSTATE_GRAVITY) )
+	{
+		return TRUE;
+	}
+	else if (
+			(countFrontPokeTokusei(wk, POKETOKUSEI_FUYUU) == 0)
+	&&	(countFrontPokeType(wk, POKETYPE_HIKOU) == 0)
+	){
+		return TRUE;
+	}
+	return FALSE;
+}
+// とくせい「じりょく」が自分に効くかチェック
+static BOOL _cec_check_jiryoku( BTL_CLIENT* wk )
+{
+	return countFrontPokeType( wk, POKETYPE_METAL );
+}
+
+//------------------------------------------------------------------------------------------------------
+// 戦闘中ポケモンの所有とくせい・タイプ等チェック
+//------------------------------------------------------------------------------------------------------
+static u8 countFrontPokeTokusei( BTL_CLIENT* wk, PokeTokusei tokusei )
+{
+	const BTL_POKEPARAM* bpp;
+	int i, cnt;
+	for(i=0, cnt=0; i<wk->numCoverPos; ++i){
+		bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
+		if( !BTL_POKEPARAM_IsDead(bpp) )
+		{
+			if( BTL_POKEPARAM_GetValue(bpp, BPP_TOKUSEI) == tokusei ){ ++cnt; }
+		}
+	}
+	return cnt;
+}
+static u8 countFrontPokeType( BTL_CLIENT* wk, PokeType type )
+{
+	const BTL_POKEPARAM* bpp;
+	int i, cnt;
+	for(i=0, cnt=0; i<wk->numCoverPos; ++i){
+		bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
+		if( !BTL_POKEPARAM_IsDead(bpp) )
+		{
+			if( BTL_POKEPARAM_IsMatchType(bpp, type) ){ ++cnt; }
+		}
+	}
+	return cnt;
+}
 
 
 //------------------------------------------------------------------------------------------------------

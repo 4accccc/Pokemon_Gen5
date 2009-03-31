@@ -1366,10 +1366,12 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* part
 
 		#ifdef PM_DEBUG
 		// 超デバッグ措置
+		/*
 		if (pokeID == 0 )
 		{
 			BTL_POKEPARAM_ChangeTokusei( pokecon->pokeParam[ pokeID ], POKETOKUSEI_KANSOUHADA );
 		}
+		*/
 		#endif
 		BTL_Printf(" Create PokeParam ID=%d, adrs=%p\n", pokeID, pokecon->pokeParam[i]);
 
@@ -1566,7 +1568,6 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
 		BTL_POKEPARAM* tmp = party->member[ idx1 ];
 		party->member[ idx1 ] = party->member[ idx2 ];
 		party->member[ idx2 ] = tmp;
-		BTL_Printf("Party(0x%p)Member Swap ... %d<->%d\n", party, idx1, idx2);
 	}
 }
 

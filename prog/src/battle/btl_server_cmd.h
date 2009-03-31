@@ -36,9 +36,11 @@ typedef enum {
 	SC_OP_RANK_UP,			///< 【計算】ステータスランクアップ  [ClientID, StatusType, プラス量]
 	SC_OP_RANK_DOWN,		///< 【計算】ステータスランクダウン  [ClientID, StatusType, マイナス量]
 	SC_OP_SICK_SET,			///< 【計算】状態異常 [PokeID, Sick, contParam]
-	SC_OP_CURE_POKESICK,	///< 【計算】ポケモン系状態異常を回復 [PokeID ]
-	SC_OP_CURE_WAZASICK,	///< 【計算】ワザ系状態異常を回復 [PokeID, SickID ]
-	SC_OP_WAZASICK_TURNCHECK,
+	SC_OP_CURE_POKESICK,			///< 【計算】ポケモン系状態異常を回復 [PokeID ]
+	SC_OP_CURE_WAZASICK,			///< 【計算】ワザ系状態異常を回復 [PokeID, SickID ]
+	SC_OP_WAZASICK_TURNCHECK,	///< 
+	SC_OP_CANTESCAPE_ADD,		///< にげ・交換禁止コードの追加を全クライアントに通知 [ClientID, CantCode]
+	SC_OP_CANTESCAPE_SUB,		///< にげ・交換禁止コードの削除を全クライアントに通知 [ClientID, CantCode]
 	SC_ACT_WAZA_EFFECT,
 	SC_ACT_WAZA_DMG,		///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
 	SC_ACT_WAZA_DMG_DBL,///< 【アクション】２体同時ダメージ処理 [ pokeID ]
@@ -199,11 +201,22 @@ static inline void SCQUE_PUT_OP_CureWazaSick( BTL_SERVER_CMD_QUE* que, u8 pokeID
 	SCQUE_PUT_Common( que, SC_OP_CURE_WAZASICK, pokeID, sickID );
 }
 
-
 static inline void SCQUE_PUT_OP_WazaSickTurnCheck( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
 	SCQUE_PUT_Common( que, SC_OP_WAZASICK_TURNCHECK, pokeID );
 }
+
+static inline void SCQUE_PUT_OP_CantEscape_Add( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 cantCode )
+{
+	SCQUE_PUT_Common( que, SC_OP_CANTESCAPE_ADD, clientID, cantCode );
+}
+static inline void SCQUE_PUT_OP_CantEscape_Sub( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 cantCode )
+{
+	SCQUE_PUT_Common( que, SC_OP_CANTESCAPE_SUB, clientID, cantCode );
+}
+
+
+
 //---------------------------------------------
 static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, u16 waza )
 {
@@ -258,9 +271,9 @@ static inline void SCQUE_PUT_ACT_MemberOut( BTL_SERVER_CMD_QUE* que, u8 clientID
 	SCQUE_PUT_Common( que, SC_ACT_MEMBER_OUT, clientID, memberIdx );
 }
 // 【アクション】ポケモン入場
-static inline void SCQUE_PUT_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx, u8 memberIdx )
+static inline void SCQUE_PUT_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx, u8 memberIdx, u16 turnCount )
 {
-	SCQUE_PUT_Common( que, SC_ACT_MEMBER_IN, clientID, posIdx, memberIdx );
+	SCQUE_PUT_Common( que, SC_ACT_MEMBER_IN, clientID, posIdx, memberIdx, turnCount );
 }
 // 【アクション】天候による一斉ダメージ		weather:天候ID, pokeCnt:ダメージを受けるポケモン数
 static inline void SCQUE_PUT_ACT_WeatherDamage( BTL_SERVER_CMD_QUE* que, u8 weather, u8 pokeCnt )

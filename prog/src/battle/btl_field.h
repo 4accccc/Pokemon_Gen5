@@ -35,6 +35,8 @@ extern BtlWeather BTL_FIELD_GetWeather( void );
 extern void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn );
 extern void BTL_FIELD_ClearWeather( void );
 
+extern BOOL BTL_FIELD_CheckState( BtlFieldState state );
+
 //=============================================================================================
 /**
  * 天候によってダメージが増加・減少するワザの増減率を返す

@@ -30,6 +30,8 @@ enum {
 
 	TURNFLG_BUF_SIZE = (BPP_TURNFLG_MAX/8)+(BPP_TURNFLG_MAX%8!=0),
 	CONTFLG_BUF_SIZE = (BPP_CONTFLG_MAX/8)+(BPP_CONTFLG_MAX%8!=0),
+
+	TURNCOUNT_NULL = BTL_TURNCOUNT_MAX+1,
 };
 
 
@@ -115,6 +117,8 @@ struct _BTL_POKEPARAM {
 	u16  tokusei;
 	u16  hp;
 
+	u16	turnCount;		///< 継続して戦闘に出ているカウンタ
+	u16	appearedTurn;	///< 戦闘に出たターンを記録
 	u8	myID;
 	u8	wazaCnt;
 	u8	pokeSick;
@@ -124,6 +128,7 @@ struct _BTL_POKEPARAM {
 	u8	wazaSickCounter[ WAZASICK_MAX ];
 	u8	turnFlag[ TURNFLG_BUF_SIZE ];
 	u8	contFlag[ CONTFLG_BUF_SIZE ];
+
 
 	u32 dmy;
 };
@@ -224,6 +229,8 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	}
 
 	bpp->ppSrc = pp;
+	bpp->appearedTurn = TURNCOUNT_NULL;
+	bpp->turnCount = 0;
 
 	flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
 	flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
@@ -513,6 +520,32 @@ int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp )
 	default:
 		return 0;
 	}
+}
+//=============================================================================================
+/**
+ * 継続して場に出ているターン数を返す
+ *
+ * @param   pp		
+ *
+ * @retval  u16		
+ */
+//=============================================================================================
+u16 BTL_POKEPARAM_GetTurnCount( const BTL_POKEPARAM* pp )
+{
+	return pp->turnCount;
+}
+//=============================================================================================
+/**
+ * 場に出た時のターン数を返す
+ *
+ * @param   pp		
+ *
+ * @retval  u16		
+ */
+//=============================================================================================
+u16 BTL_POKEPARAM_GetAppearTurn( const BTL_POKEPARAM* pp )
+{
+	return pp->appearedTurn;
 }
 //=============================================================================================
 /**
@@ -925,7 +958,6 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
 			}
 		}
 	}
-
 	if( pp->pokeSick == POKESICK_DOKU )
 	{
 		if( (pp->pokeSickCounter!=0) && (pp->pokeSickCounter < BTL_MOUDOKU_COUNT_MAX) )
@@ -933,6 +965,21 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
 			pp->pokeSickCounter++;
 		}
 	}
+}
+//=============================================================================================
+/**
+ * 場に入場した時のターンナンバーをセット
+ *
+ * @param   pp		
+ * @param   turn		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn )
+{
+	GF_ASSERT(turn < BTL_TURNCOUNT_MAX);
+	pp->appearedTurn = turn;
+	pp->turnCount = 0;
 }
 //=============================================================================================
 /**
@@ -945,6 +992,10 @@ void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp )
 void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp )
 {
 	flgbuf_clear( pp->turnFlag, sizeof(pp->turnFlag) );
+	if( pp->turnCount < BTL_TURNCOUNT_MAX )
+	{
+		pp->turnCount++;
+	}
 }
 //=============================================================================================
 /**

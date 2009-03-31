@@ -20,10 +20,23 @@ typedef struct _BTL_CLIENT		BTL_CLIENT;
 
 //--------------------------------------------------------------
 /**
- *	ワザ発動パラメータハンドラ型定義
+ *	逃げ・交換禁止コード
  */
 //--------------------------------------------------------------
-typedef struct _BTL_WAZA_EXE_PARAM	BTL_WAZA_EXE_PARAM;
+
+typedef enum {
+
+	BTL_CANTESC_START = 0,
+
+	BTL_CANTESC_KAGEFUMI = BTL_CANTESC_START,
+	BTL_CANTESC_ARIJIGOKU,
+	BTL_CANTESC_JIRYOKU,
+
+	BTL_CANTESC_MAX,
+	BTL_CANTESC_NULL = BTL_CANTESC_MAX,
+
+}BtlCantEscapeCode;
+
 
 //----------------------------------------------------------------------
 // 参照ヘッダ include 

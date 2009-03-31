@@ -168,6 +168,9 @@ extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
 extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_GetTurnFlag( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern BOOL BTL_POKEPARAM_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID );
+extern u16 BTL_POKEPARAM_GetTurnCount( const BTL_POKEPARAM* pp );
+extern u16 BTL_POKEPARAM_GetAppearTurn( const BTL_POKEPARAM* pp );
+
 
 //=============================================================================================
 /**
@@ -213,5 +216,11 @@ extern void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BTL_POKEPARAM_ResetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BTL_POKEPARAM_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok );
+extern void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );
+
+
+
+
+
 
 #endif
