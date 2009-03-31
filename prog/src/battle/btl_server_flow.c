@@ -259,6 +259,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 
 	SCQUE_Init( wk->que );
 	FlowFlg_ClearAll( wk );
+	BTL_EVENT_StartTurn();
 
 	alivePokeBefore = countAlivePokemon( wk );
 

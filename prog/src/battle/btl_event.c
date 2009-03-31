@@ -7,6 +7,9 @@
  * @date	2008.10.23	作成
  */
 //=============================================================================================
+
+#include "poke_tool\poketype.h"
+
 #include "btl_common.h"
 #include "btl_pokeparam.h"
 
@@ -35,8 +38,10 @@ struct _BTL_EVENT_FACTOR {
 	BtlEventFactor	factorType;
 	u32				priority;
 	int				work[ EVENT_HANDLER_WORK_ELEMS ];
+	u16				subID;
 	u8				pokeID;
-	u8				callingFlag;
+	u8				callingFlag : 1;
+	u8				sleepFlag : 1;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -46,6 +51,7 @@ static BTL_EVENT_FACTOR  Factors[ FACTOR_REGISTER_MAX ];
 static BTL_EVENT_FACTOR* FactorStack[ FACTOR_REGISTER_MAX ];
 static BTL_EVENT_FACTOR* FirstFactorPtr;
 static u16 StackPtr;
+
 
 /**
 *	イベント変数スタック
@@ -70,57 +76,11 @@ static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_
 static void varStack_Init( void );
 
 
-static BTL_EVENT_FACTOR* popFactor( void )
-{
-	if( StackPtr == FACTOR_REGISTER_MAX )
-	{
-		return NULL;
-	}
-	return FactorStack[ StackPtr++ ];
-}
-
-
-static void pushFactor( BTL_EVENT_FACTOR* factor )
-{
-	if( StackPtr == 0 )
-	{
-		GF_ASSERT(0);
-		return;
-	}
-	clearFactorWork( factor );	//値をクリアしてからスタックに積む
-	--StackPtr;
-	FactorStack[ StackPtr ] = factor;
-}
-
-static void clearFactorWork( BTL_EVENT_FACTOR* factor )
-{
-	GFL_STD_MemClear( factor, sizeof(factor) );
-}
-
-static inline u32 calcFactorPriority( BtlEventFactor factorType, u16 subPri )
-{
-	return (factorType << 16) | subPri;
-}
-
-static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork )
-{
-	if( factor->callingFlag == FALSE )
-	{
-		const BtlEventHandlerTable* tbl = factor->handlerTable;
-
-		int i;
-		for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
-		{
-			if( tbl[i].eventType == eventType )
-			{
-				factor->callingFlag = TRUE;
-				tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
-				factor->callingFlag = FALSE;
-			}
-		}
-	}
-}
-
+//=============================================================================================
+/**
+ * システム初期化	（バトル開始時、サーバマシンから１回呼び出す）
+ */
+//=============================================================================================
 void BTL_EVENT_InitSystem( void )
 {
 	int i;
@@ -137,20 +97,53 @@ void BTL_EVENT_InitSystem( void )
 	varStack_Init();
 }
 
-BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subPri, u8 pokeID, const BtlEventHandlerTable* handlerTable )
+
+//=============================================================================================
+/**
+ * ターンごとの初期化処理
+ */
+//=============================================================================================
+void BTL_EVENT_StartTurn( void )
+{
+	// スリープフラグを落とす
+	BTL_EVENT_FACTOR* factor;
+
+	for(factor=FirstFactorPtr; factor!=NULL; factor=factor->next)
+	{
+		factor->sleepFlag = FALSE;
+	}
+}
+
+
+//=============================================================================================
+/**
+ * 
+ *
+ * @param   factorType			ファクタータイプ
+ * @param   subID						タイプごとの個別ID（とくせいID，アイテムID等と一致）
+ * @param   priority				
+ * @param   pokeID					
+ * @param   handlerTable		
+ *
+ * @retval  BTL_EVENT_FACTOR*		
+ */
+//=============================================================================================
+BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subID, u16 priority, u8 pokeID, const BtlEventHandlerTable* handlerTable )
 {
 	BTL_EVENT_FACTOR* newFactor;
 
 	newFactor = popFactor();
 	if( newFactor )
 	{
-		newFactor->priority = calcFactorPriority( factorType, subPri );
+		newFactor->priority = calcFactorPriority( factorType, priority );
 		newFactor->factorType = factorType;
 		newFactor->prev = NULL;
 		newFactor->next = NULL;
 		newFactor->handlerTable = handlerTable;
 		newFactor->pokeID = pokeID;
+		newFactor->subID = subID;
 		newFactor->callingFlag = FALSE;
+		newFactor->sleepFlag = FALSE;
 		GFL_STD_MemClear( newFactor->work, sizeof(newFactor->work) );
 
 		// 最初の登録
@@ -224,9 +217,10 @@ void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 
 {
 	const BtlEventHandlerTable* handlerTable = factor->handlerTable;
 	BtlEventFactor type = factor->factorType;
+	u16 subID = factor->subID;
 
 	BTL_EVENT_FACTOR_Remove( factor );
-	BTL_EVENT_AddFactor( type, pri, pokeID, handlerTable );
+	BTL_EVENT_AddFactor( type, subID, pri, pokeID, handlerTable );
 }
 
 
@@ -257,7 +251,79 @@ BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactor factorType, u8 pokeID )
 	return NULL;
 }
 
+//=============================================================================================
+/**
+ * 特定タイプ＆サブIDのファクターを１ターン休止させる
+ *
+ * @param   type		
+ * @param   subID		
+ *
+ */
+//=============================================================================================
+void BTL_EVENT_SleepFactor( BtlEventFactor type, u16 subID )
+{
+	BTL_EVENT_FACTOR* factor;
 
+	for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
+	{
+		if( (factor->factorType == type) && (factor->subID == subID) )
+		{
+			factor->sleepFlag = TRUE;
+		}
+	}
+}
+
+
+static BTL_EVENT_FACTOR* popFactor( void )
+{
+	if( StackPtr == FACTOR_REGISTER_MAX )
+	{
+		return NULL;
+	}
+	return FactorStack[ StackPtr++ ];
+}
+
+
+static void pushFactor( BTL_EVENT_FACTOR* factor )
+{
+	if( StackPtr == 0 )
+	{
+		GF_ASSERT(0);
+		return;
+	}
+	clearFactorWork( factor );	//値をクリアしてからスタックに積む
+	--StackPtr;
+	FactorStack[ StackPtr ] = factor;
+}
+
+static void clearFactorWork( BTL_EVENT_FACTOR* factor )
+{
+	GFL_STD_MemClear( factor, sizeof(factor) );
+}
+
+static inline u32 calcFactorPriority( BtlEventFactor factorType, u16 subPri )
+{
+	return (factorType << 16) | subPri;
+}
+
+static void callHandlers( BTL_EVENT_FACTOR* factor, BtlEventType eventType, BTL_SVFLOW_WORK* flowWork )
+{
+	if( (factor->callingFlag == FALSE) && (factor->sleepFlag == FALSE) )
+	{
+		const BtlEventHandlerTable* tbl = factor->handlerTable;
+
+		int i;
+		for(i=0; tbl[i].eventType!=BTL_EVENT_NULL; i++)
+		{
+			if( tbl[i].eventType == eventType )
+			{
+				factor->callingFlag = TRUE;
+				tbl[i].handler( factor, flowWork, factor->pokeID, factor->work );
+				factor->callingFlag = FALSE;
+			}
+		}
+	}
+}
 
 
 //======================================================================================================

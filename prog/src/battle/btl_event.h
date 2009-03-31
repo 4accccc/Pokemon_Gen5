@@ -178,6 +178,7 @@ typedef enum {
 
 
 extern void BTL_EVENT_InitSystem( void );
+extern void BTL_EVENT_StartTurn( void );
 extern void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* server, BtlEventType type );
 
 

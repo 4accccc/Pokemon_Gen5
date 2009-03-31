@@ -28,9 +28,9 @@ static const BtlEventHandlerTable HandlerTable[] = {
 };
 
 
-BTL_EVENT_FACTOR*  HAND_TOK_ADD_Pressure( u16 pri, u8 pokeID )
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Pressure( u16 pri, u16 tokID, u8 pokeID )
 {
-	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, pri, pokeID, HandlerTable );
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
 }
 
 // BTL_EVENT_DECREMENT_PP:ワザを使ったポケモンのPPデクリメント計算
