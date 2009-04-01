@@ -29,6 +29,7 @@
 #define FLDMMDL_PL_NULL	//定義でプラチナで行っていた処理無効化
 //#define FLDMMDL_BLACT_HEAD3_TEST //定義で三頭身テスト
 #define DEBUG_FLDMMDL	//定義でデバッグ機能有効
+#define DEBUG_FLDMMDL_FRAME_60 //定義で1/60フレームで動く事を想定
 
 #ifdef DEBUG_FLDMMDL
 #define DEBUG_FLDMMDL_PRINT //定義でデバッグ出力有効

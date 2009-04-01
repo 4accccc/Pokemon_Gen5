@@ -475,6 +475,14 @@ u16 FLDMMDL_ChangeDirAcmdCode( u16 dir, u16 code )
 	GF_ASSERT( dir < DIR_MAX4 );
 	tbl = DATA_AcmdCodeDirChangeTbl;
 	
+#ifdef DEBUG_FLDMMDL_FRAME_60
+	if( code >= AC_WALK_U_8F && code <= AC_WALK_R_8F ){
+		code = AC_WALK_U_16F;
+	}else if( code >= AC_WALK_U_4F && code <= AC_WALK_R_4F ){
+		code = AC_WALK_U_8F;
+	}
+#endif
+	
 	do{
 		i = 0;
 		dir_tbl = *tbl;
@@ -1106,8 +1114,11 @@ static int AC_WalkR1F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_DashU4F_0( FLDMMDL * fmmdl )
 {
+#ifdef DEBUG_FLDMMDL_FRAME_60
+	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
+#else
 	AcWalkWorkInit( fmmdl, DIR_UP, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
-	
+#endif
 	return( TRUE );
 }
 
@@ -1120,8 +1131,11 @@ static int AC_DashU4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_DashD4F_0( FLDMMDL * fmmdl )
 {
+#ifdef DEBUG_FLDMMDL_FRAME_60
+	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
+#else	
 	AcWalkWorkInit( fmmdl, DIR_DOWN, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
-	
+#endif
 	return( TRUE );
 }
 
@@ -1134,8 +1148,11 @@ static int AC_DashD4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_DashL4F_0( FLDMMDL * fmmdl )
 {
+#ifdef DEBUG_FLDMMDL_FRAME_60
+	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
+#else
 	AcWalkWorkInit( fmmdl, DIR_LEFT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
-	
+#endif
 	return( TRUE );
 }
 
@@ -1148,8 +1165,11 @@ static int AC_DashL4F_0( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 static int AC_DashR4F_0( FLDMMDL * fmmdl )
 {
+#ifdef DEBUG_FLDMMDL_FRAME_60
+	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_8, GRID_FRAME_8, DRAW_STA_DASH_4F ); 
+#else
 	AcWalkWorkInit( fmmdl, DIR_RIGHT, GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_DASH_4F ); 
-	
+#endif
 	return( TRUE );
 }
 
