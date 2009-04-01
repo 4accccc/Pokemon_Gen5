@@ -1518,8 +1518,8 @@ BOOL Exploded_Update(BALLOON_GAME_PTR game)
 			if(storm->furihaba >= (128+32) << FX32_SHIFT){
 				storm->furihaba = (128+32) << FX32_SHIFT;
 			}
-			pos.x = BALLOON_APPEAR_POS_X + (FX_Mul(Sin360FX(storm->sec), storm->furihaba)) / FX32_ONE;
-			pos.y = BALLOON_APPEAR_POS_Y + (-FX_Mul(Cos360FX(storm->sec), storm->furihaba)) / FX32_ONE;
+			pos.x = BALLOON_APPEAR_POS_X + (FX_Mul(GFL_CALC_Sin360FX(storm->sec), storm->furihaba)) / FX32_ONE;
+			pos.y = BALLOON_APPEAR_POS_Y + (-FX_Mul(GFL_CALC_Cos360FX(storm->sec), storm->furihaba)) / FX32_ONE;
 			GFL_CLACT_WK_SetPos(storm->cap, &pos, CLSYS_DEFREND_SUB);
 			storm->delete_wait--;
 			eff_count++;
@@ -1540,8 +1540,8 @@ BOOL Exploded_Update(BALLOON_GAME_PTR game)
 			if(smoke->furihaba >= (128+32) << FX32_SHIFT){
 				smoke->furihaba = (128+32) << FX32_SHIFT;
 			}
-			pos.x = BALLOON_APPEAR_POS_X + (FX_Mul(Sin360FX(smoke->sec), smoke->furihaba)) / FX32_ONE;
-			pos.y = BALLOON_APPEAR_POS_Y + (-FX_Mul(Cos360FX(smoke->sec), smoke->furihaba)) / FX32_ONE;
+			pos.x = BALLOON_APPEAR_POS_X + (FX_Mul(GFL_CALC_Sin360FX(smoke->sec), smoke->furihaba)) / FX32_ONE;
+			pos.y = BALLOON_APPEAR_POS_Y + (-FX_Mul(GFL_CALC_Cos360FX(smoke->sec), smoke->furihaba)) / FX32_ONE;
 			GFL_CLACT_WK_SetPos(smoke->cap, &pos, CLSYS_DEFREND_SUB);
 			smoke->delete_wait--;
 			eff_count++;
@@ -1562,8 +1562,8 @@ BOOL Exploded_Update(BALLOON_GAME_PTR game)
 			if(chip->furihaba >= (128+32) << FX32_SHIFT){
 				chip->furihaba = (128+32) << FX32_SHIFT;
 			}
-			pos.x = BALLOON_APPEAR_POS_X + (FX_Mul(Sin360FX(chip->sec), chip->furihaba)) / FX32_ONE;
-			pos.y = BALLOON_APPEAR_POS_Y + (-FX_Mul(Cos360FX(chip->sec), chip->furihaba)) / FX32_ONE;
+			pos.x = BALLOON_APPEAR_POS_X + (FX_Mul(GFL_CALC_Sin360FX(chip->sec), chip->furihaba)) / FX32_ONE;
+			pos.y = BALLOON_APPEAR_POS_Y + (-FX_Mul(GFL_CALC_Cos360FX(chip->sec), chip->furihaba)) / FX32_ONE;
 			GFL_CLACT_WK_SetPos(chip->cap, &pos, CLSYS_DEFREND_SUB);
 			chip->delete_wait--;
 			eff_count++;
@@ -2229,10 +2229,10 @@ void Booster_ActorCreateAll(BALLOON_GAME_PTR game, BOOSTER_WORK *booster)
 
 	act_head = BoosterObjParam;
 	for(i = 0; i < BOOSTER_ACTOR_MAX; i++){
-		base_x = 256/2 + FX_Mul(Sin360FX(
+		base_x = 256/2 + FX_Mul(GFL_CALC_Sin360FX(
 			booster->theta + booster->move[i].start_theta), BOOSTER_FURIHABA_X);
 		base_y = 196/2 + (-FX_Mul(
-			Cos360FX(booster->theta + booster->move[i].start_theta), BOOSTER_FURIHABA_Y));
+			GFL_CALC_Cos360FX(booster->theta + booster->move[i].start_theta), BOOSTER_FURIHABA_Y));
 		
 		act_head.pos_x = base_x;
 		act_head.pos_y = base_y + BOOSTER_OFFSET_Y;
@@ -2561,7 +2561,7 @@ static int BoosterMove_Appear(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 		}
 
 		jump_theta = ((180 * move->local_frame) << FX32_SHIFT) / BOOSTER_APPEAR_FRAME;
-		jump_y = -(FX_Mul(Sin360FX(jump_theta), BOOSTER_APPEAR_JUMP_FURIHABA_Y)) / FX32_ONE;
+		jump_y = -(FX_Mul(GFL_CALC_Sin360FX(jump_theta), BOOSTER_APPEAR_JUMP_FURIHABA_Y)) / FX32_ONE;
 		srcpos.x = pos.x;
 		srcpos.y = pos.y + jump_y;
 		GFL_CLACT_WK_SetPos(move->cap, &srcpos, CLSYS_DEFREND_SUB);
@@ -2607,10 +2607,10 @@ static int BoosterMove_Normal(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOS
 	}
 	
 	jump_theta = ((180 * booster->frame) << FX32_SHIFT) / BoosterMoveDataTbl[booster->lap].move_frame;
-	offset_y = -(FX_Mul(Sin360FX(jump_theta), BOOSTER_JUMP_FURIHABA_Y)) / FX32_ONE;
+	offset_y = -(FX_Mul(GFL_CALC_Sin360FX(jump_theta), BOOSTER_JUMP_FURIHABA_Y)) / FX32_ONE;
 
-	base_x = 256/2 + FX_Mul(Sin360FX(booster->theta + move->start_theta), BOOSTER_FURIHABA_X);
-	base_y = 196/2 + (-FX_Mul(Cos360FX(booster->theta + move->start_theta), BOOSTER_FURIHABA_Y));
+	base_x = 256/2 + FX_Mul(GFL_CALC_Sin360FX(booster->theta + move->start_theta), BOOSTER_FURIHABA_X);
+	base_y = 196/2 + (-FX_Mul(GFL_CALC_Cos360FX(booster->theta + move->start_theta), BOOSTER_FURIHABA_Y));
 	pos.x = base_x;
 	pos.y = base_y + BOOSTER_OFFSET_Y + offset_y;
 //	OS_TPrintf("pos.x = %d, y = %d\n", pos.x, pos.y);
@@ -2722,8 +2722,8 @@ static int BoosterMove_Hit(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOSTER
 		next_byousin += move->start_theta / ((360 / BOOSTER_STOP_PART_NUM) << FX32_SHIFT);
 		next_byousin %= BOOSTER_STOP_PART_NUM;
 		
-		end_x = 256/2 + FX_Mul(Sin360FX((360<<FX32_SHIFT) / BOOSTER_STOP_PART_NUM * next_byousin), BOOSTER_FURIHABA_X);
-		end_y = 196/2 + (-FX_Mul(Cos360FX((360<<FX32_SHIFT) / BOOSTER_STOP_PART_NUM * next_byousin), BOOSTER_FURIHABA_Y));
+		end_x = 256/2 + FX_Mul(GFL_CALC_Sin360FX((360<<FX32_SHIFT) / BOOSTER_STOP_PART_NUM * next_byousin), BOOSTER_FURIHABA_X);
+		end_y = 196/2 + (-FX_Mul(GFL_CALC_Cos360FX((360<<FX32_SHIFT) / BOOSTER_STOP_PART_NUM * next_byousin), BOOSTER_FURIHABA_Y));
 		GFL_CLACT_WK_GetPos(move->cap, &start, CLSYS_DEFREND_SUB);
 		start.y -= BOOSTER_OFFSET_Y;
 		move->local_add_x = (end_x - start.x) * FX32_ONE / next_frame;
@@ -2740,7 +2740,7 @@ static int BoosterMove_Hit(BALLOON_GAME_PTR game, BOOSTER_WORK *booster, BOOSTER
 		move->local_fx_y += move->local_add_y;
 		
 		jump_theta = ((180 * move->local_frame) << FX32_SHIFT) / move->local_work;
-		jump_y = -(FX_Mul(Sin360FX(jump_theta), BOOSTER_JUMP_FURIHABA_Y)) / FX32_ONE;
+		jump_y = -(FX_Mul(GFL_CALC_Sin360FX(jump_theta), BOOSTER_JUMP_FURIHABA_Y)) / FX32_ONE;
 		
 		pos.x = move->local_fx_x / FX32_ONE;
 		pos.y = move->local_fx_y / FX32_ONE + BOOSTER_OFFSET_Y + jump_y;

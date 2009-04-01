@@ -66,7 +66,7 @@
 //--------------------------------------------------------------
 #define FOOTPRINT_CAMERA_MODE			GF_CAMERA_PERSPECTIV	//(GF_CAMERA_ORTHO)
 
-#define FOOTPRINT_CAMERA_PERSPWAY		(FX_GET_ROTA_NUM(22))
+#define FOOTPRINT_CAMERA_PERSPWAY		(GFL_CALC_GET_ROTA_NUM(22))
 #define FOOTPRINT_CAMERA_NEAR			( FX32_ONE )
 #define FOOTPRINT_CAMERA_FAR			( FX32_ONE * 900 )
 #define FOOTPRINT_CAMERA_TX				( 0 )		/// target
@@ -78,7 +78,7 @@
 
 ///ÉJÉÅÉâÉAÉìÉOÉã
 static const CAMERA_ANGLE FootprintCameraAngle = {
-	FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(0),
+	GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(0),
 };
 
 //--------------------------------------------------------------

@@ -1636,7 +1636,7 @@ static void CursorColTrans(u16 *CursorCol)
 		*CursorCol = 0;
 	}
 
-	sin = Sin360R(*CursorCol);
+	sin = GFL_CALC_Sin360R(*CursorCol);
 	g   = 15 +( sin * 10 ) / FX32_ONE;
 	tmp = GX_RGB(29,g,0);
 

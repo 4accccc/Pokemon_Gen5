@@ -2390,8 +2390,8 @@ static void demo_tcb_set_last_main( DEMO_WORK* wk )
 		{	
 			int rand	= gf_rand() % 360;
 			int range	= 64 + ( gf_rand() % 32 );			
-			pos.x = wk->pat_m[ i ].target_mtx.x + ( Sin360R( rand ) * range );
-			pos.y = wk->pat_m[ i ].target_mtx.y + ( Cos360R( rand ) * range );
+			pos.x = wk->pat_m[ i ].target_mtx.x + ( GFL_CALC_GFL_CALC_Sin360R( rand ) * range );
+			pos.y = wk->pat_m[ i ].target_mtx.y + ( GFL_CALC_GFL_CALC_Cos360R( rand ) * range );
 			CLACT_SetMatrix( wk->pat_m[ i ].act1, &pos );
 		}
 
@@ -2553,33 +2553,33 @@ static void Particle_TCB( TCB_PTR tcb, void* work )
 				{
 					wk->range_rad += DEMO_ROT_ADD;;
 					wk->range_rad %= 360;
-					wk->rot_range_x = ( Cos360R( wk->range_rad ) * wk->rot_range_m ) >> FX32_SHIFT;
-					act1_mtx.x = wk->target_mtx.x + ( Sin360R( wk->rot_rad ) * wk->rot_range_x * +1 );
-					act1_mtx.y = wk->target_mtx.y + ( Cos360R( wk->rot_rad ) * wk->rot_range_y * +1 );				
+					wk->rot_range_x = ( GFL_CALC_Cos360R( wk->range_rad ) * wk->rot_range_m ) >> FX32_SHIFT;
+					act1_mtx.x = wk->target_mtx.x + ( GFL_CALC_GFL_CALC_Sin360R( wk->rot_rad ) * wk->rot_range_x * +1 );
+					act1_mtx.y = wk->target_mtx.y + ( GFL_CALC_GFL_CALC_Cos360R( wk->rot_rad ) * wk->rot_range_y * +1 );				
 				}				
 				else if ( wk->type == 1 )
 				{
 					wk->range_rad += DEMO_ROT_ADD;;
 					wk->range_rad %= 360;
-					wk->rot_range_y = ( Sin360R( wk->range_rad ) * wk->rot_range_m ) >> FX32_SHIFT;
-					act1_mtx.x = wk->target_mtx.x + ( Sin360R( wk->rot_rad ) * wk->rot_range_x * +1 );
-					act1_mtx.y = wk->target_mtx.y + ( Cos360R( wk->rot_rad ) * wk->rot_range_y * +1 );
+					wk->rot_range_y = ( GFL_CALC_GFL_CALC_Sin360R( wk->range_rad ) * wk->rot_range_m ) >> FX32_SHIFT;
+					act1_mtx.x = wk->target_mtx.x + ( GFL_CALC_GFL_CALC_Sin360R( wk->rot_rad ) * wk->rot_range_x * +1 );
+					act1_mtx.y = wk->target_mtx.y + ( GFL_CALC_Cos360R( wk->rot_rad ) * wk->rot_range_y * +1 );
 				}
 				else if ( wk->type == 2 )
 				{
 					wk->range_rad += DEMO_ROT_ADD;;
 					wk->range_rad %= 360;
-					wk->rot_range_y = ( Sin360R( wk->range_rad ) * wk->rot_range_m ) >> FX32_SHIFT;
-					act1_mtx.x = wk->target_mtx.x + ( Sin360R( wk->rot_rad ) * wk->rot_range_x * -1 );
-					act1_mtx.y = wk->target_mtx.y + ( Cos360R( wk->rot_rad ) * wk->rot_range_y * -1 );					
+					wk->rot_range_y = ( GFL_CALC_GFL_CALC_Sin360R( wk->range_rad ) * wk->rot_range_m ) >> FX32_SHIFT;
+					act1_mtx.x = wk->target_mtx.x + ( GFL_CALC_GFL_CALC_Sin360R( wk->rot_rad ) * wk->rot_range_x * -1 );
+					act1_mtx.y = wk->target_mtx.y + ( GFL_CALC_Cos360R( wk->rot_rad ) * wk->rot_range_y * -1 );					
 				}
 				else if ( wk->type == 3 )
 				{
 					wk->range_rad += DEMO_ROT_ADD;;
 					wk->range_rad %= 360;
-					wk->rot_range_x = ( Cos360R( wk->range_rad ) * wk->rot_range_m ) >> FX32_SHIFT;
-					act1_mtx.x = wk->target_mtx.x + ( Sin360R( wk->rot_rad ) * wk->rot_range_x * -1 );
-					act1_mtx.y = wk->target_mtx.y + ( Cos360R( wk->rot_rad ) * wk->rot_range_y * -1 );
+					wk->rot_range_x = ( GFL_CALC_Cos360R( wk->range_rad ) * wk->rot_range_m ) >> FX32_SHIFT;
+					act1_mtx.x = wk->target_mtx.x + ( GFL_CALC_GFL_CALC_Sin360R( wk->rot_rad ) * wk->rot_range_x * -1 );
+					act1_mtx.y = wk->target_mtx.y + ( GFL_CALC_Cos360R( wk->rot_rad ) * wk->rot_range_y * -1 );
 				}
 				else if ( wk->type == 4 )
 				{
@@ -2590,8 +2590,8 @@ static void Particle_TCB( TCB_PTR tcb, void* work )
 
 					wk->rot_range_x = wk->rot_range_m;
 					wk->rot_range_y = wk->rot_range_m;
-					act1_mtx.x = wk->target_mtx.x + ( Sin360R( wk->rot_rad ) * wk->rot_range_x * +1 );
-					act1_mtx.y = wk->target_mtx.y + ( Cos360R( wk->rot_rad ) * wk->rot_range_y * +1 );
+					act1_mtx.x = wk->target_mtx.x + ( GFL_CALC_GFL_CALC_Sin360R( wk->rot_rad ) * wk->rot_range_x * +1 );
+					act1_mtx.y = wk->target_mtx.y + ( GFL_CALC_Cos360R( wk->rot_rad ) * wk->rot_range_y * +1 );
 				}				
 				else if ( wk->type == 5 )
 				{
@@ -2602,8 +2602,8 @@ static void Particle_TCB( TCB_PTR tcb, void* work )
 
 					wk->rot_range_x = wk->rot_range_m;
 					wk->rot_range_y = wk->rot_range_m;
-					act1_mtx.x = wk->target_mtx.x + ( Sin360R( wk->rot_rad ) * wk->rot_range_x * -1 );
-					act1_mtx.y = wk->target_mtx.y + ( Cos360R( wk->rot_rad ) * wk->rot_range_y * -1 );
+					act1_mtx.x = wk->target_mtx.x + ( GFL_CALC_Sin360R( wk->rot_rad ) * wk->rot_range_x * -1 );
+					act1_mtx.y = wk->target_mtx.y + ( GFL_CALC_Cos360R( wk->rot_rad ) * wk->rot_range_y * -1 );
 				}
 				else 
 				{

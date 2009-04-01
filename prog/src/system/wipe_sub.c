@@ -1862,7 +1862,7 @@ BOOL WipeFunc32(WIPE_SYS_WIPE_WORK* wipe)
 {
 	if(wipe->sequence == WIPE_INIT){
 		WIPE_TYPE_WND_SCREW_FP param = {
-			FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(179),	
+			GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(179),	
 			GX_BLEND_PLANEMASK_BD,
 			GX_BLEND_ALL,
 			WIPE_FADE_OUT
@@ -1894,7 +1894,7 @@ BOOL WipeFunc33(WIPE_SYS_WIPE_WORK* wipe)
 {
 	if(wipe->sequence == WIPE_INIT){
 		WIPE_TYPE_WND_SCREW_FP param = {
-			FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(179),	
+			GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(179),	
 			GX_BLEND_ALL,
 			GX_BLEND_PLANEMASK_BD,
 			WIPE_FADE_IN
@@ -1926,7 +1926,7 @@ BOOL WipeFunc34(WIPE_SYS_WIPE_WORK* wipe)
 {
 	if(wipe->sequence == WIPE_INIT){
 		WIPE_TYPE_WND_FLASH_FOUR_FP param = {
-			FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(45), 
+			GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(45), 
 			GX_BLEND_ALL,
 			GX_BLEND_PLANEMASK_BD,
 			WIPE_FADE_OUT
@@ -1958,7 +1958,7 @@ BOOL WipeFunc35(WIPE_SYS_WIPE_WORK* wipe)
 {
 	if(wipe->sequence == WIPE_INIT){
 		WIPE_TYPE_WND_FLASH_FOUR_FP param = {
-			FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(45),	// 45にうしないと隙間があいてしまった。
+			GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(45),	// 45にうしないと隙間があいてしまった。
 			GX_BLEND_PLANEMASK_BD,
 			GX_BLEND_ALL,
 			WIPE_FADE_IN
@@ -4584,14 +4584,14 @@ static void scchg_WndScrewSum(WIPE_TYPE_WND_SCREW* work)
 	// ウィンドウ0は 終点128-(y*tan(rota))  始点0
 	// ウィンドウ1は 始点128+(y*tan(rota))  終点255
 	
-	rota_num = work->screw.rota % FX_GET_ROTA_NUM( 90 );
+	rota_num = work->screw.rota % GFL_CALC_GET_ROTA_NUM( 90 );
 	
 	one0 = scchg_h_WndIdxDataGet(&work->hb, 0);
 	one1 = scchg_h_WndIdxDataGet(&work->hb, 1);
 	// 考えやすいので、ウィンドウ1の方で計算して
 	// 計算結果をサブにXY反転して設定する
 	for( i=0; i<96; i++ ){
-		if( work->screw.rota < FX_GET_ROTA_NUM( 90 ) ){
+		if( work->screw.rota < GFL_CALC_GET_ROTA_NUM( 90 ) ){
 			x1 = 128;
 
 			// 回転角と高さから作られる３角形の幅を求める
@@ -4616,7 +4616,7 @@ static void scchg_WndScrewSum(WIPE_TYPE_WND_SCREW* work)
 	}
 
 	for( i=96; i<192; i++ ){
-		if( work->screw.rota < FX_GET_ROTA_NUM( 90 ) ){
+		if( work->screw.rota < GFL_CALC_GET_ROTA_NUM( 90 ) ){
 			one0->wnd_tmp[0][191 - i] = 128;
 			one0->wnd_tmp[1][191 - i] = 128;
 
@@ -4624,7 +4624,7 @@ static void scchg_WndScrewSum(WIPE_TYPE_WND_SCREW* work)
 			one1->wnd_tmp[1][i] = 128;
 		}else{
 			// 回転角と高さから作られる３角形の幅を求める
-			x1 = sub_rota_height_width_one( FX_GET_ROTA_NUM( 90 ) - rota_num, (i - 96) );
+			x1 = sub_rota_height_width_one( GFL_CALC_GET_ROTA_NUM( 90 ) - rota_num, (i - 96) );
 
 			if( x1 > 127 ){
 				x1 = 127;
@@ -4862,7 +4862,7 @@ static void scchg_WndFlashFourSum(WIPE_TYPE_WND_FLASH_FOUR* work)
 	for( i=0; i<96; i++ ){
 		// 回転角と高さから作られる３角形の幅を求める
 		x1 = sub_rota_height_width_one( rota_num, (96 - i) );
-		x2 = sub_rota_height_width_one( FX_GET_ROTA_NUM(90) - rota_num, (96 - i) );
+		x2 = sub_rota_height_width_one( GFL_CALC_GET_ROTA_NUM(90) - rota_num, (96 - i) );
 		if( x1 > 127 ){
 			x1 = 127;
 		}

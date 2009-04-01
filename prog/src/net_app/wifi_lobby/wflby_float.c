@@ -77,7 +77,7 @@ enum {
 //=====================================
 #define WFLBY_FLOAT_SHAKE_NRM_COUNT_MAX		( 8 )
 #define WFLBY_FLOAT_SHAKE_NRM_COUNT_MOVEY	( 2 )
-#define WFLBY_FLOAT_SHAKE_NRM_COUNT_ROT		( RotKeyR( 5 ) )
+#define WFLBY_FLOAT_SHAKE_NRM_COUNT_ROT		( GFL_CALC_RotKeyR( 5 ) )
 #define WFLBY_FLOAT_SHAKE_NRM_COUNT_ROOP	( 4 )
 
 //-------------------------------------
@@ -85,7 +85,7 @@ enum {
 //=====================================
 #define WFLBY_FLOAT_SHAKE_NRMBIG_COUNT_MAX		( 16 )
 #define WFLBY_FLOAT_SHAKE_NRMBIG_COUNT_MOVEY	( 4 )
-#define WFLBY_FLOAT_SHAKE_NRMBIG_COUNT_ROT		( RotKeyR( 10 ) )
+#define WFLBY_FLOAT_SHAKE_NRMBIG_COUNT_ROT		( GFL_CALC_RotKeyR( 10 ) )
 #define WFLBY_FLOAT_SHAKE_NRMBIG_COUNT_ROOP		( 2 )
 
 

@@ -500,7 +500,6 @@ static BOOL GetCursorVec( MOUSE_EVENT_SYS* mes, u32 tpx, u32 tpy, VecFx32* curso
 {
 	VecFx32 posRay, vecRay, posRef, vecN;
 	VecFx32 pNear, pFar;
-	GFL_G3D_CALC_RESULT result;
 
 	//タッチパネル座標→ワールド座標系への変換 -1でビューポート外
 	if( NNS_G3dScrPosToWorldLine( tpx, tpy, &pNear, &pFar ) == -1 ){

@@ -1919,7 +1919,7 @@ static STAMP_RET StampMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		if(dakou->theta >= (360 << FX32_SHIFT)){
 			dakou->theta -= 360 << FX32_SHIFT;
 		}
-		offset_y = FX_Mul(Sin360FX(dakou->theta), DAKOU_FURIHABA_Y);// - DAKOU_FURIHABA_Y/2;
+		offset_y = FX_Mul(GFL_CALC_Sin360FX(dakou->theta), DAKOU_FURIHABA_Y);// - DAKOU_FURIHABA_Y/2;
 		D3DOBJ_SetMatrix(&move->obj, fx_x - DAKOU_ADD_X, dakou->center_y + offset_y, fx_z);
 		break;
 	}
@@ -2111,7 +2111,7 @@ static STAMP_RET StampMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		if(yure->theta >= (360 << FX32_SHIFT)){
 			yure->theta -= 360 << FX32_SHIFT;
 		}
-		offset_x = FX_Mul(Sin360FX(yure->theta), YURE_FURIHABA_X);
+		offset_x = FX_Mul(GFL_CALC_Sin360FX(yure->theta), YURE_FURIHABA_X);
 		D3DOBJ_SetMatrix(&move->obj, yure->center_x + offset_x, fx_y - YURE_ADD_Y, fx_z);
 		break;
 	}
@@ -2247,7 +2247,7 @@ static STAMP_RET StampMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		if(brar_x->theta >= (360 << FX32_SHIFT)){
 			brar_x->theta -= 360 << FX32_SHIFT;
 		}
-		offset = FX_Mul(Sin360FX(brar_x->theta), BRAR_X_FURIHABA);
+		offset = FX_Mul(GFL_CALC_Sin360FX(brar_x->theta), BRAR_X_FURIHABA);
 
 		//POS SET
 		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
@@ -2371,7 +2371,7 @@ static STAMP_RET StampMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move)
 		if(brar_y->theta >= (360 << FX32_SHIFT)){
 			brar_y->theta -= 360 << FX32_SHIFT;
 		}
-		offset = FX_Mul(Sin360FX(brar_y->theta), BRAR_Y_FURIHABA);
+		offset = FX_Mul(GFL_CALC_Sin360FX(brar_y->theta), BRAR_Y_FURIHABA);
 
 		//POS SET
 		D3DOBJ_GetMatrix(&move->obj, &fx_x, &fx_y, &fx_z);
@@ -2877,7 +2877,7 @@ static BOOL SpecialMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL
 				sp_yure->theta = 0;
 			}
 		}
-		offset = FX_Mul(Sin360FX(sp_yure->theta), SP_YURE_FURIHABA_X);
+		offset = FX_Mul(GFL_CALC_Sin360FX(sp_yure->theta), SP_YURE_FURIHABA_X);
 
 		angle = sp_yure->default_angle;
 		angle.y = offset;
@@ -2970,7 +2970,7 @@ static BOOL SpecialMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 				sp_brar_x->theta = 0;
 			}
 		}
-		offset_x = FX_Mul(Sin360FX(sp_brar_x->theta), SP_BRAR_X_FURIHABA_X);
+		offset_x = FX_Mul(GFL_CALC_Sin360FX(sp_brar_x->theta), SP_BRAR_X_FURIHABA_X);
 
 		move.x = offset_x;
 		GFC_SetLookTarget(&sp_brar_x->default_target, camera_ptr);
@@ -3016,7 +3016,7 @@ static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
 				sp_brar_y->theta = 0;
 			}
 		}
-		offset_y = FX_Mul(Sin360FX(sp_brar_y->theta), SP_BRAR_Y_FURIHABA_Y);
+		offset_y = FX_Mul(GFL_CALC_Sin360FX(sp_brar_y->theta), SP_BRAR_Y_FURIHABA_Y);
 
 		move.y = offset_y;
 		GFC_SetLookTarget(&sp_brar_y->default_target, camera_ptr);

@@ -500,8 +500,8 @@ void BB_Stardust_Call( BB_CLIENT* wk, s16 x, s16 y )
 
 static inline void BB_Client_HanabiRadSet( EFFECT_ONE* wk )
 {
-	wk->rx  = FX_Mul( Sin360R( wk->angle ), FX32_CONST( wk->range_x ) );
-	wk->ry  = FX_Mul( Cos360R( wk->angle ), FX32_CONST( wk->range_y ) );
+	wk->rx  = FX_Mul( GFL_CALC_Sin360R( wk->angle ), FX32_CONST( wk->range_x ) );
+	wk->ry  = FX_Mul( GFL_CALC_Cos360R( wk->angle ), FX32_CONST( wk->range_y ) );
 }
 
 static inline void BB_Client_HanabiPosUpdate( EFFECT_ONE* wk, fx32 x, fx32 y )
@@ -1367,15 +1367,15 @@ static void Fever01_TCB( GFL_TCB* tcb, void* work )
 		GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ 0 ].cap, TRUE );
 		{
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ 0 ].cap, &px, &py, BB_SURFACE_Y_FX );			
-			ox = ( mvwk->main[ 0 ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->main[ 0 ].rad ) * mvwk->main[ 0 ].rx );
-			oy = ( mvwk->main[ 0 ].cy << FX32_SHIFT ) + ( Cos360R( mvwk->main[ 0 ].rad ) * mvwk->main[ 0 ].ry );			
+			ox = ( mvwk->main[ 0 ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->main[ 0 ].rad ) * mvwk->main[ 0 ].rx );
+			oy = ( mvwk->main[ 0 ].cy << FX32_SHIFT ) + ( GFL_CALC_Cos360R( mvwk->main[ 0 ].rad ) * mvwk->main[ 0 ].ry );			
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->main[ 0 ].cap, ox, oy, BB_SURFACE_Y_FX );
 			BB_MoveInit_FX( &mvwk->main[ 0 ].mx, ox, ox + FX32_CONST( 180 ), BB_MOVE_SPEED_GET( mvwk->speed_m ) );
 			BB_MoveInit_FX( &mvwk->main[ 0 ].my, oy, oy - FX32_CONST(  BB_LIGHT_RY ), BB_MOVE_SPEED_GET( mvwk->speed_m ) );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->sub[ 0 ].cap, &px, &py, BB_SURFACE_Y_FX );			
-			ox = ( mvwk->sub[ 0 ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->sub[ 0 ].rad ) * mvwk->sub[ 0 ].rx );
-			oy = ( mvwk->sub[ 0 ].cy << FX32_SHIFT ) - ( Cos360R( mvwk->sub[ 0 ].rad ) * mvwk->sub[ 0 ].ry );			
+			ox = ( mvwk->sub[ 0 ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->sub[ 0 ].rad ) * mvwk->sub[ 0 ].rx );
+			oy = ( mvwk->sub[ 0 ].cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( mvwk->sub[ 0 ].rad ) * mvwk->sub[ 0 ].ry );			
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->sub[ 0 ].cap, ox, oy, BB_SURFACE_Y_FX );
 			BB_MoveInit_FX( &mvwk->sub[ 0 ].mx, ox, ox - FX32_CONST( 180 ), BB_MOVE_SPEED_GET( mvwk->speed ) );
 			BB_MoveInit_FX( &mvwk->sub[ 0 ].my, oy, oy + FX32_CONST(  BB_LIGHT_RY ), BB_MOVE_SPEED_GET( mvwk->speed ) );
@@ -1571,12 +1571,12 @@ static BOOL Roll( BB_LIGHT* wk, int speed, int dir_lr, int num )
 		}
 		CATS_ObjectPosGetCapFx32_SubSurface( wk->cap, &px, &py, BB_SURFACE_Y_FX );		
 		if ( dir_lr == BB_DIR_L ){
-			ox = ( wk->cx << FX32_SHIFT ) - ( Sin360R( wk->rad ) * wk->rx );
-			oy = ( wk->cy << FX32_SHIFT ) - ( Cos360R( wk->rad ) * wk->ry );			
+			ox = ( wk->cx << FX32_SHIFT ) - ( GFL_CALC_Sin360R( wk->rad ) * wk->rx );
+			oy = ( wk->cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( wk->rad ) * wk->ry );			
 		}
 		else {
-			ox = ( wk->cx << FX32_SHIFT ) + ( Sin360R( wk->rad ) * wk->rx );
-			oy = ( wk->cy << FX32_SHIFT ) - ( Cos360R( wk->rad ) * wk->ry );
+			ox = ( wk->cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( wk->rad ) * wk->rx );
+			oy = ( wk->cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( wk->rad ) * wk->ry );
 		}
 		CATS_ObjectPosSetCapFx32_SubSurface( wk->cap, ox, oy, BB_SURFACE_Y_FX );
 		if ( wk->rad == 0 ){
@@ -1629,13 +1629,13 @@ static void Fever02_TCB( GFL_TCB* tcb, void* work )
 			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
-			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
-			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
+			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
+			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( GFL_CALC_Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->main[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->sub[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
-			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
-			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
+			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
+			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->sub[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
 		}
 		MoveInit( &mvwk->sub[ 0 ] );
@@ -1758,13 +1758,13 @@ static void Fever03_TCB( GFL_TCB* tcb, void* work )
 			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
-			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
-			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
+			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
+			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( GFL_CALC_Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->main[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->sub[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
-			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
-			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
+			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
+			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->sub[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
 		}
 		MoveInit( &mvwk->sub[ 0 ] );
@@ -1887,13 +1887,13 @@ static void Fever04_TCB( GFL_TCB* tcb, void* work )
 			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
-			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
-			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
+			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
+			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( GFL_CALC_Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->main[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->sub[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
-			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
-			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
+			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
+			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->sub[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
 		}
 		MoveInit( &mvwk->sub[ 0 ] );
@@ -2035,13 +2035,13 @@ static void Fever05_TCB( GFL_TCB* tcb, void* work )
 			GFL_CLACT_WK_SetDrawEnable( mvwk->sub[ i ].cap, TRUE );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->main[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
-			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
-			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
+			ox = ( mvwk->main[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].rx );
+			oy = ( mvwk->main[ i ].cy << FX32_SHIFT ) + ( GFL_CALC_Cos360R( mvwk->main[ i ].rad ) * mvwk->main[ i ].ry );			
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->main[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
 			
 			CATS_ObjectPosGetCapFx32_SubSurface( mvwk->sub[ i ].cap, &px, &py, BB_SURFACE_Y_FX );			
-			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
-			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
+			ox = ( mvwk->sub[ i ].cx << FX32_SHIFT ) + ( GFL_CALC_Sin360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].rx );
+			oy = ( mvwk->sub[ i ].cy << FX32_SHIFT ) - ( GFL_CALC_Cos360R( mvwk->sub[ i ].rad ) * mvwk->sub[ i ].ry );			
 			CATS_ObjectPosSetCapFx32_SubSurface( mvwk->sub[ i ].cap, ox, oy, BB_SURFACE_Y_FX );
 		}
 		OS_Printf( " ‚±‚±‚±\n" );

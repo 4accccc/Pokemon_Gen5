@@ -316,18 +316,18 @@ enum{
     BCT_MARUNOMU_MOUTH_HIT_NEAR,// à¯óÕî≠ê∂ÅI
 } ;
 #define BCT_MARUNOMU_SCALE      (FX32_CONST(1.50f))
-#define BCT_MARUNOMU_ROTA_X_MIN			( FX_GET_ROTA_NUM( 20 ) )	// åXéŒç≈è¨íl
-#define BCT_MARUNOMU_ROTA_X_INIT        ( FX_GET_ROTA_NUM( 20 ) )    // É}ÉãÉmÅ[ÉÄÇÃå˚ÇÃåXÇ´
-#define BCT_MARUNOMU_ROTA_X_ADD         ( FX_GET_ROTA_NUM( 30 ) )   // É}ÉãÉmÅ[ÉÄÇÃå˚ÇÃåXÇ´
+#define BCT_MARUNOMU_ROTA_X_MIN			( GFL_CALC_GET_ROTA_NUM( 20 ) )	// åXéŒç≈è¨íl
+#define BCT_MARUNOMU_ROTA_X_INIT        ( GFL_CALC_GET_ROTA_NUM( 20 ) )    // É}ÉãÉmÅ[ÉÄÇÃå˚ÇÃåXÇ´
+#define BCT_MARUNOMU_ROTA_X_ADD         ( GFL_CALC_GET_ROTA_NUM( 30 ) )   // É}ÉãÉmÅ[ÉÄÇÃå˚ÇÃåXÇ´
 #define BCT_MARUNOMU_ROTA_X_MAX_360		( 90 )	// ç≈ëÂåXéŒ
-#define BCT_MARUNOMU_ROTA_X_MAX			( FX_GET_ROTA_NUM( BCT_MARUNOMU_ROTA_X_MAX_360 ) )	// ç≈ëÂåXéŒ
+#define BCT_MARUNOMU_ROTA_X_MAX			( GFL_CALC_GET_ROTA_NUM( BCT_MARUNOMU_ROTA_X_MAX_360 ) )	// ç≈ëÂåXéŒ
 #define BCT_MARUNOMU_ROTA_X_DIF			( BCT_MARUNOMU_ROTA_X_MAX - BCT_MARUNOMU_ROTA_X_MIN )	// MINÇ∆MAXÇÃç∑
-#define BCT_MARUNOMU_ROTA_X_ADD_SUB ( FX_GET_ROTA_NUM( 8 ) )    // ï‚ê≥ín
-#define BCT_MARUNOMU_ROTA_INIT			( FX_GET_ROTA_NUM( 180 ) )	// Yé≤âÒì]èâä˙íl
+#define BCT_MARUNOMU_ROTA_X_ADD_SUB ( GFL_CALC_GET_ROTA_NUM( 8 ) )    // ï‚ê≥ín
+#define BCT_MARUNOMU_ROTA_INIT			( GFL_CALC_GET_ROTA_NUM( 180 ) )	// Yé≤âÒì]èâä˙íl
 #define BCT_MARUNOMU_ROTA_SPEED_INIT    ( 128 )
 #define BCT_MARUNOMU_ROTA_SPEED_ADD     ( 360 ) // INITÇ…ë´Ç∑ç≈ëÂíl
 #define BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ( 96 )  // ï‚ê≥ín
-#define BCT_MARUNOMU_DRAWROTA_ADD       ( FX_GET_ROTA_NUM( 0 ) )  // ï\é¶Ç≈ï‚ê≥Ç∑ÇÈâÒì]äp
+#define BCT_MARUNOMU_DRAWROTA_ADD       ( GFL_CALC_GET_ROTA_NUM( 0 ) )  // ï\é¶Ç≈ï‚ê≥Ç∑ÇÈâÒì]äp
 #define BCT_MARUNOMU_ROTACOUNT_ONE		( 1000 )
 #define BCT_MARUNOMU_ROTACOUNT_GETNUM(x) ((x)*BCT_MARUNOMU_ROTACOUNT_ONE)
 
@@ -361,20 +361,20 @@ static const u16 BCT_NUTS_FIELD_NetIDRota[ BCT_PLAYER_NUM ][ BCT_PLAYER_NUM ] = 
     },
     {   // 2êl
         0,
-        FX_GET_ROTA_NUM( 180 ),
+        GFL_CALC_GET_ROTA_NUM( 180 ),
         0,0
     },
     {   // 3êl
         0,
-        FX_GET_ROTA_NUM( 120 ),
-        FX_GET_ROTA_NUM( 240 ),
+        GFL_CALC_GET_ROTA_NUM( 120 ),
+        GFL_CALC_GET_ROTA_NUM( 240 ),
         0
     },
     {   // 4êl
         0,
-        FX_GET_ROTA_NUM( 180 ),
-        FX_GET_ROTA_NUM( 90 ),
-        FX_GET_ROTA_NUM( 270 ),
+        GFL_CALC_GET_ROTA_NUM( 180 ),
+        GFL_CALC_GET_ROTA_NUM( 90 ),
+        GFL_CALC_GET_ROTA_NUM( 270 ),
     }
 };
 
@@ -383,9 +383,9 @@ static const u16 BCT_NUTS_FIELD_NetIDRota[ BCT_PLAYER_NUM ][ BCT_PLAYER_NUM ] = 
 #define BCT_CAMERA_TARGET_Y ( 0 )
 #define BCT_CAMERA_TARGET_Z ( 0 )
 #define BCT_CAMERA_ANGLE_X  ( 0xf112 )
-#define BCT_CAMERA_ANGLE_Z  ( FX_GET_ROTA_NUM( 0 ) )
+#define BCT_CAMERA_ANGLE_Z  ( GFL_CALC_GET_ROTA_NUM( 0 ) )
 #define BCT_CAMERA_DISTANCE ( 0x1d9000 )
-#define BCT_CAMERA_PEARCE   ( FX_GET_ROTA_NUM( 22 ) )
+#define BCT_CAMERA_PEARCE   ( GFL_CALC_GET_ROTA_NUM( 22 ) )
 #define BCT_CAMERA_UP       ( FX32_ONE )
 #define BCT_CAMERA_NEAR		( FX32_CONST(200) )
 #define BCT_CAMERA_FAR		( FX32_CONST(1000) )
@@ -394,21 +394,21 @@ static const u16 BCT_CAMERA_ANGLEY_NetID[ BCT_PLAYER_NUM ][ BCT_PLAYER_NUM ] = {
         0,0,0,0,
 	},
     {   // 2êl
-        FX_GET_ROTA_NUM( 180 ),
+        GFL_CALC_GET_ROTA_NUM( 180 ),
         0,
         0,0,
     },
     {   // 3êl
-        FX_GET_ROTA_NUM( 180 ),
-        FX_GET_ROTA_NUM( 300 ),
-        FX_GET_ROTA_NUM( 60 ),
+        GFL_CALC_GET_ROTA_NUM( 180 ),
+        GFL_CALC_GET_ROTA_NUM( 300 ),
+        GFL_CALC_GET_ROTA_NUM( 60 ),
         0,
     },
     {   // 4êl
-        FX_GET_ROTA_NUM( 180 ),
+        GFL_CALC_GET_ROTA_NUM( 180 ),
         0,
-        FX_GET_ROTA_NUM( 270 ),
-        FX_GET_ROTA_NUM( 90 ),
+        GFL_CALC_GET_ROTA_NUM( 270 ),
+        GFL_CALC_GET_ROTA_NUM( 90 ),
     },
 };
 
@@ -3497,7 +3497,7 @@ static u16 BCT_CLIENT_MarunomuParRotaGetEx( s32 par, s32 max_par, u16 start, u16
 
 	//  ï‚ê≥ílÇãÅÇﬂÇÈ
 	rota = (par*180) / max_par;
-	add = FX_Mul( Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_X_ADD_SUB ) ) >> FX32_SHIFT;
+	add = FX_Mul( GFL_CALC_Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_X_ADD_SUB ) ) >> FX32_SHIFT;
 	rota = ((par*div) / max_par) + add;
 
 	return (u16)(rota + start);
@@ -3527,13 +3527,13 @@ static u16 BCT_CLIENT_MarunomuRotaSpeedGet( s32 time, s32 max_time )
     if( par < BCT_MARUNOMU_ROTACOUNT_GETNUM(1) ){
         //  ï‚ê≥ílÇãÅÇﬂÇÈ
         rota = (par*180) / BCT_MARUNOMU_ROTACOUNT_GETNUM(1);
-        add = FX_Mul( Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
+        add = FX_Mul( GFL_CALC_Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
         rota = ((par*BCT_MARUNOMU_ROTA_SPEED_ADD) / BCT_MARUNOMU_ROTACOUNT_GETNUM(1)) + add;
     }else{
         par -= BCT_MARUNOMU_ROTACOUNT_GETNUM(1);
         //  ï‚ê≥ílÇãÅÇﬂÇÈ
         rota = ((par)*180) / BCT_MARUNOMU_ROTACOUNT_GETNUM(1);
-        add = FX_Mul( Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
+        add = FX_Mul( GFL_CALC_Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
         rota = ((par*BCT_MARUNOMU_ROTA_SPEED_ADD) / BCT_MARUNOMU_ROTACOUNT_GETNUM(1));
         rota = BCT_MARUNOMU_ROTA_SPEED_ADD - rota + add;
     }
@@ -3599,7 +3599,7 @@ static u16 BCT_CLIENT_MarunomuRotaSpeedGet2( s32 time, s32 max_time )
     if( par < BCT_MARUNOMU_ROTACOUNT_GETNUM(1) ){
         //  ï‚ê≥ílÇãÅÇﬂÇÈ
         rota = (par*180) / BCT_MARUNOMU_ROTACOUNT_GETNUM(1);
-        add = FX_Mul( Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
+        add = FX_Mul( GFL_CALC_Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
         rota = ((par*BCT_MARUNOMU_ROTA_SPEED_ADD) / BCT_MARUNOMU_ROTACOUNT_GETNUM(1)) + add;
     }else if( par < BCT_MARUNOMU_ROTACOUNT_GETNUM(2) ){
 		par -= BCT_MARUNOMU_ROTACOUNT_GETNUM(1);
@@ -3611,7 +3611,7 @@ static u16 BCT_CLIENT_MarunomuRotaSpeedGet2( s32 time, s32 max_time )
         par -= BCT_MARUNOMU_ROTACOUNT_GETNUM(2);
         //  ï‚ê≥ílÇãÅÇﬂÇÈ
         rota = ((par)*180) / BCT_MARUNOMU_ROTACOUNT_GETNUM(1);
-        add = FX_Mul( Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
+        add = FX_Mul( GFL_CALC_Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
         rota = ((par*BCT_MARUNOMU_ROTA_SPEED_ADD) / BCT_MARUNOMU_ROTACOUNT_GETNUM(1));
         rota = BCT_MARUNOMU_ROTA_SPEED_ADD - rota + add;
     }
@@ -3629,8 +3629,8 @@ static u16 BCT_CLIENT_MarunomuRotaSpeedGet2( s32 time, s32 max_time )
  *	@return	Xé≤âÒì]äp
  */
 //-----------------------------------------------------------------------------
-#define BCT_CLIENT_MARUNOMU_ROTX_2_START	( FX_GET_ROTA_NUM( 20 ) )
-#define BCT_CLIENT_MARUNOMU_ROTX_2_DIV	( FX_GET_ROTA_NUM( 40 ) )
+#define BCT_CLIENT_MARUNOMU_ROTX_2_START	( GFL_CALC_GET_ROTA_NUM( 20 ) )
+#define BCT_CLIENT_MARUNOMU_ROTX_2_DIV	( GFL_CALC_GET_ROTA_NUM( 40 ) )
 #define BCT_CLIENT_MARUNOMU_ROTAX_EX_TIME	( 500 )
 static u16 BCT_CLIENT_MarunomuXRotaGet2( s32 time, s32 max_time )
 {
@@ -3707,7 +3707,7 @@ static u16 BCT_CLIENT_MarunomuRotaSpeedGet3( s32 time, s32 max_time )
     if( par < BCT_MARUNOMU_ROTACOUNT_GETNUM(2) ){
         //  ï‚ê≥ílÇãÅÇﬂÇÈ
         rota = (par*180) / BCT_MARUNOMU_ROTACOUNT_GETNUM(2);
-        add = FX_Mul( Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
+        add = FX_Mul( GFL_CALC_Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
         rota = ((par*BCT_MARUNOMU_ROTA_SPEED_ADD) / BCT_MARUNOMU_ROTACOUNT_GETNUM(2)) + add;
     }else if( par < BCT_MARUNOMU_ROTACOUNT_GETNUM(3) ){
 		par -= BCT_MARUNOMU_ROTACOUNT_GETNUM(2);
@@ -3728,7 +3728,7 @@ static u16 BCT_CLIENT_MarunomuRotaSpeedGet3( s32 time, s32 max_time )
         par -= BCT_MARUNOMU_ROTACOUNT_GETNUM(3);
         //  ï‚ê≥ílÇãÅÇﬂÇÈ
         rota = ((par)*180) / BCT_MARUNOMU_ROTACOUNT_GETNUM(1);
-        add = FX_Mul( Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
+        add = FX_Mul( GFL_CALC_Sin360( rota ), FX32_CONST( BCT_MARUNOMU_ROTA_SPEED_ADD_SUB ) ) >> FX32_SHIFT;
         rota = ((par*BCT_MARUNOMU_ROTASPEED3_MAX) / BCT_MARUNOMU_ROTACOUNT_GETNUM(1));
         rota = BCT_MARUNOMU_ROTASPEED3_MAX - rota + add;
     }
@@ -6714,8 +6714,8 @@ static void BCT_CLIENT_MarunomuDrawDraw( BCT_MARUNOMU_DRAW* p_wk, const BCT_MARU
 
     MTX_Identity33( &tmp );
     MTX_RotX33( &tmp, 
-			FX_SinIdx( FX_GET_ROTA_NUM(40) ), 
-			FX_CosIdx( FX_GET_ROTA_NUM(40) ) );
+			FX_SinIdx( GFL_CALC_GET_ROTA_NUM(40) ), 
+			FX_CosIdx( GFL_CALC_GET_ROTA_NUM(40) ) );
 
     MTX_Concat33( &tmp, &mtx, &mtx );
 
@@ -6742,7 +6742,7 @@ static void BCT_CLIENT_MarunomuDrawAnmRotaSet( BCT_MARUNOMU_DRAW* p_wk, u32 rota
     // Xé≤âÒì]äpìxÇÃÉAÉjÉÅÉtÉåÅ[ÉÄÇê›íË
 	// 90Ç™BCT_MARUNOMU_ANM_FRAME_MAX
 	rotax -= BCT_MARUNOMU_ROTA_X_MIN;
-    frame = (rotax * 90) / RotKeyR( BCT_MARUNOMU_ROTA_X_MAX_360-BCT_MARUNOMU_ROTA_X_MIN );	// 0Å`90ÇÃílÇ…Ç∑ÇÈ
+    frame = (rotax * 90) / GFL_CALC_RotKey( BCT_MARUNOMU_ROTA_X_MAX_360-BCT_MARUNOMU_ROTA_X_MIN );	// 0Å`90ÇÃílÇ…Ç∑ÇÈ
 	frame = (frame * BCT_MARUNOMU_ANM_FRAME_MAX) / 90;
 	frame = BCT_MARUNOMU_ANM_FRAME_MAX - frame;
     D3DOBJ_AnmSet( &p_wk->anm[BCT_MARUNOMU_ANM_ROTA], frame );
@@ -7852,8 +7852,8 @@ static void BCT_CLIENT_OamAwayNutsMoveXY( int count, int countmax, int speed, in
 	rota = srota + ( (count * rota_div) / countmax );
 
 	// äpìxÇ©ÇÁà⁄ìÆílÇãÅÇﬂÇÈ
-	*p_x = FX_Mul( Cos360( rota ), speed << FX32_SHIFT ) >> FX32_SHIFT;
-	*p_y = FX_Mul( Sin360( rota ), speed << FX32_SHIFT ) >> FX32_SHIFT;
+	*p_x = FX_Mul( GFL_CALC_Cos360( rota ), speed << FX32_SHIFT ) >> FX32_SHIFT;
+	*p_y = FX_Mul( GFL_CALC_Sin360( rota ), speed << FX32_SHIFT ) >> FX32_SHIFT;
 }
 
 //----------------------------------------------------------------------------

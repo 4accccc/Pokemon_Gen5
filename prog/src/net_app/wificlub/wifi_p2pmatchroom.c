@@ -2039,7 +2039,7 @@ static void WcrMoveObj_DrawFuncKuruKuru( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_o
 	mat.x = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_X );
 	mat.y = WF2DMAP_OBJWkDataGet( p_obj->p_obj, WF2DMAP_OBJPM_Y );
 	shadow_mat = mat;
-	mat.y += FX_Mul( _Sin360( p_obj->move_count ), MCR_MOVEOBJ_KURU_DIST*FX32_ONE ) >> FX32_SHIFT;
+	mat.y += FX_Mul( GFL_CALC_Sin360( p_obj->move_count ), MCR_MOVEOBJ_KURU_DIST*FX32_ONE ) >> FX32_SHIFT;
 	WF2DMAP_OBJDrawWkMatrixSet( p_obj->p_draw, mat );
 
 	// 陰は地面の位置に出しっぱなし
@@ -2073,7 +2073,7 @@ static void WcrMoveObj_DrawFuncNpcJump( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_ob
 		r = (MCR_MOVEOBJ_NPC_JUMP_RMAX*count) / MCR_MOVEOBJ_NPC_JUMP_EFFCOUNT;
 
 		// ジャンプ
-		mat.y -= FX_Mul( Sin360(r), MCR_MOVEOBJ_NPC_JUMP_DIS*FX32_ONE ) >> FX32_SHIFT;
+		mat.y -= FX_Mul( GFL_CALC_Sin360(r), MCR_MOVEOBJ_NPC_JUMP_DIS*FX32_ONE ) >> FX32_SHIFT;
 	}
 
 	WF2DMAP_OBJDrawWkMatrixSet( p_obj->p_draw, mat );

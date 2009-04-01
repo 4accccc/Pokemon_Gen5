@@ -1322,9 +1322,9 @@ BOOL GetRayPosOnMap
 					VEC_Add( &posRef1, transOffs, &posRef1 );
 					VEC_Add( &posRef2, transOffs, &posRef2 );
 	
-					result = GFL_G3D_Calc_GetClossPointRayPlane
+					result = GFL_COLLISION3D_GetClossPointRayPlane
 								( posRay, vecRay, &posRef0, &vecN, &posCalc, 0 );
-					if( result == GFL_G3D_CALC_TRUE ){
+					if( result == GFL_COLLISION3D_TRUE ){
 						if( checkOnTriangle(&posCalc, &posRef0, &posRef1, &posRef2, &vecN)==TRUE ){
 							*dst = posCalc;
 							//OS_Printf("pos {%x,%x,%x}, blockID %x, gridx %x, gridz %x\n", 

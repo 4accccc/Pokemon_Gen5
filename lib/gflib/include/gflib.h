@@ -63,6 +63,11 @@ extern "C" {
 #include "quaternion.h"
 
 #include "skb.h"
+
+#include "calc_2d.h"
+#include "calc_3d.h"
+#include "collision_3d.h"
+	
 /*  */
 
 #endif	/*	__GFLIB_H__ */

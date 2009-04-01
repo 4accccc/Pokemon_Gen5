@@ -62,7 +62,7 @@
 //--------------------------------------------------------------
 //	カメラ設定
 //--------------------------------------------------------------
-#define BALLOON_CAMERA_PERSPWAY		(FX_GET_ROTA_NUM(22))
+#define BALLOON_CAMERA_PERSPWAY		(GFL_CALC_GET_ROTA_NUM(22))
 #define BALLOON_CAMERA_NEAR			( FX32_ONE )
 #define BALLOON_CAMERA_FAR			( FX32_ONE * 900 )
 #define BALLOON_CAMERA_TX			( 0 )		/// target
@@ -81,7 +81,7 @@
 ///カメラアングル
 #if WB_FIX
 static const CAMERA_ANGLE BalloonCameraAngle = {
-	FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(0),
+	GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(0),
 };
 #endif
 
@@ -1486,7 +1486,7 @@ static void Balloon_CameraInit(BALLOON_GAME_WORK *game)
 	height = FX_Mul(FX_Div(fovySin, fovyCos), BALLOON_CAMERA_DISTANCE);
 	width  = FX_Mul(height, aspect);
 	SetCamPosByTarget_Dist_Ang(&pos, 
-		FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(0), FX_GET_ROTA_NUM(0), 
+		GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(0), GFL_CALC_GET_ROTA_NUM(0), 
 		BALLOON_CAMERA_DISTANCE, &target);
 	game->camera = GFL_G3D_CAMERA_CreateOrtho(height, -height, -width, width, 
 			BALLOON_CAMERA_NEAR, BALLOON_CAMERA_FAR, 0, 
