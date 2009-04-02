@@ -58,9 +58,13 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SUNNY = {
 	0,			// OAM PLTT
 	0,			// OAM CELL
 	0,			// OAM CELLANM
-	0,			// BG CG
-	0,			// BG PLTT
-	0,			// BG SCRN
+	0,			// BGTEX
+	0,			// GXTexSizeS
+	0,			// GXTexSizeT
+	0,			// GXTexRepeat
+	0,			// GXTexFlip
+	0,			// GXTexFmt
+	0,			// GXTexPlttColor0
 
 	// ワークサイズ
 	0,

@@ -139,14 +139,18 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_STORM = {
 	//	グラフィック情報
 	ARCID_FIELD_WEATHER,			// アークID
 	TRUE,		// OAMを使用するか？
-	FALSE,		// BGを使用するか？
+	TRUE,		// BGを使用するか？
 	NARC_field_weather_storm_NCGR,			// OAM CG
 	NARC_field_weather_storm_NCLR,			// OAM PLTT
 	NARC_field_weather_storm_NCER,			// OAM CELL
 	NARC_field_weather_storm_NANR,			// OAM CELLANM
-	0,			// BG CG
-	0,			// BG PLTT
-	0,			// BG SCRN
+	NARC_field_weather_worm01_nsbtx,		// BGTEX
+	GX_TEXSIZE_S32,		// GXTexSizeS
+	GX_TEXSIZE_T32,		// GXTexSizeT
+	GX_TEXREPEAT_ST,		// GXTexRepeat
+	GX_TEXFLIP_NONE,		// GXTexFlip
+	GX_TEXFMT_PLTT16,		// GXTexFmt
+	GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
 
 	// ワークサイズ
 	sizeof(WEATHER_STORM_WORK),
@@ -245,7 +249,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHE
 		// タイミングが最小になったらメインへ
 		if( fog_result && result ){		// フェードリザルトが完了ならばメインへ
 			// BGON
-//			GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+			WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
 
 
 			// シーケンス変更
@@ -296,7 +300,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_NoFade( WEATHER_TASK* p_wk, WEATHE
 
 	
 	// BGON
-	//GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+	WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
 
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
@@ -363,8 +367,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_InitFadeOut( WEATHER_TASK* p_wk, W
 	p_local_wk->work[0] = WEATHER_STORM_FOG_START_END;	// 同じくフォグ用
 
 
-	// BGOFF
-//	GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
+	// BGON
+	WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

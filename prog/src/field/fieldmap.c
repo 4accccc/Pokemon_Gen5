@@ -366,6 +366,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		MainGameSystem( fieldWork->gs );
 		FIELD_SUBSCREEN_Main();
 		FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
+		FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// “V‹C•`‰æˆ—
 		FIELD_FOG_Main( fieldWork->fog );
 		{
 			static int time;

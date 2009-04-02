@@ -107,6 +107,8 @@ typedef struct {
 	u16	oam_pltt_id;
 	u16 oam_cell_id;
 
+	u32 bg_load;
+
 	ARCHANDLE* p_handle;
 } WEATHER_TASK_GRAPHIC;
 
@@ -170,6 +172,9 @@ struct _WEATHER_TASK {
 	
 	// カメラ情報
 	const FIELD_CAMERA* cp_camera;
+
+	// 3DBGシステム
+	FIELD_3DBG* p_3dbg;
 	
 
 	/* MemClearするワーク */
@@ -235,8 +240,8 @@ static void WEATHER_TASK_GRAPHIC_InitHandle( WEATHER_TASK_GRAPHIC* p_wk, const W
 static void WEATHER_TASK_GRAPHIC_ExitHandle( WEATHER_TASK_GRAPHIC* p_wk );
 static void WEATHER_TASK_GRAPHIC_InitOam( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, u32 heapID );
 static void WEATHER_TASK_GRAPHIC_ExitOam( WEATHER_TASK_GRAPHIC* p_wk );
-static void WEATHER_TASK_GRAPHIC_InitBg( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, u32 heapID );
-static void WEATHER_TASK_GRAPHIC_ExitBg( WEATHER_TASK_GRAPHIC* p_wk );
+static void WEATHER_TASK_GRAPHIC_InitBg( WEATHER_TASK_GRAPHIC* p_wk, FIELD_3DBG* p_3dbg, const WEATHER_TASK_DATA* cp_data, u32 heapID );
+static void WEATHER_TASK_GRAPHIC_ExitBg( WEATHER_TASK_GRAPHIC* p_wk, FIELD_3DBG* p_3dbg );
 
 
 //-------------------------------------
@@ -284,12 +289,13 @@ static void TOOL_GetPerspectiveScreenSize( u16 perspway, fx32 dist, fx32 aspect,
  *	@param	cp_camera		フィールドカメラ
  *	@param	p_light			フィールドライト
  *	@param	p_fog			フィールドフォグ
+ *	@param	p_3dbg			3DBGシステム
  *	@param	heapID			ヒープID
  *	
  *	@return	天気タスクワーク
  */
 //-----------------------------------------------------------------------------
-WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, u32 heapID )
+WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, FIELD_3DBG* p_3dbg, u32 heapID )
 {
 	WEATHER_TASK* p_wk;
 
@@ -300,6 +306,7 @@ WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_ca
 	p_wk->cp_camera		= cp_camera;	
 	p_wk->p_fog			= p_fog;
 	p_wk->p_light		= p_light;
+	p_wk->p_3dbg		= p_3dbg;
 
 	return p_wk;
 }
@@ -583,6 +590,85 @@ void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk, u32 heapID )
 {
 	FIELD_LIGHT_ReLoadDefault( p_wk->p_light, heapID );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	3DBGシステム　描画設定
+ *
+ *	@param	p_wk		ワーク		
+ *	@param	visible		フラグ
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_3DBG_SetVisible( WEATHER_TASK* p_wk, BOOL visible )
+{
+	FIELD_3DBG_SetVisible( p_wk->p_3dbg, visible );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	3DBGシステム	描画状態取得
+ *
+ *	@param	cp_wk		ワーク
+ *
+ *	@retval	TRUE	表示
+ *	@retval	FALSE	非表示
+ */
+//-----------------------------------------------------------------------------
+BOOL WEATHER_TASK_3DBG_GetVisible( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_3DBG_GetVisible( cp_wk->p_3dbg );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	3DBGシステム	アルファ設定
+ *
+ *	@param	p_wk		ワーク
+ *	@param	alpha		アルファ
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_3DBG_SetAlpha( WEATHER_TASK* p_wk, u8 alpha )
+{
+	FIELD_3DBG_SetAlpha( p_wk->p_3dbg, alpha );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	3DBGシステム	アルファ取得
+ *
+ *	@param	cp_wk	ワーク
+ *
+ *	@return	アルファ値
+ */
+//-----------------------------------------------------------------------------
+u8 WEATHER_TASK_3DBG_GetAlpha( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_3DBG_GetAlpha( cp_wk->p_3dbg );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロール座標の設定・取得
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_3DBG_SetScrollX( WEATHER_TASK* p_wk, s32 x )
+{
+	FIELD_3DBG_SetScrollX( p_wk->p_3dbg, x );
+}
+void WEATHER_TASK_3DBG_SetScrollY( WEATHER_TASK* p_wk, s32 y )
+{
+	FIELD_3DBG_SetScrollY( p_wk->p_3dbg, y );
+}
+s32 WEATHER_TASK_3DBG_GetScrollX( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_3DBG_GetScrollX( cp_wk->p_3dbg );
+}
+s32 WEATHER_TASK_3DBG_GetScrollY( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_3DBG_GetScrollY( cp_wk->p_3dbg );
+}
+
 
 
 //----------------------------------------------------------------------------
@@ -1212,6 +1298,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	GFL_CLUNIT* p_unit;
 	FIELD_FOG_WORK*	p_fog;
 	FIELD_LIGHT* p_light;
+	FIELD_3DBG* p_3dbg;
 	const FIELD_CAMERA* cp_camera;
 
 	// 一時退避
@@ -1219,6 +1306,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	p_fog		= p_wk->p_fog;
 	p_light		= p_wk->p_light;
 	cp_camera	= p_wk->cp_camera;
+	p_3dbg		= p_wk->p_3dbg;
 
 	// クリア
 	GFL_STD_MemClear( p_wk, sizeof(WEATHER_TASK) );
@@ -1228,6 +1316,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	p_wk->p_fog		= p_fog;
 	p_wk->p_light	= p_light;
 	p_wk->cp_camera	= cp_camera;
+	p_wk->p_3dbg	= p_3dbg;
 
 }
 
@@ -1443,7 +1532,7 @@ static void WEATHER_TASK_WK_ExitOam( WEATHER_TASK* p_wk )
 //-----------------------------------------------------------------------------
 static void WEATHER_TASK_WK_InitBg( WEATHER_TASK* p_wk, u32 heapID )
 {
-	WEATHER_TASK_GRAPHIC_InitBg( &p_wk->graphic, p_wk->cp_data, heapID );
+	WEATHER_TASK_GRAPHIC_InitBg( &p_wk->graphic, p_wk->p_3dbg, p_wk->cp_data, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -1455,7 +1544,7 @@ static void WEATHER_TASK_WK_InitBg( WEATHER_TASK* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void WEATHER_TASK_WK_ExitBg( WEATHER_TASK* p_wk )
 {
-	WEATHER_TASK_GRAPHIC_ExitBg( &p_wk->graphic );
+	WEATHER_TASK_GRAPHIC_ExitBg( &p_wk->graphic, p_wk->p_3dbg );
 }
 
 //----------------------------------------------------------------------------
@@ -1590,8 +1679,33 @@ static void WEATHER_TASK_GRAPHIC_ExitOam( WEATHER_TASK_GRAPHIC* p_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_TASK_GRAPHIC_InitBg( WEATHER_TASK_GRAPHIC* p_wk, const WEATHER_TASK_DATA* cp_data, u32 heapID )
+static void WEATHER_TASK_GRAPHIC_InitBg( WEATHER_TASK_GRAPHIC* p_wk, FIELD_3DBG* p_3dbg, const WEATHER_TASK_DATA* cp_data, u32 heapID )
 {
+	static FIELD_3DBG_WRITE_DATA s_FIELD_3DBG_WRITE_DATA = {
+		0,
+		0,		// GXTexSizeS
+		0,		// GXTexSizeT
+		0,		// GXTexRepeat
+		0,		// GXTexFlip
+		0,		// GXTexFmt
+		0,		// GXTexPlttColor0
+		31		// アルファ設定
+	};
+
+	if( cp_data->use_bg ){
+		s_FIELD_3DBG_WRITE_DATA.nsbtex_id	= cp_data->bg_tex;
+		s_FIELD_3DBG_WRITE_DATA.texsiz_s	= cp_data->texwidth;
+		s_FIELD_3DBG_WRITE_DATA.texsiz_t	= cp_data->texheight;
+		s_FIELD_3DBG_WRITE_DATA.repeat		= cp_data->repeat;
+		s_FIELD_3DBG_WRITE_DATA.flip		= cp_data->flip;
+		s_FIELD_3DBG_WRITE_DATA.texfmt		= cp_data->texfmt;
+		s_FIELD_3DBG_WRITE_DATA.texpltt		= cp_data->texpltt;
+
+		FIELD_3DBG_SetWriteData( p_3dbg, p_wk->p_handle, &s_FIELD_3DBG_WRITE_DATA, heapID );
+		FIELD_3DBG_SetVisible( p_3dbg, FALSE );
+
+		p_wk->bg_load = TRUE;
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -1601,8 +1715,13 @@ static void WEATHER_TASK_GRAPHIC_InitBg( WEATHER_TASK_GRAPHIC* p_wk, const WEATH
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_TASK_GRAPHIC_ExitBg( WEATHER_TASK_GRAPHIC* p_wk )
+static void WEATHER_TASK_GRAPHIC_ExitBg( WEATHER_TASK_GRAPHIC* p_wk, FIELD_3DBG* p_3dbg )
 {
+	if( p_wk->bg_load ){
+		FIELD_3DBG_ClearWriteData( p_3dbg );
+
+		p_wk->bg_load = FALSE;
+	}
 }
 
 

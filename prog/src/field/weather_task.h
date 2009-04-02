@@ -24,6 +24,7 @@ extern "C"{
 
 #include "field_light.h"
 #include "field_fog.h"
+#include "field_3dbg.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -147,9 +148,13 @@ typedef struct {
 	
 	// BG情報
 	// （２つの天気を同時に管理する場合、BGの反映は後勝ち）
-	u16 bg_cg;				
-	u16 bg_pltt;
-	u16 bg_scrn;
+	u16 bg_tex;		// BGTEX
+	u8 texwidth;	// GXTexSizeS
+	u8 texheight;	// GXTexSizeT
+	u8 repeat;		// GXTexRepeat
+	u8 flip;		// GXTexFlip
+	u8 texfmt;		// GXTexFmt
+	u8 texpltt;		// GXTexPlttColor0
 	
 	// ワーク領域サイズ
 	u32 work_byte;
@@ -195,7 +200,7 @@ typedef struct {
 //-------------------------------------
 ///	システム生成・破棄・メイン
 //=====================================
-extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, u32 heapID );
+extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, FIELD_3DBG* p_3dbg, u32 heapID );
 extern void WEATHER_TASK_Exit( WEATHER_TASK* p_wk );
 extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID );
 
@@ -214,6 +219,21 @@ extern void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk );
 //=====================================
 extern void WEATHER_TASK_LIGHT_Change( WEATHER_TASK* p_wk, u32 arcid, u32 dataid, u32 heapID );
 extern void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk, u32 heapID );
+
+
+//-------------------------------------
+///	3DBG操作
+//=====================================
+extern void WEATHER_TASK_3DBG_SetVisible( WEATHER_TASK* p_wk, BOOL visible );
+extern BOOL WEATHER_TASK_3DBG_GetVisible( const WEATHER_TASK* cp_wk );
+extern void WEATHER_TASK_3DBG_SetAlpha( WEATHER_TASK* p_wk, u8 alpha );
+extern u8 WEATHER_TASK_3DBG_GetAlpha( const WEATHER_TASK* cp_wk );
+
+extern void WEATHER_TASK_3DBG_SetScrollX( WEATHER_TASK* p_wk, s32 x );
+extern void WEATHER_TASK_3DBG_SetScrollY( WEATHER_TASK* p_wk, s32 y );
+extern s32 WEATHER_TASK_3DBG_GetScrollX( const WEATHER_TASK* cp_wk );
+extern s32 WEATHER_TASK_3DBG_GetScrollY( const WEATHER_TASK* cp_wk );
+
 
 //-------------------------------------
 ///	情報の取得

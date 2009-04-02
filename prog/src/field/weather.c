@@ -17,6 +17,8 @@
 
 #include "weather.h"
 
+#include "field_3dbg.h"
+
 // 各天気
 #include "weather_sunny.h"
 #include "weather_snow.h"
@@ -101,6 +103,15 @@ enum{
 #define FIELD_WEATHER_CLUNIT_WORK_MAX	( 96 )
 
 
+//-------------------------------------
+///	3DBG
+//=====================================
+static const FIELD_3DBG_SETUP	sc_FIELD_3DBG_SETUP = {
+	256, 192,
+	FX32_ONE*10,
+	0,
+};
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -110,6 +121,9 @@ enum{
 ///	天気システムワーク
 //=====================================
 struct _FIELD_WEATHER{
+
+	// 3DBG
+	FIELD_3DBG* p_3dbg;
 
 	// 切り替えシーケンス
 	u16		change_type;
@@ -128,6 +142,8 @@ struct _FIELD_WEATHER{
 	
 	// 今のオーバレイID
 	FSOverlayID	now_overlayID;
+
+	GFL_TCB* p_vintr;
 };
 
 
@@ -184,6 +200,7 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 //=====================================
 static void FIELD_WEATHER_OVERLAY_Load( FIELD_WEATHER* p_sys, FSOverlayID overlay );
 static void FIELD_WEATHER_OVERLAY_UnLoad( FIELD_WEATHER* p_sys );
+static void FIELD_WEATHER_VBlank( GFL_TCB* p_tcb, void* p_work );
 
 //-------------------------------------
 ///	天気切り替え処理
@@ -211,6 +228,9 @@ FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p
 
 	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WEATHER) );
 
+	// 3DBGシステム初期化
+	p_sys->p_3dbg = FIELD_3DBG_Create( &sc_FIELD_3DBG_SETUP, heapID );
+
 	// メンバ初期化
 	p_sys->change_type		= FIELD_WEATHER_CHANGETYPE_NORMAL;
 	p_sys->seq				= 0;
@@ -224,8 +244,12 @@ FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p
 	
 
 	for( i=0; i<FIELD_WEATHER_WORK_NUM; i++ ){
-		p_sys->p_task[ i ] = WEATHER_TASK_Init( p_sys->p_unit, cp_camera, p_light, p_fog, heapID );
+		p_sys->p_task[ i ] = WEATHER_TASK_Init( p_sys->p_unit, cp_camera, p_light, p_fog, p_sys->p_3dbg, heapID );
 	}
+
+	// 割り込み初期化
+	p_sys->p_vintr = GFUser_VIntr_CreateTCB( FIELD_WEATHER_VBlank, (void*)p_sys, 64 );
+	
 
 	return p_sys;
 }
@@ -241,6 +265,9 @@ void FIELD_WEATHER_Exit( FIELD_WEATHER* p_sys )
 {
 	int i;
 
+	// 割り込み破棄
+	GFL_TCB_DeleteTask( p_sys->p_vintr );
+
 	for( i=0; i<FIELD_WEATHER_WORK_NUM; i++ ){
 		WEATHER_TASK_Exit( p_sys->p_task[i] );
 	}
@@ -250,6 +277,10 @@ void FIELD_WEATHER_Exit( FIELD_WEATHER* p_sys )
 
 	// セルユニット破棄
 	GFL_CLACT_UNIT_Delete( p_sys->p_unit );
+
+
+	// 3DBGシステム破棄
+	FIELD_3DBG_Delete( p_sys->p_3dbg );
 
 	GFL_HEAP_FreeMemory( p_sys );
 }
@@ -298,6 +329,20 @@ void FIELD_WEATHER_Main( FIELD_WEATHER* p_sys, u32 heapID )
 	// タスクメイン
 	for( i=0; i<FIELD_WEATHER_WORK_NUM; i++ ){
 		WEATHER_TASK_Main( p_sys->p_task[i], heapID );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	3D描画
+ *
+ *	@param	p_sys 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WEATHER_3DWrite( FIELD_WEATHER* p_sys )
+{
+	if( p_sys ){
+		FIELD_3DBG_Write( p_sys->p_3dbg );
 	}
 }
 
@@ -443,6 +488,18 @@ static void FIELD_WEATHER_OVERLAY_UnLoad( FIELD_WEATHER* p_sys )
 		GFL_OVERLAY_Unload( p_sys->now_overlayID );
 		p_sys->now_overlayID = GFL_OVERLAY_BLANK_ID;
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	VBlank	関数
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_WEATHER_VBlank( GFL_TCB* p_tcb, void* p_work )
+{
+	FIELD_WEATHER* p_sys = p_work;
+
+	FIELD_3DBG_VBlank( p_sys->p_3dbg );
 }
 
 

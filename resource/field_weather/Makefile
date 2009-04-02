@@ -52,7 +52,7 @@ NCERFILE = $(NCEFILE:.nce=.NCER)
 NSCRFILE = $(NSCFILE:.nsc=.NSCR)
 	
 #3D
-NSBMDFILE = $(IMDFILE:.imd=.nsbmd)
+NSBTXFILE = $(IMDFILE:.imd=.nsbtx)
 NSBCAFILE = $(ICAFILE:.ica=.nsbca)
 NSBVAFILE = $(IVAFILE:.iva=.nsbva)
 NSBMAFILE = $(IMAFILE:.ima=.nsbma)
@@ -64,7 +64,7 @@ DATFILE = $(XLSFILE:.xls=.dat)
 
 LIST_FILE 	= list.txt
 OBJ_FILE 	= $(NCLRFILE) $(NCERFILE) $(NSCRFILE) \
-			  $(NSBMDFILE) $(NSBCAFILE) $(NSBVAFILE) \
+			  $(NSBTXFILE) $(NSBCAFILE) $(NSBVAFILE) \
 			  $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE) \
 			  $(DATFILE)
 
@@ -91,8 +91,8 @@ ifeq	($(CONVERTUSER),true)
 	g2dcvtr $<
 
 #3d
-.imd.nsbmd:
-	g3dcvtr $<
+.imd.nsbtx:
+	g3dcvtr $< -etex
 
 .ica.nsbca:
 	g3dcvtr $<

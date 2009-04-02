@@ -123,9 +123,13 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIN = {
 	NARC_field_weather_rain_NCLR,			// OAM PLTT
 	NARC_field_weather_rain_NCER,			// OAM CELL
 	NARC_field_weather_rain_NANR,			// OAM CELLANM
-	0,			// BG CG
-	0,			// BG PLTT
-	0,			// BG SCRN
+	0,		// BGTEX
+	0,		// GXTexSizeS
+	0,		// GXTexSizeT
+	0,		// GXTexRepeat
+	0,		// GXTexFlip
+	0,		// GXTexFmt
+	0,		// GXTexPlttColor0
 
 	// ワークサイズ
 	sizeof(WEATHER_RAIN_WORK),
