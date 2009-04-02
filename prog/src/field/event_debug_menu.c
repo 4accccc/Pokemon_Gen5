@@ -609,6 +609,8 @@ static GMEVENT_RESULT DMenuZoneSelectEvent(
 static GMEVENT_RESULT DMenuSeasonSelectEvent(
 		GMEVENT *event, int *seq, void *wk );
 
+static GMEVENT_RESULT DMenuSeasonSelectEvent2(
+		GMEVENT *event, int *seq, void *wk );
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　四季マップ間移動
@@ -627,10 +629,12 @@ static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	DEBUG_ZONESEL_EVENT_WORK *work;
 	
+#if 0
 	if( zone_id == ZONE_ID_MAPSPRING || zone_id == ZONE_ID_MAPSUMMER ||
 		zone_id == ZONE_ID_MAPAUTUMN || zone_id == ZONE_ID_MAPWINTER ){
+#endif
 		GMEVENT_Change( event,
-			DMenuSeasonSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+			DMenuSeasonSelectEvent2, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 		work = GMEVENT_GetEventWork( event );
 		MI_CpuClear8( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 	
@@ -639,9 +643,11 @@ static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 		work->heapID = heapID;
 		work->fieldWork = fieldWork;
 		return( TRUE );
+#if 0
 	}
 	
 	return( FALSE );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1749,4 +1755,92 @@ static GMEVENT_RESULT DMenuWeatherListEvent(
 	return( GMEVENT_RES_CONTINUE );
 }
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#include "gamesystem/pm_season.h"
+static const FLDMENUFUNC_LIST DATA_SeasonMenuList[PMSEASON_TOTAL] =
+{
+	{ DEBUG_FIELD_STR_SPRING, (void*)PMSEASON_SPRING },
+	{ DEBUG_FIELD_STR_SUMMER, (void*)PMSEASON_SUMMER },
+	{ DEBUG_FIELD_STR_AUTUMN, (void*)PMSEASON_AUTUMN },
+	{ DEBUG_FIELD_STR_WINTER, (void*)PMSEASON_WINTER },
+};
+
+//--------------------------------------------------------------
+/**
+ * イベント：四季ジャンプ
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuSeasonSelectEvent2(
+		GMEVENT *event, int *seq, void *wk )
+{
+	DEBUG_ZONESEL_EVENT_WORK *work = wk;
+
+	switch( (*seq) ){
+	case 0:
+		{
+			FLDMSGBG *msgBG;
+			FLDMENUFUNC_LISTDATA *listdata;
+			u32 max = DEBUG_WEATHERLIST_LIST_MAX;
+			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_WeatherList;
+			
+			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+			work->msgData = FLDMSGBG_CreateMSGDATA(
+				msgBG, NARC_message_d_field_dat );
+			listdata = FLDMENUFUNC_CreateMakeListData(
+				DATA_SeasonMenuList, max, work->msgData, work->heapID );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 8, 7 );
+			
+			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
+			GFL_MSG_Delete( work->msgData );
+		}
+		(*seq)++;
+		break;
+	case 1:
+		{
+			u32 ret;
+			ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+
+			if( ret == FLDMENUFUNC_NULL ){	//操作無し
+				break;
+			}
+			
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+
+			if( ret == FLDMENUFUNC_CANCEL ){	//キャンセル
+				return( GMEVENT_RES_FINISH );
+			}else{
+				GMEVENT *event;
+				GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gmSys );
+				PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+				const VecFx32 *pos = PLAYERWORK_getPosition( player );
+				u16 dir = PLAYERWORK_getDirection( player );
+				ZONEID zone_id = PLAYERWORK_getZoneID(player);
+				
+				if( (dir>0x2000) && (dir<0x6000) ){
+					dir = EXIT_TYPE_LEFT;
+				}else if( (dir >= 0x6000) && (dir <= 0xa000) ){
+					dir = EXIT_TYPE_DOWN;
+				}else if( (dir > 0xa000) && (dir < 0xe000) ){
+					dir = EXIT_TYPE_RIGHT;
+				}else{
+					dir = EXIT_TYPE_UP;
+				}
+
+				GAMEDATA_SetSeasonID(gdata, ret);
+				event = DEBUG_EVENT_ChangeMapPos(
+					work->gmSys, work->fieldWork, zone_id, pos, dir );
+				GMEVENT_ChangeEvent( work->gmEvent, event );
+				OS_Printf( "x = %xH, z = %xH\n", pos->x, pos->z );
+			}
+		}
+		break;
+	}
+	
+	return( GMEVENT_RES_CONTINUE );
+}
 
