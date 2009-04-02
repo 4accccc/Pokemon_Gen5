@@ -82,16 +82,17 @@ struct _MCSS_WORK
 
 struct _MCSS_SYS_WORK
 {
-	int						mcss_max;			//登録数MAX
-	MCSS_WORK				**mcss;				//登録マルチセル構造体
+	int							mcss_max;				//登録数MAX
+	MCSS_WORK					**mcss;					//登録マルチセル構造体
 #ifdef USE_RENDER
-	NNSG2dRendererInstance	mcss_render;		//描画用 Render　
-	NNSG2dRenderSurface		mcss_surface;		//メイン画面 Surface
+	NNSG2dRendererInstance		mcss_render;			//描画用 Render　
+	NNSG2dRenderSurface			mcss_surface;			//メイン画面 Surface
 #endif //USE_RENDER
-	u32						mcss_ortho_mode	:1;	//正射影描画モードフラグ
-	u32										:31;
-	int						texAdrs;			//テクスチャ転送開始アドレス
-	int						palAdrs;			//テクスチャパレット転送開始アドレス
-	int						heapID;				//使用するヒープID
+	NNSG2dImagePaletteProxy		shadow_palette_proxy;	//パレットプロキシ（影用）
+	u32							mcss_ortho_mode	:1;		//正射影描画モードフラグ
+	u32											:31;
+	int							texAdrs;				//テクスチャ転送開始アドレス
+	int							palAdrs;				//テクスチャパレット転送開始アドレス
+	int							heapID;					//使用するヒープID
 };
 

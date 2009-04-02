@@ -62,7 +62,7 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID );
 void			MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
 void			MCSS_Main( MCSS_SYS_WORK *mcss_sys );
 void			MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
-MCSS_WORK*		MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MCSS_ADD_WORK *maw );
+MCSS_WORK*		MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_WORK *maw );
 void			MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
 
 void			MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys );
@@ -93,11 +93,12 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  fx32 tex_t,
 							  NNSG2dAnimDataSRT *anim_SRT_c,
 							  NNSG2dAnimDataSRT *anim_SRT_mc,
+							  NNSG2dImagePaletteProxy *shadow_palette,
 							  int node,
 							  u32 mcss_ortho_mode,
 							  fx32 *pos_z_default );
 
-static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, MCSS_ADD_WORK *maw );
+static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw );
 static	void	MCSS_GetNewMultiCellAnimation(MCSS_WORK *mcss, NNSG2dMCType	mcType );
 static	void	MCSS_MaterialSetup( void );
 static NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
@@ -110,8 +111,10 @@ static	void	MCSS_InitRenderer( MCSS_SYS_WORK *mcss_sys );
 
 static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w );
 
-//影実験
-NNSG2dImagePaletteProxy		shadow_palette;
+#ifdef PM_DEBUG
+MCSS_WORK*		MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
+static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_DEBUG_WORK *madw );
+#endif
 
 //--------------------------------------------------------------------------
 /**
@@ -141,13 +144,13 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 	mcss_sys->palAdrs = MCSS_PAL_ADRS;
 
 	//影リソースロード
-	NNS_G2dInitImagePaletteProxy( &shadow_palette );
+	NNS_G2dInitImagePaletteProxy( &mcss_sys->shadow_palette_proxy );
 
 	// load palette data
 	{
 		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
 
-		tlw->palette_p = &shadow_palette;
+		tlw->palette_p = &mcss_sys->shadow_palette_proxy;
 		tlw->pal_ofs = MCSS_PAL_ADRS + 0x100;
 		tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_shadow_NCLR, &tlw->pPlttData, heapID );
 		GF_ASSERT( tlw->pBufPltt != NULL);
@@ -410,7 +413,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_size_y,
 									  ncec->mepachi_tex_s,
 									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
-									  &anim_SRT, &anim_SRT_mc, node,
+									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 									  mcss_sys->mcss_ortho_mode,
 									  &pos_z_default );
 					}
@@ -422,7 +425,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_size_y,
 									  ncec->mepachi_tex_s,
 									  ncec->mepachi_tex_t,
-									  &anim_SRT, &anim_SRT_mc, node,
+									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 									  mcss_sys->mcss_ortho_mode,
 									  &pos_z_default );
 					}
@@ -434,7 +437,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							  ncec->size_y,
 							  ncec->tex_s,
 							  ncec->tex_t,
-							  &anim_SRT, &anim_SRT_mc, node,
+							  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 							  mcss_sys->mcss_ortho_mode,
 							  &pos_z_default );
 			}
@@ -496,6 +499,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  fx32 tex_t,
 							  NNSG2dAnimDataSRT *anim_SRT_c,
 							  NNSG2dAnimDataSRT *anim_SRT_mc,
+							  NNSG2dImagePaletteProxy *shadow_palette,
 							  int node,
 							  u32 mcss_ortho_mode,
 							  fx32 *pos_z_default )
@@ -556,8 +560,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
 	G3_RestoreMtx( MCSS_SHADOW_MTX );
 
-	G3_TexPlttBase(shadow_palette.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
-				   shadow_palette.fmt);
+	G3_TexPlttBase( shadow_palette->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
+				   shadow_palette->fmt);
 	G3_PolygonAttr(GX_LIGHTMASK_NONE,				// no lights
 				   GX_POLYGONMODE_MODULATE,			// modulation mode
 				   GX_CULL_NONE,					// cull back
@@ -600,7 +604,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
  * マルチセル登録
  */
 //--------------------------------------------------------------------------
-MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MCSS_ADD_WORK *maw )
+MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_WORK *maw )
 {
 	int			count;
 
@@ -835,7 +839,7 @@ void	MCSS_ResetVanishFlag( MCSS_WORK *mcss )
  * リソースロード
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, MCSS_ADD_WORK *maw )
+static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw )
 {
 	MCSS_WORK	*mcss = mcss_sys->mcss[ count ];
 
@@ -1075,3 +1079,116 @@ static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *
     *p_w	+= cp_m->_33;//	W=1なので足すだけ
 }
 
+#ifdef PM_DEBUG
+//--------------------------------------------------------------------------
+/**
+ * マルチセル登録（デバッグ用）
+ */
+//--------------------------------------------------------------------------
+MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw )
+{
+	int			count;
+
+	for( count = 0 ; count < mcss_sys->mcss_max ; count++ ){
+		if( mcss_sys->mcss[ count ] == NULL ){
+			mcss_sys->mcss[ count ] = GFL_HEAP_AllocClearMemory( mcss_sys->heapID, sizeof(MCSS_WORK) );
+			mcss_sys->mcss[ count ]->index = count;
+			mcss_sys->mcss[ count ]->heapID = mcss_sys->heapID;
+			mcss_sys->mcss[ count ]->pos.x = pos_x;
+			mcss_sys->mcss[ count ]->pos.y = pos_y;
+			mcss_sys->mcss[ count ]->pos.z = pos_z;
+			mcss_sys->mcss[ count ]->scale.x = FX32_ONE;
+			mcss_sys->mcss[ count ]->scale.y = FX32_ONE;
+			mcss_sys->mcss[ count ]->scale.z = FX32_ONE;
+			MCSS_LoadResourceDebug( mcss_sys, count, madw );
+			break;
+		}
+	}
+	//登録MAX値をオーバー
+	GF_ASSERT( count < mcss_sys->mcss_max );
+
+	return mcss_sys->mcss[ count ];
+}
+
+//--------------------------------------------------------------------------
+/**
+ * リソースロード（デバッグ用）
+ */
+//--------------------------------------------------------------------------
+static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_DEBUG_WORK *madw )
+{
+	MCSS_WORK	*mcss = mcss_sys->mcss[ count ];
+
+	mcss->vanish_flag = 1;
+
+	//プロキシ初期化
+	NNS_G2dInitImageProxy( &mcss->mcss_image_proxy );
+	NNS_G2dInitImagePaletteProxy( &mcss->mcss_palette_proxy );
+
+	// セルデータ、セルアニメーション、マルチセルデータ、
+	// マルチセルアニメーションをロード。
+	NNS_G2dGetUnpackedCellBank( madw->ncer, &mcss->mcss_ncer );
+	mcss->mcss_ncer_buf = madw->ncer;
+	GF_ASSERT( mcss->mcss_ncer_buf != NULL );
+
+	NNS_G2dGetUnpackedAnimBank( madw->nanr, &mcss->mcss_nanr );
+	mcss->mcss_nanr_buf = madw->nanr;
+	GF_ASSERT( mcss->mcss_nanr_buf != NULL );
+
+	NNS_G2dGetUnpackedMultiCellBank( madw->nmcr, &mcss->mcss_nmcr );
+	mcss->mcss_nmcr_buf =  madw->nmcr;
+	GF_ASSERT( mcss->mcss_nmcr_buf != NULL );
+
+	NNS_G2dGetUnpackedMCAnimBank( madw->nmar, &mcss->mcss_nmar );
+	mcss->mcss_nmar_buf = madw->nmar;
+	GF_ASSERT( mcss->mcss_nmar_buf != NULL );
+
+	//
+	// マルチセルアニメーションの実体を初期化します
+	//
+	{
+		const NNSG2dMultiCellAnimSequence* pSequence;
+
+		// 再生するシーケンスを取得
+		pSequence = NNS_G2dGetAnimSequenceByIdx( mcss->mcss_nmar, 0 );
+		GF_ASSERT( pSequence != NULL );
+
+		// マルチセルアニメーションを構築
+		MCSS_GetNewMultiCellAnimation( mcss, NNS_G2D_MCTYPE_SHARE_CELLANIM );
+
+		// マルチセルアニメーションに再生するシーケンスをセット
+		NNS_G2dSetAnimSequenceToMCAnimation( &mcss->mcss_mcanim, pSequence );
+	}
+
+	//1枚の板ポリで表示するための情報の読み込み（独自フォーマット）
+	mcss->mcss_ncec = madw->ncec;
+
+    //
+    // VRAM 関連の初期化
+    //
+    {
+		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+		tlw->image_p = &mcss->mcss_image_proxy;
+		tlw->palette_p = &mcss->mcss_palette_proxy;
+		tlw->chr_ofs = mcss_sys->texAdrs + MCSS_TEX_SIZE * count;
+		tlw->pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * count;
+		tlw->mcss	 = mcss;
+		// load character data for 3D (software sprite)
+		{
+			NNS_G2dGetUnpackedBGCharacterData( madw->ncbr, &tlw->pCharData );
+			tlw->pBufChar = madw->ncbr;
+			GF_ASSERT( tlw->pBufChar != NULL);
+        }
+
+		// load palette data
+		{
+			NNS_G2dGetUnpackedPaletteData( madw->nclr, &tlw->pPlttData );
+			tlw->pBufPltt = madw->nclr;
+			GF_ASSERT( tlw->pBufPltt != NULL);
+
+        }
+		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+    }
+}
+
+#endif
