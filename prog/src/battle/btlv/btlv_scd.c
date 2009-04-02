@@ -726,29 +726,29 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 	stw_init( stw );
 
 	switch( target ){
-	case WAZA_TARGET_SINGLE:				///< Ž©•ªˆÈŠO‚Ì‚P‘Ìi‘I‘ðj
+	case WAZA_TARGET_OTHER_SELECT:				///< Ž©•ªˆÈŠO‚Ì‚P‘Ìi‘I‘ðj
 		stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_WITHOUT_ME, basePos) );
 		break;
-	case WAZA_TARGET_SINGLE_ENEMY:	///< “G‚P‘Ìi‘I‘ðj
+	case WAZA_TARGET_ENEMY_SELECT:	///< “G‚P‘Ìi‘I‘ðj
 		stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, basePos) );
 		break;
 
-	case WAZA_TARGET_ENEMY2:				///< “G‘¤‚Q‘Ì
-	case WAZA_TARGET_RANDOM:				///< “Gƒ‰ƒ“ƒ_ƒ€
+	case WAZA_TARGET_ENEMY_ALL:				///< “G‘¤‚Q‘Ì
+	case WAZA_TARGET_ENEMY_RANDOM:				///< “Gƒ‰ƒ“ƒ_ƒ€
 		stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, basePos) );
 		break;
 	case WAZA_TARGET_OTHER_ALL:			///< Ž©•ªˆÈŠO‘S•”
 		stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_WITHOUT_ME, basePos) );
 		break;
-	case WAZA_TARGET_ONLY_USER:			///< Ž©•ª‚P‘Ì‚Ì‚Ý
+	case WAZA_TARGET_USER:			///< Ž©•ª‚P‘Ì‚Ì‚Ý
 		stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_DEFAULT, basePos) );
 		break;
 
-	case WAZA_TARGET_TEAM_USER:			///< Ž©•ª‘¤w’n
+	case WAZA_TARGET_SIDE_FRIEND:			///< Ž©•ª‘¤w’n
 		stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_MYSIDE_ALL, basePos) );
 		break;
 
-	case WAZA_TARGET_TEAM_ENEMY:		///< “G‘¤w’n
+	case WAZA_TARGET_SIDE_ENEMY:		///< “G‘¤w’n
 		stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, basePos) );
 		break;
 

@@ -41,6 +41,8 @@ typedef enum {
 	SC_OP_WAZASICK_TURNCHECK,	///< 
 	SC_OP_CANTESCAPE_ADD,		///< にげ・交換禁止コードの追加を全クライアントに通知 [ClientID, CantCode]
 	SC_OP_CANTESCAPE_SUB,		///< にげ・交換禁止コードの削除を全クライアントに通知 [ClientID, CantCode]
+	SC_OP_CHANGE_POKETYPE,	///< 【計算】ポケモンのタイプ変更（ pokeID, type ）
+	SC_OP_CHANGE_POKEFORM,	///< 【計算】ポケモンのフォルム変更（ pokeID, type ）
 	SC_ACT_WAZA_EFFECT,
 	SC_ACT_WAZA_DMG,		///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
 	SC_ACT_WAZA_DMG_DBL,///< 【アクション】２体同時ダメージ処理 [ pokeID ]
@@ -213,6 +215,14 @@ static inline void SCQUE_PUT_OP_CantEscape_Add( BTL_SERVER_CMD_QUE* que, u8 clie
 static inline void SCQUE_PUT_OP_CantEscape_Sub( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 cantCode )
 {
 	SCQUE_PUT_Common( que, SC_OP_CANTESCAPE_SUB, clientID, cantCode );
+}
+static inline void SCQUE_PUT_OP_ChangePokeType( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 typePair )
+{
+	SCQUE_PUT_Common( que, SC_OP_CHANGE_POKETYPE, pokeID, typePair );
+}
+static inline void SCQUE_PUT_OP_ChangePokeForm( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 formNo )
+{
+	SCQUE_PUT_Common( que, SC_OP_CHANGE_POKETYPE, pokeID, formNo );
 }
 
 

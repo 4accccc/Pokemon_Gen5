@@ -48,6 +48,7 @@ typedef enum {
 	BPP_LEVEL,
 	BPP_TOKUSEI,
 	BPP_SEX,
+	BPP_FORM,
 
 	BPP_RANKTYPE_MAX = BPP_AVOID_RATIO+1,
 
@@ -217,7 +218,8 @@ extern void BTL_POKEPARAM_SetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BTL_POKEPARAM_ResetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BTL_POKEPARAM_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok );
 extern void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );
-
+extern void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type );
+extern void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
 
 
 

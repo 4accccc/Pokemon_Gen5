@@ -78,7 +78,6 @@ struct _BTL_SVFLOW_WORK {
 	SVFL_WAZAPARAM			wazaParam;
 
 	u8					flowFlags[ FLOWFLG_BYTE_MAX ];
-
 };
 
 //--------------------------------------------------------------
@@ -793,12 +792,12 @@ static void scput_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, cons
 
 		SCQUE_PUT_MSG_WAZA( wk->que, attacker_pokeID, action->fight.wazaIdx );
 
-		// @@@ここに対象による無効化チェックを入れるかも…
 		TargetPokeRec_Clear( &wk->damagedPokemon );
 		TargetPokeRec_Clear( &wk->targetPokemon );
 
 		flowsub_checkWazaParam( wk, waza, attacker, &wk->wazaParam );
 
+		// @@@ ここに、対象ポケによらない無効化チェックを入れるかも…
 		flowsub_registerWazaTargets( wk, atPos, waza, action, &wk->targetPokemon );
 		flowsub_checkNotEffect( wk, waza, attacker, &wk->targetPokemon );
 
@@ -898,17 +897,17 @@ static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos, Wa
 	if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE )
 	{
 		switch( targetType ){
-		case WAZA_TARGET_SINGLE:				///< 自分以外の１体（選択）
-		case WAZA_TARGET_SINGLE_ENEMY:	///< 敵１体（選択）
-		case WAZA_TARGET_RANDOM:				///< 敵ランダム
-		case WAZA_TARGET_ENEMY2:				///< 敵側２体
+		case WAZA_TARGET_OTHER_SELECT:				///< 自分以外の１体（選択）
+		case WAZA_TARGET_ENEMY_SELECT:	///< 敵１体（選択）
+		case WAZA_TARGET_ENEMY_RANDOM:				///< 敵ランダム
+		case WAZA_TARGET_ENEMY_ALL:				///< 敵側２体
 		case WAZA_TARGET_OTHER_ALL:			///< 自分以外全部
 			bpp = svflowsub_get_opponent_pokeparam( wk, atPos, 0 );
 			TargetPokeRec_Add( rec, bpp );
 			break;
 
-		case WAZA_TARGET_ONLY_USER:			///< 自分１体のみ
-		case WAZA_TARGET_SINGLE_FRIEND:	///< 自分を含む味方１体
+		case WAZA_TARGET_USER:			///< 自分１体のみ
+		case WAZA_TARGET_FRIEND_USER_SELECT:	///< 自分を含む味方１体
 			bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, atPos );
 			TargetPokeRec_Add( rec, bpp );
 			break;
@@ -922,20 +921,20 @@ static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos, Wa
 	else
 	{
 		switch( targetType ){
-		case WAZA_TARGET_SINGLE:				///< 自分以外の１体（選択）
+		case WAZA_TARGET_OTHER_SELECT:				///< 自分以外の１体（選択）
 			bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, action->fight.targetPos );
 			TargetPokeRec_Add( rec, bpp );
 			return 1;
-		case WAZA_TARGET_SINGLE_ENEMY:	///< 敵１体（選択）
+		case WAZA_TARGET_ENEMY_SELECT:	///< 敵１体（選択）
 			bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, action->fight.targetPos );
 			TargetPokeRec_Add( rec, bpp );
 			return 1;
-		case WAZA_TARGET_RANDOM:				///< 敵ランダム
+		case WAZA_TARGET_ENEMY_RANDOM:				///< 敵ランダム
 			bpp = svflowsub_get_opponent_pokeparam( wk, atPos, GFL_STD_MtRand(1) );
 			TargetPokeRec_Add( rec, bpp );
 			return 1;
 
-		case WAZA_TARGET_ENEMY2:				///< 敵側２体
+		case WAZA_TARGET_ENEMY_ALL:				///< 敵側２体
 			TargetPokeRec_Add( rec, svflowsub_get_opponent_pokeparam(wk, atPos, 0) );
 			TargetPokeRec_Add( rec, svflowsub_get_opponent_pokeparam(wk, atPos, 1) );
 			return 2;
@@ -946,13 +945,13 @@ static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos, Wa
 			TargetPokeRec_Add( rec, svflowsub_get_opponent_pokeparam( wk, atPos, 1 ) );
 			return 3;
 
-		case WAZA_TARGET_ONLY_USER:			///< 自分１体のみ
+		case WAZA_TARGET_USER:			///< 自分１体のみ
 			TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, atPos) );
 			return 1;
-		case WAZA_TARGET_SINGLE_FRIEND:	///< 自分を含む味方１体（選択）
+		case WAZA_TARGET_FRIEND_USER_SELECT:	///< 自分を含む味方１体（選択）
 			TargetPokeRec_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, action->fight.targetPos) );
 			return 1;
-		case WAZA_TARGET_OTHER_FRIEND:	///< 自分以外の味方１体
+		case WAZA_TARGET_FRIEND_SELECT:	///< 自分以外の味方１体
 			TargetPokeRec_Add( rec, svflowsub_get_next_pokeparam( wk, atPos ) );
 			return 1;
 		default:
@@ -2272,6 +2271,7 @@ static void scEvent_WazaDamageEffect_Single( BTL_SVFLOW_WORK* wk,
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, defPokeID );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wk->wazaParam.wazaType );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, criticalFlag );
 		SCQUE_PUT_ACT_WazaDamage( wk->que, defPokeID, aff, damage );
 		if( criticalFlag )
@@ -2974,6 +2974,7 @@ static BOOL scEvent_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 t
 		{
 			BTL_Printf("   天候 -> %d へ変化\n", weather);
 			BTL_FIELD_SetWeather( weather, turn );
+			BTL_EVENT_CallHandlers( wk, BTL_EVENT_WEATHER_CHANGE_AFTER );
 		}
 		else
 		{
@@ -3334,6 +3335,38 @@ void BTL_SVFLOW_RECEPT_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather )
 			GF_ASSERT(0);
 		}
 	}
+}
+//=============================================================================================
+/**
+ * [ハンドラ受信] ポケモンのタイプ変化（純粋タイプのみ）
+ *
+ * @param   wk			
+ * @param   pokeID	
+ * @param   type		
+ *
+ */
+//=============================================================================================
+void BTL_SVFLOW_RECEPT_ChangePokeType( BTL_SVFLOW_WORK* wk, u8 pokeID, PokeType type )
+{
+	BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+	SCQUE_PUT_OP_ChangePokeType( wk->que, pokeID, type );
+	BTL_POKEPARAM_ChangePokeType( bpp, PokeTypePair_MakePure(type) );
+}
+//=============================================================================================
+/**
+ * [ハンドラ受信] ポケモンのフォルム変化
+ *
+ * @param   wk			
+ * @param   pokeID	
+ * @param   formNo	
+ *
+ */
+//=============================================================================================
+void BTL_SVFLOW_RECEPT_ChangePokeForm( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 formNo )
+{
+	BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+	SCQUE_PUT_OP_ChangePokeForm( wk->que, pokeID, formNo );
+	BTL_POKEPARAM_ChangeForm( bpp, formNo );
 }
 //=============================================================================================
 /**

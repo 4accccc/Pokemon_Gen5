@@ -81,6 +81,10 @@ static inline PokeTypePair PokeTypePair_Make( PokeType type1, PokeType type2 )
 {
 	return ( (((type1)&0xff)<<8) | (type2&0xff) );
 }
+static inline PokeTypePair PokeTypePair_MakePure( PokeType type )
+{
+	return PokeTypePair_Make( type, type );
+}
 
 static inline PokeType PokeTypePair_GetType1( PokeTypePair pair )
 {
@@ -100,15 +104,17 @@ static inline void PokeTypePair_Split( PokeTypePair pair, PokeType* type1, PokeT
 
 static inline BOOL PokeTypePair_IsMatch( PokeTypePair pair, PokeType type )
 {
-	if( PokeTypePair_GetType1(pair) == type )
-	{
+	if( PokeTypePair_GetType1(pair) == type ){
 		return TRUE;
 	}
-	if( PokeTypePair_GetType2(pair) == type )
-	{
+	if( PokeTypePair_GetType2(pair) == type ){
 		return TRUE;
 	}
 	return FALSE;
+}
+static inline BOOL PokeTypePair_IsPure( PokeTypePair pair )
+{
+	return PokeTypePair_GetType1(pair) == PokeTypePair_GetType2(pair);
 }
 
 

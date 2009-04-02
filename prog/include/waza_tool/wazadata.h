@@ -39,6 +39,8 @@ typedef enum {
 	WAZADATA_CATEGORY_WEATHER,
 	WAZADATA_CATEGORY_FIELD_EFFECT,
 	WAZADATA_CATEGORY_SIDE_EFFECT,
+	WAZADATA_CATEGORY_EXPLOSION,
+	WAZADATA_CATEGORY_ESCAPE,
 	WAZADATA_CATEGORY_OTHERS,
 
 	WAZADATA_CATEGORY_MAX,
@@ -155,21 +157,20 @@ typedef enum {
 //------------------------------------------------------------------------------
 typedef enum {
 
-	WAZA_TARGET_SINGLE,				///< Ž©•ªˆÈŠO‚Ì‚P‘Ìi‘I‘ðj
-	WAZA_TARGET_ENEMY2,				///< “G‘¤‚Q‘Ì
-	WAZA_TARGET_OTHER_ALL,		///< Ž©•ªˆÈŠO‘S•”
-
-	WAZA_TARGET_ONLY_USER,		///< Ž©•ª‚P‘Ì‚Ì‚Ý
-	WAZA_TARGET_SINGLE_FRIEND,///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
-	WAZA_TARGET_OTHER_FRIEND,	///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ì
-	WAZA_TARGET_SINGLE_ENEMY,	///< “G‚P‘Ìi‘I‘ðj
-	WAZA_TARGET_RANDOM,				///< “Gƒ‰ƒ“ƒ_ƒ€
-
-	WAZA_TARGET_TEAM_USER,		///< Ž©•ª‘¤w’n
-	WAZA_TARGET_TEAM_ENEMY,		///< “G‘¤w’n
-	WAZA_TARGET_FIELD,				///< ê‚ÉŒø‚­i“VŒóŒn‚È‚Çj
-
-	WAZA_TARGET_UNKNOWN,			///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç‚Ì“ÁŽêŒ^
+	// ƒ|ƒPƒ‚ƒ“‘ÎÛ
+	WAZA_TARGET_OTHER_SELECT,				///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
+	WAZA_TARGET_OTHER_ALL,					///< Ž©•ªˆÈŠO‘S‚Ä
+	WAZA_TARGET_ENEMY_SELECT,				///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+	WAZA_TARGET_ENEMY_ALL,					///< ‘ŠŽè‘¤‘S‚Ä
+	WAZA_TARGET_ENEMY_RANDOM,				///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
+	WAZA_TARGET_FRIEND_USER_SELECT,	///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
+	WAZA_TARGET_FRIEND_SELECT,			///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+	WAZA_TARGET_USER,								///< Ž©•ª‚Ì‚Ý
+	// ƒ|ƒPƒ‚ƒ“ˆÈŠO‘ÎÛ
+	WAZA_TARGET_SIDE_FRIEND,				///< Ž©•ª‘¤w‰c
+	WAZA_TARGET_SIDE_ENEMY,					///< “G‘¤w‰c
+	WAZA_TARGET_FIELD,							///< ê‘S‘Ìi“VŒó‚È‚Çj
+	WAZA_TARGET_UNKNOWN,						///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
 
 }WazaTarget;
 

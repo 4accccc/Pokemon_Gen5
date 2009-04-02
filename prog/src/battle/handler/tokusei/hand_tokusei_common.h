@@ -126,10 +126,12 @@ extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Simerike( u16 pri, u16 tokID, u8 pokeID )
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_MultiType( u16 pri, u16 tokID, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_SlowStart( u16 pri, u16 tokID, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Katayaburi( u16 pri, u16 tokID, u8 pokeID );
-
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Agility( u16 pri, u16 tokID, u8 pokeID );
+extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tenkiya( u16 pri, u16 tokID, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hensyoku( u16 pri, u16 tokID, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Katayaburi( u16 pri, u16 tokID, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Namake( u16 pri, u16 tokID, u8 pokeID );
+
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hiraisin( u16 pri, u16 tokID, u8 pokeID );
 extern BTL_EVENT_FACTOR*  HAND_TOK_ADD_Yobimizu( u16 pri, u16 tokID, u8 pokeID );
 

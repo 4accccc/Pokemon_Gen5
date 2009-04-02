@@ -148,6 +148,8 @@ static BOOL scProc_OP_CurePokeSick( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CureWazaSick( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_EscapeCodeAdd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_EscapeCodeSub( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_ChangePokeType( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_ChangePokeForm( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
@@ -859,6 +861,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_OP_CURE_WAZASICK,		scProc_OP_CureWazaSick		},
 		{	SC_OP_CANTESCAPE_ADD,		scProc_OP_EscapeCodeAdd		},
 		{	SC_OP_CANTESCAPE_SUB,		scProc_OP_EscapeCodeSub		},
+		{	SC_OP_CHANGE_POKETYPE,	scProc_OP_ChangePokeType	},
+		{ SC_OP_CHANGE_POKEFORM,	scProc_OP_ChangePokeForm  },
 		{	SC_OP_WAZASICK_TURNCHECK,	scProc_OP_WSTurnCheck		},
 	};
 
@@ -1621,7 +1625,18 @@ static BOOL scProc_OP_EscapeCodeSub( BTL_CLIENT* wk, int* seq, const int* args )
 	cec_subCode( &wk->cantEscCtrl, args[0], args[1] );
 	return TRUE;
 }
-
+static BOOL scProc_OP_ChangePokeType( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+	BTL_POKEPARAM_ChangePokeType( pp, args[1] );
+	return TRUE;
+}
+static BOOL scProc_OP_ChangePokeForm( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+	BTL_POKEPARAM_ChangeForm( pp, args[1] );
+	return TRUE;
+}
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );

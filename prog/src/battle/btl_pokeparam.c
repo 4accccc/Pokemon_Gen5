@@ -107,12 +107,14 @@ typedef struct {
 
 struct _BTL_POKEPARAM {
 
+	const POKEMON_PARAM*	ppSrc;
+
 	BPP_BASE_PARAM			baseParam;
 	BPP_VARIABLE_PARAM	varyParam;
 	BPP_REAL_PARAM			realParam;
 	BPP_WAZA						waza[ PTL_WAZA_MAX ];
-	const POKEMON_PARAM*	ppSrc;
 
+	PokeTypePair	type;
 	u16  item;
 	u16  tokusei;
 	u16  hp;
@@ -123,6 +125,7 @@ struct _BTL_POKEPARAM {
 	u8	wazaCnt;
 	u8	pokeSick;
 	u8	pokeSickCounter;
+	u8	formNo;
 
 	BPP_SICK_CONT		sickCont[ WAZASICK_MAX ];
 	u8	wazaSickCounter[ WAZASICK_MAX ];
@@ -214,6 +217,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	}
 	GFL_STD_MemClear( bpp->wazaSickCounter, sizeof(bpp->wazaSickCounter) );
 
+	bpp->type = PokeTypePair_Make( bpp->baseParam.type1, bpp->baseParam.type2 );
 	bpp->item = PP_Get( pp, ID_PARA_item, NULL );
 	bpp->tokusei = PP_Get( pp, ID_PARA_speabino, 0 );
 	bpp->hp = PP_Get( pp, ID_PARA_hp, 0 );
@@ -231,6 +235,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->ppSrc = pp;
 	bpp->appearedTurn = TURNCOUNT_NULL;
 	bpp->turnCount = 0;
+	bpp->formNo = PP_Get( pp, ID_PARA_form_no, 0 );
 
 	flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
 	flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
@@ -320,7 +325,7 @@ WazaID BTL_POKEPARAM_GetWazaParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP,
 
 PokeTypePair BTL_POKEPARAM_GetPokeType( const BTL_POKEPARAM* pp )
 {
-	return PokeTypePair_Make( pp->baseParam.type1, pp->baseParam.type2 );
+	return pp->type;
 }
 
 BOOL BTL_POKEPARAM_IsMatchType( const BTL_POKEPARAM* pp, PokeType type )
@@ -364,6 +369,7 @@ int BTL_POKEPARAM_GetValue( const BTL_POKEPARAM* pp, BppValueID vid )
 	case BPP_SEX:				return pp->baseParam.sex;
 
 	case BPP_TOKUSEI:		return pp->tokusei;
+	case BPP_FORM:			return pp->formNo;
 
 	default:
 		GF_ASSERT(0);
@@ -999,6 +1005,19 @@ void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp )
 }
 //=============================================================================================
 /**
+ * タイプかきかえ
+ *
+ * @param   pp		
+ * @param   type		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type )
+{
+	pp->type = type;
+}
+//=============================================================================================
+/**
  * とくせい書き換え
  *
  * @param   pp		
@@ -1011,6 +1030,19 @@ void BTL_POKEPARAM_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok )
 	pp->tokusei = tok;
 }
 
+//=============================================================================================
+/**
+ * フォルム変更
+ *
+ * @param   pp		
+ * @param   formNo		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo )
+{
+	pp->formNo = formNo;
+}
 
 //--------------------------------------------------------------------------
 /**

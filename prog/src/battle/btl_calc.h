@@ -71,6 +71,7 @@ enum {
 	BTL_CALC_TOK_SLOWSTART_ENABLE_TURN = 5,								/// 「スロースタート」の適用ターン
 	BTL_CALC_TOK_SLOWSTART_AGIRATIO = FX32_CONST(0.5f),		/// 「スロースタート」のすばやさ変化率
 	BTL_CALC_TOK_SLOWSTART_ATKRATIO = FX32_CONST(0.5f),		/// 「スロースタート」のこうげき変化率
+	BTL_CALC_TOK_FUSIGINAUROKO_GDRATIO = FX32_CONST(1.5f),	/// 「ふしぎなうろこ」のとくぼう変化率
 
 	BTL_CALC_TOK_DOKUNOTOGE_PER   = 30,		///「どくのトゲ」発生確率
 	BTL_CALC_TOK_HONONOKARADA_PER = 30,		///「ほのおのからだ」発生確率

@@ -36,6 +36,7 @@ static void handler_Hayaasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static void handler_Tidoriasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Harikiri_HitRatio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Harikiri_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SlowStart_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SlowStart_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Fukugan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -108,6 +109,7 @@ static void handler_Housi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 static void common_touchAddSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick sick, BPP_SICK_CONT sickCont, u8 per );
 static void handler_Samehada( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Yuubaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Hensyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Isiatama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_NormalSkin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -147,6 +149,9 @@ static void handler_Arijigoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static void handler_Kagefumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Jiryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Katayaburi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tenkiya_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_TenkiFormChange( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather );
 
 
 
@@ -263,7 +268,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		{ POKETOKUSEI_YOBIMIZU,				HAND_TOK_ADD_Yuubaku },
 		{ POKETOKUSEI_NIGEASI,				HAND_TOK_ADD_Nigeasi },
 
-//		{ POKETOKUSEI_HENSYOKU,			HAND_TOK_ADD_Hensyoku },
+		{ POKETOKUSEI_HENSYOKU,				HAND_TOK_ADD_Hensyoku },
 //		{ POKETOKUSEI_KATAYABURI,		HAND_TOK_ADD_Katayaburi },
 		{ POKETOKUSEI_NAMAKE,					HAND_TOK_ADD_Namake },
 //		{ POKETOKUSEI_HIRAISIN,			HAND_TOK_ADD_Hiraisin },
@@ -276,6 +281,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 		{ POKETOKUSEI_SIMERIKE,			HAND_TOK_ADD_Simerike },
 		{ POKETOKUSEI_MARUTITAIPU,	HAND_TOK_ADD_MultiType },
 		{ POKETOKUSEI_FUSIGINAMAMORI,	HAND_TOK_ADD_FusiginaMamori },
+		{ POKETOKUSEI_ATODASI,			HAND_TOK_ADD_Agility },
+		{ POKETOKUSEI_TENKIYA,			HAND_TOK_ADD_Tenkiya },
 
 	};
 
@@ -508,6 +515,28 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Harikiri( u16 pri, u16 tokID, u8 pokeID )
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
 }
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「あとだし」
+ */
+//------------------------------------------------------------------------------
+// すばやさ計算ハンドラ
+static void handler_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+	{
+		BTL_EVENTVAR_SetValue( BTL_EVAR_AGILITY, 0 );
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Agility( u16 pri, u16 tokID, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_CALC_AGILITY,		handler_Agility },	// すばやさ計算ハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+
 //------------------------------------------------------------------------------
 /**
  *	とくせい「スロースタート」
@@ -1181,20 +1210,19 @@ static void handler_FusiginaUroko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 	// 防御側が自分で
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
 	{
-		// ミロカロスで状態異常で
+		// 状態異常で
 		const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
-		if( (BTL_POKEPARAM_GetPokeSick(bpp) != POKESICK_NULL)
-		&&	(BTL_POKEPARAM_GetMonsNo(bpp) == MONSNO_MIROKAROSU)
-		){
+		if( BTL_POKEPARAM_GetPokeSick(bpp) != POKESICK_NULL )
+		{
 			WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
 			// ダメージタイプが特殊の時
 			if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
 			{
 				// 防御２倍
 				u32 guard = BTL_EVENTVAR_GetValue( BTL_EVAR_GUARD );
-				guard *= 2;
+				guard = BTL_CALC_MulRatio( guard, BTL_CALC_TOK_FUSIGINAUROKO_GDRATIO );
 				BTL_EVENTVAR_SetValue( BTL_EVAR_GUARD, guard );
-				BTL_Printf("ポケ[%d]の ふしぎなうろこ で防御２倍\n", pokeID);
+				BTL_Printf("ポケ[%d]の ふしぎなうろこ で防御1.5倍\n", pokeID);
 			}
 		}
 	}
@@ -2207,6 +2235,38 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Yuubaku( u16 pri, u16 tokID, u8 pokeID )
 {
 	static const BtlEventHandlerTable HandlerTable[] = {
 		{ BTL_EVENT_WAZA_DMG_AFTER,			handler_Yuubaku },	// ダメージ直後ハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「へんしょく」
+ */
+//------------------------------------------------------------------------------
+// ダメージ直後ハンドラ
+static void handler_Hensyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+	{
+		const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+		if( !BTL_POKEPARAM_IsDead(bpp) )
+		{
+			PokeType type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
+			if( !BTL_POKEPARAM_IsMatchType(bpp, type) )
+			{
+				BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
+				BTL_SVFLOW_RECEPT_ChangePokeType( flowWk, pokeID, type );
+				BTL_SERVER_RECTPT_SetMessageEx( flowWk, BTL_STRID_SET_ChangePokeType, pokeID, type );
+				BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
+			}
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Hensyoku( u16 pri, u16 tokID, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_WAZA_DMG_AFTER,			handler_Hensyoku },	// ダメージ直後ハンドラ
 		{ BTL_EVENT_NULL, NULL },
 	};
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
@@ -3257,9 +3317,19 @@ static void handler_Katayaburi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 		// １ターン無効化するとくせい群
 		static const u16 disableTokTable[] = {
 			POKETOKUSEI_FUSIGINAMAMORI,	POKETOKUSEI_BOUON,			POKETOKUSEI_FUYUU,
-			POKETOKUSEI_SUNAGAKURE,			POKETOKUSEI_TYOSUI,			POKETOKUSEI_KYUUBAN,
+			POKETOKUSEI_SUNAGAKURE,			POKETOKUSEI_YUKIGAKURE,	POKETOKUSEI_TYOSUI,
 			POKETOKUSEI_KABUTOAAMAA,		POKETOKUSEI_HIRAISIN,		POKETOKUSEI_YOBIMIZU,
-			POKETOKUSEI_SHERUAAMAA,			
+			POKETOKUSEI_SHERUAAMAA,			POKETOKUSEI_TENNEN,			POKETOKUSEI_HIRAISIN,
+			POKETOKUSEI_YOBIMIZU,				POKETOKUSEI_KYUUBAN,		POKETOKUSEI_TANJUN,
+			POKETOKUSEI_TIDORIASI,			POKETOKUSEI_HAADOROKKU,	POKETOKUSEI_FIRUTAA,
+			POKETOKUSEI_MORAIBI,				POKETOKUSEI_DENKIENJIN,	POKETOKUSEI_NENCHAKU,
+			POKETOKUSEI_FUSIGINAUROKO,	POKETOKUSEI_ATUISIBOU,	POKETOKUSEI_TAINETU,
+			POKETOKUSEI_SIROIKEMURI,		POKETOKUSEI_KURIABODY,	POKETOKUSEI_SURUDOIME,
+			POKETOKUSEI_KAIRIKIBASAMI,	POKETOKUSEI_SEISINRYOKU,POKETOKUSEI_RINPUN,
+			POKETOKUSEI_GANJOU,					POKETOKUSEI_SIMERIKE,		POKETOKUSEI_DONKAN,
+			POKETOKUSEI_JUUNAN,					POKETOKUSEI_MAIPEESU,		POKETOKUSEI_MIZUNOBEERU,
+			POKETOKUSEI_HONOONOKARADA,	POKETOKUSEI_RIIFUGAADO,	POKETOKUSEI_FUMIN,
+			POKETOKUSEI_YARUKI,					POKETOKUSEI_MENEKI,			
 		};
 		u32 i;
 		for(i=0; i<NELEMS(disableTokTable); ++i)
@@ -3277,3 +3347,60 @@ BTL_EVENT_FACTOR*  HAND_TOK_ADD_Katayaburi( u16 pri, u16 tokID, u8 pokeID )
 	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
 }
 
+//------------------------------------------------------------------------------
+/**
+ *	とくせい「てんきや」
+ */
+//------------------------------------------------------------------------------
+// ポケ入場ハンドラ
+static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+	{
+		BtlWeather weather = BTL_FIELD_GetWeather();
+		common_TenkiFormChange( flowWk, pokeID, weather );
+	}
+}
+// 天候変化ハンドラ
+static void handler_Tenkiya_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+	{
+		BtlWeather weather = BTL_EVENTVAR_GetValue( BTL_EVAR_WEATHER );
+		common_TenkiFormChange( flowWk, pokeID, weather );
+	}
+}
+static void common_TenkiFormChange( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather )
+{
+	const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
+	if( BTL_POKEPARAM_GetMonsNo(bpp) == MONSNO_POWARUN )
+	{
+		u8 form_now, form_next;
+
+		form_now = BTL_POKEPARAM_GetValue( bpp, BPP_FORM );
+		switch( weather ){
+		case BTL_WEATHER_NONE:	form_next = FORMNO_POWARUN_NORMAL; break;
+		case BTL_WEATHER_SHINE:	form_next = FORMNO_POWARUN_SUN; break;
+		case BTL_WEATHER_RAIN:	form_next = FORMNO_POWARUN_RAIN; break;
+		case BTL_WEATHER_SNOW:	form_next = FORMNO_POWARUN_SNOW; break;
+		default:
+			form_next = form_now;
+		}
+
+		if( form_next != form_now )
+		{
+			BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
+			BTL_SERVER_RECTPT_SetMessage( flowWk, BTL_STRID_SET_MoraibiExe, pokeID );
+			BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
+		}
+	}
+}
+BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tenkiya( u16 pri, u16 tokID, u8 pokeID )
+{
+	static const BtlEventHandlerTable HandlerTable[] = {
+		{ BTL_EVENT_MEMBER_IN,						handler_Tenkiya_MemberIn 	},	// ポケ入場ハンドラ
+		{ BTL_EVENT_WEATHER_CHANGE_AFTER,	handler_Tenkiya_Weather		},	// 天候変化後ハンドラ
+		{ BTL_EVENT_NULL, NULL },
+	};
+	return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokID, pri, pokeID, HandlerTable );
+}
