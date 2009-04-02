@@ -168,7 +168,9 @@ static const u16 GetStartDirection(GAMESYS_WORK * gsys)
 //------------------------------------------------------------------
 static void SetMapperData(FIELD_MAIN_WORK * fieldWork)
 {
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(fieldWork->gsys);
 	FIELDDATA_SetMapperData(fieldWork->map_id,
+			GAMEDATA_GetSeasonID(gamedata),
 			&fieldWork->map_res,
 			fieldWork->pMapMatrixBuf);
 }
@@ -300,6 +302,10 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			u16		dir;
 
 			fieldWork->now_pos = *GetStartPos(gsys);
+			TAMADA_Printf("start X,Y,Z=%d,%d,%d\n",
+					FX_Whole(fieldWork->now_pos.x),
+					FX_Whole(fieldWork->now_pos.y),
+					FX_Whole(fieldWork->now_pos.z));
 			dir = GetStartDirection(gsys);
 			fieldWork->ftbl->create_func( fieldWork, &fieldWork->now_pos, dir );
 			FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );

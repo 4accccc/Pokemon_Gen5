@@ -39,3 +39,5 @@ extern u8 AREADATA_GetInnerOuterSwitch(u16 area_id);
 //------------------------------------------------------------------
 extern u8 AREADATA_GetLightType(u16 area_id);
 
+extern BOOL AREADATA_HasSeason(u16 area_id);
+

@@ -112,5 +112,11 @@ u8 AREADATA_GetLightType(u16 area_id)
 	getAreaData(&adbuf, area_id);
 	return adbuf.light_type;
 }
-
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL AREADATA_HasSeason(u16 area_id)
+{
+	if (AREA_ID_OUT01 <= area_id && area_id < AREA_ID_OUT29) return TRUE;
+	return FALSE;
+}
 

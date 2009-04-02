@@ -42,7 +42,7 @@ static int MapID2ResistID(u16 mapid)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELDDATA_SetMapperData(
-	u16 mapid, FLDMAPPER_RESISTDATA * map_res, void * matrix_buf)
+	u16 mapid, u8 sid, FLDMAPPER_RESISTDATA * map_res, void * matrix_buf)
 {
 	u16 area_id = ZONEDATA_GetAreaID(mapid);
 	u16 resid = MapID2ResistID(mapid);
@@ -69,6 +69,9 @@ void FIELDDATA_SetMapperData(
 	if (map_res->g3DmapFileType != FLDMAPPER_FILETYPE_PKGS && area_id != AREA_ID_FIELD) {
 		gTexBuffer.arcID = ARCID_AREA_MAPTEX;
 		gTexBuffer.datID = AREADATA_GetTextureSetID(area_id);
+		if (AREADATA_HasSeason(area_id) == TRUE) {
+			gTexBuffer.datID += sid;
+		}
 		TAMADA_Printf("Load Area Texture %d\n", gTexBuffer.datID);
 		map_res->gtexType = FLDMAPPER_RESIST_TEXTYPE_USE;
 		map_res->gtexData = &gTexBuffer;
