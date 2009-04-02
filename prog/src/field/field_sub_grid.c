@@ -52,12 +52,32 @@ typedef enum
 
 #define MAPHIT_HEIGHT_OVER (FX32_ONE*17)
 
+#if 0
 const u16 TestOBJCodeTbl[];
 const TestOBJCodeMax;
 
 const u16 TestOBJCodeTbl[] =
 {HERO,BOY1,GIRL1,MAN1,WOMAN1,MIDDLEMAN1,KABI32,OLDWOMAN1};
 const int TestOBJCodeMax = NELEMS( TestOBJCodeTbl );
+#endif
+
+//自機動作種類
+typedef enum
+{
+	PLAYER_MOVE_STOP,
+	PLAYER_MOVE_WALK,
+	PLAYER_MOVE_TURN,
+	PLAYER_MOVE_HITCH,
+}PLAYER_MOVE;
+
+typedef enum
+{
+	PLAYER_SET_NON,
+	PLAYER_SET_STOP,
+	PLAYER_SET_WALK,
+	PLAYER_SET_TURN,
+	PLAYER_SET_HITCH,
+}PLAYER_SET;
 
 //======================================================================
 //	typedef struct
@@ -115,6 +135,8 @@ struct _FGRID_PLAYER
 	PC_ACTCONT *pActCont;
 	
 	FLDMMDL *pFldMMdl;
+	
+	int move_state;
 };
 
 //--------------------------------------------------------------
@@ -816,6 +838,253 @@ static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 }
 #endif
 
+//サウンドテスト
+static void FGridPlayer_SountTest_Stop( void )
+{
+	//　↓ サウンドテスト（停止）
+	u16 trackBit = 0xfcff; // track 9,10 OFF
+	PMSND_ChangeBGMtrack(trackBit);
+	//　↑
+}
+static void FGridPlayer_SountTest_Move( void )
+{
+	//　↓ サウンドテスト（移動）
+	u16 trackBit = 0xffff; // 全track ON
+	PMSND_ChangeBGMtrack(trackBit);
+	//　↑
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機　移動開始チェック　停止中
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static PLAYER_SET FGridPlayer_CheckMoveStart_Stop(
+	FGRID_PLAYER *pJiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == TRUE ){
+		if( dir != DIR_NOT ){
+			u16 old_dir;
+			old_dir = FLDMMDL_GetDirDisp( fmmdl );
+			
+			if( dir != old_dir && debug_flag == FALSE ){
+				return( PLAYER_SET_TURN );
+			}
+			
+			return( PLAYER_SET_WALK );
+		}
+		
+		return( PLAYER_SET_STOP );
+	}
+	
+	return( PLAYER_SET_NON );
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機　移動開始チェック　移動中
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static PLAYER_SET FGridPlayer_CheckMoveStart_Walk(
+	FGRID_PLAYER *pJiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT ){
+		return( FGridPlayer_CheckMoveStart_Stop(
+			pJiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	{
+		u32 hit = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
+		
+		if( debug_flag == TRUE ){
+			if( hit != FLDMMDL_MOVEHITBIT_NON &&
+				!(hit&FLDMMDL_MOVEHITBIT_OUTRANGE) ){
+				hit = FLDMMDL_MOVEHITBIT_NON;
+			}
+		}
+		
+		if( hit == FLDMMDL_MOVEHITBIT_NON ){
+			return( PLAYER_SET_WALK );
+		}
+	}
+
+	return( PLAYER_SET_HITCH );
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機　移動開始チェック　振り向き中
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static PLAYER_SET FGridPlayer_CheckMoveStart_Turn(
+	FGRID_PLAYER *pJiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT ){
+		return( FGridPlayer_CheckMoveStart_Stop(
+			pJiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	return( FGridPlayer_CheckMoveStart_Walk(
+		pJiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機　移動開始チェック　障害物ヒット中
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static PLAYER_SET FGridPlayer_CheckMoveStart_Hitch(
+	FGRID_PLAYER *pJiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT ){
+		return( FGridPlayer_CheckMoveStart_Stop(
+			pJiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	return( FGridPlayer_CheckMoveStart_Walk(
+		pJiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機　移動セット　特になし
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void FGridPlayer_SetMove_Non(
+	FGRID_PLAYER *pJiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機　移動セット　停止
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void FGridPlayer_SetMove_Stop(
+	FGRID_PLAYER *pJiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	if( dir == DIR_NOT ){
+		dir = FLDMMDL_GetDirDisp( fmmdl );
+	}
+	
+	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
+	FLDMMDL_SetAcmd( fmmdl, code );
+	pJiki->move_state = PLAYER_MOVE_STOP;
+	
+	FGridPlayer_SountTest_Stop();
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機　移動セット　移動
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void FGridPlayer_SetMove_Walk(
+	FGRID_PLAYER *pJiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	
+	if( debug_flag == TRUE ){
+		code = AC_WALK_U_2F;
+	}else if( key_cont & PAD_BUTTON_B ){
+		code = AC_DASH_U_4F;
+	}else{
+		code = AC_WALK_U_8F;
+	}
+	
+	if( key_cont & PAD_BUTTON_A ){ //kari
+		code = AC_JUMP_U_2G_16F;
+	}
+	
+	code = FLDMMDL_ChangeDirAcmdCode( dir, code );
+	
+	FLDMMDL_SetAcmd( fmmdl, code );
+	pJiki->move_state = PLAYER_MOVE_WALK;
+	
+	FGridPlayer_SountTest_Move();
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機　移動セット　振り向き
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void FGridPlayer_SetMove_Turn(
+	FGRID_PLAYER *pJiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_8F );
+	
+	FLDMMDL_SetAcmd( fmmdl, code );
+	pJiki->move_state = PLAYER_MOVE_TURN;
+	
+	FGridPlayer_SountTest_Stop();
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機　移動セット　障害物ヒット
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void FGridPlayer_SetMove_Hitch(
+	FGRID_PLAYER *pJiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_32F );
+	
+	FLDMMDL_SetAcmd( fmmdl, code );
+	pJiki->move_state = PLAYER_MOVE_HITCH;
+	
+	FGridPlayer_SountTest_Stop();
+}
+
 //--------------------------------------------------------------
 /**
  * グリッド自機　移動処理
@@ -826,9 +1095,12 @@ static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 static void FGridPlayer_Move(
 	FGRID_PLAYER *pJiki, u32 key_trg, u32 key_cont )
 {
+	u16 dir;
+	BOOL debug_flag;
+	PLAYER_SET set;
 	PC_ACTCONT *pcActCont = pJiki->pGridCont->pFieldWork->pcActCont;
 	FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
-	
+
 	//----とりあえず
 	#ifdef DEBUG_ONLY_FOR_kagaya
 	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
@@ -839,16 +1111,81 @@ static void FGridPlayer_Move(
 		DEBUG_PrintAttr( pJiki );
 	}
 	#endif
-	//----
 	
+	dir = DIR_NOT;
+	if( (key_cont&PAD_KEY_UP) ){
+		dir = DIR_UP;
+	}else if( (key_cont&PAD_KEY_DOWN) ){
+		dir = DIR_DOWN;
+	}else if( (key_cont&PAD_KEY_LEFT) ){
+		dir = DIR_LEFT;
+	}else if( (key_cont&PAD_KEY_RIGHT) ){
+		dir = DIR_RIGHT;
+	}
+	
+	debug_flag = FALSE;
+	if( key_cont & PAD_BUTTON_R ){
+		debug_flag = TRUE;
+	}
+	
+	set = PLAYER_SET_NON;
+	switch( pJiki->move_state ){
+	case PLAYER_MOVE_STOP:
+		set = FGridPlayer_CheckMoveStart_Stop(
+			pJiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_WALK:
+		set = FGridPlayer_CheckMoveStart_Walk(
+			pJiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_TURN:
+		set = FGridPlayer_CheckMoveStart_Turn(
+			pJiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_HITCH:
+		set = FGridPlayer_CheckMoveStart_Hitch(
+			pJiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	default:
+		GF_ASSERT( 0 );
+	}
+	
+	switch( set ){
+	case PLAYER_SET_NON:
+		FGridPlayer_SetMove_Non(
+			pJiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_STOP:
+		FGridPlayer_SetMove_Stop(
+			pJiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_WALK:
+		FGridPlayer_SetMove_Walk(
+			pJiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_TURN:
+		FGridPlayer_SetMove_Turn(
+			pJiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_HITCH:
+		FGridPlayer_SetMove_Hitch(
+			pJiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	}
+}
+
+#if 0
 	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == TRUE ){
 		int code;
 		int dir = DIR_NOT;
+	
+		if( dir == DIR_NOT ){
 		
-		if( (key_cont&PAD_KEY_UP) ){ dir = DIR_UP; }
-		else if( (key_cont&PAD_KEY_DOWN) ){ dir = DIR_DOWN; }
-		else if( (key_cont&PAD_KEY_LEFT) ){ dir = DIR_LEFT; }
-		else if( (key_cont&PAD_KEY_RIGHT) ){ dir = DIR_RIGHT; }
+		}
+
+		else{
+
+		}
 		
 		if( dir == DIR_NOT ){
 			//　↓ サウンドテスト（停止）
@@ -885,7 +1222,7 @@ static void FGridPlayer_Move(
 					if( (key_cont & PAD_BUTTON_B) ){
 						code = FLDMMDL_ChangeDirAcmdCode( dir, AC_DASH_U_4F );
 					}else{
-						code = FLDMMDL_ChangeDirAcmdCode( dir, AC_WALK_U_8F );
+						code = FLDMMDL_ChangeDirAcmdCode( dir, AC_WALK_U_16F );
 					}
 				}
 				#else
@@ -910,6 +1247,7 @@ static void FGridPlayer_Move(
 		pJiki->pGridCont->pFieldWork, &pJiki->vec_pos );
 	#endif
 }
+#endif
 
 #if 0
 static void FGridPlayer_Move(
