@@ -49,4 +49,3 @@ perl %PERL_DIR%ncgc.pl %1c_m.ncg ./
 perl %PERL_DIR%ncl.pl %2_n.ncl ./
 perl %PERL_DIR%ncl.pl %2_r.ncl ./
 
-pause
