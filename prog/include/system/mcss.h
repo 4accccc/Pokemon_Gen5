@@ -51,6 +51,19 @@ typedef struct
 	ARCDATID	ncec;
 }MCSS_ADD_WORK;
 
+#ifdef PM_DEBUG
+typedef struct
+{
+	void	*ncbr;
+	void	*nclr;
+	void	*ncer;
+	void	*nanr;
+	void	*nmcr;
+	void	*nmar;
+	void	*ncec;
+}MCSS_ADD_DEBUG_WORK;
+#endif
+
 typedef struct _MCSS_NCEC		MCSS_NCEC;
 typedef struct _MCSS_NCEC_WORK	MCSS_NCEC_WORK;
 typedef struct _MCSS_WORK		MCSS_WORK;
@@ -60,7 +73,7 @@ extern	MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID );
 extern	void			MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
 extern	void			MCSS_Main( MCSS_SYS_WORK *mcss_sys );
 extern	void			MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
-extern	MCSS_WORK*		MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MCSS_ADD_WORK *maw );
+extern	MCSS_WORK*		MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_WORK *maw );
 extern	void			MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
 extern	void			MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys );
 extern	void			MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys );
@@ -79,6 +92,10 @@ extern	void			MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
 extern	int				MCSS_GetVanishFlag( MCSS_WORK *mcss );
 extern	void			MCSS_SetVanishFlag( MCSS_WORK *mcss );
 extern	void			MCSS_ResetVanishFlag( MCSS_WORK *mcss );
+
+#ifdef PM_DEBUG
+extern	MCSS_WORK*		MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
+#endif
 
 #endif
 
