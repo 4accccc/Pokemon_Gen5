@@ -344,7 +344,8 @@ SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
 								  test/soga/d_btltest.c \
 								  test/soga/gf_mcs.c \
 								  test/soga/capture.c \
-								  test/soga/effect_viewer.c
+								  test/soga/effect_viewer.c \
+								  test/soga/pokemon_viewer.c
 
 # ƒ^ƒCƒgƒ‹
 #===> SRCS_OVERLAY_DEV_IRC
