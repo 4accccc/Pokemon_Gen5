@@ -28,6 +28,7 @@
 #include "field_comm/field_comm_debug.h"
 #include "ircbattle/ircbattlemenu.h"
 #include "event_ircbattle.h"
+#include "event_wificlub.h"
 #include "field_subscreen.h"
 
 #include "font/font.naix"
@@ -113,6 +114,7 @@ static BOOL DMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL DMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk );
 
 static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -163,6 +165,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR13, DMenuCallProc_FldMMdlList },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
+	{ DEBUG_FIELD_STR19, DMenuCallProc_OpenClubMenu },
 	{ DEBUG_FIELD_STR15, DMenuCallProc_ControlLight },
 	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
 	{ DEBUG_FIELD_STR01, NULL },
@@ -435,39 +438,27 @@ static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
 static BOOL DMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GMEVENT *event = wk->gmEvent;
-	const HEAPID heapID = wk->heapID;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
-	IRC_BATTLE_MENU *work;
-	
-//	GMEVENT_Change( event,
-//		IRCBATTLE_MENU_Main, IRCBATTLE_MENU_GetWorkSize() );
-	
-//	work = GMEVENT_GetEventWork( event );
-	//IRCBATTLE_MENU_InitWork( heapID , gameSys , fieldWork , event , work );
-//    GAMESYSTEM_SetEvent(gameSys, EVENT_IrcBattle(gameSys, fieldWork));
-
-
- //   GMEVENT_CallEvent(event, EVENT_IrcBattle(gameSys, fieldWork));
 
     EVENT_IrcBattle(gameSys, fieldWork, event);
+	return( TRUE );
+}
 
-#if 0
+//--------------------------------------------------------------
+/**
+ * WiFiClubメニュー呼びだし
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk )
+{
 	GMEVENT *event = wk->gmEvent;
-	const HEAPID heapID = wk->heapID;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
-	FIELD_COMM_DEBUG_WORK *work;
-	
-	GMEVENT_Change( event,FIELD_COMM_DEBUG_CommDebugMenu, FIELD_COMM_DEBUG_GetWorkSize() );
-	
-	work = GMEVENT_GetEventWork( event );
-	FIELD_COMM_DEBUG_InitWork( heapID , gameSys , fieldWork , event , work );
 
-#endif
-
-
-    
+    EVENT_WiFiClub(gameSys, fieldWork, event);
 	return( TRUE );
 }
 

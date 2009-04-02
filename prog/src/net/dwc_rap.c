@@ -227,6 +227,11 @@ static void mydwc_allocRecvBuff(int i);
 
 static void mydwc_updateFriendInfo( void );
 
+static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align );
+static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  );
+
+
+
 
 //==============================================================================
 /**
@@ -1575,15 +1580,13 @@ static int mydwc_step(void)
 		
 		if( (_dWork->myvchaton == 1) && (_dWork->opvchaton == 1) && (_dWork->myvchat_send == TRUE) )
 		{
-			myvct_onVchat();
+			myvct_main(FALSE);
 		}
 		else
 		{
-			myvct_offVchat();
+			myvct_main(TRUE);
 		}
 				
-		myvct_main();
-
         if(_dWork->backupBitmap != DWC_GetAIDBitmap()){
             if(!_dWork->pausevchat && _dWork->bVChat){
                 if(myvct_AddConference(DWC_GetAIDBitmap(), DWC_GetMyAID())){

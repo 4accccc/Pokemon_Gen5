@@ -1611,7 +1611,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
 //        wk->MsgIndex = _PRINTTASK_MAX;
         wk->pMatch = pParentWork->pMatch;
         wk->pSaveData = pParentWork->pSaveData;
-        OS_TPrintf("--%x \n",wk->pSaveData);
+        OS_TPrintf("--%x \n",(int)wk->pSaveData);
         
         wk->pMyPoke = SaveData_GetTemotiPokemon(pParentWork->pSaveData);
         wk->pList = SaveData_GetWifiListData(pParentWork->pSaveData);
@@ -4653,6 +4653,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 
 	// ’ÊMó‘Ô‚ðŒ³‚É–ß‚·
 //	GFL_NET_StateChangeWiFiLogin(); //@@OO
+    _commStateChange(WIFI_STATUS_LOGIN_WAIT);
     GFL_NET_ChangeInitStruct(&aGFLNetInit);
 
     wk->preConnect = -1;

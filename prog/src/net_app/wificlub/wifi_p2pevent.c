@@ -21,6 +21,8 @@
 #include "savedata/wifilist.h"
 #include "system/main.h"
 
+#include "field/event_wificlub.h"
+
 
 //==============================================================================
 //	プロトタイプ宣言
@@ -45,6 +47,7 @@ FS_EXTERN_OVERLAY(wifi2dmap);
 typedef struct{
     WIFIP2PMATCH_PROC_PARAM* pMatchParam;
     WIFI_LIST* pWifiList;
+    GAMESYS_WORK * gsys;
 	int seq;
     u16* ret;
     u8 lvLimit;
@@ -356,6 +359,17 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
 
 static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+    EVENT_WIFICLUB_WORK* pClub = pwk;
+    EV_P2PEVENT_WORK* ep2p = GFL_PROC_AllocWork(proc, sizeof(EV_P2PEVENT_WORK),GFL_HEAPID_APP);
+
+    GFL_STD_MemClear(ep2p, sizeof(EV_P2PEVENT_WORK));
+    ep2p->pMatchParam = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WIFIP2PMATCH_PROC_PARAM));
+    ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(TEST_MATCH_WORK));
+    ep2p->pMatchParam->pSaveData = pClub->ctrl;
+    NET_PRINT("%x\n",(int)pClub->ctrl);
+    ep2p->pWifiList = SaveData_GetWifiListData(pClub->ctrl); //クラブに必要な物を移し変え
+    ep2p->pMatchParam->seq = P2P_INIT;
+    ep2p->gsys = pClub->gsys;
     return GFL_PROC_RES_FINISH;
 }
 
@@ -364,37 +378,6 @@ static GFL_PROC_RESULT WifiClubProcEnd( GFL_PROC * proc, int * seq, void * pwk, 
     return GFL_PROC_RES_FINISH;
 }
 
-
-//------------------------------------------------------------------
-/*
-   @title WIFIクラブイベントを開始する
-   @param kind     スタートする種類
- */
-//------------------------------------------------------------------
-static void* _WIFICLUB_CreateWork(int kind)
-{
-//	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldOpenEvent, sizeof(EV_P2PEVENT_WORK));
-  //  EV_P2PEVENT_WORK * ep2p = GMEVENT_GetEventWork(event);
-
-    SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
-    EV_P2PEVENT_WORK* ep2p = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EV_P2PEVENT_WORK));
-    ep2p->pMatchParam = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WIFIP2PMATCH_PROC_PARAM));
-    ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(TEST_MATCH_WORK));
-    ep2p->pMatchParam->pSaveData = saveWork;
-    ep2p->pWifiList = SaveData_GetWifiListData(saveWork); //クラブに必要な物を移し変え
-    ep2p->pMatchParam->seq = kind;
-	return ep2p;
-}
-
-//------------------------------------------------------------------
-/*
-   @title WIFIクラブイベントメモリを確保
- */
-//------------------------------------------------------------------
-void* WIFICLUB_CreateWork(void)
-{
-    return _WIFICLUB_CreateWork(P2P_INIT);
-}
 
 #if 0
 //------------------------------------------------------------------

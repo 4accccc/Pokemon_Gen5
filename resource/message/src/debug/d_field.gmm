@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-03-31T23:15:49"/>
+	<create user="ohno" host="W00141" date="2009-04-02T13:22:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,6 +334,11 @@
 グリッド[1:03:４桁:2]＿[1:03:４桁:3]</language>
 		<language name="JPN_KANJI" width="160">ブロック[1:01:２桁:0]＿[1:01:２桁:1]
 グリッド[1:03:４桁:2]＿[1:03:４桁:3]</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR19">
+		<language name="JPN" width="160">WIFICLUB</language>
+		<language name="JPN_KANJI" width="160">WIFICLUB</language>
 	</row>
 
 	<flowchart-group-list>

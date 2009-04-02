@@ -6,11 +6,16 @@
 
 extern void myvct_init( int heapID, int codec,int maxEntry );
 extern void myvct_setCodec( int codec );
-extern void myvct_main( );
-extern BOOL myvct_checkData( int aid, void *data, int size );
 
-extern void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align );
-extern void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  );
+//==============================================================================
+/**
+ * @brief   ボイスチャットメイン
+ * @param   offflg   音を送らない場合＝一時的にオフにする場合 TRUE
+ * @retval  none
+ */
+//==============================================================================
+extern void myvct_main( BOOL offflg);
+extern BOOL myvct_checkData( int aid, void *data, int size );
 
 //==============================================================================
 /**
@@ -56,14 +61,6 @@ extern void myvct_changeVADLevel(int d);
 // 送信したかどうかを返します
 extern BOOL myvct_IsSendVoiceAndInc(void);
 
-// ボイスチャットをオフにします。
-extern void myvct_offVchat();
-
-// ボイスチャットをオンにします。
-extern void myvct_onVchat();
-
-// ボイスチャットがオンかを返します。
-extern BOOL myvct_isVchatOn();
 
 //==============================================================================
 /**

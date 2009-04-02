@@ -91,7 +91,6 @@ typedef struct{
 //	プロトタイプ宣言
 //==============================================================================
 static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk);
-static void * _wificlubWorkCreate(D_OHNO_WORK *wk);
 
 
 //==============================================================================
@@ -108,12 +107,6 @@ extern const GFL_PROC_DATA DebugLayoutMainProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
-	{//WIFIクラブ
-		DEBUG_OHNO_MSG0001,
-		&WifiClubProcData,
-		&_wificlubWorkCreate,
-		FS_OVERLAY_ID(wificlub)
-	},
 	{//
 		DEBUG_OHNO_MSG0002, 
 		&DebugLayoutMainProcData,	
@@ -450,19 +443,6 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
 	}
 	
 	return FALSE;
-}
-
-
-
-//==============================================================================
-//	
-//==============================================================================
-static void * _wificlubWorkCreate(D_OHNO_WORK *wk)
-{
-    // セーブデータを読み込む
-    SaveControl_Load(SaveControl_GetPointer());
-
-	return WIFICLUB_CreateWork();
 }
 
 //==============================================================================
