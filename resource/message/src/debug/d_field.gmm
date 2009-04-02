@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-04-02T13:22:19"/>
+	<create user="tamada" host="W00139" date="2009-04-02T15:47:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,6 +339,26 @@
 	<row id="DEBUG_FIELD_STR19">
 		<language name="JPN" width="160">WIFICLUB</language>
 		<language name="JPN_KANJI" width="160">WIFICLUB</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR_SPRING">
+		<language name="JPN" width="160">はる</language>
+		<language name="JPN_KANJI" width="160">春</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR_SUMMER">
+		<language name="JPN" width="160">なつ</language>
+		<language name="JPN_KANJI" width="160">夏</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR_AUTUMN">
+		<language name="JPN" width="160">あき</language>
+		<language name="JPN_KANJI" width="160">秋</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR_WINTER">
+		<language name="JPN" width="160">ふゆ</language>
+		<language name="JPN_KANJI" width="160">冬</language>
 	</row>
 
 	<flowchart-group-list>
