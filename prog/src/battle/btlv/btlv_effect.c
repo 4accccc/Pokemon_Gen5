@@ -107,6 +107,9 @@ static	void	BTLV_EFFECT_InitPTCA( GFL_EMIT_PTR emit );
 static	void	BTLV_EFFECT_InitPTCB( GFL_EMIT_PTR emit );
 static	void	BTLV_EFFECT_TCB_End( GFL_TCB *tcb, BTLV_EFFECT_TCB *bet );
 
+#ifdef PM_DEBUG
+void	BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
+#endif 
 
 static	GFL_TCB_FUNC * const BTLV_effect_tcb_table[]={
 	&BTLV_EFFECT_TCB_AA2BBGanseki,
@@ -1165,7 +1168,7 @@ static	void	BTLV_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 			if( bet->wait == 0 ){
 				VecFx32 rt_value = { FX32_HALF >> 1, 0, 0 };
 				BTLV_MCSS_GetPokeDefaultPos( &target, BTLV_MCSS_POS_AA );
-				target.y += FX32_ONE * 3;
+				target.y += FX32_ONE * 2;
 				target.z -= FX32_ONE * 3;
 				GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 				GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
@@ -1208,8 +1211,9 @@ static	void	BTLV_EFFECT_InitPTCAA( GFL_EMIT_PTR emit )
 
 	BTLV_MCSS_GetPokeDefaultPos( &src, BTLV_MCSS_POS_AA );
 	BTLV_MCSS_GetPokeDefaultPos( &dst, BTLV_MCSS_POS_BB );
+	src.x += FX32_ONE * 2;
 	src.y += FX32_ONE * 2;
-	src.z -= 0x1600;
+	src.z -= FX32_ONE * 2;
 	dst.y += FX32_ONE * 2;
 	VEC_Normalize( &dst, &dst );
 	VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
@@ -1235,6 +1239,7 @@ static	void	BTLV_EFFECT_InitPTCBB( GFL_EMIT_PTR emit )
 
 	BTLV_MCSS_GetPokeDefaultPos( &src, BTLV_MCSS_POS_BB );
 	BTLV_MCSS_GetPokeDefaultPos( &dst, BTLV_MCSS_POS_AA );
+	src.x += FX32_ONE * 2;
 	src.y += FX32_ONE * 3;
 	dst.x -= FX32_ONE * 1;
 	dst.y += FX32_HALF;
@@ -1301,8 +1306,8 @@ static	void	BTLV_EFFECT_InitPTCB( GFL_EMIT_PTR emit )
 static	void	BTLV_EFFECT_TCB_End( GFL_TCB *tcb, BTLV_EFFECT_TCB *bet )
 {
 	if( bew->execute_flag != 0 ){
-		GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON );
-		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
+//		GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON );
+//		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
 	}
 	bew->execute_flag = 0;
 	GFL_HEAP_FreeMemory( bet );
@@ -2329,3 +2334,17 @@ static	void	BTLV_EFFECT_InitPTCBB( GFL_EMIT_PTR emit )
 #endif
 #endif
 
+#ifdef PM_DEBUG
+//============================================================================================
+/**
+ *	指定された立ち位置にポケモンをセット
+ *
+ * @param[in]	pp			セットするポケモンのPOKEMON_PARAM構造体へのポインタ
+ * @param[in]	position	セットするポケモンの立ち位置
+ */
+//============================================================================================
+void	BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position )
+{
+	BTLV_MCSS_AddDebug( bew->bmw, madw, position );
+}
+#endif

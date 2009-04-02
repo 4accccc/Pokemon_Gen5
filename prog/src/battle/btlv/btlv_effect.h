@@ -49,6 +49,10 @@ extern	BTLV_CAMERA_WORK	*BTLV_EFFECT_GetCameraWork( void );
 extern	BTLV_MCSS_WORK		*BTLV_EFFECT_GetMcssWork( void );
 extern	VMHANDLE			*BTLV_EFFECT_GetVMHandle( void );
 
+#ifdef PM_DEBUG
+extern	void				BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
+#endif 
+
 //管理構造体のポインタを返すバージョン
 #if 0
 extern	BTLV_EFFECT_WORK	*BTLV_EFFECT_Init( int index, HEAPID heapID );

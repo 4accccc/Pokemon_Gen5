@@ -108,6 +108,10 @@ static	void	TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work );
 static	void	TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work );
 static	void	TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work );
 
+#ifdef PM_DEBUG
+void	BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
+#endif
+
 //============================================================================================
 /**
  *	ポケモンの立ち位置テーブル
@@ -752,3 +756,29 @@ static	void	TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
 	}
 }
 
+#ifdef PM_DEBUG
+//============================================================================================
+/**
+ *	BTLV_MCSS追加（デバッグ用）
+ *
+ * @param[in]	bmw			BTLV_MCSS管理ワークへのポインタ
+ * @param[in]	madw		MCSS_ADD_DEBUG_WORK構造体へのポインタ
+ * @param[in]	position	ポケモンの立ち位置
+ */
+//============================================================================================
+void	BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position )
+{
+	GF_ASSERT( position < BTLV_MCSS_POS_MAX );
+	if( bmw->mcss[ position ] ){
+		BTLV_MCSS_Del( bmw, position );
+	}
+
+	bmw->mcss[ position ] = MCSS_AddDebug( bmw->mcss_sys,
+									  poke_pos_table[ position ].x,
+									  poke_pos_table[ position ].y,
+									  poke_pos_table[ position ].z,
+									  madw );
+
+	BTLV_MCSS_SetDefaultScale( bmw, position );
+}
+#endif

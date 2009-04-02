@@ -79,4 +79,8 @@ extern	void			BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, 
 extern	BOOL			BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
 extern	BOOL			BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position );
 
+#ifdef PM_DEBUG
+extern	void			BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
+#endif
+
 #endif	//__BTLV_MCSS_H_
