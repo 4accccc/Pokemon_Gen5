@@ -223,7 +223,7 @@ static void GridMoveCreate(
 	FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir )
 {
 	fieldWork->camera_control =
-		FIELD_CAMERA_Create( fieldWork->gs, fieldWork->heapID );
+		FIELD_CAMERA_Create( fieldWork, fieldWork->heapID );
 	
 	{
 		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
@@ -234,11 +234,11 @@ static void GridMoveCreate(
 		fieldWork->fldMMdlSys = fmmdlsys;
 		
 		FLDMMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
-			fieldWork->heapID, GetFieldG3Dmapper(fieldWork->gs) );
+			fieldWork->heapID, GetFieldG3Dmapper(fieldWork) );
 		
 		FLDMMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
 			fieldWork->fldMMdlSys,
-			GetBbdActSys(fieldWork->gs), 32 );
+			GetBbdActSys(fieldWork), 32 );
 		
 #if 0
 		FLDMMDL_BLACTCONT_AddResourceTex(
@@ -283,14 +283,14 @@ static void GridMoveCreate(
 			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
 		};
 		GFL_BBD_SetScale(
-			GFL_BBDACT_GetBBDSystem(fieldWork->gs->bbdActSys), &scale );
+			GFL_BBDACT_GetBBDSystem(fieldWork->bbdActSys), &scale );
 	}
 	
 	//マップ描画オフセット
 	{
 		VecFx32 offs = { -FX32_ONE*8, 0, FX32_ONE*8 };
 		FLDMAPPER_SetDrawOffset(
-			GetFieldG3Dmapper(fieldWork->gs), &offs );
+			GetFieldG3Dmapper(fieldWork), &offs );
 	}
 }
 
@@ -299,7 +299,7 @@ static void GridMoveCreate(
 	FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
 	fieldWork->camera_control =
-		FIELD_CAMERA_Create( fieldWork->gs, fieldWork->heapID );
+		FIELD_CAMERA_Create( fieldWork, fieldWork->heapID );
 	
 	{
 		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
@@ -310,13 +310,13 @@ static void GridMoveCreate(
 		
 		if( ZONEDATA_DEBUG_IsSampleObjUse(zone_id) == TRUE ){
 			fieldWork->fldActCont =
-				FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
+				FLD_CreateFieldActSys( fieldWork, fieldWork->heapID );
 			FLDACT_TestSetup( fieldWork->fldActCont );
 		}
 	}
 	
 	fieldWork->pcActCont = CreatePlayerActGrid(
-			fieldWork->gs, fieldWork->heapID );
+			fieldWork, fieldWork->heapID );
 	
 	SetGridPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
@@ -335,14 +335,14 @@ static void GridMoveCreate(
 			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
 		};
 		GFL_BBD_SetScale(
-			GFL_BBDACT_GetBBDSystem(fieldWork->gs->bbdActSys), &scale );
+			GFL_BBDACT_GetBBDSystem(fieldWork->bbdActSys), &scale );
 	}
 
 	//マップ描画オフセット
 	{
 		VecFx32 offs = { -FX32_ONE*8, 0, FX32_ONE*8 };
 		FLDMAPPER_SetDrawOffset(
-			GetFieldG3Dmapper(fieldWork->gs), &offs );
+			GetFieldG3Dmapper(fieldWork), &offs );
 	}
 }
 #endif
@@ -761,7 +761,7 @@ static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 	PC_ACTCONT *pcActCont = pJiki->pGridCont->pFieldWork->pcActCont;
 	FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
 	const FLDMAPPER *mapper = 
-		GetFieldG3Dmapper( pJiki->pGridCont->pFieldWork->gs );
+		GetFieldG3Dmapper( pJiki->pGridCont->pFieldWork );
 	s16 gx,gz;
 	s16 now_gx = FLDMMDL_GetGridPosX( fmmdl );
 	s16 now_gy = FLDMMDL_GetGridPosY( fmmdl );
@@ -799,7 +799,7 @@ static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 {
 	const FLDMAPPER *mapper = 
-		GetFieldG3Dmapper( pJiki->pGridCont->pFieldWork->gs );
+		GetFieldG3Dmapper( pJiki->pGridCont->pFieldWork );
 	fx32 now_x = pJiki->vec_pos.x;
 	fx32 now_y = pJiki->vec_pos.y;
 	fx32 now_z = pJiki->vec_pos.z;
@@ -1366,7 +1366,7 @@ static void FGridPlayer_Move(
 		pJiki->vec_pos.z += pJiki->move_val.z;
 #else
 		GridVecPosMove(
-			GetFieldG3Dmapper(pJiki->pGridCont->pFieldWork->gs),
+			GetFieldG3Dmapper(pJiki->pGridCont->pFieldWork),
 			PlayerActGrid_GridInfoGet(pcActCont),
 			&pJiki->vec_pos, &pJiki->move_val );
 #endif
@@ -1591,7 +1591,7 @@ static MAPHITBIT MapHitCheck(
 	const FLDMAPPER *mapper;
 	
 	hit = MAPHITBIT_NON;
-	mapper = GetFieldG3Dmapper( pGridCont->pFieldWork->gs );
+	mapper = GetFieldG3Dmapper( pGridCont->pFieldWork );
 	
 	if( FLDMAPPER_CheckOutRange(mapper,next) == TRUE ){
 		hit |= MAPHITBIT_OUT;
@@ -1832,7 +1832,7 @@ static FGRID_ACTCONT * GridAct_SetupCont(
 //--------------------------------------------------------------
 static void GridAct_SetupBBD( FLD_ACTCONT *fldActCont, int max )
 {
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->gs );	
+	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->fieldWork );	
 	GFL_BBDACT_ACTDATA* actData;
 	GFL_BBDACT_ACTUNIT_ID actUnitID;
 	int		i, objIdx;
@@ -1868,7 +1868,7 @@ static void GridAct_ActWorkCreate(
 		fx32 mapSizex, mapSizez;
 
 		FLDMAPPER_GetSize(
-			GetFieldG3Dmapper( fldActCont->gs ), &mapSizex, &mapSizez );
+			GetFieldG3Dmapper( fldActCont->fieldWork ), &mapSizex, &mapSizez );
 		
 		for( i=0; i<setActNum; i++ ){
 			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
@@ -1939,7 +1939,7 @@ static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
 	FLDMMDL *fmmdl;
 	FLDMMDL_HEADER head;
 	VecFx32 pos = {0,0,0};
-	const FLDMAPPER *mapper = GetFieldG3Dmapper( fieldWork->gs );
+	const FLDMAPPER *mapper = GetFieldG3Dmapper( fieldWork );
 
 	for( i = 0; i < NPC_MAX; i++ ){
 		do{

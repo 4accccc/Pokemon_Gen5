@@ -67,9 +67,9 @@ extern FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
  */
 //============================================================================================
 
-static FIELD_SETUP*	SetupGameSystem( HEAPID heapID );
-static void				RemoveGameSystem( FIELD_SETUP* gs );
-static void				MainGameSystem( FIELD_SETUP* gs );
+static void				SetupGameSystem(FIELD_MAIN_WORK * fieldWork, HEAPID heapID );
+static void				RemoveGameSystem( FIELD_MAIN_WORK * fieldWork );
+static void				MainGameSystem( FIELD_MAIN_WORK * fieldWork );
 
 
 typedef enum {
@@ -94,7 +94,6 @@ struct _FIELD_MAIN_WORK
 	
 	u16				map_id;
 	const DEPEND_FUNCTIONS * ftbl;
-	FIELD_SETUP*	gs;
 	FIELD_CAMERA*	camera_control;
 	PC_ACTCONT*		pcActCont;
 	FLD_ACTCONT*	fldActCont;
@@ -117,6 +116,23 @@ struct _FIELD_MAIN_WORK
 	FLDMSGBG *fldMsgBG;
 	
 	FLDMMDLSYS *fldMMdlSys;
+
+
+	/* 以下はFIELD_SETUPのメンバー */
+
+	GFL_G3D_UTIL*			g3Dutil;		//g3Dutil Lib ハンドル
+	u16						g3DutilUnitIdx;	//g3Dutil Unitインデックス
+	GFL_G3D_SCENE*			g3Dscene;		//g3Dscene Lib ハンドル
+	GFL_G3D_CAMERA*			g3Dcamera;		//g3Dcamera Lib ハンドル
+	GFL_G3D_LIGHTSET*		g3Dlightset;	//g3Dlight Lib ハンドル
+	GFL_TCB*				g3dVintr;		//3D用vIntrTaskハンドル
+	GFL_BBDACT_SYS*			bbdActSys;		//ビルボードアクトシステム設定ハンドル
+
+	FLDMAPPER*				g3Dmapper;
+	
+	//HEAPID					heapID;
+
+	//FIELD_MAIN_WORK*		fieldWork;
 };
 
 //------------------------------------------------------------------
@@ -238,13 +254,6 @@ FIELD_WEATHER * FIELDMAP_GetFieldWeather( FIELD_MAIN_WORK *fieldWork )
 }
 
 
-FIELD_SETUP * FIELDMAP_GetFieldSetup( FIELD_MAIN_WORK *fieldWork );
-
-FIELD_SETUP * FIELDMAP_GetFieldSetup( FIELD_MAIN_WORK *fieldWork )
-{
-	return fieldWork->gs;
-}
-
 FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
 
 FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork )
@@ -284,7 +293,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 	case 0:
 		//基本システムセットアップ
-		fieldWork->gs = SetupGameSystem( fieldWork->heapID );
+		SetupGameSystem( fieldWork, fieldWork->heapID );
 		fieldWork->seq++;
         break;
 
@@ -295,7 +304,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 		SetMapperData(fieldWork);
 		FLDMAPPER_ResistData(
-			 GetFieldG3Dmapper(fieldWork->gs), &fieldWork->map_res );
+			 fieldWork->g3Dmapper, &fieldWork->map_res );
 
 		//登録テーブルごとに個別の初期化処理を呼び出し
 		{
@@ -308,7 +317,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 					FX_Whole(fieldWork->now_pos.z));
 			dir = GetStartDirection(gsys);
 			fieldWork->ftbl->create_func( fieldWork, &fieldWork->now_pos, dir );
-			FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
+			FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
 		}
 
 
@@ -316,7 +325,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
 
 		// ライトシステム生成
-		fieldWork->light = FIELD_LIGHT_Create( 0, 0, 0, fieldWork->fog, GetG3Dlightset( fieldWork->gs ), fieldWork->heapID );
+		fieldWork->light = FIELD_LIGHT_Create( 0, 0, 0, fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
 
 		// 天気システム生成
 		fieldWork->weather_sys = FIELD_WEATHER_Init( fieldWork->camera_control, fieldWork->light, fieldWork->fog, fieldWork->heapID );
@@ -330,13 +339,13 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		break;
 
 	case 2:
-		MainGameSystem( fieldWork->gs );
+		MainGameSystem( fieldWork );
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 		if( fieldWork->fldMMdlSys != NULL ){
 			FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
 		}
 
-		if (FLDMAPPER_CheckTrans(GetFieldG3Dmapper(fieldWork->gs)) == FALSE) {
+		if (FLDMAPPER_CheckTrans(fieldWork->g3Dmapper) == FALSE) {
 			break;
 		}
 
@@ -360,7 +369,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 			//Mapシステムに位置を渡している。
 			//これがないとマップ移動しないので注意
-			FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
+			FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
 		}
 		//通信用アクター更新
 		fieldMainCommActorProc( fieldWork );
@@ -369,7 +378,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
 
 		
-		MainGameSystem( fieldWork->gs );
+		MainGameSystem( fieldWork );
 		FIELD_SUBSCREEN_Main();
 		FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
 		FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
@@ -415,7 +424,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);
 
-        FLDMAPPER_ReleaseData( GetFieldG3Dmapper(fieldWork->gs) );
+        FLDMAPPER_ReleaseData( fieldWork->g3Dmapper );
 		
 		FLDMSGBG_Delete( fieldWork->fldMsgBG );
 		
@@ -423,7 +432,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		break;
 
 	case 5:
-		RemoveGameSystem( fieldWork->gs );
+		RemoveGameSystem( fieldWork );
 		return_flag = TRUE;
 		break;
 	}
@@ -467,7 +476,7 @@ static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 				pos_array[i].z * 16 * FX32_ONE);
 		VEC_Add(&pos, &fieldWork->now_pos, &pos);
 		TAMADA_Printf("(x=%08x, z=%08x)",pos.x,pos.z);
-		if( FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork->gs), &pos, &gridInfo ) == TRUE ){
+		if( FLDMAPPER_GetGridInfo( fieldWork->g3Dmapper, &pos, &gridInfo ) == TRUE ){
 			attr = gridInfo.gridData[0].attr;
 		}
 		TAMADA_Printf("%04x%c", attr, limit[i]);
@@ -527,7 +536,7 @@ static GMEVENT * PushConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWo
 		u32 attr = 0;
 		FLDMAPPER_GRIDINFO gridInfo;
 		//pos = pos_array[i] * FX32_ONE * 16 + fieldWork->now_pos;
-		if( FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork->gs), &now_pos, &gridInfo ) == TRUE ){
+		if( FLDMAPPER_GetGridInfo( fieldWork->g3Dmapper, &now_pos, &gridInfo ) == TRUE ){
 			attr = gridInfo.gridData[0].attr;
 		}
 		if (attr == 0) return NULL;
@@ -641,25 +650,6 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 
 //------------------------------------------------------------------
 /**
- * @brief	構造体定義
- */
-//------------------------------------------------------------------
-struct _FIELD_SETUP {
-	GFL_G3D_UTIL*			g3Dutil;		//g3Dutil Lib ハンドル
-	u16						g3DutilUnitIdx;	//g3Dutil Unitインデックス
-	GFL_G3D_SCENE*			g3Dscene;		//g3Dscene Lib ハンドル
-	GFL_G3D_CAMERA*			g3Dcamera;		//g3Dcamera Lib ハンドル
-	GFL_G3D_LIGHTSET*		g3Dlightset;	//g3Dlight Lib ハンドル
-	GFL_TCB*				g3dVintr;		//3D用vIntrTaskハンドル
-	GFL_BBDACT_SYS*			bbdActSys;		//ビルボードアクトシステム設定ハンドル
-
-	FLDMAPPER*				g3Dmapper;
-	
-	HEAPID					heapID;
-};
-
-//------------------------------------------------------------------
-/**
  * @brief	ディスプレイ環境データ
  */
 //------------------------------------------------------------------
@@ -759,13 +749,13 @@ static const GXRgb edgeColorTable[8] = {
  */
 //------------------------------------------------------------------
 //ＢＧ設定関数
-static void	bg_init( FIELD_SETUP* gs );
-static void	bg_exit( FIELD_SETUP* gs );
+static void	bg_init( FIELD_MAIN_WORK * fieldWork );
+static void	bg_exit( FIELD_MAIN_WORK * fieldWork );
 //３Ｄ関数
-static void g3d_load( FIELD_SETUP* gs );
-static void g3d_control( FIELD_SETUP* gs );
-static void g3d_draw( FIELD_SETUP* gs );
-static void	g3d_unload( FIELD_SETUP* gs );
+static void g3d_load( FIELD_MAIN_WORK * fieldWork );
+static void g3d_control( FIELD_MAIN_WORK * fieldWork );
+static void g3d_draw( FIELD_MAIN_WORK * fieldWork );
+static void g3d_unload( FIELD_MAIN_WORK * fieldWork );
 static void	g3d_vblank( GFL_TCB* tcb, void* work );
 
 //------------------------------------------------------------------
@@ -773,11 +763,8 @@ static void	g3d_vblank( GFL_TCB* tcb, void* work );
  * @brief	セットアップ関数
  */
 //------------------------------------------------------------------
-static FIELD_SETUP*	SetupGameSystem( HEAPID heapID )
+static void	SetupGameSystem(FIELD_MAIN_WORK * fieldWork, HEAPID heapID )
 {
-	FIELD_SETUP*	gs = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_SETUP) );
-	gs->heapID = heapID;
-
 	//乱数初期化
 	GFL_STD_MtRandInit(0);
 
@@ -787,7 +774,7 @@ static FIELD_SETUP*	SetupGameSystem( HEAPID heapID )
 	GFL_DISP_SetBank( &dispVram );
 
 	//BG初期化
-	bg_init( gs );
+	bg_init( fieldWork );
 	
 	// CLACT初期化
 	GFL_CLACT_SYS_Create( &CLSYS_Init, &dispVram, heapID );
@@ -801,10 +788,8 @@ static FIELD_SETUP*	SetupGameSystem( HEAPID heapID )
 	GFL_FONTSYS_Init();
 	
 	//３Ｄデータのロード
-	g3d_load( gs );
-	gs->g3dVintr = GFUser_VIntr_CreateTCB( g3d_vblank, (void*)gs, 0 );
-
-	return gs;
+	g3d_load( fieldWork );
+	fieldWork->g3dVintr = GFUser_VIntr_CreateTCB( g3d_vblank, (void*)fieldWork, 0 );
 }
 
 //------------------------------------------------------------------
@@ -812,10 +797,10 @@ static FIELD_SETUP*	SetupGameSystem( HEAPID heapID )
  * @brief	セットアップ関数
  */
 //------------------------------------------------------------------
-static void	RemoveGameSystem( FIELD_SETUP* gs )
+static void	RemoveGameSystem( FIELD_MAIN_WORK * fieldWork )
 {
-	GFL_TCB_DeleteTask( gs->g3dVintr );
-	g3d_unload( gs );	//３Ｄデータ破棄
+	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
+	g3d_unload( fieldWork );	//３Ｄデータ破棄
 
 
 	// CLACT破棄
@@ -823,9 +808,9 @@ static void	RemoveGameSystem( FIELD_SETUP* gs )
 	
 	GFL_BMPWIN_Exit();
 
-	bg_exit( gs );
+	bg_exit( fieldWork );
 
-	GFL_HEAP_FreeMemory( gs );
+	//GFL_HEAP_FreeMemory( fieldWork->gs );
 }
 
 //------------------------------------------------------------------
@@ -833,10 +818,10 @@ static void	RemoveGameSystem( FIELD_SETUP* gs )
  * @brief	システムメイン関数
  */
 //------------------------------------------------------------------
-static void	MainGameSystem( FIELD_SETUP* gs )
+static void		MainGameSystem( FIELD_MAIN_WORK * fieldWork )
 {
-	g3d_control( gs );
-	g3d_draw( gs );
+	g3d_control( fieldWork );
+	g3d_draw( fieldWork );
 
 	// CLSYSメイン
 	GFL_CLACT_SYS_Main();
@@ -852,14 +837,14 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
 };	
 
-static void	bg_init( FIELD_SETUP* gs )
+static void	bg_init( FIELD_MAIN_WORK * fieldWork )
 {
 	//ＢＧシステム起動
-	GFL_BG_Init( gs->heapID );
+	GFL_BG_Init( fieldWork->heapID );
 
 	//背景色パレット作成＆転送
 	{
-		u16* plt = GFL_HEAP_AllocClearMemoryLo( gs->heapID, 16*2 );
+		u16* plt = GFL_HEAP_AllocClearMemoryLo( fieldWork->heapID, 16*2 );
 		plt[0] = BACKGROUND_COL;
 		GFL_BG_LoadPalette( GFL_BG_FRAME0_M, plt, 16*2, 0 );	//メイン画面の背景色転送
 		GFL_BG_LoadPalette( GFL_BG_FRAME0_S, plt, 16*2, 0 );	//サブ画面の背景色転送
@@ -873,7 +858,7 @@ static void	bg_init( FIELD_SETUP* gs )
 	
 	//３Ｄシステム起動
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
-						DTCM_SIZE, gs->heapID, G3DsysSetup );
+						DTCM_SIZE, fieldWork->heapID, G3DsysSetup );
 	DEBUG_GFL_G3D_SetVManSize( GFL_G3D_TEX256K, GFL_G3D_PLT64K );
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
@@ -882,7 +867,7 @@ static void	bg_init( FIELD_SETUP* gs )
 	GFL_DISP_SetDispOn();
 }
 
-static void	bg_exit( FIELD_SETUP* gs )
+static void	bg_exit( FIELD_MAIN_WORK * fieldWork )
 {
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 
@@ -938,73 +923,73 @@ static void G3DsysSetup( void )
 static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz );
 //------------------------------------------------------------------
 //作成
-static void g3d_load( FIELD_SETUP* gs )
+static void g3d_load( FIELD_MAIN_WORK * fieldWork )
 {
 	//配置物設定
 
 	//g3Dutilを使用し配列管理をする
-	gs->g3Dutil = GFL_G3D_UTIL_Create( G3D_UTIL_RESCOUNT, G3D_UTIL_OBJCOUNT, gs->heapID );
+	fieldWork->g3Dutil = GFL_G3D_UTIL_Create( G3D_UTIL_RESCOUNT, G3D_UTIL_OBJCOUNT, fieldWork->heapID );
 	//g3Dsceneを使用し管理をする
-	gs->g3Dscene = GFL_G3D_SCENE_Create( gs->g3Dutil, 
-						G3D_SCENE_OBJCOUNT, G3D_OBJWORK_SZ, G3D_ACC_COUNT, TRUE, gs->heapID );
+	fieldWork->g3Dscene = GFL_G3D_SCENE_Create( fieldWork->g3Dutil, 
+						G3D_SCENE_OBJCOUNT, G3D_OBJWORK_SZ, G3D_ACC_COUNT, TRUE, fieldWork->heapID );
 
-	gs->g3Dmapper = FLDMAPPER_Create( gs->heapID );
-	gs->bbdActSys = GFL_BBDACT_CreateSys
-					( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, g3d_trans_BBD, gs->heapID );
+	fieldWork->g3Dmapper = FLDMAPPER_Create( fieldWork->heapID );
+	fieldWork->bbdActSys = GFL_BBDACT_CreateSys
+					( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, g3d_trans_BBD, fieldWork->heapID );
 
 	//カメラ作成
-	gs->g3Dcamera = GFL_G3D_CAMERA_CreateDefault( &cameraPos, &cameraTarget, gs->heapID );
+	fieldWork->g3Dcamera = GFL_G3D_CAMERA_CreateDefault( &cameraPos, &cameraTarget, fieldWork->heapID );
 	{
 		//fx32 far = 1500 << FX32_SHIFT;
 		//fx32 far = 4096 << FX32_SHIFT;
 		fx32 far = 1024 << FX32_SHIFT;
 
-		GFL_G3D_CAMERA_SetFar( gs->g3Dcamera, &far );
+		GFL_G3D_CAMERA_SetFar( fieldWork->g3Dcamera, &far );
 	}
 	//ライト作成
-	gs->g3Dlightset = GFL_G3D_LIGHT_Create( &light0Setup, gs->heapID );
+	fieldWork->g3Dlightset = GFL_G3D_LIGHT_Create( &light0Setup, fieldWork->heapID );
 
 	//カメラライト0反映
-	GFL_G3D_CAMERA_Switching( gs->g3Dcamera );
-	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
+	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
+	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );
 	OS_Printf("TEX:%06x PLT:%04x\n",
 			DEBUG_GFL_G3D_GetBlankTextureSize(), DEBUG_GFL_G3D_GetBlankPaletteSize());
 }
 	
 //動作
-static void g3d_control( FIELD_SETUP* gs )
+static void g3d_control( FIELD_MAIN_WORK * fieldWork )
 {
-	GFL_G3D_SCENE_Main( gs->g3Dscene ); 
-	FLDMAPPER_Main( gs->g3Dmapper );
-	GFL_BBDACT_Main( gs->bbdActSys );
+	GFL_G3D_SCENE_Main( fieldWork->g3Dscene ); 
+	FLDMAPPER_Main( fieldWork->g3Dmapper );
+	GFL_BBDACT_Main( fieldWork->bbdActSys );
 }
 
 //描画
-static void g3d_draw( FIELD_SETUP* gs )
+static void g3d_draw( FIELD_MAIN_WORK * fieldWork )
 {
-	GFL_G3D_CAMERA_Switching( gs->g3Dcamera );
-	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
-	FLDMAPPER_Draw( gs->g3Dmapper, gs->g3Dcamera );
-	GFL_BBDACT_Draw( gs->bbdActSys, gs->g3Dcamera, gs->g3Dlightset );
-	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
+	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
+	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );
+	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
+	GFL_BBDACT_Draw( fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+	GFL_G3D_SCENE_Draw( fieldWork->g3Dscene );  
 }
 
 //破棄
-static void g3d_unload( FIELD_SETUP* gs )
+static void g3d_unload( FIELD_MAIN_WORK * fieldWork )
 {
-	GFL_G3D_LIGHT_Delete( gs->g3Dlightset );
-	GFL_G3D_CAMERA_Delete( gs->g3Dcamera );
+	GFL_G3D_LIGHT_Delete( fieldWork->g3Dlightset );
+	GFL_G3D_CAMERA_Delete( fieldWork->g3Dcamera );
 
-	GFL_BBDACT_DeleteSys( gs->bbdActSys );
-	FLDMAPPER_Delete( gs->g3Dmapper );
+	GFL_BBDACT_DeleteSys( fieldWork->bbdActSys );
+	FLDMAPPER_Delete( fieldWork->g3Dmapper );
 
-	GFL_G3D_SCENE_Delete( gs->g3Dscene );  
-	GFL_G3D_UTIL_Delete( gs->g3Dutil );
+	GFL_G3D_SCENE_Delete( fieldWork->g3Dscene );  
+	GFL_G3D_UTIL_Delete( fieldWork->g3Dutil );
 }
 	
 static void	g3d_vblank( GFL_TCB* tcb, void* work )
 {
-	FIELD_SETUP* gs =  (FIELD_SETUP*)work;
+	FIELD_MAIN_WORK * fieldWork = (FIELD_MAIN_WORK*)work;
 
 	// セルアクターVBlank
 	GFL_CLACT_SYS_VBlankFunc();	
@@ -1028,25 +1013,21 @@ static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz 
  * @brief	システム取得
  */
 //------------------------------------------------------------------
-GFL_G3D_CAMERA* GetG3Dcamera( FIELD_SETUP* gs )
+GFL_G3D_CAMERA* GetG3Dcamera( FIELD_MAIN_WORK * fieldWork )
 {
-	return gs->g3Dcamera;
+	return fieldWork->g3Dcamera;
 }
 
-FLDMAPPER* GetFieldG3Dmapper( FIELD_SETUP* gs )
+FLDMAPPER* GetFieldG3Dmapper( FIELD_MAIN_WORK * fieldWork )
 {
-	return gs->g3Dmapper;
+	return fieldWork->g3Dmapper;
 }
 
-GFL_BBDACT_SYS* GetBbdActSys( FIELD_SETUP* gs )
+GFL_BBDACT_SYS* GetBbdActSys( FIELD_MAIN_WORK * fieldWork )
 {
-	return gs->bbdActSys;
+	return fieldWork->bbdActSys;
 }
 
-GFL_G3D_LIGHTSET* GetG3Dlightset( FIELD_SETUP* gs )
-{
-	return gs->g3Dlightset;
-}
 	
 //============================================================================================
 /**
@@ -1196,12 +1177,10 @@ void FieldMain_AddCommActor(
 	FIELD_MAIN_WORK *fieldWork, const PLAYER_WORK *player )
 {
 	int i;
-	FIELD_SETUP *fup;
 	GFL_BBDACT_SYS *bbdActSys;
 	GFL_BBDACT_RESUNIT_ID unitID;
 	
-	fup = fieldWork->gs;
-	bbdActSys = GetBbdActSys( fup );
+	bbdActSys = fieldWork->bbdActSys;
 	unitID = GetPlayerBBdActResUnitID( fieldWork->pcActCont );
 	
 	for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
@@ -1264,7 +1243,7 @@ void FIELDMAP_ForceUpdate( FIELD_MAIN_WORK *fieldWork )
 	
 	//Mapシステムに位置を渡している。
 	//これがないとマップ移動しないので注意
-	FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
+	FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
 }
 
 

@@ -40,7 +40,7 @@ typedef struct {
 
 struct _FLD_ACTCONT {
 	HEAPID					heapID;
-	FIELD_SETUP*			gs;
+	FIELD_MAIN_WORK * fieldWork;
 	u16						cameraRotate;
 	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
 	u16						bbdActResCount;
@@ -205,7 +205,7 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 		vecMove.y = 0;
 		vecMove.z = FX_CosIdx( theta );
 
-		mvf = CalcSetGroundMove( GetFieldG3Dmapper( fldActCont->gs ), &actWork->gridInfoData, 
+		mvf = CalcSetGroundMove( GetFieldG3Dmapper( fldActCont->fieldWork ), &actWork->gridInfoData, 
 									&nowTrans, &vecMove, FX32_ONE );
 		if( mvf == TRUE ){
 			VecFx32 setTrans;
@@ -221,7 +221,7 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 #define TEST_NPC_SETNUM	(250)
 void FLDACT_TestSetup( FLD_ACTCONT* fldActCont )
 {
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->gs );	
+	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->fieldWork );	
 	GFL_BBDACT_ACTDATA* actData;
 	GFL_BBDACT_ACTUNIT_ID actUnitID;
 	int		i, objIdx;
@@ -244,7 +244,7 @@ void FLDACT_TestSetup( FLD_ACTCONT* fldActCont )
 													setActNum*sizeof(GFL_BBDACT_ACTDATA) );
 		fx32 mapSizex, mapSizez;
 
-		FLDMAPPER_GetSize( GetFieldG3Dmapper( fldActCont->gs ), &mapSizex, &mapSizez );
+		FLDMAPPER_GetSize( GetFieldG3Dmapper( fldActCont->fieldWork ), &mapSizex, &mapSizez );
 
 		for( i=0; i<setActNum; i++ ){
 //			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
@@ -275,7 +275,7 @@ void FLDACT_TestSetup( FLD_ACTCONT* fldActCont )
 
 void FLDACT_TestRelease( FLD_ACTCONT* fldActCont )
 {
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->gs );	
+	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->fieldWork );	
 	u16	setActNum = FLD_BBDACT_ACTMAX;
 
 	GFL_BBDACT_RemoveAct( bbdActSys, fldActCont->bbdActActUnitID, TEST_NPC_SETNUM );
@@ -289,13 +289,13 @@ void FLDACT_TestRelease( FLD_ACTCONT* fldActCont )
  * @brief	フィールドアクトシステム作成
  */
 //------------------------------------------------------------------
-FLD_ACTCONT*	FLD_CreateFieldActSys( FIELD_SETUP* gs, HEAPID heapID )
+FLD_ACTCONT*	FLD_CreateFieldActSys( FIELD_MAIN_WORK * fieldWork, HEAPID heapID )
 {
 	FLD_ACTCONT* fldActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_ACTCONT) );
 	int	i;
 
 	fldActCont->heapID = heapID;
-	fldActCont->gs = gs;
+	fldActCont->fieldWork = fieldWork;
 
 	for( i=0; i<FLD_BBDACT_ACTMAX; i++ ){ initActWork( fldActCont, &fldActCont->actWork[i] ); }
 
@@ -324,7 +324,7 @@ void	FLD_MainFieldActSys( FLD_ACTCONT* fldActCont )
 {
 	//カメラ回転算出(ビルボードそのものには関係ない。アニメ向きの変更をするのに参照)
 	VecFx32 vec, camPos, target;
-	GFL_G3D_CAMERA* g3Dcamera = GetG3Dcamera( fldActCont->gs );
+	GFL_G3D_CAMERA* g3Dcamera = GetG3Dcamera( fldActCont->fieldWork );
 
 	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
 	GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );

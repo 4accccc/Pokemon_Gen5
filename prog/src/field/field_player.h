@@ -11,7 +11,7 @@
 
 typedef struct _PC_ACTCONT PC_ACTCONT;
 
-extern PC_ACTCONT*		CreatePlayerAct( FIELD_SETUP* gs, HEAPID heapID );
+extern PC_ACTCONT*		CreatePlayerAct( FIELD_MAIN_WORK * fieldWork, HEAPID heapID );
 extern void				DeletePlayerAct( PC_ACTCONT* pcActCont );
 extern void				MainPlayerAct( PC_ACTCONT* pcActCont, int key );
 extern void				MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key);

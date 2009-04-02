@@ -1,6 +1,5 @@
 #include "test_graphic/fldmmdl_btx.naix"
 
-extern FIELD_SETUP * FIELDMAP_GetFieldSetup( FIELD_MAIN_WORK *fieldWork );
 extern FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
 
 //field_player_grid.c
@@ -187,7 +186,7 @@ PC_ACTCONT * CreatePlayerActGrid(
 	pFldMMdlSys = FIELDMAP_GetFldMMdlSys( fieldWork );
 	pcActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(PC_ACTCONT) );
 	
-	pcActCont->gs = FIELDMAP_GetFieldSetup( fieldWork );
+	pcActCont->fieldWork = fieldWork;
 	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
 	
 	//FLDMMDLセットアップ
@@ -314,7 +313,7 @@ FLDMAPPER_GRIDINFODATA * PlayerActGrid_GridInfoGet( PC_ACTCONT *pcActCont )
 void PlayerActGrid_ScaleSizeSet(
 	PC_ACTCONT *pcActCont, fx16 sizeX, fx16 sizeY )
 {
-	GFL_BBDACT_SYS *bbdActSys = GetBbdActSys( pcActCont->gs );
+	GFL_BBDACT_SYS *bbdActSys = GetBbdActSys( pcActCont->fieldWork );
 	int idx = GFL_BBDACT_GetBBDActIdxResIdx(
 			bbdActSys, pcActCont->bbdActActUnitID );
 	GFL_BBD_SetObjectSiz(

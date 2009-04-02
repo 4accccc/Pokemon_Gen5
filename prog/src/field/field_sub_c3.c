@@ -27,10 +27,10 @@ static u16 v_len;
 //------------------------------------------------------------------
 static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
-	fieldWork->camera_control = FIELD_CAMERA_Create( fieldWork->gs, fieldWork->heapID );
-	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
+	fieldWork->camera_control = FIELD_CAMERA_Create( fieldWork, fieldWork->heapID );
+	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork, fieldWork->heapID );
 	//FLDACT_TestSetup( fieldWork->fldActCont );
-	fieldWork->pcActCont = CreatePlayerAct( fieldWork->gs, fieldWork->heapID );
+	fieldWork->pcActCont = CreatePlayerAct( fieldWork, fieldWork->heapID );
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
 
@@ -50,6 +50,11 @@ static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 		v_len = 1;
 		v_angle = 16;
 		pos_angle = 0;
+	}
+	{
+		//fx32 far = 1024 << FX32_SHIFT;
+		fx32 far = (512 + 256 + 128) << FX32_SHIFT;
+		GFL_G3D_CAMERA_SetFar(fieldWork->g3Dcamera, &far);
 	}
 }
 

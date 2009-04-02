@@ -21,7 +21,7 @@ static void				SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID );
 //============================================================================================
 struct _PC_ACTCONT {
 	HEAPID					heapID;
-	FIELD_SETUP*			gs;
+	FIELD_MAIN_WORK *		fieldWork;
 	u16						cameraRotate;
 	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
 	u16						bbdActResCount;
@@ -229,11 +229,11 @@ static void playerBBDactFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work 
 	u16		anmID;
 	u16		dir;
 
-	dir = pcActCont->direction - getCameraRotate( GetG3Dcamera(pcActCont->gs) );
+	dir = pcActCont->direction - getCameraRotate( GetG3Dcamera(pcActCont->fieldWork) );
 	anmID = getPlayerBBDanm( pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
 
 	//カメラ補正(アニメ向きの変更をするのに参照)
-	GFL_BBDACT_SetAnimeIdxContinue( GetBbdActSys( pcActCont->gs ), actIdx, anmID );
+	GFL_BBDACT_SetAnimeIdxContinue( GetBbdActSys( pcActCont->fieldWork ), actIdx, anmID );
 	//位置補正
 	trans.x = pcActCont->trans.x;
 	trans.y = pcActCont->trans.y + FX32_ONE*7;	//補正
@@ -241,10 +241,10 @@ static void playerBBDactFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work 
 	GFL_BBD_SetObjectTrans( bbdSys, actIdx, &trans );
 }
 
-PC_ACTCONT*	CreatePlayerAct( FIELD_SETUP*	gs, HEAPID heapID )
+PC_ACTCONT*	CreatePlayerAct( FIELD_MAIN_WORK * fieldWork, HEAPID heapID )
 {
 	PC_ACTCONT*	pcActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(PC_ACTCONT) );
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( gs );
+	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fieldWork );
 	GFL_BBDACT_ACTDATA actData;
 	GFL_BBDACT_ACTUNIT_ID actUnitID;
 	int		i, objIdx;
@@ -253,7 +253,7 @@ PC_ACTCONT*	CreatePlayerAct( FIELD_SETUP*	gs, HEAPID heapID )
 	BOOL	drawEnable;
 	u16		setActNum;
 
-	pcActCont->gs = gs;
+	pcActCont->fieldWork = fieldWork;
 	SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
 	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
 	
@@ -289,7 +289,7 @@ PC_ACTCONT*	CreatePlayerAct( FIELD_SETUP*	gs, HEAPID heapID )
 
 void	DeletePlayerAct( PC_ACTCONT* pcActCont )
 {
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( pcActCont->gs );
+	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( pcActCont->fieldWork );
 
 	GFL_BBDACT_RemoveAct( bbdActSys, pcActCont->bbdActActUnitID, 1 );
 	GFL_BBDACT_RemoveResourceUnit
@@ -304,7 +304,7 @@ void	MainPlayerAct( PC_ACTCONT* pcActCont, int key)
 	u16		dir;
 	BOOL	mvFlag = FALSE;
 
-	dir = getCameraRotate( GetG3Dcamera(pcActCont->gs) );
+	dir = getCameraRotate( GetG3Dcamera(pcActCont->fieldWork) );
 
 	if( key & PAD_KEY_UP ){
 		mvFlag = TRUE;
@@ -338,7 +338,7 @@ void	MainPlayerAct( PC_ACTCONT* pcActCont, int key)
 		pcActCont->direction += RT_SPEED;
 	}
 #endif
-	CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->gs), &pcActCont->gridInfoData, 
+	CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->fieldWork), &pcActCont->gridInfoData, 
 								&pcActCont->trans, &vecMove, MV_SPEED );
     
 	if( mvFlag == TRUE ){
@@ -359,7 +359,7 @@ static void	SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID )
 {
 	int		anmID;
 	u16		dir = pcActCont->direction -
-		getCameraRotate( GetG3Dcamera(pcActCont->gs) );
+		getCameraRotate( GetG3Dcamera(pcActCont->fieldWork) );
 
 	if( pcActCont->anmSetID != anmSetID ){
 		pcActCont->anmSetID = anmSetID;
@@ -367,7 +367,7 @@ static void	SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID )
 		anmID = getPlayerBBDanm(
 			pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
 		GFL_BBDACT_SetAnimeIdx(
-			GetBbdActSys(pcActCont->gs), pcActCont->bbdActActUnitID, anmID );
+			GetBbdActSys(pcActCont->fieldWork), pcActCont->bbdActActUnitID, anmID );
 	}
 }
 

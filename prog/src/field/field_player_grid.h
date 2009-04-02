@@ -13,7 +13,6 @@ typedef enum
 	PLAYER_ANIME_FLAG_MAX,
 }PLAYER_ANIME_FLAG;
 
-//extern PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID );
 extern PC_ACTCONT * CreatePlayerActGrid( FIELD_MAIN_WORK *, const VecFx32 *pos, HEAPID heapID );
 extern void DeletePlayerActGrid( PC_ACTCONT* pcActCont );
 extern void PlayerActGrid_Update(

@@ -16,7 +16,7 @@
 //------------------------------------------------------------------
 struct _FIELD_CAMERA {
 	HEAPID				heapID;
-	FIELD_SETUP*		gs;
+	FIELD_MAIN_WORK * fieldWork;
 
 	VecFx32				trans;
 	fx32				cameraHeight;
@@ -33,12 +33,12 @@ struct _FIELD_CAMERA {
  * @brief	‰Šú‰»
  */
 //------------------------------------------------------------------
-FIELD_CAMERA*	FIELD_CAMERA_Create( FIELD_SETUP*	gs, HEAPID heapID )
+FIELD_CAMERA*	FIELD_CAMERA_Create( FIELD_MAIN_WORK * fieldWork, HEAPID heapID )
 {
 	FIELD_CAMERA* camera = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_CAMERA) );
 
 	camera->heapID = heapID;
-	camera->gs = gs;
+	camera->fieldWork = fieldWork;
 
 	VEC_Set( &camera->trans, 0, 0, 0 );
 	camera->cameraHeight = 0;
@@ -69,7 +69,7 @@ void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 
 void	FIELD_CAMERA_Main( FIELD_CAMERA* camera, int key )
 {
-	GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(camera->gs);
+	GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(camera->fieldWork);
 	VecFx32	pos, target, trans;
 	VecFx32	vecMove = { 0, 0, 0 };
 	VecFx32	vecUD = { 0, 0, 0 };
@@ -136,7 +136,7 @@ static void	FriendCursor( FIELD_CAMERA* camera )
 //------------------------------------------------------------------
 const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera)
 {
-	return GetG3Dcamera(camera->gs);
+	return GetG3Dcamera(camera->fieldWork);
 }
 
 //------------------------------------------------------------------

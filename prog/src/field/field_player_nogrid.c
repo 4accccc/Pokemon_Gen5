@@ -4,7 +4,7 @@ void	MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key)
 	u16		dir;
 	BOOL	mvFlag = FALSE;
 
-	dir = getCameraRotate( GetG3Dcamera(pcActCont->gs) );
+	dir = getCameraRotate( GetG3Dcamera(pcActCont->fieldWork) );
 
 	if( key & PAD_KEY_UP ){
 		mvFlag = TRUE;
@@ -49,7 +49,7 @@ void	MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key)
 	} else {
 		VecFx32 newPos = pcActCont->trans;
 		fx32 diff;
-		CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->gs), &pcActCont->gridInfoData, 
+		CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->fieldWork), &pcActCont->gridInfoData, 
 	//							&newPos, &vecMove, MV_SPEED );
 								&pcActCont->trans, &vecMove, MV_SPEED );
 #if 0

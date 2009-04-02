@@ -17,10 +17,10 @@
 //------------------------------------------------------------------
 static void NoGridCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
-	fieldWork->camera_control = FIELD_CAMERA_Create( fieldWork->gs, fieldWork->heapID );
-	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
+	fieldWork->camera_control = FIELD_CAMERA_Create( fieldWork, fieldWork->heapID );
+	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork, fieldWork->heapID );
 	//FLDACT_TestSetup( fieldWork->fldActCont );
-	fieldWork->pcActCont = CreatePlayerAct( fieldWork->gs, fieldWork->heapID );
+	fieldWork->pcActCont = CreatePlayerAct( fieldWork, fieldWork->heapID );
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
 	{
@@ -35,7 +35,7 @@ static void NoGridCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 	}
 	{
 		fx32 far = 4096 << FX32_SHIFT;
-		GFL_G3D_CAMERA_SetFar(GetG3Dcamera(fieldWork->gs), &far);
+		GFL_G3D_CAMERA_SetFar(fieldWork->g3Dcamera, &far);
 	}
 }
 
@@ -54,7 +54,7 @@ static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	FIELD_CAMERA_Main( fieldWork->camera_control, fieldWork->key_cont );
 #if 0
 	{
-		GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(fieldWork->gs);
+		GFL_G3D_CAMERA * g3Dcamera = fieldWork->g3Dcamera;
 		VecFx32 target, c_pos;
 		c_pos = *pos;
 
@@ -75,7 +75,7 @@ static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 		FLDMAPPER_GRIDINFO gridInfo;
 		int i;
 		GetPlayerActTrans(fieldWork->pcActCont, &trans);
-		FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork->gs), &trans, &gridInfo);
+		FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork), &trans, &gridInfo);
 		OS_Printf("gridInfo.count = %d\n", gridInfo.count);
 		for (i = 0; i < gridInfo.count; i++) {
 			OS_Printf("[%02d]%08x\n",i, gridInfo.gridData[i].height);
