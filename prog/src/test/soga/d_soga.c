@@ -68,6 +68,9 @@ typedef struct
 static	const	char	effect_viewer_str[]={
 	"EffectViewer"
 };
+static	const	char	pokemon_viewer_str[]={
+	"PokemonViewer"
+};
 static	const	char	battle_test_str[]={
 	"BattleTest"
 };
@@ -76,11 +79,13 @@ static	const	char	capture_test_str[]={
 };
 
 extern const GFL_PROC_DATA EffectViewerProcData;
+extern const GFL_PROC_DATA PokemonViewerProcData;
 extern const GFL_PROC_DATA DebugBattleTestProcData;
 extern const GFL_PROC_DATA CaptureTestProcData;
 
 static	const	SOGA_PROC_TABLE	spt[]={
 	{ effect_viewer_str,	&EffectViewerProcData },
+	{ pokemon_viewer_str,	&PokemonViewerProcData },
 	{ battle_test_str,		&DebugBattleTestProcData },
 	{ capture_test_str,		&CaptureTestProcData },
 };

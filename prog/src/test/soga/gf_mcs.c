@@ -124,6 +124,7 @@ BOOL	MCS_Init( HEAPID heapID )
 void	MCS_Exit( void )
 {
 	NNS_McsUnregisterRecvResource( MCS_CHANNEL0 );
+	NNS_McsUnregisterRecvResource( MCS_CHANNEL1 );
 
 	GFL_HEAP_FreeMemory( mw->recvBuf2 );
 	GFL_HEAP_FreeMemory( mw->recvBuf );
