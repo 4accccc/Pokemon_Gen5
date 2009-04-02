@@ -45,7 +45,6 @@ typedef struct
 	int		inputMode_;
 	
 	GFL_SKB	*gflSkb_;
-	void	*inputStr_;
 	
 }NAME_INPUT_WORK;
 
@@ -68,21 +67,6 @@ const GFL_PROC_DATA NameInputProcData = {
 	NAME_INPUT_ProcEnd,
 };
 
-//文字列長テーブル
-//文字バッファ作るときはEOM分足すこと
-static const NAME_INPUT_STR_LENGTH[NAMEIN_MAX] =
-{
-	//FIXME 海外版は名前の長さが違うのでdefineで切り替える
-	5,	// 自分の名前
-	MONS_NAME_SIZE,		// ポケモンの名前
-	8,					// ボックスの名前
-	PERSON_NAME_SIZE,	// ライバルネーム
-	12,					// ともだちコード
-	12,					// 乱数の種グループの名前
-	MONUMENT_NAME_SIZE,	// 石碑(配布）
-	PERSON_NAME_SIZE,	// WIFIともだち手帳に書き込むともだちの名前
-};
-
 //--------------------------------------------------------------
 static GFL_PROC_RESULT NAME_INPUT_ProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
@@ -92,23 +76,25 @@ static GFL_PROC_RESULT NAME_INPUT_ProcInit( GFL_PROC * proc, int * seq, void * p
 		GFL_DISPUT_BGID_S1, GFL_DISPUT_PALID_14, GFL_DISPUT_PALID_15,
 	};
 
+	NAMEIN_PARAM *param = pwk;
 	NAME_INPUT_WORK *work;
+
 		//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAME_INPUT, 0x80000 );
 	work = GFL_PROC_AllocWork( proc, sizeof(NAME_INPUT_WORK), HEAPID_NAME_INPUT );
 	GFL_STD_MemClear(work, sizeof(NAME_INPUT_WORK));
 
 	work->heapId_ = HEAPID_NAME_INPUT;
-	work->inputMode_ = (int)pwk;	//ポインタではなく数値で入力タイプが渡される
+	work->inputMode_ = param->mode;
 	GF_ASSERT_MSG( work->inputMode_ < NAMEIN_MAX , "Invalid input type [%d]\n",work->inputMode_);
 	work->state_ = NIS_FADE_IN;
 	
 	NAME_INPUT_InitGraphic(work);
 
 	//SKBの初期化
-	skbData.strlen = NAME_INPUT_STR_LENGTH[work->inputMode_];
-	work->inputStr_ = GFL_STR_CreateBuffer( NAME_INPUT_STR_LENGTH[work->inputMode_] + EOM_SIZE,work->heapId_ );
-	work->gflSkb_ = GFL_SKB_Create( work->inputStr_, &skbData, work->heapId_ );
+	skbData.strlen = param->wordmax;
+	
+	work->gflSkb_ = GFL_SKB_Create( param->strbuf, &skbData, work->heapId_ );
 	
 	GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB , 16 , 0 , ARI_FADE_SPD );
 	//背景色
@@ -120,15 +106,20 @@ static GFL_PROC_RESULT NAME_INPUT_ProcInit( GFL_PROC * proc, int * seq, void * p
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT NAME_INPUT_ProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	NAMEIN_PARAM *param = pwk;
 	NAME_INPUT_WORK *work = mywk;
-	MYSTATUS		*myStatus;
 	
-	//名前のセット
-	myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
-	MyStatus_SetMyNameFromString( myStatus , work->inputStr_ );
+	//TODO 本当は最初と同じかどうかのチェックも要る
+	if( GFL_STR_GetBufferLength( param->strbuf ) == 0 )
+	{
+		param->cancel = 0;
+	}
+	else
+	{
+		param->cancel = 1;
+	}
 	
 	GFL_SKB_Delete( work->gflSkb_ );
-	GFL_STR_DeleteBuffer( work->inputStr_ );
 
 	GFL_BMPWIN_Exit();
 
@@ -212,6 +203,7 @@ static void	NAME_INPUT_InitGraphic( NAME_INPUT_WORK *work )
 	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	};
 
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GX_SetMasterBrightness(-16);	
 	GXS_SetMasterBrightness(-16);
 	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
@@ -236,4 +228,65 @@ static void	NAME_INPUT_InitBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlan
 	GFL_BG_SetVisible( bgPlane, VISIBLE_ON );
 	GFL_BG_ClearFrame( bgPlane );
 	GFL_BG_LoadScreenReq( bgPlane );
+}
+
+
+//wifi_noteの移植で必要だったため
+//ワークの初期化・開放だけ移植
+//==============================================================================
+/**
+ * 名前入力に渡すパラメータを確保する（名前入力の結果も入るので、呼び出す側のHEAPIDが必要）
+ *
+ * @param   HeapId		呼び出す側のHEAPID
+ * @param   mode		名前入力モード(NAMEIN_MYNAME,NAMEIN_BOX,NAMEIN_POKEMON)
+ * @param   info		NAMEIN_MYNAMEの時は0=男1=女, NAMEIN_POKEMONの時は開発NO
+ * @param   wordmax		入力文字最大数の指定
+ *
+ * @retval  NAMEIN_PARAM *		確保された名前入力パラメータのポインタ
+ */
+//==============================================================================
+NAMEIN_PARAM *NameIn_ParamAllocMake(int heapId, int mode, int info, int wordmax, CONFIG *config )
+{
+	NAMEIN_PARAM *param;
+	
+	param = (NAMEIN_PARAM*)GFL_HEAP_AllocMemory(heapId, sizeof(NAMEIN_PARAM));
+
+	param->mode    = mode;		// 入力モード（自分の名前、ポケモン、ボックス）
+	param->info    = info;		// （男・女、ポケモンの開発NO)
+	param->wordmax = wordmax;	// 入力文字最大数
+	param->cancel  = 0;			// キャンセルフラグ
+#ifdef USE_PARAM_STR
+	param->str[0]  = EOM_;
+#endif
+
+	// 文字列最大長＋EOMで文字列バッファを作成
+	param->strbuf = GFL_STR_CreateBuffer( wordmax+1, heapId );
+
+
+	// ポケモン捕獲の時にボックス転送が発生した時には使用されるメンバ
+	param->get_msg_id  = 0;		// ポケモン捕獲メッセージID
+	param->boxdata     = NULL;	// ポケモンボックスデータへのポインタ
+	param->sex		   = 0;
+	param->config      = config;
+	param->form		   = 0;
+
+	return param;
+}
+
+//==============================================================================
+/**
+ * 名前入力パラメータの解放（名前入力後にユーザーが名前取得したら解放してもらう）
+ *
+ * @param   param		
+ *
+ * @retval  none		
+ */
+//==============================================================================
+void NameIn_ParamDelete(NAMEIN_PARAM *param)
+{
+	GF_ASSERT((param->strbuf)!=NULL);
+	GF_ASSERT((param)!=NULL);
+	
+	GFL_STR_DeleteBuffer(param->strbuf);
+	GFL_HEAP_FreeMemory(param);
 }

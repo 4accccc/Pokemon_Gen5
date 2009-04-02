@@ -25,8 +25,6 @@
 
 #include "codein_pv.h"
 
-#include "codein_pv.h"
-
 #define USE_FontOam 0
 
 //--------------------------------------------------------------

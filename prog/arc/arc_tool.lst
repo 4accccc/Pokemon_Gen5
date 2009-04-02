@@ -134,4 +134,8 @@
 	ARCID_CODE_INPUT	"code_input.narc"				#コード入力画面
 	ARCID_FIELD_LIGHT	"field_light.narc"	#フィールドライトデータ
 	ARCID_FIELD_WEATHER_LIGHT	"field_weather_light.narc"	#フィールド天気ライトデータ
+	ARCID_WIFI_NOTE		"wifi_note.narc"	#友だち手帳
+	ARCID_RECORD_GRA		"record_gra.narc"	#レコード交換
+	ARCID_TRF_GRA		"test_graphic/trbgra.narc"	#トレーナー(仮
+	ARCID_TRB_GRA		"test_graphic/trbgra.narc"	#トレーナー(仮
 

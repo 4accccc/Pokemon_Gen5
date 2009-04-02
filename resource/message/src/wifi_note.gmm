@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="ohno" host="W00141" date="2009-01-26T16:40:52"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="117"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="100"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="msg_wifi_note_01" back-color=",,,#ffffff,,,#ffffff,,,,,,">
+		<comment>友達手帳　タイトル</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ともだち　てちょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ともだち　てちょう</language>
+	</row>
+
+	<row id="msg_top_menu01">
+		<comment>友達手帳TOPメニュー項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ともだちリストを　みる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ともだちリストを　みる</language>
+	</row>
+
+	<row id="msg_top_menu02">
+		<comment>友達手帳TOPメニュー項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ともだちコードを　とうろく</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ともだちコードを　とうろく</language>
+	</row>
+
+	<row id="msg_top_menu03">
+		<comment>友達手帳TOPメニュー項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:0]の　ともだちコード</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:0]の　ともだちコード</language>
+	</row>
+
+	<row id="msg_top_menu04">
+		<comment>友達手帳TOPメニュー項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">とじる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">とじる</language>
+	</row>
+
+	<row id="msg_flist_title">
+		<comment>ともだち手帳　ともだちリストトップ</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ともだちリスト</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ともだちリスト</language>
+	</row>
+
+	<row id="msg_wifi_note_07">
+		<comment>ともだちリスト　ともだち名</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="msg_flist_back">
+		<comment>ともだちリスト　前画面にもどる</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:05:センタリング]もどる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:05:センタリング]もどる</language>
+	</row>
+
+	<row id="msg_wifi_note_09">
+		<comment>ともだちリスト　メニュー項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">くわしく　みる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">くわしく　みる</language>
+	</row>
+
+	<row id="msg_wifi_note_10">
+		<comment>ともだちリスト　メニュー項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">なまえを　かきかえる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">なまえを　かきかえる</language>
+	</row>
+
+	<row id="msg_wifi_note_11">
+		<comment>ともだちリスト　メニュー項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">さくじょ　する</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">さくじょ　する</language>
+	</row>
+
+	<row id="msg_wifi_note_12">
+		<comment>ともだちリスト　メニュー項目</comment>
+		<language name="JPN" font=" 1:font_system" width="216">やめる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">やめる</language>
+	</row>
+
+	<row id="msg_wifi_note_13">
+		<comment>ともだちリスト　メニュー説明</comment>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]の　データを
+どうしますか？</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]の　データを
+どうしますか？</language>
+	</row>
+
+	<row id="msg_wifi_note_14">
+		<comment>ともだちとの記録 TOP</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:0]との　きろく</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:0]との　きろく</language>
+	</row>
+
+	<row id="msg_finfo_backmsg">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" width="216">[2:05:センタリング]Ａ：まえの　がめんに　もどります</language>
+		<language name="JPN_KANJI" width="216">[2:05:センタリング]Ａ：まえの　がめんに　もどります</language>
+	</row>
+
+	<row id="msg_finfo_grp01">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" font=" 1:font_system" width="216">グループ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">グループ</language>
+	</row>
+
+	<row id="msg_finfo_grp02">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="msg_finfo_name">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:05:センタリング][1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:05:センタリング][1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="msg_finfo_page">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:05:センタリング][2:01:２桁:0]／[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:05:センタリング][2:01:２桁:0]／[2:01:２桁:1]</language>
+	</row>
+
+	<row id="msg_finfo_p00_btt">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" font=" 1:font_system" width="216">たいせんせいせき</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">たいせんせいせき</language>
+	</row>
+
+	<row id="msg_finfo_p00_bt01">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" font=" 1:font_system" width="216">かち</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">かち</language>
+	</row>
+
+	<row id="msg_finfo_p00_bt02">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" font=" 1:font_system" width="216">まけ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">まけ</language>
+	</row>
+
+	<row id="msg_finfo_p00_btnum">
+		<language name="JPN" font=" 1:font_system" width="216">[2:06:右寄せ][2:03:４桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:06:右寄せ][2:03:４桁:0]</language>
+	</row>
+
+	<row id="msg_finfo_p00_trt">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ポケモンこうかん</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモンこうかん</language>
+	</row>
+
+	<row id="msg_finfo_p00_trnum">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:06:右寄せ][2:03:４桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:06:右寄せ][2:03:４桁:0]</language>
+	</row>
+
+	<row id="msg_wifi_note_34" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,#808080,">
+		<comment>ともだちとの記録
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">りょうりかいすう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">りょうりかいすう</language>
+	</row>
+
+	<row id="msg_wifi_note_35" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,#808080,">
+		<comment>ともだちとの記録
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]</language>
+	</row>
+
+	<row id="msg_finfo_day01">
+		<comment>ともだちとの記録</comment>
+		<language name="JPN" font=" 1:font_system" width="216">さいごにあそんだひづけ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">さいごにあそんだひづけ</language>
+	</row>
+
+	<row id="msg_finfo_day02">
+		<comment>ともだちとの記録　年月日</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]／[2:01:２桁:1]／[2:01:２桁:2]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]／[2:01:２桁:1]／[2:01:２桁:2]</language>
+	</row>
+
+	<row id="msg_wifi_note_36">
+		<comment>バトルタワーの項目表示
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">バトルタワー</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルタワー</language>
+	</row>
+
+	<row id="msg_wifi_note_37">
+		<comment>バトルファクトリーの項目表示
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">バトルファクトリー</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルファクトリー</language>
+	</row>
+
+	<row id="msg_wifi_note_38">
+		<comment>バトルキャッスルの項目表示
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">バトルキャッスル</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルキャッスル</language>
+	</row>
+
+	<row id="msg_wifi_note_39">
+		<comment>バトルステージの項目表示
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">バトルステージ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルステージ</language>
+	</row>
+
+	<row id="msg_wifi_note_40">
+		<comment>バトルルーレットの項目表示
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">バトルルーレット</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">バトルルーレット</language>
+	</row>
+
+	<row id="msg_finfo_frprm_win01">
+		<comment>「ぜんかい」の項目
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ぜんかい</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ぜんかい</language>
+	</row>
+
+	<row id="msg_finfo_frprm_win02">
+		<comment>「げんざい」の項目
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">げんざい</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">げんざい</language>
+	</row>
+
+	<row id="msg_finfo_frprm_win03">
+		<comment>「さいこう」の項目
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">さいこう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">さいこう</language>
+	</row>
+
+	<row id="msg_finfo_frprm_wnum">
+		<comment>連勝数
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]れんしょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]れんしょう</language>
+	</row>
+
+	<row id="msg_wifi_note_43">
+		<comment>バトルファクトリーの「レベル５０」の項目
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">レベル５０</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">レベル５０</language>
+	</row>
+
+	<row id="msg_wifi_note_44">
+		<comment>バトルファクトリーの「オープンレベル」の項目
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">オープンレベル</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">オープンレベル</language>
+	</row>
+
+	<row id="msg_wifi_note_45">
+		<comment>バトルファクトリーの「レンタル／こうかん」の項目
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">レンタル／こうかん</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">レンタル／こうかん</language>
+	</row>
+
+	<row id="msg_wifi_note_46">
+		<comment>バトルキャッスルの「キャッスルポイント」の項目
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:06:右寄せ]キャッスルポイント</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:06:右寄せ]キャッスルポイント</language>
+	</row>
+
+	<row id="msg_wifi_note_47">
+		<comment>バトルステージの最後に挑戦したポケモン名
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:01:ポケモン種族名:0]の　きろく</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:01:ポケモン種族名:0]の　きろく</language>
+	</row>
+
+	<row id="msg_wifi_note_49">
+		<comment>レンタル、交換回数
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:06:右寄せ][2:03:４桁:0]かい</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:06:右寄せ][2:03:４桁:0]かい</language>
+	</row>
+
+	<row id="msg_wifi_note_50">
+		<comment>キャッスルポイント数
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:06:右寄せ][2:03:４桁:0]ＣＰ</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:06:右寄せ][2:03:４桁:0]ＣＰ</language>
+	</row>
+
+	<row id="msg_wifi_note_51">
+		<comment>キャッスルの部屋クリア数
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]れんしょう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]れんしょう</language>
+	</row>
+
+	<row id="msg_wifi_note_57">
+		<comment>ルーレットの部屋クリア数
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]ゲーム　クリア</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]ゲーム　クリア</language>
+	</row>
+
+	<row id="msg_wifi_note_52">
+		<comment>ミニゲームの項目表示
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ひろばゲームのかいすう</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ひろばゲームのかいすう</language>
+	</row>
+
+	<row id="msg_wifi_note_53">
+		<comment>ミニゲームの項目表示
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:40:広場ミニゲーム:0]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:40:広場ミニゲーム:0]</language>
+	</row>
+
+	<row id="msg_wifi_note_56">
+		<comment>ミニゲームを遊んだ回数
+プラチナで追加。</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:0]かい</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:0]かい</language>
+	</row>
+
+	<row id="msg_mycode_title">
+		<comment>自分のともだちコード　TOP</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:0]の　ともだちコード</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:0]の　ともだちコード</language>
+	</row>
+
+	<row id="msg_mycode_back">
+		<comment>自分のともだちコード　もどるボタン</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:05:センタリング]もどる</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:05:センタリング]もどる</language>
+	</row>
+
+	<row id="msg_mycode_code">
+		<comment>自分のともだちコード表示</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:05:センタリング][2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:05:センタリング][2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]</language>
+	</row>
+
+	<row id="msg_mycode_codeon">
+		<comment>自分のともだちコード説明</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ともだちコードを　おしえあうと
+ＷｉーＦｉコネクションを　つかって
+とおくのともだちと
+たいせんやこうかんが　たのしめます</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ともだちコードを　おしえあうと
+ＷｉーＦｉコネクションを　つかって
+とおくのともだちと
+たいせんやこうかんが　たのしめます</language>
+	</row>
+
+	<row id="msg_mycode_codeoff">
+		<comment>自分のともだちコードを持っていない場合</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ともだちコードを　もらうには
+いちど　ＷｉーＦｉコネクションに
+せつぞく　してください</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ともだちコードを　もらうには
+いちど　ＷｉーＦｉコネクションに
+せつぞく　してください</language>
+	</row>
+
+	<row id="msg_wifi_note_26">
+		<comment>入力したあいてのともだちコード登録確認</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]
+[1:00:トレーナー名:0]さんを　とうろくします</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]
+[1:00:トレーナー名:0]さんを　とうろくします</language>
+	</row>
+
+	<row id="msg_wifi_note_27">
+		<comment>入力したともだちコードが間違っていた場合の表示</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ともだちコードが　まちがっています
+[2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ともだちコードが　まちがっています
+[2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]</language>
+	</row>
+
+	<row id="msg_wifi_note_29">
+		<comment>ともだちコード削除時の確認メッセージ</comment>
+		<language name="JPN" font=" 1:font_system" width="216">[1:00:トレーナー名:0]　を　けします
+ほんとうに　よろしいですか？</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:00:トレーナー名:0]　を　けします
+ほんとうに　よろしいですか？</language>
+	</row>
+
+	<row id="msg_wifi_note_30">
+		<comment>友達手帳内で、友達コードを登録しようとしたとき
+すでに32人の友達コードが登録されていたときの
+警告メッセージ</comment>
+		<language name="JPN" width="216">ともだちリストが　いっぱい　です！</language>
+		<language name="JPN_KANJI" width="216">ともだちリストが　いっぱい　です！</language>
+	</row>
+
+	<row id="msg_wifi_note_31" text-color="#000000,,,#000000,,#808080,,#000000,,,#000000,#808080," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,#ffffff,">
+		<comment>おなじともだちコードがリスト上にあった場合
+の警告メッセージ</comment>
+		<language name="JPN" width="216">おなじ　ともだちコード　が
+とうろく　されていました</language>
+		<language name="JPN_KANJI" width="216">おなじ　ともだちコード　が
+とうろく　されていました</language>
+	</row>
+
+	<row id="msg_wifi_note_32" text-color="#000000,,,,,,,#000000,,,#000000,#808080," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,#ffffff,">
+		<comment>登録した人のともだちコードを見るときのメッセージ</comment>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんの　ともだちコード
+[2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんの　ともだちコード
+[2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]</language>
+	</row>
+
+	<row id="msg_wifi_note_33" text-color="#000000,,,,,,,#000000,,,#000000,#808080," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,#ffffff,">
+		<language name="JPN" width="216">ともだちコードをみる</language>
+		<language name="JPN_KANJI" width="216">ともだちコードをみる</language>
+	</row>
+
+	<row id="msg_wifi_note_add_01" text-color="#000000,,,,,,,,,,,,">
+		<comment>通信終了後に、相手を友達手帳に
+登録するかどうかを確認するメッセージ</comment>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]　を　ともだちてちょう　に
+とうろく　しますか？</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]　を　ともだちてちょう　に
+とうろく　しますか？</language>
+	</row>
+
+	<row id="msg_wifi_note_add_02">
+		<comment>通信終了後に、友達手帳に相手を
+登録しようとしたが、手帳がいっぱいだったときの
+メッセージ</comment>
+		<language name="JPN" width="216">ともだちリストが　いっぱい　です！
+だれか　さくじょ　しますか？</language>
+		<language name="JPN_KANJI" width="216">ともだちリストが　いっぱい　です！
+だれか　さくじょ　しますか？</language>
+	</row>
+
+	<row id="msg_wifi_note_add_03">
+		<comment>通信終了後、相手を友達手帳へ
+登録することをあきらめるときの
+メッセージ</comment>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]　の　とうろく　を
+あきらめますか？</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]　の　とうろく　を
+あきらめますか？</language>
+	</row>
+
+	<row id="msg_wifi_note_add_04">
+		<comment>通信終了後、友達手帳がいっぱいだったときに
+登録してある友達コードを削除するときの
+確認メッセージ</comment>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]　の　データを
+さくじょ　しますか？</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]　の　データを
+さくじょ　しますか？</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>

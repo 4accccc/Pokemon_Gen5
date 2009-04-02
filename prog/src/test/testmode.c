@@ -918,6 +918,7 @@ FS_EXTERN_OVERLAY(pmsinput);
 extern const GFL_PROC_DATA ProcData_PMSInput;
 #include "app/pms_Input.h"
 #include "app/codein.h"
+#include "app/wifi_note.h"
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx )
 {
 /*
@@ -925,9 +926,12 @@ static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx )
 	initParam = PMSI_PARAM_Create( PMSI_MODE_SENTENCE , PMSI_GUIDANCE_DEFAULT , SaveControl_GetPointer() , GFL_HEAPID_APP );
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, initParam);
 */
+/*
 	int block[3] = {4,4,4};
 	CODEIN_PARAM* initParam = CodeInput_ParamCreate( GFL_HEAPID_APP , 20 , block );
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pmsinput), &CodeInput_ProcData, initParam );
+*/
+	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &WifiNoteProcData, NULL );
 	return TRUE;
 }
 

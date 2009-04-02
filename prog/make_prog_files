@@ -123,7 +123,10 @@ SRCS	+=		$(SOUNDSRC) \
 				system/wazatype_icon.c \
 				app/codein/codein.c \
 				app/codein/codein_pv.c \
-				app/codein/codein_disp.c
+				app/codein/codein_disp.c \
+				net_app/union/union_gra_tool.c \
+				net_app/union/union_beacon_tool.c \
+				app/wifi_note/wifi_note.c
 
 
 #================================================

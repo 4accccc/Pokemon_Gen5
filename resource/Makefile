@@ -53,6 +53,8 @@ SUBDIRS	=	wmi \
 			field_weather \
 			field_weather_light \
 			field_light \
+			wifi_note \
+			record \
 			particle/wazaeffect
 
 

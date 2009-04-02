@@ -128,6 +128,10 @@ void GameStart_Debug_SelectName(void)
 //	最初から始める
 //
 //==============================================================================
+typedef struct
+{
+	NAMEIN_PARAM *nameInParam;
+}GAMESTART_FIRST_WORK;
 //--------------------------------------------------------------
 /**
  * @brief   
@@ -135,7 +139,10 @@ void GameStart_Debug_SelectName(void)
 //--------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	GAMESTART_FIRST_WORK *work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
 	SaveControl_ClearData(SaveControl_GetPointer());	//セーブデータクリア
+	//FIXME 正しい値に
+	work->nameInParam = NameIn_ParamAllocMake( GFL_HEAPID_APP , NAMEIN_MYNAME , 0 , PERSON_NAME_SIZE , NULL );
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -146,9 +153,10 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	GAMESTART_FIRST_WORK *work = mywk;
 	switch(*seq){
 	case 0:
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &NameInputProcData,(void*)NAMEIN_MYNAME);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &NameInputProcData,(void*)work->nameInParam);
 		(*seq)++;
 		break;
 	case 1:
@@ -165,10 +173,19 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	GAMESTART_FIRST_WORK *work = mywk;
 	GAME_INIT_WORK * init_param;
 	VecFx32 pos = {0,0,0};
+	MYSTATUS		*myStatus;
 	
+	//名前のセット
+	myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+	MyStatus_SetMyNameFromString( myStatus , work->nameInParam->strbuf );
 	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0);
+
+	NameIn_ParamDelete(work->nameInParam);
+	GFL_PROC_FreeWork( proc );
+	
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 
 	return GFL_PROC_RES_FINISH;
