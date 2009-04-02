@@ -109,6 +109,7 @@ static	void	PokemonViewerRead( POKEMON_VIEWER_WORK *pvw );
 static	void	PokemonViewerPositionLoad( POKEMON_VIEWER_WORK *pvw );
 static	void	PokemonViewerResourceLoad( POKEMON_VIEWER_WORK *pvw );
 static	void	PokemonViewerAddPokemon( POKEMON_VIEWER_WORK *pvw );
+static	void	PokemonViewerCameraWork( POKEMON_VIEWER_WORK *pvw );
 
 static	void	TextPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num );
 static	void	NumPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num );
@@ -314,6 +315,7 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
 
 	if( trg & PAD_BUTTON_START ){
 		if( pvw->mcs_enable ){
+#if 0
 			pvw->seq_no = SEQ_IDLE;
 			MCS_Exit();
 			pvw->mcs_enable = 0;
@@ -327,12 +329,28 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
 					}
 				}
 			}
+#endif
+			VecFx32	pos,target;
+			VecFx32	AA_value = { FX32_ONE * 16 * 2, FX32_ONE * 16 * 2, 0 };
+			VecFx32	BB_value = { FX32_ONE * 16, FX32_ONE * 16, 0 };
+
+			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
+			BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &pos, &target, 20, 0, 20 );
+			if( pvw->resource_data[ RESOURCE_NCBR ][ BTLV_MCSS_POS_AA ] ){
+				BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_INTERPOLATION, &AA_value, 10, 1, 0 );
+			}
+			if( pvw->resource_data[ RESOURCE_NCBR ][ BTLV_MCSS_POS_BB ] ){
+				BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_INTERPOLATION, &BB_value, 10, 1, 0 );
+			}
 		}
 		else{
 			if( MCS_Init( pvw->heapID ) == FALSE ){
 				pvw->mcs_enable = 1;
 			}
 		}
+	}
+	if( (trg & PAD_BUTTON_SELECT ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+		PokemonViewerCameraWork( pvw );
 	}
 
 	PokemonViewerSequence( pvw );
@@ -436,7 +454,6 @@ static	void	PokemonViewerRead( POKEMON_VIEWER_WORK *pvw )
 		if( head == SEND_NCEC ){
 			pvw->add_pokemon_req = 1;
 		}
-		OS_TPrintf("HeadReadOK:%d\n",head);
 		pvw->read_resource = head / 2;
 		head++;
 		MCS_Write( MCS_WRITE_CH, &head, 4 );
@@ -459,7 +476,6 @@ static	void	PokemonViewerPositionLoad( POKEMON_VIEWER_WORK *pvw )
 		head = SEND_IDLE;
 		MCS_Write( MCS_WRITE_CH, &head, 4 );
 		pvw->seq_no = SEQ_IDLE;
-		OS_TPrintf("position load\n");
 		for( res = 0 ; res < RESOURCE_MAX ; res++ ){
 			if( pvw->resource_data[ res ][ pvw->read_position ] ){
 				if( res == RESOURCE_NCBR ){
@@ -487,7 +503,6 @@ static	void	PokemonViewerResourceLoad( POKEMON_VIEWER_WORK *pvw )
 		head = SEND_IDLE;
 		MCS_Write( MCS_WRITE_CH, &head, 4 );
 		pvw->seq_no = SEQ_IDLE;
-		OS_TPrintf("ReadResource:%d size:%d\n",pvw->read_resource,size);
 	}
 }
 
@@ -640,6 +655,28 @@ static	void	PokemonViewerAddPokemon( POKEMON_VIEWER_WORK *pvw )
 		madw.ncec = pvw->resource_data[ RESOURCE_NCEC ][ pvw->read_position ];
 
 		BTLV_EFFECT_SetPokemonDebug( &madw, pvw->read_position );
+	}
+}
+
+static	void	PokemonViewerCameraWork( POKEMON_VIEWER_WORK *pvw )
+{
+	VecFx32	pos,target;
+	VecFx32	aa_value = { FX32_ONE * 16, FX32_ONE * 16, 0 };
+	VecFx32	bb_value = { FX32_ONE * 16 / 2, FX32_ONE * 16 / 2, 0 };
+
+	BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
+	target.x += FX32_ONE * 4;
+	target.y += FX32_ONE * 1;
+	target.z += FX32_ONE * 16;
+	pos.x += FX32_ONE * 4;
+	pos.y += FX32_ONE * 1;
+	pos.z += FX32_ONE * 16;
+	BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &pos, &target, 32, 0, 32 );
+	if( pvw->resource_data[ RESOURCE_NCBR ][ BTLV_MCSS_POS_AA ] ){
+		BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_INTERPOLATION, &aa_value, 16, 1, 0 );
+	}
+	if( pvw->resource_data[ RESOURCE_NCBR ][ BTLV_MCSS_POS_BB ] ){
+		BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_INTERPOLATION, &bb_value, 16, 1, 0 );
 	}
 }
  
