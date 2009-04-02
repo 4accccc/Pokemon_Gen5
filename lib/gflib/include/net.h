@@ -656,6 +656,16 @@ extern BOOL GFL_NET_ChangeMpMode(GFL_NETHANDLE* pNet,NetModeChangeFunc func);
 
 //==============================================================================
 /**
+ * @brief   サービスモードを切り替える
+ * @param   gsid         サービスモード
+ * @param   connectnum   ローカル接続人数 ＜ マックス以下
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_ChangeGameService(GameServiceID gsid,int connectnum);
+
+//==============================================================================
+/**
  * @brief 新規接続禁止＆許可を設定
  * @param   NetHandle* pNet     通信ハンドルのポインタ
  * @param   BOOL bEnable     TRUE=接続許可 FALSE=禁止
