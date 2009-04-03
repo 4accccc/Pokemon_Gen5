@@ -132,13 +132,13 @@ static	const	VecFx32	poke_pos_table[]={
 
 
 static	const	VecFx32	poke_pos_table[]={
-	{ FX_F32_TO_FX32( -2.5f + 2.500f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   8.0f ) },		//POS_AA
+	{ FX_F32_TO_FX32( -2.5f + 3.000f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   7.5f - 0.5f ) },		//POS_AA
 	{ FX_F32_TO_FX32(  4.5f - 4.200f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_BB
-	{ FX_F32_TO_FX32( -3.5f + 3.500f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   8.5f ) },		//POS_A
+	{ FX_F32_TO_FX32( -3.5f + 3.500f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.5f ) },		//POS_A
 	{ FX_F32_TO_FX32(  6.0f - 4.200f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  -9.0f ) },		//POS_B
-	{ FX_F32_TO_FX32( -0.5f + 3.845f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   9.0f ) },		//POS_C
+	{ FX_F32_TO_FX32( -0.5f + 3.845f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   9.0f ) },		//POS_C
 	{ FX_F32_TO_FX32(  2.0f - 4.964f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -11.0f ) },		//POS_D
-	{ FX_F32_TO_FX32( -2.5f + 3.845f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(  10.0f ) },		//POS_E
+	{ FX_F32_TO_FX32( -2.5f + 3.845f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  10.0f ) },		//POS_E
 	{ FX_F32_TO_FX32(  4.5f - 4.964f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_F
 };
 
