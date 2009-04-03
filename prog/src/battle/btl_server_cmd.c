@@ -83,7 +83,6 @@ static const u8 ServerCmdToFmtTbl[] = {
 	SC_ARGFMT_5_3bit,						// SC_OP_CANTESCAPE_SUB
 	SC_ARGFMT_12byte,						// SC_OP_CHANGE_POKETYPE
 	SC_ARGFMT_11byte,						// SC_OP_CHANGE_POKEFORM
-	SC_ARGFMT_4_4bit,						// SC_OP_SET_EMPTY_POS
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_WAZA_EFFECT
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_WAZA_DMG
 	SC_ARGFMT_5_5_5bit_22byte,	// SC_ACT_WAZA_DMG_DBL
