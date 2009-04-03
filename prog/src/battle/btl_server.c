@@ -377,7 +377,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 			case SVFLOW_RESULT_DEFAULT:
 				(*seq)=0;
 				break;
-			case SVFLOW_RESULT_POKE_DEAD:
+			case SVFLOW_RESULT_POKE_CHANGE:
 				setMainProc( server, ServerMain_SelectPokemon );
 				break;
 			default:
@@ -453,7 +453,7 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 			ResetAdapterCmd( server );
 			BTL_MAIN_SyncServerCalcData( server->mainModule );
 
-			if( server->flowResult == SVFLOW_RESULT_POKE_DEAD )
+			if( server->flowResult == SVFLOW_RESULT_POKE_CHANGE )
 			{
 				(*seq) = 0;
 			}

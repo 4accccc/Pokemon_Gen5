@@ -30,6 +30,7 @@ typedef enum {
 	BTL_EVENT_WAZA_EXECUTE,			///< ワザ実行チェック
 	BTL_EVENT_WAZA_EXECUTE_FIX,	///< ワザ実行チェック確定
 	BTL_EVENT_WAZA_PARAM,				///< ワザパラメータチェック
+	BTL_EVENT_DECIDE_TARGET,		///< ワザ対象決定
 	BTL_EVENT_NOEFFECT_TYPE_CHECK,///< ワザ無効化（タイプによる）チェックハンドラ
 	BTL_EVENT_NOEFFECT_CHECK_L1,///< ワザ無効化チェック（lv1 = 必中には負ける）ハンドラ
 	BTL_EVENT_NOEFFECT_CHECK_L2,///< ワザ無効化チェック（lv2 = 必中にも勝つ）ハンドラ
@@ -81,6 +82,8 @@ typedef enum {
 	BTL_EVENT_WEATHER_CHANGE_AFTER,	///< 天候の変化（直後）
 	BTL_EVENT_CALC_WEATHER_DAMAGE,	///< 天候ダメージ計算
 	BTL_EVENT_SKILL_SWAP,				///< とくせい入れ替え
+	BTL_EVENT_CHECK_PUSHOUT,		///< ふきとばし系ワザチェック
+	BTL_EVENT_CALC_DRAIN_VOLUME,	///< ドレイン系ワザ回復量計算
 
 }BtlEventType;
 

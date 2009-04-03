@@ -222,7 +222,7 @@ static inline void SCQUE_PUT_OP_ChangePokeType( BTL_SERVER_CMD_QUE* que, u8 poke
 }
 static inline void SCQUE_PUT_OP_ChangePokeForm( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 formNo )
 {
-	SCQUE_PUT_Common( que, SC_OP_CHANGE_POKETYPE, pokeID, formNo );
+	SCQUE_PUT_Common( que, SC_OP_CHANGE_POKEFORM, pokeID, formNo );
 }
 
 

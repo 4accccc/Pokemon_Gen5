@@ -33,6 +33,7 @@ typedef enum {
 	WAZADATA_CATEGORY_DAMAGE_SICK,
 	WAZADATA_CATEGORY_DAMAGE_EFFECT,
 	WAZADATA_CATEGORY_DAMAGE_EFFECT_USER,
+	WAZADATA_CATEGORY_DRAIN,
 	WAZADATA_CATEGORY_ICHIGEKI,
 	WAZADATA_CATEGORY_BIND,
 	WAZADATA_CATEGORY_GUARD,
@@ -40,7 +41,7 @@ typedef enum {
 	WAZADATA_CATEGORY_FIELD_EFFECT,
 	WAZADATA_CATEGORY_SIDE_EFFECT,
 	WAZADATA_CATEGORY_EXPLOSION,
-	WAZADATA_CATEGORY_ESCAPE,
+	WAZADATA_CATEGORY_PUSHOUT,
 	WAZADATA_CATEGORY_OTHERS,
 
 	WAZADATA_CATEGORY_MAX,
@@ -314,6 +315,17 @@ extern BOOL WAZADATA_IsImage( WazaID id, WazaImage img );
  */
 //=============================================================================================
 extern u8 WAZADATA_GetReactionRatio( WazaID id );
+
+//=============================================================================================
+/**
+ * ドレイン技のダメージ値->回復HP還元率
+ *
+ * @param   id		
+ *
+ * @retval  u8		
+ */
+//=============================================================================================
+extern u8 WAZADATA_GetDrainRatio( WazaID id );
 
 
 /*-----------------------------------------------------------------

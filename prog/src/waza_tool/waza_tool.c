@@ -289,6 +289,10 @@ enum {
 	WSEQ_REACT_B2 = 253,	/// 1/3反動（フレアドライブ）
 	WSEQ_REACT_B3 = 263,	/// 1/3反動（ボルテッカー）
 	WSEQ_REACT_C1 = 269,	/// 1/2反動
+
+	WSEQ_PUSHOUT = 28,
+	WSEQ_DRAIN = 3,
+
 };
 
 // @@@ 旧バージョンのワザデータシーケンスを、新バージョンのデータテーブルとして扱うための
@@ -527,7 +531,17 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
 				POKESICK_NULL, WAZASICK_CONT_PERMANENT, 0, 0,
 			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
 			FALSE, BTL_WEATHER_NONE, 0, 0,
-		},
+		},{
+				WSEQ_PUSHOUT, WAZADATA_CATEGORY_PUSHOUT,
+				POKESICK_NULL, WAZASICK_CONT_PERMANENT, 0, 0,
+			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE, BTL_WEATHER_NONE, 0, 0,
+		},{
+				WSEQ_DRAIN,	WAZADATA_CATEGORY_DRAIN,
+				POKESICK_NULL, WAZASICK_CONT_PERMANENT, 0, 0,
+			{ { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+			FALSE, BTL_WEATHER_NONE, 50, 0,
+		}
 	};
 	u16 seq = WT_WazaDataParaGet( waza, ID_WTD_battleeffect );
 	u16 i;
@@ -685,6 +699,24 @@ u8 WAZADATA_GetCriticalRank( WazaID id )
 //=============================================================================================
 u8 WAZADATA_GetReactionRatio( WazaID id )
 {
+	const SEQ_PARAM* seq = getSeqParam( id );
+	if( seq ){
+		return seq->reactionRatio;
+	}
+	return 0;
+}
+//=============================================================================================
+/**
+ * ドレイン技のダメージ値->回復HP還元率
+ *
+ * @param   id		
+ *
+ * @retval  u8		
+ */
+//=============================================================================================
+u8 WAZADATA_GetDrainRatio( WazaID id )
+{
+	// @@@ いまはてきとー
 	const SEQ_PARAM* seq = getSeqParam( id );
 	if( seq ){
 		return seq->reactionRatio;

@@ -28,6 +28,8 @@
 
 enum {
 	CANTESC_COUNT_MAX = 8,		///< ‚Æ‚è‚ ‚¦‚¸­‚È‚ßƒMƒŠƒMƒŠ‚È‚Æ‚±‚ÅASSERT‚©‚¯‚Ä‚Ý‚é
+
+	EMPTY_POS_NONE = -1,
 };
 
 /*--------------------------------------------------------------------------*/
@@ -767,11 +769,11 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 {
 	u8 numEmpty;
 	u8 emptyPosList[ BTL_POSIDX_MAX ];
+	u8 puttableList[ BTL_PARTY_MEMBER_MAX ];
 	numEmpty = calc_empty_pos( wk, emptyPosList );
 	if( numEmpty )
 	{
 		u8 numPuttable;
-		u8 puttableList[ BTL_PARTY_MEMBER_MAX ];
 
 		numPuttable = calc_puttable_pokemons( wk, puttableList );
 		if( numPuttable )
@@ -826,44 +828,44 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		u32				cmd;
 		ServerCmdProc	proc;
 	}scprocTbl[] = {
-		{	SC_MSG_STD,							scProc_MSG_Std						},
-		{	SC_MSG_SET,							scProc_MSG_Set						},
-		{	SC_MSG_WAZA,						scProc_MSG_Waza						},
-		{	SC_ACT_WAZA_EFFECT,			scProc_ACT_WazaEffect			},
-		{	SC_ACT_WAZA_DMG,				scProc_ACT_WazaDmg				},
-		{	SC_ACT_WAZA_DMG_DBL,		scProc_ACT_WazaDmg_Dbl		},
-		{	SC_ACT_WAZA_DMG_PLURAL,	scProc_ACT_WazaDmg_Plural	},
-		{	SC_ACT_WAZA_ICHIGEKI,		scProc_ACT_WazaIchigeki		},
-		{	SC_ACT_CONF_DMG,				scProc_ACT_ConfDamage			},
-		{	SC_ACT_DEAD,						scProc_ACT_Dead						},
-		{	SC_ACT_MEMBER_OUT,			scProc_ACT_MemberOut			},
-		{	SC_ACT_MEMBER_IN,				scProc_ACT_MemberIn				},
-		{	SC_ACT_RANKUP,					scProc_ACT_RankUp					},
-		{	SC_ACT_RANKDOWN,				scProc_ACT_RankDown				},
-		{	SC_ACT_SICK_SET,				scProc_ACT_SickSet				},
-		{	SC_ACT_SICK_DMG,				scProc_ACT_SickDamage			},
-		{	SC_ACT_WEATHER_DMG,			scProc_ACT_WeatherDmg			},
-		{	SC_ACT_WEATHER_START,		scProc_ACT_WeatherStart		},
-		{	SC_ACT_WEATHER_END,			scProc_ACT_WeatherEnd			},
-		{	SC_ACT_SIMPLE_HP,				scProc_ACT_SimpleHP				},
-		{	SC_ACT_TRACE_TOKUSEI,		scProc_ACT_TraceTokusei		},
-		{	SC_TOKWIN_IN,						scProc_TOKWIN_In					},
-		{	SC_TOKWIN_OUT,					scProc_TOKWIN_Out					},
-		{	SC_OP_HP_MINUS,					scProc_OP_HpMinus					},
-		{	SC_OP_HP_PLUS,					scProc_OP_HpPlus					},
-		{	SC_OP_HP_ZERO,					scProc_OP_HpZero					},
-		{	SC_OP_PP_MINUS,					scProc_OP_PPMinus					},
-		{	SC_OP_PP_PLUS,					scProc_OP_PPPlus					},
-		{	SC_OP_RANK_UP,					scProc_OP_RankUp					},
-		{	SC_OP_RANK_DOWN,				scProc_OP_RankDown				},
-		{	SC_OP_SICK_SET,					scProc_OP_SickSet					},
-		{	SC_OP_CURE_POKESICK,		scProc_OP_CurePokeSick		},
-		{	SC_OP_CURE_WAZASICK,		scProc_OP_CureWazaSick		},
-		{	SC_OP_CANTESCAPE_ADD,		scProc_OP_EscapeCodeAdd		},
-		{	SC_OP_CANTESCAPE_SUB,		scProc_OP_EscapeCodeSub		},
-		{	SC_OP_CHANGE_POKETYPE,	scProc_OP_ChangePokeType	},
-		{ SC_OP_CHANGE_POKEFORM,	scProc_OP_ChangePokeForm  },
-		{	SC_OP_WAZASICK_TURNCHECK,	scProc_OP_WSTurnCheck		},
+		{	SC_MSG_STD,								scProc_MSG_Std						},
+		{	SC_MSG_SET,								scProc_MSG_Set						},
+		{	SC_MSG_WAZA,							scProc_MSG_Waza						},
+		{	SC_ACT_WAZA_EFFECT,				scProc_ACT_WazaEffect			},
+		{	SC_ACT_WAZA_DMG,					scProc_ACT_WazaDmg				},
+		{	SC_ACT_WAZA_DMG_DBL,			scProc_ACT_WazaDmg_Dbl		},
+		{	SC_ACT_WAZA_DMG_PLURAL,		scProc_ACT_WazaDmg_Plural	},
+		{	SC_ACT_WAZA_ICHIGEKI,			scProc_ACT_WazaIchigeki		},
+		{	SC_ACT_CONF_DMG,					scProc_ACT_ConfDamage			},
+		{	SC_ACT_DEAD,							scProc_ACT_Dead						},
+		{	SC_ACT_MEMBER_OUT,				scProc_ACT_MemberOut			},
+		{	SC_ACT_MEMBER_IN,					scProc_ACT_MemberIn				},
+		{	SC_ACT_RANKUP,						scProc_ACT_RankUp					},
+		{	SC_ACT_RANKDOWN,					scProc_ACT_RankDown				},
+		{	SC_ACT_SICK_SET,					scProc_ACT_SickSet				},
+		{	SC_ACT_SICK_DMG,					scProc_ACT_SickDamage			},
+		{	SC_ACT_WEATHER_DMG,				scProc_ACT_WeatherDmg			},
+		{	SC_ACT_WEATHER_START,			scProc_ACT_WeatherStart		},
+		{	SC_ACT_WEATHER_END,				scProc_ACT_WeatherEnd			},
+		{	SC_ACT_SIMPLE_HP,					scProc_ACT_SimpleHP				},
+		{	SC_ACT_TRACE_TOKUSEI,			scProc_ACT_TraceTokusei		},
+		{	SC_TOKWIN_IN,							scProc_TOKWIN_In					},
+		{	SC_TOKWIN_OUT,						scProc_TOKWIN_Out					},
+		{	SC_OP_HP_MINUS,						scProc_OP_HpMinus					},
+		{	SC_OP_HP_PLUS,						scProc_OP_HpPlus					},
+		{	SC_OP_HP_ZERO,						scProc_OP_HpZero					},
+		{	SC_OP_PP_MINUS,						scProc_OP_PPMinus					},
+		{	SC_OP_PP_PLUS,						scProc_OP_PPPlus					},
+		{	SC_OP_RANK_UP,						scProc_OP_RankUp					},
+		{	SC_OP_RANK_DOWN,					scProc_OP_RankDown				},
+		{	SC_OP_SICK_SET,						scProc_OP_SickSet					},
+		{	SC_OP_CURE_POKESICK,			scProc_OP_CurePokeSick		},
+		{	SC_OP_CURE_WAZASICK,			scProc_OP_CureWazaSick		},
+		{	SC_OP_CANTESCAPE_ADD,			scProc_OP_EscapeCodeAdd		},
+		{	SC_OP_CANTESCAPE_SUB,			scProc_OP_EscapeCodeSub		},
+		{	SC_OP_CHANGE_POKETYPE,		scProc_OP_ChangePokeType	},
+		{ SC_OP_CHANGE_POKEFORM,		scProc_OP_ChangePokeForm  },
+		{	SC_OP_WAZASICK_TURNCHECK,	scProc_OP_WSTurnCheck			},
 	};
 
 restart:

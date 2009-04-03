@@ -32,7 +32,7 @@ extern u8 BTL_MAIN_PokeIDtoClientID( const BTL_MAIN_MODULE* wk, u8 pokeID );
 //=========================================================
 // for server only
 //=========================================================
-extern void BTL_MAIN_BtlPosToClientID_and_PokeIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos, u8* clientID, u8* pokeIdx );
+extern void BTL_MAIN_BtlPosToClientID_and_PosIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos, u8* clientID, u8* posIdx );
 extern void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk );
 
 //=========================================================

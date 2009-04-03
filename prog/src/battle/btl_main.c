@@ -1276,13 +1276,13 @@ u8 BTL_MAIN_BtlPosToClientID( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
  * @param   wk		
  * @param   pos		
  * @param   clientID		
- * @param   pokeIdx		
+ * @param   posIdx		
  *
  */
 //=============================================================================================
-void BTL_MAIN_BtlPosToClientID_and_PokeIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos, u8* clientID, u8* pokeIdx )
+void BTL_MAIN_BtlPosToClientID_and_PosIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos, u8* clientID, u8* posIdx )
 {
-	btlPos_to_cliendID_and_posIdx( wk, pos, clientID, pokeIdx );
+	btlPos_to_cliendID_and_posIdx( wk, pos, clientID, posIdx );
 }
 
 //=============================================================================================

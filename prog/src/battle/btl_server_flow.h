@@ -20,7 +20,7 @@
 /*--------------------------------------------------------------------------*/
 typedef enum {
 	SVFLOW_RESULT_DEFAULT = 0,	///< そのまま続行
-	SVFLOW_RESULT_POKE_DEAD,		///< ポケモン死んだので入れ替えフェーズ->バトル継続
+	SVFLOW_RESULT_POKE_CHANGE,	///< ポケモン入れ替えフェーズ->バトル継続
 	SVFLOW_RESULT_BTL_QUIT,			///< バトル終了
 }SvflowResult;
 
