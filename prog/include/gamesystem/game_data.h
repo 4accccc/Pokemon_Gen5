@@ -191,6 +191,17 @@ extern u8 GAMEDATA_GetSeasonID(const GAMEDATA *gamedata);
 
 //--------------------------------------------------------------
 /**
+ * @brief	季節のセット
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param	season_id	季節ID（gamesystem/pm_season.h参照）
+ *
+ * 実際の機能として必要かどうかは疑問だがデバッグ用として追加
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_SetSeasonID(GAMEDATA *gamedata, u8 season_id);
+
+//--------------------------------------------------------------
+/**
  * @brief   ゲームデータが持つ情報を元にセーブを実行
  *
  * @param   gamedata		ゲームデータへのポインタ
