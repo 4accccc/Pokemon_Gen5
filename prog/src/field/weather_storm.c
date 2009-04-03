@@ -129,6 +129,9 @@ static void WEATHER_STORM_OBJ_Move( WEATHER_OBJ_WORK* p_wk );
 static void WEATHER_STORM_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID ); 
 
 
+static void WEATHER_STORM_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_STORM_WORK* p_wk );
+
+
 //-----------------------------------------------------------------------------
 /**
  *			天気データ
@@ -144,12 +147,12 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_STORM = {
 	NARC_field_weather_storm_NCLR,			// OAM PLTT
 	NARC_field_weather_storm_NCER,			// OAM CELL
 	NARC_field_weather_storm_NANR,			// OAM CELLANM
-	NARC_field_weather_worm01_nsbtx,		// BGTEX
+	NARC_field_weather_storm_nsbtx,		// BGTEX
 	GX_TEXSIZE_S32,		// GXTexSizeS
 	GX_TEXSIZE_T32,		// GXTexSizeT
 	GX_TEXREPEAT_ST,		// GXTexRepeat
 	GX_TEXFLIP_NONE,		// GXTexFlip
-	GX_TEXFMT_PLTT16,		// GXTexFmt
+	GX_TEXFMT_PLTT4,		// GXTexFmt
 	GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
 
 	// ワークサイズ
@@ -251,18 +254,14 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHE
 			// BGON
 			WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
 
-
 			// シーケンス変更
 			return WEATHER_TASK_FUNC_RESULT_FINISH;
 		}
 	}
 
 	// スクロール処理
-	{
-		int x, y;
-		WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
-		WEATHER_TASK_ScrollObj( p_wk, x, y );
-	}
+	WEATHER_STORM_SCROLL_Main( p_wk, p_local_wk );
+
 
 	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
 
@@ -335,11 +334,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Main( WEATHER_TASK* p_wk, WEATHER_
 	}
 
 	// スクロール処理
-	{
-		int x, y;
-		WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
-		WEATHER_TASK_ScrollObj( p_wk, x, y );
-	}
+	WEATHER_STORM_SCROLL_Main( p_wk, p_local_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
 }
@@ -418,11 +413,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeOut( WEATHER_TASK* p_wk, WEATH
 	}
 
 	// スクロール処理
-	{
-		int x, y;
-		WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
-		WEATHER_TASK_ScrollObj( p_wk, x, y );
-	}
+	WEATHER_STORM_SCROLL_Main( p_wk, p_local_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
 }
@@ -559,3 +550,23 @@ static void WEATHER_STORM_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 }
 
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロール処理
+ *
+ *	@param	p_sys	システムワーク
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_STORM_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_STORM_WORK* p_wk )
+{
+	int x, y;
+	WEATHER_TASK_GetScrollDist( p_sys, &x, &y );
+	WEATHER_TASK_ScrollObj( p_sys, x, y );
+
+	// BG面を斜め上に動かす
+	p_wk->work[2] = (p_wk->work[2] + 6) % 256;
+	WEATHER_TASK_3DBG_SetScrollX( p_sys, (p_wk->work[2]*2) - x );
+	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->work[2]*2) + y );
+}

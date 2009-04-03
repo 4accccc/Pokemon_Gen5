@@ -117,10 +117,6 @@ extern GXTexRepeat FIELD_3DBG_GetRepeat( const FIELD_3DBG* cp_sys );
 extern void FIELD_3DBG_SetFlip( FIELD_3DBG* p_sys, GXTexFlip flip );
 extern GXTexFlip FIELD_3DBG_GetFlip( const FIELD_3DBG* cp_sys );
 
-// アルファ設定
-extern void FIELD_3DBG_SetAlpha( FIELD_3DBG* p_sys, u8 alpha );
-extern u8 FIELD_3DBG_GetAlpha( const FIELD_3DBG* cp_sys );
-
 // スクロール設定
 extern void FIELD_3DBG_SetScrollX( FIELD_3DBG* p_sys, s32 x );
 extern s32 FIELD_3DBG_GetScrollX( const FIELD_3DBG* cp_sys );
@@ -136,6 +132,15 @@ extern void FIELD_3DBG_SetScaleX( FIELD_3DBG* p_sys, fx32 x );
 extern fx32 FIELD_3DBG_GetScaleX( const FIELD_3DBG* cp_sys );
 extern void FIELD_3DBG_SetScaleY( FIELD_3DBG* p_sys, fx32 y );
 extern fx32 FIELD_3DBG_GetScaleY( const FIELD_3DBG* cp_sys );
+
+
+// アルファ設定
+// *使用には注意が必要です。
+// 半透明ポリゴンがフィールドに描画されている場所では
+// 半透明にしないでください。
+// 重なり方がおかしくなります。
+extern void FIELD_3DBG_SetAlpha( FIELD_3DBG* p_sys, u8 alpha );
+extern u8 FIELD_3DBG_GetAlpha( const FIELD_3DBG* cp_sys );
 
 #ifdef _cplusplus
 }	// extern "C"{

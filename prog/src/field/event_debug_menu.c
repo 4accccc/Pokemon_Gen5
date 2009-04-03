@@ -146,6 +146,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
 	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
+	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },

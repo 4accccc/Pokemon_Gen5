@@ -401,16 +401,6 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		
 		MainGameSystem( fieldWork );
 		FIELD_SUBSCREEN_Main();
-		FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
-		FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
-		FIELD_FOG_Main( fieldWork->fog );
-		{
-			static int time;
-			time += 30;
-			time %= 24*3600;
-			FIELD_LIGHT_Main( fieldWork->light, time );
-		}
-		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 		FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
 		
 		if( fieldWork->fldMMdlSys != NULL ){
@@ -845,6 +835,17 @@ static void	RemoveGameSystem( FIELD_MAIN_WORK * fieldWork )
 static void		MainGameSystem( FIELD_MAIN_WORK * fieldWork )
 {
 	g3d_control( fieldWork );
+
+	FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
+	FIELD_FOG_Main( fieldWork->fog );
+	{
+		static int time;
+		time += 30;
+		time %= 24*3600;
+		FIELD_LIGHT_Main( fieldWork->light, time );
+	}
+	FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+	
 	g3d_draw( fieldWork );
 
 	// CLSYSメイン
@@ -995,6 +996,8 @@ static void g3d_draw( FIELD_MAIN_WORK * fieldWork )
 	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );
 	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
 	GFL_BBDACT_Draw( fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+	FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
+
 	GFL_G3D_SCENE_Draw( fieldWork->g3Dscene );  
 }
 

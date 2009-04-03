@@ -1704,6 +1704,8 @@ static void WEATHER_TASK_GRAPHIC_InitBg( WEATHER_TASK_GRAPHIC* p_wk, FIELD_3DBG*
 		FIELD_3DBG_SetWriteData( p_3dbg, p_wk->p_handle, &s_FIELD_3DBG_WRITE_DATA, heapID );
 		FIELD_3DBG_SetVisible( p_3dbg, FALSE );
 
+		FIELD_3DBG_SetPolygonID( p_3dbg, 32 );
+
 		p_wk->bg_load = TRUE;
 	}
 }

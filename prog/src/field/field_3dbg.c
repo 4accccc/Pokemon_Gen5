@@ -13,6 +13,8 @@
 #include <gflib.h>
 #include "field_3dbg.h"
 
+
+
 //-----------------------------------------------------------------------------
 /**
  *					コーディング規約
@@ -30,6 +32,11 @@
  *						小文字と”＿”と数字を使用する 関数の引数もこれと同じ
 */
 //-----------------------------------------------------------------------------
+
+#ifdef PM_DEBUG
+#endif
+
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -184,7 +191,7 @@ void FIELD_3DBG_Write( FIELD_3DBG* p_sys )
 {
 	MtxFx44 projection;
 	
-	if( p_sys ){
+	if( !p_sys ){
 		return ;
 	}
 	
@@ -291,6 +298,9 @@ void FIELD_3DBG_SetWriteData( FIELD_3DBG* p_sys, ARCHANDLE* p_handle, const FIEL
 	FIELD_3DBG_TEX_Init( &p_sys->tex, p_handle, cp_data, heapID );
 
 	p_sys->alpha		= cp_data->alpha;			// アルファ設定
+
+	p_sys->scale_x		= FX32_ONE;
+	p_sys->scale_y		= FX32_ONE;
 }
 
 
@@ -509,6 +519,11 @@ GXTexFlip FIELD_3DBG_GetFlip( const FIELD_3DBG* cp_sys )
  *
  *	@param	p_sys	システムワーク
  *	@param	alpha	アルファ 
+// *使用には注意が必要です。
+// 半透明ポリゴンがフィールドに描画されている場所では
+// 半透明にしないでください。
+// 重なり方がおかしくなります。
+ *
  */
 //-----------------------------------------------------------------------------
 void FIELD_3DBG_SetAlpha( FIELD_3DBG* p_sys, u8 alpha )
@@ -762,15 +777,15 @@ static void FIELD_3DBG_PLANE_SetData( FIELD_3DPLANE* p_wk, const FIELD_3DBG* cp_
 	// ベーススケール値を求める
 	if( (p_wk->size_half_y > p_wk->size_half_x) ){
 		if( p_wk->size_half_y > p_wk->z ){
-			p_wk->base_scale = FX_Div( p_wk->size_half_y, 4 );
+			p_wk->base_scale = FX_Div( p_wk->size_half_y, 4<<FX32_SHIFT );
 		}else{
-			p_wk->base_scale = FX_Div( p_wk->z, 4 );
+			p_wk->base_scale = FX_Div( p_wk->z, 4<<FX32_SHIFT );
 		}
 	}else{
 		if( p_wk->size_half_x > p_wk->z ){
-			p_wk->base_scale = FX_Div( p_wk->size_half_x, 4 );
+			p_wk->base_scale = FX_Div( p_wk->size_half_x, 4<<FX32_SHIFT );
 		}else{
-			p_wk->base_scale = FX_Div( p_wk->z, 4 );
+			p_wk->base_scale = FX_Div( p_wk->z, 4<<FX32_SHIFT );
 		}
 	}
 	p_wk->size_half_x	= FX_Div( p_wk->size_half_x, p_wk->base_scale );
@@ -778,14 +793,10 @@ static void FIELD_3DBG_PLANE_SetData( FIELD_3DPLANE* p_wk, const FIELD_3DBG* cp_
 	p_wk->z				= FX_Div( p_wk->z, p_wk->base_scale );
 
 	// UV値を求める
-	u_dist = (8<<cp_tex->texsiz_s)<<FX32_SHIFT;
-	v_dist = (8<<cp_tex->texsiz_t)<<FX32_SHIFT;
-	p_wk->u1 = FX_Div( cp_sys->size_x<<FX32_SHIFT, u_dist );
-	p_wk->v1 = FX_Div( cp_sys->size_y<<FX32_SHIFT, v_dist );
-	p_wk->u0 = FX_Div( cp_sys->scroll_x<<FX32_SHIFT, u_dist );
-	p_wk->v0 = FX_Div( cp_sys->scroll_y<<FX32_SHIFT, v_dist );
-	p_wk->u1 += p_wk->u0;
-	p_wk->v1 += p_wk->v0;
+	p_wk->u0 = cp_sys->scroll_x<<FX32_SHIFT;
+	p_wk->v0 = cp_sys->scroll_y<<FX32_SHIFT;
+	p_wk->u1 = p_wk->u0 + (cp_sys->size_x<<FX32_SHIFT);
+	p_wk->v1 = p_wk->v0 + (cp_sys->size_y<<FX32_SHIFT);
 
 	// textureの変換行列を求める
 	MTX_Identity33( &p_wk->tex_mtx );
@@ -803,32 +814,34 @@ static void FIELD_3DBG_PLANE_SetData( FIELD_3DPLANE* p_wk, const FIELD_3DBG* cp_
 //-----------------------------------------------------------------------------
 static void FIELD_3DBG_PLANE_Write( const FIELD_3DPLANE* cp_wk )
 {
+	if( !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R) ){
 	
-	// texture変換設定
-	G3_MtxMode( GX_MTXMODE_TEXTURE );
-	G3_Identity();
-	G3_MultMtx33( &cp_wk->tex_mtx );
+		// texture変換設定
+		G3_MtxMode( GX_MTXMODE_TEXTURE );
+		G3_Identity();
+		G3_MultMtx33( &cp_wk->tex_mtx );
 
-	// 平面の描画
-	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
-	G3_Scale( cp_wk->base_scale, cp_wk->base_scale, cp_wk->base_scale );
+		// 平面の描画
+		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
+		G3_Scale( cp_wk->base_scale, cp_wk->base_scale, cp_wk->base_scale );
 
-	G3_Begin( GX_BEGIN_QUADS );
+		G3_Begin( GX_BEGIN_QUADS );
 
-	//平面ポリゴンなので法線ベクトルは4頂点で共用
-	G3_TexCoord( cp_wk->u0, cp_wk->v0 );
-	G3_Vtx( -cp_wk->size_half_x, cp_wk->size_half_y, cp_wk->z );
+		//平面ポリゴンなので法線ベクトルは4頂点で共用
+		G3_TexCoord( cp_wk->u0, cp_wk->v0 );
+		G3_Vtx( -cp_wk->size_half_x, cp_wk->size_half_y, -cp_wk->z );
 
-	G3_TexCoord( cp_wk->u0, cp_wk->v1 );
-	G3_Vtx( -cp_wk->size_half_x, -cp_wk->size_half_y, cp_wk->z );
+		G3_TexCoord( cp_wk->u0, cp_wk->v1 );
+		G3_Vtx( -cp_wk->size_half_x, -cp_wk->size_half_y, -cp_wk->z );
 
-	G3_TexCoord( cp_wk->u1, cp_wk->v1 );
-	G3_Vtx( cp_wk->size_half_x, -cp_wk->size_half_y, cp_wk->z );
+		G3_TexCoord( cp_wk->u1, cp_wk->v1 );
+		G3_Vtx( cp_wk->size_half_x, -cp_wk->size_half_y, -cp_wk->z );
 
-	G3_TexCoord( cp_wk->u1, cp_wk->v0 );
-	G3_Vtx( cp_wk->size_half_x, cp_wk->size_half_y, cp_wk->z );
+		G3_TexCoord( cp_wk->u1, cp_wk->v0 );
+		G3_Vtx( cp_wk->size_half_x, cp_wk->size_half_y, -cp_wk->z );
 
-	G3_End();
+		G3_End();
+	}
 
 }
 
@@ -841,8 +854,11 @@ static void FIELD_3DBG_PLANE_Write( const FIELD_3DPLANE* cp_wk )
 //-----------------------------------------------------------------------------
 static void FIELD_3DBG_SetPolyAttr( const FIELD_3DBG* cp_sys )
 {
+	// マテリアル設定
+	G3_MaterialColorDiffAmb( GX_RGB( 31,31,31 ), GX_RGB( 31,31,31 ), TRUE );
+	
 	G3_PolygonAttr( 0, GX_POLYGONMODE_MODULATE, GX_CULL_BACK, 
-			cp_sys->polygon_id, cp_sys->alpha, GX_POLYGON_ATTR_MISC_NONE );
+			cp_sys->polygon_id, cp_sys->alpha, GX_POLYGON_ATTR_MISC_FOG );
 }
 
 //----------------------------------------------------------------------------
@@ -856,7 +872,7 @@ static void FIELD_3DBG_SetTexParam( const FIELD_3DBG* cp_sys )
 {
 	GF_ASSERT( cp_sys->tex.load );
 	G3_TexImageParam( cp_sys->tex.texfmt,
-			GX_TEXGEN_TEXCOORD, 
+			GX_TEXGEN_VERTEX, 
 			cp_sys->tex.texsiz_s, cp_sys->tex.texsiz_t,
 			cp_sys->tex.repeat, cp_sys->tex.flip, 
 			cp_sys->tex.texpltt,

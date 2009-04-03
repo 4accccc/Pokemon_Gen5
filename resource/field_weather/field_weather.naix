@@ -72,7 +72,8 @@ enum {
 	NARC_field_weather_volcano_NCLR = 58,
 	NARC_field_weather_volcano_NSCR = 59,
 	NARC_field_weather_volcano_bg_NCGR = 60,
-	NARC_field_weather_worm01_nsbtx = 61
+	NARC_field_weather_storm_nsbtx = 61,
+	NARC_field_weather_worm01_nsbtx = 62
 };
 
 /* NARC_FIELD_WEATHER_NAIX_ */

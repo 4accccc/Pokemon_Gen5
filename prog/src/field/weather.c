@@ -107,8 +107,8 @@ enum{
 ///	3DBG
 //=====================================
 static const FIELD_3DBG_SETUP	sc_FIELD_3DBG_SETUP = {
-	256, 192,
-	FX32_ONE*10,
+	256, 256,
+	(FX32_ONE*1),
 	0,
 };
 
