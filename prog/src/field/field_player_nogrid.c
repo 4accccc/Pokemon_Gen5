@@ -4,7 +4,7 @@ void	MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key)
 	u16		dir;
 	BOOL	mvFlag = FALSE;
 
-	dir = getCameraRotate( GetG3Dcamera(pcActCont->fieldWork) );
+	dir = getCameraRotate( pcActCont->fieldWork );
 
 	if( key & PAD_KEY_UP ){
 		mvFlag = TRUE;

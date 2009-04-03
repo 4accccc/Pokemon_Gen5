@@ -179,9 +179,10 @@ static const int playerBBDanmOffsTblMine[] = {
 	PCACTSTOP_UP - PCACTSTOP_UP,
 };
 
-static u16 getCameraRotate( GFL_G3D_CAMERA* g3Dcamera )
+static u16 getCameraRotate( FIELD_MAIN_WORK * fieldWork )
 {
 	VecFx32 vec, camPos, target;
+	GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(fieldWork);
 	
 	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
 	GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
@@ -229,7 +230,7 @@ static void playerBBDactFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work 
 	u16		anmID;
 	u16		dir;
 
-	dir = pcActCont->direction - getCameraRotate( GetG3Dcamera(pcActCont->fieldWork) );
+	dir = pcActCont->direction - getCameraRotate( pcActCont->fieldWork );
 	anmID = getPlayerBBDanm( pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
 
 	//カメラ補正(アニメ向きの変更をするのに参照)
@@ -304,7 +305,7 @@ void	MainPlayerAct( PC_ACTCONT* pcActCont, int key)
 	u16		dir;
 	BOOL	mvFlag = FALSE;
 
-	dir = getCameraRotate( GetG3Dcamera(pcActCont->fieldWork) );
+	dir = getCameraRotate( pcActCont->fieldWork );
 
 	if( key & PAD_KEY_UP ){
 		mvFlag = TRUE;
@@ -358,8 +359,7 @@ static void	MainFriendPlayerAct( PC_ACTCONT* pcActCont )
 static void	SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID )
 {
 	int		anmID;
-	u16		dir = pcActCont->direction -
-		getCameraRotate( GetG3Dcamera(pcActCont->fieldWork) );
+	u16		dir = pcActCont->direction - getCameraRotate( pcActCont->fieldWork );
 
 	if( pcActCont->anmSetID != anmSetID ){
 		pcActCont->anmSetID = anmSetID;
