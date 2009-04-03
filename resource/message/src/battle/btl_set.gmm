@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-04-01T13:08:26"/>
+	<create user="taya" host="W00146" date="2009-04-03T20:10:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -426,7 +426,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1695,6 +1695,28 @@
 なまけていて　技が　出せない！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_Kyuuban">
+		<comment>きゅうばん</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
+きゅうばんで　はりついている！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
+きゅうばんで　はりついている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Kyuuban_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
+きゅうばんで　はりついている！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
+きゅうばんで　はりついている！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Kyuuban_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
+きゅうばんで　はりついている！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
+きゅうばんで　はりついている！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_SkillSwap" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>個別ワザ用メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
@@ -1715,6 +1737,27 @@
 おたがいの　とくせいを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
 おたがいの　とくせいを　入れかえた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_PushOutChange">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　は
+せんとうに　ひきずりだされた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　は
+せんとうに　引きずり出された！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_PushOutChange_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　は
+せんとうに　ひきずりだされた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　は
+せんとうに　引きずり出された！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_PushOutChange_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　は
+せんとうに　ひきずりだされた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　は
+せんとうに　引きずり出された！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_CantEscTok">
