@@ -320,6 +320,8 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		//セットアップ
 		fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID );
 
+		fieldWork->camera_control = FIELD_CAMERA_Create( fieldWork, fieldWork->heapID );
+
 		SetMapperData(fieldWork);
 		FLDMAPPER_ResistData(
 			 fieldWork->g3Dmapper, &fieldWork->map_res );
@@ -432,6 +434,8 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 		// フォグシステム破棄
 		FIELD_FOG_Delete( fieldWork->fog );
+
+		FIELD_CAMERA_Delete( fieldWork->camera_control );
 
 		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);

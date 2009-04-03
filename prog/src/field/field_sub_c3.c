@@ -27,7 +27,6 @@ static u16 v_len;
 //------------------------------------------------------------------
 static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
-	fieldWork->camera_control = FIELD_CAMERA_Create( fieldWork, fieldWork->heapID );
 	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork, fieldWork->heapID );
 	//FLDACT_TestSetup( fieldWork->fldActCont );
 	fieldWork->pcActCont = CreatePlayerAct( fieldWork, fieldWork->heapID );
@@ -123,7 +122,6 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 static void TestC3Delete( FIELD_MAIN_WORK* fieldWork )
 {
 	DeletePlayerAct( fieldWork->pcActCont );
-	FIELD_CAMERA_Delete( fieldWork->camera_control );
 	//FLDACT_TestRelease( fieldWork->fldActCont );
 	FLD_DeleteFieldActSys( fieldWork->fldActCont );
 }

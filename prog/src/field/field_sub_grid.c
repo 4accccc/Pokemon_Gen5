@@ -222,8 +222,6 @@ static const GRID_CAMERA_DATA DATA_CameraTbl[] =
 static void GridMoveCreate(
 	FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir )
 {
-	fieldWork->camera_control =
-		FIELD_CAMERA_Create( fieldWork, fieldWork->heapID );
 	
 	{
 		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
@@ -298,9 +296,6 @@ static void GridMoveCreate(
 static void GridMoveCreate(
 	FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
-	fieldWork->camera_control =
-		FIELD_CAMERA_Create( fieldWork, fieldWork->heapID );
-	
 	{
 		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 		PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
@@ -392,7 +387,6 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 	FGridCont_Delete( fieldWork );
 	
 	DeletePlayerActGrid( fieldWork->pcActCont );
-	FIELD_CAMERA_Delete( fieldWork->camera_control );
 	
 	if( fieldWork->fldActCont != NULL ){
 #if 0
