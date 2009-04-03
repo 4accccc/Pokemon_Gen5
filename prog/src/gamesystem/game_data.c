@@ -270,6 +270,21 @@ u8 GAMEDATA_GetSeasonID(const GAMEDATA *gamedata)
 	return gamedata->season_id;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief	季節のセット
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param	season_id	季節ID（gamesystem/pm_season.h参照）
+ *
+ * 実際の機能として必要かどうかは疑問だがデバッグ用として追加
+ */
+//--------------------------------------------------------------
+void GAMEDATA_SetSeasonID(GAMEDATA *gamedata, u8 season_id)
+{
+	GF_ASSERT(season_id < PMSEASON_TOTAL);
+	gamedata->season_id = season_id;
+}
+
 //============================================================================================
 //
 //
