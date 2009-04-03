@@ -772,6 +772,13 @@ WF_2DCSYS* WF_2DC_SysInit( GFL_CLUNIT* p_unit, PALETTE_FADE_PTR p_pfd, u32 objnu
 //		p_sys->p_res_man[i+2] = CLACT_U_ResManagerInit( WF_2DC_ANMRESMAN_OBJNUM, i+2, heap );
 //	}
 
+	//リソースIDの初期化
+	for( i=0; i<WF_2DC_CHARNUM; i++ ){
+		p_sys->chrres[i].resid[0] = GFL_CLGRP_REGISTER_FAILED;
+	}
+	p_sys->shadowres.resid[0] = GFL_CLGRP_REGISTER_FAILED;
+    p_sys->unionplttid = GFL_CLGRP_REGISTER_FAILED;
+
 	// アニメーションリソース読み込み
 	for( i=0; i<WF_2DC_MOVENUM; i++ ){
 		WF_2DC_AnmResLoad( p_sys, i, heap );
@@ -1973,7 +1980,7 @@ static void WF_2DC_CharResDelNml( WF_2DCSYS* p_sys, u32 char_no )
 
 
     GFL_CLGRP_CGR_Release(p_sys->chrres[ char_no ].resid[0]);
-    GFL_CLGRP_CGR_Release(p_sys->chrres[ char_no ].resid[1]);
+    GFL_CLGRP_PLTT_Release(p_sys->chrres[ char_no ].resid[1]);
     p_sys->chrres[ char_no ].resid[ 0 ] = GFL_CLGRP_REGISTER_FAILED;
     p_sys->chrres[ char_no ].resid[ 1 ] = GFL_CLGRP_REGISTER_FAILED;
 
@@ -2169,7 +2176,7 @@ static void WF_2DC_ShResDel( WF_2DCSYS* p_sys )
 //			p_sys->shadowres.resobj[i+2] = NULL;
 //		}
 
-        GFL_CLGRP_CGR_Release(p_sys->shadowres.resid[2]);
+        GFL_CLGRP_CELLANIM_Release(p_sys->shadowres.resid[2]);
         p_sys->shadowres.resid[ 2 ] = GFL_CLGRP_REGISTER_FAILED;
 
     }
@@ -2247,7 +2254,7 @@ static void WF_2DC_UniCharPlttResDel( WF_2DCSYS* p_sys )
 {
 //	GF_ASSERT( p_sys->p_unionpltt != NULL );
 
-    GFL_CLGRP_CGR_Release(p_sys->unionplttid);
+    GFL_CLGRP_PLTT_Release(p_sys->unionplttid);
     p_sys->unionplttid = GFL_CLGRP_REGISTER_FAILED;
 
     
@@ -2308,8 +2315,7 @@ static void WF_2DC_UniCharAnmResDel( WF_2DCSYS* p_sys )
 //	GF_ASSERT( p_sys->unionres[ 0 ].resobj[0] != NULL );
 
 	for( i=0; i<WF_2DC_UNICHAR_NUM; i++ ){
-
-        GFL_CLGRP_CGR_Release(p_sys->unionres[i].resid);
+        GFL_CLGRP_CELLANIM_Release(p_sys->unionres[i].resid);
         p_sys->unionres[i].resid = GFL_CLGRP_REGISTER_FAILED;
 
         
