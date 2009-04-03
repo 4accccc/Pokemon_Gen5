@@ -1865,4 +1865,5 @@ static BOOL DMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
 {
 	FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( wk->fieldWork );
 	FIELD_DEBUG_SetPosPrint( debug );
+	return( FALSE );
 }
