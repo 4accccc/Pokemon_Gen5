@@ -1,13 +1,16 @@
+//============================================================================================
+/**
+ * @file	field_camera.c
+ * @brief	フィールドカメラ制御
+ */
+//============================================================================================
 #include <gflib.h>
 #include "field_g3d_mapper.h"
 #include "field_common.h"
 #include "field_camera.h"
 	
-#include "arc_def.h"
+//#include "arc_def.h"
 //============================================================================================
-/**
- * @brief	カーソル
- */
 //============================================================================================
 //------------------------------------------------------------------
 /**
@@ -17,15 +20,40 @@
 struct _FIELD_CAMERA {
 	HEAPID				heapID;
 	FIELD_MAIN_WORK * fieldWork;
+	GFL_G3D_CAMERA * g3Dcamera;
 
-	VecFx32				trans;
+	VecFx32				pos;
 	fx32				cameraHeight;
 	u16					cameraLength;
 	u16					direction;
 	
 	VecFx32				transOffset;
+
+	const VecFx32 *		watch_pos;
+	const VecFx32 *		watch_ofs;
 };
 
+#if 0
+//------------------------------------------------------------------
+/**
+ * @brief	カメラパラメータ
+ */
+//------------------------------------------------------------------
+typedef struct {
+	fx32			Distance;
+	VecFx32			Angle;
+	u16				View;
+	u16				PerspWay;
+	fx32			Near;
+	fx32			Far;
+	VecFx32			Shift;
+}FIELD_CAMERA_PARAM;
+
+static const FIELD_CAMERA_PARAM FieldCameraParam[] = {
+	{
+	},
+};
+#endif
 
 #define	CAMERA_LENGTH	(16)
 //------------------------------------------------------------------
@@ -39,11 +67,16 @@ FIELD_CAMERA*	FIELD_CAMERA_Create( FIELD_MAIN_WORK * fieldWork, HEAPID heapID )
 
 	camera->heapID = heapID;
 	camera->fieldWork = fieldWork;
+	camera->g3Dcamera = GetG3Dcamera(camera->fieldWork);
+	GF_ASSERT(camera->g3Dcamera != NULL);
 
-	VEC_Set( &camera->trans, 0, 0, 0 );
+	VEC_Set( &camera->pos, 0, 0, 0 );
 	camera->cameraHeight = 0;
 	camera->cameraLength = CAMERA_LENGTH;
 	camera->direction = 0;
+
+	camera->watch_pos = NULL;
+	camera->watch_ofs = NULL;
 
 	return camera;
 }
@@ -59,22 +92,12 @@ void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 }
 
 //------------------------------------------------------------------
-/**
- * @brief	メイン
- */
 //------------------------------------------------------------------
-//#define MV_SPEED		(2*FX32_ONE)
-//#define RT_SPEED		(FX32_ONE/8)
-//#define	CAMERA_TARGET_HEIGHT	(4)//(8)
-
-void	FIELD_CAMERA_Main( FIELD_CAMERA* camera, int key )
+void FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA * camera, int key)
 {
-	GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(camera->fieldWork);
-	VecFx32	pos, target, trans;
 	VecFx32	vecMove = { 0, 0, 0 };
 	VecFx32	vecUD = { 0, 0, 0 };
 	BOOL	mvFlag = FALSE;
-
 	if( key & PAD_BUTTON_R ){
 		camera->direction -= RT_SPEED/2;
 	}
@@ -101,56 +124,83 @@ void	FIELD_CAMERA_Main( FIELD_CAMERA* camera, int key )
 		camera->cameraHeight += MV_SPEED;
 	}
 #endif
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	メイン
+ */
+//------------------------------------------------------------------
+void	FIELD_CAMERA_Main( FIELD_CAMERA* camera )
+{
+	VecFx32	pos, target;
+
+	if (camera->watch_pos) {
+		(camera->pos) = *(camera->watch_pos);
+	}
+	if (camera->watch_ofs) {
+		(camera->transOffset) = *(camera->watch_ofs);
+	}
 	
-	trans = camera->trans;
-	trans.x += camera->transOffset.x;
-	trans.y += camera->transOffset.y;
-	trans.z += camera->transOffset.z;
+	pos = camera->pos;
+	pos.x += camera->transOffset.x;
+	pos.y += camera->transOffset.y;
+	pos.z += camera->transOffset.z;
 
 	VEC_Set( &target,
-			trans.x,
-			trans.y + CAMERA_TARGET_HEIGHT*FX32_ONE,
-			trans.z);
+			pos.x,
+			pos.y + CAMERA_TARGET_HEIGHT*FX32_ONE,
+			pos.z);
 
-	pos.x = trans.x + camera->cameraLength * FX_SinIdx(camera->direction);
-	pos.y = trans.y + camera->cameraHeight;
-	pos.z = trans.z + camera->cameraLength * FX_CosIdx(camera->direction);
+	pos.x = pos.x + camera->cameraLength * FX_SinIdx(camera->direction);
+	pos.y = pos.y + camera->cameraHeight;
+	pos.z = pos.z + camera->cameraLength * FX_CosIdx(camera->direction);
 
-	GFL_G3D_CAMERA_SetTarget( g3Dcamera, &target );
-	GFL_G3D_CAMERA_SetPos( g3Dcamera, &pos );
+	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &target );
+	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &pos );
 }
 
 
-
-#if 0
-static void	FriendCursor( FIELD_CAMERA* camera )
-{
-    
-    GFL_STD_MemCopy((const void*)&fieldWork->recvWork ,&camera->trans, sizeof(VecFx32));
-	GFL_G3D_SCENEOBJ_SetPos(	GFL_G3D_SCENEOBJ_Get(camera->gs->g3Dscene, camera->cursorIdx), 
-								&camera->trans );
-}
-#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera)
 {
-	return GetG3Dcamera(camera->fieldWork);
+	return camera->g3Dcamera;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const void FIELD_CAMERA_InitPositionWatcher(FIELD_CAMERA * camera, const VecFx32 * watch_pos)
+{
+	camera->watch_pos = watch_pos;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const void FIELD_CAMERA_InitOffsetWatcher(FIELD_CAMERA * camera, const VecFx32 * watch_ofs)
+{
+	camera->watch_ofs = watch_ofs;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_CAMERA_SetNormalCameraMode(FIELD_CAMERA * camera, const VecFx32 * watch_pos)
+{
+	FIELD_CAMERA_InitPositionWatcher(camera, watch_pos);
+	FIELD_CAMERA_InitOffsetWatcher(camera, NULL);
+}
 //------------------------------------------------------------------
 /**
  * @brief	
  */
 //------------------------------------------------------------------
-void	FLD_SetCameraTrans( FIELD_CAMERA* camera, const VecFx32* trans )
+void	FLD_SetCameraTrans( FIELD_CAMERA* camera, const VecFx32* pos )
 {
-	camera->trans = *trans;
+	camera->pos = *pos;
 }
-void	FLD_GetCameraTrans( FIELD_CAMERA* camera, VecFx32* trans )
+void	FLD_GetCameraTrans( const FIELD_CAMERA* camera, VecFx32* pos )
 {
-	*trans = camera->trans;
+	*pos = camera->pos;
 }
 
 void	FLD_SetCameraDirection( FIELD_CAMERA* camera, u16* direction )

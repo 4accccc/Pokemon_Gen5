@@ -105,7 +105,7 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	MainPlayerAct_C3( fieldWork->pcActCont, fieldWork->key_cont, pos_angle );
 	FLD_MainFieldActSys( fieldWork->fldActCont );
 	
-	FIELD_CAMERA_Main( fieldWork->camera_control, fieldWork->key_cont );
+	FIELD_CAMERA_DEBUG_Control( fieldWork->camera_control, fieldWork->key_cont );
 
 	if (tp_dir == FLDEASYTP_TCHDIR_CENTER) {
 		TAMADA_Printf("LEN %04x vec:%04x\n", player_len, v_len);

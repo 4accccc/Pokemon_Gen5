@@ -50,7 +50,7 @@ static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
 	//FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 
-	FIELD_CAMERA_Main( fieldWork->camera_control, fieldWork->key_cont );
+	FIELD_CAMERA_DEBUG_Control( fieldWork->camera_control, fieldWork->key_cont );
 #if 0
 	{
 		GFL_G3D_CAMERA * g3Dcamera = fieldWork->g3Dcamera;

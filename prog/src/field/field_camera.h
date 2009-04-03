@@ -16,13 +16,15 @@ typedef struct _FIELD_CAMERA	FIELD_CAMERA;
 //------------------------------------------------------------------
 extern FIELD_CAMERA*		FIELD_CAMERA_Create( FIELD_MAIN_WORK * fieldWork, HEAPID heapID );
 extern void				FIELD_CAMERA_Delete( FIELD_CAMERA* camera );
-extern void				FIELD_CAMERA_Main( FIELD_CAMERA* camera, int key);
+extern void				FIELD_CAMERA_Main( FIELD_CAMERA* camera);
+
+extern void FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA * camera, int key);
 
 //------------------------------------------------------------------
 //	à»â∫ÇÕÉäÉlÅ[ÉÄÇ≥ÇÍÇÈó\íËÇÃä÷êîåQ
 //------------------------------------------------------------------
 extern void				FLD_SetCameraTrans( FIELD_CAMERA* camera, const VecFx32* trans );
-extern void				FLD_GetCameraTrans( FIELD_CAMERA* camera, VecFx32* trans );
+extern void				FLD_GetCameraTrans( const FIELD_CAMERA* camera, VecFx32* trans );
 extern void				FLD_SetCameraDirection( FIELD_CAMERA* camera, u16* direction );
 extern void				FLD_GetCameraDirection( FIELD_CAMERA* camera, u16* direction );
 
@@ -36,4 +38,6 @@ extern void	FLD_SetCameraTransOffset(
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera);
+extern const void FIELD_CAMERA_InitPositionWatcher(FIELD_CAMERA * camera, const VecFx32 * watch_pos);
+extern const void FIELD_CAMERA_InitOffsetWatcher(FIELD_CAMERA * camera, const VecFx32 * watch_ofs);
 

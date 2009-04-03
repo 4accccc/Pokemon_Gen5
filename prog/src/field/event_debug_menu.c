@@ -1045,7 +1045,7 @@ static GMEVENT_RESULT DMenuControlCamera(
 						work->pStrBuf, ucode, len );
 				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 23, work->pStrBuf );
 				
-				FIELD_CAMERA_Main( camera, 0 );
+				FIELD_CAMERA_Main( camera );
 			}
 		}
 		break;

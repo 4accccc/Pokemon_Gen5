@@ -440,12 +440,6 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	FLD_SetCameraTransOffset( fieldWork->camera_control, &offs );
 //	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 	
-	{
-		int key = fieldWork->key_cont;
-//		key &= ~(PAD_BUTTON_L|PAD_BUTTON_R);
-		key = 0;
-		FIELD_CAMERA_Main( fieldWork->camera_control, key );
-	}
 }
 
 #define CM_RT_SPEED (FX32_ONE/8)
@@ -525,12 +519,6 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		FLD_SetCameraTrans( fieldWork->camera_control, pos );
 	//	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 	
-		{
-			int key = fieldWork->key_cont;
-	//		key &= ~(PAD_BUTTON_L|PAD_BUTTON_R);
-			key = 0;
-			FIELD_CAMERA_Main( fieldWork->camera_control, key );
-		}
 	}
 }
 
@@ -609,7 +597,6 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
-	FIELD_CAMERA_Main( fieldWork->camera_control, 0 );
 }
 
 //======================================================================

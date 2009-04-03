@@ -133,10 +133,6 @@ struct _FIELD_MAIN_WORK
 	GFL_BBDACT_SYS*			bbdActSys;		//ビルボードアクトシステム設定ハンドル
 
 	FLDMAPPER*				g3Dmapper;
-	
-	//HEAPID					heapID;
-
-	//FIELD_MAIN_WORK*		fieldWork;
 };
 
 //------------------------------------------------------------------
@@ -401,6 +397,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
 
 		
+		FIELD_CAMERA_Main( fieldWork->camera_control );
 		MainGameSystem( fieldWork );
 		FIELD_SUBSCREEN_Main();
 		FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
