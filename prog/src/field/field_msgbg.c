@@ -22,8 +22,8 @@
 //	define
 //======================================================================
 #define FLDMSGBG_BGFRAME (GFL_BG_FRAME1_M)	///<使用BGフレーム
-#define FLDMSGBG_PANO_MENU (14) 			///<メニューパレットNo
-#define FLDMSGBG_PANO_FONT (15)				///<フォントパレットNo
+#define FLDMSGBG_PANO_MENU (13) 			///<メニューパレットNo
+#define FLDMSGBG_PANO_FONT (14)				///<フォントパレットNo
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
 #define FLDMSGBG_STRLEN (48)				///<文字列長さ標準
 
@@ -123,7 +123,7 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID )
 		GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
 		
 		GFL_BG_SetPriority( fmb->bgFrame, 0 );
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 2 );
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );
 		
 		GFL_BG_FillCharacter( fmb->bgFrame, 0x00, 1, 0 );
 		GFL_BG_FillScreen( fmb->bgFrame,

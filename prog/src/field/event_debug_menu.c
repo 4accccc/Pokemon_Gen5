@@ -37,6 +37,8 @@
 #include  "weather.h"
 #include  "msg/msg_d_tomoya.h"
 
+#include "field_debug.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -133,6 +135,8 @@ static BOOL DMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL DMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
+
 //--------------------------------------------------------------
 ///	デバッグメニューリスト　汎用
 ///	データを追加する事でメニューの項目も増えます。
@@ -141,7 +145,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
-	//{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
@@ -156,6 +160,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 {
+	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
 	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
 	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
 	{ DEBUG_FIELD_STR04, DMenuCallProc_GridScaleControl },
@@ -1844,3 +1849,20 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent2(
 	return( GMEVENT_RES_CONTINUE );
 }
 
+//======================================================================
+//	デバッグメニュー　位置情報
+//======================================================================
+extern FIELD_DEBUG_WORK * FIELDMAP_GetDebugWork( FIELD_MAIN_WORK *fieldWork );
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　フィールド位置情報
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
+{
+	FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( wk->fieldWork );
+	FIELD_DEBUG_SetPosPrint( debug );
+}

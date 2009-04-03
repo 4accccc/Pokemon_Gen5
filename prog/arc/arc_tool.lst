@@ -138,4 +138,4 @@
 	ARCID_RECORD_GRA		"record_gra.narc"	#レコード交換
 	ARCID_TRF_GRA		"test_graphic/trbgra.narc"	#トレーナー(仮
 	ARCID_TRB_GRA		"test_graphic/trbgra.narc"	#トレーナー(仮
-
+	ARCID_OTHERS		"others.narc"

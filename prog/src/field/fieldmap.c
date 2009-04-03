@@ -49,6 +49,8 @@
 
 #include "fldmmdl.h"
 
+#include "field_debug.h"
+
 extern FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
 
 //============================================================================================
@@ -116,6 +118,8 @@ struct _FIELD_MAIN_WORK
 	FLDMSGBG *fldMsgBG;
 	
 	FLDMMDLSYS *fldMMdlSys;
+	
+	FIELD_DEBUG_WORK *debugWork;
 
 
 	/* 以下はFIELD_SETUPのメンバー */
@@ -261,6 +265,20 @@ FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork )
 	return fieldWork->fldMMdlSys;
 }
 
+FIELD_DEBUG_WORK * FIELDMAP_GetDebugWork( FIELD_MAIN_WORK *fieldWork );
+
+FIELD_DEBUG_WORK * FIELDMAP_GetDebugWork( FIELD_MAIN_WORK *fieldWork )
+{
+	return fieldWork->debugWork;
+}
+
+GAMESYS_WORK * FIELDMAP_GetGameSysWork( FIELD_MAIN_WORK *fieldWork );
+
+GAMESYS_WORK * FIELDMAP_GetGameSysWork( FIELD_MAIN_WORK *fieldWork )
+{
+	return fieldWork->gsys;
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )
@@ -334,13 +352,16 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		
 		//情報バーの初期化
 		FIELD_SUBSCREEN_Init(fieldWork->heapID);
-
+		
+		//フィールドデバッグ初期化
+		fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 		fieldWork->seq++;
 		break;
 
 	case 2:
 		MainGameSystem( fieldWork );
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+		FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
 		if( fieldWork->fldMMdlSys != NULL ){
 			FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
 		}
@@ -390,6 +411,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			FIELD_LIGHT_Main( fieldWork->light, time );
 		}
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+		FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
 		
 		if( fieldWork->fldMMdlSys != NULL ){
 			FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
@@ -428,6 +450,8 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		
 		FLDMSGBG_Delete( fieldWork->fldMsgBG );
 		
+		FIELD_DEBUG_Delete( fieldWork->debugWork );
+
 		fieldWork->seq ++;
 		break;
 
