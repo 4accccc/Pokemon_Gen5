@@ -55,7 +55,8 @@ SUBDIRS	=	wmi \
 			field_light \
 			wifi_note \
 			record \
-			particle/wazaeffect
+			particle/wazaeffect \
+			others
 
 
 include $(RESOURCE_MACRO)
