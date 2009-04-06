@@ -31,6 +31,7 @@
 #define	MCSS_ANM_STOP_OFF	( 0 )		//アニメストップOFF
 #define	MCSS_VANISH_ON		( 1 )		//バニッシュON
 #define	MCSS_VANISH_OFF		( 0 )		//バニッシュOFF
+#define	MCSS_VANISH_FLIP	( 2 )		//バニッシュFLIP
 
 #ifndef __ASM_NO_DEF_
 //--------------------------------------------------------------------------
@@ -92,6 +93,7 @@ extern	void			MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
 extern	int				MCSS_GetVanishFlag( MCSS_WORK *mcss );
 extern	void			MCSS_SetVanishFlag( MCSS_WORK *mcss );
 extern	void			MCSS_ResetVanishFlag( MCSS_WORK *mcss );
+extern	void			MCSS_FlipVanishFlag( MCSS_WORK *mcss );
 
 #ifdef PM_DEBUG
 extern	MCSS_WORK*		MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
