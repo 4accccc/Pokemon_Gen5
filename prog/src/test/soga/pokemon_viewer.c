@@ -39,6 +39,43 @@
 #define	MCS_READ_CH			( 0 )
 #define	MCS_WRITE_CH		( 0 )
 
+#define G2D_BACKGROUND_COL	( GX_RGB( 31, 31, 31 ) )
+#define G2D_FONT_COL		( GX_RGB(  0,  0,  0 ) )
+#define G2D_AA_BGCOL_ON		( GX_RGB( 31,  0,  0 ) )
+#define G2D_BB_BGCOL_ON		( GX_RGB(  0, 31,  0 ) )
+#define G2D_A_BGCOL_ON		( GX_RGB(  0,  0, 31 ) )
+#define G2D_B_BGCOL_ON		( GX_RGB( 31, 31,  0 ) )
+#define G2D_C_BGCOL_ON		( GX_RGB( 31,  0, 31 ) )
+#define G2D_D_BGCOL_ON		( GX_RGB(  0, 31, 31 ) )
+#define G2D_AA_BGCOL_OFF	( GX_RGB( 15,  0,  0 ) )
+#define G2D_BB_BGCOL_OFF	( GX_RGB(  0, 15,  0 ) )
+#define G2D_A_BGCOL_OFF		( GX_RGB(  0,  0, 15 ) )
+#define G2D_B_BGCOL_OFF		( GX_RGB( 15, 15,  0 ) )
+#define G2D_C_BGCOL_OFF		( GX_RGB( 15,  0, 15 ) )
+#define G2D_D_BGCOL_OFF		( GX_RGB(  0, 15, 15 ) )
+
+
+enum{
+	BGCOL_AA = 2,
+	BGCOL_BB,
+	BGCOL_A,
+	BGCOL_B,
+	BGCOL_C,
+	BGCOL_D,
+};
+
+typedef struct{
+	u8 posx;
+	u8 posy;
+	u8 sizx;
+	u8 sizy;
+
+	u8 palnum;
+	u8 msgx;
+	u8 msgy;
+	u8 padding;
+}BMP_CREATE_TABLE;
+
 enum{
 	SEND_NCBR = 0,
 	SEND_NCBR_OK,
@@ -77,10 +114,12 @@ enum{
 };
 
 enum{
-	BMPWIN_MONSNO = 0,
-	BMPWIN_PROJECTION,
-	BMPWIN_SCALE_E,
-	BMPWIN_SCALE_M,
+	BMPWIN_AA = 0,
+	BMPWIN_BB,
+	BMPWIN_A,
+	BMPWIN_B,
+	BMPWIN_C,
+	BMPWIN_D,
 
 	BMPWIN_MAX
 };
@@ -147,9 +186,38 @@ static	const	char	num_char_table[][1]={
 	"F"
 };
 
-static	const	char	ProjectionText[2][12]={
-	"Perspective",
-	"Ortho",
+static	const	char	btlv_mcss_pos_msg[BMPWIN_MAX][8]={
+	"POS AA",
+	"POS BB",
+	"POS A",
+	"POS B",
+	"POS C",
+	"POS D",
+};
+
+static const BMP_CREATE_TABLE bmp_create_table[] = {
+	//AA
+	{ 11, 12, 10, 12, BGCOL_AA, 24, 40, 0 }, 
+	//BB
+	{ 11,  0, 10, 12, BGCOL_BB, 24, 40, 0 }, 
+	//A
+	{  0, 12, 11, 12, BGCOL_A,  28, 40, 0 }, 
+	//B
+	{ 21,  0, 11, 12, BGCOL_B,  28, 40, 0 }, 
+	//C
+	{ 21, 12, 11, 12, BGCOL_C,  28, 40, 0 }, 
+	//D
+	{  0,  0, 11, 12, BGCOL_D,  28, 40, 0 }, 
+};
+
+static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
+	{  96, 191,  88, 167 },
+	{   0,  95,  88, 167 },
+	{  96, 191,   0,  87 },
+	{   0,  95, 168, 255 },
+	{  96, 191, 168, 255 },
+	{   0,  95,   0,  87 },
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 },
 };
 
 FS_EXTERN_OVERLAY(battle);
@@ -216,7 +284,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 
 		///< sub
 		GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_ON );
 		GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
 		GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
 		
@@ -261,6 +329,12 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 				GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
+			///<FRAME1_S
+			{
+				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			},
 		};
 		GFL_BG_SetBGControl(GFL_BG_FRAME1_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(GFL_BG_FRAME1_M );
@@ -268,6 +342,39 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 		GFL_BG_ClearScreen(GFL_BG_FRAME2_M );
 		GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(GFL_BG_FRAME3_M );
+		GFL_BG_SetBGControl(GFL_BG_FRAME1_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME1_S );
+	}
+
+	{
+		static const GFL_TEXT_PRINTPARAM default_param = { NULL, 0, 0, 1, 1, 1, 0, GFL_TEXT_WRITE_16 };
+		int	i;
+
+		pvw->textParam = GFL_HEAP_AllocMemory( pvw->heapID, sizeof( GFL_TEXT_PRINTPARAM ) );
+		*pvw->textParam = default_param;
+
+
+		//フォントパレット作成＆転送
+		{
+			static	u16 plt[16] = {
+				G2D_BACKGROUND_COL, G2D_FONT_COL,
+				G2D_AA_BGCOL_ON, G2D_BB_BGCOL_ON, G2D_A_BGCOL_ON, G2D_B_BGCOL_ON, G2D_C_BGCOL_ON, G2D_D_BGCOL_ON,
+				G2D_AA_BGCOL_OFF, G2D_BB_BGCOL_OFF, G2D_A_BGCOL_OFF, G2D_B_BGCOL_OFF, G2D_C_BGCOL_OFF, G2D_D_BGCOL_OFF,
+				0, 0 };
+			GFL_BG_LoadPalette( GFL_BG_FRAME1_S, &plt, 16*2, 0 );
+		}
+
+		for( i = 0 ; i < BMPWIN_MAX ; i++ ){
+			pvw->bmpwin[ i ] = GFL_BMPWIN_Create( GFL_BG_FRAME1_S,
+												 bmp_create_table[ i ].posx,
+												 bmp_create_table[ i ].posy,
+												 bmp_create_table[ i ].sizx,
+												 bmp_create_table[ i ].sizy,
+												 0,
+												 GFL_BG_CHRAREA_GET_B );
+			TextPrint( pvw, i, i );
+		}
+		GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
 	}
 
 	//ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
@@ -304,7 +411,6 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
 	int pad = GFL_UI_KEY_GetCont();
 	int trg = GFL_UI_KEY_GetTrg();
 	int rep = GFL_UI_KEY_GetRepeat();
-	int tp = GFL_UI_TP_GetTrg();
 	POKEMON_VIEWER_WORK *pvw = mywk;
 	int	i, j;
 
@@ -330,17 +436,24 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
 				}
 			}
 #endif
+			int	mcss_pos;
 			VecFx32	pos,target;
-			VecFx32	AA_value = { FX32_ONE * 16 * 2, FX32_ONE * 16 * 2, 0 };
-			VecFx32	BB_value = { FX32_ONE * 16, FX32_ONE * 16, 0 };
+			VecFx32	scale_value[] = {
+				{ FX32_ONE * 16 * 2, FX32_ONE * 16 * 2, 0 },
+				{ FX32_ONE * 16, FX32_ONE * 16, 0 }
+			};
 
 			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
 			BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &pos, &target, 20, 0, 20 );
-			if( pvw->resource_data[ RESOURCE_NCBR ][ BTLV_MCSS_POS_AA ] ){
-				BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_INTERPOLATION, &AA_value, 10, 1, 0 );
-			}
-			if( pvw->resource_data[ RESOURCE_NCBR ][ BTLV_MCSS_POS_BB ] ){
-				BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_INTERPOLATION, &BB_value, 10, 1, 0 );
+
+			for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ ){
+				if( BTLV_MCSS_CheckExistPokemon( BTLV_EFFECT_GetMcssWork(), mcss_pos ) == TRUE ){
+					BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(),
+										 mcss_pos,
+										 EFFTOOL_CALCTYPE_INTERPOLATION,
+										 &scale_value[ mcss_pos & 1 ],
+										 10, 1, 0 );
+				}
 			}
 		}
 		else{
@@ -351,6 +464,16 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
 	}
 	if( (trg & PAD_BUTTON_SELECT ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
 		PokemonViewerCameraWork( pvw );
+	}
+
+	{
+		int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
+		if( hit != GFL_UI_TP_HIT_NONE ){
+			if( BTLV_MCSS_CheckExistPokemon( BTLV_EFFECT_GetMcssWork(), hit ) == TRUE ){
+				BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), hit, BTLV_MCSS_VANISH_FLIP );
+				TextPrint( pvw, hit, hit );
+			}
+		}
 	}
 
 	PokemonViewerSequence( pvw );
@@ -411,9 +534,6 @@ const GFL_PROC_DATA		PokemonViewerProcData = {
 //======================================================================
 static	void	PokemonViewerSequence( POKEMON_VIEWER_WORK *pvw )
 {
-//	int tp = GFL_UI_TP_GetTrg();
-//	int cont = GFL_UI_KEY_GetCont();
-
 	switch( pvw->seq_no ){
 	default:
 	case SEQ_IDLE:
@@ -511,14 +631,19 @@ static	void	PokemonViewerResourceLoad( POKEMON_VIEWER_WORK *pvw )
 //======================================================================
 static	void	TextPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num )
 {
-	pvw->textParam->writex = 0;
-	pvw->textParam->writey = 0;
+	int	flag = 0;
+
+	if( BTLV_MCSS_CheckExistPokemon( BTLV_EFFECT_GetMcssWork(), num ) == TRUE ){
+	   flag = BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), num );
+	}
+
+	pvw->textParam->writex = bmp_create_table[ bmpwin_num ].msgx;
+	pvw->textParam->writey = bmp_create_table[ bmpwin_num ].msgy;
 	pvw->textParam->bmp = GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] ), 0 );
-	GFL_TEXT_PrintSjisCode( &ProjectionText[ num ][ 0 ], pvw->textParam );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] ), bmp_create_table[ bmpwin_num ].palnum + 6 * flag );
+	GFL_TEXT_PrintSjisCode( &btlv_mcss_pos_msg[ num ][ 0 ], pvw->textParam );
 	GFL_BMPWIN_TransVramCharacter( pvw->bmpwin[ bmpwin_num ] );
 	GFL_BMPWIN_MakeScreen( pvw->bmpwin[ bmpwin_num ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
 }
 
 //======================================================================
@@ -660,9 +785,12 @@ static	void	PokemonViewerAddPokemon( POKEMON_VIEWER_WORK *pvw )
 
 static	void	PokemonViewerCameraWork( POKEMON_VIEWER_WORK *pvw )
 {
+	int	mcss_pos;
 	VecFx32	pos,target;
-	VecFx32	aa_value = { FX32_ONE * 16, FX32_ONE * 16, 0 };
-	VecFx32	bb_value = { FX32_ONE * 16 / 2, FX32_ONE * 16 / 2, 0 };
+	VecFx32	scale_value[] = {
+		{ FX32_ONE * 16, FX32_ONE * 16, 0 },
+		{ FX32_ONE * 16 / 2, FX32_ONE * 16 / 2, 0 },
+	};
 
 	BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
 	target.x += FX32_ONE * 4;
@@ -672,11 +800,15 @@ static	void	PokemonViewerCameraWork( POKEMON_VIEWER_WORK *pvw )
 	pos.y += FX32_ONE * 1;
 	pos.z += FX32_ONE * 16;
 	BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &pos, &target, 32, 0, 32 );
-	if( pvw->resource_data[ RESOURCE_NCBR ][ BTLV_MCSS_POS_AA ] ){
-		BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_INTERPOLATION, &aa_value, 16, 1, 0 );
-	}
-	if( pvw->resource_data[ RESOURCE_NCBR ][ BTLV_MCSS_POS_BB ] ){
-		BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_INTERPOLATION, &bb_value, 16, 1, 0 );
+
+	for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ ){
+		if( BTLV_MCSS_CheckExistPokemon( BTLV_EFFECT_GetMcssWork(), mcss_pos ) == TRUE ){
+			BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(),
+								 mcss_pos,
+								 EFFTOOL_CALCTYPE_INTERPOLATION,
+								 &scale_value[ mcss_pos & 1 ],
+								 16, 1, 0 );
+		}
 	}
 }
  
