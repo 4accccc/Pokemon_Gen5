@@ -9,6 +9,7 @@
 #include "gflib.h"
 #include "arc_def.h"
 
+#include "sound/sound_manager.h"
 #include "sound/pm_sndsys.h"
 #include "sound/snd_status.h"
 //============================================================================================
@@ -57,17 +58,24 @@ typedef enum {
 	SWITCH_TR16,
 
 	SWITCH_BGM_VOL,
-	SWITCH_BGM_PAN,
 	SWITCH_BGM_TEMPO,
 	SWITCH_BGM_PITCH,
+	SWITCH_BGM_REVERB,
 
-	SWITCH_SE_VOL,
-	SWITCH_SE_PAN,
-	SWITCH_SE_TEMPO,
-	SWITCH_SE_PITCH,
+	SWITCH_TREF_MODD,
+	SWITCH_TREF_MODS,
+	SWITCH_TREF_DUMMY,
 
 	SWITCH_MAX,
 }SWITCH_ID;
+
+enum {
+	TRACK_STBTN_NO_VOL = 0,
+	TRACK_STBTN_VOL_ON,
+	TRACK_STBTN_EFFECT_ON,
+
+	TRACK_STBTN_NUM,
+};
 
 //============================================================================================
 #define CHANNEL_NUM (16)
@@ -82,15 +90,21 @@ typedef struct {
 
 typedef struct {
 	SWITCH_ID	volume;
-	SWITCH_ID	pan;
 	SWITCH_ID	tempo;
 	SWITCH_ID	pitch;
+	SWITCH_ID	reverb;
 }MASTERTRACK_STATUS;
+
+typedef struct {
+	SWITCH_ID	mod_d;
+	SWITCH_ID	mod_s;
+	SWITCH_ID	dummy;
+}TRACKEFFECT_STATUS;
 
 typedef struct {
 	SWITCH_ID	volume;
 	BOOL		active;
-	BOOL		enable;
+	int			stBtn;
 }TRACK_STATUS;
 
 typedef struct {
@@ -109,7 +123,8 @@ struct _GFL_SNDSTATUS {
 	SNDTrackInfo			bgmTrackInfo[TRACK_NUM];
 	TRACK_STATUS			bgmTrackStatus[TRACK_NUM];
 	MASTERTRACK_STATUS		bgmMasterTrackStatus;
-	MASTERTRACK_STATUS		seMasterTrackStatus;
+	TRACKEFFECT_STATUS		bgmTrackEffectStatus;
+	BOOL					bgmTrackEffectSw;
 
 	SWITCH_CONTROL			swControl;
 	SWITCH_STATUS			switchStatus[SWITCH_MAX];
@@ -134,6 +149,7 @@ static void makeEventSwitchTable( GFL_SNDSTATUS* gflSndStatus );
 static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus );
 static BOOL SNDSTATUS_Control( GFL_SNDSTATUS* gflSndStatus );
 
+static void SNDSTATUS_SetMod( GFL_SNDSTATUS* gflSndStatus, BOOL enable );
 static void SNDSTATUS_SwitchParamSet( GFL_SNDSTATUS* gflSndStatus, SWITCH_ID swID );
 //============================================================================================
 /**
@@ -184,7 +200,19 @@ void	GFL_SNDSTATUS_InitControl( GFL_SNDSTATUS* gflSndStatus )
 	initSwitchControl( gflSndStatus );
 }
 
-void	GFL_SNDSTATUS_SetControlEnable( GFL_SNDSTATUS* gflSndStatus, u16 flag )
+void	GFL_SNDSTATUS_InitReverbControl( GFL_SNDSTATUS* gflSndStatus )
+{
+	gflSndStatus->switchStatus[SWITCH_BGM_REVERB].valOffs = SWITCH_VAL_MAX;
+}
+
+u16		GFL_SNDSTATUS_GetControl( GFL_SNDSTATUS* gflSndStatus )
+{
+	if( gflSndStatus == NULL ) return 0;
+
+	return gflSndStatus->setup.controlFlag;
+}
+
+void	GFL_SNDSTATUS_SetControl( GFL_SNDSTATUS* gflSndStatus, u16 flag )
 {
 	if( gflSndStatus == NULL ) return;
 
@@ -209,17 +237,13 @@ static void initStatus( GFL_SNDSTATUS* gflSndStatus )
 		swID = SWITCH_TR1 + i;
 		gflSndStatus->bgmTrackStatus[i].volume = swID;
 		gflSndStatus->bgmTrackStatus[i].active = FALSE;
-		gflSndStatus->bgmTrackStatus[i].enable = TRUE;
+		gflSndStatus->bgmTrackStatus[i].stBtn = TRACK_STBTN_VOL_ON;
 		gflSndStatus->switchStatus[swID].valOffs = SWITCH_VAL_MAX;
 	}
 	swID = SWITCH_BGM_VOL;
 	gflSndStatus->bgmMasterTrackStatus.volume = swID;
 	gflSndStatus->switchStatus[swID].valOffs = SWITCH_VAL_MAX;
 	
-	swID = SWITCH_BGM_PAN;
-	gflSndStatus->bgmMasterTrackStatus.pan = swID;
-	gflSndStatus->switchStatus[swID].valOffs = SWITCH_VAL_ZERO;
-
 	swID = SWITCH_BGM_TEMPO;
 	gflSndStatus->bgmMasterTrackStatus.tempo = swID;
 	gflSndStatus->switchStatus[swID].valOffs = SWITCH_VAL_ZERO;
@@ -228,21 +252,23 @@ static void initStatus( GFL_SNDSTATUS* gflSndStatus )
 	gflSndStatus->bgmMasterTrackStatus.pitch = swID;
 	gflSndStatus->switchStatus[swID].valOffs = SWITCH_VAL_ZERO;
 
-	swID = SWITCH_SE_VOL;
-	gflSndStatus->seMasterTrackStatus.volume = swID;
+	swID = SWITCH_BGM_REVERB;
+	gflSndStatus->bgmMasterTrackStatus.reverb = swID;
 	gflSndStatus->switchStatus[swID].valOffs = SWITCH_VAL_MAX;
+
+	swID = SWITCH_TREF_MODD;
+	gflSndStatus->bgmTrackEffectStatus.mod_d = swID;
+	gflSndStatus->switchStatus[swID].valOffs = SWITCH_VAL_MIN;
 	
-	swID = SWITCH_SE_PAN;
-	gflSndStatus->seMasterTrackStatus.pan = swID;
+	swID = SWITCH_TREF_MODS;
+	gflSndStatus->bgmTrackEffectStatus.mod_s = swID;
 	gflSndStatus->switchStatus[swID].valOffs = SWITCH_VAL_ZERO;
 
-	swID = SWITCH_SE_TEMPO;
-	gflSndStatus->seMasterTrackStatus.tempo = swID;
+	swID = SWITCH_TREF_DUMMY;
+	gflSndStatus->bgmTrackEffectStatus.dummy = swID;
 	gflSndStatus->switchStatus[swID].valOffs = SWITCH_VAL_ZERO;
 
-	swID = SWITCH_SE_PITCH;
-	gflSndStatus->seMasterTrackStatus.pitch = swID;
-	gflSndStatus->switchStatus[swID].valOffs = SWITCH_VAL_ZERO;
+	gflSndStatus->bgmTrackEffectSw = FALSE;
 }
 	
 static void initSwitchControl( GFL_SNDSTATUS* gflSndStatus )
@@ -407,26 +433,20 @@ static void writeTrackStatus( GFL_SNDSTATUS* gflSndStatus, TRACK_STATUS* status,
 
 	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[status->volume].valOffs, x*2, y);
 	if( status->active == TRUE ){
-		if( status->enable == TRUE ){
+		if( status->stBtn == TRACK_STBTN_VOL_ON ){
 			chrNo = 0x42;
+		} else if( status->stBtn == TRACK_STBTN_EFFECT_ON ){
+			chrNo = 0x46;
 		} else {
 			chrNo = 0x44;
 		}
 	} else {
 		chrNo = 0x40;
 	}
-	scrnBuf[ (y+6)*32 + x*2 + 0 ] = (chrNo + 0) | palMask;
-	scrnBuf[ (y+6)*32 + x*2 + 1 ] = (chrNo + 1) | palMask;
-}
-
-//--------------------------------------------------------------------------------------------
-static void writeMasterTrackStatus
-	( GFL_SNDSTATUS* gflSndStatus, MASTERTRACK_STATUS* status, u16 x, u16 y )
-{
-	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[status->volume].valOffs, x+1, y);
-	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[status->pan].valOffs, x+5, y);
-	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[status->tempo].valOffs, x+9, y);
-	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[status->pitch].valOffs, x+13, y);
+	scrnBuf[ (y+7)*32 + x*2 + 0 ] = (chrNo + 0x00) | palMask;
+	scrnBuf[ (y+7)*32 + x*2 + 1 ] = (chrNo + 0x01) | palMask;
+	scrnBuf[ (y+8)*32 + x*2 + 0 ] = (chrNo + 0x10) | palMask;
+	scrnBuf[ (y+8)*32 + x*2 + 1 ] = (chrNo + 0x11) | palMask;
 }
 
 //============================================================================================
@@ -486,8 +506,39 @@ static void SetScrnTrackStatus( GFL_SNDSTATUS* gflSndStatus )
 //--------------------------------------------------------------------------------------------
 static void SetScrnMasterTrackStatus( GFL_SNDSTATUS* gflSndStatus )
 {
-	writeMasterTrackStatus( gflSndStatus, &gflSndStatus->bgmMasterTrackStatus, 0, 16);
-	writeMasterTrackStatus( gflSndStatus, &gflSndStatus->seMasterTrackStatus, 16, 16);
+	MASTERTRACK_STATUS* mst = &gflSndStatus->bgmMasterTrackStatus;
+	TRACKEFFECT_STATUS* tst = &gflSndStatus->bgmTrackEffectStatus;
+
+	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[mst->volume].valOffs, 1, 16);
+	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[mst->tempo].valOffs, 5, 16);
+	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[mst->pitch].valOffs, 9, 16);
+	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[mst->reverb].valOffs, 13, 16);
+
+	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[tst->mod_d].valOffs, 21, 16);
+	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[tst->mod_s].valOffs, 25, 16);
+}
+
+//--------------------------------------------------------------------------------------------
+static void SetScrnPlayerStatus( GFL_SNDSTATUS* gflSndStatus )
+{
+	u32 playerNo = SOUNDMAN_GetHierarchyPlayerPlayerNo() - PLAYER_DEFAULT_MAX;
+
+	u16*	scrnBuf = gflSndStatus->scrnBuf;
+	u16		palMask = gflSndStatus->setup.bgPalID << 12;
+	u16		chrNo;
+	int		i, x, y;
+
+	x = 17;
+	y = 21;
+
+	for( i=0; i<5; i++ ){
+		if( i == playerNo ){ chrNo = 0xf4; }
+		else if( i < playerNo ){ chrNo = 0xf5; }
+		else { chrNo = 0xf6; }
+
+		scrnBuf[ (y-i)*32 + x + 0 ] = chrNo | palMask;
+		scrnBuf[ (y-i)*32 + x + 1 ] = chrNo | palMask | 0x0400;	// ”½“]
+	}
 }
 
 //============================================================================================
@@ -524,6 +575,8 @@ static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus )
 	SetScrnChannelStatus( gflSndStatus );
 	SetScrnTrackStatus( gflSndStatus );
 	SetScrnMasterTrackStatus( gflSndStatus );
+	SetScrnPlayerStatus( gflSndStatus );
+	SetScrnPlayerStatus( gflSndStatus );
 
 	return TRUE;
 }
@@ -537,9 +590,9 @@ static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus )
 //============================================================================================
 #define SWITCH_SX	(16-1)
 #define BUTTON_SX	(16-1)
-#define BUTTON_SY	(8-1)
+#define BUTTON_SY	(16-2)
 
-#define TRACK_BUTTON_PY	(104)
+#define TRACK_BUTTON_PY	(112)
 #define TRACK_SWITCH_PY	(56)
 #define TRACK1_PX		(0)
 #define TRACK2_PX		(16)
@@ -560,12 +613,12 @@ static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus )
 
 #define MTRACK_SWITCH_PY	(128)
 #define MTRACK_VOLUME_PX	(8)
-#define MTRACK_PAN_PX		(40)
-#define MTRACK_TEMPO_PX		(72)
-#define MTRACK_PITCH_PX		(104)
+#define MTRACK_TEMPO_PX		(40)
+#define MTRACK_PITCH_PX		(72)
+#define MTRACK_REVERB_PX	(104)
 
-#define BGM_MTRACK_PX	(0)
-#define SE_MTRACK_PX	(128)
+#define TRACKEF_MODD_PX		(168)
+#define TRACKEF_MODS_PX		(200)
 
 #define EXIT_PX			(232)
 #define EXIT_PY			(0)
@@ -646,26 +699,22 @@ static void makeEventSwitchTable( GFL_SNDSTATUS* gflSndStatus )
 		setEventSwitchTable
 			( gflSndStatus, SWITCH_TR1 + i, TRACK1_PX + 16*i, TRACK_SWITCH_PY );
 	}
-	if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTOROL_BGM ){ 
+	if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTOROL_ENABLE ){ 
 		setEventSwitchTable
-			( gflSndStatus, SWITCH_BGM_VOL, BGM_MTRACK_PX + MTRACK_VOLUME_PX, MTRACK_SWITCH_PY );
-		//setEventSwitchTable
-		//	( gflSndStatus, SWITCH_BGM_PAN, BGM_MTRACK_PX + MTRACK_PAN_PX, MTRACK_SWITCH_PY );
+			( gflSndStatus, SWITCH_BGM_VOL, MTRACK_VOLUME_PX, MTRACK_SWITCH_PY );
 		setEventSwitchTable
-			( gflSndStatus, SWITCH_BGM_TEMPO, BGM_MTRACK_PX + MTRACK_TEMPO_PX, MTRACK_SWITCH_PY );
+			( gflSndStatus, SWITCH_BGM_TEMPO, MTRACK_TEMPO_PX, MTRACK_SWITCH_PY );
 		setEventSwitchTable
-			( gflSndStatus, SWITCH_BGM_PITCH, BGM_MTRACK_PX + MTRACK_PITCH_PX, MTRACK_SWITCH_PY );
+			( gflSndStatus, SWITCH_BGM_PITCH, MTRACK_PITCH_PX, MTRACK_SWITCH_PY );
+		setEventSwitchTable
+			( gflSndStatus, SWITCH_BGM_REVERB, MTRACK_REVERB_PX, MTRACK_SWITCH_PY );
+
+		setEventSwitchTable
+			( gflSndStatus, SWITCH_TREF_MODD, TRACKEF_MODD_PX, MTRACK_SWITCH_PY );
+		setEventSwitchTable
+			( gflSndStatus, SWITCH_TREF_MODS, TRACKEF_MODS_PX, MTRACK_SWITCH_PY );
 	}
-	if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTOROL_SE ){ 
-		setEventSwitchTable
-			( gflSndStatus, SWITCH_SE_VOL, SE_MTRACK_PX + MTRACK_VOLUME_PX, MTRACK_SWITCH_PY );
-		//setEventSwitchTable
-		//	( gflSndStatus, SWITCH_SE_PAN, SE_MTRACK_PX + MTRACK_PAN_PX, MTRACK_SWITCH_PY );
-		setEventSwitchTable
-			( gflSndStatus, SWITCH_SE_TEMPO, SE_MTRACK_PX + MTRACK_TEMPO_PX, MTRACK_SWITCH_PY );
-		setEventSwitchTable
-			( gflSndStatus, SWITCH_SE_PITCH, SE_MTRACK_PX + MTRACK_PITCH_PX, MTRACK_SWITCH_PY );
-	}
+
 	gflSndStatus->eventSwitchTable[SWITCH_MAX].rect.top = GFL_UI_TP_HIT_END;//I—¹ƒf[ƒ^–„‚ßž‚Ý
 	gflSndStatus->eventSwitchTable[SWITCH_MAX].rect.bottom = 0;
 	gflSndStatus->eventSwitchTable[SWITCH_MAX].rect.left = 0;
@@ -683,6 +732,7 @@ static BOOL checkTouchPanelEvent( GFL_SNDSTATUS* gflSndStatus )
 {
 	int tblPos;
 	u32 tpx, tpy;
+	BOOL modFlag = FALSE;
 
 	if( GFL_UI_TP_GetPointTrg( &tpx, &tpy ) == FALSE ){
 		return TRUE;
@@ -697,15 +747,29 @@ static BOOL checkTouchPanelEvent( GFL_SNDSTATUS* gflSndStatus )
 		if((tblPos >= TOUCH_BUTTON_TR1)&&(tblPos <= TOUCH_BUTTON_TR16)){
 			int trNo = tblPos - TOUCH_BUTTON_TR1;
 			u16	bitMask = 0x0001 << trNo;
+			TRACK_STATUS* status = &gflSndStatus->bgmTrackStatus[trNo];
 
-			if( gflSndStatus->bgmTrackStatus[trNo].active == TRUE ){
-				if( gflSndStatus->bgmTrackStatus[trNo].enable == TRUE ){
-					NNS_SndPlayerSetTrackMute( gflSndStatus->setup.pBgmHandle, bitMask, TRUE );
-					gflSndStatus->bgmTrackStatus[trNo].enable = FALSE;
-				} else {
+			if( status->active == TRUE ){
+				status->stBtn++;
+				if(status->stBtn >= TRACK_STBTN_NUM){ status->stBtn = TRACK_STBTN_NO_VOL; }
+
+				if( status->stBtn == TRACK_STBTN_VOL_ON ){
 					NNS_SndPlayerSetTrackMute( gflSndStatus->setup.pBgmHandle, bitMask, FALSE );
-					gflSndStatus->bgmTrackStatus[trNo].enable = TRUE;
+				} else if( status->stBtn == TRACK_STBTN_EFFECT_ON ){
+					modFlag = TRUE;
+					NNS_SndPlayerSetTrackMute( gflSndStatus->setup.pBgmHandle, bitMask, FALSE );
+				} else {
+					NNS_SndPlayerSetTrackMute( gflSndStatus->setup.pBgmHandle, bitMask, TRUE );
 				}
+			}
+		}
+		if( modFlag == TRUE ){
+				SNDSTATUS_SetMod( gflSndStatus, TRUE );
+				gflSndStatus->bgmTrackEffectSw = TRUE;
+		} else {
+			if( gflSndStatus->bgmTrackEffectSw == TRUE ){
+				SNDSTATUS_SetMod( gflSndStatus, FALSE );
+				gflSndStatus->bgmTrackEffectSw = FALSE;
 			}
 		}
 		return TRUE;
@@ -792,6 +856,37 @@ static const int tempoRatioTable[32+1] = {
 	256,
 	288, 320, 352, 384, 416, 448, 480, 512, 576, 640, 704, 768, 832, 896, 960, 1024,
 };
+static const int modSpeedTable[32+1] = {
+	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+	16,
+	16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 255,
+};
+
+static void SNDSTATUS_SetMod( GFL_SNDSTATUS* gflSndStatus, BOOL enable )
+{
+	TRACK_STATUS* status;
+	u16 bitMask = 0;
+	int	depth, speed;
+	int i;
+
+	if( enable == TRUE ){
+		for( i=0; i<TRACK_NUM; i++ ){
+			TRACK_STATUS* status = &gflSndStatus->bgmTrackStatus[i];
+			if((status->active == TRUE)&&(status->stBtn == TRACK_STBTN_EFFECT_ON)){
+				bitMask |= (0x0001 << i);
+			}
+		}
+		depth = gflSndStatus->switchStatus[SWITCH_TREF_MODD].valOffs * 8;
+		if(depth > 255){ depth = 255; }
+		speed = modSpeedTable[gflSndStatus->switchStatus[SWITCH_TREF_MODS].valOffs];
+	} else {
+		bitMask = 0xffff;
+		depth = 0;
+		speed = 16;
+	}
+	NNS_SndPlayerSetTrackModDepth( gflSndStatus->setup.pBgmHandle, bitMask, depth );
+	NNS_SndPlayerSetTrackModSpeed( gflSndStatus->setup.pBgmHandle, bitMask, speed );
+}
 
 //------------------------------------------------------------------
 static void SNDSTATUS_SwitchParamSet( GFL_SNDSTATUS* gflSndStatus, SWITCH_ID swID )
@@ -833,8 +928,6 @@ static void SNDSTATUS_SwitchParamSet( GFL_SNDSTATUS* gflSndStatus, SWITCH_ID swI
 		if(value > 127){ value = 127; }
 		NNS_SndPlayerSetVolume( gflSndStatus->setup.pBgmHandle, value );
 		break;
-	case SWITCH_BGM_PAN:
-		break;
 	case SWITCH_BGM_TEMPO:
 		value = tempoRatioTable[gflSndStatus->switchStatus[SWITCH_BGM_TEMPO].valOffs];
 		NNS_SndPlayerSetTempoRatio( gflSndStatus->setup.pBgmHandle, value );
@@ -844,31 +937,23 @@ static void SNDSTATUS_SwitchParamSet( GFL_SNDSTATUS* gflSndStatus, SWITCH_ID swI
 		value = (gflSndStatus->switchStatus[SWITCH_BGM_PITCH].valOffs - SWITCH_VAL_ZERO) * 64;
 		NNS_SndPlayerSetTrackPitch( gflSndStatus->setup.pBgmHandle, 0xffff, value );
 		break;
+	case SWITCH_BGM_REVERB:
+		// reverb• 0`0x2000
+		if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTOROL_REVERB	){
+			// ‚q‚d‚u‚d‚q‚a‘€ì‚ ‚è
+			value = gflSndStatus->switchStatus[SWITCH_BGM_REVERB].valOffs * 2;
+			if(value > 63){ value = 63; }
+			NNS_SndCaptureSetReverbVolume(value, 0);
+			//PMSND_ChangeCaptureReverb(value, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT);
+		}
+		break;
 
-	case SWITCH_SE_VOL:
-		// volume• 0`127
-		//value = gflSndStatus->switchStatus[SWITCH_SE_VOL].valOffs * 4;
-		//if(value > 127){ value = 127; }
-		//NNS_SndPlayerSetVolume( gflSndStatus->setup.pSeHandle, value );
-		break;
-	case SWITCH_SE_PAN:
-		break;
-	case SWITCH_SE_TEMPO:
-		//value = tempoRatioTable[gflSndStatus->switchStatus[SWITCH_SE_TEMPO].valOffs];
-		//NNS_SndPlayerSetTempoRatio( gflSndStatus->setup.pSeHandle, value );
-		break;
-	case SWITCH_SE_PITCH:
-		// pitch• -32768`32767
-		//value = (gflSndStatus->switchStatus[SWITCH_SE_PITCH].valOffs - SWITCH_VAL_ZERO) * 64;
-		//NNS_SndPlayerSetTrackPitch( gflSndStatus->setup.pSeHandle, 0xffff, value );
+	case SWITCH_TREF_MODD:
+	case SWITCH_TREF_MODS:
+		SNDSTATUS_SetMod( gflSndStatus, TRUE );
 		break;
 	}
 }
-
-
-
-
-
 
 
 

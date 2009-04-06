@@ -499,6 +499,8 @@ u32		PMVOICE_Play
 	voicePlayer->pan = pan;
 	voicePlayer->subWaveUse = chorus;
 	voicePlayer->volumeSub = voicePlayer->volume + chorusVolOfs;
+	if( voicePlayer->volumeSub < 0 ){ voicePlayer->volumeSub = 0; }
+	if( voicePlayer->volumeSub > 127 ){ voicePlayer->volumeSub = 127; }
 	voicePlayer->speedSub = voicePlayer->speed + chorusSpOfs;
 
 	// ”gŒ`Ä¶
