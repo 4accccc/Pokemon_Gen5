@@ -378,7 +378,10 @@ int		BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position )
 void	BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, int flag )
 {
 	GF_ASSERT( bmw->mcss[ position ] != NULL );
-	if( flag == BTLV_MCSS_VANISH_ON ){
+	if( flag == BTLV_MCSS_VANISH_FLIP ){
+		MCSS_FlipVanishFlag( bmw->mcss[ position ] );
+	}
+	else if( flag == BTLV_MCSS_VANISH_ON ){
 		MCSS_SetVanishFlag( bmw->mcss[ position ] );
 	}
 	else{

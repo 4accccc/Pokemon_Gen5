@@ -137,11 +137,6 @@ void	BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
 //============================================================================================
 void	BTLV_FIELD_Main( BTLV_FIELD_WORK *bfw )
 {
-	int tp = GFL_UI_TP_GetTrg();
-
-	if( tp ){
-		BTLV_FIELD_TCBAdd( bfw );
-	}
 }
 
 //============================================================================================
