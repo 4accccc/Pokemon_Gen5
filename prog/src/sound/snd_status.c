@@ -590,7 +590,7 @@ static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus )
 //============================================================================================
 #define SWITCH_SX	(16-1)
 #define BUTTON_SX	(16-1)
-#define BUTTON_SY	(16-2)
+#define BUTTON_SY	(12)
 
 #define TRACK_BUTTON_PY	(112)
 #define TRACK_SWITCH_PY	(56)
