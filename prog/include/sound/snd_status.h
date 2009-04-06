@@ -15,10 +15,10 @@
 typedef struct _GFL_SNDSTATUS GFL_SNDSTATUS;
 
 typedef enum {
-	GFL_SNDSTATUS_CONTOROL_NONE	= 0x0000,	// ƒRƒ“ƒgƒ[ƒ‹‚È‚µ
-	GFL_SNDSTATUS_CONTOROL_BGM	= 0x0001,	// ‚a‚f‚l‘€ì‚ ‚è
-	GFL_SNDSTATUS_CONTOROL_SE	= 0x0002,	// ‚r‚d‘€ì‚ ‚è
-	GFL_SNDSTATUS_CONTOROL_EXIT	= 0x0004,	// ‚d‚w‚h‚só•t‚ ‚è
+	GFL_SNDSTATUS_CONTOROL_NONE		= 0x0000,	// ƒRƒ“ƒgƒ[ƒ‹‚È‚µ
+	GFL_SNDSTATUS_CONTOROL_ENABLE	= 0x0001,	// ‘€ì‚ ‚è
+	GFL_SNDSTATUS_CONTOROL_REVERB	= 0x0002,	// ‚q‚d‚u‚d‚q‚a‘€ì‚ ‚è
+	GFL_SNDSTATUS_CONTOROL_EXIT		= 0x0004,	// ‚d‚w‚h‚só•t‚ ‚è
 
 }GFL_SNDSTATUS_CONTROL;
 
@@ -47,5 +47,7 @@ extern void				GFL_SNDSTATUS_Delete( GFL_SNDSTATUS* gflSndStatus );
 extern BOOL				GFL_SNDSTATUS_Main( GFL_SNDSTATUS* gflSndStatus );	//FALSE‚ÅI—¹
 
 extern void	GFL_SNDSTATUS_InitControl( GFL_SNDSTATUS* gflSndStatus );
-extern void	GFL_SNDSTATUS_SetControlEnable( GFL_SNDSTATUS* gflSndStatus, u16 flag );
+extern void	GFL_SNDSTATUS_InitReverbControl( GFL_SNDSTATUS* gflSndStatus );
+extern u16	GFL_SNDSTATUS_GetControl( GFL_SNDSTATUS* gflSndStatus );
+extern void	GFL_SNDSTATUS_SetControl( GFL_SNDSTATUS* gflSndStatus, u16 flag );
 extern void	GFL_SNDSTATUS_ChangeSndHandle( GFL_SNDSTATUS* gflSndStatus, NNSSndHandle* pBgmHandle );

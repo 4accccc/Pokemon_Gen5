@@ -22,6 +22,18 @@
 
 //------------------------------------------------------------------
 /**
+ * @brief	プレーヤー設定定義
+ */
+//------------------------------------------------------------------
+enum {
+	PLAYER_SYSSE = 0,
+	PLAYER_SEVOICE,
+
+	PLAYER_DEFAULT_MAX,
+};
+
+//------------------------------------------------------------------
+/**
  * @brief	関数引数用定義
  */
 //------------------------------------------------------------------
@@ -38,9 +50,13 @@ extern void	PMSND_Init( void );
 extern void	PMSND_Main( void );
 extern void	PMSND_Exit( void );
 
+//	情報取得
+extern u32	PMSND_GetSndHeapFreeSize( void );
+
 //	リバーブ設定
-extern void PMSND_EnableCaptureReverb( u32 samplingRate, int volume, int stopFrames );
+extern void PMSND_EnableCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
 extern void PMSND_DisableCaptureReverb( void );
+extern void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
 
 //============================================================================================
 /**

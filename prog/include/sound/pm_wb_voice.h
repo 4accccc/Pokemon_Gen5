@@ -110,30 +110,30 @@ inline void PMV_CheckPlay( void ){ PMVOICE_CheckBusy(); }
  * @brief	–³ˆó
  */
 //--------------------------------------------------------------------------------------------
-inline void PMV_PlayVoice( u32 pokeNo, u32 formNo )
+inline u32 PMV_PlayVoice( u32 pokeNo, u32 formNo )
 {
-	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, FALSE, 0);
+	return PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, FALSE, 0);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_Pan( u32 pokeNo, u32 formNo, u8 pan )
+inline u32 PMV_PlayVoice_Pan( u32 pokeNo, u32 formNo, u8 pan )
 {
-	PMVOICE_Play(pokeNo, formNo, pan, FALSE, 0, 0, FALSE, 0);
+	return PMVOICE_Play(pokeNo, formNo, pan, FALSE, 0, 0, FALSE, 0);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_Chorus( u32 pokeNo, u32 formNo, int ch_vol, int ch_spd)
+inline u32 PMV_PlayVoice_Chorus( u32 pokeNo, u32 formNo, int ch_vol, int ch_spd)
 {
-	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, TRUE, ch_vol, ch_spd, FALSE, 0);
+	return PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, TRUE, ch_vol, ch_spd, FALSE, 0);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_Reverse( u32 pokeNo, u32 formNo)
+inline u32 PMV_PlayVoice_Reverse( u32 pokeNo, u32 formNo)
 {
-	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, TRUE, 0);
+	return PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, TRUE, 0);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_Custom
+inline u32 PMV_PlayVoice_Custom
 	( u32 pokeNo, u32 formNo, u8 pan, BOOL chorus, int ch_vol, int ch_spd, BOOL reverse )
 {
-	PMVOICE_Play(pokeNo, formNo, pan, chorus, ch_vol, ch_spd, reverse, 0);
+	return PMVOICE_Play(pokeNo, formNo, pan, chorus, ch_vol, ch_spd, reverse, 0);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -141,40 +141,40 @@ inline void PMV_PlayVoice_Custom
  * @brief	_forMine
  */
 //--------------------------------------------------------------------------------------------
-inline void PMV_PlayVoice_forMine( u32 pokeNo, u32 formNo )
+inline u32 PMV_PlayVoice_forMine( u32 pokeNo, u32 formNo )
 {
 	PMV_REF pmvRef;
 	PMV_MakeRefDataMine(&pmvRef);
-	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+	return PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, FALSE, (u32)&pmvRef);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_forMine_Pan( u32 pokeNo, u32 formNo, u8 pan )
+inline u32 PMV_PlayVoice_forMine_Pan( u32 pokeNo, u32 formNo, u8 pan )
 {
 	PMV_REF pmvRef;
 	PMV_MakeRefDataMine(&pmvRef);
-	PMVOICE_Play(pokeNo, formNo, pan, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+	return PMVOICE_Play(pokeNo, formNo, pan, FALSE, 0, 0, FALSE, (u32)&pmvRef);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_forMine_Chorus( u32 pokeNo, u32 formNo, int ch_vol, int ch_spd)
+inline u32 PMV_PlayVoice_forMine_Chorus( u32 pokeNo, u32 formNo, int ch_vol, int ch_spd)
 {
 	PMV_REF pmvRef;
 	PMV_MakeRefDataMine(&pmvRef);
-	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, TRUE, ch_vol, ch_spd, FALSE, (u32)&pmvRef);
+	return PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, TRUE, ch_vol, ch_spd, FALSE, (u32)&pmvRef);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_forMine_Reverse( u32 pokeNo, u32 formNo)
+inline u32 PMV_PlayVoice_forMine_Reverse( u32 pokeNo, u32 formNo)
 {
 	PMV_REF pmvRef;
 	PMV_MakeRefDataMine(&pmvRef);
-	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, TRUE, (u32)&pmvRef);
+	return PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, TRUE, (u32)&pmvRef);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_forMine_Custom
+inline u32 PMV_PlayVoice_forMine_Custom
 	( u32 pokeNo, u32 formNo, u8 pan, BOOL chorus, int ch_vol, int ch_spd, BOOL reverse )
 {
 	PMV_REF pmvRef;
 	PMV_MakeRefDataMine(&pmvRef);
-	PMVOICE_Play(pokeNo, formNo, pan, chorus, ch_vol, ch_spd, reverse, (u32)&pmvRef);
+	return PMVOICE_Play(pokeNo, formNo, pan, chorus, ch_vol, ch_spd, reverse, (u32)&pmvRef);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -182,31 +182,31 @@ inline void PMV_PlayVoice_forMine_Custom
  * @brief	_forMulti
  */
 //--------------------------------------------------------------------------------------------
-inline void PMV_PlayVoice_forMulti( u32 pokeNo, u32 formNo, PMV_REF* pmvRef )
+inline u32 PMV_PlayVoice_forMulti( u32 pokeNo, u32 formNo, PMV_REF* pmvRef )
 {
-	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+	return PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, FALSE, (u32)&pmvRef);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_forMulti_Pan( u32 pokeNo, u32 formNo, u8 pan, PMV_REF* pmvRef )
+inline u32 PMV_PlayVoice_forMulti_Pan( u32 pokeNo, u32 formNo, u8 pan, PMV_REF* pmvRef )
 {
-	PMVOICE_Play(pokeNo, formNo, pan, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+	return PMVOICE_Play(pokeNo, formNo, pan, FALSE, 0, 0, FALSE, (u32)&pmvRef);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_forMulti_Chorus
+inline u32 PMV_PlayVoice_forMulti_Chorus
 		( u32 pokeNo, u32 formNo, int ch_vol, int ch_spd, PMV_REF* pmvRef)
 {
-	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, TRUE, ch_vol, ch_spd, FALSE, (u32)&pmvRef);
+	return PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, TRUE, ch_vol, ch_spd, FALSE, (u32)&pmvRef);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_forMulti_Reverse( u32 pokeNo, u32 formNo, PMV_REF* pmvRef)
+inline u32 PMV_PlayVoice_forMulti_Reverse( u32 pokeNo, u32 formNo, PMV_REF* pmvRef)
 {
-	PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, TRUE, (u32)&pmvRef);
+	return PMVOICE_Play(pokeNo, formNo, PMV_PAN_C, FALSE, 0, 0, TRUE, (u32)&pmvRef);
 }
 //--------------------------------------------------------------
-inline void PMV_PlayVoice_forMulti_Custom( u32 pokeNo, u32 formNo, u8 pan, 
+inline u32 PMV_PlayVoice_forMulti_Custom( u32 pokeNo, u32 formNo, u8 pan, 
 						BOOL chorus, int ch_vol, int ch_spd, BOOL reverse, PMV_REF* pmvRef )
 {
-	PMVOICE_Play(pokeNo, formNo, pan, chorus, ch_vol, ch_spd, reverse, (u32)&pmvRef);
+	return PMVOICE_Play(pokeNo, formNo, pan, chorus, ch_vol, ch_spd, reverse, (u32)&pmvRef);
 }
 
 
