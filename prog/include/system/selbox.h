@@ -10,20 +10,13 @@
 
 //コンパイルを通すため、取りあえず定義だけ持ってくる
 #include "bmp_menulist.h"
+#include "palanm.h"
+#include "print/printsys.h"
+
 #define SBOX_SELECT_NULL	(BMPMENULIST_NULL)
 #define SBOX_SELECT_CANCEL	(BMPMENULIST_CANCEL)
 
 #define SBOX_WINCGX_SIZ	(27)
-
-
-#if 0 
-
-#include "bmp_menu_list.h"
-#include "touchpanel.h"
-#include "cursor_mv.h"
-#include "gflib/clact.h"
-#include "system/clact_util.h"
-#include "system/bmp_list.h"
 
 typedef enum{
 	SBOX_OFSTYPE_LEFT,		///<左寄せタイプ
@@ -69,6 +62,7 @@ typedef struct _SELBOX_HEAD_PRM{
 	u16	scgx;	///<文字列領域cgx(キャラ単位)
 	u16	fcgx;	///<フレーム領域cgx(キャラ単位)
 	u16	cgx_siz;	///<占有するcgx領域サイズ(キャラ単位)
+	
 	//↑(文字幅でウィンドウサイズが変わるので、領域オーバーチェック用に使っていいサイズを登録しておく) 
 }SELBOX_HEAD_PRM;
 
@@ -77,7 +71,7 @@ typedef struct _SELBOX_HEADER{
 	SELBOX_HEAD_PRM prm;		///<使用するVRAM領域やパレットNoなどのパラメータを格納する構造体型
 	const BMPLIST_DATA*	list;	///<表示文字データポインタ(BMPLIST,BMPMENUと共通)
 
-	GF_BGL_INI *bgl;	///<BGLデータ	
+	GFL_FONT	*fontHandle;
 	u8	count;	///<表示項目数
 }SELBOX_HEADER;
 
@@ -123,8 +117,8 @@ struct _SELBOX_WORK{
 	SELBOX_SYS*	sys_wk;	///<システムワークへの参照ポインタ
 	SELBOX_HEADER	hed;	///<ヘッダーデータ
 
-	GF_BGL_BMPWIN * win;	///<BmpWinデータ
-	RECT_HIT_TBL	*tbl;	///<Hitテーブル
+	GFL_BMPWIN 			**win;	///<BmpWinデータ
+	GFL_UI_TP_HITTBL	*tbl;	///<Hitテーブル
 
 	u8	cp;		///<カーソルポイント
 	u8	seq;	///<シーケンス
@@ -140,6 +134,9 @@ struct _SELBOX_WORK{
 
 	SELBOX_CB_FUNC cb_func;	//コールバック
 	void*			cb_work;	//コールバックに引き渡せるワーク
+	
+	PRINT_QUE	*printQue;
+	PRINT_UTIL	*printUtil;
 };
 
 
@@ -212,7 +209,5 @@ extern void SelectBoxExit(SELBOX_WORK* wk);
  * @retval	"SBOX_SELECT_CANCEL	= キャンセル(Ｂボタン)"
  */
 extern u32 SelectBoxMain(SELBOX_WORK* wk);
-
-#endif //0
 
 #endif	//__H_SELWIN_H__

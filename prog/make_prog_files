@@ -127,7 +127,8 @@ SRCS	+=		$(SOUNDSRC) \
 				app/codein/codein_disp.c \
 				net_app/union/union_gra_tool.c \
 				net_app/union/union_beacon_tool.c \
-				app/wifi_note/wifi_note.c
+				app/wifi_note/wifi_note.c \
+				system/selbox.c
 
 
 #================================================

@@ -7,6 +7,7 @@
 #ifndef _BMP_WIN_H_
 #define _BMP_WIN_H_
 
+#include <bg_sys.h>
 #include <bmp.h>
 
 #ifdef __cplusplus
@@ -321,6 +322,68 @@ extern	void	GFL_BMPWIN_SetScreenSizeY( GFL_BMPWIN * bmpwin, u8 sy );
  */
 //--------------------------------
 extern	void	GFL_BMPWIN_SetPalette( GFL_BMPWIN * bmpwin, u8 palnum );
+
+//--------------------------------------------------------------------------------------------
+/**
+ *
+ * 描画制御補助
+ *
+ */
+//--------------------------------------------------------------------------------------------
+//---------------------------------------------------------
+/**
+ * BMPWINのキャラを転送・スクリーンのMake・転送を一括で行う
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ */
+//---------------------------------------------------------
+inline	void	GFL_BMPWIN_MakeTransWindow( GFL_BMPWIN * bmpwin )
+{
+	GFL_BMPWIN_TransVramCharacter( bmpwin );
+	GFL_BMPWIN_MakeScreen( bmpwin );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(bmpwin) );
+}
+
+//---------------------------------------------------------
+/**
+ * BMPWINのキャラを転送・スクリーンのMake・転送を一括で行う(VBlank用
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ */
+//---------------------------------------------------------
+inline	void	GFL_BMPWIN_MakeTransWindow_VBlank( GFL_BMPWIN * bmpwin )
+{
+	GFL_BMPWIN_TransVramCharacter( bmpwin );
+	GFL_BMPWIN_MakeScreen( bmpwin );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(bmpwin) );
+}
+
+//---------------------------------------------------------
+/**
+ * スクリーンのClear・転送を一括で行う
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ */
+//---------------------------------------------------------
+inline	void	GFL_BMPWIN_ClearTransWindow( GFL_BMPWIN * bmpwin )
+{
+	GFL_BMPWIN_ClearScreen( bmpwin );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(bmpwin) );
+}
+
+//---------------------------------------------------------
+/**
+ * スクリーンのClear・転送を一括で行う(VBlank用
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ */
+//---------------------------------------------------------
+inline	void	GFL_BMPWIN_ClearTransWindow_VBlank( GFL_BMPWIN * bmpwin )
+{
+	GFL_BMPWIN_ClearScreen( bmpwin );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(bmpwin) );
+}
+
 
 #ifdef __cplusplus
 }/* extern "C" */

@@ -55,6 +55,7 @@ SUBDIRS	=	wmi \
 			field_light \
 			wifi_note \
 			record \
+			selbox \
 			particle/wazaeffect \
 			others
 
