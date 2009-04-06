@@ -76,14 +76,14 @@ static	const	VecFx32	stage_pos_table[]={
 //モデルデータ
 static	const	int	stage_resource_table[]={
 //	NARC_battgra_wb_batt_stage01_nsbmd,
-//	NARC_battgra_wb_batt_stage02_nsbmd,
-	NARC_battgra_wb_batt_stage03_nsbmd,
+	NARC_battgra_wb_batt_stage02_nsbmd,
+//	NARC_battgra_wb_batt_stage03_nsbmd,
 };
 
 //アニメデータ
 static	const	int	stage_anm_resource_table[]={
 //	NARC_battgra_wb_batt_stage01_nsbca,
-//	NARC_battgra_wb_batt_stage02_nsbca,
+	NARC_battgra_wb_batt_stage02_nsbca,
 	NULL,
 };
 
