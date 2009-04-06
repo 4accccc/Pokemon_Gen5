@@ -22,7 +22,7 @@
 require "nkf"
 require "rexml/document"
 include REXML
-require "tools/gmmconv.rb"
+require "./gmmconv.rb"
 
 ### メイン
 begin
@@ -36,7 +36,6 @@ begin
   GRead.JpnDupe()    ##   JPNとJPN_KANJIに増やす
   GRead.TagConv()   ## タグを置き換える
   GRead.FileWrite( ARGV[1])  ##コンバート結果を出力する
-  
   
   exit(0)
 end

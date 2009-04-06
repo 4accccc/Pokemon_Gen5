@@ -86,6 +86,8 @@ class GmmRead
   ['ドイツ語の挨拶','[1:46:ドイツ語の挨拶'],
   ['イタリア語の挨拶','[1:47:イタリア語の挨拶'],
   ['スペイン語の挨拶','[1:48:スペイン語の挨拶'],
+  ['センタリング','[BD:02:Ｘセンタリング'],
+  ['右寄せ','[BD:03:Ｘ右寄せ'],
   ]
 
   
@@ -94,10 +96,11 @@ class GmmRead
     sjisline=""
     @ConvFileLine.each{ |line|
       sjisline = NKF.nkf("-e",line)
-      
       @@TagTbl.each{ |tagbuf|
-        if sjisline =~ /\[\d+:\d+:#{tagbuf[0]}:\d+\]/
+        if sjisline =~ /\[\d+:\d+:#{tagbuf[0]}:*\d*\]/
           if tagbuf[1] != ''
+            p NKF.nkf("-e", sjisline)
+            p NKF.nkf("-e", tagbuf[1])
             sjisline = sjisline.gsub(/\[\d+:\d+:#{tagbuf[0]}/,tagbuf[1])
           else
             p "Warring:Find not WBTag : " + @ConvFileLineTmp.length.to_s + " : " + sjisline
@@ -105,6 +108,7 @@ class GmmRead
         end
       }
       utfline = NKF.nkf("-w",sjisline)
+      
       #utfline = line
       @ConvFileLineTmp.push(utfline)
     }
