@@ -425,6 +425,7 @@ static void sbox_BmpWinDelete(SELBOX_WORK* wk)
 	int i;
 	PRINTSYS_QUE_Clear( wk->printQue );
 	PRINTSYS_QUE_Delete( wk->printQue );
+	GFL_HEAP_FreeMemory(wk->printUtil);
 	
 	GFL_HEAP_FreeMemory(wk->tbl);
 	for(i = 0;i < wk->hed.count;i++)
