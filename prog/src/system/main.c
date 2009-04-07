@@ -24,6 +24,7 @@
 #include "system/net_err.h"
 #include "savedata/config.h"
 #include "system/wipe.h"
+#include "gamesystem\msgspeed.h"
 
 #include "sound\pm_sndsys.h"
 #include "sound\pm_voice.h"
@@ -174,7 +175,8 @@ static	void	GameInit(void)
 
 	/* 文字描画システム初期化 */
 	PRINTSYS_Init( GFL_HEAPID_SYSTEM );
-	
+	MSGSPEED_InitSystem( SaveControl_GetPointer() );
+
 	//通信エラー画面管理システム初期化
 	NetErr_SystemInit();
 	NetErr_SystemCreate(GFL_HEAPID_APP);//※check　とりあえずゲーム中、ずっとシステムが存在するようにしている
