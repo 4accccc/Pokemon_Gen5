@@ -482,10 +482,8 @@ void	PMSND_StopBGM( void )
 //------------------------------------------------------------------
 void	PMSND_PauseBGM( BOOL pauseFlag )
 {
-	u32	nowSoundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
-
 	PMSND_CancelSystemFadeBGM();
-	NNS_SndPlayerPause(SOUNDMAN_GetHierarchyPlayerSndHandle(), pauseFlag);
+	SOUNDMAN_PauseHierarchyPlayer(pauseFlag);
 }
 
 //------------------------------------------------------------------
