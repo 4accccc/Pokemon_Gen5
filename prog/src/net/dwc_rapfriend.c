@@ -71,6 +71,7 @@ int GFL_NET_DWC_CheckFriendByToken(DWCFriendData *data, int *index)
 //==============================================================================
 /**
  * すでに同じ人が登録されていないか。
+ * @param  WIFI_LISTのポインタ
  * @param   index 同じデータが見つかったときの、その場所。
  * @param         見つからない場合は空いているところを返す
  * @param         どこも空いていない場合は、-1 
@@ -79,13 +80,13 @@ int GFL_NET_DWC_CheckFriendByToken(DWCFriendData *data, int *index)
  * @retval  DWCFRIEND_INVALID … 受け取ったfriend_keyaが正しくない。
  */
 //==============================================================================
-int GFL_NET_DWC_CheckFriendCodeByToken( u64 friend_key, int *index)
+int GFL_NET_DWC_CheckFriendCodeByToken( WIFI_LIST* list,u64 friend_key,int *index)
 {
 	// すでに同じ人が登録していないか検索
 	int i;
-    DWCUserData *myUserData = GFI_NET_GetMyDWCUserData();
-    DWCFriendData *keyList  = GFI_NET_GetMyDWCFriendData();
-    int numMax  = GFI_NET_GetFriendNumMax();
+    DWCUserData *myUserData = WifiList_GetMyUserInfo(list);
+    DWCFriendData *keyList  = WifiList_GetDwcDataPtr(list,0);
+    int numMax  = WifiList_GetFriendDataNum(list);
     DWCFriendData token;
 
     // 友達登録鍵が正しいかどうか判定

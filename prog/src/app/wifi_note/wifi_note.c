@@ -40,6 +40,7 @@
 #include "net_app/wifi_lobby/wflby_def.h"
 #include "net_app/union/union_beacon_tool.h"
 #include "net_app/union/union_gra_tool.h"
+#include "net/dwc_rapfriend.h"
 
 
 #include "wifi_note.naix"
@@ -2194,7 +2195,7 @@ static u32 Data_NewFriendDataSet( WFNOTE_DATA* p_data, STRBUF* p_code, STRBUF* p
 					// 友達コードが違う
 					return RCODE_NEWFRIEND_SET_FRIENDKEYNG;
 				}
-				ret = GFL_NET_DWC_CheckFriendCodeByToken( friendcode, &pos);
+				ret = GFL_NET_DWC_CheckFriendCodeByToken( p_list,friendcode, &pos);
 				if(ret == DWCFRIEND_INLIST){	
 					// もう設定ずみ
 					return RCODE_NEWFRIEND_SET_SETING;

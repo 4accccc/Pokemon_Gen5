@@ -127,33 +127,6 @@ extern BOOL GFL_NET_DWC_IsVChat(void);
 
 //==============================================================================
 /**
- * すでに同じ人が登録されていないか。
- * @param   index 同じデータが見つかったときの、その場所。
- * @param         見つからない場合は空いているところを返す
- * @param         どこも空いていない場合は、-1 
- * @retval  DWCFRIEND_INLIST … すでに、同じデータがリスト上にある。この場合は何もする必要なし。
- * @retval  DWCFRIEND_OVERWRITE … すでに、同じデータがリスト上にあるが、上書きすることが望ましい場合。
- * @retval  DWCFRIEND_NODATA … 同じデータはリスト上にない。
- * @retval  DWCFRIEND_INVALID … 受け取ったDWCFriendDataが異常。
- */
-//==============================================================================
-extern int GFL_NET_DWC_CheckFriendByToken(DWCFriendData *data, int *index);
-
-//==============================================================================
-/**
- * すでに同じ人が登録されていないか。
- * @param   index 同じデータが見つかったときの、その場所。
- * @param         見つからない場合は空いているところを返す
- * @param         どこも空いていない場合は、-1 
- * @retval  DWCFRIEND_INLIST … すでに、同じデータがリスト上にある。
- * @retval  DWCFRIEND_NODATA … 同じデータはリスト上にない。
- * @retval  DWCFRIEND_INVALID … 受け取ったfriend_keyaが正しくない。
- */
-//==============================================================================
-extern int GFL_NET_DWC_CheckFriendCodeByToken( u64 friend_key, int *index);
-
-//==============================================================================
-/**
  * エラーコードを保持する
  * @param   none
  * @retval  none
