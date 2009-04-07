@@ -27,8 +27,9 @@ extern "C"{
 #define		WEATHER_NO_SNOW				(1)				// 雪		
 #define		WEATHER_NO_RAIN				(2)				// 雨		
 #define		WEATHER_NO_STORM			(3)				// 砂嵐		
+#define		WEATHER_NO_SPARK			(4)				// 雷雨
 
-#define		WEATHER_NO_NUM				(4)			// 天気数
+#define		WEATHER_NO_NUM				(5)			// 天気数
 
 	// 戦闘フィールド状態していよう
 	// バトルファクトリーのルーレット施設で

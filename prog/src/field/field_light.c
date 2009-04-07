@@ -48,11 +48,30 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+//-------------------------------------
+///	シーケンス
+//=====================================
+enum {
+	FIELD_LIGHT_SEQ_NORMAL,		// 通常
+	FIELD_LIGHT_SEQ_COLORFADE,	// カラーフェード（外部指定データ）
+} ;
+
 
 //-------------------------------------
 ///	ライトフェード
 //=====================================
 #define LIGHT_FADE_COUNT_MAX	( 60 )
+
+//-------------------------------------
+///	カラーフェード
+//=====================================
+enum {
+	COLOR_FADE_SEQ_INIT,
+	COLOR_FADE_SEQ_IN,
+	COLOR_FADE_SEQ_OUT,
+	COLOR_FADE_SEQ_END,
+} ;
+
 
 //-------------------------------------
 ///	アーカイブデータ
@@ -186,9 +205,22 @@ typedef struct {
 
 
 //-------------------------------------
+///	カラーフェード
+//=====================================
+typedef struct {
+	u16		seq;
+	u16		insync;
+	u16		outsync;
+	GXRgb	color;
+} COLOR_FADE;
+
+
+//-------------------------------------
 ///	フィールドライトシステム
 //=====================================
 struct _FIELD_LIGHT {
+	u32		seq;	// シーケンス
+	
 	// GFLIBライトシステム
 	GFL_G3D_LIGHTSET* p_liblight;
 	
@@ -210,6 +242,9 @@ struct _FIELD_LIGHT {
 
 	// 反映フェード情報
 	LIGHT_FADE	fade;
+
+	// カラーフェード
+	COLOR_FADE	color_fade;
 
 	// 反映時間
 	s32			time_second;
@@ -266,10 +301,19 @@ static void VEC_FADE_Calc( const VEC_FADE* cp_wk, u16 count, u16 count_max, VecF
 ///	ライトフェード
 //=====================================
 static void LIGHT_FADE_Init( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, const LIGHT_DATA* cp_end );
+static void LIGHT_FADE_InitEx( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, const LIGHT_DATA* cp_end, u32 sync );
+static void LIGHT_FADE_InitColor( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, GXRgb end_color, u32 sync );
 static void LIGHT_FADE_Main( LIGHT_FADE* p_wk );
 static BOOL LIGHT_FADE_IsFade( const LIGHT_FADE* cp_wk );
 static void LIGHT_FADE_GetData( const LIGHT_FADE* cp_wk, LIGHT_DATA* p_data );
 
+
+//-------------------------------------
+///	カラーフェード
+//=====================================
+static void COLOR_FADE_Init( COLOR_FADE* p_wk, u16 insync, u16 outsync, GXRgb color );
+static BOOL COLOR_FADE_Main( COLOR_FADE* p_wk, LIGHT_FADE* p_fade, const LIGHT_DATA* cp_refdata, const LIGHT_DATA* cp_nowdata );
+static BOOL COLOR_FADE_IsFade( const COLOR_FADE* cp_wk );
 
 
 #ifdef DEBUG_FIELD_LIGHT
@@ -384,7 +428,9 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 	}
 
 	// ライトデータ変更チェック
-	{
+	switch( p_sys->seq ){
+	// 通常
+	case FIELD_LIGHT_SEQ_NORMAL:
 		if( (p_sys->now_index - 1) < 0 ){
 			starttime = 0;
 		}else{
@@ -392,7 +438,6 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 		}
 
 		//OS_TPrintf( "starttime %d endtime %d now %d\n", starttime, p_sys->p_data[ p_sys->now_index ].endtime, rtc_second );
-		
 		// 今のテーブルの範囲内じゃないかチェック
 		if( (starttime > rtc_second) ||
 			(p_sys->p_data[ p_sys->now_index ].endtime <= rtc_second) ){
@@ -403,6 +448,16 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 			// フェード設定
 			LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->p_data[ p_sys->now_index ] );
 		}
+		break;
+
+	// ライトフェード（外部指定データ）
+	case FIELD_LIGHT_SEQ_COLORFADE:	// カラーフェード（外部指定データ）
+		// 色にする
+		if( COLOR_FADE_Main( &p_sys->color_fade, &p_sys->fade, &p_sys->reflect_data, &p_sys->p_data[ p_sys->now_index ] ) ){
+			p_sys->seq = FIELD_LIGHT_SEQ_NORMAL;
+		}
+		break;
+
 	}
 
 	// ライトフェード
@@ -487,6 +542,34 @@ void FIELD_LIGHT_ReLoadDefault( FIELD_LIGHT* p_sys, u32 heapID )
 
 	// フェード開始
 	LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->p_data[ p_sys->now_index ] );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カラーフェード開始
+ *
+ *	@param	p_sys		システムワーク
+ *	@param	color		色
+ *	@param	insync		フェードインシンク数
+ *	@param	outsync		フェードアウトシンク数
+ */
+//-----------------------------------------------------------------------------
+void FIELD_LIGHT_COLORFADE_Start( FIELD_LIGHT* p_sys, GXRgb color, u32 insync, u32 outsync )
+{
+	COLOR_FADE_Init( &p_sys->color_fade, insync, outsync, color );
+	p_sys->seq = FIELD_LIGHT_SEQ_COLORFADE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カラーフェード完了まち
+ *
+ *	@param	cp_sys		システムワーク
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_LIGHT_COLORFADE_IsFade( const FIELD_LIGHT* cp_sys )
+{
+	return COLOR_FADE_IsFade( &cp_sys->color_fade );
 }
 
 //----------------------------------------------------------------------------
@@ -1512,10 +1595,25 @@ static void VEC_FADE_Calc( const VEC_FADE* cp_wk, u16 count, u16 count_max, VecF
 //-----------------------------------------------------------------------------
 static void LIGHT_FADE_Init( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, const LIGHT_DATA* cp_end )
 {
+	LIGHT_FADE_InitEx( p_wk, cp_start, cp_end, LIGHT_FADE_COUNT_MAX );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライトフェード処理	初期化	シンク指定
+ *
+ *	@param	p_wk			ワーク
+ *	@param	cp_start		開始ライト情報
+ *	@param	cp_end			終了ライト情報
+ *	@param	sync			使用シンク数
+ */
+//-----------------------------------------------------------------------------
+static void LIGHT_FADE_InitEx( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, const LIGHT_DATA* cp_end, u32 sync )
+{
 	int i;
 
 	p_wk->count			= 0;
-	p_wk->count_max		= LIGHT_FADE_COUNT_MAX;
+	p_wk->count_max		= sync;
 
 
 	// フェードしない情報も保存
@@ -1534,7 +1632,41 @@ static void LIGHT_FADE_Init( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, const
 	RGB_FADE_Init( &p_wk->specular, cp_start->specular, cp_end->specular );
 	RGB_FADE_Init( &p_wk->emission, cp_start->emission, cp_end->emission );
 	RGB_FADE_Init( &p_wk->fog_color, cp_start->fog_color, cp_end->fog_color );
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カラーフェード
+ *
+ *	@param	p_wk		ワーク
+ *	@param	cp_start	開始ライトデータ
+ *	@param	end_color	終了色情報
+ *	@param	sync		かけるシンク数
+ */
+//-----------------------------------------------------------------------------
+static void LIGHT_FADE_InitColor( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, GXRgb end_color, u32 sync )
+{
+	int i;
+	p_wk->count			= 0;
+	p_wk->count_max		= sync;
+
+
+	// フェードしない情報も保存
+	p_wk->endtime = cp_start->endtime;
+	
+	for( i=0; i<4; i++ ){
+
+		RGB_FADE_Init( &p_wk->light_color[i], cp_start->light_color[i], end_color );
+		VEC_FADE_Init( &p_wk->light_vec[i], &cp_start->light_vec[i], &cp_start->light_vec[i] );
+
+		p_wk->light_flag[i] = cp_start->light_flag[i];
+	}
+
+	RGB_FADE_Init( &p_wk->diffuse, cp_start->diffuse, end_color );
+	RGB_FADE_Init( &p_wk->ambient, cp_start->ambient, end_color );
+	RGB_FADE_Init( &p_wk->specular, cp_start->specular, end_color );
+	RGB_FADE_Init( &p_wk->emission, cp_start->emission, end_color );
+	RGB_FADE_Init( &p_wk->fog_color, cp_start->fog_color, cp_start->fog_color );
 }
 
 //----------------------------------------------------------------------------
@@ -1598,6 +1730,86 @@ static void LIGHT_FADE_GetData( const LIGHT_FADE* cp_wk, LIGHT_DATA* p_data )
 
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カラーフェード開始
+ *
+ *	@param	p_wk		ワーク
+ *	@param	insync		インシンク
+ *	@param	outsync		アウトシンク
+ *	@param	color		色
+ */
+//-----------------------------------------------------------------------------
+static void COLOR_FADE_Init( COLOR_FADE* p_wk, u16 insync, u16 outsync, GXRgb color )
+{
+	p_wk->seq		= COLOR_FADE_SEQ_INIT;
+	p_wk->insync	= insync;
+	p_wk->outsync	= outsync;
+	p_wk->color		= color;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カラーフェードメイン
+ *
+ *	@param	p_wk		ワーク
+ *	@param	p_fade		フェードシステム
+ *	@param	cp_refdata	反映してるのライトデータ
+ *	@param	cp_nowdata	今のライトデータ
+ *
+ *	@retval	TRUE	フェード完了
+ *	@retval	FALSE	フェード中
+ */
+//-----------------------------------------------------------------------------
+static BOOL COLOR_FADE_Main( COLOR_FADE* p_wk, LIGHT_FADE* p_fade, const LIGHT_DATA* cp_refdata, const LIGHT_DATA* cp_nowdata )
+{
+	switch( p_wk->seq ){
+	case COLOR_FADE_SEQ_INIT:
+		LIGHT_FADE_InitColor( p_fade, cp_refdata, p_wk->color, p_wk->insync );
+		p_wk->seq = COLOR_FADE_SEQ_IN;
+		break;
+
+	case COLOR_FADE_SEQ_IN:
+		if( !LIGHT_FADE_IsFade( p_fade ) ){
+			LIGHT_FADE_InitEx( p_fade, cp_refdata, cp_nowdata, p_wk->outsync );
+			p_wk->seq = COLOR_FADE_SEQ_OUT;
+		}
+		break;
+
+	case COLOR_FADE_SEQ_OUT:
+		if( !LIGHT_FADE_IsFade( p_fade ) ){
+			p_wk->seq = COLOR_FADE_SEQ_END;
+		}
+		break;
+
+	case COLOR_FADE_SEQ_END:
+		return TRUE;
+
+	default:
+		GF_ASSERT(0);
+		break;
+	}
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カラーフェード完了待ち
+ *
+ *	@param	cp_wk	ワーク
+ *
+ *	@retval	TRUE	フェード中
+ *	@retval	FALSE	フェード完了
+ */
+//-----------------------------------------------------------------------------
+static BOOL COLOR_FADE_IsFade( const COLOR_FADE* cp_wk )
+{
+	if( cp_wk->seq == COLOR_FADE_SEQ_END ){
+		return FALSE;
+	}
+	return TRUE;
+}
 
 
 

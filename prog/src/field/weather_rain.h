@@ -27,6 +27,13 @@ FS_EXTERN_OVERLAY(field_weather_rain);
 //-----------------------------------------------------------------------------
 extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIN;
 
+//-----------------------------------------------------------------------------
+/**
+ *		—‹‰J
+*/
+//-----------------------------------------------------------------------------
+extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SPARKRAIN;
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

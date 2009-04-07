@@ -1635,7 +1635,7 @@ typedef struct
 	FLDMENUFUNC *menuFunc;
 }DEBUG_WEATERLIST_EVENT_WORK;
 
-#define DEBUG_WEATHERLIST_LIST_MAX	( 4 )
+#define DEBUG_WEATHERLIST_LIST_MAX	( 5 )
 
 //--------------------------------------------------------------
 ///	proto
@@ -1647,7 +1647,7 @@ static GMEVENT_RESULT DMenuWeatherListEvent(
 static const FLDMENUFUNC_HEADER DATA_DebugMenuList_WeatherList =
 {
 	1,		//リスト項目数
-	5,		//表示最大項目数
+	6,		//表示最大項目数
 	0,		//ラベル表示Ｘ座標
 	13,		//項目表示Ｘ座標
 	0,		//カーソル表示Ｘ座標
@@ -1673,6 +1673,7 @@ static const FLDMENUFUNC_LIST DATA_WeatherMenuList[DEBUG_WEATHERLIST_LIST_MAX] =
 	{ D_TOMOYA_WEATEHR01, (void*)WEATHER_NO_SNOW },
 	{ D_TOMOYA_WEATEHR02, (void*)WEATHER_NO_RAIN },
 	{ D_TOMOYA_WEATEHR03, (void*)WEATHER_NO_STORM },
+	{ D_TOMOYA_WEATEHR05, (void*)WEATHER_NO_SPARK },
 };
 
 //--------------------------------------------------------------
@@ -1730,7 +1731,7 @@ static GMEVENT_RESULT DMenuWeatherListEvent(
 				msgBG, NARC_message_d_tomoya_dat );
 			listdata = FLDMENUFUNC_CreateMakeListData(
 				DATA_WeatherMenuList, max, work->msgData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 8, 7 );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 8, 11 );
 			
 			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
 			GFL_MSG_Delete( work->msgData );

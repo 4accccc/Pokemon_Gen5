@@ -593,6 +593,34 @@ void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk, u32 heapID )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	カラーフェード開始
+ *
+ *	@param	p_wk		ワーク
+ *	@param	color		カラー
+ *	@param	insync		インシンク
+ *	@param	outsync		アウトシンク
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_LIGHT_StartColorFade( WEATHER_TASK* p_wk, GXRgb color, u16 insync, u16 outsync )
+{
+	FIELD_LIGHT_COLORFADE_Start( p_wk->p_light, color, insync, outsync );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カラーフェードチェック
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+BOOL WEATHER_TASK_LIGHT_IsColorFade( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_LIGHT_COLORFADE_IsFade( cp_wk->p_light );
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	3DBGシステム　描画設定
  *
  *	@param	p_wk		ワーク		

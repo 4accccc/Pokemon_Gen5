@@ -66,6 +66,13 @@ extern void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32
 // FIELD_LIGHT_Create or FIELD_LIGHT_Changeで設定したlight_no seasonのライト情報に戻す
 extern void FIELD_LIGHT_ReLoadDefault( FIELD_LIGHT* p_sys, u32 heapID );
 
+
+//-------------------------------------
+///	ライトフェード機能
+//=====================================
+extern void FIELD_LIGHT_COLORFADE_Start( FIELD_LIGHT* p_sys, GXRgb color, u32 insync, u32 outsync );
+extern BOOL FIELD_LIGHT_COLORFADE_IsFade( const FIELD_LIGHT* cp_sys );
+
 //-------------------------------------
 ///	ライト情報反映のON・OFF
 //=====================================
