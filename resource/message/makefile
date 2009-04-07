@@ -81,4 +81,6 @@ $(ARCHIVE_DATA_PATH_DL) : $(DST_ROOT_DIR)/d_dlplay.dat
 clean:
 	-rm $(DST_ROOT_DIR)/*.dat
 	-rm $(DST_ROOT_DIR)/*.h
+	-rm $(DEPEND_LIST)
+	-rm $(TARGET_LIST)
 
