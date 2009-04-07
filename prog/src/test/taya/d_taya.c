@@ -831,6 +831,7 @@ FS_EXTERN_OVERLAY(battle);
 #include "poke_tool\monsno_def.h"
 #include "waza_tool\wazano_def.h"
 #include "test\performance.h"
+#include "savedata\config.h"
 
 //----------------------------------
 // スタンドアロン
@@ -843,20 +844,15 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 	case 0:
 
 		GFL_STD_MtRandInit(0);
-		{
-			u32 i, result;
-			u32 cnt[2];
-			cnt[0] = cnt[1] = 0;
-			for(i=0; i<10000; ++i){
-				result = GFL_STD_MtRand(2);
-				cnt[result]++;
-			}
-			TAYA_Printf("ランダム発生テスト: 0->%d,  1->%d\n", cnt[0], cnt[1]);
-		}
 
 		deleteTemporaryModules( wk );
 		quitGraphicSystems( wk );
 		GFL_HEAP_DeleteHeap( HEAPID_TEMP );
+		{
+			// メッセージ速度を最速に
+			CONFIG* cfg = SaveData_GetConfig( SaveControl_GetPointer() );
+			CONFIG_SetMsgSpeed( cfg, MSGSPEED_FAST );
+		}
 		(*seq)++;
 		break;
 	case 1:

@@ -752,7 +752,7 @@ static BOOL scput_Nigeru( BTL_SVFLOW_WORK* wk, u8 clientID, u8 pokeIdx )
 	SVCL_WORK* clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
 	BTL_POKEPARAM* bpp = clwk->frontMember[ pokeIdx ];
 
-	BOOL fEscape = TRUE;	// @@@ ¡‚Í‘¦À‚É“¦‚°‚ç‚ê‚é‚æ‚¤‚É‚µ‚Ä‚¢‚é
+	BOOL fEscape = TRUE;	// @@@ ¡‚Í‚·‚Î‚â‚³ŒvŽZ‚ð‚¹‚¸’N‚Å‚à“¦‚°‚ç‚ê‚é‚æ‚¤‚É‚µ‚Ä‚¢‚é
 
 	BTL_EVENTVAR_Push();
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );

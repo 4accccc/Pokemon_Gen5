@@ -729,11 +729,11 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 	case WAZA_TARGET_OTHER_SELECT:				///< Ž©•ªˆÈŠO‚Ì‚P‘Ìi‘I‘ðj
 		stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_WITHOUT_ME, basePos) );
 		break;
-	case WAZA_TARGET_ENEMY_SELECT:	///< “G‚P‘Ìi‘I‘ðj
+	case WAZA_TARGET_ENEMY_SELECT:				///< “G‚P‘Ìi‘I‘ðj
 		stw_setSelectablePoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, basePos) );
 		break;
 
-	case WAZA_TARGET_ENEMY_ALL:				///< “G‘¤‚Q‘Ì
+	case WAZA_TARGET_ENEMY_ALL:						///< “G‘¤‚Q‘Ì
 	case WAZA_TARGET_ENEMY_RANDOM:				///< “Gƒ‰ƒ“ƒ_ƒ€
 		stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, basePos) );
 		break;
@@ -754,6 +754,10 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 
 	case WAZA_TARGET_FIELD:					///< ê‚ÉŒø‚­i“VŒóŒn‚È‚Çj
 		stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_ALL, basePos) );
+		break;
+
+	case WAZA_TARGET_UNKNOWN:			///< “ÁŽêŒni‚ä‚Ñ‚ð‚Ó‚é“™j
+		// @@@ –¢ŽÀ‘•
 		break;
 
 	default:
