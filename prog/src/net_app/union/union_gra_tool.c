@@ -14,8 +14,7 @@
 #include "net_app/union/union_gra_tool.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_tool.h"
-
-#define GRATOOL_COMMENT (0)
+#include "arc_def.h"
 
 //	GSのsystem\softsprite.cから移植
 void			SoftSpriteChrMask(u8* src);
@@ -130,9 +129,23 @@ void ChangesInto_1D_from_2D(int arc_id, int index_no, int heap_id, int x, int y,
 	GFL_HEAP_FreeMemory(aw);
 }
 
+//	GSのgflib\calctool.cから移植
+//============================================================================================
+/**
+ *	乱数暗号キー生成ルーチン
+ *
+ * @param[in,out]	code	暗号キー格納ワークのポインタ
+ *
+ * @return	暗号キー格納ワークの上位2バイトを暗号キーとして返す
+ */
+//============================================================================================
+static	u16 CodeRand_UniGraTool(u32 *code)
+{
+    code[0] = code[0] *1103515245L + 24691;
+    return (u16)(code[0] / 65536L) ;
+}
 
 //	GSのsystem\softsprite.cから移植
-#if GRATOOL_COMMENT
 //============================================================================================
 /**
  *	ポケモングラフィックにかけられたマスクを解除
@@ -154,7 +167,7 @@ void	SoftSpriteChrMask(u8 *src)
 	//プラチナは前方マスク
 	for(i=0;i<(20*10*0x20)/2;i++){
 		buf[i]^=code;
-		CodeRand(&code);
+		CodeRand_UniGraTool(&code);
 	}
 
 //DPでは、後方マスク
@@ -163,7 +176,7 @@ void	SoftSpriteChrMask(u8 *src)
 
 	for(i=(20*10*0x20)/2-1;i>-1;i--){
 		buf[i]^=code;
-		CodeRand(&code);
+		CodeRand_UniGraTool(&code);
 	}
 #endif
 }
@@ -187,10 +200,9 @@ void	SoftSpriteChrMask_DP(u8 *src)
 
 	for(i=(20*10*0x20)/2-1;i>-1;i--){
 		buf[i]^=code;
-		CodeRand(&code);
+		CodeRand_UniGraTool(&code);
 	}
 }
-#endif //GRATOOL_COMMENT
 
 //--------------------------------------------------------------
 /**
@@ -203,8 +215,6 @@ void	SoftSpriteChrMask_DP(u8 *src)
 //--------------------------------------------------------------
 void	SoftSpriteChrMask_ArcID(u8 *src, int arc_id)
 {
-#if GRATOOL_COMMENT
-
 #if 1	//PLATINUM_MERGE_UNFIX
 //	if(arc_id == ARC_DP_POKE_GRA || arc_id == ARC_DP_OTHER_POKE || arc_id == ARC_TRF_GRA){
 	if( arc_id == ARCID_TRF_GRA){
@@ -216,8 +226,6 @@ void	SoftSpriteChrMask_ArcID(u8 *src, int arc_id)
 #else
 	//金銀ではまだDpの復号処理を呼んでおく	08.07.07
 	SoftSpriteChrMask_DP(src);
-#endif
-
 #endif
 }
 

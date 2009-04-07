@@ -496,7 +496,7 @@ enum{
 #define BMPL_FLIST_MENU_LISTNUM	(SBOX_FLIST_SEL_CT)	// メニューリストの項目数
 
 // 詳細画面へフェードのウエイト
-#define FLIST_INFO_WAIT	(4)
+#define FLIST_INFO_WAIT	(8)
 
 //	消しゴムアクター
 #define FLIST_CLEARACT_Y	( -4 + CLACT_MAIN2_REND_Y_S32 )
@@ -2878,8 +2878,7 @@ static void Draw_FriendNameSetWordset( WFNOTE_DRAW* p_draw, SAVE_CONTROL_WORK* p
 #if NOTE_DEBUG
 	{
 		STRBUF	*nameStr = GFL_STR_CreateBuffer( 10 , heapID );
-		STRCODE name[4] ={L'な',L'な',L'し',0xFFFF};
-		GFL_STR_SetStringCode( nameStr, name );
+		GFL_STR_SetStringCode( nameStr, WifiList_GetFriendNamePtr(p_wifilist, idx) );
 		MyStatus_SetMyNameFromString( p_mystatus, nameStr );
 		GFL_STR_DeleteBuffer( nameStr );
 	}
@@ -2907,8 +2906,7 @@ static void Draw_FriendGroupSetWordset( WFNOTE_DRAW* p_draw, SAVE_CONTROL_WORK* 
 #if NOTE_DEBUG
 	{
 		STRBUF	*nameStr = GFL_STR_CreateBuffer( 10 , heapID );
-		STRCODE name[4] ={L'な',L'な',L'し',0xFFFF};
-		GFL_STR_SetStringCode( nameStr, name );
+		GFL_STR_SetStringCode( nameStr, WifiList_GetFriendGroupNamePtr( p_wifilist, idx ) );
 		MyStatus_SetMyNameFromString( p_mystatus, nameStr );
 		GFL_STR_DeleteBuffer( nameStr );
 	}
@@ -3243,7 +3241,7 @@ static WFNOTE_STRET ModeSelect_Main( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_dat
 		if( result == FALSE ){
 			break;
 		}
-		p_wk->wait = 2;
+		p_wk->wait = 4;
 		p_data->subseq = SEQ_MODESEL_MAIN_ENDWAIT;
 		break;
 	case SEQ_MODESEL_MAIN_ENDWAIT:
@@ -3927,7 +3925,7 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
 			break;
 			
 		case RCODE_FLIST_SEQMAIN_SELECTPL:	// 人を選択した
-			p_wk->wait = 4;
+			p_wk->wait = 8;
 			p_data->subseq = SEQ_FLIST_MENUINIT;
 			break;
 		}
@@ -4197,7 +4195,6 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
 			BGPLT_M_MSGFONT, BMPL_FLIST_BKMSG_CGX, 0 );
 
 	p_str = GFL_MSG_CreateString( p_draw->p_msgman, msg_flist_back );
-	//FIXME 色変更 WFNOTE_TCOL_BLACK
 	PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->backmsg), 0, 0, p_str, p_draw->fontHandle , WFNOTE_TCOL_BLACK );
 	GFL_STR_DeleteBuffer( p_str );
 
@@ -5638,7 +5635,6 @@ static void FListDrawArea_SetPlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WF_2DCSYS* p_c
 	p_str = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 	GFL_STR_SetStringCode( p_str, WifiList_GetFriendNamePtr(p_list,idx) );
 
-	//FIXME 色変更 sc_SEXCOL[sex]
 	PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(*p_wk->text), x, y, p_str, p_draw->fontHandle , sc_SEXCOL[sex] );
 
 	GFL_STR_DeleteBuffer( p_str );
@@ -6045,25 +6041,21 @@ static void MyCode_DrawInit( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DR
 		// コードあり
 		// メッセージ
 		GFL_MSG_GetString( p_draw->p_msgman, msg_mycode_codeon, p_str );
-		//FIXME 色変更 WFNOTE_COL_BLACK
 		PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->msg), 0, 0, p_str, p_draw->fontHandle , WFNOTE_TCOL_BLACK);
 
 		// 数字
 		Draw_FriendCodeSetWordset( p_draw, code );
 		GFL_MSG_GetString( p_draw->p_msgman, msg_mycode_code, p_tmp );
 		WORDSET_ExpandStr( p_draw->p_wordset, p_str, p_tmp );
-		//FIXME 色変更 WFNOTE_COL_WHITE
 		PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->code), 0, 0, p_str, p_draw->fontHandle , WFNOTE_COL_WHITE);
 	}else{
 		// コードなし
 		// メッセージ
 		GFL_MSG_GetString( p_draw->p_msgman, msg_mycode_codeoff, p_str );
-		//FIXME 色変更 WFNOTE_COL_BLACK
 		PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->msg), 0, 0, p_str, p_draw->fontHandle , WFNOTE_TCOL_BLACK);
 	}
 	//戻るボタン
 	GFL_MSG_GetString( p_draw->p_msgman, msg_mycode_back, p_str );
-	//FIXME 色変更 WFNOTE_TCOL_BLACK
 	PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->back), 0, 0, p_str, p_draw->fontHandle , WFNOTE_TCOL_BLACK);
 
 	GFL_STR_DeleteBuffer( p_str );
@@ -7968,7 +7960,6 @@ static void FInfoDraw_Page04( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
 	num = 123;
 #endif
 	p_monsstr = GFL_MSG_CreateString( GlobalMsg_PokeName , num );
-	//FIXME 色変更 WFNOTE_COL_BLACK
 	PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->p_msg[5][FINFO_PAGE04_BA]), 
 			FINFO_PAGE04_TT_X, FINFO_PAGE04_TT2_Y,
 			p_monsstr, p_draw->fontHandle , WFNOTE_COL_BLACK );
@@ -8221,7 +8212,6 @@ static void FInfoDraw_Bmp( WFNOTE_FINFO_DRAWAREA* p_wk, u32 page, u32 bmp, WFNOT
 {
 	GFL_MSG_GetString( p_draw->p_msgman, msg_idx, p_tmp );
 	WORDSET_ExpandStr( p_draw->p_wordset, p_str, p_tmp );
-	//FIXME 色変更 col
 	PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->p_msg[page][bmp]), x, y, p_str, p_draw->fontHandle , col );
 }
 
@@ -8247,7 +8237,6 @@ static void FInfoDraw_BaseBmp( GFL_BMPWIN** win, WFNOTE_DATA* p_data, WFNOTE_DRA
 {
 	GFL_MSG_GetString( p_draw->p_msgman, msg_idx, p_draw->p_tmp );
 	WORDSET_ExpandStr( p_draw->p_wordset, p_draw->p_str, p_draw->p_tmp );
-	//FIXME 色変更 col
 	PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(*win), x, y, p_draw->p_str, p_draw->fontHandle , col );
 }
 
