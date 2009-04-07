@@ -49,7 +49,7 @@ typedef struct _PLAYER_HIERARCHY	PLAYER_HIERARCHY;
 struct _PLAYER_HIERARCHY{
 	BOOL				active;
 	u16					soundIdx;
-	u16					playerNo;
+//	u16					playerNo;
 	NNSSndHandle		sndHandle;
 	int					heapLvDelete;
 	int					heapLvReset;
@@ -63,6 +63,7 @@ struct _PLAYER_HIERARCHY{
 #define PLAYER_HIERARCHY_HEAPLV_NULL	(0xffffffff)
 static PLAYER_HIERARCHY	sndHierarchyArray[PLAYER_HIERARCHY_NUM];
 static int				sndHierarchyArrayPos;
+static u16				sndHierarchyPlayerNo;
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -147,18 +148,22 @@ void	SOUNDMAN_InitHierarchyPlayer( const SOUNDMAN_HIERARCHY_PLAYER_DATA* playerD
 
 	GF_ASSERT(pSndHeapHandle);
 
+	sndHierarchyPlayerNo = playerData->hierarchyPlayerStartNo;
+
 	// 階層プレーヤー構造初期化
 	sndHierarchyArrayPos = 0;
 	for( i=0; i<PLAYER_HIERARCHY_NUM; i++ ){
 		initHierarchyPlayerWork(i);
 		player = &sndHierarchyArray[i];
 		// プレーヤーナンバー設定
-		player->playerNo = playerData->hierarchyPlayerStartNo + i;
+		//player->playerNo = playerData->hierarchyPlayerStartNo;
 		// サウンドハンドルは一度だけ初期化
 		NNS_SndHandleInit(&player->sndHandle);
-		// チャンネル設定
-		NNS_SndPlayerSetAllocatableChannel(player->playerNo, playerData->playerPlayableChannel);
 	}
+	NNS_SndPlayerSetPlayableSeqCount(sndHierarchyPlayerNo, PLAYER_HIERARCHY_NUM);
+	// チャンネル設定
+	NNS_SndPlayerSetAllocatableChannel(sndHierarchyPlayerNo, playerData->playerPlayableChannel);
+
 	// 初期階層プレーヤー作成
 	createHierarchyPlayer(NNS_SndHeapSaveState(*pSndHeapHandle));
 }
@@ -182,9 +187,7 @@ u32		SOUNDMAN_GetHierarchyPlayerSoundIdx( void )
 
 u32		SOUNDMAN_GetHierarchyPlayerPlayerNo( void )
 {
-	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
-
-	return player->playerNo;
+	return sndHierarchyArrayPos;
 }
 
 NNSSndHandle*	SOUNDMAN_GetHierarchyPlayerSndHandle( void )
@@ -264,13 +267,12 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 	if( result == FALSE){ return FALSE; }
 
 	// サウンドデータ（seq, bank）をプレーヤーヒープに読み込み、サウンド再生開始
-	result = NNS_SndArcPlayerStartSeqEx
-			(&player->sndHandle, player->playerNo, -1, -1, soundIdx);
+	result = NNS_SndArcPlayerStartSeqEx(&player->sndHandle, sndHierarchyPlayerNo, -1, -1, soundIdx);
 	if( result == FALSE){ return FALSE; }
 
 	player->heapLvFull = NNS_SndHeapSaveState(*pSndHeapHandle);
 #ifdef STATUS_PRINT
-	OS_Printf("sound hierarchy start player(%d), seqno(%d), ", player->playerNo, soundIdx);
+	OS_Printf("sound hierarchy start player(%d), seqno(%d), ", sndHierarchyArrayPos, soundIdx);
 	OS_Printf("soundHeap(%d->%d), ", heapSize, NNS_SndHeapGetFreeSize(*pSndHeapHandle));
 	OS_Printf("soundHeapSaveLv delete(%d), reset(%d), push(%d), full(%d)\n", 
 			player->heapLvDelete, player->heapLvReset, player->heapLvPush, player->heapLvFull);
@@ -295,8 +297,8 @@ void	SOUNDMAN_StopHierarchyPlayer( void )
 
 	if( player->active == FALSE ){ return; }
 
-	// 現在のプレーヤーの即時停止
-	NNS_SndPlayerStopSeqByPlayerNo(player->playerNo, 0);
+	// 現在のサウンドハンドルに結び付けられたシーケンスを即時停止
+	NNS_SndPlayerStopSeq(&player->sndHandle, 0);
 	player->soundIdx = PLAYER_HIERARCHY_EMPTY;
 	resetHierarchyPlayer();
 }
@@ -315,8 +317,8 @@ void	SOUNDMAN_PauseHierarchyPlayer( BOOL flag )
 	GF_ASSERT(pSndHeapHandle);
 
 	if( player->active == FALSE ){ return; }
-	// 現在のプレーヤーの一時停止
-	NNS_SndPlayerPauseByPlayerNo(player->playerNo, flag);
+	// 現在のサウンドハンドルに結び付けられたシーケンスを一時停止
+	NNS_SndPlayerPause(&player->sndHandle, flag);
 }
 
 //--------------------------------------------------------------------------------------------

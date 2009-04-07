@@ -521,7 +521,8 @@ static void SetScrnMasterTrackStatus( GFL_SNDSTATUS* gflSndStatus )
 //--------------------------------------------------------------------------------------------
 static void SetScrnPlayerStatus( GFL_SNDSTATUS* gflSndStatus )
 {
-	u32 playerNo = SOUNDMAN_GetHierarchyPlayerPlayerNo() - PLAYER_DEFAULT_MAX;
+	//u32 playerNo = SOUNDMAN_GetHierarchyPlayerPlayerNo() - PLAYER_DEFAULT_MAX;
+	u32 playerNo = SOUNDMAN_GetHierarchyPlayerPlayerNo();
 
 	u16*	scrnBuf = gflSndStatus->scrnBuf;
 	u16		palMask = gflSndStatus->setup.bgPalID << 12;
