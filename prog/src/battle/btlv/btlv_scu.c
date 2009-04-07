@@ -11,7 +11,7 @@
 
 #include "poke_tool/monsno_def.h"
 #include "print/printsys.h"
-#include "print/msgspeed.h"
+#include "gamesystem/msgspeed.h"
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
