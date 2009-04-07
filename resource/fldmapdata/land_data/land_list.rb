@@ -24,10 +24,10 @@ while f = ARGV.shift
 		yen_flg = 1
 		column = line.split ","
 		name = column[1]
-		land_list.printf("\t$(DIR_LANDRES)/#{name}c.bin")
-		land_list.printf(" $(DIR_LANDRES)/#{name}c.imd")
-		land_arc_list.printf("\"land_3dppack/#{name}c.3dppack\"\n")
-		land_model_list.printf("\t$(DIR_LANDRES)/#{name}c.imd")
+		land_list.printf("\t$(DIR_LANDRES)/#{name}.bin")
+		land_list.printf(" $(DIR_LANDRES)/#{name}.imd")
+		land_arc_list.printf("\"land_3dppack/#{name}.3dppack\"\n")
+		land_model_list.printf("\t$(DIR_LANDRES)/#{name}.imd")
 	end
 	csv_file.close
 end
