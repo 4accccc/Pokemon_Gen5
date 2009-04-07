@@ -222,6 +222,32 @@ void	PMSND_Main( void )
 		}
 	}
 	if( bgmFadeCounter ){ bgmFadeCounter--; }
+
+	{
+		NNSSndHandle* pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
+		s16	local[16];
+		s16	global[16];
+		int i;
+
+		OS_Printf("sound player lovalVariable = ");
+		for( i=0; i<16; i++ ){
+			if(NNS_SndPlayerReadVariable(pBgmHandle, i, &local[i]) == FALSE){
+				OS_Printf("[err],");
+			} else {
+				OS_Printf("[%x],", local[i]);
+			}
+		}
+		OS_Printf("\n");
+		OS_Printf("sound player globalVariable = ");
+		for( i=0; i<16; i++ ){
+			if(NNS_SndPlayerReadGlobalVariable(i, &global[i]) == FALSE){
+				OS_Printf("[err],");
+			} else {
+				OS_Printf("[%x],", global[i]);
+			}
+		}
+		OS_Printf("\n");
+	}
 }
 
 //============================================================================================
@@ -603,7 +629,8 @@ void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan )
 //------------------------------------------------------------------
 BOOL	PMSND_CheckPlayBGM( void )
 {
-	int count = NNS_SndPlayerCountPlayingSeqByPlayerNo(SOUNDMAN_GetHierarchyPlayerPlayerNo());
+	u16 playerNo = SOUNDMAN_GetHierarchyPlayerPlayerNo() + PLAYER_DEFAULT_MAX;
+	int count = NNS_SndPlayerCountPlayingSeqByPlayerNo(playerNo);
 
 	if( count ){
 		return TRUE;
