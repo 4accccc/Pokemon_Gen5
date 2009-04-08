@@ -2,7 +2,7 @@
 #ifndef __CODEIN_SND_H__
 #define __CODEIN_SND_H__
 
-#include "sound/snd_tool.h"
+#include "sound/pm_sndsys.h"
 
 #define CI_SE_BLOCK		( SEQ_SE_DP_BUTTON3 )
 #define CI_SE_TOUCH		( SEQ_SE_DP_BUTTON3 )

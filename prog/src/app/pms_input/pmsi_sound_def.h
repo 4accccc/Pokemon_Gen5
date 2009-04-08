@@ -10,7 +10,7 @@
 #ifndef __PMSI_SOUND_DEF_H__
 #define __PMSI_SOUND_DEF_H__
 
-#include "sound\pm_sndsys.h.h"
+#include "sound\pm_sndsys.h"
 
 #define PMS_USE_SND (0)
 
