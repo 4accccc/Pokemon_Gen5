@@ -222,7 +222,7 @@ void	PMSND_Main( void )
 		}
 	}
 	if( bgmFadeCounter ){ bgmFadeCounter--; }
-
+#if 0
 	{
 		NNSSndHandle* pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
 		s16	local[16];
@@ -248,6 +248,7 @@ void	PMSND_Main( void )
 		}
 		OS_Printf("\n");
 	}
+#endif
 }
 
 //============================================================================================
