@@ -50,6 +50,7 @@ typedef struct{
 	VMHANDLE	*vmh;
 	int			src;
 	int			dst;
+	fx32		ofs_y;
 	fx32		angle;
 }BTLV_EFFVM_EMIT_INIT_WORK;
 
@@ -64,17 +65,17 @@ void		BTLV_EFFVM_Exit( VMHANDLE *vmh );
 void		BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID waza );
 
 //エフェクトコマンド
-static VMCMD_RESULT EC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT EC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT EC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT	EC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT	EC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT	EC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT	EC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT	EC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT	EC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work );
 
-static VMCMD_RESULT EC_SEQ_END( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 
 //VM_WAIT_FUNC群
 static	BOOL	VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work );
@@ -97,25 +98,23 @@ u32		BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
  *	データテーブル
  */
 //============================================================================================
-enum{
-	TBL_AA2BB = 0,
-	TBL_BB2AA,
-	TBL_A2B,
-	TBL_A2C,
-	TBL_A2D,
-	TBL_B2A,
-	TBL_B2C,
-	TBL_B2D,
-	TBL_C2A,
-	TBL_C2B,
-	TBL_C2D,
-	TBL_D2A,
-	TBL_D2B,
-	TBL_D2C,
+#define	TBL_AA2BB	( 4 * 0 )
+#define	TBL_BB2AA	( 4 * 1 )
+#define	TBL_A2B		( 4 * 2 )
+#define	TBL_A2C		( 4 * 3 )
+#define	TBL_A2D		( 4 * 4 )
+#define	TBL_B2A		( 4 * 5 )
+#define	TBL_B2C		( 4 * 6 )
+#define	TBL_B2D		( 4 * 7 )
+#define	TBL_C2A		( 4 * 8 )
+#define	TBL_C2B		( 4 * 9 )
+#define	TBL_C2D		( 4 * 10 )
+#define	TBL_D2A		( 4 * 11 )
+#define	TBL_D2B		( 4 * 12 )
+#define	TBL_D2C		( 4 * 13 )
+#define	TBL_ERROR	( 0xffffffff )
 
-	TBL_ERROR,
-};
-static const script_table[ BTLV_MCSS_POS_MAX ][ BTLV_MCSS_POS_MAX ]={
+static const int	script_table[ BTLV_MCSS_POS_MAX ][ BTLV_MCSS_POS_MAX ]={
 	//	AA			BB			A			B			C			D	
 	{	TBL_AA2BB,	TBL_AA2BB,	TBL_ERROR,	TBL_ERROR,	TBL_ERROR,	TBL_ERROR	},	//AA
 	{	TBL_BB2AA,	TBL_BB2AA,	TBL_ERROR,	TBL_ERROR,	TBL_ERROR,	TBL_ERROR	},	//BB
@@ -131,17 +130,17 @@ static const script_table[ BTLV_MCSS_POS_MAX ][ BTLV_MCSS_POS_MAX ]={
  */
 //============================================================================================
 static const VMCMD_FUNC btlv_effect_command_table[]={
-	EC_CAMERA_MOVE,
-	EC_PARTICLE_LOAD,
-	EC_PARTICLE_PLAY,
-	EC_POKEMON_MOVE,
-	EC_POKEMON_SCALE,
-	EC_POKEMON_ROTATE,
-	EC_POKEMON_SET_MEPACHI_FLAG,
-	EC_POKEMON_SET_ANM_FLAG,
-	EC_EFFECT_END_WAIT,
+	VMEC_CAMERA_MOVE,
+	VMEC_PARTICLE_LOAD,
+	VMEC_PARTICLE_PLAY,
+	VMEC_POKEMON_MOVE,
+	VMEC_POKEMON_SCALE,
+	VMEC_POKEMON_ROTATE,
+	VMEC_POKEMON_SET_MEPACHI_FLAG,
+	VMEC_POKEMON_SET_ANM_FLAG,
+	VMEC_EFFECT_END_WAIT,
 
-	EC_SEQ_END,
+	VMEC_SEQ_END,
 };
 
 //============================================================================================
@@ -217,7 +216,7 @@ void	BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID w
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT EC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 	VecFx32		cam_pos,cam_target;
@@ -314,7 +313,7 @@ static VMCMD_RESULT EC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT EC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	void			*heap;
@@ -329,7 +328,6 @@ static VMCMD_RESULT EC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
 		heap = GFL_HEAP_AllocMemory( bevw->heapID, PARTICLE_LIB_HEAP_SIZE );
 		bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, bevw->heapID );
 		ofs = bevw->dpd->adrs[ BTLV_EFFVM_GetDPDNo( bevw, datID ) ];
-		OS_TPrintf("ofs:%d\n",ofs);
 		resource = (void *)&bevw->dpd->adrs[ ofs ];
 		GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
 		return VMCMD_RESULT_SUSPEND;
@@ -351,7 +349,7 @@ static VMCMD_RESULT EC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT EC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	BTLV_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
@@ -362,6 +360,7 @@ static VMCMD_RESULT EC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 	beeiw->vmh = vmh;
 	beeiw->src = ( int )VMGetU32( vmh );
 	beeiw->dst = ( int )VMGetU32( vmh );
+	beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
 	beeiw->angle = ( fx32 )VMGetU32( vmh );
 
 	if( beeiw->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE ){
@@ -381,7 +380,7 @@ static VMCMD_RESULT EC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT	EC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT	VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	int		position;
@@ -417,7 +416,7 @@ static VMCMD_RESULT	EC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT	EC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT	VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	int		position;
@@ -453,7 +452,7 @@ static VMCMD_RESULT	EC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT	EC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT	VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	int		position;
@@ -489,7 +488,7 @@ static VMCMD_RESULT	EC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT	EC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT	VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	int		position;
@@ -522,7 +521,7 @@ static VMCMD_RESULT	EC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_wo
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT	EC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT	VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	int		position;
@@ -548,7 +547,7 @@ static VMCMD_RESULT	EC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work )
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT	EC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT	VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work )
 {
 	VMCMD_SetWait( vmh, VWF_EFFECT_END_CHECK );
 
@@ -563,7 +562,7 @@ static VMCMD_RESULT	EC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work )
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT EC_SEQ_END( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 	int	i;
@@ -828,8 +827,8 @@ static	void	EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 	BTLV_MCSS_GetPokeDefaultPos( &src, beeiw->src );
 	BTLV_MCSS_GetPokeDefaultPos( &dst, beeiw->dst );
 
-	src.y += FX32_ONE * 2;
-	dst.y += FX32_ONE * 2;
+	src.y += beeiw->ofs_y;
+	dst.y += beeiw->ofs_y;
 
 	//srcとdstが一緒のときは、方向なし
 	if( beeiw->src != beeiw->dst ){
@@ -871,7 +870,7 @@ static	void	EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 void	BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd )
 {
 	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
-	int	*start_ofs = (int *)&start[ script_table[ from ][ to ] * 4 ] ;
+	int	*start_ofs = (int *)&start[ script_table[ from ][ to ] ] ;
 	int	i;
 
 	bevw->dat_id_cnt = 0;

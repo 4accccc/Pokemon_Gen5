@@ -124,34 +124,25 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 
 #endif
 
+//命令シンボル宣言
+//COMMAND_START
+#define	EC_CAMERA_MOVE				( 0 )
+#define	EC_PARTICLE_LOAD			( 1 )
+#define	EC_PARTICLE_PLAY			( 2 )
+#define	EC_POKEMON_MOVE				( 3 )
+#define	EC_POKEMON_SCALE			( 4 )
+#define	EC_POKEMON_ROTATE			( 5 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	( 6 )
+#define	EC_POKEMON_SET_ANM_FLAG		( 7 )
+#define	EC_EFFECT_END_WAIT			( 8 )
+
+//終了コマンドは必ず一番下になるようにする
+#define	EC_SEQ_END					( 9 )
+
 #ifndef __C_NO_DEF_
 
 //勝手にパディングを入れられないようにする
 	.option	alignment off
-
-	.macro	INIT_CMD
-def_cmd_count = 0
-	.endm
-
-	.macro	DEF_CMD	symname
-\symname = def_cmd_count
-def_cmd_count = ( def_cmd_count + 1 )
-	.endm
-
-//命令シンボル宣言
-	INIT_CMD
-	DEF_CMD	EC_CAMERA_MOVE
-	DEF_CMD	EC_PARTICLE_LOAD
-	DEF_CMD	EC_PARTICLE_PLAY
-	DEF_CMD	EC_POKEMON_MOVE
-	DEF_CMD	EC_POKEMON_SCALE
-	DEF_CMD	EC_POKEMON_ROTATE
-	DEF_CMD	EC_POKEMON_SET_MEPACHI_FLAG
-	DEF_CMD	EC_POKEMON_SET_ANM_FLAG
-	DEF_CMD	EC_EFFECT_END_WAIT
-
-//終了コマンドは必ず一番下になるようにする
-	DEF_CMD	EC_SEQ_END
 
 //命令マクロ定義
 //======================================================================
@@ -202,11 +193,12 @@ def_cmd_count = ( def_cmd_count + 1 )
 /**
  * @brief	パーティクル再生
  *
- * #param_num	5
+ * #param_num	6
  * @param	num			再生パーティクルナンバー
  * @param	index		spa内インデックスナンバー
  * @param	start_pos	パーティクル再生開始立ち位置
  * @param	dir_pos		パーティクル再生方向立ち位置
+ * @param	ofs_y		パーティクル再生Y方向オフセット
  * @param	dir_angle	パーティクル再生方向Y角度
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
@@ -216,14 +208,16 @@ def_cmd_count = ( def_cmd_count + 1 )
  * #param	COMBOBOX_TEXT	方向無し	攻撃側	防御側
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_NONE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
  * #param	VALUE_FX32
+ * #param	VALUE_FX32
  */
 //======================================================================
-	.macro	PARTICLE_PLAY	num, index, start_pos, dir_pos, dir_angle
+	.macro	PARTICLE_PLAY	num, index, start_pos, dir_pos, ofs_y, dir_angle
 	.short	EC_PARTICLE_PLAY
 	.long	\num
 	.long	\index
 	.long	\start_pos
 	.long	\dir_pos
+	.long	\ofs_y
 	.long	\dir_angle
 	.endm
 
