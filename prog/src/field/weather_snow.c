@@ -199,12 +199,12 @@ static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {2,4
 #define WEATHER_ARARE_FOG_OFS_START	(0x800)
 
 /*== あられオブジェクト ==*/
-#define WEATHER_ARARE_SPEED_X		(-3)						// 横に進むスピード
-#define WEATHER_ARARE_SPEED_Y		(8)						// たてに進むスピードベース
+#define WEATHER_ARARE_SPEED_X		(-2)						// 横に進むスピード
+#define WEATHER_ARARE_SPEED_Y		(6)						// たてに進むスピードベース
 #define WEATHER_ARARE_ADDSPEED_X	(1)						// 横に進むスピードに足すあたい
 #define WEATHER_ARARE_ADDSPEED_Y	(1)						// たてに進むスピードに足すあたい
 #define	WEATHER_ARARE_END_MIN		(1)							// 終了カウンタ最小
-#define WEATHER_ARARE_END_MAX		(4)							// 終了カウンタ最大
+#define WEATHER_ARARE_END_MAX		(6)							// 終了カウンタ最大
 #define	WEATHER_ARARE_START_X_BASE	(0)							// ベースになるX開始座標
 #define	WEATHER_ARARE_MUL_X			(15)						// ベースに雨の種類分足す値
 #define	WEATHER_ARARE_START_X_MAX	(270)						// X開始座標乱数の最大値
