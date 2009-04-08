@@ -455,9 +455,7 @@ static void WEATHER_STORM_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	GFL_CLACT_WK_GetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
 	
 	// 動作フラグをチェック
-	switch(obj_w[3]){
-	case 0:		// 動作
-
+	if(!obj_w[3]){
 		// 動かす
 		mat.x += obj_w[4];
 		mat.y += obj_w[2];
@@ -473,12 +471,9 @@ static void WEATHER_STORM_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 		}
 
 		GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
-			
-		break;
-	case 1:		// 破棄
+	}else{
 		WEATHER_TASK_DeleteObj( p_wk );
-		break;
-	}		
+	}
 }
 
 //----------------------------------------------------------------------------

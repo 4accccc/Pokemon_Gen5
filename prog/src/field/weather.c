@@ -193,6 +193,18 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_rain)
 	},
 
+	// êÅê·
+	{
+		&c_WEATHER_TASK_DATA_SNOWSTORM,
+		FS_OVERLAY_ID(field_weather_snow)
+	},
+
+	// Ç†ÇÁÇÍ
+	{
+		&c_WEATHER_TASK_DATA_ARARE,
+		FS_OVERLAY_ID(field_weather_snow)
+	},
+
 };
 
 

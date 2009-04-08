@@ -1635,7 +1635,6 @@ typedef struct
 	FLDMENUFUNC *menuFunc;
 }DEBUG_WEATERLIST_EVENT_WORK;
 
-#define DEBUG_WEATHERLIST_LIST_MAX	( 5 )
 
 //--------------------------------------------------------------
 ///	proto
@@ -1667,14 +1666,17 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_WeatherList =
 };
 
 ///てんきメニューリスト
-static const FLDMENUFUNC_LIST DATA_WeatherMenuList[DEBUG_WEATHERLIST_LIST_MAX] =
+static const FLDMENUFUNC_LIST DATA_WeatherMenuList[] =
 {
 	{ D_TOMOYA_WEATEHR00, (void*)WEATHER_NO_SUNNY },
 	{ D_TOMOYA_WEATEHR01, (void*)WEATHER_NO_SNOW },
 	{ D_TOMOYA_WEATEHR02, (void*)WEATHER_NO_RAIN },
 	{ D_TOMOYA_WEATEHR03, (void*)WEATHER_NO_STORM },
 	{ D_TOMOYA_WEATEHR05, (void*)WEATHER_NO_SPARK },
+	{ D_TOMOYA_WEATEHR06, (void*)WEATHER_NO_SNOWSTORM },
+	{ D_TOMOYA_WEATEHR07, (void*)WEATHER_NO_ARARE },
 };
+#define DEBUG_WEATHERLIST_LIST_MAX	( NELEMS(DATA_WeatherMenuList) )
 
 //--------------------------------------------------------------
 /**

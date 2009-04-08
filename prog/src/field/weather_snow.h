@@ -29,6 +29,21 @@ FS_EXTERN_OVERLAY(field_weather_snow);
 extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOW;
 
 
+//-----------------------------------------------------------------------------
+/**
+ *		êÅê·
+*/
+//-----------------------------------------------------------------------------
+extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOWSTORM;
+
+//-----------------------------------------------------------------------------
+/**
+ *		Ç†ÇÁÇÍ
+*/
+//-----------------------------------------------------------------------------
+extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_ARARE;
+
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif
