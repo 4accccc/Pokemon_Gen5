@@ -13,6 +13,7 @@
 #include <textprint.h>
 
 #include "system/main.h"
+#include "print/printsys.h"
 #include "arc_def.h"
 
 #include "battle/btlv/btlv_effect.h"
@@ -21,6 +22,10 @@
 #include "poke_tool/monsno_def.h"
 
 #include "gf_mcs.h"
+
+#include "font/font.naix"
+#include "message.naix"
+#include "msg/msg_d_soga.h"
 
 #define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
@@ -39,12 +44,17 @@
 #define	MCS_READ_CH			( 0 )
 #define	MCS_WRITE_CH		( 0 )
 
+#define G2D_BACKGROUND_COL	( GX_RGB( 31, 31, 31 ) )
+#define G2D_FONT_COL		( GX_RGB(  0,  0,  0 ) )
+
 enum{
 	SEND_SEQUENCE = 1,
-	SEND_SEQUENCE_OK =2,
-	SEND_RESOURCE = 3,
-	SEND_RESOURCE_OK =4,
-	SEND_IDLE = 5,
+	SEND_SEQUENCE_OK,
+	SEND_RESOURCE,
+	SEND_RESOURCE_OK,
+	SEND_RECEIVE,
+	SEND_RECEIVE_OK,
+	SEND_IDLE,
 };
 
 enum{
@@ -53,15 +63,13 @@ enum{
 	SEQ_LOAD_RESOURCE_DATA,
 	SEQ_EFFECT_ENABLE,
 	SEQ_EFFECT_WAIT,
+	SEQ_RECEIVE_ACTION,
 };
 
 enum{
-	BMPWIN_MONSNO = 0,
-	BMPWIN_PROJECTION,
-	BMPWIN_SCALE_E,
-	BMPWIN_SCALE_M,
-
-	BMPWIN_MAX
+	SUB_SEQ_INIT = 0,
+	SUB_SEQ_PARTICLE_PLAY_PARAM,
+	SUB_SEQ_PARTICLE_PLAY_PARAM_SEND,
 };
 
 typedef struct
@@ -69,13 +77,18 @@ typedef struct
 	HEAPID				heapID;
 
 	int					seq_no;
+	int					sub_seq_no;
 	int					mcs_enable;
 	POKEMON_PARAM		*pp;
 	int					mons_no;
-	GFL_BMPWIN			*bmpwin[ BMPWIN_MAX ];
+	GFL_BMPWIN			*bmpwin;
 	GFL_TEXT_PRINTPARAM	*textParam;
 	int					key_repeat_speed;
 	int					key_repeat_wait;
+
+	GFL_MSGDATA			*msg;
+	GFL_FONT			*font;
+	STRBUF				*strbuf;
 
 	void				*sequence_data;
 	void				*resource_data;
@@ -85,6 +98,7 @@ static	void	EffectViewerSequence( EFFECT_VIEWER_WORK *evw );
 static	void	EffectViewerRead( EFFECT_VIEWER_WORK *evw );
 static	void	EffectViewerSequenceLoad( EFFECT_VIEWER_WORK *evw );
 static	void	EffectViewerResourceLoad( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw );
 
 static	void	TextPrint(EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num );
 static	void	NumPrint( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num );
@@ -188,7 +202,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
 
 		///< sub
-		GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_OFF );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_ON );
 		GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
 		GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
 		GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
@@ -234,6 +248,12 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 				GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
+			///<FRAME0_S
+			{
+				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			},
 		};
 		GFL_BG_SetBGControl(GFL_BG_FRAME1_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(GFL_BG_FRAME1_M );
@@ -241,6 +261,30 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 		GFL_BG_ClearScreen(GFL_BG_FRAME2_M );
 		GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(GFL_BG_FRAME3_M );
+		GFL_BG_SetBGControl(GFL_BG_FRAME0_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME0_S );
+	}
+
+	{
+		static const GFL_TEXT_PRINTPARAM default_param = { NULL, 0, 0, 1, 1, 1, 0, GFL_TEXT_WRITE_16 };
+		int	i;
+
+		evw->textParam = GFL_HEAP_AllocMemory( evw->heapID, sizeof( GFL_TEXT_PRINTPARAM ) );
+		*evw->textParam = default_param;
+
+
+		//フォントパレット作成＆転送
+		{
+			static	u16 plt[16] = {
+				G2D_BACKGROUND_COL, G2D_FONT_COL,
+				0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0,
+				0, 0 };
+			GFL_BG_LoadPalette( GFL_BG_FRAME0_S, &plt, 16*2, 0 );
+		}
+
+		evw->bmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 0, 0, 32, 24, 0, GFL_BG_CHRAREA_GET_F );
+
 	}
 
 	//ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
@@ -263,6 +307,18 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 
 	GFL_UI_KEY_GetRepeatSpeed( &evw->key_repeat_speed, &evw->key_repeat_wait );
 	GFL_UI_KEY_SetRepeatSpeed( evw->key_repeat_speed / 4, evw->key_repeat_wait );
+
+	//メッセージ系初期化
+	GFL_FONTSYS_Init();
+	evw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, evw->heapID );
+	evw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, evw->heapID );
+
+	evw->strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_ATTACK );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), 0, 0, evw->strbuf, evw->font );
+	GFL_BMPWIN_TransVramCharacter( evw->bmpwin );
+	GFL_BMPWIN_MakeScreen( evw->bmpwin );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+	GFL_HEAP_FreeMemory( evw->strbuf );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -394,6 +450,9 @@ static	void	EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
 			evw->seq_no = SEQ_IDLE;
 		}
 		break;
+	case SEQ_RECEIVE_ACTION:
+		EffectViewerRecieveAction( evw );
+		break;
 	}
 }
 
@@ -424,6 +483,13 @@ static	void	EffectViewerRead( EFFECT_VIEWER_WORK *evw )
 			head = SEND_RESOURCE_OK;
 			MCS_Write( MCS_WRITE_CH, &head, 4 );
 			OS_TPrintf("resource_data head:%d\n",size);
+		}
+		else if( head == SEND_RECEIVE ){
+			evw->seq_no = SEQ_RECEIVE_ACTION;
+			evw->sub_seq_no = SUB_SEQ_INIT;
+			head = SEND_RECEIVE_OK;
+			MCS_Write( MCS_WRITE_CH, &head, 4 );
+			OS_TPrintf("receive head:%d\n",size);
 		}
 	}
 }
@@ -475,10 +541,47 @@ static	void	EffectViewerResourceLoad( EFFECT_VIEWER_WORK *evw )
 }
 
 //======================================================================
+//	DSからPCへデータを受け渡す
+//======================================================================
+static	void	EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
+{
+	switch( evw->sub_seq_no ){
+	case SUB_SEQ_INIT:
+		{
+			int	*start_ofs = (int *)evw->sequence_data ;
+			u8 *start = (u8 *)evw->sequence_data;
+			u16 *com_start = (u16 *)&start[ start_ofs[ 0 ] ];
+
+			switch( com_start[ 0 ] ){
+			case EC_CAMERA_MOVE:
+			case EC_PARTICLE_LOAD:
+				break;
+			case EC_PARTICLE_PLAY:
+				evw->sub_seq_no = SUB_SEQ_PARTICLE_PLAY_PARAM;
+				break;
+			case EC_POKEMON_MOVE:
+			case EC_POKEMON_SCALE:
+			case EC_POKEMON_ROTATE:
+			case EC_POKEMON_SET_MEPACHI_FLAG:
+			case EC_POKEMON_SET_ANM_FLAG:
+			case EC_EFFECT_END_WAIT:
+				break;
+			}
+		}
+		break;
+	case SUB_SEQ_PARTICLE_PLAY_PARAM:
+		break;
+	case SUB_SEQ_PARTICLE_PLAY_PARAM_SEND:
+		break;
+	}
+}
+
+//======================================================================
 //	テキスト表示
 //======================================================================
 static	void	TextPrint( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num )
 {
+#if 0
 	evw->textParam->writex = 0;
 	evw->textParam->writey = 0;
 	evw->textParam->bmp = GFL_BMPWIN_GetBmp( evw->bmpwin[ bmpwin_num ] );
@@ -486,7 +589,8 @@ static	void	TextPrint( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num )
 	GFL_TEXT_PrintSjisCode( &ProjectionText[ num ][ 0 ], evw->textParam );
 	GFL_BMPWIN_TransVramCharacter( evw->bmpwin[ bmpwin_num ] );
 	GFL_BMPWIN_MakeScreen( evw->bmpwin[ bmpwin_num ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+#endif
 }
 
 //======================================================================
@@ -494,6 +598,7 @@ static	void	TextPrint( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num )
 //======================================================================
 static	void	NumPrint( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num )
 {
+#if 0
 	char	num_char[ 4 ] = "\0\0\0\0";
 	int		num_100,num_10,num_1;
 
@@ -512,11 +617,13 @@ static	void	NumPrint( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num )
 	GFL_TEXT_PrintSjisCode( &num_char[0], evw->textParam );
 	GFL_BMPWIN_TransVramCharacter( evw->bmpwin[ bmpwin_num ] );
 	GFL_BMPWIN_MakeScreen( evw->bmpwin[ bmpwin_num ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+#endif
 }
 
 static	void	Num16Print( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num )
 {
+#if 0
 	int		i;
 	char	num_char[ 9 ] = "\0\0\0\0\0\0\0\0\0";
 
@@ -531,7 +638,8 @@ static	void	Num16Print( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num )
 	GFL_TEXT_PrintSjisCode( &num_char[0], evw->textParam );
 	GFL_BMPWIN_TransVramCharacter( evw->bmpwin[ bmpwin_num ] );
 	GFL_BMPWIN_MakeScreen( evw->bmpwin[ bmpwin_num ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+#endif
 }
 
 //======================================================================
