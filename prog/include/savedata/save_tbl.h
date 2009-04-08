@@ -61,6 +61,7 @@ enum{
 	GMDATA_ID_PMS,  		//簡易文
 	GMDATA_ID_FLDMMDL,		//動作モデル
 	GMDATA_ID_WFHIROBA,		//Wi-Fi広場
+	GMDATA_ID_MUSICAL,		//ミュージカル
 	
 #if 0
 	GMDATA_ID_SYSTEM_DATA,

@@ -27,6 +27,7 @@
 #include "system/pms_word.h"
 #include "field/fldmmdl.h"
 #include "savedata/wifi_hiroba_save.h"
+#include "savedata/musical_save.h"
 
 //==============================================================================
 //	定数定義
@@ -209,6 +210,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		(FUNC_GET_SIZE)SAVEDATA_WFLBY_GetWorkSize,
 		(FUNC_INIT_WORK)SAVEDATA_WFLBY_InitWork,
 	},
+	{	//ミュージカル
+		GMDATA_ID_MUSICAL,
+		(FUNC_GET_SIZE)MUSICAL_SAVE_GetWorkSize,
+		(FUNC_INIT_WORK)MUSICAL_SAVE_InitWork,
+	}
 };
 
 
