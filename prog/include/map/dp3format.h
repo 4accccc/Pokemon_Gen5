@@ -25,7 +25,7 @@ typedef struct {
 	fx32	vecN1_D;       // ax+by+cz+d =0 のD値
 	fx32	vecN2_D;
 
-	u16		attr:31;          //アトリビュートビット
+	u16		attr:15;          //アトリビュートビット
 	u16		tryangleType:1;   //三角形の形のタイプ  ＼ = 0  ／ = 1
 	u16     value;            //アトリビュートValue
 } NormalVtxSt;
