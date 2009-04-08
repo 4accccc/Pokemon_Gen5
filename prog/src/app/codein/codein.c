@@ -21,7 +21,7 @@
 //#include "poke_tool/pokeicon.h"
 //#include "poke_tool/boxdata.h"
 #include "system/bmp_menu.h"
-#include "sound/snd_tool.h"
+#include "sound/pm_sndsys.h"
 
 #include "codein_pv.h"
 #include "codein_snd.h"
