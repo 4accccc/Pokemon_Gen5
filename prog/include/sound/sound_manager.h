@@ -39,7 +39,7 @@ extern void	SOUNDMAN_InitHierarchyPlayer( const SOUNDMAN_HIERARCHY_PLAYER_DATA* 
 
 // 階層プレーヤー状態取得
 extern u32				SOUNDMAN_GetHierarchyPlayerSoundIdx( void );
-extern u32				SOUNDMAN_GetHierarchyPlayerPlayerNo( void );
+extern u32				SOUNDMAN_GetHierarchyPlayerPlayerNoIdx( void );
 extern NNSSndHandle*	SOUNDMAN_GetHierarchyPlayerSndHandle( void );
 extern int				SOUNDMAN_GetHierarchyPlayerSoundHeapLv( void );
 // 階層プレーヤー状態設定

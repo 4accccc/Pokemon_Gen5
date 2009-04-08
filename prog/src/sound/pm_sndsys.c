@@ -210,6 +210,7 @@ void	PMSND_Main( void )
 
 	NNS_SndMain();
 
+#if 0	// 現状、常に呼び出す必要もなさそうなので削除
 	// サウンドドライバ情報更新
 	NNS_SndUpdateDriverInfo();
 	{
@@ -221,6 +222,7 @@ void	PMSND_Main( void )
 			NNS_SndPlayerReadDriverTrackInfo( pBgmHandle, i, &bgmPlayerInfo.trackInfo[i]);
 		}
 	}
+#endif
 	if( bgmFadeCounter ){ bgmFadeCounter--; }
 #if 0
 	{
@@ -630,7 +632,7 @@ void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan )
 //------------------------------------------------------------------
 BOOL	PMSND_CheckPlayBGM( void )
 {
-	u16 playerNo = SOUNDMAN_GetHierarchyPlayerPlayerNo() + PLAYER_DEFAULT_MAX;
+	u16 playerNo = SOUNDMAN_GetHierarchyPlayerPlayerNoIdx() + PLAYER_DEFAULT_MAX;
 	int count = NNS_SndPlayerCountPlayingSeqByPlayerNo(playerNo);
 
 	if( count ){

@@ -185,7 +185,7 @@ u32		SOUNDMAN_GetHierarchyPlayerSoundIdx( void )
 	return player->soundIdx;
 }
 
-u32		SOUNDMAN_GetHierarchyPlayerPlayerNo( void )
+u32		SOUNDMAN_GetHierarchyPlayerPlayerNoIdx( void )
 {
 	return sndHierarchyArrayPos;
 }

@@ -125,6 +125,7 @@ struct _GFL_SNDSTATUS {
 	MASTERTRACK_STATUS		bgmMasterTrackStatus;
 	TRACKEFFECT_STATUS		bgmTrackEffectStatus;
 	BOOL					bgmTrackEffectSw;
+	u8						trackNumStack[8];	// プレーヤー階層分（現状は5）必要
 
 	SWITCH_CONTROL			swControl;
 	SWITCH_STATUS			switchStatus[SWITCH_MAX];
@@ -519,26 +520,28 @@ static void SetScrnMasterTrackStatus( GFL_SNDSTATUS* gflSndStatus )
 }
 
 //--------------------------------------------------------------------------------------------
-static void SetScrnPlayerStatus( GFL_SNDSTATUS* gflSndStatus )
+static void SetScrnPlayerStatus( GFL_SNDSTATUS* gflSndStatus, u32 playerNoIdx )
 {
-	//u32 playerNo = SOUNDMAN_GetHierarchyPlayerPlayerNo() - PLAYER_DEFAULT_MAX;
-	u32 playerNo = SOUNDMAN_GetHierarchyPlayerPlayerNo();
-
 	u16*	scrnBuf = gflSndStatus->scrnBuf;
 	u16		palMask = gflSndStatus->setup.bgPalID << 12;
-	u16		chrNo;
+	u16		chrNo, chrNo2, trackNum;
 	int		i, x, y;
 
 	x = 17;
-	y = 21;
+	y = 22;
 
 	for( i=0; i<5; i++ ){
-		if( i == playerNo ){ chrNo = 0xf4; }
-		else if( i < playerNo ){ chrNo = 0xf5; }
-		else { chrNo = 0xf6; }
+		if( i == playerNoIdx ){ chrNo = 0x79; }
+		else if( i < playerNoIdx ){ chrNo = 0x7a; }
+		else { chrNo = 0x7b; }
+
+		trackNum = gflSndStatus->trackNumStack[i];
+		if(trackNum){ chrNo2 = trackNum -1 + 0xd0; } 
+		else { chrNo2 = 0x4f; }
 
 		scrnBuf[ (y-i)*32 + x + 0 ] = chrNo | palMask;
 		scrnBuf[ (y-i)*32 + x + 1 ] = chrNo | palMask | 0x0400;	// 反転
+		scrnBuf[ (y-i)*32 + x + 2 ] = chrNo2 | palMask;
 	}
 }
 
@@ -552,21 +555,25 @@ static void SetScrnPlayerStatus( GFL_SNDSTATUS* gflSndStatus )
 static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus )
 {
 	NNSSndHandle*	pBgmHandle = gflSndStatus->setup.pBgmHandle;
-	BOOL result;
+	u32 bgmPlayerNoIdx = SOUNDMAN_GetHierarchyPlayerPlayerNoIdx();
+	BOOL f;
 	int i;
 
 	// サウンドドライバ情報更新
-	//NNS_SndUpdateDriverInfo();
+	NNS_SndUpdateDriverInfo();	//pm_sndsys内に常駐された場合は削除すること（1_call/1_frame）
 
 	// 更新されたチャンネル情報取得
 	for( i=0; i<CHANNEL_NUM; i++ ){
 		NNS_SndReadDriverChannelInfo( i, &gflSndStatus->channelInfo[i]); 
 	}
+	// 現在の階層以上のトラック数情報リセット
+	for( i=0; i<8; i++ ){ if(i >= bgmPlayerNoIdx){ gflSndStatus->trackNumStack[i] = 0; } }
 	// 更新されたトラック情報取得
 	if( pBgmHandle != NULL ){
 		for( i=0; i<TRACK_NUM; i++ ){
-			gflSndStatus->bgmTrackStatus[i].active = 
-				NNS_SndPlayerReadDriverTrackInfo( pBgmHandle, i, &gflSndStatus->bgmTrackInfo[i]);
+			f = NNS_SndPlayerReadDriverTrackInfo(pBgmHandle, i, &gflSndStatus->bgmTrackInfo[i]);
+			gflSndStatus->bgmTrackStatus[i].active = f;
+			if(f == TRUE){ gflSndStatus->trackNumStack[bgmPlayerNoIdx]++; }
 		}
 	} else {
 		for( i=0; i<TRACK_NUM; i++ ){
@@ -576,8 +583,7 @@ static BOOL SNDSTATUS_SetInfo( GFL_SNDSTATUS* gflSndStatus )
 	SetScrnChannelStatus( gflSndStatus );
 	SetScrnTrackStatus( gflSndStatus );
 	SetScrnMasterTrackStatus( gflSndStatus );
-	SetScrnPlayerStatus( gflSndStatus );
-	SetScrnPlayerStatus( gflSndStatus );
+	SetScrnPlayerStatus( gflSndStatus, bgmPlayerNoIdx );
 
 	return TRUE;
 }
