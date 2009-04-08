@@ -890,6 +890,7 @@ static void DEBUG_SetMenuWorkZoneIDName(
 //======================================================================
 #define CM_RT_SPEED (FX32_ONE/8)
 #define CM_HEIGHT_MV (FX32_ONE*2)
+#define CM_NEARFAR_MV (FX32_ONE)
 
 //--------------------------------------------------------------
 ///	DEBUG_CTLCAMERA_WORK カメラ操作ワーク1
@@ -957,16 +958,17 @@ static GMEVENT_RESULT DMenuControlCamera(
 	
 	switch( (*seq) ){
 	case 0:
-		work->pMsgWin = FLDMSGWIN_Add( work->pMsgBG, NULL, 21, 1, 10, 5 );
+		work->pMsgWin = FLDMSGWIN_Add( work->pMsgBG, NULL, 21, 1, 10, 10 );
 		update = TRUE;
 		(*seq)++;
 	case 1:
 		{
-			fx32 height;
+			fx32 height, near, far;
 			u16 dir,length;
 			int trg = GFL_UI_KEY_GetTrg();
 			int cont = GFL_UI_KEY_GetCont();
 			FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( work->fieldWork );
+			GFL_G3D_CAMERA* gfl_camera = GetG3Dcamera( work->fieldWork );
 			
 			if( trg & PAD_BUTTON_B ){
 				(*seq)++;
@@ -976,6 +978,8 @@ static GMEVENT_RESULT DMenuControlCamera(
 			FLD_GetCameraDirection( camera, &dir );
 			FLD_GetCameraLength( camera, &length );
 			FLD_GetCameraHeight( camera, &height );
+			GFL_G3D_CAMERA_GetNear( gfl_camera, &near );
+			GFL_G3D_CAMERA_GetFar( gfl_camera, &far );
 
 			if( cont & PAD_BUTTON_R ){
 				dir -= CM_RT_SPEED;
@@ -1001,19 +1005,47 @@ static GMEVENT_RESULT DMenuControlCamera(
 				}
 			}
 		
-			if( cont & PAD_KEY_UP ){
-				height -= CM_HEIGHT_MV;
-				update = TRUE;
+			if( !((cont & PAD_BUTTON_Y) || (cont & PAD_BUTTON_A)) ){	// near far操作以外
+				if( cont & PAD_KEY_UP ){
+					height -= CM_HEIGHT_MV;
+					update = TRUE;
+				}
+		
+				if( cont & PAD_KEY_DOWN ){
+					height += CM_HEIGHT_MV;
+					update = TRUE;
+				}	
 			}
-	
-			if( cont & PAD_KEY_DOWN ){
-				height += CM_HEIGHT_MV;
-				update = TRUE;
-			}	
+
+			if( (cont & PAD_BUTTON_Y) ){	// near
+				if( cont & PAD_KEY_UP ){
+					near += CM_NEARFAR_MV;
+					update = TRUE;
+				}
+		
+				if( cont & PAD_KEY_DOWN ){
+					near -= CM_NEARFAR_MV;
+					update = TRUE;
+				}	
+			}
+
+			if( (cont & PAD_BUTTON_A) ){	// far
+				if( cont & PAD_KEY_UP ){
+					far += CM_NEARFAR_MV;
+					update = TRUE;
+				}
+		
+				if( cont & PAD_KEY_DOWN ){
+					far -= CM_NEARFAR_MV;
+					update = TRUE;
+				}	
+			}
 
 			FLD_SetCameraDirection( camera, &dir );
 			FLD_SetCameraLength( camera, length );
 			FLD_SetCameraHeight( camera, height );
+			GFL_G3D_CAMERA_SetNear( gfl_camera, &near );
+			GFL_G3D_CAMERA_SetFar( gfl_camera, &far );
 			
 			if( update == TRUE && work->vanish == FALSE ){
 				int len = 128;
@@ -1044,6 +1076,22 @@ static GMEVENT_RESULT DMenuControlCamera(
 				GFL_STR_SetStringCodeOrderLength(
 						work->pStrBuf, ucode, len );
 				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 23, work->pStrBuf );
+
+				len = 128;
+				sprintf( sjis, "NEAR:%xH \0", near );
+				STD_ConvertStringSjisToUnicode(
+						ucode, &len, sjis, NULL, NULL );
+				GFL_STR_SetStringCodeOrderLength(
+						work->pStrBuf, ucode, len );
+				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 34, work->pStrBuf );
+
+				len = 128;
+				sprintf( sjis, "FAR:%xH \0", far );
+				STD_ConvertStringSjisToUnicode(
+						ucode, &len, sjis, NULL, NULL );
+				GFL_STR_SetStringCodeOrderLength(
+						work->pStrBuf, ucode, len );
+				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 45, work->pStrBuf );
 				
 				FIELD_CAMERA_Main( camera );
 			}
