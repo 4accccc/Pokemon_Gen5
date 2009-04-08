@@ -11,11 +11,12 @@
 #include "fldmmdl.h"
 
 extern GAMESYS_WORK * FIELDMAP_GetGameSysWork( FIELD_MAIN_WORK *fieldWork );
+extern FLDMAPPER* GetFieldG3Dmapper( FIELD_MAIN_WORK * fieldWork );
 
 //======================================================================
 //	define
 //======================================================================
-#define DEBUG_BGFRAME (GFL_BG_FRAME2_M) //使用するBGフレーム
+#define DEBUG_BGFRAME (GFL_BG_FRAME3_M) //使用するBGフレーム
 #define DEBUG_PANO_FONT (15) //フォントで使用するパレットNo
 
 //======================================================================
@@ -31,7 +32,8 @@ struct _TAG_FIELD_DEBUG_WORK
 	u32 bgFrame;	//デバッグで使用するBG FRAME
 	FIELD_MAIN_WORK *pFieldMainWork; //FIELD_MAIN_WORK*
 	
-	int flag_pos_print;
+	BOOL flag_bgscr_load;	//デバッグBG面のスクリーンロード
+	BOOL flag_pos_print;	//座標表示切り替え
 };
 
 //======================================================================
@@ -39,8 +41,9 @@ struct _TAG_FIELD_DEBUG_WORK
 //======================================================================
 static void DebugFont_Init( FIELD_DEBUG_WORK *work );
 static void DebugFont_Put( u16 *screen, char c, u16 x, u16 y );
-static void DebugFont_Print( u16 x, u16 y, const char *msgBuf );
-static void DebugFont_ClearLine( u16 y );
+static void DebugFont_Print(
+	FIELD_DEBUG_WORK *work, u16 x, u16 y, const char *msgBuf );
+static void DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y );
 
 static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work );
 
@@ -93,6 +96,11 @@ void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work )
 {
 	if( work->flag_pos_print == TRUE ){
 		DebugFieldPosPrint_Proc( work );
+	}
+	
+	if( work->flag_bgscr_load == TRUE ){
+		GFL_BG_LoadScreenReq( work->bgFrame );
+		work->flag_bgscr_load = FALSE;
 	}
 }
 
@@ -346,7 +354,8 @@ static void DebugFont_Put( u16 *screen, char c, u16 x, u16 y )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DebugFont_Print( u16 x, u16 y, const char *msgBuf )
+static void DebugFont_Print(
+	FIELD_DEBUG_WORK *work, u16 x, u16 y, const char *msgBuf )
 {
 	u16 n = 0;
 	u16 *screen;
@@ -355,7 +364,8 @@ static void DebugFont_Print( u16 x, u16 y, const char *msgBuf )
 		DebugFont_Put(screen,msgBuf[n],x+n,y);
 		n++;
 	}
-	GFL_BG_LoadScreenReq( DEBUG_BGFRAME );
+	
+	work->flag_bgscr_load = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -365,12 +375,12 @@ static void DebugFont_Print( u16 x, u16 y, const char *msgBuf )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DebugFont_ClearLine( u16 y )
+static void DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y )
 {
 	char buf[33];
 	MI_CpuFill8( buf, 0x20, 32 );
 	buf[32] = 0;
-	DebugFont_Print( 0, y, buf );
+	DebugFont_Print( work, 0, y, buf );
 }
 
 //======================================================================
@@ -403,25 +413,61 @@ void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work )
 //--------------------------------------------------------------
 static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 {
+	char str[256];
 	GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( work->pFieldMainWork );
 	PLAYER_WORK *player = GAMESYSTEM_GetMyPlayerWork( gsys );
 	const VecFx32 *pos = PLAYERWORK_getPosition( player );
 	
 	{
-		char str[256];
-		DebugFont_ClearLine( 0 );
+		DebugFont_ClearLine( work, 0 );
 		sprintf( str, "X %d %xH GRID %d",
 			FX_Whole(pos->x), pos->x, SIZE_GRID_FX32(pos->x) );
-		DebugFont_Print( 0, 0, str );
+		DebugFont_Print( work, 0, 0, str );
 		
-		DebugFont_ClearLine( 1 );
-		sprintf( str, "Y %d %dH GRID %d",
+		DebugFont_ClearLine( work, 1 );
+		sprintf( str, "Y %d %xH GRID %d",
 			FX_Whole(pos->y), pos->y, SIZE_GRID_FX32(pos->y) );
-		DebugFont_Print( 0, 1, str );
+		DebugFont_Print( work, 0, 1, str );
 		
-		DebugFont_ClearLine( 2 );
-		sprintf( str, "Z %d %dH GRID %d",
+		DebugFont_ClearLine( work, 2 );
+		sprintf( str, "Z %d %xH GRID %d",
 			FX_Whole(pos->z), pos->z, SIZE_GRID_FX32(pos->z) );
-		DebugFont_Print( 0, 2, str );
+		DebugFont_Print( work, 0, 2, str );
+	}
+	
+	{
+		u32 attr;
+		int x,y,z;
+		VecFx32 a_pos;
+		const FLDMAPPER *pG3DMapper;
+		FLDMAPPER_GRIDINFO gridInfo;
+		
+		pG3DMapper = GetFieldG3Dmapper( work->pFieldMainWork );
+		
+		if( pG3DMapper == NULL ){
+			return;
+		}
+		
+		sprintf( str, "ATTRIBUTE" );
+		DebugFont_ClearLine( work, 3 );
+		DebugFont_Print( work, 0, 3, str );
+		
+		a_pos = *pos;
+		a_pos.z -= GRID_SIZE_FX32( 1 );
+		
+		for( z = 0, y = 4; z < 3; z++, y++, a_pos.z += GRID_SIZE_FX32(1) ){
+			DebugFont_ClearLine( work, y );
+			for( x = 0, a_pos.x = pos->x - GRID_SIZE_FX32(1);
+					x < 3*10; x += 10, a_pos.x += GRID_SIZE_FX32(1) ){
+				if( FLDMAPPER_GetGridInfo(pG3DMapper,&a_pos,&gridInfo) ){
+					attr = gridInfo.gridData[0].attr;
+					sprintf( str, "%08xH", attr );
+				}else{
+					sprintf( str, "GET ERROR", attr );
+				}
+				
+				DebugFont_Print( work, x, y, str );
+			}
+		}
 	}
 }
