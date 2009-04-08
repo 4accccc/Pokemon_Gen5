@@ -224,33 +224,6 @@ void	PMSND_Main( void )
 	}
 #endif
 	if( bgmFadeCounter ){ bgmFadeCounter--; }
-#if 0
-	{
-		NNSSndHandle* pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
-		s16	local[16];
-		s16	global[16];
-		int i;
-
-		OS_Printf("sound player lovalVariable = ");
-		for( i=0; i<16; i++ ){
-			if(NNS_SndPlayerReadVariable(pBgmHandle, i, &local[i]) == FALSE){
-				OS_Printf("[err],");
-			} else {
-				OS_Printf("[%x],", local[i]);
-			}
-		}
-		OS_Printf("\n");
-		OS_Printf("sound player globalVariable = ");
-		for( i=0; i<16; i++ ){
-			if(NNS_SndPlayerReadGlobalVariable(i, &global[i]) == FALSE){
-				OS_Printf("[err],");
-			} else {
-				OS_Printf("[%x],", global[i]);
-			}
-		}
-		OS_Printf("\n");
-	}
-#endif
 }
 
 //============================================================================================
