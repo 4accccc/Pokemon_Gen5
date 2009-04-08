@@ -7,7 +7,7 @@
  */
 //==============================================================================================
 #include "common.h"
-#include "system/snd_tool.h"
+#include "system/pm_sndsys.h"
 #include "trcard_sys.h"
 #include "trcard_snd.h"
 
