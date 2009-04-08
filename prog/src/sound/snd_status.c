@@ -703,23 +703,16 @@ static void makeEventSwitchTable( GFL_SNDSTATUS* gflSndStatus )
 		gflSndStatus->eventSwitchTable[i].rect.right = 0;
 	}
 	for( i=0; i<SWITCH_BGM_VOL; i++ ){
-		setEventSwitchTable
-			( gflSndStatus, SWITCH_TR1 + i, TRACK1_PX + 16*i, TRACK_SWITCH_PY );
+		setEventSwitchTable(gflSndStatus, SWITCH_TR1 + i, TRACK1_PX + 16*i, TRACK_SWITCH_PY);
 	}
 	if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTOROL_ENABLE ){ 
-		setEventSwitchTable
-			( gflSndStatus, SWITCH_BGM_VOL, MTRACK_VOLUME_PX, MTRACK_SWITCH_PY );
-		setEventSwitchTable
-			( gflSndStatus, SWITCH_BGM_TEMPO, MTRACK_TEMPO_PX, MTRACK_SWITCH_PY );
-		setEventSwitchTable
-			( gflSndStatus, SWITCH_BGM_PITCH, MTRACK_PITCH_PX, MTRACK_SWITCH_PY );
-		setEventSwitchTable
-			( gflSndStatus, SWITCH_BGM_REVERB, MTRACK_REVERB_PX, MTRACK_SWITCH_PY );
+		setEventSwitchTable(gflSndStatus, SWITCH_BGM_VOL, MTRACK_VOLUME_PX, MTRACK_SWITCH_PY);
+		setEventSwitchTable(gflSndStatus, SWITCH_BGM_TEMPO, MTRACK_TEMPO_PX, MTRACK_SWITCH_PY);
+		setEventSwitchTable(gflSndStatus, SWITCH_BGM_PITCH, MTRACK_PITCH_PX, MTRACK_SWITCH_PY);
+		setEventSwitchTable(gflSndStatus, SWITCH_BGM_REVERB, MTRACK_REVERB_PX, MTRACK_SWITCH_PY);
 
-		setEventSwitchTable
-			( gflSndStatus, SWITCH_TREF_MODD, TRACKEF_MODD_PX, MTRACK_SWITCH_PY );
-		setEventSwitchTable
-			( gflSndStatus, SWITCH_TREF_MODS, TRACKEF_MODS_PX, MTRACK_SWITCH_PY );
+		setEventSwitchTable(gflSndStatus, SWITCH_TREF_MODD, TRACKEF_MODD_PX, MTRACK_SWITCH_PY);
+		setEventSwitchTable(gflSndStatus, SWITCH_TREF_MODS, TRACKEF_MODS_PX, MTRACK_SWITCH_PY);
 	}
 
 	gflSndStatus->eventSwitchTable[SWITCH_MAX].rect.top = GFL_UI_TP_HIT_END;//終了データ埋め込み
