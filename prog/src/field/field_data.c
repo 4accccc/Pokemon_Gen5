@@ -42,29 +42,22 @@ static int MapID2ResistID(u16 mapid)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELDDATA_SetMapperData(
-	u16 mapid, u8 sid, FLDMAPPER_RESISTDATA * map_res, void * matrix_buf)
+	u16 mapid, u8 sid, FLDMAPPER_RESISTDATA * map_res, MAP_MATRIX *matrix_buf )
 {
 	u16 area_id = ZONEDATA_GetAreaID(mapid);
 	u16 resid = MapID2ResistID(mapid);
 	*map_res = resistMapTbl[resid].mapperData;
 
 	if (resistMapTbl[resid].isMatrixMapFlag){
-		u8 *tbl;
-		u32 matID;
-		const MAP_MATRIX_HEADER *matH;
-		
+		u16 matID;
 		matID = ZONEDATA_GetMatrixID( mapid );
-		GFL_ARC_LoadData( matrix_buf, ARCID_FLDMAP_MAPMATRIX, matID );
-		
-		matH = matrix_buf;
-		tbl = (u8*)matrix_buf + sizeof(MAP_MATRIX_HEADER);
-		
-		map_res->sizex = matH->size_h;
-		map_res->sizez = matH->size_v;
-		map_res->totalSize = matH->size_h * matH->size_v;
-		map_res->blocks = (const FLDMAPPER_MAPDATA *)tbl;
-
+		MAP_MATRIX_Init( matrix_buf, matID, mapid );
+		map_res->sizex = MAP_MATRIX_GetMapSizeX( matrix_buf );
+		map_res->sizez = MAP_MATRIX_GetMapSizeZ( matrix_buf );
+		map_res->totalSize = MAP_MATRIX_GetMapTotalSize( matrix_buf );
+		map_res->blocks = (const FLDMAPPER_MAPDATA*)MAP_MATRIX_GetMapResIDTable( matrix_buf );
 	}
+	
 	//標準フィールド以外のときだけテクスチャをグローバルにしてみる
 	if (map_res->g3DmapFileType != FLDMAPPER_FILETYPE_PKGS && area_id != AREA_ID_FIELD) {
 		gTexBuffer.arcID = ARCID_AREA_MAPTEX;

@@ -113,7 +113,6 @@ typedef struct {
 	u16						sizez;			//縦ブロック数
 	u32						totalSize;		//配列サイズ
 	const FLDMAPPER_MAPDATA*	blocks;			//実マップデータ
-
 }FLDMAPPER_RESISTDATA;
 
 //============================================================================================

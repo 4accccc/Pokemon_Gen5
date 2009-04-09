@@ -51,6 +51,8 @@
 
 #include "field_debug.h"
 
+#include "map_matrix.h"
+
 extern FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
 
 //============================================================================================
@@ -109,7 +111,7 @@ struct _FIELD_MAIN_WORK
 	int				key_cont;
 	
 	void *pGridCont;
-	void *pMapMatrixBuf;
+	MAP_MATRIX *pMapMatrix;
 	FLDMAPPER_RESISTDATA map_res;
 	
 	FIELD_COMM_MAIN *commSys;
@@ -188,7 +190,7 @@ static void SetMapperData(FIELD_MAIN_WORK * fieldWork)
 	FIELDDATA_SetMapperData(fieldWork->map_id,
 			GAMEDATA_GetSeasonID(gamedata),
 			&fieldWork->map_res,
-			fieldWork->pMapMatrixBuf);
+			fieldWork->pMapMatrix );
 }
 
 
@@ -206,8 +208,8 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork->map_id = GetSceneID(gsys);
 	fieldWork->ftbl = FIELDDATA_GetFieldFunctions(fieldWork->map_id);
 	//サイズは暫定。DPでの最大サイズは30x30
-	fieldWork->pMapMatrixBuf = GFL_HEAP_AllocClearMemory(
-			heapID, sizeof(FLDMAPPER_MAPDATA) * 32 * 32);
+	fieldWork->pMapMatrix = MAP_MATRIX_CreateWork( heapID );
+
 	//通信用処理
 	fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID , GFL_HEAPID_APP );
 #if 0
@@ -283,7 +285,7 @@ void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )
     SND_STRM_Stop();
     SND_STRM_Release();
 #endif
-    GFL_HEAP_FreeMemory( fldWork->pMapMatrixBuf );
+	MAP_MATRIX_Delete( fldWork->pMapMatrix );
 
 	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
 	FIELD_COMM_MAIN_TermSystem( fldWork->commSys , FALSE );

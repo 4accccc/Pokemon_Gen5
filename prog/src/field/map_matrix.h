@@ -1,9 +1,41 @@
-typedef struct
-{
-	u16 flag;
-	u16 kind;
-	u16 size_h;
-	u16 size_v;
-}MAP_MATRIX_HEADER;
+//======================================================================
+/**
+ *
+ * @file	map_matrix.h
+ * @brief	マップマトリクス
+ * @author	kagaya
+ * @data	05.07.13
+ *
+ */
+//======================================================================
+#ifndef MAP_MATRIX_H_FILE
+#define MAP_MATRIX_H_FILE
 
-#include "arc/test_graphic/map_matrix.naix"
+#include <gflib.h>
+
+//======================================================================
+//	define
+//======================================================================
+
+//======================================================================
+//	struct
+//======================================================================
+typedef struct _TAG_MAP_MATRIX MAP_MATRIX; ///<MAP_MATRIX
+
+//======================================================================
+//	extern
+//======================================================================
+extern MAP_MATRIX * MAP_MATRIX_CreateWork( HEAPID heapID );
+extern void MAP_MATRIX_Init(
+	MAP_MATRIX *pMat, const u16 matrix_id, const u16 zone_id );
+extern void MAP_MATRIX_Delete( MAP_MATRIX *pMat );
+
+extern u32 MAP_MATRIX_GetMatrixID( const MAP_MATRIX *pMat );
+extern u32 MAP_MATRIX_GetBlockPosZoneID(
+		const MAP_MATRIX *pMat, int x, int z );
+extern u16 MAP_MATRIX_GetMapSizeX( const MAP_MATRIX *pMat );
+extern u16 MAP_MATRIX_GetMapSizeZ( const MAP_MATRIX *pMat );
+extern u32 MAP_MATRIX_GetMapTotalSize( const MAP_MATRIX *pMat );
+extern const u32 * MAP_MATRIX_GetMapResIDTable( const MAP_MATRIX *pMat );
+
+#endif //MAP_MATRIX_H_FILE
