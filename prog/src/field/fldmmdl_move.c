@@ -1162,14 +1162,10 @@ u32 FLDMMDL_HitCheckMove(
 		pos.y = GRID_SIZE_FX32( y );
 		pos.z = GRID_SIZE_FX32( z ) + GRID_HALF_FX32;
 		
-		if( FLDMMDL_GetMapPosAttr(fmmdl,&pos,&attr) == TRUE ){
-			if( attr != 0 ){
-				ret |= FLDMMDL_MOVEHITBIT_ATTR;
-			}
-		}else{
+		if( FldMMdl_HitCheckMoveAttr(fmmdl,x,z,dir) == TRUE ){
 			ret |= FLDMMDL_MOVEHITBIT_ATTR;
 		}
-		
+
 		if( FLDMMDL_GetMapPosHeight(fmmdl,&pos,&height) == TRUE ){
 			fx32 diff = vec->y - height;
 			if( diff < 0 ){ diff = -diff; }
@@ -1368,6 +1364,8 @@ BOOL FLDMMDL_HitCheckMoveLimit( const FLDMMDL * fmmdl, s16 x, s16 y, s16 z )
 	return( FALSE );
 }
 
+#define MAP_ATTR_FLAG_HITCH (1<<0)
+
 //--------------------------------------------------------------
 /**
  * フィールド動作モデルアトリビュートヒットチェック
@@ -1378,7 +1376,7 @@ BOOL FLDMMDL_HitCheckMoveLimit( const FLDMMDL * fmmdl, s16 x, s16 y, s16 z )
  * @retval	int		TRUE=移動不可アトリビュート
  */
 //--------------------------------------------------------------
-BOOL FldMMdl_HitCheckMoveAttr(
+static BOOL FldMMdl_HitCheckMoveAttr(
 	const FLDMMDL * fmmdl, s16 x, s16 z, u16 dir )
 {
 	#ifndef FLDMMDL_PL_NULL
@@ -1405,12 +1403,25 @@ BOOL FldMMdl_HitCheckMoveAttr(
 		pos.z = GRID_SIZE_FX32( z );
 		
 		if( FLDMMDL_GetMapPosAttr(fmmdl,&pos,&attr) == TRUE ){
+#if 0
 			if( attr == 0 ){
 				return( FALSE );
 			}
+#else
+			u16 val = attr & 0xffff;
+			u16 flag = (attr&0xffff0000) >> 16;
+			if( FLDMMDL_GetOBJID(fmmdl) == FLDMMDL_ID_PLAYER ){
+				OS_Printf( "attr = %08xH, val=%xH,flag=%xH\n",
+					attr, val, flag );
+			}
+			if( (flag & MAP_ATTR_FLAG_HITCH) == 0 ){
+				return( FALSE );
+			}
+#endif
 		}
 	}
 	#endif
+	
 	return( TRUE );
 }
 
