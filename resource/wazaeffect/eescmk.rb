@@ -205,7 +205,7 @@ end
 	SEQ_MACRO_SEARCH = 4
 
 	#SEQ_INIT_CMD_SEARCH
-	INIT_CMD_POS = 2
+	INIT_CMD_POS = 0
 
 	#SEQ_BRIEF_SEARCH
 	BRIEF_POS = 2
@@ -227,7 +227,7 @@ end
 		split_data = data[i].split(/\s+/)
 		case seq_no
 		when SEQ_INIT_CMD_SEARCH
-			if split_data[ INIT_CMD_POS ] == "INIT_CMD"
+			if split_data[ INIT_CMD_POS ] == "//COMMAND_START"
 				seq_no = SEQ_BRIEF_SEARCH
 			end
 		when SEQ_BRIEF_SEARCH
@@ -308,6 +308,7 @@ end
 	num_str = ""
 	file_list = []
 	bin_list = []
+	bin_list_tmp = []
 
 	i = 0
 
@@ -418,7 +419,7 @@ end
 						file_list.size.times {|num|
 							file_name = File::basename( file_list[ num ] )
 							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
-								bin_list << file_list[ num ]
+								bin_list_tmp << file_list[ num ]
 							end
 						}
 
@@ -430,7 +431,7 @@ end
 						file_list.size.times {|num|
 							file_name = File::basename( file_list[ num ] )
 							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
-								bin_list << file_list[ num ]
+								bin_list_tmp << file_list[ num ]
 							end
 						}
 
@@ -438,6 +439,13 @@ end
 						str += file_dialog
 					when "FILE_DIALOG_COMBOBOX"
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fdc_ext( param_num -1 ) 
+						inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fdc_ext( param_num -1 ), ".h" )
+						file_list.size.times {|num|
+							file_name = File::basename( file_list[ num ] )
+							if file_name[ 0..5 ] == file_dialog[ 0..5 ]
+								bin_list_tmp << file_list[ num ]
+							end
+						}
 						file_dialog = file_dialog.sub( ".", "_" ).upcase
 						str += file_dialog
 					when "COMBOBOX_HEADER"
@@ -451,6 +459,20 @@ end
 		end
 		i += 1
 	end
+
+	count = 0
+
+	#bin_list_tmpのダブりをチェック
+	bin_list_tmp.size.times {|tmp_num|
+		bin_list.size.times {|count|
+			if bin_list[ count ] == bin_list_tmp[ tmp_num ]
+				break;
+			end
+		}
+		if bin_list.size == count
+			bin_list << bin_list_tmp[ tmp_num ]
+		end
+	}
 
 	open( "eebinary.bin", "wb" ) {|file|
 		padding = []
