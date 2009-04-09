@@ -14,7 +14,8 @@ typedef struct _FIELD_CAMERA	FIELD_CAMERA;
 //------------------------------------------------------------------
 //	ê∂ê¨ÅEÉÅÉCÉìÅEè¡ãé
 //------------------------------------------------------------------
-extern FIELD_CAMERA*		FIELD_CAMERA_Create( FIELD_MAIN_WORK * fieldWork, HEAPID heapID );
+extern FIELD_CAMERA* FIELD_CAMERA_Create(FIELD_MAIN_WORK * fieldWork,
+		GFL_G3D_CAMERA * cam, HEAPID heapID);
 extern void				FIELD_CAMERA_Delete( FIELD_CAMERA* camera );
 extern void				FIELD_CAMERA_Main( FIELD_CAMERA* camera);
 
@@ -38,6 +39,8 @@ extern void	FLD_SetCameraTransOffset(
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera);
+
+extern void FIELD_CAMERA_SetNormalCameraMode(FIELD_CAMERA * camera, const VecFx32 * watch_pos);
 extern const void FIELD_CAMERA_InitPositionWatcher(FIELD_CAMERA * camera, const VecFx32 * watch_pos);
 extern const void FIELD_CAMERA_InitOffsetWatcher(FIELD_CAMERA * camera, const VecFx32 * watch_ofs);
 

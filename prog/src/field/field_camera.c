@@ -61,14 +61,14 @@ static const FIELD_CAMERA_PARAM FieldCameraParam[] = {
  * @brief	‰Šú‰»
  */
 //------------------------------------------------------------------
-FIELD_CAMERA*	FIELD_CAMERA_Create( FIELD_MAIN_WORK * fieldWork, HEAPID heapID )
+FIELD_CAMERA* FIELD_CAMERA_Create(FIELD_MAIN_WORK * fieldWork, GFL_G3D_CAMERA * cam, HEAPID heapID)
 {
 	FIELD_CAMERA* camera = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_CAMERA) );
 
+	GF_ASSERT(cam != NULL);
 	camera->heapID = heapID;
 	camera->fieldWork = fieldWork;
-	camera->g3Dcamera = GetG3Dcamera(camera->fieldWork);
-	GF_ASSERT(camera->g3Dcamera != NULL);
+	camera->g3Dcamera = cam;
 
 	VEC_Set( &camera->pos, 0, 0, 0 );
 	camera->cameraHeight = 0;
@@ -78,6 +78,11 @@ FIELD_CAMERA*	FIELD_CAMERA_Create( FIELD_MAIN_WORK * fieldWork, HEAPID heapID )
 	camera->watch_pos = NULL;
 	camera->watch_ofs = NULL;
 
+	{
+		fx32 far = 1024 << FX32_SHIFT;
+
+		GFL_G3D_CAMERA_SetFar( camera->g3Dcamera, &far );
+	}
 	return camera;
 }
 

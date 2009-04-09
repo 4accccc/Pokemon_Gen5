@@ -318,7 +318,8 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		//セットアップ
 		fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID );
 
-		fieldWork->camera_control = FIELD_CAMERA_Create( fieldWork, fieldWork->heapID );
+		fieldWork->camera_control = FIELD_CAMERA_Create(
+				fieldWork, fieldWork->g3Dcamera, fieldWork->heapID );
 
 		SetMapperData(fieldWork);
 		FLDMAPPER_ResistData(
@@ -967,13 +968,6 @@ static void g3d_load( FIELD_MAIN_WORK * fieldWork )
 
 	//カメラ作成
 	fieldWork->g3Dcamera = GFL_G3D_CAMERA_CreateDefault( &cameraPos, &cameraTarget, fieldWork->heapID );
-	{
-		//fx32 far = 1500 << FX32_SHIFT;
-		//fx32 far = 4096 << FX32_SHIFT;
-		fx32 far = 1024 << FX32_SHIFT;
-
-		GFL_G3D_CAMERA_SetFar( fieldWork->g3Dcamera, &far );
-	}
 	//ライト作成
 	fieldWork->g3Dlightset = GFL_G3D_LIGHT_Create( &light0Setup, fieldWork->heapID );
 
