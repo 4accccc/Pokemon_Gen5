@@ -109,6 +109,13 @@ static const GFL_UI_TP_HITTBL bttndata[] = {
 // “à•”ƒ[ƒN
 //--------------------------------------------
 
+enum _BATTLETYPE_SELECT {
+    _SELECTBT_SINGLE = 0,
+    _SELECTBT_DOUBLE,
+    _SELECTBT_TRI,
+    _SELECTBT_EXIT
+};
+
 
 enum _IBMODE_SELECT {
     _SELECTMODE_BATTLE = 0,
@@ -567,22 +574,27 @@ static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork)
 static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
     switch(bttnid){
-      case EVENTIRCBTL_ENTRYMODE_SINGLE:
-      case EVENTIRCBTL_ENTRYMODE_DOUBLE:
-      case EVENTIRCBTL_ENTRYMODE_TRI:
-        pWork->selectType = bttnid;
+      case _SELECTBT_SINGLE:
+        pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
         _buttonWindowDelete(pWork);
         _CHANGE_STATE(pWork,_modeReportInit);
-        return TRUE;
-      case EVENTIRCBTL_ENTRYMODE_MULTH:
-      case EVENTIRCBTL_ENTRYMODE_EXIT:
+        break;
+      case _SELECTBT_DOUBLE:
+        pWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
+        _buttonWindowDelete(pWork);
+        _CHANGE_STATE(pWork,_modeReportInit);
+        break;
+      case _SELECTBT_TRI:
+        pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRI;
+        _buttonWindowDelete(pWork);
+        _CHANGE_STATE(pWork,_modeReportInit);
+        break;
+      default:
         _buttonWindowDelete(pWork);
         _CHANGE_STATE(pWork,_modeSelectMenuInit);
-        return TRUE;
-      default:
         break;
     }
-    return FALSE;
+    return TRUE;
 }
 
 //------------------------------------------------------------------------------

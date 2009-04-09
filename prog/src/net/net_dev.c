@@ -76,7 +76,8 @@ GFLNetDevTable* NET_DeviceLoad(int deviceNo)
         return NET_GetIrcDeviceTable();
 #endif
       default:
-        GF_ASSERT(0);
+//        GF_ASSERT(0);
+        break;
     }
     return NULL;
 }
@@ -123,7 +124,8 @@ void NET_DeviceUnload(int deviceNo)
         break;
 #endif
       default:
-        GF_ASSERT(0);
+//        GF_ASSERT(0);
+        break;
     }
 }
 

@@ -46,6 +46,7 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 FS_EXTERN_OVERLAY(battle);
 FS_EXTERN_OVERLAY(ircbattlematch);
 
+#define _LOCALMATCHNO (100)
 
 enum _EVENT_IRCBATTLE {
     _CALL_IRCBATTLE_MENU,
@@ -53,6 +54,7 @@ enum _EVENT_IRCBATTLE {
     _FIELD_FADEOUT,
     _CALL_IRCBATTLE_MATCH,
     _WAIT_IRCBATTLE_MATCH,
+    _TIMING_SYNC_CALL_BATTLE,
     _CALL_BATTLE,
     _WAIT_BATTLE,
     _CALL_IRCBATTLE_FRIEND,
@@ -104,9 +106,24 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 		break;
       case _WAIT_IRCBATTLE_MATCH:
         if (!GAMESYSTEM_IsProcExists(gsys)){
+            if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_EXIT){
+                return GMEVENT_RES_FINISH;
+            }
+            else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND){
+                *seq = _CALL_IRCBATTLE_FRIEND;
+                return GMEVENT_RES_CONTINUE;
+            }
             (*seq) ++;
+            GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+            GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
+            GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO);
         }
 		break;
+      case _TIMING_SYNC_CALL_BATTLE:
+        if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO)){
+            (*seq) ++;
+        }
+        break;
       case _CALL_BATTLE:
         switch(dbw->selectType){
           case EVENTIRCBTL_ENTRYMODE_SINGLE:
@@ -123,18 +140,14 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
             dbw->para.rule = BTL_RULE_DOUBLE;
             NET_PRINT("multiMode\n");
             break;
-          case EVENTIRCBTL_ENTRYMODE_FRIEND:
-            *seq = _CALL_IRCBATTLE_FRIEND;
-            return GMEVENT_RES_CONTINUE;
           default:
-            //キャンセル終了
-            return GMEVENT_RES_FINISH;
+            GF_ASSERT(0);
+            break;
         }
         dbw->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
         dbw->para.netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
         dbw->para.commPos = dbw->para.netID;
-        GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
-		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
+		GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &dbw->para);
         GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
 		(*seq)++;
 		break;
@@ -143,6 +156,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
             break;
         }
         NET_PRINT("バトル完了 event_ircbattle\n");
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 		(*seq) = _CALL_NET_END;
 		break;
       case _CALL_IRCBATTLE_FRIEND:  //  ともだちコード交換

@@ -169,7 +169,8 @@ NextMatchKindTbl aNextMatchKindTbl[] = {
 static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	int len;
-    EV_P2PEVENT_WORK * ep2p = pwk;
+    EVENT_WIFICLUB_WORK* pClub = (void*)pwk;
+    EV_P2PEVENT_WORK * ep2p = pClub->pWork;
 
     switch (ep2p->seq) {
       case P2P_INIT:
@@ -223,8 +224,6 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
       case P2P_EXIT:
       case P2P_SETEND:
       case P2P_FREE:
-        GFL_HEAP_FreeMemory(ep2p->pMatchParam);
-		GFL_HEAP_FreeMemory(ep2p);
 		return TRUE;
 
 	  case P2P_POFIN_WAIT:
@@ -366,15 +365,23 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
     ep2p->pMatchParam = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WIFIP2PMATCH_PROC_PARAM));
     ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(TEST_MATCH_WORK));
     ep2p->pMatchParam->pSaveData = pClub->ctrl;
-    NET_PRINT("%x\n",(int)pClub->ctrl);
+    NET_PRINT("%x %x\n",(int)ep2p->pMatchParam->pMatch,(int)pClub->ctrl);
     ep2p->pWifiList = SaveData_GetWifiListData(pClub->ctrl); //クラブに必要な物を移し変え
     ep2p->pMatchParam->seq = P2P_INIT;
     ep2p->gsys = pClub->gsys;
+
+    pClub->pWork = ep2p;
+    
     return GFL_PROC_RES_FINISH;
 }
 
 static GFL_PROC_RESULT WifiClubProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+    EVENT_WIFICLUB_WORK* pClub = pwk;
+    EV_P2PEVENT_WORK* ep2p = pClub->pWork;
+
+    GFL_HEAP_FreeMemory(ep2p->pMatchParam);
+    GFL_HEAP_FreeMemory(ep2p);
     return GFL_PROC_RES_FINISH;
 }
 

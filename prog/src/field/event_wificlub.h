@@ -21,6 +21,7 @@ typedef struct {
 	GAMESYS_WORK * gsys;
 	FIELD_MAIN_WORK * fieldmap;
     SAVE_CONTROL_WORK *ctrl;
+    void* pWork;
     BATTLE_SETUP_PARAM para;
     BOOL isEndProc;
     int selectType;

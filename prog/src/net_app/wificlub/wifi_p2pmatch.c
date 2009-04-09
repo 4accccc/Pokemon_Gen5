@@ -1611,7 +1611,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
 //        wk->MsgIndex = _PRINTTASK_MAX;
         wk->pMatch = pParentWork->pMatch;
         wk->pSaveData = pParentWork->pSaveData;
-        OS_TPrintf("--%x \n",(int)wk->pSaveData);
+        OS_TPrintf("--%x %x \n",(int)pParentWork,(int)wk->pSaveData);
         
         wk->pMyPoke = SaveData_GetTemotiPokemon(pParentWork->pSaveData);
         wk->pList = SaveData_GetWifiListData(pParentWork->pSaveData);
@@ -1696,13 +1696,13 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
 
         // シーケンス毎の動作
             if(FuncTable[wk->seq]!=NULL){
-            static int seqBk=0;
+         //   static int seqBk=0;
 
-            if(seqBk != wk->seq){
+  //          if(seqBk != wk->seq){
 //                OHNO_PRINT("wp2p %d \n",wk->seq);
-                OS_TPrintf("wp2p %d \n",wk->seq);
-            }
-            seqBk = wk->seq;
+//                OS_TPrintf("wp2p %d \n",wk->seq);
+//            }
+  //          seqBk = wk->seq;
 
             *seq = (*FuncTable[wk->seq])( wk, *seq );
         }
