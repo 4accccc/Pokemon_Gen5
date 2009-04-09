@@ -1154,8 +1154,8 @@ static void writeButton(SOUNDTEST_WORK* sw, u8 x, u8 y, BOOL flag )
  * @brief	選択サウンド名表示
  */
 //------------------------------------------------------------------
-#define NAMEMSG_STARTIDX_BGM	(msg_seq_mus_gs_bicycle)
-#define NAMEMSG_STARTIDX_SE		(msg_seq_se_dp_000)
+#define NAMEMSG_STARTIDX_BGM	(msg_seq_dummy)
+#define NAMEMSG_STARTIDX_SE		(msg_seq_se_dp_select)
 #define NAMEMSG_STARTIDX_VOICE	(msg_seq_pv)
 static void printSelectName(SOUNDTEST_WORK* sw)
 {

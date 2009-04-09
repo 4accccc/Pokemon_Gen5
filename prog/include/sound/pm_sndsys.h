@@ -9,16 +9,17 @@
 #ifndef __PMSNDSYS_H__
 #define __PMSNDSYS_H__
 
+#include "sound/sound_data.h"
 #include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 //------------------------------------------------------------------
 /**
  * @brief	データＩＮＤＥＸ有効範囲
  */
 //------------------------------------------------------------------
-#define PMSND_BGM_START		(SEQ_MUS_GS_BICYCLE)
-#define PMSND_BGM_END		(SEQ_MUS_WB_WIN4)
-#define PMSND_SE_START		(SEQ_SE_DP_000)
-#define PMSND_SE_END		(SEQ_TEST_TITLE)
+#define PMSND_BGM_START		(BGM_START)
+#define PMSND_BGM_END		(SEQ_WB_GTS)
+#define PMSND_SE_START		(SE_START)
+#define PMSND_SE_END		(SEQ_SE_GS_SLOT05)
 
 //------------------------------------------------------------------
 /**

@@ -84,7 +84,7 @@ static GMEVENT_RESULT DebugBattleEvent(GMEVENT * event, int *  seq, void * work)
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
 		// サウンドテスト
 		// 戦闘用ＢＧＭセット
-		PMSND_PlayBGM(SEQ_MUS_WB_VS_NORAPOKE);
+		PMSND_PlayBGM(SEQ_WB_VS_NORAPOKE);
 		//
 		(*seq)++;
 		break;
