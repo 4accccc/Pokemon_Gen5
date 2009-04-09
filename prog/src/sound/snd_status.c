@@ -528,7 +528,7 @@ static void SetScrnPlayerStatus( GFL_SNDSTATUS* gflSndStatus, u32 playerNoIdx )
 	int		i, x, y;
 
 	x = 17;
-	y = 22;
+	y = 21;
 
 	for( i=0; i<5; i++ ){
 		if( i == playerNoIdx ){ chrNo = 0x79; }
