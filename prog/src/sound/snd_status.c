@@ -432,7 +432,6 @@ static void writeTrackStatus( GFL_SNDSTATUS* gflSndStatus, TRACK_STATUS* status,
 	u16*	scrnBuf = gflSndStatus->scrnBuf;
 	u16		palMask = gflSndStatus->setup.bgPalID << 12;
 
-	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[status->volume].valOffs, x*2, y);
 	if( status->active == TRUE ){
 		if( status->stBtn == TRACK_STBTN_VOL_ON ){
 			chrNo = 0x42;
@@ -444,10 +443,26 @@ static void writeTrackStatus( GFL_SNDSTATUS* gflSndStatus, TRACK_STATUS* status,
 	} else {
 		chrNo = 0x40;
 	}
-	scrnBuf[ (y+7)*32 + x*2 + 0 ] = (chrNo + 0x00) | palMask;
-	scrnBuf[ (y+7)*32 + x*2 + 1 ] = (chrNo + 0x01) | palMask;
-	scrnBuf[ (y+8)*32 + x*2 + 0 ] = (chrNo + 0x10) | palMask;
-	scrnBuf[ (y+8)*32 + x*2 + 1 ] = (chrNo + 0x11) | palMask;
+	scrnBuf[ (y+7)*32 + x + 0 ] = (chrNo + 0x00) | palMask;
+	scrnBuf[ (y+7)*32 + x + 1 ] = (chrNo + 0x01) | palMask;
+	scrnBuf[ (y+8)*32 + x + 0 ] = (chrNo + 0x10) | palMask;
+	scrnBuf[ (y+8)*32 + x + 1 ] = (chrNo + 0x11) | palMask;
+}
+
+//--------------------------------------------------------------------------------------------
+static void writeReverbInfo( GFL_SNDSTATUS* gflSndStatus )
+{
+	u16		chrNo;
+	u16*	scrnBuf = gflSndStatus->scrnBuf;
+	u16		palMask = gflSndStatus->setup.bgPalID << 12;
+	int		x = 12;
+	int		y = 22;
+	int		i;
+
+	if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTOROL_REVERB ){ chrNo = 0x1c; }
+	else { chrNo = 0xa8; }
+
+	for( i=0; i<4; i++ ){ scrnBuf[ y*32 + x + i ] = (chrNo + i) | palMask; }
 }
 
 //============================================================================================
@@ -495,12 +510,16 @@ static void SetScrnChannelStatus( GFL_SNDSTATUS* gflSndStatus )
 //--------------------------------------------------------------------------------------------
 static void SetScrnTrackStatus( GFL_SNDSTATUS* gflSndStatus )
 {
-	int	x = 0;
+	TRACK_STATUS* status;
+	int	x;
 	int	y = 7;
 	int i;
 
 	for( i=0; i<TRACK_NUM; i++ ){
-		writeTrackStatus( gflSndStatus, &gflSndStatus->bgmTrackStatus[i], x + i, y );
+		status = &gflSndStatus->bgmTrackStatus[i];
+		x = i*2;
+		writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[status->volume].valOffs, x, y);
+		writeTrackStatus( gflSndStatus, status, x, y );
 	}
 }
 
@@ -509,6 +528,7 @@ static void SetScrnMasterTrackStatus( GFL_SNDSTATUS* gflSndStatus )
 {
 	MASTERTRACK_STATUS* mst = &gflSndStatus->bgmMasterTrackStatus;
 	TRACKEFFECT_STATUS* tst = &gflSndStatus->bgmTrackEffectStatus;
+	u16*	scrnBuf = gflSndStatus->scrnBuf;
 
 	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[mst->volume].valOffs, 1, 16);
 	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[mst->tempo].valOffs, 5, 16);
@@ -517,6 +537,8 @@ static void SetScrnMasterTrackStatus( GFL_SNDSTATUS* gflSndStatus )
 
 	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[tst->mod_d].valOffs, 21, 16);
 	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[tst->mod_s].valOffs, 25, 16);
+
+	//writeReverbInfo( gflSndStatus );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -705,15 +727,13 @@ static void makeEventSwitchTable( GFL_SNDSTATUS* gflSndStatus )
 	for( i=0; i<SWITCH_BGM_VOL; i++ ){
 		setEventSwitchTable(gflSndStatus, SWITCH_TR1 + i, TRACK1_PX + 16*i, TRACK_SWITCH_PY);
 	}
-	if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTOROL_ENABLE ){ 
-		setEventSwitchTable(gflSndStatus, SWITCH_BGM_VOL, MTRACK_VOLUME_PX, MTRACK_SWITCH_PY);
-		setEventSwitchTable(gflSndStatus, SWITCH_BGM_TEMPO, MTRACK_TEMPO_PX, MTRACK_SWITCH_PY);
-		setEventSwitchTable(gflSndStatus, SWITCH_BGM_PITCH, MTRACK_PITCH_PX, MTRACK_SWITCH_PY);
-		setEventSwitchTable(gflSndStatus, SWITCH_BGM_REVERB, MTRACK_REVERB_PX, MTRACK_SWITCH_PY);
+	setEventSwitchTable(gflSndStatus, SWITCH_BGM_VOL, MTRACK_VOLUME_PX, MTRACK_SWITCH_PY);
+	setEventSwitchTable(gflSndStatus, SWITCH_BGM_TEMPO, MTRACK_TEMPO_PX, MTRACK_SWITCH_PY);
+	setEventSwitchTable(gflSndStatus, SWITCH_BGM_PITCH, MTRACK_PITCH_PX, MTRACK_SWITCH_PY);
+	setEventSwitchTable(gflSndStatus, SWITCH_BGM_REVERB, MTRACK_REVERB_PX, MTRACK_SWITCH_PY);
 
-		setEventSwitchTable(gflSndStatus, SWITCH_TREF_MODD, TRACKEF_MODD_PX, MTRACK_SWITCH_PY);
-		setEventSwitchTable(gflSndStatus, SWITCH_TREF_MODS, TRACKEF_MODS_PX, MTRACK_SWITCH_PY);
-	}
+	setEventSwitchTable(gflSndStatus, SWITCH_TREF_MODD, TRACKEF_MODD_PX, MTRACK_SWITCH_PY);
+	setEventSwitchTable(gflSndStatus, SWITCH_TREF_MODS, TRACKEF_MODS_PX, MTRACK_SWITCH_PY);
 
 	gflSndStatus->eventSwitchTable[SWITCH_MAX].rect.top = GFL_UI_TP_HIT_END;//終了データ埋め込み
 	gflSndStatus->eventSwitchTable[SWITCH_MAX].rect.bottom = 0;
@@ -764,8 +784,8 @@ static BOOL checkTouchPanelEvent( GFL_SNDSTATUS* gflSndStatus )
 			}
 		}
 		if( modFlag == TRUE ){
-				SNDSTATUS_SetMod( gflSndStatus, TRUE );
-				gflSndStatus->bgmTrackEffectSw = TRUE;
+			SNDSTATUS_SetMod( gflSndStatus, TRUE );
+			gflSndStatus->bgmTrackEffectSw = TRUE;
 		} else {
 			if( gflSndStatus->bgmTrackEffectSw == TRUE ){
 				SNDSTATUS_SetMod( gflSndStatus, FALSE );
