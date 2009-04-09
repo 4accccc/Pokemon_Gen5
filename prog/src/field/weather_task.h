@@ -206,7 +206,6 @@ extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID );
 
 //-------------------------------------
 ///	発動・停止管理
-// *現在FOG処理未実装
 //=====================================
 extern void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID );
 extern void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont );
@@ -279,6 +278,16 @@ extern void WEATHER_TASK_FogClear( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE mod
 extern void WEATHER_TASK_FogFadeIn_Init( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode );
 extern void WEATHER_TASK_FogFadeOut_Init( WEATHER_TASK* p_wk, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode );
 extern BOOL WEATHER_TASK_FogFade_IsFade( const WEATHER_TASK* cp_wk );
+
+//-------------------------------------
+///	フォグブレンド操作
+//=====================================
+extern void WEATHER_TASK_Fog_SetBlendMode( WEATHER_TASK* p_wk, FIELD_FOG_BLEND blend );
+extern FIELD_FOG_BLEND WEATHER_TASK_Fog_GetBlendMode( const WEATHER_TASK* cp_wk );
+extern void WEATHER_TASK_Fog_SetAlpha( WEATHER_TASK* p_wk, u8 alpha );
+extern u8 WEATHER_TASK_Fog_GetAlpha( const WEATHER_TASK* cp_wk );
+
+
 
 //-------------------------------------
 ///　スクロール管理

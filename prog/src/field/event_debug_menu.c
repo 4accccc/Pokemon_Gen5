@@ -1723,6 +1723,7 @@ static const FLDMENUFUNC_LIST DATA_WeatherMenuList[] =
 	{ D_TOMOYA_WEATEHR05, (void*)WEATHER_NO_SPARK },
 	{ D_TOMOYA_WEATEHR06, (void*)WEATHER_NO_SNOWSTORM },
 	{ D_TOMOYA_WEATEHR07, (void*)WEATHER_NO_ARARE },
+	{ D_TOMOYA_WEATEHR08, (void*)WEATHER_NO_MIRAGE },
 };
 #define DEBUG_WEATHERLIST_LIST_MAX	( NELEMS(DATA_WeatherMenuList) )
 
@@ -1850,7 +1851,7 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent2(
 				msgBG, NARC_message_d_field_dat );
 			listdata = FLDMENUFUNC_CreateMakeListData(
 				DATA_SeasonMenuList, max, work->msgData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 8, 7 );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 16, 7 );
 			
 			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
 			GFL_MSG_Delete( work->msgData );

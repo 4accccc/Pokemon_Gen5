@@ -941,6 +941,8 @@ void WEATHER_TASK_FogSet( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog
 {
 	if( mode == WEATHER_TASK_FOG_USE ){
 
+		FIELD_FOG_SetBlendMode( p_wk->p_fog, FIELD_FOG_BLEND_COLOR_ALPHA );
+		FIELD_FOG_SetColorA( p_wk->p_fog, 31 );
 		FIELD_FOG_SetSlope( p_wk->p_fog, fog_slope );
 		FIELD_FOG_SetOffset( p_wk->p_fog, fog_offs );
 		FIELD_FOG_TBL_SetUpDefault( p_wk->p_fog );
@@ -1014,6 +1016,60 @@ extern BOOL WEATHER_TASK_FogFade_IsFade( const WEATHER_TASK* cp_wk )
 		return FALSE;	
 	}
 	return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	FOGブレンドモード設定
+ *
+ *	@param	p_wk		ワーク
+ *	@param	blend		ブレンド
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_Fog_SetBlendMode( WEATHER_TASK* p_wk, FIELD_FOG_BLEND blend )
+{
+	FIELD_FOG_SetBlendMode( p_wk->p_fog, blend );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	FOGブレンドモード取得
+ *
+ *	@param	cp_wk		ワーク
+ *
+ *	@return	ブレンドモード
+ */
+//-----------------------------------------------------------------------------
+FIELD_FOG_BLEND WEATHER_TASK_Fog_GetBlendMode( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_FOG_GetBlendMode( cp_wk->p_fog );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	FOGブレンドアルファ値設定
+ *
+ *	@param	p_wk		ワーク
+ *	@param	alpha		アルファ値
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_Fog_SetAlpha( WEATHER_TASK* p_wk, u8 alpha )
+{
+	FIELD_FOG_SetColorA( p_wk->p_fog, alpha );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	FOGブレンドアルファ値取得
+ *
+ *	@param	cp_wk	ワーク
+ *
+ *	@return	アルファ値
+ */
+//-----------------------------------------------------------------------------
+u8 WEATHER_TASK_Fog_GetAlpha( const WEATHER_TASK* cp_wk )
+{
+	return FIELD_FOG_GetColorA( cp_wk->p_fog );
 }
 
 

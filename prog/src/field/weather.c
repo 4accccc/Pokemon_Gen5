@@ -24,6 +24,7 @@
 #include "weather_snow.h"
 #include "weather_rain.h"
 #include "weather_storm.h"
+#include "weather_mirage.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -203,6 +204,12 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 	{
 		&c_WEATHER_TASK_DATA_ARARE,
 		FS_OVERLAY_ID(field_weather_snow)
+	},
+
+	// å‡‹C˜O
+	{
+		&c_WEATHER_TASK_DATA_MIRAGE,
+		FS_OVERLAY_ID(field_weather_storm)
 	},
 
 };
