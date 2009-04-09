@@ -16,16 +16,20 @@
 //# は引数を文字列に ## は文字列の結合 \ でマクロの改行
 
 //externで関数を定義し、別ソースで関数が宣言されていてもOKなように
-//extern SCRIPT_FINISH_TYPE STA_SCRIPT_FuncName_Func(STA_SCRIPT_SYS *work,STA_SCRIPT_WORK *scriptWork);
-#define SCRIPT_FUNC_DEF(str) extern SCRIPT_FINISH_TYPE STA_SCRIPT_ ## str ## _Func(STA_SCRIPT_SYS *work,STA_SCRIPT_WORK *scriptWork);
+//extern VMCMD_RESULT STA_SCRIPT_FuncName_Func(VMHANDLE *vmh, void *context_work);
+#define SCRIPT_FUNC_DEF(str) extern VMCMD_RESULT STA_SCRIPT_ ## str ## _Func(VMHANDLE *vmh, void *context_work);
 #include "script_table.dat"
 #undef SCRIPT_FUNC_DEF
 
+//============================================================================================
+/**
+ *	スクリプトテーブル
+ */
+//============================================================================================
 //定義された順に関数を配列に格納
 //STA_SCRIPT_FuncName_Func,
 #define SCRIPT_FUNC_DEF(str) STA_SCRIPT_ ## str ## _Func,
-STA_SCRIPT_FUNC STA_ScriptFuncArr[] =
-{
+VMCMD_FUNC STA_ScriptFuncArr[]={
 #include "script_table.dat"
 };
 #undef SCRIPT_FUNC_DEF

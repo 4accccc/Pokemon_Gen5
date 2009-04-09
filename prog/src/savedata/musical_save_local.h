@@ -10,9 +10,11 @@
 #ifndef MUSICAL_SAVE_LOCAL_H__
 #define MUSICAL_SAVE_LOCAL_H__
 
+#include "savedata/musical_save.h"
+
 struct _MUSICAL_SAVE {
-	u32 dummy;
-	
+	//‘O‰ñ‘•”õ
+	MUSICAL_EQUIP_SAVE	befEquip;
 };
 
 

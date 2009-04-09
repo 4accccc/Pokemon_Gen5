@@ -38,7 +38,6 @@ SCRIPT_FUNC_DEF( EffectRepeatStart )//10//エフェクト連続再生
 
 //ライト系
 SCRIPT_FUNC_DEF( LightShowCircle )	//2	//ライトON(円形
-SCRIPT_FUNC_DEF( LightShowShine )	//3	//ライトON(台形
 SCRIPT_FUNC_DEF( LightHide )		//1	//ライトOFF
 SCRIPT_FUNC_DEF( LightMove )		//5	//ライト移動
 SCRIPT_FUNC_DEF( LightColor )		//3	//ライト色設定

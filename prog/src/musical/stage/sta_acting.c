@@ -14,6 +14,7 @@
 
 #include "arc_def.h"
 #include "musical_item.naix"
+#include "musical_script.naix"
 #include "stage_gra.naix"
 #include "message.naix"
 #include "print/printsys.h"
@@ -29,13 +30,8 @@
 
 #include "musical/musical_stage_sys.h"
 #include "sta_local_def.h"
-#include "sta_acting.h"
-#include "sta_act_effect.h"
-#include "sta_act_poke.h"
-#include "sta_act_obj.h"
-#include "sta_act_light.h"
+#include "script/sta_act_script_def.h"
 #include "sta_act_bg.h"
-#include "script/sta_act_script.h"
 
 #include "eff_def/mus_eff.h"
 
@@ -168,8 +164,6 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
-#include "script/script_table.h"	//↓のスクリプト定義用
-#include "script/script_test.dat"	//スクリプトテストデータ
 ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
 {
 	u8 i;
@@ -262,17 +256,19 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 		{
 			
 			//演劇風
-			STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData );
+			//STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData );
+			void *scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_we_001_bin , FALSE , work->heapId );
+			STA_SCRIPT_SetScript( work->scriptSys , scriptData );
 		}
 		if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
 		{
 			//ミュージカル風
-			STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData2 );
+			//STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData2 );
 		}
 		if(	(GFL_UI_KEY_GetCont() & PAD_BUTTON_L) && 
 			GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
 		{
-			STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestDataAri );
+//			STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestDataAri );
 		}
 	}
 	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )

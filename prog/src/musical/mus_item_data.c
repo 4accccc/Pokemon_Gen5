@@ -26,11 +26,11 @@
 //======================================================================
 typedef enum
 {
-	EPB_HEAD = 1,
-	EPB_EAR = 2,
-	EPB_BODY = 4,
-	EPB_WAIST = 8,
-	EPB_HAND = 16,
+	EPB_HEAD	= 1<<MUS_POKE_EQU_TYPE_HEAD,
+	EPB_EAR		= 1<<MUS_POKE_EQU_TYPE_EAR,
+	EPB_BODY	= 1<<MUS_POKE_EQU_TYPE_BODY,
+	EPB_WAIST	= 1<<MUS_POKE_EQU_TYPE_WAIST,
+	EPB_HAND	= 1<<MUS_POKE_EQU_TYPE_HAND,
 }EQIUP_POS_BIT;
 
 //======================================================================

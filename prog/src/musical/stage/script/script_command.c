@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "system/vm_cmd.h"
 
 #include "print/gf_font.h"
 
@@ -24,8 +25,8 @@
 #pragma mark [> define
 #define SCRIPT_PRINT_LABEL(str) ARI_TPrintf("SCRIPT Frame[%4d] No[%d]%s\n",scriptWork->frame, SCRIPT_ENUM_ ## str ,#str);
 
-#define ScriptFunc_GetValueS32(ptr) (*((s32*)ptr)++)
-#define ScriptFunc_GetValuefx32(ptr) (*((fx32*)ptr)++)
+#define ScriptFunc_GetValueS32() (VMGetU32(scriptWork->vmHandle))
+#define ScriptFunc_GetValuefx32() (VMGetU32(scriptWork->vmHandle))
 
 //通常のタスクプライオリティ
 //追従系などは低く設定することで、本体の移動を優先させる
@@ -101,9 +102,9 @@ typedef struct
 //======================================================================
 #pragma mark [> proto
 
-//関数を全部staticで宣言
-//static SCRIPT_FINISH_TYPE STA_SCRIPT_FuncName_Func(STA_SCRIPT_SYS *work,STA_SCRIPT_WORK *scriptWork);
-#define SCRIPT_FUNC_DEF(str) SCRIPT_FINISH_TYPE STA_SCRIPT_ ## str ## _Func(STA_SCRIPT_SYS *work,STA_SCRIPT_WORK *scriptWork);
+//関数を全部を宣言
+//VMCMD_RESULT STA_SCRIPT_FuncName_Func(VMHANDLE *vmh, void *context_work);
+#define SCRIPT_FUNC_DEF(str) VMCMD_RESULT STA_SCRIPT_ ## str ## _Func(VMHANDLE *vmh, void *context_work);
 #include "script_table.dat"
 #undef SCRIPT_FUNC_DEF
 
@@ -124,6 +125,10 @@ static void SCRIPT_TCB_MoveLightTCB(  GFL_TCB *tcb, void *work );
 static void SCRIPT_TCB_PokeAct_Jump(  GFL_TCB *tcb, void *work );
 
 static void SCRIPT_TCB_EffectRepeat(  GFL_TCB *tcb, void *work );
+
+//======================================================================
+//	data
+//======================================================================
 
 //------------------------------------------------------------------
 //	汎用関数
@@ -187,7 +192,7 @@ static REPEAT_MNG_RETURN SCRIPT_TCB_UpdateRepeat( REPEAT_MNG_WORK *repeatWork )
 
 
 
-#define SCRIPT_FUNC_DEF(str) SCRIPT_FINISH_TYPE STA_SCRIPT_ ## str ## _Func(STA_SCRIPT_SYS *work,STA_SCRIPT_WORK *scriptWork)
+#define SCRIPT_FUNC_DEF(str) VMCMD_RESULT STA_SCRIPT_ ## str ## _Func(VMHANDLE *vmh, void *context_work)
 
 //------------------------------------------------------------------
 //	システム
@@ -196,14 +201,17 @@ static REPEAT_MNG_RETURN SCRIPT_TCB_UpdateRepeat( REPEAT_MNG_WORK *repeatWork )
 //スクリプトの終了
 SCRIPT_FUNC_DEF( ScriptFinish )
 {
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	SCRIPT_PRINT_LABEL(ScriptFinish);
-	return SFT_END;
+	scriptWork->isFinish = TRUE;
+	return SFT_SUSPEND;
 }
 
 //指定フレーム待機
 SCRIPT_FUNC_DEF( FrameWait )
 {
-	const s32 count = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	const s32 count = ScriptFunc_GetValueS32();
 	scriptWork->waitCnt = count;
 
 	SCRIPT_PRINT_LABEL(FrameWait);
@@ -213,8 +221,10 @@ SCRIPT_FUNC_DEF( FrameWait )
 //指定フレームまで待つ
 SCRIPT_FUNC_DEF( FrameWaitTime )
 {
-	const s32 count = ScriptFunc_GetValueS32(scriptWork->loadPos);
-;
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 count = ScriptFunc_GetValueS32();
+
 	SCRIPT_PRINT_LABEL(FrameWaitTime);
 	
 	if( scriptWork->frame >= count )
@@ -237,6 +247,8 @@ SCRIPT_FUNC_DEF( FrameWaitTime )
 //カーテン上げる(固定速度
 SCRIPT_FUNC_DEF( CurtainUp )
 {
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
 	MOVE_WORK_S32 *moveWork;
 	SCRIPT_PRINT_LABEL(CurtainUp);
 
@@ -256,6 +268,8 @@ SCRIPT_FUNC_DEF( CurtainUp )
 //カーテン下げる(固定速度
 SCRIPT_FUNC_DEF( CurtainDown )
 {
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
 	MOVE_WORK_S32 *moveWork;
 	SCRIPT_PRINT_LABEL(CurtainDown);
 	moveWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_WORK_S32 ));
@@ -273,8 +287,10 @@ SCRIPT_FUNC_DEF( CurtainDown )
 //カーテン動かす
 SCRIPT_FUNC_DEF( CurtainMove )
 {
-	const s32 frame = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 pos = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 frame = ScriptFunc_GetValueS32();
+	const s32 pos = ScriptFunc_GetValuefx32();
 	
 	if( frame == 0 )
 	{
@@ -322,8 +338,10 @@ static void SCRIPT_TCB_MoveCurtainTCB(  GFL_TCB *tcb, void *work )
 //ステージを移動させる
 SCRIPT_FUNC_DEF( StageMove )
 {
-	const s32 frame = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 pos = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 frame = ScriptFunc_GetValueS32();
+	const s32 pos = ScriptFunc_GetValuefx32();
 	
 	if( frame == 0 )
 	{
@@ -367,7 +385,9 @@ static void SCRIPT_TCB_MoveStageTCB(  GFL_TCB *tcb, void *work )
 //BG読み替え
 SCRIPT_FUNC_DEF( StageChangeBg )
 {
-	const s32 bgNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 bgNo = ScriptFunc_GetValueS32();
 	
 	STA_ACT_LoadBg( work->actWork , bgNo );
 
@@ -383,8 +403,10 @@ SCRIPT_FUNC_DEF( StageChangeBg )
 //ポケモン表示制御
 SCRIPT_FUNC_DEF( PokeShow )
 {
-	const s32 pokeNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 flg = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 flg = ScriptFunc_GetValueS32();
 
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
@@ -398,8 +420,10 @@ SCRIPT_FUNC_DEF( PokeShow )
 //ポケモン向き
 SCRIPT_FUNC_DEF( PokeDir )
 {
-	const s32 pokeNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 dir = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 dir = ScriptFunc_GetValueS32();
 
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
@@ -413,11 +437,13 @@ SCRIPT_FUNC_DEF( PokeDir )
 //ポケモン移動
 SCRIPT_FUNC_DEF( PokeMove )
 {
-	const s32 pokeNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 frame = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const fx32 posX = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posY = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posZ = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 frame = ScriptFunc_GetValueS32();
+	const fx32 posX = ScriptFunc_GetValuefx32();
+	const fx32 posY = ScriptFunc_GetValuefx32();
+	const fx32 posZ = ScriptFunc_GetValuefx32();
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
@@ -471,7 +497,9 @@ static void SCRIPT_TCB_MovePokeTCB(  GFL_TCB *tcb, void *work )
 //ポケモンアニメ停止
 SCRIPT_FUNC_DEF( PokeStopAnime )
 {
-	const s32 pokeNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 pokeNo = ScriptFunc_GetValueS32();
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
@@ -485,7 +513,9 @@ SCRIPT_FUNC_DEF( PokeStopAnime )
 //ポケモンアニメ開始
 SCRIPT_FUNC_DEF( PokeStartAnime )
 {
-	const s32 pokeNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 pokeNo = ScriptFunc_GetValueS32();
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
@@ -499,8 +529,10 @@ SCRIPT_FUNC_DEF( PokeStartAnime )
 //ポケモンアニメ変更
 SCRIPT_FUNC_DEF( PokeChangeAnime )
 {
-	const s32 pokeNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 anmIdx = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 anmIdx = ScriptFunc_GetValueS32();
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
@@ -523,10 +555,12 @@ typedef struct
 
 SCRIPT_FUNC_DEF( PokeActionJump )
 {
-	const s32 pokeNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 interval = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 num = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 height = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 interval = ScriptFunc_GetValueS32();
+	const s32 num = ScriptFunc_GetValuefx32();
+	const fx32 height = ScriptFunc_GetValuefx32();
 
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
@@ -581,8 +615,10 @@ static void SCRIPT_TCB_PokeAct_Jump(  GFL_TCB *tcb, void *work )
 //オブジェクト作成
 SCRIPT_FUNC_DEF( ObjectCreate )
 {
-	const s32 objNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 objType = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 objNo = ScriptFunc_GetValueS32();
+	const s32 objType = ScriptFunc_GetValueS32();
 	
 	STA_OBJ_SYS  *objSys = STA_ACT_GetObjectSys( work->actWork );
 	STA_OBJ_WORK *objWork;
@@ -598,7 +634,9 @@ SCRIPT_FUNC_DEF( ObjectCreate )
 //オブジェクト破棄
 SCRIPT_FUNC_DEF( ObjectDelete )
 {
-	const s32 objNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 objNo = ScriptFunc_GetValueS32();
 	
 	STA_OBJ_SYS  *objSys = STA_ACT_GetObjectSys( work->actWork );
 	STA_OBJ_WORK *objWork = STA_ACT_GetObjectWork( work->actWork , objNo );
@@ -612,7 +650,9 @@ SCRIPT_FUNC_DEF( ObjectDelete )
 //オブジェクト表示
 SCRIPT_FUNC_DEF( ObjectShow )
 {
-	const s32 objNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 objNo = ScriptFunc_GetValueS32();
 	
 	STA_OBJ_SYS  *objSys = STA_ACT_GetObjectSys( work->actWork );
 	STA_OBJ_WORK *objWork = STA_ACT_GetObjectWork( work->actWork , objNo );
@@ -626,7 +666,9 @@ SCRIPT_FUNC_DEF( ObjectShow )
 //オブジェクト非表示
 SCRIPT_FUNC_DEF( ObjectHide )
 {
-	const s32 objNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 objNo = ScriptFunc_GetValueS32();
 	
 	STA_OBJ_SYS  *objSys = STA_ACT_GetObjectSys( work->actWork );
 	STA_OBJ_WORK *objWork = STA_ACT_GetObjectWork( work->actWork , objNo );
@@ -640,11 +682,13 @@ SCRIPT_FUNC_DEF( ObjectHide )
 //オブジェクト移動
 SCRIPT_FUNC_DEF( ObjectMove )
 {
-	const s32 objNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 frame = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const fx32 posX = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posY = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posZ = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 objNo = ScriptFunc_GetValueS32();
+	const s32 frame = ScriptFunc_GetValueS32();
+	const fx32 posX = ScriptFunc_GetValuefx32();
+	const fx32 posY = ScriptFunc_GetValuefx32();
+	const fx32 posZ = ScriptFunc_GetValuefx32();
 	
 	STA_OBJ_SYS  *objSys = STA_ACT_GetObjectSys( work->actWork );
 	STA_OBJ_WORK *objWork = STA_ACT_GetObjectWork( work->actWork , objNo );
@@ -703,8 +747,10 @@ static void SCRIPT_TCB_MoveObjTCB(  GFL_TCB *tcb, void *work )
 //エフェクト作成
 SCRIPT_FUNC_DEF( EffectCreate )
 {
-	const s32 effectNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 fileNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 effectNo = ScriptFunc_GetValueS32();
+	const s32 fileNo = ScriptFunc_GetValueS32();
 	
 	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
 	STA_EFF_WORK *effWork = STA_EFF_CreateEffect( effSys , NARC_stage_gra_mus_eff_00_spa + fileNo );
@@ -718,7 +764,9 @@ SCRIPT_FUNC_DEF( EffectCreate )
 //エフェクト破棄
 SCRIPT_FUNC_DEF( EffectDelete )
 {
-	const s32 effectNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 effectNo = ScriptFunc_GetValueS32();
 	
 	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
 	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
@@ -732,11 +780,13 @@ SCRIPT_FUNC_DEF( EffectDelete )
 //エフェクト再生
 SCRIPT_FUNC_DEF( EffectStart )
 {
-	const s32 effectNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 emiterNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const fx32 posX = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posY = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posZ = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 effectNo = ScriptFunc_GetValueS32();
+	const s32 emiterNo = ScriptFunc_GetValueS32();
+	const fx32 posX = ScriptFunc_GetValuefx32();
+	const fx32 posY = ScriptFunc_GetValuefx32();
+	const fx32 posZ = ScriptFunc_GetValuefx32();
 	VecFx32	pos;
 
 //	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
@@ -752,8 +802,10 @@ SCRIPT_FUNC_DEF( EffectStart )
 //エフェクト停止
 SCRIPT_FUNC_DEF( EffectStop )
 {
-	const s32 effectNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 emiterNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 effectNo = ScriptFunc_GetValueS32();
+	const s32 emiterNo = ScriptFunc_GetValueS32();
 
 //	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
 	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
@@ -776,16 +828,18 @@ typedef struct
 
 SCRIPT_FUNC_DEF( EffectRepeatStart )
 {
-	const s32 effectNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 emiterNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 interval = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 num = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posXStart = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posXEnd = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posYStart = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posYEnd = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posZStart = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posZEnd = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 effectNo = ScriptFunc_GetValueS32();
+	const s32 emiterNo = ScriptFunc_GetValueS32();
+	const s32 interval = ScriptFunc_GetValueS32();
+	const s32 num = ScriptFunc_GetValuefx32();
+	const fx32 posXStart = ScriptFunc_GetValuefx32();
+	const fx32 posXEnd = ScriptFunc_GetValuefx32();
+	const fx32 posYStart = ScriptFunc_GetValuefx32();
+	const fx32 posYEnd = ScriptFunc_GetValuefx32();
+	const fx32 posZStart = ScriptFunc_GetValuefx32();
+	const fx32 posZEnd = ScriptFunc_GetValuefx32();
 	
 //	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
 	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
@@ -843,8 +897,10 @@ static void SCRIPT_TCB_EffectRepeat(  GFL_TCB *tcb, void *work )
 //ライトON(円形
 SCRIPT_FUNC_DEF( LightShowCircle )
 {
-	const s32 lightNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const fx32 rad = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 lightNo = ScriptFunc_GetValueS32();
+	const fx32 rad = ScriptFunc_GetValueS32();
 	
 	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
 	STA_LIGHT_WORK *lightWork;
@@ -859,31 +915,12 @@ SCRIPT_FUNC_DEF( LightShowCircle )
 	return SFT_CONTINUE;
 }
 
-//ライトON(台形
-SCRIPT_FUNC_DEF( LightShowShine )
-{
-	const s32 lightNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const fx32 upLen = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const fx32 downLen = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	
-	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
-	STA_LIGHT_WORK *lightWork;
-	
-	lightWork = STA_LIGHT_CreateObject( lightSys , ALT_SHINES );
-	STA_LIGHT_SetColor( lightSys , lightWork , GX_RGB(31,31,0) , 16 );
-	STA_LIGHT_SetOptionValue( lightSys , lightWork , upLen , downLen );
-	
-	STA_ACT_SetLightWork( work->actWork , lightWork , lightNo );
-	
-
-	SCRIPT_PRINT_LABEL(LightShowShine);
-	return SFT_CONTINUE;
-}
-
 //ライトOFF
 SCRIPT_FUNC_DEF( LightHide )
 {
-	const s32 lightNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 lightNo = ScriptFunc_GetValueS32();
 
 	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
 	STA_LIGHT_WORK *lightWork = STA_ACT_GetLightWork( work->actWork , lightNo );
@@ -897,12 +934,14 @@ SCRIPT_FUNC_DEF( LightHide )
 //ライト移動
 SCRIPT_FUNC_DEF( LightMove )
 {
-	const s32 lightNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 frame = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const fx32 posX = ScriptFunc_GetValuefx32(scriptWork->loadPos);
-	const fx32 posY = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 lightNo = ScriptFunc_GetValueS32();
+	const s32 frame = ScriptFunc_GetValueS32();
+	const fx32 posX = ScriptFunc_GetValuefx32();
+	const fx32 posY = ScriptFunc_GetValuefx32();
 	//現在Zは計算してない。有効にすることは可能だが必要？
-	const fx32 posZ = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	const fx32 posZ = ScriptFunc_GetValuefx32();
 	
 	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
 	STA_LIGHT_WORK *lightWork = STA_ACT_GetLightWork( work->actWork , lightNo );
@@ -957,11 +996,13 @@ static void SCRIPT_TCB_MoveLightTCB(  GFL_TCB *tcb, void *work )
 //ライト色設定
 SCRIPT_FUNC_DEF( LightColor )
 {
-	const s32 lightNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 colR = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 colG = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 colB = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 alpha = ScriptFunc_GetValuefx32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 lightNo = ScriptFunc_GetValueS32();
+	const s32 colR = ScriptFunc_GetValueS32();
+	const s32 colG = ScriptFunc_GetValueS32();
+	const s32 colB = ScriptFunc_GetValueS32();
+	const s32 alpha = ScriptFunc_GetValuefx32();
 	const GXRgb col = GX_RGB( (u8)colR , (u8)colG , (u8)colB );
 	
 	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
@@ -981,8 +1022,10 @@ SCRIPT_FUNC_DEF( LightColor )
 //メッセージ表示
 SCRIPT_FUNC_DEF( MessageShow )
 {
-	const s32 msgNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 dispSpd = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 msgNo = ScriptFunc_GetValueS32();
+	const s32 dispSpd = ScriptFunc_GetValueS32();
 
 	STA_ACT_ShowMessage( work->actWork , msgNo , dispSpd );
 	SCRIPT_PRINT_LABEL(MessageShow);
@@ -992,6 +1035,8 @@ SCRIPT_FUNC_DEF( MessageShow )
 //メッセージ消去
 SCRIPT_FUNC_DEF( MessageHide )
 {
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
 	
 	STA_ACT_HideMessage( work->actWork );
 	SCRIPT_PRINT_LABEL(MessageHide);
@@ -1001,9 +1046,11 @@ SCRIPT_FUNC_DEF( MessageHide )
 //メッセージ消去
 SCRIPT_FUNC_DEF( MessageColor )
 {
-	const s32 msgCol = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 shadowCol = ScriptFunc_GetValueS32(scriptWork->loadPos);
-	const s32 backNo = ScriptFunc_GetValueS32(scriptWork->loadPos);
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 msgCol = ScriptFunc_GetValueS32();
+	const s32 shadowCol = ScriptFunc_GetValueS32();
+	const s32 backNo = ScriptFunc_GetValueS32();
 	GFL_FONTSYS_SetColor( msgCol,shadowCol,backNo );
 
 	SCRIPT_PRINT_LABEL(MessageColor);

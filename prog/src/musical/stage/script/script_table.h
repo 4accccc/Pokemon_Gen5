@@ -9,6 +9,8 @@
 #ifndef SCRIPT_TABLE_H__
 #define SCRIPT_TABLE_H__
 
+#include "system/vm_cmd.h"
+
 #include "sta_act_script.h"
 #include "sta_act_script_def.h"
 
@@ -24,7 +26,7 @@ enum
 
 
 //スクリプトテーブル
-extern STA_SCRIPT_FUNC STA_ScriptFuncArr[];
+extern VMCMD_FUNC STA_ScriptFuncArr[];
 
 #endif SCRIPT_TABLE_H__
 

@@ -36,6 +36,19 @@
 #pragma mark [> proto
 static BOOL STA_SCRIPT_UpdateScript( STA_SCRIPT_SYS *work , STA_SCRIPT_WORK *scriptWork );
 
+//============================================================================================
+/**
+ *	VMイニシャライザテーブル
+ */
+//============================================================================================
+static	const VM_INITIALIZER	vm_init={
+	16,//BTLV_EFFVM_STACK_SIZE,				//u16 stack_size;	///<使用するスタックのサイズ
+	8,//BTLV_EFFVM_REG_SIZE,				//u16 reg_size;		///<使用するレジスタの数
+	STA_ScriptFuncArr,			//const VMCMD_FUNC * command_table;	///<使用する仮想マシン命令の関数テーブル
+	SCRIPT_ENUM_MAX,			//const u32 command_max;			///<使用する仮想マシン命令定義の最大数
+};
+
+
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
@@ -112,11 +125,17 @@ void STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData )
 	work->scriptWork[i]->loadPos = work->scriptWork[i]->scriptData;
 	work->scriptWork[i]->waitCnt = 0;
 	work->scriptWork[i]->frame = 0;
+	work->scriptWork[i]->isFinish = FALSE;
+
+	work->scriptWork[i]->sysWork = work;
+	work->scriptWork[i]->vmHandle = VM_Create( work->heapId , &vm_init );
+	VM_Init( work->scriptWork[i]->vmHandle , (void*)work->scriptWork[i] );
+	VM_Start( work->scriptWork[i]->vmHandle , work->scriptWork[i]->scriptData );
 }
 
 static BOOL STA_SCRIPT_UpdateScript( STA_SCRIPT_SYS *work , STA_SCRIPT_WORK *scriptWork )
 {
-	SCRIPT_FINISH_TYPE ret = SFT_CONTINUE;
+	
 	if( scriptWork->waitCnt > 0 )
 	{
 		scriptWork->waitCnt--;
@@ -124,18 +143,12 @@ static BOOL STA_SCRIPT_UpdateScript( STA_SCRIPT_SYS *work , STA_SCRIPT_WORK *scr
 
 	if( scriptWork->waitCnt == 0 )
 	{
-		while( ret == SFT_CONTINUE )
+		VM_Control( scriptWork->vmHandle );
+		if( scriptWork->isFinish == TRUE )
 		{
-			s32 *scriptNo = scriptWork->loadPos;
-			((s32*)scriptWork->loadPos)++;
-			GF_ASSERT_MSG( *scriptNo < SCRIPT_ENUM_MAX , "ScriptNo[%d] is invalid!!\n",*scriptNo);
-			ret = STA_ScriptFuncArr[*scriptNo](work,scriptWork);
-		}
-		if( ret == SFT_END )
-		{
-			//FIXME ここでスクリプトデータをFreeすべきか？
-			//今はファイル読み込みではないためで開放できず・・・
-	//		GFL_HEAP_FreeMemory( scriptWork->scriptData );
+			VM_End( scriptWork->vmHandle );
+			VM_Delete( scriptWork->vmHandle );
+			GFL_HEAP_FreeMemory( scriptWork->scriptData );
 			return TRUE;
 		}
 	}

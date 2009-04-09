@@ -38,5 +38,9 @@ int MUSICAL_SAVE_GetWorkSize(void)
 
 void MUSICAL_SAVE_InitWork(MUSICAL_SAVE *mus_save)
 {
-	
+	u8 i;
+	for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
+	{
+		mus_save->befEquip.equipData[i].pos = MUS_POKE_EQU_INVALID;
+	}
 }

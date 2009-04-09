@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: musical_script.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MUSICAL_SCRIPT_NAIX_
+#define NARC_MUSICAL_SCRIPT_NAIX_
+
+enum {
+	NARC_musical_script_eebinary_bin = 0,
+	NARC_musical_script_we_001_bin = 1
+};
+
+/* NARC_MUSICAL_SCRIPT_NAIX_ */
+#endif

@@ -10,6 +10,8 @@
 #ifndef STA_ACT_SCRIPT_DEF_H__
 #define STA_ACT_SCRIPT_DEF_H__
 
+#include "system/vm_cmd.h"
+
 #include "sta_act_script.h"
 #include "../sta_acting.h"
 #include "../sta_act_effect.h"
@@ -29,9 +31,8 @@
 #pragma mark [> enum
 typedef enum
 {
-	SFT_CONTINUE,	//継続
-	SFT_SUSPEND,	//次フレームへ
-	SFT_END,		//スクリプト終了
+	SFT_CONTINUE = VMCMD_RESULT_CONTINUE,	//継続
+	SFT_SUSPEND  = VMCMD_RESULT_SUSPEND,	//次フレームへ
 	
 }SCRIPT_FINISH_TYPE;
 
@@ -49,6 +50,10 @@ typedef struct
 	
 	u32		frame;
 	u16		waitCnt;
+	BOOL	isFinish;
+	
+	STA_SCRIPT_SYS *sysWork;
+	VMHANDLE	*vmHandle;
 	
 }STA_SCRIPT_WORK;
 

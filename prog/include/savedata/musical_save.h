@@ -11,11 +11,24 @@
 #define MUSICAL_SAVE_H__
 
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORK参照のため
+#include "musical/musical_define.h"
 
 
 //======================================================================
 //	typedef struct
 //======================================================================
+
+typedef struct
+{
+	u8	pos;					//装備箇所(MUS_POKE_EQUIP_POS）
+	MUSICAL_POKE_EQUIP data;	//アイテム番号と角度
+}MUSICAL_EQUIP_ONE_SAVE;
+
+typedef struct
+{
+	MUSICAL_EQUIP_ONE_SAVE equipData[MUSICAL_ITEM_EQUIP_MAX];
+}MUSICAL_EQUIP_SAVE;
+
 typedef struct _MUSICAL_SAVE MUSICAL_SAVE;
 
 
