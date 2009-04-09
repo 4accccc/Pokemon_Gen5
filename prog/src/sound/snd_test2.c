@@ -292,7 +292,7 @@ static const GFL_UI_TP_HITTBL eventTouchPanelTableCont[SNDTEST_TPEVCONT_MAX + 1]
 };
 
 static const u16 tpRepeatFrame[] = {
-	64, 32, 16, 8, 4, 2, 1, 0, 
+	32, 16, 8, 4, 2, 1, 0, 
 };
 
 //------------------------------------------------------------------
@@ -322,7 +322,6 @@ static const int initNoData[NOIDX_MAX] = {
 typedef struct {
 	HEAPID				heapID;
 	int					seq;
-	int					timer;
 
 	GFL_SNDSTATUS*		gflSndStatus;
 	GFL_SKB*			gflSkb;
@@ -330,29 +329,24 @@ typedef struct {
 
 	void*				skbStrBuf;
 
-	GFL_MSGDATA* msgman;			//メッセージマネージャー
-	GFL_MSGDATA* monsmsgman;		//メッセージマネージャー
-
-	BMP_MENULIST_DATA	*menuList;
-	BMPMENULIST_WORK	*menuWork;
-	PRINT_UTIL			printUtil;
+	PRINT_UTIL			printUtil[NAMEIDX_MAX];
 	PRINT_QUE			*printQue;
 	GFL_FONT 			*fontHandle;
+	GFL_MSGDATA*		msgman;
+	GFL_MSGDATA*		monsmsgman;
 
 	GFL_BMPWIN*			bmpwinName[NAMEIDX_MAX];	
 	GFL_BMPWIN*			bmpwinNo[NOIDX_MAX];	
 
 	GFL_TCB*			g2dVintr;		//2Dシステム用vIntrTaskハンドル
 
-	int					setNum[NOIDX_MAX];	
-
-	BOOL				bgmPauseSw;
+	STRBUF*				setName[NAMEIDX_MAX];
+	int					setNo[NOIDX_MAX];	
 
 	int					mode;
-
+	BOOL				bgmPauseSw;
 	BOOL				reverbFlag;
 
-	int					sndHeapFreeSize;
 	u16					tpTrgRepeatFrame;
 	u16					tpTrgRepeatCount;
 }SOUNDTEST_WORK;
@@ -362,6 +356,7 @@ enum {
 	MODE_SOUND_CONTROL,
 };
 
+#define NAME_BUF_SIZE	(48*2)
 //============================================================================================
 /**
  *
@@ -390,19 +385,32 @@ static void	SoundWorkInitialize(SOUNDTEST_WORK* sw)
 	sw->skbStrBuf = GFL_SKB_CreateSjisCodeBuffer(sw->heapID);
 	sw->seq = 0;
 
-	for( i=0; i<NOIDX_MAX; i++ ){
-		sw->setNum[i] = initNoData[i];
-	}
 	sw->bgmPauseSw = FALSE;
 	sw->reverbFlag = FALSE;
 
 	sw->mode = MODE_SOUND_SELECT;
 	sw->tpTrgRepeatFrame = 0;
 	sw->tpTrgRepeatCount = 0;
+
+	for(i=0; i<NAMEIDX_MAX; i++)
+		{ sw->setName[i] = GFL_STR_CreateBuffer(NAME_BUF_SIZE, sw->heapID); }
+	for( i=0; i<NOIDX_MAX; i++ ){ sw->setNo[i] = initNoData[i]; }
+
+	sw->msgman = GFL_MSG_Create
+		(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_snd_test_name_dat, sw->heapID);
+	sw->monsmsgman = GFL_MSG_Create
+		(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, sw->heapID);
 }
 
 static void	SoundWorkFinalize(SOUNDTEST_WORK* sw)
 {
+	int i;
+
+	GFL_MSG_Delete(sw->monsmsgman);
+	GFL_MSG_Delete(sw->msgman);
+
+	for(i=0; i<NAMEIDX_MAX; i++){ GFL_STR_DeleteBuffer(sw->setName[i]); }
+
 	GFL_SKB_DeleteSjisCodeBuffer(sw->skbStrBuf);
 }
 
@@ -422,6 +430,9 @@ static GFL_PROC_RESULT SoundTest2Proc_Init(GFL_PROC * proc, int * seq, void * pw
 
 	SoundWorkInitialize(sw);
 
+	sw->fontHandle = GFL_FONT_Create
+		(ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE ,sw->heapID);
+	sw->printQue = PRINTSYS_QUE_Create(sw->heapID);
 	{
 		GFL_SNDSTATUS_SETUP sndStatusSetup;
 
@@ -440,7 +451,9 @@ static GFL_PROC_RESULT SoundTest2Proc_Main(GFL_PROC * proc, int * seq, void * pw
 	SOUNDTEST_WORK*	sw;
 	sw = mywk;
 
-	GFL_SNDSTATUS_Main( sw->gflSndStatus );
+	GFL_SNDSTATUS_Main(sw->gflSndStatus);
+
+	PRINTSYS_QUE_Main(sw->printQue);
 
 	if(SoundTest(sw) == TRUE){
 		return GFL_PROC_RES_CONTINUE;
@@ -455,6 +468,10 @@ static GFL_PROC_RESULT SoundTest2Proc_End(GFL_PROC * proc, int * seq, void * pwk
 	sw = mywk;
 
 	GFL_SNDSTATUS_Delete( sw->gflSndStatus );
+
+	PRINTSYS_QUE_Clear(sw->printQue);
+	PRINTSYS_QUE_Delete(sw->printQue);
+	GFL_FONT_Delete(sw->fontHandle);
 
 	SoundWorkFinalize(sw);
 
@@ -498,6 +515,8 @@ static void	RemoveSoundTestSys(SOUNDTEST_WORK* sw);
 static void	MainSoundTestSys(SOUNDTEST_WORK* sw);
 
 static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw);
+
+static void printSelectName(SOUNDTEST_WORK* sw);
 //------------------------------------------------------------------
 /**
  *
@@ -534,7 +553,6 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 	switch(sw->seq){
 	case 0:
 		SetupSoundTestSys(sw);
-		sw->sndHeapFreeSize = PMSND_GetSndHeapFreeSize();
 		sw->seq++;
 		break;
 
@@ -702,6 +720,7 @@ static void	g2d_load(SOUNDTEST_WORK* sw)
 											bmpwinNameStDat[i][2], bmpwinNameStDat[i][3],
 											TEXT_PLTTID, GFL_BG_CHRAREA_GET_F );
 		GFL_BMPWIN_MakeScreen(sw->bmpwinName[i]);
+		PRINT_UTIL_Setup(&sw->printUtil[i], sw->bmpwinName[i]);
 	}
 	for(i=0; i<NOIDX_MAX;	i++){
 		sw->bmpwinNo[i] = GFL_BMPWIN_Create(	TEXT_FRAME,
@@ -720,14 +739,16 @@ static void g2d_draw(SOUNDTEST_WORK* sw)
 	int i;
 
 	for(i=0; i<NOIDX_MAX; i++){ 
-		printNum(sw->bmpwinNo[i], sw->setNum[i], 5);
+		printNum(sw->bmpwinNo[i], sw->setNo[i], 5);
 		GFL_BMPWIN_TransVramCharacter(sw->bmpwinNo[i]); 
 	}
-	//文字更新
-	for(i=0; i<NAMEIDX_MAX; i++){ GFL_BMPWIN_TransVramCharacter(sw->bmpwinName[i]); }
 	//ヒープ残量表示
 	printNum(sw->bmpwinNo[NOIDX_HEAPFREESIZ], PMSND_GetSndHeapFreeSize(), 6);
 	GFL_BMPWIN_TransVramCharacter(sw->bmpwinNo[NOIDX_HEAPFREESIZ]); 
+
+	//選択サウンド名表示
+	printSelectName(sw);
+	for(i=0; i<NAMEIDX_MAX; i++){ PRINT_UTIL_Trans(&sw->printUtil[i], sw->printQue); }
 }
 
 static void	g2d_unload(SOUNDTEST_WORK* sw)
@@ -743,8 +764,6 @@ static void	g2d_unload(SOUNDTEST_WORK* sw)
 static void	g2d_vblank(GFL_TCB* tcb, void* work)
 {
 	SOUNDTEST_WORK* sw =  (SOUNDTEST_WORK*)work;
-	GFL_CLACT_SYS_VBlankFunc();
-	//GFL_BG_VBlankFunc();
 }
 
 //------------------------------------------------------------------
@@ -815,6 +834,7 @@ static void printNum(GFL_BMPWIN* bmpwin, int num, int numberSize )
  *
  */
 //============================================================================================
+#if 0
 #define SEQ_VARIABLE_NUM (16)
 typedef struct {
 	s16		val;
@@ -875,8 +895,7 @@ static void SeqRecover( NNSSndHandle* handle )
 		}
 	}
 }
-
-static BOOL pauseSw = FALSE;
+#endif
 //------------------------------------------------------------------
 /**
  * @brief	タッチパネルイベント判定
@@ -907,7 +926,7 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 	
 		case SNDTEST_TPEV_BGM_PLAY:
 			if( sw->bgmPauseSw == FALSE ){
-				PMSND_PlayBGM(sw->setNum[NOIDX_BGMNO]);
+				PMSND_PlayBGM(sw->setNo[NOIDX_BGMNO]);
 				GFL_SNDSTATUS_InitControl(sw->gflSndStatus);
 			} else {
 				PMSND_PauseBGM(FALSE);
@@ -931,7 +950,7 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 
 		case SNDTEST_TPEV_BGM_PLAYFADEIN:
 			PMSND_StopBGM();
-			PMSND_PlayNextBGM(sw->setNum[NOIDX_BGMNO]);
+			PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
 			GFL_SNDSTATUS_InitControl(sw->gflSndStatus);
 			sw->bgmPauseSw = FALSE;
 			break;
@@ -942,7 +961,7 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 			break;
 
 		case SNDTEST_TPEV_BGM_FADEOUTPLAYFADEIN:
-			PMSND_PlayNextBGM(sw->setNum[NOIDX_BGMNO]);
+			PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
 			GFL_SNDSTATUS_InitControl(sw->gflSndStatus);
 			sw->bgmPauseSw = FALSE;
 			break;
@@ -960,35 +979,35 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 			break;
 
 		case SNDTEST_TPEV_VOICE_PLAY:
-			vpIdx = PMV_PlayVoice(	sw->setNum[NOIDX_VOICENO], 0 );
-			PMVOICE_SetStatus(vpIdx, sw->setNum[NOIDX_VOICEPAN], 0, sw->setNum[NOIDX_VOICESPEED]);
+			vpIdx = PMV_PlayVoice(	sw->setNo[NOIDX_VOICENO], 0 );
+			PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
 			break;
 
 		case SNDTEST_TPEV_VOICE_PLAYCHROUS:
-			vpIdx = PMV_PlayVoice_Chorus(	sw->setNum[NOIDX_VOICENO], 0,
-											sw->setNum[NOIDX_VOICECHORUSVOL], 
-											sw->setNum[NOIDX_VOICECHORUSSPEED] );
-			PMVOICE_SetStatus(vpIdx, sw->setNum[NOIDX_VOICEPAN], 0, sw->setNum[NOIDX_VOICESPEED]);
+			vpIdx = PMV_PlayVoice_Chorus(	sw->setNo[NOIDX_VOICENO], 0,
+											sw->setNo[NOIDX_VOICECHORUSVOL], 
+											sw->setNo[NOIDX_VOICECHORUSSPEED] );
+			PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
 			break;
 
 		case SNDTEST_TPEV_VOICE_PLAYREVERSE:
-			vpIdx = PMV_PlayVoice_Reverse( sw->setNum[NOIDX_VOICENO], 0 );
-			PMVOICE_SetStatus(vpIdx, sw->setNum[NOIDX_VOICEPAN], 0, sw->setNum[NOIDX_VOICESPEED]);
+			vpIdx = PMV_PlayVoice_Reverse( sw->setNo[NOIDX_VOICENO], 0 );
+			PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
 			break;
 
 		case SNDTEST_TPEV_VOICE_PLAYREVERSECHORUS:
-			vpIdx = PMV_PlayVoice_Custom(	sw->setNum[NOIDX_VOICENO], 0,
-											sw->setNum[NOIDX_VOICEPAN],
+			vpIdx = PMV_PlayVoice_Custom(	sw->setNo[NOIDX_VOICENO], 0,
+											sw->setNo[NOIDX_VOICEPAN],
 											TRUE, 
-											sw->setNum[NOIDX_VOICECHORUSVOL], 
-											sw->setNum[NOIDX_VOICECHORUSSPEED],
+											sw->setNo[NOIDX_VOICECHORUSVOL], 
+											sw->setNo[NOIDX_VOICECHORUSSPEED],
 											TRUE );
-			PMVOICE_SetStatus(vpIdx, sw->setNum[NOIDX_VOICEPAN], 0, sw->setNum[NOIDX_VOICESPEED]);
+			PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
 			break;
 
 		case SNDTEST_TPEV_SE_PLAY:
-			PMSND_PlaySE(sw->setNum[NOIDX_SENO]);
-			PMSND_SetStatusSE( PMSND_NOEFFECT, sw->setNum[NOIDX_SEPITCH], sw->setNum[NOIDX_SEPAN]);
+			PMSND_PlaySE(sw->setNo[NOIDX_SENO]);
+			PMSND_SetStatusSE( PMSND_NOEFFECT, sw->setNo[NOIDX_SEPITCH], sw->setNo[NOIDX_SEPAN]);
 			break;
 
 		case SNDTEST_TPEV_REVERB:
@@ -1098,15 +1117,15 @@ static BOOL checkTouchPanelEventCont(SOUNDTEST_WORK* sw)
 //------------------------------------------------------------------
 static void numberInc(SOUNDTEST_WORK* sw, int idx, int max )
 {
-	if(sw->setNum[idx] < max){
-		sw->setNum[idx]++;	
+	if(sw->setNo[idx] < max){
+		sw->setNo[idx]++;	
 	}
 }
 
 static void numberDec(SOUNDTEST_WORK* sw, int idx, int min )
 {
-	if(sw->setNum[idx] > min){
-		sw->setNum[idx]--;	
+	if(sw->setNo[idx] > min){
+		sw->setNo[idx]--;	
 	}
 }
 
@@ -1128,6 +1147,38 @@ static void writeButton(SOUNDTEST_WORK* sw, u8 x, u8 y, BOOL flag )
 	buf[1] = (chrNo+1) | palMask;
 	GFL_BG_WriteScreen( BG_FRAME, buf, x, y, 2, 1 );
 	GFL_BG_LoadScreenReq(BG_FRAME);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	選択サウンド名表示
+ */
+//------------------------------------------------------------------
+#define NAMEMSG_STARTIDX_BGM	(msg_seq_mus_gs_bicycle)
+#define NAMEMSG_STARTIDX_SE		(msg_seq_se_dp_000)
+#define NAMEMSG_STARTIDX_VOICE	(msg_seq_pv)
+static void printSelectName(SOUNDTEST_WORK* sw)
+{
+	u32 msgIdx;
+	int i;
+
+	for(i=0; i<NAMEIDX_MAX; i++){ GFL_BMP_Clear(GFL_BMPWIN_GetBmp(sw->bmpwinName[i]), 0); }
+	
+	// BGM
+	msgIdx = (sw->setNo[NOIDX_BGMNO]-initNoData[NOIDX_BGMNO]) + NAMEMSG_STARTIDX_BGM;
+	GFL_MSG_GetString(sw->msgman, msgIdx, sw->setName[NAMEIDX_BGM]);
+    PRINT_UTIL_Print(	&sw->printUtil[NAMEIDX_BGM], sw->printQue , 3, 1, 
+						sw->setName[NAMEIDX_BGM], sw->fontHandle);
+	// SE
+	msgIdx = (sw->setNo[NOIDX_SENO]-initNoData[NOIDX_SENO]) + NAMEMSG_STARTIDX_SE;
+	GFL_MSG_GetString(sw->msgman, msgIdx, sw->setName[NAMEIDX_SE]);
+    PRINT_UTIL_Print(	&sw->printUtil[NAMEIDX_SE], sw->printQue , 3, 1, 
+						sw->setName[NAMEIDX_SE], sw->fontHandle);
+	// VOICE
+	msgIdx = (sw->setNo[NOIDX_VOICENO]-initNoData[NOIDX_VOICENO]) + NAMEMSG_STARTIDX_VOICE;
+	GFL_MSG_GetString(sw->monsmsgman, msgIdx, sw->setName[NAMEIDX_VOICE]);
+    PRINT_UTIL_Print(	&sw->printUtil[NAMEIDX_VOICE], sw->printQue , 3, 1, 
+						sw->setName[NAMEIDX_VOICE], sw->fontHandle);
 }
 
 
