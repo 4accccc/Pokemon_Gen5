@@ -835,6 +835,10 @@ static void FGridPlayer_SountTest_Move( void )
 	//　↑
 }
 
+static PLAYER_SET FGridPlayer_CheckMoveStart_Walk(
+	FGRID_PLAYER *pJiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+
 //--------------------------------------------------------------
 /**
  * グリッド自機　移動開始チェック　停止中
@@ -855,7 +859,8 @@ static PLAYER_SET FGridPlayer_CheckMoveStart_Stop(
 				return( PLAYER_SET_TURN );
 			}
 			
-			return( PLAYER_SET_WALK );
+			return( FGridPlayer_CheckMoveStart_Walk(
+				pJiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
 		}
 		
 		return( PLAYER_SET_STOP );

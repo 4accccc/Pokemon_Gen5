@@ -1410,10 +1410,7 @@ static BOOL FldMMdl_HitCheckMoveAttr(
 #else
 			u16 val = attr & 0xffff;
 			u16 flag = (attr&0xffff0000) >> 16;
-			if( FLDMMDL_GetOBJID(fmmdl) == FLDMMDL_ID_PLAYER ){
-				OS_Printf( "attr = %08xH, val=%xH,flag=%xH\n",
-					attr, val, flag );
-			}
+			
 			if( (flag & MAP_ATTR_FLAG_HITCH) == 0 ){
 				return( FALSE );
 			}
