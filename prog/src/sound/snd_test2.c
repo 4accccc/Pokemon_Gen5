@@ -155,9 +155,9 @@ static const GFL_BG_BGCNT_HEADER Statuscont = {
  */
 //------------------------------------------------------------------
 static const u8 bmpwinNameStDat[NAMEIDX_MAX][4] = {	//px, py, sx, sy
-	{ 0x01, 0x04, 10, 1 },	//NAMEIDX_BGM
-	{ 0x0b, 0x04, 10, 1 },	//NAMEIDX_VOICE
-	{ 0x15, 0x04, 10, 1 },	//NAMEIDX_SE
+	{ 0x01, 0x03, 10, 2 },	//NAMEIDX_BGM
+	{ 0x0b, 0x03, 10, 2 },	//NAMEIDX_VOICE
+	{ 0x15, 0x03, 10, 2 },	//NAMEIDX_SE
 };
 
 static const u8 bmpwinNoStDat[NOIDX_MAX][4] = {	//px, py, sx, sy
@@ -298,7 +298,7 @@ static const GFL_UI_TP_HITTBL eventTouchPanelTableCont[SNDTEST_TPEVCONT_MAX + 1]
 };
 
 static const u16 tpRepeatFrame[] = {
-	32, 16, 8, 4, 2, 1, 0, 
+	16, 8, 4, 2, 1, 0, 
 };
 
 //------------------------------------------------------------------
@@ -1115,7 +1115,7 @@ static void printName(SOUNDTEST_WORK* sw, int idx)
 {
 	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(sw->bmpwinName[idx]), 0);
 
-    PRINT_UTIL_PrintColor(	&sw->printUtilName[idx], sw->printQue, 3, 1, 
+    PRINT_UTIL_PrintColor(	&sw->printUtilName[idx], sw->printQue, 3, 7, 
 							sw->setName[idx], sw->fontHandle, PRINTSYS_LSB_Make(2,3,0));
 }
 
