@@ -67,9 +67,13 @@ FIELD_DEBUG_WORK * FIELD_DEBUG_Init(
 	work->bgFrame = DEBUG_BGFRAME;
 	work->pFieldMainWork = pFieldMainWork;
 	
-	{
+	{	//デバッグ用フォント初期化
 		DebugFont_Init( work );
 	}
+	
+	{	//各デバッグ機能初期化
+	}
+	
 	return( work );
 }
 
@@ -88,17 +92,17 @@ void FIELD_DEBUG_Delete( FIELD_DEBUG_WORK *work )
 //--------------------------------------------------------------
 /**
  * フィールドデバッグシステム 常駐処理
- * @param
- * @retval
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
  */
 //--------------------------------------------------------------
 void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work )
 {
-	if( work->flag_pos_print == TRUE ){
+	if( work->flag_pos_print == TRUE ){ //座標表示
 		DebugFieldPosPrint_Proc( work );
 	}
 	
-	if( work->flag_bgscr_load == TRUE ){
+	if( work->flag_bgscr_load == TRUE ){ //デバッグ用BGスクリーン反映
 		GFL_BG_LoadScreenReq( work->bgFrame );
 		work->flag_bgscr_load = FALSE;
 	}
@@ -338,7 +342,7 @@ static void DebugFont_Put( u16 *screen, char c, u16 x, u16 y )
 	if(c=='='){
 		c = 0x30+10;
 	}
-	if(c=='-'){   // マイナス表示が出ていなかったのでMに置換
+	if(c=='-'){   // マイナス表示が無いのでMに置換
 		c = 'M';
 	}
 	screen[x+y*32] = (DEBUG_PANO_FONT<<12)+(c-0x2F);
@@ -418,7 +422,7 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 	PLAYER_WORK *player = GAMESYSTEM_GetMyPlayerWork( gsys );
 	const VecFx32 *pos = PLAYERWORK_getPosition( player );
 	
-	{
+	{	//座標表示
 		DebugFont_ClearLine( work, 0 );
 		sprintf( str, "X %d %xH GRID %d",
 			FX_Whole(pos->x), pos->x, SIZE_GRID_FX32(pos->x) );
@@ -435,7 +439,7 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 		DebugFont_Print( work, 0, 2, str );
 	}
 	
-	{
+	{	//マップアトリビュート表示
 		u32 attr;
 		int x,y,z;
 		VecFx32 a_pos;

@@ -43,8 +43,8 @@ struct _TAG_MAP_MATRIX
 	u32 zone_id;
 	u32 matrix_id;
 	
-	u16 size_x;
-	u16 size_z;
+	u16 size_w;
+	u16 size_h;
 	u16 status_flag;
 	u32 table_size;
 	u32 zone_id_tbl[MAP_MATRIX_MAX];
@@ -67,7 +67,7 @@ static void MapMatrix_SetData(
  * @retval	MAP_MATRIX* MAP_MATRIX*
  */
 //--------------------------------------------------------------
-MAP_MATRIX * MAP_MATRIX_CreateWork( HEAPID heapID )
+MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID )
 {
 	MAP_MATRIX *pMat;
 	pMat = GFL_HEAP_AllocClearMemory( heapID, sizeof(MAP_MATRIX) );
@@ -123,27 +123,31 @@ static void MapMatrix_SetData(
 	pMat->zone_id = zone_id;
 	pMat->matrix_id = matrix_id;
 	
-	pMat->size_x = pMatH->size_h;
-	pMat->size_z = pMatH->size_v;
-	pMat->table_size = pMatH->size_h * pMatH->size_v;
-	pMat->status_flag = 0;
+	pMat->size_w = pMatH->size_h;
+	pMat->size_h = pMatH->size_v;
+	pMat->table_size = pMat->size_w * pMat->size_h;
+	pMat->status_flag = pMatH->flag;
 	
-	GF_ASSERT( pMat->size_x );
-	GF_ASSERT( pMat->size_z );
+	GF_ASSERT( pMat->size_w );
+	GF_ASSERT( pMat->size_h );
 	
 	pMatTbl = pMat->map_res_id_tbl;
 	pResTbl = (const u32*)((const u32)pMatData + sizeof(MAP_MATRIX_HEADER));
 	MI_CpuCopy32( pResTbl, pMatTbl, sizeof(u32)*pMat->table_size );
-
-	if( pMat->status_flag ){ //ゾーンID指定チェック
+	
+	pMatTbl = pMat->zone_id_tbl;
+	
+	if( pMat->status_flag == 1 ){ //ゾーンID指定チェック
+		pResTbl = (const u32*)((const u32)pMatData +
+			sizeof(MAP_MATRIX_HEADER) + (sizeof(u32)*pMat->table_size) );
+		MI_CpuCopy32( pResTbl, pMatTbl, sizeof(u32)*pMat->table_size );
 	}else{ //ゾーンID指定なし
-		pMatTbl = pMat->zone_id_tbl;
 		MI_CpuFill32( pMatTbl, zone_id, sizeof(u32)*MAP_MATRIX_MAX );
 	}
 	
 #ifdef DEBUG_ONLY_FOR_kagaya
 	OS_Printf( "マトリクス情報 ID=%d,X=%d,Z=%d\n",
-		matrix_id, pMat->size_x, pMat->size_z );
+		matrix_id, pMat->size_w, pMat->size_h );
 #endif
 }
 
@@ -173,19 +177,23 @@ u32 MAP_MATRIX_GetMatrixID( const MAP_MATRIX *pMat )
 //--------------------------------------------------------------
 u32 MAP_MATRIX_GetBlockPosZoneID( const MAP_MATRIX *pMat, int x, int z )
 {
-	return( 0 );
+	u32 zone_id;
+	GF_ASSERT( 0 <= x && x < pMat->size_w );
+	GF_ASSERT( 0 <= z && z < pMat->size_h );
+	zone_id = pMat->zone_id_tbl[x + (z*pMat->size_h)];
+	return( zone_id );
 }
 
 //--------------------------------------------------------------
 /**
- * MAP_MATRIX マップXサイズ取得
+ * MAP_MATRIX マップ横ブロックサイズ取得
  * @param	pMat	MAP_MATRIX
  * @retval	u16	Xサイズ
  */
 //--------------------------------------------------------------
-u16 MAP_MATRIX_GetMapSizeX( const MAP_MATRIX *pMat )
+u16 MAP_MATRIX_GetMapBlockSizeWidth( const MAP_MATRIX *pMat )
 {
-	return( pMat->size_x );
+	return( pMat->size_w );
 }
 
 //--------------------------------------------------------------
@@ -195,9 +203,9 @@ u16 MAP_MATRIX_GetMapSizeX( const MAP_MATRIX *pMat )
  * @retval	u16	Xサイズ
  */
 //--------------------------------------------------------------
-u16 MAP_MATRIX_GetMapSizeZ( const MAP_MATRIX *pMat )
+u16 MAP_MATRIX_GetMapBlockSizeHeight( const MAP_MATRIX *pMat )
 {
-	return( pMat->size_z );
+	return( pMat->size_h );
 }
 
 //--------------------------------------------------------------
@@ -207,7 +215,7 @@ u16 MAP_MATRIX_GetMapSizeZ( const MAP_MATRIX *pMat )
  * @retval	u32		総サイズ
  */
 //--------------------------------------------------------------
-u32 MAP_MATRIX_GetMapTotalSize( const MAP_MATRIX *pMat )
+u32 MAP_MATRIX_GetMapBlockTotalSize( const MAP_MATRIX *pMat )
 {
 	return( pMat->table_size );
 }

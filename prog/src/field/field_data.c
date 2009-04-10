@@ -52,9 +52,9 @@ void FIELDDATA_SetMapperData(
 		u16 matID;
 		matID = ZONEDATA_GetMatrixID( mapid );
 		MAP_MATRIX_Init( matrix_buf, matID, mapid );
-		map_res->sizex = MAP_MATRIX_GetMapSizeX( matrix_buf );
-		map_res->sizez = MAP_MATRIX_GetMapSizeZ( matrix_buf );
-		map_res->totalSize = MAP_MATRIX_GetMapTotalSize( matrix_buf );
+		map_res->sizex = MAP_MATRIX_GetMapBlockSizeWidth( matrix_buf );
+		map_res->sizez = MAP_MATRIX_GetMapBlockSizeHeight( matrix_buf );
+		map_res->totalSize = MAP_MATRIX_GetMapBlockTotalSize( matrix_buf );
 		map_res->blocks = (const FLDMAPPER_MAPDATA*)MAP_MATRIX_GetMapResIDTable( matrix_buf );
 	}
 	

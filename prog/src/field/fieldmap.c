@@ -208,7 +208,7 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork->map_id = GetSceneID(gsys);
 	fieldWork->ftbl = FIELDDATA_GetFieldFunctions(fieldWork->map_id);
 	//サイズは暫定。DPでの最大サイズは30x30
-	fieldWork->pMapMatrix = MAP_MATRIX_CreateWork( heapID );
+	fieldWork->pMapMatrix = MAP_MATRIX_Create( heapID );
 
 	//通信用処理
 	fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID , GFL_HEAPID_APP );
