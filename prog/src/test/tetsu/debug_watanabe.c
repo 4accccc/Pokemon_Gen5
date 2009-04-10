@@ -6,22 +6,33 @@
  * @date	2007.02.01
  */
 //============================================================================================
+#include <wchar.h>
 #include "gflib.h"
-
+#include "system/gfl_use.h"
 #include "system\main.h"
+#include "arc_def.h"
 
-FS_EXTERN_OVERLAY(watanabe_sample);
-extern const GFL_PROC_DATA DebugWatanabeSample1ProcData;
-extern void	SampleBoot( HEAPID heapID );
-extern void	SampleEnd( void );
-extern BOOL	SampleMain( void );
+#include "font/font.naix"
+#include "print/printsys.h"
+#include "print/str_tool.h"
+
 //============================================================================================
-//
-//
-//		プロセスの定義
-//
-//
+/**
+ *
+ *
+ *
+ *
+ * @brief	プロセス定義
+ *
+ *
+ *
+ *
+ */
 //============================================================================================
+static void allocWork( GFL_PROC* proc );
+static void freeWork( GFL_PROC* proc );
+static void setNextProc( void* procwork );
+static BOOL mainControl( void* procwork );
 //------------------------------------------------------------------
 /**
  * @brief	プロセスの初期化
@@ -34,10 +45,8 @@ extern BOOL	SampleMain( void );
 static GFL_PROC_RESULT DebugWatanabeMainProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-#if 0
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x100000 );
-	SampleBoot( HEAPID_WATANABE_DEBUG );
-#endif
+	allocWork(proc);
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -49,15 +58,10 @@ static GFL_PROC_RESULT DebugWatanabeMainProcInit
 static GFL_PROC_RESULT DebugWatanabeMainProcMain
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-#if 0
-	if( SampleMain() == TRUE ){
+	if( mainControl(mywk) == FALSE ){
 		return GFL_PROC_RES_FINISH;
 	}
-
 	return GFL_PROC_RES_CONTINUE;
-#else
-	return GFL_PROC_RES_FINISH;
-#endif
 }
 
 //------------------------------------------------------------------
@@ -72,11 +76,8 @@ static GFL_PROC_RESULT DebugWatanabeMainProcMain
 static GFL_PROC_RESULT DebugWatanabeMainProcEnd
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-#if 0
-	SampleEnd();
-	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
-#endif
-	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample1ProcData, NULL);
+	setNextProc(mywk);
+	freeWork(proc);
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -89,6 +90,386 @@ const GFL_PROC_DATA DebugWatanabeMainProcData = {
 	DebugWatanabeMainProcEnd,
 };
 
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ * @brief	デバッグ項目選択
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief		ＢＧ設定定義
+ */
+//------------------------------------------------------------------
+#define TEXT_FRAME		(GFL_BG_FRAME3_S)
+#define TEXT_DISPSIDE	(PALTYPE_SUB_BG)
+#define TEXT_PLTTID		(15)
+#define PLTT_SIZ		(16*2)
+
+//------------------------------------------------------------------
+/**
+ * @brief		項目リスト
+ */
+//------------------------------------------------------------------
+#define LISTITEM_NAMESIZE	(32)
+typedef struct {
+	u16						str[LISTITEM_NAMESIZE];
+	FSOverlayID				procOvID;
+	const GFL_PROC_DATA*	procData;
+}DEBUGITEM_LIST;
+
+enum {
+	DEBUGITEM_1 = 0,
+	DEBUGITEM_2,
+	DEBUGITEM_3,
+	DEBUGITEM_4,
+	DEBUGITEM_5,
+	DEBUGITEM_6,
+
+	DEBUGITEM_MAX,
+};
+
+FS_EXTERN_OVERLAY(watanabe_sample);
+extern const GFL_PROC_DATA DebugWatanabeSample1ProcData;
+FS_EXTERN_OVERLAY(sound_debug);
+extern const GFL_PROC_DATA SoundTest2ProcData;
+
+static const DEBUGITEM_LIST debugItemList[DEBUGITEM_MAX] = {
+	{L"■３Ｄシーンサンプル",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
+	{L"■サウンドテスト",		FS_OVERLAY_ID(sound_debug),		&SoundTest2ProcData},
+	{L"■サンプル３",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
+	{L"■サンプル４",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
+	{L"■サンプル５",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
+	{L"■サンプル６",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
+};
+
+//------------------------------------------------------------------
+/**
+ * @brief		構造体定義
+ */
+//------------------------------------------------------------------
+typedef struct {
+	HEAPID	heapID;
+	u32		seq;
+	u32		selectItem;
+	
+	PRINT_UTIL			printUtil;
+	PRINT_QUE*			printQue;
+	GFL_FONT*			fontHandle;
+	GFL_BMPWIN*			bmpwin;
+	
+	GFL_UI_TP_HITTBL	tpTable[DEBUGITEM_MAX+1];
+	
+	u32					wait;
+}DEBUG_WATANABE_WORK;
+
+#define NON_SELECT_ITEM	(0xffffffff)
+//------------------------------------------------------------------
+/**
+ * @brief		プロトタイプ宣言
+ */
+//------------------------------------------------------------------
+static void	bg_init(HEAPID heapID);
+static void	bg_exit(void);
+
+static void drawList(DEBUG_WATANABE_WORK* dw);
+static void makeList(DEBUG_WATANABE_WORK* dw);
+
+//------------------------------------------------------------------
+/**
+ * @brief	
+ */
+//------------------------------------------------------------------
+static void allocWork( GFL_PROC* proc )
+{
+	DEBUG_WATANABE_WORK* dw;
+	HEAPID heapID = GFL_HEAPID_APP;
+
+	dw = GFL_PROC_AllocWork(proc, sizeof(DEBUG_WATANABE_WORK), heapID);
+	GFL_STD_MemClear(dw, sizeof(DEBUG_WATANABE_WORK));
+
+	dw->heapID = heapID;
+	dw->seq = 0;
+	dw->selectItem = NON_SELECT_ITEM;
+}
+
+static void freeWork( GFL_PROC* proc )
+{
+	GFL_PROC_FreeWork(proc);
+}
+
+static void setNextProc( void* procwork )
+{
+	DEBUG_WATANABE_WORK* dw;
+	u32 itemID;
+
+	dw = procwork;
+	itemID = dw->selectItem;
+
+	GFL_PROC_SysSetNextProc(debugItemList[itemID].procOvID, debugItemList[itemID].procData, NULL);
+}
+
+//------------------------------------------------------------------
+/**
+ *
+ * @brief	メイン
+ *
+ */
+//------------------------------------------------------------------
+static BOOL mainControl( void* procwork )
+{
+	DEBUG_WATANABE_WORK* dw;
+	dw = procwork;
+
+	switch(dw->seq){
+	case 0:
+		//基本セットアップ
+		bg_init(dw->heapID);
+		//フォント用パレット転送
+		GFL_ARC_UTIL_TransVramPalette(	ARCID_FONT, 
+										NARC_font_default_nclr,
+										TEXT_DISPSIDE,
+										TEXT_PLTTID * PLTT_SIZ,
+										PLTT_SIZ,
+										dw->heapID);
+		//フォントハンドル作成
+		dw->fontHandle = GFL_FONT_Create(	ARCID_FONT,
+											NARC_font_large_nftr,
+											GFL_FONT_LOADTYPE_FILE,
+											FALSE,
+											dw->heapID);
+		//プリントキューハンドル作成
+		dw->printQue = PRINTSYS_QUE_Create(dw->heapID);
+
+		//描画用ビットマップ作成（画面全体）
+		dw->bmpwin = GFL_BMPWIN_Create(	TEXT_FRAME,
+										0, 0, 32, 24,
+										TEXT_PLTTID, GFL_BG_CHRAREA_GET_F );
+		GFL_BMPWIN_MakeScreen(dw->bmpwin);
+		GFL_BG_LoadScreenReq(TEXT_FRAME);
+		PRINT_UTIL_Setup(&dw->printUtil, dw->bmpwin);
+
+		makeList(dw);
+
+		dw->seq++;
+		break;
+
+	case 1:
+		drawList(dw);
+		PRINT_UTIL_Trans(&dw->printUtil, dw->printQue);
+		PRINTSYS_QUE_Main(dw->printQue);
+		{
+			u32 tblPos;
+
+			tblPos = GFL_UI_TP_HitTrg(dw->tpTable);
+			if( tblPos != GFL_UI_TP_HIT_NONE ){
+				dw->selectItem = tblPos;
+				dw->wait = 0;
+				dw->seq++;
+			}
+		}
+		break;
+
+	case 2:
+		drawList(dw);
+		PRINT_UTIL_Trans(&dw->printUtil, dw->printQue);
+		PRINTSYS_QUE_Main(dw->printQue);
+
+		if( dw->wait < 16 ){ dw->wait++; }
+		else{ dw->seq++; }
+
+		break;
+
+	case 3:
+		PRINTSYS_QUE_Clear(dw->printQue);
+		GFL_BMPWIN_Delete(dw->bmpwin);
+
+		PRINTSYS_QUE_Delete(dw->printQue);
+		GFL_FONT_Delete(dw->fontHandle);
+
+		bg_exit();
+		return FALSE;
+	}
+	return TRUE;
+}
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	セットアップ
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	ディスプレイ環境データ
+ */
+//------------------------------------------------------------------
+///ＶＲＡＭバンク設定構造体
+static const GFL_DISP_VRAM dispVram = {
+	GX_VRAM_BG_128_A,				//メイン2DエンジンのBGに割り当て 
+	GX_VRAM_BGEXTPLTT_NONE,			//メイン2DエンジンのBG拡張パレットに割り当て
+	GX_VRAM_SUB_BG_32_H,			//サブ2DエンジンのBGに割り当て
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		//サブ2DエンジンのBG拡張パレットに割り当て
+	GX_VRAM_OBJ_64_E,				//メイン2DエンジンのOBJに割り当て
+	GX_VRAM_OBJEXTPLTT_NONE,		//メイン2DエンジンのOBJ拡張パレットにに割り当て
+	GX_VRAM_SUB_OBJ_NONE,			//サブ2DエンジンのOBJに割り当て
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	//サブ2DエンジンのOBJ拡張パレットにに割り当て
+	GX_VRAM_TEX_NONE,				//テクスチャイメージスロットに割り当て
+	GX_VRAM_TEXPLTT_NONE,			//テクスチャパレットスロットに割り当て
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+};
+
+static const GFL_BG_SYS_HEADER bgsysHeader = {
+	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+};	
+
+static const GFL_BG_BGCNT_HEADER Textcont = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
+
+//------------------------------------------------------------------
+/**
+ * @brief		ＢＧ設定＆データ転送
+ */
+//------------------------------------------------------------------
+static void	bg_init(HEAPID heapID)
+{
+	//VRAM設定
+	GFL_DISP_SetBank(&dispVram);
+
+	//ＢＧシステム起動
+	GFL_BG_Init(heapID);
+
+	//ＢＧモード設定
+	GFL_BG_SetBGMode(&bgsysHeader);
+
+	//ＢＧコントロール設定
+	GFL_BG_SetBGControl(TEXT_FRAME, &Textcont, GFL_BG_MODE_TEXT);
+	GFL_BG_SetPriority(TEXT_FRAME, 0);
+	GFL_BG_SetVisible(TEXT_FRAME, VISIBLE_ON);
+
+	GFL_BG_FillCharacter(TEXT_FRAME, 0, 1, 0);	// 先頭にクリアキャラ配置
+	GFL_BG_ClearScreen(TEXT_FRAME);
+
+	//ビットマップウインドウ起動
+	GFL_BMPWIN_Init(heapID);
+
+	//ディスプレイ面の選択
+	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
+	GFL_DISP_SetDispOn();
+}
+
+static void	bg_exit(void)
+{
+	GFL_BMPWIN_Exit();
+	GFL_BG_FreeBGControl(TEXT_FRAME);
+	GFL_BG_Exit();
+}
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ *
+ * @brief	リスト
+ *
+ */
+//------------------------------------------------------------------
+#define ITEM_PX (8*2)
+#define ITEM_PY (8*2)
+#define ITEM_SX (16)
+#define ITEM_SY (16)
+
+//------------------------------------------------------------------
+/**
+ * @brief	描画
+ */
+//------------------------------------------------------------------
+static void drawList(DEBUG_WATANABE_WORK* dw)
+{
+	STRCODE			str[128];
+	STRBUF*			strBuf;
+	PRINTSYS_LSB	lsb;
+	int i;
+
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(dw->bmpwin), 15);
+
+	strBuf = GFL_STR_CreateBuffer(LISTITEM_NAMESIZE+1, dw->heapID);
+
+	for( i=0; i<DEBUGITEM_MAX; i++ ){
+		//終端コードを追加してからSTRBUFに変換
+		const u16 strLen = wcslen(debugItemList[i].str);
+		GFL_STD_MemCopy(debugItemList[i].str, str, strLen*2);
+		str[strLen] = GFL_STR_GetEOMCode();
+		GFL_STR_SetStringCode(strBuf, str);
+			
+		if( i == dw->selectItem ){ lsb = PRINTSYS_LSB_Make(3,2,15); }
+		else { lsb = PRINTSYS_LSB_Make(1,2,15); }
+
+		PRINT_UTIL_PrintColor(	&dw->printUtil, dw->printQue, 
+								ITEM_PX, i * ITEM_SY + ITEM_PY, 
+								strBuf, dw->fontHandle, lsb);		
+	}
+	GFL_STR_DeleteBuffer(strBuf);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	タッチパネル判定テーブル
+ */
+//------------------------------------------------------------------
+static void makeList(DEBUG_WATANABE_WORK* dw)
+{
+	int i;
+
+	for( i=0; i<DEBUGITEM_MAX; i++ ){
+		//タッチパネル判定テーブル作成
+		dw->tpTable[i].rect.top = i * ITEM_SY + ITEM_PY;
+		dw->tpTable[i].rect.bottom = dw->tpTable[i].rect.top + (ITEM_SY-1);
+		dw->tpTable[i].rect.left = ITEM_PX;
+		dw->tpTable[i].rect.right = dw->tpTable[i].rect.left + (ITEM_SX-1);
+	}
+	dw->tpTable[DEBUGITEM_MAX].rect.top = GFL_UI_TP_HIT_END;//終了データ埋め込み
+	dw->tpTable[DEBUGITEM_MAX].rect.bottom = 0;
+	dw->tpTable[DEBUGITEM_MAX].rect.left = 0;
+	dw->tpTable[DEBUGITEM_MAX].rect.right = 0;
+}
 
 
 

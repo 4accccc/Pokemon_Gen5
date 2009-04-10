@@ -10,7 +10,6 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "net/network_define.h"
-#include "textprint.h"
 #include "arc_def.h"
 
 void	SampleBoot( HEAPID heapID );
@@ -421,7 +420,6 @@ struct _SAMPLE_SETUP {
 	G3D_MAPPER*				g3Dmapper;		//マップ表示コントローラ
 
 	GFL_BMPWIN*				bmpwin;			//bitmapWin個別ハンドル
-	GFL_TEXT_PRINTPARAM*	textParam;		//テキスト表示パラメータ
 
 	HEAPID					heapID;
 };
@@ -694,8 +692,6 @@ static void G3DsysSetup( void )
 #define BMPWIN_POS_PY (20)
 #define BMPWIN_POS_SX (30)
 #define BMPWIN_POS_SY (3)
-static const GFL_TEXT_PRINTPARAM default_param = 
-{ NULL, 0, 0, 1, 1, FCOL_P, BCOL_P, GFL_TEXT_WRITE_16 };
 
 static void	g2d_load( SAMPLE_SETUP* gs )
 {
@@ -715,13 +711,6 @@ static void	g2d_load( SAMPLE_SETUP* gs )
 									BMPWIN_POS_PX, BMPWIN_POS_PY,
 									BMPWIN_POS_SX, BMPWIN_POS_SY,
 									TEXTBG_PAL, GFL_BG_CHRAREA_GET_F );
-	//文字表示パラメータワーク作成
-	{
-		GFL_TEXT_PRINTPARAM* param = GFL_HEAP_AllocMemory(gs->heapID,sizeof(GFL_TEXT_PRINTPARAM));
-		*param = default_param;
-		param->bmp = GFL_BMPWIN_GetBmp( gs->bmpwin );
-		gs->textParam = param;
-	}
 	//ビットマップキャラクターをアップデート
 	GFL_BG_ClearScreen( TEXTBG_FRAME );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( gs->bmpwin ), BCOL_P );
@@ -742,7 +731,6 @@ static void	g2d_unload( SAMPLE_SETUP* gs )
 {
 	GFL_TCB_DeleteTask( gs->g2dVintr );
 
-	GFL_HEAP_FreeMemory( gs->textParam );
 	GFL_BMPWIN_Delete( gs->bmpwin );
 }
 
