@@ -14,8 +14,6 @@
 #include "textprint.h"
 #include "arc_def.h"
 #include "system/g3d_tool.h"
-#include "sound/snd_strm.h"
-#include "arc/snd_strm.naix"
 
 #include "print/gf_font.h"
 
@@ -90,7 +88,6 @@ typedef enum {
 struct _FIELD_MAIN_WORK
 {
 	GAMESYS_WORK*	gsys;
-    VecFx32         recvWork;
 	HEAPID			heapID;
 	GAMEMODE		gamemode;
 	int				seq;
@@ -152,11 +149,8 @@ struct _DEPEND_FUNCTIONS{
 //------------------------------------------------------------------
 static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work);
 
-FIELD_MAIN_WORK* fieldWork;
-
 static void fieldMainCommActorFree( FIELD_MAIN_WORK *fieldWork );
 static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork );
-//情報バーの初期化と開放
 
 
 //------------------------------------------------------------------
@@ -172,7 +166,10 @@ static int GetSceneID(GAMESYS_WORK * gsys)
 static const VecFx32 * GetStartPos(GAMESYS_WORK * gsys)
 {
 	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
-	return PLAYERWORK_getPosition(pw);
+	const VecFx32 * pos = PLAYERWORK_getPosition(pw);
+	TAMADA_Printf("start X,Y,Z=%d,%d,%d\n",
+			FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
+	return pos;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -201,6 +198,7 @@ static void SetMapperData(FIELD_MAIN_WORK * fieldWork)
 //------------------------------------------------------------------
 FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 {
+	FIELD_MAIN_WORK * fieldWork;
 	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_MAIN_WORK) );
 	fieldWork->heapID = heapID;
 	fieldWork->gamemode = GAMEMODE_BOOT;
@@ -212,11 +210,6 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 
 	//通信用処理
 	fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID , GFL_HEAPID_APP );
-#if 0
-    //サウンド用処理
-	SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_Firestarter_swav, SND_STRM_PCM8, SND_STRM_8KHZ, GFL_HEAPID_APP );
-    SND_STRM_Play();
-#endif
 	return fieldWork;
 }
 
@@ -281,16 +274,11 @@ GAMESYS_WORK * FIELDMAP_GetGameSysWork( FIELD_MAIN_WORK *fieldWork )
 //------------------------------------------------------------------
 void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )
 {
-#if 0
-    SND_STRM_Stop();
-    SND_STRM_Release();
-#endif
 	MAP_MATRIX_Delete( fldWork->pMapMatrix );
 
 	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
 	FIELD_COMM_MAIN_TermSystem( fldWork->commSys , FALSE );
 	GFL_HEAP_FreeMemory( fldWork );
-	fieldWork = NULL;
 }
 
 //------------------------------------------------------------------
@@ -322,23 +310,15 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 				fieldWork, fieldWork->g3Dcamera, fieldWork->heapID );
 
 		SetMapperData(fieldWork);
-		FLDMAPPER_ResistData(
-			 fieldWork->g3Dmapper, &fieldWork->map_res );
+		FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
 
 		//登録テーブルごとに個別の初期化処理を呼び出し
 		{
-			u16		dir;
-
+			u16 dir = GetStartDirection(gsys);
 			fieldWork->now_pos = *GetStartPos(gsys);
-			TAMADA_Printf("start X,Y,Z=%d,%d,%d\n",
-					FX_Whole(fieldWork->now_pos.x),
-					FX_Whole(fieldWork->now_pos.y),
-					FX_Whole(fieldWork->now_pos.z));
-			dir = GetStartDirection(gsys);
 			fieldWork->ftbl->create_func( fieldWork, &fieldWork->now_pos, dir );
 			FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
 		}
-
 
 		// フォグシステム生成
 		fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
@@ -386,9 +366,6 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			//登録テーブルごとに個別のメイン処理を呼び出し
 			fieldWork->ftbl->main_func( fieldWork, &fieldWork->now_pos );
 			
-			//通信用アクター更新
-			//fieldMainCommActorProc( fieldWork );
-
 			//Mapシステムに位置を渡している。
 			//これがないとマップ移動しないので注意
 			FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
@@ -398,7 +375,6 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 		//通信用処理(プレイヤーの座標の設定とか
 		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
-
 		
 		FIELD_CAMERA_Main( fieldWork->camera_control );
 		MainGameSystem( fieldWork );
@@ -409,6 +385,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
 		}
 		break;
+
 	case 4:
 		//イベント起動チェックを停止する
 		GAMESYSTEM_EVENT_EntryCheckFunc(gsys, NULL, NULL);
@@ -487,7 +464,6 @@ static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 	for (i = 0; i < NELEMS(pos_array); i++) {
 		u32 attr = 0;
 		FLDMAPPER_GRIDINFO gridInfo;
-		//pos = pos_array[i] * FX32_ONE * 16 + fieldWork->now_pos;
 		VEC_Set(&pos,
 				pos_array[i].x * 16 * FX32_ONE,
 				pos_array[i].y * 16 * FX32_ONE,
@@ -553,7 +529,6 @@ static GMEVENT * PushConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWo
 	{
 		u32 attr = 0;
 		FLDMAPPER_GRIDINFO gridInfo;
-		//pos = pos_array[i] * FX32_ONE * 16 + fieldWork->now_pos;
 		if( FLDMAPPER_GetGridInfo( fieldWork->g3Dmapper, &now_pos, &gridInfo ) == TRUE ){
 			attr = gridInfo.gridData[0].attr;
 		}
@@ -590,7 +565,6 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 	//ソフトリセットチェック
 	if( (cont&resetCont) == resetCont ){
 		return DEBUG_EVENT_GameEnd(gsys, fieldWork);
-		//return DEBUG_EVENT_FieldSample(gsys, fieldWork);
 	}
 	
 	//マップ変更チェック
@@ -660,8 +634,6 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
  *
  */
 //============================================================================================
-//#define BACKGROUND_COL	(GX_RGB(23,29,31))		//背景色
-//#define FOG_COL			(GX_RGB(31,31,31))		//フォグ色
 #define BACKGROUND_COL	(GX_RGB(30,31,31))		//背景色
 #define FOG_COL			(GX_RGB(31,31,31))		//フォグ色
 #define DTCM_SIZE		(0x1000)				//DTCMエリアのサイズ
@@ -707,24 +679,6 @@ static const GFL_CLSYS_INIT CLSYS_Init = {
 	FIELD_CLSYS_RESOUCE_MAX
 };
 
-
-//------------------------------------------------------------------
-/**
- * @brief	アーカイブテーブル
- */
-//------------------------------------------------------------------
-#include "test_graphic/fld_act.naix"
-
-#if 0
-static	const	char	*GraphicFileTable[]={
-	"test_graphic/test3d.narc",
-	"test_graphic/fld_act.narc",
-	"test_graphic/fld_map.narc",
-	"test_graphic/sample_map.narc",
-};
-#endif
-
-//static const char font_path[] = {"gfl_font.dat"};
 
 //------------------------------------------------------------------
 /**
