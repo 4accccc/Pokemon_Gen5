@@ -25,7 +25,7 @@
 
 #include "font/font.naix"
 #include "message.naix"
-#include "msg/msg_d_soga.h"
+#include "effect_viewer.h"
 
 #define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
@@ -44,8 +44,18 @@
 #define	MCS_READ_CH			( 0 )
 #define	MCS_WRITE_CH		( 0 )
 
+enum{
+	BACK_COL = 0,
+	SHADOW_COL = 2,
+	LETTER_COL_NORMAL = 1,
+	LETTER_COL_SELECT,
+	LETTER_COL_CURSOR,
+};
+
 #define G2D_BACKGROUND_COL	( GX_RGB( 31, 31, 31 ) )
 #define G2D_FONT_COL		( GX_RGB(  0,  0,  0 ) )
+#define G2D_FONT_SELECT_COL	( GX_RGB(  0, 31,  0 ) )
+#define G2D_FONT_CURSOR_COL	( GX_RGB( 31,  0,  0 ) )
 
 enum{
 	SEND_SEQUENCE = 1,
@@ -54,6 +64,8 @@ enum{
 	SEND_RESOURCE_OK,
 	SEND_RECEIVE,
 	SEND_RECEIVE_OK,
+	SEND_DECIDE,
+	SEND_CANCEL,
 	SEND_IDLE,
 };
 
@@ -88,21 +100,45 @@ typedef struct
 
 	GFL_MSGDATA			*msg;
 	GFL_FONT			*font;
-	STRBUF				*strbuf;
+
+	int					menu_list;
+
+	u32					*param_start;
+	u32					*param;
+	int					edit_param;
+	int					cursor_pos;
+	int					cursor_keta;
+
+	int					answer;
+
+	int					draw_req;
 
 	void				*sequence_data;
 	void				*resource_data;
+
+	GFL_PTC_PTR			ptc;
 }EFFECT_VIEWER_WORK;
 
 static	void	EffectViewerSequence( EFFECT_VIEWER_WORK *evw );
 static	void	EffectViewerRead( EFFECT_VIEWER_WORK *evw );
 static	void	EffectViewerSequenceLoad( EFFECT_VIEWER_WORK *evw );
 static	void	EffectViewerResourceLoad( EFFECT_VIEWER_WORK *evw );
-static	void	EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw );
+static	BOOL	EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerInitMenuList( EFFECT_VIEWER_WORK *evw, int menu_list );
+static	void	EffectViewerDrawMenuList( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerDrawCursor( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerDrawMenuLabel( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerDrawMenuData( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerDrawMenuDataNum( EFFECT_VIEWER_WORK *evw, const MENU_SCREEN_DATA *msd_p, int param );
+static	void	EffectViewerDrawMenuDataComboBox( EFFECT_VIEWER_WORK *evw, const MENU_SCREEN_DATA *msd_p, int param );
+static	void	EffectViewerEditMenuList( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerMoveAction( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerEditAction( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerParticleResourceLoad( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerParticlePlay( EFFECT_VIEWER_WORK *evw );
+static	void	EffectViewerParticleEnd( EFFECT_VIEWER_WORK *evw );
 
-static	void	TextPrint(EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num );
-static	void	NumPrint( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num );
-static	void	Num16Print( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num );
+static	u32		*EffectViewerMakeSendData( EFFECT_VIEWER_WORK *evw, int param_start, int param_count );
 
 static	void	MoveCamera( EFFECT_VIEWER_WORK *evw );
 
@@ -113,30 +149,6 @@ static	const	int	pokemon_pos_table[][2]={
 	{ BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB },
 	{ BTLV_MCSS_POS_A, BTLV_MCSS_POS_B },
 	{ BTLV_MCSS_POS_C, BTLV_MCSS_POS_D }
-};
-
-static	const	char	num_char_table[][1]={
-	"0",
-	"1",
-	"2",
-	"3",
-	"4",
-	"5",
-	"6",
-	"7",
-	"8",
-	"9",
-	"A",
-	"B",
-	"C",
-	"D",
-	"E",
-	"F"
-};
-
-static	const	char	ProjectionText[2][12]={
-	"Perspective",
-	"Ortho",
 };
 
 FS_EXTERN_OVERLAY(battle);
@@ -276,10 +288,8 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 		//フォントパレット作成＆転送
 		{
 			static	u16 plt[16] = {
-				G2D_BACKGROUND_COL, G2D_FONT_COL,
-				0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0,
-				0, 0 };
+				G2D_BACKGROUND_COL, G2D_FONT_COL, G2D_FONT_SELECT_COL, G2D_FONT_CURSOR_COL,
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			GFL_BG_LoadPalette( GFL_BG_FRAME0_S, &plt, 16*2, 0 );
 		}
 
@@ -311,14 +321,9 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 	//メッセージ系初期化
 	GFL_FONTSYS_Init();
 	evw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, evw->heapID );
-	evw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, evw->heapID );
+	evw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, TRUE, evw->heapID );
 
-	evw->strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_ATTACK );
-	PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), 0, 0, evw->strbuf, evw->font );
-	GFL_BMPWIN_TransVramCharacter( evw->bmpwin );
-	GFL_BMPWIN_MakeScreen( evw->bmpwin );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
-	GFL_HEAP_FreeMemory( evw->strbuf );
+	EffectViewerInitMenuList( evw, MENULIST_TITLE );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -338,10 +343,10 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
 
 	if( evw->mcs_enable ){
 		MCS_Main();
-//		MCS_Write();
 	}
 
 	if( trg & PAD_BUTTON_START ){
+#if 0
 		if( evw->mcs_enable ){
 			evw->seq_no = SEQ_IDLE;
 			MCS_Exit();
@@ -360,6 +365,13 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
 				evw->mcs_enable = 1;
 			}
 		}
+#else
+		if( evw->mcs_enable == 0){
+			if( MCS_Init( evw->heapID ) == FALSE ){
+				evw->mcs_enable = 1;
+			}
+		}
+#endif
 	}
 
 	EffectViewerSequence( evw );
@@ -396,6 +408,10 @@ static GFL_PROC_RESULT EffectViewerProcExit( GFL_PROC * proc, int * seq, void * 
 	GFL_BG_Exit();
 	GFL_BMPWIN_Exit();
 
+	if( evw->param ){
+		GFL_HEAP_FreeMemory( evw->param );
+	}
+
 	GFL_PROC_FreeWork( proc );
 
 	GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
@@ -419,8 +435,9 @@ const GFL_PROC_DATA		EffectViewerProcData = {
 //======================================================================
 static	void	EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
 {
-	int tp = GFL_UI_TP_GetTrg();
 	int cont = GFL_UI_KEY_GetCont();
+
+	EffectViewerDrawMenuList( evw );
 
 	switch( evw->seq_no ){
 	default:
@@ -437,12 +454,14 @@ static	void	EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
 		EffectViewerResourceLoad( evw );
 		break;
 	case SEQ_EFFECT_ENABLE:
+#if 0
 		if( cont == PAD_BUTTON_A ){
 			BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->sequence_data, evw->resource_data );
 		}
 		else if( cont == PAD_BUTTON_B ){
 			BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data );
 		}
+#endif
 		evw->seq_no++;
 		break;
 	case SEQ_EFFECT_WAIT:
@@ -451,7 +470,9 @@ static	void	EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
 		}
 		break;
 	case SEQ_RECEIVE_ACTION:
-		EffectViewerRecieveAction( evw );
+		if( EffectViewerRecieveAction( evw ) == TRUE ){
+			evw->seq_no = SEQ_IDLE;
+		}
 		break;
 	}
 }
@@ -487,6 +508,7 @@ static	void	EffectViewerRead( EFFECT_VIEWER_WORK *evw )
 		else if( head == SEND_RECEIVE ){
 			evw->seq_no = SEQ_RECEIVE_ACTION;
 			evw->sub_seq_no = SUB_SEQ_INIT;
+			evw->answer = 0;
 			head = SEND_RECEIVE_OK;
 			MCS_Write( MCS_WRITE_CH, &head, 4 );
 			OS_TPrintf("receive head:%d\n",size);
@@ -543,103 +565,420 @@ static	void	EffectViewerResourceLoad( EFFECT_VIEWER_WORK *evw )
 //======================================================================
 //	DSからPCへデータを受け渡す
 //======================================================================
-static	void	EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
+static	BOOL	EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
 {
+	BOOL	ret = FALSE;
+
 	switch( evw->sub_seq_no ){
 	case SUB_SEQ_INIT:
 		{
 			int	*start_ofs = (int *)evw->sequence_data ;
 			u8 *start = (u8 *)evw->sequence_data;
 			u16 *com_start = (u16 *)&start[ start_ofs[ 0 ] ];
+			evw->param_start = (u32 *)&start[ start_ofs[ 0 ] + 2 ];
 
 			switch( com_start[ 0 ] ){
-			case EC_CAMERA_MOVE:
-			case EC_PARTICLE_LOAD:
-				break;
 			case EC_PARTICLE_PLAY:
+				EffectViewerInitMenuList( evw, MENULIST_PPE );
+				BTLV_MCSS_ResetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+				EffectViewerParticleResourceLoad( evw );
 				evw->sub_seq_no = SUB_SEQ_PARTICLE_PLAY_PARAM;
+				evw->param[ MLP_PPE_ATTACK ] = BTLV_MCSS_POS_AA;
+				evw->param[ MLP_PPE_DEFENCE ] = BTLV_MCSS_POS_BB;
+				evw->param[ MLP_PPE_OFSY ] = evw->param_start[ PPEPARAM_OFS_Y ];
+				evw->param[ MLP_PPE_ANGLE ] = evw->param_start[ PPEPARAM_DIR_ANGLE ];
 				break;
+#if 0
+			case EC_CAMERA_MOVE:
 			case EC_POKEMON_MOVE:
 			case EC_POKEMON_SCALE:
 			case EC_POKEMON_ROTATE:
 			case EC_POKEMON_SET_MEPACHI_FLAG:
 			case EC_POKEMON_SET_ANM_FLAG:
+#endif
+			case EC_PARTICLE_LOAD:
 			case EC_EFFECT_END_WAIT:
+			case EC_SEQ_END:
+			default:
+				{
+					u32 *buf;
+					evw->answer = EDIT_CANCEL;
+					buf = EffectViewerMakeSendData( evw, 0, 0 );
+					MCS_Write( MCS_WRITE_CH, buf, 4 );
+					GFL_HEAP_FreeMemory( buf );
+					EffectViewerInitMenuList( evw, MENULIST_TITLE );
+					ret = TRUE;
+				}
 				break;
 			}
 		}
 		break;
 	case SUB_SEQ_PARTICLE_PLAY_PARAM:
+		EffectViewerEditMenuList( evw );
+		EffectViewerParticlePlay( evw );
+		if( ( evw->answer == EDIT_DECIDE ) || ( evw->answer == EDIT_CANCEL ) ){
+			evw->sub_seq_no = SUB_SEQ_PARTICLE_PLAY_PARAM_SEND;
+		}
 		break;
 	case SUB_SEQ_PARTICLE_PLAY_PARAM_SEND:
+		{
+			u32 *buf;
+			buf = EffectViewerMakeSendData( evw, MLP_PPE_OFSY, 2 );
+			MCS_Write( MCS_WRITE_CH, buf, PPE_SEND_SIZE );
+			GFL_HEAP_FreeMemory( buf );
+			EffectViewerParticleEnd( evw );
+			EffectViewerInitMenuList( evw, MENULIST_TITLE );
+			ret = TRUE;
+		}
 		break;
+	}
+	return ret;
+}
+
+//======================================================================
+//	メニューリスト初期化
+//======================================================================
+static	void	EffectViewerInitMenuList( EFFECT_VIEWER_WORK *evw, int menu_list )
+{
+	const MENU_SCREEN_PARAM *msp_p = msp[ menu_list ];
+	evw->menu_list = menu_list;
+	evw->edit_param = NO_EDIT;
+	evw->cursor_pos = NO_EDIT;
+	if( msp_p->count ){
+		if( evw->param ){
+			GFL_HEAP_FreeMemory( evw->param );
+		}
+		evw->param = GFL_HEAP_AllocClearMemory( evw->heapID, sizeof( u32 ) * msp_p->count );
+	}
+	if( msp_p->mlp ){
+		evw->cursor_pos = 0;
+	}
+	evw->draw_req = 1;
+}
+
+//======================================================================
+//	テキスト表示
+//======================================================================
+static	void	EffectViewerDrawMenuList( EFFECT_VIEWER_WORK *evw )
+{
+	if( evw->draw_req ){
+		evw->draw_req = 0;
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp( evw->bmpwin ), 0 );
+
+		EffectViewerDrawCursor( evw );
+		EffectViewerDrawMenuLabel( evw );
+		EffectViewerDrawMenuData( evw );
+
+		GFL_BMPWIN_TransVramCharacter( evw->bmpwin );
+		GFL_BMPWIN_MakeScreen( evw->bmpwin );
+		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 	}
 }
 
 //======================================================================
 //	テキスト表示
 //======================================================================
-static	void	TextPrint( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num )
+static	void	EffectViewerDrawCursor( EFFECT_VIEWER_WORK *evw )
 {
-#if 0
-	evw->textParam->writex = 0;
-	evw->textParam->writey = 0;
-	evw->textParam->bmp = GFL_BMPWIN_GetBmp( evw->bmpwin[ bmpwin_num ] );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( evw->bmpwin[ bmpwin_num ] ), 0 );
-	GFL_TEXT_PrintSjisCode( &ProjectionText[ num ][ 0 ], evw->textParam );
-	GFL_BMPWIN_TransVramCharacter( evw->bmpwin[ bmpwin_num ] );
-	GFL_BMPWIN_MakeScreen( evw->bmpwin[ bmpwin_num ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
-#endif
+	STRBUF	*strbuf;
+	const MENU_SCREEN_PARAM *msp_p = msp[ evw->menu_list ];
+
+	GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
+
+	if( evw->cursor_pos != NO_EDIT ){
+		strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_CURSOR );
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ),
+						msp_p->mlp[ evw->cursor_pos ].cursor_pos_x,
+						msp_p->mlp[ evw->cursor_pos ].cursor_pos_y,
+						strbuf, evw->font );
+		GFL_HEAP_FreeMemory( strbuf );
+	}
 }
 
 //======================================================================
-//	数字表示
+//	テキスト表示
 //======================================================================
-static	void	NumPrint( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num )
+static	void	EffectViewerDrawMenuLabel( EFFECT_VIEWER_WORK *evw )
 {
-#if 0
-	char	num_char[ 4 ] = "\0\0\0\0";
-	int		num_100,num_10,num_1;
+	int	i;
+	STRBUF	*strbuf;
+	const MENU_SCREEN_PARAM *msp_p = msp[ evw->menu_list ];
+	const MENU_SCREEN_DATA *msd_p;
 
-	num_100 = num / 100;
-	num_10  = ( num - ( num_100 * 100 ) ) / 10;
-	num_1   = num - ( num_100 * 100 ) - (num_10 * 10 );
+	GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
 
-	num_char[ 0 ] = num_char_table[ num_100 ][ 0 ];
-	num_char[ 1 ] = num_char_table[ num_10  ][ 0 ];
-	num_char[ 2 ] = num_char_table[ num_1   ][ 0 ];
-
-	evw->textParam->writex = 0;
-	evw->textParam->writey = 0;
-	evw->textParam->bmp = GFL_BMPWIN_GetBmp( evw->bmpwin[ bmpwin_num ] );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( evw->bmpwin[ bmpwin_num ] ), 0 );
-	GFL_TEXT_PrintSjisCode( &num_char[0], evw->textParam );
-	GFL_BMPWIN_TransVramCharacter( evw->bmpwin[ bmpwin_num ] );
-	GFL_BMPWIN_MakeScreen( evw->bmpwin[ bmpwin_num ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
-#endif
+	for( i = 0 ; i < msp_p->count ; i++ ){
+		msd_p = msp_p->msd[ i ];
+		strbuf = GFL_MSG_CreateString( evw->msg,  msd_p->strID );
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->label_x, msd_p->label_y, strbuf, evw->font );
+		GFL_HEAP_FreeMemory( strbuf );
+	}
 }
 
-static	void	Num16Print( EFFECT_VIEWER_WORK *evw, int num, int bmpwin_num )
+//======================================================================
+//	テキスト表示
+//======================================================================
+static	void	EffectViewerDrawMenuData( EFFECT_VIEWER_WORK *evw )
 {
-#if 0
-	int		i;
-	char	num_char[ 9 ] = "\0\0\0\0\0\0\0\0\0";
+	int	param;
+	const MENU_SCREEN_PARAM *msp_p = msp[ evw->menu_list ];
+	const MENU_SCREEN_DATA *msd_p;
 
-	for( i = 0 ; i < 8 ; i++ ){
-		num_char[ i ] = num_char_table[ ( num >> ( 28 - 4 * i ) ) & 0x0000000f ][ 0 ];
+	for( param = 0 ; param < msp_p->count ; param++ ){
+		msd_p = msp_p->msd[ param ];
+		switch( msd_p->edit_type ){
+		default:
+		case EDIT_NONE:
+			break;
+		case EDIT_INT:
+		case EDIT_FX32:
+			EffectViewerDrawMenuDataNum( evw, msd_p, param );
+			break;
+		case EDIT_COMBOBOX:
+			EffectViewerDrawMenuDataComboBox( evw, msd_p, param );
+			break;
+		}
+	}
+}
+
+//======================================================================
+//	テキスト表示
+//======================================================================
+static	void	EffectViewerDrawMenuDataNum( EFFECT_VIEWER_WORK *evw, const MENU_SCREEN_DATA *msd_p, int param )
+{
+	STRBUF	*strbuf;
+	int		keta, ofsx = 0;
+	u32		num;
+
+	for( keta = 7 ; keta >= 0 ; keta-- ){
+		if( param == evw->edit_param ){
+			if( keta == evw->cursor_keta ){
+				GFL_FONTSYS_SetColor( LETTER_COL_CURSOR, SHADOW_COL, BACK_COL );
+			}
+			else{
+				GFL_FONTSYS_SetColor( LETTER_COL_SELECT, SHADOW_COL, BACK_COL );
+			}
+		}
+		else{
+			GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
+		}
+		if( ( keta == 2 ) && ( msd_p->edit_type == EDIT_FX32 ) ){
+			strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_NUMDOT );
+			PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->data_x + ofsx, msd_p->data_y, strbuf, evw->font );
+			GFL_HEAP_FreeMemory( strbuf );
+			ofsx += 8;
+		}
+		num = ( evw->param[ param ] & ( 0x0000000f << ( keta * 4 ) ) ) >> ( keta * 4 );
+		strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_NUM0 + num );
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->data_x + ofsx, msd_p->data_y, strbuf, evw->font );
+		GFL_HEAP_FreeMemory( strbuf );
+		ofsx += 8;
+	}
+}
+
+//======================================================================
+//	テキスト表示
+//======================================================================
+static	void	EffectViewerDrawMenuDataComboBox( EFFECT_VIEWER_WORK *evw, const MENU_SCREEN_DATA *msd_p, int param )
+{
+	STRBUF	*strbuf;
+
+	if( param == evw->edit_param ){
+		GFL_FONTSYS_SetColor( LETTER_COL_SELECT, SHADOW_COL, BACK_COL );
+	}
+	else{
+		GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
 	}
 
-	evw->textParam->writex = 0;
-	evw->textParam->writey = 0;
-	evw->textParam->bmp = GFL_BMPWIN_GetBmp( evw->bmpwin[ bmpwin_num ] );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( evw->bmpwin[ bmpwin_num ] ), 0 );
-	GFL_TEXT_PrintSjisCode( &num_char[0], evw->textParam );
-	GFL_BMPWIN_TransVramCharacter( evw->bmpwin[ bmpwin_num ] );
-	GFL_BMPWIN_MakeScreen( evw->bmpwin[ bmpwin_num ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
-#endif
+	strbuf = GFL_MSG_CreateString( evw->msg,  msd_p->edit_min + evw->param[ param ] );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->data_x, msd_p->data_y, strbuf, evw->font );
+	GFL_HEAP_FreeMemory( strbuf );
+}
+
+//======================================================================
+//	データエディット
+//======================================================================
+static	void	EffectViewerEditMenuList( EFFECT_VIEWER_WORK *evw )
+{
+	int tp = GFL_UI_TP_GetCont();
+
+	if( evw->edit_param == NO_EDIT ){
+		if( tp ){
+			MoveCamera( evw );
+		}
+		else{
+			EffectViewerMoveAction( evw );
+		}
+	}
+	else{
+		EffectViewerEditAction( evw );
+	}
+}
+
+//======================================================================
+//	データエディット
+//======================================================================
+static	void	EffectViewerMoveAction( EFFECT_VIEWER_WORK *evw )
+{
+	int trg = GFL_UI_KEY_GetTrg();
+	const MENU_SCREEN_PARAM *msp_p = msp[ evw->menu_list ];
+	const MENU_SCREEN_DATA *msd_p = msp_p->msd[ evw->cursor_pos ];
+
+	if( ( trg == PAD_KEY_UP ) && ( msp_p->mlp[ evw->cursor_pos ].move_up != NO_MOVE ) ){
+		evw->cursor_pos = msp_p->mlp[ evw->cursor_pos ].move_up;
+		evw->draw_req = 1;
+	}
+	else if( ( trg == PAD_KEY_DOWN ) && ( msp_p->mlp[ evw->cursor_pos ].move_down != NO_MOVE ) ){
+		evw->cursor_pos = msp_p->mlp[ evw->cursor_pos ].move_down;
+		evw->draw_req = 1;
+	}
+	else if( ( trg == PAD_KEY_LEFT ) && ( msp_p->mlp[ evw->cursor_pos ].move_left != NO_MOVE ) ){
+		evw->cursor_pos = msp_p->mlp[ evw->cursor_pos ].move_left;
+		evw->draw_req = 1;
+	}
+	else if( ( trg == PAD_KEY_RIGHT ) && ( msp_p->mlp[ evw->cursor_pos ].move_right != NO_MOVE ) ){
+		evw->cursor_pos = msp_p->mlp[ evw->cursor_pos ].move_right;
+		evw->draw_req = 1;
+	}
+	else if ( trg == PAD_BUTTON_A ){
+		evw->edit_param = evw->cursor_pos;
+		evw->draw_req = 1;
+		switch( msd_p->edit_type ){
+		default:
+		case EDIT_NONE:
+		case EDIT_COMBOBOX:
+			break;
+		case EDIT_DECIDE:
+		case EDIT_CANCEL:
+			evw->answer = msd_p->edit_type;
+			break;
+		case EDIT_INT:
+			evw->cursor_keta = 0;
+			break;
+		case EDIT_FX32:
+			evw->cursor_keta = 3;
+			break;
+		}
+	}
+}
+
+//======================================================================
+//	データエディット
+//======================================================================
+static	void	EffectViewerEditAction( EFFECT_VIEWER_WORK *evw )
+{
+	int trg = GFL_UI_KEY_GetTrg();
+	const MENU_SCREEN_PARAM *msp_p = msp[ evw->menu_list ];
+	const MENU_SCREEN_DATA *msd_p = msp_p->msd[ evw->edit_param ];
+
+	switch( msd_p->edit_type ){
+	default:
+	case EDIT_NONE:
+		break;
+	case EDIT_INT:
+	case EDIT_FX32:
+		if( trg == PAD_KEY_UP ){
+			evw->param[ evw->edit_param ] += 1 << ( 4 * evw->cursor_keta );
+			evw->draw_req = 1;
+		}
+		if( trg == PAD_KEY_DOWN ){
+			evw->param[ evw->edit_param ] -= 1 << ( 4 * evw->cursor_keta );
+			evw->draw_req = 1;
+		}
+		if( ( trg == PAD_KEY_LEFT ) && ( evw->cursor_keta < 7 ) ){
+			evw->cursor_keta++;
+			evw->draw_req = 1;
+		}
+		if( ( trg == PAD_KEY_RIGHT ) && ( evw->cursor_keta > 0 ) ){
+			evw->cursor_keta--;
+			evw->draw_req = 1;
+		}
+		break;
+	case EDIT_COMBOBOX:
+		if( ( trg == PAD_KEY_UP ) && ( evw->param[ evw->edit_param ] < ( msd_p->edit_max - msd_p->edit_min ) ) ){
+			evw->param[ evw->edit_param ]++;	
+			evw->draw_req = 1;
+		}
+		if( ( trg == PAD_KEY_DOWN ) && ( evw->param[ evw->edit_param ] > 0 ) ){
+			evw->param[ evw->edit_param ]--;	
+			evw->draw_req = 1;
+		}
+		break;
+	}
+	if( trg == PAD_BUTTON_A ){
+		evw->edit_param = NO_EDIT;
+		evw->draw_req = 1;
+	}
+}
+
+//======================================================================
+//	パーティクルリソースロード
+//======================================================================
+static	void	EffectViewerParticleResourceLoad( EFFECT_VIEWER_WORK *evw )
+{
+	int					ofs;
+	void				*heap;
+	void				*resource;
+	DEBUG_PARTICLE_DATA	*dpd = (DEBUG_PARTICLE_DATA *)evw->resource_data;
+
+	heap = GFL_HEAP_AllocMemory( evw->heapID, PARTICLE_LIB_HEAP_SIZE );
+	evw->ptc = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, evw->heapID );
+	ofs = dpd->adrs[ 0 ];
+	resource = (void *)&dpd->adrs[ ofs ];
+	GFL_PTC_SetResourceEx( evw->ptc, resource, FALSE, GFUser_VIntr_GetTCBSYS() );
+}
+
+//======================================================================
+//	パーティクル再生
+//======================================================================
+static	void	EffectViewerParticlePlay( EFFECT_VIEWER_WORK *evw )
+{
+	if( ( GFL_PTC_GetEmitterNum( evw->ptc ) ) && ( evw->draw_req ) ){
+		GFL_PTC_DeleteEmitterAll( evw->ptc );
+	}
+	if( GFL_PTC_GetEmitterNum( evw->ptc ) == 0 ){
+		BTLV_EFFVM_DebugParticlePlay( BTLV_EFFECT_GetVMHandle(), evw->ptc, 0,
+									  evw->param[ MLP_PPE_ATTACK ],
+									  evw->param[ MLP_PPE_DEFENCE ],
+									  evw->param[ MLP_PPE_OFSY ],
+									  evw->param[ MLP_PPE_ANGLE ] );
+	}
+}
+
+//======================================================================
+//	パーティクル再生後始末
+//======================================================================
+static	void	EffectViewerParticleEnd( EFFECT_VIEWER_WORK *evw )
+{
+	if( evw->ptc ){
+		void	*heap;
+
+		heap = GFL_PTC_GetHeapPtr( evw->ptc );
+		GFL_HEAP_FreeMemory( heap );
+		GFL_PTC_Delete( evw->ptc );
+		evw->ptc = NULL;
+	}
+	BTLV_MCSS_SetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+}
+
+//======================================================================
+//	MCS転送するデータを生成
+//======================================================================
+static	u32	*EffectViewerMakeSendData( EFFECT_VIEWER_WORK *evw, int param_start, int param_count )
+{
+	int	i;
+	u32	*buf = GFL_HEAP_AllocMemory( evw->heapID, sizeof( u32 ) * ( param_count + 1 ) );
+
+	if( evw->answer == EDIT_DECIDE ){
+		buf[ 0 ] = SEND_DECIDE;
+	}
+	else{
+		buf[ 0 ] = SEND_CANCEL;
+	}
+	for( i = 0 ; i < param_count ; i++ ){
+		buf[ i + 1 ] = evw->param[ param_start + i ];
+	}
+	return buf;
 }
 
 //======================================================================
@@ -721,6 +1060,10 @@ static	void	MoveCamera( EFFECT_VIEWER_WORK *evw )
 			camTarget.y,
 			camTarget.z );
 */
+	}
+	if( pad & PAD_BUTTON_START ){
+		BTLV_CAMERA_GetDefaultCameraPosition( &camPos, &camTarget );
+		BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &camPos, &camTarget, 20, 0, 20 );
 	}
 
 }
