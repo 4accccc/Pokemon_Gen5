@@ -209,7 +209,7 @@ static TESTMODE_MENU_LIST topMenu[] =
 	{L"そがべ　ひさし"		,TESTMODE_ITEM_SelectFuncSogabe },
 	{L"おおの　かつみ"		,TESTMODE_ITEM_SelectFuncOhno },
 	{L"たや　まさお"		,TESTMODE_ITEM_SelectFuncTaya },
-	{L"Sample1" 			,TESTMODE_ITEM_SelectFuncSample1 },
+//	{L"Sample1" 			,TESTMODE_ITEM_SelectFuncSample1 },
 	{L"まつだ　よしのり"	,TESTMODE_ITEM_SelectFuncMatsuda },
 	{L"かがや　けいた"		,TESTMODE_ITEM_SelectFuncKagaya  },
 	{L"ありいずみ　のぶひこ",TESTMODE_ITEM_SelectFuncAri },

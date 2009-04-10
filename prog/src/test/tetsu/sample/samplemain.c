@@ -20,6 +20,7 @@ BOOL	SampleMain( void );
 #include "sample_net.h"
 
 #include "sound/snd_status.h"
+#include "sound/pm_sndsys.h"
 
 #include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 //============================================================================================
@@ -156,15 +157,6 @@ void	SampleEnd( void )
 /**
  * @brief	メイン
  */
-static	int				bgmNo;
-static	int				seNo;
-static	int				voiceNo;
-static	NNSSndHandle	bgmHandle;
-static	NNSSndHandle	seHandle;
-static	NNSSndHandle	voiceHandle;
-static	NNSSndHeapHandle soundHeap;
-static	int				soundHeapLv;
-static	int				seHeapLv;
 //------------------------------------------------------------------
 BOOL	SampleMain( void )
 {
@@ -182,16 +174,7 @@ BOOL	SampleMain( void )
 		sampleWork->mapNum = 0;
 		sampleWork->seq++;
 
-		//NNS_SndArcLoadBank(BANK_BASIC, soundHeap);
-		voiceNo = 1;
-		seNo = SEQ_SE_DP_000;
-		bgmNo = SEQ_WB_BICYCLE;
-		//bgmNo = SEQ_GS_EYE_K_AYASHII;
-		NNS_SndHandleInit(&bgmHandle);
-		NNS_SndHandleInit(&seHandle);
-		NNS_SndHandleInit(&voiceHandle);
-		soundHeap = GFL_SOUND_GetSoundHeap();
-		soundHeapLv = NNS_SndHeapSaveState(soundHeap);
+		PMSND_PlayBGM(SEQ_WB_BICYCLE);
         break;
 
 	case 1:
@@ -214,32 +197,6 @@ BOOL	SampleMain( void )
 		}
 		sampleWork->subProcSw = FALSE;
 		sampleWork->seq++;
-
-		{
-			NNS_SndPlayerStopSeq(&bgmHandle, 0);
-			NNS_SndHandleInit(&bgmHandle);
-
-			NNS_SndHeapLoadState(soundHeap, soundHeapLv);
-			OS_Printf("sound heap recover state remains %x\n", NNS_SndHeapGetFreeSize(soundHeap));
-
-			OS_Printf("sound BGM start seqnum %d\n", bgmNo);
-			if(NNS_SndArcLoadSeq(bgmNo, soundHeap) == FALSE){
-				OS_Printf("sound BGM Load Error\n");
-			}
-			if(NNS_SndArcPlayerStartSeq(&bgmHandle, bgmNo) == FALSE){
-				OS_Printf("sound BGM seq start Error\n");
-			}
-			OS_Printf("sound heap remains %x\n", NNS_SndHeapGetFreeSize(soundHeap));
-			bgmNo++;
-#if 0
-			OS_Printf("setup sound effect\n");
-			if(NNS_SndArcLoadSeq(seNo, soundHeap) == FALSE){
-				OS_Printf("sound_Effect load Error\n");
-			}
-			OS_Printf("sound heap remains %x\n", NNS_SndHeapGetFreeSize(soundHeap));
-#endif
-			seHeapLv = NNS_SndHeapSaveState(soundHeap);
-		}
 		break;
 
 	case 2:
@@ -276,44 +233,20 @@ BOOL	SampleMain( void )
 				break;
 			}
 			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
-#if 1
 				GFL_SNDSTATUS_SETUP sndStatusSetup;
 
 				sndStatusSetup = sndStatusData;
-				sndStatusSetup.pBgmHandle = &bgmHandle;
+				sndStatusSetup.pBgmHandle = PMSND_GetBGMhandlePointer();
 
 				sampleWork->gflSndStatus = GFL_SNDSTATUS_Create
 											( &sndStatusSetup, sampleWork->heapID );
 				sampleWork->subProcSw = TRUE;
-#else
-				NNS_SndPlayerStopSeq(&seHandle, 0);
-				NNS_SndHandleInit(&seHandle);
-
-				NNS_SndHeapLoadState(soundHeap, seHeapLv);
-				if(NNS_SndArcLoadSeq(seNo, soundHeap) == FALSE){
-					OS_Printf("sound_Effect load Error\n");
-				}
-				if(NNS_SndArcPlayerStartSeq(&seHandle, seNo) == FALSE){
-					OS_Printf("sound_Effect seq start Error\n");
-				}
-				seNo++;
-#endif
 				break;
 			}
 			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-#if 1
 				sampleWork->gflSkb = GFL_SKB_Create
 										( sampleWork->skbStrBuf, &skbData, sampleWork->heapID );
 				sampleWork->subProcSw = TRUE;
-#else
-				NNS_SndPlayerStopSeq(&voiceHandle, 0);
-				NNS_SndHandleInit(&voiceHandle);
-
-				if(NNS_SndArcPlayerStartSeqEx(&voiceHandle, -1, voiceNo, -1, SEQ_PV) == FALSE){
-					OS_Printf("voice seq start Error\n");
-				}
-				voiceNo++;
-#endif
 				break;
 			}
 		}
@@ -527,9 +460,6 @@ static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
 
 	//乱数初期化
 	GFL_STD_MtRandInit(0);
-
-	//ARCシステム初期化
-//	GFL_ARC_Init( &GraphicFileTable[0], NELEMS(GraphicFileTable) );		gfl_use.cで1回だけ初期化に変更
 
 	//VRAMクリア
 	GFL_DISP_ClearVRAM( GX_VRAM_D );
