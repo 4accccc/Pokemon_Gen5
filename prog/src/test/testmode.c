@@ -863,12 +863,14 @@ static BOOL TESTMODE_ITEM_SelectFuncTaya( TESTMODE_WORK *work , const int idx )
 	return TRUE;
 }
 
+#if 0
 extern const GFL_PROC_DATA TestProg1MainProcData;
 static BOOL TESTMODE_ITEM_SelectFuncSample1( TESTMODE_WORK *work , const int idx )
 {
 	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
 	return TRUE;
 }
+#endif
 
 FS_EXTERN_OVERLAY(matsuda_debug);
 extern const GFL_PROC_DATA DebugMatsudaListProcData;

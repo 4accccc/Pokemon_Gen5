@@ -7,6 +7,7 @@
  */
 //============================================================================================
 #include "gflib.h"
+#include "system/main.h"
 #include "system/gfl_use.h"
 #include "net/network_define.h"
 #include "textprint.h"
@@ -23,6 +24,75 @@ BOOL	SampleMain( void );
 #include "sound/pm_sndsys.h"
 
 #include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
+//============================================================================================
+//
+//
+//		プロセスの定義
+//
+//
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	プロセスの初期化
+ *
+ * ここでヒープの生成や各種初期化処理を行う。
+ * 初期段階ではmywkはNULLだが、GFL_PROC_AllocWorkを使用すると
+ * 以降は確保したワークのアドレスとなる。
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT DebugWatanabeSample1ProcInit
+				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x100000 );
+	SampleBoot( HEAPID_WATANABE_DEBUG );
+
+	return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	プロセスのメイン
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT DebugWatanabeSample1ProcMain
+				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+	if( SampleMain() == TRUE ){
+		return GFL_PROC_RES_FINISH;
+	}
+
+	return GFL_PROC_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	プロセスの終了処理
+ *
+ * 単に終了した場合、親プロセスに処理が返る。
+ * GFL_PROC_SysSetNextProcを呼んでおくと、終了後そのプロセスに
+ * 処理が遷移する。
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT DebugWatanabeSample1ProcEnd
+				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+	SampleEnd();
+	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
+
+	return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const GFL_PROC_DATA DebugWatanabeSample1ProcData = {
+	DebugWatanabeSample1ProcInit,
+	DebugWatanabeSample1ProcMain,
+	DebugWatanabeSample1ProcEnd,
+};
+
+
+
+
 //============================================================================================
 /**
  *

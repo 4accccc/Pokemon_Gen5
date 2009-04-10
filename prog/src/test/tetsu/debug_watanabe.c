@@ -10,6 +10,8 @@
 
 #include "system\main.h"
 
+FS_EXTERN_OVERLAY(watanabe_sample);
+extern const GFL_PROC_DATA DebugWatanabeSample1ProcData;
 extern void	SampleBoot( HEAPID heapID );
 extern void	SampleEnd( void );
 extern BOOL	SampleMain( void );
@@ -32,9 +34,10 @@ extern BOOL	SampleMain( void );
 static GFL_PROC_RESULT DebugWatanabeMainProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+#if 0
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x100000 );
 	SampleBoot( HEAPID_WATANABE_DEBUG );
-
+#endif
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -46,11 +49,15 @@ static GFL_PROC_RESULT DebugWatanabeMainProcInit
 static GFL_PROC_RESULT DebugWatanabeMainProcMain
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+#if 0
 	if( SampleMain() == TRUE ){
 		return GFL_PROC_RES_FINISH;
 	}
 
 	return GFL_PROC_RES_CONTINUE;
+#else
+	return GFL_PROC_RES_FINISH;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -65,8 +72,11 @@ static GFL_PROC_RESULT DebugWatanabeMainProcMain
 static GFL_PROC_RESULT DebugWatanabeMainProcEnd
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+#if 0
 	SampleEnd();
 	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
+#endif
+	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample1ProcData, NULL);
 
 	return GFL_PROC_RES_FINISH;
 }
