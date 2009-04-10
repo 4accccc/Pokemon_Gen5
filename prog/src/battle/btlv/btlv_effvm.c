@@ -90,7 +90,9 @@ static	void	EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
 #ifdef PM_DEBUG
 //デバッグ用関数
 void	BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd );
-u32		BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
+void	BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, int src, int dst, fx32 ofs_y, fx32 angle );
+
+static	u32		BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
 #endif
 
 //============================================================================================
@@ -887,13 +889,41 @@ void	BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, con
 
 //============================================================================================
 /**
+ *	パーティクル再生（デバッグ用）
+ *
+ * @param[in]	vmh		仮想マシン制御構造体へのポインタ
+ * @param[in]	ptc		GFL_PTC_PTR
+ * @param[in]	index	再生するエミッタ番号
+ * @param[in]	src		攻撃側
+ * @param[in]	dst		防御側
+ * @param[in]	ofs_y	エミッタの高さ調整値
+ * @param[in]	angle	エミッタのパーティクル射出角度
+ *
+ */
+//============================================================================================
+void	BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, int src, int dst, fx32 ofs_y, fx32 angle )
+{
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+	BTLV_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+
+	beeiw->vmh = vmh;
+	beeiw->src = src;
+	beeiw->dst = dst;
+	beeiw->ofs_y = ofs_y;
+	beeiw->angle = angle;
+
+	GFL_PTC_CreateEmitterCallback( ptc, index, &EFFVM_InitEmitterPos, beeiw );
+}
+
+//============================================================================================
+/**
  *	DEBUG_PARTICLE_DATAの配列の添え字をARCDATIDから取得する
  *
  * @param[in]	bevw	エフェクト管理構造体へのポインタ
  * @param[in]	datID	取得するARCDATID
  */
 //============================================================================================
-u32		BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
+static	u32		BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
 {
 	int	i;
 
