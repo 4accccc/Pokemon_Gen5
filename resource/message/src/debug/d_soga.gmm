@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2009-04-08T13:07:20"/>
+	<create user="sogabe" host="W00140" date="2009-04-09T20:45:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -283,24 +283,13 @@
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
-			<font default=" 0:large" position="4" width="109">
+			<font default=" 0:large" position="3" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="6" width="70"/>
-			<line position="-1" width="100"/>
-		</language>
-		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
-			<font default=" 0:large" position="5" width="106">
-				<list entry="0" file="W:\font\large.nftr"/>
-				<list entry="1" file="W:\font\small.nftr"/>
-			</font>
-			<size position="-1" width="100"/>
-			<space position="-1" width="100"/>
-			<width position="7" width="75"/>
+			<width position="4" width="70"/>
 			<line position="-1" width="100"/>
 		</language>
 	</columns>
@@ -333,74 +322,140 @@
 	</lock>
 
 
+	<row id="EVMSG_CURSOR">
+		<language name="JPN">→</language>
+	</row>
+
+	<row id="EVMSG_NUM0">
+		<language name="JPN">0</language>
+	</row>
+
+	<row id="EVMSG_NUM1">
+		<language name="JPN">1</language>
+	</row>
+
+	<row id="EVMSG_NUM2">
+		<language name="JPN">2</language>
+	</row>
+
+	<row id="EVMSG_NUM3">
+		<language name="JPN">3</language>
+	</row>
+
+	<row id="EVMSG_NUM4">
+		<language name="JPN">4</language>
+	</row>
+
+	<row id="EVMSG_NUM5">
+		<language name="JPN">5</language>
+	</row>
+
+	<row id="EVMSG_NUM6">
+		<language name="JPN">6</language>
+	</row>
+
+	<row id="EVMSG_NUM7">
+		<language name="JPN">7</language>
+	</row>
+
+	<row id="EVMSG_NUM8">
+		<language name="JPN">8</language>
+	</row>
+
+	<row id="EVMSG_NUM9">
+		<language name="JPN">9</language>
+	</row>
+
+	<row id="EVMSG_NUMA">
+		<language name="JPN">A</language>
+	</row>
+
+	<row id="EVMSG_NUMB">
+		<language name="JPN">B</language>
+	</row>
+
+	<row id="EVMSG_NUMC">
+		<language name="JPN">C</language>
+	</row>
+
+	<row id="EVMSG_NUMD">
+		<language name="JPN">D</language>
+	</row>
+
+	<row id="EVMSG_NUME">
+		<language name="JPN">E</language>
+	</row>
+
+	<row id="EVMSG_NUMF">
+		<language name="JPN">F</language>
+	</row>
+
+	<row id="EVMSG_NUMDOT">
+		<language name="JPN">.</language>
+	</row>
+
 	<row id="EVMSG_TITLE">
 		<language name="JPN">ポケモンエフェクトビューワー</language>
-		<language name="JPN_KANJI">ポケモンエフェクトビューワー</language>
 	</row>
 
 	<row id="EVMSG_ATTACK">
-		<language name="JPN">こうげき</language>
-		<language name="JPN_KANJI">こうげき</language>
+		<language name="JPN">かいしいち</language>
 	</row>
 
 	<row id="EVMSG_DEFENCE">
-		<language name="JPN">ぼうぎょ</language>
-		<language name="JPN_KANJI">ぼうぎょ</language>
+		<language name="JPN">ほうこう</language>
+	</row>
+
+	<row id="EVMSG_DECIDE">
+		<language name="JPN">けってい</language>
+	</row>
+
+	<row id="EVMSG_CANCEL">
+		<language name="JPN">キャンセル</language>
 	</row>
 
 	<row id="EVMSG_POS_AA">
 		<language name="JPN">ＰＯＳ＿ＡＡ</language>
-		<language name="JPN_KANJI">ＰＯＳ＿ＡＡ</language>
 	</row>
 
 	<row id="EVMSG_POS_BB">
 		<language name="JPN">ＰＯＳ＿ＢＢ</language>
-		<language name="JPN_KANJI">ＰＯＳ＿ＢＢ</language>
 	</row>
 
 	<row id="EVMSG_POS_A">
 		<language name="JPN">ＰＯＳ＿Ａ</language>
-		<language name="JPN_KANJI">ＰＯＳ＿Ａ</language>
 	</row>
 
 	<row id="EVMSG_POS_B">
 		<language name="JPN">ＰＯＳ＿Ｂ</language>
-		<language name="JPN_KANJI">ＰＯＳ＿Ｂ</language>
 	</row>
 
 	<row id="EVMSG_POS_C">
 		<language name="JPN">ＰＯＳ＿Ｃ</language>
-		<language name="JPN_KANJI">ＰＯＳ＿Ｃ</language>
 	</row>
 
 	<row id="EVMSG_POS_D">
 		<language name="JPN">ＰＯＳ＿Ｄ</language>
-		<language name="JPN_KANJI">ＰＯＳ＿Ｄ</language>
 	</row>
 
 	<row id="EVMSG_POS_E">
 		<language name="JPN">ＰＯＳ＿Ｅ</language>
-		<language name="JPN_KANJI">ＰＯＳ＿Ｅ</language>
 	</row>
 
 	<row id="EVMSG_POS_F">
 		<language name="JPN">ＰＯＳ＿Ｆ</language>
-		<language name="JPN_KANJI">ＰＯＳ＿Ｆ</language>
 	</row>
 
 	<row id="EVMSG_PPLAY_EDIT">
 		<language name="JPN">パーティクルさいせい</language>
-		<language name="JPN_KANJI">パーティクルさいせい</language>
 	</row>
 
 	<row id="EVMSG_PPLAY_OFSY">
 		<language name="JPN">エミッタたかさ</language>
-		<language name="JPN_KANJI">エミッタたかさ</language>
 	</row>
 
 	<row id="EVMSG_PPLAY_ANGLE">
 		<language name="JPN">エミッタかくど</language>
-		<language name="JPN_KANJI">エミッタかくど</language>
 	</row>
 
 	<flowchart-group-list>
