@@ -620,19 +620,19 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 
 
 //============================================================================================
-/**
- *
- *
- *
- *
- *
- * @brief	セットアップ
- *
- *
- *
- *
- *
- */
+//
+// 
+//
+//
+//
+//
+//		セットアップ
+//
+//
+//
+//
+//
+//
 //============================================================================================
 #define BACKGROUND_COL	(GX_RGB(30,31,31))		//背景色
 #define FOG_COL			(GX_RGB(31,31,31))		//フォグ色
@@ -778,8 +778,6 @@ static void	RemoveGameSystem( FIELD_MAIN_WORK * fieldWork )
 	GFL_BMPWIN_Exit();
 
 	bg_exit( fieldWork );
-
-	//GFL_HEAP_FreeMemory( fieldWork->gs );
 }
 
 //------------------------------------------------------------------
@@ -887,7 +885,6 @@ static void G3DsysSetup( void )
 	G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
 
 	G3X_SetEdgeColorTable( edgeColorTable ); 
-	//G3X_EdgeMarking( TRUE );
 	G3X_EdgeMarking( FALSE );
 
 	// ビューポートの設定
@@ -1194,7 +1191,6 @@ static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 const BOOL FIELDMAP_IsReady( const FIELD_MAIN_WORK *fieldWork )
 {
 	return (fieldWork->gamemode == GAMEMODE_NORMAL);
-	//return (fieldWork->seq==3);
 }
 
 //--------------------------------------------------------------

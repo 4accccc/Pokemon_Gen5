@@ -43,7 +43,7 @@ static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 		FLD_SetCameraLength(cam, 0x0308);
 		FLD_SetCameraDirection(cam, &dir);
 		FLD_SetCameraHeight(cam, height);
-		FLD_SetCameraTrans(cam, &trans);
+		FIELD_CAMERA_SetPos(cam, &trans);
 
 		player_len = 0x1f0;
 		v_len = 1;
@@ -98,7 +98,7 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	}
 	{
 		VecFx32 cam, player_pos;
-		FLD_GetCameraTrans( fieldWork->camera_control, &cam);
+		FIELD_CAMERA_GetPos( fieldWork->camera_control, &cam);
 		CalcPos(&player_pos, &cam, player_len, pos_angle);
 		SetPlayerActTrans( fieldWork->pcActCont, &player_pos );
 	}

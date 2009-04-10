@@ -196,14 +196,75 @@ void FIELD_CAMERA_SetNormalCameraMode(FIELD_CAMERA * camera, const VecFx32 * wat
 }
 //------------------------------------------------------------------
 /**
- * @brief	
+ * @brief	nearクリップ面までの距離を設定
+ * @param	camera		FIELDカメラ制御ポインタ
+ * @param	near		設定する距離（fx32)
  */
 //------------------------------------------------------------------
-void	FLD_SetCameraTrans( FIELD_CAMERA* camera, const VecFx32* pos )
+void FIELD_CAMERA_SetNear(FIELD_CAMERA * camera, fx32 near)
+{
+	GFL_G3D_CAMERA_SetNear(camera->g3Dcamera, &near);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	nearクリップ面までの距離を取得
+ * @param	camera		FIELDカメラ制御ポインタ
+ * @return	fx32		取得した距離
+ */
+//------------------------------------------------------------------
+fx32 FIELD_CAMERA_GetNear(const FIELD_CAMERA * camera)
+{
+	fx32 near;
+	GFL_G3D_CAMERA_GetNear( camera->g3Dcamera, &near);
+	return near;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	farクリップ面までの距離を設定
+ * @param	camera		FIELDカメラ制御ポインタ
+ * @param	far		設定する距離（fx32)
+ */
+//------------------------------------------------------------------
+void FIELD_CAMERA_SetFar(FIELD_CAMERA * camera, fx32 far)
+{
+	GFL_G3D_CAMERA_SetFar( camera->g3Dcamera, &far );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	farクリップ面までの距離を取得
+ * @param	camera		FIELDカメラ制御ポインタ
+ * @return	fx32		取得した距離
+ */
+//------------------------------------------------------------------
+fx32 FIELD_CAMERA_GetFar(const FIELD_CAMERA * camera)
+{
+	fx32 far;
+	GFL_G3D_CAMERA_GetFar( camera->g3Dcamera, &far);
+	return far;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ位置の取得
+ * @param	camera		FIELDカメラ制御ポインタ
+ * @param	pos			カメラ位置を渡すVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+void	FIELD_CAMERA_SetPos( FIELD_CAMERA* camera, const VecFx32* pos )
 {
 	camera->pos = *pos;
 }
-void	FLD_GetCameraTrans( const FIELD_CAMERA* camera, VecFx32* pos )
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ位置の取得
+ * @param	camera		FIELDカメラ制御ポインタ
+ * @param	pos			カメラ位置を受け取るVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+void	FIELD_CAMERA_GetPos( const FIELD_CAMERA* camera, VecFx32* pos )
 {
 	*pos = camera->pos;
 }
@@ -234,9 +295,4 @@ void	FLD_GetCameraHeight( FIELD_CAMERA *camera, fx32 *height )
 	*height = camera->cameraHeight;
 }
 
-void	FLD_SetCameraTransOffset(
-		FIELD_CAMERA *camera, const VecFx32 *offs )
-{
-	camera->transOffset = *offs;
-}
 

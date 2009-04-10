@@ -968,7 +968,6 @@ static GMEVENT_RESULT DMenuControlCamera(
 			int trg = GFL_UI_KEY_GetTrg();
 			int cont = GFL_UI_KEY_GetCont();
 			FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( work->fieldWork );
-			GFL_G3D_CAMERA* gfl_camera = GetG3Dcamera( work->fieldWork );
 			
 			if( trg & PAD_BUTTON_B ){
 				(*seq)++;
@@ -978,8 +977,8 @@ static GMEVENT_RESULT DMenuControlCamera(
 			FLD_GetCameraDirection( camera, &dir );
 			FLD_GetCameraLength( camera, &length );
 			FLD_GetCameraHeight( camera, &height );
-			GFL_G3D_CAMERA_GetNear( gfl_camera, &near );
-			GFL_G3D_CAMERA_GetFar( gfl_camera, &far );
+			near = FIELD_CAMERA_GetNear( camera );
+			far = FIELD_CAMERA_GetFar( camera );
 
 			if( cont & PAD_BUTTON_R ){
 				dir -= CM_RT_SPEED;
@@ -1044,8 +1043,8 @@ static GMEVENT_RESULT DMenuControlCamera(
 			FLD_SetCameraDirection( camera, &dir );
 			FLD_SetCameraLength( camera, length );
 			FLD_SetCameraHeight( camera, height );
-			GFL_G3D_CAMERA_SetNear( gfl_camera, &near );
-			GFL_G3D_CAMERA_SetFar( gfl_camera, &far );
+			FIELD_CAMERA_SetNear( camera, near );
+			FIELD_CAMERA_SetFar( camera, far );
 			
 			if( update == TRUE && work->vanish == FALSE ){
 				int len = 128;
