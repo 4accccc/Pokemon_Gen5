@@ -48,9 +48,9 @@
 #define WEATHER_STORM_TIMING_ADD_END	(1)							// タイミングを減らす数
 #define WEATHER_STORM_ADD_START			(1)							// 最初の同時に雨を登録する数
 #define WEATHER_STORM_ADD_TIMING		(4)							// 砂のタイミングをこれ回変更したら１回増やす
-#define WEATHER_STORM_ADD				(2)							// 登録する数を増やす数
-#define WEATHER_STORM_ADD_END			(-3)							// 登録する数を増やす数
-#define	WEATHER_STORM_ADD_MAIN			(4)							// メインシーケンスでの登録する数
+#define WEATHER_STORM_ADD				(1)							// 登録する数を増やす数
+#define WEATHER_STORM_ADD_END			(-1)							// 登録する数を増やす数
+#define	WEATHER_STORM_ADD_MAIN			(1)							// メインシーケンスでの登録する数
 
 /*== フェード無し開始の時 ==*/
 #define WEATHER_STORM_NOFADE_OBJ_START_NUM	( 24 )				// 開始時の散布するオブジェクトの数
@@ -452,7 +452,7 @@ static void WEATHER_STORM_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	obj_w = WEATHER_OBJ_WORK_GetWork( p_wk );
 	p_clwk = WEATHER_OBJ_WORK_GetClWk( p_wk );
 
-	GFL_CLACT_WK_GetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+	WEATHER_OBJ_WORK_GetPos( p_wk, &mat );
 	
 	// 動作フラグをチェック
 	if(!obj_w[3]){
@@ -470,7 +470,7 @@ static void WEATHER_STORM_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 			obj_w[3] = 1;
 		}
 
-		GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+		WEATHER_OBJ_WORK_SetPos( p_wk, &mat );
 	}else{
 		WEATHER_TASK_DeleteObj( p_wk );
 	}
@@ -540,7 +540,7 @@ static void WEATHER_STORM_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		mat.y = WEATHER_STORM_START_Y1_MIN + GFUser_GetPublicRand(WEATHER_STORM_START_Y1_MAX);
 
 		// 座標設定
-		GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+		WEATHER_OBJ_WORK_SetPos( add_obj, &mat );
 	}
 }
 

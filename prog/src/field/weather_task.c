@@ -73,6 +73,11 @@ enum{
 #define WEATHER_OBJ_WORK_SOFT_PRI	( 64 )
 #define WEATHER_OBJ_WORK_SERFACE_NO	( CLSYS_DEFREND_MAIN )
 
+#define WEATHER_OBJ_MINTURN_X	(-64*FX32_ONE)
+#define WEATHER_OBJ_MINTURN_Y	(-64*FX32_ONE)
+#define WEATHER_OBJ_MAXTURN_X	((256*FX32_ONE) + (64*FX32_ONE))
+#define WEATHER_OBJ_MAXTURN_Y	((192*FX32_ONE) + (64*FX32_ONE))
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -275,7 +280,7 @@ static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk );
 //-------------------------------------
 ///	ツール
 //=====================================
-static void TOOL_GetPerspectiveScreenSize( u16 perspway, fx32 dist, fx32 aspect, fx32* p_width, fx32* p_height );
+static void TOOL_GetPerspectiveScreenSize( const MtxFx44* cp_pers_mtx, fx32 dist, fx32* p_width, fx32* p_height );
 
 
 
@@ -766,7 +771,7 @@ WEATHER_OBJ_WORK* WEATHER_TASK_CreateObj( WEATHER_TASK* p_wk, u32 heapID )
 	if( p_obj ){
 
 		// 初期化
-		WEATHER_OBJ_WK_Init( p_obj, p_wk, &p_wk->graphic, p_wk->p_unit, heapID );
+//		WEATHER_OBJ_WK_Init( p_obj, p_wk, &p_wk->graphic, p_wk->p_unit, heapID );
 
 		// リンクリストに設定
 		WEATHER_TASK_WK_PushObjList( p_wk, p_obj );
@@ -789,10 +794,10 @@ void WEATHER_TASK_DeleteObj( WEATHER_OBJ_WORK* p_obj )
 		WEATHER_TASK_WK_PopObjList( p_obj->p_parent, p_obj );
 
 		// 破棄
-		WEATHER_OBJ_WK_Exit( p_obj );
+//		WEATHER_OBJ_WK_Exit( p_obj );
 
 		//  ワーククリア
-		WEATHER_OBJ_WK_Clear( p_obj );
+//		WEATHER_OBJ_WK_Clear( p_obj );
 	}
 }
 
@@ -1137,40 +1142,43 @@ void WEATHER_TASK_GetScrollDist( WEATHER_TASK* p_wk, int* p_x, int* p_y )
 	// 今のカメラの2dで1の３ｄの値を求める
 	camera_dist = VEC_Distance( &now_mat, &now_camera_pos );
 	TOOL_GetPerspectiveScreenSize( 
-			defaultCameraFovy/2 *PERSPWAY_COEFFICIENT,
+			NNS_G3dGlbGetProjectionMtx(),
 			camera_dist,
-			defaultCameraAspect,
 			&d_x, &d_y);
+
+	// うまくいくようにちょうせい
 	d_x = FX_Div(d_x, 256*FX32_ONE);
 
 	// 上に進んでいるとき、
 	// 下に進んでいるとき
-	if( dist_y <= 0 ){
-		d_y = FX_Div(d_y, 0xbe8d0);
-	}else{
-		d_y = FX_Div(d_y, 0xbe811);
-	}
+	d_y = FX_Div(d_y, 192*FX32_ONE);
 
 
 	// プラスで計算する
 	mark = FX32_ONE;
 	if(dist_x < 0){		// ーの時は＋の値にする
 		mark = -FX32_ONE;
-		dist_x = FX_Mul( dist_x, -FX32_ONE );
+		dist_x = -dist_x;
 	}
 	scl_x = FX_Div(dist_x, d_x);	// スクロール座標を計算
 	if( mark < 0 ){		// 元の符号に戻す
-		scl_x = FX_Mul( scl_x, mark );	// 元の符号に戻す
+		scl_x = -scl_x;	// 元の符号に戻す
+
+		// うまく見えるように調整
+		scl_x += FX32_ONE;
 	}
 
 	mark = FX32_ONE;
 	if(dist_y < 0){		// ーの時は＋の値にする
 		mark = -FX32_ONE;
-		dist_y = FX_Mul( dist_y, -FX32_ONE );
+		dist_y = -dist_y;
 	}	
 	scl_y = FX_Div(dist_y, d_y);	// スクロール座標を求める
 	if( mark < 0 ){
-		scl_y = FX_Mul( scl_y, mark );	// 元の符号に戻す
+		scl_y = -scl_y;	// 元の符号に戻す
+
+		// うまく見えるように調整
+		scl_y += FX32_ONE;
 	}
 		
 	// 今の座標を取得
@@ -1307,6 +1315,62 @@ const WEATHER_TASK* WEATHER_OBJ_WORK_GetParent( const WEATHER_OBJ_WORK* cp_wk )
 {
 	return cp_wk->p_parent;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	座標の取得関数
+ *
+ *	@param	cp_wk	ワーク
+ *	@param	p_pos	位置格納先
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_OBJ_WORK_GetPos( const WEATHER_OBJ_WORK* cp_wk, GFL_CLACTPOS* p_pos )
+{
+	GFL_CLWK* p_clwk;
+
+	p_clwk = WEATHER_OBJ_WK_GetClWk( cp_wk );
+	GFL_CLACT_WK_GetPos( p_clwk, p_pos, CLSYS_DEFREND_MAIN );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	座標の設定	（サーフェース内回り込みあり）
+ *
+ *	@param	p_wk		ワーク
+ *	@param	cp_pos		位置
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_OBJ_WORK_SetPos( WEATHER_OBJ_WORK* p_wk, const GFL_CLACTPOS* cp_pos )
+{
+	GFL_CLWK* p_clwk;
+	GFL_CLACTPOS pos;
+
+	pos = *cp_pos;
+
+	// 回り込み
+	if(pos.x > WEATHER_OBJ_MAXTURN_X){
+		pos.x %= WEATHER_OBJ_MAXTURN_X;
+	}else{
+
+		if( pos.x < WEATHER_OBJ_MINTURN_X ){	
+			pos.x += WEATHER_OBJ_MAXTURN_X;
+		}
+	}
+
+	if(pos.y > WEATHER_OBJ_MAXTURN_Y){
+		pos.y %= WEATHER_OBJ_MAXTURN_Y;
+	}else{
+
+		if( pos.y < WEATHER_OBJ_MINTURN_Y ){	
+			pos.y += WEATHER_OBJ_MAXTURN_Y;
+		}
+	}
+
+	p_clwk = WEATHER_OBJ_WK_GetClWk( p_wk );
+	GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DEFREND_MAIN );
+}
+
 
 
 
@@ -1508,6 +1572,9 @@ static void WEATHER_TASK_WK_PushObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p
 	p_last->p_next->p_last	= p_obj;
 	p_last->p_next			= p_obj;
 
+
+	// 描画ON
+	GFL_CLACT_WK_SetDrawEnable( p_obj->p_clwk, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -1539,6 +1606,9 @@ static void WEATHER_TASK_WK_PopObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_
 	// 自分のリストポインタをクリア
 	p_obj->p_next = NULL;
 	p_obj->p_last = NULL;
+
+	// 描画OFF
+	GFL_CLACT_WK_SetDrawEnable( p_obj->p_clwk, FALSE );
 
 }
 
@@ -1641,8 +1711,17 @@ static void WEATHER_TASK_WK_ExitBg( WEATHER_TASK* p_wk )
 //-----------------------------------------------------------------------------
 static void WEATHER_TASK_WK_InitOther( WEATHER_TASK* p_wk, u32 heapID )
 {
+	int i;
+	
 	GF_ASSERT( !p_wk->p_user_work );
 	p_wk->p_user_work = GFL_HEAP_AllocClearMemory( heapID, p_wk->cp_data->work_byte );
+
+	// オブジェワークのアクターをクリエイト
+	if( p_wk->cp_data->use_oam ){
+		for( i=0; i<WEATHER_TASK_OBJBUFF_MAX; i++ ){
+			WEATHER_OBJ_WK_Init( &p_wk->objbuff[i], p_wk, &p_wk->graphic, p_wk->p_unit, heapID );
+		}
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -1654,9 +1733,19 @@ static void WEATHER_TASK_WK_InitOther( WEATHER_TASK* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void WEATHER_TASK_WK_ExitOther( WEATHER_TASK* p_wk )
 {
+	int i;
+	
 	if( p_wk->p_user_work ){
 		GFL_HEAP_FreeMemory( p_wk->p_user_work );
 		p_wk->p_user_work = NULL;
+	}
+
+	// オブジェワークのアクターを破棄
+	if( p_wk->cp_data->use_oam ){
+		for( i=0; i<WEATHER_TASK_OBJBUFF_MAX; i++ ){
+			WEATHER_OBJ_WK_Exit( &p_wk->objbuff[i] );
+			WEATHER_OBJ_WK_Clear( &p_wk->objbuff[i] );
+		}
 	}
 }
 
@@ -2007,7 +2096,7 @@ static void WEATHER_OBJ_WK_Clear( WEATHER_OBJ_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static BOOL WEATHER_OBJ_WK_IsUse( const WEATHER_OBJ_WORK* cp_wk )
 {
-	if( cp_wk->p_parent == NULL ){
+	if( cp_wk->p_last == NULL ){
 		return FALSE;
 	}
 	return TRUE;
@@ -2045,6 +2134,9 @@ static void WEATHER_OBJ_WK_Init( WEATHER_OBJ_WORK* p_wk, WEATHER_TASK* p_parent,
 			cp_graphic->oam_cgx_id, cp_graphic->oam_pltt_id, 
 			cp_graphic->oam_cell_id, &cladd, 
 			WEATHER_OBJ_WORK_SERFACE_NO, heapID );
+
+	// 描画OFF
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
 
 }
 
@@ -2135,31 +2227,21 @@ static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk )
 /**
  *	@brief	射影行列の情報から、高さと幅を返す
  *
- *	@param	perspway			視野角
+ *	@param	cp_pers_mtx			パースマトリックス
  *	@param	dist				ターゲットまでの距離
- *	@param	aspect				アスペクト比
  *	@param	p_width				画面の幅格納先
  *	@param	p_height			画面の高さ格納先
  */
 //-----------------------------------------------------------------------------
-static void TOOL_GetPerspectiveScreenSize( u16 perspway, fx32 dist, fx32 aspect, fx32* p_width, fx32* p_height )
+static void TOOL_GetPerspectiveScreenSize( const MtxFx44* cp_pers_mtx, fx32 dist, fx32* p_width, fx32* p_height )
 {
-	fx32 fovySin;
-	fx32 fovyCos;
-	fx32 fovyTan;
-
-	fovySin = FX_SinIdx( perspway );
-	fovyCos = FX_CosIdx( perspway );
-
-	fovyTan = FX_Div( fovySin, fovyCos );
-	
 	// 高さを求める
-	*p_height = FX_Mul(dist, fovyTan);				// (fovySin / fovyCos)*TargetDist
+	*p_height = FX_Div(dist, cp_pers_mtx->_11);				// (fovySin / fovyCos)*TargetDist
 	*p_height = FX_Mul(*p_height, 2*FX32_ONE);		// ２かけると画面の高さになる
 	
-	// 幅を求める(アスペクトを4/3で固定)
-	*p_width  = FX_Mul(*p_height, aspect );
-
+	// 幅を求める
+	*p_width  = FX_Div(dist, cp_pers_mtx->_00);
+	*p_width = FX_Mul(*p_width, 2*FX32_ONE);		// ２かけると画面の幅になる
 }
 
 

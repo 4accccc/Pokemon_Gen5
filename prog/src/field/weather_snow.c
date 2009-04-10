@@ -84,14 +84,14 @@
 //-------------------------------------
 //	吹雪管理関数定数
 //=====================================
-#define	WEATHER_SSNOW_TIMING_MIN		(3)							// 雨を出すタイミング最小
-#define WEATHER_SSNOW_TIMING_MAX		(30)						// 雨を出すタイミング最大
-#define WEATHER_SSNOW_TIMING_ADD		(5)							// タイミングを減らす数
+#define	WEATHER_SSNOW_TIMING_MIN		(1)							// 雨を出すタイミング最小
+#define WEATHER_SSNOW_TIMING_MAX		(18)						// 雨を出すタイミング最大
+#define WEATHER_SSNOW_TIMING_ADD		(3)							// タイミングを減らす数
 #define WEATHER_SSNOW_ADD_START			(1)							// 最初の同時に雨を登録する数
 #define WEATHER_SSNOW_ADD_TIMING		(2)							// 雨のタイミングをこれ回変更したら１回増やす
 #define WEATHER_SSNOW_ADD				(1)							// 登録する数を増やす数
-#define WEATHER_SSNOW_ADD_END			(-3)							// 登録する数を増やす数
-#define	WEATHER_SSNOW_ADD_MAIN			(6)							// メインシーケンスでの登録する数
+#define WEATHER_SSNOW_ADD_END			(-1)							// 登録する数を増やす数
+#define	WEATHER_SSNOW_ADD_MAIN			(1)							// メインシーケンスでの登録する数
 
 /*== フェード無し開始の時 ==*/
 #define WEATHER_SSNOW_NOFADE_OBJ_START_NUM	( 20 )				// 開始時の散布するオブジェクトの数
@@ -780,7 +780,7 @@ static void WEATHER_SNOW_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	
 
 	
-	GFL_CLACT_WK_GetPos( p_clwk, &pos, CLSYS_DEFREND_MAIN );
+	WEATHER_OBJ_WORK_GetPos( p_wk, &pos );
 
 	// 動かす
 	// X座標移動
@@ -806,7 +806,7 @@ static void WEATHER_SNOW_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	} 
 
 	// 座標設定
-	GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DEFREND_MAIN );
+	WEATHER_OBJ_WORK_SetPos( p_wk, &pos );
 	
 	// カウント設定
 	p_local_wk[6] = (p_local_wk[6] + 1) % 100;
@@ -890,7 +890,7 @@ static void WEATHER_SNOW_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		}else{
 			pos.y = ( -8 - GFUser_GetPublicRand(20));
 		}
-		GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DEFREND_MAIN );
+		WEATHER_OBJ_WORK_SetPos( p_addobj, &pos );
 	}
 
 }
@@ -1986,7 +1986,7 @@ static void WEATHER_ARARE_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	obj_w = WEATHER_OBJ_WORK_GetWork( p_wk );
 	p_clwk = WEATHER_OBJ_WORK_GetClWk( p_wk );
 
-	GFL_CLACT_WK_GetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+	WEATHER_OBJ_WORK_GetPos( p_wk, &mat );
 	
 	// 動作フラグをチェック
 	switch(obj_w[3]){
@@ -2011,7 +2011,7 @@ static void WEATHER_ARARE_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 			mat.y += (obj_w[2]);
 
 			// 座標設定
-			GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+			WEATHER_OBJ_WORK_SetPos( p_wk, &mat );
 		}
 
 		break;
@@ -2033,7 +2033,7 @@ static void WEATHER_ARARE_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 				obj_w[4] ++;
 			}
 		}
-		GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+		WEATHER_OBJ_WORK_SetPos( p_wk, &mat );
 
 		if(obj_w[0]-- <= 0){
 			obj_w[3] = 2;		// 破棄
@@ -2110,7 +2110,7 @@ static void WEATHER_ARARE_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		// 座標を設定
 		mat.x = ( WEATHER_ARARE_START_X_BASE + (frame * WEATHER_ARARE_MUL_X) + (rand % WEATHER_ARARE_START_X_MAX) );
 		mat.y = WEATHER_ARARE_START_Y;
-		GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+		WEATHER_OBJ_WORK_SetPos( add_obj, &mat );
 
 		obj_w[6] = rand;			// 乱数保存
 	}

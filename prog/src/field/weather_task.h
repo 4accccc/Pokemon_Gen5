@@ -317,7 +317,8 @@ extern void WEATHER_TASK_StopLoopSnd( WEATHER_TASK* p_wk );
 extern void* WEATHER_OBJ_WORK_GetWork( const WEATHER_OBJ_WORK* cp_wk );
 extern GFL_CLWK* WEATHER_OBJ_WORK_GetClWk( const WEATHER_OBJ_WORK* cp_wk );
 extern const WEATHER_TASK* WEATHER_OBJ_WORK_GetParent( const WEATHER_OBJ_WORK* cp_wk );
-
+extern void WEATHER_OBJ_WORK_GetPos( const WEATHER_OBJ_WORK* cp_wk, GFL_CLACTPOS* p_pos );
+extern void WEATHER_OBJ_WORK_SetPos( WEATHER_OBJ_WORK* p_wk, const GFL_CLACTPOS* cp_pos );
 
 
 //-----------------------------------------------------------------------------

@@ -87,8 +87,8 @@
 #define WEATHER_STRAIN_ADD_START		(1)					// 最初の同時に雨を登録する数
 #define WEATHER_STRAIN_ADD_TIMING		(2)					// 雨のタイミングをこれ回変更したら１回増やす
 #define WEATHER_STRAIN_ADD			(1)						// 登録する数を増やす数
-#define WEATHER_STRAIN_ADD_END		(-3)					// 登録する数を増やす数
-#define	WEATHER_STRAIN_ADD_MAIN		(10)					// メインシーケンスでの登録する数
+#define WEATHER_STRAIN_ADD_END		(-1)					// 登録する数を増やす数
+#define	WEATHER_STRAIN_ADD_MAIN		(2)					// メインシーケンスでの登録する数
 
 /*== フェード無し開始の時 ==*/
 #define WEATHER_STRAIN_NOFADE_OBJ_START_NUM	( 20 )				// 開始時の散布するオブジェクトの数
@@ -100,19 +100,19 @@
 #define	WEATHER_STRAIN_FOG_TIMING_END	(100)						// に１回フォグテーブルを操作
 #define WEATHER_STRAIN_FOG_START		(1)					// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STRAIN_FOG_START_END	(1)					// このカウント動いてからフォグテーブルを操作
-#define WEATHER_STRAIN_FOG_OFS			(0x300)
+#define WEATHER_STRAIN_FOG_OFS			(0x200)
 #define WEATHER_STRAIN_FOG_OFS_START	(0x800)
 
 
 /*== 雨オブジェクト ==*/
-#define WEATHER_STRAIN_SPEED_X		(-24)						// 横に進むスピード
-#define WEATHER_STRAIN_SPEED_Y		(24)							// たてに進むスピードベース
-#define	WEATHER_STRAIN_END_MIN		(0)							// 終了カウンタ最小
-#define WEATHER_STRAIN_END_MAX		(4)							// 終了カウンタ最大
+#define WEATHER_STRAIN_SPEED_X		(-12)						// 横に進むスピード
+#define WEATHER_STRAIN_SPEED_Y		(12)							// たてに進むスピードベース
+#define	WEATHER_STRAIN_END_MIN		(1)							// 終了カウンタ最小
+#define WEATHER_STRAIN_END_MAX		(2)							// 終了カウンタ最大
 #define	WEATHER_STRAIN_START_X		(0)							// ベースになるX開始座標
 #define	WEATHER_STRAIN_START_X_MAX	(512)						// X開始座標乱数値
 #define	WEATHER_STRAIN_START_Y		(-80)						// Y開始座標
-#define	WEATHER_STRAIN_START_Y_MAX	(48)						// Y開始座標乱数値
+#define	WEATHER_STRAIN_START_Y_MAX	(40)						// Y開始座標乱数値
 
 #define WEATHER_STRAIN_OBJ_MUL_NUM	(5)							// オブジェのスピードを変化させる値
 #define WEATHER_STRAIN_OBJ_MUL_CHG	(60)						// 変更タイミング
@@ -659,7 +659,7 @@ static void WEATHER_RAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	obj_w = WEATHER_OBJ_WORK_GetWork( p_wk );
 	p_clwk = WEATHER_OBJ_WORK_GetClWk( p_wk );
 
-	GFL_CLACT_WK_GetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+	WEATHER_OBJ_WORK_GetPos( p_wk, &mat );
 	
 	// 動作フラグをチェック
 	switch(obj_w[3]){
@@ -684,7 +684,7 @@ static void WEATHER_RAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 			}
 		}
 		// 座標設定
-		GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+		WEATHER_OBJ_WORK_SetPos( p_wk, &mat );
 
 		break;
 	case 1:		// 破棄アニメ
@@ -756,7 +756,7 @@ static void WEATHER_RAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		// 座標を設定
 		mat.x = ( WEATHER_RAIN_START_X_BASE + (frame * WEATHER_RAIN_MUL_X) + (rand % WEATHER_RAIN_START_X_MAX) );
 		mat.y = WEATHER_RAIN_START_Y;
-		GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+		WEATHER_OBJ_WORK_SetPos( add_obj, &mat );
 	}
 }
 
@@ -1043,7 +1043,7 @@ static void WEATHER_SPARKRAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	obj_w = WEATHER_OBJ_WORK_GetWork( p_wk );
 	p_clwk = WEATHER_OBJ_WORK_GetClWk( p_wk );
 
-	GFL_CLACT_WK_GetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+	WEATHER_OBJ_WORK_GetPos( p_wk, &mat );
 	
 	// 動作フラグをチェック
 	switch(obj_w[3]){
@@ -1068,7 +1068,7 @@ static void WEATHER_SPARKRAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 			}
 		}
 		// 座標設定
-		GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+		WEATHER_OBJ_WORK_SetPos( p_wk, &mat );
 		break;
 	case 1:		// 破棄アニメ
 		if(obj_w[0]-- <= 0){
@@ -1139,7 +1139,7 @@ static void WEATHER_SPARKRAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 			mat.x = WEATHER_STRAIN_START_X + (rand % WEATHER_STRAIN_START_X_MAX);
 			mat.y = WEATHER_STRAIN_START_Y + (rand % WEATHER_STRAIN_START_Y_MAX);
 
-			GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
+			WEATHER_OBJ_WORK_SetPos( add_obj, &mat );
 		}
 		
 	}
