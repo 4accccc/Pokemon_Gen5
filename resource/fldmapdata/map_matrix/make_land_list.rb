@@ -1,3 +1,5 @@
+#land_listì¬
+
 land_list = open("land_list","w+")
 
 while f = ARGV.shift

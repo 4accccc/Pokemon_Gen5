@@ -13,11 +13,12 @@ $KCODE = "SJIS"
 
 #==============================================================
 #	※マトリクスフォーマット バイト単位
-#	0-1 マップ存在
+#	0-1 マップフラグ　0=ゾーンID配列無し 1=ゾーンID配列有り
 #	2-3 マップ種類
 #	4-5	Hブロックサイズ
 #	6-7 Vブロックサイズ
-#	8-ブロックサイズ(HxV)x4byte分の配置配列
+#	8- ブロックサイズ(HxV)x4byte分の配置配列(4byte単位
+#	8+配置配列- ブロックサイズ分のゾーンID配列(4byte単位
 #
 #	※地形データテキストフォーマット
 #	format: tabspace
@@ -44,6 +45,7 @@ IDX_NON		= (0xffffffff)
 RET_ERROR	= (-1)
 RET_TRUE	= (1)
 RET_FALSE	= (0)
+RET_ERROR_STR = nil
 
 #固定文字列
 STR_NULL	= ""
@@ -67,7 +69,7 @@ def table_posdata_get( listfile, x, y )
 	while y > 0					#Y合わせ
 		line = listfile.gets
 		
-		if( line == @nil || line.include?(STR_END) )
+		if( line == nil || line.include?(STR_END) )
 			return RET_ERROR
 		end
 		
@@ -76,19 +78,64 @@ def table_posdata_get( listfile, x, y )
 	
 	line = listfile.gets		#目当ての行
 
-	if( line == @nil || line.include?(STR_END) )
+	if( line == nil || line.include?(STR_END) )
 		return RET_ERROR
 	end
 	
 	str = split( "\t" )			#タブ単位
 	x += 1						#Y目盛り飛ばし
-
-	if( str[x] == @nil || str[x] == STR_END )
+	
+	if( str[x] == nil || str[x] == STR_END )
 		return RET_ERROR
 	end
 	
 	num = str[x].to_i
 	return num
+end
+
+#--------------------------------------------------------------
+#	表データの指定位置の文字列を取得
+#	listfile	リストファイル
+#	x	X位置
+#	y	Y位置
+#--------------------------------------------------------------
+def table_posstr_get( listfile, x, y )
+	listfile.pos = 0			#先頭に
+	
+	listfile.gets				#タイトル飛ばし
+	listfile.gets				#X目盛り飛ばし
+	
+	while y > 0					#Y合わせ
+		line = listfile.gets
+		
+		if( line == nil || line.include?(STR_END) )
+			return RET_ERROR_STR
+		end
+		
+		y -= 1
+	end
+	
+	line = listfile.gets		#目当ての行
+
+	if( line == nil || line.include?(STR_END) )
+		return RET_ERROR_STR
+	end
+	
+	str = split( "\t" )			#タブ単位
+	x += 1						#Y目盛り飛ばし
+	
+	if( str[x] == nil || str[x] == STR_END )
+		return RET_ERROR_STR
+	end
+	
+	/(\w*)/ =~ str[x]			#英数字抜き出し
+	ret = $1
+	
+	if( ret == nil || ret == "" )
+		return RET_ERROR_STR
+	end
+	
+	return ret
 end
 
 #==============================================================
@@ -103,7 +150,7 @@ def landnaix_number_get( naix_file, str )
 	loop{
 		line = naix_file.gets
 		
-		if( line == @nil || line.include?("}") )
+		if( line == nil || line.include?("}") )
 			return RET_ERROR
 		end
 
@@ -117,7 +164,7 @@ def landnaix_number_get( naix_file, str )
 	loop{
 		line = naix_file.gets
 		
-		if( line == @nil || line.include?("}") )
+		if( line == nil || line.include?("}") )
 			return RET_ERROR
 		end
 		
@@ -145,7 +192,7 @@ def blocknum_landidx_get( idx, blocknum_file, naix_file )
 	loop{
 		line = blocknum_file.gets
 		
-		if( line == @nil || line.include?(STR_END) )
+		if( line == nil || line.include?(STR_END) )
 			return RET_ERROR
 		end
 		
@@ -163,6 +210,63 @@ def blocknum_landidx_get( idx, blocknum_file, naix_file )
 			return ret
 		end
 	}
+end
+
+#==============================================================
+#	defineファイル
+#==============================================================
+#--------------------------------------------------------------
+#	define数値読み込み
+#	hfile  define定義ファイル
+#	search 検索文字列
+#	戻り値 指定文字列の数値 RET_ERROR=ヒット無し
+#--------------------------------------------------------------
+def hfile_search( hfile, search )
+	pos = hfile.pos
+	hfile.pos = 0
+	num = RET_ERROR
+	
+	search = search.strip #先頭末尾の空白、改行削除
+	
+	while line = hfile.gets
+		if( line =~ /\A#define/ )
+			len = line.length
+			str = line.split() #空白文字以外羅列
+			
+			if( str[1] == search ) #ヒット
+				i = 2
+				loop{
+					str_num = str[i]
+					
+					if( str_num == nil )
+						break
+					end
+					
+					if( str_num =~ /0x[0-9a-zA-Z.*]/ ) #16進表記
+						/([\A0x0-9a-fA-F]+)/ =~ str_num
+						str_num = $1
+						num = str_num.hex
+						hit = 1
+						break
+					end
+				
+					if( str_num =~ /[0-9.*]/ ) #10進表記
+						/([\A0-9]+)/ =~ str_num
+						str_num = $1
+						num = str_num.to_i
+						hit = 1
+						break
+					end
+					
+					i = i + 1
+				}
+				break
+			end
+		end
+	end
+	
+	hfile.pos = pos
+	return num
 end
 
 #==============================================================
@@ -221,6 +325,14 @@ def prefixname_get( prefix, x, y )
 end
 
 #--------------------------------------------------------------
+#	ZONE ID名に"ZONE_ID_"を足した文字列を返す
+#--------------------------------------------------------------
+def zone_id_str_get( id )
+	name = sprintf( "ZONE_ID_%s", id )
+	return name
+end
+
+#--------------------------------------------------------------
 #	マトリクスIDをバイナリファイル名に変換した文字列を返す
 #--------------------------------------------------------------
 def	matid_binname_get( id )
@@ -267,12 +379,14 @@ end
 #	一行コンバート
 #	return RET_TRUE == 終端
 #--------------------------------------------------------------
-def mtxline_convert( line, cr_dir_path, naix_file, blocknum_file )
-	if( line == @nil || line.include?(STR_END) )
+def mtxline_convert(
+	line, cr_dir_path, naix_file, blocknum_file, zone_id_header_file )
+	if( line == nil || line.include?(STR_END) )
 		return RET_TRUE
 	end
 	
-	landfile = @nil
+	landfile = nil
+	zonefile = nil
 	str = line.split( "\t" )
 	str_id = matstr_matid_get( str )
 	x_size = matstr_x_size_get( str )
@@ -287,29 +401,44 @@ def mtxline_convert( line, cr_dir_path, naix_file, blocknum_file )
 	str_wfile = sprintf( "%s/%s", cr_dir_path, str_wfile )
 	wfile = File.open( str_wfile, "wb" )
 	
-	if( wfile == @nil )
+	if( wfile == nil )
 		printf( "mapmatcv ERROR バイナリファイル作成失敗\n" )
 		exit 1
 	end
 	
-	if( landname != "X" )		#ゾーンファイル指定無し
+	filewrite_flag( wfile, 0 )					#ファイルフラグ 0
+	
+	if( landname != "X" && landname != "x" )	#地形種類指定有り
 		landname = sprintf( "%s\.txt", landname )
 		landfile = File.open( landname )
+		if( landfile == nil )
+			printf( "%s open error!!\n", landname )
+			exit 1
+		end
 	end
 	
-	filewrite_flag( wfile, 1 )
-	filewrite_kind( wfile, 1 )
+	if( zonename != "X" && zonename != "x" )	#ゾーンID指定有り
+		filewrite_flag( wfile, 1 )				#ファイルフラグ 1に
+		zonename = sprintf( "%s\.txt", zonename )
+		zonefile = File.open( zonename )
+		if( zonefile == nil )
+			printf( "%s open error!!\n", landname )
+			exit 1
+		end
+	end
+
+	filewrite_kind( wfile, 0 )
 	filewrite_xy_size( wfile, x_size, y_size )
 	
 	wfile.pos = WPOS_TABLE		#書き込み位置をテーブルへ
 	y = 0
 	
-	while y < y_size
+	while y < y_size			#リソースIDテーブル作成
 		x = 0
 		while x < x_size
 			idx = 1
 			
-			if( landname != "X" )	#テーブル指定あり
+			if( landfile != nil )	#テーブル指定あり
 				idx = table_posdata_get( landfile, x, y )
 				
 				if( idx == RET_ERROR )
@@ -338,7 +467,7 @@ def mtxline_convert( line, cr_dir_path, naix_file, blocknum_file )
 					exit 1
 				end
 			end
-
+			
 			ary = Array( idx )
 			wfile.write( ary.pack("I*") )
 			x += 1
@@ -346,12 +475,45 @@ def mtxline_convert( line, cr_dir_path, naix_file, blocknum_file )
 		y += 1
 	end
 	
-	wfile.close
-	
-	if( landfile != @nil )
+	if( landfile != nil )
 		landfile.close
 	end
 
+	if( zonefile != nil )	#zone idテーブル指定有り
+		y = 0
+		while y < y_size			#リソースIDテーブル作成
+			x = 0
+			while x < x_size
+				str_zone = table_posstr_get( zonefile, x, y )
+				if( str_zone == RET_ERROR_STR )
+					printf( "map_matconv ERROR ZONE_ID %d,%d\n", x, y )
+					exit 1
+				end
+				
+				idx = IDX_NON
+				
+				if( str_zone != "0" )	#ID指定有り
+					str_zone = zone_id_str_get( str_zone )
+					idx = hfile_search( zone_id_header_file, str_zone )
+					
+					if( idx == RET_ERROR )
+						printf( "map_matconv ZONE_ID ERROR %s %d,%d\n",
+							str_zone, x, y )
+						exit 1
+					end
+				end
+				
+				ary = Array( idx )
+				wfile.write( ary.pack("I*") )
+				x += 1
+			end
+			y += 1
+		end
+		
+		zonefile.close
+	end
+	
+	wfile.close
 	return RET_FALSE
 end
 
@@ -365,8 +527,12 @@ mtx_path = ARGV[0]		#マップマトリクスファイルパス
 blocknum_path = ARGV[1]		#ブロック番号ファイルパス
 landnaix_path = ARGV[2]		#地形モデルアーカイブインデックスファイルパス
 dirbin_path = ARGV[3]		#バイナリファイル作成先パス
+zone_id_header_path = ARGV[4] #ゾーンIDヘッダーファイルパス
 
-if( mtx_path == @nil || landnaix_path == @nil || dirbin_path == @nil )
+if( mtx_path == nil ||
+	landnaix_path == nil ||
+	dirbin_path == nil ||
+	zone_id_header_path == nil )
 	printf( "mat_matconv ERROR 引数異常\n" )
 	exit 1
 end
@@ -374,20 +540,26 @@ end
 printf( "mat_matconv %s %s %s\n", mtx_path, landnaix_path, dirbin_path )
 
 mtx_file = File.open( mtx_path, "r" )
-if( mtx_file == @nil )
+if( mtx_file == nil )
 	printf( "mat_matconv ERROR %sが開けません\n", mtx_path )
 	exit 1
 end
 
 blocknum_file = File.open( blocknum_path, "r" )
-if( blocknum_file == @nil )
+if( blocknum_file == nil )
 	printf( "mat_matconv ERROR %sが開けません\n", blocknum_path )
 	exit 1
 end
 
 naix_file = File.open( landnaix_path, "r" )
-if( naix_file == @nil )
+if( naix_file == nil )
 	printf( "mat_matconv ERROR %sが開けません\n", landnaix_path )
+	exit 1
+end
+
+zone_id_header_file = File.open( zone_id_header_path, "r" )
+if( zone_id_header_file == nil )
+	printf( "mat_matconv ERROR %sが開けません\n", zone_id_header_path )
 	exit 1
 end
 
@@ -395,7 +567,8 @@ mtx_file.gets				#一行飛ばし
 
 loop{
 	line = mtx_file.gets
-	ret = mtxline_convert( line, dirbin_path, naix_file, blocknum_file )
+	ret = mtxline_convert( line,
+		dirbin_path, naix_file, blocknum_file, zone_id_header_file )
 	if( ret == RET_TRUE )
 		break
 	end
@@ -404,3 +577,4 @@ loop{
 mtx_file.close
 blocknum_file.close
 naix_file.close
+zone_id_header_file.close
