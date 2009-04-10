@@ -126,9 +126,9 @@ struct _FIELD_MAIN_WORK
 
 	/* 以下はFIELD_SETUPのメンバー */
 
-	GFL_G3D_UTIL*			g3Dutil;		//g3Dutil Lib ハンドル
-	u16						g3DutilUnitIdx;	//g3Dutil Unitインデックス
-	GFL_G3D_SCENE*			g3Dscene;		//g3Dscene Lib ハンドル
+	//GFL_G3D_UTIL*			g3Dutil;		//g3Dutil Lib ハンドル
+	//u16						g3DutilUnitIdx;	//g3Dutil Unitインデックス
+	//GFL_G3D_SCENE*			g3Dscene;		//g3Dscene Lib ハンドル
 	GFL_G3D_CAMERA*			g3Dcamera;		//g3Dcamera Lib ハンドル
 	GFL_G3D_LIGHTSET*		g3Dlightset;	//g3Dlight Lib ハンドル
 	GFL_TCB*				g3dVintr;		//3D用vIntrTaskハンドル
@@ -751,9 +751,6 @@ static const GFL_G3D_LIGHTSET_SETUP light0Setup = { light0Tbl, NELEMS(light0Tbl)
 #define G3D_FRM_PRI			(1)			//３Ｄ面の描画プライオリティー
 #define G3D_UTIL_RESCOUNT	(512)		//g3Dutilで使用するリソースの最大設定可能数
 #define G3D_UTIL_OBJCOUNT	(128)		//g3Dutilで使用するオブジェクトの最大設定可能数
-#define G3D_SCENE_OBJCOUNT	(256)		//g3Dsceneで使用するsceneObjの最大設定可能数
-#define G3D_OBJWORK_SZ		(64)		//g3Dsceneで使用するsceneObjのワークサイズ
-#define G3D_ACC_COUNT		(32)		//g3Dsceneで使用するsceneObjAccesaryの最大設定可能数
 #define G3D_BBDACT_RESMAX	(64)		//billboardActで使用するリソースの最大設定可能数
 #define G3D_BBDACT_ACTMAX	(256)		//billboardActで使用するオブジェクトの最大設定可能数
 
@@ -956,11 +953,6 @@ static void g3d_load( FIELD_MAIN_WORK * fieldWork )
 {
 	//配置物設定
 
-	//g3Dutilを使用し配列管理をする
-	fieldWork->g3Dutil = GFL_G3D_UTIL_Create( G3D_UTIL_RESCOUNT, G3D_UTIL_OBJCOUNT, fieldWork->heapID );
-	//g3Dsceneを使用し管理をする
-	fieldWork->g3Dscene = GFL_G3D_SCENE_Create( fieldWork->g3Dutil, 
-						G3D_SCENE_OBJCOUNT, G3D_OBJWORK_SZ, G3D_ACC_COUNT, TRUE, fieldWork->heapID );
 
 	fieldWork->g3Dmapper = FLDMAPPER_Create( fieldWork->heapID );
 	fieldWork->bbdActSys = GFL_BBDACT_CreateSys
@@ -981,7 +973,6 @@ static void g3d_load( FIELD_MAIN_WORK * fieldWork )
 //動作
 static void g3d_control( FIELD_MAIN_WORK * fieldWork )
 {
-	GFL_G3D_SCENE_Main( fieldWork->g3Dscene ); 
 	FLDMAPPER_Main( fieldWork->g3Dmapper );
 	GFL_BBDACT_Main( fieldWork->bbdActSys );
 }
@@ -995,7 +986,8 @@ static void g3d_draw( FIELD_MAIN_WORK * fieldWork )
 	GFL_BBDACT_Draw( fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
 	FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
 
-	GFL_G3D_SCENE_Draw( fieldWork->g3Dscene );  
+	//描画終了（バッファスワップ）
+	GFL_G3D_DRAW_End();							
 }
 
 //破棄
@@ -1006,9 +998,6 @@ static void g3d_unload( FIELD_MAIN_WORK * fieldWork )
 
 	GFL_BBDACT_DeleteSys( fieldWork->bbdActSys );
 	FLDMAPPER_Delete( fieldWork->g3Dmapper );
-
-	GFL_G3D_SCENE_Delete( fieldWork->g3Dscene );  
-	GFL_G3D_UTIL_Delete( fieldWork->g3Dutil );
 }
 	
 static void	g3d_vblank( GFL_TCB* tcb, void* work )
