@@ -506,7 +506,7 @@ u32		PMVOICE_Play
 	// îgå`çƒê∂
 	if( playWave(voicePlayer) == FALSE ){ stopWave(voicePlayer); };
 	
-	OS_Printf("voicePlayerIdx = %x\n",voicePlayerIdx);
+	//OS_Printf("voicePlayerIdx = %x\n",voicePlayerIdx);
 	return voicePlayerIdx;
 }
 
