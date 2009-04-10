@@ -8,9 +8,7 @@
 //============================================================================================
 #include "gflib.h"
 #include "system/gfl_use.h"
-#include "textprint.h"
 #include "arc_def.h"
-#include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 
 #include "message.naix"
 #include "font/font.naix"
@@ -20,12 +18,9 @@
 #include "msg/msg_monsname.h"
 
 #include "system/main.h"
-#include "system/bmp_menuwork.h"
-#include "system/bmp_menulist.h"
-#include "system/bmp_winframe.h"
-#include "msg/msg_debugname.h"
 
 #include "poke_tool/monsno_def.h"
+#include "print/printsys.h"
 #include "print/str_tool.h"
 
 #include "sound/snd_status.h"
@@ -320,6 +315,10 @@ static const int initNoData[NOIDX_MAX] = {
 	0,					//NOIDX_SEPITCH
 };
 
+#define NAMEMSG_STARTIDX_BGM	(msg_seq_dummy)
+#define NAMEMSG_STARTIDX_SE		(msg_seq_se_dp_select)
+#define NAMEMSG_STARTIDX_VOICE	(msg_seq_pv)
+
 //============================================================================================
 /**
  *
@@ -367,38 +366,7 @@ enum {
 	MODE_SOUND_CONTROL,
 };
 
-//============================================================================================
-/**
- *
- * @brief	プロトタイプ宣言
- *
- */
-//============================================================================================
-static BOOL	SoundTest(SOUNDTEST_WORK* sw);
 
-static void	SetupSoundTestSys(SOUNDTEST_WORK* sw);
-static void	RemoveSoundTestSys(SOUNDTEST_WORK* sw);
-static void	MainSoundTestSys(SOUNDTEST_WORK* sw);
-
-static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw);
-static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw);
-static BOOL checkTouchPanelEventCont(SOUNDTEST_WORK* sw);
-
-static void	bg_init(SOUNDTEST_WORK* sw);
-static void	bg_exit(SOUNDTEST_WORK* sw);
-
-static void	g2d_load(SOUNDTEST_WORK* sw);
-static void g2d_draw(SOUNDTEST_WORK* sw);
-static void	g2d_unload(SOUNDTEST_WORK* sw);
-static void	g2d_vblank( GFL_TCB* tcb, void* work );
-
-static void printName(SOUNDTEST_WORK* sw, int idx);
-static void printNo(SOUNDTEST_WORK* sw, int idx, u32 numberSize );
-static void numberInc(SOUNDTEST_WORK* sw, int idx, int max );
-static void numberDec(SOUNDTEST_WORK* sw, int idx, int min );
-
-static void setSelectName(SOUNDTEST_WORK* sw);
-static void writeButton(SOUNDTEST_WORK* sw, u8 x, u8 y, BOOL flag );
 //============================================================================================
 /**
  *
@@ -414,6 +382,8 @@ static void writeButton(SOUNDTEST_WORK* sw, u8 x, u8 y, BOOL flag );
  *
  */
 //============================================================================================
+static BOOL	SoundTest(SOUNDTEST_WORK* sw);
+
 //------------------------------------------------------------------
 /**
  * @brief	ワークの初期化＆破棄
@@ -442,11 +412,29 @@ static void	SoundWorkInitialize(SOUNDTEST_WORK* sw)
 		(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_snd_test_name_dat, sw->heapID);
 	sw->monsmsgman = GFL_MSG_Create
 		(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, sw->heapID);
+
+	sw->fontHandle = GFL_FONT_Create
+		(ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE ,sw->heapID);
+	sw->printQue = PRINTSYS_QUE_Create(sw->heapID);
+	{
+		GFL_SNDSTATUS_SETUP sndStatusSetup;
+
+		sndStatusSetup = sndStatusData;
+		sndStatusSetup.pBgmHandle = PMSND_GetBGMhandlePointer();
+
+		sw->gflSndStatus = GFL_SNDSTATUS_Create( &sndStatusSetup, sw->heapID );
+	}
 }
 
 static void	SoundWorkFinalize(SOUNDTEST_WORK* sw)
 {
 	int i;
+
+	GFL_SNDSTATUS_Delete( sw->gflSndStatus );
+
+	PRINTSYS_QUE_Clear(sw->printQue);
+	PRINTSYS_QUE_Delete(sw->printQue);
+	GFL_FONT_Delete(sw->fontHandle);
 
 	GFL_MSG_Delete(sw->monsmsgman);
 	GFL_MSG_Delete(sw->msgman);
@@ -473,18 +461,6 @@ static GFL_PROC_RESULT SoundTest2Proc_Init(GFL_PROC * proc, int * seq, void * pw
 
 	SoundWorkInitialize(sw);
 
-	sw->fontHandle = GFL_FONT_Create
-		(ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE ,sw->heapID);
-	sw->printQue = PRINTSYS_QUE_Create(sw->heapID);
-	{
-		GFL_SNDSTATUS_SETUP sndStatusSetup;
-
-		sndStatusSetup = sndStatusData;
-		sndStatusSetup.pBgmHandle = PMSND_GetBGMhandlePointer();
-
-		sw->gflSndStatus = GFL_SNDSTATUS_Create( &sndStatusSetup, sw->heapID );
-	}
-
     return GFL_PROC_RES_FINISH;
 }
 
@@ -493,10 +469,6 @@ static GFL_PROC_RESULT SoundTest2Proc_Main(GFL_PROC * proc, int * seq, void * pw
 {
 	SOUNDTEST_WORK*	sw;
 	sw = mywk;
-
-	GFL_SNDSTATUS_Main(sw->gflSndStatus);
-
-	PRINTSYS_QUE_Main(sw->printQue);
 
 	if(SoundTest(sw) == TRUE){
 		return GFL_PROC_RES_CONTINUE;
@@ -509,12 +481,6 @@ static GFL_PROC_RESULT SoundTest2Proc_End(GFL_PROC * proc, int * seq, void * pwk
 {
 	SOUNDTEST_WORK*	sw;
 	sw = mywk;
-
-	GFL_SNDSTATUS_Delete( sw->gflSndStatus );
-
-	PRINTSYS_QUE_Clear(sw->printQue);
-	PRINTSYS_QUE_Delete(sw->printQue);
-	GFL_FONT_Delete(sw->fontHandle);
 
 	SoundWorkFinalize(sw);
 
@@ -553,6 +519,29 @@ const GFL_PROC_DATA SoundTest2ProcData = {
  *
  */
 //============================================================================================
+static void	SetupSoundTestSys(SOUNDTEST_WORK* sw);
+static void	RemoveSoundTestSys(SOUNDTEST_WORK* sw);
+static void	MainSoundTestSys(SOUNDTEST_WORK* sw);
+
+static BOOL checkTouchPanelEvent(SOUNDTEST_WORK* sw);
+static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw);
+static BOOL checkTouchPanelEventCont(SOUNDTEST_WORK* sw);
+
+static void	bg_init(SOUNDTEST_WORK* sw);
+static void	bg_exit(SOUNDTEST_WORK* sw);
+
+static void	g2d_load(SOUNDTEST_WORK* sw);
+static void g2d_draw(SOUNDTEST_WORK* sw);
+static void	g2d_unload(SOUNDTEST_WORK* sw);
+static void	g2d_vblank( GFL_TCB* tcb, void* work );
+
+static void printName(SOUNDTEST_WORK* sw, int idx);
+static void printNo(SOUNDTEST_WORK* sw, int idx, u32 numberSize );
+static void numberInc(SOUNDTEST_WORK* sw, int idx, int max );
+static void numberDec(SOUNDTEST_WORK* sw, int idx, int min );
+
+static void setSelectName(SOUNDTEST_WORK* sw);
+static void writeButton(SOUNDTEST_WORK* sw, u8 x, u8 y, BOOL flag );
 //------------------------------------------------------------------
 /**
  *
@@ -598,6 +587,8 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 
 			GFL_SNDSTATUS_SetControl( sw->gflSndStatus, flag );
 		}
+		GFL_SNDSTATUS_Main(sw->gflSndStatus);
+
 		MainSoundTestSys(sw);
 		checkControlChange(sw);
 
@@ -781,6 +772,7 @@ static void g2d_draw(SOUNDTEST_WORK* sw)
 		printNo(sw, i, 6);
 		PRINT_UTIL_Trans(&sw->printUtilNo[i], sw->printQue);
 	}
+	PRINTSYS_QUE_Main(sw->printQue);
 }
 
 static void	g2d_unload(SOUNDTEST_WORK* sw)
@@ -1048,10 +1040,6 @@ static BOOL checkTouchPanelEventCont(SOUNDTEST_WORK* sw)
  * @brief	選択サウンド名取り出し
  */
 //------------------------------------------------------------------
-#define NAMEMSG_STARTIDX_BGM	(msg_seq_dummy)
-#define NAMEMSG_STARTIDX_SE		(msg_seq_se_dp_select)
-#define NAMEMSG_STARTIDX_VOICE	(msg_seq_pv)
-
 static void setSelectName(SOUNDTEST_WORK* sw)
 {
 	u32 msgIdx;
