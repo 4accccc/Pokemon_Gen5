@@ -378,6 +378,11 @@ void PMSND_DisableCaptureReverb( void )
 	reverbStatus.active = FALSE;
 }
 
+BOOL PMSND_CheckEnableCaptureReverb( void )
+{
+	return reverbStatus.active;
+}
+
 void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames )
 {
 	BOOL restartFlag = FALSE;

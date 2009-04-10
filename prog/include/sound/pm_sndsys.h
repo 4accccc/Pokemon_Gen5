@@ -57,6 +57,7 @@ extern u32	PMSND_GetSndHeapFreeSize( void );
 //	ÉäÉoÅ[Éuê›íË
 extern void PMSND_EnableCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
 extern void PMSND_DisableCaptureReverb( void );
+extern BOOL PMSND_CheckEnableCaptureReverb( void );
 extern void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
 
 //============================================================================================

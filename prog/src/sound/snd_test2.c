@@ -193,7 +193,7 @@ static const GFL_SKB_SETUP skbData= {
 static const GFL_SNDSTATUS_SETUP sndStatusData= {
 	0,
 	GFL_DISPUT_BGID_S0, GFL_DISPUT_PALID_15,
-	NULL, GFL_SNDSTATUS_CONTOROL_NONE,
+	NULL, GFL_SNDSTATUS_CONTROL_NONE,
 };
 
 //------------------------------------------------------------------
@@ -564,13 +564,9 @@ static void	checkControlChange(SOUNDTEST_WORK* sw)
 {
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		if( sw->mode == MODE_SOUND_SELECT ){
-			u16 flag = GFL_SNDSTATUS_CONTOROL_ENABLE;
-			if( sw->reverbFlag == TRUE ){ flag |= GFL_SNDSTATUS_CONTOROL_REVERB; }
-			GFL_SNDSTATUS_SetControl( sw->gflSndStatus, flag );
 			GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
 			sw->mode = MODE_SOUND_CONTROL;
 		} else {
-			GFL_SNDSTATUS_SetControl( sw->gflSndStatus, GFL_SNDSTATUS_CONTOROL_NONE );
 			GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
 			sw->mode = MODE_SOUND_SELECT;
 		}
@@ -594,7 +590,14 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 
 	case 1:
 		GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSND_GetBGMhandlePointer());
+		{
+			//soundStatusƒRƒ“ƒgƒ[ƒ‹Ý’è
+			u16 flag;
+			if( sw->mode == MODE_SOUND_SELECT ){ flag = GFL_SNDSTATUS_CONTROL_NONE; }
+			else { flag = GFL_SNDSTATUS_CONTROL_ENABLE; }
 
+			GFL_SNDSTATUS_SetControl( sw->gflSndStatus, flag );
+		}
 		MainSoundTestSys(sw);
 		checkControlChange(sw);
 

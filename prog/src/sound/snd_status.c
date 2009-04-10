@@ -333,7 +333,7 @@ BOOL	GFL_SNDSTATUS_Main( GFL_SNDSTATUS* gflSndStatus )
 				break;
 			}
 		}
-		if( gflSndStatus->setup.controlFlag != GFL_SNDSTATUS_CONTOROL_NONE ){
+		if( gflSndStatus->setup.controlFlag != GFL_SNDSTATUS_CONTROL_NONE ){
 			if( SNDSTATUS_Control( gflSndStatus ) == FALSE ){
 				gflSndStatus->seq = SEQ_POPVRAM;
 			}
@@ -459,7 +459,7 @@ static void writeReverbInfo( GFL_SNDSTATUS* gflSndStatus )
 	int		y = 22;
 	int		i;
 
-	if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTOROL_REVERB ){ chrNo = 0x1c; }
+	if( PMSND_CheckEnableCaptureReverb() == TRUE ){ chrNo = 0x1c; }
 	else { chrNo = 0xa8; }
 
 	for( i=0; i<4; i++ ){ scrnBuf[ y*32 + x + i ] = (chrNo + i) | palMask; }
@@ -538,7 +538,7 @@ static void SetScrnMasterTrackStatus( GFL_SNDSTATUS* gflSndStatus )
 	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[tst->mod_d].valOffs, 21, 16);
 	writeScrnSwitch( gflSndStatus, gflSndStatus->switchStatus[tst->mod_s].valOffs, 25, 16);
 
-	//writeReverbInfo( gflSndStatus );
+	writeReverbInfo( gflSndStatus );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -760,7 +760,7 @@ static BOOL checkTouchPanelEvent( GFL_SNDSTATUS* gflSndStatus )
 	tblPos = GFL_UI_TP_HitTrg(eventTouchPanelTable);
 	if( tblPos != GFL_UI_TP_HIT_NONE ){
 		if( tblPos == TOUCH_EXIT ){
-			if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTOROL_EXIT ){
+			if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTROL_EXIT ){
 				return FALSE;	// I—¹
 			}
 		}
@@ -795,6 +795,10 @@ static BOOL checkTouchPanelEvent( GFL_SNDSTATUS* gflSndStatus )
 		return TRUE;
 	}
 	tblPos = GFL_UI_TP_HitTrg(gflSndStatus->eventSwitchTable);
+	if( tblPos == SWITCH_BGM_REVERB ){
+		//reverbƒXƒCƒbƒ`‚Íreverb—LŒø‚É‚È‚Á‚Ä‚¢‚È‚¯‚ê‚Î–³Ž‹
+		if( PMSND_CheckEnableCaptureReverb() == FALSE ){ return TRUE; }
+	}
 	if( tblPos != GFL_UI_TP_HIT_NONE ){
 		gflSndStatus->swControl.seq = SWITCH_SLIDE_MODE;
 		gflSndStatus->swControl.swID = tblPos;
@@ -959,7 +963,7 @@ static void SNDSTATUS_SwitchParamSet( GFL_SNDSTATUS* gflSndStatus, SWITCH_ID swI
 		break;
 	case SWITCH_BGM_REVERB:
 		// reverb• 0`0x2000
-		if( gflSndStatus->setup.controlFlag & GFL_SNDSTATUS_CONTOROL_REVERB	){
+		if( PMSND_CheckEnableCaptureReverb() == TRUE ){
 			// ‚q‚d‚u‚d‚q‚a‘€ì‚ ‚è
 			value = gflSndStatus->switchStatus[SWITCH_BGM_REVERB].valOffs * 2;
 			if(value > 63){ value = 63; }

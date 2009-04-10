@@ -92,7 +92,7 @@ static const GFL_SKB_SETUP skbData= {
 static const GFL_SNDSTATUS_SETUP sndStatusData= {
 	PAD_BUTTON_SELECT,
 	GFL_DISPUT_BGID_M1, GFL_DISPUT_PALID_15,
-	NULL, GFL_SNDSTATUS_CONTOROL_ENABLE | GFL_SNDSTATUS_CONTOROL_EXIT,
+	NULL, GFL_SNDSTATUS_CONTROL_ENABLE | GFL_SNDSTATUS_CONTROL_EXIT,
 };
 //------------------------------------------------------------------
 /**
