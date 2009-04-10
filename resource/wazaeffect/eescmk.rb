@@ -310,7 +310,7 @@ end
 	bin_list = []
 	bin_list_tmp = []
 
-	i = 0
+	data_pos = 0
 
 	#シーケンス
 	SEQ_SIGNATURE_SEARCH = 0
@@ -321,8 +321,8 @@ end
 	EFFNO_POS = 0
 	ESF_COM_STR_POS = 0
 
-	while i < data.size
-		split_data = data[i].split(/\s+/)
+	while data_pos < data.size
+		split_data = data[ data_pos ].split(/\s+/)
 		case seq_no
 		when SEQ_SIGNATURE_SEARCH
 			cnt = 0
@@ -338,11 +338,11 @@ end
 			if split_data[ 0 ][ 0 ].chr == "$"
 				file_cnt = split_data[ 0 ][ 1 ].chr + split_data[ 0 ][ 2 ].chr + split_data[ 0 ][ 3 ].chr + split_data[ 0 ][ 4 ].chr
 				file_cnt.to_i.times{
-					i += 1
-					file_list << data[ i ].strip
+					data_pos += 1
+					file_list << data[ data_pos ].strip
 				}
 			else
-				i -= 1
+				data_pos -= 1
 			end
 			seq_no = SEQ_EFFNO_SEARCH
 		when SEQ_EFFNO_SEARCH
@@ -358,7 +358,7 @@ end
 			end
 		when SEQ_MAKE_DATA
 			if split_data[ EFFNO_POS ][ 0 ].chr == "#"
-				i -= 1
+				data_pos -= 1
 				seq_no = SEQ_EFFNO_SEARCH
 			elsif split_data[ EFFNO_POS ][ 0 ].chr == "&"
 				write_file = "we_" + num_str + ".s"
@@ -413,6 +413,20 @@ end
 						str += format("0x%08x",f)
 					when "VALUE_INT"
 						str += split_data[ param_num ]
+					when "VALUE_VECFX32"
+						vecfx32 = split_data[ param_num ].split(/:/)
+						for i in 0..(vecfx32.size-1)
+							if i != 0
+								str += ",\t"
+							end
+							f = vecfx32[ i ].to_f
+							if f > 0
+								f = f * ( 1 << 12 ) + 0.5
+							else
+								f = f * ( 1 << 12 ) - 0.5
+							end
+							str += format("0x%08x",f)
+						end
 					when "FILE_DIALOG"
 						file_dialog = split_data[ param_num ] + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ) 
 						inc_header << file_dialog.sub( com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_fd_ext( param_num -1 ), ".h" )
@@ -457,7 +471,7 @@ end
 				sequence << str
 			end
 		end
-		i += 1
+		data_pos += 1
 	end
 
 	count = 0
