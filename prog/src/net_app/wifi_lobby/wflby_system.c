@@ -4608,13 +4608,14 @@ static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVE_CO
 
 	
 	{// 名前を設定
+	#if WB_TEMP_FIX	//WBでは文字がunicodeの為、ここで仮のSTRCODEを入れておく。後々はサーバー側でunicode対応 or ローカルでPLまでのSTRCODEへunicodeの変換、のどちらかが必要
 		STRBUF* p_name;
 		p_name = MyStatus_CreateNameString( p_mystatus, heapID );
 		// 送受信するプロフィールの名前
 		GFL_STR_GetStringCode( p_name, p_myprofile->profile.name, PERSON_NAME_SIZE + EOM_SIZE );
 		GFL_STR_GetStringCode( p_name, p_myprofile->def_name, PERSON_NAME_SIZE + EOM_SIZE );
 		GFL_STR_DeleteBuffer( p_name );
-	#if WB_TEMP_FIX	//WBでは文字がunicodeの為、ここで仮のSTRCODEを入れておく。後々はサーバー側でunicode対応 or ローカルでPLまでのSTRCODEへunicodeの変換、のどちらかが必要
+	#else
 		p_myprofile->profile.name[0] = 1;
 		p_myprofile->profile.name[2] = 2;
 		p_myprofile->profile.name[3] = 3;

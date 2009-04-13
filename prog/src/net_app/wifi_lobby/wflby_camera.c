@@ -71,6 +71,7 @@ struct _WFLBY_CAMERA {
 	GFL_G3D_CAMERA *			p_camera;
 	const WFLBY_3DPERSON*	cp_person;
 	VecFx32					target;
+	VecFx32					old_target;
 };
 
 //-----------------------------------------------------------------------------
@@ -93,7 +94,7 @@ WFLBY_CAMERA* WFLBY_CAMERA_Init( u32 heapID )
 {
 	WFLBY_CAMERA* p_wk;
 	VecFx32 camUp = {0, FX32_ONE, 0};
-	VecFx32 camPos = {0, 0, WFLBY_CAMERA_DIST};
+	VecFx32 camPos = {0, FX32_ONE, 0};
 	
 	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_CAMERA) );
 	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_CAMERA) );
@@ -135,10 +136,21 @@ WFLBY_CAMERA* WFLBY_CAMERA_Init( u32 heapID )
 		/*== 視点からの距離にする ==*/
 		VEC_Add(&camPos,&p_wk->target,&camPos);
 	}
-	p_wk->p_camera = GFL_G3D_CAMERA_CreatePerspective( 
-		WFLBY_CAMERA_PARS, defaultCameraAspect, WFLBY_CAMERA_NEAR, WFLBY_CAMERA_FAR, 0,
+//	p_wk->p_camera = GFL_G3D_CAMERA_CreatePerspective( 
+//		WFLBY_CAMERA_PARS, defaultCameraAspect, WFLBY_CAMERA_NEAR, WFLBY_CAMERA_FAR, 0,
+//		&camPos, &camUp, &p_wk->target, heapID );
+	p_wk->p_camera = GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
+		FX_SinIdx( WFLBY_CAMERA_PARS ), FX_CosIdx( WFLBY_CAMERA_PARS ),
+		defaultCameraAspect, 0, WFLBY_CAMERA_NEAR, WFLBY_CAMERA_FAR, 0,
 		&camPos, &camUp, &p_wk->target, heapID );
+	
+	OS_TPrintf("camera init \n");
+	OS_TPrintf("カメラ角度 angle.x = %x, angle.y = %x, angle.z = %x\n", sc_WFLBY_CAMERA_ANGLE.x, sc_WFLBY_CAMERA_ANGLE.y, sc_WFLBY_CAMERA_ANGLE.z);
+	OS_TPrintf("ターゲット target.x = %d, y = %d, z = %d\n", p_wk->target.x, p_wk->target.y, p_wk->target.z);
+	OS_TPrintf("Pos pos.x = %d, y = %d, z = %d\n", camPos.x, camPos.y, camPos.z);
+	
 	GFL_G3D_CAMERA_Switching(p_wk->p_camera);
+	p_wk->old_target = p_wk->target;
 #endif
 
 	OS_TPrintf( "透視射影\n" );
@@ -187,14 +199,33 @@ GFL_G3D_CAMERA * WFLBY_CAMERA_Get(WFLBY_CAMERA *p_sys)
 //-----------------------------------------------------------------------------
 void WFLBY_CAMERA_Draw( WFLBY_CAMERA* p_sys )
 {
+	VecFx32 vec;
+	GFL_G3D_LOOKAT lookat;
+
 	// ターゲット座標計算
 	if( p_sys->cp_person ){
 		WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_sys->cp_person, &p_sys->target );
 		p_sys->target.x += WFLBY_CAMERA_X_OFS;
 		p_sys->target.z += WFLBY_CAMERA_Z_OFS;
+		
 	}
 	
+	//ターゲットに対してバインド移動
+	GFL_G3D_GetSystemLookAt(&lookat);
+	{
+		//移動差分を計算
+		VEC_Subtract(&p_sys->target, &p_sys->old_target, &vec);
+		{//カメラと注視点を同時に平行移動	GFC_ShiftCamera(&vec,GF_Camera);
+			VEC_Add(&lookat.camPos, &vec, &lookat.camPos);
+			VEC_Add(&lookat.target, &vec, &lookat.target);
+		}
+	}
+	p_sys->old_target = p_sys->target;
+	
 	// カメラ反映
+	GFL_G3D_CAMERA_SetPos( p_sys->p_camera, &lookat.camPos );
+	GFL_G3D_CAMERA_SetTarget( p_sys->p_camera, &lookat.target );
+	GFL_G3D_SetSystemLookAt( &lookat );
 	GFL_G3D_DRAW_SetLookAt();
 }
 

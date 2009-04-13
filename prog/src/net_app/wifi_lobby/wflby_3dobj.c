@@ -621,9 +621,12 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 		setdata.heap	= heapID;
 		p_sys->p_blact = BLACT_InitSet( &setdata );
 	#else
+		VecFx32 scale={FX32_ONE*16, FX32_ONE*16, FX32_ONE*16};
+		
 		p_sys->p_blact = GFL_BBDACT_CreateSys(
 			WFLBY_3DMDL_MDLDATA_NUM + WFLBY_3DMDL_ANMDATA_NUM + WFLBY_3DMDL_DATA_NUM, 
 			objnum, g3d_trans_BBD, heapID);
+		GFL_BBD_SetScale( GFL_BBDACT_GetBBDSystem(p_sys->p_blact), &scale );
 	#endif
 	}
 
@@ -722,6 +725,7 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 			#endif
 			}
 			p_sys->resunit_id = GFL_BBDACT_AddResourceUnit(p_sys->p_blact, bbdres, tblno);
+			GFL_HEAP_FreeMemory(bbdres);
 		}
 
 
@@ -945,7 +949,7 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 		NNSGfdTexKey	texkey;
 		NNSGfdTexKey	tex4x4key;
 		NNSGfdPlttKey	plttkey;
-		VecFx32			scale = {FX32_ONE,FX32_ONE,FX32_ONE};
+		VecFx32			scale = {FX32_ONE*2,FX32_ONE*2,FX32_ONE*2};
 	#endif
 		u32				objid;
 		VecFx32			matrix = {0,0,0};
@@ -1002,7 +1006,9 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 			WF2DMAP_POS pos;
 			pos = WF2DMAP_OBJWkMatrixGet( cp_objwk );
 			WFLBY_3DMATRIX_GetPosVec( &pos, &matrix );
+			matrix.x += 8*FX32_ONE;
 			matrix.z += WFLBY_3DOBJ_OFS_Z;
+			matrix.y += 16*FX32_ONE;
 		}
 
 		// ƒ[ƒN‚ðì¬
@@ -1014,8 +1020,8 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 		p_wk->p_act = BLACT_Add( &add );
 	#else
 		actdata.resID = res_id;
-		actdata.sizX = FX16_ONE*8-1;
-		actdata.sizY = FX16_ONE*8-1;
+		actdata.sizX = FX16_ONE;
+		actdata.sizY = FX16_ONE;
 		actdata.alpha = 31;
 		actdata.drawEnable = TRUE;
 		actdata.lightMask = p_sys->mdl_light_msk;
@@ -1195,6 +1201,8 @@ void WFLBY_3DOBJWK_GetMatrix( const WFLBY_3DOBJWK* cp_wk, WF2DMAP_POS* p_pos )
 //-----------------------------------------------------------------------------
 void WFLBY_3DOBJWK_Set3DMatrix( WFLBY_3DOBJWK* p_wk, const VecFx32* cp_vec )
 {
+	VecFx32 trans;
+	
 #if WB_FIX
 	BLACT_MatrixSet( p_wk->p_act, cp_vec );
 
@@ -1202,7 +1210,10 @@ void WFLBY_3DOBJWK_Set3DMatrix( WFLBY_3DOBJWK* p_wk, const VecFx32* cp_vec )
 	D3DOBJ_SetMatrix( &p_wk->shadow, cp_vec->x + WFLBY_3DOBJ_SHADOW_OFS_X,
 			WFLBY_3DOBJ_SHADOW_MAT_Y, cp_vec->z + WFLBY_3DOBJ_SHADOW_OFS_Z );
 #else
-	GFL_BBD_SetObjectTrans(GFL_BBDACT_GetBBDSystem(p_wk->p_blact), p_wk->act_idx, cp_vec);
+	trans = *cp_vec;
+	trans.x += FX32_ONE*8;
+	trans.y += FX32_ONE*16;
+	GFL_BBD_SetObjectTrans(GFL_BBDACT_GetBBDSystem(p_wk->p_blact), p_wk->act_idx, &trans);
 
 	// ‰e‚É”½‰f‚½‚¾‚µA‰e‚Í‚ÌYˆÊ’u‚Íí‚É’èˆÊ’u
 	p_wk->shadow_st.trans.x = cp_vec->x + WFLBY_3DOBJ_SHADOW_OFS_X;

@@ -427,7 +427,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _deleteFriendList,  ///< wifiフレンドリスト削除コールバック
     _getFriendData,   ///< DWC形式の友達リスト	
     _getMyUserData,  ///< DWCのユーザデータ（自分のデータ）
-    GFL_NET_DWC_HEAPSIZE,   ///< DWCへのHEAPサイズ
+    GFL_NET_DWCLOBBY_HEAPSIZE,   ///< DWCへのHEAPサイズ
     TRUE,        ///< デバック用サーバにつなぐかどうか
     0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,  //元になるheapid
