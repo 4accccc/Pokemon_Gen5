@@ -39,7 +39,7 @@ RES_DIR = ./
 CNV_DIR = ./
 
 #コンバート対象のファイルツリーを生成
-WAZAEFFSRCS	:= $(wildcard $(RES_DIR)*.s)
+WAZAEFFSRCS	:= $(wildcard $(RES_DIR)we_*.s)
 
 .PHONY:	do-build clean subdir
 
@@ -66,7 +66,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 $(NARCNAME): $(notdir $(WAZAEFFSRCS:.s=.bin))
-	nnsarc -c -l -n -i $(NARCNAME) *.bin
+	nnsarc -c -l -n -i $(NARCNAME) we_*.bin
 	$(NAIXCUT) $(NAIXNAME)
 endif
 
