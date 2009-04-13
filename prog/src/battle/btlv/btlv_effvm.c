@@ -44,6 +44,7 @@ typedef struct{
 	ARCDATID	dat_id[ PARTICLE_GLOBAL_MAX ];
 	u32			dat_id_cnt;
 #endif
+	VM_CODE		*sequence;
 }BTLV_EFFVM_WORK;
 
 typedef struct{
@@ -61,6 +62,7 @@ typedef struct{
 //============================================================================================
 
 VMHANDLE	*BTLV_EFFVM_Init( HEAPID heapID );
+BOOL		BTLV_EFFVM_Main( VMHANDLE *vmh );
 void		BTLV_EFFVM_Exit( VMHANDLE *vmh );
 void		BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID waza );
 
@@ -184,6 +186,26 @@ VMHANDLE	*BTLV_EFFVM_Init( HEAPID heapID )
 
 //============================================================================================
 /**
+ *	VM初期化
+ *
+ * @param[in]	heapID			ヒープID
+ */
+//============================================================================================
+BOOL		BTLV_EFFVM_Main( VMHANDLE *vmh )
+{
+	BOOL	ret = VM_Control( vmh );
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+
+	if( ( ret == FALSE ) && ( bevw->sequence ) ){ 
+		GFL_HEAP_FreeMemory( bevw->sequence );
+		bevw->sequence = NULL;
+	}
+
+	return ret;
+}
+
+//============================================================================================
+/**
  *	VM終了
  *
  * @param[in]	vmh	仮想マシン制御構造体へのポインタ
@@ -205,9 +227,12 @@ void	BTLV_EFFVM_Exit( VMHANDLE *vmh )
 void	BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID waza )
 {
 	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+	int	*start_ofs;
 	bevw->attack_pos = from;
 	bevw->defence_pos = to;
-	//VM_Start( vmh, &we_001_data[0] );
+	bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, bevw->heapID );
+	start_ofs = (int *)&bevw->sequence[ script_table[ from ][ to ] ] ;
+	VM_Start( vmh, &bevw->sequence[ start_ofs[ 0 ] ] );
 }
 
 //============================================================================================

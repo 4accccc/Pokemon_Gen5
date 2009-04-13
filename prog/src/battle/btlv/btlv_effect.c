@@ -181,7 +181,7 @@ void	BTLV_EFFECT_Main( void )
 {
 	if( bew == NULL ) return;
 
-	bew->execute_flag = VM_Control( bew->vm_core );
+	bew->execute_flag = BTLV_EFFVM_Main( bew->vm_core );
 
 	GFL_TCB_Main( bew->tcb_sys );
 
@@ -227,6 +227,7 @@ void	BTLV_EFFECT_Main( void )
 //=============================================================================================
 void BTLV_EFFECT_AddByPos( BtlvMcssPos from, BtlvMcssPos to, WazaID waza )
 {
+	BTLV_EFFVM_Start( bew->vm_core, from, to, waza );
 }
 
 //=============================================================================================
