@@ -19,12 +19,14 @@
 #include "system\gfl_use.h"
 #include "battle/btlv/btlv_effect.h"
 #include "pokegra/pokegra_wb.naix"
-#include "battgra/battgra_wb.naix"
+#include "battle/battgra_wb.naix"
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
 #include "test/performance.h"
+
+#include "waza_tool/wazano_def.h"
 
 //#define MCS_ENABLE		//MCSを使用する
 //#define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
@@ -748,6 +750,13 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
 #else
 	MoveCamera( wk );
 
+	if( (trg & PAD_BUTTON_L ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+		BTLV_EFFECT_AddByPos( BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, WAZANO_HATAKU );
+	}
+	if( (trg & PAD_BUTTON_R ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+		BTLV_EFFECT_AddByPos( BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, WAZANO_KAENGURUMA );
+	}
+
 #if 0
 	if( (trg & PAD_BUTTON_X ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
 		BTLV_EFFECT_Add( BTLV_EFFECT_A2BGANSEKI );
@@ -815,22 +824,7 @@ static GFL_PROC_RESULT DebugBattleTestProcExit( GFL_PROC * proc, int * seq, void
 
 	GFL_UI_KEY_SetRepeatSpeed( wk->key_repeat_speed, wk->key_repeat_wait );
 
-#ifdef	POKEGRA_CHECK
-	{
-		int	i;
-
-		for( i = 0 ; i < BMPWIN_MAX ; i++ ){
-			GFL_BMPWIN_Delete( wk->bmpwin[ i ] );
-		}
-	}
-	GFL_HEAP_FreeMemory( wk->textParam );
-	BTLV_MCSS_Exit( wk->bmw );
-#endif
-
 	BTLV_EFFECT_Exit();
-//	BTLV_EFFECT_Exit( wk->bew );
-
-//    NNS_SndStrmFreeChannel( &wk->strm );
 
 	GFL_G3D_Exit();
 
