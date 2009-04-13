@@ -90,4 +90,16 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/mapwinter02_01.bin $(DIR_LANDRES)/mapwinter02_01.imd \
 	$(DIR_LANDRES)/mapwinter01_02.bin $(DIR_LANDRES)/mapwinter01_02.imd \
 	$(DIR_LANDRES)/mapwinter02_02.bin $(DIR_LANDRES)/mapwinter02_02.imd \
+	$(DIR_LANDRES)/c03_a00_00.bin $(DIR_LANDRES)/c03_a00_00.imd \
+	$(DIR_LANDRES)/c03_b00_00.bin $(DIR_LANDRES)/c03_b00_00.imd \
+	$(DIR_LANDRES)/c03_c00_00.bin $(DIR_LANDRES)/c03_c00_00.imd \
+	$(DIR_LANDRES)/c03_d00_00.bin $(DIR_LANDRES)/c03_d00_00.imd \
+	$(DIR_LANDRES)/c03_e00_00.bin $(DIR_LANDRES)/c03_e00_00.imd \
+	$(DIR_LANDRES)/c03_f00_00.bin $(DIR_LANDRES)/c03_f00_00.imd \
+	$(DIR_LANDRES)/c03_g00_00.bin $(DIR_LANDRES)/c03_g00_00.imd \
+	$(DIR_LANDRES)/c03_h00_00.bin $(DIR_LANDRES)/c03_h00_00.imd \
+	$(DIR_LANDRES)/c03_i00_00.bin $(DIR_LANDRES)/c03_i00_00.imd \
+	$(DIR_LANDRES)/c03_j00_00.bin $(DIR_LANDRES)/c03_j00_00.imd \
+	$(DIR_LANDRES)/c03_k00_00.bin $(DIR_LANDRES)/c03_k00_00.imd \
+	$(DIR_LANDRES)/c03_l00_00.bin $(DIR_LANDRES)/c03_l00_00.imd \
 	$(DIR_LANDRES)/testpc00_00.bin $(DIR_LANDRES)/testpc00_00.imd

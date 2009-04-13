@@ -102,7 +102,19 @@ enum {
 	NARC_map_land_data_mapwinter02_01_3dppack = 88,
 	NARC_map_land_data_mapwinter01_02_3dppack = 89,
 	NARC_map_land_data_mapwinter02_02_3dppack = 90,
-	NARC_map_land_data_testpc00_00_3dppack = 91
+	NARC_map_land_data_c03_a00_00_3dppack = 91,
+	NARC_map_land_data_c03_b00_00_3dppack = 92,
+	NARC_map_land_data_c03_c00_00_3dppack = 93,
+	NARC_map_land_data_c03_d00_00_3dppack = 94,
+	NARC_map_land_data_c03_e00_00_3dppack = 95,
+	NARC_map_land_data_c03_f00_00_3dppack = 96,
+	NARC_map_land_data_c03_g00_00_3dppack = 97,
+	NARC_map_land_data_c03_h00_00_3dppack = 98,
+	NARC_map_land_data_c03_i00_00_3dppack = 99,
+	NARC_map_land_data_c03_j00_00_3dppack = 100,
+	NARC_map_land_data_c03_k00_00_3dppack = 101,
+	NARC_map_land_data_c03_l00_00_3dppack = 102,
+	NARC_map_land_data_testpc00_00_3dppack = 103
 };
 
 /* NARC_MAP_LAND_DATA_NAIX_ */

@@ -11,7 +11,8 @@ def put_result name
 	end
 end
 def map_file_check prefix
-	path = "../land_res/" + prefix + "c"
+	#path = "../land_res/" + prefix + "c"
+	path = "../land_res/" + prefix
 	put_result( path + "\.imd" )
 	put_result( path + "\.bin")
 	put_result( path + "\.3dmd" )
