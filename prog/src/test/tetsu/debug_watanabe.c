@@ -32,7 +32,7 @@
 static void allocWork( GFL_PROC* proc );
 static void freeWork( GFL_PROC* proc );
 static void setNextProc( void* procwork );
-static BOOL mainControl( void* procwork );
+static BOOL mainFunc( void* procwork );
 //------------------------------------------------------------------
 /**
  * @brief	プロセスの初期化
@@ -58,7 +58,7 @@ static GFL_PROC_RESULT DebugWatanabeMainProcInit
 static GFL_PROC_RESULT DebugWatanabeMainProcMain
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	if( mainControl(mywk) == FALSE ){
+	if( mainFunc(mywk) == FALSE ){
 		return GFL_PROC_RES_FINISH;
 	}
 	return GFL_PROC_RES_CONTINUE;
@@ -178,9 +178,11 @@ typedef struct {
  * @brief		プロトタイプ宣言
  */
 //------------------------------------------------------------------
-static void	bg_init(HEAPID heapID);
-static void	bg_exit(void);
+static void systemSetup(DEBUG_WATANABE_WORK* dw);
+static void systemFramework(DEBUG_WATANABE_WORK* dw);
+static void systemDelete(DEBUG_WATANABE_WORK* dw);
 
+static BOOL control(DEBUG_WATANABE_WORK* dw);
 static void drawList(DEBUG_WATANABE_WORK* dw);
 static void makeList(DEBUG_WATANABE_WORK* dw);
 
@@ -225,78 +227,28 @@ static void setNextProc( void* procwork )
  *
  */
 //------------------------------------------------------------------
-static BOOL mainControl( void* procwork )
+static BOOL mainFunc( void* procwork )
 {
 	DEBUG_WATANABE_WORK* dw;
 	dw = procwork;
 
 	switch(dw->seq){
 	case 0:
-		//基本セットアップ
-		bg_init(dw->heapID);
-		//フォント用パレット転送
-		GFL_ARC_UTIL_TransVramPalette(	ARCID_FONT, 
-										NARC_font_default_nclr,
-										TEXT_DISPSIDE,
-										TEXT_PLTTID * PLTT_SIZ,
-										PLTT_SIZ,
-										dw->heapID);
-		//フォントハンドル作成
-		dw->fontHandle = GFL_FONT_Create(	ARCID_FONT,
-											NARC_font_large_nftr,
-											GFL_FONT_LOADTYPE_FILE,
-											FALSE,
-											dw->heapID);
-		//プリントキューハンドル作成
-		dw->printQue = PRINTSYS_QUE_Create(dw->heapID);
-
-		//描画用ビットマップ作成（画面全体）
-		dw->bmpwin = GFL_BMPWIN_Create(	TEXT_FRAME,
-										0, 0, 32, 24,
-										TEXT_PLTTID, GFL_BG_CHRAREA_GET_F );
-		GFL_BMPWIN_MakeScreen(dw->bmpwin);
-		GFL_BG_LoadScreenReq(TEXT_FRAME);
-		PRINT_UTIL_Setup(&dw->printUtil, dw->bmpwin);
-
+		systemSetup(dw);
 		makeList(dw);
 
 		dw->seq++;
 		break;
 
 	case 1:
-		drawList(dw);
-		PRINT_UTIL_Trans(&dw->printUtil, dw->printQue);
-		PRINTSYS_QUE_Main(dw->printQue);
-		{
-			u32 tblPos;
+		if( control(dw) == FALSE ){ dw->seq++; }
 
-			tblPos = GFL_UI_TP_HitTrg(dw->tpTable);
-			if( tblPos != GFL_UI_TP_HIT_NONE ){
-				dw->selectItem = tblPos;
-				dw->wait = 0;
-				dw->seq++;
-			}
-		}
+		drawList(dw);
+		systemFramework(dw);
 		break;
 
 	case 2:
-		drawList(dw);
-		PRINT_UTIL_Trans(&dw->printUtil, dw->printQue);
-		PRINTSYS_QUE_Main(dw->printQue);
-
-		if( dw->wait < 16 ){ dw->wait++; }
-		else{ dw->seq++; }
-
-		break;
-
-	case 3:
-		PRINTSYS_QUE_Clear(dw->printQue);
-		GFL_BMPWIN_Delete(dw->bmpwin);
-
-		PRINTSYS_QUE_Delete(dw->printQue);
-		GFL_FONT_Delete(dw->fontHandle);
-
-		bg_exit();
+		systemDelete(dw);
 		return FALSE;
 	}
 	return TRUE;
@@ -309,7 +261,7 @@ static BOOL mainControl( void* procwork )
  *
  *
  *
- * @brief	セットアップ
+ * @brief	システムセットアップ
  *
  *
  *
@@ -388,6 +340,68 @@ static void	bg_exit(void)
 	GFL_BG_Exit();
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief		セットアップ
+ */
+//------------------------------------------------------------------
+static void systemSetup(DEBUG_WATANABE_WORK* dw)
+{
+	//基本セットアップ
+	bg_init(dw->heapID);
+	//フォント用パレット転送
+	GFL_ARC_UTIL_TransVramPalette(	ARCID_FONT, 
+									NARC_font_default_nclr,
+									TEXT_DISPSIDE,
+									TEXT_PLTTID * PLTT_SIZ,
+									PLTT_SIZ,
+									dw->heapID);
+	//フォントハンドル作成
+	dw->fontHandle = GFL_FONT_Create(	ARCID_FONT,
+										NARC_font_large_nftr,
+										GFL_FONT_LOADTYPE_FILE,
+										FALSE,
+										dw->heapID);
+	//プリントキューハンドル作成
+	dw->printQue = PRINTSYS_QUE_Create(dw->heapID);
+
+	//描画用ビットマップ作成（画面全体）
+	dw->bmpwin = GFL_BMPWIN_Create(	TEXT_FRAME,
+									0, 0, 32, 24,
+									TEXT_PLTTID, GFL_BG_CHRAREA_GET_F );
+	PRINT_UTIL_Setup(&dw->printUtil, dw->bmpwin);
+
+	GFL_BMPWIN_MakeScreen(dw->bmpwin);
+	GFL_BG_LoadScreenReq(TEXT_FRAME);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		フレームワーク
+ */
+//------------------------------------------------------------------
+static void systemFramework(DEBUG_WATANABE_WORK* dw)
+{
+	PRINT_UTIL_Trans(&dw->printUtil, dw->printQue);
+	PRINTSYS_QUE_Main(dw->printQue);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		破棄
+ */
+//------------------------------------------------------------------
+static void systemDelete(DEBUG_WATANABE_WORK* dw)
+{
+	PRINTSYS_QUE_Clear(dw->printQue);
+	GFL_BMPWIN_Delete(dw->bmpwin);
+
+	PRINTSYS_QUE_Delete(dw->printQue);
+	GFL_FONT_Delete(dw->fontHandle);
+
+	bg_exit();
+}
+
 
 //============================================================================================
 /**
@@ -396,7 +410,7 @@ static void	bg_exit(void)
  *
  *
  *
- * @brief	
+ * @brief	リストコントロール	
  *
  *
  *
@@ -404,13 +418,6 @@ static void	bg_exit(void)
  *
  */
 //============================================================================================
-//------------------------------------------------------------------
-/**
- *
- * @brief	リスト
- *
- */
-//------------------------------------------------------------------
 #define ITEM_PX (8*2)
 #define ITEM_PY (8*2)
 #define ITEM_SX (16)
@@ -451,7 +458,7 @@ static void drawList(DEBUG_WATANABE_WORK* dw)
 
 //------------------------------------------------------------------
 /**
- * @brief	タッチパネル判定テーブル
+ * @brief	タッチパネル判定テーブル作成
  */
 //------------------------------------------------------------------
 static void makeList(DEBUG_WATANABE_WORK* dw)
@@ -469,6 +476,42 @@ static void makeList(DEBUG_WATANABE_WORK* dw)
 	dw->tpTable[DEBUGITEM_MAX].rect.bottom = 0;
 	dw->tpTable[DEBUGITEM_MAX].rect.left = 0;
 	dw->tpTable[DEBUGITEM_MAX].rect.right = 0;
+}
+
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	動作関数	
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+static	BOOL control(DEBUG_WATANABE_WORK* dw)
+{
+	if( dw->selectItem == NON_SELECT_ITEM ){
+		//未選択
+		u32 tblPos = GFL_UI_TP_HitTrg(dw->tpTable);
+		if( tblPos != GFL_UI_TP_HIT_NONE ){
+			dw->selectItem = tblPos;
+			dw->wait = 0;
+			return TRUE;
+		}
+	}
+	if( dw->wait < 16 ){
+		//選択後ウェイト処理
+		dw->wait++;
+		return TRUE;
+	}
+	return FALSE;
 }
 
 

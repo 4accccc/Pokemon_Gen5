@@ -19,10 +19,9 @@ BOOL	SampleMain( void );
 #include "g3d_mapper.h"
 #include "sample_net.h"
 
-#include "sound/snd_status.h"
+#include "sound/snd_viewer.h"
 #include "sound/pm_sndsys.h"
 
-#include "sound/wb_sound_data.sadl"		//サウンドラベルファイル
 //============================================================================================
 //
 //
@@ -159,10 +158,13 @@ static const GFL_SKB_SETUP skbData= {
 	GFL_SKB_MODE_HIRAGANA, TRUE, PAD_BUTTON_START,
 	GFL_DISPUT_BGID_M1, GFL_DISPUT_PALID_14, GFL_DISPUT_PALID_15,
 };
-static const GFL_SNDSTATUS_SETUP sndStatusData= {
+static const GFL_SNDVIEWER_SETUP sndStatusData= {
 	PAD_BUTTON_SELECT,
 	GFL_DISPUT_BGID_M1, GFL_DISPUT_PALID_15,
-	NULL, GFL_SNDSTATUS_CONTROL_ENABLE | GFL_SNDSTATUS_CONTROL_EXIT,
+	PMSND_GetBGMhandlePointer,
+	PMSND_GetBGMplayerNoIdx,
+	PMSND_CheckOnReverb,
+	GFL_SNDVIEWER_CONTROL_ENABLE | GFL_SNDVIEWER_CONTROL_EXIT,
 };
 //------------------------------------------------------------------
 /**
@@ -184,7 +186,7 @@ typedef struct {
 	int				mapNum;
 
 	GFL_SKB*		gflSkb;
-	GFL_SNDSTATUS*	gflSndStatus;
+	GFL_SNDVIEWER*	gflSndViewer;
 	BOOL			subProcSw;
 
 	void*			skbStrBuf;
@@ -278,11 +280,11 @@ BOOL	SampleMain( void )
 					sampleWork->subProcSw = FALSE;
 					sampleWork->gflSkb = NULL;
 				} 
-			} else if(sampleWork->gflSndStatus != NULL ){
-				if( GFL_SNDSTATUS_Main( sampleWork->gflSndStatus ) == FALSE ){	
-					GFL_SNDSTATUS_Delete( sampleWork->gflSndStatus );
+			} else if(sampleWork->gflSndViewer != NULL ){
+				if( GFL_SNDVIEWER_Main( sampleWork->gflSndViewer ) == FALSE ){	
+					GFL_SNDVIEWER_Delete( sampleWork->gflSndViewer );
 					sampleWork->subProcSw = FALSE;
-					sampleWork->gflSndStatus = NULL;
+					sampleWork->gflSndViewer = NULL;
 				}
 			} else {
 				sampleWork->subProcSw = FALSE;
@@ -302,13 +304,7 @@ BOOL	SampleMain( void )
 				break;
 			}
 			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
-				GFL_SNDSTATUS_SETUP sndStatusSetup;
-
-				sndStatusSetup = sndStatusData;
-				sndStatusSetup.pBgmHandle = PMSND_GetBGMhandlePointer();
-
-				sampleWork->gflSndStatus = GFL_SNDSTATUS_Create
-											( &sndStatusSetup, sampleWork->heapID );
+				sampleWork->gflSndViewer = GFL_SNDVIEWER_Create(&sndStatusData, sampleWork->heapID);
 				sampleWork->subProcSw = TRUE;
 				break;
 			}

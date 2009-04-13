@@ -248,9 +248,24 @@ void	PMSND_Exit( void )
  *
  */
 //============================================================================================
-u32		PMSND_GetSndHeapFreeSize( void )
+u32 PMSND_GetSndHeapFreeSize( void )
 {
 	return NNS_SndHeapGetFreeSize(PmSndHeapHandle);
+}
+
+NNSSndHandle* PMSND_GetBGMhandlePointer( void )
+{
+	return SOUNDMAN_GetHierarchyPlayerSndHandle();
+}
+
+u32 PMSND_GetBGMplayerNoIdx( void )
+{
+	return	SOUNDMAN_GetHierarchyPlayerPlayerNoIdx();
+}
+ 
+BOOL PMSND_CheckOnReverb( void )
+{
+	return reverbStatus.active;
 }
 
 //============================================================================================
@@ -378,11 +393,6 @@ void PMSND_DisableCaptureReverb( void )
 	reverbStatus.active = FALSE;
 }
 
-BOOL PMSND_CheckEnableCaptureReverb( void )
-{
-	return reverbStatus.active;
-}
-
 void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames )
 {
 	BOOL restartFlag = FALSE;
@@ -429,16 +439,6 @@ void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int sto
  *
  */
 //============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief	サウンドハンドル取得
- */
-//------------------------------------------------------------------
-NNSSndHandle* PMSND_GetBGMhandlePointer( void )
-{
-	return SOUNDMAN_GetHierarchyPlayerSndHandle();
-}
-
 //------------------------------------------------------------------
 /**
  * @brief	サウンド再生

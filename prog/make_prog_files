@@ -97,7 +97,7 @@ SRCS	+=		$(SOUNDSRC) \
 				app/name_input/name_input.c \
 				app/pms_input/pms_input.c \
 				app/pms_input/pmsi_param.c \
-				sound/snd_status.c \
+				sound/snd_viewer.c \
 				mystery/comm_mystery_gift.c \
 				system/laster.c \
 				field/fldmmdl.c \

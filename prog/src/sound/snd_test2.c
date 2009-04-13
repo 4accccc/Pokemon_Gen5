@@ -23,7 +23,7 @@
 #include "print/printsys.h"
 #include "print/str_tool.h"
 
-#include "sound/snd_status.h"
+#include "sound/snd_viewer.h"
 #include "sound/pm_sndsys.h"
 #include "sound/pm_wb_voice.h"
 
@@ -185,10 +185,13 @@ static const GFL_SKB_SETUP skbData= {
  * @brief	サウンドステータス設定
  */
 //------------------------------------------------------------------
-static const GFL_SNDSTATUS_SETUP sndStatusData= {
+static const GFL_SNDVIEWER_SETUP sndViewerData= {
 	0,
 	GFL_DISPUT_BGID_S0, GFL_DISPUT_PALID_15,
-	NULL, GFL_SNDSTATUS_CONTROL_NONE,
+	PMSND_GetBGMhandlePointer,
+	PMSND_GetBGMplayerNoIdx,
+	PMSND_CheckOnReverb,
+	GFL_SNDVIEWER_CONTROL_NONE,
 };
 
 //------------------------------------------------------------------
@@ -330,7 +333,7 @@ typedef struct {
 	HEAPID				heapID;
 	int					seq;
 
-	GFL_SNDSTATUS*		gflSndStatus;
+	GFL_SNDVIEWER*		gflSndViewer;
 	GFL_SKB*			gflSkb;
 	BOOL				gflSkbSw;
 
@@ -416,21 +419,15 @@ static void	SoundWorkInitialize(SOUNDTEST_WORK* sw)
 	sw->fontHandle = GFL_FONT_Create
 		(ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE ,sw->heapID);
 	sw->printQue = PRINTSYS_QUE_Create(sw->heapID);
-	{
-		GFL_SNDSTATUS_SETUP sndStatusSetup;
 
-		sndStatusSetup = sndStatusData;
-		sndStatusSetup.pBgmHandle = PMSND_GetBGMhandlePointer();
-
-		sw->gflSndStatus = GFL_SNDSTATUS_Create( &sndStatusSetup, sw->heapID );
-	}
+	sw->gflSndViewer = GFL_SNDVIEWER_Create( &sndViewerData, sw->heapID );
 }
 
 static void	SoundWorkFinalize(SOUNDTEST_WORK* sw)
 {
 	int i;
 
-	GFL_SNDSTATUS_Delete( sw->gflSndStatus );
+	GFL_SNDVIEWER_Delete( sw->gflSndViewer );
 
 	PRINTSYS_QUE_Clear(sw->printQue);
 	PRINTSYS_QUE_Delete(sw->printQue);
@@ -578,16 +575,16 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 		break;
 
 	case 1:
-		GFL_SNDSTATUS_ChangeSndHandle(sw->gflSndStatus, PMSND_GetBGMhandlePointer());
+		GFL_SNDVIEWER_ChangeSndHandle(sw->gflSndViewer, PMSND_GetBGMhandlePointer());
 		{
 			//soundStatusコントロール設定
 			u16 flag;
-			if( sw->mode == MODE_SOUND_SELECT ){ flag = GFL_SNDSTATUS_CONTROL_NONE; }
-			else { flag = GFL_SNDSTATUS_CONTROL_ENABLE; }
+			if( sw->mode == MODE_SOUND_SELECT ){ flag = GFL_SNDVIEWER_CONTROL_NONE; }
+			else { flag = GFL_SNDVIEWER_CONTROL_ENABLE; }
 
-			GFL_SNDSTATUS_SetControl( sw->gflSndStatus, flag );
+			GFL_SNDVIEWER_SetControl( sw->gflSndViewer, flag );
 		}
-		GFL_SNDSTATUS_Main(sw->gflSndStatus);
+		GFL_SNDVIEWER_Main(sw->gflSndViewer);
 
 		MainSoundTestSys(sw);
 		checkControlChange(sw);
@@ -836,7 +833,7 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 		case SNDTEST_TPEV_BGM_PLAY:
 			if( sw->bgmPauseSw == FALSE ){
 				PMSND_PlayBGM(sw->setNo[NOIDX_BGMNO]);
-				GFL_SNDSTATUS_InitControl(sw->gflSndStatus);
+				GFL_SNDVIEWER_InitControl(sw->gflSndViewer);
 			} else {
 				PMSND_PauseBGM(FALSE);
 				sw->bgmPauseSw = FALSE;
@@ -860,7 +857,7 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 		case SNDTEST_TPEV_BGM_PLAYFADEIN:
 			PMSND_StopBGM();
 			PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
-			GFL_SNDSTATUS_InitControl(sw->gflSndStatus);
+			GFL_SNDVIEWER_InitControl(sw->gflSndViewer);
 			sw->bgmPauseSw = FALSE;
 			break;
 
@@ -871,7 +868,7 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 
 		case SNDTEST_TPEV_BGM_FADEOUTPLAYFADEIN:
 			PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
-			GFL_SNDSTATUS_InitControl(sw->gflSndStatus);
+			GFL_SNDVIEWER_InitControl(sw->gflSndViewer);
 			sw->bgmPauseSw = FALSE;
 			break;
 
@@ -927,7 +924,7 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 				PMSND_DisableCaptureReverb();
 				sw->reverbFlag = FALSE;
 			}
-			GFL_SNDSTATUS_InitReverbControl( sw->gflSndStatus );
+			GFL_SNDVIEWER_InitReverbControl( sw->gflSndViewer );
 			writeButton(sw, 0x07, 0x15, sw->reverbFlag );
 			break;
 

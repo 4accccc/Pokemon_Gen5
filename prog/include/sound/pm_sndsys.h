@@ -52,12 +52,14 @@ extern void	PMSND_Main( void );
 extern void	PMSND_Exit( void );
 
 //	情報取得
-extern u32	PMSND_GetSndHeapFreeSize( void );
+extern u32				PMSND_GetSndHeapFreeSize( void );
+extern NNSSndHandle*	PMSND_GetBGMhandlePointer( void );
+extern u32				PMSND_GetBGMplayerNoIdx( void );
+extern BOOL				PMSND_CheckOnReverb( void );
 
 //	リバーブ設定
 extern void PMSND_EnableCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
 extern void PMSND_DisableCaptureReverb( void );
-extern BOOL PMSND_CheckEnableCaptureReverb( void );
 extern void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
 
 //============================================================================================
@@ -67,8 +69,6 @@ extern void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, 
  *
  */
 //============================================================================================
-extern NNSSndHandle* PMSND_GetBGMhandlePointer( void );
-
 extern void	PMSND_PlayBGM_EX( u32 soundIdx, u16 trackBit );				//ＢＧＭを再生
 #define PMSND_PlayBGM( soundIdx ) PMSND_PlayBGM_EX( soundIdx, 0xffff )	//上記簡易版
 extern void	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit );			//ＢＧＭ自動フェード再生
