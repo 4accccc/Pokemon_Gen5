@@ -141,3 +141,4 @@
 	ARCID_SELBOX_GRA	"selbox_gra.narc"			#selbox用
 	ARCID_MUSICAL_SCRIPT	"musical_script.narc"		#ミュージカルスクリプト
 	ARCID_OTHERS		"others.narc"
+	ARCID_WAZAEFF_SEQ	"wazaeffect/waza_eff.narc"	#技エフェクトシーケンス
