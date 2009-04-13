@@ -15,7 +15,7 @@
 
 #include "btlv_effect.h"
 
-#include "battgra/battgra_wb.naix"
+#include "battle/battgra_wb.naix"
 
 //============================================================================================
 /**

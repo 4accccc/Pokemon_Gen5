@@ -13,7 +13,7 @@
 #include "btlv_effect.h"
 
 #include "arc_def.h"
-#include "battgra/battgra_wb.naix"
+#include "battle/battgra_wb.naix"
 
 //============================================================================================
 /**
