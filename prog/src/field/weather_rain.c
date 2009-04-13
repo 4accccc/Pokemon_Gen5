@@ -135,7 +135,7 @@ enum{
 #define WEATHER_SPARK_TBL_MAX	( 4 )	// 4回まで繰り返すことが出来る
 
 // 初期化ウエイト
-#define WEATHER_SPARK_INIT_RAND	(100)
+#define WEATHER_SPARK_INIT_RAND	(3)
 
 // 雷の色構成青
 #define WEATHER_SPARK_COLOR_BLUE	( 8 )	//  これをコメントアウトすると青みを調整できるように
@@ -165,16 +165,16 @@ static const u8 sc_WEATHER_SPARK_TYPE_RAND[WEATHER_SPARK_TYPE_MAX] = {
 
 // 雷がおちた後のウエイト最小
 static const u16 sc_WEATHER_SPARK_TYPE_RAND_WAIT_MIN[WEATHER_SPARK_TYPE_MAX] = {
-	200,
-	300,
-	300,
+	120,
+	240,
+	240,
 };
 
 // 雷がおちた後のウエイト乱数で変動する値
 static const u16 sc_WEATHER_SPARK_TYPE_RAND_WAIT_MAX[WEATHER_SPARK_TYPE_MAX] = {
+	240,
 	300,
-	400,
-	400,
+	300,
 };
 
 // 雷の強さ	最小

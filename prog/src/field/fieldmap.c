@@ -324,7 +324,12 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
 
 		// ライトシステム生成
-		fieldWork->light = FIELD_LIGHT_Create( 0, 0, 0, fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
+		{
+			GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+			fieldWork->light = FIELD_LIGHT_Create( 0, 
+					GAMEDATA_GetSeasonID(gamedata), 0, 
+					fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
+		}
 
 		// 天気システム生成
 		fieldWork->weather_sys = FIELD_WEATHER_Init( fieldWork->camera_control, fieldWork->light, fieldWork->fog, fieldWork->heapID );
@@ -789,16 +794,6 @@ static void		MainGameSystem( FIELD_MAIN_WORK * fieldWork )
 {
 	g3d_control( fieldWork );
 
-	FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
-	FIELD_FOG_Main( fieldWork->fog );
-	{
-		static int time;
-		time += 30;
-		time %= 24*3600;
-		FIELD_LIGHT_Main( fieldWork->light, time );
-	}
-	FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
-	
 	g3d_draw( fieldWork );
 
 	// CLSYSメイン
@@ -926,6 +921,16 @@ static void g3d_control( FIELD_MAIN_WORK * fieldWork )
 {
 	FLDMAPPER_Main( fieldWork->g3Dmapper );
 	GFL_BBDACT_Main( fieldWork->bbdActSys );
+
+	FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
+	FIELD_FOG_Main( fieldWork->fog );
+	{
+		static int time;
+		time += 30;
+		time %= 24*3600;
+		FIELD_LIGHT_Main( fieldWork->light, time );
+	}
+	FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 }
 
 //描画

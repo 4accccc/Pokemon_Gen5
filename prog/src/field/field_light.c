@@ -15,6 +15,8 @@
 #include "arc_def.h"
 #include "message.naix"
 
+#include "gamesystem/pm_season.h"
+
 #include "print/wordset.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
@@ -77,7 +79,7 @@ enum {
 ///	アーカイブデータ
 //=====================================
 #define LIGHT_ARC_ID			( ARCID_FIELD_LIGHT )
-#define LIGHT_ARC_SEASON_NUM	( 4 )
+#define LIGHT_ARC_SEASON_NUM	( PMSEASON_TOTAL )
 
 
 
