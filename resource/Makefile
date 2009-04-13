@@ -57,7 +57,8 @@ SUBDIRS	=	wmi \
 			record \
 			selbox \
 			particle/wazaeffect \
-			others
+			others \
+			wazaeffect
 
 
 include $(RESOURCE_MACRO)
