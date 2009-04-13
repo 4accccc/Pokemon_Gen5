@@ -12,7 +12,7 @@
 #include <tcbl.h>
 
 #include "arc_def.h"
-#include "battgra/battgra_wb.naix"
+#include "battle/battgra_wb.naix"
 
 //#define	USE_RENDER		//有効にすることでNNSのレンダラを使用して描画する
 #include "system/mcss.h"	//内部でUSE_RENDERを参照しているのでここより上に移動は不可
