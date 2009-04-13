@@ -17,6 +17,7 @@
 
 #include "infowin/infowin.h"
 #include "test/ariizumi/ari_debug.h"
+#include "savedata/musical_save.h"
 #include "musical/musical_local.h"
 #include "musical/mus_poke_draw.h"
 #include "musical/mus_item_draw.h"
@@ -260,6 +261,7 @@ static FITTING_RETURN DUP_CHECK_CheckMain( FITTING_WORK *work );
 static void DUP_CHECK_UpdateTpMain( FITTING_WORK *work );
 static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work );
 static void DUP_CHECK_ResetItemAngle( FITTING_WORK *work );
+static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
 	GX_VRAM_BG_128_D,				// メイン2DエンジンのBG
@@ -302,6 +304,7 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 	work->befAngleEnable = FALSE;
 	work->holdItem = NULL;
 	work->holdItemType = IG_NONE;
+	work->listSpeed = 0;
 	work->listTotalMove = LIST_FULL_ANGLE-0x8000;	//半回転の位置からスタート
 	work->snapPos = MUS_POKE_EQU_INVALID;
 	DUP_FIT_SetupGraphic( work );
@@ -1579,6 +1582,7 @@ static FITTING_RETURN DUP_CHECK_CheckMain(  FITTING_WORK *work )
 	switch( hitRet )
 	{
 	case 0:	//決定ボタン
+		DUP_CHECK_SaveNowEquip( work );
 		return FIT_RET_GO_END;
 		break;
 	case 1:	//戻るボタン
@@ -1687,5 +1691,34 @@ static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work )
 	}
 	work->befAngle = angle;
 	work->befAngleEnable = TRUE;
+	
+}
+
+static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work )
+{
+	
+	MUSICAL_SAVE *mus_save = MUSICAL_SAVE_GetMusicalSave(SaveControl_GetPointer());
+	MUSICAL_EQUIP_SAVE *mus_bef_save = MUSICAL_SAVE_GetBefEquipData( mus_save );
+	FIT_ITEM_WORK *item;
+	u8 i;
+	u8 save_pos = 0;
+	
+	MUSICAL_SAVE_ResetBefEquip(mus_save);
+	
+	item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
+	while( item != NULL && save_pos < MUSICAL_ITEM_EQUIP_MAX )
+	{
+		u16 equip_pos = DUP_FIT_ITEM_GetCount( item );
+		MUS_POKE_EQUIP_DATA *equip_data = MUS_POKE_DRAW_GetEquipData( work->drawWork , equip_pos );
+		
+		mus_bef_save->equipData[save_pos].pos = equip_pos;
+		mus_bef_save->equipData[save_pos].data.itemNo = DUP_FIT_ITEM_GetItemIdx( item );
+		mus_bef_save->equipData[save_pos].data.angle = work->initWork->musPoke->equip[equip_pos].angle;
+		
+		item = DUP_FIT_ITEM_GetNextItem(item);
+
+		save_pos++;
+		GF_ASSERT_MSG( save_pos < MUSICAL_ITEM_EQUIP_MAX , "装備品が多すぎ！\n" );
+	}
 	
 }

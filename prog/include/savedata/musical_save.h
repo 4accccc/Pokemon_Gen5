@@ -40,11 +40,14 @@ typedef struct _MUSICAL_SAVE MUSICAL_SAVE;
 //	セーブデータシステムが依存する関数
 //----------------------------------------------------------
 extern int MUSICAL_SAVE_GetWorkSize(void);
-extern void MUSICAL_SAVE_InitWork(MUSICAL_SAVE * my);
+extern void MUSICAL_SAVE_InitWork(MUSICAL_SAVE * musSave);
 
 //----------------------------------------------------------
 //	データ操作のための関数
 //----------------------------------------------------------
+extern MUSICAL_SAVE* MUSICAL_SAVE_GetMusicalSave( SAVE_CONTROL_WORK *sv );
 
+extern void MUSICAL_SAVE_ResetBefEquip( MUSICAL_SAVE *musSave );
+extern MUSICAL_EQUIP_SAVE* MUSICAL_SAVE_GetBefEquipData( MUSICAL_SAVE *musSave );
 
 #endif //MUSICAL_SAVE_H__

@@ -23,6 +23,9 @@
 //	define
 //======================================================================
 #pragma mark [> define
+#define SCRIPT_TPrintf	ARI_TPrintf
+#define SCRIPT_Printf	ARI_Printf
+
 #define SCRIPT_PRINT_LABEL(str) ARI_TPrintf("SCRIPT Frame[%4d] No[%d]%s\n",scriptWork->frame, SCRIPT_ENUM_ ## str ,#str);
 
 #define ScriptFunc_GetValueS32() (VMGetU32(scriptWork->vmHandle))
@@ -212,9 +215,9 @@ SCRIPT_FUNC_DEF( FrameWait )
 {
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	const s32 count = ScriptFunc_GetValueS32();
+	SCRIPT_PRINT_LABEL(FrameWait);
 	scriptWork->waitCnt = count;
 
-	SCRIPT_PRINT_LABEL(FrameWait);
 	return SFT_SUSPEND;
 }
 
@@ -291,6 +294,7 @@ SCRIPT_FUNC_DEF( CurtainMove )
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
 	const s32 frame = ScriptFunc_GetValueS32();
 	const s32 pos = ScriptFunc_GetValuefx32();
+	SCRIPT_PRINT_LABEL(CurtainMove);
 	
 	if( frame == 0 )
 	{
@@ -310,7 +314,6 @@ SCRIPT_FUNC_DEF( CurtainMove )
 		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , 10 );
 	}
 	
-	SCRIPT_PRINT_LABEL(CurtainMove);
 	return SFT_CONTINUE;
 }
 //カーテン制御TCB
@@ -342,6 +345,7 @@ SCRIPT_FUNC_DEF( StageMove )
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
 	const s32 frame = ScriptFunc_GetValueS32();
 	const s32 pos = ScriptFunc_GetValuefx32();
+	SCRIPT_PRINT_LABEL(StageMove);
 	
 	if( frame == 0 )
 	{
@@ -361,7 +365,6 @@ SCRIPT_FUNC_DEF( StageMove )
 		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveStageTCB , (void*)moveWork , 10 );
 	}
 
-	SCRIPT_PRINT_LABEL(StageMove);
 	return SFT_CONTINUE;
 }
 
@@ -388,10 +391,11 @@ SCRIPT_FUNC_DEF( StageChangeBg )
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
 	const s32 bgNo = ScriptFunc_GetValueS32();
+	SCRIPT_PRINT_LABEL(StageChangeBg);
+	SCRIPT_TPrintf( "  bgNo[%d]\n",bgNo);
 	
 	STA_ACT_LoadBg( work->actWork , bgNo );
 
-	SCRIPT_PRINT_LABEL(StageChangeBg);
 	return SFT_CONTINUE;
 }
 
@@ -410,10 +414,11 @@ SCRIPT_FUNC_DEF( PokeShow )
 
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+	SCRIPT_PRINT_LABEL(PokeShow);
+	SCRIPT_TPrintf( "  pokeNo[%d][%s]\n",pokeNo,(flg==0?"OFF":"ON"));
 
 	STA_POKE_SetShowFlg( pokeSys , pokeWork , flg );
 
-	SCRIPT_PRINT_LABEL(PokeShow);
 	return SFT_CONTINUE;
 }
 
@@ -427,10 +432,10 @@ SCRIPT_FUNC_DEF( PokeDir )
 
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+	SCRIPT_PRINT_LABEL(PokeDir);
 
 	STA_POKE_SetPokeDir( pokeSys , pokeWork , (dir==0 ? SPD_LEFT : SPD_RIGHT) );
 
-	SCRIPT_PRINT_LABEL(PokeDir);
 	return SFT_CONTINUE;
 }
 
@@ -447,6 +452,7 @@ SCRIPT_FUNC_DEF( PokeMove )
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+	SCRIPT_PRINT_LABEL(PokeMove);
 
 	if( frame == 0 )
 	{
@@ -474,7 +480,6 @@ SCRIPT_FUNC_DEF( PokeMove )
 		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MovePokeTCB , (void*)movePoke , 10 );
 	}
 	
-	SCRIPT_PRINT_LABEL(PokeMove);
 	return SFT_CONTINUE;
 }
 //ポケモン移動制御TCB
@@ -503,10 +508,10 @@ SCRIPT_FUNC_DEF( PokeStopAnime )
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+	SCRIPT_PRINT_LABEL(PokeStopAnime);
 	
 	STA_POKE_StopAnime( pokeSys , pokeWork );
 	
-	SCRIPT_PRINT_LABEL(PokeStopAnime);
 	return SFT_CONTINUE;
 }
 
@@ -519,10 +524,10 @@ SCRIPT_FUNC_DEF( PokeStartAnime )
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+	SCRIPT_PRINT_LABEL(PokeStartAnime);
 
 	STA_POKE_StartAnime( pokeSys , pokeWork );
 
-	SCRIPT_PRINT_LABEL(PokeStartAnime);
 	return SFT_CONTINUE;
 }
 
@@ -536,10 +541,10 @@ SCRIPT_FUNC_DEF( PokeChangeAnime )
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+	SCRIPT_PRINT_LABEL(PokeChangeAnime);
 
 	STA_POKE_ChangeAnime( pokeSys , pokeWork , anmIdx );
 
-	SCRIPT_PRINT_LABEL(PokeChangeAnime);
 	return SFT_CONTINUE;
 }
 
@@ -565,6 +570,7 @@ SCRIPT_FUNC_DEF( PokeActionJump )
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
 	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
 	POKE_ACT_JUMP_WORK	*jumpWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(POKE_ACT_JUMP_WORK));
+	SCRIPT_PRINT_LABEL(PokeActionJump);
 	
 	jumpWork->pokeWork = pokeWork;
 	jumpWork->height = height;
@@ -576,7 +582,6 @@ SCRIPT_FUNC_DEF( PokeActionJump )
 	
 	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_PokeAct_Jump , (void*)jumpWork , 10 );
 
-	SCRIPT_PRINT_LABEL(PokeActionJump);
 	return SFT_CONTINUE;
 
 }
@@ -622,12 +627,12 @@ SCRIPT_FUNC_DEF( ObjectCreate )
 	
 	STA_OBJ_SYS  *objSys = STA_ACT_GetObjectSys( work->actWork );
 	STA_OBJ_WORK *objWork;
+	SCRIPT_PRINT_LABEL(ObjectCreate);
 
 	objWork = STA_OBJ_CreateObject( objSys , objType );
 
 	STA_ACT_SetObjectWork( work->actWork , objWork , objNo );
 
-	SCRIPT_PRINT_LABEL(ObjectCreate);
 	return SFT_CONTINUE;
 }
 
@@ -640,10 +645,10 @@ SCRIPT_FUNC_DEF( ObjectDelete )
 	
 	STA_OBJ_SYS  *objSys = STA_ACT_GetObjectSys( work->actWork );
 	STA_OBJ_WORK *objWork = STA_ACT_GetObjectWork( work->actWork , objNo );
+	SCRIPT_PRINT_LABEL(ObjectDelete);
 	
 	STA_OBJ_DeleteObject( objSys , objWork );
 
-	SCRIPT_PRINT_LABEL(ObjectDelete);
 	return SFT_CONTINUE;
 }
 
@@ -656,10 +661,10 @@ SCRIPT_FUNC_DEF( ObjectShow )
 	
 	STA_OBJ_SYS  *objSys = STA_ACT_GetObjectSys( work->actWork );
 	STA_OBJ_WORK *objWork = STA_ACT_GetObjectWork( work->actWork , objNo );
+	SCRIPT_PRINT_LABEL(ObjectShow);
 	
 	STA_OBJ_SetShowFlg( objSys , objWork , TRUE );
 	
-	SCRIPT_PRINT_LABEL(ObjectShow);
 	return SFT_CONTINUE;
 }
 
@@ -672,10 +677,10 @@ SCRIPT_FUNC_DEF( ObjectHide )
 	
 	STA_OBJ_SYS  *objSys = STA_ACT_GetObjectSys( work->actWork );
 	STA_OBJ_WORK *objWork = STA_ACT_GetObjectWork( work->actWork , objNo );
+	SCRIPT_PRINT_LABEL(ObjectHide);
 	
 	STA_OBJ_SetShowFlg( objSys , objWork , FALSE );
 	
-	SCRIPT_PRINT_LABEL(ObjectHide);
 	return SFT_CONTINUE;
 }
 
@@ -692,6 +697,7 @@ SCRIPT_FUNC_DEF( ObjectMove )
 	
 	STA_OBJ_SYS  *objSys = STA_ACT_GetObjectSys( work->actWork );
 	STA_OBJ_WORK *objWork = STA_ACT_GetObjectWork( work->actWork , objNo );
+	SCRIPT_PRINT_LABEL(ObjectMove);
 
 	if( frame == 0 )
 	{
@@ -719,7 +725,6 @@ SCRIPT_FUNC_DEF( ObjectMove )
 		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveObjTCB , (void*)moveObj , 10 );
 	}
 
-	SCRIPT_PRINT_LABEL(ObjectMove);
 	return SFT_CONTINUE;
 }
 
@@ -754,10 +759,10 @@ SCRIPT_FUNC_DEF( EffectCreate )
 	
 	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
 	STA_EFF_WORK *effWork = STA_EFF_CreateEffect( effSys , NARC_stage_gra_mus_eff_00_spa + fileNo );
+	SCRIPT_PRINT_LABEL(EffectCreate);
 
 	STA_ACT_SetEffectWork( work->actWork , effWork , effectNo );
 
-	SCRIPT_PRINT_LABEL(EffectCreate);
 	return SFT_CONTINUE;
 }
 
@@ -770,10 +775,10 @@ SCRIPT_FUNC_DEF( EffectDelete )
 	
 	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
 	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
+	SCRIPT_PRINT_LABEL(EffectDelete);
 	
 	STA_EFF_DeleteEffect( effSys , effWork );
 
-	SCRIPT_PRINT_LABEL(EffectDelete);
 	return SFT_CONTINUE;
 }
 
@@ -791,11 +796,11 @@ SCRIPT_FUNC_DEF( EffectStart )
 
 //	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
 	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
+	SCRIPT_PRINT_LABEL(EffectStart);
 
 	VEC_Set( &pos , ACT_POS_X_FX(posX),ACT_POS_Y_FX(posY),posZ );
 	STA_EFF_CreateEmitter( effWork , emiterNo , &pos );
 
-	SCRIPT_PRINT_LABEL(EffectStart);
 	return SFT_CONTINUE;
 }
 
@@ -809,10 +814,10 @@ SCRIPT_FUNC_DEF( EffectStop )
 
 //	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
 	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
+	SCRIPT_PRINT_LABEL(EffectStop);
 
 	STA_EFF_DeleteEmitter( effWork , emiterNo );
 
-	SCRIPT_PRINT_LABEL(EffectStop);
 	return SFT_CONTINUE;
 }
 
@@ -845,6 +850,7 @@ SCRIPT_FUNC_DEF( EffectRepeatStart )
 	STA_EFF_WORK *effWork = STA_ACT_GetEffectWork( work->actWork , effectNo );
 	
 	EFFECT_REPEAT_WORK *effRepeat = GFL_HEAP_AllocMemory( work->heapId , sizeof(EFFECT_REPEAT_WORK));
+	SCRIPT_PRINT_LABEL(EffectRepeatStart);
 	
 	GF_ASSERT( posXStart <= posXEnd );
 	GF_ASSERT( posYStart <= posYEnd );
@@ -862,7 +868,6 @@ SCRIPT_FUNC_DEF( EffectRepeatStart )
 
 	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_EffectRepeat , (void*)effRepeat , 10 );
 
-	SCRIPT_PRINT_LABEL(EffectRepeatStart);
 	return SFT_CONTINUE;
 }
 //エフェクト連続再生制御
@@ -904,6 +909,7 @@ SCRIPT_FUNC_DEF( LightShowCircle )
 	
 	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
 	STA_LIGHT_WORK *lightWork;
+	SCRIPT_PRINT_LABEL(LightShowCircle);
 	
 	lightWork = STA_LIGHT_CreateObject( lightSys , ALT_CIRCLE );
 	STA_LIGHT_SetColor( lightSys , lightWork , GX_RGB(31,31,0) , 16 );
@@ -911,7 +917,6 @@ SCRIPT_FUNC_DEF( LightShowCircle )
 	
 	STA_ACT_SetLightWork( work->actWork , lightWork , lightNo );
 	
-	SCRIPT_PRINT_LABEL(LightShowCircle);
 	return SFT_CONTINUE;
 }
 
@@ -924,10 +929,10 @@ SCRIPT_FUNC_DEF( LightHide )
 
 	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
 	STA_LIGHT_WORK *lightWork = STA_ACT_GetLightWork( work->actWork , lightNo );
+	SCRIPT_PRINT_LABEL(LightHide);
 	
 	STA_LIGHT_DeleteObject( lightSys , lightWork );
 
-	SCRIPT_PRINT_LABEL(LightHide);
 	return SFT_CONTINUE;
 }
 
@@ -945,6 +950,7 @@ SCRIPT_FUNC_DEF( LightMove )
 	
 	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
 	STA_LIGHT_WORK *lightWork = STA_ACT_GetLightWork( work->actWork , lightNo );
+	SCRIPT_PRINT_LABEL(LightMove);
 
 	if( frame == 0 )
 	{
@@ -972,7 +978,6 @@ SCRIPT_FUNC_DEF( LightMove )
 		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveLightTCB , (void*)moveLight , 10 );
 	}
 	
-	SCRIPT_PRINT_LABEL(LightMove);
 	return SFT_CONTINUE;
 }
 
@@ -1007,10 +1012,10 @@ SCRIPT_FUNC_DEF( LightColor )
 	
 	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
 	STA_LIGHT_WORK *lightWork = STA_ACT_GetLightWork( work->actWork , lightNo );
+	SCRIPT_PRINT_LABEL(LightColor);
 
 	STA_LIGHT_SetColor( lightSys , lightWork , col , alpha );
 	
-	SCRIPT_PRINT_LABEL(LightColor);
 	return SFT_CONTINUE;
 }
 
@@ -1026,9 +1031,9 @@ SCRIPT_FUNC_DEF( MessageShow )
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
 	const s32 msgNo = ScriptFunc_GetValueS32();
 	const s32 dispSpd = ScriptFunc_GetValueS32();
+	SCRIPT_PRINT_LABEL(MessageShow);
 
 	STA_ACT_ShowMessage( work->actWork , msgNo , dispSpd );
-	SCRIPT_PRINT_LABEL(MessageShow);
 	return SFT_CONTINUE;
 }
 
@@ -1037,9 +1042,9 @@ SCRIPT_FUNC_DEF( MessageHide )
 {
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	SCRIPT_PRINT_LABEL(MessageHide);
 	
 	STA_ACT_HideMessage( work->actWork );
-	SCRIPT_PRINT_LABEL(MessageHide);
 	return SFT_CONTINUE;
 }
 
@@ -1051,9 +1056,9 @@ SCRIPT_FUNC_DEF( MessageColor )
 	const s32 msgCol = ScriptFunc_GetValueS32();
 	const s32 shadowCol = ScriptFunc_GetValueS32();
 	const s32 backNo = ScriptFunc_GetValueS32();
+	SCRIPT_PRINT_LABEL(MessageColor);
 	GFL_FONTSYS_SetColor( msgCol,shadowCol,backNo );
 
-	SCRIPT_PRINT_LABEL(MessageColor);
 	return SFT_CONTINUE;
 }
 

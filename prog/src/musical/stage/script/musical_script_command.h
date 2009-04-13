@@ -10,75 +10,49 @@
 #ifndef MUSICAL_SCRIPT_COMMAND_H__
 #define MUSICAL_SCRIPT_COMMAND_H__
 
-#define SCRIPT_FUNC_DEF(str) STA_SCRIPT_##str##_Func
 
 #endif MUSICAL_SCRIPT_COMMAND_H__
+
+//命令シンボル宣言
+//COMMAND_START
+#define SCRIPT_ENUM_ScriptFinish 	 (0)
+#define SCRIPT_ENUM_FrameWait 	 (1)
+#define SCRIPT_ENUM_FrameWaitTime 	 (2)
+#define SCRIPT_ENUM_CurtainUp 	 (3)
+#define SCRIPT_ENUM_CurtainDown 	 (4)
+#define SCRIPT_ENUM_CurtainMove 	 (5)
+#define SCRIPT_ENUM_StageMove 	 (6)
+#define SCRIPT_ENUM_StageChangeBg 	 (7)
+#define SCRIPT_ENUM_PokeShow 	 (8)
+#define SCRIPT_ENUM_PokeDir 	 (9)
+#define SCRIPT_ENUM_PokeMove 	 (10)
+#define SCRIPT_ENUM_PokeStopAnime 	 (11)
+#define SCRIPT_ENUM_PokeStartAnime 	 (12)
+#define SCRIPT_ENUM_PokeChangeAnime 	 (13)
+#define SCRIPT_ENUM_PokeActionJump 	 (14)
+#define SCRIPT_ENUM_ObjectCreate 	 (15)
+#define SCRIPT_ENUM_ObjectDelete 	 (16)
+#define SCRIPT_ENUM_ObjectShow 	 (17)
+#define SCRIPT_ENUM_ObjectHide 	 (18)
+#define SCRIPT_ENUM_ObjectMove 	 (19)
+#define SCRIPT_ENUM_EffectCreate 	 (20)
+#define SCRIPT_ENUM_EffectDelete 	 (21)
+#define SCRIPT_ENUM_EffectStart 	 (22)
+#define SCRIPT_ENUM_EffectStop 	 (23)
+#define SCRIPT_ENUM_EffectRepeatStart 	 (24)
+#define SCRIPT_ENUM_LightShowCircle 	 (25)
+#define SCRIPT_ENUM_LightHide 	 (26)
+#define SCRIPT_ENUM_LightMove 	 (27)
+#define SCRIPT_ENUM_LightColor 	 (28)
+#define SCRIPT_ENUM_MessageShow 	 (29)
+#define SCRIPT_ENUM_MessageHide 	 (30)
+#define SCRIPT_ENUM_MessageColor 	 (31)
+#define SEQ_END 	 (32)
 
 #ifndef __C_NO_DEF_
 
 //勝手にパディングを入れられないようにする
 	.option	alignment off
-
-	.macro	INIT_CMD
-def_cmd_count = 0
-	.endm
-
-	.macro	DEF_CMD	symname
-\symname = def_cmd_count
-def_cmd_count = ( def_cmd_count + 1 )
-	.endm
-
-#pragma mark [>Symbol
-//命令シンボル宣言
-	INIT_CMD
-	DEF_CMD SCRIPT_FUNC_DEF(ScriptFinish)
-	DEF_CMD SCRIPT_FUNC_DEF(FrameWait)
-	DEF_CMD SCRIPT_FUNC_DEF(FrameWaitTime)
-
-	//カーテン系
-	DEF_CMD SCRIPT_FUNC_DEF(CurtainUp)		//カーテンを上げる
-	DEF_CMD SCRIPT_FUNC_DEF(CurtainDown)		//カーテンを下げる
-	DEF_CMD SCRIPT_FUNC_DEF(CurtainMove)		//2	//カーテンを移動させる
-
-	//舞台系
-	DEF_CMD SCRIPT_FUNC_DEF(StageMove)		//2	//ステージを移動させる
-	DEF_CMD SCRIPT_FUNC_DEF(StageChangeBg)	//1	//BG読み替え
-
-	//ポケモン系
-	DEF_CMD SCRIPT_FUNC_DEF(PokeShow)			//2	//ポケモンの表示・非表示制御
-	DEF_CMD SCRIPT_FUNC_DEF(PokeDir)			//2	//ポケモンの向き(右か左)
-	DEF_CMD SCRIPT_FUNC_DEF(PokeMove)			//5	//ポケモン移動
-	DEF_CMD SCRIPT_FUNC_DEF(PokeStopAnime)	//1	//ポケモンアニメ停止
-	DEF_CMD SCRIPT_FUNC_DEF(PokeStartAnime)	//1	//ポケモンアニメ開始
-	DEF_CMD SCRIPT_FUNC_DEF(PokeChangeAnime)	//2	//ポケモンアニメ変更
-	DEF_CMD SCRIPT_FUNC_DEF(PokeActionJump)	//4	//ポケモンアクション・跳ねる
-
-	//オブジェクト系
-	DEF_CMD SCRIPT_FUNC_DEF(ObjectCreate)		//2	//オブジェクト作成
-	DEF_CMD SCRIPT_FUNC_DEF(ObjectDelete)		//1	//オブジェクト破棄
-	DEF_CMD SCRIPT_FUNC_DEF(ObjectShow)		//1	//オブジェクト表示
-	DEF_CMD SCRIPT_FUNC_DEF(ObjectHide)		//1	//オブジェクト非表示
-	DEF_CMD SCRIPT_FUNC_DEF(ObjectMove)		//5	//ポケモン移動
-
-	//エフェクト系
-	DEF_CMD SCRIPT_FUNC_DEF(EffectCreate)		//2	//エフェクト作成
-	DEF_CMD SCRIPT_FUNC_DEF(EffectDelete)		//1	//エフェクト破棄
-	DEF_CMD SCRIPT_FUNC_DEF(EffectStart)		//5	//エフェクト再生
-	DEF_CMD SCRIPT_FUNC_DEF(EffectStop)		//2	//エフェクト停止
-	DEF_CMD SCRIPT_FUNC_DEF(EffectRepeatStart)//10//エフェクト連続再生
-
-	//ライト系
-	DEF_CMD SCRIPT_FUNC_DEF(LightShowCircle)	//2	//ライトON(円形
-	DEF_CMD SCRIPT_FUNC_DEF(LightHide)		//1	//ライトOFF
-	DEF_CMD SCRIPT_FUNC_DEF(LightMove)		//5	//ライト移動
-	DEF_CMD SCRIPT_FUNC_DEF(LightColor)		//3	//ライト色設定
-
-	//メッセージ系
-	DEF_CMD SCRIPT_FUNC_DEF(MessageShow)		//2	//メッセージ表示
-	DEF_CMD SCRIPT_FUNC_DEF(MessageHide)			//メッセージ消去
-	DEF_CMD SCRIPT_FUNC_DEF(MessageColor)		//1	//メッセージ色変え
-
-	DEF_CMD	EC_SEQ_END
 	
 #pragma mark [>System Command
 //命令マクロ定義
@@ -90,7 +64,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComScriptFinish
-	.short	SCRIPT_FUNC_DEF(ScriptFinish)
+	.short	SCRIPT_ENUM_ScriptFinish)
 	.endm
 
 //======================================================================
@@ -104,7 +78,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComFrameWait	frame
-	.short	SCRIPT_FUNC_DEF(FrameWait)
+	.short	SCRIPT_ENUM_FrameWait
 	.long	\frame
 	.endm
 
@@ -119,7 +93,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComFrameWaitTime	frame
-	.short	SCRIPT_FUNC_DEF(FrameWaitTime)
+	.short	SCRIPT_ENUM_FrameWaitTime
 	.long	\frame
 	.endm
 
@@ -132,7 +106,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComCurtainUp
-	.short	SCRIPT_FUNC_DEF(CurtainUp)
+	.short	SCRIPT_ENUM_CurtainUp
 	.endm
 
 //======================================================================
@@ -143,7 +117,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComCurtainDown
-	.short	SCRIPT_FUNC_DEF(CurtainDown)
+	.short	SCRIPT_ENUM_CurtainDown
 	.endm
 
 //======================================================================
@@ -159,7 +133,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComCurtainMove	frame	height
-	.short	SCRIPT_FUNC_DEF(CurtainMove)
+	.short	SCRIPT_ENUM_CurtainMove
 	.long	\frame
 	.long	\height
 	.endm
@@ -178,7 +152,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComStageMove	frame	pos
-	.short	SCRIPT_FUNC_DEF(StageMove)
+	.short	SCRIPT_ENUM_StageMove
 	.long	\frame
 	.long	\pos
 	.endm
@@ -194,7 +168,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComStageChangeBg	bgNo
-	.short	SCRIPT_FUNC_DEF(StageChangeBg)
+	.short	SCRIPT_ENUM_StageChangeBg
 	.long	\bgNo
 	.endm
 
@@ -209,11 +183,11 @@ def_cmd_count = ( def_cmd_count + 1 )
  *
  * #param	VALUE_INT
  * #param	COMBOBOX_TEXT	ON	OFF
- * #param	COMBOBOX_VALUE	0	1
+ * #param	COMBOBOX_VALUE	1	0
  */
 //======================================================================
 	.macro	ComPokeShow	pokeNo	flg
-	.short	SCRIPT_FUNC_DEF(PokeShow)
+	.short	SCRIPT_ENUM_PokeShow
 	.long	\pokeNo
 	.long	\flg
 	.endm
@@ -232,7 +206,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComPokeDir	pokeNo	dir
-	.short	SCRIPT_FUNC_DEF(PokeDir)
+	.short	SCRIPT_ENUM_PokeDir
 	.long	\pokeNo
 	.long	\dir
 	.endm
@@ -256,7 +230,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComPokeMove	pokeNo	frame	posX	posY	posZ
-	.short	SCRIPT_FUNC_DEF(PokeMove)
+	.short	SCRIPT_ENUM_PokeMove
 	.long	\pokeNo
 	.long	\frame
 	.long	\posX
@@ -275,7 +249,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComPokeStopAnime	pokeNo
-	.short	SCRIPT_FUNC_DEF(PokeStopAnime)
+	.short	SCRIPT_ENUM_PokeStopAnime
 	.long	\pokeNo
 	.endm
 
@@ -290,7 +264,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComPokeStartAnime	pokeNo
-	.short	SCRIPT_FUNC_DEF(PokeStartAnime)
+	.short	SCRIPT_ENUM_PokeStartAnime
 	.long	\pokeNo
 	.endm
 
@@ -307,7 +281,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComPokeChangeAnime	pokeNo	animeNo
-	.short	SCRIPT_FUNC_DEF(PokeChangeAnime)
+	.short	SCRIPT_ENUM_PokeChangeAnime
 	.long	\pokeNo
 	.long	\animeNo
 	.endm
@@ -330,7 +304,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComPokeActionJump	pokeNo	interval	repeat	height
-	.short	SCRIPT_FUNC_DEF(PokeActionJump)
+	.short	SCRIPT_ENUM_PokeActionJump
 	.long	\pokeNo
 	.long	\interval
 	.long	\repeat
@@ -351,7 +325,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComObjectCreate	objNo	type
-	.short	SCRIPT_FUNC_DEF(ObjectCreate)
+	.short	SCRIPT_ENUM_ObjectCreate
 	.long	\objNo
 	.long	\type
 	.endm
@@ -367,7 +341,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComObjectDelete	objNo
-	.short	SCRIPT_FUNC_DEF(ObjectDelete)
+	.short	SCRIPT_ENUM_ObjectDelete
 	.long	\objNo
 	.endm
 
@@ -382,7 +356,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComObjectShow	objNo
-	.short	SCRIPT_FUNC_DEF(ObjectShow)
+	.short	SCRIPT_ENUM_ObjectShow
 	.long	\objNo
 	.endm
 
@@ -397,7 +371,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComObjectHide	objNo
-	.short	SCRIPT_FUNC_DEF(ObjectHide)
+	.short	SCRIPT_ENUM_ObjectHide
 	.long	\objNo
 	.endm
 
@@ -420,7 +394,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComObjectMove	objNo	frame	posX	posY	posZ
-	.short	SCRIPT_FUNC_DEF(ObjectMove)
+	.short	SCRIPT_ENUM_ObjectMove
 	.long	\objNo
 	.long	\frame
 	.long	\posX
@@ -443,7 +417,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComEffectCreate	effNo	type
-	.short	SCRIPT_FUNC_DEF(EffectCreate)
+	.short	SCRIPT_ENUM_EffectCreate
 	.long	\effNo
 	.long	\type
 	.endm
@@ -459,7 +433,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComEffectDelete	effNo
-	.short	SCRIPT_FUNC_DEF(EffectDelete)
+	.short	SCRIPT_ENUM_EffectDelete
 	.long	\effNo
 	.endm
 
@@ -482,7 +456,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComEffectStart	effNo	emitNo	posX	posY	posZ
-	.short	SCRIPT_FUNC_DEF(EffectStart)
+	.short	SCRIPT_ENUM_EffectStart
 	.long	\effNo
 	.long	\emitNo
 	.long	\posX
@@ -503,7 +477,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComEffectStop	effNo	emitNo
-	.short	SCRIPT_FUNC_DEF(EffectStop)
+	.short	SCRIPT_ENUM_EffectStop
 	.long	\effNo
 	.long	\emitNo
 	.endm
@@ -531,7 +505,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComEffectRepeatStart	effNo	emitNo	interval	repeat	posX1	posY1	posZ1
-	.short	SCRIPT_FUNC_DEF(EffectRepeatStart)
+	.short	SCRIPT_ENUM_EffectRepeatStart
 	.long	\effNo
 	.long	\emitNo
 	.long	\interval
@@ -558,7 +532,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComLightShowCircle	lightNo	radian
-	.short	SCRIPT_FUNC_DEF(LightShowCircle)
+	.short	SCRIPT_ENUM_LightShowCircle
 	.long	\lightNo
 	.long	\radian
 	.endm
@@ -574,7 +548,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComLightHide	lightNo
-	.short	SCRIPT_FUNC_DEF(LightHide)
+	.short	SCRIPT_ENUM_LightHide
 	.long	\lightNo
 	.endm
 
@@ -597,7 +571,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComLightMove	lightNo	frame	posX	posY	posZ
-	.short	SCRIPT_FUNC_DEF(LightMove)
+	.short	SCRIPT_ENUM_LightMove
 	.long	\lightNo
 	.long	\frame
 	.long	\posX
@@ -624,7 +598,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComLightColor	lightNo	colR	colG	colB	alpha
-	.short	SCRIPT_FUNC_DEF(LightColor)
+	.short	SCRIPT_ENUM_LightColor
 	.long	\lightNo
 	.long	\colR
 	.long	\colG
@@ -646,7 +620,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComMessageShow	msgNo	speed
-	.short	SCRIPT_FUNC_DEF(MessageShow)
+	.short	SCRIPT_ENUM_MessageShow
 	.long	\msgNo
 	.long	\speed
 	.endm
@@ -660,7 +634,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComMessageHide	
-	.short	SCRIPT_FUNC_DEF(MessageHide)
+	.short	SCRIPT_ENUM_MessageHide
 	.endm
 
 //======================================================================
@@ -678,7 +652,7 @@ def_cmd_count = ( def_cmd_count + 1 )
  */
 //======================================================================
 	.macro	ComMessageColor	colLetter	colShadow	colBack
-	.short	SCRIPT_FUNC_DEF(MessageColor)
+	.short	SCRIPT_ENUM_MessageColor
 	.long	\colLetter
 	.long	\colShadow
 	.long	\colBack
@@ -692,10 +666,9 @@ def_cmd_count = ( def_cmd_count + 1 )
  * #param_num	0
  */
 //======================================================================
-	.macro	SEQ_END
-	.short	SCRIPT_FUNC_DEF(ScriptFinish)
+	.macro	ComSEQ_END
+	.short	SCRIPT_ENUM_ScriptFinish
 	.endm
 
 #endif //__C_NO_DEF_
 
-#undef SCRIPT_FUNC_DEF

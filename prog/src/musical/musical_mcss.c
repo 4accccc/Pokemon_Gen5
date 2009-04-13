@@ -11,8 +11,8 @@
 #include <tcbl.h>
 
 #include "arc_def.h"
-#include "battgra/battgra_wb.naix"
 
+#define		USE_SHADOW (0)
 //#define	USE_RENDER		//有効にすることでNNSのレンダラを使用して描画する
 #include "musical_mcss.h"	//内部でUSE_RENDERを参照しているのでここより上に移動は不可
 #include "musical_mcss_def.h"
@@ -118,7 +118,9 @@ static	void	MUS_MCSS_InitRenderer( MUS_MCSS_SYS_WORK *mcss_sys );
 static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w );
 
 //影実験
+#if USE_SHADOW
 NNSG2dImagePaletteProxy		mus_shadow_palette;
+#endif //USE_SHADOW
 
 //--------------------------------------------------------------------------
 /**
@@ -147,6 +149,7 @@ MUS_MCSS_SYS_WORK*	MUS_MCSS_Init( int max, HEAPID heapID )
 	mcss_sys->texAdrs = MUS_MCSS_TEX_ADRS;
 	mcss_sys->palAdrs = MUS_MCSS_PAL_ADRS;
 
+#if USE_SHADOW
 	//影リソースロード
 	NNS_G2dInitImagePaletteProxy( &mus_shadow_palette );
 
@@ -161,6 +164,7 @@ MUS_MCSS_SYS_WORK*	MUS_MCSS_Init( int max, HEAPID heapID )
 
 		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
 	}
+#endif //USE_SHADOW
 	
 	return mcss_sys;
 }
@@ -689,7 +693,8 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 	G3_MtxMode( GX_MTXMODE_PROJECTION );
 	G3_RestoreMtx( 0 );
 	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
-/*
+
+#if USE_SHADOW
 	G3_RestoreMtx( MUS_MCSS_SHADOW_MTX );
 
 	G3_TexPlttBase(mus_shadow_palette.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
@@ -722,7 +727,7 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 	G3_TexCoord( tex_s,				tex_t + scale_y );
 	G3_Vtx( 0, -MUS_MCSS_DEFAULT_LINE, 0 );
 	G3_End();
-*/
+#endif //USE_SHADOW
 
 	if( mcss_ortho_mode == 0 ){
 		*pos_z_default -= MUS_MCSS_DEFAULT_Z;
