@@ -74,3 +74,5 @@ enum {
 };
 #include "../area_data/area_id.h"
 #include "..\..\sound\wb_sound_data.sadl"
+#include "../map_matrix/map_matrix.naix"
+

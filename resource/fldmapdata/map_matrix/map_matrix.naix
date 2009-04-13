@@ -17,7 +17,19 @@ enum {
 	NARC_map_matrix_wbautumn_mat_bin = 3,
 	NARC_map_matrix_wbwinter_mat_bin = 4,
 	NARC_map_matrix_testpc_mat_bin = 5,
-	NARC_map_matrix_testroom_mat_bin = 6
+	NARC_map_matrix_testroom_mat_bin = 6,
+	NARC_map_matrix_c03_a_mat_bin = 7,
+	NARC_map_matrix_c03_b_mat_bin = 8,
+	NARC_map_matrix_c03_c_mat_bin = 9,
+	NARC_map_matrix_c03_d_mat_bin = 10,
+	NARC_map_matrix_c03_e_mat_bin = 11,
+	NARC_map_matrix_c03_f_mat_bin = 12,
+	NARC_map_matrix_c03_g_mat_bin = 13,
+	NARC_map_matrix_c03_h_mat_bin = 14,
+	NARC_map_matrix_c03_i_mat_bin = 15,
+	NARC_map_matrix_c03_j_mat_bin = 16,
+	NARC_map_matrix_c03_k_mat_bin = 17,
+	NARC_map_matrix_c03_l_mat_bin = 18
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

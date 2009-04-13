@@ -402,7 +402,7 @@ def mtxline_convert(
 	wfile = File.open( str_wfile, "wb" )
 	
 	if( wfile == nil )
-		printf( "mapmatcv ERROR バイナリファイル作成失敗\n" )
+		printf( "mapmatcv ERROR バイナリファイル%s作成失敗\n", str_wfile )
 		exit 1
 	end
 	
@@ -442,7 +442,7 @@ def mtxline_convert(
 				idx = table_posdata_get( landfile, x, y )
 				
 				if( idx == RET_ERROR )
-					printf( "map_matconv ERROR 地形テーブル異常\n" )
+					printf( "map_matconv ERROR 地形テーブル異常 #{landfile.path},#{x},#{y}\n" )
 					exit 1
 				end
 			end

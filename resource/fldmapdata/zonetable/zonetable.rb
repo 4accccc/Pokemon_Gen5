@@ -236,7 +236,11 @@ class ZoneDataFile < OutputFile
 		end
 		movemodel = column[@cl.cMOVEMODEL]
 		matrixArc = "MATRIX_ARC_#{column[@cl.cMATRIXARC]}".upcase
-		matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
+		if matrixArc == "MATRIX_ARC_NGMATRIX" then
+			matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
+		else
+			matrixId = "NARC_map_matrix_#{column[@cl.cMATRIXID].downcase}_mat_bin"
+		end
 
 		event_id = column[@cl.cEVENT] == "›" ? "NARC_zone_event_zone_#{id.downcase}_total_bin" : "event_dummy"
 		script = column[@cl.cSCRIPT] == "›" ? "NARC_scr_seq_#{id.downcase}_bin" : "scr_dummy"
