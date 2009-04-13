@@ -503,8 +503,8 @@ static	BOOL control(DEBUG_WATANABE_WORK* dw)
 		if( tblPos != GFL_UI_TP_HIT_NONE ){
 			dw->selectItem = tblPos;
 			dw->wait = 0;
-			return TRUE;
 		}
+		return TRUE;
 	}
 	if( dw->wait < 16 ){
 		//選択後ウェイト処理
