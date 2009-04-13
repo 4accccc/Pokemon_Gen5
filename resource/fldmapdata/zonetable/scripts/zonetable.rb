@@ -239,7 +239,8 @@ class ZoneDataFile < OutputFile
 		if matrixArc == "MATRIX_ARC_NGMATRIX" then
 			matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
 		else
-			matrixId = "NARC_map_matrix_#{column[@cl.cMATRIXID].downcase}_mat_bin"
+			matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
+			#matrixId = "NARC_map_matrix_#{column[@cl.cMATRIXID].downcase}_mat_bin"
 		end
 
 		event_id = column[@cl.cEVENT] == "○" ? "NARC_zone_event_zone_#{id.downcase}_total_bin" : "event_dummy"
@@ -491,9 +492,9 @@ def convert
 	files = [
 		#カラム内容指定ID定義、ファイル名、上書き前に確認するかどうか
 		ZoneIDFile.new(cl, "zone_id.h", true),
-		ZoneDataFile.new(cl, "zonetable.c", false),
+		ZoneDataFile.new(cl, "tmp/zonetable.c", false),
 	#	ZoneNameFile.new(cl, "mapname.dat", false),
-		ZoneNameBinaryFile.new(cl, "zonename.bin", false),
+		ZoneNameBinaryFile.new(cl, "tmp/zonename.bin", false),
 	#	ZoneEventFile.new(cl, "eventlist.txt", false),
 	#	ZoneEventArcFile.new(cl, "eventarc.txt", false),
 	#	ZoneEventDoorHeader.new(cl, "doorevent.h", true),

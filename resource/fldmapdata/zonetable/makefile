@@ -41,10 +41,13 @@ XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
 ELF2BIN		= $(PROJECT_ROOT)/tools/celf2bin.exe
 
-CONVERTER	= ruby zonetable.rb
+CONVERTER	= ruby scripts/zonetable.rb
 
+HEADERDIR	= header
+WORKDIR		= tmp
 DATAFILE	= zonetable.xls
-CONVSRCS	= zonetable.c
+DATATABTXT	= $(WORKDIR)/$(DATAFILE:.xls=.txt)
+CONVSRCS	= $(WORKDIR)/zonetable.c
 DEPFILES	= ../area_data/area_id.h
 
 #コンバート結果のテキストファイル一覧（比較対象となるもの）
@@ -63,7 +66,7 @@ RESULTS		= $(NARCNAME) $(NAIXNAME) zone_id.h
 LDIRT_CLEAN = $(TEMP_FILES) $(addprefix $(TARGETDIR)/, $(RESULTS))
 ifeq	($(CONVERTUSER),true)
 #コンバート対象者のみ、中間ファイル削除
-LDIRT_CLEAN	+= $(OUTPUT) $(CONVSRCS:.c=.bin) $(CONVSRCS) $(RESULTS)
+LDIRT_CLEAN	+= $(OUTPUT) $(WORKDIR)/*.bin $(DATATABTXT) $(CONVSRCS) $(RESULTS)
 endif
 
 LINCLUDES	= $(NITROSDK_ROOT)/include
@@ -80,7 +83,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 %.bin: %.c
 	echo "//" > temp.c
 #	echo "#include \"$(NITROSDK_ROOT)/include/nitro/types.h\"" > temp.c
-	cat dummy_define.h zonetableformat.h $< |unix2dos > temp.c
+	cat $(HEADERDIR)/dummy_define.h $(HEADERDIR)/zonetableformat.h $< |unix2dos > temp.c
 #	cat dummy.h $< >> temp.c
 	$(CC) $(CCFLAGS) $(INCLUDES)  -c temp.c -MD -o $*.o
 	$(MWLD) -dis -o $*.elf $*.o
@@ -108,11 +111,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #	--(コンパイル＆elf2bin)-->	zonetable.bin
 #	--(nnsarc)-->	zonedata.narc/.naix
 $(NARCNAME): $(DATAFILE) $(DEPFILES)
-	#$(EXCEL2TAB) $(DATAFILE)
-	$(XLS2TAB) $(DATAFILE) > $(DATAFILE:.xls=.txt)
-	$(CONVERTER) $(DATAFILE:.xls=.txt)
+	$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
+	$(CONVERTER) $(DATATABTXT)
+	$(MAKE) make_matrix_header
 	$(MAKE) makebin				#Ｃソース→バイナリ変換して
-	nnsarc -i -c -l -n $(NARCNAME) *.bin > arc_result.txt	#アーカイブ作成
+	nnsarc -i -c -l -n $(NARCNAME) $(WORKDIR)/*.bin > $(WORKDIR)/arc_result.txt	#アーカイブ作成
 	$(NAIXCUT) $(NAIXNAME)
 endif
 
@@ -121,6 +124,9 @@ endif
 #Ｃソース→バイナリ変換
 makebin: $(CONVSRCS:.c=.bin)
 
+make_matrix_header:
+	$(XLS2TAB) ../map_matrix/map_matrix.xls > $(WORKDIR)/map_matrix.txt
+	ruby scripts/make_matrix_header.rb $(WORKDIR)/map_matrix.txt > $(WORKDIR)/map_matrix.h
 
 
 
@@ -136,12 +142,15 @@ diff_output:
 diff:
 	@$(MAKE) cp_output
 	@echo コンバート
-	#@$(EXCEL2TAB) $(DATAFILE)
-	@$(CONVERTER) $(DATAFILE:.xls=.txt)
+	@$(CONVERTER) $(DATATABTXT)
 	@-echo "#差分は以下の通り" > diff.txt
 	@$(MAKE) diff_output
 	@cat diff.txt
 	@-rm $(addsuffix .old, $(OUTPUT))
 
+
+test:
+	#$(XLS2TAB) ../map_matrix/map_matrix.xls > $(WORKDIR)/map_matrix.txt
+	ruby scripts/make_matrix_header.rb $(WORKDIR)/map_matrix.txt > $(WORKDIR)/map_matrix.h
 
 
