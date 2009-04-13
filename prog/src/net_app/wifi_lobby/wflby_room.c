@@ -1368,6 +1368,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 		PRINT_UTIL_Trans( &p_wk->under_win.tr_card.printUtil[i], p_wk->def_msg.printQue );
 	}
 	PRINT_UTIL_Trans( &p_wk->under_win.bttn.printUtil, p_wk->def_msg.printQue );
+	PRINT_UTIL_Trans( &p_wk->listwin.printUtil, p_wk->def_msg.printQue );
 	
 	switch( *p_seq ){
 	case WFLBY_ROOM_MAINSEQ_FADEIN:
@@ -6803,6 +6804,8 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrint( WFLBY_TR_CARD* p_wk, WFLBY_ROOM
 	p_str = WFLBY_ROOM_Msg_Get( p_msg, WFLBY_DEFMSG_TYPE_HIROBA, strid );
 	PRINT_UTIL_PrintColor(
 		&p_wk->printUtil[winno], p_msg->printQue, x, y, p_str, p_msg->fontHandle_system, col);
+	GFL_BMPWIN_MakeScreen(p_wk->printUtil[winno].win);
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_wk->printUtil[winno].win) );
 }
 // 右端表示バージョン
 static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrintRightSide( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_DEFMSG* p_msg, u32 winno, u32 strid, u8 x, u8 y, PRINTSYS_LSB col )
@@ -6823,6 +6826,8 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WinPrintRightSide( WFLBY_TR_CARD* p_wk, W
 
 	PRINT_UTIL_PrintColor(
 		&p_wk->printUtil[winno], p_msg->printQue, draw_x, y, p_str, p_msg->fontHandle_system, col);
+	GFL_BMPWIN_MakeScreen(p_wk->printUtil[winno].win);
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_wk->printUtil[winno].win) );
 }
 
 //----------------------------------------------------------------------------
