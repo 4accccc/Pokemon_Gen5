@@ -156,11 +156,11 @@ static void _sendGamePlay( VecFx32* pVec  );
 static const GFL_SKB_SETUP skbData= {
 	GFL_SKB_STRLEN_MAX, GFL_SKB_STRTYPE_SJIS,
 	GFL_SKB_MODE_HIRAGANA, TRUE, PAD_BUTTON_START,
-	GFL_DISPUT_BGID_M1, GFL_DISPUT_PALID_14, GFL_DISPUT_PALID_15,
+	GFL_DISPUT_BGID_S1, GFL_DISPUT_PALID_14, GFL_DISPUT_PALID_15,
 };
 static const GFL_SNDVIEWER_SETUP sndStatusData= {
 	PAD_BUTTON_SELECT,
-	GFL_DISPUT_BGID_M1, GFL_DISPUT_PALID_15,
+	GFL_DISPUT_BGID_S1, GFL_DISPUT_PALID_15,
 	PMSND_GetBGMhandlePointer,
 	PMSND_GetBGMsoundNo,
 	PMSND_GetBGMplayerNoIdx,
@@ -392,9 +392,10 @@ static BOOL GameEndCheck( int cont )
  *
  */
 //============================================================================================
-//#define BACKGROUND_COL	(GX_RGB(23,29,31))		//背景色
-//#define FOG_COL			(GX_RGB(31,31,31))		//フォグ色
-#define BACKGROUND_COL	(GX_RGB(30,31,31))		//背景色
+//#define BACKGROUND_COL	(GX_RGB(23,29,31))	//背景色
+//#define FOG_COL			(GX_RGB(31,31,31))	//フォグ色
+#define BACKGROUND_COL		(GX_RGB(30,31,31))	//背景色
+#define BACKGROUND_S_COL	(GX_RGB(0,0,0))		//背景色
 #define FOG_COL			(GX_RGB(31,31,31))		//フォグ色
 #define DTCM_SIZE		(0x1000)				//DTCMエリアのサイズ
 
@@ -586,7 +587,7 @@ static const GFL_BG_BGCNT_HEADER textBGcont = {
 	GX_BG_SCRBASE_0x3800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
 	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 };
-#define TEXTBG_FRAME	(GFL_BG_FRAME1_M)
+#define TEXTBG_FRAME	(GFL_BG_FRAME1_S)
 #define TEXTBG_PAL		(15)
 
 static void	bg_init( SAMPLE_SETUP* gs )
@@ -599,6 +600,7 @@ static void	bg_init( SAMPLE_SETUP* gs )
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( gs->heapID, 16*2 );
 		plt[0] = BACKGROUND_COL;
 		GFL_BG_LoadPalette( GFL_BG_FRAME0_M, plt, 16*2, 0 );	//メイン画面の背景色転送
+		plt[0] = BACKGROUND_S_COL;
 		GFL_BG_LoadPalette( GFL_BG_FRAME0_S, plt, 16*2, 0 );	//サブ画面の背景色転送
 		GFL_HEAP_FreeMemory( plt );
 	}
@@ -620,7 +622,8 @@ static void	bg_init( SAMPLE_SETUP* gs )
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
 	//ディスプレイ面の選択
-	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+	//GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_DISP_SetDispOn();
 }
 
