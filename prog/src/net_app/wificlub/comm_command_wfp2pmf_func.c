@@ -12,12 +12,10 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
 
-#include "communication/communication.h"
+#include "wifi_p2pmatch_local.h"
 #include "comm_command_wfp2pmf.h"
-
-#define __COMM_COMMAND_WFP2PMF_FUNC_H_GLOBAL
 #include "comm_command_wfp2pmf_func.h"
 
 //-----------------------------------------------------------------------------
@@ -65,7 +63,7 @@
 //-----------------------------------------------------------------------------
 void CommCommandWFP2PMFInitialize( WFP2P_WK* p_wk )
 {
-	CommCommandInitialize( WFP2PMF_CommCommandTclGet(), 
+	GFL_NET_AddCommandTable(GFL_NET_CMD_WIFICLUB, WFP2PMF_CommCommandTclGet(), 
 			WFP2PMF_CommCommandTblNumGet(), p_wk );
 }
 
@@ -74,10 +72,10 @@ void CommCommandWFP2PMFInitialize( WFP2P_WK* p_wk )
  *	@brief	通信コマンド設定	wifi_p2pmatch.c内でテーブル設定用
  */
 //-----------------------------------------------------------------------------
-void CommCommandWFP2PMF_MatchStartInitialize( void )
+void CommCommandWFP2PMF_MatchStartInitialize( WIFIP2PMATCH_WORK *wk )
 {
-	CommCommandInitialize( WFP2PMF_CommCommandTclGet(), 
-			WFP2PMF_CommCommandTblNumGet(), NULL );
+	GFL_NET_AddCommandTable(GFL_NET_CMD_WIFICLUB, WFP2PMF_CommCommandTclGet(), 
+			WFP2PMF_CommCommandTblNumGet(), wk );
 }
 
 int CommWFP2PMFGetZeroSize( void )
@@ -117,10 +115,10 @@ int CommWFP2PMFGetWFP2PMF_COMM_VCHATSize( void )
  *	@param	pWork		ワーク
  */
 //-----------------------------------------------------------------------------
-void CommWFP2PMFGameResult( int netID, int size, void* pBuff, void* pWork )
+void CommWFP2PMFGameResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
 	WFP2P_WK* p_wk = pWork;
-	WFP2PMF_COMM_RESULT* p_data = pBuff;
+	const WFP2PMF_COMM_RESULT* p_data = pData;
 
 	if( p_wk == NULL ){
 		return ;
@@ -139,7 +137,7 @@ void CommWFP2PMFGameResult( int netID, int size, void* pBuff, void* pWork )
  *	@param	pWork		ワーク
  */
 //-----------------------------------------------------------------------------
-void CommWFP2PMFGameStart( int netID, int size, void* pBuff, void* pWork )
+void CommWFP2PMFGameStart(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
 	WFP2P_WK* p_wk = pWork;
 
@@ -161,7 +159,7 @@ void CommWFP2PMFGameStart( int netID, int size, void* pBuff, void* pWork )
  *	@param	pWork		ワーク
  */
 //-----------------------------------------------------------------------------
-void CommWFP2PMFGameVchat( int netID, int size, void* pBuff, void* pWork )
+void CommWFP2PMFGameVchat(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
 	WFP2P_WK* p_wk = pWork;
 
@@ -170,5 +168,5 @@ void CommWFP2PMFGameVchat( int netID, int size, void* pBuff, void* pWork )
 	}
 	
 	// VCHATフラグ取得
-	WFP2PMF_CommVchatRecv( p_wk, pBuff );
+	WFP2PMF_CommVchatRecv( p_wk, pData );
 }

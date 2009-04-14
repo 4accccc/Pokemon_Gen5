@@ -37,7 +37,8 @@
 #include "print/str_tool.h"
 
 #include "wifip2pmatch.naix"			// グラフィックアーカイブ定義
-//#include "comm_command_wfp2pmf_func.h"  //２Ｄフィールド 
+#include "comm_command_wfp2pmf.h"  //２Ｄフィールド 
+#include "comm_command_wfp2pmf_func.h"  //２Ｄフィールド 
 #include "msg/msg_wifi_lobby.h"
 #include "msg/msg_wifi_system.h"
 
@@ -7138,11 +7139,11 @@ static BOOL _connectingErrFunc(WIFIP2PMATCH_WORK *wk)
 			myvchat		= wk->pMatch->myMatchStatus.vchat;
 			targetvchat	= p_status->vchat;
 
-			OS_TPrintf( "check mystart=%d tastatus=%d tastatus_org=%d myvchat=%d tavchat=%d \n", 
-					mySt, targetSt, targetSt_org, myvchat, targetvchat );
+//			OS_TPrintf( "check mystart=%d tastatus=%d tastatus_org=%d myvchat=%d tavchat=%d \n", 
+//					mySt, targetSt, targetSt_org, myvchat, targetvchat );
 
 			if( ((mySt != targetSt) && (mySt != targetSt_org)) ||
-				(myvchat != targetSt) ){
+				(myvchat != targetvchat) ){
 				_friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
 				WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
 				_CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
@@ -7169,8 +7170,8 @@ static BOOL _connectingErrFunc(WIFIP2PMATCH_WORK *wk)
 //------------------------------------------------------------------
 static int _parentModeCallMenuYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 {
-    if((GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_DISCONNECTING) || GFL_NET_StateIsWifiDisconnect() || !GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER)){
-        OS_TPrintf("%d %d %d\n",GFL_NET_StateGetWifiStatus(),GFL_NET_StateIsWifiDisconnect(),GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER));
+    if((GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_DISCONNECTING) || GFL_NET_StateIsWifiDisconnect() ){
+        OS_TPrintf("DISCONNECT %d %d\n",GFL_NET_StateGetWifiStatus(),GFL_NET_StateIsWifiDisconnect());
         
         if(wk->bRetryBattle){
             WifiP2PMatchMessagePrint(wk, msg_wifilobby_065, FALSE);
@@ -7186,23 +7187,52 @@ static int _parentModeCallMenuYesNo( WIFIP2PMATCH_WORK *wk, int seq )
     }
     else{
 
-		
+        if(wk->timer > 1){
+            wk->timer--;
+        }
+
+        
         if(wk->timer==0){
-            if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_CHECK)){
+            if(GFL_NET_HANDLE_IsNegotiation(GFL_NET_HANDLE_GetCurrentHandle())){
+//            if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_CHECK)){
 //@@OO                CommToolTempDataReset();
+                GFL_STD_MemClear(&wk->matchState,sizeof(wk->matchState));
                 GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_CHECK2);
                 wk->bRetryBattle = FALSE;
                 _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_SEND);
             }
         }
         else{
-            wk->timer--;
-            if(wk->timer == 0){
-                GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_CHECK);
+//            wk->timer--;
+            if(wk->timer == 1){
+                NET_PRINT("送った %d\n",GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()));
+                if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
+                    wk->timer = 0;
+                }
+//                GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_CHECK);
             }
         }
     }
     return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * $brief   つながるべきステートを受信
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+void WifiP2PMatchRecvGameStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    WIFIP2PMATCH_WORK *wk = pWork;
+    const u16 *pRecvData = pData;
+
+
+    wk->matchState[netID] = pRecvData[0];
+
+
 }
 
 //
@@ -7222,7 +7252,7 @@ static int _parentModeCallMenuSend( WIFIP2PMATCH_WORK *wk, int seq )
 //    else if(CommIsTimingSync(_TIMING_GAME_CHECK2)){
         u16 status = _WifiMyStatusGet( wk, &wk->pMatch->myMatchStatus );
 		BOOL result = TRUE;
-		
+        GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_STATUS, sizeof(u16), &status);
 //@@OO        result = CommToolSetTempData(GFL_NET_SystemGetCurrentID() ,&status);
 		if( result ){
 	        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_CHECK);
@@ -7240,7 +7270,6 @@ static int _parentModeCallMenuSend( WIFIP2PMATCH_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int _parentModeCallMenuCheck( WIFIP2PMATCH_WORK *wk, int seq )
 {
-    const u16* pData = NULL;
     int id=0;
     if(GFL_NET_SystemGetCurrentID() == GFL_NET_NETID_SERVER){
         id = 1;
@@ -7248,13 +7277,12 @@ static int _parentModeCallMenuCheck( WIFIP2PMATCH_WORK *wk, int seq )
     else{
         id = GFL_NET_NETID_SERVER;
     }
-//@@OO    pData = CommToolGetTempData(id);
     if(_connectingErrFunc(wk)){
     }
-    else if(pData!=NULL){
+    else if(WIFI_STATUS_NONE != wk->matchState[id]){
         u16 org_status = _WifiMyStatusGet( wk, &wk->pMatch->myMatchStatus );
 		u16 status = _convertState(org_status);
-        if((pData[0] == status) || (pData[0] == org_status)){
+        if((wk->matchState[id] == status) || (wk->matchState[id] == org_status)){
             GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_START);
             _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MYSTATUS_WAIT);
         }
@@ -8110,6 +8138,7 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status)
 	org_status = _WifiMyStatusGet( wk, &wk->pMatch->myMatchStatus );
 	
     if(org_status != status){
+        _commStateChange(status);
 
         wk->pMatch->myMatchStatus.status = status;
         if(_modeBattle(status) || (status == WIFI_STATUS_TRADE)|| (status == WIFI_STATUS_FRONTIER)||
@@ -10531,12 +10560,10 @@ static u8 WifiDwc_getFriendStatus( int idx )
 //-----------------------------------------------------------------------------
 static BOOL WifiP2PMatch_CommWifiBattleStart( WIFIP2PMATCH_WORK* wk, int friendno, int status )
 {
-	// 080707	tomoya takahashi
-	// 同期通信ワークを初期化
-//@@OO	CommToolInitialize( HEAPID_COMMUNICATION );// COMMUNICATONにしているのは、comm_systemの中でもCOMMUNICATIONでやっているためです。
 	
 	// ボイスチャット設定
-	GFL_NET_DWC_SetVChat(wk->pMatch->myMatchStatus.vchat);// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
+    // ボイスチャットとBGM音量の関係を整理 tomoya takahashi
+	GFL_NET_DWC_SetVChat(wk->pMatch->myMatchStatus.vchat);
 
 	// 4人で遊ぶゲームのときは、通信の一部をHEAP_WORLDから確保する
 	// その他は通常の通信バッファからとる
@@ -10545,10 +10572,9 @@ static BOOL WifiP2PMatch_CommWifiBattleStart( WIFIP2PMATCH_WORK* wk, int friendn
 //	}else{
 //		mydwc_recvHeapChange( FALSE, HEAPID_WIFIP2PMATCHEX );
 //	}
-
 	// 接続する前に４人募集で送られてくる可能性のある
 	// コマンドを設定する
-//	CommCommandWFP2PMF_MatchStartInitialize();
+	CommCommandWFP2PMF_MatchStartInitialize(wk);
 	
 	return GFL_NET_StateStartWifiPeerMatch( friendno );
 }

@@ -22,7 +22,7 @@ enum CommCommandTradeList_e {
 	CNM_WFP2PMF_RESULT = GFL_NET_CMD_WIFICLUB,	///< 通信KONG		親ー＞子
 	CNM_WFP2PMF_START,						///< ゲーム開始		親ー＞子
 	CNM_WFP2PMF_VCHAT,						///< VCHATデータ	親ー＞子
-
+    CNM_WFP2PMF_STATUS,   ///< WIFIステータスデータ
 	//-------------------------------------
 	//	
 	//=====================================

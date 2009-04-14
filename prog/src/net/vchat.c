@@ -27,6 +27,23 @@
 //#define VCT_ERROR_NONE (VCT_SUCCESS)
 
 
+// デバッグ出力を大量に吐き出す場合定義
+#if defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_tomoya_takahashi)
+#define DEBUGPRINT_ON (0)
+#else
+#define DEBUGPRINT_ON (0)
+#endif
+
+
+#if DEBUGPRINT_ON
+#define VCT_PRINT(...) \
+  (void) ((VCT_PRINT(__VA_ARGS__)))
+#else   //DEBUGPRINT_ON
+#define VCT_PRINT(...)           ((void) 0)
+#endif  // DEBUGPRINT_ON
+
+
+
 // マイクゲインを設定
 #define MY_AMPGAIN PM_AMPGAIN_160 
 
@@ -89,7 +106,7 @@ static int _difftime = 0;
 
 static void InitFirst(void)
 {
-    NET_PRINT("Init sound system\n");
+    VCT_PRINT("Init sound system\n");
     // マイク関連の初期化
     MIC_Init();
     PM_Init();
@@ -97,13 +114,13 @@ static void InitFirst(void)
     {
 	    u32 ret;
 	    ret = PM_SetAmp(PM_AMP_ON);
-	    if( ret == PM_RESULT_SUCCESS )
+        if( ret == PM_RESULT_SUCCESS )
 	    {
-		    NET_PRINT("AMPをオンにしました。\n");
+            VCT_PRINT("AMPをオンにしました。\n");
 	    }
 	    else
 	    {
-		    NET_PRINT("AMPの初期化に失敗（%d）", ret);
+		    VCT_PRINT("AMPの初期化に失敗（%d）", ret);
 	    }
     }
 
@@ -112,11 +129,11 @@ static void InitFirst(void)
 	    ret = PM_SetAmpGain(MY_AMPGAIN);
 	    if( ret == PM_RESULT_SUCCESS )
 	    {
-		    NET_PRINT("AMPのゲインを設定しました。\n");
+		    VCT_PRINT("AMPのゲインを設定しました。\n");
 	    }
 	    else
 	    {
-		    NET_PRINT("AMPのゲイン設定に失敗（%d）", ret);
+		    VCT_PRINT("AMPのゲイン設定に失敗（%d）", ret);
 	    }
     }
     
@@ -127,7 +144,7 @@ static void InitFirst(void)
     NNS_SndStrmInit(&_vWork->sSndStream);
 
 	MI_CpuClearFast(_vWork->sSilentBuffer, sizeof(_vWork->sSilentBuffer) );
-    NET_PRINT("Init sound system done.\n");
+    VCT_PRINT("Init sound system done.\n");
     
     _difftime = 0;
 
@@ -200,15 +217,15 @@ static void SndCallback(NNSSndStrmCallbackStatus sts,
     {
 
         if(VCT_SendAudio(micSrc, length)){
-            NET_PRINT("○ length 0x%x\n", length);
+            VCT_PRINT("○ length 0x%x\n", length);
         }
     }else{
-//   	    NET_PRINT("×");
+//   	    VCT_PRINT("×");
     }  
     for (ch = 0; ch < nChannels; ++ch) {
         if( !VCT_ReceiveAudio(buffer[ch], length, NULL) )
         {
-            NET_PRINT("音声データを受け取れません\n");
+            VCT_PRINT("音声データを受け取れません\n");
         }
     }
     _vWork->bSendVoice = 2;
@@ -234,7 +251,7 @@ static int startCall( u8 aid )
         if (session == NULL) {
             // セッションを使い切っている、またはaidが自分自身の場合
             // CraeteSession が失敗します
-            NET_PRINT("Can't create session!\n");
+            VCT_PRINT("Can't create session!\n");
             return 0;
         }
 	
@@ -245,7 +262,7 @@ static int startCall( u8 aid )
         ret = VCT_Request(session, VCT_REQUEST_INVITE);  //もう一度送る
     }
     if (ret != VCT_ERROR_NONE){
-        NET_PRINT("Can't request Invite [%d]\n", ret);
+        VCT_PRINT("Can't request Invite [%d]\n", ret);
         VCT_DeleteSession(session);
         _vWork->session = NULL;
         return 0;
@@ -265,16 +282,16 @@ static int receiveCall( u8 aid )
         
         ret = VCT_Response(_vWork->session, VCT_RESPONSE_OK);
         if (ret != VCT_ERROR_NONE){
-            NET_PRINT("Can't send response OK [%d]\n", ret);
+            VCT_PRINT("Can't send response OK [%d]\n", ret);
             return 0;
         }
         
         if( !VCT_StartStreaming(_vWork->session) )
         {
-	        NET_PRINT("can't start session! %d\n", _vWork->session->aid);
+	        VCT_PRINT("can't start session! %d\n", _vWork->session->aid);
 	        return 0;	        
         } else {
-   	        NET_PRINT("ストリーミングを開始します%d\n", _vWork->session->aid);	        
+   	        VCT_PRINT("ストリーミングを開始します%d\n", _vWork->session->aid);	        
 		}
 	        
                 
@@ -296,15 +313,15 @@ static void VoiceChatEventCallbackConference(u8 aid, VCTEvent event, VCTSession 
     
     switch (event) {
     case VCT_EVENT_DISCONNECTED:
-        NET_PRINT("Disconnected\n");
+        VCT_PRINT("Disconnected\n");
         ClearSession(session);
         break;
     case VCT_EVENT_CONNECTED:
         VCT_StartStreaming(session);
-        NET_PRINT("Connected\n");
+        VCT_PRINT("Connected\n");
         break;
     case VCT_EVENT_ABORT:
-        NET_PRINT("Session abrot\n");
+        VCT_PRINT("Session abrot\n");
         ClearSession(session);
         break;
     default:
@@ -322,76 +339,76 @@ static void VoiceChatEventCallbackPhone(u8 aid, VCTEvent event, VCTSession *sess
     
     int ret;
     
-    OS_TPrintf("event %d\n");
+    VCT_PRINT("event %d\n");
     switch (event) {
     case VCT_EVENT_INCOMING:
         if (_vWork->session) {
-            NET_PRINT("Return busy to %d\n", session->aid);
+            VCT_PRINT("Return busy to %d\n", session->aid);
             ret = VCT_Response(session, VCT_RESPONSE_BUSY_HERE);
             VCT_DeleteSession(session);
             break;
         }
             
-        NET_PRINT("Invite From %d\n", session->aid);
+        VCT_PRINT("Invite From %d\n", session->aid);
         _vWork->session = session;
         break;
 
     case VCT_EVENT_RESPONDBYE:
-        NET_PRINT("Bye From %d\n", session->aid);
+        VCT_PRINT("Bye From %d\n", session->aid);
         ret = VCT_Response(session, VCT_RESPONSE_OK);
         if (ret != VCT_ERROR_NONE){
-            NET_PRINT("Can't send response Ok [%d]\n", ret);
+            VCT_PRINT("Can't send response Ok [%d]\n", ret);
         }
         ClearSession(session);
         GFL_NET_DWC_StopVChat();
         break;
 
     case VCT_EVENT_DISCONNECTED:
-        NET_PRINT("Disconnected\n");
+        VCT_PRINT("Disconnected\n");
         ClearSession(session);
         GFL_NET_DWC_StopVChat();
         break;
 
     case VCT_EVENT_CANCEL:
-        NET_PRINT("Cancel From %d\n", session->aid);
+        VCT_PRINT("Cancel From %d\n", session->aid);
         ret = VCT_Response(session, VCT_RESPONSE_TERMINATED);
         if (ret != VCT_ERROR_NONE){
-            NET_PRINT("Can't send response RequestTerminated [%d]\n", ret);
+            VCT_PRINT("Can't send response RequestTerminated [%d]\n", ret);
         }
         ClearSession(session);
         break;
 
     case VCT_EVENT_CONNECTED:
-        NET_PRINT("200 OK From %d\n", session->aid);
+        VCT_PRINT("200 OK From %d\n", session->aid);
         if(session->mode != _vWork->mode){
             ClearSession(session);
-            NET_PRINT("セッションが違うものが来た\n");
+            VCT_PRINT("セッションが違うものが来た\n");
             return;
         }
         if( VCT_StartStreaming(session) )
         {
-	        NET_PRINT("ストリーミングを開始します%d\n", session->aid);	        
+	        VCT_PRINT("ストリーミングを開始します%d\n", session->aid);	        
 	        _vWork->state = VCTSTATE_CALLING;
         } else 
         {
-	        NET_PRINT("can't start session! %d\n", session->aid);	        
+	        VCT_PRINT("can't start session! %d\n", session->aid);	        
         }
         break;
 
     case VCT_EVENT_REJECT:
-        NET_PRINT("Reject From %d\n", session->aid);
+        VCT_PRINT("Reject From %d\n", session->aid);
         ClearSession(session);
         break;
 
     case VCT_EVENT_BUSY:
     case VCT_EVENT_TIMEOUT:
     case VCT_EVENT_ABORT:
-        NET_PRINT("Clear session by '%d'\n", event);
+        VCT_PRINT("Clear session by '%d'\n", event);
         ClearSession(session);
         break;
 
     default:
-        NET_PRINT(" not handler (%d)\n", event);
+        VCT_PRINT(" not handler (%d)\n", event);
         break;
     }
 }
@@ -423,7 +440,8 @@ void myvct_main(BOOL offflg)
         VCT_Main();
         while( _difftime >= 1000 * 1000 / 60 )
         {
-            //	    NET_PRINT("!");
+//            VCT_PRINT("!");
+            NET_PRINT("!");
             VCT_Main();
             _difftime -= 1000 * 1000 / 60 ;
         }
@@ -432,7 +450,7 @@ void myvct_main(BOOL offflg)
 
     if(_vWork->mode != VCT_MODE_CONFERENCE){  // カンファレンスの場合すでに会話中扱いにする
 
-//    NET_PRINT("st: %d %d\n",_vWork->state, mydwc_getaid());
+//    VCT_PRINT("st: %d %d\n",_vWork->state, mydwc_getaid());
 
     switch( _vWork->state )
 	{
@@ -480,7 +498,7 @@ BOOL myvct_checkData( int aid, void *data, int size )
 	
 	if( VCT_HandleData (aid, data, size ) ){
 #ifdef VCFINFO_SHOW
-	    NET_PRINT(".");
+	    VCT_PRINT(".");
 #endif
 	    return TRUE;
     }
@@ -495,7 +513,7 @@ void myvct_init( int heapID, int codec,int maxEntry )
     int size;
     int vctmode = VCT_MODE_PHONE;
 
-    OS_TPrintf("myvct%d %d\n",codec,maxEntry);
+    VCT_PRINT("myvct%d %d\n",codec,maxEntry);
 	if( _vWork == NULL )
 	{
 		void* vWork_temp=NULL;
@@ -566,7 +584,7 @@ void myvct_init( int heapID, int codec,int maxEntry )
 
 	    
 	    if (!VCT_Init(&config)) {
-	        NET_PRINT("ERROR: Can't initialize VoiceChat!!!\n");
+	        VCT_PRINT("ERROR: Can't initialize VoiceChat!!!\n");
 	    }	    
 	}
 
@@ -577,7 +595,7 @@ void myvct_init( int heapID, int codec,int maxEntry )
 	
     VCT_EnableEchoCancel( TRUE );
 
-   OS_TPrintf("myvct_init\n"); 
+   VCT_PRINT("myvct_init\n"); 
     return;	
 }
 
@@ -616,7 +634,7 @@ void myvct_endConnection(){
 		// 会話要求を出してまだ返事が来る前。
 		ret = VCT_Request( _vWork->session, VCT_REQUEST_CANCEL );
         if (ret != VCT_ERROR_NONE){
-			NET_PRINT("Can't request Cancel [%d]\n", ret);
+			VCT_PRINT("Can't request Cancel [%d]\n", ret);
 			GFL_NET_DWC_StopVChat();
 			return;
 		}			
@@ -625,7 +643,7 @@ void myvct_endConnection(){
 	// 会話中。会話終了要求を出す。
 	ret = VCT_Request( _vWork->session, VCT_REQUEST_BYE );
     if (ret != VCT_ERROR_NONE){
-		NET_PRINT("Can't request Bye [%d]\n", ret);
+		VCT_PRINT("Can't request Bye [%d]\n", ret);
 		GFL_NET_DWC_StopVChat();
 		return;
 	}
@@ -726,12 +744,12 @@ BOOL myvct_AddConference(int bitmap, int myAid)
             }
             ret = VCT_AddConferenceClient(i);
             if (ret != VCT_ERROR_NONE){
-                NET_PRINT("AddConferenceError [%d]\n", ret);
+                VCT_PRINT("AddConferenceError [%d]\n", ret);
                 return FALSE;
             }
             else{
                 _vWork->bConf[i] = TRUE;
-                NET_PRINT("AddConference設定 %d\n", i);
+                VCT_PRINT("AddConference設定 %d\n", i);
             }
         }
     }
@@ -763,7 +781,7 @@ BOOL myvct_DelConference(int myAid)
         if(_vWork->bConf[i]==TRUE){
             ret = VCT_RemoveConferenceClient(i);
             if (ret != VCT_ERROR_NONE){
-                NET_PRINT("DELConferenceError [%d]\n", ret);
+                VCT_PRINT("DELConferenceError [%d]\n", ret);
                 return FALSE;
             }
             else{

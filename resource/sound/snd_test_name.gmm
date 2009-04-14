@@ -357,10 +357,6 @@
 		<language name="JPN" width="256">SILENCE-DUNGEON</language>
 		<language name="JPN_KANJI" width="256">SILENCE-DUNGEON</language>
 	</row>
-	<row id="msg_seq_test_title">
-		<language name="JPN" width="256">TEST-TITLE</language>
-		<language name="JPN_KANJI" width="256">TEST-TITLE</language>
-	</row>
 	<row id="msg_seq_wb_title">
 		<language name="JPN" width="256">WB-TITLE</language>
 		<language name="JPN_KANJI" width="256">WB-TITLE</language>
@@ -721,6 +717,46 @@
 		<language name="JPN" width="256">WB-GTS</language>
 		<language name="JPN_KANJI" width="256">WB-GTS</language>
 	</row>
+	<row id="msg_seq_wb_test_250kb">
+		<language name="JPN" width="256">WB-TEST-250KB</language>
+		<language name="JPN_KANJI" width="256">WB-TEST-250KB</language>
+	</row>
+	<row id="msg_seq_wb_test_200kb">
+		<language name="JPN" width="256">WB-TEST-200KB</language>
+		<language name="JPN_KANJI" width="256">WB-TEST-200KB</language>
+	</row>
+	<row id="msg_seq_wb_e_test_200kb">
+		<language name="JPN" width="256">WB-E-TEST-200KB</language>
+		<language name="JPN_KANJI" width="256">WB-E-TEST-200KB</language>
+	</row>
+	<row id="msg_seq_wb_e_test_150kb">
+		<language name="JPN" width="256">WB-E-TEST-150KB</language>
+		<language name="JPN_KANJI" width="256">WB-E-TEST-150KB</language>
+	</row>
+	<row id="msg_seq_me_test_150kb">
+		<language name="JPN" width="256">ME-TEST-150KB</language>
+		<language name="JPN_KANJI" width="256">ME-TEST-150KB</language>
+	</row>
+	<row id="msg_seq_me_test_100kb">
+		<language name="JPN" width="256">ME-TEST-100KB</language>
+		<language name="JPN_KANJI" width="256">ME-TEST-100KB</language>
+	</row>
+	<row id="msg_seq_wb_ba_test_250kb">
+		<language name="JPN" width="256">WB-BA-TEST-250KB</language>
+		<language name="JPN_KANJI" width="256">WB-BA-TEST-250KB</language>
+	</row>
+	<row id="msg_seq_wb_ba_test_200kb">
+		<language name="JPN" width="256">WB-BA-TEST-200KB</language>
+		<language name="JPN_KANJI" width="256">WB-BA-TEST-200KB</language>
+	</row>
+	<row id="msg_seq_wb_ba_pinch_test_150kb">
+		<language name="JPN" width="256">WB-BA-PINCH-TEST-150KB</language>
+		<language name="JPN_KANJI" width="256">WB-BA-PINCH-TEST-150KB</language>
+	</row>
+	<row id="msg_seq_mus_end">
+		<language name="JPN" width="256">MUS-END</language>
+		<language name="JPN_KANJI" width="256">MUS-END</language>
+	</row>
 	<row id="msg_seq_me_asa">
 		<language name="JPN" width="256">ME-ASA</language>
 		<language name="JPN_KANJI" width="256">ME-ASA</language>
@@ -793,49 +829,9 @@
 		<language name="JPN" width="256">ME-TAMAGO-GET</language>
 		<language name="JPN_KANJI" width="256">ME-TAMAGO-GET</language>
 	</row>
-	<row id="msg_seq_me_mushitori1">
-		<language name="JPN" width="256">ME-MUSHITORI1</language>
-		<language name="JPN_KANJI" width="256">ME-MUSHITORI1</language>
-	</row>
-	<row id="msg_seq_me_mushitori2">
-		<language name="JPN" width="256">ME-MUSHITORI2</language>
-		<language name="JPN_KANJI" width="256">ME-MUSHITORI2</language>
-	</row>
-	<row id="msg_seq_me_mushitori3">
-		<language name="JPN" width="256">ME-MUSHITORI3</language>
-		<language name="JPN_KANJI" width="256">ME-MUSHITORI3</language>
-	</row>
-	<row id="msg_seq_me_cardgame1">
-		<language name="JPN" width="256">ME-CARDGAME1</language>
-		<language name="JPN_KANJI" width="256">ME-CARDGAME1</language>
-	</row>
-	<row id="msg_seq_me_cardgame2">
-		<language name="JPN" width="256">ME-CARDGAME2</language>
-		<language name="JPN_KANJI" width="256">ME-CARDGAME2</language>
-	</row>
-	<row id="msg_seq_me_pokegear_regist">
-		<language name="JPN" width="256">ME-POKEGEAR-REGIST</language>
-		<language name="JPN_KANJI" width="256">ME-POKEGEAR-REGIST</language>
-	</row>
 	<row id="msg_seq_me_gonin">
 		<language name="JPN" width="256">ME-GONIN</language>
 		<language name="JPN_KANJI" width="256">ME-GONIN</language>
-	</row>
-	<row id="msg_seq_me_pt_new">
-		<language name="JPN" width="256">ME-PT-NEW</language>
-		<language name="JPN_KANJI" width="256">ME-PT-NEW</language>
-	</row>
-	<row id="msg_seq_me_pt_resultg">
-		<language name="JPN" width="256">ME-PT-RESULTG</language>
-		<language name="JPN_KANJI" width="256">ME-PT-RESULTG</language>
-	</row>
-	<row id="msg_seq_me_pt_special">
-		<language name="JPN" width="256">ME-PT-SPECIAL</language>
-		<language name="JPN_KANJI" width="256">ME-PT-SPECIAL</language>
-	</row>
-	<row id="msg_seq_me_pt_victory">
-		<language name="JPN" width="256">ME-PT-VICTORY</language>
-		<language name="JPN_KANJI" width="256">ME-PT-VICTORY</language>
 	</row>
 	<row id="msg_seq_me_roulette">
 		<language name="JPN" width="256">ME-ROULETTE</language>
@@ -852,6 +848,10 @@
 	<row id="msg_seq_me_minigame">
 		<language name="JPN" width="256">ME-MINIGAME</language>
 		<language name="JPN_KANJI" width="256">ME-MINIGAME</language>
+	</row>
+	<row id="msg_seq_me_end">
+		<language name="JPN" width="256">ME-END</language>
+		<language name="JPN_KANJI" width="256">ME-END</language>
 	</row>
 	<row id="msg_seq_se_pl_w012">
 		<language name="JPN" width="256">PL-W012</language>
@@ -4328,6 +4328,10 @@
 	<row id="msg_seq_se_gs_slot05">
 		<language name="JPN" width="256">GS-SLOT05</language>
 		<language name="JPN_KANJI" width="256">GS-SLOT05</language>
+	</row>
+	<row id="msg_seq_se_end">
+		<language name="JPN" width="256">END</language>
+		<language name="JPN_KANJI" width="256">END</language>
 	</row>
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

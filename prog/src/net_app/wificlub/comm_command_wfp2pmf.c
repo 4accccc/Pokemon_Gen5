@@ -9,12 +9,11 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
-#include "communication/communication.h"
-#include "comm_command_wfp2pmf_func.h"
+#include <gflib.h>
 
-#define __COMM_COMMAND_WFP2PMF_H_GLOBAL
+#include "wifi_p2pmatch_local.h"
 #include "comm_command_wfp2pmf.h"
+#include "comm_command_wfp2pmf_func.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -53,13 +52,14 @@
 
 
 // 対応するコールバック関数
-static const CommPacketTbl _CommNutWFP2PMFPacketTbl[] = {
+static const NetRecvFuncTable _CommNutWFP2PMFPacketTbl[] = {
 	//-------------------------------------
 	//　ゲーム用
 	//=====================================
-	{ CommWFP2PMFGameResult, CommWFP2PMFGetWFP2PMF_COMM_RESULTSize, NULL },			///< 通信OK			親ー＞子
-	{ CommWFP2PMFGameStart, CommWFP2PMFGetZeroSize, NULL },			///< ゲーム開始			親ー＞子
-	{ CommWFP2PMFGameVchat, CommWFP2PMFGetWFP2PMF_COMM_VCHATSize, NULL },	///< VCHATデータ	親ー＞子
+	{ CommWFP2PMFGameResult, NULL },			///< 通信OK			親ー＞子
+	{ CommWFP2PMFGameStart,  NULL },			///< ゲーム開始			親ー＞子
+	{ CommWFP2PMFGameVchat,  NULL },	///< VCHATデータ	親ー＞子
+    { WifiP2PMatchRecvGameStatus,  NULL },
 };
 
 //----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ static const CommPacketTbl _CommNutWFP2PMFPacketTbl[] = {
  *	@brief		コマンドテーブルを取得
  */
 //-----------------------------------------------------------------------------
-const CommPacketTbl* WFP2PMF_CommCommandTclGet( void )
+const NetRecvFuncTable* WFP2PMF_CommCommandTclGet( void )
 {
 	return _CommNutWFP2PMFPacketTbl;
 }
@@ -79,5 +79,5 @@ const CommPacketTbl* WFP2PMF_CommCommandTclGet( void )
 //-----------------------------------------------------------------------------
 int WFP2PMF_CommCommandTblNumGet( void )
 {
-    return sizeof(_CommNutWFP2PMFPacketTbl)/sizeof(CommPacketTbl);
+    return NELEMS(_CommNutWFP2PMFPacketTbl);
 }

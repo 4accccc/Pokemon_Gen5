@@ -17,9 +17,9 @@
  */
 //------------------------------------------------------------------
 #define PMSND_BGM_START		(BGM_START)
-#define PMSND_BGM_END		(SEQ_WB_GTS)
+#define PMSND_BGM_END		(SEQ_MUS_END)
 #define PMSND_SE_START		(SE_START)
-#define PMSND_SE_END		(SEQ_SE_GS_SLOT05)
+#define PMSND_SE_END		(SEQ_SE_END)
 
 //------------------------------------------------------------------
 /**

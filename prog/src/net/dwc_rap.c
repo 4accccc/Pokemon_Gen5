@@ -34,16 +34,9 @@
 // ボイスチャットを利用する場合は定義する。
 #define MYDWC_USEVCHA
 
-
-//#define YOSHIHARA_VCHAT_ONOFFTEST
-
-
-// ヒープ領域の最大使用量を監視する場合定義
-//#define CHEAK_HEAPSPACE
-
 // デバッグ出力を大量に吐き出す場合定義
 #if defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_tomoya_takahashi)
-#define DEBUGPRINT_ON
+//#define DEBUGPRINT_ON
 #endif
 
 
@@ -357,7 +350,7 @@ void mydwc_free()
 //==============================================================================
 int mydwc_connect()
 {
-//    OS_TPrintf("mydwc_connect %d\n",_dWork->state);
+//    NET_PRINT("mydwc_connect %d\n",_dWork->state);
     switch( _dWork->state )
 	{
 		case MDSTATE_INIT:
@@ -907,14 +900,13 @@ int GFL_NET_DWC_SendToOther(void *data, int size)
             _dWork->sendbufflag = 0;
             return 0;
         }
-		//OHNO_PRINT(":");
 	}	
 	
-	{
-        // 自分自身の受信コールバックを呼び出す。
-        if( _dWork->clientCallback != NULL ) _dWork->clientCallback(DWC_GetMyAID() , data, size);
-	}  
-	
+    // 自分自身の受信コールバックを呼び出す。
+    
+    if( _dWork->clientCallback != NULL ){
+        _dWork->clientCallback(DWC_GetMyAID() , data, size);
+    }
 	return 1;
 }
 
@@ -1205,7 +1197,7 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size )
 	topcode = (buffer[3] << 24) | (buffer[2] << 16) | (buffer[1] << 8) | buffer[0];
 
     //	MYDWC_DEBUGPRINT("[%d,%d,%d,%d]", buffer[0], buffer[1], buffer[2], buffer[3]);
-    NET_PRINT("-受信-\n");
+    MYDWC_DEBUGPRINT("-受信-\n");
     
 	// 一度受信してはじめてタイムアウトを設定する。
 	_dWork->timeoutflag = 1;
@@ -1223,7 +1215,8 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size )
 		_setOpVchat( topcode );
 		return;
 	}
-	MYDWC_DEBUGPRINT( "受信(%d)\n",*((s32*)buffer) );
+//	MYDWC_DEBUGPRINT( "受信(%d)\n",*((s32*)buffer) );
+	NET_PRINT( "受信(%d)\n", aid );
 	
 	// アライメントを確実にするために、コピー
 	{
@@ -1507,33 +1500,6 @@ static void _sendData(int param)
 }
 */
 
-#ifdef YOSHIHARA_VCHAT_ONOFFTEST		
-
-static u16 debug_trg;
-static u16 debug_cont = 0;
-
-static void vchat_onoff()
-{
-	{
-	    u16 ReadData = PAD_Read();
-	    debug_trg  = (u16)(ReadData & (ReadData ^ debug_cont));            // トリガ 入力
-	    debug_cont = ReadData;      	
-	}	
-	
-	if( debug_trg & PAD_BUTTON_R )
-	{
-		if( _dWork->myvchaton )
-		{
-			mydwc_VChatPause();
-		}
-		else
-		{
-			mydwc_VChatRestart();
-		}
-	}
-}
-
-#endif
 
 static BOOL sendKeepAlivePacket(int i)
 {
@@ -1574,9 +1540,6 @@ static int mydwc_step(void)
 #ifdef MYDWC_USEVCHA
 	if( _dWork->isvchat ) 
 	{
-#ifdef YOSHIHARA_VCHAT_ONOFFTEST		
-		vchat_onoff();
-#endif
 		
 		if( (_dWork->myvchaton == 1) && (_dWork->opvchaton == 1) && (_dWork->myvchat_send == TRUE) )
 		{
