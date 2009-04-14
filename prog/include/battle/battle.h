@@ -110,6 +110,8 @@ typedef struct {
 	POKEPARTY*			partyEnemy2;	///< 2vs2時の２番目敵AI用（不要ならnull）
 
 
+	u16				musicDefault;		///< デフォルト時のBGMナンバー
+	u16				musicPinch;			///< ピンチ時のBGMナンバー
 
 }BATTLE_SETUP_PARAM;
 
