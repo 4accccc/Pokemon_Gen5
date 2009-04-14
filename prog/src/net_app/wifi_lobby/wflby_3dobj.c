@@ -24,6 +24,7 @@
 #include "test_graphic/mmodel.naix"
 
 #include "wifi_lobby_other.naix"
+#include "test_graphic/fld_act.naix"
 
 #include "wflby_def.h"
 #include "wflby_3dmatrix.h"
@@ -228,6 +229,12 @@ static const u16 sc_WFLBY_ANMDATA[ WFLBY_3DMDL_ANMDATA_NUM ] = {
 ///		アニメフレームデータ
 //=====================================
 enum{
+	// 停止アニメ
+	WFLBY_3DOBJ_ANM_TYPE_STOP_UP,
+	WFLBY_3DOBJ_ANM_TYPE_STOP_DOWN,
+	WFLBY_3DOBJ_ANM_TYPE_STOP_LEFT,
+	WFLBY_3DOBJ_ANM_TYPE_STOP_RIGHT,
+
 	// 歩きアニメ
 	WFLBY_3DOBJ_ANM_TYPE_UP,
 	WFLBY_3DOBJ_ANM_TYPE_DOWN,
@@ -259,144 +266,137 @@ static const BLACT_ANIME_TBL WFLBY_3DOBJ_ANM_TR_FRAME_DATA[] =
 	{ 0, 0, BLACT_ANIM_CMD_MAX },
 };
 #else
-static const GFL_BBDACT_ANM DATA_BlActHero_StopU[] = {
-	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{GFL_BBDACT_ANMCOM_END,0,0,0},
+static const GFL_BBDACT_ANM PCstopLAnm[] = {
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
 };
-static const GFL_BBDACT_ANM DATA_BlActHero_StopD[] = {
-	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{GFL_BBDACT_ANMCOM_END,0,0,0},
+static const GFL_BBDACT_ANM PCstopRAnm[] = {
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
 };
-static const GFL_BBDACT_ANM DATA_BlActHero_StopL[] = {
-	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,1},
-	{GFL_BBDACT_ANMCOM_END,0,0,0},
+static const GFL_BBDACT_ANM PCstopUAnm[] = {
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
 };
-static const GFL_BBDACT_ANM DATA_BlActHero_StopR[] = {
-	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
-	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
-	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
-	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,1},
-	{GFL_BBDACT_ANMCOM_END,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_WalkU8F[] = {
-	{9,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{9,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
-	{0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_WalkD8F[] = {
-	{22,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{23,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{21,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_WalkL8F[] = {
-	{1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{3,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_WalkR8F[] = {
-	{1,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
-	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
-	{3,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
-	{2,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_DashU4F[] = {
-	{8,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{7,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{10,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{7,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_DashD4F[] = {
-	{12,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{11,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{13,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{11,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_DashL4F[] = {
-	{15,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{14,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{16,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{14,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
-};
-static const GFL_BBDACT_ANM DATA_BlActHero_DashR4F[] = {
-	{15,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
-	{14,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
-	{16,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
-	{14,GFL_BBDACT_ANMFLIP_ON,GFL_BBDACT_ANMFLIP_OFF,4},
-	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+static const GFL_BBDACT_ANM PCstopDAnm[] = {
+	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
 };
 
-static const GFL_BBDACT_ANM * DATA_BlActHeroTbl[] = {
-#if 1	//WiFi広場用に移植元とアニメの並びを合わせた
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_32F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_DashU4F,	//DRAW_STA_DASH_4F
-	DATA_BlActHero_DashD4F,
-	DATA_BlActHero_DashL4F,
-	DATA_BlActHero_DashR4F,
-#else	//フィールドと同じアニメ順
-	DATA_BlActHero_StopU,	//DRAW_STA_STOP
-	DATA_BlActHero_StopD,
-	DATA_BlActHero_StopL,
-	DATA_BlActHero_StopR,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_32F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_16F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_8F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_4F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_2F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_6F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_3F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_WalkU8F,	//DRAW_STA_WALK_7F
-	DATA_BlActHero_WalkD8F,
-	DATA_BlActHero_WalkL8F,
-	DATA_BlActHero_WalkR8F,
-	DATA_BlActHero_DashU4F,	//DRAW_STA_DASH_4F
-	DATA_BlActHero_DashD4F,
-	DATA_BlActHero_DashL4F,
-	DATA_BlActHero_DashR4F,
-#endif
+static const GFL_BBDACT_ANM PCwalkLAnm[] = {
+	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
 };
+static const GFL_BBDACT_ANM PCwalkRAnm[] = {
+	{ 1, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 3, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCwalkUAnm[] = {
+	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 20, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCwalkDAnm[] = {
+	{ 22, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 23, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+
+static const GFL_BBDACT_ANM PCrunLAnm[] = {
+	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 16, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCrunRAnm[] = {
+	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 16, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCrunUAnm[] = {
+	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCrunDAnm[] = {
+	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 13, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+
+static const GFL_BBDACT_ANM* playerBBDactAnmTable[] = { 
+	PCstopUAnm, PCstopDAnm, PCstopLAnm, PCstopRAnm,
+	PCwalkUAnm, PCwalkDAnm, PCwalkLAnm, PCwalkRAnm,
+	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,
+};
+
+//--------------------------------------------------------------
+//	NPCのアニメテーブル
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM NPC_walkLAnm[] = {
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM NPC_walkRAnm[] = {
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 1, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 3, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM NPC_walkUAnm[] = {
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM NPC_walkDAnm[] = {
+	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+
+static const GFL_BBDACT_ANM * DATA_BlActNpcTbl[] = {
+	//STOP 主人公と同様のアニメルーチンを通す為、テーブルの順番だけあわす。ここはダミー
+	NPC_walkUAnm,
+	NPC_walkDAnm,
+	NPC_walkLAnm,
+	NPC_walkRAnm,
+	//WALK
+	NPC_walkUAnm,
+	NPC_walkDAnm,
+	NPC_walkLAnm,
+	NPC_walkRAnm,
+	//RUN 主人公と同様のアニメルーチンを通す為、テーブルの順番だけあわす。ここはダミー
+	NPC_walkUAnm,
+	NPC_walkDAnm,
+	NPC_walkLAnm,
+	NPC_walkRAnm,
+};
+
 #endif	//WB_FIX
 
 
@@ -413,104 +413,104 @@ static const WFLBY_3DMDL_DATA	sc_WFLBY_3DMDL_DATA[ WFLBY_3DMDL_DATA_NUM ] = {
 	// 主人公2
 	{
 		PLHERO,
-		NARC_mmodel_hero_nsbtx,
+		NARC_fld_act_hero_nsbtx,	//NARC_mmodel_hero_nsbtx,
 		TRUE
 	},
 	{
 		PLHEROINE,
-		NARC_mmodel_heroine_nsbtx,
+		NARC_fld_act_hero_nsbtx,	//NARC_mmodel_heroine_nsbtx,
 		TRUE
 	},
 
 	// ユニオンキャラクタ16
 	{
 		PLBOY1,
-		NARC_mmodel_boy1_nsbtx,
+		NARC_fld_act_achamo_nsbtx,	//NARC_mmodel_boy1_nsbtx,
 		FALSE
 	},
 	{
 		PLBOY3,
-		NARC_mmodel_boy3_nsbtx,
+		NARC_fld_act_artist_nsbtx,	//NARC_mmodel_boy3_nsbtx,
 		FALSE
 	},
 	{
 		PLMAN3,
-		NARC_mmodel_man3_nsbtx,
+		NARC_fld_act_badman_nsbtx,	//NARC_mmodel_man3_nsbtx,
 		FALSE
 	},
 	{
 		PLBADMAN,
-		NARC_mmodel_badman_nsbtx,
+		NARC_fld_act_beachgirl_nsbtx,	//NARC_mmodel_badman_nsbtx,
 		FALSE
 	},
 	{
 		PLEXPLORE,
-		NARC_mmodel_explore_nsbtx,
+		NARC_fld_act_idol_nsbtx,	//NARC_mmodel_explore_nsbtx,
 		FALSE
 	},
 	{
 		PLFIGHTER,
-		NARC_mmodel_fighter_nsbtx,
+		NARC_fld_act_lady_nsbtx,	//NARC_mmodel_fighter_nsbtx,
 		FALSE
 	},
 	{
 		PLGORGGEOUSM,
-		NARC_mmodel_gorggeousm_nsbtx,
+		NARC_fld_act_oldman1_nsbtx,	//NARC_mmodel_gorggeousm_nsbtx,
 		FALSE
 	},
 	{
 		PLMYSTERY,
-		NARC_mmodel_mystery_nsbtx,
+		NARC_fld_act_policeman_nsbtx,	//NARC_mmodel_mystery_nsbtx,
 		FALSE
 	},
 	{
 		PLGIRL1,
-		NARC_mmodel_girl1_nsbtx,
+		NARC_fld_act_rivel_nsbtx,	//NARC_mmodel_girl1_nsbtx,
 		FALSE
 	},
 	{
 		PLGIRL2,
-		NARC_mmodel_girl2_nsbtx,
+		NARC_fld_act_waiter_nsbtx,	//NARC_mmodel_girl2_nsbtx,
 		FALSE
 	},
 	{
 		PLWOMAN2,
-		NARC_mmodel_woman2_nsbtx,
+		NARC_fld_act_achamo_nsbtx,	//NARC_mmodel_woman2_nsbtx,
 		FALSE
 	},
 	{
 		PLWOMAN3,
-		NARC_mmodel_woman3_nsbtx,
+		NARC_fld_act_artist_nsbtx,	//NARC_mmodel_woman3_nsbtx,
 		FALSE
 	},
 	{
 		PLIDOL,
-		NARC_mmodel_idol_nsbtx,
+		NARC_fld_act_badman_nsbtx,	//NARC_mmodel_idol_nsbtx,
 		FALSE
 	},
 	{
 		PLLADY,	
-		NARC_mmodel_lady_nsbtx,
+		NARC_fld_act_beachgirl_nsbtx,	//NARC_mmodel_lady_nsbtx,
 		FALSE
 	},
 	{
 		PLCOWGIRL,
-		NARC_mmodel_cowgirl_nsbtx,
+		NARC_fld_act_idol_nsbtx,	//NARC_mmodel_cowgirl_nsbtx,
 		FALSE
 	},
 	{
 		PLGORGGEOUSW,
-		NARC_mmodel_gorggeousw_nsbtx,
+		NARC_fld_act_lady_nsbtx,	//NARC_mmodel_gorggeousw_nsbtx,
 		FALSE
 	},
 	{
 		PLWIFISW,
-		NARC_mmodel_wifisw_nsbtx,
+		NARC_fld_act_oldman1_nsbtx,	//NARC_mmodel_wifisw_nsbtx,
 		FALSE
 	},
 	{
 		PLWIFISM,
-		NARC_mmodel_wifism_nsbtx,
+		NARC_fld_act_policeman_nsbtx,	//NARC_mmodel_wifism_nsbtx,
 		FALSE
 	},
 };
@@ -709,16 +709,18 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 					TEXRESM_CutTexPTR( p_tex );
 				}
 			#else
-				bbdres[tblno].arcID = ARCID_FLDMMLD;
-				bbdres[tblno].datID = sc_WFLBY_3DMDL_DATA[i].tex;
 				bbdres[tblno].texFmt = GFL_BBD_TEXFMT_PAL16;
 				bbdres[tblno].texSiz = GFL_BBD_TEXSIZ_32x512;
 				bbdres[tblno].celSizX = 32;
 				bbdres[tblno].celSizY = 32;
 				if(i < WFLBY_3DMDL_DATA_HERO_NUM){
-					bbdres[tblno].dataCut = GFL_BBDACT_RESTYPE_TRANSSRC;
+					bbdres[tblno].arcID = ARCID_FLDACT;
+					bbdres[tblno].datID = NARC_fld_act_tex32x32_nsbtx;	//転送領域確保用のダミー
+					bbdres[tblno].dataCut = GFL_BBDACT_RESTYPE_DATACUT;//GFL_BBDACT_RESTYPE_TRANSSRC;
 				}
 				else{
+					bbdres[tblno].arcID = ARCID_FLDACT;
+					bbdres[tblno].datID = sc_WFLBY_3DMDL_DATA[i].tex;
 					bbdres[tblno].dataCut = GFL_BBDACT_RESTYPE_DATACUT;
 				}
 				tblno++;
@@ -834,6 +836,7 @@ void WFLBY_3DOBJSYS_Draw( WFLBY_3DOBJSYS* p_sys, GFL_G3D_CAMERA *p_camera )
 #if WB_FIX
 	BLACT_DrawSys();
 #else
+	GFL_BBDACT_Main( p_sys->p_blact );
 	GFL_BBDACT_Draw(p_sys->p_blact, p_camera, NULL);
 #endif
 
@@ -1029,8 +1032,17 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 		actdata.func = NULL;
 		actdata.work = NULL;
 		p_wk->act_idx = GFL_BBDACT_AddAct(p_sys->p_blact, p_sys->resunit_id, &actdata, 1);
-		GFL_BBDACT_SetAnimeTable(
-			p_sys->p_blact, p_wk->act_idx, DATA_BlActHeroTbl, NELEMS(DATA_BlActHeroTbl));
+		if(res_id == p_sys->resunit_id){	//res_idが先頭なら主人公
+			//ダミーと転送用のリソースを入れ替える
+			GFL_BBDACT_BindActTexResLoad(
+				p_sys->p_blact, p_wk->act_idx, ARCID_FLDACT, sc_WFLBY_3DMDL_DATA[res_id].tex);
+			GFL_BBDACT_SetAnimeTable(
+				p_sys->p_blact, p_wk->act_idx, playerBBDactAnmTable, NELEMS(playerBBDactAnmTable));
+		}
+		else{
+			GFL_BBDACT_SetAnimeTable(
+				p_sys->p_blact, p_wk->act_idx, DATA_BlActNpcTbl, NELEMS(DATA_BlActNpcTbl));
+		}
 		GFL_BBDACT_SetAnimeIdxOn(p_sys->p_blact, p_wk->act_idx, 0);
 	#endif
 	
@@ -1259,7 +1271,6 @@ void WFLBY_3DOBJWK_SetWay( WFLBY_3DOBJWK* p_wk, WF2DMAP_WAY way )
 	BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
 #else
 	GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
-	GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
 #endif
 }
 
@@ -1663,19 +1674,19 @@ static void WFLBY_3DOBJWK_Updata( WFLBY_3DOBJWK* p_wk )
 
 	// 以前のフレーム数より今のフレーム数が小さいとき
 	// 状態が変更したときに以前のアニメとフレーム数を保存する
+#if WB_FIX
 	if( (p_wk->lastfrm > frame) || (p_wk->lastst != st) ){
 		if( WFLBY_3DOBJWK_GetAnmSave( p_wk->lastst ) == TRUE ){
 			// アニメフレームを保存する
-		#if WB_FIX
 			p_wk->lastanm	= BLACT_AnmOffsGet( p_wk->p_act );
 			p_wk->lastframe = BLACT_AnmFrameGetOffs( p_wk->p_act );
-		#else
-			p_wk->lastanm	= GFL_BBDACT_GetAnimeIdx(p_wk->p_blact, p_wk->act_idx);
-			p_wk->lastframe = GFL_BBDACT_GetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx);
-		#endif
 		}
 		p_wk->lastst = st;
 	}
+#else
+	p_wk->lastanm	= GFL_BBDACT_GetAnimeIdx(p_wk->p_blact, p_wk->act_idx);
+	p_wk->lastframe = GFL_BBDACT_GetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx);
+#endif
 	p_wk->lastfrm	= frame;
 	
 	// 更新
@@ -1708,7 +1719,6 @@ static void WFLBY_3DOBJWK_Updata_Normal( WFLBY_3DOBJWK* p_wk )
 	BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
 #else
 	GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
-	GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
 #endif
 }
 
@@ -1740,7 +1750,7 @@ static void WFLBY_3DOBJWK_Updata_Walk( WFLBY_3DOBJWK* p_wk )
 #if WB_FIX
 	BLACT_AnmOffsChg( p_wk->p_act, anm );
 #else
-	GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+	;
 #endif
 
 	// 前のアニメと一緒なら前のフレームから続ける
@@ -1754,11 +1764,10 @@ static void WFLBY_3DOBJWK_Updata_Walk( WFLBY_3DOBJWK* p_wk )
 	}
 #else
 	if( p_wk->lastanm == anm ){
-		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, frame+p_wk->lastframe);
+		GFL_BBDACT_SetAnimeIdxContinue(p_wk->p_blact, p_wk->act_idx, anm);
+//※check		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, frame);
 	}else{
 		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, frame);
 	}
 #endif
 }
@@ -1777,26 +1786,24 @@ static void WFLBY_3DOBJWK_Updata_Turn( WFLBY_3DOBJWK* p_wk )
 	// フレーム数取得
 	now_frame = WF2DMAP_OBJWkDataGet( p_wk->cp_objwk, WF2DMAP_OBJPM_FRAME );
 
+	way	= WF2DMAP_OBJWkDataGet( p_wk->cp_objwk, WF2DMAP_OBJPM_WAY );
+	//anm = WFLBY_3DMDL_ANM_GetAnmOffs( TRUE, way );
+	anm = WFLBY_3DOBJ_ANM_TYPE_STOP_UP + way;
+	
 	if( now_frame < WFLBY_3DOBJ_TRUN_FIRST_FRAME ){
 	#if WB_FIX
 		BLACT_AnmFrameSetOffs( p_wk->p_act, WFLBY_3DOBJ_TRUN_FIRST_FRAME*FX32_ONE );	// 1歩前に
 	#else
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, WFLBY_3DOBJ_TRUN_FIRST_FRAME );	// 1歩前に
+		GFL_BBDACT_SetAnimeIdxContinue(p_wk->p_blact, p_wk->act_idx, anm );
+//		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 1);	// 1歩前に
 	#endif
 	}else{
-		// WAYの方向にあるく
-		way	= WF2DMAP_OBJWkDataGet( p_wk->cp_objwk, WF2DMAP_OBJPM_WAY );
-
-		// 方向のアニメオフセット取得
-		anm = WFLBY_3DMDL_ANM_GetAnmOffs( TRUE, way );
-
 		// アクターに設定
 	#if WB_FIX
 		BLACT_AnmOffsChg( p_wk->p_act, anm );
 		BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
 	#else
 		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
 	#endif
 	}
 }
@@ -1829,7 +1836,7 @@ static void WFLBY_3DOBJWK_Updata_Run( WFLBY_3DOBJWK* p_wk )
 #if WB_FIX
 	BLACT_AnmOffsChg( p_wk->p_act, anm );
 #else
-	GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
+	;
 #endif
 
 	// 前のアニメと一緒なら前のフレームから続ける
@@ -1843,11 +1850,10 @@ static void WFLBY_3DOBJWK_Updata_Run( WFLBY_3DOBJWK* p_wk )
 	}
 #else
 	if( p_wk->lastanm == anm ){
-		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, frame+p_wk->lastframe);
+		GFL_BBDACT_SetAnimeIdxContinue(p_wk->p_blact, p_wk->act_idx, anm);
+//※check		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, frame+p_wk->lastframe);
 	}else{
 		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, anm);
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, frame);
 	}
 #endif
 }
@@ -1890,7 +1896,6 @@ static void WFLBY_3DOBJWK_Anm_Rota( WFLBY_3DOBJWK* p_wk )
 		BLACT_AnmFrameSetOffs( p_wk->p_act, 0 );
 	#else
 		GFL_BBDACT_SetAnimeIdx(p_wk->p_blact, p_wk->act_idx, blact_anm);
-		GFL_BBDACT_SetAnimeFrmIdx(p_wk->p_blact, p_wk->act_idx, 0);
 	#endif
 	}
 	if( (p_wk->anmframe + p_wk->anmspeed) < (WFLBY_3DOBJ_ANM_ROTA_1SYNC*WF2DMAP_WAY_NUM) ){
