@@ -311,7 +311,7 @@ void CheckHeightData(const void *mem, MHI_PTR outMHI)
 	void * hdata_adrs = (void*)((u8*)mem + sizeof(DP_HEIGHT_HEADER));
 	READ_INFO read_info;
 	DP_HEIGHT_HEADER * dhh = (DP_HEIGHT_HEADER *)mem;
-	OS_Printf("address:%08x\n",mem);
+	//OS_Printf("address:%08x\n",mem);
 	readerHeader(&mem, &read_info);
 	//SetDataMem(&read_info, outMHI, (void **)&hdata_adrs);
 	outMHI->SplitGridData = hdata_adrs; (u8*)hdata_adrs += sizeof(SPLIT_GRID_DATA);
