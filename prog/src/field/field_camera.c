@@ -2,6 +2,7 @@
 /**
  * @file	field_camera.c
  * @brief	フィールドカメラ制御
+ * @author	tamada GAME FREAK inc.
  */
 //============================================================================================
 #include <gflib.h>
@@ -18,18 +19,20 @@
  */
 //------------------------------------------------------------------
 struct _FIELD_CAMERA {
-	HEAPID				heapID;
-	FIELD_MAIN_WORK * fieldWork;
-	GFL_G3D_CAMERA * g3Dcamera;
+	HEAPID				heapID;			///<使用するヒープ指定ID
+	FIELD_MAIN_WORK * fieldWork;		///<フィールドマップへのポインタ
+	GFL_G3D_CAMERA * g3Dcamera;			///<カメラ構造体へのポインタ
 
-	FIELD_CAMERA_TYPE	type;
-	VecFx32				target;
-	fx32				cameraHeight;
-	u16					cameraLength;
-	u16					direction;
-	
-	const VecFx32 *		watch_target;
+	FIELD_CAMERA_TYPE	type;			///<カメラのタイプ指定
+
+	const VecFx32 *		watch_target;	///<追随する注視点へのポインタ
+
+	VecFx32				target;			///<注視点用ワーク
+	fx32				xzHeight;
+	u16					xzLength;
+	u16					xzDir;
 };
+
 
 #if 0
 //------------------------------------------------------------------
@@ -54,19 +57,51 @@ static const FIELD_CAMERA_PARAM FieldCameraParam[] = {
 #endif
 
 
+//------------------------------------------------------------------
+/**
+ * @brief	場面ごとのカメラ制御関数テーブル定義
+ */
+//------------------------------------------------------------------
 typedef struct {
-	void (*setup)(FIELD_CAMERA * camera);
-	void (*control)(FIELD_CAMERA * camera);
+	void (*init_func)(FIELD_CAMERA * camera);
+	void (*control)(FIELD_CAMERA * camera, u16 key_cont);
 }CAMERA_FUNC_TABLE;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void SetupGridParameter(FIELD_CAMERA * camera);
-static void SetupBridgeParameter(FIELD_CAMERA * camera);
-static void SetupC3Parameter(FIELD_CAMERA * camera);
+static void initGridParameter(FIELD_CAMERA * camera);
+static void initBridgeParameter(FIELD_CAMERA * camera);
+static void initC3Parameter(FIELD_CAMERA * camera);
+static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont);
+static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont);
+static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont);
 
 
-#define	CAMERA_LENGTH	(16)
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	場面ごとのカメラ制御関数テーブル定義
+ */
+//------------------------------------------------------------------
+static const CAMERA_FUNC_TABLE CameraFuncTable[] = {
+	{
+		initGridParameter,
+		ControlGridParameter,
+	},
+	{
+		initBridgeParameter,
+		ControlBridgeParameter,
+	},
+	{
+		initC3Parameter,
+		ControlC3Parameter,
+	}
+};
+
+
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 /**
  * @brief	初期化
@@ -81,89 +116,26 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 {
 	FIELD_CAMERA* camera = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_CAMERA) );
 
+	enum { CAMERA_LENGTH = 16 };
+
 	GF_ASSERT(cam != NULL);
-	camera->heapID = heapID;
-	camera->fieldWork = fieldWork;
-	camera->g3Dcamera = cam;
-	camera->type = type;
+	GF_ASSERT(type < FIELD_CAMERA_TYPE_MAX);
 	TAMADA_Printf("FIELD CAMERA TYPE = %d\n", type);
+	camera->fieldWork = fieldWork;
+	camera->type = type;
+	camera->g3Dcamera = cam;
+	camera->watch_target = target;
+	camera->heapID = heapID;
 
 	VEC_Set( &camera->target, 0, 0, 0 );
-	camera->cameraHeight = 0;
-	camera->cameraLength = CAMERA_LENGTH;
-	camera->direction = 0;
+	camera->xzHeight = 0;
+	camera->xzLength = CAMERA_LENGTH;
+	camera->xzDir = 0;
 
-	camera->watch_target = target;
-
-	switch ( (FIELD_CAMERA_TYPE)type ) {
-	case FIELD_CAMERA_TYPE_GRID:
-		SetupGridParameter(camera);
-		break;
-	case FIELD_CAMERA_TYPE_H01:
-		SetupBridgeParameter(camera);
-		break;
-	case FIELD_CAMERA_TYPE_C03:
-		SetupC3Parameter(camera);
-		break;
-	default:
-		GF_ASSERT_MSG(0, "CAMERA TYPE ERROR! check maptable.xls\n");
-	}
+	CameraFuncTable[camera->type].init_func(camera);
 
 	return camera;
 }
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void SetupGridParameter(FIELD_CAMERA * camera)
-{
-	//{ 0x78, 0xd8000 },	//DPぽい
-	FIELD_CAMERA_SetLengthOnXZ( camera, 0x0078);
-	FIELD_CAMERA_SetHeightOnXZ( camera, 0xd8000);
-	{
-		fx32 far = 1024 << FX32_SHIFT;
-
-		GFL_G3D_CAMERA_SetFar( camera->g3Dcamera, &far );
-	}
-	FIELD_CAMERA_SetTargetPos(camera, camera->watch_target);
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void SetupC3Parameter(FIELD_CAMERA * camera)
-{
-	u16 dir = 0;
-	fx32 height = 0x7c000;
-	VecFx32 trans = {0x2f6f36, 0, 0x301402};
-
-	FIELD_CAMERA_SetLengthOnXZ(camera, 0x0308);
-	FIELD_CAMERA_SetDirectionOnXZ(camera, dir);
-	FIELD_CAMERA_SetHeightOnXZ(camera, height);
-	FIELD_CAMERA_SetTargetPos(camera, &trans);
-
-	//player_len = 0x1f0;
-	//v_len = 1;
-	//v_angle = 16;
-	//pos_angle = 0;
-	FIELD_CAMERA_SetFar(camera, (512 + 256 + 128) << FX32_SHIFT);
-	camera->watch_target = NULL;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void SetupBridgeParameter(FIELD_CAMERA * camera)
-{
-	u16 len;
-	fx32 height;
-	len = FIELD_CAMERA_GetLengthOnXZ(camera);
-	len += 0x0080;
-	FIELD_CAMERA_SetLengthOnXZ(camera, len);
-	height = FIELD_CAMERA_GetHeightOnXZ(camera);
-	height += 0x0003a000;
-	FIELD_CAMERA_SetHeightOnXZ(camera, height);
-	FIELD_CAMERA_SetFar(camera, 4096 << FX32_SHIFT );
-	FIELD_CAMERA_SetTargetPos(camera, camera->watch_target);
-}
-
 //------------------------------------------------------------------
 /**
  * @brief	終了
@@ -175,85 +147,173 @@ void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 }
 
 //------------------------------------------------------------------
-//------------------------------------------------------------------
-void FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA * camera, int key)
-{
-	VecFx32	vecMove = { 0, 0, 0 };
-	VecFx32	vecUD = { 0, 0, 0 };
-	BOOL	mvFlag = FALSE;
-	if( key & PAD_BUTTON_R ){
-		camera->direction -= RT_SPEED/2;
-	}
-	if( key & PAD_BUTTON_L ){
-		camera->direction += RT_SPEED/2;
-	}
-#if 0
-	if( key & PAD_BUTTON_B ){
-		if( camera->cameraLength > 8 ){
-			camera->cameraLength -= 8;
-		}
-		//vecMove.y = -MV_SPEED;
-	}
-	if( key & PAD_BUTTON_A ){
-		if( camera->cameraLength < 4096 ){
-			camera->cameraLength += 8;
-		}
-		//vecMove.y = MV_SPEED;
-	}
-	if( key & PAD_BUTTON_Y ){
-		camera->cameraHeight -= MV_SPEED;
-	}
-	if( key & PAD_BUTTON_X ){
-		camera->cameraHeight += MV_SPEED;
-	}
-#endif
-}
-
-//------------------------------------------------------------------
 /**
  * @brief	メイン
  */
 //------------------------------------------------------------------
 void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont)
 {
-	enum {
-		CAMERA_TARGET_HEIGHT =	(4),
-	};
+	CameraFuncTable[camera->type].control(camera, key_cont);
+}
 
-	VecFx32	pos, target;
 
-	switch (camera->type) {
-	case FIELD_CAMERA_TYPE_GRID:
-		break;
-	case FIELD_CAMERA_TYPE_H01:
-	case FIELD_CAMERA_TYPE_C03:
-		FIELD_CAMERA_DEBUG_Control(camera, key_cont);
-		break;
-	default:
-		GF_ASSERT_MSG(0, "CAMERA TYPE ERROR! check maptable.xls\n");
-	}
+//============================================================================================
+//
+//
+//		カメラ初期化用関数
+//
+//
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void initGridParameter(FIELD_CAMERA * camera)
+{
+	//{ 0x78, 0xd8000 },	//DPぽい
+	camera->xzLength = 0x0078;
+	camera->xzHeight = 0xd8000;
+	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
+}
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void initC3Parameter(FIELD_CAMERA * camera)
+{
+	VecFx32 trans = {0x2f6f36, 0, 0x301402};
+
+	camera->xzLength = 0x0308;
+	camera->xzHeight = 0x07c000;
+	camera->xzDir = 0;
+	FIELD_CAMERA_SetTargetPos(camera, &trans);
+
+	FIELD_CAMERA_SetFar(camera, (512 + 256 + 128) << FX32_SHIFT);
+	camera->watch_target = NULL;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void initBridgeParameter(FIELD_CAMERA * camera)
+{
+	enum { CAMERA_LENGTH = 16 };
+	camera->xzLength = 0x0080 + CAMERA_LENGTH;
+	camera->xzHeight = 0x0003a000;
+
+	FIELD_CAMERA_SetFar(camera, 4096 << FX32_SHIFT );
+}
+
+//============================================================================================
+//
+//
+//		カメラ状態アップデート用関数
+//
+//
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	注視点を保持する座標ワークを監視、追随する
+ */
+//------------------------------------------------------------------
+static void updateTargetBinding(FIELD_CAMERA * camera)
+{
 	if (camera->watch_target) {
 		(camera->target) = *(camera->watch_target);
 	}
-	
-	pos = camera->target;
+}
 
-	VEC_Set( &target,
-			pos.x,
-			pos.y + CAMERA_TARGET_HEIGHT*FX32_ONE,
-			pos.z);
+//------------------------------------------------------------------
+/**
+ * @brief	XZ平面でのカメラ制御
+ *
+ * 注視点、Y軸でのカメラの高さ、注視点からの水平距離をパラメータとして
+ * カメラの位置を決定する
+ */
+//------------------------------------------------------------------
+static void updateXZTargetCamera(FIELD_CAMERA * camera)
+{
+	enum { CAMERA_TARGET_HEIGHT = 4 };
+	VecFx32	pos, target;
 
-	pos.x = pos.x + camera->cameraLength * FX_SinIdx(camera->direction);
-	pos.y = pos.y + camera->cameraHeight;
-	pos.z = pos.z + camera->cameraLength * FX_CosIdx(camera->direction);
+	target = pos = camera->target;
+	target.y += CAMERA_TARGET_HEIGHT * FX32_ONE;
+
+	pos.x = pos.x + camera->xzLength * FX_SinIdx(camera->xzDir);
+	pos.y = pos.y + camera->xzHeight;
+	pos.z = pos.z + camera->xzLength * FX_CosIdx(camera->xzDir);
 
 	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &target );
 	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &pos );
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief	デバッグのためのキー制御
+ */
+//------------------------------------------------------------------
+static void debugControl( FIELD_CAMERA * camera, int key)
+{
+	VecFx32	vecMove = { 0, 0, 0 };
+	VecFx32	vecUD = { 0, 0, 0 };
+	BOOL	mvFlag = FALSE;
+	if( key & PAD_BUTTON_R ){
+		camera->xzDir -= RT_SPEED/2;
+	}
+	if( key & PAD_BUTTON_L ){
+		camera->xzDir += RT_SPEED/2;
+	}
+#if 0
+	if( key & PAD_BUTTON_B ){
+		if( camera->xzLength > 8 ){
+			camera->xzLength -= 8;
+		}
+		//vecMove.y = -MV_SPEED;
+	}
+	if( key & PAD_BUTTON_A ){
+		if( camera->xzLength < 4096 ){
+			camera->xzLength += 8;
+		}
+		//vecMove.y = MV_SPEED;
+	}
+	if( key & PAD_BUTTON_Y ){
+		camera->xzHeight -= MV_SPEED;
+	}
+	if( key & PAD_BUTTON_X ){
+		camera->xzHeight += MV_SPEED;
+	}
+#endif
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont)
+{
+	updateTargetBinding(camera);
+	updateXZTargetCamera(camera);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
+{
+	debugControl(camera, key_cont);
+	updateTargetBinding(camera);
+	updateXZTargetCamera(camera);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont)
+{
+	updateTargetBinding(camera);
+	updateXZTargetCamera(camera);
+}
 
 
+//============================================================================================
+//
+//
+//			カメラ操作用外部公開関数
+//
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera)
@@ -347,7 +407,6 @@ void	FIELD_CAMERA_GetTargetPos( const FIELD_CAMERA* camera, VecFx32* pos )
 {
 	*pos = camera->target;
 }
-
 //------------------------------------------------------------------
 /**
  * @brief	XZ平面上の方向を取得する
@@ -365,38 +424,47 @@ u16 FIELD_CAMERA_GetDirectionOnXZ( const FIELD_CAMERA * camera )
 
 	VEC_Subtract( &target, &camPos, &vec );
 	value = FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
-	if(value != camera->direction) {
-		TAMADA_Printf("calc value = %04x, hold value = %04x\n",value, camera->direction);
+	if(value != camera->xzDir) {
+		TAMADA_Printf("calc value = %04x, hold value = %04x\n",value, camera->xzDir);
 	}
 	return value;
 #endif
-	return camera->direction;
+	return camera->xzDir;
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELD_CAMERA_SetDirectionOnXZ(FIELD_CAMERA * camera, u16 dir)
 {
-	camera->direction = dir;
+	camera->xzDir = dir;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void FIELD_CAMERA_SetLengthOnXZ( FIELD_CAMERA *camera, u16 leng )
 {
-	camera->cameraLength = leng;
+	camera->xzLength = leng;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 u16	FIELD_CAMERA_GetLengthOnXZ( const FIELD_CAMERA *camera )
 {
-	return camera->cameraLength;
+	return camera->xzLength;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void	FIELD_CAMERA_SetHeightOnXZ( FIELD_CAMERA *camera, fx32 height )
 {
-	camera->cameraHeight = height;
+	camera->xzHeight = height;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 fx32	FIELD_CAMERA_GetHeightOnXZ( const FIELD_CAMERA *camera )
 {
-	 return camera->cameraHeight;
+	 return camera->xzHeight;
 }
 
 
