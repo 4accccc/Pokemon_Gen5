@@ -41,6 +41,7 @@ typedef struct {
 
 }GFL_SNDVIEWER_SETUP;
 
+#define GFL_SNDVIEWER_PLAYERNO_UNKNOWN	(0xffffffff)
 //============================================================================================
 /**
  *

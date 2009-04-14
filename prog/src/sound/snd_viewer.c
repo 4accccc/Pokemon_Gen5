@@ -78,7 +78,7 @@ enum {
 //============================================================================================
 #define CHANNEL_NUM			(16)
 #define TRACK_NUM			(16)
-#define	PLAYER_STACK_NUM	(8)	// ƒvƒŒ[ƒ„[ŠK‘w•ªiŒ»ó‚Í5j•K—v
+#define	PLAYER_STACK_NUM	(8)	// ID 0 = tempPlayer
 #define SWITCH_VAL_MAX		(32)
 #define SWITCH_VAL_ZERO		(16)
 #define SWITCH_VAL_MIN		(0)
@@ -256,6 +256,7 @@ static void updateSndSystemInfo( GFL_SNDVIEWER* gflSndViewer )
 	}
 	if( gflSndViewer->setup.getPlayerNoFunc != NULL ){
 		u32 newPlayerNo = gflSndViewer->setup.getPlayerNoFunc();
+		if(newPlayerNo >= PLAYER_STACK_NUM){ newPlayerNo = PLAYER_STACK_NUM -1; }
 		if( newPlayerNo != gflSndViewer->playerNoIdx ){
 			if( newPlayerNo >= gflSndViewer->playerNoIdx ){
 				playerResetFlag = TRUE;
@@ -560,7 +561,7 @@ static void SetScrnPlayerStatus( GFL_SNDVIEWER* gflSndViewer )
 	x = 17;
 	y = 21;
 
-	for( i=0; i<5; i++ ){
+	for( i=1; i<6; i++ ){
 		if( i == gflSndViewer->playerNoIdx ){ chrNo = 0x79; }
 		else if( i < gflSndViewer->playerNoIdx ){ chrNo = 0x7a; }
 		else { chrNo = 0x7b; }
@@ -569,9 +570,9 @@ static void SetScrnPlayerStatus( GFL_SNDVIEWER* gflSndViewer )
 		if(trackNum){ chrNo2 = trackNum -1 + 0xd0; } 
 		else { chrNo2 = 0x4f; }
 
-		scrnBuf[ (y-i)*32 + x + 0 ] = chrNo | palMask;
-		scrnBuf[ (y-i)*32 + x + 1 ] = chrNo | palMask | 0x0400;	// ”½“]
-		scrnBuf[ (y-i)*32 + x + 2 ] = chrNo2 | palMask;
+		scrnBuf[ (y-(i-1))*32 + x + 0 ] = chrNo | palMask;
+		scrnBuf[ (y-(i-1))*32 + x + 1 ] = chrNo | palMask | 0x0400;	// ”½“]
+		scrnBuf[ (y-(i-1))*32 + x + 2 ] = chrNo2 | palMask;
 	}
 }
 

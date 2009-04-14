@@ -255,6 +255,9 @@ u32 PMSND_GetSndHeapFreeSize( void )
 
 NNSSndHandle* PMSND_GetBGMhandlePointer( void )
 {
+	if( PMSND_CheckPlaySE() == TRUE ){
+		return &systemPlayerUnit.playerDataArray[PLAYER_SEVOICE].sndHandle;
+	}
 	return SOUNDMAN_GetHierarchyPlayerSndHandle();
 }
 
@@ -265,7 +268,10 @@ u32 PMSND_GetBGMsoundNo( void )
 
 u32 PMSND_GetBGMplayerNoIdx( void )
 {
-	return	SOUNDMAN_GetHierarchyPlayerPlayerNoIdx();
+	if( PMSND_CheckPlaySE() == TRUE ){
+		return 0;
+	}
+	return	SOUNDMAN_GetHierarchyPlayerPlayerNoIdx() + 1;
 }
  
 BOOL PMSND_CheckOnReverb( void )
