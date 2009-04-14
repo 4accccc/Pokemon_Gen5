@@ -21,20 +21,6 @@ static void NoGridCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 	fieldWork->pcActCont = CreatePlayerAct( fieldWork, fieldWork->heapID );
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
-	{
-		u16 len;
-		fx32 height;
-		FLD_GetCameraLength(fieldWork->camera_control, &len);
-		len += 0x0080;
-		FLD_SetCameraLength(fieldWork->camera_control, len);
-		FLD_GetCameraHeight(fieldWork->camera_control, &height);
-		height += 0x0003a000;
-		FLD_SetCameraHeight(fieldWork->camera_control, height);
-	}
-	{
-		fx32 far = 4096 << FX32_SHIFT;
-		GFL_G3D_CAMERA_SetFar(fieldWork->g3Dcamera, &far);
-	}
 }
 
 //------------------------------------------------------------------
@@ -46,7 +32,7 @@ static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 
-	FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
+//	FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
 
 	FIELD_CAMERA_DEBUG_Control( fieldWork->camera_control, fieldWork->key_cont );
 

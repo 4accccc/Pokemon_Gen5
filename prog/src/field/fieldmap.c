@@ -307,7 +307,11 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID );
 
 		fieldWork->camera_control = FIELD_CAMERA_Create(
-				fieldWork, fieldWork->g3Dcamera, fieldWork->heapID );
+				fieldWork,
+				ZONEDATA_GetCameraID(fieldWork->map_id),
+				fieldWork->g3Dcamera,
+				&fieldWork->now_pos,
+				fieldWork->heapID );
 
 		SetMapperData(fieldWork);
 		FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );

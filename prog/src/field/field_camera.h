@@ -10,12 +10,21 @@
 //------------------------------------------------------------------
 typedef struct _FIELD_CAMERA	FIELD_CAMERA;
 
+typedef enum {
+	FIELD_CAMERA_TYPE_GRID,
+	FIELD_CAMERA_TYPE_H01,
+	FIELD_CAMERA_TYPE_C03,
+}FIELD_CAMERA_TYPE;
 
 //------------------------------------------------------------------
 //	ê∂ê¨ÅEÉÅÉCÉìÅEè¡ãé
 //------------------------------------------------------------------
-extern FIELD_CAMERA* FIELD_CAMERA_Create(FIELD_MAIN_WORK * fieldWork,
-		GFL_G3D_CAMERA * cam, HEAPID heapID);
+extern FIELD_CAMERA* FIELD_CAMERA_Create(
+		FIELD_MAIN_WORK * fieldWork,
+		FIELD_CAMERA_TYPE type,
+		GFL_G3D_CAMERA * cam,
+		const VecFx32 * target,
+		HEAPID heapID);
 extern void				FIELD_CAMERA_Delete( FIELD_CAMERA* camera );
 extern void				FIELD_CAMERA_Main( FIELD_CAMERA* camera);
 
@@ -61,7 +70,7 @@ extern void	FLD_GetCameraHeight( FIELD_CAMERA *camera, fx32 *height );
 //------------------------------------------------------------------
 extern const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera);
 
-extern void FIELD_CAMERA_SetNormalCameraMode(FIELD_CAMERA * camera, const VecFx32 * watch_pos);
-extern const void FIELD_CAMERA_InitPositionWatcher(FIELD_CAMERA * camera, const VecFx32 * watch_pos);
-extern const void FIELD_CAMERA_InitOffsetWatcher(FIELD_CAMERA * camera, const VecFx32 * watch_ofs);
+extern void FIELD_CAMERA_FreeTarget(FIELD_CAMERA * camera);
+extern void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target);
+
 

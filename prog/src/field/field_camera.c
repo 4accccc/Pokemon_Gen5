@@ -22,15 +22,13 @@ struct _FIELD_CAMERA {
 	FIELD_MAIN_WORK * fieldWork;
 	GFL_G3D_CAMERA * g3Dcamera;
 
+	FIELD_CAMERA_TYPE	type;
 	VecFx32				pos;
 	fx32				cameraHeight;
 	u16					cameraLength;
 	u16					direction;
 	
-	VecFx32				transOffset;
-
-	const VecFx32 *		watch_pos;
-	const VecFx32 *		watch_ofs;
+	const VecFx32 *		watch_target;
 };
 
 #if 0
@@ -55,13 +53,31 @@ static const FIELD_CAMERA_PARAM FieldCameraParam[] = {
 };
 #endif
 
+
+typedef struct {
+	void (*setup)(FIELD_CAMERA * camera);
+	void (*control)(FIELD_CAMERA * camera);
+}CAMERA_FUNC_TABLE;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void SetupGridParameter(FIELD_CAMERA * camera);
+static void SetupBridgeParameter(FIELD_CAMERA * camera);
+static void SetupC3Parameter(FIELD_CAMERA * camera);
+
+
 #define	CAMERA_LENGTH	(16)
 //------------------------------------------------------------------
 /**
  * @brief	èâä˙âª
  */
 //------------------------------------------------------------------
-FIELD_CAMERA* FIELD_CAMERA_Create(FIELD_MAIN_WORK * fieldWork, GFL_G3D_CAMERA * cam, HEAPID heapID)
+FIELD_CAMERA* FIELD_CAMERA_Create(
+		FIELD_MAIN_WORK * fieldWork,
+		FIELD_CAMERA_TYPE type,
+		GFL_G3D_CAMERA * cam,
+		const VecFx32 * target,
+		HEAPID heapID)
 {
 	FIELD_CAMERA* camera = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_CAMERA) );
 
@@ -69,21 +85,83 @@ FIELD_CAMERA* FIELD_CAMERA_Create(FIELD_MAIN_WORK * fieldWork, GFL_G3D_CAMERA * 
 	camera->heapID = heapID;
 	camera->fieldWork = fieldWork;
 	camera->g3Dcamera = cam;
+	camera->type = type;
+	TAMADA_Printf("FIELD CAMERA TYPE = %d\n", type);
 
 	VEC_Set( &camera->pos, 0, 0, 0 );
 	camera->cameraHeight = 0;
 	camera->cameraLength = CAMERA_LENGTH;
 	camera->direction = 0;
 
-	camera->watch_pos = NULL;
-	camera->watch_ofs = NULL;
+	camera->watch_target = target;
 
+	switch ( (FIELD_CAMERA_TYPE)type ) {
+	case FIELD_CAMERA_TYPE_GRID:
+		SetupGridParameter(camera);
+		break;
+	case FIELD_CAMERA_TYPE_H01:
+		SetupBridgeParameter(camera);
+		break;
+	case FIELD_CAMERA_TYPE_C03:
+		SetupC3Parameter(camera);
+		break;
+	default:
+		GF_ASSERT_MSG(0, "CAMERA TYPE ERROR! check maptable.xls\n");
+	}
+
+	return camera;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void SetupGridParameter(FIELD_CAMERA * camera)
+{
+	//{ 0x78, 0xd8000 },	//DPÇ€Ç¢
+	FLD_SetCameraLength( camera, 0x0078);
+	FLD_SetCameraHeight( camera, 0xd8000);
 	{
 		fx32 far = 1024 << FX32_SHIFT;
 
 		GFL_G3D_CAMERA_SetFar( camera->g3Dcamera, &far );
 	}
-	return camera;
+	FIELD_CAMERA_SetPos(camera, camera->watch_target);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void SetupC3Parameter(FIELD_CAMERA * camera)
+{
+	u16 dir = 0;
+	fx32 height = 0x7c000;
+	VecFx32 trans = {0x2f6f36, 0, 0x301402};
+
+	FLD_SetCameraLength(camera, 0x0308);
+	FLD_SetCameraDirection(camera, &dir);
+	FLD_SetCameraHeight(camera, height);
+	FIELD_CAMERA_SetPos(camera, &trans);
+
+	//player_len = 0x1f0;
+	//v_len = 1;
+	//v_angle = 16;
+	//pos_angle = 0;
+	FIELD_CAMERA_SetFar(camera, (512 + 256 + 128) << FX32_SHIFT);
+	camera->watch_target = NULL;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void SetupBridgeParameter(FIELD_CAMERA * camera)
+{
+	u16 len;
+	fx32 height;
+	FLD_GetCameraLength(camera, &len);
+	len += 0x0080;
+	FLD_SetCameraLength(camera, len);
+	FLD_GetCameraHeight(camera, &height);
+	height += 0x0003a000;
+	FLD_SetCameraHeight(camera, height);
+	FIELD_CAMERA_SetFar(camera, 4096 << FX32_SHIFT );
+	FIELD_CAMERA_SetPos(camera, camera->watch_target);
 }
 
 //------------------------------------------------------------------
@@ -140,17 +218,11 @@ void	FIELD_CAMERA_Main( FIELD_CAMERA* camera )
 {
 	VecFx32	pos, target;
 
-	if (camera->watch_pos) {
-		(camera->pos) = *(camera->watch_pos);
-	}
-	if (camera->watch_ofs) {
-		(camera->transOffset) = *(camera->watch_ofs);
+	if (camera->watch_target) {
+		(camera->pos) = *(camera->watch_target);
 	}
 	
 	pos = camera->pos;
-	pos.x += camera->transOffset.x;
-	pos.y += camera->transOffset.y;
-	pos.z += camera->transOffset.z;
 
 	VEC_Set( &target,
 			pos.x,
@@ -175,25 +247,17 @@ const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-const void FIELD_CAMERA_InitPositionWatcher(FIELD_CAMERA * camera, const VecFx32 * watch_pos)
+void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target)
 {
-	camera->watch_pos = watch_pos;
+	camera->watch_target = watch_target;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_CAMERA_FreeTarget(FIELD_CAMERA * camera)
+{
+	camera->watch_target = NULL;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-const void FIELD_CAMERA_InitOffsetWatcher(FIELD_CAMERA * camera, const VecFx32 * watch_ofs)
-{
-	camera->watch_ofs = watch_ofs;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void FIELD_CAMERA_SetNormalCameraMode(FIELD_CAMERA * camera, const VecFx32 * watch_pos)
-{
-	FIELD_CAMERA_InitPositionWatcher(camera, watch_pos);
-	FIELD_CAMERA_InitOffsetWatcher(camera, NULL);
-}
 //------------------------------------------------------------------
 /**
  * @brief	nearÉNÉäÉbÉvñ Ç‹Ç≈ÇÃãóó£Çê›íË

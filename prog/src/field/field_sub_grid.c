@@ -269,9 +269,6 @@ static void GridMoveCreate(
 	
 	fieldWork->pGridCont = FGridCont_Init( fieldWork, pos, dir );
 	
-	//カメラ設定
-	FLD_SetCameraLength( fieldWork->camera_control, DATA_CameraTbl[0].len );
-	FLD_SetCameraHeight( fieldWork->camera_control, DATA_CameraTbl[0].hi );
 	
 	//ビルボード設定
 	{
@@ -433,7 +430,7 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	Jiki_UpdatePlayerWork( fieldWork );
 
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
-	FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
+	//FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
 //	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 	
 }
@@ -512,7 +509,7 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		}
 
 		GetPlayerActTrans( fieldWork->pcActCont, pos );
-		FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
+		//FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
 	//	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 	
 	}
@@ -592,7 +589,7 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	}
 
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
-	FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
+	//FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
 }
 
 //======================================================================

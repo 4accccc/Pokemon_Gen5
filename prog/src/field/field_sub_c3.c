@@ -34,26 +34,10 @@ static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
 
 	{
-		FIELD_CAMERA * cam = fieldWork->camera_control;
-		u16 len = 0x0340;
-		u16 dir = 0;
-		fx32 height = 0x7c000;
-		VecFx32 trans = {0x2f6f36, 0, 0x301402};
-
-		FLD_SetCameraLength(cam, 0x0308);
-		FLD_SetCameraDirection(cam, &dir);
-		FLD_SetCameraHeight(cam, height);
-		FIELD_CAMERA_SetPos(cam, &trans);
-
 		player_len = 0x1f0;
 		v_len = 1;
 		v_angle = 16;
 		pos_angle = 0;
-	}
-	{
-		//fx32 far = 1024 << FX32_SHIFT;
-		fx32 far = (512 + 256 + 128) << FX32_SHIFT;
-		GFL_G3D_CAMERA_SetFar(fieldWork->g3Dcamera, &far);
 	}
 }
 
