@@ -29,6 +29,7 @@ typedef struct
 	void*				printBuffer;
 	void*				recvBuf;
 	void*				recvBuf2;
+	GFL_TCB				*vBlankTask;
 }MCS_WORK;
 
 static	MCS_WORK	*mw = NULL;
@@ -75,7 +76,7 @@ BOOL	MCS_Init( HEAPID heapID )
 	mw->mcsWorkMem = GFL_HEAP_AllocMemory( mw->heapID, NNS_MCS_WORKMEM_SIZE ); // MCSのワーク用メモリを確保
 	NNS_McsInit( mw->mcsWorkMem );
 
-	GFUser_VIntr_CreateTCB( MCS_VBlankIntr, NULL, 0 );
+	mw->vBlankTask = GFUser_VIntr_CreateTCB( MCS_VBlankIntr, NULL, 0 );
 
 	// カートリッジ割り込みを有効にし、カートリッジ割り込み内で
     // NNS_McsCartridgeInterrupt()が呼ばれるようにする
@@ -130,12 +131,14 @@ void	MCS_Exit( void )
 	GFL_HEAP_FreeMemory( mw->recvBuf );
 	GFL_HEAP_FreeMemory( mw->printBuffer );
 
+	GFL_TCB_DeleteTask( mw->vBlankTask );
+
 	// NNS_McsPutStringによる出力
 	(void)NNS_McsPutString("device close\n");
 
 	// デバイスをクローズ
 	(void)NNS_McsClose();
-
+	
 	GFL_HEAP_FreeMemory( mw->mcsWorkMem );
 
 	GFL_HEAP_FreeMemory( mw );

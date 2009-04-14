@@ -48,4 +48,7 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work );
 u16		STA_ACT_GetStageScroll( ACTING_WORK *work );
 void	STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll );
 
+
+//エディタ用
+void	STA_ACT_EDITOR_SetScript( ACTING_WORK *work , void* data );
 #endif STA_ACTING_H__

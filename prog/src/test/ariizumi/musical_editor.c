@@ -18,13 +18,21 @@
 
 #include "musical/stage/sta_acting.h"
 
+#include "test/soga/gf_mcs.h"
+
 //======================================================================
 //	define
 //======================================================================
+#pragma mark [>define
+#define	HEAD_SIZE			( 4 )
+
+#define	MCS_READ_CH			( 0 )
+#define	MCS_WRITE_CH		( 0 )
 
 //======================================================================
 //	enum
 //======================================================================
+#pragma mark [>enum
 enum	//メインシーケンス
 {
 	STA_SEQ_INIT_ACTING,	//ステージ演技部分
@@ -32,23 +40,54 @@ enum	//メインシーケンス
 	STA_SEQ_TERM_ACTING,
 };
 
+//MCS用定義
+enum
+{
+	SEND_SEQUENCE = 1,
+	SEND_SEQUENCE_OK,
+	SEND_RESOURCE,
+	SEND_RESOURCE_OK,
+	SEND_RECEIVE,
+	SEND_RECEIVE_OK,
+	SEND_DECIDE,
+	SEND_CANCEL,
+	SEND_IDLE,
+};
+
+//MCS用Seq
+typedef enum
+{
+	MSEQ_WAIT,
+	MSEQ_LOAD_SEQ,
+	MSEQ_LOAD_RES,
+	MSEQ_SEND,
+}MSC_SEQ;
+
 //======================================================================
 //	typedef struct
 //======================================================================
-
+#pragma mark [>struct
 typedef struct
 {
 	ACTING_INIT_WORK	*actInitWork;
 	ACTING_WORK			*actWork;
+	
+	MSC_SEQ				mcsSeq;
+	void				*scriptData;
 }MUS_EDIT_LOCAL_WORK;
 
 //======================================================================
 //	proto
 //======================================================================
-
+#pragma mark [>prot
 static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT MusicalEditProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT MusicalEditProc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
+
+static void MusicalEdit_McsMain( MUS_EDIT_LOCAL_WORK *work );
+static void MusicalEdit_McsWait( MUS_EDIT_LOCAL_WORK *work );
+static void MusicalEdit_McsLoadSeq( MUS_EDIT_LOCAL_WORK *work );
+static void MusicalEdit_McsLoadRes( MUS_EDIT_LOCAL_WORK *work );
 
 GFL_PROC_DATA MusicalEdit_ProcData =
 {
@@ -56,6 +95,8 @@ GFL_PROC_DATA MusicalEdit_ProcData =
 	MusicalEditProc_Main,
 	MusicalEditProc_Term
 };
+
+FS_EXTERN_OVERLAY(sogabe_debug);
 
 //--------------------------------------------------------------
 //	
@@ -65,7 +106,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 {
 	int ePos;
 	MUS_EDIT_LOCAL_WORK *work;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x60000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x70000 );
 
 	work = GFL_PROC_AllocWork( proc, sizeof(MUS_EDIT_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
 	work->actInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STAGE , sizeof(ACTING_INIT_WORK) );
@@ -104,12 +145,24 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 		work->actInitWork->musPoke[ePos].equip[MUS_POKE_EQU_BODY].type = 30;
 	}
 */	
+
+	//mcs用初期化
+	work->mcsSeq = MSEQ_WAIT;
+	work->scriptData = NULL;
+	GFL_OVERLAY_Load(FS_OVERLAY_ID(sogabe_debug));
 	return GFL_PROC_RES_FINISH;
 }
 
 static GFL_PROC_RESULT MusicalEditProc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
 	MUS_EDIT_LOCAL_WORK *work = mywk;
+	
+	if( work->scriptData != NULL )
+	{
+		GFL_HEAP_FreeMemory( work->scriptData );
+	}
+
+	GFL_OVERLAY_Unload(FS_OVERLAY_ID(sogabe_debug));
 	
 	GFL_HEAP_FreeMemory( work->actInitWork->musPoke[0].pokePara );
 	GFL_HEAP_FreeMemory( work->actInitWork->musPoke[1].pokePara );
@@ -129,6 +182,7 @@ static GFL_PROC_RESULT MusicalEditProc_Main( GFL_PROC * proc, int * seq , void *
 	{
 	case STA_SEQ_INIT_ACTING:
 		work->actWork = STA_ACT_InitActing( work->actInitWork );
+		MCS_Init( HEAPID_MUSICAL_STAGE );
 		*seq = STA_SEQ_LOOP_ACTING;
 		break;
 		
@@ -136,6 +190,7 @@ static GFL_PROC_RESULT MusicalEditProc_Main( GFL_PROC * proc, int * seq , void *
 		{
 			ACTING_RETURN ret;
 			ret = STA_ACT_LoopActing( work->actWork );
+			MusicalEdit_McsMain( work );
 			if( ret == ACT_RET_GO_END )
 			{
 				*seq = STA_SEQ_TERM_ACTING;
@@ -145,9 +200,110 @@ static GFL_PROC_RESULT MusicalEditProc_Main( GFL_PROC * proc, int * seq , void *
 
 	case STA_SEQ_TERM_ACTING:
 		STA_ACT_TermActing( work->actWork );
+		MCS_Exit();
 		return GFL_PROC_RES_FINISH;
 		break;
 	}
+	
 	return GFL_PROC_RES_CONTINUE;
 }
 
+static void MusicalEdit_McsMain( MUS_EDIT_LOCAL_WORK *work )
+{
+	u32 size;
+	MCS_Main();
+
+	switch(work->mcsSeq)
+	{
+	case MSEQ_WAIT:
+		MusicalEdit_McsWait( work );
+		break;
+	case MSEQ_LOAD_SEQ:
+		MusicalEdit_McsLoadSeq( work );
+		break;
+	case MSEQ_LOAD_RES:
+	case MSEQ_SEND:
+		MusicalEdit_McsLoadRes( work );
+		break;
+	}
+
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+	{
+		if( work->scriptData != NULL )
+		{
+			STA_ACT_EDITOR_SetScript( work->actWork , work->scriptData );
+		}
+	}
+}
+
+static void MusicalEdit_McsWait( MUS_EDIT_LOCAL_WORK *work )
+{
+	const u32 size = MCS_CheckRead();
+	if( size > 0 )
+	{
+		u32	head;
+		MCS_Read( &head, HEAD_SIZE );
+		if( head == SEND_SEQUENCE )
+		{
+			work->mcsSeq = MSEQ_LOAD_SEQ;
+			head = SEND_SEQUENCE_OK;
+			MCS_Write( MCS_WRITE_CH, &head, 4 );
+			OS_TPrintf("sequence_data head:%d\n",size);
+		}
+		else if( head == SEND_RESOURCE )
+		{
+			work->mcsSeq = MSEQ_LOAD_RES;
+			head = SEND_RESOURCE_OK;
+			MCS_Write( MCS_WRITE_CH, &head, 4 );
+			OS_TPrintf("resource_data head:%d\n",size);
+		}
+		else if( head == SEND_RECEIVE )
+		{
+			work->mcsSeq = MSEQ_SEND;
+//				evw->sub_seq_no = SUB_SEQ_INIT;
+//				evw->answer = 0;
+			head = SEND_RECEIVE_OK;
+			MCS_Write( MCS_WRITE_CH, &head, 4 );
+			OS_TPrintf("receive head:%d\n",size);
+		}
+	}
+}
+static void MusicalEdit_McsLoadSeq( MUS_EDIT_LOCAL_WORK *work )
+{
+	const u32 size = MCS_CheckRead();
+	if( size )
+	{
+		u32	head;
+		if( work->scriptData )
+		{
+			GFL_HEAP_FreeMemory( work->scriptData );
+		}
+		work->scriptData = GFL_HEAP_AllocClearMemory( HEAPID_MUSICAL_STAGE, size );
+		MCS_Read( work->scriptData, size );
+		head = SEND_IDLE;
+		MCS_Write( MCS_WRITE_CH, &head, 4 );
+		work->mcsSeq = MSEQ_WAIT;
+		OS_TPrintf("sequence_data load:%d\n",size);
+	}
+	
+}
+
+static void MusicalEdit_McsLoadRes( MUS_EDIT_LOCAL_WORK *work )
+{
+	//ダミー読み込み
+	const u32	size = MCS_CheckRead();
+
+	if( size )
+	{
+		u32	head;
+		void* data;
+		data = GFL_HEAP_AllocClearMemory( HEAPID_MUSICAL_STAGE, size );
+		MCS_Read( data, size );
+		head = SEND_IDLE;
+		MCS_Write( MCS_WRITE_CH, &head, 4 );
+		work->mcsSeq = MSEQ_WAIT;
+
+		GFL_HEAP_FreeMemory( data );
+		OS_TPrintf("dummy load:%d\n",size);
+	}
+}

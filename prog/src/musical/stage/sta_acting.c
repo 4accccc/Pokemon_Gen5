@@ -866,5 +866,13 @@ void	STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll )
 	work->updateScroll = TRUE;
 }
 
+#pragma mark [> editor func
+//--------------------------------------------------------------
+//エディタ用
+//--------------------------------------------------------------
+void	STA_ACT_EDITOR_SetScript( ACTING_WORK *work , void* data )
+{
+	STA_SCRIPT_SetScript( work->scriptSys , data );
+}
 
 
