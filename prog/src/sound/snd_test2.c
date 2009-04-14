@@ -576,7 +576,6 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 		break;
 
 	case 1:
-		GFL_SNDVIEWER_ChangeSndHandle(sw->gflSndViewer, PMSND_GetBGMhandlePointer());
 		{
 			//soundStatusƒRƒ“ƒgƒ[ƒ‹Ý’è
 			u16 flag;
@@ -834,7 +833,6 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 		case SNDTEST_TPEV_BGM_PLAY:
 			if( sw->bgmPauseSw == FALSE ){
 				PMSND_PlayBGM(sw->setNo[NOIDX_BGMNO]);
-				GFL_SNDVIEWER_InitControl(sw->gflSndViewer);
 			} else {
 				PMSND_PauseBGM(FALSE);
 				sw->bgmPauseSw = FALSE;
@@ -858,7 +856,6 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 		case SNDTEST_TPEV_BGM_PLAYFADEIN:
 			PMSND_StopBGM();
 			PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
-			GFL_SNDVIEWER_InitControl(sw->gflSndViewer);
 			sw->bgmPauseSw = FALSE;
 			break;
 
@@ -869,7 +866,6 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 
 		case SNDTEST_TPEV_BGM_FADEOUTPLAYFADEIN:
 			PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
-			GFL_SNDVIEWER_InitControl(sw->gflSndViewer);
 			sw->bgmPauseSw = FALSE;
 			break;
 
@@ -925,7 +921,6 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 				PMSND_DisableCaptureReverb();
 				sw->reverbFlag = FALSE;
 			}
-			GFL_SNDVIEWER_InitReverbControl( sw->gflSndViewer );
 			writeButton(sw, 0x07, 0x15, sw->reverbFlag );
 			break;
 

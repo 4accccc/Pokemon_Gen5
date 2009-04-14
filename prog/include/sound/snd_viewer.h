@@ -52,8 +52,5 @@ extern GFL_SNDVIEWER*	GFL_SNDVIEWER_Create( const GFL_SNDVIEWER_SETUP* setup, HE
 extern void				GFL_SNDVIEWER_Delete( GFL_SNDVIEWER* gflSndViewer );
 extern BOOL				GFL_SNDVIEWER_Main( GFL_SNDVIEWER* gflSndViewer );	//FALSEÇ≈èIóπ
 
-extern void	GFL_SNDVIEWER_InitControl( GFL_SNDVIEWER* gflSndViewer );
-extern void	GFL_SNDVIEWER_InitReverbControl( GFL_SNDVIEWER* gflSndViewer );
 extern u16	GFL_SNDVIEWER_GetControl( GFL_SNDVIEWER* gflSndViewer );
 extern void	GFL_SNDVIEWER_SetControl( GFL_SNDVIEWER* gflSndViewer, u16 flag );
-extern void	GFL_SNDVIEWER_ChangeSndHandle( GFL_SNDVIEWER* gflSndViewer, NNSSndHandle* pBgmHandle );

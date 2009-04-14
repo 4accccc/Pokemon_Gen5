@@ -198,21 +198,6 @@ void	GFL_SNDVIEWER_Delete( GFL_SNDVIEWER* gflSndViewer )
 	GFL_HEAP_FreeMemory( gflSndViewer );
 }
 
-void	GFL_SNDVIEWER_InitControl( GFL_SNDVIEWER* gflSndViewer )
-{
-#if 0
-	initPlayerStatus( gflSndViewer );
-#endif
-	initSwitchControl( gflSndViewer );
-}
-
-void	GFL_SNDVIEWER_InitReverbControl( GFL_SNDVIEWER* gflSndViewer )
-{
-#if 0
-	SWITCH_VAL_ADRS(SWITCH_BGM_REVERB) = SWITCH_VAL_MAX;
-#endif
-}
-
 u16		GFL_SNDVIEWER_GetControl( GFL_SNDVIEWER* gflSndViewer )
 {
 	if( gflSndViewer == NULL ) return 0;
@@ -226,13 +211,6 @@ void	GFL_SNDVIEWER_SetControl( GFL_SNDVIEWER* gflSndViewer, u16 flag )
 
 	gflSndViewer->setup.controlFlag = flag;
 	makeEventSwitchTable( gflSndViewer );
-}
-
-void	GFL_SNDVIEWER_ChangeSndHandle( GFL_SNDVIEWER* gflSndViewer, NNSSndHandle* pBgmHandle )
-{
-	//if( gflSndViewer == NULL ) return;
-
-	//gflSndViewer->setup.pBgmHandle = pBgmHandle;
 }
 
 //============================================================================================
@@ -283,6 +261,7 @@ static void updateSndSystemInfo( GFL_SNDVIEWER* gflSndViewer )
 				playerResetFlag = TRUE;
 			} else {
 				playerResetFlag = FALSE;
+				gflSndViewer->playerStack[gflSndViewer->playerNoIdx].trackNum = 0;
 			}
 			gflSndViewer->playerNoIdx = newPlayerNo;
 		}
@@ -303,11 +282,13 @@ static void updateSndSystemInfo( GFL_SNDVIEWER* gflSndViewer )
 	} else {
 		gflSndViewer->soundNo = 0;
 	}
+
 	if( gflSndViewer->setup.getReverbFlagFunc != NULL ){
 		gflSndViewer->reverb = gflSndViewer->setup.getReverbFlagFunc();
 	} else {
 		gflSndViewer->reverb = FALSE;
 	}
+	if(gflSndViewer->reverb == FALSE){ PLAYER_SWITCH_VAL_ADRS(SWITCH_BGM_REVERB) = SWITCH_VAL_MAX; }
 }
 
 //============================================================================================
