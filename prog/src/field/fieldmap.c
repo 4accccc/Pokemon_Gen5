@@ -987,11 +987,6 @@ static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz 
  * @brief	ƒVƒXƒeƒ€æ“¾
  */
 //------------------------------------------------------------------
-GFL_G3D_CAMERA* GetG3Dcamera( FIELD_MAIN_WORK * fieldWork )
-{
-	return fieldWork->g3Dcamera;
-}
-
 FLDMAPPER* GetFieldG3Dmapper( FIELD_MAIN_WORK * fieldWork )
 {
 	return fieldWork->g3Dmapper;
