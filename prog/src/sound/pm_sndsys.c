@@ -258,6 +258,11 @@ NNSSndHandle* PMSND_GetBGMhandlePointer( void )
 	return SOUNDMAN_GetHierarchyPlayerSndHandle();
 }
 
+u32 PMSND_GetBGMsoundNo( void )
+{
+	return SOUNDMAN_GetHierarchyPlayerSoundIdx();
+}
+
 u32 PMSND_GetBGMplayerNoIdx( void )
 {
 	return	SOUNDMAN_GetHierarchyPlayerPlayerNoIdx();

@@ -54,6 +54,7 @@ extern void	PMSND_Exit( void );
 //	î•ñæ“¾
 extern u32				PMSND_GetSndHeapFreeSize( void );
 extern NNSSndHandle*	PMSND_GetBGMhandlePointer( void );
+extern u32				PMSND_GetBGMsoundNo( void );
 extern u32				PMSND_GetBGMplayerNoIdx( void );
 extern BOOL				PMSND_CheckOnReverb( void );
 

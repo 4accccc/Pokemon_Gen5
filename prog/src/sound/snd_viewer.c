@@ -76,31 +76,18 @@ enum {
 };
 
 //============================================================================================
-#define CHANNEL_NUM (16)
-#define TRACK_NUM	(16)
-#define SWITCH_VAL_MAX	(32)
-#define SWITCH_VAL_ZERO	(16)
-#define SWITCH_VAL_MIN	(0)
+#define CHANNEL_NUM			(16)
+#define TRACK_NUM			(16)
+#define	PLAYER_STACK_NUM	(8)	// ÉvÉåÅ[ÉÑÅ[äKëwï™ÅiåªèÛÇÕ5ÅjïKóv
+#define SWITCH_VAL_MAX		(32)
+#define SWITCH_VAL_ZERO		(16)
+#define SWITCH_VAL_MIN		(0)
 
 typedef struct {
 	s8		valOffs;
 }SWITCH_STATUS;
 
 typedef struct {
-	SWITCH_ID	volume;
-	SWITCH_ID	tempo;
-	SWITCH_ID	pitch;
-	SWITCH_ID	reverb;
-}MASTERTRACK_STATUS;
-
-typedef struct {
-	SWITCH_ID	mod_d;
-	SWITCH_ID	mod_s;
-	SWITCH_ID	dummy;
-}TRACKEFFECT_STATUS;
-
-typedef struct {
-	SWITCH_ID	volume;
 	BOOL		active;
 	int			stBtn;
 }TRACK_STATUS;
@@ -112,6 +99,12 @@ typedef struct {
 	u8			rectL;
 }SWITCH_CONTROL;
 
+typedef struct {
+	TRACK_STATUS			trackStatus[TRACK_NUM];
+	SWITCH_STATUS			switchStatus[SWITCH_MAX];
+	u8						trackNum;
+}PLAYER_STACK;
+
 struct _GFL_SNDVIEWER {
 	HEAPID					heapID;
 	int						seq;
@@ -119,19 +112,16 @@ struct _GFL_SNDVIEWER {
 	GFL_DISPUT_VRAMSV*		vramSv;
 
 	NNSSndHandle*			sndHandle;
+	u32						soundNo;
 	u32						playerNoIdx;
 	BOOL					reverb;
 
 	SNDChannelInfo			channelInfo[CHANNEL_NUM];
 	SNDTrackInfo			bgmTrackInfo[TRACK_NUM];
-	TRACK_STATUS			bgmTrackStatus[TRACK_NUM];
-	MASTERTRACK_STATUS		bgmMasterTrackStatus;
-	TRACKEFFECT_STATUS		bgmTrackEffectStatus;
-	BOOL					bgmTrackEffectSw;
-	u8						trackNumStack[8];	// ÉvÉåÅ[ÉÑÅ[äKëwï™ÅiåªèÛÇÕ5ÅjïKóv
+
+	PLAYER_STACK			playerStack[PLAYER_STACK_NUM];
 
 	SWITCH_CONTROL			swControl;
-	SWITCH_STATUS			switchStatus[SWITCH_MAX];
 	GFL_UI_TP_HITTBL		eventSwitchTable[SWITCH_MAX+1];
 
 	void*					volumeSwScrnPattern;
@@ -142,7 +132,12 @@ struct _GFL_SNDVIEWER {
 #define PUSH_CGX_SIZ	(0x2000)
 #define PUSH_SCR_SIZ	(0x800)
 
-static void initStatus( GFL_SNDVIEWER* gflSndViewer );
+#define TRACK_ADRS(trNo, plNo)			gflSndViewer->playerStack[plNo].trackStatus[trNo]
+#define PLAYER_TRACK_ADRS(trNo)			TRACK_ADRS(trNo, gflSndViewer->playerNoIdx )
+#define SWITCH_VAL_ADRS(trNo, plNo)		gflSndViewer->playerStack[plNo].switchStatus[trNo].valOffs
+#define PLAYER_SWITCH_VAL_ADRS(trNo)	SWITCH_VAL_ADRS(trNo, gflSndViewer->playerNoIdx )
+
+static void initPlayerStatus( GFL_SNDVIEWER* gflSndViewer, u32 playerNoIdx );
 static void initSwitchControl( GFL_SNDVIEWER* gflSndViewer );
 
 static void loadGraphicData( GFL_SNDVIEWER* gflSndViewer );
@@ -151,9 +146,9 @@ static void makeEventSwitchTable( GFL_SNDVIEWER* gflSndViewer );
 static BOOL SNDVIEWER_SetInfo( GFL_SNDVIEWER* gflSndViewer );
 static BOOL SNDVIEWER_Control( GFL_SNDVIEWER* gflSndViewer );
 
-static void SNDVIEWER_SetMod( GFL_SNDVIEWER* gflSndViewer, BOOL enable );
 static void SNDVIEWER_SetTrackStatus( GFL_SNDVIEWER* gflSndViewer, int trackNo );
 static void SNDVIEWER_SetSwitchParam( GFL_SNDVIEWER* gflSndViewer, SWITCH_ID swID );
+static void SNDVIEWER_ResetSwitchParam( GFL_SNDVIEWER* gflSndViewer );
 //============================================================================================
 /**
  *
@@ -182,7 +177,12 @@ extern GFL_SNDVIEWER*	GFL_SNDVIEWER_Create( const GFL_SNDVIEWER_SETUP* setup, HE
 	gflSndViewer->volumeSwScrnPattern = GFL_ARC_LoadDataFilePathAlloc
 					( arc_path, NARC_soundstatus_soundstatus_vsw_NSCR, heapID );
 
-	initStatus( gflSndViewer );
+	gflSndViewer->sndHandle = NULL;
+	gflSndViewer->soundNo = 0;
+	gflSndViewer->playerNoIdx = 0;
+	gflSndViewer->reverb = FALSE;
+
+	for( i=0; i<PLAYER_STACK_NUM; i++ ){ initPlayerStatus( gflSndViewer, i ); }
 	initSwitchControl( gflSndViewer );
 
 	return gflSndViewer;
@@ -200,13 +200,17 @@ void	GFL_SNDVIEWER_Delete( GFL_SNDVIEWER* gflSndViewer )
 
 void	GFL_SNDVIEWER_InitControl( GFL_SNDVIEWER* gflSndViewer )
 {
-	initStatus( gflSndViewer );
+#if 0
+	initPlayerStatus( gflSndViewer );
+#endif
 	initSwitchControl( gflSndViewer );
 }
 
 void	GFL_SNDVIEWER_InitReverbControl( GFL_SNDVIEWER* gflSndViewer )
 {
-	gflSndViewer->switchStatus[SWITCH_BGM_REVERB].valOffs = SWITCH_VAL_MAX;
+#if 0
+	SWITCH_VAL_ADRS(SWITCH_BGM_REVERB) = SWITCH_VAL_MAX;
+#endif
 }
 
 u16		GFL_SNDVIEWER_GetControl( GFL_SNDVIEWER* gflSndViewer )
@@ -232,47 +236,25 @@ void	GFL_SNDVIEWER_ChangeSndHandle( GFL_SNDVIEWER* gflSndViewer, NNSSndHandle* p
 }
 
 //============================================================================================
-static void initStatus( GFL_SNDVIEWER* gflSndViewer )
+static void initPlayerStatus( GFL_SNDVIEWER* gflSndViewer, u32 playerNoIdx )
 {
-	SWITCH_ID swID;
 	int i;
 
 	for( i=0; i<TRACK_NUM; i++ ){
-		swID = SWITCH_TR1 + i;
-		gflSndViewer->bgmTrackStatus[i].volume = swID;
-		gflSndViewer->bgmTrackStatus[i].active = FALSE;
-		gflSndViewer->bgmTrackStatus[i].stBtn = TRACK_STBTN_VOL_ON;
-		gflSndViewer->switchStatus[swID].valOffs = SWITCH_VAL_MAX;
+		TRACK_ADRS(i, playerNoIdx).active = FALSE;
+		TRACK_ADRS(i, playerNoIdx).stBtn = TRACK_STBTN_VOL_ON;
+		SWITCH_VAL_ADRS(SWITCH_TR1 + i, playerNoIdx) = SWITCH_VAL_MAX;
 	}
-	swID = SWITCH_BGM_VOL;
-	gflSndViewer->bgmMasterTrackStatus.volume = swID;
-	gflSndViewer->switchStatus[swID].valOffs = SWITCH_VAL_MAX;
-	
-	swID = SWITCH_BGM_TEMPO;
-	gflSndViewer->bgmMasterTrackStatus.tempo = swID;
-	gflSndViewer->switchStatus[swID].valOffs = SWITCH_VAL_ZERO;
+	SWITCH_VAL_ADRS(SWITCH_BGM_VOL, playerNoIdx) = SWITCH_VAL_MAX;
+	SWITCH_VAL_ADRS(SWITCH_BGM_TEMPO, playerNoIdx) = SWITCH_VAL_ZERO;
+	SWITCH_VAL_ADRS(SWITCH_BGM_PITCH, playerNoIdx) = SWITCH_VAL_ZERO;
+	SWITCH_VAL_ADRS(SWITCH_BGM_REVERB, playerNoIdx) = SWITCH_VAL_MAX;
 
-	swID = SWITCH_BGM_PITCH;
-	gflSndViewer->bgmMasterTrackStatus.pitch = swID;
-	gflSndViewer->switchStatus[swID].valOffs = SWITCH_VAL_ZERO;
+	SWITCH_VAL_ADRS(SWITCH_TREF_MODD, playerNoIdx) = SWITCH_VAL_MIN;
+	SWITCH_VAL_ADRS(SWITCH_TREF_MODS, playerNoIdx) = SWITCH_VAL_ZERO;
+	SWITCH_VAL_ADRS(SWITCH_TREF_DUMMY, playerNoIdx) = SWITCH_VAL_ZERO;
 
-	swID = SWITCH_BGM_REVERB;
-	gflSndViewer->bgmMasterTrackStatus.reverb = swID;
-	gflSndViewer->switchStatus[swID].valOffs = SWITCH_VAL_MAX;
-
-	swID = SWITCH_TREF_MODD;
-	gflSndViewer->bgmTrackEffectStatus.mod_d = swID;
-	gflSndViewer->switchStatus[swID].valOffs = SWITCH_VAL_MIN;
-	
-	swID = SWITCH_TREF_MODS;
-	gflSndViewer->bgmTrackEffectStatus.mod_s = swID;
-	gflSndViewer->switchStatus[swID].valOffs = SWITCH_VAL_ZERO;
-
-	swID = SWITCH_TREF_DUMMY;
-	gflSndViewer->bgmTrackEffectStatus.dummy = swID;
-	gflSndViewer->switchStatus[swID].valOffs = SWITCH_VAL_ZERO;
-
-	gflSndViewer->bgmTrackEffectSw = FALSE;
+	gflSndViewer->playerStack[playerNoIdx].trackNum = 0;
 }
 	
 static void initSwitchControl( GFL_SNDVIEWER* gflSndViewer )
@@ -287,15 +269,39 @@ static void initSwitchControl( GFL_SNDVIEWER* gflSndViewer )
 
 static void updateSndSystemInfo( GFL_SNDVIEWER* gflSndViewer )
 {
+	BOOL playerResetFlag = TRUE;
+
 	if( gflSndViewer->setup.getSndHandleFunc != NULL ){
 		gflSndViewer->sndHandle = gflSndViewer->setup.getSndHandleFunc();
 	} else {
 		gflSndViewer->sndHandle = NULL;
 	}
 	if( gflSndViewer->setup.getPlayerNoFunc != NULL ){
-		gflSndViewer->playerNoIdx = gflSndViewer->setup.getPlayerNoFunc();
+		u32 newPlayerNo = gflSndViewer->setup.getPlayerNoFunc();
+		if( newPlayerNo != gflSndViewer->playerNoIdx ){
+			if( newPlayerNo >= gflSndViewer->playerNoIdx ){
+				playerResetFlag = TRUE;
+			} else {
+				playerResetFlag = FALSE;
+			}
+			gflSndViewer->playerNoIdx = newPlayerNo;
+		}
 	} else {
 		gflSndViewer->playerNoIdx = 0;
+		playerResetFlag = TRUE;
+	}
+	if( gflSndViewer->setup.getSoundNoFunc != NULL ){
+		u32 newSoundNo = gflSndViewer->setup.getSoundNoFunc();
+		if( newSoundNo != gflSndViewer->soundNo ){
+			gflSndViewer->soundNo = newSoundNo;
+			if( playerResetFlag == TRUE ){
+				initPlayerStatus( gflSndViewer,  gflSndViewer->playerNoIdx);
+			} else {
+				SNDVIEWER_ResetSwitchParam( gflSndViewer );
+			}
+		}
+	} else {
+		gflSndViewer->soundNo = 0;
 	}
 	if( gflSndViewer->setup.getReverbFlagFunc != NULL ){
 		gflSndViewer->reverb = gflSndViewer->setup.getReverbFlagFunc();
@@ -539,9 +545,9 @@ static void SetScrnTrackStatus( GFL_SNDVIEWER* gflSndViewer )
 	int i;
 
 	for( i=0; i<TRACK_NUM; i++ ){
-		status = &gflSndViewer->bgmTrackStatus[i];
+		status = &PLAYER_TRACK_ADRS(i);
 		x = i*2;
-		writeScrnSwitch( gflSndViewer, gflSndViewer->switchStatus[status->volume].valOffs, x, y);
+		writeScrnSwitch( gflSndViewer, PLAYER_SWITCH_VAL_ADRS(SWITCH_TR1 + i), x, y);
 		writeTrackStatus( gflSndViewer, status, x, y );
 	}
 }
@@ -549,17 +555,15 @@ static void SetScrnTrackStatus( GFL_SNDVIEWER* gflSndViewer )
 //--------------------------------------------------------------------------------------------
 static void SetScrnMasterTrackStatus( GFL_SNDVIEWER* gflSndViewer )
 {
-	MASTERTRACK_STATUS* mst = &gflSndViewer->bgmMasterTrackStatus;
-	TRACKEFFECT_STATUS* tst = &gflSndViewer->bgmTrackEffectStatus;
 	u16*	scrnBuf = gflSndViewer->scrnBuf;
 
-	writeScrnSwitch( gflSndViewer, gflSndViewer->switchStatus[mst->volume].valOffs, 1, 16);
-	writeScrnSwitch( gflSndViewer, gflSndViewer->switchStatus[mst->tempo].valOffs, 5, 16);
-	writeScrnSwitch( gflSndViewer, gflSndViewer->switchStatus[mst->pitch].valOffs, 9, 16);
-	writeScrnSwitch( gflSndViewer, gflSndViewer->switchStatus[mst->reverb].valOffs, 13, 16);
+	writeScrnSwitch( gflSndViewer, PLAYER_SWITCH_VAL_ADRS(SWITCH_BGM_VOL), 1, 16);
+	writeScrnSwitch( gflSndViewer, PLAYER_SWITCH_VAL_ADRS(SWITCH_BGM_TEMPO), 5, 16);
+	writeScrnSwitch( gflSndViewer, PLAYER_SWITCH_VAL_ADRS(SWITCH_BGM_PITCH), 9, 16);
+	writeScrnSwitch( gflSndViewer, PLAYER_SWITCH_VAL_ADRS(SWITCH_BGM_REVERB), 13, 16);
 
-	writeScrnSwitch( gflSndViewer, gflSndViewer->switchStatus[tst->mod_d].valOffs, 21, 16);
-	writeScrnSwitch( gflSndViewer, gflSndViewer->switchStatus[tst->mod_s].valOffs, 25, 16);
+	writeScrnSwitch( gflSndViewer, PLAYER_SWITCH_VAL_ADRS(SWITCH_TREF_MODD), 21, 16);
+	writeScrnSwitch( gflSndViewer, PLAYER_SWITCH_VAL_ADRS(SWITCH_TREF_MODS), 25, 16);
 
 	writeReverbInfo( gflSndViewer );
 }
@@ -580,7 +584,7 @@ static void SetScrnPlayerStatus( GFL_SNDVIEWER* gflSndViewer )
 		else if( i < gflSndViewer->playerNoIdx ){ chrNo = 0x7a; }
 		else { chrNo = 0x7b; }
 
-		trackNum = gflSndViewer->trackNumStack[i];
+		trackNum = gflSndViewer->playerStack[i].trackNum;
 		if(trackNum){ chrNo2 = trackNum -1 + 0xd0; } 
 		else { chrNo2 = 0x4f; }
 
@@ -599,7 +603,6 @@ static void SetScrnPlayerStatus( GFL_SNDVIEWER* gflSndViewer )
 //============================================================================================
 static BOOL SNDVIEWER_SetInfo( GFL_SNDVIEWER* gflSndViewer )
 {
-	BOOL f;
 	int i;
 
 	// ÉTÉEÉìÉhÉhÉâÉCÉoèÓïÒçXêV
@@ -609,26 +612,21 @@ static BOOL SNDVIEWER_SetInfo( GFL_SNDVIEWER* gflSndViewer )
 	for( i=0; i<CHANNEL_NUM; i++ ){
 		NNS_SndReadDriverChannelInfo( i, &gflSndViewer->channelInfo[i]); 
 	}
-	// åªç›ÇÃäKëwà»è„ÇÃÉgÉâÉbÉNêîèÓïÒÉäÉZÉbÉg
-	for( i=0; i<8; i++ ){ 
-		if(i >= gflSndViewer->playerNoIdx){
-			gflSndViewer->trackNumStack[i] = 0;
-		}
-	}
+	// åªç›ÇÃäKëwÇÃÉgÉâÉbÉNêîèÓïÒÉäÉZÉbÉg
+	gflSndViewer->playerStack[gflSndViewer->playerNoIdx].trackNum = 0;
+
 	// çXêVÇ≥ÇÍÇΩÉgÉâÉbÉNèÓïÒéÊìæ
 	if( gflSndViewer->sndHandle != NULL ){
+		BOOL f;
+
 		for( i=0; i<TRACK_NUM; i++ ){
 			f = NNS_SndPlayerReadDriverTrackInfo
 				(gflSndViewer->sndHandle, i, &gflSndViewer->bgmTrackInfo[i]);
-			gflSndViewer->bgmTrackStatus[i].active = f;
-			if(f == TRUE){ 
-				gflSndViewer->trackNumStack[gflSndViewer->playerNoIdx]++; 
-			}
+			PLAYER_TRACK_ADRS(i).active = f;
+			if(f == TRUE){ gflSndViewer->playerStack[gflSndViewer->playerNoIdx].trackNum++; }
 		}
 	} else {
-		for( i=0; i<TRACK_NUM; i++ ){
-			gflSndViewer->bgmTrackStatus[i].active = FALSE;
-		}
+		for( i=0; i<TRACK_NUM; i++ ){ PLAYER_TRACK_ADRS(i).active = FALSE; }
 	}
 	SetScrnChannelStatus( gflSndViewer );
 	SetScrnTrackStatus( gflSndViewer );
@@ -730,7 +728,7 @@ static void setEventSwitchTable( GFL_SNDVIEWER* gflSndViewer, SWITCH_ID swID, u8
 	GFL_UI_TP_HITTBL* tbl = &gflSndViewer->eventSwitchTable[swID];
 	u8	cy;
 
-	cy = (y + 24) - (gflSndViewer->switchStatus[swID].valOffs - SWITCH_VAL_ZERO);// íÜêSéZèo;
+	cy = (y + 24) - (PLAYER_SWITCH_VAL_ADRS(swID) - SWITCH_VAL_ZERO);// íÜêSéZèo;
 
 	// switch yîªíËê›íË(ïù8)
 	tbl->rect.top = cy - 4;
@@ -836,14 +834,14 @@ static BOOL checkTouchPanelSlide( GFL_SNDVIEWER* gflSndViewer )
 	if( diff != 0 ){
 		gflSndViewer->swControl.tpy = tpy;
 
-		valOffs = gflSndViewer->switchStatus[gflSndViewer->swControl.swID].valOffs;
+		valOffs = PLAYER_SWITCH_VAL_ADRS(gflSndViewer->swControl.swID);
 		valOffs += diff;
 		if(valOffs < -SWITCH_VAL_MIN){
 			valOffs = -SWITCH_VAL_MIN;
 		} else if( valOffs > SWITCH_VAL_MAX ){
 			valOffs = SWITCH_VAL_MAX;
 		}
-		gflSndViewer->switchStatus[gflSndViewer->swControl.swID].valOffs = valOffs;
+		PLAYER_SWITCH_VAL_ADRS(gflSndViewer->swControl.swID) = valOffs;
 
 		SNDVIEWER_SetSwitchParam( gflSndViewer, gflSndViewer->swControl.swID );
 	}
@@ -880,73 +878,141 @@ static BOOL SNDVIEWER_Control( GFL_SNDVIEWER* gflSndViewer )
  *
  */
 //============================================================================================
-static const int tempoRatioTable[32+1] = {
-	64, 72, 80, 88, 96, 104, 112, 120, 128, 144, 160, 176, 192, 208, 224, 240,
-	256,
-	288, 320, 352, 384, 416, 448, 480, 512, 576, 640, 704, 768, 832, 896, 960, 1024,
-};
+static void SNDVIEWER_SetTrackMute( GFL_SNDVIEWER* gflSndViewer, int trackNo )
+{
+	u16	bitMask = 0x0001 << trackNo;
+
+	if( PLAYER_TRACK_ADRS(trackNo).active == TRUE ){
+		if(PLAYER_TRACK_ADRS(trackNo).stBtn == TRACK_STBTN_NO_VOL ){
+			NNS_SndPlayerSetTrackMute(gflSndViewer->sndHandle, bitMask, TRUE);
+		} else {
+			NNS_SndPlayerSetTrackMute(gflSndViewer->sndHandle, bitMask, FALSE);
+		}
+	}
+}
+
+//------------------------------------------------------------------
+static void SNDVIEWER_SetTrackVolume( GFL_SNDVIEWER* gflSndViewer, int trackNo )
+{
+	u16	bitMask = 0x0001 << trackNo;
+	int value;
+
+	if( PLAYER_TRACK_ADRS(trackNo).active == TRUE ){
+		// volumeïù 0Å`127
+		value = PLAYER_SWITCH_VAL_ADRS(SWITCH_TR1 + trackNo) * 4;
+	
+		if(value > 127){ value = 127; }
+
+		NNS_SndPlayerSetTrackVolume( gflSndViewer->sndHandle, bitMask, value );
+	}
+}
+
+//------------------------------------------------------------------
+static void SNDVIEWER_SetModDepth( GFL_SNDVIEWER* gflSndViewer, int trackNo, BOOL enable )
+{
+	u16	bitMask = 0x0001 << trackNo;
+	int	depth;
+
+	if( enable == TRUE ){
+		depth = PLAYER_SWITCH_VAL_ADRS(SWITCH_TREF_MODD) * 8;
+		if(depth > 255){ depth = 255; }
+	} else {
+		depth = 0;
+	}
+	NNS_SndPlayerSetTrackModDepth( gflSndViewer->sndHandle, bitMask, depth );
+}
+
+//------------------------------------------------------------------
 static const int modSpeedTable[32+1] = {
 	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
 	16,
 	16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 255,
 };
 
-//------------------------------------------------------------------
-static void SNDVIEWER_SetMod( GFL_SNDVIEWER* gflSndViewer, BOOL enable )
+static void SNDVIEWER_SetModSpeed( GFL_SNDVIEWER* gflSndViewer, int trackNo, BOOL enable )
 {
-	TRACK_STATUS* status;
-	u16 bitMask = 0;
-	int	depth, speed;
-	int i;
+	u16	bitMask = 0x0001 << trackNo;
+	int	speed;
 
 	if( enable == TRUE ){
-		for( i=0; i<TRACK_NUM; i++ ){
-			TRACK_STATUS* status = &gflSndViewer->bgmTrackStatus[i];
-			if((status->active == TRUE)&&(status->stBtn == TRACK_STBTN_EFFECT_ON)){
-				bitMask |= (0x0001 << i);
-			}
-		}
-		depth = gflSndViewer->switchStatus[SWITCH_TREF_MODD].valOffs * 8;
-		if(depth > 255){ depth = 255; }
-		speed = modSpeedTable[gflSndViewer->switchStatus[SWITCH_TREF_MODS].valOffs];
+		speed = modSpeedTable[PLAYER_SWITCH_VAL_ADRS(SWITCH_TREF_MODS)];
 	} else {
-		bitMask = 0xffff;
-		depth = 0;
 		speed = 16;
 	}
-	NNS_SndPlayerSetTrackModDepth( gflSndViewer->sndHandle, bitMask, depth );
 	NNS_SndPlayerSetTrackModSpeed( gflSndViewer->sndHandle, bitMask, speed );
+}
+
+//------------------------------------------------------------------
+static void SNDVIEWER_SetPlayerVolume( GFL_SNDVIEWER* gflSndViewer )
+{
+	int value;
+
+	// volumeïù 0Å`127
+	value = PLAYER_SWITCH_VAL_ADRS(SWITCH_BGM_VOL) * 4;
+	if(value > 127){ value = 127; }
+	NNS_SndPlayerSetVolume( gflSndViewer->sndHandle, value );
+}
+
+//------------------------------------------------------------------
+static const int tempoRatioTable[32+1] = {
+	64, 72, 80, 88, 96, 104, 112, 120, 128, 144, 160, 176, 192, 208, 224, 240,
+	256,
+	288, 320, 352, 384, 416, 448, 480, 512, 576, 640, 704, 768, 832, 896, 960, 1024,
+};
+
+static void SNDVIEWER_SetPlayerTempo( GFL_SNDVIEWER* gflSndViewer )
+{
+	int value;
+
+	value = tempoRatioTable[PLAYER_SWITCH_VAL_ADRS(SWITCH_BGM_TEMPO)];
+	NNS_SndPlayerSetTempoRatio( gflSndViewer->sndHandle, value );
+}
+
+//------------------------------------------------------------------
+static void SNDVIEWER_SetPlayerPitch( GFL_SNDVIEWER* gflSndViewer )
+{
+	int value;
+
+	// pitchïù -32768Å`32767
+	value = (PLAYER_SWITCH_VAL_ADRS(SWITCH_BGM_PITCH) - SWITCH_VAL_ZERO) * 64;
+	NNS_SndPlayerSetTrackPitch( gflSndViewer->sndHandle, 0xffff, value );
+}
+
+//------------------------------------------------------------------
+static void SNDVIEWER_SetPlayerReverb( GFL_SNDVIEWER* gflSndViewer )
+{
+	int value;
+
+	// reverbVolumeïù 0Å`63
+	if( gflSndViewer->reverb == TRUE ){
+		// ÇqÇdÇuÇdÇqÇaëÄçÏÇ†ÇË
+		value = PLAYER_SWITCH_VAL_ADRS(SWITCH_BGM_REVERB) * 2;
+		if(value > 63){ value = 63; }
+		NNS_SndCaptureSetReverbVolume(value, 0);
+		//PMSND_ChangeCaptureReverb(value, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT);
+	}
 }
 
 //------------------------------------------------------------------
 static void SNDVIEWER_SetTrackStatus( GFL_SNDVIEWER* gflSndViewer, int trackNo )
 {
 	u16	bitMask = 0x0001 << trackNo;
-	TRACK_STATUS* status = &gflSndViewer->bgmTrackStatus[trackNo];
 	BOOL modFlag = FALSE;
 
 	if( gflSndViewer->sndHandle == NULL ){ return; }
-
-	if( status->active == TRUE ){
-		status->stBtn++;
-		if(status->stBtn >= TRACK_STBTN_NUM){ status->stBtn = TRACK_STBTN_NO_VOL; }
-
-		if( status->stBtn == TRACK_STBTN_VOL_ON ){
-			NNS_SndPlayerSetTrackMute(gflSndViewer->sndHandle, bitMask, FALSE);
-		} else if( status->stBtn == TRACK_STBTN_EFFECT_ON ){
-			modFlag = TRUE;
-			NNS_SndPlayerSetTrackMute(gflSndViewer->sndHandle, bitMask, FALSE);
-		} else {
-			NNS_SndPlayerSetTrackMute(gflSndViewer->sndHandle, bitMask, TRUE);
+	if( PLAYER_TRACK_ADRS(trackNo).active == TRUE ){
+		PLAYER_TRACK_ADRS(trackNo).stBtn++;
+		if(PLAYER_TRACK_ADRS(trackNo).stBtn >= TRACK_STBTN_NUM){ 
+			PLAYER_TRACK_ADRS(trackNo).stBtn = TRACK_STBTN_NO_VOL; 
 		}
-		if( modFlag == TRUE ){
-			SNDVIEWER_SetMod( gflSndViewer, TRUE );
-			gflSndViewer->bgmTrackEffectSw = TRUE;
+
+		SNDVIEWER_SetTrackMute( gflSndViewer, trackNo );
+		if( PLAYER_TRACK_ADRS(trackNo).stBtn == TRACK_STBTN_EFFECT_ON ){
+			SNDVIEWER_SetModDepth( gflSndViewer, trackNo, TRUE );
+			SNDVIEWER_SetModSpeed( gflSndViewer, trackNo, TRUE ); 
 		} else {
-			if( gflSndViewer->bgmTrackEffectSw == TRUE ){
-				SNDVIEWER_SetMod( gflSndViewer, FALSE );
-				gflSndViewer->bgmTrackEffectSw = FALSE;
-			}
+			SNDVIEWER_SetModDepth( gflSndViewer, trackNo, FALSE ); 
+			SNDVIEWER_SetModSpeed( gflSndViewer, trackNo, FALSE ); 
 		}
 	}
 }
@@ -975,53 +1041,61 @@ static void SNDVIEWER_SetSwitchParam( GFL_SNDVIEWER* gflSndViewer, SWITCH_ID swI
 	case SWITCH_TR14:
 	case SWITCH_TR15:
 	case SWITCH_TR16:
-		{
-			// volumeïù 0Å`127
-			u32	bitMask;
-			value = gflSndViewer->switchStatus[gflSndViewer->swControl.swID].valOffs * 4;
-			if(value > 127){ value = 127; }
-
-			bitMask = 0x00000001 << swID;
-			NNS_SndPlayerSetTrackVolume( gflSndViewer->sndHandle, bitMask, value );
-		}
+		SNDVIEWER_SetTrackVolume( gflSndViewer, gflSndViewer->swControl.swID - SWITCH_TR1 );
 		break;
 
 	case SWITCH_BGM_VOL:
-		// volumeïù 0Å`127
-		value = gflSndViewer->switchStatus[SWITCH_BGM_VOL].valOffs * 4;
-		if(value > 127){ value = 127; }
-		NNS_SndPlayerSetVolume( gflSndViewer->sndHandle, value );
+		SNDVIEWER_SetPlayerVolume( gflSndViewer );
 		break;
 	case SWITCH_BGM_TEMPO:
-		value = tempoRatioTable[gflSndViewer->switchStatus[SWITCH_BGM_TEMPO].valOffs];
-		NNS_SndPlayerSetTempoRatio( gflSndViewer->sndHandle, value );
+		SNDVIEWER_SetPlayerTempo( gflSndViewer );
 		break;
 	case SWITCH_BGM_PITCH:
-		// pitchïù -32768Å`32767
-		value = (gflSndViewer->switchStatus[SWITCH_BGM_PITCH].valOffs - SWITCH_VAL_ZERO) * 64;
-		NNS_SndPlayerSetTrackPitch( gflSndViewer->sndHandle, 0xffff, value );
+		SNDVIEWER_SetPlayerPitch( gflSndViewer );
 		break;
 	case SWITCH_BGM_REVERB:
-		// reverbïù 0Å`0x2000
-		if( gflSndViewer->reverb == TRUE ){
-			// ÇqÇdÇuÇdÇqÇaëÄçÏÇ†ÇË
-			value = gflSndViewer->switchStatus[SWITCH_BGM_REVERB].valOffs * 2;
-			if(value > 63){ value = 63; }
-			NNS_SndCaptureSetReverbVolume(value, 0);
-			//PMSND_ChangeCaptureReverb(value, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT);
-		}
+		SNDVIEWER_SetPlayerReverb( gflSndViewer );
 		break;
 
 	case SWITCH_TREF_MODD:
 	case SWITCH_TREF_MODS:
-		SNDVIEWER_SetMod( gflSndViewer, TRUE );
+		{
+			TRACK_STATUS* status;
+			int i;
+
+			for( i=0; i<TRACK_NUM; i++ ){
+				if((PLAYER_TRACK_ADRS(i).active == TRUE)
+					&&(PLAYER_TRACK_ADRS(i).stBtn == TRACK_STBTN_EFFECT_ON))
+				{
+					SNDVIEWER_SetModDepth( gflSndViewer, i, TRUE );
+					SNDVIEWER_SetModSpeed( gflSndViewer, i, TRUE );
+				}
+			}
+		}
 		break;
 	}
 }
 
+//------------------------------------------------------------------
+static void SNDVIEWER_ResetSwitchParam( GFL_SNDVIEWER* gflSndViewer )
+{
+	int i;
 
+	for( i=0; i<TRACK_NUM; i++ ){
+		if(PLAYER_TRACK_ADRS(i).active == TRUE){
+			SNDVIEWER_SetTrackVolume( gflSndViewer, i );
+			SNDVIEWER_SetTrackMute( gflSndViewer, i );
+			if(PLAYER_TRACK_ADRS(i).stBtn == TRACK_STBTN_EFFECT_ON){
+				SNDVIEWER_SetModDepth( gflSndViewer, i, TRUE );
+				SNDVIEWER_SetModSpeed( gflSndViewer, i, TRUE );
+			}
+		}
+	}
+	SNDVIEWER_SetPlayerVolume( gflSndViewer );
+	SNDVIEWER_SetPlayerTempo( gflSndViewer );
+	SNDVIEWER_SetPlayerPitch( gflSndViewer );
+	SNDVIEWER_SetPlayerReverb( gflSndViewer );
+}
 
-
-
-
+	
 
