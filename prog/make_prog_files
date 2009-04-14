@@ -512,10 +512,11 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
 				app/pms_input/pmsiv_wordwin.c
 
 
-# ミュージカル
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+# ミュージカル(mcs使うために曽我部さんのoverlayの下に
+#===> SRCS_OVERLAY_SOGABE_DEBUG
+#  ===> SRCS_OVERLAY_DEV_WIFI
+#  ===> SRCS_OVERLAY_DEV_WIRELESS
+#  ===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
 				musical/mus_poke_data.c \
 				musical/mus_item_draw.c \
@@ -533,7 +534,8 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
 				musical/stage/sta_act_bg.c \
 				musical/stage/script/sta_act_script.c \
 				musical/stage/script/script_command.c \
-				musical/stage/script/script_table.c
+				musical/stage/script/script_table.c \
+				test/ariizumi/musical_editor.c
 
 #パレス
 #===> SRCS_OVERLAY_DEV_WIFI

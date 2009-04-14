@@ -1,0 +1,73 @@
+//ミュージカル関係
+#include "musical/musical_dressup_sys.h"
+#include "musical/musical_stage_sys.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/monsno_def.h"
+FS_EXTERN_OVERLAY(musical);
+
+static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx );
+
+static TESTMODE_MENU_LIST menuMusical[] = 
+{
+	{L"ドレスアップ"		,TESTMODE_ITEM_SelectFuncDressUp },
+	{L"ステージ"			,TESTMODE_ITEM_SelectFuncStage },
+	
+	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
+};
+
+static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx )
+{
+	DRESSUP_INIT_WORK *initWork = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof(DRESSUP_INIT_WORK));
+	initWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &DressUp_ProcData, initWork);
+	return TRUE;
+}
+static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &MusicalStage_ProcData, NULL);
+	return TRUE;
+}
+
+//個人テストパート関係
+
+#include "app/pms_Input.h"
+#include "app/codein.h"
+#include "app/wifi_note.h"
+#include "test/ariizumi/musical_editor.h"
+FS_EXTERN_OVERLAY(pmsinput);
+extern const GFL_PROC_DATA ProcData_PMSInput;
+static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectDebPmsInput( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx );
+
+static TESTMODE_MENU_LIST menuAriizumi[] = 
+{
+	{L"ミュージカルエディタ"	,TESTMODE_ITEM_SelectMusicalEditor },
+	{L"友達手帳"				,TESTMODE_ITEM_SelectDebWifiNote },
+	{L"かんい文入力"			,TESTMODE_ITEM_SelectDebPmsInput },
+	
+	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
+};
+
+static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &WifiNoteProcData, NULL );
+	return TRUE;
+	
+}
+static BOOL TESTMODE_ITEM_SelectDebPmsInput( TESTMODE_WORK *work , const int idx )
+{
+	PMSI_PARAM	*initParam;
+	initParam = PMSI_PARAM_Create( PMSI_MODE_SENTENCE , PMSI_GUIDANCE_DEFAULT , SaveControl_GetPointer() , GFL_HEAPID_APP );
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, initParam);
+	return TRUE;
+	
+}
+
+static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &MusicalEdit_ProcData, NULL);
+	return TRUE;
+}
+

@@ -161,8 +161,6 @@ static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx
 static BOOL TESTMODE_ITEM_ChangeRTC( TESTMODE_WORK *work , const int idx );
 
 static BOOL TESTMODE_ITEM_ChangeMusicalMenu( TESTMODE_WORK *work , const int idx );
-static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx );
-static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx );
 
 static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int idx );
 
@@ -228,14 +226,6 @@ static TESTMODE_MENU_LIST menuRTCEdit[] =
 	{L"分　へらす"			,TESTMODE_ITEM_ChangeRTC },
 	{L"秒　ふやす"			,TESTMODE_ITEM_ChangeRTC },
 	{L"秒　へらす"			,TESTMODE_ITEM_ChangeRTC },
-	
-	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
-};
-
-static TESTMODE_MENU_LIST menuMusical[] = 
-{
-	{L"ドレスアップ"		,TESTMODE_ITEM_SelectFuncDressUp },
-	{L"ステージ"			,TESTMODE_ITEM_SelectFuncStage },
 	
 	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
 };
@@ -912,28 +902,10 @@ static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx 
 	return TRUE;
 }
 
-//FS_EXTERN_OVERLAY(ariizumi_debug);
-//extern const GFL_PROC_DATA DebugAriizumiMainProcData;
-//FS_EXTERN_OVERLAY(mystery);
-//extern const GFL_PROC_DATA MysteryGiftProcData;
-FS_EXTERN_OVERLAY(pmsinput);
-extern const GFL_PROC_DATA ProcData_PMSInput;
-#include "app/pms_Input.h"
-#include "app/codein.h"
-#include "app/wifi_note.h"
+#include "ariizumi/ari_testmode.cdat"
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx )
 {
-/*
-	PMSI_PARAM	*initParam;
-	initParam = PMSI_PARAM_Create( PMSI_MODE_SENTENCE , PMSI_GUIDANCE_DEFAULT , SaveControl_GetPointer() , GFL_HEAPID_APP );
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, initParam);
-*/
-/*
-	int block[3] = {4,4,4};
-	CODEIN_PARAM* initParam = CodeInput_ParamCreate( GFL_HEAPID_APP , 20 , block );
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pmsinput), &CodeInput_ProcData, initParam );
-*/
-	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &WifiNoteProcData, NULL );
+	TESTMODE_COMMAND_ChangeMenu( work , menuAriizumi , NELEMS(menuAriizumi) );
 	return TRUE;
 }
 
@@ -960,29 +932,12 @@ static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx
 
 
 //-----------------------------------------------------------------------
-//ミュージカル関係
-#include "musical/musical_dressup_sys.h"
-#include "musical/musical_stage_sys.h"
-#include "poke_tool/poke_tool.h"
-#include "poke_tool/monsno_def.h"
-FS_EXTERN_OVERLAY(musical);
 
-//RTC調整
+//ミュージカルメニュー
+//#include "ariizumi/ari_testmode.cdat"	←の中にある
 static BOOL TESTMODE_ITEM_ChangeMusicalMenu( TESTMODE_WORK *work , const int idx )
 {
 	TESTMODE_COMMAND_ChangeMenu( work , menuMusical , NELEMS(menuMusical) );
-	return TRUE;
-}
-static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx )
-{
-	DRESSUP_INIT_WORK *initWork = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof(DRESSUP_INIT_WORK));
-	initWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &DressUp_ProcData, initWork);
-	return TRUE;
-}
-static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx )
-{
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &MusicalStage_ProcData, NULL);
 	return TRUE;
 }
 
