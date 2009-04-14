@@ -11,6 +11,8 @@
 #include "arc_def.h"
 #include "test_graphic/fld_act.naix"
 
+#include "fieldmap_local.h"	//FIELDMAP_GetFieldCamera
+#include "field_camera.h"	//FIELD_CAMERA_～
 #include "fldmmdl.h"
 
 static void				SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID );
@@ -179,17 +181,6 @@ static const int playerBBDanmOffsTblMine[] = {
 	PCACTSTOP_UP - PCACTSTOP_UP,
 };
 
-static u16 getCameraRotate( FIELD_MAIN_WORK * fieldWork )
-{
-	VecFx32 vec, camPos, target;
-	GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(fieldWork);
-	
-	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
-	GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
-
-	VEC_Subtract( &target, &camPos, &vec );
-	return FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
-}
 
 static int getPlayerBBDanm( int anmSetID, u16 dir, const int* anmOffsTable )
 {
@@ -230,7 +221,8 @@ static void playerBBDactFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work 
 	u16		anmID;
 	u16		dir;
 
-	dir = pcActCont->direction - getCameraRotate( pcActCont->fieldWork );
+	dir = pcActCont->direction
+		- FIELD_CAMERA_GetDirectionOnXZ( FIELDMAP_GetFieldCamera(pcActCont->fieldWork) );
 	anmID = getPlayerBBDanm( pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
 
 	//カメラ補正(アニメ向きの変更をするのに参照)
@@ -305,7 +297,7 @@ void	MainPlayerAct( PC_ACTCONT* pcActCont, int key)
 	u16		dir;
 	BOOL	mvFlag = FALSE;
 
-	dir = getCameraRotate( pcActCont->fieldWork );
+	dir = FIELD_CAMERA_GetDirectionOnXZ( FIELDMAP_GetFieldCamera(pcActCont->fieldWork) );
 
 	if( key & PAD_KEY_UP ){
 		mvFlag = TRUE;
@@ -349,17 +341,12 @@ void	MainPlayerAct( PC_ACTCONT* pcActCont, int key)
 	}
 }
 
-#if 0
-static void	MainFriendPlayerAct( PC_ACTCONT* pcActCont )
-{
-    GFL_STD_MemCopy((const void*)&fieldWork->recvWork ,&pcActCont->trans, sizeof(VecFx32));
-}
-#endif
 
 static void	SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID )
 {
 	int		anmID;
-	u16		dir = pcActCont->direction - getCameraRotate( pcActCont->fieldWork );
+	u16 dir = pcActCont->direction
+		- FIELD_CAMERA_GetDirectionOnXZ( FIELDMAP_GetFieldCamera(pcActCont->fieldWork) );
 
 	if( pcActCont->anmSetID != anmSetID ){
 		pcActCont->anmSetID = anmSetID;

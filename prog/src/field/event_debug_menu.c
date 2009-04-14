@@ -974,9 +974,9 @@ static GMEVENT_RESULT DMenuControlCamera(
 				break;
 			}
 			
-			FLD_GetCameraDirection( camera, &dir );
-			FLD_GetCameraLength( camera, &length );
-			FLD_GetCameraHeight( camera, &height );
+			dir = FIELD_CAMERA_GetDirectionOnXZ( camera );
+			length = FIELD_CAMERA_GetLengthOnXZ( camera );
+			height = FIELD_CAMERA_GetHeightOnXZ( camera );
 			near = FIELD_CAMERA_GetNear( camera );
 			far = FIELD_CAMERA_GetFar( camera );
 
@@ -1040,9 +1040,9 @@ static GMEVENT_RESULT DMenuControlCamera(
 				}	
 			}
 
-			FLD_SetCameraDirection( camera, &dir );
-			FLD_SetCameraLength( camera, length );
-			FLD_SetCameraHeight( camera, height );
+			FIELD_CAMERA_SetDirectionOnXZ( camera, dir );
+			FIELD_CAMERA_SetLengthOnXZ( camera, length );
+			FIELD_CAMERA_SetHeightOnXZ( camera, height );
 			FIELD_CAMERA_SetNear( camera, near );
 			FIELD_CAMERA_SetFar( camera, far );
 			
@@ -1092,7 +1092,7 @@ static GMEVENT_RESULT DMenuControlCamera(
 						work->pStrBuf, ucode, len );
 				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 45, work->pStrBuf );
 				
-				FIELD_CAMERA_Main( camera );
+				FIELD_CAMERA_Main( camera, 0 );
 			}
 		}
 		break;
@@ -1246,9 +1246,9 @@ static GMEVENT_RESULT DMenuTestCameraListEvent(
 					{ 0x0000, 0x0000, 0x0000, 0x0000 };
 				FIELD_CAMERA *camera =
 					FIELDMAP_GetFieldCamera( work->fieldWork );
-				FLD_SetCameraDirection( camera, &dir[ret] );
-				FLD_SetCameraLength( camera, length[ret] );
-				FLD_SetCameraHeight( camera, height[ret] );
+				FIELD_CAMERA_SetDirectionOnXZ( camera, dir[ret] );
+				FIELD_CAMERA_SetLengthOnXZ( camera, length[ret] );
+				FIELD_CAMERA_SetHeightOnXZ( camera, height[ret] );
 			}
 			
 			return( GMEVENT_RES_FINISH );

@@ -14,10 +14,15 @@
 
 static void CalcPos(VecFx32 * pos, const VecFx32 * center, u16 len, u16 dir);
 
-static u16 player_len;
-static s16 v_angle;
-static u16 pos_angle;
-static u16 v_len;
+typedef struct {
+	u16 player_len;
+	u16 pos_angle;
+	s16 df_len;
+	s16 df_angle;
+}C3_MOVE_WORK;
+
+static C3_MOVE_WORK C3MoveWork;
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -27,75 +32,72 @@ static u16 v_len;
 //------------------------------------------------------------------
 static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
+	static const C3_MOVE_WORK init = {
+		 0x1f0,
+		 0,
+		 1,
+		 16
+	};
+	C3MoveWork = init;
 	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork, fieldWork->heapID );
-	//FLDACT_TestSetup( fieldWork->fldActCont );
 	fieldWork->pcActCont = CreatePlayerAct( fieldWork, fieldWork->heapID );
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
 
-	{
-		player_len = 0x1f0;
-		v_len = 1;
-		v_angle = 16;
-		pos_angle = 0;
-	}
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 {
-	FLDEASYTP_TCHDIR tp_dir = FieldEasyTP_TouchDirGet();
+	C3_MOVE_WORK * mwk = &C3MoveWork;
+
+#ifdef	PM_DEBUG
+	{
+		FLDEASYTP_TCHDIR tp_dir = FieldEasyTP_TouchDirGet();
+		switch (tp_dir) {
+		case FLDEASYTP_TCHDIR_LEFT:		mwk->df_angle -= 4;	break;
+		case FLDEASYTP_TCHDIR_RIGHT:	mwk->df_angle += 4;	break;
+		case FLDEASYTP_TCHDIR_UP:		mwk->df_len += 1;	break;
+		case FLDEASYTP_TCHDIR_DOWN:		mwk->df_len -= 1;	break;
+		}
+		if (mwk->df_angle <= 0) {mwk->df_angle = 4;}
+		if (mwk->df_angle > FX32_ONE / 16) { mwk->df_angle = FX32_ONE / 16; }
+		if (mwk->df_len <= 0) {mwk->df_len = 1; }
+		if (mwk->df_len > 8) {mwk->df_len = 8; }
+		if (tp_dir == FLDEASYTP_TCHDIR_CENTER) {
+			TAMADA_Printf("LEN %04x vec:%04x\n", mwk->player_len, mwk->df_len);
+			TAMADA_Printf("ANGLE %04x vec:%04x\n", mwk->pos_angle, mwk->df_angle);
+		}
+	}
+#endif
 
 	{
-		switch (tp_dir) {
-		case FLDEASYTP_TCHDIR_LEFT:		v_angle -= 4;	break;
-		case FLDEASYTP_TCHDIR_RIGHT:	v_angle += 4;	break;
-		case FLDEASYTP_TCHDIR_UP:		v_len += 1;	break;
-		case FLDEASYTP_TCHDIR_DOWN:		v_len -= 1;	break;
-		}
-		if (v_angle <= 0) {v_angle = 4;}
-		if (v_angle > FX32_ONE / 16) { v_angle = FX32_ONE / 16; }
-		if (v_len <= 0) {v_len = 1; }
-		if (v_len > 8) {v_len = 8; }
-	}
-	{
-		u16 dir;
-		FLD_GetCameraDirection(fieldWork->camera_control, &dir);
 		if (fieldWork->key_cont & PAD_KEY_LEFT) {
-			pos_angle -= v_angle;
-			dir -= v_angle;
+			mwk->pos_angle -= mwk->df_angle;
 		}
 		if (fieldWork->key_cont & PAD_KEY_RIGHT) {
-			pos_angle += v_angle;
-			dir += v_angle;
+			mwk->pos_angle += mwk->df_angle;
 		}
-		FLD_SetCameraDirection(fieldWork->camera_control, &dir);
-	}
-	{
 		if (fieldWork->key_cont & PAD_KEY_UP) {
-			player_len -= v_len;
+			mwk->player_len -= mwk->df_len;
 		}
 		if (fieldWork->key_cont & PAD_KEY_DOWN) {
-			player_len += v_len;
+			mwk->player_len += mwk->df_len;
 		}
 	}
+
 	{
 		VecFx32 cam, player_pos;
-		FIELD_CAMERA_GetPos( fieldWork->camera_control, &cam);
-		CalcPos(&player_pos, &cam, player_len, pos_angle);
+		FIELD_CAMERA_GetTargetPos( fieldWork->camera_control, &cam);
+		CalcPos(&player_pos, &cam, mwk->player_len, mwk->pos_angle);
 		SetPlayerActTrans( fieldWork->pcActCont, &player_pos );
 	}
-	MainPlayerAct_C3( fieldWork->pcActCont, fieldWork->key_cont, pos_angle );
+	FIELD_CAMERA_SetDirectionOnXZ(fieldWork->camera_control, mwk->pos_angle);
+	MainPlayerAct_C3( fieldWork->pcActCont, fieldWork->key_cont, mwk->pos_angle );
 	FLD_MainFieldActSys( fieldWork->fldActCont );
 	
-	FIELD_CAMERA_DEBUG_Control( fieldWork->camera_control, fieldWork->key_cont );
 
-	if (tp_dir == FLDEASYTP_TCHDIR_CENTER) {
-		TAMADA_Printf("LEN %04x vec:%04x\n", player_len, v_len);
-		TAMADA_Printf("ANGLE %04x vec:%04x\n", pos_angle, v_angle);
-
-	}
 }
 
 //------------------------------------------------------------------
@@ -106,7 +108,6 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 static void TestC3Delete( FIELD_MAIN_WORK* fieldWork )
 {
 	DeletePlayerAct( fieldWork->pcActCont );
-	//FLDACT_TestRelease( fieldWork->fldActCont );
 	FLD_DeleteFieldActSys( fieldWork->fldActCont );
 }
 

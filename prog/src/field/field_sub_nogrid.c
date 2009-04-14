@@ -32,10 +32,6 @@ static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 
-//	FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
-
-	FIELD_CAMERA_DEBUG_Control( fieldWork->camera_control, fieldWork->key_cont );
-
 	if (FieldEasyTP_TouchDirGet() == FLDEASYTP_TCHDIR_DOWN) {
 		VecFx32 trans;
 		FLDMAPPER_GRIDINFO gridInfo;

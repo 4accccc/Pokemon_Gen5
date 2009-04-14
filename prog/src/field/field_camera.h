@@ -25,8 +25,10 @@ extern FIELD_CAMERA* FIELD_CAMERA_Create(
 		GFL_G3D_CAMERA * cam,
 		const VecFx32 * target,
 		HEAPID heapID);
+
 extern void				FIELD_CAMERA_Delete( FIELD_CAMERA* camera );
-extern void				FIELD_CAMERA_Main( FIELD_CAMERA* camera);
+
+extern void				FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont);
 
 extern void FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA * camera, int key);
 
@@ -44,27 +46,27 @@ extern fx32 FIELD_CAMERA_GetFar(const FIELD_CAMERA * camera);
  * @param	pos			カメラ位置を受け取るVecFx32へのポインタ
  */
 //------------------------------------------------------------------
-extern void	FIELD_CAMERA_GetPos( const FIELD_CAMERA* camera, VecFx32* pos );
+extern void	FIELD_CAMERA_GetTargetPos( const FIELD_CAMERA* camera, VecFx32* pos );
 
 //------------------------------------------------------------------
 /**
- * @brief	カメラ位置の取得
+ * @brief	カメラ注視点の取得
  * @param	camera		FIELDカメラ制御ポインタ
- * @param	pos			カメラ位置を渡すVecFx32へのポインタ
+ * @param	pos			カメラ注視点を渡すVecFx32へのポインタ
  */
 //------------------------------------------------------------------
-extern void	FIELD_CAMERA_SetPos( FIELD_CAMERA* camera, const VecFx32* pos );
+extern void	FIELD_CAMERA_SetTargetPos( FIELD_CAMERA* camera, const VecFx32* target );
 
+extern u16 FIELD_CAMERA_GetDirectionOnXZ(const FIELD_CAMERA * camera );
+extern void FIELD_CAMERA_SetDirectionOnXZ(FIELD_CAMERA * camera, u16 dir);
 //------------------------------------------------------------------
 //	以下はリネームされる予定の関数群
 //------------------------------------------------------------------
-extern void				FLD_SetCameraDirection( FIELD_CAMERA* camera, u16* direction );
-extern void				FLD_GetCameraDirection( FIELD_CAMERA* camera, u16* direction );
 
-extern void	FLD_SetCameraLength( FIELD_CAMERA *camera, u16 leng );
-extern void	FLD_GetCameraLength( FIELD_CAMERA *camera, u16 *leng );
-extern void	FLD_SetCameraHeight( FIELD_CAMERA *camera, fx32 height );
-extern void	FLD_GetCameraHeight( FIELD_CAMERA *camera, fx32 *height );
+extern void	FIELD_CAMERA_SetLengthOnXZ( FIELD_CAMERA *camera, u16 leng );
+extern u16	FIELD_CAMERA_GetLengthOnXZ(const FIELD_CAMERA *camera);
+extern void	FIELD_CAMERA_SetHeightOnXZ( FIELD_CAMERA *camera, fx32 height );
+extern fx32	FIELD_CAMERA_GetHeightOnXZ( const FIELD_CAMERA *camera );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

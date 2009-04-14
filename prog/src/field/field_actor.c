@@ -17,6 +17,8 @@
 
 #include "test_graphic/fld_act.naix"
 
+#include "field_camera.h"	//FIELD_CAMERA_GetDirectionOnXZ
+#include "fieldmap_local.h"	//FIELDMAP_GetFieldCamera
 //============================================================================================
 /**
  * @brief	フィールドアクター
@@ -322,6 +324,7 @@ void	FLD_DeleteFieldActSys( FLD_ACTCONT* fldActCont )
 //------------------------------------------------------------------
 void	FLD_MainFieldActSys( FLD_ACTCONT* fldActCont )
 {
+#if 0
 	//カメラ回転算出(ビルボードそのものには関係ない。アニメ向きの変更をするのに参照)
 	VecFx32 vec, camPos, target;
 	GFL_G3D_CAMERA* g3Dcamera = GetG3Dcamera( fldActCont->fieldWork );
@@ -332,6 +335,9 @@ void	FLD_MainFieldActSys( FLD_ACTCONT* fldActCont )
 	VEC_Subtract( &target, &camPos, &vec );
 	
 	fldActCont->cameraRotate = FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
+#endif
+	fldActCont->cameraRotate = 
+		FIELD_CAMERA_GetDirectionOnXZ(FIELDMAP_GetFieldCamera(fldActCont->fieldWork));
 }
 
 //------------------------------------------------------------------

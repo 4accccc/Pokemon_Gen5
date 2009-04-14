@@ -368,7 +368,8 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		break;
 
 	case 3:
-		if( GAMESYSTEM_GetEvent(gsys) == FALSE) {
+		fieldWork->key_cont = 0;
+		if( GAMESYSTEM_GetEvent(gsys) == NULL) {
 		
 			fieldWork->key_cont = GFL_UI_KEY_GetCont();
 			
@@ -385,7 +386,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		//通信用処理(プレイヤーの座標の設定とか
 		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
 		
-		FIELD_CAMERA_Main( fieldWork->camera_control );
+		FIELD_CAMERA_Main( fieldWork->camera_control, fieldWork->key_cont );
 		MainGameSystem( fieldWork );
 		FIELD_SUBSCREEN_Main();
 		FIELD_DEBUG_UpdateProc( fieldWork->debugWork );

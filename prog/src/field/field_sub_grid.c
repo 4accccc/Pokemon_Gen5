@@ -316,8 +316,8 @@ static void GridMoveCreate(
 	fieldWork->pGridCont = FGridCont_Init( fieldWork, pos, dir );
 	
 	//カメラ設定
-	FLD_SetCameraLength( fieldWork->camera_control, DATA_CameraTbl[0].len );
-	FLD_SetCameraHeight( fieldWork->camera_control, DATA_CameraTbl[0].hi );
+	FIELD_CAMERA_SetLengthOnXZ( fieldWork->camera_control, DATA_CameraTbl[0].len );
+	FIELD_CAMERA_SetHeightOnXZ( fieldWork->camera_control, DATA_CameraTbl[0].hi );
 	
 	//ビルボード設定
 	{
@@ -415,9 +415,9 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_L) ){
 		pGridCont->debug_camera_num++;
 		pGridCont->debug_camera_num %= GRIDCAMERA_MAX;
-		FLD_SetCameraLength( fieldWork->camera_control,
+		FIELD_CAMERA_SetLengthOnXZ( fieldWork->camera_control,
 				DATA_CameraTbl[pGridCont->debug_camera_num].len );
-		FLD_SetCameraHeight( fieldWork->camera_control,
+		FIELD_CAMERA_SetHeightOnXZ( fieldWork->camera_control,
 				DATA_CameraTbl[pGridCont->debug_camera_num].hi );
 		OS_Printf( "テストカメラ　No.%d\n", pGridCont->debug_camera_num );
 	}
@@ -430,15 +430,12 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	Jiki_UpdatePlayerWork( fieldWork );
 
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
-	//FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
 //	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 	
 }
 
 #define CM_RT_SPEED (FX32_ONE/8)
 #define CM_HEIGHT_MV (FX32_ONE*2)
-
-#define	CAMERA_TARGET_HEIGHT	(4)//(8)
 
 //--------------------------------------------------------------
 /**
@@ -462,9 +459,9 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	if( trg & PAD_BUTTON_B ){
 		pGridCont->proc_switch = GRIDPROC_MAIN;
 	}else{
-		FLD_GetCameraDirection( camera, &dir );
-		FLD_GetCameraLength( camera, &leng );
-		FLD_GetCameraHeight( camera, &height );
+		dir = FIELD_CAMERA_GetDirectionOnXZ( camera );
+		leng = FIELD_CAMERA_GetLengthOnXZ( camera );
+		height = FIELD_CAMERA_GetHeightOnXZ( camera );
 
 		if( cont & PAD_BUTTON_R ){
 			dir -= CM_RT_SPEED;
@@ -498,9 +495,9 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 					dir, leng, height );
 		}
 	
-		FLD_SetCameraDirection( camera, &dir );
-		FLD_SetCameraLength( camera, leng );
-		FLD_SetCameraHeight( camera, height );
+		FIELD_CAMERA_SetDirectionOnXZ( camera, dir );
+		FIELD_CAMERA_SetLengthOnXZ( camera, leng );
+		FIELD_CAMERA_SetHeightOnXZ( camera, height );
 	}
 	
 	{
@@ -509,7 +506,6 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		}
 
 		GetPlayerActTrans( fieldWork->pcActCont, pos );
-		//FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
 	//	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 	
 	}
@@ -574,8 +570,8 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 				p_height = p_height_1 * pcent;
 				height = 0x20000 + p_height;
 				
-				FLD_SetCameraLength( fieldWork->camera_control, length );
-				FLD_SetCameraHeight( fieldWork->camera_control, height );
+				FIELD_CAMERA_SetLengthOnXZ( fieldWork->camera_control, length );
+				FIELD_CAMERA_SetHeightOnXZ( fieldWork->camera_control, height );
 				
 				OS_Printf( "scale = %xH, %dパーセント\n", scale, pcent );
 			}
@@ -589,7 +585,6 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	}
 
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
-	//FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
 }
 
 //======================================================================
@@ -1637,9 +1632,9 @@ void DEBUG_FldGridProc_ScaleChange( FIELD_MAIN_WORK *fieldWork )
 		{
 			fx16 size = FX16_ONE * 8 - 1;
 			FGridPlayer_ScaleSet( pJiki, size );
-			FLD_SetCameraLength( fieldWork->camera_control,
+			FIELD_CAMERA_SetLengthOnXZ( fieldWork->camera_control,
 					DATA_CameraTbl[pGridCont->debug_camera_num].len );
-			FLD_SetCameraHeight( fieldWork->camera_control,
+			FIELD_CAMERA_SetHeightOnXZ( fieldWork->camera_control,
 					DATA_CameraTbl[pGridCont->debug_camera_num].hi );
 		}
 		break;
@@ -1647,9 +1642,9 @@ void DEBUG_FldGridProc_ScaleChange( FIELD_MAIN_WORK *fieldWork )
 		{
 			fx16 size = FX16_ONE * 4 - 1;
 			FGridPlayer_ScaleSet( pJiki, size );
-			FLD_SetCameraLength(
+			FIELD_CAMERA_SetLengthOnXZ(
 				fieldWork->camera_control, GRIDCAMERA_LENGTH_HALF );
-			FLD_SetCameraHeight(
+			FIELD_CAMERA_SetHeightOnXZ(
 				fieldWork->camera_control, GRIDCAMERA_HEIGHT_HALF );
 		}
 		break;

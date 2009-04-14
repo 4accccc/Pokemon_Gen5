@@ -12,4 +12,3 @@ extern GFL_BBDACT_SYS* GetBbdActSys( FIELD_MAIN_WORK * fieldWork );
 
 #define MV_SPEED		(2*FX32_ONE)
 #define RT_SPEED		(FX32_ONE/8)
-#define	CAMERA_TARGET_HEIGHT	(4)//(8)

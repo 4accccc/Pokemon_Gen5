@@ -23,7 +23,7 @@ struct _FIELD_CAMERA {
 	GFL_G3D_CAMERA * g3Dcamera;
 
 	FIELD_CAMERA_TYPE	type;
-	VecFx32				pos;
+	VecFx32				target;
 	fx32				cameraHeight;
 	u16					cameraLength;
 	u16					direction;
@@ -88,7 +88,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 	camera->type = type;
 	TAMADA_Printf("FIELD CAMERA TYPE = %d\n", type);
 
-	VEC_Set( &camera->pos, 0, 0, 0 );
+	VEC_Set( &camera->target, 0, 0, 0 );
 	camera->cameraHeight = 0;
 	camera->cameraLength = CAMERA_LENGTH;
 	camera->direction = 0;
@@ -117,14 +117,14 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 static void SetupGridParameter(FIELD_CAMERA * camera)
 {
 	//{ 0x78, 0xd8000 },	//DPぽい
-	FLD_SetCameraLength( camera, 0x0078);
-	FLD_SetCameraHeight( camera, 0xd8000);
+	FIELD_CAMERA_SetLengthOnXZ( camera, 0x0078);
+	FIELD_CAMERA_SetHeightOnXZ( camera, 0xd8000);
 	{
 		fx32 far = 1024 << FX32_SHIFT;
 
 		GFL_G3D_CAMERA_SetFar( camera->g3Dcamera, &far );
 	}
-	FIELD_CAMERA_SetPos(camera, camera->watch_target);
+	FIELD_CAMERA_SetTargetPos(camera, camera->watch_target);
 }
 
 //------------------------------------------------------------------
@@ -135,10 +135,10 @@ static void SetupC3Parameter(FIELD_CAMERA * camera)
 	fx32 height = 0x7c000;
 	VecFx32 trans = {0x2f6f36, 0, 0x301402};
 
-	FLD_SetCameraLength(camera, 0x0308);
-	FLD_SetCameraDirection(camera, &dir);
-	FLD_SetCameraHeight(camera, height);
-	FIELD_CAMERA_SetPos(camera, &trans);
+	FIELD_CAMERA_SetLengthOnXZ(camera, 0x0308);
+	FIELD_CAMERA_SetDirectionOnXZ(camera, dir);
+	FIELD_CAMERA_SetHeightOnXZ(camera, height);
+	FIELD_CAMERA_SetTargetPos(camera, &trans);
 
 	//player_len = 0x1f0;
 	//v_len = 1;
@@ -154,14 +154,14 @@ static void SetupBridgeParameter(FIELD_CAMERA * camera)
 {
 	u16 len;
 	fx32 height;
-	FLD_GetCameraLength(camera, &len);
+	len = FIELD_CAMERA_GetLengthOnXZ(camera);
 	len += 0x0080;
-	FLD_SetCameraLength(camera, len);
-	FLD_GetCameraHeight(camera, &height);
+	FIELD_CAMERA_SetLengthOnXZ(camera, len);
+	height = FIELD_CAMERA_GetHeightOnXZ(camera);
 	height += 0x0003a000;
-	FLD_SetCameraHeight(camera, height);
+	FIELD_CAMERA_SetHeightOnXZ(camera, height);
 	FIELD_CAMERA_SetFar(camera, 4096 << FX32_SHIFT );
-	FIELD_CAMERA_SetPos(camera, camera->watch_target);
+	FIELD_CAMERA_SetTargetPos(camera, camera->watch_target);
 }
 
 //------------------------------------------------------------------
@@ -214,15 +214,30 @@ void FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA * camera, int key)
  * @brief	メイン
  */
 //------------------------------------------------------------------
-void	FIELD_CAMERA_Main( FIELD_CAMERA* camera )
+void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont)
 {
+	enum {
+		CAMERA_TARGET_HEIGHT =	(4),
+	};
+
 	VecFx32	pos, target;
 
+	switch (camera->type) {
+	case FIELD_CAMERA_TYPE_GRID:
+		break;
+	case FIELD_CAMERA_TYPE_H01:
+	case FIELD_CAMERA_TYPE_C03:
+		FIELD_CAMERA_DEBUG_Control(camera, key_cont);
+		break;
+	default:
+		GF_ASSERT_MSG(0, "CAMERA TYPE ERROR! check maptable.xls\n");
+	}
+
 	if (camera->watch_target) {
-		(camera->pos) = *(camera->watch_target);
+		(camera->target) = *(camera->watch_target);
 	}
 	
-	pos = camera->pos;
+	pos = camera->target;
 
 	VEC_Set( &target,
 			pos.x,
@@ -317,9 +332,9 @@ fx32 FIELD_CAMERA_GetFar(const FIELD_CAMERA * camera)
  * @param	pos			カメラ位置を渡すVecFx32へのポインタ
  */
 //------------------------------------------------------------------
-void	FIELD_CAMERA_SetPos( FIELD_CAMERA* camera, const VecFx32* pos )
+void	FIELD_CAMERA_SetTargetPos( FIELD_CAMERA* camera, const VecFx32* target )
 {
-	camera->pos = *pos;
+	camera->target = *target;
 }
 //------------------------------------------------------------------
 /**
@@ -328,35 +343,60 @@ void	FIELD_CAMERA_SetPos( FIELD_CAMERA* camera, const VecFx32* pos )
  * @param	pos			カメラ位置を受け取るVecFx32へのポインタ
  */
 //------------------------------------------------------------------
-void	FIELD_CAMERA_GetPos( const FIELD_CAMERA* camera, VecFx32* pos )
+void	FIELD_CAMERA_GetTargetPos( const FIELD_CAMERA* camera, VecFx32* pos )
 {
-	*pos = camera->pos;
+	*pos = camera->target;
 }
 
-void	FLD_SetCameraDirection( FIELD_CAMERA* camera, u16* direction )
+//------------------------------------------------------------------
+/**
+ * @brief	XZ平面上の方向を取得する
+ * @param	camera		FIELDカメラ制御ポインタ
+ */
+//------------------------------------------------------------------
+u16 FIELD_CAMERA_GetDirectionOnXZ( const FIELD_CAMERA * camera )
 {
-	camera->direction = *direction;
+#if 0
+	u16 value;
+	VecFx32 vec, camPos, target;
+	
+	GFL_G3D_CAMERA_GetPos( camera->g3Dcamera, &camPos );
+	GFL_G3D_CAMERA_GetTarget( camera->g3Dcamera, &target );
+
+	VEC_Subtract( &target, &camPos, &vec );
+	value = FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
+	if(value != camera->direction) {
+		TAMADA_Printf("calc value = %04x, hold value = %04x\n",value, camera->direction);
+	}
+	return value;
+#endif
+	return camera->direction;
 }
-void	FLD_GetCameraDirection( FIELD_CAMERA* camera, u16* direction )
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_CAMERA_SetDirectionOnXZ(FIELD_CAMERA * camera, u16 dir)
 {
-	*direction = camera->direction;
+	camera->direction = dir;
 }
 
-void	FLD_SetCameraLength( FIELD_CAMERA *camera, u16 leng )
+void FIELD_CAMERA_SetLengthOnXZ( FIELD_CAMERA *camera, u16 leng )
 {
 	camera->cameraLength = leng;
 }
-void	FLD_GetCameraLength( FIELD_CAMERA *camera, u16 *leng )
+
+u16	FIELD_CAMERA_GetLengthOnXZ( const FIELD_CAMERA *camera )
 {
-	*leng = camera->cameraLength;
+	return camera->cameraLength;
 }
-void	FLD_SetCameraHeight( FIELD_CAMERA *camera, fx32 height )
+
+void	FIELD_CAMERA_SetHeightOnXZ( FIELD_CAMERA *camera, fx32 height )
 {
 	camera->cameraHeight = height;
 }
-void	FLD_GetCameraHeight( FIELD_CAMERA *camera, fx32 *height )
+
+fx32	FIELD_CAMERA_GetHeightOnXZ( const FIELD_CAMERA *camera )
 {
-	*height = camera->cameraHeight;
+	 return camera->cameraHeight;
 }
 
 
