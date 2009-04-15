@@ -86,16 +86,6 @@ typedef struct _FGRID_CONT		FGRID_CONT;
 typedef struct _FGRID_PLAYER	FGRID_PLAYER;
 
 //--------------------------------------------------------------
-//	MMDL_LIST
-//--------------------------------------------------------------
-#define MMDL_LIST_MAX 64
-typedef struct
-{
-	int count;
-	u16 id_list[MMDL_LIST_MAX];
-}MMDL_LIST;
-
-//--------------------------------------------------------------
 ///	FGRID_CONT
 //--------------------------------------------------------------
 struct _FGRID_CONT
@@ -187,7 +177,6 @@ static void Jiki_UpdatePlayerWork( FIELD_MAIN_WORK *fieldWork );
 
 static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork );
 
-static void MMdlList_Init( MMDL_LIST *mlist, int list_id, HEAPID heapID );
 
 //--------------------------------------------------------------
 ///	data
@@ -222,44 +211,8 @@ static const GRID_CAMERA_DATA DATA_CameraTbl[] =
 static void GridMoveCreate(
 	FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir )
 {
+	//initFLDMMDL(fieldWork);
 	
-	{
-		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
-		PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
-		FLDMMDLSYS *fmmdlsys = GAMEDATA_GetFldMMdlSys( gdata );
-		int zone_id = PLAYERWORK_getZoneID( player );
-		
-		fieldWork->fldMMdlSys = fmmdlsys;
-		
-		FLDMMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
-			fieldWork->heapID, GetFieldG3Dmapper(fieldWork) );
-		
-		FLDMMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
-			fieldWork->fldMMdlSys,
-			GetBbdActSys(fieldWork), 32 );
-		
-#if 0
-		FLDMMDL_BLACTCONT_AddResourceTex(
-			fieldWork->fldMMdlSys, TestOBJCodeTbl, TestOBJCodeMax );
-#else
-		{
-			int list_area_id = 0;
-			MMDL_LIST mlist;
-			MMdlList_Init( &mlist, list_area_id, fieldWork->heapID );
-			FLDMMDL_BLACTCONT_AddOBJCodeRes( fieldWork->fldMMdlSys, HERO );
-			FLDMMDL_BLACTCONT_AddResourceTex(
-					fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
-		}
-#endif		
-		FLDMMDLSYS_SetupDrawProc(		//動作モデル描画　セットアップ
-				fieldWork->fldMMdlSys );
-		
-		FLDMMDLSYS_Pop( fieldWork->fldMMdlSys ); //動作モデル　復帰
-		
-		if( ZONEDATA_DEBUG_IsSampleObjUse(zone_id) == TRUE ){
-	//		GridMap_SetupNPC( fieldWork );
-		}
-	}
 	
 	fieldWork->pcActCont = CreatePlayerActGrid(
 			fieldWork, pos, fieldWork->heapID );
@@ -385,9 +338,12 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 	
 	DeletePlayerActGrid( fieldWork->pcActCont );
 	
+	//finishFLDMMDL(fieldWork);
+#if 0
 	FLDMMDLSYS_Push( fieldWork->fldMMdlSys );
 	FLDMMDLSYS_DeleteProc( fieldWork->fldMMdlSys );
 	fieldWork->fldMMdlSys = NULL;
+#endif
 }
 
 //======================================================================
@@ -1945,26 +1901,3 @@ BOOL FIELDMAP_CheckGridControl( FIELD_MAIN_WORK *fieldWork )
 	return( TRUE );
 }
 
-//======================================================================
-//	動作モデルリスト
-//======================================================================
-static void MMdlList_Init( MMDL_LIST *mlist, int list_id, HEAPID heapID )
-{
-	int i = 0;
-	u16 *pList;
-	pList = GFL_ARC_LoadDataAlloc( ARCID_FLDMMDL_LIST, list_id, heapID );
-	mlist->count = 0;
-	
-	while( pList[i] != OBJCODEMAX ){
-		OS_Printf( "モデルリスト　No %d = %d\n", i, pList[i] );
-		mlist->id_list[i] = pList[i];
-		i++;
-		GF_ASSERT( i < MMDL_LIST_MAX );
-	}
-
-	OS_Printf( "モデルリスト総数 %d\n", i );
-	
-	mlist->count = i;
-	mlist->id_list[i] = OBJCODEMAX;
-	GFL_HEAP_FreeMemory( pList );
-}

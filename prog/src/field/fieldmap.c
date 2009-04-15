@@ -279,6 +279,8 @@ void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )
 	GFL_HEAP_FreeMemory( fldWork );
 }
 
+static void initFLDMMDL(FIELD_MAIN_WORK * fieldWork);
+static finishFLDMMDL(FIELD_MAIN_WORK * fieldWork);
 //------------------------------------------------------------------
 /**
  * @brief	メイン
@@ -314,6 +316,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		SetMapperData(fieldWork);
 		FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
 
+		initFLDMMDL(fieldWork);
 		//登録テーブルごとに個別の初期化処理を呼び出し
 		{
 			u16 dir = GetStartDirection(gsys);
@@ -424,6 +427,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);
+		finishFLDMMDL(fieldWork);
 
         FLDMAPPER_ReleaseData( fieldWork->g3Dmapper );
 		
@@ -630,12 +634,100 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 //============================================================================================
 //
 // 
+//		FLDMMDLの初期化・破棄処理
+//		※FLDMMDLSYS自体はイベント遷移内で破棄される
+//
+//
+//============================================================================================
+//======================================================================
+//	動作モデルリスト
+//======================================================================
+//--------------------------------------------------------------
+//	MMDL_LIST
+//--------------------------------------------------------------
+enum {	MMDL_LIST_MAX	=	64 };
+typedef struct
+{
+	int count;
+	u16 id_list[MMDL_LIST_MAX];
+}MMDL_LIST;
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void MMdlList_Init( MMDL_LIST *mlist, int list_id, HEAPID heapID )
+{
+	int i = 0;
+	u16 *pList;
+	pList = GFL_ARC_LoadDataAlloc( ARCID_FLDMMDL_LIST, list_id, heapID );
+	mlist->count = 0;
+	
+	while( pList[i] != OBJCODEMAX ){
+		OS_Printf( "モデルリスト　No %d = %d\n", i, pList[i] );
+		mlist->id_list[i] = pList[i];
+		i++;
+		GF_ASSERT( i < MMDL_LIST_MAX );
+	}
+
+	OS_Printf( "モデルリスト総数 %d\n", i );
+	
+	mlist->count = i;
+	mlist->id_list[i] = OBJCODEMAX;
+	GFL_HEAP_FreeMemory( pList );
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void initFLDMMDL(FIELD_MAIN_WORK * fieldWork)
+{
+	{
+		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
+		PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+		FLDMMDLSYS *fmmdlsys = GAMEDATA_GetFldMMdlSys( gdata );
+		
+		fieldWork->fldMMdlSys = fmmdlsys;
+		
+		FLDMMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
+			fieldWork->heapID, GetFieldG3Dmapper(fieldWork) );
+		
+		FLDMMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
+			fieldWork->fldMMdlSys,
+			GetBbdActSys(fieldWork), 32 );
+		
+		//ビルボードリソース登録
+		{
+			int list_area_id = 0;
+			MMDL_LIST mlist;
+			MMdlList_Init( &mlist, list_area_id, fieldWork->heapID );
+			FLDMMDL_BLACTCONT_AddOBJCodeRes( fieldWork->fldMMdlSys, HERO );
+			FLDMMDL_BLACTCONT_AddResourceTex(
+					fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
+		}
+
+		FLDMMDLSYS_SetupDrawProc(		//動作モデル描画　セットアップ
+				fieldWork->fldMMdlSys );
+		
+		FLDMMDLSYS_Pop( fieldWork->fldMMdlSys ); //動作モデル　復帰
+	}
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static finishFLDMMDL(FIELD_MAIN_WORK * fieldWork)
+{
+	FLDMMDLSYS_Push( fieldWork->fldMMdlSys );
+	FLDMMDLSYS_DeleteProc( fieldWork->fldMMdlSys );
+	fieldWork->fldMMdlSys = NULL;
+}
+
+
+
+//============================================================================================
+//
+//
 //
 //
 //
 //
 //		セットアップ
-//
 //
 //
 //
