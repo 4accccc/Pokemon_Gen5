@@ -1,11 +1,14 @@
 //============================================================================================
 /**
- * @file	snd_status.c
+ * @file	snd_viewer.c
  * @brief	サウンドステータスビューワー
  * @author	
  * @date	
  */
 //============================================================================================
+#ifndef __SND_VIEWER_H__
+#define __SND_VIEWER_H__
+
 //
 //	使用の際にはgraphicフォルダ内のsndstatus.narcをルートに配置してください
 //	（"sndstatus.narc"パス指定で取得できる場所）
@@ -55,3 +58,5 @@ extern BOOL				GFL_SNDVIEWER_Main( GFL_SNDVIEWER* gflSndViewer );	//FALSEで終了
 
 extern u16	GFL_SNDVIEWER_GetControl( GFL_SNDVIEWER* gflSndViewer );
 extern void	GFL_SNDVIEWER_SetControl( GFL_SNDVIEWER* gflSndViewer, u16 flag );
+
+#endif

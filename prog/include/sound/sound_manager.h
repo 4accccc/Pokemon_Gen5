@@ -6,6 +6,9 @@
  * @date	
  */
 //============================================================================================
+#ifndef __SND_MANAGER_H__
+#define __SND_MANAGER_H__
+
 //============================================================================================
 /**
  *
@@ -68,3 +71,4 @@ extern SOUNDMAN_PRESET_HANDLE*	SOUNDMAN_PresetSoundTbl( const u32* soundIdxTbl, 
 extern SOUNDMAN_PRESET_HANDLE*	SOUNDMAN_PresetGroup( u32 groupIdx );
 extern void						SOUNDMAN_ReleasePresetData( SOUNDMAN_PRESET_HANDLE* handle );
 
+#endif
