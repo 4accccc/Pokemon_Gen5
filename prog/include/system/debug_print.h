@@ -21,6 +21,7 @@ typedef enum {
 	AUTHOR_KAGAYA,
 	AUTHOR_ARIIZUMI,
 	AUTHOR_TAYA,
+	AUTHOR_NAGI,
 
 	AUTHOR_IGNORE,		///< ‚±‚ê‚ðŽw’è‚·‚é‚Æo—Í‚³‚ê‚È‚¢
 }AUTHOR_ID;
@@ -93,6 +94,6 @@ extern void DEBUG_Printf( AUTHOR_ID author_id, const char * fmt, ... );
 #define		MATSUDA_Printf( ...)		DEBUG_Printf( AUTHOR_MATSUDA, __VA_ARGS__ )
 #define		KAGAYA_Printf( ...)			DEBUG_Printf( AUTHOR_KAGAYA, __VA_ARGS__ )
 #define		ARIIZUMI_Printf( ...)		DEBUG_Printf( AUTHOR_ARIIZUMI, __VA_ARGS__ )
-
+#define		NAGI_Printf( ... )			DEBUG_Printf( AUTHOR_NAGI, __VA_ARGS__ )
 
 #endif
