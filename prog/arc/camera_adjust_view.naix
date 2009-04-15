@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: camera_adjust_view.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-04-14T20:54:22
+ *****************************************************************************/
+
+#ifndef NARC_CAMERA_ADJUST_VIEW_NAIX_
+#define NARC_CAMERA_ADJUST_VIEW_NAIX_
+
+enum {
+	NARC_camera_adjust_view_camera_cont_NCGR = 0,
+	NARC_camera_adjust_view_camera_cont_NCLR = 1,
+	NARC_camera_adjust_view_camera_cont_NSCR = 2
+};
+
+/* NARC_CAMERA_ADJUST_VIEW_NAIX_ */
+#endif
