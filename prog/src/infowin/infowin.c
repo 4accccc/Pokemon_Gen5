@@ -19,6 +19,13 @@
 #include "test/ariizumi/ari_debug.h"
 
 //======================================================================
+//	debug
+//======================================================================
+#ifdef PM_DEBUG
+#define DEBUG_LO_BATTERY_VOLUME_UP
+#endif//PM_DEBUG
+
+//======================================================================
 //	define
 //======================================================================
 static const u8 INFOWIN_WIDTH = 32;
@@ -67,6 +74,9 @@ static const u16 INFOWIN_COLOR_GRAY = 0x318c;
 static const u16 INFOWIN_COLOR_RED = 0x187b;
 static const u16 INFOWIN_COLOR_YERROW = 0x1e7f;
 static const u16 INFOWIN_COLOR_GREEN = 0x0667;
+
+static const u16 INFOWIN_BEACON_SCAN_SYNC	= 10*60;	//10秒スキャンする
+static const u16 INFOWIN_BEACON_WAIT_SYNC	= 10*60;//30*60;	//30秒ネット開始をまつ
 //======================================================================
 //	enum
 //======================================================================
@@ -154,6 +164,11 @@ typedef struct
 	//BATTERY
 	u8	batteryVol;		//0~3
 
+	//beacon
+	u16		beaconCnt;		//beaconを取得している時間
+	u16		restartSeq;
+	BOOL	isRestart;
+
 	GFL_TCB *vblankFunc;
 }INFOWIN_WORK;
 
@@ -171,6 +186,10 @@ static	void	INFOWIN_WaitCommInitCallBack(void* pWork);
 static	void	INFOWIN_WaitCommExitCallBack(void* pWork);
 static	void	INFOWIN_UpdateSearchBeacon( void );
 
+//ビーコンスキャン中の電源節約のため、接続しなおす関数bynagihashi
+static void INFOWIN_ReStartCommMain( void );
+
+
 INFOWIN_WORK *infoWk = NULL;
 u8	infoCommState = ICS_STOP;
 
@@ -184,6 +203,7 @@ void	INFOWIN_Init( u8 bgplane , u8 pltNo ,HEAPID heapId )
 	GF_ASSERT_MSG(infoWk == NULL ,"Infobar is initialized!!\n");
 	
 	infoWk = GFL_HEAP_AllocMemory( heapId , sizeof( INFOWIN_WORK ) );
+	GFL_STD_MemClear( infoWk, sizeof(INFOWIN_WORK) );
 	
 	infoWk->bgplane = bgplane;
 	infoWk->pltNo = pltNo;
@@ -202,6 +222,10 @@ void	INFOWIN_Init( u8 bgplane , u8 pltNo ,HEAPID heapId )
 	//一回強制的に更新
 	INFOWIN_Update();
 	infoWk->isRefresh = INFOWIN_REFRESH_MASK;
+
+#ifdef DEBUG_LO_BATTERY_VOLUME_UP
+	SND_SetMasterVolume(0);
+#endif //DEBUG_LO_BATTERY_VOLUME_UP
 }
 
 void	INFOWIN_Update( void )
@@ -222,15 +246,24 @@ void	INFOWIN_Update( void )
 			if( infoWk->batteryVol != nowVol )
 			{
 				infoWk->batteryVol = nowVol;
-				infoWk->batteryVol |= INFOWIN_REFRESH_BATTERY;
+				infoWk->isRefresh |= INFOWIN_REFRESH_BATTERY;
 			}
 			infoWk->batteryCnt = 0;
+
+#ifdef DEBUG_LO_BATTERY_VOLUME_UP
+			if( nowVol == 0 ){
+				SND_SetMasterVolume(127);
+			}
+#endif //DEBUG_LO_BATTERY_VOLUME_UP
 		}
 	}
 	if( INFOWIN_IsStartComm() == TRUE )
 	{
 		INFOWIN_UpdateSearchBeacon();
 	}
+
+	//リスタート処理
+	INFOWIN_ReStartCommMain();
 }
 
 void	INFOWIN_Exit( void )
@@ -584,8 +617,11 @@ void	INFOWIN_StopComm( void )
 		OS_TPrintf("Infobar comm is stoped!!\n");
 		return;
 	}
-	GFL_NET_Exit(INFOWIN_WaitCommExitCallBack);
-	infoCommState = ICS_WAIT_FINISH;
+	if( INFOWIN_IsStartComm() )
+	{
+		GFL_NET_Exit(INFOWIN_WaitCommExitCallBack);
+		infoCommState = ICS_WAIT_FINISH;
+	}
 }
 
 
@@ -605,6 +641,7 @@ static void	INFOWIN_WaitCommExitCallBack(void* pWork)
 //--------------------------------------------------------------
 static	void INFOWIN_UpdateSearchBeacon( void )
 {
+#if 0 //origin
 	u8 bcnIdx = 0;
 	int targetIdx = -1;
 	void *bcnData;
@@ -636,5 +673,116 @@ static	void INFOWIN_UpdateSearchBeacon( void )
 			ARI_TPrintf("INFO:beacon is lost!\n");
 		}
 		infoWk->isRefresh |= INFOWIN_REFRESH_BEACON;
+	}
+#else	//電源節約処理を入れました090406nagihashi
+	u8 bcnIdx = 0;
+	int targetIdx = -1;
+	void *bcnData;
+	BOOL flg = FALSE;
+
+	//ビーコンスキャン開始
+	if( infoCommState == ICS_FINISH_INIT )
+	{
+		infoCommState = ICS_SCAN_BEACON;
+		GFL_NET_StartBeaconScan();
+		NAGI_Printf("●ビーコン開始\n");
+	}
+
+	//ビーコンスキャン時の操作
+	if( infoCommState == ICS_SCAN_BEACON )
+	{
+		//ビーコンスキャンをするカウント
+		if( infoWk->beaconCnt++ >= INFOWIN_BEACON_SCAN_SYNC ){
+			infoWk->beaconCnt	= 0;
+			//時間がたったらネットリスタート
+			infoWk->isRestart	= TRUE;
+			NAGI_Printf("●ネットリスタート\n");
+		}
+		
+
+		//以下、ビーコンチェック
+		while( GFL_NET_GetBeaconData(bcnIdx) != NULL )
+		{
+			bcnData = GFL_NET_GetBeaconData( bcnIdx );
+			flg = TRUE;
+			bcnIdx++;
+		}
+
+		if( flg != INFOWIN_CHECK_BIT( infoWk->isRefresh , INFOWIN_DISP_BEACON ) )
+		{
+			if( flg == TRUE )
+			{
+				infoWk->isRefresh |= INFOWIN_DISP_BEACON;
+				ARI_TPrintf("INFO:beacon is find!\n");
+			}
+			else
+			{
+				infoWk->isRefresh -= INFOWIN_DISP_BEACON;
+				ARI_TPrintf("INFO:beacon is lost!\n");
+			}
+			infoWk->isRefresh |= INFOWIN_REFRESH_BEACON;
+		}
+	}
+
+#endif
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リスタートメイン処理処理
+ *
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void INFOWIN_ReStartCommMain( void )
+{
+	enum{
+		SEQ_STOP_NET_REQ,
+		SEQ_STOP_NET_WAIT,
+		SEQ_WAIT_SYNC,
+		SEQ_START_NET_REQ,
+		SEQ_START_NET_WAIT,
+	};
+
+	//リスタートリクエストがでたら開始
+	if( infoWk->isRestart ){
+
+		switch( infoWk->restartSeq ){
+		//電源節約のためネット停止
+		case SEQ_STOP_NET_REQ:
+			INFOWIN_StopComm();
+			infoWk->restartSeq++;
+			break;
+
+		case SEQ_STOP_NET_WAIT:
+			if( INFOWIN_IsStopComm() ){
+				infoWk->restartSeq++;
+			}
+			break;
+
+		//電源節約時間
+		case SEQ_WAIT_SYNC:
+			if( infoWk->beaconCnt++ >= INFOWIN_BEACON_WAIT_SYNC ){
+				infoWk->beaconCnt	= 0;
+				infoWk->restartSeq++;
+			}
+			break;
+
+		//ビーコンチェックのためネット接続
+		case SEQ_START_NET_REQ:
+			INFOWIN_StartComm();
+			infoWk->restartSeq++;
+			break;
+
+		case SEQ_START_NET_WAIT:
+			if( INFOWIN_IsStartComm() ){
+				infoWk->restartSeq	= 0;
+				infoWk->isRestart	= FALSE;
+				NAGI_Printf("●ネット再接続\n");
+			}
+			break;
+		}
 	}
 }
