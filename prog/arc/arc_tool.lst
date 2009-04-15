@@ -107,7 +107,7 @@
 	ARCID_MYSIGN		"mysign.narc"			#サイン(トレーナーカード)
 	ARCID_TRAINERCARD	"trainer_case.narc"		#トレーナーカード
 	ARCID_TRC_UNION		"trc_union.narc"		#ユニオンルーム トレーナーカード キャラ絵
-	ARCID_SOUNDTEST		"soundtest.narc"		#サウンドテスト画像
+	ARCID_SOUNDTEST		"soundtest.narc"		#サウンドテスト画像（デバッグ）
 	ARCID_PMS_AIKOTOBA_DATA	"pms_aikotoba.narc"	#簡易文・壁紙取得合言葉
 	ARCID_PMSI_GRAPHIC	"pmsi.narc"		#簡易文入力画面素材
 	ARCID_COMPATI_CHECK	"compati_check.narc"	#相性チェック
@@ -142,3 +142,4 @@
 	ARCID_MUSICAL_SCRIPT	"musical_script.narc"		#ミュージカルスクリプト
 	ARCID_OTHERS		"others.narc"
 	ARCID_WAZAEFF_SEQ	"wazaeffect/waza_eff.narc"	#技エフェクトシーケンス
+	ARCID_CAMERACONT	"camera_adjust_view.narc"	#カメラ調整用画像（デバッグ）
