@@ -5,7 +5,7 @@
 #include "gamesystem/game_event.h"
 
 #include "field_g3d_mapper.h"
-#include "field_player.h"			//PC_ACT_FUNC
+//#include "field_player.h"			//PC_ACT_FUNC
 
 #include "field/fieldmap.h"
 #include "field/field_msgbg.h"

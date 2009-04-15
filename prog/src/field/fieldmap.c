@@ -19,7 +19,6 @@
 
 #include "fieldmap_local.h"
 #include "field_common.h"
-#include "field_actor.h"
 #include "field_player.h"
 #include "field_camera.h"
 #include "field_data.h"
@@ -97,7 +96,6 @@ struct _FIELD_MAIN_WORK
 	const DEPEND_FUNCTIONS * ftbl;
 	FIELD_CAMERA*	camera_control;
 	PC_ACTCONT*		pcActCont;
-	FLD_ACTCONT*	fldActCont;
 	VecFx32			now_pos;
 
 

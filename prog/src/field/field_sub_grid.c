@@ -385,13 +385,6 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 	
 	DeletePlayerActGrid( fieldWork->pcActCont );
 	
-	if( fieldWork->fldActCont != NULL ){
-#if 0
-		FLDACT_TestRelease( fieldWork->fldActCont );
-		FLD_DeleteFieldActSys( fieldWork->fldActCont );
-#endif
-	}
-	
 	FLDMMDLSYS_Push( fieldWork->fldMMdlSys );
 	FLDMMDLSYS_DeleteProc( fieldWork->fldMMdlSys );
 	fieldWork->fldMMdlSys = NULL;
@@ -422,9 +415,6 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		OS_Printf( "テストカメラ　No.%d\n", pGridCont->debug_camera_num );
 	}
 	
-	if( fieldWork->fldActCont != NULL ){
-		FLD_MainFieldActSys( fieldWork->fldActCont );
-	}
 	
 //	FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );	//メインに移動
 	Jiki_UpdatePlayerWork( fieldWork );
@@ -458,6 +448,7 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	
 	if( trg & PAD_BUTTON_B ){
 		pGridCont->proc_switch = GRIDPROC_MAIN;
+		TAMADA_Printf("switch to GRIDPROC_MAIN\n");
 	}else{
 		dir = FIELD_CAMERA_GetDirectionOnXZ( camera );
 		leng = FIELD_CAMERA_GetLengthOnXZ( camera );
@@ -500,15 +491,6 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		FIELD_CAMERA_SetHeightOnXZ( camera, height );
 	}
 	
-	{
-		if( fieldWork->fldActCont != NULL ){
-			FLD_MainFieldActSys( fieldWork->fldActCont );
-		}
-
-		GetPlayerActTrans( fieldWork->pcActCont, pos );
-	//	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
-	
-	}
 }
 
 //--------------------------------------------------------------
@@ -534,6 +516,7 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	
 	if( trg & PAD_BUTTON_B ){
 		pGridCont->proc_switch = GRIDPROC_MAIN;
+		TAMADA_Printf("switch to GRIDPROC_MAIN\n");
 	}else{
 		if( cont & (PAD_KEY_UP|PAD_KEY_DOWN) ){
 			fx16 val = 0x80;	//1=0x1000
@@ -580,9 +563,6 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		}
 	}
 	
-	if( fieldWork->fldActCont != NULL ){
-		FLD_MainFieldActSys( fieldWork->fldActCont );
-	}
 
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 }
@@ -1610,6 +1590,7 @@ void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork )
 {
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
 	pGridCont->proc_switch = GRIDPROC_DEBUG00;
+	TAMADA_Printf("switch to GRIDPROC_DEBUG00\n");
 }
 
 //--------------------------------------------------------------
@@ -1663,6 +1644,7 @@ void DEBUG_FldGridProc_ScaleControl( FIELD_MAIN_WORK *fieldWork )
 	fx16 scale;
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
 	pGridCont->proc_switch = GRIDPROC_DEBUG01;
+	TAMADA_Printf("switch to GRIDPROC_DEBUG01\n");
 }
 
 //--------------------------------------------------------------

@@ -39,7 +39,6 @@ static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 		 16
 	};
 	C3MoveWork = init;
-	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork, fieldWork->heapID );
 	fieldWork->pcActCont = CreatePlayerAct( fieldWork, fieldWork->heapID );
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
@@ -95,7 +94,6 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	}
 	FIELD_CAMERA_SetDirectionOnXZ(fieldWork->camera_control, mwk->pos_angle);
 	MainPlayerAct_C3( fieldWork->pcActCont, fieldWork->key_cont, mwk->pos_angle );
-	FLD_MainFieldActSys( fieldWork->fldActCont );
 	
 
 }
@@ -108,7 +106,6 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 static void TestC3Delete( FIELD_MAIN_WORK* fieldWork )
 {
 	DeletePlayerAct( fieldWork->pcActCont );
-	FLD_DeleteFieldActSys( fieldWork->fldActCont );
 }
 
 //============================================================================================

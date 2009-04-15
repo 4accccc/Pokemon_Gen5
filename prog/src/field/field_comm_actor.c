@@ -15,7 +15,7 @@
 
 #include "fieldmap_local.h"
 #include "field_common.h"
-#include "field_actor.h"
+//#include "field_actor.h"
 
 #include "field_comm_actor.h"
 #include "test_graphic/fld_act.naix"

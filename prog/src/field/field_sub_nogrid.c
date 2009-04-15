@@ -17,7 +17,6 @@
 //------------------------------------------------------------------
 static void NoGridCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
-	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork, fieldWork->heapID );
 	fieldWork->pcActCont = CreatePlayerAct( fieldWork, fieldWork->heapID );
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
@@ -28,7 +27,6 @@ static void NoGridCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 {
 	MainPlayerAct_NoGrid( fieldWork->pcActCont, fieldWork->key_cont );
-	FLD_MainFieldActSys( fieldWork->fldActCont );
 	
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 
@@ -53,6 +51,5 @@ static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 static void NoGridDelete( FIELD_MAIN_WORK* fieldWork )
 {
 	DeletePlayerAct( fieldWork->pcActCont );
-	FLD_DeleteFieldActSys( fieldWork->fldActCont );
 }
 
