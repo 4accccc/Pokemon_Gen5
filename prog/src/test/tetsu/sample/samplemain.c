@@ -22,6 +22,7 @@ BOOL	SampleMain( void );
 #include "sound/snd_viewer.h"
 #include "sound/pm_sndsys.h"
 
+#include "test/camera_adjust_view.h"
 //============================================================================================
 //
 //
@@ -130,8 +131,9 @@ static void				MainCursor( CURSOR_CONT* cursor);
 static void             FriendCursor( CURSOR_CONT* cursor );
 static void				SetCursorTrans( CURSOR_CONT* cursor, const VecFx32* trans );
 static void				GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans );
-static void				SetCursorDirection( CURSOR_CONT* cursor, u16* direction );
-static void				GetCursorDirection( CURSOR_CONT* cursor, u16* direction );
+static u16*				GetCursorCameraAngleVPointer( CURSOR_CONT* cursor );
+static u16*				GetCursorCameraAngleHPointer( CURSOR_CONT* cursor );
+static fx32*			GetCursorCameraLengthPointer( CURSOR_CONT* cursor );
 
 typedef struct _PC_ACTCONT PC_ACTCONT;
 static PC_ACTCONT*		CreatePlayerAct( SAMPLE_SETUP* gs, HEAPID heapID );
@@ -167,6 +169,10 @@ static const GFL_SNDVIEWER_SETUP sndStatusData= {
 	PMSND_CheckOnReverb,
 	GFL_SNDVIEWER_CONTROL_ENABLE | GFL_SNDVIEWER_CONTROL_EXIT,
 };
+static const GFL_CAMADJUST_SETUP camAdjustData= {
+	PAD_BUTTON_START,
+	GFL_DISPUT_BGID_S1, GFL_DISPUT_PALID_15,
+};
 //------------------------------------------------------------------
 /**
  * @brief	構造体定義
@@ -188,6 +194,7 @@ typedef struct {
 
 	GFL_SKB*		gflSkb;
 	GFL_SNDVIEWER*	gflSndViewer;
+	GFL_CAMADJUST*	gflCamAdjust;
 	BOOL			subProcSw;
 
 	void*			skbStrBuf;
@@ -287,6 +294,12 @@ BOOL	SampleMain( void )
 					sampleWork->subProcSw = FALSE;
 					sampleWork->gflSndViewer = NULL;
 				}
+			} else if(sampleWork->gflCamAdjust != NULL ){
+				if( GFL_CAMADJUST_Main( sampleWork->gflCamAdjust ) == FALSE ){	
+					GFL_CAMADJUST_Delete( sampleWork->gflCamAdjust );
+					sampleWork->subProcSw = FALSE;
+					sampleWork->gflCamAdjust = NULL;
+				}
 			} else {
 				sampleWork->subProcSw = FALSE;
 			}
@@ -310,8 +323,13 @@ BOOL	SampleMain( void )
 				break;
 			}
 			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-				sampleWork->gflSkb = GFL_SKB_Create
-										( sampleWork->skbStrBuf, &skbData, sampleWork->heapID );
+				//sampleWork->gflSkb = GFL_SKB_Create
+				//						( sampleWork->skbStrBuf, &skbData, sampleWork->heapID );
+				sampleWork->gflCamAdjust = GFL_CAMADJUST_Create(&camAdjustData, sampleWork->heapID);
+				GFL_CAMADJUST_SetCameraParam(	sampleWork->gflCamAdjust,
+												GetCursorCameraAngleVPointer(sampleWork->cursor),
+												GetCursorCameraAngleHPointer(sampleWork->cursor),
+												GetCursorCameraLengthPointer(sampleWork->cursor) );
 				sampleWork->subProcSw = TRUE;
 				break;
 			}
@@ -326,7 +344,6 @@ BOOL	SampleMain( void )
 			GetPlayerActTrans( sampleWork->pcActCont, &pos );
 
 			SetCursorTrans( sampleWork->cursor, &pos );
-			//SetCursorDirection( sampleWork->cursor, &dir );
 			SetPos3Dmapper( GetG3Dmapper(sampleWork->gs), &pos );
 		}
 		MainCursor( sampleWork->cursor );
@@ -980,9 +997,9 @@ struct _CURSOR_CONT {
 
 	u16					cursorIdx;
 	VecFx32				trans;
-	fx32				cameraHeight;
-	u16					cameraLength;
-	u16					direction;
+	fx32				length;
+	u16					angleV;
+	u16					angleH;
 
 	G3D_MAPPER_INFODATA gridInfoData;
 };
@@ -1027,7 +1044,12 @@ static const GFL_G3D_SCENEOBJ_DATA cursorObject[] = {
 	},
 };
 
-#define	CAMERA_LENGTH	(16)
+#define	CAMERA_LENGTH	(16*FX32_ONE)
+#define	CAMERA_TARGET_HEIGHT	(4 * FX32_ONE)
+#define PITCH_LIMIT (0x200)
+
+static void CalcCameraPos
+	(const fx32 length, const u16 angleV, const u16 angleH, const VecFx32* target, VecFx32* dst);
 //------------------------------------------------------------------
 /**
  * @brief	初期化
@@ -1041,9 +1063,9 @@ static CURSOR_CONT*	CreateCursor( SAMPLE_SETUP*	gs, HEAPID heapID )
 	cursor->gs = gs;
 
 	VEC_Set( &cursor->trans, 0, 0, 0 );
-	cursor->cameraHeight = 0;
-	cursor->cameraLength = CAMERA_LENGTH;
-	cursor->direction = 0;
+	cursor->length = CAMERA_LENGTH;
+	cursor->angleV = 0;
+	cursor->angleH = 0;
 	InitGet3DmapperGridInfoData( &cursor->gridInfoData );
 
 	//３Ｄデータセットアップ
@@ -1077,53 +1099,17 @@ static void	DeleteCursor( CURSOR_CONT* cursor )
  * @brief	メイン
  */
 //------------------------------------------------------------------
-#define MV_SPEED		(2*FX32_ONE)
-#define RT_SPEED		(FX32_ONE/8)
-#define	CAMERA_TARGET_HEIGHT	(4)//(8)
 static void	MainCursor( CURSOR_CONT* cursor )
 {
 	VecFx32	pos, target;
-	VecFx32	vecMove = { 0, 0, 0 };
-	VecFx32	vecUD = { 0, 0, 0 };
-	int		key;
-	BOOL	mvFlag = FALSE;
 
-	key = GFL_UI_KEY_GetCont();
+	target = cursor->trans;
+	target.y += (CAMERA_TARGET_HEIGHT);
 
-	if( key & PAD_BUTTON_R ){
-		cursor->direction -= RT_SPEED;
-	}
-	if( key & PAD_BUTTON_L ){
-		cursor->direction += RT_SPEED;
-	}
-	if( key & PAD_BUTTON_B ){
-		if( cursor->cameraLength > 8 ){
-			cursor->cameraLength -= 8;
-		}
-		//vecMove.y = -MV_SPEED;
-	}
-	if( key & PAD_BUTTON_A ){
-		if( cursor->cameraLength < 4096 ){
-			cursor->cameraLength += 8;
-		}
-		//vecMove.y = MV_SPEED;
-	}
-	if( key & PAD_BUTTON_Y ){
-		cursor->cameraHeight -= MV_SPEED;
-	}
-	if( key & PAD_BUTTON_X ){
-		cursor->cameraHeight += MV_SPEED;
-	}
-	VEC_Set(	&target,
-				cursor->trans.x,
-				cursor->trans.y + CAMERA_TARGET_HEIGHT*FX32_ONE,
-				cursor->trans.z);
-	pos.x = cursor->trans.x + cursor->cameraLength * FX_SinIdx(cursor->direction);
-	pos.y = cursor->trans.y + cursor->cameraHeight;
-	pos.z = cursor->trans.z + cursor->cameraLength * FX_CosIdx(cursor->direction);
+	CalcCameraPos(cursor->length, cursor->angleV, cursor->angleH, &target, &pos);
 
-	GFL_G3D_SCENEOBJ_SetPos(	GFL_G3D_SCENEOBJ_Get(cursor->gs->g3Dscene, cursor->cursorIdx), 
-								&cursor->trans );
+	//GFL_G3D_SCENEOBJ_SetPos(	GFL_G3D_SCENEOBJ_Get(cursor->gs->g3Dscene, cursor->cursorIdx), 
+	//							&cursor->trans );
 	GFL_G3D_CAMERA_SetTarget( cursor->gs->g3Dcamera, &target );
 	GFL_G3D_CAMERA_SetPos( cursor->gs->g3Dcamera, &pos );
 }
@@ -1132,10 +1118,30 @@ static void	MainCursor( CURSOR_CONT* cursor )
 
 static void	FriendCursor( CURSOR_CONT* cursor )
 {
-    
     GFL_STD_MemCopy((const void*)&sampleWork->recvWork ,&cursor->trans, sizeof(VecFx32));
 	GFL_G3D_SCENEOBJ_SetPos(	GFL_G3D_SCENEOBJ_Get(cursor->gs->g3Dscene, cursor->cursorIdx), 
 								&cursor->trans );
+}
+
+//-----------------------------------------------------------------------------------------
+//　距離とアングルによるカメラ位置計算
+//-----------------------------------------------------------------------------------------
+static void CalcCameraPos
+	(const fx32 length, const u16 angleV, const u16 angleH, const VecFx32* target, VecFx32* dst)
+{
+	VecFx32 vecCamera;
+	fx16 sinYaw = FX_SinIdx(angleV);
+	fx16 cosYaw = FX_CosIdx(angleV);
+	fx16 sinPitch = FX_SinIdx(angleH);
+	fx16 cosPitch = FX_CosIdx(angleH);
+
+	if(cosPitch < 0){ cosPitch = -cosPitch; }	// 裏周りしないようにマイナス値はプラス値に補正
+	if(cosPitch < PITCH_LIMIT){ cosPitch = PITCH_LIMIT; }	// 0値近辺は不正表示になるため補正
+
+	// カメラの座標計算
+	VEC_Set( &vecCamera, sinYaw * cosPitch, sinPitch * FX16_ONE, cosYaw * cosPitch);
+	VEC_Normalize(&vecCamera, &vecCamera);
+	VEC_MultAdd( length, &vecCamera, target, dst );
 }
 
 //------------------------------------------------------------------
@@ -1152,20 +1158,29 @@ static void	GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans )
 	*trans = cursor->trans;
 }
 
-static void	SetCursorDirection( CURSOR_CONT* cursor, u16* direction )
+static u16* GetCursorCameraAngleVPointer( CURSOR_CONT* cursor )
 {
-	cursor->direction = *direction;
+	return &cursor->angleV;
 }
-static void	GetCursorDirection( CURSOR_CONT* cursor, u16* direction )
+
+static u16* GetCursorCameraAngleHPointer( CURSOR_CONT* cursor )
 {
-	*direction = cursor->direction;
+	return &cursor->angleH;
 }
+
+static fx32* GetCursorCameraLengthPointer( CURSOR_CONT* cursor )
+{
+	return &cursor->length;
+}
+
 
 //============================================================================================
 /**
  * @brief	プレーヤーアクター
  */
 //============================================================================================
+#define MV_SPEED		(2*FX32_ONE)
+
 struct _PC_ACTCONT {
 	HEAPID					heapID;
 	SAMPLE_SETUP*			gs;
@@ -1479,14 +1494,6 @@ static void	MainPlayerAct( PC_ACTCONT* pcActCont )
 		vecMove.z = FX_CosIdx( (u16)(dir + 0x4000) );
 		pcActCont->direction = dir + 0xc000;
 	}
-#if 0
-	if( key & PAD_BUTTON_R ){
-		pcActCont->direction -= RT_SPEED;
-	}
-	if( key & PAD_BUTTON_L ){
-		pcActCont->direction += RT_SPEED;
-	}
-#endif
 	CalcSetGroundMove( GetG3Dmapper(pcActCont->gs), &pcActCont->gridInfoData, 
 								&pcActCont->trans, &vecMove, MV_SPEED );
     
