@@ -79,5 +79,5 @@ const NetRecvFuncTable* WFP2PMF_CommCommandTclGet( void )
 //-----------------------------------------------------------------------------
 int WFP2PMF_CommCommandTblNumGet( void )
 {
-    return NELEMS(_CommNutWFP2PMFPacketTbl);
+    return (CNM_COMMAND_MAX-GFL_NET_CMD_WIFICLUB);
 }

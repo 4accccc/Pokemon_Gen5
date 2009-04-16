@@ -84,7 +84,7 @@ static GMEVENT_RESULT DebugBattleEvent(GMEVENT * event, int *  seq, void * work)
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
 		// サウンドテスト
 		// 戦闘用ＢＧＭセット
-		PMSND_PlayBGM(SEQ_WB_VS_NORAPOKE);
+		PMSND_PlayBGM(dbw->para.musicDefault);
 		//
 		(*seq)++;
 		break;
@@ -153,6 +153,9 @@ GMEVENT * DEBUG_EVENT_Battle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 		PokeParty_Add(para->partyEnemy1, PP_Create( MONSNO_ARUSEUSU + 1, 15, 3594, HEAPID_CORE));
 		para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
 		para->partyEnemy2 = NULL;	///< 2vs2時の２番目敵AI用（不要ならnull）
+
+        para->musicDefault = SEQ_WB_BA_TEST_250KB;		///< デフォルト時のBGMナンバー
+        para->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;			///< ピンチ時のBGMナンバー
 
 		dbw->timeWait = 0;
 	}

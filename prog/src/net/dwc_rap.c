@@ -1216,7 +1216,7 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size )
 		return;
 	}
 //	MYDWC_DEBUGPRINT( "受信(%d)\n",*((s32*)buffer) );
-	NET_PRINT( "受信(%d)\n", aid );
+//	NET_PRINT( "受信(%d)\n",aid );
 	
 	// アライメントを確実にするために、コピー
 	{
@@ -1234,7 +1234,9 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size )
 			if( _dWork->serverCallback != NULL ) _dWork->serverCallback(aid, temp, size-4);
 		} else {
 			// サーバからクライアントに対して送られてきたものと判断。	
-			if( _dWork->clientCallback != NULL ) _dWork->clientCallback(aid, temp, size-4);
+            if( _dWork->clientCallback != NULL ){
+                _dWork->clientCallback(aid, temp, size-4);
+            }
 		}
 		
 		mydwc_FreeFunc(NULL, temp, size - 4);
@@ -1906,14 +1908,14 @@ static void mydwc_updateFriendInfo( void )
 	{
 		int index = _dWork->friendupdate_index % FRIENDLIST_MAXSIZE;
 		int size;
-	
+
         if( DWC_IsBuddyFriendData( &(_dWork->keyList[index]) ) ){
             _dWork->friend_status[index] = DWC_GetFriendStatusData(&_dWork->keyList[ index ],(char*)_dWork->friendinfo[index],&size);
 #ifdef PM_DEBUG
             GF_ASSERT( (size <= MYDWC_STATUS_DATA_SIZE_MAX) || (size == -1));
 #endif
 		}
-		_dWork->friendupdate_index = (_dWork->friendupdate_index + 1) % FRIENDLIST_MAXSIZE;
+		_dWork->friendupdate_index = (_dWork->friendupdate_index + 1);
 	}
 }
 

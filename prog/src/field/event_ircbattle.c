@@ -26,6 +26,7 @@
 #include "ircbattle/ircbattlematch.h"
 #include "ircbattle/ircbattlemenu.h"
 #include "ircbattle/ircbattlefriend.h"
+#include "sound/pm_sndsys.h"
 #include "battle/battle.h"
 #include "poke_tool/monsno_def.h"
 #include "system/main.h"			//GFL_HEAPID_APP参照
@@ -147,7 +148,9 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         dbw->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
         dbw->para.netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
         dbw->para.commPos = dbw->para.netID;
-		GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &dbw->para);
+        PMSND_PlayBGM(dbw->para.musicDefault);
+
+        GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &dbw->para);
         GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
 		(*seq)++;
 		break;
@@ -226,6 +229,10 @@ void EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * e
         para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
         para->partyEnemy2 = NULL;		///< 2vs2時の２番目敵AI用（不要ならnull）
 
+
+        para->musicDefault = SEQ_WB_BA_TEST_250KB;		///< デフォルト時のBGMナンバー
+        para->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;			///< ピンチ時のBGMナンバー
+        
 		PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->partyPlayer);
 	}
 }
