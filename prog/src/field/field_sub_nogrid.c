@@ -17,8 +17,13 @@
 //------------------------------------------------------------------
 static void NoGridCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
-	fieldWork->pcActCont = CreatePlayerAct( fieldWork, fieldWork->heapID );
+#if 0
+	fieldWork->pcActCont = CreatePlayerAct( fieldWork, pos, fieldWork->heapID );
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
+	SetPlayerActDirection( fieldWork->pcActCont, &dir );
+#endif
+	fieldWork->pcActCont = CreatePlayerActGrid(fieldWork, pos, fieldWork->heapID);
+	SetGridPlayerActTrans( fieldWork->pcActCont, pos);
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
 }
 
@@ -29,18 +34,7 @@ static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 	MainPlayerAct_NoGrid( fieldWork->pcActCont, fieldWork->key_cont );
 	
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
-
-	if (FieldEasyTP_TouchDirGet() == FLDEASYTP_TCHDIR_DOWN) {
-		VecFx32 trans;
-		FLDMAPPER_GRIDINFO gridInfo;
-		int i;
-		GetPlayerActTrans(fieldWork->pcActCont, &trans);
-		FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork), &trans, &gridInfo);
-		OS_Printf("gridInfo.count = %d\n", gridInfo.count);
-		for (i = 0; i < gridInfo.count; i++) {
-			OS_Printf("[%02d]%08x\n",i, gridInfo.gridData[i].height);
-		}
-	}
+	SetGridPlayerActTrans( fieldWork->pcActCont, pos);
 }
 
 //------------------------------------------------------------------
@@ -50,6 +44,7 @@ static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 //------------------------------------------------------------------
 static void NoGridDelete( FIELD_MAIN_WORK* fieldWork )
 {
-	DeletePlayerAct( fieldWork->pcActCont );
+	DeletePlayerActGrid(fieldWork->pcActCont);
+	//DeletePlayerAct( fieldWork->pcActCont );
 }
 

@@ -3,6 +3,7 @@
 extern FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
 
 //field_player_grid.c
+#ifdef OLD_FIELDPLAYER_NOUSE
 static const GFL_BBDACT_RESDATA playerGridBBDactResTable[] = {
 	{ ARCID_FLDMMDL_BTX, NARC_fldmmdl_btx_obj_kabi32_nsbtx,
 	GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x32, 32, 32,
@@ -88,6 +89,7 @@ static const GFL_BBDACT_ANM* playerGridBBDactAnmTable[] = {
 	PCGridwalkUAnm, PCGridwalkDAnm, PCGridwalkLAnm, PCGridwalkRAnm,
 	PCjumpUAnm, PCjumpDAnm, PCjumpLAnm, PCjumpRAnm,
 };
+#endif OLD_FIELDPLAYER_NOUSE
 
 #if 0	//3head test
 PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )

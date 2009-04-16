@@ -11,24 +11,28 @@ void	MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key)
 		vecMove.x = FX_SinIdx( (u16)(dir + 0x8000) );
 		vecMove.z = FX_CosIdx( (u16)(dir + 0x8000) );
 		pcActCont->direction = dir;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_UP);
 	}
 	if( key & PAD_KEY_DOWN ){
 		mvFlag = TRUE;
 		vecMove.x = FX_SinIdx( (u16)(dir + 0x0000) );
 		vecMove.z = FX_CosIdx( (u16)(dir + 0x0000) );
 		pcActCont->direction = dir + 0x8000;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_DOWN);
 	}
 	if( key & PAD_KEY_LEFT ){
 		mvFlag = TRUE;
 		vecMove.x = FX_SinIdx( (u16)(dir + 0xc000) );
 		vecMove.z = FX_CosIdx( (u16)(dir + 0xc000) );
 		pcActCont->direction = dir + 0x4000;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_LEFT);
 	}
 	if( key & PAD_KEY_RIGHT ){
 		mvFlag = TRUE;
 		vecMove.x = FX_SinIdx( (u16)(dir + 0x4000) );
 		vecMove.z = FX_CosIdx( (u16)(dir + 0x4000) );
 		pcActCont->direction = dir + 0xc000;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_RIGHT);
 	}
 	if (key & PAD_BUTTON_Y) {
 		vecMove.y = -2 * FX32_ONE;
@@ -55,9 +59,11 @@ void	MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key)
 
     
 	if( mvFlag == TRUE ){
-		SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
+		//SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
+		FLDMMDL_SetDrawStatus(pcActCont->pFldMMdl, DRAW_STA_WALK);
 	} else {
-		SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
+		//SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
+		FLDMMDL_SetDrawStatus(pcActCont->pFldMMdl, DRAW_STA_STOP);
 	}
 }
 
@@ -68,25 +74,31 @@ void	MainPlayerAct_C3( PC_ACTCONT* pcActCont, int key, u16 angle)
 	if( key & PAD_KEY_UP ){
 		mvFlag = TRUE;
 		pcActCont->direction = angle;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_UP);
 	}
 	if( key & PAD_KEY_DOWN ){
 		mvFlag = TRUE;
 		pcActCont->direction = angle + 0x8000;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_DOWN);
 	}
 	if( key & PAD_KEY_LEFT ){
 		mvFlag = TRUE;
 		pcActCont->direction = angle + 0x4000;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_LEFT);
 	}
 	if( key & PAD_KEY_RIGHT ){
 		mvFlag = TRUE;
 		pcActCont->direction = angle + 0xc000;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_RIGHT);
 	}
 
     
 	if( mvFlag == TRUE ){
-		SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
+		//SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
+		FLDMMDL_SetDrawStatus(pcActCont->pFldMMdl, DRAW_STA_WALK);
 	} else {
-		SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
+		//SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
+		FLDMMDL_SetDrawStatus(pcActCont->pFldMMdl, DRAW_STA_STOP);
 	}
 }
 

@@ -15,7 +15,6 @@
 #include "field_camera.h"	//FIELD_CAMERA_～
 #include "fldmmdl.h"
 
-static void				SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID );
 //============================================================================================
 /**
  * @brief	プレーヤーアクター
@@ -24,340 +23,24 @@ static void				SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID );
 struct _PC_ACTCONT {
 	HEAPID					heapID;
 	FIELD_MAIN_WORK *		fieldWork;
-	u16						cameraRotate;
+//	u16						cameraRotate;
 	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
-	u16						bbdActResCount;
+//	u16						bbdActResCount;
 	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
-	u16						bbdActActCount;
+//	u16						bbdActActCount;
 	u16						direction;
 	VecFx32					trans;
-	int						anmSetID;
-	BOOL					anmSetReq;			
+//	int						anmSetID;
+//	BOOL					anmSetReq;			
 
 	FLDMAPPER_GRIDINFODATA		gridInfoData;
 	
 	FLDMMDL *pFldMMdl;
 };
 
-enum {
-	ANMTYPE_STOP = 0,
-	ANMTYPE_WALK,
-	ANMTYPE_RUN,
-	ANMTYPE_JUMP,
-};
 
-static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_tex32x32_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-//	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx,
-//		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_TRANSSRC },
-};
-
-static const GFL_BBDACT_ANM PCstopLAnm[] = {
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCstopRAnm[] = {
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCstopUAnm[] = {
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCstopDAnm[] = {
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-
-static const GFL_BBDACT_ANM PCwalkLAnm[] = {
-	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCwalkRAnm[] = {
-	{ 1, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 3, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCwalkUAnm[] = {
-	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 20, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCwalkDAnm[] = {
-	{ 22, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 23, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-
-static const GFL_BBDACT_ANM PCrunLAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 16, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCrunRAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 16, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCrunUAnm[] = {
-	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCrunDAnm[] = {
-	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 13, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-
-static const GFL_BBDACT_ANM PCjumpLAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCjumpRAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCjumpUAnm[] = {
-	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCjumpDAnm[] = {
-	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-
-enum {
-	PCACTSTOP_UP = 0,
-	PCACTSTOP_DOWN,
-	PCACTSTOP_LEFT,
-	PCACTSTOP_RIGHT,
-
-	PCACTWALK_UP,
-	PCACTWALK_DOWN,
-	PCACTWALK_LEFT,
-	PCACTWALK_RIGHT,
-
-	PCACTRUN_UP,
-	PCACTRUN_DOWN,
-	PCACTRUN_LEFT,
-	PCACTRUN_RIGHT,
-
-	PCACTJUMP_UP,
-	PCACTJUMP_DOWN,
-	PCACTJUMP_LEFT,
-	PCACTJUMP_RIGHT,
-};
-
-static const GFL_BBDACT_ANM* playerBBDactAnmTable[] = { 
-	PCstopUAnm, PCstopDAnm, PCstopLAnm, PCstopRAnm,
-	PCwalkUAnm, PCwalkDAnm, PCwalkLAnm, PCwalkRAnm,
-	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,
-	PCjumpUAnm, PCjumpDAnm, PCjumpLAnm, PCjumpRAnm,
-};
-
-static const int playerBBDanmOffsTblMine[] = { 
-	PCACTSTOP_LEFT - PCACTSTOP_UP,
-	PCACTSTOP_DOWN - PCACTSTOP_UP,
-	PCACTSTOP_RIGHT - PCACTSTOP_UP,
-	PCACTSTOP_UP - PCACTSTOP_UP,
-};
-
-
-static int getPlayerBBDanm( int anmSetID, u16 dir, const int* anmOffsTable )
-{
-	int	anmBase, datOffs;
-
-	if( (dir > 0x2000)&&(dir < 0x6000)){
-		datOffs = 0;
-	} else if( (dir >= 0x6000)&&(dir <= 0xa000)){
-		datOffs = 1;
-	} else if( (dir > 0xa000)&&(dir < 0xe000)){
-		datOffs = 2;
-	} else {
-		datOffs = 3;
-	}
-	switch( anmSetID ){
-	default:
-	case ANMTYPE_STOP:
-		anmBase = PCACTSTOP_UP;
-		break;
-	case ANMTYPE_WALK:
-		anmBase = PCACTWALK_UP;
-		break;
-	case ANMTYPE_RUN:
-		anmBase = PCACTRUN_UP;
-		break;
-	case ANMTYPE_JUMP:
-		anmBase = PCACTJUMP_UP;
-		break;
-	}
-	return anmBase + anmOffsTable[ datOffs ];
-}
-
-static void playerBBDactFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
-{
-	GFL_BBD_SYS*	bbdSys = GFL_BBDACT_GetBBDSystem( bbdActSys );
-	PC_ACTCONT*	pcActCont = (PC_ACTCONT*)work;
-	VecFx32	trans = pcActCont->trans;
-	u16		anmID;
-	u16		dir;
-
-	dir = pcActCont->direction
-		- FIELD_CAMERA_GetDirectionOnXZ( FIELDMAP_GetFieldCamera(pcActCont->fieldWork) );
-	anmID = getPlayerBBDanm( pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
-
-	//カメラ補正(アニメ向きの変更をするのに参照)
-	GFL_BBDACT_SetAnimeIdxContinue( GetBbdActSys( pcActCont->fieldWork ), actIdx, anmID );
-	//位置補正
-	trans.x = pcActCont->trans.x;
-	trans.y = pcActCont->trans.y + FX32_ONE*7;	//補正
-	trans.z = pcActCont->trans.z;
-	GFL_BBD_SetObjectTrans( bbdSys, actIdx, &trans );
-}
-
-PC_ACTCONT*	CreatePlayerAct( FIELD_MAIN_WORK * fieldWork, HEAPID heapID )
-{
-	PC_ACTCONT*	pcActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(PC_ACTCONT) );
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fieldWork );
-	GFL_BBDACT_ACTDATA actData;
-	GFL_BBDACT_ACTUNIT_ID actUnitID;
-	int		i, objIdx;
-	VecFx32	trans;
-	u8		alpha;
-	BOOL	drawEnable;
-	u16		setActNum;
-
-	pcActCont->fieldWork = fieldWork;
-	SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
-	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
-	
-	//リソースセットアップ
-	pcActCont->bbdActResUnitID = GFL_BBDACT_AddResourceUnit( bbdActSys, playerBBDactResTable,
-														NELEMS(playerBBDactResTable) );
-	actData.resID = 0;
-	actData.sizX = FX16_ONE*8-1;
-	actData.sizY = FX16_ONE*8-1;
-	
-	actData.trans.x = 0;
-	actData.trans.y = 0;
-	actData.trans.z = 0;
-
-	actData.alpha = 31;
-	actData.drawEnable = TRUE;
-	actData.lightMask = GFL_BBD_LIGHTMASK_01;
-	actData.func = playerBBDactFunc;
-	actData.work = pcActCont;
-
-	pcActCont->bbdActActUnitID = GFL_BBDACT_AddAct
-				( bbdActSys, pcActCont->bbdActResUnitID, &actData, 1 );
-	//GFL_BBDACT_BindActTexRes
-	//		( bbdActSys, pcActCont->bbdActActUnitID, pcActCont->bbdActResUnitID+1 );
-	GFL_BBDACT_BindActTexResLoad
-		( bbdActSys, pcActCont->bbdActActUnitID, ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx );
-
-	GFL_BBDACT_SetAnimeTable( bbdActSys, pcActCont->bbdActActUnitID, 
-								playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
-	GFL_BBDACT_SetAnimeIdxOn( bbdActSys, pcActCont->bbdActActUnitID, 0 );
-	return pcActCont;
-}
-
-void	DeletePlayerAct( PC_ACTCONT* pcActCont )
-{
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( pcActCont->fieldWork );
-
-	GFL_BBDACT_RemoveAct( bbdActSys, pcActCont->bbdActActUnitID, 1 );
-	GFL_BBDACT_RemoveResourceUnit
-				( bbdActSys, pcActCont->bbdActResUnitID, NELEMS(playerBBDactResTable) );
-
-	GFL_HEAP_FreeMemory( pcActCont );
-}
-
-void	MainPlayerAct( PC_ACTCONT* pcActCont, int key)
-{
-	VecFx32	vecMove = { 0, 0, 0 };
-	u16		dir;
-	BOOL	mvFlag = FALSE;
-
-	dir = FIELD_CAMERA_GetDirectionOnXZ( FIELDMAP_GetFieldCamera(pcActCont->fieldWork) );
-
-	if( key & PAD_KEY_UP ){
-		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0x8000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0x8000) );
-		pcActCont->direction = dir;
-	}
-	if( key & PAD_KEY_DOWN ){
-		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0x0000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0x0000) );
-		pcActCont->direction = dir + 0x8000;
-	}
-	if( key & PAD_KEY_LEFT ){
-		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0xc000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0xc000) );
-		pcActCont->direction = dir + 0x4000;
-	}
-	if( key & PAD_KEY_RIGHT ){
-		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0x4000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0x4000) );
-		pcActCont->direction = dir + 0xc000;
-	}
-#if 0
-	if( key & PAD_BUTTON_R ){
-		pcActCont->direction -= RT_SPEED;
-	}
-	if( key & PAD_BUTTON_L ){
-		pcActCont->direction += RT_SPEED;
-	}
-#endif
-	CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->fieldWork), &pcActCont->gridInfoData, 
-								&pcActCont->trans, &vecMove, MV_SPEED );
-    
-	if( mvFlag == TRUE ){
-		SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
-	} else {
-		SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
-	}
-}
-
-
-static void	SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID )
-{
-	int		anmID;
-	u16 dir = pcActCont->direction
-		- FIELD_CAMERA_GetDirectionOnXZ( FIELDMAP_GetFieldCamera(pcActCont->fieldWork) );
-
-	if( pcActCont->anmSetID != anmSetID ){
-		pcActCont->anmSetID = anmSetID;
-
-		anmID = getPlayerBBDanm(
-			pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
-		GFL_BBDACT_SetAnimeIdx(
-			GetBbdActSys(pcActCont->fieldWork), pcActCont->bbdActActUnitID, anmID );
-	}
-}
-
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void	SetPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
 {
 	int gx = SIZE_GRID_FX32( trans->x );
@@ -366,26 +49,361 @@ void	SetPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
 	VEC_Set( &pcActCont->trans, trans->x, trans->y, trans->z );
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void	GetPlayerActTrans( PC_ACTCONT* pcActCont, VecFx32* trans )
 {
 	VEC_Set( trans, pcActCont->trans.x, pcActCont->trans.y, pcActCont->trans.z );
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void	SetPlayerActDirection( PC_ACTCONT* pcActCont, const u16* direction )
 {
 	pcActCont->direction  = *direction;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void	GetPlayerActDirection( PC_ACTCONT* pcActCont, u16* direction )
 {
 	*direction = pcActCont->direction;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 GFL_BBDACT_RESUNIT_ID GetPlayerBBdActResUnitID( PC_ACTCONT *pcActCont )
 {
 	return( pcActCont->bbdActResUnitID );
 }
 
-#include "field_player_nogrid.c"
-#include "field_player_grid.c"
+//#include "field_player_nogrid.c"
+//#include "field_player_grid.c"
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void setNogridMoveValue(PC_ACTCONT * pcActCont, u16 key, VecFx32 * vec)
+{
+	u16		dir;
+	BOOL	mvFlag = FALSE;
+
+	dir = FIELD_CAMERA_GetDirectionOnXZ( FIELDMAP_GetFieldCamera(pcActCont->fieldWork) );
+
+	if( key & PAD_KEY_UP ){
+		mvFlag = TRUE;
+		vec->x = FX_SinIdx( (u16)(dir + 0x8000) );
+		vec->z = FX_CosIdx( (u16)(dir + 0x8000) );
+		pcActCont->direction = dir;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_UP);
+	}
+	if( key & PAD_KEY_DOWN ){
+		mvFlag = TRUE;
+		vec->x = FX_SinIdx( (u16)(dir + 0x0000) );
+		vec->z = FX_CosIdx( (u16)(dir + 0x0000) );
+		pcActCont->direction = dir + 0x8000;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_DOWN);
+	}
+	if( key & PAD_KEY_LEFT ){
+		mvFlag = TRUE;
+		vec->x = FX_SinIdx( (u16)(dir + 0xc000) );
+		vec->z = FX_CosIdx( (u16)(dir + 0xc000) );
+		pcActCont->direction = dir + 0x4000;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_LEFT);
+	}
+	if( key & PAD_KEY_RIGHT ){
+		mvFlag = TRUE;
+		vec->x = FX_SinIdx( (u16)(dir + 0x4000) );
+		vec->z = FX_CosIdx( (u16)(dir + 0x4000) );
+		pcActCont->direction = dir + 0xc000;
+		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_RIGHT);
+	}
+	if (key & PAD_BUTTON_Y) {
+		vec->y = -2 * FX32_ONE;
+	}
+	if (key & PAD_BUTTON_X) {
+		vec->y = +2 * FX32_ONE;
+	}
+
+	if( mvFlag == TRUE ){
+		FLDMMDL_SetDrawStatus(pcActCont->pFldMMdl, DRAW_STA_WALK);
+	} else {
+		FLDMMDL_SetDrawStatus(pcActCont->pFldMMdl, DRAW_STA_STOP);
+	}
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void	MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key)
+{
+	VecFx32	vecMove = { 0, 0, 0 };
+	setNogridMoveValue(pcActCont, key, &vecMove);
+
+	if (key & PAD_BUTTON_B) {
+		VEC_Add(&pcActCont->trans, &vecMove, &pcActCont->trans);
+	} else {
+		VecFx32 newPos = pcActCont->trans;
+		fx32 diff;
+		CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->fieldWork), &pcActCont->gridInfoData, 
+								&pcActCont->trans, &vecMove, MV_SPEED );
+	}
+}
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void	MainPlayerAct_C3( PC_ACTCONT* pcActCont, int key, u16 angle)
+{
+	VecFx32	vecMove = { 0, 0, 0 };
+	setNogridMoveValue(pcActCont, key, &vecMove);
+}
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	移動方向の地形に沿ったベクトル取得
+ */
+//------------------------------------------------------------------
+static void GetGroundMoveVec
+		( const VecFx16* vecN, const VecFx32* pos, const VecFx32* vecMove, VecFx32* result )
+{
+	VecFx32	vecN32, posNext;
+	fx32	by, valD;
+
+	VEC_Add( pos, vecMove, &posNext );
+
+	VEC_Set( &vecN32, vecN->x, vecN->y, vecN->z );
+	valD = -( FX_Mul(vecN32.x,pos->x) + FX_Mul(vecN32.y,pos->y) + FX_Mul(vecN32.z,pos->z) ); 
+	by = -( FX_Mul( vecN32.x, posNext.x ) + FX_Mul( vecN32.z, posNext.z ) + valD );
+	posNext.y = FX_Div( by, vecN32.y );
+
+	VEC_Subtract( &posNext, pos, result );
+	VEC_Normalize( result, result );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL CalcSetGroundMove( const FLDMAPPER* g3Dmapper, FLDMAPPER_GRIDINFODATA* gridInfoData, 
+								VecFx32* pos, VecFx32* vecMove, fx32 speed )
+{
+	FLDMAPPER_GRIDINFO gridInfo;
+	VecFx32	posNext, vecGround;
+	fx32	height = 0;
+	BOOL	initSw = FALSE;
+
+	//VEC_Normalize( &vecMove, &vecMove );
+	//
+	if( (gridInfoData->vecN.x|gridInfoData->vecN.y|gridInfoData->vecN.z) == 0 ){
+		//vecN = {0,0,0}の場合は初期状態
+		VecFx16	vecNinit = { 0, FX16_ONE, 0 };
+
+		GetGroundMoveVec( &vecNinit, pos, vecMove, &vecGround );
+		initSw = TRUE;
+	} else {
+		GetGroundMoveVec( &gridInfoData->vecN, pos, vecMove, &vecGround );
+	}
+	VEC_MultAdd( speed, &vecGround, pos, &posNext );
+	if( posNext.y < 0 ){
+		posNext.y = 0;	//ベースライン
+	}
+	if( FLDMAPPER_CheckOutRange( g3Dmapper, &posNext ) == TRUE ){
+	//	OS_Printf("マップ範囲外で移動不可\n");
+		return FALSE;
+	}
+
+	//プレーヤー用動作。この位置中心に高さデータが存在するため、すべて取得して設定
+	if( FLDMAPPER_GetGridInfo( g3Dmapper, &posNext, &gridInfo ) == FALSE ){
+		return FALSE;
+	}
+
+	if( gridInfo.count ){
+		int		i = 0, p;
+		fx32	h_tmp, diff1, diff2;
+
+		height = gridInfo.gridData[0].height;
+		p = 0;
+		i++;
+		for( ; i<gridInfo.count; i++ ){
+			h_tmp = gridInfo.gridData[i].height;
+
+			diff1 = height - pos->y;
+			diff2 = h_tmp - pos->y;
+
+			if( FX_Mul( diff2, diff2 ) < FX_Mul( diff1, diff1 ) ){
+				height = h_tmp;
+				p = i;
+			}
+		}
+		*gridInfoData = gridInfo.gridData[p];	//グリッドデータ更新
+		VEC_Set( pos, posNext.x, gridInfoData->height, posNext.z );		//位置情報更新
+	}
+	return TRUE;
+}
+	
+//============================================================================================
+//============================================================================================
+
+#include "test_graphic/fldmmdl_btx.naix"
+
+extern FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const FLDMMDL_HEADER DATA_JikiHeader =
+{
+	0xff,	///<識別ID
+	HERO,	///<表示するOBJコード
+	MV_DMY,	///<動作コード
+	0,	///<イベントタイプ
+	0,	///<イベントフラグ
+	0,	///<イベントID
+	0,	///<指定方向
+	0,	///<指定パラメタ 0
+	0,	///<指定パラメタ 1
+	0,	///<指定パラメタ 2
+	MOVE_LIMIT_NOT,	///<X方向移動制限
+	MOVE_LIMIT_NOT,	///<Z方向移動制限
+	0,	///<グリッドX
+	0,	///<グリッドZ
+	0,	///<Y値 fx32型
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+PC_ACTCONT * CreatePlayerActGrid(
+		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos, HEAPID heapID )
+{
+	FLDMMDL_HEADER head;
+	PC_ACTCONT *pcActCont;
+	FLDMMDLSYS *pFldMMdlSys;
+
+	pFldMMdlSys = FIELDMAP_GetFldMMdlSys( fieldWork );
+	pcActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(PC_ACTCONT) );
+	
+	pcActCont->fieldWork = fieldWork;
+	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
+	
+	//FLDMMDLセットアップ
+	pcActCont->pFldMMdl = FLDMMDLSYS_SearchOBJID( pFldMMdlSys, 0xff );
+
+	if( pcActCont->pFldMMdl == NULL ){
+		head = DATA_JikiHeader;
+		head.gx = SIZE_GRID_FX32( pos->x );
+		head.gz = SIZE_GRID_FX32( pos->z );
+		head.y = pos->y;
+		pcActCont->pFldMMdl = FLDMMDLSYS_AddFldMMdl( pFldMMdlSys, &DATA_JikiHeader, 0 );
+	}
+	
+	return pcActCont;
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void DeletePlayerActGrid( PC_ACTCONT* pcActCont )
+{
+	GFL_HEAP_FreeMemory( pcActCont );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void PlayerActGrid_Update(
+	PC_ACTCONT *pcActCont, u16 dir, const VecFx32 *pos )
+{
+	VecFx32 trans;
+	pcActCont->trans = *pos;
+	
+	SetGridPlayerActTrans( pcActCont, pos );
+	FLDMMDL_SetForceDirDisp( pcActCont->pFldMMdl, dir );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void SetGridPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
+{
+	int gx = SIZE_GRID_FX32( trans->x );
+	int gy = SIZE_GRID_FX32( trans->y );
+	int gz = SIZE_GRID_FX32( trans->z );
+	
+	FLDMMDL_SetOldGridPosX( pcActCont->pFldMMdl,
+		FLDMMDL_GetGridPosX(pcActCont->pFldMMdl) );
+	FLDMMDL_SetOldGridPosY( pcActCont->pFldMMdl,
+		FLDMMDL_GetGridPosY(pcActCont->pFldMMdl) );
+	FLDMMDL_SetOldGridPosZ( pcActCont->pFldMMdl,
+		FLDMMDL_GetGridPosZ(pcActCont->pFldMMdl) );
+	
+	FLDMMDL_SetGridPosX( pcActCont->pFldMMdl, gx );
+	FLDMMDL_SetGridPosY( pcActCont->pFldMMdl, gy );
+	FLDMMDL_SetGridPosZ( pcActCont->pFldMMdl, gz );
+	FLDMMDL_SetVectorPos( pcActCont->pFldMMdl, trans );
+	
+	VEC_Set( &pcActCont->trans, trans->x, trans->y, trans->z );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void PlayerActGrid_AnimeSet(
+	PC_ACTCONT *pcActCont, int dir, PLAYER_ANIME_FLAG flag )
+{
+	switch( flag ){
+	case PLAYER_ANIME_FLAG_STOP:
+		FLDMMDL_SetDrawStatus( pcActCont->pFldMMdl, DRAW_STA_STOP );
+		break;
+	case PLAYER_ANIME_FLAG_WALK:
+		FLDMMDL_SetDrawStatus( pcActCont->pFldMMdl, DRAW_STA_WALK_8F );
+		break;
+	default:
+		FLDMMDL_SetDrawStatus( pcActCont->pFldMMdl, DRAW_STA_WALK_4F );
+		break;
+	}
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+FLDMAPPER_GRIDINFODATA * PlayerActGrid_GridInfoGet( PC_ACTCONT *pcActCont )
+{
+	return( &pcActCont->gridInfoData );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void PlayerActGrid_ScaleSizeSet(
+	PC_ACTCONT *pcActCont, fx16 sizeX, fx16 sizeY )
+{
+	GFL_BBDACT_SYS *bbdActSys = GetBbdActSys( pcActCont->fieldWork );
+	int idx = GFL_BBDACT_GetBBDActIdxResIdx(
+			bbdActSys, pcActCont->bbdActActUnitID );
+	GFL_BBD_SetObjectSiz(
+		GFL_BBDACT_GetBBDSystem(bbdActSys),
+		idx, &sizeX, &sizeY );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
+
+FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont )
+{
+	return pcActCont->pFldMMdl;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void PLAYER_GRID_GetFrontGridPos(
+	PC_ACTCONT *pcActCont, int *gx, int *gy, int *gz )
+{
+	int dir;
+	FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
+	
+	*gx = FLDMMDL_GetGridPosX( fmmdl );
+	*gy = FLDMMDL_GetGridPosY( fmmdl );
+	*gz = FLDMMDL_GetGridPosZ( fmmdl );
+	dir = FLDMMDL_GetDirDisp( fmmdl );
+	
+	*gx += FLDMMDL_TOOL_GetDirAddValueGridX( dir );
+	*gz += FLDMMDL_TOOL_GetDirAddValueGridZ( dir );
+}
 
