@@ -34,6 +34,7 @@
 #define ZONE_ID_C03P11           ( 30)
 #define ZONE_ID_C03P12           ( 31)
 #define ZONE_ID_C03P13           ( 32)
-#define ZONE_ID_MAX	(33)
+#define ZONE_ID_PALACETEST       ( 33)
+#define ZONE_ID_MAX	(34)
 #endif // __ZONE_ID_H__
 
