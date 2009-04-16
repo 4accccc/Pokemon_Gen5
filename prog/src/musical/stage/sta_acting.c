@@ -280,18 +280,8 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 			{
 				GFL_HEAP_FreeMemory( work->scriptData );
 			}
-			work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_we_001_bin , FALSE , work->heapId );
+			work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_mus_001_001_bin , FALSE , work->heapId );
 			STA_ACT_StartScript( work );
-		}
-		if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-		{
-			//ミュージカル風
-			//STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData2 );
-		}
-		if(	(GFL_UI_KEY_GetCont() & PAD_BUTTON_L) && 
-			GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-		{
-//			STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestDataAri );
 		}
 	}
 	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
