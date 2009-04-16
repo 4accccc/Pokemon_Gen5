@@ -114,7 +114,10 @@ enum {
 	NARC_map_land_data_c03_j00_00_3dppack = 100,
 	NARC_map_land_data_c03_k00_00_3dppack = 101,
 	NARC_map_land_data_c03_l00_00_3dppack = 102,
-	NARC_map_land_data_testpc00_00_3dppack = 103
+	NARC_map_land_data_testpc00_00_3dppack = 103,
+	NARC_map_land_data_palace_test00_00_3dppack = 104,
+	NARC_map_land_data_palace_test01_00_3dppack = 105,
+	NARC_map_land_data_palace_test02_00_3dppack = 106
 };
 
 /* NARC_MAP_LAND_DATA_NAIX_ */
