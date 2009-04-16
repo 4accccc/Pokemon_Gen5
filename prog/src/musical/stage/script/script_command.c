@@ -26,7 +26,7 @@
 #define SCRIPT_TPrintf	ARI_TPrintf
 #define SCRIPT_Printf	ARI_Printf
 
-#define SCRIPT_PRINT_LABEL(str) ARI_TPrintf("SCRIPT Frame[%4d] No[%d]%s\n",scriptWork->frame, SCRIPT_ENUM_ ## str ,#str);
+#define SCRIPT_PRINT_LABEL(str) SCRIPT_TPrintf("SCRIPT Frame[%4d] No[%d]%s\n",scriptWork->frame, SCRIPT_ENUM_ ## str ,#str);
 
 #define ScriptFunc_GetValueS32() (VMGetU32(scriptWork->vmHandle))
 #define ScriptFunc_GetValuefx32() (VMGetU32(scriptWork->vmHandle))
@@ -34,6 +34,7 @@
 //通常のタスクプライオリティ
 //追従系などは低く設定することで、本体の移動を優先させる
 #define SCRIPT_TCB_PRI_NORMAL (10)
+#define SCRIPT_TCB_PRI_LOW (7)
 
 //======================================================================
 //	enum
@@ -51,6 +52,7 @@ typedef enum
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
+//直線移動管理構造体(幕・舞台用)
 typedef struct
 {
 	//TODO 精度確保のためにfx32とかでやったほうが良いかも
@@ -63,6 +65,7 @@ typedef struct
 	u16 step;
 }MOVE_WORK_S32;
 
+//ベクトル移動管理構造体(ポケ・ライト・OBJ・エフェクト等)
 typedef struct
 {
 	ACTING_WORK *actWork;
@@ -91,6 +94,24 @@ typedef struct
 	MOVE_WORK_VEC moveWork;
 }MOVE_LIGHT_VEC;
 
+//ポケ追従移動管理構造体(ライト・OBJ・エフェクト等)
+typedef struct
+{
+	ACTING_WORK *actWork;
+	STA_POKE_WORK *pokeWork;
+	VecFx32 ofs;			//オフセット
+	u16 frame;
+	u16 step;
+}POKE_TRACE_WORK_VEC;
+
+
+typedef struct
+{
+	STA_LIGHT_WORK *lightWork;
+	POKE_TRACE_WORK_VEC moveWork;
+}MOVE_TRACE_LIGHT_VEC;
+
+
 //指定回数繰り返す時の管理
 typedef struct
 {
@@ -116,6 +137,7 @@ typedef struct
 static BOOL SCRIPT_TCB_UpdateMoveS32( MOVE_WORK_S32 *moveWork , s32 *newPos );
 static BOOL SCRIPT_TCB_UpdateMoveVec( MOVE_WORK_VEC *moveWork , VecFx32 *newPos );
 static REPEAT_MNG_RETURN SCRIPT_TCB_UpdateRepeat( REPEAT_MNG_WORK *repeatWork );
+static BOOL SCRIPT_TCB_UpdatePokeTrace( POKE_TRACE_WORK_VEC *moveWork , VecFx32 *newPos );
 
 //移動系
 static void SCRIPT_TCB_MoveCurtainTCB(  GFL_TCB *tcb, void *work );
@@ -123,11 +145,16 @@ static void SCRIPT_TCB_MoveStageTCB(  GFL_TCB *tcb, void *work );
 static void SCRIPT_TCB_MovePokeTCB(  GFL_TCB *tcb, void *work );
 static void SCRIPT_TCB_MoveObjTCB(  GFL_TCB *tcb, void *work );
 static void SCRIPT_TCB_MoveLightTCB(  GFL_TCB *tcb, void *work );
+static void SCRIPT_TCB_MoveTraceLightTCB(  GFL_TCB *tcb, void *work );
 
 //アクション系
 static void SCRIPT_TCB_PokeAct_Jump(  GFL_TCB *tcb, void *work );
 
 static void SCRIPT_TCB_EffectRepeat(  GFL_TCB *tcb, void *work );
+
+//便利関数
+static const s32 ScriptFunc_GetPokeBit( const STA_SCRIPT_WORK *scriptWork , const s32 pokeNo );
+
 
 //======================================================================
 //	data
@@ -172,6 +199,23 @@ static BOOL SCRIPT_TCB_UpdateMoveVec( MOVE_WORK_VEC *moveWork , VecFx32 *newPos 
 	}
 }
 
+static BOOL SCRIPT_TCB_UpdatePokeTrace( POKE_TRACE_WORK_VEC *moveWork , VecFx32 *newPos )
+{
+	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( moveWork->actWork );
+	VecFx32	pokePos;
+	
+	STA_POKE_GetPosition( pokeSys , moveWork->pokeWork , &pokePos );
+	VEC_Add( &pokePos , &moveWork->ofs , newPos );
+
+	moveWork->step++;
+	if( moveWork->step >= moveWork->frame )
+	{
+		return TRUE;
+	}
+	return FALSE;
+	
+}
+
 static REPEAT_MNG_RETURN SCRIPT_TCB_UpdateRepeat( REPEAT_MNG_WORK *repeatWork )
 {
 	repeatWork->step++;
@@ -206,7 +250,7 @@ SCRIPT_FUNC_DEF( ScriptFinish )
 {
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	SCRIPT_PRINT_LABEL(ScriptFinish);
-	scriptWork->isFinish = TRUE;
+	scriptWork->isFlag |= SFB_IS_FINISH;
 	return SFT_SUSPEND;
 }
 
@@ -242,6 +286,24 @@ SCRIPT_FUNC_DEF( FrameWaitTime )
 	
 }
 
+//同期待ちを行う
+SCRIPT_FUNC_DEF( SyncScript )
+{
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 count = ScriptFunc_GetValueS32();
+
+	SCRIPT_PRINT_LABEL(SyncScript);
+
+	GF_ASSERT_MSG( scriptWork->isFlag & SFB_IS_TARGET_SYNC , "Script is not sync target!!\n")
+	if( scriptWork->isFlag & SFB_IS_TARGET_SYNC )
+	{
+		scriptWork->isFlag |= SFB_WAIT_SYNC;
+	}
+	
+	return SFT_SUSPEND;
+}
+
 //------------------------------------------------------------------
 //	カーテン
 //------------------------------------------------------------------
@@ -263,7 +325,7 @@ SCRIPT_FUNC_DEF( CurtainUp )
 	moveWork->frame = MATH_ABS(moveWork->end-moveWork->start)/ACT_CURTAIN_SCROLL_SPEED;
 	moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
 	
-	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , 10 );
+	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
 	
 	return SFT_CONTINUE;
 	
@@ -283,7 +345,7 @@ SCRIPT_FUNC_DEF( CurtainDown )
 	moveWork->frame = MATH_ABS(moveWork->end-moveWork->start)/ACT_CURTAIN_SCROLL_SPEED;
 	moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
 	
-	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , 10 );
+	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
 	
 	return SFT_CONTINUE;
 }
@@ -311,7 +373,7 @@ SCRIPT_FUNC_DEF( CurtainMove )
 		moveWork->frame = frame;
 		moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
 	
-		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , 10 );
+		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
 	}
 	
 	return SFT_CONTINUE;
@@ -362,7 +424,7 @@ SCRIPT_FUNC_DEF( StageMove )
 		moveWork->frame = frame;
 		moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
 	
-		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveStageTCB , (void*)moveWork , 10 );
+		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveStageTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
 	}
 
 	return SFT_CONTINUE;
@@ -404,20 +466,45 @@ SCRIPT_FUNC_DEF( StageChangeBg )
 //------------------------------------------------------------------
 #pragma mark [>Pokemon
 
+static const s32 ScriptFunc_GetPokeBit( const STA_SCRIPT_WORK *scriptWork , const s32 pokeNo )
+{
+	s32 bit;
+	if( pokeNo == -1 )
+	{
+		bit = scriptWork->trgPokeFlg;
+	}
+	else
+	{
+		bit = 1<<pokeNo;
+	}
+	return bit;
+}
+
 //ポケモン表示制御
 SCRIPT_FUNC_DEF( PokeShow )
 {
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
-	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+	const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
 	const s32 flg = ScriptFunc_GetValueS32();
-
+	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
-	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
-	SCRIPT_PRINT_LABEL(PokeShow);
-	SCRIPT_TPrintf( "  pokeNo[%d][%s]\n",pokeNo,(flg==0?"OFF":"ON"));
 
-	STA_POKE_SetShowFlg( pokeSys , pokeWork , flg );
+	u8	pokeNo;
+	
+	SCRIPT_PRINT_LABEL(PokeShow);
+	SCRIPT_TPrintf( "  pokeNo[%d][%s]\n",pokeNoTemp,(flg==0?"OFF":"ON"));
+	
+	for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+	{
+		if( pokeNoBit & (1<<pokeNo) )
+		{
+			STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+			STA_POKE_SetShowFlg( pokeSys , pokeWork , flg );
+		}
+		
+	}
 
 	return SFT_CONTINUE;
 }
@@ -427,14 +514,22 @@ SCRIPT_FUNC_DEF( PokeDir )
 {
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
-	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+	const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
 	const s32 dir = ScriptFunc_GetValueS32();
+	u8	pokeNo;
 
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
-	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
 	SCRIPT_PRINT_LABEL(PokeDir);
 
-	STA_POKE_SetPokeDir( pokeSys , pokeWork , (dir==0 ? SPD_LEFT : SPD_RIGHT) );
+	for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+	{
+		if( pokeNoBit & (1<<pokeNo) )
+		{
+			STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+			STA_POKE_SetPokeDir( pokeSys , pokeWork , (dir==0 ? SPD_LEFT : SPD_RIGHT) );
+		}
+	}
 
 	return SFT_CONTINUE;
 }
@@ -444,44 +539,110 @@ SCRIPT_FUNC_DEF( PokeMove )
 {
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
-	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+	const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
 	const s32 frame = ScriptFunc_GetValueS32();
 	const fx32 posX = ScriptFunc_GetValuefx32();
 	const fx32 posY = ScriptFunc_GetValuefx32();
 	const fx32 posZ = ScriptFunc_GetValuefx32();
+	u8	pokeNo;
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
-	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
 	SCRIPT_PRINT_LABEL(PokeMove);
 
-	if( frame == 0 )
+	for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
 	{
-		VecFx32 pos;
-		VEC_Set( &pos , posX,posY,posZ );
-		STA_POKE_SetPosition( pokeSys , pokeWork , &pos );		
-	}
-	else
-	{
-		VecFx32 subVec;
-		MOVE_POKE_VEC *movePoke;
-		movePoke = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_POKE_VEC ));
-		movePoke->pokeWork = pokeWork;
-		movePoke->moveWork.actWork = work->actWork;
-		movePoke->moveWork.step = 0;
-		STA_POKE_GetPosition( pokeSys , pokeWork , &movePoke->moveWork.start );
-		VEC_Set( &movePoke->moveWork.end , posX,posY,posZ );
-		movePoke->moveWork.frame = frame;
+		if( pokeNoBit & (1<<pokeNo) )
+		{
+			STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+			if( frame == 0 )
+			{
+				VecFx32 pos;
+				VEC_Set( &pos , posX,posY,posZ );
+				STA_POKE_SetPosition( pokeSys , pokeWork , &pos );		
+			}
+			else
+			{
+				VecFx32 subVec;
+				MOVE_POKE_VEC *movePoke;
+				movePoke = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_POKE_VEC ));
+				movePoke->pokeWork = pokeWork;
+				movePoke->moveWork.actWork = work->actWork;
+				movePoke->moveWork.step = 0;
+				STA_POKE_GetPosition( pokeSys , pokeWork , &movePoke->moveWork.start );
+				VEC_Set( &movePoke->moveWork.end , posX,posY,posZ );
+				movePoke->moveWork.frame = frame;
 
-		VEC_Subtract( &movePoke->moveWork.end , &movePoke->moveWork.start , &subVec );
-		movePoke->moveWork.stepVal.x = subVec.x / frame;
-		movePoke->moveWork.stepVal.y = subVec.y / frame;
-		movePoke->moveWork.stepVal.z = subVec.z / frame;
+				VEC_Subtract( &movePoke->moveWork.end , &movePoke->moveWork.start , &subVec );
+				movePoke->moveWork.stepVal.x = subVec.x / frame;
+				movePoke->moveWork.stepVal.y = subVec.y / frame;
+				movePoke->moveWork.stepVal.z = subVec.z / frame;
 
-		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MovePokeTCB , (void*)movePoke , 10 );
+				GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MovePokeTCB , (void*)movePoke , SCRIPT_TCB_PRI_NORMAL );
+			}
+		}
 	}
 	
 	return SFT_CONTINUE;
 }
+
+//ポケモン相対移動
+SCRIPT_FUNC_DEF( PokeMoveOffset )
+{
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+	const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
+	const s32 frame = ScriptFunc_GetValueS32();
+	const fx32 ofsX = ScriptFunc_GetValuefx32();
+	const fx32 ofsY = ScriptFunc_GetValuefx32();
+	const fx32 ofsZ = ScriptFunc_GetValuefx32();
+	u8	pokeNo;
+	
+	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
+	SCRIPT_PRINT_LABEL(PokeMoveOffset);
+
+	for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+	{
+		if( pokeNoBit & (1<<pokeNo) )
+		{
+			STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+			if( frame == 0 )
+			{
+				VecFx32 pos;
+				STA_POKE_GetPosition( pokeSys , pokeWork , &pos );
+				pos.x += ofsX;
+				pos.y += ofsY;
+				pos.z += ofsZ;
+				STA_POKE_SetPosition( pokeSys , pokeWork , &pos );		
+			}
+			else
+			{
+				VecFx32 subVec;
+				MOVE_POKE_VEC *movePoke;
+				movePoke = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_POKE_VEC ));
+				movePoke->pokeWork = pokeWork;
+				movePoke->moveWork.actWork = work->actWork;
+				movePoke->moveWork.step = 0;
+				STA_POKE_GetPosition( pokeSys , pokeWork , &movePoke->moveWork.start );
+				VEC_Set( &movePoke->moveWork.end , 
+						movePoke->moveWork.start.x + ofsX,
+						movePoke->moveWork.start.y + ofsY,
+						movePoke->moveWork.start.z + ofsZ );
+				movePoke->moveWork.frame = frame;
+
+				movePoke->moveWork.stepVal.x = ofsX / frame;
+				movePoke->moveWork.stepVal.y = ofsY / frame;
+				movePoke->moveWork.stepVal.z = ofsZ / frame;
+
+				GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MovePokeTCB , (void*)movePoke , SCRIPT_TCB_PRI_NORMAL );
+			}
+		}
+	}
+	
+	return SFT_CONTINUE;	
+}
+
 //ポケモン移動制御TCB
 static void SCRIPT_TCB_MovePokeTCB(  GFL_TCB *tcb, void *work )
 {
@@ -504,13 +665,21 @@ SCRIPT_FUNC_DEF( PokeStopAnime )
 {
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
-	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+	const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
+	u8	pokeNo;
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
-	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
 	SCRIPT_PRINT_LABEL(PokeStopAnime);
 	
-	STA_POKE_StopAnime( pokeSys , pokeWork );
+	for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+	{
+		if( pokeNoBit & (1<<pokeNo) )
+		{
+			STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+			STA_POKE_StopAnime( pokeSys , pokeWork );
+		}
+	}
 	
 	return SFT_CONTINUE;
 }
@@ -520,13 +689,22 @@ SCRIPT_FUNC_DEF( PokeStartAnime )
 {
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
-	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+	const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
+	u8	pokeNo;
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
-	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
 	SCRIPT_PRINT_LABEL(PokeStartAnime);
 
-	STA_POKE_StartAnime( pokeSys , pokeWork );
+	for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+	{
+		if( pokeNoBit & (1<<pokeNo) )
+		{
+			STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+			STA_POKE_StartAnime( pokeSys , pokeWork );
+			
+		}
+	}
 
 	return SFT_CONTINUE;
 }
@@ -536,14 +714,22 @@ SCRIPT_FUNC_DEF( PokeChangeAnime )
 {
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
-	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+	const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
 	const s32 anmIdx = ScriptFunc_GetValueS32();
+	u8	pokeNo;
 	
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
-	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
 	SCRIPT_PRINT_LABEL(PokeChangeAnime);
 
-	STA_POKE_ChangeAnime( pokeSys , pokeWork , anmIdx );
+	for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+	{
+		if( pokeNoBit & (1<<pokeNo) )
+		{
+			STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+			STA_POKE_ChangeAnime( pokeSys , pokeWork , anmIdx );
+		}
+	}
 
 	return SFT_CONTINUE;
 }
@@ -562,25 +748,32 @@ SCRIPT_FUNC_DEF( PokeActionJump )
 {
 	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
 	STA_SCRIPT_SYS *work = scriptWork->sysWork;
-	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+	const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
 	const s32 interval = ScriptFunc_GetValueS32();
 	const s32 num = ScriptFunc_GetValuefx32();
 	const fx32 height = ScriptFunc_GetValuefx32();
+	u8	pokeNo;
 
 	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
-	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
-	POKE_ACT_JUMP_WORK	*jumpWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(POKE_ACT_JUMP_WORK));
 	SCRIPT_PRINT_LABEL(PokeActionJump);
 	
-	jumpWork->pokeWork = pokeWork;
-	jumpWork->height = height;
-	
-	jumpWork->repeatWork.actWork = work->actWork;
-	jumpWork->repeatWork.step = 0;
-	jumpWork->repeatWork.interval = interval;
-	jumpWork->repeatWork.num = num;
-	
-	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_PokeAct_Jump , (void*)jumpWork , 10 );
+	for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+	{
+		if( pokeNoBit & (1<<pokeNo) )
+		{
+			POKE_ACT_JUMP_WORK	*jumpWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(POKE_ACT_JUMP_WORK));
+			jumpWork->pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+			jumpWork->height = height;
+			
+			jumpWork->repeatWork.actWork = work->actWork;
+			jumpWork->repeatWork.step = 0;
+			jumpWork->repeatWork.interval = interval;
+			jumpWork->repeatWork.num = num;
+			
+			GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_PokeAct_Jump , (void*)jumpWork , SCRIPT_TCB_PRI_NORMAL );
+		}
+	}
 
 	return SFT_CONTINUE;
 
@@ -610,6 +803,43 @@ static void SCRIPT_TCB_PokeAct_Jump(  GFL_TCB *tcb, void *work )
 		STA_POKE_SetPositionOffset( pokeSys , jumpWork->pokeWork , &ofs );
 		
 	}
+}
+
+#pragma mark [>PokemonManage
+//ポケモン動作番号予約
+SCRIPT_FUNC_DEF( PokeMngSetFlag )
+{
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	
+	const s32 flg1 = ScriptFunc_GetValueS32();
+	const s32 flg2 = ScriptFunc_GetValueS32();
+	const s32 flg3 = ScriptFunc_GetValueS32();
+	const s32 flg4 = ScriptFunc_GetValueS32();
+	
+	SCRIPT_PRINT_LABEL( PokeMngSetFlag );
+	
+	scriptWork->trgPokeFlg = 0;
+	
+	if( flg1 == TRUE )
+	{
+		scriptWork->trgPokeFlg += 1;
+	}
+	if( flg2 == TRUE )
+	{
+		scriptWork->trgPokeFlg += 2;
+	}
+	if( flg3 == TRUE )
+	{
+		scriptWork->trgPokeFlg += 4;
+	}
+	if( flg4 == TRUE )
+	{
+		scriptWork->trgPokeFlg += 8;
+	}
+	
+	return SFT_CONTINUE;
+
 }
 
 //------------------------------------------------------------------
@@ -722,7 +952,7 @@ SCRIPT_FUNC_DEF( ObjectMove )
 		moveObj->moveWork.stepVal.y = subVec.y / frame;
 		moveObj->moveWork.stepVal.z = subVec.z / frame;
 
-		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveObjTCB , (void*)moveObj , 10 );
+		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveObjTCB , (void*)moveObj , SCRIPT_TCB_PRI_NORMAL );
 	}
 
 	return SFT_CONTINUE;
@@ -840,10 +1070,10 @@ SCRIPT_FUNC_DEF( EffectRepeatStart )
 	const s32 interval = ScriptFunc_GetValueS32();
 	const s32 num = ScriptFunc_GetValuefx32();
 	const fx32 posXStart = ScriptFunc_GetValuefx32();
-	const fx32 posXEnd = ScriptFunc_GetValuefx32();
 	const fx32 posYStart = ScriptFunc_GetValuefx32();
-	const fx32 posYEnd = ScriptFunc_GetValuefx32();
 	const fx32 posZStart = ScriptFunc_GetValuefx32();
+	const fx32 posXEnd = ScriptFunc_GetValuefx32();
+	const fx32 posYEnd = ScriptFunc_GetValuefx32();
 	const fx32 posZEnd = ScriptFunc_GetValuefx32();
 	
 //	STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
@@ -866,7 +1096,7 @@ SCRIPT_FUNC_DEF( EffectRepeatStart )
 	effRepeat->repeatWork.interval = interval;
 	effRepeat->repeatWork.num = num;
 
-	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_EffectRepeat , (void*)effRepeat , 10 );
+	GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_EffectRepeat , (void*)effRepeat , SCRIPT_TCB_PRI_NORMAL );
 
 	return SFT_CONTINUE;
 }
@@ -945,7 +1175,7 @@ SCRIPT_FUNC_DEF( LightMove )
 	const s32 frame = ScriptFunc_GetValueS32();
 	const fx32 posX = ScriptFunc_GetValuefx32();
 	const fx32 posY = ScriptFunc_GetValuefx32();
-	//現在Zは計算してない。有効にすることは可能だが必要？
+	//現在Zは使えない
 	const fx32 posZ = ScriptFunc_GetValuefx32();
 	
 	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
@@ -975,7 +1205,7 @@ SCRIPT_FUNC_DEF( LightMove )
 		moveLight->moveWork.stepVal.y = subVec.y / frame;
 		moveLight->moveWork.stepVal.z = subVec.z / frame;
 
-		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveLightTCB , (void*)moveLight , 10 );
+		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveLightTCB , (void*)moveLight , SCRIPT_TCB_PRI_NORMAL );
 	}
 	
 	return SFT_CONTINUE;
@@ -989,6 +1219,67 @@ static void SCRIPT_TCB_MoveLightTCB(  GFL_TCB *tcb, void *work )
 	VecFx32 newPos;
 	
 	const BOOL isFinish = SCRIPT_TCB_UpdateMoveVec( &moveLight->moveWork , &newPos );
+	STA_LIGHT_SetPosition( lightSys , moveLight->lightWork , &newPos );
+	
+	if( isFinish == TRUE )
+	{
+		GFL_HEAP_FreeMemory( work );
+		GFL_TCB_DeleteTask( tcb );
+	}
+}
+
+//ライト追従移動
+SCRIPT_FUNC_DEF( LightMoveTrace )
+{
+	STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+	STA_SCRIPT_SYS *work = scriptWork->sysWork;
+	const s32 lightNo = ScriptFunc_GetValueS32();
+	const s32 pokeNo = ScriptFunc_GetValueS32();
+	const s32 frame = ScriptFunc_GetValueS32();
+	const fx32 ofsX = ScriptFunc_GetValuefx32();
+	const fx32 ofsY = ScriptFunc_GetValuefx32();
+	//現在Zは使えない
+	const fx32 ofsZ = ScriptFunc_GetValuefx32();
+	
+	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
+	STA_LIGHT_WORK *lightWork = STA_ACT_GetLightWork( work->actWork , lightNo );
+	STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
+	STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+	SCRIPT_PRINT_LABEL(LightMoveTrace);
+	
+	if( frame == 0 )
+	{
+		VecFx32 pos,ofs;
+		STA_POKE_GetPosition( pokeSys , pokeWork , &pos );
+		VEC_Set( &ofs , ofsX,ofsY,ofsZ );
+		VEC_Add( &pos,&ofs,&pos );
+		STA_LIGHT_SetPosition( lightSys , lightWork , &pos );
+	}
+	else
+	{
+		MOVE_TRACE_LIGHT_VEC *moveTraceLight;
+		moveTraceLight = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_TRACE_LIGHT_VEC ));
+		moveTraceLight->lightWork = lightWork;
+		moveTraceLight->moveWork.actWork = work->actWork;
+		moveTraceLight->moveWork.pokeWork = pokeWork;
+		moveTraceLight->moveWork.step = 0;
+		VEC_Set( &moveTraceLight->moveWork.ofs , ofsX,ofsY,ofsZ );
+		moveTraceLight->moveWork.frame = frame;
+
+		GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveTraceLightTCB , (void*)moveTraceLight , SCRIPT_TCB_PRI_LOW );
+	}
+	
+	return SFT_CONTINUE;
+}
+
+//ライト追従移動制御TCB
+static void SCRIPT_TCB_MoveTraceLightTCB(  GFL_TCB *tcb, void *work )
+{
+	MOVE_TRACE_LIGHT_VEC *moveLight = (MOVE_TRACE_LIGHT_VEC*)work;
+	STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( moveLight->moveWork.actWork );
+	VecFx32 newPos;
+	
+	const BOOL isFinish = SCRIPT_TCB_UpdatePokeTrace( &moveLight->moveWork , &newPos );
 	STA_LIGHT_SetPosition( lightSys , moveLight->lightWork , &newPos );
 	
 	if( isFinish == TRUE )

@@ -23,7 +23,7 @@
 //	define
 //======================================================================
 #pragma mark [> define
-#define SCRIPT_NUM (3)
+#define SCRIPT_NUM (8)
 
 //======================================================================
 //	enum
@@ -36,6 +36,12 @@ typedef enum
 	
 }SCRIPT_FINISH_TYPE;
 
+typedef enum
+{
+	SFB_IS_FINISH		= 1<<0,		//終了したか？
+	SFB_IS_TARGET_SYNC	= 1<<1,		//同期待ちの対象にするか？
+	SFB_WAIT_SYNC		= 1<<2,		//同期待ち中か？
+}SCRIPT_FLAG_BIT;
 
 //======================================================================
 //	proto
@@ -45,15 +51,17 @@ typedef enum
 //スクリプト１本のデータ
 typedef struct
 {
+	STA_SCRIPT_SYS *sysWork;
+	VMHANDLE	*vmHandle;
+	
 	void	*scriptData;
 	void	*loadPos;
 	
 	u32		frame;
 	u16		waitCnt;
-	BOOL	isFinish;
+	u16		isFlag;
 	
-	STA_SCRIPT_SYS *sysWork;
-	VMHANDLE	*vmHandle;
+	u8		trgPokeFlg;
 	
 }STA_SCRIPT_WORK;
 

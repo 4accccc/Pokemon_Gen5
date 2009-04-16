@@ -15,39 +15,43 @@
 
 //命令シンボル宣言
 //COMMAND_START
-#define SCRIPT_ENUM_ScriptFinish 	 (0)
-#define SCRIPT_ENUM_FrameWait 	 (1)
-#define SCRIPT_ENUM_FrameWaitTime 	 (2)
-#define SCRIPT_ENUM_CurtainUp 	 (3)
-#define SCRIPT_ENUM_CurtainDown 	 (4)
-#define SCRIPT_ENUM_CurtainMove 	 (5)
-#define SCRIPT_ENUM_StageMove 	 (6)
-#define SCRIPT_ENUM_StageChangeBg 	 (7)
-#define SCRIPT_ENUM_PokeShow 	 (8)
-#define SCRIPT_ENUM_PokeDir 	 (9)
-#define SCRIPT_ENUM_PokeMove 	 (10)
-#define SCRIPT_ENUM_PokeStopAnime 	 (11)
-#define SCRIPT_ENUM_PokeStartAnime 	 (12)
-#define SCRIPT_ENUM_PokeChangeAnime 	 (13)
-#define SCRIPT_ENUM_PokeActionJump 	 (14)
-#define SCRIPT_ENUM_ObjectCreate 	 (15)
-#define SCRIPT_ENUM_ObjectDelete 	 (16)
-#define SCRIPT_ENUM_ObjectShow 	 (17)
-#define SCRIPT_ENUM_ObjectHide 	 (18)
-#define SCRIPT_ENUM_ObjectMove 	 (19)
-#define SCRIPT_ENUM_EffectCreate 	 (20)
-#define SCRIPT_ENUM_EffectDelete 	 (21)
-#define SCRIPT_ENUM_EffectStart 	 (22)
-#define SCRIPT_ENUM_EffectStop 	 (23)
-#define SCRIPT_ENUM_EffectRepeatStart 	 (24)
-#define SCRIPT_ENUM_LightShowCircle 	 (25)
-#define SCRIPT_ENUM_LightHide 	 (26)
-#define SCRIPT_ENUM_LightMove 	 (27)
-#define SCRIPT_ENUM_LightColor 	 (28)
-#define SCRIPT_ENUM_MessageShow 	 (29)
-#define SCRIPT_ENUM_MessageHide 	 (30)
-#define SCRIPT_ENUM_MessageColor 	 (31)
-#define SEQ_END 	 (32)
+#define SCRIPT_ENUM_ScriptFinish 		(0)
+#define SCRIPT_ENUM_FrameWait 			(1)
+#define SCRIPT_ENUM_FrameWaitTime 		(2)
+#define SCRIPT_ENUM_SyncScript			(3)
+#define SCRIPT_ENUM_CurtainUp 			(4)
+#define SCRIPT_ENUM_CurtainDown 		(5)
+#define SCRIPT_ENUM_CurtainMove 		(6)
+#define SCRIPT_ENUM_StageMove 			(7)
+#define SCRIPT_ENUM_StageChangeBg 		(8)
+#define SCRIPT_ENUM_PokeShow 			(9)
+#define SCRIPT_ENUM_PokeDir 			(10)
+#define SCRIPT_ENUM_PokeMove 			(11)
+#define SCRIPT_ENUM_PokeMoveOffset		(12)
+#define SCRIPT_ENUM_PokeStopAnime 		(13)
+#define SCRIPT_ENUM_PokeStartAnime 		(14)
+#define SCRIPT_ENUM_PokeChangeAnime 	(15)
+#define SCRIPT_ENUM_PokeActionJump 		(16)
+#define SCRIPT_ENUM_PokeMngSetFlag 		(17)
+#define SCRIPT_ENUM_ObjectCreate 		(18)
+#define SCRIPT_ENUM_ObjectDelete 		(19)
+#define SCRIPT_ENUM_ObjectShow 			(20)
+#define SCRIPT_ENUM_ObjectHide 			(21)
+#define SCRIPT_ENUM_ObjectMove 			(22)
+#define SCRIPT_ENUM_EffectCreate 		(23)
+#define SCRIPT_ENUM_EffectDelete 		(24)
+#define SCRIPT_ENUM_EffectStart 		(25)
+#define SCRIPT_ENUM_EffectStop 			(26)
+#define SCRIPT_ENUM_EffectRepeatStart	(27)
+#define SCRIPT_ENUM_LightShowCircle		(28)
+#define SCRIPT_ENUM_LightHide 			(29)
+#define SCRIPT_ENUM_LightMove 			(30)
+#define SCRIPT_ENUM_LightMoveTrace		(31)
+#define SCRIPT_ENUM_LightColor 			(32)
+#define SCRIPT_ENUM_MessageShow 		(33)
+#define SCRIPT_ENUM_MessageHide 		(34)
+#define SCRIPT_ENUM_MessageColor 		(35)
+#define SEQ_END 						(36)
 
 #ifndef __C_NO_DEF_
 
@@ -84,18 +88,21 @@
 
 //======================================================================
 /**
- * @brief	システム：指定までフレームウェイト
+ * @brief	システム：スクリプト全体で同期を取る
  *
  * #param_num	1
- * @param	frame	フレーム数
+ * @param	comment	コメント(仮
  *
  * #param	VALUE_INT
+ *
  */
 //======================================================================
-	.macro	ComFrameWaitTime	frame
-	.short	SCRIPT_ENUM_FrameWaitTime
-	.long	\frame
+	.macro	ComSyncScript	comment
+	.short	SCRIPT_ENUM_SyncScript
+	.long	\comment
 	.endm
+
+
 
 #pragma mark [>Curtain Command
 //======================================================================
@@ -178,12 +185,12 @@
  * @brief	ポケモン：表示切替
  *
  * #param_num	2
- * @param	pokeNo	ポケモン番号
+ * @param	pokeNo	ポケモン番号(-1で事前登録対象)
  * @param	flg		ON/OFF
  *
  * #param	VALUE_INT
- * #param	COMBOBOX_TEXT	ON	OFF
- * #param	COMBOBOX_VALUE	1	0
+ * #param	COMBOBOX_TEXT	OFF	ON
+ * #param	COMBOBOX_VALUE	0	1
  */
 //======================================================================
 	.macro	ComPokeShow	pokeNo	flg
@@ -197,7 +204,7 @@
  * @brief	ポケモン：方向設定
  *
  * #param_num	2
- * @param	pokeNo	ポケモン番号
+ * @param	pokeNo	ポケモン番号(-1で事前登録対象)
  * @param	dir		向き(左：右)
  *
  * #param	VALUE_INT
@@ -215,18 +222,14 @@
 /**
  * @brief	ポケモン：移動
  *
- * #param_num	5
- * @param	pokeNo	ポケモン番号
+ * #param_num	3
+ * @param	pokeNo	ポケモン番号(-1で事前登録対象)
  * @param	frame	フレーム数
- * @param	posX	Ｘ座標
- * @param	posY	Ｙ座標
- * @param	posZ	Ｚ座標
+ * @param	pos		座標
  *
  * #param	VALUE_INT
  * #param	VALUE_INT
- * #param	VALUE_FX32
- * #param	VALUE_FX32
- * #param	VALUE_FX32
+ * #param	VALUE_VECFX32 posX posY posZ
  */
 //======================================================================
 	.macro	ComPokeMove	pokeNo	frame	posX	posY	posZ
@@ -240,10 +243,33 @@
 
 //======================================================================
 /**
+ * @brief	ポケモン：移動(相対座標)
+ *
+ * #param_num	3
+ * @param	pokeNo	ポケモン番号(-1で事前登録対象)
+ * @param	frame	フレーム数
+ * @param	offset	オフセット
+ *
+ * #param	VALUE_INT
+ * #param	VALUE_INT
+ * #param	VALUE_VECFX32 offsetX offsetY offsetZ
+ */
+//======================================================================
+	.macro	ComPokeMoveOffset	pokeNo	frame	offsetX	offsetY	offsetZ
+	.short	SCRIPT_ENUM_PokeMoveOffset
+	.long	\pokeNo
+	.long	\frame
+	.long	\offsetX
+	.long	\offsetY
+	.long	\offsetZ
+	.endm
+
+//======================================================================
+/**
  * @brief	ポケモン：アニメ停止
  *
  * #param_num	1
- * @param	pokeNo	ポケモン番号
+ * @param	pokeNo	ポケモン番号(-1で事前登録対象)
  *
  * #param	VALUE_INT
  */
@@ -258,7 +284,7 @@
  * @brief	ポケモン：アニメ開始
  *
  * #param_num	1
- * @param	pokeNo	ポケモン番号
+ * @param	pokeNo	ポケモン番号(-1で事前登録対象)
  *
  * #param	VALUE_INT
  */
@@ -273,7 +299,7 @@
  * @brief	ポケモン：アニメ変更
  *
  * #param_num	2
- * @param	pokeNo	ポケモン番号
+ * @param	pokeNo	ポケモン番号(-1で事前登録対象)
  * @param	animeNo	アニメ番号
  *
  * #param	VALUE_INT
@@ -292,7 +318,7 @@
  * @brief	ポケモンアクション：跳ねる
  *
  * #param_num	4
- * @param	pokeNo	ポケモン番号
+ * @param	pokeNo	ポケモン番号(-1で事前登録対象)
  * @param	interval	間隔
  * @param	repeat	回数
  * @param	height	高さ
@@ -310,6 +336,36 @@
 	.long	\repeat
 	.long	\height
 	.endm
+
+#pragma mark [>Pokemon Manage Command
+//======================================================================
+/**
+ * @brief	ポケモン管理：動作番号設定
+ *
+ * #param_num	4
+ * @param	flg1	ポケモン１のフラグ
+ * @param	flg2	ポケモン２のフラグ
+ * @param	flg3	ポケモン３のフラグ
+ * @param	flg4	ポケモン４のフラグ
+ *
+ * #param	COMBOBOX_TEXT	OFF	ON
+ * #param	COMBOBOX_VALUE	0	1
+ * #param	COMBOBOX_TEXT	OFF	ON
+ * #param	COMBOBOX_VALUE	0	1
+ * #param	COMBOBOX_TEXT	OFF	ON
+ * #param	COMBOBOX_VALUE	0	1
+ * #param	COMBOBOX_TEXT	OFF	ON
+ * #param	COMBOBOX_VALUE	0	1
+ */
+//======================================================================
+	.macro	ComPokeMngSetFlg	flg1	flg2	flg3	flg4
+	.short	SCRIPT_ENUM_PokeMngSetFlag
+	.long	\flg1
+	.long	\flg2
+	.long	\flg3
+	.long	\flg4
+	.endm
+
 
 #pragma mark [>Object Command
 //======================================================================
@@ -379,18 +435,14 @@
 /**
  * @brief	オブジェクト：移動
  *
- * #param_num	5
+ * #param_num	3
  * @param	objNo	オブジェクト管理番号
  * @param	frame	フレーム数
- * @param	posX	Ｘ座標
- * @param	posY	Ｙ座標
- * @param	posZ	Ｚ座標
+ * @param	pos		座標
  *
  * #param	VALUE_INT
  * #param	VALUE_INT
- * #param	VALUE_FX32
- * #param	VALUE_FX32
- * #param	VALUE_FX32
+ * #param	VALUE_VECFX32 posX posY posZ
  */
 //======================================================================
 	.macro	ComObjectMove	objNo	frame	posX	posY	posZ
@@ -441,18 +493,14 @@
 /**
  * @brief	エフェクト：再生
  *
- * #param_num	5
+ * #param_num	3
  * @param	effNo	エフェクト管理番号
  * @param	emitNo	エミッタ番号
- * @param	posX	Ｘ座標
- * @param	posY	Ｙ座標
- * @param	posZ	Ｚ座標
+ * @param	pos		座標
  *
  * #param	VALUE_INT
  * #param	VALUE_INT
- * #param	VALUE_FX32
- * #param	VALUE_FX32
- * #param	VALUE_FX32
+ * #param	VALUE_VECFX32 posX posY posZ
  */
 //======================================================================
 	.macro	ComEffectStart	effNo	emitNo	posX	posY	posZ
@@ -486,36 +534,34 @@
 /**
  * @brief	エフェクト：連続再生
  *
- * #param_num	7
+ * #param_num	6
  * @param	effNo	エフェクト管理番号
  * @param	emitNo	エミッタ番号
  * @param	interval	間隔
  * @param	repeat	回数
- * @param	posX1	Ｘ座標
- * @param	posY1	Ｙ座標
- * @param	posZ1	Ｚ座標
+ * @param	startPos	開始座標
+ * @param	endPos	終了座標(必ず開始座標が小さくなるようにしてください
  *
  * #param	VALUE_INT
  * #param	VALUE_INT
  * #param	VALUE_INT
  * #param	VALUE_INT
- * #param	VALUE_FX32
- * #param	VALUE_FX32
- * #param	VALUE_FX32
+ * #param	VALUE_VECFX32 startPosX startPosY startPosZ
+ * #param	VALUE_VECFX32 endPosX endPosY endPosZ
  */
 //======================================================================
-	.macro	ComEffectRepeatStart	effNo	emitNo	interval	repeat	posX1	posY1	posZ1
+	.macro	ComEffectRepeatStart	effNo	emitNo	interval	repeat	posX1	posY1	posZ1	posX2	posY2	posZ2
 	.short	SCRIPT_ENUM_EffectRepeatStart
 	.long	\effNo
 	.long	\emitNo
 	.long	\interval
 	.long	\repeat
 	.long	\posX1
-	.long	\posX1
-	.long	\posY1
 	.long	\posY1
 	.long	\posZ1
-	.long	\posZ1
+	.long	\posX2
+	.long	\posY2
+	.long	\posZ2
 	.endm
 
 #pragma mark [>Light Command
@@ -556,18 +602,14 @@
 /**
  * @brief	スポットライト：移動
  *
- * #param_num	5
+ * #param_num	3
  * @param	lightNo	スポットライト管理番号
  * @param	frame	フレーム数
- * @param	posX	Ｘ座標
- * @param	posY	Ｙ座標
- * @param	posZ	Ｚ座標
+ * @param	pos		座標(Z無効)
  *
  * #param	VALUE_INT
  * #param	VALUE_INT
- * #param	VALUE_FX32
- * #param	VALUE_FX32
- * #param	VALUE_FX32
+ * #param	VALUE_VECFX32 posX posY posZ(invalid!)
  */
 //======================================================================
 	.macro	ComLightMove	lightNo	frame	posX	posY	posZ
@@ -577,6 +619,32 @@
 	.long	\posX
 	.long	\posY
 	.long	\posZ
+	.endm
+
+//======================================================================
+/**
+ * @brief	スポットライト：ポケモン追従移動
+ *
+ * #param_num	4
+ * @param	lightNo	スポットライト管理番号
+ * @param	pokeNo	ポケモン番号(-1不可)
+ * @param	frame	フレーム数
+ * @param	ofs		オフセット(Z無効)
+ *
+ * #param	VALUE_INT
+ * #param	VALUE_INT
+ * #param	VALUE_INT
+ * #param	VALUE_VECFX32 offsetX offsetY offsetZ(invalid!)
+ */
+//======================================================================
+	.macro	ComLightMoveTrace	lightNo	pokeNo	frame	ofsX	ofsY	ofsZ
+	.short	SCRIPT_ENUM_LightMoveTrace
+	.long	\lightNo
+	.long	\pokeNo
+	.long	\frame
+	.long	\ofsX
+	.long	\ofsY
+	.long	\ofsZ
 	.endm
 
 //======================================================================

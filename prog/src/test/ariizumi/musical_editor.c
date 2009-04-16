@@ -106,7 +106,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 {
 	int ePos;
 	MUS_EDIT_LOCAL_WORK *work;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x70000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x100000 );
 
 	work = GFL_PROC_AllocWork( proc, sizeof(MUS_EDIT_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
 	work->actInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STAGE , sizeof(ACTING_INIT_WORK) );
@@ -148,7 +148,6 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 
 	//mcs—p‰Šú‰»
 	work->mcsSeq = MSEQ_WAIT;
-	work->scriptData = NULL;
 	GFL_OVERLAY_Load(FS_OVERLAY_ID(sogabe_debug));
 	return GFL_PROC_RES_FINISH;
 }
@@ -157,10 +156,6 @@ static GFL_PROC_RESULT MusicalEditProc_Term( GFL_PROC * proc, int * seq , void *
 {
 	MUS_EDIT_LOCAL_WORK *work = mywk;
 	
-	if( work->scriptData != NULL )
-	{
-		GFL_HEAP_FreeMemory( work->scriptData );
-	}
 
 	GFL_OVERLAY_Unload(FS_OVERLAY_ID(sogabe_debug));
 	
@@ -229,10 +224,7 @@ static void MusicalEdit_McsMain( MUS_EDIT_LOCAL_WORK *work )
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
 	{
-		if( work->scriptData != NULL )
-		{
-			STA_ACT_EDITOR_SetScript( work->actWork , work->scriptData );
-		}
+		STA_ACT_EDITOR_StartScript( work->actWork );
 	}
 }
 
@@ -274,16 +266,14 @@ static void MusicalEdit_McsLoadSeq( MUS_EDIT_LOCAL_WORK *work )
 	if( size )
 	{
 		u32	head;
-		if( work->scriptData )
-		{
-			GFL_HEAP_FreeMemory( work->scriptData );
-		}
-		work->scriptData = GFL_HEAP_AllocClearMemory( HEAPID_MUSICAL_STAGE, size );
-		MCS_Read( work->scriptData, size );
+		void *scriptData = GFL_HEAP_AllocClearMemory( HEAPID_MUSICAL_STAGE, size );
+		MCS_Read( scriptData, size );
+		STA_ACT_EDITOR_SetScript( work->actWork , scriptData );
 		head = SEND_IDLE;
 		MCS_Write( MCS_WRITE_CH, &head, 4 );
 		work->mcsSeq = MSEQ_WAIT;
 		OS_TPrintf("sequence_data load:%d\n",size);
+		
 	}
 	
 }

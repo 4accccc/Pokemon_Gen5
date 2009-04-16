@@ -4,6 +4,7 @@
 SCRIPT_FUNC_DEF( ScriptFinish )		//スクリプトの終了
 SCRIPT_FUNC_DEF( FrameWait )		//1	//指定フレームウェイト
 SCRIPT_FUNC_DEF( FrameWaitTime )	//1	//指定フレームまで待つ
+SCRIPT_FUNC_DEF( SyncScript )		//0	//同期待ちを行う
 //カーテン系
 SCRIPT_FUNC_DEF( CurtainUp )		//カーテンを上げる
 SCRIPT_FUNC_DEF( CurtainDown )		//カーテンを下げる
@@ -16,30 +17,36 @@ SCRIPT_FUNC_DEF( StageChangeBg )//1	//BG読み替え
 //ポケモン系
 SCRIPT_FUNC_DEF( PokeShow )		//2	//ポケモンの表示・非表示制御
 SCRIPT_FUNC_DEF( PokeDir )		//2	//ポケモンの向き(右か左)
-SCRIPT_FUNC_DEF( PokeMove )		//5	//ポケモン移動
+SCRIPT_FUNC_DEF( PokeMove )		//3	//ポケモン移動
+SCRIPT_FUNC_DEF( PokeMoveOffset )	//3	//ポケモン相対移動
 SCRIPT_FUNC_DEF( PokeStopAnime )	//1	//ポケモンアニメ停止
 SCRIPT_FUNC_DEF( PokeStartAnime )	//1	//ポケモンアニメ開始
 SCRIPT_FUNC_DEF( PokeChangeAnime )	//2	//ポケモンアニメ変更
+//ポケモンアクション系
 SCRIPT_FUNC_DEF( PokeActionJump )	//4	//ポケモンアクション・跳ねる
+//ポケモン管理系
+SCRIPT_FUNC_DEF( PokeMngSetFlag )	//4	//ポケモン動作番号予約
+
 
 //オブジェクト系
 SCRIPT_FUNC_DEF( ObjectCreate )		//2	//オブジェクト作成
 SCRIPT_FUNC_DEF( ObjectDelete )		//1	//オブジェクト破棄
 SCRIPT_FUNC_DEF( ObjectShow )		//1	//オブジェクト表示
 SCRIPT_FUNC_DEF( ObjectHide )		//1	//オブジェクト非表示
-SCRIPT_FUNC_DEF( ObjectMove )		//5	//ポケモン移動
+SCRIPT_FUNC_DEF( ObjectMove )		//3	//オブジェクト移動
 
 //エフェクト系
 SCRIPT_FUNC_DEF( EffectCreate )		//2	//エフェクト作成
 SCRIPT_FUNC_DEF( EffectDelete )		//1	//エフェクト破棄
 SCRIPT_FUNC_DEF( EffectStart )		//5	//エフェクト再生
 SCRIPT_FUNC_DEF( EffectStop )		//2	//エフェクト停止
-SCRIPT_FUNC_DEF( EffectRepeatStart )//10//エフェクト連続再生
+SCRIPT_FUNC_DEF( EffectRepeatStart )//6 //エフェクト連続再生
 
 //ライト系
 SCRIPT_FUNC_DEF( LightShowCircle )	//2	//ライトON(円形
 SCRIPT_FUNC_DEF( LightHide )		//1	//ライトOFF
-SCRIPT_FUNC_DEF( LightMove )		//5	//ライト移動
+SCRIPT_FUNC_DEF( LightMove )		//3	//ライト移動
+SCRIPT_FUNC_DEF( LightMoveTrace )	//4	//ライト追従移動
 SCRIPT_FUNC_DEF( LightColor )		//3	//ライト色設定
 
 //メッセージ系

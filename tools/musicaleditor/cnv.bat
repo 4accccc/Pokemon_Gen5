@@ -42,7 +42,7 @@ REM ##################################################
 
 cd C:\home\pokemon_wb\tools\musicaleditor
 del we_000.bin
-ruby c:\home\pokemon_wb\resource\musical\script\eescmk.rb c:\home\pokemon_wb\prog\src\musical\stage\script\musical_script_command.h we_test.esf c:/home/pokemon_wb/ on
+ruby c:\home\pokemon_wb\resource\musical\script\eescmk.rb c:\home\pokemon_wb\prog\src\musical\stage\script\musical_script_command.h we_test.esf c:/home/pokemon_wb/ we_ on
 
 if not %ERRORLEVEL%==0 GOTO ERROR
 

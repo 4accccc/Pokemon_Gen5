@@ -61,6 +61,18 @@
 #define ACT_MSG_POS_WIDTH  ( 24 )
 #define ACT_MSG_POS_HEIGHT ( 4 )
 
+//スクリプト用
+enum
+{
+	STA_SCRIPT_MAIN = 0,
+	//１は未使用
+	STA_SCRIPT_POKE_1 = 2,
+	STA_SCRIPT_POKE_2 = 3,
+	STA_SCRIPT_POKE_3 = 4,
+	STA_SCRIPT_POKE_4 = 5,
+};
+
+
 //======================================================================
 //	enum
 //======================================================================
@@ -105,6 +117,7 @@ struct _ACTING_WORK
 	GFL_BBD_SYS			*bbdSys;
 	
 	STA_SCRIPT_SYS		*scriptSys;
+	void				*scriptData;
 	
 	//メッセージ用
 	GFL_TCBLSYS			*tcblSys;
@@ -133,6 +146,8 @@ static void STA_ACT_SetupMessage( ACTING_WORK *work );
 
 static void STA_ACT_UpdateScroll( ACTING_WORK *work );
 static void STA_ACT_UpdateMessage( ACTING_WORK *work );
+
+static void STA_ACT_StartScript( ACTING_WORK *work );
 
 
 
@@ -211,6 +226,10 @@ void	STA_ACT_TermActing( ACTING_WORK *work )
 	INFOWIN_Exit();
 	
 	STA_SCRIPT_ExitSystem( work->scriptSys );
+	if( work->scriptData != NULL )
+	{
+		GFL_HEAP_FreeMemory( work->scriptData );
+	}
 
 	GFL_MSG_Delete( work->msgHandle );
 	GFL_BMPWIN_Delete( work->msgWin );
@@ -257,8 +276,12 @@ ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work )
 			
 			//演劇風
 			//STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData );
-			void *scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_we_001_bin , FALSE , work->heapId );
-			STA_SCRIPT_SetScript( work->scriptSys , scriptData );
+			if( work->scriptData != NULL )
+			{
+				GFL_HEAP_FreeMemory( work->scriptData );
+			}
+			work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_we_001_bin , FALSE , work->heapId );
+			STA_ACT_StartScript( work );
 		}
 		if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
 		{
@@ -710,6 +733,28 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 	GFL_BG_SetScroll( ACT_FRAME_MAIN_CURTAIN , GFL_BG_SCROLL_Y_SET , work->makuOffset );
 }
 
+static void STA_ACT_StartScript( ACTING_WORK *work )
+{
+	u8 i;
+	const u32 *headData = (u32*)work->scriptData;
+	const u8 pokeScriptArr[4] = 
+	{
+		STA_SCRIPT_POKE_1,
+		STA_SCRIPT_POKE_2,
+		STA_SCRIPT_POKE_3,
+		STA_SCRIPT_POKE_4
+	};
+
+	STA_SCRIPT_SetScript( work->scriptSys , (u8*)work->scriptData+headData[STA_SCRIPT_MAIN] , TRUE );
+	for( i=0; i<4 ; i++ )
+	{
+		if( headData[pokeScriptArr[i]] != headData[STA_SCRIPT_MAIN] )
+		{
+			STA_SCRIPT_SetScript( work->scriptSys , (u8*)work->scriptData+headData[pokeScriptArr[i]] , TRUE );
+		}
+	}
+}
+
 #pragma mark [> message func
 //--------------------------------------------------------------
 //	メッセージ関係
@@ -872,7 +917,18 @@ void	STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll )
 //--------------------------------------------------------------
 void	STA_ACT_EDITOR_SetScript( ACTING_WORK *work , void* data )
 {
-	STA_SCRIPT_SetScript( work->scriptSys , data );
+	if( work->scriptData != NULL )
+	{
+		GFL_HEAP_FreeMemory( work->scriptData );
+	}
+	work->scriptData = data;
 }
 
+void	STA_ACT_EDITOR_StartScript( ACTING_WORK *work )
+{
+	if( work->scriptData != NULL )
+	{
+		STA_ACT_StartScript( work );
+	}
+}
 

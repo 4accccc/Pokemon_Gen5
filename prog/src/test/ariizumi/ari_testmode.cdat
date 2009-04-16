@@ -43,7 +43,7 @@ static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int i
 
 static TESTMODE_MENU_LIST menuAriizumi[] = 
 {
-	{L"ミュージカルエディタ"	,TESTMODE_ITEM_SelectMusicalEditor },
+	{L"ミュージカルデバッグ"	,TESTMODE_ITEM_SelectMusicalEditor },
 	{L"友達手帳"				,TESTMODE_ITEM_SelectDebWifiNote },
 	{L"かんい文入力"			,TESTMODE_ITEM_SelectDebPmsInput },
 	

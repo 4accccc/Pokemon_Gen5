@@ -92,6 +92,7 @@ void STA_SCRIPT_ExitSystem( STA_SCRIPT_SYS *work )
 void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work )
 {
 	u8 i;
+	BOOL isFinishSync = TRUE;
 	for( i=0;i<SCRIPT_NUM;i++ )
 	{
 		if( work->scriptWork[i] != NULL )
@@ -102,12 +103,36 @@ void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work )
 				GFL_HEAP_FreeMemory( work->scriptWork[i] );
 				work->scriptWork[i] = NULL;
 			}
+			else
+			if( work->scriptWork[i]->isFlag & SFB_IS_TARGET_SYNC )
+			{
+				//同期待ち対象スクリプトが一つでも同期待ちになっていなかったらアウト！
+				if( (work->scriptWork[i]->isFlag & SFB_WAIT_SYNC) == 0 )
+				{
+					isFinishSync = FALSE;
+				}
+			}
+		}
+	}
+	//同期の解除
+	if( isFinishSync == TRUE )
+	{
+		for( i=0;i<SCRIPT_NUM;i++ )
+		{
+			if( work->scriptWork[i] != NULL )
+			{
+				if( (work->scriptWork[i]->isFlag & SFB_IS_TARGET_SYNC) &&
+					(work->scriptWork[i]->isFlag & SFB_WAIT_SYNC) )
+				{
+					work->scriptWork[i]->isFlag ^= SFB_WAIT_SYNC;
+				}
+			}
 		}
 	}
 	GFL_TCB_Main( work->tcbSys );
 }
 
-void STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData )
+void STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData , const BOOL isTrgSync )
 {
 	u8 i;
 	for( i=0;i<SCRIPT_NUM;i++ )
@@ -125,7 +150,12 @@ void STA_SCRIPT_SetScript( STA_SCRIPT_SYS *work , void *scriptData )
 	work->scriptWork[i]->loadPos = work->scriptWork[i]->scriptData;
 	work->scriptWork[i]->waitCnt = 0;
 	work->scriptWork[i]->frame = 0;
-	work->scriptWork[i]->isFinish = FALSE;
+	work->scriptWork[i]->isFlag = 0;
+	work->scriptWork[i]->trgPokeFlg = 0;
+	if( isTrgSync == TRUE )
+	{
+		work->scriptWork[i]->isFlag |= SFB_IS_TARGET_SYNC;
+	}
 
 	work->scriptWork[i]->sysWork = work;
 	work->scriptWork[i]->vmHandle = VM_Create( work->heapId , &vm_init );
@@ -141,14 +171,15 @@ static BOOL STA_SCRIPT_UpdateScript( STA_SCRIPT_SYS *work , STA_SCRIPT_WORK *scr
 		scriptWork->waitCnt--;
 	}
 
-	if( scriptWork->waitCnt == 0 )
+	if( scriptWork->waitCnt == 0 &&
+		( scriptWork->isFlag & SFB_WAIT_SYNC ) == 0)
 	{
 		VM_Control( scriptWork->vmHandle );
-		if( scriptWork->isFinish == TRUE )
+		if( scriptWork->isFlag & SFB_IS_FINISH )
 		{
 			VM_End( scriptWork->vmHandle );
 			VM_Delete( scriptWork->vmHandle );
-			GFL_HEAP_FreeMemory( scriptWork->scriptData );
+			//GFL_HEAP_FreeMemory( scriptWork->scriptData );
 			return TRUE;
 		}
 	}
