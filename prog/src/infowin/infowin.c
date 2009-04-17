@@ -22,7 +22,10 @@
 //	debug
 //======================================================================
 #ifdef PM_DEBUG
-#define DEBUG_LO_BATTERY_VOLUME_UP
+
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+//#define DEBUG_LO_BATTERY_VOLUME_UP
+#endif //DEBUG_ONLY_FOR_toru_nagihashi
 #endif//PM_DEBUG
 
 //======================================================================
