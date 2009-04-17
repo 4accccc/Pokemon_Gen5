@@ -11,7 +11,6 @@
 #include "system/gfl_use.h"
 #include "system/main.h"		//GFL_HEAPID_APP
 #include "net/network_define.h"
-#include "textprint.h"
 #include "arc_def.h"
 #include "system/g3d_tool.h"
 

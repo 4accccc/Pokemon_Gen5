@@ -7,7 +7,6 @@
  */
 //======================================================================
 #include <gflib.h>
-#include <textprint.h>
 
 #include "include/system/gfl_use.h"
 #include "arc/arc_def.h"

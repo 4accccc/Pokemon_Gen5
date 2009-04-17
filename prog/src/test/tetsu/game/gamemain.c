@@ -9,7 +9,6 @@
 #include "gflib.h"
 #include "system/gfl_use.h"
 #include "net/network_define.h"
-#include "textprint.h"
 
 #include "setup.h"
 #include "game_net.h"

@@ -23,7 +23,7 @@
 #include "arc_def.h"
 #include "arc_file.h"
 
-#include "textprint.h"
+//#include "textprint.h"
 
 #ifdef PM_DEBUG
 #include "test/debug_pause.h"
@@ -138,7 +138,7 @@ void GFLUser_Init(void)
 	GFL_BACKUP_Init(GFL_HEAPID_APP, GFL_HEAPID_APP);
 
 	//システムフォント初期化
-	GFL_TEXT_CreateSystem( NULL );
+	//GFL_TEXT_CreateSystem( NULL );
 
 	//RTC初期化
 	GFL_RTC_Init();
@@ -190,7 +190,7 @@ void GFLUser_Display(void)
 //------------------------------------------------------------------
 void GFLUser_Exit(void)
 {
-	GFL_TEXT_DeleteSystem();
+	//GFL_TEXT_DeleteSystem();
 	GFL_BACKUP_Exit();
 	//GFL_SOUND_Exit();
 	GFL_FADE_Exit();

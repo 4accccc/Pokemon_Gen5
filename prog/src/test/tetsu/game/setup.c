@@ -7,7 +7,6 @@
  */
 //============================================================================================
 #include <gflib.h>
-#include <textprint.h>
 
 #include "system\gfl_use.h"
 #include "system/main.h"
@@ -184,7 +183,7 @@ static const u16 defaultFontPalette[] = {
 #define GAME_MAP_WIN_PY			(0)
 #define GAME_MAP_WIN_SX			(18)
 #define GAME_MAP_WIN_SY			(18)
-
+#if 0
 //bmp, writex, writey, spacex, spacey, colorF, colorB, mode
 static const GFL_TEXT_PRINTPARAM playerStatusWinPrintParam = {
 	NULL, 1, 1, 1, 1, 15, 1, GFL_TEXT_WRITE_16
@@ -192,7 +191,7 @@ static const GFL_TEXT_PRINTPARAM playerStatusWinPrintParam = {
 static const GFL_TEXT_PRINTPARAM msgWinPrintParam = {
 	NULL, 1, 1, 1, 1, 1, 15, GFL_TEXT_WRITE_16
 };
-
+#endif
 static const u16 textBitmapWinList[][5] = {
 	//ステータスウインドウ
 	{ GAME_STATUS_WIN_PX, GAME_STATUS_WIN_PY, GAME_STATUS_WIN_SX, GAME_STATUS_WIN_SY, TEXT_PLTT },
