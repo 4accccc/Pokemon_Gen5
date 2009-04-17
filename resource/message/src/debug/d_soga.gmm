@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2009-04-09T20:45:37"/>
+	<create user="sogabe" host="W00140" date="2009-04-17T19:25:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="497" top="170" right="1202" bottom="790" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -321,6 +321,54 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="DSMSG_EFFECT_VIEWER">
+		<language name="JPN">エフェクトビューワー</language>
+	</row>
+
+	<row id="DSMSG_POKEMON_VIEWER">
+		<language name="JPN">ポケモンビューワー</language>
+	</row>
+
+	<row id="DSMSG_BATTLE_TEST">
+		<language name="JPN">バトルテスト</language>
+	</row>
+
+	<row id="DSMSG_CAPTURE">
+		<language name="JPN">キャプチャじっけん</language>
+	</row>
+
+	<row id="PVMSG_POS_AA">
+		<language name="JPN">POS AA</language>
+	</row>
+
+	<row id="PVMSG_POS_BB">
+		<language name="JPN">POS BB</language>
+	</row>
+
+	<row id="PVMSG_POS_A">
+		<language name="JPN">POS A</language>
+	</row>
+
+	<row id="PVMSG_POS_B">
+		<language name="JPN">POS B</language>
+	</row>
+
+	<row id="PVMSG_POS_C">
+		<language name="JPN">POS C</language>
+	</row>
+
+	<row id="PVMSG_POS_D">
+		<language name="JPN">POS D</language>
+	</row>
+
+	<row id="PVMSG_POS_E">
+		<language name="JPN">POS E</language>
+	</row>
+
+	<row id="PVMSG_POS_F">
+		<language name="JPN">POS F</language>
+	</row>
 
 	<row id="EVMSG_CURSOR">
 		<language name="JPN">→</language>
@@ -456,6 +504,18 @@
 
 	<row id="EVMSG_PPLAY_ANGLE">
 		<language name="JPN">エミッタかくど</language>
+	</row>
+
+	<row id="WazaNameMsg">
+		<language name="JPN">[1:07:わざ名:0]</language>
+	</row>
+
+	<row id="PPMsg">
+		<language name="JPN">ＰＰ</language>
+	</row>
+
+	<row id="PPNowMaxMsg">
+		<language name="JPN">[2:01:２桁:0]／[2:01:２桁:1]</language>
 	</row>
 
 	<flowchart-group-list>
