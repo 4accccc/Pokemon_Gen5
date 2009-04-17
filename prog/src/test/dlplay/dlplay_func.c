@@ -8,7 +8,6 @@
  */
 //======================================================================
 #include <gflib.h>
-#include <textprint.h>
 #include <tcbl.h>
 
 #include "system/gfl_use.h"
@@ -20,6 +19,8 @@
 //======================================================================
 //	define
 //======================================================================
+
+#define USE_DEBUG_MSG (0)
 
 #define DLPLAY_FUNC_MSG_X (16)
 #define DLPLAY_FUNC_MSG_LINE_NUM (24)
@@ -46,7 +47,9 @@ struct _DLPLAY_MSG_SYS
 
 	GFL_BMPWIN			*bmpwin_[DLPLAY_FUNC_MSG_LINE_NUM ];
 	GFL_BMPWIN			*bmpwinMsg_;
+#if USE_DEBUG_MSG
 	GFL_TEXT_PRINTPARAM	*textParam_[DLPLAY_FUNC_MSG_LINE_NUM ];
+#endif //USE_DEBUG_MSG
 
 	GFL_MSGDATA		*msgData_;
 	GFL_FONT		*fontHandle_;
@@ -116,6 +119,7 @@ DLPLAY_MSG_SYS*	DLPlayFunc_MsgInit( int	heapID , u8 bgPlane )
 	}
 
 	{
+#if USE_DEBUG_MSG
 		GFL_TEXT_PRINTPARAM defaultParam;
 
 		defaultParam.writex	= DLPLAY_FUNC_MSG_X;
@@ -133,6 +137,7 @@ DLPLAY_MSG_SYS*	DLPlayFunc_MsgInit( int	heapID , u8 bgPlane )
 			
 			//DLPlayFunc_MsgUpdate( msgSys , i , (i==DLPLAY_FUNC_MSG_LINE_NUM-1?TRUE:FALSE));
 		}
+#endif //USE_DEBUG_MSG
 	}
 
 	return msgSys;
@@ -172,11 +177,13 @@ void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFil
 //======================================================================
 void	DLPlayFunc_MsgTerm( DLPLAY_MSG_SYS *msgSys )
 {
+#if USE_DEBUG_MSG
 	u8 i;
 	for( i=0;i<DLPLAY_FUNC_MSG_LINE_NUM;i++ ){
 		GFL_BMPWIN_Delete( msgSys->bmpwin_[i] );
 		GFL_HEAP_FreeMemory( msgSys->textParam_[i] );
 	}
+#endif //USE_DEBUG_MSG
 	GFL_HEAP_FreeMemory( msgSys );
 
 }
@@ -201,6 +208,7 @@ void	DLPlayFunc_FontTerm( DLPLAY_MSG_SYS *msgSys )
 void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys)
 {
 	ARI_TPrintf("MsgPut:[%s]\n",str);
+#if USE_DEBUG_MSG
 	//GFL_BMP_Clear( msgSys->textParam_[msgSys->line_]->bmp , 0x0000 );
 
 	msgSys->textParam_[msgSys->line_]->writex	= DLPLAY_FUNC_MSG_X;
@@ -214,22 +222,26 @@ void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys)
 	//ŽŸ‚Ìƒ‰ƒCƒ“‚ðƒNƒŠƒA‚µ‚Ä‚¨‚­:
 	GFL_BMP_Clear( msgSys->textParam_[msgSys->line_]->bmp , 0x0000 );
 	DLPlayFunc_MsgUpdate( msgSys , msgSys->line_ , TRUE );
+#endif USE_DEBUG_MSG
 }
 
 void DLPlayFunc_PutStringLine( u8 line , char* str , DLPLAY_MSG_SYS *msgSys )
 {
 	ARI_TPrintf("MsgPut:[%d][%s]\n",line,str);
+#if USE_DEBUG_MSG
 	GFL_BMP_Clear( msgSys->textParam_[line]->bmp , 0x0000 );
 	DLPlayFunc_MsgUpdate( msgSys , line , FALSE );
 	msgSys->textParam_[line]->writex	= DLPLAY_FUNC_MSG_X;
 	msgSys->textParam_[line]->writey	= 0;
 	GFL_TEXT_PrintSjisCode( str , msgSys->textParam_[line] );
 	DLPlayFunc_MsgUpdate( msgSys , line , TRUE );
+#endif //USE_DEBUG_MSG
 }
 
 void DLPlayFunc_PutStringLineDiv( u8 line , char* str1 , char* str2 , DLPLAY_MSG_SYS *msgSys )
 {
 	ARI_TPrintf("MsgPut:[%d][%32s][%32s]\n",line,str1,str2);
+#if USE_DEBUG_MSG
 	GFL_BMP_Clear( msgSys->textParam_[line]->bmp , 0x0000 );
 	DLPlayFunc_MsgUpdate( msgSys , line , FALSE );
 	msgSys->textParam_[line]->writex	= DLPLAY_FUNC_MSG_X;
@@ -238,13 +250,16 @@ void DLPlayFunc_PutStringLineDiv( u8 line , char* str1 , char* str2 , DLPLAY_MSG
 	msgSys->textParam_[line]->writex	= DLPLAY_FUNC_MSG_X+128;
 	GFL_TEXT_PrintSjisCode( str2 , msgSys->textParam_[line] );
 	DLPlayFunc_MsgUpdate( msgSys , line , TRUE );
+#endif //USE_DEBUG_MSG
 }
 
 void DLPlayFunc_ClearString( DLPLAY_MSG_SYS *msgSys )
 {
+#if USE_DEBUG_MSG
 	u8 i;
 	for(i=0;i<DLPLAY_FUNC_MSG_LINE_NUM;i++)
 		GFL_BMP_Clear( msgSys->textParam_[i]->bmp , 0x0000 );
+#endif //USE_DEBUG_MSG
 }
 
 //======================================================================
