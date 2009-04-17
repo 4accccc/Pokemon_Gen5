@@ -5,7 +5,6 @@
 //===================================================================
 #include <wchar.h>
 #include <gflib.h>
-#include <textprint.h>
 
 #include "arc_def.h"
 #include "message.naix"
