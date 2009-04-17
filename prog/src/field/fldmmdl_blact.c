@@ -349,7 +349,7 @@ static void IDCodeIndex_Delete( IDCODEIDX *idx )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void IDCodeIndex_RegistCode( IDCODEIDX *idx, u16 code, u16 id )
+static void IDCodeIndex_RegistCode( IDCODEIDX *idx, u16 code, u16 id  )
 {
 	int i = 0;
 	IDCODE *tbl = idx->pIDCodeBuf;
@@ -470,10 +470,11 @@ static void BBDResUnitIndex_AddResUnit( FLDMMDLSYS *fmmdlsys, u16 obj_code )
 	data.arcID = ARCID_FLDMMDL_RES;
 	data.datID = prm->res_idx;
 	data.texFmt = GFL_BBD_TEXFMT_PAL16;
-	data.texSiz = prm->tex_size;	//ŒÃ‚¢’l ŽØ‚è‚½‚¢‘
+	data.texSiz = prm->tex_size;
 	data.celSizX = 32;				//‚¢‚¸‚êmdl_size‚©‚ç
 	data.celSizY = 32;
 	data.dataCut = GFL_BBDACT_RESTYPE_DATACUT;
+	
 	id = GFL_BBDACT_AddResourceUnit( pBlActCont->pBbdActSys, &data, 1 );
 	IDCodeIndex_RegistCode( &pBlActCont->BBDResUnitIdx, obj_code, id );
 }

@@ -16,11 +16,14 @@
 //======================================================================
 //	define
 //======================================================================
+#define MAP_MATRIX_ZONE_ID_NON (0xffffffff)
+#define MAP_MATRIX_RES_ID_NON (0xffffffff)
 
 //======================================================================
 //	struct
 //======================================================================
 typedef struct _TAG_MAP_MATRIX MAP_MATRIX; ///<MAP_MATRIX
+//typedef u16 ZONE_ID;
 
 //======================================================================
 //	extern
@@ -33,9 +36,14 @@ extern void MAP_MATRIX_Delete( MAP_MATRIX *pMat );
 extern u32 MAP_MATRIX_GetMatrixID( const MAP_MATRIX *pMat );
 extern u32 MAP_MATRIX_GetBlockPosZoneID(
 		const MAP_MATRIX *pMat, int x, int z );
+extern u32 MAP_MATRIX_GetVectorPosZoneID(
+		const MAP_MATRIX *pMat, fx32 x, fx32 z );
 extern u16 MAP_MATRIX_GetMapBlockSizeWidth( const MAP_MATRIX *pMat );
 extern u16 MAP_MATRIX_GetMapBlockSizeHeight( const MAP_MATRIX *pMat );
 extern u32 MAP_MATRIX_GetMapBlockTotalSize( const MAP_MATRIX *pMat );
 extern const u32 * MAP_MATRIX_GetMapResIDTable( const MAP_MATRIX *pMat );
-
+extern BOOL MAP_MATRIX_CheckBlockPosRange(
+		const MAP_MATRIX *pMat, int x, int z );
+extern BOOL MAP_MATRIX_CheckVectorPosRange(
+		const MAP_MATRIX *pMat, int x, int z );
 #endif //MAP_MATRIX_H_FILE

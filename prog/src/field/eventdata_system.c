@@ -64,6 +64,10 @@ extern const CONNECT_DATA SampleConnectData_4season[];
 extern const int SampleConnectDataCount_4season;
 extern const FLDMMDL_HEADER SampleFldMMdlHeader_4season[];
 extern const int SampleFldMMdlHeaderCount_4season;
+extern const FLDMMDL_HEADER SampleFldMMdlHeader_T01[];
+extern const int SampleFldMMdlHeaderCount_T01;
+extern const FLDMMDL_HEADER SampleFldMMdlHeader_R01[];
+extern const int SampleFldMMdlHeaderCount_R01;
 
 //============================================================================================
 //
@@ -129,6 +133,14 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 		evdata->connect_data = SampleConnectData_4season;
 		evdata->npc_count = SampleFldMMdlHeaderCount_4season;
 		evdata->npc_data = SampleFldMMdlHeader_4season;
+		break;
+	case ZONE_ID_T01:
+		evdata->npc_count = SampleFldMMdlHeaderCount_T01;
+		evdata->npc_data = SampleFldMMdlHeader_T01;
+		break;
+	case ZONE_ID_R01:
+		evdata->npc_count = SampleFldMMdlHeaderCount_R01;
+		evdata->npc_data = SampleFldMMdlHeader_R01;
 		break;
 	}
 }
@@ -901,6 +913,68 @@ const FLDMMDL_HEADER SampleFldMMdlHeader_4season[] = {
 };
 
 const int SampleFldMMdlHeaderCount_4season = NELEMS(SampleFldMMdlHeader_4season);
+
+const FLDMMDL_HEADER SampleFldMMdlHeader_T01[] = {
+	{
+		0,		///<識別ID
+		KABI32,	///<表示するOBJコード
+		MV_RND,	///<動作コード
+		0,	///<イベントタイプ
+		0,	///<イベントフラグ
+		0,	///<イベントID
+		DIR_DOWN,	///<指定方向
+		0,	///<指定パラメタ 0
+		0,	///<指定パラメタ 1
+		0,	///<指定パラメタ 2
+		2,	///<X方向移動制限
+		2,	///<Z方向移動制限
+		752,	///<グリッドX
+		805,	///<グリッドZ
+		0,	///<Y値 fx32型
+	},
+};
+
+const int SampleFldMMdlHeaderCount_T01 = NELEMS(SampleFldMMdlHeader_T01);
+
+const FLDMMDL_HEADER SampleFldMMdlHeader_R01[] = {
+	{
+		0,		///<識別ID
+		KABI32,	///<表示するOBJコード
+		MV_RND,	///<動作コード
+		0,	///<イベントタイプ
+		0,	///<イベントフラグ
+		0,	///<イベントID
+		DIR_DOWN,	///<指定方向
+		0,	///<指定パラメタ 0
+		0,	///<指定パラメタ 1
+		0,	///<指定パラメタ 2
+		2,	///<X方向移動制限
+		2,	///<Z方向移動制限
+		757,	///<グリッドX
+		788,	///<グリッドZ
+		0,	///<Y値 fx32型
+	},
+	{
+		0,		///<識別ID
+		WOMAN1,	///<表示するOBJコード
+		MV_RND,	///<動作コード
+		0,	///<イベントタイプ
+		0,	///<イベントフラグ
+		0,	///<イベントID
+		DIR_DOWN,	///<指定方向
+		0,	///<指定パラメタ 0
+		0,	///<指定パラメタ 1
+		0,	///<指定パラメタ 2
+		2,	///<X方向移動制限
+		2,	///<Z方向移動制限
+		756,	///<グリッドX
+		796,	///<グリッドZ
+		0,	///<Y値 fx32型
+	},
+};
+
+const int SampleFldMMdlHeaderCount_R01 = NELEMS(SampleFldMMdlHeader_R01);
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

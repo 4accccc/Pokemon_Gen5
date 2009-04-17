@@ -96,7 +96,7 @@ struct _FIELD_MAIN_WORK
 	FIELD_CAMERA*	camera_control;
 	PC_ACTCONT*		pcActCont;
 	VecFx32			now_pos;
-
+	LOCATION		location;
 
 	FIELD_LIGHT*	light;
 	FIELD_FOG_WORK*	fog;
@@ -149,6 +149,7 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work);
 static void fieldMainCommActorFree( FIELD_MAIN_WORK *fieldWork );
 static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork );
 
+static BOOL fieldmap_UpdateZone( FIELD_MAIN_WORK *fieldWork );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -202,6 +203,7 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork->gsys = gsys;
 	fieldWork->map_id = GetSceneID(gsys);
 	fieldWork->ftbl = FIELDDATA_GetFieldFunctions(fieldWork->map_id);
+	
 	//サイズは暫定。DPでの最大サイズは30x30
 	fieldWork->pMapMatrix = MAP_MATRIX_Create( heapID );
 
@@ -267,6 +269,13 @@ GAMESYS_WORK * FIELDMAP_GetGameSysWork( FIELD_MAIN_WORK *fieldWork )
 	return fieldWork->gsys;
 }
 
+MAP_MATRIX * FIELDMAP_GetMapMatrix( FIELD_MAIN_WORK *fieldWork );
+
+MAP_MATRIX * FIELDMAP_GetMapMatrix( FIELD_MAIN_WORK *fieldWork )
+{
+	return( fieldWork->pMapMatrix );
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )
@@ -279,7 +288,7 @@ void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )
 }
 
 static void initFLDMMDL(FIELD_MAIN_WORK * fieldWork);
-static finishFLDMMDL(FIELD_MAIN_WORK * fieldWork);
+static void finishFLDMMDL(FIELD_MAIN_WORK * fieldWork);
 //------------------------------------------------------------------
 /**
  * @brief	メイン
@@ -313,9 +322,17 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 				fieldWork->heapID );
 
 		SetMapperData(fieldWork);
+		
+		//フィールドマップ用ロケーション作成
+		fieldWork->location.zone_id = fieldWork->map_id;
+		fieldWork->location.pos = fieldWork->now_pos;
+		
+		//マップデータ登録
 		FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
-
+		
+		//動作モデル初期化
 		initFLDMMDL(fieldWork);
+		
 		//登録テーブルごとに個別の初期化処理を呼び出し
 		{
 			u16 dir = GetStartDirection(gsys);
@@ -352,6 +369,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		MainGameSystem( fieldWork );
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 		FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
+		
 		if( fieldWork->fldMMdlSys != NULL ){
 			FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
 		}
@@ -368,6 +386,10 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		break;
 
 	case 3:
+		//ゾーン更新処理
+		fieldmap_UpdateZone( fieldWork );
+		
+		//マップ別 登録処理
 		fieldWork->key_cont = 0;
 		if( GAMESYSTEM_GetEvent(gsys) == NULL) {
 		
@@ -380,9 +402,10 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			//これがないとマップ移動しないので注意
 			FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
 		}
+
 		//通信用アクター更新
 		fieldMainCommActorProc( fieldWork );
-
+		
 		//通信用処理(プレイヤーの座標の設定とか
 		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
 		
@@ -710,7 +733,7 @@ static void initFLDMMDL(FIELD_MAIN_WORK * fieldWork)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static finishFLDMMDL(FIELD_MAIN_WORK * fieldWork)
+static void finishFLDMMDL(FIELD_MAIN_WORK * fieldWork)
 {
 	FLDMMDLSYS_Push( fieldWork->fldMMdlSys );
 	FLDMMDLSYS_DeleteProc( fieldWork->fldMMdlSys );
@@ -1195,4 +1218,6 @@ void FIELDMAP_ForceUpdate( FIELD_MAIN_WORK *fieldWork )
 	FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
 }
 
-
+//======================================================================
+//	フィールド　ゾーン更新
+//======================================================================

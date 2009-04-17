@@ -1411,15 +1411,15 @@ static BOOL FldMMdl_HitCheckMoveAttr(
 			u16 val = attr & 0xffff;
 			u16 flag = (attr&0xffff0000) >> 16;
 			
-			if( (flag & MAP_ATTR_FLAG_HITCH) == 0 ){
-				return( FALSE );
+			if( (flag & MAP_ATTR_FLAG_HITCH) == 0 ){ //移動可能フラグ
+				return( FALSE );	//移動可能アトリビュート
 			}
 #endif
 		}
 	}
 	#endif
 	
-	return( TRUE );
+	return( TRUE ); //移動不可アトリビュート
 }
 
 //--------------------------------------------------------------
@@ -1634,7 +1634,7 @@ BOOL FLDMMDL_GetMapPosAttr(
 {
 	FLDMAPPER_GRIDINFO GridInfo;
 	*attr = 0;
-
+	
 	if( FldMMdl_GetMapGridInfo(fmmdl,pos,&GridInfo) == TRUE ){
 		*attr = GridInfo.gridData[0].attr;
 		return( TRUE );

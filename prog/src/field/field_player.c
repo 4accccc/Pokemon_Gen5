@@ -289,14 +289,17 @@ PC_ACTCONT * CreatePlayerActGrid(
 	//FLDMMDLセットアップ
 	pcActCont->pFldMMdl = FLDMMDLSYS_SearchOBJID( pFldMMdlSys, 0xff );
 
-	if( pcActCont->pFldMMdl == NULL ){
+	if( pcActCont->pFldMMdl == NULL ){	//新規
 		head = DATA_JikiHeader;
 		head.gx = SIZE_GRID_FX32( pos->x );
 		head.gz = SIZE_GRID_FX32( pos->z );
 		head.y = pos->y;
 		pcActCont->pFldMMdl = FLDMMDLSYS_AddFldMMdl( pFldMMdlSys, &DATA_JikiHeader, 0 );
+	}else{	//復帰
 	}
 	
+	FLDMMDL_SetStatusBitNotZoneDelete( pcActCont->pFldMMdl, TRUE );
+
 	return pcActCont;
 }
 

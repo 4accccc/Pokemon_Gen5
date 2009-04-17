@@ -703,6 +703,7 @@ extern FLDMMDL * FLDMMDLSYS_SearchGridPos(
 extern FLDMMDL * FLDMMDLSYS_SearchMoveCode(
 	const FLDMMDLSYS *fos, u16 mv_code );
 extern FLDMMDL * FLDMMDLSYS_SearchOBJID( const FLDMMDLSYS *fos, u16 id );
+extern void FLDMMDLSYS_DeleteZoneUpdateFldMMdl( FLDMMDLSYS *fos );
 
 extern BOOL FLDMMDL_SearchUseOBJCode( const FLDMMDL *fmmdl, u16 code );
 extern void FLDMMDL_InitPosition(

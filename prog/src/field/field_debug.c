@@ -9,9 +9,12 @@
 #include "field_debug.h"
 #include "arc/others.naix"
 #include "fldmmdl.h"
+#include "map_matrix.h"
+#include "field/zonedata.h"
 
 extern GAMESYS_WORK * FIELDMAP_GetGameSysWork( FIELD_MAIN_WORK *fieldWork );
 extern FLDMAPPER* GetFieldG3Dmapper( FIELD_MAIN_WORK * fieldWork );
+extern MAP_MATRIX * FIELDMAP_GetMapMatrix( FIELD_MAIN_WORK *fieldWork );
 
 //======================================================================
 //	define
@@ -473,5 +476,27 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 				DebugFont_Print( work, x, y, str );
 			}
 		}
+	}
+	
+	{	//マップブロック　ZONE_ID表示
+		u32 zone_id = MAP_MATRIX_ZONE_ID_NON;
+		MAP_MATRIX *pMatrix = FIELDMAP_GetMapMatrix( work->pFieldMainWork );
+		
+		if( MAP_MATRIX_CheckVectorPosRange(pMatrix,pos->x,pos->z) == TRUE ){
+			zone_id = MAP_MATRIX_GetVectorPosZoneID(
+					pMatrix, pos->x, pos->z );
+		}
+		
+		DebugFont_ClearLine( work, 7 );
+		sprintf( str, "ZONE ID " );
+		DebugFont_Print( work, 0, 7, str );
+		
+		if( zone_id == MAP_MATRIX_ZONE_ID_NON ){
+			sprintf( str, "ERROR" );
+		}else{
+			ZONEDATA_GetZoneName( 0, str, zone_id );
+		}
+		
+		DebugFont_Print( work, 8, 7, str );
 	}
 }

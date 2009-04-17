@@ -420,6 +420,8 @@ void FLDMMDLSYS_SetFldMMdl( const FLDMMDLSYS *fos,
 	GF_ASSERT( count > 0 );
 	GF_ASSERT( header != NULL );
 	
+	KAGAYA_Printf( "FLDMMDLSYS_SetFldMMdl Count %d\n", count );
+	
 	do{
 		FLDMMDLSYS_AddFldMMdl( fos, header, zone_id );
 		header++;
@@ -3544,6 +3546,30 @@ static FLDMMDL * FldMMdlSys_SearchAlies(
 	}
 	
 	return( NULL );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS フィールド動作モデル ゾーン更新時の動作モデル削除
+ * @param	fos	FLDMMDLSYS
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDLSYS_DeleteZoneUpdateFldMMdl( FLDMMDLSYS *fos )
+{
+	u32 no = 0;
+	FLDMMDL *fmmdl;
+	
+	while( FLDMMDLSYS_SearchUseFldMMdl(fos,&fmmdl,&no) ){
+		//本来であれば更にエイリアスチェックが入る
+		if( FLDMMDL_CheckStatusBit(
+				fmmdl,FLDMMDL_STABIT_ZONE_DEL_NOT) == 0 ){
+			if( FLDMMDL_GetOBJID(fmmdl) == 0xff ){
+				GF_ASSERT( 0 );
+			}
+			FLDMMDL_Delete( fmmdl );
+		}
+	}
 }
 
 //======================================================================

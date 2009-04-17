@@ -193,11 +193,15 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	case 1:
 		//フィールドマップを終了待ち
 		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
+		//配置していた動作モデルを削除
+		FLDMMDLSYS_DeleteMMdl( GAMEDATA_GetFldMMdlSys(gamedata) );
 		(*seq)++;
 		break;
 	case 2:
 		//新しいマップID、初期位置をセット
 		UpdateMapParams(gsys, &mcw->loc_req);
+		//新規ゾーンに配置する動作モデルを追加
+		SetFldMMdl( gsys, &mcw->loc_req, GAMEINIT_MODE_FIRST );
 		(*seq)++;
 		break;
 	case 3:
@@ -391,7 +395,7 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 		direction = GetDirValueByDirID(loc.dir_id);
 		PLAYERWORK_setDirection(mywork, direction);
 	}
-
+	
 	//開始位置を記憶しておく
 	GAMEDATA_SetStartLocation(gamedata, &loc);
 }
