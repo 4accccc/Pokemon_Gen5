@@ -342,8 +342,8 @@ typedef struct {
 
 	GFL_TCB*			g2dVintr;
 
-	PRINT_QUE			*printQue;
-	GFL_FONT 			*fontHandle;
+	PRINT_QUE*			printQue;
+	GFL_FONT*			fontHandle;
 	GFL_MSGDATA*		msgman;
 	GFL_MSGDATA*		monsmsgman;
 
