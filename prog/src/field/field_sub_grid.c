@@ -1998,11 +1998,16 @@ static BOOL gridmap_CheckMoveZoneChange( FIELD_MAIN_WORK *pFieldMainWork )
 {
 	LOCATION *lc = &pFieldMainWork->location;
 	MAP_MATRIX *mat = pFieldMainWork->pMapMatrix;
-	u32 zone_id = MAP_MATRIX_GetVectorPosZoneID( mat, lc->pos.x, lc->pos.z );
 	
-	if( zone_id != MAP_MATRIX_ZONE_ID_NON ){ //現状 IDが無い場合は更新しない
-		if( zone_id != (u32)lc->zone_id ){
-			return( TRUE );
+	if( MAP_MATRIX_CheckVectorPosRange(mat,lc->pos.x,lc->pos.z) == TRUE ){
+		u32 zone_id =
+			MAP_MATRIX_GetVectorPosZoneID( mat, lc->pos.x, lc->pos.z );
+		
+		//現状 IDが無い場合は更新しない
+		if( zone_id != MAP_MATRIX_ZONE_ID_NON ){
+			if( zone_id != (u32)lc->zone_id ){
+				return( TRUE );
+			}
 		}
 	}
 	
