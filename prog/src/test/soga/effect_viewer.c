@@ -10,7 +10,6 @@
 #include <gflib.h>
 #include <procsys.h>
 #include <tcbl.h>
-#include <textprint.h>
 
 #include "system/main.h"
 #include "print/printsys.h"
@@ -94,7 +93,6 @@ typedef struct
 	POKEMON_PARAM		*pp;
 	int					mons_no;
 	GFL_BMPWIN			*bmpwin;
-	GFL_TEXT_PRINTPARAM	*textParam;
 	int					key_repeat_speed;
 	int					key_repeat_wait;
 
@@ -278,13 +276,6 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 	}
 
 	{
-		static const GFL_TEXT_PRINTPARAM default_param = { NULL, 0, 0, 1, 1, 1, 0, GFL_TEXT_WRITE_16 };
-		int	i;
-
-		evw->textParam = GFL_HEAP_AllocMemory( evw->heapID, sizeof( GFL_TEXT_PRINTPARAM ) );
-		*evw->textParam = default_param;
-
-
 		//フォントパレット作成＆転送
 		{
 			static	u16 plt[16] = {
@@ -404,6 +395,9 @@ static GFL_PROC_RESULT EffectViewerProcExit( GFL_PROC * proc, int * seq, void * 
 	BTLV_EFFECT_Exit();
 
 	GFL_G3D_Exit();
+
+	GFL_MSG_Delete( evw->msg );
+	GFL_FONT_Delete( evw->font );
 
 	GFL_BG_Exit();
 	GFL_BMPWIN_Exit();

@@ -9,7 +9,6 @@
 #include <gflib.h>
 #include <procsys.h>
 #include <tcbl.h>
-#include <textprint.h>
 
 #include <nnsys/mcs.h>
 
@@ -152,30 +151,6 @@ static	const	int	pokemon_pos_table[][2]={
 	{ BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB },
 	{ BTLV_MCSS_POS_A, BTLV_MCSS_POS_B },
 	{ BTLV_MCSS_POS_C, BTLV_MCSS_POS_D }
-};
-
-static	const	char	num_char_table[][1]={
-	"0",
-	"1",
-	"2",
-	"3",
-	"4",
-	"5",
-	"6",
-	"7",
-	"8",
-	"9",
-	"A",
-	"B",
-	"C",
-	"D",
-	"E",
-	"F"
-};
-
-static	const	char	ProjectionText[2][12]={
-	"Perspective",
-	"Ortho",
 };
 
 FS_EXTERN_OVERLAY(battle);

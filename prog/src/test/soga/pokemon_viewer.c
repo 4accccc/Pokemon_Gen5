@@ -10,7 +10,6 @@
 #include <gflib.h>
 #include <procsys.h>
 #include <tcbl.h>
-#include <textprint.h>
 
 #include "system/main.h"
 #include "arc_def.h"
@@ -21,6 +20,11 @@
 #include "poke_tool/monsno_def.h"
 
 #include "gf_mcs.h"
+
+#include "print/printsys.h"
+#include "msg/msg_d_soga.h"
+#include "font/font.naix"
+#include "message.naix"
 
 #define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
@@ -38,6 +42,14 @@
 
 #define	MCS_READ_CH			( 0 )
 #define	MCS_WRITE_CH		( 0 )
+
+enum{
+	BACK_COL = 0,
+	SHADOW_COL = 2,
+	LETTER_COL_NORMAL = 1,
+	LETTER_COL_SELECT,
+	LETTER_COL_CURSOR,
+};
 
 #define G2D_BACKGROUND_COL	( GX_RGB( 31, 31, 31 ) )
 #define G2D_FONT_COL		( GX_RGB(  0,  0,  0 ) )
@@ -127,13 +139,14 @@ enum{
 typedef struct
 {
 	HEAPID				heapID;
+	GFL_MSGDATA			*msg;
+	GFL_FONT			*font;
 
 	int					seq_no;
 	int					mcs_enable;
 	POKEMON_PARAM		*pp;
 	int					mons_no;
 	GFL_BMPWIN			*bmpwin[ BMPWIN_MAX ];
-	GFL_TEXT_PRINTPARAM	*textParam;
 	int					key_repeat_speed;
 	int					key_repeat_wait;
 	int					read_position;
@@ -151,8 +164,6 @@ static	void	PokemonViewerAddPokemon( POKEMON_VIEWER_WORK *pvw );
 static	void	PokemonViewerCameraWork( POKEMON_VIEWER_WORK *pvw );
 
 static	void	TextPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num );
-static	void	NumPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num );
-static	void	Num16Print( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num );
 
 static	void	MoveCamera( POKEMON_VIEWER_WORK *pvw );
 
@@ -167,47 +178,28 @@ static	const	int	pokemon_pos_table[][2]={
 	{ BTLV_MCSS_POS_C, BTLV_MCSS_POS_D }
 };
 
-static	const	char	num_char_table[][1]={
-	"0",
-	"1",
-	"2",
-	"3",
-	"4",
-	"5",
-	"6",
-	"7",
-	"8",
-	"9",
-	"A",
-	"B",
-	"C",
-	"D",
-	"E",
-	"F"
-};
-
-static	const	char	btlv_mcss_pos_msg[BMPWIN_MAX][8]={
-	"POS AA",
-	"POS BB",
-	"POS A",
-	"POS B",
-	"POS C",
-	"POS D",
+static	const	u32	btlv_mcss_pos_msg[BMPWIN_MAX]={
+	PVMSG_POS_AA,
+	PVMSG_POS_BB,
+	PVMSG_POS_A,
+	PVMSG_POS_B,
+	PVMSG_POS_C,
+	PVMSG_POS_D,
 };
 
 static const BMP_CREATE_TABLE bmp_create_table[] = {
 	//AA
-	{ 11, 12, 10, 12, BGCOL_AA, 24, 40, 0 }, 
+	{ 11, 12, 10, 12, BGCOL_AA, 12, 40, 0 }, 
 	//BB
-	{ 11,  0, 10, 12, BGCOL_BB, 24, 40, 0 }, 
+	{ 11,  0, 10, 12, BGCOL_BB, 12, 40, 0 }, 
 	//A
-	{  0, 12, 11, 12, BGCOL_A,  28, 40, 0 }, 
+	{  0, 12, 11, 12, BGCOL_A,  20, 40, 0 }, 
 	//B
-	{ 21,  0, 11, 12, BGCOL_B,  28, 40, 0 }, 
+	{ 21,  0, 11, 12, BGCOL_B,  20, 40, 0 }, 
 	//C
-	{ 21, 12, 11, 12, BGCOL_C,  28, 40, 0 }, 
+	{ 21, 12, 11, 12, BGCOL_C,  20, 40, 0 }, 
 	//D
-	{  0,  0, 11, 12, BGCOL_D,  28, 40, 0 }, 
+	{  0,  0, 11, 12, BGCOL_D,  20, 40, 0 }, 
 };
 
 static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
@@ -347,12 +339,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 	}
 
 	{
-		static const GFL_TEXT_PRINTPARAM default_param = { NULL, 0, 0, 1, 1, 1, 0, GFL_TEXT_WRITE_16 };
 		int	i;
-
-		pvw->textParam = GFL_HEAP_AllocMemory( pvw->heapID, sizeof( GFL_TEXT_PRINTPARAM ) );
-		*pvw->textParam = default_param;
-
 
 		//フォントパレット作成＆転送
 		{
@@ -364,6 +351,11 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 			GFL_BG_LoadPalette( GFL_BG_FRAME1_S, &plt, 16*2, 0 );
 		}
 
+		//メッセージ系初期化
+		GFL_FONTSYS_Init();
+		pvw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, pvw->heapID );
+		pvw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, TRUE, pvw->heapID );
+
 		for( i = 0 ; i < BMPWIN_MAX ; i++ ){
 			pvw->bmpwin[ i ] = GFL_BMPWIN_Create( GFL_BG_FRAME1_S,
 												 bmp_create_table[ i ].posx,
@@ -374,7 +366,6 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 												 GFL_BG_CHRAREA_GET_B );
 			TextPrint( pvw, i, i );
 		}
-		GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
 	}
 
 	//ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
@@ -508,6 +499,9 @@ static GFL_PROC_RESULT PokemonViewerProcExit( GFL_PROC * proc, int * seq, void *
 
 	GFL_G3D_Exit();
 
+	GFL_MSG_Delete( pvw->msg );
+	GFL_FONT_Delete( pvw->font );
+
 	GFL_BG_Exit();
 	GFL_BMPWIN_Exit();
 
@@ -632,63 +626,26 @@ static	void	PokemonViewerResourceLoad( POKEMON_VIEWER_WORK *pvw )
 static	void	TextPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num )
 {
 	int	flag = 0;
+	STRBUF	*strbuf;
 
 	if( BTLV_MCSS_CheckExistPokemon( BTLV_EFFECT_GetMcssWork(), num ) == TRUE ){
 	   flag = BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), num );
 	}
 
-	pvw->textParam->writex = bmp_create_table[ bmpwin_num ].msgx;
-	pvw->textParam->writey = bmp_create_table[ bmpwin_num ].msgy;
-	pvw->textParam->bmp = GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] ), bmp_create_table[ bmpwin_num ].palnum + 6 * flag );
-	GFL_TEXT_PrintSjisCode( &btlv_mcss_pos_msg[ num ][ 0 ], pvw->textParam );
+
+	GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, bmp_create_table[ bmpwin_num ].palnum + 6 * flag );
+
+	strbuf = GFL_MSG_CreateString( pvw->msg,  btlv_mcss_pos_msg[ num ] );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] ),
+					bmp_create_table[ bmpwin_num ].msgx,
+					bmp_create_table[ bmpwin_num ].msgy,
+					strbuf, pvw->font );
+	GFL_HEAP_FreeMemory( strbuf );
+
 	GFL_BMPWIN_TransVramCharacter( pvw->bmpwin[ bmpwin_num ] );
 	GFL_BMPWIN_MakeScreen( pvw->bmpwin[ bmpwin_num ] );
-}
-
-//======================================================================
-//	数字表示
-//======================================================================
-static	void	NumPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num )
-{
-	char	num_char[ 4 ] = "\0\0\0\0";
-	int		num_100,num_10,num_1;
-
-	num_100 = num / 100;
-	num_10  = ( num - ( num_100 * 100 ) ) / 10;
-	num_1   = num - ( num_100 * 100 ) - (num_10 * 10 );
-
-	num_char[ 0 ] = num_char_table[ num_100 ][ 0 ];
-	num_char[ 1 ] = num_char_table[ num_10  ][ 0 ];
-	num_char[ 2 ] = num_char_table[ num_1   ][ 0 ];
-
-	pvw->textParam->writex = 0;
-	pvw->textParam->writey = 0;
-	pvw->textParam->bmp = GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] ), 0 );
-	GFL_TEXT_PrintSjisCode( &num_char[0], pvw->textParam );
-	GFL_BMPWIN_TransVramCharacter( pvw->bmpwin[ bmpwin_num ] );
-	GFL_BMPWIN_MakeScreen( pvw->bmpwin[ bmpwin_num ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
-}
-
-static	void	Num16Print( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num )
-{
-	int		i;
-	char	num_char[ 9 ] = "\0\0\0\0\0\0\0\0\0";
-
-	for( i = 0 ; i < 8 ; i++ ){
-		num_char[ i ] = num_char_table[ ( num >> ( 28 - 4 * i ) ) & 0x0000000f ][ 0 ];
-	}
-
-	pvw->textParam->writex = 0;
-	pvw->textParam->writey = 0;
-	pvw->textParam->bmp = GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] ), 0 );
-	GFL_TEXT_PrintSjisCode( &num_char[0], pvw->textParam );
-	GFL_BMPWIN_TransVramCharacter( pvw->bmpwin[ bmpwin_num ] );
-	GFL_BMPWIN_MakeScreen( pvw->bmpwin[ bmpwin_num ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
 }
 
 //======================================================================

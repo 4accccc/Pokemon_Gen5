@@ -9,9 +9,21 @@
 #include <gflib.h>
 #include <procsys.h>
 #include <tcbl.h>
-#include <textprint.h>
 
+#include "print/printsys.h"
+#include "arc_def.h"
+#include "msg/msg_d_soga.h"
 #include "system/main.h"
+#include "font/font.naix"
+#include "message.naix"
+
+enum{
+	BACK_COL = 0,
+	SHADOW_COL = 2,
+	LETTER_COL_NORMAL = 1,
+	LETTER_COL_SELECT,
+	LETTER_COL_CURSOR,
+};
 
 #define G2D_BACKGROUND_COL	(0x0000)
 #define G2D_FONT_COL		(0x7fff)
@@ -31,52 +43,19 @@ typedef struct
 	int					pos;
 	HEAPID				heapID;
 	GFL_BMPWIN			*bmpwin[ BMPWIN_MAX ];
-	GFL_TEXT_PRINTPARAM	*textParam;
+	GFL_MSGDATA			*msg;
+	GFL_FONT			*font;
 	int					key_repeat_speed;
 	int					key_repeat_wait;
 }SOGA_WORK;
 
 static	void	TextPrint( SOGA_WORK *wk );
-static	void	NumPrint( SOGA_WORK *wk, int num, int bmpwin_num );
-static	void	Num16Print( SOGA_WORK *wk, int num, int bmpwin_num );
-
-static	const	char	num_char_table[][1]={
-	"0",
-	"1",
-	"2",
-	"3",
-	"4",
-	"5",
-	"6",
-	"7",
-	"8",
-	"9",
-	"A",
-	"B",
-	"C",
-	"D",
-	"E",
-	"F"
-};
 
 typedef struct
 {
-	const char			*menu_str;
+	const u32			menu_str;
 	const GFL_PROC_DATA	*gpd;
 }SOGA_PROC_TABLE;
-
-static	const	char	effect_viewer_str[]={
-	"EffectViewer"
-};
-static	const	char	pokemon_viewer_str[]={
-	"PokemonViewer"
-};
-static	const	char	battle_test_str[]={
-	"BattleTest"
-};
-static	const	char	capture_test_str[]={
-	"CaptureTest"
-};
 
 extern const GFL_PROC_DATA EffectViewerProcData;
 extern const GFL_PROC_DATA PokemonViewerProcData;
@@ -84,10 +63,10 @@ extern const GFL_PROC_DATA DebugBattleTestProcData;
 extern const GFL_PROC_DATA CaptureTestProcData;
 
 static	const	SOGA_PROC_TABLE	spt[]={
-	{ effect_viewer_str,	&EffectViewerProcData },
-	{ pokemon_viewer_str,	&PokemonViewerProcData },
-	{ battle_test_str,		&DebugBattleTestProcData },
-	{ capture_test_str,		&CaptureTestProcData },
+	{ DSMSG_EFFECT_VIEWER,	&EffectViewerProcData },
+	{ DSMSG_POKEMON_VIEWER,	&PokemonViewerProcData },
+	{ DSMSG_BATTLE_TEST,	&DebugBattleTestProcData },
+	{ DSMSG_CAPTURE,		&CaptureTestProcData },
 };
 
 //--------------------------------------------------------------------------
@@ -190,18 +169,12 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	}
 
 	{
-		static const GFL_TEXT_PRINTPARAM default_param = { NULL, 0, 0, 1, 1, 1, 0, GFL_TEXT_WRITE_16 };
-		wk->bmpwin[ BMPWIN_MENU ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 0, 0, 32, 24, 0, GFL_BG_CHRAREA_GET_B );
-
-		wk->textParam = GFL_HEAP_AllocMemory( wk->heapID, sizeof( GFL_TEXT_PRINTPARAM ) );
-		*wk->textParam = default_param;
-
 		//フォントパレット作成＆転送
-		{
-			static	u16 plt[16] = { G2D_BACKGROUND_COL, G2D_FONT_COL, G2D_FONTSELECT_COL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-			GFL_BG_LoadPalette( GFL_BG_FRAME2_M, &plt, 16*2, 0 );
-		}
+		static	u16 plt[16] = { G2D_BACKGROUND_COL, G2D_FONT_COL, G2D_FONTSELECT_COL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		GFL_BG_LoadPalette( GFL_BG_FRAME2_M, &plt, 16*2, 0 );
 	}
+
+	wk->bmpwin[ BMPWIN_MENU ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 0, 0, 32, 24, 0, GFL_BG_CHRAREA_GET_F );
 
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 	
@@ -210,6 +183,11 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 
 	GFL_UI_KEY_GetRepeatSpeed( &wk->key_repeat_speed, &wk->key_repeat_wait );
 	GFL_UI_KEY_SetRepeatSpeed( wk->key_repeat_speed / 4, wk->key_repeat_wait );
+
+	//メッセージ系初期化
+	GFL_FONTSYS_Init();
+	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, wk->heapID );
+	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, TRUE, wk->heapID );
 
 	TextPrint( wk );
 
@@ -273,8 +251,10 @@ static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void
 
 	GFL_UI_KEY_SetRepeatSpeed( wk->key_repeat_speed, wk->key_repeat_wait );
 
-	GFL_HEAP_FreeMemory( wk->textParam );
 	GFL_BMPWIN_Delete( wk->bmpwin[ BMPWIN_MENU ] );
+
+	GFL_MSG_Delete( wk->msg );
+	GFL_FONT_Delete( wk->font );
 
 	GFL_BG_Exit();
 	GFL_BMPWIN_Exit();
@@ -303,70 +283,27 @@ const GFL_PROC_DATA		DebugSogabeMainProcData = {
 static	void	TextPrint( SOGA_WORK *wk )
 {
 	int	i;
+	STRBUF	*strbuf;
 
-	wk->textParam->bmp = GFL_BMPWIN_GetBmp( wk->bmpwin[ BMPWIN_MENU ] );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmpwin[ BMPWIN_MENU ] ), 0 );
 
 	for( i = 0 ; i < NELEMS( spt ) ; i++ ){
-		wk->textParam->writex = 0;
-		wk->textParam->writey = i * 8;
-		if( i == wk->pos ){
-			wk->textParam->colorF = 2;
+		if( wk->pos == i ){
+			GFL_FONTSYS_SetColor( LETTER_COL_SELECT, SHADOW_COL, BACK_COL );
 		}
 		else{
-			wk->textParam->colorF = 1;
+			GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
 		}
-		GFL_TEXT_PrintSjisCode( spt[ i ].menu_str, wk->textParam );
-	}
 
+		strbuf = GFL_MSG_CreateString( wk->msg,  spt[ i ].menu_str );
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->bmpwin[ BMPWIN_MENU ] ),
+						0,
+						i * 12,
+						strbuf, wk->font );
+		GFL_HEAP_FreeMemory( strbuf );
+	}
 	GFL_BMPWIN_TransVramCharacter( wk->bmpwin[ BMPWIN_MENU ] );
 	GFL_BMPWIN_MakeScreen( wk->bmpwin[ BMPWIN_MENU ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
-}
-
-//======================================================================
-//	数字表示
-//======================================================================
-static	void	NumPrint( SOGA_WORK *wk, int num, int bmpwin_num )
-{
-	char	num_char[ 4 ] = "\0\0\0\0";
-	int		num_100,num_10,num_1;
-
-	num_100 = num / 100;
-	num_10  = ( num - ( num_100 * 100 ) ) / 10;
-	num_1   = num - ( num_100 * 100 ) - (num_10 * 10 );
-
-	num_char[ 0 ] = num_char_table[ num_100 ][ 0 ];
-	num_char[ 1 ] = num_char_table[ num_10  ][ 0 ];
-	num_char[ 2 ] = num_char_table[ num_1   ][ 0 ];
-
-	wk->textParam->writex = 0;
-	wk->textParam->writey = 0;
-	wk->textParam->bmp = GFL_BMPWIN_GetBmp( wk->bmpwin[ bmpwin_num ] );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmpwin[ bmpwin_num ] ), 0 );
-	GFL_TEXT_PrintSjisCode( &num_char[0], wk->textParam );
-	GFL_BMPWIN_TransVramCharacter( wk->bmpwin[ bmpwin_num ] );
-	GFL_BMPWIN_MakeScreen( wk->bmpwin[ bmpwin_num ] );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
-}
-
-
-static	void	Num16Print( SOGA_WORK *wk, int num, int bmpwin_num )
-{
-	int		i;
-	char	num_char[ 9 ] = "\0\0\0\0\0\0\0\0\0";
-
-	for( i = 0 ; i < 8 ; i++ ){
-		num_char[ i ] = num_char_table[ ( num >> ( 28 - 4 * i ) ) & 0x0000000f ][ 0 ];
-	}
-
-	wk->textParam->writex = 0;
-	wk->textParam->writey = 0;
-	wk->textParam->bmp = GFL_BMPWIN_GetBmp( wk->bmpwin[ bmpwin_num ] );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmpwin[ bmpwin_num ] ), 0 );
-	GFL_TEXT_PrintSjisCode( &num_char[0], wk->textParam );
-	GFL_BMPWIN_TransVramCharacter( wk->bmpwin[ bmpwin_num ] );
-	GFL_BMPWIN_MakeScreen( wk->bmpwin[ bmpwin_num ] );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
 }
 
