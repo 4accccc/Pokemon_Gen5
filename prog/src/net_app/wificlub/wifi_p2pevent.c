@@ -187,7 +187,6 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
 
     switch (ep2p->seq) {
       case P2P_INIT:
-        GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
         ep2p->seq = P2P_MATCH_BOARD;
         if(ep2p->pMatchParam->seq == WIFI_P2PMATCH_DPW){
             if( mydwc_checkMyGSID() ){
@@ -197,6 +196,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
         }
 		break;
       case P2P_MATCH_BOARD:
+        GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
         GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi2dmap), &WifiP2PMatchProcData, ep2p->pMatchParam);
         ep2p->seq ++;
 		break;
@@ -238,12 +238,15 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
         pClub->para.netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
         pClub->para.commPos = pClub->para.netID;
         PMSND_PlayBGM(pClub->para.musicDefault);
+
+        GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
         GAMESYSTEM_CallProc(ep2p->gsys, NO_OVERLAY_ID, &BtlProcData, &pClub->para);
 //        GFL_PROC_SysCallProc(NO_OVERLAY_ID, GMEVENT_Sub_BattleProc, battle_param);
         ep2p->seq++;
         break;
 	case P2P_BATTLE_END:
         ep2p->seq = P2P_MATCH_BOARD;
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 		break;
       case P2P_TRADE:
 //        EventCmd_UnionTrade(event);
