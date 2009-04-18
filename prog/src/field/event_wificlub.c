@@ -17,13 +17,14 @@
 #include "gamesystem/game_data.h"
 
 #include "field/fieldmap.h"
+#include "sound/pm_sndsys.h"  //SEQ_WB_BA_TEST_250KB
 
 #include "./event_fieldmap_control.h"
 #include "field/event_wificlub.h"
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-#include "battle/battle.h"
+#include "battle/battle.h"   // BATTLE_SETUP_PARAM
 #include "poke_tool/monsno_def.h"
 #include "system/main.h"			//GFL_HEAPID_APP参照
 
@@ -72,7 +73,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
 		(*seq)++;
 		break;
       case _CALL_WIFICLUB:
-        GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wificlub), &WifiClubProcData, dbw);
+        GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &WifiClubProcData, dbw);
 		(*seq)++;
 		break;
       case _WAIT_WIFICLUB:
@@ -131,6 +132,9 @@ void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * ev
         para->partyEnemy1 = NULL;		///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
         para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
         para->partyEnemy2 = NULL;		///< 2vs2時の２番目敵AI用（不要ならnull）
+
+        para->musicDefault = SEQ_WB_BA_TEST_250KB;		///< デフォルト時のBGMナンバー
+        para->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;			///< ピンチ時のBGMナンバー
 
 		PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->partyPlayer);
 	}

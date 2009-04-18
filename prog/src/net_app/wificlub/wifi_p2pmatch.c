@@ -1596,10 +1596,11 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
 //		GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi_2dmapsys));
 
         if(pParentWork->seq == WIFI_P2PMATCH_DPW){ // ê¢äEëŒêÌÇ»ÇÁ
-            GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0x70000 );
+            GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0x70000 );
         }
         else{
-            GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0xa0000 );
+//            GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0xa0000 );
+            GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0x90000 );
         }
         wk = GFL_PROC_AllocWork( proc, sizeof(WIFIP2PMATCH_WORK), HEAPID_WIFIP2PMATCH );
         MI_CpuFill8( wk, 0, sizeof(WIFIP2PMATCH_WORK) );

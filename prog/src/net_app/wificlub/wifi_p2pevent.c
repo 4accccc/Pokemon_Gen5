@@ -8,6 +8,7 @@
 //============================================================================================
 
 #include <gflib.h>
+#include "net/network_define.h"
 
 #include "gamesystem/game_event.h"
 
@@ -20,6 +21,8 @@
 #include "net/dwc_rapcommon.h"
 #include "savedata/wifilist.h"
 #include "system/main.h"
+#include "battle/battle.h"  //BTL_RULE_SINGLE
+#include "sound/pm_sndsys.h"
 
 #include "field/event_wificlub.h"
 
@@ -42,12 +45,20 @@ const GFL_PROC_DATA WifiClubProcData = {
 
 
 FS_EXTERN_OVERLAY(wifi2dmap);
+FS_EXTERN_OVERLAY(battle);
+FS_EXTERN_OVERLAY(wificlub);
+#define _LOCALMATCHNO (100)
+//----------------------------------------------------------------
+// バトル用定義
+extern const NetRecvFuncTable BtlRecvFuncTable[];
+//----------------------------------------------------------------
 
 
 typedef struct{
     WIFIP2PMATCH_PROC_PARAM* pMatchParam;
     WIFI_LIST* pWifiList;
     GAMESYS_WORK * gsys;
+    BATTLE_SETUP_PARAM para;
 	int seq;
     u16* ret;
     u8 lvLimit;
@@ -61,6 +72,8 @@ typedef struct{
 		P2P_MATCH_BOARD,
 		P2P_SELECT,
 		P2P_BATTLE,
+        P2P_TIMING_SYNC_CALL_BATTLE,
+        P2P_BATTLE_START,
         P2P_BATTLE_END,
 		P2P_TRADE,
         P2P_TRADE_END,
@@ -134,9 +147,9 @@ static const u8 sc_P2P_FOUR_MATCH_MAX[ WFP2PMF_TYPE_NUM ] = {
 #endif
 
 typedef struct {
-    u16 kind;
     u8 lvLimit;
     u8 bSingle;
+    u16 kind;
 } NextMatchKindTbl;
 
 NextMatchKindTbl aNextMatchKindTbl[] = {
@@ -174,6 +187,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
 
     switch (ep2p->seq) {
       case P2P_INIT:
+        GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
         ep2p->seq = P2P_MATCH_BOARD;
         if(ep2p->pMatchParam->seq == WIFI_P2PMATCH_DPW){
             if( mydwc_checkMyGSID() ){
@@ -193,10 +207,11 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
                 //            SysFlag_WifiUseSet(SaveData_GetEventWork(fsys->savedata));
             }
         }
-        NET_PRINT("P2P_SELECT %d %d\n",ep2p->seq,ep2p->pMatchParam->seq);
         ep2p->seq = aNextMatchKindTbl[ep2p->pMatchParam->seq].kind;
+        NET_PRINT("P2P_SELECT %d %d\n",ep2p->seq,ep2p->pMatchParam->seq);
         ep2p->lvLimit = aNextMatchKindTbl[ep2p->pMatchParam->seq].lvLimit;
         ep2p->bSingle = aNextMatchKindTbl[ep2p->pMatchParam->seq].bSingle;
+        GFL_OVERLAY_Unload(FS_OVERLAY_ID(wificlub));
         switch(ep2p->pMatchParam->seq){
           case WIFI_P2PMATCH_DPW_END:  //DPWへいく場合
             *(ep2p->ret) = 1;
@@ -204,7 +219,26 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
             break;
         }
 		break;
-	case P2P_BATTLE:
+      case P2P_BATTLE:
+        {
+            GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+            GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
+            GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO);
+            ep2p->seq++;
+        }
+		break;
+      case P2P_TIMING_SYNC_CALL_BATTLE:
+        if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO)){
+            ep2p->seq++;
+        }
+        break;
+      case P2P_BATTLE_START:
+        pClub->para.rule = BTL_RULE_SINGLE;
+        pClub->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+        pClub->para.netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+        pClub->para.commPos = pClub->para.netID;
+        PMSND_PlayBGM(pClub->para.musicDefault);
+        GAMESYSTEM_CallProc(ep2p->gsys, NO_OVERLAY_ID, &BtlProcData, &pClub->para);
 //        GFL_PROC_SysCallProc(NO_OVERLAY_ID, GMEVENT_Sub_BattleProc, battle_param);
         ep2p->seq++;
         break;
