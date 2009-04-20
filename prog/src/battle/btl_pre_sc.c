@@ -29,13 +29,13 @@ static inline void putVal( PRE_SC_BUF* buf, u16 val )
 }
 
 
-void PreSC_Put( PRE_SC_BUF* buf, PreScElem preSc, PreScFormat fmt, u32 numArgs, ... )
+void PreSC_PutOpen( PRE_SC_BUF* buf, PreScElem preSc, u32 numArgs, ... )
 {
 	va_list   list;
 	u32 i;
 	u16 arg;
 
-	preSc = compFormat( preSc, fmt );
+	preSc = compFormat( preSc, PRESC_FMT_OPEN );
 	putVal( buf, preSc );
 	putVal( buf, numArgs );
 
@@ -46,5 +46,28 @@ void PreSC_Put( PRE_SC_BUF* buf, PreScElem preSc, PreScFormat fmt, u32 numArgs, 
 		putVal( buf, arg );
 	}
 	va_end( list );
+}
+void PreSC_PutSingle( PRE_SC_BUF* buf, PreScElem preSc, u32 numArgs, ... )
+{
+	va_list   list;
+	u32 i;
+	u16 arg;
+
+	preSc = compFormat( preSc, PRESC_FMT_SINGLE );
+	putVal( buf, preSc );
+	putVal( buf, numArgs );
+
+	va_start( list, numArgs );
+	for(i=0; i<numArgs; ++i)
+	{
+		arg = va_arg( list, int );
+		putVal( buf, arg );
+	}
+	va_end( list );
+}
+void PreSC_PutClose( PRE_SC_BUF* buf, PreScElem preSc )
+{
+	preSc = compFormat( preSc, PRESC_FMT_CLOSE );
+	putVal( buf, preSc );
 }
 

@@ -619,7 +619,60 @@ BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp )
 }
 
 //-----------------------------
+static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max )
+{
+	const s8* ptr;
 
+	*min = RANK_STATUS_MIN;
+	*max = RANK_STATUS_MAX;
+
+	switch( type ) {
+	case BPP_ATTACK:			ptr = &pp->varyParam.attack; break;
+	case BPP_DEFENCE:			ptr = &pp->varyParam.defence; break;
+	case BPP_SP_ATTACK:		ptr = &pp->varyParam.sp_attack; break;
+	case BPP_SP_DEFENCE:	ptr = &pp->varyParam.sp_defence; break;
+	case BPP_AGILITY:			ptr = &pp->varyParam.agility; break;
+	case BPP_HIT_RATIO:		ptr = &pp->varyParam.hit; break;
+	case BPP_AVOID_RATIO:	ptr = &pp->varyParam.avoid; break;
+	case BPP_CRITICAL_RATIO:
+		ptr = &pp->varyParam.critical;
+		*min = RANK_CRITICAL_MIN;
+		*max = RANK_CRITICAL_MAX;
+		break;
+	default:
+		GF_ASSERT(0);
+		return NULL;
+	}
+	return ptr;
+}
+static s8* getRankVaryStatus( BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max )
+{
+	return (s8*) getRankVaryStatusConst( pp, type, min, max );
+}
+
+//=============================================================================================
+/**
+ * ランク増減効果が有効か？
+ *
+ * @param   pp				
+ * @param   rankType	
+ * @param   volume		
+ *
+ * @retval  BOOL		
+ */
+//=============================================================================================
+BOOL BTL_POKEPARAM_IsRankEffectValid( const BTL_POKEPARAM* pp, BppValueID rankType, int volume )
+{
+	const s8* ptr;
+	s8  min, max;
+
+	ptr = getRankVaryStatusConst( pp, rankType, &min, &max );
+	if( volume > 0 ){
+		return ((*ptr) < max);
+	}else{
+		return ((*ptr) > min);
+	}
+}
 //=============================================================================================
 /**
  * ランクアップ効果
@@ -628,10 +681,10 @@ BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp )
  * @param   rankType	
  * @param   volume		
  *
- * @retval  BOOL		ランクが上がった場合TRUE／もう上がらない場合FALSE
+ * @retval  u8 result		実際に上がった段階数
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
+u8 BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
 {
 	s8 *ptr;
 	s8 max = RANK_STATUS_MAX;
@@ -655,16 +708,15 @@ BOOL BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
 
 	if( *ptr < max )
 	{
-		*ptr += volume;
-		if( *ptr > max )
-		{
-			*ptr = max;
+		if( (*ptr + volume) > max ){
+			volume = max - (*ptr);
 		}
+		*ptr += volume;
 		update_RealParam( pp, rankType );
-		return TRUE;
+		return volume;
 	}
 
-	return FALSE;
+	return 0;
 }
 
 //=============================================================================================
@@ -675,10 +727,10 @@ BOOL BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
  * @param   rankType	
  * @param   volume		
  *
- * @retval  BOOL		ランクが下がった場合TRUE／もう下がらない場合FALSE
+ * @retval  u8		実際に下がった段階数
  */
 //=============================================================================================
-BOOL BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
+u8 BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
 {
 	s8 *ptr;
 	s8 min = RANK_STATUS_MIN;
@@ -702,16 +754,17 @@ BOOL BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume )
 
 	if( *ptr > min )
 	{
-		*ptr -= volume;
-		if( *ptr < min )
-		{
-			*ptr = min;
+		BTL_Printf(" [BPP] RankDown ptr=%d, vol=%d, min=%d\n", *ptr, volume, min );
+		if( (*ptr - volume) < min ){
+			volume = (*ptr) - min;
+			BTL_Printf(" [BPP] change vol=%d\n", volume );
 		}
-		update_RealParam( pp, rankType );
-		return TRUE;
+		*ptr -= volume;
+		BTL_Printf(" [BPP] change ptr=%d\n", *ptr );
+	update_RealParam( pp, rankType );
+		return volume;
 	}
-
-	return FALSE;
+	return 0;
 }
 
 //=============================================================================================

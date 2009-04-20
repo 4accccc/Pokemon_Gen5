@@ -183,7 +183,7 @@ extern u16 BTL_POKEPARAM_GetAppearTurn( const BTL_POKEPARAM* pp );
  * @retval  BppHpBorder		
  */
 //=============================================================================================
-BppHpBorder BTL_POKEPARAM_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp );
+extern BppHpBorder BTL_POKEPARAM_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp );
 
 //=============================================================================================
 /**
@@ -194,13 +194,25 @@ BppHpBorder BTL_POKEPARAM_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp );
  * @retval  BppHpBorder		
  */
 //=============================================================================================
-BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp );
+extern BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp );
 
 
+//=============================================================================================
+/**
+ * ランク増減効果が効く（上限・下限に達していない）かどうか判定
+ *
+ * @param   pp				
+ * @param   rankType	
+ * @param   volume		
+ *
+ * @retval  BOOL		効く場合TRUE
+ */
+//=============================================================================================
+extern BOOL BTL_POKEPARAM_IsRankEffectValid( const BTL_POKEPARAM* pp, BppValueID rankType, int volume );
 
 //-------------------------
-extern BOOL BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
-extern BOOL BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
+extern u8 BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
+extern u8 BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
 extern void BTL_POKEPARAM_HpMinus( BTL_POKEPARAM* pp, u16 value );
 extern void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value );
 extern void BTL_POKEPARAM_HpZero( BTL_POKEPARAM* pp );
@@ -220,6 +232,7 @@ extern void BTL_POKEPARAM_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok );
 extern void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );
 extern void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type );
 extern void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
+
 
 
 

@@ -1212,7 +1212,6 @@ static inline u8 PokeID_to_ClientID( u8 pokeID )
 	GF_ASSERT_MSG(0, "Illegal PokeID[%d]", pokeID);
 	return 0;
 }
-
 //=============================================================================================
 /**
  * バトルポケモンIDをポケモン戦闘位置に変換

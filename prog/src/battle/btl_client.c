@@ -148,6 +148,7 @@ static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CurePokeSick( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CureWazaSick( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_EscapeCodeAdd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_EscapeCodeSub( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ChangePokeType( BTL_CLIENT* wk, int* seq, const int* args );
@@ -861,6 +862,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_OP_SICK_SET,						scProc_OP_SickSet					},
 		{	SC_OP_CURE_POKESICK,			scProc_OP_CurePokeSick		},
 		{	SC_OP_CURE_WAZASICK,			scProc_OP_CureWazaSick		},
+		{ SC_OP_MEMBER_IN,					scProc_OP_MemberIn				},
 		{	SC_OP_CANTESCAPE_ADD,			scProc_OP_EscapeCodeAdd		},
 		{	SC_OP_CANTESCAPE_SUB,			scProc_OP_EscapeCodeSub		},
 		{	SC_OP_CHANGE_POKETYPE,		scProc_OP_ChangePokeType	},
@@ -964,15 +966,6 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 			u8 posIdx = wk->cmdArgs[1];
 			u8 memberIdx = wk->cmdArgs[2];
 			BtlPokePos  pokePos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
-
-			BTL_Printf("MEMBER IN .... myParty:%p, client=%d, posIdx=%d, memberIdx=%d\n", wk->myParty, clientID, posIdx, memberIdx);
-			{
-				BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
-				BTL_POKEPARAM* bpp;
-				BTL_PARTY_SwapMembers( party, posIdx, memberIdx );
-				bpp = BTL_PARTY_GetMemberData( party, posIdx );
-				BTL_POKEPARAM_SetAppearTurn( bpp, args[3] );
-			}
 
 			BTLV_StartMemberChangeAct( wk->viewCore, pokePos, clientID, memberIdx );
 			(*seq)++;
@@ -1615,6 +1608,22 @@ static BOOL scProc_OP_CureWazaSick( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 	BTL_POKEPARAM_CureWazaSick( pp, args[1] );
+	return TRUE;
+}
+static BOOL scProc_OP_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	u8 clientID = wk->cmdArgs[0];
+	u8 posIdx = wk->cmdArgs[1];
+	u8 memberIdx = wk->cmdArgs[2];
+	BtlPokePos  pokePos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
+
+	{
+		BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+		BTL_POKEPARAM* bpp;
+		BTL_PARTY_SwapMembers( party, posIdx, memberIdx );
+		bpp = BTL_PARTY_GetMemberData( party, posIdx );
+		BTL_POKEPARAM_SetAppearTurn( bpp, args[3] );
+	}
 	return TRUE;
 }
 static BOOL scProc_OP_EscapeCodeAdd( BTL_CLIENT* wk, int* seq, const int* args )

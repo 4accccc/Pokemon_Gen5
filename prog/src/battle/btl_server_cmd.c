@@ -55,7 +55,8 @@ typedef enum {
 	SC_ARGFMT_5_5_5bit_22byte = SC_ARGFMT(5,0),
 
 	// メッセージ型（可変引数）
-	SC_ARGFMT_MSG = SC_ARGFMT(0,0),
+	SC_ARGFMT_MSG   = SC_ARGFMT(0,0),
+	SC_ARGFMT_POINT = SC_ARGFMT(0,1),
 
 }ScArgFormat;
 
@@ -78,6 +79,7 @@ static const u8 ServerCmdToFmtTbl[] = {
 	SC_ARGFMT_112byte,					// SC_OP_SICK_SET
 	SC_ARGFMT_1byte,						// SC_OP_CURE_POKESICK
 	SC_ARGFMT_12byte,						// SC_OP_CURE_WAZASICK
+	SC_ARGFMT_53bit_1byte,			// SC_OP_MEMBER_IN
 	SC_ARGFMT_1byte,						// SC_OP_WAZASICK_TURNCHECK
 	SC_ARGFMT_5_3bit,						// SC_OP_CANTESCAPE_ADD
 	SC_ARGFMT_5_3bit,						// SC_OP_CANTESCAPE_SUB
@@ -103,8 +105,8 @@ static const u8 ServerCmdToFmtTbl[] = {
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_TRACE_TOKUSEI
 	SC_ARGFMT_1byte,						// SC_TOKWIN_IN
 	SC_ARGFMT_1byte,						// SC_TOKWIN_OUT
-	SC_ARGFMT_5_3bit,						// SC_MSG_WAZA
 
+	SC_ARGFMT_5_3bit,	// SC_MSG_WAZA
 	SC_ARGFMT_MSG,		// SC_MSG_STD
 	SC_ARGFMT_MSG,		// SC_MSG_SET
 };
@@ -268,6 +270,8 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
 			scque_put2byte( que, args[4] );
 		}
 		break;
+	case SC_ARGFMT_POINT:
+		break;
 	default:
 		GF_ASSERT(0);
 		break;
@@ -352,6 +356,8 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
 			args[4] = scque_read2byte( que );
 		}
 		break;
+	case SC_ARGFMT_POINT:
+		break;
 	default:
 		GF_ASSERT(0);
 		break;
@@ -391,9 +397,101 @@ void SCQUE_PUT_Common( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ... )
 	}
 }
 
+//=============================================================================================
+/**
+ * キュー書き込みの現在位置を予約する
+ *
+ * @param   que		
+ * @param   cmd		書き込みコマンド
+ *
+ * @retval  u16		現在位置
+ */
+//=============================================================================================
+u16 SCQUE_RESERVE_Pos( BTL_SERVER_CMD_QUE* que, ServerCmd cmd )
+{
+	GF_ASSERT( cmd < NELEMS(ServerCmdToFmtTbl) );
+	{
+		u16 pos;
+		u8  fmt, arg_cnt, reserve_size, i;
+
+		fmt = ServerCmdToFmtTbl[ cmd ];
+		arg_cnt = SC_ARGFMT_GetArgCount( fmt );
+
+		for(i=0; i<arg_cnt; ++i)
+		{
+			ArgBuffer[i] = 0;
+		}
+
+		pos = que->writePtr;
+		put_core( que, cmd, fmt, ArgBuffer );
+		reserve_size = que->writePtr - pos;
+		GF_ASSERT(reserve_size >= 3);
+
+		que->writePtr = pos;
+		scque_put2byte( que, SCEX_RESERVE );
+		scque_put1byte( que, reserve_size-3 );
+
+		que->writePtr = pos + reserve_size;
+
+		BTL_Printf(" reserved pos=%d, wp=%d\n", pos, que->writePtr);
+
+		return pos;
+	}
+}
+
+void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ... )
+{
+	GF_ASSERT( cmd < NELEMS(ServerCmdToFmtTbl) );
+	{
+		va_list   list;
+		u32 i, arg_cnt;
+		u16 reserved_cmd, reserved_size;
+		u8 fmt;
+
+		fmt = ServerCmdToFmtTbl[ cmd ];
+		arg_cnt = SC_ARGFMT_GetArgCount( fmt );
+
+		va_start( list, cmd );
+		for(i=0; i<arg_cnt; ++i)
+		{
+			ArgBuffer[i] = va_arg( list, int );
+		}
+		va_end( list );
+
+		BTL_Printf("Write Reserved Pos ... pos=%d, cmd=%d\n", pos, cmd );
+
+		{
+			u16 default_read_pos = que->readPtr;
+			que->readPtr = pos;
+			reserved_cmd = scque_read2byte( que );
+			reserved_size = scque_read1byte( que );
+			que->readPtr = default_read_pos;
+		}
+		if( cmd == SCEX_RESERVE )
+		{
+			u8 wrote_size;
+			u16 default_write_pos = que->writePtr;
+			que->writePtr = pos;
+			put_core( que, cmd, fmt, ArgBuffer );
+			wrote_size = (que->writePtr - pos - 3);
+			GF_ASSERT(wrote_size == reserved_size);
+			que->writePtr = default_write_pos;
+		}
+	}
+}
+
 ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 {
 	ServerCmd cmd = scque_read2byte( que );
+
+	// 予約領域に何も書き込まれなかった場合は単純にスキップする
+	while( cmd == SCEX_RESERVE )
+	{
+		u8 reserve_size = scque_read1byte( que );
+		BTL_Printf("Reserved Skip! size=%d\n", reserve_size);
+		que->readPtr += reserve_size;
+		cmd = scque_read2byte( que );
+	}
 
 	GF_ASSERT( cmd < NELEMS(ServerCmdToFmtTbl) );
 
@@ -428,7 +526,7 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 
 //=============================================================================================
 /**
- * 特定サーバコマンドの直後、１バイト単位で引数を渡す（可変引数に対処）
+ * １バイト単位で引数を書き込み（特定コマンドに於いて可変引数に対処するための措置）
  *
  * @param   que		
  * @param   arg		
@@ -441,7 +539,7 @@ void SCQUE_PUT_ArgOnly( BTL_SERVER_CMD_QUE* que, u8 arg )
 }
 //=============================================================================================
 /**
- * 特定サーバコマンドの直後、１バイト単位で渡された引数を読み出す
+ * １バイト単位で渡された引数を読み出す
  *
  * @param   que		
  *

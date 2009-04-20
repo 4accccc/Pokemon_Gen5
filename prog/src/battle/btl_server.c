@@ -223,7 +223,7 @@ static inline void setup_client_members( SVCL_WORK* client, BTL_PARTY* party, u8
 		u16 numFrontPoke = (numCoverPos < client->memberCount)? numCoverPos : client->memberCount;
 		for(i=0; i<numFrontPoke; i++)
 		{
-			client->frontMember[i] = client->member[i];
+//			client->frontMember[i] = client->member[i];
 		}
 		for( ; i<NELEMS(client->frontMember); i++)
 		{
@@ -576,6 +576,7 @@ const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
 BTL_POKEPARAM* BTL_SVCL_GetFrontPokeData( SVCL_WORK* clwk, u8 posIdx )
 {
 	GF_ASSERT(posIdx<clwk->numCoverPos);
-	return clwk->frontMember[ posIdx ];
+//	return clwk->frontMember[ posIdx ];
+	return clwk->member[ posIdx ];
 }
 

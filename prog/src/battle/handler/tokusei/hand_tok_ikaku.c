@@ -42,7 +42,7 @@ static void handler_MemberComp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 		BtlPokePos myPos = BTL_SVFLOW_CheckExistFrontPokeID( flowWk, pokeID );
 
 		BTL_SERVER_RECEPT_TokuseiWinIn( flowWk, pokeID );
-		BTL_SERVER_RECEPT_RankDownEffect( flowWk, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, myPos), BPP_ATTACK, 1 );
+		BTL_SERVER_RECEPT_RankDownEffect( flowWk, EXPOS_MAKE(BTL_EXPOS_ENEMY_ALL, myPos), BPP_ATTACK, 1, TRUE );
 		BTL_SERVER_RECEPT_TokuseiWinOut( flowWk, pokeID );
 
 		BTL_EVENT_FACTOR_Remove( myHandle );

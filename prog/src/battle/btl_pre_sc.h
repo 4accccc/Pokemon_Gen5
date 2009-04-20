@@ -16,12 +16,26 @@ enum {
 
 typedef enum {
 
-	PRESC_ESCAPE_ROOT,
 	PRESC_FIGHT_ROOT,
+	PRESC_ESCAPE_ROOT,
 	PRESC_ITEM_ROOT,
 	PRESC_CHANGE_ROOT,
 
+	PRESC_SUCCESS,
+	PRESC_CONF_CHECK,
+	PRESC_WAZA_READY,
 	PRESC_WAZA_EXE,
+	PRESC_WAZA_EXE_FAIL,
+	PRESC_WAZA_NOEFFECT,
+	PRESC_WAZA_AVOID,
+	PRESC_DMG_WAZA,
+	PRESC_DMG_NOT_WAZA,
+	PRESC_ICHIGEKI,
+	PRESC_POKESICK_CURE,
+	PRESC_RANKDOWN_EFFECT,
+	PRESC_RANKUP_EFFECT,
+	PRESC_DRAIN_HP,
+
 	PRESC_MAX,
 
 }PreScElem;
@@ -37,7 +51,7 @@ typedef enum {
 
 typedef struct {
 	u16  pointer;
-	u16  code[ PRE_SC_BUF_SIZE ];
+	s16  code[ PRE_SC_BUF_SIZE ];
 }PRE_SC_BUF;
 
 
@@ -47,7 +61,9 @@ static inline void PreSC_Init( PRE_SC_BUF* buf )
 	buf->pointer = 0;
 }
 
-extern void PreSC_Put( PRE_SC_BUF* buf, PreScElem preSc, PreScFormat fmt, u32 numArgs, ... );
+extern void PreSC_PutOpen( PRE_SC_BUF* buf, PreScElem preSc, u32 numArgs, ... );
+extern void PreSC_PutSingle( PRE_SC_BUF* buf, PreScElem preSc, u32 numArgs, ... );
+extern void PreSC_PutClose( PRE_SC_BUF* buf, PreScElem preSc );
 
 
 /*

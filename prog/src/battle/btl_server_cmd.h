@@ -38,37 +38,41 @@ typedef enum {
 	SC_OP_SICK_SET,			///< 【計算】状態異常 [PokeID, Sick, contParam]
 	SC_OP_CURE_POKESICK,			///< 【計算】ポケモン系状態異常を回復 [PokeID ]
 	SC_OP_CURE_WAZASICK,			///< 【計算】ワザ系状態異常を回復 [PokeID, SickID ]
+	SC_OP_MEMBER_IN,			///< メンバー入場
 	SC_OP_WAZASICK_TURNCHECK,	///< 
-	SC_OP_CANTESCAPE_ADD,		///< にげ・交換禁止コードの追加を全クライアントに通知 [ClientID, CantCode]
-	SC_OP_CANTESCAPE_SUB,		///< にげ・交換禁止コードの削除を全クライアントに通知 [ClientID, CantCode]
-	SC_OP_CHANGE_POKETYPE,	///< 【計算】ポケモンのタイプ変更（ pokeID, type ）
-	SC_OP_CHANGE_POKEFORM,	///< 【計算】ポケモンのフォルム変更（ pokeID, type ）
+	SC_OP_CANTESCAPE_ADD,	///< にげ・交換禁止コードの追加を全クライアントに通知 [ClientID, CantCode]
+	SC_OP_CANTESCAPE_SUB,	///< にげ・交換禁止コードの削除を全クライアントに通知 [ClientID, CantCode]
+	SC_OP_CHANGE_POKETYPE,///< 【計算】ポケモンのタイプ変更（ pokeID, type ）
+	SC_OP_CHANGE_POKEFORM,///< 【計算】ポケモンのフォルム変更（ pokeID, type ）
 	SC_ACT_WAZA_EFFECT,
-	SC_ACT_WAZA_DMG,		///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
-	SC_ACT_WAZA_DMG_DBL,///< 【アクション】２体同時ダメージ処理 [ pokeID ]
+	SC_ACT_WAZA_DMG,			///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
+	SC_ACT_WAZA_DMG_DBL,	///< 【アクション】２体同時ダメージ処理 [ pokeID ]
 	SC_ACT_WAZA_DMG_PLURAL,	///< 【アクション】複数体同時ダメージ処理 [ pokeCnt, affAbout, ... ]
-	SC_ACT_WAZA_ICHIGEKI,///< 【アクション】一撃ワザ処理
-	SC_ACT_CONF_DMG,		///< 【アクション】こんらん自爆ダメージ [ pokeID ]
-	SC_ACT_RANKUP,			///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
-	SC_ACT_RANKDOWN,		///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
-	SC_ACT_DEAD,				///< 【ポケモンひんし】[ ClientID ]
-	SC_ACT_MEMBER_OUT,	///< 【ポケモン退場】[ ClientID, memberIdx ]
-	SC_ACT_MEMBER_IN,		///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
-	SC_ACT_SICK_SET,		///<  状態異常をくらった
-	SC_ACT_SICK_DMG,		///<  アクション／ターンチェック時の状態異常ダメージ
-	SC_ACT_WEATHER_DMG,	///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
-	SC_ACT_WEATHER_START,///< 天候変化
-	SC_ACT_WEATHER_END,	///< ターンチェックで天候終了
-	SC_ACT_SIMPLE_HP,		///< シンプルなHPゲージ増減処理
+	SC_ACT_WAZA_ICHIGEKI,	///< 【アクション】一撃ワザ処理
+	SC_ACT_CONF_DMG,			///< 【アクション】こんらん自爆ダメージ [ pokeID ]
+	SC_ACT_RANKUP,				///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
+	SC_ACT_RANKDOWN,			///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
+	SC_ACT_DEAD,					///< 【ポケモンひんし】[ ClientID ]
+	SC_ACT_MEMBER_OUT,		///< 【ポケモン退場】[ ClientID, memberIdx ]
+	SC_ACT_MEMBER_IN,			///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
+	SC_ACT_SICK_SET,			///<  状態異常をくらった
+	SC_ACT_SICK_DMG,			///<  アクション／ターンチェック時の状態異常ダメージ
+	SC_ACT_WEATHER_DMG,		///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
+	SC_ACT_WEATHER_START,	///< 天候変化
+	SC_ACT_WEATHER_END,		///< ターンチェックで天候終了
+	SC_ACT_SIMPLE_HP,			///< シンプルなHPゲージ増減処理
 	SC_ACT_TRACE_TOKUSEI,	///< とくせいトレース[ pokeID, targetPokeID, tokusei ]
-	SC_TOKWIN_IN,				///< とくせいウィンドウ表示イン [ClientID]
-	SC_TOKWIN_OUT,			///< とくせいウィンドウ表示アウト [ClientID]
+	SC_TOKWIN_IN,					///< とくせいウィンドウ表示イン [ClientID]
+	SC_TOKWIN_OUT,				///< とくせいウィンドウ表示アウト [ClientID]
 
 	SC_MSG_WAZA,				///< ワザメッセージ表示[ ClientID, wazaIdx ]
 	SC_MSG_STD,					///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
 	SC_MSG_SET,					///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
 
 	SC_MAX,
+
+	SCEX_RESERVE,
+
 }ServerCmd;
 
 //--------------------------------------------------------------
@@ -118,7 +122,7 @@ static inline void scque_put2byte( BTL_SERVER_CMD_QUE* que, u16 data )
 }
 static inline u16 scque_read2byte( BTL_SERVER_CMD_QUE* que )
 {
-	GF_ASSERT(que->readPtr < (que->writePtr-1));
+	GF_ASSERT_MSG(que->readPtr < (que->writePtr-1), "rp=%d, wp=%d", que->readPtr, que->writePtr);
 	{
 		u16 data = ( (que->buffer[que->readPtr] << 8) | que->buffer[que->readPtr+1] );
 		que->readPtr += 2;
@@ -202,6 +206,11 @@ static inline void SCQUE_PUT_OP_CureWazaSick( BTL_SERVER_CMD_QUE* que, u8 pokeID
 {
 	SCQUE_PUT_Common( que, SC_OP_CURE_WAZASICK, pokeID, sickID );
 }
+static inline void SCQUE_PUT_OP_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx, u8 memberIdx, u16 turnCount )
+{
+	SCQUE_PUT_Common( que, SC_OP_MEMBER_IN, clientID, posIdx, memberIdx, turnCount );
+}
+
 
 static inline void SCQUE_PUT_OP_WazaSickTurnCheck( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
@@ -353,6 +362,9 @@ extern void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... );
 
 
 //=====================================================
+
+extern u16  SCQUE_RESERVE_Pos( BTL_SERVER_CMD_QUE* que, ServerCmd cmd );
+extern void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ... );
 
 extern ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args );
 

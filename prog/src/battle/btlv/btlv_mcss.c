@@ -239,7 +239,8 @@ void	BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position )
 	MCSS_ADD_WORK	maw;
 
 	GF_ASSERT( position < BTLV_MCSS_POS_MAX );
-	GF_ASSERT( bmw->mcss[ position ] == NULL );
+	GF_ASSERT_MSG( bmw->mcss[ position ] == NULL, "pos=%d", position );
+	TAYA_Printf("[MCSS] ADD!! pos=%d\n", position);
 
 	BTLV_MCSS_MakeMAW( pp, &maw, position );
 	bmw->mcss[ position ] = MCSS_Add( bmw->mcss_sys,
