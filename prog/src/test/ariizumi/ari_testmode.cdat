@@ -39,11 +39,15 @@ FS_EXTERN_OVERLAY(pmsinput);
 extern const GFL_PROC_DATA ProcData_PMSInput;
 static BOOL TESTMODE_ITEM_SelectDebWifiNote( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebPmsInput( TESTMODE_WORK *work , const int idx );
+#if USE_MUSICAL_EDIT
 static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx );
+#endif //USE_MUSICAL_EDIT
 
 static TESTMODE_MENU_LIST menuAriizumi[] = 
 {
+#if USE_MUSICAL_EDIT
 	{L"ミュージカルデバッグ"	,TESTMODE_ITEM_SelectMusicalEditor },
+#endif //USE_MUSICAL_EDIT
 	{L"友達手帳"				,TESTMODE_ITEM_SelectDebWifiNote },
 	{L"かんい文入力"			,TESTMODE_ITEM_SelectDebPmsInput },
 	
@@ -65,9 +69,11 @@ static BOOL TESTMODE_ITEM_SelectDebPmsInput( TESTMODE_WORK *work , const int idx
 	
 }
 
+#if USE_MUSICAL_EDIT
 static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx )
 {
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &MusicalEdit_ProcData, NULL);
 	return TRUE;
 }
+#endif //USE_MUSICAL_EDIT
 

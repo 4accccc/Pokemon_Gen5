@@ -46,4 +46,10 @@ void STA_OBJ_GetPosition( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork , VecFx32 *p
 void STA_OBJ_SetShowFlg( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork , const BOOL flg );
 BOOL STA_OBJ_GetShowFlg( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork );
 
+#if USE_MUSICAL_EDIT
+BOOL STA_OBJ_IsEnable( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork );
+BOOL STA_OBJ_GetObjNo( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork );
+#endif //USE_MUSICAL_EDIT
+
+
 #endif STA_ACT_OBJ_H__

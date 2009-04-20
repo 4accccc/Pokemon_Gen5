@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: mus_debug.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MUS_DEBUG_NAIX_
+#define NARC_MUS_DEBUG_NAIX_
+
+enum {
+	NARC_mus_debug_musical_editor_NCLR = 0,
+	NARC_mus_debug_musical_editor_NCGR = 1,
+	NARC_mus_debug_musical_editor_poke_NSCR = 2
+};
+
+/* NARC_MUS_DEBUG_NAIX_ */
+#endif

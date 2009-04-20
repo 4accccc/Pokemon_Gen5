@@ -11,8 +11,9 @@
 #include "musical_define.h"
 
 
-//ミュージカルの参加資格があるか調べる(仮)
-BOOL	MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara );
+//ミュージカルの参加資格があるか調べる
+const BOOL	MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara );
+const u16	MUSICAL_SYSTEM_ChangeMusicalPokeNumber( POKEMON_PARAM *pokePara );
 //ミュージカル用パラメータの初期化
 MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID heapId );
 

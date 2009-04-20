@@ -155,7 +155,7 @@ static const GFL_DISP_VRAM vramBank = {
 	GX_VRAM_BG_128_D,				// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_23_G,			// メイン2DエンジンのBG拡張パレット
 //	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+	GX_VRAM_SUB_BG_48_HI,			// サブ2DエンジンのBG
 	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 	GX_VRAM_OBJ_16_F,				// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
@@ -168,13 +168,13 @@ static const GFL_DISP_VRAM vramBank = {
 };
 //	A テクスチャ
 //	B テクスチャ
-//	C SubBg
+//	C None
 //	D MainBg
 //	E テクスチャパレット
 //	F MainObj
 //	G MainBgExPlt
-//	H None
-//	I None
+//	H SubBG
+//	I SubBG
 
 //--------------------------------------------------------------
 //	
@@ -405,14 +405,14 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
 		static const GFL_BG_BGCNT_HEADER header_sub1 = {
 			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x8000,
+			GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x7000,
 			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 		};
 		// BG3 SUB (Info
 		static const GFL_BG_BGCNT_HEADER header_sub3 = {
 			0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
+			GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000,0x4000,
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 		};
 
@@ -790,7 +790,9 @@ void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd 
 {
 	if( work->printHandle != NULL )
 	{
-		GF_ASSERT_MSG( NULL , "Message is not finish!!\n" )
+		//デバッグ時にした画面の文字切り替えにで文字がバグる事があったため
+//		GF_ASSERT_MSG( NULL , "Message is not finish!!\n" )
+		OS_TPrintf( NULL , "Message is not finish!!\n" );
 		PRINTSYS_PrintStreamDelete( work->printHandle );
 		work->printHandle = NULL;
 	}

@@ -8,12 +8,51 @@
 //======================================================================
 
 #include "musical/musical_system.h"
+#include "poke_tool/monsno_def.h"
 
-//ミュージカルの参加資格があるか調べる(仮)
-BOOL	MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara )
+static const u16 musPokeArr[]=
 {
-	OS_TPrintf("MUSICAL_SYSTEM_CheckEntryMusical is not created!!!\n");
-	return TRUE;
+	MONSNO_PIKATYUU,
+	MONSNO_RAITYUU,
+	MONSNO_PIKUSII,
+	MONSNO_EREBUU,
+	494,
+	495,
+	0xFFFF,
+};
+//ミュージカルの参加資格があるか調べる(仮)
+const BOOL	MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara )
+{
+	u16 i=0;
+	int	mons_no = PP_Get( pokePara, ID_PARA_monsno,	NULL );
+
+	while( 0xFFFF != musPokeArr[i] )
+	{
+		if( mons_no == musPokeArr[i] )
+		{
+			return TRUE;
+		}
+		i++;
+	}
+	return FALSE;
+}
+
+//ミュージカルでの番号に変換
+const u16	MUSICAL_SYSTEM_ChangeMusicalPokeNumber( POKEMON_PARAM *pokePara )
+{
+	u16 i=0;
+	int	mons_no = PP_Get( pokePara, ID_PARA_monsno,	NULL );
+
+	while( 0xFFFF != musPokeArr[i] )
+	{
+		if( mons_no == musPokeArr[i] )
+		{
+			return i;
+		}
+		i++;
+	}
+	//一応最終番号に変換
+	return i-1;
 }
 
 //ミュージカル用パラメータの初期化

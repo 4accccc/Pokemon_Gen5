@@ -47,6 +47,9 @@ struct _STA_OBJ_WORK
 
 	int			resIdx;
 	int			bbdIdx;
+#if USE_MUSICAL_EDIT
+	u16			objId;
+#endif USE_MUSICAL_EDIT
 };
 
 struct _STA_OBJ_SYS
@@ -172,6 +175,9 @@ STA_OBJ_WORK* STA_OBJ_CreateObject( STA_OBJ_SYS *work , const u16 objId )
 	objWork->pos.x= 0;
 	objWork->pos.y= 0;
 	objWork->pos.z= 0;
+#if USE_MUSICAL_EDIT
+	objWork->objId = objId;
+#endif //USE_MUSICAL_EDIT
 	
 	objWork->resIdx = GFL_BBD_AddResourceArc( work->bbdSys , ARCID_STAGE_GRA , 
 											NARC_stage_gra_stage_ojb01_nsbtx + objId , GFL_BBD_TEXFMT_PAL256 ,
@@ -214,3 +220,16 @@ BOOL STA_OBJ_GetShowFlg( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork )
 {
 	return GFL_BBD_GetObjectDrawEnable( work->bbdSys , objWork->bbdIdx );
 }
+
+#if USE_MUSICAL_EDIT
+//デバッグ用
+BOOL STA_OBJ_IsEnable( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork )
+{
+	return objWork->isEnable;
+}
+BOOL STA_OBJ_GetObjNo( STA_OBJ_SYS *work , STA_OBJ_WORK *objWork )
+{
+	return objWork->objId;
+}
+#endif USE_MUSICAL_EDIT
+

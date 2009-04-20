@@ -299,16 +299,7 @@ enum{
 	MUS_POKEGRA_NMAR,
 	MUS_POKEGRA_NCEC
 };
-static const u16 musPokeArr[]=
-{
-	MONSNO_PIKATYUU,
-	MONSNO_RAITYUU,
-	MONSNO_PIKUSII,
-	MONSNO_EREBUU,
-	500,
-	501,
-	0xFFFF,
-};
+
 static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WORK *maw)
 {
 	const POKEMON_PASO_PARAM *ppp = PP_GetPPPPointerConst( musPoke->pokePara );
@@ -318,7 +309,7 @@ static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WO
 	int	rare	= PPP_CheckRare( ppp );
 	int	file_start;
 	int	file_offset;
-	
+/*	
 	//FIXME mons_noの変換を行う！
 	{
 		int i;
@@ -334,8 +325,8 @@ static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WO
 		}
 		mons_no = i;
 	}
-
-	file_start = MUS_POKEGRA_FILE_MAX * mons_no;	//ポケモンナンバーからファイルのオフセットを計算
+*/
+	file_start = MUS_POKEGRA_FILE_MAX * MUSICAL_SYSTEM_ChangeMusicalPokeNumber(musPoke->pokePara);	//ポケモンナンバーからファイルのオフセットを計算
 
 	//本来は別フォルム処理を入れる
 #ifdef DEBUG_ONLY_FOR_ariizumi_nobuhiko

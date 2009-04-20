@@ -878,6 +878,7 @@ SCRIPT_FUNC_DEF( ObjectDelete )
 	SCRIPT_PRINT_LABEL(ObjectDelete);
 	
 	STA_OBJ_DeleteObject( objSys , objWork );
+	STA_ACT_SetObjectWork( work->actWork , NULL , objNo );
 
 	return SFT_CONTINUE;
 }
@@ -1008,6 +1009,7 @@ SCRIPT_FUNC_DEF( EffectDelete )
 	SCRIPT_PRINT_LABEL(EffectDelete);
 	
 	STA_EFF_DeleteEffect( effSys , effWork );
+	STA_ACT_SetEffectWork( work->actWork , NULL , effectNo );
 
 	return SFT_CONTINUE;
 }
@@ -1162,6 +1164,7 @@ SCRIPT_FUNC_DEF( LightHide )
 	SCRIPT_PRINT_LABEL(LightHide);
 	
 	STA_LIGHT_DeleteObject( lightSys , lightWork );
+	STA_ACT_SetLightWork( work->actWork , NULL , lightNo );
 
 	return SFT_CONTINUE;
 }

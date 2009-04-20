@@ -1,7 +1,7 @@
 //======================================================================
 /**
- * @file	dressup_system.h
- * @brief	ミュージカルのドレスアップProc
+ * @file	musical_editor.h
+ * @brief	ミュージカルエディター
  * @author	ariizumi
  * @data	09/03/02
  */
@@ -9,7 +9,9 @@
 #ifndef MUSICAL_EDITOR_H__
 #define MUSICAL_EDITOR_H__
 
-#include "test/ariizumi/musical_editor.h"
+#include "musical/stage/sta_local_def.h"
+
+#if USE_MUSICAL_EDIT
 
 //======================================================================
 //	define
@@ -32,5 +34,7 @@ extern GFL_PROC_DATA MusicalEdit_ProcData;
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
+
+#endif //USE_MUSICAL_EDIT
 
 #endif //MUSICAL_EDITOR_H__

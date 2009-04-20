@@ -9,6 +9,9 @@
 #ifndef STA_LOCAL_DEF_H__
 #define STA_LOCAL_DEF_H__
 
+//ミュージカルデバッグ用
+#define USE_MUSICAL_EDIT (1)
+
 //BBD用座標変換(カメラの幅から計算
 #define ACT_POS_X(val)	FX32_CONST((val)/16.0f)
 #define ACT_POS_Y(val)	FX32_CONST((192.0f-(val))/16.0f)
