@@ -5720,7 +5720,7 @@ static void WFLBY_ROOM_UNDERWIN_PalTrans( WFLBY_UNDER_WIN* p_wk, WFLBY_GRAPHICCO
 #endif
 
 	// É^ÉXÉNê∂ê¨
-	GFUser_VIntr_CreateTCB( WFLBY_ROOM_UNDERWIN_PalTransVTcb, p_wk, 0 );
+	GFUser_VIntr_CreateTCB( WFLBY_ROOM_UNDERWIN_PalTransVTcb, p_wk, 3 );
 }
 
 //----------------------------------------------------------------------------
