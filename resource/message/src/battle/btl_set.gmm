@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-04-03T20:10:56"/>
+	<create user="taya" host="W00146" date="2009-04-17T21:43:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1052,6 +1052,302 @@
 かいひりつ　が　がくっと　さがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
 かいひ率ががくっと下がった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>↓能力ランクこれ以上あがらない</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_ATK_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_ATK_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_DEF">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_DEF_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_DEF_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_SPATK">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_SPATK_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_SPATK_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_SPDEF">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+とくぼう　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+特防　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_SPDEF_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+とくぼう　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+特防　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_SPDEF_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+とくぼう　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+特防　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_AGI">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+すばやさ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+素早さ　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_AGI_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+すばやさ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+素早さ　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_AGI_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+すばやさ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+素早さ　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_HIT">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+めいちゅうりつ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+命中率　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_HIT_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+めいちゅうりつ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+命中率　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_HIT_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+めいちゅうりつ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+命中率　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_AVOID">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+かいひりつ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+かいひ率　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_AVOID_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+かいひりつ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+かいひ率　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankupMax_AVOID_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+かいひりつ　は　もう　あがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+かいひ率　は　もう　上がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>↓能力ランクこれ以上さがらない</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_ATK_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_ATK_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+こうげき　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_DEF">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_DEF_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_DEF_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+ぼうぎょ　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_SPATK">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_SPATK_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_SPATK_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+とくこう　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_SPDEF">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+とくぼう　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+特防　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_SPDEF_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+とくぼう　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+特防　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_SPDEF_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+とくぼう　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+特防　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_AGI">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+すばやさ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+素早さ　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_AGI_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+すばやさ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+素早さ　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_AGI_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+すばやさ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+素早さ　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_HIT">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+めいちゅうりつ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+命中率　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_HIT_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+めいちゅうりつ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+命中率　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_HIT_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+めいちゅうりつ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+命中率　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_AVOID">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]　の
+かいひりつ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]　の
+かいひ率　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_AVOID_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]　の
+かいひりつ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]　の
+かいひ率　は　もう　下がらない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankdownMin_AVOID_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]　の
+かいひりつ　は　もう　さがらない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]　の
+かいひ率　は　もう　下がらない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownFail" back-color=",,,#ffff00,,,,,,,,,,,,,,">
