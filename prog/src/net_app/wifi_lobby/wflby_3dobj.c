@@ -1009,9 +1009,9 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 			WF2DMAP_POS pos;
 			pos = WF2DMAP_OBJWkMatrixGet( cp_objwk );
 			WFLBY_3DMATRIX_GetPosVec( &pos, &matrix );
-			matrix.x += 8*FX32_ONE;
+			matrix.x += WFLBY_BLDACT_PL_OFFSET_X;
+			matrix.y += WFLBY_BLDACT_PL_OFFSET_Y;
 			matrix.z += WFLBY_3DOBJ_OFS_Z;
-			matrix.y += 16*FX32_ONE;
 		}
 
 		// ƒ[ƒN‚ðì¬
@@ -1223,14 +1223,14 @@ void WFLBY_3DOBJWK_Set3DMatrix( WFLBY_3DOBJWK* p_wk, const VecFx32* cp_vec )
 			WFLBY_3DOBJ_SHADOW_MAT_Y, cp_vec->z + WFLBY_3DOBJ_SHADOW_OFS_Z );
 #else
 	trans = *cp_vec;
-	trans.x += FX32_ONE*8;
-	trans.y += FX32_ONE*16;
+	trans.x += WFLBY_BLDACT_PL_OFFSET_X;
+	trans.y += WFLBY_BLDACT_PL_OFFSET_Y;
 	GFL_BBD_SetObjectTrans(GFL_BBDACT_GetBBDSystem(p_wk->p_blact), p_wk->act_idx, &trans);
 
 	// ‰e‚É”½‰f‚½‚¾‚µA‰e‚Í‚ÌYˆÊ’u‚Íí‚É’èˆÊ’u
-	p_wk->shadow_st.trans.x = cp_vec->x + WFLBY_3DOBJ_SHADOW_OFS_X;
+	p_wk->shadow_st.trans.x = trans.x + WFLBY_3DOBJ_SHADOW_OFS_X;
 	p_wk->shadow_st.trans.y = WFLBY_3DOBJ_SHADOW_MAT_Y;
-	p_wk->shadow_st.trans.z = cp_vec->z + WFLBY_3DOBJ_SHADOW_OFS_Z;
+	p_wk->shadow_st.trans.z = trans.z + WFLBY_3DOBJ_SHADOW_OFS_Z;
 #endif
 }
 

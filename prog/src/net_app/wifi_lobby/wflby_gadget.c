@@ -851,7 +851,7 @@ struct _WFLBY_GADGET{
 
 
 	// 各リソース
-	GFL_G3D_OBJ	*g3dobj[ WFLBY_GADGET_MDL_NUM ];
+//	GFL_G3D_OBJ	*g3dobj[ WFLBY_GADGET_MDL_NUM ];
 	GFL_G3D_RND *rnder[ WFLBY_GADGET_MDL_NUM ];
 	GFL_G3D_RES *p_mdlres[ WFLBY_GADGET_MDL_NUM ];		// リソース
 	GFL_G3D_RES*		p_texres[ WFLBY_GADGET_TEX_NUM ];	// テクスチャ
@@ -1787,6 +1787,8 @@ static void WFLBY_GADGET_LoadMdl( WFLBY_GADGET* p_sys, ARCHANDLE* p_handle, u32 
 		// エミッションを明るくする
 		NNS_G3dMdlSetMdlEmiAll( p_sys->mdl[i].pModel, GX_RGB( 31,31,31 ) );
 	#else
+		GF_ASSERT(p_sys->p_mdlres[i] == NULL);
+		GF_ASSERT(p_sys->rnder[i] == NULL);
 		p_sys->p_mdlres[i] = GFL_G3D_CreateResourceHandle( p_handle, WFLBY_GADGET_MDL_FILE_START + i ) ;
 		p_sys->rnder[i] = GFL_G3D_RENDER_Create( p_sys->p_mdlres[i], 0, NULL );
 
@@ -1814,6 +1816,9 @@ static void WFLBY_GADGET_DeleteMdl( WFLBY_GADGET* p_sys )
 		GFL_HEAP_FreeMemory( p_sys->mdl[i].pResMdl );
 	#else
 		GFL_G3D_DeleteResource(p_sys->p_mdlres[i]);
+		GFL_G3D_RENDER_Delete(p_sys->rnder[i]);
+		p_sys->p_mdlres[i] = NULL;
+		p_sys->rnder[i] = NULL;
 	#endif
 	}
 }
@@ -2191,7 +2196,18 @@ static BOOL WFLBY_GADGET_OBJ_Draw( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk )
 static void WFLBY_GADGET_OBJ_End( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk )
 {
 	// 全ワークの初期化
+#if WB_FIX
 	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_GADGET_OBJ) );
+#else
+	int i;
+	
+	for(i = 0; i < WFLBY_GADGET_OBJ_MAX; i++){
+		if(p_wk->g3dobj[i] != NULL){
+			GFL_G3D_OBJECT_Delete(p_wk->g3dobj[i]);
+		}
+	}
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_GADGET_OBJ) );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2227,7 +2243,11 @@ static BOOL WFLBY_GADGET_OBJ_CheckMove( const WFLBY_GADGET_OBJ* cp_wk )
 //-----------------------------------------------------------------------------
 static BOOL WFLBY_GADGET_OBJ_CheckRes( const WFLBY_GADGET_OBJ* cp_wk, u32 idx )
 {
+#if WB_FIX
 	if( cp_wk->cp_objres[idx] == NULL ){
+#else
+	if( cp_wk->cp_objres[idx] == NULL || cp_wk->g3dobj[idx] == NULL ){
+#endif
 		return FALSE;
 	}
 	return TRUE;
@@ -2290,6 +2310,7 @@ static void WFLBY_GADGET_OBJ_DrawRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 	NNSG3dResMdlSet*		pMdlset;
 	NNSG3dResMdl*			pMdl;
 	int set_anmframe;
+	int tblidx;
 	
 	GF_ASSERT( p_wk->cp_objres[idx] != NULL );
 
@@ -2324,26 +2345,30 @@ static void WFLBY_GADGET_OBJ_DrawRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 	// テクスチャバインド
 	restex = NNS_G3dGetTex( p_tex );
 	// 無理やり貼り付けてみる
+	NNS_G3dReleaseMdlTex(pMdl);
 	result = NNS_G3dForceBindMdlTex( pMdl, restex, 0, 0 );
 	GF_ASSERT( result );
 	// 無理やり貼り付けてみる
+	NNS_G3dReleaseMdlPltt(pMdl);
 	result = NNS_G3dForceBindMdlPltt( pMdl, restex, 0, 0 );
 	GF_ASSERT( result );
 #endif
 
 	// アニメの適用
 	for( i=0; i<WFLBY_GADGET_ANM_MAX; i++ ){
-		if( p_wk->cp_objres[idx]->anm[i] != WFLBY_GADGET_ANM_NONE ){
+		tblidx = p_wk->cp_objres[idx]->anm[i];
+		if( tblidx != WFLBY_GADGET_ANM_NONE ){
 		#if WB_FIX
 			p_anm = p_sys->anm[ p_wk->cp_objres[idx]->anm[i] ];
 			D3DOBJ_AddAnm( &p_wk->obj[idx], p_anm );
 			// フレームをあわせる
 			D3DOBJ_AnmSet( p_anm, p_wk->anm_frame[idx][i] );
 		#else
-			GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj[idx], i );
+			GF_ASSERT(p_wk->g3dobj[idx] != NULL);
+			GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj[idx], tblidx );
 			// フレームをあわせる
 			set_anmframe = p_wk->anm_frame[idx][i];
-			GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj[idx], i, &set_anmframe );
+			GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj[idx], tblidx, &set_anmframe );
 		#endif
 		}else{
 			break;
@@ -2364,12 +2389,15 @@ static void WFLBY_GADGET_OBJ_DrawRes( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 
 	// アニメを破棄
 	for( i=0; i<WFLBY_GADGET_ANM_MAX; i++ ){
-		if( p_wk->cp_objres[idx]->anm[i] != WFLBY_GADGET_ANM_NONE ){
+		tblidx = p_wk->cp_objres[idx]->anm[i];
+		if( tblidx != WFLBY_GADGET_ANM_NONE ){
 		#if WB_FIX
 			p_anm = &p_sys->anm[ p_wk->cp_objres[idx]->anm[i] ];
 			D3DOBJ_DelAnm( &p_wk->obj[idx], p_anm );
 		#else
-			GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj[idx], i );
+			GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj[idx], tblidx );
+//			GFL_G3D_OBJECT_Delete(p_wk->g3dobj[idx]);
+//			p_wk->g3dobj[idx] = NULL;
 		#endif
 		}else{
 			break;
@@ -2514,10 +2542,27 @@ static fx32 WFLBY_GADGET_OBJ_GetFrame( const WFLBY_GADGET* cp_sys, const WFLBY_G
 	return D3DOBJ_AnmGet( cp_anm );
 #else
 	int frame;
+	int tblidx;
 
-	GFL_G3D_OBJECT_GetAnimeFrame(cp_wk->g3dobj[objidx], anmidx, &frame);
+	tblidx = cp_wk->cp_objres[ objidx ]->anm[ anmidx ];
+	GFL_G3D_OBJECT_GetAnimeFrame(cp_wk->g3dobj[objidx], tblidx, &frame);
 	return frame;
 #endif
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   主人公座標取得にPL,WBでの座標基準補正によるオフセットを足しこんだ値で返す
+ *
+ * @param   p_person		
+ * @param   mtx		
+ */
+//--------------------------------------------------------------
+static void WFLBY_GADGET_GetPersonMtx(const WFLBY_3DPERSON* p_person, VecFx32 *mtx)
+{
+	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_person, mtx );
+	mtx->x -= WFLBY_BLDACT_PL_OFFSET_X;
+	mtx->y -= WFLBY_BLDACT_PL_OFFSET_Y;
 }
 
 
@@ -2566,7 +2611,7 @@ static void WFLBY_GADGET_ANM_Init_Signal00( WFLBY_GADGET* p_sys, WFLBY_GADGET_OB
 		WFLBY_GADGET_OBJ_SetRes( p_sys, p_wk, i, &sc_WFLBY_GADGET_RES[WFLBY_GADGET_OBJ_SIGNAL00 + i] );
 
 		// 座標をあわせる
-		WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+		WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 		// 設定
 		matrix.x = matrix.x + WFLBY_GADGET_SIGNAL_ANM_MOVE_X;
 		matrix.z = matrix.z + WFLBY_GADGET_SIGNAL_ANM_MOVE_Z;
@@ -2601,7 +2646,7 @@ static void WFLBY_GADGET_ANM_Init_Cracker00( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 #endif
 
 	// 座標をあわせる
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	matrix.y		+= WFLBY_GADGET_AIR_Y;
 	matrix.x		+= WFLBY_GADGET_CRACKER_CENTER_X;
 	flash_matrix	= matrix;
@@ -2686,7 +2731,7 @@ static void WFLBY_GADGET_ANM_Init_Cracker01( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 #endif
 
 	// 座標をあわせる
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	matrix.y		+= WFLBY_GADGET_AIR_Y;
 	matrix.x		+= WFLBY_GADGET_CRACKER_CENTER_X;
 	flash_matrix	= matrix;
@@ -2816,7 +2861,7 @@ static void WFLBY_GADGET_ANM_Init_Cracker02( WFLBY_GADGET* p_sys, WFLBY_GADGET_O
 	p_wk->mvwk.cracker.alpha_count[2] = WFLBY_GADGET_CRACKER_ALPHA_OUT_SYNC;
 
 	// 座標をあわせる
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	matrix.y		+= WFLBY_GADGET_AIR_Y;
 	matrix.x		+= WFLBY_GADGET_CRACKER_CENTER_X;
 	flash_matrix	= matrix;
@@ -3659,7 +3704,7 @@ static void WFLBY_GADGET_Balloon_InitUp_Normal( WFLBY_GADGET* p_sys, WFLBY_GADGE
 	VecFx32 matrix;
 
 	// 座標を取得
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	
 	// 主人公動作初期化
 	WFLBY_GADGET_MV_Straight_Init( &p_wk->mvwk.balloon.straightobj,
@@ -3685,7 +3730,7 @@ static void WFLBY_GADGET_Balloon_InitUp_Roof( WFLBY_GADGET* p_sys, WFLBY_GADGET_
 	VecFx32		matrix;
 
 	// 座標を取得
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	
 	// 主人公動作初期化
 	WFLBY_GADGET_MV_Straight_Init( &p_wk->mvwk.balloon.straightobj,
@@ -3741,7 +3786,7 @@ static BOOL WFLBY_GADGET_Balloon_MainUp_Normal( WFLBY_GADGET* p_sys, WFLBY_GADGE
 	p_wk->mvwk.balloon.count ++;
 	
 	//  値を設定
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	WFLBY_GADGET_MV_Straight_GetNum( &p_wk->mvwk.balloon.straightobj, &matrix.x, &matrix.y, &matrix.z );
 	WFLBY_GADGET_MV_SinCurve_GetNum( &p_wk->mvwk.balloon.sincurveobj, &carve_x );
 
@@ -3798,7 +3843,7 @@ static BOOL WFLBY_GADGET_Balloon_MainUp_Roof( WFLBY_GADGET* p_sys, WFLBY_GADGET_
 	p_wk->mvwk.balloon.count ++;
 	
 	//  値を設定
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	WFLBY_GADGET_MV_Straight_GetNum( &p_wk->mvwk.balloon.straightobj, &matrix.x, &matrix.y, &matrix.z );
 
 	WFLBY_3DOBJCONT_DRAW_Set3DMatrix( p_wk->p_person, &matrix );
@@ -3841,7 +3886,7 @@ static void WFLBY_GADGET_Balloon_InitDown_Normal( WFLBY_GADGET* p_sys, WFLBY_GAD
 	u32 anmidx;
 
 	// 座標を取得
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	
 	// 主人公動作初期化
 	WFLBY_GADGET_MV_Straight_Init( &p_wk->mvwk.balloon.straightobj,
@@ -3907,7 +3952,7 @@ static void WFLBY_GADGET_Balloon_InitDown_Roof( WFLBY_GADGET* p_sys, WFLBY_GADGE
 	VecFx32		move_matrix;
 
 	// 座標を取得
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	
 	// 主人公動作初期化
 	WFLBY_GADGET_MV_Straight_Init( &p_wk->mvwk.balloon.straightobj,
@@ -3988,7 +4033,7 @@ static BOOL WFLBY_GADGET_Balloon_MainDown_Normal( WFLBY_GADGET* p_sys, WFLBY_GAD
 			p_wk->mvwk.balloon.count ++;
 			
 			//  値を設定
-			WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+			WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 			WFLBY_GADGET_MV_Straight_GetNum( &p_wk->mvwk.balloon.straightobj, &matrix.x, &matrix.y, &matrix.z );
 			WFLBY_3DOBJCONT_DRAW_Set3DMatrix( p_wk->p_person, &matrix );
 
@@ -4014,7 +4059,7 @@ static BOOL WFLBY_GADGET_Balloon_MainDown_Normal( WFLBY_GADGET* p_sys, WFLBY_GAD
 			rot = ( 0x7fff * p_wk->mvwk.balloon.count ) / WFLBY_GADGET_BALLOON_OBJ_DON_SYNC;
 			dis = FX_Mul( FX_SinIdx( rot ), WFLBY_GADGET_BALLOON_OBJ_DON_DIS );
 
-			WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+			WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 			matrix.y = p_wk->mvwk.balloon.don_start_y+dis;
 			WFLBY_3DOBJCONT_DRAW_Set3DMatrix( p_wk->p_person, &matrix );
 
@@ -4141,7 +4186,7 @@ static BOOL WFLBY_GADGET_Balloon_MainDown_Roof( WFLBY_GADGET* p_sys, WFLBY_GADGE
 			p_wk->mvwk.balloon.count ++;
 			
 			//  値を設定
-			WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+			WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 			WFLBY_GADGET_MV_Straight_GetNum( &p_wk->mvwk.balloon.straightobj, &matrix.x, &matrix.y, &matrix.z );
 			WFLBY_3DOBJCONT_DRAW_Set3DMatrix( p_wk->p_person, &matrix );
 
@@ -4187,7 +4232,7 @@ static void WFLBY_GADGET_Balloon_SetObjPos( WFLBY_GADGET_OBJ*  p_wk )
 	VecFx32 matrix;
 
 	// 座標を取得
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	
 	switch( p_wk->mvwk.balloon.balloon_num ){
 	case 1:
@@ -4243,7 +4288,7 @@ static void WFLBY_GADGET_Balloon_SetObjPos_Roof( WFLBY_GADGET_OBJ*  p_wk )
 	VecFx32 matrix;
 
 	// 座標を取得
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	
 	switch( p_wk->mvwk.balloon.balloon_num ){
 	case 1:
@@ -4371,7 +4416,7 @@ static void WFLBY_GADGET_Sparkle_Init( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_
 	u32 objidx;
 	
 	// 主人公座標を取得
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 
 
 	for( i=0; i<roop_num; i++ ){
@@ -4470,7 +4515,7 @@ static void WFLBY_GADGET_Ripple_Init( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_w
 		WFLBY_GADGET_OBJ_SetRes( p_sys, p_wk, i, &sc_WFLBY_GADGET_RES[WFLBY_GADGET_OBJ_RIPPLE00 + i] );
 
 		// 座標をあわせる
-		WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+		WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 		// 設定
 		matrix.y += WFLBY_GADGET_FLOOR_Y;
 		matrix.z += WFLBY_GADGET_RIPPLE_MAT_Z;
@@ -4576,7 +4621,7 @@ static void WFLBY_GADGET_Swing_Init( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk
 		WFLBY_GADGET_OBJ_SetRes( p_sys, p_wk, i, &sc_WFLBY_GADGET_RES[WFLBY_GADGET_OBJ_SWING00 + i] );
 
 		// 座標をあわせる
-		WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+		WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 		// 設定
 		matrix.y += WFLBY_GADGET_FLOOR_Y;
 		VEC_Set( &p_wk->objst[i].trans, matrix.x, matrix.y, matrix.z );
@@ -4608,7 +4653,7 @@ static void WFLBY_GADGET_Inazuma_Init( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_
 	int i;
 
 	// 稲妻作成
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_wk->p_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( p_wk->p_person, &matrix );
 	matrix.z += WFLBY_GADGET_CYMBALS_INAZUMA_OFS_Z;
 	matrix.x += WFLBY_GADGET_CYMBALS_INAZUMA_OFS_X;
 	matrix.y += WFLBY_GADGET_AIR_Y + WFLBY_GADGET_CYMBALS_INAZUMA_OFS_Y;
@@ -4914,7 +4959,7 @@ static void WFLBY_GADGET_OnpuMove_InitBell( WFLBY_GADGET_ONPU* p_wk, const WFLBY
 	u16	start_rot;
 
 	// 主人公の座標を取得
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( cp_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( cp_person, &matrix );
 	matrix.x += WFLBY_GADGET_ONPU_X_OFS;
 	matrix.y += WFLBY_GADGET_AIR_Y;
 	matrix.z += WFLBY_GADGET_ONPU_Z_OFS;
@@ -5007,7 +5052,7 @@ static void WFLBY_GADGET_OnpuMove_InitDram( WFLBY_GADGET_ONPU* p_wk, const WFLBY
 	VecFx32 end_matrix;
 
 	// 主人公の座標を取得
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( cp_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( cp_person, &matrix );
 	matrix.x += WFLBY_GADGET_ONPU_X_OFS;
 	matrix.y += WFLBY_GADGET_FLOOR_Y;
 	matrix.z += WFLBY_GADGET_ONPU_Z_OFS;
@@ -5120,7 +5165,7 @@ static void WFLBY_GADGET_OnpuMove_InitCymbals( WFLBY_GADGET_ONPU* p_wk, const WF
 	VecFx32 end_matrix;
 
 	// 主人公の座標を取得
-	WFLBY_3DOBJCONT_DRAW_Get3DMatrix( cp_person, &matrix );
+	WFLBY_GADGET_GetPersonMtx( cp_person, &matrix );
 	matrix.x += WFLBY_GADGET_ONPU_X_OFS;
 	matrix.y += WFLBY_GADGET_AIR_Y + WFLBY_GADGET_ONPU_MOVE_CYMBALS_START_Y;
 	matrix.z += WFLBY_GADGET_ONPU_Z_OFS;

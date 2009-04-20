@@ -3449,44 +3449,22 @@ static void WFLBY_ROOM_RoomDraw( WFLBY_ROOMWK* p_wk )
 	WFLBY_3DMAPOBJCONT_Draw( p_wk->p_mapobjcont );
 	WFLBY_DEBUG_ROOM_PRINT_TIME_TICK_PRINT_DRAW( __LINE__ );
 
-	//プロジェクションマトリクスの変換
-#if 0
-	{
-		const MtxFx44 *m;
-		MtxFx44 pm;
-
-		m = NNS_G3dGlbGetProjectionMtx();
-
-		org_pm = *m;
-		pm = org_pm;
-		pm._32 += FX_Mul(pm._22,WFLBY_ROOM_PRO_MAT_Z_OFS*FX32_ONE);
-		NNS_G3dGlbSetProjectionMtx(&pm);
-//		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
-	}
-#endif
-	
 	// 人物の表示
 	WFLBY_3DOBJCONT_Draw( p_wk->p_objcont, WFLBY_CAMERA_Get(p_wk->p_camera) );
 	WFLBY_DEBUG_ROOM_PRINT_TIME_TICK_PRINT_DRAW( __LINE__ );
 
-	//プロジェクションマトリクスを元に戻す
-#if 0
-	{
-		NNS_G3dGlbSetProjectionMtx(&org_pm);
-		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
-	}
-#endif
-
 	// ガジェット
 	WFLBY_GADGET_Draw( p_wk->p_gadget );
 	WFLBY_DEBUG_ROOM_PRINT_TIME_TICK_PRINT_DRAW( __LINE__ );
-	GFL_G3D_DRAW_End();
+
 #if WB_FIX
 	GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO,GX_BUFFERMODE_Z);
 #endif
 
 	// 描画システムメイン
 	WFLBY_ROOM_GraphicMain( &p_wk->graphic );
+
+	GFL_G3D_DRAW_End();
 }
 
 //----------------------------------------------------------------------------

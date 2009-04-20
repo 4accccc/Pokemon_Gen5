@@ -207,7 +207,8 @@ void WFLBY_CAMERA_Draw( WFLBY_CAMERA* p_sys )
 		WFLBY_3DOBJCONT_DRAW_Get3DMatrix( p_sys->cp_person, &p_sys->target );
 		p_sys->target.x += WFLBY_CAMERA_X_OFS;
 		p_sys->target.z += WFLBY_CAMERA_Z_OFS;
-		
+		p_sys->target.x -= WFLBY_BLDACT_PL_OFFSET_X;
+		p_sys->target.y -= WFLBY_BLDACT_PL_OFFSET_Y;
 	}
 	
 	//ターゲットに対してバインド移動
