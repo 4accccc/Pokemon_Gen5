@@ -129,8 +129,6 @@ GFL_FILE_TREE	=	titledemo.narc \
 					skb.narc \
 					soundstatus.narc \
 					wb_sound_data.sdat \
-					pm_battle.swav	\
-					mh.swav	\
 					gfl_font.dat \
 					dl_rom/child.srl \
 					dl_rom/icon.char \
