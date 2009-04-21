@@ -62,6 +62,7 @@ typedef enum {
 	SC_ACT_WEATHER_END,		///< ターンチェックで天候終了
 	SC_ACT_SIMPLE_HP,			///< シンプルなHPゲージ増減処理
 	SC_ACT_TRACE_TOKUSEI,	///< とくせいトレース[ pokeID, targetPokeID, tokusei ]
+	SC_ACT_KINOMI,				///< きのみを食べる
 	SC_TOKWIN_IN,					///< とくせいウィンドウ表示イン [ClientID]
 	SC_TOKWIN_OUT,				///< とくせいウィンドウ表示アウト [ClientID]
 
@@ -323,6 +324,10 @@ static inline void SCQUE_PUT_ACT_SimpleHP( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 static inline void SCQUE_PUT_ACT_TokTrace( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 targetPokeID, PokeTokusei tok )
 {
 	SCQUE_PUT_Common( que, SC_ACT_TRACE_TOKUSEI, pokeID, targetPokeID, tok );
+}
+static inline void SCQUE_PUT_ACT_KINOMI( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+	SCQUE_PUT_Common( que, SC_ACT_KINOMI, pokeID );
 }
 
 

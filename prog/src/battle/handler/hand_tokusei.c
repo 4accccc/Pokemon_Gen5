@@ -2008,9 +2008,9 @@ static void handler_IkarinoTubo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 		// クリティカルだったら攻撃１段アップ
 		if( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_FLAG) )
 		{
-			BTL_EVWK_AFTER_DAMAGED* evwk = (BTL_EVWK_AFTER_DAMAGED*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+			BTL_EVWK_DAMAGE_REACTION* evwk = (BTL_EVWK_DAMAGE_REACTION*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
 
-			evwk->reaction = BTL_EV_AFTER_DAMAGED_REACTION_RANKUP;
+			evwk->reaction = BTL_EV_AFTER_DAMAGED_REACTION_RANK;
 			evwk->targetPokeID = pokeID;
 			evwk->rankType = WAZA_RANKEFF_ATTACK;
 			evwk->rankVolume = 1;
@@ -2175,7 +2175,7 @@ static void common_touchAddSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick si
 		{
 			if( BTL_CALC_IsOccurPer(per) )
 			{
-				BTL_EVWK_AFTER_DAMAGED* evwk = (BTL_EVWK_AFTER_DAMAGED*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+				BTL_EVWK_DAMAGE_REACTION* evwk = (BTL_EVWK_DAMAGE_REACTION*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
 
 				evwk->reaction = BTL_EV_AFTER_DAMAGED_REACTION_SICK;
 				evwk->targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
@@ -2199,7 +2199,7 @@ static void handler_Samehada( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 		WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
 		if( WAZADATA_IsTouch(waza) )
 		{
-			BTL_EVWK_AFTER_DAMAGED* evwk = (BTL_EVWK_AFTER_DAMAGED*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+			BTL_EVWK_DAMAGE_REACTION* evwk = (BTL_EVWK_DAMAGE_REACTION*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
 			u8 attackerPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
 			const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, attackerPokeID );
 
@@ -2234,7 +2234,7 @@ static void handler_Yuubaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 			WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
 			if( WAZADATA_IsTouch(waza) )
 			{
-				BTL_EVWK_AFTER_DAMAGED* evwk = (BTL_EVWK_AFTER_DAMAGED*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+				BTL_EVWK_DAMAGE_REACTION* evwk = (BTL_EVWK_DAMAGE_REACTION*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
 				u8 attackerPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
 				const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, attackerPokeID );
 
@@ -2270,7 +2270,7 @@ static void handler_Hensyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 			PokeType type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
 			if( !BTL_POKEPARAM_IsMatchType(bpp, type) )
 			{
-				BTL_EVWK_AFTER_DAMAGED* evwk = (BTL_EVWK_AFTER_DAMAGED*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+				BTL_EVWK_DAMAGE_REACTION* evwk = (BTL_EVWK_DAMAGE_REACTION*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
 
 				evwk->reaction = BTL_EV_AFTER_DAMAGED_REACTION_POKETYPE;
 				evwk->targetPokeID = pokeID;

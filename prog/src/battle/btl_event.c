@@ -117,7 +117,7 @@ void BTL_EVENT_StartTurn( void )
 
 //=============================================================================================
 /**
- * 
+ * イベント反応要素を追加
  *
  * @param   factorType			ファクタータイプ
  * @param   subID						タイプごとの個別ID（とくせいID，アイテムID等と一致）
@@ -192,7 +192,14 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactor factorType, u16 subID, u16
 		return NULL;
 	}
 }
-
+//=============================================================================================
+/**
+ * イベント反応要素を削除
+ *
+ * @param   factor		
+ *
+ */
+//=============================================================================================
 void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
 {
 	if( factor == FirstFactorPtr )
@@ -212,7 +219,16 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
 
 	pushFactor( factor );
 }
-
+//=============================================================================================
+/**
+ * 反応要素の対応するポケモンを差し替え
+ *
+ * @param   factor		
+ * @param   pokeID		
+ * @param   pri		
+ *
+ */
+//=============================================================================================
 void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 pri )
 {
 	const BtlEventHandlerTable* handlerTable = factor->handlerTable;
@@ -222,8 +238,29 @@ void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 
 	BTL_EVENT_FACTOR_Remove( factor );
 	BTL_EVENT_AddFactor( type, subID, pri, pokeID, handlerTable );
 }
+//=============================================================================================
+/**
+ * サブID（とくせいID，アイテムID等、要素タイプに準じる）を返す
+ *
+ * @param   factor		
+ *
+ * @retval  u16		
+ */
+//=============================================================================================
+u16 BTL_EVENT_FACTOR_GetSubID( const BTL_EVENT_FACTOR* factor )
+{
+	return factor->subID;
+}
 
 
+//=============================================================================================
+/**
+ * 全登録要素に対し、指定イベントの通知
+ *
+ * @param   flowWork		
+ * @param   eventID		
+ */
+//=============================================================================================
 void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
 	BTL_EVENT_FACTOR* factor;

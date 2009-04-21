@@ -103,6 +103,7 @@ static const u8 ServerCmdToFmtTbl[] = {
 	SC_ARGFMT_1byte,						// SC_ACT_WEATHER_END,
 	SC_ARGFMT_1byte,						// SC_ACT_SIMPLE_HP
 	SC_ARGFMT_5_5_14bit,				// SC_ACT_TRACE_TOKUSEI
+	SC_ARGFMT_1byte,						// SC_ACT_KINOMI
 	SC_ARGFMT_1byte,						// SC_TOKWIN_IN
 	SC_ARGFMT_1byte,						// SC_TOKWIN_OUT
 
