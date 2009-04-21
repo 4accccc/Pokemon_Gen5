@@ -225,7 +225,7 @@ extern void GFL_NET_StateWifiEnterLogin(void);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateWifiLogout(void);
+extern void GFL_NET_StateWifiLogout(NetEndCallback netEndCallback);
 //----------------------------------------------------------------------------
 /**
  *	@brief	セーブして良いかどうか確認するフラグ

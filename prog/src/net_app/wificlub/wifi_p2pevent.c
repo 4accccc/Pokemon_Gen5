@@ -417,8 +417,10 @@ static GFL_PROC_RESULT WifiClubProcEnd( GFL_PROC * proc, int * seq, void * pwk, 
     EVENT_WIFICLUB_WORK* pClub = pwk;
     EV_P2PEVENT_WORK* ep2p = pClub->pWork;
 
+    GFL_HEAP_FreeMemory(ep2p->pMatchParam->pMatch);
     GFL_HEAP_FreeMemory(ep2p->pMatchParam);
-    GFL_HEAP_FreeMemory(ep2p);
+    GFL_PROC_FreeWork(proc);
+    
     return GFL_PROC_RES_FINISH;
 }
 

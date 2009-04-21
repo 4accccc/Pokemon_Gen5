@@ -333,7 +333,7 @@ void mydwc_free()
     if(_dWork){
         GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
         mydwc_releaseRecvBuffAll();
-        GFL_HEAP_DeleteHeap(pNetInit->wifiHeapID);
+//        GFL_HEAP_DeleteHeap(pNetInit->wifiHeapID);
         GFL_NET_Align32Free( _dWork  );
         _dWork = NULL;
     }

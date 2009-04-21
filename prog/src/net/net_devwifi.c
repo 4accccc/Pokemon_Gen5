@@ -314,7 +314,7 @@ static BOOL _DevIsConnectFunc(void)
 //------------------------------------------------------------------------------
 static BOOL _DevIsEndFunc(void)
 {
-    return GFL_NET_DWC_IsInit();
+    return !GFL_NET_DWC_IsInit();
 }
 
 

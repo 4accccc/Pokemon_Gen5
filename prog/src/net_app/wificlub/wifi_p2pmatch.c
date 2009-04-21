@@ -3699,13 +3699,15 @@ static int _retryWait( WIFIP2PMATCH_WORK *wk, int seq )
     if(ret == BMPMENU_NULL){  // まだ選択中
         return seq;
     }else if(ret == 0){ // はいを選択した場合
-        GFL_NET_StateWifiLogout();
+        //GFL_NET_StateWifiLogout();
+        GFL_NET_Exit(NULL);
         _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);
         _CHANGESTATE(wk,WIFIP2PMATCH_RETRY);
     }
     else{  // いいえを選択した場合
         _myStatusChange(wk, WIFI_STATUS_LOGIN_WAIT);	// VCHATの状態を元に戻すため
-        GFL_NET_StateWifiLogout();
+        //GFL_NET_StateWifiLogout();
+        GFL_NET_Exit(NULL);
      //@@OO     CommInfoFinalize();   //Info初期化
         wk->endSeq = WIFI_P2PMATCH_END;
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_END_WAIT);
@@ -3986,7 +3988,8 @@ static int _firstConnectEndMsgWait( WIFIP2PMATCH_WORK *wk, int seq )
         if(wk->initSeq == WIFI_P2PMATCH_DPW){ // 世界対戦なら
             wk->endSeq = WIFI_P2PMATCH_DPW_END;   // 終了処理へ
             _CHANGESTATE(wk,WIFIP2PMATCH_MODE_END_WAIT);
-            GFL_NET_StateWifiLogout();
+        //GFL_NET_StateWifiLogout();
+        GFL_NET_Exit(NULL);
         }
         else if( 0==WifiList_GetFriendDataNum(wk->pList) ){  //フレンドがいない
             WifiP2PMatchMessagePrint(wk, dwc_message_0011, TRUE);
@@ -7606,7 +7609,8 @@ static int _exitExiting( WIFIP2PMATCH_WORK *wk, int seq )
     }
     if(wk->timer == 1){
         wk->timer = 0;
-        GFL_NET_StateWifiLogout();  // 終了
+        //GFL_NET_StateWifiLogout();
+        GFL_NET_Exit(NULL);
     }
     if(!GFL_NET_IsInit()){
         NET_PRINT("切断した時にフレンドコードを詰める\n");
