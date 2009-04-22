@@ -31,6 +31,9 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
 
+#NARCに必要なscrファイル名
+SCRFILE = pokegra_wb.scr
+
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ../../../pokemon_wb_doc/pokegra/
 
@@ -86,11 +89,20 @@ do-build:	$(TARGETDIR)/$(NARCNAME)
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
+	$(COPY) pokemon_viewer_def.h $(PROJECT_PROGDIR)src/test/soga/
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-$(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLNFILE:.ncl=.NCLR)) $(notdir $(NCLRFILE:.ncl=.NCLR))
-	nnsarc -c -l -n -i $(NARCNAME) -S pokegra_wb.scr
+
+do-build:	$(SCRFILE) $(NARCNAME)
+
+$(SCRFILE): $(PERL_DIR)mkscr.pl $(NCGFILE) $(NCGCFILE) $(NMCFILE) $(NCLNFILE) $(NCLRFILE)
+	ls -1 pfwb*.NMCR > nmcr.lst
+	perl $(PERL_DIR)mkscr.pl nmcr.lst
+
+$(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLNFILE:.ncl=.NCLR)) $(notdir $(NCLRFILE:.ncl=.NCLR)) $(SCRFILE)
+	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE)
 	$(NAIXCUT) $(NAIXNAME)
+
 endif
 
 #------------------------------------------------------------------------------
