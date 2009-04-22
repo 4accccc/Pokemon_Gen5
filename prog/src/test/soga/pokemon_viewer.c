@@ -22,9 +22,17 @@
 #include "gf_mcs.h"
 
 #include "print/printsys.h"
+#include "print/wordset.h"
 #include "msg/msg_d_soga.h"
 #include "font/font.naix"
 #include "message.naix"
+
+#include "pokemon_viewer_def.h"
+
+
+//============================================================================================
+//	定数定義
+//============================================================================================
 
 #define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
@@ -42,6 +50,12 @@
 
 #define	MCS_READ_CH			( 0 )
 #define	MCS_WRITE_CH		( 0 )
+
+#define	MONS_INFO_X			( 74 )
+#define	MONS_INFO_Y			( 96 - 6 )
+
+#define	NEW_POKEMON_START	( 500 )
+#define	NEW_POKEMON_END	( NEW_POKEMON_START + NEW_POKEMON_COUNT - 1 )
 
 enum{
 	BACK_COL = 0,
@@ -105,6 +119,8 @@ enum{
 	SEND_NCEC_OK,
 	SEND_POS,
 	SEND_POS_OK,
+	SEND_CLEAR,
+	SEND_CLEAR_OK,
 	SEND_IDLE,
 };
 
@@ -123,6 +139,7 @@ enum{
 	SEQ_IDLE = 0,
 	SEQ_LOAD_POS_DATA,
 	SEQ_LOAD_RESOURCE_DATA,
+	SEQ_CLEAR,
 };
 
 enum{
@@ -136,27 +153,39 @@ enum{
 	BMPWIN_MAX
 };
 
+//============================================================================================
+//	構造体定義
+//============================================================================================
+
 typedef struct
 {
-	HEAPID				heapID;
+	HEAPID					heapID;
 	GFL_MSGDATA			*msg;
-	GFL_FONT			*font;
+	GFL_FONT				*font;
 
-	int					seq_no;
-	int					mcs_enable;
+	int							seq_no;
+	int							mcs_enable;
 	POKEMON_PARAM		*pp;
-	int					mons_no;
+	int							mons_no[ BTLV_MCSS_POS_MAX ];
 	GFL_BMPWIN			*bmpwin[ BMPWIN_MAX ];
-	int					key_repeat_speed;
-	int					key_repeat_wait;
-	int					read_position;
-	int					read_resource;
-	int					add_pokemon_req;
+	GFL_BMPWIN			*bmpwin2;
+	int							key_repeat_speed;
+	int							key_repeat_wait;
+	int							read_position;
+	int							read_resource;
+	int							add_pokemon_req;
+	int							edit_mode;
+	int							edit_pos;
 
-	void				*resource_data[ RESOURCE_MAX ][ BTLV_MCSS_POS_MAX ];
+	void						*resource_data[ RESOURCE_MAX ][ BTLV_MCSS_POS_MAX ];
 }POKEMON_VIEWER_WORK;
 
+//============================================================================================
+//	プロトタイプ宣言
+//============================================================================================
+
 static	void	PokemonViewerSequence( POKEMON_VIEWER_WORK *pvw );
+static	BOOL	PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw );
 static	void	PokemonViewerRead( POKEMON_VIEWER_WORK *pvw );
 static	void	PokemonViewerPositionLoad( POKEMON_VIEWER_WORK *pvw );
 static	void	PokemonViewerResourceLoad( POKEMON_VIEWER_WORK *pvw );
@@ -164,13 +193,19 @@ static	void	PokemonViewerAddPokemon( POKEMON_VIEWER_WORK *pvw );
 static	void	PokemonViewerCameraWork( POKEMON_VIEWER_WORK *pvw );
 
 static	void	TextPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num );
+static	void	PokemonViewerDrawMonsNo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos );
+static	void	PokemonViewerPP_Put( POKEMON_VIEWER_WORK *pvw, int mons_no );
 
 static	void	MoveCamera( POKEMON_VIEWER_WORK *pvw );
 
+static	void	set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos );
 #if 0
-static	void	set_pokemon( POKEMON_VIEWER_WORK *pvw );
 static	void	del_pokemon( POKEMON_VIEWER_WORK *pvw );
 #endif
+
+//============================================================================================
+//	データ
+//============================================================================================
 
 static	const	int	pokemon_pos_table[][2]={ 
 	{ BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB },
@@ -232,15 +267,15 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 		
 	{
 		static const GFL_DISP_VRAM dispvramBank = {
-			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+			GX_VRAM_BG_128_D,				// メイン2DエンジンのBG
 			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-			GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
+			GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
 			GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 			GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
 			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
 			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_01_BC,				// テクスチャイメージスロット
+			GX_VRAM_TEX_01_AB,				// テクスチャイメージスロット
 			GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
 			GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
 			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
@@ -327,6 +362,12 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
+			///<FRAME2_S
+			{
+				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			},
 		};
 		GFL_BG_SetBGControl(GFL_BG_FRAME1_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(GFL_BG_FRAME1_M );
@@ -336,6 +377,8 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 		GFL_BG_ClearScreen(GFL_BG_FRAME3_M );
 		GFL_BG_SetBGControl(GFL_BG_FRAME1_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(GFL_BG_FRAME1_S );
+		GFL_BG_SetBGControl(GFL_BG_FRAME2_S, &TextBgCntDat[4], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME2_S );
 	}
 
 	{
@@ -366,6 +409,9 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 												 GFL_BG_CHRAREA_GET_B );
 			TextPrint( pvw, i, i );
 		}
+
+		pvw->bmpwin2 = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 0, 0, 32, 24, 0, GFL_BG_CHRAREA_GET_B );
+
 	}
 
 	//ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
@@ -389,6 +435,10 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 	GFL_UI_KEY_GetRepeatSpeed( &pvw->key_repeat_speed, &pvw->key_repeat_wait );
 	GFL_UI_KEY_SetRepeatSpeed( pvw->key_repeat_speed / 4, pvw->key_repeat_wait );
 
+	//POKEMON_PARAM生成
+	pvw->pp = GFL_HEAP_AllocMemory( pvw->heapID, POKETOOL_GetWorkSize() );
+	PP_SetupEx( pvw->pp, 0, 0, 0, 0, 255 );
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -407,60 +457,79 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
 
 	if( pvw->mcs_enable ){
 		MCS_Main();
-//		MCS_Write();
+	}
+	else
+	{	
+		if( PokemonViewerSubSequence( pvw ) == TRUE )
+		{	
+			return GFL_PROC_RES_CONTINUE;	
+		}
 	}
 
-	if( trg & PAD_BUTTON_START ){
-		if( pvw->mcs_enable ){
-#if 0
+	if( trg & PAD_BUTTON_START )
+	{	
+		if( pvw->mcs_enable )
+		{
 			pvw->seq_no = SEQ_IDLE;
 			MCS_Exit();
 			pvw->mcs_enable = 0;
-			for( i = 0 ; i < BTLV_MCSS_POS_MAX ; i++ ){
-				for( j = 0 ; j < RESOURCE_MAX ; j++ ){
-					if( pvw->resource_data[ j ][ i ] ){
-						if( j == RESOURCE_NCBR ){
+			for( i = 0 ; i < BTLV_MCSS_POS_MAX ; i++ )
+			{
+				for( j = 0 ; j < RESOURCE_MAX ; j++ )
+				{
+					if( pvw->resource_data[ j ][ i ] )
+					{
+						if( j == RESOURCE_NCBR )
+						{
 							BTLV_EFFECT_DelPokemon( i );
 						}
 						pvw->resource_data[ j ][ i ] = NULL;
 					}
 				}
 			}
-#endif
-			int	mcss_pos;
-			VecFx32	pos,target;
-			VecFx32	scale_value[] = {
-				{ FX32_ONE * 16 * 2, FX32_ONE * 16 * 2, 0 },
-				{ FX32_ONE * 16, FX32_ONE * 16, 0 }
-			};
-
-			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
-			BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &pos, &target, 20, 0, 20 );
-
-			for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ ){
-				if( BTLV_MCSS_CheckExistPokemon( BTLV_EFFECT_GetMcssWork(), mcss_pos ) == TRUE ){
-					BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(),
-										 mcss_pos,
-										 EFFTOOL_CALCTYPE_INTERPOLATION,
-										 &scale_value[ mcss_pos & 1 ],
-										 10, 1, 0 );
-				}
-			}
 		}
-		else{
-			if( MCS_Init( pvw->heapID ) == FALSE ){
+		else
+		{
+			if( MCS_Init( pvw->heapID ) == FALSE )
+			{
 				pvw->mcs_enable = 1;
 			}
 		}
 	}
-	if( (trg & PAD_BUTTON_SELECT ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
+	if( (trg & PAD_BUTTON_SELECT ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) )
+	{
 		PokemonViewerCameraWork( pvw );
+	}
+
+	if( (trg & PAD_BUTTON_DEBUG ) )
+	{	
+		int	mcss_pos;
+		VecFx32	pos,target;
+		VecFx32	scale_value[] = {
+			{ FX32_ONE * 16 * 2, FX32_ONE * 16 * 2, 0 },
+			{ FX32_ONE * 16, FX32_ONE * 16, 0 }
+		};
+
+		BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
+		BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &pos, &target, 20, 0, 20 );
+
+		for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ )
+		{
+			if( BTLV_EFFECT_CheckExistPokemon( mcss_pos ) == TRUE )
+			{
+				BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(),
+									 mcss_pos,
+									 EFFTOOL_CALCTYPE_INTERPOLATION,
+									 &scale_value[ mcss_pos & 1 ],
+									 10, 1, 0 );
+			}
+		}
 	}
 
 	{
 		int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
 		if( hit != GFL_UI_TP_HIT_NONE ){
-			if( BTLV_MCSS_CheckExistPokemon( BTLV_EFFECT_GetMcssWork(), hit ) == TRUE ){
+			if( BTLV_EFFECT_CheckExistPokemon( hit ) == TRUE ){
 				BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), hit, BTLV_MCSS_VANISH_FLIP );
 				TextPrint( pvw, hit, hit );
 			}
@@ -494,6 +563,8 @@ static GFL_PROC_RESULT PokemonViewerProcExit( GFL_PROC * proc, int * seq, void *
 	}
 
 	GFL_UI_KEY_SetRepeatSpeed( pvw->key_repeat_speed, pvw->key_repeat_wait );
+
+	GFL_HEAP_FreeMemory( pvw->pp );
 
 	BTLV_EFFECT_Exit();
 
@@ -540,7 +611,116 @@ static	void	PokemonViewerSequence( POKEMON_VIEWER_WORK *pvw )
 	case SEQ_LOAD_RESOURCE_DATA:
 		PokemonViewerResourceLoad( pvw );
 		break;
+	case SEQ_CLEAR:
+		{
+			int head = SEND_IDLE;
+			int	mcss_pos;
+			int	res;
+
+			MCS_Write( MCS_WRITE_CH, &head, 4 );
+			pvw->seq_no = SEQ_IDLE;
+
+			for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ ){
+				if( BTLV_EFFECT_CheckExistPokemon( mcss_pos ) == TRUE ){
+					BTLV_EFFECT_DelPokemon( mcss_pos );
+					for( res = RESOURCE_NCBR ; res < RESOURCE_MAX ; res++ ){	
+						//リソース自体の解放は、MCSS_Delの中でやっているので、NULL初期化だけ行う
+						pvw->resource_data[ res ][ mcss_pos ] = NULL;
+					}
+				}
+				if( mcss_pos < BMPWIN_MAX ){
+					TextPrint( pvw, mcss_pos, mcss_pos );
+				}
+			}
+		}
+		break;
 	}
+}
+
+//======================================================================
+//	ロムに入っているポケモンを閲覧するモード
+//======================================================================
+static	BOOL	PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
+{	
+	BOOL	ret = FALSE;
+	if( pvw->edit_mode )
+	{	
+		int rep = GFL_UI_KEY_GetRepeat();
+		int cont = GFL_UI_KEY_GetCont();
+		
+		if( rep & PAD_KEY_UP )
+		{	
+			pvw->mons_no[ pvw->edit_pos ]++;
+		}
+		if( rep & PAD_KEY_DOWN )
+		{	
+			pvw->mons_no[ pvw->edit_pos ]--;
+		}
+		if( rep & PAD_KEY_LEFT )
+		{	
+			pvw->mons_no[ pvw->edit_pos ] -= 10;
+		}
+		if( rep & PAD_KEY_RIGHT )
+		{	
+			pvw->mons_no[ pvw->edit_pos ] += 10;
+		}
+		if( rep & PAD_BUTTON_L )
+		{	
+			pvw->mons_no[ pvw->edit_pos ] -= 100;
+		}
+		if( rep & PAD_BUTTON_R )
+		{	
+			pvw->mons_no[ pvw->edit_pos ] += 100;
+		}
+		if( rep & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+		{	
+			pvw->edit_mode = 0;
+			GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_ON );
+			GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
+			rep = 0;
+		}
+		if( pvw->mons_no[ pvw->edit_pos ] < 0 )
+		{	
+			pvw->mons_no[ pvw->edit_pos ] += NEW_POKEMON_END + 1;
+		}
+		if( pvw->mons_no[ pvw->edit_pos ] > NEW_POKEMON_END )
+		{	
+			pvw->mons_no[ pvw->edit_pos ] -= NEW_POKEMON_END + 1;
+		}
+		if( rep != 0 )
+		{	
+			int	res;
+
+			if( BTLV_EFFECT_CheckExistPokemon( pvw->edit_pos ) == TRUE ){
+					BTLV_EFFECT_DelPokemon( pvw->edit_pos );
+			}
+			PokemonViewerPP_Put( pvw, pvw->mons_no[ pvw->edit_pos ] );
+			set_pokemon( pvw, pvw->edit_pos );
+		}
+		if( cont != 0)
+		{	
+			ret = TRUE;
+		}
+	}
+	else
+	{	
+		int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
+		if( hit != GFL_UI_TP_HIT_NONE ){
+			pvw->edit_mode = 1;
+			pvw->edit_pos = hit;
+			PokemonViewerPP_Put( pvw, pvw->mons_no[ hit ] );
+			GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
+			GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_ON );
+			ret = TRUE;
+		}
+	}
+
+	if( ret == TRUE )
+	{	
+		PokemonViewerDrawMonsNo( pvw, pvw->edit_pos );
+	}
+
+	return ret;
 }
 
 //======================================================================
@@ -559,7 +739,10 @@ static	void	PokemonViewerRead( POKEMON_VIEWER_WORK *pvw )
 
 	if( size ){
 		MCS_Read( &head, HEAD_SIZE );
-		if( head == SEND_POS ){
+		if( head == SEND_CLEAR ){
+			pvw->seq_no = SEQ_CLEAR;
+		}
+		else if( head == SEND_POS ){
 			pvw->seq_no = SEQ_LOAD_POS_DATA;
 		}
 		else{
@@ -590,11 +773,10 @@ static	void	PokemonViewerPositionLoad( POKEMON_VIEWER_WORK *pvw )
 		head = SEND_IDLE;
 		MCS_Write( MCS_WRITE_CH, &head, 4 );
 		pvw->seq_no = SEQ_IDLE;
-		for( res = 0 ; res < RESOURCE_MAX ; res++ ){
-			if( pvw->resource_data[ res ][ pvw->read_position ] ){
-				if( res == RESOURCE_NCBR ){
-					BTLV_EFFECT_DelPokemon( pvw->read_position );
-				}
+		if( BTLV_EFFECT_CheckExistPokemon( pvw->read_position ) == TRUE ){
+			BTLV_EFFECT_DelPokemon( pvw->read_position );
+			for( res = RESOURCE_NCBR ; res < RESOURCE_MAX ; res++ ){	
+				//リソース自体の解放は、MCSS_Delの中でやっているので、NULL初期化だけ行う
 				pvw->resource_data[ res ][ pvw->read_position ] = NULL;
 			}
 		}
@@ -628,7 +810,7 @@ static	void	TextPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num )
 	int	flag = 0;
 	STRBUF	*strbuf;
 
-	if( BTLV_MCSS_CheckExistPokemon( BTLV_EFFECT_GetMcssWork(), num ) == TRUE ){
+	if( BTLV_EFFECT_CheckExistPokemon( num ) == TRUE ){
 	   flag = BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), num );
 	}
 
@@ -646,6 +828,53 @@ static	void	TextPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num )
 	GFL_BMPWIN_TransVramCharacter( pvw->bmpwin[ bmpwin_num ] );
 	GFL_BMPWIN_MakeScreen( pvw->bmpwin[ bmpwin_num ] );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
+}
+
+//======================================================================
+//	テキスト表示
+//======================================================================
+static	void	PokemonViewerDrawMonsNo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
+{	
+	STRBUF	*str_src;
+	STRBUF	*str_dst = GFL_STR_CreateBuffer( 100, pvw->heapID );
+	WORDSET*  mons_info = WORDSET_Create( pvw->heapID );
+	int			no;
+
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pvw->bmpwin2 ), 0 );
+
+	WORDSET_RegisterNumber( mons_info, 0, pvw->mons_no[ pos ], 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+	if( pvw->mons_no[ pos ] <= MONSNO_END )
+	{	
+		WORDSET_RegisterPokeMonsName( mons_info, 1, pvw->pp );
+	}
+	str_src = GFL_MSG_CreateString( pvw->msg,  PVMSG_MONSNAME );
+	WORDSET_ExpandStr( mons_info, str_dst, str_src );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin2 ), MONS_INFO_X, MONS_INFO_Y, str_dst, pvw->font );
+
+	GFL_HEAP_FreeMemory( str_src );
+	GFL_HEAP_FreeMemory( str_dst );
+	WORDSET_Delete( mons_info );
+
+	GFL_BMPWIN_TransVramCharacter( pvw->bmpwin2 );
+	GFL_BMPWIN_MakeScreen( pvw->bmpwin2 );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+}
+
+//======================================================================
+//	POKEMON_PARAMセット
+//======================================================================
+static	void	PokemonViewerPP_Put( POKEMON_VIEWER_WORK *pvw, int mons_no )
+{	
+	if( mons_no >= NEW_POKEMON_START )
+	{	
+		mons_no -= NEW_POKEMON_START;
+		mons_no += MONSNO_END + 1;
+	}
+	else if( mons_no > MONSNO_END )
+	{	
+		mons_no = 0;
+	}
+	PP_Put( pvw->pp, ID_PARA_monsno, mons_no );
 }
 
 //======================================================================
@@ -759,7 +988,7 @@ static	void	PokemonViewerCameraWork( POKEMON_VIEWER_WORK *pvw )
 	BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &pos, &target, 32, 0, 32 );
 
 	for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ ){
-		if( BTLV_MCSS_CheckExistPokemon( BTLV_EFFECT_GetMcssWork(), mcss_pos ) == TRUE ){
+		if( BTLV_EFFECT_CheckExistPokemon( mcss_pos ) == TRUE ){
 			BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(),
 								 mcss_pos,
 								 EFFTOOL_CALCTYPE_INTERPOLATION,
@@ -769,21 +998,17 @@ static	void	PokemonViewerCameraWork( POKEMON_VIEWER_WORK *pvw )
 	}
 }
  
-#if 0
-static	void	set_pokemon( POKEMON_VIEWER_WORK *pvw )
+static	void	set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
 {
-	//POKEMON_PARAM生成
-	POKEMON_PARAM	*pp = GFL_HEAP_AllocMemory( pvw->heapID, POKETOOL_GetWorkSize() );
-	PP_SetupEx( pp, 0, 0, 0, 0, 255 );
-	
-	PP_Put( pp, ID_PARA_monsno, MONSNO_RIZAADON );
-	PP_Put( pp, ID_PARA_id_no, 0x10 );
-	BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
-	BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
+	int mons_no = PP_Get( pvw->pp, ID_PARA_monsno, NULL );
 
-	GFL_HEAP_FreeMemory( pp );
+	if( mons_no != 0 )
+	{	
+		BTLV_EFFECT_SetPokemon( pvw->pp, pos );
+	}
 }
 
+#if 0
 static	void	del_pokemon( POKEMON_VIEWER_WORK *pvw )
 {
 	BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_AA );
