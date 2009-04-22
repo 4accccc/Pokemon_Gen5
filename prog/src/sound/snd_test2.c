@@ -830,103 +830,103 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 	} 
 	switch(tblPos){
 	
-		case SNDTEST_TPEV_BGM_PLAY:
-			if( sw->bgmPauseSw == FALSE ){
-				PMSND_PlayBGM(sw->setNo[NOIDX_BGMNO]);
-			} else {
-				PMSND_PauseBGM(FALSE);
-				sw->bgmPauseSw = FALSE;
-			}
-			break;
-
-		case SNDTEST_TPEV_BGM_STOP:
-			PMSND_StopBGM();
-			sw->bgmPauseSw = FALSE;
-			break;
-
-		case SNDTEST_TPEV_BGM_PAUSE:
-			if( sw->bgmPauseSw == FALSE ){
-				if( PMSND_CheckPlayBGM() == TRUE ){
-					PMSND_PauseBGM(TRUE);
-					sw->bgmPauseSw = TRUE;
-				}
-			}
-			break;
-
-		case SNDTEST_TPEV_BGM_PLAYFADEIN:
-			PMSND_StopBGM();
-			PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
-			sw->bgmPauseSw = FALSE;
-			break;
-
-		case SNDTEST_TPEV_BGM_FADEOUTSTOP:
-			PMSND_PlayNextBGM(0);
-			sw->bgmPauseSw = FALSE;
-			break;
-
-		case SNDTEST_TPEV_BGM_FADEOUTPLAYFADEIN:
-			PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
-			sw->bgmPauseSw = FALSE;
-			break;
-
-		case SNDTEST_TPEV_BGM_PAUSEPUSH:
-			PMSND_PauseBGM(TRUE);
-			PMSND_PushBGM();
-			sw->bgmPauseSw = FALSE;
-			break;
-
-		case SNDTEST_TPEV_BGM_POPPLAY:
-			PMSND_PopBGM();
+	case SNDTEST_TPEV_BGM_PLAY:
+		if( sw->bgmPauseSw == FALSE ){
+			PMSND_PlayBGM(sw->setNo[NOIDX_BGMNO]);
+		} else {
 			PMSND_PauseBGM(FALSE);
 			sw->bgmPauseSw = FALSE;
-			break;
+		}
+		break;
 
-		case SNDTEST_TPEV_VOICE_PLAY:
-			vpIdx = PMV_PlayVoice(	sw->setNo[NOIDX_VOICENO], 0 );
-			PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
-			break;
+	case SNDTEST_TPEV_BGM_STOP:
+		PMSND_StopBGM();
+		sw->bgmPauseSw = FALSE;
+		break;
 
-		case SNDTEST_TPEV_VOICE_PLAYCHROUS:
-			vpIdx = PMV_PlayVoice_Chorus(	sw->setNo[NOIDX_VOICENO], 0,
-											sw->setNo[NOIDX_VOICECHORUSVOL], 
-											sw->setNo[NOIDX_VOICECHORUSSPEED] );
-			PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
-			break;
-
-		case SNDTEST_TPEV_VOICE_PLAYREVERSE:
-			vpIdx = PMV_PlayVoice_Reverse( sw->setNo[NOIDX_VOICENO], 0 );
-			PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
-			break;
-
-		case SNDTEST_TPEV_VOICE_PLAYREVERSECHORUS:
-			vpIdx = PMV_PlayVoice_Custom(	sw->setNo[NOIDX_VOICENO], 0,
-											sw->setNo[NOIDX_VOICEPAN],
-											TRUE, 
-											sw->setNo[NOIDX_VOICECHORUSVOL], 
-											sw->setNo[NOIDX_VOICECHORUSSPEED],
-											TRUE );
-			PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
-			break;
-
-		case SNDTEST_TPEV_SE_PLAY:
-			PMSND_PlaySE(sw->setNo[NOIDX_SENO]);
-			PMSND_SetStatusSE( PMSND_NOEFFECT, sw->setNo[NOIDX_SEPITCH], sw->setNo[NOIDX_SEPAN]);
-			break;
-
-		case SNDTEST_TPEV_REVERB:
-			if(sw->reverbFlag == FALSE){
-				PMSND_EnableCaptureReverb( 0x2000, 16000, 63, 0 );
-				sw->reverbFlag = TRUE;
-			} else {
-				PMSND_DisableCaptureReverb();
-				sw->reverbFlag = FALSE;
+	case SNDTEST_TPEV_BGM_PAUSE:
+		if( sw->bgmPauseSw == FALSE ){
+			if( PMSND_CheckPlayBGM() == TRUE ){
+				PMSND_PauseBGM(TRUE);
+				sw->bgmPauseSw = TRUE;
 			}
-			writeButton(sw, 0x07, 0x15, sw->reverbFlag );
-			break;
+		}
+		break;
 
-		case SNDTEST_TPEV_EXIT:
-			sw->seq++;
-			break;
+	case SNDTEST_TPEV_BGM_PLAYFADEIN:
+		PMSND_StopBGM();
+		PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
+		sw->bgmPauseSw = FALSE;
+		break;
+
+	case SNDTEST_TPEV_BGM_FADEOUTSTOP:
+		PMSND_PlayNextBGM(0);
+		sw->bgmPauseSw = FALSE;
+		break;
+
+	case SNDTEST_TPEV_BGM_FADEOUTPLAYFADEIN:
+		PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
+		sw->bgmPauseSw = FALSE;
+		break;
+
+	case SNDTEST_TPEV_BGM_PAUSEPUSH:
+		PMSND_PauseBGM(TRUE);
+		PMSND_PushBGM();
+		sw->bgmPauseSw = FALSE;
+		break;
+
+	case SNDTEST_TPEV_BGM_POPPLAY:
+		PMSND_PopBGM();
+		PMSND_PauseBGM(FALSE);
+		sw->bgmPauseSw = FALSE;
+		break;
+
+	case SNDTEST_TPEV_VOICE_PLAY:
+		vpIdx = PMV_PlayVoice(	sw->setNo[NOIDX_VOICENO], 0 );
+		PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+		break;
+
+	case SNDTEST_TPEV_VOICE_PLAYCHROUS:
+		vpIdx = PMV_PlayVoice_Chorus(	sw->setNo[NOIDX_VOICENO], 0,
+										sw->setNo[NOIDX_VOICECHORUSVOL], 
+										sw->setNo[NOIDX_VOICECHORUSSPEED] );
+		PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+		break;
+
+	case SNDTEST_TPEV_VOICE_PLAYREVERSE:
+		vpIdx = PMV_PlayVoice_Reverse( sw->setNo[NOIDX_VOICENO], 0 );
+		PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+		break;
+
+	case SNDTEST_TPEV_VOICE_PLAYREVERSECHORUS:
+		vpIdx = PMV_PlayVoice_Custom(	sw->setNo[NOIDX_VOICENO], 0,
+										sw->setNo[NOIDX_VOICEPAN],
+										TRUE, 
+										sw->setNo[NOIDX_VOICECHORUSVOL], 
+										sw->setNo[NOIDX_VOICECHORUSSPEED],
+										TRUE );
+		PMVOICE_SetStatus(vpIdx, sw->setNo[NOIDX_VOICEPAN], 0, sw->setNo[NOIDX_VOICESPEED]);
+		break;
+
+	case SNDTEST_TPEV_SE_PLAY:
+		PMSND_PlaySE(sw->setNo[NOIDX_SENO]);
+		PMSND_SetStatusSE( PMSND_NOEFFECT, sw->setNo[NOIDX_SEPITCH], sw->setNo[NOIDX_SEPAN]);
+		break;
+
+	case SNDTEST_TPEV_REVERB:
+		if(sw->reverbFlag == FALSE){
+			PMSND_EnableCaptureReverb( 0x2000, 16000, 63, 0 );
+			sw->reverbFlag = TRUE;
+		} else {
+			PMSND_DisableCaptureReverb();
+			sw->reverbFlag = FALSE;
+		}
+		writeButton(sw, 0x07, 0x15, sw->reverbFlag );
+		break;
+
+	case SNDTEST_TPEV_EXIT:
+		sw->seq++;
+		break;
 	}
 	return TRUE;
 }
@@ -948,60 +948,60 @@ static BOOL checkTouchPanelEventCont(SOUNDTEST_WORK* sw)
 	}
 	switch(tblPos){
 
-		case SNDTEST_TPEV_BGM_NUMDOWN:
-			numberDec(sw, NOIDX_BGMNO, PMSND_BGM_START);
-			break;
-		case SNDTEST_TPEV_BGM_NUMUP:
-			numberInc(sw, NOIDX_BGMNO, PMSND_BGM_END);
-			break;
-		case SNDTEST_TPEV_VOICE_NUMDOWN:
-			numberDec(sw, NOIDX_VOICENO, PMVOICE_START);
-			break;
-		case SNDTEST_TPEV_VOICE_NUMUP:
-			numberInc(sw, NOIDX_VOICENO, PMVOICE_END);
-			break;
-		case SNDTEST_TPEV_SE_NUMDOWN:
-			numberDec(sw, NOIDX_SENO, PMSND_SE_START);
-			break;
-		case SNDTEST_TPEV_SE_NUMUP:
-			numberInc(sw, NOIDX_SENO, PMSND_SE_END);
-			break;
-		case SNDTEST_TPEV_VOICE_PANDOWN:
-			numberDec(sw, NOIDX_VOICEPAN, -127);
-			break;
-		case SNDTEST_TPEV_VOICE_PANUP:
-			numberInc(sw, NOIDX_VOICEPAN, 127);
-			break;
-		case SNDTEST_TPEV_SE_PANDOWN:
-			numberDec(sw, NOIDX_SEPAN, -127);
-			break;
-		case SNDTEST_TPEV_SE_PANUP:
-			numberInc(sw, NOIDX_SEPAN, 127);
-			break;
-		case SNDTEST_TPEV_VOICE_SPEEDDOWN:
-			numberDec(sw, NOIDX_VOICESPEED, 0x80000000);
-			break;
-		case SNDTEST_TPEV_VOICE_SPEEDUP:
-			numberInc(sw, NOIDX_VOICESPEED, 0x7fffffff);
-			break;
-		case SNDTEST_TPEV_VOICE_CHORUSSPEEDDOWN:
-			numberDec(sw, NOIDX_VOICECHORUSSPEED, 0x80000000);
-			break;
-		case SNDTEST_TPEV_VOICE_CHORUSSPEEDUP:
-			numberInc(sw, NOIDX_VOICECHORUSSPEED, 0x7fffffff);
-			break;
-		case SNDTEST_TPEV_VOICE_CHORUSVOLDOWN:
-			numberDec(sw, NOIDX_VOICECHORUSVOL, -127);
-			break;
-		case SNDTEST_TPEV_VOICE_CHORUSVOLUP:
-			numberInc(sw, NOIDX_VOICECHORUSVOL, 127);
-			break;
-		case SNDTEST_TPEV_SE_PITCHDOWN:
-			numberDec(sw, NOIDX_SEPITCH, 0x80000000);
-			break;
-		case SNDTEST_TPEV_SE_PITCHUP:
-			numberInc(sw, NOIDX_SEPITCH, 0x7fffffff);
-			break;
+	case SNDTEST_TPEV_BGM_NUMDOWN:
+		numberDec(sw, NOIDX_BGMNO, PMSND_BGM_START);
+		break;
+	case SNDTEST_TPEV_BGM_NUMUP:
+		numberInc(sw, NOIDX_BGMNO, PMSND_BGM_END);
+		break;
+	case SNDTEST_TPEV_VOICE_NUMDOWN:
+		numberDec(sw, NOIDX_VOICENO, PMVOICE_START);
+		break;
+	case SNDTEST_TPEV_VOICE_NUMUP:
+		numberInc(sw, NOIDX_VOICENO, PMVOICE_END);
+		break;
+	case SNDTEST_TPEV_SE_NUMDOWN:
+		numberDec(sw, NOIDX_SENO, PMSND_SE_START);
+		break;
+	case SNDTEST_TPEV_SE_NUMUP:
+		numberInc(sw, NOIDX_SENO, PMSND_SE_END);
+		break;
+	case SNDTEST_TPEV_VOICE_PANDOWN:
+		numberDec(sw, NOIDX_VOICEPAN, -127);
+		break;
+	case SNDTEST_TPEV_VOICE_PANUP:
+		numberInc(sw, NOIDX_VOICEPAN, 127);
+		break;
+	case SNDTEST_TPEV_SE_PANDOWN:
+		numberDec(sw, NOIDX_SEPAN, -127);
+		break;
+	case SNDTEST_TPEV_SE_PANUP:
+		numberInc(sw, NOIDX_SEPAN, 127);
+		break;
+	case SNDTEST_TPEV_VOICE_SPEEDDOWN:
+		numberDec(sw, NOIDX_VOICESPEED, 0x80000000);
+		break;
+	case SNDTEST_TPEV_VOICE_SPEEDUP:
+		numberInc(sw, NOIDX_VOICESPEED, 0x7fffffff);
+		break;
+	case SNDTEST_TPEV_VOICE_CHORUSSPEEDDOWN:
+		numberDec(sw, NOIDX_VOICECHORUSSPEED, 0x80000000);
+		break;
+	case SNDTEST_TPEV_VOICE_CHORUSSPEEDUP:
+		numberInc(sw, NOIDX_VOICECHORUSSPEED, 0x7fffffff);
+		break;
+	case SNDTEST_TPEV_VOICE_CHORUSVOLDOWN:
+		numberDec(sw, NOIDX_VOICECHORUSVOL, -127);
+		break;
+	case SNDTEST_TPEV_VOICE_CHORUSVOLUP:
+		numberInc(sw, NOIDX_VOICECHORUSVOL, 127);
+		break;
+	case SNDTEST_TPEV_SE_PITCHDOWN:
+		numberDec(sw, NOIDX_SEPITCH, 0x80000000);
+		break;
+	case SNDTEST_TPEV_SE_PITCHUP:
+		numberInc(sw, NOIDX_SEPITCH, 0x7fffffff);
+		break;
 	}
 	sw->tpTrgRepeatFrame = tpRepeatFrame[sw->tpTrgRepeatCount];
 	if(sw->tpTrgRepeatCount < NELEMS(tpRepeatFrame) - 1){ sw->tpTrgRepeatCount++; }

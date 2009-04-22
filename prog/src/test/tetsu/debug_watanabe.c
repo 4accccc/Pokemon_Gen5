@@ -130,26 +130,18 @@ typedef struct {
 enum {
 	DEBUGITEM_1 = 0,
 	DEBUGITEM_2,
-	DEBUGITEM_3,
-	DEBUGITEM_4,
-	DEBUGITEM_5,
-	DEBUGITEM_6,
 
 	DEBUGITEM_MAX,
 };
 
 FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeSample1ProcData;
-FS_EXTERN_OVERLAY(sound_debug);
-extern const GFL_PROC_DATA SoundTest2ProcData;
+FS_EXTERN_OVERLAY(watanabe_sample);
+extern const GFL_PROC_DATA DebugWatanabeSample2ProcData;
 
 static const DEBUGITEM_LIST debugItemList[DEBUGITEM_MAX] = {
 	{L"■３Ｄシーンサンプル",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
-	{L"■サウンドテスト",		FS_OVERLAY_ID(sound_debug),		&SoundTest2ProcData},
-	{L"■サンプル３",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
-	{L"■サンプル４",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
-	{L"■サンプル５",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
-	{L"■サンプル６",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
+	{L"■サンプル２",		FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample2ProcData},
 };
 
 //------------------------------------------------------------------
