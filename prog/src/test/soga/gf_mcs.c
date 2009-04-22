@@ -22,14 +22,14 @@
 
 typedef struct
 {
-	HEAPID				heapID;
-    u8*					mcsWorkMem;
-    NNSMcsDeviceCaps	deviceCaps;
-    NNSMcsRecvCBInfo	recvCBInfo;
-	void*				printBuffer;
-	void*				recvBuf;
-	void*				recvBuf2;
-	GFL_TCB				*vBlankTask;
+	HEAPID						heapID;
+	u8*								mcsWorkMem;
+	NNSMcsDeviceCaps	deviceCaps;
+	NNSMcsRecvCBInfo	recvCBInfo;
+	void*							printBuffer;
+	void*							recvBuf;
+	void*							recvBuf2;
+	GFL_TCB*					vBlankTask;
 }MCS_WORK;
 
 static	MCS_WORK	*mw = NULL;
@@ -65,7 +65,10 @@ static	void	MCS_CartIntrFunc( void );
 //============================================================================================
 BOOL	MCS_Init( HEAPID heapID )
 {
-	if(	mw ) return TRUE;
+	if(	mw )
+	{	
+		return TRUE;
+	}
 
 	//管理構造体メモリを確保
 	mw = GFL_HEAP_AllocMemory( heapID, sizeof( MCS_WORK ) );
@@ -90,29 +93,37 @@ BOOL	MCS_Init( HEAPID heapID )
 		mw->recvBuf = GFL_HEAP_AllocMemory( mw->heapID, 0x4000 );       // 受信用バッファの確保
 		mw->recvBuf2 = GFL_HEAP_AllocMemory( mw->heapID, 0x4000 );       // 受信用バッファの確保
 
-        NNS_NULL_ASSERT( mw->printBuffer );
-        NNS_NULL_ASSERT( mw->recvBuf );
-        NNS_NULL_ASSERT( mw->recvBuf2 );
+		NNS_NULL_ASSERT( mw->printBuffer );
+		NNS_NULL_ASSERT( mw->recvBuf );
+		NNS_NULL_ASSERT( mw->recvBuf2 );
 
-        // OS_Printfによる出力
-        OS_Printf("device open\n");
+		// OS_Printfによる出力
+		OS_Printf("device open\n");
 
-        // mcs文字列出力の初期化
+		// mcs文字列出力の初期化
 		NNS_McsInitPrint( mw->printBuffer, 1024 );
 
-        // NNS_McsPrintfによる出力
-        // このタイミングでmcsサーバが接続していれば、コンソールに表示されます。
+		// NNS_McsPrintfによる出力
+		// このタイミングでmcsサーバが接続していれば、コンソールに表示されます。
 		(void)NNS_McsPrintf("device ID %08X\n", mw->deviceCaps.deviceID );
 
-        // 読み取り用バッファの登録
+		 // 読み取り用バッファの登録
 		NNS_McsRegisterStreamRecvBuffer( MCS_CHANNEL0, mw->recvBuf, 0x4000 );
 		NNS_McsRegisterStreamRecvBuffer( MCS_CHANNEL1, mw->recvBuf2, 0x4000 );
 
         // 受信コールバック関数の登録
 //		NNS_McsRegisterRecvCallback( &mw->recvCBInfo, MCS_CHANNEL1, MCS_DataRecvCallback, (u32)&mw->mw );
 
-        return FALSE;
-    }
+		if( NNS_McsIsServerConnect() == FALSE )
+		{	
+			OS_TPrintf("接続に失敗しています\n");
+			OS_TPrintf("接続するときは、[デバイス]-[接続]を選んでください\n");
+			MCS_Exit();
+			return TRUE;
+		}
+
+		return FALSE;
+	}
 	OS_Printf("device open fail.\n");
 	return TRUE;
 }
@@ -134,7 +145,12 @@ void	MCS_Exit( void )
 	GFL_TCB_DeleteTask( mw->vBlankTask );
 
 	// NNS_McsPutStringによる出力
-	(void)NNS_McsPutString("device close\n");
+	if( NNS_McsIsServerConnect() == TRUE )
+	{	
+		(void)NNS_McsPutString("device close\n");
+		(void)NNS_McsPutString("再接続するときは、[デバイス]-[切断]を選んで切断した後\n");
+		(void)NNS_McsPutString("[デバイス]-[接続]を選んでください\n");
+	}
 
 	// デバイスをクローズ
 	(void)NNS_McsClose();
