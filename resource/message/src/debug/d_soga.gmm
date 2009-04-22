@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2009-04-17T19:25:07"/>
+	<create user="sogabe" host="W00140" date="2009-04-22T15:30:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,9 +294,9 @@
 		</language>
 	</columns>
 
-	<dialog left="497" top="170" right="1202" bottom="790" maximized="no" rayout="Vertical2">
+	<dialog left="50" top="62" right="755" bottom="682" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="756" top="61" right="1229" bottom="459" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -368,6 +368,10 @@
 
 	<row id="PVMSG_POS_F">
 		<language name="JPN">POS F</language>
+	</row>
+
+	<row id="PVMSG_MONSNAME">
+		<language name="JPN">[2:02:３桁:0]：[1:01:ポケモン種族名:1]</language>
 	</row>
 
 	<row id="EVMSG_CURSOR">
