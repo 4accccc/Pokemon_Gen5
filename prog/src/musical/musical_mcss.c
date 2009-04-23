@@ -68,7 +68,7 @@ MUS_MCSS_SYS_WORK*	MUS_MCSS_Init( int max, HEAPID heapID );
 void			MUS_MCSS_Exit( MUS_MCSS_SYS_WORK *mcss_sys );
 void			MUS_MCSS_Main( MUS_MCSS_SYS_WORK *mcss_sys );
 void			MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb );
-MUS_MCSS_WORK*		MUS_MCSS_Add( MUS_MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MUS_MCSS_ADD_WORK *maw , void *work );
+MUS_MCSS_WORK*		MUS_MCSS_Add( MUS_MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MUS_MCSS_ADD_WORK *maw , void *work , const BOOL isVBlank );
 void			MUS_MCSS_Del( MUS_MCSS_SYS_WORK *mcss_sys, MUS_MCSS_WORK *mcss );
 
 void			MUS_MCSS_SetOrthoMode( MUS_MCSS_SYS_WORK *mcss_sys );
@@ -104,7 +104,7 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 							  fx32 *pos_z_default ,
 							  const u8 isFlip );
 
-static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_MCSS_ADD_WORK *maw );
+static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_MCSS_ADD_WORK *maw , const BOOL isVBlank );
 static	void	MUS_MCSS_GetNewMultiCellAnimation(MUS_MCSS_WORK *mcss, NNSG2dMCType	mcType );
 static	void	MUS_MCSS_MaterialSetup( void );
 static NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
@@ -742,9 +742,10 @@ static	void	MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 //--------------------------------------------------------------------------
 /**
  * マルチセル登録
+ * 表示中に読み込むならisVBlankをTRUEにすること！！
  */
 //--------------------------------------------------------------------------
-MUS_MCSS_WORK*	MUS_MCSS_Add( MUS_MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MUS_MCSS_ADD_WORK *maw , void *work )
+MUS_MCSS_WORK*	MUS_MCSS_Add( MUS_MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MUS_MCSS_ADD_WORK *maw , void *work , const BOOL isVBlank )
 {
 	int			count;
 
@@ -761,7 +762,7 @@ MUS_MCSS_WORK*	MUS_MCSS_Add( MUS_MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y
 			mcss_sys->mcss[ count ]->scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->scale.z = FX32_ONE;
 			mcss_sys->mcss[ count ]->work = work;
-			MUS_MCSS_LoadResource( mcss_sys, count, maw );
+			MUS_MCSS_LoadResource( mcss_sys, count, maw , isVBlank );
 			break;
 		}
 	}
@@ -978,7 +979,7 @@ void	MUS_MCSS_ResetVanishFlag( MUS_MCSS_WORK *mcss )
  * リソースロード
  */
 //--------------------------------------------------------------------------
-static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_MCSS_ADD_WORK *maw )
+static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_MCSS_ADD_WORK *maw , const BOOL isVBlank )
 {
 	MUS_MCSS_WORK	*mcss = mcss_sys->mcss[ count ];
 
@@ -1020,7 +1021,7 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
 	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc( maw->arcID, maw->ncec, mcss->heapID );
 	mcss->musInfo  = (MUS_MCSS_NCEC_MUS*)&mcss->mcss_ncec->ncec[mcss->mcss_ncec->cells];
 	{
-#if DEB_ARI
+#if 0 & DEB_ARI
 		int i;
 		for( i=0;i<12;i++ )
 		{
@@ -1038,25 +1039,32 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
     // VRAM 関連の初期化
     //
     {
-		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
-		tlw->image_p = &mcss->mcss_image_proxy;
-		tlw->palette_p = &mcss->mcss_palette_proxy;
-		tlw->chr_ofs = mcss_sys->texAdrs + MUS_MCSS_TEX_SIZE * count;
-		tlw->pal_ofs = mcss_sys->palAdrs + MUS_MCSS_PAL_SIZE * count;
-		tlw->mcss	 = mcss;
-		// load character data for 3D (software sprite)
-		{
-			tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, FALSE, &tlw->pCharData, mcss->heapID );
-			GF_ASSERT( tlw->pBufChar != NULL);
-        }
+			TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+			tlw->image_p = &mcss->mcss_image_proxy;
+			tlw->palette_p = &mcss->mcss_palette_proxy;
+			tlw->chr_ofs = mcss_sys->texAdrs + MUS_MCSS_TEX_SIZE * count;
+			tlw->pal_ofs = mcss_sys->palAdrs + MUS_MCSS_PAL_SIZE * count;
+			tlw->mcss	 = mcss;
+			// load character data for 3D (software sprite)
+			{
+				tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, FALSE, &tlw->pCharData, mcss->heapID );
+				GF_ASSERT( tlw->pBufChar != NULL);
+			}
 
 		// load palette data
-		{
-			tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &tlw->pPlttData, mcss->heapID );
-			GF_ASSERT( tlw->pBufPltt != NULL);
-
-        }
-		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+			{
+				tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &tlw->pPlttData, mcss->heapID );
+				GF_ASSERT( tlw->pBufPltt != NULL);
+			}
+			
+			if( isVBlank == TRUE )
+			{
+				GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+			}
+			else
+			{
+				TCB_LoadResource( NULL , tlw );
+			}
     }
 }
 
@@ -1096,7 +1104,10 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 	}
 
 	GFL_HEAP_FreeMemory( work );
-	GFL_TCB_DeleteTask( tcb );
+	if( tcb != NULL )
+	{
+		GFL_TCB_DeleteTask( tcb );
+	}
 }
 
 /*---------------------------------------------------------------------------*

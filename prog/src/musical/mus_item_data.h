@@ -34,7 +34,7 @@ MUS_ITEM_DATA_SYS* MUS_ITEM_DATA_InitSystem( HEAPID heapId );
 void MUS_ITEM_DATA_ExitSystem( MUS_ITEM_DATA_SYS *sysWork );
 
 //MUS_ITEM_DRAW_WORK‚Ìì¬‚Å“à•”‚Åì¬‚³‚ê‚Ä‚¢‚é‚Ì‚ÅA•`‰æ‚ğˆê‚Ég‚¤ê‡‚Í‚»‚Á‚¿‚©‚çæ“¾‚µ‚Ä‚­‚¾‚³‚¢
-MUS_ITEM_DATA_WORK* MUS_ITEM_DATA_LoadMusItemData( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo , HEAPID heapId );
+MUS_ITEM_DATA_WORK* MUS_ITEM_DATA_GetMusItemData( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo );
 
 void	MUS_ITEM_DATA_GetDispOffset( MUS_ITEM_DATA_WORK*  dataWork , GFL_POINT* ofs );
 GFL_BBD_TEXSIZ	MUS_ITEM_DATA_GetTexType( MUS_ITEM_DATA_WORK*  dataWork );

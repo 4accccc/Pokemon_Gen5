@@ -195,7 +195,8 @@ struct MusicalData => {
 		$dress_up_cell = 0;
 		
 		#---------------------------------------------------------------------
-		@musicalDataIdx = (255,255,255,255);
+		#(パディングのせいで8個・・・
+		@musicalDataIdx = (255,255,255,255,255,255,255,255);
 		$dataArrIdx = 0;
 		#---------------------------------------------------------------------
 		for( $obj = 0 ; $obj < $objs ; $obj++ ){
@@ -264,6 +265,11 @@ struct MusicalData => {
 			#---------------------------------------------------------------------
 			#カラーパレットが0以外のときは、ドレスアップ用セル
 			elsif( $oam_color_param ){
+				if( $dataArrIdx >= 8 )
+				{
+					print "ポイントの数が多いよ！！\n";
+				}
+
 				$musicalCells[$musicalCellIdx] = MusicalData->new();
 				$musicalCells[$musicalCellIdx]->objNo($totalObjNo);
 				$musicalCells[$musicalCellIdx]->pltNo($oam_color_param);
@@ -274,10 +280,6 @@ struct MusicalData => {
 				$dataArrIdx += 1;
 				$musicalCellIdx += 1;
 				
-				if( $dataArrIdx >= 4 )
-				{
-					print "ポイントの数が多いよ！！\n";
-				}
 			}
 			#---------------------------------------------------------------------
 			else{
@@ -350,8 +352,8 @@ struct MusicalData => {
 		$mepachi_tex_s = ( ( $mepachi_char % 32 ) * 8 ) << 12;
 		$mepachi_tex_t = ( ( $mepachi_char >> 5 ) * 8 ) << 12;
 
-		#セルの情報を書き出す
-		$write = pack "l l l l l l l l l l l l C C C C", $min_x, $min_y, $size_x, $size_y, $tex_s, $tex_t, $mepachi_min_x, $mepachi_min_y, $mepachi_size_x, $mepachi_size_y, $mepachi_tex_s, $mepachi_tex_t,@musicalDataIdx[0..3];
+		#セルの情報を書き出す(パディングのせいで8個・・・
+		$write = pack "l l l l l l l l l l l l C C C C C C C C", $min_x, $min_y, $size_x, $size_y, $tex_s, $tex_t, $mepachi_min_x, $mepachi_min_y, $mepachi_size_x, $mepachi_size_y, $mepachi_tex_s, $mepachi_tex_t,@musicalDataIdx[0..7];
 		print WRITE_NCE $write;
 #=cut
 	}

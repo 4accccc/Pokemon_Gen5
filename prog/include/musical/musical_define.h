@@ -29,14 +29,15 @@
 //ミュージカルポケモンの装備箇所
 typedef enum
 {
-	MUS_POKE_EQU_HEAD,		//頭
 	MUS_POKE_EQU_EAR_R,		//右耳
 	MUS_POKE_EQU_EAR_L,		//左耳
+	MUS_POKE_EQU_HEAD,		//頭
+	MUS_POKE_EQU_EYE,		//目・鼻
+	MUS_POKE_EQU_FACE,		//顔
 	MUS_POKE_EQU_BODY,		//胴
 	MUS_POKE_EQU_WAIST,		//腰
 	MUS_POKE_EQU_HAND_R,	//右手
 	MUS_POKE_EQU_HAND_L,	//左手
-	MUS_POKE_EQU_TAIL,		//尻尾
 
 	MUS_POKE_EQUIP_MAX,
 	
@@ -47,8 +48,10 @@ typedef enum
 //アイテムデータに設定される。装備できる場所の種類
 typedef enum
 {
-	MUS_POKE_EQU_TYPE_HEAD,		//頭
 	MUS_POKE_EQU_TYPE_EAR,		//耳(右耳・左耳)
+	MUS_POKE_EQU_TYPE_HEAD,		//頭
+	MUS_POKE_EQU_TYPE_EYE,		//目
+	MUS_POKE_EQU_TYPE_FACE,		//顔
 	MUS_POKE_EQU_TYPE_BODY,		//胴
 	MUS_POKE_EQU_TYPE_WAIST,	//腰
 	MUS_POKE_EQU_TYPE_HAND,		//手(右手・左手)

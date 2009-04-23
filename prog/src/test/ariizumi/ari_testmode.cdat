@@ -1,4 +1,5 @@
 //ミュージカル関係
+#include "musical/musical_local.h"
 #include "musical/musical_dressup_sys.h"
 #include "musical/musical_stage_sys.h"
 #include "poke_tool/poke_tool.h"

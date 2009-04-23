@@ -38,7 +38,6 @@ void MUS_ITEM_DRAW_TermSystem( MUS_ITEM_DRAW_SYSTEM* work );
 //更新
 void MUS_ITEM_DRAW_UpdateSystem( MUS_ITEM_DRAW_SYSTEM* work );
 void MUS_ITEM_DRAW_UpdateSystem_VBlank( MUS_ITEM_DRAW_SYSTEM* work );
-void MUS_ITEM_DRAW_DrawSystem( MUS_ITEM_DRAW_SYSTEM* work );
 
 //アイテムの追加・削除
 //アイテム番号からリソースの読み込み
@@ -82,5 +81,10 @@ void MUS_ITEM_DRAW_CheckHit( MUS_ITEM_DRAW_WORK *itemWork , fx16 posX , fx16 pos
 #if DEB_ARI
 void MUS_ITEM_DRAW_Debug_DumpResData( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork );
 #endif
+
+#if USE_MUSICAL_EDIT
+void MUS_ITEM_DRAW_GetDispOffset( MUS_ITEM_DRAW_WORK* itemWork , GFL_POINT* ofs );
+const BOOL	MUS_ITEM_DRAW_CanEquipPosItemNo( MUS_ITEM_DRAW_SYSTEM* work , const u16 itemNo , const MUS_POKE_EQUIP_POS pos );
+#endif	//USE_MUSICAL_EDIT
 
 #endif MUS_ITEM_DRAW_H__

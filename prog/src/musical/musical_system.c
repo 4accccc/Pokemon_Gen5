@@ -21,11 +21,9 @@ static const u16 musPokeArr[]=
 	0xFFFF,
 };
 //ミュージカルの参加資格があるか調べる(仮)
-const BOOL	MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara )
+const BOOL	MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( const u16 mons_no )
 {
 	u16 i=0;
-	int	mons_no = PP_Get( pokePara, ID_PARA_monsno,	NULL );
-
 	while( 0xFFFF != musPokeArr[i] )
 	{
 		if( mons_no == musPokeArr[i] )
@@ -35,6 +33,12 @@ const BOOL	MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara )
 		i++;
 	}
 	return FALSE;
+}
+
+const BOOL	MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara )
+{
+	u16	mons_no = PP_Get( pokePara, ID_PARA_monsno,	NULL );
+	return MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( mons_no );
 }
 
 //ミュージカルでの番号に変換

@@ -26,8 +26,10 @@
 //======================================================================
 typedef enum
 {
-	EPB_HEAD	= 1<<MUS_POKE_EQU_TYPE_HEAD,
 	EPB_EAR		= 1<<MUS_POKE_EQU_TYPE_EAR,
+	EPB_HEAD	= 1<<MUS_POKE_EQU_TYPE_HEAD,
+	EPB_EYE		= 1<<MUS_POKE_EQU_TYPE_EYE,
+	EPB_FACE	= 1<<MUS_POKE_EQU_TYPE_FACE,
 	EPB_BODY	= 1<<MUS_POKE_EQU_TYPE_BODY,
 	EPB_WAIST	= 1<<MUS_POKE_EQU_TYPE_WAIST,
 	EPB_HAND	= 1<<MUS_POKE_EQU_TYPE_HAND,
@@ -90,7 +92,7 @@ void MUS_ITEM_DATA_ExitSystem( MUS_ITEM_DATA_SYS *sysWork )
 	GFL_HEAP_FreeMemory( sysWork );
 }
 
-MUS_ITEM_DATA_WORK* MUS_ITEM_DATA_LoadMusItemData( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo , HEAPID heapId )
+MUS_ITEM_DATA_WORK* MUS_ITEM_DATA_GetMusItemData( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo )
 {
 	const u8 tempNo = itemNo%33;
 	
@@ -112,15 +114,27 @@ const BOOL	MUS_ITEM_DATA_CanEquipPos( MUS_ITEM_DATA_WORK*  dataWork , const MUS_
 {
 	switch( pos )
 	{
+	case MUS_POKE_EQU_EAR_R:		//âEé®
+	case MUS_POKE_EQU_EAR_L:		//ç∂é®
+		if( dataWork->equipPosBit & EPB_EAR )
+		{
+			return TRUE;
+		}
+		break;
 	case MUS_POKE_EQU_HEAD:			//ì™
 		if( dataWork->equipPosBit & EPB_HEAD )
 		{
 			return TRUE;
 		}
 		break;
-	case MUS_POKE_EQU_EAR_R:		//âEé®
-	case MUS_POKE_EQU_EAR_L:		//ç∂é®
-		if( dataWork->equipPosBit & EPB_EAR )
+	case MUS_POKE_EQU_EYE:		//ñ⁄ÅEï@
+		if( dataWork->equipPosBit & EPB_EYE )
+		{
+			return TRUE;
+		}
+		break;
+	case MUS_POKE_EQU_FACE:		//äÁ
+		if( dataWork->equipPosBit & EPB_FACE )
 		{
 			return TRUE;
 		}
@@ -143,8 +157,6 @@ const BOOL	MUS_ITEM_DATA_CanEquipPos( MUS_ITEM_DATA_WORK*  dataWork , const MUS_
 		{
 			return TRUE;
 		}
-		break;
-	case MUS_POKE_EQU_TAIL:			//êKîˆ
 		break;
 	default:
 		GF_ASSERT_MSG( NULL ,"invalid equip pos!!\n" );

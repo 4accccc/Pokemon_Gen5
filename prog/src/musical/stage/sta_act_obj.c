@@ -15,6 +15,7 @@
 
 #include "musical/mus_poke_draw.h"
 #include "musical/mus_item_draw.h"
+#include "musical/musical_local.h"
 
 #include "sta_local_def.h"
 #include "sta_act_obj.h"

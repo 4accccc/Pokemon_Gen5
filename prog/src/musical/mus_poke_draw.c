@@ -126,7 +126,7 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 	
 	
 	work->musMcss[idx].enable = TRUE;
-	work->musMcss[idx].mcss = MUS_MCSS_Add( work->mcssSys , 0,0,0,&maw , &work->musMcss[idx] );
+	work->musMcss[idx].mcss = MUS_MCSS_Add( work->mcssSys , 0,0,0,&maw , &work->musMcss[idx] , FALSE );
 	VEC_Set( &scale, 
 			 FX32_ONE*16, 
 			 FX32_ONE*16,
@@ -245,7 +245,7 @@ static void MUS_POKE_MCSS_CallBack( const u8 pltNo , MUS_MCSS_CELL_DATA *cellDat
 {
 	MUS_POKE_DRAW_WORK *drawWork = work;
 	
-	if( pltNo >= MUS_POKE_PLT_HEAD )
+	if( pltNo >= MUS_POKE_PLT_START )
 	{
 		const MUS_POKE_EQUIP_POS pos = MUS_POKE_PLT_TO_POS(pltNo);
 		

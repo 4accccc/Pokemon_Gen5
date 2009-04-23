@@ -69,7 +69,7 @@ extern	MUS_MCSS_SYS_WORK*	MUS_MCSS_Init( int max, HEAPID heapID );
 extern	void			MUS_MCSS_Exit( MUS_MCSS_SYS_WORK *mcss_sys );
 extern	void			MUS_MCSS_Main( MUS_MCSS_SYS_WORK *mcss_sys );
 extern	void			MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb );
-extern	MUS_MCSS_WORK*	MUS_MCSS_Add( MUS_MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MUS_MCSS_ADD_WORK *maw , void *work );
+extern	MUS_MCSS_WORK*	MUS_MCSS_Add( MUS_MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MUS_MCSS_ADD_WORK *maw , void *work , const BOOL isVBlank );
 extern	void			MUS_MCSS_Del( MUS_MCSS_SYS_WORK *mcss_sys, MUS_MCSS_WORK *mcss );
 extern	void			MUS_MCSS_SetOrthoMode( MUS_MCSS_SYS_WORK *mcss_sys );
 extern	void			MUS_MCSS_ResetOrthoMode( MUS_MCSS_SYS_WORK *mcss_sys );

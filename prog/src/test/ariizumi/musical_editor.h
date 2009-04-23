@@ -10,6 +10,7 @@
 #define MUSICAL_EDITOR_H__
 
 #include "musical/stage/sta_local_def.h"
+#include "musical/musical_local.h"
 
 #if USE_MUSICAL_EDIT
 

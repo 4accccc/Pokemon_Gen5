@@ -17,6 +17,7 @@
 #include "musical_item.naix"
 
 #include "test/ariizumi/ari_debug.h"
+#include "musical/musical_local.h"
 #include "musical/mus_item_draw.h"
 #include "musical/mus_item_data.h"
 #include "musical/musical_camera_def.h"
@@ -234,7 +235,7 @@ MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddItemId( MUS_ITEM_DRAW_SYSTEM* work , u16 it
 	u8 sizeX,sizeY;
 	
 	work->musItem[i].arcIdx = MUS_ITEM_DRAW_GetArcIdx( itemIdx );
-	work->musItem[i].itemData = MUS_ITEM_DATA_LoadMusItemData( work->itemDataSys , work->musItem[i].arcIdx , work->heapId );
+	work->musItem[i].itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , work->musItem[i].arcIdx );
 
 	texSize = MUS_ITEM_DATA_GetTexType( work->musItem[i].itemData );
 	MUS_ITEM_DRAW_GetPicSize( &work->musItem[i] , &sizeX , &sizeY );
@@ -256,7 +257,7 @@ MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddResource( MUS_ITEM_DRAW_SYSTEM* work , u16 
 	u8 sizeX,sizeY;
 	
 	work->musItem[i].arcIdx = MUS_ITEM_DRAW_GetArcIdx( itemIdx );
-	work->musItem[i].itemData = MUS_ITEM_DATA_LoadMusItemData( work->itemDataSys , work->musItem[i].arcIdx , work->heapId );
+	work->musItem[i].itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , work->musItem[i].arcIdx );
 
 	texSize = MUS_ITEM_DATA_GetTexType( work->musItem[i].itemData );
 	MUS_ITEM_DRAW_GetPicSize( &work->musItem[i] , &sizeX , &sizeY );
@@ -311,7 +312,7 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 	u16 newResId;
 	
 	itemWork->arcIdx = MUS_ITEM_DRAW_GetArcIdx( newId );
-	itemWork->itemData = MUS_ITEM_DATA_LoadMusItemData( work->itemDataSys , itemWork->arcIdx , work->heapId );
+	itemWork->itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemWork->arcIdx );
 
 	texSize = MUS_ITEM_DATA_GetTexType( itemWork->itemData );
 	MUS_ITEM_DRAW_GetPicSize( itemWork , &sizeX , &sizeY );
@@ -455,3 +456,16 @@ void MUS_ITEM_DRAW_Debug_DumpResData( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW
 	OS_TPrintf("[%2d][%8x]\n",itemWork->resIdx,pltAdr);
 }
 #endif
+
+#if USE_MUSICAL_EDIT
+void MUS_ITEM_DRAW_GetDispOffset( MUS_ITEM_DRAW_WORK* itemWork , GFL_POINT* ofs )
+{
+	MUS_ITEM_DATA_GetDispOffset( itemWork->itemData , ofs );
+}
+const BOOL	MUS_ITEM_DRAW_CanEquipPosItemNo( MUS_ITEM_DRAW_SYSTEM* work , const u16 itemNo , const MUS_POKE_EQUIP_POS pos )
+{
+	MUS_ITEM_DATA_WORK *itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemNo );
+	return MUS_ITEM_DATA_CanEquipPos( itemData , pos );
+}
+
+#endif	//USE_MUSICAL_EDIT

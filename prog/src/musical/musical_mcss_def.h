@@ -23,7 +23,7 @@
 
 #define	DOT_LENGTH			(FX32_HALF >> 5)	//セルデータ1ドットに対するポリゴンの長さの基準
 
-#define MUS_CELL_ARR_NUM	(4)
+#define MUS_CELL_ARR_NUM	(8)
 //--------------------------------------------------------------------------
 /**
  * 構造体定義
@@ -94,6 +94,9 @@ struct _MUS_MCSS_WORK
 	u16							rotZ;
 	VecFx32						rotOfsBase;
 	VecFx32						rotOfs;
+	BOOL						isLoadFinish;
+	NNSGfdTexKey		texKey;
+	NNSGfdTexKey		pltKey;
 };
 
 struct _MUS_MCSS_SYS_WORK
