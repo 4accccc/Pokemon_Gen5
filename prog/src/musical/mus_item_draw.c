@@ -138,6 +138,10 @@ void MUS_ITEM_DRAW_UpdateSystem( MUS_ITEM_DRAW_SYSTEM* work )
  			if( itemWork->useOffset == TRUE )
 			{
 	 			MUS_ITEM_DATA_GetDispOffset( itemWork->itemData , &ofsPos );
+				if( itemWork->sizeX < 0 )
+				{
+					ofsPos.x *= -1;
+				}
 				rotOfsX = FX_CosIdx( itemWork->rotZ ) * ofsPos.x - FX_SinIdx( itemWork->rotZ ) * ofsPos.y;
 				rotOfsY = FX_SinIdx( itemWork->rotZ ) * ofsPos.x + FX_CosIdx( itemWork->rotZ ) * ofsPos.y;
 			}
@@ -173,9 +177,7 @@ void MUS_ITEM_DRAW_UpdateSystem_VBlank( MUS_ITEM_DRAW_SYSTEM* work )
 //アイテム番号からARCの番号を調べる
 u16 MUS_ITEM_DRAW_GetArcIdx( const u16 itemIdx )
 {
-	//FIXME 今は32パターンだからループ
-
-	return (NARC_musical_item_item01_nsbtx + itemIdx)%33;
+	return (NARC_musical_item_item_000_nsbtx + itemIdx);
 }
 //ファイルIdxからサイズを調べる
 void MUS_ITEM_DRAW_GetPicSize( MUS_ITEM_DRAW_WORK *itemWork , u8 *sizeXRate , u8 *sizeYRate )
@@ -192,6 +194,12 @@ void MUS_ITEM_DRAW_GetPicSize( MUS_ITEM_DRAW_WORK *itemWork , u8 *sizeXRate , u8
 const BOOL MUS_ITEM_DRAW_CanEquipPos( MUS_ITEM_DRAW_WORK *itemWork , const MUS_POKE_EQUIP_POS pos )
 {
 	return MUS_ITEM_DATA_CanEquipPos( itemWork->itemData , pos );
+}
+
+//指定箇所に装備できるか?
+const BOOL MUS_ITEM_DRAW_IsBackItem( MUS_ITEM_DRAW_WORK *itemWork )
+{
+	return MUS_ITEM_DATA_IsBackItem( itemWork->itemData );
 }
 
 

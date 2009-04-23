@@ -135,6 +135,7 @@ typedef struct
 	u8		befObjId;
 	u8		lightNum;
 	u8		befLightState;
+	BOOL	isInitMcs;
 
 	//Setting時
 	u8		pokeNo;
@@ -296,7 +297,7 @@ static GFL_PROC_RESULT MusicalEditProc_Main( GFL_PROC * proc, int * seq , void *
 		
 	case STA_SEQ_INIT_ACTING:
 		work->actWork = STA_ACT_InitActing( work->actInitWork );
-		MCS_Init( work->heapId );
+		work->isInitMcs = !MCS_Init( work->heapId );
 		MusicalEdit_InitGraphic( work );
 		MusicalEdit_InitBgPokeEquip( work );
 		*seq = STA_SEQ_LOOP_ACTING;
@@ -445,14 +446,15 @@ static void MusicalEdit_DrawPokeData( MUS_EDIT_LOCAL_WORK *work , const u8 pokeN
 	STRBUF	*str = GFL_STR_CreateBuffer( 32 , work->heapId );
 	STRCODE posName[MUS_POKE_EQUIP_MAX][20] =
 	{
-		{ L'H',L'E',L'A',L'D',0xFFFF },
 		{ L'H',L'A',L'R',L'_',L'R',0xFFFF },
 		{ L'H',L'A',L'R',L'_',L'L',0xFFFF },
+		{ L'H',L'E',L'A',L'D',0xFFFF },
+		{ L'E',L'Y',L'E',0xFFFF },
+		{ L'F',L'A',L'C',L'E',0xFFFF },
 		{ L'B',L'O',L'D',L'Y',0xFFFF },
 		{ L'W',L'A',L'I',L'S',L'T',0xFFFF },
 		{ L'H',L'A',L'N',L'D',L'_',L'R',0xFFFF },
 		{ L'H',L'A',L'N',L'D',L'_',L'L',0xFFFF },
-		{ L'T',L'A',L'I',L'L',0xFFFF },
 	};
 	MUSICAL_POKE_PARAM *musPoke = &work->actInitWork->musPoke[pokeNo];
 
@@ -472,7 +474,7 @@ static void MusicalEdit_DrawPokeData( MUS_EDIT_LOCAL_WORK *work , const u8 pokeN
 	
 	//装備品
 	{
-		const u8 itemNo = musPoke->equip[ work->dispEquipPos[pokeNo] ].itemNo;
+		const u16 itemNo = musPoke->equip[ work->dispEquipPos[pokeNo] ].itemNo;
 		if( itemNo == MUSICAL_ITEM_INVALID )
 		{
 			GFL_MSG_GetString( work->itemMsgHandle , ITEM_NAME_NONE , str );
@@ -730,6 +732,12 @@ static void MusicalEdit_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
 static void MusicalEdit_McsMain( MUS_EDIT_LOCAL_WORK *work )
 {
 	u32 size;
+	
+	if( work->isInitMcs == FALSE )
+	{
+		return;
+	}
+	
 	MCS_Main();
 
 	switch(work->mcsSeq)
@@ -1062,7 +1070,7 @@ static void MusicalSetting_DrawPoke( MUS_EDIT_LOCAL_WORK *work )
 	//装備品
 	for( i=0;i<9;i++ )
 	{
-		const u8 itemNo = musPoke->equip[ i ].itemNo;
+		const u16 itemNo = musPoke->equip[ i ].itemNo;
 		if( itemNo == MUSICAL_ITEM_INVALID )
 		{
 			GFL_MSG_GetString( work->itemMsgHandle , ITEM_NAME_NONE , str );
@@ -1168,11 +1176,18 @@ static void MusicalSetting_UpdatePoke( MUS_EDIT_LOCAL_WORK *work )
 			MusicalEdit_UpdateNumberFunc( F32_CONST(equipData->pos.x+ofs.x+rotOfs.x) , 3 ,10 , 5+ePos*2 );
 			MusicalEdit_UpdateNumberFunc( F32_CONST(equipData->pos.y+ofs.y+rotOfs.y) , 3 ,14 , 5+ePos*2 );
 			if( work->itemWork[ePos] != NULL )
-			{
+			{ 
 				GFL_POINT itemOfs;
 				pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
 				pos.y = (equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
-				pos.z = FX32_CONST(60.0f);	//とりあえずポケの前に出す
+				if( MUS_ITEM_DRAW_IsBackItem( work->itemWork[ePos] ) == TRUE )
+				{
+					pos.z = FX32_CONST(0.0f);	//後ろ！
+				}
+				else
+				{
+					pos.z = FX32_CONST(60.0f);	//とりあえずポケの前に出す
+				}
 
 				MUS_ITEM_DRAW_SetPosition(	work->itemDrawSys , 
 											work->itemWork[ePos] ,
@@ -1245,6 +1260,10 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
 			else
 			{
 				u16 count = 0;
+				if( *itemNo == MUSICAL_ITEM_INVALID )
+				{
+					*itemNo = 0;
+				}
 				while( TRUE )
 				{
 					if( *itemNo + moveVal < 0 )

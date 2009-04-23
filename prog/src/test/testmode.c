@@ -197,8 +197,8 @@ static TESTMODE_MENU_LIST topMenu[] =
 	{L"名前を選んで開始"	,TESTMODE_ITEM_SelectFuncChangeSelectName },
 	{L"RTC調整"				,TESTMODE_ITEM_SelectFuncRTCEdit },
 	{L"セーブ破かい"		,TESTMODE_ITEM_SelectFuncSave },
-    {L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
-    {L"ミュージカル"		,TESTMODE_ITEM_ChangeMusicalMenu },
+	{L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
+	{L"ミュージカル"		,TESTMODE_ITEM_ChangeMusicalMenu },
 
 	//個人
 	{L"わたなべ　てつや"	,TESTMODE_ITEM_SelectFuncWatanabe },

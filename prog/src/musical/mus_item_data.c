@@ -26,13 +26,14 @@
 //======================================================================
 typedef enum
 {
-	EPB_EAR		= 1<<MUS_POKE_EQU_TYPE_EAR,
-	EPB_HEAD	= 1<<MUS_POKE_EQU_TYPE_HEAD,
-	EPB_EYE		= 1<<MUS_POKE_EQU_TYPE_EYE,
-	EPB_FACE	= 1<<MUS_POKE_EQU_TYPE_FACE,
-	EPB_BODY	= 1<<MUS_POKE_EQU_TYPE_BODY,
-	EPB_WAIST	= 1<<MUS_POKE_EQU_TYPE_WAIST,
-	EPB_HAND	= 1<<MUS_POKE_EQU_TYPE_HAND,
+	EPB_EAR			= 1<<MUS_POKE_EQU_TYPE_EAR,
+	EPB_HEAD		= 1<<MUS_POKE_EQU_TYPE_HEAD,
+	EPB_EYE			= 1<<MUS_POKE_EQU_TYPE_EYE,
+	EPB_FACE		= 1<<MUS_POKE_EQU_TYPE_FACE,
+	EPB_BODY		= 1<<MUS_POKE_EQU_TYPE_BODY,
+	EPB_WAIST		= 1<<MUS_POKE_EQU_TYPE_WAIST,
+	EPB_HAND		= 1<<MUS_POKE_EQU_TYPE_HAND,
+	EPB_IS_BACK	= 1<<MUS_POKE_EQU_IS_BACK,
 }EQIUP_POS_BIT;
 
 //======================================================================
@@ -94,9 +95,7 @@ void MUS_ITEM_DATA_ExitSystem( MUS_ITEM_DATA_SYS *sysWork )
 
 MUS_ITEM_DATA_WORK* MUS_ITEM_DATA_GetMusItemData( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo )
 {
-	const u8 tempNo = itemNo%33;
-	
-	return &sysWork->dataArr[tempNo];
+	return &sysWork->dataArr[itemNo];
 }
 
 void	MUS_ITEM_DATA_GetDispOffset( MUS_ITEM_DATA_WORK*  dataWork , GFL_POINT* ofs )
@@ -164,3 +163,13 @@ const BOOL	MUS_ITEM_DATA_CanEquipPos( MUS_ITEM_DATA_WORK*  dataWork , const MUS_
 	}
 	return FALSE;
 }
+
+const BOOL	MUS_ITEM_DATA_IsBackItem( MUS_ITEM_DATA_WORK*  dataWork )
+{
+	if( dataWork->equipPosBit & EPB_IS_BACK )
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+

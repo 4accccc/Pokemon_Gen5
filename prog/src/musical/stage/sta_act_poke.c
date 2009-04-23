@@ -215,7 +215,16 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 
 				pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
 				pos.y = (equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
-				pos.z = pokeWork->pokePos.z+FX32_HALF;	//とりあえずポケの前に出す
+				if( MUS_ITEM_DRAW_IsBackItem( pokeWork->itemWork[ePos] ) == TRUE )
+				{
+					//背面用アイテム
+					pos.z = pokeWork->pokePos.z-FX32_CONST(20.0f);
+				}
+				else
+				{
+					//とりあえずポケの前に出す
+					pos.z = pokeWork->pokePos.z+FX32_HALF;	
+				}
 
 				//OS_Printf("[%.2f][%.2f]\n",F32_CONST(equipData->pos.z),F32_CONST(pokePos.z));
 				MUS_ITEM_DRAW_SetPosition(	work->itemDrawSys , 
@@ -228,9 +237,9 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 											pokeWork->itemWork[ePos] ,
 											equipData->scale.x /16 /4,
 											equipData->scale.y /16 /4);
-				MUS_ITEM_DRAW_SetFlipS( work->itemDrawSys , 
-										pokeWork->itemWork[ePos] ,
-										flipS );
+//				MUS_ITEM_DRAW_SetFlipS( work->itemDrawSys , 
+//										pokeWork->itemWork[ePos] ,
+//										flipS );
 			}
 		}
 	}

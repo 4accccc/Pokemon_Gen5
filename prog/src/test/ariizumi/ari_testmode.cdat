@@ -46,6 +46,7 @@ static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int i
 
 static TESTMODE_MENU_LIST menuAriizumi[] = 
 {
+	{L"ミュージカル"		,TESTMODE_ITEM_ChangeMusicalMenu },
 #if USE_MUSICAL_EDIT
 	{L"ミュージカルデバッグ"	,TESTMODE_ITEM_SelectMusicalEditor },
 #endif //USE_MUSICAL_EDIT

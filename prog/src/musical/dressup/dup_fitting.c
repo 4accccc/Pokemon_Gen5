@@ -106,6 +106,7 @@ static const fx32 RETURN_LIST_ITEM_DEPTH = FX32_CONST(30.0f);
 //装備アイテム系
 static const u16 HOLD_ITEM_SNAP_LENGTH = 12;
 static const fx32 EQUIP_ITEM_DEPTH = FX32_CONST(50.5f);
+static const fx32 EQUIP_ITEM_DEPTH_BACK = FX32_CONST(20.5f);
 
 
 //リストに戻るアニメーション
@@ -168,6 +169,12 @@ typedef enum
 //======================================================================
 #pragma mark [> struct
 
+typedef struct
+{
+	u16		itemId;
+	BOOL	isOutList;	//リスト外にいる
+}ITEM_STATE;
+
 struct _FITTING_WORK
 {
 	HEAPID heapId;
@@ -196,6 +203,8 @@ struct _FITTING_WORK
 
 	//アイテム系
 	GFL_G3D_RES	*itemRes[MUSICAL_ITEM_MAX];
+	u16							totalItemNum;
+	ITEM_STATE			itemState[MUSICAL_ITEM_MAX];
 	FIT_ITEM_GROUP	*itemGroupList;
 	FIT_ITEM_GROUP	*itemGroupField;
 	FIT_ITEM_GROUP	*itemGroupEquip;
@@ -697,6 +706,30 @@ static void DUP_FIT_SetupPokemon( FITTING_WORK *work )
 static void DUP_FIT_SetupItem( FITTING_WORK *work )
 {
 	int i;
+	
+	//所持アイテムのチェック
+	work->totalItemNum = 0;
+	for( i=0;i<MUSICAL_ITEM_MAX;i++ )
+	{
+		//	FIXME:正しい所持アイテムチェック
+		if( i%3 != 0 )
+		{
+			work->itemState[work->totalItemNum].itemId = i;
+			work->itemState[work->totalItemNum].isOutList = FALSE;
+			work->totalItemNum++;
+		}
+	}
+	//残りに空データをつめる
+	i=0;
+	while( work->totalItemNum+i < MUSICAL_ITEM_MAX )
+	{
+		work->itemState[work->totalItemNum+i].itemId = MUSICAL_ITEM_INVALID;
+		work->itemState[work->totalItemNum+i].isOutList = FALSE;
+		i++;
+	}
+	
+	
+	//グラフィック系初期化
 	work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , ITEM_DISP_NUM , work->heapId );
 	for( i=0;i<MUSICAL_ITEM_MAX;i++ )
 	{
@@ -1026,6 +1059,11 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
 				DUP_FIT_UpdateTpDropItemToList( work );
 			}
 			else
+			if( hitMinOval == TRUE )
+			{
+				DUP_FIT_UpdateTpDropItemToField( work );
+			}
+			else
 			{
 				DUP_FIT_UpdateTpDropItemToField( work );
 			}
@@ -1221,6 +1259,10 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work )
 		dispPos.y = (int)F32_CONST(equipData->pos.y+equipData->ofs.y)+ 96;
 		rotZ = equipData->itemRot;
 		MUS_ITEM_DRAW_SetUseOffset( work->itemDrawSys , itemDrawWork , TRUE );
+		if( MUS_ITEM_DRAW_IsBackItem( itemDrawWork ) == TRUE )
+		{
+			pos.z = EQUIP_ITEM_DEPTH_BACK;
+		}
 	}
 	else
 	{
@@ -1368,7 +1410,14 @@ static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
 		VecFx32 pos;
 		MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
 		MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , drawWork , &pos );
-		pos.z = depth;
+		if( MUS_ITEM_DRAW_IsBackItem( drawWork ) == TRUE )
+		{
+			pos.z = depth-EQUIP_ITEM_DEPTH+EQUIP_ITEM_DEPTH_BACK;
+		}
+		else
+		{
+			pos.z = depth;
+		}
 		MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , drawWork , &pos );
 		
 		depth -= FX32_CONST(0.1f);

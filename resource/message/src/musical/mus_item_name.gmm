@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-04-17T18:40:05"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-04-23T11:49:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="68" top="182" right="773" bottom="803" maximized="no" rayout="Vertical2">
+	<dialog left="-64" top="182" right="641" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -464,6 +464,874 @@
 
 	<row id="ITEM_NAME_032">
 		<language name="JPN" width="256">デバッグ用十字</language>
+	</row>
+
+	<row id="ITEM_NAME_033">
+		<language name="JPN" width="256">アイテム33</language>
+	</row>
+
+	<row id="ITEM_NAME_034">
+		<language name="JPN" width="256">アイテム34</language>
+	</row>
+
+	<row id="ITEM_NAME_035">
+		<language name="JPN" width="256">アイテム35</language>
+	</row>
+
+	<row id="ITEM_NAME_036">
+		<language name="JPN" width="256">アイテム36</language>
+	</row>
+
+	<row id="ITEM_NAME_037">
+		<language name="JPN" width="256">アイテム37</language>
+	</row>
+
+	<row id="ITEM_NAME_038">
+		<language name="JPN" width="256">アイテム38</language>
+	</row>
+
+	<row id="ITEM_NAME_039">
+		<language name="JPN" width="256">アイテム39</language>
+	</row>
+
+	<row id="ITEM_NAME_040">
+		<language name="JPN" width="256">アイテム40</language>
+	</row>
+
+	<row id="ITEM_NAME_041">
+		<language name="JPN" width="256">アイテム41</language>
+	</row>
+
+	<row id="ITEM_NAME_042">
+		<language name="JPN" width="256">アイテム42</language>
+	</row>
+
+	<row id="ITEM_NAME_043">
+		<language name="JPN" width="256">アイテム43</language>
+	</row>
+
+	<row id="ITEM_NAME_044">
+		<language name="JPN" width="256">アイテム44</language>
+	</row>
+
+	<row id="ITEM_NAME_045">
+		<language name="JPN" width="256">アイテム45</language>
+	</row>
+
+	<row id="ITEM_NAME_046">
+		<language name="JPN" width="256">アイテム46</language>
+	</row>
+
+	<row id="ITEM_NAME_047">
+		<language name="JPN" width="256">アイテム47</language>
+	</row>
+
+	<row id="ITEM_NAME_048">
+		<language name="JPN" width="256">アイテム48</language>
+	</row>
+
+	<row id="ITEM_NAME_049">
+		<language name="JPN" width="256">アイテム49</language>
+	</row>
+
+	<row id="ITEM_NAME_050">
+		<language name="JPN" width="256">アイテム50</language>
+	</row>
+
+	<row id="ITEM_NAME_051">
+		<language name="JPN" width="256">アイテム51</language>
+	</row>
+
+	<row id="ITEM_NAME_052">
+		<language name="JPN" width="256">アイテム52</language>
+	</row>
+
+	<row id="ITEM_NAME_053">
+		<language name="JPN" width="256">アイテム53</language>
+	</row>
+
+	<row id="ITEM_NAME_054">
+		<language name="JPN" width="256">アイテム54</language>
+	</row>
+
+	<row id="ITEM_NAME_055">
+		<language name="JPN" width="256">アイテム55</language>
+	</row>
+
+	<row id="ITEM_NAME_056">
+		<language name="JPN" width="256">アイテム56</language>
+	</row>
+
+	<row id="ITEM_NAME_057">
+		<language name="JPN" width="256">アイテム57</language>
+	</row>
+
+	<row id="ITEM_NAME_058">
+		<language name="JPN" width="256">アイテム58</language>
+	</row>
+
+	<row id="ITEM_NAME_059">
+		<language name="JPN" width="256">アイテム59</language>
+	</row>
+
+	<row id="ITEM_NAME_060">
+		<language name="JPN" width="256">アイテム60</language>
+	</row>
+
+	<row id="ITEM_NAME_061">
+		<language name="JPN" width="256">アイテム61</language>
+	</row>
+
+	<row id="ITEM_NAME_062">
+		<language name="JPN" width="256">アイテム62</language>
+	</row>
+
+	<row id="ITEM_NAME_063">
+		<language name="JPN" width="256">アイテム63</language>
+	</row>
+
+	<row id="ITEM_NAME_064">
+		<language name="JPN" width="256">アイテム64</language>
+	</row>
+
+	<row id="ITEM_NAME_065">
+		<language name="JPN" width="256">アイテム65</language>
+	</row>
+
+	<row id="ITEM_NAME_066">
+		<language name="JPN" width="256">アイテム66</language>
+	</row>
+
+	<row id="ITEM_NAME_067">
+		<language name="JPN" width="256">アイテム67</language>
+	</row>
+
+	<row id="ITEM_NAME_068">
+		<language name="JPN" width="256">アイテム68</language>
+	</row>
+
+	<row id="ITEM_NAME_069">
+		<language name="JPN" width="256">アイテム69</language>
+	</row>
+
+	<row id="ITEM_NAME_070">
+		<language name="JPN" width="256">アイテム70</language>
+	</row>
+
+	<row id="ITEM_NAME_071">
+		<language name="JPN" width="256">アイテム71</language>
+	</row>
+
+	<row id="ITEM_NAME_072">
+		<language name="JPN" width="256">アイテム72</language>
+	</row>
+
+	<row id="ITEM_NAME_073">
+		<language name="JPN" width="256">アイテム73</language>
+	</row>
+
+	<row id="ITEM_NAME_074">
+		<language name="JPN" width="256">アイテム74</language>
+	</row>
+
+	<row id="ITEM_NAME_075">
+		<language name="JPN" width="256">アイテム75</language>
+	</row>
+
+	<row id="ITEM_NAME_076">
+		<language name="JPN" width="256">アイテム76</language>
+	</row>
+
+	<row id="ITEM_NAME_077">
+		<language name="JPN" width="256">アイテム77</language>
+	</row>
+
+	<row id="ITEM_NAME_078">
+		<language name="JPN" width="256">アイテム78</language>
+	</row>
+
+	<row id="ITEM_NAME_079">
+		<language name="JPN" width="256">アイテム79</language>
+	</row>
+
+	<row id="ITEM_NAME_080">
+		<language name="JPN" width="256">アイテム80</language>
+	</row>
+
+	<row id="ITEM_NAME_081">
+		<language name="JPN" width="256">アイテム81</language>
+	</row>
+
+	<row id="ITEM_NAME_082">
+		<language name="JPN" width="256">アイテム82</language>
+	</row>
+
+	<row id="ITEM_NAME_083">
+		<language name="JPN" width="256">アイテム83</language>
+	</row>
+
+	<row id="ITEM_NAME_084">
+		<language name="JPN" width="256">アイテム84</language>
+	</row>
+
+	<row id="ITEM_NAME_085">
+		<language name="JPN" width="256">アイテム85</language>
+	</row>
+
+	<row id="ITEM_NAME_086">
+		<language name="JPN" width="256">アイテム86</language>
+	</row>
+
+	<row id="ITEM_NAME_087">
+		<language name="JPN" width="256">アイテム87</language>
+	</row>
+
+	<row id="ITEM_NAME_088">
+		<language name="JPN" width="256">アイテム88</language>
+	</row>
+
+	<row id="ITEM_NAME_089">
+		<language name="JPN" width="256">アイテム89</language>
+	</row>
+
+	<row id="ITEM_NAME_090">
+		<language name="JPN" width="256">アイテム90</language>
+	</row>
+
+	<row id="ITEM_NAME_091">
+		<language name="JPN" width="256">アイテム91</language>
+	</row>
+
+	<row id="ITEM_NAME_092">
+		<language name="JPN" width="256">アイテム92</language>
+	</row>
+
+	<row id="ITEM_NAME_093">
+		<language name="JPN" width="256">アイテム93</language>
+	</row>
+
+	<row id="ITEM_NAME_094">
+		<language name="JPN" width="256">アイテム94</language>
+	</row>
+
+	<row id="ITEM_NAME_095">
+		<language name="JPN" width="256">アイテム95</language>
+	</row>
+
+	<row id="ITEM_NAME_096">
+		<language name="JPN" width="256">アイテム96</language>
+	</row>
+
+	<row id="ITEM_NAME_097">
+		<language name="JPN" width="256">アイテム97</language>
+	</row>
+
+	<row id="ITEM_NAME_098">
+		<language name="JPN" width="256">アイテム98</language>
+	</row>
+
+	<row id="ITEM_NAME_099">
+		<language name="JPN" width="256">アイテム99</language>
+	</row>
+
+	<row id="ITEM_NAME_100">
+		<language name="JPN" width="256">アイテム100</language>
+	</row>
+
+	<row id="ITEM_NAME_101">
+		<language name="JPN" width="256">アイテム101</language>
+	</row>
+
+	<row id="ITEM_NAME_102">
+		<language name="JPN" width="256">アイテム102</language>
+	</row>
+
+	<row id="ITEM_NAME_103">
+		<language name="JPN" width="256">アイテム103</language>
+	</row>
+
+	<row id="ITEM_NAME_104">
+		<language name="JPN" width="256">アイテム104</language>
+	</row>
+
+	<row id="ITEM_NAME_105">
+		<language name="JPN" width="256">アイテム105</language>
+	</row>
+
+	<row id="ITEM_NAME_106">
+		<language name="JPN" width="256">アイテム106</language>
+	</row>
+
+	<row id="ITEM_NAME_107">
+		<language name="JPN" width="256">アイテム107</language>
+	</row>
+
+	<row id="ITEM_NAME_108">
+		<language name="JPN" width="256">アイテム108</language>
+	</row>
+
+	<row id="ITEM_NAME_109">
+		<language name="JPN" width="256">アイテム109</language>
+	</row>
+
+	<row id="ITEM_NAME_110">
+		<language name="JPN" width="256">アイテム110</language>
+	</row>
+
+	<row id="ITEM_NAME_111">
+		<language name="JPN" width="256">アイテム111</language>
+	</row>
+
+	<row id="ITEM_NAME_112">
+		<language name="JPN" width="256">アイテム112</language>
+	</row>
+
+	<row id="ITEM_NAME_113">
+		<language name="JPN" width="256">アイテム113</language>
+	</row>
+
+	<row id="ITEM_NAME_114">
+		<language name="JPN" width="256">アイテム114</language>
+	</row>
+
+	<row id="ITEM_NAME_115">
+		<language name="JPN" width="256">アイテム115</language>
+	</row>
+
+	<row id="ITEM_NAME_116">
+		<language name="JPN" width="256">アイテム116</language>
+	</row>
+
+	<row id="ITEM_NAME_117">
+		<language name="JPN" width="256">アイテム117</language>
+	</row>
+
+	<row id="ITEM_NAME_118">
+		<language name="JPN" width="256">アイテム118</language>
+	</row>
+
+	<row id="ITEM_NAME_119">
+		<language name="JPN" width="256">アイテム119</language>
+	</row>
+
+	<row id="ITEM_NAME_120">
+		<language name="JPN" width="256">アイテム120</language>
+	</row>
+
+	<row id="ITEM_NAME_121">
+		<language name="JPN" width="256">アイテム121</language>
+	</row>
+
+	<row id="ITEM_NAME_122">
+		<language name="JPN" width="256">アイテム122</language>
+	</row>
+
+	<row id="ITEM_NAME_123">
+		<language name="JPN" width="256">アイテム123</language>
+	</row>
+
+	<row id="ITEM_NAME_124">
+		<language name="JPN" width="256">アイテム124</language>
+	</row>
+
+	<row id="ITEM_NAME_125">
+		<language name="JPN" width="256">アイテム125</language>
+	</row>
+
+	<row id="ITEM_NAME_126">
+		<language name="JPN" width="256">アイテム126</language>
+	</row>
+
+	<row id="ITEM_NAME_127">
+		<language name="JPN" width="256">アイテム127</language>
+	</row>
+
+	<row id="ITEM_NAME_128">
+		<language name="JPN" width="256">アイテム128</language>
+	</row>
+
+	<row id="ITEM_NAME_129">
+		<language name="JPN" width="256">アイテム129</language>
+	</row>
+
+	<row id="ITEM_NAME_130">
+		<language name="JPN" width="256">アイテム130</language>
+	</row>
+
+	<row id="ITEM_NAME_131">
+		<language name="JPN" width="256">アイテム131</language>
+	</row>
+
+	<row id="ITEM_NAME_132">
+		<language name="JPN" width="256">アイテム132</language>
+	</row>
+
+	<row id="ITEM_NAME_133">
+		<language name="JPN" width="256">アイテム133</language>
+	</row>
+
+	<row id="ITEM_NAME_134">
+		<language name="JPN" width="256">アイテム134</language>
+	</row>
+
+	<row id="ITEM_NAME_135">
+		<language name="JPN" width="256">アイテム135</language>
+	</row>
+
+	<row id="ITEM_NAME_136">
+		<language name="JPN" width="256">アイテム136</language>
+	</row>
+
+	<row id="ITEM_NAME_137">
+		<language name="JPN" width="256">アイテム137</language>
+	</row>
+
+	<row id="ITEM_NAME_138">
+		<language name="JPN" width="256">アイテム138</language>
+	</row>
+
+	<row id="ITEM_NAME_139">
+		<language name="JPN" width="256">アイテム139</language>
+	</row>
+
+	<row id="ITEM_NAME_140">
+		<language name="JPN" width="256">アイテム140</language>
+	</row>
+
+	<row id="ITEM_NAME_141">
+		<language name="JPN" width="256">アイテム141</language>
+	</row>
+
+	<row id="ITEM_NAME_142">
+		<language name="JPN" width="256">アイテム142</language>
+	</row>
+
+	<row id="ITEM_NAME_143">
+		<language name="JPN" width="256">アイテム143</language>
+	</row>
+
+	<row id="ITEM_NAME_144">
+		<language name="JPN" width="256">アイテム144</language>
+	</row>
+
+	<row id="ITEM_NAME_145">
+		<language name="JPN" width="256">アイテム145</language>
+	</row>
+
+	<row id="ITEM_NAME_146">
+		<language name="JPN" width="256">アイテム146</language>
+	</row>
+
+	<row id="ITEM_NAME_147">
+		<language name="JPN" width="256">アイテム147</language>
+	</row>
+
+	<row id="ITEM_NAME_148">
+		<language name="JPN" width="256">アイテム148</language>
+	</row>
+
+	<row id="ITEM_NAME_149">
+		<language name="JPN" width="256">アイテム149</language>
+	</row>
+
+	<row id="ITEM_NAME_150">
+		<language name="JPN" width="256">アイテム150</language>
+	</row>
+
+	<row id="ITEM_NAME_151">
+		<language name="JPN" width="256">アイテム151</language>
+	</row>
+
+	<row id="ITEM_NAME_152">
+		<language name="JPN" width="256">アイテム152</language>
+	</row>
+
+	<row id="ITEM_NAME_153">
+		<language name="JPN" width="256">アイテム153</language>
+	</row>
+
+	<row id="ITEM_NAME_154">
+		<language name="JPN" width="256">アイテム154</language>
+	</row>
+
+	<row id="ITEM_NAME_155">
+		<language name="JPN" width="256">アイテム155</language>
+	</row>
+
+	<row id="ITEM_NAME_156">
+		<language name="JPN" width="256">アイテム156</language>
+	</row>
+
+	<row id="ITEM_NAME_157">
+		<language name="JPN" width="256">アイテム157</language>
+	</row>
+
+	<row id="ITEM_NAME_158">
+		<language name="JPN" width="256">アイテム158</language>
+	</row>
+
+	<row id="ITEM_NAME_159">
+		<language name="JPN" width="256">アイテム159</language>
+	</row>
+
+	<row id="ITEM_NAME_160">
+		<language name="JPN" width="256">アイテム160</language>
+	</row>
+
+	<row id="ITEM_NAME_161">
+		<language name="JPN" width="256">アイテム161</language>
+	</row>
+
+	<row id="ITEM_NAME_162">
+		<language name="JPN" width="256">アイテム162</language>
+	</row>
+
+	<row id="ITEM_NAME_163">
+		<language name="JPN" width="256">アイテム163</language>
+	</row>
+
+	<row id="ITEM_NAME_164">
+		<language name="JPN" width="256">アイテム164</language>
+	</row>
+
+	<row id="ITEM_NAME_165">
+		<language name="JPN" width="256">アイテム165</language>
+	</row>
+
+	<row id="ITEM_NAME_166">
+		<language name="JPN" width="256">アイテム166</language>
+	</row>
+
+	<row id="ITEM_NAME_167">
+		<language name="JPN" width="256">アイテム167</language>
+	</row>
+
+	<row id="ITEM_NAME_168">
+		<language name="JPN" width="256">アイテム168</language>
+	</row>
+
+	<row id="ITEM_NAME_169">
+		<language name="JPN" width="256">アイテム169</language>
+	</row>
+
+	<row id="ITEM_NAME_170">
+		<language name="JPN" width="256">アイテム170</language>
+	</row>
+
+	<row id="ITEM_NAME_171">
+		<language name="JPN" width="256">アイテム171</language>
+	</row>
+
+	<row id="ITEM_NAME_172">
+		<language name="JPN" width="256">アイテム172</language>
+	</row>
+
+	<row id="ITEM_NAME_173">
+		<language name="JPN" width="256">アイテム173</language>
+	</row>
+
+	<row id="ITEM_NAME_174">
+		<language name="JPN" width="256">アイテム174</language>
+	</row>
+
+	<row id="ITEM_NAME_175">
+		<language name="JPN" width="256">アイテム175</language>
+	</row>
+
+	<row id="ITEM_NAME_176">
+		<language name="JPN" width="256">アイテム176</language>
+	</row>
+
+	<row id="ITEM_NAME_177">
+		<language name="JPN" width="256">アイテム177</language>
+	</row>
+
+	<row id="ITEM_NAME_178">
+		<language name="JPN" width="256">アイテム178</language>
+	</row>
+
+	<row id="ITEM_NAME_179">
+		<language name="JPN" width="256">アイテム179</language>
+	</row>
+
+	<row id="ITEM_NAME_180">
+		<language name="JPN" width="256">アイテム180</language>
+	</row>
+
+	<row id="ITEM_NAME_181">
+		<language name="JPN" width="256">アイテム181</language>
+	</row>
+
+	<row id="ITEM_NAME_182">
+		<language name="JPN" width="256">アイテム182</language>
+	</row>
+
+	<row id="ITEM_NAME_183">
+		<language name="JPN" width="256">アイテム183</language>
+	</row>
+
+	<row id="ITEM_NAME_184">
+		<language name="JPN" width="256">アイテム184</language>
+	</row>
+
+	<row id="ITEM_NAME_185">
+		<language name="JPN" width="256">アイテム185</language>
+	</row>
+
+	<row id="ITEM_NAME_186">
+		<language name="JPN" width="256">アイテム186</language>
+	</row>
+
+	<row id="ITEM_NAME_187">
+		<language name="JPN" width="256">アイテム187</language>
+	</row>
+
+	<row id="ITEM_NAME_188">
+		<language name="JPN" width="256">アイテム188</language>
+	</row>
+
+	<row id="ITEM_NAME_189">
+		<language name="JPN" width="256">アイテム189</language>
+	</row>
+
+	<row id="ITEM_NAME_190">
+		<language name="JPN" width="256">アイテム190</language>
+	</row>
+
+	<row id="ITEM_NAME_191">
+		<language name="JPN" width="256">アイテム191</language>
+	</row>
+
+	<row id="ITEM_NAME_192">
+		<language name="JPN" width="256">アイテム192</language>
+	</row>
+
+	<row id="ITEM_NAME_193">
+		<language name="JPN" width="256">アイテム193</language>
+	</row>
+
+	<row id="ITEM_NAME_194">
+		<language name="JPN" width="256">アイテム194</language>
+	</row>
+
+	<row id="ITEM_NAME_195">
+		<language name="JPN" width="256">アイテム195</language>
+	</row>
+
+	<row id="ITEM_NAME_196">
+		<language name="JPN" width="256">アイテム196</language>
+	</row>
+
+	<row id="ITEM_NAME_197">
+		<language name="JPN" width="256">アイテム197</language>
+	</row>
+
+	<row id="ITEM_NAME_198">
+		<language name="JPN" width="256">アイテム198</language>
+	</row>
+
+	<row id="ITEM_NAME_199">
+		<language name="JPN" width="256">アイテム199</language>
+	</row>
+
+	<row id="ITEM_NAME_200">
+		<language name="JPN" width="256">アイテム200</language>
+	</row>
+
+	<row id="ITEM_NAME_201">
+		<language name="JPN" width="256">アイテム201</language>
+	</row>
+
+	<row id="ITEM_NAME_202">
+		<language name="JPN" width="256">アイテム202</language>
+	</row>
+
+	<row id="ITEM_NAME_203">
+		<language name="JPN" width="256">アイテム203</language>
+	</row>
+
+	<row id="ITEM_NAME_204">
+		<language name="JPN" width="256">アイテム204</language>
+	</row>
+
+	<row id="ITEM_NAME_205">
+		<language name="JPN" width="256">アイテム205</language>
+	</row>
+
+	<row id="ITEM_NAME_206">
+		<language name="JPN" width="256">アイテム206</language>
+	</row>
+
+	<row id="ITEM_NAME_207">
+		<language name="JPN" width="256">アイテム207</language>
+	</row>
+
+	<row id="ITEM_NAME_208">
+		<language name="JPN" width="256">アイテム208</language>
+	</row>
+
+	<row id="ITEM_NAME_209">
+		<language name="JPN" width="256">アイテム209</language>
+	</row>
+
+	<row id="ITEM_NAME_210">
+		<language name="JPN" width="256">アイテム210</language>
+	</row>
+
+	<row id="ITEM_NAME_211">
+		<language name="JPN" width="256">アイテム211</language>
+	</row>
+
+	<row id="ITEM_NAME_212">
+		<language name="JPN" width="256">アイテム212</language>
+	</row>
+
+	<row id="ITEM_NAME_213">
+		<language name="JPN" width="256">アイテム213</language>
+	</row>
+
+	<row id="ITEM_NAME_214">
+		<language name="JPN" width="256">アイテム214</language>
+	</row>
+
+	<row id="ITEM_NAME_215">
+		<language name="JPN" width="256">アイテム215</language>
+	</row>
+
+	<row id="ITEM_NAME_216">
+		<language name="JPN" width="256">アイテム216</language>
+	</row>
+
+	<row id="ITEM_NAME_217">
+		<language name="JPN" width="256">アイテム217</language>
+	</row>
+
+	<row id="ITEM_NAME_218">
+		<language name="JPN" width="256">アイテム218</language>
+	</row>
+
+	<row id="ITEM_NAME_219">
+		<language name="JPN" width="256">アイテム219</language>
+	</row>
+
+	<row id="ITEM_NAME_220">
+		<language name="JPN" width="256">アイテム220</language>
+	</row>
+
+	<row id="ITEM_NAME_221">
+		<language name="JPN" width="256">アイテム221</language>
+	</row>
+
+	<row id="ITEM_NAME_222">
+		<language name="JPN" width="256">アイテム222</language>
+	</row>
+
+	<row id="ITEM_NAME_223">
+		<language name="JPN" width="256">アイテム223</language>
+	</row>
+
+	<row id="ITEM_NAME_224">
+		<language name="JPN" width="256">アイテム224</language>
+	</row>
+
+	<row id="ITEM_NAME_225">
+		<language name="JPN" width="256">アイテム225</language>
+	</row>
+
+	<row id="ITEM_NAME_226">
+		<language name="JPN" width="256">アイテム226</language>
+	</row>
+
+	<row id="ITEM_NAME_227">
+		<language name="JPN" width="256">アイテム227</language>
+	</row>
+
+	<row id="ITEM_NAME_228">
+		<language name="JPN" width="256">アイテム228</language>
+	</row>
+
+	<row id="ITEM_NAME_229">
+		<language name="JPN" width="256">アイテム229</language>
+	</row>
+
+	<row id="ITEM_NAME_230">
+		<language name="JPN" width="256">アイテム230</language>
+	</row>
+
+	<row id="ITEM_NAME_231">
+		<language name="JPN" width="256">アイテム231</language>
+	</row>
+
+	<row id="ITEM_NAME_232">
+		<language name="JPN" width="256">アイテム232</language>
+	</row>
+
+	<row id="ITEM_NAME_233">
+		<language name="JPN" width="256">アイテム233</language>
+	</row>
+
+	<row id="ITEM_NAME_234">
+		<language name="JPN" width="256">アイテム234</language>
+	</row>
+
+	<row id="ITEM_NAME_235">
+		<language name="JPN" width="256">アイテム235</language>
+	</row>
+
+	<row id="ITEM_NAME_236">
+		<language name="JPN" width="256">アイテム236</language>
+	</row>
+
+	<row id="ITEM_NAME_237">
+		<language name="JPN" width="256">アイテム237</language>
+	</row>
+
+	<row id="ITEM_NAME_238">
+		<language name="JPN" width="256">アイテム238</language>
+	</row>
+
+	<row id="ITEM_NAME_239">
+		<language name="JPN" width="256">アイテム239</language>
+	</row>
+
+	<row id="ITEM_NAME_240">
+		<language name="JPN" width="256">アイテム240</language>
+	</row>
+
+	<row id="ITEM_NAME_241">
+		<language name="JPN" width="256">アイテム241</language>
+	</row>
+
+	<row id="ITEM_NAME_242">
+		<language name="JPN" width="256">アイテム242</language>
+	</row>
+
+	<row id="ITEM_NAME_243">
+		<language name="JPN" width="256">アイテム243</language>
+	</row>
+
+	<row id="ITEM_NAME_244">
+		<language name="JPN" width="256">アイテム244</language>
+	</row>
+
+	<row id="ITEM_NAME_245">
+		<language name="JPN" width="256">アイテム245</language>
+	</row>
+
+	<row id="ITEM_NAME_246">
+		<language name="JPN" width="256">アイテム246</language>
+	</row>
+
+	<row id="ITEM_NAME_247">
+		<language name="JPN" width="256">アイテム247</language>
+	</row>
+
+	<row id="ITEM_NAME_248">
+		<language name="JPN" width="256">アイテム248</language>
+	</row>
+
+	<row id="ITEM_NAME_249">
+		<language name="JPN" width="256">アイテム249</language>
 	</row>
 
 	<row id="OBJ_NAME_000">

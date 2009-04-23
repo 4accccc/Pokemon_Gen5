@@ -13,9 +13,9 @@
 //======================================================================
 //	define
 //======================================================================
-//ミュージカルの装備アイテムの最大個数
-#define MUSICAL_ITEM_MAX (240)
-#define MUSICAL_ITEM_INVALID (0xFF)
+//ミュージカルの装備アイテムの最大個数(最大512で考えておく
+#define MUSICAL_ITEM_MAX (250)
+#define MUSICAL_ITEM_INVALID (511)
 //ミュージカルに参加可能な人数
 #define MUSICAL_POKE_MAX (4)
 
@@ -55,6 +55,8 @@ typedef enum
 	MUS_POKE_EQU_TYPE_BODY,		//胴
 	MUS_POKE_EQU_TYPE_WAIST,	//腰
 	MUS_POKE_EQU_TYPE_HAND,		//手(右手・左手)
+
+	MUS_POKE_EQU_IS_BACK,			//背面装備判定
 
 	MUS_POKE_EQUIP_TYPE_MAX,
 	
