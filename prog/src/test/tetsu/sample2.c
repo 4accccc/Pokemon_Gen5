@@ -832,7 +832,7 @@ void	ELBOARD_Draw( EL_SCOREBOARD* elb,
 #if 0
 	G3_Scale( scale, scale, scale );
 #else
-	G3_Scale( scale * FX32_ONE, scale * FX32_ONE, scale * FX32_ONE );
+	G3_Scale( scale * FX16_ONE, scale * FX16_ONE, scale * FX16_ONE );
 #endif
 	s0 = 0;
 	s1 = s0 + elb->texSizX * FX32_ONE;
