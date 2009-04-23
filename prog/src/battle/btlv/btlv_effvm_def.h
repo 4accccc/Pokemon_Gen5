@@ -16,37 +16,37 @@
 #define __BTLV_EFFVM_DEF_H_
 
 #define	BTLV_EFFVM_STACK_SIZE	( 16 )	///<使用するスタックのサイズ
-#define	BTLV_EFFVM_REG_SIZE		( 8 )	///<使用するレジスタの数
+#define	BTLV_EFFVM_REG_SIZE		( 8 )		///<使用するレジスタの数
 
 //スクリプトアドレステーブル用定義
 #define	BTLEFF_AA_SAME			( 0xffffffff )		//立ち位置AAと同じ
 #define	BTLEFF_AA_REVERSE		( 0xfffffffe )		//立ち位置AAの反転
 #define	BTLEFF_BB_SAME			( 0xfffffffd )		//立ち位置BBと同じ
 #define	BTLEFF_BB_REVERSE		( 0xfffffffc )		//立ち位置BBの反転
-#define	BTLEFF_A_SAME			( 0xfffffffb )		//立ち位置Aと同じ
+#define	BTLEFF_A_SAME				( 0xfffffffb )		//立ち位置Aと同じ
 #define	BTLEFF_A_REVERSE		( 0xfffffffa )		//立ち位置Aの反転
-#define	BTLEFF_B_SAME			( 0xfffffff9 )		//立ち位置Bと同じ
+#define	BTLEFF_B_SAME				( 0xfffffff9 )		//立ち位置Bと同じ
 #define	BTLEFF_B_REVERSE		( 0xfffffff8 )		//立ち位置Bの反転
-#define	BTLEFF_C_SAME			( 0xfffffff7 )		//立ち位置Cと同じ
+#define	BTLEFF_C_SAME				( 0xfffffff7 )		//立ち位置Cと同じ
 #define	BTLEFF_C_REVERSE		( 0xfffffff6 )		//立ち位置Cの反転
-#define	BTLEFF_D_SAME			( 0xfffffff5 )		//立ち位置Dと同じ
+#define	BTLEFF_D_SAME				( 0xfffffff5 )		//立ち位置Dと同じ
 #define	BTLEFF_D_REVERSE		( 0xfffffff4 )		//立ち位置Dの反転
 
 //カメラ移動タイプ
-#define	BTLEFF_CAMERA_MOVE_DIRECT			( 0 )		//ダイレクト
+#define	BTLEFF_CAMERA_MOVE_DIRECT					( 0 )		//ダイレクト
 #define	BTLEFF_CAMERA_MOVE_INTERPOLATION	( 1 )		//追従
 
 //カメラ移動先
-#define	BTLEFF_CAMERA_POS_AA			( 0 )
-#define	BTLEFF_CAMERA_POS_BB			( 1 )
-#define	BTLEFF_CAMERA_POS_A				( 2 )
-#define	BTLEFF_CAMERA_POS_B				( 3 )
-#define	BTLEFF_CAMERA_POS_C				( 4 )
-#define	BTLEFF_CAMERA_POS_D				( 5 )
-#define	BTLEFF_CAMERA_POS_INIT			( 6 )
-#define	BTLEFF_CAMERA_POS_ATTACK		( 7 )
-#define	BTLEFF_CAMERA_POS_ATTACK_PAIR	( 8 )
-#define	BTLEFF_CAMERA_POS_DEFENCE		( 9 )
+#define	BTLEFF_CAMERA_POS_AA						( 0 )
+#define	BTLEFF_CAMERA_POS_BB						( 1 )
+#define	BTLEFF_CAMERA_POS_A							( 2 )
+#define	BTLEFF_CAMERA_POS_B							( 3 )
+#define	BTLEFF_CAMERA_POS_C							( 4 )
+#define	BTLEFF_CAMERA_POS_D							( 5 )
+#define	BTLEFF_CAMERA_POS_INIT					( 6 )
+#define	BTLEFF_CAMERA_POS_ATTACK				( 7 )
+#define	BTLEFF_CAMERA_POS_ATTACK_PAIR		( 8 )
+#define	BTLEFF_CAMERA_POS_DEFENCE				( 9 )
 #define	BTLEFF_CAMERA_POS_DEFENCE_PAIR	( 10 )
 
 //パーティクル再生
@@ -56,27 +56,32 @@
 
 //ポケモン操作
 #define	BTLEFF_POKEMON_SIDE_ATTACK				( 0 )		//攻撃側
-#define	BTLEFF_POKEMON_SIDE_ATTACK_PAIR			( 1 )		//攻撃側ペア
+#define	BTLEFF_POKEMON_SIDE_ATTACK_PAIR		( 1 )		//攻撃側ペア
 #define	BTLEFF_POKEMON_SIDE_DEFENCE				( 2 )		//防御側
-#define	BTLEFF_POKEMON_SIDE_DEFENCE_PAIR		( 3 )		//防御側ペア
+#define	BTLEFF_POKEMON_SIDE_DEFENCE_PAIR	( 3 )		//防御側ペア
 
-#define	BTLEFF_POKEMON_MOVE_DIRECT				( EFFTOOL_CALCTYPE_DIRECT )
-#define	BTLEFF_POKEMON_MOVE_INTERPOLATION		( EFFTOOL_CALCTYPE_INTERPOLATION )
-#define	BTLEFF_POKEMON_MOVE_ROUNDTRIP			( EFFTOOL_CALCTYPE_ROUNDTRIP )
+#define	BTLEFF_POKEMON_MOVE_DIRECT						( EFFTOOL_CALCTYPE_DIRECT )
+#define	BTLEFF_POKEMON_MOVE_INTERPOLATION			( EFFTOOL_CALCTYPE_INTERPOLATION )
+#define	BTLEFF_POKEMON_MOVE_ROUNDTRIP					( EFFTOOL_CALCTYPE_ROUNDTRIP )
 #define	BTLEFF_POKEMON_MOVE_ROUNDTRIP_LONG		( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
-#define	BTLEFF_POKEMON_SCALE_DIRECT				( EFFTOOL_CALCTYPE_DIRECT )
+#define	BTLEFF_POKEMON_SCALE_DIRECT						( EFFTOOL_CALCTYPE_DIRECT )
 #define	BTLEFF_POKEMON_SCALE_INTERPOLATION		( EFFTOOL_CALCTYPE_INTERPOLATION )
-#define	BTLEFF_POKEMON_SCALE_ROUNDTRIP			( EFFTOOL_CALCTYPE_ROUNDTRIP )
+#define	BTLEFF_POKEMON_SCALE_ROUNDTRIP				( EFFTOOL_CALCTYPE_ROUNDTRIP )
 #define	BTLEFF_POKEMON_SCALE_ROUNDTRIP_LONG		( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
-#define	BTLEFF_POKEMON_ROTATE_DIRECT			( EFFTOOL_CALCTYPE_DIRECT )
+#define	BTLEFF_POKEMON_ROTATE_DIRECT					( EFFTOOL_CALCTYPE_DIRECT )
 #define	BTLEFF_POKEMON_ROTATE_INTERPOLATION		( EFFTOOL_CALCTYPE_INTERPOLATION )
-#define	BTLEFF_POKEMON_ROTATE_ROUNDTRIP			( EFFTOOL_CALCTYPE_ROUNDTRIP )
+#define	BTLEFF_POKEMON_ROTATE_ROUNDTRIP				( EFFTOOL_CALCTYPE_ROUNDTRIP )
 #define	BTLEFF_POKEMON_ROTATE_ROUNDTRIP_LONG	( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
-#define	BTLEFF_MEPACHI_ON						( MCSS_MEPACHI_ON )
-#define	BTLEFF_MEPACHI_OFF						( MCSS_MEPACHI_OFF )
-#define	BTLEFF_MEPACHI_MABATAKI					( 2 )
-#define	BTLEFF_ANM_STOP							( MCSS_ANM_STOP_ON )
-#define	BTLEFF_ANM_START						( MCSS_ANM_STOP_OFF )
+#define	BTLEFF_MEPACHI_ON											( MCSS_MEPACHI_ON )
+#define	BTLEFF_MEPACHI_OFF										( MCSS_MEPACHI_OFF )
+#define	BTLEFF_MEPACHI_MABATAKI								( 2 )
+#define	BTLEFF_ANM_STOP												( MCSS_ANM_STOP_ON )
+#define	BTLEFF_ANM_START											( MCSS_ANM_STOP_OFF )
+
+//エミッタ移動
+#define	BTLEFF_EMITTER_MOVE_NONE							( 0 )
+#define	BTLEFF_EMITTER_MOVE_STRAIGHT					( 1 )
+#define	BTLEFF_EMITTER_MOVE_CURVE							( 2 )
 
 #endif //__BTLV_EFFVM_DEF_H_
 
@@ -91,11 +96,11 @@
 
 ex)
  * #param_num	5
- * @param	type		カメラ移動タイプ
+ * @param	type			カメラ移動タイプ
  * @param	move_pos	移動先
- * @param	frame		カメラタイプが追従のとき、何フレームで移動先に到達するかを指定
- * @param	wait		移動ウエイト
- * @param	brake		ブレーキをかけはじめるフレームを指定
+ * @param	frame			カメラタイプが追従のとき、何フレームで移動先に到達するかを指定
+ * @param	wait			移動ウエイト
+ * @param	brake			ブレーキをかけはじめるフレームを指定
  *
  * #param	COMBOBOX_TEXT	ダイレクト	追従
  * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_MOVE_DIRECT	BTLEFF_CAMERA_MOVE_INTERPOLATION
@@ -115,6 +120,15 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 　先に設定したコンボボックス型のインデックスに対応して実際のシーケンスソースに書き出されるラベル定義などを記述します
 ・VALUE_FX32
 　FX32型の値（ツール上では、小数ありの数値入力を可能にします）
+・VALUE_INT
+	INT型の値（ツール上では、小数なしの数値入力になります）
+・VALUE_VECFX32
+	VecFx32型の値　型の宣言の後ろにタブ区切りで、数値入力ダイアログ表示用のラベルを記述できます
+ex)
+	VALUE_VECFX32	camPosX	camPosY	camPosZ
+	
+	こうすることによって、ツールのダイアログに、入力するための値の意味を表示させることができます
+
 ・FILE_DIALOG
 　ファイルダイアログを表示してファイル選択を促す　選択を絞る拡張子を指定できます
 ・FILE_DIALOG_COMBOBOX
@@ -126,18 +140,20 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 
 //命令シンボル宣言
 //COMMAND_START
-#define	EC_CAMERA_MOVE				( 0 )
-#define	EC_PARTICLE_LOAD			( 1 )
-#define	EC_PARTICLE_PLAY			( 2 )
-#define	EC_POKEMON_MOVE				( 3 )
-#define	EC_POKEMON_SCALE			( 4 )
-#define	EC_POKEMON_ROTATE			( 5 )
+#define	EC_CAMERA_MOVE							( 0 )
+#define	EC_PARTICLE_LOAD						( 1 )
+#define	EC_PARTICLE_PLAY						( 2 )
+#define	EC_POKEMON_MOVE							( 3 )
+#define	EC_POKEMON_SCALE						( 4 )
+#define	EC_POKEMON_ROTATE						( 5 )
 #define	EC_POKEMON_SET_MEPACHI_FLAG	( 6 )
-#define	EC_POKEMON_SET_ANM_FLAG		( 7 )
-#define	EC_EFFECT_END_WAIT			( 8 )
+#define	EC_POKEMON_SET_ANM_FLAG			( 7 )
+#define	EC_EMITTER_MOVE							( 8 )
+#define	EC_EFFECT_END_WAIT					( 9 )
+#define	EC_WAIT											( 10 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END					( 9 )
+#define	EC_SEQ_END									( 11 )
 
 #ifndef __C_NO_DEF_
 
@@ -150,11 +166,11 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
  * @brief		カメラ移動
  *
  * #param_num	5
- * @param	type		カメラ移動タイプ
+ * @param	type			カメラ移動タイプ
  * @param	move_pos	移動先
- * @param	frame		カメラタイプが追従のとき、何フレームで移動先に到達するかを指定
- * @param	wait		移動ウエイト
- * @param	brake		ブレーキをかけはじめるフレームを指定
+ * @param	frame			カメラタイプが追従のとき、何フレームで移動先に到達するかを指定
+ * @param	wait			移動ウエイト
+ * @param	brake			ブレーキをかけはじめるフレームを指定
  *
  * #param	COMBOBOX_TEXT	追従	ダイレクト
  * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_MOVE_INTERPOLATION	BTLEFF_CAMERA_MOVE_DIRECT
@@ -167,11 +183,11 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 //======================================================================
 	.macro	CAMERA_MOVE	type, move_pos, frame, wait, brake
 	.short	EC_CAMERA_MOVE
-	.long	\type
-	.long	\move_pos
-	.long	\frame
-	.long	\wait
-	.long	\brake
+	.long		\type
+	.long		\move_pos
+	.long		\frame
+	.long		\wait
+	.long		\brake
 	.endm
 
 //======================================================================
@@ -181,12 +197,12 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
  * #param_num	1
  * @param	datID	アーカイブデータのdatID
  *
- * #param	FILE_DIALOG_WITH_ADD	.spa	パーティクル再生
+ * #param	FILE_DIALOG_WITH_ADD	.spa	パーティクル再生	エミッタ移動
  */
 //======================================================================
 	.macro	PARTICLE_LOAD	datID
 	.short	EC_PARTICLE_LOAD
-	.long	\datID
+	.long		\datID
 	.endm
 
 //======================================================================
@@ -194,11 +210,11 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
  * @brief	パーティクル再生
  *
  * #param_num	6
- * @param	num			再生パーティクルナンバー
- * @param	index		spa内インデックスナンバー
+ * @param	num				再生パーティクルナンバー
+ * @param	index			spa内インデックスナンバー
  * @param	start_pos	パーティクル再生開始立ち位置
  * @param	dir_pos		パーティクル再生方向立ち位置
- * @param	ofs_y		パーティクル再生Y方向オフセット
+ * @param	ofs_y			パーティクル再生Y方向オフセット
  * @param	dir_angle	パーティクル再生方向Y角度
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
@@ -213,12 +229,12 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 //======================================================================
 	.macro	PARTICLE_PLAY	num, index, start_pos, dir_pos, ofs_y, dir_angle
 	.short	EC_PARTICLE_PLAY
-	.long	\num
-	.long	\index
-	.long	\start_pos
-	.long	\dir_pos
-	.long	\ofs_y
-	.long	\dir_angle
+	.long		\num
+	.long		\index
+	.long		\start_pos
+	.long		\dir_pos
+	.long		\ofs_y
+	.long		\dir_angle
 	.endm
 
 //======================================================================
@@ -226,13 +242,13 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
  * @brief	ポケモン移動
  *
  * #param_num	7
- * @param	pos			移動させるポケモンの立ち位置
- * @param	type		移動タイプ
+ * @param	pos					移動させるポケモンの立ち位置
+ * @param	type				移動タイプ
  * @param	move_pos_x	移動先X座標
  * @param	move_pos_y	移動先Y座標
- * @param	frame		移動フレーム数（目的地まで何フレームで到達するか）
- * @param	wait		移動ウエイト
- * @param	count		往復カウント（移動タイプが往復のときだけ有効）
+ * @param	frame				移動フレーム数（目的地まで何フレームで到達するか）
+ * @param	wait				移動ウエイト
+ * @param	count				往復カウント（移動タイプが往復のときだけ有効）
  *
  * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
@@ -247,13 +263,13 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 //======================================================================
 	.macro	POKEMON_MOVE	pos, type, move_pos_x, move_pos_y, frame, wait, count
 	.short	EC_POKEMON_MOVE
-	.long	\pos
-	.long	\type
-	.long	\move_pos_x
-	.long	\move_pos_y
-	.long	\frame
-	.long	\wait
-	.long	\count
+	.long		\pos
+	.long		\type
+	.long		\move_pos_x
+	.long		\move_pos_y
+	.long		\frame
+	.long		\wait
+	.long		\count
 	.endm
 
 //======================================================================
@@ -263,8 +279,8 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
  * #param_num	7
  * @param	pos			拡縮させるポケモンの立ち位置
  * @param	type		拡縮タイプ
- * @param	scale_x		X方向拡縮率
- * @param	scale_y		Y方向拡縮率
+ * @param	scale_x	X方向拡縮率
+ * @param	scale_y	Y方向拡縮率
  * @param	frame		拡縮フレーム数（設定した拡縮値まで何フレームで到達するか）
  * @param	wait		拡縮ウエイト
  * @param	count		往復カウント（拡縮タイプが往復のときだけ有効）
@@ -282,13 +298,13 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 //======================================================================
 	.macro	POKEMON_SCALE	pos, type, scale_x, scale_y, frame, wait, count
 	.short	EC_POKEMON_SCALE
-	.long	\pos
-	.long	\type
-	.long	\scale_x
-	.long	\scale_y
-	.long	\frame
-	.long	\wait
-	.long	\count
+	.long		\pos
+	.long		\type
+	.long		\scale_x
+	.long		\scale_y
+	.long		\frame
+	.long		\wait
+	.long		\count
 	.endm
 
 //======================================================================
@@ -298,7 +314,7 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
  * #param_num	6
  * @param	pos			回転させるポケモンの立ち位置
  * @param	type		回転タイプ
- * @param	rotate		回転角度
+ * @param	rotate	回転角度
  * @param	frame		回転フレーム数（設定した回転値まで何フレームで到達するか）
  * @param	wait		回転ウエイト
  * @param	count		往復カウント（回転タイプが往復のときだけ有効）
@@ -315,12 +331,12 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 //======================================================================
 	.macro	POKEMON_ROTATE	pos, type, rotate, frame, wait, count
 	.short	EC_POKEMON_ROTATE
-	.long	\pos
-	.long	\type
-	.long	\rotate
-	.long	\frame
-	.long	\wait
-	.long	\count
+	.long		\pos
+	.long		\type
+	.long		\rotate
+	.long		\frame
+	.long		\wait
+	.long		\count
 	.endm
 
 //======================================================================
@@ -343,10 +359,10 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 //======================================================================
 	.macro	POKEMON_SET_MEPACHI_FLAG	pos, type, wait, count
 	.short	EC_POKEMON_SET_MEPACHI_FLAG
-	.long	\pos
-	.long	\type
-	.long	\wait
-	.long	\count
+	.long		\pos
+	.long		\type
+	.long		\wait
+	.long		\count
 	.endm
 
 //======================================================================
@@ -371,6 +387,33 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 
 //======================================================================
 /**
+ * @brief	エミッタ移動
+ *
+ * #param_num	6
+ * @param	num					再生パーティクルナンバー
+ * @param	index				spa内インデックスナンバー
+ * @param	move_type		移動タイプ（直線、放物線）
+ * @param	start_pos		移動開始立ち位置
+ * @param	end_pos			移動終了立ち位置
+ * @param	move_param	立ち位置Y方向オフセット	移動スピード	放物線角度（放物線時のみ）
+ *
+ * #param	FILE_DIALOG_COMBOBOX .spa
+ * #param	COMBOBOX_HEADER
+ * #param	COMBOBOX_TEXT	直線	放物線
+ * #param	COMBOBOX_VALUE	BTLEFF_EMITTER_MOVE_STRAIGHT	BTLEFF_EMITTER_MOVE_CURVE
+ * #param	COMBOBOX_TEXT	攻撃側	防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
+ * #param	COMBOBOX_TEXT	攻撃側	防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
+ * #param	VALUE_VECFX32	立ち位置Y方向オフセット	移動スピード	放物線角度（放物線時のみ）
+ */
+//======================================================================
+	.macro	EMITTER_MOVE
+	.short	EC_EMITTER_MOVE
+	.endm
+
+//======================================================================
+/**
  * @brief	エフェクト終了待ち
  *
  * #param_num	0
@@ -380,6 +423,26 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 	.short	EC_EFFECT_END_WAIT
 	.endm
 
+//======================================================================
+/**
+ * @brief	タイマーによるウエイト
+ *
+ * #param_num	1
+ * @param		wait	ウエイト時間
+ *
+ * #param	VALUE_INT	ウエイト時間
+ */
+//======================================================================
+	.macro	WAIT	wait
+	.short	EC_WAIT
+	.long		\wait
+	.endm
+
+//======================================================================
+/**
+ * 	エフェクト終了はかならず最後になるようにする
+ */
+//======================================================================
 //======================================================================
 /**
  * @brief	エフェクト終了
