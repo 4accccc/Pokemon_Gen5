@@ -78,4 +78,13 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.NCLR
 endif
 
+#------------------------------------------------------------------------------
+#	make sub ルール（使用する文字セットが変わった時にbmpを作り直し）
+#------------------------------------------------------------------------------
+sub:	convlist.bin
+
+convlist.bin: pokemon_wb.xlor
+	perl makesub.pl JIS_X0201_X0208_01.xlor pokemon_wb.xlor
+	makesubfont largefull.bmpd convlist.bin large.bmp
+	makesubfont smallfull.bmpd convlist.bin small.bmp
 
