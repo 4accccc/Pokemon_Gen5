@@ -125,7 +125,7 @@ static const SOUNDMAN_HIERARCHY_PLAYER_DATA pmHierarchyPlayerData = {
  *
  */
 //============================================================================================
-#define	SOUND_HEAP_SIZE	(0x0b0000)
+#define	SOUND_HEAP_SIZE	(0x0a0000)   //640K
 #define CAPTURE_BUFSIZE (0x2000)
 
 static u8				PmSoundHeap[SOUND_HEAP_SIZE];
