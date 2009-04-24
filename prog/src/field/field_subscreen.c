@@ -74,7 +74,7 @@ void FIELD_SUBSCREEN_Init( u32 heapID )
 	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 
 	INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , heapID);
-	if( INFOWIN_IsStartComm() == TRUE )
+	if( INFOWIN_IsInitComm() == TRUE )
 	{
 		GFL_NET_ReloadIcon();
 	}

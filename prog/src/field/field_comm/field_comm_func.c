@@ -207,7 +207,7 @@ FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID )
 			commFunc_->pktBuffData_[i].type_ = FCPBT_INVALID;
 		}
 	}
-	if( GFL_NET_IsInit() && INFOWIN_IsStartComm() == FALSE )
+	if( GFL_NET_IsInit() && INFOWIN_IsInitComm() == FALSE )
 	{
 		commFunc_->isInitCommSystem_ = TRUE;
 	}

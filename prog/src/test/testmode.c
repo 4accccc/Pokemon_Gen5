@@ -779,7 +779,7 @@ static BOOL TESTMODE_ITEM_SelectFuncContinue( TESTMODE_WORK *work , const int id
 //‘±‚«‚©‚ç
 static BOOL TESTMODE_ITEM_SelectFuncContinueComm( TESTMODE_WORK *work , const int idx )
 {
-	INFOWIN_StartComm();
+	INFOWIN_InitComm( GFL_HEAPID_APP|HEAPDIR_MASK );
 	TESTMODE_COMMAND_StartGame( work , TMI_CONTINUE );
 	return TRUE;
 }

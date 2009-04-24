@@ -360,9 +360,9 @@ const BOOL	FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys )
 		}
 		break;
 	case 1:
-		if( INFOWIN_IsStartComm() == TRUE )
+		if( INFOWIN_IsInitComm() == TRUE )
 		{
-			INFOWIN_StopComm();
+			INFOWIN_ExitComm();
 			commSys->menuSeq_++;
 		}
 		else
@@ -371,7 +371,7 @@ const BOOL	FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys )
 		}
 		break;
 	case 2:
-		if( INFOWIN_IsStopComm() == TRUE )
+		if( GFL_NET_IsExit() == TRUE )
 		{
 			commSys->menuSeq_++;
 		}
@@ -441,9 +441,9 @@ const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 		}
 		break;
 	case 1:
-		if( INFOWIN_IsStartComm() == TRUE )
+		if( INFOWIN_IsInitComm() == TRUE )
 		{
-			INFOWIN_StopComm();
+			INFOWIN_ExitComm();
 			commSys->menuSeq_++;
 		}
 		else
@@ -452,7 +452,7 @@ const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 		}
 		break;
 	case 2:
-		if( INFOWIN_IsStopComm() == TRUE )
+		if( GFL_NET_IsExit() == TRUE )
 		{
 			commSys->menuSeq_++;
 		}
