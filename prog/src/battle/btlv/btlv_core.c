@@ -118,8 +118,6 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 	core->mainSeq = 0;
 
 	BTL_STR_InitSystem( mainModule, client, pokeCon, heapID );
-	GFL_UI_TP_Init( heapID );
-
 
 	return core;
 }
@@ -134,7 +132,6 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 //=============================================================================================
 void BTLV_Delete( BTLV_CORE* core )
 {
-	GFL_UI_TP_Exit();
 	BTL_STR_QuitSystem();
 
 	//エフェクト削除 soga
@@ -160,7 +157,6 @@ void BTLV_Delete( BTLV_CORE* core )
 //=============================================================================================
 void BTLV_CORE_Main( BTLV_CORE* core )
 {
-	GFL_UI_TP_Main();
 	GFL_TCBL_Main( core->tcbl );
 	BTLV_EFFECT_Main();		//soga
 }
