@@ -123,6 +123,8 @@ static void ms_set_trace( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_yotimu( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_omitoosi( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_change_poke_type( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_kinomi_common( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_kinomi_rankup( STRBUF* dst, u16 strID, const int* args );
 
 
 
@@ -410,6 +412,14 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 		{ BTL_STRID_SET_YotimuExe,			ms_set_yotimu	    },
 		{ BTL_STRID_SET_Omitoosi,				ms_set_omitoosi   },
 		{ BTL_STRID_SET_ChangePokeType,	ms_set_change_poke_type },
+		{ BTL_STRID_SET_KinomiEff_RecoverHP, ms_set_kinomi_common },
+		{ BTL_STRID_SET_KinomiEff_CureDoku, ms_set_kinomi_common },
+		{ BTL_STRID_SET_KinomiEff_CureMahi,	ms_set_kinomi_common },
+		{ BTL_STRID_SET_KinomiEff_CureNemuri, ms_set_kinomi_common },
+		{ BTL_STRID_SET_KinomiEff_CureKoori,  ms_set_kinomi_common },
+		{ BTL_STRID_SET_KinomiEff_CureYakedo, ms_set_kinomi_common },
+		{ BTL_STRID_SET_KinomiEff_CureKonran, ms_set_kinomi_common },
+		{ BTL_STRID_SET_KinomiEff_Rankup_ATK, ms_set_kinomi_rankup },
 	};
 
 	int i;
@@ -545,6 +555,42 @@ static void ms_set_change_poke_type( STRBUF* dst, u16 strID, const int* args )
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+//--------------------------------------------------------------
+/**
+ *	○○は××で　たいりょくをかいふくした！  等々、木の実効果。
+ *  args... [0]:pokeID,  [1]:itemID
+ */
+//--------------------------------------------------------------
+static void ms_set_kinomi_common( STRBUF* dst, u16 strID, const int* args )
+{
+	register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+	WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );
+	strID = get_setStrID( args[0], strID );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+
+}
+//--------------------------------------------------------------
+/**
+ *	○○は××で△△が　（ぐーんと）あがった！ （木の実でランク効果）
+ *  args... [0]:pokeID  [1]:statusType  [2]:volume  [3]:itemID
+ */
+//--------------------------------------------------------------
+static void ms_set_kinomi_rankup( STRBUF* dst, u16 strID, const int* args )
+{
+	u8 statusType = args[1] - WAZA_RANKEFF_ORIGIN;
+	if( args[2] > 1 )
+	{
+		strID += (SETTYPE_MAX * WAZA_RANKEFF_NUMS);
+	}
+	register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+	WORDSET_RegisterItemName( SysWork.wset, 1, args[3] );
+
+	strID = get_setPtnStrID( args[0], strID, statusType );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
 //=============================================================================================
 /**
  * ワザメッセージの生成

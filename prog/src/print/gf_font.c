@@ -250,7 +250,7 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
 			GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsMap,
 						mapTblSize, (void*)(wk->codeMapTop) );
 
-			TAYA_Printf("[GF_FONT] MapTableSize=%08x bytes\n", mapTblSize);
+			TAYA_Printf("[GF_FONT] IndexTableSize=%08x bytes\n", mapTblSize);
 		}
 	}
 }

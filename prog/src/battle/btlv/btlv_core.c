@@ -512,6 +512,7 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
 	case 0:
 		BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos );
 
+
 		if( subwk->affinity < BTL_TYPEAFF_100 )
 		{
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
@@ -522,6 +523,7 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
 			BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
 			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 		}
+
 		(*seq)++;
 		break;
 
@@ -831,15 +833,6 @@ void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 //	printf( wk->strBuf );
 }
-/*
-yellow
-red
-gray
-purple
-green
-blue
-*/
-
 
 //=============================================================================================
 /**
@@ -956,6 +949,31 @@ void BTLV_ResetCommWaitInfo( BTLV_CORE* wk )
 	BTLV_SCD_ClearCommWaitInfo( wk->scrnD );
 }
 
+
+//=============================================================================================
+/**
+ * きのみ食べアクション開始
+ *
+ * @param   wk		
+ * @param   pos		きのみを食べるポケモンの位置
+ */
+//=============================================================================================
+void BTLV_KinomiAct_Start( BTLV_CORE* wk, BtlPokePos pos )
+{
+	BTLV_SCU_KinomiAct_Start( wk->scrnU, pos );
+}
+//=============================================================================================
+/**
+ * きのみ食べアクション終了待ち
+ *
+ * @param   wk		
+ * @param   pos		きのみを食べるポケモンの位置
+ */
+//=============================================================================================
+BOOL BTLV_KinomiAct_Wait( BTLV_CORE* wk, BtlPokePos pos )
+{
+	return BTLV_SCU_KinomiAct_Wait( wk->scrnU, pos );
+}
 
 //-------------------------------------------
 

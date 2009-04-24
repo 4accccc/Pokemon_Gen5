@@ -16,6 +16,7 @@
 #include "..\btl_server_local.h"
 
 extern BTL_EVENT_FACTOR*  BTL_HANDLER_ITEM_Add( const BTL_POKEPARAM* pp );
+extern void BTL_HANDLER_ITEM_Remove( const BTL_POKEPARAM* pp );
 
 
 

@@ -28,47 +28,48 @@ enum {
 typedef enum {
 	SC_NULL = 0,
 
-	SC_OP_HP_MINUS,			///< 【計算】HPマイナス  [ClientID, マイナス量]
-	SC_OP_HP_PLUS,			///< 【計算】HPプラス    [ClientID, プラス量]
-	SC_OP_HP_ZERO,			///< 【計算】HP0 にする [ pokeID ]
-	SC_OP_PP_MINUS,			///< 【計算】PPマイナス  [ClientID, マイナス量]
-	SC_OP_PP_PLUS,			///< 【計算】PPプラス    [ClientID, プラス量]
-	SC_OP_RANK_UP,			///< 【計算】ステータスランクアップ  [ClientID, StatusType, プラス量]
-	SC_OP_RANK_DOWN,		///< 【計算】ステータスランクダウン  [ClientID, StatusType, マイナス量]
-	SC_OP_SICK_SET,			///< 【計算】状態異常 [PokeID, Sick, contParam]
+	SC_OP_HP_MINUS,						///< 【計算】HPマイナス  [ClientID, マイナス量]
+	SC_OP_HP_PLUS,						///< 【計算】HPプラス    [ClientID, プラス量]
+	SC_OP_HP_ZERO,						///< 【計算】HP0 にする [ pokeID ]
+	SC_OP_PP_MINUS,						///< 【計算】PPマイナス  [ClientID, マイナス量]
+	SC_OP_PP_PLUS,						///< 【計算】PPプラス    [ClientID, プラス量]
+	SC_OP_RANK_UP,						///< 【計算】ステータスランクアップ  [ClientID, StatusType, プラス量]
+	SC_OP_RANK_DOWN,					///< 【計算】ステータスランクダウン  [ClientID, StatusType, マイナス量]
+	SC_OP_SICK_SET,						///< 【計算】状態異常 [PokeID, Sick, contParam]
 	SC_OP_CURE_POKESICK,			///< 【計算】ポケモン系状態異常を回復 [PokeID ]
 	SC_OP_CURE_WAZASICK,			///< 【計算】ワザ系状態異常を回復 [PokeID, SickID ]
-	SC_OP_MEMBER_IN,			///< メンバー入場
+	SC_OP_MEMBER_IN,					///< メンバー入場
 	SC_OP_WAZASICK_TURNCHECK,	///< 
-	SC_OP_CANTESCAPE_ADD,	///< にげ・交換禁止コードの追加を全クライアントに通知 [ClientID, CantCode]
-	SC_OP_CANTESCAPE_SUB,	///< にげ・交換禁止コードの削除を全クライアントに通知 [ClientID, CantCode]
-	SC_OP_CHANGE_POKETYPE,///< 【計算】ポケモンのタイプ変更（ pokeID, type ）
-	SC_OP_CHANGE_POKEFORM,///< 【計算】ポケモンのフォルム変更（ pokeID, type ）
+	SC_OP_CANTESCAPE_ADD,			///< にげ・交換禁止コードの追加を全クライアントに通知 [ClientID, CantCode]
+	SC_OP_CANTESCAPE_SUB,			///< にげ・交換禁止コードの削除を全クライアントに通知 [ClientID, CantCode]
+	SC_OP_CHANGE_POKETYPE,		///< 【計算】ポケモンのタイプ変更（ pokeID, type ）
+	SC_OP_CHANGE_POKEFORM,		///< 【計算】ポケモンのフォルム変更（ pokeID, type ）
+	SC_OP_REMOVE_ITEM,				///< 所有アイテム削除
 	SC_ACT_WAZA_EFFECT,
-	SC_ACT_WAZA_DMG,			///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
-	SC_ACT_WAZA_DMG_DBL,	///< 【アクション】２体同時ダメージ処理 [ pokeID ]
-	SC_ACT_WAZA_DMG_PLURAL,	///< 【アクション】複数体同時ダメージ処理 [ pokeCnt, affAbout, ... ]
-	SC_ACT_WAZA_ICHIGEKI,	///< 【アクション】一撃ワザ処理
-	SC_ACT_CONF_DMG,			///< 【アクション】こんらん自爆ダメージ [ pokeID ]
-	SC_ACT_RANKUP,				///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
-	SC_ACT_RANKDOWN,			///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
-	SC_ACT_DEAD,					///< 【ポケモンひんし】[ ClientID ]
-	SC_ACT_MEMBER_OUT,		///< 【ポケモン退場】[ ClientID, memberIdx ]
-	SC_ACT_MEMBER_IN,			///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
-	SC_ACT_SICK_SET,			///<  状態異常をくらった
-	SC_ACT_SICK_DMG,			///<  アクション／ターンチェック時の状態異常ダメージ
-	SC_ACT_WEATHER_DMG,		///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
-	SC_ACT_WEATHER_START,	///< 天候変化
-	SC_ACT_WEATHER_END,		///< ターンチェックで天候終了
-	SC_ACT_SIMPLE_HP,			///< シンプルなHPゲージ増減処理
-	SC_ACT_TRACE_TOKUSEI,	///< とくせいトレース[ pokeID, targetPokeID, tokusei ]
-	SC_ACT_KINOMI,				///< きのみを食べる
-	SC_TOKWIN_IN,					///< とくせいウィンドウ表示イン [ClientID]
-	SC_TOKWIN_OUT,				///< とくせいウィンドウ表示アウト [ClientID]
+	SC_ACT_WAZA_DMG,					///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
+	SC_ACT_WAZA_DMG_DBL,			///< 【アクション】２体同時ダメージ処理 [ pokeID ]
+	SC_ACT_WAZA_DMG_PLURAL,		///< 【アクション】複数体同時ダメージ処理 [ pokeCnt, affAbout, ... ]
+	SC_ACT_WAZA_ICHIGEKI,			///< 【アクション】一撃ワザ処理
+	SC_ACT_CONF_DMG,					///< 【アクション】こんらん自爆ダメージ [ pokeID ]
+	SC_ACT_RANKUP,						///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
+	SC_ACT_RANKDOWN,					///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
+	SC_ACT_DEAD,							///< 【ポケモンひんし】[ ClientID ]
+	SC_ACT_MEMBER_OUT,				///< 【ポケモン退場】[ ClientID, memberIdx ]
+	SC_ACT_MEMBER_IN,					///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
+	SC_ACT_SICK_SET,					///<  状態異常をくらった
+	SC_ACT_SICK_DMG,					///<  アクション／ターンチェック時の状態異常ダメージ
+	SC_ACT_WEATHER_DMG,				///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
+	SC_ACT_WEATHER_START,			///< 天候変化
+	SC_ACT_WEATHER_END,				///< ターンチェックで天候終了
+	SC_ACT_SIMPLE_HP,					///< シンプルなHPゲージ増減処理
+	SC_ACT_TRACE_TOKUSEI,			///< とくせいトレース[ pokeID, targetPokeID, tokusei ]
+	SC_ACT_KINOMI,						///< きのみを食べる
+	SC_TOKWIN_IN,							///< とくせいウィンドウ表示イン [ClientID]
+	SC_TOKWIN_OUT,						///< とくせいウィンドウ表示アウト [ClientID]
 
-	SC_MSG_WAZA,				///< ワザメッセージ表示[ ClientID, wazaIdx ]
-	SC_MSG_STD,					///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
-	SC_MSG_SET,					///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
+	SC_MSG_WAZA,							///< ワザメッセージ表示[ ClientID, wazaIdx ]
+	SC_MSG_STD,								///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
+	SC_MSG_SET,								///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
 
 	SC_MAX,
 
@@ -233,6 +234,10 @@ static inline void SCQUE_PUT_OP_ChangePokeType( BTL_SERVER_CMD_QUE* que, u8 poke
 static inline void SCQUE_PUT_OP_ChangePokeForm( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 formNo )
 {
 	SCQUE_PUT_Common( que, SC_OP_CHANGE_POKEFORM, pokeID, formNo );
+}
+static inline void SCQUE_PUT_OP_RemoveItem( BTL_SERVER_CMD_QUE* que, u8 pokeID  )
+{
+	SCQUE_PUT_Common( que, SC_OP_REMOVE_ITEM, pokeID );
 }
 
 

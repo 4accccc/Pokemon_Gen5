@@ -194,6 +194,8 @@ extern void BTLV_StartCommWait( BTLV_CORE* wk );
 extern BOOL BTLV_WaitCommWait( BTLV_CORE* wk );
 extern void BTLV_ResetCommWaitInfo( BTLV_CORE* wk );
 
+extern void BTLV_KinomiAct_Start( BTLV_CORE* wk, BtlPokePos pos );
+extern BOOL BTLV_KinomiAct_Wait( BTLV_CORE* wk, BtlPokePos pos );
 
 
 //-----------------------------------------------------------

@@ -26,6 +26,7 @@ typedef enum {
 
 	BTL_EVENT_CHECK_CHANGE,						///< いれかえチェック
 	BTL_EVENT_CHECK_ESCAPE,						///< にげるチェック
+	BTL_EVENT_CHECK_SP_PRIORITY,			///< とくしゅ優先度チェック
 	BTL_EVENT_CALC_AGILITY,						///< すばやさ計算
 	BTL_EVENT_CHECK_CONF,							///< 混乱チェック
 	BTL_EVENT_CALC_CONF_DAMAGE,				///< 混乱ダメージ計算
@@ -48,6 +49,7 @@ typedef enum {
 	BTL_EVENT_ATTACKER_POWER,					///< 攻撃側の能力値（こうげきorとくこう）補正ハンドラ
 	BTL_EVENT_DEFENDER_GUARD,					///< 防御側の能力値（ぼうぎょorとくぼう）補正ハンドラ
 	BTL_EVENT_DAMAGE_PROC1,						///< タイプ計算前ダメージ補正ハンドラ
+	BTL_EVENT_CHECK_AFFINITY,					///< 相性計算
 	BTL_EVENT_ATTACKER_TYPE,					///< 攻撃側ポケタイプ
 	BTL_EVENT_DEFENDER_TYPE,					///< 防御側ポケタイプ
 	BTL_EVENT_TYPEMATCH_RATIO,				///< 攻撃側タイプ一致時倍率
@@ -57,7 +59,8 @@ typedef enum {
 	BTL_EVENT_WAZA_DMG_LAST,					///< 最終ダメージ補正ハンドラ
 	BTL_EVENT_WAZA_DMG_AFTER,					///< 単体ダメージ処理後
 	BTL_EVENT_WAZA_DMG_AFTER_ATONCE,	///< 一斉ダメージ処理後
-	BTL_EVENT_DECREMENT_PP,						///< 使用ワザのPP値を減少
+	BTL_EVENT_DECREMENT_PP_VOLUME,		///< 使用ワザの減少PP値を取得
+	BTL_EVENT_DECREMENT_PP_DONE,			///< 使用ワザのPP値を減少後
 
 	BTL_EVENT_CALC_REACTION,					///< 反動計算ハンドラ
 	BTL_EVENT_ADD_RANK_TARGET,				///< ワザを受けた側への追加効果
@@ -68,6 +71,7 @@ typedef enum {
 	BTL_EVENT_MEMBER_IN,							///< 個別ポケ入場直後
 	BTL_EVENT_MEMBER_COMP,						///< 全参加ポケ登場後
 	BTL_EVENT_GET_RANKEFF_VALUE,			///< ワザによる能力ランク増減値チェック
+	BTL_EVENT_RANKEFF_LAST_CHECK,			///< 能力ランク増減最終チェック
 	BTL_EVENT_BEFORE_RANKUP,					///< 能力上げる（前）
 	BTL_EVENT_AFTER_RANKUP,						///< 能力上げた（後）
 	BTL_EVENT_BEFORE_RANKDOWN,				///< 能力下げる（前）
@@ -80,6 +84,8 @@ typedef enum {
 	BTL_EVENT_SHRINK_FIX,							///< ひるみ確定後
 	BTL_EVENT_ICHIGEKI_CHECK,					///< 一撃必殺チェック
 	BTL_EVENT_NOT_WAZA_DAMAGE,				///< ワザ以外のダメージチェック
+	BTL_EVENT_USE_ITEM_ENABLE,				///< アイテム使用可否チェック
+	BTL_EVENT_USE_ITEM,								///< アイテム使用
 
 	BTL_EVENT_TURNCHECK_BEGIN,				///< ターンチェック（先頭）
 	BTL_EVENT_TURNCHECK_END,					///< ターンチェック（終端）
@@ -91,6 +97,7 @@ typedef enum {
 	BTL_EVENT_SKILL_SWAP,							///< とくせい入れ替え
 	BTL_EVENT_CHECK_PUSHOUT,					///< ふきとばし系ワザチェック
 	BTL_EVENT_CALC_DRAIN_VOLUME,			///< ドレイン系ワザ回復量計算
+
 
 }BtlEventType;
 
@@ -126,8 +133,10 @@ typedef enum {
 	BTL_EVAR_POKEID_DAMAGED4,
 	BTL_EVAR_POKEID_DAMAGED5,
 	BTL_EVAR_POKEID_DAMAGED6,
+	BTL_EVAR_SP_PRIORITY,
 	BTL_EVAR_WAZAID,
 	BTL_EVAR_WAZA_TYPE,
+	BTL_EVAR_WAZA_IDX,
 	BTL_EVAR_USER_TYPE,
 	BTL_EVAR_SICKID,
 	BTL_EVAR_SICK_CONT,
@@ -173,6 +182,7 @@ typedef enum {
 extern void BTL_EVENTVAR_Push( void );
 extern void BTL_EVENTVAR_Pop( void );
 extern void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value );
+extern void BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value );
 extern int BTL_EVENTVAR_GetValue( BtlEvVarLabel label );
 
 
@@ -186,12 +196,12 @@ extern int BTL_EVENTVAR_GetValue( BtlEvVarLabel label );
  *	ワザダメージ->回復化チェックハンドラ用ワーク
  */
 typedef struct {
-	u8  pokeID;				///< 対象ポケモンID
-	u8  tokFlag;			///< とくせいウインドウ表示
-	u16 recoverHP;		///< 回復量
+	u8  pokeID;									///< 対象ポケモンID
+	u8  tokFlag;								///< とくせいウインドウ表示
+	u16 recoverHP;							///< 回復量
 
-	WazaRankEffect	rankEffect;		///< 回復に加えランク効果が発生する場合に設定
-	s16							rankVolume;		///< ランク効果増減値
+	WazaRankEffect	rankEffect;	///< 回復に加えランク効果が発生する場合に設定
+	s16							rankVolume;	///< ランク効果増減値
 
 }BTL_EVWK_DMG_TO_RECOVER;
 
@@ -237,9 +247,9 @@ typedef struct {
  */
 typedef enum {
 
-	BTL_EV_SICK_REACTION_NONE = 0,
-	BTL_EV_SICK_REACTION_DISCARD,	///< 効果を打ち消す
-	BTL_EV_SICK_REACTION_REFRECT,	///< 相手にもうつす
+	BTL_EV_SICK_REACTION_NONE = 0,	///< 反応なし
+	BTL_EV_SICK_REACTION_DISCARD,		///< 効果を打ち消す
+	BTL_EV_SICK_REACTION_REFRECT,		///< 相手にもうつす
 
 }BtlEvSickReaction;
 
@@ -248,14 +258,13 @@ typedef enum {
  */
 typedef struct {
 
-	BtlEvSickReaction		reaction;
-	WazaSick						discardSickType;
-	u8									fDiscardByTokusei;
-	u8									discardPokeID;
-	u8									fItemResponce;
+	BtlEvSickReaction		reaction;						///< 反応タイプ
+	WazaSick						discardSickType;		///< 特定の状態異常のみ打ち消す場合に指定
+	u8									fDiscardByTokusei;	///< とくせいによる打ち消しならTRUEにする
+	u8									discardPokeID;			///< 打ち消したポケモンID
+	u8									fItemResponce;			///< アイテム使用する場合TRUEにする
 
 }BTL_EVWK_ADDSICK;
-
 
 /**
  *	ランク効果チェックハンドラ用ワーク
@@ -264,9 +273,52 @@ typedef struct {
 
 	u8							failFlag;						///< とにかく失敗
 	u8							failTokuseiFlag;		///< 対象ポケモンのとくせいによる失敗
-	WazaRankEffect	failSpecificType;		///< 特定の効果のみ失敗
+	u8							useItemFlag;				///< アイテム発動フラグ
+	WazaRankEffect	failSpecificType;		///< 特定の効果のみ失敗させるなら指定
 
 }BTL_EVWK_CHECK_RANKEFF;
+
+/**
+ *	相性チェックハンドラ用ワーク
+ */
+typedef struct {
+
+	BtlTypeAff			aff;							///< 相性ID
+	u8							weakedByItem;			///< アイテムによって相性が弱められている
+	u8							weakReserveByItem;///< アイテムによってダメージ値を半減させる
+	u16							weakedItemID;			///< 弱めるために使われたアイテム
+
+}BTL_EVWK_CHECK_AFFINITY;
+
+/**
+ *	アイテム使用効果ハンドラ用ワーク
+ */
+typedef struct {
+
+	/** 各種効果の有効bitフラグ */
+	union {
+		u16 eq_bitField;
+		struct {
+			u16			eq_recoverHP			: 1;		///< HP回復
+			u16			eq_recoverPP			: 1;		///< PP回復
+			u16			eq_curePokeSick		: 1;		///< ポケモン系状態異常の回復
+			u16			eq_cureWazaSick		: 1;		///< ワザ系状態異常の回復
+			u16			eq_catchWazaSick	: 1;		///< 自分が状態異常になる
+			u16			eq_rankEffect			: 1;		///< ランク増減効果
+			u16			eq_recoverRank		: 1;		///< マイナスランクをフラットに戻す
+			u16			eq_padding				: 9;		///< パディング
+		};
+	};
+
+	u16							recoverHP;			///< HP回復量
+	u8							recoverPP;			///< PP回復量
+	u8							recoverPP_wazaIdx;	///< PP回復するワザIndex
+	WazaSick				cureWazaSick;		///< 回復するワザ系状態異常ID
+	WazaSick				catchWazaSick;	///< 自分がかかる状態異常ID
+	WazaRankEffect	rankEffect;			///< 増減するランク効果ID
+	int							rankVolume;			///< ランク効果の増減値
+
+}BTL_EVWK_USE_ITEM;
 
 
 

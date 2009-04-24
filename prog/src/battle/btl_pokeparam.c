@@ -438,8 +438,6 @@ u32 BTL_POKEPARAM_GetItem( const BTL_POKEPARAM* pp )
 {
 	return pp->item;
 }
-
-
 //=============================================================================================
 /**
  * ひんし状態かチェック
@@ -452,6 +450,21 @@ u32 BTL_POKEPARAM_GetItem( const BTL_POKEPARAM* pp )
 BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp )
 {
 	return BTL_POKEPARAM_GetValue( pp, BPP_HP ) == 0;
+}
+//=============================================================================================
+/**
+ * ワザPP値を取得
+ *
+ * @param   pp		
+ * @param   wazaIdx		
+ *
+ */
+//=============================================================================================
+u16 BTL_POKEPARAM_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx )
+{
+	GF_ASSERT(wazaIdx < pp->wazaCnt);
+
+	return  pp->waza[wazaIdx].pp;
 }
 //=============================================================================================
 /**
@@ -1062,7 +1075,6 @@ void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp )
  *
  * @param   pp		
  * @param   type		
- *
  */
 //=============================================================================================
 void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type )
@@ -1075,27 +1087,36 @@ void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type )
  *
  * @param   pp		
  * @param   tok		
- *
  */
 //=============================================================================================
 void BTL_POKEPARAM_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok )
 {
 	pp->tokusei = tok;
 }
-
 //=============================================================================================
 /**
  * フォルム変更
  *
  * @param   pp		
  * @param   formNo		
- *
  */
 //=============================================================================================
 void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo )
 {
 	pp->formNo = formNo;
 }
+//=============================================================================================
+/**
+ * 所有アイテム削除
+ *
+ * @param   pp		
+ */
+//=============================================================================================
+void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp )
+{
+	pp->item = 0;
+}
+
 
 //--------------------------------------------------------------------------
 /**

@@ -38,8 +38,8 @@ static void handler_ShrinkCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 	// Ž©•ª‚ª‚Ð‚é‚Ü‚³‚ê‚é‘ÎÛ
 	if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
 	{
-		// ”­¶Šm—¦‚ð0‚É‘‚«Š·‚¦
-		BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, 0 );
+		// ‹­§Ž¸”sƒtƒ‰ƒO‚ð‚n‚m
+		BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
 	}
 }
 

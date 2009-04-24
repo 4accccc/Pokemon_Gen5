@@ -43,7 +43,7 @@ static void handler_decPP( BTL_EVENT_FACTOR* myHandle, BTL_SERVER* server, u8 po
 		if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DAMAGED1+i) == pokeID )
 		{
 			u16 volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
-			BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, ++volume );
+			BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, ++volume );
 			BTL_Printf("ダメージ受けた%d体目が自分（ID=%d）なので、プレッシャーでPPを多く減らします\n", i, pokeID);
 		}
 	}

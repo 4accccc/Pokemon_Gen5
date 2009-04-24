@@ -39,9 +39,8 @@ typedef enum {
 	BPP_AGILITY,
 	BPP_HIT_RATIO,
 	BPP_AVOID_RATIO,
-
-	//--- ここまでランクアップ／ダウン効果の引数としても用いる ---
 	BPP_CRITICAL_RATIO,
+	//--- ここまでランクアップ／ダウン効果の引数としても用いる ---
 
 	BPP_HP,
 	BPP_MAX_HP,
@@ -61,7 +60,7 @@ typedef enum {
 //--------------------------------------------------------------
 typedef enum {
 
-	BPP_TURNFLG_ACTION_EXE,	///< 行動した
+	BPP_TURNFLG_ACTION_DONE,	///< 行動した
 	BPP_TURNFLG_SHRINK,			///< ひるまされた
 	BPP_TURNFLG_DEAD,				///< このターンに死んだ
 
@@ -147,6 +146,7 @@ extern void BTL_POKEPARAM_Copy( BTL_POKEPARAM* dst, const BTL_POKEPARAM* src );
 
 extern u8 BTL_POKEPARAM_GetID( const BTL_POKEPARAM* pp );
 extern const POKEMON_PARAM* BTL_POKEPARAM_GetSrcData( const BTL_POKEPARAM* bpp );
+extern u16 BTL_POKEPARAM_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx );
 
 extern u16 BTL_POKEPARAM_GetMonsNo( const BTL_POKEPARAM* pp );
 extern u8 BTL_POKEPARAM_GetWazaCount( const BTL_POKEPARAM* pp );
@@ -232,7 +232,7 @@ extern void BTL_POKEPARAM_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok );
 extern void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );
 extern void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type );
 extern void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
-
+extern void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp );
 
 
 

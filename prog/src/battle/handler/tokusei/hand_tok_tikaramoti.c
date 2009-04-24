@@ -44,7 +44,7 @@ static void handler_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 		{
 				u32 power = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
 				power *= 2;
-				BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, power );
+				BTL_EVENTVAR_RewriteValue( BTL_EVAR_POWER, power );
 				BTL_Printf("pokeID:%d Ç∆Ç≠ÇπÇ¢[ÇøÇ©ÇÁÇ‡ÇøorÉàÉKÉpÉèÅ[]Ç…ÇÊÇËÅAçUåÇà–óÕî{ëù\n", pokeID);
 		}
 	}

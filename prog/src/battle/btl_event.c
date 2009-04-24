@@ -448,7 +448,40 @@ void BTL_EVENTVAR_SetValue( BtlEvVarLabel label, int value )
 		}
 	}
 }
+void BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value )
+{
+	GF_ASSERT(label!=BTL_EVAR_NULL);
+	GF_ASSERT(label!=BTL_EVAR_SYS_SEPARATE);
 
+	{
+		VAR_STACK* stack = &VarStack;
+
+		int p = stack->sp;
+		while( p < NELEMS(stack->label) )
+		{
+			if(stack->label[p] == label)
+			{
+				break;
+			}
+			++p;
+		}
+		if( p < NELEMS(stack->value) )
+		{
+			stack->label[p] = label;
+			stack->value[p] = value;
+			#ifdef PM_DEBUG
+			if( p >= (NELEMS(stack->label)/8*7) )
+			{
+				BTL_Printf("Var Stack sp=%d äÎåØêÖàÊÇ≈Ç∑ÅIÅI\n", p);
+			}
+			#endif
+		}
+		else
+		{
+			GF_ASSERT(0);	// stack overflow
+		}
+	}
+}
 int BTL_EVENTVAR_GetValue( BtlEvVarLabel label )
 {
 	GF_ASSERT(label!=BTL_EVAR_NULL);

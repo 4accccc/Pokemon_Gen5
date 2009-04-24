@@ -40,7 +40,7 @@ int MSGSPEED_GetWait( void )
 {
 	CONFIG*  cfg = SaveData_GetConfig( (SAVE_CONTROL_WORK*)SaveCtrl );
 
-// @@@ GFL_NET_GetConnectNum
+// @@@ ’ÊM”»’è‚Í–¢‘Î‰žB°>GFL_NET_GetConnectNum
 
 	switch( CONFIG_GetMsgSpeed(cfg) ){
 	case MSGSPEED_SLOW:		return  3;

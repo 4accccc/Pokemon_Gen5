@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include "waza_tool\wazadata.h"
 #include "waza_tool\wazano_def.h"
+#include "item\item.h"
 
 #include "btl_event.h"
 #include "btl_server_cmd.h"
@@ -104,9 +105,10 @@ struct _BTL_SVFLOW_WORK {
 	BTL_SERVER_CMD_QUE*			que;
 	u32											turnCount;
 	SvflowResult						flowResult;
-	u8                      numClient;
+	u8			numClient;
 	u8			wazaEff_EnableFlag;
 	u8			wazaEff_TargetPokeID;
+	HEAPID	heapID;
 
 	ACTION_ORDER_WORK		actOrder[ BTL_POS_MAX ];
 	TARGET_POKE_REC			targetPokemon;
@@ -154,17 +156,19 @@ static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos, Wa
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static BTL_POKEPARAM* svflowsub_get_opponent_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos, u8 pokeSideIdx );
 static BTL_POKEPARAM* svflowsub_get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos );
+static void scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, TARGET_POKE_REC* rec );
 static void scproc_Fight_Damage( BTL_SVFLOW_WORK* wk, WazaID waza, SVCL_WORK* atClient,
 	 BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker,
 	TARGET_POKE_REC* targets, fx32 dmg_ratio );
 static void scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
-			BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza, fx32 targetDmgRatio );
+			BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza,
+			fx32 targetDmgRatio, BTL_EVWK_CHECK_AFFINITY* evwk );
 static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 		BTL_POKEPARAM* attacker,  BTL_POKEPARAM* defender,
-		WazaID waza,   BtlTypeAff aff,   fx32 targetDmgRatio );
+		WazaID waza,   BTL_EVWK_CHECK_AFFINITY* evwkAff,   fx32 targetDmgRatio );
 static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk, 
-		BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets, const u8* aff, WazaID waza, fx32 dmg_ratio );
+		BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets, BTL_EVWK_CHECK_AFFINITY** evwkAry, WazaID waza, fx32 dmg_ratio );
 static void scproc_WazaAdditionalEffect( BTL_SVFLOW_WORK* wk, WazaID waza,
 	BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage );
 static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_EVWK_DAMAGE_REACTION* evwk );
@@ -179,8 +183,15 @@ static BOOL scEvent_AddSick_IsMustFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 static void scEvent_AddSick_Check( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
 		WazaSick sick, BTL_EVWK_ADDSICK* evwk );
 static void scproc_UseItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static void scproc_UseItem_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVWK_USE_ITEM* evwk, u16 itemID );
+static void scproc_UseItem_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVWK_USE_ITEM* evwk, u16 itemID );
+static void scproc_UseItem_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVWK_USE_ITEM* evwk, u16 itemID );
+static void scPut_EatNutsAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static void scPut_EatNutsMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
+static void scPut_RemoveItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static void scEvent_GetItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BTL_EVWK_USE_ITEM* evwk );
 static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
-static void scput_Fight_Damage_After_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
+static void scproc_Fight_Damage_After_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static BOOL svflowsub_hitcheck_singular( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza );
 static u16 scEvent_CalcDamage( BTL_SVFLOW_WORK* wk, 
 		const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza,
@@ -194,7 +205,8 @@ static void scproc_Fight_SimpleSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
 static void scproc_Fight_Damage_AddEffect( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
 static void scproc_Fight_SimpleEffect( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, BOOL fAlmost );
-static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRankEffect effect, int volume, BOOL fAlmost );
+static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
+	WazaRankEffect effect, int volume, u16 itemID, BOOL fAlmost );
 static void scproc_Fight_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage );
 static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void svflowsub_MakeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* receiver, BTL_POKEPARAM* attacker,
@@ -219,7 +231,8 @@ static void* eventWork_Push( BTL_EVENT_WORK_STACK* stack, u32 size );
 static void eventWork_Pop( BTL_EVENT_WORK_STACK* stack, void* adrs );
 static void scPut_ConfCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_ConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage );
-static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static void scPut_CurePokeSick_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static void scPut_CureSick_EatNuts( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
 static void scPut_WazaExecuteFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, SV_WazaFailCause cause );
 static void scPut_WazaFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scPut_WazaAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, WazaID waza );
@@ -227,14 +240,16 @@ static void scput_WazaNoEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defend
 static void scput_DmgToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVWK_DMG_TO_RECOVER* evwk );
 static void scPut_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke );
 static void scPut_WazaEffectOn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaID waza );
-static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage, BOOL critical_flag );
+static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage,
+	BOOL critical_flag, BOOL plural_hit_flag );
 static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, u32 poke_cnt, BtlTypeAff aff, 
 	BTL_POKEPARAM** bpp, const u16* damage, const u8* critical_flag );
+static void scPut_WazaDamageAffMsg( BTL_SVFLOW_WORK* wk, BtlTypeAff aff );
 static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u32 damage );
 static void scPut_TokWin_In( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_TokWin_Out( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_RankEffectLimit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaRankEffect effect, int volume );
-static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRankEffect effect, int volume );
+static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRankEffect effect, int volume, u16 itemID );
 static void scPut_RankEffectFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
 	WazaRankEffect effect, const BTL_EVWK_CHECK_RANKEFF* evwk );
 static void scPut_Ichigeki( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target );
@@ -242,6 +257,8 @@ static void scPut_SimpleHp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, int value )
 static void scPut_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaSick sick, BPP_SICK_CONT sickCont );
 static void scPut_AddSickFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick );
 static void scPut_Messae_Set( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 strID );
+static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, u8 vol );
+static u8 scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckConf( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
@@ -261,20 +278,25 @@ static BOOL scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
 static void scEvent_WazaDamageEffect_Double( BTL_SVFLOW_WORK* wk,
 	BTL_POKEPARAM* attacker, BTL_POKEPARAM* def1, BTL_POKEPARAM* def2, WazaID waza, BtlTypeAff aff,
 	u32 dmg1, u32 dmg2 );
-static BtlTypeAff scEvent_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, PokeType waza_type );
-static void scEvent_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, TARGET_POKE_REC* rec );
+static BtlTypeAff scEvent_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender,
+	PokeType waza_type, BTL_EVWK_CHECK_AFFINITY* evwk );
+static u32 scEvent_DecrementPPVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u16 wazaIdx, TARGET_POKE_REC* rec );
+static BOOL scEvent_DecrementPP_Reaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8 wazaIdx );
 static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8* hitCount );
-static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
+static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
+	const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, SVFL_WAZAPARAM* wazaParam );
 static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
 	const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BOOL criticalFlag );
 static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
-	const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BOOL criticalFlag );
+	const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
+	WazaID waza, SVFL_WAZAPARAM* wazaParam, BOOL criticalFlag );
 static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, PokeType waza_type );
 static PokeTypePair scEvent_getDefenderPokeType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
 static void scEvent_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx );
 static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static void scEvent_AddShrink( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker, u8 per );
+static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk,
+	const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scEvent_CheckAddSickPer( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
 static void scEvent_MakePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* receiver, BTL_POKEPARAM* attacker,
 	PokeSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost );
@@ -288,6 +310,7 @@ static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEP
 static int scEvent_CalcDrainVolume( BTL_SVFLOW_WORK* wk, WazaID waza,
 	const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, int damage );
 static BOOL scEvent_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
+static BOOL scEvent_CheckItemUseEnable( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 
 
 
@@ -305,6 +328,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 	wk->turnCount = 0;
 	wk->flowResult = SVFLOW_RESULT_DEFAULT;
 	wk->que = que;
+	wk->heapID = heapID;
 
 	eventWork_Init( &wk->eventWork );
 
@@ -369,7 +393,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 		{
 			const BTL_ACTION_PARAM* action = BTL_SVCL_GetPokeAction( clwk, pokeIdx );
 
-			BTL_POKEPARAM_SetTurnFlag( bpp, BPP_TURNFLG_ACTION_EXE );
+			BTL_POKEPARAM_SetTurnFlag( bpp, BPP_TURNFLG_ACTION_DONE );
 
 			BTL_Printf("Client(%d) の %d 番目のポケモンのアクション\n", clientID, pokeIdx);
 			switch( action->gen.cmd ){
@@ -473,19 +497,20 @@ SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk )
 static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
 {
 	/*
-		行動優先順  ... 2BIT
-		ワザ優先順  ... 6BIT
-		素早さ      ... 16BIT
+		行動優先順  ...  2 BIT
+		特殊優先順  ...  8 BIT
+		ワザ優先順  ...  6 BIT
+		素早さ      ... 16 BIT
 	*/
-	#define MakePriValue( actPri, wazaPri, agility )	\
-						( ((actPri)<<22) | ((wazaPri)<<16) | (agility) )
+	#define MakePriValue( spePri, actPri, wazaPri, agility )	\
+						( ((actPri&0x03)<<30) | ((spePri&0x0f)<<22) | ((wazaPri&0x3f)<<16) | (agility&0xffff) )
 
 	SVCL_WORK* clwk;
 	const BTL_ACTION_PARAM* actParam;
 	const BTL_POKEPARAM* bpp;
 	u32 pri[ BTL_POS_MAX ];
 	u16 agility;
-	u8  action, actionPri, wazaPri;
+	u8  action, actionPri, wazaPri, spePri;
 	u8  i, j, p, numPoke;
 
 // 各ポケモンの行動プライオリティ値を生成
@@ -513,14 +538,14 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
 				break;
 			}
 			// ワザによる優先順
-			if( actParam->gen.cmd == BTL_ACTION_FIGHT )
-			{
+			if( actParam->gen.cmd == BTL_ACTION_FIGHT ){
 				WazaID  w = BTL_POKEPARAM_GetWazaNumber( bpp, actParam->fight.wazaIdx );
 				wazaPri = WAZADATA_GetPriority( w ) - WAZAPRI_MIN;
-			}
-			else
-			{
+				// アイテム装備など、特殊な優先フラグ
+				spePri = scEvent_CheckSpecialActPriority( wk, bpp );
+			}else{
 				wazaPri = 0;
+				spePri = 0;
 			}
 			// すばやさ
 			agility = scEvent_CalcAgility( wk, bpp );
@@ -529,7 +554,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
 					i, j, actionPri, wazaPri, agility );
 
 			// プライオリティ値とクライアントIDを対にして配列に保存
-			pri[p] = MakePriValue( actionPri, wazaPri, agility );
+			pri[p] = MakePriValue( actionPri, spePri, wazaPri, agility );
 			order[p].clientID = i;
 			order[p].pokeIdx = j;
 			++p;
@@ -957,7 +982,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, con
 		fail_cause = scEvent_CheckWazaExecute( wk, attacker, waza, &cured_flag );
 		if( cured_flag )
 		{
-			scPut_CurePokeSick( wk, attacker );
+			scPut_CurePokeSick_WazaCheck( wk, attacker );
 		}
 		if( fail_cause != SV_WAZAFAIL_NULL )
 		{
@@ -1027,7 +1052,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, con
 			SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT, atPokeID, wk->wazaEff_TargetPokeID, waza );
 		}
 
-		scEvent_decrementPP( wk, attacker, action->fight.wazaIdx, &wk->damagedPokemon );
+		scproc_decrementPP( wk, attacker, action->fight.wazaIdx, &wk->damagedPokemon );
 	}
 }
 //--------------------------------------------------------------------------
@@ -1189,7 +1214,6 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
 		}
 	}
 }
-
 //----------------------------------------------------------------------
 // サーバーフロー下請け：指定位置から見て対戦相手のポケモンデータを返す
 //----------------------------------------------------------------------
@@ -1220,6 +1244,30 @@ static BTL_POKEPARAM* svflowsub_get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPoke
 	clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
 
 	return clwk->frontMember[ posIdx ];
+}
+//--------------------------------------------------------------------------
+/**
+ * [Proc] 使ったワザのPPデクリメント
+ *
+ * @param   wk				
+ * @param   attacker	攻撃ポケモンパラメータ
+ * @param   wazaIdx		使ったワザインデックス
+ * @param   rec				ダメージを受けたポケモンパラメータ群
+ *
+ */
+//--------------------------------------------------------------------------
+static void scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, TARGET_POKE_REC* rec )
+{
+	u8 vol = scEvent_DecrementPPVolume( wk, attacker, wazaIdx, rec );
+	if( vol )
+	{
+		scPut_DecrementPP( wk, attacker, wazaIdx, vol );
+
+		if( scEvent_DecrementPP_Reaction(wk, attacker, wazaIdx) )
+		{
+			scproc_UseItem( wk, attacker );
+		}
+	}
 }
 //----------------------------------------------------------------------
 // サーバーフロー：「たたかう」> ダメージワザ系
@@ -1255,6 +1303,7 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
 	TARGET_POKE_REC* targets, fx32 dmg_ratio )
 {
 	BTL_POKEPARAM* bpp;
+	PokeType waza_type;
 	u8 poke_cnt;
 
 	// 命中チェック -> 命中しなかった場合は targets から除外
@@ -1282,30 +1331,44 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
 		eventWork_Pop( &wk->eventWork, ewk );
 	}
 
+	waza_type = WAZADATA_GetType( waza );
 	TargetPokeRec_GetStart( targets );
 	poke_cnt = TargetPokeRec_GetCount( targets );
 	if( poke_cnt == 1 )
 	{
+		BTL_EVWK_CHECK_AFFINITY* evwk;
 		bpp = TargetPokeRec_GetNext( targets );
-		scproc_Fight_Damage_side_single( wk, attacker, bpp, waza, dmg_ratio );
+		evwk = eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_CHECK_AFFINITY) );
+		scEvent_checkWazaDamageAffinity( wk, bpp, waza_type, evwk );
+		scproc_Fight_Damage_side_single( wk, attacker, bpp, waza, dmg_ratio, evwk );
+		eventWork_Pop( &wk->eventWork, evwk );
 	}
 	else if( poke_cnt > 1 )
 	{
-		u8 aff[ BTL_POSIDX_MAX ];
-		u8 critical[ BTL_POSIDX_MAX ];
+		BTL_EVWK_CHECK_AFFINITY* evwkAry[ BTL_POSIDX_MAX ];
 		u8 f_same_aff;
-		PokeType waza_type;
-		u32 i, j;
+		int i, j;
 
 		f_same_aff = TRUE;
-		waza_type = WAZADATA_GetType( waza );
 		for(i=0; i<poke_cnt; ++i)
 		{
 			bpp = TargetPokeRec_Get( targets, i );
-			aff[i] = scEvent_checkWazaDamageAffinity( wk, bpp, waza_type );
+			evwkAry[i] = eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_CHECK_AFFINITY) );
+			scEvent_checkWazaDamageAffinity( wk, bpp, waza_type, evwkAry[i] );
+		}
+
+	// 相性が別のヤツがいる or 相性がハンドラによって変化された場合は個別の処理
+		for(i=0; i<poke_cnt; ++i)
+		{
+			if( evwkAry[i]->weakedByItem ){
+				f_same_aff = FALSE;
+				break;
+			}
 			for(j=0; j<i; ++j){
-				if( BTL_CALC_TypeAffAbout(aff[i]) != BTL_CALC_TypeAffAbout(aff[j]) ){
+				if( BTL_CALC_TypeAffAbout(evwkAry[i]->aff) != BTL_CALC_TypeAffAbout(evwkAry[j]->aff) ){
 					f_same_aff = FALSE;
+					i = poke_cnt;
+					break;
 				}
 			}
 		}
@@ -1314,13 +1377,17 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
 		{
 			for(i=0; i<poke_cnt; ++i){
 				bpp = TargetPokeRec_Get( targets, i );
-				scproc_Fight_Damage_side_single( wk, attacker, bpp, waza, dmg_ratio );
+				scproc_Fight_Damage_side_single( wk, attacker, bpp, waza, dmg_ratio, evwkAry[i] );
 			}
 		}
-		// 相性一致なら、体力バーを同時に減らすようにコマンド生成する
+		// 相性が全てのターゲットで一致なら、体力バーを同時に減らすようにコマンド生成する
 		else
 		{
-			scproc_Fight_damage_side_plural( wk, attacker, targets, aff, waza, dmg_ratio );
+			scproc_Fight_damage_side_plural( wk, attacker, targets, evwkAry, waza, dmg_ratio );
+		}
+
+		for(i=poke_cnt-1; i>=0; --i){
+			eventWork_Pop( &wk->eventWork, evwkAry[i] );
 		}
 	}
 }
@@ -1328,11 +1395,10 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKE
 // サーバーフロー下請け：単体ダメージ処理（上位分岐）
 //------------------------------------------------------------------
 static void scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
-			BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza, fx32 targetDmgRatio )
+			BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, WazaID waza,
+			fx32 targetDmgRatio, BTL_EVWK_CHECK_AFFINITY* evwk )
 {
-	BtlTypeAff aff = scEvent_checkWazaDamageAffinity( wk, defender, wk->wazaParam.wazaType );
-
-	svflowsub_damage_act_singular( wk, attacker, defender, waza, aff, targetDmgRatio );
+	svflowsub_damage_act_singular( wk, attacker, defender, waza, evwk, targetDmgRatio );
 
 	scPut_CheckDeadCmd( wk, defender );
 	scPut_CheckDeadCmd( wk, attacker );
@@ -1342,17 +1408,17 @@ static void scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
 //------------------------------------------------------------------
 static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 		BTL_POKEPARAM* attacker,  BTL_POKEPARAM* defender,
-		WazaID waza,   BtlTypeAff aff,   fx32 targetDmgRatio )
+		WazaID waza,   BTL_EVWK_CHECK_AFFINITY* evwkAff,   fx32 targetDmgRatio )
 {
 	u8 plural_flag = FALSE;	// 複数回ヒットフラグ
 	u8 deadFlag = FALSE;
 	u8 atPokeID, defPokeID;
 	u8 hit_count, critical_flag, item_use_flag;
 	u32 damage;
+	BTL_EVWK_DAMAGE_REACTION* evwkReaction;
 	int i;
-	BTL_EVWK_DAMAGE_REACTION* evwk;
 
-	evwk = eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_DAMAGE_REACTION) );
+	evwkReaction = eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_DAMAGE_REACTION) );
 	plural_flag = scEvent_CheckPluralHit( wk, attacker, waza, &hit_count );
 	BTL_Printf("念のため表示 : ヒット回数=%d\n", hit_count);
 
@@ -1364,7 +1430,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 	for(i=0; i<hit_count; ++i)
 	{
 		critical_flag = scEvent_CheckCritical( wk, attacker, defender, waza );
-		damage = scEvent_CalcDamage( wk, attacker, defender, waza, aff, targetDmgRatio, critical_flag );
+		damage = scEvent_CalcDamage( wk, attacker, defender, waza, evwkAff->aff, targetDmgRatio, critical_flag );
 
 		// デバッグを簡単にするため必ず大ダメージにする措置
 		#ifdef PM_DEBUG
@@ -1386,15 +1452,15 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 		}
 		#endif
 
-		scPut_WazaDamageSingle( wk, defender, aff, damage, critical_flag );
+		scPut_WazaDamageSingle( wk, defender, evwkAff->aff, damage, critical_flag, plural_flag );
 		scproc_WazaAdditionalEffect( wk, waza, attacker, defender, damage );
 
-		item_use_flag = scEvent_WazaDamageReaction( wk, attacker, defender, waza, aff, damage, critical_flag, evwk );
+		item_use_flag = scEvent_WazaDamageReaction( wk, attacker, defender, waza,
+				evwkAff->aff, damage, critical_flag, evwkReaction );
 		if( item_use_flag ){
 			scproc_UseItem( wk, defender );
 		}
-		scproc_WazaDamageReaction( wk, evwk );
-
+		scproc_WazaDamageReaction( wk, evwkReaction );
 		scproc_Damage_Kickback( wk, attacker, waza, damage );
 
 		if( BTL_POKEPARAM_IsDead(defender) )
@@ -1413,14 +1479,15 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 	if( plural_flag )
 	{
 		// @@@ 「●●回あたった！」メッセージ
-//			SCQUE_PUT_MSG_WazaHitCount( wk->que, i );	// @@@ あとで
+//		scPut_WazaDamageAffMsg( wk, evwkAff );
+//		SCQUE_PUT_MSG_WazaHitCount( wk->que, i );	// @@@ あとで
 	}
 
-	eventWork_Pop( &wk->eventWork, evwk );
+	eventWork_Pop( &wk->eventWork, evwkReaction );
 }
 
 static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk, 
-		BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets, const u8* aff, WazaID waza, fx32 dmg_ratio )
+		BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets, BTL_EVWK_CHECK_AFFINITY** evwkAry, WazaID waza, fx32 dmg_ratio )
 {
 	BTL_POKEPARAM *bpp[ BTL_POSIDX_MAX ];
 	u16 dmg[ BTL_POSIDX_MAX ];
@@ -1436,11 +1503,11 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
 	{
 		bpp[i] = TargetPokeRec_Get( targets, i );
 		critical_flg[i] = scEvent_CheckCritical( wk, attacker, bpp[i], waza );
-		dmg[i] = scEvent_CalcDamage( wk, attacker, bpp[i], waza, aff[i], dmg_ratio, critical_flg[i] );
+		dmg[i] = scEvent_CalcDamage( wk, attacker, bpp[i], waza, evwkAry[i]->aff, dmg_ratio, critical_flg[i] );
 		TargetPokeRec_AddWithDamage( &wk->damagedPokemon, bpp[i], dmg[i] );
 	}
 
-	scPut_WazaDamagePlural( wk, poke_cnt, aff[0], bpp, dmg, critical_flg );
+	scPut_WazaDamagePlural( wk, poke_cnt, evwkAry[0]->aff, bpp, dmg, critical_flg );
 
 	for(i=0; i<poke_cnt; ++i)
 	{
@@ -1561,7 +1628,7 @@ static void scproc_WazaDamageReaction_Rank( BTL_SVFLOW_WORK* wk, BTL_EVWK_DAMAGE
 		sc_reserved_flag = TRUE;
 	}
 
-	succeed = scproc_RankEffectCore( wk, target, evwk->rankType, evwk->rankVolume, TRUE );
+	succeed = scproc_RankEffectCore( wk, target, evwk->rankType, evwk->rankVolume, ITEM_DUMMY_DATA, TRUE );
 
 	if( succeed ){
 		SCQUE_PUT_ReservedPos( wk->que, sc_reserved_pos, SC_TOKWIN_IN, evwk->damagedPokeID );
@@ -1721,7 +1788,96 @@ static void scEvent_AddSick_Check( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* tar
 //------------------------------------------------------------------
 static void scproc_UseItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
-	// @@@ 未実装
+	if( scEvent_CheckItemUseEnable(wk, bpp) )
+	{
+		BTL_EVWK_USE_ITEM* evwk = eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_USE_ITEM) );
+		u32 itemID = BTL_POKEPARAM_GetItem( bpp );
+
+		scEvent_GetItemEquip( wk, bpp, evwk );
+
+		if( ITEM_CheckNuts(itemID) ){
+			scPut_EatNutsAct( wk, bpp );
+		}
+		scPut_RemoveItem( wk, bpp );
+
+		if( evwk->eq_recoverHP ){
+			scproc_UseItem_RecoverHP( wk, bpp, evwk, itemID );
+		}
+		if( evwk->eq_curePokeSick ){
+			scproc_UseItem_CurePokeSick( wk, bpp, evwk, itemID );
+		}
+		if( evwk->eq_rankEffect ){
+			scproc_UseItem_RankEffect( wk, bpp, evwk, itemID );
+		}
+
+		eventWork_Pop( &wk->eventWork, evwk );
+	}
+}
+
+static void scproc_UseItem_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVWK_USE_ITEM* evwk, u16 itemID )
+{
+	scPut_SimpleHp( wk, bpp, evwk->recoverHP );
+	if( ITEM_CheckNuts(itemID) ){
+		scPut_EatNutsMessage( wk, bpp, itemID );
+	}
+}
+static void scproc_UseItem_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVWK_USE_ITEM* evwk, u16 itemID )
+{
+	scPut_CureSick_EatNuts( wk, bpp, itemID );
+}
+static void scproc_UseItem_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVWK_USE_ITEM* evwk, u16 itemID )
+{
+	scproc_RankEffectCore( wk, bpp, evwk->rankEffect, evwk->rankVolume, itemID, TRUE );
+}
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * [Put] きのみを食べるアクション
+ */
+//----------------------------------------------------------------------------------
+static void scPut_EatNutsAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+{
+	SCQUE_PUT_ACT_KINOMI( wk->que, BTL_POKEPARAM_GetID(bpp) );
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Put] きのみを食べた効果メッセージ
+ */
+//----------------------------------------------------------------------------------
+static void scPut_EatNutsMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
+{
+	SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KinomiEff_RecoverHP, BTL_POKEPARAM_GetID(bpp), itemID );
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Put] 所持アイテムを削除
+ */
+//----------------------------------------------------------------------------------
+static void scPut_RemoveItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+{
+	BTL_HANDLER_ITEM_Remove( bpp );
+	BTL_POKEPARAM_RemoveItem( bpp );
+	SCQUE_PUT_OP_RemoveItem( wk->que, BTL_POKEPARAM_GetID(bpp) );
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] アイテム使用効果の取得
+ *
+ * @param   wk		
+ * @param   bpp		
+ * @param   evwk		
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_GetItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BTL_EVWK_USE_ITEM* evwk )
+{
+	evwk->eq_bitField = 0;
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WORK_ADRS, (int)evwk );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_USE_ITEM );
+	BTL_EVENTVAR_Pop();
 }
 
 //------------------------------------------------------------------
@@ -1729,24 +1885,23 @@ static void scproc_UseItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 //------------------------------------------------------------------
 static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
 {
-	scput_Fight_Damage_After_Shrink( wk, waza, attacker, targets );
+	scproc_Fight_Damage_After_Shrink( wk, waza, attacker, targets );
 }
 //------------------------------------------------------------------
 // サーバーフロー：ダメージ受け後の処理 > ひるみチェック
 //------------------------------------------------------------------
-static void scput_Fight_Damage_After_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
+static void scproc_Fight_Damage_After_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
 {
-	u32 per = WAZADATA_GetShrinkPer( waza );
-	if( per )
-	{
-		BTL_POKEPARAM* bpp;
-		u32 cnt, i=0;
+	BTL_POKEPARAM* bpp;
+	u32 cnt, i=0;
 
-		while( (bpp = TargetPokeRec_Get(targets, i++)) != NULL )
+	while( (bpp = TargetPokeRec_Get(targets, i++)) != NULL )
+	{
+		if( !BTL_POKEPARAM_GetTurnFlag(bpp, BPP_TURNFLG_ACTION_DONE) )
 		{
-			if( !BTL_POKEPARAM_GetTurnFlag(bpp, BPP_TURNFLG_ACTION_EXE) )
+			if( scEvent_CheckShrink(wk, bpp, attacker, waza) )
 			{
-				scEvent_AddShrink( wk, bpp, attacker, per );
+				BTL_POKEPARAM_SetTurnFlag( bpp, BPP_TURNFLG_SHRINK );
 			}
 		}
 	}
@@ -1791,9 +1946,9 @@ static u16 scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
 		u16 atkPower, defGuard, wazaPower;
 
 		// 各種パラメータから素のダメージ値計算
-		wazaPower = scEvent_getWazaPower( wk, attacker, defender, waza );
+		wazaPower = scEvent_getWazaPower( wk, attacker, defender, waza, &wk->wazaParam );
 		atkPower  = scEvent_getAttackPower( wk, attacker, defender, waza, criticalFlag );
-		defGuard  = scEvent_getDefenderGuard( wk, attacker, defender, waza, criticalFlag );
+		defGuard  = scEvent_getDefenderGuard( wk, attacker, defender, waza, &wk->wazaParam, criticalFlag );
 		{
 			u8 atkLevel = BTL_POKEPARAM_GetValue( attacker, BPP_LEVEL );
 			rawDamage = wazaPower * atkPower * (atkLevel*2/5+2) / defGuard / 50;
@@ -2070,7 +2225,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_
 		int  volume;
 
 		scEvent_GetWazaRankEffectValue( wk, waza, i, attacker, target, &effect, &volume );
-		if( scproc_RankEffectCore(wk, target, effect, volume, fAlmost) )
+		if( scproc_RankEffectCore(wk, target, effect, volume, ITEM_DUMMY_DATA, fAlmost) )
 		{
 			ret = TRUE;
 		}
@@ -2081,16 +2236,18 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_
 /**
  * ランク増減効果のコア（ワザ以外もこれを呼び出す）
  *
- * @param   wk		
+ * @param   wk				
  * @param   target		
  * @param   effect		
  * @param   volume		
+ * @param   itemID		アイテム使用によるランク増減ならアイテムID指定（それ以外は ITEM_DUMMY_DATA を指定）
  * @param   fAlmost		
  *
  * @retval  BOOL		ランク増減効果が発生したらTRUE
  */
 //--------------------------------------------------------------------------
-static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRankEffect effect, int volume, BOOL fAlmost )
+static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
+	WazaRankEffect effect, int volume, u16 itemID, BOOL fAlmost )
 {
 	if( !BTL_POKEPARAM_IsRankEffectValid(target, effect, volume) )
 	{
@@ -2108,7 +2265,11 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, W
 		if( scEvent_CheckRankEffectSuccess(wk, target, effect, volume, evwk) )
 		{
 			BTL_Printf("ランク効果：type=%d, volume=%d\n", effect, volume );
-			scPut_RankEffect( wk, target, effect, volume );
+			scPut_RankEffect( wk, target, effect, volume, itemID );
+			if( evwk->useItemFlag )
+			{
+				scproc_UseItem( wk, target );
+			}
 		}
 		else
 		{
@@ -2681,7 +2842,7 @@ static void scPut_ConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damag
  * ワザ出し判定時のポケモン系状態異常回復処理
  */
 //--------------------------------------------------------------------------
-static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+static void scPut_CurePokeSick_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
 	u8 pokeID = BTL_POKEPARAM_GetID( bpp );
 	PokeSick sick = BTL_POKEPARAM_GetPokeSick( bpp );
@@ -2698,6 +2859,48 @@ static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 		break;
 	default:
 		GF_ASSERT_MSG(0, "illegal sick ID=%d\n", sick);
+	}
+}
+//--------------------------------------------------------------------------
+/**
+ * きのみ食べ時の状態異常回復
+ */
+//--------------------------------------------------------------------------
+static void scPut_CureSick_EatNuts( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
+{
+	u8 pokeID = BTL_POKEPARAM_GetID( bpp );
+	WazaSick sick = BTL_POKEPARAM_GetPokeSick( bpp );
+
+	if( sick != WAZASICK_NULL )
+	{
+		u16 strID;
+		switch( sick ){
+		case POKESICK_DOKU:		strID = BTL_STRID_SET_KinomiEff_CureDoku;		break;
+		case POKESICK_NEMURI:	strID = BTL_STRID_SET_KinomiEff_CureNemuri;	break;
+		case POKESICK_MAHI:		strID = BTL_STRID_SET_KinomiEff_CureMahi;		break;
+		case POKESICK_KOORI:	strID = BTL_STRID_SET_KinomiEff_CureKoori;	break;
+		case POKESICK_YAKEDO:	strID = BTL_STRID_SET_KinomiEff_CureYakedo;	break;
+		default:
+			GF_ASSERT_MSG(0, "illegal sick ID=%d\n", sick);
+			strID = BTL_STRID_SET_KinomiEff_CureDoku;
+			break;
+		}
+		BTL_POKEPARAM_CurePokeSick( bpp );
+		SCQUE_PUT_OP_CurePokeSick( wk->que, pokeID );
+		SCQUE_PUT_MSG_SET( wk->que, strID, pokeID, itemID );
+	}
+	else
+	{
+		if( BTL_POKEPARAM_CheckSick(bpp, WAZASICK_KONRAN) )
+		{
+			BTL_POKEPARAM_CureWazaSick( bpp, WAZASICK_KONRAN );
+			SCQUE_PUT_OP_CureWazaSick( wk->que, pokeID, WAZASICK_KONRAN );
+			SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KinomiEff_CureKonran, pokeID, itemID );
+		}
+		else
+		{
+			GF_ASSERT(0);	// ここに来る時は混乱の時だけなハズ…
+		}
 	}
 }
 //--------------------------------------------------------------------------
@@ -2836,9 +3039,15 @@ static void scPut_WazaEffectOn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attack
  * [Put] ワザによるダメージ（単体）
  */
 //--------------------------------------------------------------------------
-static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage, BOOL critical_flag )
+static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage,
+	BOOL critical_flag, BOOL plural_hit_flag )
 {
 	u8 pokeID = BTL_POKEPARAM_GetID( defender );
+
+	// 複数回ヒットは最後に１回だけ「効果は○○だ！」を出すため、ここでは無効化
+	if( plural_hit_flag ){
+		aff = BTL_TYPEAFF_100;
+	}
 
 	BTL_POKEPARAM_HpMinus( defender, damage );
 	SCQUE_PUT_OP_HpMinus( wk->que, pokeID, damage );
@@ -2875,6 +3084,10 @@ static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, u32 poke_cnt, BtlTypeAf
 			SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_CriticalHit, BTL_POKEPARAM_GetID(bpp[i]) );
 		}
 	}
+}
+static void scPut_WazaDamageAffMsg( BTL_SVFLOW_WORK* wk, BtlTypeAff aff )
+{
+//	scPut_WazaDamageSingle( wk, defender, aff, damage, critical_flag );
 }
 //--------------------------------------------------------------------------
 /**
@@ -2938,7 +3151,7 @@ static void scPut_RankEffectLimit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* tar
  * [Put] ランク増減効果が発生
  */
 //--------------------------------------------------------------------------
-static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRankEffect effect, int volume )
+static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRankEffect effect, int volume, u16 itemID )
 {
 	u8 pokeID = BTL_POKEPARAM_GetID( target );
 
@@ -2947,7 +3160,11 @@ static void scPut_RankEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaRa
 		volume = BTL_POKEPARAM_RankUp( target, effect, volume );
 		SCQUE_PUT_OP_RankUp( wk->que, pokeID, effect, volume );
 		SCQUE_PUT_ACT_RankUp( wk->que, pokeID, effect, volume );
-		SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankup_ATK, pokeID, effect, volume );
+		if( itemID != ITEM_DUMMY_DATA ){
+			SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Rankup_ATK, pokeID, effect, volume );
+		}else{
+			SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KinomiEff_Rankup_ATK, pokeID, effect, volume, itemID );
+		}
 	}
 	else
 	{
@@ -3040,6 +3257,22 @@ static void scPut_Messae_Set( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16
 {
 	SCQUE_PUT_MSG_SET( wk->que, strID, BTL_POKEPARAM_GetID(bpp) );
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Put] 使ったワザのPPデクリメント
+ *
+ * @param   wk		
+ * @param   attacker		
+ * @param   wazaIdx		
+ * @param   vol		
+ */
+//----------------------------------------------------------------------------------
+static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, u8 vol )
+{
+	u8 pokeID = BTL_POKEPARAM_GetID( attacker );
+	BTL_POKEPARAM_PPMinus( attacker, wazaIdx, vol );
+	SCQUE_PUT_OP_PPMinus( wk->que, pokeID, wazaIdx, vol );
+}
 
 
 //---------------------------------------------------------------------------------------------
@@ -3053,6 +3286,28 @@ static void scPut_Messae_Set( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16
 //
 //---------------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------
+/**
+ * [Event] “たたかう”を選んだときの特殊優先度を判定
+ * ※特殊優先度 = すばやさ、ワザ優先度より高い優先条件。
+ *
+ * @param   wk				
+ * @param   attacker		
+ *
+ * @retval  u8		
+ */
+//----------------------------------------------------------------------------------
+static u8 scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
+{
+	u8 pri = 0;
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(attacker) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_SP_PRIORITY, pri );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_SP_PRIORITY );
+		pri = BTL_EVENTVAR_GetValue( BTL_EVAR_SP_PRIORITY );
+	BTL_EVENTVAR_Pop();
+	return pri;
+}
 //--------------------------------------------------------------------------
 /**
  * [Event] すばやさ取得
@@ -3069,7 +3324,7 @@ static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attack
 	BTL_EVENTVAR_Push();
 		BTL_EVENTVAR_SetValue( BTL_EVAR_AGILITY, agi );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(attacker) );
-		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, TRUE );	// まひ無視フラグとして使っている
+		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, TRUE );	// まひチェックフラグとして使っている
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_AGILITY );
 		agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
 		if( BTL_POKEPARAM_GetPokeSick(attacker) == POKESICK_MAHI )
@@ -3229,12 +3484,10 @@ static void scEvent_CheckWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
 //--------------------------------------------------------------------------
 static BOOL scEvent_checkHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
-	if( WAZADATA_IsAlwaysHit(waza) )
-	{
+	if( WAZADATA_IsAlwaysHit(waza) ){
 		return TRUE;
 	}
-	if( BTL_POKEPARAM_CheckSick(attacker, WAZASICK_MUSTHIT) )
-	{
+	if( BTL_POKEPARAM_CheckSick(attacker, WAZASICK_MUSTHIT) ){
 		return TRUE;
 	}
 
@@ -3394,12 +3647,12 @@ static BOOL scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defe
 /**
  * [Event] クリティカルヒット発生チェック
  *
- * @param   wk		
- * @param   attacker		
- * @param   defender		
- * @param   waza		
+ * @param   wk				
+ * @param   attacker	
+ * @param   defender	
+ * @param   waza			
  *
- * @retval  BOOL		
+ * @retval  BOOL			
  */
 //--------------------------------------------------------------------------
 static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
@@ -3411,6 +3664,7 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 	BTL_EVENTVAR_Push();
 		BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_RANK, rank );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_CRITICAL_CHECK );
 		if( !BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG ) )
@@ -3451,6 +3705,7 @@ static BOOL scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, defPokeID );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_TYPEAFF, aff );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wk->wazaParam.wazaType );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_ITEMUSE_FLAG, item_use_flag );
@@ -3490,59 +3745,94 @@ static void scEvent_WazaDamageEffect_Double( BTL_SVFLOW_WORK* wk,
 
 	BTL_EVENTVAR_Pop();
 }
-//--------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 /**
  * [Event] ワザの相性計算
  *
  * @param   wk		
  * @param   defender		
  * @param   waza_type		
+ * @param   evwk				[out] 計算結果
  *
  * @retval  BtlTypeAff		
  */
-//--------------------------------------------------------------------------
-static BtlTypeAff scEvent_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, PokeType waza_type )
+//----------------------------------------------------------------------------------
+static BtlTypeAff scEvent_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender,
+	PokeType waza_type, BTL_EVWK_CHECK_AFFINITY* evwk )
 {
 	PokeTypePair defPokeType = scEvent_getDefenderPokeType( wk, defender );
-	return BTL_CALC_TypeAff( waza_type, defPokeType );;
-}
-//--------------------------------------------------------------------------
-/**
- * [Event] 使ったワザのPPデクリメント
- *
- * @param   wk				
- * @param   attacker	攻撃ポケモンパラメータ
- * @param   wazaIdx		使ったワザインデックス
- * @param   rec				ダメージを受けたポケモンパラメータ群
- *
- */
-//--------------------------------------------------------------------------
-static void scEvent_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, TARGET_POKE_REC* rec )
-{
-	BTL_EVENTVAR_Push();
+	evwk->aff = BTL_CALC_TypeAff( waza_type, defPokeType );
+	evwk->weakedByItem = FALSE;
+	evwk->weakReserveByItem = FALSE;
+	evwk->weakedItemID = ITEM_DUMMY_DATA;
 
-	BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, 1 );
-	{
-		u8 i = 0;
-		BTL_POKEPARAM* bpp;
-		BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGED_POKECNT, TargetPokeRec_GetCount(rec) );
-		while( (bpp=TargetPokeRec_Get(rec, i)) != NULL )
-		{
-			BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DAMAGED1+i, BTL_POKEPARAM_GetID(bpp) );
-			++i;
-		}
-	}
-	BTL_EVENT_CallHandlers( wk, BTL_EVENT_DECREMENT_PP );
-	{
-		u8 volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
-		if( volume )
-		{
-			u8 pokeID = BTL_POKEPARAM_GetID( attacker );
-			SCQUE_PUT_OP_PPMinus( wk->que, pokeID, wazaIdx, volume );
-			BTL_POKEPARAM_PPMinus( attacker, wazaIdx, volume );
-		}
-	}
+
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, waza_type );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WORK_ADRS, (int)(evwk) );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_AFFINITY );
 	BTL_EVENTVAR_Pop();
+
+	return evwk->aff;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザ使用後のデクリメントするPP値を取得
+ *
+ * @param   wk		
+ * @param   attacker	ワザ使用ポケモン
+ * @param   wazaIdx		使用ワザインデックス
+ * @param   rec				ワザによってダメージを受けたポケモンパラメータ群
+ *
+ * @retval  u32				デクリメントPP値
+ */
+//----------------------------------------------------------------------------------
+static u32 scEvent_DecrementPPVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u16 wazaIdx, TARGET_POKE_REC* rec )
+{
+	u32 volume = 1;
+
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
+		{
+			u8 i = 0;
+			BTL_POKEPARAM* bpp;
+			BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGED_POKECNT, TargetPokeRec_GetCount(rec) );
+			while( (bpp=TargetPokeRec_Get(rec, i)) != NULL )
+			{
+				BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DAMAGED1+i, BTL_POKEPARAM_GetID(bpp) );
+				++i;
+			}
+		}
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_DECREMENT_PP_VOLUME );
+		volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+	BTL_EVENTVAR_Pop();
+
+	return volume;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザ使用後、PPをデクリメントした後の反応
+ *
+ * @param   wk		
+ * @param   attacker		
+ *
+ * @retval  BOOL		アイテム使用反応があればTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scEvent_DecrementPP_Reaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8 wazaIdx )
+{
+	BOOL flag = FALSE;
+
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, flag );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID,		BTL_POKEPARAM_GetID(attacker) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_IDX,	wazaIdx );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_DECREMENT_PP_DONE );
+		flag = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+	BTL_EVENTVAR_Pop();
+
+	return flag;
 }
 //--------------------------------------------------------------------------
 /**
@@ -3609,8 +3899,21 @@ static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* at
 	return FALSE;
 }
 
-// ワザ威力取得
-static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザ威力取得
+ *
+ * @param   wk					
+ * @param   attacker		
+ * @param   defender		
+ * @param   waza				
+ * @param   wazaParam		
+ *
+ * @retval  u16		ワザ威力値
+ */
+//----------------------------------------------------------------------------------
+static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
+	const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, SVFL_WAZAPARAM* wazaParam )
 {
 	u16 power = WAZADATA_GetPower( waza );
 
@@ -3618,6 +3921,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(defender) );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_POWER, power );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_POWER );
 		power = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
@@ -3672,7 +3976,8 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
 
 // 防御側能力値取得
 static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
-	const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BOOL criticalFlag )
+	const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
+	WazaID waza, SVFL_WAZAPARAM* wazaParam, BOOL criticalFlag )
 {
 	BppValueID vid;
 
@@ -3717,6 +4022,7 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
 
 			BTL_EVENTVAR_SetValue( BTL_EVAR_GUARD, guard );
 			BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+			BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
 			BTL_EVENT_CallHandlers( wk, BTL_EVENT_DEFENDER_GUARD );
 			guard = BTL_EVENTVAR_GetValue( BTL_EVAR_GUARD );
 
@@ -3804,30 +4110,39 @@ static void scEvent_MemberIn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 }
 
 
-//--------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 /**
- * [Event] ワザ追加効果により対象ポケモンをひるませる
+ * [Event] ワザ追加効果により対象ポケモンをひるませるか判定
  *
- * @param   wk					
- * @param   target			対象ポケモンデータ
- * @param   attacker		攻撃したポケモンデータ
- * @param   per					ひるみ確率
+ * @param   wk				
+ * @param   target		対象ポケモンデータ
+ * @param   attacker	攻撃ポケモンデータ
+ * @param   waza			使ったワザ
  *
+ * @retval  BOOL		ひるませる場合TRUE
  */
-//--------------------------------------------------------------------------
-static void scEvent_AddShrink( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker, u8 per )
+//----------------------------------------------------------------------------------
+static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk,
+	const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, WazaID waza )
 {
+	u32 per = WAZADATA_GetShrinkPer( waza );
+	BOOL fail_flag = FALSE;
+
 	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, fail_flag );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BTL_POKEPARAM_GetID(target) );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
 		BTL_EVENT_CallHandlers( wk, BTL_EVENT_SHRINK_CHECK );
 		per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
+		fail_flag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
 	BTL_EVENTVAR_Pop();
 
-	if( perOccur(per) )
-	{
-		BTL_POKEPARAM_SetTurnFlag( target, BPP_TURNFLG_SHRINK );
+	if( fail_flag ){
+		return FALSE;
+	}else{
+		return perOccur(per);
 	}
 }
 //--------------------------------------------------------------------------
@@ -4034,17 +4349,19 @@ static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEP
 	evwk->failFlag = FALSE;
 	evwk->failTokuseiFlag = FALSE;
 	evwk->failSpecificType = WAZA_RANKEFF_NULL;
+	evwk->useItemFlag = FALSE;
 
 	BTL_EVENTVAR_Push();
 		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(target) );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, effect );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, volume );
 		BTL_EVENTVAR_SetValue( BTL_EVAR_WORK_ADRS, (int)evwk );
-		BTL_EVENT_CallHandlers( wk, BTL_EVENT_GET_RANKEFF_VALUE );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_LAST_CHECK );
 	BTL_EVENTVAR_Pop();
 
 	return evwk->failFlag == FALSE;
-}//--------------------------------------------------------------------------
+}
+//--------------------------------------------------------------------------
 /**
  * [Event] ドレイン攻撃のドレインHP量を計算
  *
@@ -4104,6 +4421,28 @@ static BOOL scEvent_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 t
 		}
 	BTL_EVENTVAR_Pop();
 	return (weather != BTL_WEATHER_NONE);
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] アイテム使用可否チェック
+ *
+ * @param   wk		
+ * @param   bpp		
+ *
+ * @retval  BOOL		TRUEで使用可能
+ */
+//--------------------------------------------------------------------------
+static BOOL scEvent_CheckItemUseEnable( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+	BOOL flag = TRUE;
+
+	BTL_EVENTVAR_Push();
+		BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
+		BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, flag );
+		BTL_EVENT_CallHandlers( wk, BTL_EVENT_USE_ITEM_ENABLE );
+		flag = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+	BTL_EVENTVAR_Pop();
+	return flag;
 }
 
 
@@ -4309,7 +4648,7 @@ void BTL_SERVER_RECEPT_RankDownEffect( BTL_SVFLOW_WORK* wk, BtlExPos exPos, BppV
 		pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos[i] );
 		if( !BTL_POKEPARAM_IsDead(pp) )
 		{
-			scproc_RankEffectCore( wk, pp, statusType, volume, fAlmost );
+			scproc_RankEffectCore( wk, pp, statusType, volume, ITEM_DUMMY_DATA, fAlmost );
 		}
 	}
 }
@@ -4337,7 +4676,7 @@ void BTL_SERVER_RECEPT_RankUpEffect( BTL_SVFLOW_WORK* wk, BtlExPos exPos, BppVal
 		pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos[i] );
 		if( !BTL_POKEPARAM_IsDead(pp) )
 		{
-			scproc_RankEffectCore( wk, pp, statusType, volume, fAlmost );
+			scproc_RankEffectCore( wk, pp, statusType, volume, ITEM_DUMMY_DATA, fAlmost );
 		}
 	}
 }
@@ -4541,5 +4880,19 @@ void BTL_SVFLOW_RECEPT_TraceTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 targetPo
 	BTL_POKEPARAM_ChangeTokusei( bpp, tok );
 	SCQUE_PUT_ACT_TokTrace( wk->que, pokeID, targetPokeID, tok );
 	BTL_HANDLER_TOKUSEI_Add( bpp );
+}
+
+//=============================================================================================
+/**
+ * ハンドラ使用ヒープID取得
+ *
+ * @param   wk		
+ *
+ * @retval  HEAPID		
+ */
+//=============================================================================================
+HEAPID BTL_SVFLOW_RECEPT_GetHeapID( BTL_SVFLOW_WORK* wk )
+{
+	return wk->heapID;
 }
 

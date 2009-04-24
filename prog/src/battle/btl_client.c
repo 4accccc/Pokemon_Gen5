@@ -135,6 +135,7 @@ static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
@@ -154,6 +155,7 @@ static BOOL scProc_OP_EscapeCodeSub( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_ChangePokeType( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ChangePokeForm( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_RemoveItem( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -850,6 +852,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_ACT_WEATHER_END,				scProc_ACT_WeatherEnd			},
 		{	SC_ACT_SIMPLE_HP,					scProc_ACT_SimpleHP				},
 		{	SC_ACT_TRACE_TOKUSEI,			scProc_ACT_TraceTokusei		},
+		{	SC_ACT_KINOMI,						scProc_ACT_Kinomi					},
 		{	SC_TOKWIN_IN,							scProc_TOKWIN_In					},
 		{	SC_TOKWIN_OUT,						scProc_TOKWIN_Out					},
 		{	SC_OP_HP_MINUS,						scProc_OP_HpMinus					},
@@ -868,6 +871,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		{	SC_OP_CHANGE_POKETYPE,		scProc_OP_ChangePokeType	},
 		{ SC_OP_CHANGE_POKEFORM,		scProc_OP_ChangePokeForm  },
 		{	SC_OP_WAZASICK_TURNCHECK,	scProc_OP_WSTurnCheck			},
+		{	SC_OP_REMOVE_ITEM,				scProc_OP_RemoveItem			},
 	};
 
 restart:
@@ -1472,6 +1476,34 @@ static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args )
  *  args .. [0]:トレース持ちのポケID  [1]:コピー対象のポケID  [2]:コピーするとくせい
  */
 //---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	u8 pokeID = args[0];
+	BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, pokeID );
+
+	switch( *seq ){
+	case 0:
+		{
+			BTLV_KinomiAct_Start( wk->viewCore, pos );
+			(*seq)++;
+		}
+		break;
+	case 1:
+		if( BTLV_KinomiAct_Wait( wk->viewCore, pos ) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+
+	return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *	とくせい「トレース」の発動処理
+ *  args .. [0]:トレース持ちのポケID  [1]:コピー対象のポケID  [2]:コピーするとくせい
+ */
+//---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	u8 pokeID = args[0];
@@ -1652,6 +1684,12 @@ static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
 {
 	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 	BTL_POKEPARAM_WazaSick_TurnCheck( pp );
+	return TRUE;
+}
+static BOOL scProc_OP_RemoveItem( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+	BTL_POKEPARAM_RemoveItem( pp );
 	return TRUE;
 }
 
