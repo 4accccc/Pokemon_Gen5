@@ -2406,17 +2406,6 @@ BOOL WFLBY_SYSTEM_GetProfileGameClear( const WFLBY_USER_PROFILE* cp_profile )
 WFLBY_ITEMTYPE WFLBY_SYSTEM_GetProfileItem( const WFLBY_USER_PROFILE* cp_profile )
 {
 	u32 item;
-#if PM_DEBUG
-	static u32 debug_item = WFLBY_ITEM_SIGNAL00;
-	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_Y){
-		debug_item++;
-		if(debug_item >= WFLBY_ITEM_NUM){
-			debug_item = 0;
-		}
-		OS_TPrintf("gadget_no = %d\n", debug_item);
-	}
-	return debug_item;
-#endif
 
 	// まだタッチトイをもらっていない人にアクセスしました。
 	if( cp_profile->item == WFLBY_ITEM_INIT ){

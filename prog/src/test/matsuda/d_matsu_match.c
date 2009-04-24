@@ -27,6 +27,7 @@
 #include "font/font.naix"
 #include "pokeicon/pokeicon.h"
 #include "system\gfl_use.h"
+#include "gamesystem/msgspeed.h"
 
 
 //==============================================================================
@@ -651,7 +652,7 @@ static BOOL DebugMatsuda_IrcMatch(D_MATSU_WORK *wk)
 		OS_TPrintf("親＝Aボタン、　子＝Xボタン\n");
 		GFL_MSG_GetString( wk->mm, DM_MSG_MATCH001, wk->strbuf );
 		wk->printStream = PRINTSYS_PrintStream( wk->drawwin[ENTRY_MAX].win, 0, 0,
-						wk->strbuf, wk->fontHandle, 0, wk->tcbl, 0, wk->heapID, 0xff );
+						wk->strbuf, wk->fontHandle, MSGSPEED_GetWait(), wk->tcbl, 0, wk->heapID, 0xff );
 
 		wk->seq++;
 		break;

@@ -49,6 +49,7 @@
 #include "wflby_anketo.h"
 #include "wflby_snd.h"
 #include "system/gfl_use.h"
+#include "gamesystem/msgspeed.h"
 
 
 //-----------------------------------------------------------------------------
@@ -465,7 +466,7 @@ typedef union{
 //=====================================
 typedef struct {
 	u32 msgno;
-	s32 msgwait;
+	int msgwait;
 	GFL_BMPWIN* win;
 	STRBUF*			p_str;
 	void*			p_timewait;
@@ -1782,7 +1783,7 @@ static void ANKETO_TalkWin_Init( ANKETO_TALKWIN* p_wk, ANKETO_DRAWSYS* p_sys, SA
 	{
 		CONFIG* p_config;
 		p_config = SaveData_GetConfig( p_save );
-		p_wk->msgwait = CONFIG_GetMsgPrintSpeed( p_config );
+		p_wk->msgwait = MSGSPEED_GetWait();	//CONFIG_GetMsgPrintSpeed( p_config );
 	}
 }
 
@@ -1826,7 +1827,7 @@ static void ANKETO_TalkWin_Exit( ANKETO_TALKWIN* p_wk, u32 heapID )
  */
 //--------------------------------------------------------------
 static PRINT_STREAM * _PrintStreamColor(GFL_BMPWIN* dst, u16 xpos, u16 ypos, 
-	const STRBUF* str, GFL_FONT* font, u16 wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, 
+	const STRBUF* str, GFL_FONT* font, int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, 
 	HEAPID heapID, u16 clearColor, GF_PRINTCOLOR font_color )
 {
 	u8 letter, u8 shadow, u8 back;

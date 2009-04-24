@@ -49,6 +49,7 @@
 #include "arc_def.h"
 #include "test/wflby_debug.h"
 #include "savedata/wifilist.h"
+#include "gamesystem/msgspeed.h"
 
 // ダミーグラフィックです
 #include "wifip2pmatch.naix"
@@ -257,7 +258,7 @@ typedef struct {
 	GFL_FONT*			font_handle;	// フォントハンドル
 	u32					fontid;		// メッセージのフォントID	
 	void*				p_timewait;	// タイムウエイト
-	u32					msgspeed;
+	int					msgspeed;
 #if WB_FIX
 	u32					msgno;
 #else
@@ -1371,7 +1372,7 @@ static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GFL_FONT *font_handle, GF
 	p_wk->p_tmp		= GFL_STR_CreateBuffer( WFLBY_WINSYS_STRBUFNUM, heapID );
 	p_wk->font_handle = font_handle;
 	p_wk->fontid	= fontid;
-	p_wk->msgspeed	= CONFIG_GetMsgPrintSpeed( SaveData_GetConfig( p_save ) );
+	p_wk->msgspeed	= MSGSPEED_GetWait();//CONFIG_GetMsgPrintSpeed( SaveData_GetConfig( p_save ) );
 #if WB_FIX
 	p_wk->msgno		= 0;
 #else

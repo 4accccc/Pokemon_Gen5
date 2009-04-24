@@ -1512,7 +1512,7 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 
 		//•¶Žš—ñ‚Ì•\Ž¦
 		wk->msgID = PRINTSYS_PrintStream(/*ˆø”“à‚Í‚Ü‚¾–¢‘Î‰ž*/	&wk->msgwin,FONT_TALK,wk->msgstr,0,0,
-										CONFIG_GetMsgPrintSpeed( wk->config ),NULL);
+										MSGSPEED_GetWait()/*CONFIG_GetMsgPrintSpeed( wk->config )*/,NULL);
 
 		wk->msgseq = MSGDRAW;
 		break;

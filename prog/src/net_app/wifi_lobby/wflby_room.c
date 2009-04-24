@@ -62,6 +62,7 @@
 #include "system/main.h"
 #include "system/actor_tool.h"
 #include "lobby_trfgra.naix"
+#include "gamesystem/msgspeed.h"
 
 
 //-----------------------------------------------------------------------------
@@ -654,7 +655,7 @@ typedef struct {
 #else
 	PRINT_STREAM*	print_stream;
 #endif
-	u32				msgwait;
+	int				msgwait;
 	STRBUF*			p_str;
 	void*			p_timewait;
 	PRINT_UTIL		printUtil;
@@ -3550,12 +3551,13 @@ static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT
 
 	// 文字列バッファ作成
 	p_wk->p_str = GFL_STR_CreateBuffer( WFLBY_TALKWIN_STRBUFNUM, heapID );
+	OS_TPrintf("p_str生成\n");
 
 	// メッセージ表示ウエイトを設定
 	{
 		CONFIG* p_config;
 		p_config = SaveData_GetConfig( p_save );
-		p_wk->msgwait = CONFIG_GetMsgPrintSpeed( p_config );
+		p_wk->msgwait = MSGSPEED_GetWait();	//CONFIG_GetMsgPrintSpeed( p_config );
 	}
 }
 
@@ -3580,6 +3582,8 @@ static void WFLBY_ROOM_TalkWin_Exit( WFLBY_ROOM_TALKMSG* p_wk )
 	
 	// 文字列バッファ破棄
 	GFL_STR_DeleteBuffer( p_wk->p_str );
+	p_wk->p_str = NULL;
+	OS_TPrintf("p_str破棄\n");
 
 	// ビットマップ破棄
 	WFLBY_ROOM_TalkWin_BmpWinDelete(p_wk);
@@ -3619,7 +3623,7 @@ static void WFLBY_ROOM_TalkWin_BmpWinDelete( WFLBY_ROOM_TALKMSG *p_wk )
  */
 //--------------------------------------------------------------
 static PRINT_STREAM * _PrintStreamColor(GFL_BMPWIN* dst, u16 xpos, u16 ypos, 
-	const STRBUF* str, GFL_FONT* font, u16 wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, 
+	const STRBUF* str, GFL_FONT* font, int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, 
 	HEAPID heapID, u16 clearColor, GF_PRINTCOLOR font_color )
 {
 	u8 letter, shadow, back;
@@ -3897,6 +3901,7 @@ static void WFLBY_ROOM_TalkWin_Board_Print( WFLBY_ROOM_TALKMSG* p_wk, const STRB
 	BmpWinFrame_TransScreen( p_wk->win ,WINDOW_TRANS_ON_V);
 	
 	// 文字列コピー
+	GF_ASSERT(p_wk->p_str != NULL);
 	GFL_STR_CopyBuffer( p_wk->p_str, cp_str );
 	p_wk->print_stream = PRINTSYS_PrintStream(p_wk->win, 0, 0, p_wk->p_str, system_handle, 
 			p_wk->msgwait, tcblsys, 10, HEAPID_WFLBY_ROOM, 

@@ -42,6 +42,7 @@
 #include "wflby_def.h"
 
 #include "net\network_define.h"
+#include "gamesystem/msgspeed.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -1177,7 +1178,7 @@ static void MNGM_MSG_SetGameName( MNGM_MSG* p_wk, u32 game );
 static void MNGM_MSG_GetStr( MNGM_MSG* p_wk, STRBUF* p_str, u32 msgidx );
 static void MNGM_MSG_Print( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y );
 static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y );
-static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF* p_str, u32 wait );
+static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF* p_str, int wait );
 static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y, PRINTSYS_LSB col );
 
 // 会話ウィンドウ
@@ -2853,7 +2854,7 @@ static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, 
  */
 //--------------------------------------------------------------
 static PRINT_STREAM * _PrintStreamColor(GFL_BMPWIN* dst, u16 xpos, u16 ypos, 
-	const STRBUF* str, GFL_FONT* font, u16 wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, 
+	const STRBUF* str, GFL_FONT* font, int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, 
 	HEAPID heapID, u16 clearColor, GF_PRINTCOLOR font_color )
 {
 	u8 letter, u8 shadow, u8 back;
@@ -2884,7 +2885,7 @@ static PRINT_STREAM * _PrintStreamColor(GFL_BMPWIN* dst, u16 xpos, u16 ypos,
  *	@retval	メッセージナンバー
  */
 //-----------------------------------------------------------------------------
-static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF* p_str, u32 wait )
+static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF* p_str, int wait )
 {
 	GFL_MSG_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_str, p_wk->p_tmp );
@@ -3023,7 +3024,8 @@ static void MNGM_TALKWIN_MsgPrint( MNGM_TALKWIN* p_wk, MNGM_MSG* p_msg, u32 msgi
 	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[idx]), 15 );
 	p_wk->msg_no[idx] = MNGM_MSG_PrintScr( p_msg, msgidx, p_wk->win[idx],
-			p_wk->p_str[idx], MNGM_TALKWIN_MSG_SPEED );
+			p_wk->p_str[idx], 
+			MSGSPEED_GetWait());//MNGM_TALKWIN_MSG_SPEED ); ※check PLはMNGM_TALKWIN_MSG_SPEEDで固定にしていたので、MSGSPEED_GetWaitの挙動によっては固定にした方がいいかもしれない
 
 	// ウインドウを書き込む
     TalkWinFrame_Write(p_wk->win[idx], WINDOW_TRANS_OFF, MNGM_TALKWIN_CGX, MNGM_TALKWIN_PAL );

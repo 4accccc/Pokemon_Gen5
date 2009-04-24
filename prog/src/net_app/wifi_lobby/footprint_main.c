@@ -857,7 +857,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 		GFL_MSG_GetString(fps->msgman, msg_footprint_exit_select, fps->talk_strbuf);
 		fps->msg_index = PRINTSYS_PrintStream(/*ˆø”“à‚Í‚Ü‚¾–¢‘Î‰ž*/&fps->talk_win, FONT_TALK, 
 			fps->talk_strbuf, 0, 0, 
-			CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(fps->sv)), NULL);
+			MSGSPEED_GetWait()/*CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(fps->sv))*/, NULL);
 		(*seq)++;
 		break;
 	case SEQ_EXIT_SELECT_MSG_WAIT:
@@ -919,7 +919,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 		GFL_MSG_GetString(fps->msgman, msg_footprint_timeup, fps->talk_strbuf);
 		fps->msg_index = PRINTSYS_PrintStream(/*ˆø”“à‚Í‚Ü‚¾–¢‘Î‰ž*/&fps->talk_win, FONT_TALK, 
 			fps->talk_strbuf, 0, 0, 
-			CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(fps->sv)), NULL);
+			MSGSPEED_GetWait()/*CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(fps->sv))*/, NULL);
 		(*seq)++;
 		break;
 	case SEQ_TIMEUP_MSG_WAIT:

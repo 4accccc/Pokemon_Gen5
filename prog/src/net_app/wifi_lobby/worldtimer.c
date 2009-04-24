@@ -1078,7 +1078,7 @@ typedef struct {
 typedef struct {
 	u32				seq;
 	u32				msg_no;
-	u32				msg_wait;
+	int				msg_wait;
 	STRBUF*			p_str;
 	GFL_BMPWIN	*win;
 	TOUCH_SW_SYS*	p_touch_sw;
@@ -3628,7 +3628,7 @@ static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_dra
 	{
 		CONFIG* p_config;
 		p_config = SaveData_GetConfig( p_save );
-		p_wk->msg_wait = CONFIG_GetMsgPrintSpeed( p_config );
+		p_wk->msg_wait = MSGSPEED_GetWait();//CONFIG_GetMsgPrintSpeed( p_config );
 	}
 
 	// メッセージバッファ
