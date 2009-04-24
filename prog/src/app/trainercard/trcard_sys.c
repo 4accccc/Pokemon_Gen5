@@ -39,16 +39,18 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
 GFL_PROC_RESULT TrCardSysProc_InitComm( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
+GFL_PROC_RESULT TrCardSysProc_EndComm( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 const GFL_PROC_DATA TrCardSysProcData = {
 	TrCardSysProc_Init,
 	TrCardSysProc_Main,
 	TrCardSysProc_End,
 };
-//初期化が違う通信用Procデータ
+//初期化・開放が違う通信用Procデータ
+//トレーナーカードデータを外部から受け取る
 const GFL_PROC_DATA TrCardSysCommProcData = {
 	TrCardSysProc_InitComm,
 	TrCardSysProc_Main,
-	TrCardSysProc_End,
+	TrCardSysProc_EndComm,
 };
 
 //================================================================
@@ -167,6 +169,18 @@ GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void 
 	TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
 
 	GFL_HEAP_FreeMemory( wk->tcp->TrCardData );
+	GFL_HEAP_FreeMemory( wk->tcp );
+
+	//ワークエリア解放
+	GFL_PROC_FreeWork(proc);
+	
+	GFL_HEAP_DeleteHeap(HEAPID_TRCARD_SYS);
+	return GFL_PROC_RES_FINISH;
+}
+GFL_PROC_RESULT TrCardSysProc_EndComm( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
+{
+	TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
+
 	GFL_HEAP_FreeMemory( wk->tcp );
 
 	//ワークエリア解放
