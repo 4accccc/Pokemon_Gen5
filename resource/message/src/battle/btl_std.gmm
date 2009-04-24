@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-03-26T18:45:17"/>
+	<create user="taya" host="W00146" date="2009-04-23T14:49:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -514,9 +514,17 @@
 		<language name="JPN_KANJI" width="216">いちげき必殺！</language>
 	</row>
 
-	<row id="BTL_STRID_STD_SkillSwap_xxx">
-		<language name="JPN" width="216">ああ</language>
-		<language name="JPN_KANJI" width="216">ああ</language>
+	<row id="BTL_STRID_STD_KinomiEff_WazaWeak">
+		<comment>きのみ効果メッセージ</comment>
+		<language name="JPN" width="216">[1:09:どうぐ名:0]は
+[1:07:わざ名:1]の　いりょくを　よわめた！</language>
+		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]は
+[1:07:わざ名:1]の　威力を　弱めた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_KinomiEff_">
+		<language name="JPN" width="216"></language>
+		<language name="JPN_KANJI" width="216"></language>
 	</row>
 
 	<flowchart-group-list>
