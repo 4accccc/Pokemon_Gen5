@@ -58,6 +58,8 @@ const BOOL MUS_ITEM_DRAW_IsBackItem( MUS_ITEM_DRAW_WORK *itemWork );
 //絵の変更
 void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , u16 newId , GFL_G3D_RES *newRes );
 void MUS_ITEM_DRAW_SetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes );
+void MUS_ITEM_DRAW_SetDarkPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes , void **pltWork );
+void MUS_ITEM_DRAW_ResetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes );
 
 //影用に各数値をコピーする
 void MUS_ITEM_DRAW_CopyItemDataToShadow(  MUS_ITEM_DRAW_SYSTEM* work ,MUS_ITEM_DRAW_WORK *baseItem , MUS_ITEM_DRAW_WORK *shadowItem);

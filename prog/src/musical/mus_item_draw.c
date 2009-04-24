@@ -27,7 +27,7 @@
 //	define
 //======================================================================
 //影用のVRAM転送Task
-#define VRAM_TRANS_TASK_NUM (2)
+#define VRAM_TRANS_TASK_NUM (6)
 
 //======================================================================
 //	enum
@@ -42,6 +42,7 @@ struct _MUS_ITEM_DRAW_WORK
 	BOOL	enable;
 	BOOL	isUpdate;
 	BOOL	useOffset;	//アイテムのオフセットを利用するか？
+	BOOL	isShadow;
 	int		resIdx;
 	int		bbdIdx;
 	u32		arcIdx;
@@ -288,6 +289,7 @@ static MUS_ITEM_DRAW_WORK* MUS_ITEM_DRAW_AddFunc( MUS_ITEM_DRAW_SYSTEM* work , u
 	work->musItem[idx].enable = TRUE;
 	work->musItem[idx].isUpdate = TRUE;
 	work->musItem[idx].useOffset = TRUE;
+	work->musItem[idx].isShadow = FALSE;
 
 	work->musItem[idx].pos.x = pos->x;
 	work->musItem[idx].pos.y = pos->y;
@@ -321,6 +323,7 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 	
 	itemWork->arcIdx = MUS_ITEM_DRAW_GetArcIdx( newId );
 	itemWork->itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemWork->arcIdx );
+	itemWork->isShadow = FALSE;
 
 	texSize = MUS_ITEM_DATA_GetTexType( itemWork->itemData );
 	MUS_ITEM_DRAW_GetPicSize( itemWork , &sizeX , &sizeY );
@@ -342,17 +345,82 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 	itemWork->enable = TRUE;
 }
 
+//影用灰色パレット設定
 void MUS_ITEM_DRAW_SetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes )
 {
-	u32 pltAdr;
-	NNSG3dPlttKey pltKey;
-	u32 pltSize;
-	
-	//同じ16色パレットでも使用色数で配置サイズが変わるのでPltKeyからサイズを取得する
-	GFL_BBD_GetResourceTexPlttAdrs( work->bbdSys , itemWork->resIdx , &pltAdr );
-	pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
-	pltSize = NNS_GfdGetPlttKeySize( pltKey );
-	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT , pltAdr , (void*)work->shadowPallet , pltSize );
+	if( itemWork->isShadow == FALSE )
+	{
+		u32 pltAdr;
+		NNSG3dPlttKey pltKey;
+		u32 pltSize;
+		
+		//同じ16色パレットでも使用色数で配置サイズが変わるのでPltKeyからサイズを取得する
+		GFL_BBD_GetResourceTexPlttAdrs( work->bbdSys , itemWork->resIdx , &pltAdr );
+		pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
+		pltSize = NNS_GfdGetPlttKeySize( pltKey );
+		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT , pltAdr , (void*)work->shadowPallet , pltSize );
+		itemWork->isShadow = TRUE;
+	}
+}
+
+//暗用灰色パレット設定
+//パレット用のワークはそこからポインタをもらう。NULLなら生成。あるならそれをそのまま使う
+void MUS_ITEM_DRAW_SetDarkPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes , void **pltWork )
+{
+	if( itemWork->isShadow == FALSE )
+	{
+		u32 pltAdr;
+		NNSG3dPlttKey pltKey;
+		u32 pltSize;
+		
+		//同じ16色パレットでも使用色数で配置サイズが変わるのでPltKeyからサイズを取得する
+		GFL_BBD_GetResourceTexPlttAdrs( work->bbdSys , itemWork->resIdx , &pltAdr );
+		pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
+		pltSize = NNS_GfdGetPlttKeySize( pltKey );
+		
+		if( *pltWork == NULL )
+		{
+			GXRgb *pltData = (void*)GFL_G3D_GetAdrsTexturePltt( shadowRes );
+			GXRgb *transData;
+			u8 i;
+			*pltWork = GFL_HEAP_AllocClearMemory( work->heapId , pltSize );
+
+			transData = *pltWork;
+			for( i=0;i<pltSize/2;i++ )
+			{
+				const u8 r = (pltData[i] & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+				const u8 g = (pltData[i] & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+				const u8 b = (pltData[i] & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+				//OS_TPrintf("[%04x:%d:%d:%d]\n",pltData[i],r,g,b);
+				transData[i] = GX_RGB( r/2 , g/2 , b/2 );
+				
+			}
+		}
+		
+		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT , pltAdr , *pltWork , pltSize );
+		itemWork->isShadow = TRUE;
+	}
+}
+
+//パレットをデフォルトに戻す
+void MUS_ITEM_DRAW_ResetShadowPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WORK *itemWork , GFL_G3D_RES *shadowRes )
+{
+	if( itemWork->isShadow == TRUE )
+	{
+		u32 pltAdr;
+		NNSG3dPlttKey pltKey;
+		u32 pltSize;
+		void* dataAdr;
+		
+		//同じ16色パレットでも使用色数で配置サイズが変わるのでPltKeyからサイズを取得する
+		GFL_BBD_GetResourceTexPlttAdrs( work->bbdSys , itemWork->resIdx , &pltAdr );
+		pltKey = GFL_G3D_GetTexturePlttVramKey( shadowRes );
+		pltSize = NNS_GfdGetPlttKeySize( pltKey );
+		
+		dataAdr = (void*)GFL_G3D_GetAdrsTexturePltt( shadowRes );
+		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT , pltAdr , dataAdr , pltSize );
+		itemWork->isShadow = FALSE;
+	}
 }
 
 //影用に各数値をコピーする

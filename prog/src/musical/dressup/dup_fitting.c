@@ -91,7 +91,8 @@ static const u16 LIST_ROTATE_LIMIT = DEG_TO_U16(90);
 
 //アイテム1個の間隔
 static const u16 LIST_ONE_ANGLE = 0x10000/ITEM_LIST_NUM;
-static const u32 LIST_FULL_ANGLE = LIST_ONE_ANGLE*MUSICAL_ITEM_MAX;
+		//アイテムのマックスが変動するので廃止
+//static const u32 LIST_FULL_ANGLE = LIST_ONE_ANGLE*MUSICAL_ITEM_MAX;
 
 //リストのZ座標
 static const fx32 LIST_DEPTH_BASE = FX32_CONST( 20.0f );
@@ -172,7 +173,9 @@ typedef enum
 typedef struct
 {
 	u16		itemId;
+	GFL_G3D_RES	*itemRes;
 	BOOL	isOutList;	//リスト外にいる
+	void	*pltWork;		//暗パレット用ワーク
 }ITEM_STATE;
 
 struct _FITTING_WORK
@@ -199,10 +202,9 @@ struct _FITTING_WORK
 	ITEM_GROUPE		holdItemType;
 
 	MUS_ITEM_DRAW_WORK *shadowItem;	//影用
-	u16					shadowItemId;
+	u16					shadowItemIdx;
 
 	//アイテム系
-	GFL_G3D_RES	*itemRes[MUSICAL_ITEM_MAX];
 	u16							totalItemNum;
 	ITEM_STATE			itemState[MUSICAL_ITEM_MAX];
 	FIT_ITEM_GROUP	*itemGroupList;
@@ -246,6 +248,7 @@ static void DUP_FIT_SetupPokemon( FITTING_WORK *work );
 static void DUP_FIT_SetupItem( FITTING_WORK *work );
 static void DUP_FIT_TermItem( FITTING_WORK *work );
 static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle , u16 sizeX , u16 sizeY );
+static void DUP_FIT_CheckItemListPallet( FITTING_WORK *work );
 
 static void DUP_FIT_UpdateTpMain( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY );
@@ -314,7 +317,6 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 	work->holdItem = NULL;
 	work->holdItemType = IG_NONE;
 	work->listSpeed = 0;
-	work->listTotalMove = LIST_FULL_ANGLE-0x8000;	//半回転の位置からスタート
 	work->snapPos = MUS_POKE_EQU_INVALID;
 	DUP_FIT_SetupGraphic( work );
 	DUP_FIT_SetupBgObj( work );
@@ -437,29 +439,38 @@ static void DUP_FIT_VBlankFunc(GFL_TCB *tcb, void *wk )
 {
 	FITTING_WORK *work = wk;
 	FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
+	BOOL isChangeItem = FALSE;
 	while( item != NULL )
 	{
 		MUS_ITEM_DRAW_WORK *itemDrawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
-		const u16 itemId = DUP_FIT_ITEM_GetItemIdx( item );
-		const u16 newId = DUP_FIT_ITEM_GetNewItemIdx( item );
+		const u16 itemIdx = DUP_FIT_ITEM_GetItemIdx( item );
+		const u16 newIdx = DUP_FIT_ITEM_GetNewItemIdx( item );
 		
-		if( itemId != newId )
+		if( itemIdx != newIdx )
 		{
-			MUS_ITEM_DRAW_ChengeGraphic(  work->itemDrawSys , itemDrawWork , newId , work->itemRes[MUS_ITEM_DRAW_GetArcIdx(newId)] );
-			DUP_FIT_ITEM_SetItemIdx( item , newId );
+			u16 itemId = work->itemState[newIdx].itemId;
+			MUS_ITEM_DRAW_ChengeGraphic(  work->itemDrawSys , itemDrawWork , itemId , work->itemState[newIdx].itemRes );
+			DUP_FIT_ITEM_SetItemIdx( item , newIdx );
+			isChangeItem = TRUE;
 		}
 		
 		item = DUP_FIT_ITEM_GetNextItem(item);
 	}
+	if( isChangeItem == TRUE )
+	{
+		DUP_FIT_CheckItemListPallet( work );
+	}
 
 	if( work->holdItem != NULL )
 	{
-		if( work->shadowItemId != DUP_FIT_ITEM_GetItemIdx(work->holdItem) )
+		if( work->shadowItemIdx != DUP_FIT_ITEM_GetItemIdx(work->holdItem) )
 		{
-			work->shadowItemId = DUP_FIT_ITEM_GetItemIdx(work->holdItem);
+			u16 shadowItemId;
+			work->shadowItemIdx = DUP_FIT_ITEM_GetItemIdx(work->holdItem);
+			shadowItemId = work->itemState[ work->shadowItemIdx ].itemId;
 			
-			MUS_ITEM_DRAW_ChengeGraphic( work->itemDrawSys , work->shadowItem , work->shadowItemId , work->itemRes[work->shadowItemId] );
-			MUS_ITEM_DRAW_SetShadowPallet( work->itemDrawSys , work->shadowItem , work->itemRes[work->shadowItemId] );
+			MUS_ITEM_DRAW_ChengeGraphic( work->itemDrawSys , work->shadowItem , shadowItemId , work->itemState[ work->shadowItemIdx ].itemRes );
+			MUS_ITEM_DRAW_SetShadowPallet( work->itemDrawSys , work->shadowItem , work->itemState[ work->shadowItemIdx ].itemRes );
 		}
 	}
 	GFL_CLACT_SYS_VBlankFunc();
@@ -712,10 +723,15 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
 	for( i=0;i<MUSICAL_ITEM_MAX;i++ )
 	{
 		//	FIXME:正しい所持アイテムチェック
-		if( i%3 != 0 )
+#if DEB_ARI
+		if( i<33 || 1 )
+#else
+		if( i<33 )
+#endif
 		{
 			work->itemState[work->totalItemNum].itemId = i;
 			work->itemState[work->totalItemNum].isOutList = FALSE;
+			work->itemState[work->totalItemNum].pltWork = NULL;
 			work->totalItemNum++;
 		}
 	}
@@ -725,15 +741,15 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
 	{
 		work->itemState[work->totalItemNum+i].itemId = MUSICAL_ITEM_INVALID;
 		work->itemState[work->totalItemNum+i].isOutList = FALSE;
+		work->itemState[work->totalItemNum].pltWork = NULL;
 		i++;
 	}
 	
-	
 	//グラフィック系初期化
 	work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , ITEM_DISP_NUM , work->heapId );
-	for( i=0;i<MUSICAL_ITEM_MAX;i++ )
+	for( i=0;i<work->totalItemNum;i++ )
 	{
-		work->itemRes[i] = MUS_ITEM_DRAW_LoadResource( i );
+		work->itemState[i].itemRes = MUS_ITEM_DRAW_LoadResource( work->itemState[i].itemId );
 	}
 	
 	work->itemGroupList = DUP_FIT_ITEMGROUP_CreateGroup( work->heapId , ITEM_LIST_NUM );
@@ -745,20 +761,24 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
 		FIT_ITEM_WORK* item;
 		VecFx32 pos = {0,0,0};
 		
-		item = DUP_FIT_ITEM_CreateItem( work->heapId , work->itemDrawSys , i , work->itemRes[i] , &pos );
+		item = DUP_FIT_ITEM_CreateItem( work->heapId , work->itemDrawSys ,
+																		work->itemState[0].itemId , 
+																		work->itemState[0].itemRes , &pos );
 		DUP_FIT_ITEMGROUP_AddItem( work->itemGroupList,item );
 		MUS_ITEM_DRAW_SetUseOffset( work->itemDrawSys , DUP_FIT_ITEM_GetItemDrawWork( item ) , FALSE );
 	}
+	//半回転の位置からスタート
+	work->listTotalMove = (LIST_ONE_ANGLE*work->totalItemNum)-0x8000;	
 	DUP_FIT_CalcItemListAngle( work , 0 , 0 , LIST_SIZE_X , LIST_SIZE_Y );
 	work->isOpenList = TRUE;
 	
 	//影用
 	{
 		VecFx32 pos = {0,0,0};
-		work->shadowItem = MUS_ITEM_DRAW_AddResource( work->itemDrawSys , 0 , work->itemRes[0] , &pos );
+		work->shadowItem = MUS_ITEM_DRAW_AddResource( work->itemDrawSys , work->itemState[0].itemId , work->itemState[0].itemRes , &pos );
 		MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , work->shadowItem , FALSE );
 		MUS_ITEM_DRAW_SetSize( work->itemDrawSys , work->shadowItem , FX16_ONE , FX16_ONE );
-		work->shadowItemId = 0;
+		work->shadowItemIdx = 0;
 	}
 }
 
@@ -802,9 +822,9 @@ static void DUP_FIT_TermItem( FITTING_WORK *work )
 	MUS_ITEM_DRAW_DelItem( work->itemDrawSys , work->shadowItem );
 
 
-	for( i=0;i<MUSICAL_ITEM_MAX;i++ )
+	for( i=0;i<work->totalItemNum;i++ )
 	{
-		MUS_ITEM_DRAW_DeleteResource( work->itemRes[i] );
+		MUS_ITEM_DRAW_DeleteResource( work->itemState[i].itemRes );
 	}
 	
 	DUP_FIT_ITEMGROUP_DeleteGroup( work->itemGroupList );
@@ -849,6 +869,22 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
 	DUP_FIT_UpdateTpMain( work );
 	DUP_FIT_UpdateItemAnime( work );
 	DUP_FIT_UpdateShadow( work );
+	
+	//VBlankによるPltの転送が終わっていたらここでメモリを開放
+	//VBlank中だと割り込みが怖いのでここで・・・
+	if( NNS_GfdGetVramTransferTaskTotalSize() == 0 )
+	{
+		int i;
+		for( i=0;i<work->totalItemNum;i++ )
+		{
+			if(work->itemState[i].pltWork != NULL )
+			{
+				GFL_HEAP_FreeMemory( work->itemState[i].pltWork );
+				work->itemState[i].pltWork = NULL;
+			}
+		}
+	}
+
 }
 
 
@@ -864,11 +900,11 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
 	work->listTotalMove += moveAngle;
 	if( work->listTotalMove < 0 )
 	{
-		work->listTotalMove += LIST_FULL_ANGLE;
+		work->listTotalMove += (LIST_ONE_ANGLE*work->totalItemNum);
 	}
-	if( work->listTotalMove >= LIST_FULL_ANGLE )
+	if( work->listTotalMove >= (LIST_ONE_ANGLE*work->totalItemNum) )
 	{
-		work->listTotalMove -= LIST_FULL_ANGLE;
+		work->listTotalMove -= (LIST_ONE_ANGLE*work->totalItemNum);
 	}
 	
 
@@ -883,27 +919,34 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
 		const fx32 cos = (fx32)FX_CosIdx( oneAngle );
 		const fx32 posX = LIST_CENTER_X_FX+sin*sizeX;
 		const fx32 posY = LIST_CENTER_Y_FX+cos*sizeY;
-		
+		const u16 nowIdx = DUP_FIT_ITEM_GetItemIdx( item );
+
 		//絵の読み替え処理とか
 		{
-			const u16 nowId = DUP_FIT_ITEM_GetItemIdx( item );
-			u16 newId;
+			const u16 nowIdx = DUP_FIT_ITEM_GetItemIdx( item );
+			u16 newIdx;
 			s32 subAngle;
 			s32 itemTotalAngle;
 
 			subAngle = (oneAngle + 0x8000 )%0x10000;
 			itemTotalAngle = (work->listTotalMove+subAngle);
-			if( itemTotalAngle < 0 )
+			while( itemTotalAngle < 0 )
 			{
-				itemTotalAngle += LIST_FULL_ANGLE;
+				itemTotalAngle += (LIST_ONE_ANGLE*work->totalItemNum);
 			}
-			if( itemTotalAngle >= LIST_FULL_ANGLE )
+			while( itemTotalAngle >= (LIST_ONE_ANGLE*work->totalItemNum) )
 			{
-				itemTotalAngle -= LIST_FULL_ANGLE;
+				itemTotalAngle -= (LIST_ONE_ANGLE*work->totalItemNum);
 			}
 			
-			newId = (itemTotalAngle+(LIST_ONE_ANGLE/2))/LIST_ONE_ANGLE;
-			DUP_FIT_ITEM_SetNewItemIdx( item , newId );
+			newIdx = (itemTotalAngle+(LIST_ONE_ANGLE/2))/LIST_ONE_ANGLE;
+			//計算誤差が起こる・・・(アイテムがリストの個数(14)以下だと起こる
+			if( newIdx >= work->totalItemNum )
+			{
+				newIdx -= work->totalItemNum;
+			}
+			
+			DUP_FIT_ITEM_SetNewItemIdx( item , newIdx );
 		}
 		
 		//位置の計算
@@ -961,6 +1004,31 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
 	}
 	item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
 	
+}
+
+//--------------------------------------------------------------
+//リストのアイテム暗転処理
+//--------------------------------------------------------------
+static void DUP_FIT_CheckItemListPallet( FITTING_WORK *work )
+{
+	FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
+
+	while( item != NULL )
+	{
+		const u16 nowIdx = DUP_FIT_ITEM_GetItemIdx( item );
+		MUS_ITEM_DRAW_WORK *itemDrawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
+		
+		//影化処理
+		if( work->itemState[nowIdx].isOutList == TRUE )
+		{
+			MUS_ITEM_DRAW_SetDarkPallet( work->itemDrawSys , itemDrawWork , work->itemState[ nowIdx ].itemRes , &work->itemState[ nowIdx ].pltWork );
+		}
+		else if( work->itemState[nowIdx].isOutList == FALSE )
+		{
+			MUS_ITEM_DRAW_ResetShadowPallet( work->itemDrawSys , itemDrawWork , work->itemState[ nowIdx ].itemRes );
+		}
+		item = DUP_FIT_ITEM_GetNextItem(item);
+	}
 }
 
 //--------------------------------------------------------------
@@ -1120,10 +1188,12 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 
 		while( item != NULL )
 		{
+			const u16 itemIdx = DUP_FIT_ITEM_GetItemIdx( item );
 			//サイズを気にするか？
 //			if( DUP_FIT_ITEM_GetScale( item ) == FX32_ONE &&
 //				DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE )
-			if( DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE )
+			if( DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE &&
+					work->itemState[itemIdx].isOutList == FALSE )
 			{
 				work->holdItem = item;
 				work->holdItemType = IG_LIST;
@@ -1209,7 +1279,7 @@ static void DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work )
 			work->holdItem = item;
 			work->holdItemType = IG_FIELD;
 			//DUP_FIT_ITEM_CheckLengthSqrt( item , work->tpx,work->tpy );
-			ARI_TPrintf("Item Hold[%d]\n",DUP_FIT_ITEM_GetItemIdx(item));
+			ARI_TPrintf("Item Hold[%d]\n",work->itemState[DUP_FIT_ITEM_GetItemIdx(item)].itemId);
 			item = NULL;
 		}
 		else
@@ -1304,6 +1374,7 @@ static void DUP_FIT_CreateItemListToField( FITTING_WORK *work )
 	FIT_ITEM_WORK* item;
 	VecFx32 pos = {0,0,HOLD_ITEM_DEPTH};
 	u16 itemIdx = DUP_FIT_ITEM_GetItemIdx( work->holdItem );
+	u16 itemId = work->itemState[itemIdx].itemId;
 	MUS_ITEM_DRAW_WORK *itemDrawWork,*holdDrawWork;
 	GFL_POINT dispPos;
 	fx16 scaleX,scaleY;
@@ -1313,7 +1384,7 @@ static void DUP_FIT_CreateItemListToField( FITTING_WORK *work )
 	pos.x = FX32_CONST(work->tpx);
 	pos.y = FX32_CONST(work->tpy);
 
-	item = DUP_FIT_ITEM_CreateItem( work->heapId , work->itemDrawSys , itemIdx , work->itemRes[itemIdx] , &pos );
+	item = DUP_FIT_ITEM_CreateItem( work->heapId , work->itemDrawSys , itemId , work->itemState[itemIdx].itemRes , &pos );
 	DUP_FIT_ITEMGROUP_AddItem( work->itemGroupField,item );
 
 	DUP_FIT_ITEM_SetPosition( item , &dispPos );
@@ -1326,6 +1397,10 @@ static void DUP_FIT_CreateItemListToField( FITTING_WORK *work )
 	//保持アイテムを今生成したものに変える
 	work->holdItem = item;
 	work->holdItemType = IG_FIELD;
+	
+	//アイテムを取った状態に
+	work->itemState[itemIdx].isOutList = TRUE;
+	DUP_FIT_CheckItemListPallet( work );
 }
 
 //--------------------------------------------------------------
@@ -1367,6 +1442,7 @@ static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work )
 	VecFx32 pos;
 	MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
 	MUS_ITEM_DRAW_WORK *holdDrawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
+	const u16 itemIdx = DUP_FIT_ITEM_GetItemIdx( work->holdItem );
 
 	//リストを付け替えて座標を再設定
 	DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupField , work->holdItem );
@@ -1379,7 +1455,10 @@ static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work )
 	MUS_ITEM_DRAW_SetSize( work->itemDrawSys , holdDrawWork ,FX16_ONE,FX16_ONE );
 
 	DUP_FIT_ITEM_SetCount( work->holdItem , 0 );
-	
+
+	//アイテムを戻した状態に
+	work->itemState[itemIdx].isOutList = FALSE;
+	DUP_FIT_CheckItemListPallet( work );
 #if DEB_ARI
 	DUP_FIT_ITEM_DumpList( work->itemGroupField ,2 );
 #endif
@@ -1518,7 +1597,7 @@ static void DUP_FIT_UpdateShadow( FITTING_WORK *work )
 		MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , work->shadowItem , FALSE );
 	}
 	else	//VBlankで絵の転送ができないと表示しない
-	if( work->shadowItemId == DUP_FIT_ITEM_GetItemIdx(work->holdItem) )
+	if( work->shadowItemIdx == DUP_FIT_ITEM_GetItemIdx(work->holdItem) )
 	{
 		VecFx32 pos;
 		MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , work->shadowItem , TRUE );
@@ -1685,7 +1764,7 @@ static void DUP_CHECK_UpdateTpMain( FITTING_WORK *work )
 			if( DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE )
 			{
 				work->holdItem = item;
-				ARI_TPrintf("Equip Item Hold[%d]\n",DUP_FIT_ITEM_GetItemIdx(item));
+				ARI_TPrintf("Equip Item Hold[%d]\n",work->itemState[DUP_FIT_ITEM_GetItemIdx(item)].itemId);
 			}
 			item = DUP_FIT_ITEM_GetNextItem(item);
 		}
@@ -1761,7 +1840,7 @@ static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work )
 		MUS_POKE_EQUIP_DATA *equip_data = MUS_POKE_DRAW_GetEquipData( work->drawWork , equip_pos );
 		
 		mus_bef_save->equipData[save_pos].pos = equip_pos;
-		mus_bef_save->equipData[save_pos].data.itemNo = DUP_FIT_ITEM_GetItemIdx( item );
+		mus_bef_save->equipData[save_pos].data.itemNo = work->itemState[DUP_FIT_ITEM_GetItemIdx( item )].itemId;
 		mus_bef_save->equipData[save_pos].data.angle = work->initWork->musPoke->equip[equip_pos].angle;
 		
 		item = DUP_FIT_ITEM_GetNextItem(item);

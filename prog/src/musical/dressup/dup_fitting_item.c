@@ -274,15 +274,20 @@ u16	 DUP_FIT_ITEM_GetCount( FIT_ITEM_WORK *item )
 //--------------------------------------------------------------
 //座標とのチェック
 //--------------------------------------------------------------
+//縦長・横長を考慮するか？
+#define USE_LONG_SIZE (0)
 const BOOL DUP_FIT_ITEM_CheckHit( FIT_ITEM_WORK *item , u32 posX , u32 posY )
 {
 	GFL_BBD_TEXSIZ texSize;
+#if USE_LONG_SIZE
 	u8 xRate,yRate;
+#endif //USE_LONG_SIZE
 	GFL_POINT ofsPos;
 	s16 subX,subY;
-
 	u16 arcIdx = MUS_ITEM_DRAW_GetArcIdx( item->itemId );
+#if USE_LONG_SIZE
 	MUS_ITEM_DRAW_GetPicSize( item->itemWork , &xRate,&yRate );
+#endif //USE_LONG_SIZE
 	MUS_ITEM_DRAW_GetOffsetPos( item->itemWork , &ofsPos );
 	if( MUS_ITEM_DRAW_GetUseOffset( NULL , item->itemWork ) == TRUE )
 	{
@@ -295,10 +300,17 @@ const BOOL DUP_FIT_ITEM_CheckHit( FIT_ITEM_WORK *item , u32 posX , u32 posY )
 		subY = item->pos.y - posY;
 	}
 
+#if USE_LONG_SIZE
 	if( subX < ITEM_HIT_SIZE*xRate &&
 		subX >-ITEM_HIT_SIZE*xRate &&
 		subY < ITEM_HIT_SIZE*yRate &&
 		subY >-ITEM_HIT_SIZE*yRate )
+#else
+	if( subX < ITEM_HIT_SIZE &&
+		subX >-ITEM_HIT_SIZE &&
+		subY < ITEM_HIT_SIZE &&
+		subY >-ITEM_HIT_SIZE )
+#endif //USE_LONG_SIZE
 	{
 		return TRUE;
 	}
