@@ -24,6 +24,7 @@
 #include "savedata/trainercard_data.h"
 #include "savedata/record.h"
 #include "system/wipe.h"
+#include "gamesystem\msgspeed.h"
 
 #include "app/mysign.h"
 #include "mysign_local.h"
@@ -1698,7 +1699,7 @@ static void EndMessagePrint( MYSIGN_WORK *wk, int msgno )
 
 	// •¶Žš—ñ•`‰æŠJŽn
 	wk->printHandle = PRINTSYS_PrintStream( wk->MsgWin, 0,0
-			,wk->TalkString ,wk->fontHandle ,CONFIG_GetMsgPrintSpeed(wk->config) 
+			,wk->TalkString ,wk->fontHandle ,MSGSPEED_GetWait() 
 			,wk->printTcblSys , 0 , HEAPID_OEKAKI , 0);
 
 

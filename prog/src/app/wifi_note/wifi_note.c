@@ -29,6 +29,7 @@
 #include "print/wordset.h"
 #include "print/global_msg.h"
 #include "print/str_tool.h"
+#include "gamesystem\msgspeed.h"
 
 #include "savedata/wifilist.h"
 
@@ -1139,7 +1140,6 @@ typedef struct {
 	GFL_BMPWIN *talk;	// 会話ウィンドウ
 	BMPMENU_WORK* p_yesno;// YESNOウィンドウ
 	u32 talkmsg_idx;	// 会話メッセージidx
-	u32 msg_speed;	// 会話メッセージスピード
 	STRBUF* p_str;
 } WFNOTE_MODESELECT;
 
@@ -1183,7 +1183,6 @@ typedef struct {
 	GFL_BMPWIN *talk;	// トークメッセージ用 
 	STRBUF* p_talkstr;
 	u32 msgidx;			
-	u32 msgspeed;
 //	GF_BGL_BMPWIN menu;	// メニューリスト用
 	BMPLIST_DATA* p_menulist[BMPL_FLIST_MENU_NUM];	// メニューリスト
 //	  BMPLIST_WORK* p_listwk;	// BMPメニューワーク
@@ -3430,9 +3429,6 @@ static void ModeSelect_DrawInit( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
 	// 会話ウィンドウ用メッセージバッファ確保
 	p_wk->p_str = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 
-	// メッセージスピード取得
-	p_wk->msg_speed = CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(p_data->p_save)); 
-
 	// メッセージ書き込み
 	p_str = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 	p_tmp = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
@@ -3765,7 +3761,7 @@ static void ModeSelect_TalkMsgPrint( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_dra
 	GFL_MSG_GetString( p_draw->p_msgman, msgidx, p_tmp );
 	WORDSET_ExpandStr( p_draw->p_wordset, p_wk->p_str, p_tmp );
 	p_draw->printHandleMsg = PRINTSYS_PrintStream(p_wk->talk,	0, 0,
-			p_wk->p_str, p_draw->fontHandle , p_wk->msg_speed, 
+			p_wk->p_str, p_draw->fontHandle , MSGSPEED_GetWait(), 
 			p_draw->msgTcblSys , 10 , p_draw->heapID , PRINTSYS_LSB_GetB(WFNOTE_COL_BLACK) );
 
 	BmpWinFrame_Write( p_wk->talk, WINDOW_TRANS_OFF, 
@@ -3864,7 +3860,6 @@ static BOOL ModeSelect_StatusChengeCheck( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* 
 //-----------------------------------------------------------------------------
 static void FList_Init( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 heapID )
 {
-	p_wk->msgspeed = CONFIG_GetMsgPrintSpeed(SaveData_GetConfig(p_data->p_save));
 	
 	FList_DrawInit( p_wk, p_data, p_draw,  heapID );
 }
@@ -5178,7 +5173,7 @@ static void FList_TalkMsgWrite( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw, u3
 	WORDSET_ExpandStr( p_draw->p_wordset, p_wk->p_talkstr, p_tmp );
 
 	p_draw->printHandleMsg = PRINTSYS_PrintStream(p_wk->talk,	0, 0,
-			p_wk->p_talkstr, p_draw->fontHandle , p_wk->msgspeed, 
+			p_wk->p_talkstr, p_draw->fontHandle , MSGSPEED_GetWait(), 
 			p_draw->msgTcblSys , 10 , p_draw->heapID , PRINTSYS_LSB_GetB(WFNOTE_COL_BLACK) );
 
 	BmpWinFrame_Write( p_wk->talk, WINDOW_TRANS_OFF, 

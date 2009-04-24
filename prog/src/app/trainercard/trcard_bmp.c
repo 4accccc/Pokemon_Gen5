@@ -14,6 +14,7 @@
 #include "print/wordset.h"
 #include "print/str_tool.h"
 
+#include "gamesystem\msgspeed.h"
 #include "savedata/playtime.h"
 #include "trcard_bmp.h"
 #include "trcard_cgx_def.h"
@@ -856,7 +857,7 @@ void TRCBmp_SignDrawMsgPut(TR_CARD_WORK* wk,const u8 pat)
 //	wk->msgIdx = GF_STR_PrintColor(&wk->win[TRC_BMPWIN_MSG], FONT_TALK, 
 //			wk->SignBuf[pat], 0, 0, wk->msg_spd, SIGN_MSGCOLOR, NULL);	
 	wk->printHandle = PRINTSYS_PrintStream( wk->win[TRC_BMPWIN_MSG], 0,0
-			,wk->SignBuf[pat] ,wk->fontHandle ,wk->msg_spd 
+			,wk->SignBuf[pat] ,wk->fontHandle ,MSGSPEED_GetWait() 
 			,wk->vblankTcblSys , 0 , wk->heapId , 0);
 	
 	GFL_BMPWIN_MakeScreen(wk->win[TRC_BMPWIN_MSG]);
