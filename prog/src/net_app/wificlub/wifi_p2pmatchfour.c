@@ -65,7 +65,7 @@
 //-----------------------------------------------------------------------------
 
 // WIFI2DMAPシステムオーバーレイ
-FS_EXTERN_OVERLAY(wifi_2dmapsys);
+FS_EXTERN_OVERLAY(wifi2dmap);
 
 // セルアクター
 #define WIFI_P2PMATCH_RESNUM	(4)	// リソース数
@@ -788,7 +788,7 @@ GFL_PROC_RESULT WifiP2PMatchFourProc_Init( GFL_PROC * proc, int * seq, void * pw
 	BOOL result;
 
 	// wifi_2dmapオーバーレイ読込み
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi_2dmapsys));
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi2dmap));
 
 	// 通信中かチェック
 	//result = CommStateIsWifiConnect();
@@ -1012,7 +1012,7 @@ GFL_PROC_RESULT WifiP2PMatchFourProc_End(GFL_PROC * proc, int * seq, void * pwk,
     GFL_HEAP_DeleteHeap( HEAPID_WIFI_FOURMATCH );
 
 	// オーバーレイ破棄
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi_2dmapsys) );
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi2dmap) );
 
     return GFL_PROC_RES_FINISH;
 }

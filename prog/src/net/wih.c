@@ -1137,6 +1137,7 @@ static void WH_StateOutStartParent(void *arg)
             // cb->macAddress には, 切断された子機の MAC アドレスが入っています。
             _pWmInfo->sConnectBitmap &= ~target_bitmap;
             if(_pWmInfo->disconnectCallBack){
+			    GFI_NET_HANDLE_Delete(cb->aid);
                 _pWmInfo->disconnectCallBack(cb->aid);
             }
         }

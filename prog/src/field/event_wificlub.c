@@ -62,7 +62,7 @@ enum _EVENT_IRCBATTLE {
 //============================================================================================
 static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * work)
 {
-	EVENT_WIFICLUB_WORK * dbw = work;
+    EVENT_WIFICLUB_WORK * dbw = work;
 	GAMESYS_WORK * gsys = dbw->gsys;
     
     
@@ -119,6 +119,8 @@ void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * ev
     NET_PRINT("%x\n",(int)dbw->ctrl);
 	dbw->gsys = gsys;
 	dbw->fieldmap = fieldmap;
+    dbw->event = event;
+
 	para = &dbw->para;
 	{
 		para->engine = BTL_ENGINE_ALONE;

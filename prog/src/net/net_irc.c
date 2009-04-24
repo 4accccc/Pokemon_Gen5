@@ -574,6 +574,7 @@ void GFL_NET_IRC_Move(void)
 					OS_TPrintf("赤外線：再接続の時間切れ\n");
 					nis->connect = FALSE;
 					nis->err_code = IRC_ERRCODE_SHUTDOWN;
+				    GFI_NET_HANDLE_Delete(1-GFL_NET_IRC_System_GetCurrentAid());  // ハンドル削除
 					IRC_Shutdown();
 				}
 			}
@@ -591,6 +592,7 @@ void GFL_NET_IRC_Move(void)
 					nis->connect = FALSE;
 					nis->err_code = IRC_ERRCODE_SHUTDOWN;
 					nis->retry_time = 0xffff;
+				    GFI_NET_HANDLE_Delete(1-GFL_NET_IRC_System_GetCurrentAid());  // ハンドル削除
 					IRC_Shutdown();
 				}
 			}

@@ -190,6 +190,14 @@ extern BOOL GFL_NET_HANDLE_RequestNegotiation(void);
  */
 //==============================================================================
 extern GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID);
+//==============================================================================
+/**
+ * @brief       接続ハンドルを消す  通信内部で通信切断時に使う
+ * @param       netID  ただしサーバのは受け付けない
+ * @return      none
+ */
+//==============================================================================
+extern void GFI_NET_HANDLE_Delete(int netID);
 
 #endif //__NET_HANDLE_H__
 

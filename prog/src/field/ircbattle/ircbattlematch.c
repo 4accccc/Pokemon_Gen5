@@ -287,7 +287,7 @@ static void _connectCallBack(void* pWk, int netID)
 	pWork->connect_bit |= 1 << netID;
 	temp = pWork->connect_bit;
 	if(MATH_CountPopulation(temp) >= 2){
-		OS_TPrintf("全員のネゴシエーション完了 人数bit=%d\n", pWork->connect_bit);
+		OS_TPrintf("全員のネゴシエーション完了 人数bit=%x\n", pWork->connect_bit);
 		pWork->connect_ok = TRUE;
 	}
 }

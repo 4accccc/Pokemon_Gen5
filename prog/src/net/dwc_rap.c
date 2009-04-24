@@ -42,7 +42,7 @@
 
 #ifdef DEBUGPRINT_ON
 #define MYDWC_DEBUGPRINT(...) \
-    (void) ((OS_TPrintf(__VA_ARGS__)))
+  (void) ((OS_TPrintf(__VA_ARGS__)))
 #else
 #define MYDWC_DEBUGPRINT(...)           ((void) 0)
 #endif
@@ -56,7 +56,7 @@
 #define FRIENDINFO_UPDATA_PERFRAME (1)	// 080708 ˆ—•s‰ÂŒyŒ¸‚Ì‚½‚ß
 
 // WiFi‚Åg‚¤Heap‚ÌƒTƒCƒY(128KƒoƒCƒgA‰¼j+7000
-//-----#if TESTOHNO 
+//-----#if TESTOHNO
 //#define MYDWC_HEAPSIZE (0x2B000)
 //#define MYDWC_HEAPSIZE (0x2C000)
 //#define MYDWC_HEAPSIZE (0x2B000)
@@ -82,74 +82,74 @@
 
 typedef struct
 {
-	u8 sendBuffer[ SIZE_SEND_BUFFER ];
-//	u8* recvBuffer;
-	DWCFriendData *keyList;  // DWCŒ`®‚Ì—F’BƒŠƒXƒg	
-	DWCFriendsMatchControl stDwcCnt;    // DWC§Œä\‘¢‘Ì	
-    DWCUserData *myUserData;		// DWC‚Ìƒ†[ƒUƒf[ƒ^i©•ª‚Ìƒf[ƒ^j
-	DWCInetControl stConnCtrl;
-    void *recvPtr[_WIFI_NUM_MAX];  //óMƒoƒbƒtƒ@‚Ì32ƒoƒCƒgƒAƒ‰ƒCƒƒ“ƒg‚µ‚Ä‚¢‚È‚¢ƒ|ƒCƒ“ƒ^
-    
-	MYDWCReceiverFunc serverCallback;
-	MYDWCReceiverFunc clientCallback;
-	MYDWCDisconnectFunc disconnectCallback;
-    void* pDisconnectWork;
-    MYDWCConnectFunc connectCallback;
-    void* pConnectWork;
-    MYDWCConnectModeCheckFunc connectModeCheck;
-    
-	void (*fetalErrorCallback)(int);
-	u8 randommatch_query[_MATCHSTRINGNUM];
-	u8 friend_status[FRIENDLIST_MAXSIZE];   //WC_GetFriendStatusData‚Ì–ß‚è’l
-	u8 friendinfo[FRIENDLIST_MAXSIZE][MYDWC_STATUS_DATA_SIZE_MAX]; //WC_GetFriendStatusData‚Å“¾‚ç‚ê‚é’l
-	u32 friendupdate_index;	
-	
-	int state;
-	int matching_type;
-	
-	int sendbufflag;
-	
-//	int op_aid;			// ‘Šè‚Ìaid
-    int maxConnectNum;  //Å‘åÚ‘±l”
-    u32 backupBitmap;
-	
-	int isvchat;
-	int friendindex;   // ¡‚©‚çÚ‘±‚·‚éƒtƒŒƒ“ƒh‚ÌƒŠƒXƒgƒCƒ“ƒfƒbƒNƒX
-	int newFriendConnect;  // Ú‘±‚µ‚Ä‚«‚½‚çTRUE 2006.05.24 k.ohno
-    BOOL bVChat;     // VCHATONOFF
-	BOOL bConnectCallback;  
-	int vchatcodec;
-	
-	int timeoutflag;
-	
-	int sendintervaltime[_WIFI_NUM_MAX];		// ‘O‰ñƒf[ƒ^‚ğ‘—M‚µ‚Ä‚©‚ç‚ÌƒtƒŒ[ƒ€”B
-    int setupErrorCount;  //ƒGƒ‰[‚µ‚½”‚ğƒJƒEƒ“ƒg
-	
-	int opvchaton;				// ‘Šè‚Ìƒ{ƒCƒXƒ`ƒƒƒbƒg‚ªƒIƒ“‚©ƒIƒt‚©
-	u16 myvchaton;				// ©•ª‚Ìƒ{ƒCƒXƒ`ƒƒƒbƒg‚ªƒIƒ“‚©ƒIƒt‚©
-	u16 myvchat_send;			// ‰¹ºƒf[ƒ^‘—Mƒtƒ‰ƒO
-	
-    u32 BlockUse_BackupBitmap;
-	
-	u8 myseqno;				// ©•ª‚ª‘—M‚·‚éƒpƒPƒbƒg‚ÌƒV[ƒPƒ“ƒXNo
-	u8 opseqno;				// ‘Šè‚ªÅŒã‚É‘—‚Á‚Ä‚«‚½ƒpƒPƒbƒg‚ÌƒV[ƒPƒ“ƒXNo
-    u8 bHeapError;  // HEAPŠm•Û¸”s‚Ìê‡
-    u8 pausevchat; //vchatˆê’â~
-    u8 blockClient;   // ƒNƒ‰ƒCƒAƒ“ƒg‚ğÚ‘±‹Ö~‚É‚·‚é
+  u8 sendBuffer[ SIZE_SEND_BUFFER ];
+  //	u8* recvBuffer;
+  DWCFriendData *keyList;  // DWCŒ`®‚Ì—F’BƒŠƒXƒg
+  DWCFriendsMatchControl stDwcCnt;    // DWC§Œä\‘¢‘Ì
+  DWCUserData *myUserData;		// DWC‚Ìƒ†[ƒUƒf[ƒ^i©•ª‚Ìƒf[ƒ^j
+  DWCInetControl stConnCtrl;
+  void *recvPtr[_WIFI_NUM_MAX];  //óMƒoƒbƒtƒ@‚Ì32ƒoƒCƒgƒAƒ‰ƒCƒƒ“ƒg‚µ‚Ä‚¢‚È‚¢ƒ|ƒCƒ“ƒ^
 
-	u8 closedflag;		// ConnectionClosedCallback ‚ÅƒzƒXƒg”‚ª1‚É‚È‚Á‚½‚çØ’fˆ—‚É‘JˆÚ‚·‚é‚Ì‚©@TRUE‚ÅØ’fˆ—‚É‘JˆÚ@080602 tomoya
-    u8 saveing;  //ƒZ[ƒu’†‚É1
-    u8 bWiFiFriendGroup;  ///< —F’B‚Æs‚¤ƒT[ƒrƒX‚©‚Ç‚¤‚©
-    
+  MYDWCReceiverFunc serverCallback;
+  MYDWCReceiverFunc clientCallback;
+  MYDWCDisconnectFunc disconnectCallback;
+  void* pDisconnectWork;
+  MYDWCConnectFunc connectCallback;
+  void* pConnectWork;
+  MYDWCConnectModeCheckFunc connectModeCheck;
+
+  void (*fetalErrorCallback)(int);
+  u8 randommatch_query[_MATCHSTRINGNUM];
+  u8 friend_status[FRIENDLIST_MAXSIZE];   //WC_GetFriendStatusData‚Ì–ß‚è’l
+  u8 friendinfo[FRIENDLIST_MAXSIZE][MYDWC_STATUS_DATA_SIZE_MAX]; //WC_GetFriendStatusData‚Å“¾‚ç‚ê‚é’l
+  u32 friendupdate_index;
+
+  int state;
+  int matching_type;
+
+  int sendbufflag;
+
+  //	int op_aid;			// ‘Šè‚Ìaid
+  int maxConnectNum;  //Å‘åÚ‘±l”
+  u32 backupBitmap;
+
+  int isvchat;
+  int friendindex;   // ¡‚©‚çÚ‘±‚·‚éƒtƒŒƒ“ƒh‚ÌƒŠƒXƒgƒCƒ“ƒfƒbƒNƒX
+  int newFriendConnect;  // Ú‘±‚µ‚Ä‚«‚½‚çTRUE 2006.05.24 k.ohno
+  BOOL bVChat;     // VCHATONOFF
+  BOOL bConnectCallback;
+  int vchatcodec;
+
+  int timeoutflag;
+
+  int sendintervaltime[_WIFI_NUM_MAX];		// ‘O‰ñƒf[ƒ^‚ğ‘—M‚µ‚Ä‚©‚ç‚ÌƒtƒŒ[ƒ€”B
+  int setupErrorCount;  //ƒGƒ‰[‚µ‚½”‚ğƒJƒEƒ“ƒg
+
+  int opvchaton;				// ‘Šè‚Ìƒ{ƒCƒXƒ`ƒƒƒbƒg‚ªƒIƒ“‚©ƒIƒt‚©
+  u16 myvchaton;				// ©•ª‚Ìƒ{ƒCƒXƒ`ƒƒƒbƒg‚ªƒIƒ“‚©ƒIƒt‚©
+  u16 myvchat_send;			// ‰¹ºƒf[ƒ^‘—Mƒtƒ‰ƒO
+
+  u32 BlockUse_BackupBitmap;
+
+  u8 myseqno;				// ©•ª‚ª‘—M‚·‚éƒpƒPƒbƒg‚ÌƒV[ƒPƒ“ƒXNo
+  u8 opseqno;				// ‘Šè‚ªÅŒã‚É‘—‚Á‚Ä‚«‚½ƒpƒPƒbƒg‚ÌƒV[ƒPƒ“ƒXNo
+  u8 bHeapError;  // HEAPŠm•Û¸”s‚Ìê‡
+  u8 pausevchat; //vchatˆê’â~
+  u8 blockClient;   // ƒNƒ‰ƒCƒAƒ“ƒg‚ğÚ‘±‹Ö~‚É‚·‚é
+
+  u8 closedflag;		// ConnectionClosedCallback ‚ÅƒzƒXƒg”‚ª1‚É‚È‚Á‚½‚çØ’fˆ—‚É‘JˆÚ‚·‚é‚Ì‚©@TRUE‚ÅØ’fˆ—‚É‘JˆÚ@080602 tomoya
+  u8 saveing;  //ƒZ[ƒu’†‚É1
+  u8 bWiFiFriendGroup;  ///< —F’B‚Æs‚¤ƒT[ƒrƒX‚©‚Ç‚¤‚©
+
 } MYDWC_WORK;
 
 // e‹@‚ÌAID
 #define _WIFI_PARENT_AID (0)
 
 enum  _blockStatus{
-    _BLOCK_NONE,
-    _BLOCK_START,
-    _BLOCK_CALLBACK,
+  _BLOCK_NONE,
+  _BLOCK_START,
+  _BLOCK_CALLBACK,
 };
 
 // ƒ{ƒCƒXƒ`ƒƒƒbƒg‚Ìƒg[ƒNƒ“‚Æ¬‡‚µ‚È‚¢‚æ‚¤‚É‚·‚é‚½‚ßA
@@ -166,34 +166,34 @@ enum  _blockStatus{
 #define MYDWC_KEEPALIVE_PACKET 0x0002
 
 enum{
-	MDSTATE_INIT,	
-	MDSTATE_CONNECTING,
-	MDSTATE_CONNECTED,
-	MDSTATE_TRYLOGIN,
-	MDSTATE_LOGIN,
-	MDSTATE_MATCHING,
-	MDSTATE_CANCEL,	
-	MDSTATE_MATCHED,	
-	MDSTATE_PLAYING,	
-	MDSTATE_CANCELFINISH,	
-	MDSTATE_FAIL,			// 2006.7.4 yoshihara’Ç‰Á
-	MDSTATE_FAILFINISH,	
-	MDSTATE_ERROR,
-	MDSTATE_ERROR_FM,
-	MDSTATE_ERROR_DISCONNECT,
-	MDSTATE_ERROR_FETAL,
-	MDSTATE_DISCONNECTTING,	
-	MDSTATE_DISCONNECT,	
-	MDSTATE_TIMEOUT,
-	MDSTATE_LAST
+  MDSTATE_INIT,
+  MDSTATE_CONNECTING,
+  MDSTATE_CONNECTED,
+  MDSTATE_TRYLOGIN,
+  MDSTATE_LOGIN,
+  MDSTATE_MATCHING,
+  MDSTATE_CANCEL,
+  MDSTATE_MATCHED,
+  MDSTATE_PLAYING,
+  MDSTATE_CANCELFINISH,
+  MDSTATE_FAIL,			// 2006.7.4 yoshihara’Ç‰Á
+  MDSTATE_FAILFINISH,
+  MDSTATE_ERROR,
+  MDSTATE_ERROR_FM,
+  MDSTATE_ERROR_DISCONNECT,
+  MDSTATE_ERROR_FETAL,
+  MDSTATE_DISCONNECTTING,
+  MDSTATE_DISCONNECT,
+  MDSTATE_TIMEOUT,
+  MDSTATE_LAST
 };
 
 enum {
-	MDTYPE_RANDOM,
-	MDTYPE_PARENT,
-	MDTYPE_CHILD
+  MDTYPE_RANDOM,
+  MDTYPE_PARENT,
+  MDTYPE_CHILD
 };
-	
+
 
 static MYDWC_WORK *_dWork = NULL;
 
@@ -236,7 +236,7 @@ static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  );
 
 BOOL GFL_NET_DWC_IsInit(void)
 {
-    return (_dWork!=NULL);
+  return (_dWork!=NULL);
 }
 
 
@@ -245,7 +245,7 @@ BOOL GFL_NET_DWC_IsInit(void)
  * ƒCƒ“ƒ^[ƒlƒbƒg‚ÖÚ‘±ŠJn
  * @param   pSaveData      ƒZ[ƒuƒf[ƒ^‚Ö‚Ìƒ|ƒCƒ“ƒ^
  * @param   heapSize       ƒq[ƒvƒTƒCƒY
- * @param   maxConnectNum  Å‘åÚ‘±l”  
+ * @param   maxConnectNum  Å‘åÚ‘±l”
  * @retval  MYDWC_STARTCONNECT_OK c OK
  * @retval  MYDWC_STARTCONNECT_FIRST c ‰‚ß‚ÄÚ‘±‚·‚éê‡BiƒƒbƒZ[ƒW•\¦‚Ì•K—v—L
  * @retval  MYDWC_STARTCONNECT_DIFFERENTDS c ˆÙ‚È‚é‚c‚r‚ÅÚ‘±‚µ‚æ‚¤‚µ‚Ä‚éê‡Bi—vŒxj
@@ -253,72 +253,72 @@ BOOL GFL_NET_DWC_IsInit(void)
 //==============================================================================
 int mydwc_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
 {
-    void* pTemp;
-    GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
+  void* pTemp;
+  GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
 
-    // ƒq[ƒv—Ìˆæ‚©‚çƒ[ƒN—Ìˆæ‚ğŠm•ÛB
-	GF_ASSERT( _dWork == NULL );
+  // ƒq[ƒv—Ìˆæ‚©‚çƒ[ƒN—Ìˆæ‚ğŠm•ÛB
+  GF_ASSERT( _dWork == NULL );
 #ifdef DEBUGPRINT_ON
-	DWC_SetReportLevel(DWC_REPORTFLAG_ALL);
+  DWC_SetReportLevel(DWC_REPORTFLAG_ALL);
 #else
-	DWC_SetReportLevel(0);
+  DWC_SetReportLevel(0);
 #endif
-    
-    NET_PRINT("mydwc_start %d %d\n",sizeof(MYDWC_WORK) + 32, pNetInit->maxBeaconNum);
-    
-    _dWork = GFL_NET_Align32Alloc(pNetInit->netHeapID, sizeof(MYDWC_WORK));
 
-	_dWork->state = MDSTATE_INIT;
+  NET_PRINT("mydwc_start %d %d\n",sizeof(MYDWC_WORK) + 32, pNetInit->maxBeaconNum);
 
-    _dWork->vchatcodec = VCHAT_NONE;
-	_dWork->friendindex = -1;
-    _dWork->maxConnectNum = pNetInit->maxConnectNum;
-    _dWork->newFriendConnect = -1;
-    _dWork->bVChat = TRUE;
-    _dWork->bHeapError = FALSE;
-    
-    _dWork->myvchaton = 1;
-    _dWork->opvchaton = 1;
-	_dWork->myvchat_send = 1;
-    
-    _dWork->myUserData = pUserData;
-    _dWork->keyList = pFriendData;
+  _dWork = GFL_NET_Align32Alloc(pNetInit->netHeapID, sizeof(MYDWC_WORK));
 
-	// 2008.06.02 tomoya ClosedCallback‚ÅØ’fˆ—‚É‘JˆÚ‚·‚é‚æ‚¤‚É‚·‚é‚Ì‚©‚ğƒtƒ‰ƒO‚Å‚«‚è‚©‚¦‚ê‚é‚æ‚¤‚É•ÏX(Wi-FiƒNƒ‰ƒu‚Sl•åW‰æ–Ê—p)
-	_dWork->closedflag = TRUE;
+  _dWork->state = MDSTATE_INIT;
+
+  _dWork->vchatcodec = VCHAT_NONE;
+  _dWork->friendindex = -1;
+  _dWork->maxConnectNum = pNetInit->maxConnectNum;
+  _dWork->newFriendConnect = -1;
+  _dWork->bVChat = TRUE;
+  _dWork->bHeapError = FALSE;
+
+  _dWork->myvchaton = 1;
+  _dWork->opvchaton = 1;
+  _dWork->myvchat_send = 1;
+
+  _dWork->myUserData = pUserData;
+  _dWork->keyList = pFriendData;
+
+  // 2008.06.02 tomoya ClosedCallback‚ÅØ’fˆ—‚É‘JˆÚ‚·‚é‚æ‚¤‚É‚·‚é‚Ì‚©‚ğƒtƒ‰ƒO‚Å‚«‚è‚©‚¦‚ê‚é‚æ‚¤‚É•ÏX(Wi-FiƒNƒ‰ƒu‚Sl•åW‰æ–Ê—p)
+  _dWork->closedflag = TRUE;
 
 #ifdef PM_DEBUG
-    DWC_ReportUserData(_dWork->myUserData);
+  DWC_ReportUserData(_dWork->myUserData);
 #endif
 
+  {
+	int i;
+	for( i = 0; i < FRIENDLIST_MAXSIZE; i++ )
 	{
-		int i;
-		for( i = 0; i < FRIENDLIST_MAXSIZE; i++ )
-		{
-			_dWork->friend_status[i] = DWC_STATUS_OFFLINE;
-		}
+	  _dWork->friend_status[i] = DWC_STATUS_OFFLINE;
 	}
-	
-
-	// ƒ†[ƒUƒf[ƒ^‚Ìó‘Ô‚ğƒ`ƒFƒbƒNB
-	mydwc_showFriendInfo();	
-	
-
-	if( !DWC_CheckHasProfile( _dWork->myUserData ) ) 
-	{
-		// ‚Ü‚¾‚±‚Ìƒf[ƒ^‚Åˆê“x‚à‚v‚‰‚e‚‰‚ÉŒq‚¢‚Å‚¢‚È‚¢B
-		return MYDWC_STARTCONNECT_FIRST;
-	}
-	
-	if( !DWC_CheckValidConsole( _dWork->myUserData ) )
-	{
-		// –{‘Ìî•ñ‚ªˆá‚¤¨ˆá‚¤‚c‚r‚ÅÚ‘±‚µ‚æ‚¤‚Æ‚µ‚Ä‚¢‚éB
-		return 	MYDWC_STARTCONNECT_DIFFERENTDS;
-	}
-	
+  }
 
 
-	return MYDWC_STARTCONNECT_OK;
+  // ƒ†[ƒUƒf[ƒ^‚Ìó‘Ô‚ğƒ`ƒFƒbƒNB
+  mydwc_showFriendInfo();
+
+
+  if( !DWC_CheckHasProfile( _dWork->myUserData ) )
+  {
+	// ‚Ü‚¾‚±‚Ìƒf[ƒ^‚Åˆê“x‚à‚v‚‰‚e‚‰‚ÉŒq‚¢‚Å‚¢‚È‚¢B
+	return MYDWC_STARTCONNECT_FIRST;
+  }
+
+  if( !DWC_CheckValidConsole( _dWork->myUserData ) )
+  {
+	// –{‘Ìî•ñ‚ªˆá‚¤¨ˆá‚¤‚c‚r‚ÅÚ‘±‚µ‚æ‚¤‚Æ‚µ‚Ä‚¢‚éB
+	return 	MYDWC_STARTCONNECT_DIFFERENTDS;
+  }
+
+
+
+  return MYDWC_STARTCONNECT_OK;
 }
 
 //==============================================================================
@@ -330,14 +330,14 @@ int mydwc_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
 //==============================================================================
 void mydwc_free()
 {
-    if(_dWork){
-        GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-        mydwc_releaseRecvBuffAll();
-//        GFL_HEAP_DeleteHeap(pNetInit->wifiHeapID);
-        GFL_NET_Align32Free( _dWork  );
-        _dWork = NULL;
-    }
-	DWC_ClearError();
+  if(_dWork){
+	GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
+	mydwc_releaseRecvBuffAll();
+	//        GFL_HEAP_DeleteHeap(pNetInit->wifiHeapID);
+	GFL_NET_Align32Free( _dWork  );
+	_dWork = NULL;
+  }
+  DWC_ClearError();
 }
 
 //==============================================================================
@@ -350,88 +350,88 @@ void mydwc_free()
 //==============================================================================
 int mydwc_connect()
 {
-//    NET_PRINT("mydwc_connect %d\n",_dWork->state);
-    switch( _dWork->state )
+  //    NET_PRINT("mydwc_connect %d\n",_dWork->state);
+  switch( _dWork->state )
+  {
+  case MDSTATE_INIT:
+	// ‰Šúó‘Ô
 	{
-		case MDSTATE_INIT:
-		// ‰Šúó‘Ô
-		{
-            GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-		    // ƒƒ‚ƒŠŠm•ÛŠÖ”İ’è
-		    DWC_SetMemFunc( mydwc_AllocFunc, mydwc_FreeFunc );
-		    // ƒlƒbƒgÚ‘±‰Šú‰»
-            DWC_InitInetEx(&_dWork->stConnCtrl, _NETWORK_DMA_NO, _NETWORK_POWERMODE, _NETWORK_SSL_PRIORITY);
+	  GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
+	  // ƒƒ‚ƒŠŠm•ÛŠÖ”İ’è
+	  DWC_SetMemFunc( mydwc_AllocFunc, mydwc_FreeFunc );
+	  // ƒlƒbƒgÚ‘±‰Šú‰»
+	  DWC_InitInetEx(&_dWork->stConnCtrl, _NETWORK_DMA_NO, _NETWORK_POWERMODE, _NETWORK_SSL_PRIORITY);
 
-            if(pNetInit->bDebugServer){
-                DWC_SetAuthServer(DWC_CONNECTINET_AUTH_TEST);
-            }
-            else{
-                DWC_SetAuthServer(DWC_CONNECTINET_AUTH_RELEASE);
-            }
-            
-			// ”ñ“¯Šú‚Éƒlƒbƒg‚ÉÚ‘±
-			DWC_ConnectInetAsync();
-			
-			_dWork->state = MDSTATE_CONNECTING;
-			_dWork->isvchat = 0;
-		}
-		
-		case MDSTATE_CONNECTING:
-		{
-			// ˆÀ’è‚µ‚½ó‹µ‚É‚È‚é‚Ü‚Å‘Ò‚ÂB
-			if( DWC_CheckInet() )
-			{
-				if( DWC_GetInetStatus() == DWC_CONNECTINET_STATE_CONNECTED )
-				{
-					_dWork->state = MDSTATE_CONNECTED;
-				}
-				else
-				{
-					_dWork->state = MDSTATE_ERROR;
-				}
-			}
-			else
-			{
-				// ©“®Ú‘±ˆ—’†
-		        DWC_ProcessInet();
-  
-				break;	
-			}
-		}
-		
-		case MDSTATE_CONNECTED:
-			// ƒGƒ‰[‚ª‚¨‚±‚Á‚Ä‚¢‚È‚¢‚©”»’è
-			{
-				int ret = mydwc_HandleError();
-                if( ret != 0 ){
-                    return ret;
-                }
-			}
-        // ƒI[ƒo[ƒŒƒC‚µ‚Ä‚éê‡ DWC_Init‚ğÄ“xCALL‚µ‚Ä‚ ‚°‚È‚¢‚Æ‚±‚±‚Å’â~
-        // ƒtƒŒƒ“ƒhƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»
-        DWC_InitFriendsMatch(&(_dWork->stDwcCnt), (_dWork->myUserData), 
-                             GAME_PRODUCTID, GAME_NAME,
-                             GAME_SECRET_KEY, 0, 0,
-                             _dWork->keyList, FRIENDLIST_MAXSIZE);
-            
-		    {// IPL‚Ìƒ†[ƒU–¼‚ğg‚Á‚ÄƒƒOƒCƒ“
-		    	// ©•ª‚Ìƒ†[ƒU–¼‚ğˆ³kB
-				OSOwnerInfo info;
-				OS_GetOwnerInfo( &info );
-			    DWC_LoginAsync( &(info.nickName[0]), NULL, LoginCallback, NULL);       
-		    }
-		    _dWork->state = MDSTATE_TRYLOGIN;
-		
-		case MDSTATE_TRYLOGIN:
-			// ƒƒOƒCƒ“‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚ÂB
-			DWC_ProcessFriendsMatch();
-			break;
-			
-		case MDSTATE_LOGIN:
-            DWC_ProcessFriendsMatch();   // 2006.04.07 k.ohno ƒƒOƒCƒ“‚µ‚½‚¾‚¯‚Ìó‘Ô‚ğ‘±‚·‚éˆ×
-			return STEPMATCH_CONNECT;
+	  if(pNetInit->bDebugServer){
+		DWC_SetAuthServer(DWC_CONNECTINET_AUTH_TEST);
+	  }
+	  else{
+		DWC_SetAuthServer(DWC_CONNECTINET_AUTH_RELEASE);
+	  }
+
+	  // ”ñ“¯Šú‚Éƒlƒbƒg‚ÉÚ‘±
+	  DWC_ConnectInetAsync();
+
+	  _dWork->state = MDSTATE_CONNECTING;
+	  _dWork->isvchat = 0;
 	}
-	return mydwc_HandleError();	
+
+  case MDSTATE_CONNECTING:
+	{
+	  // ˆÀ’è‚µ‚½ó‹µ‚É‚È‚é‚Ü‚Å‘Ò‚ÂB
+	  if( DWC_CheckInet() )
+	  {
+		if( DWC_GetInetStatus() == DWC_CONNECTINET_STATE_CONNECTED )
+		{
+		  _dWork->state = MDSTATE_CONNECTED;
+		}
+		else
+		{
+		  _dWork->state = MDSTATE_ERROR;
+		}
+	  }
+	  else
+	  {
+		// ©“®Ú‘±ˆ—’†
+		DWC_ProcessInet();
+
+		break;
+	  }
+	}
+
+  case MDSTATE_CONNECTED:
+	// ƒGƒ‰[‚ª‚¨‚±‚Á‚Ä‚¢‚È‚¢‚©”»’è
+	{
+	  int ret = mydwc_HandleError();
+	  if( ret != 0 ){
+		return ret;
+	  }
+	}
+	// ƒI[ƒo[ƒŒƒC‚µ‚Ä‚éê‡ DWC_Init‚ğÄ“xCALL‚µ‚Ä‚ ‚°‚È‚¢‚Æ‚±‚±‚Å’â~
+	// ƒtƒŒƒ“ƒhƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»
+	DWC_InitFriendsMatch(&(_dWork->stDwcCnt), (_dWork->myUserData),
+						 GAME_PRODUCTID, GAME_NAME,
+						 GAME_SECRET_KEY, 0, 0,
+						 _dWork->keyList, FRIENDLIST_MAXSIZE);
+
+	{// IPL‚Ìƒ†[ƒU–¼‚ğg‚Á‚ÄƒƒOƒCƒ“
+	  // ©•ª‚Ìƒ†[ƒU–¼‚ğˆ³kB
+	  OSOwnerInfo info;
+	  OS_GetOwnerInfo( &info );
+	  DWC_LoginAsync( &(info.nickName[0]), NULL, LoginCallback, NULL);
+	}
+	_dWork->state = MDSTATE_TRYLOGIN;
+
+  case MDSTATE_TRYLOGIN:
+	// ƒƒOƒCƒ“‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚ÂB
+	DWC_ProcessFriendsMatch();
+	break;
+
+  case MDSTATE_LOGIN:
+	DWC_ProcessFriendsMatch();   // 2006.04.07 k.ohno ƒƒOƒCƒ“‚µ‚½‚¾‚¯‚Ìó‘Ô‚ğ‘±‚·‚éˆ×
+	return STEPMATCH_CONNECT;
+  }
+  return mydwc_HandleError();
 }
 
 //==============================================================================
@@ -444,8 +444,8 @@ int mydwc_connect()
 //==============================================================================
 void mydwc_setReceiver( MYDWCReceiverFunc server, MYDWCReceiverFunc client )
 {
-	_dWork->serverCallback = server;
-	_dWork->clientCallback = client;	
+  _dWork->serverCallback = server;
+  _dWork->clientCallback = client;
 }
 
 //==============================================================================
@@ -458,8 +458,8 @@ void mydwc_setReceiver( MYDWCReceiverFunc server, MYDWCReceiverFunc client )
 //==============================================================================
 void GFL_NET_DWC_SetDisconnectCallback( MYDWCDisconnectFunc pFunc, void* pWork )
 {
-    _dWork->disconnectCallback =pFunc;
-    _dWork->pDisconnectWork =pWork;
+  _dWork->disconnectCallback =pFunc;
+  _dWork->pDisconnectWork =pWork;
 }
 
 
@@ -472,7 +472,7 @@ void GFL_NET_DWC_SetDisconnectCallback( MYDWCDisconnectFunc pFunc, void* pWork )
 //==============================================================================
 void GFL_NET_DWC_SetConnectModeCheckCallback( MYDWCConnectModeCheckFunc pFunc )
 {
-    _dWork->connectModeCheck = pFunc;
+  _dWork->connectModeCheck = pFunc;
 }
 
 //==============================================================================
@@ -485,8 +485,8 @@ void GFL_NET_DWC_SetConnectModeCheckCallback( MYDWCConnectModeCheckFunc pFunc )
 //==============================================================================
 void GFL_NET_DWC_SetConnectCallback( MYDWCConnectFunc pFunc, void* pWork )
 {
-    _dWork->connectCallback =pFunc;
-    _dWork->pConnectWork =pWork;
+  _dWork->connectCallback =pFunc;
+  _dWork->pConnectWork =pWork;
 }
 
 //==============================================================================
@@ -495,95 +495,95 @@ void GFL_NET_DWC_SetConnectCallback( MYDWCConnectFunc pFunc, void* pWork )
  * @retval  ³c¬Œ÷B‚Oc¸”sB
  */
 //==============================================================================
-//-----#if TESTOHNO 
+//-----#if TESTOHNO
 const static char randommatch_query[] = "%s = \'%s\'";
 
 int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit )
 {
 
-    GF_ASSERT( _dWork != NULL );
-    
-	if( _dWork->state != MDSTATE_LOGIN ) return 0;
-    mydwc_releaseRecvBuffAll();
+  GF_ASSERT( _dWork != NULL );
+
+  if( _dWork->state != MDSTATE_LOGIN ) return 0;
+  mydwc_releaseRecvBuffAll();
 
 
-    {
-		int result;
-        DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, 0};
-		moc.timeout = timelimit*1000;
-//        DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, _RANDOMMATCH_TIMEOUT*1000};
-//	    if(!bParent){
-//            moc.timeout = 1; // q‹@‚ÉŠÔ‚Ìå“±Œ ‚ª‚È‚¢‚æ‚¤‚É’Z‚­İ’è‚·‚é
-//        }
-        result = DWC_SetMatchingOption(DWC_MATCH_OPTION_MIN_COMPLETE,&moc,sizeof(moc));
-		GF_ASSERT( result == DWC_SET_MATCH_OPT_RESULT_SUCCESS );
-    }
-    GF_ASSERT(DWC_AddMatchKeyString(0,PPW_LOBBY_MATCHMAKING_KEY,(const char *)keyStr)!=0);
-    {
-        MI_CpuClear8(_dWork->randommatch_query,_MATCHSTRINGNUM);
-        sprintf((char*)_dWork->randommatch_query,randommatch_query,PPW_LOBBY_MATCHMAKING_KEY,keyStr);
-        GF_ASSERT(strlen((const char*)_dWork->randommatch_query) < _MATCHSTRINGNUM);
-    }
-    if(bParent){
-        DWC_AddMatchKeyString(1,(const char*)_dWork->randommatch_query,(const char*)_dWork->randommatch_query);
-    }
-	{
-		int i;
-		for(i=0;i<numEntry; i++){
-			mydwc_allocRecvBuff(i);
-		}
+  {
+	int result;
+	DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, 0};
+	moc.timeout = timelimit*1000;
+	//        DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, _RANDOMMATCH_TIMEOUT*1000};
+	//	    if(!bParent){
+	//            moc.timeout = 1; // q‹@‚ÉŠÔ‚Ìå“±Œ ‚ª‚È‚¢‚æ‚¤‚É’Z‚­İ’è‚·‚é
+	//        }
+	result = DWC_SetMatchingOption(DWC_MATCH_OPTION_MIN_COMPLETE,&moc,sizeof(moc));
+	GF_ASSERT( result == DWC_SET_MATCH_OPT_RESULT_SUCCESS );
+  }
+  GF_ASSERT(DWC_AddMatchKeyString(0,PPW_LOBBY_MATCHMAKING_KEY,(const char *)keyStr)!=0);
+  {
+	MI_CpuClear8(_dWork->randommatch_query,_MATCHSTRINGNUM);
+	sprintf((char*)_dWork->randommatch_query,randommatch_query,PPW_LOBBY_MATCHMAKING_KEY,keyStr);
+	GF_ASSERT(strlen((const char*)_dWork->randommatch_query) < _MATCHSTRINGNUM);
+  }
+  if(bParent){
+	DWC_AddMatchKeyString(1,(const char*)_dWork->randommatch_query,(const char*)_dWork->randommatch_query);
+  }
+  {
+	int i;
+	for(i=0;i<numEntry; i++){
+	  mydwc_allocRecvBuff(i);
 	}
-        
-    _dWork->state = MDSTATE_MATCHING;
+  }
 
-    MYDWC_DEBUGPRINT("mydwc_startmatch %d ",numEntry);
-    _dWork->maxConnectNum = numEntry;
-    
-    DWC_ConnectToAnybodyAsync
-    (
-    	numEntry,
-        (const char*)_dWork->randommatch_query,
-        ConnectToAnybodyCallback,
-        NULL,
-        EvaluateAnybodyCallback,
-        NULL
-    );
-	_dWork->matching_type = MDTYPE_RANDOM;
-    // ‘—MƒR[ƒ‹ƒoƒbƒN‚Ìİ’è	
-    DWC_SetUserSendCallback( SendDoneCallback ); 
+  _dWork->state = MDSTATE_MATCHING;
 
-    // óMƒR[ƒ‹ƒoƒbƒN‚Ìİ’è	
-    DWC_SetUserRecvCallback( UserRecvCallback ); 
-    
-    // ƒRƒlƒNƒVƒ‡ƒ“ƒNƒ[ƒYƒR[ƒ‹ƒoƒbƒN‚ğİ’è
-    DWC_SetConnectionClosedCallback(ConnectionClosedCallback, NULL);
-    
-    // ƒ^ƒCƒ€ƒAƒEƒgƒR[ƒ‹ƒoƒbƒN‚Ìİ’è
-    DWC_SetUserRecvTimeoutCallback( recvTimeoutCallback );
-    
-    _dWork->sendbufflag = 0;
+  MYDWC_DEBUGPRINT("mydwc_startmatch %d ",numEntry);
+  _dWork->maxConnectNum = numEntry;
 
-	_dWork->closedflag = TRUE;	// 080602 tomoya
-    return 1;    
+  DWC_ConnectToAnybodyAsync
+	(
+	  numEntry,
+	  (const char*)_dWork->randommatch_query,
+	  ConnectToAnybodyCallback,
+	  NULL,
+	  EvaluateAnybodyCallback,
+	  NULL
+	  );
+  _dWork->matching_type = MDTYPE_RANDOM;
+  // ‘—MƒR[ƒ‹ƒoƒbƒN‚Ìİ’è
+  DWC_SetUserSendCallback( SendDoneCallback );
+
+  // óMƒR[ƒ‹ƒoƒbƒN‚Ìİ’è
+  DWC_SetUserRecvCallback( UserRecvCallback );
+
+  // ƒRƒlƒNƒVƒ‡ƒ“ƒNƒ[ƒYƒR[ƒ‹ƒoƒbƒN‚ğİ’è
+  DWC_SetConnectionClosedCallback(ConnectionClosedCallback, NULL);
+
+  // ƒ^ƒCƒ€ƒAƒEƒgƒR[ƒ‹ƒoƒbƒN‚Ìİ’è
+  DWC_SetUserRecvTimeoutCallback( recvTimeoutCallback );
+
+  _dWork->sendbufflag = 0;
+
+  _dWork->closedflag = TRUE;	// 080602 tomoya
+  return 1;
 }
 //----#endif //TESTOHNO
 
 // 2006.7.4 yoshihara ’Ç‰Á
 static void finishcancel()
 {
-    if( _dWork->state == MDSTATE_FAIL ){
-		_dWork->state = MDSTATE_FAILFINISH;
-    }
-    else
-    {
-		_dWork->state = MDSTATE_CANCELFINISH;
-    }	
+  if( _dWork->state == MDSTATE_FAIL ){
+	_dWork->state = MDSTATE_FAILFINISH;
+  }
+  else
+  {
+	_dWork->state = MDSTATE_CANCELFINISH;
+  }
 }
 
 //==============================================================================
 /**
  * ƒ‰ƒ“ƒ_ƒ€‘Îíƒ}ƒbƒ`ƒ“ƒO’†‚É–ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚éŠÖ”B
- * @retval  
+ * @retval
  	STEPMATCH_CONTINUEcƒ}ƒbƒ`ƒ“ƒO’†
  	STEPMATCH_SUCCESSc¬Œ÷
  	STEPMATCH_CANCELcƒLƒƒƒ“ƒZƒ‹
@@ -594,129 +594,129 @@ static void finishcancel()
 
 int mydwc_stepmatch( int isCancel )
 {
-    switch ( _dWork->state ){
-      case MDSTATE_INIT:
-      case MDSTATE_CONNECTING:
-      case MDSTATE_CONNECTED:
-      case MDSTATE_TRYLOGIN:
-      case MDSTATE_LOGIN:
-        return mydwc_connect();
-      case MDSTATE_MATCHING:
-			// Œ»İ’Tõ’†
-			if( isCancel ) 
-			{
-				_dWork->state = MDSTATE_CANCEL;
-			}
-			// 2006.7.4 yoshiharaC³ ‚±‚±‚©‚ç
-			// q‹@‚Ìê‡A‚Â‚È‚¬‚É‚¢‚Á‚Ä‚ée‚ªŒ»İ‚àƒT[ƒoƒ‚[ƒh‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚·‚éB
-			if( _dWork->matching_type == MDTYPE_CHILD )
-			{
-				if( _dWork->friendindex >= 0 ) // ‚±‚Ìif‚Í”O‚Ì‚½‚ß
-				{
-					if( _dWork->friend_status[_dWork->friendindex] != DWC_STATUS_MATCH_SC_SV )
-					{
-						MYDWC_DEBUGPRINT("‘Šè‚ªƒT[ƒo‚ğ‚â‚ß‚Ä‚µ‚Ü‚Á‚½‚Ì‚ÅAƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚·B\n");
-						// Šù‚Ée‚Å‚È‚­‚È‚Á‚Ä‚µ‚Ü‚Á‚Ä‚¢‚éBƒLƒƒƒ“ƒZƒ‹‚ÖˆÚ€
-						_dWork->state = MDSTATE_FAIL;	
-					}
-				}
-			}
-			// 2006.7.4 yoshiharaC³ ‚±‚±‚Ü‚Å
-			
-			break;
-			
-      case MDSTATE_CANCEL:
-      case MDSTATE_FAIL:      
-			if( _dWork->matching_type == MDTYPE_RANDOM)  //QÆæ‚ªŠÔˆá‚Á‚Ä‚¢‚½‚Ì‚ÅC³ 07.12.06 k.ohno
-			{
-				// ƒ‰ƒ“ƒ_ƒ€ƒ}ƒbƒ`
-				// ƒLƒƒƒ“ƒZƒ‹ˆ—’†
-				MYDWC_DEBUGPRINT("ƒ‰ƒ“ƒ_ƒ€ƒ}ƒbƒ`	CANCELˆ—\n");
-				if( !DWC_CancelMatching() )
-				{
-				}
-				break;
-			} else {
-				int ret;
-
-                ret = DWC_CloseAllConnectionsHard();
-                finishcancel();	  // ƒR[ƒ‹ƒoƒbƒN“à‚ÅSTATE‚ğ•Ï‚¦‚È‚¢‚æ‚¤‚ÉC³‚µ‚½ˆ× RETURN‚ÉŠÖŒW‚È‚­ó‘Ô•ÏX‚·‚é
-#if 0
-                if( ret == 1 )
-				{
-					// q‹@‚ª‚¢‚È‚¢¨ƒR[ƒ‹ƒoƒbƒN–³‚µ‚ÅI—¹
-		            // 2006.7.4 yoshihara C³
-					finishcancel();	
-				}
-				else if (ret == 0)
-				{
-					// ƒR[ƒ‹ƒoƒbƒN‚ª‹A‚Á‚Ä‚«‚Ä‚¢‚é‚Í‚¸
-					finishcancel();	
-				}
-				else
-				{
-		            // 2006.7.4 yoshihara C³
-					finishcancel();	
-//					MYDWC_DEBUGPRINT("Now unable to disconnect.\n");
-				}
-#endif
-			}
-        break;    //   06.05.12’Ç‰Á
-		case MDSTATE_MATCHED:
-			// Š®—¹B
-			{
-                GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-#ifdef MYDWC_USEVCHA
-//                if(!CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo())){   // ‚SlÚ‘±‚Ì‚Íƒ{ƒCƒXƒ`ƒƒƒbƒg‚ğ©“®‹N“®‚µ‚È‚¢ @@OO
-                GFL_NET_DWC_StartVChat(pNetInit->wifiHeapID);
-  //              }
-                if(_dWork->bVChat){
-	                _dWork->myvchaton = 1;
-                }
-                else{
-	                _dWork->myvchaton = 0;
-                }
-
-#endif
-                _dWork->state = MDSTATE_PLAYING;
-                return STEPMATCH_SUCCESS;	
-			}
-			break;
-		case MDSTATE_CANCELFINISH:
-			// ƒƒOƒCƒ“’¼Œã‚Ìó‘Ô‚É
-			_dWork->state = MDSTATE_LOGIN;
-			_dWork->sendbufflag = 0;
-            _dWork->newFriendConnect = -1;
-            MYDWC_DEBUGPRINT("ƒLƒƒƒ“ƒZƒ‹ˆ—Š®—¹\n");
-			return STEPMATCH_CANCEL;
-		case MDSTATE_FAILFINISH:
-			// ƒƒOƒCƒ“’¼Œã‚Ìó‘Ô‚É
-			_dWork->state = MDSTATE_LOGIN;
-			_dWork->sendbufflag = 0;
-            _dWork->newFriendConnect = -1;
-            MYDWC_DEBUGPRINT("ƒtƒBƒjƒbƒVƒ…ˆ—Š®—¹\n");
-			return STEPMATCH_FAIL;			
-		case MDSTATE_ERROR:
-            return  mydwc_HandleError();
-      case MDSTATE_DISCONNECTTING:
-        // ƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÌI—¹‚ğ‘Ò‚Á‚Ä‚¢‚éó‘Ô
-        if( _dWork->isvchat == 0 ) {
-            // ƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÌØ’fŠ®—¹B
-            // ’ÊM©‘Ì‚ğØ‚éB
-            MYDWC_DEBUGPRINT("ƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÌØ’fŠ®—¹B\n");
-            DWC_CloseAllConnectionsHard( );
-            _dWork->state = MDSTATE_DISCONNECT;
-            break;
-        }
-
-		default:
-			break;		
-//			return handleError();
+  switch ( _dWork->state ){
+  case MDSTATE_INIT:
+  case MDSTATE_CONNECTING:
+  case MDSTATE_CONNECTED:
+  case MDSTATE_TRYLOGIN:
+  case MDSTATE_LOGIN:
+	return mydwc_connect();
+  case MDSTATE_MATCHING:
+	// Œ»İ’Tõ’†
+	if( isCancel )
+	{
+	  _dWork->state = MDSTATE_CANCEL;
 	}
-	return mydwc_step();	
-		
-//    DWC_ProcessFriendsMatch();  // DWC’ÊMˆ—XV			
-//	return handleError();
+	// 2006.7.4 yoshiharaC³ ‚±‚±‚©‚ç
+	// q‹@‚Ìê‡A‚Â‚È‚¬‚É‚¢‚Á‚Ä‚ée‚ªŒ»İ‚àƒT[ƒoƒ‚[ƒh‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚·‚éB
+	if( _dWork->matching_type == MDTYPE_CHILD )
+	{
+	  if( _dWork->friendindex >= 0 ) // ‚±‚Ìif‚Í”O‚Ì‚½‚ß
+	  {
+		if( _dWork->friend_status[_dWork->friendindex] != DWC_STATUS_MATCH_SC_SV )
+		{
+		  MYDWC_DEBUGPRINT("‘Šè‚ªƒT[ƒo‚ğ‚â‚ß‚Ä‚µ‚Ü‚Á‚½‚Ì‚ÅAƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚·B\n");
+		  // Šù‚Ée‚Å‚È‚­‚È‚Á‚Ä‚µ‚Ü‚Á‚Ä‚¢‚éBƒLƒƒƒ“ƒZƒ‹‚ÖˆÚ€
+		  _dWork->state = MDSTATE_FAIL;
+		}
+	  }
+	}
+	// 2006.7.4 yoshiharaC³ ‚±‚±‚Ü‚Å
+
+	break;
+
+  case MDSTATE_CANCEL:
+  case MDSTATE_FAIL:
+	if( _dWork->matching_type == MDTYPE_RANDOM)  //QÆæ‚ªŠÔˆá‚Á‚Ä‚¢‚½‚Ì‚ÅC³ 07.12.06 k.ohno
+	{
+	  // ƒ‰ƒ“ƒ_ƒ€ƒ}ƒbƒ`
+	  // ƒLƒƒƒ“ƒZƒ‹ˆ—’†
+	  MYDWC_DEBUGPRINT("ƒ‰ƒ“ƒ_ƒ€ƒ}ƒbƒ`	CANCELˆ—\n");
+	  if( !DWC_CancelMatching() )
+	  {
+	  }
+	  break;
+	} else {
+	  int ret;
+
+	  ret = DWC_CloseAllConnectionsHard();
+	  finishcancel();	  // ƒR[ƒ‹ƒoƒbƒN“à‚ÅSTATE‚ğ•Ï‚¦‚È‚¢‚æ‚¤‚ÉC³‚µ‚½ˆ× RETURN‚ÉŠÖŒW‚È‚­ó‘Ô•ÏX‚·‚é
+#if 0
+	  if( ret == 1 )
+	  {
+		// q‹@‚ª‚¢‚È‚¢¨ƒR[ƒ‹ƒoƒbƒN–³‚µ‚ÅI—¹
+		// 2006.7.4 yoshihara C³
+		finishcancel();
+	  }
+	  else if (ret == 0)
+	  {
+		// ƒR[ƒ‹ƒoƒbƒN‚ª‹A‚Á‚Ä‚«‚Ä‚¢‚é‚Í‚¸
+		finishcancel();
+	  }
+	  else
+	  {
+		// 2006.7.4 yoshihara C³
+		finishcancel();
+		//					MYDWC_DEBUGPRINT("Now unable to disconnect.\n");
+	  }
+#endif
+	}
+	break;    //   06.05.12’Ç‰Á
+  case MDSTATE_MATCHED:
+	// Š®—¹B
+	{
+	  GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
+#ifdef MYDWC_USEVCHA
+	  //                if(!CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo())){   // ‚SlÚ‘±‚Ì‚Íƒ{ƒCƒXƒ`ƒƒƒbƒg‚ğ©“®‹N“®‚µ‚È‚¢ @@OO
+	  GFL_NET_DWC_StartVChat(pNetInit->wifiHeapID);
+	  //              }
+	  if(_dWork->bVChat){
+		_dWork->myvchaton = 1;
+	  }
+	  else{
+		_dWork->myvchaton = 0;
+	  }
+
+#endif
+	  _dWork->state = MDSTATE_PLAYING;
+	  return STEPMATCH_SUCCESS;
+	}
+	break;
+  case MDSTATE_CANCELFINISH:
+	// ƒƒOƒCƒ“’¼Œã‚Ìó‘Ô‚É
+	_dWork->state = MDSTATE_LOGIN;
+	_dWork->sendbufflag = 0;
+	_dWork->newFriendConnect = -1;
+	MYDWC_DEBUGPRINT("ƒLƒƒƒ“ƒZƒ‹ˆ—Š®—¹\n");
+	return STEPMATCH_CANCEL;
+  case MDSTATE_FAILFINISH:
+	// ƒƒOƒCƒ“’¼Œã‚Ìó‘Ô‚É
+	_dWork->state = MDSTATE_LOGIN;
+	_dWork->sendbufflag = 0;
+	_dWork->newFriendConnect = -1;
+	MYDWC_DEBUGPRINT("ƒtƒBƒjƒbƒVƒ…ˆ—Š®—¹\n");
+	return STEPMATCH_FAIL;
+  case MDSTATE_ERROR:
+	return  mydwc_HandleError();
+  case MDSTATE_DISCONNECTTING:
+	// ƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÌI—¹‚ğ‘Ò‚Á‚Ä‚¢‚éó‘Ô
+	if( _dWork->isvchat == 0 ) {
+	  // ƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÌØ’fŠ®—¹B
+	  // ’ÊM©‘Ì‚ğØ‚éB
+	  MYDWC_DEBUGPRINT("ƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÌØ’fŠ®—¹B\n");
+	  DWC_CloseAllConnectionsHard( );
+	  _dWork->state = MDSTATE_DISCONNECT;
+	  break;
+	}
+
+  default:
+	break;
+	//			return handleError();
+  }
+  return mydwc_step();
+
+  //    DWC_ProcessFriendsMatch();  // DWC’ÊMˆ—XV
+  //	return handleError();
 }
 
 
@@ -729,7 +729,7 @@ int mydwc_stepmatch( int isCancel )
 //==============================================================================
 BOOL mydwc_canSendToServer()
 {
-	return ( DWC_GetMyAID() == 0 || ( _dWork->sendbufflag == 0 && _isSendableReliable() ) );
+  return ( DWC_GetMyAID() == 0 || ( _dWork->sendbufflag == 0 && _isSendableReliable() ) );
 }
 
 //==============================================================================
@@ -740,7 +740,7 @@ BOOL mydwc_canSendToServer()
 //==============================================================================
 BOOL mydwc_canSendToClient()
 {
-	return ( _dWork->sendbufflag == 0 && _isSendableReliable() );
+  return ( _dWork->sendbufflag == 0 && _isSendableReliable() );
 }
 
 //==============================================================================
@@ -752,51 +752,51 @@ BOOL mydwc_canSendToClient()
 //==============================================================================
 int mydwc_sendToServer(void *data, int size)
 {
-    if( !(size < SIZE_SEND_BUFFER) ){
-        return 0;
-    }
-    if(FALSE==mydwc_canSendToServer()){
-        return 0;
-    }
+  if( !(size < SIZE_SEND_BUFFER) ){
+	return 0;
+  }
+  if(FALSE==mydwc_canSendToServer()){
+	return 0;
+  }
 
-	MYDWC_DEBUGPRINT("mydwc_sendToServer(data=%d)\n", *((u32*)data));
+  MYDWC_DEBUGPRINT("mydwc_sendToServer(data=%d)\n", *((u32*)data));
 
-	if( DWC_GetMyAID() == 0 )
+  if( DWC_GetMyAID() == 0 )
+  {
+	// ©•ª‚ªe
+	// ƒR[ƒ‹ƒoƒbƒN“à‚Å‘‚«Š·‚¦‚ç‚ê‚é‰Â”\«‚ğl‚¦Adata‚ğƒRƒs[‚µ‚Ä‚¨‚­B
+	//		void *buf = mydwc_AllocFunc( NULL, size, 32 );
+	//		MI_CpuCopy8	( data, buf, size );
+
+	// ©•ª©g‚ÌƒT[ƒoóMƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚·B
+	if( _dWork->serverCallback != NULL ) _dWork->serverCallback(0, data, size);
+
+	// ƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚µ‚½‚ç‚·‚®‚ÉŠJ•úB
+	//		mydwc_FreeFunc( NULL, buf, size );
+
+	return 1;
+  }
+  else
+  {
+	// ‘Šè‚ªeB‘Šè‚É‘Î‚µ‚Äƒf[ƒ^‘—MB
+	if( _dWork->sendbufflag || !_isSendableReliable() ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
 	{
-		// ©•ª‚ªe
-		// ƒR[ƒ‹ƒoƒbƒN“à‚Å‘‚«Š·‚¦‚ç‚ê‚é‰Â”\«‚ğl‚¦Adata‚ğƒRƒs[‚µ‚Ä‚¨‚­B
-//		void *buf = mydwc_AllocFunc( NULL, size, 32 );
-//		MI_CpuCopy8	( data, buf, size );
-		
-		// ©•ª©g‚ÌƒT[ƒoóMƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚·B
-		if( _dWork->serverCallback != NULL ) _dWork->serverCallback(0, data, size);
-		
-		// ƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚µ‚½‚ç‚·‚®‚ÉŠJ•úB
-//		mydwc_FreeFunc( NULL, buf, size );
-		
-		return 1;
+	  // ‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚Ç‚Å‘—‚ê‚È‚¢B
+	  return 0;
 	}
-	else
-	{
-		// ‘Šè‚ªeB‘Šè‚É‘Î‚µ‚Äƒf[ƒ^‘—MB
-		if( _dWork->sendbufflag || !_isSendableReliable() ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
-		{
-			// ‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚Ç‚Å‘—‚ê‚È‚¢B
-			return 0;
-		}
-		
-		// ‘—Mƒoƒbƒtƒ@‚ÉƒRƒs[
-		*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_GAME_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
-		_dWork->sendBuffer[MYDWC_PACKET_SEQNO_POS] = ++_dWork->myseqno;
-		MI_CpuCopy8( data, &(_dWork->sendBuffer[4]), size );
-		_dWork->sendbufflag = 1;
-		
-		// e‹@‚ÉŒü‚¯‚Ä‚Ì‚İ‘—M
-		DWC_SendReliableBitmap( 0x01, &(_dWork->sendBuffer[0]), size + 4);
-//		MYDWC_DEBUGPRINT("-");
-		//OHNO_PRINT("-");
-		return 1;
-	}
+
+	// ‘—Mƒoƒbƒtƒ@‚ÉƒRƒs[
+	*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_GAME_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
+	_dWork->sendBuffer[MYDWC_PACKET_SEQNO_POS] = ++_dWork->myseqno;
+	MI_CpuCopy8( data, &(_dWork->sendBuffer[4]), size );
+	_dWork->sendbufflag = 1;
+
+	// e‹@‚ÉŒü‚¯‚Ä‚Ì‚İ‘—M
+	DWC_SendReliableBitmap( 0x01, &(_dWork->sendBuffer[0]), size + 4);
+	//		MYDWC_DEBUGPRINT("-");
+	//OHNO_PRINT("-");
+	return 1;
+  }
 }
 
 //==============================================================================
@@ -808,57 +808,57 @@ int mydwc_sendToServer(void *data, int size)
 //==============================================================================
 int mydwc_sendToClient(void *data, int size)
 {
-    if( !(size < SIZE_SEND_BUFFER) ){
-        return 0;
-    }
-	// e‹@‚µ‚©‚±‚Ì“®ì‚Ís‚í‚È‚¢‚Í‚¸B
-    if( !(DWC_GetMyAID() == 0) ){
-        return 0;
-    }
-	
-	MYDWC_DEBUGPRINT("sendToClient(data=%d)\n", *((u32*)data));
-	
+  if( !(size < SIZE_SEND_BUFFER) ){
+	return 0;
+  }
+  // e‹@‚µ‚©‚±‚Ì“®ì‚Ís‚í‚È‚¢‚Í‚¸B
+  if( !(DWC_GetMyAID() == 0) ){
+	return 0;
+  }
+
+  MYDWC_DEBUGPRINT("sendToClient(data=%d)\n", *((u32*)data));
+
+  {
+	// ‘Šè‚É‘Î‚µ‚Äƒf[ƒ^‘—MB
+	if( _dWork->sendbufflag || !_isSendableReliable() ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
 	{
-		// ‘Šè‚É‘Î‚µ‚Äƒf[ƒ^‘—MB
-		if( _dWork->sendbufflag || !_isSendableReliable() ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
-		{
-//            MYDWC_DEBUGPRINT("wifi failed %d %d\n",_dWork->sendbufflag,_isSendableReliable());
-			// ‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚Ç‚Å‘—‚ê‚È‚¢B
-			return 0;
-		}
-		
-		// ‘—Mƒoƒbƒtƒ@‚ÉƒRƒs[
-		*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_GAME_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
-		_dWork->sendBuffer[MYDWC_PACKET_SEQNO_POS] = ++_dWork->myseqno;
-		MI_CpuCopy8( data, &(_dWork->sendBuffer[4]), size );
-        _dWork->sendbufflag = 1;
-		
-        // q‹@‚ÉŒü‚¯‚Ä‘—M
-     //   MYDWC_DEBUGPRINT("wifi send %z\n",DWC_GetAIDBitmap());
-        if(!DWC_SendReliableBitmap(DWC_GetAIDBitmap(), &(_dWork->sendBuffer[0]), size + 4)){
-            MYDWC_DEBUGPRINT("wifi SCfailed %d\n",size);
-			// ‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚Ç‚Å‘—‚ê‚È‚¢B
-            _dWork->sendbufflag = 0;
-            return 0;
-        }
-//		MYDWC_DEBUGPRINT("-");
-		//OHNO_PRINT(".");
-	}	
-	
-	{
-		// ©•ª‚É‘Î‚µ‚Ä‘—M
-//		// ƒR[ƒ‹ƒoƒbƒN“à‚Å‘‚«Š·‚¦‚ç‚ê‚é‰Â”\«‚ğl‚¦Adata‚ğƒRƒs[‚µ‚Ä‚¨‚­B
-//		void *buf = mydwc_AllocFunc( NULL, size, 32 );
-//		MI_CpuCopy8	( data, buf, size );
-		
-		// ©•ª©g‚ÌƒT[ƒoóMƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚·B
-		if( _dWork->clientCallback != NULL ) _dWork->clientCallback(0, data, size);
-		
-		// ƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚µ‚½‚ç‚·‚®‚ÉŠJ•úB
-//		mydwc_FreeFunc( NULL, buf, size );
-	}  
-	
-	return 1;
+	  //            MYDWC_DEBUGPRINT("wifi failed %d %d\n",_dWork->sendbufflag,_isSendableReliable());
+	  // ‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚Ç‚Å‘—‚ê‚È‚¢B
+	  return 0;
+	}
+
+	// ‘—Mƒoƒbƒtƒ@‚ÉƒRƒs[
+	*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_GAME_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
+	_dWork->sendBuffer[MYDWC_PACKET_SEQNO_POS] = ++_dWork->myseqno;
+	MI_CpuCopy8( data, &(_dWork->sendBuffer[4]), size );
+	_dWork->sendbufflag = 1;
+
+	// q‹@‚ÉŒü‚¯‚Ä‘—M
+	//   MYDWC_DEBUGPRINT("wifi send %z\n",DWC_GetAIDBitmap());
+	if(!DWC_SendReliableBitmap(DWC_GetAIDBitmap(), &(_dWork->sendBuffer[0]), size + 4)){
+	  MYDWC_DEBUGPRINT("wifi SCfailed %d\n",size);
+	  // ‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚Ç‚Å‘—‚ê‚È‚¢B
+	  _dWork->sendbufflag = 0;
+	  return 0;
+	}
+	//		MYDWC_DEBUGPRINT("-");
+	//OHNO_PRINT(".");
+  }
+
+  {
+	// ©•ª‚É‘Î‚µ‚Ä‘—M
+	//		// ƒR[ƒ‹ƒoƒbƒN“à‚Å‘‚«Š·‚¦‚ç‚ê‚é‰Â”\«‚ğl‚¦Adata‚ğƒRƒs[‚µ‚Ä‚¨‚­B
+	//		void *buf = mydwc_AllocFunc( NULL, size, 32 );
+	//		MI_CpuCopy8	( data, buf, size );
+
+	// ©•ª©g‚ÌƒT[ƒoóMƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚·B
+	if( _dWork->clientCallback != NULL ) _dWork->clientCallback(0, data, size);
+
+	// ƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚µ‚½‚ç‚·‚®‚ÉŠJ•úB
+	//		mydwc_FreeFunc( NULL, buf, size );
+  }
+
+  return 1;
 }
 
 
@@ -871,43 +871,43 @@ int mydwc_sendToClient(void *data, int size)
 //==============================================================================
 int GFL_NET_DWC_SendToOther(void *data, int size)
 {
-    u16 bitmap;
-    
-    if( !(size < SIZE_SEND_BUFFER) ){
-        return 0;
-    }
-	
-	
+  u16 bitmap;
+
+  if( !(size < SIZE_SEND_BUFFER) ){
+	return 0;
+  }
+
+
+  {
+	// ‘Šè‚É‘Î‚µ‚Äƒf[ƒ^‘—MB
+	if( _dWork->sendbufflag || !_isSendableReliable() ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
 	{
-		// ‘Šè‚É‘Î‚µ‚Äƒf[ƒ^‘—MB
-		if( _dWork->sendbufflag || !_isSendableReliable() ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
-		{
-//            MYDWC_DEBUGPRINT("wifi failed %d %d\n",_dWork->sendbufflag,_isSendableReliable());
-			// ‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚Ç‚Å‘—‚ê‚È‚¢B
-			return 0;
-		}
-		
-		// ‘—Mƒoƒbƒtƒ@‚ÉƒRƒs[
-		*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_GAME_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
-		_dWork->sendBuffer[MYDWC_PACKET_SEQNO_POS] = ++_dWork->myseqno;
-		MI_CpuCopy8( data, &(_dWork->sendBuffer[4]), size );
-        _dWork->sendbufflag = 1;
-		
-        bitmap = DWC_GetAIDBitmap();
-        if(bitmap != DWC_SendReliableBitmap(bitmap, &(_dWork->sendBuffer[0]), size + 4)){
-            MYDWC_DEBUGPRINT("wifi SOFailed %d\n",size);
-			// ‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚Ç‚Å‘—‚ê‚È‚¢B
-            _dWork->sendbufflag = 0;
-            return 0;
-        }
-	}	
-	
-    // ©•ª©g‚ÌóMƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚·B
-    
-    if( _dWork->clientCallback != NULL ){
-        _dWork->clientCallback(DWC_GetMyAID() , data, size);
-    }
-	return 1;
+	  //            MYDWC_DEBUGPRINT("wifi failed %d %d\n",_dWork->sendbufflag,_isSendableReliable());
+	  // ‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚Ç‚Å‘—‚ê‚È‚¢B
+	  return 0;
+	}
+
+	// ‘—Mƒoƒbƒtƒ@‚ÉƒRƒs[
+	*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_GAME_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
+	_dWork->sendBuffer[MYDWC_PACKET_SEQNO_POS] = ++_dWork->myseqno;
+	MI_CpuCopy8( data, &(_dWork->sendBuffer[4]), size );
+	_dWork->sendbufflag = 1;
+
+	bitmap = DWC_GetAIDBitmap();
+	if(bitmap != DWC_SendReliableBitmap(bitmap, &(_dWork->sendBuffer[0]), size + 4)){
+	  MYDWC_DEBUGPRINT("wifi SOFailed %d\n",size);
+	  // ‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚Ç‚Å‘—‚ê‚È‚¢B
+	  _dWork->sendbufflag = 0;
+	  return 0;
+	}
+  }
+
+  // ©•ª©g‚ÌóMƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚·B
+
+  if( _dWork->clientCallback != NULL ){
+	_dWork->clientCallback(DWC_GetMyAID() , data, size);
+  }
+  return 1;
 }
 
 /*---------------------------------------------------------------------------*
@@ -915,66 +915,66 @@ int GFL_NET_DWC_SendToOther(void *data, int size)
  *---------------------------------------------------------------------------*/
 static void LoginCallback(DWCError error, int profileID, void *param)
 {
-    BOOL result;
+  BOOL result;
 
-    // stUserData‚ªXV‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğŠm”FB
-    if ( DWC_CheckDirtyFlag( (_dWork->myUserData)) )
-    {
-	    // •K‚¸‚±‚Ìƒ^ƒCƒ~ƒ“ƒO‚Åƒ`ƒFƒbƒN‚µ‚ÄAdirty flag‚ª—LŒø‚É‚È‚Á‚Ä‚¢‚½‚çA
-	    // DWCUserData‚ğDSƒJ[ƒh‚ÌƒoƒbƒNƒAƒbƒv‚É•Û‘¶‚·‚é‚æ‚¤‚É‚µ‚Ä‚­‚¾‚³‚¢B
-	    // 2006.04.07 k.ohno  ƒZ[ƒuƒGƒŠƒA‚É“ü‚ê‚é
-	    DWCUserData *userdata = NULL;
-	    DWC_ClearDirtyFlag(_dWork->myUserData);
-     //   SaveData_SaveParts(_dWork->pSaveData, SVBLK_ID_NORMAL);  //ƒZ[ƒu’† k.ohno 06.06.05
-        _dWork->saveing = 1;  //ƒZ[ƒu’†‚É1
-        
+  // stUserData‚ªXV‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğŠm”FB
+  if ( DWC_CheckDirtyFlag( (_dWork->myUserData)) )
+  {
+	// •K‚¸‚±‚Ìƒ^ƒCƒ~ƒ“ƒO‚Åƒ`ƒFƒbƒN‚µ‚ÄAdirty flag‚ª—LŒø‚É‚È‚Á‚Ä‚¢‚½‚çA
+	// DWCUserData‚ğDSƒJ[ƒh‚ÌƒoƒbƒNƒAƒbƒv‚É•Û‘¶‚·‚é‚æ‚¤‚É‚µ‚Ä‚­‚¾‚³‚¢B
+	// 2006.04.07 k.ohno  ƒZ[ƒuƒGƒŠƒA‚É“ü‚ê‚é
+	DWCUserData *userdata = NULL;
+	DWC_ClearDirtyFlag(_dWork->myUserData);
+	//   SaveData_SaveParts(_dWork->pSaveData, SVBLK_ID_NORMAL);  //ƒZ[ƒu’† k.ohno 06.06.05
+	_dWork->saveing = 1;  //ƒZ[ƒu’†‚É1
+
 	//          userdata = WifiList_GetMyUserInfo(SaveData_GetWifiListData(_dWork->pSaveData));
-	//          MI_CpuCopy32( &_dWork->myUserData, userdata,  sizeof(_dWork->myUserData) );	
-	    MYDWC_DEBUGPRINT("©•ª‚ÌƒtƒŒƒ“ƒhƒR[ƒh‚ª•ÏX\n");
-    }
+	//          MI_CpuCopy32( &_dWork->myUserData, userdata,  sizeof(_dWork->myUserData) );
+	MYDWC_DEBUGPRINT("©•ª‚ÌƒtƒŒƒ“ƒhƒR[ƒh‚ª•ÏX\n");
+  }
 
-    if (error == DWC_ERROR_NONE){
-        // ”FØ¬Œ÷Aƒvƒƒtƒ@ƒCƒ‹IDæ“¾
+  if (error == DWC_ERROR_NONE){
+	// ”FØ¬Œ÷Aƒvƒƒtƒ@ƒCƒ‹IDæ“¾
 #if 0
-        if(CommStateGetServiceNo() == COMM_MODE_LOBBY_WIFI){
-            _dWork->state = MDSTATE_LOGIN;		// ƒƒOƒCƒ“Š®—¹  
-        }
-        else{
-            result = DWC_UpdateServersAsync(NULL, //i‰ß‹‚Æ‚ÌŒİŠ·«‚Ì‚½‚ßA•K‚¸NULL)
-                                            UpdateServersCallback, _dWork->myUserData,
-                                            FriendStatusCallback, param,
-                                            DeleteFriendListCallback, param);
+	if(CommStateGetServiceNo() == COMM_MODE_LOBBY_WIFI){
+	  _dWork->state = MDSTATE_LOGIN;		// ƒƒOƒCƒ“Š®—¹
+	}
+	else{
+	  result = DWC_UpdateServersAsync(NULL, //i‰ß‹‚Æ‚ÌŒİŠ·«‚Ì‚½‚ßA•K‚¸NULL)
+									  UpdateServersCallback, _dWork->myUserData,
+									  FriendStatusCallback, param,
+									  DeleteFriendListCallback, param);
 
-            if (result == FALSE){
-                // ŒÄ‚ñ‚Å‚à‚¢‚¢ó‘ÔiƒƒOƒCƒ“‚ªŠ®—¹‚µ‚Ä‚¢‚È‚¢ó‘Ôj‚ÅŒÄ‚ñ‚¾‚Ì‚İ
-                // FALSE‚ª•Ô‚Á‚Ä‚­‚é‚Ì‚ÅA•’Ê‚ÍTRUE
-                MYDWC_DEBUGPRINT("DWC_UpdateServersAsync error teminated.\n");
-                GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
-                return;
-            }
-        }
+	  if (result == FALSE){
+		// ŒÄ‚ñ‚Å‚à‚¢‚¢ó‘ÔiƒƒOƒCƒ“‚ªŠ®—¹‚µ‚Ä‚¢‚È‚¢ó‘Ôj‚ÅŒÄ‚ñ‚¾‚Ì‚İ
+		// FALSE‚ª•Ô‚Á‚Ä‚­‚é‚Ì‚ÅA•’Ê‚ÍTRUE
+		MYDWC_DEBUGPRINT("DWC_UpdateServersAsync error teminated.\n");
+		GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
+		return;
+	  }
+	}
 #else
-            result = DWC_UpdateServersAsync(NULL, //i‰ß‹‚Æ‚ÌŒİŠ·«‚Ì‚½‚ßA•K‚¸NULL)
-                                            UpdateServersCallback, _dWork->myUserData,
-                                            FriendStatusCallback, param,
-                                            DeleteFriendListCallback, param);
+	result = DWC_UpdateServersAsync(NULL, //i‰ß‹‚Æ‚ÌŒİŠ·«‚Ì‚½‚ßA•K‚¸NULL)
+									UpdateServersCallback, _dWork->myUserData,
+									FriendStatusCallback, param,
+									DeleteFriendListCallback, param);
 
-            if (result == FALSE){
-                // ŒÄ‚ñ‚Å‚à‚¢‚¢ó‘ÔiƒƒOƒCƒ“‚ªŠ®—¹‚µ‚Ä‚¢‚È‚¢ó‘Ôj‚ÅŒÄ‚ñ‚¾‚Ì‚İ
-                // FALSE‚ª•Ô‚Á‚Ä‚­‚é‚Ì‚ÅA•’Ê‚ÍTRUE
-                MYDWC_DEBUGPRINT("DWC_UpdateServersAsync error teminated.\n");
-                GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
-                return;
-            }
+	if (result == FALSE){
+	  // ŒÄ‚ñ‚Å‚à‚¢‚¢ó‘ÔiƒƒOƒCƒ“‚ªŠ®—¹‚µ‚Ä‚¢‚È‚¢ó‘Ôj‚ÅŒÄ‚ñ‚¾‚Ì‚İ
+	  // FALSE‚ª•Ô‚Á‚Ä‚­‚é‚Ì‚ÅA•’Ê‚ÍTRUE
+	  MYDWC_DEBUGPRINT("DWC_UpdateServersAsync error teminated.\n");
+	  GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
+	  return;
+	}
 #endif
-        // GameSpyƒT[ƒoãƒoƒfƒB¬—§ƒR[ƒ‹ƒoƒbƒN‚ğ“o˜^‚·‚é
-        DWC_SetBuddyFriendCallback(BuddyFriendCallback, NULL);
-    }
-    else
-    {
-        // ”FØ¸”s
-		_dWork->state = MDSTATE_ERROR;
-    }
+	// GameSpyƒT[ƒoãƒoƒfƒB¬—§ƒR[ƒ‹ƒoƒbƒN‚ğ“o˜^‚·‚é
+	DWC_SetBuddyFriendCallback(BuddyFriendCallback, NULL);
+  }
+  else
+  {
+	// ”FØ¸”s
+	_dWork->state = MDSTATE_ERROR;
+  }
 }
 
 /*---------------------------------------------------------------------------*
@@ -982,16 +982,16 @@ static void LoginCallback(DWCError error, int profileID, void *param)
  *---------------------------------------------------------------------------*/
 static void recvTimeoutCallback(u8 aid)
 {
-	MYDWC_DEBUGPRINT("DWCƒ^ƒCƒ€ƒAƒEƒg - %d",aid);
-	// ƒRƒlƒNƒVƒ‡ƒ“‚ğ•Â‚¶‚é
-	if( _dWork->timeoutflag )
-	{
-		MYDWC_DEBUGPRINT("Ú‘±‚ğØ’f‚µ‚Ü‚·\n");
-		DWC_CloseAllConnectionsHard( );
-        _dWork->newFriendConnect = -1;
-		// ƒ^ƒCƒ€ƒAƒEƒg
-		_dWork->state = MDSTATE_TIMEOUT;	
-	}
+  MYDWC_DEBUGPRINT("DWCƒ^ƒCƒ€ƒAƒEƒg - %d",aid);
+  // ƒRƒlƒNƒVƒ‡ƒ“‚ğ•Â‚¶‚é
+  if( _dWork->timeoutflag )
+  {
+	MYDWC_DEBUGPRINT("Ú‘±‚ğØ’f‚µ‚Ü‚·\n");
+	DWC_CloseAllConnectionsHard( );
+	_dWork->newFriendConnect = -1;
+	// ƒ^ƒCƒ€ƒAƒEƒg
+	_dWork->state = MDSTATE_TIMEOUT;
+  }
 }
 
 /*---------------------------------------------------------------------------*
@@ -1000,16 +1000,16 @@ static void recvTimeoutCallback(u8 aid)
 static void UpdateServersCallback(DWCError error, BOOL isChanged, void* param)
 {
 #pragma unused(param)
-    if (error == DWC_ERROR_NONE){
-        if (isChanged){
-            // —F’BƒŠƒXƒg‚ª•ÏX‚³‚ê‚Ä‚¢‚½
-        }
-       	_dWork->state = MDSTATE_LOGIN;		// ƒƒOƒCƒ“Š®—¹  
-    }
-    else {
-        // ƒƒOƒCƒ“¸”sˆµ‚¢‚É‚µ‚Æ‚­H
-        _dWork->state = MDSTATE_ERROR;
-    }
+  if (error == DWC_ERROR_NONE){
+	if (isChanged){
+	  // —F’BƒŠƒXƒg‚ª•ÏX‚³‚ê‚Ä‚¢‚½
+	}
+	_dWork->state = MDSTATE_LOGIN;		// ƒƒOƒCƒ“Š®—¹
+  }
+  else {
+	// ƒƒOƒCƒ“¸”sˆµ‚¢‚É‚µ‚Æ‚­H
+	_dWork->state = MDSTATE_ERROR;
+  }
 }
 
 
@@ -1020,9 +1020,9 @@ static void FriendStatusCallback(int index, u8 status, const char* statusString,
 {
 #pragma unused(param)
 
-    MYDWC_DEBUGPRINT("Friend[%d] changed status -> %d (statusString : %s).\n",
-               index, status, statusString);
-            
+  MYDWC_DEBUGPRINT("Friend[%d] changed status -> %d (statusString : %s).\n",
+				   index, status, statusString);
+
 }
 
 
@@ -1032,15 +1032,15 @@ static void FriendStatusCallback(int index, u8 status, const char* statusString,
 static void DeleteFriendListCallback(int deletedIndex, int srcIndex, void* param)
 {
 #pragma unused(param)
-    GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
+  GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
 
-    // ƒtƒŒƒ“ƒhƒŠƒXƒg‚ªíœ‚³‚ê‚½B
-    MYDWC_DEBUGPRINT("friend[%d] was deleted (equal friend[%d]).\n",
-               deletedIndex, srcIndex);
+  // ƒtƒŒƒ“ƒhƒŠƒXƒg‚ªíœ‚³‚ê‚½B
+  MYDWC_DEBUGPRINT("friend[%d] was deleted (equal friend[%d]).\n",
+				   deletedIndex, srcIndex);
 
-    if(pNetInit->friendDeleteFunc){
-        pNetInit->friendDeleteFunc(deletedIndex, srcIndex, GFL_NET_GetWork());
-    }
+  if(pNetInit->friendDeleteFunc){
+	pNetInit->friendDeleteFunc(deletedIndex, srcIndex, GFL_NET_GetWork());
+  }
 
 }
 
@@ -1052,7 +1052,7 @@ static void BuddyFriendCallback(int index, void* param)
 {
 #pragma unused(param)
 
-    MYDWC_DEBUGPRINT("I was authorized by friend[%d].\n", index);
+  MYDWC_DEBUGPRINT("I was authorized by friend[%d].\n", index);
 }
 
 /*---------------------------------------------------------------------------*
@@ -1060,54 +1060,54 @@ static void BuddyFriendCallback(int index, void* param)
  *---------------------------------------------------------------------------*/
 static void clearTimeoutBuff(void)
 {
-    MI_CpuClear8(_dWork->sendintervaltime, sizeof(_dWork->sendintervaltime));
+  MI_CpuClear8(_dWork->sendintervaltime, sizeof(_dWork->sendintervaltime));
 }
 /*---------------------------------------------------------------------------*
   ƒ^ƒCƒ€ƒAƒEƒgŠÔ‚Ìİ’è
  *---------------------------------------------------------------------------*/
 static void setTimeoutTime(void)
 {
-    int i;
+  int i;
 
-    for(i = 0 ;i < _WIFI_NUM_MAX; i++){
-        DWC_SetRecvTimeoutTime( i, 0 );
-    }
+  for(i = 0 ;i < _WIFI_NUM_MAX; i++){
+	DWC_SetRecvTimeoutTime( i, 0 );
+  }
 
-    
-    if(DWC_GetMyAID() == _WIFI_PARENT_AID){
-        for(i = 0 ;i < _dWork->maxConnectNum; i++){
-            if(DWC_GetMyAID() != i){
-                if(DWC_GetAIDBitmap() & (0x01<<i) ){
-                    GF_ASSERT(DWC_SetRecvTimeoutTime( i, MYDWC_TIMEOUTSEC * 1000 ));
-                    MYDWC_DEBUGPRINT("setTimeOut %d\n",i);
-                }
-            }
-        }
-    }
-    else{
-        GF_ASSERT(DWC_SetRecvTimeoutTime( _WIFI_PARENT_AID, MYDWC_TIMEOUTSEC * 1000 ));
-        MYDWC_DEBUGPRINT("setTimeOut 0\n");
-    }
 
-	// 080523 tomoya takahashi
-	// BTS:’ÊMNo.167	
-	// e‚©‚ç‰½‚©óM‚µ‚È‚¢‚Ætimeoutflag‚ª‚½‚½‚È‚¢‚½‚ßA
-	// q‚Í‚¢‚Â‚Ü‚Å‚àƒ^ƒCƒ€ƒAƒEƒgó‘Ô‚É‚È‚ç‚È‚¢‰Â”\«‚ª‚ ‚éB
-	// ‚»‚Ìˆ×Aƒ}ƒbƒ`ƒ“ƒO‚ª¬Œ÷‚µ‚½‚çA’¼‚®‚Étimeoutflag‚ª—§‚Â‚æ‚¤‚É
-	// •ÏX‚µ‚Ä‚İ‚éB
-    // _dWork->timeoutflag = 0;	<-Œ³X
-    _dWork->timeoutflag = 1;	
-    clearTimeoutBuff();
+  if(DWC_GetMyAID() == _WIFI_PARENT_AID){
+	for(i = 0 ;i < _dWork->maxConnectNum; i++){
+	  if(DWC_GetMyAID() != i){
+		if(DWC_GetAIDBitmap() & (0x01<<i) ){
+		  GF_ASSERT(DWC_SetRecvTimeoutTime( i, MYDWC_TIMEOUTSEC * 1000 ));
+		  MYDWC_DEBUGPRINT("setTimeOut %d\n",i);
+		}
+	  }
+	}
+  }
+  else{
+	GF_ASSERT(DWC_SetRecvTimeoutTime( _WIFI_PARENT_AID, MYDWC_TIMEOUTSEC * 1000 ));
+	MYDWC_DEBUGPRINT("setTimeOut 0\n");
+  }
+
+  // 080523 tomoya takahashi
+  // BTS:’ÊMNo.167
+  // e‚©‚ç‰½‚©óM‚µ‚È‚¢‚Ætimeoutflag‚ª‚½‚½‚È‚¢‚½‚ßA
+  // q‚Í‚¢‚Â‚Ü‚Å‚àƒ^ƒCƒ€ƒAƒEƒgó‘Ô‚É‚È‚ç‚È‚¢‰Â”\«‚ª‚ ‚éB
+  // ‚»‚Ìˆ×Aƒ}ƒbƒ`ƒ“ƒO‚ª¬Œ÷‚µ‚½‚çA’¼‚®‚Étimeoutflag‚ª—§‚Â‚æ‚¤‚É
+  // •ÏX‚µ‚Ä‚İ‚éB
+  // _dWork->timeoutflag = 0;	<-Œ³X
+  _dWork->timeoutflag = 1;
+  clearTimeoutBuff();
 }
 
 
 static void setConnectionBuffer(int index)
 {
-    int i,j;
-    
-	_dWork->state = MDSTATE_MATCHED;
+  int i,j;
 
-    setTimeoutTime();
+  _dWork->state = MDSTATE_MATCHED;
+
+  setTimeoutTime();
 }
 
 /*---------------------------------------------------------------------------*
@@ -1117,28 +1117,28 @@ static void ConnectToAnybodyCallback(DWCError error, BOOL cancel, void* param)
 {
 #pragma unused(param)
 
-    if (error == DWC_ERROR_NONE){
-        if (!cancel){
-            // Œ©’m‚ç‚Êl‚½‚¿‚Æ‚ÌƒRƒlƒNƒVƒ‡ƒ“İ—§Š®—¹
-            MYDWC_DEBUGPRINT("Ú‘±Š®—¹ %d\n",DWC_GetMyAID());
-            setConnectionBuffer(1 - DWC_GetMyAID() );
-        }
-        else {
-            MYDWC_DEBUGPRINT("ƒLƒƒƒ“ƒZƒ‹Š®—¹\n");
-            // ƒƒOƒCƒ“Œãó‘Ô‚É–ß‚é
-            
-            // 2006.7.4 yoshihara C³
-			finishcancel();	
-        }
-    }
-    else {
-        MYDWC_DEBUGPRINT("ƒ}ƒbƒ`ƒ“ƒO’†‚ÉƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B %d\n\n", error);
-		_dWork->state = MDSTATE_ERROR; 
-    }
-    if( _dWork->connectCallback ){
-        // ‰½l‚Æ‚Â‚È‚ª‚Á‚Ä‚àˆê‰ñ‚µ‚©ŒÄ‚Î‚ê‚È‚¢‚Ì‚Å©•ª‚ÌID‚ğ“ü‚ê‚Ä‚¢‚é
-        _dWork->connectCallback(DWC_GetMyAID(), _dWork->pConnectWork);
-    }
+  if (error == DWC_ERROR_NONE){
+	if (!cancel){
+	  // Œ©’m‚ç‚Êl‚½‚¿‚Æ‚ÌƒRƒlƒNƒVƒ‡ƒ“İ—§Š®—¹
+	  MYDWC_DEBUGPRINT("Ú‘±Š®—¹ %d\n",DWC_GetMyAID());
+	  setConnectionBuffer(1 - DWC_GetMyAID() );
+	}
+	else {
+	  MYDWC_DEBUGPRINT("ƒLƒƒƒ“ƒZƒ‹Š®—¹\n");
+	  // ƒƒOƒCƒ“Œãó‘Ô‚É–ß‚é
+
+	  // 2006.7.4 yoshihara C³
+	  finishcancel();
+	}
+  }
+  else {
+	MYDWC_DEBUGPRINT("ƒ}ƒbƒ`ƒ“ƒO’†‚ÉƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B %d\n\n", error);
+	_dWork->state = MDSTATE_ERROR;
+  }
+  if( _dWork->connectCallback ){
+	// ‰½l‚Æ‚Â‚È‚ª‚Á‚Ä‚àˆê‰ñ‚µ‚©ŒÄ‚Î‚ê‚È‚¢‚Ì‚Å©•ª‚ÌID‚ğ“ü‚ê‚Ä‚¢‚é
+	_dWork->connectCallback(DWC_GetMyAID(), _dWork->pConnectWork);
+  }
 }
 
 /*---------------------------------------------------------------------------*
@@ -1148,21 +1148,21 @@ static int  EvaluateAnybodyCallback(int index, void* param)
 {
 #pragma unused(index,param)
 
-    return 1;
+  return 1;
 }
 
 
 /** -------------------------------------------------------------------------
-  ‘—MŠ®—¹ƒR[ƒ‹ƒoƒbƒN  
+  ‘—MŠ®—¹ƒR[ƒ‹ƒoƒbƒN
   ---------------------------------------------------------------------------*/
 static void SendDoneCallback( int size, u8 aid )
 {
 #pragma unused(size)
-	// ‘—Mƒoƒbƒtƒ@‚ğ‚ ‚¯‚é
-	_dWork->sendbufflag = 0;
-	_dWork->sendintervaltime[aid] = 0;
-//	MYDWC_DEBUGPRINT( "‘—M\n" );
-//	MYDWC_DEBUGPRINT( "*" );
+  // ‘—Mƒoƒbƒtƒ@‚ğ‚ ‚¯‚é
+  _dWork->sendbufflag = 0;
+  _dWork->sendintervaltime[aid] = 0;
+  //	MYDWC_DEBUGPRINT( "‘—M\n" );
+  //	MYDWC_DEBUGPRINT( "*" );
 }
 
 
@@ -1171,76 +1171,76 @@ static void _setOpVchat(u32 topcode)
 {
 
   //  if(!CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo())){
-        if( topcode & MYDWC_PACKET_VCHAT_MASK ) 
-        {
-            // ‘Šè‚Ìƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÍƒIƒ“
-            _dWork->opvchaton = 1;		
-        }
-        else
-        {
-            // ‘Šè‚Ìƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÍƒIƒ“
-            _dWork->opvchaton = 0;		
-        }
-//    }
+  if( topcode & MYDWC_PACKET_VCHAT_MASK )
+  {
+	// ‘Šè‚Ìƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÍƒIƒ“
+	_dWork->opvchaton = 1;
+  }
+  else
+  {
+	// ‘Šè‚Ìƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÍƒIƒ“
+	_dWork->opvchaton = 0;
+  }
+  //    }
 }
 
 
 
 /** -------------------------------------------------------------------------
-  óMŠ®—¹ƒR[ƒ‹ƒoƒbƒN  
+  óMŠ®—¹ƒR[ƒ‹ƒoƒbƒN
   ---------------------------------------------------------------------------*/
 static void UserRecvCallback( u8 aid, u8* buffer, int size )
 {
 #pragma unused( aid, buffer, size )
 
-	u32 topcode;
-	topcode = (buffer[3] << 24) | (buffer[2] << 16) | (buffer[1] << 8) | buffer[0];
+  u32 topcode;
+  topcode = (buffer[3] << 24) | (buffer[2] << 16) | (buffer[1] << 8) | buffer[0];
 
-    //	MYDWC_DEBUGPRINT("[%d,%d,%d,%d]", buffer[0], buffer[1], buffer[2], buffer[3]);
-    MYDWC_DEBUGPRINT("-óM-\n");
-    
-	// ˆê“xóM‚µ‚Ä‚Í‚¶‚ß‚Äƒ^ƒCƒ€ƒAƒEƒg‚ğİ’è‚·‚éB
-	_dWork->timeoutflag = 1;
+  //	MYDWC_DEBUGPRINT("[%d,%d,%d,%d]", buffer[0], buffer[1], buffer[2], buffer[3]);
+  MYDWC_DEBUGPRINT("-óM-\n");
 
-	// ‚Ü‚¸Aæ“ª‚Ì‚SƒoƒCƒg‚ğ‚İ‚ÄAƒQ[ƒ€‚Ìî•ñ‚©‚Ç‚¤‚©‚ğ”»’f
-	if( (topcode & MYDWC_PACKETYPE_MASK) == MYDWC_GAME_PACKET ){
-		_setOpVchat( topcode );
-		_dWork->opseqno = buffer[MYDWC_PACKET_SEQNO_POS];
+  // ˆê“xóM‚µ‚Ä‚Í‚¶‚ß‚Äƒ^ƒCƒ€ƒAƒEƒg‚ğİ’è‚·‚éB
+  _dWork->timeoutflag = 1;
+
+  // ‚Ü‚¸Aæ“ª‚Ì‚SƒoƒCƒg‚ğ‚İ‚ÄAƒQ[ƒ€‚Ìî•ñ‚©‚Ç‚¤‚©‚ğ”»’f
+  if( (topcode & MYDWC_PACKETYPE_MASK) == MYDWC_GAME_PACKET ){
+	_setOpVchat( topcode );
+	_dWork->opseqno = buffer[MYDWC_PACKET_SEQNO_POS];
+  }
+  else {
+#ifdef MYDWC_USEVCHA
+	if( myvct_checkData( aid, buffer,size ) ) return;
+#endif
+	// –³ˆÓ–¡‚Èî•ñiƒRƒlƒNƒVƒ‡ƒ“‚ğ•Û‚·‚é‚½‚ß‚Ì‚à‚Ì‚Æv‚í‚ê‚éj
+	_setOpVchat( topcode );
+	return;
+  }
+  //	MYDWC_DEBUGPRINT( "óM(%d)\n",*((s32*)buffer) );
+  //	NET_PRINT( "óM(%d)\n",aid );
+
+  // ƒAƒ‰ƒCƒƒ“ƒg‚ğŠmÀ‚É‚·‚é‚½‚ß‚ÉAƒRƒs[
+  {
+	u16 *temp = (u16*)mydwc_AllocFunc( NULL, size - 4, 4);
+	if(temp==NULL){
+	  return;
 	}
-	else {
-#ifdef MYDWC_USEVCHA		
-		if( myvct_checkData( aid, buffer,size ) ) return;
-#endif	
-		// –³ˆÓ–¡‚Èî•ñiƒRƒlƒNƒVƒ‡ƒ“‚ğ•Û‚·‚é‚½‚ß‚Ì‚à‚Ì‚Æv‚í‚ê‚éj
-		_setOpVchat( topcode );
-		return;
-	}
-//	MYDWC_DEBUGPRINT( "óM(%d)\n",*((s32*)buffer) );
-//	NET_PRINT( "óM(%d)\n",aid );
-	
-	// ƒAƒ‰ƒCƒƒ“ƒg‚ğŠmÀ‚É‚·‚é‚½‚ß‚ÉAƒRƒs[
+
+	MI_CpuCopy8(buffer + 4, (void*)temp, size - 4);
+
+	if( DWC_GetMyAID() == 0 )
 	{
-		u16 *temp = (u16*)mydwc_AllocFunc( NULL, size - 4, 4);
-        if(temp==NULL){
-            return;
-        }
-        
-		MI_CpuCopy8(buffer + 4, (void*)temp, size - 4);
-		
-		if( DWC_GetMyAID() == 0 )
-		{	
-			// ©•ª‚ªe‚Ìê‡cƒNƒ‰ƒCƒ“ƒg‚©‚çƒT[ƒo‚É‘Î‚µ‚Ä‘—‚ç‚ê‚Ä‚«‚½‚à‚Ì‚Æ”»’fB
-			// ƒT[ƒo—póMŠÖ”‚ğŒÄ‚Ño‚·B
-			if( _dWork->serverCallback != NULL ) _dWork->serverCallback(aid, temp, size-4);
-		} else {
-			// ƒT[ƒo‚©‚çƒNƒ‰ƒCƒAƒ“ƒg‚É‘Î‚µ‚Ä‘—‚ç‚ê‚Ä‚«‚½‚à‚Ì‚Æ”»’fB	
-            if( _dWork->clientCallback != NULL ){
-                _dWork->clientCallback(aid, temp, size-4);
-            }
-		}
-		
-		mydwc_FreeFunc(NULL, temp, size - 4);
+	  // ©•ª‚ªe‚Ìê‡cƒNƒ‰ƒCƒ“ƒg‚©‚çƒT[ƒo‚É‘Î‚µ‚Ä‘—‚ç‚ê‚Ä‚«‚½‚à‚Ì‚Æ”»’fB
+	  // ƒT[ƒo—póMŠÖ”‚ğŒÄ‚Ño‚·B
+	  if( _dWork->serverCallback != NULL ) _dWork->serverCallback(aid, temp, size-4);
+	} else {
+	  // ƒT[ƒo‚©‚çƒNƒ‰ƒCƒAƒ“ƒg‚É‘Î‚µ‚Ä‘—‚ç‚ê‚Ä‚«‚½‚à‚Ì‚Æ”»’fB
+	  if( _dWork->clientCallback != NULL ){
+		_dWork->clientCallback(aid, temp, size-4);
+	  }
 	}
+
+	mydwc_FreeFunc(NULL, temp, size - 4);
+  }
 }
 
 /*---------------------------------------------------------------------------*
@@ -1257,66 +1257,68 @@ index 	ƒNƒ[ƒY‚µ‚½ƒvƒŒƒCƒ„[‚Ì—F’BƒŠƒXƒgƒCƒ“ƒfƒbƒNƒXBƒNƒ[ƒY‚µ‚½ƒvƒŒƒCƒ„[‚ª—
 param 	DWC_SetConnectionClosedCallbackŠÖ”‚Åw’è‚µ‚½ƒR[ƒ‹ƒoƒbƒN—pƒpƒ‰ƒ[ƒ^
  *---------------------------------------------------------------------------*/
 static void ConnectionClosedCallback(DWCError error,
-                                     BOOL isLocal,
-                                     BOOL isServer,
-                                     u8  aid,
-                                     int index,
-                                     void* param)
+									 BOOL isLocal,
+									 BOOL isServer,
+									 u8  aid,
+									 int index,
+									 void* param)
 {
 #pragma unused(param, index)
-    MYDWC_DEBUGPRINT("ConnectionClosedCallback %d %d %d %d %d\n",error,isLocal, isServer,aid,_dWork->closedflag);
+  MYDWC_DEBUGPRINT("ConnectionClosedCallback %d %d %d %d %d\n",error,isLocal, isServer,aid,_dWork->closedflag);
 
-    _dWork->sendbufflag = 0;
-    _dWork->setupErrorCount = 0;
-    _dWork->bConnectCallback = FALSE;
-    
-    if (error == DWC_ERROR_NONE){
+  _dWork->sendbufflag = 0;
+  _dWork->setupErrorCount = 0;
+  _dWork->bConnectCallback = FALSE;
 
-//        if((!CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo()) && (DWC_GetNumConnectionHost() == 1))){
-        if(((_dWork->closedflag == TRUE) && (DWC_GetNumConnectionHost() == 1))){
-            // ‘S‚Ä‚ÌƒRƒlƒNƒVƒ‡ƒ“‚ªƒNƒ[ƒY‚³‚ê‚½ê‡         
-          
-            // ƒLƒƒƒ“ƒZƒ‹’†‚È‚ç‚ÎAƒLƒƒƒ“ƒZƒ‹‚ªŠ®—¹‚µ‚½B
-			if(	_dWork->state == MDSTATE_CANCEL )
-			{
-                //  DWC_SetupGameServer‚ÌƒR[ƒ‹ƒoƒbƒN‚ÅŒÄ‚Î‚ê‚é‚½‚ß ‚Ü‚¾ó‘Ô‚ªDISCONNECT‚Å‚«‚Ä‚¢‚È‚¢‰Â”\«‚ª‚ ‚é‚½‚ß ‚±‚±‚ÅFINISH‚É‚µ‚È‚¢
-                //				_dWork->state = MDSTATE_CANCELFINISH;
-                MYDWC_DEBUGPRINT("MDSTATE_CANCELFINISH\n");
-			}
-			else {
-                //‚±‚±‚Ííœ
-//                OHNO_PRINT("DWC_CloseAllConnectionsHard");
-//                DWC_CloseAllConnectionsHard( );
-//				_dWork->state = MDSTATE_DISCONNECT;
-				_dWork->state = MDSTATE_DISCONNECTTING;
-                MYDWC_DEBUGPRINT("MDSTATE_DISCONNECTTING\n");
-			}
-			if( _dWork->isvchat )
-			{
-				// ‚Ü‚¾ƒ{ƒCƒXƒ`ƒƒƒbƒgƒ‰ƒCƒuƒ‰ƒŠ‚ğ‰ğ•ú‚µ‚Ä‚¢‚È‚¢ê‡B
-				GFL_NET_DWC_StopVChat();
-			}
-			
-        }
-        
-        if (isLocal){
-            MYDWC_DEBUGPRINT("Closed connection to aid %d (friendListIndex = %d) Rest %d.\n",
-                       aid, index, DWC_GetNumConnectionHost());
-        }
-        else {
-            MYDWC_DEBUGPRINT("Connection to aid %d (friendListIndex = %d) was closed. Rest %d.\n",
-                       aid, index, DWC_GetNumConnectionHost());
-        }
-    }
-    else {
-        MYDWC_DEBUGPRINT("Failed to close connections. %d\n\n", error);
-    }
+  if (error == DWC_ERROR_NONE){
 
-//    mydwc_releaseRecvBuff(aid);
-    
-    if( _dWork->disconnectCallback ){  //
-        _dWork->disconnectCallback(aid, _dWork->pDisconnectWork);
-    }
+	//        if((!CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo()) && (DWC_GetNumConnectionHost() == 1))){
+	if(((_dWork->closedflag == TRUE) && (DWC_GetNumConnectionHost() == 1))){
+	  // ‘S‚Ä‚ÌƒRƒlƒNƒVƒ‡ƒ“‚ªƒNƒ[ƒY‚³‚ê‚½ê‡
+
+	  // ƒLƒƒƒ“ƒZƒ‹’†‚È‚ç‚ÎAƒLƒƒƒ“ƒZƒ‹‚ªŠ®—¹‚µ‚½B
+	  if(	_dWork->state == MDSTATE_CANCEL )
+	  {
+		//  DWC_SetupGameServer‚ÌƒR[ƒ‹ƒoƒbƒN‚ÅŒÄ‚Î‚ê‚é‚½‚ß ‚Ü‚¾ó‘Ô‚ªDISCONNECT‚Å‚«‚Ä‚¢‚È‚¢‰Â”\«‚ª‚ ‚é‚½‚ß ‚±‚±‚ÅFINISH‚É‚µ‚È‚¢
+		//				_dWork->state = MDSTATE_CANCELFINISH;
+		MYDWC_DEBUGPRINT("MDSTATE_CANCELFINISH\n");
+	  }
+	  else {
+		//‚±‚±‚Ííœ
+		//                OHNO_PRINT("DWC_CloseAllConnectionsHard");
+		//                DWC_CloseAllConnectionsHard( );
+		//				_dWork->state = MDSTATE_DISCONNECT;
+		_dWork->state = MDSTATE_DISCONNECTTING;
+		MYDWC_DEBUGPRINT("MDSTATE_DISCONNECTTING\n");
+	  }
+	  if( _dWork->isvchat )
+	  {
+		// ‚Ü‚¾ƒ{ƒCƒXƒ`ƒƒƒbƒgƒ‰ƒCƒuƒ‰ƒŠ‚ğ‰ğ•ú‚µ‚Ä‚¢‚È‚¢ê‡B
+		GFL_NET_DWC_StopVChat();
+	  }
+
+	}
+
+	if (isLocal){
+	  MYDWC_DEBUGPRINT("Closed connection to aid %d (friendListIndex = %d) Rest %d.\n",
+					   aid, index, DWC_GetNumConnectionHost());
+	}
+	else {
+	  MYDWC_DEBUGPRINT("Connection to aid %d (friendListIndex = %d) was closed. Rest %d.\n",
+					   aid, index, DWC_GetNumConnectionHost());
+	}
+  }
+  else {
+	MYDWC_DEBUGPRINT("Failed to close connections. %d\n\n", error);
+  }
+
+  //    mydwc_releaseRecvBuff(aid);
+
+  GFI_NET_HANDLE_Delete(aid);  // ƒnƒ“ƒhƒ‹íœ
+  if( _dWork->disconnectCallback )
+  {
+	_dWork->disconnectCallback(aid, _dWork->pDisconnectWork);
+  }
 }
 
 /*---------------------------------------------------------------------------*
@@ -1325,26 +1327,26 @@ static void ConnectionClosedCallback(DWCError error,
 void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align )
 {
 #pragma unused( name )
-    void * ptr;
-    OSIntrMode old;
-    GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
+  void * ptr;
+  OSIntrMode old;
+  GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
 
 #ifdef DEBUGPRINT_ON
-   NET_PRINT("HEAPæ“¾(%d, %d) \n", size, align);
+  NET_PRINT("HEAPæ“¾(%d, %d) \n", size, align);
 #endif
-    
-    GF_ASSERT(align <= 32);  // ‚±‚ê‚ğ‚±‚¦‚½‚çÄ‘Î‰
-    old = OS_DisableInterrupts();
-    ptr = GFL_NET_Align32Alloc(pNetInit->wifiHeapID, size);
-    OS_RestoreInterrupts( old );
 
-    if(ptr == NULL){
-        GF_ASSERT(ptr);
-        // ƒq[ƒv‚ª–³‚¢ê‡‚ÌC³
-        GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
-        return NULL;
-    }
-    return ptr;
+  GF_ASSERT(align <= 32);  // ‚±‚ê‚ğ‚±‚¦‚½‚çÄ‘Î‰
+  old = OS_DisableInterrupts();
+  ptr = GFL_NET_Align32Alloc(pNetInit->wifiHeapID, size);
+  OS_RestoreInterrupts( old );
+
+  if(ptr == NULL){
+	GF_ASSERT(ptr);
+	// ƒq[ƒv‚ª–³‚¢ê‡‚ÌC³
+	GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
+	return NULL;
+  }
+  return ptr;
 }
 
 /*---------------------------------------------------------------------------*
@@ -1353,15 +1355,15 @@ void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align )
 void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  )
 {
 #pragma unused( name, size )
-    OSIntrMode old;
-	u16 groupid;
+  OSIntrMode old;
+  u16 groupid;
 
-    if ( !ptr ){
-        return;  //NULLŠJ•ú‚ğ”F‚ß‚é
-    }
-    old = OS_DisableInterrupts();
-    GFL_NET_Align32Free(ptr);
-    OS_RestoreInterrupts( old );
+  if ( !ptr ){
+	return;  //NULLŠJ•ú‚ğ”F‚ß‚é
+  }
+  old = OS_DisableInterrupts();
+  GFL_NET_Align32Free(ptr);
+  OS_RestoreInterrupts( old );
 }
 
 //==============================================================================
@@ -1373,98 +1375,98 @@ void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  )
 //==============================================================================
 int mydwc_HandleError(void)
 {
-	int errorCode;
-	DWCErrorType myErrorType;
-	int ret;
-    int returnNo = 0;
+  int errorCode;
+  DWCErrorType myErrorType;
+  int ret;
+  int returnNo = 0;
 
 
-    ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
+  ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
 
-    
-	if( ret != 0 ){
-        // ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶B
-        MYDWC_DEBUGPRINT("error occured!(%d, %d, %d)\n", ret, errorCode, myErrorType);
 
-        // DWC_GetLastErrorEx‚Ìà–¾‚É‚Ì‚Á‚Æ‚é  2008.5.23
-        // •Ô‚·‚à‚Ì‚ÍŠî–{“I‚ÉerrorCode‚Å‚ ‚é‚ª
-        // ƒGƒ‰[ƒR[ƒh‚ª 0 ‚Ìê‡‚âƒGƒ‰[ˆ—ƒ^ƒCƒv‚ª DWC_ETYPE_LIGHT ‚Ìê‡‚ÍAƒQ[ƒ€ŒÅ—L‚Ì•\¦‚Ì‚İ‚È‚Ì‚Å ret‚ğ•Ô‚·
-        // heapƒGƒ‰[‚¾‚Á‚½‚çŒã‚Å‚³‚ç‚É•ÏX
-        returnNo = errorCode;
-        if((errorCode == 0) || (myErrorType == DWC_ETYPE_LIGHT)){
-            returnNo = ret;
-        }
-        switch(myErrorType)
-        {
-          case DWC_ETYPE_LIGHT:
-            // ƒQ[ƒ€ŒÅ—L‚Ì•\¦‚Ì‚İ‚ÅAƒGƒ‰[ƒR[ƒh•\¦‚Í•K—v‚È‚¢B
-            // DWC_ClearError()‚ğŒÄ‚Ño‚¹‚ÎA•œ‹A‰Â”\B
-            DWC_ClearError();
-            
-            break;
-          case DWC_ETYPE_SHOW_ERROR:  // ƒGƒ‰[•\¦
-            DWC_ClearError();
-            break;
-          case DWC_ETYPE_SHUTDOWN_FM:
-          case DWC_ETYPE_SHUTDOWN_GHTTP:
-          case DWC_ETYPE_SHUTDOWN_ND:
-            // DWC_ShutdownFriendsMatch()‚ğŒÄ‚Ño‚µ‚ÄAFriendsMatchˆ—‚ğI—¹‚·‚é•K—v‚ª‚ ‚éB
-            // ƒGƒ‰[ƒR[ƒh‚Ì•\¦‚ª•K—vB
-            // ‚±‚Ìê‡A‚Æ‚è‚ ‚¦‚¸DWC_ETYPE_DISCONNECT‚Æ“¯‚¶ˆ—‚ğ‚µ‚Ä‚¨‚­B
-          case DWC_ETYPE_DISCONNECT:
-            //FriendsMatchˆ—’†‚È‚çDWC_ShutdownFriendsMatch()‚ğŒÄ‚Ño‚µA
-            //X‚ÉDWC_CleanupInet()‚Å’ÊM‚ÌØ’f‚às‚¤•K—v‚ª‚ ‚éB
-            //ƒGƒ‰[ƒR[ƒh‚Ì•\¦‚ª•K—vB 
-            if(_dWork){
-                switch( _dWork->state )
-                {			
-                  case MDSTATE_TRYLOGIN:
-                  case MDSTATE_LOGIN:		
-                  case MDSTATE_MATCHING:
-                  case MDSTATE_CANCEL:
-                  case MDSTATE_MATCHED:
-                  case MDSTATE_PLAYING:
-                  case MDSTATE_CANCELFINISH:
-                  case MDSTATE_ERROR:
-                  case MDSTATE_TIMEOUT:
-                  case MDSTATE_DISCONNECTTING:
-                  case MDSTATE_DISCONNECT:
-                    DWC_ShutdownFriendsMatch(  );
-                  case MDSTATE_INIT:	
-                  case MDSTATE_CONNECTING:
-                  case MDSTATE_CONNECTED:
-                    // ‚Ü‚¾‚±‚Ì“_‚Å‚ÍAƒtƒŒƒ“ƒhƒ}ƒbƒ`ƒ‰ƒCƒuƒ‰ƒŠ‚ÍŒÄ‚Î‚ê‚Ä‚¢‚È‚¢B
-                    // WIFILê‚Ìê‡ŠO‚ÅŒÄ‚Ô
-//                    if(CommStateGetServiceNo() != COMM_MODE_LOBBY_WIFI){
-                        DWC_CleanupInet( );
-  //                  }
-                }
-                
-                DWC_ClearError();
-            }
-            if(_dWork){
-                _dWork->state = MDSTATE_ERROR_DISCONNECT;
-            }
-            break;
-          case DWC_ETYPE_FATAL:
-            // FatalError‘Š“–‚È‚Ì‚ÅA“dŒ¹OFF‚ğ‘£‚·•K—v‚ª‚ ‚éB
-            if(_dWork){
-                _dWork->state = MDSTATE_ERROR_FETAL;
-                // ‚±‚ÌƒR[ƒ‹ƒoƒbƒN‚©‚çˆ—‚ª‚©‚¦‚Á‚Ä‚±‚È‚¢‚Í‚¸B
-                if( _dWork->fetalErrorCallback != NULL ){
-                    _dWork->fetalErrorCallback( -errorCode );
-                }
-            }
-            break;
-        }
-    }
-    if(_dWork->bHeapError){
-        returnNo = ERRORCODE_HEAP;
-    }
-    if( ret != 0 ){
-        GFL_NET_StateSetWifiError( errorCode, myErrorType, ret);
-    }
-	return returnNo;
+  if( ret != 0 ){
+	// ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶B
+	MYDWC_DEBUGPRINT("error occured!(%d, %d, %d)\n", ret, errorCode, myErrorType);
+
+	// DWC_GetLastErrorEx‚Ìà–¾‚É‚Ì‚Á‚Æ‚é  2008.5.23
+	// •Ô‚·‚à‚Ì‚ÍŠî–{“I‚ÉerrorCode‚Å‚ ‚é‚ª
+	// ƒGƒ‰[ƒR[ƒh‚ª 0 ‚Ìê‡‚âƒGƒ‰[ˆ—ƒ^ƒCƒv‚ª DWC_ETYPE_LIGHT ‚Ìê‡‚ÍAƒQ[ƒ€ŒÅ—L‚Ì•\¦‚Ì‚İ‚È‚Ì‚Å ret‚ğ•Ô‚·
+	// heapƒGƒ‰[‚¾‚Á‚½‚çŒã‚Å‚³‚ç‚É•ÏX
+	returnNo = errorCode;
+	if((errorCode == 0) || (myErrorType == DWC_ETYPE_LIGHT)){
+	  returnNo = ret;
+	}
+	switch(myErrorType)
+	{
+	case DWC_ETYPE_LIGHT:
+	  // ƒQ[ƒ€ŒÅ—L‚Ì•\¦‚Ì‚İ‚ÅAƒGƒ‰[ƒR[ƒh•\¦‚Í•K—v‚È‚¢B
+	  // DWC_ClearError()‚ğŒÄ‚Ño‚¹‚ÎA•œ‹A‰Â”\B
+	  DWC_ClearError();
+
+	  break;
+	case DWC_ETYPE_SHOW_ERROR:  // ƒGƒ‰[•\¦
+	  DWC_ClearError();
+	  break;
+	case DWC_ETYPE_SHUTDOWN_FM:
+	case DWC_ETYPE_SHUTDOWN_GHTTP:
+	case DWC_ETYPE_SHUTDOWN_ND:
+	  // DWC_ShutdownFriendsMatch()‚ğŒÄ‚Ño‚µ‚ÄAFriendsMatchˆ—‚ğI—¹‚·‚é•K—v‚ª‚ ‚éB
+	  // ƒGƒ‰[ƒR[ƒh‚Ì•\¦‚ª•K—vB
+	  // ‚±‚Ìê‡A‚Æ‚è‚ ‚¦‚¸DWC_ETYPE_DISCONNECT‚Æ“¯‚¶ˆ—‚ğ‚µ‚Ä‚¨‚­B
+	case DWC_ETYPE_DISCONNECT:
+	  //FriendsMatchˆ—’†‚È‚çDWC_ShutdownFriendsMatch()‚ğŒÄ‚Ño‚µA
+	  //X‚ÉDWC_CleanupInet()‚Å’ÊM‚ÌØ’f‚às‚¤•K—v‚ª‚ ‚éB
+	  //ƒGƒ‰[ƒR[ƒh‚Ì•\¦‚ª•K—vB
+	  if(_dWork){
+		switch( _dWork->state )
+		{
+		case MDSTATE_TRYLOGIN:
+		case MDSTATE_LOGIN:
+		case MDSTATE_MATCHING:
+		case MDSTATE_CANCEL:
+		case MDSTATE_MATCHED:
+		case MDSTATE_PLAYING:
+		case MDSTATE_CANCELFINISH:
+		case MDSTATE_ERROR:
+		case MDSTATE_TIMEOUT:
+		case MDSTATE_DISCONNECTTING:
+		case MDSTATE_DISCONNECT:
+		  DWC_ShutdownFriendsMatch(  );
+		case MDSTATE_INIT:
+		case MDSTATE_CONNECTING:
+		case MDSTATE_CONNECTED:
+		  // ‚Ü‚¾‚±‚Ì“_‚Å‚ÍAƒtƒŒƒ“ƒhƒ}ƒbƒ`ƒ‰ƒCƒuƒ‰ƒŠ‚ÍŒÄ‚Î‚ê‚Ä‚¢‚È‚¢B
+		  // WIFILê‚Ìê‡ŠO‚ÅŒÄ‚Ô
+		  //                    if(CommStateGetServiceNo() != COMM_MODE_LOBBY_WIFI){
+		  DWC_CleanupInet( );
+		  //                  }
+		}
+
+		DWC_ClearError();
+	  }
+	  if(_dWork){
+		_dWork->state = MDSTATE_ERROR_DISCONNECT;
+	  }
+	  break;
+	case DWC_ETYPE_FATAL:
+	  // FatalError‘Š“–‚È‚Ì‚ÅA“dŒ¹OFF‚ğ‘£‚·•K—v‚ª‚ ‚éB
+	  if(_dWork){
+		_dWork->state = MDSTATE_ERROR_FETAL;
+		// ‚±‚ÌƒR[ƒ‹ƒoƒbƒN‚©‚çˆ—‚ª‚©‚¦‚Á‚Ä‚±‚È‚¢‚Í‚¸B
+		if( _dWork->fetalErrorCallback != NULL ){
+		  _dWork->fetalErrorCallback( -errorCode );
+		}
+	  }
+	  break;
+	}
+  }
+  if(_dWork->bHeapError){
+	returnNo = ERRORCODE_HEAP;
+  }
+  if( ret != 0 ){
+	GFL_NET_StateSetWifiError( errorCode, myErrorType, ret);
+  }
+  return returnNo;
 }
 
 
@@ -1472,21 +1474,21 @@ int mydwc_HandleError(void)
 
 static BOOL _isSendableReliable(void)
 {
-    int i;
-    BOOL bRet=FALSE;
+  int i;
+  BOOL bRet=FALSE;
 
-    for(i=0;i< _dWork->maxConnectNum;i++){
-        if(DWC_GetMyAID()==i){
-            continue;
-        }
-        if(DWC_IsValidAID(i)){
-            bRet=TRUE;  // ‘—M‘Šè‚ª‚¢‚½ê‡TRUE
-            if(!DWC_IsSendableReliable(i)){
-                return FALSE;
-            }
-        }
-    }
-    return bRet;
+  for(i=0;i< _dWork->maxConnectNum;i++){
+	if(DWC_GetMyAID()==i){
+	  continue;
+	}
+	if(DWC_IsValidAID(i)){
+	  bRet=TRUE;  // ‘—M‘Šè‚ª‚¢‚½ê‡TRUE
+	  if(!DWC_IsSendableReliable(i)){
+		return FALSE;
+	  }
+	}
+  }
+  return bRet;
 }
 
 /*
@@ -1498,27 +1500,27 @@ static void _sendData(int param)
 	if( !DWC_IsSendableReliable( _dWork->op_aid ) ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
 	{
 		DWC_SendReliable( _dWork->op_aid, &(_buffer), 4 );
-	}	
+	}
 }
-*/
+ */
 
 
 static BOOL sendKeepAlivePacket(int i)
 {
-	if( (_dWork->sendbufflag == 0) && _isSendableReliable() && (0xfffe & DWC_GetAIDBitmap()) ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
-	{
-        MYDWC_DEBUGPRINT("SEND KEEP ALIVE PACKET  %d %d %d\n",_dWork->sendbufflag,_isSendableReliable() , DWC_GetAIDBitmap());
-		_dWork->sendbufflag = 1;
-		*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_KEEPALIVE_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
+  if( (_dWork->sendbufflag == 0) && _isSendableReliable() && (0xfffe & DWC_GetAIDBitmap()) ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
+  {
+	MYDWC_DEBUGPRINT("SEND KEEP ALIVE PACKET  %d %d %d\n",_dWork->sendbufflag,_isSendableReliable() , DWC_GetAIDBitmap());
+	_dWork->sendbufflag = 1;
+	*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_KEEPALIVE_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
 
-        DWC_SendReliableBitmap(DWC_GetAIDBitmap(), &(_dWork->sendBuffer[0]), 4);
+	DWC_SendReliableBitmap(DWC_GetAIDBitmap(), &(_dWork->sendBuffer[0]), 4);
 
-		_dWork->sendintervaltime[i] = 0;
-        //MYDWC_DEBUGPRINT("SEND KEEP ALIVE PACKET\n");
-		//OHNO_PRINT("KEEP ALIVE %d\n",sys.vsync_counter);
-        return TRUE;
-	}
-    return FALSE;
+	_dWork->sendintervaltime[i] = 0;
+	//MYDWC_DEBUGPRINT("SEND KEEP ALIVE PACKET\n");
+	//OHNO_PRINT("KEEP ALIVE %d\n",sys.vsync_counter);
+	return TRUE;
+  }
+  return FALSE;
 }
 
 
@@ -1532,56 +1534,56 @@ static BOOL sendKeepAlivePacket(int i)
 //==============================================================================
 static int mydwc_step(void)
 {
-    int i,ret;
-    
+  int i,ret;
 
-	DWC_ProcessFriendsMatch();  // DWC’ÊMˆ—XV
-	mydwc_updateFriendInfo();	
 
-    
+  DWC_ProcessFriendsMatch();  // DWC’ÊMˆ—XV
+  mydwc_updateFriendInfo();
+
+
 #ifdef MYDWC_USEVCHA
-	if( _dWork->isvchat ) 
+  if( _dWork->isvchat )
+  {
+
+	if( (_dWork->myvchaton == 1) && (_dWork->opvchaton == 1) && (_dWork->myvchat_send == TRUE) )
 	{
-		
-		if( (_dWork->myvchaton == 1) && (_dWork->opvchaton == 1) && (_dWork->myvchat_send == TRUE) )
-		{
-			myvct_main(FALSE);
-		}
-		else
-		{
-			myvct_main(TRUE);
-		}
-				
-        if(_dWork->backupBitmap != DWC_GetAIDBitmap()){
-            if(!_dWork->pausevchat && _dWork->bVChat){
-                if(myvct_AddConference(DWC_GetAIDBitmap(), DWC_GetMyAID())){
-                    _dWork->backupBitmap = DWC_GetAIDBitmap();
-                }
-            }
-        }
+	  myvct_main(FALSE);
 	}
+	else
+	{
+	  myvct_main(TRUE);
+	}
+
+	if(_dWork->backupBitmap != DWC_GetAIDBitmap()){
+	  if(!_dWork->pausevchat && _dWork->bVChat){
+		if(myvct_AddConference(DWC_GetAIDBitmap(), DWC_GetMyAID())){
+		  _dWork->backupBitmap = DWC_GetAIDBitmap();
+		}
+	  }
+	}
+  }
 #endif
-    if( _dWork->state == MDSTATE_TIMEOUT ){  // ƒ^ƒCƒ€ƒAƒEƒgƒXƒe[ƒg‚Ì‚Í“¯‚ÉƒGƒ‰[‚àŠÄ‹‚·‚é
-		ret = mydwc_HandleError();
-        if(ret != 0){
-            return ret;
-        }
-        return STEPMATCH_TIMEOUT;
-    }
-	if( _dWork->state == MDSTATE_DISCONNECT ) return STEPMATCH_DISCONNECT;
-	
-	if( _dWork->state == MDSTATE_MATCHED  ||  _dWork->state == MDSTATE_PLAYING) {
-        for(i=0 ; i< _dWork->maxConnectNum; i++){
-            if( _dWork->sendintervaltime[i]++ >= KEEPALIVE_TOKEN_TIME && _dWork->sendbufflag == 0) {
-                if(sendKeepAlivePacket(i)){
-                    clearTimeoutBuff();
-                    break;
-                }
-            }
-        }
+  if( _dWork->state == MDSTATE_TIMEOUT ){  // ƒ^ƒCƒ€ƒAƒEƒgƒXƒe[ƒg‚Ì‚Í“¯‚ÉƒGƒ‰[‚àŠÄ‹‚·‚é
+	ret = mydwc_HandleError();
+	if(ret != 0){
+	  return ret;
 	}
-	
-	return mydwc_HandleError();
+	return STEPMATCH_TIMEOUT;
+  }
+  if( _dWork->state == MDSTATE_DISCONNECT ) return STEPMATCH_DISCONNECT;
+
+  if( _dWork->state == MDSTATE_MATCHED  ||  _dWork->state == MDSTATE_PLAYING) {
+	for(i=0 ; i< _dWork->maxConnectNum; i++){
+	  if( _dWork->sendintervaltime[i]++ >= KEEPALIVE_TOKEN_TIME && _dWork->sendbufflag == 0) {
+		if(sendKeepAlivePacket(i)){
+		  clearTimeoutBuff();
+		  break;
+		}
+	  }
+	}
+  }
+
+  return mydwc_HandleError();
 }
 
 //==============================================================================
@@ -1592,18 +1594,18 @@ static int mydwc_step(void)
 //==============================================================================
 u32 GFL_NET_DWC_GetAid(void)
 {
-    if(_dWork){
-        if( _dWork->state == MDSTATE_MATCHED || _dWork->state == MDSTATE_PLAYING || _dWork->state == MDSTATE_DISCONNECTTING )
-        {
-            return DWC_GetMyAID();
-        }
-    }
-	return 0xffffffff;
+  if(_dWork){
+	if( _dWork->state == MDSTATE_MATCHED || _dWork->state == MDSTATE_PLAYING || _dWork->state == MDSTATE_DISCONNECTTING )
+	{
+	  return DWC_GetMyAID();
+	}
+  }
+  return 0xffffffff;
 }
 
 // ƒ{ƒCƒXƒ`ƒƒƒbƒg‚ÌØ’fƒR[ƒ‹ƒoƒbƒNB
 static void vct_endcallback(){
-	_dWork->isvchat = 0;
+  _dWork->isvchat = 0;
 }
 
 //==============================================================================
@@ -1615,57 +1617,57 @@ static void vct_endcallback(){
 //==============================================================================
 void GFL_NET_DWC_StartVChat(int heapID)
 {
-    int late;
-    int num = 1;
-//    BOOL bFourGame = CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo());
+  int late;
+  int num = 1;
+  //    BOOL bFourGame = CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo());
 
-	// ƒfƒoƒbƒNƒvƒŠƒ“ƒgOFF
+  // ƒfƒoƒbƒNƒvƒŠƒ“ƒgOFF
 #ifndef DEBUGPRINT_ON
-	VCT_SetReportLevel( VCT_REPORTLEVEL_NONE );
+  VCT_SetReportLevel( VCT_REPORTLEVEL_NONE );
 #else
-      VCT_SetReportLevel( VCT_REPORTLEVEL_ALL );
+  VCT_SetReportLevel( VCT_REPORTLEVEL_ALL );
 
 #endif
 #if 0
-    if(bFourGame){
-        num = GFL_NET_GetConnectNum()-1;
-        MYDWC_DEBUGPRINT("VCTONl”%d\n",num);
-        if(num < 1){
-            num = 1;
-        }
-        _dWork->myvchaton = 1;
-        _dWork->opvchaton = 1;
-		_dWork->myvchat_send = 1;
-    }
+  if(bFourGame){
+	num = GFL_NET_GetConnectNum()-1;
+	MYDWC_DEBUGPRINT("VCTONl”%d\n",num);
+	if(num < 1){
+	  num = 1;
+	}
+	_dWork->myvchaton = 1;
+	_dWork->opvchaton = 1;
+	_dWork->myvchat_send = 1;
+  }
 #endif
-    
-	if( _dWork->isvchat==0 ){
-        switch( _dWork->vchatcodec ){
-          case VCHAT_G711_ULAW:
-            late = VCT_CODEC_G711_ULAW;
-            break;
-          case VCHAT_2BIT_ADPCM:
-            late = VCT_CODEC_2BIT_ADPCM;
-            break;
-          case VCHAT_3BIT_ADPCM:
-            late = VCT_CODEC_3BIT_ADPCM;
-            break;
-          case VCHAT_4BIT_ADPCM:		
-            late = VCT_CODEC_4BIT_ADPCM;
-            break;
-          default:
-     //       if(!bFourGame){
-                late = VCT_CODEC_4BIT_ADPCM;   //  DP
-       //     }
-         //   else{
-           //     late = VCT_CODEC_3BIT_ADPCM;
-//            }
-            break;
-        }
-        myvct_init( heapID, late, num );
-        myvct_setDisconnectCallback( vct_endcallback );
-        _dWork->isvchat = 1;
-    }
+
+  if( _dWork->isvchat==0 ){
+	switch( _dWork->vchatcodec ){
+	case VCHAT_G711_ULAW:
+	  late = VCT_CODEC_G711_ULAW;
+	  break;
+	case VCHAT_2BIT_ADPCM:
+	  late = VCT_CODEC_2BIT_ADPCM;
+	  break;
+	case VCHAT_3BIT_ADPCM:
+	  late = VCT_CODEC_3BIT_ADPCM;
+	  break;
+	case VCHAT_4BIT_ADPCM:
+	  late = VCT_CODEC_4BIT_ADPCM;
+	  break;
+	default:
+	  //       if(!bFourGame){
+	  late = VCT_CODEC_4BIT_ADPCM;   //  DP
+	  //     }
+	  //   else{
+	  //     late = VCT_CODEC_3BIT_ADPCM;
+	  //            }
+	  break;
+	}
+	myvct_init( heapID, late, num );
+	myvct_setDisconnectCallback( vct_endcallback );
+	_dWork->isvchat = 1;
+  }
 }
 
 //==============================================================================
@@ -1679,27 +1681,27 @@ void GFL_NET_DWC_StartVChat(int heapID)
 //==============================================================================
 void GFL_NET_DWC_SetVchat(int codec)
 {
-	_dWork->vchatcodec = codec;
+  _dWork->vchatcodec = codec;
 
-	if( _dWork->isvchat ){
-		switch( _dWork->vchatcodec ){
-			case VCHAT_G711_ULAW:
-				myvct_setCodec( VCT_CODEC_G711_ULAW );
-			break;
-			case VCHAT_2BIT_ADPCM:
-				myvct_setCodec( VCT_CODEC_2BIT_ADPCM );
-			break;
-			case VCHAT_3BIT_ADPCM:
-				myvct_setCodec( VCT_CODEC_3BIT_ADPCM );
-			break;
-			case VCHAT_4BIT_ADPCM:		
-				myvct_setCodec( VCT_CODEC_4BIT_ADPCM );
-			break;
-			case VCHAT_8BIT_RAW:
-				myvct_setCodec( VCT_CODEC_8BIT_RAW );
-			break;
-		}
+  if( _dWork->isvchat ){
+	switch( _dWork->vchatcodec ){
+	case VCHAT_G711_ULAW:
+	  myvct_setCodec( VCT_CODEC_G711_ULAW );
+	  break;
+	case VCHAT_2BIT_ADPCM:
+	  myvct_setCodec( VCT_CODEC_2BIT_ADPCM );
+	  break;
+	case VCHAT_3BIT_ADPCM:
+	  myvct_setCodec( VCT_CODEC_3BIT_ADPCM );
+	  break;
+	case VCHAT_4BIT_ADPCM:
+	  myvct_setCodec( VCT_CODEC_4BIT_ADPCM );
+	  break;
+	case VCHAT_8BIT_RAW:
+	  myvct_setCodec( VCT_CODEC_8BIT_RAW );
+	  break;
 	}
+  }
 }
 
 //==============================================================================
@@ -1712,11 +1714,11 @@ void GFL_NET_DWC_SetVchat(int codec)
 
 void GFL_NET_DWC_StopVChat(void)
 {
-    myvct_free();
-    if(_dWork != NULL){
-	    _dWork->isvchat = 0;
-    	_dWork->backupBitmap = 0;
-    }
+  myvct_free();
+  if(_dWork != NULL){
+	_dWork->isvchat = 0;
+	_dWork->backupBitmap = 0;
+  }
 }
 
 //==============================================================================
@@ -1729,13 +1731,13 @@ void GFL_NET_DWC_StopVChat(void)
 
 void mydwc_pausevchat(BOOL bPause)
 {
-    if(bPause){
-        myvct_DelConference(DWC_GetMyAID());
-        _dWork->pausevchat = TRUE;
-    }
-    else{
-        _dWork->pausevchat = FALSE;
-    }
+  if(bPause){
+	myvct_DelConference(DWC_GetMyAID());
+	_dWork->pausevchat = TRUE;
+  }
+  else{
+	_dWork->pausevchat = FALSE;
+  }
 }
 
 
@@ -1749,55 +1751,55 @@ void mydwc_pausevchat(BOOL bPause)
 //==============================================================================
 int GFL_NET_DWC_ErrorType(int code, int type)
 {
-	int code100 = code / 100;
-	int code1000 = code / 1000;
+  int code100 = code / 100;
+  int code1000 = code / 1000;
 
-    if( code == 20101 ) return 1;
-	if( code1000 == 23 ) return 1;
-	if( code == 20108 ) return 2;
-	if( code == 20110 ) return 3;
-	if( code100 == 512 ) return 4;
-	if( code100 == 500 ) return 5;
-    if( code == 51103 ) return 7;
-	if( code100 == 510 ) return 6;
-	if( code100 == 511 ) return 6;
-	if( code100 == 513 ) return 6;
-	if( code >= 52000 && code <= 52003 ) return 8;
-	if( code >= 52100 && code <= 52103 ) return 8;
-	if( code >= 52200 && code <= 52203 ) return 8;
-	if( code == 80430 ) return 9;
+  if( code == 20101 ) return 1;
+  if( code1000 == 23 ) return 1;
+  if( code == 20108 ) return 2;
+  if( code == 20110 ) return 3;
+  if( code100 == 512 ) return 4;
+  if( code100 == 500 ) return 5;
+  if( code == 51103 ) return 7;
+  if( code100 == 510 ) return 6;
+  if( code100 == 511 ) return 6;
+  if( code100 == 513 ) return 6;
+  if( code >= 52000 && code <= 52003 ) return 8;
+  if( code >= 52100 && code <= 52103 ) return 8;
+  if( code >= 52200 && code <= 52203 ) return 8;
+  if( code == 80430 ) return 9;
 
-    if( code1000 == 20 ) return 0;
-	if( code100 == 520 ) return 0;
-	if( code100 == 521 ) return 0;
-	if( code100 == 522 ) return 0;
-	if( code100 == 523 ) return 0;
-	if( code100 == 530 ) return 0;
-	if( code100 == 531 ) return 0;
-	if( code100 == 532 ) return 0;
+  if( code1000 == 20 ) return 0;
+  if( code100 == 520 ) return 0;
+  if( code100 == 521 ) return 0;
+  if( code100 == 522 ) return 0;
+  if( code100 == 523 ) return 0;
+  if( code100 == 530 ) return 0;
+  if( code100 == 531 ) return 0;
+  if( code100 == 532 ) return 0;
 
-    if( code < 10000 ) return 14; // ƒGƒ‰[ƒR[ƒh‚ª‚P‚O‚O‚O‚OˆÈ‰º‚Ìê‡‚ÍAƒGƒ‰[ƒR[ƒh‚Ì•\¦‚Ì•K—v‚ª‚È‚¢B
+  if( code < 10000 ) return 14; // ƒGƒ‰[ƒR[ƒh‚ª‚P‚O‚O‚O‚OˆÈ‰º‚Ìê‡‚ÍAƒGƒ‰[ƒR[ƒh‚Ì•\¦‚Ì•K—v‚ª‚È‚¢B
 
-	if( code1000 == 31 ) return 12; // ƒ_ƒEƒ“ƒ[ƒh¸”s
-    // ‚»‚Ì‘¼‚ÌƒGƒ‰[‚ÍTYPE‚Å”»’f
+  if( code1000 == 31 ) return 12; // ƒ_ƒEƒ“ƒ[ƒh¸”s
+  // ‚»‚Ì‘¼‚ÌƒGƒ‰[‚ÍTYPE‚Å”»’f
 
-    switch(type){
-      case DWC_ETYPE_NO_ERROR:
-      case DWC_ETYPE_LIGHT:
-      case DWC_ETYPE_SHOW_ERROR:
-        return 11;
-      case DWC_ETYPE_SHUTDOWN_FM:
-      case DWC_ETYPE_SHUTDOWN_GHTTP:
-      case DWC_ETYPE_SHUTDOWN_ND:
-      case DWC_ETYPE_DISCONNECT:
-        return 10;
-      default:
-        GF_ASSERT(0); //DWC‚ª•Ô‚·type‚ª‘‚¦‚Ä‚¢‚é‚È‚çŒ©’¼‚µ‚ª•K—v
-        break;
-      case DWC_ETYPE_FATAL:
-        return 15;
-    }
-    return -1;
+  switch(type){
+  case DWC_ETYPE_NO_ERROR:
+  case DWC_ETYPE_LIGHT:
+  case DWC_ETYPE_SHOW_ERROR:
+	return 11;
+  case DWC_ETYPE_SHUTDOWN_FM:
+  case DWC_ETYPE_SHUTDOWN_GHTTP:
+  case DWC_ETYPE_SHUTDOWN_ND:
+  case DWC_ETYPE_DISCONNECT:
+	return 10;
+  default:
+	GF_ASSERT(0); //DWC‚ª•Ô‚·type‚ª‘‚¦‚Ä‚¢‚é‚È‚çŒ©’¼‚µ‚ª•K—v
+	break;
+  case DWC_ETYPE_FATAL:
+	return 15;
+  }
+  return -1;
 }
 
 //==============================================================================
@@ -1809,34 +1811,34 @@ int GFL_NET_DWC_ErrorType(int code, int type)
 //==============================================================================
 int mydwc_disconnect( int sync )
 {
-	if( sync == 0 ){
-        MYDWC_DEBUGPRINT(" mydwc_disconnect state %d \n",_dWork->state);
-		switch( _dWork->state )	{
-          case MDSTATE_MATCHING:   // k.ohno 06.07.08  ’Ç‰Á
-          case MDSTATE_MATCHED:
-          case MDSTATE_PLAYING:
-            if( _dWork->isvchat ){
-                MYDWC_DEBUGPRINT("ƒ{ƒCƒXƒ`ƒƒƒbƒg‰Ò“­’† ~‚ß‚é\n");
-                myvct_endConnection();
-            }
-            _dWork->state = MDSTATE_DISCONNECTTING;
-            break;
-          case MDSTATE_LOGIN:     //e‹@Ø’f‚É“®‚«‚ğ‡‚í‚¹‚é‚½‚ß‚É’Ç‰Á k.ohno 06.07.04
-          case MDSTATE_ERROR_DISCONNECT:
-          case MDSTATE_DISCONNECT:
-          case MDSTATE_TIMEOUT:
-            return 1;
-        }
+  if( sync == 0 ){
+	MYDWC_DEBUGPRINT(" mydwc_disconnect state %d \n",_dWork->state);
+	switch( _dWork->state )	{
+	case MDSTATE_MATCHING:   // k.ohno 06.07.08  ’Ç‰Á
+	case MDSTATE_MATCHED:
+	case MDSTATE_PLAYING:
+	  if( _dWork->isvchat ){
+		MYDWC_DEBUGPRINT("ƒ{ƒCƒXƒ`ƒƒƒbƒg‰Ò“­’† ~‚ß‚é\n");
+		myvct_endConnection();
+	  }
+	  _dWork->state = MDSTATE_DISCONNECTTING;
+	  break;
+	case MDSTATE_LOGIN:     //e‹@Ø’f‚É“®‚«‚ğ‡‚í‚¹‚é‚½‚ß‚É’Ç‰Á k.ohno 06.07.04
+	case MDSTATE_ERROR_DISCONNECT:
+	case MDSTATE_DISCONNECT:
+	case MDSTATE_TIMEOUT:
+	  return 1;
 	}
-    else {
-		switch( _dWork->state ) {
-            case MDSTATE_LOGIN:     //e‹@Ø’f‚É“®‚«‚ğ‡‚í‚¹‚é‚½‚ß‚É’Ç‰Á k.ohno 06.07.04
-			case MDSTATE_DISCONNECT:
-			case MDSTATE_TIMEOUT:
-				return 1;
-		}		
+  }
+  else {
+	switch( _dWork->state ) {
+	case MDSTATE_LOGIN:     //e‹@Ø’f‚É“®‚«‚ğ‡‚í‚¹‚é‚½‚ß‚É’Ç‰Á k.ohno 06.07.04
+	case MDSTATE_DISCONNECT:
+	case MDSTATE_TIMEOUT:
+	  return 1;
 	}
-	return 0;
+  }
+  return 0;
 }
 
 //==============================================================================
@@ -1848,14 +1850,14 @@ int mydwc_disconnect( int sync )
 //==============================================================================
 int mydwc_returnLobby()
 {
-    if( _dWork->state == MDSTATE_DISCONNECT || _dWork->state == MDSTATE_TIMEOUT || _dWork->state == MDSTATE_LOGIN) {
-//        _dWork->op_aid = -1;
-        _dWork->state = MDSTATE_LOGIN;
-        _dWork->newFriendConnect = -1;
-        GFL_NET_DWC_ResetClientBlock();
-        return 1;
-	 }
-	 return 0;
+  if( _dWork->state == MDSTATE_DISCONNECT || _dWork->state == MDSTATE_TIMEOUT || _dWork->state == MDSTATE_LOGIN) {
+	//        _dWork->op_aid = -1;
+	_dWork->state = MDSTATE_LOGIN;
+	_dWork->newFriendConnect = -1;
+	GFL_NET_DWC_ResetClientBlock();
+	return 1;
+  }
+  return 0;
 }
 
 //==============================================================================
@@ -1867,9 +1869,9 @@ int mydwc_returnLobby()
 //==============================================================================
 void mydwc_setFetalErrorCallback( void (*func)(int) )
 {
-    if(_dWork){
-        _dWork->fetalErrorCallback = func;
-    }
+  if(_dWork){
+	_dWork->fetalErrorCallback = func;
+  }
 }
 
 
@@ -1885,11 +1887,11 @@ void mydwc_setFetalErrorCallback( void (*func)(int) )
 
 void mydwc_Logout(void)
 {
-    MYDWC_DEBUGPRINT("----------------------ok LOGOUT  \n");
-    DWC_ShutdownFriendsMatch();
-    DWC_CleanupInet();
-    GFL_NET_DWC_StopVChat();
-    mydwc_free();
+  MYDWC_DEBUGPRINT("----------------------ok LOGOUT  \n");
+  DWC_ShutdownFriendsMatch();
+  DWC_CleanupInet();
+  GFL_NET_DWC_StopVChat();
+  mydwc_free();
 }
 
 //-------------------------------------------------------------------------------
@@ -1902,21 +1904,21 @@ void mydwc_Logout(void)
 
 static void mydwc_updateFriendInfo( void )
 {
-	int i;
-    
-	for(i = 0; i < FRIENDINFO_UPDATA_PERFRAME; i++)
-	{
-		int index = _dWork->friendupdate_index % FRIENDLIST_MAXSIZE;
-		int size;
+  int i;
 
-        if( DWC_IsBuddyFriendData( &(_dWork->keyList[index]) ) ){
-            _dWork->friend_status[index] = DWC_GetFriendStatusData(&_dWork->keyList[ index ],(char*)_dWork->friendinfo[index],&size);
+  for(i = 0; i < FRIENDINFO_UPDATA_PERFRAME; i++)
+  {
+	int index = _dWork->friendupdate_index % FRIENDLIST_MAXSIZE;
+	int size;
+
+	if( DWC_IsBuddyFriendData( &(_dWork->keyList[index]) ) ){
+	  _dWork->friend_status[index] = DWC_GetFriendStatusData(&_dWork->keyList[ index ],(char*)_dWork->friendinfo[index],&size);
 #ifdef PM_DEBUG
-            GF_ASSERT( (size <= MYDWC_STATUS_DATA_SIZE_MAX) || (size == -1));
+	  GF_ASSERT( (size <= MYDWC_STATUS_DATA_SIZE_MAX) || (size == -1));
 #endif
-		}
-		_dWork->friendupdate_index = (_dWork->friendupdate_index + 1);
 	}
+	_dWork->friendupdate_index = (_dWork->friendupdate_index + 1);
+  }
 }
 
 //==============================================================================
@@ -1929,10 +1931,10 @@ static void mydwc_updateFriendInfo( void )
 //==============================================================================
 BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size )
 {
-	MYDWC_DEBUGPRINT("upload status change(%p, %d)\n", data, size);
+  MYDWC_DEBUGPRINT("upload status change(%p, %d)\n", data, size);
 
-    GF_ASSERT(size < MYDWC_STATUS_DATA_SIZE_MAX);
-	return DWC_SetOwnStatusData( data, size );
+  GF_ASSERT(size < MYDWC_STATUS_DATA_SIZE_MAX);
+  return DWC_SetOwnStatusData( data, size );
 }
 
 //==============================================================================
@@ -1944,7 +1946,7 @@ BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size )
 //==============================================================================
 u8 *GFL_NET_DWC_GetFriendInfo( int index )
 {
-	return _dWork->friendinfo[index];
+  return _dWork->friendinfo[index];
 }
 
 //==============================================================================
@@ -1956,7 +1958,7 @@ u8 *GFL_NET_DWC_GetFriendInfo( int index )
 //==============================================================================
 u8 mydwc_getFriendStatus( int index )
 {
-	return _dWork->friend_status[index];
+  return _dWork->friend_status[index];
 }
 
 
@@ -1973,68 +1975,68 @@ static void NewClientCallback(int index, void* param);
 //==============================================================================
 int GFL_NET_DWC_StartGame( int target,int maxnum, BOOL bVCT )
 {
-    int ans,num = maxnum;
+  int ans,num = maxnum;
 
-    if(GFL_NET_DWC_GetSaving()){
-        return DWCRAP_STARTGAME_FIRSTSAVE;
-    }
-    
-    if( _dWork->state != MDSTATE_LOGIN ){
-        _dWork->setupErrorCount++;
-        if(_dWork->setupErrorCount>120){
-            return DWCRAP_STARTGAME_FAILED;
-        }
-        return DWCRAP_STARTGAME_NOTSTATE;
-    }
-    mydwc_releaseRecvBuffAll();
-    _dWork->BlockUse_BackupBitmap = 0; //080703 ohno
-	_dWork->closedflag = TRUE;	// 080602	tomoya
-	_dWork->friendindex = target;
-    _dWork->maxConnectNum = maxnum;
-//    OHNO_PRINT("max %d\n",_dWork->maxConnectNum);
-    if(bVCT){
-        num=2;
-    }
-    _dWork->bConnectCallback = TRUE;
-    if ( target < 0 ){
-        ans = DWC_SetupGameServer((u8)num, SetupGameServerCallback, NULL, NewClientCallback, NULL);
-	    _dWork->matching_type = MDTYPE_PARENT;
-    } else {
-        ans = DWC_ConnectToGameServerAsync(target,ConnectToGameServerCallback,NULL,NewClientCallback,NULL);
-        _dWork->matching_type = MDTYPE_CHILD;
-    }
-    if(!ans){
-        _dWork->setupErrorCount++;
-        if(_dWork->setupErrorCount>120){
-            return DWCRAP_STARTGAME_FAILED;
-        }
-        return DWCRAP_STARTGAME_RETRY;
-    }
-    _dWork->setupErrorCount = 0;//ƒŠƒZƒbƒg‚µ‚Ä‚¨‚­
-                              
-	{
-		int i;
-		for(i=0;i<maxnum; i++){
-			mydwc_allocRecvBuff(i);
-		}
+  if(GFL_NET_DWC_GetSaving()){
+	return DWCRAP_STARTGAME_FIRSTSAVE;
+  }
+
+  if( _dWork->state != MDSTATE_LOGIN ){
+	_dWork->setupErrorCount++;
+	if(_dWork->setupErrorCount>120){
+	  return DWCRAP_STARTGAME_FAILED;
 	}
-    _dWork->state = MDSTATE_MATCHING;
-  
-    // ‘—MƒR[ƒ‹ƒoƒbƒN‚Ìİ’è	
-    DWC_SetUserSendCallback( SendDoneCallback ); 
+	return DWCRAP_STARTGAME_NOTSTATE;
+  }
+  mydwc_releaseRecvBuffAll();
+  _dWork->BlockUse_BackupBitmap = 0; //080703 ohno
+  _dWork->closedflag = TRUE;	// 080602	tomoya
+  _dWork->friendindex = target;
+  _dWork->maxConnectNum = maxnum;
+  //    OHNO_PRINT("max %d\n",_dWork->maxConnectNum);
+  if(bVCT){
+	num=2;
+  }
+  _dWork->bConnectCallback = TRUE;
+  if ( target < 0 ){
+	ans = DWC_SetupGameServer((u8)num, SetupGameServerCallback, NULL, NewClientCallback, NULL);
+	_dWork->matching_type = MDTYPE_PARENT;
+  } else {
+	ans = DWC_ConnectToGameServerAsync(target,ConnectToGameServerCallback,NULL,NewClientCallback,NULL);
+	_dWork->matching_type = MDTYPE_CHILD;
+  }
+  if(!ans){
+	_dWork->setupErrorCount++;
+	if(_dWork->setupErrorCount>120){
+	  return DWCRAP_STARTGAME_FAILED;
+	}
+	return DWCRAP_STARTGAME_RETRY;
+  }
+  _dWork->setupErrorCount = 0;//ƒŠƒZƒbƒg‚µ‚Ä‚¨‚­
 
-    // óMƒR[ƒ‹ƒoƒbƒN‚Ìİ’è	
-    DWC_SetUserRecvCallback( UserRecvCallback ); 
-    
-    // ƒRƒlƒNƒVƒ‡ƒ“ƒNƒ[ƒYƒR[ƒ‹ƒoƒbƒN‚ğİ’è
-    DWC_SetConnectionClosedCallback(ConnectionClosedCallback, NULL);
-    
-    // ƒ^ƒCƒ€ƒAƒEƒgƒR[ƒ‹ƒoƒbƒN‚Ìİ’è
-    DWC_SetUserRecvTimeoutCallback( recvTimeoutCallback );
-    
-    _dWork->sendbufflag = 0;
-    
-    return DWCRAP_STARTGAME_OK;    
+  {
+	int i;
+	for(i=0;i<maxnum; i++){
+	  mydwc_allocRecvBuff(i);
+	}
+  }
+  _dWork->state = MDSTATE_MATCHING;
+
+  // ‘—MƒR[ƒ‹ƒoƒbƒN‚Ìİ’è
+  DWC_SetUserSendCallback( SendDoneCallback );
+
+  // óMƒR[ƒ‹ƒoƒbƒN‚Ìİ’è
+  DWC_SetUserRecvCallback( UserRecvCallback );
+
+  // ƒRƒlƒNƒVƒ‡ƒ“ƒNƒ[ƒYƒR[ƒ‹ƒoƒbƒN‚ğİ’è
+  DWC_SetConnectionClosedCallback(ConnectionClosedCallback, NULL);
+
+  // ƒ^ƒCƒ€ƒAƒEƒgƒR[ƒ‹ƒoƒbƒN‚Ìİ’è
+  DWC_SetUserRecvTimeoutCallback( recvTimeoutCallback );
+
+  _dWork->sendbufflag = 0;
+
+  return DWCRAP_STARTGAME_OK;
 }
 
 //==============================================================================
@@ -2047,172 +2049,172 @@ int GFL_NET_DWC_StartGame( int target,int maxnum, BOOL bVCT )
 //==============================================================================
 int GFL_NET_DWC_GetFriendIndex(void)
 {
-    if(_dWork){
-        // ¡Ú‘±‚µ‚Ä‚¢‚é—F’B‚ÌƒtƒŒƒ“ƒhƒŠƒXƒgã‚ÌˆÊ’u‚ğ•Ô‚µ‚Ü‚·B
-        return _dWork->friendindex;
-    }
-    return -1;
+  if(_dWork){
+	// ¡Ú‘±‚µ‚Ä‚¢‚é—F’B‚ÌƒtƒŒƒ“ƒhƒŠƒXƒgã‚ÌˆÊ’u‚ğ•Ô‚µ‚Ü‚·B
+	return _dWork->friendindex;
+  }
+  return -1;
 }
 
 /*---------------------------------------------------------------------------*
   ƒQ[ƒ€ƒT[ƒo‹N“®ƒR[ƒ‹ƒoƒbƒNŠÖ”
  *---------------------------------------------------------------------------*/
 static void SetupGameServerCallback(DWCError error,
-                                    BOOL cancel,
-                                    BOOL self,
-                                    BOOL isServer,
-                                    int  index,
-                                    void* param)
+									BOOL cancel,
+									BOOL self,
+									BOOL isServer,
+									int  index,
+									void* param)
 {
 #pragma unused(isServer, param)
-    BOOL bFriendOnly = FALSE;
+  BOOL bFriendOnly = FALSE;
 
-    _dWork->bConnectCallback = FALSE;
-    if (error == DWC_ERROR_NONE){
-        if (!cancel){
-            // ƒlƒbƒgƒ[ƒN‚ÉV‹KƒNƒ‰ƒCƒAƒ“ƒg‚ª‰Á‚í‚Á‚½
-            MYDWC_DEBUGPRINT("—F’B‚ªÚ‘±‚µ‚Ä‚«‚Ü‚µ‚½BiƒCƒ“ƒfƒbƒNƒX%dj\n", index);
-			// Ú‘±‚ªŠm—§‚µ‚½‚Æ‚«‚Ì‚İA
-			// ‘ã“ü‚·‚éŒ`‚ÉC³
-			// 080624
-			// BTS’ÊM630‚Ì‘Îˆ	tomoya 
-//			_dWork->friendindex = index;
+  _dWork->bConnectCallback = FALSE;
+  if (error == DWC_ERROR_NONE){
+	if (!cancel){
+	  // ƒlƒbƒgƒ[ƒN‚ÉV‹KƒNƒ‰ƒCƒAƒ“ƒg‚ª‰Á‚í‚Á‚½
+	  MYDWC_DEBUGPRINT("—F’B‚ªÚ‘±‚µ‚Ä‚«‚Ü‚µ‚½BiƒCƒ“ƒfƒbƒNƒX%dj\n", index);
+	  // Ú‘±‚ªŠm—§‚µ‚½‚Æ‚«‚Ì‚İA
+	  // ‘ã“ü‚·‚éŒ`‚ÉC³
+	  // 080624
+	  // BTS’ÊM630‚Ì‘Îˆ	tomoya
+	  //			_dWork->friendindex = index;
 
-//            if(CommLocalIsWiFiFriendGroup(CommStateGetServiceNo()) && (index==-1)){
-            if(_dWork->bWiFiFriendGroup && (index == -1)){
-                bFriendOnly = TRUE;
-            }
+	  //            if(CommLocalIsWiFiFriendGroup(CommStateGetServiceNo()) && (index==-1)){
+	  if(_dWork->bWiFiFriendGroup && (index == -1)){
+		bFriendOnly = TRUE;
+	  }
 
-            if(_dWork->connectModeCheck){
-                if(FALSE == _dWork->connectModeCheck(index,GFL_NET_GetWork())){
-                    OS_TPrintf("Ø’fWIFIP2PModeCheck \n");
-                    bFriendOnly = TRUE;
-                }
-            }
-            
-            if (_dWork->blockClient || bFriendOnly){
-                u32 bitmap = ~_dWork->BlockUse_BackupBitmap & DWC_GetAIDBitmap();
-				u32 aidbitmap = DWC_GetAIDBitmap();	// (DWC_CloseConnectionHardBitmap‚Ì‚È‚©‚ÅAClosedCallback‚ª‚æ‚Î‚ê‚é‚½‚ß)
-                if(bitmap){
-                    DWC_CloseConnectionHardBitmap(&bitmap);
-                    MYDWC_DEBUGPRINT("ó‚¯•t‚¯‚½q‹@‚ğØ’f %x %x\n",bitmap,_dWork->BlockUse_BackupBitmap);
-                    if((bitmap ^ aidbitmap) == 0x01){ //©•ª‚µ‚©‚¢‚È‚©‚Á‚½‚ç©•ªCANCEL
-                        MYDWC_DEBUGPRINT("©•ªƒLƒƒƒ“ƒZƒ‹ %x %x \n",bitmap,aidbitmap);
-                        _dWork->state = MDSTATE_CANCEL;
-                    }
-                    return;
-                }
-            }
+	  if(_dWork->connectModeCheck){
+		if(FALSE == _dWork->connectModeCheck(index,GFL_NET_GetWork())){
+		  OS_TPrintf("Ø’fWIFIP2PModeCheck \n");
+		  bFriendOnly = TRUE;
+		}
+	  }
 
-			// Ú‘±‚ªŠm—§‚µ‚½‚Æ‚«‚Ì‚İA
-			// ‘ã“ü‚·‚éŒ`‚ÉC³
-			// 080624
-			// BTS’ÊM630‚Ì‘Îˆ	tomoya 
-			_dWork->friendindex = index;
+	  if (_dWork->blockClient || bFriendOnly){
+		u32 bitmap = ~_dWork->BlockUse_BackupBitmap & DWC_GetAIDBitmap();
+		u32 aidbitmap = DWC_GetAIDBitmap();	// (DWC_CloseConnectionHardBitmap‚Ì‚È‚©‚ÅAClosedCallback‚ª‚æ‚Î‚ê‚é‚½‚ß)
+		if(bitmap){
+		  DWC_CloseConnectionHardBitmap(&bitmap);
+		  MYDWC_DEBUGPRINT("ó‚¯•t‚¯‚½q‹@‚ğØ’f %x %x\n",bitmap,_dWork->BlockUse_BackupBitmap);
+		  if((bitmap ^ aidbitmap) == 0x01){ //©•ª‚µ‚©‚¢‚È‚©‚Á‚½‚ç©•ªCANCEL
+			MYDWC_DEBUGPRINT("©•ªƒLƒƒƒ“ƒZƒ‹ %x %x \n",bitmap,aidbitmap);
+			_dWork->state = MDSTATE_CANCEL;
+		  }
+		  return;
+		}
+	  }
+
+	  // Ú‘±‚ªŠm—§‚µ‚½‚Æ‚«‚Ì‚İA
+	  // ‘ã“ü‚·‚éŒ`‚ÉC³
+	  // 080624
+	  // BTS’ÊM630‚Ì‘Îˆ	tomoya
+	  _dWork->friendindex = index;
 
 
-            _dWork->BlockUse_BackupBitmap = DWC_GetAIDBitmap();
-            if(_dWork->BlockUse_BackupBitmap==0x01){ //©•ª‚¾‚¯‚Â‚È‚ª‚Á‚½‚Æ‚«‚É‚Íƒ^ƒCƒ€ƒAƒEƒg‚É‚·‚é
-                _dWork->state = MDSTATE_CANCEL;
-                MYDWC_DEBUGPRINT("©•ªƒ^ƒCƒ€ƒAƒEƒg %x\n",_dWork->BlockUse_BackupBitmap);
-            }
-            else{
-                // ƒoƒbƒtƒ@‚ÌŠm•Û
-                setConnectionBuffer(index);
-            }
-        }
-        else 
-        {
-            if (self){
-                // ©•ª‚ªƒ}ƒbƒ`ƒ“ƒO‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½
-                MYDWC_DEBUGPRINT("ƒ}ƒbƒ`ƒ“ƒO‚ÌƒLƒƒƒ“ƒZƒ‹‚ªŠ®—¹‚µ‚Ü‚µ‚½B\n\n");
-	            // ƒƒOƒCƒ“Œãó‘Ô‚É–ß‚é
-//				s_dwcstate = MYDWCSTATE_MATCH_CANCELFINISH;  
-            }
-            else {
-                // Œq‚¢‚Å‚¢‚½q‹@‚ªAÚ‘±‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½B
-                MYDWC_DEBUGPRINT("Client (friendListIndex = %d) canceled matching.\n\n", index);
-                // Œq‚¢‚Å‚«‚½q‹@‚ª‚¢‚È‚­‚È‚Á‚½B2006.7.3 yoshihara
-                _dWork->newFriendConnect = -1;
-            }
-        }
-    }
-    else {
-        // ƒGƒ‰[‚ª”­¶‚µ‚½BƒGƒ‰[ƒR[ƒh‚ÍAstepŠÖ”‚Ì’†‚ÅE‚¤B
-        MYDWC_DEBUGPRINT("SetupGame server error occured. %d\n\n", error);
+	  _dWork->BlockUse_BackupBitmap = DWC_GetAIDBitmap();
+	  if(_dWork->BlockUse_BackupBitmap==0x01){ //©•ª‚¾‚¯‚Â‚È‚ª‚Á‚½‚Æ‚«‚É‚Íƒ^ƒCƒ€ƒAƒEƒg‚É‚·‚é
+		_dWork->state = MDSTATE_CANCEL;
+		MYDWC_DEBUGPRINT("©•ªƒ^ƒCƒ€ƒAƒEƒg %x\n",_dWork->BlockUse_BackupBitmap);
+	  }
+	  else{
+		// ƒoƒbƒtƒ@‚ÌŠm•Û
+		setConnectionBuffer(index);
+	  }
+	}
+	else
+	{
+	  if (self){
+		// ©•ª‚ªƒ}ƒbƒ`ƒ“ƒO‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½
+		MYDWC_DEBUGPRINT("ƒ}ƒbƒ`ƒ“ƒO‚ÌƒLƒƒƒ“ƒZƒ‹‚ªŠ®—¹‚µ‚Ü‚µ‚½B\n\n");
+		// ƒƒOƒCƒ“Œãó‘Ô‚É–ß‚é
+		//				s_dwcstate = MYDWCSTATE_MATCH_CANCELFINISH;
+	  }
+	  else {
+		// Œq‚¢‚Å‚¢‚½q‹@‚ªAÚ‘±‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½B
+		MYDWC_DEBUGPRINT("Client (friendListIndex = %d) canceled matching.\n\n", index);
+		// Œq‚¢‚Å‚«‚½q‹@‚ª‚¢‚È‚­‚È‚Á‚½B2006.7.3 yoshihara
+		_dWork->newFriendConnect = -1;
+	  }
+	}
+  }
+  else {
+	// ƒGƒ‰[‚ª”­¶‚µ‚½BƒGƒ‰[ƒR[ƒh‚ÍAstepŠÖ”‚Ì’†‚ÅE‚¤B
+	MYDWC_DEBUGPRINT("SetupGame server error occured. %d\n\n", error);
 
-//        s_dwcstate = MYDWCSTATE_MATCH_CANCELFINISH; 
-    }
+	//        s_dwcstate = MYDWCSTATE_MATCH_CANCELFINISH;
+  }
 }
 
 /*---------------------------------------------------------------------------*
   ƒQ[ƒ€ƒT[ƒoÚ‘±ƒR[ƒ‹ƒoƒbƒNŠÖ”
  *---------------------------------------------------------------------------*/
 static void ConnectToGameServerCallback(DWCError error,
-                                        BOOL cancel,
-                                        BOOL self,
-                                        BOOL isServer,
-                                        int  index,
-                                        void* param)
+										BOOL cancel,
+										BOOL self,
+										BOOL isServer,
+										int  index,
+										void* param)
 {
 #pragma unused(param)
-    _dWork->bConnectCallback = FALSE;
-    if (error == DWC_ERROR_NONE){
-        if (!cancel){
+  _dWork->bConnectCallback = FALSE;
+  if (error == DWC_ERROR_NONE){
+	if (!cancel){
 
-            if (self){
-                // ©•ª‚ªƒQ[ƒ€ƒT[ƒo‚Æ‚»‚±‚É‚Å‚«‚Ä‚¢‚éƒlƒbƒgƒ[ƒN‚Ö‚ÌÚ‘±‚É
-                // ¬Œ÷‚µ‚½ê‡
-                MYDWC_DEBUGPRINT("Ú‘±‚É¬Œ÷‚µ‚Ü‚µ‚½\n");
-            }
-            else {
-                // ƒlƒbƒgƒ[ƒN‚ÉV‹KƒNƒ‰ƒCƒAƒ“ƒg‚ª‰Á‚í‚Á‚½ê‡B
-                // “ñl‘ÎíŒÀ’è‚È‚Ì‚ÅA‚±‚±‚É‚Í‚±‚È‚¢‚Í‚¸B
-                MYDWC_DEBUGPRINT("V‹K‚É‚Â‚È‚ª‚è‚Ü‚µ‚½\n");
-            }
-            // óMƒoƒbƒtƒ@ƒZƒbƒg
-            setConnectionBuffer(index);
-        }
-        else {
-            if (self){
-                // ©•ª‚ªƒ}ƒbƒ`ƒ“ƒO‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½
-                MYDWC_DEBUGPRINT("ƒLƒƒƒ“ƒZƒ‹‚ªŠ®—¹‚µ‚Ü‚µ‚½B\n\n");
-                // ƒƒOƒCƒ“Œãó‘Ô‚É–ß‚é
-//                s_dwcstate = MYDWCSTATE_MATCH_CANCELFINISH;  
-            }
-            else {
-                if (isServer){
-                    // ƒQ[ƒ€ƒT[ƒo‚ªƒ}ƒbƒ`ƒ“ƒO‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½
-                    MYDWC_DEBUGPRINT("e‚ªÚ‘±‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½\n\n");
-                    // ƒ}ƒbƒ`ƒ“ƒO‚ğI—¹‚µ‚ÄƒƒOƒCƒ“Œãó‘Ô‚É–ß‚é
-//                    s_dwcstate = MYDWCSTATE_MATCH_CANCELFINISH;
-                }
-                else {
-                    MYDWC_DEBUGPRINT("q‚ªÚ‘±‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½\n\n");
-                    // ‘¼‚ÌƒNƒ‰ƒCƒAƒ“ƒg‚ªƒ}ƒbƒ`ƒ“ƒO‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½B
-                    // “ñl‘Îí‚È‚ç‚±‚±‚É‚±‚È‚¢‚Í‚¸B
-                }
-            }
-        }
-    }
+	  if (self){
+		// ©•ª‚ªƒQ[ƒ€ƒT[ƒo‚Æ‚»‚±‚É‚Å‚«‚Ä‚¢‚éƒlƒbƒgƒ[ƒN‚Ö‚ÌÚ‘±‚É
+		// ¬Œ÷‚µ‚½ê‡
+		MYDWC_DEBUGPRINT("Ú‘±‚É¬Œ÷‚µ‚Ü‚µ‚½\n");
+	  }
+	  else {
+		// ƒlƒbƒgƒ[ƒN‚ÉV‹KƒNƒ‰ƒCƒAƒ“ƒg‚ª‰Á‚í‚Á‚½ê‡B
+		// “ñl‘ÎíŒÀ’è‚È‚Ì‚ÅA‚±‚±‚É‚Í‚±‚È‚¢‚Í‚¸B
+		MYDWC_DEBUGPRINT("V‹K‚É‚Â‚È‚ª‚è‚Ü‚µ‚½\n");
+	  }
+	  // óMƒoƒbƒtƒ@ƒZƒbƒg
+	  setConnectionBuffer(index);
+	}
+	else {
+	  if (self){
+		// ©•ª‚ªƒ}ƒbƒ`ƒ“ƒO‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½
+		MYDWC_DEBUGPRINT("ƒLƒƒƒ“ƒZƒ‹‚ªŠ®—¹‚µ‚Ü‚µ‚½B\n\n");
+		// ƒƒOƒCƒ“Œãó‘Ô‚É–ß‚é
+		//                s_dwcstate = MYDWCSTATE_MATCH_CANCELFINISH;
+	  }
+	  else {
+		if (isServer){
+		  // ƒQ[ƒ€ƒT[ƒo‚ªƒ}ƒbƒ`ƒ“ƒO‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½
+		  MYDWC_DEBUGPRINT("e‚ªÚ‘±‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½\n\n");
+		  // ƒ}ƒbƒ`ƒ“ƒO‚ğI—¹‚µ‚ÄƒƒOƒCƒ“Œãó‘Ô‚É–ß‚é
+		  //                    s_dwcstate = MYDWCSTATE_MATCH_CANCELFINISH;
+		}
+		else {
+		  MYDWC_DEBUGPRINT("q‚ªÚ‘±‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½\n\n");
+		  // ‘¼‚ÌƒNƒ‰ƒCƒAƒ“ƒg‚ªƒ}ƒbƒ`ƒ“ƒO‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚½B
+		  // “ñl‘Îí‚È‚ç‚±‚±‚É‚±‚È‚¢‚Í‚¸B
+		}
+	  }
+	}
+  }
 #ifdef PM_DEBUG
-    else {
-        // ƒGƒ‰[‚ª”­¶‚µ‚½BƒGƒ‰[ƒR[ƒh‚ÍAstepŠÖ”‚Ì’†‚ÅE‚¤B
-        MYDWC_DEBUGPRINT("ConnectGame server error occured. %d\n\n", error);
-        {
-            int errorCode;
-            DWCErrorType myErrorType;
-            int ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
-            if( ret != 0 ){
-                MYDWC_DEBUGPRINT("error occured!(%d, %d, %d)\n", ret, errorCode, myErrorType);
-            }
-        }
-        // ‚à‚¤ˆê“xÅ‰‚©‚çB‚¨‚¢‚¨‚¢ˆ—
-//        s_dwcstate = MYDWCSTATE_MATCH_ERRORFINISH; 
-    }
+  else {
+	// ƒGƒ‰[‚ª”­¶‚µ‚½BƒGƒ‰[ƒR[ƒh‚ÍAstepŠÖ”‚Ì’†‚ÅE‚¤B
+	MYDWC_DEBUGPRINT("ConnectGame server error occured. %d\n\n", error);
+	{
+	  int errorCode;
+	  DWCErrorType myErrorType;
+	  int ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
+	  if( ret != 0 ){
+		MYDWC_DEBUGPRINT("error occured!(%d, %d, %d)\n", ret, errorCode, myErrorType);
+	  }
+	}
+	// ‚à‚¤ˆê“xÅ‰‚©‚çB‚¨‚¢‚¨‚¢ˆ—
+	//        s_dwcstate = MYDWCSTATE_MATCH_ERRORFINISH;
+  }
 #endif
 
-//    s_blocking = 0;
+  //    s_blocking = 0;
 }
 
 /*---------------------------------------------------------------------------*
@@ -2221,24 +2223,24 @@ static void ConnectToGameServerCallback(DWCError error,
 static void NewClientCallback(int index, void* param)
 {
 #pragma unused(param)
-    // V‹KÚ‘±ƒNƒ‰ƒCƒAƒ“ƒg‚ÌÚ‘±ˆ—‚ªI‚í‚é‚Ü‚Å‚ÍA
-    // ƒRƒ“ƒgƒ[ƒ‰‘€ì‚ğ‹Ö~‚·‚é
-//    s_blocking = 1;
+  // V‹KÚ‘±ƒNƒ‰ƒCƒAƒ“ƒg‚ÌÚ‘±ˆ—‚ªI‚í‚é‚Ü‚Å‚ÍA
+  // ƒRƒ“ƒgƒ[ƒ‰‘€ì‚ğ‹Ö~‚·‚é
+  //    s_blocking = 1;
 
-    _dWork->newFriendConnect = index;
-    
-    MYDWC_DEBUGPRINT("V‚µ‚¢l‚ªÚ‘±‚µ‚Ä‚«‚Ü‚µ‚½B\n");
-    if (index != -1){
-        MYDWC_DEBUGPRINT("—F’B[%d].\n", index);
-        //VCTƒJƒ“ƒtƒ@ƒŒƒ“ƒXŠJn
+  _dWork->newFriendConnect = index;
 
-    }
-    else {
-        MYDWC_DEBUGPRINT("—F’B‚Å‚Í‚È‚¢.\n");
-    }
-    if( _dWork->connectCallback ){  //
-        _dWork->connectCallback(index, _dWork->pConnectWork);
-    }
+  MYDWC_DEBUGPRINT("V‚µ‚¢l‚ªÚ‘±‚µ‚Ä‚«‚Ü‚µ‚½B\n");
+  if (index != -1){
+	MYDWC_DEBUGPRINT("—F’B[%d].\n", index);
+	//VCTƒJƒ“ƒtƒ@ƒŒƒ“ƒXŠJn
+
+  }
+  else {
+	MYDWC_DEBUGPRINT("—F’B‚Å‚Í‚È‚¢.\n");
+  }
+  if( _dWork->connectCallback ){  //
+	_dWork->connectCallback(index, _dWork->pConnectWork);
+  }
 }
 
 //==============================================================================
@@ -2250,7 +2252,7 @@ static void NewClientCallback(int index, void* param)
 //==============================================================================
 void mydwc_changeVADLevel(int d)
 {
-//	myvct_changeVADLevel(d);
+  //	myvct_changeVADLevel(d);
 }
 
 //==============================================================================
@@ -2262,77 +2264,77 @@ void mydwc_changeVADLevel(int d)
 //==============================================================================
 void mydwc_showFriendInfo()
 {
-	int i;
-	
-	if( !DWC_CheckHasProfile( _dWork->myUserData ) ) 
+  int i;
+
+  if( !DWC_CheckHasProfile( _dWork->myUserData ) )
+  {
+	DWCFriendData token;
+	u32 *ptr;
+
+	DWC_CreateExchangeToken( _dWork->myUserData, &token );
+	ptr = (u32*)&token;
+	MYDWC_DEBUGPRINT("‚Ü‚¾Aƒvƒƒtƒ@ƒCƒ‹‚h‚cæ“¾‘O\nƒƒOƒCƒ“‚h‚c:(%d, %d, %d)\n\n", ptr[0], ptr[1], ptr[2] );
+  }
+  else
+  {
+	// Ú‘±Ï‚İ
+	DWCFriendData token;
+	DWC_CreateExchangeToken( _dWork->myUserData, &token );
+	MYDWC_DEBUGPRINT("ƒvƒƒtƒ@ƒCƒ‹‚h‚c:%d \n\n", DWC_GetGsProfileId( _dWork->myUserData, &token ) );
+  }
+
+  for( i = 0; i < FRIENDLIST_MAXSIZE; i++ )
+  {
+	int ret = DWC_GetFriendDataType( &(_dWork->keyList[i]) );
+	u32 *ptr = (u32*)(&_dWork->keyList[i]);
+	switch(ret)
 	{
-		DWCFriendData token;
-		u32 *ptr;
+	case DWC_FRIENDDATA_LOGIN_ID:
+	  MYDWC_DEBUGPRINT("%d:ƒƒOƒCƒ“‚h‚c:(%d, %d, %d)",i, ptr[0], ptr[1], ptr[2] );
+	  break;
 
-		DWC_CreateExchangeToken( _dWork->myUserData, &token ); 
-		ptr = (u32*)&token;
-		MYDWC_DEBUGPRINT("‚Ü‚¾Aƒvƒƒtƒ@ƒCƒ‹‚h‚cæ“¾‘O\nƒƒOƒCƒ“‚h‚c:(%d, %d, %d)\n\n", ptr[0], ptr[1], ptr[2] );		
+	case DWC_FRIENDDATA_FRIEND_KEY:
+	  MYDWC_DEBUGPRINT("%d:ƒtƒŒƒ“ƒhƒR[ƒh:(%d)", i, DWC_GetGsProfileId( _dWork->myUserData, &_dWork->keyList[i] ) );
+	  break;
+
+	case DWC_FRIENDDATA_GS_PROFILE_ID:
+	  MYDWC_DEBUGPRINT("%d:ƒvƒƒtƒ@ƒCƒ‹‚h‚c:(%d)", i, DWC_GetGsProfileId( _dWork->myUserData, &_dWork->keyList[ i ]) );
+	  break;
+
+	case DWC_FRIENDDATA_NODATA:
+	default:
+	  MYDWC_DEBUGPRINT("%d:‹ó", i);
+	  break;
 	}
-	else
+
+	if( DWC_IsBuddyFriendData( &(_dWork->keyList[i]) ) )
 	{
-		// Ú‘±Ï‚İ	
-		DWCFriendData token;
-		DWC_CreateExchangeToken( _dWork->myUserData, &token );
-		MYDWC_DEBUGPRINT("ƒvƒƒtƒ@ƒCƒ‹‚h‚c:%d \n\n", DWC_GetGsProfileId( _dWork->myUserData, &token ) );	
+	  MYDWC_DEBUGPRINT("(—¼v‚¢)");
 	}
-	
-	for( i = 0; i < FRIENDLIST_MAXSIZE; i++ )
-	{
-		int ret = DWC_GetFriendDataType( &(_dWork->keyList[i]) );
-		u32 *ptr = (u32*)(&_dWork->keyList[i]);
-		switch(ret)
-		{
-			case DWC_FRIENDDATA_LOGIN_ID:
-				MYDWC_DEBUGPRINT("%d:ƒƒOƒCƒ“‚h‚c:(%d, %d, %d)",i, ptr[0], ptr[1], ptr[2] );
-				break;
-
-			case DWC_FRIENDDATA_FRIEND_KEY:
-				MYDWC_DEBUGPRINT("%d:ƒtƒŒƒ“ƒhƒR[ƒh:(%d)", i, DWC_GetGsProfileId( _dWork->myUserData, &_dWork->keyList[i] ) );			
-				break;
-
-			case DWC_FRIENDDATA_GS_PROFILE_ID:
-				MYDWC_DEBUGPRINT("%d:ƒvƒƒtƒ@ƒCƒ‹‚h‚c:(%d)", i, DWC_GetGsProfileId( _dWork->myUserData, &_dWork->keyList[ i ]) );
-				break;
-
-			case DWC_FRIENDDATA_NODATA:
-			default:
-				MYDWC_DEBUGPRINT("%d:‹ó", i);
-				break;
-		}			
-		
-		if( DWC_IsBuddyFriendData( &(_dWork->keyList[i]) ) )
-		{
-			MYDWC_DEBUGPRINT("(—¼v‚¢)");
-		}
-		MYDWC_DEBUGPRINT("\n");
-	}
+	MYDWC_DEBUGPRINT("\n");
+  }
 }
 
 
 // ‘—M‚µ‚½‚©‚Ç‚¤‚©‚ğ•Ô‚µ‚Ü‚·
 BOOL mydwc_IsSendVoiceAndInc(void)
 {
-    return myvct_IsSendVoiceAndInc();
+  return myvct_IsSendVoiceAndInc();
 }
 
 
 //==============================================================================
 /**
  * ƒ{ƒCƒXƒ`ƒƒƒbƒgó‘Ô‚©‚Ç‚¤‚©‚ğ•Ô‚µ‚Ü‚·   k.ohno 06.05.23 07.22 ƒtƒ‰ƒO‚ğŒğŠ·
- * @retval  TRUEcƒ{ƒCƒXƒ`ƒƒƒbƒg   FALSEcƒ{ƒCƒXƒ`ƒƒƒbƒg‚Å‚Í‚È‚¢ 
+ * @retval  TRUEcƒ{ƒCƒXƒ`ƒƒƒbƒg   FALSEcƒ{ƒCƒXƒ`ƒƒƒbƒg‚Å‚Í‚È‚¢
  */
 //==============================================================================
 BOOL mydwc_IsVChat(void)
 {
-    if(_dWork){
-        return _dWork->bVChat;
-    }
-    return FALSE;
+  if(_dWork){
+	return _dWork->bVChat;
+  }
+  return FALSE;
 }
 
 //==============================================================================
@@ -2343,10 +2345,10 @@ BOOL mydwc_IsVChat(void)
 //==============================================================================
 BOOL GFL_NET_DWC_IsNewPlayer(void)
 {
-    if(_dWork){
-        return _dWork->newFriendConnect;
-    }
-    return FALSE;
+  if(_dWork){
+	return _dWork->newFriendConnect;
+  }
+  return FALSE;
 }
 
 //==============================================================================
@@ -2357,9 +2359,9 @@ BOOL GFL_NET_DWC_IsNewPlayer(void)
 //==============================================================================
 void GFL_NET_DWC_ResetNewPlayer(void)
 {
-    if(_dWork){
-        _dWork->newFriendConnect = -1;
-    }
+  if(_dWork){
+	_dWork->newFriendConnect = -1;
+  }
 }
 
 //==============================================================================
@@ -2369,39 +2371,39 @@ void GFL_NET_DWC_ResetNewPlayer(void)
 //==============================================================================
 void GFL_NET_DWC_SetVChat(BOOL bVChat)
 {
-    _dWork->bVChat = bVChat;
+  _dWork->bVChat = bVChat;
 }
 
 static void sendPacket()
 {
-    int i;
-    
-	if( _dWork->sendbufflag || !_isSendableReliable() ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
-	{
-		_dWork->sendbufflag = 1;
-		*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_KEEPALIVE_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);;
+  int i;
 
-        DWC_SendReliableBitmap(DWC_GetAIDBitmap(), &(_dWork->sendBuffer[0]), 4);
-        clearTimeoutBuff();
-	}
+  if( _dWork->sendbufflag || !_isSendableReliable() ) // ‘—Mƒoƒbƒtƒ@‚ğƒ`ƒFƒbƒNB
+  {
+	_dWork->sendbufflag = 1;
+	*((u32*)&(_dWork->sendBuffer[0])) = MYDWC_KEEPALIVE_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);;
+
+	DWC_SendReliableBitmap(DWC_GetAIDBitmap(), &(_dWork->sendBuffer[0]), 4);
+	clearTimeoutBuff();
+  }
 }
 
 void mydwc_VChatPause()
 {
-	if( _dWork->myvchaton != 0 )
-	{
-		_dWork->myvchaton = 0;
-		sendPacket();
-	}
+  if( _dWork->myvchaton != 0 )
+  {
+	_dWork->myvchaton = 0;
+	sendPacket();
+  }
 }
 
 void mydwc_VChatRestart()
 {
-	if( _dWork->myvchaton != 1 )
-	{
-		_dWork->myvchaton = 1;
-		sendPacket();
-	}
+  if( _dWork->myvchaton != 1 )
+  {
+	_dWork->myvchaton = 1;
+	sendPacket();
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2413,17 +2415,17 @@ void mydwc_VChatRestart()
 //-----------------------------------------------------------------------------
 void mydwc_VChatSetSend( BOOL flag )
 {
-	_dWork->myvchat_send = flag;
+  _dWork->myvchat_send = flag;
 }
 BOOL mydwc_VChatGetSend( void )
 {
-	return _dWork->myvchat_send;
+  return _dWork->myvchat_send;
 }
 
 
 static void _blockCallback(void* param)
 {
-   _dWork->blockClient = _BLOCK_CALLBACK;
+  _dWork->blockClient = _BLOCK_CALLBACK;
 }
 
 //==============================================================================
@@ -2435,11 +2437,11 @@ static void _blockCallback(void* param)
 //==============================================================================
 int GFL_NET_DWC_SetClientBlock(void)
 {
-    if(_dWork->blockClient==_BLOCK_NONE){
-	    _dWork->blockClient = _BLOCK_START;
-        DWC_StopSCMatchingAsync(_blockCallback,NULL);
-    }
-    return (_dWork->blockClient==_BLOCK_CALLBACK);
+  if(_dWork->blockClient==_BLOCK_NONE){
+	_dWork->blockClient = _BLOCK_START;
+	DWC_StopSCMatchingAsync(_blockCallback,NULL);
+  }
+  return (_dWork->blockClient==_BLOCK_CALLBACK);
 }
 
 //==============================================================================
@@ -2451,7 +2453,7 @@ int GFL_NET_DWC_SetClientBlock(void)
 //==============================================================================
 void GFL_NET_DWC_ResetClientBlock(void)
 {
-    _dWork->blockClient = _BLOCK_NONE;
+  _dWork->blockClient = _BLOCK_NONE;
 }
 
 //==============================================================================
@@ -2463,7 +2465,7 @@ void GFL_NET_DWC_ResetClientBlock(void)
 //==============================================================================
 int GFL_NET_DWC_AnybodyEvalNum(void)
 {
-    return DWC_GetNumConnectionHost();
+  return DWC_GetNumConnectionHost();
 }
 
 
@@ -2473,51 +2475,51 @@ int GFL_NET_DWC_AnybodyEvalNum(void)
  *
  *	@param	flag	ƒtƒ‰ƒO		TRUE‚È‚çØ’fˆ—‚É‘JˆÚ‚·‚éi‰Šú’lTRUEj
  *
- * *Wi-FiƒNƒ‰ƒu‚Sl•åW‰æ–Ê—p‚Éì¬		
+ * *Wi-FiƒNƒ‰ƒu‚Sl•åW‰æ–Ê—p‚Éì¬
  */
 //-----------------------------------------------------------------------------
 void GFL_NET_DWC_SetClosedDisconnectFlag( BOOL flag )
 {
-	_dWork->closedflag = flag;
-	MYDWC_DEBUGPRINT( "_dWork->closedflag = %d\n", flag );
+  _dWork->closedflag = flag;
+  MYDWC_DEBUGPRINT( "_dWork->closedflag = %d\n", flag );
 }
 
 //==============================================================================
 /**
  * @brief   óMƒoƒbƒtƒ@ŠJ•ú
- * @param   
+ * @param
  * @retval  none
  */
 //==============================================================================
 
 void mydwc_releaseRecvBuff(int aid)
 {
-    if(_dWork->recvPtr[aid]!=NULL){
-        //OHNO_PRINT("_SetRecvBufferƒƒ‚ƒŠŠJ•ú %d\n",aid);
-        GFL_NET_Align32Free(_dWork->recvPtr[aid]);
-        _dWork->recvPtr[aid]=NULL;
-    }
+  if(_dWork->recvPtr[aid]!=NULL){
+	//OHNO_PRINT("_SetRecvBufferƒƒ‚ƒŠŠJ•ú %d\n",aid);
+	GFL_NET_Align32Free(_dWork->recvPtr[aid]);
+	_dWork->recvPtr[aid]=NULL;
+  }
 }
 
 //==============================================================================
 /**
  * @brief   óMƒoƒbƒtƒ@Šm•Û
- * @param   
+ * @param
  * @retval  none
  */
 //==============================================================================
 
 void mydwc_allocRecvBuff(int i)
 {
-    GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
+  GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
 
-    mydwc_releaseRecvBuff(i);
+  mydwc_releaseRecvBuff(i);
 
-    if(_dWork->recvPtr[i]==NULL){
-        NET_PRINT("_SetRecvBufferƒƒ‚ƒŠŠm•Û %d\n",i);
-        _dWork->recvPtr[i] = GFL_NET_Align32Alloc(pNetInit->wifiHeapID, SIZE_RECV_BUFFER);
-        DWC_SetRecvBuffer( i, _dWork->recvPtr[i], SIZE_RECV_BUFFER );
-    }
+  if(_dWork->recvPtr[i]==NULL){
+	NET_PRINT("_SetRecvBufferƒƒ‚ƒŠŠm•Û %d\n",i);
+	_dWork->recvPtr[i] = GFL_NET_Align32Alloc(pNetInit->wifiHeapID, SIZE_RECV_BUFFER);
+	DWC_SetRecvBuffer( i, _dWork->recvPtr[i], SIZE_RECV_BUFFER );
+  }
 }
 
 //==============================================================================
@@ -2530,11 +2532,11 @@ void mydwc_allocRecvBuff(int i)
 
 void mydwc_releaseRecvBuffAll(void)
 {
-    int i;
+  int i;
 
-    for(i = 0 ; i < _WIFI_NUM_MAX ; i++){
-        mydwc_releaseRecvBuff(i);
-    }
+  for(i = 0 ; i < _WIFI_NUM_MAX ; i++){
+	mydwc_releaseRecvBuff(i);
+  }
 
 }
 
@@ -2546,7 +2548,7 @@ void mydwc_releaseRecvBuffAll(void)
 //-----------------------------------------------------------------------------
 u8 GFL_NET_DWC_GetSaving(void)
 {
-    return _dWork->saveing;  //ƒZ[ƒu’†‚É1
+  return _dWork->saveing;  //ƒZ[ƒu’†‚É1
 }
 
 //----------------------------------------------------------------------------
@@ -2556,7 +2558,7 @@ u8 GFL_NET_DWC_GetSaving(void)
 //-----------------------------------------------------------------------------
 void GFL_NET_DWC_ResetSaving(void)
 {
-    _dWork->saveing = 0;
+  _dWork->saveing = 0;
 }
 
 //----------------------------------------------------------------------------
@@ -2567,7 +2569,7 @@ void GFL_NET_DWC_ResetSaving(void)
 //-----------------------------------------------------------------------------
 BOOL mydwc_CancelDisable(void)
 {
-    return _dWork->bConnectCallback;
+  return _dWork->bConnectCallback;
 }
 
 //----------------------------------------------------------------------------
@@ -2578,10 +2580,10 @@ BOOL mydwc_CancelDisable(void)
 //-----------------------------------------------------------------------------
 BOOL mydwc_IsLogin(void)
 {
-    if(_dWork){
-        return ( _dWork->state == MDSTATE_LOGIN );
-    }
-    return FALSE;
+  if(_dWork){
+	return ( _dWork->state == MDSTATE_LOGIN );
+  }
+  return FALSE;
 }
 
 #endif //GFL_NET_WIFI

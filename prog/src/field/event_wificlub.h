@@ -18,13 +18,14 @@
 //typedef struct _EVENT_WIFICLUB_WORK EVENT_WIFICLUB_WORK;
 
 typedef struct {
-	GAMESYS_WORK * gsys;
-	FIELD_MAIN_WORK * fieldmap;
-    SAVE_CONTROL_WORK *ctrl;
-    void* pWork;
-    BATTLE_SETUP_PARAM para;
-    BOOL isEndProc;
-    int selectType;
+  GMEVENT * event;
+  GAMESYS_WORK * gsys;
+  FIELD_MAIN_WORK * fieldmap;
+  SAVE_CONTROL_WORK *ctrl;
+  void* pWork;
+  BATTLE_SETUP_PARAM para;
+  BOOL isEndProc;
+  int selectType;
 } EVENT_WIFICLUB_WORK;
 
 
