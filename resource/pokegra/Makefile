@@ -86,7 +86,7 @@ endif
 #------------------------------------------------------------------------------
 do-build:	$(TARGETDIR)/$(NARCNAME)
 
-$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
+$(TARGETDIR)/$(NARCNAME):	$(NARCNAME) $(NAIXNAME) pokemon_viewer_def.h
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 	$(COPY) pokemon_viewer_def.h $(PROJECT_PROGDIR)src/test/soga/
