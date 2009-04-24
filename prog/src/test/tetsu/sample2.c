@@ -21,24 +21,8 @@
 
 #include "test/camera_adjust_view.h"
 
-typedef struct _EL_SCOREBOARD	EL_SCOREBOARD;
+#include "system/el_scoreboard.h"
 
-typedef enum {
-	ELB_TEXSIZ_16x16 = 0,
-	ELB_TEXSIZ_32x16,
-	ELB_TEXSIZ_64x16,
-	ELB_TEXSIZ_128x16,
-	ELB_TEXSIZ_256x16,
-	ELB_TEXSIZ_512x16,
-	ELB_TEXSIZ_1024x16,
-}ELB_TEXSIZ;
-
-EL_SCOREBOARD*	ELBOARD_Add( ELB_TEXSIZ sizMode, u8 strLen, HEAPID heapID );
-void						ELBOARD_Delete( EL_SCOREBOARD* elb );
-void						ELBOARD_Main( EL_SCOREBOARD* elb );
-void						ELBOARD_Draw( EL_SCOREBOARD* elb, 
-															VecFx32* trans, fx32 scale, fx16 sizX, fx16 sizY, 
-															GFL_G3D_CAMERA* g3Dcamera, GFL_G3D_LIGHTSET* g3Dlightset );
 //============================================================================================
 /**
  *
@@ -120,13 +104,17 @@ typedef struct {
 
 	GFL_BMPWIN*					bmpwin;	
 
-	STRBUF*							strBuf;
+	STRBUF*							strBuf1;
+	STRBUF*							strBuf2;
 	GFL_BMP_DATA*				bmp;	
 
 	GFL_G3D_CAMERA*			g3Dcamera;	
 	GFL_G3D_LIGHTSET*		g3Dlightset;	
 
-	EL_SCOREBOARD*			elb;
+	EL_SCOREBOARD*			elb1;
+	EL_SCOREBOARD*			elb2;
+	EL_SCOREBOARD*			elb3;
+	EL_SCOREBOARD*			elb4;
 
 	GFL_CAMADJUST*			gflCamAdjust;
 	fx32								cameraLength;
@@ -155,6 +143,70 @@ static BOOL	sample2(SAMPLE2_WORK* sw);
 
 //------------------------------------------------------------------
 /**
+ * @brief	文字列作成
+ */
+//------------------------------------------------------------------
+static void makeStr(const u16* str, STRBUF* strBuf)
+{
+	STRCODE strTmp[STRBUF_SIZE];
+	u32 strLen;
+
+	//文字列長さ取得
+	const u16 checkLen = wcslen(str);
+	if(checkLen >= STRBUF_SIZE){ strLen = STRBUF_SIZE - 1; }
+	else { strLen = checkLen; }
+
+	//終端コードを追加してからSTRBUFに変換
+	GFL_STD_MemCopy(str, strTmp, strLen*2);
+	strTmp[strLen] = GFL_STR_GetEOMCode();
+
+	GFL_STR_SetStringCode(strBuf, strTmp);
+}
+
+static void makeStr2(const u16* str, STRBUF* strBuf)
+{
+	STRCODE strTmp[STRBUF_SIZE];
+	u32 strLen;
+	u16*	pStr = strTmp;
+
+	//文字列長さ取得
+	const u16 checkLen = wcslen(str);
+	if(checkLen >= STRBUF_SIZE/2){ strLen = STRBUF_SIZE/2; }
+	else { strLen = checkLen; }
+
+	//終端コードを追加してからSTRBUFに変換
+	{
+		int i;
+		for( i=0; i<strLen; i++ ){
+			pStr[i*2+0] = str[i];
+			if( i== strLen-1){
+				pStr[i*2+1] = GFL_STR_GetEOMCode();
+			} else {
+				pStr[i*2+1] = 0xfffe;
+			}
+		}
+	}
+	GFL_STR_SetStringCode(strBuf, strTmp);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	文字列描画
+ */
+//------------------------------------------------------------------
+#if 0
+static void printStr
+			(const STRBUF* str, GFL_BMP_DATA* bmp, PRINT_QUE* printQue, GFL_FONT* fontHandle)
+{
+	PRINTSYS_LSB	lsb = PRINTSYS_LSB_Make(LCOL,0,0);
+	clearBitmap(bmp);
+
+	PRINTSYS_PrintQueColor(printQue, bmp, 0, 2, str, fontHandle, lsb);
+}
+#endif
+
+//------------------------------------------------------------------
+/**
  * @brief	ワークの初期化＆破棄
  */
 //------------------------------------------------------------------
@@ -163,12 +215,16 @@ static void	workInitialize(SAMPLE2_WORK* sw)
 	sw->seq = 0;
 	sw->timer = 0;
 
-	sw->strBuf = GFL_STR_CreateBuffer(STRBUF_SIZE, sw->heapID);
+	sw->strBuf1 = GFL_STR_CreateBuffer(STRBUF_SIZE, sw->heapID);
+	sw->strBuf2 = GFL_STR_CreateBuffer(STRBUF_SIZE, sw->heapID);
+	makeStr(testMsg, sw->strBuf1);
+	makeStr2(testMsg, sw->strBuf2);
 }
 
 static void	workFinalize(SAMPLE2_WORK* sw)
 {
-	GFL_STR_DeleteBuffer(sw->strBuf);
+	GFL_STR_DeleteBuffer(sw->strBuf2);
+	GFL_STR_DeleteBuffer(sw->strBuf1);
 }
 
 //------------------------------------------------------------------
@@ -182,12 +238,12 @@ static GFL_PROC_RESULT Sample2Proc_Init(GFL_PROC * proc, int * seq, void * pwk, 
 
 	sw = GFL_PROC_AllocWork(proc, sizeof(SAMPLE2_WORK), GFL_HEAPID_APP);
 
-    GFL_STD_MemClear(sw, sizeof(SAMPLE2_WORK));
-    sw->heapID = GFL_HEAPID_APP;
+  GFL_STD_MemClear(sw, sizeof(SAMPLE2_WORK));
+  sw->heapID = GFL_HEAPID_APP;
 
 	workInitialize(sw);
 
-    return GFL_PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------
@@ -213,7 +269,7 @@ static GFL_PROC_RESULT Sample2Proc_End(GFL_PROC * proc, int * seq, void * pwk, v
 
 	GFL_PROC_FreeWork(proc);
 
-    return GFL_PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //------------------------------------------------------------------
@@ -250,10 +306,6 @@ static void systemSetup(SAMPLE2_WORK* sw);
 static void systemFramework(SAMPLE2_WORK* sw);
 static void systemDelete(SAMPLE2_WORK* sw);
 
-static void makeStr(const u16* str, STRBUF* strBuf);
-static void printStr
-			(const STRBUF* str, GFL_BMP_DATA* bmp, PRINT_QUE* printQue, GFL_FONT* fontHandle);
-	
 //------------------------------------------------------------------
 /**
  *
@@ -267,8 +319,7 @@ static BOOL	sample2(SAMPLE2_WORK* sw)
 	case 0:
 		systemSetup(sw);
 
-		makeStr(testMsg, sw->strBuf);
-		printStr(sw->strBuf, sw->bmp, sw->printQue, sw->fontHandle);
+		//printStr(sw->strBuf1, sw->bmp, sw->printQue, sw->fontHandle);
 
 		sw->gflCamAdjust = GFL_CAMADJUST_Create(&camAdjustData, sw->heapID);
 		GFL_CAMADJUST_SetCameraParam
@@ -452,7 +503,8 @@ static void systemSetup(SAMPLE2_WORK* sw)
 
 	sw->bmp = GFL_BMPWIN_GetBmp(sw->bmpwin);
 
-	sw->elb = ELBOARD_Add( ELB_TEXSIZ_256x16, 64, sw->heapID );
+	sw->elb1 = ELBOARD_Add(sw->strBuf1, ELB_MODE_S, sw->heapID);
+	//sw->elb2 = ELBOARD_Add(sw->strBuf2, ELB_MODE_T, sw->heapID);
 }
 
 //------------------------------------------------------------------
@@ -466,7 +518,8 @@ static void systemFramework(SAMPLE2_WORK* sw)
 	PRINTSYS_QUE_Main(sw->printQue);
 	GFL_BMPWIN_TransVramCharacter(sw->bmpwin);
 
-	ELBOARD_Main(sw->elb);
+	ELBOARD_Main(sw->elb1);
+	//ELBOARD_Main(sw->elb2);
 
 	//３Ｄ描画
 	{
@@ -495,11 +548,20 @@ static void systemFramework(SAMPLE2_WORK* sw)
 		GFL_G3D_DRAW_Start();			//描画開始
 		GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定		
 		{
-			fx32		scale = FX32_ONE;
-			fx16		sizX = 7 * FX16_ONE;
-			fx16		sizY = 1 * FX16_ONE;
+			VecFx32 trans = {0,64 * FX32_ONE,0};
+			fx32	scale = FX32_ONE;
+			u16		width = 200;
+			u16		height = 16;
 
-			ELBOARD_Draw(sw->elb, &target, scale, sizX, sizY, sw->g3Dcamera, sw->g3Dlightset);
+			ELBOARD_Draw(sw->elb1, &target, scale, width, height, sw->g3Dcamera, sw->g3Dlightset);
+		}
+		{
+			VecFx32 trans = {64 * FX32_ONE,0,0};
+			fx32	scale = FX32_ONE;
+			u16		width = 16;
+			u16		height = 200;
+
+			//ELBOARD_Draw(sw->elb2, &trans, scale, width, height, sw->g3Dcamera, sw->g3Dlightset);
 		}
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 	}
@@ -512,7 +574,8 @@ static void systemFramework(SAMPLE2_WORK* sw)
 //------------------------------------------------------------------
 static void systemDelete(SAMPLE2_WORK* sw)
 {
-	ELBOARD_Delete(sw->elb);
+	//ELBOARD_Delete(sw->elb2);
+	ELBOARD_Delete(sw->elb1);
 
 	GFL_G3D_LIGHT_Delete(sw->g3Dlightset);
 	GFL_G3D_CAMERA_Delete(sw->g3Dcamera);
@@ -548,353 +611,5 @@ static void systemDelete(SAMPLE2_WORK* sw)
 
 
 
-
-
-//============================================================================================
-/**
- * @file	ele_scoreboard.c
- * @brief	電光掲示板システム
- */
-//============================================================================================
-//============================================================================================
-/**
- *
- *
- *
- *
- *
- * @brief	
- *
- *
- *
- *
- *
- */
-//============================================================================================
-//------------------------------------------------------------------
-/**
- *
- * @brief	型宣言
- *
- */
-//------------------------------------------------------------------
-struct _EL_SCOREBOARD {
-	HEAPID				heapID;
-
-	GXTexSizeS		s;						//SDK用データサイズX定義
-	GXTexSizeT		t;						//SDK用データサイズY定義
-	u16						texSizX;			//テクスチャデータサイズX
-	u16						texSizY;			//テクスチャデータサイズY
-	NNSGfdTexKey	texVramKey;		//テクスチャＶＲＡＭキー
-	NNSGfdPlttKey	plttVramKey;	//パレットＶＲＡＭキー
-
-	PRINT_QUE*		printQue;
-	GFL_FONT*			fontHandle;
-
-	STRBUF*				strBuf1;
-	STRBUF*				strBuf2;
-
-	GFL_BMP_DATA*	bmp;	
-	GFL_BMP_DATA*	bmpTmp;	
-
-	int						timer;
-};
-
-//------------------------------------------------------------------
-//SDK用データサイズ定義　変換テーブル（GFL_BBD_TEXSIZ に対応）
-typedef struct {
-	GXTexSizeS	s;
-	GXTexSizeT	t;
-	u16					sizX;
-	u16					sizY;
-}GX_SIZ_TBL;
-
-static const GX_SIZ_TBL GX_sizTbl[] = {
-	{ GX_TEXSIZE_S16,		GX_TEXSIZE_T16,		16,		16		}, 
-	{ GX_TEXSIZE_S32,		GX_TEXSIZE_T16,		32,		16		}, 
-	{ GX_TEXSIZE_S64,		GX_TEXSIZE_T16,		64,		16		}, 
-	{ GX_TEXSIZE_S128,	GX_TEXSIZE_T16,		128,	16		}, 
-	{ GX_TEXSIZE_S256,	GX_TEXSIZE_T16,		256,	16		}, 
-	{ GX_TEXSIZE_S512,	GX_TEXSIZE_T16,		512,	16		}, 
-	{ GX_TEXSIZE_S1024,	GX_TEXSIZE_T16,		1024,	16		}, 
-};
-
-//------------------------------------------------------------------
-/**
- * @brief	ウインドウ背景クリア
- */
-//------------------------------------------------------------------
-static void clearBitmap(GFL_BMP_DATA* bmp)
-{
-	u8*	dataAdrs = GFL_BMP_GetCharacterAdrs(bmp);
-	u32	writeSize = GFL_BMP_GetBmpDataSize(bmp);
-	int	i;
-
-	for( i= 0; i<writeSize; i++ ){ dataAdrs[i] = ((BCOL2 << 4) | BCOL1); }
-
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	文字列描画
- */
-//------------------------------------------------------------------
-static void printStr
-			(const STRBUF* str, GFL_BMP_DATA* bmp, PRINT_QUE* printQue, GFL_FONT* fontHandle)
-{
-	PRINTSYS_LSB	lsb = PRINTSYS_LSB_Make(LCOL,0,0);
-	clearBitmap(bmp);
-
-	PRINTSYS_PrintQueColor(printQue, bmp, 0, 2, str, fontHandle, lsb);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	文字列作成
- */
-//------------------------------------------------------------------
-static void makeStr(const u16* str, STRBUF* strBuf)
-{
-	STRCODE strTmp[STRBUF_SIZE];
-	u32 strLen;
-
-	//文字列長さ取得
-	const u16 checkLen = wcslen(str);
-	if(checkLen >= STRBUF_SIZE){ strLen = STRBUF_SIZE - 1; }
-	else { strLen = checkLen; }
-
-	//終端コードを追加してからSTRBUFに変換
-	GFL_STD_MemCopy(str, strTmp, strLen*2);
-	strTmp[strLen] = GFL_STR_GetEOMCode();
-
-	GFL_STR_SetStringCode(strBuf, strTmp);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	ビットマップ変換
- */
-//------------------------------------------------------------------
-static void convBitmap(GFL_BMP_DATA* src, GFL_BMP_DATA* dst)
-{
-	u16	size_x = GFL_BMP_GetSizeX(src)/8;						//画像データのXdotサイズ
-	u16	size_y = GFL_BMP_GetSizeY(src)/8;						//画像データのYdotサイズ
-	u16	col = (u16)GFL_BMP_GetColorFormat(src);			//カラーモード＆データサイズ
-	u16	size_cx = col/8;														//キャラクタデータXサイズ
-	u8*	srcAdrs = GFL_BMP_GetCharacterAdrs(src);
-	u8*	dstAdrs = GFL_BMP_GetCharacterAdrs(dst);
-	int	i, cx, cy, x, y;
-
-	for( i=0; i<size_x * size_y * col; i++ ){
-		y = i/(size_x * size_cx);
-		x = i%(size_x * size_cx);
-		dstAdrs[i] = srcAdrs[ ((y/8)*size_x + (x/size_cx))*col + ((y%8)*size_cx + (x%size_cx)) ];
-	}
-}
-
-
-//------------------------------------------------------------------
-/**
- * @brief	オブジェクト追加
- */
-//------------------------------------------------------------------
-EL_SCOREBOARD* ELBOARD_Add( ELB_TEXSIZ sizMode, u8 strLen, HEAPID heapID )
-{
-	EL_SCOREBOARD* elb = GFL_HEAP_AllocClearMemory(heapID, sizeof(EL_SCOREBOARD));
-
-	elb->heapID = heapID;
-
-	//描画用設定
-	if( sizMode >= NELEMS(GX_sizTbl) ){ sizMode = NELEMS(GX_sizTbl)-1; }
-	elb->s = GX_sizTbl[sizMode].s;
-	elb->t = GX_sizTbl[sizMode].t;
-	elb->texSizX = GX_sizTbl[sizMode].sizX;
-	elb->texSizY = GX_sizTbl[sizMode].sizY;
-
-	//ＶＲＡＭ確保
-	elb->texVramKey = NNS_GfdAllocTexVram(elb->texSizX * elb->texSizY, FALSE, 0);
-	elb->plttVramKey = NNS_GfdAllocPlttVram(16, FALSE, 0);
-
-	//フォントハンドル作成
-	elb->fontHandle = GFL_FONT_Create
-						(ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID);
-	//プリントキューハンドル作成
-	elb->printQue = PRINTSYS_QUE_Create(heapID);
-
-	//文字列バッファ作成
-	elb->strBuf1 = GFL_STR_CreateBuffer(strLen, heapID);
-	elb->strBuf2 = GFL_STR_CreateBuffer(strLen, heapID);
-
-	//ビットマップ作成
-	elb->bmp = GFL_BMP_Create(elb->texSizX/8, elb->texSizY/8, GFL_BMP_16_COLOR, heapID);
-	elb->bmpTmp = GFL_BMP_Create(elb->texSizX/8, elb->texSizY/8, GFL_BMP_16_COLOR, heapID);
-
-	elb->timer = 0;
-
-	return elb;
-}	
-
-//------------------------------------------------------------------
-/**
- * @brief	オブジェクト破棄
- */
-//------------------------------------------------------------------
-void	ELBOARD_Delete( EL_SCOREBOARD* elb )
-{
-	GFL_BMP_Delete(elb->bmpTmp);
-	GFL_BMP_Delete(elb->bmp);
-
-	GFL_STR_DeleteBuffer(elb->strBuf2);
-	GFL_STR_DeleteBuffer(elb->strBuf1);
-
-	PRINTSYS_QUE_Clear(elb->printQue);
-	PRINTSYS_QUE_Delete(elb->printQue);
-	GFL_FONT_Delete(elb->fontHandle);
-
-	NNS_GfdFreePlttVram(elb->plttVramKey);
-	NNS_GfdFreeTexVram(elb->texVramKey);
-}	
-
-//------------------------------------------------------------------
-/**
- *
- * @brief	動作
- *
- */
-//------------------------------------------------------------------
-void	ELBOARD_Main( EL_SCOREBOARD* elb )
-{
-	elb->timer++;
-
-	makeStr(testMsg, elb->strBuf1);
-	printStr(elb->strBuf1, elb->bmp, elb->printQue, elb->fontHandle);
-	convBitmap(elb->bmp, elb->bmpTmp);
-
-	{
-		void* src;
-		u32 dst, siz;
-
-		if(elb->timer & 0x0004){ src = (void*)plttData; } else { src = (void*)plttData2; }
-		dst = NNS_GfdGetPlttKeyAddr(elb->plttVramKey);
-		siz = PLTT_SIZ;
-		NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, siz);
-
-		src = GFL_BMP_GetCharacterAdrs(elb->bmpTmp);
-		dst = NNS_GfdGetTexKeyAddr(elb->texVramKey);
-		siz = NNS_GfdGetTexKeySize(elb->texVramKey);
-		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_VRAM, dst, src, siz);
-	}
-}
-
-//------------------------------------------------------------------
-/**
- *
- * @brief	描画
- *
- */
-//------------------------------------------------------------------
-#define ELB_DIF			(GX_RGB(31, 31, 31))
-#define ELB_AMB			(GX_RGB(16, 16, 16))
-#define ELB_SPE			(GX_RGB(16, 16, 16))
-#define ELB_EMI			(GX_RGB(0, 0, 0))
-#define ELB_POLID 	(63)
-
-void	ELBOARD_Draw( EL_SCOREBOARD* elb, 
-										VecFx32* trans, fx32 scale, fx16 sizX, fx16 sizY, 
-										GFL_G3D_CAMERA* g3Dcamera, GFL_G3D_LIGHTSET* g3Dlightset )
-{
-	MtxFx33			mtx;
-	VecFx16			vecN;
-	VecFx32			transTmp;
-	fx32				s0, t0, s1, t1;
-
-	G3X_Reset();
-
-	//カメラ設定取得
-	{
-		VecFx32		camPos, camUp, target, vecNtmp;
-		MtxFx43		mtxCamera;
-
-		GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
-		GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
-		GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
-
-		G3_LookAt( &camPos, &camUp, &target, &mtxCamera );	//mtxCameraには行列計算結果が返る
-		MTX_Copy43To33( &mtxCamera, &mtx );		//カメラ逆行列から回転行列を取り出す
-
-		VEC_Subtract( &camPos, &target, &vecNtmp );
-		VEC_Normalize( &vecNtmp, &vecNtmp );
-		VEC_Fx16Set( &vecN, vecNtmp.x, vecNtmp.y, vecNtmp.z );
-	}
-	if( g3Dlightset ){ GFL_G3D_LIGHT_Switching( g3Dlightset ); }
-
-	//グローバルスケール設定
-#if 0
-	G3_Scale( scale, scale, scale );
-#else
-	G3_Scale( scale * FX16_ONE, scale * FX16_ONE, scale * FX16_ONE );
-#endif
-	s0 = 0;
-	s1 = s0 + elb->texSizX * FX32_ONE;
-	t0 = 0;
-	t1 = t0 + elb->texSizY * FX32_ONE;
-
-	G3_PushMtx();
-
-	VEC_Set(&transTmp, FX_Div(trans->x,scale), FX_Div(trans->y,scale), FX_Div(trans->z,scale));
-	//回転、平行移動パラメータ設定
-	G3_MultTransMtx33(&mtx, &transTmp);
-
-	G3_TexImageParam(	GX_TEXFMT_PLTT16, GX_TEXGEN_TEXCOORD, elb->s, elb->t,
-										GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
-										GX_TEXPLTTCOLOR0_TRNS, NNS_GfdGetTexKeyAddr(elb->texVramKey) );
-	G3_TexPlttBase( NNS_GfdGetPlttKeyAddr(elb->plttVramKey), GX_TEXFMT_PLTT16 );
-
-	//マテリアル設定
-	G3_MaterialColorDiffAmb( ELB_DIF, ELB_AMB, TRUE );
-	G3_MaterialColorSpecEmi( ELB_SPE, ELB_EMI, FALSE );
-	G3_PolygonAttr(	GFL_BBD_LIGHTMASK_0123, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 
-									ELB_POLID, 31, GX_POLYGON_ATTR_MISC_FOG );
-	
-	G3_Begin( GX_BEGIN_QUADS );
-
-	if( g3Dlightset )	{ G3_Normal(vecN.x, vecN.y, vecN.z); } 	//平面ポリゴンなので法線ベクトルは共用
-	else							{ G3_Color(GX_RGB(31, 31, 31)); }
-#if 0
-	G3_TexCoord(s0, t0);
-	G3_Vtx(-sizX, sizY, 0);
-
-	G3_TexCoord(s0, t1);
-	G3_Vtx(-sizX, -sizY, 0);
-
-	G3_TexCoord(s1, t1);
-	G3_Vtx(sizX, -sizY, 0);
-
-	G3_TexCoord(s1, t0);
-	G3_Vtx(sizX, sizY, 0);
-#else
-	{
-		fx16	setSizX = elb->texSizX / 2;
-		fx16	setSizY = elb->texSizY / 2;
-
-		G3_TexCoord(s0, t0);
-		G3_Vtx(-setSizX, setSizY, 0);
-
-		G3_TexCoord(s0, t1);
-		G3_Vtx(-setSizX, -setSizY, 0);
-
-		G3_TexCoord(s1, t1);
-		G3_Vtx(setSizX, -setSizY, 0);
-
-		G3_TexCoord(s1, t0);
-		G3_Vtx(setSizX, setSizY, 0);
-	}
-#endif
-	G3_End();
-	G3_PopMtx(1);
-
-	//↓後にG3D_Systemで行うので、ここではやらない
-	//G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_W);
-}
 
 

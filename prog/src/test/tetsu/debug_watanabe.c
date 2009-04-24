@@ -140,8 +140,8 @@ FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeSample2ProcData;
 
 static const DEBUGITEM_LIST debugItemList[DEBUGITEM_MAX] = {
-	{L"■３Ｄシーンサンプル",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
-	{L"■サンプル２",		FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample2ProcData},
+	{L"■３Ｄシーンサンプル",			FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
+	{L"■電光けいじばんサンプル",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample2ProcData},
 };
 
 //------------------------------------------------------------------
