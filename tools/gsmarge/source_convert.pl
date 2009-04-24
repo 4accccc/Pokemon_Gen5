@@ -434,7 +434,31 @@ $REPLACE_SELF	= "CONVERT_REPLACE_SELF";
 	["MenuWinGraphicSet","BmpWinFrame_GraphicSet"],
 	["BmpMenuWinWrite","BmpWinFrame_Write"],
 	["Particle_DrawAll","GFL_PTC_DrawAll"],
-	["Particle_CalcAll","GFL_PTC_CalcAll"]
+	["Particle_CalcAll","GFL_PTC_CalcAll"],
+	["GF_BMP_PrintMain","GFL_BMP_Print"],
+	["GF_BMP_PrintMain256","GFL_BMP_Print16to256"],
+	["GF_BGL_BmpFill","GFL_BMP_Fill"],
+	["GF_BGL_BmpWinAllocGet","GFL_BMPWIN_Init"],
+	["GFL_BMPWIN_Create",$REPLACE_SELF],
+	["GF_BGL_BmpWinDel","GFL_BMPWIN_Delete"],
+	["GF_BGL_BmpWinFree",$REPLACE_SELF],
+	["GF_BGL_BmpWinOn","GFL_BMPWIN_MakeTransWindow"],
+	["GF_BGL_BmpWinOnVReq","GFL_BMPWIN_MakeTransWindow_VBlank"],
+	["GF_BGL_BmpWinMakeScrn","GFL_BMPWIN_MakeScreen"],
+	["GF_BGL_BmpWinMakeScrnLimited",$REPLACE_SELF],
+	["GF_BGL_BmpWinClearScrn","GFL_BMPWIN_ClearScreen"],
+	["GF_BGL_BmpWinCgxOn","GFL_BMPWIN_TransVramCharacter"],
+	["GF_BGL_BmpWinGet_Frame","GFL_BMPWIN_GetFrame"],
+	["GF_BGL_BmpWinGet_SizeX","GFL_BMPWIN_GetSizeX"],
+	["GF_BGL_BmpWinGet_SizeY","GFL_BMPWIN_GetSizeY"],
+	["GF_BGL_BmpWinGet_PosX","GFL_BMPWIN_GetPosX"],
+	["GF_BGL_BmpWinGet_PosY","GFL_BMPWIN_GetPosY"],
+	["GF_BGL_BmpWinGet_Chrofs","GFL_BMPWIN_GetChrNum"],
+	["GF_BGL_BmpWinSet_PosX","GFL_BMPWIN_SetPosX"],
+	["GF_BGL_BmpWinSet_PosY","GFL_BMPWIN_SetPosY"],
+	["GF_BGL_BmpWinSet_Pal","GFL_BMPWIN_SetPalette"]
+
+
 );
 
 
