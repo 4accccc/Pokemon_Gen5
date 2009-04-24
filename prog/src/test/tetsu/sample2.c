@@ -504,7 +504,7 @@ static void systemSetup(SAMPLE2_WORK* sw)
 	sw->bmp = GFL_BMPWIN_GetBmp(sw->bmpwin);
 
 	sw->elb1 = ELBOARD_Add(sw->strBuf1, ELB_MODE_S, sw->heapID);
-	//sw->elb2 = ELBOARD_Add(sw->strBuf2, ELB_MODE_T, sw->heapID);
+	sw->elb2 = ELBOARD_Add(sw->strBuf2, ELB_MODE_T, sw->heapID);
 }
 
 //------------------------------------------------------------------
@@ -519,7 +519,7 @@ static void systemFramework(SAMPLE2_WORK* sw)
 	GFL_BMPWIN_TransVramCharacter(sw->bmpwin);
 
 	ELBOARD_Main(sw->elb1);
-	//ELBOARD_Main(sw->elb2);
+	ELBOARD_Main(sw->elb2);
 
 	//３Ｄ描画
 	{
@@ -548,20 +548,20 @@ static void systemFramework(SAMPLE2_WORK* sw)
 		GFL_G3D_DRAW_Start();			//描画開始
 		GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定		
 		{
-			VecFx32 trans = {0,64 * FX32_ONE,0};
+			VecFx32 trans = {0,8 * FX32_ONE,0};
 			fx32	scale = FX32_ONE;
 			u16		width = 200;
 			u16		height = 16;
 
-			ELBOARD_Draw(sw->elb1, &target, scale, width, height, sw->g3Dcamera, sw->g3Dlightset);
+			ELBOARD_Draw(sw->elb1, &trans, scale, width, height, sw->g3Dcamera, sw->g3Dlightset);
 		}
 		{
-			VecFx32 trans = {64 * FX32_ONE,0,0};
+			VecFx32 trans = {8 * FX32_ONE,0,0};
 			fx32	scale = FX32_ONE;
 			u16		width = 16;
 			u16		height = 200;
 
-			//ELBOARD_Draw(sw->elb2, &trans, scale, width, height, sw->g3Dcamera, sw->g3Dlightset);
+			ELBOARD_Draw(sw->elb2, &trans, scale, width, height, sw->g3Dcamera, sw->g3Dlightset);
 		}
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 	}
@@ -574,7 +574,7 @@ static void systemFramework(SAMPLE2_WORK* sw)
 //------------------------------------------------------------------
 static void systemDelete(SAMPLE2_WORK* sw)
 {
-	//ELBOARD_Delete(sw->elb2);
+	ELBOARD_Delete(sw->elb2);
 	ELBOARD_Delete(sw->elb1);
 
 	GFL_G3D_LIGHT_Delete(sw->g3Dlightset);

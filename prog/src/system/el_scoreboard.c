@@ -82,12 +82,12 @@ typedef struct {
 }GX_TEXSIZ_TBL;
 
 static const GX_TEXSIZ_TBL GX_texSizTbl[] = {
-	{ 16,		GX_TEXSIZE_S16,		GX_TEXSIZE_S16 },
-	{ 32,		GX_TEXSIZE_S32,		GX_TEXSIZE_S32 },
-	{ 64,		GX_TEXSIZE_S64 ,	GX_TEXSIZE_S64 },
-	{ 128,	GX_TEXSIZE_S128,	GX_TEXSIZE_S128 },
-	{ 256,	GX_TEXSIZE_S256,	GX_TEXSIZE_S256 },
-	{ 512,	GX_TEXSIZE_S512,	GX_TEXSIZE_S512 },
+	{ 16,		GX_TEXSIZE_S16,		GX_TEXSIZE_T16 },
+	{ 32,		GX_TEXSIZE_S32,		GX_TEXSIZE_T32 },
+	{ 64,		GX_TEXSIZE_S64 ,	GX_TEXSIZE_T64 },
+	{ 128,	GX_TEXSIZE_S128,	GX_TEXSIZE_T128 },
+	{ 256,	GX_TEXSIZE_S256,	GX_TEXSIZE_T256 },
+	{ 512,	GX_TEXSIZE_S512,	GX_TEXSIZE_T512 },
 };
 
 //------------------------------------------------------------------
@@ -322,7 +322,8 @@ void	ELBOARD_Draw( EL_SCOREBOARD* elb,
 
 	//グローバルスケール設定
 	//※頂点座標設定値に制限があるので、テクスチャサイズに合わせるためスケールの方で吸収する
-	G3_Scale( scale * FX16_ONE, scale * FX16_ONE, scale * FX16_ONE );
+	scale *= FX16_ONE;
+	G3_Scale( scale, scale, scale );
 
 	G3_PushMtx();
 
