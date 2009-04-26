@@ -14,6 +14,7 @@ USERS	=	tamada lee_hyunjung
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname	= all_build_model
+#targetname	= buildmodel_outdoor
 NARCNAME	= $(targetname).narc
 NAIXNAME	= $(targetname).naix
 
@@ -31,13 +32,14 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
 
-#EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
 XLS2TAB	= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 
 
+TMP				= tmp
 XLS_DATA	= $(targetname).xls
-DEP_LIST	= depend_list.txt
-ARC_LIST	= archive_file.txt
+TXT_DATA	= $(TMP)/$(XLS_DATA:.xls=.txt)
+DEP_LIST	= $(TMP)/depend_list.txt
+ARC_LIST	= $(TMP)/archive_file.txt
 RESDIR		= nsbmdfiles
 SRCDIR		= imdfiles
 
@@ -73,15 +75,14 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
 $(NARCNAME):	$(DEPEND_FILES)
-	nnsarc -c -l -n -i $(NARCNAME) -S $(ARC_LIST) > arc_result.txt
+	nnsarc -c -l -n -i $(NARCNAME) -S $(ARC_LIST) > $(TMP)/arc_result.txt
 	$(NAIXCUT) $(NAIXNAME)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、リスト生成
 $(DEP_LIST):	$(XLS_DATA)
-	#$(EXCEL2TAB) $(XLS_DATA)
-	$(XLS2TAB) $(XLS_DATA) > $(XLS_DATA:.xls=.txt)
-	ruby makelist.rb $(XLS_DATA:.xls=.txt) $(DEP_LIST) $(ARC_LIST)
+	$(XLS2TAB) $(XLS_DATA) > $(TXT_DATA)
+	ruby makelist.rb $(TXT_DATA) $(DEP_LIST) $(ARC_LIST)
 endif
 
 #------------------------------------------------------------------------------
@@ -95,7 +96,7 @@ clean:
 	-rm -f $(NAIXNAME)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	-rm -f $(DEPEND_FILES)
-	-rm -f *.txt
+	-rm -f $(TMP)/*.txt *.txt
 endif
 
 
