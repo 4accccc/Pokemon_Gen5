@@ -75,8 +75,9 @@ bmodel_list.each{|bmodel|
 book.delete_at(0)		#1ÉyÅ[ÉWñ⁄çÌèú
 arc_list = File.open("#{OUTPUT_DIR}/#{OUTPUT_SYM}.list","w")
 book.each_index{|sheet_index|
-	filename = sprintf("%s/%s%03d.bin", OUTPUT_DIR, OUTPUT_SYM, sheet_index)
+	filename = sprintf("%s/%s%03d.bin", OUTPUT_DIR, OUTPUT_SYM, sheet_index+1)
 	arc_list.puts "\"#{filename}\""
+	puts "#{filename}"
 	File.open(filename , "wb"){|outfile|
 		entrys = Hash.new
 		sheet = book[sheet_index]
@@ -90,7 +91,7 @@ book.each_index{|sheet_index|
 			bmodel = bmodel_list[index]
 			if bmodel.flag == true || entrys.has_key?(bmodel.name) then
 				outfile.write([index].pack("S"))
-				#printf("%3d %3d %s\n", count, index, bmodel.name)
+				#printf("%3d %3d %-5s %-20s\n", count, index, bmodel.flag, bmodel.name)
 				count += 1
 			end
 		}
