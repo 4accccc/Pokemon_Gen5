@@ -1,5 +1,52 @@
 DEPEND_FILES	=	\
 	$(RESDIR)/pc_01.nsbmd \
+	$(RESDIR)/gate_01.nsbmd \
 	$(RESDIR)/t2_house01.nsbmd \
 	$(RESDIR)/t2_build01.nsbmd \
-	$(RESDIR)/gate_01.nsbmd \
+	$(RESDIR)/t1_house_01.nsbmd \
+	$(RESDIR)/t1_house_02.nsbmd \
+	$(RESDIR)/t1_labo_01.nsbmd \
+	$(RESDIR)/c1_school_01.nsbmd \
+	$(RESDIR)/c1_build_01.nsbmd \
+	$(RESDIR)/c1_build_02.nsbmd \
+	$(RESDIR)/c1_build_03.nsbmd \
+	$(RESDIR)/c1_rest_01.nsbmd \
+	$(RESDIR)/c1_gateway_03.nsbmd \
+	$(RESDIR)/c2_build_01.nsbmd \
+	$(RESDIR)/c2_build_02.nsbmd \
+	$(RESDIR)/c2_build_03.nsbmd \
+	$(RESDIR)/c2_museum_01.nsbmd \
+	$(RESDIR)/c2_cafe_01.nsbmd \
+	$(RESDIR)/sodateya_01.nsbmd \
+	$(RESDIR)/stump_01.nsbmd \
+	$(RESDIR)/stump_02.nsbmd \
+	$(RESDIR)/rock_01.nsbmd \
+	$(RESDIR)/dtree_01.nsbmd \
+	$(RESDIR)/dtree_02.nsbmd \
+	$(RESDIR)/fountain_01.nsbmd \
+	$(RESDIR)/o_chair_01.nsbmd \
+	$(RESDIR)/o_parasol_01.nsbmd \
+	$(RESDIR)/o_table_01.nsbmd \
+	$(RESDIR)/drum_01.nsbmd \
+	$(RESDIR)/tile_01.nsbmd \
+	$(RESDIR)/fireplace_01.nsbmd \
+	$(RESDIR)/fireplace_02.nsbmd \
+	$(RESDIR)/entrance_01.nsbmd \
+	$(RESDIR)/r4_build_01.nsbmd \
+	$(RESDIR)/r4_build_02.nsbmd \
+	$(RESDIR)/fream_01.nsbmd \
+	$(RESDIR)/sandbag_01.nsbmd \
+	$(RESDIR)/d4_ruins_01.nsbmd \
+	$(RESDIR)/d4_ruins_02.nsbmd \
+	$(RESDIR)/d5_whouse_01.nsbmd \
+	$(RESDIR)/d5_whouse_02.nsbmd \
+	$(RESDIR)/d5_container_01.nsbmd \
+	$(RESDIR)/d5_container_02.nsbmd \
+	$(RESDIR)/d5_ship_01.nsbmd \
+	$(RESDIR)/c5_house_01.nsbmd \
+	$(RESDIR)/c5_build_01.nsbmd \
+	$(RESDIR)/d5_crane01.nsbmd \
+	$(RESDIR)/searock_01.nsbmd \
+	$(RESDIR)/searock_02.nsbmd \
+	$(RESDIR)/roadcone_01.nsbmd \
+

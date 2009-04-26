@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="fuchino" host="W00152" date="2009-04-22T21:56:51" source="searock_01.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="fuchino" host="W00152" date="2009-04-22T21:56:51" source="searock_01.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="0"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="3" xyz="-2.000000 0.250000 -1.000000" whd="4.000000 3.000000 3.000000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="searock1.1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="searock1.1_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/searock_01/tex/searock1.1.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 bb00 0bbb 0000 0000 0000
+			0000 0000 0000 89bb b788 0000 0000 0000
+			0000 0000 b000 8897 b988 0000 0000 0000
+			0000 0000 7b00 8889 7888 00aa 0000 0000
+			0000 0000 77a0 8889 7988 01b9 0000 0000
+			0000 0000 77aa 8888 9788 1b99 0000 0000
+			0000 a000 7bba 8889 9798 ab99 0011 0000
+			0000 ba10 7bbb 8897 9b78 ab79 01ab 0000
+			0000 baa1 bbbb 9977 b7b7 abbb 11bb 0000
+			6000 aaa1 7bbb 7779 b7b7 1abb 1aaa 0060
+			1600 aaaa 9bbb 7799 bb77 1abb aaa1 0061
+			1600 77ba bb77 bb97 aabb aaab 1111 0661
+			a660 777a b777 bbaa aabb aaaa 111a 0661
+			1a66 77bb ab77 baaa 11ab bbaa aa11 06aa
+			b166 babb aabb aaaa a111 bbbb aa11 661a
+			b146 aaab a1aa 1aaa b111 bbbb a111 6611
+			b163 aaba a11a aaaa aa11 bbbb 1111 36a1
+			a663 aaab a11a aaaa aa11 abba aa11 3566
+			6633 aaba 1111 1aaa aa11 1aaa 66a1 3366
+			6432 1aa6 1111 a1aa a111 11aa 66a1 2336
+			4432 a666 111a 1a1a a11a 111a 466a 2335
+			5532 6644 1aaa a1a1 a111 aa11 446a 2333
+			5322 4444 6666 1a11 1111 aa11 5546 0233
+			3320 4444 6633 1166 1111 6666 4454 0233
+			3220 3333 6333 6666 6666 4446 3445 0023
+			2200 3332 4333 3444 4333 4444 2344 0022
+			2000 3322 4333 3444 3333 4433 2333 0002
+			0000 2220 3333 3344 3333 3333 0222 0000
+			0000 2000 2222 3332 3333 2223 0002 0000
+			0000 0000 0000 2222 2222 0002 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="searock1.1_pl" color_size="16">
+		7c1f 2509 59a0 3d88 4e0a 628d 7f95 52b4
+		6759 5b17 2d8c 4231 7fff 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="searock1_lm1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.396484 0.049561 -0.198242"
+		volume_max="0.396484 0.644531 0.396484"
+		volume_r="0.782227"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.707031 0.707031"/>
+					<pos_xyz xyz="-0.396484 0.049561 0.396484"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="0.396484 0.049561"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_yz yz="0.644531 -0.198242"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.396484 0.644531"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="pCube1" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="y_on"
+		scale="40.342285 40.342285 40.342285"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.396484 0.049561 -0.198242"
+		volume_max="0.396484 0.644531 0.396484"
+		volume_r="0.782227"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
+
+</body>
+
+</imd>

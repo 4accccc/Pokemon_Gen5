@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tamada" host="W00139" date="2008-11-26T15:58:36" source="gate_01.mb"/>
+	<create user="fuchino" host="W00152" date="2009-04-22T21:58:45" source="gate_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="tamada" host="W00139" date="2008-11-26T15:58:36" source="gate_01.mb"/>
+<original_create user="fuchino" host="W00152" date="2009-04-22T21:58:45" source="gate_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gate_1_pl"
-		path="C:/home/3dmapinstall/choice/WB_field_all/gate_1.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/gate_01/tex/gate_1.tga"
 	>
 		<bitmap size="256">
 			6666 6666 6666 6666 aabb bbaa 99aa aa99
@@ -76,7 +76,7 @@
 		width="16" height="32" original_width="16" original_height="32"
 		format="a3i5"
 		palette_name="gate_2_pl"
-		path="C:/home/3dmapinstall/choice/WB_field_all/gate_2.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/gate_01/tex/gate_2.tga"
 	>
 		<bitmap size="256">
 			e9e9 ecec eeed eeee eced ecec e9ec e9e9
@@ -118,7 +118,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gate_3_pl"
-		path="C:/home/3dmapinstall/choice/WB_field_all/gate_3.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/gate_01/tex/gate_3.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -139,11 +139,11 @@
 			8888 8888 8888 8888 8888 8888 8888 8888
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="kage"
+	<tex_image index="3" name="h_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
-		palette_name="kage_pl"
-		path="C:/home/3dmapinstall/choice/WB_field_all/kage.tga"
+		palette_name="h_kage_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/common_tex/h_kage.tga"
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
@@ -167,13 +167,13 @@
 		1a3f 4a52 533f 56b5 6318 6b5a 739c 77bd
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="3" name="kage_pl" color_size="8">
+	<tex_palette index="3" name="h_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="5">
-	<material index="0" name="gate_1_lm3"
+	<material index="0" name="gate_1_lm4"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -197,7 +197,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="gate_2_lm3"
+	<material index="1" name="gate_2_lm5"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -221,7 +221,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="gate_2_lm4"
+	<material index="2" name="gate_2_lm6"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -245,7 +245,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="gate_3_lm1"
+	<material index="3" name="gate_3_lm2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -269,7 +269,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="kage_lm1"
+	<material index="4" name="h_kage_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"

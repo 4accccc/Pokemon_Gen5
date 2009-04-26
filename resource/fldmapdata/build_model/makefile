@@ -13,8 +13,8 @@ USERS	=	tamada lee_hyunjung
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname	= all_build_model
-#targetname	= buildmodel_outdoor
+#targetname	= all_build_model
+targetname	= buildmodel_outdoor
 NARCNAME	= $(targetname).narc
 NAIXNAME	= $(targetname).naix
 
@@ -43,6 +43,15 @@ ARC_LIST	= $(TMP)/archive_file.txt
 RESDIR		= nsbmdfiles
 SRCDIR		= imdfiles
 
+.PHONY:	do-build lists clean subdir
+
+#------------------------------------------------------------------------------
+#	make do-build ルール
+#------------------------------------------------------------------------------
+do-build:	subdir
+	$(MAKE) lists
+	$(MAKE) arc
+
 -include $(DEP_LIST)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -53,15 +62,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr $< -o $@
 endif
 
-
-.PHONY:	do-build lists clean subdir
-
-#------------------------------------------------------------------------------
-#	make do-build ルール
-#------------------------------------------------------------------------------
-do-build:	subdir
-	$(MAKE) lists
-	$(MAKE) arc
 
 subdir:
 	@$(MAKE_SUBDIR)

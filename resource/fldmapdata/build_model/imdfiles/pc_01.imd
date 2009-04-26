@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-01-09T10:51:01" source="t2_pc.mb"/>
+	<create user="fuchino" host="W00152" date="2009-04-22T21:54:11" source="pc_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-01-09T10:51:01" source="t2_pc.mb"/>
+<original_create user="fuchino" host="W00152" date="2009-04-22T21:54:11" source="pc_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,11 +30,11 @@
 <box_test pos_scale="4" xyz="-3.125000 0.062500 -3.500000" whd="6.625000 5.470459 5.375000"/>
 
 <tex_image_array size="5">
-	<tex_image index="0" name="kage"
+	<tex_image index="0" name="h_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
-		palette_name="kage_pl"
-		path="C:/pokemonWB/wbhome_test/t2_pc/kage.tga"
+		palette_name="h_kage_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/common_tex/h_kage.tga"
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
@@ -48,7 +48,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="pckabe1"
-		path="C:/pokemonWB/wbhome_test/t2_pc/pc_kabe1.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/pc_01/tex/pc_kabe1.tga"
 	>
 		<bitmap size="32">
 			0dbc 0000 0db9 0000 a8b9 8899 a9bc 88dd
@@ -57,11 +57,29 @@
 			bdb6 33db 8dbe 33d8 ddb7 33dd ddb3 33dd
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="pc_win1"
+	<tex_image index="2" name="pc_logo"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="pclogo"
+		path="C:/home/wb_data3d/build_model/outdoor/pc_01/tex/pc_logo.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 4300 0034 0000
+			0000 8763 3678 0000 3000 8887 7888 0003
+			7300 8888 8888 0037 8510 2588 8862 0258
+			8610 6258 8526 0268 6610 8626 5268 0266
+			2210 8622 2268 0222 6610 6266 5526 0266
+			7510 2688 8862 0257 7300 8888 8888 0037
+			3000 8887 7888 0003 0000 8763 3678 0000
+			0000 4300 0034 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="pc_win1"
 		width="16" height="64" original_width="16" original_height="64"
 		format="a3i5"
 		palette_name="pcwin"
-		path="C:/pokemonWB/wbhome_test/t2_pc/pc_win1.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/pc_01/tex/pc_win1.tga"
 	>
 		<bitmap size="512">
 			efef efef efef efef efef efef efef efef
@@ -130,30 +148,12 @@
 			e2e2 e2e2 e4e4 e4e4 e2e2 e2e2 e4e4 e4e4
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="pclogo"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="pclogo"
-		path="C:/pokemonWB/wbhome_test/t2_pc/pclogo.tga"
-	>
-		<bitmap size="64">
-			0000 0000 0000 0000 0000 4300 0034 0000
-			0000 8763 3678 0000 3000 8887 7888 0003
-			7300 8888 8888 0037 8510 2588 8862 0258
-			8610 6258 8526 0268 6610 8626 5268 0266
-			2210 8622 2268 0222 6610 6266 5526 0266
-			7510 2688 8862 0257 7300 8888 8888 0037
-			3000 8887 7888 0003 0000 8763 3678 0000
-			0000 4300 0034 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="4" name="pcyuka"
+	<tex_image index="4" name="pc_yuka"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
 		color0_mode="color"
 		palette_name="pcyuka"
-		path="C:/pokemonWB/wbhome_test/t2_pc/pcyuka.tga"
+		path="C:/home/wb_data3d/build_model/outdoor/pc_01/tex/pc_yuka.tga"
 	>
 		<bitmap size="8">
 			0000 1554 1aa4 1be4 1be4 1aa4 1554 0000
@@ -162,7 +162,7 @@
 </tex_image_array>
 
 <tex_palette_array size="5">
-	<tex_palette index="0" name="kage_pl" color_size="8">
+	<tex_palette index="0" name="h_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="pckabe1" color_size="16">
@@ -183,20 +183,20 @@
 </tex_palette_array>
 
 <material_array size="6">
-	<material index="0" name="kage_lm2"
+	<material index="0" name="h_kage_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="40"
+		polygon_id="9"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="0 0 0"
+		ambient="31 31 31"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -207,7 +207,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="lambert10"
+	<material index="1" name="lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -226,86 +226,14 @@
 		shininess_table_flag="off"
 		tex_image_idx="-1" tex_palette_idx="-1"
 	/>
-	<material index="2" name="lambert12"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="2"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="3" name="lambert15"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="4" name="lambert7"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="3"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="5" name="lambert9"
+	<material index="2" name="pc_kabe1_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
+		polygon_id="8"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -316,6 +244,78 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="3" name="pc_logo_lm1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="2" tex_palette_idx="2"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="4" name="pc_win1_lm1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="3" tex_palette_idx="3"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="5" name="pc_yuka_lm1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="4" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -632,6 +632,23 @@
 					<pos_xy xy="2.623535 1.629150"/>
 				</primitive>
 				<primitive index="3" type="quad_strip" vertex_size="6">
+					<tex st="2.875000 6.750000"/>
+					<nrm xyz="-0.664063 0.748047 0.000000"/>
+					<pos_xyz xyz="-0.508057 5.355225 -2.200195"/>
+					<tex st="2.875000 8.125000"/>
+					<pos_xz xz="-0.508057 0.908447"/>
+					<tex st="0.062500 6.750000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xyz xyz="-0.000977 5.533203 -2.200195"/>
+					<tex st="0.062500 8.125000"/>
+					<pos_xz xz="-0.000977 0.908447"/>
+					<tex st="2.875000 6.750000"/>
+					<nrm xyz="0.664063 0.748047 0.000000"/>
+					<pos_xyz xyz="0.506104 5.355225 -2.200195"/>
+					<tex st="2.875000 8.125000"/>
+					<pos_xz xz="0.506104 0.908447"/>
+				</primitive>
+				<primitive index="4" type="quad_strip" vertex_size="6">
 					<tex st="4.000000 15.875000"/>
 					<nrm xyz="0.654297 0.708984 -0.265625"/>
 					<pos_xyz xyz="2.996826 4.633057 -2.177246"/>
@@ -651,27 +668,10 @@
 					<nrm xyz="0.148438 0.914063 0.375000"/>
 					<pos_xyz xyz="2.435791 4.893066 1.058350"/>
 				</primitive>
-				<primitive index="4" type="quad_strip" vertex_size="6">
-					<tex st="2.875000 6.750000"/>
-					<nrm xyz="-0.664063 0.748047 0.000000"/>
-					<pos_xyz xyz="-0.508057 5.355225 -2.200195"/>
-					<tex st="2.875000 8.125000"/>
-					<pos_xz xz="-0.508057 0.908447"/>
-					<tex st="0.062500 6.750000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="-0.000977 5.533203 -2.200195"/>
-					<tex st="0.062500 8.125000"/>
-					<pos_xz xz="-0.000977 0.908447"/>
-					<tex st="2.875000 6.750000"/>
-					<nrm xyz="0.664063 0.748047 0.000000"/>
-					<pos_xyz xyz="0.506104 5.355225 -2.200195"/>
-					<tex st="2.875000 8.125000"/>
-					<pos_xz xz="0.506104 0.908447"/>
-				</primitive>
 				<primitive index="5" type="triangle_strip" vertex_size="4">
 					<tex st="7.562500 5.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xy xy="-0.508057 5.355225"/>
+					<pos_xyz xyz="-0.508057 5.355225 0.908447"/>
 					<tex st="7.562500 15.625000"/>
 					<pos_xy xy="-0.000977 4.925781"/>
 					<tex st="7.562500 5.000000"/>
@@ -1135,7 +1135,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface32" kind="mesh"
+	<node index="0" name="polySurface41" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -1155,10 +1155,10 @@
 	>
 		<display index="0" material="0" polygon="5" priority="0"/>
 		<display index="1" material="1" polygon="3" priority="0"/>
-		<display index="2" material="2" polygon="0" priority="0"/>
-		<display index="3" material="3" polygon="4" priority="0"/>
+		<display index="2" material="2" polygon="2" priority="0"/>
+		<display index="3" material="3" polygon="0" priority="0"/>
 		<display index="4" material="4" polygon="1" priority="0"/>
-		<display index="5" material="5" polygon="2" priority="0"/>
+		<display index="5" material="5" polygon="4" priority="0"/>
 	</node>
 </node_array>
 
