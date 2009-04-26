@@ -1,14 +1,20 @@
+#------------------------------------------------------------------------------
+#
+#		
+#
+#------------------------------------------------------------------------------
 require "fileutils"
 
 INPUT_FILE	=	ARGV[0]
-DEP_FILE	=	ARGV[1]
-ARC_FILE	=	ARGV[2]
+DEP_SYMBOL	= ARGV[1]
+DEP_FILE	=	ARGV[2]
+ARC_FILE	=	ARGV[3]
 
 input_file = File.open(INPUT_FILE, "r")
 dep_file = File.open(DEP_FILE, "w")
 arc_file = File.open(ARC_FILE, "w")
 
-dep_file.puts "DEPEND_FILES	=	\\\n"
+dep_file.puts "#{DEP_SYMBOL}	=	\\\n"
 
 check_list = Array.new
 

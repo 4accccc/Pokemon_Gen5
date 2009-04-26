@@ -1,4 +1,4 @@
-DEPEND_FILES	=	\
+DEP_OUTDOOR	=	\
 	$(RESDIR)/pc_01.nsbmd \
 	$(RESDIR)/gate_01.nsbmd \
 	$(RESDIR)/t2_house01.nsbmd \
