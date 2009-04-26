@@ -70,7 +70,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 #imdデータからの生成ルール
 %.nsbmd:	../$(SRCDIR)/%.imd
-	g3dcvtr $< -o $@
+	@echo $<をコンバート
+	@g3dcvtr $< -o $@
 endif
 
 
@@ -92,20 +93,24 @@ $(TARGETDIR)/$(NARC_INDOOR):	$(NARC_INDOOR)
 	@$(COPY) $(NAIX_INDOOR) $(TARGETDIR)
 
 $(NARC_OUTDOOR):	$(DEP_OUTDOOR)
+	@echo $@をアーカイブしています
 	@nnsarc -c -l -n -i $(NARC_OUTDOOR) -S $(ARC_LIST_OUTDOOR) > $(TMP)/arc_result.txt
 	@$(NAIXCUT) $(NAIX_OUTDOOR)
 
 $(NARC_INDOOR):	$(DEP_INDOOR)
+	@echo $@をアーカイブしています
 	@nnsarc -c -l -n -i $(NARC_INDOOR) -S $(ARC_LIST_INDOOR) > $(TMP)/arc_result.txt
 	@$(NAIXCUT) $(NAIX_INDOOR)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、リスト生成
 $(DEP_LIST_OUTDOOR):	$(XLS_DATA_OUTDOOR)
+	@echo $<からリスト生成中
 	@$(XLS2TAB) $(XLS_DATA_OUTDOOR) > $(TXT_DATA_OUTDOOR)
 	@ruby makelist.rb $(TXT_DATA_OUTDOOR) DEP_OUTDOOR $(DEP_LIST_OUTDOOR) $(ARC_LIST_OUTDOOR)
 
 $(DEP_LIST_INDOOR):	$(XLS_DATA_INDOOR)
+	@echo $<からリスト生成中
 	@$(XLS2TAB) $(XLS_DATA_INDOOR) > $(TXT_DATA_INDOOR)
 	@ruby makelist.rb $(TXT_DATA_INDOOR) DEP_INDOOR $(DEP_LIST_INDOOR) $(ARC_LIST_INDOOR)
 endif
@@ -115,13 +120,13 @@ endif
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
-	-rm -f $(TARGETDIR)/$(NARC_OUTDOOR) $(TARGETDIR)/$(NAIX_OUTDOOR)
-	-rm -f $(TARGETDIR)/$(NARC_INDOOR) $(TARGETDIR)/$(NAIX_INDOOR)
-	-rm -f $(NARC_OUTDOOR) $(NAIX_OUTDOOR)
-	-rm -f $(NARC_INDOOR) $(NAIX_INDOOR)
+	@-rm -f $(TARGETDIR)/$(NARC_OUTDOOR) $(TARGETDIR)/$(NAIX_OUTDOOR)
+	@-rm -f $(TARGETDIR)/$(NARC_INDOOR) $(TARGETDIR)/$(NAIX_INDOOR)
+	@-rm -f $(NARC_OUTDOOR) $(NAIX_OUTDOOR)
+	@-rm -f $(NARC_INDOOR) $(NAIX_INDOOR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	-rm -f $(DEP_OUTDOOR) $(DEP_INDOOR)
-	-rm -f $(TMP)/*.txt *.txt
+	@-rm -f $(DEP_OUTDOOR) $(DEP_INDOOR)
+	@-rm -f $(TMP)/*.txt *.txt
 endif
 
 

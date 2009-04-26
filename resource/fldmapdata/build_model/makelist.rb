@@ -38,4 +38,3 @@ check_list.each{|item|
 input_file.close
 dep_file.close
 arc_file.close
-puts "#{check_list}"
