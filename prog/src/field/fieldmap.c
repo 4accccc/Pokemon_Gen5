@@ -27,6 +27,7 @@
 #include "weather.h"
 #include "field_fog.h"
 #include "field_light.h"
+#include "field_buildmodel.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
@@ -150,6 +151,8 @@ struct _FIELDMAP_WORK
 	void *mapCtrlWork;
 	
 	FIELD_DEBUG_WORK *debugWork;
+
+	FIELD_BMODEL_MAN * bmodel_man;
 
 	//削除予定
 	FLD_COMM_ACTOR *commActorTbl[FLD_COMM_ACTOR_MAX];
@@ -320,6 +323,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 				&fieldWork->now_pos,
 				fieldWork->heapID );
 
+		fieldWork->bmodel_man = FIELD_BMODEL_MAN_Create( fieldWork->heapID );
 		{
 			GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
 			
@@ -327,6 +331,9 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 					GAMEDATA_GetSeasonID(gamedata),
 					&fieldWork->map_res,
 					fieldWork->pMapMatrix );
+			//とりあえずここで配置モデルリストをセットする
+			FIELD_BMODEL_MAN_Load(fieldWork->bmodel_man, fieldWork->map_id);
+			fieldWork->map_res.gobjData = (void*)FIELD_BMODEL_MAN_GetOBJTBL(fieldWork->bmodel_man);
 		}
 		
 		//フィールドマップ用ロケーション作成
@@ -490,6 +497,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 		FIELD_PLAYER_Delete( fieldWork->field_player );
 		
     FLDMAPPER_ReleaseData( fieldWork->g3Dmapper );
+		FIELD_BMODEL_MAN_Delete( fieldWork->bmodel_man );
 		
 		FLDMSGBG_Delete( fieldWork->fldMsgBG );
 		

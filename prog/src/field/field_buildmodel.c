@@ -15,8 +15,10 @@
 
 #include "field_buildmodel.h"
 
-#include "field_g3d_mapper.h"
-#include "fieldmap_resist.h"
+#include "field_g3d_mapper.h"		//下記ヘッダに必要
+#include "fieldmap_resist.h"		//FLDMAPPER_RESISTDATA_OBJTBLなど
+
+#include "arc/fieldmap/area_id.h"
 
 //============================================================================================
 //============================================================================================
@@ -54,6 +56,7 @@ static FIELD_BMODEL_MAN * GlobalManager;
 //============================================================================================
 static void makeTblFromIndex(FIELD_BMODEL_MAN * man);
 static void makeResistObjTable(FIELD_BMODEL_MAN * man);
+static u16 calcArcIndex(u16 area_id);
 
 //============================================================================================
 //============================================================================================
@@ -80,6 +83,7 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid)
 {	
 	ARCHANDLE * handle;
 	u16 area_id = ZONEDATA_GetAreaID(zoneid);
+	u16 arc_index = calcArcIndex(area_id);
 
 	GFL_STD_MemClear(man->tbl, sizeof(man->tbl));
 	GFL_STD_MemFill16(man->entry_index, BMODEL_ENTRY_NG, sizeof(man->entry_index));
@@ -101,24 +105,24 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid)
 	{	
 		u16 data_count = GFL_ARC_GetDataFileCntByHandle(handle);
 		TAMADA_Printf("bmodel list id = %d\n",data_count);
-		if (data_count < area_id)
+		if (data_count < arc_index)
 		{	
-			GF_ASSERT_MSG(0, "配置モデルリストデータがありません(%d<%d)\n", data_count, area_id);
-			area_id = 0;		//とりあえずハングアップ回避
+			GF_ASSERT_MSG(0, "配置モデルリストデータがありません(%d<%d)\n", data_count, arc_index);
+			arc_index = 0;		//とりあえずハングアップ回避
 		}
 	}
 	//読み込み
 	{	
-		u16 size = GFL_ARC_GetDataSizeByHandle(handle, area_id);
+		u16 size = GFL_ARC_GetDataSizeByHandle(handle, arc_index);
 		man->entry_count = size / sizeof(BMODEL_ID);
 		if(size > sizeof(man->entry_index))
 		{	
-			GF_ASSERT_MSG(0, "配置モデルリストデータが大きすぎます（AREA=%d)\n", area_id);
+			GF_ASSERT_MSG(0, "配置モデルリストデータがオーバー（size=%d ARCINDEX=%d)\n", size, arc_index);
 			man->entry_count = BMODEL_ENTRY_MAX;	//とりあえずハングアップ回避
 			size = sizeof(man->entry_index);
 		}
 		TAMADA_Printf("entry_count=%d\n", man->entry_count);
-		GFL_ARC_LoadDataOfsByHandle(handle, area_id, 0, size, man->entry_index);
+		GFL_ARC_LoadDataOfsByHandle(handle, arc_index, 0, size, man->entry_index);
 	}
 	GFL_ARC_CloseDataHandle(handle);
 
@@ -148,7 +152,13 @@ u16 FIELD_BMODEL_MAN_GetNarcIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
 //------------------------------------------------------------------
 u16 FIELD_BMODEL_MAN_GetEntryIndex(BMODEL_ID id)
 {	
-	return FIELD_BMODEL_MAN_GetNarcIndex(GlobalManager, id);
+	u16 entry;
+	FIELD_BMODEL_MAN * man = GlobalManager;
+	//entry = FIELD_BMODEL_MAN_GetNarcIndex(GlobalManager, id);
+	GF_ASSERT(id < BMODEL_ID_MAX);
+	entry = man->tbl[id];
+	TAMADA_Printf("bmodel index = %d -->%d\n",id, entry);
+	return entry;
 }
 //============================================================================================
 //============================================================================================
@@ -186,6 +196,20 @@ static void makeResistObjTable(FIELD_BMODEL_MAN * man)
 	resist->objCount = man->entry_count;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static u16 calcArcIndex(u16 area_id)
+{	
+	if (area_id >= AREA_ID_IN01)
+	{	
+		return area_id - AREA_ID_IN01;
+	}
+	if (area_id >= AREA_ID_OUT01)
+	{	
+		return (area_id - AREA_ID_OUT01) / 4;
+	}
+	return 0;	//とりあえず
+}
 
 
 

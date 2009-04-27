@@ -35,7 +35,7 @@ static FLDMAPPER_RESIST_TEX	gTexBuffer;
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static int MapID2ResistID(u16 mapid)
+static u16 MapID2ResistID(u16 mapid)
 {
 	u16 resid;
 	GF_ASSERT(mapid < ZONEDATA_GetZoneIDMax());
@@ -83,7 +83,7 @@ void FIELDDATA_SetMapperData(
 				AREADATA_GetInnerOuterSwitch(area_id),
 				AREADATA_GetLightType(area_id));
 	}
-#if 1
+#if 0
 	{
 		int x,z;
 		for (z = 0; z < map_res->sizez; z++) {
@@ -240,9 +240,11 @@ static const u16	resistDDobjTbl[] = {
 };
 
 static const FLDMAPPER_RESISTDATA_OBJTBL	gobjData_Tbl = {
-	ARCID_ALLBUILDMODEL, resistObjTbl2, NELEMS(resistObjTbl2), 
+	ARCID_BMODEL_OUTDOOR, resistObjTbl2, NELEMS(resistObjTbl2), 
+	//ARCID_ALLBUILDMODEL, resistObjTbl2, NELEMS(resistObjTbl2), 
+	0/* dummy archive id */, NULL, 0,
 	//ARCID_FLDMAP_SAMPLE, resistObjTbl, NELEMS(resistObjTbl), 
-	ARCID_FLDMAP_ACTOR, resistDDobjTbl, NELEMS(resistDDobjTbl),
+	//ARCID_FLDMAP_ACTOR, resistDDobjTbl, NELEMS(resistDDobjTbl),
 };
 
 //------------------------------------------------------------------
