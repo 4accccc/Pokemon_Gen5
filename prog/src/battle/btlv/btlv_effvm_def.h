@@ -116,12 +116,18 @@ doxygen書式の@paramはそのままツール上のコメントとして表示されます
 パラメータの型を記述します
 ・COMBOBOX_TEXT
 　コンボボックス型にして、コンボボックスで表示するリストデータを列記します
+
 ・COMBOBOX_VALUE
 　先に設定したコンボボックス型のインデックスに対応して実際のシーケンスソースに書き出されるラベル定義などを記述します
+
 ・VALUE_FX32
 　FX32型の値（ツール上では、小数ありの数値入力を可能にします）
+	型の宣言の後ろに、数値入力ダイアログ表示用のラベルを記述できます
+
 ・VALUE_INT
 	INT型の値（ツール上では、小数なしの数値入力になります）
+	型の宣言の後ろに、数値入力ダイアログ表示用のラベルを記述できます
+
 ・VALUE_VECFX32
 	VecFx32型の値　型の宣言の後ろにタブ区切りで、数値入力ダイアログ表示用のラベルを記述できます
 ex)
@@ -131,8 +137,10 @@ ex)
 
 ・FILE_DIALOG
 　ファイルダイアログを表示してファイル選択を促す　選択を絞る拡張子を指定できます
+
 ・FILE_DIALOG_COMBOBOX
 　ファイルダイアログで選択したファイルをコンボボックスで表示します　選択を絞る拡張子を指定できます
+
 ・COMBOBOX_HEADER
 　FILE_DIALOG_COMBOBOXで選択したファイルの拡張子.hファイルを読み込んでコンボボックスを表示します
 
@@ -176,9 +184,9 @@ ex)
  * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_MOVE_INTERPOLATION	BTLEFF_CAMERA_MOVE_DIRECT
  * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	初期位置	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D
  * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_ATTACK BTLEFF_CAMERA_POS_ATTACK_PAIR	BTLEFF_CAMERA_POS_DEFENCE BTLEFF_CAMERA_POS_DEFENCE_PAIR	BTLEFF_CAMERA_POS_INIT	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D
- * #param	VALUE_INT
- * #param	VALUE_INT
- * #param	VALUE_INT
+ * #param	VALUE_INT	移動フレーム数
+ * #param	VALUE_INT	移動ウエイト
+ * #param	VALUE_INT	ブレーキ開始フレーム
  */
 //======================================================================
 	.macro	CAMERA_MOVE	type, move_pos, frame, wait, brake
@@ -223,8 +231,8 @@ ex)
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
  * #param	COMBOBOX_TEXT	方向無し	攻撃側	防御側
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_NONE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
- * #param	VALUE_FX32
- * #param	VALUE_FX32
+ * #param	VALUE_FX32	パーティクル再生Y方向オフセット
+ * #param	VALUE_FX32	パーティクル再生方向Y角度
  */
 //======================================================================
 	.macro	PARTICLE_PLAY	num, index, start_pos, dir_pos, ofs_y, dir_angle
@@ -254,11 +262,11 @@ ex)
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
  * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_MOVE_DIRECT	BTLEFF_POKEMON_MOVE_INTERPOLATION	BTLEFF_POKEMON_MOVE_ROUNDTRIP	BTLEFF_POKEMON_MOVE_ROUNDTRIP_LONG
- * #param	VALUE_FX32
- * #param	VALUE_FX32
- * #param	VALUE_INT
- * #param	VALUE_INT
- * #param	VALUE_INT
+ * #param	VALUE_FX32	移動先X座標
+ * #param	VALUE_FX32	移動先Y座標
+ * #param	VALUE_INT		移動フレーム数
+ * #param	VALUE_INT		移動ウエイト
+ * #param	VALUE_INT		往復カウント（往復時有効）
  */
 //======================================================================
 	.macro	POKEMON_MOVE	pos, type, move_pos_x, move_pos_y, frame, wait, count
@@ -289,11 +297,11 @@ ex)
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
  * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SCALE_DIRECT	BTLEFF_POKEMON_SCALE_INTERPOLATION	BTLEFF_POKEMON_SCALE_ROUNDTRIP	BTLEFF_POKEMON_SCALE_ROUNDTRIP_LONG
- * #param	VALUE_FX32
- * #param	VALUE_FX32
- * #param	VALUE_INT
- * #param	VALUE_INT
- * #param	VALUE_INT
+ * #param	VALUE_FX32	X方向拡縮率
+ * #param	VALUE_FX32	Y方向拡縮率
+ * #param	VALUE_INT		拡縮フレーム数
+ * #param	VALUE_INT		拡縮ウエイト
+ * #param	VALUE_INT		往復カウント（往復時有効）
  */
 //======================================================================
 	.macro	POKEMON_SCALE	pos, type, scale_x, scale_y, frame, wait, count
@@ -323,10 +331,10 @@ ex)
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
  * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_ROTATE_DIRECT	BTLEFF_POKEMON_ROTATE_INTERPOLATION	BTLEFF_POKEMON_ROTATE_ROUNDTRIP	BTLEFF_POKEMON_ROTATE_ROUNDTRIP_LONG
- * #param	VALUE_FX32
- * #param	VALUE_INT
- * #param	VALUE_INT
- * #param	VALUE_INT
+ * #param	VALUE_FX32	回転角度
+ * #param	VALUE_INT		回転フレーム数（設定した回転値まで何フレームで到達するか）
+ * #param	VALUE_INT		回転ウエイト
+ * #param	VALUE_INT		往復カウント（往復時有効）
  */
 //======================================================================
 	.macro	POKEMON_ROTATE	pos, type, rotate, frame, wait, count
@@ -346,15 +354,15 @@ ex)
  * #param_num	4
  * @param	pos			メパチさせるポケモンの立ち位置
  * @param	type		メパチタイプ
- * @param	wait		メパチウエイト（メパチタイプがまばたきのときだけ有効）
- * @param	count		メパチカウント（メパチタイプがまばたきのときだけ有効）
+ * @param	wait		まばたきウエイト（メパチタイプがまばたきのときだけ有効）
+ * @param	count		まばたきカウント（メパチタイプがまばたきのときだけ有効）
  *
  * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
  * #param	COMBOBOX_TEXT	閉じる	開ける	まばたき
  * #param	COMBOBOX_VALUE	BTLEFF_MEPACHI_ON	BTLEFF_MEPACHI_OFF	BTLEFF_MEPACHI_MABATAKI
- * #param	VALUE_INT
- * #param	VALUE_INT
+ * #param	VALUE_INT	まばたきウエイト（まばたき時有効）
+ * #param	VALUE_INT	まばたきカウント（まばたき時有効）
  */
 //======================================================================
 	.macro	POKEMON_SET_MEPACHI_FLAG	pos, type, wait, count
@@ -395,7 +403,7 @@ ex)
  * @param	move_type		移動タイプ（直線、放物線）
  * @param	start_pos		移動開始立ち位置
  * @param	end_pos			移動終了立ち位置
- * @param	move_param	立ち位置Y方向オフセット	移動スピード	放物線角度（放物線時のみ）
+ * @param	move_param	立ち位置Y方向オフセット(ofs_y)	移動フレーム(move_frame)	放物線頂点（放物線時のみ）(top)
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
@@ -405,11 +413,19 @@ ex)
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
  * #param	COMBOBOX_TEXT	攻撃側	防御側
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
- * #param	VALUE_VECFX32	立ち位置Y方向オフセット	移動スピード	放物線角度（放物線時のみ）
+ * #param	VALUE_VECFX32	立ち位置Y方向オフセット	移動フレーム	放物線頂点（放物線時のみ）
  */
 //======================================================================
-	.macro	EMITTER_MOVE
+	.macro	EMITTER_MOVE	num, index, move_type, start_pos, end_pos, ofs_y, move_frame, top
 	.short	EC_EMITTER_MOVE
+	.long		\num
+	.long		\index
+	.long		\move_type
+	.long		\start_pos
+	.long		\end_pos
+	.long		\ofs_y
+	.long		\move_frame
+	.long		\top
 	.endm
 
 //======================================================================

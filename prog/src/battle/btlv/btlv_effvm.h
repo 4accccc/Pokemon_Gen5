@@ -26,7 +26,7 @@ typedef struct
 }DEBUG_PARTICLE_DATA;
 #endif
 
-extern	VMHANDLE	*BTLV_EFFVM_Init( HEAPID heapID );
+extern	VMHANDLE	*BTLV_EFFVM_Init( GFL_TCBSYS *tcbsys, HEAPID heapID );
 extern	BOOL		BTLV_EFFVM_Main( VMHANDLE *vmh );
 extern	void		BTLV_EFFVM_Exit( VMHANDLE *core );
 extern	void		BTLV_EFFVM_Start( VMHANDLE *core, BtlvMcssPos from, BtlvMcssPos to, WazaID waza );
