@@ -83,6 +83,15 @@ static void mapCtrlC3_Create(
 	*work = init;
 	FIELDMAP_SetMapCtrlWork( fieldWork, work );
 	
+	{	//ビルボード設定
+		VecFx32 scale = {
+			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
+			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
+			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
+		};
+		GFL_BBDACT_SYS *bbdActSys = FIELDMAP_GetBbdActSys( fieldWork );
+		GFL_BBD_SetScale( GFL_BBDACT_GetBBDSystem(bbdActSys), &scale );
+	}
 	fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	FIELD_PLAYER_SetPos( fld_player, pos);
 	FIELD_PLAYER_SetDir( fld_player, dir );
