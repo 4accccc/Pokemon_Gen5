@@ -448,14 +448,12 @@ static	void	EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
 		EffectViewerResourceLoad( evw );
 		break;
 	case SEQ_EFFECT_ENABLE:
-#if 0
 		if( cont == PAD_BUTTON_A ){
 			BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->sequence_data, evw->resource_data );
 		}
 		else if( cont == PAD_BUTTON_B ){
 			BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data );
 		}
-#endif
 		evw->seq_no++;
 		break;
 	case SEQ_EFFECT_WAIT:
