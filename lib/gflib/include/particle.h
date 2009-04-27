@@ -112,6 +112,9 @@ typedef u32 (*pTexCallback)(u32, BOOL);
 ///エミッタ生成時に呼ばれるコールバック関数の型
 typedef void (*pEmitFunc)(GFL_EMIT_PTR);
 
+///SPL_SetCallbackFuncに指定するコールバック関数の型
+typedef void (*pEmitCBFunc)( GFL_EMIT_PTR, unsigned int );
+
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
@@ -211,6 +214,13 @@ extern	void			GFL_PTC_SetEmitterConvergencePos(GFL_EMIT_PTR emit, VecFx32* p_pos
 extern	void			GFL_PTC_GetEmitterConvergencePos(GFL_EMIT_PTR emit, VecFx32* p_pos);
 extern	void			GFL_PTC_SetEmitterConvergenceRatio(GFL_EMIT_PTR emit, fx16* ratio);
 extern	void			GFL_PTC_GetEmitterConvergenceRatio(GFL_EMIT_PTR emit, fx16* ratio);
+
+// -----------------------------------------
+//	コールバック関連
+// -----------------------------------------
+extern	void			GFL_PTC_SetCallbackFunc( GFL_EMIT_PTR emit, pEmitCBFunc func );
+extern	void			GFL_PTC_SetUserData( GFL_EMIT_PTR emit, void *work );
+extern	void			*GFL_PTC_GetUserData( GFL_EMIT_PTR emit );
 
 #ifdef __cplusplus
 }/* extern "C" */
