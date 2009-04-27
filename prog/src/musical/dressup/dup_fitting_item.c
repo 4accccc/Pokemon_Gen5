@@ -38,8 +38,11 @@ struct _FIT_ITEM_WORK
 	MUS_ITEM_DRAW_WORK	*itemWork;
 	GFL_POINT	pos;
 	fx32	scale;
-	u16		cnt;	//汎用カウンタ
+	u16		cnt;	//カウンタ
+	MUS_POKE_EQUIP_POS ePos;
 	
+	GFL_POINT	befPos;
+
 	//単方向リスト構造
 	FIT_ITEM_WORK* next;
 };
@@ -197,6 +200,7 @@ FIT_ITEM_WORK* DUP_FIT_ITEM_CreateItem( HEAPID heapId , MUS_ITEM_DRAW_SYSTEM *it
 	item->itemId = itemId;
 	item->itemWork = MUS_ITEM_DRAW_AddResource( itemDrawSys , itemId , res , pos );
 	item->cnt = 0;
+	item->ePos = MUS_POKE_EQU_INVALID;
 	return item;
 }
 void DUP_FIT_ITEM_DeleteItem( FIT_ITEM_WORK *item , MUS_ITEM_DRAW_SYSTEM *itemDrawSys )
@@ -254,6 +258,14 @@ GFL_POINT* DUP_FIT_ITEM_GetPosition( FIT_ITEM_WORK *item )
 {
 	return &item->pos;
 }
+void DUP_FIT_ITEM_SetBefPosition( FIT_ITEM_WORK *item , const GFL_POINT *pos )
+{
+	item->befPos = *pos;
+}
+GFL_POINT* DUP_FIT_ITEM_GetBefPosition( FIT_ITEM_WORK *item )
+{
+	return &item->befPos;
+}
 void DUP_FIT_ITEM_SetScale( FIT_ITEM_WORK *item , const fx32 scale )
 {
 	item->scale = scale;
@@ -270,6 +282,17 @@ u16	 DUP_FIT_ITEM_GetCount( FIT_ITEM_WORK *item )
 {
 	return item->cnt;
 }
+
+void	DUP_FIT_ITEM_SetEquipPos( FIT_ITEM_WORK *item , const MUS_POKE_EQUIP_POS ePos )
+{
+	item->ePos = ePos;
+}
+
+const MUS_POKE_EQUIP_POS	DUP_FIT_ITEM_GetEquipPos( FIT_ITEM_WORK *item )
+{
+	return item->ePos;
+}
+
 
 //--------------------------------------------------------------
 //座標とのチェック

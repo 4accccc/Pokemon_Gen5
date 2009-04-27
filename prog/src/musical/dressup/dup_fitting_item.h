@@ -69,10 +69,16 @@ MUS_ITEM_DRAW_WORK* DUP_FIT_ITEM_GetItemDrawWork( FIT_ITEM_WORK *item );
 
 void DUP_FIT_ITEM_SetPosition( FIT_ITEM_WORK *item ,const GFL_POINT *pos );
 GFL_POINT* DUP_FIT_ITEM_GetPosition( FIT_ITEM_WORK *item );
+void DUP_FIT_ITEM_SetBefPosition( FIT_ITEM_WORK *item ,const GFL_POINT *pos );
+GFL_POINT* DUP_FIT_ITEM_GetBefPosition( FIT_ITEM_WORK *item );
 void DUP_FIT_ITEM_SetScale( FIT_ITEM_WORK *item , const fx32 scale );
 fx32 DUP_FIT_ITEM_GetScale( FIT_ITEM_WORK *item );
 void DUP_FIT_ITEM_SetCount( FIT_ITEM_WORK *item , const u16 count );
 u16	 DUP_FIT_ITEM_GetCount( FIT_ITEM_WORK *item );
+
+void	DUP_FIT_ITEM_SetEquipPos( FIT_ITEM_WORK *item , const MUS_POKE_EQUIP_POS ePos );
+const MUS_POKE_EQUIP_POS	DUP_FIT_ITEM_GetEquipPos( FIT_ITEM_WORK *item );
+
 
 //座標とのチェック
 const BOOL DUP_FIT_ITEM_CheckHit( FIT_ITEM_WORK *item , u32 posX , u32 posY );

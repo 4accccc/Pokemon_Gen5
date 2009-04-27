@@ -112,6 +112,8 @@ static const fx32 EQUIP_ITEM_DEPTH_BACK = FX32_CONST(20.5f);
 
 //リストに戻るアニメーション
 static const u16 ITEM_RETURN_ANIME_CNT = 30;
+//移動キャンセルでフィールドに戻るとき
+static const u16 ITEM_RETURN_POS_CNT = 5;
 
 
 //表示順位メモ
@@ -200,6 +202,8 @@ struct _FITTING_WORK
 	
 	FIT_ITEM_WORK	*holdItem;	//保持しているアイテム
 	ITEM_GROUPE		holdItemType;
+	ITEM_GROUPE		befItemType;
+	GFL_POINT			befItemPos;
 
 	MUS_ITEM_DRAW_WORK *shadowItem;	//影用
 	u16					shadowItemIdx;
@@ -257,6 +261,7 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpDropItemToField( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work );
+static void DUP_FIT_UpdateTpCancelDropItem( FITTING_WORK *work );
 
 static const BOOL DUP_FIT_CheckIsEquipItem( FITTING_WORK *work , const MUS_POKE_EQUIP_POS pos);
 static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition( FITTING_WORK *work , MUS_ITEM_DRAW_WORK *itemDrawWork , GFL_POINT *pos , u16 *len );
@@ -316,6 +321,8 @@ FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 	work->befAngleEnable = FALSE;
 	work->holdItem = NULL;
 	work->holdItemType = IG_NONE;
+	work->befItemType = IG_NONE;
+
 	work->listSpeed = 0;
 	work->snapPos = MUS_POKE_EQU_INVALID;
 	DUP_FIT_SetupGraphic( work );
@@ -408,6 +415,7 @@ FITTING_RETURN	DUP_FIT_LoopFitting( FITTING_WORK *work )
 		break;
 	}
 
+	DUP_FIT_UpdateItemAnime( work );
 	MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
 	MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
 	
@@ -867,7 +875,6 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
 #endif
 
 	DUP_FIT_UpdateTpMain( work );
-	DUP_FIT_UpdateItemAnime( work );
 	DUP_FIT_UpdateShadow( work );
 	
 	//VBlankによるPltの転送が終わっていたらここでメモリを開放
@@ -1129,7 +1136,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
 			else
 			if( hitMinOval == TRUE )
 			{
-				DUP_FIT_UpdateTpDropItemToField( work );
+				DUP_FIT_UpdateTpCancelDropItem( work );
 			}
 			else
 			{
@@ -1140,6 +1147,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
 		work->befAngleEnable = FALSE;
 		work->holdItem = NULL;
 		work->holdItemType = IG_NONE;
+		work->befItemType = IG_NONE;
 		work->snapPos = MUS_POKE_EQU_INVALID;
 	}
 	//慣性で回る～
@@ -1280,6 +1288,22 @@ static void DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work )
 			work->holdItemType = IG_FIELD;
 			//DUP_FIT_ITEM_CheckLengthSqrt( item , work->tpx,work->tpy );
 			ARI_TPrintf("Item Hold[%d]\n",work->itemState[DUP_FIT_ITEM_GetItemIdx(item)].itemId);
+			
+			//戻す時用の処理
+			if( isEquipList == TRUE )
+			{
+				work->befItemType = IG_EQUIP;
+				work->befItemPos.x = 0;
+				work->befItemPos.y = 0;
+			}
+			else
+			{
+				const GFL_POINT *itemPos = DUP_FIT_ITEM_GetPosition( item );
+				work->befItemType = IG_FIELD;
+				work->befItemPos.x = itemPos->x;
+				work->befItemPos.y = itemPos->y;
+			}
+
 			item = NULL;
 		}
 		else
@@ -1397,6 +1421,7 @@ static void DUP_FIT_CreateItemListToField( FITTING_WORK *work )
 	//保持アイテムを今生成したものに変える
 	work->holdItem = item;
 	work->holdItemType = IG_FIELD;
+	work->befItemType = IG_LIST;
 	
 	//アイテムを取った状態に
 	work->itemState[itemIdx].isOutList = TRUE;
@@ -1454,7 +1479,7 @@ static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work )
 
 	MUS_ITEM_DRAW_SetSize( work->itemDrawSys , holdDrawWork ,FX16_ONE,FX16_ONE );
 
-	DUP_FIT_ITEM_SetCount( work->holdItem , 0 );
+	DUP_FIT_ITEM_SetCount( work->holdItem , ITEM_RETURN_ANIME_CNT );
 
 	//アイテムを戻した状態に
 	work->itemState[itemIdx].isOutList = FALSE;
@@ -1480,7 +1505,7 @@ static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
 
 	MUS_ITEM_DRAW_SetSize( work->itemDrawSys , holdDrawWork ,FX16_ONE,FX16_ONE );
 
-	DUP_FIT_ITEM_SetCount( work->holdItem , work->snapPos );
+	DUP_FIT_ITEM_SetEquipPos( work->holdItem , work->snapPos );
 	
 	//深度の再設定
 	item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
@@ -1510,6 +1535,34 @@ static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
 }
 
 //--------------------------------------------------------------
+//アイテムを取った位置に戻す
+//--------------------------------------------------------------
+static void DUP_FIT_UpdateTpCancelDropItem( FITTING_WORK *work )
+{
+	if( work->befItemType == IG_FIELD )
+	{
+		VecFx32 pos = {0,0,HOLD_ITEM_DEPTH};
+		MUS_ITEM_DRAW_WORK *itemDrawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
+		GFL_POINT dispPos;
+
+		dispPos.x = work->tpx;
+		dispPos.y = work->tpy;
+		pos.x = FX32_CONST(work->befItemPos.x);
+		pos.y = FX32_CONST(work->befItemPos.y);
+		DUP_FIT_ITEM_SetBefPosition( work->holdItem , &dispPos );
+		MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , itemDrawWork , &pos );
+		DUP_FIT_ITEM_SetPosition( work->holdItem , &work->befItemPos );
+		DUP_FIT_ITEM_SetCount( work->holdItem , ITEM_RETURN_POS_CNT );
+		
+		DUP_FIT_UpdateTpDropItemToField( work );
+	}
+	else
+	{
+		DUP_FIT_UpdateTpDropItemToList( work );
+	}
+}
+
+//--------------------------------------------------------------
 //指定箇所に装備があるか？
 //--------------------------------------------------------------
 static const BOOL DUP_FIT_CheckIsEquipItem( FITTING_WORK *work , const MUS_POKE_EQUIP_POS pos)
@@ -1517,7 +1570,7 @@ static const BOOL DUP_FIT_CheckIsEquipItem( FITTING_WORK *work , const MUS_POKE_
 	FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
 	while( item != NULL )
 	{
-		if( pos == DUP_FIT_ITEM_GetCount( item ) )
+		if( pos == DUP_FIT_ITEM_GetEquipPos( item ) )
 		{
 			return TRUE;
 		}
@@ -1558,31 +1611,70 @@ static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work , MUS
 }
 
 //--------------------------------------------------------------
-//アイテムのアニメーション(itemGroupAnimeに登録されている物の処理
+//アイテムのアニメーション
 //--------------------------------------------------------------
 static void DUP_FIT_UpdateItemAnime( FITTING_WORK *work )
 {
-	FIT_ITEM_WORK *nextItem = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupAnime );
-	while( nextItem != NULL )
+	//itemGroupAnimeに登録されている物の処理
 	{
-		FIT_ITEM_WORK *item = nextItem;
-		MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
-		u16 cnt = DUP_FIT_ITEM_GetCount( item );
-
-		//removeする可能性があるので、先に次をとっておく
-		nextItem = DUP_FIT_ITEM_GetNextItem(item);
-
-		cnt++;
-		if( ITEM_RETURN_ANIME_CNT > cnt )
+		FIT_ITEM_WORK *nextItem = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupAnime );
+		while( nextItem != NULL )
 		{
-			fx16 size = FX16_ONE * (ITEM_RETURN_ANIME_CNT-cnt) / ITEM_RETURN_ANIME_CNT;
-			MUS_ITEM_DRAW_SetSize( work->itemDrawSys , drawWork , size , size );
-			DUP_FIT_ITEM_SetCount( item , cnt );
+			FIT_ITEM_WORK *item = nextItem;
+			MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
+			u16 cnt = DUP_FIT_ITEM_GetCount( item );
+
+			//removeする可能性があるので、先に次をとっておく
+			nextItem = DUP_FIT_ITEM_GetNextItem(item);
+
+			cnt--;
+			if( cnt > 0 )
+			{
+				fx16 size = FX16_ONE * (cnt) / ITEM_RETURN_ANIME_CNT;
+				MUS_ITEM_DRAW_SetSize( work->itemDrawSys , drawWork , size , size );
+				DUP_FIT_ITEM_SetCount( item , cnt );
+			}
+			else
+			{
+				DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupAnime , item );
+				DUP_FIT_ITEM_DeleteItem( item , work->itemDrawSys );
+			}
 		}
-		else
+	}
+	
+	//フィールドのアイテムキャンセル戻り処理
+	{
+		FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupField );
+		while( item != NULL )
 		{
-			DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupAnime , item );
-			DUP_FIT_ITEM_DeleteItem( item , work->itemDrawSys );
+			u16 cnt = DUP_FIT_ITEM_GetCount( item );
+			if( cnt > 0 )
+			{
+				MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
+				GFL_POINT *befPos = DUP_FIT_ITEM_GetBefPosition( item );
+				GFL_POINT *endPos = DUP_FIT_ITEM_GetPosition( item );
+				cnt--;
+				if( cnt > 0 )
+				{
+					VecFx32 pos;
+					MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , drawWork , &pos );
+					pos.x = FX32_CONST((endPos->x-befPos->x)*(ITEM_RETURN_POS_CNT-cnt)/ITEM_RETURN_POS_CNT+befPos->x);
+					pos.y = FX32_CONST((endPos->y-befPos->y)*(ITEM_RETURN_POS_CNT-cnt)/ITEM_RETURN_POS_CNT+befPos->y);
+					MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , drawWork , &pos );
+				}
+				else
+				{
+					VecFx32 pos;
+					MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , drawWork , &pos );
+					pos.x = FX32_CONST(endPos->x);
+					pos.y = FX32_CONST(endPos->y);
+					MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , drawWork , &pos );
+				}
+				
+				DUP_FIT_ITEM_SetCount( item , cnt );
+			}
+			
+			item = DUP_FIT_ITEM_GetNextItem(item);
 		}
 	}
 }
@@ -1741,7 +1833,7 @@ static void DUP_CHECK_ResetItemAngle( FITTING_WORK *work )
 	item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
 	while( item != NULL )
 	{
-		u16 equipPos = DUP_FIT_ITEM_GetCount( item );
+		u16 equipPos = DUP_FIT_ITEM_GetEquipPos( item );
 		MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , equipPos );
 		MUS_ITEM_DRAW_SetRotation( work->itemDrawSys , DUP_FIT_ITEM_GetItemDrawWork(item) , equipData->itemRot );
 		item = DUP_FIT_ITEM_GetNextItem(item);
@@ -1797,7 +1889,7 @@ static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work )
 	{
 		u16 rot;
 		s32 subAngle = work->befAngle - angle;
-		u16 equipPos = DUP_FIT_ITEM_GetCount( work->holdItem );
+		u16 equipPos = DUP_FIT_ITEM_GetEquipPos( work->holdItem );
 		s16 angle = work->initWork->musPoke->equip[equipPos].angle;
 		MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , equipPos );
 		
@@ -1836,7 +1928,7 @@ static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work )
 	item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
 	while( item != NULL && save_pos < MUSICAL_ITEM_EQUIP_MAX )
 	{
-		u16 equip_pos = DUP_FIT_ITEM_GetCount( item );
+		u16 equip_pos = DUP_FIT_ITEM_GetEquipPos( item );
 		MUS_POKE_EQUIP_DATA *equip_data = MUS_POKE_DRAW_GetEquipData( work->drawWork , equip_pos );
 		
 		mus_bef_save->equipData[save_pos].pos = equip_pos;
