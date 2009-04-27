@@ -37,7 +37,8 @@ COLUMM_Z = 25
 
 ### 定数定義
 #
-CMD_PATH = File.dirname($0)
+#CMD_PATH = File.dirname($0)
+CMD_PATH = File.dirname(__FILE__).gsub(/\\/,"/")
 
 
 # .xls を .xml に変換するためのコマンド式

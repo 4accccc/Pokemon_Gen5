@@ -34,21 +34,41 @@ class XlsTextReader < CXls2Xml
 	def initialize
 		#@xmldata=""
 		@sheets ={}
+		@sep = '\t'
 	end
 	def getXmlSheet(xlsName)
 		@xmldata = xls2xml(xlsName)
 		@sheets = xml2sheet(@xmldata)
 	end
 
-	def output(sep)
+	def setSeparater(sep)
+		@sep = sep
+	end
+
+	def putpagetitle
+		xml2pagetitle(@xmldata)
+		#@xmldata
+	end
+	def output(sheet_number)
+		sheet = @sheets[sheet_number]
+		return output_sheet(sheet)
+	end
+
+	def output_sheet(sheet)
+		contents = ""
+		sheet.each{|row|
+			row.each{|col|
+				contents += sprintf("%s%s",col, @sep)
+			}
+			contents += sprintf("\n")
+		}
+		return contents
+	end
+
+	def output
 		contents = ""
 		@sheets.each{|sheet|
-			sheet.each{|row|
-				row.each{|col|
-					contents += sprintf("%s%s",col, sep)
-				}
-				contents += sprintf("\n")
-			}
+			contents += output_sheet(sheet)
 		}
 		#なぜか最初に空行が入ってしまうので対処。
 		#本来的にはちゃんとデバッグする
@@ -56,12 +76,14 @@ class XlsTextReader < CXls2Xml
 	end
 end
 
+page = nil
 #オプションの解釈処理
 case ARGV[0]
 when "-tab"		then sep = '	'
 when "-t"		then sep = '	'
 when "-comma"	then sep = ','
 when "-c"		then sep = ','
+
 when /\-.+/		then raise CommnandLineArgumentError, "無効なオプションです"
 end
 
@@ -77,5 +99,7 @@ raise FileNotFoundException, "ファイル#{ARGV[0]}が見つかりません" unless FileTes
 
 conv = XlsTextReader.new
 conv.getXmlSheet(ARGV[0])
-puts "#{conv.output(sep)}"
+conv.setSeparater(sep)
+puts "#{conv.output}"
+#puts "#{conv.putpagetitle}"
 
