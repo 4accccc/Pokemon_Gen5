@@ -1,50 +1,72 @@
-//============================================================================================
+//======================================================================
 /**
- * @file	field_sub_nogrid.c
- * @brief	フィールドメイン処理サブ（グリッド無し用）
- *
- * このソースはfield_main.cにインクルードされています。
- * 最終的にはちゃんと分割管理されますが、実験環境のために
- * しばらくはこの形式です。
+ * @file	fieldmap_ctrl_nogrid.c
+ * @brief	フィールドマップ　コントロール　ノングリッド処理
+ * @author	tamada
  */
-//============================================================================================
+//======================================================================
+#include <gflib.h>
+#include "system/gfl_use.h"
 
-#include "field_easytp.h"
-//------------------------------------------------------------------
+#include "fieldmap.h"
+#include "field_player_nogrid.h"
+
+//======================================================================
+//	define
+//======================================================================
+
+//======================================================================
+//	struct
+//======================================================================
+
+//======================================================================
+//	proto
+//======================================================================
+
+//======================================================================
+//	フィールドマップ　ノングリッド処理
+//======================================================================
+//--------------------------------------------------------------
 /**
- * @brief	初期化処理（グリッド無し）
+ * フィールドマップ　ノングリッド処理　初期化
+ * @param	fieldWork	FIELD_MAIN_WORK
+ * @param	pos	自機初期位置
+ * @param	dir 自機初期方向
  */
-//------------------------------------------------------------------
-static void NoGridCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
+//--------------------------------------------------------------
+static void mapCtrlNoGrid_Create(
+		FIELDMAP_WORK *fieldWork, VecFx32 *pos, u16 dir )
 {
-#if 0
-	fieldWork->pcActCont = CreatePlayerAct( fieldWork, pos, fieldWork->heapID );
-	SetPlayerActTrans( fieldWork->pcActCont, pos );
-	SetPlayerActDirection( fieldWork->pcActCont, &dir );
-#endif
-	fieldWork->pcActCont = CreatePlayerActGrid(fieldWork, pos, fieldWork->heapID);
-	SetGridPlayerActTrans( fieldWork->pcActCont, pos);
-	SetPlayerActDirection( fieldWork->pcActCont, &dir );
+	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+	FIELD_PLAYER_SetPos( fieldWork->field_player, pos );
+	FIELD_PLAYER_SetDir( fieldWork->field_player, dir );
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
+//--------------------------------------------------------------
+/**
+ * フィールドマップ　ノングリッド処理　削除
+ * @param	fieldWork	FIELDMAP_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
+{
+	//DeletePlayerAct( fieldWork->field_player );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドマップ　ノングリッド処理　メイン
+ * @param fieldWork FIELDMAP_WORK
+ * @param pos
+ * @retval nothing
+ */
+//--------------------------------------------------------------
 static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 {
-	MainPlayerAct_NoGrid( fieldWork->pcActCont, fieldWork->key_cont );
-	
-	GetPlayerActTrans( fieldWork->pcActCont, pos );
-	SetGridPlayerActTrans( fieldWork->pcActCont, pos);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	終了処理（グリッド無し）
- */
-//------------------------------------------------------------------
-static void NoGridDelete( FIELD_MAIN_WORK* fieldWork )
-{
-	DeletePlayerActGrid(fieldWork->pcActCont);
-	//DeletePlayerAct( fieldWork->pcActCont );
+	int key_cont = FIELDMAP_GetKeyCont( fieldWork );
+	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+	FIELD_PLAYER_NOGRID_Move( fld_player, key_cont );
+	FIELD_PLAYER_GetPos( fld_player, pos );
 }
 

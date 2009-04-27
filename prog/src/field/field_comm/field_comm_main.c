@@ -51,9 +51,9 @@ static const s8 FCM_dirOfsArr[4][2]={{0,-1},{0,1},{-1,0},{1,0}};
 FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID );
 void	FIELD_COMM_MAIN_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll );
 void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , 
-				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys );
+				GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys );
 static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork , 
-				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys );
+				GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys );
 static void	FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork , 
 				GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 
@@ -115,7 +115,7 @@ void FIELD_COMM_MAIN_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll )
 //	他キャラの情報を取得し、通信から設定
 //--------------------------------------------------------------
 void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , 
-				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys )
+				GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys )
 {
 	if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE )
 	{
@@ -139,7 +139,7 @@ void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 // 自分ののキャラの更新
 //--------------------------------------------------------------
 static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork , 
-				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys )
+				GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys )
 {
 	ZONEID zoneID;
 	VecFx32 pos;
@@ -147,8 +147,8 @@ static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork ,
 	PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
 	//自キャラ座標を更新
 	zoneID = PLAYERWORK_getZoneID( plWork );
-	GetPlayerActTrans( pcActor , &pos );
-	GetPlayerActDirection( pcActor , &dir );
+	FIELD_PLAYER_GetPos( pcActor, &pos );
+	dir = FIELD_PLAYER_GetDir( pcActor );
 	//dir = FieldMainGrid_GetPlayerDir( fieldWork );
 	FIELD_COMM_DATA_SetSelfData_Pos( &zoneID , &pos , &dir );
 	FIELD_COMM_FUNC_Send_SelfData( commSys->commFunc_ );

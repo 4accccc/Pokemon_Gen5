@@ -7,14 +7,13 @@
  */
 //======================================================================
 #include "field_debug.h"
-#include "arc/others.naix"
+#include "fieldmap.h"
+
 #include "fldmmdl.h"
 #include "map_matrix.h"
 #include "field/zonedata.h"
 
-extern GAMESYS_WORK * FIELDMAP_GetGameSysWork( FIELD_MAIN_WORK *fieldWork );
-extern FLDMAPPER* GetFieldG3Dmapper( FIELD_MAIN_WORK * fieldWork );
-extern MAP_MATRIX * FIELDMAP_GetMapMatrix( FIELD_MAIN_WORK *fieldWork );
+#include "arc/others.naix"
 
 //======================================================================
 //	define
@@ -449,7 +448,7 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 		const FLDMAPPER *pG3DMapper;
 		FLDMAPPER_GRIDINFO gridInfo;
 		
-		pG3DMapper = GetFieldG3Dmapper( work->pFieldMainWork );
+		pG3DMapper = FIELDMAP_GetFieldG3Dmapper( work->pFieldMainWork );
 		
 		if( pG3DMapper == NULL ){
 			return;

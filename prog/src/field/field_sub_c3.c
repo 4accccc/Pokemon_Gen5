@@ -10,7 +10,7 @@
 //============================================================================================
 
 #include "field_easytp.h"
-
+#include "field_player_nogrid.h"
 
 static void CalcPos(VecFx32 * pos, const VecFx32 * center, u16 len, u16 dir);
 
@@ -40,13 +40,12 @@ static void TestC3Create( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 	};
 	C3MoveWork = init;
 #if 0
-	fieldWork->pcActCont = CreatePlayerAct( fieldWork, pos, fieldWork->heapID );
-	SetPlayerActTrans( fieldWork->pcActCont, pos );
-	SetPlayerActDirection( fieldWork->pcActCont, &dir );
+	fieldWork->field_player = CreatePlayerAct( fieldWork, pos, fieldWork->heapID );
+	SetPlayerActTrans( fieldWork->field_player, pos );
+	FIELD_PLAYER_SetDir( fieldWork->field_player, &dir );
 #endif
-	fieldWork->pcActCont = CreatePlayerActGrid(fieldWork, pos, fieldWork->heapID);
-	SetGridPlayerActTrans( fieldWork->pcActCont, pos);
-	SetPlayerActDirection( fieldWork->pcActCont, &dir );
+	FIELD_PLAYER_SetPos( fieldWork->field_player, pos);
+	FIELD_PLAYER_SetDir( fieldWork->field_player, dir );
 
 }
 
@@ -75,11 +74,11 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 		VecFx32 cam, player_pos;
 		FIELD_CAMERA_GetTargetPos( fieldWork->camera_control, &cam);
 		CalcPos(&player_pos, &cam, mwk->player_len, mwk->pos_angle);
-		//SetPlayerActTrans( fieldWork->pcActCont, &player_pos );
-		SetGridPlayerActTrans( fieldWork->pcActCont, &player_pos);
+		//SetPlayerActTrans( fieldWork->field_player, &player_pos );
+		FIELD_PLAYER_SetPos( fieldWork->field_player, &player_pos);
 	}
 	FIELD_CAMERA_SetDirectionOnXZ(fieldWork->camera_control, mwk->pos_angle);
-	MainPlayerAct_C3( fieldWork->pcActCont, fieldWork->key_cont, mwk->pos_angle );
+	FIELD_PLAYER_C3_Move( fieldWork->field_player, fieldWork->key_cont, mwk->pos_angle );
 }
 
 //------------------------------------------------------------------
@@ -89,8 +88,7 @@ static void TestC3Main( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 //------------------------------------------------------------------
 static void TestC3Delete( FIELD_MAIN_WORK* fieldWork )
 {
-	DeletePlayerActGrid(fieldWork->pcActCont);
-	//DeletePlayerAct( fieldWork->pcActCont );
+	//DeletePlayerAct( fieldWork->field_player );
 }
 
 //============================================================================================

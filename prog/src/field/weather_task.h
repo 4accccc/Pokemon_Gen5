@@ -18,7 +18,7 @@ extern "C"{
 
 #include <gflib.h>
 
-#include "fieldmap_local.h"
+#include "fieldmap.h"
 #include "field_common.h"
 #include "field_camera.h"
 

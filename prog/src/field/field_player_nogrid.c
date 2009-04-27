@@ -1,122 +1,178 @@
-void	MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key)
+//======================================================================
+/**
+ * @file	field_player_nogrid.c
+ * @brief	ノングリッド移動　フィールドプレイヤー制御
+ */
+//======================================================================
+#include <gflib.h>
+
+#include "fieldmap.h"
+#include "field_g3d_mapper.h"
+#include "fldmmdl.h"
+#include "field_player.h"
+#include "field_camera.h"
+
+#include "field_player_nogrid.h"
+
+//======================================================================
+//	define
+//======================================================================
+#define MV_SPEED (2*FX32_ONE) ///<移動速度
+
+//======================================================================
+//	struct
+//======================================================================
+
+//======================================================================
+//	proto
+//======================================================================
+static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
+		FIELDMAP_WORK *fieldWork, u16 key, VecFx32 *vec );
+static BOOL nogridPC_Move_CalcSetGroundMove(
+		const FLDMAPPER *g3Dmapper,
+		FLDMAPPER_GRIDINFODATA* gridInfoData,
+		VecFx32* pos, VecFx32* vecMove, fx32 speed );
+
+//======================================================================
+//	ノングリッド移動　フィールドプレイヤー制御
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機　ノングリッド移動
+ * @param fld_player FIELD_PLAYER
+ * @param key キー情報
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER *fld_player, int key )
+{
+	VecFx32 pos;
+	FIELDMAP_WORK *fieldWork;
+	VecFx32	vecMove = { 0, 0, 0 };
+	
+	FIELD_PLAYER_GetPos( fld_player, &pos );
+	fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
+	
+	nogridPC_Move_SetValue( fld_player, fieldWork, key, &vecMove );
+	
+	if (key & PAD_BUTTON_B) {
+		VEC_Add( &pos, &vecMove, &pos );
+		FIELD_PLAYER_SetPos( fld_player, &pos );
+	} else {
+		fx32 diff;
+		nogridPC_Move_CalcSetGroundMove(
+				FIELDMAP_GetFieldG3Dmapper(fieldWork),
+				FIELD_PLAYER_GetGridInfoData(fld_player),
+				&pos, &vecMove, MV_SPEED );
+		FIELD_PLAYER_SetPos( fld_player, &pos );
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機　ノングリッド移動 C3用
+ * @param fld_player FIELD_PLAYER
+ * @param key キー情報
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_C3_Move( FIELD_PLAYER *fld_player, int key, u16 angle )
 {
 	VecFx32	vecMove = { 0, 0, 0 };
+	FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
+	nogridPC_Move_SetValue( fld_player, fieldWork, key, &vecMove );
+}
+
+//======================================================================
+//	ノングリッド自機　移動処理
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * ノングリッド自機　移動制御　移動量、方向をセット
+ * @param	fld_player FIELD_PLAYER
+ * @param	fieldWork FIELDMAP_WORK
+ * @param key キー情報
+ * @param vec 移動量格納先
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
+		FIELDMAP_WORK *fieldWork, u16 key, VecFx32 *vec )
+{
 	u16		dir;
+	FLDMMDL *fmmdl;
 	BOOL	mvFlag = FALSE;
+	
+	fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
+	dir = FIELD_CAMERA_GetDirectionOnXZ( FIELDMAP_GetFieldCamera(fieldWork) );
+	
+	if( key & PAD_KEY_UP )
+	{
+		mvFlag = TRUE;
+		vec->x = FX_SinIdx( (u16)(dir + 0x8000) );
+		vec->z = FX_CosIdx( (u16)(dir + 0x8000) );
+		FIELD_PLAYER_SetDir( fld_player, dir );
+		FLDMMDL_SetDirDisp(fmmdl,DIR_UP);
+	}
 
-	dir = FIELD_CAMERA_GetDirectionOnXZ( FIELDMAP_GetFieldCamera(pcActCont->fieldWork) );
+	if( key & PAD_KEY_DOWN )
+	{
+		mvFlag = TRUE;
+		vec->x = FX_SinIdx( (u16)(dir + 0x0000) );
+		vec->z = FX_CosIdx( (u16)(dir + 0x0000) );
+		FIELD_PLAYER_SetDir( fld_player, dir + 0x8000 );
+		FLDMMDL_SetDirDisp(fmmdl, DIR_DOWN);
+	}
 
-	if( key & PAD_KEY_UP ){
+	if( key & PAD_KEY_LEFT )
+	{
 		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0x8000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0x8000) );
-		pcActCont->direction = dir;
-		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_UP);
+		vec->x = FX_SinIdx( (u16)(dir + 0xc000) );
+		vec->z = FX_CosIdx( (u16)(dir + 0xc000) );
+		FIELD_PLAYER_SetDir( fld_player, dir + 0x4000 );
+		FLDMMDL_SetDirDisp(fmmdl,DIR_LEFT);
 	}
-	if( key & PAD_KEY_DOWN ){
+
+	if( key & PAD_KEY_RIGHT )
+	{
 		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0x0000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0x0000) );
-		pcActCont->direction = dir + 0x8000;
-		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_DOWN);
+		vec->x = FX_SinIdx( (u16)(dir + 0x4000) );
+		vec->z = FX_CosIdx( (u16)(dir + 0x4000) );
+		FIELD_PLAYER_SetDir( fld_player, dir + 0xc000 );
+		FLDMMDL_SetDirDisp(fmmdl,DIR_RIGHT);
 	}
-	if( key & PAD_KEY_LEFT ){
-		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0xc000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0xc000) );
-		pcActCont->direction = dir + 0x4000;
-		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_LEFT);
-	}
-	if( key & PAD_KEY_RIGHT ){
-		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0x4000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0x4000) );
-		pcActCont->direction = dir + 0xc000;
-		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_RIGHT);
-	}
+
 	if (key & PAD_BUTTON_Y) {
-		vecMove.y = -2 * FX32_ONE;
+		vec->y = -2 * FX32_ONE;
 	}
 	if (key & PAD_BUTTON_X) {
-		vecMove.y = +2 * FX32_ONE;
+		vec->y = +2 * FX32_ONE;
 	}
-	if (key & PAD_BUTTON_B) {
-		VEC_Add(&pcActCont->trans, &vecMove, &pcActCont->trans);
-	} else {
-		VecFx32 newPos = pcActCont->trans;
-		fx32 diff;
-		CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->fieldWork), &pcActCont->gridInfoData, 
-	//							&newPos, &vecMove, MV_SPEED );
-								&pcActCont->trans, &vecMove, MV_SPEED );
-#if 0
-		diff = newPos.y - pcActCont->trans.y;
-		if ((diff >= 0 && diff < FX32_ONE * 32)
-				|| (diff < 0 && diff > FX32_ONE * -32) ){
-			pcActCont->trans = newPos;
-		}
-#endif
-	}
-
-    
+	
 	if( mvFlag == TRUE ){
-		//SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
-		FLDMMDL_SetDrawStatus(pcActCont->pFldMMdl, DRAW_STA_WALK);
+		FLDMMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK);
 	} else {
-		//SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
-		FLDMMDL_SetDrawStatus(pcActCont->pFldMMdl, DRAW_STA_STOP);
+		FLDMMDL_SetDrawStatus(fmmdl,DRAW_STA_STOP);
 	}
 }
 
-void	MainPlayerAct_C3( PC_ACTCONT* pcActCont, int key, u16 angle)
-{
-	BOOL	mvFlag = FALSE;
-
-	if( key & PAD_KEY_UP ){
-		mvFlag = TRUE;
-		pcActCont->direction = angle;
-		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_UP);
-	}
-	if( key & PAD_KEY_DOWN ){
-		mvFlag = TRUE;
-		pcActCont->direction = angle + 0x8000;
-		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_DOWN);
-	}
-	if( key & PAD_KEY_LEFT ){
-		mvFlag = TRUE;
-		pcActCont->direction = angle + 0x4000;
-		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_LEFT);
-	}
-	if( key & PAD_KEY_RIGHT ){
-		mvFlag = TRUE;
-		pcActCont->direction = angle + 0xc000;
-		FLDMMDL_SetDirDisp(pcActCont->pFldMMdl, DIR_RIGHT);
-	}
-
-    
-	if( mvFlag == TRUE ){
-		//SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
-		FLDMMDL_SetDrawStatus(pcActCont->pFldMMdl, DRAW_STA_WALK);
-	} else {
-		//SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
-		FLDMMDL_SetDrawStatus(pcActCont->pFldMMdl, DRAW_STA_STOP);
-	}
-}
-
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
- * @brief	移動方向の地形に沿ったベクトル取得
+ * 移動方向の地形に沿ったベクトル取得
+ * @param	vecN 地形ベクトル
+ * @param	pos 座標
+ * @param	vecMove 移動ベクトル
+ * @param	result 結果格納先
+ * @retval nothing
  */
-//------------------------------------------------------------------
-#define WALK_LIMIT_HEIGHT ( 16 * FX32_ONE )
-
-static void GetGroundMoveVec
-		( const VecFx16* vecN, const VecFx32* pos, const VecFx32* vecMove, VecFx32* result )
+//--------------------------------------------------------------
+static void nogridPC_Move_GetGroundMoveVec(
+	const VecFx16* vecN, const VecFx32* pos,
+	const VecFx32* vecMove, VecFx32* result )
 {
 	VecFx32	vecN32, posNext;
 	fx32	by, valD;
-
+	
 	VEC_Add( pos, vecMove, &posNext );
 
 	VEC_Set( &vecN32, vecN->x, vecN->y, vecN->z );
@@ -128,10 +184,21 @@ static void GetGroundMoveVec
 	VEC_Normalize( result, result );
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-BOOL CalcSetGroundMove( const FLDMAPPER* g3Dmapper, FLDMAPPER_GRIDINFODATA* gridInfoData, 
-								VecFx32* pos, VecFx32* vecMove, fx32 speed )
+//--------------------------------------------------------------
+/**
+ * ノングリッド移動　移動計算
+ * @param	g3Dmapper FLDMAPPER*
+ * @param gridInfoData FLDMAPPER_GRIDINFODATA
+ * @param pos 座標
+ * @param vecMove 移動量
+ * @param speed 移動速度
+ * @retval BOOL FALSE=移動不可
+ */
+//--------------------------------------------------------------
+static BOOL nogridPC_Move_CalcSetGroundMove(
+		const FLDMAPPER *g3Dmapper,
+		FLDMAPPER_GRIDINFODATA* gridInfoData,
+		VecFx32* pos, VecFx32* vecMove, fx32 speed )
 {
 	FLDMAPPER_GRIDINFO gridInfo;
 	VecFx32	posNext, vecGround;
@@ -144,10 +211,10 @@ BOOL CalcSetGroundMove( const FLDMAPPER* g3Dmapper, FLDMAPPER_GRIDINFODATA* grid
 		//vecN = {0,0,0}の場合は初期状態
 		VecFx16	vecNinit = { 0, FX16_ONE, 0 };
 
-		GetGroundMoveVec( &vecNinit, pos, vecMove, &vecGround );
+		nogridPC_Move_GetGroundMoveVec( &vecNinit, pos, vecMove, &vecGround );
 		initSw = TRUE;
 	} else {
-		GetGroundMoveVec( &gridInfoData->vecN, pos, vecMove, &vecGround );
+		nogridPC_Move_GetGroundMoveVec( &gridInfoData->vecN, pos, vecMove, &vecGround );
 	}
 	VEC_MultAdd( speed, &vecGround, pos, &posNext );
 	if( posNext.y < 0 ){
@@ -181,19 +248,8 @@ BOOL CalcSetGroundMove( const FLDMAPPER* g3Dmapper, FLDMAPPER_GRIDINFODATA* grid
 				p = i;
 			}
 		}
-#if 0
-		if( initSw == FALSE ){
-			//移動制限テスト
-			if(FX_Mul((height-pos->y),(height-pos->y))
-					>=FX_Mul(WALK_LIMIT_HEIGHT,WALK_LIMIT_HEIGHT)){
-				return FALSE;
-			}
-		} 
-#endif
 		*gridInfoData = gridInfo.gridData[p];	//グリッドデータ更新
 		VEC_Set( pos, posNext.x, gridInfoData->height, posNext.z );		//位置情報更新
 	}
 	return TRUE;
 }
-	
-

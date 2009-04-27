@@ -298,7 +298,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 			const FLDMENUFUNC_LIST *menulist;
 			const DEBUG_MENU_LISTDATA *d_menu_listdata;
 			
-			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
 			
 			work->msgData = FLDMSGBG_CreateMSGDATA(
 						msgBG, NARC_message_d_field_dat );
@@ -384,11 +384,13 @@ static BOOL DMenuCallProc_GridCamera( DEBUG_MENU_EVENT_WORK *wk )
 //--------------------------------------------------------------
 static BOOL DMenuCallProc_GridScaleSwitch( DEBUG_MENU_EVENT_WORK *wk )
 {
+#if 0
 	DEBUG_MENU_EVENT_WORK *d_menu = wk;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	HEAPID DebugHeapID = d_menu->heapID;
 	
 	DEBUG_FldGridProc_ScaleChange( fieldWork );
+#endif
 	return( FALSE );
 }
 
@@ -401,11 +403,13 @@ static BOOL DMenuCallProc_GridScaleSwitch( DEBUG_MENU_EVENT_WORK *wk )
 //--------------------------------------------------------------
 static BOOL DMenuCallProc_GridScaleControl( DEBUG_MENU_EVENT_WORK *wk )
 {
+#if 0
 	DEBUG_MENU_EVENT_WORK *d_menu = wk;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	HEAPID DebugHeapID = d_menu->heapID;
 	
 	DEBUG_FldGridProc_ScaleControl( fieldWork );
+#endif
 	return( FALSE );
 }
 
@@ -568,7 +572,7 @@ static GMEVENT_RESULT DMenuZoneSelectEvent(
 			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;
 			FLDMENUFUNC_LISTDATA *pMenuListData;
 			
-			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
 			work->msgData = FLDMSGBG_CreateMSGDATA(
 					msgBG, NARC_message_d_field_dat );
 			pMenuListData = FLDMENUFUNC_CreateListData( max, work->heapID );
@@ -679,7 +683,7 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent(
 			u32 i,tbl[4] = { ZONE_ID_MAPSPRING,ZONE_ID_MAPSUMMER,
 				ZONE_ID_MAPAUTUMN,ZONE_ID_MAPWINTER };
 			
-			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
 			work->msgData = FLDMSGBG_CreateMSGDATA(
 					msgBG, NARC_message_d_field_dat );
 			
@@ -936,7 +940,7 @@ static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
 	work->event = event;
 	work->heapID = heapID;
 	work->fieldWork = fieldWork;
-	work->pMsgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+	work->pMsgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
 	work->pStrBuf = GFL_STR_CreateBuffer( 128, work->heapID );
 	return( TRUE );
 }
@@ -1213,7 +1217,7 @@ static GMEVENT_RESULT DMenuTestCameraListEvent(
 			u32 max = TESTCAMERALISTMAX;
 			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_TestCameraList;
 			
-			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
 			work->msgData = FLDMSGBG_CreateMSGDATA(
 				msgBG, NARC_message_d_field_dat );
 			listdata = FLDMENUFUNC_CreateMakeListData(
@@ -1369,7 +1373,7 @@ static GMEVENT_RESULT DMenuFldMMdlListEvent(
 			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_FldMMdlList;
 			FLDMENUFUNC_LISTDATA *pMenuListData;
 			
-			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
 			work->msgData = FLDMSGBG_CreateMSGDATA(
 					msgBG, NARC_message_d_field_dat );
 			pMenuListData = FLDMENUFUNC_CreateListData( max, work->heapID );
@@ -1776,7 +1780,7 @@ static GMEVENT_RESULT DMenuWeatherListEvent(
 			u32 max = DEBUG_WEATHERLIST_LIST_MAX;
 			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_WeatherList;
 			
-			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
 			work->msgData = FLDMSGBG_CreateMSGDATA(
 				msgBG, NARC_message_d_tomoya_dat );
 			listdata = FLDMENUFUNC_CreateMakeListData(
@@ -1845,7 +1849,7 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent2(
 			u32 max = DEBUG_WEATHERLIST_LIST_MAX;
 			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_WeatherList;
 			
-			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
 			work->msgData = FLDMSGBG_CreateMSGDATA(
 				msgBG, NARC_message_d_field_dat );
 			listdata = FLDMENUFUNC_CreateMakeListData(

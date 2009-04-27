@@ -12,7 +12,7 @@
 #include "gamesystem/game_event.h"
 
 #include "field/field_msgbg.h"
-#include "fieldmap_local.h"
+#include "fieldmap.h"
 #include "fldmmdl.h"
 
 //======================================================================

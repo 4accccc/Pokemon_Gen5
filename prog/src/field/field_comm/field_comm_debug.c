@@ -122,7 +122,7 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
 				{DEBUG_FIELD_C_CHOICE07,FIELD_COMM_DEBUG_MenuCallback_EndComm},
 			};
 			FLDMENUFUNC_HEADER head = FieldCommDebugMenuHeader;
-			FLDMSGBG *msgBG = FIELDMAP_GetFLDMSGBG( commDeb->fieldWork_ );
+			FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG( commDeb->fieldWork_ );
 			GFL_MSGDATA	*msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
 			FLDMENUFUNC_LISTDATA *listdata;
 			

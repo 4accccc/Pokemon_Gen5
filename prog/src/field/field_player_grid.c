@@ -1,351 +1,521 @@
-#include "test_graphic/fldmmdl_btx.naix"
+//======================================================================
+/**
+ * @file	field_player_grid.c
+ * @brief グリッド専用 フィールドプレイヤー制御
+ * @author kagaya
+ */
+//======================================================================
+#include <gflib.h>
 
-extern FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
+#include "fieldmap.h"
+#include "fldmmdl.h"
+#include "field_player.h"
 
-//field_player_grid.c
-#ifdef OLD_FIELDPLAYER_NOUSE
-static const GFL_BBDACT_RESDATA playerGridBBDactResTable[] = {
-	{ ARCID_FLDMMDL_BTX, NARC_fldmmdl_btx_obj_kabi32_nsbtx,
-	GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x32, 32, 32,
-	GFL_BBDACT_RESTYPE_DATACUT },
-};
+#include "sound/pm_sndsys.h"
 
-static const GFL_BBDACT_ANM PCGridstopLAnm[] = {
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCGridstopRAnm[] = {
-	{ 4, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCGridstopUAnm[] = {
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCGridstopDAnm[] = {
-	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
+#include "field_player_grid.h"
 
-static const GFL_BBDACT_ANM PCGridwalkLAnm[] = {
-	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCGridwalkRAnm[] = {
-	{ 5, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 4, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 6, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 4, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCGridwalkUAnm[] = {
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCGridwalkDAnm[] = {
-	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCGridrunLAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 16, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCGridrunRAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 16, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCGridrunUAnm[] = {
-	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCGridrunDAnm[] = {
-	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 13, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM* playerGridBBDactAnmTable[] = { 
-	PCGridstopUAnm, PCGridstopDAnm, PCGridstopLAnm, PCGridstopRAnm,
-	PCGridwalkUAnm, PCGridwalkDAnm, PCGridwalkLAnm, PCGridwalkRAnm,
-	PCGridwalkUAnm, PCGridwalkDAnm, PCGridwalkLAnm, PCGridwalkRAnm,
-	PCjumpUAnm, PCjumpDAnm, PCjumpLAnm, PCjumpRAnm,
-};
-#endif OLD_FIELDPLAYER_NOUSE
-
-#if 0	//3head test
-PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )
+//======================================================================
+//	define
+//======================================================================
+//--------------------------------------------------------------
+///	PLAYER_MOVE
+//--------------------------------------------------------------
+typedef enum
 {
-	PC_ACTCONT*	pcActCont =
-		GFL_HEAP_AllocClearMemory( heapID, sizeof(PC_ACTCONT) );
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( gs );
-	GFL_BBDACT_ACTDATA actData;
-	GFL_BBDACT_ACTUNIT_ID actUnitID;
-	int		i, objIdx;
-	VecFx32	trans;
-	u8		alpha;
-	BOOL	drawEnable;
-	u16		setActNum;
+	PLAYER_MOVE_STOP,
+	PLAYER_MOVE_WALK,
+	PLAYER_MOVE_TURN,
+	PLAYER_MOVE_HITCH,
+}PLAYER_MOVE;
 
-	pcActCont->gs = gs;
-	SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
-	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
+//--------------------------------------------------------------
+//	PLAYER_SET
+//--------------------------------------------------------------
+typedef enum
+{
+	PLAYER_SET_NON,
+	PLAYER_SET_STOP,
+	PLAYER_SET_WALK,
+	PLAYER_SET_TURN,
+	PLAYER_SET_HITCH,
+}PLAYER_SET;
+
+//======================================================================
+//	struct
+//======================================================================
+//--------------------------------------------------------------
+/// FIELD_PLAYER_GRID
+//--------------------------------------------------------------
+struct _TAG_FIELD_PLAYER_GRID
+{
+	FIELD_PLAYER *fld_player;
+	FIELDMAP_WORK *fieldWork;
+	int move_state;
+	fx16 scale_size;	//FX16_ONE*8
+};
+
+//======================================================================
+//	proto
+//======================================================================
+static PLAYER_SET gjiki_CheckMoveStart_Stop(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET gjiki_CheckMoveStart_Walk(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET gjiki_CheckMoveStart_Turn(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static PLAYER_SET gjiki_CheckMoveStart_Hitch(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+
+static void gjiki_SetMove_Non(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void gjiki_SetMove_Stop(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void gjiki_SetMove_Walk(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void gjiki_SetMove_Turn(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void gjiki_SetMove_Hitch(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+
+static void gjiki_Sound_MoveStop( void );
+static void gjiki_Sound_Move( void );
+
+//======================================================================
+//	グリッド移動 フィールドプレイヤー制御
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * グリッド移動　フィールドプレイヤー制御　生成
+ * @param	fld_player FIELD_PLAYER
+ * @param heapID HEAPID
+ * @retval FIELD_PLAYER_GRID
+ */
+//--------------------------------------------------------------
+FIELD_PLAYER_GRID * FIELD_PLAYER_GRID_Init(
+		FIELD_PLAYER *fld_player, HEAPID heapID )
+{
+	FIELD_PLAYER_GRID *g_jiki;
 	
-	//リソースセットアップ
-	pcActCont->bbdActResUnitID =
-		GFL_BBDACT_AddResourceUnit(
-			bbdActSys, playerBBDactResTable,
-			NELEMS(playerBBDactResTable) );
+	g_jiki = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER_GRID) );
+	g_jiki->fld_player = fld_player;
+	g_jiki->fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
+	g_jiki->scale_size = FX16_ONE*8-1;
 
-	actData.resID = 0;
-	actData.sizX = FX16_ONE*8-1;
-	actData.sizY = FX16_ONE*8-1;
-	
-	actData.trans.x = 0;
-	actData.trans.y = 0;
-	actData.trans.z = 0;
-
-	actData.alpha = 31;
-	actData.drawEnable = TRUE;
-	actData.lightMask = GFL_BBD_LIGHTMASK_01;
-	actData.func = playerBBDactFuncGrid;
-	actData.work = pcActCont;
-
-	pcActCont->bbdActActUnitID = GFL_BBDACT_AddAct
-				( bbdActSys, pcActCont->bbdActResUnitID, &actData, 1 );
-	//GFL_BBDACT_BindActTexRes
-	//		( bbdActSys, pcActCont->bbdActActUnitID, pcActCont->bbdActResUnitID+1 );
-	GFL_BBDACT_BindActTexResLoad
-		( bbdActSys, pcActCont->bbdActActUnitID, ARCID_FLDMMDL_BTX, NARC_fldmmdl_btx_obj_kabi32_nsbtx );
-
-	GFL_BBDACT_SetAnimeTable( bbdActSys, pcActCont->bbdActActUnitID, 
-					playerGridBBDactAnmTable, NELEMS(playerGridBBDactAnmTable) );
-	GFL_BBDACT_SetAnimeIdxOn( bbdActSys, pcActCont->bbdActActUnitID, 0 );
-	
-	//サイズ変更
-	/*
-	{
-		int idx;
-		fx16 sizeX,sizeY;
-
-		sizeX = sizeY = FX16_ONE*4-1;
-		idx = GFL_BBDACT_GetBBDActIdxResIdx(
-			bbdActSys, pcActCont->bbdActActUnitID );
-
-		GFL_BBD_SetObjectSiz(
-			GFL_BBDACT_GetBBDSystem(GetBbdActSys(pcActCont->gs)),
-			idx, &sizeX, &sizeY );
-	}
-	*/
-
-	return pcActCont;
+//SetGridPlayerActTrans( g_jiki->pActCont, &g_jiki->vec_pos );
+	return( g_jiki );
 }
-#else
-static const FLDMMDL_HEADER DATA_JikiHeader =
-{
-	0xff,	///<識別ID
-	HERO,	///<表示するOBJコード
-	MV_DMY,	///<動作コード
-	0,	///<イベントタイプ
-	0,	///<イベントフラグ
-	0,	///<イベントID
-	0,	///<指定方向
-	0,	///<指定パラメタ 0
-	0,	///<指定パラメタ 1
-	0,	///<指定パラメタ 2
-	MOVE_LIMIT_NOT,	///<X方向移動制限
-	MOVE_LIMIT_NOT,	///<Z方向移動制限
-	0,	///<グリッドX
-	0,	///<グリッドZ
-	0,	///<Y値 fx32型
-};
 
-PC_ACTCONT * CreatePlayerActGrid(
-		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos, HEAPID heapID )
+//--------------------------------------------------------------
+/**
+ * グリッド移動　フィールドプレイヤー制御　削除
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_GRID_Delete( FIELD_PLAYER_GRID *g_jiki )
 {
-	FLDMMDL_HEADER head;
-	PC_ACTCONT *pcActCont;
-	FLDMMDLSYS *pFldMMdlSys;
-	
-	pFldMMdlSys = FIELDMAP_GetFldMMdlSys( fieldWork );
-	pcActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(PC_ACTCONT) );
-	
-	pcActCont->fieldWork = fieldWork;
-	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
-	
-	//FLDMMDLセットアップ
-	pcActCont->pFldMMdl = FLDMMDLSYS_SearchOBJID( pFldMMdlSys, 0xff );
+	GFL_HEAP_FreeMemory( g_jiki );
+}
 
-	if( pcActCont->pFldMMdl == NULL ){ //新規
-		head = DATA_JikiHeader;
-		head.gx = SIZE_GRID_FX32( pos->x );
-		head.gz = SIZE_GRID_FX32( pos->z );
-		head.y = pos->y;
-		pcActCont->pFldMMdl =
-			FLDMMDLSYS_AddFldMMdl( pFldMMdlSys, &DATA_JikiHeader, 0 );
-	}else{	//復帰
-		
+//======================================================================
+//	グリッド移動 フィールドプレイヤー制御　移動
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * グリッド移動 フィールドプレイヤー制御　移動
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_GRID_Move(
+		FIELD_PLAYER_GRID *g_jiki, int key_trg, int key_cont )
+{
+	u16 dir;
+	BOOL debug_flag;
+	PLAYER_SET set;
+	FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( g_jiki->fld_player );
+	
+	dir = DIR_NOT;
+	if( (key_cont&PAD_KEY_UP) ){
+		dir = DIR_UP;
+	}else if( (key_cont&PAD_KEY_DOWN) ){
+		dir = DIR_DOWN;
+	}else if( (key_cont&PAD_KEY_LEFT) ){
+		dir = DIR_LEFT;
+	}else if( (key_cont&PAD_KEY_RIGHT) ){
+		dir = DIR_RIGHT;
 	}
 	
-	FLDMMDL_SetStatusBitNotZoneDelete( pcActCont->pFldMMdl, TRUE );
-#if 0
-	//BLACTセットアップ
-	pcActCont->bbdActActUnitID =
-		FLDMMDL_BLACTCONT_AddActor( pcActCont->pFldMMdl, 0 );
-	FLDMMDL_SetBlActID( pcActCont->pFldMMdl, pcActCont->bbdActActUnitID );
-#endif
-	return pcActCont;
-}
-#endif
-
-void DeletePlayerActGrid( PC_ACTCONT* pcActCont )
-{
-#if 0
-	FLDMMDL_BLACTCONT_DeleteActor(
-		pcActCont->pFldMMdl, FLDMMDL_GetBlActID(pcActCont->pFldMMdl) );
-#endif
-	GFL_HEAP_FreeMemory( pcActCont );
-}
-
-void PlayerActGrid_Update(
-	PC_ACTCONT *pcActCont, u16 dir, const VecFx32 *pos )
-{
-	VecFx32 trans;
-	pcActCont->trans = *pos;
-	
-	SetGridPlayerActTrans( pcActCont, pos );
-	FLDMMDL_SetForceDirDisp( pcActCont->pFldMMdl, dir );
-}
-
-void SetGridPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
-{
-	int gx = SIZE_GRID_FX32( trans->x );
-	int gy = SIZE_GRID_FX32( trans->y );
-	int gz = SIZE_GRID_FX32( trans->z );
-	
-	FLDMMDL_SetOldGridPosX( pcActCont->pFldMMdl,
-		FLDMMDL_GetGridPosX(pcActCont->pFldMMdl) );
-	FLDMMDL_SetOldGridPosY( pcActCont->pFldMMdl,
-		FLDMMDL_GetGridPosY(pcActCont->pFldMMdl) );
-	FLDMMDL_SetOldGridPosZ( pcActCont->pFldMMdl,
-		FLDMMDL_GetGridPosZ(pcActCont->pFldMMdl) );
-	
-	FLDMMDL_SetGridPosX( pcActCont->pFldMMdl, gx );
-	FLDMMDL_SetGridPosY( pcActCont->pFldMMdl, gy );
-	FLDMMDL_SetGridPosZ( pcActCont->pFldMMdl, gz );
-	FLDMMDL_SetVectorPos( pcActCont->pFldMMdl, trans );
-	
-	VEC_Set( &pcActCont->trans, trans->x, trans->y, trans->z );
-}
-
-#if 0
-void PlayerActGrid_AnimeSet(
-	PC_ACTCONT *pcActCont, int dir , PLAYER_ANIME_FLAG flag )
-{
-	int tbl[PLAYER_ANIME_FLAG_MAX] =
-		{PCACTSTOP_UP,PCACTWALK_UP,PCACTRUN_UP};
-	int anmID = tbl[flag] + dir;
-	
-	if( pcActCont->anmSetID != anmID ){
-//		OS_Printf( "自機アニメセット dir=%d, anmID=%d\n", dir, anmID );
-		pcActCont->anmSetID = anmID;
-		GFL_BBDACT_SetAnimeIdx(
-			GetBbdActSys(pcActCont->gs), pcActCont->bbdActActUnitID, anmID );
+	debug_flag = FALSE;
+	if( key_cont & PAD_BUTTON_R ){
+		debug_flag = TRUE;
 	}
 	
-#if 0
-	trans.x = pcActCont->trans.x;
-	trans.y = pcActCont->trans.y + FX32_ONE*7;	//補正
-	trans.z = pcActCont->trans.z;
-	
-	GFL_BBD_SetObjectTrans(
-		GFL_BBDACT_GetBBDSystem(GetBbdActSys(pcActCont->gs)),
-		pcActCont->bbdActActUnitID, &trans );
-#endif
-}
-#else
-void PlayerActGrid_AnimeSet(
-	PC_ACTCONT *pcActCont, int dir, PLAYER_ANIME_FLAG flag )
-{
-#if 0
-	int tbl[PLAYER_ANIME_FLAG_MAX] =
-		{PCACTSTOP_UP,PCACTWALK_UP,PCACTRUN_UP};
-	int anmID = tbl[flag] + dir;
-	
-	if( pcActCont->anmSetID != anmID ){
-		pcActCont->anmSetID = anmID;
-		GFL_BBDACT_SetAnimeIdx(
-			GetBbdActSys(pcActCont->gs), pcActCont->bbdActActUnitID, anmID );
-	}
-#else	
-	switch( flag ){
-	case PLAYER_ANIME_FLAG_STOP:
-		FLDMMDL_SetDrawStatus( pcActCont->pFldMMdl, DRAW_STA_STOP );
+	set = PLAYER_SET_NON;
+	switch( g_jiki->move_state ){
+	case PLAYER_MOVE_STOP:
+		set = gjiki_CheckMoveStart_Stop(
+			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
 		break;
-	case PLAYER_ANIME_FLAG_WALK:
-		FLDMMDL_SetDrawStatus( pcActCont->pFldMMdl, DRAW_STA_WALK_8F );
+	case PLAYER_MOVE_WALK:
+		set = gjiki_CheckMoveStart_Walk(
+			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_TURN:
+		set = gjiki_CheckMoveStart_Turn(
+			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_MOVE_HITCH:
+		set = gjiki_CheckMoveStart_Hitch(
+			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	default:
-		FLDMMDL_SetDrawStatus( pcActCont->pFldMMdl, DRAW_STA_WALK_4F );
+		GF_ASSERT( 0 );
+	}
+	
+	switch( set ){
+	case PLAYER_SET_NON:
+		gjiki_SetMove_Non(
+			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_STOP:
+		gjiki_SetMove_Stop(
+			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_WALK:
+		gjiki_SetMove_Walk(
+			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_TURN:
+		gjiki_SetMove_Turn(
+			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+		break;
+	case PLAYER_SET_HITCH:
+		gjiki_SetMove_Hitch(
+			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
 		break;
 	}
-#endif
-}
-#endif
-
-FLDMAPPER_GRIDINFODATA * PlayerActGrid_GridInfoGet( PC_ACTCONT *pcActCont )
-{
-	return( &pcActCont->gridInfoData );
 }
 
-void PlayerActGrid_ScaleSizeSet(
-	PC_ACTCONT *pcActCont, fx16 sizeX, fx16 sizeY )
+//======================================================================
+//	移動開始チェック
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　停止中
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param fmmdl FLDMMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET gjiki_CheckMoveStart_Stop(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
-	GFL_BBDACT_SYS *bbdActSys = GetBbdActSys( pcActCont->fieldWork );
-	int idx = GFL_BBDACT_GetBBDActIdxResIdx(
-			bbdActSys, pcActCont->bbdActActUnitID );
-	GFL_BBD_SetObjectSiz(
-		GFL_BBDACT_GetBBDSystem(bbdActSys),
-		idx, &sizeX, &sizeY );
-}
-
-FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
-
-FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont )
-{
-	return pcActCont->pFldMMdl;
-}
-
-void PLAYER_GRID_GetFrontGridPos(
-	PC_ACTCONT *pcActCont, int *gx, int *gy, int *gz )
-{
-	int dir;
-	FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
+	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == TRUE ){
+		if( dir != DIR_NOT ){
+			u16 old_dir;
+			old_dir = FLDMMDL_GetDirDisp( fmmdl );
+			
+			if( dir != old_dir && debug_flag == FALSE ){
+				return( PLAYER_SET_TURN );
+			}
+			
+			return( gjiki_CheckMoveStart_Walk(
+				g_jiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+		}
+		
+		return( PLAYER_SET_STOP );
+	}
 	
-	*gx = FLDMMDL_GetGridPosX( fmmdl );
-	*gy = FLDMMDL_GetGridPosY( fmmdl );
-	*gz = FLDMMDL_GetGridPosZ( fmmdl );
-	dir = FLDMMDL_GetDirDisp( fmmdl );
-	
-	*gx += FLDMMDL_TOOL_GetDirAddValueGridX( dir );
-	*gz += FLDMMDL_TOOL_GetDirAddValueGridZ( dir );
+	return( PLAYER_SET_NON );
 }
 
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　移動中
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param fmmdl FLDMMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET gjiki_CheckMoveStart_Walk(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT ){
+		return( gjiki_CheckMoveStart_Stop(
+			g_jiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	{
+		u32 hit = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
+		
+		if( debug_flag == TRUE ){
+			if( hit != FLDMMDL_MOVEHITBIT_NON &&
+				!(hit&FLDMMDL_MOVEHITBIT_OUTRANGE) ){
+				hit = FLDMMDL_MOVEHITBIT_NON;
+			}
+		}
+		
+		if( hit == FLDMMDL_MOVEHITBIT_NON ){
+			return( PLAYER_SET_WALK );
+		}
+	}
+	
+	return( PLAYER_SET_HITCH );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　振り向き中
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param fmmdl FLDMMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET gjiki_CheckMoveStart_Turn(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT ){
+		return( gjiki_CheckMoveStart_Stop(
+			g_jiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	return( gjiki_CheckMoveStart_Walk(
+		g_jiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始チェック　障害物ヒット中
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param fmmdl FLDMMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param dir 移動方向
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval PLAYER_SET
+ */
+//--------------------------------------------------------------
+static PLAYER_SET gjiki_CheckMoveStart_Hitch(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
+		return( PLAYER_SET_NON );
+	}
+	
+	if( dir == DIR_NOT ){
+		return( gjiki_CheckMoveStart_Stop(
+			g_jiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+	}
+	
+	return( gjiki_CheckMoveStart_Walk(
+		g_jiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+}
+
+//======================================================================
+//	移動セット
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 移動開始セット 特に無し
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param fmmdl FLDMMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gjiki_SetMove_Non(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 停止
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param fmmdl FLDMMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gjiki_SetMove_Stop(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	if( dir == DIR_NOT ){
+		dir = FLDMMDL_GetDirDisp( fmmdl );
+	}
+	
+	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
+	FLDMMDL_SetAcmd( fmmdl, code );
+	g_jiki->move_state = PLAYER_MOVE_STOP;
+	
+	gjiki_Sound_MoveStop();
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 移動
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param fmmdl FLDMMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gjiki_SetMove_Walk(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	
+	if( debug_flag == TRUE ){
+		code = AC_WALK_U_2F;
+	}else if( key_cont & PAD_BUTTON_B ){
+		code = AC_DASH_U_4F;
+	}else{
+		code = AC_WALK_U_8F;
+	}
+	
+	if( key_cont & PAD_BUTTON_A ){ //kari
+		code = AC_JUMP_U_2G_16F;
+	}
+	
+	code = FLDMMDL_ChangeDirAcmdCode( dir, code );
+	
+	FLDMMDL_SetAcmd( fmmdl, code );
+	g_jiki->move_state = PLAYER_MOVE_WALK;
+	
+	gjiki_Sound_Move();
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 振り向き
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param fmmdl FLDMMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gjiki_SetMove_Turn(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_8F );
+	
+	FLDMMDL_SetAcmd( fmmdl, code );
+	g_jiki->move_state = PLAYER_MOVE_TURN;
+	
+	gjiki_Sound_MoveStop();
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動セット 障害物ヒット
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param fmmdl FLDMMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gjiki_SetMove_Hitch(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_32F );
+	
+	FLDMMDL_SetAcmd( fmmdl, code );
+	g_jiki->move_state = PLAYER_MOVE_HITCH;
+	
+	gjiki_Sound_MoveStop();
+}
+
+//======================================================================
+//	サウンド
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * サウンドテスト　自機停止
+ * @param nothing
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gjiki_Sound_MoveStop( void )
+{
+	//　↓ サウンドテスト（停止）
+	u16 trackBit = 0xfcff; // track 9,10 OFF
+	PMSND_ChangeBGMtrack(trackBit);
+	//　↑
+}
+
+//--------------------------------------------------------------
+/**
+ * サウンドテスト　自機移動
+ * @param nothing
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gjiki_Sound_Move( void )
+{
+	//　↓ サウンドテスト（移動）
+	u16 trackBit = 0xffff; // 全track ON
+	PMSND_ChangeBGMtrack(trackBit);
+	//　↑
+}

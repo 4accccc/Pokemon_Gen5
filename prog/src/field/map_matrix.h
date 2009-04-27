@@ -45,5 +45,5 @@ extern const u32 * MAP_MATRIX_GetMapResIDTable( const MAP_MATRIX *pMat );
 extern BOOL MAP_MATRIX_CheckBlockPosRange(
 		const MAP_MATRIX *pMat, int x, int z );
 extern BOOL MAP_MATRIX_CheckVectorPosRange(
-		const MAP_MATRIX *pMat, int x, int z );
+		const MAP_MATRIX *pMat, fx32 x, fx32 z );
 #endif //MAP_MATRIX_H_FILE

@@ -48,7 +48,7 @@ static GAME_INIT_WORK TestGameInitWork;
 
 //============================================================================================
 //============================================================================================
-extern const GFL_PROC_DATA FieldMapProcData;
+extern const GFL_PROC_DATA FieldProcData;
 FS_EXTERN_OVERLAY(fieldmap);
 
 static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param);
@@ -276,7 +276,7 @@ void GAMESYSTEM_CallProc(GAMESYS_WORK * gsys,
 //------------------------------------------------------------------
 void GAMESYSTEM_CallFieldProc(GAMESYS_WORK * gsys)
 {
-	GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(fieldmap), &FieldMapProcData, gsys);
+	GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(fieldmap), &FieldProcData, gsys);
 }
 
 //------------------------------------------------------------------

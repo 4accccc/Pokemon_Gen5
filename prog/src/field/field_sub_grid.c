@@ -87,6 +87,15 @@ typedef enum
 	PLAYER_SET_HITCH,
 }PLAYER_SET;
 
+typedef enum
+{
+	PLAYER_ANIME_FLAG_STOP = 0,
+	PLAYER_ANIME_FLAG_WALK,
+	PLAYER_ANIME_FLAG_RUN,
+	PLAYER_ANIME_FLAG_MAX,
+}PLAYER_ANIME_FLAG;
+
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -132,7 +141,7 @@ struct _FGRID_PLAYER
 	PLAYER_ANIME_FLAG anime_flag;
 	
 	const FGRID_CONT *pGridCont;
-	PC_ACTCONT *pActCont;
+	FIELD_PLAYER *pActCont;
 	
 	FLDMMDL *pFldMMdl;
 	
@@ -151,7 +160,7 @@ typedef struct
 //======================================================================
 //	proto
 //======================================================================
-extern FLDMMDL * Player_GetFldMMdl( PC_ACTCONT *pcActCont );
+extern FLDMMDL * FIELD_PLAYER_GetFldMMdl( FIELD_PLAYER *field_player );
 
 static FGRID_CONT * FGridCont_Init(
 	FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos, u16 dir );
@@ -229,18 +238,14 @@ static const GRID_CAMERA_DATA DATA_CameraTbl[] =
  */
 //------------------------------------------------------------------
 static void GridMoveCreate(
-	FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir )
+	FIELD_MAIN_WORK *fieldWork, VecFx32 *pos, u16 dir )
 {
 	//initFLDMMDL(fieldWork);
 	
-	fieldWork->pcActCont = CreatePlayerActGrid(
-			fieldWork, pos, fieldWork->heapID );
-	
-//	SetGridPlayerActTrans( fieldWork->pcActCont, pos );
-	SetPlayerActDirection( fieldWork->pcActCont, &dir );
+//	SetGridPlayerActTrans( fieldWork->field_player, pos );
+	FIELD_PLAYER_SetDir( fieldWork->field_player, dir );
 	
 	fieldWork->pGridCont = FGridCont_Init( fieldWork, pos, dir );
-	
 	
 	//ビルボード設定
 	{
@@ -257,59 +262,9 @@ static void GridMoveCreate(
 	{
 		VecFx32 offs = { -FX32_ONE*8, 0, FX32_ONE*8 };
 		FLDMAPPER_SetDrawOffset(
-			GetFieldG3Dmapper(fieldWork), &offs );
+			FIELDMAP_GetFieldG3Dmapper(fieldWork), &offs );
 	}
 }
-
-#if 0
-static void GridMoveCreate(
-	FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
-{
-	{
-		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
-		PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
-		int zone_id = PLAYERWORK_getZoneID( player );
-		
-		fieldWork->fldActCont = NULL;
-		
-		if( ZONEDATA_DEBUG_IsSampleObjUse(zone_id) == TRUE ){
-			fieldWork->fldActCont =
-				FLD_CreateFieldActSys( fieldWork, fieldWork->heapID );
-			FLDACT_TestSetup( fieldWork->fldActCont );
-		}
-	}
-	
-	fieldWork->pcActCont = CreatePlayerActGrid(
-			fieldWork, fieldWork->heapID );
-	
-	SetGridPlayerActTrans( fieldWork->pcActCont, pos );
-	SetPlayerActDirection( fieldWork->pcActCont, &dir );
-	
-	fieldWork->pGridCont = FGridCont_Init( fieldWork, pos, dir );
-	
-	//カメラ設定
-	FIELD_CAMERA_SetLengthOnXZ( fieldWork->camera_control, DATA_CameraTbl[0].len );
-	FIELD_CAMERA_SetHeightOnXZ( fieldWork->camera_control, DATA_CameraTbl[0].hi );
-	
-	//ビルボード設定
-	{
-		VecFx32 scale = {
-			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
-			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
-			FX32_ONE+(FX32_ONE/2)+(FX32_ONE/4),
-		};
-		GFL_BBD_SetScale(
-			GFL_BBDACT_GetBBDSystem(fieldWork->bbdActSys), &scale );
-	}
-
-	//マップ描画オフセット
-	{
-		VecFx32 offs = { -FX32_ONE*8, 0, FX32_ONE*8 };
-		FLDMAPPER_SetDrawOffset(
-			GetFieldG3Dmapper(fieldWork), &offs );
-	}
-}
-#endif
 
 //------------------------------------------------------------------
 /**
@@ -354,13 +309,6 @@ static void GridMoveMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 {
 	FGridCont_Delete( fieldWork );
-	
-	DeletePlayerActGrid( fieldWork->pcActCont );
-#if 0	
-	FLDMMDLSYS_Push( fieldWork->fldMMdlSys );
-	FLDMMDLSYS_DeleteProc( fieldWork->fldMMdlSys );
-	fieldWork->fldMMdlSys = NULL;
-#endif
 }
 
 //======================================================================
@@ -406,7 +354,7 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	
 	//自機情報の反映
 	Jiki_UpdatePlayerWork( fieldWork );
-	GetPlayerActTrans( fieldWork->pcActCont, pos );
+	FIELD_PLAYER_GetPos( fieldWork->field_player, pos );
 	
 	//カメラへの反映
 //	FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
@@ -486,7 +434,7 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 			FLD_MainFieldActSys( fieldWork->fldActCont );
 		}
 		
-		GetPlayerActTrans( fieldWork->pcActCont, pos );
+		FIELD_PLAYER_SetPos( fieldWork->field_player, pos );
 		FIELD_CAMERA_SetPos( fieldWork->camera_control, pos );
 	//	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 	
@@ -565,7 +513,7 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	}
 	
 
-	GetPlayerActTrans( fieldWork->pcActCont, pos );
+	FIELD_PLAYER_SetPos( fieldWork->field_player, pos );
 }
 
 //======================================================================
@@ -624,6 +572,7 @@ static FGRID_CONT * FGridCont_Init(
 #endif
 	
 	{	//グリッド用位置情報更新
+#if 0
 		MAP_MATRIX *mat = fieldWork->pMapMatrix;
 		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 		const LOCATION *s_lc = GAMEDATA_GetStartLocation( gdata );
@@ -631,6 +580,7 @@ static FGRID_CONT * FGridCont_Init(
 		pGridCont->location = *s_lc;
 		pGridCont->location.zone_id =
 			MAP_MATRIX_GetVectorPosZoneID( mat, s_lc->pos.x, s_lc->pos.z );
+#endif
 	}
 	
 	return( pGridCont );
@@ -681,7 +631,7 @@ static FGRID_PLAYER * FGridPlayer_Init(
 	pGridCont->pGridPlayer = pJiki;
 	
 	pJiki->pGridCont = pGridCont;
-	pJiki->pActCont = pGridCont->pFieldWork->pcActCont;
+	pJiki->pActCont = pGridCont->pFieldWork->field_player;
 	
 	pJiki->dir = dir;
 	pJiki->move_dir = dir;
@@ -697,7 +647,7 @@ static FGRID_PLAYER * FGridPlayer_Init(
 	pJiki->vec_pos = pos;
 	pJiki->scale_size = FX16_ONE*8-1;
 	
-	SetGridPlayerActTrans( pJiki->pActCont, &pJiki->vec_pos );
+//	SetGridPlayerActTrans( pJiki->pActCont, &pJiki->vec_pos );
 		
 	pJiki->anime_flag = PLAYER_ANIME_FLAG_STOP;
 	return( pJiki );
@@ -862,7 +812,7 @@ static PLAYER_SET FGridPlayer_CheckMoveStart_Walk(
 			return( PLAYER_SET_WALK );
 		}
 	}
-
+	
 	return( PLAYER_SET_HITCH );
 }
 
@@ -1043,8 +993,8 @@ static void FGridPlayer_Move(
 	u16 dir;
 	BOOL debug_flag;
 	PLAYER_SET set;
-	PC_ACTCONT *pcActCont = pJiki->pGridCont->pFieldWork->pcActCont;
-	FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
+	FIELD_PLAYER *field_player = pJiki->pGridCont->pFieldWork->field_player;
+	FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( field_player );
 
 	#ifdef DEBUG_ONLY_FOR_kagaya
 	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
@@ -1193,7 +1143,7 @@ static void FGridPlayer_Move(
 static void FGridPlayer_Move(
 	FGRID_PLAYER *pJiki, u32 key_trg, u32 key_cont )
 {
-	PC_ACTCONT *pcActCont = pJiki->pGridCont->pFieldWork->pcActCont;
+	FIELD_PLAYER *field_player = pJiki->pGridCont->pFieldWork->field_player;
 	
 	//----とりあえず
 	#ifdef DEBUG_ONLY_FOR_kagaya
@@ -1235,7 +1185,7 @@ static void FGridPlayer_Move(
 			hit = MapHitCheck( pJiki->pGridCont, &pJiki->vec_pos, &next );
 			#else
 			{
-				FLDMMDL *fmmdl = Player_GetFldMMdl( pcActCont );
+				FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( field_player );
 				int next_gx = SIZE_GRID_FX32( next.x );
 				int next_gy = SIZE_GRID_FX32( next.y );
 				int next_gz = SIZE_GRID_FX32( next.z );
@@ -1292,7 +1242,7 @@ static void FGridPlayer_Move(
 		case DIR_LEFT:	dir = 2; break;
 		case DIR_RIGHT:	dir = 3; break;
 		}
-		PlayerActGrid_AnimeSet( pcActCont, dir, pJiki->anime_flag );
+		PlayerActGrid_AnimeSet( field_player, dir, pJiki->anime_flag );
 		
 		FldWorkPlayerWorkDirSet(
 			pJiki->pGridCont->pFieldWork, pJiki->dir );
@@ -1306,15 +1256,15 @@ static void FGridPlayer_Move(
 		pJiki->vec_pos.z += pJiki->move_val.z;
 #else
 		GridVecPosMove(
-			GetFieldG3Dmapper(pJiki->pGridCont->pFieldWork),
-			PlayerActGrid_GridInfoGet(pcActCont),
+			FIELDMAP_GetFieldG3Dmapper(pJiki->pGridCont->pFieldWork),
+			PlayerActGrid_GridInfoGet(field_player),
 			&pJiki->vec_pos, &pJiki->move_val );
 #endif
 		pJiki->move_count.x += pJiki->move_val.x;
 		pJiki->move_count.y += pJiki->move_val.y;
 		pJiki->move_count.z += pJiki->move_val.z;
 		
-		PlayerActGrid_Update( pcActCont, pJiki->dir, &pJiki->vec_pos );
+		PlayerActGrid_Update( field_player, pJiki->dir, &pJiki->vec_pos );
 		FldWorkPlayerWorkPosSet(
 			pJiki->pGridCont->pFieldWork, &pJiki->vec_pos );
 		
@@ -1380,7 +1330,7 @@ static void FGridPlayer_Move(
 static void FGridPlayer_ScaleSet( FGRID_PLAYER *pJiki, fx16 scale )
 {
 	pJiki->scale_size = scale;
-	PlayerActGrid_ScaleSizeSet( pJiki->pActCont, scale, scale );
+//	PlayerActGrid_ScaleSizeSet( pJiki->pActCont, scale, scale );
 }
 
 //--------------------------------------------------------------
@@ -1484,6 +1434,7 @@ static BOOL GetMapAttr(
  * @retval	fx32	高さ
  */
 //--------------------------------------------------------------
+#if 0
 static fx32 GetMapHeight(
 	const FLDMAPPER *g3Dmapper, const VecFx32 *pos )
 {
@@ -1515,6 +1466,7 @@ static fx32 GetMapHeight(
 	
 	return( 0 );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1523,6 +1475,7 @@ static fx32 GetMapHeight(
  * @retval	
  */
 //--------------------------------------------------------------
+#if 0
 static MAPHITBIT MapHitCheck(
 	const FGRID_CONT *pGridCont, const VecFx32 *now, const VecFx32 *next )
 {
@@ -1564,6 +1517,7 @@ static MAPHITBIT MapHitCheck(
 	
 	return( hit );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1572,12 +1526,14 @@ static MAPHITBIT MapHitCheck(
  * @retval
  */
 //--------------------------------------------------------------
+#if 0
 void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork )
 {
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
 	pGridCont->proc_switch = GRIDPROC_DEBUG00;
 	TAMADA_Printf("switch to GRIDPROC_DEBUG00\n");
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1640,6 +1596,7 @@ void DEBUG_FldGridProc_ScaleControl( FIELD_MAIN_WORK *fieldWork )
  * @retval	u16			DIR_UP等
  */
 //--------------------------------------------------------------
+#if 0
 u16 FieldMainGrid_GetPlayerDir( const FIELD_MAIN_WORK *fieldWork )
 {
 	const FGRID_CONT *pGridCont = fieldWork->pGridCont;
@@ -1651,6 +1608,7 @@ u16 FieldMainGrid_GetPlayerDir( const FIELD_MAIN_WORK *fieldWork )
 
 	return( DIR_NOT );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1659,6 +1617,7 @@ u16 FieldMainGrid_GetPlayerDir( const FIELD_MAIN_WORK *fieldWork )
  * @retval
  */
 //--------------------------------------------------------------
+#if 0
 static void FldWorkPlayerWorkPosSet(
 		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos )
 {
@@ -1666,6 +1625,7 @@ static void FldWorkPlayerWorkPosSet(
 	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 	PLAYERWORK_setPosition( player, pos );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1674,6 +1634,7 @@ static void FldWorkPlayerWorkPosSet(
  * @retval
  */
 //--------------------------------------------------------------
+#if 0
 static void FldWorkPlayerWorkDirSet(
 	FIELD_MAIN_WORK *fieldWork, u16 dir )
 {
@@ -1683,13 +1644,14 @@ static void FldWorkPlayerWorkDirSet(
 	GF_ASSERT( dir < DIR_MAX4 );
 	PLAYERWORK_setDirection( player, tbl[dir] );
 }
+#endif
 
 static void Jiki_UpdatePlayerWork( FIELD_MAIN_WORK *fieldWork )
 {
 	VecFx32 pos;
 	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
-	FLDMMDL *fmmdl = Player_GetFldMMdl( fieldWork->pcActCont );
+	FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fieldWork->field_player );
 	u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xc000 };
 	int dir = FLDMMDL_GetDirDisp( fmmdl );
 	
@@ -1697,220 +1659,8 @@ static void Jiki_UpdatePlayerWork( FIELD_MAIN_WORK *fieldWork )
 
 	PLAYERWORK_setDirection( player, tbl[dir] );
 	PLAYERWORK_setPosition( player, &pos );
-	SetPlayerActDirection( fieldWork->pcActCont, &tbl[dir] );
-	SetGridPlayerActTrans( fieldWork->pcActCont, &pos );
-}
-
-#if 0	//実データ利用
-static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
-{
-	u16 attr;
-	const u16 *buf = NULL;
-	int gx = SIZE_GRID_FX32(x), gz = SIZE_GRID_FX32(z);
-	
-	if( gx < 0x20 ){
-		if( gz < 0x20 ){
-			buf = pGridCont->pMapAttr[0];
-		}else if( gz < 0x40 ){
-			gz -= 0x20;
-			buf = pGridCont->pMapAttr[2];
-		}
-	}else if( gx < 0x40 ){
-		gx -= 0x20;
-		if( gz < 0x20 ){
-			buf = pGridCont->pMapAttr[1];
-		}else if( gz < 0x40 ){
-			gz -= 0x20;
-			buf = pGridCont->pMapAttr[3];
-		}
-	}
-	
-	if( buf == NULL ){
-		return( FALSE );
-	}
-	
-	attr = buf[gx+(gz*0x20)];
-	
-	if( ((attr&0x8000)>>15) ){
-		return( TRUE );
-	}
-	
-	return( FALSE );
-}
-#endif
-
-//======================================================================
-//======================================================================
-//======================================================================
-//======================================================================
-#if 0
-//--------------------------------------------------------------
-//	アクター　コントロールセットアップ
-//--------------------------------------------------------------
-static FGRID_ACTCONT * GridAct_SetupCont(
-	FLD_ACTCONT *fldActCont, u32 heapID, int max )
-{
-	FGRID_ACTCONT *pGridActCont;
-	
-	pGridActCont = GFL_HEAP_AllocClearMemory(
-			heapID, sizeof(FGRID_ACTCONT) );
-	
-	pGridActCont->max = max;
-	pGridActCont->heapID = heapID;
-	
-	pGridActCont->pGridActTbl = GFL_HEAP_AllocClearMemory(
-			heapID, sizeof(FGRID_ACTOR)*max );
-	
-	pGridActCont->pFldActCont = fldActCont;
-	
-	GridAct_SetupBBD( fldActCont, max );
-	return( pActCont );
-}
-#endif
-
-#if 0
-//--------------------------------------------------------------
-// アクター	ビルボードシステムセットアップ
-//--------------------------------------------------------------
-static void GridAct_SetupBBD( FLD_ACTCONT *fldActCont, int max )
-{
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->fieldWork );	
-	GFL_BBDACT_ACTDATA* actData;
-	GFL_BBDACT_ACTUNIT_ID actUnitID;
-	int		i, objIdx;
-	VecFx32	trans;
-	u8		alpha;
-	BOOL	drawEnable;
-	u16		setActNum;
-	
-	//リソースセットアップ
-	fldActCont->bbdActResCount = NELEMS( testResTable );
-	fldActCont->bbdActResUnitID = GFL_BBDACT_AddResourceUnit(
-				bbdActSys, 
-				testResTable, 
-				fldActCont->bbdActResCount );
-	
-	fldActCont->bbdActActCount = FLD_BBDACT_ACTMAX;
-}
-#endif
-
-#if 0
-//--------------------------------------------------------------
-///	アクター　アクター領域作成
-//--------------------------------------------------------------
-static void GridAct_ActWorkCreate( 
-
-	//ＮＰＣアクターセットアップ
-	{
-		u16	setActNum = TEST_NPC_SETNUM;
-		
-		GFL_BBDACT_ACTDATA *actData = GFL_HEAP_AllocClearMemory(
-				fldActCont->heapID,
-				setActNum *s izeof(GFL_BBDACT_ACTDATA) );
-		fx32 mapSizex, mapSizez;
-
-		FLDMAPPER_GetSize(
-			GetFieldG3Dmapper( fldActCont->fieldWork ), &mapSizex, &mapSizez );
-		
-		for( i=0; i<setActNum; i++ ){
-			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
-			actData[i].sizX = FX16_ONE*8-1;
-			actData[i].sizY = FX16_ONE*8-1;
-	
-			actData[i].trans.x = (GFUser_GetPublicRand(mapSizex) );
-			actData[i].trans.y = 0;
-			actData[i].trans.z = (GFUser_GetPublicRand(mapSizez) );
-			
-			actData[i].alpha = 31;
-			actData[i].drawEnable = TRUE;
-			actData[i].lightMask = GFL_BBD_LIGHTMASK_01;
-			actData[i].func = testFunc;
-			actData[i].work = fldActCont;
-		}
-		fldActCont->bbdActActUnitID = GFL_BBDACT_AddAct( bbdActSys, fldActCont->bbdActResUnitID,
-														actData, setActNum );
-		for( i=0; i<setActNum; i++ ){
-			GFL_BBDACT_SetAnimeTable( bbdActSys, fldActCont->bbdActActUnitID+i, 
-										testAnmTable, NELEMS(testAnmTable) );
-			GFL_BBDACT_SetAnimeIdxOn( bbdActSys, fldActCont->bbdActActUnitID+i, 0 );
-		}
-		GFL_HEAP_FreeMemory( actData );
-	}
-}
-#endif
-
-//======================================================================
-//	FLDMMDL NPC配置テスト
-//======================================================================
-//--------------------------------------------------------------
-///	
-//--------------------------------------------------------------
-static const FLDMMDL_HEADER DATA_NpcHeader =
-{
-	0,	///<識別ID
-	1,	///<表示するOBJコード
-	MV_RND,	///<動作コード
-	0,	///<イベントタイプ
-	0,	///<イベントフラグ
-	0,	///<イベントID
-	0,	///<指定方向
-	0,	///<指定パラメタ 0
-	0,	///<指定パラメタ 1
-	0,	///<指定パラメタ 2
-	16,	///<X方向移動制限
-	16,	///<Z方向移動制限
-	90,	///<グリッドX
-	86,	///<グリッドZ
-	0,	///<Y値 fx32型
-};
-
-#define NPC_MAX (250)
-
-//--------------------------------------------------------------
-/**
- * npc配置テスト
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
-{
-#if 0
-	u32 attr;
-	int i,gx,gy,gz;
-	FLDMMDL *fmmdl;
-	FLDMMDL_HEADER head;
-	VecFx32 pos = {0,0,0};
-	const FLDMAPPER *mapper = GetFieldG3Dmapper( fieldWork );
-
-	for( i = 0; i < NPC_MAX; i++ ){
-		do{
-			gx = GFUser_GetPublicRand( 128 );
-			gz = GFUser_GetPublicRand( 128 );
-			pos.x = GRID_SIZE_FX32(gx) + GRID_HALF_FX32;
-			pos.z = GRID_SIZE_FX32(gz) + GRID_HALF_FX32;
-			
-			if( GetMapAttr(mapper,&pos,&attr) == TRUE ){
-				if( attr == 0 ){
-					int no;
-					head = DATA_NpcHeader;
-					head.id = i + 1;
-					do{
-						no = GFUser_GetPublicRand( TestOBJCodeMax );
-						head.obj_code = TestOBJCodeTbl[no];
-					}while( head.obj_code == HERO ||
-							head.obj_code == NONDRAW );
-					OS_Printf( "%d Code %d\n", i, head.obj_code );
-					head.gx = gx;
-					head.gz = gz;
-					fmmdl = FLDMMDLSYS_AddFldMMdl(
-						fieldWork->fldMMdlSys, &head, 0 );
-					break;
-				}
-			}
-		}while( 1 );
-	}
-#endif
+	FIELD_PLAYER_SetDir( fieldWork->field_player, tbl[dir] );
+//	SetGridPlayerActTrans( fieldWork->field_player, &pos );
 }
 
 //======================================================================
@@ -1923,6 +1673,7 @@ static void GridMap_SetupNPC( FIELD_MAIN_WORK *fieldWork )
  * @retval
  */
 //--------------------------------------------------------------
+#if 0
 BOOL FIELDMAP_CheckGridControl( FIELD_MAIN_WORK *fieldWork )
 {
 	if( fieldWork->pGridCont == NULL ){
@@ -1930,49 +1681,49 @@ BOOL FIELDMAP_CheckGridControl( FIELD_MAIN_WORK *fieldWork )
 	}
 	return( TRUE );
 }
-
-//======================================================================
-//	動作モデルリスト
-//======================================================================
-#if 0
-static void MMdlList_Init( MMDL_LIST *mlist, int list_id, HEAPID heapID )
-{
-	int i = 0;
-	u16 *pList;
-	pList = GFL_ARC_LoadDataAlloc( ARCID_FLDMMDL_LIST, list_id, heapID );
-	mlist->count = 0;
-	
-	while( pList[i] != OBJCODEMAX ){
-		OS_Printf( "モデルリスト　No %d = %d\n", i, pList[i] );
-		mlist->id_list[i] = pList[i];
-		i++;
-		GF_ASSERT( i < MMDL_LIST_MAX );
-	}
-
-	OS_Printf( "モデルリスト総数 %d\n", i );
-	
-	mlist->count = i;
-	mlist->id_list[i] = OBJCODEMAX;
-	GFL_HEAP_FreeMemory( pList );
-}
 #endif
 
 //======================================================================
-//	
+//	ゾーン更新
 //======================================================================
+static BOOL fldmap_CheckPlayerPosUpdate( FIELD_MAIN_WORK *pFldWork );
+static BOOL fldmap_CheckMoveZoneChange( FIELD_MAIN_WORK *pFldWork );
+static void fldmap_ZoneChange( FIELD_MAIN_WORK *pFldWork );
+
+static void zoneChange_SetMMdl(
+		FLDMMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id );
+static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id );
+static void zoneChange_SetWeather( FIELD_MAIN_WORK *pFldWork, u32 zone_id );
+static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id );
+
+//--------------------------------------------------------------
+/**
+ * 自機移動によるゾーン更新	固まり次第、fieldmap.cへ
+ */
+//--------------------------------------------------------------
+static BOOL fldmap_UpdateMoveZone( FIELD_MAIN_WORK *pFldWork )
+{
+	if( fldmap_CheckPlayerPosUpdate(pFldWork) == TRUE ){
+		if( fldmap_CheckMoveZoneChange(pFldWork) == TRUE ){
+			fldmap_ZoneChange( pFldWork );
+			return( TRUE );
+		}
+	}
+	
+	return( FALSE );
+}
+
 //--------------------------------------------------------------
 /**
  * 自機座標更新チェック
- * @param
- * @retval
+ * @param	pFldWork	FIELD_MAIN_WORK
+ * @retval	BOOL	TRUE=座標更新
  */
 //--------------------------------------------------------------
-//static BOOL gridmap_CheckPlayerPosUpdate(
-//	FIELD_MAIN_WORK *pFieldMainWork, FGRID_CONT *pGridCont )
-static BOOL gridmap_CheckPlayerPosUpdate( FIELD_MAIN_WORK *pFieldMainWork )
+static BOOL fldmap_CheckPlayerPosUpdate( FIELD_MAIN_WORK *pFldWork )
 {
-	LOCATION *lc = &pFieldMainWork->location;
-	GAMEDATA *gdata = GAMESYSTEM_GetGameData( pFieldMainWork->gsys );
+	LOCATION *lc = &pFldWork->location;
+	GAMEDATA *gdata = GAMESYSTEM_GetGameData( pFldWork->gsys );
 	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 	const VecFx32 *pos = PLAYERWORK_getPosition( player );
 	
@@ -1988,16 +1739,14 @@ static BOOL gridmap_CheckPlayerPosUpdate( FIELD_MAIN_WORK *pFieldMainWork )
 //--------------------------------------------------------------
 /**
  * ゾーン切り替えチェック 
- * @param
- * @retval
+ * @param	pFldWork	FIELD_MAIN_WORK
+ * @retval	BOOL TRUE=ゾーン切り替え発生
  */
 //--------------------------------------------------------------
-//static BOOL gridmap_CheckMoveZoneChange(
-//	FIELD_MAIN_WORK *pFieldMainWork, FGRID_CONT *pGridCont )
-static BOOL gridmap_CheckMoveZoneChange( FIELD_MAIN_WORK *pFieldMainWork )
+static BOOL fldmap_CheckMoveZoneChange( FIELD_MAIN_WORK *pFldWork )
 {
-	LOCATION *lc = &pFieldMainWork->location;
-	MAP_MATRIX *mat = pFieldMainWork->pMapMatrix;
+	LOCATION *lc = &pFldWork->location;
+	MAP_MATRIX *mat = pFldWork->pMapMatrix;
 	
 	if( MAP_MATRIX_CheckVectorPosRange(mat,lc->pos.x,lc->pos.z) == TRUE ){
 		u32 zone_id =
@@ -2017,105 +1766,144 @@ static BOOL gridmap_CheckMoveZoneChange( FIELD_MAIN_WORK *pFieldMainWork )
 //--------------------------------------------------------------
 /**
  * ゾーン切り替え時の処理
- * @param
- * @retval
+ * @param	pFldWork	FIELD_MAIN_WORK
+ * @retval	nothing
  */
 //--------------------------------------------------------------
-static void gridmap_MoveZoneChange( FIELD_MAIN_WORK *pFieldMainWork )
+static void fldmap_ZoneChange( FIELD_MAIN_WORK *pFldWork )
 {
-	LOCATION *lc = &pFieldMainWork->location;
-	FLDMMDLSYS *fmmdlsys = pFieldMainWork->fldMMdlSys;
-	GAMEDATA *gdata = GAMESYSTEM_GetGameData( pFieldMainWork->gsys );
+	LOCATION *lc = &pFldWork->location;
+	GAMEDATA *gdata = GAMESYSTEM_GetGameData( pFldWork->gsys );
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
-	MAP_MATRIX *mat = pFieldMainWork->pMapMatrix;
+	FLDMMDLSYS *fmmdlsys = pFldWork->fldMMdlSys;
+	
+	MAP_MATRIX *mat = pFldWork->pMapMatrix;
 	u32 new_zone_id = MAP_MATRIX_GetVectorPosZoneID(
 			mat, lc->pos.x, lc->pos.z );
-	
-	{	//旧ゾーン配置動作モデル削除
-		FLDMMDLSYS_DeleteZoneUpdateFldMMdl( fmmdlsys );
-	}
+	u32 old_zone_id = lc->zone_id;
 	
 	GF_ASSERT( new_zone_id != MAP_MATRIX_ZONE_ID_NON );
-
-	{	//次のイベントデータをロード
-		EVENTDATA_SYS_Load( evdata, new_zone_id );
-	}
-		
-	{	//新規ゾーン配置動作モデル
-		u16 count = EVENTDATA_GetNpcCount( evdata );
-		
-		if( count ){
-			const FLDMMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
-			FLDMMDLSYS_SetFldMMdl( fmmdlsys, header, new_zone_id, count );
-		}
-	}
-
-	{	//BGM切り替え
-		u16 trackBit = 0xfcff;	// track 9,10 OFF
-		#if 0
-		u16 nextBGM = ZONEDATA_GetBGMID(
-				new_zone_id, GAMEDATA_GetSeasonID(gdata) );
-		#else
-		u16 nextBGM = 0;
-		
-		switch( new_zone_id ){
-		case ZONE_ID_T01:
-			nextBGM = SEQ_WB_T_01; break;
-		case ZONE_ID_C01:
-			nextBGM = SEQ_WB_TITLE; break;
-		case ZONE_ID_R01:
-			nextBGM = SEQ_WB_R_A_SP; break;
-		case ZONE_ID_D01:
-			nextBGM = SEQ_WB_SHINKA; break;
-			break;
-		default:
-			break;
-		}
-		#endif
-		PMSND_PlayNextBGM_EX( nextBGM, trackBit );
-	}
-		
-	{	//天候リクエスト
-		u32 w_no = WEATHER_NO_NUM;
-		FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( pFieldMainWork );
-		
-		switch( new_zone_id ){
-		case ZONE_ID_T01:
-			w_no = WEATHER_NO_SNOW;
-			break;
-		case ZONE_ID_R01:
-			w_no = WEATHER_NO_RAIN;
-			break;
-		}
-
-		if( w_no != WEATHER_NO_NUM ){
-			FIELD_WEATHER_Change( we, w_no );
-		}
-	}
 	
-	{	//ゾーンID更新
-		PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
-		PLAYERWORK_setZoneID( player, new_zone_id );
-		lc->zone_id = new_zone_id;
-	}
+	//旧ゾーン配置動作モデル削除
+	FLDMMDLSYS_DeleteZoneUpdateFldMMdl( fmmdlsys );
 	
-	KAGAYA_Printf(
-		"ゾーン更新完了 %d -> %d\n", lc->zone_id, new_zone_id );
+	//次のイベントデータをロード
+	EVENTDATA_SYS_Load( evdata, new_zone_id );
+	
+	//新規ゾーンに配置する動作モデルセット
+	zoneChange_SetMMdl( fmmdlsys, evdata, new_zone_id );
+	
+	//BGM切り替え
+	zoneChange_SetBGM( gdata, new_zone_id );
+	
+	//天候リクエスト
+	zoneChange_SetWeather( pFldWork, new_zone_id );
+	
+	//PLAYER_WORK更新
+	zoneChange_UpdatePlayerWork( gdata, new_zone_id );
+	
+	//ゾーンID更新
+	lc->zone_id = new_zone_id;
+	
+	KAGAYA_Printf( "ゾーン更新完了 %d -> %d\n", lc->zone_id, new_zone_id );
 }
 
 //--------------------------------------------------------------
 /**
- * ゾーン更新	固まり次第、fieldmap.cへ
+ * ゾーン切り替え時の処理　新規ゾーン動作モデルセット
+ * @param	fmmdlsys	FLDMMDLSYS
+ * @param	evdata	EVENTDATA_SYSTEM
+ * @param	zone_id	次のゾーンID
+ * @retval	nothing
  */
 //--------------------------------------------------------------
-static BOOL fieldmap_UpdateZone( FIELD_MAIN_WORK *fieldWork )
+static void zoneChange_SetMMdl(
+		FLDMMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id )
 {
-	if( gridmap_CheckPlayerPosUpdate(fieldWork) == TRUE ){
-		if( gridmap_CheckMoveZoneChange(fieldWork) == TRUE ){
-			gridmap_MoveZoneChange( fieldWork );
-			return( TRUE );
+	u16 count = EVENTDATA_GetNpcCount( evdata );
+	
+	if( count ){
+		const FLDMMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
+		FLDMMDLSYS_SetFldMMdl( fmmdlsys, header, zone_id, count );
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * ゾーン切り替え時の処理　BGM切り替え
+ * @param	gdata	GAMEDATA
+ * @param	zone_id	次のゾーンID
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
+{
+	u16 trackBit = 0xfcff;	// track 9,10 OFF
+	#if 0
+	u16 nextBGM = ZONEDATA_GetBGMID(
+			new_zone_id, GAMEDATA_GetSeasonID(gdata) );
+	#else
+	u16 nextBGM = 0;
+	switch( zone_id ){
+	case ZONE_ID_T01:
+		nextBGM = SEQ_WB_T_01; break;
+	case ZONE_ID_C01:
+		nextBGM = SEQ_WB_TITLE; break;
+	case ZONE_ID_R01:
+		nextBGM = SEQ_WB_R_A_SP; break;
+	case ZONE_ID_D01:
+		nextBGM = SEQ_WB_SHINKA; break;
+		break;
+	default:
+		break;
+	}
+	#endif
+	
+	if( nextBGM != 0 ){
+		if( PMSND_GetBGMsoundNo() != nextBGM ){
+			PMSND_PlayNextBGM_EX( nextBGM, trackBit );
 		}
 	}
-	
-	return( FALSE );
 }
+
+//--------------------------------------------------------------
+/**
+ * ゾーン切り替え時の処理　天候リクエスト
+ * @param	pFldWork	FIELD_MAIN_WORK*
+ * @param	zone_id	次のゾーンID
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void zoneChange_SetWeather( FIELD_MAIN_WORK *pFldWork, u32 zone_id )
+{
+	u32 w_no = WEATHER_NO_NUM;
+	FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( pFldWork );
+	
+	switch( zone_id ){
+	case ZONE_ID_T01:
+		w_no = WEATHER_NO_SNOW;
+		break;
+	case ZONE_ID_R01:
+		w_no = WEATHER_NO_RAIN;
+		break;
+	}
+	
+	if( w_no != WEATHER_NO_NUM && w_no != FIELD_WEATHER_GetWeatherNo(we) ){
+		FIELD_WEATHER_Change( we, w_no );
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * ゾーン切り替え時の処理　PLAYER_WORK更新
+ * @param	gdata	GAMEDATA
+ * @param	zone_id	次のゾーンID
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id )
+{
+	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+	PLAYERWORK_setZoneID( player, zone_id );
+}
+

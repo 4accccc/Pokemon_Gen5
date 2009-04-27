@@ -167,7 +167,7 @@ GMEVENT_RESULT FIELD_COMM_EVENT_StartCommNormal( GMEVENT *event , int *seq , voi
 	switch( *seq )
 	{
 	case 0:
-		FIELD_COMM_MAIN_InitStartCommMenu( commSys, FIELDMAP_GetFLDMSGBG(evtWork->fieldWork_) );
+		FIELD_COMM_MAIN_InitStartCommMenu( commSys, FIELDMAP_GetFldMsgBG(evtWork->fieldWork_) );
 		*seq += 1;
 		break;
 	case 1:
@@ -197,7 +197,7 @@ GMEVENT_RESULT FIELD_COMM_EVENT_StartCommInvasion( GMEVENT *event , int *seq , v
 	switch( *seq )
 	{
 	case 0:
-		FIELD_COMM_MAIN_InitStartInvasionMenu( commSys, FIELDMAP_GetFLDMSGBG(evtWork->fieldWork_) );
+		FIELD_COMM_MAIN_InitStartInvasionMenu( commSys, FIELDMAP_GetFldMsgBG(evtWork->fieldWork_) );
 		*seq += 1;
 		break;
 	case 1:
@@ -267,7 +267,7 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEvent( GMEVENT *event , int *seq , vo
 			//OK
 			FIELD_COMM_DATA_SetTalkState( FCD_SELF_INDEX , FCTS_TALKING );
 			
-			*commMenu = FIELD_COMM_MENU_InitCommMenu( FIELD_COMM_MAIN_GetHeapID( commSys ), FIELDMAP_GetFLDMSGBG(evtWork->fieldWork_) );
+			*commMenu = FIELD_COMM_MENU_InitCommMenu( FIELD_COMM_MAIN_GetHeapID( commSys ), FIELDMAP_GetFldMsgBG(evtWork->fieldWork_) );
 			FIELD_COMM_MENU_InitBG_MsgPlane( *commMenu );
 			FIELD_COMM_MENU_OpenMessageWindow( FCM_BGPLANE_MSG_WINDOW , *commMenu );
 			FIELD_COMM_MENU_SetMessage( DEBUG_FIELD_C_STR02 , *commMenu );
@@ -403,7 +403,7 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEventPartner( GMEVENT *event , int *s
 		//OK
 		FIELD_COMM_DATA_SetTalkState( FCD_SELF_INDEX , FCTS_TALKING );
 		
-		*commMenu = FIELD_COMM_MENU_InitCommMenu( FIELD_COMM_MAIN_GetHeapID( commSys ), FIELDMAP_GetFLDMSGBG(evtWork->fieldWork_) );
+		*commMenu = FIELD_COMM_MENU_InitCommMenu( FIELD_COMM_MAIN_GetHeapID( commSys ), FIELDMAP_GetFldMsgBG(evtWork->fieldWork_) );
 		FIELD_COMM_MENU_InitBG_MsgPlane( *commMenu );
 		FIELD_COMM_MENU_OpenMessageWindow( FCM_BGPLANE_MSG_WINDOW , *commMenu );
 		FIELD_COMM_MENU_SetMessage( DEBUG_FIELD_C_STR03 , *commMenu );
@@ -583,7 +583,7 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkCommonEvent( GMEVENT *event , int *se
 			const BOOL ret = FIELD_COMM_EVENT_ChangePartFunc( evtWork );
 			if( ret == TRUE )
 			{
-				*commMenu = FIELD_COMM_MENU_InitCommMenu( FIELD_COMM_MAIN_GetHeapID( commSys ), FIELDMAP_GetFLDMSGBG(evtWork->fieldWork_) );
+				*commMenu = FIELD_COMM_MENU_InitCommMenu( FIELD_COMM_MAIN_GetHeapID( commSys ), FIELDMAP_GetFldMsgBG(evtWork->fieldWork_) );
 				FIELD_COMM_MENU_InitBG_MsgPlane( *commMenu );
 				FIELD_COMM_MENU_OpenMessageWindow( FCM_BGPLANE_MSG_WINDOW , *commMenu );
 				FIELD_COMM_MENU_SetMessage( DEBUG_FIELD_C_STR10 , *commMenu );

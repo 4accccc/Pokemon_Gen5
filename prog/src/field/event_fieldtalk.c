@@ -72,7 +72,7 @@ GMEVENT * EVENT_FieldTalk(
 {
 	GMEVENT *event;
 	SCRIPT_FLDPARAM fparam;
-	FLDMSGBG *msgBG = FIELDMAP_GetFLDMSGBG( fieldWork );
+	FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG( fieldWork );
 	
 	fparam.msgBG = msgBG;
 	event = SCRIPT_SetScript(
@@ -95,7 +95,7 @@ GMEVENT * EVENT_FieldTalk(
 	
 	ftalk_wk->scr_id = scr_id;
 	ftalk_wk->heapID = heapID;
-	ftalk_wk->msgBG = FIELDMAP_GetFLDMSGBG( fieldWork );
+	ftalk_wk->msgBG = FIELDMAP_GetFldMsgBG( fieldWork );
 	ftalk_wk->fmmdl_player = fmmdl_player;
 	ftalk_wk->fmmdl_talk = fmmdl_talk;
 	ftalk_wk->fieldWork = fieldWork;

@@ -3,7 +3,7 @@
  */
 //============================================================================================
 #include <gflib.h>
-#include "./fieldmap_local.h"
+#include "./fieldmap.h"
 #include "arc_def.h"
 #include "field_data.h"
 
@@ -13,6 +13,10 @@
 #include "map_matrix.h"
 
 #include "fieldmap/area_id.h"
+
+#include "fieldmap_ctrl_grid.h"
+#include "fieldmap_ctrl_nogrid.h"
+#include "fieldmap_ctrl_c3.h"
 
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
@@ -289,7 +293,7 @@ const SCENE_DATA resistMapTbl[] = {
 		//	4,  4, NELEMS(loopbridgemap),
 		//	loopbridgemap, 
 		}, 
-		&FieldNoGridFunctions,
+		&FieldMapCtrl_NoGridFunctions,
 		FALSE,
 	},
 	{	//実験マップ グリッド移動
@@ -303,7 +307,7 @@ const SCENE_DATA resistMapTbl[] = {
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
 		},
-		&FieldGridFunctions,
+		&FieldMapCtrl_GridFunctions,
 		TRUE,
 	},
 	{	//実験マップ　橋
@@ -317,7 +321,7 @@ const SCENE_DATA resistMapTbl[] = {
 			2,  6, NELEMS(samplebridge),
 			samplebridge, 
 		}, 
-		&FieldNoGridFunctions,
+		&FieldMapCtrl_NoGridFunctions,
 		FALSE,
 	},
 	{
@@ -332,7 +336,7 @@ const SCENE_DATA resistMapTbl[] = {
 			2,  6, NELEMS(GSMap),
 			GSMap, 
 		},
-		&FieldGridFunctions,
+		&FieldMapCtrl_GridFunctions,
 		FALSE,
 	},
 	{	//実験マップ　C3
@@ -346,7 +350,7 @@ const SCENE_DATA resistMapTbl[] = {
 			2,  2, NELEMS(test_c3map),
 			test_c3map, 
 		}, 
-		&FieldTestC3Functions,
+		&FieldMapCtrl_C3Functions,
 		FALSE,
 	},
 };

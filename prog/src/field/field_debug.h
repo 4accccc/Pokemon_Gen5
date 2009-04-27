@@ -16,7 +16,7 @@
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_event.h"
 
-#include "field/fieldmap.h"
+#include "field/fieldmap_proc.h"
 
 //======================================================================
 //	define

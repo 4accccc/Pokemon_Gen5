@@ -153,9 +153,9 @@ u32 MAP_MATRIX_GetBlockPosZoneID( const MAP_MATRIX *pMat, int x, int z )
 //--------------------------------------------------------------
 u32 MAP_MATRIX_GetVectorPosZoneID( const MAP_MATRIX *pMat, fx32 x, fx32 z )
 {
-	int gx = MapMatrix_ChgBlockPos( x );
-	int gz = MapMatrix_ChgBlockPos( z );
-	return( MAP_MATRIX_GetBlockPosZoneID(pMat,gx,gz) );
+	int bx = MapMatrix_ChgBlockPos( x );
+	int bz = MapMatrix_ChgBlockPos( z );
+	return( MAP_MATRIX_GetBlockPosZoneID(pMat,bx,bz) );
 }
 
 //--------------------------------------------------------------
@@ -217,8 +217,8 @@ const u32 * MAP_MATRIX_GetMapResIDTable( const MAP_MATRIX *pMat )
 //--------------------------------------------------------------
 BOOL MAP_MATRIX_CheckBlockPosRange( const MAP_MATRIX *pMat, int x, int z )
 {
-	if( z >= 0 && z <= pMat->size_h ){
-		if( x >= 0 && x <= pMat->size_w ){
+	if( z >= 0 && z < pMat->size_h ){
+		if( x >= 0 && x < pMat->size_w ){
 			return( TRUE );
 		}
 	}
@@ -234,11 +234,12 @@ BOOL MAP_MATRIX_CheckBlockPosRange( const MAP_MATRIX *pMat, int x, int z )
  * @retval	BOOL	TRUE=”ÍˆÍ“à FALSE=”ÍˆÍŠO
  */
 //--------------------------------------------------------------
-BOOL MAP_MATRIX_CheckVectorPosRange( const MAP_MATRIX *pMat, int x, int z )
+BOOL MAP_MATRIX_CheckVectorPosRange(
+		const MAP_MATRIX *pMat, fx32 x, fx32 z )
 {
-	int gx = MapMatrix_ChgBlockPos( x );
-	int gz = MapMatrix_ChgBlockPos( z );
-	return( MAP_MATRIX_CheckBlockPosRange(pMat,gx,gz) );
+	int bx = MapMatrix_ChgBlockPos( x );
+	int bz = MapMatrix_ChgBlockPos( z );
+	return( MAP_MATRIX_CheckBlockPosRange(pMat,bx,bz) );
 }
 
 //======================================================================
@@ -300,5 +301,5 @@ static void MapMatrix_SetData(
 //--------------------------------------------------------------
 static int MapMatrix_ChgBlockPos( fx32 pos )
 {
-	return( (((pos)/16) / FX32_ONE) / 32 );
+	return( ((pos/FX32_ONE)/16)/32 );
 }

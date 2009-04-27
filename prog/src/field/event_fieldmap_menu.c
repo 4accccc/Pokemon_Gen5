@@ -18,11 +18,12 @@
 #include "test/easy_pokelist.h"
 
 #include "event_fieldmap_menu.h"
+#include "fieldmap.h"
 #include "system/main.h"
+
 #include "event_fieldmap_control.h"	//EVENT_FieldSubProc
 #include "app/config_panel.h"		//ConfigPanelProcData
 #include "app/trainer_card.h"		//TrainerCardSysProcData
-#include "fieldmap_local.h"
 
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
 extern const GFL_PROC_DATA TrainerCardProcData;
@@ -217,7 +218,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 			const FLDMENUFUNC_LIST *menulist; 
 			const FMENU_LISTDATA *fmenu_listdata;
 			
-			msgBG = FIELDMAP_GetFLDMSGBG( mwk->fieldWork );
+			msgBG = FIELDMAP_GetFldMsgBG( mwk->fieldWork );
 			mwk->msgData = FLDMSGBG_CreateMSGDATA(
 				msgBG, NARC_message_fldmapmenu_dat );
 			
@@ -294,7 +295,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 static BOOL FMenuCallProc_Zukan( FMENU_EVENT_WORK *mwk )
 {
 	GMEVENT * subevent = createFMenuMsgWinEvent( mwk->gmSys, mwk->heapID,
-		FLDMAPMENU_STR08, FIELDMAP_GetFLDMSGBG(mwk->fieldWork) );
+		FLDMAPMENU_STR08, FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
 	GMEVENT_CallEvent(mwk->gmEvent, subevent);
 
 	return( TRUE );
@@ -333,7 +334,7 @@ static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
 static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 {
 	GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID,
-			FLDMAPMENU_STR10, FIELDMAP_GetFLDMSGBG(mwk->fieldWork) );
+			FLDMAPMENU_STR10, FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
 	GMEVENT_CallEvent(mwk->gmEvent, subevent);
 	return( TRUE );
 }
@@ -366,7 +367,7 @@ static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk )
 static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk )
 {
 	GMEVENT * subevent = createFMenuReportEvent( mwk->gmSys, mwk->fieldWork, mwk->heapID,
-			FIELDMAP_GetFLDMSGBG(mwk->fieldWork) );
+			FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
 	GMEVENT_CallEvent(mwk->gmEvent, subevent);
 	return( TRUE );
 }
