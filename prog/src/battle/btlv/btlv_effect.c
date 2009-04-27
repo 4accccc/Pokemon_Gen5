@@ -41,28 +41,28 @@ struct _BTLV_EFFECT_WORK
 {
 	//本来はスクリプトエンジンを載せて、動作させるが、暫定でTCBを利用する
 	//最終的にはエフェクトで使用するTCBをBTLV_MCSS、BTLV_CAMERA、BTLV_EFFECTでシェアする形にする
-	GFL_TCBSYS			*tcb_sys;
-	void				*tcb_work;
-	VMHANDLE			*vm_core;
+	GFL_TCBSYS				*tcb_sys;
+	void							*tcb_work;
+	VMHANDLE					*vm_core;
 	BTLV_MCSS_WORK		*bmw;
 	BTLV_STAGE_WORK		*bsw;
 	BTLV_FIELD_WORK		*bfw;
 	BTLV_CAMERA_WORK	*bcw;
-	int					execute_flag;
-	HEAPID				heapID;
+	int								execute_flag;
+	HEAPID						heapID;
 
 	//暫定で戻し
-	GFL_PTC_PTR			ptc;
-	u8					spa_work[ PARTICLE_LIB_HEAP_SIZE ];
+	GFL_PTC_PTR				ptc;
+	u8								spa_work[ PARTICLE_LIB_HEAP_SIZE ];
 };
 
 typedef	struct
 {
-	void		*resource;
+	void				*resource;
 	BtlvMcssPos	target;
-	int			seq_no;
-	int			work;
-	int			wait;
+	int					seq_no;
+	int					work;
+	int					wait;
 }BTLV_EFFECT_TCB;
 
 //============================================================================================
@@ -82,7 +82,7 @@ BOOL	BTLV_EFFECT_CheckExistPokemon( int position );
 
 BTLV_CAMERA_WORK	*BTLV_EFFECT_GetCameraWork( void );
 BTLV_MCSS_WORK		*BTLV_EFFECT_GetMcssWork( void );
-VMHANDLE			*BTLV_EFFECT_GetVMHandle( void );
+VMHANDLE					*BTLV_EFFECT_GetVMHandle( void );
 
 static	BTLV_EFFECT_WORK	*bew = NULL;
 
@@ -139,7 +139,7 @@ void	BTLV_EFFECT_Init( int index, HEAPID heapID )
 	bew->tcb_work = GFL_HEAP_AllocClearMemory( heapID, GFL_TCB_CalcSystemWorkSize( BTLV_EFFECT_TCB_MAX ) );
 	bew->tcb_sys = GFL_TCB_Init( BTLV_EFFECT_TCB_MAX, bew->tcb_work );
 
-	bew->vm_core = BTLV_EFFVM_Init( heapID );
+	bew->vm_core = BTLV_EFFVM_Init( bew->tcb_sys, heapID );
 
 	bew->bmw = BTLV_MCSS_Init( bew->tcb_sys, heapID );
 	bew->bsw = BTLV_STAGE_Init( index, heapID );
