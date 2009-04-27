@@ -35,19 +35,19 @@
 struct _BTLV_CAMERA_WORK
 {
 	GFL_TCBSYS			*tcb_sys;
-	GFL_G3D_CAMERA		*camera;
-	u16					phi;
-	u16					theta;
-	fx32				radius;
-	int					move_flag;
-	VecFx32				move_pos;
-	VecFx32				move_target;
-	VecFx32				vec_pos;
-	VecFx32				vec_target;
-	int					wait;
-	int					wait_tmp;
-	int					brake_frame;
-	HEAPID				heapID;
+	GFL_G3D_CAMERA	*camera;
+	u16							phi;
+	u16							theta;
+	fx32						radius;
+	int							move_flag;
+	VecFx32					move_pos;
+	VecFx32					move_target;
+	VecFx32					vec_pos;
+	VecFx32					vec_target;
+	int							wait;
+	int							wait_tmp;
+	int							brake_frame;
+	HEAPID					heapID;
 };
 
 //============================================================================================
