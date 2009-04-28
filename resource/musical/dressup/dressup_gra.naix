@@ -23,7 +23,8 @@ enum {
 	NARC_dressup_gra_test_bg_d_NSCR = 9,
 	NARC_dressup_gra_test_bg_u_NSCR = 10,
 	NARC_dressup_gra_obj_button_NCER = 11,
-	NARC_dressup_gra_obj_button_NANR = 12
+	NARC_dressup_gra_obj_button_NANR = 12,
+	NARC_dressup_gra_new_str_nsbtx = 13
 };
 
 /* NARC_DRESSUP_GRA_NAIX_ */

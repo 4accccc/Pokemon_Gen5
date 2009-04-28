@@ -23,6 +23,14 @@
 //======================================================================
 //	typedef struct
 //======================================================================
+typedef struct
+{
+  u16   itemId;
+  GFL_G3D_RES *itemRes;
+  BOOL  isOutList;  //リスト外にいる
+  BOOL  isNew;
+  void  *pltWork;   //暗パレット用ワーク
+}ITEM_STATE;
 
 typedef struct _FIT_ITEM_WORK FIT_ITEM_WORK;
 typedef struct _FIT_ITEM_GROUP FIT_ITEM_GROUP;
@@ -51,20 +59,20 @@ const BOOL DUP_FIT_ITEMGROUP_IsItemMax( FIT_ITEM_GROUP *group );
 //--------------------------------------------------------------
 
 //アイテムの作成・削除
-FIT_ITEM_WORK* DUP_FIT_ITEM_CreateItem( HEAPID heapId , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , u16 itemId , GFL_G3D_RES *res , VecFx32 *pos );
+FIT_ITEM_WORK* DUP_FIT_ITEM_CreateItem( HEAPID heapId , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , ITEM_STATE *itemState, VecFx32 *pos );
 void DUP_FIT_ITEM_DeleteItem( FIT_ITEM_WORK *item , MUS_ITEM_DRAW_SYSTEM *itemDrawSys );
 
 //絵の変更
-void DUP_FIT_ITEM_ChengeGraphic( FIT_ITEM_WORK *item , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , u16 itemId , GFL_G3D_RES *res );
+void DUP_FIT_ITEM_ChengeGraphic( FIT_ITEM_WORK *item , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , ITEM_STATE *itemState );
 
 //次のアイテムを取得
 FIT_ITEM_WORK* DUP_FIT_ITEM_GetNextItem( FIT_ITEM_WORK *item );
 
 //各数値の取得
-void DUP_FIT_ITEM_SetItemIdx( FIT_ITEM_WORK *item , const u16 idx);
-u16 DUP_FIT_ITEM_GetItemIdx( FIT_ITEM_WORK *item );
-void DUP_FIT_ITEM_SetNewItemIdx( FIT_ITEM_WORK *item , const u16 idx);
-u16 DUP_FIT_ITEM_GetNewItemIdx( FIT_ITEM_WORK *item );
+void DUP_FIT_ITEM_SetItemState( FIT_ITEM_WORK *item , ITEM_STATE *itemState );
+ITEM_STATE* DUP_FIT_ITEM_GetItemState( FIT_ITEM_WORK *item );
+void DUP_FIT_ITEM_SetNewItemState( FIT_ITEM_WORK *item , ITEM_STATE *itemState);
+ITEM_STATE* DUP_FIT_ITEM_GetNewItemState( FIT_ITEM_WORK *item );
 MUS_ITEM_DRAW_WORK* DUP_FIT_ITEM_GetItemDrawWork( FIT_ITEM_WORK *item );
 
 void DUP_FIT_ITEM_SetPosition( FIT_ITEM_WORK *item ,const GFL_POINT *pos );

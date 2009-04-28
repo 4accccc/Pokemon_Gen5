@@ -35,6 +35,10 @@ struct _FIT_ITEM_WORK
 {
 	u16	itemId;
 	u16	newItemId;
+	
+	ITEM_STATE *itemState;
+	ITEM_STATE *newItemState;
+	
 	MUS_ITEM_DRAW_WORK	*itemWork;
 	GFL_POINT	pos;
 	fx32	scale;
@@ -192,13 +196,13 @@ const BOOL DUP_FIT_ITEMGROUP_IsItemMax( FIT_ITEM_GROUP *group )
 //--------------------------------------------------------------
 //アイテムの作成・削除
 //--------------------------------------------------------------
-FIT_ITEM_WORK* DUP_FIT_ITEM_CreateItem( HEAPID heapId , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , u16 itemId , GFL_G3D_RES *res , VecFx32 *pos )
+FIT_ITEM_WORK* DUP_FIT_ITEM_CreateItem( HEAPID heapId , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , ITEM_STATE *itemState , VecFx32 *pos )
 {
 	FIT_ITEM_WORK *item = GFL_HEAP_AllocMemory( heapId , sizeof( FIT_ITEM_WORK ));
 	
 	item->next = NULL;
-	item->itemId = itemId;
-	item->itemWork = MUS_ITEM_DRAW_AddResource( itemDrawSys , itemId , res , pos );
+	item->itemState = itemState;
+	item->itemWork = MUS_ITEM_DRAW_AddResource( itemDrawSys , itemState->itemId , itemState->itemRes , pos );
 	item->cnt = 0;
 	item->ePos = MUS_POKE_EQU_INVALID;
 	return item;
@@ -212,10 +216,10 @@ void DUP_FIT_ITEM_DeleteItem( FIT_ITEM_WORK *item , MUS_ITEM_DRAW_SYSTEM *itemDr
 //--------------------------------------------------------------
 //絵の読み替え
 //--------------------------------------------------------------
-void DUP_FIT_ITEM_ChengeGraphic( FIT_ITEM_WORK *item , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , u16 itemId , GFL_G3D_RES *res )
+void DUP_FIT_ITEM_ChengeGraphic( FIT_ITEM_WORK *item , MUS_ITEM_DRAW_SYSTEM *itemDrawSys , ITEM_STATE *itemState )
 {
-	item->itemId = itemId;
-	MUS_ITEM_DRAW_ChengeGraphic( itemDrawSys , item->itemWork , itemId , res );
+	item->itemState = itemState;
+	MUS_ITEM_DRAW_ChengeGraphic( itemDrawSys , item->itemWork , itemState->itemId , itemState->itemRes );
 }
 
 //--------------------------------------------------------------
@@ -229,21 +233,21 @@ FIT_ITEM_WORK* DUP_FIT_ITEM_GetNextItem( FIT_ITEM_WORK *item )
 //--------------------------------------------------------------
 //各数値の取得
 //--------------------------------------------------------------
-void DUP_FIT_ITEM_SetItemIdx( FIT_ITEM_WORK *item , const u16 idx)
+void DUP_FIT_ITEM_SetItemState( FIT_ITEM_WORK *item , ITEM_STATE *itemState )
 {
-	item->itemId = idx;
+	item->itemState = itemState;
 }
-u16 DUP_FIT_ITEM_GetItemIdx( FIT_ITEM_WORK *item )
+ITEM_STATE* DUP_FIT_ITEM_GetItemState( FIT_ITEM_WORK *item )
 {
-	return item->itemId;
+	return item->itemState;
 }
-void DUP_FIT_ITEM_SetNewItemIdx( FIT_ITEM_WORK *item , const u16 idx)
+void DUP_FIT_ITEM_SetNewItemState( FIT_ITEM_WORK *item , ITEM_STATE *itemState )
 {
-	item->newItemId = idx;
+	item->newItemState = itemState;
 }
-u16 DUP_FIT_ITEM_GetNewItemIdx( FIT_ITEM_WORK *item )
+ITEM_STATE* DUP_FIT_ITEM_GetNewItemState( FIT_ITEM_WORK *item )
 {
-	return item->newItemId;
+	return item->newItemState;
 }
 MUS_ITEM_DRAW_WORK* DUP_FIT_ITEM_GetItemDrawWork( FIT_ITEM_WORK *item )
 {
@@ -307,7 +311,7 @@ const BOOL DUP_FIT_ITEM_CheckHit( FIT_ITEM_WORK *item , u32 posX , u32 posY )
 #endif //USE_LONG_SIZE
 	GFL_POINT ofsPos;
 	s16 subX,subY;
-	u16 arcIdx = MUS_ITEM_DRAW_GetArcIdx( item->itemId );
+	u16 arcIdx = MUS_ITEM_DRAW_GetArcIdx( item->itemState->itemId );
 #if USE_LONG_SIZE
 	MUS_ITEM_DRAW_GetPicSize( item->itemWork , &xRate,&yRate );
 #endif //USE_LONG_SIZE
@@ -361,7 +365,7 @@ void	DUP_FIT_ITEM_DumpList( FIT_ITEM_GROUP *group , u8 dispIdx )
 	ARI_TPrintf("DUMP ITEM LIST[%d] [Num:%d]\n",dispIdx,group->num);
 	while( listItem != NULL )
 	{
-		ARI_TPrintf("[id:%2d][itemId:%2d]\n",i,listItem->itemId);
+		ARI_TPrintf("[id:%2d][itemId:%2d]\n",i,listItem->itemState->itemId);
 		listItem = listItem->next;
 		i++;
 	}
