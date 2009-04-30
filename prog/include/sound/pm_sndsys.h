@@ -101,8 +101,19 @@ extern void	PMSND_PlaySE( u32 soundNum );		//ＳＥを再生
 extern BOOL	PMSND_CheckPlaySE( void );			//ＳＥ終了検出(TRUE実行中)
 extern void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan );//ＳＥステータス変更
 
-
-
+//============================================================================================
+/**
+ *
+ *
+ * @brief	プリセット関数ラッパー
+ *					とりあえずシステムでハンドルを１つだけ用意し簡易登録可能にする
+ *
+ *
+ */
+//============================================================================================
+extern void	PMDSND_PresetSoundTbl( const u32* soundIdxTbl, u32 tblNum );
+extern void	PMSND_PresetGroup( u32 groupIdx );
+extern void	PMSND_ReleasePreset( void );
 
 
 
