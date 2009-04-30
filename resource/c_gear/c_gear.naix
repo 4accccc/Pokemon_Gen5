@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: c_gear.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_C_GEAR_NAIX_
+#define NARC_C_GEAR_NAIX_
+
+enum {
+	NARC_c_gear_c_gear_base_NCLR = 0,
+	NARC_c_gear_c_gear_NCGR = 1,
+	NARC_c_gear_c_gear_NSCR = 2
+};
+
+/* NARC_C_GEAR_NAIX_ */
+#endif
