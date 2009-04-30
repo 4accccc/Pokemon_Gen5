@@ -196,6 +196,17 @@ const BOOL MUS_ITEM_DRAW_CanEquipPos( MUS_ITEM_DRAW_WORK *itemWork , const MUS_P
 {
 	return MUS_ITEM_DATA_CanEquipPos( itemWork->itemData , pos );
 }
+const BOOL	MUS_ITEM_DRAW_CanEquipPosItemNo( MUS_ITEM_DRAW_SYSTEM* work , const u16 itemNo , const MUS_POKE_EQUIP_POS pos )
+{
+	MUS_ITEM_DATA_WORK *itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemNo );
+	return MUS_ITEM_DATA_CanEquipPos( itemData , pos );
+}
+
+const BOOL	MUS_ITEM_DRAW_CanEquipPosUserDataItemNo( MUS_ITEM_DRAW_SYSTEM* work , const u16 itemNo , const MUS_POKE_EQUIP_USER pos )
+{
+	MUS_ITEM_DATA_WORK *itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemNo );
+	return MUS_ITEM_DATA_CanEquipPosUserData( itemData , pos );
+}
 
 //指定箇所に装備できるか?
 const BOOL MUS_ITEM_DRAW_IsBackItem( MUS_ITEM_DRAW_WORK *itemWork )
@@ -343,6 +354,8 @@ void MUS_ITEM_DRAW_ChengeGraphic( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
 //	GFL_BBD_SetObjectDrawEnable( work->bbdSys , itemWork->bbdIdx , &flg );
 //	GFL_BBD_SetObjectSiz( work->bbdSys , itemWork->bbdIdx , &scaleX , &scaleY );
 	itemWork->enable = TRUE;
+	itemWork->isUpdate = TRUE; 
+
 }
 
 //影用灰色パレット設定
@@ -537,11 +550,6 @@ void MUS_ITEM_DRAW_Debug_DumpResData( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW
 void MUS_ITEM_DRAW_GetDispOffset( MUS_ITEM_DRAW_WORK* itemWork , GFL_POINT* ofs )
 {
 	MUS_ITEM_DATA_GetDispOffset( itemWork->itemData , ofs );
-}
-const BOOL	MUS_ITEM_DRAW_CanEquipPosItemNo( MUS_ITEM_DRAW_SYSTEM* work , const u16 itemNo , const MUS_POKE_EQUIP_POS pos )
-{
-	MUS_ITEM_DATA_WORK *itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemNo );
-	return MUS_ITEM_DATA_CanEquipPos( itemData , pos );
 }
 
 #endif	//USE_MUSICAL_EDIT

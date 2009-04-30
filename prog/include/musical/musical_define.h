@@ -20,7 +20,7 @@
 #define MUSICAL_POKE_MAX (4)
 
 //ミュージカルで装備できるアイテムの個数
-#define MUSICAL_ITEM_EQUIP_MAX (4)	//顔＆頭・胴・右手・左手
+#define MUSICAL_ITEM_EQUIP_MAX (MUS_POKE_EQUIP_USER_MAX)	//顔＆頭・胴・右手・左手
 
 //======================================================================
 //	enum
@@ -45,23 +45,20 @@ typedef enum
 }MUS_POKE_EQUIP_POS;
 
 //ミュージカルポケモンの装備箇所識別用
-//アイテムデータに設定される。装備できる場所の種類
+//ユーザーが認識できる箇所。
 typedef enum
 {
-	MUS_POKE_EQU_TYPE_EAR,		//耳(右耳・左耳)
-	MUS_POKE_EQU_TYPE_HEAD,		//頭
-	MUS_POKE_EQU_TYPE_EYE,		//目
-	MUS_POKE_EQU_TYPE_FACE,		//顔
-	MUS_POKE_EQU_TYPE_BODY,		//胴
-	MUS_POKE_EQU_TYPE_WAIST,	//腰
-	MUS_POKE_EQU_TYPE_HAND,		//手(右手・左手)
+	MUS_POKE_EQU_USER_EAR,		//耳(右耳・左耳)
+	MUS_POKE_EQU_USER_HEAD,		//頭
+	MUS_POKE_EQU_USER_FACE,		//顔
+	MUS_POKE_EQU_USER_BODY,		//胴
+	MUS_POKE_EQU_USER_HAND_R,	//手(右手)
+	MUS_POKE_EQU_USER_HAND_L,	//手(左手)
 
-	MUS_POKE_EQU_IS_BACK,			//背面装備判定
-
-	MUS_POKE_EQUIP_TYPE_MAX,
+	MUS_POKE_EQUIP_USER_MAX,
 	
-	MUS_POKE_EQU_TYPE_INVALID,	//無効値
-}MUS_POKE_EQUIP_TYPE;
+	MUS_POKE_EQU_USER_INVALID,	//無効値
+}MUS_POKE_EQUIP_USER;
 
 
 //======================================================================

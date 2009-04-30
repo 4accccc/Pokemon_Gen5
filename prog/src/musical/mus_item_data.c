@@ -157,6 +157,59 @@ const BOOL	MUS_ITEM_DATA_CanEquipPos( MUS_ITEM_DATA_WORK*  dataWork , const MUS_
 			return TRUE;
 		}
 		break;
+	case MUS_POKE_EQUIP_MAX:		//ドレスアップ検索用
+		return FALSE;
+		break;
+	default:
+		GF_ASSERT_MSG( NULL ,"invalid equip pos!!\n" );
+		break;
+	}
+	return FALSE;
+}
+
+const BOOL	MUS_ITEM_DATA_CanEquipPosUserData( MUS_ITEM_DATA_WORK*  dataWork , const MUS_POKE_EQUIP_USER pos )
+{
+	switch( pos )
+	{
+	case MUS_POKE_EQU_USER_EAR:		//耳(右耳・左耳)
+		if( dataWork->equipPosBit & EPB_EAR )
+		{
+			return TRUE;
+		}
+		break;
+		
+	case MUS_POKE_EQU_USER_HEAD:		//頭
+		if( dataWork->equipPosBit & EPB_HEAD )
+		{
+			return TRUE;
+		}
+		break;
+
+	case MUS_POKE_EQU_USER_FACE:		//顔
+		if( dataWork->equipPosBit & (EPB_EYE|EPB_FACE) )
+		{
+			return TRUE;
+		}
+		break;
+
+	case MUS_POKE_EQU_USER_BODY:		//胴
+		if( dataWork->equipPosBit & (EPB_BODY|EPB_WAIST) )
+		{
+			return TRUE;
+		}
+		break;
+
+	case MUS_POKE_EQU_USER_HAND_R:	//手(右手)
+	case MUS_POKE_EQU_USER_HAND_L:	//手(左手)
+		if( dataWork->equipPosBit & EPB_HAND )
+		{
+			return TRUE;
+		}
+		break;
+
+	case MUS_POKE_EQUIP_USER_MAX:		//ドレスアップ検索用
+		return FALSE;
+		break;
 	default:
 		GF_ASSERT_MSG( NULL ,"invalid equip pos!!\n" );
 		break;
@@ -171,5 +224,48 @@ const BOOL	MUS_ITEM_DATA_IsBackItem( MUS_ITEM_DATA_WORK*  dataWork )
 		return TRUE;
 	}
 	return FALSE;
+}
+
+const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP_USER pos )
+{
+	switch( pos )
+	{
+	case MUS_POKE_EQU_EAR_R:		//右耳
+	case MUS_POKE_EQU_EAR_L:		//左耳
+		return MUS_POKE_EQU_USER_EAR;
+		break;
+
+	case MUS_POKE_EQU_HEAD:			//頭
+		return MUS_POKE_EQU_USER_HEAD;
+		break;
+
+	case MUS_POKE_EQU_EYE:		//目・鼻
+	case MUS_POKE_EQU_FACE:		//顔
+		return MUS_POKE_EQU_USER_FACE;
+		break;
+
+	case MUS_POKE_EQU_BODY:			//胴
+	case MUS_POKE_EQU_WAIST:		//腰
+		return MUS_POKE_EQU_USER_BODY;
+		break;
+
+	case MUS_POKE_EQU_HAND_R:		//右手
+		return MUS_POKE_EQU_USER_HAND_R;
+		break;
+
+	case MUS_POKE_EQU_HAND_L:		//左手
+		return MUS_POKE_EQU_USER_HAND_L;
+		break;
+
+	case MUS_POKE_EQUIP_MAX:		//ドレスアップ検索用
+		return MUS_POKE_EQUIP_USER_MAX;
+		break;
+
+	default:
+		GF_ASSERT_MSG( NULL ,"invalid equip pos!!\n" );
+		return MUS_POKE_EQU_USER_INVALID;
+		break;
+	}
+  
 }
 

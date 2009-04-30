@@ -21,6 +21,7 @@
 #include "musical/musical_local.h"
 #include "musical/mus_poke_draw.h"
 #include "musical/mus_item_draw.h"
+#include "musical/mus_item_data.h"
 #include "musical/musical_camera_def.h"
 #include "dup_fitting.h"
 #include "dup_fitting_item.h"
@@ -112,6 +113,7 @@ static const fx32 EQUIP_ITEM_DEPTH_BACK = FX32_CONST(20.5f);
 
 //リストに戻るアニメーション
 static const u16 ITEM_RETURN_ANIME_CNT = 30;
+static const fx32 ITEM_RETURN_DEPTH = FX32_CONST(70.0f);
 //移動キャンセルでフィールドに戻るとき
 static const u16 ITEM_RETURN_POS_CNT = 5;
 //表示アイテムの点滅間隔
@@ -207,9 +209,16 @@ struct _FITTING_WORK
   u32         newPicBbdIdx[ITEM_LIST_NUM];
   u16         newPicBlinkCnt;
 
+  //ソート系
+  BOOL isSortAnime;   //ソート中判定
+  u32  sortAnimeMoveAngle;  //ソートアニメ移動分
+  u32  sortAnimeEndAngle;   //ソートアニメ完了位置
+  MUS_POKE_EQUIP_USER sortType; //今のソート種類
+
   //アイテム系
   u16             totalItemNum;
-  ITEM_STATE      itemState[MUSICAL_ITEM_MAX];
+  ITEM_STATE      itemStateBase[MUSICAL_ITEM_MAX];
+  ITEM_STATE      *itemState[MUSICAL_ITEM_MAX];
   FIT_ITEM_GROUP  *itemGroupList;
   FIT_ITEM_GROUP  *itemGroupField;
   FIT_ITEM_GROUP  *itemGroupEquip;
@@ -261,12 +270,16 @@ static void DUP_FIT_UpdateTpDropItemToField( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work );
 static void DUP_FIT_UpdateTpCancelDropItem( FITTING_WORK *work );
+static void DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work );
+static void DUP_FIT_UpdateSortAnime( FITTING_WORK *work );
 
 static const BOOL DUP_FIT_CheckIsEquipItem( FITTING_WORK *work , const MUS_POKE_EQUIP_POS pos);
 static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition( FITTING_WORK *work , MUS_ITEM_DRAW_WORK *itemDrawWork , GFL_POINT *pos , u16 *len );
 static void DUP_FIT_UpdateItemAnime( FITTING_WORK *work );
 static void DUP_FIT_UpdateShadow( FITTING_WORK *work );
 static void DUP_FIT_CreateItemListToField( FITTING_WORK *work );
+static void DUP_FIT_SortItemIdx( FITTING_WORK *work , const MUS_POKE_EQUIP_USER ePos , const u16 startIdx );
+static const u16 DUP_FIT_CalcSortPriority( FITTING_WORK *work , ITEM_STATE *itemState , const MUS_POKE_EQUIP_USER ePos );
 
 static BOOL DUP_FIT_CheckPointInOval( s16 subX , s16 subY , s16 size , float ratioYX );
 
@@ -321,6 +334,8 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
   work->holdItem = NULL;
   work->holdItemType = IG_NONE;
   work->befItemType = IG_NONE;
+  work->isSortAnime = FALSE;
+  work->sortType = MUS_POKE_EQUIP_USER_MAX;
 
   work->listSpeed = 0;
   work->snapPos = MUS_POKE_EQU_INVALID;
@@ -722,44 +737,28 @@ static void DUP_FIT_SetupPokemon( FITTING_WORK *work )
 static void DUP_FIT_SetupItem( FITTING_WORK *work )
 {
   int i;
-  const u16 itemIdArr[33] =
-    {8,11,18,19,27,
-     0,1,2,3,4,
-     5,6,7,9,10,
-     12,13,14,15,16,
-     17,20,21,22,23,
-     24,25,26,28,29,
-     30,31,32 };
-  
   //所持アイテムのチェック
   work->totalItemNum = 0;
   for( i=0;i<MUSICAL_ITEM_MAX;i++ )
   {
     //  FIXME:正しい所持アイテムチェック
 #if DEB_ARI
-    if( i<33 || 1)
+    if( i<33 )
 #else
     if( i<33 )
 #endif
     {
-      if( i < 33 )
+      work->itemStateBase[work->totalItemNum].itemId = i;
+      work->itemStateBase[work->totalItemNum].isOutList = FALSE;
+      if( i<33 && GFL_STD_MtRand0(4) == 0 )
       {
-        work->itemState[work->totalItemNum].itemId = itemIdArr[i];
+        work->itemStateBase[work->totalItemNum].isNew = TRUE;
       }
       else
       {
-        work->itemState[work->totalItemNum].itemId = i;
+        work->itemStateBase[work->totalItemNum].isNew = FALSE;
       }
-      work->itemState[work->totalItemNum].isOutList = FALSE;
-      if( i<5 )
-      {
-        work->itemState[work->totalItemNum].isNew = TRUE;
-      }
-      else
-      {
-        work->itemState[work->totalItemNum].isNew = FALSE;
-      }
-      work->itemState[work->totalItemNum].pltWork = NULL;
+      work->itemStateBase[work->totalItemNum].pltWork = NULL;
       work->totalItemNum++;
     }
   }
@@ -767,10 +766,10 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
   i=0;
   while( work->totalItemNum+i < MUSICAL_ITEM_MAX )
   {
-    work->itemState[work->totalItemNum+i].itemId = MUSICAL_ITEM_INVALID;
-    work->itemState[work->totalItemNum+i].isOutList = FALSE;
-    work->itemState[work->totalItemNum].isNew = TRUE;
-    work->itemState[work->totalItemNum].pltWork = NULL;
+    work->itemStateBase[work->totalItemNum+i].itemId = MUSICAL_ITEM_INVALID;
+    work->itemStateBase[work->totalItemNum+i].isOutList = FALSE;
+    work->itemStateBase[work->totalItemNum].isNew = TRUE;
+    work->itemStateBase[work->totalItemNum].pltWork = NULL;
     i++;
   }
   
@@ -778,8 +777,10 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
   work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , ITEM_DISP_NUM , work->heapId );
   for( i=0;i<work->totalItemNum;i++ )
   {
-    work->itemState[i].itemRes = MUS_ITEM_DRAW_LoadResource( work->itemState[i].itemId );
+    work->itemStateBase[i].itemRes = MUS_ITEM_DRAW_LoadResource( work->itemStateBase[i].itemId );
   }
+  //デフォルトでソート
+  DUP_FIT_SortItemIdx( work , MUS_POKE_EQUIP_USER_MAX , 0 );
   
   work->itemGroupList = DUP_FIT_ITEMGROUP_CreateGroup( work->heapId , ITEM_LIST_NUM );
   work->itemGroupField = DUP_FIT_ITEMGROUP_CreateGroup( work->heapId , ITEM_FIELD_NUM );
@@ -791,14 +792,14 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
     VecFx32 pos = {0,0,0};
     
     item = DUP_FIT_ITEM_CreateItem( work->heapId , work->itemDrawSys ,
-                                    &work->itemState[0], &pos );
+                                    &work->itemStateBase[0], &pos );
     DUP_FIT_ITEMGROUP_AddItem( work->itemGroupList,item );
     MUS_ITEM_DRAW_SetUseOffset( work->itemDrawSys , DUP_FIT_ITEM_GetItemDrawWork( item ) , FALSE );
   }
   //影用
   {
     VecFx32 pos = {0,0,0};
-    work->shadowItem = MUS_ITEM_DRAW_AddResource( work->itemDrawSys , work->itemState[0].itemId , work->itemState[0].itemRes , &pos );
+    work->shadowItem = MUS_ITEM_DRAW_AddResource( work->itemDrawSys , work->itemStateBase[0].itemId , work->itemStateBase[0].itemRes , &pos );
     MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , work->shadowItem , FALSE );
     MUS_ITEM_DRAW_SetSize( work->itemDrawSys , work->shadowItem , FX16_ONE , FX16_ONE );
     work->shadowItemId = 0;
@@ -879,7 +880,7 @@ static void DUP_FIT_TermItem( FITTING_WORK *work )
 
   for( i=0;i<work->totalItemNum;i++ )
   {
-    MUS_ITEM_DRAW_DeleteResource( work->itemState[i].itemRes );
+    MUS_ITEM_DRAW_DeleteResource( work->itemStateBase[i].itemRes );
   }
   
   DUP_FIT_ITEMGROUP_DeleteGroup( work->itemGroupList );
@@ -921,7 +922,14 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
   }
 #endif
 
-  DUP_FIT_UpdateTpMain( work );
+  if( work->isSortAnime == TRUE )
+  {
+    DUP_FIT_UpdateSortAnime( work );
+  }
+  else
+  {
+    DUP_FIT_UpdateTpMain( work );
+  }
   DUP_FIT_UpdateShadow( work );
 
   //New!の点滅更新
@@ -943,10 +951,10 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
     int i;
     for( i=0;i<work->totalItemNum;i++ )
     {
-      if(work->itemState[i].pltWork != NULL )
+      if(work->itemStateBase[i].pltWork != NULL )
       {
-        GFL_HEAP_FreeMemory( work->itemState[i].pltWork );
-        work->itemState[i].pltWork = NULL;
+        GFL_HEAP_FreeMemory( work->itemStateBase[i].pltWork );
+        work->itemStateBase[i].pltWork = NULL;
       }
     }
   }
@@ -964,6 +972,7 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
   FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
   
   work->listTotalMove += moveAngle;
+  
   if( work->listTotalMove < 0 )
   {
     work->listTotalMove += (LIST_ONE_ANGLE*work->totalItemNum);
@@ -987,8 +996,8 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
     const fx32 posX = LIST_CENTER_X_FX+sin*sizeX;
     const fx32 posY = LIST_CENTER_Y_FX+cos*sizeY;
     ITEM_STATE *nowItemState = DUP_FIT_ITEM_GetItemState( item );
-    ITEM_STATE *newItemState = DUP_FIT_ITEM_GetItemState( item );
-
+    ITEM_STATE *newItemState = nowItemState;
+    
     //絵の読み替え処理とか
     {
       u16 newIdx;
@@ -1005,15 +1014,18 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
       {
         itemTotalAngle -= (LIST_ONE_ANGLE*work->totalItemNum);
       }
-      
-      newIdx = (itemTotalAngle+(LIST_ONE_ANGLE/2))/LIST_ONE_ANGLE;
-      //計算誤差が起こる・・・(アイテムがリストの個数(14)以下だと起こる
-      if( newIdx >= work->totalItemNum )
+      if( work->isSortAnime == FALSE ||
+          work->sortAnimeMoveAngle > (0x10000-oneAngle+0x8000)%0x10000 )
       {
-        newIdx -= work->totalItemNum;
+        newIdx = (itemTotalAngle+(LIST_ONE_ANGLE/2))/LIST_ONE_ANGLE;
+        //計算誤差が起こる・・・(アイテムがリストの個数(14)以下だと起こる
+        if( newIdx >= work->totalItemNum )
+        {
+          newIdx -= work->totalItemNum;
+        }
+        newItemState = work->itemState[newIdx];
+        DUP_FIT_ITEM_SetNewItemState( item , newItemState );
       }
-      newItemState = &work->itemState[newIdx];
-      DUP_FIT_ITEM_SetNewItemState( item , newItemState );
     }
     
     //位置の計算
@@ -1091,7 +1103,6 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
     i++;
   }
   item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
-  
 }
 
 //--------------------------------------------------------------
@@ -1133,11 +1144,15 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
   {
     if( work->tpIsTrg && (work->tpy > 192-16) )
     {
+      //チェックボタン
       work->state = DUS_GO_CHECK;
       work->animeCnt = 0;
     }
     else
     {
+      BOOL hitMinOval = FALSE;
+      BOOL hitMaxOval = FALSE;
+      
       //取り合えずInfoBarとチェックボタンにかぶらない処理
       if( work->tpy > 192-16 )
       {
@@ -1161,7 +1176,6 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
         const s16 subY = work->tpy - LIST_CENTER_Y;
         const u32 centerLen = F32_CONST(FX_Sqrt(FX32_CONST(subX*subX+subY*subY)));
         //内側の円に居るか？
-        BOOL hitMinOval,hitMaxOval;
         hitMinOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MIN_Y,LIST_TPHIT_RATIO_MIN );
         hitMaxOval = DUP_FIT_CheckPointInOval( subX,subY,LIST_TPHIT_MAX_Y,LIST_TPHIT_RATIO_MAX );
         if( hitMinOval == FALSE && hitMaxOval == TRUE )
@@ -1172,6 +1186,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
         else if( (hitMinOval == FALSE && hitMaxOval == FALSE )||
              (hitMinOval == TRUE && hitMaxOval == TRUE ))
         {
+          //リストから引っ張り出す判定
           if( DUP_FIT_ITEMGROUP_IsItemMax(work->itemGroupField) == FALSE )
           {
             //円の内側も許可
@@ -1187,7 +1202,15 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
       }
       if( isTouchList == FALSE && work->tpIsTrg == TRUE )
       {
+        //リスト・フィールドから拾う判定
         DUP_FIT_UpdateTpHoldItem(work);
+        
+        //ソート判定
+        if( hitMinOval == TRUE && work->holdItem == NULL )
+        {
+          DUP_FIT_UpdateTpPokeCheck( work );
+        }
+
       }
     }
   }
@@ -1643,6 +1666,104 @@ static void DUP_FIT_UpdateTpCancelDropItem( FITTING_WORK *work )
 }
 
 //--------------------------------------------------------------
+//ポケモンのタッチチェック（ソート用)
+//--------------------------------------------------------------
+static void DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work )
+{
+  u16 snapLen = 16;
+  GFL_POINT pokePosSub;
+  MUS_POKE_EQUIP_POS touchPos;
+  u16 startIdx;
+  //1週半と1個先のところを先頭にしてソート(スタートは下
+//  const u32 startAngle = work->listTotalMove + 0x18000+LIST_ONE_ANGLE;
+  //1と1/4週と1個先のところを先頭にしてソート(スタートは左
+  const u32 startAngle = work->listTotalMove + 0x14000+LIST_ONE_ANGLE;
+  
+  if( startAngle >= work->totalItemNum * LIST_ONE_ANGLE )
+  {
+    startIdx = (startAngle-(work->totalItemNum * LIST_ONE_ANGLE)) / LIST_ONE_ANGLE;
+  }
+  else
+  {
+    startIdx = startAngle / LIST_ONE_ANGLE;
+  }
+  
+  pokePosSub.x = work->tpx - FIT_POKE_POS_X;
+  pokePosSub.y = work->tpy - FIT_POKE_POS_Y;
+  touchPos = DUP_FIT_SearchEquipPosition( work ,NULL, &pokePosSub , &snapLen );
+
+  if( touchPos != MUS_POKE_EQU_INVALID )
+  {
+    MUS_POKE_EQUIP_USER userType = MUS_ITEM_DATA_EquipPosToUserType( touchPos );
+    //手は出てくるものは同じだけど、左右バラ扱いなので
+    if( userType == MUS_POKE_EQU_USER_HAND_L )
+    {
+      userType = MUS_POKE_EQU_USER_HAND_R;
+    }
+    if( userType == work->sortType )
+    {
+      //デフォルトでソート
+      DUP_FIT_SortItemIdx( work , MUS_POKE_EQUIP_USER_MAX , startIdx );
+      work->sortType = MUS_POKE_EQUIP_USER_MAX;
+    }
+    else
+    {
+      DUP_FIT_SortItemIdx( work , userType , startIdx );
+      work->sortType = userType;
+    }
+  }
+  else
+  {
+    //デフォルトでソート
+    DUP_FIT_SortItemIdx( work , MUS_POKE_EQUIP_USER_MAX , startIdx );
+    work->sortType = MUS_POKE_EQUIP_USER_MAX;
+  }
+  work->isSortAnime = TRUE;
+  work->sortAnimeMoveAngle = 0;
+  work->sortAnimeEndAngle = 0x10000 + work->listAngle%LIST_ONE_ANGLE;
+  //listAngleのあまりが０だったら
+  /*  //1週半のときだけ有効にする
+  if( work->sortAnimeEndAngle == 0x10000 )
+  {
+    work->sortAnimeEndAngle += LIST_ONE_ANGLE;
+  }
+  */
+  
+  DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
+  
+}
+
+//--------------------------------------------------------------
+//ソート中アニメ
+//--------------------------------------------------------------
+static void DUP_FIT_UpdateSortAnime( FITTING_WORK *work )
+{
+  static const u16 SORT_ANIME_MIN_SPD = 256;
+  u32 leastAngle;
+  u32 moveAngle;
+
+  leastAngle = work->sortAnimeEndAngle - work->sortAnimeMoveAngle;
+  
+  moveAngle = leastAngle/10;
+  if( moveAngle < SORT_ANIME_MIN_SPD )
+  {
+    if( leastAngle < SORT_ANIME_MIN_SPD )
+    {
+      moveAngle = leastAngle;
+      work->isSortAnime = FALSE;
+    }
+    else
+    {
+      moveAngle = SORT_ANIME_MIN_SPD;
+    }
+  }
+  
+  work->sortAnimeMoveAngle += moveAngle;
+  work->listAngle -= moveAngle;
+  DUP_FIT_CalcItemListAngle( work , work->listAngle , moveAngle , LIST_SIZE_X , LIST_SIZE_Y );
+}
+
+//--------------------------------------------------------------
 //指定箇所に装備があるか？
 //--------------------------------------------------------------
 static const BOOL DUP_FIT_CheckIsEquipItem( FITTING_WORK *work , const MUS_POKE_EQUIP_POS pos)
@@ -1668,9 +1789,10 @@ static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work , MUS
   MUS_POKE_EQUIP_POS minPos = MUS_POKE_EQU_INVALID;
   for( i=0; i<MUS_POKE_EQUIP_MAX ;i++ )
   {
+    const BOOL canEquipPos = ( itemDrawWork == NULL ? TRUE : MUS_ITEM_DRAW_CanEquipPos( itemDrawWork , i ) );
     MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , i );
     if( equipData->isEnable == TRUE && 
-      MUS_ITEM_DRAW_CanEquipPos( itemDrawWork , i ) == TRUE )
+       canEquipPos == TRUE )
 //    if( pokeData->isEquip[i] == TRUE )
     {
       const int equipPosX = (int)F32_CONST(equipData->pos.x+equipData->ofs.x)+128-FIT_POKE_POS_X;
@@ -1684,7 +1806,6 @@ static MUS_POKE_EQUIP_POS DUP_FIT_SearchEquipPosition(  FITTING_WORK *work , MUS
         minPos = i;
       }
     }
-    
   }
   *len = minLen;
   return minPos;
@@ -1710,8 +1831,12 @@ static void DUP_FIT_UpdateItemAnime( FITTING_WORK *work )
       cnt--;
       if( cnt > 0 )
       {
+        VecFx32 pos;
         fx16 size = FX16_ONE * (cnt) / ITEM_RETURN_ANIME_CNT;
         MUS_ITEM_DRAW_SetSize( work->itemDrawSys , drawWork , size , size );
+        MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , drawWork , &pos );
+        pos.z = ITEM_RETURN_DEPTH;
+        MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , drawWork , &pos );
         DUP_FIT_ITEM_SetCount( item , cnt );
       }
       else
@@ -1798,9 +1923,59 @@ static BOOL DUP_FIT_CheckPointInOval( s16 subX , s16 subY , s16 size , float rat
 {
   const s16 newSubX = (s16)(subX*ratioYX);
   if( newSubX * newSubX + subY * subY < size*size )
+  {
     return TRUE;
+  }
   else
+  {
     return FALSE;
+  }
+}
+
+//--------------------------------------------------------------
+//列の並べ替え
+//--------------------------------------------------------------
+static void DUP_FIT_SortItemIdx( FITTING_WORK *work , const MUS_POKE_EQUIP_USER ePos , const u16 startIdx)
+{
+  u16 i,j;
+  for( i=0 ; i<work->totalItemNum ; i++ )
+  {
+    const u16 idx = (startIdx+i)%work->totalItemNum;
+    work->itemState[idx] = &work->itemStateBase[i];
+  }
+  for( i=0 ; i<work->totalItemNum ; i++ )
+  {
+    const u16 idx_i = (startIdx+i)%work->totalItemNum;
+
+    u16 biggerIdx = idx_i;
+    u16 biggerPri;
+    biggerPri = DUP_FIT_CalcSortPriority( work , work->itemState[idx_i] , ePos );
+    for( j=i+1 ; j<work->totalItemNum ; j++ )
+    {
+      const u16 idx_j = (startIdx+j)%work->totalItemNum;
+      const u16 jPir = DUP_FIT_CalcSortPriority( work , work->itemState[idx_j] , ePos );
+      if( biggerPri < jPir )
+      {
+        biggerPri = jPir;
+        biggerIdx = idx_j;
+      }
+    }
+    if( biggerIdx != idx_i )
+    {
+      ITEM_STATE *temp;
+      temp = work->itemState[idx_i];
+      work->itemState[idx_i] = work->itemState[biggerIdx];
+      work->itemState[biggerIdx] = temp;
+    }
+  }
+}
+
+static const u16 DUP_FIT_CalcSortPriority( FITTING_WORK *work , ITEM_STATE *itemState , const MUS_POKE_EQUIP_USER uPos )
+{
+  const BOOL isTrgPos = MUS_ITEM_DRAW_CanEquipPosUserDataItemNo(work->itemDrawSys , itemState->itemId , uPos );
+  return ( isTrgPos == TRUE ? 2000 : 0 ) +
+         ( itemState->isNew ? 1000 : 0 ) +
+         ( 999 - itemState->itemId );
 }
 
 #pragma mark [> StateChangeAnime
