@@ -285,9 +285,9 @@ void	ELBOARD_Main( EL_SCOREBOARD* elb )
  */
 //------------------------------------------------------------------
 #define ELB_DIF			(GX_RGB(31, 31, 31))
-#define ELB_AMB			(GX_RGB(16, 16, 16))
-#define ELB_SPE			(GX_RGB(16, 16, 16))
-#define ELB_EMI			(GX_RGB(0, 0, 0))
+#define ELB_AMB			(GX_RGB(31, 31, 31))
+#define ELB_SPE			(GX_RGB(31, 31, 31))
+#define ELB_EMI			(GX_RGB(31, 31, 31))
 #define ELB_POLID 	(63)
 
 void	ELBOARD_Draw( EL_SCOREBOARD* elb, 

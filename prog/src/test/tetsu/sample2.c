@@ -51,6 +51,7 @@
 #define COL_SIZ				(2)
 #define PLTT_SIZ			(16*COL_SIZ)
 
+#define BACKGROUND_COLOR (0)
 //------------------------------------------------------------------
 /**
  * @brief		ＢＧ描画データ
@@ -478,7 +479,7 @@ static void systemSetup(SAMPLE2_WORK* sw)
 	//基本セットアップ
 	bg_init(sw->heapID);
 	//フォント用パレット転送
-	GFL_BG_SetBackGroundColor( TEXT_FRAME, 0x7fff );
+	GFL_BG_SetBackGroundColor( TEXT_FRAME, BACKGROUND_COLOR );
 	GFL_BG_LoadPalette( TEXT_FRAME, (void*)plttData, PLTT_SIZ, TEXT_PLTTID * PLTT_SIZ );
 	//フォントハンドル作成
 	sw->fontHandle = GFL_FONT_Create(	ARCID_FONT,

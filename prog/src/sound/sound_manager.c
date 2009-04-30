@@ -62,8 +62,8 @@ struct _PLAYER_HIERARCHY{
 #define PLAYER_HIERARCHY_EMPTY			(0xffff)
 #define PLAYER_HIERARCHY_HEAPLV_NULL	(0xffffffff)
 static PLAYER_HIERARCHY	sndHierarchyArray[PLAYER_HIERARCHY_NUM];
-static int				sndHierarchyArrayPos;
-static u16				sndHierarchyPlayerNo;
+static int	sndHierarchyArrayPos;
+static u16	sndHierarchyPlayerNo;
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -277,10 +277,29 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 	OS_Printf("soundHeapSaveLv delete(%d), reset(%d), push(%d), full(%d)\n", 
 			player->heapLvDelete, player->heapLvReset, player->heapLvPush, player->heapLvFull);
 #endif
-
 	player->soundIdx = soundIdx;
 	return result;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ *
+ * @brief	サウンド再生(スレッド用関数)
+ *
+ */
+//--------------------------------------------------------------------------------------------
+void	SOUNDMAN_PlayHierarchyPlayer_forThread( void* arg )
+{
+	SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG* arg1 = (SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG*)arg;
+
+	NNS_SndArcSetLoadBlockSize(0x01000);	//分割ロード指定
+
+	SOUNDMAN_PlayHierarchyPlayer(arg1->soundIdx);
+	NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), arg1->volume);
+
+	NNS_SndArcSetLoadBlockSize(0);	//分割ロードなし
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
