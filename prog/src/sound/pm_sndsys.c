@@ -128,17 +128,18 @@ static const SOUNDMAN_HIERARCHY_PLAYER_DATA pmHierarchyPlayerData = {
 #define	SOUND_HEAP_SIZE	(0x0a0000)   //640K
 #define CAPTURE_BUFSIZE (0x2000)
 
-static u8				PmSoundHeap[SOUND_HEAP_SIZE];
-static u8				captureBuffer[ CAPTURE_BUFSIZE ] ATTRIBUTE_ALIGN(32);
-static NNSSndArc		PmSoundArc;
-static NNSSndHeapHandle	PmSndHeapHandle;
-static u32				playerNumber;
-static u32				bgmFadeCounter;
-static PMSND_FADESTATUS	fadeStatus;
-static PMSND_REVERB		reverbStatus;
-static PMSND_PL_UNIT	systemPlayerUnit;
-static PMSND_PLAYERSTATUS bgmPlayerInfo;
-static SOUNDMAN_PRESET_HANDLE* systemPresetHandle;
+static u8												PmSoundHeap[SOUND_HEAP_SIZE];
+static u8												captureBuffer[ CAPTURE_BUFSIZE ] ATTRIBUTE_ALIGN(32);
+static NNSSndArc								PmSoundArc;
+static NNSSndHeapHandle					PmSndHeapHandle;
+static u32											playerNumber;
+static u32											bgmFadeCounter;
+static PMSND_FADESTATUS					fadeStatus;
+static PMSND_REVERB							reverbStatus;
+static PMSND_PL_UNIT						systemPlayerUnit;
+static PMSND_PLAYERSTATUS				bgmPlayerInfo;
+static SOUNDMAN_PRESET_HANDLE*	systemPresetHandle;
+static SOUNDMAN_PRESET_HANDLE*	usrPresetHandle1;
 
 static void	PMSND_WatchDog( void );
 static void PMSND_CreatePlayerUnit( const PMSND_PLSETUP* setupTbl, PMSND_PL_UNIT* playerUnit );
@@ -184,6 +185,7 @@ void	PMSND_Init( void )
 
 	// 常駐サウンドデータ読み込み
 	systemPresetHandle = SOUNDMAN_PresetGroup(GROUP_GLOBAL);
+	usrPresetHandle1 = NULL;
 #if 0
 	{
 		u32 presetTbl[] = {1501, 1502};
@@ -806,6 +808,35 @@ void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan )
 }
 
 
+//============================================================================================
+/**
+ *
+ *
+ * @brief	プリセット関数ラッパー
+ *					とりあえずシステムでハンドルを１つだけ用意し簡易登録可能にする
+ *
+ *
+ */
+//============================================================================================
+void	PMDSND_PresetSoundTbl( const u32* soundIdxTbl, u32 tblNum )
+{
+	PMSND_ReleasePreset();
+	usrPresetHandle1 = SOUNDMAN_PresetSoundTbl(soundIdxTbl, tblNum);
+}
+
+void	PMSND_PresetGroup( u32 groupIdx )
+{
+	PMSND_ReleasePreset();
+	usrPresetHandle1 = SOUNDMAN_PresetGroup(groupIdx);
+}
+
+void PMSND_ReleasePreset( void )
+{
+	if( usrPresetHandle1 != NULL ){
+		SOUNDMAN_ReleasePresetData(usrPresetHandle1);
+		usrPresetHandle1 = NULL;
+	}
+}
 
 #if 0
 //============================================================================================
