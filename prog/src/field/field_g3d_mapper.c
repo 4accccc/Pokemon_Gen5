@@ -358,12 +358,12 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 			setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
 			setup.texVramSize = 0;
 			setup.mapFileFunc = mapFileFuncTbl;
-			setup.exWork			= NULL;
+			setup.externalWork = NULL;
 		} else {
 			setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
 			setup.texVramSize = MAPTEX_SIZE;
 			setup.mapFileFunc = mapFileFuncTbl;
-			setup.exWork			= NULL;
+			setup.externalWork = NULL;
 		}
 
 		//ブロック制御ハンドル作成
