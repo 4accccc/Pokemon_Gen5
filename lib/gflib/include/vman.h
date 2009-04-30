@@ -1,10 +1,10 @@
 //==============================================================================
 /**
  *
- *@file		vman.h
- *@brief	OBJ用VRAM領域管理
- *@author	taya
- *@data		2006.11.28
+ *@file   vman.h
+ *@brief  OBJ用VRAM領域管理
+ *@author taya
+ *@data   2006.11.28
  *
  */
 //==============================================================================
@@ -16,35 +16,35 @@ extern "C" {
 #endif
 
 //==============================================================
-//	管理オブジェクト不完全型定義
+//  管理オブジェクト不完全型定義
 //==============================================================
-typedef struct _GFL_VMAN	GFL_VMAN;
+typedef struct _GFL_VMAN  GFL_VMAN;
 
 //==============================================================
-//	管理タイプ定数
+//  管理タイプ定数
 //==============================================================
 typedef enum {
-	GFL_VMAN_TYPE_BG,
-	GFL_VMAN_TYPE_OBJ,
+  GFL_VMAN_TYPE_BG,
+  GFL_VMAN_TYPE_OBJ,
 }GFL_VMAN_TYPE;
 
 //==============================================================
-//	領域予約時の情報を保存しておくための構造体。
-//	領域解放の際に必要となる。
+//  領域予約時の情報を保存しておくための構造体。
+//  領域解放の際に必要となる。
 //
-//	構造体等に簡単に組み込めるようにメンバ公開してあるが、
-//	内部を操作することは禁止。
+//  構造体等に簡単に組み込めるようにメンバ公開してあるが、
+//  内部を操作することは禁止。
 //==============================================================
 typedef struct {
-	u32   pos;
-	u32   size;
+  u32   pos;
+  u32   size;
 }GFL_VMAN_RESERVE_INFO;
 
 
 extern u32 GFI_VRAM_CalcVramSize( u32 vramBank );
 extern void GFL_VMAN_sysInit( void );
 extern void GFL_VMAN_sysExit( void );
-extern GFL_VMAN* GFL_VMAN_Create( u16 heapID, GFL_VMAN_TYPE type, u32 vramBank );
+extern GFL_VMAN* GFL_VMAN_Create( u16 heapID, GFL_VMAN_TYPE type, u32 vramBank, u32 objMappingMode );
 extern void GFL_VMAN_Delete( GFL_VMAN* man );
 extern void GFL_VMAN_InitReserveInfo( GFL_VMAN_RESERVE_INFO* reserveInfo );
 extern BOOL GFL_VMAN_IsReserveInfoInitialized( const GFL_VMAN_RESERVE_INFO* reserveInfo );
@@ -64,5 +64,5 @@ extern void GFL_VMAN_SetPrintDebug( GFL_VMAN* man, BOOL flag );
 }/* extern "C" */
 #endif
 
-#endif	/* #ifndef __VMAN_H__ */
+#endif  /* #ifndef __VMAN_H__ */
 
