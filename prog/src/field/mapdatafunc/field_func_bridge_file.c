@@ -59,7 +59,7 @@ enum {
 	TEX_TRANS,
 };
 
-BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap )
+BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
 	GFL_G3D_MAP_LOAD_STATUS* ldst;
 

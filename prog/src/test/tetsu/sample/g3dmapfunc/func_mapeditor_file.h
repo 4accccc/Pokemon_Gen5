@@ -15,7 +15,7 @@
  * @brief	マップデータ読み込み
  */
 //============================================================================================
-extern BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap );
+extern BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap, void * exWork );
 //============================================================================================
 /**
  * @brief	３Ｄマップ情報取得

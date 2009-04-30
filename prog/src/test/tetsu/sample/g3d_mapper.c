@@ -136,6 +136,7 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 		setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
 		setup.texVramSize = MAPTEX_SIZE;
 		setup.mapFileFunc = mapFileFuncTbl;
+		setup.exWork			= NULL;
 
 		//ブロック制御ハンドル作成
 		for( i=0; i<MAP_BLOCK_COUNT; i++ ){

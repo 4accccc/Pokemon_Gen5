@@ -127,7 +127,7 @@ typedef struct {
 
 //------------------------------------------------------------------
 //マップデータファイル処理関数定義
-typedef BOOL (GFL_G3D_MAP_FILELOAD_FUNC)( GFL_G3D_MAP* g3Dmap );
+typedef BOOL (GFL_G3D_MAP_FILELOAD_FUNC)( GFL_G3D_MAP* g3Dmap, void * exWork );
 typedef void (GFL_G3D_MAP_FILEATTR_FUNC)( GFL_G3D_MAP_ATTRINFO* attrInfo,
 										const void* mapdata, const VecFx32* posInBlock, 
 										const fx32 map_width, const fx32 map_height );
@@ -145,6 +145,7 @@ typedef struct {
 	u32								mapDataHeapSize;
 	u32								texVramSize;
 	const GFL_G3D_MAP_FILE_FUNC*	mapFileFunc;
+	void *						externalWork;
 
 }GFL_G3D_MAP_SETUP;
 
@@ -158,7 +159,7 @@ typedef struct {
  * @brief	３Ｄマップシステム作成
  */
 //------------------------------------------------------------------
-extern GFL_G3D_MAP*	GFL_G3D_MAP_Create( GFL_G3D_MAP_SETUP* setup, HEAPID heapID );
+extern GFL_G3D_MAP*	GFL_G3D_MAP_Create( const GFL_G3D_MAP_SETUP* setup, HEAPID heapID );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップシステム破棄

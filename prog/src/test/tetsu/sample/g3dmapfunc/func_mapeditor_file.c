@@ -38,7 +38,7 @@ enum {
 	TEX_TRANS,
 };
 
-BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
+BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
 	GFL_G3D_MAP_LOAD_STATUS* ldst;
 

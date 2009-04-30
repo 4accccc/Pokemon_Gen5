@@ -117,7 +117,7 @@ enum {
 	RND_CREATE,
 };
 
-BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
+BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
 	GFL_G3D_MAP_LOAD_STATUS* ldst;
 
