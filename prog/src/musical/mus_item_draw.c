@@ -208,6 +208,12 @@ const BOOL	MUS_ITEM_DRAW_CanEquipPosUserDataItemNo( MUS_ITEM_DRAW_SYSTEM* work ,
 	return MUS_ITEM_DATA_CanEquipPosUserData( itemData , pos );
 }
 
+const BOOL MUS_ITEM_DRAW_CheckMainPosUserDataItemNo( MUS_ITEM_DRAW_SYSTEM* work , const u16 itemNo , const MUS_POKE_EQUIP_USER pos )
+{
+	MUS_ITEM_DATA_WORK *itemData = MUS_ITEM_DATA_GetMusItemData( work->itemDataSys , itemNo );
+	return MUS_ITEM_DATA_CheckMainPosUserData( itemData , pos );
+}
+
 //w’è‰ÓŠ‚É‘•”õ‚Å‚«‚é‚©?
 const BOOL MUS_ITEM_DRAW_IsBackItem( MUS_ITEM_DRAW_WORK *itemWork )
 {
