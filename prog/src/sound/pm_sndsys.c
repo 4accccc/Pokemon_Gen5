@@ -157,6 +157,7 @@ static void PMSND_SystemFadeBGM( void );
 static void PMSND_InitCaptureReverb( void );
 
 static void createSoundPlayThread( u32 soundIdx );
+static void deleteSoundPlayThread( void );
 static BOOL checkEndSoundPlayThread( void );
 //============================================================================================
 /**
@@ -663,6 +664,8 @@ static void PMSND_ResetSystemFadeBGM( void )
 	fadeStatus.volumeCounter = fadeStatus.fadeFrames;
 	//Å‘å’l‚ÉXV
 	NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127);
+
+	deleteSoundPlayThread();
 	threadBusy = FALSE;
 }
 
@@ -695,6 +698,7 @@ static void PMSND_SystemFadeBGM( void )
 			if( fadeStatus.volumeCounter > 0 ){
 				fadeStatus.volumeCounter--;
 			} else {
+				threadBusy = FALSE;
 				bgmSetFlag = TRUE;
 			}
 		} else {									
@@ -877,9 +881,7 @@ static void createSoundPlayThread( u32 soundIdx )
 	threadArg.soundIdx = soundIdx;
 	threadArg.volume = 0;
 
-	if( OS_IsThreadTerminated(&soundLoadThread) == FALSE ){
-		OS_DestroyThread(&soundLoadThread);
-	}
+	deleteSoundPlayThread();
 	OS_CreateThread(&soundLoadThread, 
 									SOUNDMAN_PlayHierarchyPlayer_forThread,
 									&threadArg,
@@ -887,6 +889,13 @@ static void createSoundPlayThread( u32 soundIdx )
 									THREAD_STACKSIZ,
 									17);
 	OS_WakeupThreadDirect(&soundLoadThread);
+}
+
+static void deleteSoundPlayThread( void )
+{
+	if( OS_IsThreadTerminated(&soundLoadThread) == FALSE ){
+		OS_DestroyThread(&soundLoadThread);
+	}
 }
 
 static BOOL checkEndSoundPlayThread( void )
