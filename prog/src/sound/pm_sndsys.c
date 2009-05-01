@@ -713,8 +713,7 @@ static void PMSND_SystemFadeBGM( void )
 	} else {
 		if( threadBusy == TRUE ){
 				debugCounter++;
-				OS_Printf(" sound Data Loading.... %x\n",debugCounter);
-				OS_Sleep(1);
+				OS_Sleep(0);
 				return;
 		}
 		bgmSetFlag = TRUE;	// Å‰‚É–Â‚èo‚·ê‡

@@ -10,6 +10,9 @@
 
 #include "sound/sound_manager.h"
 
+/// BGMの分割読み込みのサイズ  
+#define BGM_BLOCKLOAD_SIZE  (0x2000)
+
 static NNSSndHeapHandle*	pSndHeapHandle = NULL;
 //#define STATUS_PRINT
 //============================================================================================
@@ -292,7 +295,7 @@ void	SOUNDMAN_PlayHierarchyPlayer_forThread( void* arg )
 {
 	SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG* arg1 = (SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG*)arg;
 
-	NNS_SndArcSetLoadBlockSize(0x01000);	//分割ロード指定
+	NNS_SndArcSetLoadBlockSize(BGM_BLOCKLOAD_SIZE);	//分割ロード指定
 
 	SOUNDMAN_PlayHierarchyPlayer(arg1->soundIdx);
 	NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), arg1->volume);
