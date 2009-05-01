@@ -16,6 +16,8 @@
 
 #include "field_g3d_mapper.h"
 #include "fieldmap_resist.h"
+#include "field_g3dmap_exwork.h"
+#include "field_ground_anime.h"
 
 #include "system/g3d_tool.h"
 //============================================================================================
@@ -65,11 +67,20 @@ typedef struct {
 	GFL_G3D_OBJ*	g3Dobj;							//オブジェクトハンドル
 }GLOBALOBJ_RES;
 
+//-------------------------------------
+// GFL_G3D_MAP拡張ワーク
+struct _FLD_G3D_MAP_EXWORK{
+	FIELD_GRANM_WORK* p_granm_wk;		// 地面アニメーション
+	FIELD_BMODEL_MAN * bmodel_man;	// 
+} ;
+
+
 //------------------------------------------------------------------
 struct _FLD_G3D_MAPPER {
-	HEAPID				heapID;
+	HEAPID					heapID;
 	GFL_G3D_MAP*		g3Dmap[MAP_BLOCK_COUNT];
-	BLOCK_IDX			blockIdx[MAP_BLOCK_COUNT];
+	BLOCK_IDX				blockIdx[MAP_BLOCK_COUNT];
+	FLD_G3D_MAP_EXWORK	g3DmapExWork[MAP_BLOCK_COUNT];		// GFL_G3D_MAPに関連する情報を拡張するワーク
 	
 	FLDMAPPER_FILETYPE	g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
 	u32					nowBlockIdx;				
@@ -90,6 +101,8 @@ struct _FLD_G3D_MAPPER {
 	u32						globalObjResCount;				//共通オブジェクト数
 
 	GFL_G3D_MAP_GLOBALOBJ	globalObj;						//共通オブジェクト
+
+	FIELD_GRANM*	granime;	// 地面アニメーションシステム
 };
 
 //------------------------------------------------------------------
@@ -125,6 +138,13 @@ static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos
 static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
 static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
 static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_IDX* new );
+
+// FLD_G3D_MAP_EXWORK　操作関数
+static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmapper, u32 index );
+static void FLD_G3D_MAP_ExWork_Exit( FLD_G3D_MAP_EXWORK* p_wk );
+static void FLD_G3D_MAP_ExWork_ClearBlockData( FLD_G3D_MAP_EXWORK* p_wk );
+static BOOL FLD_G3D_MAP_ExWork_IsGranm( const FLD_G3D_MAP_EXWORK* cp_wk );
+static FIELD_GRANM_WORK* FLD_G3D_MAP_ExWork_GetGranmWork( const FLD_G3D_MAP_EXWORK* cp_wk );
 
 static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
 //------------------------------------------------------------------
@@ -266,6 +286,12 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 			}
 		}
 	}
+
+	// 地面アニメーション管理
+	if( g3Dmapper->granime ){
+		
+		FIELD_GRANM_Main( g3Dmapper->granime );
+	}
 }
 
 //------------------------------------------------------------------
@@ -350,6 +376,15 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 	//グローバルオブジェクト作成
 	//CreateGlobalObject( g3Dmapper, resistData );
 
+	// 地面アニメーション作成
+	if( resistData->ground_anime.arcID == FLDMAPPER_MAPDATA_NULL ){
+		g3Dmapper->granime = NULL;
+	}else{
+		g3Dmapper->granime = FIELD_GRANM_Create( resistData->ground_anime.arcID, 
+				resistData->ground_anime.datID, MAP_BLOCK_COUNT, g3Dmapper->heapID );
+	}
+	
+	
 	{
 		int i;
 		GFL_G3D_MAP_SETUP setup;
@@ -368,10 +403,15 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 
 		//ブロック制御ハンドル作成
 		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+			// 拡張ワークの初期化
+			FLD_G3D_MAP_ExWork_Init( &g3Dmapper->g3DmapExWork[i], g3Dmapper, i );
+			setup.externalWork = &g3Dmapper->g3DmapExWork[i];
+
+			// ブロック情報生成
 			g3Dmapper->g3Dmap[i] = GFL_G3D_MAP_Create( &setup, g3Dmapper->heapID );
 		}
 	}
-	
+
 	//マップブロック制御設定
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		//新アーカイブＩＤを登録
@@ -404,7 +444,17 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
 		GFL_G3D_MAP_ReleaseGlobalObjResource( g3Dmapper->g3Dmap[i] );
 		GFL_G3D_MAP_ReleaseGlobalTexResource( g3Dmapper->g3Dmap[i] );
 		GFL_G3D_MAP_ReleaseArc( g3Dmapper->g3Dmap[i] );
+
+		// 拡張ワークの破棄
+		FLD_G3D_MAP_ExWork_Exit( &g3Dmapper->g3DmapExWork[i] );
 	}
+
+	// 地面アニメーション破棄
+	if( g3Dmapper->granime != NULL ){
+		FIELD_GRANM_Delete( g3Dmapper->granime );
+		g3Dmapper->granime = NULL;
+	}
+	
 	DeleteGlobalObject( g3Dmapper );
 	DeleteGlobalTexture( g3Dmapper );
 }
@@ -794,6 +844,9 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_IDX* new )
 			if( delFlag == FALSE ){
 				g3Dmapper->blockIdx[i].blockIdx = MAPID_NULL;
 				GFL_G3D_MAP_SetDrawSw( g3Dmapper->g3Dmap[i], FALSE );
+
+				// 拡張ワークの情報もクリア
+				FLD_G3D_MAP_ExWork_ClearBlockData( &g3Dmapper->g3DmapExWork[i] );
 				delProcFlag = TRUE;
 			}
 		}
@@ -1259,5 +1312,143 @@ void FLDMAPPER_SetDrawOffset( FLDMAPPER *g3Dmapper, const VecFx32 *offs )
 void FLDMAPPER_GetDrawOffset( const FLDMAPPER *g3Dmapper, VecFx32 *offs )
 {
 	*offs = g3Dmapper->globalDrawOffset;
+}
+
+
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *			GFL_G3D_MAP拡張ワーク操作
+ */
+//-----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	拡張ワークから、地面アニメーションの有無を取得
+ *
+ *	@param	cp_wk			ワーク
+ *
+ *	@retval	TRUE	ある
+ *	@retval	FALSE	ない
+ */
+//-----------------------------------------------------------------------------
+BOOL FLD_G3D_MAP_EXWORK_IsGranm( const FLD_G3D_MAP_EXWORK* cp_wk )
+{
+	return FLD_G3D_MAP_ExWork_IsGranm( cp_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	拡張ワークから、地面アニメーションワークを取得
+ *
+ *	@param	cp_wk		ワーク
+ *	
+ *	@return	地面アニメーションわーく
+ */
+//-----------------------------------------------------------------------------
+FIELD_GRANM_WORK* FLD_G3D_MAP_EXWORK_GetGranmWork( const FLD_G3D_MAP_EXWORK* cp_wk )
+{
+	return FLD_G3D_MAP_ExWork_GetGranmWork( cp_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	配置モデルの制御ワーク取得
+ *
+ *	@param	cp_wk		ワーク
+ *
+ *	@return	配置モデルの制御ワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_BMODEL_MAN* FLD_G3D_MAP_EXWORK_GetBModelMan( const FLD_G3D_MAP_EXWORK* cp_wk )
+{
+	return  cp_wk->bmodel_man;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	GFL_G3D_MAPの拡張ワーク初期化
+ *
+ *	@param	p_wk				ワーク
+ *	@param	g3Dmapper		マッパーワーク
+ *	@param	index				ブロックインデックス
+ */
+//-----------------------------------------------------------------------------
+static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmapper, u32 index )
+{
+	// 地面アニメ
+	if( g3Dmapper->granime ){
+		p_wk->p_granm_wk = FIELD_GRANM_GetWork( g3Dmapper->granime, index );
+	}else{
+		p_wk->p_granm_wk = NULL;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	GFL_G3D_MAPの拡張ワーク破棄
+ *
+ *	@param	p_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void FLD_G3D_MAP_ExWork_Exit( FLD_G3D_MAP_EXWORK* p_wk )
+{
+	if( p_wk->p_granm_wk ){
+		// ブロックモデルとのリンクを解消
+		FIELD_GRANM_WORK_Release( p_wk->p_granm_wk );
+		p_wk->p_granm_wk = NULL;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ブロックに割り当てていた情報をクリアする
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void FLD_G3D_MAP_ExWork_ClearBlockData( FLD_G3D_MAP_EXWORK* p_wk )
+{
+	if( p_wk->p_granm_wk ){
+		// ブロックモデルとのリンクを解消
+		FIELD_GRANM_WORK_Release( p_wk->p_granm_wk );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	地面アニメーションがあるかチェック
+ *
+ *	@param	cp_wk		ワーク
+ *
+ *	@retval	TRUE	ある
+ *	@retval	FALSE	ない
+ */
+//-----------------------------------------------------------------------------
+static BOOL FLD_G3D_MAP_ExWork_IsGranm( const FLD_G3D_MAP_EXWORK* cp_wk )
+{
+	if( cp_wk->p_granm_wk ){
+		return TRUE;
+	}
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	地面アニメーションのワークを取得する
+ *
+ *	@param	cp_wk		ワーク
+ *
+ *	@retval	地面アニメーションのワーク
+ *	@retval	NULL 地面アニメーションがない
+ */
+//-----------------------------------------------------------------------------
+static FIELD_GRANM_WORK* FLD_G3D_MAP_ExWork_GetGranmWork( const FLD_G3D_MAP_EXWORK* cp_wk )
+{
+	return cp_wk->p_granm_wk;
 }
 

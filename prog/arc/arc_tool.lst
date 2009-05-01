@@ -149,3 +149,4 @@
 	ARCID_WAZAEFF_SEQ	"wazaeffect/waza_eff.narc"	#技エフェクトシーケンス
 	ARCID_CAMERACONT	"camera_adjust_view.narc"	#カメラ調整用画像（デバッグ）
 	ARCID_MUSICAL_DEBUG	"mus_debug.narc"	#ミュージカルデバッグ用（デバッグ）
+	ARCID_AREA_ITA		"fieldmap/area_map_ita.narc"	#エリア地面アニメーションデータ

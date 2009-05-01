@@ -324,6 +324,7 @@ extern void GFL_G3D_MAP_GetLoadDatID( GFL_G3D_MAP* g3Dmap, u32* ID );
 //------------------------------------------------------------------
 extern void GFL_G3D_MAP_CreateResourceMdl( GFL_G3D_MAP* g3Dmap, void* mem );
 extern void GFL_G3D_MAP_DeleteResourceMdl( GFL_G3D_MAP* g3Dmap );
+extern const GFL_G3D_RES* GFL_G3D_MAP_GetResourceMdl( const GFL_G3D_MAP* g3Dmap );
 //------------------------------------------------------------------
 /**
  * @brief	テクスチャリソース設定
@@ -331,12 +332,14 @@ extern void GFL_G3D_MAP_DeleteResourceMdl( GFL_G3D_MAP* g3Dmap );
 //------------------------------------------------------------------
 extern void GFL_G3D_MAP_CreateResourceTex( GFL_G3D_MAP* g3Dmap, void* mem );
 extern void GFL_G3D_MAP_DeleteResourceTex( GFL_G3D_MAP* g3Dmap );
+extern const GFL_G3D_RES* GFL_G3D_MAP_GetResourceTex( const GFL_G3D_MAP* g3Dmap );
 //------------------------------------------------------------------
 /**
  * @brief	レンダー作成
  */
 //------------------------------------------------------------------
 extern void GFL_G3D_MAP_MakeRenderObj( GFL_G3D_MAP* g3Dmap );
+extern NNSG3dRenderObj* GFL_G3D_MAP_GetRenderObj( GFL_G3D_MAP* g3Dmap );
 //------------------------------------------------------------------
 /**
  * @brief	ファイル読み込み関数

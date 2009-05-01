@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: area_map_ita.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_AREA_MAP_ITA_NAIX_
+#define NARC_AREA_MAP_ITA_NAIX_
+
+enum {
+	NARC_area_map_ita_area_ita_00_nsbta = 0
+};
+
+/* NARC_AREA_MAP_ITA_NAIX_ */
+#endif

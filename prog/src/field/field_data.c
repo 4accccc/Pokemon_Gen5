@@ -276,6 +276,7 @@ static const FLDMAPPER_MAPDATA GSMap[] = {
 	{ FLDMAPPER_MAPDATA_NULL }, { 29 },
 };
 
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 #define MAP_XZ_SIZE (512 * FX32_ONE)	//16 unit * 32 grid
@@ -294,6 +295,7 @@ const SCENE_DATA resistMapTbl[] = {
 			newbridgemap,
 		//	4,  4, NELEMS(loopbridgemap),
 		//	loopbridgemap, 
+			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
 		FALSE,
@@ -308,6 +310,7 @@ const SCENE_DATA resistMapTbl[] = {
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
+			{ARCID_AREA_ITA,0},	// 地面アニメーション
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -322,6 +325,7 @@ const SCENE_DATA resistMapTbl[] = {
 
 			2,  6, NELEMS(samplebridge),
 			samplebridge, 
+			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
 		FALSE,
@@ -337,6 +341,7 @@ const SCENE_DATA resistMapTbl[] = {
 
 			2,  6, NELEMS(GSMap),
 			GSMap, 
+			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		},
 		&FieldMapCtrl_GridFunctions,
 		FALSE,
@@ -351,6 +356,7 @@ const SCENE_DATA resistMapTbl[] = {
 
 			2,  2, NELEMS(test_c3map),
 			test_c3map, 
+			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		}, 
 		&FieldMapCtrl_C3Functions,
 		FALSE,

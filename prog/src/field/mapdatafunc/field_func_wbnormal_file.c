@@ -11,6 +11,7 @@
 #include "field_func_wbnormal_file.h"
 
 #include "../field_buildmodel.h"
+#include "../field_g3dmap_exwork.h"	// GFL_G3D_MAP拡張ワーク
 
 //============================================================================================
 /**
@@ -44,6 +45,11 @@ enum {
 BOOL FieldLoadMapData_WBNormalFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
 	GFL_G3D_MAP_LOAD_STATUS* ldst;
+	FLD_G3D_MAP_EXWORK* p_exwork;	// GFL_G3D_MAP拡張ワーク
+
+
+	// 拡張ワーク取得
+	p_exwork = exWork;
 
 	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
 
@@ -104,6 +110,16 @@ BOOL FieldLoadMapData_WBNormalFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 		}
 		//>>GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
 		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
+
+		// 地面アニメーションの設定
+		if( FLD_G3D_MAP_EXWORK_IsGranm( p_exwork ) ){
+			FIELD_GRANM_WORK* p_granm;
+
+			p_granm = FLD_G3D_MAP_EXWORK_GetGranmWork( p_exwork );
+			FIELD_GRANM_WORK_Bind( p_granm, 
+					GFL_G3D_MAP_GetResourceMdl(g3Dmap), GFL_G3D_MAP_GetResourceTex(g3Dmap), 
+					GFL_G3D_MAP_GetRenderObj(g3Dmap) );
+		}
 
 		ldst->seq = TEX_TRANS;
 		break;
