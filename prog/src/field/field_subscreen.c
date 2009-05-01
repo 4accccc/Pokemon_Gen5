@@ -13,6 +13,7 @@
 #include <gflib.h>
 #include "infowin/infowin.h"
 #include "field_subscreen.h"
+#include "c_gear/c_gear.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -43,6 +44,10 @@
 */
 //-----------------------------------------------------------------------------
 
+struct _FIELD_SUBSCREEN_WORK {
+  C_GEAR_WORK* cgearWork;
+};
+
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -57,11 +62,14 @@
  *	@param	heapID	ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-void FIELD_SUBSCREEN_Init( u32 heapID )
+FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID )
 {
-	// BG3 SUB (インフォバー
-	static const GFL_BG_BGCNT_HEADER header_sub3 = {
-		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+  FIELD_SUBSCREEN_WORK* pWork = GFL_HEAP_AllocClearMemory(heapID, sizeof(FIELD_SUBSCREEN_WORK));
+
+  {
+    // BG3 SUB (インフォバー
+    static const GFL_BG_BGCNT_HEADER header_sub3 = {
+      0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x6000,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
@@ -78,6 +86,10 @@ void FIELD_SUBSCREEN_Init( u32 heapID )
 	{
 		GFL_NET_ReloadIcon();
 	}
+  }
+  //pWork->cgearWork = CGEAR_Init();
+  
+  return pWork;
 }
 
 //----------------------------------------------------------------------------
@@ -85,10 +97,12 @@ void FIELD_SUBSCREEN_Init( u32 heapID )
  *	@brief	インフォーバーの破棄
  */
 //-----------------------------------------------------------------------------
-void FIELD_SUBSCREEN_Exit( void )
+void FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork )
 {
+  //CGEAR_Exit(pWork->cgearWork);
 	INFOWIN_Exit();
 	GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
+  GFL_HEAP_FreeMemory(pWork);
 }
 
 //----------------------------------------------------------------------------
@@ -96,8 +110,9 @@ void FIELD_SUBSCREEN_Exit( void )
  *	@brief	インフォーバーの更新
  */
 //-----------------------------------------------------------------------------
-void FIELD_SUBSCREEN_Main( void )
+void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
 {
+  //CGEAR_Main(pWork->cgearWork);
 	INFOWIN_Update();
 }
 

@@ -384,6 +384,8 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     if( !GAMESYSTEM_EVENT_IsExists(pClub->gsys) ){		//サブプロセス終了待ち
       //     if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){		//サブプロセス終了待ち
       ep2p->seq = P2P_FourWaitEnd( ep2p );
+      GFL_OVERLAY_Unload(FS_OVERLAY_ID(wificlub));
+
     }
     break;
 
@@ -492,6 +494,7 @@ static void P2P_FourWaitInit( EV_P2PEVENT_WORK* p_wk, GMEVENT* fsys, u32 heapID,
 
   p_wk->work = p_work;
 
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
   GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi2dmap), &WifiP2PMatchFourProcData, p_work);
 //  EventCmd_CallSubProc(fsys, &WifiP2PMatchFourProcData, p_work);
 }

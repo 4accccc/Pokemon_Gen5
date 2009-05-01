@@ -21,7 +21,6 @@
 #include "field_player.h"
 #include "field_camera.h"
 #include "field_data.h"
-#include "field_subscreen.h"
 #include "field/field_msgbg.h"
 
 #include "weather.h"
@@ -121,6 +120,7 @@ struct _FIELDMAP_WORK
 	FIELD_FOG_WORK *fog;
 	
 	FIELD_WEATHER *weather_sys;
+  FIELD_SUBSCREEN_WORK* fieldSubscreenWork;
 	
 	FIELD_COMM_MAIN *commSys;
 	
@@ -393,7 +393,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 				fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
 		
 		//情報バーの初期化
-		FIELD_SUBSCREEN_Init(fieldWork->heapID);
+		fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID);
 		
 		//フィールドデバッグ初期化
 		fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
@@ -451,7 +451,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 		
 		FIELD_CAMERA_Main( fieldWork->camera_control, fieldWork->key_cont );
 		fldmapMain_GameSystem_Main( fieldWork );
-		FIELD_SUBSCREEN_Main();
+		FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
 		FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
 		
 		if( fieldWork->fldMMdlSys != NULL ){
@@ -473,7 +473,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 		fieldMainCommActorFree( fieldWork );
 		
 		//情報バーの開放
-		FIELD_SUBSCREEN_Exit();
+		FIELD_SUBSCREEN_Exit(fieldWork->fieldSubscreenWork);
 
 		// 天気システム破棄
 		FIELD_WEATHER_Exit( fieldWork->weather_sys );
@@ -1593,6 +1593,32 @@ static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork )
 {
 	fieldWork->mapCtrlWork = NULL;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief  FIELD_SUBSCREEN_WORKを得る
+ * @param fieldWork FIELDMAP_WORK
+ * @retval FIELD_SUBSCREEN_WORK*
+ */
+//--------------------------------------------------------------
+FIELD_SUBSCREEN_WORK* FIELDMAP_GetFieldSubscreenWork( FIELDMAP_WORK *fieldWork )
+{
+	return fieldWork->fieldSubscreenWork;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  FIELD_SUBSCREEN_WORKを設定する
+ * @param  fieldWork FIELDMAP_WORK
+ * @retval FIELD_SUBSCREEN_WORK*
+ */
+//--------------------------------------------------------------
+void FIELDMAP_SetFieldSubscreenWork( FIELDMAP_WORK *fieldWork,FIELD_SUBSCREEN_WORK* pWork )
+{
+  fieldWork->fieldSubscreenWork = pWork;
+}
+
+
 
 //======================================================================
 //	data

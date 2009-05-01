@@ -96,6 +96,7 @@
 	ARCID_EASYPOKELIST	"test_graphic/easy_pokelist.narc"	#簡易ポケモンリスト
 	ARCID_CONFIG_GRA	"test_graphic/config_gra.narc"		#設定画面用データ
 	ARCID_IRCBATTLE		"ircbattle.narc"           #赤外線マッチングバトル
+	ARCID_C_GEAR		"c_gear.narc"           #コミュニケーションギア
 	ARCID_WIFI2DCHAR		"wifi2dchar.narc"
 	ARCID_WIFIUNIONCHAR		"wifi_unionobj.narc"
 	ARCID_WIFIP2PMATCH		"wifip2pmatch.narc"

@@ -788,7 +788,7 @@ GFL_PROC_RESULT WifiP2PMatchFourProc_Init( GFL_PROC * proc, int * seq, void * pw
 	BOOL result;
 
 	// wifi_2dmapオーバーレイ読込み
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi2dmap));
+//	GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi2dmap));
 
 	// 通信中かチェック
 	//result = CommStateIsWifiConnect();
@@ -1012,7 +1012,7 @@ GFL_PROC_RESULT WifiP2PMatchFourProc_End(GFL_PROC * proc, int * seq, void * pwk,
     GFL_HEAP_DeleteHeap( HEAPID_WIFI_FOURMATCH );
 
 	// オーバーレイ破棄
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi2dmap) );
+	//GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi2dmap) );  外で行う必要がある
 
     return GFL_PROC_RES_FINISH;
 }
@@ -1178,6 +1178,9 @@ static void WFP2PMF_GraphicInit( WFP2PMF_WK* p_wk, const WFP2PMF_INIT* cp_init, 
 
 	// セルアクター
 	WFP2PMF_GraphicClactInit( &p_wk->draw, heapID );
+
+  // ビットマップウインドウ
+  GFL_BMPWIN_Init( heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -1190,7 +1193,10 @@ static void WFP2PMF_GraphicInit( WFP2PMF_WK* p_wk, const WFP2PMF_INIT* cp_init, 
 //-----------------------------------------------------------------------------
 static void WFP2PMF_GraphicDelete( WFP2PMF_WK* p_wk, u32 heapID )
 {
-	// セルアクター
+
+  // ビットマップウインドウ
+  GFL_BMPWIN_Exit();
+  // セルアクター
 	WFP2PMF_GraphicClactDelete( &p_wk->draw );
 	
 	// メッセージデータ破棄
@@ -1229,7 +1235,9 @@ static void WFP2PMF_GraphicBGLInit( WFP2PMF_DRAW* p_draw, u32 heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+            GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,
+          0x10000,
+          GX_BG_EXTPLTT_01,
             2, 0, 0, FALSE
             };
         GFL_BG_SetBGControl(GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1241,7 +1249,9 @@ static void WFP2PMF_GraphicBGLInit( WFP2PMF_DRAW* p_draw, u32 heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+            GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000,
+      0x8000,
+          GX_BG_EXTPLTT_01,
             1, 0, 0, FALSE
             };
         GFL_BG_SetBGControl(GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1253,7 +1263,9 @@ static void WFP2PMF_GraphicBGLInit( WFP2PMF_DRAW* p_draw, u32 heapID )
     {
         GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_23,
+            GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000,
+      0x8000,
+          GX_BG_EXTPLTT_23,
             0, 0, 0, FALSE
         };
         GFL_BG_SetBGControl(GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1356,7 +1368,7 @@ static void WFP2PMF_GraphicBmpInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp
     p_draw->msgwin = GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
 			WFP2PMF_MSGWIN_X, WFP2PMF_MSGWIN_Y,
 			WFP2PMF_MSGWIN_SIZX, WFP2PMF_MSGWIN_SIZY, 
-			WFP2PMF_MSGWIN_PAL, WFP2PMF_MSGWIN_CGX );
+			WFP2PMF_MSGWIN_PAL, GFL_BMP_CHRAREA_GET_B );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->msgwin), 15 );
     GFL_BMPWIN_MakeFrameScreen( p_draw->msgwin,
 		WFP2PMF_BG1_TALKWIN_CGX, WFP2PMF_BG1_TALKWIN_PAL );
@@ -1366,7 +1378,7 @@ static void WFP2PMF_GraphicBmpInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp
     p_draw->titlewin = GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
 			WFP2PMF_TITLEWIN_X, WFP2PMF_TITLEWIN_Y,
 			WFP2PMF_TITLEWIN_SIZX, WFP2PMF_TITLEWIN_SIZY, 
-			WFP2PMF_TITLEWIN_PAL, WFP2PMF_TITLEWIN_CGX );
+			WFP2PMF_TITLEWIN_PAL, GFL_BMP_CHRAREA_GET_B );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->titlewin), 15 );
     GFL_BMPWIN_MakeFrameScreen( p_draw->titlewin,
 			WFP2PMF_BG1_MENUWIN_CGX, WFP2PMF_BG1_MENUWIN_PAL );
@@ -1376,14 +1388,14 @@ static void WFP2PMF_GraphicBmpInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp
     p_draw->vchatwin = GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
 			WFP2PMF_VCHATWIN_X, WFP2PMF_VCHATWIN_Y,
 			WFP2PMF_VCHATWIN_SIZX, WFP2PMF_VCHATWIN_SIZY, 
-			WFP2PMF_VCHATWIN_PAL, WFP2PMF_VCHATWIN_CGX );
+			WFP2PMF_VCHATWIN_PAL, GFL_BMP_CHRAREA_GET_B );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->vchatwin), 0 );
 
 	// CONNECTリスト
     p_draw->conlistwin = GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
 			WFP2PMF_CONLISTWIN_X, WFP2PMF_CONLISTWIN_Y,
 			WFP2PMF_CONLISTWIN_SIZX, WFP2PMF_CONLISTWIN_SIZY, 
-			WFP2PMF_CONLISTWIN_PAL, WFP2PMF_CONLISTWIN_CGX );
+			WFP2PMF_CONLISTWIN_PAL, GFL_BMP_CHRAREA_GET_B );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->conlistwin), 15 );
     GFL_BMPWIN_MakeFrameScreen( p_draw->conlistwin,
 			WFP2PMF_BG1_MENUWIN_CGX, WFP2PMF_BG1_MENUWIN_PAL );
@@ -1392,7 +1404,7 @@ static void WFP2PMF_GraphicBmpInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp
     p_draw->newconwin = GFL_BMPWIN_Create(GFL_BG_FRAME1_M,
 			WFP2PMF_NEWCONWIN_X, WFP2PMF_NEWCONWIN_Y,
 			WFP2PMF_NEWCONWIN_SIZX, WFP2PMF_NEWCONWIN_SIZY, 
-			WFP2PMF_NEWCONWIN_PAL, WFP2PMF_NEWCONWIN_CGX );
+			WFP2PMF_NEWCONWIN_PAL, GFL_BMP_CHRAREA_GET_B );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->newconwin), 15 );
 }
 

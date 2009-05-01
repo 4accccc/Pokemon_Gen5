@@ -36,19 +36,19 @@ enum {
 struct _BMPMENU_WORK {
 	BMPMENU_HEADER	hed;
 	BMPCURSOR *cursor;
-	
+
 	u32	cancel;
-	
+
 	u8	index;
 	u8	cur_pos;
 	u8	len;
 	u8	px;
-	
+
 	u8	py;
 	u8	sx;
 	u8	sy;
 	u8	mv;
-	
+
 	u8	heap_id;	// メモリ取得モード
 	u8  dmy[3];		// ビット余り
 };
@@ -91,36 +91,36 @@ static void BmpWinOn( GFL_BMPWIN *bmpwin );
  */
 //--------------------------------------------------------------
 BMPMENU_WORK * BmpMenu_AddNoTrans( const BMPMENU_HEADER *dat,
-		u8 px, u8 py, u8 pos, u8 heap_id, u32 cancel )
+																	 u8 px, u8 py, u8 pos, u8 heap_id, u32 cancel )
 {
 	BMPMENU_WORK *mw;
-	
+
 	mw = (BMPMENU_WORK *)GFL_HEAP_AllocClearMemory(
-			heap_id, sizeof(BMPMENU_WORK) );
-	
+		heap_id, sizeof(BMPMENU_WORK) );
+
 	mw->hed		= *dat;
 	mw->cursor  = BmpCursor_Create( heap_id );
 	mw->cancel  = cancel;
 	mw->cur_pos	= pos;
 	mw->len		= BmpMenuStrLen( mw );
 	mw->heap_id = heap_id;
-	
+
 	mw->px = px;
 	mw->py = py;
-	
+
 #if 0
 	mw->sx = FontHeaderGet( dat->font, FONT_HEADER_SIZE_X )
-				+ FontHeaderGet( dat->font, FONT_HEADER_SPACE_X );
+		+ FontHeaderGet( dat->font, FONT_HEADER_SPACE_X );
 	mw->sy = FontHeaderGet( dat->font, FONT_HEADER_SIZE_Y )
-				+ FontHeaderGet( dat->font, FONT_HEADER_SPACE_Y );
+		+ FontHeaderGet( dat->font, FONT_HEADER_SPACE_Y );
 #else
 	mw->sx = mw->hed.font_size_x;
 	mw->sy = mw->hed.font_size_y;
 #endif
-	
+
 	BmpMenuStrPut( mw );
 	BmpMenuCursorPut( mw );
-	
+
 	return mw;
 }
 
@@ -141,11 +141,11 @@ BMPMENU_WORK * BmpMenu_AddNoTrans( const BMPMENU_HEADER *dat,
  */
 //--------------------------------------------------------------
 BMPMENU_WORK * BmpMenu_AddEx( const BMPMENU_HEADER * dat,
-		u8 px, u8 py, u8 pos, u8 heap_id, u32 cancel )
+															u8 px, u8 py, u8 pos, u8 heap_id, u32 cancel )
 {
 	BMPMENU_WORK *mw;
 	mw = BmpMenu_AddNoTrans( dat, px, py, pos, heap_id, cancel );
-//	BmpWinOn( mw->hed.win );
+	//	BmpWinOn( mw->hed.win );
 	return mw;
 }
 
@@ -190,7 +190,7 @@ void BmpMenu_Exit( BMPMENU_WORK *mw, u8 * backup )
 	if( backup != NULL ){
 		*backup = mw->cur_pos;
 	}
-	
+
 	BmpCursor_Delete( mw->cursor );
 	GFL_HEAP_FreeMemory( mw );
 }
@@ -210,37 +210,37 @@ u32 BmpMenu_Main( BMPMENU_WORK * mw )
 	mw->mv = BMPMENU_MOVE_NONE;
 
 	if( trg & PAD_BUTTON_DECIDE ){
-//		Snd_SePlay( SE_DECIDE );
+		//		Snd_SePlay( SE_DECIDE );
 		return mw->hed.menu[ mw->cur_pos ].param;
 	}
 
 	if( trg & mw->cancel ){
-//		Snd_SePlay( SE_CANCEL );
+		//		Snd_SePlay( SE_CANCEL );
 		return BMPMENU_CANCEL;
 	}
 	if( trg & PAD_KEY_UP ){
-//		if( BmpMenuCursorMove( mw, MV_UP, SEQ_SE_DP_SELECT ) == TRUE ){
+		//		if( BmpMenuCursorMove( mw, MV_UP, SEQ_SE_DP_SELECT ) == TRUE ){
 		if( BmpMenuCursorMove( mw, MV_UP, 0 ) == TRUE ){
 			mw->mv = BMPMENU_MOVE_UP;
 		}
 		return BMPMENU_NULL;
 	}
 	if( trg & PAD_KEY_DOWN ){
-//		if( BmpMenuCursorMove( mw, MV_DOWN, SEQ_SE_DP_SELECT ) == TRUE ){
+		//		if( BmpMenuCursorMove( mw, MV_DOWN, SEQ_SE_DP_SELECT ) == TRUE ){
 		if( BmpMenuCursorMove( mw, MV_DOWN, 0 ) == TRUE ){
 			mw->mv = BMPMENU_MOVE_DOWN;
 		}
 		return BMPMENU_NULL;
 	}
 	if( trg & PAD_KEY_LEFT ){
-//		if( BmpMenuCursorMove( mw, MV_LEFT, SEQ_SE_DP_SELECT ) == TRUE ){
+		//		if( BmpMenuCursorMove( mw, MV_LEFT, SEQ_SE_DP_SELECT ) == TRUE ){
 		if( BmpMenuCursorMove( mw, MV_LEFT, 0 ) == TRUE ){
 			mw->mv = BMPMENU_MOVE_LEFT;
 		}
 		return BMPMENU_NULL;
 	}
 	if( trg & PAD_KEY_RIGHT ){
-//		if( BmpMenuCursorMove( mw, MV_RIGHT, SEQ_SE_DP_SELECT ) == TRUE ){
+		//		if( BmpMenuCursorMove( mw, MV_RIGHT, SEQ_SE_DP_SELECT ) == TRUE ){
 		if( BmpMenuCursorMove( mw, MV_RIGHT, 0 ) == TRUE ){
 			mw->mv = BMPMENU_MOVE_RIGHT;
 		}
@@ -266,11 +266,11 @@ u32 BmpMenu_MainSE( BMPMENU_WORK * mw, u16 key_se )
 	mw->mv = BMPMENU_MOVE_NONE;
 
 	if( trg & PAD_BUTTON_DECIDE ){
-//		Snd_SePlay( SE_DECIDE );
+		//		Snd_SePlay( SE_DECIDE );
 		return mw->hed.menu[ mw->cur_pos ].param;
 	}
 	if( trg & mw->cancel ){
-//		Snd_SePlay( SE_CANCEL );
+		//		Snd_SePlay( SE_CANCEL );
 		return BMPMENU_CANCEL;
 	}
 	if( trg & PAD_KEY_UP ){
@@ -315,30 +315,30 @@ u32 BmpMenu_MainOutControl( BMPMENU_WORK * mw, u8 prm )
 {
 	switch( prm ){
 	case BMPMENU_CNTROL_DECIDE:		// 決定
-//		Snd_SePlay( SE_DECIDE );
+		//		Snd_SePlay( SE_DECIDE );
 		return mw->hed.menu[ mw->cur_pos ].param;
 
 	case BMPMENU_CNTROL_CANCEL:		// キャンセル
-//		Snd_SePlay( SE_CANCEL );
+		//		Snd_SePlay( SE_CANCEL );
 		return BMPMENU_CANCEL;
 
 	case BMPMENU_CNTROL_UP:			// 上
-//		BmpMenuCursorMove( mw, MV_UP, SEQ_SE_DP_SELECT );
+		//		BmpMenuCursorMove( mw, MV_UP, SEQ_SE_DP_SELECT );
 		BmpMenuCursorMove( mw, MV_UP, 0 );
 		return BMPMENU_NULL;
 
 	case BMPMENU_CNTROL_DOWN:		// 下
-//		BmpMenuCursorMove( mw, MV_DOWN, SEQ_SE_DP_SELECT );
+		//		BmpMenuCursorMove( mw, MV_DOWN, SEQ_SE_DP_SELECT );
 		BmpMenuCursorMove( mw, MV_DOWN, 0 );
 		return BMPMENU_NULL;
 
 	case BMPMENU_CNTROL_LEFT:		// 左
-//		BmpMenuCursorMove( mw, MV_LEFT, SEQ_SE_DP_SELECT );
+		//		BmpMenuCursorMove( mw, MV_LEFT, SEQ_SE_DP_SELECT );
 		BmpMenuCursorMove( mw, MV_LEFT, 0 );
 		return BMPMENU_NULL;
 
 	case BMPMENU_CNTROL_RIGHT:		// 右
-//		BmpMenuCursorMove( mw, MV_RIGHT, SEQ_SE_DP_SELECT );
+		//		BmpMenuCursorMove( mw, MV_RIGHT, SEQ_SE_DP_SELECT );
 		BmpMenuCursorMove( mw, MV_RIGHT, 0 );
 		return BMPMENU_NULL;
 	}
@@ -406,19 +406,19 @@ static BOOL BmpMenuCursorMove( BMPMENU_WORK * mw, u8 mv, u16 se )
 		}
 #endif
 		CursorWritePosGet( mw, &px, &py, old );
-		
+
 #if 0	//old dp
 		GF_BGL_BmpWinFill( mw->hed.win, col, px, py, 8, mw->sy );
 #else
-//		GFL_BMP_Fill(
-//			GFL_BMPWIN_GetBmp(mw->hed.win), px, py, mw->sx, mw->sy, col );
+		//		GFL_BMP_Fill(
+		//			GFL_BMPWIN_GetBmp(mw->hed.win), px, py, mw->sx, mw->sy, col );
 		GFL_BMP_Fill(
 			GFL_BMPWIN_GetBmp(mw->hed.win), px, py, mw->sx, mw->sy, 0xff );
 #endif
 	}
-	
+
 	BmpMenuCursorPut( mw );
-//	Snd_SePlay( se );
+	//	Snd_SePlay( se );
 	return TRUE;
 }
 
@@ -441,44 +441,44 @@ static u8 BmpMenuCursorMoveCheck( BMPMENU_WORK * mw, u8 mv )
 		if( mw->hed.y_max <= 1 ){ return FALSE; }
 		if( ( mw->cur_pos % mw->hed.y_max ) == 0 ){
 			if( mw->hed.loop_f == 0 ){ return FALSE; }
-//			mw->cur_pos += ( mw->hed.y_max - 1 );
+			//			mw->cur_pos += ( mw->hed.y_max - 1 );
 			new_pos = mw->cur_pos + ( mw->hed.y_max - 1 );
 		}else{
-//			mw->cur_pos -= 1;
-//			return TRUE;
+			//			mw->cur_pos -= 1;
+			//			return TRUE;
 			new_pos = mw->cur_pos - 1;
 		}
 	}else if( mv == MV_DOWN ){
 		if( mw->hed.y_max <= 1 ){ return FALSE; }
 		if( ( mw->cur_pos % mw->hed.y_max ) == ( mw->hed.y_max - 1 ) ){
 			if( mw->hed.loop_f == 0 ){ return FALSE; }
-//			mw->cur_pos -= ( mw->hed.y_max - 1 );
+			//			mw->cur_pos -= ( mw->hed.y_max - 1 );
 			new_pos = mw->cur_pos - ( mw->hed.y_max - 1 );
 		}else{
-//			mw->cur_pos += 1;
-//			return TRUE;
+			//			mw->cur_pos += 1;
+			//			return TRUE;
 			new_pos = mw->cur_pos + 1;
 		}
 	}else if( mv == MV_LEFT ){
 		if( mw->hed.x_max <= 1 ){ return FALSE; }
 		if( mw->cur_pos < mw->hed.y_max ){
 			if( mw->hed.loop_f == 0 ){ return FALSE; }
-//			mw->cur_pos += ( mw->hed.y_max * ( mw->hed.x_max - 1 ) );
+			//			mw->cur_pos += ( mw->hed.y_max * ( mw->hed.x_max - 1 ) );
 			new_pos = mw->cur_pos + ( mw->hed.y_max * ( mw->hed.x_max - 1 ) );
 		}else{
-//			mw->cur_pos -= mw->hed.y_max;
-//			return TRUE;
+			//			mw->cur_pos -= mw->hed.y_max;
+			//			return TRUE;
 			new_pos = mw->cur_pos - mw->hed.y_max;
 		}
 	}else{
 		if( mw->hed.x_max <= 1 ){ return FALSE; }
 		if( mw->cur_pos >= ( mw->hed.y_max * ( mw->hed.x_max - 1 ) ) ){
 			if( mw->hed.loop_f == 0 ){ return FALSE; }
-//			mw->cur_pos %= mw->hed.y_max;
+			//			mw->cur_pos %= mw->hed.y_max;
 			new_pos = mw->cur_pos % mw->hed.y_max;
 		}else{
-//			mw->cur_pos += mw->hed.y_max;
-//			return TRUE;
+			//			mw->cur_pos += mw->hed.y_max;
+			//			return TRUE;
 			new_pos = mw->cur_pos + mw->hed.y_max;
 		}
 	}
@@ -504,7 +504,7 @@ static u8 BmpMenuStrLen( BMPMENU_WORK * buf )
 {
 	u8	len = 0;
 	u8	i, j;
-	
+
 	for( i=0; i<buf->hed.x_max*buf->hed.y_max; i++ ){
 #if 0	//old_dp
 		j = FontProc_GetPrintStrWidth(
@@ -515,7 +515,7 @@ static u8 BmpMenuStrLen( BMPMENU_WORK * buf )
 #endif
 		if( len < j ){ len = j; }
 	}
-	
+
 	return len;
 }
 
@@ -539,7 +539,7 @@ static void BmpMenuStrPut( BMPMENU_WORK * mw )
 		mw->hed.win, FontHeaderGet( mw->hed.font, FONT_HEADER_B_COLOR ) );
 
 	px = mw->px;
-//	plus = px * ( mw->len + 2 );
+	//	plus = px * ( mw->len + 2 );
 	plus = mw->len + mw->sx * 2;
 	for( i=0; i<mw->hed.x_max; i++ ){
 		for( j=0; j<mw->hed.y_max; j++ ){
@@ -551,22 +551,22 @@ static void BmpMenuStrPut( BMPMENU_WORK * mw )
 	}
 #else
 	{
-//		u8 l,s,b;
-//		GFL_FONTSYS_GetColor( &l, &s, &b );
+		//		u8 l,s,b;
+		//		GFL_FONTSYS_GetColor( &l, &s, &b );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(mw->hed.win), 0xff );
 	}
-	
+
 	px = mw->px;
-//	plus = px * ( mw->len + 2 );
+	//	plus = px * ( mw->len + 2 );
 	plus = mw->len + mw->sx * 2;
-	
+
 	for( i=0; i<mw->hed.x_max; i++ ){
 		for( j=0; j<mw->hed.y_max; j++ ){
 			str = mw->hed.menu[i*mw->hed.y_max+j].str;
 			py  = ( mw->sy + mw->hed.line_spc ) * j + mw->py;
 			PRINT_UTIL_Print(
-					mw->hed.print_util, mw->hed.print_que,
-					px, py, str, mw->hed.font_handle );
+				mw->hed.print_util, mw->hed.print_que,
+				px, py, str, mw->hed.font_handle );
 		}
 		px += plus;
 	}
@@ -590,7 +590,7 @@ static void BmpMenuCursorPut( BMPMENU_WORK * mw )
 
 	CursorWritePosGet( mw, &px, &py, mw->cur_pos );
 	BmpCursor_Print( mw->cursor, px, py,
-		mw->hed.print_util, mw->hed.print_que, mw->hed.font_handle );
+									 mw->hed.print_util, mw->hed.print_que, mw->hed.font_handle );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -607,7 +607,7 @@ static void BmpMenuCursorPut( BMPMENU_WORK * mw )
 //--------------------------------------------------------------------------------------------
 static void CursorWritePosGet( BMPMENU_WORK * mw, u8 * x, u8 * y, u8 pos )
 {
-//	*x = ( pos / mw->hed.y_max ) * ( mw->len + 2 ) * mw->sx;
+	//	*x = ( pos / mw->hed.y_max ) * ( mw->len + 2 ) * mw->sx;
 	*x = ( pos / mw->hed.y_max ) * ( mw->len + mw->sx * 2 );
 	*y = ( pos % mw->hed.y_max ) * ( mw->sy + mw->hed.line_spc ) + mw->py;
 }
@@ -636,16 +636,16 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit(	const BMPWIN_YESNO_DAT *data, u16 cgx, u
 	BMPMENU_HEADER hed;
 	GFL_MSGDATA * man;
 	BMP_MENULIST_DATA * ld;
-    BMPMENU_WORK* pWk;
+	BMPMENU_WORK* pWk;
 
-    
+
 	man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_yesnomenu_dat, heap );
 	ld  = BmpMenuWork_ListCreate( 2, heap );
 	BmpMenuWork_ListAddArchiveString( ld, man, msgid_yesno_yes, 0,heap );
 	BmpMenuWork_ListAddArchiveString( ld, man, msgid_yesno_no, BMPMENU_CANCEL,heap );
 	GFL_MSG_Delete( man );
 
-    GFL_STD_MemClear(&hed,sizeof(BMPMENU_HEADER));
+	GFL_STD_MemClear(&hed,sizeof(BMPMENU_HEADER));
 
 	hed.menu     = ld;
 	hed.win      = GFL_BMPWIN_Create( data->frmnum , data->pos_x, data->pos_y, 6, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
@@ -654,22 +654,24 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit(	const BMPWIN_YESNO_DAT *data, u16 cgx, u
 	hed.line_spc = 1;
 	hed.c_disp_f = 0;
 	hed.loop_f = 0;
-    hed.print_util = GFL_HEAP_AllocClearMemory(heap,sizeof(PRINT_UTIL));
+	hed.print_util = GFL_HEAP_AllocClearMemory(heap,sizeof(PRINT_UTIL));
 
-    hed.font_handle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
-    hed.font_size_y = GFL_FONT_GetLineHeight(hed.font_handle);
-    PRINT_UTIL_Setup(hed.print_util, hed.win);
-    hed.print_que = PRINTSYS_QUE_Create( heap );
+	hed.font_handle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
+	hed.font_size_y = GFL_FONT_GetLineHeight(hed.font_handle);
+	hed.font_size_x = hed.font_size_y;
+	PRINT_UTIL_Setup(hed.print_util, hed.win);
+	hed.print_que = PRINTSYS_QUE_Create( heap );
+//	GFL_MSGDATA *msgdata;	//表示に使用するメッセージバッファ
 
-//	GFL_BG_BmpWinAddEx( ini, hed.win, data );
+	//	GFL_BG_BmpWinAddEx( ini, hed.win, data );
 	//BmpMenuWinWrite( hed.win, WINDOW_TRANS_OFF, cgx, pal );
 	pWk = BmpMenu_AddEx( &hed, 8, 0, pos, heap, PAD_BUTTON_CANCEL );
-    GFL_BMPWIN_MakeScreen(hed.win);
-    BmpWinFrame_Write( hed.win, WINDOW_TRANS_ON, cgx, pal );
-    
+	GFL_BMPWIN_MakeScreen(hed.win);
+	BmpWinFrame_Write( hed.win, WINDOW_TRANS_ON, cgx, pal );
+
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(hed.win) );
 	GFL_BMPWIN_TransVramCharacter( hed.win );
-    return pWk;
+	return pWk;
 
 }
 
@@ -687,8 +689,10 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit(	const BMPWIN_YESNO_DAT *data, u16 cgx, u
 //--------------------------------------------------------------------------------------------
 u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
 {
-//	u32	ret = BmpMenu_MainSE( mw,SE_DECIDE );
-    u32	ret = BmpMenu_Main( mw );
+	//	u32	ret = BmpMenu_MainSE( mw,SE_DECIDE );
+	u32	ret = BmpMenu_Main( mw );
+
+	PRINTSYS_QUE_Main(mw->hed.print_que);
 
 	if( ret != BMPMENU_NULL ){
 		BmpMenu_YesNoMenuExit( mw );
@@ -734,14 +738,14 @@ u32 BmpYesNoSelectMainOutControl( BMPMENU_WORK * mw, u8 prm, u32 heap )
 void BmpMenu_YesNoMenuExit( BMPMENU_WORK * mw )
 {
 	PRINTSYS_QUE_Delete( mw->hed.print_que );
-    GFL_HEAP_FreeMemory( mw->hed.print_util );
+	GFL_HEAP_FreeMemory( mw->hed.print_util );
 
-    BmpWinFrame_Clear( mw->hed.win, WINDOW_TRANS_ON );
-	GFL_BMPWIN_Delete( mw->hed.win );
-    GFL_FONT_Delete( mw->hed.font_handle );
+	BmpWinFrame_Clear( mw->hed.win, WINDOW_TRANS_ON );
+	GFL_FONT_Delete( mw->hed.font_handle );
 	BmpMenuWork_ListDelete( (BMPMENU_DATA*)mw->hed.menu );
 
-    BmpMenu_Exit( mw, NULL );
+	GFL_BMPWIN_Delete( mw->hed.win );
+	BmpMenu_Exit( mw, NULL );
 }
 
 
@@ -758,7 +762,7 @@ void BmpMenu_YesNoMenuExit( BMPMENU_WORK * mw )
 void BmpWin_DrawCursorImage(GFL_BMPWIN* win, u32 x, u32 y)
 {
 #if 0
-    static const u8 CursorBitmapImage[] = {
+	static const u8 CursorBitmapImage[] = {
 		0xff,0xff,0xff,0x00,
 		0xff,0xff,0xff,0x00,
 		0x21,0xff,0xff,0x00,
@@ -822,6 +826,6 @@ void BmpMenu_SetCursorString( BMPMENU_WORK *mw, u32 strID )
 //--------------------------------------------------------------
 void BmpMenu_RedrawString( BMPMENU_WORK *mw )
 {
-    BmpMenuStrPut( mw );
-    BmpMenuCursorPut( mw );
+	BmpMenuStrPut( mw );
+	BmpMenuCursorPut( mw );
 }

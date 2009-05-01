@@ -53,60 +53,60 @@ static BOOL _DevLobbyLogoutWait(void);
 //--------------------------------------------
 
 static GFLNetDevTable netDevTbl={
-    _DevBootFunc,
-    _DevInitFunc,
-    _DevStartFunc,
-    _DevMainFunc,
-    _DevEndFunc,
-    _DevExitFunc,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    _DevChangeOverModeConnectFunc,
-    _DevWifiConnectFunc,
-    _DevModeDisconnectFunc,
-    NULL,
-    NULL,
-    NULL,
-    _DevSendDataFunc,
-    _DevSetRecvCallbackFunc,
-    _DevIsStartFunc,
-    _DevIsConnectFunc,
-    _DevIsEndFunc,
-    _DevIsIdleFunc,
-    _DevGetBitmapFunc,
-    _DevGetCurrentIDFunc,
-    _DevGetIconLevelFunc,
-    _DevGetError,
-    _DevSetNoChildErrorSet,
-    _DevIsConnectable,
-    _DevIsVChat,
-    _DevIsNewPlayer,
-    NULL, //_DevIrcMoveFunc
+  _DevBootFunc,
+  _DevInitFunc,
+  _DevStartFunc,
+  _DevMainFunc,
+  _DevEndFunc,
+  _DevExitFunc,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  _DevChangeOverModeConnectFunc,
+  _DevWifiConnectFunc,
+  _DevModeDisconnectFunc,
+  NULL,
+  NULL,
+  NULL,
+  _DevSendDataFunc,
+  _DevSetRecvCallbackFunc,
+  _DevIsStartFunc,
+  _DevIsConnectFunc,
+  _DevIsEndFunc,
+  _DevIsIdleFunc,
+  _DevGetBitmapFunc,
+  _DevGetCurrentIDFunc,
+  _DevGetIconLevelFunc,
+  _DevGetError,
+  _DevSetNoChildErrorSet,
+  _DevIsConnectable,
+  _DevIsVChat,
+  _DevIsNewPlayer,
+  NULL, //_DevIrcMoveFunc
 
-	NULL,	//DevIsConnectSystemFunc
-	NULL,	//DevGetSendLockFlagFunc
-	NULL,	//DevConnectWorkInitFunc
-	NULL,	//DevGetSendLockFlagFunc
-	NULL,	//DevConnectWorkInitFunc
+  NULL,	//DevIsConnectSystemFunc
+  NULL,	//DevGetSendLockFlagFunc
+  NULL,	//DevConnectWorkInitFunc
+  NULL,	//DevGetSendLockFlagFunc
+  NULL,	//DevConnectWorkInitFunc
 
-//-- 以下、Wi-Fi広場専用
-	_DevLobbyLogin,	//DevLobbyLoginFunc
-	_DevDebugSetRoom,	//DevDebugSetRoomFunc
-	_DevLobbyUpdateErrorCheck,	//DevLobbyUpdateErrorCheckFunc
-	_DevLobbyLoginWait,	//DevLobbyLoginWaitFunc
-	_DevLobbyLogout,	//DevLobbyLogoutFunc
-	_DevLobbyLogoutWait,	//DevLobbyLogoutWaitFunc
+  //-- 以下、Wi-Fi広場専用
+  _DevLobbyLogin,	//DevLobbyLoginFunc
+  _DevDebugSetRoom,	//DevDebugSetRoomFunc
+  _DevLobbyUpdateErrorCheck,	//DevLobbyUpdateErrorCheckFunc
+  _DevLobbyLoginWait,	//DevLobbyLoginWaitFunc
+  _DevLobbyLogout,	//DevLobbyLogoutFunc
+  _DevLobbyLogoutWait,	//DevLobbyLogoutWaitFunc
 };
 
 //--------------------------------------------
@@ -114,8 +114,8 @@ static GFLNetDevTable netDevTbl={
 //--------------------------------------------
 
 typedef struct{
-    GFL_NETSYS* pNet;
-    NetDevEndCallback callback;
+  GFL_NETSYS* pNet;
+  NetDevEndCallback callback;
 } NetWork;
 
 
@@ -130,7 +130,7 @@ static NetWork* _pWork = NULL;
 //------------------------------------------------------------------------------
 static void _DevBootFunc(HEAPID heapID, NetErrorFunc errorFunc)
 {
-    GFL_NET_WifiStart( heapID, errorFunc );
+  GFL_NET_WifiStart( heapID, errorFunc );
 }
 
 //------------------------------------------------------------------------------
@@ -142,12 +142,12 @@ static void _DevBootFunc(HEAPID heapID, NetErrorFunc errorFunc)
 
 static BOOL _DevInitFunc(HEAPID heapID, GFL_NETSYS* pNet,NetDevEndCallback callback, void* pUserWork)
 {
-    if(_pWork){
-        return FALSE;  //すでに初期化済み
-    }
-    _pWork = GFL_HEAP_AllocClearMemory(heapID, sizeof(NetWork));
-    _pWork->pNet = pNet;
-    return TRUE;
+  if(_pWork){
+    return FALSE;  //すでに初期化済み
+  }
+  _pWork = GFL_HEAP_AllocClearMemory(heapID, sizeof(NetWork));
+  _pWork->pNet = pNet;
+  return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -158,11 +158,11 @@ static BOOL _DevInitFunc(HEAPID heapID, GFL_NETSYS* pNet,NetDevEndCallback callb
 //------------------------------------------------------------------------------
 static int _DevStartFunc(NetDevEndCallback callback)
 {
-    int ret = mydwc_startConnect( GFI_NET_GetMyDWCUserData() ,GFI_NET_GetMyDWCFriendData());
-    if(callback)
-        callback(TRUE);
-    //    mydwc_setFetalErrorCallback(CommFatalErrorFunc);   //@@OO エラー処理追加必要 07/02/22
-    return ret;
+  int ret = mydwc_startConnect( GFI_NET_GetMyDWCUserData() ,GFI_NET_GetMyDWCFriendData());
+  if(callback)
+    callback(TRUE);
+  //    mydwc_setFetalErrorCallback(CommFatalErrorFunc);   //@@OO エラー処理追加必要 07/02/22
+  return ret;
 }
 
 //------------------------------------------------------------------------------
@@ -174,7 +174,7 @@ static int _DevStartFunc(NetDevEndCallback callback)
 
 static int _DevMainFunc(u16 bitmap)
 {
-    return mydwc_stepmatch(bitmap);
+  return mydwc_stepmatch(bitmap);
 }
 
 //------------------------------------------------------------------------------
@@ -186,15 +186,15 @@ static int _DevMainFunc(u16 bitmap)
 //------------------------------------------------------------------------------
 static BOOL _DevEndFunc(BOOL bForce, NetDevEndCallback callback)
 {
-    if(mydwc_disconnect( !bForce ) ){
-        if(mydwc_returnLobby()){
-            return TRUE;
-        }
+  if(mydwc_disconnect( !bForce ) ){
+    if(mydwc_returnLobby()){
+      return TRUE;
     }
-    else{
-        mydwc_stepmatch(bForce);
-    }
-    return FALSE;
+  }
+  else{
+    mydwc_stepmatch(bForce);
+  }
+  return FALSE;
 }
 
 //------------------------------------------------------------------------------
@@ -205,15 +205,15 @@ static BOOL _DevEndFunc(BOOL bForce, NetDevEndCallback callback)
 //------------------------------------------------------------------------------
 static BOOL _DevExitFunc(NetDevEndCallback callback)
 {
-    if(_pWork){
-        mydwc_Logout();  // 切断
-        if(callback){
-            callback(TRUE);
-        }
-        GFL_HEAP_FreeMemory(_pWork);
-        _pWork = NULL;
+  if(_pWork){
+    mydwc_Logout();  // 切断
+    if(callback){
+      callback(TRUE);
     }
-    return TRUE;
+    GFL_HEAP_FreeMemory(_pWork);
+    _pWork = NULL;
+  }
+  return TRUE;
 }
 
 
@@ -225,7 +225,7 @@ static BOOL _DevExitFunc(NetDevEndCallback callback)
 //------------------------------------------------------------------------------
 static BOOL _DevChangeOverModeConnectFunc(u8* keyStr,int numEntry, BOOL bParent, u32 timelimit, NetDevEndCallback callback)
 {
-    return GFL_NET_DWC_StartMatch( keyStr, numEntry,  bParent, timelimit );
+  return GFL_NET_DWC_StartMatch( keyStr, numEntry,  bParent, timelimit );
 }
 
 //------------------------------------------------------------------------------
@@ -236,7 +236,7 @@ static BOOL _DevChangeOverModeConnectFunc(u8* keyStr,int numEntry, BOOL bParent,
 //------------------------------------------------------------------------------
 static BOOL _DevWifiConnectFunc(int index, int maxnum, BOOL bVCT)
 {
-    return GFL_NET_DWC_StartGame(index ,maxnum, bVCT );
+  return GFL_NET_DWC_StartGame(index ,maxnum, bVCT );
 }
 
 //------------------------------------------------------------------------------
@@ -247,11 +247,11 @@ static BOOL _DevWifiConnectFunc(int index, int maxnum, BOOL bVCT)
 //------------------------------------------------------------------------------
 static BOOL _DevModeDisconnectFunc(BOOL bForce, NetDevEndCallback callback)
 {
-    if(mydwc_disconnect( !bForce )){
-        mydwc_returnLobby();
-        return TRUE;
-    }
-    return FALSE;
+  if(mydwc_disconnect( !bForce )){
+    mydwc_returnLobby();
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //------------------------------------------------------------------------------
@@ -263,13 +263,13 @@ static BOOL _DevModeDisconnectFunc(BOOL bForce, NetDevEndCallback callback)
 
 static BOOL _DevSendDataFunc(void* data, int size, int no, NetDevEndCallback callback)
 {
-    if(GFL_NET_DWC_SendToOther(data, size)){
-        if(callback){
-            callback(TRUE);
-        }
-        return TRUE;
+  if(GFL_NET_DWC_SendToOther(data, size)){
+    if(callback){
+      callback(TRUE);
     }
-    return FALSE;
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //------------------------------------------------------------------------------
@@ -280,8 +280,8 @@ static BOOL _DevSendDataFunc(void* data, int size, int no, NetDevEndCallback cal
 //------------------------------------------------------------------------------
 static BOOL _DevSetRecvCallbackFunc(PTRCommRecvLocalFunc recvCallback)
 {
-    mydwc_setReceiver(recvCallback,recvCallback);
-    return TRUE;
+  mydwc_setReceiver(recvCallback,recvCallback);
+  return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -292,7 +292,7 @@ static BOOL _DevSetRecvCallbackFunc(PTRCommRecvLocalFunc recvCallback)
 //------------------------------------------------------------------------------
 static BOOL _DevIsStartFunc(void)
 {
-    return GFL_NET_DWC_IsInit();
+  return GFL_NET_DWC_IsInit();
 }
 
 //------------------------------------------------------------------------------
@@ -303,7 +303,7 @@ static BOOL _DevIsStartFunc(void)
 //------------------------------------------------------------------------------
 static BOOL _DevIsConnectFunc(void)
 {
-    return (MYDWC_NONE_AID != GFL_NET_DWC_GetAid());
+  return (MYDWC_NONE_AID != GFL_NET_DWC_GetAid());
 }
 
 //------------------------------------------------------------------------------
@@ -314,7 +314,7 @@ static BOOL _DevIsConnectFunc(void)
 //------------------------------------------------------------------------------
 static BOOL _DevIsEndFunc(void)
 {
-    return !GFL_NET_DWC_IsInit();
+  return !GFL_NET_DWC_IsInit();
 }
 
 
@@ -326,7 +326,7 @@ static BOOL _DevIsEndFunc(void)
 //------------------------------------------------------------------------------
 static BOOL _DevIsIdleFunc(void)
 {
-    return mydwc_IsLogin();
+  return mydwc_IsLogin();
 }
 
 //------------------------------------------------------------------------------
@@ -337,7 +337,7 @@ static BOOL _DevIsIdleFunc(void)
 //------------------------------------------------------------------------------
 static u32 _DevGetBitmapFunc(void)
 {
-    return DWC_GetAIDBitmap();
+  return DWC_GetAIDBitmap();
 }
 
 
@@ -350,7 +350,7 @@ static u32 _DevGetBitmapFunc(void)
 //------------------------------------------------------------------------------
 static u32 _DevGetCurrentIDFunc(void)
 {
-    return GFL_NET_DWC_GetAid();
+  return GFL_NET_DWC_GetAid();
 }
 
 //------------------------------------------------------------------------------
@@ -361,7 +361,7 @@ static u32 _DevGetCurrentIDFunc(void)
 //------------------------------------------------------------------------------
 static int _DevGetIconLevelFunc(void)
 {
-    return (WM_LINK_LEVEL_3 - DWC_GetLinkLevel());
+  return (WM_LINK_LEVEL_3 - DWC_GetLinkLevel());
 }
 
 //------------------------------------------------------------------------------
@@ -372,19 +372,19 @@ static int _DevGetIconLevelFunc(void)
 //------------------------------------------------------------------------------
 static int _DevGetError(void)  ///< エラーを得る
 {
-	int errorCode;
-	DWCErrorType myErrorType;
-	int ret;
+  int errorCode;
+  DWCErrorType myErrorType;
+  int ret;
 
-    ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
-    
-    if(ret == DWC_ERROR_NONE){
-        return 0;
-    }
-    else if(errorCode==0){  //WIFIでは０番が帰ることがあるため変換して返す
-        return -10000;
-    }
-    return errorCode;
+  ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
+
+  if(ret == DWC_ERROR_NONE){
+    return 0;
+  }
+  else if(errorCode==0){  //WIFIでは０番が帰ることがあるため変換して返す
+    return -10000;
+  }
+  return errorCode;
 }
 
 //------------------------------------------------------------------------------
@@ -396,7 +396,7 @@ static int _DevGetError(void)  ///< エラーを得る
 
 static void _DevSetNoChildErrorSet(BOOL bOn)
 {
-//    GFL_NET_WLSetDisconnectOtherError(bOn);
+  //    GFL_NET_WLSetDisconnectOtherError(bOn);
 }
 
 
@@ -409,11 +409,11 @@ static void _DevSetNoChildErrorSet(BOOL bOn)
 
 static BOOL _DevIsConnectable(int index)
 {
-    if( mydwc_getFriendStatus(index) != DWC_STATUS_MATCH_SC_SV ){
-        return FALSE;
-    }
-    //    mydwc_setReceiver( CommRecvParentCallback, CommRecvCallback );
-    return TRUE;
+  if( mydwc_getFriendStatus(index) != DWC_STATUS_MATCH_SC_SV ){
+    return FALSE;
+  }
+  //    mydwc_setReceiver( CommRecvParentCallback, CommRecvCallback );
+  return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -425,7 +425,7 @@ static BOOL _DevIsConnectable(int index)
 
 static BOOL _DevIsVChat(void)
 {
-    return mydwc_IsVChat();
+  return mydwc_IsVChat();
 }
 
 //------------------------------------------------------------------------------
@@ -436,7 +436,7 @@ static BOOL _DevIsVChat(void)
 //------------------------------------------------------------------------------
 static BOOL _DevIsNewPlayer(void)
 {
-    return GFL_NET_DWC_IsNewPlayer();
+  return GFL_NET_DWC_IsNewPlayer();
 }
 
 
@@ -444,7 +444,7 @@ static BOOL _DevIsNewPlayer(void)
 /**
  * @brief   Wi-Fi広場にログイン	DWC_LOBBY_Login
  *
- * @param   cp_loginprofile		
+ * @param   cp_loginprofile
  *
  *	@retval	TRUE	成功
  *	@retval	FALSE	失敗		失敗した場合エラータイプを取得してLogoutしてください
@@ -452,22 +452,22 @@ static BOOL _DevIsNewPlayer(void)
 //--------------------------------------------------------------
 static BOOL _DevLobbyLogin(const void* cp_loginprofile)
 {
-	return DWC_LOBBY_Login(cp_loginprofile);
+  return DWC_LOBBY_Login(cp_loginprofile);
 }
 
 //--------------------------------------------------------------
 /**
  * @brief   デバッグ用 部屋データ設定DWC_LOBBY_DEBUG_SetRoomData
  *
- * @param   locktime		
- * @param   random		
- * @param   roomtype		
- * @param   season		
+ * @param   locktime
+ * @param   random
+ * @param   roomtype
+ * @param   season
  */
 //--------------------------------------------------------------
 static void _DevDebugSetRoom( u32 locktime, u32 random, u8 roomtype, u8 season )
 {
-	DWC_LOBBY_DEBUG_SetRoomData(locktime, random, roomtype, season);
+  DWC_LOBBY_DEBUG_SetRoomData(locktime, random, roomtype, season);
 }
 
 //--------------------------------------------------------------
@@ -479,7 +479,7 @@ static void _DevDebugSetRoom( u32 locktime, u32 random, u8 roomtype, u8 season )
 //--------------------------------------------------------------
 static BOOL _DevLobbyUpdateErrorCheck(void)
 {
-	return DWC_LOBBY_UpdateErrorCheck();
+  return DWC_LOBBY_UpdateErrorCheck();
 }
 
 //--------------------------------------------------------------
@@ -492,7 +492,7 @@ static BOOL _DevLobbyUpdateErrorCheck(void)
 //--------------------------------------------------------------
 static BOOL _DevLobbyLoginWait(void)
 {
-	return DWC_LOBBY_LoginWait();
+  return DWC_LOBBY_LoginWait();
 }
 
 //--------------------------------------------------------------
@@ -502,7 +502,7 @@ static BOOL _DevLobbyLoginWait(void)
 //--------------------------------------------------------------
 static void _DevLobbyLogout(void)
 {
-	DWC_LOBBY_Logout();
+  DWC_LOBBY_Logout();
 }
 
 //--------------------------------------------------------------
@@ -515,13 +515,13 @@ static void _DevLobbyLogout(void)
 //--------------------------------------------------------------
 static BOOL _DevLobbyLogoutWait(void)
 {
-	return DWC_LOBBY_LogoutWait();
+  return DWC_LOBBY_LogoutWait();
 }
 
 
 
 //==============================================================================
-//	
+//
 //==============================================================================
 //------------------------------------------------------------------------------
 /**
@@ -531,5 +531,5 @@ static BOOL _DevLobbyLogoutWait(void)
 //------------------------------------------------------------------------------
 GFLNetDevTable *NET_GetWifiDeviceTable(void)
 {
-    return &netDevTbl;
+  return &netDevTbl;
 }

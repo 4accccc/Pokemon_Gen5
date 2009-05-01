@@ -43,43 +43,43 @@ FS_EXTERN_OVERLAY(wifilobby_common);
 //------------------------------------------------------------------------------
 GFLNetDevTable* NET_DeviceLoad(int deviceNo)
 {
-    switch(deviceNo){
+  switch(deviceNo){
 #if SUPPORT_WIFI_
-      case GFL_NET_TYPE_WIFI:
+  case GFL_NET_TYPE_WIFI:
 #if SUPPORT_OVERLAY_
-        GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
 #endif
-        return NET_GetWifiDeviceTable();
+    return NET_GetWifiDeviceTable();
 #endif
 #if SUPPORT_WIFI_
-      case GFL_NET_TYPE_WIFI_LOBBY:
+  case GFL_NET_TYPE_WIFI_LOBBY:
 #if SUPPORT_OVERLAY_
-        GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
-//        GFL_OVERLAY_Load( FS_OVERLAY_ID( wifilobby_common ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
+    //        GFL_OVERLAY_Load( FS_OVERLAY_ID( wifilobby_common ) );
 #endif
-        return NET_GetWifiDeviceTable();
+    return NET_GetWifiDeviceTable();
 #endif
 #if SUPPORT_WIRELESS_
-      case GFL_NET_TYPE_WIRELESS:
-      case GFL_NET_TYPE_WIRELESS_SCANONLY:
+  case GFL_NET_TYPE_WIRELESS:
+  case GFL_NET_TYPE_WIRELESS_SCANONLY:
 #if SUPPORT_OVERLAY_
-        GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wireless ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wireless ) );
 #endif
-        return NET_GetWirelessDeviceTable();
+    return NET_GetWirelessDeviceTable();
 #endif
 #if SUPPORT_IRC_
-      case GFL_NET_TYPE_IRC:
-      case GFL_NET_TYPE_IRC_WIRELESS:
+  case GFL_NET_TYPE_IRC:
+  case GFL_NET_TYPE_IRC_WIRELESS:
 #if SUPPORT_OVERLAY_
-        GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_irc ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_irc ) );
 #endif
-        return NET_GetIrcDeviceTable();
+    return NET_GetIrcDeviceTable();
 #endif
-      default:
-//        GF_ASSERT(0);
-        break;
-    }
-    return NULL;
+  default:
+    //        GF_ASSERT(0);
+    break;
+  }
+  return NULL;
 }
 
 //------------------------------------------------------------------------------
@@ -91,41 +91,41 @@ GFLNetDevTable* NET_DeviceLoad(int deviceNo)
 //------------------------------------------------------------------------------
 void NET_DeviceUnload(int deviceNo)
 {
-    switch(deviceNo){
+  switch(deviceNo){
 #if SUPPORT_WIFI_
-      case GFL_NET_TYPE_WIFI:
+  case GFL_NET_TYPE_WIFI:
 #if SUPPORT_OVERLAY_
-        GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
 #endif
-        break;
+    break;
 #endif
 #if SUPPORT_WIFI_
-      case GFL_NET_TYPE_WIFI_LOBBY:
+  case GFL_NET_TYPE_WIFI_LOBBY:
 #if SUPPORT_OVERLAY_
-        GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
-//        GFL_OVERLAY_Unload( FS_OVERLAY_ID( wifilobby_common ) );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
+    //        GFL_OVERLAY_Unload( FS_OVERLAY_ID( wifilobby_common ) );
 #endif
-        break;
+    break;
 #endif
 #if SUPPORT_WIRELESS_
-      case GFL_NET_TYPE_WIRELESS:
-      case GFL_NET_TYPE_WIRELESS_SCANONLY:
+  case GFL_NET_TYPE_WIRELESS:
+  case GFL_NET_TYPE_WIRELESS_SCANONLY:
 #if SUPPORT_OVERLAY_
-        GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wireless ) );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wireless ) );
 #endif
-        break;
+    break;
 #endif
 #if SUPPORT_IRC_
-      case GFL_NET_TYPE_IRC:
-      case GFL_NET_TYPE_IRC_WIRELESS:
+  case GFL_NET_TYPE_IRC:
+  case GFL_NET_TYPE_IRC_WIRELESS:
 #if SUPPORT_OVERLAY_
-        GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_irc ) );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_irc ) );
 #endif
-        break;
+    break;
 #endif
-      default:
-//        GF_ASSERT(0);
-        break;
-    }
+  default:
+    //        GF_ASSERT(0);
+    break;
+  }
 }
 

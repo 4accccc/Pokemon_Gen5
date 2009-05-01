@@ -41,6 +41,7 @@ SUBDIRS	=	wmi \
 			compatible \
 			musical \
 			infowin \
+			c_gear \
 			bmpoam \
 			wifi_lobby_other \
 			wifi_lobby \

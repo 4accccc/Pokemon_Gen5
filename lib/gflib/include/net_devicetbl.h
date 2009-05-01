@@ -10,8 +10,7 @@ extern "C" {
  * @date    2008.12.19
  */
 //=============================================================================
-#ifndef GFL_NET_DEVICETBL_H__
-#define GFL_NET_DEVICETBL_H__
+#pragma once
 
 /// @brief 送信完了コールバック
 typedef BOOL (*PTRSendDataCallback)(BOOL result);
@@ -48,17 +47,17 @@ typedef BOOL (*DevResetBeaconChangeFlgFunc)(NetDevEndCallback callback); ///<Dev
 typedef BOOL (*DevIsChangeOverTurnFunc)(NetDevEndCallback callback); ///<DevIsChangeOverTurn        親子切り替えしてよいかどうか(親機が一回でもビーコンを送信し終わったかどうか)
 
 typedef BOOL (*DevSetChildConnectCallbackFunc)(PTRChildConnectCallbackFunc func);  ///< 子供がつないだ時のコールバックを指定する
-typedef BOOL (*DevParentModeConnectFunc)(BOOL bChannelChange,NetDevEndCallback callback); ///<DevParentModeConnect       親開始          
+typedef BOOL (*DevParentModeConnectFunc)(BOOL bChannelChange,NetDevEndCallback callback); ///<DevParentModeConnect       親開始
 typedef BOOL (*DevChildModeConnectFunc)(BOOL bBconInit,NetDevEndCallback callback); ///<DevChildModeConnect        子供開始        ビーコンindex + macAddress  つながない場合-1
 typedef BOOL (*DevChildModeMacConnectFunc)(BOOL bBconInit,void* pMacAddr,int index,NetDevEndCallback callback,PTRPARENTFIND_CALLBACK pCallback); ///<DevChildModeConnect        子供開始        ビーコンindex + macAddress  つながない場合-1
 typedef BOOL (*DevChangeOverModeConnectFunc)(u8* keyStr,int numEntry, BOOL bParent, u32 timelimit,NetDevEndCallback callback); ///<DevChangeOverModeConnect   ランダム接続     つながない場合-1
-typedef BOOL (*DevWifiConnectFunc)(int index, int maxnum, BOOL bVCT); 
-typedef BOOL (*DevModeDisconnectFunc)(BOOL bForce, NetDevEndCallback callback); ///<DevModeDisconnect          接続を終わる    
+typedef BOOL (*DevWifiConnectFunc)(int index, int maxnum, BOOL bVCT);
+typedef BOOL (*DevModeDisconnectFunc)(BOOL bForce, NetDevEndCallback callback); ///<DevModeDisconnect          接続を終わる
 typedef BOOL (*DevIsStepDSFunc)(void);  ///< データシェアリング方式送信出来る状態か
 typedef BOOL (*DevStepDSFunc)(void* pSendData);  ///< データシェアリング方式送信
 typedef void* (*DevGetSharedDataAdrFunc)(int index);  ///<データシェアリング方式データを得る
 
-typedef BOOL (*DevSendDataFunc)(void* data,int size,int no,NetDevEndCallback callback); ///<DevSendData                送信関数                   
+typedef BOOL (*DevSendDataFunc)(void* data,int size,int no,NetDevEndCallback callback); ///<DevSendData                送信関数
 typedef BOOL (*DevRecvCallbackFunc)(PTRCommRecvLocalFunc recvCallback); ///<DevRecvCallback            受信コールバック
 
 typedef BOOL (*DevIsStartFunc)(void); ///<DevIsStart                 通信接続してるかどうか
@@ -109,17 +108,17 @@ typedef struct{
   DevIsChangeOverTurnFunc DevIsChangeOverTurn;        ///<親子切り替えしてよいかどうか(親機が一回でもビーコンを送信し終わったかどうか)
 
   DevSetChildConnectCallbackFunc DevSetChildConnectCallback; ///< 子供がつないだ時のコールバックを指定する
-  DevParentModeConnectFunc DevParentModeConnect;       ///<親開始          
-  DevChildModeConnectFunc DevChildModeConnect;        ///<子供開始        
-  DevChildModeMacConnectFunc   DevChildModeMacConnect; ///<     子供開始      macAddress  
+  DevParentModeConnectFunc DevParentModeConnect;       ///<親開始
+  DevChildModeConnectFunc DevChildModeConnect;        ///<子供開始
+  DevChildModeMacConnectFunc   DevChildModeMacConnect; ///<     子供開始      macAddress
   DevChangeOverModeConnectFunc DevChangeOverModeConnect;   ///<ランダム接続     つながない場合-1
   DevWifiConnectFunc DevWifiConnect;  ///<WIFI接続
-  DevModeDisconnectFunc DevModeDisconnect;          ///<接続を終わる    
+  DevModeDisconnectFunc DevModeDisconnect;          ///<接続を終わる
   DevIsStepDSFunc DevIsStepDS;  ///< データシェアリング方式送信出来る状態か
   DevStepDSFunc DevStepDS;  ///< データシェアリング方式送信
   DevGetSharedDataAdrFunc DevGetSharedDataAdr;
 
-  DevSendDataFunc DevSendData;                ///<送信関数                   
+  DevSendDataFunc DevSendData;                ///<送信関数
   DevRecvCallbackFunc DevRecvCallback;            ///<受信コールバック
 
   DevIsStartFunc DevIsStart;                 ///<通信接続してるかどうか
@@ -149,7 +148,7 @@ typedef struct{
   DevLobbyLogoutFunc DevLobbyLogout;	///<DWC_LOBBY_Logout
   DevLobbyLogoutWaitFunc DevLobbyLogoutWait;	///<DWC_LOBBY_LogoutWait
 
-  
+
 } GFLNetDevTable;
 
 
@@ -163,8 +162,6 @@ extern GFLNetDevTable* NET_DeviceLoad(int deviceNo);
 extern void NET_DeviceUnload(int deviceNo);
 
 
-
-#endif // GFL_NET_DEVICETBL_H__
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -1604,7 +1604,7 @@ static GMEVENT_RESULT DMenuControlLight(
 		FIELD_LIGHT_DEBUG_Init( p_light, work->heapID );
 
 		// インフォーバーの非表示
-		FIELD_SUBSCREEN_Exit();
+		FIELD_SUBSCREEN_Exit(FIELDMAP_GetFieldSubscreenWork(work->fieldWork));
 		GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_OFF );
 
 		// ビットマップウィンドウ初期化
@@ -1658,7 +1658,7 @@ static GMEVENT_RESULT DMenuControlLight(
 		}
 
 		// インフォーバーの表示
-		FIELD_SUBSCREEN_Init( work->heapID );
+    FIELDMAP_SetFieldSubscreenWork(work->fieldWork,FIELD_SUBSCREEN_Init( work->heapID ));
 
 		return( GMEVENT_RES_FINISH );
 	}

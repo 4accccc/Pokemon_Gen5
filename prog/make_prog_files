@@ -241,6 +241,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_comm/field_comm_menu.c \
 				field/field_comm/field_comm_debug.c \
 				field/ircbattle/ircbattlemenu.c \
+				field/c_gear/c_gear.c \
 				field/fldmmdl_draw.c \
 				field/fldmmdl_acmd.c \
 				field/fldmmdl_move_0.c \

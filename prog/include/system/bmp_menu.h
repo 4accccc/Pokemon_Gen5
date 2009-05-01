@@ -25,7 +25,7 @@
 typedef struct {
 	const BMPMENU_DATA * menu;
 	GFL_BMPWIN *win;
-	u8	font;
+	u8	dummy;
 	u8	x_max;			// 横方向項目最大数（必ず１以上）
 	u8	y_max;			// 縦方向項目最大数（必ず１以上）
 	u8	line_spc:4;		// 文字間隔Ｙ

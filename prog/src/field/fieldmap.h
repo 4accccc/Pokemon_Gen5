@@ -26,6 +26,7 @@
 #include "weather.h"
 
 #include "field_debug.h"
+#include "field_subscreen.h"
 
 //======================================================================
 //	define
@@ -80,6 +81,8 @@ extern void FIELDMAP_SetMapCtrlWork(FIELDMAP_WORK *fieldWork,void *ctrlWork);
 extern int FIELDMAP_GetKeyCont( const FIELDMAP_WORK *fieldWork );
 extern int FIELDMAP_GetKeyTrg( const FIELDMAP_WORK *fieldWork );
 extern FIELD_PLAYER * FIELDMAP_GetFieldPlayer( FIELDMAP_WORK *fieldWork );
+extern FIELD_SUBSCREEN_WORK* FIELDMAP_GetFieldSubscreenWork( FIELDMAP_WORK *fieldWork );
+extern void FIELDMAP_SetFieldSubscreenWork( FIELDMAP_WORK *fieldWork,FIELD_SUBSCREEN_WORK* pWork );
 
 //---------------------------------------------------------------
 //	Ç¢Ç∏ÇÍè¡ÇµÇ‹Ç∑

@@ -8,8 +8,7 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-#ifndef __FIELD_SUBSCREEN_H__
-#define __FIELD_SUBSCREEN_H__
+#pragma once
 
 #ifdef _cplusplus
 extern "C"{
@@ -31,19 +30,20 @@ extern "C"{
 */
 //-----------------------------------------------------------------------------
 
+typedef struct _FIELD_SUBSCREEN_WORK FIELD_SUBSCREEN_WORK;
+
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern void FIELD_SUBSCREEN_Init( u32 heapID );
-extern void FIELD_SUBSCREEN_Exit( void );
-extern void FIELD_SUBSCREEN_Main( void );
+extern FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID );
+extern void FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork );
+extern void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork );
 
 #ifdef _cplusplus
 }	// extern "C"{
 #endif
 
-#endif		// __FIELD_SUBSCREEN_H__
 
 
