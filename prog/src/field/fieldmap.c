@@ -1650,7 +1650,7 @@ static const GFL_DISP_VRAM fldmapdata_dispVram =
 ///	BGÉwÉbÉ_Å[
 //--------------------------------------------------------------
 static const GFL_BG_SYS_HEADER fldmapdata_bgsysHeader = {
-	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_1,GX_BG0_AS_3D
 };
 
 //--------------------------------------------------------------

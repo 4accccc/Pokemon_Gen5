@@ -38,6 +38,8 @@
 */
 //-----------------------------------------------------------------------------
 
+#define CGEAR_ON (1)
+
 //-----------------------------------------------------------------------------
 /**
  *					\‘¢‘ÌéŒ¾
@@ -87,7 +89,9 @@ FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID )
 		GFL_NET_ReloadIcon();
 	}
   }
-  //pWork->cgearWork = CGEAR_Init();
+#if CGEAR_ON
+  pWork->cgearWork = CGEAR_Init();
+#endif
   
   return pWork;
 }
@@ -99,7 +103,9 @@ FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID )
 //-----------------------------------------------------------------------------
 void FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork )
 {
-  //CGEAR_Exit(pWork->cgearWork);
+#if CGEAR_ON
+  CGEAR_Exit(pWork->cgearWork);
+#endif
 	INFOWIN_Exit();
 	GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
   GFL_HEAP_FreeMemory(pWork);
@@ -112,7 +118,9 @@ void FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork )
 //-----------------------------------------------------------------------------
 void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
 {
-  //CGEAR_Main(pWork->cgearWork);
+#if CGEAR_ON
+  CGEAR_Main(pWork->cgearWork);
+#endif
 	INFOWIN_Update();
 }
 

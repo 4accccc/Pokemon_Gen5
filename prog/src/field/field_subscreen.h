@@ -21,7 +21,7 @@ extern "C"{
 */
 //-----------------------------------------------------------------------------
 //BGñ Ç∆ÉpÉåÉbÉgî‘çÜ(âºê›íË
-#define FIELD_SUBSCREEN_BGPLANE	(GFL_BG_FRAME3_S)
+#define FIELD_SUBSCREEN_BGPLANE	(GFL_BG_FRAME0_S)
 #define FIELD_SUBSCREEN_PALLET	(0xE)
 
 //-----------------------------------------------------------------------------

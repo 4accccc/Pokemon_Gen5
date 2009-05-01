@@ -126,7 +126,8 @@ enum _IBMODE_CHANGE {
 };
 
 
-#define GEAR_MAIN_FRAME   (GFL_BG_FRAME2_S)
+#define GEAR_MAIN_FRAME   (GFL_BG_FRAME3_S)
+#define GEAR_BMPWIN_FRAME   (GFL_BG_FRAME1_S)
 
 
 typedef void (StateFunc)(C_GEAR_WORK* pState);
@@ -222,12 +223,12 @@ static void _gearBgCreate(C_GEAR_WORK* pWork)
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, pWork->heapID );
 
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_c_gear_c_gear_base_NCLR,
-                                      PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
-    // サブ画面BG2キャラ転送
+                                      PALTYPE_SUB_BG, 0, 0x20,  pWork->heapID);
+    // サブ画面BGキャラ転送
     pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_c_gear_c_gear_NCGR,
                                                                   GEAR_MAIN_FRAME, 0, 0, pWork->heapID);
 
-    // サブ画面BG2スクリーン転送
+    // サブ画面BGスクリーン転送
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
                                            NARC_c_gear_c_gear_NSCR,
                                            GEAR_MAIN_FRAME, 0,
@@ -239,22 +240,35 @@ static void _gearBgCreate(C_GEAR_WORK* pWork)
 //    ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_ircbattle_connect_anm_NCLR, pWork->heapID);
     GFL_ARC_CloseDataHandle( p_handle );
   }
-
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 }
 
 
 static void _createSubBg(C_GEAR_WORK* pWork)
 {
-  // フィールドに設定が無かったので仮設定
   {
     int frame = GEAR_MAIN_FRAME;
     GFL_BG_BGCNT_HEADER AffineBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0x400, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+      GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x04000, 0x8000,GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( frame, &AffineBgCntDat, GFL_BG_MODE_AFFINE );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_SetPriority( frame, 2 );
+    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = GEAR_BMPWIN_FRAME;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_SetPriority( frame, 0 );
@@ -277,7 +291,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,C_GEAR_WORK* pWork)
 {
   int i;
   u32 cgx;
-  int frame = GFL_BG_FRAME1_S;
+  int frame = GEAR_BMPWIN_FRAME;
 
   pWork->windowNum = num;
 
@@ -375,10 +389,9 @@ static void _modeInit(C_GEAR_WORK* pWork)
   _gearBgCreate(pWork);
   pWork->IsIrc=FALSE;
 
-  pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
-  pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
-  pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_c_gear_dat, pWork->heapID );
-  //  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+//  pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+//  pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
+//  pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_c_gear_dat, pWork->heapID );
   _CHANGE_STATE(pWork,_modeSelectMenuInit);
 }
 
@@ -390,14 +403,14 @@ static void _modeInit(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuInit(C_GEAR_WORK* pWork)
 {
-  int aMsgBuff[]={gear_001,gear_001,gear_001};
+ // int aMsgBuff[]={gear_001,gear_001,gear_001};
 
-  _buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
+//  _buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
 
-  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_modeSelectMenuButtonCallback;
+//  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
+//  pWork->touch = &_modeSelectMenuButtonCallback;
 
-  _CHANGE_STATE(pWork,_modeSelectMenuWait);
+//  _CHANGE_STATE(pWork,_modeSelectMenuWait);
 }
 
 static void _workEnd(C_GEAR_WORK* pWork)
@@ -405,14 +418,26 @@ static void _workEnd(C_GEAR_WORK* pWork)
   GFL_FONTSYS_SetDefaultColor();
 
   //    _buttonWindowDelete(pWork);
-  GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
-                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
-  GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
-  GFL_MSG_Delete( pWork->pMsgData );
-  GFL_FONT_Delete(pWork->pFontHandle);
-  GFL_STR_DeleteBuffer(pWork->pStrBuf);
-  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+  GFL_BG_FillCharacterRelease( GEAR_BMPWIN_FRAME, 1, 0);
+  GFL_BG_FillCharacterRelease( GEAR_MAIN_FRAME, 1, 0);
+//  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
+//                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
+  GFL_BG_FreeBGControl(GEAR_BMPWIN_FRAME);
+  GFL_BG_FreeBGControl(GEAR_MAIN_FRAME);
+
+  if(pWork->pMsgData)
+  {
+    GFL_MSG_Delete( pWork->pMsgData );
+  }
+  if(pWork->pFontHandle){
+    GFL_FONT_Delete(pWork->pFontHandle);
+  }
+  if(pWork->pStrBuf)
+  {
+    GFL_STR_DeleteBuffer(pWork->pStrBuf);
+  }
+  GFL_BG_SetVisible( GEAR_BMPWIN_FRAME, VISIBLE_OFF );
+  GFL_BG_SetVisible( GEAR_MAIN_FRAME, VISIBLE_OFF );
 
 }
 
@@ -663,10 +688,10 @@ C_GEAR_WORK* CGEAR_Init( void )
 {
   C_GEAR_WORK *pWork = NULL;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CGEAR, 0x8000 );
+  //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CGEAR, 0x8000 );
 
-  pWork = GFL_HEAP_AllocClearMemory( HEAPID_CGEAR, sizeof( C_GEAR_WORK ) );
-  pWork->heapID = HEAPID_CGEAR;
+  pWork = GFL_HEAP_AllocClearMemory( HEAPID_FIELDMAP, sizeof( C_GEAR_WORK ) );
+  pWork->heapID = HEAPID_FIELDMAP;
   _CHANGE_STATE( pWork, _modeInit);
   return pWork;
 }
@@ -698,7 +723,7 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
 
   GFL_HEAP_FreeMemory(pWork);
   
-  GFL_HEAP_DeleteHeap(HEAPID_CGEAR);
+//  GFL_HEAP_DeleteHeap(HEAPID_CGEAR);
 
 }
 
