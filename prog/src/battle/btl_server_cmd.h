@@ -45,6 +45,8 @@ typedef enum {
 	SC_OP_CHANGE_POKETYPE,		///< 【計算】ポケモンのタイプ変更（ pokeID, type ）
 	SC_OP_CHANGE_POKEFORM,		///< 【計算】ポケモンのフォルム変更（ pokeID, type ）
 	SC_OP_REMOVE_ITEM,				///< 所有アイテム削除
+	SC_OP_UPDATE_USE_WAZA,		///< 直前使用ワザ更新
+	SC_OP_SET_CONTFLAG,				///< 永続フラグセット
 	SC_ACT_WAZA_EFFECT,
 	SC_ACT_WAZA_DMG,					///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
 	SC_ACT_WAZA_DMG_DBL,			///< 【アクション】２体同時ダメージ処理 [ pokeID ]
@@ -239,7 +241,14 @@ static inline void SCQUE_PUT_OP_RemoveItem( BTL_SERVER_CMD_QUE* que, u8 pokeID  
 {
 	SCQUE_PUT_Common( que, SC_OP_REMOVE_ITEM, pokeID );
 }
-
+static inline void SCQUE_PUT_OP_UpdateUseWaza( BTL_SERVER_CMD_QUE* que, u8 pokeID, WazaID waza  )
+{
+	SCQUE_PUT_Common( que, SC_OP_UPDATE_USE_WAZA, pokeID, waza );
+}
+static inline void SCQUE_PUT_OP_SetContFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID, BppContFlag flag )
+{
+	SCQUE_PUT_Common( que, SC_OP_SET_CONTFLAG, pokeID, flag );
+}
 
 
 //---------------------------------------------

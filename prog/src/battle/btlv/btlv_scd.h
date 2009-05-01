@@ -26,6 +26,19 @@ typedef struct _BTLV_SCD	BTLV_SCD;
 #include "battle/btl_pokeselect.h"
 #include "btlv_core.h"
 
+//--------------------------------------------------------------
+/**
+ *	アクション選択中の経過
+ */
+//--------------------------------------------------------------
+typedef enum {
+	BTLV_SCD_SelAction_Still = 0,	///< まだ選択中
+	BTLV_SCD_SelAction_Done,			///< 選択おわった
+
+	BTLV_SCD_SelAction_Warn_Kodawari,	///< こだわり中、出せないワザが選ばれた
+
+}BtlvScd_SelAction_Result;
+
 
 
 extern BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore,
@@ -35,7 +48,8 @@ extern void BTLV_SCD_Delete( BTLV_SCD* wk );
 extern void BTLV_SCD_Setup( BTLV_SCD* wk );
 
 extern void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
-extern BOOL BTLV_SCD_WaitActionSelect( BTLV_SCD* wk );
+extern BtlvScd_SelAction_Result BTLV_SCD_WaitActionSelect( BTLV_SCD* wk );
+extern void BTLV_SCD_RestartActionSelect( BTLV_SCD* wk );
 
 extern void BTLV_SCD_StartPokemonSelect( BTLV_SCD* wk );
 extern BOOL BTLV_SCD_WaitPokemonSelect( BTLV_SCD* wk );

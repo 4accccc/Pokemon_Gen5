@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btl_pokeparam.h
- * @brief	ポケモンWB バトルシステム  参加ポケモン戦闘用データ
- * @author	taya
+ * @file  btl_pokeparam.h
+ * @brief ポケモンWB バトルシステム  参加ポケモン戦闘用データ
+ * @author  taya
  *
- * @date	2008.10.08	作成
+ * @date  2008.10.08  作成
  */
 //=============================================================================================
 #ifndef __BTL_POKEPARAM_H__
@@ -18,124 +18,139 @@
 
 //--------------------------------------------------------------
 /**
- *	ハンドラ型定義
+ *  ハンドラ型定義
  */
 //--------------------------------------------------------------
-typedef struct _BTL_POKEPARAM	BTL_POKEPARAM;
+typedef struct _BTL_POKEPARAM BTL_POKEPARAM;
 
 //--------------------------------------------------------------
 /**
- *	取得できる能力値
+ *  取得できる能力値
  */
 //--------------------------------------------------------------
 typedef enum {
 
-	BPP_VALUE_NULL = 0,
+  BPP_VALUE_NULL = 0,
 
-	BPP_ATTACK,
-	BPP_DEFENCE,
-	BPP_SP_ATTACK,
-	BPP_SP_DEFENCE,
-	BPP_AGILITY,
-	BPP_HIT_RATIO,
-	BPP_AVOID_RATIO,
-	BPP_CRITICAL_RATIO,
-	//--- ここまでランクアップ／ダウン効果の引数としても用いる ---
+  BPP_ATTACK,
+  BPP_DEFENCE,
+  BPP_SP_ATTACK,
+  BPP_SP_DEFENCE,
+  BPP_AGILITY,
+  BPP_HIT_RATIO,
+  BPP_AVOID_RATIO,
+  BPP_CRITICAL_RATIO,
+  //--- ここまでランクアップ／ダウン効果の引数としても用いる ---
 
-	BPP_HP,
-	BPP_MAX_HP,
-	BPP_LEVEL,
-	BPP_TOKUSEI,
-	BPP_SEX,
-	BPP_FORM,
+  BPP_HP,
+  BPP_MAX_HP,
+  BPP_LEVEL,
+  BPP_TOKUSEI,
+  BPP_SEX,
+  BPP_FORM,
 
-	BPP_RANKTYPE_MAX = BPP_AVOID_RATIO+1,
+  BPP_RANKTYPE_MAX = BPP_AVOID_RATIO+1,
 
 }BppValueID;
 
 //--------------------------------------------------------------
 /**
- *	ターンごとにクリアされるフラグセット
+ *  ターンごとにクリアされるフラグセット
  */
 //--------------------------------------------------------------
 typedef enum {
 
-	BPP_TURNFLG_ACTION_DONE,	///< 行動した
-	BPP_TURNFLG_SHRINK,			///< ひるまされた
-	BPP_TURNFLG_DEAD,				///< このターンに死んだ
+  BPP_TURNFLG_ACTION_DONE,  ///< 行動した
+  BPP_TURNFLG_SHRINK,     ///< ひるまされた
+  BPP_TURNFLG_DEAD,       ///< このターンに死んだ
 
-	BPP_TURNFLG_MAX,
+  BPP_TURNFLG_MAX,
 
 }BppTurnFlag;
 
 //--------------------------------------------------------------
 /**
- *	永続的に保持されるフラグセット
+ *  永続的に保持されるフラグセット
  */
 //--------------------------------------------------------------
 typedef enum {
 
-	BPP_CONTFLG_DEAD_IGNORE,	///< 既に死んでいるので場にいないものとして扱う
-	BPP_CONTFLG_MAX,
+  BPP_CONTFLG_DEAD_IGNORE,      ///< 既に死んでいるので場にいないものとして扱う
+  BPP_CONTFLG_KODAWARI_LOCK,    ///< 最初に使ったワザしか出せなくなる
+  BPP_CONTFLG_MAX,
 
 }BppContFlag;
 
 //--------------------------------------------------------------
 /**
- *	HP残量めやす
+ *  HP残量めやす
  */
 //--------------------------------------------------------------
 typedef enum {
 
-	BPP_HPBORDER_GREEN = 0,		///< 通常
-	BPP_HPBORDER_YELLOW,			///< 1/3以下
-	BPP_HPBORDER_RED,					///< 1/8以下
+  BPP_HPBORDER_GREEN = 0,   ///< 通常
+  BPP_HPBORDER_YELLOW,      ///< 1/3以下
+  BPP_HPBORDER_RED,         ///< 1/8以下
 
 }BppHpBorder;
 
 //--------------------------------------------------------------
 /**
- *	状態異常継続パラメータ
+ *  状態異常継続パラメータ
  */
 //--------------------------------------------------------------
 typedef struct  {
 
-	union {
-		u16    raw;
-		struct {
-			u16  type : 4;
-			u16  _0   : 12;
-		};
-		struct {
-			u16  type_turn : 4;
-			u16  count     : 6;
-			u16  _1        : 6;
-		}turn;
-		struct {
-			u16  type_poke : 4;
-			u16  ID        : 6;
-			u16  _2        : 6;
-		}poke;
-	};
+  union {
+    u16    raw;
+    struct {
+      u16  type : 4;
+      u16  _0   : 12;
+    };
+    struct {
+      u16  type_turn : 4;
+      u16  count     : 6;
+      u16  _1        : 6;
+    }turn;
+    struct {
+      u16  type_poke : 4;
+      u16  ID        : 6;
+      u16  _2        : 6;
+    }poke;
+  };
 
 }BPP_SICK_CONT;
 
+//--------------------------------------------------------------
+/**
+ *  「こらえる（ワザダメージでHPが最低１残る）」理由
+ */
+//--------------------------------------------------------------
+typedef enum {
+
+  BPP_KORAE_NONE = 0,       ///< こらえない
+  BPP_KORAE_WAZA_DEFENDER,  ///< 防御側のワザによる（「こらえる」を使用など）
+  BPP_KORAE_WAZA_ATTACKER,  ///< 攻撃側のワザによる（「みねうち」を使用など）
+  BPP_KORAE_ITEM,           ///< 防御側の装備アイテム効果（きあいのタスキなど）
+
+}BppKoraeruCause;
+
 static inline void BPP_SICKCONT_Set_Turn( BPP_SICK_CONT* cont, u8 turns )
 {
-	cont->raw = 0;
-	cont->type = WAZASICK_CONT_TURN;
-	cont->turn.count = turns;
+  cont->raw = 0;
+  cont->type = WAZASICK_CONT_TURN;
+  cont->turn.count = turns;
 }
 static inline void BPP_SICKCONT_Set_Poke( BPP_SICK_CONT* cont, u8 pokeID )
 {
-	cont->raw = 0;
-	cont->type = WAZASICK_CONT_POKE;
-	cont->poke.ID = pokeID;
+  cont->raw = 0;
+  cont->type = WAZASICK_CONT_POKE;
+  cont->poke.ID = pokeID;
 }
 static inline void BPP_SICKCONT_Set_Permanent( BPP_SICK_CONT* cont )
 {
-	cont->raw = 0;
-	cont->type = WAZASICK_CONT_PERMANENT;
+  cont->raw = 0;
+  cont->type = WAZASICK_CONT_PERMANENT;
 }
 
 
@@ -162,8 +177,9 @@ extern int BTL_POKEPARAM_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID 
 extern u32 BTL_POKEPARAM_GetItem( const BTL_POKEPARAM* pp );
 
 extern BOOL BTL_POKEPARAM_IsDead( const BTL_POKEPARAM* pp );
-extern BOOL BTL_POKEPARAM_IsFullHP( const BTL_POKEPARAM* pp );
+extern BOOL BTL_POKEPARAM_IsHPFull( const BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType );
+extern BOOL BTL_POKEPARAM_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx );
 
 extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
 extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
@@ -172,15 +188,18 @@ extern BOOL BTL_POKEPARAM_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flag
 extern u16 BTL_POKEPARAM_GetTurnCount( const BTL_POKEPARAM* pp );
 extern u16 BTL_POKEPARAM_GetAppearTurn( const BTL_POKEPARAM* pp );
 
+extern WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp );
+extern u32 BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp );
+
 
 //=============================================================================================
 /**
  * 指定HPの値から、HP残量のめやす（普通・半減・ピンチとか）を返す
  *
- * @param   pp		
- * @param   hp		
+ * @param   pp
+ * @param   hp
  *
- * @retval  BppHpBorder		
+ * @retval  BppHpBorder
  */
 //=============================================================================================
 extern BppHpBorder BTL_POKEPARAM_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp );
@@ -189,9 +208,9 @@ extern BppHpBorder BTL_POKEPARAM_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp 
 /**
  * 現在のHP残量のめやす（普通・半減・ピンチとか）を返す
  *
- * @param   pp		
+ * @param   pp
  *
- * @retval  BppHpBorder		
+ * @retval  BppHpBorder
  */
 //=============================================================================================
 extern BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp );
@@ -201,11 +220,11 @@ extern BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp );
 /**
  * ランク増減効果が効く（上限・下限に達していない）かどうか判定
  *
- * @param   pp				
- * @param   rankType	
- * @param   volume		
+ * @param   pp
+ * @param   rankType
+ * @param   volume
  *
- * @retval  BOOL		効く場合TRUE
+ * @retval  BOOL    効く場合TRUE
  */
 //=============================================================================================
 extern BOOL BTL_POKEPARAM_IsRankEffectValid( const BTL_POKEPARAM* pp, BppValueID rankType, int volume );
@@ -233,7 +252,7 @@ extern void BTL_POKEPARAM_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );
 extern void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type );
 extern void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
 extern void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp );
-
+extern void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza );
 
 
 

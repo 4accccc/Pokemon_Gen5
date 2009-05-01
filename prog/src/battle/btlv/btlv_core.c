@@ -59,7 +59,8 @@ struct _BTLV_CORE {
 	STRBUF*						strBuf;
 	GFL_FONT*					fontHandle;
 	BTL_ACTION_PARAM*	actionParam;
-	u32								procPokeID;
+	const BTL_POKEPARAM*	procPokeParam;
+	u32										procPokeID;
 
 	GFL_TCBLSYS*	tcbl;
 	BTLV_SCU*			scrnU;
@@ -277,7 +278,6 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 		u16 idx1;
 		u16 idx2;
 		u16 maxElems;
-		int printArg;
 	}SEQ_WORK;
 
 	SEQ_WORK* wk = workBufer;
@@ -285,7 +285,6 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 
 	switch( *seq ){
 	case 0:
-		wk->printArg = core->procPokeID;
 		BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction, 1, core->procPokeID );
 		BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_NONE );
 		(*seq)++;
@@ -293,16 +292,35 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 	case 1:
 		if( BTLV_SCU_WaitMsg(core->scrnU) )
 		{
-			const BTL_POKEPARAM* bpp = BTL_CLIENT_GetProcPokeData( core->myClient );
-			BTLV_SCD_StartActionSelect( core->scrnD, bpp, core->actionParam );
+			BTLV_SCD_StartActionSelect( core->scrnD, core->procPokeParam, core->actionParam );
 			(*seq)++;
 		}
 		break;
 	case 2:
-		if( BTLV_SCD_WaitActionSelect(core->scrnD) )
 		{
-			return TRUE;
+			BtlvScd_SelAction_Result res = BTLV_SCD_WaitActionSelect( core->scrnD );
+			switch( res ){
+			case BTLV_SCD_SelAction_Still:	return FALSE;
+			case BTLV_SCD_SelAction_Done:		return TRUE;
+			case BTLV_SCD_SelAction_Warn_Kodawari:
+				{
+					WazaID wazaID = BTL_POKEPARAM_GetPrevWazaNumber( core->procPokeParam );
+					u16    itemID = BTL_POKEPARAM_GetItem( core->procPokeParam );
+					BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_KodawariLock, 2, itemID, wazaID );
+					BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_STD );
+					(*seq)++;
+				}
+				break;
+			}
 		}
+		break;
+	case 3:
+		if( BTLV_SCU_WaitMsg(core->scrnU) )
+		{
+			BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction, 1, core->procPokeID );
+			(*seq) = 0;
+		}
+		break;
 	}
 	return FALSE;
 }
@@ -385,10 +403,11 @@ static BOOL mainproc_call( BTLV_CORE* core )
  *
  */
 //=============================================================================================
-void BTLV_UI_SelectAction_Start( BTLV_CORE* core, u8 pokeID, BTL_ACTION_PARAM* dest )
+void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
 {
+	core->procPokeParam = bpp;
+	core->procPokeID = BTL_POKEPARAM_GetID( bpp );
 	core->actionParam = dest;
-	core->procPokeID = pokeID;
 	mainproc_setup( core, CmdProc_SelectAction );
 }
 //=============================================================================================
@@ -404,8 +423,6 @@ BOOL BTLV_UI_SelectAction_Wait( BTLV_CORE* core )
 {
 	return mainproc_call( core );
 }
-
-
 
 
 

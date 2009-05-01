@@ -103,6 +103,7 @@ struct _BTLV_SCD {
 	SEL_TARGET_WORK		selTargetWork;
 	u8								selTargetDone;
 
+	BtlvScd_SelAction_Result	selActionResult;
 	const BTLV_CORE* vcore;
 	const BTL_MAIN_MODULE* mainModule;
 	const BTL_POKE_CONTAINER* pokeCon;
@@ -118,9 +119,9 @@ static void spstack_push( BTLV_SCD* wk, BPFunc initFunc, BPFunc loopFunc );
 static BOOL spstack_call( BTLV_SCD* wk );
 static void printBtn( BTLV_SCD* wk, u16 posx, u16 posy, u16 sizx, u16 sizy, u16 col, u16 strID );
 static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str );
-static void printCommWait( BTLV_SCD* wk );
 static BOOL selectAction_init( int* seq, void* wk_adrs );
 static BOOL selectAction_loop( int* seq, void* wk_adrs );
+static BtlvScd_SelAction_Result  check_unselectable_waza( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, u8 waza_idx );
 static void stw_init( SEL_TARGET_WORK* stw );
 static void stw_convert_pos_to_index( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, u8 num );
 static void stw_setSelectablePoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
@@ -136,6 +137,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs );
 static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk );
 static BOOL selectPokemon_init( int* seq, void* wk_adrs );
 static BOOL selectPokemon_loop( int* seq, void* wk_adrs );
+static void printCommWait( BTLV_SCD* wk );
 
 
 
@@ -250,12 +252,21 @@ void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACT
 {
 	wk->bpp = bpp;
 	wk->destActionParam = dest;
+	wk->selActionResult = BTLV_SCD_SelAction_Still;
+
 	spstack_push( wk, selectAction_init, selectAction_loop );
 }
-
-BOOL BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
+void BTLV_SCD_RestartActionSelect( BTLV_SCD* wk )
 {
-	return spstack_call( wk );
+	wk->selActionResult = BTLV_SCD_SelAction_Still;
+}
+BtlvScd_SelAction_Result BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
+{
+	if( !spstack_call( wk ) ){
+		return wk->selActionResult;
+	}else{
+		return BTLV_SCD_SelAction_Done;
+	}
 }
 
 static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
@@ -413,6 +424,11 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 //			if( hit != GFL_UI_TP_HIT_NONE )
 			if( ( hit != GFL_UI_TP_HIT_NONE ) && ( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) - 1 ) )
 			{
+				wk->selActionResult = check_unselectable_waza( wk, wk->bpp, hit );
+				if( wk->selActionResult != BTLV_SCD_SelAction_Still ){
+					return FALSE;
+				}
+
 				BTL_ACTION_SetFightParam( wk->destActionParam, hit, 0 );
 
 				if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE )
@@ -458,6 +474,30 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 		return TRUE;
 	}
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * こだわり状態など、選択できないワザを選んだら対応する警告IDを返す
+ *
+ * @param   wk		
+ * @param   bpp		
+ * @param   waza_idx		
+ *
+ * @retval  BtlvScd_SelAction_Result		
+ */
+//----------------------------------------------------------------------------------
+static BtlvScd_SelAction_Result  check_unselectable_waza( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, u8 waza_idx )
+{
+	if( BTL_POKEPARAM_GetContFlag(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
+	{
+		WazaID  select_waza = BTL_POKEPARAM_GetWazaNumber( bpp, waza_idx );
+		if( select_waza != BTL_POKEPARAM_GetPrevWazaNumber(bpp) ){
+			return BTLV_SCD_SelAction_Warn_Kodawari;
+		}
+	}
+
+	return BTLV_SCD_SelAction_Still;
 }
 
 //--------------------------------------------------------------------------------------

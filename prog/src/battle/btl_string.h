@@ -14,6 +14,10 @@
 #include "btl_client.h"
 #include "btl_pokeparam.h"
 
+enum {
+	BTL_STR_ARG_MAX = 8,
+};
+
 
 extern void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, const BTL_POKE_CONTAINER* pokeCon, HEAPID heapID );
 extern void BTL_STR_QuitSystem( void );
