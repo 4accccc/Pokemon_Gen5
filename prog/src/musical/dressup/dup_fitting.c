@@ -373,7 +373,11 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
   GX_SetMasterBrightness(0);  
   GXS_SetMasterBrightness(0);
   
-  DUP_DEMO_DemoStart( work );
+  if( DUP_FIT_ITEMGROUP_GetItemNum(work->itemGroupField) == 0 )
+  {
+    //フィールドにアイテム無かったらデモ
+    DUP_DEMO_DemoStart( work );
+  }
   return work;
 }
 
@@ -2548,10 +2552,10 @@ static void DUP_DEMO_DemoMain( FITTING_WORK *work )
     DUP_DEMO_DemoPhaseWait( work , 30 );
     break;
   case 3:
+    //タッチペンが左から下へリストを回す
     {
-      const GFL_POINT start ={ 162,120 };
-      const GFL_POINT end   ={ 208,160 };
-      DUP_DEMO_DemoPhaseDragPen( work , &start , &end , 60 );
+      const s32 angle = work->demoMoveValue*LIST_ONE_ANGLE;
+      DUP_DEMO_DemoPhaseListRot( work , -(u16)angle , -angle , work->demoMoveValue*15 );
     }
     break;
   case 4:
@@ -2559,19 +2563,19 @@ static void DUP_DEMO_DemoMain( FITTING_WORK *work )
     break;
   case 5:
     {
-      const GFL_POINT start ={ 208,160 };
-      const GFL_POINT end   ={ 162,120 };
+      const GFL_POINT start ={ 162,120 };
+      const GFL_POINT end   ={ 208,160 };
       DUP_DEMO_DemoPhaseDragPen( work , &start , &end , 60 );
     }
     break;
   case 6:
-    DUP_DEMO_DemoPhaseWait( work , 60 );
+    DUP_DEMO_DemoPhaseWait( work , 30 );
     break;
   case 7:
-    //タッチペンが左から下へリストを回す
     {
-      const s32 angle = work->demoMoveValue*LIST_ONE_ANGLE;
-      DUP_DEMO_DemoPhaseListRot( work , -(u16)angle , -angle , work->demoMoveValue*15 );
+      const GFL_POINT start ={ 208,160 };
+      const GFL_POINT end   ={ 162,120 };
+      DUP_DEMO_DemoPhaseDragPen( work , &start , &end , 60 );
     }
     break;
   case 8:
