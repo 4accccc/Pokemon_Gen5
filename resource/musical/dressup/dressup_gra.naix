@@ -12,18 +12,18 @@
 
 enum {
 	NARC_dressup_gra_card_case_d_NCLR = 0,
-	NARC_dressup_gra_obj_button_NCLR = 1,
+	NARC_dressup_gra_obj_main_NCLR = 1,
 	NARC_dressup_gra_test_bg_NCLR = 2,
 	NARC_dressup_gra_bg_mirror_NCGR = 3,
 	NARC_dressup_gra_card_case_NCGR = 4,
-	NARC_dressup_gra_obj_button_NCGR = 5,
+	NARC_dressup_gra_obj_main_NCGR = 5,
 	NARC_dressup_gra_test_bg_NCGR = 6,
 	NARC_dressup_gra_bg_mirror_NSCR = 7,
 	NARC_dressup_gra_card_case_NSCR = 8,
 	NARC_dressup_gra_test_bg_d_NSCR = 9,
 	NARC_dressup_gra_test_bg_u_NSCR = 10,
-	NARC_dressup_gra_obj_button_NCER = 11,
-	NARC_dressup_gra_obj_button_NANR = 12,
+	NARC_dressup_gra_obj_main_NCER = 11,
+	NARC_dressup_gra_obj_main_NANR = 12,
 	NARC_dressup_gra_new_str_nsbtx = 13
 };
 

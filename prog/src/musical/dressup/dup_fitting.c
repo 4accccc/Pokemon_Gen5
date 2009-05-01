@@ -146,6 +146,7 @@ static const u8 ITEM_LIST_NEW_BLINK = 60;
 #pragma mark [> enum
 typedef enum
 {
+  DUS_FITTING_DEMO,
   DUS_FITTING_MAIN,
   DUS_GO_CHECK,
   DUS_CHECK_MAIN,
@@ -230,9 +231,15 @@ struct _FITTING_WORK
   u16 listHoldMove; //持っているときの移動量
   s32 listTotalMove;  //リスト全体の移動量
   
+  //デモ用
+  BOOL isDemo;
+  u16  demoCnt;
+  u8   demoPhase;
+  
   //Obj系
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK  *buttonCell[2];
+  GFL_CLWK  *demoPen;
   u32     objResIdx[DUP_OBJ_RES_MAX];
 
   
@@ -292,6 +299,15 @@ static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work );
 static void DUP_CHECK_ResetItemAngle( FITTING_WORK *work );
 static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work );
 
+#pragma mark [> proto Demo
+static void DUP_DEMO_DemoMain( FITTING_WORK *work );
+static void DUP_DEMO_DemoStart( FITTING_WORK *work );
+static void DUP_DEMO_DemoEnd( FITTING_WORK *work );
+
+static void DUP_DEMO_DemoPhaseListRot( FITTING_WORK *work , const u16 start , const s32 value , const u16 cnt);
+static void DUP_DEMO_DemoPhaseWait( FITTING_WORK *work , const u16 cnt );
+static void DUP_DEMO_DemoPhaseDragPen( FITTING_WORK *work , const GFL_POINT *start , const GFL_POINT *end , const u16 cnt );
+
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
@@ -350,6 +366,8 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
   //フェードないので仮処理
   GX_SetMasterBrightness(0);  
   GXS_SetMasterBrightness(0);
+  
+  DUP_DEMO_DemoStart( work );
   return work;
 }
 
@@ -366,6 +384,7 @@ void  DUP_FIT_TermFitting( FITTING_WORK *work )
 
   GFL_CLACT_WK_Remove( work->buttonCell[0] );
   GFL_CLACT_WK_Remove( work->buttonCell[1] );
+  GFL_CLACT_WK_Remove( work->demoPen );
   GFL_CLGRP_PLTT_Release( work->objResIdx[DOR_BUTTON_PLT] );
   GFL_CLGRP_CGR_Release( work->objResIdx[DOR_BUTTON_NCG] );
   GFL_CLGRP_CELLANIM_Release( work->objResIdx[DOR_BUTTON_ANM] );
@@ -398,6 +417,10 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   FITTING_RETURN ret = FIT_RET_CONTINUE;
   switch( work->state )
   {
+  case DUS_FITTING_DEMO:
+    DUP_DEMO_DemoMain(work);
+    break;
+
   case DUS_FITTING_MAIN:
     DUP_FIT_FittingMain(work);
     break;
@@ -620,7 +643,7 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
     
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
-    work->cellUnit  = GFL_CLACT_UNIT_Create( 2 , 0, work->heapId );
+    work->cellUnit  = GFL_CLACT_UNIT_Create( 3 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   }
 
@@ -667,9 +690,9 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
                     FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
 
   //Obj用Res
-  work->objResIdx[DOR_BUTTON_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_obj_button_NCLR , CLSYS_DRAW_MAIN , 0 , work->heapId  );
-  work->objResIdx[DOR_BUTTON_NCG] = GFL_CLGRP_CGR_Register( arcHandle , NARC_dressup_gra_obj_button_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-  work->objResIdx[DOR_BUTTON_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_dressup_gra_obj_button_NCER , NARC_dressup_gra_obj_button_NANR, work->heapId  );
+  work->objResIdx[DOR_BUTTON_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_obj_main_NCLR , CLSYS_DRAW_MAIN , 0 , work->heapId  );
+  work->objResIdx[DOR_BUTTON_NCG] = GFL_CLGRP_CGR_Register( arcHandle , NARC_dressup_gra_obj_main_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+  work->objResIdx[DOR_BUTTON_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_dressup_gra_obj_main_NCER , NARC_dressup_gra_obj_main_NANR, work->heapId  );
   
   {
   //セルの生成
@@ -694,8 +717,20 @@ static void DUP_FIT_SetupBgObj( FITTING_WORK *work )
               work->objResIdx[DOR_BUTTON_ANM],
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
 
+    cellInitData.pos_x = 128;
+    cellInitData.pos_y = 96;
+    cellInitData.anmseq = 2;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    work->demoPen = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->objResIdx[DOR_BUTTON_NCG],
+              work->objResIdx[DOR_BUTTON_PLT],
+              work->objResIdx[DOR_BUTTON_ANM],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+
     GFL_CLACT_WK_SetDrawEnable( work->buttonCell[0], TRUE );
     GFL_CLACT_WK_SetDrawEnable( work->buttonCell[1], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->demoPen, FALSE );
   }
 
   GFL_ARC_CloseDataHandle(arcHandle);
@@ -920,6 +955,16 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
     MUS_ITEM_DRAW_Debug_DumpResData( work->itemDrawSys,work->shadowItem );
     OS_TPrintf("---DumpResIdx---\n");
   }
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A &&
+      work->isDemo == FALSE )
+  {
+    DUP_DEMO_DemoStart( work );
+  }
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  {
+    OS_TPrintf("[%d:%d]\n",work->tpx,work->tpy);
+  }
+
 #endif
 
   if( work->isSortAnime == TRUE )
@@ -1136,10 +1181,12 @@ static void DUP_FIT_CheckItemListPallet( FITTING_WORK *work )
 static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
 {
   BOOL isTouchList = FALSE;
-  work->befTpx = work->tpx;
-  work->befTpy = work->tpy;
-  work->tpIsTrg = GFL_UI_TP_GetTrg();
-  work->tpIsTouch = GFL_UI_TP_GetPointCont( &work->tpx,&work->tpy );
+  //デモの場合は外から数値が入ってくる
+  if( work->isDemo == FALSE )
+  {
+    work->tpIsTrg = GFL_UI_TP_GetTrg();
+    work->tpIsTouch = GFL_UI_TP_GetPointCont( &work->tpx,&work->tpy );
+  }
   if( work->tpIsTrg || work->tpIsTouch )
   {
     if( work->tpIsTrg && (work->tpy > 192-16) )
@@ -1273,6 +1320,8 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
       work->listSpeed = 0;
     }
   }
+  work->befTpx = work->tpx;
+  work->befTpy = work->tpy;
   
 }
 //--------------------------------------------------------------
@@ -2200,3 +2249,165 @@ static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work )
   }
   
 }
+
+#pragma mark [> DemoFunc
+//--------------------------------------------------------------
+//デモ画面
+//--------------------------------------------------------------
+static void DUP_DEMO_DemoStart( FITTING_WORK *work )
+{
+  work->isDemo = TRUE;
+  work->demoCnt = 0;
+  work->demoPhase = 1;
+
+  work->state = DUS_FITTING_DEMO;
+}
+
+static void DUP_DEMO_DemoEnd( FITTING_WORK *work )
+{
+  work->isDemo = FALSE;
+  work->state = DUS_FITTING_MAIN;
+  GFL_CLACT_WK_SetDrawEnable( work->demoPen, FALSE );
+}
+
+static void DUP_DEMO_DemoMain( FITTING_WORK *work )
+{
+  switch( work->demoPhase )
+  {
+  case 1:
+    //タッチペンが右から下へリストを回す
+    DUP_DEMO_DemoPhaseListRot( work , 0x6000 , 0x6000 , 60 );
+    break;
+  case 2:
+    DUP_DEMO_DemoPhaseWait( work , 60 );
+    break;
+  case 3:
+    //タッチペンが左から下へリストを回す
+    DUP_DEMO_DemoPhaseListRot( work , 0xA000 , -0x6000 , 60 );
+    break;
+  case 4:
+    DUP_DEMO_DemoPhaseWait( work , 30 );
+    break;
+  case 5:
+    {
+      const GFL_POINT start ={ 162,120 };
+      const GFL_POINT end   ={ 208,160 };
+      DUP_DEMO_DemoPhaseDragPen( work , &start , &end , 60 );
+    }
+    break;
+  case 6:
+    DUP_DEMO_DemoPhaseWait( work , 30 );
+    break;
+  case 7:
+    {
+      const GFL_POINT start ={ 208,160 };
+      const GFL_POINT end   ={ 162,120 };
+      DUP_DEMO_DemoPhaseDragPen( work , &start , &end , 60 );
+    }
+    break;
+  case 8:
+    DUP_DEMO_DemoPhaseWait( work , 30 );
+    break;
+  case 9:
+    DUP_DEMO_DemoEnd( work );
+    return;
+    break;
+  }
+  
+//  if( work->tpIsTouch == TRUE )
+  {
+    GFL_CLACTPOS cellPos;
+    cellPos.x = work->tpx;
+    cellPos.y = work->tpy;
+    GFL_CLACT_WK_SetPos( work->demoPen , &cellPos , CLSYS_DEFREND_MAIN );
+    //GFL_CLACT_WK_SetDrawEnable( work->demoPen, TRUE );
+  }
+//  else
+  {
+    //GFL_CLACT_WK_SetDrawEnable( work->demoPen, FALSE );
+  }
+  
+  DUP_FIT_FittingMain( work );
+  
+#if DEB_ARI
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+  {
+    DUP_DEMO_DemoEnd( work );
+  }
+#endif //DEB_ARI
+}
+
+//タッチペンがリストを回す
+static void DUP_DEMO_DemoPhaseListRot( FITTING_WORK *work , const u16 start , const s32 value , const u16 cnt)
+{
+  work->tpIsTouch = FALSE;
+  work->tpIsTrg = FALSE;
+  GFL_CLACT_WK_SetDrawEnable( work->demoPen, TRUE );
+  //座標
+  {
+    const s32 oneAngle = value/cnt;
+    const u16 Angle = (start-oneAngle*work->demoCnt + 0x10000)%0x10000;
+    const fx32 sin = (fx32)FX_SinIdx( Angle );
+    const fx32 cos = (fx32)FX_CosIdx( Angle );
+    const fx32 posX = LIST_CENTER_X_FX+sin*LIST_SIZE_X;
+    const fx32 posY = LIST_CENTER_Y_FX+cos*LIST_SIZE_Y;
+    work->tpx = F32_CONST( posX );
+    work->tpy = F32_CONST( posY );
+    
+    work->listAngle -= oneAngle;
+    DUP_FIT_CalcItemListAngle( work , work->listAngle , oneAngle , LIST_SIZE_X , LIST_SIZE_Y );
+  }
+
+  work->demoCnt++;
+  if( work->demoCnt > cnt )
+  {
+    work->demoCnt = 0;
+    work->demoPhase++;
+  }
+
+}
+
+//ウェイト
+static void DUP_DEMO_DemoPhaseWait( FITTING_WORK *work , const u16 cnt )
+{
+  work->tpIsTouch = FALSE;
+  work->tpIsTrg = FALSE;
+  work->demoCnt++;
+  GFL_CLACT_WK_SetDrawEnable( work->demoPen, FALSE );
+  if( work->demoCnt > cnt )
+  {
+    work->demoCnt = 0;
+    work->demoPhase++;
+  }
+}
+
+//タッチペンの移動
+static void DUP_DEMO_DemoPhaseDragPen( FITTING_WORK *work , const GFL_POINT *start , const GFL_POINT *end , const u16 cnt )
+{
+  GFL_POINT pos;
+  
+  work->tpIsTouch = TRUE;
+  if( work->demoCnt == 0 )
+  {
+    work->tpIsTrg = TRUE;
+  }
+  else
+  {
+    work->tpIsTrg = FALSE;
+  }
+  pos.x = start->x+(end->x-start->x)*work->demoCnt/cnt;
+  pos.y = start->y+(end->y-start->y)*work->demoCnt/cnt;
+
+  work->tpx = pos.x;
+  work->tpy = pos.y;
+
+  GFL_CLACT_WK_SetDrawEnable( work->demoPen, TRUE );
+  work->demoCnt++;
+  if( work->demoCnt > cnt )
+  {
+    work->demoCnt = 0;
+    work->demoPhase++;
+  }
+  
+}
+
