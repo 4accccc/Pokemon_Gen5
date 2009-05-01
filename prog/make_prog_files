@@ -1,130 +1,131 @@
 # プログラム追加ファイル
 
 # サウンド関連
-SOUNDSRC = 		sound/snd_strm.c \
-				sound/sound_manager.c \
-				sound/pm_sndsys.c \
-				sound/pm_voice.c \
-				sound/pm_wb_voice.c
+SOUNDSRC =    sound/snd_strm.c \
+        sound/sound_manager.c \
+        sound/pm_sndsys.c \
+        sound/pm_voice.c \
+        sound/pm_wb_voice.c
 
 #セーブデータ関連
-SAVEDATASRC = 	savedata/save_tbl.c \
-				savedata/save_control.c \
-				savedata/contest_savedata.c \
-				savedata/test_savedata.c \
-				savedata/box_savedata.c \
-				savedata/perapvoice.c \
-				savedata/myitem_savedata.c \
-				savedata/config.c \
-				savedata/mystatus.c \
-				savedata/playtime.c \
-				savedata/player_data.c \
-				savedata/situation.c \
-				savedata/trainercard_data.c \
-				savedata/system_data.c \
-				savedata/record.c \
-				savedata/wifihistory.c \
-				savedata/wifilist.c \
-				savedata/mystery_data.c \
-				savedata/wifi_hiroba_save.c \
-				savedata/musical_save.c
+SAVEDATASRC =   savedata/save_tbl.c \
+        savedata/save_control.c \
+        savedata/contest_savedata.c \
+        savedata/test_savedata.c \
+        savedata/box_savedata.c \
+        savedata/perapvoice.c \
+        savedata/myitem_savedata.c \
+        savedata/config.c \
+        savedata/mystatus.c \
+        savedata/playtime.c \
+        savedata/player_data.c \
+        savedata/situation.c \
+        savedata/trainercard_data.c \
+        savedata/system_data.c \
+        savedata/record.c \
+        savedata/wifihistory.c \
+        savedata/wifilist.c \
+        savedata/mystery_data.c \
+        savedata/wifi_hiroba_save.c \
+        savedata/musical_save.c
 
 #通信の常駐
-NETWORKSRC =	net/net_icondata.c \
-				net/net_dev.c \
-				net/dwc_rapfriend.c \
-				system/net_err.c
+NETWORKSRC =  net/net_icondata.c \
+        net/net_dev.c \
+        net/dwc_rapfriend.c \
+        system/net_err.c
 
 
 
 #常駐プログラム
-SRCS	+=		$(SOUNDSRC) \
-				$(SAVEDATASRC) \
-				$(NETWORKSRC) \
-				test/matsuda/performance.c \
-				system/debug_print.c \
-				system/vm.c \
-				system/g3d_tool.c \
-				system/rtc_tool.c \
-				system/build_revision.c \
-				gamesystem/gamesystem.c \
-				gamesystem/game_event.c \
-				gamesystem/game_data.c \
-				gamesystem/msgspeed.c \
-				map/dp3format.c \
-				field/zonedata.c \
-				field/areadata.c \
-				field/location.c \
-				field/eventdata_system.c \
-				field/event_fieldmap_control.c \
-				field/event_mapchange.c \
-				field/event_fieldmap_menu.c \
-				field/event_debug_menu.c \
-				field/event_battle.c \
-				field/event_ircbattle.c \
-				net_app/wificlub/wifi_p2pevent.c \
-				field/event_wificlub.c \
-				field/field_comm/field_comm_data.c \
-				field/field_comm/field_comm_func.c \
-				field/field_comm/field_comm_event.c \
-				system/mcss.c \
-				system/mcss_tool.c \
-				poke_tool/poke_tool.c \
-				poke_tool/pokeparty.c \
-				poke_tool/poke_personal.c \
-				pokeicon/pokeicon.c \
-				waza_tool/waza_tool.c \
-				print/printsys.c \
-				print/gf_font.c \
-				print/wordset.c \
-				print/global_msg.c \
-				print/global_font.c \
-				print/str_tool.c \
-				system/bmp_winframe.c \
-				system/bmp_menuwork.c \
-				system/bmp_menu.c \
-				system/bmp_menulist.c \
-				system/bmp_cursor.c \
-				system/file_util.c \
-				item/item.c \
-				title/title_control.c \
-				system/palanm.c \
-				system/wipe.c \
-				system/wipe_sub.c \
-				system/wipe_wnd.c \
-				system/touch_subwindow.c \
-				app/trainercard/trcard_sys.c \
-				app/name_input/name_input.c \
-				app/pms_input/pms_input.c \
-				app/pms_input/pmsi_param.c \
-				sound/snd_viewer.c \
-				mystery/comm_mystery_gift.c \
-				system/laster.c \
-				field/fldmmdl.c \
-				field/fldmmdl_move.c \
-				system/pms_data.c \
-				system/pms_word.c \
-				musical/musical_system.c \
-				infowin/infowin.c \
-				system/actor_tool.c \
-				system/bmp_oam.c \
-				net_app/wifi_earth/wifi_country.c \
-				field/script.c \
-				field/scrcmd.c \
-				field/eventwork.c \
-				field/scrcmd_work.c \
-				test/matsuda/wflby_debug.c \
-				test/ariizumi/debug_pause.c \
-				system/wazatype_icon.c \
-				app/codein/codein.c \
-				app/codein/codein_pv.c \
-				app/codein/codein_disp.c \
-				net_app/union/union_gra_tool.c \
-				net_app/union/union_beacon_tool.c \
-				app/wifi_note/wifi_note.c \
-				test/camera_adjust_view.c \
-				system/el_scoreboard.c \
-				system/selbox.c
+SRCS  +=    $(SOUNDSRC) \
+        $(SAVEDATASRC) \
+        $(NETWORKSRC) \
+        test/matsuda/performance.c \
+        system/debug_print.c \
+        system/vm.c \
+        system/g3d_tool.c \
+        system/rtc_tool.c \
+        system/build_revision.c \
+        gamesystem/gamesystem.c \
+        gamesystem/game_event.c \
+        gamesystem/game_data.c \
+        gamesystem/msgspeed.c \
+        map/dp3format.c \
+        field/zonedata.c \
+        field/areadata.c \
+        field/location.c \
+        field/eventdata_system.c \
+        field/event_fieldmap_control.c \
+        field/event_mapchange.c \
+        field/event_fieldmap_menu.c \
+        field/event_debug_menu.c \
+        field/event_battle.c \
+        field/event_ircbattle.c \
+        net_app/wificlub/wifi_p2pevent.c \
+        field/event_wificlub.c \
+        field/field_comm/field_comm_sys.c \
+        field/field_comm/field_comm_data.c \
+        field/field_comm/field_comm_func.c \
+        field/field_comm/field_comm_event.c \
+        system/mcss.c \
+        system/mcss_tool.c \
+        poke_tool/poke_tool.c \
+        poke_tool/pokeparty.c \
+        poke_tool/poke_personal.c \
+        pokeicon/pokeicon.c \
+        waza_tool/waza_tool.c \
+        print/printsys.c \
+        print/gf_font.c \
+        print/wordset.c \
+        print/global_msg.c \
+        print/global_font.c \
+        print/str_tool.c \
+        system/bmp_winframe.c \
+        system/bmp_menuwork.c \
+        system/bmp_menu.c \
+        system/bmp_menulist.c \
+        system/bmp_cursor.c \
+        system/file_util.c \
+        item/item.c \
+        title/title_control.c \
+        system/palanm.c \
+        system/wipe.c \
+        system/wipe_sub.c \
+        system/wipe_wnd.c \
+        system/touch_subwindow.c \
+        app/trainercard/trcard_sys.c \
+        app/name_input/name_input.c \
+        app/pms_input/pms_input.c \
+        app/pms_input/pmsi_param.c \
+        sound/snd_viewer.c \
+        mystery/comm_mystery_gift.c \
+        system/laster.c \
+        field/fldmmdl.c \
+        field/fldmmdl_move.c \
+        system/pms_data.c \
+        system/pms_word.c \
+        musical/musical_system.c \
+        infowin/infowin.c \
+        system/actor_tool.c \
+        system/bmp_oam.c \
+        net_app/wifi_earth/wifi_country.c \
+        field/script.c \
+        field/scrcmd.c \
+        field/eventwork.c \
+        field/scrcmd_work.c \
+        test/matsuda/wflby_debug.c \
+        test/ariizumi/debug_pause.c \
+        system/wazatype_icon.c \
+        app/codein/codein.c \
+        app/codein/codein_pv.c \
+        app/codein/codein_disp.c \
+        net_app/union/union_gra_tool.c \
+        net_app/union/union_beacon_tool.c \
+        app/wifi_note/wifi_note.c \
+        test/camera_adjust_view.c \
+        system/el_scoreboard.c \
+        system/selbox.c
 
 
 #================================================
@@ -141,7 +142,7 @@ SRCS	+=		$(SOUNDSRC) \
 # オーバーレイIDになります
 #
 # これらの処理はoverlaytool.rbで行われています。
-# ■注意■ 
+# ■注意■
 # 1.このツールはフォルダ内のソースコード名取得は行っていません
 #   つまり、「$(DEBUGDIR)」のみ書いてこのフォルダの中のファイルを
 #   全てオーバーレイ扱いにするという処理は作成していません。
@@ -151,75 +152,75 @@ SRCS	+=		$(SOUNDSRC) \
 #   存在していないオーバーレイソースを先に「===>」で指定しないように
 #   してください（チェックはしています）
 #   一番初めのオーバーレイターゲット定義は「main」しか書けない事になります。
-# 3.ライブラリをオーバーレイする場合  #LIB=>	???.a  と書いてください
+# 3.ライブラリをオーバーレイする場合  #LIB=>  ???.a  と書いてください
 #
 # --------------
 # ==> main
 # SRCS_OVERLY_FIRST = $(SRC)/test.c
-# 
+#
 # ==> SRCS_OVERLY_FIRST
 # SRCS_OVERLY_SECOND = $(SRC)/test2.c
 # --------------
 # は書けますが、
-# 
+#
 # --------------
 # ==> SRCS_OVERLY_SECOND
 # SRCS_OVERLY_FIRST = $(SRC)/test.c
-# 
+#
 # ==> main
 # SRCS_OVERLY_SECOND = $(SRC)/test2.c
 # --------------
 # はFIRSTの下にSECONDがあるのに先にSECONDをターゲットに
 # しようとしているのでエラーになります。
-# 
-# 
+#
+#
 # 要望・質問は森にお願いします。
-# 
+#
 
 # wifiプログラム
 #===> main
-#LIB=>					libdwcauth.a
-#LIB=>					libdwcbase.a
-#LIB=>					libdwcac.a
-#LIB=>					libdwcgscommon.a
-#LIB=>					libdwcgsghttp.a
-#LIB=>					libdwcgsgp.a
-#LIB=>					libdwcgsgstats.a
-#LIB=>					libdwcgsgt2.a
-#LIB=>					libdwcgsnatneg.a
-#LIB=>					libdwcgsqr2.a
-#LIB=>					libdwcgsserverbrowsing.a
-#LIB=>					libvct.a
-#LIB=>					libsoc.a
-#LIB=>					libcps.a
-#LIB=>					libssl.a
-#LIB=>					libwcm.a
-#LIB=>					libstubsmd5.a
-SRCS_OVERLAY_DEV_WIFI		= net/net_devwifi.c \
-								net/dwc_rap.c \
-								net/dwc_rapinitialize.c \
-								net/dwc_rapcommon.c \
-								net/vchat.c
+#LIB=>          libdwcauth.a
+#LIB=>          libdwcbase.a
+#LIB=>          libdwcac.a
+#LIB=>          libdwcgscommon.a
+#LIB=>          libdwcgsghttp.a
+#LIB=>          libdwcgsgp.a
+#LIB=>          libdwcgsgstats.a
+#LIB=>          libdwcgsgt2.a
+#LIB=>          libdwcgsnatneg.a
+#LIB=>          libdwcgsqr2.a
+#LIB=>          libdwcgsserverbrowsing.a
+#LIB=>          libvct.a
+#LIB=>          libsoc.a
+#LIB=>          libcps.a
+#LIB=>          libssl.a
+#LIB=>          libwcm.a
+#LIB=>          libstubsmd5.a
+SRCS_OVERLAY_DEV_WIFI   = net/net_devwifi.c \
+                net/dwc_rap.c \
+                net/dwc_rapinitialize.c \
+                net/dwc_rapcommon.c \
+                net/vchat.c
 
 
 # wirelessプログラム
 #===> main
-SRCS_OVERLAY_DEV_WIRELESS		=   net/net_devwireless.c \
-									net/net_whpipe.c \
-									net/wih.c
+SRCS_OVERLAY_DEV_WIRELESS   =   net/net_devwireless.c \
+                  net/net_whpipe.c \
+                  net/wih.c
 
 
 # ircプログラム
 #===> SRCS_OVERLAY_DEV_WIRELESS
-SRCS_OVERLAY_DEV_IRC		=   net/net_devirc.c \
-								net/net_irc.c \
-								net/irc.c
+SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
+                net/net_irc.c \
+                net/irc.c
 
 #wifi設定画面
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>					libmb.a
-#LIB=>					libdwcutil.a
-SRCS_OVERLAY_WIFI_UTIL	= net/dwc_raputil.c
+#LIB=>          libmb.a
+#LIB=>          libdwcutil.a
+SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 
 
 # field
@@ -281,32 +282,32 @@ SRCS_OVERLAY_FIELD_WEATHER_RAIN = field/weather_rain.c
 
 #===> SRCS_OVERLAY_FIELDMAP
 SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
-									field/weather_mirage.c
+                  field/weather_mirage.c
 
 # マッパーサンプル
 #===> main
-SRCS_OVERLAY_WATANABE_SAMPLE	= test/tetsu/sample/samplemain.c \
-				test/tetsu/sample/g3d_mapper.c \
-				test/tetsu/sample/sample_net.c \
-				test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
-				test/tetsu/sample/g3dmapfunc/func_pmcustom_file.c \
-				test/tetsu/test_prog1.c \
-				test/tetsu/sample2.c \
-				test/tetsu/debug_watanabe.c
+SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/samplemain.c \
+        test/tetsu/sample/g3d_mapper.c \
+        test/tetsu/sample/sample_net.c \
+        test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
+        test/tetsu/sample/g3dmapfunc/func_pmcustom_file.c \
+        test/tetsu/test_prog1.c \
+        test/tetsu/sample2.c \
+        test/tetsu/debug_watanabe.c
 
 # コンフィグ画面
 #===> main
-SRCS_OVERLAY_CONFIG_PANEL	= app/config_panel/config_panel.c
+SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel.c
 
 
 # サウンドデバッグ画面
 #===> main
-SRCS_OVERLAY_SOUND_DEBUG	= sound/snd_test2.c
+SRCS_OVERLAY_SOUND_DEBUG  = sound/snd_test2.c
 
 
 # 有泉デバッグ
 #===> main
-SRCS_OVERLAY_ARIIZUMI_DEBUG	= test/ariizumi/debug_ariizumi.c
+SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c
 
 
 
@@ -314,203 +315,203 @@ SRCS_OVERLAY_ARIIZUMI_DEBUG	= test/ariizumi/debug_ariizumi.c
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_MATSUDA_DEBUG	= test/matsuda/d_matsu.c \
-				test/matsuda/d_matsu_net.c \
-				test/matsuda/d_matsu_match.c \
-				test/matsuda/d_matsu_item.c \
-				test/matsuda/d_matsu_list.c \
-				test/matsuda/d_matsu_huge_beacon.c \
-				test/matsuda/huge_beacon.c \
-				test/matsuda/d_save.c \
-				test/matsuda/palace_block.c \
-				test/matsuda/palace_block2.c
+SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
+        test/matsuda/d_matsu_net.c \
+        test/matsuda/d_matsu_match.c \
+        test/matsuda/d_matsu_item.c \
+        test/matsuda/d_matsu_list.c \
+        test/matsuda/d_matsu_huge_beacon.c \
+        test/matsuda/huge_beacon.c \
+        test/matsuda/d_save.c \
+        test/matsuda/palace_block.c \
+        test/matsuda/palace_block2.c
 
 # 田谷デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
-SRCS_OVERLAY_TAYA_DEBUG		= test/taya/d_taya.c
+SRCS_OVERLAY_TAYA_DEBUG   = test/taya/d_taya.c
 
 
 # 曽我部デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>					libnnsmcs.a
-SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
-								  test/soga/d_btltest.c \
-								  test/soga/gf_mcs.c \
-								  test/soga/capture.c \
-								  test/soga/effect_viewer.c \
-								  test/soga/pokemon_viewer.c
+#LIB=>          libnnsmcs.a
+SRCS_OVERLAY_SOGABE_DEBUG   = test/soga/d_soga.c \
+                  test/soga/d_btltest.c \
+                  test/soga/gf_mcs.c \
+                  test/soga/capture.c \
+                  test/soga/effect_viewer.c \
+                  test/soga/pokemon_viewer.c
 
 # タイトル
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
-SRCS_OVERLAY_TITLE	= title/title.c \
-				title/startmenu.c \
-				title/game_start.c
+SRCS_OVERLAY_TITLE  = title/title.c \
+        title/startmenu.c \
+        title/game_start.c
 
 
 # testmode
 #===> SRCS_OVERLAY_TITLE
-SRCS_OVERLAY_TESTMODE	= test/testmode.c
+SRCS_OVERLAY_TESTMODE = test/testmode.c
 
 
 #ポケモンリスト
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
-SRCS_OVERLAY_POKELIST	= test/matsuda/easy_pokelist.c
+SRCS_OVERLAY_POKELIST = test/matsuda/easy_pokelist.c
 
 
 # 交換画面
 #===> SRCS_OVERLAY_POKELIST
-SRCS_OVERLAY_TRADE	= trade/trade.c \
-				trade/trade_main.c
+SRCS_OVERLAY_TRADE  = trade/trade.c \
+        trade/trade_main.c
 
 #wifi風船割り
 #===> main
-SRCS_OVERLAY_BALLOON =	net_app/balloon/balloon.c \
-						net_app/balloon/balloon_game.c \
-						net_app/balloon/balloon_sonans.c \
-						net_app/balloon/balloon_tool.c \
-						net_app/balloon/balloon_entry.c \
-						net_app/balloon/comm_command_balloon.c \
-						net_app/balloon/balloon_send_recv.c
+SRCS_OVERLAY_BALLOON =  net_app/balloon/balloon.c \
+            net_app/balloon/balloon_game.c \
+            net_app/balloon/balloon_sonans.c \
+            net_app/balloon/balloon_tool.c \
+            net_app/balloon/balloon_entry.c \
+            net_app/balloon/comm_command_balloon.c \
+            net_app/balloon/balloon_send_recv.c
 
 # バトル
 #===> SRCS_OVERLAY_TAYA_DEBUG
 #===> SRCS_OVERLAY_SOGABE_DEBUG
-SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
-			battle/btl_server.c \
-			battle/btl_server_flow.c \
-			battle/btl_server_cmd.c \
-			battle/btl_pre_sc.c \
-			battle/btl_client.c \
-			battle/btl_adapter.c \
-			battle/btl_pokeparam.c \
-			battle/btl_event.c \
-			battle/btl_calc.c \
-			battle/btl_net.c \
-			battle/btl_string.c \
-			battle/btl_util.c \
-			battle/btl_field.c \
-			battle/btl_pokeselect.c \
-			battle/handler/hand_tokusei.c \
-			battle/handler/hand_item.c \
-			battle/handler/tokusei/hand_tok_ikaku.c \
-			battle/handler/tokusei/hand_tok_clearbody.c \
-			battle/handler/tokusei/hand_tok_seisinryoku.c \
-			battle/handler/tokusei/hand_tok_fukutsuno.c \
-			battle/handler/tokusei/hand_tok_atuisibou.c \
-			battle/handler/tokusei/hand_tok_kairikibasami.c \
-			battle/handler/tokusei/hand_tok_tikaramoti.c \
-			battle/btlv/btlv_core.c \
-			battle/btlv/btlv_scu.c \
-			battle/btlv/btlv_scd.c \
-			battle/btlv/btlv_stage.c \
-			battle/btlv/btlv_field.c \
-			battle/btlv/btlv_camera.c \
-			battle/btlv/btlv_effect.c \
-			battle/btlv/btlv_efftool.c \
-			battle/btlv/btlv_effvm.c \
-			battle/btlv/btlv_mcss.c
+SRCS_OVERLAY_BATTLE = battle/btl_main.c \
+      battle/btl_server.c \
+      battle/btl_server_flow.c \
+      battle/btl_server_cmd.c \
+      battle/btl_pre_sc.c \
+      battle/btl_client.c \
+      battle/btl_adapter.c \
+      battle/btl_pokeparam.c \
+      battle/btl_event.c \
+      battle/btl_calc.c \
+      battle/btl_net.c \
+      battle/btl_string.c \
+      battle/btl_util.c \
+      battle/btl_field.c \
+      battle/btl_pokeselect.c \
+      battle/handler/hand_tokusei.c \
+      battle/handler/hand_item.c \
+      battle/handler/tokusei/hand_tok_ikaku.c \
+      battle/handler/tokusei/hand_tok_clearbody.c \
+      battle/handler/tokusei/hand_tok_seisinryoku.c \
+      battle/handler/tokusei/hand_tok_fukutsuno.c \
+      battle/handler/tokusei/hand_tok_atuisibou.c \
+      battle/handler/tokusei/hand_tok_kairikibasami.c \
+      battle/handler/tokusei/hand_tok_tikaramoti.c \
+      battle/btlv/btlv_core.c \
+      battle/btlv/btlv_scu.c \
+      battle/btlv/btlv_scd.c \
+      battle/btlv/btlv_stage.c \
+      battle/btlv/btlv_field.c \
+      battle/btlv/btlv_camera.c \
+      battle/btlv/btlv_effect.c \
+      battle/btlv/btlv_efftool.c \
+      battle/btlv/btlv_effvm.c \
+      battle/btlv/btlv_mcss.c
 
 # WIFICLUB
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_WIFICLUB	=   net_app/wificlub/wifi_p2pmatchroom.c \
-							net_app/wificlub/wifi_p2pmatchroom_map.c \
-							net_app/wificlub/wifi_p2pmatch.c \
-							net_app/wificlub/comm_command_wfp2pmf.c \
-							net_app/wificlub/comm_command_wfp2pmf_func.c \
-							net_app/wificlub/wifi_p2pmatchfour.c
+SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
+              net_app/wificlub/wifi_p2pmatchroom_map.c \
+              net_app/wificlub/wifi_p2pmatch.c \
+              net_app/wificlub/comm_command_wfp2pmf.c \
+              net_app/wificlub/comm_command_wfp2pmf_func.c \
+              net_app/wificlub/wifi_p2pmatchfour.c
 
 
 # WIFI2DMAP
 #===> SRCS_OVERLAY_WIFICLUB
 SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
-							net_app/wifi2dmap/wf2dmap_map.c \
-							net_app/wifi2dmap/wf2dmap_obj.c \
-							net_app/wifi2dmap/wf2dmap_judge.c \
-							net_app/wifi2dmap/wf2dmap_objdraw.c \
-							net_app/wifi2dmap/wf2dmap_scroll.c \
-							net_app/wifi2dmap/wf2dmap_scrdraw.c \
-							net_app/wifi2dmap/wf2dmap_cmdq.c
+              net_app/wifi2dmap/wf2dmap_map.c \
+              net_app/wifi2dmap/wf2dmap_obj.c \
+              net_app/wifi2dmap/wf2dmap_judge.c \
+              net_app/wifi2dmap/wf2dmap_objdraw.c \
+              net_app/wifi2dmap/wf2dmap_scroll.c \
+              net_app/wifi2dmap/wf2dmap_scrdraw.c \
+              net_app/wifi2dmap/wf2dmap_cmdq.c
 
 # IRCBATTLEマッチング
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_IRCBATTLEMATCH = field/ircbattle/ircbattlematch.c \
-								field/ircbattle/ircbattlefriend.c
+                field/ircbattle/ircbattlefriend.c
 
 # 不思議な贈り物
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
-			mystery/comm_mystery_state.c \
-			mystery/comm_mystery_card.c \
-			mystery/mysterylib.c \
-			mystery/beacondownload.c 
+      mystery/comm_mystery_state.c \
+      mystery/comm_mystery_card.c \
+      mystery/mysterylib.c \
+      mystery/beacondownload.c
 
 # トレーナーカード
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
-			app/trainercard/trcard_bmp.c \
-			app/trainercard/trcard_obj.c \
-			app/mysign/mysign.c
+      app/trainercard/trcard_bmp.c \
+      app/trainercard/trcard_obj.c \
+      app/mysign/mysign.c
 
 #相性チェック
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
-			net_app/compatible/compati_tool.c \
-			net_app/compatible/compati_control.c \
-			net_app/compatible/compati_result.c \
-			net_app/compatible/compati_comm.c \
-			net_app/compatible/compati_irc.c
+      net_app/compatible/compati_tool.c \
+      net_app/compatible/compati_control.c \
+      net_app/compatible/compati_result.c \
+      net_app/compatible/compati_comm.c \
+      net_app/compatible/compati_irc.c
 
 
 #ダウンロードプレイ  DP/PL/GS吸い上げ
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_DOWNLOAD_PLAY = test/dlplay/dlplay_parent_sample.c \
-				test/dlplay/dlplay_parent_main.c \
-				test/dlplay/dlplay_func.c \
-				test/dlplay/mbp.c \
-				test/dlplay/dlplay_comm_func.c \
-				test/dlplay/dlplay_disp_sys.c
+        test/dlplay/dlplay_parent_main.c \
+        test/dlplay/dlplay_func.c \
+        test/dlplay/mbp.c \
+        test/dlplay/dlplay_comm_func.c \
+        test/dlplay/dlplay_disp_sys.c
 
 # 大野デバッグ
 #===> SRCS_OVERLAY_WIFI2DMAP
-SRCS_OVERLAY_OHNO_DEBUG	= test/ohno/d_ohno_list.c
+SRCS_OVERLAY_OHNO_DEBUG = test/ohno/d_ohno_list.c
 
 # 大野デバッグ
 #===> SRCS_OVERLAY_OHNO_DEBUG
-SRCS_OVERLAY_OHNO_DEBUGAPP	= test/ohno/debug_ohno.c \
-				test/ohno/fatal_error.c \
-				test/ohno/debug_field.c \
-				test/ohno/test_layout.c
+SRCS_OVERLAY_OHNO_DEBUGAPP  = test/ohno/debug_ohno.c \
+        test/ohno/fatal_error.c \
+        test/ohno/debug_field.c \
+        test/ohno/test_layout.c
 
 # 簡易文入力
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
-				app/pms_input/pms_input_view.c \
-				app/pms_input/pmsi_initial_data.c \
-				app/pms_input/pmsiv_button.c \
-				app/pms_input/pmsiv_category.c \
-				app/pms_input/pmsiv_edit.c \
-				app/pms_input/pmsiv_sub.c \
-				app/pms_input/pmsiv_tool.c \
-				app/pms_input/pmsiv_wordwin.c
+        app/pms_input/pms_input_view.c \
+        app/pms_input/pmsi_initial_data.c \
+        app/pms_input/pmsiv_button.c \
+        app/pms_input/pmsiv_category.c \
+        app/pms_input/pmsiv_edit.c \
+        app/pms_input/pmsiv_sub.c \
+        app/pms_input/pmsiv_tool.c \
+        app/pms_input/pmsiv_wordwin.c
 
 
 # ミュージカル(mcs使うために曽我部さんのoverlayの下に
@@ -519,88 +520,88 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
 #  ===> SRCS_OVERLAY_DEV_WIRELESS
 #  ===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
-				musical/mus_poke_data.c \
-				musical/mus_item_draw.c \
-				musical/mus_item_data.c \
-				musical/dressup/dup_fitting.c \
-				musical/dressup/dup_fitting_item.c \
-				musical/musical_mcss.c \
-				musical/dressup/musical_dressup_sys.c \
-				musical/stage/musical_stage_sys.c \
-				musical/stage/sta_acting.c \
-				musical/stage/sta_act_effect.c \
-				musical/stage/sta_act_poke.c \
-				musical/stage/sta_act_obj.c \
-				musical/stage/sta_act_light.c \
-				musical/stage/sta_act_bg.c \
-				musical/stage/script/sta_act_script.c \
-				musical/stage/script/script_command.c \
-				musical/stage/script/script_table.c \
-				test/ariizumi/musical_editor.c
+        musical/mus_poke_data.c \
+        musical/mus_item_draw.c \
+        musical/mus_item_data.c \
+        musical/dressup/dup_fitting.c \
+        musical/dressup/dup_fitting_item.c \
+        musical/musical_mcss.c \
+        musical/dressup/musical_dressup_sys.c \
+        musical/stage/musical_stage_sys.c \
+        musical/stage/sta_acting.c \
+        musical/stage/sta_act_effect.c \
+        musical/stage/sta_act_poke.c \
+        musical/stage/sta_act_obj.c \
+        musical/stage/sta_act_light.c \
+        musical/stage/sta_act_bg.c \
+        musical/stage/script/sta_act_script.c \
+        musical/stage/script/script_command.c \
+        musical/stage/script/script_table.c \
+        test/ariizumi/musical_editor.c
 
 #パレス
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
-			app/palace/palace_draw.c
+      app/palace/palace_draw.c
 
 
 #WIFI 世界 共通
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>					libdwcgsghttp.a
-#LIB=>					libdwcnd.a
-#LIB=>					libdwcnhttp.a
-SRCS_OVERLAY_DPW_COMMON		= libdpw/dpwi_encrypt.c \
-				  		libdpw/dpwi_session.c
+#LIB=>          libdwcgsghttp.a
+#LIB=>          libdwcnd.a
+#LIB=>          libdwcnhttp.a
+SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
+              libdpw/dpwi_session.c
 
 #Wi-Fi広場
 #===> SRCS_OVERLAY_WIFI2DMAP
-#LIB=>					libdwcbm.a
-#LIB=>					libdwcaccount.a
-#LIB=>					libdwcgschat.a
-#LIB=>					libdwcppwlobby.a
-#LIB=>					libdwcilobby.a
-#LIB=>					libdwcenc.a
-SRCS_OVERLAY_WIFILOBBY_COMMON		=	net_app/wifi_lobby/wifi_lobby.c \
-										net_app/wifi_lobby/wflby_system.c \
-										net_app/wifi_lobby/wflby_apl.c \
-										net_app/wifi_lobby/wflby_def.c \
-										net_app/wifi_lobby/lobby_news_data.c \
-										net/dwc_lobbylib.c \
-										net_app/wifi_lobby/wflby_3dobj.c \
-										net_app/wifi_lobby/worldtimer_place.c
+#LIB=>          libdwcbm.a
+#LIB=>          libdwcaccount.a
+#LIB=>          libdwcgschat.a
+#LIB=>          libdwcppwlobby.a
+#LIB=>          libdwcilobby.a
+#LIB=>          libdwcenc.a
+SRCS_OVERLAY_WIFILOBBY_COMMON   = net_app/wifi_lobby/wifi_lobby.c \
+                    net_app/wifi_lobby/wflby_system.c \
+                    net_app/wifi_lobby/wflby_apl.c \
+                    net_app/wifi_lobby/wflby_def.c \
+                    net_app/wifi_lobby/lobby_news_data.c \
+                    net/dwc_lobbylib.c \
+                    net_app/wifi_lobby/wflby_3dobj.c \
+                    net_app/wifi_lobby/worldtimer_place.c
 
 #WIFILOBBY
 #===>SRCS_OVERLAY_WIFILOBBY_COMMON
-SRCS_OVERLAY_WIFILOBBY_CONNECT		=	net_app/wifi_lobby/wflby_connect.c
+SRCS_OVERLAY_WIFILOBBY_CONNECT    = net_app/wifi_lobby/wflby_connect.c
 
 
 ### #WIFILOBBY
 ### #===>SRCS_OVERLAY_WIFILOBBY_COMMON
-### SRCS_OVERLAY_WIFILOBBY_ANKETO		=	net_app/wifi_lobby/wflby_anketo.c
+### SRCS_OVERLAY_WIFILOBBY_ANKETO   = net_app/wifi_lobby/wflby_anketo.c
 
 
 ### #WIFILOBBY
 ### #===>SRCS_OVERLAY_WIFILOBBY_COMMON
-### SRCS_OVERLAY_WORLDTIMER		=	net_app/wifi_lobby/worldtimer.c
+### SRCS_OVERLAY_WORLDTIMER   = net_app/wifi_lobby/worldtimer.c
 
 #WIFILOBBY
 #===>SRCS_OVERLAY_WIFILOBBY_COMMON
-SRCS_OVERLAY_WIFILOBBY_ROOM		=	net_app/wifi_lobby/wflby_3dmatrix.c \
-									net_app/wifi_lobby/wflby_mapcont.c \
-									net_app/wifi_lobby/wflby_3dobjcont.c \
-									net_app/wifi_lobby/wflby_room.c \
-									net_app/wifi_lobby/wflby_camera.c \
-									net_app/wifi_lobby/wflby_3dmapobj.c \
-									net_app/wifi_lobby/wflby_3dmapobj_cont.c \
-									net_app/wifi_lobby/wflby_event.c \
-									net_app/wifi_lobby/wflby_ev_def.c \
-									net_app/wifi_lobby/wflby_ev_mg.c \
-									net_app/wifi_lobby/wflby_ev_talk.c \
-									net_app/wifi_lobby/wflby_gadget.c \
-									net_app/wifi_lobby/wflby_light.c \
-									net_app/wifi_lobby/wflby_timeevent.c \
-									net_app/wifi_lobby/wflby_fire.c \
-									net_app/wifi_lobby/wflby_ev_anketo.c \
-									net_app/wifi_lobby/wflby_float.c
+SRCS_OVERLAY_WIFILOBBY_ROOM   = net_app/wifi_lobby/wflby_3dmatrix.c \
+                  net_app/wifi_lobby/wflby_mapcont.c \
+                  net_app/wifi_lobby/wflby_3dobjcont.c \
+                  net_app/wifi_lobby/wflby_room.c \
+                  net_app/wifi_lobby/wflby_camera.c \
+                  net_app/wifi_lobby/wflby_3dmapobj.c \
+                  net_app/wifi_lobby/wflby_3dmapobj_cont.c \
+                  net_app/wifi_lobby/wflby_event.c \
+                  net_app/wifi_lobby/wflby_ev_def.c \
+                  net_app/wifi_lobby/wflby_ev_mg.c \
+                  net_app/wifi_lobby/wflby_ev_talk.c \
+                  net_app/wifi_lobby/wflby_gadget.c \
+                  net_app/wifi_lobby/wflby_light.c \
+                  net_app/wifi_lobby/wflby_timeevent.c \
+                  net_app/wifi_lobby/wflby_fire.c \
+                  net_app/wifi_lobby/wflby_ev_anketo.c \
+                  net_app/wifi_lobby/wflby_float.c

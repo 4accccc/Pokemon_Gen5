@@ -248,6 +248,7 @@ static void fieldMainCommActorProc( FIELDMAP_WORK *fieldWork );
 FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 {
 	FIELDMAP_WORK *fieldWork;
+  COMM_FIELD_SYS_PTR comm_field;
 	
 	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELDMAP_WORK) );
 	fieldWork->heapID = heapID;
@@ -266,7 +267,10 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	fieldWork->pMapMatrix = MAP_MATRIX_Create( heapID );
 	
 	//通信用処理
-	fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP );
+  fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP );
+  comm_field = GAMESYSTEM_GetCommFieldWork(gsys);
+  FIELD_COMM_MAIN_CommFieldSysPtrSet(fieldWork->commSys, comm_field);
+  FIELD_COMM_MAIN_CommFieldMapInit(comm_field);
 	
 	return fieldWork;
 }
@@ -283,8 +287,8 @@ void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 	//マップマトリクス
 	MAP_MATRIX_Delete( fieldWork->pMapMatrix );
 	
-	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
-	FIELD_COMM_MAIN_TermSystem( fieldWork->commSys, FALSE );
+////	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
+	FIELD_COMM_MAIN_TermSystem( fieldWork, fieldWork->commSys );
 
 	GFL_HEAP_FreeMemory( fieldWork );
 }

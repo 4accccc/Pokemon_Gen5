@@ -172,6 +172,8 @@ struct _GAMESYS_WORK {
 
 	GAMEDATA * gamedata;
 	void * fieldmap;
+	void * comm_field;			///<フィールド通信ワーク
+	void * comm_infowin;		///<INFOWIN通信ワーク
 };
 
 //------------------------------------------------------------------
@@ -339,6 +341,31 @@ void * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys)
 void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap)
 {
 	gsys->fieldmap = fieldmap;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   フィールド通信ワークポインタ取得
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @retval  フィールド通信ワークポインタ(確保されていない場合はNULL)
+ */
+//--------------------------------------------------------------
+void * GAMESYSTEM_GetCommFieldWork(GAMESYS_WORK * gsys)
+{
+	return gsys->comm_field;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   フィールド通信ワークポインタセット
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @param   comm_field		フィールド通信ワークポインタ
+ */
+//--------------------------------------------------------------
+void GAMESYSTEM_SetCommFieldWork(GAMESYS_WORK * gsys, void * comm_field)
+{
+	GF_ASSERT(gsys->comm_field == NULL);
+	gsys->comm_field = comm_field;
 }
 
 
