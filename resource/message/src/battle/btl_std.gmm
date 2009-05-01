@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-04-23T14:49:18"/>
+	<create user="taya" host="W00146" date="2009-05-01T16:23:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -432,7 +432,7 @@
 		<language name="JPN" width="216">わけも　わからず
 じぶんを　こうげきした！</language>
 		<language name="JPN_KANJI" width="216">わけも　分からず
-自分を　こうげきした！</language>
+自分を　攻撃した！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_CriticalHit">
@@ -463,7 +463,7 @@
 
 	<row id="BTL_STRID_STD_MistStart">
 		<language name="JPN" width="216">きりが　ただよいはじめた！</language>
-		<language name="JPN_KANJI" width="216">きりが　ただよいはじめた！</language>
+		<language name="JPN_KANJI" width="216">霧が　ただよいはじめた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_ShineEnd">
@@ -484,12 +484,12 @@
 
 	<row id="BTL_STRID_STD_SnowEnd">
 		<language name="JPN" width="216">あられが　やんだ！</language>
-		<language name="JPN_KANJI" width="216">あられが　やんだ！</language>
+		<language name="JPN_KANJI" width="216">あられが　止んだ！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_MistEnd">
 		<language name="JPN" width="216">きりが　はれた！</language>
-		<language name="JPN_KANJI" width="216">きりが晴れた！</language>
+		<language name="JPN_KANJI" width="216">霧が晴れた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_SandAttack">
@@ -522,9 +522,12 @@
 [1:07:わざ名:1]の　威力を　弱めた！</language>
 	</row>
 
-	<row id="BTL_STRID_STD_KinomiEff_">
-		<language name="JPN" width="216"></language>
-		<language name="JPN_KANJI" width="216"></language>
+	<row id="BTL_STRID_STD_KodawariLock">
+		<comment>こだわり効果：特定のワザしか出せなくなる</comment>
+		<language name="JPN" width="216">[1:09:どうぐ名:0]の　こうかで
+[1:07:わざ名:1]しか　だせない！</language>
+		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]の　効果で
+[1:07:わざ名:1]しか　出せない！</language>
 	</row>
 
 	<flowchart-group-list>
