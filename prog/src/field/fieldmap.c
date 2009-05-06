@@ -397,7 +397,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 				fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
 		
 		//情報バーの初期化
-		fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID);
+		fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, FIELD_SUBSCREEN_NORMAL);
 		
 		//フィールドデバッグ初期化
 		fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );

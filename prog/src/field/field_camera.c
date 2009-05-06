@@ -14,6 +14,16 @@
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef enum {  
+  FIELD_CAMERA_CALC_XZ,
+  FIELD_CAMERA_CALC_ANGLE,
+
+  FIELD_CAMERA_CALC_TYPE_MAX,
+
+}FIELD_CAMERA_CALC_TYPE;
+
+//------------------------------------------------------------------
 /**
  * @brief	型宣言
  */
@@ -25,12 +35,19 @@ struct _FIELD_CAMERA {
 
 	FIELD_CAMERA_TYPE	type;			///<カメラのタイプ指定
 
+  FIELD_CAMERA_CALC_TYPE calc_type;
+
 	const VecFx32 *		watch_target;	///<追随する注視点へのポインタ
 
 	VecFx32				target;			///<注視点用ワーク
+
 	fx32				xzHeight;
 	u16					xzLength;
 	u16					xzDir;
+
+  u16         angle_h;
+  u16         angle_v;
+  fx32        angle_len;
 };
 
 
@@ -127,10 +144,16 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 	camera->watch_target = target;
 	camera->heapID = heapID;
 
+  camera->calc_type = FIELD_CAMERA_CALC_XZ;
+
 	VEC_Set( &camera->target, 0, 0, 0 );
 	camera->xzHeight = 0;
 	camera->xzLength = CAMERA_LENGTH;
 	camera->xzDir = 0;
+
+  camera->angle_v = 0;
+  camera->angle_h = 0;
+  camera->angle_len = 0x0078;
 
 	CameraFuncTable[camera->type].init_func(camera);
 
@@ -244,6 +267,44 @@ static void updateXZTargetCamera(FIELD_CAMERA * camera)
 }
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static void updateAngleCamera(FIELD_CAMERA * camera)
+{ 
+  enum {  PITCH_LIMIT = 0x200 };
+  VecFx32 cameraPos;
+	fx16 sinYaw = FX_SinIdx(camera->angle_v);
+	fx16 cosYaw = FX_CosIdx(camera->angle_v);
+	fx16 sinPitch = FX_SinIdx(camera->angle_h);
+	fx16 cosPitch = FX_CosIdx(camera->angle_h);
+
+	if(cosPitch < 0){ cosPitch = -cosPitch; }	// 裏周りしないようにマイナス値はプラス値に補正
+	if(cosPitch < PITCH_LIMIT){ cosPitch = PITCH_LIMIT; }	// 0値近辺は不正表示になるため補正
+
+	// カメラの座標計算
+	VEC_Set( &cameraPos, sinYaw * cosPitch, sinPitch * FX16_ONE, cosYaw * cosPitch);
+	VEC_Normalize(&cameraPos, &cameraPos);
+	VEC_MultAdd( camera->angle_len, &cameraPos, &camera->target, &cameraPos );
+  //cameraPos = cameraPos * length + camera->target
+
+	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &camera->target );
+	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &cameraPos );
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void updateCameraCalc(FIELD_CAMERA * camera)
+{ 
+  GF_ASSERT(camera->calc_type < FIELD_CAMERA_CALC_TYPE_MAX);
+  switch (camera->calc_type)
+  { 
+  case FIELD_CAMERA_CALC_XZ:
+    updateXZTargetCamera(camera);
+    break;
+  case FIELD_CAMERA_CALC_ANGLE:
+    updateAngleCamera(camera);
+    break;
+  }
+}
+//------------------------------------------------------------------
 /**
  * @brief	デバッグのためのキー制御
  */
@@ -286,7 +347,8 @@ static void debugControl( FIELD_CAMERA * camera, int key)
 static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	updateTargetBinding(camera);
-	updateXZTargetCamera(camera);
+  updateCameraCalc(camera);
+	//updateXZTargetCamera(camera);
 }
 
 //------------------------------------------------------------------
@@ -295,7 +357,8 @@ static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	debugControl(camera, key_cont);
 	updateTargetBinding(camera);
-	updateXZTargetCamera(camera);
+	//updateXZTargetCamera(camera);
+  updateCameraCalc(camera);
 }
 
 //------------------------------------------------------------------
@@ -303,7 +366,8 @@ static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
 static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	updateTargetBinding(camera);
-	updateXZTargetCamera(camera);
+	//updateXZTargetCamera(camera);
+  updateCameraCalc(camera);
 }
 
 
@@ -467,4 +531,24 @@ fx32	FIELD_CAMERA_GetHeightOnXZ( const FIELD_CAMERA *camera )
 	 return camera->xzHeight;
 }
 
+
+#ifdef  PM_DEBUG
+#include "test/camera_adjust_view.h"
+//------------------------------------------------------------------
+//  デバッグ用：下画面操作とのバインド
+//------------------------------------------------------------------
+void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param)
+{ 
+  GFL_CAMADJUST * gflCamAdjust = param;
+  GFL_CAMADJUST_SetCameraParam(gflCamAdjust,
+      &camera->angle_v, &camera->angle_h, &camera->angle_len);
+
+  camera->calc_type = FIELD_CAMERA_CALC_ANGLE;
+}
+
+void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
+{ 
+  camera->calc_type = FIELD_CAMERA_CALC_XZ;
+}
+#endif  //PM_DEBUG
 

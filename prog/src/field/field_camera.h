@@ -95,4 +95,11 @@ extern void FIELD_CAMERA_FreeTarget(FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target);
 
 
+#ifdef  PM_DEBUG
+//------------------------------------------------------------------
+//  デバッグ用：下画面操作とのバインド
+//------------------------------------------------------------------
+extern void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param);
+extern void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera);
+#endif
 

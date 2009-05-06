@@ -119,6 +119,7 @@ static BOOL DMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk );
 
 static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
+static DMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk );
 
 static void DEBUG_SetMenuWorkZoneIDNameAll(
 		FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
@@ -174,6 +175,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR19, DMenuCallProc_OpenClubMenu },
 	{ DEBUG_FIELD_STR15, DMenuCallProc_ControlLight },
 	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
+  { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -619,8 +621,6 @@ static GMEVENT_RESULT DMenuZoneSelectEvent(
 static GMEVENT_RESULT DMenuSeasonSelectEvent(
 		GMEVENT *event, int *seq, void *wk );
 
-static GMEVENT_RESULT DMenuSeasonSelectEvent2(
-		GMEVENT *event, int *seq, void *wk );
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　四季マップ間移動
@@ -639,12 +639,8 @@ static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	DEBUG_ZONESEL_EVENT_WORK *work;
 	
-#if 0
-	if( zone_id == ZONE_ID_MAPSPRING || zone_id == ZONE_ID_MAPSUMMER ||
-		zone_id == ZONE_ID_MAPAUTUMN || zone_id == ZONE_ID_MAPWINTER ){
-#endif
 		GMEVENT_Change( event,
-			DMenuSeasonSelectEvent2, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+			DMenuSeasonSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 		work = GMEVENT_GetEventWork( event );
 		MI_CpuClear8( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 	
@@ -653,12 +649,18 @@ static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 		work->heapID = heapID;
 		work->fieldWork = fieldWork;
 		return( TRUE );
-#if 0
-	}
-	
-	return( FALSE );
-#endif
 }
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#include "gamesystem/pm_season.h"
+static const FLDMENUFUNC_LIST DATA_SeasonMenuList[PMSEASON_TOTAL] =
+{
+	{ DEBUG_FIELD_STR_SPRING, (void*)PMSEASON_SPRING },
+	{ DEBUG_FIELD_STR_SUMMER, (void*)PMSEASON_SUMMER },
+	{ DEBUG_FIELD_STR_AUTUMN, (void*)PMSEASON_AUTUMN },
+	{ DEBUG_FIELD_STR_WINTER, (void*)PMSEASON_WINTER },
+};
 
 //--------------------------------------------------------------
 /**
@@ -678,25 +680,18 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent(
 	case 0:
 		{
 			FLDMSGBG *msgBG;
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;
-			FLDMENUFUNC_LISTDATA *pMenuListData;
-			u32 i,tbl[4] = { ZONE_ID_MAPSPRING,ZONE_ID_MAPSUMMER,
-				ZONE_ID_MAPAUTUMN,ZONE_ID_MAPWINTER };
+			FLDMENUFUNC_LISTDATA *listdata;
+			u32 max = NELEMS(DATA_SeasonMenuList);
+			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;  //流用
 			
 			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
 			work->msgData = FLDMSGBG_CreateMSGDATA(
-					msgBG, NARC_message_d_field_dat );
+				msgBG, NARC_message_d_field_dat );
+			listdata = FLDMENUFUNC_CreateMakeListData(
+				DATA_SeasonMenuList, max, work->msgData, work->heapID );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 16, 7 );
 			
-			pMenuListData = FLDMENUFUNC_CreateListData( 4, work->heapID );
-			
-			for( i = 0; i < 4; i++ ){
-				DEBUG_SetMenuWorkZoneIDName(
-					pMenuListData, work->heapID, tbl[i] );
-			}
-			
-			FLDMENUFUNC_InputHeaderListSize( &menuH, 4, 1, 1, 11, 7 );
-			work->menuFunc = FLDMENUFUNC_AddMenu(
-					msgBG, &menuH, pMenuListData );
+			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
 			GFL_MSG_Delete( work->msgData );
 		}
 		(*seq)++;
@@ -720,6 +715,7 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent(
 				PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 				const VecFx32 *pos = PLAYERWORK_getPosition( player );
 				u16 dir = PLAYERWORK_getDirection( player );
+				ZONEID zone_id = PLAYERWORK_getZoneID(player);
 				
 				if( (dir>0x2000) && (dir<0x6000) ){
 					dir = EXIT_TYPE_LEFT;
@@ -731,8 +727,9 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent(
 					dir = EXIT_TYPE_UP;
 				}
 
+				GAMEDATA_SetSeasonID(gdata, ret);
 				event = DEBUG_EVENT_ChangeMapPos(
-					work->gmSys, work->fieldWork, ret, pos, dir );
+					work->gmSys, work->fieldWork, zone_id, pos, dir );
 				GMEVENT_ChangeEvent( work->gmEvent, event );
 				OS_Printf( "x = %xH, z = %xH\n", pos->x, pos->z );
 			}
@@ -741,6 +738,161 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent(
 	}
 	
 	return( GMEVENT_RES_CONTINUE );
+}
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ */
+//--------------------------------------------------------------
+typedef struct {  
+	HEAPID heapID;
+	GAMESYS_WORK *gmSys;
+	GMEVENT *gmEvent;
+	FIELD_MAIN_WORK *fieldWork;
+	FLDMENUFUNC *menuFunc;
+  FIELD_SUBSCREEN_WORK * subscreen;
+}DEBUG_MENU_EVENT_SUBSCRN_SELECT_WORK, DMESSWORK;
+
+//--------------------------------------------------------------
+//	proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuSubscreenSelectEvent(
+		GMEVENT *event, int *seq, void *wk );
+static void setupTouchCameraSubscreen(DMESSWORK * dmess);
+static void setupSoundViewerSubscreen(DMESSWORK * dmess);
+static void setupNormalSubscreen(DMESSWORK * dmess);
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　四季マップ間移動
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static DMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk )
+{
+	HEAPID heapID = wk->heapID;
+	GMEVENT *event = wk->gmEvent;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	DMESSWORK *work;
+	
+		GMEVENT_Change( event,
+			DMenuSubscreenSelectEvent, sizeof(DMESSWORK) );
+		work = GMEVENT_GetEventWork( event );
+		MI_CpuClear8( work, sizeof(DMESSWORK) );
+	
+		work->gmSys = gsys;
+		work->gmEvent = event;
+		work->heapID = heapID;
+		work->fieldWork = fieldWork;
+    work->subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+		return( TRUE );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[PMSEASON_TOTAL] =
+{
+	{ DEBUG_FIELD_STR_SUBSCRN01, (void*)setupTouchCameraSubscreen },
+	{ DEBUG_FIELD_STR_SUBSCRN02, (void*)setupSoundViewerSubscreen },
+	{ DEBUG_FIELD_STR_SUBSCRN03, (void*)setupNormalSubscreen },
+};
+
+//--------------------------------------------------------------
+/**
+ * イベント：四季ジャンプ
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuSubscreenSelectEvent(
+		GMEVENT *event, int *seq, void *wk )
+{
+	DMESSWORK *work = wk;
+
+	switch( *seq )
+  {
+	case 0:
+		{
+			FLDMSGBG *msgBG;
+	    GFL_MSGDATA *msgData;
+			FLDMENUFUNC_LISTDATA *listdata;
+			u32 max = NELEMS(DATA_SubcreenMenuList);
+			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;  //流用
+			
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
+			msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
+			listdata = FLDMENUFUNC_CreateMakeListData(
+				DATA_SubcreenMenuList, max, msgData, work->heapID );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 16, 7 );
+			
+			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
+			GFL_MSG_Delete( msgData );
+		}
+		(*seq)++;
+		break;
+	case 1:
+		{
+			u32 ret;
+			ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+
+			if( ret == FLDMENUFUNC_NULL ){	//操作無し
+				break;
+			}
+			
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+
+			if( ret == FLDMENUFUNC_CANCEL ){	//キャンセル
+				return( GMEVENT_RES_FINISH );
+			}else{
+        typedef void (* CHANGE_FUNC)(DMESSWORK*);
+        CHANGE_FUNC func = (CHANGE_FUNC)ret;
+        func(work);
+        //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(work->fieldWork), ret);
+				return( GMEVENT_RES_FINISH );
+			}
+		}
+		break;
+	}
+	
+	return GMEVENT_RES_CONTINUE ;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief サブスクリーンのカメラ操作に同期させる
+ *
+ * @todo  カメラをバインドしてから、どのように切り離すか？を確定させる
+ */
+//--------------------------------------------------------------
+static void setupTouchCameraSubscreen(DMESSWORK * dmess)
+{ 
+  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
+  { 
+    void * inner_work;
+    FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(dmess->fieldWork);
+    inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(dmess->subscreen);
+    FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work);
+  }
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void setupSoundViewerSubscreen(DMESSWORK * dmess)
+{ 
+  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER);
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void setupNormalSubscreen(DMESSWORK * dmess)
+{ 
+  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_NORMAL);
 }
 
 //======================================================================
@@ -1406,7 +1558,7 @@ static GMEVENT_RESULT DMenuFldMMdlListEvent(
 					work->fldmmdlsys, work->obj_code );
 			
 			{
-				VecFx32 pos;
+				//VecFx32 pos;
 				FLDMMDL *jiki;
 				FLDMMDL_HEADER head = {
 					0,	///<識別ID
@@ -1658,7 +1810,8 @@ static GMEVENT_RESULT DMenuControlLight(
 		}
 
 		// インフォーバーの表示
-    FIELDMAP_SetFieldSubscreenWork(work->fieldWork,FIELD_SUBSCREEN_Init( work->heapID ));
+    FIELDMAP_SetFieldSubscreenWork(work->fieldWork,
+        FIELD_SUBSCREEN_Init( work->heapID, FIELD_SUBSCREEN_NORMAL ));
 
 		return( GMEVENT_RES_FINISH );
 	}
@@ -1809,95 +1962,6 @@ static GMEVENT_RESULT DMenuWeatherListEvent(
 			}
 			
 			return( GMEVENT_RES_FINISH );
-		}
-		break;
-	}
-	
-	return( GMEVENT_RES_CONTINUE );
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-#include "gamesystem/pm_season.h"
-static const FLDMENUFUNC_LIST DATA_SeasonMenuList[PMSEASON_TOTAL] =
-{
-	{ DEBUG_FIELD_STR_SPRING, (void*)PMSEASON_SPRING },
-	{ DEBUG_FIELD_STR_SUMMER, (void*)PMSEASON_SUMMER },
-	{ DEBUG_FIELD_STR_AUTUMN, (void*)PMSEASON_AUTUMN },
-	{ DEBUG_FIELD_STR_WINTER, (void*)PMSEASON_WINTER },
-};
-
-//--------------------------------------------------------------
-/**
- * イベント：四季ジャンプ
- * @param	event	GMEVENT
- * @param	seq		シーケンス
- * @param	wk		event work
- * @retval	GMEVENT_RESULT
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT DMenuSeasonSelectEvent2(
-		GMEVENT *event, int *seq, void *wk )
-{
-	DEBUG_ZONESEL_EVENT_WORK *work = wk;
-
-	switch( (*seq) ){
-	case 0:
-		{
-			FLDMSGBG *msgBG;
-			FLDMENUFUNC_LISTDATA *listdata;
-			u32 max = DEBUG_WEATHERLIST_LIST_MAX;
-			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_WeatherList;
-			
-			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-			work->msgData = FLDMSGBG_CreateMSGDATA(
-				msgBG, NARC_message_d_field_dat );
-			listdata = FLDMENUFUNC_CreateMakeListData(
-				DATA_SeasonMenuList, max, work->msgData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 16, 7 );
-			
-			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
-			GFL_MSG_Delete( work->msgData );
-		}
-		(*seq)++;
-		break;
-	case 1:
-		{
-			u32 ret;
-			ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-
-			if( ret == FLDMENUFUNC_NULL ){	//操作無し
-				break;
-			}
-			
-			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-
-			if( ret == FLDMENUFUNC_CANCEL ){	//キャンセル
-				return( GMEVENT_RES_FINISH );
-			}else{
-				GMEVENT *event;
-				GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gmSys );
-				PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
-				const VecFx32 *pos = PLAYERWORK_getPosition( player );
-				u16 dir = PLAYERWORK_getDirection( player );
-				ZONEID zone_id = PLAYERWORK_getZoneID(player);
-				
-				if( (dir>0x2000) && (dir<0x6000) ){
-					dir = EXIT_TYPE_LEFT;
-				}else if( (dir >= 0x6000) && (dir <= 0xa000) ){
-					dir = EXIT_TYPE_DOWN;
-				}else if( (dir > 0xa000) && (dir < 0xe000) ){
-					dir = EXIT_TYPE_RIGHT;
-				}else{
-					dir = EXIT_TYPE_UP;
-				}
-
-				GAMEDATA_SetSeasonID(gdata, ret);
-				event = DEBUG_EVENT_ChangeMapPos(
-					work->gmSys, work->fieldWork, zone_id, pos, dir );
-				GMEVENT_ChangeEvent( work->gmEvent, event );
-				OS_Printf( "x = %xH, z = %xH\n", pos->x, pos->z );
-			}
 		}
 		break;
 	}
