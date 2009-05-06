@@ -186,7 +186,6 @@ static u32 GAMESYS_WORK_GetSize(void)
 //------------------------------------------------------------------
 static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param)
 {
-	int i;
 	gsys->heapID = heapID;
 	gsys->parent_work = init_param;
 	gsys->procsys = GFL_PROC_LOCAL_boot(gsys->heapID);
@@ -197,6 +196,7 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 
 	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
 	gsys->fieldmap = NULL;
+	gsys->comm_field = NULL;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
