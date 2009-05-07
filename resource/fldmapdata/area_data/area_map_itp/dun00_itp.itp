@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="tomoya_takahashi" host="W00148" date="2009-05-01T17:21:58" source="itp_check.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="100"
+	tool_start_frame="1"
+	tool_end_frame="100"
+	compress_material="on" material_size="3 3"
+/>
+
+<tex_pattern_list_data image_size="4" palette_size="4">
+	<image_name index="0" name="storm64.1"/>
+	<image_name index="1" name="storm64.2"/>
+	<image_name index="2" name="storm64.3"/>
+	<image_name index="3" name="storm64.4"/>
+	<palette_name index="0" name="storm64.1_pl"/>
+	<palette_name index="1" name="storm64.2_pl"/>
+	<palette_name index="2" name="storm64.3_pl"/>
+	<palette_name index="3" name="storm64.4_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="7">
+		0 17 52 0 71 0 37
+	</frame_idx>
+	<image_idx size="7">
+		0 1 2 0 2 0 3
+	</image_idx>
+	<palette_idx size="7">
+		0 1 2 0 2 0 3
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="3">
+	<tex_pattern_anm index="0" material_name="lambert2" data_size="3" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="lambert3" data_size="2" data_head="3"/>
+	<tex_pattern_anm index="2" material_name="lambert4" data_size="2" data_head="5"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
