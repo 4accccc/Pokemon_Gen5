@@ -17,6 +17,7 @@
 #include "field_comm_func.h"
 #include "field_comm_data.h"
 #include "field_comm_sys.h"
+#include "field/field_comm/palace_sys.h"
 #include "test/performance.h"
 #include "system/main.h"
 
@@ -35,9 +36,11 @@
 //======================================================================
 struct _FIELD_COMM_MAIN
 {
-  u8  menuSeq_;
   HEAPID  heapID_;
+  u8  comm_type;
+  u8  menuSeq_;
   u8  talkTrgChara_;
+  u8  padding;
   FIELD_COMM_MENU *commMenu_;
 #if 0 ////
   FIELD_COMM_FUNC *commFunc_;
@@ -45,6 +48,7 @@ struct _FIELD_COMM_MAIN
  COMM_FIELD_SYS_PTR commField_;
 #endif
   u8  commActorIndex_[FIELD_COMM_MEMBER_MAX];
+  PALACE_SYS_PTR palace;    ///<パレスシステムワークへのポインタ
 };
 
 //上下左右に対応したグリッドでのオフセット
@@ -112,6 +116,10 @@ void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *co
       //フィールドの通信エラーの仕様によってこれをどうするかは後々決める　※check
       FIELD_COMM_MAIN_CommFieldSysFree(commSys);
       GAMESYSTEM_SetCommFieldWork(FIELDMAP_GetGameSysWork(fieldWork), NULL);
+      if(commSys->palace != NULL){
+        PALACE_SYS_Free(commSys->palace);
+        commSys->palace = NULL;
+      }
     }
   }
 
@@ -193,6 +201,32 @@ void FIELD_COMM_MAIN_CommFieldMapInit(COMM_FIELD_SYS_PTR comm_field)
   FIELD_COMM_DATA_DataReset(commData);
 }
 
+//==================================================================
+/**
+ * フィールド通信タイプをセット
+ *
+ * @param   commSys		
+ * @param   comm_type		通信タイプ
+ */
+//==================================================================
+void FIELD_COMM_MAIN_SetCommType(FIELD_COMM_MAIN *commSys, FIELD_COMM_TYPE comm_type)
+{
+  commSys->comm_type = comm_type;
+}
+
+//==================================================================
+/**
+ * フィールド通信タイプ取得
+ *
+ * @param   commSys		
+ *
+ * @retval  FIELD_COMM_TYPE		通信タイプ
+ */
+//==================================================================
+FIELD_COMM_TYPE FIELD_COMM_MAIN_GetCommType(FIELD_COMM_MAIN *commSys)
+{
+  return commSys->comm_type;
+}
 
 //--------------------------------------------------------------
 // フィールド通信システム更新
@@ -217,6 +251,7 @@ void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
   {
     u8 i;
     FIELD_COMM_FUNC_UpdateSystem( commFunc );
+    PALACE_SYS_Update(commSys->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), pcActor);
     if( FIELD_COMM_FUNC_GetMemberNum( commFunc ) > 1 )
     //if( FIELD_COMM_FUNC_GetCommMode( commFunc ) == FIELD_COMM_MODE_CONNECT )
     {
@@ -250,7 +285,7 @@ static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork ,
   dir = FIELD_PLAYER_GetDir( pcActor );
   //dir = FieldMainGrid_GetPlayerDir( fieldWork );
   FIELD_COMM_DATA_SetSelfData_Pos( commData, &zoneID , &pos , &dir );
-  FIELD_COMM_FUNC_Send_SelfData( commFunc, commData );
+  FIELD_COMM_FUNC_Send_SelfData( commFunc, commData, PALACE_SYS_GetArea(commSys->palace) );
 }
 
 //--------------------------------------------------------------
@@ -512,6 +547,9 @@ const BOOL  FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys, GAMESYS
       comm_field = FIELD_COMM_MAIN_CommFieldSysAlloc(commSys, GFL_HEAP_LOWID(GFL_HEAPID_APP));
       GAMESYSTEM_SetCommFieldWork(gsys, comm_field);
       FIELD_COMM_FUNC_InitCommSystem( commSys->commField_ );
+      if(commSys->comm_type == FIELD_COMM_TYPE_PALACE){
+        commSys->palace = PALACE_SYS_Alloc(GFL_HEAP_LOWID(GFL_HEAPID_APP));
+      }
     }
     commSys->menuSeq_++;
     break;
@@ -602,6 +640,9 @@ const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COM
       comm_field = FIELD_COMM_MAIN_CommFieldSysAlloc(commSys, GFL_HEAP_LOWID(GFL_HEAPID_APP));
       GAMESYSTEM_SetCommFieldWork(gsys, comm_field);
       FIELD_COMM_FUNC_InitCommSystem( commSys->commField_ );
+      if(commSys->comm_type == FIELD_COMM_TYPE_PALACE){
+        commSys->palace = PALACE_SYS_Alloc(GFL_HEAP_LOWID(GFL_HEAPID_APP));
+      }
     }
     commSys->menuSeq_++;
     break;
@@ -653,6 +694,10 @@ BOOL FIELD_COMM_MAIN_DisconnectWait( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN
   if(FIELD_COMM_FUNC_IsFinishTermCommSystem(commFunc) == TRUE){
     FIELD_COMM_MAIN_CommFieldSysFree(commSys);
     GAMESYSTEM_SetCommFieldWork(FIELDMAP_GetGameSysWork(fieldWork), NULL);
+    if(commSys->palace != NULL){
+      PALACE_SYS_Free(commSys->palace);
+      commSys->palace = NULL;
+    }
     return TRUE;
   }
   return FALSE;

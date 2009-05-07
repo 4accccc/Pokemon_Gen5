@@ -60,6 +60,8 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
 static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartComm( FIELD_COMM_DEBUG_WORK *work );
 static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartInvasion(FIELD_COMM_DEBUG_WORK *work  );
 static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_EndComm(FIELD_COMM_DEBUG_WORK *work  );
+static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartComm_Palace( FIELD_COMM_DEBUG_WORK *work );
+static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartInvasion_Palace( FIELD_COMM_DEBUG_WORK *work );
 static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_ChangePartTest(FIELD_COMM_DEBUG_WORK *work );
 static  const BOOL  FIELD_COMM_DEBUG_SubProc_DisconnectWait(FIELD_COMM_DEBUG_WORK *work );
 static  const BOOL  FIELD_COMM_DEBUG_SubProc_ChangePartTest(FIELD_COMM_DEBUG_WORK *work );
@@ -115,12 +117,14 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
   case 0:
     //メニューの生成
     {
-      static const u8 itemNum = 3;
+      static const u8 itemNum = 5;
       static const FLDMENUFUNC_LIST itemMenuList[itemNum] =
       {
         {DEBUG_FIELD_C_CHOICE00,FIELD_COMM_DEBUG_MenuCallback_StartComm},
         {DEBUG_FIELD_C_CHOICE01,FIELD_COMM_DEBUG_MenuCallback_StartInvasion},
         {DEBUG_FIELD_C_CHOICE07,FIELD_COMM_DEBUG_MenuCallback_EndComm},
+        {DEBUG_FIELD_C_CHOICE08,FIELD_COMM_DEBUG_MenuCallback_StartComm_Palace},
+        {DEBUG_FIELD_C_CHOICE09,FIELD_COMM_DEBUG_MenuCallback_StartInvasion_Palace},
       };
       FLDMENUFUNC_HEADER head = FieldCommDebugMenuHeader;
       FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG( commDeb->fieldWork_ );
@@ -317,6 +321,31 @@ static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_EndComm( FIELD_COMM_DEBUG_WORK
 
   return TRUE;
 }
+//--------------------------------------------------------------
+//  通信開始
+//--------------------------------------------------------------
+static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartComm_Palace( FIELD_COMM_DEBUG_WORK *work )
+{
+  BOOL ret;
+  FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+  
+  ret = FIELD_COMM_DEBUG_MenuCallback_StartComm(work);
+  FIELD_COMM_MAIN_SetCommType(commSys, FIELD_COMM_TYPE_PALACE);
+  return ret;
+}
+//--------------------------------------------------------------
+//  侵入開始
+//--------------------------------------------------------------
+static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartInvasion_Palace( FIELD_COMM_DEBUG_WORK *work )
+{
+  BOOL ret;
+  FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+  
+  ret = FIELD_COMM_DEBUG_MenuCallback_StartInvasion(work);
+  FIELD_COMM_MAIN_SetCommType(commSys, FIELD_COMM_TYPE_PALACE);
+  return ret;
+}
+
 //--------------------------------------------------------------
 //  パート切り替えテスト
 //--------------------------------------------------------------

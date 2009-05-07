@@ -60,6 +60,8 @@ typedef struct
   u8  dir_;   //グリッドなので上左下右が0～3で入る(方向自体は0x4000単位
   u16 zoneID_;  //ここは通信用のIDとして変換して抑えられる
   u8  talkState_;
+  u8  palace_area;  ///<※check　field_commのシステムに乗っかっている現状、ここにパレスのデータも入れる。別に作成した場合、ここから消す
+  u8  padding[2];
 }FIELD_COMM_PLAYER_PACKET;
 
 //再送信用パケット情報
@@ -605,7 +607,7 @@ const BOOL FIELD_COMM_FUNC_IsGetUserData( FIELD_COMM_FUNC *commFunc )
 //--------------------------------------------------------------
 // 自分のデータ送信
 //--------------------------------------------------------------
-const BOOL  FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc, FIELD_COMM_DATA *commData )
+const BOOL  FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc, FIELD_COMM_DATA *commData, int palace_area )
 {
   PLAYER_WORK *plWork = NULL;
   const VecFx32 *pos;
@@ -626,6 +628,7 @@ const BOOL  FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc, FIELD_COMM
   commFunc->plPkt_.posZ_ = F32_CONST( pos->z );
   commFunc->plPkt_.dir_ = dir;
   commFunc->plPkt_.talkState_ = talkState;
+  commFunc->plPkt_.palace_area = palace_area;
 
   ARI_TPrintf("SEND[ ][%d][%d][%d][%x]\n",commFunc->plPkt_.posX_,commFunc->plPkt_.posY_,commFunc->plPkt_.posZ_,dir);
   {

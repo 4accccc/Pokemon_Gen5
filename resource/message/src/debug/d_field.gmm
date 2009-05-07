@@ -198,6 +198,16 @@
 		<language name="JPN_KANJI" width="80">通信終了</language>
 	</row>
 
+	<row id="DEBUG_FIELD_C_CHOICE08">
+		<language name="JPN" width="80">パレス募集</language>
+		<language name="JPN_KANJI" width="80">パレス募集</language>
+	</row>
+
+	<row id="DEBUG_FIELD_C_CHOICE09">
+		<language name="JPN" width="80">パレス侵入</language>
+		<language name="JPN_KANJI" width="80">パレス侵入</language>
+	</row>
+
 	<row id="DEBUG_FIELD_C_STR00">
 		<language name="JPN" width="80">通信を開始します。
 よろしいですか？</language>

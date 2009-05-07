@@ -22,6 +22,11 @@
 //======================================================================
 //  enum
 //======================================================================
+///フィールド通信タイプ
+typedef enum{
+  FIELD_COMM_TYPE_NORMAL,   ///<ノーマル
+  FIELD_COMM_TYPE_PALACE,   ///<パレス
+}FIELD_COMM_TYPE;
 
 //======================================================================
 //  typedef struct
@@ -33,6 +38,9 @@
 extern FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID );
 extern void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *commSys );
 extern void FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys );
+
+extern void FIELD_COMM_MAIN_SetCommType(FIELD_COMM_MAIN *commSys, FIELD_COMM_TYPE comm_type);
+extern FIELD_COMM_TYPE FIELD_COMM_MAIN_GetCommType(FIELD_COMM_MAIN *commSys);
 
 extern const BOOL FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys );
 extern const BOOL FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys );
