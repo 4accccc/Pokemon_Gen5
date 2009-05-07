@@ -1,3 +1,7 @@
 "cube.nsbmd"
 "block_tex16.ntfp"
 "block_tex16.ntft"
+"debug_areano.NCER"
+"debug_areano.NANR"
+"debug_areano.NCGR"
+"debug_areano.NCLR"

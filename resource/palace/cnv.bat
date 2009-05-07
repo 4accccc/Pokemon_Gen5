@@ -10,6 +10,7 @@ del *.ntfp
 del *.ntft
 
 echo g2dコンバート
+g2dcvtr debug_areano.nce -br -ncn
 
 echo g3dコンバート
 g3dcvtr "cube.imd"

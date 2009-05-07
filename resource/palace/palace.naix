@@ -13,7 +13,11 @@
 enum {
 	NARC_palace_cube_nsbmd = 0,
 	NARC_palace_block_tex16_ntfp = 1,
-	NARC_palace_block_tex16_ntft = 2
+	NARC_palace_block_tex16_ntft = 2,
+	NARC_palace_debug_areano_NCER = 3,
+	NARC_palace_debug_areano_NANR = 4,
+	NARC_palace_debug_areano_NCGR = 5,
+	NARC_palace_debug_areano_NCLR = 6
 };
 
 /* NARC_PALACE_NAIX_ */
