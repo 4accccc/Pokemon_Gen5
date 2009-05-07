@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: elboard_test.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-05-01T19:36:05
+ *****************************************************************************/
+
+#ifndef NARC_ELBOARD_TEST_NAIX_
+#define NARC_ELBOARD_TEST_NAIX_
+
+enum {
+	NARC_elboard_test_elboard_test_nsbmd = 0,
+	NARC_elboard_test_elboard_test_nsbtx = 1,
+	NARC_elboard_test_elboard_test_nsbca = 2,
+	NARC_elboard_test_elboard_test_nsbta = 3
+};
+
+/* NARC_ELBOARD_TEST_NAIX_ */
+#endif
