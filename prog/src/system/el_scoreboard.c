@@ -32,6 +32,33 @@
  *
  */
 //============================================================================================
+typedef struct {
+	u16						texSizIdxS;
+	u16						texSizIdxT;
+
+	NNSGfdTexKey	texVramKey;		//テクスチャＶＲＡＭキー
+	u32						texOffset;
+
+	GFL_FONT*			fontHandle;
+}EL_SCOREBOARD_SETDATA;
+
+//------------------------------------------------------------------
+typedef struct {
+	u16					siz;
+	GXTexSizeS	s;
+	GXTexSizeT	t;
+}GX_TEXSIZ_TBL;
+
+static const GX_TEXSIZ_TBL GX_texSizTbl[] = {
+	{ 16,		GX_TEXSIZE_S16,		GX_TEXSIZE_T16 },
+	{ 32,		GX_TEXSIZE_S32,		GX_TEXSIZE_T32 },
+	{ 64,		GX_TEXSIZE_S64 ,	GX_TEXSIZE_T64 },
+	{ 128,	GX_TEXSIZE_S128,	GX_TEXSIZE_T128 },
+	{ 256,	GX_TEXSIZE_S256,	GX_TEXSIZE_T256 },
+	{ 512,	GX_TEXSIZE_S512,	GX_TEXSIZE_T512 },
+};
+
+static void makeElboard(EL_SCOREBOARD_SETDATA* setData, const STRBUF* str, HEAPID heapID);
 //------------------------------------------------------------------
 /**
  * @brief		パレットデータ
@@ -54,6 +81,26 @@ static const u16 plttData2[PLTT_SIZ/2] = {
 #define BCOL2 (2)
 #define LCOL	(3)
 
+
+
+
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	電光掲示板オブジェクト
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
 //------------------------------------------------------------------
 /**
  *
@@ -69,97 +116,9 @@ struct _EL_SCOREBOARD {
 	NNSGfdTexKey	texVramKey;		//テクスチャＶＲＡＭキー
 	NNSGfdPlttKey	plttVramKey;	//パレットＶＲＡＭキー
 
-	GFL_BMP_DATA*	bmp;	
-
 	int						timer;
 };
 
-//------------------------------------------------------------------
-typedef struct {
-	u16					siz;
-	GXTexSizeS	s;
-	GXTexSizeT	t;
-}GX_TEXSIZ_TBL;
-
-static const GX_TEXSIZ_TBL GX_texSizTbl[] = {
-	{ 16,		GX_TEXSIZE_S16,		GX_TEXSIZE_T16 },
-	{ 32,		GX_TEXSIZE_S32,		GX_TEXSIZE_T32 },
-	{ 64,		GX_TEXSIZE_S64 ,	GX_TEXSIZE_T64 },
-	{ 128,	GX_TEXSIZE_S128,	GX_TEXSIZE_T128 },
-	{ 256,	GX_TEXSIZE_S256,	GX_TEXSIZE_T256 },
-	{ 512,	GX_TEXSIZE_S512,	GX_TEXSIZE_T512 },
-};
-
-//------------------------------------------------------------------
-/**
- * @brief	ウインドウ背景クリア
- */
-//------------------------------------------------------------------
-static void clearBitmap(GFL_BMP_DATA* bmp)
-{
-	u8*	dataAdrs = GFL_BMP_GetCharacterAdrs(bmp);
-	u32	writeSize = GFL_BMP_GetBmpDataSize(bmp);
-	int	i;
-
-	for( i= 0; i<writeSize; i++ ){ dataAdrs[i] = ((BCOL2 << 4) | BCOL1); }
-
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	文字列描画
- */
-//------------------------------------------------------------------
-static void printStr
-			(const STRBUF* str, GFL_BMP_DATA* bmp, PRINT_QUE* printQue, GFL_FONT* fontHandle)
-{
-	PRINTSYS_LSB	lsb = PRINTSYS_LSB_Make(LCOL,0,0);
-	clearBitmap(bmp);
-
-	PRINTSYS_PrintQueColor(printQue, bmp, 0, 2, str, fontHandle, lsb);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	ビットマップ変換
- */
-//------------------------------------------------------------------
-static void convBitmap(GFL_BMP_DATA* src, GFL_BMP_DATA* dst)
-{
-	u16	size_x = GFL_BMP_GetSizeX(src)/8;						//画像データのXdotサイズ
-	u16	size_y = GFL_BMP_GetSizeY(src)/8;						//画像データのYdotサイズ
-	u16	col = (u16)GFL_BMP_GetColorFormat(src);			//カラーモード＆データサイズ
-	u16	size_cx = col/8;														//キャラクタデータXサイズ
-	u8*	srcAdrs = GFL_BMP_GetCharacterAdrs(src);
-	u8*	dstAdrs = GFL_BMP_GetCharacterAdrs(dst);
-	int	i, cx, cy, x, y;
-
-	for( i=0; i<size_x * size_y * col; i++ ){
-		y = i/(size_x * size_cx);
-		x = i%(size_x * size_cx);
-		dstAdrs[i] = srcAdrs[ ((y/8)*size_x + (x/size_cx))*col + ((y%8)*size_cx + (x%size_cx)) ];
-	}
-}
-
-
-
-
-
-//============================================================================================
-/**
- *
- *
- *
- *
- *
- * @brief	
- *
- *
- *
- *
- *
- */
-//============================================================================================
 //------------------------------------------------------------------
 /**
  * @brief	オブジェクト追加
@@ -168,75 +127,58 @@ static void convBitmap(GFL_BMP_DATA* src, GFL_BMP_DATA* dst)
 EL_SCOREBOARD* ELBOARD_Add( const STRBUF* str, const ELB_MODE mode, HEAPID heapID )
 {
 	EL_SCOREBOARD* elb = GFL_HEAP_AllocClearMemory(heapID, sizeof(EL_SCOREBOARD));
+	GFL_FONT*			fontHandle;
 
 	elb->mode = mode;
+
+	//フォントハンドル作成
+	fontHandle = GFL_FONT_Create
+						(ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID);
+
+	//テクスチャ領域ＩＮＤＥＸ取得
 	{
-		//テクスチャ作成
-		int						sizMode;
-		u16						texSizS, texSizT;
-		PRINT_QUE*		printQue;
-		GFL_FONT*			fontHandle;
-		GFL_BMP_DATA*	bmpTmp;	
+		u32 strLen;
+		int i;
 
-		//フォントハンドル作成
-		fontHandle = GFL_FONT_Create
-							(ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID);
-		//プリントキューハンドル作成
-		printQue = PRINTSYS_QUE_Create(heapID);
-		//テクスチャ領域ＩＮＤＥＸ取得
-		{
-			u32 strLen;
-			int i;
+		elb->texSizIdxS = NELEMS(GX_texSizTbl)-1;	//初期設定
+		elb->texSizIdxT = NELEMS(GX_texSizTbl)-1;	//初期設定
 
-			elb->texSizIdxS = NELEMS(GX_texSizTbl)-1;	//初期設定
-			elb->texSizIdxT = NELEMS(GX_texSizTbl)-1;	//初期設定
-
-			strLen = PRINTSYS_GetStrWidth(str, fontHandle, 0);
-			for( i=0; i<NELEMS(GX_texSizTbl); i++ ){
-				if(strLen <= GX_texSizTbl[i].siz){
-						elb->texSizIdxS = i;
-						break;
-				}
-			}
-			strLen = PRINTSYS_GetStrHeight(str, fontHandle);
-			for( i=0; i<NELEMS(GX_texSizTbl); i++ ){
-				if(strLen <= GX_texSizTbl[i].siz){
-						elb->texSizIdxT = i;
-						break;
-				}
+		strLen = PRINTSYS_GetStrWidth(str, fontHandle, 0);
+		for( i=0; i<NELEMS(GX_texSizTbl); i++ ){
+			if(strLen <= GX_texSizTbl[i].siz){
+					elb->texSizIdxS = i;
+					break;
 			}
 		}
-		texSizS = GX_texSizTbl[elb->texSizIdxS].siz;
-		texSizT = GX_texSizTbl[elb->texSizIdxT].siz;
-
-		//テクスチャ用ビットマップ作成
-		elb->bmp = GFL_BMP_Create(texSizS/8, texSizT/8, GFL_BMP_16_COLOR, heapID);
-		bmpTmp = GFL_BMP_Create(texSizS/8, texSizT/8, GFL_BMP_16_COLOR, heapID);
-
-		printStr(str, bmpTmp, printQue, fontHandle);
-		convBitmap(bmpTmp, elb->bmp);
-
-		GFL_BMP_Delete(bmpTmp);
-		PRINTSYS_QUE_Clear(printQue);
-		PRINTSYS_QUE_Delete(printQue);
-		GFL_FONT_Delete(fontHandle);
+		strLen = PRINTSYS_GetStrHeight(str, fontHandle);
+		for( i=0; i<NELEMS(GX_texSizTbl); i++ ){
+			if(strLen <= GX_texSizTbl[i].siz){
+					elb->texSizIdxT = i;
+					break;
+			}
+		}
 	}
+	//テクスチャＶＲＡＭ確保
 	{
-		//テクスチャＶＲＡＭ確保
 		u32 texVramSiz = GX_texSizTbl[elb->texSizIdxS].siz * GX_texSizTbl[elb->texSizIdxT].siz;
 		elb->texVramKey = NNS_GfdAllocTexVram(texVramSiz, FALSE, 0);
 		elb->plttVramKey = NNS_GfdAllocPlttVram(16, FALSE, 0);
 	}
-	{
-		//テクスチャ転送
-		void* src;
-		u32		dst, siz;
 
-		src = GFL_BMP_GetCharacterAdrs(elb->bmp);
-		dst = NNS_GfdGetTexKeyAddr(elb->texVramKey);
-		siz = NNS_GfdGetTexKeySize(elb->texVramKey);
-		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_VRAM, dst, src, siz);
+	//テクスチャ作成
+	{
+		EL_SCOREBOARD_SETDATA setData;
+		setData.texSizIdxS = elb->texSizIdxS;
+		setData.texSizIdxT = elb->texSizIdxT;
+		setData.texVramKey = elb->texVramKey;	
+		setData.texOffset = 0;
+		setData.fontHandle = fontHandle;
+
+		makeElboard(&setData, str, heapID);
 	}
+
+	GFL_FONT_Delete(fontHandle);
+
 	elb->timer = 0;
 
 	return elb;
@@ -251,8 +193,6 @@ void	ELBOARD_Delete( EL_SCOREBOARD* elb )
 {
 	NNS_GfdFreePlttVram(elb->plttVramKey);
 	NNS_GfdFreeTexVram(elb->texVramKey);
-
-	GFL_BMP_Delete(elb->bmp);
 }	
 
 //------------------------------------------------------------------
@@ -264,6 +204,8 @@ void	ELBOARD_Delete( EL_SCOREBOARD* elb )
 //------------------------------------------------------------------
 void	ELBOARD_Main( EL_SCOREBOARD* elb )
 {
+	if( elb->mode == ELB_MODE_NONE ){ return; }
+
 	elb->timer++;
 	{
 		//パレットアニメーション
@@ -384,4 +326,254 @@ void	ELBOARD_Draw( EL_SCOREBOARD* elb,
 
 
 
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	電光掲示板テクスチャ（既存テクスチャに貼り付けて使用）
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+#define INVALID_DATA	(0xffffffff)
+
+struct _EL_SCOREBOARD_TEX {
+	ELB_MODE			mode;
+	u16						texSizIdxS;
+	u16						texSizIdxT;
+
+	NNSGfdTexKey	texVramKey;		//テクスチャＶＲＡＭキー
+	NNSGfdPlttKey	plttVramKey;	//パレットＶＲＡＭキー
+	u32						texOffset;
+	u32						plttOffset;
+
+	int						timer;
+};
+
+//------------------------------------------------------------------
+/**
+ * @brief	オブジェクト追加(既存テクスチャに貼り付け)
+ */
+//------------------------------------------------------------------
+EL_SCOREBOARD_TEX*	ELBOARD_TEX_Add( GFL_G3D_RES* g3Dtex, const STRBUF* str, HEAPID heapID )
+{
+	EL_SCOREBOARD_TEX* elb_tex = GFL_HEAP_AllocClearMemory(heapID, sizeof(EL_SCOREBOARD_TEX));
+
+	elb_tex->mode = ELB_MODE_NONE;
+
+	elb_tex->texSizIdxS = NELEMS(GX_texSizTbl)-1;	//初期設定
+	elb_tex->texSizIdxT = NELEMS(GX_texSizTbl)-1;	//初期設定
+	elb_tex->texOffset = INVALID_DATA;
+	elb_tex->plttOffset = INVALID_DATA;
+
+	//binary内辞書からから転送先データ取得
+	{
+		NNSG3dResTex*		NNSresTex = GFL_G3D_GetResTex(g3Dtex);
+		elb_tex->texVramKey = NNSresTex->texInfo.vramKey;
+		elb_tex->plttVramKey = NNSresTex->plttInfo.vramKey;
+
+		//texデータ取得
+		{
+			u16							offsDict = NNSresTex->texInfo.ofsDict;
+			NNSG3dResDict*	NNSresDict = (NNSG3dResDict*)((u32)NNSresTex + offsDict);
+			NNSG3dResName name[] = {"elboard_core"};
+			NNSG3dResDictTexData* entryTex;
+			GXTexSizeS	s;
+			GXTexSizeT	t;
+			int i;
+
+			entryTex = NNS_G3dGetResDataByName(NNSresDict, name);
+			if(entryTex == NULL){ return elb_tex; }		// find name Error
+
+			elb_tex->texOffset = (entryTex->texImageParam & 0x0000ffff) << 3;
+			s = (entryTex->texImageParam & 0x00700000) >> 20;
+			t = (entryTex->texImageParam & 0x03800000) >> 23;
+
+			for( i=0; i<NELEMS(GX_texSizTbl); i++ ){
+				if(s == GX_texSizTbl[i].s){
+						elb_tex->texSizIdxS = i;
+						break;
+				}
+			}
+			for( i=0; i<NELEMS(GX_texSizTbl); i++ ){
+				if(t == GX_texSizTbl[i].t){
+						elb_tex->texSizIdxT = i;
+						break;
+				}
+			}
+			//OS_Printf("tex offset = 0x%x\n", elb_tex->texOffset); 
+			//OS_Printf("tex sizIdxS	= %d\n", elb_tex->texSizIdxS);
+			//OS_Printf("tex sizIdxT	= %d\n", elb_tex->texSizIdxT);
+		}
+		//plttデータ取得
+		{
+			u16							offsDict = NNSresTex->plttInfo.ofsDict;
+			NNSG3dResDict*	NNSresDict = (NNSG3dResDict*)((u32)NNSresTex + offsDict);
+			NNSG3dResName name[] = {"elboard_core_pl"};
+			NNSG3dResDictPlttData* entryPltt;
+
+			entryPltt = NNS_G3dGetResDataByName(NNSresDict, name);
+			if(entryPltt == NULL){ return elb_tex; }		// find name Error
+			if(entryPltt->flag == 1){ return elb_tex; }	// format Error
+
+			elb_tex->plttOffset = (entryPltt->offset & 0x0000ffff) << 3;
+			//OS_Printf("pltt offset = 0x%x\n", elb_tex->plttOffset); 
+		}
+	}
+	{
+		//フォントハンドル作成
+		GFL_FONT*	fontHandle = GFL_FONT_Create
+						(ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID);
+
+		//テクスチャ作成
+		{
+			EL_SCOREBOARD_SETDATA setData;
+			setData.texSizIdxS = elb_tex->texSizIdxS;
+			setData.texSizIdxT = elb_tex->texSizIdxT;
+			setData.texVramKey = elb_tex->texVramKey;	
+			setData.texOffset = elb_tex->texOffset;	
+			setData.fontHandle = fontHandle;
+	
+			makeElboard(&setData, str, heapID);
+		}
+		GFL_FONT_Delete(fontHandle);
+	}
+
+	elb_tex->timer = 0;
+
+	return elb_tex;
+}	
+
+//------------------------------------------------------------------
+/**
+ * @brief	オブジェクト破棄
+ */
+//------------------------------------------------------------------
+void	ELBOARD_TEX_Delete( EL_SCOREBOARD_TEX* elb_tex )
+{
+}	
+
+//------------------------------------------------------------------
+/**
+ *
+ * @brief	動作
+ *
+ */
+//------------------------------------------------------------------
+void	ELBOARD_TEX_Main( EL_SCOREBOARD_TEX* elb_tex )
+{
+	elb_tex->timer++;
+	if(elb_tex->plttOffset != INVALID_DATA)
+	{
+		//パレットアニメーション
+		void* src;
+		u32 dst, siz;
+
+		if(elb_tex->timer & 0x0004){ src = (void*)plttData; } else { src = (void*)plttData2; }
+		dst = NNS_GfdGetPlttKeyAddr(elb_tex->plttVramKey) + elb_tex->plttOffset;
+		siz = PLTT_SIZ;
+		NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, siz);
+	}
+}
+
+
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	電光掲示板テクスチャ作成＆転送
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+// ウインドウ背景クリア
+static void clearBitmap(GFL_BMP_DATA* bmp)
+{
+	u8*	dataAdrs = GFL_BMP_GetCharacterAdrs(bmp);
+	u32	writeSize = GFL_BMP_GetBmpDataSize(bmp);
+	int	i;
+
+	for( i= 0; i<writeSize; i++ ){ dataAdrs[i] = ((BCOL2 << 4) | BCOL1); }
+
+}
+// 文字列描画
+static void printStr
+			(const STRBUF* str, GFL_BMP_DATA* bmp, PRINT_QUE* printQue, GFL_FONT* fontHandle)
+{
+	PRINTSYS_LSB	lsb = PRINTSYS_LSB_Make(LCOL,0,0);
+	clearBitmap(bmp);
+
+	PRINTSYS_PrintQueColor(printQue, bmp, 0, 2, str, fontHandle, lsb);
+}
+// ビットマップ変換
+static void convBitmap(GFL_BMP_DATA* src, GFL_BMP_DATA* dst)
+{
+	u16	size_x = GFL_BMP_GetSizeX(src)/8;						//画像データのXdotサイズ
+	u16	size_y = GFL_BMP_GetSizeY(src)/8;						//画像データのYdotサイズ
+	u16	col = (u16)GFL_BMP_GetColorFormat(src);			//カラーモード＆データサイズ
+	u16	size_cx = col/8;														//キャラクタデータXサイズ
+	u8*	srcAdrs = GFL_BMP_GetCharacterAdrs(src);
+	u8*	dstAdrs = GFL_BMP_GetCharacterAdrs(dst);
+	int	i, cx, cy, x, y;
+
+	for( i=0; i<size_x * size_y * col; i++ ){
+		y = i/(size_x * size_cx);
+		x = i%(size_x * size_cx);
+		dstAdrs[i] = srcAdrs[ ((y/8)*size_x + (x/size_cx))*col + ((y%8)*size_cx + (x%size_cx)) ];
+	}
+}
+
+//------------------------------------------------------------------
+static void makeElboard(EL_SCOREBOARD_SETDATA* setData, const STRBUF* str, HEAPID heapID)
+{
+	//テクスチャ作成
+	u16						texSizS, texSizT;
+	PRINT_QUE*		printQue;
+	GFL_BMP_DATA*	bmp;	
+	GFL_BMP_DATA*	bmpTmp;	
+
+	//プリントキューハンドル作成
+	printQue = PRINTSYS_QUE_Create(heapID);
+
+	texSizS = GX_texSizTbl[setData->texSizIdxS].siz;
+	texSizT = GX_texSizTbl[setData->texSizIdxT].siz;
+
+	//テクスチャ用ビットマップ作成
+	bmp = GFL_BMP_Create(texSizS/8, texSizT/8, GFL_BMP_16_COLOR, heapID);
+	bmpTmp = GFL_BMP_Create(texSizS/8, texSizT/8, GFL_BMP_16_COLOR, heapID);
+
+	printStr(str, bmpTmp, printQue, setData->fontHandle);
+	convBitmap(bmpTmp, bmp);
+	{
+		//テクスチャ転送
+		void* src = GFL_BMP_GetCharacterAdrs(bmp);
+		u32		dst = NNS_GfdGetTexKeyAddr(setData->texVramKey) + setData->texOffset;
+		u32		siz = texSizS/8 * texSizT/8 * 0x20;
+
+		GX_BeginLoadTex(); 
+		DC_FlushRange(src, siz);
+		GX_LoadTex(src, dst, siz); 
+		GX_EndLoadTex(); 
+	}
+
+	GFL_BMP_Delete(bmpTmp);
+	GFL_BMP_Delete(bmp);
+
+	PRINTSYS_QUE_Clear(printQue);
+	PRINTSYS_QUE_Delete(printQue);
+}	
 

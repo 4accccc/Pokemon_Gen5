@@ -100,22 +100,14 @@ typedef struct {
 	HEAPID							heapID;
 	int									seq;
 
-	PRINT_QUE*					printQue;
-	GFL_FONT*						fontHandle;
-
-	GFL_BMPWIN*					bmpwin;	
-
-	STRBUF*							strBuf1;
-	STRBUF*							strBuf2;
-	GFL_BMP_DATA*				bmp;	
+	STRBUF*							strBuf;
 
 	GFL_G3D_CAMERA*			g3Dcamera;	
 	GFL_G3D_LIGHTSET*		g3Dlightset;	
+	GFL_G3D_UTIL*				g3Dutil;
+	u16									g3DutilUnitIdx;
 
-	EL_SCOREBOARD*			elb1;
-	EL_SCOREBOARD*			elb2;
-	EL_SCOREBOARD*			elb3;
-	EL_SCOREBOARD*			elb4;
+	EL_SCOREBOARD_TEX*	elb_tex;
 
 	GFL_CAMADJUST*			gflCamAdjust;
 	fx32								cameraLength;
@@ -192,22 +184,6 @@ static void makeStr2(const u16* str, STRBUF* strBuf)
 
 //------------------------------------------------------------------
 /**
- * @brief	文字列描画
- */
-//------------------------------------------------------------------
-#if 0
-static void printStr
-			(const STRBUF* str, GFL_BMP_DATA* bmp, PRINT_QUE* printQue, GFL_FONT* fontHandle)
-{
-	PRINTSYS_LSB	lsb = PRINTSYS_LSB_Make(LCOL,0,0);
-	clearBitmap(bmp);
-
-	PRINTSYS_PrintQueColor(printQue, bmp, 0, 2, str, fontHandle, lsb);
-}
-#endif
-
-//------------------------------------------------------------------
-/**
  * @brief	ワークの初期化＆破棄
  */
 //------------------------------------------------------------------
@@ -216,16 +192,13 @@ static void	workInitialize(SAMPLE2_WORK* sw)
 	sw->seq = 0;
 	sw->timer = 0;
 
-	sw->strBuf1 = GFL_STR_CreateBuffer(STRBUF_SIZE, sw->heapID);
-	sw->strBuf2 = GFL_STR_CreateBuffer(STRBUF_SIZE, sw->heapID);
-	makeStr(testMsg, sw->strBuf1);
-	makeStr2(testMsg, sw->strBuf2);
+	sw->strBuf = GFL_STR_CreateBuffer(STRBUF_SIZE, sw->heapID);
+	makeStr(testMsg, sw->strBuf);
 }
 
 static void	workFinalize(SAMPLE2_WORK* sw)
 {
-	GFL_STR_DeleteBuffer(sw->strBuf2);
-	GFL_STR_DeleteBuffer(sw->strBuf1);
+	GFL_STR_DeleteBuffer(sw->strBuf);
 }
 
 //------------------------------------------------------------------
@@ -319,8 +292,6 @@ static BOOL	sample2(SAMPLE2_WORK* sw)
 	switch(sw->seq){
 	case 0:
 		systemSetup(sw);
-
-		//printStr(sw->strBuf1, sw->bmp, sw->printQue, sw->fontHandle);
 
 		sw->gflCamAdjust = GFL_CAMADJUST_Create(&camAdjustData, sw->heapID);
 		GFL_CAMADJUST_SetCameraParam
@@ -420,6 +391,46 @@ static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
 };
 static const GFL_G3D_LIGHTSET_SETUP light0Setup = { light0Tbl, NELEMS(light0Tbl) };
 
+#include "arc/elboard_test.naix"
+
+enum {
+	G3DRES_ELBOARD_BMD = 0,
+	G3DRES_ELBOARD_BTX,
+	G3DRES_ELBOARD_BCA,
+	G3DRES_ELBOARD_BTA,
+};
+
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
+	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbmd, GFL_G3D_UTIL_RESARC },
+	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbtx, GFL_G3D_UTIL_RESARC },
+	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbca, GFL_G3D_UTIL_RESARC },
+	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbta, GFL_G3D_UTIL_RESARC },
+};
+
+static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
+	{ G3DRES_ELBOARD_BCA, 0 },
+	{ G3DRES_ELBOARD_BTA, 0 },
+};
+
+enum {
+	G3DOBJ_ELBOARD1 = 0,
+};
+
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
+	{ G3DRES_ELBOARD_BMD, 0, G3DRES_ELBOARD_BTX, g3Dutil_anm1Tbl, NELEMS(g3Dutil_anm1Tbl) },
+};
+
+static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
+	g3Dutil_resTbl, NELEMS(g3Dutil_resTbl),
+	g3Dutil_objTbl, NELEMS(g3Dutil_objTbl),
+};
+
+static const GFL_G3D_OBJSTATUS g3DobjStatus1 = {
+	{ 0, 0, 0 },																				//座標
+	{ FX32_ONE, FX32_ONE, FX32_ONE },										//スケール
+	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
+};
+
 //------------------------------------------------------------------
 /**
  * @brief		ＢＧ設定＆データ転送
@@ -481,19 +492,6 @@ static void systemSetup(SAMPLE2_WORK* sw)
 	//フォント用パレット転送
 	GFL_BG_SetBackGroundColor( TEXT_FRAME, BACKGROUND_COLOR );
 	GFL_BG_LoadPalette( TEXT_FRAME, (void*)plttData, PLTT_SIZ, TEXT_PLTTID * PLTT_SIZ );
-	//フォントハンドル作成
-	sw->fontHandle = GFL_FONT_Create(	ARCID_FONT,
-										NARC_font_large_nftr,
-										GFL_FONT_LOADTYPE_FILE,
-										FALSE,
-										sw->heapID);
-	//プリントキューハンドル作成
-	sw->printQue = PRINTSYS_QUE_Create(sw->heapID);
-
-	//描画用ビットマップ作成
-	sw->bmpwin = GFL_BMPWIN_Create(	TEXT_FRAME, 4, 2, 24, 2, TEXT_PLTTID, GFL_BG_CHRAREA_GET_F );
-	GFL_BMPWIN_MakeScreen(sw->bmpwin);
-	GFL_BG_LoadScreenReq(TEXT_FRAME);
 
 	//カメラ作成
 	sw->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(&cameraPos, &cameraTarget, sw->heapID);
@@ -502,10 +500,26 @@ static void systemSetup(SAMPLE2_WORK* sw)
 	sw->g3Dlightset = GFL_G3D_LIGHT_Create( &light0Setup, sw->heapID );
 	GFL_G3D_LIGHT_Switching(sw->g3Dlightset);
 
-	sw->bmp = GFL_BMPWIN_GetBmp(sw->bmpwin);
+	//３Ｄオブジェクト作成
+	{
+		u16						objIdx, elboard1Idx;
+		GFL_G3D_OBJ*	g3Dobj;
+		GFL_G3D_RES*	g3Dtex;
 
-	sw->elb1 = ELBOARD_Add(sw->strBuf1, ELB_MODE_S, sw->heapID);
-	sw->elb2 = ELBOARD_Add(sw->strBuf2, ELB_MODE_T, sw->heapID);
+		//リソース作成
+		sw->g3Dutil = GFL_G3D_UTIL_Create(NELEMS(g3Dutil_resTbl), NELEMS(g3Dutil_objTbl), sw->heapID );
+		sw->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( sw->g3Dutil, &g3Dutil_setup );
+
+		//アニメーションを有効にする
+		objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx);
+		elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
+		g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
+		GFL_G3D_OBJECT_EnableAnime(g3Dobj, 0); 
+		GFL_G3D_OBJECT_EnableAnime(g3Dobj, 1); 
+
+		g3Dtex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
+		sw->elb_tex = ELBOARD_TEX_Add(g3Dtex, sw->strBuf, sw->heapID);
+	}
 }
 
 //------------------------------------------------------------------
@@ -516,11 +530,7 @@ static void systemSetup(SAMPLE2_WORK* sw)
 #define PITCH_LIMIT (0x200)
 static void systemFramework(SAMPLE2_WORK* sw)
 {
-	PRINTSYS_QUE_Main(sw->printQue);
-	GFL_BMPWIN_TransVramCharacter(sw->bmpwin);
-
-	ELBOARD_Main(sw->elb1);
-	ELBOARD_Main(sw->elb2);
+	ELBOARD_TEX_Main(sw->elb_tex);
 
 	//３Ｄ描画
 	{
@@ -544,25 +554,22 @@ static void systemFramework(SAMPLE2_WORK* sw)
 			VEC_MultAdd(sw->cameraLength, &vecCamera, &target, &cameraPos);
 
 			GFL_G3D_CAMERA_SetPos(sw->g3Dcamera, &cameraPos);
+			GFL_G3D_CAMERA_Switching(sw->g3Dcamera);
 		}
 
 		GFL_G3D_DRAW_Start();			//描画開始
 		GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定		
 		{
-			VecFx32 trans = {0,8 * FX32_ONE,0};
-			fx32	scale = FX32_ONE;
-			u16		width = 200;
-			u16		height = 16;
+			u16						objIdx, elboard1Idx;
+			GFL_G3D_OBJ*	g3Dobj;
 
-			ELBOARD_Draw(sw->elb1, &trans, scale, width, height, sw->g3Dcamera, sw->g3Dlightset);
-		}
-		{
-			VecFx32 trans = {8 * FX32_ONE,0,0};
-			fx32	scale = FX32_ONE;
-			u16		width = 16;
-			u16		height = 200;
+			objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx );
+			elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
+			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
 
-			ELBOARD_Draw(sw->elb2, &trans, scale, width, height, sw->g3Dcamera, sw->g3Dlightset);
+			GFL_G3D_DRAW_DrawObject(g3Dobj, &g3DobjStatus1);
+			GFL_G3D_OBJECT_LoopAnimeFrame(g3Dobj, 0, FX32_ONE ); 
+			GFL_G3D_OBJECT_LoopAnimeFrame(g3Dobj, 1, FX32_ONE ); 
 		}
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 	}
@@ -575,17 +582,12 @@ static void systemFramework(SAMPLE2_WORK* sw)
 //------------------------------------------------------------------
 static void systemDelete(SAMPLE2_WORK* sw)
 {
-	ELBOARD_Delete(sw->elb2);
-	ELBOARD_Delete(sw->elb1);
+	ELBOARD_TEX_Delete(sw->elb_tex);
+	GFL_G3D_UTIL_DelUnit(sw->g3Dutil, sw->g3DutilUnitIdx);
+	GFL_G3D_UTIL_Delete(sw->g3Dutil);
 
 	GFL_G3D_LIGHT_Delete(sw->g3Dlightset);
 	GFL_G3D_CAMERA_Delete(sw->g3Dcamera);
-
-	PRINTSYS_QUE_Clear(sw->printQue);
-	GFL_BMPWIN_Delete(sw->bmpwin);
-
-	PRINTSYS_QUE_Delete(sw->printQue);
-	GFL_FONT_Delete(sw->fontHandle);
 
 	bg_exit();
 }
