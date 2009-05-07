@@ -32,6 +32,7 @@
 #ifdef PM_DEBUG
 #include "test/performance.h"
 #include "test/debug_pause.h"
+#include "debug/debugwin_sys.h"
 #endif //PM_DEBUG
 
 #include "title/title.h"
@@ -76,6 +77,13 @@ void NitroMain(void)
 #ifdef PM_DEBUG
 	DEBUG_PerformanceInit();
 	DEBUG_PAUSE_Init();
+	{
+    //デバッグし捨ての初期化＋アドレスを渡す
+    u8 *charArea;
+    u16 *scrnArea,*plttArea;
+    NetErr_GetTempArea( &charArea , &scrnArea , &plttArea );
+    DEBUGWIN_InitSystem(charArea , scrnArea , plttArea);
+  }
 #endif
 
 	while(TRUE){
@@ -227,6 +235,10 @@ static	void	GameMain(void)
 //------------------------------------------------------------------
 static	void	GameExit(void)
 {
+#ifdef PM_DEBUG
+  //デバッグシステム
+  DEBUGWIN_ExitSystem();
+#endif PM_DEBUG
 	SND_STRM_Exit();
 	PMVOICE_Exit();
 	PMSND_Exit();

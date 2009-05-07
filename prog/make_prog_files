@@ -125,7 +125,8 @@ SRCS  +=    $(SOUNDSRC) \
         app/wifi_note/wifi_note.c \
         test/camera_adjust_view.c \
         system/el_scoreboard.c \
-        system/selbox.c
+        system/selbox.c \
+        debug/debugwin_sys.c
 
 
 #================================================

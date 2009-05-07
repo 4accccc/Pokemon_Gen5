@@ -27,6 +27,7 @@
 
 #ifdef PM_DEBUG
 #include "test/debug_pause.h"
+#include "debug/debugwin_sys.h"
 #endif //PM_DEBUG
 
 
@@ -160,8 +161,11 @@ void GFLUser_Main(void)
     GFL_NET_Main();  //キーの処理の後すぐに通信を処理したい為ここに配置
 	
 #ifdef PM_DEBUG
+  //デバッグシステム
+  DEBUGWIN_UpdateSystem();
 	//Lを押している間停止。L押しながらRで1コマ送る
-	if( DEBUG_PAUSE_Update() == TRUE )
+	if( DEBUG_PAUSE_Update() == TRUE &&
+	    DEBUGWIN_IsActive() == FALSE )
 #endif
 	{
 		GFL_PROC_Main();

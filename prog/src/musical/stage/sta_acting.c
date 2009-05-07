@@ -35,6 +35,8 @@
 
 #include "eff_def/mus_eff.h"
 
+#include "debug/debugwin_sys.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -211,11 +213,17 @@ ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
 	GX_SetMasterBrightness(0);	
 	GXS_SetMasterBrightness(0);
 	
+#if USE_DEBUGWIN_SYSTEM
+  DEBUGWIN_InitProc( ACT_FRAME_MAIN_FONT , work->fontHandle );
+#endif	//USE_DEBUGWIN_SYSTEM
 	return work;
 }
 
 void	STA_ACT_TermActing( ACTING_WORK *work )
 {
+#if USE_DEBUGWIN_SYSTEM
+  DEBUGWIN_ExitProc();
+#endif	//USE_DEBUGWIN_SYSTEM
 	//フェードないので仮処理
 	GX_SetMasterBrightness(-16);	
 	GXS_SetMasterBrightness(-16);

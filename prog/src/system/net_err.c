@@ -247,6 +247,19 @@ NET_ERR_STATUS NetErr_App_ErrorCheck(void)
 
 //--------------------------------------------------------------
 /**
+ * @brief   外に退避用アドレスを渡す
+ */
+//--------------------------------------------------------------
+void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea )
+{
+	NET_ERR_SYSTEM *nes = &NetErrSystem;
+  *charArea = nes->push_char_p;
+  *scrnArea = nes->push_scrn_p;
+  *plttArea = nes->push_pltt_p;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   画面情報を退避し、エラー画面を表示
  */
 //--------------------------------------------------------------

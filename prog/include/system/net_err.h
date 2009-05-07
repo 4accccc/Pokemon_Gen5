@@ -34,6 +34,8 @@ extern void NetErr_SystemExit(void);
 extern NET_ERR_STATUS NetErr_Main(void);
 extern void NetErr_ErrorSet(void);
 
+extern void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea );
+
 
 //--------------------------------------------------------------
 //	アプリ側で使用する関数
