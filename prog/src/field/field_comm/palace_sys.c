@@ -17,6 +17,17 @@
 
 
 //==============================================================================
+//  定数定義
+//==============================================================================
+///パレスマップの範囲(この座標外に出た場合、ワープさせる必要がある)
+enum{
+  PALACE_MAP_RANGE_LEFT_X = 512,
+  PALACE_MAP_RANGE_RIGHT_X = 1024,
+
+  PALACE_MAP_RANGE_LEN = 512,     ///<パレスマップのX長
+};
+
+//==============================================================================
 //  構造体定義
 //==============================================================================
 ///パレスシステムワーク
@@ -73,12 +84,6 @@ void PALACE_SYS_Free(PALACE_SYS_PTR palace)
  * @param   palace		
  */
 //==================================================================
-///パレスマップの範囲(この座標外に出た場合、ワープさせる必要がある)
-enum{
-  PALACE_MAP_RANGE_LEFT_X = 512,
-  PALACE_MAP_RANGE_RIGHT_X = 1024,
-};
-
 void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply)
 {
   int net_num;
@@ -113,14 +118,12 @@ static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIE
 {
   ZONEID zone_id;
   VecFx32 pos, new_pos;
-  u16 dir;
   s32 offs_left, offs_right;
   int new_area;
   
   zone_id = PLAYERWORK_getZoneID(plwork);
   FIELD_PLAYER_GetPos( fldply, &pos );
   new_pos = pos;
-  dir = FIELD_PLAYER_GetDir( fldply );
   new_area = palace->area;
   
   offs_left = FX_Whole(pos.x) - PALACE_MAP_RANGE_LEFT_X;
@@ -171,33 +174,44 @@ int PALACE_SYS_GetArea(PALACE_SYS_PTR palace)
 /**
  * 友達の自機座標をパレスのエリアIDを判定して修正を行う
  *
- * @param   palace		    
- * @param   friend_area		
- * @param   plwork		    
- * @param   fldply		    
+ * @param   palace		      パレスシステムへのポインタ
+ * @param   friend_area	  	友達のパレスエリア
+ * @param   my_plwork		    自分のPLAYER_WORK
+ * @param   friend_plwork		友達のPLAYER_WORK
  */
 //==================================================================
-void PALACE_SYS_FriendPosConvert(PALACE_SYS_PTR palace, int friend_area, PLAYER_WORK *plwork, FIELD_PLAYER *fldply)
+void PALACE_SYS_FriendPosConvert(PALACE_SYS_PTR palace, int friend_area, 
+  PLAYER_WORK *my_plwork, PLAYER_WORK *friend_plwork)//, FIELD_PLAYER *friend_fldply)
 {
   int left_area, right_area;
+  VecFx32 pos;
   
-  if(palace == NULL || palace->area == friend_area){
+  if(palace == NULL || palace->area == friend_area 
+      || PLAYERWORK_getZoneID(my_plwork) != PLAYERWORK_getZoneID(friend_plwork)){
     return;
   }
   
   left_area = palace->area - 1;
   right_area = palace->area + 1;
   if(left_area < 0){
-    palace->entry_count - 1;
+    left_area = palace->entry_count - 1;
   }
   if(right_area >= palace->entry_count){
     right_area = 0;
   }
   
+//  FIELD_PLAYER_GetPos( friend_fldply, &pos );
+  pos = *(PLAYERWORK_getPosition(friend_plwork));
   if(friend_area == right_area){  //右隣のエリアにいる場合
+    pos.x += PALACE_MAP_RANGE_LEN << FX32_SHIFT;
   }
   else if(friend_area == left_area){ //左隣のエリアにいる場合
+    pos.x -= PALACE_MAP_RANGE_LEN << FX32_SHIFT;
   }
   else{ //両隣のエリアではない場合
+    pos.x += (PALACE_MAP_RANGE_LEN * 2) << FX32_SHIFT;
   }
+//  FIELD_PLAYER_SetPos( friend_fldply, &pos );
+  PLAYERWORK_setPosition(friend_plwork, &pos);
 }
+

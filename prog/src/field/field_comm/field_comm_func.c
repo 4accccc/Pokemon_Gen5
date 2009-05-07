@@ -672,6 +672,7 @@ void  FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const voi
   PLAYERWORK_setPosition( plWork , &pos );
   PLAYERWORK_setDirection( plWork , dir );
   PLAYERWORK_setZoneID( plWork , pkt->zoneID_ );
+  PLAYERWORK_setPalaceArea( plWork , pkt->palace_area );
   FIELD_COMM_DATA_SetCharaData_IsValid( commData, netID , TRUE );
   FIELD_COMM_DATA_SetTalkState( commData, netID , pkt->talkState_ );
 

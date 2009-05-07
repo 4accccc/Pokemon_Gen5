@@ -267,7 +267,7 @@ void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 }
 
 //--------------------------------------------------------------
-// 自分ののキャラの更新
+// 自分のキャラの更新
 //--------------------------------------------------------------
 static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys )
@@ -328,6 +328,10 @@ static void FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
           PLAYER_WORK *setPlWork = GAMEDATA_GetPlayerWork( gameData , i+1 );  //0には自分が入っているから
           PLAYER_WORK *charaWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(commData, i);
           GFL_STD_MemCopy( (void*)charaWork , (void*)setPlWork , sizeof(PLAYER_WORK) );
+
+          PALACE_SYS_FriendPosConvert(commSys->palace, PLAYERWORK_getPalaceArea(setPlWork), 
+            GAMEDATA_GetPlayerWork( gameData, 0 ), setPlWork);
+
           if( FIELD_COMM_DATA_GetCharaData_IsExist(commData, i) == FALSE )
           {
             //未初期化なキャラなので、初期化する

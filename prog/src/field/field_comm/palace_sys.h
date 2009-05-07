@@ -22,3 +22,5 @@ extern PALACE_SYS_PTR PALACE_SYS_Alloc(HEAPID heap_id);
 extern void PALACE_SYS_Free(PALACE_SYS_PTR palace);
 extern void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply);
 extern int PALACE_SYS_GetArea(PALACE_SYS_PTR palace);
+extern void PALACE_SYS_FriendPosConvert(PALACE_SYS_PTR palace, int friend_area, 
+  PLAYER_WORK *my_plwork, PLAYER_WORK *friend_plwork);
