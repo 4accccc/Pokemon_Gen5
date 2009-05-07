@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-04-02T15:47:04"/>
+	<create user="tamada" host="W00139" date="2009-05-06T18:42:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -74,7 +74,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="159"/>
+		<id position="0" width="237"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -112,7 +112,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,6 +359,26 @@
 	<row id="DEBUG_FIELD_STR_WINTER">
 		<language name="JPN" width="160">ふゆ</language>
 		<language name="JPN_KANJI" width="160">冬</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR_SUBSCRN">
+		<language name="JPN" width="160">したがめん</language>
+		<language name="JPN_KANJI" width="160">下画面</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR_SUBSCRN01">
+		<language name="JPN" width="160">カメラそうさ</language>
+		<language name="JPN_KANJI" width="160">カメラ操作</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR_SUBSCRN02">
+		<language name="JPN" width="160">サウンドビューワー</language>
+		<language name="JPN_KANJI" width="160">サウンドビューワー</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR_SUBSCRN03">
+		<language name="JPN" width="160">つうじょうモード</language>
+		<language name="JPN_KANJI" width="160">通常モード</language>
 	</row>
 
 	<flowchart-group-list>
