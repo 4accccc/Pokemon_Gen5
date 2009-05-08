@@ -429,12 +429,13 @@ static fx32 FIELD_GRANM_Ita_Main( FIELD_GRANM_ITA* p_wk, fx32 frame )
 //-----------------------------------------------------------------------------
 static FIELD_GRANM_WORK* FIELD_GRANM_Ita_GetWork( const FIELD_GRANM_ITA* cp_wk, u32 index )
 {
-	GF_ASSERT( index < cp_wk->wkmax );
 
 	// ‰Šú‰»‚³‚ê‚Ä‚¢‚½‚çˆ—‚·‚é
 	if( !cp_wk->p_anmfile ){
 		return NULL;
 	}
+
+	GF_ASSERT( index < cp_wk->wkmax );
 	return &cp_wk->p_wkbuf[index];
 }
 

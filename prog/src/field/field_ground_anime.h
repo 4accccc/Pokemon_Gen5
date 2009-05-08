@@ -46,11 +46,11 @@ typedef struct {
 	u16 ita_use:8;
 	u16 itp_use:8;
 	u16 block_num;
-	u16 ita_arcID;
+	u16 ita_arcID;			// itaアニメーション
 	u16 ita_dataID;
-	u16 itp_arcID;
+	u16 itp_arcID;			// itpアニメーション　アニメデータ
 	u16 itp_anmID;
-	u16 itp_texarcID;
+	u16 itp_texarcID;		// itpアニメーション　テクスチャデータ
 	u16 itp_texID;
 } FIELD_GRANM_SETUP;
 
