@@ -55,7 +55,8 @@ struct _FIELD_GRANM_WORK
 //-------------------------------------
 ///	ITAアニメーション管理
 //=====================================
-typedef struct {
+typedef struct 
+{
 	FIELD_GRANM_WORK* p_wkbuf;
 	u32								wkmax;
 
@@ -67,7 +68,8 @@ typedef struct {
 //-------------------------------------
 ///	ITPアニメーション管理
 //=====================================
-typedef struct {
+typedef struct 
+{
 
 	// １つ前のフレーム情報
 	BOOL trans;
@@ -135,7 +137,7 @@ static fx32 FIELD_GRANM_Work_SetAnimeFrame( FIELD_GRANM_WORK* p_wk, fx32 frame )
 //-------------------------------------
 ///	ITPアニメーション管理
 //=====================================
-static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, u32 heapID );
+static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, u32 heapID );
 static void FIELD_GRANM_Itp_Exit( FIELD_GRANM_ITP* p_wk );
 static void FIELD_GRANM_Itp_Main( FIELD_GRANM_ITP* p_wk, fx32 speed );
 static u32 FIELD_GRANM_Itp_GetTransTexAddr( const GFL_G3D_RES* cp_ground_tex, const GFL_G3D_RES* cp_anmtex, u32 anm_tex_idx );
@@ -168,7 +170,7 @@ FIELD_GRANM* FIELD_GRANM_Create( const FIELD_GRANM_SETUP* cp_setup, const GFL_G3
 
 	// ITPアニメーションの初期化処理
 	if( cp_setup->itp_use ){
-		FIELD_GRANM_Itp_Init( &p_sys->itp_anime, cp_setup->itp_arcID, cp_setup->itp_anmID, cp_setup->itp_texID, cp_tex, heapID );
+		FIELD_GRANM_Itp_Init( &p_sys->itp_anime, cp_setup->itp_arcID, cp_setup->itp_texarcID, cp_setup->itp_anmID, cp_setup->itp_texID, cp_tex, heapID );
 	}
 
 	// オートアニメーションフラグ設定
@@ -556,13 +558,14 @@ static fx32 FIELD_GRANM_Work_SetAnimeFrame( FIELD_GRANM_WORK* p_wk, fx32 frame )
  *
  *	@param	p_wk			ワーク
  *	@param	arcID			アーカイブID
+ *	@param	tex_arcID	アーカイブID
  *	@param	anmID			アニメーションデータID
  *	@param	texID			テクスチャデータID
  *	@param	cp_tex		地面テクスチャ
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, u32 heapID )
+static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, u32 heapID )
 {
 	// 地面テクスチャ保存
 	p_wk->cp_ground_tex = cp_tex;
@@ -572,7 +575,7 @@ static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 anmID, u
 	TEXANM_UnPackLoadFile( p_wk->p_anmfile, &p_wk->anmtbl );
 
 	// アニメーションテクスチャ読み込み
-	p_wk->p_tex = GFL_G3D_CreateResourceArc( arcID, texID );
+	p_wk->p_tex = GFL_G3D_CreateResourceArc( tex_arcID, texID );
 
 	// アニメーション数分の情報作成
 	{

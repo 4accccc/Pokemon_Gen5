@@ -383,7 +383,8 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 			FALSE, FALSE,
 			MAP_BLOCK_COUNT,
 			ARCID_AREA_ITA, 0,
-			ARCID_AREA_ITP, 0, 0,
+			ARCID_AREA_ITP, 0, 
+			ARCID_AREA_ITP_TEX, 0, 
 		};
 	
 		// ITAアニメーションの設定
@@ -400,7 +401,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 		}else{
 			granm_setup.itp_use			= TRUE;
 			granm_setup.itp_anmID		= resistData->ground_anime.itp_anm_datID;
-			granm_setup.itp_texID		= resistData->ground_anime.itp_tex_datID;
+			granm_setup.itp_texID		= resistData->ground_anime.itp_anm_datID;
 		}
 
 		g3Dmapper->granime = FIELD_GRANM_Create( &granm_setup, g3Dmapper->globalTexture, g3Dmapper->heapID );

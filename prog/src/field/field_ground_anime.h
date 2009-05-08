@@ -43,13 +43,14 @@ typedef struct _FIELD_GRANM_WORK FIELD_GRANM_WORK;
 ///	èâä˙âªÉfÅ[É^
 //=====================================
 typedef struct {
-	u16 ita_use:1;
-	u16 itp_use:1;
-	u16 block_num:14;
+	u16 ita_use:8;
+	u16 itp_use:8;
+	u16 block_num;
 	u16 ita_arcID;
 	u16 ita_dataID;
 	u16 itp_arcID;
 	u16 itp_anmID;
+	u16 itp_texarcID;
 	u16 itp_texID;
 } FIELD_GRANM_SETUP;
 

@@ -295,7 +295,7 @@ const SCENE_DATA resistMapTbl[] = {
 			newbridgemap,
 		//	4,  4, NELEMS(loopbridgemap),
 		//	loopbridgemap, 
-			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
+			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
 		FALSE,
@@ -310,7 +310,7 @@ const SCENE_DATA resistMapTbl[] = {
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
-			{0,2,5},	// 地面アニメーション
+			{0,2},	// 地面アニメーション
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
@@ -325,7 +325,7 @@ const SCENE_DATA resistMapTbl[] = {
 
 			2,  6, NELEMS(samplebridge),
 			samplebridge, 
-			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
+			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
 		FALSE,
@@ -341,7 +341,7 @@ const SCENE_DATA resistMapTbl[] = {
 
 			2,  6, NELEMS(GSMap),
 			GSMap, 
-			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
+			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		},
 		&FieldMapCtrl_GridFunctions,
 		FALSE,
@@ -356,7 +356,7 @@ const SCENE_DATA resistMapTbl[] = {
 
 			2,  2, NELEMS(test_c3map),
 			test_c3map, 
-			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
+			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		}, 
 		&FieldMapCtrl_C3Functions,
 		FALSE,

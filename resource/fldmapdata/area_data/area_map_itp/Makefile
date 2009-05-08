@@ -12,7 +12,8 @@ USERS	= tomoya_takahashi
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = area_map_itp
+targetname 	= area_map_itp
+targetname2 = area_map_itp_tex
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -58,9 +59,8 @@ NSBTAFILE = $(ITAFILE:.ita=.nsbta)
 
 
 LIST_FILE 	= list.txt
-OBJ_FILE 	= $(NCLRFILE) $(NCERFILE) $(NSCRFILE) \
-			  $(NSBTXFILE) $(NSBCAFILE) $(NSBVAFILE) \
-			  $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE)
+OBJ_FILE 	=  $(NSBTPFILE)
+OBJ_FILE2 = $(NSBTXFILE)
 
 
 #ITPコンバータ
@@ -115,7 +115,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname2).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -125,16 +125,28 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
+# narc のコピーだけ実行する
+$(TARGETDIR)/$(targetname2).narc: $(targetname2).narc
+	$(COPY) $(targetname2).narc $(TARGETDIR)
+	$(COPY) $(targetname2).naix $(TARGETDIR)
+
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(OBJ_FILE)
 	-ls *.itpdat > $(LIST_FILE)
-	-ls *.nsb* >> $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
+	-rm	$(LIST_FILE)
+
+# コピー先のnarcが古い場合実行する
+$(targetname2).narc: $(OBJ_FILE)
+	-ls *.nsb* >> $(LIST_FILE)
+	$(ARCLIST_MAKE) $(LIST_FILE)
+	nnsarc -c -l -n -i $(targetname2) -S $(LIST_FILE)
+	$(NAIXCUT) $(targetname2).naix
 	-rm	$(LIST_FILE)
 endif
 
@@ -146,6 +158,8 @@ clean:
 	@$(MAKE_SUBDIR)
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(TARGETDIR)/$(targetname2).narc
+	rm -f $(TARGETDIR)/$(targetname2).naix
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
@@ -155,6 +169,8 @@ ifeq	($(CONVERTUSER),true)
 	rm -f *.naix
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
+	rm -f $(targetname2).narc
+	rm -f $(targetname2).naix
 endif
 
 
