@@ -83,16 +83,12 @@ typedef struct {
 #define COL_F2	(0x031F)
 
 static const u16 plttData0[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F1 };
-static const u16 plttData1[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F1 };
-static const u16 plttData2[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F1 };
-static const u16 plttData3[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F1 };
-static const u16 plttData4[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F2 };
-static const u16 plttData5[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F2 };
-static const u16 plttData6[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F2 };
-static const u16 plttData7[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F2 };
+static const u16 plttData1[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F1 };
+static const u16 plttData2[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F2 };
+static const u16 plttData3[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F2 };
 
 static const u16* plttData[] = { 
-	plttData0, plttData1, plttData2, plttData3, plttData4, plttData5, plttData6, plttData7,
+	plttData0, plttData1, plttData2, plttData3, plttData0, plttData1, plttData2, plttData3,
 };
 
 #define BCOL1 (1)
