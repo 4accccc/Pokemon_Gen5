@@ -174,7 +174,8 @@ const BOOL  MUS_ITEM_DATA_CanEquipPosUserData( MUS_ITEM_DATA_WORK*  dataWork , c
 {
   switch( pos )
   {
-  case MUS_POKE_EQU_USER_EAR:   //耳(右耳・左耳)
+  case MUS_POKE_EQU_USER_EAR_R:   //耳(右耳・左耳)
+  case MUS_POKE_EQU_USER_EAR_L:   //耳(右耳・左耳)
     if( dataWork->equipPosBit & EPB_EAR )
     {
       return TRUE;
@@ -225,7 +226,8 @@ const BOOL  MUS_ITEM_DATA_CheckMainPosUserData( MUS_ITEM_DATA_WORK*  dataWork , 
 {
   switch( pos )
   {
-  case MUS_POKE_EQU_USER_EAR:   //耳(右耳・左耳)
+  case MUS_POKE_EQU_USER_EAR_R:   //耳(右耳・左耳)
+  case MUS_POKE_EQU_USER_EAR_L:   //耳(右耳・左耳)
     if( dataWork->mainPos == MUS_POKE_EQU_TYPE_EAR )
     {
       return TRUE;
@@ -287,8 +289,10 @@ const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP
   switch( pos )
   {
   case MUS_POKE_EQU_EAR_R:    //右耳
+    return MUS_POKE_EQU_USER_EAR_R;
+    break;
   case MUS_POKE_EQU_EAR_L:    //左耳
-    return MUS_POKE_EQU_USER_EAR;
+    return MUS_POKE_EQU_USER_EAR_L;
     break;
 
   case MUS_POKE_EQU_HEAD:     //頭

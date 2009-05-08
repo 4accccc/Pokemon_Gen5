@@ -54,3 +54,8 @@ SCRIPT_FUNC_DEF( MessageShow )		//2	//メッセージ表示
 SCRIPT_FUNC_DEF( MessageHide )			//メッセージ消去
 SCRIPT_FUNC_DEF( MessageColor )		//1	//メッセージ色変え
 
+//BGM系
+SCRIPT_FUNC_DEF( BgmStart )			//1	//BGM開始
+SCRIPT_FUNC_DEF( BgmStop )				//BGM停止
+
+SCRIPT_FUNC_DEF( PokeActionRotate )	//3	//ポケモンアクション・回転

@@ -48,7 +48,8 @@ typedef enum
 //ユーザーが認識できる箇所。
 typedef enum
 {
-	MUS_POKE_EQU_USER_EAR,		//耳(右耳・左耳)
+	MUS_POKE_EQU_USER_EAR_R,	//耳(右耳)
+	MUS_POKE_EQU_USER_EAR_L,	//耳(左耳)
 	MUS_POKE_EQU_USER_HEAD,		//頭
 	MUS_POKE_EQU_USER_FACE,		//顔
 	MUS_POKE_EQU_USER_BODY,		//胴

@@ -12,7 +12,8 @@
 
 enum {
 	NARC_musical_script_eebinary_bin = 0,
-	NARC_musical_script_mus_001_001_bin = 1
+	NARC_musical_script_mus_001_001_bin = 1,
+	NARC_musical_script_mus_002_001_bin = 2
 };
 
 /* NARC_MUSICAL_SCRIPT_NAIX_ */
