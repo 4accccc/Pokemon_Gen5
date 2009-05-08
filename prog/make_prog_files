@@ -274,6 +274,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_player_nogrid.c \
 				field/fieldmap_ctrl_nogrid.c \
 				field/field_ground_anime.c \
+				field/texanm_sys.c \
 				field/fieldmap_ctrl_c3.c
 
 

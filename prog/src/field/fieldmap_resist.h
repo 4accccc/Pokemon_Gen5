@@ -97,8 +97,9 @@ typedef struct {
 }FLDMAPPER_RESIST_TEX;
 
 typedef struct {
-	u32 arcID;		// 無い場合はFLDMAPPER_MAPDATA_NULLを指定
-	u32 datID;		// 無い場合はFLDMAPPER_MAPDATA_NULLを指定
+	u32 ita_datID;		// 無い場合はFLDMAPPER_MAPDATA_NULLを指定
+	u32 itp_anm_datID;		// 無い場合はFLDMAPPER_MAPDATA_NULLを指定
+	u32 itp_tex_datID;		// 無い場合はFLDMAPPER_MAPDATA_NULLを指定
 }FLDMAPPER_RESIST_GROUND_ANIME;
 
 //------------------------------------------------------------------

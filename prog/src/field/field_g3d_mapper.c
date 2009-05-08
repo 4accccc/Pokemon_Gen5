@@ -9,6 +9,8 @@
 #include "gflib.h"
 #include "system\gfl_use.h"	//乱数用
 
+#include "arc\arc_def.h"	// アーカイブデータ
+
 #include "mapdatafunc/field_func_mapeditor_file.h"
 #include "mapdatafunc/field_func_pmcustom_file.h"
 #include "mapdatafunc/field_func_bridge_file.h"
@@ -289,7 +291,6 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 
 	// 地面アニメーション管理
 	if( g3Dmapper->granime ){
-		
 		FIELD_GRANM_Main( g3Dmapper->granime );
 	}
 }
@@ -377,11 +378,32 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 	//CreateGlobalObject( g3Dmapper, resistData );
 
 	// 地面アニメーション作成
-	if( resistData->ground_anime.arcID == FLDMAPPER_MAPDATA_NULL ){
-		g3Dmapper->granime = NULL;
-	}else{
-		g3Dmapper->granime = FIELD_GRANM_Create( resistData->ground_anime.arcID, 
-				resistData->ground_anime.datID, MAP_BLOCK_COUNT, g3Dmapper->heapID );
+	{
+		static FIELD_GRANM_SETUP granm_setup = {
+			FALSE, FALSE,
+			MAP_BLOCK_COUNT,
+			ARCID_AREA_ITA, 0,
+			ARCID_AREA_ITP, 0, 0,
+		};
+	
+		// ITAアニメーションの設定
+		if( resistData->ground_anime.ita_datID == FLDMAPPER_MAPDATA_NULL ){
+			granm_setup.ita_use			= FALSE;
+		}else{
+			granm_setup.ita_use			= TRUE;
+			granm_setup.ita_dataID	= resistData->ground_anime.ita_datID;
+		}
+
+		// ITPアニメーションの設定
+		if( resistData->ground_anime.itp_anm_datID == FLDMAPPER_MAPDATA_NULL ){
+			granm_setup.itp_use			= FALSE;
+		}else{
+			granm_setup.itp_use			= TRUE;
+			granm_setup.itp_anmID		= resistData->ground_anime.itp_anm_datID;
+			granm_setup.itp_texID		= resistData->ground_anime.itp_tex_datID;
+		}
+
+		g3Dmapper->granime = FIELD_GRANM_Create( &granm_setup, g3Dmapper->globalTexture, g3Dmapper->heapID );
 	}
 	
 	
@@ -1381,11 +1403,7 @@ FIELD_BMODEL_MAN* FLD_G3D_MAP_EXWORK_GetBModelMan( const FLD_G3D_MAP_EXWORK* cp_
 static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmapper, u32 index )
 {
 	// 地面アニメ
-	if( g3Dmapper->granime ){
-		p_wk->p_granm_wk = FIELD_GRANM_GetWork( g3Dmapper->granime, index );
-	}else{
-		p_wk->p_granm_wk = NULL;
-	}
+	p_wk->p_granm_wk = FIELD_GRANM_GetWork( g3Dmapper->granime, index );
 }
 
 //----------------------------------------------------------------------------

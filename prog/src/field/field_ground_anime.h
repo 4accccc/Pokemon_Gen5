@@ -39,6 +39,20 @@ typedef struct _FIELD_GRANM FIELD_GRANM;
 //=====================================
 typedef struct _FIELD_GRANM_WORK FIELD_GRANM_WORK;
 
+//-------------------------------------
+///	初期化データ
+//=====================================
+typedef struct {
+	u16 ita_use:1;
+	u16 itp_use:1;
+	u16 block_num:14;
+	u16 ita_arcID;
+	u16 ita_dataID;
+	u16 itp_arcID;
+	u16 itp_anmID;
+	u16 itp_texID;
+} FIELD_GRANM_SETUP;
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -50,7 +64,7 @@ typedef struct _FIELD_GRANM_WORK FIELD_GRANM_WORK;
 ///	フィールド地面アニメーション管理システム
 //	操作関数
 //=====================================
-extern FIELD_GRANM* FIELD_GRANM_Create( u32 arcID, u32 dataID, u32 block_num, u32 heapID );
+extern FIELD_GRANM* FIELD_GRANM_Create( const FIELD_GRANM_SETUP* cp_setup, const GFL_G3D_RES* cp_tex, u32 heapID );
 extern void FIELD_GRANM_Delete( FIELD_GRANM* p_sys );
 extern void FIELD_GRANM_Main( FIELD_GRANM* p_sys );
 extern FIELD_GRANM_WORK* FIELD_GRANM_GetWork( const FIELD_GRANM* cp_sys, u32 idx );
