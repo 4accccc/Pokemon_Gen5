@@ -57,21 +57,6 @@
  * @brief		ＢＧ描画データ
  */
 //------------------------------------------------------------------
-static const u16 plttData[PLTT_SIZ/2] = { 
-	0x0000, 0x18C6, 0x2108, 0x021F, 0x0000, 0x0000, 0x0000, 0x0000,
-	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
-
-static const u16 plttData2[PLTT_SIZ/2] = { 
-	0x0000, 0x18C6, 0x2108, 0x031F, 0x0000, 0x0000, 0x0000, 0x0000,
-	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
-
-#define BCOL1 (1)
-#define BCOL2 (2)
-#define LCOL	(3)
-#define COLDATA_LETTER1 (0x21f)
-#define COLDATA_LETTER2 (0x31f)
 //------------------------------------------------------------------
 /**
  * @brief	タッチパネル判定テーブル
@@ -506,7 +491,7 @@ static void systemSetup(SAMPLE2_WORK* sw)
 	bg_init(sw->heapID);
 	//フォント用パレット転送
 	GFL_BG_SetBackGroundColor( TEXT_FRAME, BACKGROUND_COLOR );
-	GFL_BG_LoadPalette( TEXT_FRAME, (void*)plttData, PLTT_SIZ, TEXT_PLTTID * PLTT_SIZ );
+	//GFL_BG_LoadPalette( TEXT_FRAME, (void*)plttData, PLTT_SIZ, TEXT_PLTTID * PLTT_SIZ );
 
 	//カメラ作成
 	sw->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(&cameraPos, &cameraTarget, sw->heapID);
