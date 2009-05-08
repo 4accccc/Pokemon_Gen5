@@ -174,6 +174,7 @@ BMPOAM_ACT_PTR BmpOam_ActorAdd(BMPOAM_SYS_PTR bsp, const BMPOAM_ACT_DATA *head)
 	bact->act_num_x = num_x;
 	bact->act_num_y = num_y;
 	bact->setSerface = head->setSerface;
+	bact->draw_type = head->draw_type;
 	
 	//ƒLƒƒƒ‰“o˜^
 	hdl = GFL_ARC_OpenDataHandle(ARCID_BMPOAM, bsp->heap_id);
