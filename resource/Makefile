@@ -58,6 +58,7 @@ SUBDIRS	=	wmi \
 			record \
 			selbox \
 			particle/wazaeffect \
+			particle/battleeffect \
 			others \
 			wazaeffect
 
