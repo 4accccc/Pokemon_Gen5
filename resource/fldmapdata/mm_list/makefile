@@ -6,7 +6,7 @@
 #	@author	tamada GAME FREAK inc.
 #
 #----------------------------------------------------------------------------
-USERS = kagaya
+USERS = kagaya lee_hyunjung
 include $(PROJECT_RSCDIR)/macro_define
 
 #----------------------------------------------------------------------------
@@ -27,6 +27,7 @@ ARCNAME	=	move_model_list.narc
 ARCLIST	=	arclist.txt
 ARCHEAD	=	mmlist_def.h
 ASMFILES	= $(wildcard mmlid_*.s)
+FMMDLHEAD = $(PROJECT_ROOT)/resource/fldmmdl/fldmmdl_objcode.h
 
 #Makeで生成される*.bin/*.narcはmake cleanの削除対象にする
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
@@ -74,13 +75,13 @@ endif
 #	エリア毎のアセンブラファイル生成
 #----------------------------------------------------------------------------
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
-$(RSCTXT):	$(RSCFILE)
+$(RSCTXT): $(RSCFILE)
 	@echo 動作モデル管理表変換処理･･･
 	@$(XLS2TXT) $(RSCFILE)				#タブ区切りテキストに変換
 	
 ASMFILE:	$(ASMFILES:.s=.bin)
 
-$(ARCLIST):	 $(RSCTXT)
+$(ARCLIST): $(RSCTXT) $(FMMDLHEAD)
 	@echo エリア別データ生成処理･･･
 	@$(TXT2ASM)  $(RSCTXT) $(ARCLIST) $(ARCHEAD)
 	@echo 個別アセンブラファイルコンパイル･･･
