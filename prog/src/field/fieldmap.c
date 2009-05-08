@@ -3,7 +3,9 @@
  * @file	fieldmap.c
  * @brief	フィールドマップ処理
  * @author
- * @data	
+ *
+ * @todo  1/30で動作しているがキーは1/60で拾っているので取れないタイミングがある
+ * @todo  外部からのフィールドマップ終了リクエストが同上のタイミングを考慮していない
  */
 //======================================================================
 #include <gflib.h>
@@ -85,25 +87,65 @@ typedef enum{
 //--------------------------------------------------------------
 ///	定数
 //--------------------------------------------------------------
-#define BACKGROUND_COL	(GX_RGB(30,31,31)) ///<背景色
-#define FOG_COL			(GX_RGB(31,31,31))		///<フォグ色
-#define DTCM_SIZE		(0x1000) ///<DTCMエリアのサイズ
 
-#define FIELD_CLSYS_RESOUCE_MAX		(64) ///<セルアクターリソース最大
 
-///3D面の描画プライオリティー
-#define G3D_FRM_PRI (1)
+enum { 
+  ///3D面の描画プライオリティー
+  FIELD_3D_FRAME_PRI    =   1,
+
+  ///テクスチャ使用サイズ指定
+  FIELD_3D_VRAM_SIZE    =   GFL_G3D_TEX256K,
+
+  ///パレット使用サイズ指定
+  FIELD_3D_PLTT_SIZE    =   GFL_G3D_PLT64K,
+
+  ///DTCMエリアのサイズ
+  FIELD_3D_DTCM_SIZE    =   0x1000, 
+
+///billboardActで使用するリソースの最大設定可能数
+  FIELD_G3D_BBDACT_RESMAX	    =   64,
+///billboardActで使用するオブジェクトの最大設定可能数
+  FIELD_G3D_BBDACT_ACTMAX	    =   256,
+
+  ///<セルアクターリソース最大
+  FIELD_CLSYS_RESOUCE_MAX		  =   64,
+
+  ///フォグ色
+  FIELD_DEFAULT_FOG_COLOR		  =   (GX_RGB(31,31,31)),
+  ///背景色
+  FIELD_DEFAULT_BG_COLOR	    =   (GX_RGB(30,31,31)),
+};
+
+
 ///g3Dutilで使用するリソースの最大設定可能数
 #define G3D_UTIL_RESCOUNT	(512)
 ///g3Dutilで使用するオブジェクトの最大設定可能数
 #define G3D_UTIL_OBJCOUNT	(128)
-///billboardActで使用するリソースの最大設定可能数
-#define G3D_BBDACT_RESMAX	(64)
-///billboardActで使用するオブジェクトの最大設定可能数
-#define G3D_BBDACT_ACTMAX	(256)
 
 #define MMDL_LIST_MAX	(64) ///<動作モデルリスト最大
 
+//--------------------------------------------------------------
+/**
+ * @brief フィールドマップシーケンス動作関数の戻り値
+ */
+//--------------------------------------------------------------
+typedef enum {  
+  MAINSEQ_RESULT_CONTINUE,      ///<動作継続中
+  MAINSEQ_RESULT_NEXTSEQ,       ///<次のシーケンスへ切り替え
+  MAINSEQ_RESULT_FINISH,        ///<終了
+
+  MAINSEQ_RESULT_MAX
+}MAINSEQ_RESULT;
+
+//--------------------------------------------------------------
+/**
+ * @brief フィールドマップシーケンス動作関数の型定義
+ */
+//--------------------------------------------------------------
+typedef MAINSEQ_RESULT (*FIELDMAP_MAIN_FUNC)(GAMESYS_WORK *, FIELDMAP_WORK *);
+
+//======================================================================
+//======================================================================
 //======================================================================
 //	struct
 //======================================================================
@@ -168,10 +210,16 @@ typedef struct
 //======================================================================
 //	proto
 //======================================================================
-//gamesystem
-static void fldmapMain_GameSystem_SetUp( FIELDMAP_WORK *fieldWork );
-static void	fldmapMain_GameSystem_Remove( FIELDMAP_WORK *fieldWork );
-static void	fldmapMain_GameSystem_Main( FIELDMAP_WORK *fieldWork );
+
+//--------------------------------------------------------------
+//  フィールドメインシーケンス関数群
+//--------------------------------------------------------------
+static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+static MAINSEQ_RESULT mainSeqFunc_update(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 
 //bg
 static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork );
@@ -223,10 +271,9 @@ static const VecFx32 fldmapdata_cameraTarget;
 static const VecFx32 fldmapdata_cameraPos;
 static const GFL_G3D_LIGHTSET_SETUP fldmapdata_light0Setup;
 static const GXRgb fldmapdata_edgeColorTable[8];
+static const u32 fldmapdata_fogColorTable[8];
 
-//----------------------------------
-// 削除予定
-//----------------------------------
+static const u16 fldmapdata_bgColorTable[16];
 
 //======================================================================
 //	フィールドマップ　生成　削除
@@ -283,7 +330,6 @@ void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 	//マップマトリクス
 	MAP_MATRIX_Delete( fieldWork->pMapMatrix );
 	
-  //FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
 	FIELD_COMM_MAIN_TermSystem( fieldWork, fieldWork->commSys );
 
 	GFL_HEAP_FreeMemory( fieldWork );
@@ -292,258 +338,54 @@ void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 //======================================================================
 //	フィールドマップ　メイン
 //======================================================================
-//--------------------------------------------------------------
-/**
- * フィールドマップ　メイン
- * @param	gsys	GAMESYS_WORK
- * @param	fieldWork FIELDMAP_WORK
- * @retval	BOOL
- */
-//--------------------------------------------------------------
-#if 0
-BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-{
-	int i;
-	BOOL return_flag = FALSE;
-	
-	fieldWork->timer++;
-	
-	switch( fieldWork->seq ){
-	case FLDMAPSEQ_SETUP_SYSTEM: //基本システムセットアップ
-		fldmapMain_GameSystem_SetUp( fieldWork );
-		fieldWork->seq++;
-		break;
-	case FLDMAPSEQ_SETUP: //セットアップ
-		fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID );
-		
-		fieldWork->camera_control = FIELD_CAMERA_Create(
-				fieldWork,
-				ZONEDATA_GetCameraID(fieldWork->map_id),
-				fieldWork->g3Dcamera,
-				&fieldWork->now_pos,
-				fieldWork->heapID );
-
-		fieldWork->bmodel_man = FIELD_BMODEL_MAN_Create( fieldWork->heapID );
-		{
-			GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-			
-			FIELDDATA_SetMapperData(fieldWork->map_id,
-					GAMEDATA_GetSeasonID(gamedata),
-					&fieldWork->map_res,
-					fieldWork->pMapMatrix );
-			//とりあえずここで配置モデルリストをセットする
-			FIELD_BMODEL_MAN_Load(fieldWork->bmodel_man, fieldWork->map_id);
-			fieldWork->map_res.gobjData = (void*)FIELD_BMODEL_MAN_GetOBJTBL(fieldWork->bmodel_man);
-		}
-		
-		//フィールドマップ用ロケーション作成
-		fieldWork->location.zone_id = fieldWork->map_id;
-		fieldWork->location.pos = fieldWork->now_pos;
-		
-		//マップデータ登録
-		FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
-		
-		//動作モデル初期化
-		fldmapMain_FLDMMDL_Init(fieldWork);
-		
-		{
-			const PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
-			const u16 dir = pw->direction;
-			const VecFx32 *pos = &pw->position;
-
-			//自機作成
-			fieldWork->field_player =
-				FIELD_PLAYER_Create( fieldWork, pos, fieldWork->heapID );
-			
-			//登録テーブルごとに個別の初期化処理を呼び出し
-			fieldWork->now_pos = *pos;
-			fieldWork->func_tbl->create_func(fieldWork, &fieldWork->now_pos, dir);
-			
-			FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
-			
-			TAMADA_Printf("start X,Y,Z=%d,%d,%d\n",
-					FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
-			OS_Printf( "Start Dir = %d\n", pw->direction );
-		}
-		
-		// フォグシステム生成
-		fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
-
-		// ライトシステム生成
-		{
-			GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-			fieldWork->light = FIELD_LIGHT_Create( 0, 
-					GAMEDATA_GetSeasonID(gamedata), 0, 
-					fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
-		}
-
-		// 天気システム生成
-		fieldWork->weather_sys = FIELD_WEATHER_Init(
-				fieldWork->camera_control,
-				fieldWork->light,
-				fieldWork->fog,
-				fieldWork->heapID );
-		
-		// 天気晴れ
-		FIELD_WEATHER_Set(
-				fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
-		
-		//情報バーの初期化
-		fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, FIELD_SUBSCREEN_NORMAL);
-		
-		//フィールドデバッグ初期化
-		fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
-		fieldWork->seq++;
-		break;
-	case FLDMAPSEQ_READY: //セットアップ完了
-		fldmapMain_GameSystem_Main( fieldWork );
-		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
-		FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
-		
-		if( fieldWork->fldMMdlSys != NULL ){
-			FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
-		}
-		
-		if( FLDMAPPER_CheckTrans(fieldWork->g3Dmapper) == FALSE ){
-			break;
-		}
-		
-		//フィールドマップ用イベント起動チェックをセットする
-		GAMESYSTEM_EVENT_EntryCheckFunc(
-				gsys, fldmapFunc_Event_CheckEvent, fieldWork );
-		
-		fieldWork->gamemode = GAMEMODE_NORMAL;
-		fieldWork->seq++;
-		break;
-	case FLDMAPSEQ_UPDATE: //フィールドマップ更新
-		//ゾーン更新処理
-		fldmapMain_UpdateMoveZone( fieldWork );
-		
-		//マップ別 登録処理
-		fieldWork->key_trg = 0;
-		fieldWork->key_cont = 0;
-
-		if( GAMESYSTEM_GetEvent(gsys) == NULL) {
-			fieldWork->key_trg = GFL_UI_KEY_GetTrg();
-			fieldWork->key_cont = GFL_UI_KEY_GetCont();
-			
-			//登録テーブルごとに個別のメイン処理を呼び出し
-			fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
-			
-			//Mapシステムに位置を渡している。
-			//これがないとマップ移動しないので注意
-			FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
-		}
-		
-		//自機更新
-		FIELD_PLAYER_Update( fieldWork->field_player );
-#if 0
-		//通信用アクター更新
-		fieldMainCommActorProc( fieldWork );
-#endif	
-		//通信用処理(プレイヤーの座標の設定とか
-		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork,
-				fieldWork->gsys, fieldWork->field_player, fieldWork->commSys );
-		
-		FIELD_CAMERA_Main( fieldWork->camera_control, fieldWork->key_cont );
-		fldmapMain_GameSystem_Main( fieldWork );
-		FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
-		FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
-		
-		if( fieldWork->fldMMdlSys != NULL ){
-			FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
-		}
-		break;
-	case FLDMAPSEQ_FREE: //フィールドマップ開放
-		//イベント起動チェックを停止する
-		GAMESYSTEM_EVENT_EntryCheckFunc(gsys, NULL, NULL);
-		
-		{ //アクターが持つプレイヤー現在位置をPLAYER_WORKに反映する
-			VecFx32 player_pos;
-			PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
-			FIELD_PLAYER_GetPos(fieldWork->field_player, &player_pos);
-			PLAYERWORK_setPosition(pw, &player_pos);
-		}
-		
-		//通信用アクター削除
-#if 0
-		fieldMainCommActorFree( fieldWork );
-#endif
-
-		//情報バーの開放
-		FIELD_SUBSCREEN_Exit(fieldWork->fieldSubscreenWork);
-
-		// 天気システム破棄
-		FIELD_WEATHER_Exit( fieldWork->weather_sys );
-		fieldWork->weather_sys = NULL;
-
-		// ライトシステム破棄
-		FIELD_LIGHT_Delete( fieldWork->light );
-		
-		// フォグシステム破棄
-		FIELD_FOG_Delete( fieldWork->fog );
-		
-		FIELD_CAMERA_Delete( fieldWork->camera_control );
-		
-		//登録テーブルごとに個別の終了処理を呼び出し
-		fieldWork->func_tbl->delete_func(fieldWork);
-		fldmap_ClearMapCtrlWork( fieldWork );
-		
-		fldmapMain_FLDMMDL_Finish(fieldWork);
-		
-		//自機破棄
-		FIELD_PLAYER_Delete( fieldWork->field_player );
-		
-    FLDMAPPER_ReleaseData( fieldWork->g3Dmapper );
-		FIELD_BMODEL_MAN_Delete( fieldWork->bmodel_man );
-		
-		FLDMSGBG_Delete( fieldWork->fldMsgBG );
-		
-		FIELD_DEBUG_Delete( fieldWork->debugWork );
-
-		fieldWork->seq ++;
-		break;
-	case FLDMAPSEQ_END: //終了
-		fldmapMain_GameSystem_Remove( fieldWork );
-		return_flag = TRUE;
-		break;
-	}
-
-	return return_flag;
-}
-
-#else
-
-//======================================================================
-//======================================================================
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-typedef enum {  
-  MAINSEQ_RESULT_CONTINUE,
-  MAINSEQ_RESULT_FINISH,
-  MAINSEQ_RESULT_NEXTSEQ,
-
-  MAINSEQ_RESULT_MAX
-}MAINSEQ_RESULT;
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-typedef MAINSEQ_RESULT (*FIELDMAP_MAIN_FUNC)(GAMESYS_WORK *, FIELDMAP_WORK *);
-
-//======================================================================
-//======================================================================
-static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-static MAINSEQ_RESULT mainSeqFunc_update(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-
+//  フィールドメインシーケンス関数群
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
-	fldmapMain_GameSystem_SetUp( fieldWork );
+	HEAPID heapID = fieldWork->heapID;
+	
+	//乱数初期化
+	GFL_STD_MtRandInit(0);
+
+	//VRAMクリア
+	GFL_DISP_ClearVRAM( GX_VRAM_D );
+	//VRAM設定
+	GFL_DISP_SetBank( &fldmapdata_dispVram );
+
+	//BG初期化
+	fldmap_BG_Init( fieldWork );
+	
+	// CLACT初期化
+	GFL_CLACT_SYS_Create(
+			&fldmapdata_CLSYS_Init, &fldmapdata_dispVram, heapID );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+
+	//BMP初期化
+	GFL_BMPWIN_Init( heapID );
+	
+	//FONT初期化
+	GFL_FONTSYS_Init();
+	
+	//３Ｄシステム起動
+	GFL_G3D_Init(
+			GFL_G3D_VMANLNK, FIELD_3D_VRAM_SIZE,
+      GFL_G3D_VMANLNK, FIELD_3D_PLTT_SIZE,
+			FIELD_3D_DTCM_SIZE, fieldWork->heapID, fldmap_G3D_CallBackSetUp );
+	DEBUG_GFL_G3D_SetVManSize( FIELD_3D_VRAM_SIZE, FIELD_3D_PLTT_SIZE );
+
+	//３Ｄデータのロード
+	fldmap_G3D_Load( fieldWork );
+	
+	TAMADA_Printf("TEX:%06x PLT:%04x\n",
+			DEBUG_GFL_G3D_GetBlankTextureSize(),
+			DEBUG_GFL_G3D_GetBlankPaletteSize());
+
+	//VBlankTCB
+	fieldWork->g3dVintr =
+		GFUser_VIntr_CreateTCB( fldmap_G3D_VBlank, (void*)fieldWork, 0 );
+
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
@@ -595,16 +437,11 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     //登録テーブルごとに個別の初期化処理を呼び出し
     fieldWork->now_pos = *pos;
     fieldWork->func_tbl->create_func(fieldWork, &fieldWork->now_pos, dir);
-#if 0
-    OS_Printf( "testtestD %d, %d, %d\n",
-        pos->x/FX32_ONE, pos->y/FX32_ONE, pos->z/FX32_ONE );
-#endif
     
     FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
     
-    TAMADA_Printf("start X,Y,Z=%d,%d,%d\n",
-        FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
-    OS_Printf( "Start Dir = %d\n", pw->direction );
+    TAMADA_Printf("start X,Y,Z=%d,%d,%d\n", FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
+    TAMADA_Printf( "Start Dir = %d\n", pw->direction );
   }
   
   // フォグシステム生成
@@ -634,7 +471,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
-  //fieldWork->seq++;
+
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
@@ -643,7 +480,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
-  //fldmapMain_GameSystem_Main( fieldWork );
 	fldmap_G3D_Control( fieldWork );
 	fldmap_G3D_Draw( fieldWork );
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
@@ -711,8 +547,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
   FIELD_CAMERA_Main( fieldWork->camera_control, fieldWork->key_cont );
-  //fldmapMain_GameSystem_Main( fieldWork );
-	//fldmap_G3D_Control( fieldWork );
 	fldmap_G3D_Draw( fieldWork );
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
   
@@ -771,62 +605,77 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
-  fldmapMain_GameSystem_Remove( fieldWork );
+	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
+
+	fldmap_G3D_Unload( fieldWork );	//３Ｄデータ破棄
+	
+	GFL_CLACT_SYS_Delete(); // CLACT破棄
+	
+	GFL_BMPWIN_Exit();
+	
+	fldmap_BG_Exit( fieldWork );
   return MAINSEQ_RESULT_FINISH;
 }
 
+//======================================================================
+//======================================================================
 //--------------------------------------------------------------
-//--------------------------------------------------------------
-static const FIELDMAP_MAIN_FUNC mainfuncTable[FLDMAPSEQ_MAX][2] = { 
-	//FLDMAPSEQ_SETUP_SYSTEM: 基本システムセットアップ
-  { 
-    mainSeqFunc_setup_system,
-    mainSeqFunc_setup_system,
-  },
-	//FLDMAPSEQ_SETUP: セットアップ
-  { 
-    mainSeqFunc_setup,
-    mainSeqFunc_setup,
-  },
-	//FLDMAPSEQ_READY: セットアップ完了
-  { 
-    mainSeqFunc_ready,
-    NULL,
-  },
-	//FLDMAPSEQ_UPDATE: フィールドマップ更新
-  { 
-    mainSeqFunc_update_top,
-    mainSeqFunc_update_tail,
-  },
-	//FLDMAPSEQ_FREE: フィールドマップ開放
-  { 
-    mainSeqFunc_free,
-    mainSeqFunc_free,
-  },
-	//FLDMAPSEQ_END: 終了
-  { 
-    mainSeqFunc_end,
-    mainSeqFunc_end,
-  },
-};
-
-//--------------------------------------------------------------
+/**
+ * フィールドマップ　メイン
+ * @param	gsys	GAMESYS_WORK
+ * @param	fieldWork FIELDMAP_WORK
+ * @retval	TRUE    フィールドマップ終了
+ * @retval  FALSE   動作継続中
+ */
 //--------------------------------------------------------------
 BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
+  static const FIELDMAP_MAIN_FUNC mainfuncTable[FLDMAPSEQ_MAX][2] = { 
+    //FLDMAPSEQ_SETUP_SYSTEM: 基本システムセットアップ
+    { 
+      mainSeqFunc_setup_system,
+      mainSeqFunc_setup_system,
+    },
+    //FLDMAPSEQ_SETUP: セットアップ
+    { 
+      mainSeqFunc_setup,
+      mainSeqFunc_setup,
+    },
+    //FLDMAPSEQ_READY: セットアップ完了
+    { 
+      mainSeqFunc_ready,
+      mainSeqFunc_ready,
+    },
+    //FLDMAPSEQ_UPDATE: フィールドマップ更新
+    { 
+      mainSeqFunc_update_top,
+      mainSeqFunc_update_tail,
+    },
+    //FLDMAPSEQ_FREE: フィールドマップ開放
+    { 
+      mainSeqFunc_free,
+      mainSeqFunc_free,
+    },
+    //FLDMAPSEQ_END: 終了
+    { 
+      mainSeqFunc_end,
+      mainSeqFunc_end,
+    },
+  };
+
   MAINSEQ_RESULT result;
   FIELDMAP_MAIN_FUNC func;
+
 
   GF_ASSERT(fieldWork->seq < NELEMS(mainfuncTable));
 	fieldWork->timer++;
 	
+  result = MAINSEQ_RESULT_CONTINUE;
   func = mainfuncTable[fieldWork->seq][fieldWork->seq_switch];
-  if (func == NULL)
+  if (func != NULL) 
   { 
-    fieldWork->seq_switch = !fieldWork->seq_switch;
-    return FALSE;
+    result = func(gsys, fieldWork);
   }
-  result = func(gsys, fieldWork);
 
   switch (result) 
   { 
@@ -841,9 +690,8 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
     return TRUE;
   }
   return FALSE;
-
 }
-#endif
+
 
 //======================================================================
 //	フィールドマップ　ツール
@@ -1144,85 +992,6 @@ void FIELDMAP_SetFieldSubscreenWork(
 }
 
 //======================================================================
-//	フィールドマップ　サブ　ゲームシステム
-//======================================================================
-//--------------------------------------------------------------
-/**
- * フィールドマップ　システムセットアップ
- * @param	fieldWork FIELDMAP_WORK
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void fldmapMain_GameSystem_SetUp( FIELDMAP_WORK *fieldWork )
-{
-	HEAPID heapID = fieldWork->heapID;
-	
-	//乱数初期化
-	GFL_STD_MtRandInit(0);
-
-	//VRAMクリア
-	GFL_DISP_ClearVRAM( GX_VRAM_D );
-	//VRAM設定
-	GFL_DISP_SetBank( &fldmapdata_dispVram );
-
-	//BG初期化
-	fldmap_BG_Init( fieldWork );
-	
-	// CLACT初期化
-	GFL_CLACT_SYS_Create(
-			&fldmapdata_CLSYS_Init, &fldmapdata_dispVram, heapID );
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-
-	//BMP初期化
-	GFL_BMPWIN_Init( heapID );
-	
-	//FONT初期化
-	GFL_FONTSYS_Init();
-	
-	//３Ｄデータのロード
-	fldmap_G3D_Load( fieldWork );
-	
-	//VBlankTCB
-	fieldWork->g3dVintr =
-		GFUser_VIntr_CreateTCB( fldmap_G3D_VBlank, (void*)fieldWork, 0 );
-}
-
-//--------------------------------------------------------------
-/**
- * フィールドマップ　システム破棄
- * @param	fieldWork FIELDMAP_WORK
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void fldmapMain_GameSystem_Remove( FIELDMAP_WORK *fieldWork )
-{
-	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
-
-	fldmap_G3D_Unload( fieldWork );	//３Ｄデータ破棄
-	
-	GFL_CLACT_SYS_Delete(); // CLACT破棄
-	
-	GFL_BMPWIN_Exit();
-	
-	fldmap_BG_Exit( fieldWork );
-}
-
-//--------------------------------------------------------------
-/**
- * フィールドマップ　システムメイン
- * @param fieldWork FIELDMAP_WORK
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void fldmapMain_GameSystem_Main( FIELDMAP_WORK *fieldWork )
-{
-	fldmap_G3D_Control( fieldWork );
-	fldmap_G3D_Draw( fieldWork );
-	GFL_CLACT_SYS_Main(); // CLSYSメイン
-}
-
-//======================================================================
 //	フィールドマップ　サブ　BG関連
 //======================================================================
 //--------------------------------------------------------------
@@ -1237,14 +1006,9 @@ static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork )
 	//ＢＧシステム起動
 	GFL_BG_Init( fieldWork->heapID );
 	
-	//背景色パレット作成＆転送
-	{
-		u16* plt = GFL_HEAP_AllocClearMemoryLo( fieldWork->heapID, 16*2 );
-		plt[0] = BACKGROUND_COL;
-		GFL_BG_LoadPalette( GFL_BG_FRAME0_M, plt, 16*2, 0 ); //メイン画面の背景色
-		GFL_BG_LoadPalette( GFL_BG_FRAME0_S, plt, 16*2, 0 ); //サブ画面の背景色
-		GFL_HEAP_FreeMemory( plt );
-	}
+	//背景色パレット転送
+  GFL_BG_LoadPalette( GFL_BG_FRAME0_M, (void*)fldmapdata_bgColorTable, 16*2, 0 ); //メイン画面の背景色
+  GFL_BG_LoadPalette( GFL_BG_FRAME0_S, (void*)fldmapdata_bgColorTable, 16*2, 0 ); //サブ画面の背景色
 
 	//ＢＧモード設定
 	GFL_BG_SetBGMode( &fldmapdata_bgsysHeader );
@@ -1252,13 +1016,7 @@ static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork )
 	//ＢＧコントロール設定
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
 	
-	//３Ｄシステム起動
-	GFL_G3D_Init(
-			GFL_G3D_VMANLNK,
-			GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
-			DTCM_SIZE, fieldWork->heapID, fldmap_G3D_CallBackSetUp );
-	DEBUG_GFL_G3D_SetVManSize( GFL_G3D_TEX256K, GFL_G3D_PLT64K );
-	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
+	GFL_BG_SetBGControl3D( FIELD_3D_FRAME_PRI );
 
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
@@ -1298,21 +1056,9 @@ static void fldmap_G3D_CallBackSetUp( void )
 	G3X_AlphaBlend( TRUE );
 
 	// フォグセットアップ
-  {
-		int i;
-		u32 fog_table[8];
-	
-		G3X_SetFog(TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x0400, 0x00e00 );
-		G3X_SetFogColor(FOG_COL, 0);
-
-		for ( i=0; i<8; i++ ){
-			fog_table[i] =
-					(u32)(((i*16)<<0) |
-							((i*16+4)<<8) | ((i*16+8)<<16) | ((i*16+12)<<24));
-		}
-
-		G3X_SetFogTable(&fog_table[0]);
-	}
+  G3X_SetFog(TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x0400, 0x00e00 );
+  G3X_SetFogColor(FIELD_DEFAULT_FOG_COLOR, 0);
+  G3X_SetFogTable(fldmapdata_fogColorTable);
 	
 	// クリアカラーの設定
 	//color,alpha,depth,polygonID,fog
@@ -1338,7 +1084,7 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
 	//配置物設定
 	fieldWork->g3Dmapper = FLDMAPPER_Create( fieldWork->heapID );
 	fieldWork->bbdActSys = GFL_BBDACT_CreateSys(
-			G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX,
+			FIELD_G3D_BBDACT_RESMAX, FIELD_G3D_BBDACT_ACTMAX,
 			fldmap_G3D_BBDTrans, fieldWork->heapID );
 
 	//カメラ作成
@@ -1353,9 +1099,6 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
 	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );
 	
-	OS_Printf("TEX:%06x PLT:%04x\n",
-			DEBUG_GFL_G3D_GetBlankTextureSize(),
-			DEBUG_GFL_G3D_GetBlankPaletteSize());
 }
 
 //--------------------------------------------------------------
@@ -1578,7 +1321,6 @@ static GMEVENT * fldmap_Event_CheckConnect(
 		return EVENT_ChangeMap(gsys, fieldWork, sp);
 	}else{
 		LOCATION loc_req;
-		GMEVENT * event;
 		CONNECTDATA_SetNextLocation(cnct, &loc_req);
 		return EVENT_ChangeMap(gsys, fieldWork, &loc_req);
 	}
@@ -2026,3 +1768,25 @@ static const GXRgb fldmapdata_edgeColorTable[8] = {
 	GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),
 	GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),
 };
+
+//--------------------------------------------------------------
+//  3D  フォグカラー
+//--------------------------------------------------------------
+#define FOG_VALUE(v) (u32)(((v*16)<<0) | ((v*16+4)<<8) | ((v*16+8)<<16) | ((v*16+12)<<24))
+static const u32 fldmapdata_fogColorTable[8] = {  
+  FOG_VALUE(0),
+  FOG_VALUE(1),
+  FOG_VALUE(2),
+  FOG_VALUE(3),
+  FOG_VALUE(4),
+  FOG_VALUE(5),
+  FOG_VALUE(6),
+  FOG_VALUE(7),
+};
+//--------------------------------------------------------------
+//  BG  背景カラー
+//--------------------------------------------------------------
+static const u16 fldmapdata_bgColorTable[16] = { 
+  FIELD_DEFAULT_BG_COLOR, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+};
+
