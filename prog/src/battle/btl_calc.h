@@ -199,6 +199,7 @@ extern void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont
 
 extern void BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick, BPP_SICK_CONT* cont );
 extern void BTL_CALC_MakeDefaultWazaSickCont( PokeSick sick, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* cont );
+extern BPP_SICK_CONT BTL_CALC_MakeMoudokuSickCont( void );
 
 //=============================================================================================
 /**
