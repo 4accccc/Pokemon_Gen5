@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-08T10:52:41"/>
+	<create user="matsumiya" host="W00179" date="2009-05-08T18:21:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="130"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -291,6 +291,31 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_t01_man1_01">
+		<comment>文字モードの切り替え
+・</comment>
+		<attribute name="キャラ指定">男性１
+man1</attribute>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="msg_t01_man1_02">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="msg_t01_middleman1_01">
+		<attribute name="キャラ指定">中年男性
+middleman1</attribute>
+		<language name="JPN" width="256">かがくの　ちからって　すげー！▼
+いまじゃ　むせんを　つかって
+せかいの　ひとびとと　あそべるんだと</language>
+		<language name="JPN_KANJI" width="256">かがくの　ちからって　すげー！▼
+いまじゃ　むせんを　つかって
+せかいの　ひとびとと　あそべるんだと</language>
+	</row>
 
 	<row id="msg_t01_sign1_01">
 		<comment>看板分類：タウンマップ</comment>
