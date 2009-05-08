@@ -763,6 +763,7 @@ static GMEVENT_RESULT DMenuSubscreenSelectEvent(
 static void setupTouchCameraSubscreen(DMESSWORK * dmess);
 static void setupSoundViewerSubscreen(DMESSWORK * dmess);
 static void setupNormalSubscreen(DMESSWORK * dmess);
+static void setupTopMenuSubscreen(DMESSWORK * dmess);
 
 //--------------------------------------------------------------
 /**
@@ -799,6 +800,7 @@ static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[PMSEASON_TOTAL] =
 	{ DEBUG_FIELD_STR_SUBSCRN01, (void*)setupTouchCameraSubscreen },
 	{ DEBUG_FIELD_STR_SUBSCRN02, (void*)setupSoundViewerSubscreen },
 	{ DEBUG_FIELD_STR_SUBSCRN03, (void*)setupNormalSubscreen },
+	{ DEBUG_FIELD_STR_SUBSCRN04, (void*)setupTopMenuSubscreen },
 };
 
 //--------------------------------------------------------------
@@ -893,6 +895,13 @@ static void setupSoundViewerSubscreen(DMESSWORK * dmess)
 static void setupNormalSubscreen(DMESSWORK * dmess)
 { 
   FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_NORMAL);
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void setupTopMenuSubscreen(DMESSWORK * dmess)
+{ 
+  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_TOPMENU);
 }
 
 //======================================================================

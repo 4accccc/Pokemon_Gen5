@@ -27,7 +27,7 @@
 */
 //-----------------------------------------------------------------------------
 
-#define CGEAR_ON (0)
+#define CGEAR_ON (1)
 
 //-----------------------------------------------------------------------------
 /**
@@ -38,9 +38,9 @@
 struct _FIELD_SUBSCREEN_WORK {
 	FIELD_SUBSCREEN_MODE mode;
 	HEAPID heapID;
-  C_GEAR_WORK* cgearWork;
 
 	union {	
+    C_GEAR_WORK* cgearWork;
 		GFL_CAMADJUST * gflCamAdjust;
 		GFL_SNDVIEWER * gflSndViewer;
 		void * checker;
@@ -72,6 +72,10 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork);
 static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
+static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork);
+static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+
 static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork);
 static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
@@ -93,6 +97,12 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		init_normal_subscreen,
 		update_normal_subscreen,
 		exit_normal_subscreen,
+	},
+	{	
+		FIELD_SUBSCREEN_TOPMENU,
+		init_topmenu_subscreen,
+		update_topmenu_subscreen,
+		exit_topmenu_subscreen,
 	},
 	{	
 		FIELD_SUBSCREEN_DEBUG_LIGHT,
@@ -203,12 +213,52 @@ void * FIELD_SUBSCREEN_DEBUG_GetControl(FIELD_SUBSCREEN_WORK * pWork)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	インフォーバーの初期化
+ *	@brief	CGEARの初期化
  *	
  *	@param	heapID	ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
 static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork)
+{
+#if CGEAR_ON
+  pWork->cgearWork = CGEAR_Init();
+#endif
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	インフォーバーの破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+#if CGEAR_ON
+  CGEAR_Exit(pWork->cgearWork);
+#endif
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	インフォーバーの更新
+ */
+//-----------------------------------------------------------------------------
+static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+#if CGEAR_ON
+  CGEAR_Main(pWork->cgearWork);
+#endif
+}
+
+//=============================================================================
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の初期化
+ *	@param	heapID	ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork)
 {
   // BG3 SUB (インフォバー
   static const GFL_BG_BGCNT_HEADER header_sub3 = {
@@ -229,35 +279,26 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork)
 	{
 		GFL_NET_ReloadIcon();
 	}
-#if CGEAR_ON
-  pWork->cgearWork = CGEAR_Init();
-#endif
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	インフォーバーの破棄
+ *	@brief	メニュー画面の破棄
  */
 //-----------------------------------------------------------------------------
-static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
-#if CGEAR_ON
-  CGEAR_Exit(pWork->cgearWork);
-#endif
 	INFOWIN_Exit();
 	GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	インフォーバーの更新
+ *	@brief	メニュー画面の更新
  */
 //-----------------------------------------------------------------------------
-static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
-#if CGEAR_ON
-  CGEAR_Main(pWork->cgearWork);
-#endif
 	INFOWIN_Update();
 }
 

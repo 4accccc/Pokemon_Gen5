@@ -245,6 +245,11 @@ static void _gearBgCreate(C_GEAR_WORK* pWork)
 
 static void _createSubBg(C_GEAR_WORK* pWork)
 {
+  int i = 0;
+  for(i = GFL_BG_FRAME0_S;i <= GFL_BG_FRAME3_S ; i++)
+  {
+    GFL_BG_SetVisible( i, VISIBLE_OFF );
+  }
   {
     int frame = GEAR_MAIN_FRAME;
     GFL_BG_BGCNT_HEADER AffineBgCntDat = {
@@ -422,6 +427,10 @@ static void _workEnd(C_GEAR_WORK* pWork)
   GFL_BG_FillCharacterRelease( GEAR_MAIN_FRAME, 1, 0);
 //  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
 //                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
+
+  GFL_BG_FreeCharacterArea(GEAR_MAIN_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subchar));
+  
   GFL_BG_FreeBGControl(GEAR_BMPWIN_FRAME);
   GFL_BG_FreeBGControl(GEAR_MAIN_FRAME);
 
