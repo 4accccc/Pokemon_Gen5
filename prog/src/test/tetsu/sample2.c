@@ -107,12 +107,14 @@ typedef struct {
 	GFL_G3D_UTIL*				g3Dutil;
 	u16									g3DutilUnitIdx;
 
-	EL_SCOREBOARD_TEX*	elb_tex;
+	EL_SCOREBOARD_TEX*	elb_tex[2];
 
 	GFL_CAMADJUST*			gflCamAdjust;
 	fx32								cameraLength;
 	u16									cameraAngleV;
 	u16									cameraAngleH;
+
+	u16									targetObjID;
 
 	int									timer;
 }SAMPLE2_WORK;
@@ -280,6 +282,7 @@ static void systemSetup(SAMPLE2_WORK* sw);
 static void systemFramework(SAMPLE2_WORK* sw);
 static void systemDelete(SAMPLE2_WORK* sw);
 
+static void changeTargetObject(SAMPLE2_WORK* sw);
 //------------------------------------------------------------------
 /**
  *
@@ -301,15 +304,15 @@ static BOOL	sample2(SAMPLE2_WORK* sw)
 		break;
 
 	case 1:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
 			sw->seq++;
+			break;
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			changeTargetObject(sw);
 		}
 		GFL_CAMADJUST_Main(sw->gflCamAdjust);
-		{
-			u16 col;
-			if( sw->timer & 0x0004 ){ col = COLDATA_LETTER1; } else { col = COLDATA_LETTER2; }
-			GFL_BG_LoadPalette(TEXT_FRAME, (void*)&col, COL_SIZ, TEXT_PLTTID*PLTT_SIZ + LCOL*COL_SIZ);
-		}
+
 		systemFramework(sw);
 		break;
 
@@ -525,15 +528,27 @@ static void systemSetup(SAMPLE2_WORK* sw)
 
 		//ƒAƒjƒ[ƒVƒ‡ƒ“‚ð—LŒø‚É‚·‚é
 		objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx);
-		//elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
-		elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
-		g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
+		{
+			elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
+			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
 
-		anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
-		for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_EnableAnime(g3Dobj, i); } 
+			anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
+			for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_EnableAnime(g3Dobj, i); } 
 
-		g3Dtex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
-		sw->elb_tex = ELBOARD_TEX_Add(g3Dtex, sw->strBuf, sw->heapID);
+			g3Dtex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
+			sw->elb_tex[0] = ELBOARD_TEX_Add(g3Dtex, sw->strBuf, sw->heapID);
+		} 
+		{
+			elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
+			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
+
+			anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
+			for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_EnableAnime(g3Dobj, i); } 
+
+			g3Dtex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
+			sw->elb_tex[1] = ELBOARD_TEX_Add(g3Dtex, sw->strBuf, sw->heapID);
+		}
+		sw->targetObjID = G3DOBJ_ELBOARD1;
 	}
 }
 
@@ -545,7 +560,8 @@ static void systemSetup(SAMPLE2_WORK* sw)
 #define PITCH_LIMIT (0x200)
 static void systemFramework(SAMPLE2_WORK* sw)
 {
-	ELBOARD_TEX_Main(sw->elb_tex);
+	ELBOARD_TEX_Main(sw->elb_tex[0]);
+	ELBOARD_TEX_Main(sw->elb_tex[1]);
 
 	//‚R‚c•`‰æ
 	{
@@ -580,8 +596,7 @@ static void systemFramework(SAMPLE2_WORK* sw)
 			int i, anmCount;
 
 			objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx );
-			//elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
-			elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
+			elboard1Idx = objIdx + sw->targetObjID;
 			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
 
 			GFL_G3D_DRAW_DrawObject(g3Dobj, &g3DobjStatus1);
@@ -600,7 +615,9 @@ static void systemFramework(SAMPLE2_WORK* sw)
 //------------------------------------------------------------------
 static void systemDelete(SAMPLE2_WORK* sw)
 {
-	ELBOARD_TEX_Delete(sw->elb_tex);
+	ELBOARD_TEX_Delete(sw->elb_tex[1]);
+	ELBOARD_TEX_Delete(sw->elb_tex[0]);
+
 	GFL_G3D_UTIL_DelUnit(sw->g3Dutil, sw->g3DutilUnitIdx);
 	GFL_G3D_UTIL_Delete(sw->g3Dutil);
 
@@ -629,6 +646,14 @@ static void systemDelete(SAMPLE2_WORK* sw)
  *
  */
 //============================================================================================
+static void changeTargetObject(SAMPLE2_WORK* sw)
+{
+	if(sw->targetObjID == G3DOBJ_ELBOARD2){
+		sw->targetObjID = G3DOBJ_ELBOARD1;
+	} else {
+		sw->targetObjID = G3DOBJ_ELBOARD2;
+	}
+}
 
 
 
