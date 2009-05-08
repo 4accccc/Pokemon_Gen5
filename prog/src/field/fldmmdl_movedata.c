@@ -842,6 +842,18 @@ static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_AlongWallLRR =
 	FLDMMDL_MoveReturnProcDummy,							///<復帰関数
 };
 
+//--------------------------------------------------------------
+/// MV_COMM_ACTOR
+//--------------------------------------------------------------
+static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CommActor =
+{
+	MV_COMM_ACTOR,												///<動作コード
+	FLDMMDL_MoveCommActor_Init,						///<初期化関数
+	FLDMMDL_MoveCommActor_Move,						///<動作関数
+	FLDMMDL_MoveDeleteProcDummy,					///<削除関数
+	FLDMMDL_MoveReturnProcDummy,					///<復帰関数
+};
+
 //==============================================================================
 //	フィールド動作モデル 動作関数まとめ
 //==============================================================================
@@ -849,7 +861,7 @@ static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_AlongWallLRR =
 ///	動作関数まとめ
 ///	並びはfieldobj_code.h MV_DMY等のコードと一致
 //--------------------------------------------------------------
-const FLDMMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[] =
+const FLDMMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[MV_CODE_MAX] =
 {
 	&DATA_FieldOBJMove_Dummy,								//MV_DMY
 	&DATA_FieldOBJMove_Player,								//MV_PLAYER
@@ -923,6 +935,7 @@ const FLDMMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[] =
 	&DATA_FieldOBJMove_AlongWallLRL,						//MV_ALONGW_LRL
 	&DATA_FieldOBJMove_AlongWallLRR,						//MV_ALONGW_LRR
 	&DATA_FieldOBJMove_RndHLim,								//MV_RND_H_LIM
+  &DATA_FieldOBJMove_CommActor,           //MV_COMM_ACTOR
 };
 
 //==============================================================================

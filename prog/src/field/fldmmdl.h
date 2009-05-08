@@ -738,7 +738,7 @@ extern u8 * DEBUG_FLDMMDL_GetOBJCodeString( u16 code, HEAPID heapID );
 //--------------------------------------------------------------
 //	fldmmdl_movedata.c
 //--------------------------------------------------------------
-extern const FLDMMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[];
+extern const FLDMMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[MV_CODE_MAX];
 extern int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( FLDMMDL * );
 extern const int * const DATA_AcmdCodeDirChangeTbl[];
 

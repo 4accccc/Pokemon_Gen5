@@ -55,8 +55,10 @@ static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act );
 static FLDMMDL * fldcommAct_fmmdl_Add(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 code,
     const u16 *watch_dir, const VecFx32 *watch_pos );
-static void fldcommAct_fmmdl_SetWatchPos(
-    FLDMMDL *fmmdl, const VecFx32 *pos );
+static void fldcommAct_fmmdl_SetWatchData(
+    FLDMMDL *fmmdl, const u16 *dir, const VecFx32 *pos );
+
+static u16 grid_ChangeFourDir( u16 dir );
 
 static const FLDMMDL_HEADER fldcommActro_FldMMdlHeader;
 
@@ -198,9 +200,12 @@ static FLDMMDL * fldcommAct_fmmdl_Add(
   
   head.obj_code = code;
   fmmdl = FLDMMDLSYS_AddFldMMdl( fmmdlsys, &head, 0 );
-  fldcommAct_fmmdl_SetWatchPos( fmmdl, watch_pos );
-  //座標設定
-  //高さ、アトリビュート無視設定
+  fldcommAct_fmmdl_SetWatchData( fmmdl, watch_dir, watch_pos );
+  
+  FLDMMDL_InitPosition( fmmdl, watch_pos, grid_ChangeFourDir(*watch_dir) );
+  FLDMMDL_SetStatusBitHeightGetOFF( fmmdl, TRUE );
+  FLDMMDL_SetStatusBitNotZoneDelete( fmmdl, TRUE );
+  
   return( fmmdl );
 }
 
@@ -228,6 +233,29 @@ void FLDMMDL_MoveCommActor_Move( FLDMMDL *fmmdl )
 {
   MV_COMMACT_WORK *work;
   work = FLDMMDL_GetMoveProcWork( fmmdl );
+  
+  {
+    u16 dir;
+    dir = grid_ChangeFourDir( *work->watch_dir );
+    FLDMMDL_SetDirDisp( fmmdl, dir );
+  }
+  
+  {
+    VecFx32 pos;
+    u16 status = DRAW_STA_STOP;
+    
+    FLDMMDL_GetVectorPos( fmmdl, &pos );
+    
+    if( pos.x != work->watch_pos->x ||
+        pos.y != work->watch_pos->y ||
+        pos.z != work->watch_pos->z ){
+        FLDMMDL_InitPosition( fmmdl,
+            work->watch_pos, FLDMMDL_GetDirDisp(fmmdl) );
+        status = DRAW_STA_WALK_8F;
+    }
+    
+    FLDMMDL_SetDrawStatus( fmmdl, status );
+  }
 }
 
 //--------------------------------------------------------------
@@ -238,12 +266,34 @@ void FLDMMDL_MoveCommActor_Move( FLDMMDL *fmmdl )
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void fldcommAct_fmmdl_SetWatchPos(
-    FLDMMDL *fmmdl, const VecFx32 *pos )
+static void fldcommAct_fmmdl_SetWatchData(
+    FLDMMDL *fmmdl, const u16 *dir, const VecFx32 *pos )
 {
   MV_COMMACT_WORK *work;
   work = FLDMMDL_GetMoveProcWork( fmmdl );
+  work->watch_dir = dir;
   work->watch_pos = pos;
+}
+
+//--------------------------------------------------------------
+/**
+ * 360度方向->４方向に
+ * @param	dir	方向　0x10000単位
+ * @retval	u16 DIR_UP等
+ */
+//--------------------------------------------------------------
+static u16 grid_ChangeFourDir( u16 dir )
+{
+	if( (dir>0x2000) && (dir<0x6000) ){
+		dir = DIR_LEFT;
+	}else if( (dir >= 0x6000) && (dir <= 0xa000) ){
+		dir = DIR_DOWN;
+	}else if( (dir > 0xa000)&&(dir < 0xe000) ){
+		dir = DIR_RIGHT;
+	}else{
+		dir = DIR_UP;
+	}
+	return( dir );
 }
 
 //======================================================================
@@ -256,7 +306,7 @@ static const FLDMMDL_HEADER fldcommActro_FldMMdlHeader =
 {
   FLDMMDL_ID_COMMACTOR,
   0,
-  MV_DMY,
+  MV_COMM_ACTOR,
   0,	///<イベントタイプ
   0,	///<イベントフラグ
   0,	///<イベントID
