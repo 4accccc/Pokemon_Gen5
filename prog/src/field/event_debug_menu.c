@@ -16,6 +16,7 @@
 #include "message.naix"
 #include "msg/msg_d_field.h"
 
+#include "fieldmap.h"
 #include "field/zonedata.h"
 #include "field_comm/field_comm_main.h"
 #include "arc/fieldmap/zone_id.h"
@@ -1981,8 +1982,6 @@ static GMEVENT_RESULT DMenuWeatherListEvent(
 //======================================================================
 //	デバッグメニュー　位置情報
 //======================================================================
-extern FIELD_DEBUG_WORK * FIELDMAP_GetDebugWork( FIELD_MAIN_WORK *fieldWork );
-
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　フィールド位置情報

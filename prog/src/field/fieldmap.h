@@ -41,10 +41,6 @@ typedef enum
 	FLDMAP_CTRLTYPE_MAX,
 }FLDMAP_CTRLTYPE;
 
-//è¡ÇµÇ‹Ç∑
-#define FLD_COMM_PLAYER_MAX (4)
-#define FLD_COMM_ACTOR_MAX (FLD_COMM_PLAYER_MAX-1)
-
 //======================================================================
 //	struct
 //======================================================================
@@ -63,7 +59,7 @@ typedef struct
 //	extern
 //======================================================================
 //FIELDMAP_WORK ê›íËÅAéQè∆
-extern void * FieldMain_GetCommSys( const FIELDMAP_WORK *fieldWork );
+extern void * FIELDMAP_GetCommSys( const FIELDMAP_WORK *fieldWork );
 extern FLDMSGBG * FIELDMAP_GetFldMsgBG( FIELDMAP_WORK *fieldWork );
 extern FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELDMAP_WORK *fieldWork );
 extern FIELD_LIGHT * FIELDMAP_GetFieldLight( FIELDMAP_WORK *fieldWork );
@@ -81,21 +77,7 @@ extern void FIELDMAP_SetMapCtrlWork(FIELDMAP_WORK *fieldWork,void *ctrlWork);
 extern int FIELDMAP_GetKeyCont( const FIELDMAP_WORK *fieldWork );
 extern int FIELDMAP_GetKeyTrg( const FIELDMAP_WORK *fieldWork );
 extern FIELD_PLAYER * FIELDMAP_GetFieldPlayer( FIELDMAP_WORK *fieldWork );
-extern FIELD_SUBSCREEN_WORK* FIELDMAP_GetFieldSubscreenWork( FIELDMAP_WORK *fieldWork );
-extern void FIELDMAP_SetFieldSubscreenWork( FIELDMAP_WORK *fieldWork,FIELD_SUBSCREEN_WORK* pWork );
-
-//---------------------------------------------------------------
-//	Ç¢Ç∏ÇÍè¡ÇµÇ‹Ç∑
-//---------------------------------------------------------------
-extern void DEBUG_FldGridProc_Camera( FIELDMAP_WORK *fieldWork );
-//field_sub_grid.c
-extern void DEBUG_FldGridProc_Camera( FIELDMAP_WORK *fieldWork );
-extern void DEBUG_FldGridProc_ScaleChange( FIELDMAP_WORK *fieldWork );
-extern void DEBUG_FldGridProc_ScaleControl( FIELDMAP_WORK *fieldWork );
-extern void FieldMain_AddCommActor(
-	FIELDMAP_WORK *fieldWork, const PLAYER_WORK *player );
-extern void* FieldMain_GetCommSys( const FIELDMAP_WORK *fieldWork);
-extern const BOOL FieldMain_IsFieldUpdate( const FIELDMAP_WORK *fieldWork );
-extern void FieldMain_UpdateFieldFunc( FIELDMAP_WORK *fieldWork );
-extern u16 FieldMainGrid_GetPlayerDir( const FIELDMAP_WORK *fieldWork );
-extern BOOL FIELDMAP_CheckGridControl( FIELDMAP_WORK *fieldWork );
+extern FIELD_SUBSCREEN_WORK* FIELDMAP_GetFieldSubscreenWork(
+    FIELDMAP_WORK *fieldWork );
+extern void FIELDMAP_SetFieldSubscreenWork(
+    FIELDMAP_WORK *fieldWork,FIELD_SUBSCREEN_WORK* pWork );

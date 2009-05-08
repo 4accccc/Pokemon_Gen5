@@ -34,6 +34,7 @@
 #define FLDMMDL_ID_PLAYER 	(0xff)	///<自機専用ID
 #define FLDMMDL_ID_PAIR   	(0xfe)	///<連れ歩き専用ID
 #define FLDMMDL_ID_GIMMICK	(0xfd)	///<ジム等の仕掛け専用ID
+#define FLDMMDL_ID_COMMACTOR (0xfc) ///<通信アクター専用ID
 
 //--------------------------------------------------------------
 //	エイリアスID 元:PL script_def.h
@@ -114,7 +115,8 @@
 #define MV_ALONGW_LRL	0x41		///<壁沿い両手左(m
 #define MV_ALONGW_LRR	0x42		///<壁沿い両手右(m
 #define MV_RND_H_LIM	0x43 ///<ランダムに横移動 移動チェック移動制限のみ
-#define MV_CODE_MAX		0x44		///<コード最大（プログラム判定専用
+#define MV_COMM_ACTOR 0x44 ///<通信アクター動作
+#define MV_CODE_MAX		0x45		///<コード最大（プログラム判定専用
 #define MV_CODE_NOT		0xff		///<非動作コード(プログラム判定専用
 
 /*　未対応

@@ -54,11 +54,6 @@ static void mapCtrlGrid_Create(
 static void mapCtrlGrid_Delete( FIELDMAP_WORK *fieldWork );
 static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos );
 
-static void gridproc_Init(
-		FIELDMAP_WORK *fieldWork, const VecFx32 *pos, u16 dir );
-static void gridproc_Delete( FIELDMAP_WORK *fieldWork );
-static void gridproc_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos );
-
 static u16 grid_ChangeFourDir( u16 dir );
 
 //======================================================================
@@ -86,48 +81,6 @@ const DEPEND_FUNCTIONS FieldMapCtrl_GridFunctions =
 //--------------------------------------------------------------
 static void mapCtrlGrid_Create(
 	FIELDMAP_WORK *fieldWork, VecFx32 *pos, u16 dir )
-{
-	gridproc_Init( fieldWork, pos, dir );
-}
-
-//--------------------------------------------------------------
-/**
- * フィールドマップ　グリッド処理　終了
- * @param	fieldWork	FIELDMAP_WORK
- * @retval	nothing
- */
-//--------------------------------------------------------------
-static void mapCtrlGrid_Delete( FIELDMAP_WORK *fieldWork )
-{
-	gridproc_Delete( fieldWork );
-}
-
-//--------------------------------------------------------------
-/**
- * フィールドマップ　グリッド処理　メイン
- * @param	fieldWork FIELDMAP_WORK
- * @retval	nothing
- */
-//--------------------------------------------------------------
-static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
-{
-	gridproc_Main( fieldWork, pos );
-}
-
-//======================================================================
-//	グリッド処理　メインプロセス
-//======================================================================
-//--------------------------------------------------------------
-/**
- * グリッド処理　初期化
- * @param	fieldWork	FIELDMAP_WORK
- * @param	pos	自機初期位置
- * @param	dir 自機初期方向
- * @retval	nothing
- */
-//--------------------------------------------------------------
-static void gridproc_Init(
-		FIELDMAP_WORK *fieldWork, const VecFx32 *pos, u16 dir )
 {
 	HEAPID heapID;
 	FIELDMAP_CTRL_GRID *gridWork;
@@ -165,12 +118,12 @@ static void gridproc_Init(
 
 //--------------------------------------------------------------
 /**
- * グリッド処理　削除
+ * フィールドマップ　グリッド処理　終了
  * @param	fieldWork	FIELDMAP_WORK
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void gridproc_Delete( FIELDMAP_WORK *fieldWork )
+static void mapCtrlGrid_Delete( FIELDMAP_WORK *fieldWork )
 {
 	FIELDMAP_CTRL_GRID *gridWork;
 	gridWork = FIELDMAP_GetMapCtrlWork( fieldWork );
@@ -180,13 +133,12 @@ static void gridproc_Delete( FIELDMAP_WORK *fieldWork )
 
 //--------------------------------------------------------------
 /**
- * グリッド処理　メイン
- * @param	fieldWork	FIELDMAP_WORK
- * @param	pos
+ * フィールドマップ　グリッド処理　メイン
+ * @param	fieldWork FIELDMAP_WORK
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void gridproc_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
+static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 {
 	FIELDMAP_CTRL_GRID *gridWork = FIELDMAP_GetMapCtrlWork( fieldWork );
 	FIELD_PLAYER_GRID *gridPlayer = gridWork->gridPlayer;

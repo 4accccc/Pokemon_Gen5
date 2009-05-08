@@ -20,6 +20,7 @@
 #include "field/field_comm/palace_sys.h"
 #include "test/performance.h"
 #include "system/main.h"
+#include "field/field_comm_actor.h"
 
 #include "msg/msg_d_field.h"
 
@@ -49,6 +50,7 @@ struct _FIELD_COMM_MAIN
 #endif
   u8  commActorIndex_[FIELD_COMM_MEMBER_MAX];
   PALACE_SYS_PTR palace;    ///<パレスシステムワークへのポインタ
+  FIELD_COMM_ACTOR_CTRL *actCtrl_;
 };
 
 //上下左右に対応したグリッドでのオフセット
@@ -130,6 +132,10 @@ void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *co
 ////    FIELD_COMM_FUNC_TermSystem( commSys->commField_->commFunc_ );
   }
 #endif
+
+  if( commSys->actCtrl_ != NULL ){
+    FIELD_COMM_ACTOR_CTRL_Delete( commSys->actCtrl_ );
+  }
 
   GFL_HEAP_FreeMemory( commSys );
 }
@@ -226,6 +232,17 @@ void FIELD_COMM_MAIN_SetCommType(FIELD_COMM_MAIN *commSys, FIELD_COMM_TYPE comm_
 FIELD_COMM_TYPE FIELD_COMM_MAIN_GetCommType(FIELD_COMM_MAIN *commSys)
 {
   return commSys->comm_type;
+}
+
+//==================================================================
+/**
+ * フィールド通信アクター設定
+ */
+//==================================================================
+void FIELD_COMM_MAIN_SetCommActor(FIELD_COMM_MAIN *commSys, FLDMMDLSYS *fmmdlsys)
+{
+  int max = 4;
+  commSys->actCtrl_ = FIELD_COMM_ACTOR_CTRL_Create( max, fmmdlsys, commSys->heapID_ );
 }
 
 //--------------------------------------------------------------
@@ -335,7 +352,8 @@ static void FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
           if( FIELD_COMM_DATA_GetCharaData_IsExist(commData, i) == FALSE )
           {
             //未初期化なキャラなので、初期化する
-            FieldMain_AddCommActor( fieldWork , setPlWork );
+            FIELD_COMM_ACTOR_CTRL_AddActor( commSys->actCtrl_,
+                0, HERO, &setPlWork->direction, &setPlWork->position );
             FIELD_COMM_DATA_SetCharaData_IsExist(commData, i,TRUE);
           }
           FIELD_COMM_DATA_SetCharaData_IsValid(commData, i,FALSE);

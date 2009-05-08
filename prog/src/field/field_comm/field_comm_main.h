@@ -41,6 +41,7 @@ extern void FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , GAMES
 
 extern void FIELD_COMM_MAIN_SetCommType(FIELD_COMM_MAIN *commSys, FIELD_COMM_TYPE comm_type);
 extern FIELD_COMM_TYPE FIELD_COMM_MAIN_GetCommType(FIELD_COMM_MAIN *commSys);
+extern void FIELD_COMM_MAIN_SetCommActor(FIELD_COMM_MAIN *commSys, FLDMMDLSYS *fmmdlsys);
 
 extern const BOOL FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys );
 extern const BOOL FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys );

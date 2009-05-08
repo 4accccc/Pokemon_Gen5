@@ -280,7 +280,7 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
 static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartComm( FIELD_COMM_DEBUG_WORK *work )
 {
   GMEVENT *event = work->event_;
-  FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+  FIELD_COMM_MAIN *commSys = FIELDMAP_GetCommSys(work->fieldWork_);
   FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
   FIELD_COMM_EVENT *eveWork;
 
@@ -296,7 +296,7 @@ static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartComm( FIELD_COMM_DEBUG_WO
 static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartInvasion( FIELD_COMM_DEBUG_WORK *work )
 {
   GMEVENT *event = work->event_;
-  FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+  FIELD_COMM_MAIN *commSys = FIELDMAP_GetCommSys(work->fieldWork_);
   FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
   FIELD_COMM_EVENT *eveWork;
 
@@ -312,7 +312,7 @@ static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartInvasion( FIELD_COMM_DEBU
 static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_EndComm( FIELD_COMM_DEBUG_WORK *work )
 {
   GMEVENT *event = work->event_;
-  FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+  FIELD_COMM_MAIN *commSys = FIELDMAP_GetCommSys(work->fieldWork_);
   FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
   FIELD_COMM_EVENT *eveWork;
 
@@ -327,7 +327,7 @@ static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_EndComm( FIELD_COMM_DEBUG_WORK
 static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartComm_Palace( FIELD_COMM_DEBUG_WORK *work )
 {
   BOOL ret;
-  FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+  FIELD_COMM_MAIN *commSys = FIELDMAP_GetCommSys(work->fieldWork_);
   
   ret = FIELD_COMM_DEBUG_MenuCallback_StartComm(work);
   FIELD_COMM_MAIN_SetCommType(commSys, FIELD_COMM_TYPE_PALACE);
@@ -339,7 +339,7 @@ static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartComm_Palace( FIELD_COMM_D
 static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartInvasion_Palace( FIELD_COMM_DEBUG_WORK *work )
 {
   BOOL ret;
-  FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+  FIELD_COMM_MAIN *commSys = FIELDMAP_GetCommSys(work->fieldWork_);
   
   ret = FIELD_COMM_DEBUG_MenuCallback_StartInvasion(work);
   FIELD_COMM_MAIN_SetCommType(commSys, FIELD_COMM_TYPE_PALACE);
@@ -370,7 +370,7 @@ static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_ChangePartTest(FIELD_COMM_DEBU
 //--------------------------------------------------------------
 static  const BOOL  FIELD_COMM_DEBUG_SubProc_DisconnectWait(FIELD_COMM_DEBUG_WORK *work )
 {
-  FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+  FIELD_COMM_MAIN *commSys = FIELDMAP_GetCommSys(work->fieldWork_);
   FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
 
   if(FIELD_COMM_MAIN_DisconnectWait( fieldWork , commSys ) == TRUE){

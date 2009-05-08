@@ -1,40 +1,37 @@
 //======================================================================
 /**
- *
  * @file	field_comm_actor.h
  * @brief	
  * @author
  * @data
- *
  */
 //======================================================================
-#ifndef __FIELD_COMM_ACTOR_H__
-#define __FIELD_COMM_ACTOR_H__
-
+#pragma once
 #include <gflib.h>
 #include "system/gfl_use.h"
-#include "gamesystem/playerwork.h"
-
-#include "fldmmdl_code.h"
+#include "fldmmdl.h"
 
 //======================================================================
-//	define
+//  define
 //======================================================================
 
 //======================================================================
-//	struct
+//  struct
 //======================================================================
-///FLD_COMM_ACTOR
-typedef struct _TAG_FLD_COMM_ACTOR FLD_COMM_ACTOR;
+///FIELD_COMM_ACTOR_CTRL
+typedef struct _TAG_FIELD_COMM_ACTOR_CTRL FIELD_COMM_ACTOR_CTRL;
 
 //======================================================================
-//	通信用アクター
+//  extern 
 //======================================================================
-extern FLD_COMM_ACTOR * FldCommActor_Init(
-	const PLAYER_WORK *player,
-	GFL_BBDACT_SYS *bbdActSys,
-	GFL_BBDACT_RESUNIT_ID resUnitID, HEAPID heapID, u32 id );
-extern void FldCommActor_Delete( FLD_COMM_ACTOR *act );
-extern void FldCommActor_Update( FLD_COMM_ACTOR *act );
+extern FIELD_COMM_ACTOR_CTRL * FIELD_COMM_ACTOR_CTRL_Create(
+    int max, FLDMMDLSYS *fmmdlsys, HEAPID heapID );
+extern void FIELD_COMM_ACTOR_CTRL_Delete( FIELD_COMM_ACTOR_CTRL *act_ctrl );
+extern void FIELD_COMM_ACTOR_CTRL_AddActor( FIELD_COMM_ACTOR_CTRL *act_ctrl,
+    u32 id, u16 code, const u16 *watch_dir, const VecFx32 *watch_pos );
+extern void FIELD_COMM_ACTOR_CTRL_DeleteActro(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id );
 
-#endif //__FIELD_COMM_ACTOR_H__
+extern void FLDMMDL_MoveCommActor_Init( FLDMMDL *fmmdl );
+extern void FLDMMDL_MoveCommActor_Move( FLDMMDL *fmmdl );
+

@@ -1,347 +1,272 @@
 //======================================================================
 /**
- *
  * @file	field_comm_actor.c
  * @brief	
  * @author
  * @data
- *
  */
 //======================================================================
 #include <gflib.h>
 #include "system/gfl_use.h"
-#include "net/network_define.h"
-#include "arc_def.h"
-
-#include "fieldmap.h"
-#include "field_common.h"
-//#include "field_actor.h"
 
 #include "field_comm_actor.h"
-#include "test_graphic/fld_act.naix"
 
 //======================================================================
 //	define
 //======================================================================
-//--------------------------------------------------------------
-///	ビルボードアクターアニメ番号
-//--------------------------------------------------------------
-enum
-{
-	PCACTSTOP_UP = 0,
-	PCACTSTOP_DOWN,
-	PCACTSTOP_LEFT,
-	PCACTSTOP_RIGHT,
-
-	PCACTWALK_UP,
-	PCACTWALK_DOWN,
-	PCACTWALK_LEFT,
-	PCACTWALK_RIGHT,
-
-	PCACTRUN_UP,
-	PCACTRUN_DOWN,
-	PCACTRUN_LEFT,
-	PCACTRUN_RIGHT,
-
-	PCACTJUMP_UP,
-	PCACTJUMP_DOWN,
-	PCACTJUMP_LEFT,
-	PCACTJUMP_RIGHT,
-
-	PCACTANMNO_MAX,
-};
 
 //======================================================================
 //	struct
 //======================================================================
 //--------------------------------------------------------------
-///	FLD_COMM_ACTOR
+/// FIELD_COMM_ACTOR
 //--------------------------------------------------------------
-struct _TAG_FLD_COMM_ACTOR
+typedef struct
 {
-	const PLAYER_WORK *player;
-	
-	HEAPID heapID;
-	u16 dir;
-	u16 old_dir;
-	int anm_id;
-	int next_anm_id;
-	u32 id;
-	VecFx32 pos;
-	VecFx32 old_pos;
-	
-	GFL_BBDACT_SYS *bbdActSys;
-	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
-	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
+  u32 id;
+  FLDMMDL *fmmdl;
+}FIELD_COMM_ACTOR;
+
+//--------------------------------------------------------------
+/// FIELD_COMM_ACTOR_CTRL
+//--------------------------------------------------------------
+struct _TAG_FIELD_COMM_ACTOR_CTRL
+{
+  int max;
+  HEAPID heapID;
+  FLDMMDLSYS *fmmdlsys;
+  FIELD_COMM_ACTOR *act_tbl;
 };
+
+//--------------------------------------------------------------
+/// MV_COMMACT_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  const u16 *watch_dir;
+  const VecFx32 *watch_pos;
+}MV_COMMACT_WORK;
 
 //======================================================================
 //	proto
 //======================================================================
-static void commActBBDActFunc(
-	GFL_BBDACT_SYS *bbdActSys, int actIdx, void* work );
+static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act );
 
-static const GFL_BBDACT_RESDATA playerBBDactResData;
-static const GFL_BBDACT_ANM *playerBBDactAnmTable[PCACTANMNO_MAX];
+static FLDMMDL * fldcommAct_fmmdl_Add(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 code,
+    const u16 *watch_dir, const VecFx32 *watch_pos );
+static void fldcommAct_fmmdl_SetWatchPos(
+    FLDMMDL *fmmdl, const VecFx32 *pos );
+
+static const FLDMMDL_HEADER fldcommActro_FldMMdlHeader;
 
 //======================================================================
-//	通信用アクター
+//  フィールド　通信用アクター制御
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 通信用アクター　初期化
- * @param	player		参照するPLAYER_WORK *
- * @param	bbdActSys	使用するGFL_BBDACT_SYS
- * @param	resUnitID	使用するGFL_BBDACT_RESUNIT_ID
- * @param	heapID		リソース確保用ヒープID
- * @retval	FLD_COMM_ACTOR	追加されたFLD_COMM_ACTOR *
+ * フィールド通信用アクター制御　初期化
+ * @param max アクター最大数
+ * @param fmmdlsys FLDMMDLSYS*
+ * @param heapID HEAPID
+ * @retval FIELD_COMM_ACTOR_CTRL
  */
 //--------------------------------------------------------------
-FLD_COMM_ACTOR * FldCommActor_Init(
-	const PLAYER_WORK *player,
-	GFL_BBDACT_SYS *bbdActSys,
-	GFL_BBDACT_RESUNIT_ID TestresUnitID, HEAPID heapID, u32 id )
+FIELD_COMM_ACTOR_CTRL * FIELD_COMM_ACTOR_CTRL_Create(
+    int max, FLDMMDLSYS *fmmdlsys, HEAPID heapID )
 {
-	u32 dir;
-	FLD_COMM_ACTOR *act;
-	GFL_BBDACT_ACTDATA actData;
-	GFL_BBDACT_RESUNIT_ID resUnitID;
-	const VecFx32 *pos;
-	
-	pos = PLAYERWORK_getPosition( player );
-	dir = PLAYERWORK_getDirection( player );
-	
-	resUnitID = GFL_BBDACT_AddResourceUnit(
-			bbdActSys, &playerBBDactResData, 1 );
-	
-	act = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_COMM_ACTOR) );
-	act->heapID = heapID;
-	act->dir = dir;
-	act->old_dir = DIR_NOT;
-	act->pos = *pos;
-	act->old_pos = *pos;
-	act->bbdActSys = bbdActSys;
-	act->player = player;	//追加しましたAri1114
-	act->anm_id = -1;
-	act->id = id;
-	act->bbdActResUnitID = resUnitID;
-
-	actData.resID = 0;
-	actData.sizX = FX16_ONE*8-1;
-	actData.sizY = FX16_ONE*8-1;
-	actData.trans.x = 0;
-	actData.trans.y = 0;
-	actData.trans.z = 0;
-	actData.alpha = 31;
-	actData.drawEnable = TRUE;
-	actData.func = commActBBDActFunc;
-	actData.work = act;
-	
-	act->bbdActActUnitID =
-		GFL_BBDACT_AddAct( bbdActSys, resUnitID, &actData, 1 ); 
-	
-	GFL_BBDACT_BindActTexResLoad(
-		bbdActSys, act->bbdActActUnitID,
-		ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx );
-	GFL_BBDACT_SetAnimeTable(
-		bbdActSys, act->bbdActActUnitID,
-		playerBBDactAnmTable, PCACTANMNO_MAX );
-	GFL_BBDACT_SetAnimeIdxOn( bbdActSys, act->bbdActActUnitID, 0 );
-	
-	return( act );
+  FIELD_COMM_ACTOR_CTRL *act_ctrl;
+  
+  act_ctrl = GFL_HEAP_AllocClearMemory(
+      heapID, sizeof(FIELD_COMM_ACTOR_CTRL) );
+  act_ctrl->max = max;
+  act_ctrl->fmmdlsys = fmmdlsys;
+  
+  act_ctrl->act_tbl =
+    GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_COMM_ACTOR)*max );
+  return( act_ctrl );
 }
 
 //--------------------------------------------------------------
 /**
- * フィールド通信用アクター　削除
- * @param	
- * @retval
+ * フィールド通信用アクター制御　削除。
+ * 追加されていたアクターも削除される。
+ * @param act_ctrl FIELD_COMM_ACTOR_CTRL*
+ * @retval nothing
  */
 //--------------------------------------------------------------
-void FldCommActor_Delete( FLD_COMM_ACTOR *act )
+void FIELD_COMM_ACTOR_CTRL_Delete( FIELD_COMM_ACTOR_CTRL *act_ctrl )
 {
-	GFL_BBDACT_RemoveResourceUnit( act->bbdActSys, act->bbdActResUnitID, 1 );
-	GFL_HEAP_FreeMemory( act );
+  int i = 0;
+  FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
+  
+  for( i = 0; i < act_ctrl->max; i++, act++ ){
+    if( act->fmmdl != NULL ){
+      fldcommAct_DeleteActor( act );
+    }
+  }
+  
+  GFL_HEAP_FreeMemory( act_ctrl->act_tbl );
+  GFL_HEAP_FreeMemory( act_ctrl );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールド通信用アクター制御　アクター追加
+ * @param act_ctrl FIELD_COMM_ACTOR_CTRL*
+ * @param id 管理ID
+ * @param code 表示コード HERO等
+ * @param watch_pos 表示する座標
+ * @retval FIELD_COMM_ACTOR* 追加されたFIELD_COMM_ACTRO*
+ */
+//--------------------------------------------------------------
+void FIELD_COMM_ACTOR_CTRL_AddActor( FIELD_COMM_ACTOR_CTRL *act_ctrl,
+    u32 id, u16 code, const u16 *watch_dir, const VecFx32 *watch_pos )
+{
+  int i;
+  FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
+  
+  for( i = 0; i < act_ctrl->max; i++, act++ ){
+    if( act->fmmdl == NULL ){
+      act->fmmdl = fldcommAct_fmmdl_Add(
+          act_ctrl, code, watch_dir, watch_pos );
+      act->id = id;
+    }
+  }
+  
+  GF_ASSERT( 0 && "ERROR COMM ACTOR MAX\n");
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールド通信用アクター制御　アクター削除
+ * @param act_ctrl  FIELD_COMM_ACTOR_CTRL*
+ * @param id 追加時に指定した管理ID
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_COMM_ACTOR_CTRL_DeleteActro(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id )
+{
+  int i;
+  FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
+  
+  for( i = 0; i < act_ctrl->max; i++, act++ ){
+    if( act->fmmdl != NULL ){
+      if( act->id == id ){
+        fldcommAct_DeleteActor( act );
+        return;
+      }
+    }
+  }
+  
+  GF_ASSERT( 0 && "ERROR COMM ACTOR DELETE\n" );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールド通信用アクター　アクター削除処理
+ * @param act FIELD_COMM_ACTOR
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act )
+{
+  FLDMMDL_Delete( act->fmmdl );
+  MI_CpuClear8( act, sizeof(FIELD_COMM_ACTOR) );
 }
 
 //======================================================================
-//	パーツ
+//  通信用アクター　動作モデル
 //======================================================================
 //--------------------------------------------------------------
 /**
- * フィールド通信用アクター　更新
- * @param	act	FLD_COMM_ACTOR *
- * @param	pos 表示座標
- * @param	dir 表示方向
- * @retval	nothing
+ * 通信用アクター　動作モデル追加
+ * @param act_ctrl  FIELD_COMM_ACTOR_CTRL
+ * @param code  表示コード HERO等
+ * @param watch_pos 表示する座標
+ * @retval FLDMMDL* 追加されたFLDMMDL
  */
 //--------------------------------------------------------------
-void FldCommActor_Update( FLD_COMM_ACTOR *act )
+static FLDMMDL * fldcommAct_fmmdl_Add(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 code,
+    const u16 *watch_dir, const VecFx32 *watch_pos )
 {
-	u16 dir;
-	int anmBase;
-	const VecFx32 *pos;
-	
-	pos = PLAYERWORK_getPosition( act->player );
-	dir = PLAYERWORK_getDirection( act->player );
-	
-	act->old_pos = act->pos;
-	act->pos = *pos;
-	act->old_dir = act->dir;
-	act->dir = dir;
-	
-	if( act->pos.x != act->old_pos.x ||
-		act->pos.y != act->old_pos.y ||
-		act->pos.z != act->old_pos.z ){
-		anmBase = 4;
-	}else{
-		anmBase = 0;
-	}
-	
-	act->next_anm_id = anmBase + dir;
+  FLDMMDL *fmmdl;
+  FLDMMDLSYS *fmmdlsys = act_ctrl->fmmdlsys;
+  FLDMMDL_HEADER head = fldcommActro_FldMMdlHeader;
+  
+  head.obj_code = code;
+  fmmdl = FLDMMDLSYS_AddFldMMdl( fmmdlsys, &head, 0 );
+  fldcommAct_fmmdl_SetWatchPos( fmmdl, watch_pos );
+  //座標設定
+  //高さ、アトリビュート無視設定
+  return( fmmdl );
 }
 
-//======================================================================
-///	ビルボードアクター
-//======================================================================
 //--------------------------------------------------------------
 /**
- * フィールド通信用アクター　アクター処理
- * @param	
- * @retval
+ * 通信用アクター　動作モデル　動作初期化
+ * @param   fmmdl FLDMMDL
+ * @retval  nothing
  */
 //--------------------------------------------------------------
-static void commActBBDActFunc(
-	GFL_BBDACT_SYS *bbdActSys, int actIdx, void* work )
+void FLDMMDL_MoveCommActor_Init( FLDMMDL *fmmdl )
 {
-	VecFx32 pos;
-	FLD_COMM_ACTOR *act = work;
-	
-	pos = act->pos;
-	pos.y += FX32_ONE * 12;
-//	pos.z += 1;
+  MV_COMMACT_WORK *work;
+  work = FLDMMDL_InitMoveProcWork( fmmdl, sizeof(MV_COMMACT_WORK) );
+}
 
-	GFL_BBD_SetObjectTrans(
-		GFL_BBDACT_GetBBDSystem(act->bbdActSys), actIdx, &pos );
+//--------------------------------------------------------------
+/**
+ * 通信用アクター　動作モデル　動作
+ * @param fmmdl FLDMMDL*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_MoveCommActor_Move( FLDMMDL *fmmdl )
+{
+  MV_COMMACT_WORK *work;
+  work = FLDMMDL_GetMoveProcWork( fmmdl );
+}
 
-	if( act->anm_id != act->next_anm_id ){
-		act->anm_id = act->next_anm_id;
-		GFL_BBDACT_SetAnimeIdx(
-			act->bbdActSys, actIdx, act->anm_id );
-	}
+//--------------------------------------------------------------
+/**
+ * 通信用アクター　動作モデル　参照座標をセット
+ * @param fmmdl FLDMMDL*
+ * @param pos 参照する座標
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void fldcommAct_fmmdl_SetWatchPos(
+    FLDMMDL *fmmdl, const VecFx32 *pos )
+{
+  MV_COMMACT_WORK *work;
+  work = FLDMMDL_GetMoveProcWork( fmmdl );
+  work->watch_pos = pos;
 }
 
 //======================================================================
-//	data
+//  data
 //======================================================================
 //--------------------------------------------------------------
-///	ビルボードリソース
+/// 通信アクター用FLDMMDL_HEADER
 //--------------------------------------------------------------
-static const GFL_BBDACT_RESDATA playerBBDactResData =
+static const FLDMMDL_HEADER fldcommActro_FldMMdlHeader =
 {
-	ARCID_FLDMAP_ACTOR, NARC_fld_act_tex32x32_nsbtx,
-	GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024,
-	32, 32, GFL_BBDACT_RESTYPE_DATACUT 
-};
-
-//--------------------------------------------------------------
-///	ビルボードアクターアニメ
-//--------------------------------------------------------------
-static const GFL_BBDACT_ANM PCstopLAnm[] = {
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCstopRAnm[] = {
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCstopUAnm[] = {
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCstopDAnm[] = {
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-
-static const GFL_BBDACT_ANM PCwalkLAnm[] = {
-	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCwalkRAnm[] = {
-	{ 1, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 3, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCwalkUAnm[] = {
-	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 20, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCwalkDAnm[] = {
-	{ 22, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 23, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-
-static const GFL_BBDACT_ANM PCrunLAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 16, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCrunRAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 16, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCrunUAnm[] = {
-	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCrunDAnm[] = {
-	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 13, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-
-static const GFL_BBDACT_ANM PCjumpLAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCjumpRAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCjumpUAnm[] = {
-	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCjumpDAnm[] = {
-	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-
-static const GFL_BBDACT_ANM* playerBBDactAnmTable[] = { 
-	PCstopUAnm, PCstopDAnm, PCstopLAnm, PCstopRAnm,
-	PCwalkUAnm, PCwalkDAnm, PCwalkLAnm, PCwalkRAnm,
-	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,
-	PCjumpUAnm, PCjumpDAnm, PCjumpLAnm, PCjumpRAnm,
+  FLDMMDL_ID_COMMACTOR,
+  0,
+  MV_DMY,
+  0,	///<イベントタイプ
+  0,	///<イベントフラグ
+  0,	///<イベントID
+  0,	///<指定方向
+  0,	///<指定パラメタ 0
+  0,	///<指定パラメタ 1
+  0,	///<指定パラメタ 2
+  4,	///<X方向移動制限
+  4,	///<Z方向移動制限
+  0,	///<グリッドX
+  0,	///<グリッドZ
+  0,	///<Y値 fx32型
 };

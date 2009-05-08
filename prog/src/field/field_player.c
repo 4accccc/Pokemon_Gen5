@@ -74,14 +74,17 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 	fld_player->fldmmdl =
 		FLDMMDLSYS_SearchOBJID( fmmdlsys, FLDMMDL_ID_PLAYER );
 
-	if( fld_player->fldmmdl == NULL ){	//V‹K
+	if( fld_player->fldmmdl == NULL )	//V‹K
+	{
 		FLDMMDL_HEADER head;
 		head = playerdata_FldMMdlHeader;
 		head.gx = SIZE_GRID_FX32( pos->x );
 		head.gz = SIZE_GRID_FX32( pos->z );
 		head.y = pos->y;
 		fld_player->fldmmdl = FLDMMDLSYS_AddFldMMdl( fmmdlsys, &head, 0 );
-	}else{	//•œ‹A
+	}
+	else //•œ‹A
+	{
 		int gx = SIZE_GRID_FX32( pos->x );
 		int gy = SIZE_GRID_FX32( pos->y );
 		int gz = SIZE_GRID_FX32( pos->z );

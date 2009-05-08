@@ -152,12 +152,8 @@ struct _FIELDMAP_WORK
 	void *mapCtrlWork;
 	
 	FIELD_DEBUG_WORK *debugWork;
-
+  
 	FIELD_BMODEL_MAN * bmodel_man;
-
-	//削除予定
-	FLD_COMM_ACTOR *commActorTbl[FLD_COMM_ACTOR_MAX];
-	void *pGridCont;
 };
 
 //--------------------------------------------------------------
@@ -204,15 +200,6 @@ static GMEVENT * fldmap_Event_CheckPushConnect(
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * fldmapFunc_Event_CheckEvent(GAMESYS_WORK *gsys, void *work);
 
-//data
-static const GFL_DISP_VRAM fldmapdata_dispVram;
-static const GFL_BG_SYS_HEADER fldmapdata_bgsysHeader;
-static const GFL_CLSYS_INIT fldmapdata_CLSYS_Init;
-static const VecFx32 fldmapdata_cameraTarget;
-static const VecFx32 fldmapdata_cameraPos;
-static const GFL_G3D_LIGHTSET_SETUP fldmapdata_light0Setup;
-static const GXRgb fldmapdata_edgeColorTable[8];
-
 //zonechange
 static BOOL fldmapMain_UpdateMoveZone( FIELDMAP_WORK *fieldWork );
 static BOOL fldmap_CheckPlayerPosUpdate( FIELDMAP_WORK *fieldWork );
@@ -228,10 +215,17 @@ static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id );
 //etc
 static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork );
 
+//data
+static const GFL_DISP_VRAM fldmapdata_dispVram;
+static const GFL_BG_SYS_HEADER fldmapdata_bgsysHeader;
+static const GFL_CLSYS_INIT fldmapdata_CLSYS_Init;
+static const VecFx32 fldmapdata_cameraTarget;
+static const VecFx32 fldmapdata_cameraPos;
+static const GFL_G3D_LIGHTSET_SETUP fldmapdata_light0Setup;
+static const GXRgb fldmapdata_edgeColorTable[8];
+
 //----------------------------------
 // 削除予定
-static void fieldMainCommActorFree( FIELDMAP_WORK *fieldWork );
-static void fieldMainCommActorProc( FIELDMAP_WORK *fieldWork );
 //----------------------------------
 
 //======================================================================
@@ -266,12 +260,14 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	//マップマトリクス
 	fieldWork->pMapMatrix = MAP_MATRIX_Create( heapID );
 	
-	//通信用処理
+	//通信用処理 
   fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP );
   comm_field = GAMESYSTEM_GetCommFieldWork(gsys);
   FIELD_COMM_MAIN_CommFieldSysPtrSet(fieldWork->commSys, comm_field);
   FIELD_COMM_MAIN_CommFieldMapInit(comm_field);
-	
+	FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys,
+      GAMEDATA_GetFldMMdlSys(GAMESYSTEM_GetGameData(gsys)));
+   
 	return fieldWork;
 }
 
@@ -287,7 +283,7 @@ void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 	//マップマトリクス
 	MAP_MATRIX_Delete( fieldWork->pMapMatrix );
 	
-////	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
+  //FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
 	FIELD_COMM_MAIN_TermSystem( fieldWork, fieldWork->commSys );
 
 	GFL_HEAP_FreeMemory( fieldWork );
@@ -296,8 +292,6 @@ void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 //======================================================================
 //	フィールドマップ　メイン
 //======================================================================
-
-
 //--------------------------------------------------------------
 /**
  * フィールドマップ　メイン
@@ -364,10 +358,6 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 			//登録テーブルごとに個別の初期化処理を呼び出し
 			fieldWork->now_pos = *pos;
 			fieldWork->func_tbl->create_func(fieldWork, &fieldWork->now_pos, dir);
-#if 0
-			OS_Printf( "testtestD %d, %d, %d\n",
-					pos->x/FX32_ONE, pos->y/FX32_ONE, pos->z/FX32_ONE );
-#endif
 			
 			FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
 			
@@ -447,10 +437,10 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 		
 		//自機更新
 		FIELD_PLAYER_Update( fieldWork->field_player );
-
+#if 0
 		//通信用アクター更新
 		fieldMainCommActorProc( fieldWork );
-		
+#endif	
 		//通信用処理(プレイヤーの座標の設定とか
 		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork,
 				fieldWork->gsys, fieldWork->field_player, fieldWork->commSys );
@@ -476,8 +466,10 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 		}
 		
 		//通信用アクター削除
+#if 0
 		fieldMainCommActorFree( fieldWork );
-		
+#endif
+
 		//情報バーの開放
 		FIELD_SUBSCREEN_Exit(fieldWork->fieldSubscreenWork);
 
@@ -701,9 +693,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   //自機更新
   FIELD_PLAYER_Update( fieldWork->field_player );
 
-  //通信用アクター更新
-  fieldMainCommActorProc( fieldWork );
-  
   //通信用処理(プレイヤーの座標の設定とか
   FIELD_COMM_MAIN_UpdateCommSystem( fieldWork,
       fieldWork->gsys, fieldWork->field_player, fieldWork->commSys );
@@ -743,9 +732,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     FIELD_PLAYER_GetPos(fieldWork->field_player, &player_pos);
     PLAYERWORK_setPosition(pw, &player_pos);
   }
-  
-  //通信用アクター削除
-  fieldMainCommActorFree( fieldWork );
   
   //情報バーの開放
   FIELD_SUBSCREEN_Exit(fieldWork->fieldSubscreenWork);
@@ -918,7 +904,7 @@ void FIELDMAP_ForceUpdate( FIELDMAP_WORK *fieldWork )
  * @retval	void*
  */
 //--------------------------------------------------------------
-void * FieldMain_GetCommSys( const FIELDMAP_WORK *fieldWork )
+void * FIELDMAP_GetCommSys( const FIELDMAP_WORK *fieldWork )
 {
 	return (void*)fieldWork->commSys;
 }
@@ -1129,6 +1115,32 @@ FIELD_PLAYER * FIELDMAP_GetFieldPlayer( FIELDMAP_WORK *fieldWork )
 {
 	GF_ASSERT( fieldWork->field_player != NULL ); //未登録参照は禁止
 	return fieldWork->field_player;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  FIELD_SUBSCREEN_WORKを得る
+ * @param fieldWork FIELDMAP_WORK
+ * @retval FIELD_SUBSCREEN_WORK*
+ */
+//--------------------------------------------------------------
+FIELD_SUBSCREEN_WORK * FIELDMAP_GetFieldSubscreenWork(
+    FIELDMAP_WORK *fieldWork )
+{
+	return fieldWork->fieldSubscreenWork;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  FIELD_SUBSCREEN_WORKを設定する
+ * @param  fieldWork FIELDMAP_WORK
+ * @retval FIELD_SUBSCREEN_WORK*
+ */
+//--------------------------------------------------------------
+void FIELDMAP_SetFieldSubscreenWork(
+    FIELDMAP_WORK *fieldWork, FIELD_SUBSCREEN_WORK *pWork )
+{
+  fieldWork->fieldSubscreenWork = pWork;
 }
 
 //======================================================================
@@ -1938,32 +1950,6 @@ static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork )
 	fieldWork->mapCtrlWork = NULL;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief  FIELD_SUBSCREEN_WORKを得る
- * @param fieldWork FIELDMAP_WORK
- * @retval FIELD_SUBSCREEN_WORK*
- */
-//--------------------------------------------------------------
-FIELD_SUBSCREEN_WORK* FIELDMAP_GetFieldSubscreenWork( FIELDMAP_WORK *fieldWork )
-{
-	return fieldWork->fieldSubscreenWork;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief  FIELD_SUBSCREEN_WORKを設定する
- * @param  fieldWork FIELDMAP_WORK
- * @retval FIELD_SUBSCREEN_WORK*
- */
-//--------------------------------------------------------------
-void FIELDMAP_SetFieldSubscreenWork( FIELDMAP_WORK *fieldWork,FIELD_SUBSCREEN_WORK* pWork )
-{
-  fieldWork->fieldSubscreenWork = pWork;
-}
-
-
-
 //======================================================================
 //	data
 //======================================================================
@@ -2040,68 +2026,3 @@ static const GXRgb fldmapdata_edgeColorTable[8] = {
 	GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),
 	GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),
 };
-
-//======================================================================
-//======================================================================
-//
-//	以下消えます
-//
-//======================================================================
-//======================================================================
-
-
-//--------------------------------------------------------------
-/**
- * フィールド通信用アクターの追加
- * @param	fieldWork	FIELDMAP_WORK
- * @param	player		参照するPLAYER_WORK
- * @retval	nothing
- */
-//--------------------------------------------------------------
-void FieldMain_AddCommActor(
-	FIELDMAP_WORK *fieldWork, const PLAYER_WORK *player )
-{
-	int i;
-	GFL_BBDACT_SYS *bbdActSys;
-	GFL_BBDACT_RESUNIT_ID unitID;
-	
-	bbdActSys = fieldWork->bbdActSys;
-	unitID = GetPlayerBBdActResUnitID( fieldWork->field_player );
-	
-	for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
-		if( fieldWork->commActorTbl[i] == NULL ){
-			fieldWork->commActorTbl[i] = FldCommActor_Init(
-				player, bbdActSys, unitID, fieldWork->heapID, i );
-			return;
-		}
-	}
-}
-
-//--------------------------------------------------------------
-///	通信アクター全削除
-//--------------------------------------------------------------
-static void fieldMainCommActorFree( FIELDMAP_WORK *fieldWork )
-{
-	int i;
-	
-	for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
-		if( fieldWork->commActorTbl[i] != NULL ){
-			FldCommActor_Delete( fieldWork->commActorTbl[i] );
-			fieldWork->commActorTbl[i] = NULL;
-		}
-	}
-}
-
-//--------------------------------------------------------------
-///	通信アクター更新
-//--------------------------------------------------------------
-static void fieldMainCommActorProc( FIELDMAP_WORK *fieldWork )
-{
-	int i;
-	
-	for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
-		if( fieldWork->commActorTbl[i] != NULL ){
-			FldCommActor_Update( fieldWork->commActorTbl[i] );
-		}
-	}
-}
