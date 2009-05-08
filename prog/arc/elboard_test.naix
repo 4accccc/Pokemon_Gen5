@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2009-05-01T19:36:05
+	Update:2009-05-08T12:18:14
  *****************************************************************************/
 
 #ifndef NARC_ELBOARD_TEST_NAIX_
@@ -14,7 +14,10 @@ enum {
 	NARC_elboard_test_elboard_test_nsbmd = 0,
 	NARC_elboard_test_elboard_test_nsbtx = 1,
 	NARC_elboard_test_elboard_test_nsbca = 2,
-	NARC_elboard_test_elboard_test_nsbta = 3
+	NARC_elboard_test_elboard_test_nsbta = 3,
+	NARC_elboard_test_elboard2_test_nsbmd = 4,
+	NARC_elboard_test_elboard2_test_nsbtx = 5,
+	NARC_elboard_test_elboard2_test_nsbta = 6
 };
 
 /* NARC_ELBOARD_TEST_NAIX_ */

@@ -32,6 +32,11 @@
  *
  */
 //============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief		テクスチャ作成データ
+ */
+//------------------------------------------------------------------
 typedef struct {
 	u16						texSizIdxS;
 	u16						texSizIdxT;
@@ -61,30 +66,40 @@ static const GX_TEXSIZ_TBL GX_texSizTbl[] = {
 static void makeElboard(EL_SCOREBOARD_SETDATA* setData, const STRBUF* str, HEAPID heapID);
 //------------------------------------------------------------------
 /**
- * @brief		パレットデータ
+ * @brief		パレットアニメデータ
  */
 //------------------------------------------------------------------
+typedef struct {
+	NNSGfdTexKey	plttVramKey;		//テクスチャＶＲＡＭキー
+	u32						plttOffset;
+}EL_SCOREBOARD_ANMDATA;
+
 #define COL_SIZ				(2)
-#define PLTT_SIZ			(16*COL_SIZ)
+#define PLTT_SIZ			(4*COL_SIZ)
 
-static const u16 plttData[PLTT_SIZ/2] = { 
-	0x0000, 0x18C6, 0x2108, 0x021F, 0x0000, 0x0000, 0x0000, 0x0000,
-	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+#define COL_B1	(0x18C6)
+#define COL_B2	(0x2108)
+#define COL_F1	(0x021F)
+#define COL_F2	(0x031F)
 
-static const u16 plttData2[PLTT_SIZ/2] = { 
-	0x0000, 0x18C6, 0x2108, 0x031F, 0x0000, 0x0000, 0x0000, 0x0000,
-	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+static const u16 plttData0[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F1 };
+static const u16 plttData1[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F1 };
+static const u16 plttData2[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F1 };
+static const u16 plttData3[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F1 };
+static const u16 plttData4[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F2 };
+static const u16 plttData5[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F2 };
+static const u16 plttData6[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F2 };
+static const u16 plttData7[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F2 };
+
+static const u16* plttData[] = { 
+	plttData0, plttData1, plttData2, plttData3, plttData4, plttData5, plttData6, plttData7,
 };
 
 #define BCOL1 (1)
 #define BCOL2 (2)
 #define LCOL	(3)
 
-
-
-
-
+static void anmElboard(EL_SCOREBOARD_ANMDATA* anmData, int timer);
 
 //============================================================================================
 /**
@@ -193,6 +208,8 @@ void	ELBOARD_Delete( EL_SCOREBOARD* elb )
 {
 	NNS_GfdFreePlttVram(elb->plttVramKey);
 	NNS_GfdFreeTexVram(elb->texVramKey);
+
+	GFL_HEAP_FreeMemory(elb);
 }	
 
 //------------------------------------------------------------------
@@ -208,14 +225,12 @@ void	ELBOARD_Main( EL_SCOREBOARD* elb )
 
 	elb->timer++;
 	{
-		//パレットアニメーション
-		void* src;
-		u32 dst, siz;
+		EL_SCOREBOARD_ANMDATA anmData;
 
-		if(elb->timer & 0x0004){ src = (void*)plttData; } else { src = (void*)plttData2; }
-		dst = NNS_GfdGetPlttKeyAddr(elb->plttVramKey);
-		siz = PLTT_SIZ;
-		NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, siz);
+		anmData.plttVramKey = elb->plttVramKey;
+		anmData.plttOffset = 0;
+
+		anmElboard(&anmData, elb->timer);
 	}
 }
 
@@ -457,6 +472,7 @@ EL_SCOREBOARD_TEX*	ELBOARD_TEX_Add( GFL_G3D_RES* g3Dtex, const STRBUF* str, HEAP
 //------------------------------------------------------------------
 void	ELBOARD_TEX_Delete( EL_SCOREBOARD_TEX* elb_tex )
 {
+	GFL_HEAP_FreeMemory(elb_tex);
 }	
 
 //------------------------------------------------------------------
@@ -471,16 +487,15 @@ void	ELBOARD_TEX_Main( EL_SCOREBOARD_TEX* elb_tex )
 	elb_tex->timer++;
 	if(elb_tex->plttOffset != INVALID_DATA)
 	{
-		//パレットアニメーション
-		void* src;
-		u32 dst, siz;
+		EL_SCOREBOARD_ANMDATA anmData;
 
-		if(elb_tex->timer & 0x0004){ src = (void*)plttData; } else { src = (void*)plttData2; }
-		dst = NNS_GfdGetPlttKeyAddr(elb_tex->plttVramKey) + elb_tex->plttOffset;
-		siz = PLTT_SIZ;
-		NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, siz);
+		anmData.plttVramKey = elb_tex->plttVramKey;
+		anmData.plttOffset = elb_tex->plttOffset;
+
+		anmElboard(&anmData, elb_tex->timer);
 	}
 }
+
 
 
 
@@ -576,4 +591,32 @@ static void makeElboard(EL_SCOREBOARD_SETDATA* setData, const STRBUF* str, HEAPI
 	PRINTSYS_QUE_Clear(printQue);
 	PRINTSYS_QUE_Delete(printQue);
 }	
+
+
+
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	電光掲示板パレットアニメ
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+static void anmElboard(EL_SCOREBOARD_ANMDATA* anmData, int timer)
+{
+	void*	src = (void*)plttData[ timer & 7 ];
+	u32		dst = NNS_GfdGetPlttKeyAddr(anmData->plttVramKey) + anmData->plttOffset;
+	u32		siz = PLTT_SIZ;
+
+	NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, siz);
+}
 

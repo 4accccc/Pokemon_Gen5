@@ -398,6 +398,9 @@ enum {
 	G3DRES_ELBOARD_BTX,
 	G3DRES_ELBOARD_BCA,
 	G3DRES_ELBOARD_BTA,
+	G3DRES_ELBOARD2_BMD,
+	G3DRES_ELBOARD2_BTX,
+	G3DRES_ELBOARD2_BTA,
 };
 
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
@@ -405,6 +408,9 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbtx, GFL_G3D_UTIL_RESARC },
 	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbca, GFL_G3D_UTIL_RESARC },
 	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbta, GFL_G3D_UTIL_RESARC },
+	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbmd, GFL_G3D_UTIL_RESARC },
+	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbtx, GFL_G3D_UTIL_RESARC },
+	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbta, GFL_G3D_UTIL_RESARC },
 };
 
 static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
@@ -412,12 +418,18 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
 	{ G3DRES_ELBOARD_BTA, 0 },
 };
 
+static const GFL_G3D_UTIL_ANM g3Dutil_anm2Tbl[] = {
+	{ G3DRES_ELBOARD2_BTA, 0 },
+};
+
 enum {
 	G3DOBJ_ELBOARD1 = 0,
+	G3DOBJ_ELBOARD2,
 };
 
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_ELBOARD_BMD, 0, G3DRES_ELBOARD_BTX, g3Dutil_anm1Tbl, NELEMS(g3Dutil_anm1Tbl) },
+	{ G3DRES_ELBOARD2_BMD, 0, G3DRES_ELBOARD2_BTX, g3Dutil_anm2Tbl, NELEMS(g3Dutil_anm2Tbl) },
 };
 
 static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
@@ -505,6 +517,7 @@ static void systemSetup(SAMPLE2_WORK* sw)
 		u16						objIdx, elboard1Idx;
 		GFL_G3D_OBJ*	g3Dobj;
 		GFL_G3D_RES*	g3Dtex;
+		int i, anmCount;
 
 		//リソース作成
 		sw->g3Dutil = GFL_G3D_UTIL_Create(NELEMS(g3Dutil_resTbl), NELEMS(g3Dutil_objTbl), sw->heapID );
@@ -512,10 +525,12 @@ static void systemSetup(SAMPLE2_WORK* sw)
 
 		//アニメーションを有効にする
 		objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx);
-		elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
+		//elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
+		elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
 		g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
-		GFL_G3D_OBJECT_EnableAnime(g3Dobj, 0); 
-		GFL_G3D_OBJECT_EnableAnime(g3Dobj, 1); 
+
+		anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
+		for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_EnableAnime(g3Dobj, i); } 
 
 		g3Dtex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
 		sw->elb_tex = ELBOARD_TEX_Add(g3Dtex, sw->strBuf, sw->heapID);
@@ -562,14 +577,17 @@ static void systemFramework(SAMPLE2_WORK* sw)
 		{
 			u16						objIdx, elboard1Idx;
 			GFL_G3D_OBJ*	g3Dobj;
+			int i, anmCount;
 
 			objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx );
-			elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
+			//elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
+			elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
 			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
 
 			GFL_G3D_DRAW_DrawObject(g3Dobj, &g3DobjStatus1);
-			GFL_G3D_OBJECT_LoopAnimeFrame(g3Dobj, 0, FX32_ONE ); 
-			GFL_G3D_OBJECT_LoopAnimeFrame(g3Dobj, 1, FX32_ONE ); 
+
+			anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
+			for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_LoopAnimeFrame(g3Dobj, i, FX32_ONE ); } 
 		}
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 	}
