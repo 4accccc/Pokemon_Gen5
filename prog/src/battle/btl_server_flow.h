@@ -202,16 +202,22 @@ typedef struct {
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
- WazaSick   sickID;                  ///< 状態異常ID
+ WazaSick       sickID;              ///< 状態異常ID
+ BPP_SICK_CONT  sickCont;            ///< 状態異常継続パラメータ
+ u8   fAlmost;                       ///< ほぼ確定フラグ（特殊要因で失敗した場合に原因メッセージを表示する）
  u8   poke_cnt;                      ///< 対象ポケモン数
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
+ u8   fExMsg;                        ///< 成功時、特殊メッセージ表示
+ u8   exStrArgCnt;                   ///< 成功時の特殊メッセージ引数の数
+ u16  exStrID;                       ///< 成功時の特殊メッセージID
+ int  exStrArgs[ BTL_STR_ARG_MAX ];  ///< 成功時の特殊メッセージ引数
 }BTL_HANDEX_PARAM_ADD_SICK;
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  WazaRankEffect rankType;            ///< ランク増減種類
  s8   rankVolume;                    ///< ランク増減値
- u8   fAlmost;                       ///< ほぼ確定フラグ（とくせい等、特殊要因がなければ確実に起こる場合TRUE）
+ u8   fAlmost;                       ///< ほぼ確定フラグ（特殊要因で失敗した場合に原因メッセージを表示する）
  u8   poke_cnt;                      ///< 対象ポケモン数
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
 }BTL_HANDEX_PARAM_RANK_EFFECT;
