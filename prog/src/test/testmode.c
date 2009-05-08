@@ -154,6 +154,7 @@ static BOOL TESTMODE_ITEM_SelectFuncSound( TESTMODE_WORK *work , const int idx )
 static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncDlPlay( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncNagi( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx );
 
 static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx );
@@ -185,6 +186,8 @@ static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int 
 #elif defined DEBUG_ONLY_FOR_ariizumi_nobuhiko
 //	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncDressUp
 	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncAri
+#elif defined DEBUG_ONLY_FOR_nagihashi_toru
+	#define QuickSelectFunc		TESTMODE_ITEM_SelectFuncNagi
 #endif
 
 
@@ -211,6 +214,7 @@ static TESTMODE_MENU_LIST topMenu[] =
 	{L"Ç©Ç™Ç‚Å@ÇØÇ¢ÇΩ"		,TESTMODE_ITEM_SelectFuncKagaya  },
 	{L"Ç†ÇËÇ¢Ç∏Ç›Å@ÇÃÇ‘Ç–Ç±",TESTMODE_ITEM_SelectFuncAri },
 	{L"DlPlay Sample"		,TESTMODE_ITEM_SelectFuncDlPlay },
+	{L"Ç»Ç¨ÇÕÇµÅ@Ç∆Ç®ÇÈ"	, TESTMODE_ITEM_SelectFuncNagi	}
 };
 
 static TESTMODE_MENU_LIST menuRTCEdit[] = 
@@ -913,6 +917,14 @@ extern const GFL_PROC_DATA DebugDLPlayMainProcData;
 static BOOL TESTMODE_ITEM_SelectFuncDlPlay( TESTMODE_WORK *work , const int idx )
 {
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(download_play), &DebugDLPlayMainProcData, NULL);
+	return TRUE;
+}
+
+FS_EXTERN_OVERLAY(nagihashi_debug);
+extern const GFL_PROC_DATA DebugNagiMainProcData;
+static BOOL TESTMODE_ITEM_SelectFuncNagi( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(nagihashi_debug), &DebugNagiMainProcData, NULL);
 	return TRUE;
 }
 
