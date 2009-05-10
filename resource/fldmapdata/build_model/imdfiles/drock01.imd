@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-04-22T20:47:03" source="rock_01.mb"/>
+	<create user="fuchino" host="W00152" date="2009-04-27T20:38:09" source="drock01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-04-22T20:47:03" source="rock_01.mb"/>
+<original_create user="fuchino" host="W00152" date="2009-04-27T20:38:09" source="drock01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,12 +30,12 @@
 <box_test pos_scale="3" xyz="-2.000000 0.250000 -1.000000" whd="4.000000 3.000000 3.000000"/>
 
 <tex_image_array size="1">
-	<tex_image index="0" name="rock01"
+	<tex_image index="0" name="drock01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="rock01_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/rock_01/tex/rock01.tga"
+		palette_name="drock01_pl"
+		path="C:/home/wb_data3d/build_model/indoor/drock01/tex/drock01.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -75,14 +75,14 @@
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="rock01_pl" color_size="8">
-		7c1f 292e 2509 3dad 5b3c 52db 4657 39d3
+	<tex_palette index="0" name="drock01_pl" color_size="8">
+		0c1f 258e 2109 3daf 5b9a 537a 46f7 3a53
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="rock01_lm1"
-		light0="on" light1="off" light2="off" light3="off"
+	<material index="0" name="drock01_lm1"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -119,7 +119,7 @@
 		volume_max="0.396484 0.644531 0.396484"
 		volume_r="0.782227"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="off" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -127,7 +127,7 @@
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
-					<nrm xyz="0.000000 0.707031 0.707031"/>
+					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="-0.396484 0.049561 0.396484"/>
 					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="0.396484 0.049561"/>

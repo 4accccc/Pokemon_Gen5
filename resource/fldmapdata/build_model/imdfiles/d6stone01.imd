@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="ibe_mana" host="W00191" date="2009-05-07T17:06:13" source="d6stone01.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="ibe_mana" host="W00191" date="2009-05-07T17:06:13" source="d6stone01.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="3"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="2 2"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="3" xyz="-1.000000 -0.250000 -1.457275" whd="2.000000 5.294678 1.957031"/>
+
+<tex_image_array size="2">
+	<tex_image index="0" name="h_kage"
+		width="8" height="8" original_width="8" original_height="8"
+		format="a3i5"
+		palette_name="h_kage_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/common_tex/h_kage.tga"
+	>
+		<bitmap size="32">
+			2020 2020 2020 2020 2020 2020 2020 2020
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="huyuuisi_001"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="huyuuisi_001_pl"
+		path="C:/home/wb_data3d/build_model/indoor/d6stone01/tex/huyuuisi_001.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 3555 0003 0000 0000 0000 0000
+			0000 5000 ccc9 0336 0000 0000 0000 0000
+			0000 4000 bbbb 36cb 0003 0000 0000 0000
+			0000 4500 bbb4 9bbb 0036 0000 0000 0000
+			0000 9500 bb64 99bb 0369 0000 0000 0000
+			0000 b500 b946 999b 3999 0000 0000 0000
+			0000 bb50 6468 998b 9899 0004 0000 0000
+			0000 8b50 4688 98b9 8989 0049 0000 0000
+			0000 8b50 6988 9b94 8898 0488 0000 0000
+			0000 8b61 9888 ba59 8889 5188 0000 0000
+			0000 9221 9988 a645 888b b518 0005 0000
+			0000 2983 5552 6445 88ba 6b61 0006 0000
+			0000 9783 7887 4245 3ba6 66b6 0056 0000
+			0000 7985 8879 2457 6363 666b 0056 0000
+			0000 9785 8999 2478 b636 6666 0056 0000
+			0000 9983 9999 5788 6466 6666 0566 0000
+			0000 6683 9996 4899 4666 6666 0566 0000
+			0000 6683 6666 3466 4666 6664 0566 0000
+			0000 6883 6666 3466 7466 6647 0566 0000
+			0000 8840 6666 3466 7746 6477 0466 0000
+			0000 8330 6668 3446 7774 4777 0566 0000
+			0000 3300 6688 4444 7773 7777 0054 0000
+			0000 3000 4883 4444 7773 6777 0056 0000
+			0000 0000 4430 4444 7773 6677 0056 0000
+			0000 0000 3300 4444 7734 6667 0006 0000
+			0000 0000 0000 4433 7734 6666 0005 0000
+			0000 0000 0000 3300 6733 3666 0000 0000
+			0000 0000 0000 0000 6635 3566 0000 0000
+			0000 0000 0000 0000 3300 0333 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="2">
+	<tex_palette index="0" name="h_kage_pl" color_size="8">
+		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="huyuuisi_001_pl" color_size="16">
+		7c1f 24c4 28e4 20c4 24e5 24e4 2904 2d26
+		3146 2d25 3167 3587 39a8 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="2">
+	<material index="0" name="h_kage_lm1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="huyuuisi_001_lm3"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="2">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-1.000000 3.630615 -1.457031"
+		volume_max="1.000000 5.044678 -0.042969"
+		volume_r="5.345459"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xyz xyz="-1.000000 3.630615 -0.042969"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="1.000000 3.630615"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_yz yz="5.044678 -1.457031"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-1.000000 5.044678"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="6" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-0.500000 -0.250000 -0.670166"
+		volume_max="0.500000 -0.250000 0.500000"
+		volume_r="0.715332"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quad_strip" vertex_size="6">
+					<mtx idx="0"/>
+					<tex st="5.000000 1.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xyz xyz="0.500000 -0.250000 0.207520"/>
+					<pos_xz xz="0.500000 -0.377686"/>
+					<pos_xz xz="0.000000 0.500000"/>
+					<pos_xz xz="0.000000 -0.670166"/>
+					<pos_xz xz="-0.500000 0.207520"/>
+					<pos_xz xz="-0.500000 -0.377686"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="polySurface8" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="y_on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="2"
+		vertex_size="10" polygon_size="3"
+		triangle_size="0" quad_size="3"
+		volume_min="-1.000000 -0.250000 -1.457031"
+		volume_max="1.000000 5.044678 0.500000"
+		volume_r="5.345459"
+	>
+		<display index="0" material="0" polygon="1" priority="0"/>
+		<display index="1" material="1" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="10" polygon_size="3"
+	triangle_size="0" quad_size="3"/>
+
+</body>
+
+</imd>
