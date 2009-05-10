@@ -29,7 +29,6 @@ typedef struct {
 const SCENE_DATA	resistMapTbl[];
 const unsigned int resistMapTblCount;
 
-static FLDMAPPER_RESIST_TEX	gTexBuffer;
 
 //============================================================================================
 //============================================================================================
@@ -64,14 +63,15 @@ void FIELDDATA_SetMapperData(
 	
 	//標準フィールド以外のときだけテクスチャをグローバルにしてみる
 	if (map_res->g3DmapFileType != FLDMAPPER_FILETYPE_PKGS && area_id != AREA_ID_FIELD) {
+    FLDMAPPER_RESIST_TEX	gTexBuffer;
 		gTexBuffer.arcID = ARCID_AREA_MAPTEX;
 		gTexBuffer.datID = AREADATA_GetTextureSetID(area_id);
 		if (AREADATA_HasSeason(area_id) == TRUE) {
 			gTexBuffer.datID += sid;
 		}
 		TAMADA_Printf("Load Area Texture %d\n", gTexBuffer.datID);
-		map_res->gtexType = FLDMAPPER_RESIST_TEXTYPE_USE;
-		map_res->gtexData = &gTexBuffer;
+		map_res->gtexType = FLDMAPPER_TEXTYPE_USE;
+		map_res->gtexData = gTexBuffer;
 	}
 	{
 		TAMADA_Printf("ZONE_ID:%d AREA_ID:%d\n",mapid, area_id);
@@ -215,40 +215,6 @@ static const FLDMAPPER_MAPDATA samplebridge[] = {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-#include "fieldmap/all_build_model.naix"
-static const FLDMAPPER_RESISTOBJDATA resistObjTbl2[] = {
-	{ NARC_all_build_model_gate_01_nsbmd, NON_LOWQ},
-	{ NARC_all_build_model_pc_01_nsbmd, NON_LOWQ},
-	{ NARC_all_build_model_t2_build01_nsbmd, NON_LOWQ},
-	{ NARC_all_build_model_t2_house01_nsbmd, NON_LOWQ},
-};
-
-#include "test_graphic/fieldmap_sample.naix"	//resistDDobjTblのために残している
-#if 0
-static const FLDMAPPER_RESISTOBJDATA	resistObjTbl[] = {
-	// high quality model, low quality model のセットを登録する
-	// high quality model, NON_LOWQでもOKらしい
-	{ NARC_fieldmap_sample_pc_01_h_nsbmd, NARC_fieldmap_sample_pc_01_l_nsbmd },
-	{ NARC_fieldmap_sample_buil_01_h_nsbmd, NARC_fieldmap_sample_buil_01_l_nsbmd },
-};
-#endif
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const u16	resistDDobjTbl[] = {
-	NARC_fieldmap_sample_sample_tree_nsbtx,
-};
-
-static const FLDMAPPER_RESISTDATA_OBJTBL	gobjData_Tbl = {
-	ARCID_BMODEL_OUTDOOR, resistObjTbl2, NELEMS(resistObjTbl2), 
-	//ARCID_ALLBUILDMODEL, resistObjTbl2, NELEMS(resistObjTbl2), 
-	0/* dummy archive id */, NULL, 0,
-	//ARCID_FLDMAP_SAMPLE, resistObjTbl, NELEMS(resistObjTbl), 
-	//ARCID_FLDMAP_ACTOR, resistDDobjTbl, NELEMS(resistDDobjTbl),
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 //金銀形式バイナリデータサンプル
 #define DATID_GSMAP_GOBJ (2)
 static const FLDMAPPER_RESISTDATA_OBJBIN	gobjData_Bin = {
@@ -288,13 +254,14 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LAND_EX,
-			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
-			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
 
 			3,	5, NELEMS(newbridgemap),
 			newbridgemap,
 		//	4,  4, NELEMS(loopbridgemap),
 		//	loopbridgemap, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
@@ -305,11 +272,12 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LANDDATA,
-			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
-			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 		},
 		&FieldMapCtrl_GridFunctions,
@@ -320,11 +288,12 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LAND_EX,
-			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
-			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
 
 			2,  6, NELEMS(samplebridge),
 			samplebridge, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
@@ -336,11 +305,12 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_FILETYPE_PKGS,
 			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_GSMAP, 
-			FLDMAPPER_RESIST_TEXTYPE_USE,	&gtexData, 
-			FLDMAPPER_RESIST_OBJTYPE_BIN,	(void*)&gobjData_Bin,
 
 			2,  6, NELEMS(GSMap),
 			GSMap, 
+
+			FLDMAPPER_TEXTYPE_USE,	{ ARCID_GSTEX, DATID_GSMAP_GTEX, },
+			FLDMAPPER_RESIST_OBJTYPE_BIN,	(void*)&gobjData_Bin,
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		},
 		&FieldMapCtrl_GridFunctions,
@@ -351,11 +321,12 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LAND_EX,
-			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
-			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
 
 			2,  2, NELEMS(test_c3map),
 			test_c3map, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		}, 
 		&FieldMapCtrl_C3Functions,

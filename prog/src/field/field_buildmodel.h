@@ -37,3 +37,5 @@ extern u16 FIELD_BMODEL_MAN_GetNarcIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID
 
 extern u16 FIELD_BMODEL_MAN_GetEntryIndex(BMODEL_ID id);
 
+extern FIELD_BMODEL_MAN * FLDMAPPER_GetBuildModelManager( FLDMAPPER* g3Dmapper);
+

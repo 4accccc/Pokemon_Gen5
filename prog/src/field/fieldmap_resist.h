@@ -41,7 +41,7 @@ typedef enum {
 //
 //------------------------------------------------------------------
 #define	NON_LOWQ	(0xffff)
-#define	NON_TEX		(0xffff)
+
 typedef struct {
 	u16 highQ_ID;
 	u16 lowQ_ID;
@@ -63,8 +63,9 @@ typedef struct {
 
 typedef enum {
 	FLDMAPPER_RESIST_OBJTYPE_NONE	= 0xffffffff,
-	FLDMAPPER_RESIST_OBJTYPE_TBL	= 0,
-	FLDMAPPER_RESIST_OBJTYPE_BIN	= 1,
+  FLDMAPPER_RESIST_OBJTYPE_BMODEL = 0,
+	FLDMAPPER_RESIST_OBJTYPE_TBL,
+	FLDMAPPER_RESIST_OBJTYPE_BIN,
 }FLDMAPPER_RESIST_OBJTYPE;
 typedef struct {
 	u32							objArcID;	//アーカイブＩＤ
@@ -87,9 +88,11 @@ typedef struct {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef enum {
-	FLDMAPPER_RESIST_TEXTYPE_NONE = 0xffffffff,
-	FLDMAPPER_RESIST_TEXTYPE_USE = 0,
-}FLDMAPPER_RESIST_TEXTYPE;
+	FLDMAPPER_TEXTYPE_NONE = 0,
+	FLDMAPPER_TEXTYPE_USE,
+
+  FLDMAPPER_TEXTYPE_MAX,
+}FLDMAPPER_TEXTYPE;
 
 typedef struct {
 	u32 arcID;
@@ -105,19 +108,19 @@ typedef struct {
 //------------------------------------------------------------------
 typedef struct {
 	FLDMAPPER_FILETYPE		g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
-	fx32					width;			//ブロック１辺の幅
-	fx32					height;			//ブロック高さ
+	fx32					blockWidth;			//ブロック１辺の幅
+	fx32					blockHeight;			//ブロック高さ
 	FLDMAPPER_MODE			mode;			//動作モード
 	u32						arcID;			//グラフィックアーカイブＩＤ
-	FLDMAPPER_RESIST_TEXTYPE	gtexType;		//グローバルテクスチャタイプ
-	const FLDMAPPER_RESIST_TEX*	gtexData;		//グローバルテクスチャ
-	FLDMAPPER_RESIST_OBJTYPE	gobjType;		//グローバルオブジェクトタイプ
-	void *						gobjData;		//グローバルオブジェクト
-
 	u16						sizex;			//横ブロック数
 	u16						sizez;			//縦ブロック数
 	u32						totalSize;		//配列サイズ
 	const FLDMAPPER_MAPDATA*	blocks;			//実マップデータ
+
+	FLDMAPPER_TEXTYPE	gtexType;		//グローバルテクスチャタイプ
+	FLDMAPPER_RESIST_TEX	gtexData;		//グローバルテクスチャ
+	FLDMAPPER_RESIST_OBJTYPE	gobjType;		//グローバルオブジェクトタイプ
+	void *						gobjData;		//グローバルオブジェクト
 
 	FLDMAPPER_RESIST_GROUND_ANIME ground_anime;	// 地面アニメーション
 }FLDMAPPER_RESISTDATA;
