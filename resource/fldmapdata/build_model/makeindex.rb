@@ -1,36 +1,37 @@
 #------------------------------------------------------------------------------
 #
-#		
+#		配置モデルのエリア別登録リスト生成
+#
+#		2009.04.27		tamada
 #
 #------------------------------------------------------------------------------
 require "fileutils"
 
-INPUT_FILE	= ARGV[0]
-OUTPUT_SYM	= ARGV[1]
-OUTPUT_DIR	= ARGV[2]
+INPUT_FILE	= ARGV[0]			#入力ファイル名
+OUTPUT_SYM	= ARGV[1]			#出力ファイルシンボル
+OUTPUT_DIR	= ARGV[2]			#出力先ディレクトリ名
 
-input_file = File.open(INPUT_FILE, "r")
 
 book = Array.new
 sheet = Array.new
-count = 0
+book << sheet
 
 #bookに対してシートごとに分断して保存
-while line = input_file.gets
-	column = line.split
-	if column.length < 2 then
-		if sheet.length > 1
-			book << sheet
-			sheet = Array.new
-		else
-			break
+File.open(INPUT_FILE, "r"){|input_file|
+	while line = input_file.gets
+		column = line.split
+		#カラムがない＝別シートと判定
+		if column.length < 2 then
+			if sheet.length > 1
+				sheet = Array.new
+				book << sheet
+			else
+				break
+			end
 		end
+		sheet << line
 	end
-	sheet << line
-end
-if sheet.length > 0 
-	book << sheet
-end
+}
 
 class InputFileError < Exception; end
 #------------------------------------------------------------------------------
@@ -91,7 +92,7 @@ book.each_index{|sheet_index|
 			bmodel = bmodel_list[index]
 			if bmodel.flag == true || entrys.has_key?(bmodel.name) then
 				outfile.write([index].pack("S"))
-				#printf("%3d %3d %-5s %-20s\n", count, index, bmodel.flag, bmodel.name)
+				printf("%3d %3d %-5s %-20s\n", count, index, bmodel.flag, bmodel.name)
 				count += 1
 			end
 		}

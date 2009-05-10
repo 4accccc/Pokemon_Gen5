@@ -45,12 +45,28 @@ DEP_INDOOR	=	\
 	$(RESDIR)/d4treasure01.nsbmd \
 	$(RESDIR)/d4treasure02.nsbmd \
 	$(RESDIR)/quicksand_01.nsbmd \
-	$(RESDIR)/d5stair_u01.nsbmd \
-	$(RESDIR)/d5stair_d01.nsbmd \
-	$(RESDIR)/d5stone01.nsbmd \
-	$(RESDIR)/d5stone02.nsbmd \
-	$(RESDIR)/d5stone03.nsbmd \
-	$(RESDIR)/d5stone04.nsbmd \
+	$(RESDIR)/d6stair_u01.nsbmd \
+	$(RESDIR)/d6stair_d01.nsbmd \
+	$(RESDIR)/d6stone01.nsbmd \
+	$(RESDIR)/d6stone02.nsbmd \
+	$(RESDIR)/d6stone03.nsbmd \
+	$(RESDIR)/d6stone04.nsbmd \
+	$(RESDIR)/d6stone05.nsbmd \
+	$(RESDIR)/d6rock01.nsbmd \
+	$(RESDIR)/pcshelf01.nsbmd \
 	$(RESDIR)/d5stone05.nsbmd \
-	$(RESDIR)/d5rock01.nsbmd \
+	$(RESDIR)/d6rock01_dummy.nsbmd \
+	$(RESDIR)/pcshelf01_dummy.nsbmd \
+	$(RESDIR)/d5container01.nsbmd \
+	$(RESDIR)/d5container02.nsbmd \
+	$(RESDIR)/d5container03.nsbmd \
+	$(RESDIR)/d5container04.nsbmd \
+	$(RESDIR)/d5box01.nsbmd \
+	$(RESDIR)/d5box02.nsbmd \
+	$(RESDIR)/d5ice01.nsbmd \
+	$(RESDIR)/d5ice02.nsbmd \
+	$(RESDIR)/d1shelf01.nsbmd \
+	$(RESDIR)/d1disk01.nsbmd \
+	$(RESDIR)/elboard_test.nsbmd \
+	$(RESDIR)/elboard2_test.nsbmd \
 
