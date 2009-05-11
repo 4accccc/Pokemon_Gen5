@@ -142,13 +142,13 @@ $(DEP_LIST_INDOOR):	$(TXT_DATA_INDOOR)
 
 #
 $(INDEX_OUTDOOR):		$(TXT_DATA_OUTDOOR)
-	@echo エリア別配置モデルリスト生成中
+	@echo エリア別配置モデルリスト（屋外）生成中
 	@ruby makeindex.rb	$(TXT_DATA_OUTDOOR) out $(INDEXDIR)
 	@echo $@をアーカイブしています
 	@nnsarc -c -l -n -i $(INDEX_OUTDOOR) -S $(INDEXDIR)/out.list > $(WKDIR)/arc_result.txt
 
 $(INDEX_INDOOR):		$(TXT_DATA_INDOOR)
-	@echo エリア別配置モデルリスト生成中
+	@echo エリア別配置モデルリスト（屋内）生成中
 	@ruby makeindex.rb	$(TXT_DATA_INDOOR) in $(INDEXDIR)
 	@echo $@をアーカイブしています
 	@nnsarc -c -l -n -i $(INDEX_INDOOR) -S $(INDEXDIR)/in.list > $(WKDIR)/arc_result.txt
