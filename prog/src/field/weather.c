@@ -17,6 +17,7 @@
 
 #include "weather.h"
 
+#include "field_3dpriority.h"
 #include "field_3dbg.h"
 
 // Še“V‹C
@@ -109,7 +110,7 @@ enum{
 //=====================================
 static const FIELD_3DBG_SETUP	sc_FIELD_3DBG_SETUP = {
 	256, 256,
-	(FX32_ONE*1),
+	FLD_3DPRI_WEATHER_OFFS,
 	0,
 };
 

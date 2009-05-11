@@ -42,7 +42,7 @@ typedef struct _FIELD_3DBG FIELD_3DBG;
 typedef struct {
 	u16		size_x;			// ピクセル単位のＢＧ０に描画するさいの面サイズ	
 	u16		size_y;			// ピクセル単位のＢＧ０に描画するさいの面サイズ
-	fx32	camera_dist;	// 面を配置するカメラからの距離
+	fx32	camera_dist;	// 面を配置するカメラ（ニア面）からの距離
 	u8		polygon_id;		// ポリゴンID
 
 	u8		pad[3];
@@ -101,7 +101,7 @@ extern u16 FIELD_3DBG_GetScreenSizeX( const FIELD_3DBG* cp_sys );
 extern void FIELD_3DBG_SetScreenSizeY( FIELD_3DBG* p_sys, u16 size_y );
 extern u16 FIELD_3DBG_GetScreenSizeY( const FIELD_3DBG* cp_sys );
 
-// 面を配置するカメラからの距離
+// 面を配置するカメラ（ニア面）からの距離
 extern void FIELD_3DBG_SetCameraDist( FIELD_3DBG* p_sys, fx32 dist );
 extern fx32 FIELD_3DBG_GetCameraDist( const FIELD_3DBG* cp_sys );
 
