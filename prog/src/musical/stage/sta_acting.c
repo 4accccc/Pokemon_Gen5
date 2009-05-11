@@ -212,6 +212,7 @@ ACTING_WORK*  STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
   
 #if USE_DEBUGWIN_SYSTEM
   DEBUGWIN_InitProc( ACT_FRAME_MAIN_CURTAIN , work->fontHandle );
+  DEBUGWIN_ChangeLetterColor( 31,31,31 );
 #endif  //USE_DEBUGWIN_SYSTEM
   return work;
 }

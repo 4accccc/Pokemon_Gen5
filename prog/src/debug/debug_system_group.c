@@ -48,6 +48,9 @@ static void DEBWIN_Update_PMeterOff( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_Pause( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_Pause( void* userWork , DEBUGWIN_ITEM* item );
 
+static void DEBWIN_Update_Kanji( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_Kanji( void* userWork , DEBUGWIN_ITEM* item );
+
 static void DEBWIN_Update_RTC_year( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_RTC_month( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_RTC_day( void* userWork , DEBUGWIN_ITEM* item );
@@ -82,6 +85,7 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   DEBUGWIN_AddItemToGroup( "パフォーマンスメーターON",DEBWIN_Update_PMeterOn , NULL , GROUPID_SYSTEM , heapId );
   DEBUGWIN_AddItemToGroup( "パフォーマンスメーターOFF",DEBWIN_Update_PMeterOff , NULL , GROUPID_SYSTEM , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Pause   ,DEBWIN_Draw_Pause   , (void*)sysGroupWork , GROUPID_SYSTEM , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Kanji   ,DEBWIN_Draw_Kanji   , (void*)sysGroupWork , GROUPID_SYSTEM , heapId );
 
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_year   ,DEBWIN_Draw_RTC_year   , (void*)sysGroupWork , GROUPID_RTC , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_month  ,DEBWIN_Draw_RTC_month  , (void*)sysGroupWork , GROUPID_RTC , heapId );
@@ -114,7 +118,7 @@ static void DEBWIN_Update_PMeterOff(  void* userWork , DEBUGWIN_ITEM* item )
   }
 }
 
-//パフォーマンスメーター
+//一時停止機能
 static void DEBWIN_Update_Pause( void* userWork , DEBUGWIN_ITEM* item )
 {
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
@@ -138,6 +142,36 @@ static void DEBWIN_Draw_Pause( void* userWork , DEBUGWIN_ITEM* item )
   }
 }
 
+//漢字
+static void DEBWIN_Update_Kanji( void* userWork , DEBUGWIN_ITEM* item )
+{
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    const u8 langId = GFL_MSGSYS_GetLangID();
+    if( langId == 0 )
+    {
+      GFL_MSGSYS_SetLangID( 1 );
+    }
+    else
+    {
+      GFL_MSGSYS_SetLangID( 0 );
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void DEBWIN_Draw_Kanji( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const u8 langId = GFL_MSGSYS_GetLangID();
+  if( langId == 0 )
+  {
+    DEBUGWIN_ITEM_SetNameV( item , "漢字モード[現在OFF]" );
+  }
+  else
+  {
+    DEBUGWIN_ITEM_SetNameV( item , "漢字モード[現在ON]" );
+  }
+}
 
 //RTC
 static void DEBWIN_Update_RTC_year( void* userWork , DEBUGWIN_ITEM* item )

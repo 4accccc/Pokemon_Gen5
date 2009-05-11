@@ -28,6 +28,9 @@
 
 #define DEBUGWIN_ITEM_NAME_LEN (24)
 
+#define DEBUGWIN_LETTER_COLOR (0x0000)
+#define DEBUGWIN_SELECT_COLOR (0x001f)
+
 //======================================================================
 //  enum
 //======================================================================
@@ -86,6 +89,8 @@ struct _DEBUGWIN_GROUP
 typedef struct
 {
   u16 flg;
+  u16 letterColor;
+  u16 selectColor;
   u32 frmnum;
   GFL_FONT *fontHandle;
   DEBUGWIN_GROUP  *topGroup;
@@ -177,7 +182,8 @@ void DEBUGWIN_UpdateSystem(void)
 {
   if( (debWork->flg & DWF_IS_INIT) )
   {
-    if( GFL_UI_KEY_GetTrg() & DEBUGWIN_TRG_KEY )
+    if( (GFL_UI_KEY_GetCont()& DEBUGWIN_CONT_KEY) &&
+        (GFL_UI_KEY_GetTrg() & DEBUGWIN_TRG_KEY ))
     {
       debWork->flg = debWork->flg ^ DWF_IS_ACTIVE;
       
@@ -217,6 +223,9 @@ void DEBUGWIN_InitProc( const u32 frmnum , GFL_FONT *fontHandle )
   debWork->flg = debWork->flg | DWF_IS_INIT;
   debWork->activeGroup = debWork->topGroup;
   debWork->activeItem = NULL;
+
+  debWork->letterColor = DEBUGWIN_LETTER_COLOR;
+  debWork->selectColor = DEBUGWIN_SELECT_COLOR;
 }
 
 void DEBUGWIN_ExitProc( void )
@@ -270,7 +279,10 @@ static void DEBUGWIN_OpenDebugWindow( void )
   //パレットの作成
   {
     u16 col[4]={ 0x0000 , 0x0000 , 0x7fff , 0x001f };
-    GFL_STD_MemCopy16(col, GFL_DISPUT_GetPltPtr(debWork->frmnum), sizeof(u16)*4);
+    col[DFP_NORMAL] = debWork->letterColor;
+    col[DFP_ACTIVE] = debWork->selectColor;
+    GFL_BG_LoadPalette( debWork->frmnum , col , sizeof(u16)*4 , 0 );
+//    GFL_STD_MemCopy16(col, GFL_DISPUT_GetPltPtr(debWork->frmnum), sizeof(u16)*4);
   }
   
   debWork->bmp = GFL_BMP_CreateInVRAM( GFL_DISPUT_GetCgxPtr(debWork->frmnum) , DEBUGWIN_WIDTH , DEBUGWIN_HEIGHT , GFL_BMP_16_COLOR , HEAPID_DEBUGWIN );
@@ -278,18 +290,6 @@ static void DEBUGWIN_OpenDebugWindow( void )
   //GFL_BMP_Clear( debWork->bmp , 0 );
   
   DEBUGWIN_DrawDebugWindow( TRUE , FALSE );
-/*
-  {
-    STRCODE code[4] ={L'て',L'す',L'と',0xFFFF};
-    STRBUF *str = GFL_STR_CreateBuffer( 8 , HEAPID_DEBUGWIN);
-    GFL_STR_SetStringCode( str , code );
-    PRINTSYS_Print( debWork->bmp , 0, 0, str, debWork->fontHandle );
-    PRINTSYS_Print( debWork->bmp , 0,16, str, debWork->fontHandle );
-    PRINTSYS_Print( debWork->bmp , 0,32, str, debWork->fontHandle );
-    PRINTSYS_Print( debWork->bmp , 0,64, str, debWork->fontHandle );
-    GFL_STR_DeleteBuffer( str );
-  }
-*/
 }
 
 static void DEBUGWIN_CloseDebugWindow( void )
@@ -397,7 +397,7 @@ static void DEBUGWIN_DrawDebugWindow( const BOOL forceDraw , const BOOL reset)
       {
         item->drawFunc( item->work , (void*)item );
       }
-      
+
       if( item == debWork->activeItem )
       {
         GFL_FONTSYS_SetColor( DFP_ACTIVE ,DFP_SHADOW ,DFP_BACK );
@@ -675,6 +675,20 @@ void DEBUGWIN_ITEM_SetNameV( DEBUGWIN_ITEM* item , char *nameStr , ...)
 }
 
 #pragma mark [>Draw Func
+//--------------------------------------------------------------
+//	色の変更
+//--------------------------------------------------------------
+void DEBUGWIN_ChangeLetterColor( const u8 r , const u8 g , const u8 b )
+{
+  debWork->letterColor = GX_RGB(r, g, b);
+}
+
+void DEBUGWIN_ChangeSelectColor( const u8 r , const u8 g , const u8 b )
+{
+  debWork->selectColor = GX_RGB(r, g, b);
+}
+
+
 //画面全更新
 void DEBUGWIN_RefreshScreen( void )
 {
