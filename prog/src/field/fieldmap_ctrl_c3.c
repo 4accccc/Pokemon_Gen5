@@ -124,17 +124,28 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 	C3_MOVE_WORK *mwk = FIELDMAP_GetMapCtrlWork( fieldWork );
 	
 	{
+		s16 df_angle;
+		s16 df_len;
+
+		if( key_cont & PAD_BUTTON_B ){
+			df_angle	= mwk->df_angle*4;
+			df_len		= mwk->df_len*4;
+		}else{
+			df_angle	= mwk->df_angle;
+			df_len		= mwk->df_len;
+		}
+		
 		if (key_cont & PAD_KEY_LEFT) {
-			mwk->pos_angle -= mwk->df_angle;
+			mwk->pos_angle -= df_angle;
 		}
 		if (key_cont & PAD_KEY_RIGHT) {
-			mwk->pos_angle += mwk->df_angle;
+			mwk->pos_angle += df_angle;
 		}
 		if (key_cont & PAD_KEY_UP) {
-			mwk->player_len -= mwk->df_len;
+			mwk->player_len -= df_len;
 		}
 		if (key_cont & PAD_KEY_DOWN) {
-			mwk->player_len += mwk->df_len;
+			mwk->player_len += df_len;
 		}
 	}
 
