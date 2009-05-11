@@ -421,6 +421,7 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 	GXS_SetMasterBrightness(-16);
 	GFL_DISP_GX_SetVisibleControlDirect(0);		//‘SBG&OBJ‚Ì•\Ž¦OFF
 	GFL_DISP_GXS_SetVisibleControlDirect(0);
+  GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
 
 	GFL_DISP_SetBank( &vramBank );
 	GFL_BG_Init( work->heapId_ );

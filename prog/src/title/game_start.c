@@ -16,7 +16,7 @@
 #include "savedata/situation.h"
 #include "app/name_input.h"
 #include "test/testmode.h"
-
+#include "select_moji_mode.h"
 
 //==============================================================================
 //	
@@ -156,10 +156,16 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 	GAMESTART_FIRST_WORK *work = mywk;
 	switch(*seq){
 	case 0:
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &NameInputProcData,(void*)work->nameInParam);
+	  //Š¿Žš‘I‘ð
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &SelectMojiModeProcData,NULL);
 		(*seq)++;
 		break;
 	case 1:
+	  //–¼‘O“ü—Í
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &NameInputProcData,(void*)work->nameInParam);
+		(*seq)++;
+		break;
+	case 2:
 		return GFL_PROC_RES_FINISH;
 	}
 
