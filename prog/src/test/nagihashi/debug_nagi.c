@@ -15,6 +15,7 @@
 
 //contant
 #include "system/main.h"	//HEAPID
+#include "system/gfl_use.h"
 
 //module
 #include "system/bmp_menulist.h"
@@ -22,6 +23,9 @@
 //archive
 #include "arc_def.h"
 #include "font/font.naix"
+
+//proc
+#include "net_app/irc_aura.h"
 
 //=============================================================================
 /**
@@ -43,14 +47,22 @@
 //=====================================
 typedef struct
 {
-	GFL_BMPWIN	*p_bmpwin;
+	int dummy;
 } GRAPHIC_BG_WORK;
+//-------------------------------------
+///	3D描画環境
+//=====================================
+typedef struct {
+	GFL_G3D_CAMERA		*p_camera;
+} GRAPHIC_3D_WORK;
 //-------------------------------------
 ///	描画関係
 //=====================================
 typedef struct 
 {
 	GRAPHIC_BG_WORK		gbg;
+	GRAPHIC_3D_WORK		g3d;
+	GFL_TCB *p_tcb;
 } GRAPHIC_WORK;
 //-------------------------------------
 ///	リスト
@@ -114,6 +126,8 @@ static void DEBUG_NAGI_COMMAND_End( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
+static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work );
+
 //BG
 static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
@@ -132,11 +146,16 @@ static PRINT_STREAM * MSG_GetPrintStream( const MSG_WORK *cp_wk );
 static PRINT_QUE* MSG_GetPrintQue( const MSG_WORK *cp_wk );
 //LISTFUNC
 typedef void (*LISTDATA_FUNCTION)( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_Test( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
-
+//3d
+static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
+static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
+static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk );
+static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk );
+static void Graphic_3d_SetUp( void );
 //=============================================================================
 /**
  *					データ
@@ -162,7 +181,7 @@ typedef enum
 } GRAPHIC_BG_FRAME;
 static const u32 sc_bgcnt_frame[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	GFL_BG_FRAME0_M,
+	GFL_BG_FRAME0_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] = 
 {
@@ -180,7 +199,7 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 //=====================================
 enum
 {	
-	LISTDATA_SEQ_TEST,
+	LISTDATA_SEQ_PROC_AURA,
 	LISTDATA_SEQ_RETURN,
 	LISTDATA_SEQ_NEXT_HOME,
 	LISTDATA_SEQ_NEXT_PAGE1,
@@ -188,7 +207,7 @@ enum
 };
 static const LISTDATA_FUNCTION	sc_list_funciton[]	= 
 {	
-	LISTDATA_Test,
+	LISTDATA_ChangeProcAura,
 	LISTDATA_Return,
 	LISTDATA_NextListHome,
 	LISTDATA_NextListPage1,
@@ -200,10 +219,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
 	{	
-		L"文字列", LISTDATA_SEQ_TEST
-	},
-	{	
-		L"次へ", LISTDATA_SEQ_NEXT_PAGE1
+		L"オーラチェック", LISTDATA_SEQ_PROC_AURA
 	},
 	{	
 		L"もどる", LISTDATA_SEQ_RETURN
@@ -213,7 +229,7 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 static const LIST_SETUP_TBL sc_list_data_page1[]	=
 {	
 	{	
-		L"進んだよ", LISTDATA_SEQ_TEST
+		L"進んだよ", LISTDATA_SEQ_PROC_AURA
 	},
 	{	
 		L"前へ", LISTDATA_SEQ_NEXT_HOME
@@ -245,12 +261,11 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 	MSG_Init( &p_wk->msg, HEAPID_NAGI_DEBUG );
 
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( sc_bgcnt_frame[GRAPHIC_BG_FRAME_TEXT],
-			1, 1, 30, 12, 0, GFL_BMP_CHRAREA_GET_B );
+			1, 1, 30, 10, 0, GFL_BMP_CHRAREA_GET_B );
 	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
 
 	LIST_Init( &p_wk->list, sc_list_data_home, NELEMS(sc_list_data_home), 
 			&p_wk->msg, p_wk->p_bmpwin, HEAPID_NAGI_DEBUG );
-
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -377,6 +392,8 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 		GF_ASSERT_MSG( 0, "DEBUG_PROC_NAGI_MainのSEQエラー %d", *p_seq );
 	}
 
+	GRAPHIC_Draw( &p_wk->grp );
+
 	return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================
@@ -439,15 +456,16 @@ static void DEBUG_NAGI_COMMAND_End( DEBUG_NAGI_MAIN_WORK *p_wk )
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	test
+ *	@brief	ProcChange
  *
  *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ワーク
  *
  */
 //-----------------------------------------------------------------------------
-static void LISTDATA_Test( DEBUG_NAGI_MAIN_WORK *p_wk )
+FS_EXTERN_OVERLAY(irc_aura);
+static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
-	NAGI_Printf("てすとー\n");
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_aura), &IrcAura_ProcData, NULL );
 }
 //----------------------------------------------------------------------------
 /**
@@ -506,23 +524,23 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
 
 	// ディスプレイON
-	GFL_DISP_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
+	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 	GFL_DISP_SetDispOn();
 
 	// VRAMバンク設定
 	{
 		static const GFL_DISP_VRAM sc_vramSetTable =
 		{
-			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-			GX_VRAM_BGEXTPLTT_NONE,         // メイン2DエンジンのBG拡張パレット
-			GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE,     // サブ2DエンジンのBG拡張パレット
-			GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+			GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
+			GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+			GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
+			GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+			GX_VRAM_OBJ_NONE,					// メイン2DエンジンのOBJ
 			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-			GX_VRAM_SUB_OBJ_16_I,           // サブ2DエンジンのOBJ
-			GX_VRAM_SUB_OBJEXTPLTT_NONE,    // サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
+			GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+			GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+			GX_VRAM_TEX_0_D,						// テクスチャイメージスロット
+			GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
 			GX_OBJVRAMMODE_CHAR_1D_128K,		
 			GX_OBJVRAMMODE_CHAR_1D_128K,		
 		};
@@ -531,7 +549,11 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 
 	//描画モジュール
 	GRAPHIC_BG_Init( &p_wk->gbg, heapID );
+	GRAPHIC_3D_Init( &p_wk->g3d, heapID );
+
+	p_wk->p_tcb	= GFUser_VIntr_CreateTCB(Graphic_Tcb_Capture, p_wk, 0 );
 }
+
 
 //----------------------------------------------------------------------------
 /**
@@ -543,6 +565,9 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 {
+	GFL_TCB_DeleteTask( p_wk->p_tcb );
+
+	GRAPHIC_3D_Exit( &p_wk->g3d );
 	GRAPHIC_BG_Exit( &p_wk->gbg );
 }
 
@@ -556,7 +581,125 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 {
+	enum {	
+			CIRCLE_VTX_MAX	=	60,
+	};
+
+	int i;
+	u16 r1;
+	VecFx16	circle_vtx[CIRCLE_VTX_MAX];
+
+	static u16 r	= 0;
+	static u8	red			= 31;
+	static u8	green		= 16;
+	static u8	blue		= 0;
+	
+	r+=0xFF;
+	red++;
+	green++;
+	blue++;
+	red	%= 32;
+	green	%= 32;
+	blue	%= 32;
+
+	{
+		for( i = 0; i < CIRCLE_VTX_MAX; i++ )
+		{	
+			circle_vtx[i].x	=	FX_CosIdx( ( i * 360 / CIRCLE_VTX_MAX) * 0xFFFF / 360 );
+			circle_vtx[i].y	=	FX_SinIdx( ( i * 360 / CIRCLE_VTX_MAX) * 0xFFFF / 360 );
+			circle_vtx[i].z	=	0;
+		}
+	}
+
+	GRAPHIC_3D_StartDraw( &p_wk->g3d );
+	//NNS系の3D描画
+	//なし
+	NNS_G3dGeFlushBuffer();
+	//SDK系の3D描画
+	G3_MaterialColorDiffAmb(GX_RGB(16, 16, 16), GX_RGB(16, 16, 16), FALSE );
+	G3_MaterialColorSpecEmi(GX_RGB( 16, 16, 16 ), GX_RGB( 31,31,31 ), FALSE );
+	G3_PolygonAttr( GX_LIGHTMASK_0123,GX_POLYGONMODE_MODULATE,GX_CULL_BACK,0,31,0 );
+
+	G3_Scale(FX_SinIdx(r), FX_SinIdx(r), FX_SinIdx(r));
+
+	G3_Begin( GX_BEGIN_TRIANGLES );
+	{	
+		G3_Color(GX_RGB(red, green, blue));
+		for( i = 0; i < CIRCLE_VTX_MAX - 1; i++ )
+		{	
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+			G3_Vtx( circle_vtx[i+1].x, circle_vtx[i+1].y, circle_vtx[i+1].z);
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+		}
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+			G3_Vtx( circle_vtx[0].x, circle_vtx[0].y, circle_vtx[0].z);
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+	}
+	G3_End();
+
+	if( r > 0x1fff )
+	{	
+		r1=	r - 0x1fff;
+	}else{	
+		r1=0;
+	}
+	G3_Scale(FX_SinIdx(r1), FX_SinIdx(r1), FX_SinIdx(r1));
+
+	G3_Begin( GX_BEGIN_TRIANGLES );
+	{	
+		G3_Color(GX_RGB(green, blue, red));
+		for( i = 0; i < CIRCLE_VTX_MAX - 1; i++ )
+		{	
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+			G3_Vtx( circle_vtx[i+1].x, circle_vtx[i+1].y, circle_vtx[i+1].z);
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+		}
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+			G3_Vtx( circle_vtx[0].x, circle_vtx[0].y, circle_vtx[0].z);
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+	}
+	G3_End();
+
+	if( r > 0x3fff )
+	{	
+		r1=	r - 0x3fff;
+	}else{	
+		r1=0;
+	}
+	G3_Scale(FX_SinIdx(r1), FX_SinIdx(r1), FX_SinIdx(r1));
+
+	G3_Begin( GX_BEGIN_TRIANGLES );
+	{	
+		G3_Color(GX_RGB(blue, red, green));
+		for( i = 0; i < CIRCLE_VTX_MAX-1; i++ )
+		{	
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+			G3_Vtx( circle_vtx[i+1].x, circle_vtx[i+1].y, circle_vtx[i+1].z);
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+		}
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+			G3_Vtx( circle_vtx[0].x, circle_vtx[0].y, circle_vtx[0].z);
+			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+	}
+	G3_End();
+
+	GRAPHIC_3D_EndDraw( &p_wk->g3d );
+
+
+
 }
+
+static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work )
+{	
+	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
+                      GX_CAPTURE_MODE_AB,			   // Capture mode
+                      GX_CAPTURE_SRCA_2D3D,						 // Blend src A
+                      GX_CAPTURE_SRCB_VRAM_0x00000,     // Blend src B
+                      GX_CAPTURE_DEST_VRAM_B_0x00000,   // Output VRAM
+                      14,             // Blend parameter for src A
+                      14);            // Blend parameter for src B
+}
+
 //=============================================================================
 /**
  *					GRAPHIC_BG
@@ -583,7 +726,8 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 	{
 		static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
 		{
-			GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D
+		//	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+				GX_DISPMODE_VRAM_B,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
 		};	
 		GFL_BG_SetBGMode( &sc_bg_sys_header );
 	}
@@ -623,6 +767,134 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK* p_wk )
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();
 }
+//=============================================================================
+/**
+ *					GRAPHIC_3D
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	３D環境の初期化
+ *
+ *	@param	p_wk			ワーク
+ *	@param	heapID		ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
+{
+	static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST(5) };
+	static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };
+	static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };
+
+	enum{	
+		CAMERA_PER_FOVY	=	(40),
+		CAMERA_PER_ASPECT =	(FX32_ONE * 4 / 3),
+		CAMERA_PER_NEAR	=	(FX32_ONE * 1),
+		CAMERA_PER_FER	=	(FX32_ONE * 800),
+		CAMERA_PER_SCALEW	=(0),
+	};
+
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K,
+			GFL_G3D_VMANLNK, GFL_G3D_PLT32K, 0, heapID, Graphic_3d_SetUp );
+	p_wk->p_camera = GFL_G3D_CAMERA_CreatePerspective( CAMERA_PER_FOVY, CAMERA_PER_ASPECT,
+				CAMERA_PER_NEAR, CAMERA_PER_FER, CAMERA_PER_SCALEW, 
+				&sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	３D環境の破棄
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk )
+{
+	GFL_G3D_CAMERA_Delete( p_wk->p_camera );
+	GFL_G3D_Exit();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	描画開始
+ *	
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk )
+{	
+	GFL_G3D_DRAW_Start();
+	GFL_G3D_CAMERA_Switching( p_wk->p_camera );
+	GFL_G3D_DRAW_SetLookAt();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	描画終了
+ *
+ *	@param	p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk )
+{	
+	GFL_G3D_DRAW_End();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	環境セットアップコールバック関数
+ */
+//-----------------------------------------------------------------------------
+static void Graphic_3d_SetUp( void )
+{
+	// ３Ｄ使用面の設定(表示＆プライオリティー)
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	G2_SetBG0Priority(0);
+
+	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
+	G3X_SetShading( GX_SHADING_HIGHLIGHT );
+	G3X_AntiAlias( FALSE );
+	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
+	G3X_AlphaBlend( TRUE );		// アルファブレンド　オン
+	G3X_EdgeMarking( FALSE );
+	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
+
+	// クリアカラーの設定
+	G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
+	// ビューポートの設定
+	G3_ViewPort(0, 0, 255, 191);
+
+	// ライト設定
+	{
+		static const GFL_G3D_LIGHT sc_GFL_G3D_LIGHT[] = {
+			{
+				{ 0, -FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+			{
+				{ 0, FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+			{
+				{ 0, -FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+			{
+				{ 0, -FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+		};
+		int i;
+		
+		for( i=0; i<NELEMS(sc_GFL_G3D_LIGHT); i++ ){
+			GFL_G3D_SetSystemLight( i, &sc_GFL_G3D_LIGHT[i] );
+		}
+	}
+
+	//レンダリングスワップバッファ
+	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+}
+
 
 //=============================================================================
 /**
@@ -785,8 +1057,8 @@ static void MSG_Init( MSG_WORK *p_wk, HEAPID heapID )
 
 	p_wk->p_print_que = PRINTSYS_QUE_Create( heapID );
 
- 
 	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0, heapID );
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, heapID );
 }
 
 //----------------------------------------------------------------------------

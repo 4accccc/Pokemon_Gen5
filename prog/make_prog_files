@@ -491,6 +491,12 @@ SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
       net_app/compatible/compati_comm.c \
       net_app/compatible/compati_irc.c
 
+#赤外線オーラチェック
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_IRC_AURA	= net_app/irc_aura/irc_aura_main.c
+
 
 #ダウンロードプレイ  DP/PL/GS吸い上げ
 #===> SRCS_OVERLAY_DEV_WIRELESS
