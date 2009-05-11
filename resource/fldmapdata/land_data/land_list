@@ -105,4 +105,5 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/testpc00_00.bin $(DIR_LANDRES)/testpc00_00.imd \
 	$(DIR_LANDRES)/palace_test00_00.bin $(DIR_LANDRES)/palace_test00_00.imd \
 	$(DIR_LANDRES)/palace_test01_00.bin $(DIR_LANDRES)/palace_test01_00.imd \
-	$(DIR_LANDRES)/palace_test02_00.bin $(DIR_LANDRES)/palace_test02_00.imd
+	$(DIR_LANDRES)/palace_test02_00.bin $(DIR_LANDRES)/palace_test02_00.imd \
+	$(DIR_LANDRES)/m_gate01_00_00.bin $(DIR_LANDRES)/m_gate01_00_00.imd

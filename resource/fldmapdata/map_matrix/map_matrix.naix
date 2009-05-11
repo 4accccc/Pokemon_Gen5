@@ -30,7 +30,8 @@ enum {
 	NARC_map_matrix_c03_j_mat_bin = 16,
 	NARC_map_matrix_c03_k_mat_bin = 17,
 	NARC_map_matrix_c03_l_mat_bin = 18,
-	NARC_map_matrix_palace_test_mat_bin = 19
+	NARC_map_matrix_palace_test_mat_bin = 19,
+	NARC_map_matrix_gate01_mat_bin = 20
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
