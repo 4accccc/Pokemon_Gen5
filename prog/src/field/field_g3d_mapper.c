@@ -1,13 +1,12 @@
 //============================================================================================
 /**
- * @file	g3d_mapper.c
+ * @file	field_g3d_mapper.c
  * @brief	
  * @author	
  * @date	
  */
 //============================================================================================
 #include "gflib.h"
-#include "system\gfl_use.h"	//óêêîóp
 
 #include "arc\arc_def.h"	// ÉAÅ[ÉJÉCÉuÉfÅ[É^
 
@@ -22,6 +21,7 @@
 #include "field_ground_anime.h"
 
 #include "system/g3d_tool.h"
+
 //============================================================================================
 /**
  *
@@ -57,7 +57,7 @@
 typedef struct {
 	u32			blockIdx;
 	VecFx32		trans;
-}BLOCK_IDX;
+}BLOCKINFO;
 
 //------------------------------------------------------------------
 typedef struct {
@@ -93,8 +93,9 @@ struct _FLD_G3D_MAPPER {
   FLDMAPPER_TEXTYPE gtexType;
 
 	GFL_G3D_MAP*		g3Dmap[MAP_BLOCK_COUNT];
-	BLOCK_IDX				blockIdx[MAP_BLOCK_COUNT];
 	FLD_G3D_MAP_EXWORK	g3DmapExWork[MAP_BLOCK_COUNT];		// GFL_G3D_MAPÇ…ä÷òAÇ∑ÇÈèÓïÒÇägí£Ç∑ÇÈÉèÅ[ÉN
+	BLOCKINFO				blockInfo[MAP_BLOCK_COUNT];
+  BLOCKINFO       newBlockInfo[MAP_BLOCK_COUNT];
 	
 	u32					nowBlockIdx;				
 	VecFx32				posCont;
@@ -143,21 +144,21 @@ static void DeleteGlobalObj( GLOBALOBJ_RES* objRes );
 static void CreateGlobalDDobj( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA_DDOBJ* resistData );
 static void DeleteGlobalDDobj( FLDMAPPER* g3Dmapper );
 
-static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
-static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
-static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
-static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_IDX* new );
+static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCKINFO* blockInfo );
+static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCKINFO* blockInfo );
+static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCKINFO* blockInfo );
+static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCKINFO* new );
 
-static FIELD_GRANM * createGroundAnime(
-    const FLDMAPPER_RESIST_GROUND_ANIME * resistGroundAnimeData,
-    const GFL_G3D_RES * globalTexture,
-    HEAPID heapID);
+static FIELD_GRANM * createGroundAnime( const FLDMAPPER * g3Dmapper,
+    const FLDMAPPER_RESIST_GROUND_ANIME * resistGroundAnimeData);
 // FLD_G3D_MAP_EXWORKÅ@ëÄçÏä÷êî
 static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmapper, u32 index );
 static void FLD_G3D_MAP_ExWork_Exit( FLD_G3D_MAP_EXWORK* p_wk );
 static void FLD_G3D_MAP_ExWork_ClearBlockData( FLD_G3D_MAP_EXWORK* p_wk );
 static BOOL FLD_G3D_MAP_ExWork_IsGranm( const FLD_G3D_MAP_EXWORK* cp_wk );
 static FIELD_GRANM_WORK* FLD_G3D_MAP_ExWork_GetGranmWork( const FLD_G3D_MAP_EXWORK* cp_wk );
+
+static void BLOCKINFO_init(BLOCKINFO * info);
 
 static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
 //------------------------------------------------------------------
@@ -185,8 +186,7 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
 	g3Dmapper->heapID = heapID;
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		g3Dmapper->blockIdx[i].blockIdx = MAPID_NULL;
-		VEC_Set( &g3Dmapper->blockIdx[i].trans, 0, 0, 0 );
+    BLOCKINFO_init(&g3Dmapper->blockInfo[i]);
 	}
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		g3Dmapper->g3Dmap[i] = NULL;
@@ -251,7 +251,6 @@ void	FLDMAPPER_Delete( FLDMAPPER* g3Dmapper )
 //------------------------------------------------------------------
 void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 {
-	BLOCK_IDX nowBlockIdx[MAP_BLOCK_COUNT];
 	int i;
 
 	GF_ASSERT( g3Dmapper );
@@ -260,22 +259,22 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 		return;
 	}
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		nowBlockIdx[i].blockIdx = MAPID_NULL;
+    BLOCKINFO_init(&g3Dmapper->newBlockInfo[i]);
 	}
 
 	switch( g3Dmapper->mode ){
 	case FLDMAPPER_MODE_SCROLL_NONE: 
-		GetMapperBlockIdxAll( g3Dmapper, &g3Dmapper->posCont, &nowBlockIdx[0] );
+		GetMapperBlockIdxAll( g3Dmapper, &g3Dmapper->posCont, &g3Dmapper->newBlockInfo[0] );
 		break;
 	default:
 	case FLDMAPPER_MODE_SCROLL_XZ: 
-		GetMapperBlockIdxXZ( g3Dmapper, &g3Dmapper->posCont, &nowBlockIdx[0] );
+		GetMapperBlockIdxXZ( g3Dmapper, &g3Dmapper->posCont, &g3Dmapper->newBlockInfo[0] );
 		break;
 	case FLDMAPPER_MODE_SCROLL_Y: 
-		GetMapperBlockIdxY( g3Dmapper, &g3Dmapper->posCont, &nowBlockIdx[0] );
+		GetMapperBlockIdxY( g3Dmapper, &g3Dmapper->posCont, &g3Dmapper->newBlockInfo[0] );
 		break;
 	}
-	ReloadMapperBlock( g3Dmapper, &nowBlockIdx[0] );
+	ReloadMapperBlock( g3Dmapper, &g3Dmapper->newBlockInfo[0] );
 
 	//ÉuÉçÉbÉNêßå‰ÉÅÉCÉì
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
@@ -401,8 +400,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 	//CreateGlobalObject( g3Dmapper, resistData );
 
 	// ínñ ÉAÉjÉÅÅ[ÉVÉáÉìçÏê¨
-  g3Dmapper->granime = createGroundAnime(
-      &resistData->ground_anime, g3Dmapper->globalTexture, g3Dmapper->heapID);
+  g3Dmapper->granime = createGroundAnime(g3Dmapper, &resistData->ground_anime);
 	
 	{
 		int i;
@@ -710,7 +708,7 @@ void FLDMAPPER_SetPos( FLDMAPPER* g3Dmapper, const VecFx32* pos )
  * @brief	É}ÉbÉvçXêVÉuÉçÉbÉNéÊìæ
  */
 //------------------------------------------------------------------
-static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
+static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCKINFO* blockInfo )
 {
 	u32		idx, county, countxz;
 	fx32	blockWidth, blockHeight;
@@ -734,10 +732,10 @@ static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos
 			if( idx >= g3Dmapper->totalSize ){
 				idx = MAPID_NULL;
 			}
-			blockIdx[idx].blockIdx = idx;
-			blockIdx[idx].trans.x = offsx * blockWidth + blockWidth/2;
-			blockIdx[idx].trans.y = i * blockHeight;
-			blockIdx[idx].trans.z = offsz * blockWidth + blockWidth/2;
+			blockInfo[idx].blockIdx = idx;
+			blockInfo[idx].trans.x = offsx * blockWidth + blockWidth/2;
+			blockInfo[idx].trans.y = i * blockHeight;
+			blockInfo[idx].trans.z = offsz * blockWidth + blockWidth/2;
 			idx++;
 		}
 	}
@@ -753,7 +751,7 @@ static const BLOCK_OFFS blockPat_Around[] = {//é©ï™ÇÃÇ¢ÇÈÉuÉçÉbÉNÇ©ÇÁé¸àÕï˚å¸Ç…Ç
 	{-1,-1},{-1, 0},{-1, 1},{ 0,-1},{ 0, 0},{ 0, 1},{ 1,-1},{ 1, 0},{ 1, 1},
 };
 
-static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
+static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCKINFO* blockInfo )
 {
 	u16		sizex, sizez;
 	u32		idx, idxmax, blockx, blockz;
@@ -781,15 +779,15 @@ static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos,
 				idx = MAPID_NULL;
 			}
 		}
-		blockIdx[i].blockIdx = idx;
-		blockIdx[i].trans.x = offsx * blockWidth + blockWidth/2;
-		blockIdx[i].trans.y = 0;
-		blockIdx[i].trans.z = offsz * blockWidth + blockWidth/2;
+		blockInfo[i].blockIdx = idx;
+		blockInfo[i].trans.x = offsx * blockWidth + blockWidth/2;
+		blockInfo[i].trans.y = 0;
+		blockInfo[i].trans.z = offsz * blockWidth + blockWidth/2;
 	}
 }
 
 //------------------------------------------------------------------
-static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
+static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCKINFO* blockInfo )
 {
 	u16		sizex, sizez;
 	u32		idx, blocky, countxz;
@@ -819,10 +817,10 @@ static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, 
 		if( idx >= g3Dmapper->totalSize ){
 			idx = MAPID_NULL;
 		}
-		blockIdx[p].blockIdx = idx;
-		blockIdx[p].trans.x = offsx * blockWidth + blockWidth/2;
-		blockIdx[p].trans.y = blocky * blockHeight;
-		blockIdx[p].trans.z = offsz * blockWidth + blockWidth/2;
+		blockInfo[p].blockIdx = idx;
+		blockInfo[p].trans.x = offsx * blockWidth + blockWidth/2;
+		blockInfo[p].trans.y = blocky * blockHeight;
+		blockInfo[p].trans.z = offsz * blockWidth + blockWidth/2;
 		p++;
 	}
 	for( i=0; i<countxz; i++ ){
@@ -834,10 +832,10 @@ static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, 
 		if( idx >= g3Dmapper->totalSize ){
 			idx = MAPID_NULL;
 		}
-		blockIdx[p].blockIdx = idx;
-		blockIdx[p].trans.x = offsx * blockWidth + blockWidth/2;
-		blockIdx[p].trans.y = (blocky + offsy) * blockHeight;
-		blockIdx[p].trans.z = offsz * blockWidth + blockWidth/2;
+		blockInfo[p].blockIdx = idx;
+		blockInfo[p].trans.x = offsx * blockWidth + blockWidth/2;
+		blockInfo[p].trans.y = (blocky + offsy) * blockHeight;
+		blockInfo[p].trans.z = offsz * blockWidth + blockWidth/2;
 		p++;
 	}
 }
@@ -847,7 +845,7 @@ static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, 
  * @brief	É}ÉbÉvÉuÉçÉbÉNçXêVÉ`ÉFÉbÉN
  */
 //------------------------------------------------------------------
-static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_IDX* new )
+static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCKINFO* new )
 {
 	BOOL addFlag, delFlag, delProcFlag, addProcFlag, reloadFlag;
 	int i, j, c;
@@ -857,16 +855,16 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_IDX* new )
 	//çXêVÉuÉçÉbÉNÉ`ÉFÉbÉN
 	delProcFlag = FALSE;
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		if( g3Dmapper->blockIdx[i].blockIdx != MAPID_NULL ){
+		if( g3Dmapper->blockInfo[i].blockIdx != MAPID_NULL ){
 			delFlag = FALSE;
 			for( j=0; j<MAP_BLOCK_COUNT; j++ ){
-				if(( g3Dmapper->blockIdx[i].blockIdx == new[j].blockIdx )&&(delFlag == FALSE )){
+				if(( g3Dmapper->blockInfo[i].blockIdx == new[j].blockIdx )&&(delFlag == FALSE )){
 					new[j].blockIdx = MAPID_NULL;
 					delFlag = TRUE;
 				}
 			}
 			if( delFlag == FALSE ){
-				g3Dmapper->blockIdx[i].blockIdx = MAPID_NULL;
+				g3Dmapper->blockInfo[i].blockIdx = MAPID_NULL;
 				GFL_G3D_MAP_SetDrawSw( g3Dmapper->g3Dmap[i], FALSE );
 
 				// ägí£ÉèÅ[ÉNÇÃèÓïÒÇ‡ÉNÉäÉA
@@ -882,7 +880,7 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_IDX* new )
 		if( new[i].blockIdx != MAPID_NULL ){
 			addFlag = FALSE;
 			for( j=0; j<MAP_BLOCK_COUNT; j++ ){
-				if(( g3Dmapper->blockIdx[j].blockIdx == MAPID_NULL )&&(addFlag == FALSE )){
+				if(( g3Dmapper->blockInfo[j].blockIdx == MAPID_NULL )&&(addFlag == FALSE )){
 					u32 mapdatID = g3Dmapper->blocks[new[i].blockIdx].datID;
 
 					if( mapdatID != FLDMAPPER_MAPDATA_NULL ){
@@ -890,7 +888,7 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_IDX* new )
 						GFL_G3D_MAP_SetTrans( g3Dmapper->g3Dmap[j], &new[i].trans );
 						GFL_G3D_MAP_SetDrawSw( g3Dmapper->g3Dmap[j], TRUE );
 					}
-					g3Dmapper->blockIdx[j] = new[i];
+					g3Dmapper->blockInfo[j] = new[i];
 					addFlag = TRUE;
 					addProcFlag = TRUE;
 				}
@@ -1390,8 +1388,10 @@ static void CreateGrobalObj_forBin( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESIST
 
 //============================================================================================
 //============================================================================================
-static FIELD_GRANM * createGroundAnime(const FLDMAPPER_RESIST_GROUND_ANIME * resistGroundAnimeData,
-    const GFL_G3D_RES * globalTexture, HEAPID heapID)
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static FIELD_GRANM * createGroundAnime( const FLDMAPPER * g3Dmapper,
+    const FLDMAPPER_RESIST_GROUND_ANIME * resistGroundAnimeData)
 { 
   static FIELD_GRANM_SETUP granm_setup = {
     FALSE, FALSE,
@@ -1417,7 +1417,7 @@ static FIELD_GRANM * createGroundAnime(const FLDMAPPER_RESIST_GROUND_ANIME * res
     granm_setup.itp_anmID		= resistGroundAnimeData->itp_anm_datID;
     granm_setup.itp_texID		= resistGroundAnimeData->itp_anm_datID;
   }
-	return FIELD_GRANM_Create( &granm_setup, globalTexture, heapID );
+	return FIELD_GRANM_Create( &granm_setup, g3Dmapper->globalTexture, g3Dmapper->heapID );
 }
 
 
@@ -1552,5 +1552,15 @@ static BOOL FLD_G3D_MAP_ExWork_IsGranm( const FLD_G3D_MAP_EXWORK* cp_wk )
 static FIELD_GRANM_WORK* FLD_G3D_MAP_ExWork_GetGranmWork( const FLD_G3D_MAP_EXWORK* cp_wk )
 {
 	return cp_wk->p_granm_wk;
+}
+
+//============================================================================================
+//============================================================================================
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void BLOCKINFO_init(BLOCKINFO * info)
+{ 
+		info->blockIdx = MAPID_NULL;
+		VEC_Set( &info->trans, 0, 0, 0 );
 }
 
