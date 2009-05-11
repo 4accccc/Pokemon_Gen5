@@ -211,7 +211,7 @@ ACTING_WORK*  STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
   GXS_SetMasterBrightness(0);
   
 #if USE_DEBUGWIN_SYSTEM
-  DEBUGWIN_InitProc( ACT_FRAME_MAIN_FONT , work->fontHandle );
+  DEBUGWIN_InitProc( ACT_FRAME_MAIN_CURTAIN , work->fontHandle );
 #endif  //USE_DEBUGWIN_SYSTEM
   return work;
 }
@@ -695,6 +695,7 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
     STA_BG_SetScrollOffset( work->bgSys , work->scrollOffset );
     STA_POKE_System_SetScrollOffset( work->pokeSys , work->scrollOffset ); 
     STA_OBJ_System_SetScrollOffset( work->objSys , work->scrollOffset ); 
+    work->updateScroll = FALSE;
   }
   
 #if DEB_ARI

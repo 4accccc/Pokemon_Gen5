@@ -126,7 +126,8 @@ SRCS  +=    $(SOUNDSRC) \
         test/camera_adjust_view.c \
         system/el_scoreboard.c \
         system/selbox.c \
-        debug/debugwin_sys.c
+        debug/debugwin_sys.c \
+        debug/debug_system_group.c
 
 
 #================================================
