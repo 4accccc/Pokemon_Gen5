@@ -73,36 +73,8 @@ void FIELDDATA_SetMapperData(
 		map_res->gtexType = FLDMAPPER_TEXTYPE_USE;
 		map_res->gtexData = gTexBuffer;
 	}
-	{
-		TAMADA_Printf("ZONE_ID:%d AREA_ID:%d\n",mapid, area_id);
-		TAMADA_Printf("ModelSet=%d, TexSet=%d, AnmSet=%d, ",
-				AREADATA_GetModelSetID(area_id),
-				AREADATA_GetTextureSetID(area_id),
-				AREADATA_GetAnimeSetID(area_id));
-		TAMADA_Printf("INOUT=%d, Light=%d\n",
-				AREADATA_GetInnerOuterSwitch(area_id),
-				AREADATA_GetLightType(area_id));
-	}
-#if 0
-	{
-		int x,z;
-		for (z = 0; z < map_res->sizez; z++) {
-			for (x = 0; x < map_res->sizex; x++) {
-				TAMADA_Printf("%08x ",map_res->blocks[map_res->sizex * z + x]);
-			}
-			TAMADA_Printf("\n");
-		}
-	}
-#endif
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-const FLDMAPPER_RESISTDATA * FIELDDATA_GetMapperData(u16 mapid)
-{
-	u16 resid = MapID2ResistID(mapid);
-	return &resistMapTbl[resid].mapperData;
-}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
@@ -110,13 +82,6 @@ const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
 	u16 resid = MapID2ResistID(mapid);
 	return resistMapTbl[resid].dep_funcs;
 }
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-u16 FIELDDATA_GetMapIDMax(void)
-{
-	return resistMapTblCount;
-}
-
 
 //============================================================================================
 //============================================================================================

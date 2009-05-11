@@ -13,10 +13,7 @@
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void FIELDDATA_SetMapperData(u16 mapid, u8 sid, FLDMAPPER_RESISTDATA * map_res, MAP_MATRIX *matrix_buf );
-extern const FLDMAPPER_RESISTDATA * FIELDDATA_GetMapperData(u16 mapid);
 extern const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid);
-extern BOOL FIELDDATA_IsMatrixMap(u16 mapid);
-extern u16 FIELDDATA_GetMapIDMax(void);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
