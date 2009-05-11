@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="nakatsui" host="W00169" date="2009-03-31T16:51:15" source="untitled"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-05-07T18:08:41" source="untitled"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="nakatsui" host="W00169" date="2009-03-31T16:51:15" source="untitled"/>
+<original_create user="iwao_kazumasa" host="W00203" date="2009-05-07T18:08:41" source="untitled"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -478,7 +478,7 @@
 </tex_palette_array>
 
 <material_array size="15">
-	<material index="0" name="dansa01a_lm2"
+	<material index="0" name="dansa01a_lm5"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -502,7 +502,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="gake01a_lm8"
+	<material index="1" name="gake01a_lm15"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -526,7 +526,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="gake1_0_lm8"
+	<material index="2" name="gake1_0_lm15"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -550,7 +550,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="grass01a_lm6"
+	<material index="3" name="grass01a_lm12"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -574,7 +574,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="hashi01a_lm2"
+	<material index="4" name="hashi01a_lm4"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -598,7 +598,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="kaidan01a_lm2"
+	<material index="5" name="kaidan01a_lm4"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -622,7 +622,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="kusa01a_lm2"
+	<material index="6" name="kusa01a_lm5"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -646,7 +646,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="kusa01b_lm2"
+	<material index="7" name="kusa01b_lm7"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -670,7 +670,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="kusa02a_lm2"
+	<material index="8" name="kusa02a_lm4"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -694,7 +694,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="kusa02b_lm2"
+	<material index="9" name="kusa02b_lm5"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -718,7 +718,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="michi01a_lm3"
+	<material index="10" name="michi01a_lm6"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -742,7 +742,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="michi01b_lm1"
+	<material index="11" name="michi01b_lm4"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -766,7 +766,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="12" name="mori01a_lm2"
+	<material index="12" name="mori01a_lm5"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -779,7 +779,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="25 25 25"
+		ambient="31 31 31"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -790,7 +790,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="13" name="mori01b_lm2"
+	<material index="13" name="mori01b_lm8"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -814,7 +814,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="14" name="mori01c_lm4"
+	<material index="14" name="mori01c_lm10"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -4689,39 +4689,39 @@
 					<pos_xy xy="2.375000 0.625000"/>
 					<tex st="-25.000000 80.000000"/>
 					<pos_xz xz="2.375000 1.125000"/>
-					<tex st="-21.000000 80.000000"/>
+					<tex st="-21.000000 48.000000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_s xyz="3.125000 0.750000 0.625000"/>
+					<pos_xy xy="3.125000 0.750000"/>
 					<tex st="-21.000000 0.000000"/>
 					<pos_xz xz="3.125000 1.875000"/>
 					<tex st="-25.000000 0.000000"/>
 					<pos_xy xy="3.125000 0.625000"/>
-					<tex st="-25.000000 80.000000"/>
-					<pos_xz xz="3.125000 0.625000"/>
-					<tex st="-1.000000 80.000000"/>
+					<tex st="-25.000000 48.000000"/>
+					<pos_xz xz="3.125000 1.125000"/>
+					<tex st="-1.000000 48.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xy xy="2.750000 0.750000"/>
 					<tex st="-1.000000 0.000000"/>
 					<pos_xz xz="2.750000 1.875000"/>
 					<tex st="-21.000000 0.000000"/>
 					<pos_xy xy="3.125000 0.750000"/>
-					<tex st="-21.000000 80.000000"/>
-					<pos_xz xz="3.125000 0.625000"/>
-					<tex st="-1.000000 80.000000"/>
+					<tex st="-21.000000 48.000000"/>
+					<pos_xz xz="3.125000 1.125000"/>
+					<tex st="-1.000000 48.000000"/>
 					<pos_xz xz="2.750000 1.875000"/>
 					<tex st="-1.000000 0.000000"/>
-					<pos_xz xz="2.750000 0.625000"/>
+					<pos_xz xz="2.750000 1.125000"/>
 					<tex st="-21.000000 0.000000"/>
 					<pos_xy xy="2.375000 0.750000"/>
-					<tex st="-21.000000 80.000000"/>
+					<tex st="-21.000000 48.000000"/>
 					<pos_xz xz="2.375000 1.875000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_xy xy="2.375000 0.750000"/>
 					<tex st="-21.000000 0.000000"/>
-					<pos_xz xz="2.375000 0.625000"/>
+					<pos_xz xz="2.375000 1.125000"/>
 					<tex st="-25.000000 0.000000"/>
 					<pos_xy xy="2.375000 0.625000"/>
-					<tex st="-25.000000 80.000000"/>
+					<tex st="-25.000000 48.000000"/>
 					<pos_xz xz="2.375000 1.875000"/>
 				</primitive>
 			</primitive_array>
