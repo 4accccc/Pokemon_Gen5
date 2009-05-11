@@ -116,9 +116,10 @@ void FIELD_COMM_ACTOR_CTRL_Delete( FIELD_COMM_ACTOR_CTRL *act_ctrl )
 /**
  * フィールド通信用アクター制御　アクター追加
  * @param act_ctrl FIELD_COMM_ACTOR_CTRL*
- * @param id 管理ID
+ * @param id 任意の管理ID
  * @param code 表示コード HERO等
- * @param watch_pos 表示する座標
+ * @param watch_dir 方向参照先
+ * @param watch_pos 座標参照先
  * @retval FIELD_COMM_ACTOR* 追加されたFIELD_COMM_ACTRO*
  */
 //--------------------------------------------------------------
@@ -133,6 +134,7 @@ void FIELD_COMM_ACTOR_CTRL_AddActor( FIELD_COMM_ACTOR_CTRL *act_ctrl,
       act->fmmdl = fldcommAct_fmmdl_Add(
           act_ctrl, code, watch_dir, watch_pos );
       act->id = id;
+      return;
     }
   }
   
