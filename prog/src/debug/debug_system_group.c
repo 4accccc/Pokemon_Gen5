@@ -18,9 +18,6 @@
 //======================================================================
 #pragma mark [> define
 
-#define GROUPID_SYSTEM (254)
-#define GROUPID_RTC (253)
-
 //======================================================================
 //	enum
 //======================================================================
@@ -80,21 +77,21 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   
   GFL_RTC_GetDateTime( &sysGroupWork->rtcDate , &sysGroupWork->rtcTime );
   
-  DEBUGWIN_AddGroupToTop( GROUPID_SYSTEM , "System" , heapId );
-  DEBUGWIN_AddGroupToGroup( GROUPID_RTC , "RTC" , GROUPID_SYSTEM , heapId );
-  DEBUGWIN_AddItemToGroup( "パフォーマンスメーターON",DEBWIN_Update_PMeterOn , NULL , GROUPID_SYSTEM , heapId );
-  DEBUGWIN_AddItemToGroup( "パフォーマンスメーターOFF",DEBWIN_Update_PMeterOff , NULL , GROUPID_SYSTEM , heapId );
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Pause   ,DEBWIN_Draw_Pause   , (void*)sysGroupWork , GROUPID_SYSTEM , heapId );
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Kanji   ,DEBWIN_Draw_Kanji   , (void*)sysGroupWork , GROUPID_SYSTEM , heapId );
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUPID_SYSTEM , "System" , heapId );
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUPID_RTC , "RTC" , DEBUGWIN_GROUPID_SYSTEM , heapId );
+  DEBUGWIN_AddItemToGroup( "パフォーマンスメーターON",DEBWIN_Update_PMeterOn , NULL , DEBUGWIN_GROUPID_SYSTEM , heapId );
+  DEBUGWIN_AddItemToGroup( "パフォーマンスメーターOFF",DEBWIN_Update_PMeterOff , NULL , DEBUGWIN_GROUPID_SYSTEM , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Pause   ,DEBWIN_Draw_Pause   , (void*)sysGroupWork , DEBUGWIN_GROUPID_SYSTEM , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Kanji   ,DEBWIN_Draw_Kanji   , (void*)sysGroupWork , DEBUGWIN_GROUPID_SYSTEM , heapId );
 
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_year   ,DEBWIN_Draw_RTC_year   , (void*)sysGroupWork , GROUPID_RTC , heapId );
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_month  ,DEBWIN_Draw_RTC_month  , (void*)sysGroupWork , GROUPID_RTC , heapId );
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_day    ,DEBWIN_Draw_RTC_day    , (void*)sysGroupWork , GROUPID_RTC , heapId );
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_hour   ,DEBWIN_Draw_RTC_hour   , (void*)sysGroupWork , GROUPID_RTC , heapId );
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_minute ,DEBWIN_Draw_RTC_minute , (void*)sysGroupWork , GROUPID_RTC , heapId );
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_sec    ,DEBWIN_Draw_RTC_sec    , (void*)sysGroupWork , GROUPID_RTC , heapId );
-  DEBUGWIN_AddItemToGroup( "適用",DEBWIN_Update_RTC_apply , (void*)sysGroupWork , GROUPID_RTC , heapId );
-  DEBUGWIN_AddItemToGroup( "現在時刻取得",DEBWIN_Update_RTC_get , (void*)sysGroupWork , GROUPID_RTC , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_year   ,DEBWIN_Draw_RTC_year   , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_month  ,DEBWIN_Draw_RTC_month  , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_day    ,DEBWIN_Draw_RTC_day    , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_hour   ,DEBWIN_Draw_RTC_hour   , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_minute ,DEBWIN_Draw_RTC_minute , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_sec    ,DEBWIN_Draw_RTC_sec    , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
+  DEBUGWIN_AddItemToGroup( "適用",DEBWIN_Update_RTC_apply , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
+  DEBUGWIN_AddItemToGroup( "現在時刻取得",DEBWIN_Update_RTC_get , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
 }
 
 void DEBUGWIN_RemoveSystemGroup(void)

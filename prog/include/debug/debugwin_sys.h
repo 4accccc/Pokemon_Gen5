@@ -24,6 +24,8 @@
 #define USE_DEBUGWIN_SYSTEM (0)
 #endif
 
+#define DEBUGWIN_GROUPID_TOPMENU (255)
+
 #define DEBUGWIN_CONT_KEY (PAD_BUTTON_L)
 #define DEBUGWIN_TRG_KEY (PAD_BUTTON_SELECT)
 
@@ -31,6 +33,7 @@
 #define DEBUGWIN_CHAR_TEMP_AREA (0x4000)
 #define DEBUGWIN_SCRN_TEMP_AREA (0x800)
 #define DEBUGWIN_PLTT_TEMP_AREA (0x20)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -128,7 +131,7 @@ void DEBUGWIN_ExitProc( void );
  * @param heapId  ÉqÅ[ÉvID
  */
 //------------------------------------------------------------------
-void DEBUGWIN_AddGroupToTop( const u8 id , const char *nameStr , const heapId );
+void DEBUGWIN_AddGroupToTop( const u8 id , const char *nameStr , const HEAPID heapId );
 
 //------------------------------------------------------------------
 /**
@@ -140,7 +143,7 @@ void DEBUGWIN_AddGroupToTop( const u8 id , const char *nameStr , const heapId );
  * @param heapId        ÉqÅ[ÉvID
  */
 //------------------------------------------------------------------
-void DEBUGWIN_AddGroupToGroup( const u8 id , const char *nameStr , const u8 parentGroupId, const heapId );
+void DEBUGWIN_AddGroupToGroup( const u8 id , const char *nameStr , const u8 parentGroupId, const HEAPID heapId );
 
 //------------------------------------------------------------------
 /**
@@ -171,7 +174,7 @@ void DEBUGWIN_AddItemToGroup( const char *nameStr ,
                               DEBUGWIN_UPDATE_FUNC updateFunc , 
                               void *work , 
                               const u8 parentGroupId , 
-                              const heapId );
+                              const HEAPID heapId );
 
 //------------------------------------------------------------------
 /**
@@ -188,7 +191,7 @@ void DEBUGWIN_AddItemToGroupEx( DEBUGWIN_UPDATE_FUNC updateFunc ,
                                 DEBUGWIN_DRAW_FUNC drawFunc , 
                                 void *work , 
                                 const u8 parentGroupId , 
-                                const heapId );
+                                const HEAPID heapId );
 
 //------------------------------------------------------------------
 /**

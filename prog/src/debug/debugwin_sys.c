@@ -121,13 +121,13 @@ static void DEBUGWIN_CloseDebugWindow( void );
 static void DEBUGWIN_UpdateDebugWindow( void );
 static void DEBUGWIN_DrawDebugWindow( const BOOL forceDraw , const BOOL reset);
 
-static DEBUGWIN_GROUP* DEBUGWIN_CreateGroup( const u8 id , const char *nameStr , const heapId );
+static DEBUGWIN_GROUP* DEBUGWIN_CreateGroup( const u8 id , const char *nameStr , const HEAPID heapId );
 static void DEBUGWIN_RemoveGroupFunc( DEBUGWIN_GROUP *group );
 static DEBUGWIN_GROUP* DEBUGWIN_SearchGroupFromId( const u8 id );
 static DEBUGWIN_GROUP* DEBUGWIN_SearchGroupFromIdFunc( const u8 id , DEBUGWIN_GROUP *grp );
-static DEBUGWIN_GROUP* DEBUGWIN_AddGroupToGroupFunc( const u8 id , const char *nameStr , DEBUGWIN_GROUP *parentGroup, const heapId );
+static DEBUGWIN_GROUP* DEBUGWIN_AddGroupToGroupFunc( const u8 id , const char *nameStr , DEBUGWIN_GROUP *parentGroup, const HEAPID heapId );
 
-static DEBUGWIN_ITEM* DEBUGWIN_CreateItem( const char *nameStr , void *work , DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_FUNC drawFunc , const heapId );
+static DEBUGWIN_ITEM* DEBUGWIN_CreateItem( const char *nameStr , void *work , DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_FUNC drawFunc , const HEAPID heapId );
 static void DEBUGWIN_AddItemToGroupFunc( DEBUGWIN_GROUP *grp , DEBUGWIN_ITEM *item );
 static void DEBUGWIN_RemoveGroupFunc( DEBUGWIN_GROUP *group );
 static void DEBUGWIN_RemoveGroupChild( DEBUGWIN_GROUP *group );
@@ -158,7 +158,7 @@ void DEBUGWIN_InitSystem( u8* charArea , u16* scrnArea , u16* plttArea )
   debWork->plttTempArea = plttArea;
   DEBUGWIN_ExitProc();
   
-  debWork->topGroup = DEBUGWIN_CreateGroup( 255 , "TopMenu" , HEAPID_DEBUGWIN );
+  debWork->topGroup = DEBUGWIN_CreateGroup( DEBUGWIN_GROUPID_TOPMENU , "TopMenu" , HEAPID_DEBUGWIN );
 
   DEBUGWIN_AddSystemGroup(HEAPID_DEBUGWIN);
 }
@@ -417,12 +417,12 @@ static void DEBUGWIN_DrawDebugWindow( const BOOL forceDraw , const BOOL reset)
 
 #pragma mark [>Group Func
 
-void DEBUGWIN_AddGroupToTop( const u8 id , const char *nameStr , const heapId )
+void DEBUGWIN_AddGroupToTop( const u8 id , const char *nameStr , const HEAPID heapId )
 {
   DEBUGWIN_AddGroupToGroupFunc( id , nameStr , debWork->topGroup , heapId );
 }
 
-void DEBUGWIN_AddGroupToGroup( const u8 id , const char *nameStr , const u8 parentGroupId, const heapId )
+void DEBUGWIN_AddGroupToGroup( const u8 id , const char *nameStr , const u8 parentGroupId, const HEAPID heapId )
 {
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( parentGroupId );
   if( grp == NULL )
@@ -435,7 +435,7 @@ void DEBUGWIN_AddGroupToGroup( const u8 id , const char *nameStr , const u8 pare
   }
 }
 
-static DEBUGWIN_GROUP* DEBUGWIN_AddGroupToGroupFunc( const u8 id , const char *nameStr , DEBUGWIN_GROUP *parentGroup, const heapId )
+static DEBUGWIN_GROUP* DEBUGWIN_AddGroupToGroupFunc( const u8 id , const char *nameStr , DEBUGWIN_GROUP *parentGroup, const HEAPID heapId )
 {
   if( DEBUGWIN_SearchGroupFromId( id ) != NULL )
   {
@@ -457,7 +457,7 @@ static DEBUGWIN_GROUP* DEBUGWIN_AddGroupToGroupFunc( const u8 id , const char *n
 }
 
 
-void DEBUGWIN_AddItemToGroup( const char *nameStr , DEBUGWIN_UPDATE_FUNC updateFunc , void *work , const u8 parentGroupId , const heapId )
+void DEBUGWIN_AddItemToGroup( const char *nameStr , DEBUGWIN_UPDATE_FUNC updateFunc , void *work , const u8 parentGroupId , const HEAPID heapId )
 {
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( parentGroupId );
   if( grp == NULL )
@@ -471,7 +471,7 @@ void DEBUGWIN_AddItemToGroup( const char *nameStr , DEBUGWIN_UPDATE_FUNC updateF
   }
 }
 
-void DEBUGWIN_AddItemToGroupEx( DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_FUNC drawFunc , void *work , const u8 parentGroupId , const heapId )
+void DEBUGWIN_AddItemToGroupEx( DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_FUNC drawFunc , void *work , const u8 parentGroupId , const HEAPID heapId )
 {
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( parentGroupId );
   if( grp == NULL )
@@ -506,7 +506,7 @@ static void DEBUGWIN_AddItemToGroupFunc( DEBUGWIN_GROUP *grp , DEBUGWIN_ITEM *it
   grp->linkNum++;
 }
 
-static DEBUGWIN_GROUP* DEBUGWIN_CreateGroup( const u8 id , const char *nameStr , const heapId )
+static DEBUGWIN_GROUP* DEBUGWIN_CreateGroup( const u8 id , const char *nameStr , const HEAPID heapId )
 {
   DEBUGWIN_GROUP *grp = GFL_HEAP_AllocMemory( heapId , sizeof(DEBUGWIN_GROUP) );
 
@@ -625,7 +625,7 @@ static DEBUGWIN_GROUP* DEBUGWIN_SearchGroupFromIdFunc( const u8 id , DEBUGWIN_GR
 }
 
 #pragma mark [>Item Func
-static DEBUGWIN_ITEM* DEBUGWIN_CreateItem( const char *nameStr , void *work , DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_FUNC drawFunc , const heapId )
+static DEBUGWIN_ITEM* DEBUGWIN_CreateItem( const char *nameStr , void *work , DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_FUNC drawFunc , const HEAPID heapId )
 {
   DEBUGWIN_ITEM *item = GFL_HEAP_AllocMemory( heapId , sizeof(DEBUGWIN_ITEM) );
   
@@ -733,11 +733,11 @@ void DEBUGWIN_ExitSystem(void){}
 BOOL DEBUGWIN_IsActive(void){return FALSE;}
 void DEBUGWIN_InitProc( const u32 frmnum , GFL_FONT *fontHandle ){}
 void DEBUGWIN_ExitProc( void ){}
-void DEBUGWIN_AddGroupToTop( const u8 id , const char *nameStr , const heapId ){}
-void DEBUGWIN_AddGroupToGroup( const u8 id , const char *nameStr , const u8 parentGroupId, const heapId ){}
+void DEBUGWIN_AddGroupToTop( const u8 id , const char *nameStr , const HEAPID heapId ){}
+void DEBUGWIN_AddGroupToGroup( const u8 id , const char *nameStr , const u8 parentGroupId, const HEAPID heapId ){}
 void DEBUGWIN_RemoveGroup( const u8 id ){}
-void DEBUGWIN_AddItemToGroup( const char *nameStr , DEBUGWIN_UPDATE_FUNC updateFunc , void *work , const u8 parentGroupId , const heapId ){}
-void DEBUGWIN_AddItemToGroupEx( DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_FUNC drawFunc , void *work , const u8 parentGroupId , const heapId ){}
+void DEBUGWIN_AddItemToGroup( const char *nameStr , DEBUGWIN_UPDATE_FUNC updateFunc , void *work , const u8 parentGroupId , const HEAPID heapId ){}
+void DEBUGWIN_AddItemToGroupEx( DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_FUNC drawFunc , void *work , const u8 parentGroupId , const HEAPID heapId ){}
 void DEBUGWIN_ITEM_SetName( DEBUGWIN_ITEM* item , const char *nameStr ){}
 void DEBUGWIN_ITEM_SetNameV( DEBUGWIN_ITEM* item , char *nameStr , ...){}
 void DEBUGWIN_RefreshScreen( void ){}
