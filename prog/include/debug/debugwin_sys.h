@@ -18,12 +18,13 @@
 //======================================================================
 #pragma mark [> define
 
-#if DEBUG_ONLY_FOR_ariizumi_nobuhiko
+#if PM_DEBUG
 #define USE_DEBUGWIN_SYSTEM (1)
 #else
 #define USE_DEBUGWIN_SYSTEM (0)
 #endif
 
+#define DEBUGWIN_CONT_KEY (PAD_BUTTON_L)
 #define DEBUGWIN_TRG_KEY (PAD_BUTTON_SELECT)
 
 //各種退避領域サイズ(WBではエラー画面から拝借するのでサイズをあわせてる
