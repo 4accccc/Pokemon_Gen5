@@ -57,12 +57,13 @@ extern fx32 FIELD_CAMERA_GetNear(const FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_SetFar(FIELD_CAMERA * camera, fx32 far);
 extern fx32 FIELD_CAMERA_GetFar(const FIELD_CAMERA * camera);
 
-extern u16 FIELD_CAMERA_GetDirectionOnXZ(const FIELD_CAMERA * camera );
-extern void FIELD_CAMERA_SetDirectionOnXZ(FIELD_CAMERA * camera, u16 dir);
-extern void	FIELD_CAMERA_SetLengthOnXZ( FIELD_CAMERA *camera, u16 leng );
-extern u16	FIELD_CAMERA_GetLengthOnXZ(const FIELD_CAMERA *camera);
-extern void	FIELD_CAMERA_SetHeightOnXZ( FIELD_CAMERA *camera, fx32 height );
-extern fx32	FIELD_CAMERA_GetHeightOnXZ( const FIELD_CAMERA *camera );
+// ターゲットを中心とした、アングル操作
+extern u16 FIELD_CAMERA_GetAngleX(const FIELD_CAMERA * camera );
+extern void FIELD_CAMERA_SetAngleX(FIELD_CAMERA * camera, u16 angle );
+extern u16 FIELD_CAMERA_GetAngleY(const FIELD_CAMERA * camera );
+extern void FIELD_CAMERA_SetAngleY(FIELD_CAMERA * camera, u16 angle );
+extern fx32 FIELD_CAMERA_GetAngleLen(const FIELD_CAMERA * camera );
+extern void FIELD_CAMERA_SetAngleLen(FIELD_CAMERA * camera, fx32 length );
 
 //------------------------------------------------------------------
 /**

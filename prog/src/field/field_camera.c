@@ -13,15 +13,6 @@
 //#include "arc_def.h"
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-typedef enum {  
-  FIELD_CAMERA_CALC_XZ,
-  FIELD_CAMERA_CALC_ANGLE,
-
-  FIELD_CAMERA_CALC_TYPE_MAX,
-
-}FIELD_CAMERA_CALC_TYPE;
 
 //------------------------------------------------------------------
 /**
@@ -34,8 +25,6 @@ struct _FIELD_CAMERA {
 	GFL_G3D_CAMERA * g3Dcamera;			///<カメラ構造体へのポインタ
 
 	FIELD_CAMERA_TYPE	type;			///<カメラのタイプ指定
-
-  FIELD_CAMERA_CALC_TYPE calc_type;
 
 	const VecFx32 *		watch_target;	///<追随する注視点へのポインタ
 
@@ -144,12 +133,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 	camera->watch_target = target;
 	camera->heapID = heapID;
 
-  camera->calc_type = FIELD_CAMERA_CALC_XZ;
-
 	VEC_Set( &camera->target, 0, 0, 0 );
-	camera->xzHeight = 0;
-	camera->xzLength = CAMERA_LENGTH;
-	camera->xzDir = 0;
 
   camera->angle_v = 0;
   camera->angle_h = 0;
@@ -191,21 +175,66 @@ void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont)
 //------------------------------------------------------------------
 static void initGridParameter(FIELD_CAMERA * camera)
 {
+	enum { 
+		CAMERA_LENGTH = 0x78000,
+		CAMERA_HEIGHT = 0xd8000,
+	};
 	//{ 0x78, 0xd8000 },	//DPぽい
-	camera->xzLength = 0x0078;
-	camera->xzHeight = 0xd8000;
+	// 距離
+	camera->angle_len = FX_Mul( CAMERA_LENGTH, CAMERA_LENGTH ) + FX_Mul( CAMERA_HEIGHT, CAMERA_HEIGHT );
+	camera->angle_len = FX_Sqrt( camera->angle_len );
+
+	// X軸の角度
+	{
+		fx32 cos;
+		VecFx32 vec0 = { 0,0,FX32_ONE };
+		VecFx32 vec1 = { 0 };
+
+		vec1.z = CAMERA_LENGTH;
+		vec1.y = CAMERA_HEIGHT;
+
+		VEC_Normalize( &vec0, &vec0 );
+		VEC_Normalize( &vec1, &vec1 );
+
+		cos = VEC_DotProduct( &vec0, &vec1 );
+		camera->angle_h = FX_AcosIdx( cos );
+	}
+	
 	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
+	
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void initC3Parameter(FIELD_CAMERA * camera)
 {
+	enum { 
+		CAMERA_LENGTH = 0x308000,
+		CAMERA_HEIGHT = 0x07c000,
+	};
 	VecFx32 trans = {0x2f6f36, 0, 0x301402};
 
-	camera->xzLength = 0x0308;
-	camera->xzHeight = 0x07c000;
-	camera->xzDir = 0;
+	
+	// 距離
+	camera->angle_len = FX_Mul( CAMERA_LENGTH, CAMERA_LENGTH ) + FX_Mul( CAMERA_HEIGHT, CAMERA_HEIGHT );
+	camera->angle_len = FX_Sqrt( camera->angle_len );
+
+	// X軸の角度
+	{
+		fx32 cos;
+		VecFx32 vec0 = { 0,0,FX32_ONE };
+		VecFx32 vec1 = { 0 };
+
+		vec1.z = CAMERA_LENGTH;
+		vec1.y = CAMERA_HEIGHT;
+
+		VEC_Normalize( &vec0, &vec0 );
+		VEC_Normalize( &vec1, &vec1 );
+
+		cos = VEC_DotProduct( &vec0, &vec1 );
+		camera->angle_h = FX_AcosIdx( cos );
+	}
+	
 	FIELD_CAMERA_SetTargetPos(camera, &trans);
 
 	FIELD_CAMERA_SetFar(camera, (512 + 256 + 128) << FX32_SHIFT);
@@ -216,9 +245,31 @@ static void initC3Parameter(FIELD_CAMERA * camera)
 //------------------------------------------------------------------
 static void initBridgeParameter(FIELD_CAMERA * camera)
 {
-	enum { CAMERA_LENGTH = 16 };
-	camera->xzLength = 0x0080 + CAMERA_LENGTH;
-	camera->xzHeight = 0x0003a000;
+	enum { 
+		CAMERA_LENGTH = 0x90000,
+		CAMERA_HEIGHT = 0x3a000,
+	};
+
+
+	// 距離
+	camera->angle_len = FX_Mul( CAMERA_LENGTH, CAMERA_LENGTH ) + FX_Mul( CAMERA_HEIGHT, CAMERA_HEIGHT );
+	camera->angle_len = FX_Sqrt( camera->angle_len );
+
+	// X軸の角度
+	{
+		fx32 cos;
+		VecFx32 vec0 = { 0,0,FX32_ONE };
+		VecFx32 vec1 = { 0 };
+
+		vec1.z = CAMERA_LENGTH;
+		vec1.y = CAMERA_HEIGHT;
+
+		VEC_Normalize( &vec0, &vec0 );
+		VEC_Normalize( &vec1, &vec1 );
+
+		cos = VEC_DotProduct( &vec0, &vec1 );
+		camera->angle_h = FX_AcosIdx( cos );
+	}
 
 	FIELD_CAMERA_SetFar(camera, 4096 << FX32_SHIFT );
 }
@@ -243,35 +294,13 @@ static void updateTargetBinding(FIELD_CAMERA * camera)
 }
 
 //------------------------------------------------------------------
-/**
- * @brief	XZ平面でのカメラ制御
- *
- * 注視点、Y軸でのカメラの高さ、注視点からの水平距離をパラメータとして
- * カメラの位置を決定する
- */
-//------------------------------------------------------------------
-static void updateXZTargetCamera(FIELD_CAMERA * camera)
-{
-	enum { CAMERA_TARGET_HEIGHT = 4 };
-	VecFx32	pos, target;
-
-	target = pos = camera->target;
-	target.y += CAMERA_TARGET_HEIGHT * FX32_ONE;
-
-	pos.x = pos.x + camera->xzLength * FX_SinIdx(camera->xzDir);
-	pos.y = pos.y + camera->xzHeight;
-	pos.z = pos.z + camera->xzLength * FX_CosIdx(camera->xzDir);
-
-	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &target );
-	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &pos );
-}
-
-//------------------------------------------------------------------
 //------------------------------------------------------------------
 static void updateAngleCamera(FIELD_CAMERA * camera)
 { 
   enum {  PITCH_LIMIT = 0x200 };
+	enum { CAMERA_TARGET_HEIGHT = 0x4000 }; //ターゲット補正値 
   VecFx32 cameraPos;
+	VecFx32 cameraTarget = {0};
 	fx16 sinYaw = FX_SinIdx(camera->angle_v);
 	fx16 cosYaw = FX_CosIdx(camera->angle_v);
 	fx16 sinPitch = FX_SinIdx(camera->angle_h);
@@ -285,24 +314,19 @@ static void updateAngleCamera(FIELD_CAMERA * camera)
 	VEC_Normalize(&cameraPos, &cameraPos);
 	VEC_MultAdd( camera->angle_len, &cameraPos, &camera->target, &cameraPos );
   //cameraPos = cameraPos * length + camera->target
+	
+	// カメラターゲット補正
+	cameraTarget		= camera->target;
+	cameraTarget.y	+= CAMERA_TARGET_HEIGHT;
 
-	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &camera->target );
+	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
 	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &cameraPos );
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void updateCameraCalc(FIELD_CAMERA * camera)
 { 
-  GF_ASSERT(camera->calc_type < FIELD_CAMERA_CALC_TYPE_MAX);
-  switch (camera->calc_type)
-  { 
-  case FIELD_CAMERA_CALC_XZ:
-    updateXZTargetCamera(camera);
-    break;
-  case FIELD_CAMERA_CALC_ANGLE:
-    updateAngleCamera(camera);
-    break;
-  }
+   updateAngleCamera(camera);
 }
 //------------------------------------------------------------------
 /**
@@ -315,31 +339,11 @@ static void debugControl( FIELD_CAMERA * camera, int key)
 	VecFx32	vecUD = { 0, 0, 0 };
 	BOOL	mvFlag = FALSE;
 	if( key & PAD_BUTTON_R ){
-		camera->xzDir -= RT_SPEED/2;
+		camera->angle_v -= RT_SPEED/2;
 	}
 	if( key & PAD_BUTTON_L ){
-		camera->xzDir += RT_SPEED/2;
+		camera->angle_v += RT_SPEED/2;
 	}
-#if 0
-	if( key & PAD_BUTTON_B ){
-		if( camera->xzLength > 8 ){
-			camera->xzLength -= 8;
-		}
-		//vecMove.y = -MV_SPEED;
-	}
-	if( key & PAD_BUTTON_A ){
-		if( camera->xzLength < 4096 ){
-			camera->xzLength += 8;
-		}
-		//vecMove.y = MV_SPEED;
-	}
-	if( key & PAD_BUTTON_Y ){
-		camera->xzHeight -= MV_SPEED;
-	}
-	if( key & PAD_BUTTON_X ){
-		camera->xzHeight += MV_SPEED;
-	}
-#endif
 }
 
 //------------------------------------------------------------------
@@ -348,7 +352,6 @@ static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	updateTargetBinding(camera);
   updateCameraCalc(camera);
-	//updateXZTargetCamera(camera);
 }
 
 //------------------------------------------------------------------
@@ -357,7 +360,6 @@ static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	debugControl(camera, key_cont);
 	updateTargetBinding(camera);
-	//updateXZTargetCamera(camera);
   updateCameraCalc(camera);
 }
 
@@ -366,7 +368,6 @@ static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
 static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	updateTargetBinding(camera);
-	//updateXZTargetCamera(camera);
   updateCameraCalc(camera);
 }
 
@@ -471,65 +472,50 @@ void	FIELD_CAMERA_GetTargetPos( const FIELD_CAMERA* camera, VecFx32* pos )
 {
 	*pos = camera->target;
 }
-//------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------
 /**
- * @brief	XZ平面上の方向を取得する
- * @param	camera		FIELDカメラ制御ポインタ
+ *	@brief	カメラangle　X軸操作
  */
-//------------------------------------------------------------------
-u16 FIELD_CAMERA_GetDirectionOnXZ( const FIELD_CAMERA * camera )
+//-----------------------------------------------------------------------------
+u16 FIELD_CAMERA_GetAngleX(const FIELD_CAMERA * camera )
 {
-#if 0
-	u16 value;
-	VecFx32 vec, camPos, target;
-	
-	GFL_G3D_CAMERA_GetPos( camera->g3Dcamera, &camPos );
-	GFL_G3D_CAMERA_GetTarget( camera->g3Dcamera, &target );
-
-	VEC_Subtract( &target, &camPos, &vec );
-	value = FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
-	if(value != camera->xzDir) {
-		TAMADA_Printf("calc value = %04x, hold value = %04x\n",value, camera->xzDir);
-	}
-	return value;
-#endif
-	return camera->xzDir;
+	return camera->angle_h;
+}
+void FIELD_CAMERA_SetAngleX(FIELD_CAMERA * camera, u16 angle )
+{
+	camera->angle_h = angle;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void FIELD_CAMERA_SetDirectionOnXZ(FIELD_CAMERA * camera, u16 dir)
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラangle　Y軸操作
+ */
+//-----------------------------------------------------------------------------
+u16 FIELD_CAMERA_GetAngleY(const FIELD_CAMERA * camera )
 {
-	camera->xzDir = dir;
+	return camera->angle_v;
+}
+void FIELD_CAMERA_SetAngleY(FIELD_CAMERA * camera, u16 angle )
+{
+	camera->angle_v = angle;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void FIELD_CAMERA_SetLengthOnXZ( FIELD_CAMERA *camera, u16 leng )
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラangle　ターゲットからの距離操作
+ */
+//-----------------------------------------------------------------------------
+fx32 FIELD_CAMERA_GetAngleLen(const FIELD_CAMERA * camera )
 {
-	camera->xzLength = leng;
+	return camera->angle_len;	
+}
+void FIELD_CAMERA_SetAngleLen(FIELD_CAMERA * camera, fx32 length )
+{
+	camera->angle_len = length;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-u16	FIELD_CAMERA_GetLengthOnXZ( const FIELD_CAMERA *camera )
-{
-	return camera->xzLength;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void	FIELD_CAMERA_SetHeightOnXZ( FIELD_CAMERA *camera, fx32 height )
-{
-	camera->xzHeight = height;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-fx32	FIELD_CAMERA_GetHeightOnXZ( const FIELD_CAMERA *camera )
-{
-	 return camera->xzHeight;
-}
 
 
 #ifdef  PM_DEBUG
@@ -543,12 +529,10 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param)
   GFL_CAMADJUST_SetCameraParam(gflCamAdjust,
       &camera->angle_v, &camera->angle_h, &camera->angle_len);
 
-  camera->calc_type = FIELD_CAMERA_CALC_ANGLE;
 }
 
 void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
 { 
-  camera->calc_type = FIELD_CAMERA_CALC_XZ;
 }
 #endif  //PM_DEBUG
 

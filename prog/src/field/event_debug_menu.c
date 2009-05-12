@@ -1138,156 +1138,20 @@ static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
 static GMEVENT_RESULT DMenuControlCamera(
 		GMEVENT *event, int *seq, void *wk )
 {
-	int update = FALSE;
 	DEBUG_CTLCAMERA_WORK *work = wk;
+  FIELD_SUBSCREEN_WORK * subscreen;
 	
-	switch( (*seq) ){
-	case 0:
-		work->pMsgWin = FLDMSGWIN_Add( work->pMsgBG, NULL, 21, 1, 10, 10 );
-		update = TRUE;
-		(*seq)++;
-	case 1:
-		{
-			fx32 height, near, far;
-			u16 dir,length;
-			int trg = GFL_UI_KEY_GetTrg();
-			int cont = GFL_UI_KEY_GetCont();
-			FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( work->fieldWork );
-			
-			if( trg & PAD_BUTTON_B ){
-				(*seq)++;
-				break;
-			}
-			
-			dir = FIELD_CAMERA_GetDirectionOnXZ( camera );
-			length = FIELD_CAMERA_GetLengthOnXZ( camera );
-			height = FIELD_CAMERA_GetHeightOnXZ( camera );
-			near = FIELD_CAMERA_GetNear( camera );
-			far = FIELD_CAMERA_GetFar( camera );
 
-			if( cont & PAD_BUTTON_R ){
-				dir -= CM_RT_SPEED;
-				update = TRUE;
-			}
-	
-			if( cont & PAD_BUTTON_L ){
-				dir += CM_RT_SPEED;
-				update = TRUE;
-			}
-	
-			if( cont & PAD_KEY_LEFT ){
-				if( length > 8 ){
-					length -= 8;
-					update = TRUE;
-				}
-			}
-
-			if( cont & PAD_KEY_RIGHT ){
-				if( length < 4096 ){
-					length += 8;
-					update = TRUE;
-				}
-			}
-		
-			if( !((cont & PAD_BUTTON_Y) || (cont & PAD_BUTTON_A)) ){	// near far操作以外
-				if( cont & PAD_KEY_UP ){
-					height -= CM_HEIGHT_MV;
-					update = TRUE;
-				}
-		
-				if( cont & PAD_KEY_DOWN ){
-					height += CM_HEIGHT_MV;
-					update = TRUE;
-				}	
-			}
-
-			if( (cont & PAD_BUTTON_Y) ){	// near
-				if( cont & PAD_KEY_UP ){
-					near += CM_NEARFAR_MV;
-					update = TRUE;
-				}
-		
-				if( cont & PAD_KEY_DOWN ){
-					near -= CM_NEARFAR_MV;
-					update = TRUE;
-				}	
-			}
-
-			if( (cont & PAD_BUTTON_A) ){	// far
-				if( cont & PAD_KEY_UP ){
-					far += CM_NEARFAR_MV;
-					update = TRUE;
-				}
-		
-				if( cont & PAD_KEY_DOWN ){
-					far -= CM_NEARFAR_MV;
-					update = TRUE;
-				}	
-			}
-
-			FIELD_CAMERA_SetDirectionOnXZ( camera, dir );
-			FIELD_CAMERA_SetLengthOnXZ( camera, length );
-			FIELD_CAMERA_SetHeightOnXZ( camera, height );
-			FIELD_CAMERA_SetNear( camera, near );
-			FIELD_CAMERA_SetFar( camera, far );
-			
-			if( update == TRUE && work->vanish == FALSE ){
-				int len = 128;
-				char sjis[128];
-				u16 ucode[128];
-				
-				FLDMSGWIN_ClearWindow( work->pMsgWin );
-
-				sprintf( sjis, "LENGTH:%xH \0", length );
-				STD_ConvertStringSjisToUnicode(
-						ucode, &len, sjis, NULL, NULL );
-				GFL_STR_SetStringCodeOrderLength( 
-						work->pStrBuf, ucode, len );
-				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 1, work->pStrBuf );
-				
-				len = 128;
-				sprintf( sjis, "HEIGHT:%xH \0", height );
-				STD_ConvertStringSjisToUnicode(
-						ucode, &len, sjis, NULL, NULL );
-				GFL_STR_SetStringCodeOrderLength(
-						work->pStrBuf, ucode, len );
-				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 12, work->pStrBuf );
-				
-				len = 128;
-				sprintf( sjis, "DIR:%xH \0", dir );
-				STD_ConvertStringSjisToUnicode(
-						ucode, &len, sjis, NULL, NULL );
-				GFL_STR_SetStringCodeOrderLength(
-						work->pStrBuf, ucode, len );
-				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 23, work->pStrBuf );
-
-				len = 128;
-				sprintf( sjis, "NEAR:%xH \0", near );
-				STD_ConvertStringSjisToUnicode(
-						ucode, &len, sjis, NULL, NULL );
-				GFL_STR_SetStringCodeOrderLength(
-						work->pStrBuf, ucode, len );
-				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 34, work->pStrBuf );
-
-				len = 128;
-				sprintf( sjis, "FAR:%xH \0", far );
-				STD_ConvertStringSjisToUnicode(
-						ucode, &len, sjis, NULL, NULL );
-				GFL_STR_SetStringCodeOrderLength(
-						work->pStrBuf, ucode, len );
-				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 45, work->pStrBuf );
-				
-				FIELD_CAMERA_Main( camera, 0 );
-			}
-		}
-		break;
-	case 2:
-		FLDMSGWIN_Delete( work->pMsgWin );
-		GFL_STR_DeleteBuffer( work->pStrBuf );
-		return( GMEVENT_RES_FINISH );
-	}
-	
-	return( GMEVENT_RES_CONTINUE );
+	// カメラ操作は下画面で行う
+	subscreen = FIELDMAP_GetFieldSubscreenWork(work->fieldWork);
+  FIELD_SUBSCREEN_Change(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
+  { 
+    void * inner_work;
+    FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
+    inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
+    FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work);
+  }
+	return( GMEVENT_RES_FINISH );
 }
 
 //======================================================================
@@ -1423,17 +1287,31 @@ static GMEVENT_RESULT DMenuTestCameraListEvent(
 			FLDMENUFUNC_DeleteMenu( work->menuFunc );
 			
 			if( ret != FLDMENUFUNC_CANCEL ){	//決定
-				u16 length[TESTCAMERALISTMAX] =
+				static const u16 length[TESTCAMERALISTMAX] =
 					{ 0x0090, 0x0078, 0x0080, 0x0078 };
-				fx32 height[TESTCAMERALISTMAX] =
+				static const fx32 height[TESTCAMERALISTMAX] =
 					{ 0xae000, 0xa0000, 0xab000, 0xd8000 };
-				u16 dir[TESTCAMERALISTMAX] =
-					{ 0x0000, 0x0000, 0x0000, 0x0000 };
 				FIELD_CAMERA *camera =
 					FIELDMAP_GetFieldCamera( work->fieldWork );
-				FIELD_CAMERA_SetDirectionOnXZ( camera, dir[ret] );
-				FIELD_CAMERA_SetLengthOnXZ( camera, length[ret] );
-				FIELD_CAMERA_SetHeightOnXZ( camera, height[ret] );
+				VecFx32 vec0, vec1;
+				fx32 cos, len;
+
+				// XZ平面の距離とY方向の高さ情報から
+				// angle角度　距離を求める
+				//
+				// FIELD_CAMERAシステムの処理をangleでの動作に変更したため
+				// 修正
+				len = FX_Mul( length[ret]<<FX32_SHIFT, length[ret]<<FX32_SHIFT ) + FX_Mul( height[ret], height[ret] );
+				len = FX_Sqrt( len );
+
+				VEC_Set( &vec0, 0,0,FX32_ONE );
+				VEC_Set( &vec1, 0,height[ret],length[ret]<<FX32_SHIFT );
+				VEC_Normalize( &vec0, &vec0 );
+				VEC_Normalize( &vec1, &vec1 );
+				cos = VEC_DotProduct( &vec0, &vec1 );
+				
+				FIELD_CAMERA_SetAngleX( camera, FX_AcosIdx( cos ) );
+				FIELD_CAMERA_SetAngleLen( camera, len );
 			}
 			
 			return( GMEVENT_RES_FINISH );

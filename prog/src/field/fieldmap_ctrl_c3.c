@@ -159,7 +159,7 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 		CalcPos( &player_pos, &cam, mwk->player_len, mwk->pos_angle );
 		//SetPlayerActTrans( fieldWork->field_player, &player_pos );
 		FIELD_PLAYER_SetPos( fld_player, &player_pos);
-		FIELD_CAMERA_SetDirectionOnXZ( camera_control, mwk->pos_angle );
+		FIELD_CAMERA_SetAngleY( camera_control, mwk->pos_angle );
 		FIELD_PLAYER_C3_Move( fld_player, key_cont, mwk->pos_angle );
 	}
 }
