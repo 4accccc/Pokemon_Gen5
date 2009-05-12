@@ -28,11 +28,8 @@ struct _FIELD_CAMERA {
 
 	const VecFx32 *		watch_target;	///<追随する注視点へのポインタ
 
-	VecFx32				target;			///<注視点用ワーク
-
-	fx32				xzHeight;
-	u16					xzLength;
-	u16					xzDir;
+	VecFx32				target;			        ///<注視点用ワーク
+	VecFx32				target_offset;			///<注視点用補正座標
 
   u16         angle_h;
   u16         angle_v;
@@ -202,6 +199,8 @@ static void initGridParameter(FIELD_CAMERA * camera)
 	
 	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
 	
+  // ターゲット補正値
+  VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
 }
 
 //------------------------------------------------------------------
@@ -209,15 +208,16 @@ static void initGridParameter(FIELD_CAMERA * camera)
 static void initC3Parameter(FIELD_CAMERA * camera)
 {
 	enum { 
-		CAMERA_LENGTH = 0x308000,
-		CAMERA_HEIGHT = 0x07c000,
+		CAMERA_LENGTH = 0x308,
+		CAMERA_HEIGHT = 0x07c,
+
+		CAMERA_ANGLE_LENGTH = 0x315000,
 	};
 	VecFx32 trans = {0x2f6f36, 0, 0x301402};
 
 	
 	// 距離
-	camera->angle_len = FX_Mul( CAMERA_LENGTH, CAMERA_LENGTH ) + FX_Mul( CAMERA_HEIGHT, CAMERA_HEIGHT );
-	camera->angle_len = FX_Sqrt( camera->angle_len );
+	camera->angle_len = CAMERA_ANGLE_LENGTH;
 
 	// X軸の角度
 	{
@@ -239,6 +239,9 @@ static void initC3Parameter(FIELD_CAMERA * camera)
 
 	FIELD_CAMERA_SetFar(camera, (512 + 256 + 128) << FX32_SHIFT);
 	camera->watch_target = NULL;
+
+  // ターゲット補正値
+  VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
 }
 
 //------------------------------------------------------------------
@@ -272,6 +275,9 @@ static void initBridgeParameter(FIELD_CAMERA * camera)
 	}
 
 	FIELD_CAMERA_SetFar(camera, 4096 << FX32_SHIFT );
+
+  // ターゲット補正値
+  VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
 }
 
 //============================================================================================
@@ -298,7 +304,6 @@ static void updateTargetBinding(FIELD_CAMERA * camera)
 static void updateAngleCamera(FIELD_CAMERA * camera)
 { 
   enum {  PITCH_LIMIT = 0x200 };
-	enum { CAMERA_TARGET_HEIGHT = 0x4000 }; //ターゲット補正値 
   VecFx32 cameraPos;
 	VecFx32 cameraTarget = {0};
 	fx16 sinYaw = FX_SinIdx(camera->angle_v);
@@ -316,8 +321,7 @@ static void updateAngleCamera(FIELD_CAMERA * camera)
   //cameraPos = cameraPos * length + camera->target
 	
 	// カメラターゲット補正
-	cameraTarget		= camera->target;
-	cameraTarget.y	+= CAMERA_TARGET_HEIGHT;
+  VEC_Add( &camera->target, &camera->target_offset, &cameraTarget );
 
 	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
 	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &cameraPos );
@@ -472,6 +476,32 @@ void	FIELD_CAMERA_GetTargetPos( const FIELD_CAMERA* camera, VecFx32* pos )
 {
 	*pos = camera->target;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ注視点　補正座標の取得
+ * @param	camera		    FIELDカメラ制御ポインタ
+ * @param	target_offset	カメラ注視点を補正する座標受け取るVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+void	FIELD_CAMERA_GetTargetOffset( const FIELD_CAMERA* camera, VecFx32* target_offset )
+{
+  *target_offset = camera->target_offset;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ注視点　補正座標の取得
+ * @param	camera		        FIELDカメラ制御ポインタ
+ * @param	target_offset			カメラ注視点を補正する座標渡すVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+void	FIELD_CAMERA_SetTargetOffset( FIELD_CAMERA* camera, const VecFx32* target_offset )
+{
+  camera->target_offset = *target_offset;
+}
+
 
 
 //----------------------------------------------------------------------------

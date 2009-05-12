@@ -83,6 +83,26 @@ extern void	FIELD_CAMERA_GetTargetPos( const FIELD_CAMERA* camera, VecFx32* pos 
 //------------------------------------------------------------------
 extern void	FIELD_CAMERA_SetTargetPos( FIELD_CAMERA* camera, const VecFx32* target );
 
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ注視点　補正座標の取得
+ * @param	camera		    FIELDカメラ制御ポインタ
+ * @param	target_offset	カメラ注視点を補正する座標受け取るVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+extern void	FIELD_CAMERA_GetTargetOffset( const FIELD_CAMERA* camera, VecFx32* target_offset );
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ注視点　補正座標の取得
+ * @param	camera		        FIELDカメラ制御ポインタ
+ * @param	target_offset			カメラ注視点を補正する座標渡すVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+extern void	FIELD_CAMERA_SetTargetOffset( FIELD_CAMERA* camera, const VecFx32* target_offset );
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera);
