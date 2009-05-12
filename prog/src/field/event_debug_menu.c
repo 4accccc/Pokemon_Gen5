@@ -811,7 +811,7 @@ static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[FIELD_SUBSCREEN_MODE_MAX] =
 
 //--------------------------------------------------------------
 /**
- * イベント：四季ジャンプ
+ * イベント：した画面ジャンプ
  * @param	event	GMEVENT
  * @param	seq		シーケンス
  * @param	wk		event work
@@ -837,7 +837,7 @@ static GMEVENT_RESULT DMenuSubscreenSelectEvent(
 			msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
 			listdata = FLDMENUFUNC_CreateMakeListData(
 				DATA_SubcreenMenuList, max, msgData, work->heapID );
-			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 16, 7 );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 16, max*2 );
 			
 			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
 			GFL_MSG_Delete( msgData );
