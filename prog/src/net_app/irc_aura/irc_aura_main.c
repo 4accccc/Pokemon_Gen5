@@ -414,13 +414,6 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 	AURA_MAIN_WORK	*p_wk;
 	p_wk	= p_work;
 
-
-	MSGWND_PrintNumber(  &p_wk->d_msgwnd, &p_wk->msg, AURA_DEBUG_000, p_wk->left.x, 0, 0, 0 );
-	MSGWND_PrintNumber(  &p_wk->d_msgwnd, &p_wk->msg, AURA_DEBUG_000, p_wk->left.y, 1, 0, 0 );
-	MSGWND_PrintNumber(  &p_wk->d_msgwnd, &p_wk->msg, AURA_DEBUG_000, p_wk->right.x, 2, 0, 0 );
-	MSGWND_PrintNumber(  &p_wk->d_msgwnd, &p_wk->msg, AURA_DEBUG_000, p_wk->right.y, 3, 0, 0 );
-
-
 	switch( *p_seq )
 	{	
 	case SEQ_INIT:
@@ -1119,6 +1112,11 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MAIN:
 		if( TP_GetRectTrg( &sc_left, &p_wk->left ) )
 		{	
+
+	MSGWND_PrintNumber(  &p_wk->d_msgwnd, &p_wk->msg, AURA_DEBUG_000, p_wk->left.x, 0, 0, 0 );
+	MSGWND_PrintNumber(  &p_wk->d_msgwnd, &p_wk->msg, AURA_DEBUG_000, p_wk->left.y, 1, 0, 0 );
+
+
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchLeft );
 		}
@@ -1164,6 +1162,10 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_WAIT_RIGHT:
 		if( TP_GetRectCont( &sc_right, &p_wk->right ) )
 		{	
+	MSGWND_PrintNumber(  &p_wk->d_msgwnd, &p_wk->msg, AURA_DEBUG_000, p_wk->right.x, 2, 0, 0 );
+	MSGWND_PrintNumber(  &p_wk->d_msgwnd, &p_wk->msg, AURA_DEBUG_000, p_wk->right.y, 3, 0, 0 );
+
+
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchRight );
 		}
