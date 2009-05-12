@@ -499,7 +499,9 @@ static	void	INFOWIN_InitBg( u8 bgplane , u8 pltNo, HEAPID heapId )
 	GFL_ARC_CloseDataHandle(arcHdl);
 	
 	//‰Šúó‘ÔBG‚ÌÝ’è
+	
 	GFL_BG_FillScreen( bgplane,INFOWIN_BLACK_CHR+infoWk->ncgPos,0,0,INFOWIN_WIDTH,INFOWIN_HEIGHT,pltNo);
+	GFL_BG_FillScreen( bgplane,INFOWIN_CLEAR_CHR+infoWk->ncgPos,0,INFOWIN_HEIGHT,INFOWIN_WIDTH,32,pltNo);
 	GFL_BG_LoadScreenReq( bgplane );
 }
 
