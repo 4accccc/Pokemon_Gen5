@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-08T10:49:08"/>
+	<create user="matsumiya" host="W00179" date="2009-05-12T17:07:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,42 @@
 	</lock>
 
 
+	<row id="msg_r01_boy1_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">少年</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">テスト用メッセージ</language>
+	</row>
+
+	<row id="msg_r01_boy1_02">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">少年</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">テスト用メッセージ</language>
+	</row>
+
+	<row id="msg_r01_girl1_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">少女</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">テスト用メッセージ</language>
+	</row>
+
+	<row id="msg_r01_man1_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">青年</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">テスト用メッセージ</language>
+	</row>
+
 	<row id="msg_r01_sign1_01">
+		<comment>看板分類：タウンマップ</comment>
+		<attribute name="キャラ指定">看板：道路</attribute>
+		<language name="JPN" width="256">１ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">１番道路</language>
+	</row>
+
+	<row id="msg_r01_sign1_02">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">１ばんどうろ</language>
