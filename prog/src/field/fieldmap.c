@@ -39,6 +39,7 @@
 #include "event_debug_menu.h"
 #include "event_fieldmap_menu.h"
 #include "event_battle.h"
+#include "event_ircbattle.h"
 #include "event_fieldtalk.h"
 
 #include "field_comm_actor.h"
@@ -1362,6 +1363,28 @@ static GMEVENT * fldmap_Event_CheckPushConnect(
 
 //--------------------------------------------------------------
 /**
+ * サブスクリーンからのイベント起動チェック
+ * @param gsys GAMESYS_WORK
+ * @param	fieldWork FIELDMAP_WORK
+ * @retval GMEVENT NULL イベント無し
+ */
+//--------------------------------------------------------------
+static GMEVENT * fldmap_Event_Check_SubScreen(
+		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+  GMEVENT* event=NULL;
+  
+  switch(FIELD_SUBSCREEN_GetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork))){
+  case FIELD_SUBSCREEN_ACTION_DEBUGIRC:
+    event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
+    FIELD_SUBSCREEN_ResetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork));
+    break;
+  }
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
  * イベント　イベント起動チェック
  * @param	gsys GAMESYS_WORK
  * @param work FIELDMAP_WORK
@@ -1411,7 +1434,14 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 	if( trg == PAD_BUTTON_X ){
 		return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
 	}
-	
+
+	//サブスクリーンからのイベント起動チェック
+	event = fldmap_Event_Check_SubScreen(gsys, fieldWork);
+	if( event != NULL )
+  {
+		return event;
+	}
+  
 	//デバッグメニュー起動チェック
 	if( trg == PAD_BUTTON_SELECT ){
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 

@@ -204,13 +204,18 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * event)
+GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * prevevent,BOOL bCreate)
 {
-  GMEVENT * child_event;
+  GMEVENT * event = prevevent;
   BATTLE_SETUP_PARAM * para;
   EVENT_IRCBATTLE_WORK * dbw;
 
-  GMEVENT_Change( event,EVENT_IrcBattleMain, sizeof(EVENT_IRCBATTLE_WORK) );
+  if(bCreate){
+    event = GMEVENT_Create(gsys, NULL, EVENT_IrcBattleMain, sizeof(EVENT_IRCBATTLE_WORK));
+  }
+  else{
+    GMEVENT_Change( event,EVENT_IrcBattleMain, sizeof(EVENT_IRCBATTLE_WORK) );
+  }
   dbw = GMEVENT_GetEventWork(event);
   dbw->ctrl = SaveControl_GetPointer();
   dbw->gsys = gsys;
@@ -235,6 +240,7 @@ void EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * e
 
     PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->partyPlayer);
   }
+  return event;
 }
 
 

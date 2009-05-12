@@ -27,8 +27,6 @@
 */
 //-----------------------------------------------------------------------------
 
-#define CGEAR_ON (1)
-
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -38,7 +36,7 @@
 struct _FIELD_SUBSCREEN_WORK {
 	FIELD_SUBSCREEN_MODE mode;
 	HEAPID heapID;
-
+  FIELD_SUBSCREEN_ACTION action;
 	union {	
     C_GEAR_WORK* cgearWork;
 		GFL_CAMADJUST * gflCamAdjust;
@@ -76,6 +74,10 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork);
 static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
+static void init_debugred_subscreen(FIELD_SUBSCREEN_WORK * pWork);
+static void update_debugred_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void exit_debugred_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+
 static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork);
 static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
@@ -104,6 +106,12 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		update_topmenu_subscreen,
 		exit_topmenu_subscreen,
 	},
+  {
+    FIELD_SUBSCREEN_DEBUG_RED,
+		init_debugred_subscreen,
+		update_debugred_subscreen,
+		exit_debugred_subscreen,
+  },
 	{	
 		FIELD_SUBSCREEN_DEBUG_LIGHT,
 		init_light_subscreen,
@@ -200,6 +208,45 @@ FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_GetMode(const FIELD_SUBSCREEN_WORK * pWork)
 	return pWork->mode;
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief  アクション状態を取得する
+ * @param	 mode
+ */
+//----------------------------------------------------------------------------
+FIELD_SUBSCREEN_ACTION FIELD_SUBSCREEN_GetAction( FIELD_SUBSCREEN_WORK* pWork)
+{
+  if(pWork){
+    return pWork->action;
+  }
+  return FIELD_SUBSCREEN_ACTION_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief  アクション状態を設定する
+ * @param	 mode
+ */
+//----------------------------------------------------------------------------
+void FIELD_SUBSCREEN_SetAction( FIELD_SUBSCREEN_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
+{
+  if(pWork){
+    pWork->action = actionno;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief  アクション状態を消す
+ * @param	 mode
+ */
+//----------------------------------------------------------------------------
+void FIELD_SUBSCREEN_ResetAction( FIELD_SUBSCREEN_WORK* pWork)
+{
+  FIELD_SUBSCREEN_SetAction(pWork, FIELD_SUBSCREEN_ACTION_NONE);
+}
+
+
 #ifdef	PM_DEBUG
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
@@ -220,9 +267,7 @@ void * FIELD_SUBSCREEN_DEBUG_GetControl(FIELD_SUBSCREEN_WORK * pWork)
 //-----------------------------------------------------------------------------
 static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork)
 {
-#if CGEAR_ON
   pWork->cgearWork = CGEAR_Init();
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -232,9 +277,7 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork)
 //-----------------------------------------------------------------------------
 static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
-#if CGEAR_ON
   CGEAR_Exit(pWork->cgearWork);
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -244,9 +287,62 @@ static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
-#if CGEAR_ON
   CGEAR_Main(pWork->cgearWork);
-#endif
+}
+
+//=============================================================================
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	赤外線デバッグの初期化
+ *	
+ *	@param	heapID	ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+static void init_debugred_subscreen(FIELD_SUBSCREEN_WORK * pWork)
+{
+  // BG3 SUB (インフォバー
+  static const GFL_BG_BGCNT_HEADER header_sub3 = {
+      0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x6000,
+		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+	};
+
+	GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
+	GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
+	GFL_BG_ClearFrame( FIELD_SUBSCREEN_BGPLANE );
+	
+	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
+
+	INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , pWork->heapID);
+	if( INFOWIN_IsInitComm() == TRUE )
+	{
+		GFL_NET_ReloadIcon();
+	}
+  FIELD_SUBSCREEN_SetAction(pWork, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	赤外線デバッグの破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_debugred_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+	INFOWIN_Exit();
+	GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	赤外線デバッグの更新
+ */
+//-----------------------------------------------------------------------------
+static void update_debugred_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+	INFOWIN_Update();
 }
 
 //=============================================================================
