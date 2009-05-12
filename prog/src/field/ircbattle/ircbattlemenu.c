@@ -120,6 +120,7 @@ enum _BATTLETYPE_SELECT {
 enum _IBMODE_SELECT {
   _SELECTMODE_BATTLE = 0,
   _SELECTMODE_POKE_CHANGE,
+	_SELECTMODE_COMPATIBLE,	//相性チェック
   _SELECTMODE_EXIT
 };
 
@@ -373,7 +374,7 @@ static void _modeInit(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuInit(IRC_BATTLE_MENU* pWork)
 {
-  int aMsgBuff[]={IRCBTL_STR_01,IRCBTL_STR_02,IRCBTL_STR_03};
+  int aMsgBuff[]={IRCBTL_STR_01,IRCBTL_STR_02,IRCBTL_STR_15,IRCBTL_STR_03};
 
   _buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
 
@@ -418,6 +419,11 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
     _CHANGE_STATE(pWork,_modeSelectChangeInit);
     _buttonWindowDelete(pWork);
     return TRUE;
+	case _SELECTMODE_COMPATIBLE:
+    pWork->selectType = EVENTIRCBTL_ENTRYMODE_COMPATIBLE;
+    _CHANGE_STATE(pWork,NULL);        // 相性診断モードへ移るために終了
+    _buttonWindowDelete(pWork);
+		return TRUE;
   case _SELECTMODE_EXIT:
     _CHANGE_STATE(pWork,NULL);        // 終わり
     _buttonWindowDelete(pWork);

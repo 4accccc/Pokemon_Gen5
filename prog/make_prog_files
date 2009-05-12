@@ -492,6 +492,12 @@ SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
       net_app/compatible/compati_comm.c \
       net_app/compatible/compati_irc.c
 
+#赤外線相性チェックトップ
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_IRC_COMPATIBLE	= net_app/irc_compatible/irc_compatible.c
+
 #赤外線オーラチェック
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
