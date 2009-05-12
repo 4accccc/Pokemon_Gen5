@@ -127,21 +127,17 @@ typedef struct {
 	const GFL_PROC_DATA*	procData;
 }DEBUGITEM_LIST;
 
-enum {
-	DEBUGITEM_1 = 0,
-	DEBUGITEM_2,
-
-	DEBUGITEM_MAX,
-};
-
 FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeSample1ProcData;
 FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeSample2ProcData;
+FS_EXTERN_OVERLAY(watanabe_sample);
+extern const GFL_PROC_DATA DebugWatanabeSample3ProcData;
 
-static const DEBUGITEM_LIST debugItemList[DEBUGITEM_MAX] = {
+static const DEBUGITEM_LIST debugItemList[] = {
 	{L"■３Ｄシーンサンプル",			FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
 	{L"■電光けいじばんサンプル",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample2ProcData},
+	{L"■サンプル",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample3ProcData},
 };
 
 //------------------------------------------------------------------
@@ -159,7 +155,7 @@ typedef struct {
 	GFL_FONT*			fontHandle;
 	GFL_BMPWIN*			bmpwin;
 	
-	GFL_UI_TP_HITTBL	tpTable[DEBUGITEM_MAX+1];
+	GFL_UI_TP_HITTBL	tpTable[NELEMS(debugItemList)+1];
 	
 	u32					wait;
 }DEBUG_WATANABE_WORK;
@@ -431,7 +427,7 @@ static void drawList(DEBUG_WATANABE_WORK* dw)
 
 	strBuf = GFL_STR_CreateBuffer(LISTITEM_NAMESIZE+1, dw->heapID);
 
-	for( i=0; i<DEBUGITEM_MAX; i++ ){
+	for( i=0; i<NELEMS(debugItemList); i++ ){
 		//終端コードを追加してからSTRBUFに変換
 		const u16 strLen = wcslen(debugItemList[i].str);
 		GFL_STD_MemCopy(debugItemList[i].str, str, strLen*2);
@@ -457,17 +453,17 @@ static void makeList(DEBUG_WATANABE_WORK* dw)
 {
 	int i;
 
-	for( i=0; i<DEBUGITEM_MAX; i++ ){
+	for( i=0; i<NELEMS(debugItemList); i++ ){
 		//タッチパネル判定テーブル作成
 		dw->tpTable[i].rect.top = i * ITEM_SY + ITEM_PY;
 		dw->tpTable[i].rect.bottom = dw->tpTable[i].rect.top + (ITEM_SY-1);
 		dw->tpTable[i].rect.left = ITEM_PX;
 		dw->tpTable[i].rect.right = dw->tpTable[i].rect.left + (ITEM_SX-1);
 	}
-	dw->tpTable[DEBUGITEM_MAX].rect.top = GFL_UI_TP_HIT_END;//終了データ埋め込み
-	dw->tpTable[DEBUGITEM_MAX].rect.bottom = 0;
-	dw->tpTable[DEBUGITEM_MAX].rect.left = 0;
-	dw->tpTable[DEBUGITEM_MAX].rect.right = 0;
+	dw->tpTable[NELEMS(debugItemList)].rect.top = GFL_UI_TP_HIT_END;//終了データ埋め込み
+	dw->tpTable[NELEMS(debugItemList)].rect.bottom = 0;
+	dw->tpTable[NELEMS(debugItemList)].rect.left = 0;
+	dw->tpTable[NELEMS(debugItemList)].rect.right = 0;
 }
 
 

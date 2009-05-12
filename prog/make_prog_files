@@ -302,6 +302,7 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/samplemain.c \
         test/tetsu/sample/g3dmapfunc/func_pmcustom_file.c \
         test/tetsu/test_prog1.c \
         test/tetsu/sample2.c \
+        test/tetsu/sample3.c \
         test/tetsu/debug_watanabe.c
 
 # コンフィグ画面

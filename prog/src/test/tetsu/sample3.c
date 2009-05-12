@@ -38,6 +38,23 @@
  *
  */
 //============================================================================================
+typedef struct {
+	VecFx16	vtx0;
+	VecFx16	vtx1;
+	VecFx16	vtx2;
+}DRAW_TRIANGLE;
+
+typedef struct {
+	VecFx16	vtx0;
+	VecFx16	vtx1;
+	VecFx16	vtx2;
+	VecFx16	vtx3;
+}DRAW_QUAD;
+
+static BOOL calcTriangle
+	(GFL_G3D_CAMERA* g3Dcamera, DRAW_TRIANGLE* triangle, VecFx32* trans, fx32* scale, int x, int y );
+static void	drawTriangle( VecFx32* trans, fx32 scale, DRAW_TRIANGLE* triData, GXRgb color );
+static void	drawQuad( VecFx32* trans, fx32 scale, DRAW_QUAD* quadData, GXRgb color );
 //------------------------------------------------------------------
 /**
  * @brief	定数
@@ -70,8 +87,6 @@
  * @brief	初期値テーブル
  */
 //------------------------------------------------------------------
-static const u16 testMsg[] = { L"電光けいじばんを作ってみよう！！・・・・・・" };
-
 static const GFL_CAMADJUST_SETUP camAdjustData= {
 	0,
 	GFL_DISPUT_BGID_S0, GFL_DISPUT_PALID_15,
@@ -88,8 +103,6 @@ typedef struct {
 	HEAPID							heapID;
 	int									seq;
 
-	STRBUF*							strBuf;
-
 	GFL_G3D_CAMERA*			g3Dcamera;	
 	GFL_G3D_LIGHTSET*		g3Dlightset;	
 	GFL_G3D_UTIL*				g3Dutil;
@@ -100,9 +113,12 @@ typedef struct {
 	u16									cameraAngleV;
 	u16									cameraAngleH;
 
-	u16									targetObjID;
-
 	int									timer;
+
+	BOOL								cameraControlMode;
+
+	u32									tpx;
+	u32									tpy;
 }SAMPLE3_WORK;
 
 //============================================================================================
@@ -124,73 +140,6 @@ static BOOL	sample3(SAMPLE3_WORK* sw);
 
 //------------------------------------------------------------------
 /**
- * @brief	文字列作成
- */
-//------------------------------------------------------------------
-static void makeStr(const u16* str, STRBUF* strBuf)
-{
-	STRCODE strTmp[STRBUF_SIZE];
-	u32 strLen;
-
-	//文字列長さ取得
-	const u16 checkLen = wcslen(str);
-	if(checkLen >= STRBUF_SIZE){ strLen = STRBUF_SIZE - 1; }
-	else { strLen = checkLen; }
-
-	//終端コードを追加してからSTRBUFに変換
-	GFL_STD_MemCopy(str, strTmp, strLen*2);
-	strTmp[strLen] = GFL_STR_GetEOMCode();
-
-	GFL_STR_SetStringCode(strBuf, strTmp);
-}
-
-static void makeStr2(const u16* str, STRBUF* strBuf)
-{
-	STRCODE strTmp[STRBUF_SIZE];
-	u32 strLen;
-	u16*	pStr = strTmp;
-
-	//文字列長さ取得
-	const u16 checkLen = wcslen(str);
-	if(checkLen >= STRBUF_SIZE/2){ strLen = STRBUF_SIZE/2; }
-	else { strLen = checkLen; }
-
-	//終端コードを追加してからSTRBUFに変換
-	{
-		int i;
-		for( i=0; i<strLen; i++ ){
-			pStr[i*2+0] = str[i];
-			if( i== strLen-1){
-				pStr[i*2+1] = GFL_STR_GetEOMCode();
-			} else {
-				pStr[i*2+1] = 0xfffe;
-			}
-		}
-	}
-	GFL_STR_SetStringCode(strBuf, strTmp);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	ワークの初期化＆破棄
- */
-//------------------------------------------------------------------
-static void	workInitialize(SAMPLE3_WORK* sw)
-{
-	sw->seq = 0;
-	sw->timer = 0;
-
-	sw->strBuf = GFL_STR_CreateBuffer(STRBUF_SIZE, sw->heapID);
-	makeStr(testMsg, sw->strBuf);
-}
-
-static void	workFinalize(SAMPLE3_WORK* sw)
-{
-	GFL_STR_DeleteBuffer(sw->strBuf);
-}
-
-//------------------------------------------------------------------
-/**
  * @brief	proc関数
  */
 //------------------------------------------------------------------
@@ -202,8 +151,11 @@ static GFL_PROC_RESULT Sample3Proc_Init(GFL_PROC * proc, int * seq, void * pwk, 
 
   GFL_STD_MemClear(sw, sizeof(SAMPLE3_WORK));
   sw->heapID = GFL_HEAPID_APP;
-
-	workInitialize(sw);
+	sw->seq = 0;
+	sw->timer = 0;
+	sw->cameraControlMode = TRUE;
+	sw->tpx = 0xffff;
+	sw->tpy = 0xffff;
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -226,8 +178,6 @@ static GFL_PROC_RESULT Sample3Proc_End(GFL_PROC * proc, int * seq, void * pwk, v
 {
 	SAMPLE3_WORK*	sw;
 	sw = mywk;
-
-	workFinalize(sw);
 
 	GFL_PROC_FreeWork(proc);
 
@@ -293,7 +243,22 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 			sw->seq++;
 			break;
 		}
-		GFL_CAMADJUST_Main(sw->gflCamAdjust);
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			if(sw->cameraControlMode == FALSE){
+				GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
+				sw->cameraControlMode = TRUE;
+			} else {
+				GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
+				sw->cameraControlMode = FALSE;
+			}
+			break;
+		}
+
+		if(sw->cameraControlMode == TRUE){
+			GFL_CAMADJUST_Main(sw->gflCamAdjust);
+		} else {
+			GFL_UI_TP_GetPointCont(&sw->tpx, &sw->tpy);
+		}
 
 		systemFramework(sw);
 		break;
@@ -379,28 +344,15 @@ static const GFL_G3D_LIGHTSET_SETUP light0Setup = { light0Tbl, NELEMS(light0Tbl)
 #include "arc/elboard_test.naix"
 
 enum {
-	G3DRES_ELBOARD_BMD = 0,
-	G3DRES_ELBOARD_BTX,
-	G3DRES_ELBOARD_BCA,
-	G3DRES_ELBOARD_BTA,
-	G3DRES_ELBOARD2_BMD,
+	G3DRES_ELBOARD2_BMD = 0,
 	G3DRES_ELBOARD2_BTX,
 	G3DRES_ELBOARD2_BTA,
 };
 
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbmd, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbtx, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbca, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbta, GFL_G3D_UTIL_RESARC },
 	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbmd, GFL_G3D_UTIL_RESARC },
 	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbtx, GFL_G3D_UTIL_RESARC },
 	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbta, GFL_G3D_UTIL_RESARC },
-};
-
-static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
-	{ G3DRES_ELBOARD_BCA, 0 },
-	{ G3DRES_ELBOARD_BTA, 0 },
 };
 
 static const GFL_G3D_UTIL_ANM g3Dutil_anm2Tbl[] = {
@@ -408,12 +360,10 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anm2Tbl[] = {
 };
 
 enum {
-	G3DOBJ_ELBOARD1 = 0,
-	G3DOBJ_ELBOARD2,
+	G3DOBJ_ELBOARD2 = 0,
 };
 
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
-	{ G3DRES_ELBOARD_BMD, 0, G3DRES_ELBOARD_BTX, g3Dutil_anm1Tbl, NELEMS(g3Dutil_anm1Tbl) },
 	{ G3DRES_ELBOARD2_BMD, 0, G3DRES_ELBOARD2_BTX, g3Dutil_anm2Tbl, NELEMS(g3Dutil_anm2Tbl) },
 };
 
@@ -507,15 +457,6 @@ static void systemSetup(SAMPLE3_WORK* sw)
 		//アニメーションを有効にする
 		objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx);
 		{
-			elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
-			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
-
-			anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
-			for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_EnableAnime(g3Dobj, i); } 
-
-			g3Dtex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
-		} 
-		{
 			elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
 			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
 
@@ -524,7 +465,6 @@ static void systemSetup(SAMPLE3_WORK* sw)
 
 			g3Dtex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
 		}
-		sw->targetObjID = G3DOBJ_ELBOARD1;
 	}
 }
 
@@ -562,14 +502,13 @@ static void systemFramework(SAMPLE3_WORK* sw)
 		}
 
 		GFL_G3D_DRAW_Start();			//描画開始
-		GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定		
 		{
 			u16						objIdx, elboard1Idx;
 			GFL_G3D_OBJ*	g3Dobj;
 			int i, anmCount;
 
 			objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx );
-			elboard1Idx = objIdx + sw->targetObjID;
+			elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
 			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
 
 			GFL_G3D_DRAW_DrawObject(g3Dobj, &g3DobjStatus1);
@@ -577,6 +516,26 @@ static void systemFramework(SAMPLE3_WORK* sw)
 			anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
 			for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_LoopAnimeFrame(g3Dobj, i, FX32_ONE ); } 
 		}
+		{
+			DRAW_TRIANGLE	tri0;
+			VecFx32				triTrans;
+			fx32					triScale;
+
+			if((sw->tpx != 0xffff)&&(sw->tpy != 0xffff)){
+				if(calcTriangle(sw->g3Dcamera, &tri0, &triTrans, &triScale, sw->tpx, sw->tpy) == TRUE){
+					drawTriangle(&triTrans, triScale, &tri0, GX_RGB(31, 31, 31));
+				}
+			}
+		}
+		{
+			DRAW_QUAD	plane0 =	{ {-FX32_ONE, 0,  FX32_ONE}, { FX32_ONE, 0,  FX32_ONE},
+														{-FX32_ONE, 0, -FX32_ONE}, { FX32_ONE, 0, -FX32_ONE} };
+			VecFx32		planeTrans = {64*FX32_ONE, 64*FX32_ONE, 64*FX32_ONE};
+			fx32			planeScale = FX32_ONE * 64;
+
+			drawQuad(&planeTrans, planeScale, &plane0, GX_RGB(31, 0, 0));
+		}
+
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 	}
 }
@@ -634,35 +593,116 @@ static void systemDelete(SAMPLE3_WORK* sw)
  *
  */
 //============================================================================================
-static void	drawObject( VecFx32* trans, fx32 scale, fx16* vtxData )
+static void	drawTriangle( VecFx32* trans, fx32 scale, DRAW_TRIANGLE* triData, GXRgb color )
 {
+	G3_PushMtx();
+	//平行移動パラメータ設定
+	G3_Translate(trans->x, trans->y, trans->z);
 	//グローバルスケール設定
-	//※頂点座標設定値に制限があるので、テクスチャサイズに合わせるためスケールの方で吸収する
-	scale *= FX16_ONE;
 	G3_Scale( scale, scale, scale );
 
-	G3_PushMtx();
-
-	//平行移動パラメータ設定
-	G3_Translate(FX_Div(trans->x,scale), FX_Div(trans->y,scale), FX_Div(trans->z,scale));
-
 	//マテリアル設定
-	G3_MaterialColorDiffAmb( GX_RGB(31, 31, 31), GX_RGB(0, 0, 0), TRUE );
-	G3_MaterialColorSpecEmi( GX_RGB(31, 31, 31), GX_RGB(0, 0, 0), FALSE );
+	G3_MaterialColorDiffAmb( GX_RGB(31, 31, 31), GX_RGB(31, 31, 31), TRUE );
+	G3_MaterialColorSpecEmi( GX_RGB(31, 31, 31), GX_RGB(31, 31, 31), FALSE );
 	G3_PolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 
-									63, 31, GX_POLYGON_ATTR_MISC_FOG );
+									63, 31, GX_POLYGON_ATTR_MISC_DISP_1DOT );
 	
-	G3_Begin( GX_BEGIN_QUADS );
+	G3_Begin( GX_BEGIN_TRIANGLES );
 
-	G3_Color(GX_RGB(31, 31, 31));
+	G3_Color(color);
 
-//	G3_Vtx(vtxData[0][0], vtxData[0][1], 0);
-//	G3_Vtx(vtxData[1][1], vtxData[1][1], 0);
-//	G3_Vtx(vtxData[2][1], vtxData[2][1], 0);
-//	G3_Vtx(vtxData[3][1], vtxData[3][1], 0);
+	G3_Vtx(	triData->vtx2.x, triData->vtx2.y, triData->vtx2.z); 
+	G3_Vtx(	triData->vtx0.x, triData->vtx0.y, triData->vtx0.z); 
+	G3_Vtx(	triData->vtx1.x, triData->vtx1.y, triData->vtx1.z); 
 
 	G3_End();
 	G3_PopMtx(1);
 }
 
+static void	drawQuad( VecFx32* trans, fx32 scale, DRAW_QUAD* quadData, GXRgb color )
+{
+	G3_PushMtx();
+
+	//平行移動パラメータ設定
+	G3_Translate(trans->x, trans->y, trans->z);
+	//グローバルスケール設定
+	G3_Scale( scale, scale, scale );
+
+	//マテリアル設定
+	G3_MaterialColorDiffAmb( GX_RGB(31, 31, 31), GX_RGB(31, 31, 31), TRUE );
+	G3_MaterialColorSpecEmi( GX_RGB(31, 31, 31), GX_RGB(31, 31, 31), FALSE );
+	G3_PolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 
+									63, 31, GX_POLYGON_ATTR_MISC_DISP_1DOT );
+	
+	G3_Begin( GX_BEGIN_QUADS );
+
+	G3_Color(color);
+
+	G3_Vtx(quadData->vtx2.x, quadData->vtx2.y, quadData->vtx2.z); 
+	G3_Vtx(quadData->vtx0.x, quadData->vtx0.y, quadData->vtx0.z); 
+	G3_Vtx(quadData->vtx1.x, quadData->vtx1.y, quadData->vtx1.z); 
+	G3_Vtx(quadData->vtx3.x, quadData->vtx3.y, quadData->vtx3.z); 
+
+	G3_End();
+	G3_PopMtx(1);
+}
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ *
+ *
+ * @brief	座標計算
+ *
+ *
+ *
+ *
+ *
+ */
+//============================================================================================
+static BOOL calcTriangle
+	(GFL_G3D_CAMERA* g3Dcamera, DRAW_TRIANGLE* triangle, VecFx32* trans, fx32* scale, int x, int y )
+{
+	VecFx32		vec0, vec1, vec2;
+	fx32			val1, val2;
+	fx32			near_backup;
+
+	//変換精度を上げるためnearの距離をとる
+	GFL_G3D_CAMERA_GetNear(g3Dcamera, &near_backup);
+	{
+		fx32 near = 64* FX32_ONE;
+
+		GFL_G3D_CAMERA_SetNear(g3Dcamera, &near);
+		GFL_G3D_CAMERA_Switching(g3Dcamera);
+	}
+
+	if( NNS_G3dScrPosToWorldLine(x, y, &vec0, NULL ) == -1 ){ return FALSE; }
+
+	NNS_G3dScrPosToWorldLine(8, 18*8, &vec1, NULL );
+	NNS_G3dScrPosToWorldLine(32, 18*8, &vec2, NULL );
+
+	VEC_Subtract(&vec1, &vec0, &vec1);
+	VEC_Subtract(&vec2, &vec0, &vec2);
+
+	val1 = VEC_Mag(&vec1);
+	val2 = VEC_Mag(&vec2);
+
+	//長い方をスケールに設定
+	if( val1 >= val2 ){ *scale = val1; }
+	else { *scale = val2; }
+
+	VEC_Set(trans, vec0.x, vec0.y, vec0.z);
+	VEC_Fx16Set(&triangle->vtx0, 0, 0, 0);
+	VEC_Fx16Set(&triangle->vtx1, FX_Div(vec1.x,*scale), FX_Div(vec1.y,*scale), FX_Div(vec1.z,*scale));
+	VEC_Fx16Set(&triangle->vtx2, FX_Div(vec2.x,*scale), FX_Div(vec2.y,*scale), FX_Div(vec2.z,*scale));
+
+	//near復帰
+	GFL_G3D_CAMERA_SetNear(g3Dcamera, &near_backup);
+	GFL_G3D_CAMERA_Switching(g3Dcamera);
+
+	return TRUE;
+}
 

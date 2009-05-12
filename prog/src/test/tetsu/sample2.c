@@ -143,32 +143,6 @@ static void makeStr(const u16* str, STRBUF* strBuf)
 	GFL_STR_SetStringCode(strBuf, strTmp);
 }
 
-static void makeStr2(const u16* str, STRBUF* strBuf)
-{
-	STRCODE strTmp[STRBUF_SIZE];
-	u32 strLen;
-	u16*	pStr = strTmp;
-
-	//文字列長さ取得
-	const u16 checkLen = wcslen(str);
-	if(checkLen >= STRBUF_SIZE/2){ strLen = STRBUF_SIZE/2; }
-	else { strLen = checkLen; }
-
-	//終端コードを追加してからSTRBUFに変換
-	{
-		int i;
-		for( i=0; i<strLen; i++ ){
-			pStr[i*2+0] = str[i];
-			if( i== strLen-1){
-				pStr[i*2+1] = GFL_STR_GetEOMCode();
-			} else {
-				pStr[i*2+1] = 0xfffe;
-			}
-		}
-	}
-	GFL_STR_SetStringCode(strBuf, strTmp);
-}
-
 //------------------------------------------------------------------
 /**
  * @brief	ワークの初期化＆破棄
