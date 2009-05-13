@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-12T17:22:21"/>
+	<create user="matsumiya" host="W00179" date="2009-05-13T11:12:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,6 +359,13 @@ middleman1</attribute>
 		<attribute name="キャラ指定">看板：友達♀</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　いえ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　家</language>
+	</row>
+
+	<row id="msg_t01_sign4_02">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">看板：研究所</attribute>
+		<language name="JPN" width="256">ポケモン　けんきゅうじょ</language>
+		<language name="JPN_KANJI" width="256">ポケモン研究所</language>
 	</row>
 
 	<flowchart-group-list>
