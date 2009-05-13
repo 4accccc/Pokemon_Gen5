@@ -1151,6 +1151,9 @@ static GMEVENT_RESULT DMenuControlCamera(
     inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
     FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work);
   }
+
+	GFL_STR_DeleteBuffer( work->pStrBuf );
+
 	return( GMEVENT_RES_FINISH );
 }
 
