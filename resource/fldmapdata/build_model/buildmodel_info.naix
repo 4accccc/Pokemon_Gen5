@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: buildmodel_info.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_BUILDMODEL_INFO_NAIX_
+#define NARC_BUILDMODEL_INFO_NAIX_
+
+enum {
+	NARC_buildmodel_info_buildmodel_anime_bin = 0,
+	NARC_buildmodel_info_buildmodel_outdoor_bin = 1,
+	NARC_buildmodel_info_buildmodel_indoor_bin = 2
+};
+
+/* NARC_BUILDMODEL_INFO_NAIX_ */
+#endif

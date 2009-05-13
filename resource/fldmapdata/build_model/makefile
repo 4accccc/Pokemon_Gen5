@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	tamada lee_hyunjung
+USERS	=	 lee_hyunjung fuchino tamada
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -30,7 +30,7 @@ TARGETDIR	= $(PROJECT_ARCDIR)fieldmap
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	=
+SUBDIRS	= anime_files
 
 
 #共通ルールファイルのインクルード
@@ -48,21 +48,31 @@ XLS_DATA_OUTDOOR	= $(TARGET_OUTDOOR).xls
 TXT_DATA_OUTDOOR	= $(WKDIR)/$(XLS_DATA_OUTDOOR:.xls=.txt)
 DEP_LIST_OUTDOOR	= $(WKDIR)/depend_outdoor.txt
 ARC_LIST_OUTDOOR	= $(WKDIR)/archive_outdoor.txt
-INDEX_OUTDOOR			= $(INDEXDIR)/bmodel_index_outdoor.narc
+INDEX_OUTDOOR			= bmodel_index_outdoor.narc
+BIN_DATA_OUTDOOR	= $(WKDIR)/$(XLS_DATA_OUTDOOR:.xls=.bin)
 
 XLS_DATA_INDOOR	= $(TARGET_INDOOR).xls
 TXT_DATA_INDOOR	= $(WKDIR)/$(XLS_DATA_INDOOR:.xls=.txt)
 DEP_LIST_INDOOR	= $(WKDIR)/depend_indoor.txt
 ARC_LIST_INDOOR	= $(WKDIR)/archive_indoor.txt
-INDEX_INDOOR			= $(INDEXDIR)/bmodel_index_indoor.narc
+INDEX_INDOOR			= bmodel_index_indoor.narc
+BIN_DATA_INDOOR	= $(WKDIR)/$(XLS_DATA_INDOOR:.xls=.bin)
+
+#アニメデータ関連
+XLS_DATA_ANIME	= buildmodel_anime.xls
+TXT_DATA_ANIME	= $(WKDIR)/$(XLS_DATA_ANIME:.xls=.txt)
+BIN_DATA_ANIME	= $(WKDIR)/$(XLS_DATA_ANIME:.xls=.bin)
+
+NARC_BIN_DATA		= buildmodel_info.narc
+NAIX_BIN_DATA		= buildmodel_info.naix
 
 .PHONY:	do-build lists clean subdir
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir
-	$(MAKE) lists
+do-build:	subdir bindata
+#	$(MAKE) bindata
 	$(MAKE) arc
 	$(MAKE) index
 
@@ -84,9 +94,15 @@ subdir:
 
 arc:	$(TARGETDIR)/$(NARC_OUTDOOR) $(TARGETDIR)/$(NARC_INDOOR)
 
-lists:	$(DEP_LIST_OUTDOOR) $(DEP_LIST_INDOOR)
-
 index: $(TARGETDIR)/$(INDEX_OUTDOOR) $(TARGETDIR)/$(INDEX_INDOOR)
+
+
+bindata:	$(TARGETDIR)/$(NARC_BIN_DATA)
+
+$(TARGETDIR)/$(NARC_BIN_DATA): $(NARC_BIN_DATA)
+	@echo $(TARGETDIR)に$(NARC_BIN_DATA)をコピー
+	@$(COPY)	$(NARC_BIN_DATA) $(TARGETDIR)
+	@$(COPY) $(NAIX_BIN_DATA) $(TARGETDIR)
 
 $(TARGETDIR)/$(NARC_OUTDOOR):	$(NARC_OUTDOOR)
 	@echo $(TARGETDIR)に$(NARC_OUTDOOR)をコピー
@@ -108,19 +124,26 @@ $(NARC_INDOOR):	$(DEP_INDOOR)
 	@nnsarc -c -l -n -i $(NARC_INDOOR) -S $(ARC_LIST_INDOOR) > $(WKDIR)/arc_result.txt
 	@$(NAIXCUT) $(NAIX_INDOOR)
 
-$(TARGETDIR)/$(INDEX_OUTDOOR):	$(INDEX_OUTDOOR)
+$(TARGETDIR)/$(INDEX_OUTDOOR):	$(INDEXDIR)/$(INDEX_OUTDOOR)
 	@echo $(TARGETDIR)に$<をコピー
-	@$(COPY) $(INDEX_OUTDOOR) $(TARGETDIR)/
+	@$(COPY) $(INDEXDIR)/$(INDEX_OUTDOOR) $(TARGETDIR)
 
-$(TARGETDIR)/$(INDEX_INDOOR):	$(INDEX_INDOOR)
+$(TARGETDIR)/$(INDEX_INDOOR):	$(INDEXDIR)/$(INDEX_INDOOR)
 	@echo $(TARGETDIR)に$<をコピー
-	@$(COPY) $(INDEX_INDOOR) $(TARGETDIR)/
+	@$(COPY) $(INDEXDIR)/$(INDEX_INDOOR) $(TARGETDIR)
 
 
 #------------------------------------------------------------------------------
 #	以下はコンバート対象者のみ動作する
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
+
+$(NARC_BIN_DATA):	$(BIN_DATA_ANIME) $(BIN_DATA_OUTDOOR) $(BIN_DATA_INDOOR)
+	@echo \"$(BIN_DATA_ANIME)\" > $(WKDIR)/bindata.list
+	@echo \"$(BIN_DATA_OUTDOOR)\" >> $(WKDIR)/bindata.list
+	@echo \"$(BIN_DATA_INDOOR)\" >> $(WKDIR)/bindata.list
+	nnsarc -c -l -n -i $(NARC_BIN_DATA) -S $(WKDIR)/bindata.list > $(WKDIR)/arc_result.txt
+	$(NAIXCUT) $(NAIX_BIN_DATA)
 
 #
 $(TXT_DATA_OUTDOOR):	$(XLS_DATA_OUTDOOR)
@@ -132,26 +155,33 @@ $(TXT_DATA_INDOOR):	$(XLS_DATA_INDOOR)
 	@$(XLS2TAB) $(XLS_DATA_INDOOR) > $(TXT_DATA_INDOOR)
 
 #
-$(DEP_LIST_OUTDOOR):	$(TXT_DATA_OUTDOOR)
+$(BIN_DATA_OUTDOOR):	$(TXT_DATA_OUTDOOR)
 	@echo コンバート対象配置モデルのリストアップ中
-	@ruby makelist.rb $(TXT_DATA_OUTDOOR) DEP_OUTDOOR $(DEP_LIST_OUTDOOR) $(ARC_LIST_OUTDOOR)
+	@ruby makelist.rb $(TXT_DATA_OUTDOOR) \
+		DEP_OUTDOOR $(DEP_LIST_OUTDOOR) $(ARC_LIST_OUTDOOR) $(BIN_DATA_OUTDOOR)
 
-$(DEP_LIST_INDOOR):	$(TXT_DATA_INDOOR)
+$(BIN_DATA_INDOOR):	$(TXT_DATA_INDOOR)
 	@echo コンバート対象配置モデルのリストアップ中
-	@ruby makelist.rb $(TXT_DATA_INDOOR) DEP_INDOOR $(DEP_LIST_INDOOR) $(ARC_LIST_INDOOR)
+	@ruby makelist.rb $(TXT_DATA_INDOOR) \
+		DEP_INDOOR $(DEP_LIST_INDOOR) $(ARC_LIST_INDOOR) $(BIN_DATA_INDOOR)
 
 #
-$(INDEX_OUTDOOR):		$(TXT_DATA_OUTDOOR)
-	@echo エリア別配置モデルリスト（屋外）生成中
+$(INDEXDIR)/$(INDEX_OUTDOOR):		$(TXT_DATA_OUTDOOR)
+	@echo 屋外エリア別配置モデルリスト（$@）生成中
 	@ruby makeindex.rb	$(TXT_DATA_OUTDOOR) out $(INDEXDIR)
 	@echo $@をアーカイブしています
-	@nnsarc -c -l -n -i $(INDEX_OUTDOOR) -S $(INDEXDIR)/out.list > $(WKDIR)/arc_result.txt
+	@nnsarc -c -l -n -i $(INDEXDIR)/$(INDEX_OUTDOOR) -S $(INDEXDIR)/out.list > $(WKDIR)/arc_result.txt
 
-$(INDEX_INDOOR):		$(TXT_DATA_INDOOR)
-	@echo エリア別配置モデルリスト（屋内）生成中
+$(INDEXDIR)/$(INDEX_INDOOR):		$(TXT_DATA_INDOOR)
+	@echo 屋内エリア別配置モデルリスト（$@）生成中
 	@ruby makeindex.rb	$(TXT_DATA_INDOOR) in $(INDEXDIR)
 	@echo $@をアーカイブしています
-	@nnsarc -c -l -n -i $(INDEX_INDOOR) -S $(INDEXDIR)/in.list > $(WKDIR)/arc_result.txt
+	@nnsarc -c -l -n -i $(INDEXDIR)/$(INDEX_INDOOR) -S $(INDEXDIR)/in.list > $(WKDIR)/arc_result.txt
+
+$(BIN_DATA_ANIME):	$(XLS_DATA_ANIME)
+	@echo 配置モデルアニメ情報（$(BIN_DATA_ANIME)）生成中
+	@$(XLS2TAB) -c $(XLS_DATA_ANIME) > $(TXT_DATA_ANIME)
+	@ruby bmanime_info.rb $(TXT_DATA_ANIME) $(BIN_DATA_ANIME)
 
 endif		#コンバート対象者のみ動作、ここまで
 
@@ -159,16 +189,20 @@ endif		#コンバート対象者のみ動作、ここまで
 #	make cleanルール
 #------------------------------------------------------------------------------
 clean:
+	@echo cleanup build_model directory
 	@$(MAKE_SUBDIR)
 	@-rm -f $(TARGETDIR)/$(NARC_OUTDOOR) $(TARGETDIR)/$(NAIX_OUTDOOR)
 	@-rm -f $(TARGETDIR)/$(NARC_INDOOR) $(TARGETDIR)/$(NAIX_INDOOR)
 	@-rm -f $(NARC_OUTDOOR) $(NAIX_OUTDOOR)
 	@-rm -f $(NARC_INDOOR) $(NAIX_INDOOR)
 	@-rm -f $(TARGETDIR)/$(INDEX_OUTDOOR) $(TARGETDIR)/$(INDEX_INDOOR)
+	@-rm -f $(TARGETDIR)/$(NARC_BIN_DATA)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	@-rm -f $(DEP_OUTDOOR) $(DEP_INDOOR)
 	@-rm -f $(WKDIR)/*.txt *.txt
 	@-rm -f $(INDEXDIR)/*
+	@-rm -f $(WKDIR)/*.bin
+	@-rm -f $(NARC_BIN_DATA)
 endif
 
 

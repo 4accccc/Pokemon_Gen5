@@ -1,0 +1,67 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: buildmodel_outdoor.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_BUILDMODEL_OUTDOOR_NAIX_
+#define NARC_BUILDMODEL_OUTDOOR_NAIX_
+
+enum {
+	NARC_buildmodel_outdoor_pc_01_nsbmd = 0,
+	NARC_buildmodel_outdoor_gate_01_nsbmd = 1,
+	NARC_buildmodel_outdoor_t2_house01_nsbmd = 2,
+	NARC_buildmodel_outdoor_t2_build01_nsbmd = 3,
+	NARC_buildmodel_outdoor_t1_house_01_nsbmd = 4,
+	NARC_buildmodel_outdoor_t1_house_02_nsbmd = 5,
+	NARC_buildmodel_outdoor_t1_labo_01_nsbmd = 6,
+	NARC_buildmodel_outdoor_c1_school_01_nsbmd = 7,
+	NARC_buildmodel_outdoor_c1_build_01_nsbmd = 8,
+	NARC_buildmodel_outdoor_c1_build_02_nsbmd = 9,
+	NARC_buildmodel_outdoor_c1_build_03_nsbmd = 10,
+	NARC_buildmodel_outdoor_c1_rest_01_nsbmd = 11,
+	NARC_buildmodel_outdoor_c1_gateway_03_nsbmd = 12,
+	NARC_buildmodel_outdoor_c2_build_01_nsbmd = 13,
+	NARC_buildmodel_outdoor_c2_build_02_nsbmd = 14,
+	NARC_buildmodel_outdoor_c2_build_03_nsbmd = 15,
+	NARC_buildmodel_outdoor_c2_museum_01_nsbmd = 16,
+	NARC_buildmodel_outdoor_c2_cafe_01_nsbmd = 17,
+	NARC_buildmodel_outdoor_sodateya_01_nsbmd = 18,
+	NARC_buildmodel_outdoor_stump_01_nsbmd = 19,
+	NARC_buildmodel_outdoor_stump_02_nsbmd = 20,
+	NARC_buildmodel_outdoor_rock_01_nsbmd = 21,
+	NARC_buildmodel_outdoor_dtree_01_nsbmd = 22,
+	NARC_buildmodel_outdoor_dtree_02_nsbmd = 23,
+	NARC_buildmodel_outdoor_fountain_01_nsbmd = 24,
+	NARC_buildmodel_outdoor_o_chair_01_nsbmd = 25,
+	NARC_buildmodel_outdoor_o_parasol_01_nsbmd = 26,
+	NARC_buildmodel_outdoor_o_table_01_nsbmd = 27,
+	NARC_buildmodel_outdoor_drum_01_nsbmd = 28,
+	NARC_buildmodel_outdoor_tile_01_nsbmd = 29,
+	NARC_buildmodel_outdoor_fireplace_01_nsbmd = 30,
+	NARC_buildmodel_outdoor_fireplace_02_nsbmd = 31,
+	NARC_buildmodel_outdoor_entrance_01_nsbmd = 32,
+	NARC_buildmodel_outdoor_r4_build_01_nsbmd = 33,
+	NARC_buildmodel_outdoor_r4_build_02_nsbmd = 34,
+	NARC_buildmodel_outdoor_fream_01_nsbmd = 35,
+	NARC_buildmodel_outdoor_sandbag_01_nsbmd = 36,
+	NARC_buildmodel_outdoor_d4_ruins_01_nsbmd = 37,
+	NARC_buildmodel_outdoor_d4_ruins_02_nsbmd = 38,
+	NARC_buildmodel_outdoor_d5_whouse_01_nsbmd = 39,
+	NARC_buildmodel_outdoor_d5_whouse_02_nsbmd = 40,
+	NARC_buildmodel_outdoor_d5_container_01_nsbmd = 41,
+	NARC_buildmodel_outdoor_d5_container_02_nsbmd = 42,
+	NARC_buildmodel_outdoor_d5_ship_01_nsbmd = 43,
+	NARC_buildmodel_outdoor_c5_house_01_nsbmd = 44,
+	NARC_buildmodel_outdoor_c5_build_01_nsbmd = 45,
+	NARC_buildmodel_outdoor_d5_crane01_nsbmd = 46,
+	NARC_buildmodel_outdoor_searock_01_nsbmd = 47,
+	NARC_buildmodel_outdoor_searock_02_nsbmd = 48,
+	NARC_buildmodel_outdoor_roadcone_01_nsbmd = 49
+};
+
+/* NARC_BUILDMODEL_OUTDOOR_NAIX_ */
+#endif
