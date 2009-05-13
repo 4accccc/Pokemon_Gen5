@@ -7,7 +7,7 @@
 #
 #----------------------------------------------------------------------------
 #‘ÎÛƒ†[ƒU[
-USERS = kagaya
+USERS = kagaya matsumiya
 #‹¤’Ê
 include $(PROJECT_RSCDIR)/macro_define
 
