@@ -19,20 +19,6 @@ typedef signed long s32;
 //------------------------------------------------------------------
 
 enum {
-	//sp_scr_dummy = NARC_scr_seq_sp_dummy_bin,
-	sp_scr_dummy = 0xf000,
-	//scr_dummy = NARC_scr_seq_dummy_bin,
-	scr_dummy = 0xe000,
-	//event_dummy = NARC_zone_event_zone_dummy_total_bin,
-	event_dummy = 0xd000,
-	//sp_scr_dummy = NARC_scr_seq_sp_c01_bin,
-	//scr_dummy = NARC_scr_seq_c01_bin,
-	//msg_dummy = NARC_msg_c01_dat,
-	msg_dummy = 0xcccc,
-	enc_dummy = 0xffff
-};
-
-enum {
 	BG_ID_FOREST	=	3,
 
 	MMLID_NOENTRY	=	0,
@@ -77,5 +63,21 @@ enum {
 //#include "../map_matrix/map_matrix.naix"
 #include "tmp/map_matrix.h"
 #include "../script/script_seq.naix"      //script ID 定義ファイル
+#include "../../message/message.naix"     //message archive ID定義ファイル
 
+enum {
+	//sp_scr_dummy = NARC_scr_seq_sp_dummy_bin,
+	//sp_scr_dummy = NARC_scr_seq_sp_c01_bin,
+	//scr_dummy = NARC_scr_seq_c01_bin,
+	sp_scr_dummy = 0xf000,
+	scr_dummy = NARC_script_seq_dummy_bin,
+
+	//event_dummy = NARC_zone_event_zone_dummy_total_bin,
+	event_dummy = 0xd000,
+
+	//msg_dummy = NARC_msg_c01_dat,
+	msg_dummy = 0,      //とりあえず、メッセージがない場合は０を当てておく
+
+	enc_dummy = 0xffff
+};
 
