@@ -97,9 +97,15 @@
 //======================================================================
 //	
 //======================================================================
-#include "common_scr_def.h"							//共通スクリプトデータID
+//共通スクリプトデータID
+#include "common_scr_def.h"
 
+//動作モデル表示コード
 #include "../../../prog/src/field/fldmmdl_code.h"
+
+//src/field
+#include "../../../prog/src/field/script_def.h"
+
 
 #if 0 //wb null
 #include "saveflag.h"								//フラグ、ワーク定義

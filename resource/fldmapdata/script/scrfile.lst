@@ -2,4 +2,6 @@ SCRSRCS	=\
 	c99.ev	\
 	common_scr.ev	\
 	dummy.ev	\
-	dummy_scr.ev	
+	dummy_scr.ev	\
+	sp_t01.ev	\
+	t01.ev	

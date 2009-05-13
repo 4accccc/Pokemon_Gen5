@@ -14,7 +14,9 @@ enum {
 	NARC_script_seq_c99_bin = 0,
 	NARC_script_seq_common_scr_bin = 1,
 	NARC_script_seq_dummy_bin = 2,
-	NARC_script_seq_dummy_scr_bin = 3
+	NARC_script_seq_dummy_scr_bin = 3,
+	NARC_script_seq_sp_t01_bin = 4,
+	NARC_script_seq_t01_bin = 5
 };
 
 /* NARC_SCRIPT_SEQ_NAIX_ */
