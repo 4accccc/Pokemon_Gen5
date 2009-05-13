@@ -128,7 +128,7 @@ u16 ZONEDATA_GetMapRscID(u16 zone_id)
  * @return	u16	スクリプトアーカイブでの指定ID
  */
 //------------------------------------------------------------------
-u16 ZONEDATA_GetScriptID(u16 zone_id)
+u16 ZONEDATA_GetScriptArcID(u16 zone_id)
 { 
   ZONEDATA zdbuf;
   getZoneData(&zdbuf, zone_id);
@@ -142,11 +142,25 @@ u16 ZONEDATA_GetScriptID(u16 zone_id)
  * @return	u16	スクリプトアーカイブでの指定ID
  */
 //------------------------------------------------------------------
-u16 ZONEDATA_GetSpScriptID(u16 zone_id)
+u16 ZONEDATA_GetSpScriptArcID(u16 zone_id)
 { 
   ZONEDATA zdbuf;
   getZoneData(&zdbuf, zone_id);
   return zdbuf.sp_script_id;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief フィールドメッセージ指定IDの取得
+ * @param	zone_id	ゾーン指定ID
+ * @return	u16	メッセージアーカイブでの指定ID
+ */
+//------------------------------------------------------------------
+u16 ZONEDATA_GetMessageArcID(u16 zone_id)
+{ 
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.msg_id;
 }
 
 //------------------------------------------------------------------
