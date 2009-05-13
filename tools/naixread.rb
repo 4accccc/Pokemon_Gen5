@@ -34,7 +34,17 @@ class NAIXReader
     @arc_name
   end
 
+  def getIndex( name )
+    if name =~/^NARC_/ then
+      return @index.index(name)
+    else
+      p = "NARC_" + @arc_name + "_" + name
+      #puts "seach short name :#{p}"
+      return @index.index(p)
+    end
+  end
 
+  ###以下は外部から呼べない関数
   private
 
   #*.naixファイルを解釈して配列に格納
