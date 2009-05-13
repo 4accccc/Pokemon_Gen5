@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-13T11:49:42"/>
+	<create user="matsumiya" host="W00179" date="2009-05-13T15:19:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,11 +297,11 @@
 		<language name="JPN" width="256">かべの　らくがきも
 グラフィティと　いえるまで▼
 げいじゅつせいが　たかまれば
-ひとびとは　よろこぶもの　なんだ</language>
+ひとびとは　よろこぶもの　なんだな</language>
 		<language name="JPN_KANJI" width="256">壁の　落書きも
 グラフィティと　いえるまで▼
 芸術性が　高まれば
-人々は　喜ぶもの　なんだ</language>
+人々は　喜ぶもの　なんだな</language>
 	</row>
 
 	<flowchart-group-list>
