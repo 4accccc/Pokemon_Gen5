@@ -58,7 +58,13 @@ ev_talkobj_man01:
 //  T01 WOMAN1の会話用イベントスクリプトです。
 //-------------------------------------------------------------
 ev_talkobj_woman01:
-  _NOP
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_testmsg02
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
 //-------------------------------------------------------------
