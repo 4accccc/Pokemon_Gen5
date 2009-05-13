@@ -49,3 +49,4 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/searock_01.nsbmd \
 	$(RESDIR)/searock_02.nsbmd \
 	$(RESDIR)/roadcone_01.nsbmd \
+
