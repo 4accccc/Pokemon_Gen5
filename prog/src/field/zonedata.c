@@ -36,6 +36,10 @@ static inline u16 check_range(u16 zone_id)
 #define	CHECK_RANGE(value)	{value = check_range(value);}
 
 //------------------------------------------------------------------
+/**
+ * @brief	ゾーンの最大数の取得
+ * @return	u16	最大数
+ */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetZoneIDMax(void)
 {
@@ -64,6 +68,11 @@ static ZONEDATA * getZoneData(ZONEDATA * zdbuf, u16 zone_id)
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief	エリア指定の取得
+ * @param	zone_id	ゾーン指定ID
+ * @return	u16	エリア指定値
+ */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetAreaID(u16 zone_id)
 {
@@ -72,6 +81,12 @@ u16 ZONEDATA_GetAreaID(u16 zone_id)
 	return zdbuf.area_id;
 }
 //------------------------------------------------------------------
+/**
+ * @brief	マップアーカイブ指定の取得
+ * @param	zone_id	ゾーン指定ID
+ * @return	u8		map archive指定
+ *
+ */
 //------------------------------------------------------------------
 u8 ZONEDATA_GetMapArc(u16 zone_id)
 {
@@ -80,6 +95,11 @@ u8 ZONEDATA_GetMapArc(u16 zone_id)
 	return zdbuf.matrix_arc;
 }
 //------------------------------------------------------------------
+/**
+ * @brief	マトリックス指定の取得
+ * @param	zone_id	ゾーン指定ID
+ * @return	u16	マトリックス指定値
+ */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetMatrixID(u16 zone_id)
 {
@@ -88,6 +108,11 @@ u16 ZONEDATA_GetMatrixID(u16 zone_id)
 	return zdbuf.matrix_id;
 }
 //------------------------------------------------------------------
+/**
+ * @brief	マップ構造指定の取得
+ * @param	zone_id	ゾーン指定ID
+ * @return	u16	マップ構造指定値
+ */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetMapRscID(u16 zone_id)
 {
@@ -97,6 +122,39 @@ u16 ZONEDATA_GetMapRscID(u16 zone_id)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief スクリプト指定IDの取得
+ * @param	zone_id	ゾーン指定ID
+ * @return	u16	スクリプトアーカイブでの指定ID
+ */
+//------------------------------------------------------------------
+u16 ZONEDATA_GetScriptID(u16 zone_id)
+{ 
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.script_id;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 特殊スクリプト指定IDの取得
+ * @param	zone_id	ゾーン指定ID
+ * @return	u16	スクリプトアーカイブでの指定ID
+ */
+//------------------------------------------------------------------
+u16 ZONEDATA_GetSpScriptID(u16 zone_id)
+{ 
+  ZONEDATA zdbuf;
+  getZoneData(&zdbuf, zone_id);
+  return zdbuf.sp_script_id;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	マップ開始位置の取得（デバッグ用）
+ * @param	zone_id	ゾーン指定ID
+ * @param	pos		開始位置を受け取るためのfx32型ポインタ
+ */
 //------------------------------------------------------------------
 void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos)
 {
@@ -109,6 +167,11 @@ void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	カメラ指定IDの取得
+ * @param	zone_id	ゾーン指定ID
+ * @return	u8		カメラ指定IDの値
+ */
 //------------------------------------------------------------------
 u8 ZONEDATA_GetCameraID(u16 zone_id)
 {
@@ -117,6 +180,12 @@ u8 ZONEDATA_GetCameraID(u16 zone_id)
 	return zdbuf.camera_id;
 }
 //------------------------------------------------------------------
+/**
+ * @brief	BGM指定IDの取得
+ * @param	zone_id		ゾーン指定ID
+ * @param	season_id	季節指定ID
+ * @return	u8		BGM指定IDの値
+ */
 //------------------------------------------------------------------
 u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id)
 {
@@ -137,6 +206,11 @@ u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	特殊なサンプルOBJを使用するかどうかの設定取得
+ * @param	zone_id	ゾーン指定ID
+ * @param	BOOL	TRUEのとき、サンプルOBJを使用する
+ */
 //------------------------------------------------------------------
 BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
 {
@@ -148,6 +222,12 @@ BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief	ゾーン名データの取得
+ * @param	heapID		作業用ヒープの指定
+ * @param	buffer		名前を取得するためのバッファ(ZONEDATA_NAME_LENGTHの長さが必要）
+ * @param	zoneid		取得するゾーンの名前
+ */
 //------------------------------------------------------------------
 void ZONEDATA_GetZoneName(HEAPID heapID, char * buffer, u16 zone_id)
 {
