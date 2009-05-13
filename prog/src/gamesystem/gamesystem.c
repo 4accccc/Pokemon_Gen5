@@ -80,20 +80,21 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYS, HEAPSIZE_GAMESYS );
 	gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_GAMESYS);
+	GFL_STD_MemClear(gsys, work_size);
 	GameSysWork = gsys;
-	GameSystem_Init(gsys, HEAPID_GAMESYS, pwk);
+	GameSystem_Init(gsys, HEAPID_GAMESYS, game_init);
 #if 1		/* 暫定的にプロセス登録 */
 	switch(game_init->mode){
 	case GAMEINIT_MODE_CONTINUE:
 		{
-			GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, pwk);
+			GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, game_init);
 			GAMESYSTEM_SetEvent(gsys, event);
 		}
 		break;
 	case GAMEINIT_MODE_FIRST:
 	case GAMEINIT_MODE_DEBUG:
 		{
-			GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, pwk);
+			GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, game_init);
 			GAMESYSTEM_SetEvent(gsys, event);
 			//適当に手持ちポケモンをAdd
 			DEBUG_MyPokeAdd(gsys);
@@ -141,12 +142,14 @@ const GFL_PROC_DATA GameMainProcData = {
  * @file	ゲーム開始初期化用ワーク取得
  */
 //------------------------------------------------------------------
-GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir)
+GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir, BOOL always_net)
 {
+  GFL_STD_MemClear(&TestGameInitWork, sizeof(GAME_INIT_WORK));
 	TestGameInitWork.mode = mode;
 	TestGameInitWork.mapid = mapid;
 	TestGameInitWork.pos = *pos;
 	TestGameInitWork.dir = dir;
+	TestGameInitWork.always_net = always_net;
 	return &TestGameInitWork;
 }
 
@@ -160,7 +163,7 @@ GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid, VecFx32 *p
 //------------------------------------------------------------------
 struct _GAMESYS_WORK {
 	HEAPID heapID;			///<使用するヒープ指定ID
-	void * parent_work;		///<親（呼び出し元）から引き継いだワークへのポインタ
+	GAME_INIT_WORK * init_param;		///<親（呼び出し元）から引き継いだワークへのポインタ
 
 	GFL_PROCSYS * procsys;	///<使用しているPROCシステムへのポインタ
 
@@ -173,7 +176,11 @@ struct _GAMESYS_WORK {
 	GAMEDATA * gamedata;
 	void * fieldmap;
 	void * comm_field;			///<フィールド通信ワーク
+	GAME_COMM_SYS_PTR game_comm;    ///<ゲーム通信管理ワークへのポインタ
 	void * comm_infowin;		///<INFOWIN通信ワーク
+	
+	u8 always_net;          ///<TRUE:常時通信
+	u8 padding[3];
 };
 
 //------------------------------------------------------------------
@@ -187,7 +194,7 @@ static u32 GAMESYS_WORK_GetSize(void)
 static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param)
 {
 	gsys->heapID = heapID;
-	gsys->parent_work = init_param;
+	gsys->init_param = init_param;
 	gsys->procsys = GFL_PROC_LOCAL_boot(gsys->heapID);
 	gsys->proc_result = FALSE;
 	gsys->evcheck_func = NULL;
@@ -197,12 +204,16 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
 	gsys->fieldmap = NULL;
 	gsys->comm_field = NULL;
+	gsys->game_comm = GameCommSys_Alloc(gsys->heapID);
+	gsys->comm_infowin = NULL;
+	gsys->always_net = init_param->always_net;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 {
 	GAMEDATA_Delete(gsys->gamedata);
+	GameCommSys_Free(gsys->game_comm);
 }
 
 
@@ -228,6 +239,9 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 	GAMESYSTEM_EVENT_CheckSet(gsys, gsys->evcheck_func, gsys->evcheck_context);
 	//イベント実行処理
 	GAMESYSTEM_EVENT_Main(gsys);
+	//通信イベント実行処理
+	GameCommSys_Main(gsys->game_comm);
+	//メインプロセス
 	gsys->proc_result = GFL_PROC_LOCAL_Main(gsys->procsys);
 	if (gsys->proc_result == FALSE && gsys->event == NULL) {
 		//プロセスもイベントも存在しないとき、ゲーム終了
@@ -353,6 +367,30 @@ void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap)
 void * GAMESYSTEM_GetCommFieldWork(GAMESYS_WORK * gsys)
 {
 	return gsys->comm_field;
+}
+
+//==================================================================
+/**
+ * ゲーム通信管理ワークへのポインタを取得する
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @retval  GAME_COMM_SYS_PTR		ゲーム通信管理ワークへのポインタ
+ */
+//==================================================================
+GAME_COMM_SYS_PTR GAMESYSTEM_GetGameCommSysPtr(GAMESYS_WORK *gsys)
+{
+  return gsys->game_comm;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   常時通信フラグの取得
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @retval  TRUE:常時通信ON、　FALSE:常時通信OFF
+ */
+//--------------------------------------------------------------
+BOOL GAMESYSTEM_GetAlwaysNetFlag(GAMESYS_WORK * gsys)
+{
+	return gsys->always_net;
 }
 
 //--------------------------------------------------------------

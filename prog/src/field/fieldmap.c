@@ -313,7 +313,14 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
   FIELD_COMM_MAIN_CommFieldMapInit(comm_field);
 	FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys,
       GAMEDATA_GetFldMMdlSys(GAMESYSTEM_GetGameData(gsys)));
-   
+  
+  //èÌéûí êMÉÇÅ[Éh
+  {
+    GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
+    if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE && GameCommSys_BootCheck(gcsp) == FALSE){
+      GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH);
+    }
+  }
 	return fieldWork;
 }
 

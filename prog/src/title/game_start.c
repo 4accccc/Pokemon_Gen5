@@ -99,6 +99,16 @@ void GameStart_Continue(void)
 
 //--------------------------------------------------------------
 /**
+ * @brief   「続きから始める(常時通信)」を選択
+ */
+//--------------------------------------------------------------
+void GameStart_ContinueNet(void)
+{
+	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_ContinueProcData, (void*)TRUE);
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   「デバッグ開始」を選択
  */
 //--------------------------------------------------------------
@@ -187,7 +197,7 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 	//名前のセット
 	myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
 	MyStatus_SetMyNameFromString( myStatus , work->nameInParam->strbuf );
-	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0);
+	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0, FALSE);
 
 	NameIn_ParamDelete(work->nameInParam);
 	GFL_PROC_FreeWork( proc );
@@ -233,12 +243,15 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
 {
 	GAME_INIT_WORK * init_param;
 	PLAYERWORK_SAVE plsv;
+	BOOL always_net;
+	
+	always_net = (BOOL)pwk;   //TRUE:常時通信で「続きから」
 	
 	SaveControl_Load(SaveControl_GetPointer());
 	SaveData_SituationLoad_PlayerWorkSave(SaveControl_GetPointer(), &plsv);
 
 	init_param = DEBUG_GetGameInitWork(
-		GAMEINIT_MODE_CONTINUE, plsv.zoneID, &plsv.position, plsv.direction);
+		GAMEINIT_MODE_CONTINUE, plsv.zoneID, &plsv.position, plsv.direction, always_net);
 	
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 
@@ -284,7 +297,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 	VecFx32 pos = {0,0,0};
 
 	SaveControl_ClearData(SaveControl_GetPointer());
-	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0);
+	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0, FALSE);
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 #endif
 
@@ -351,7 +364,7 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * 
 		GAME_INIT_WORK * init_param;
 		VecFx32 pos = {0,0,0};
 		
-		init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0);
+		init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0, FALSE);
 		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 	}
 	else

@@ -772,7 +772,7 @@ static	void INFOWIN_UpdateSearchBeacon( void )
 				}
 				else
 				{
-					infoWk->isRefresh -= INFOWIN_DISP_BEACON;
+					infoWk->isRefresh &= 0xffff ^ INFOWIN_DISP_BEACON;
 					ARI_TPrintf("INFO:beacon is lost!\n");
 				}
 				infoWk->isRefresh |= INFOWIN_REFRESH_BEACON;

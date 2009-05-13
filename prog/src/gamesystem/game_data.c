@@ -49,6 +49,7 @@ struct _GAMEDATA{
 	FLDMMDLSYS *fldmmdlsys;
 	EVENTWORK *eventwork;
 	u8 season_id;				///<‹GßŽw’èID
+	u8 padding[3];
 };
 
 //==============================================================================
@@ -73,8 +74,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	GAMEDATA * gd;
 	SITUATION *st;
 	
-	gd = GFL_HEAP_AllocMemory(heapID, sizeof(GAMEDATA));
-	GFL_STD_MemClear(gd, sizeof(GAMEDATA));
+	gd = GFL_HEAP_AllocClearMemory(heapID, sizeof(GAMEDATA));
 	
 	gd->sv_control_ptr = SaveControl_GetPointer();
 	

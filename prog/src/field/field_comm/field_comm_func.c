@@ -19,6 +19,7 @@
 #include "field_comm_data.h"
 #include "field/field_comm/field_comm_sys.h"
 #include "test/ariizumi/ari_debug.h"
+#include "field/game_beacon_search.h"
 
 //======================================================================
 //  define
@@ -102,6 +103,8 @@ struct _FIELD_COMM_FUNC
   BOOL  actionReturn_;    //行動選択の結果
 
   BOOL  isGetUserData_;
+  
+  GBS_BEACON send_beacon;   ///<送信ビーコンバッファ
 };
 //ビーコン
 typedef struct
@@ -127,7 +130,6 @@ void  FIELD_COMM_FUNC_FinishInitCallback( void* pWork );
 void  FIELD_COMM_FUNC_FinishTermCallback( void* pWork );
 void* FIELD_COMM_FUNC_GetBeaconData(void* pWork);   // ビーコンデータ取得関数
 static void* FIELD_COMM_FUNC_GetBeaconData_CommFunc(FIELD_COMM_FUNC *commFunc);
-int   FIELD_COMM_FUNC_GetBeaconSize(void* pWork);   // ビーコンデータサイズ取得関数
 BOOL  FIELD_COMM_FUNC_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 ); // ビーコンのサービスを比較して繋いで良いかどうか判断する
 void  FIELD_COMM_FUNC_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);    // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
 void  FIELD_COMM_FUNC_DisconnectCallBack(void* pWork);  // 通信切断時に呼ばれる関数(終了時
@@ -246,7 +248,7 @@ void  FIELD_COMM_FUNC_InitCommSystem( COMM_FIELD_SYS_PTR commField )
         NULL, // ユーザー同士が交換するデータのポインタ取得関数
     NULL, // ユーザー同士が交換するデータのサイズ取得関数
     FIELD_COMM_FUNC_GetBeaconData,    // ビーコンデータ取得関数
-    FIELD_COMM_FUNC_GetBeaconSize,    // ビーコンデータサイズ取得関数
+    GameBeacon_GetBeaconSize,    // ビーコンデータサイズ取得関数
     FIELD_COMM_FUNC_CheckConnectService,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
     FIELD_COMM_FUNC_ErrorCallBack,    // 通信不能なエラーが起こった場合呼ばれる
         NULL,  //FatalError
@@ -261,13 +263,7 @@ void  FIELD_COMM_FUNC_InitCommSystem( COMM_FIELD_SYS_PTR commField )
     0,   ///< DWCへのHEAPサイズ
     TRUE,        ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
-#if (DEBUG_ONLY_FOR_matsuda)
-    0x222,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
-#elif DEB_ARI&0
-    0x346,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
-#else
     0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
-#endif
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
@@ -280,11 +276,7 @@ void  FIELD_COMM_FUNC_InitCommSystem( COMM_FIELD_SYS_PTR commField )
     FALSE,    // MP通信＝親子型通信モードかどうか
     GFL_NET_TYPE_WIRELESS,    //通信タイプの指定
     TRUE,   // 親が再度初期化した場合、つながらないようにする場合TRUE
-#if DEB_ARI&0
-    30//GameServiceID
-#else
     WB_NET_FIELDMOVE_SERVICEID, //GameServiceID
-#endif
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
@@ -1083,6 +1075,7 @@ void* FIELD_COMM_FUNC_GetBeaconData(void* pWork)
 
 static void* FIELD_COMM_FUNC_GetBeaconData_CommFunc(FIELD_COMM_FUNC *commFunc)
 {
+#if 0
   static FIELD_COMM_BEACON beacon;
 
   if( commFunc->commMode_ == FIELD_COMM_MODE_WAIT )
@@ -1092,14 +1085,14 @@ static void* FIELD_COMM_FUNC_GetBeaconData_CommFunc(FIELD_COMM_FUNC *commFunc)
   beacon.memberNum_ = FIELD_COMM_FUNC_GetMemberNum(commFunc);
 
   return (void*)&beacon;
-}
-
-//--------------------------------------------------------------
-// ビーコンデータサイズ取得関数
-//--------------------------------------------------------------
-int   FIELD_COMM_FUNC_GetBeaconSize(void *pWork)
-{
-  return sizeof( FIELD_COMM_BEACON );
+#else
+  GBS_BEACON *beacon = &commFunc->send_beacon;
+  
+  beacon->gsid = WB_NET_FIELDMOVE_SERVICEID;
+  beacon->member_num = FIELD_COMM_FUNC_GetMemberNum(commFunc);
+  beacon->member_max = FIELD_COMM_MEMBER_MAX;
+  return beacon;
+#endif
 }
 
 //--------------------------------------------------------------

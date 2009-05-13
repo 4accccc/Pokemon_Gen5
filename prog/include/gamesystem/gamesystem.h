@@ -15,6 +15,8 @@ extern "C" {
 
 #include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
+#include "gamesystem/game_comm.h"
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -172,6 +174,24 @@ extern GAMEDATA * GAMESYSTEM_GetGameData(GAMESYS_WORK * gsys);
  */
 //------------------------------------------------------------------
 extern PLAYER_WORK * GAMESYSTEM_GetMyPlayerWork(GAMESYS_WORK * gsys);
+
+//==================================================================
+/**
+ * ゲーム通信管理ワークへのポインタを取得する
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @retval  GAME_COMM_SYS_PTR		ゲーム通信管理ワークへのポインタ
+ */
+//==================================================================
+extern GAME_COMM_SYS_PTR GAMESYSTEM_GetGameCommSysPtr(GAMESYS_WORK *gsys);
+
+//--------------------------------------------------------------
+/**
+ * @brief   常時通信フラグの取得
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @retval  TRUE:常時通信ON、　FALSE:常時通信OFF
+ */
+//--------------------------------------------------------------
+extern BOOL GAMESYSTEM_GetAlwaysNetFlag(GAMESYS_WORK * gsys);
 
 #ifdef	__cplusplus
 } /* extern "C" */
