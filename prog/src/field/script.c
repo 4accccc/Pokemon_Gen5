@@ -18,6 +18,8 @@
 
 #include "message.naix"
 
+#include "arc/fieldmap/zone_id.h"
+
 #include "script.h"
 #include "script_offset_id.h" //スクリプトIDオフセット
 #include "script_def.h"
@@ -63,9 +65,14 @@ struct _TAG_SCRIPT_WORK
 	EV_WIN_WORK* ev_win;			//イベントウィンドウワークへのポインタ
 	//会話ウィンドウ
 	GF_BGL_BMPWIN MsgWinDat;		//ビットマップウィンドウデータ
-	BMPMENU_WORK* mw;				//ビットマップメニューワーク
 #endif
 	
+#ifndef SCRIPT_PL_NULL
+	BMPMENU_WORK* mw;				//ビットマップメニューワーク
+#else
+  void *mw;
+#endif
+
 #ifndef SCRIPT_PL_NULL
 	int player_dir;					//イベント起動時の主人公の向き
 	FIELD_OBJ_PTR target_obj;		//話しかけ対象のOBJのポインタ
@@ -115,6 +122,7 @@ struct _TAG_SCRIPT_WORK
 	GAMESYS_WORK *gsys;
 	HEAPID heapID;
 	FLDMSGBG *msgBG;
+  u32 zone_id;
 
 	SCRIPT_FLDPARAM fld_param;
 };
@@ -149,8 +157,8 @@ static void EvScriptWork_Init( SCRIPT_WORK *sc, GAMESYS_WORK *gsys,
 	u16 scr_id, FLDMMDL *obj, void* ret_wk);
 
 static void InitScript(
-	SCRCMD_WORK *work, VMHANDLE* core, u16 id, u8 type, HEAPID heapID );
-static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u16 id, HEAPID heapID );
+	SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 id, u8 type, HEAPID heapID );
+static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 id, HEAPID heapID );
 static void SetScriptData(
 	SCRCMD_WORK *work, VMHANDLE* core, int index, u32 dat_id, HEAPID heapID );
 static void SetZoneScriptData( FLDCOMMON_WORK* fsys, VMHANDLE* core );
@@ -463,7 +471,12 @@ static void EvScriptWork_Init( SCRIPT_WORK *sc,
 	sc->target_obj = obj;		//話しかけ対象OBJのポインタセット
 	sc->script_id  = scr_id;	//メインのスクリプトID
 	sc->ret_script_wk = ret_wk;	//スクリプト結果を代入するワーク
-	
+  
+  { //wb
+    PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork( gsys );
+  	sc->zone_id = PLAYERWORK_getZoneID( pw );
+  }
+  
 	if( obj != NULL ){
 		*objid = FLDMMDL_GetOBJID( obj ); //話しかけ対象OBJIDのセット
 	}
@@ -526,7 +539,7 @@ VMHANDLE * SCRIPT_AddVMachine(
 	core = VM_Create( heapID, &init );	//仮想マシン初期化
 	
 	VM_Init( core, work );
-	InitScript( work, core, scr_id, 0, heapID );//ローカルスクリプト初期化
+	InitScript( work, core, sc->zone_id, scr_id, 0, heapID );//ローカルスクリプト初期化
 	return core;
 }
 
@@ -541,10 +554,10 @@ VMHANDLE * SCRIPT_AddVMachine(
  */
 //--------------------------------------------------------------
 static void InitScript(
-	SCRCMD_WORK *work, VMHANDLE* core, u16 id, u8 type, HEAPID heapID )
+	SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 id, u8 type, HEAPID heapID )
 {
 	u16 scr_id;
-	scr_id = SetScriptDataSub( work, core, id, heapID ); //スクリプトデータ、メッセージデータ読み込み
+	scr_id = SetScriptDataSub( work, core, zone_id, id, heapID ); //スクリプトデータ、メッセージデータ読み込み
 	VM_Start( core, core->pScript ); //仮想マシンにコード設定
 	EventDataIDJump( core, scr_id );
 //	VM_SetWork(core,(void *)fsys->event); //コマンドなどで参照するワークセット
@@ -560,7 +573,7 @@ static void InitScript(
  * @retval	"スクリプトIDからオフセットを引いた値"
  */
 //--------------------------------------------------------------
-static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u16 id, HEAPID heapID )
+static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 id, HEAPID heapID )
 {
 	u16 scr_id = id;
 	
@@ -574,12 +587,28 @@ static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u16 id, HEAPID h
 		#ifndef SCRIPT_PL_NULL
 		SetZoneScriptData( fsys, core );	//ゾーンスクリプトデータセット
 		scr_id -= ID_START_SCR_OFFSET;
-		#else //test
-		SetScriptData( work, core,
-			NARC_script_seq_c99_bin,
-			NARC_message_c99_dat,
-			heapID );
-		scr_id -= ID_START_SCR_OFFSET;
+		#else //wb 仮
+    {
+      u32 idx_script = NARC_script_seq_dummy_scr_bin;
+      u32 idx_msg = NARC_message_common_scr_dat;
+      
+      switch( zone_id ){
+      case ZONE_ID_T01:
+        idx_script = NARC_script_seq_t01_bin;
+        idx_msg = NARC_message_t01_dat;
+        break;
+      case ZONE_ID_MAPSPRING:
+      case ZONE_ID_MAPSUMMER:
+      case ZONE_ID_MAPAUTUMN:
+      case ZONE_ID_MAPWINTER:
+        idx_script = NARC_script_seq_c99_bin;
+        idx_msg = NARC_message_c99_dat;
+        break;
+      }
+      
+	  	SetScriptData( work, core, idx_script, idx_msg, heapID );
+		  scr_id -= ID_START_SCR_OFFSET;
+    }
 		#endif
 	}else{										//SCRID_NULL(0)が渡された時
 		SetScriptData( work, core,
@@ -913,6 +942,9 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	//SCRIPT_FLDPARAM wb
 	case ID_EVSCR_WK_FLDPARAM:
 		return &sc->fld_param;
+	//ビットマップメニューワークのポインタ
+	case ID_EVSCR_MENUWORK:
+		return &sc->mw;
 #ifndef SCRIPT_PL_NULL
 	//イベントウィンドウワークのポインタ
 	case ID_EVSCR_EVWIN:
@@ -920,9 +952,6 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	//会話ウィンドウビットマップデータのポインタ
 	case ID_EVSCR_MSGWINDAT:
 		return &sc->MsgWinDat;
-	//ビットマップメニューワークのポインタ
-	case ID_EVSCR_MENUWORK:
-		return &sc->mw;
 	//単語セット
 	case ID_EVSCR_WORDSET:
 		return &sc->wordset;

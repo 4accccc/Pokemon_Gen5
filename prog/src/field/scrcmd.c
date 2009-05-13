@@ -1372,3 +1372,23 @@ static VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
 	FLDMMDL_SetDirDisp( *fmmdl, dir );
 	return 0;
 }
+
+//======================================================================
+//  はい、いいえ　処理
+//======================================================================
+#if 0
+//--------------------------------------------------------------
+/**
+ * 「はい・いいえ」処理
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @retval 1
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  FLDMENUFUNC **mw	= SCRIPT_GetMemberWork( sc, ID_EVSCR_MENUWORK );
+	u16 wk_id			= VMGetU16( core );
+}
+#endif
