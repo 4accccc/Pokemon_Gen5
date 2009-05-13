@@ -11,9 +11,11 @@
 #define NARC_BUILDMODEL_ANIME_NAIX_
 
 enum {
-	NARC_buildmodel_anime_elboard2_test_nsbta = 0,
-	NARC_buildmodel_anime_elboard_test_nsbca = 1,
-	NARC_buildmodel_anime_elboard_test_nsbta = 2
+	NARC_buildmodel_anime_door_cl_nsbca = 0,
+	NARC_buildmodel_anime_door_op_nsbca = 1,
+	NARC_buildmodel_anime_elboard2_test_nsbta = 2,
+	NARC_buildmodel_anime_elboard_test_nsbca = 3,
+	NARC_buildmodel_anime_elboard_test_nsbta = 4
 };
 
 /* NARC_BUILDMODEL_ANIME_NAIX_ */
