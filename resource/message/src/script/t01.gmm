@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-13T16:40:38"/>
+	<create user="matsumiya" host="W00179" date="2009-05-13T17:24:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -303,29 +303,17 @@
 	<row id="msg_t01_testmsg02">
 		<attribute name="キャラ指定">woman01</attribute>
 		<language name="JPN" width="256">ここは　イッシュちほうの　はしにある
-カノコタウンという　まちです▼
-みちを　まっすぐに　すすめば
-カラクサタウンに　いけるわ</language>
+カノコタウンという　まちです</language>
 		<language name="JPN_KANJI" width="256">ここは　イッシュ地方の　端にある
-カノコタウンという　街です▼
-道を　まっすぐに　進めば
-カラクサタウンに　行けるわ</language>
+カノコタウンという　街です</language>
 	</row>
 
 	<row id="msg_t01_testmsg03">
 		<attribute name="キャラ指定">babygirl1</attribute>
 		<language name="JPN" width="256">こんにちは！
-トレーナーさん！！▼
-この　ちほうの　ポケモンのこと
-あたし　なんにも　しらないの……▼
-だから　トレーナーさんが　いろいろ
-おしえてくれると　うれしいな！</language>
+トレーナーさん！！</language>
 		<language name="JPN_KANJI" width="256">こんにちは！
-トレーナーさん！！▼
-この　ちほうの　ポケモンのこと
-あたし　なんにも　知らないの……▼
-だから　トレーナーさんが　いろいろ
-おしえてくれると　うれしいな！</language>
+トレーナーさん！！</language>
 	</row>
 
 	<flowchart-group-list>
