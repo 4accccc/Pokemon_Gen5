@@ -26,6 +26,7 @@
 
 //proc
 #include "net_app/irc_aura.h"
+#include "net_app/irc_compatible.h"
 
 //=============================================================================
 /**
@@ -147,6 +148,7 @@ static PRINT_QUE* MSG_GetPrintQue( const MSG_WORK *cp_wk );
 //LISTFUNC
 typedef void (*LISTDATA_FUNCTION)( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -200,6 +202,7 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 enum
 {	
 	LISTDATA_SEQ_PROC_AURA,
+	LISTDATA_SEQ_PROC_COMPATIBLE,
 	LISTDATA_SEQ_RETURN,
 	LISTDATA_SEQ_NEXT_HOME,
 	LISTDATA_SEQ_NEXT_PAGE1,
@@ -208,6 +211,7 @@ enum
 static const LISTDATA_FUNCTION	sc_list_funciton[]	= 
 {	
 	LISTDATA_ChangeProcAura,
+	LISTDATA_ChangeProcCompatible,
 	LISTDATA_Return,
 	LISTDATA_NextListHome,
 	LISTDATA_NextListPage1,
@@ -220,6 +224,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
 	{	
 		L"オーラチェック", LISTDATA_SEQ_PROC_AURA
+	},
+	{	
+		L"相性診断画面へ", LISTDATA_SEQ_PROC_COMPATIBLE
 	},
 	{	
 		L"もどる", LISTDATA_SEQ_RETURN
@@ -466,6 +473,20 @@ FS_EXTERN_OVERLAY(irc_aura);
 static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
 	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_aura), &IrcAura_ProcData, NULL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ProcChange
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+FS_EXTERN_OVERLAY(irc_compatible);
+static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, NULL );
 }
 //----------------------------------------------------------------------------
 /**
