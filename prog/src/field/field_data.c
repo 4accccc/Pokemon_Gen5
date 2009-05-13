@@ -217,7 +217,9 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ　橋
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
-			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,3,
+      FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LAND_EX,
 
 			3,	5, NELEMS(newbridgemap),
@@ -235,7 +237,9 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ グリッド移動
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
-			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,3,
+      FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LANDDATA,
 
 			1,  1, 1,		//dummy map matrix data
@@ -251,7 +255,9 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ　橋
 		{	
 			FLDMAPPER_FILETYPE_NORMAL,
-			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,3,
+      FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LAND_EX,
 
 			2,  6, NELEMS(samplebridge),
@@ -268,7 +274,9 @@ const SCENE_DATA resistMapTbl[] = {
 		//実験マップ　グリッド移動 金銀
 		{	
 			FLDMAPPER_FILETYPE_PKGS,
-			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,3,
+      FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_GSMAP, 
 
 			2,  6, NELEMS(GSMap),
@@ -284,7 +292,9 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ　C3
 		{	
 			FLDMAPPER_FILETYPE_NORMAL,
-			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,3,
+      FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LAND_EX,
 
 			2,  2, NELEMS(test_c3map),

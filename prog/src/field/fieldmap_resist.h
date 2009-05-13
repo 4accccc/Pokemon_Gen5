@@ -109,7 +109,9 @@ typedef struct {
 typedef struct {
 	FLDMAPPER_FILETYPE		g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
 	fx32					blockWidth;			//ブロック１辺の幅
-	fx32					blockHeight;			//ブロック高さ
+	fx32					blockHeight;		//ブロック高さ
+  u16           blockXNum;      //メモリに一度に置く、横ブロック数
+  u16           blockYNum;      //メモリに一度に置く、縦ブロック数
 	FLDMAPPER_MODE			mode;			//動作モード
 	u32						arcID;			//グラフィックアーカイブＩＤ
 	u16						sizex;			//横ブロック数
