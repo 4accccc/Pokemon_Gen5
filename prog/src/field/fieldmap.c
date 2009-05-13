@@ -465,7 +465,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
   
   //情報バーの初期化
-  fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, FIELD_SUBSCREEN_NORMAL);
+  fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, fieldWork, FIELD_SUBSCREEN_NORMAL);
   
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );

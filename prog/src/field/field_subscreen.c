@@ -37,6 +37,7 @@ struct _FIELD_SUBSCREEN_WORK {
 	FIELD_SUBSCREEN_MODE mode;
 	HEAPID heapID;
   FIELD_SUBSCREEN_ACTION action;
+  FIELDMAP_WORK * fieldmap;
 	union {	
     C_GEAR_WORK* cgearWork;
 		GFL_CAMADJUST * gflCamAdjust;
@@ -140,7 +141,8 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
  *	@param	mode		ìÆçÏÉÇÅ[ÉhéwíË
  */
 //-----------------------------------------------------------------------------
-FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID, FIELD_SUBSCREEN_MODE mode )
+FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
+    FIELDMAP_WORK * fieldmap, FIELD_SUBSCREEN_MODE mode )
 {
   FIELD_SUBSCREEN_WORK* pWork = GFL_HEAP_AllocClearMemory(heapID, sizeof(FIELD_SUBSCREEN_WORK));
 	GF_ASSERT(mode < FIELD_SUBSCREEN_MODE_MAX);

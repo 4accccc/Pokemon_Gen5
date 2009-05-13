@@ -10,6 +10,8 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "field/fieldmap_proc.h"  //FIELDMAP_WORK参照
+
 #ifdef _cplusplus
 extern "C"{
 #endif
@@ -60,7 +62,8 @@ typedef struct _FIELD_SUBSCREEN_WORK FIELD_SUBSCREEN_WORK;
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID, FIELD_SUBSCREEN_MODE mode );
+extern FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
+    FIELDMAP_WORK * fieldmap, FIELD_SUBSCREEN_MODE mode );
 extern void FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork );
 extern void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork );
 extern void FIELD_SUBSCREEN_Change( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode);

@@ -1718,7 +1718,7 @@ static GMEVENT_RESULT DMenuControlLight(
 
 		// インフォーバーの表示
     FIELDMAP_SetFieldSubscreenWork(work->fieldWork,
-        FIELD_SUBSCREEN_Init( work->heapID, FIELD_SUBSCREEN_NORMAL ));
+        FIELD_SUBSCREEN_Init( work->heapID, work->fieldWork, FIELD_SUBSCREEN_NORMAL ));
 
 		return( GMEVENT_RES_FINISH );
 	}
