@@ -10,7 +10,7 @@ require "fileutils"
 
 class AnimeIndexError < Exception; end
 
-ANIME_INDEX_FILE  ="wkdir/buildmodel_anime_info.h"
+ANIME_INDEX_FILE  ="wkdir/buildmodel_anime.h"
 #------------------------------------------------------------------------------
 # 各配置モデルごとのアニメ指定IDのテーブルを生成する
 # IN: outputfile  出力先オブジェクト
