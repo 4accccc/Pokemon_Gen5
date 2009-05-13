@@ -1526,12 +1526,13 @@ static BOOL	SHAKESEARCH_Main( SHAKE_SEARCH_WORK *p_wk, const GFL_RECT	*cp_rect )
 	//Œv‘ªI—¹‘Ò‚¿
 	if( p_wk->cnt++ > TOUCH_COUNTER_MAX )
 	{	
+		TP_GetRectCont( cp_rect, &p_wk->shake[TOUCH_COUNTER_SHAKE_MAX-1] );
 		return TRUE;
 	}
 	else
 	{	
 		//Œv‘ª
-		if( p_wk->shake_cnt++ >= TOUCH_COUNTER_SHAKE_SYNC )
+		if( p_wk->shake_cnt++ > TOUCH_COUNTER_SHAKE_SYNC )
 		{	
 			p_wk->shake_cnt	= 0;
 			TP_GetRectCont( cp_rect, &p_wk->shake[p_wk->shake_idx++] );
