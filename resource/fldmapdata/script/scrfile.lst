@@ -4,4 +4,6 @@ SCRSRCS	=\
 	dummy.ev	\
 	dummy_scr.ev	\
 	sp_t01.ev	\
-	t01.ev	
+	sp_t02.ev	\
+	t01.ev	\
+	t02.ev	
