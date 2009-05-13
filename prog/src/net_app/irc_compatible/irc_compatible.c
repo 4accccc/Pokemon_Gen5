@@ -21,15 +21,16 @@
 #include "print/gf_font.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "system/bmp_winframe.h"
 
 //	archive
 #include "arc_def.h"
 #include "font/font.naix"
 #include "message.naix"
-#include "msg/msg_irc_aura.h"
+#include "msg/msg_irc_compatible.h"
 
 //	aura
-#include "net_app/irc_aura.h"
+#include "net_app/irc_compatible.h"
 
 //=============================================================================
 /**
@@ -41,8 +42,8 @@
 //=====================================
 enum{	
 	// メイン画面BG
-	IRC_COMPATIBLE_BG_PAL_M_00 = 0,//
-	IRC_COMPATIBLE_BG_PAL_M_01,		// 使用してない
+	IRC_COMPATIBLE_BG_PAL_M_00 = 0,//フォント
+	IRC_COMPATIBLE_BG_PAL_M_01,		// フレーム用パレット
 	IRC_COMPATIBLE_BG_PAL_M_02,		// 使用してない
 	IRC_COMPATIBLE_BG_PAL_M_03,		// 使用してない
 	IRC_COMPATIBLE_BG_PAL_M_04,		// 使用してない
@@ -93,16 +94,20 @@ enum{
 //-------------------------------------
 ///	位置
 //=====================================
-#define	MSGTEXT_WND_X	(1)
-#define	MSGTEXT_WND_Y	(18)
-#define	MSGTEXT_WND_W	(30)
-#define	MSGTEXT_WND_H	(5)
+#define	MSGWND_AURA_X	(8)
+#define	MSGWND_AURA_Y	(8)
+#define	MSGWND_AURA_W	(16)
+#define	MSGWND_AURA_H	(3)
+
+#define	MSGWND_RETURN_X	(1)
+#define	MSGWND_RETURN_Y	(20)
+#define	MSGWND_RETURN_W	(30)
+#define	MSGWND_RETURN_H	(3)
 
 //-------------------------------------
 ///	カウント
 //=====================================
 #define TOCH_COUNTER_MAX	(30*5)
-
 
 //=============================================================================
 /**
@@ -114,23 +119,15 @@ enum{
 //=====================================
 typedef struct
 {
-	int dummy;
+	GFL_ARCUTIL_TRANSINFO	frame_char;
+	GFL_TCB						*p_vblank_task;
 } GRAPHIC_BG_WORK;
-//-------------------------------------
-///	3D描画環境
-//=====================================
-typedef struct 
-{
-	GFL_G3D_CAMERA		*p_camera;
-} GRAPHIC_3D_WORK;
 //-------------------------------------
 ///	描画関係
 //=====================================
 typedef struct 
 {
-	GRAPHIC_BG_WORK		gbg;
-	GRAPHIC_3D_WORK		g3d;
-	GFL_TCB						*p_vblank_task;
+	int dummy;
 } GRAPHIC_WORK;
 //-------------------------------------
 ///	文字管理
@@ -146,11 +143,37 @@ typedef struct
 //-------------------------------------
 ///	メッセージ表示ウィンドウ
 //=====================================
-typedef struct {
+typedef struct 
+{
 	GFL_BMPWIN*				p_bmpwin;
 	PRINT_UTIL        print_util;
 	STRBUF*						p_strbuf;
 } MSGWND_WORK;
+
+//-------------------------------------
+///	ボタン
+//=====================================
+#define BUTTON_MAX	(4)
+typedef struct
+{	
+	u32				strID;
+	u16				x;			//開始点X
+	u16				y;			//開始点Y
+	u16				w;			//開始点からの幅
+	u16				h;
+} BUTTON_SETUP;
+typedef struct 
+{
+	GFL_BUTTON_MAN			*p_btn;
+	GFL_BMPWIN					*p_bmpwin[BUTTON_MAX];
+	GFL_UI_TP_HITTBL		hit_tbl[BUTTON_MAX+1];//+1は終了コード分
+	const	 BUTTON_SETUP *cp_btn_setup_tbl;
+	u16			btn_num;
+	u16			frm;
+	u16			select_btn_id;
+	u16			is_touch;
+} BUTTON_WORK;
+
 
 //-------------------------------------
 ///	オーラチェックメインワーク
@@ -161,24 +184,19 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 {
 	//グラフィックモジュール
 	GRAPHIC_WORK		grp;
+	GRAPHIC_BG_WORK	bg;
+
 	MSG_WORK				msg;
 	MSGWND_WORK			msgwnd;
 
-	//デバッグ用
-	MSGWND_WORK			d_msgwnd;
+	BUTTON_WORK			btn;
 
-	u32	cnt;			//カウンタ
 
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
 	u16		seq;
 	BOOL is_end;
-
-	//結果
-	GFL_POINT	left;
-	GFL_POINT	right;
 };
-
 
 //=============================================================================
 /**
@@ -193,17 +211,10 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
-static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //BG
 static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
-static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
-//3d
-static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
-static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
-static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk );
-static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk );
-static void Graphic_3d_SetUp( void );
+static void Graphic_BG_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //MSG_WORK
 static void MSG_Init( MSG_WORK *p_wk, HEAPID heapID );
 static void MSG_Exit( MSG_WORK *p_wk );
@@ -218,17 +229,23 @@ static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe,
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static BOOL MSGWND_Main( MSGWND_WORK *p_wk, MSG_WORK *p_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
+static void MSGWND_PrintColor( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y, PRINTSYS_LSB color );
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
+static GFL_BMPWIN * MSGWND_GetBmpWin( const MSGWND_WORK *cp_wk );
 //SEQ
 static void SEQ_Change( IRC_COMPATIBLE_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
 static void SEQ_End( IRC_COMPATIBLE_MAIN_WORK *p_wk );
 //SEQ_FUNC
-
-//汎用
-static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg );
-static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
-
-
+static void SEQFUNC_Select( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
+//集合
+static void CreateTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk, HEAPID heapID );
+static void DeleteTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk );
+//BTN
+static void BUTTON_Init( BUTTON_WORK *p_wk, u8 frm, const	 BUTTON_SETUP *cp_btn_setup_tbl, u8 tbl_max, const MSG_WORK *cp_msg, GFL_ARCUTIL_TRANSINFO frame_char, u8 plt, HEAPID heapID );
+static void BUTTON_Exit( BUTTON_WORK *p_wk );
+static void BUTTON_Main( BUTTON_WORK *p_wk );
+static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID );
+static void Button_TouchCallBack( u32 btnID, u32 event, void *p_param );
 //=============================================================================
 /**
  *					データ
@@ -249,7 +266,7 @@ const GFL_PROC_DATA IrcCompatible_ProcData	=
 typedef enum 
 {
 	GRAPHIC_BG_FRAME_M_INFOWIN,
-	GRAPHIC_BG_FRAME_M_BACK,
+	GRAPHIC_BG_FRAME_M_TEXT,
 	GRAPHIC_BG_FRAME_S_TEXT,
 	GRAPHIC_BG_FRAME_S_BACK,
 	GRAPHIC_BG_FRAME_MAX
@@ -292,23 +309,31 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 };
 
 //-------------------------------------
-///	タッチ範囲
+///	ボタン範囲
 //=====================================
-static const GFL_RECT	sc_left	=
-{	
-	0, 2*8, 14*8, 20*8
+enum{	
+	BTNID_AURA,
+	BTNID_RETURN,
 };
-#if 0
-static const GFL_RECT	sc_right	=
+static const BUTTON_SETUP	sc_btn_setp_tbl[]	=
 {	
-	19, 2, 33, 20
+	//list選択
+	{	
+		COMPATI_LIST_000,
+		MSGWND_AURA_X,
+		MSGWND_AURA_Y,
+		MSGWND_AURA_W,
+		MSGWND_AURA_H,
+	},
+	//戻る
+	{	
+		COMPATI_BTN_000,
+		MSGWND_RETURN_X,
+		MSGWND_RETURN_Y,
+		MSGWND_RETURN_W,
+		MSGWND_RETURN_H,
+	},
 };
-#else
-static const GFL_RECT	sc_right	=
-{	
-	9*8, 2*8, 23*8, 20*8
-};
-#endif
 
 
 //=============================================================================
@@ -339,15 +364,9 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	GFL_STD_MemClear( p_wk, sizeof(IRC_COMPATIBLE_MAIN_WORK) );
 
 	//モジュール初期化
-	MSG_Init( &p_wk->msg, HEAPID_IRCCOMPATIBLE );
-	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCCOMPATIBLE );
-	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, HEAPID_IRCCOMPATIBLE );
-	MSGWND_Init( &p_wk->msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
-			MSGTEXT_WND_X, MSGTEXT_WND_Y, MSGTEXT_WND_W, MSGTEXT_WND_H, HEAPID_IRCCOMPATIBLE );
-	MSGWND_Init( &p_wk->d_msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
-			0, 0, 18, 4, HEAPID_IRCCOMPATIBLE );
+	CreateTemporaryModules( p_wk, HEAPID_IRCCOMPATIBLE );
 
-	SEQ_Change( p_wk, NULL );
+	SEQ_Change( p_wk, SEQFUNC_Select );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -370,11 +389,7 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 	p_wk	= p_work;
 
 	//モジュール破棄
-	MSGWND_Exit( &p_wk->d_msgwnd );
-	MSGWND_Exit( &p_wk->msgwnd );
-	INFOWIN_Exit();
-	GRAPHIC_Exit( &p_wk->grp );
-	MSG_Exit( &p_wk->msg );
+	DeleteTemporaryModules( p_wk );
 
 	//プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );
@@ -431,17 +446,11 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 
 	case SEQ_MAIN:
 
-		//p_wk->seq_function( p_wk, &p_wk->seq );
+		p_wk->seq_function( p_wk, &p_wk->seq );
 		if( p_wk->is_end )
 		{	
 			*p_seq	= SEQ_FADEIN_START;
 		}
-
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-		{
-			SEQ_End( p_wk );
-		}
-
 		break;
 
 	case SEQ_FADEIN_START:
@@ -463,11 +472,11 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 		GF_ASSERT_MSG( 0, "IRC_COMPATIBLE_PROC_MainのSEQエラー %d", *p_seq );
 	}
 
+	//文字表示
 	INFOWIN_Update();
 	if( MSG_Main( &p_wk->msg ) )
 	{	
 		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
-		MSGWND_Main( &p_wk->d_msgwnd, &p_wk->msg );
 	}
 
 	return GFL_PROC_RES_CONTINUE;
@@ -514,13 +523,6 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 		};
 		GFL_DISP_SetBank( &sc_vramSetTable );
 	}
-
-	//描画モジュール
-	GRAPHIC_BG_Init( &p_wk->gbg, heapID );
-//	GRAPHIC_3D_Init( &p_wk->g3d, heapID );
-
-	//VBlackTask登録
-	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
 }
 
 
@@ -534,10 +536,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 {
-	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
-//	GRAPHIC_3D_Exit( &p_wk->g3d );
-	GRAPHIC_BG_Exit( &p_wk->gbg );
 }
 
 //----------------------------------------------------------------------------
@@ -550,21 +549,6 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 {
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	VBlank用タスク
- *
- *	@param	GFL_TCB *p_tcb	タスクControlブロック
- *	@param	*p_work					ワークアドレス
- *
- */
-//-----------------------------------------------------------------------------
-static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work )
-{	
-	GRAPHIC_WORK* p_wk	= p_work;
-	GRAPHIC_BG_VBlankFunction( &p_wk->gbg );
 }
 
 //=============================================================================
@@ -612,10 +596,16 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 
 	//読み込み設定
 	{	
-		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], GX_RGB(31,31,31) );
+		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], GX_RGB(31,31,31) );
 		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
 		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_BACK], GX_RGB(31,31,31) );
+
+		GFL_BG_FillCharacter( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], 0x00, 1, 0 );
+		p_wk->frame_char	= BmpWinFrame_GraphicSetAreaMan(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], IRC_COMPATIBLE_BG_PAL_M_01, MENU_TYPE_SYSTEM, heapID);
 	}
+
+	//VBlackTask登録
+	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_BG_VBlankTask, p_wk, 0 );
 }
 
 //----------------------------------------------------------------------------
@@ -628,160 +618,47 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK* p_wk )
 {	
-	int i;
 
-	// BGコントロール破棄
-	for( i = 0; i < GRAPHIC_BG_FRAME_MAX; i++ )
-	{
-		GFL_BG_FreeBGControl( sc_bgcnt_frame[i] );
+	//タスク破棄
+	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
+
+	//リソース破棄
+	{	
+		GFL_BG_FreeCharacterArea(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT],
+				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->frame_char),
+				GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->frame_char));
+		GFL_BG_FillCharacterRelease(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], 1,0);
+	}
+
+	//BG設定破棄
+	{	
+		int i;
+		// BGコントロール破棄
+		for( i = 0; i < GRAPHIC_BG_FRAME_MAX; i++ )
+		{
+			GFL_BG_FreeBGControl( sc_bgcnt_frame[i] );
+		}
 	}
 
 	// BGシステム破棄
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();
 }
-
 //----------------------------------------------------------------------------
 /**
- *	@brief	BG描画	VBlack関数
+ *	@brief	VBlank用タスク
  *
- *	@param	GRAPHIC_BG_WORK *p_wk ワーク
+ *	@param	GFL_TCB *p_tcb	タスクControlブロック
+ *	@param	*p_work					ワークアドレス
  *
  */
 //-----------------------------------------------------------------------------
-static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk )
+static void Graphic_BG_VBlankTask( GFL_TCB *p_tcb, void *p_work )
 {	
 	GFL_BG_VBlankFunc();
+
 }
 
-//=============================================================================
-/**
- *					GRAPHIC_3D
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	３D環境の初期化
- *
- *	@param	p_wk			ワーク
- *	@param	heapID		ヒープID
- */
-//-----------------------------------------------------------------------------
-static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
-{
-	static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST(5) };
-	static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };
-	static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };
-
-	enum{	
-		CAMERA_PER_FOVY	=	(40),
-		CAMERA_PER_ASPECT =	(FX32_ONE * 4 / 3),
-		CAMERA_PER_NEAR	=	(FX32_ONE * 1),
-		CAMERA_PER_FER	=	(FX32_ONE * 800),
-		CAMERA_PER_SCALEW	=(0),
-	};
-
-	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K,
-			GFL_G3D_VMANLNK, GFL_G3D_PLT32K, 0, heapID, Graphic_3d_SetUp );
-	p_wk->p_camera = GFL_G3D_CAMERA_CreatePerspective( CAMERA_PER_FOVY, CAMERA_PER_ASPECT,
-				CAMERA_PER_NEAR, CAMERA_PER_FER, CAMERA_PER_SCALEW, 
-				&sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	３D環境の破棄
- *
- *	@param	p_wk	ワーク
- */
-//-----------------------------------------------------------------------------
-static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk )
-{
-	GFL_G3D_CAMERA_Delete( p_wk->p_camera );
-	GFL_G3D_Exit();
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	描画開始
- *	
- *	@param	p_wk	ワーク
- */
-//-----------------------------------------------------------------------------
-static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk )
-{	
-	GFL_G3D_DRAW_Start();
-	GFL_G3D_CAMERA_Switching( p_wk->p_camera );
-	GFL_G3D_DRAW_SetLookAt();
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	描画終了
- *
- *	@param	p_wk	ワーク
- */
-//-----------------------------------------------------------------------------
-static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk )
-{	
-	GFL_G3D_DRAW_End();
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	環境セットアップコールバック関数
- */
-//-----------------------------------------------------------------------------
-static void Graphic_3d_SetUp( void )
-{
-	// ３Ｄ使用面の設定(表示＆プライオリティー)
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-	G2_SetBG0Priority(0);
-
-	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
-	G3X_SetShading( GX_SHADING_HIGHLIGHT );
-	G3X_AntiAlias( FALSE );
-	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
-	G3X_AlphaBlend( TRUE );		// アルファブレンド　オン
-	G3X_EdgeMarking( FALSE );
-	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
-
-	// クリアカラーの設定
-	G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
-	// ビューポートの設定
-	G3_ViewPort(0, 0, 255, 191);
-
-	// ライト設定
-	{
-		static const GFL_G3D_LIGHT sc_GFL_G3D_LIGHT[] = 
-		{
-			{
-				{ 0, -FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-			{
-				{ 0, FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-			{
-				{ 0, -FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-			{
-				{ 0, -FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-		};
-		int i;
-		
-		for( i=0; i<NELEMS(sc_GFL_G3D_LIGHT); i++ ){
-			GFL_G3D_SetSystemLight( i, &sc_GFL_G3D_LIGHT[i] );
-		}
-	}
-
-	//レンダリングスワップバッファ
-	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
-}
 //=============================================================================
 /**
  *					MSG
@@ -808,11 +685,12 @@ static void MSG_Init( MSG_WORK *p_wk, HEAPID heapID )
 	p_wk->p_print_que = PRINTSYS_QUE_Create( heapID );
 
 	p_wk->p_msg = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_irc_aura_dat, heapID );
+		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_irc_compatible_dat, heapID );
 
 	p_wk->p_wordset	= WORDSET_Create( heapID );
 
 	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -997,6 +875,39 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, 
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	メッセージ表示面に文字を表示
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	MSG_WORK *cp_msg	文字管理
+ *	@param	strID							文字ID
+ *	@param	x									開始位置X
+ *	@param	y									開始位置Y
+ *	@param	color							色
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintColor( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y, PRINTSYS_LSB color )
+{	
+	const GFL_MSGDATA* cp_msgdata;
+	PRINT_QUE*	p_que;
+	GFL_FONT*		p_font;
+
+	cp_msgdata	= MSG_GetMsgDataConst( cp_msg );
+	p_que		= MSG_GetPrintQue( cp_msg );
+	p_font	= MSG_GetFont( cp_msg );
+
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+
+	//文字列作成
+	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
+
+	//表示
+	PRINT_UTIL_PrintColor( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font, color );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	メッセージ表示面に数値つき文字を表示
  *
  *	@param	MSGWND_WORK* p_wk	ワーク
@@ -1041,6 +952,20 @@ static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 	}
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	BMPWINを取得
+ *
+ *	@param	const MSGWND_WORK *cp_wk	ワーク
+ *
+ *	@return	BMPWIN
+ */
+//-----------------------------------------------------------------------------
+static GFL_BMPWIN * MSGWND_GetBmpWin( const MSGWND_WORK *cp_wk )
+{	
+	return cp_wk->p_bmpwin;
+}
+
 //=============================================================================
 /**
  *				SEQ
@@ -1075,77 +1000,266 @@ static void SEQ_End( IRC_COMPATIBLE_MAIN_WORK *p_wk )
 }
 //=============================================================================
 /**
- *				汎用
+ *				SEQFUNC
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	矩形内にTrgしたかどうか
+ *	@brief	選択シーケンス
  *
- *	@param	const GFL_RECT *cp_rect	矩形
- *	@param	*p_trg									座標受け取り
+ *	@param	IRC_COMPATIBLE_MAIN_WORK *p_wk	ワーク
+ *	@param	*p_seq													シーケンス
  *
- *	@retval	TRUEタッチした
- *	@retval	FALSEタッチしていない
  */
 //-----------------------------------------------------------------------------
-static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg )
+static void SEQFUNC_Select( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-	u32 x, y;
-	BOOL ret;
+	enum{	
+		SEQ_SELECT,
+		SEQ_JUMP,
+	};
+	u32 ret;
 
-	//Cont中で、矩形内のとき
-	if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+	switch( *p_seq )
 	{	
-		if( ((u32)( x - cp_rect->left) < (u32)(cp_rect->right - cp_rect->left))
-				&	((u32)( y - cp_rect->top) < (u32)(cp_rect->bottom - cp_rect->top))
-			)
-		{
-			//受け取りが存在したら代入して返す
-			if( p_trg )
+	case SEQ_SELECT:
+		BUTTON_Main( &p_wk->btn );
+		if( BUTTON_IsTouch( &p_wk->btn,  &ret ) )
+		{	
+			switch( ret )
 			{	
-				p_trg->x	= x;
-				p_trg->y	= y;
-			}
-			return TRUE;
+			case BTNID_AURA:
+				break;
+			case BTNID_RETURN:
+				SEQ_End( p_wk );
+				break;
+			};
 		}
+		break;
+	case SEQ_JUMP:
+		break;
+	};
+}
+//=============================================================================
+/**
+ *			adapter
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	PROC切り替え時に消されるモジュール作成
+ *
+ *	@param	IRC_COMPATIBLE_MAIN_WORK *p_wk	ワーク
+ *	@param	heapID													ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CreateTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk, HEAPID heapID )
+{	
+	MSG_Init( &p_wk->msg, heapID );
+	GRAPHIC_Init( &p_wk->grp, heapID );
+	GRAPHIC_BG_Init( &p_wk->bg, heapID );
+
+	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, heapID );
+	
+	BUTTON_Init( &p_wk->btn, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
+			sc_btn_setp_tbl, NELEMS(sc_btn_setp_tbl), &p_wk->msg, p_wk->bg.frame_char, IRC_COMPATIBLE_BG_PAL_M_01, heapID );
+
+	//MSGWND_Init( &p_wk->msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
+	//		MSGWND_AURA_X, MSGWND_AURA_Y, MSGWND_AURA_W, MSGWND_AURA_H, HEAPID_IRCCOMPATIBLE );
+	//		MSGWND_RETURN_X, MSGWND_RETURN_Y, MSGWND_RETURN_W, MSGWND_RETURN_H, HEAPID_IRCCOMPATIBLE );
+	//MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_LIST_000, 12, 0  );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	PROC切り替え時に消されるモジュール破棄
+ *
+ *	@param	IRC_COMPATIBLE_MAIN_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DeleteTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk )
+{	
+	BUTTON_Exit( &p_wk->btn );
+
+	{	
+		//	MSGWND_Exit( &p_wk->msgwnd );
+	}
+	INFOWIN_Exit();
+	GRAPHIC_BG_Exit( &p_wk->bg );
+	GRAPHIC_Exit( &p_wk->grp );
+	MSG_Exit( &p_wk->msg );
+}
+//=============================================================================
+/**
+ *						BUTTON
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタン初期化	
+ *
+ *	@param	BUTTON_WORK *p_wk				ワーク
+ *	@param	frm											ボタンを表示するフレーム
+ *	@param	GFL_RECT *cp_rect_tbl		ボタンの設定テーブル(実体をもってください)
+ *	@param	tbl_max									テーブルの個数
+ *	@param	cp_msg									文字管理
+ *	@param	frame_char							フレームに使うキャラ
+ *	@param	plt											パレット
+ *	@param	HEAPID									ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void BUTTON_Init( BUTTON_WORK *p_wk, u8 frm, const	 BUTTON_SETUP *cp_btn_setup_tbl, u8 tbl_max, const MSG_WORK *cp_msg, GFL_ARCUTIL_TRANSINFO frame_char, u8 plt, HEAPID heapID )
+{	
+	//エラー
+	GF_ASSERT_MSG( tbl_max < BUTTON_MAX, "ボタン数が、多いですBUTTON_MAXの定義を変えてください", tbl_max );
+
+	//クリア
+	GFL_STD_MemClear( p_wk, sizeof(BUTTON_WORK) );
+	p_wk->cp_btn_setup_tbl	= cp_btn_setup_tbl;
+	p_wk->btn_num			= tbl_max;
+	p_wk->frm					= frm;
+
+	//HITTBLを作成（キャラ単位をドット単位に）
+	{	
+		int i;
+		const	 BUTTON_SETUP *cp_setup;
+		for( i = 0; i < p_wk->btn_num; i++ )
+		{	
+			cp_setup	= &cp_btn_setup_tbl[i];
+			p_wk->hit_tbl[i].rect.top			= (cp_setup->y)*8+1;
+			p_wk->hit_tbl[i].rect.bottom	= (cp_setup->y + cp_setup->h)*8-1;
+			p_wk->hit_tbl[i].rect.left		= (cp_setup->x)*8+1;
+			p_wk->hit_tbl[i].rect.right		= (cp_setup->x + cp_setup->w)*8-1;
+		}
+		p_wk->hit_tbl[i].rect.top	= GFL_UI_TP_HIT_END;
+	}
+
+	//ボタンマネージャ作成
+	p_wk->p_btn	= GFL_BMN_Create( p_wk->hit_tbl, Button_TouchCallBack, p_wk, heapID );
+
+	//BMPWIN作成し内容を書き込む
+	{	
+		int i;
+		const	 BUTTON_SETUP *cp_setup;
+		STRBUF *p_strbuf;
+		for( i = 0; i < p_wk->btn_num; i++ )
+		{	
+			//BMPWIN作成
+			cp_setup	= &cp_btn_setup_tbl[i];
+			p_wk->p_bmpwin[i]	= GFL_BMPWIN_Create( frm, cp_setup->x,
+					cp_setup->y, cp_setup->w, cp_setup->h, plt, GFL_BMP_CHRAREA_GET_B );
+
+			//BMPWIN転送
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0 );
+			GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin[i] );
+
+			//枠描画
+			BmpWinFrame_Write( p_wk->p_bmpwin[i], WINDOW_TRANS_ON, 
+					GFL_ARCUTIL_TRANSINFO_GetPos(frame_char), plt );
+
+			//文字作成描画
+			p_strbuf	= GFL_MSG_CreateString( MSG_GetMsgDataConst(cp_msg), cp_setup->strID );
+			GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
+
+			//中央に配置
+			{	
+				u32	w;
+				u32 h;
+				w	= PRINTSYS_GetStrWidth( p_strbuf, MSG_GetFont(cp_msg), 0 );
+				h	= PRINTSYS_GetStrHeight( p_strbuf, MSG_GetFont(cp_msg) );
+				PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 
+					cp_setup->w*4-w/2, cp_setup->h*4-h/2, p_strbuf, MSG_GetFont(cp_msg) );
+			}
+			GFL_STR_DeleteBuffer( p_strbuf );
+
+			GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[i] );
+
+		}
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタン破棄
+ *
+ *	@param	BUTTON_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void BUTTON_Exit( BUTTON_WORK *p_wk )
+{	
+	//BMPWIN破棄
+	{	
+		int i;
+		for( i = 0; i < p_wk->btn_num; i++ )
+		{	
+			GFL_BMPWIN_Delete(p_wk->p_bmpwin[i]);
+		}
+	}
+
+	//BMN破棄
+	GFL_BMN_Delete( p_wk->p_btn );
+
+	GFL_STD_MemClear( p_wk, sizeof(BUTTON_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンメイン処理
+ *
+ *	@param	BUTTON_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void BUTTON_Main( BUTTON_WORK *p_wk )
+{
+	p_wk->is_touch	= GFL_BMN_Main( p_wk->p_btn );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンがタッチされたかどうか
+ *
+ *	@param	const BUTTON_WORK *cp_wk	ワーク
+ *	@param	*p_btnID									タッチされたボタンID受け取り
+ *
+ *	@retval	TRUEならば押された
+ *	@retval	FALSEならば押されていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID )
+{	
+	if( cp_wk->is_touch )
+	{	
+		if( p_btnID )
+		{	
+			*p_btnID	= cp_wk->select_btn_id;
+		}
+		return TRUE;
 	}
 
 	return FALSE;
 }
+
 //----------------------------------------------------------------------------
 /**
- *	@brief	矩形内にタッチしたかどうか
+ *	@brief	ボタンが押された時のコールバック
  *
- *	@param	const GFL_RECT *cp_rect	矩形
- *	@param	*p_cont									座標受け取り
+ *	@param	u32 btnID	ボタンID
+ *	@param	event			イベント
+ *	@param	*p_param	Createで渡されたアドレス
  *
- *	@retval	TRUEタッチした
- *	@retval	FALSEタッチしていない
  */
 //-----------------------------------------------------------------------------
-static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont )
+static void Button_TouchCallBack( u32 btnID, u32 event, void *p_param )
 {	
-	u32 x, y;
-	BOOL ret;
+	BUTTON_WORK *p_wk;
+	p_wk	= p_param;
 
-	//Cont中で、矩形内のとき
-	if( GFL_UI_TP_GetPointCont( &x, &y ) )
+	if( event == GFL_BMN_EVENT_TOUCH )
 	{	
-		if( ((u32)( x - cp_rect->left) < (u32)(cp_rect->right - cp_rect->left))
-				&	((u32)( y - cp_rect->top) < (u32)(cp_rect->bottom - cp_rect->top))
-			)
-		{
-			//受け取りが存在したら代入して返す
-			if( p_cont )
-			{	
-				p_cont->x	= x;
-				p_cont->y	= y;
-			}
-			return TRUE;
-		}
+		p_wk->select_btn_id	= btnID;
 	}
-
-	return FALSE;
 }
 
