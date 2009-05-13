@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-11T23:17:15"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-05-13T12:42:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="248" top="349" right="953" bottom="969" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -378,14 +378,6 @@
 		<language name="JPN" width="256">あなたは　ちょっとせっかちさん
 あいては　ちょっとしんちょうです</language>
 		<language name="JPN_KANJI" width="256"></language>
-	</row>
-
-	<row id="AURA_DEBUG_000">
-		<comment>デバッグ用文字列</comment>
-		<language name="JPN">ひだりゆびざひょうX[2:02:３桁:0]Y[2:02:３桁:1]
-みぎゆびざひょうX[2:02:３桁:2]Y[2:02:３桁:3]</language>
-		<language name="JPN_KANJI">左指座標X[2:02:３桁:0]Y[2:02:３桁:1]
-右指座標X[2:02:３桁:2]Y[2:02:３桁:3]</language>
 	</row>
 
 	<flowchart-group-list>
