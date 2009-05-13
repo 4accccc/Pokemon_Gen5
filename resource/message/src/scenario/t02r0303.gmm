@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-13T11:35:41"/>
+	<create user="matsumiya" host="W00179" date="2009-05-13T15:17:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,11 +296,11 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">おじさん１</attribute>
 		<language name="JPN" width="256">こんなところまで　きたんだ
-なにか　おみあげを　あげよう！▼
+なにか　おみやげを　あげよう！▼
 とおもったけれど　なんにもないな
 また　こんどまでに　よういしておくよ</language>
 		<language name="JPN_KANJI" width="256">こんなところまで　来たんだ
-なにか　おみあげを　あげよう！▼
+なにか　お土産を　あげよう！▼
 と思ったけれど　なんにもないな
 また　今度までに　用意しておくよ</language>
 	</row>
