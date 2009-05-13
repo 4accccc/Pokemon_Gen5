@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-13T11:45:54"/>
+	<create user="matsumiya" host="W00179" date="2009-05-13T15:18:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,9 +296,9 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">女性1</attribute>
 		<language name="JPN" width="256">こんどね　ミュージカルを　みに
-ライモンシティに　いく　よていなの</language>
+ライモンシティまで　いくのよ</language>
 		<language name="JPN_KANJI" width="256">今度ね　ミュージカルを　観に
-ライモンシティに　行く　予定なの</language>
+ライモンシティまで　行くのよ</language>
 	</row>
 
 	<flowchart-group-list>
