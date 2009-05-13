@@ -111,7 +111,7 @@ struct _FLD_G3D_MAPPER {
   BLOCK_WORK*   blockWk;      // ブロックワーク
   BLOCK_NEWREQ* blockNew;     // ブロック更新リクエストワーク
   u8            blockXNum;    // メモリ配置横ブロック数
-  u8            blockYNum;    // メモリ配置縦ブロック数
+  u8            blockZNum;    // メモリ配置縦ブロック数
   u16           blockNum;     // メモリ配置ブロック総数
   
 	u32					nowBlockIdx;				
@@ -165,6 +165,11 @@ static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos
 static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new );
 static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new );
 static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new );
+
+static s32 GetMapperBlockStartIdxEven( u32 blockNum, fx32 width, fx32 pos );
+static s32 GetMapperBlockStartIdxUnEven( u32 blockNum, fx32 width, fx32 pos );
+
+
 
 static FIELD_GRANM * createGroundAnime( u32 blockNum, GFL_G3D_RES* globalTexture,
     const FLDMAPPER_RESIST_GROUND_ANIME * resistGroundAnimeData, u32 heapID );
@@ -389,8 +394,8 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 	g3Dmapper->blocks = resistData->blocks;
 	g3Dmapper->mode = resistData->mode;
   g3Dmapper->blockXNum  = resistData->blockXNum;
-  g3Dmapper->blockYNum  = resistData->blockYNum;
-  g3Dmapper->blockNum   = resistData->blockXNum * resistData->blockYNum;
+  g3Dmapper->blockZNum  = resistData->blockZNum;
+  g3Dmapper->blockNum   = resistData->blockXNum * resistData->blockZNum;
 
   {//mode異常の対処 
     switch( g3Dmapper->mode ){
@@ -438,7 +443,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 
 		//ブロック制御ハンドル作成
     GF_ASSERT( resistData->blockXNum > 0 );
-    GF_ASSERT( resistData->blockYNum > 0 );
+    GF_ASSERT( resistData->blockZNum > 0 );
     g3Dmapper->blockWk = GFL_HEAP_AllocClearMemory( g3Dmapper->heapID, sizeof(BLOCK_WORK) * g3Dmapper->blockNum );
     g3Dmapper->blockNew = GFL_HEAP_AllocClearMemory( g3Dmapper->heapID, sizeof(BLOCK_NEWREQ) * g3Dmapper->blockNum );
 		for( i=0; i<g3Dmapper->blockNum; i++ ){
@@ -750,6 +755,7 @@ static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos
 {
 	u32		idx, county, countxz;
 	fx32	blockWidth, blockHeight;
+  fx32  blockHalfWidth;
 	int		i, j, offsx, offsz;
 
 	countxz = g3Dmapper->sizex * g3Dmapper->sizez;
@@ -757,8 +763,9 @@ static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos
 	if( g3Dmapper->totalSize % countxz ){
 		county++;
 	}
-	blockWidth = g3Dmapper->blockWidth;
-	blockHeight = g3Dmapper->blockHeight;
+	blockWidth      = g3Dmapper->blockWidth;
+  blockHalfWidth  = FX_Div( g3Dmapper->blockWidth, 2*FX32_ONE );
+	blockHeight     = g3Dmapper->blockHeight;
 
 	idx = 0;
 
@@ -772,60 +779,72 @@ static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos
 			}
       BLOCKINFO_SetBlockIdx( &new[idx].newBlockInfo, idx );
       BLOCKINFO_SetBlockTrans( &new[idx].newBlockInfo, 
-         offsx * blockWidth + blockWidth/2,
-         i * blockHeight,
-         offsz * blockWidth + blockWidth/2 );
+         FX_Mul(offsx<<FX32_SHIFT, blockWidth) + blockHalfWidth,
+         FX_Mul( i<<FX32_SHIFT,blockHeight ),
+         FX_Mul(offsz<<FX32_SHIFT, blockWidth) + blockHalfWidth );
 			idx++;
 		}
 	}
 }
 
 //------------------------------------------------------------------
-typedef struct {
-	s16	z;
-	s16	x;
-}BLOCK_OFFS;
-
-static const BLOCK_OFFS blockPat_Around[] = {//自分のいるブロックから周囲方向に９ブロックとる
-	{-1,-1},{-1, 0},{-1, 1},{ 0,-1},{ 0, 0},{ 0, 1},{ 1,-1},{ 1, 0},{ 1, 1},
-};
-
 static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new )
 {
 	u16		sizex, sizez;
-	u32		idx, idxmax, blockx, blockz;
-	fx32	blockWidth;
-	int		i, offsx, offsz;
+	u32		idx, idxmax;
+	fx32	blockWidth, blockHalfWidth;
+	int		i, j;
+  int   start_x, start_z;
+  int   set_x, set_z;
+
 
 	sizex = g3Dmapper->sizex;
 	sizez = g3Dmapper->sizez;
 	idxmax = sizex * sizez;
 	blockWidth = g3Dmapper->blockWidth;
+  blockHalfWidth = FX_Div( g3Dmapper->blockWidth, 2*FX32_ONE );
 
-	blockx = FX_Whole( FX_Div( pos->x, blockWidth ) );
-	blockz = FX_Whole( FX_Div( pos->z, blockWidth ) );
+  // XZ方向ブロック開始位置を求める
+  if( (g3Dmapper->blockXNum % 2) == 0 ){
+    // 偶数の場合
+    start_x = GetMapperBlockStartIdxEven( g3Dmapper->blockXNum, blockWidth, pos->x );
+  }else{
+    // 奇数の場合
+    start_x = GetMapperBlockStartIdxUnEven( g3Dmapper->blockXNum, blockWidth, pos->x );
+  }
+  if( (g3Dmapper->blockXNum % 2) == 0 ){
+    // 偶数の場合
+    start_z = GetMapperBlockStartIdxEven( g3Dmapper->blockZNum, blockWidth, pos->z );
+  }else{
+    // 奇数の場合
+    start_z = GetMapperBlockStartIdxUnEven( g3Dmapper->blockZNum, blockWidth, pos->z );
+  }
 
-  GF_ASSERT( g3Dmapper->blockNum == 9 );  // 現状９じゃないとうごかない
-	for( i=0; i<g3Dmapper->blockNum; i++ ){
-		offsx = blockx + blockPat_Around[i].x;
-		offsz = blockz + blockPat_Around[i].z;
-
-		if((offsx < 0)||(offsx >= sizex)||(offsz < 0)||(offsz >= sizez)){
-			idx = MAPID_NULL;
-		} else {
-			idx = offsz * sizex + offsx;
-
-			if( idx >= idxmax ){
-				idx = MAPID_NULL;
-			}
-		}
-
-    BLOCKINFO_SetBlockIdx( &new[i].newBlockInfo, idx );
-    BLOCKINFO_SetBlockTrans( &new[i].newBlockInfo, 
-       offsx * blockWidth + blockWidth/2,
-       0,
-       offsz * blockWidth + blockWidth/2 );
-	}
+  // 読み込みリクエスト情報を設定する
+	for( i=0; i<g3Dmapper->blockZNum; i++ )
+  {
+    // 設定するブロックのZ値を求める 
+    // ブロックデータの範囲内かチェックする
+    set_z = start_z + i;
+    if( (set_z >= 0) && (set_z < sizez) )
+    {
+  	  for( j=0; j<g3Dmapper->blockXNum; j++ )
+      {
+        // 設定するブロックのX値を求める 
+        // ブロックデータの範囲内かチェックする
+        set_x = start_x + j;
+        if( (set_x >= 0) && (set_x < sizex) )
+        {
+          idx = (i*g3Dmapper->blockXNum) + j;
+          BLOCKINFO_SetBlockIdx( &new[idx].newBlockInfo, (set_z * sizex) + set_x );
+          BLOCKINFO_SetBlockTrans( &new[idx].newBlockInfo, 
+             FX_Mul(set_x<<FX32_SHIFT, blockWidth) + blockHalfWidth,
+             0,
+             FX_Mul(set_z<<FX32_SHIFT, blockWidth) + blockHalfWidth );
+        }
+      }
+    }
+  }
 }
 
 //------------------------------------------------------------------
@@ -834,13 +853,15 @@ static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, 
 	u16		sizex, sizez;
 	u32		idx, blocky, countxz;
 	fx32	blockWidth, blockHeight;
+  fx32  blockHalfWidth;
 	int		i, p, offsx, offsy, offsz;
 
 	sizex = g3Dmapper->sizex;
 	sizez = g3Dmapper->sizez;
 	countxz = sizex * sizez;
-	blockWidth = g3Dmapper->blockWidth;
-	blockHeight = g3Dmapper->blockHeight;
+	blockWidth      = g3Dmapper->blockWidth;
+  blockHalfWidth  = FX_Div( g3Dmapper->blockWidth, 2*FX32_ONE );
+	blockHeight     = g3Dmapper->blockHeight;
 
 	blocky = FX_Whole( FX_Div( pos->y, blockHeight ) );
 	if( pos->y - ( blocky * blockHeight ) > blockHeight/2 ){
@@ -861,9 +882,9 @@ static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, 
 		}
     BLOCKINFO_SetBlockIdx( &new[p].newBlockInfo, idx );
     BLOCKINFO_SetBlockTrans( &new[p].newBlockInfo, 
-       offsx * blockWidth + blockWidth/2,
-       blocky * blockHeight,
-       offsz * blockWidth + blockWidth/2 );
+       FX_Mul( offsx<<FX32_SHIFT, blockWidth ) + blockHalfWidth,
+       FX_Mul( blocky<<FX32_SHIFT, blockHeight ),
+       FX_Mul( offsz<<FX32_SHIFT, blockWidth) + blockHalfWidth );
 		p++;
 	}
 	for( i=0; i<countxz; i++ ){
@@ -877,9 +898,9 @@ static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, 
 		}
     BLOCKINFO_SetBlockIdx( &new[p].newBlockInfo, idx );
     BLOCKINFO_SetBlockTrans( &new[p].newBlockInfo, 
-       offsx * blockWidth + blockWidth/2,
-       (blocky + offsy) * blockHeight,
-       offsz * blockWidth + blockWidth/2 );
+       FX_Mul( offsx<<FX32_SHIFT, blockWidth ) + blockHalfWidth,
+       FX_Mul( (blocky + offsy)<<FX32_SHIFT, blockHeight ),
+       FX_Mul( offsz<<FX32_SHIFT, blockWidth ) + blockHalfWidth );
 		p++;
 	}
 }
@@ -958,6 +979,67 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
 	}
 	return reloadFlag;
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ブロック数偶数のときの、ブロック開始位置を求める
+ *
+ *	@param	blockNum    ブロック数
+ *	@param	width       １ブロック幅
+ *	@param	pos         自分の位置
+ *
+ *	@return ブロック開始位置  （負の値の場合もあり）
+ */
+//-----------------------------------------------------------------------------
+static s32 GetMapperBlockStartIdxEven( u32 blockNum, fx32 width, fx32 pos )
+{
+  fx32 offs;
+  fx32 block;
+  fx32 width_half;
+  s32 block_start;
+
+  block_start = -((blockNum/2)-1); // ブロックの端の位置を求める、あらかじめ自分を含めるために-1している
+
+  block = pos / width;
+  offs  = pos % width;
+  width_half = FX_Div( width, 2*FX32_ONE );
+
+  if( offs < width_half ){
+    block_start += block-1;
+  }else{
+    block_start += block;
+  }
+
+  return block_start;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ブロック数奇数のときの、ブロック開始位置を求める
+ *
+ *	@param	blockNum    ブロック数
+ *	@param	width       １ブロック幅
+ *	@param	pos         自分の位置
+ *
+ *	@return ブロック開始位置  （負の値の場合もあり）
+ */
+//-----------------------------------------------------------------------------
+static s32 GetMapperBlockStartIdxUnEven( u32 blockNum, fx32 width, fx32 pos )
+{
+  fx32 block;
+  s32 block_start;
+
+  block_start = -(blockNum/2);  // ブロックの端の位置を求める。
+                                // 奇数は、２で割ることで、勝手に自分の分が減る
+
+  block = pos / width;
+  block_start += block;
+
+  return block_start;
+}
+
 
 
 //============================================================================================
