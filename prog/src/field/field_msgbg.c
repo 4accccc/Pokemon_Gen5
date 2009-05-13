@@ -16,6 +16,9 @@
 #include "arc_def.h"
 #include "font/font.naix"
 
+#include "message.naix"
+#include "msg/msg_yesnomenu.h"
+
 #include "field/field_msgbg.h"
 
 //======================================================================
@@ -92,6 +95,8 @@ static void FldMenuFuncH_BmpMenuListH(
 static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
 	u16 pos_x, u16 pos_y, u16 size_x, u16 size_y );
 static void FldBmpWinFrame_Delete( GFL_BMPWIN *bmpwin );
+
+static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo;
 
 //======================================================================
 //	FLDMSGBG	フィールドメッセージBG関連
@@ -601,12 +606,15 @@ FLDMSGWIN * FLDMSGWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData )
  * @param	fmb	FLDMSGBG
  * @param	pMenuHead FLDMENUFUNC_HEADER
  * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
+ * @param list_pos リスト初期位置
+ * @param cursor_pos カーソル初期位置
  * @retval	FLDMENUFUNC*
  */
 //--------------------------------------------------------------
-FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
+FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
 	const FLDMENUFUNC_HEADER *pMenuHead,
-	FLDMENUFUNC_LISTDATA *pMenuListData )
+	FLDMENUFUNC_LISTDATA *pMenuListData,
+  u16 list_pos, u16 cursor_pos )
 {
 	FLDMENUFUNC *menuFunc;
 	BMPMENULIST_HEADER menuH;
@@ -633,11 +641,26 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
 	menuH.list = (const BMP_MENULIST_DATA *)pMenuListData;
 	
 	menuFunc->pMenuListWork =
-		BmpMenuList_Set( &menuH, 0, 0, fmb->heapID );
+		BmpMenuList_Set( &menuH, list_pos, cursor_pos, fmb->heapID );
 //	BmpMenuList_SetCursorString( menuFunc->pMenuListWork, 0 );
 	BmpMenuList_SetCursorBmp( menuFunc->pMenuListWork, fmb->heapID );
-	
 	return( menuFunc );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMENUFUNC メニュー追加　リスト位置、カーソル位置省略版
+ * @param	fmb	FLDMSGBG
+ * @param	pMenuHead FLDMENUFUNC_HEADER
+ * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
+ * @retval	FLDMENUFUNC*
+ */
+//--------------------------------------------------------------
+FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
+	const FLDMENUFUNC_HEADER *pMenuHead,
+	FLDMENUFUNC_LISTDATA *pMenuListData )
+{
+  return( FLDMENUFUNC_AddMenuList(fmb,pMenuHead,pMenuListData,0,0) );
 }
 
 //--------------------------------------------------------------
@@ -821,6 +844,61 @@ static void FldMenuFuncH_BmpMenuListH(
 }
 
 //======================================================================
+//  はい、いいえ選択メニュー
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * はい、いいえ選択メニュー　追加
+ * @param fmb FLDMSGBG
+ * @param pos FLDMENUFUNC_YESNO カーソル初期位置
+ * @retval FLDMENUFUNC*
+ * メニュー削除の際はFLDMENUFUNC_DeleteMenu()を呼ぶ事。
+ */
+//--------------------------------------------------------------
+FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
+    FLDMSGBG *fmb, FLDMENUFUNC_YESNO pos )
+{
+  u32 max = 2;
+	GFL_MSGDATA *msgData;
+  FLDMENUFUNC *menuFunc;
+	FLDMENUFUNC_LISTDATA *listData;
+  FLDMENUFUNC_HEADER menuH = DATA_MenuHeader_YesNo;
+  const FLDMENUFUNC_LIST menuList[2] = {
+    { msgid_yesno_yes, (void*)0 }, { msgid_yesno_no, (void*)1 }, };
+  
+  msgData = FLDMSGBG_CreateMSGDATA( fmb, NARC_message_yesnomenu_dat );
+  listData = FLDMENUFUNC_CreateMakeListData(
+            menuList, max, msgData, fmb->heapID );
+  GFL_MSG_Delete( msgData );
+  
+	FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 15, 7, 4 );
+  menuFunc = FLDMENUFUNC_AddMenuList( fmb, &menuH, listData, 0, pos );
+  return( menuFunc );
+}
+
+//--------------------------------------------------------------
+/**
+ * はい、いいえ選択メニュー 動作
+ * @param menuFunc FLDMENUFUNC*
+ * @retval u32 FLDMENUFUNC_YESNO
+ */
+//--------------------------------------------------------------
+FLDMENUFUNC_YESNO FLDMENUFUNC_ProcYesNoMenu( FLDMENUFUNC *menuFunc )
+{
+  u32 ret = FLDMENUFUNC_ProcMenu( menuFunc );
+  
+  if( ret == FLDMENUFUNC_NULL ){
+    return( FLDMENUFUNC_YESNO_NULL );
+  }
+  
+  if( ret == FLDMENUFUNC_CANCEL ){
+    return( FLDMENUFUNC_YESNO_NO );
+  }
+  
+  return( ret );
+}
+
+//======================================================================
 //	パーツ
 //======================================================================
 //--------------------------------------------------------------
@@ -869,3 +947,31 @@ static void FldBmpWinFrame_Delete( GFL_BMPWIN *bmpwin )
 	BmpWinFrame_Clear( bmpwin, 0 );
 	GFL_BMPWIN_Delete( bmpwin );
 }
+
+//======================================================================
+//  data
+//======================================================================
+//--------------------------------------------------------------
+//  はい、いいえ選択メニューヘッダー
+//--------------------------------------------------------------
+static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo =
+{
+	1,		//リスト項目数
+	10,		//表示最大項目数
+	0,		//ラベル表示Ｘ座標
+	13,		//項目表示Ｘ座標
+	0,		//カーソル表示Ｘ座標
+	0,		//表示Ｙ座標
+	1,		//表示文字色
+	15,		//表示背景色
+	2,		//表示文字影色
+	0,		//文字間隔Ｘ
+	1,		//文字間隔Ｙ
+	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
+	12,		//文字サイズX(ドット
+	12,		//文字サイズY(ドット
+	0,		//表示座標X キャラ単位
+	0,		//表示座標Y キャラ単位
+	0,		//表示サイズX キャラ単位
+	0,		//表示サイズY キャラ単位
+};

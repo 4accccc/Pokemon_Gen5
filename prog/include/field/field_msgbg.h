@@ -32,6 +32,17 @@ typedef enum
 	FLDMENUFUNC_SKIP_LRBTN = 	(2),			///<LRボタンスキップ
 }FLDMENUFUNC_SKIP;
 
+//--------------------------------------------------------------
+/// はい、いいえ
+//--------------------------------------------------------------
+typedef enum
+{
+  FLDMENUFUNC_YESNO_YES = 0, ///<はい
+  FLDMENUFUNC_YESNO_NO, ///<いいえorキャンセル
+  
+  FLDMENUFUNC_YESNO_NULL, ///<選択中
+}FLDMENUFUNC_YESNO;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -126,6 +137,10 @@ extern void FLDMSGWIN_ClearWindow( FLDMSGWIN *msgWin );
 extern FLDMSGWIN * FLDMSGWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData );
 
 //メニュー
+extern FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
+	const FLDMENUFUNC_HEADER *pMenuHead,
+	FLDMENUFUNC_LISTDATA *pMenuListData,
+  u16 list_pos, u16 cursor_pos );
 extern FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
 	const FLDMENUFUNC_HEADER *pMenuHead,
 	FLDMENUFUNC_LISTDATA *pMenuListData );
@@ -144,5 +159,10 @@ extern void FLDMENUFUNC_AddArcStringListData(
 extern void FLDMENUFUNC_InputHeaderListSize(
 	FLDMENUFUNC_HEADER *head, u16 count,
 	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );
+
+//はい、いいえ選択メニュー
+extern FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
+    FLDMSGBG *fmb, FLDMENUFUNC_YESNO pos );
+extern FLDMENUFUNC_YESNO FLDMENUFUNC_ProcYesNoMenu( FLDMENUFUNC *menuFunc );
 
 #endif //__FLDMSGBG_H__

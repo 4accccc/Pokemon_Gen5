@@ -120,7 +120,7 @@ void FIELD_COMM_ACTOR_CTRL_Delete( FIELD_COMM_ACTOR_CTRL *act_ctrl )
  * @param code 表示コード HERO等
  * @param watch_dir 方向参照先
  * @param watch_pos 座標参照先
- * @retval FIELD_COMM_ACTOR* 追加されたFIELD_COMM_ACTRO*
+ * @retval nothing
  */
 //--------------------------------------------------------------
 void FIELD_COMM_ACTOR_CTRL_AddActor( FIELD_COMM_ACTOR_CTRL *act_ctrl,
