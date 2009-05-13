@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-13T17:31:15"/>
+	<create user="matsumiya" host="W00179" date="2009-05-13T17:33:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,10 +302,10 @@
 
 	<row id="msg_t01_testmsg02">
 		<attribute name="キャラ指定">woman01</attribute>
-		<language name="JPN" width="256">カノコタウンは　イッシュちほうで
-いちばん　いなか　なの</language>
-		<language name="JPN_KANJI" width="256">カノコタウンは　イッシュ地方で
-いちばん　田舎　なの</language>
+		<language name="JPN" width="256">カノコタウンの　きたは
+カラクサタウンなの</language>
+		<language name="JPN_KANJI" width="256">カノコタウンの　北は
+カラクサタウンなの</language>
 	</row>
 
 	<row id="msg_t01_testmsg03">
