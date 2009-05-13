@@ -153,3 +153,4 @@
 	ARCID_AREA_ITA				"fieldmap/area_map_ita.narc"	#エリア地面アニメーションデータ
 	ARCID_AREA_ITP				"fieldmap/area_map_itp.narc"	#エリア地面アニメーションデータ
 	ARCID_AREA_ITP_TEX		"fieldmap/area_map_itp_tex.narc"	#エリア地面アニメーションデータ
+	ARCID_IRCAURA_GRAPHIC	"ircaura_gra.narc"	#赤外線オーラチェックゲーム用絵素材

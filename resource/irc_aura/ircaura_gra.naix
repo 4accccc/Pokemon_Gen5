@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: ircaura_gra.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_IRCAURA_GRA_NAIX_
+#define NARC_IRCAURA_GRA_NAIX_
+
+enum {
+	NARC_ircaura_gra_aura_bg_guide_NCLR = 0,
+	NARC_ircaura_gra_aura_bg_guide_NCGR = 1,
+	NARC_ircaura_gra_aura_bg_guide_l_NSCR = 2,
+	NARC_ircaura_gra_aura_bg_guide_r_NSCR = 3
+};
+
+/* NARC_IRCAURA_GRA_NAIX_ */
+#endif

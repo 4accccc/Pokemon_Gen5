@@ -27,6 +27,7 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_irc_aura.h"
+#include "ircaura_gra.naix"
 
 //	aura
 #include "net_app/irc_aura.h"
@@ -34,7 +35,6 @@
 #ifdef PM_DEBUG
 //debug用
 #include <wchar.h>	//wcslen
-#include <stdio.h>	//wsprintf
 #endif
 
 //=============================================================================
@@ -52,7 +52,7 @@
 //=====================================
 enum{	
 	// メイン画面BG
-	AURA_BG_PAL_M_00 = 0,//
+	AURA_BG_PAL_M_00 = 0,//GUIDE用BG
 	AURA_BG_PAL_M_01,		// 使用してない
 	AURA_BG_PAL_M_02,		// 使用してない
 	AURA_BG_PAL_M_03,		// 使用してない
@@ -108,6 +108,15 @@ enum{
 #define	MSGTEXT_WND_Y	(18)
 #define	MSGTEXT_WND_W	(30)
 #define	MSGTEXT_WND_H	(5)
+
+#define DEBUGMSG_LEFT1	(0)
+#define DEBUGMSG_LEFT2	(20)
+#define DEBUGMSG_LEFT3	(40)
+#define DEBUGMSG_LEFT4	(60)
+#define DEBUGMSG_RIGHT1	(80)
+#define DEBUGMSG_RIGHT2	(100)
+#define DEBUGMSG_RIGHT3	(120)
+#define DEBUGMSG_RIGHT4	(140)
 
 //-------------------------------------
 ///	カウント
@@ -301,14 +310,15 @@ const GFL_PROC_DATA IrcAura_ProcData	=
 typedef enum 
 {
 	GRAPHIC_BG_FRAME_M_INFOWIN,
-	GRAPHIC_BG_FRAME_M_BACK,
+	GRAPHIC_BG_FRAME_M_GUIDE_L,
+	GRAPHIC_BG_FRAME_M_GUIDE_R,
 	GRAPHIC_BG_FRAME_S_TEXT,
 	GRAPHIC_BG_FRAME_S_BACK,
 	GRAPHIC_BG_FRAME_MAX
 } GRAPHIC_BG_FRAME;
 static const u32 sc_bgcnt_frame[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	INFOWIN_BG_FRAME, GFL_BG_FRAME1_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,
+	INFOWIN_BG_FRAME, GFL_BG_FRAME1_M, GFL_BG_FRAME2_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] = 
 {
@@ -319,11 +329,18 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
-	// GRAPHIC_BG_FRAME_M_BACK
+	// GRAPHIC_BG_FRAME_M_GUIDE_L
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+	},
+	// GRAPHIC_BG_FRAME_M_GUIDE_R
+	{
+		0, 0, 0x800, 0,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_TEXT
@@ -333,7 +350,7 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
-	// GRAPHIC_BG_FRAME_M_BACK
+	// GRAPHIC_BG_FRAME_S_BACK
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -348,17 +365,17 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 //=====================================
 static const GFL_RECT	sc_left	=
 {	
-	0, 2*8, 14*8, 20*8
+	0, 2*8, 11*8, 20*8
 };
 #if 0
 static const GFL_RECT	sc_right	=
 {	
-	19, 2, 33, 20
+	19, 2, 22, 20
 };
 #else
 static const GFL_RECT	sc_right	=
 {	
-	9*8, 2*8, 23*8, 20*8
+	11*8+1, 2*8, 22*8, 20*8
 };
 #endif
 
@@ -405,8 +422,9 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	SHAKESEARCH_Init( &p_wk->shake_left );
 	SHAKESEARCH_Init( &p_wk->shake_right );
 
-	SEQ_Change( p_wk, SEQFUNC_StartGame );
 
+
+	SEQ_Change( p_wk, SEQFUNC_StartGame );
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -432,6 +450,7 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 	MSGWND_Exit( &p_wk->msgwnd );
 	INFOWIN_Exit();
 	GRAPHIC_Exit( &p_wk->grp );
+	MSG_Exit( &p_wk->d_msg );
 	MSG_Exit( &p_wk->msg );
 
 	//プロセスワーク破棄
@@ -677,10 +696,29 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 
 	//読み込み設定
 	{	
-		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], GX_RGB(31,31,31) );
+		ARCHANDLE *p_handle;
+
 		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
 		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_BACK], GX_RGB(31,31,31) );
+
+		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCAURA_GRAPHIC, heapID );
+
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircaura_gra_aura_bg_guide_NCLR,
+				PALTYPE_MAIN_BG, PALTYPE_MAIN_BG*0x20, 0x20, heapID );
+	
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_ircaura_gra_aura_bg_guide_NCGR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], 0, 0, FALSE, heapID );
+
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircaura_gra_aura_bg_guide_l_NSCR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], 0, 0, FALSE, heapID );
+
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircaura_gra_aura_bg_guide_r_NSCR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], 0, 0, FALSE, heapID );
+
+		GFL_ARC_CloseDataHandle( p_handle );
 	}
+
+	GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
 }
 
 //----------------------------------------------------------------------------
@@ -1251,25 +1289,32 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
 		MSGWND_Clear( &p_wk->d_msgwnd );
 		MSGWND_PrintDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"左指の座標", 0, 0 );
+							L"左指の座標", DEBUGMSG_LEFT1, 0 );
 		MSGWND_PrintDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"右指の座標", 80, 0 );
+							L"右指の座標", DEBUGMSG_RIGHT1, 0 );
 		MSGWND_PrintDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"左指のブレ", 0, 20 );
+							L"左指のブレ", DEBUGMSG_LEFT1, 20 );
 		MSGWND_PrintDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"右指のブレ", 80,20 );
+							L"右指のブレ", DEBUGMSG_RIGHT1,20 );
 
 		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_000, 0, 0 );
+
+
+		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
+		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], VISIBLE_ON );
+
 		*p_seq	= SEQ_MAIN;
 		break;
 
 	case SEQ_MAIN:
 		if( TP_GetRectTrg( &sc_left, &p_wk->trg_left ) )
 		{	
+			OS_Printf("左手座標\n");
+			OS_Printf("X %d Y %d\n", p_wk->trg_left.x, p_wk->trg_left.y);
 			MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"X %d", p_wk->trg_left.x, 0, 10 );
+							L"X %d", p_wk->trg_left.x, DEBUGMSG_LEFT1, 10 );
 			MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"Y %d", p_wk->trg_left.y, 40, 10 );
+							L"Y %d", p_wk->trg_left.y, DEBUGMSG_LEFT2, 10 );
 
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchLeft );
@@ -1303,15 +1348,26 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			if( SHAKESEARCH_Main( &p_wk->shake_left, &sc_left ) )
 			{	
 				int i;
+				OS_Printf("左手ブレ幅\n");
 				for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
 				{	
 					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"X %d", p_wk->shake_left.shake[i].x, 0, i*10+30 );
+							L"X %d", p_wk->shake_left.shake[i].x, DEBUGMSG_LEFT1, i*10+30 );
 					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"Y %d", p_wk->shake_left.shake[i].y, 40, i*10+30 );
+							L"( %d )", p_wk->shake_left.shake[i].x- p_wk->shake_left.shake[0].x, DEBUGMSG_LEFT2, i*10+30 );
+					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
+							L"Y %d", p_wk->shake_left.shake[i].y, DEBUGMSG_LEFT3, i*10+30 );
+					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
+							L"( %d )", p_wk->shake_left.shake[i].y- p_wk->shake_left.shake[0].y, DEBUGMSG_LEFT4, i*10+30 );
+					OS_Printf( "X %d (%d) Y %d (%d)\n", 
+							p_wk->shake_left.shake[i].x, 
+							p_wk->shake_left.shake[i].x - p_wk->shake_left.shake[0].x, 
+							p_wk->shake_left.shake[i].y, 
+							p_wk->shake_left.shake[i].y - p_wk->shake_left.shake[0].y );
 				}
 
 				MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_002, 0, 0 );
+		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_ON );
 				*p_seq	= SEQ_WAIT_RIGHT;
 			}
 		}
@@ -1324,10 +1380,12 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_WAIT_RIGHT:
 		if( TP_GetRectCont( &sc_right, &p_wk->trg_right ) )
 		{	
+			OS_Printf("右手座標\n");
+			OS_Printf("X %d Y %d\n", p_wk->trg_right.x, p_wk->trg_right.y);
 			MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"X %d", p_wk->trg_right.x, 80, 10 );
+							L"X %d", p_wk->trg_right.x, DEBUGMSG_RIGHT1, 10 );
 			MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"Y %d", p_wk->trg_right.y, 120, 10 );
+							L"Y %d", p_wk->trg_right.y, DEBUGMSG_RIGHT2, 10 );
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchRight );
 		}
@@ -1369,12 +1427,22 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			if( SHAKESEARCH_Main( &p_wk->shake_right, &sc_right ) )
 			{	
 				int i;
+				OS_Printf("右手ブレ幅\n");
 				for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
 				{	
 					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"X %d", p_wk->shake_right.shake[i].x, 80, i*10+30 );
+							L"X %d", p_wk->shake_right.shake[i].x, DEBUGMSG_RIGHT1, i*10+30 );
 					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"Y %d", p_wk->shake_right.shake[i].y, 120, i*10+30 );
+							L"( %d )", p_wk->shake_right.shake[i].x - p_wk->shake_right.shake[0].x, DEBUGMSG_RIGHT2, i*10+30 );
+					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
+							L"Y %d", p_wk->shake_right.shake[i].y, DEBUGMSG_RIGHT3, i*10+30 );
+					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
+							L"( %d )", p_wk->shake_right.shake[i].y - p_wk->shake_right.shake[0].y,DEBUGMSG_RIGHT4, i*10+30 );
+					OS_Printf( "X %d (%d) Y %d (%d)\n", 
+							p_wk->shake_right.shake[i].x, 
+							p_wk->shake_right.shake[i].x - p_wk->shake_right.shake[0].x, 
+							p_wk->shake_right.shake[i].y, 
+							p_wk->shake_right.shake[i].y - p_wk->shake_right.shake[0].y );
 				}
 				MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_003, 0, 0 );
 				SEQ_Change( p_wk, SEQFUNC_Result );
