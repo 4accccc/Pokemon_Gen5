@@ -1310,7 +1310,7 @@ static GMEVENT_RESULT DMenuTestCameraListEvent(
 				VEC_Normalize( &vec1, &vec1 );
 				cos = VEC_DotProduct( &vec0, &vec1 );
 				
-				FIELD_CAMERA_SetAngleX( camera, FX_AcosIdx( cos ) );
+				FIELD_CAMERA_SetAnglePitch( camera, FX_AcosIdx( cos ) );
 				FIELD_CAMERA_SetAngleLen( camera, len );
 			}
 			

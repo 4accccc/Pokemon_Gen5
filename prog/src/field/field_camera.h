@@ -58,10 +58,12 @@ extern void FIELD_CAMERA_SetFar(FIELD_CAMERA * camera, fx32 far);
 extern fx32 FIELD_CAMERA_GetFar(const FIELD_CAMERA * camera);
 
 // ターゲットを中心とした、アングル操作
-extern u16 FIELD_CAMERA_GetAngleX(const FIELD_CAMERA * camera );
-extern void FIELD_CAMERA_SetAngleX(FIELD_CAMERA * camera, u16 angle );
-extern u16 FIELD_CAMERA_GetAngleY(const FIELD_CAMERA * camera );
-extern void FIELD_CAMERA_SetAngleY(FIELD_CAMERA * camera, u16 angle );
+// Pitch  垂直方向回転
+// Yaw    水平方向回転
+extern u16 FIELD_CAMERA_GetAnglePitch(const FIELD_CAMERA * camera );
+extern void FIELD_CAMERA_SetAnglePitch(FIELD_CAMERA * camera, u16 angle );
+extern u16 FIELD_CAMERA_GetAngleYaw(const FIELD_CAMERA * camera );
+extern void FIELD_CAMERA_SetAngleYaw(FIELD_CAMERA * camera, u16 angle );
 extern fx32 FIELD_CAMERA_GetAngleLen(const FIELD_CAMERA * camera );
 extern void FIELD_CAMERA_SetAngleLen(FIELD_CAMERA * camera, fx32 length );
 

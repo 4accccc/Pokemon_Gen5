@@ -104,7 +104,7 @@ static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
 	BOOL	mvFlag = FALSE;
 	
 	fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
-	dir = FIELD_CAMERA_GetAngleY( FIELDMAP_GetFieldCamera(fieldWork) );
+	dir = FIELD_CAMERA_GetAngleYaw( FIELDMAP_GetFieldCamera(fieldWork) );
 	
 	if( key & PAD_KEY_UP )
 	{
