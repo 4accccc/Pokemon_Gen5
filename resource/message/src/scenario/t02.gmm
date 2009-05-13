@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-12T17:25:23"/>
+	<create user="matsumiya" host="W00179" date="2009-05-13T11:21:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="99"/>
+		<comment position="4" width="147"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,7 +293,6 @@
 
 
 	<row id="msg_t01_babygirl1_01">
-		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">？？？</language>
 		<language name="JPN_KANJI" width="256">？？？</language>
@@ -323,6 +322,13 @@
 		<language name="JPN" width="256">カラクサタウン</language>
 		<language name="JPN_KANJI" width="256">カラクサタウン
 生い茂るツルは繁栄の証</language>
+	</row>
+
+	<row id="msg_t01_sign1_02">
+		<attribute name="キャラ指定">看板：ポケセン</attribute>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">旅のお供に　ポケモンセンター
+ショップコーナーも　あります</language>
 	</row>
 
 	<flowchart-group-list>
