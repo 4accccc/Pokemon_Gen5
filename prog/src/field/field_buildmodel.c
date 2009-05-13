@@ -14,15 +14,27 @@
 #include "field/areadata.h"
 
 #include "field_buildmodel.h"
+#include "field_bmanime.h"
 
 #include "field_g3d_mapper.h"		//下記ヘッダに必要
 #include "fieldmap_resist.h"		//FLDMAPPER_RESISTDATA_OBJTBLなど
 
 #include "arc/fieldmap/area_id.h"
+#include "arc/fieldmap/buildmodel_info.naix"
 
 //============================================================================================
 //============================================================================================
 
+enum {  
+  BMANIME_ID_COUNT_MAX = 4,
+
+};
+
+enum{ 
+  FILEID_BMODEL_ANIMEDATA = NARC_buildmodel_info_buildmodel_anime_bin,
+
+
+};
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
@@ -31,6 +43,22 @@ enum {
 
 	BMODEL_ID_NG	= BMODEL_ID_MAX,
 	BMODEL_ENTRY_NG = BMODEL_ENTRY_MAX,
+
+  BMANIME_NULL_ID  = 0xffff,
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+struct _FIELD_BMANIME_DATA
+{ 
+  u8 anm_type;  //BMANIME_TYPE  アニメの種類指定
+  u8 prg_type;  //動作プログラムの種類指定
+  u8 anm_count; //アニメカウント
+  u8 set_count; //
+
+  ///アニメアーカイブ指定ID
+  u16 anm_id[BMANIME_ID_COUNT_MAX];
+
 };
 
 //------------------------------------------------------------------
@@ -38,11 +66,16 @@ enum {
 struct _FIELD_BMODEL_MAN
 {
 	HEAPID heapID;
-	u8 tbl[BMODEL_ID_MAX];
-	BMODEL_ID entry_index[BMODEL_ENTRY_MAX];
-	u16 entry_count;
-	ARCID use_arcid;
 
+	u8 IDToEntryTable[BMODEL_ID_MAX];
+
+	u16 entryCount;
+	BMODEL_ID entryToIDTable[BMODEL_ENTRY_MAX];
+  FIELD_BMANIME_DATA animeData[BMODEL_ENTRY_MAX];
+
+	ARCID model_arcid;
+
+  //FLDMAPPERに引き渡すための生成データ保持ワーク
 	FLDMAPPER_RESISTDATA_OBJTBL	gobjData_Tbl;
 	FLDMAPPER_RESISTOBJDATA resistObjTbl[BMODEL_ENTRY_MAX * 2];
 };
@@ -50,27 +83,43 @@ struct _FIELD_BMODEL_MAN
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static FIELD_BMODEL_MAN * GlobalManager;
 
-//============================================================================================
-//============================================================================================
-static void makeTblFromIndex(FIELD_BMODEL_MAN * man);
-static void makeResistObjTable(FIELD_BMODEL_MAN * man);
-static u16 calcArcIndex(u16 area_id);
 
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static void makeIDToEntryTable(FIELD_BMODEL_MAN * man);
+static void makeResistObjTable(FIELD_BMODEL_MAN * man);
+static u16 calcArcIndex(u16 area_id);
+
+static void loadBModelIDList(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id);
+
+static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id);
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void FIELD_BMANIME_DATA_init(FIELD_BMANIME_DATA * data);
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief 配置モデルマネジャー生成
+ * @param heapID
+ */
 //------------------------------------------------------------------
 FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID)
 {	
 	FIELD_BMODEL_MAN * man = GFL_HEAP_AllocMemory(heapID, sizeof(FIELD_BMODEL_MAN));
 	man->heapID = heapID;
-	GlobalManager = man;
 	return man;
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 配置モデルマネジャー消去
+ * @param man 配置モデルマネジャーへのポインタ
+ */
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
 {	
@@ -78,125 +127,170 @@ void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 配置モデルデータ読み込み処理
+ * @param man 配置モデルマネジャーへのポインタ
+ */
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid)
 {	
-	ARCHANDLE * handle;
 	u16 area_id = ZONEDATA_GetAreaID(zoneid);
-	u16 arc_index = calcArcIndex(area_id);
+	u16 bmlist_index = calcArcIndex(area_id);
+  ARCID bmlist_arc_id;
+  u16 model_info_dataid;
+  int i;
 
-	GFL_STD_MemClear(man->tbl, sizeof(man->tbl));
-	GFL_STD_MemFill16(man->entry_index, BMODEL_ENTRY_NG, sizeof(man->entry_index));
+	GFL_STD_MemClear(man->IDToEntryTable, sizeof(man->IDToEntryTable));
+	GFL_STD_MemFill16(man->entryToIDTable, BMODEL_ENTRY_NG, sizeof(man->entryToIDTable));
+  for (i = 0; i < BMODEL_ENTRY_MAX; i++)
+  { 
+    FIELD_BMANIME_DATA_init(&man->animeData[i]);
+  }
 
-	{	
-		ARCID index_arc;
-		if (AREADATA_GetInnerOuterSwitch(area_id) != 0) 
-		{	
-			man->use_arcid = ARCID_BMODEL_OUTDOOR;
-			index_arc = ARCID_BMODEL_IDX_OUTDOOR;
-		}
-		else
-		{	
-			man->use_arcid = ARCID_BMODEL_INDOOR;
-			index_arc = ARCID_BMODEL_IDX_INDOOR;
-		}
-		handle = GFL_ARC_OpenDataHandle(index_arc, man->heapID);
-	}
-	{	
-		u16 data_count = GFL_ARC_GetDataFileCntByHandle(handle);
-		TAMADA_Printf("bmodel list id = %d\n",data_count);
-		if (data_count < arc_index)
-		{	
-			GF_ASSERT_MSG(0, "配置モデルリストデータがありません(%d<%d)\n", data_count, arc_index);
-			arc_index = 0;		//とりあえずハングアップ回避
-		}
-	}
-	//読み込み
-	{	
-		u16 size = GFL_ARC_GetDataSizeByHandle(handle, arc_index);
-		man->entry_count = size / sizeof(BMODEL_ID);
-		if(size > sizeof(man->entry_index))
-		{	
-			GF_ASSERT_MSG(0, "配置モデルリストデータがオーバー（size=%d ARCINDEX=%d)\n", size, arc_index);
-			man->entry_count = BMODEL_ENTRY_MAX;	//とりあえずハングアップ回避
-			size = sizeof(man->entry_index);
-		}
-		TAMADA_Printf("entry_count=%d\n", man->entry_count);
-		GFL_ARC_LoadDataOfsByHandle(handle, arc_index, 0, size, man->entry_index);
-	}
-	GFL_ARC_CloseDataHandle(handle);
+  if (AREADATA_GetInnerOuterSwitch(area_id) != 0) 
+  {	
+    man->model_arcid = ARCID_BMODEL_OUTDOOR;
+    model_info_dataid = NARC_buildmodel_info_buildmodel_outdoor_bin;
+    bmlist_arc_id = ARCID_BMODEL_IDX_OUTDOOR;
+  }
+  else
+  {	
+    man->model_arcid = ARCID_BMODEL_INDOOR;
+    model_info_dataid = NARC_buildmodel_info_buildmodel_indoor_bin;
+    bmlist_arc_id = ARCID_BMODEL_IDX_INDOOR;
+  }
 
-	//データテーブル生成
-	makeTblFromIndex(man);
+  //エリア別配置モデルIDリストの読み込み
+  loadBModelIDList(man, bmlist_arc_id, bmlist_index);
+
+	//ID→登録順序の変換データテーブル生成
+	makeIDToEntryTable(man);
+
+  //必要な配置モデルアニメデータの読み込み
+  loadAnimeData(man, model_info_dataid);
+
+  //FLDMAPPERに引き渡すデータを生成
 	makeResistObjTable(man);
-
 }
+
 //------------------------------------------------------------------
+/**
+ * @brief
+ * @param man 配置モデルマネジャーへのポインタ
+ * @return  FLDMAPPER_RESISTDATA_OBJTBL 生成したデータへのポインタ
+ *
+ * 生成データを保持するメモリははマネジャー管理下に置かれている。
+ * このタイミングで確保しているわけではない
+ */
 //------------------------------------------------------------------
 const FLDMAPPER_RESISTDATA_OBJTBL * FIELD_BMODEL_MAN_GetOBJTBL(const FIELD_BMODEL_MAN * man)
 {	
 	return &man->gobjData_Tbl;
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+#if 0
 u16 FIELD_BMODEL_MAN_GetNarcIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
 {
 	int index;
 	GF_ASSERT(id < BMODEL_ID_MAX);
-	index = man->tbl[id];
+	index = man->IDToEntryTable[id];
 	GF_ASSERT(index < BMODEL_ENTRY_MAX);
-	return man->entry_index[index];
+	return man->entryToIDTable[index];
 }
+#endif
 
 //------------------------------------------------------------------
+/**
+ * @brief 配置モデルIDを登録済み配置モデルのインデックスに変換する
+ * @param man 配置モデルマネジャーへのポインタ
+ */
 //------------------------------------------------------------------
-u16 FIELD_BMODEL_MAN_GetEntryIndex(BMODEL_ID id)
+u16 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
 {	
 	u16 entry;
-	FIELD_BMODEL_MAN * man = GlobalManager;
-	//entry = FIELD_BMODEL_MAN_GetNarcIndex(GlobalManager, id);
 	GF_ASSERT(id < BMODEL_ID_MAX);
-	entry = man->tbl[id];
-	TAMADA_Printf("bmodel index = %d -->%d\n",id, entry);
+	entry = man->IDToEntryTable[id];
+	TAMADA_Printf("bmodel: id(%d) -->entry_index(%d)\n",id, entry);
 	return entry;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief 配置モデルIDから対応するアニメデータを取得する
+ * @param bm_id   配置モデルID
+ */
+//------------------------------------------------------------------
+const FIELD_BMANIME_DATA * FIELD_BMODEL_MAN_GetAnimeData(FIELD_BMODEL_MAN * man, u16 bm_id)
+{ 
+  u16 entry_id = man->IDToEntryTable[bm_id];
+  GF_ASSERT(bm_id < BMODEL_ID_MAX);
+  GF_ASSERT(entry_id < man->entryCount);
+  return &man->animeData[entry_id];
+}
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
-//BMODEL_IDで引くtblにはentry_indexへのオフセットを格納
+/**
+ * @brief エリア別配置モデルIDリストの読み込み
+ * @param man
+ * @param arc_id  エリア別配置モデルリストのアーカイブ指定ID（屋内or屋外）
+ * @param file_id  エリアIDから変換したファイル指定ID
+ *
+ * entryCount/entryToIDTableを書き換える
+ */
 //------------------------------------------------------------------
-static void makeTblFromIndex(FIELD_BMODEL_MAN * man)
+static void loadBModelIDList(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id)
+{ 
+  ARCHANDLE * hdl = GFL_ARC_OpenDataHandle(arc_id, man->heapID);
+  u16 data_count = GFL_ARC_GetDataFileCntByHandle(hdl);
+
+  TAMADA_Printf("bmodel list id = %d\n",file_id);
+  if (data_count < file_id)
+  {	
+    GF_ASSERT_MSG(0, "配置モデルリストデータがありません(%d<%d)\n", data_count, file_id);
+    file_id = 0;		//とりあえずハングアップ回避
+  }
+
+	//読み込み
+	{	
+		u16 size = GFL_ARC_GetDataSizeByHandle(hdl, file_id);
+		man->entryCount = size / sizeof(BMODEL_ID);
+		if(size > sizeof(man->entryToIDTable))
+		{	
+			GF_ASSERT_MSG(0, "配置モデルリストデータがオーバー（size=%d ARCINDEX=%d)\n", size, file_id);
+			man->entryCount = BMODEL_ENTRY_MAX;	//とりあえずハングアップ回避
+			size = sizeof(man->entryToIDTable);
+		}
+		TAMADA_Printf("entryCount=%d\n", man->entryCount);
+		GFL_ARC_LoadDataOfsByHandle(hdl, file_id, 0, size, man->entryToIDTable);
+	}
+	GFL_ARC_CloseDataHandle(hdl);
+}
+
+//------------------------------------------------------------------
+//BMODEL_IDで引くIDToEntryTableにはentryToIDTableへのオフセットを格納
+//------------------------------------------------------------------
+static void makeIDToEntryTable(FIELD_BMODEL_MAN * man)
 {
 	int i;
-	for (i = 0; i < man->entry_count; i++)
+	for (i = 0; i < man->entryCount; i++)
 	{	
-		int pos = man->entry_index[i];
-		man->tbl[pos] = i;
+		int pos = man->entryToIDTable[i];
+		man->IDToEntryTable[pos] = i;
 	}
 }
 
 //------------------------------------------------------------------
-//------------------------------------------------------------------
-static void makeResistObjTable(FIELD_BMODEL_MAN * man)
-{
-	static const FLDMAPPER_RESISTDATA_OBJTBL init = {	
-		0, NULL, 0, 0, NULL, 0
-	};
-	int i;
-	FLDMAPPER_RESISTDATA_OBJTBL * resist = &man->gobjData_Tbl;
-	FLDMAPPER_RESISTOBJDATA * mapperObj = man->resistObjTbl;
-	GFL_STD_MemFill16(mapperObj, NON_LOWQ, sizeof(man->resistObjTbl));
-	for (i = 0; i < man->entry_count; i++)
-	{	
-		mapperObj[i].highQ_ID = man->entry_index[i];
-	}
-	*resist = init;
-	resist->objArcID = man->use_arcid;
-	resist->objData = mapperObj;
-	resist->objCount = man->entry_count;
-}
-
-//------------------------------------------------------------------
+/**
+ * @brief エリアIDから配置モデル情報へのインデックス取得
+ * @param area_id 
+ * @return  u16 情報アーカイブの指定ID
+ *
+ * @todo  エリアデータの並びに依存して計算しているので移行を考えること！
+ */
 //------------------------------------------------------------------
 static u16 calcArcIndex(u16 area_id)
 {	
@@ -212,4 +306,134 @@ static u16 calcArcIndex(u16 area_id)
 }
 
 
+//------------------------------------------------------------------
+/**
+ * @brief FLDMAPPERでの登録に使用できるデータを生成
+ */
+//------------------------------------------------------------------
+static void makeResistObjTable(FIELD_BMODEL_MAN * man)
+{
+	static const FLDMAPPER_RESISTDATA_OBJTBL init = {	
+		0, NULL, 0, 0, NULL, 0
+	};
+	int i;
+	FLDMAPPER_RESISTDATA_OBJTBL * resist = &man->gobjData_Tbl;
+	FLDMAPPER_RESISTOBJDATA * mapperObj = man->resistObjTbl;
+	GFL_STD_MemFill16(mapperObj, NON_LOWQ, sizeof(man->resistObjTbl));
+	for (i = 0; i < man->entryCount; i++)
+	{	
+		mapperObj[i].highQ_ID = man->entryToIDTable[i];
+	}
+	*resist = init;
+	resist->objArcID = man->model_arcid;
+	resist->objData = mapperObj;
+	resist->objCount = man->entryCount;
+}
+
+//============================================================================================
+//
+//
+//
+//    配置モデルアニメデータ
+//
+//
+//
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief 保持しているアニメIDへのポインタを返す
+ */
+//------------------------------------------------------------------
+const u16 * FIELD_BMANIME_DATA_getAnimeFileID(const FIELD_BMANIME_DATA * data)
+{ 
+  return data->anm_id;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 保持しているアニメIDの数を返す
+ */
+//------------------------------------------------------------------
+u32 FIELD_BMANIME_DATA_getAnimeCount(const FIELD_BMANIME_DATA * data)
+{ 
+  u32 i,count;
+  for (i = 0, count = 0; i < BMANIME_ID_COUNT_MAX; i++)
+  { 
+    if (data->anm_id[i] != BMANIME_NULL_ID)
+    { 
+      count ++;
+    }
+  }
+  return count;
+}
+//------------------------------------------------------------------
+/**
+ * @brief アニメタイプを返す
+ * @return  BMANIME_TYPE
+ */
+//------------------------------------------------------------------
+BMANIME_TYPE FIELD_BMANIME_DATA_getAnimeType(const FIELD_BMANIME_DATA * data)
+{ 
+  return data->anm_type;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief プログラムタイプを返す
+ * @return  BMANIME_PROG_TYPE
+ */
+//------------------------------------------------------------------
+BMANIME_PROG_TYPE FIELD_BMANIME_DATA_getProgType(const FIELD_BMANIME_DATA * data)
+{ 
+  return data->prg_type;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief FIELD_BMANIME_DATAの初期化
+ */
+//------------------------------------------------------------------
+static void FIELD_BMANIME_DATA_init(FIELD_BMANIME_DATA * data)
+{ 
+  static const FIELD_BMANIME_DATA init = {  
+    BMANIME_TYPE_NONE,  //アニメの種類指定
+    BMANIME_PROG_TYPE_NONE,  //動作プログラムの種類指定
+    0,  //アニメカウント（仮）
+    0,  //セットカウント（仮）
+    //アニメアーカイブ指定ID
+    { BMANIME_NULL_ID, BMANIME_NULL_ID, BMANIME_NULL_ID, BMANIME_NULL_ID, }
+
+  };
+  *data = init;
+}
+//------------------------------------------------------------------
+/**
+ * @brief 配置モデル用アニメデータの読み込み
+ */
+//------------------------------------------------------------------
+static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id)
+{ 
+  ARCHANDLE * info_hdl = GFL_ARC_OpenDataHandle(ARCID_BMODEL_INFO, man->heapID);
+  ARCHANDLE * animeHdl = GFL_ARC_OpenDataHandle(ARCID_BMODEL_ANIME, man->heapID);
+  u16 anime_id;
+  int i;
+
+  for (i = 0; i < man->entryCount; i++)
+  { 
+    BMODEL_ID id = man->entryToIDTable[i];
+    GFL_ARC_LoadDataOfsByHandle(info_hdl, file_id, id * sizeof(u16), sizeof(u16), &anime_id);
+    TAMADA_Printf("bmodel: entry ID(%d) --> anime_id(%d)\n", id, anime_id);
+    if (anime_id != 0xffff)
+    { 
+      GFL_ARC_LoadDataOfsByHandle(animeHdl, FILEID_BMODEL_ANIMEDATA,
+          anime_id * sizeof(FIELD_BMANIME_DATA), sizeof(FIELD_BMANIME_DATA),
+          &man->animeData[i]);
+    }
+  }
+  GFL_ARC_CloseDataHandle(info_hdl);
+  GFL_ARC_CloseDataHandle(animeHdl);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 

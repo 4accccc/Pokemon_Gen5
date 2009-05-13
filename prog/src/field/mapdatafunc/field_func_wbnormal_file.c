@@ -96,9 +96,10 @@ BOOL FieldLoadMapData_WBNormalFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 				PositionSt* objStatus = (PositionSt*)&layout->posData;
 				GFL_G3D_MAP_GLOBALOBJ_ST status;
 				int i, count = layout->count;
+        FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
 
 				for( i=0; i<count; i++ ){
-					status.id = FIELD_BMODEL_MAN_GetEntryIndex(objStatus[i].resourceID);
+					status.id = FIELD_BMODEL_MAN_GetEntryIndex(bm, objStatus[i].resourceID);
 					VEC_Set( &status.trans, 
 							objStatus[i].xpos, objStatus[i].ypos, -objStatus[i].zpos );
 					//DirectX‚ÆDS‚ÅÀ•WŒn‚ª‹t‚¾‚©‚çH‚Æ‚è‚ ‚¦‚¸•ÏŠ·
