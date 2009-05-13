@@ -34,7 +34,8 @@
 
 #ifdef PM_DEBUG
 //debug用
-#include <wchar.h>	//wcslen
+#include "system/net_err.h"	//VRAM退避用アドレスを貰うため
+#include <wchar.h>					//wcslen
 #endif
 
 //=============================================================================
@@ -181,6 +182,37 @@ typedef struct {
 	STRBUF*						p_strbuf;
 } MSGWND_WORK;
 
+#ifdef DEBUG_AURA_MSG
+//-------------------------------------
+///	デバッグプリント用画面
+//=====================================
+typedef struct {
+	GFL_BMP_DATA *p_bmp;
+	GFL_FONT*			p_font;
+
+	BOOL	is_now_save;
+	u8	frm;
+
+  u8  *p_char_temp_area;      ///<キャラクタVRAM退避先
+  u16 *p_scrn_temp_area;      ///<スクリーンVRAM退避先
+  u16 *p_pltt_temp_area;      ///<パレットVRAM退避先
+
+ 	u8  font_col_bkup[3];
+  u8  prioryty_bkup;
+  u8  scroll_x_bkup;
+  u8  scroll_y_bkup;
+
+	HEAPID heapID;
+} DEBUG_PRINT_WORK;
+
+#define DEBUGPRINT_CHAR_TEMP_AREA (0x4000)
+#define DEBUGPRINT_SCRN_TEMP_AREA (0x800)
+#define DEBUGPRINT_PLTT_TEMP_AREA (0x20)
+#define DEBUGPRINT_WIDTH  (20)
+#define DEBUGPRINT_HEIGHT (24)
+
+static DEBUG_PRINT_WORK *sp_dp_wk;
+#endif //DEBUG_AURA_MSG
 
 //-------------------------------------
 ///	ブレ計測
@@ -205,11 +237,6 @@ struct _AURA_MAIN_WORK
 	MSG_WORK				msg;
 	MSGWND_WORK			msgwnd;
 
-	//デバッグ用
-	MSG_WORK				d_msg;
-	MSGWND_WORK			d_msgwnd;
-
-
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
 	u16		seq;
@@ -222,7 +249,6 @@ struct _AURA_MAIN_WORK
 	SHAKE_SEARCH_WORK	shake_right;
 
 };
-
 
 //=============================================================================
 /**
@@ -264,15 +290,6 @@ static BOOL MSGWND_Main( MSGWND_WORK *p_wk, MSG_WORK *p_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
-
-#ifdef DEBUG_AURA_MSG
-static void MSGWND_PrintDebug( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, const u16 *cp_str, u16 x, u16 y );
-static void MSGWND_PrintNumberDebug( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, const u16 *cp_str, int number, u16 x, u16 y );
-#else
-#define MSGWND_PrintDebug( ... )				((void)0)
-#define MSGWND_PrintNumberDebug( ... )	((void)0)
-#endif //DEBUG_AURA_MSG
-
 //SEQ
 static void SEQ_Change( AURA_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
 static void SEQ_End( AURA_MAIN_WORK *p_wk );
@@ -288,7 +305,24 @@ static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
 static void	SHAKESEARCH_Init( SHAKE_SEARCH_WORK *p_wk );
 static void	SHAKESEARCH_Exit( SHAKE_SEARCH_WORK *p_wk );
 static BOOL	SHAKESEARCH_Main( SHAKE_SEARCH_WORK *p_wk, const GFL_RECT	*cp_rect );
- 
+//DEBUG_PRINT
+#ifdef DEBUG_AURA_MSG
+static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID );
+static void DEBUGPRINT_Exit( void );
+static void DEBUGPRINT_Open( void );
+static void DEBUGPRINT_Close( void );
+static void DEBUGPRINT_Print( const u16 *cp_str, u16 x, u16 y );
+static void DEBUGPRINT_PrintNumber( const u16 *cp_str, int number, u16 x, u16 y );
+static void DEBUGPRINT_Clear( void );
+#else
+#define DEBUGPRINT_Init(...)				((void)0)
+#define DEBUGPRINT_Exit(...)				((void)0)
+#define DEBUGPRINT_Open(...)				((void)0)
+#define DEBUGPRINT_Close(...)				((void)0)
+#define DEBUGPRINT_Print(...)				((void)0)
+#define DEBUGPRINT_PrintNumber(...) ((void)0)
+#define DEBUGPRINT_Clear(...)				((void)0)
+#endif //DEBUG_AURA_MSG
 
 //=============================================================================
 /**
@@ -354,7 +388,7 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 
@@ -408,20 +442,18 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	GFL_STD_MemClear( p_wk, sizeof(AURA_MAIN_WORK) );
 
 	//モジュール初期化
-	MSG_Init( &p_wk->msg, MSG_FONT_TYPE_LARGE, HEAPID_IRCAURA );
-	MSG_Init( &p_wk->d_msg, MSG_FONT_TYPE_SMALL, HEAPID_IRCAURA );
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCAURA );
+	MSG_Init( &p_wk->msg, MSG_FONT_TYPE_LARGE, HEAPID_IRCAURA );
 	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, HEAPID_IRCAURA );
 	MSGWND_Init( &p_wk->msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
 			MSGTEXT_WND_X, MSGTEXT_WND_Y, MSGTEXT_WND_W, MSGTEXT_WND_H, HEAPID_IRCAURA );
 
-	//デバッグ用
-	MSGWND_Init( &p_wk->d_msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
-			0, 0, 32, 16, HEAPID_IRCAURA );
-
 	SHAKESEARCH_Init( &p_wk->shake_left );
 	SHAKESEARCH_Init( &p_wk->shake_right );
 
+	//デバッグ
+	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCAURA );
+	DEBUGPRINT_Open();
 
 
 	SEQ_Change( p_wk, SEQFUNC_StartGame );
@@ -445,12 +477,14 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 
 	p_wk	= p_work;
 
+	//デバッグ破棄
+	DEBUGPRINT_Close();
+	DEBUGPRINT_Exit();
+
 	//モジュール破棄
-	MSGWND_Exit( &p_wk->d_msgwnd );
 	MSGWND_Exit( &p_wk->msgwnd );
 	INFOWIN_Exit();
 	GRAPHIC_Exit( &p_wk->grp );
-	MSG_Exit( &p_wk->d_msg );
 	MSG_Exit( &p_wk->msg );
 
 	//プロセスワーク破棄
@@ -549,10 +583,6 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 	{	
 		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
 	}
-	if( MSG_Main( &p_wk->d_msg ) )
-	{	
-		MSGWND_Main( &p_wk->d_msgwnd, &p_wk->d_msg );
-	}
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -574,6 +604,9 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 {
 	//ワーククリア
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
+
+	//VRAMクリアー
+	GFL_DISP_ClearVRAM( 0 );
 
 	// ディスプレイON
 	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
@@ -697,9 +730,6 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 	//読み込み設定
 	{	
 		ARCHANDLE *p_handle;
-
-		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
-		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_BACK], GX_RGB(31,31,31) );
 
 		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCAURA_GRAPHIC, heapID );
 
@@ -927,7 +957,10 @@ static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID )
 
 	p_wk->p_wordset	= WORDSET_Create( heapID );
 
-	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
+	{	
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
+		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -1170,63 +1203,6 @@ static void MSGWND_Clear( MSGWND_WORK* p_wk )
 	GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
 }
 
-#ifdef DEBUG_AURA_MSG
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバッグ用文字列表示	（ワイド文字列を出力します）
- *
- *	@param	MSGWND_WORK* p_wk	ワーク
- *	@param	MSG_WORK *cp_msg	メッセージ管理
- *	@param	u16 *cp_str				ワイド文字列
- *	@param	x									位置X
- *	@param	y									位置Y
- *
- */
-//-----------------------------------------------------------------------------
-static void MSGWND_PrintDebug( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, const u16 *cp_str, u16 x, u16 y )
-{	
-	PRINT_QUE*	p_que;
-	GFL_FONT*		p_font;
-
-	p_que		= MSG_GetPrintQue( cp_msg );
-	p_font	= MSG_GetFont( cp_msg );
-
-	//文字列作成
-	{	
-		STRCODE	str[128];
-		u16	strlen;
-
-		strlen	= wcslen(cp_str);
-		GFL_STD_MemCopy(cp_str, str, strlen*2);
-		str[strlen]	= GFL_STR_GetEOMCode();
-		GFL_STR_SetStringCode( p_wk->p_strbuf, str);
-	}
-
-	//表示
-	PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバッグ用数値入り文字列表示	（ワイド文字列を出力します）
- *
- *	@param	MSGWND_WORK* p_wk	ワーク
- *	@param	MSG_WORK *cp_msg	メッセージ管理
- *	@param	u16 *cp_str				ワイド文字列
- *	@param	number						数値
- *	@param	x									位置X
- *	@param	y									位置Y
- *
- */
-//-----------------------------------------------------------------------------
-static void MSGWND_PrintNumberDebug( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, const u16 *cp_str, int number, u16 x, u16 y )
-{
-	u16	str[128];
-
-	swprintf( str, 128, cp_str, number );
-	MSGWND_PrintDebug( p_wk, cp_msg, str, x, y );
-}
-#endif //DEBUG_AURA_MSG
-
 //=============================================================================
 /**
  *				SEQ
@@ -1287,15 +1263,11 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		SHAKESEARCH_Init( &p_wk->shake_left );
 		SHAKESEARCH_Init( &p_wk->shake_right );
 
-		MSGWND_Clear( &p_wk->d_msgwnd );
-		MSGWND_PrintDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"左指の座標", DEBUGMSG_LEFT1, 0 );
-		MSGWND_PrintDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"右指の座標", DEBUGMSG_RIGHT1, 0 );
-		MSGWND_PrintDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"左指のブレ", DEBUGMSG_LEFT1, 20 );
-		MSGWND_PrintDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"右指のブレ", DEBUGMSG_RIGHT1,20 );
+		DEBUGPRINT_Clear();
+		DEBUGPRINT_Print( L"左指の座標", DEBUGMSG_LEFT1, 0 );
+		DEBUGPRINT_Print( L"右指の座標", DEBUGMSG_RIGHT1, 0 );
+		DEBUGPRINT_Print( L"左指のブレ", DEBUGMSG_LEFT1, 20 );
+		DEBUGPRINT_Print( L"右指のブレ", DEBUGMSG_RIGHT1,20 );
 
 		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_000, 0, 0 );
 
@@ -1311,10 +1283,8 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		{	
 			OS_Printf("左手座標\n");
 			OS_Printf("X %d Y %d\n", p_wk->trg_left.x, p_wk->trg_left.y);
-			MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"X %d", p_wk->trg_left.x, DEBUGMSG_LEFT1, 10 );
-			MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"Y %d", p_wk->trg_left.y, DEBUGMSG_LEFT2, 10 );
+			DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_left.x, DEBUGMSG_LEFT1, 10 );
+			DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_left.y, DEBUGMSG_LEFT2, 10 );
 
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchLeft );
@@ -1351,14 +1321,10 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				OS_Printf("左手ブレ幅\n");
 				for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
 				{	
-					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"X %d", p_wk->shake_left.shake[i].x, DEBUGMSG_LEFT1, i*10+30 );
-					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"( %d )", p_wk->shake_left.shake[i].x- p_wk->shake_left.shake[0].x, DEBUGMSG_LEFT2, i*10+30 );
-					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"Y %d", p_wk->shake_left.shake[i].y, DEBUGMSG_LEFT3, i*10+30 );
-					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"( %d )", p_wk->shake_left.shake[i].y- p_wk->shake_left.shake[0].y, DEBUGMSG_LEFT4, i*10+30 );
+					DEBUGPRINT_PrintNumber( L"X %d", p_wk->shake_left.shake[i].x, DEBUGMSG_LEFT1, i*10+30 );
+					DEBUGPRINT_PrintNumber( L"( %d )", p_wk->shake_left.shake[i].x- p_wk->shake_left.shake[0].x, DEBUGMSG_LEFT2, i*10+30 );
+					DEBUGPRINT_PrintNumber( L"Y %d", p_wk->shake_left.shake[i].y, DEBUGMSG_LEFT3, i*10+30 );
+					DEBUGPRINT_PrintNumber( L"( %d )", p_wk->shake_left.shake[i].y- p_wk->shake_left.shake[0].y, DEBUGMSG_LEFT4, i*10+30 );
 					OS_Printf( "X %d (%d) Y %d (%d)\n", 
 							p_wk->shake_left.shake[i].x, 
 							p_wk->shake_left.shake[i].x - p_wk->shake_left.shake[0].x, 
@@ -1382,10 +1348,8 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		{	
 			OS_Printf("右手座標\n");
 			OS_Printf("X %d Y %d\n", p_wk->trg_right.x, p_wk->trg_right.y);
-			MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"X %d", p_wk->trg_right.x, DEBUGMSG_RIGHT1, 10 );
-			MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"Y %d", p_wk->trg_right.y, DEBUGMSG_RIGHT2, 10 );
+			DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_right.x, DEBUGMSG_RIGHT1, 10 );
+			DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_right.y, DEBUGMSG_RIGHT2, 10 );
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchRight );
 		}
@@ -1430,14 +1394,10 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				OS_Printf("右手ブレ幅\n");
 				for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
 				{	
-					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"X %d", p_wk->shake_right.shake[i].x, DEBUGMSG_RIGHT1, i*10+30 );
-					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"( %d )", p_wk->shake_right.shake[i].x - p_wk->shake_right.shake[0].x, DEBUGMSG_RIGHT2, i*10+30 );
-					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"Y %d", p_wk->shake_right.shake[i].y, DEBUGMSG_RIGHT3, i*10+30 );
-					MSGWND_PrintNumberDebug( &p_wk->d_msgwnd, &p_wk->d_msg, 
-							L"( %d )", p_wk->shake_right.shake[i].y - p_wk->shake_right.shake[0].y,DEBUGMSG_RIGHT4, i*10+30 );
+					DEBUGPRINT_PrintNumber( L"X %d", p_wk->shake_right.shake[i].x, DEBUGMSG_RIGHT1, i*10+30 );
+					DEBUGPRINT_PrintNumber( L"( %d )", p_wk->shake_right.shake[i].x - p_wk->shake_right.shake[0].x, DEBUGMSG_RIGHT2, i*10+30 );
+					DEBUGPRINT_PrintNumber( L"Y %d", p_wk->shake_right.shake[i].y, DEBUGMSG_RIGHT3, i*10+30 );
+					DEBUGPRINT_PrintNumber( L"( %d )", p_wk->shake_right.shake[i].y - p_wk->shake_right.shake[0].y,DEBUGMSG_RIGHT4, i*10+30 );
 					OS_Printf( "X %d (%d) Y %d (%d)\n", 
 							p_wk->shake_right.shake[i].x, 
 							p_wk->shake_right.shake[i].x - p_wk->shake_right.shake[0].x, 
@@ -1612,3 +1572,211 @@ static BOOL	SHAKESEARCH_Main( SHAKE_SEARCH_WORK *p_wk, const GFL_RECT	*cp_rect )
 	return FALSE;
 }
  
+#ifdef DEBUG_AURA_MSG
+//=============================================================================
+/**
+ *				デバッグプリント用画面
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域	初期化
+ *
+ *	@param	frm											フレーム
+ *	@param	heapID									ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID )
+{	
+	DEBUG_PRINT_WORK *p_wk;
+
+	sp_dp_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(DEBUG_PRINT_WORK) );
+	p_wk = sp_dp_wk;
+	GFL_STD_MemClear( p_wk, sizeof(DEBUG_PRINT_WORK) );
+	p_wk->heapID						= heapID;
+	p_wk->is_now_save				= is_now_save;
+	p_wk->frm								= frm;
+
+	//デバッグプリント用フォント
+	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT,
+				NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );	
+
+	//退避エリアをNetEffから取得
+	NetErr_GetTempArea( &p_wk->p_char_temp_area, &p_wk->p_scrn_temp_area, &p_wk->p_pltt_temp_area );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域	破棄
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Exit( void )
+{	
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+
+	GFL_FONT_Delete( p_wk->p_font );
+	GFL_STD_MemClear( p_wk, sizeof(DEBUG_PRINT_WORK) );
+
+	GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域オープン
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Open( void )
+{	
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+
+	GF_ASSERT( p_wk );
+
+	if( p_wk->is_now_save )
+	{	
+		//VRAMのデータを退避
+		GFL_STD_MemCopy16(GFL_DISPUT_GetCgxPtr(p_wk->frm), p_wk->p_char_temp_area, DEBUGPRINT_CHAR_TEMP_AREA);
+		GFL_STD_MemCopy16(GFL_DISPUT_GetScrPtr(p_wk->frm), p_wk->p_scrn_temp_area, DEBUGPRINT_SCRN_TEMP_AREA);
+		GFL_STD_MemCopy16(GFL_DISPUT_GetPltPtr(p_wk->frm), p_wk->p_pltt_temp_area, DEBUGPRINT_PLTT_TEMP_AREA);	
+		//Fontカラーの退避
+		GFL_FONTSYS_GetColor( &p_wk->font_col_bkup[0] ,
+				&p_wk->font_col_bkup[1] ,
+				&p_wk->font_col_bkup[2] );
+
+		//もろもろ退避
+		p_wk->prioryty_bkup = GFL_BG_GetPriority(p_wk->frm);
+		p_wk->scroll_x_bkup = GFL_BG_GetScrollX(p_wk->frm);
+		p_wk->scroll_y_bkup = GFL_BG_GetScrollY(p_wk->frm);
+	}
+
+	//上で退避させたものの設定
+	GFL_BG_SetPriority( p_wk->frm , 0 );
+	GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_X_SET , 0 );
+	GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_Y_SET , 0 );
+
+	//デバッグプリント用設定
+	//スクリーンの作成
+  {
+    u8 x,y;
+		u16 buf;
+    for( y = 0;y<DEBUGPRINT_HEIGHT;y++ )
+    {
+      for( x=0;x<DEBUGPRINT_WIDTH;x++ )
+      {
+        buf = x+y*DEBUGPRINT_WIDTH;
+        GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
+      }
+      for( x=DEBUGPRINT_WIDTH;x<32;x++ )
+      {
+        buf = DEBUGPRINT_HEIGHT*DEBUGPRINT_WIDTH;
+        GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
+      }
+    }
+    GFL_BG_LoadScreenReq( p_wk->frm );
+  }
+  
+  //パレットの作成
+  {
+    u16 col[4]={ 0xFFFF , 0x0000 , 0x7fff , 0x001f };
+    GFL_BG_LoadPalette( p_wk->frm, col, sizeof(u16)*4, 0 );
+  }
+
+	//書き込むためのBMP作成
+	p_wk->p_bmp	= GFL_BMP_CreateInVRAM( GFL_DISPUT_GetCgxPtr(p_wk->frm), DEBUGPRINT_WIDTH, DEBUGPRINT_HEIGHT, GFL_BMP_16_COLOR, p_wk->heapID );
+	GFL_STD_MemClear16( GFL_DISPUT_GetCgxPtr(p_wk->frm) , DEBUGPRINT_CHAR_TEMP_AREA );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域	終了
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Close( void )
+{	
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+
+	GF_ASSERT( p_wk );
+
+	GFL_BMP_Delete( p_wk->p_bmp );
+	if( p_wk->is_now_save )
+	{	
+		//もろもろ復帰
+		GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_X_SET , p_wk->scroll_x_bkup );
+		GFL_BG_SetScroll( p_wk->frm , GFL_BG_SCROLL_Y_SET , p_wk->scroll_y_bkup );
+		GFL_BG_SetPriority( p_wk->frm , p_wk->prioryty_bkup );
+		//Fontカラーの復帰
+		GFL_FONTSYS_SetColor( p_wk->font_col_bkup[0] ,
+				p_wk->font_col_bkup[1] ,
+				p_wk->font_col_bkup[2] );
+		GFL_STD_MemCopy16(p_wk->p_char_temp_area, GFL_DISPUT_GetCgxPtr(p_wk->frm), DEBUGPRINT_CHAR_TEMP_AREA);
+		GFL_STD_MemCopy16(p_wk->p_scrn_temp_area, GFL_DISPUT_GetScrPtr(p_wk->frm), DEBUGPRINT_SCRN_TEMP_AREA);
+		GFL_STD_MemCopy16(p_wk->p_pltt_temp_area, GFL_DISPUT_GetPltPtr(p_wk->frm), DEBUGPRINT_PLTT_TEMP_AREA);
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域に書き込み
+ *
+ *	@param	u16 *cp_str							ワイド文字列
+ *	@param	x												座標X
+ *	@param	y												座標Y
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Print( const u16 *cp_str, u16 x, u16 y )
+{	
+	STRBUF	*p_strbuf;
+	STRCODE	str[128];
+	u16	strlen;
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+
+	GF_ASSERT(p_wk);
+
+	//STRBUF用に変換
+	strlen	= wcslen(cp_str);
+	GFL_STD_MemCopy(cp_str, str, strlen*2);
+	str[strlen]	= GFL_STR_GetEOMCode();
+
+	//STRBUFに転送
+	p_strbuf	= GFL_STR_CreateBuffer( strlen*2, p_wk->heapID );
+	GFL_STR_SetStringCode( p_strbuf, str);
+
+	//書き込み
+	PRINTSYS_Print( p_wk->p_bmp, x, y, p_strbuf, p_wk->p_font );
+
+	//破棄
+	GFL_STR_DeleteBuffer( p_strbuf );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域に数値つき文字書き込み
+ *
+ *	@param	u16 *cp_str							ワイド文字列（%dや%fを使ってください）
+ *	@param	number									数字
+ *	@param	x												座標X
+ *	@param	y												座標Y
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_PrintNumber( const u16 *cp_str, int number, u16 x, u16 y )
+{	
+	u16	str[128];
+	swprintf( str, 128, cp_str, number );
+	DEBUGPRINT_Print( str, x, y );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ用プリント領域をクリアー
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Clear( void )
+{	
+	DEBUG_PRINT_WORK *p_wk	= sp_dp_wk;
+	GF_ASSERT(p_wk);
+	GFL_BMP_Clear( p_wk->p_bmp, 0 );
+}
+#endif //DEBUG_AURA_MSG 
