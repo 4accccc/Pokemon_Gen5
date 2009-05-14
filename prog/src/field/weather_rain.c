@@ -677,7 +677,7 @@ static void WEATHER_RAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 			}
 		}
 		// 座標設定
-		WEATHER_OBJ_WORK_SetPos( p_wk, &mat );
+		WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &mat );
 
 		break;
 	case 1:		// 破棄アニメ
@@ -749,7 +749,7 @@ static void WEATHER_RAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		// 座標を設定
 		mat.x = ( WEATHER_RAIN_START_X_BASE + (frame * WEATHER_RAIN_MUL_X) + (rand % WEATHER_RAIN_START_X_MAX) );
 		mat.y = WEATHER_RAIN_START_Y;
-		WEATHER_OBJ_WORK_SetPos( add_obj, &mat );
+		WEATHER_OBJ_WORK_SetPosNoTurn( add_obj, &mat );
 	}
 }
 
@@ -1061,7 +1061,7 @@ static void WEATHER_SPARKRAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 			}
 		}
 		// 座標設定
-		WEATHER_OBJ_WORK_SetPos( p_wk, &mat );
+		WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &mat );
 		break;
 	case 1:		// 破棄アニメ
 		if(obj_w[0]-- <= 0){
@@ -1132,7 +1132,7 @@ static void WEATHER_SPARKRAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 			mat.x = WEATHER_STRAIN_START_X + (rand % WEATHER_STRAIN_START_X_MAX);
 			mat.y = WEATHER_STRAIN_START_Y + (rand % WEATHER_STRAIN_START_Y_MAX);
 
-			WEATHER_OBJ_WORK_SetPos( add_obj, &mat );
+			WEATHER_OBJ_WORK_SetPosNoTurn( add_obj, &mat );
 		}
 		
 	}

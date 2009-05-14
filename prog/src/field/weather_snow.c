@@ -42,8 +42,8 @@
 //-------------------------------------
 //	雪管理関数定数
 //=====================================
-#define	WEATHER_SNOW_TIMING_MIN		(7)				// 雪を出すタイミング最小
-#define WEATHER_SNOW_TIMING_MAX		(12)				// 雪を出すタイミング最大
+#define	WEATHER_SNOW_TIMING_MIN		(10)				// 雪を出すタイミング最小
+#define WEATHER_SNOW_TIMING_MAX		(14)				// 雪を出すタイミング最大
 #define WEATHER_SNOW_TIMING_ADD		(5)					// タイミングを減らす数
 #define	WEATHER_SNOW_ADD_TIMING		(1)					// １度のオブジェ登録数を増やすタイミング
 #define	WEATHER_SNOW_ADD			(0)					// オブジェ登録数を足す値
@@ -197,8 +197,8 @@ static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6
 #define WEATHER_ARARE_FOG_OFS_START	(0x800)
 
 /*== あられオブジェクト ==*/
-#define WEATHER_ARARE_SPEED_X		(-3)						// 横に進むスピード
-#define WEATHER_ARARE_SPEED_Y		(9)						// たてに進むスピードベース
+#define WEATHER_ARARE_SPEED_X		(-4)						// 横に進むスピード
+#define WEATHER_ARARE_SPEED_Y		(10)						// たてに進むスピードベース
 #define WEATHER_ARARE_ADDSPEED_X	(2)						// 横に進むスピードに足すあたい
 #define WEATHER_ARARE_ADDSPEED_Y	(2)						// たてに進むスピードに足すあたい
 #define	WEATHER_ARARE_END_MIN		(1)							// 終了カウンタ最小
@@ -2031,7 +2031,7 @@ static void WEATHER_ARARE_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 				obj_w[4] ++;
 			}
 		}
-		WEATHER_OBJ_WORK_SetPos( p_wk, &mat );
+		WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &mat );
 
 		if(obj_w[0]-- <= 0){
 			obj_w[3] = 2;		// 破棄

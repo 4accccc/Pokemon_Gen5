@@ -73,10 +73,10 @@ enum{
 #define WEATHER_OBJ_WORK_SOFT_PRI	( 64 )
 #define WEATHER_OBJ_WORK_SERFACE_NO	( CLSYS_DEFREND_MAIN )
 
-#define WEATHER_OBJ_MINTURN_X	(-64*FX32_ONE)
-#define WEATHER_OBJ_MINTURN_Y	(-64*FX32_ONE)
-#define WEATHER_OBJ_MAXTURN_X	((256*FX32_ONE) + (64*FX32_ONE))
-#define WEATHER_OBJ_MAXTURN_Y	((192*FX32_ONE) + (64*FX32_ONE))
+#define WEATHER_OBJ_MINTURN_X	(-64)
+#define WEATHER_OBJ_MINTURN_Y	(-64)
+#define WEATHER_OBJ_MAXTURN_X	((256) + (64))
+#define WEATHER_OBJ_MAXTURN_Y	((192) + (64))
 
 
 //-----------------------------------------------------------------------------
@@ -1369,6 +1369,22 @@ void WEATHER_OBJ_WORK_SetPos( WEATHER_OBJ_WORK* p_wk, const GFL_CLACTPOS* cp_pos
 
 	p_clwk = WEATHER_OBJ_WK_GetClWk( p_wk );
 	GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DEFREND_MAIN );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  回り込みなしの座標設定関数
+ *
+ *	@param	p_wk      ワーク
+ *	@param	cp_pos    位置
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_OBJ_WORK_SetPosNoTurn( WEATHER_OBJ_WORK* p_wk, const GFL_CLACTPOS* cp_pos )
+{
+	GFL_CLWK* p_clwk;
+
+	p_clwk = WEATHER_OBJ_WK_GetClWk( p_wk );
+	GFL_CLACT_WK_SetPos( p_clwk, cp_pos, CLSYS_DEFREND_MAIN );
 }
 
 
