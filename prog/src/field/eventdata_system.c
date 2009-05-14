@@ -970,10 +970,14 @@ const FLDMMDL_HEADER SampleFldMMdlHeader_T01[] = {
 
 const int SampleFldMMdlHeaderCount_T01 = NELEMS(SampleFldMMdlHeader_T01);
 
+//仮 r01動作モデル
+#include "../../resource/fldmapdata/eventdata/zone_r01evc.cdat"
+
+#if 0
 const FLDMMDL_HEADER SampleFldMMdlHeader_R01[] = {
 	{
 		0,		///<識別ID
-		KABI32,	///<表示するOBJコード
+		BOY1,	///<表示するOBJコード
 		MV_RND,	///<動作コード
 		0,	///<イベントタイプ
 		0,	///<イベントフラグ
@@ -989,7 +993,7 @@ const FLDMMDL_HEADER SampleFldMMdlHeader_R01[] = {
 		0,	///<Y値 fx32型
 	},
 	{
-		0,		///<識別ID
+		1,		///<識別ID
 		WOMAN1,	///<表示するOBJコード
 		MV_RND,	///<動作コード
 		0,	///<イベントタイプ
@@ -1008,7 +1012,7 @@ const FLDMMDL_HEADER SampleFldMMdlHeader_R01[] = {
 };
 
 const int SampleFldMMdlHeaderCount_R01 = NELEMS(SampleFldMMdlHeader_R01);
-
+#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
