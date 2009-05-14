@@ -150,6 +150,7 @@ FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
 	pWork->mode = mode;
 	pWork->heapID = heapID;
 	pWork->checker = NULL;
+	pWork->fieldmap = fieldmap;
 
 	funcTable[mode].init_func(pWork);
   
@@ -269,7 +270,10 @@ void * FIELD_SUBSCREEN_DEBUG_GetControl(FIELD_SUBSCREEN_WORK * pWork)
 //-----------------------------------------------------------------------------
 static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork)
 {
-  pWork->cgearWork = CGEAR_Init();
+  pWork->cgearWork = CGEAR_Init(CGEAR_SV_GetCGearSaveData(
+		GAMEDATA_GetSaveControlWork(
+		GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap))
+		)));
 }
 
 //----------------------------------------------------------------------------

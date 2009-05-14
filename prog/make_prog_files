@@ -23,6 +23,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/trainercard_data.c \
         savedata/system_data.c \
         savedata/record.c \
+        savedata/c_gear_data.c \
         savedata/wifihistory.c \
         savedata/wifilist.c \
         savedata/mystery_data.c \

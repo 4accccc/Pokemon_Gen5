@@ -439,3 +439,17 @@ SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata)
 	//セーブ実行
 	return SaveControl_Save(gamedata->sv_control_ptr);
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief	  セーブコントロールワークを取得する
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	SAVE_CONTROL_WORK	のポインタ
+ */
+//--------------------------------------------------------------
+
+SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWork(GAMEDATA * gamedata)
+{
+	return gamedata->sv_control_ptr;
+}
+

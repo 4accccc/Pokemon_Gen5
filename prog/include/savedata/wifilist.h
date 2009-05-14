@@ -1,16 +1,14 @@
 //============================================================================================
 /**
  * @file	WifiList.h
- * @brief	ともだちてちょう用 
+ * @brief	ともだちてちょう用
  * @author	mori GAME FREAK inc.  --> k.ohno
  * @date	2006.02.10
  */
 //============================================================================================
-#ifndef __WIFILIST_H__
-#define __WIFILIST_H__
+#pragma once
 
 #include <dwc.h>
-
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORK参照のため
 
 
@@ -29,20 +27,20 @@ typedef struct _WIFI_LIST WIFI_LIST;
 
 // WifiList_<Get*Set>FriendInfoで使うenum
 enum{
-	WIFILIST_FRIEND_ID = 0,
-//	WIFILIST_FRIEND_BATTLE_NUM,
-	WIFILIST_FRIEND_BATTLE_WIN,
-	WIFILIST_FRIEND_BATTLE_LOSE,
-	WIFILIST_FRIEND_TRADE_NUM,
-	WIFILIST_FRIEND_LASTBT_YEAR,
-	WIFILIST_FRIEND_LASTBT_MONTH,
-	WIFILIST_FRIEND_LASTBT_DAY,
-	WIFILIST_FRIEND_UNION_GRA,
-	WIFILIST_FRIEND_SEX,
-	WIFILIST_FRIEND_POFIN_NUM,
-	WIFILIST_FRIEND_BALLSLOW_NUM,
-	WIFILIST_FRIEND_BALANCEBALL_NUM,
-	WIFILIST_FRIEND_BALLOON_NUM,
+  WIFILIST_FRIEND_ID = 0,
+  //	WIFILIST_FRIEND_BATTLE_NUM,
+  WIFILIST_FRIEND_BATTLE_WIN,
+  WIFILIST_FRIEND_BATTLE_LOSE,
+  WIFILIST_FRIEND_TRADE_NUM,
+  WIFILIST_FRIEND_LASTBT_YEAR,
+  WIFILIST_FRIEND_LASTBT_MONTH,
+  WIFILIST_FRIEND_LASTBT_DAY,
+  WIFILIST_FRIEND_UNION_GRA,
+  WIFILIST_FRIEND_SEX,
+  WIFILIST_FRIEND_POFIN_NUM,
+  WIFILIST_FRIEND_BALLSLOW_NUM,
+  WIFILIST_FRIEND_BALANCEBALL_NUM,
+  WIFILIST_FRIEND_BALLOON_NUM,
 };
 
 //============================================================================================
@@ -89,4 +87,3 @@ extern void WifiList_SetCountStopNum( WIFI_LIST *list, int no );
 //----------------------------------------------------------
 extern WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK* pSave);
 
-#endif

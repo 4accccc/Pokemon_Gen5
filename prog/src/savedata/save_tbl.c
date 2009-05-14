@@ -18,6 +18,7 @@
 #include "playerdata_local.h"
 #include "savedata/wifihistory.h"
 #include "savedata/wifilist.h"
+#include "savedata/c_gear_data.h"
 #include "savedata/trainercard_data.h"
 #include "savedata/mystery_data.h"
 #include "savedata/situation.h"
@@ -169,6 +170,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_WIFILIST,
 		(FUNC_GET_SIZE)WifiList_GetWorkSize,
 		(FUNC_INIT_WORK)WifiList_Init,
+	},
+	{	// C-GEAR
+		GMDATA_ID_CGEAR,
+		(FUNC_GET_SIZE)CGEAR_SV_GetWorkSize,
+		(FUNC_INIT_WORK)CGEAR_SV_Init,
 	},
 	{	//トレーナーカード(サイン
 		GMDATA_ID_TRCARD,

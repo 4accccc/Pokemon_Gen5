@@ -219,3 +219,18 @@ extern SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata);
  */
 //--------------------------------------------------------------
 extern EVENTWORK * GAMEDATA_GetEventWork(GAMEDATA *gamedata);
+
+//============================================================================================
+//	SAVE_CONTROL_WORKへのアクセス
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	  セーブコントロールワークを取得する
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	SAVE_CONTROL_WORK	のポインタ
+ */
+//------------------------------------------------------------------
+extern SAVE_CONTROL_WORK * GAMEDATA_GetSaveControlWork(GAMEDATA * gamedata);
+
+
+

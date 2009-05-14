@@ -12,13 +12,14 @@
 #pragma once
 
 #include <gflib.h>
+#include "savedata/c_gear_data.h"
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "field/fieldmap.h"
 
 typedef struct _C_GEAR_WORK  C_GEAR_WORK;
 
-extern C_GEAR_WORK* CGEAR_Init(void);
+extern C_GEAR_WORK* CGEAR_Init(CGEAR_SAVEDATA* pCGSV);
 extern void CGEAR_Main(C_GEAR_WORK* pWork);
 extern void CGEAR_Exit(C_GEAR_WORK* pWork);
 

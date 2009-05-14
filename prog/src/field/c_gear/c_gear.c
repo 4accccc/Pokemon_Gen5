@@ -65,12 +65,6 @@ typedef struct {
 } _WINDOWPOS;
 
 
-static _WINDOWPOS wind4[]={
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*4), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*3), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*2), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)  ), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-};
 
 
 static const GFL_UI_TP_HITTBL bttndata[] = {
@@ -126,8 +120,9 @@ enum _IBMODE_CHANGE {
 };
 
 
-#define GEAR_MAIN_FRAME   (GFL_BG_FRAME3_S)
+#define GEAR_MAIN_FRAME   (GFL_BG_FRAME2_S)
 #define GEAR_BMPWIN_FRAME   (GFL_BG_FRAME1_S)
+#define GEAR_BUTTON_FRAME   (GFL_BG_FRAME0_S)
 
 
 typedef void (StateFunc)(C_GEAR_WORK* pState);
@@ -153,6 +148,7 @@ struct _C_GEAR_WORK {
   GAMESYS_WORK *gameSys_;
   FIELD_MAIN_WORK *fieldWork_;
   GMEVENT* event_;
+	CGEAR_SAVEDATA* pCGSV;
 };
 
 
@@ -216,25 +212,73 @@ static void _changeStateDebug(C_GEAR_WORK* pWork,StateFunc state, int line)
 }
 #endif
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   ギアのパネルをセーブデータにしたがって作る
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+#define PANEL_Y1 (6)
+#define PANEL_Y2 (4)
+#define PANEL_X1 (-2)
+
+#define PANEL_HEIDHT1 (3)
+#define PANEL_HEIGHT2 (4)
+
+#define PANEL_WIDTH (9)
+#define PANEL_SIZEXY (4)   //
+
+
+static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
+{
+  int x , y;
+  int yloop[2] = {PANEL_HEIDHT1,PANEL_HEIGHT2};
+  int ypos[2] = {PANEL_Y1,PANEL_Y2};
+
+  for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
+    for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
+      int xscr = PANEL_X1 + x * PANEL_SIZEXY;
+      int yscr = ypos[ x % 2 ] + y * PANEL_SIZEXY;
+			
+//      _gearPanelBgScreenMake(pWork, xscr, yscr);
+    }
+  }
+}
+
 
 static void _gearBgCreate(C_GEAR_WORK* pWork)
 {
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, pWork->heapID );
 
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_c_gear_c_gear_base_NCLR,
-                                      PALTYPE_SUB_BG, 0, 0x20,  pWork->heapID);
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_c_gear_c_gear_NCLR,
+                                      PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
     // サブ画面BGキャラ転送
     pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_c_gear_c_gear_NCGR,
                                                                   GEAR_MAIN_FRAME, 0, 0, pWork->heapID);
 
     // サブ画面BGスクリーン転送
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-                                           NARC_c_gear_c_gear_NSCR,
+                                           NARC_c_gear_c_gear01_NSCR,
                                            GEAR_MAIN_FRAME, 0,
                                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                            pWork->heapID);
 
+    // サブ画面BGスクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+                                           NARC_c_gear_c_gear00_NSCR,
+                                           GEAR_BMPWIN_FRAME, 0,
+                                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                           pWork->heapID);
+
+    // サブ画面BGスクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+                                           NARC_c_gear_c_gear02_NSCR,
+                                           GEAR_BUTTON_FRAME, 0,
+                                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                           pWork->heapID);
+    
 
     //パレットアニメシステム作成
 //    ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_ircbattle_connect_anm_NCLR, pWork->heapID);
@@ -252,12 +296,12 @@ static void _createSubBg(C_GEAR_WORK* pWork)
   }
   {
     int frame = GEAR_MAIN_FRAME;
-    GFL_BG_BGCNT_HEADER AffineBgCntDat = {
-      0, 0, 0x400, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-      GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x04000, 0x8000,GX_BG_EXTPLTT_01,
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
       };
-    GFL_BG_SetBGControl( frame, &AffineBgCntDat, GFL_BG_MODE_AFFINE );
+    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_SetPriority( frame, 2 );
@@ -270,18 +314,40 @@ static void _createSubBg(C_GEAR_WORK* pWork)
     int frame = GEAR_BMPWIN_FRAME;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_SetPriority( frame, 1 );
+ //   GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+
+  {
+    int frame = GEAR_BUTTON_FRAME;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_SetPriority( frame, 0 );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+ //   GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
 
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
+  
+  //  G2S_SetBlendAlpha( GEAR_MAIN_FRAME, GEAR_BMPWIN_FRAME , 3, 16 );
+ //   G2S_SetBlendAlpha( GEAR_MAIN_FRAME, GEAR_BUTTON_FRAME , 16, 16 );
+  G2S_SetBlendAlpha( GEAR_MAIN_FRAME|GEAR_BUTTON_FRAME, GEAR_BMPWIN_FRAME , 1, 8 );
+
 }
 
 
@@ -294,34 +360,6 @@ static void _createSubBg(C_GEAR_WORK* pWork)
 
 static void _buttonWindowCreate(int num,int* pMsgBuff,C_GEAR_WORK* pWork)
 {
-  int i;
-  u32 cgx;
-  int frame = GEAR_BMPWIN_FRAME;
-
-  pWork->windowNum = num;
-
-  for(i=0;i < num;i++){
-    _WINDOWPOS* pos = wind4;
-
-    pWork->buttonWin[i] = GFL_BMPWIN_Create(
-      frame,
-      pos[i].leftx, pos[i].lefty,
-      pos[i].width, pos[i].height,
-      _BUTTON_WIN_PAL, GFL_BMP_CHRAREA_GET_F);
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
-    GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
-    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-    //    BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
-
-    // システムウインドウ枠描画
-
-    GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
-    GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
-    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-
-
-  }
 }
 
 //----------------------------------------------------------------------------
@@ -423,7 +461,6 @@ static void _workEnd(C_GEAR_WORK* pWork)
   GFL_FONTSYS_SetDefaultColor();
 
   //    _buttonWindowDelete(pWork);
-  GFL_BG_FillCharacterRelease( GEAR_BMPWIN_FRAME, 1, 0);
   GFL_BG_FillCharacterRelease( GEAR_MAIN_FRAME, 1, 0);
 //  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
 //                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
@@ -431,6 +468,7 @@ static void _workEnd(C_GEAR_WORK* pWork)
   GFL_BG_FreeCharacterArea(GEAR_MAIN_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subchar));
   
+  GFL_BG_FreeBGControl(GEAR_BUTTON_FRAME);
   GFL_BG_FreeBGControl(GEAR_BMPWIN_FRAME);
   GFL_BG_FreeBGControl(GEAR_MAIN_FRAME);
 
@@ -445,6 +483,7 @@ static void _workEnd(C_GEAR_WORK* pWork)
   {
     GFL_STR_DeleteBuffer(pWork->pStrBuf);
   }
+  GFL_BG_SetVisible( GEAR_BUTTON_FRAME, VISIBLE_OFF );
   GFL_BG_SetVisible( GEAR_BMPWIN_FRAME, VISIBLE_OFF );
   GFL_BG_SetVisible( GEAR_MAIN_FRAME, VISIBLE_OFF );
 
@@ -693,7 +732,7 @@ static void _modeReportWait(C_GEAR_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-C_GEAR_WORK* CGEAR_Init( void )
+C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV )
 {
   C_GEAR_WORK *pWork = NULL;
 
@@ -701,7 +740,8 @@ C_GEAR_WORK* CGEAR_Init( void )
 
   pWork = GFL_HEAP_AllocClearMemory( HEAPID_FIELDMAP, sizeof( C_GEAR_WORK ) );
   pWork->heapID = HEAPID_FIELDMAP;
-  _CHANGE_STATE( pWork, _modeInit);
+	pWork->pCGSV = pCGSV;
+	_CHANGE_STATE( pWork, _modeInit);
   return pWork;
 }
 
