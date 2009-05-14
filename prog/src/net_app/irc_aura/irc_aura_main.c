@@ -1639,9 +1639,9 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 		DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_left[idx1].y - p_wk->trg_left[idx2].y,
 				DEBUGMSG3_TAB+20, 20 );
 		DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_right[idx1].x - p_wk->trg_right[idx2].x,
-				DEBUGMSG3_TAB, 30 );
+				DEBUGMSG3_TAB+40, 20 );
 		DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_right[idx1].y - p_wk->trg_right[idx2].y,
-				DEBUGMSG3_TAB+20, 30 );
+				DEBUGMSG3_TAB+60, 20 );
 
 		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
 		{	
