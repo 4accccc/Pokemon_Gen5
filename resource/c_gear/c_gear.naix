@@ -11,9 +11,17 @@
 #define NARC_C_GEAR_NAIX_
 
 enum {
-	NARC_c_gear_c_gear_base_NCLR = 0,
-	NARC_c_gear_c_gear_NCGR = 1,
-	NARC_c_gear_c_gear_NSCR = 2
+	NARC_c_gear_c_gear_NCLR = 0,
+	NARC_c_gear_c_gear_obj_NCLR = 1,
+	NARC_c_gear_c_gear_NCGR = 2,
+	NARC_c_gear_c_gear_obj_NCGR = 3,
+	NARC_c_gear_c_gear_obj_NCER = 4,
+	NARC_c_gear_c_gear00_NSCR = 5,
+	NARC_c_gear_c_gear01_NSCR = 6,
+	NARC_c_gear_c_gear02_NSCR = 7,
+	NARC_c_gear_c_gear02b_NSCR = 8,
+	NARC_c_gear_c_gear03_NSCR = 9,
+	NARC_c_gear_c_gear_obj_NANR = 10
 };
 
 /* NARC_C_GEAR_NAIX_ */
