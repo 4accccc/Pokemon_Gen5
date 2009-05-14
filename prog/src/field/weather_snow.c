@@ -42,8 +42,8 @@
 //-------------------------------------
 //	雪管理関数定数
 //=====================================
-#define	WEATHER_SNOW_TIMING_MIN		(14)				// 雪を出すタイミング最小
-#define WEATHER_SNOW_TIMING_MAX		(24)				// 雪を出すタイミング最大
+#define	WEATHER_SNOW_TIMING_MIN		(7)				// 雪を出すタイミング最小
+#define WEATHER_SNOW_TIMING_MAX		(12)				// 雪を出すタイミング最大
 #define WEATHER_SNOW_TIMING_ADD		(5)					// タイミングを減らす数
 #define	WEATHER_SNOW_ADD_TIMING		(1)					// １度のオブジェ登録数を増やすタイミング
 #define	WEATHER_SNOW_ADD			(0)					// オブジェ登録数を足す値
@@ -55,25 +55,25 @@
 #define	WEATHER_SNOW_NOFADE_OBJ_START_DUST_MOVE	( 24 )			// ずらして動作させる値
 
 /*== フォグ ==*/
-#define	WEATHER_SNOW_FOG_TIMING		(400)							// に１回フォグテーブルを操作
-#define	WEATHER_SNOW_FOG_TIMING_END	(300)							// に１回フォグテーブルを操作
-#define WEATHER_SNOW_FOG_START		(16)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_SNOW_FOG_START_END	(32)						// このカウント動いてからフォグテーブルを操作
+#define	WEATHER_SNOW_FOG_TIMING		(200)							// に１回フォグテーブルを操作
+#define	WEATHER_SNOW_FOG_TIMING_END	(150)							// に１回フォグテーブルを操作
+#define WEATHER_SNOW_FOG_START		(8)						// このカウント動いてからフォグテーブルを操作
+#define WEATHER_SNOW_FOG_START_END	(16)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_SNOW_FOG_OFS		(0x300)
 #define WEATHER_SNOW_FOG_OFS_START	(0xb00)
 
 /*== 雪オブジェクト ==*/
-#define	WEATHER_SNOW_ADD_TMG_X_BASE	(4)					// 雪のスピードを足すタイミング
+#define	WEATHER_SNOW_ADD_TMG_X_BASE	(2)					// 雪のスピードを足すタイミング
 #define	WEATHER_SNOW_ADD_TMG_X_RAN	(2)					// 雪のスピードを足すタイミング乱数値
-#define	WEATHER_SNOW_ADD_TMG_Y_BASE	(1)					// 雪のスピードを足すタイミング
-#define	WEATHER_SNOW_ADD_TMG_Y_RAN	(2)					// 雪のスピードを足すタイミング乱数値
+#define	WEATHER_SNOW_ADD_TMG_Y_BASE	(2)					// 雪のスピードを足すタイミング
+#define	WEATHER_SNOW_ADD_TMG_Y_RAN	(1)					// 雪のスピードを足すタイミング乱数値
 
 #define	WEATHER_SSNOWTART_X_BASE	(-32)						// ベースになるX開始座標
 #define	WEATHER_SSNOWTART_X_MAX	(414)						// X開始座標乱数の最大値
 #define WEATHER_SNOW_OBJ_NUM		(4)					// オブジェ種類
 
-#define WEATHER_SNOW_OBJ_AUTODEST_TIMING_MAX ( 60 )	// 自滅タイム　最大
-#define WEATHER_SNOW_OBJ_AUTODEST_TIMING_MIN ( 4 )	// 自滅タイム　最小
+#define WEATHER_SNOW_OBJ_AUTODEST_TIMING_MAX ( 30 )	// 自滅タイム　最大
+#define WEATHER_SNOW_OBJ_AUTODEST_TIMING_MIN ( 2 )	// 自滅タイム　最小
 
 /*== 雪グラフィック構成データ ==*/
 #define WEATHER_SNOW_GRAPHIC_CELL	( 3 )
@@ -85,7 +85,7 @@
 //	吹雪管理関数定数
 //=====================================
 #define	WEATHER_SSNOW_TIMING_MIN		(1)							// 雨を出すタイミング最小
-#define WEATHER_SSNOW_TIMING_MAX		(18)						// 雨を出すタイミング最大
+#define WEATHER_SSNOW_TIMING_MAX		(6)						// 雨を出すタイミング最大
 #define WEATHER_SSNOW_TIMING_ADD		(3)							// タイミングを減らす数
 #define WEATHER_SSNOW_ADD_START			(1)							// 最初の同時に雨を登録する数
 #define WEATHER_SSNOW_ADD_TIMING		(2)							// 雨のタイミングをこれ回変更したら１回増やす
@@ -108,18 +108,17 @@
 
 /*== 雪オブジェクト ==*/
 #define WEATHER_SSNOW_SPEED_X		(-1)						// 横に進むスピード
-#define	WEATHER_SSNOW_END_MIN		(4)							// 終了カウンタ最小
-#define WEATHER_SSNOW_END_MAX		(46)						// 終了カウンタ最大
+#define	WEATHER_SSNOW_END_MIN		(2)							// 終了カウンタ最小
+#define WEATHER_SSNOW_END_MAX		(23)						// 終了カウンタ最大
 #define WEATHER_SSNOW_END_NUM		(WEATHER_SSNOW_END_MAX - WEATHER_SSNOW_END_MIN)	// カウンタの値の数
 #define	WEATHER_SSNOW_END_DIV		((WEATHER_SSNOW_END_NUM / 3)+1)	// オブジェクトの種類を計算するとき割る値
 #define	WEATHER_SSNOW_START_X_BASE	(-20)						// ベースになるX開始座標
 #define	WEATHER_SSNOW_MUL_X			(20)						// ベースに雪の種類分足す値
 #define	WEATHER_SSNOW_START_X_MAX	(420)						// X開始座標乱数の最大値
 #define	WEATHER_SSNOW_START_Y		(-8)						// Y開始座標
-#define	WEATHER_SSNOW_SPEED_ADD_TMG	(20)						// X座標のスピードを上げるタイミング
 
 #define	WEATHER_SSNOW_ADD_SP_TMG_NUM (4)						// スピードを変更するタイミングの数
-#define	WEATHER_SSNOW_ADD_SP_TMG_TMG (200)						// スピードを変更するタイミングのタイミング
+#define	WEATHER_SSNOW_ADD_SP_TMG_TMG (100)						// スピードを変更するタイミングのタイミング
 
 /*== 吹雪グラフィック構成データ ==*/
 #define WEATHER_SSNOW_GRAPHIC_CELL	( 1 )
@@ -129,13 +128,13 @@
 // 北海道雪
 //=======================
 #define	WEATHER_SNOW_S_TIMING_MIN		(1)							// 雪を出すタイミング最小
-#define WEATHER_SNOW_S_TIMING_MAX		(6)						// 雪を出すタイミング最大
+#define WEATHER_SNOW_S_TIMING_MAX		(3)						// 雪を出すタイミング最大
 #define WEATHER_SNOW_S_TIMING_ADD		(2)							// タイミングを減らす数
 #define WEATHER_SNOW_S_ADD_START		(1)							// 最初の同時に雪を登録する数
 #define WEATHER_SNOW_S_ADD_TIMING		(2)							// 雪のタイミングをこれ回変更したら１回増やす
 #define WEATHER_SNOW_S_ADD				(1)							// 登録する数を増やす数
-#define WEATHER_SNOW_S_ADD_END			(-4)						// 登録する数を増やす数
-#define	WEATHER_SNOW_S_ADD_MAIN			(10)						// メインシーケンスでの登録する数
+#define WEATHER_SNOW_S_ADD_END			(-2)						// 登録する数を増やす数
+#define	WEATHER_SNOW_S_ADD_MAIN			(1)						// メインシーケンスでの登録する数
 
 /*== フェード無し開始の時 ==*/
 #define WEATHER_SNOW_S_NOFADE_OBJ_START_NUM	( 20 )				// 開始時の散布するオブジェクトの数
@@ -143,10 +142,10 @@
 #define	WEATHER_SNOW_S_NOFADE_OBJ_START_DUST_MOVE	( 2 )		// １ずつずらして動作させる
 
 /*== フォグ ==*/
-#define	WEATHER_SNOW_S_FOG_TIMING		(300)							// に１回フォグテーブルを操作
-#define	WEATHER_SNOW_S_FOG_TIMING_END	(300)							// に１回フォグテーブルを操作
-#define WEATHER_SNOW_S_FOG_START		(16)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_SNOW_S_FOG_START_END	(20)						// このカウント動いてからフォグテーブルを操作
+#define	WEATHER_SNOW_S_FOG_TIMING		(200)							// に１回フォグテーブルを操作
+#define	WEATHER_SNOW_S_FOG_TIMING_END	(150)							// に１回フォグテーブルを操作
+#define WEATHER_SNOW_S_FOG_START		(8)						// このカウント動いてからフォグテーブルを操作
+#define WEATHER_SNOW_S_FOG_START_END	(10)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_SNOW_S_FOG_OFS			(-0x80)
 #define WEATHER_SNOW_S_FOG_OFS_START	(0x800)
 
@@ -155,22 +154,21 @@
 #define WEATHER_SNOW_S_BG_ALP_TIM_E	(8)		// アルファを１下げるタイミング
 
 // オブジェ 
-#define	WEATHER_SNOW_S_END_MIN		(18)						// 終了カウンタ最小
-#define WEATHER_SNOW_S_END_MAX		(24)						// 終了カウンタ最大
+#define	WEATHER_SNOW_S_END_MIN		(9)						// 終了カウンタ最小
+#define WEATHER_SNOW_S_END_MAX		(12)						// 終了カウンタ最大
 #define WEATHER_SNOW_S_START_X		(256)						// 横から出すときのX座標
 #define WEATHER_SNOW_S_START_X_RAN	(24)						// 横から出すときのX座標
 #define	WEATHER_SNOW_S_START_Y_BASE	(-32)							// ベースになるY開始座標
 #define	WEATHER_SNOW_S_START_Y_MAX	(168)						// X開始座標乱数の最大値
 
-#define	WEATHER_SNOW_S_SPEED_ADD_TMG (10)						// X座標のスピードを上げるタイミング
 
 #define	WEATHER_SNOW_S_ADD_SP_TMG_NUM (4)						// スピードを変更するタイミングの数
-#define	WEATHER_SNOW_S_ADD_SP_CHG_TMG (512)						// スピードを変更するタイミングのタイミング
+#define	WEATHER_SNOW_S_ADD_SP_CHG_TMG (256)						// スピードを変更するタイミングのタイミング
 
 #define WEATHER_SNOW_S_ADD_SP_TMG		(4)						// スピードを変更するタイミング
 #define WEATHER_SNOW_S_SP_UP			(8)						// この値以上の横スピードのときは派手にする
-static const int WEATHER_SSNOW_SPEED_X_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {-4,-6,-8,-10};
-static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {2,4,2,4};	// たてに進むスピード
+static const int WEATHER_SSNOW_SPEED_X_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {-7,-11,-15,-19};
+static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6,3,6};	// たてに進むスピード
 
 
 
@@ -191,20 +189,20 @@ static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {2,4
 #define	WEATHER_ARARE_NOFADE_OBJ_START_DUST_MOVE	( 1 )			// ずらして動作させる値
 
 /*== フォグ ==*/
-#define	WEATHER_ARARE_FOG_TIMING		(300)							// に１回フォグテーブルを操作
-#define	WEATHER_ARARE_FOG_TIMING_END	(100)							// に１回フォグテーブルを操作
+#define	WEATHER_ARARE_FOG_TIMING		(150)							// に１回フォグテーブルを操作
+#define	WEATHER_ARARE_FOG_TIMING_END	(50)							// に１回フォグテーブルを操作
 #define WEATHER_ARARE_FOG_START		(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_ARARE_FOG_START_END	(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_ARARE_FOG_OFS		(0x300)
 #define WEATHER_ARARE_FOG_OFS_START	(0x800)
 
 /*== あられオブジェクト ==*/
-#define WEATHER_ARARE_SPEED_X		(-2)						// 横に進むスピード
-#define WEATHER_ARARE_SPEED_Y		(6)						// たてに進むスピードベース
-#define WEATHER_ARARE_ADDSPEED_X	(1)						// 横に進むスピードに足すあたい
-#define WEATHER_ARARE_ADDSPEED_Y	(1)						// たてに進むスピードに足すあたい
+#define WEATHER_ARARE_SPEED_X		(-3)						// 横に進むスピード
+#define WEATHER_ARARE_SPEED_Y		(9)						// たてに進むスピードベース
+#define WEATHER_ARARE_ADDSPEED_X	(2)						// 横に進むスピードに足すあたい
+#define WEATHER_ARARE_ADDSPEED_Y	(2)						// たてに進むスピードに足すあたい
 #define	WEATHER_ARARE_END_MIN		(1)							// 終了カウンタ最小
-#define WEATHER_ARARE_END_MAX		(6)							// 終了カウンタ最大
+#define WEATHER_ARARE_END_MAX		(3)							// 終了カウンタ最大
 #define	WEATHER_ARARE_START_X_BASE	(0)							// ベースになるX開始座標
 #define	WEATHER_ARARE_MUL_X			(15)						// ベースに雨の種類分足す値
 #define	WEATHER_ARARE_START_X_MAX	(270)						// X開始座標乱数の最大値
@@ -1223,8 +1221,8 @@ static void WEATHER_SSNOW_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 	int tbl_num;
 	WEATHER_SSNOW_WORK* sys_w;		// システムワーク
 	s32* obj_w;			// オブジェクトワーク
-	static int WEATHER_SSNOW_ADD_SP_TMG[WEATHER_SSNOW_ADD_SP_TMG_NUM] = {16,32,16,10};
-	static int WEATHER_SSNOW_SPEED_Y[WEATHER_SSNOW_ADD_SP_TMG_NUM] = {2,2,2,2};	// たてに進むスピード
+	static int WEATHER_SSNOW_ADD_SP_TMG[WEATHER_SSNOW_ADD_SP_TMG_NUM] = {8,16,8,5};
+	static int WEATHER_SSNOW_SPEED_Y[WEATHER_SSNOW_ADD_SP_TMG_NUM] = {4,4,4,4};	// たてに進むスピード
 	int frame;	// フレーム数
 	GFL_CLACTPOS mat;	// 設定座標
 	GFL_CLWK* p_clwk;
@@ -1657,7 +1655,7 @@ static void WEATHER_SNOW_S_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 
 	
 	// num分オブジェクトを登録
-	for(i=0;i<num*4;i++){
+	for(i=0;i<num;i++){
 
 		add_obj = WEATHER_TASK_CreateObj( p_wk, heapID );		// 登録
 		if(add_obj == NULL){			// 失敗したら終了

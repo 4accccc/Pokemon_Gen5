@@ -92,8 +92,8 @@
 
 #define WEATHER_STORM_STRONG_CHG	(6)						// ïóÇ™Ç±ÇÃílà»è„Ç…Ç»Ç¡ÇΩéûê®Ç¢Çã≠Ç≠Ç∑ÇÈ
 
-static const int STORM_SPEED_X_TBL[WEATHER_STORM_SPEED_NUM] = {-3,-5,-5,-3,-5,-6,-10,-6};
-static const int STORM_SPEED_Y_TBL[WEATHER_STORM_SPEED_NUM] = { 2, 2, 2, 4, 4, 2, 2, 2};	
+static const int STORM_SPEED_X_TBL[WEATHER_STORM_SPEED_NUM] = {-6,-10,-10,-6,-10,-12,-20,-12};
+static const int STORM_SPEED_Y_TBL[WEATHER_STORM_SPEED_NUM] = { 4, 4, 4, 8, 8, 4, 4, 4};	
 
 //-----------------------------------------------------------------------------
 /**

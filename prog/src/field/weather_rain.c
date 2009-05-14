@@ -56,18 +56,18 @@
 #define	WEATHER_RAIN_NOFADE_OBJ_START_DUST_MOVE	( 1 )			// ずらして動作させる値
 
 /*== フォグ ==*/
-#define	WEATHER_RAIN_FOG_TIMING		(300)							// に１回フォグテーブルを操作
-#define	WEATHER_RAIN_FOG_TIMING_END	(100)							// に１回フォグテーブルを操作
+#define	WEATHER_RAIN_FOG_TIMING		(150)							// に１回フォグテーブルを操作
+#define	WEATHER_RAIN_FOG_TIMING_END	(50)							// に１回フォグテーブルを操作
 #define WEATHER_RAIN_FOG_START		(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_RAIN_FOG_START_END	(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_RAIN_FOG_OFS		(0x300)
 #define WEATHER_RAIN_FOG_OFS_START	(0x800)
 
 /*== 雨オブジェクト ==*/
-#define WEATHER_RAIN_SPEED_X		(-5)						// 横に進むスピード
-#define WEATHER_RAIN_SPEED_Y		(10)						// たてに進むスピードベース
+#define WEATHER_RAIN_SPEED_X		(-8)						// 横に進むスピード
+#define WEATHER_RAIN_SPEED_Y		(16)						// たてに進むスピードベース
 #define	WEATHER_RAIN_END_MIN		(1)							// 終了カウンタ最小
-#define WEATHER_RAIN_END_MAX		(3)							// 終了カウンタ最大
+#define WEATHER_RAIN_END_MAX		(2)							// 終了カウンタ最大
 #define	WEATHER_RAIN_START_X_BASE	(0)							// ベースになるX開始座標
 #define	WEATHER_RAIN_MUL_X			(15)						// ベースに雨の種類分足す値
 #define	WEATHER_RAIN_START_X_MAX	(270)						// X開始座標乱数の最大値
@@ -96,8 +96,8 @@
 #define	WEATHER_STRAIN_NOFADE_OBJ_START_DUST_MOVE	( 1 )		// ずらす動作数の値
 
 /*== フォグ ==*/
-#define	WEATHER_STRAIN_FOG_TIMING		(300)						// に１回フォグテーブルを操作
-#define	WEATHER_STRAIN_FOG_TIMING_END	(100)						// に１回フォグテーブルを操作
+#define	WEATHER_STRAIN_FOG_TIMING		(150)						// に１回フォグテーブルを操作
+#define	WEATHER_STRAIN_FOG_TIMING_END	(50)						// に１回フォグテーブルを操作
 #define WEATHER_STRAIN_FOG_START		(1)					// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STRAIN_FOG_START_END	(1)					// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STRAIN_FOG_OFS			(0x200)
@@ -105,8 +105,8 @@
 
 
 /*== 雨オブジェクト ==*/
-#define WEATHER_STRAIN_SPEED_X		(-12)						// 横に進むスピード
-#define WEATHER_STRAIN_SPEED_Y		(12)							// たてに進むスピードベース
+#define WEATHER_STRAIN_SPEED_X		(-20)						// 横に進むスピード
+#define WEATHER_STRAIN_SPEED_Y		(20)							// たてに進むスピードベース
 #define	WEATHER_STRAIN_END_MIN		(1)							// 終了カウンタ最小
 #define WEATHER_STRAIN_END_MAX		(2)							// 終了カウンタ最大
 #define	WEATHER_STRAIN_START_X		(0)							// ベースになるX開始座標
@@ -195,18 +195,11 @@ static const u8 sc_WEATHER_SPARK_STRONG_RAND_MAX[WEATHER_SPARK_TYPE_MAX] = {
 // 雷フラッシュスピード
 #define WEATHER_SPARK_FLASHIN_SYNC	( 4 )
 static const u8 sc_WEATHER_SPARK_FLASHOUT_SYNC[32] = {
-#if 1
-	24,24,24,24,24,24,24,24,24,24,
-	24,24,24,24,24,24,24,24,24,24,
-	20,20,20,30,30,40,40,50,50,50,
-	55,55,
-
-#else
-	8,8,8,8,8,8,8,8,8,8,
-	8,8,8,8,8,8,8,8,8,8,
-	8,8,8,10,10,14,14,20,20,20,
-	30,30,
-#endif
+  15,15,15,15,15,15,15,15,15,15,
+	15,15,15,15,15,15,15,15,15,15,
+	15,15,15,20,20,30,30,35,35,35,
+	40,40,
+	
 };
 
 // 軽い雷の繰り返す数
