@@ -11,6 +11,7 @@
 #pragma once
 
 #include "field/fieldmap_proc.h"  //FIELDMAP_WORK参照
+#include "field/field_menu_item.h"     //FIELD_MENU_ITEM_TYPE参照
 
 #ifdef _cplusplus
 extern "C"{
@@ -44,6 +45,8 @@ typedef enum {
   FIELD_SUBSCREEN_ACTION_NONE,
   FIELD_SUBSCREEN_ACTION_DEBUGIRC,  ///< デバッグIRCアプリ起動
   FIELD_SUBSCREEN_ACTION_TOPMENU,   ///< TOPMENU起動
+  FIELD_SUBSCREEN_ACTION_TOPMENU_DECIDE,  ///< FieldMenu項目決定
+  FIELD_SUBSCREEN_ACTION_TOPMENU_EXIT,    ///< FieldMenu終了
 
   FIELD_SUBSCREEN_ACTION_MAX,
 
@@ -72,6 +75,10 @@ extern FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_GetMode(const FIELD_SUBSCREEN_WORK *
 extern FIELD_SUBSCREEN_ACTION FIELD_SUBSCREEN_GetAction( FIELD_SUBSCREEN_WORK* pWork);
 extern void FIELD_SUBSCREEN_ResetAction( FIELD_SUBSCREEN_WORK* pWork);
 extern void FIELD_SUBSCREEN_SetAction( FIELD_SUBSCREEN_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno);
+
+//フィールドメニューと決定項目番号のやり取り
+extern const FIELD_MENU_ITEM_TYPE FIELD_SUBSCREEN_GetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork );
+extern void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD_MENU_ITEM_TYPE itemType );
 
 
 #ifdef	PM_DEBUG

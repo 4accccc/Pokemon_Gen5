@@ -270,6 +270,18 @@ PRINT_QUE * FLDMSGBG_GetPrintQue( FLDMSGBG *fmb )
 
 //--------------------------------------------------------------
 /**
+ * FLDMSGBG 使用しているGFL_FONTを返す
+ * @param	fmb	FLDMSGBG
+ * @retval	GFL_FONT*
+ */
+//--------------------------------------------------------------
+GFL_FONT * FLDMSGBG_GetFontHandle( FLDMSGBG *fmb )
+{
+  return( fmb->fontHandle );
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMSGBG FLDMSGBGで使用しているHEAPIDでGFL_MSGDATA初期化。
  * 戻り値GFL_MSGDATAの削除は各自で行う事。
  * @param	fmb	FLDMSGBG

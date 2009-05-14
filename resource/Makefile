@@ -61,7 +61,8 @@ SUBDIRS	=	wmi \
 			particle/battleeffect \
 			others \
 			wazaeffect \
-			irc_aura
+			irc_aura \
+			field_menu
 
 
 include $(RESOURCE_MACRO)

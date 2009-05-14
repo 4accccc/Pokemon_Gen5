@@ -15,6 +15,7 @@
 
 #include "infowin/infowin.h"
 #include "c_gear/c_gear.h"
+#include "field_menu.h"
 
 #include "sound/snd_viewer.h"
 #include "sound/pm_sndsys.h"
@@ -39,6 +40,7 @@ struct _FIELD_SUBSCREEN_WORK {
   FIELD_SUBSCREEN_ACTION action;
   FIELDMAP_WORK * fieldmap;
 	union {	
+	  FIELD_MENU_WORK *fieldMenuWork;
     C_GEAR_WORK* cgearWork;
 		GFL_CAMADJUST * gflCamAdjust;
 		GFL_SNDVIEWER * gflSndViewer;
@@ -366,21 +368,24 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork)
   static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x6000,
+		GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x6000,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
 
 	GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
 	GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
 	GFL_BG_ClearFrame( FIELD_SUBSCREEN_BGPLANE );
+	GFL_BG_ClearScreenCode( FIELD_SUBSCREEN_BGPLANE , 0 );
 	
 	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
-
+	
+	pWork->fieldMenuWork = FIELD_MENU_InitMenu( pWork->heapID , pWork , pWork->fieldmap );
 	INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , pWork->heapID);
-	if( INFOWIN_IsInitComm() == TRUE )
-	{
-		GFL_NET_ReloadIcon();
-	}
+
+  if( INFOWIN_IsInitComm() == TRUE )
+  {
+    GFL_NET_ReloadIcon();
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -391,6 +396,7 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork)
 static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
 	INFOWIN_Exit();
+	FIELD_MENU_ExitMenu( pWork->fieldMenuWork );
 	GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
 }
 
@@ -401,8 +407,47 @@ static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
+	FIELD_MENU_UpdateMenu( pWork->fieldMenuWork );
 	INFOWIN_Update();
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フィールドメニューに項目の初期位置設定
+ */
+//----------------------------------------------------------------------------
+const FIELD_MENU_ITEM_TYPE FIELD_SUBSCREEN_GetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork )
+{
+  if( FIELD_SUBSCREEN_GetMode( pWork ) != FIELD_SUBSCREEN_TOPMENU )
+  {
+    GF_ASSERT_MSG( 0,"Subscreen mode is not topmenu!!\n" );
+    return FMIT_EXIT;
+  }
+  else
+  {
+    return (FIELD_MENU_GetMenuItemNo( pWork->fieldMenuWork ));
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フィールドメニューから決定項目の取得
+ */
+//----------------------------------------------------------------------------
+void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD_MENU_ITEM_TYPE itemType )
+{
+  if( FIELD_SUBSCREEN_GetMode( pWork ) != FIELD_SUBSCREEN_TOPMENU )
+  {
+    GF_ASSERT_MSG( 0,"Subscreen mode is not topmenu!!\n" );
+    return;
+  }
+  else
+  {
+    FIELD_MENU_SetMenuItemNo( pWork->fieldMenuWork , itemType );
+  }
+
+}
+
 
 //=============================================================================
 //=============================================================================

@@ -106,6 +106,7 @@ extern void FLDMSGBG_ClearPrintQue( FLDMSGBG *fmb );
 extern void FLDMSGBG_AllPrint( FLDMSGBG *fmb );
 extern BOOL FLDMSGBG_CheckFinishPrint( FLDMSGBG *fmb );
 extern PRINT_QUE * FLDMSGBG_GetPrintQue( FLDMSGBG *fmb );
+extern GFL_FONT * FLDMSGBG_GetFontHandle( FLDMSGBG *fmb );
 extern GFL_MSGDATA * FLDMSGBG_CreateMSGDATA( FLDMSGBG *fmb, u32 arcDatIDMsg );
 
 //メッセージ表示
