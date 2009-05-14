@@ -176,6 +176,7 @@ static u32 TargetPokeRec_CopyEnemys( const TARGET_POKE_REC* rec, const BTL_POKEP
 static void TargetPokeRec_RemoveDeadPokemon( TARGET_POKE_REC* rec );
 static BOOL scput_Nigeru( BTL_SVFLOW_WORK* wk, u8 clientID, u8 pokeIdx );
 static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 pokeIdx, BOOL fBtlStart );
+static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
 static void scproc_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx );
 static void scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static SV_WazaFailCause scproc_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
@@ -305,7 +306,7 @@ static void scPut_Message_SetEx( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, 
 static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, u8 vol );
 static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID );
 static void scPut_AddSickDefaultMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaSick sickID, BPP_SICK_CONT sickCont );
-static u8 scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
+static void scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8* spePriA, u8* spePriB );
 static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckConf( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
@@ -419,10 +420,13 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
       if( !BTL_POKEPARAM_IsDead(cw->member[posIdx]) )
       {
         // @@@ 先々は、戦闘開始時のMemberInと途中入れ替えのMemberInでは演出を別ける必要アリ。
+        BTL_Printf("client(%d, posIdx=%d poke...In!\n", i, posIdx);
         scproc_MemberIn( wk, i, posIdx, posIdx, TRUE );
       }
     }
   }
+
+  scproc_AfterMemberIn( wk );
 
   // @@@ しぬこともあるかも
   return SVFLOW_RESULT_DEFAULT;
@@ -466,6 +470,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
         BTL_Printf("【ポケモン】を処理。位置%d <- ポケ%d \n", action->change.posIdx, action->change.memberIdx);
         scproc_MemberOut( wk, clientID, action->change.posIdx );
         scproc_MemberIn( wk, clientID, action->change.posIdx, action->change.memberIdx, FALSE );
+        scproc_AfterMemberIn( wk );
         break;
       case BTL_ACTION_ESCAPE:
         BTL_Printf("【にげる】を処理。\n");
@@ -538,6 +543,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk )
       scproc_MemberIn( wk, i, action->change.posIdx, action->change.memberIdx, FALSE );
     }
   }
+  scproc_AfterMemberIn( wk );
 
   {
     // @@@ いずれ「まきびし」とかで死ぬこともある
@@ -558,19 +564,20 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
 {
   /*
     行動優先順  ...  2 BIT
-    特殊優先順  ...  8 BIT
+    特殊優先順A ...  3 BIT
     ワザ優先順  ...  6 BIT
+    特殊優先順B ...  3 BIT
     素早さ      ... 16 BIT
   */
-  #define MakePriValue( spePri, actPri, wazaPri, agility )  \
-            ( ((actPri&0x03)<<30) | ((spePri&0x0f)<<22) | ((wazaPri&0x3f)<<16) | (agility&0xffff) )
+  #define MakePriValue( actPri, spePriA, wazaPri, spePriB, agility )  \
+            ( ((actPri&0x03)<<27) | ((spePriA&0x07)<<25) | ((wazaPri&0x3f)<<19) | ((spePriB&0x07)<<16) | (agility&0xffff) )
 
   SVCL_WORK* clwk;
   const BTL_ACTION_PARAM* actParam;
   const BTL_POKEPARAM* bpp;
   u32 pri[ BTL_POS_MAX ];
   u16 agility;
-  u8  action, actionPri, wazaPri, spePri;
+  u8  action, actionPri, wazaPri, spPri_A, spPri_B;
   u8  i, j, p, numPoke;
 
 // 各ポケモンの行動プライオリティ値を生成
@@ -602,10 +609,11 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
         WazaID  w = BTL_POKEPARAM_GetWazaNumber( bpp, actParam->fight.wazaIdx );
         wazaPri = WAZADATA_GetPriority( w ) - WAZAPRI_MIN;
         // アイテム装備など、特殊な優先フラグ
-        spePri = scEvent_CheckSpecialActPriority( wk, bpp );
+        scEvent_CheckSpecialActPriority( wk, bpp, &spPri_A, &spPri_B );
       }else{
         wazaPri = 0;
-        spePri = 0;
+        spPri_A = BTL_SPPRI_A_DEFAULT;
+        spPri_B = BTL_SPPRI_B_DEFAULT;
       }
       // すばやさ
       agility = scEvent_CalcAgility( wk, bpp );
@@ -614,7 +622,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
           i, j, actionPri, wazaPri, agility );
 
       // プライオリティ値とクライアントIDを対にして配列に保存
-      pri[p] = MakePriValue( actionPri, spePri, wazaPri, agility );
+      pri[p] = MakePriValue( actionPri, spPri_A, wazaPri, spPri_B, agility );
       order[p].clientID = i;
       order[p].pokeIdx = j;
       ++p;
@@ -995,6 +1003,7 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 pok
 
   BTL_HANDLER_TOKUSEI_Add( bpp );
   BTL_HANDLER_ITEM_Add( bpp );
+  BTL_POKEPARAM_SetContFlag( bpp, BPP_CONTFLG_MEMBERIN_EFFECT );
   BTL_POKEPARAM_SetAppearTurn( bpp, wk->turnCount );
 
   SCQUE_PUT_OP_MemberIn( wk->que, clientID, posIdx, pokeIdx, wk->turnCount );
@@ -1002,8 +1011,24 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 pok
   {
     SCQUE_PUT_ACT_MemberIn( wk->que, clientID, posIdx, pokeIdx, wk->turnCount );
   }
+}
+static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
+{
+  FRONT_POKE_SEEK_WORK fps;
+  BTL_POKEPARAM* bpp;
+  u32 hem_state = Hem_PushState( &wk->HEManager );
 
-  scEvent_MemberIn( wk, bpp );
+  FRONT_POKE_SEEK_InitWork( &fps, wk );
+  while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
+  {
+    if( BTL_POKEPARAM_GetContFlag(bpp, BPP_CONTFLG_MEMBERIN_EFFECT) )
+    {
+      scEvent_MemberIn( wk, bpp );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      BTL_POKEPARAM_ResetContFlag( bpp, BPP_CONTFLG_MEMBERIN_EFFECT );
+    }
+  }
+  Hem_PopState( &wk->HEManager, hem_state );
 }
 
 
@@ -2656,6 +2681,7 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
           u8 nextPokeIdx = get_pushout_nextpoke_idx( wk, clwk );
           SCQUE_PUT_ACT_MemberOut( wk->que, clientID, posIdx );
           scproc_MemberIn( wk, clientID, posIdx, nextPokeIdx, FALSE );
+          scproc_AfterMemberIn( wk );
         }
       }
       else
@@ -2747,7 +2773,8 @@ static void scproc_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
 
   if( scEvent_ChangeWeather( wk, weather, BTL_WEATHER_TURN_DEFAULT ) )
   {
-    scPut_WazaEffectOn( wk, attacker, attacker, waza );
+    wazaEff_SetNoTarget( wk );
+//    scPut_WazaEffectOn( wk, attacker, attacker, waza );
     SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
   }
 }
@@ -2812,6 +2839,7 @@ static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
 
   while( (handEx_header = Hem_ReadWork(&wk->HEManager)) != NULL )
   {
+    BTL_Printf("ProcHandEX : ADRS=0x%p, type=%d\n", handEx_header, handEx_header->equip);
     switch( handEx_header->equip ){
     case BTL_HANDEX_USE_ITEM:      scproc_HandEx_useItem( wk, handEx_header ); break;
     case BTL_HANDEX_RECOVER_HP:    scproc_HandEx_recoverHP( wk, handEx_header, useItemID ); break;
@@ -3836,24 +3864,24 @@ static void scPut_AddSickDefaultMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* b
 //----------------------------------------------------------------------------------
 /**
  * [Event] “たたかう”を選んだときの特殊優先度を判定
- * ※特殊優先度 = すばやさ、ワザ優先度より高い優先条件。
  *
  * @param   wk
  * @param   attacker
+ * @param   spePriA     [out] 特殊優先度Aを受け取る（ワザより高い判定レベル）
+ * @param   spePriB     [out] 特殊優先度Bを受け取る（ワザより低い判定レベル）
  *
- * @retval  u8
  */
 //----------------------------------------------------------------------------------
-static u8 scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
+static void scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8* spePriA, u8* spePriB )
 {
-  u8 pri = 0;
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_SP_PRIORITY, pri );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_SP_PRIORITY_A, BTL_SPPRI_A_DEFAULT );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_SP_PRIORITY_B, BTL_SPPRI_B_DEFAULT );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_SP_PRIORITY );
-    pri = BTL_EVENTVAR_GetValue( BTL_EVAR_SP_PRIORITY );
+    *spePriA = BTL_EVENTVAR_GetValue( BTL_EVAR_SP_PRIORITY_A );
+    *spePriB = BTL_EVENTVAR_GetValue( BTL_EVAR_SP_PRIORITY_B );
   BTL_EVENTVAR_Pop();
-  return pri;
 }
 //--------------------------------------------------------------------------
 /**
@@ -5262,6 +5290,34 @@ void BTL_SERVER_RECTPT_SetMessageEx( BTL_SVFLOW_WORK* wk, u16 msgID, u8 pokeID, 
 {
   SCQUE_PUT_MSG_SET( wk->que, msgID, pokeID, arg );
 }
+
+//=============================================================================================
+/**
+ * 該当位置にいる生存しているポケモンIDを配列に格納＆数を返す
+ *
+ * @param   wk
+ * @param   exPos
+ * @param   dst_pokeID    [out]格納先配列
+ *
+ * @retval  u8    格納した数
+ */
+//=============================================================================================
+u8 BTL_SERVERFLOW_RECEPT_GetTargetPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID )
+{
+  u8 pos[ BTL_POSIDX_MAX ];
+  BTL_POKEPARAM* bpp;
+  u8 max, num, i;
+
+  max = BTL_MAIN_ExpandBtlPos( wk->mainModule, exPos, pos );
+  for(i=0, num=0; i<max; ++i)
+  {
+    bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, pos[i] );
+    if( !BTL_POKEPARAM_IsDead(bpp) ){
+      dst_pokeID[num++] = BTL_POKEPARAM_GetID( bpp );
+    }
+  }
+  return num;
+}
 //=============================================================================================
 /**
  * [ハンドラ受信] ステータスのランクダウン効果
@@ -5604,14 +5660,16 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     if( (wk->stack_ptr + size) <= sizeof(wk->workBuffer) )
     {
       BTL_HANDEX_PARAM_HEADER* header = (BTL_HANDEX_PARAM_HEADER*) &(wk->workBuffer[wk->stack_ptr]);
+
+      for(i=0; i<size; ++i){
+        wk->workBuffer[ wk->stack_ptr + i ] = 0;
+      }
       header->equip = eq_type;
       header->size = size;
       header->userPokeID = userPokeID;
       header->tokwin_flag = 0;
-      for(i=0; i<size; ++i){
-        wk->workBuffer[ wk->stack_ptr + i ] = 0;
-      }
       wk->stack_ptr += size;
+      BTL_Printf("Get Hem Work: ADRS=0x%p, type=%d, size=%d, pokeID=%d\n", header, header->equip, size, userPokeID);
       return header;
     }
     else

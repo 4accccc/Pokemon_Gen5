@@ -119,6 +119,29 @@ extern void BTL_SVFLOW_RECEPT_CantEscapeSub( BTL_SVFLOW_WORK* wk, u8 pokeID, Btl
 extern void BTL_SVFLOW_RECEPT_TraceTokusei( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 targetPokeID );
 extern HEAPID BTL_SVFLOW_RECEPT_GetHeapID( BTL_SVFLOW_WORK* wk );
 
+/**
+ * 特殊優先順コードA（ワザ優先順より上位）
+ */
+typedef enum {
+
+  BTL_SPPRI_A_LOW     = 0,
+  BTL_SPPRI_A_DEFAULT = 1,
+  BTL_SPPRI_A_HIGH    = 2,
+
+}BtlSpecialPriA;
+
+/**
+ * 特殊優先順コードB（ワザ優先順より下位）
+ */
+typedef enum {
+
+  BTL_SPPRI_B_LOW     = 0,
+  BTL_SPPRI_B_DEFAULT = 1,
+  BTL_SPPRI_B_HIGH    = 2,
+
+}BtlSpPriA;
+
+
 
 /**
  *  状態異常化失敗コード
@@ -235,6 +258,8 @@ typedef struct {
 }BTL_HANDEX_PARAM_DAMAGE;
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
+extern u8 BTL_SERVERFLOW_RECEPT_GetTargetPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );
+
 
 
 

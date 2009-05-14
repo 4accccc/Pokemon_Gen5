@@ -131,6 +131,8 @@ static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KyouseiGipusu( u16 pri, u16 itemID, u8 po
 static void handler_KyouseiGipusu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_SenseiNoTume( u16 pri, u16 itemID, u8 pokeID );
 static void handler_SenseiNoTume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KoukouNoSippo( u16 pri, u16 itemID, u8 pokeID );
+static void handler_KoukouNoSippo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_OujaNoSirusi( u16 pri, u16 itemID, u8 pokeID );
 static void handler_OujaNoSirusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KoukakuLens( u16 pri, u16 itemID, u8 pokeID );
@@ -299,6 +301,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_ITEM_Add( const BTL_POKEPARAM* pp )
     { ITEM_HIKARINOKONA,      HAND_ADD_ITEM_HikarinoKona      },
     { ITEM_KYOUSEIGIPUSU,     HAND_ADD_ITEM_KyouseiGipusu     },
     { ITEM_SENSEINOTUME,      HAND_ADD_ITEM_SenseiNoTume      },
+    { ITEM_KOUKOUNOSIPPO,     HAND_ADD_ITEM_KoukouNoSippo     },
+    { ITEM_MANPUKUOKOU,       HAND_ADD_ITEM_KoukouNoSippo     },  // Ç‹ÇÒÇ’Ç≠Ç®Ç±Ç§=Ç±Ç§Ç±Ç§ÇÃÇµÇ¡Ç€ìôâø
     { ITEM_OUZYANOSIRUSI,     HAND_ADD_ITEM_OujaNoSirusi      },
     { ITEM_KOUKAKURENZU,      HAND_ADD_ITEM_KoukakuLens       },
     { ITEM_PINTORENZU,        HAND_ADD_ITEM_PintLens          },
@@ -1501,8 +1505,28 @@ static void handler_SenseiNoTume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     u8 per = common_GetItemParam( myHandle, flowWk, ITEM_PRM_ATTACK );
     if( BTL_CALC_IsOccurPer(per) )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY, 1 );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY_A, BTL_SPPRI_A_HIGH );
     }
+  }
+}
+//------------------------------------------------------------------------------
+/**
+ *  Ç±Ç§Ç±Ç§ÇÃÇµÇ¡Ç€ÅAÇ‹ÇÒÇ’Ç≠Ç®Ç±Ç§
+ */
+//------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR* HAND_ADD_ITEM_KoukouNoSippo( u16 pri, u16 itemID, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CHECK_SP_PRIORITY,      handler_KoukouNoSippo },
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, pri, pokeID, HandlerTable );
+}
+static void handler_KoukouNoSippo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY_B, BTL_SPPRI_B_LOW );
   }
 }
 //------------------------------------------------------------------------------

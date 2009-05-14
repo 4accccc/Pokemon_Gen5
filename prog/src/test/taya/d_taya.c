@@ -879,8 +879,8 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->partyEnemy2 = NULL; ///< 2vs2時の２番目敵AI用（不要ならnull）
 
     #ifdef DEBUG_ONLY_FOR_taya
-      setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_KEKKINGU, MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
-      setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_AABOKKU, MONSNO_GYARADOSU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
+      setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
+      setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_AABOKKU, MONSNO_METAGUROSU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
       {
         #if 1
         POKEMON_PARAM* pp;

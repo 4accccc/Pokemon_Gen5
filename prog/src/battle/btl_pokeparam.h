@@ -75,8 +75,10 @@ typedef enum {
 //--------------------------------------------------------------
 typedef enum {
 
+  BPP_CONTFLG_MEMBERIN_EFFECT,  ///< “üê’¼Œã
   BPP_CONTFLG_DEAD_IGNORE,      ///< Šù‚ÉŽ€‚ñ‚Å‚¢‚é‚Ì‚Åê‚É‚¢‚È‚¢‚à‚Ì‚Æ‚µ‚Äˆµ‚¤
   BPP_CONTFLG_KODAWARI_LOCK,    ///< Å‰‚ÉŽg‚Á‚½ƒƒU‚µ‚©o‚¹‚È‚­‚È‚é
+
   BPP_CONTFLG_MAX,
 
 }BppContFlag;
