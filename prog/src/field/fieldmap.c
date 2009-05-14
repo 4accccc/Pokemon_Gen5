@@ -186,6 +186,7 @@ struct _FIELDMAP_WORK
   u32 seq_switch;
 	int timer;
 	int	key_trg;
+  int key_trg_tail;
 	int key_cont;
 	u16 map_id;
 	VecFx32 now_pos;
@@ -517,7 +518,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   fieldWork->key_cont = 0;
 
   if( GAMESYSTEM_GetEvent(gsys) == NULL) {
-    fieldWork->key_trg = GFL_UI_KEY_GetTrg();
+    fieldWork->key_trg = GFL_UI_KEY_GetTrg() | fieldWork->key_trg_tail;
     fieldWork->key_cont = GFL_UI_KEY_GetCont();
     
     //登録テーブルごとに個別のメイン処理を呼び出し
@@ -548,6 +549,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
 static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
+  fieldWork->key_trg_tail = GFL_UI_KEY_GetTrg();
+
   FIELD_CAMERA_Main( fieldWork->camera_control, fieldWork->key_cont );
 	fldmap_G3D_Draw( fieldWork );
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
