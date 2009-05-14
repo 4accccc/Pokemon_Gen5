@@ -8,18 +8,11 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-#ifndef __WIFI_P2PMATCHFOUR_H__
-#define __WIFI_P2PMATCHFOUR_H__
+#pragma once
 
 #include <gflib.h>
 #include "net_app/wificlub/wifi_p2pmatch.h"
 
-#undef GLOBAL
-#ifdef	__WIFI_P2PMATCHFOUR_H_GLOBAL
-#define	GLOBAL	/* */
-#else
-#define	GLOBAL	extern
-#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -69,6 +62,4 @@ typedef struct {
 extern const GFL_PROC_DATA WifiP2PMatchFourProcData;
 
 
-#undef	GLOBAL
-#endif		// __WIFI_P2PMATCHFOUR_H__
 

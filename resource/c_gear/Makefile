@@ -55,7 +55,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $<
 
 .nce.NCER:
-	g2dcvtr $< -br
+	g2dcvtr $< -br -lbl
 
 endif
 
@@ -72,7 +72,7 @@ subdir:
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR) 
+	$(COPY) $(targetname).naix $(TARGETDIR)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -80,6 +80,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
+	$(COPY) *.h ../../prog/src/field/c_gear/
 endif
 
 #------------------------------------------------------------------------------

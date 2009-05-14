@@ -8,8 +8,8 @@
 //=============================================================================
 
 
-#ifndef __WIFI_P2PMATCH_LOCAL_H__
-#define __WIFI_P2PMATCH_LOCAL_H__
+#pragma once
+
 
 #include <gflib.h>
 #include "savedata/wifilist.h"
@@ -422,5 +422,5 @@ struct _WIFIP2PMATCH_WORK{
 extern void WifiP2PMatchRecvGameStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
-#endif  //__WIFI_P2PMATCH_LOCAL_H__
+
 

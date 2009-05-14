@@ -6,8 +6,7 @@
  * @date	06.04.07
  */
 //============================================================================================
-#ifndef __WIFI_P2PMATCH_H__
-#define __WIFI_P2PMATCH_H__
+#pragma once
 
 #include <gflib.h>
 #include "gamesystem/game_event.h"
@@ -50,4 +49,4 @@ extern void EventCmd_DPWInitProc2(GMEVENT * event, u16* ret);
 extern void* WIFICLUB_CreateWork(void);
 
 
-#endif //__WIFI_P2PMATCH_H__
+
