@@ -142,7 +142,7 @@ $(targetname).narc: $(OBJ_FILE)
 	-rm	$(LIST_FILE)
 
 # コピー先のnarcが古い場合実行する
-$(targetname2).narc: $(OBJ_FILE)
+$(targetname2).narc: $(OBJ_FILE2)
 	-ls *.nsb* >> $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname2) -S $(LIST_FILE)

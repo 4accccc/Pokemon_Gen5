@@ -114,23 +114,12 @@ static const FLDMAPPER_MAPDATA sampleMap[] = {
 static const FLDMAPPER_MAPDATA newbridgemap[] = {
 	{ NARC_nogrid_mapblock_h01a_00_00_3dppack }, //{ NARC_nogrid_mapblock_h01a_dummy },
 	{ NARC_nogrid_mapblock_h01a_01_00_3dppack },
-	{ NARC_nogrid_mapblock_h01a_02_00_3dppack },
 
 	{ NARC_nogrid_mapblock_h01a_00_01_3dppack },
 	{ NARC_nogrid_mapblock_h01a_01_01_3dppack },
-	{ NARC_nogrid_mapblock_h01a_02_01_3dppack }, //{ NARC_nogrid_mapblock_h01a_dummy },
 
 	{ NARC_nogrid_mapblock_h01a_00_02_3dppack },
 	{ NARC_nogrid_mapblock_h01a_01_02_3dppack },
-	{ NARC_nogrid_mapblock_h01a_02_02_3dppack }, //{ NARC_nogrid_mapblock_h01a_dummy },
-
-	{ NARC_nogrid_mapblock_h01a_00_03_3dppack },
-	{ NARC_nogrid_mapblock_h01a_01_03_3dppack },
-	{ NARC_nogrid_mapblock_h01a_02_03_3dppack }, //{ NARC_nogrid_mapblock_h01a_dummy },
-
-	{ NARC_nogrid_mapblock_h01a_00_04_3dppack },
-	{ NARC_nogrid_mapblock_h01a_01_04_3dppack },
-	{ NARC_nogrid_mapblock_h01a_02_04_3dppack },
 };
 
 //------------------------------------------------------------------
@@ -217,12 +206,12 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ　橋
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
-			MAP_XZ_SIZE, 1024*FX32_ONE, 
-      3,3,
-      FLDMAPPER_MODE_SCROLL_XZ, 
+			1024*FX32_ONE, 1024*FX32_ONE, 
+      2,3,
+      FLDMAPPER_MODE_SCROLL_NONE, 
 			ARCID_FLDMAP_LAND_EX,
 
-			3,	5, NELEMS(newbridgemap),
+			2,	3, NELEMS(newbridgemap),
 			newbridgemap,
 		//	4,  4, NELEMS(loopbridgemap),
 		//	loopbridgemap, 

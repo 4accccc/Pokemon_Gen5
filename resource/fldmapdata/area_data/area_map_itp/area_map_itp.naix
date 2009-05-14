@@ -13,10 +13,7 @@
 enum {
 	NARC_area_map_itp_area00_itp_itpdat = 0,
 	NARC_area_map_itp_dun00_itp_itpdat = 1,
-	NARC_area_map_itp_itp_test_chip_itpdat = 2,
-	NARC_area_map_itp_area00_itp_nsbtx = 3,
-	NARC_area_map_itp_dun00_itp_nsbtx = 4,
-	NARC_area_map_itp_itp_test_chip_nsbtx = 5
+	NARC_area_map_itp_itp_test_chip_itpdat = 2
 };
 
 /* NARC_AREA_MAP_ITP_NAIX_ */
