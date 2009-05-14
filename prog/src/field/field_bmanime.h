@@ -18,7 +18,7 @@ typedef struct _FIELD_BMANIME_DATA FIELD_BMANIME_DATA;
 
 //------------------------------------------------------------------
 /**
- * @brief 配置モデルアニメのタイプ指定
+ * @brief 配置モデルアニメの適用タイプ指定
  */
 //------------------------------------------------------------------
 typedef enum {  
@@ -30,9 +30,14 @@ typedef enum {
 }BMANIME_TYPE;
 
 //------------------------------------------------------------------
+/**
+ * @brief 配置モデルアニメの特殊タイプ指定
+ */
 //------------------------------------------------------------------
 typedef enum {  
-  BMANIME_PROG_TYPE_NONE = 0,
+  BMANIME_PROG_TYPE_NONE = 0,   ///<特に動作なし
+  BMANIME_PROG_TYPE_ELBOARD1,   ///<電光掲示板その１
+  BMANIME_PROG_TYPE_ELBOARD2,   ///<電光掲示板その２
 
   BMANIME_PROG_TYPE_MAX,
 }BMANIME_PROG_TYPE;

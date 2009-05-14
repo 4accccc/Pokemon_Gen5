@@ -348,6 +348,7 @@ ARCID FIELD_BMODEL_MAN_GetAnimeArcID(const FIELD_BMODEL_MAN * man)
 //------------------------------------------------------------------
 /**
  * @brief 保持しているアニメIDへのポインタを返す
+ * @param data  アニメデータへのポインタ
  */
 //------------------------------------------------------------------
 const u16 * FIELD_BMANIME_DATA_getAnimeFileID(const FIELD_BMANIME_DATA * data)
@@ -358,6 +359,7 @@ const u16 * FIELD_BMANIME_DATA_getAnimeFileID(const FIELD_BMANIME_DATA * data)
 //------------------------------------------------------------------
 /**
  * @brief 保持しているアニメIDの数を返す
+ * @param data  アニメデータへのポインタ
  */
 //------------------------------------------------------------------
 u32 FIELD_BMANIME_DATA_getAnimeCount(const FIELD_BMANIME_DATA * data)
@@ -374,7 +376,8 @@ u32 FIELD_BMANIME_DATA_getAnimeCount(const FIELD_BMANIME_DATA * data)
 }
 //------------------------------------------------------------------
 /**
- * @brief アニメタイプを返す
+ * @brief アニメ適用タイプを返す
+ * @param data  アニメデータへのポインタ
  * @return  BMANIME_TYPE
  */
 //------------------------------------------------------------------
@@ -386,6 +389,7 @@ BMANIME_TYPE FIELD_BMANIME_DATA_getAnimeType(const FIELD_BMANIME_DATA * data)
 //------------------------------------------------------------------
 /**
  * @brief プログラムタイプを返す
+ * @param data  アニメデータへのポインタ
  * @return  BMANIME_PROG_TYPE
  */
 //------------------------------------------------------------------
@@ -402,7 +406,7 @@ BMANIME_PROG_TYPE FIELD_BMANIME_DATA_getProgType(const FIELD_BMANIME_DATA * data
 static void FIELD_BMANIME_DATA_init(FIELD_BMANIME_DATA * data)
 { 
   static const FIELD_BMANIME_DATA init = {  
-    BMANIME_TYPE_NONE,  //アニメの種類指定
+    BMANIME_TYPE_NONE,  //アニメ適用の種類指定
     BMANIME_PROG_TYPE_NONE,  //動作プログラムの種類指定
     0,  //アニメカウント（仮）
     0,  //セットカウント（仮）
@@ -424,14 +428,14 @@ static void FIELD_BMANIME_DATA_dump(const FIELD_BMANIME_DATA * data)
   int i;
   int type = data->anm_type;
   if (type >= BMANIME_TYPE_MAX) type = 3;
-  OS_Printf("FIELD_BMANIME_DATA:");
-  OS_Printf("%s, %d\n", animetype[data->anm_type], type);
-  OS_Printf("%d %d %d\n",data->prg_type, data->anm_count, data->set_count);
+  TAMADA_Printf("FIELD_BMANIME_DATA:");
+  TAMADA_Printf("%s, %d\n", animetype[data->anm_type], type);
+  TAMADA_Printf("%d %d %d\n",data->prg_type, data->anm_count, data->set_count);
   for (i = 0; i < BMANIME_ID_COUNT_MAX; i++)
   {
-    OS_Printf("%04x ", data->anm_id[i]);
+    TAMADA_Printf("%04x ", data->anm_id[i]);
   }
-  OS_Printf("\n");
+  TAMADA_Printf("\n");
 }
 #endif
 
@@ -448,11 +452,11 @@ static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id)
 
   { 
     int count = GFL_ARC_GetDataSizeByHandle(info_hdl, file_id) / sizeof(u16);
-    OS_Printf("BModel <--> anime table (%d)\n",count);
+    TAMADA_Printf("BModel <--> anime table (%d)\n",count);
     for (i = 0; i < count ; i++)
     { 
       GFL_ARC_LoadDataOfsByHandle(info_hdl, file_id, i * sizeof(u16), sizeof(u16), &anime_id);
-      OS_Printf("%03d %04x\n", i, anime_id);
+      TAMADA_Printf("%03d %04x\n", i, anime_id);
     }
   }
   for (i = 0; i < man->entryCount; i++)
