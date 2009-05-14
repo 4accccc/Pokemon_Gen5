@@ -340,6 +340,12 @@ static void makeResistObjTable(FIELD_BMODEL_MAN * man)
 //
 //============================================================================================
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+ARCID FIELD_BMODEL_MAN_GetAnimeArcID(const FIELD_BMODEL_MAN * man)
+{ 
+  return ARCID_BMODEL_ANIME;
+}
+//------------------------------------------------------------------
 /**
  * @brief 保持しているアニメIDへのポインタを返す
  */
@@ -407,6 +413,29 @@ static void FIELD_BMANIME_DATA_init(FIELD_BMANIME_DATA * data)
   *data = init;
 }
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+#ifdef  PM_DEBUG
+static void FIELD_BMANIME_DATA_dump(const FIELD_BMANIME_DATA * data)
+{ 
+  static const char * animetype[] ={  
+    "BMANIME_TYPE_NONE","BMANIME_TYPE_ETERNAL","BMANIME_TYPE_EVENT",
+    "BMANIME_TYPE_ERROR",
+  };
+  int i;
+  int type = data->anm_type;
+  if (type >= BMANIME_TYPE_MAX) type = 3;
+  OS_Printf("FIELD_BMANIME_DATA:");
+  OS_Printf("%s, %d\n", animetype[data->anm_type], type);
+  OS_Printf("%d %d %d\n",data->prg_type, data->anm_count, data->set_count);
+  for (i = 0; i < BMANIME_ID_COUNT_MAX; i++)
+  {
+    OS_Printf("%04x ", data->anm_id[i]);
+  }
+  OS_Printf("\n");
+}
+#endif
+
+//------------------------------------------------------------------
 /**
  * @brief 配置モデル用アニメデータの読み込み
  */
@@ -414,10 +443,18 @@ static void FIELD_BMANIME_DATA_init(FIELD_BMANIME_DATA * data)
 static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id)
 { 
   ARCHANDLE * info_hdl = GFL_ARC_OpenDataHandle(ARCID_BMODEL_INFO, man->heapID);
-  ARCHANDLE * animeHdl = GFL_ARC_OpenDataHandle(ARCID_BMODEL_ANIME, man->heapID);
   u16 anime_id;
   int i;
 
+  { 
+    int count = GFL_ARC_GetDataSizeByHandle(info_hdl, file_id) / sizeof(u16);
+    OS_Printf("BModel <--> anime table (%d)\n",count);
+    for (i = 0; i < count ; i++)
+    { 
+      GFL_ARC_LoadDataOfsByHandle(info_hdl, file_id, i * sizeof(u16), sizeof(u16), &anime_id);
+      OS_Printf("%03d %04x\n", i, anime_id);
+    }
+  }
   for (i = 0; i < man->entryCount; i++)
   { 
     BMODEL_ID id = man->entryToIDTable[i];
@@ -425,13 +462,13 @@ static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id)
     TAMADA_Printf("bmodel: entry ID(%d) --> anime_id(%d)\n", id, anime_id);
     if (anime_id != 0xffff)
     { 
-      GFL_ARC_LoadDataOfsByHandle(animeHdl, FILEID_BMODEL_ANIMEDATA,
+      GFL_ARC_LoadDataOfsByHandle(info_hdl, FILEID_BMODEL_ANIMEDATA,
           anime_id * sizeof(FIELD_BMANIME_DATA), sizeof(FIELD_BMANIME_DATA),
           &man->animeData[i]);
+      FIELD_BMANIME_DATA_dump(&man->animeData[i]);
     }
   }
   GFL_ARC_CloseDataHandle(info_hdl);
-  GFL_ARC_CloseDataHandle(animeHdl);
 }
 
 //------------------------------------------------------------------

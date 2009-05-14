@@ -22,6 +22,7 @@
 
 #include "system/g3d_tool.h"
 
+#include "field_bmanime.h"  //FIELD_BMANIME_DATAなど
 //============================================================================================
 /**
  *
@@ -208,7 +209,6 @@ static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
 //------------------------------------------------------------------
 FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
 {
-	int i;
 	FLDMAPPER* g3Dmapper = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMAPPER) );
 
 	g3Dmapper->heapID = heapID;
@@ -247,8 +247,6 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
 //------------------------------------------------------------------
 void	FLDMAPPER_Delete( FLDMAPPER* g3Dmapper )
 {
-	int i;
-
 	GF_ASSERT( g3Dmapper );
 
 	FLDMAPPER_ReleaseData( g3Dmapper );	//登録されたままの場合を想定して削除
@@ -1378,12 +1376,38 @@ static void CreateGlobalObj_forBModel(FLDMAPPER * g3Dmapper, FIELD_BMODEL_MAN * 
 						( g3Dmapper->heapID, sizeof(GFL_G3D_MAP_OBJ) * gobjTbl->objCount );
 
 		for( i=0 ; i<gobjTbl->objCount; i++ ){
+      ARCID arcID = FIELD_BMODEL_MAN_GetAnimeArcID(g3Dmapper->bmodel_man);
+      int j, count;
+      const u16 * anmIDs;
 			objParam.mdl.arcID = gobjTbl->objArcID;
 			objParam.mdl.datID = gobjTbl->objData[i].highQ_ID;
 			objParam.mdl.inDatNum = 0;
+      
+      {//配置モデルに対応したアニメデータを取得 
+        const FIELD_BMANIME_DATA * anmData;
+        anmData = FIELD_BMODEL_MAN_GetAnimeData(g3Dmapper->bmodel_man, objParam.mdl.datID);
+        count = FIELD_BMANIME_DATA_getAnimeCount(anmData);
+        anmIDs = FIELD_BMANIME_DATA_getAnimeFileID(anmData);
+      }
+			for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
+				if( j<count ) 
+        { 
+					objParam.anm[j].arcID = arcID;
+					objParam.anm[j].datID = anmIDs[j];
+					objParam.anm[j].inDatNum = 0;
+				} else {
+					objParam.anm[j].arcID = MAKE_RES_NONPARAM;
+					objParam.anm[j].datID = MAKE_RES_NONPARAM;
+					objParam.anm[j].inDatNum = 0;
+				}
+			}
 			CreateGlobalObj( &g3Dmapper->globalObjRes[i], &objParam );
 			g3Dmapper->globalObj.gobj[i].g3DobjHQ = g3Dmapper->globalObjRes[i].g3Dobj;
 			g3Dmapper->globalObj.gobj[i].g3DobjLQ = NULL;
+			for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
+				GFL_G3D_OBJECT_EnableAnime( g3Dmapper->globalObjRes[i].g3Dobj, j ); 
+				GFL_G3D_OBJECT_ResetAnimeFrame( g3Dmapper->globalObjRes[i].g3Dobj, j ); 
+			}
 		}
 	}
 }

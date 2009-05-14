@@ -41,6 +41,7 @@ typedef enum {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern const FIELD_BMANIME_DATA * FIELD_BMODEL_MAN_GetAnimeData(FIELD_BMODEL_MAN * man, u16 bm_id);
+extern ARCID FIELD_BMODEL_MAN_GetAnimeArcID(const FIELD_BMODEL_MAN * man);
 
 extern const u16 * FIELD_BMANIME_DATA_getAnimeFileID(const FIELD_BMANIME_DATA * data);
 extern u32 FIELD_BMANIME_DATA_getAnimeCount(const FIELD_BMANIME_DATA * data);
