@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-14T19:00:49"/>
+	<create user="matsumiya" host="W00179" date="2009-05-14T19:15:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,17 +311,17 @@
 	<row id="msg_r01_girl1_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">少女</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">テスト用メッセージ</language>
+		<language name="JPN" width="256">くるくる　まわります</language>
+		<language name="JPN_KANJI" width="256">くるくる　回ります</language>
 	</row>
 
 	<row id="msg_r01_man1_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">青年</attribute>
 		<language name="JPN" width="256">ふんばってから　はしり
-ひだりを　むきます</language>
+さゆうを　みます</language>
 		<language name="JPN_KANJI" width="256">踏ん張ってから　走り
-左を　向きます</language>
+左右を　向きます</language>
 	</row>
 
 	<row id="msg_r01_sign1_01">
