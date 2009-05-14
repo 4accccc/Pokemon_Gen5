@@ -271,7 +271,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
 
 ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
 {
-#if DEB_ARI
+#if DEB_ARI|1
   if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
   {
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
@@ -337,7 +337,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   //OBJ‚ÌXV
   GFL_CLACT_SYS_Main();
 
-#if DEB_ARI
+#if DEB_ARI|1
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
     GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
   {
@@ -661,8 +661,8 @@ static void STA_ACT_SetupEffect( ACTING_WORK *work )
 static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 {
   const u8 spd = 2;
-#if DEB_ARI
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
+#if DEB_ARI|1
+  if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
   {
     if( work->scrollOffset + spd < ACT_BG_SCROLL_MAX )
     {
@@ -674,7 +674,7 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
     }
     work->updateScroll = TRUE;
   }
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
+  if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
   {
     if( work->scrollOffset - spd > 0 )
     {
