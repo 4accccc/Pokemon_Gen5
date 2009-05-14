@@ -254,8 +254,8 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       {
         //決定のときは表示しっぱなしが良いかも知れないが、
         //現状レポートなど下画面のみ切り替えがありうるので一回消して開放させる。
-        WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                        WIPE_FADE_BLACK , 8 , 1 , work->heapId );
+        //WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+        //                WIPE_FADE_BLACK , 8 , 1 , work->heapId );
         work->state = FMS_EXIT_DECIDEITEM;
       }
     }
@@ -265,8 +265,8 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     work->waitCnt++;
     if( work->waitCnt > FIELD_MENU_ICON_DECIDE_ANIME_CNT )
     {
-      WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                      WIPE_FADE_BLACK , 8 , 1 , work->heapId );
+      //WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+      //                WIPE_FADE_BLACK , 8 , 1 , work->heapId );
       work->state = FMS_EXIT_DECIDEITEM;
     }
     break;
@@ -279,7 +279,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     break;
     
   case FMS_EXIT_DECIDEITEM:
-    if( WIPE_SYS_EndCheck() == TRUE )
+    //if( WIPE_SYS_EndCheck() == TRUE )
     {
       FIELD_SUBSCREEN_SetAction( work->subScrWork , FIELD_SUBSCREEN_ACTION_TOPMENU_DECIDE );
       work->state = FMS_FINISH;

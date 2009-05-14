@@ -242,7 +242,6 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
         //ƒLƒƒƒ“ƒZƒ‹
         FIELD_SUBSCREEN_ResetAction( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
         FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_NORMAL);
-        GXS_SetMasterBrightness(0);
         return( GMEVENT_RES_FINISH );
       }
     }
@@ -393,7 +392,7 @@ static BOOL FMenuCallProc_Zukan( FMENU_EVENT_WORK *mwk )
   GMEVENT * subevent = createFMenuMsgWinEvent( mwk->gmSys, mwk->heapID,
     FLDMAPMENU_STR08, FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
   GMEVENT_CallEvent(mwk->gmEvent, subevent);
-
+  GXS_SetMasterBrightness(-16);
   return( TRUE );
 }
 
@@ -432,6 +431,7 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
   GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID,
       FLDMAPMENU_STR10, FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
   GMEVENT_CallEvent(mwk->gmEvent, subevent);
+  GXS_SetMasterBrightness(-16);
   return( TRUE );
 }
 
