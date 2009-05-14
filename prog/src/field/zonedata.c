@@ -174,9 +174,9 @@ void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos)
 {
 	ZONEDATA zdbuf;
 	getZoneData(&zdbuf, zone_id);
-	pos->x = zdbuf.sx * FX32_ONE;
-	pos->y = zdbuf.sy * FX32_ONE;
-	pos->z = zdbuf.sz * FX32_ONE;
+	pos->x = zdbuf.sx * FX32_ONE * 16;
+	pos->y = zdbuf.sy * FX32_ONE * 16;
+	pos->z = zdbuf.sz * FX32_ONE * 16;
 	OS_Printf("x,y,z=%d,%d,%d\n",pos->x, pos->y, pos->z);
 }
 

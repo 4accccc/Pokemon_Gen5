@@ -383,6 +383,11 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 	PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(gamedata);
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
 
+  { 
+    char buf[ZONEDATA_NAME_LENGTH*2];
+    ZONEDATA_GetZoneName(0, buf, loc_req->zone_id);
+    TAMADA_Printf("UpdateMapParams:%s\n", buf);
+  }
 	//イベント起動データの読み込み
 	EVENTDATA_SYS_Load(evdata, loc_req->zone_id);
 	
