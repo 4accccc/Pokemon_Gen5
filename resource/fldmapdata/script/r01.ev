@@ -16,6 +16,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA ev_talkobj_boy1
+_EVENT_DATA ev_talkobj_girl1
+_EVENT_DATA ev_talkobj_man1
 _EVENT_DATA_END
 
 
@@ -51,6 +53,14 @@ ev_talkobj_boy1:
 
 	_OBJ_PAUSE_CLEAR_ALL //動作モデルポーズを解除します
 	_END //イベントを終了します
+
+ev_talkobj_girl1:
+	_NOP
+	_END
+
+ev_talkobj_man1:
+	_NOP
+	_END
 
 _ANIME_LABEL test01anime
 	_ANIME_DATA AC_WALK_U_8F,2
