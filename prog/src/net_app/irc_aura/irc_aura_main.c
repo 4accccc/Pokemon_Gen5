@@ -44,7 +44,8 @@
 */
 //=============================================================================
 #ifdef PM_DEBUG
-#define DEBUG_AURA_MSG
+#define DEBUG_AURA_MSG	//デバッグメッセージを出す
+#define DEBUG_ONLY_PLAY	//デバッグ用一台でプレイするモードを出す
 #endif //PM_DEBUG
 
 
@@ -112,12 +113,16 @@ enum{
 
 #define DEBUGMSG_LEFT1	(0)
 #define DEBUGMSG_LEFT2	(20)
-#define DEBUGMSG_LEFT3	(40)
-#define DEBUGMSG_LEFT4	(60)
-#define DEBUGMSG_RIGHT1	(80)
-#define DEBUGMSG_RIGHT2	(100)
-#define DEBUGMSG_RIGHT3	(120)
-#define DEBUGMSG_RIGHT4	(140)
+//#define DEBUGMSG_LEFT3	(40)
+//#define DEBUGMSG_LEFT4	(60)
+
+#define DEBUGMSG_RIGHT1	(40)
+#define DEBUGMSG_RIGHT2	(60)
+//#define DEBUGMSG_RIGHT3	(120)
+//#define DEBUGMSG_RIGHT4	(140)
+
+#define DEBUGMSG2_TAB			(175)
+#define DEBUGMSG3_TAB			(85)
 
 //-------------------------------------
 ///	カウント
@@ -133,6 +138,14 @@ typedef enum {
 	MSG_FONT_TYPE_LARGE,
 	MSG_FONT_TYPE_SMALL,
 }MSG_FONT_TYPE;
+
+//-------------------------------------
+///	デバッグ用人数セーブ機能
+//=====================================
+#ifdef DEBUG_ONLY_PLAY
+#define DEBUG_GAME_NUM	(5)
+#define DEBUG_PLAYER_SAVE_NUM	(DEBUG_GAME_NUM*2)
+#endif //DEBUG_ONLY_PLAY
 
 //=============================================================================
 /**
@@ -208,8 +221,8 @@ typedef struct {
 #define DEBUGPRINT_CHAR_TEMP_AREA (0x4000)
 #define DEBUGPRINT_SCRN_TEMP_AREA (0x800)
 #define DEBUGPRINT_PLTT_TEMP_AREA (0x20)
-#define DEBUGPRINT_WIDTH  (20)
-#define DEBUGPRINT_HEIGHT (24)
+#define DEBUGPRINT_WIDTH  (32)
+#define DEBUGPRINT_HEIGHT (18)
 
 static DEBUG_PRINT_WORK *sp_dp_wk;
 #endif //DEBUG_AURA_MSG
@@ -242,12 +255,17 @@ struct _AURA_MAIN_WORK
 	u16		seq;
 	BOOL is_end;
 
-	//結果
-	GFL_POINT		trg_left;
-	GFL_POINT		trg_right;
-	SHAKE_SEARCH_WORK	shake_left;
-	SHAKE_SEARCH_WORK	shake_right;
+	u16							debug_player;			//自分か相手か
+	u16							debug_game_cnt;	//何ゲーム目か
 
+	//結果
+	GFL_POINT		trg_left[DEBUG_PLAYER_SAVE_NUM];
+	GFL_POINT		trg_right[DEBUG_PLAYER_SAVE_NUM];
+	SHAKE_SEARCH_WORK	shake_left[DEBUG_PLAYER_SAVE_NUM];
+	SHAKE_SEARCH_WORK	shake_right[DEBUG_PLAYER_SAVE_NUM];
+
+	//引数
+	IRC_AURA_PARAM	*p_param;
 };
 
 //=============================================================================
@@ -301,6 +319,8 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq );
 //汎用
 static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg );
 static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
+static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk );
+
 //ブレ計測
 static void	SHAKESEARCH_Init( SHAKE_SEARCH_WORK *p_wk );
 static void	SHAKESEARCH_Exit( SHAKE_SEARCH_WORK *p_wk );
@@ -406,7 +426,7 @@ static const GFL_RECT	sc_right	=
 {	
 	19, 2, 22, 20
 };
-#else
+#else	//2点タッチなので、上の座標と左座標の中点
 static const GFL_RECT	sc_right	=
 {	
 	11*8+1, 2*8, 22*8, 20*8
@@ -440,6 +460,7 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(AURA_MAIN_WORK), HEAPID_IRCAURA );
 	GFL_STD_MemClear( p_wk, sizeof(AURA_MAIN_WORK) );
+	p_wk->p_param	= p_param;
 
 	//モジュール初期化
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCAURA );
@@ -448,8 +469,14 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	MSGWND_Init( &p_wk->msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
 			MSGTEXT_WND_X, MSGTEXT_WND_Y, MSGTEXT_WND_W, MSGTEXT_WND_H, HEAPID_IRCAURA );
 
-	SHAKESEARCH_Init( &p_wk->shake_left );
-	SHAKESEARCH_Init( &p_wk->shake_right );
+	{	
+		int i;
+		for( i = 0; i < DEBUG_PLAYER_SAVE_NUM; i++ )
+		{	
+			SHAKESEARCH_Init( &p_wk->shake_left[ i ] );
+			SHAKESEARCH_Init( &p_wk->shake_right[ i ] );
+		}
+	}
 
 	//デバッグ
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCAURA );
@@ -1260,16 +1287,18 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	switch( *p_seq )
 	{	
 	case SEQ_INIT:
-		SHAKESEARCH_Init( &p_wk->shake_left );
-		SHAKESEARCH_Init( &p_wk->shake_right );
 
-		DEBUGPRINT_Clear();
-		DEBUGPRINT_Print( L"左指の座標", DEBUGMSG_LEFT1, 0 );
-		DEBUGPRINT_Print( L"右指の座標", DEBUGMSG_RIGHT1, 0 );
-		DEBUGPRINT_Print( L"左指のブレ", DEBUGMSG_LEFT1, 20 );
-		DEBUGPRINT_Print( L"右指のブレ", DEBUGMSG_RIGHT1,20 );
+		DEBUGAURA_PRINT_UpDate( p_wk );
 
-		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_000, 0, 0 );
+		if( p_wk->debug_player == 0 )
+		{	
+			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_000, 0, 0 );
+		}
+		else
+		{	
+
+			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_DEBUG_001, 0, 0 );
+		}
 
 
 		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
@@ -1279,16 +1308,33 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_MAIN:
-		if( TP_GetRectTrg( &sc_left, &p_wk->trg_left ) )
+		if( TP_GetRectTrg( &sc_left, &p_wk->trg_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ] ) )
 		{	
-			OS_Printf("左手座標\n");
-			OS_Printf("X %d Y %d\n", p_wk->trg_left.x, p_wk->trg_left.y);
-			DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_left.x, DEBUGMSG_LEFT1, 10 );
-			DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_left.y, DEBUGMSG_LEFT2, 10 );
-
+			DEBUGAURA_PRINT_UpDate( p_wk );
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchLeft );
 		}
+
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+		{	
+			if( p_wk->debug_game_cnt == 0 )
+			{	
+				p_wk->debug_game_cnt	= DEBUG_GAME_NUM-1;
+			}
+			else
+			{	
+				p_wk->debug_game_cnt--;
+			}
+			SEQ_Change( p_wk, SEQFUNC_StartGame);
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+		{	
+			p_wk->debug_game_cnt++;
+			p_wk->debug_game_cnt	%= DEBUG_GAME_NUM;
+			SEQ_Change( p_wk, SEQFUNC_StartGame);
+		}
+
+
 		break;
 	}
 }
@@ -1315,25 +1361,11 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		if( TP_GetRectCont( &sc_left, NULL ) )
 		{	
 			//計測終了待ち
-			if( SHAKESEARCH_Main( &p_wk->shake_left, &sc_left ) )
+			if( SHAKESEARCH_Main( &p_wk->shake_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ], &sc_left ) )
 			{	
-				int i;
-				OS_Printf("左手ブレ幅\n");
-				for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
-				{	
-					DEBUGPRINT_PrintNumber( L"X %d", p_wk->shake_left.shake[i].x, DEBUGMSG_LEFT1, i*10+30 );
-					DEBUGPRINT_PrintNumber( L"( %d )", p_wk->shake_left.shake[i].x- p_wk->shake_left.shake[0].x, DEBUGMSG_LEFT2, i*10+30 );
-					DEBUGPRINT_PrintNumber( L"Y %d", p_wk->shake_left.shake[i].y, DEBUGMSG_LEFT3, i*10+30 );
-					DEBUGPRINT_PrintNumber( L"( %d )", p_wk->shake_left.shake[i].y- p_wk->shake_left.shake[0].y, DEBUGMSG_LEFT4, i*10+30 );
-					OS_Printf( "X %d (%d) Y %d (%d)\n", 
-							p_wk->shake_left.shake[i].x, 
-							p_wk->shake_left.shake[i].x - p_wk->shake_left.shake[0].x, 
-							p_wk->shake_left.shake[i].y, 
-							p_wk->shake_left.shake[i].y - p_wk->shake_left.shake[0].y );
-				}
-
+				DEBUGAURA_PRINT_UpDate( p_wk );
 				MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_002, 0, 0 );
-		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_ON );
+				GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_ON );
 				*p_seq	= SEQ_WAIT_RIGHT;
 			}
 		}
@@ -1344,12 +1376,9 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_WAIT_RIGHT:
-		if( TP_GetRectCont( &sc_right, &p_wk->trg_right ) )
+		if( TP_GetRectCont( &sc_right, &p_wk->trg_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ] ) )
 		{	
-			OS_Printf("右手座標\n");
-			OS_Printf("X %d Y %d\n", p_wk->trg_right.x, p_wk->trg_right.y);
-			DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_right.x, DEBUGMSG_RIGHT1, 10 );
-			DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_right.y, DEBUGMSG_RIGHT2, 10 );
+			DEBUGAURA_PRINT_UpDate( p_wk );
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchRight );
 		}
@@ -1388,24 +1417,25 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MAIN:
 		if( TP_GetRectCont( &sc_right, NULL ) )
 		{	
-			if( SHAKESEARCH_Main( &p_wk->shake_right, &sc_right ) )
+			if( SHAKESEARCH_Main( &p_wk->shake_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ], &sc_right ) )
 			{	
 				int i;
-				OS_Printf("右手ブレ幅\n");
-				for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
+
+				DEBUGAURA_PRINT_UpDate( p_wk );
+			//	MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_003, 0, 0 );
+
+				//0ならば自分の番なので、次は相手の番
+				if( p_wk->debug_player == 0 )
 				{	
-					DEBUGPRINT_PrintNumber( L"X %d", p_wk->shake_right.shake[i].x, DEBUGMSG_RIGHT1, i*10+30 );
-					DEBUGPRINT_PrintNumber( L"( %d )", p_wk->shake_right.shake[i].x - p_wk->shake_right.shake[0].x, DEBUGMSG_RIGHT2, i*10+30 );
-					DEBUGPRINT_PrintNumber( L"Y %d", p_wk->shake_right.shake[i].y, DEBUGMSG_RIGHT3, i*10+30 );
-					DEBUGPRINT_PrintNumber( L"( %d )", p_wk->shake_right.shake[i].y - p_wk->shake_right.shake[0].y,DEBUGMSG_RIGHT4, i*10+30 );
-					OS_Printf( "X %d (%d) Y %d (%d)\n", 
-							p_wk->shake_right.shake[i].x, 
-							p_wk->shake_right.shake[i].x - p_wk->shake_right.shake[0].x, 
-							p_wk->shake_right.shake[i].y, 
-							p_wk->shake_right.shake[i].y - p_wk->shake_right.shake[0].y );
+					p_wk->debug_player++;
+					SEQ_Change( p_wk, SEQFUNC_StartGame );
 				}
-				MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_003, 0, 0 );
-				SEQ_Change( p_wk, SEQFUNC_Result );
+				else
+				{
+				//1ならば相手の番なので終了
+					MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_DEBUG_002, 0, 0 );
+					SEQ_Change( p_wk, SEQFUNC_Result );
+				}
 			}
 		}
 		else
@@ -1431,7 +1461,13 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-
+	if(	GFL_UI_TP_GetTrg()	)
+	{	
+		p_wk->debug_game_cnt++;
+		p_wk->debug_game_cnt	%=	DEBUG_GAME_NUM;
+		p_wk->debug_player		= 0;
+		SEQ_Change( p_wk, SEQFUNC_StartGame );
+	}
 }
 //=============================================================================
 /**
@@ -1508,6 +1544,158 @@ static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont )
 
 	return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグプリントを更新
+ *
+ *	@param	AURA_MAIN_WORK *p_wk	ワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
+{	
+	int i, j;
+	int now_idx;
+
+	DEBUGPRINT_Clear();
+
+	DEBUGPRINT_PrintNumber( L"%d番目のゲーム", p_wk->debug_game_cnt, 0,  0 );
+	DEBUGPRINT_PrintNumber( L"%d人目の番です", p_wk->debug_player, 100,  0 );
+
+	for( j = 0; j < 2; j++ )
+	{	
+		now_idx	= p_wk->debug_game_cnt + (j*DEBUG_GAME_NUM);
+
+		DEBUGPRINT_Print( L"左指の座標", DEBUGMSG_LEFT1+(DEBUGMSG2_TAB*j), 10 );
+		DEBUGPRINT_Print( L"右指の座標", DEBUGMSG_RIGHT1+(DEBUGMSG2_TAB*j),10 );
+	
+		DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_left[now_idx].x, DEBUGMSG_LEFT1+(DEBUGMSG2_TAB*j), 20 );
+		DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_left[now_idx].y, DEBUGMSG_LEFT2+(DEBUGMSG2_TAB*j), 20 );
+	
+		DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_right[now_idx].x, DEBUGMSG_RIGHT1+(DEBUGMSG2_TAB*j), 20 );
+		DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_right[now_idx].y, DEBUGMSG_RIGHT2+(DEBUGMSG2_TAB*j), 20 );
+	
+		DEBUGPRINT_Print( L"左指のブレ", DEBUGMSG_LEFT1+(DEBUGMSG2_TAB*j), 30 );
+		DEBUGPRINT_Print( L"右指のブレ", DEBUGMSG_RIGHT1+(DEBUGMSG2_TAB*j),30 );
+
+		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
+		{	
+			//DEBUGPRINT_PrintNumber( L"X %d", p_wk->shake_left.shake[i].x, DEBUGMSG_LEFT1, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"X( %d )", p_wk->shake_left[now_idx].shake[i].x- p_wk->shake_left[now_idx].shake[0].x, DEBUGMSG_LEFT1+(DEBUGMSG2_TAB*j), i*10+40 );
+			//DEBUGPRINT_PrintNumber( L"Y %d", p_wk->shake_left.shake[i].y, DEBUGMSG_LEFT3, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"Y( %d )", p_wk->shake_left[now_idx].shake[i].y- p_wk->shake_left[now_idx].shake[0].y, DEBUGMSG_LEFT2+(DEBUGMSG2_TAB*j), i*10+40 );
+	
+			//DEBUGPRINT_PrintNumber( L"X %d", p_wk->shake_right.shake[i].x, DEBUGMSG_RIGHT1, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"X( %d )", p_wk->shake_right[now_idx].shake[i].x - p_wk->shake_right[now_idx].shake[0].x, DEBUGMSG_RIGHT1+(DEBUGMSG2_TAB*j), i*10+40 );
+			//DEBUGPRINT_PrintNumber( L"Y %d", p_wk->shake_right.shake[i].y, DEBUGMSG_RIGHT3, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"Y( %d )", p_wk->shake_right[now_idx].shake[i].y - p_wk->shake_right[now_idx].shake[0].y,DEBUGMSG_RIGHT2+(DEBUGMSG2_TAB*j), i*10+40 );
+		}
+	
+
+		//プリント
+		OS_Printf( "%d番目のゲーム\n", p_wk->debug_game_cnt );
+		OS_Printf( "%d人目の番です\n", p_wk->debug_player );
+	
+		OS_Printf("左手座標\n");
+		OS_Printf("X %d Y %d\n", p_wk->trg_left[now_idx].x, p_wk->trg_left[now_idx].y);
+	
+		OS_Printf("右手座標\n");
+		OS_Printf("X %d Y %d\n", p_wk->trg_right[now_idx].x, p_wk->trg_right[now_idx].y);
+	
+		OS_Printf("左手ブレ幅\n");
+		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
+		{	
+			OS_Printf( "X %d (%d) Y %d (%d)\n", 
+					p_wk->shake_right[now_idx].shake[i].x, 
+					p_wk->shake_right[now_idx].shake[i].x - p_wk->shake_right[now_idx].shake[0].x, 
+					p_wk->shake_right[now_idx].shake[i].y, 
+					p_wk->shake_right[now_idx].shake[i].y - p_wk->shake_right[now_idx].shake[0].y );
+		}
+	
+		OS_Printf("右手ブレ幅\n");
+		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
+		{	
+			OS_Printf( "X %d (%d) Y %d (%d)\n", 
+					p_wk->shake_left[now_idx].shake[i].x, 
+					p_wk->shake_left[now_idx].shake[i].x - p_wk->shake_left[now_idx].shake[0].x, 
+					p_wk->shake_left[now_idx].shake[i].y, 
+					p_wk->shake_left[now_idx].shake[i].y - p_wk->shake_left[now_idx].shake[0].y );
+		}
+	}
+
+	{	
+		u16 idx1, idx2;
+		s32	ofs1[4];
+		s32	ofs2[4];
+
+		idx1	= p_wk->debug_game_cnt + (0*DEBUG_GAME_NUM);;
+		idx2	= p_wk->debug_game_cnt + (1*DEBUG_GAME_NUM);;
+
+		//差---------------------
+		DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_left[idx1].x - p_wk->trg_left[idx2].x,
+				DEBUGMSG3_TAB, 20 );
+		DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_left[idx1].y - p_wk->trg_left[idx2].y,
+				DEBUGMSG3_TAB+20, 20 );
+		DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_right[idx1].x - p_wk->trg_right[idx2].x,
+				DEBUGMSG3_TAB, 30 );
+		DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_right[idx1].y - p_wk->trg_right[idx2].y,
+				DEBUGMSG3_TAB+20, 30 );
+
+		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
+		{	
+			ofs1[0]	= p_wk->shake_left[idx1].shake[i].x- p_wk->shake_left[idx1].shake[0].x;
+			ofs1[1]	= p_wk->shake_left[idx1].shake[i].y- p_wk->shake_left[idx1].shake[0].y;
+			ofs1[2]	= p_wk->shake_right[idx1].shake[i].x- p_wk->shake_right[idx1].shake[0].x;
+			ofs1[3]	= p_wk->shake_right[idx1].shake[i].y- p_wk->shake_right[idx1].shake[0].y;
+			ofs2[0]	= p_wk->shake_left[idx2].shake[i].x- p_wk->shake_left[idx2].shake[0].x;
+			ofs2[1]	= p_wk->shake_left[idx2].shake[i].y- p_wk->shake_left[idx2].shake[0].y;
+			ofs2[2]	= p_wk->shake_right[idx2].shake[i].x- p_wk->shake_right[idx2].shake[0].x;
+			ofs2[3]	= p_wk->shake_right[idx2].shake[i].y- p_wk->shake_right[idx2].shake[0].y;
+
+			DEBUGPRINT_PrintNumber( L"X( %d )", ofs1[0]-ofs2[0], DEBUGMSG3_TAB, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"Y( %d )", ofs1[1]-ofs2[1], DEBUGMSG3_TAB+20, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"X( %d )", ofs1[2]-ofs2[2], DEBUGMSG3_TAB+40, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"Y( %d )", ofs1[3]-ofs2[3], DEBUGMSG3_TAB+60, i*10+40 );
+
+		}
+
+		OS_Printf( "○差\n" );
+		OS_Printf("左手座標の差\n");
+		OS_Printf("X %d Y %d\n", 
+				p_wk->trg_left[idx1].x - p_wk->trg_left[idx2].x,
+				p_wk->trg_left[idx1].y - p_wk->trg_left[idx2].y);
+	
+		OS_Printf("右手座標の差\n");
+		OS_Printf("X %d Y %d\n", 
+				p_wk->trg_right[idx1].x - p_wk->trg_right[idx2].x,
+				p_wk->trg_right[idx1].y - p_wk->trg_right[idx2].y);
+
+		OS_Printf( "左手ブレの差\n" );
+		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
+		{	
+			ofs1[0]	= p_wk->shake_left[idx1].shake[i].x- p_wk->shake_left[idx1].shake[0].x;
+			ofs1[1]	= p_wk->shake_left[idx1].shake[i].y- p_wk->shake_left[idx1].shake[0].y;
+			ofs2[0]	= p_wk->shake_left[idx2].shake[i].x- p_wk->shake_left[idx2].shake[0].x;
+			ofs2[1]	= p_wk->shake_left[idx2].shake[i].y- p_wk->shake_left[idx2].shake[0].y;
+			OS_Printf( "X (%d) Y (%d)\n",ofs1[0]-ofs2[0], ofs1[1]-ofs2[1] );
+		}
+
+		OS_Printf( "右手ブレの差\n" );
+		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
+		{	
+			ofs1[2]	= p_wk->shake_right[idx1].shake[i].x- p_wk->shake_right[idx1].shake[0].x;
+			ofs1[3]	= p_wk->shake_right[idx1].shake[i].y- p_wk->shake_right[idx1].shake[0].y;
+			ofs2[2]	= p_wk->shake_right[idx2].shake[i].x- p_wk->shake_right[idx2].shake[0].x;
+			ofs2[3]	= p_wk->shake_right[idx2].shake[i].y- p_wk->shake_right[idx2].shake[0].y;
+			OS_Printf( "X (%d) Y (%d)\n",ofs1[2]-ofs2[2], ofs1[3]-ofs2[3] );
+		}
+
+	}
+
+}
+
 //=============================================================================
 /**
  *			ブレ計測
@@ -1673,6 +1861,16 @@ static void DEBUGPRINT_Open( void )
         GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
       }
     }
+		for( y = DEBUGPRINT_HEIGHT;y<24;y++ )
+    {
+	 		buf = DEBUGPRINT_HEIGHT*DEBUGPRINT_WIDTH;
+ 			GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
+			for( x=0;x<32;x++ )
+      {
+        buf = DEBUGPRINT_HEIGHT*DEBUGPRINT_WIDTH;
+        GFL_BG_WriteScreen( p_wk->frm, &buf, x,y,1,1 );
+      }
+		}
     GFL_BG_LoadScreenReq( p_wk->frm );
   }
   
