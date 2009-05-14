@@ -10,6 +10,7 @@
 #include "gamesystem/game_comm.h"
 
 #include "field/game_beacon_search.h"
+#include "field/field_comm/field_comm_func.h"
 
 
 //==============================================================================
@@ -74,13 +75,13 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     GameBeacon_Exit,       //exit
     GameBeacon_ExitWait,   //exit_wait
   },
-  //GAME_COMM_NO_PALACE
+  //GAME_COMM_NO_INVASION
   {
-    NULL,       //init
-    NULL,       //init_wait
-    NULL,       //update
-    NULL,       //exit
-    NULL,       //exit_wait
+    FIELD_COMM_FUNC_InitCommSystem,       //init
+    FIELD_COMM_FUNC_InitCommSystemWait,   //init_wait
+    FIELD_COMM_FUNC_UpdateSystem,         //update
+    FIELD_COMM_FUNC_TermCommSystem,       //exit
+    FIELD_COMM_FUNC_TermCommSystemWait,   //exit_wait
   },
 };
 
@@ -206,6 +207,7 @@ void GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp)
 {
   GF_ASSERT(gcsp->sub_work.seq == GCSSEQ_UPDATE);
   
+  OS_TPrintf("GameCommSys_ExitReq\n");
   gcsp->sub_work.seq = GCSSEQ_EXIT;
 }
 
@@ -231,16 +233,18 @@ void GameCommSys_ChangeReq(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no)
  *
  * @param   gcsp		
  *
- * @retval  BOOL		TRUE:何らかの通信が起動している
- * @retval          FALSE:何も起動していない
+ * @retval  GAME_COMM_NO  起動している通信ゲーム番号(何も起動していなければGAME_COMM_NO_NULL)
  */
 //==================================================================
-BOOL GameCommSys_BootCheck(GAME_COMM_SYS_PTR gcsp)
+GAME_COMM_NO GameCommSys_BootCheck(GAME_COMM_SYS_PTR gcsp)
 {
-  if(gcsp->game_comm_no == GAME_COMM_NO_NULL && gcsp->reserve_comm_game_no == GAME_COMM_NO_NULL){
-    return FALSE; //何も起動していない
+  if(gcsp->game_comm_no != GAME_COMM_NO_NULL){
+    return gcsp->game_comm_no;
   }
-  return TRUE;
+  if(gcsp->reserve_comm_game_no != GAME_COMM_NO_NULL){
+    return gcsp->reserve_comm_game_no;
+  }
+  return GAME_COMM_NO_NULL;
 }
 
 //==================================================================
@@ -255,4 +259,36 @@ BOOL GameCommSys_BootCheck(GAME_COMM_SYS_PTR gcsp)
 GAME_COMM_NO GameCommSys_GetCommGameNo(GAME_COMM_SYS_PTR gcsp)
 {
   return gcsp->game_comm_no;
+}
+
+//==================================================================
+/**
+ * 通信ゲームがシステムの待ち状態か調べる
+ *
+ * @param   gcsp		
+ *
+ * @retval  		TRUE:初期化待ち、終了待ち、等のシステム系の待ち状態になっている
+ * @retval      FALSE:通常の更新処理を実行している状態
+ */
+//==================================================================
+BOOL GameCommSys_CheckSystemWaiting(GAME_COMM_SYS_PTR gcsp)
+{
+  if(gcsp->game_comm_no == GAME_COMM_NO_NULL || gcsp->sub_work.seq != GCSSEQ_UPDATE){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * アプリケーションワークのポインタを取得する
+ *
+ * @param   gcsp		  
+ *
+ * @retval  void *		アプリケーションワークへのポインタ
+ */
+//==================================================================
+void *GameCommSys_GetAppWork(GAME_COMM_SYS_PTR gcsp)
+{
+  return gcsp->app_work;
 }

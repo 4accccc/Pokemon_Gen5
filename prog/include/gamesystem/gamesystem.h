@@ -136,24 +136,6 @@ extern void * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys);
 //------------------------------------------------------------------
 extern void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap);
 
-//--------------------------------------------------------------
-/**
- * @brief   フィールド通信ワークポインタ取得
- * @param   gsys		ゲーム制御システムへのポインタ
- * @retval  フィールド通信ワークポインタ(確保されていない場合はNULL)
- */
-//--------------------------------------------------------------
-extern void * GAMESYSTEM_GetCommFieldWork(GAMESYS_WORK * gsys);
-
-//--------------------------------------------------------------
-/**
- * @brief   フィールド通信ワークポインタセット
- * @param   gsys		ゲーム制御システムへのポインタ
- * @param   comm_field		フィールド通信ワークポインタ
- */
-//--------------------------------------------------------------
-extern void GAMESYSTEM_SetCommFieldWork(GAMESYS_WORK * gsys, void * comm_field);
-
 //------------------------------------------------------------------
 /**
  * @brief	ゲームデータの取得

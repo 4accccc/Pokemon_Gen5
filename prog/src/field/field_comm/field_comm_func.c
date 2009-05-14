@@ -238,7 +238,7 @@ static void FIELD_COMM_FUNC_Connect(void* pWork,int hardID)
 //--------------------------------------------------------------
 //  通信開始
 //--------------------------------------------------------------
-void  FIELD_COMM_FUNC_InitCommSystem( COMM_FIELD_SYS_PTR commField )
+void * FIELD_COMM_FUNC_InitCommSystem( void )
 {
   static const GFLNetInitializeStruct aGFLNetInit = {
     FieldCommRecvTable, //NetSamplePacketTbl,  // 受信関数テーブル
@@ -282,29 +282,74 @@ void  FIELD_COMM_FUNC_InitCommSystem( COMM_FIELD_SYS_PTR commField )
 #endif
   };
 
-  GF_ASSERT(commField != NULL);
+  COMM_FIELD_SYS_PTR commField;
+
+  commField = FIELD_COMM_MAIN_CommFieldSysAlloc(GFL_HEAP_LOWID(GFL_HEAPID_APP));
+  
   GFL_NET_Init( &aGFLNetInit , FIELD_COMM_FUNC_FinishInitCallback , commField );
   {
-    FIELD_COMM_FUNC *commFunc;
-    commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
+    FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
     commFunc->commMode_ = FIELD_COMM_MODE_NONE;
   }
+  
+  return commField;
+}
+
+//==================================================================
+/**
+ * 通信システム初期化待ち
+ * @param   pWork		
+ * @retval  BOOL		TRUE:初期化完了　　FALSE:初期化待ち
+ */
+//==================================================================
+BOOL  FIELD_COMM_FUNC_InitCommSystemWait( void *pWork )
+{
+  COMM_FIELD_SYS_PTR commField = pWork;
+  FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
+  
+  if(commFunc->isInitCommSystem_ == TRUE){
+    FIELD_COMM_FUNC_StartCommWait(commFunc);
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
 //  通信システム終了
 //--------------------------------------------------------------
-void  FIELD_COMM_FUNC_TermCommSystem( void )
+void  FIELD_COMM_FUNC_TermCommSystem( void *pWork )
 {
 ////  commFunc->isInitCommSystem_ = FALSE;
   GFL_NET_Exit( FIELD_COMM_FUNC_FinishTermCallback );
 }
 
+//==================================================================
+/**
+ * 通信システム終了待ち確認
+ * @param   pWork		
+ * @retval  BOOL		TRUE:終了。　FALSE:終了待ち
+ */
+//==================================================================
+BOOL  FIELD_COMM_FUNC_TermCommSystemWait( void *pWork )
+{
+  COMM_FIELD_SYS_PTR commField = pWork;
+
+  FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
+  if(commFunc->isInitCommSystem_ == FALSE){
+    FIELD_COMM_MAIN_CommFieldSysFree(commField);
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //--------------------------------------------------------------
 //  通信システム更新(ビーコンの待ちうけ
 //--------------------------------------------------------------
-void  FIELD_COMM_FUNC_UpdateSystem( FIELD_COMM_FUNC *commFunc )
+void  FIELD_COMM_FUNC_UpdateSystem( void *pWork )
 {
+  COMM_FIELD_SYS_PTR commField = pWork;
+  FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
+
   //待ち受け側でもビーコンをチェックしてみる
   //if( commFunc->commMode_ == FIELD_COMM_MODE_SEARCH )
   //  待ちうけ・探索中で親機ではない時
@@ -319,7 +364,7 @@ void  FIELD_COMM_FUNC_UpdateSystem( FIELD_COMM_FUNC *commFunc )
     }
   //  else
     {
-      if( FIELD_COMM_FUNC_GetMemberNum(commFunc) > 1 )
+      if( FIELD_COMM_FUNC_GetMemberNum() > 1 )
       {
         //親機の場合は子機が来たら接続状態に
         ARI_TPrintf("Connect!(Parent)\n");
@@ -364,7 +409,7 @@ void  FIELD_COMM_FUNC_UpdateSystem( FIELD_COMM_FUNC *commFunc )
     FIELD_COMM_FUNC_SendPacketBuff( commFunc );
   }
 
-#if DEB_ARI
+#if 0 //DEB_ARI
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
   {
     commFunc->commMode_ = FIELD_COMM_MODE_NONE;
@@ -525,7 +570,7 @@ const FIELD_COMM_MODE FIELD_COMM_FUNC_GetCommMode( FIELD_COMM_FUNC *commFunc )
 //--------------------------------------------------------------
 //  接続人数を取得
 //--------------------------------------------------------------
-const int FIELD_COMM_FUNC_GetMemberNum( FIELD_COMM_FUNC *commFunc )
+const int FIELD_COMM_FUNC_GetMemberNum( void )
 {
   /*
   u8 i;
@@ -1089,7 +1134,7 @@ static void* FIELD_COMM_FUNC_GetBeaconData_CommFunc(FIELD_COMM_FUNC *commFunc)
   GBS_BEACON *beacon = &commFunc->send_beacon;
   
   beacon->gsid = WB_NET_FIELDMOVE_SERVICEID;
-  beacon->member_num = FIELD_COMM_FUNC_GetMemberNum(commFunc);
+  beacon->member_num = FIELD_COMM_FUNC_GetMemberNum();
   beacon->member_max = FIELD_COMM_MEMBER_MAX;
   return beacon;
 #endif
@@ -1112,7 +1157,7 @@ void  FIELD_COMM_FUNC_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
   FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
 
   NetErr_ErrorSet();
-  FIELD_COMM_FUNC_TermCommSystem();
+////  FIELD_COMM_FUNC_TermCommSystem();
   commFunc->isInitCommSystem_ = FALSE;
 }
 

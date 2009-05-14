@@ -432,7 +432,7 @@ void  FIELD_COMM_MENU_UpdateDebugWindow( FIELD_COMM_MAIN *commSys )
           plWork = FIELD_COMM_DATA_GetSelfData_PlayerWork(commData);
           FIELD_COMM_DATA_GetGridPos_AfterMove(commData, FCD_SELF_INDEX,&px,&pz);
         }
-        if( FIELD_COMM_DATA_GetCharaData_IsExist(FIELD_COMM_SYS_GetCommDataWork(commField), i) == TRUE )
+        if( FIELD_COMM_DATA_GetCharaData_IsExist(commData, i) == TRUE )
         {
           plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(commData, i);
           FIELD_COMM_DATA_GetGridPos_AfterMove(commData, i,&px,&pz);

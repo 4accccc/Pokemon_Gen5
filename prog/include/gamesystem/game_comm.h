@@ -16,7 +16,7 @@ typedef enum{
   GAME_COMM_NO_NULL,                  ///<何も起動していない状態
   
   GAME_COMM_NO_FIELD_BEACON_SEARCH,   ///<フィールド上でビーコンサーチ
-  GAME_COMM_NO_PALACE,                ///<パレス
+  GAME_COMM_NO_INVASION,              ///<侵入
 }GAME_COMM_NO;
 
 
@@ -43,7 +43,9 @@ extern void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO comm_game_no);
 extern void GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommSys_ChangeReq(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO comm_game_no);
-extern BOOL GameCommSys_BootCheck(GAME_COMM_SYS_PTR gcsp);
+extern GAME_COMM_NO GameCommSys_BootCheck(GAME_COMM_SYS_PTR gcsp);
 extern GAME_COMM_NO GameCommSys_GetCommGameNo(GAME_COMM_SYS_PTR gcsp);
+extern BOOL GameCommSys_CheckSystemWaiting(GAME_COMM_SYS_PTR gcsp);
+extern void *GameCommSys_GetAppWork(GAME_COMM_SYS_PTR gcsp);
 
 

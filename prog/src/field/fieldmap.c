@@ -307,17 +307,16 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	fieldWork->pMapMatrix = MAP_MATRIX_Create( heapID );
 	
 	//通信用処理 
-  fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP );
-  comm_field = GAMESYSTEM_GetCommFieldWork(gsys);
-  FIELD_COMM_MAIN_CommFieldSysPtrSet(fieldWork->commSys, comm_field);
-  FIELD_COMM_MAIN_CommFieldMapInit(comm_field);
+  fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID, GFL_HEAPID_APP, GAMESYSTEM_GetGameCommSysPtr(gsys) );
+  FIELD_COMM_MAIN_CommFieldMapInit(FIELD_COMM_MAIN_GetCommFieldSysPtr(fieldWork->commSys));
 	FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys,
       GAMEDATA_GetFldMMdlSys(GAMESYSTEM_GetGameData(gsys)));
   
   //常時通信モード
   {
     GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
-    if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE && GameCommSys_BootCheck(gcsp) == FALSE){
+    if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE 
+        && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
       GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH);
     }
   }
@@ -336,8 +335,6 @@ void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 	//マップマトリクス
 	MAP_MATRIX_Delete( fieldWork->pMapMatrix );
 	
-	FIELD_COMM_MAIN_TermSystem( fieldWork, fieldWork->commSys );
-
 	GFL_HEAP_FreeMemory( fieldWork );
 }
 
@@ -586,6 +583,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   FIELD_FOG_Delete( fieldWork->fog );
   
   FIELD_CAMERA_Delete( fieldWork->camera_control );
+
+	//フィールド通信削除
+	FIELD_COMM_MAIN_TermSystem( fieldWork, fieldWork->commSys );
   
   //登録テーブルごとに個別の終了処理を呼び出し
   fieldWork->func_tbl->delete_func(fieldWork);

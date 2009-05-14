@@ -175,7 +175,6 @@ struct _GAMESYS_WORK {
 
 	GAMEDATA * gamedata;
 	void * fieldmap;
-	void * comm_field;			///<フィールド通信ワーク
 	GAME_COMM_SYS_PTR game_comm;    ///<ゲーム通信管理ワークへのポインタ
 	void * comm_infowin;		///<INFOWIN通信ワーク
 	
@@ -203,7 +202,6 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 
 	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
 	gsys->fieldmap = NULL;
-	gsys->comm_field = NULL;
 	gsys->game_comm = GameCommSys_Alloc(gsys->heapID);
 	gsys->comm_infowin = NULL;
 	gsys->always_net = init_param->always_net;
@@ -357,18 +355,6 @@ void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap)
 	gsys->fieldmap = fieldmap;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief   フィールド通信ワークポインタ取得
- * @param   gsys		ゲーム制御システムへのポインタ
- * @retval  フィールド通信ワークポインタ(確保されていない場合はNULL)
- */
-//--------------------------------------------------------------
-void * GAMESYSTEM_GetCommFieldWork(GAMESYS_WORK * gsys)
-{
-	return gsys->comm_field;
-}
-
 //==================================================================
 /**
  * ゲーム通信管理ワークへのポインタを取得する
@@ -391,19 +377,6 @@ GAME_COMM_SYS_PTR GAMESYSTEM_GetGameCommSysPtr(GAMESYS_WORK *gsys)
 BOOL GAMESYSTEM_GetAlwaysNetFlag(GAMESYS_WORK * gsys)
 {
 	return gsys->always_net;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   フィールド通信ワークポインタセット
- * @param   gsys		ゲーム制御システムへのポインタ
- * @param   comm_field		フィールド通信ワークポインタ
- */
-//--------------------------------------------------------------
-void GAMESYSTEM_SetCommFieldWork(GAMESYS_WORK * gsys, void * comm_field)
-{
-	GF_ASSERT(gsys->comm_field == NULL);
-	gsys->comm_field = comm_field;
 }
 
 

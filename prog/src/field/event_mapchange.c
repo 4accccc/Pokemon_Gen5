@@ -127,9 +127,17 @@ static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
 	case 0:
 		//フィールドマップをフェードアウト
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gew->gsys, gew->fieldmap, 0));
+		//通信が動いている場合は終了させる
+		if(GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gew->gsys)) != GAME_COMM_NO_NULL){
+      GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(gew->gsys));
+    }
 		(*seq)++;
 		break;
 	case 1:
+	  //通信終了待ち
+	  if(GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gew->gsys)) != GAME_COMM_NO_NULL){
+      break;
+    }
 		//フィールドマップを終了待ち
 		GMEVENT_CallEvent(event, EVENT_FieldClose(gew->gsys, gew->fieldmap));
 		(*seq)++;

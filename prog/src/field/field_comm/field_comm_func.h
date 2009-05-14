@@ -45,9 +45,11 @@ typedef enum
 extern FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID );
 extern void FIELD_COMM_FUNC_DataReset( FIELD_COMM_FUNC *commFunc );
 extern void FIELD_COMM_FUNC_TermSystem( FIELD_COMM_FUNC *commFunc );
-extern void FIELD_COMM_FUNC_InitCommSystem( COMM_FIELD_SYS_PTR commField );
-extern void FIELD_COMM_FUNC_TermCommSystem( void );
-extern void FIELD_COMM_FUNC_UpdateSystem( FIELD_COMM_FUNC *commFunc );
+extern void * FIELD_COMM_FUNC_InitCommSystem( void );
+extern BOOL  FIELD_COMM_FUNC_InitCommSystemWait( void *pWork );
+extern void  FIELD_COMM_FUNC_TermCommSystem( void *pWork );
+extern BOOL  FIELD_COMM_FUNC_TermCommSystemWait( void *pWork );
+extern void  FIELD_COMM_FUNC_UpdateSystem( void *pWork );
 
 extern void FIELD_COMM_FUNC_StartCommWait( FIELD_COMM_FUNC *commFunc );
 extern void FIELD_COMM_FUNC_StartCommSearch( FIELD_COMM_FUNC *commFunc );
@@ -67,7 +69,7 @@ extern const u8 FIELD_COMM_FUNC_GetBit_TalkMember( FIELD_COMM_FUNC *commFunc );
 extern const BOOL FIELD_COMM_FUNC_IsFinishInitCommSystem( FIELD_COMM_FUNC *commFunc );
 extern const BOOL FIELD_COMM_FUNC_IsFinishTermCommSystem( FIELD_COMM_FUNC *commFunc );
 extern const FIELD_COMM_MODE FIELD_COMM_FUNC_GetCommMode( FIELD_COMM_FUNC *commFunc );
-extern const int  FIELD_COMM_FUNC_GetMemberNum( FIELD_COMM_FUNC *commFunc );
+extern const int  FIELD_COMM_FUNC_GetMemberNum( void );
 extern const int  FIELD_COMM_FUNC_GetSelfIndex( FIELD_COMM_FUNC *commFunc );
 extern const BOOL FIELD_COMM_FUNC_IsReserveTalk( FIELD_COMM_FUNC *commFunc );
 extern void FIELD_COMM_FUNC_ResetReserveTalk( FIELD_COMM_FUNC *commFunc );

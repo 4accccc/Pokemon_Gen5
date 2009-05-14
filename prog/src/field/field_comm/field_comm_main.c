@@ -21,6 +21,7 @@
 #include "test/performance.h"
 #include "system/main.h"
 #include "field/field_comm_actor.h"
+#include "gamesystem/game_comm.h"
 
 #include "msg/msg_d_field.h"
 
@@ -51,6 +52,7 @@ struct _FIELD_COMM_MAIN
   u8  commActorIndex_[FIELD_COMM_MEMBER_MAX];
   PALACE_SYS_PTR palace;    ///<パレスシステムワークへのポインタ
   FIELD_COMM_ACTOR_CTRL *actCtrl_;
+  GAME_COMM_SYS_PTR game_comm;
 };
 
 //上下左右に対応したグリッドでのオフセット
@@ -60,7 +62,7 @@ static const s8 FCM_dirOfsArr[4][2]={{0,-1},{0,1},{-1,0},{1,0}};
 //  proto
 //======================================================================
 
-FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID );
+FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID, GAME_COMM_SYS_PTR game_comm );
 void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *commSys );
 void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys );
@@ -83,7 +85,7 @@ void  FIELD_COMM_MAIN_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COMM_MAIN *commSys );
 
 void  FIELD_COMM_MAIN_Disconnect( FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
-void FIELD_COMM_MAIN_CommFieldSysFree(FIELD_COMM_MAIN *commSys);
+void FIELD_COMM_MAIN_CommFieldSysFree(COMM_FIELD_SYS_PTR comm_field);
 
 
 //--------------------------------------------------------------
@@ -91,11 +93,15 @@ void FIELD_COMM_MAIN_CommFieldSysFree(FIELD_COMM_MAIN *commSys);
 //  @param  commHeapID 通信用に常駐するヒープID
 //      通信が有効な間中開放されないHeapを指定してください
 //--------------------------------------------------------------
-FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID )
+FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID, GAME_COMM_SYS_PTR game_comm )
 {
   FIELD_COMM_MAIN *commSys;
   commSys = GFL_HEAP_AllocClearMemory( heapID , sizeof(FIELD_COMM_MAIN) );
   commSys->heapID_ = heapID;
+  commSys->game_comm = game_comm;
+  if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
+    commSys->commField_ = GameCommSys_GetAppWork(game_comm);
+  }
 ////  commSys->commField_->commFunc_ = FIELD_COMM_FUNC_InitSystem( commHeapID );
 
 ////  FIELD_COMM_DATA_InitSystem( commHeapID );
@@ -111,17 +117,17 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID )
 void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *commSys )
 {
   if(commSys->commField_ != NULL){
-    FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commSys->commField_);
-    if(FIELD_COMM_FUNC_IsFinishTermCommSystem(commFunc) == TRUE){
+    if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
       //通信監視ワークが存在しているのに切断されているのは通信エラーが発生して強制切断された場合
       //その為、フィールドの破棄と同時に通信管理ワークの破棄も行う
       //フィールドの通信エラーの仕様によってこれをどうするかは後々決める　※check
-      FIELD_COMM_MAIN_CommFieldSysFree(commSys);
-      GAMESYSTEM_SetCommFieldWork(FIELDMAP_GetGameSysWork(fieldWork), NULL);
+    #if 0
+      GameCommSys_ExitReq(commSys->game_comm);
       if(commSys->palace != NULL){
         PALACE_SYS_Free(commSys->palace);
         commSys->palace = NULL;
       }
+    #endif
     }
   }
 
@@ -142,36 +148,16 @@ void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *co
 
 //==================================================================
 /**
- * フィールド通信監視ワークポインタのセット
- *
- * @param   commSys       フィールド通信システムワークへのポインタ
- * @param   comm_field    フィールド通信監視ワークポインタ
- */
-//==================================================================
-void FIELD_COMM_MAIN_CommFieldSysPtrSet( FIELD_COMM_MAIN *commSys, COMM_FIELD_SYS_PTR comm_field)
-{
-  //commField_がNULL時にNULL代入はあり
-  GF_ASSERT((commSys->commField_ == NULL && comm_field == NULL) || (commSys->commField_ != NULL && comm_field == NULL) || (commSys->commField_ == NULL && comm_field != NULL));
-
-  commSys->commField_ = comm_field;
-}
-
-//==================================================================
-/**
  * フィールド通信監視ワークを生成する(通信開始時に生成すればよい)
  *
- * @param   commSys
  * @param   commHeapID
  *
  * @retval  COMM_FIELD_SYS_PTR    生成したフィールド通信監視ワークへのポインタ
  */
 //==================================================================
-COMM_FIELD_SYS_PTR FIELD_COMM_MAIN_CommFieldSysAlloc(FIELD_COMM_MAIN *commSys, HEAPID commHeapID)
+COMM_FIELD_SYS_PTR FIELD_COMM_MAIN_CommFieldSysAlloc(HEAPID commHeapID)
 {
-  GF_ASSERT(commSys->commField_ == NULL);
-
-  commSys->commField_ = FIELD_COMM_SYS_Alloc(commHeapID);
-  return commSys->commField_;
+  return FIELD_COMM_SYS_Alloc(commHeapID);
 }
 
 //==================================================================
@@ -181,12 +167,9 @@ COMM_FIELD_SYS_PTR FIELD_COMM_MAIN_CommFieldSysAlloc(FIELD_COMM_MAIN *commSys, H
  * @param   commSys   フィールド通信システムワークへのポインタ
  */
 //==================================================================
-void FIELD_COMM_MAIN_CommFieldSysFree(FIELD_COMM_MAIN *commSys)
+void FIELD_COMM_MAIN_CommFieldSysFree(COMM_FIELD_SYS_PTR comm_field)
 {
-  GF_ASSERT(commSys->commField_ != NULL);
-
-  FIELD_COMM_SYS_Free(commSys->commField_);
-  commSys->commField_ = NULL;
+  FIELD_COMM_SYS_Free(comm_field);
 }
 
 //==================================================================
@@ -257,19 +240,16 @@ void FIELD_COMM_MAIN_SetCommActor(FIELD_COMM_MAIN *commSys, FLDMMDLSYS *fmmdlsys
 void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys )
 {
-  FIELD_COMM_FUNC *commFunc;
-
-  if(commSys->commField_ == NULL){
+  if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
     return;
   }
 
-  commFunc = FIELD_COMM_SYS_GetCommFuncWork(commSys->commField_);
-  if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commFunc ) == TRUE )
+  if(commSys->commField_ != NULL)
   {
     u8 i;
-    FIELD_COMM_FUNC_UpdateSystem( commFunc );
+////    FIELD_COMM_FUNC_UpdateSystem( commSys->commField_ );
     PALACE_SYS_Update(commSys->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), pcActor);
-    if( FIELD_COMM_FUNC_GetMemberNum( commFunc ) > 1 )
+    if( FIELD_COMM_FUNC_GetMemberNum() > 1 )
     //if( FIELD_COMM_FUNC_GetCommMode( commFunc ) == FIELD_COMM_MODE_CONNECT )
     {
       FIELD_COMM_MAIN_UpdateSelfData( fieldWork , gameSys , pcActor , commSys );
@@ -277,9 +257,12 @@ void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
     }
   }
 #if DEB_ARI
-  if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_L )
-    FIELD_COMM_MENU_SwitchDebugWindow( FCM_BGPLANE_MSG_WINDOW, FIELDMAP_GetFldMsgBG(fieldWork) );
-  FIELD_COMM_MENU_UpdateDebugWindow( commSys );
+  if(commSys->commField_ != NULL)
+  {
+    if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_L )
+      FIELD_COMM_MENU_SwitchDebugWindow( FCM_BGPLANE_MSG_WINDOW, FIELDMAP_GetFldMsgBG(fieldWork) );
+    FIELD_COMM_MENU_UpdateDebugWindow( commSys );
+  }
 #endif  //DEB_ARI
 }
 
@@ -373,7 +356,7 @@ const BOOL  FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys )
   FIELD_COMM_FUNC *commFunc;
   FIELD_COMM_DATA *commData;
 
-  if(commSys->commField_ == NULL){
+  if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
     return FALSE;
   }
 
@@ -427,7 +410,7 @@ const BOOL  FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys )
   FIELD_COMM_FUNC *commFunc;
   FIELD_COMM_DATA *commData;
 
-  if(commSys->commField_ == NULL){
+  if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
     return FALSE;
   }
 
@@ -563,12 +546,8 @@ const BOOL  FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys, GAMESYS
   case 3:
     //未初期化のときだけ初期化する
 ////    if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commField_->commFunc_ ) == FALSE ){
-    if(commSys->commField_ == NULL){
-      COMM_FIELD_SYS_PTR comm_field;
-
-      comm_field = FIELD_COMM_MAIN_CommFieldSysAlloc(commSys, GFL_HEAP_LOWID(GFL_HEAPID_APP));
-      GAMESYSTEM_SetCommFieldWork(gsys, comm_field);
-      FIELD_COMM_FUNC_InitCommSystem( commSys->commField_ );
+    if(GameCommSys_BootCheck(commSys->game_comm) == GAME_COMM_NO_NULL){
+      GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION);
       if(commSys->comm_type == FIELD_COMM_TYPE_PALACE){
         commSys->palace = PALACE_SYS_Alloc(GFL_HEAP_LOWID(GFL_HEAPID_APP));
       }
@@ -577,10 +556,8 @@ const BOOL  FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys, GAMESYS
     break;
   case 4:
     {
-      FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commSys->commField_);
-
-      if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commFunc ) == TRUE ){
-        FIELD_COMM_FUNC_StartCommWait( commFunc );
+      if(GameCommSys_CheckSystemWaiting(commSys->game_comm) == FALSE){
+        commSys->commField_ = GameCommSys_GetAppWork(commSys->game_comm);
         commSys->menuSeq_++;
         return (TRUE);
       }
@@ -656,12 +633,8 @@ const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COM
   case 3:
     //未初期化のときだけ初期化する
 ////    if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commField_->commFunc_ ) == FALSE ){
-    if(commSys->commField_ == NULL){
-      COMM_FIELD_SYS_PTR comm_field;
-
-      comm_field = FIELD_COMM_MAIN_CommFieldSysAlloc(commSys, GFL_HEAP_LOWID(GFL_HEAPID_APP));
-      GAMESYSTEM_SetCommFieldWork(gsys, comm_field);
-      FIELD_COMM_FUNC_InitCommSystem( commSys->commField_ );
+    if(GameCommSys_BootCheck(commSys->game_comm) == GAME_COMM_NO_NULL){
+      GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION);
       if(commSys->comm_type == FIELD_COMM_TYPE_PALACE){
         commSys->palace = PALACE_SYS_Alloc(GFL_HEAP_LOWID(GFL_HEAPID_APP));
       }
@@ -670,10 +643,8 @@ const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COM
     break;
   case 4:
     {
-    FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commSys->commField_);
-
-      if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commFunc ) == TRUE ){
-        FIELD_COMM_FUNC_StartCommSearch( commFunc );
+      if(GameCommSys_CheckSystemWaiting(commSys->game_comm) == FALSE){
+        commSys->commField_ = GameCommSys_GetAppWork(commSys->game_comm);
         commSys->menuSeq_++;
         return (TRUE);
       }
@@ -696,7 +667,8 @@ const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COM
 void  FIELD_COMM_MAIN_Disconnect( FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys )
 {
   //FieldMain_CommActorFreeAll( fieldWork );
-  FIELD_COMM_FUNC_TermCommSystem();
+////  FIELD_COMM_FUNC_TermCommSystem();
+  GameCommSys_ExitReq(commSys->game_comm);
 }
 
 //==================================================================
@@ -711,11 +683,8 @@ void  FIELD_COMM_MAIN_Disconnect( FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *
 //==================================================================
 BOOL FIELD_COMM_MAIN_DisconnectWait( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *commSys )
 {
-  FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commSys->commField_);
-
-  if(FIELD_COMM_FUNC_IsFinishTermCommSystem(commFunc) == TRUE){
-    FIELD_COMM_MAIN_CommFieldSysFree(commSys);
-    GAMESYSTEM_SetCommFieldWork(FIELDMAP_GetGameSysWork(fieldWork), NULL);
+  if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
+    commSys->commField_ = NULL;
     if(commSys->palace != NULL){
       PALACE_SYS_Free(commSys->palace);
       commSys->palace = NULL;
