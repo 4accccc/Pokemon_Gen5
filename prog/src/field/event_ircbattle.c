@@ -222,7 +222,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
 		break;
 	case _CALL_IRCCOMMPATIBLE:	//相性チェック画面へ
-		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, NULL );
+		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, gsys );
     (*seq)++;
 		break;
 	case _WAIT_IRCCOMMPATIBLE:

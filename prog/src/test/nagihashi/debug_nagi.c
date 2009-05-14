@@ -27,6 +27,7 @@
 //proc
 #include "net_app/irc_aura.h"
 #include "net_app/irc_compatible.h"
+#include "net_app/compatible_irc_sys.h"
 
 //=============================================================================
 /**
@@ -37,6 +38,12 @@
 ///	リストの最大文字数
 //=====================================
 #define LISTDATA_STR_LENGTH	(32)
+
+
+//-------------------------------------
+///	エクスターン
+//=====================================
+FS_EXTERN_OVERLAY( compatible_irc_sys );
 
 //=============================================================================
 /**
@@ -95,6 +102,7 @@ typedef struct
 	GFL_BMPWIN				*p_bmpwin;
 
 	BOOL	is_end;
+
 	//Proc切り替え用
 	FSOverlayID overlay_Id;
 	const GFL_PROC_DATA *p_procdata;
@@ -242,6 +250,7 @@ static const LIST_SETUP_TBL sc_list_data_page1[]	=
 		L"前へ", LISTDATA_SEQ_NEXT_HOME
 	}
 };
+
 
 
 //----------------------------------------------------------------------------

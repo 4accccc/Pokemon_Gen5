@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-12T23:45:16"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-05-14T11:35:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,6 +337,29 @@
 		<language name="JPN" width="256">せきがいせんつうしんを
 してください</language>
 		<language name="JPN_KANJI" width="256">赤外線通信を
+してください</language>
+	</row>
+
+	<row id="COMPATI_STR_001">
+		<language name="JPN" width="256">つながりませんでした
+もどります</language>
+		<language name="JPN_KANJI" width="256">つながりませんでした
+戻ります</language>
+	</row>
+
+	<row id="COMPATI_STR_002">
+		<language name="JPN" width="256">つながりました
+メニューを　えらんでください</language>
+		<language name="JPN_KANJI" width="256">つながりました
+メニューを選んでください</language>
+	</row>
+
+	<row id="COMPATI_STR_003">
+		<language name="JPN" width="256">メニューを　せんたくしました
+せきがいせんつうしんを
+してください</language>
+		<language name="JPN_KANJI" width="256">メニューを選択しました
+赤外線通信を
 してください</language>
 	</row>
 
