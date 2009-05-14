@@ -361,7 +361,9 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 		{
 			p_sys->seq	= COMPATIBLE_IRC_SEQ_DISCONNECT_WAIT;
 		}
-		break;
+//		break;
+//	fall through
+
 	case COMPATIBLE_IRC_SEQ_DISCONNECT_WAIT:
 		if( !p_sys->is_connect ){
 			p_sys->seq = COMPATIBLE_IRC_SEQ_DISCONNECT_END;
