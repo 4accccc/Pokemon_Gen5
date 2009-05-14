@@ -40,11 +40,14 @@ _EVENT_DATA_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
+//--------------------------------------------------------------
+//	
+//--------------------------------------------------------------
 ev_talkobj_boy1:
 	_TALK_OBJ_PAUSE_ALL //動作モデルをポーズします
 	_TURN_HERO_SITE //自機の方向へ振り向きます
 	_TALKWIN_OPEN //会話ウィンドウを開きます
-	_TALKMSG_ALLPUT msg_r01_boy1_01 //会話ウィンドウにmsg_t01_testmsg01を表示します
+	_TALKMSG_ALLPUT msg_r01_boy1_01 //会話ウィンドウにmsg_r01_boy1_01を表示します
 	_AB_KEYWAIT //ABキー待ちです
 	_TALKWIN_CLOSE //会話ウィンドウを閉じます
 
@@ -54,15 +57,56 @@ ev_talkobj_boy1:
 	_OBJ_PAUSE_CLEAR_ALL //動作モデルポーズを解除します
 	_END //イベントを終了します
 
+
 ev_talkobj_girl1:
-	_NOP
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_girl1_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME R01GIRL1,test02anime
+	_OBJ_ANIME_WAIT
+
+	_OBJ_PAUSE_CLEAR_ALL
 	_END
+
 
 ev_talkobj_man1:
-	_NOP
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_man1_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME R01MAN1,test03anime
+	_OBJ_ANIME_WAIT
+
+	_OBJ_PAUSE_CLEAR_ALL
 	_END
 
+//--------------------------------------------------------------
+//	アニメーションデータ
+//--------------------------------------------------------------
 _ANIME_LABEL test01anime
 	_ANIME_DATA AC_WALK_U_8F,2
 	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL test02anime
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL test03anime
+	_ANIME_DATA AC_STAY_WALK_D_8F,3
+	_ANIME_DATA AC_WALK_D_2F,2
+	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA ACMD_END,0
