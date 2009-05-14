@@ -16,7 +16,9 @@ enum {
 	NARC_buildmodel_anime_elboard2_test_nsbta = 2,
 	NARC_buildmodel_anime_elboard_test_nsbca = 3,
 	NARC_buildmodel_anime_elboard_test_nsbta = 4,
-	NARC_buildmodel_anime_fountain_01_nsbta = 5
+	NARC_buildmodel_anime_fireplace_02_nsbta = 5,
+	NARC_buildmodel_anime_fountain_01_nsbta = 6,
+	NARC_buildmodel_anime_machine_l02_nsbta = 7
 };
 
 /* NARC_BUILDMODEL_ANIME_NAIX_ */

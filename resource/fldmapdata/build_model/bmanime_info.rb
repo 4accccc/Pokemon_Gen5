@@ -34,6 +34,9 @@ class BmAnime
   #アニメタイプ指定(ならびに注意！！）
   @@anime_type = ["NO_ANIME", "ETERNAL", "EVENT"]
 
+  #動作タイプ指定(ならびに注意！！）
+  @@program_type = ["NONE", "ELBOARD1", "ELBOARD2"]
+
   #拡張子変換テーブル
   @@ext_tbl = {
     ".ita" => ".nsbta",
@@ -58,10 +61,13 @@ class BmAnime
 
     @anm_type = @@anime_type.index(column[@@COL_ANMTYPE])
     if @anm_type == nil
-      raise InputFileError, "アニメID #{@symbol} のアニメタイプ #{column[@COL_ANMTYPE]} は非対応です"
+      raise InputFileError, "アニメID #{@symbol} のアニメタイプ #{column[@@COL_ANMTYPE]} は非対応です"
     end
 
-    @prog_type = Integer(column[@@COL_PROGTYPE])
+    @prog_type = @@program_type.index(column[@@COL_PROGTYPE])
+    if @prog_type == nil
+      raise InputFileError, "アニメID #{@symbol} の動作タイプ \"#{column[@@COL_PROGTYPE]}\" は非対応です"
+    end
 
     @anime_count = Integer(column[@@COL_ANMCOUNT])
 
