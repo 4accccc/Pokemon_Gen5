@@ -3,6 +3,8 @@ SCRSRCS	=\
 	common_scr.ev	\
 	dummy.ev	\
 	dummy_scr.ev	\
+	r01.ev	\
+	sp_r01.ev	\
 	sp_t01.ev	\
 	sp_t02.ev	\
 	t01.ev	\
