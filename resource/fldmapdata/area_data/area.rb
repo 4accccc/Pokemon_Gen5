@@ -16,6 +16,11 @@
 load 'area_common.def'
 require 'area_common.rb'	#COL_～の定義など
 
+#NAIXReaderの読み込み
+lib_path_naixread = ENV["PROJECT_ROOT"] + "tools/naixread"
+require lib_path_naixread
+
+
 #配列へのエントリ
 def EntryVec(vec, item)
 	#すでにあるか調べる
@@ -80,22 +85,6 @@ def ChangeExtend(inStr, inExtStr)
 	return str
 end
 
-#スクリプトファイル作成
-def MakeScript(vec, inFileName, inExt)
-	script_file = File.open(inFileName,"w")
-	vec.each do | item |
-		file_name = ChangeExtend(item, inExt);
-		script_file.printf("\"%s\"\n",file_name)
-	end
-end
-def MakeDependFile(vec, inFileName, inExt, symbolName)
-	dep_file = File.open(inFileName, "w")
-	dep_file.printf("%s = \\\n", symbolName)
-	vec.each do |item|
-		file_name = ChangeExtend(item, inExt)
-		dep_file.printf("\t%s \\\n", file_name)
-	end
-end
 
 #ファイルパックライト
 def FileWrite(bin_file, data, code)
@@ -177,70 +166,54 @@ end
 #	コンバート本体
 #------------------------------------------------------------------------------
 
-area_tbl_file = File.open(ARGV[0],"r")
-#area_id_h = File.open(TARGET_HEADER_FILENAME, "w")
-id_file = AreaIDMaker.new(TARGET_HEADER_FILENAME)
-#area_id_h.printf("//このファイルはコンバータにより生成されます\n")
-#area_id_h.printf("enum {\n")
+begin
+  area_tbl_file = File.open(ARGV[0],"r")
+  id_file = AreaIDMaker.new(TARGET_HEADER_FILENAME)
 
-build_vec = []
-tex_vec = []
-g_anm_vec = []
-marge_tex_before = []
+  build_vec = []
+  tex_vec = []
+  g_anm_vec = []
 
-total_bin_file = File.open(TARGET_BIN_FILENAME, "wb")
-total_txt_file = File.open("area_data.txt", "w")
+  total_bin_file = File.open(TARGET_BIN_FILENAME, "wb")
+  total_txt_file = File.open("area_data.txt", "w")
 
-#1行読み飛ばし
-#line = area_tbl_file.gets
-read_through area_tbl_file
+  #1行読み飛ばし
+  #line = area_tbl_file.gets
+  read_through area_tbl_file
 
-area_count = 0
-while line = area_tbl_file.gets
-	column = line.split "\t"
+  area_count = 0
+  while line = area_tbl_file.gets
+    column = line.split "\t"
 
-	#area_name = getAreaName(column)
-	#エリアＩＤ列挙
-	#area_id_h.printf("\t%-24s = %3d,\n",area_name.upcase, area_count)
-	id_file.putAreaName(column)
+    #area_name = getAreaName(column)
+    #エリアＩＤ列挙
+    id_file.putAreaName(column)
 
-	#binファイル作成
-	#データ書き込み
-	bm_id = EntryVec(build_vec,column[COL_BMNAME])	#モデル
-	FileWrite(total_bin_file,bm_id, "S")
-	tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
-	FileWrite(total_bin_file,tex_id, "S")
-	anm_id = EntryVec2(g_anm_vec,column[COL_ANMNAME],"none")	#地形アニメファイル
-	FileWrite(total_bin_file,anm_id, "S")
-	inout = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
-	FileWrite(total_bin_file,inout, "C")
-	light = Getlight(column[COL_LIGHTTYPE])				#ライト
-	FileWrite(total_bin_file,light, "C")
-	total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d\n",
-						  area_count, bm_id, tex_id, anm_id, inout, light);
+    #binファイル作成
+    #データ書き込み
+    bm_id = EntryVec(build_vec,column[COL_BMNAME])	#モデル
+    FileWrite(total_bin_file,bm_id, "S")
+    tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
+    FileWrite(total_bin_file,tex_id, "S")
+    anm_id = EntryVec2(g_anm_vec,column[COL_ANMNAME],"none")	#地形アニメファイル
+    FileWrite(total_bin_file,anm_id, "S")
+    inout = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
+    FileWrite(total_bin_file,inout, "C")
+    light = Getlight(column[COL_LIGHTTYPE])				#ライト
+    FileWrite(total_bin_file,light, "C")
+    total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d\n",
+                area_count, bm_id, tex_id, anm_id, inout, light);
 
-	#マージ前テクスチャを収集
-	EntryVec(marge_tex_before,column[COL_TEXPART1])	#マージ前テクスチャ1
-	EntryVec(marge_tex_before,column[COL_TEXPART2])	#マージ前テクスチャ2
-	#"dummy"は省く
-	marge_tex_before.delete("dummy")
-	
-	area_count += 1
-	
+    area_count += 1
+    
+  end
+
+  total_bin_file.close
+  total_txt_file.close
+  #テイル作成
+  id_file.close
+
 end
-
-total_bin_file.close
-total_txt_file.close
-#テイル作成
-#area_id_h.printf("\tAREA_ID_MAX\n");
-#area_id_h.printf("};")
-id_file.close
-
-#	//配置
-MakeScript(build_vec, "build_list.txt", "dat" );
-MakeScript(build_vec, "build_xls_list.txt", "xls" );
-#	//地形アニメ
-MakeScript(g_anm_vec, ARC_ANM_LIST_FILENAME, "nsbta" );
 
 
 
