@@ -1297,7 +1297,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		else
 		{	
 
-			//MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_DEBUG_001, 0, 0 );
+			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_DEBUG_001, 0, 0 );
 		}
 
 
