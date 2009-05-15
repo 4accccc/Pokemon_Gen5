@@ -121,7 +121,7 @@ enum{
 //#define DEBUGMSG_RIGHT3	(120)
 //#define DEBUGMSG_RIGHT4	(140)
 
-#define DEBUGMSG2_TAB			(175)
+#define DEBUGMSG2_TAB			(170)
 #define DEBUGMSG3_TAB			(85)
 
 //-------------------------------------
@@ -1300,6 +1300,15 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_DEBUG_001, 0, 0 );
 		}
 
+		{	
+			int i;
+			for( i = 0 ; i < DEBUG_PLAYER_SAVE_NUM; i++ )
+			{
+				p_wk->shake_left[i].cnt				= 0;
+				p_wk->shake_left[i].shake_cnt	= 0;
+				p_wk->shake_left[i].shake_idx	= 0;
+			}
+		}
 
 		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
 		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], VISIBLE_ON );
@@ -1371,6 +1380,7 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		}
 		else
 		{	
+			SHAKESEARCH_Init( &p_wk->shake_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ]);
 			*p_seq	= SEQ_RET;
 		}
 		break;
@@ -1439,6 +1449,7 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		}
 		else
 		{	
+			SHAKESEARCH_Init( &p_wk->shake_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ]);
 			*p_seq	= SEQ_RET;
 		}
 		break;
@@ -1582,14 +1593,14 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
 		{	
 			//DEBUGPRINT_PrintNumber( L"X %d", p_wk->shake_left.shake[i].x, DEBUGMSG_LEFT1, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"X( %d )", p_wk->shake_left[now_idx].shake[i].x- p_wk->shake_left[now_idx].shake[0].x, DEBUGMSG_LEFT1+(DEBUGMSG2_TAB*j), i*10+40 );
+			DEBUGPRINT_PrintNumber( L"X %d ", p_wk->shake_left[now_idx].shake[i].x- p_wk->shake_left[now_idx].shake[0].x, DEBUGMSG_LEFT1+(DEBUGMSG2_TAB*j), i*10+40 );
 			//DEBUGPRINT_PrintNumber( L"Y %d", p_wk->shake_left.shake[i].y, DEBUGMSG_LEFT3, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"Y( %d )", p_wk->shake_left[now_idx].shake[i].y- p_wk->shake_left[now_idx].shake[0].y, DEBUGMSG_LEFT2+(DEBUGMSG2_TAB*j), i*10+40 );
+			DEBUGPRINT_PrintNumber( L"Y %d ", p_wk->shake_left[now_idx].shake[i].y- p_wk->shake_left[now_idx].shake[0].y, DEBUGMSG_LEFT2+(DEBUGMSG2_TAB*j), i*10+40 );
 	
 			//DEBUGPRINT_PrintNumber( L"X %d", p_wk->shake_right.shake[i].x, DEBUGMSG_RIGHT1, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"X( %d )", p_wk->shake_right[now_idx].shake[i].x - p_wk->shake_right[now_idx].shake[0].x, DEBUGMSG_RIGHT1+(DEBUGMSG2_TAB*j), i*10+40 );
+			DEBUGPRINT_PrintNumber( L"X %d ", p_wk->shake_right[now_idx].shake[i].x - p_wk->shake_right[now_idx].shake[0].x, DEBUGMSG_RIGHT1+(DEBUGMSG2_TAB*j), i*10+40 );
 			//DEBUGPRINT_PrintNumber( L"Y %d", p_wk->shake_right.shake[i].y, DEBUGMSG_RIGHT3, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"Y( %d )", p_wk->shake_right[now_idx].shake[i].y - p_wk->shake_right[now_idx].shake[0].y,DEBUGMSG_RIGHT2+(DEBUGMSG2_TAB*j), i*10+40 );
+			DEBUGPRINT_PrintNumber( L"Y %d ", p_wk->shake_right[now_idx].shake[i].y - p_wk->shake_right[now_idx].shake[0].y,DEBUGMSG_RIGHT2+(DEBUGMSG2_TAB*j), i*10+40 );
 		}
 	
 
@@ -1653,10 +1664,10 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 			ofs2[2]	= p_wk->shake_right[idx2].shake[i].x- p_wk->shake_right[idx2].shake[0].x;
 			ofs2[3]	= p_wk->shake_right[idx2].shake[i].y- p_wk->shake_right[idx2].shake[0].y;
 
-			DEBUGPRINT_PrintNumber( L"X( %d )", ofs1[0]-ofs2[0], DEBUGMSG3_TAB, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"Y( %d )", ofs1[1]-ofs2[1], DEBUGMSG3_TAB+20, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"X( %d )", ofs1[2]-ofs2[2], DEBUGMSG3_TAB+40, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"Y( %d )", ofs1[3]-ofs2[3], DEBUGMSG3_TAB+60, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"X %d ", ofs1[0]-ofs2[0], DEBUGMSG3_TAB, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"Y %d ", ofs1[1]-ofs2[1], DEBUGMSG3_TAB+20, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"X %d ", ofs1[2]-ofs2[2], DEBUGMSG3_TAB+40, i*10+40 );
+			DEBUGPRINT_PrintNumber( L"Y %d ", ofs1[3]-ofs2[3], DEBUGMSG3_TAB+60, i*10+40 );
 
 		}
 
