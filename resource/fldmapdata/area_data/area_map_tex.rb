@@ -8,7 +8,6 @@
 #------------------------------------------------------------------------------
 
 load "area_common.def"
-load "area_common.rb"
 
 
 #------------------------------------------------------------------------------
@@ -31,7 +30,7 @@ nnsarc_depend_file.printf("# area_map_tex.rbÇ…ÇÊÇËê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ\n")
 nnsarc_depend_file.printf("NNSARC_DEPEND_FILES	= \\\n")
 
 #1çsì«Ç›îÚÇŒÇµ
-read_through area_tbl_file
+READTHROUGH_LINES.times{|| area_tbl_file.gets}
 
 area_count = 0
 while line = area_tbl_file.gets

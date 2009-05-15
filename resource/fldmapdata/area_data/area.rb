@@ -13,8 +13,7 @@
 #
 #------------------------------------------------------------------------------
 
-load 'area_common.def'
-require 'area_common.rb'	#COL_`‚Ì’è‹`‚È‚Ç
+load 'area_common.def'	#COL_`‚Ì’è‹`‚È‚Ç
 
 #NAIXReader‚Ì“Ç‚İ‚İ
 lib_path_naixread = ENV["PROJECT_ROOT"] + "tools/naixread"
@@ -179,7 +178,7 @@ begin
 
   #1s“Ç‚İ”ò‚Î‚µ
   #line = area_tbl_file.gets
-  read_through area_tbl_file
+	READTHROUGH_LINES.times{|| area_tbl_file.gets}
 
   area_count = 0
   while line = area_tbl_file.gets

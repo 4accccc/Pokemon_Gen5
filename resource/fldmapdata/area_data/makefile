@@ -33,7 +33,6 @@ BUILD_DIR		:= $(subst $(DQ),,$(BM_ARCHIVER_DIR))
 #NSBTXFILES_DIR	= nsbtx_files
 
 #AREA_TABLE	= area_table.txt
-AREABM_LIST = abmlst_files
 
 TEX_DEPEND_FILES	= $(NSBTX_DEPEND_FILENAME) $(NNSARC_DEPEND_FILENAME) $(NNSARC_TEXLIST_FILENAME)
 
@@ -69,14 +68,13 @@ XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 #----------------------------------------------------------------------------
 #Makeで生成される*.binはmake cleanの削除対象にする
 CLEANFILES	= $(TARGETDIR)/$(TARGET_HEADER) $(TARGETDIR)/$(TARGET)
-CLEANFILES	+=  $(AREABM_LIST) $(TXTDATA)
+CLEANFILES	+=  $(TXTDATA)
 
 #----------------------------------------------------------------------------
 #	ツールへのパス指定
 #----------------------------------------------------------------------------
 LISTMK		= listmk.rb
 NEWFILE	= make_new_file.exe
-ABMLIST_MK	= ruby abmlstmk.rb
 #TEXSET_MK	 = ruby mklst_texset.rb
 
 #----------------------------------------------------------------------------
@@ -102,7 +100,6 @@ G_ANM_LIST	=	$(subst $(DQ),,$(ARC_ANM_LIST_FILENAME))
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-#do-build: subdir $(TARGET_ARC) $(AREABM_LIST)
 do-build:	$(TARGETDIR)/$(TARGET) subdir
 
 subdir:
@@ -121,8 +118,6 @@ $(TARGET):	$(SRC_XLS_FILE)
 	ruby area.rb $(SRC_TXT_FILE)
 	#地形モデルテクスチャコンバート用定義生成
 	ruby area_map_tex.rb $(SRC_TXT_FILE)
-	#配置モデル用依存リスト生成
-	ruby abmlstmk.rb $(SRC_TXT_FILE) $(AREABM_LIST)
 endif
 
 
@@ -132,8 +127,6 @@ $(TARGET_ARC): $(XLS)
 	$(XLS2TAB) $(SRC_XLS_FILE) > $(SRC_TXT_FILE)
 	#$(MAKE) convert				#コンバート
 	ruby area.rb $(SRC_TXT_FILE)
-	#$(MAKE) mkabmlst			#エリア配置モデルファイルリスト作成
-	ruby abmlstmk.rb $(SRC_TXT_FILE) $(AREABM_LIST)
 	$(MAKE) mktexsetlst			#テクスチャセット元データリスト作成
 	$(MAKE) addnew				#新規空データ追加
 	$(MAKE) movelist			#リストファイル移動
@@ -153,10 +146,6 @@ movelist:
 	#-rm $(TEX_LIST)
 	ruby $(LISTMK) $(G_ANM_LIST) g_nsbta area_ground_anime/$(G_ANM_LIST)
 	-rm $(G_ANM_LIST) 
-
-#area build list作成
-mkabmlst:
-	$(ABMLIST_MK) $(SRC_TXT_FILE) $(AREABM_LIST)
 
 #マップテクスチャセットリスト作成
 mktexsetlst:

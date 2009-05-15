@@ -595,9 +595,9 @@ nsbtx_files/tex_set_in01.nsbtx: src_imd_files/testroom00_00c.imd
 	@$(COPY) src_imd_files/testroom00_00c.imd marged_imd_files/tex_set_in01.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in01.imd -o nsbtx_files/tex_set_in01.nsbtx -etex
 
-nsbtx_files/tex_set_in02.nsbtx: src_imd_files/testroom00_00c.imd
-	@echo src_imd_files/testroom00_00c.imd Å® nsbtx_files/tex_set_in02.nsbtx
-	@$(COPY) src_imd_files/testroom00_00c.imd marged_imd_files/tex_set_in02.imd
+nsbtx_files/tex_set_in02.nsbtx: src_imd_files/in02_texset.imd
+	@echo src_imd_files/in02_texset.imd Å® nsbtx_files/tex_set_in02.nsbtx
+	@$(COPY) src_imd_files/in02_texset.imd marged_imd_files/tex_set_in02.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in02.imd -o nsbtx_files/tex_set_in02.nsbtx -etex
 
 nsbtx_files/tex_set_in03.nsbtx: src_imd_files/testpc00_00c.imd
