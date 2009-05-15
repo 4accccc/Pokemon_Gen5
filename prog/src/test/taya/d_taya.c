@@ -879,7 +879,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->partyEnemy2 = NULL; ///< 2vs2時の２番目敵AI用（不要ならnull）
 
     #ifdef DEBUG_ONLY_FOR_taya
-      setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
+      setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
       setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_AABOKKU, MONSNO_METAGUROSU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
       {
         #if 1
@@ -1097,7 +1097,7 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
 
       if( para->netID == 0 )
       {
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
+        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
       }
       else
       {
@@ -1315,9 +1315,12 @@ static void setup_party( HEAPID heapID, POKEPARTY* party, ... )
     {
       TAYA_Printf("Create MonsNo=%d\n", monsno);
       pp = PP_Create( monsno, 50, 3594, heapID );
-      if( monsno == MONSNO_GYARADOSU )
+      if( monsno == MONSNO_PORIGON )
       {
+        PP_SetWazaPush( pp, WAZANO_TEKUSUTYAA );
         PP_SetWazaPush( pp, WAZANO_NAMINORI );
+        PP_SetWazaPush( pp, WAZANO_KAMINARI );
+        PP_SetWazaPush( pp, WAZANO_HUNKA );
       }
       PokeParty_Add( party, pp );
     }

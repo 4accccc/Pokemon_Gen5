@@ -20,6 +20,7 @@
 
 #include "handler\hand_tokusei.h"
 #include "handler\hand_item.h"
+#include "handler\hand_waza.h"
 
 #include "btl_server_flow.h"
 
@@ -181,6 +182,9 @@ static void scproc_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx );
 static void scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static SV_WazaFailCause scproc_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static void scproc_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, const BTL_ACTION_PARAM* action );
+static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, const BTL_ACTION_PARAM* action );
+static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static BOOL scproc_Fight_CheckWazaExecuteFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static u8 flowsub_registerWazaTargets( BTL_SVFLOW_WORK* wk, BtlPokePos atPos, WazaID waza, const BTL_ACTION_PARAM* action, TARGET_POKE_REC* rec );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static BTL_POKEPARAM* svflowsub_get_opponent_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos, u8 pokeSideIdx );
@@ -188,7 +192,7 @@ static BTL_POKEPARAM* svflowsub_get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPoke
 static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, SV_WazaFailCause fail_cause );
 static void scproc_WazaExecuteFix( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, BTL_EVWK_WAZA_EXE* evwk );
 static void scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, TARGET_POKE_REC* rec );
-static void scproc_Fight_Damage( BTL_SVFLOW_WORK* wk, WazaID waza, SVCL_WORK* atClient,
+static void scproc_Fight_Damage( BTL_SVFLOW_WORK* wk, WazaID waza,
    BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker,
   TARGET_POKE_REC* targets, fx32 dmg_ratio );
@@ -249,7 +253,9 @@ static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk );
 static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk );
 static BOOL scEvent_CheckPushOutFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void scproc_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, const BTL_ACTION_PARAM* action );
+static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
 static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
+static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void scput_Fight_Others_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
 static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID );
 static void scproc_HandEx_useItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
@@ -260,6 +266,7 @@ static void scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 static void scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID );
 static void scproc_HandEx_recoverRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static void scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
 static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
@@ -363,9 +370,11 @@ static int scEvent_CalcDrainVolume( BTL_SVFLOW_WORK* wk, WazaID waza,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, int damage );
 static void scEvent_CheckSpecialDrain( BTL_SVFLOW_WORK* wk, WazaID waza,
   const BTL_POKEPARAM* attacker, u32 total_damage );
-static BOOL scEvent_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
+static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8* turn );
+static void scEvent_AfterChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather );
 static BOOL scEvent_CheckItemUseEnable( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk );
+static u16 Hem_GetStackPtr( const HANDLER_EXHIBISION_MANAGER* wk );
 static u32 Hem_PushState( HANDLER_EXHIBISION_MANAGER* wk );
 static void Hem_PopState( HANDLER_EXHIBISION_MANAGER* wk, u32 state );
 static BTL_HANDEX_PARAM_HEADER* Hem_ReadWork( HANDLER_EXHIBISION_MANAGER* wk );
@@ -1084,11 +1093,123 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, con
 
   atClient = BTL_SERVER_GetClientWork( wk->server, attackClientID );
   attacker = atClient->frontMember[posIdx];
-  attacker_pokeID = BTL_POKEPARAM_GetID( attacker );
 
   waza = BTL_POKEPARAM_GetWazaNumber( attacker, action->fight.wazaIdx );
+  BTL_HANDLER_Waza_Add( attacker, waza );
 
-// こんらん自爆判定
+  do {
+    // こんらん自爆判定
+    if( scproc_Fight_CheckConf(wk, attacker) ){ break; }
+    // ワザ出し失敗判定
+    if( scproc_Fight_CheckWazaExecuteFail(wk, attacker, waza) ){ break; }
+
+    // ワザ出し成功
+    scproc_Fight_WazaExe( wk, attacker, waza, action );
+
+  }while(0);
+
+  BTL_HANDLER_Waza_Remove( attacker, waza );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 「たたかう」-> ワザ出し成功以降の処理
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   waza
+ */
+//----------------------------------------------------------------------------------
+static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, const BTL_ACTION_PARAM* action )
+{
+  WazaCategory  category = WAZADATA_GetCategory( waza );
+  u8 pokeID = BTL_POKEPARAM_GetID( attacker );
+  BtlPokePos    atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, pokeID );
+  u16  que_reserve_pos;
+
+  TargetPokeRec_Clear( &wk->damagedPokemon );
+  TargetPokeRec_Clear( &wk->targetPokemon );
+
+  scEvent_CheckWazaParam( wk, waza, attacker, &wk->wazaParam );
+
+  SCQUE_PUT_MSG_WAZA( wk->que, pokeID, waza );
+  BTL_Printf("ポケ(%d)の直前ワザに - %d - をセットする\n", pokeID, waza );
+  BTL_POKEPARAM_UpdateUsedWazaNumber( attacker, waza );
+  SCQUE_PUT_OP_UpdateUseWaza( wk->que, pokeID, waza );
+
+  {
+    BTL_EVWK_WAZA_EXE* evwk = eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_WAZA_EXE) );
+    scEvent_WazaExecuteFix( wk, attacker, waza, evwk );
+    scproc_WazaExecuteFix( wk, attacker, waza, evwk );
+    eventWork_Pop( &wk->eventWork, evwk );
+  }
+
+  que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
+  wk->wazaEff_EnableFlag = FALSE;
+  wk->wazaEff_TargetPokeID = BTL_POKEID_NULL;
+
+  // @@@ ここに、対象ポケによらない無効化チェックを入れるかも…
+  flowsub_registerWazaTargets( wk, atPos, waza, action, &wk->targetPokemon );
+  flowsub_checkNotEffect( wk, waza, attacker, &wk->targetPokemon );
+
+  switch( category ){
+  case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
+  case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
+  case WAZADATA_CATEGORY_DAMAGE_EFFECT:
+  case WAZADATA_CATEGORY_DAMAGE_SICK:
+  case WAZADATA_CATEGORY_DRAIN:
+    scproc_Fight_Damage( wk, waza, attacker, &wk->targetPokemon );
+    break;
+  case WAZADATA_CATEGORY_SIMPLE_EFFECT:
+    scproc_Fight_SimpleEffect( wk, waza, attacker, &wk->targetPokemon );
+    break;
+  case WAZADATA_CATEGORY_SIMPLE_SICK:
+    scproc_Fight_SimpleSick( wk, waza, attacker, &wk->targetPokemon );
+    break;
+  case WAZADATA_CATEGORY_EFFECT_SICK:
+    scproc_Fight_EffectSick( wk, waza, attacker, &wk->targetPokemon );
+    break;
+  case WAZADATA_CATEGORY_ICHIGEKI:
+    scproc_Fight_Ichigeki( wk, waza, attacker, &wk->targetPokemon );
+    break;
+  case WAZADATA_CATEGORY_WEATHER:
+    scproc_Fight_Weather( wk, waza, attacker, action );
+    break;
+  case WAZADATA_CATEGORY_PUSHOUT:
+    scproc_Fight_PushOut( wk, waza, attacker, &wk->targetPokemon );
+    break;
+
+//  case WAZADATA_CATEGORY_BIND:
+//  case WAZADATA_CATEGORY_GUARD:
+//  case WAZADATA_CATEGORY_FIELD_EFFECT:
+//  case WAZADATA_CATEGORY_SIDE_EFFECT:
+  case WAZADATA_CATEGORY_OTHERS:
+    scput_Fight_Others( wk, waza, attacker, &wk->targetPokemon );
+    break;
+  default:
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
+    break;
+  }
+
+  if( wk->wazaEff_EnableFlag )
+  {
+    SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT, pokeID, wk->wazaEff_TargetPokeID, waza );
+  }
+
+  scproc_decrementPP( wk, attacker, action->fight.wazaIdx, &wk->damagedPokemon );
+}
+//----------------------------------------------------------------------------------
+/**
+ * こんらん自爆チェック＆処理
+ *
+ * @param   wk
+ * @param   attacker
+ *
+ * @retval  BOOL    自爆した場合TRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker )
+{
   if( BTL_POKEPARAM_CheckSick(attacker, WAZASICK_KONRAN) )
   {
     scPut_ConfCheck( wk, attacker );
@@ -1096,101 +1217,32 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, u8 attackClientID, u8 posIdx, con
     {
       u16 conf_dmg = scEvent_CalcConfDamage( wk, attacker );
       scPut_ConfDamage( wk, attacker, conf_dmg );
-      return;
+      return TRUE;
     }
   }
-// ワザ出し成功判定
-  {
-    SV_WazaFailCause  fail_cause;
-//  fail_cause = scEvent_CheckWazaExecute( wk, attacker, waza, &cured_flag );
-    fail_cause = scproc_CheckWazaExecute( wk, attacker, waza );
-    if( fail_cause != SV_WAZAFAIL_NULL )
-    {
-      scproc_WazaExecuteFailed( wk, attacker, waza, fail_cause );
-      return;
-    }
-  }
-// ワザを出すことに成功
-  {
-    WazaCategory  category = WAZADATA_GetCategory( waza );
-    BtlPokePos    atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, attacker_pokeID );
-    u16  que_reserve_pos;
-    BTL_Printf("出すポケ位置=%d, 出すワザ=%d, カテゴリ=%d\n", atPos, waza, category);
-
-    TargetPokeRec_Clear( &wk->damagedPokemon );
-    TargetPokeRec_Clear( &wk->targetPokemon );
-
-    scEvent_CheckWazaParam( wk, waza, attacker, &wk->wazaParam );
-    SCQUE_PUT_MSG_WAZA( wk->que, attacker_pokeID, action->fight.wazaIdx );
-
-    BTL_Printf("ポケ(%d)の直前ワザに - %d - をセットするけどね\n", attacker_pokeID, waza );
-    BTL_POKEPARAM_UpdateUsedWazaNumber( attacker, waza );
-    SCQUE_PUT_OP_UpdateUseWaza( wk->que, attacker_pokeID, waza );
-
-    {
-      BTL_EVWK_WAZA_EXE* evwk = eventWork_Push( &wk->eventWork, sizeof(BTL_EVWK_WAZA_EXE) );
-      scEvent_WazaExecuteFix( wk, attacker, waza, evwk );
-      scproc_WazaExecuteFix( wk, attacker, waza, evwk );
-      eventWork_Pop( &wk->eventWork, evwk );
-    }
-
-    que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
-    wk->wazaEff_EnableFlag = FALSE;
-    wk->wazaEff_TargetPokeID = BTL_POKEID_NULL;
-
-    // @@@ ここに、対象ポケによらない無効化チェックを入れるかも…
-    flowsub_registerWazaTargets( wk, atPos, waza, action, &wk->targetPokemon );
-    flowsub_checkNotEffect( wk, waza, attacker, &wk->targetPokemon );
-
-    switch( category ){
-    case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
-    case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
-    case WAZADATA_CATEGORY_DAMAGE_EFFECT:
-    case WAZADATA_CATEGORY_DAMAGE_SICK:
-    case WAZADATA_CATEGORY_DRAIN:
-      scproc_Fight_Damage( wk, waza, atClient, attacker, &wk->targetPokemon );
-      break;
-    case WAZADATA_CATEGORY_SIMPLE_EFFECT:
-      scproc_Fight_SimpleEffect( wk, waza, attacker, &wk->targetPokemon );
-      break;
-    case WAZADATA_CATEGORY_SIMPLE_SICK:
-      scproc_Fight_SimpleSick( wk, waza, attacker, &wk->targetPokemon );
-      break;
-    case WAZADATA_CATEGORY_EFFECT_SICK:
-      scproc_Fight_EffectSick( wk, waza, attacker, &wk->targetPokemon );
-      break;
-    case WAZADATA_CATEGORY_ICHIGEKI:
-      scproc_Fight_Ichigeki( wk, waza, attacker, &wk->targetPokemon );
-      break;
-    case WAZADATA_CATEGORY_WEATHER:
-      scproc_Fight_Weather( wk, waza, attacker, action );
-      break;
-    case WAZADATA_CATEGORY_PUSHOUT:
-      scproc_Fight_PushOut( wk, waza, attacker, &wk->targetPokemon );
-      break;
-
-//  case WAZADATA_CATEGORY_BIND:
-//  case WAZADATA_CATEGORY_GUARD:
-//  case WAZADATA_CATEGORY_FIELD_EFFECT:
-//  case WAZADATA_CATEGORY_SIDE_EFFECT:
-    case WAZADATA_CATEGORY_OTHERS:
-      scput_Fight_Others( wk, waza, attacker, &wk->targetPokemon );
-      break;
-    default:
-//    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaAvoid );
-      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
-      break;
-    }
-
-    if( wk->wazaEff_EnableFlag )
-    {
-      u8 atPokeID = BTL_POKEPARAM_GetID( attacker );
-      SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT, atPokeID, wk->wazaEff_TargetPokeID, waza );
-    }
-
-    scproc_decrementPP( wk, attacker, action->fight.wazaIdx, &wk->damagedPokemon );
-  }
+  return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * ワザ出し失敗チェック
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   waza
+ *
+ * @retval  BOOL    失敗した場合TRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scproc_Fight_CheckWazaExecuteFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
+{
+  SV_WazaFailCause  fail_cause = scproc_CheckWazaExecute( wk, attacker, waza );
+  if( fail_cause != SV_WAZAFAIL_NULL ){
+    scproc_WazaExecuteFailed( wk, attacker, waza, fail_cause );
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //--------------------------------------------------------------------------
 /**
  * 対象ポケモンのデータポインタを、TARGET_POKE_REC構造体にセット
@@ -1463,7 +1515,7 @@ static void scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8
 //----------------------------------------------------------------------
 // サーバーフロー：「たたかう」> ダメージワザ系
 //----------------------------------------------------------------------
-static void scproc_Fight_Damage( BTL_SVFLOW_WORK* wk, WazaID waza, SVCL_WORK* atClient,
+static void scproc_Fight_Damage( BTL_SVFLOW_WORK* wk, WazaID waza,
    BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
 {
   u8 target_cnt;
@@ -2660,6 +2712,7 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
     }
     if( !scEvent_checkHit(wk, attacker, target, waza) ){
       scPut_WazaAvoid( wk, attacker, waza );
+      return;
     }
 
     {
@@ -2771,12 +2824,26 @@ static void scproc_Fight_Weather( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
 {
   BtlWeather  weather = WAZADATA_GetWeather( waza );
 
-  if( scEvent_ChangeWeather( wk, weather, BTL_WEATHER_TURN_DEFAULT ) )
-  {
+  if( scproc_WeatherCore( wk, weather, BTL_WEATHER_TURN_DEFAULT ) ){
     wazaEff_SetNoTarget( wk );
-//    scPut_WazaEffectOn( wk, attacker, attacker, waza );
-    SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
   }
+}
+static BOOL scproc_WeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn )
+{
+  if( scEvent_CheckChangeWeather(wk, weather, &turn) )
+  {
+    BTL_FIELD_SetWeather( weather, turn );
+    SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
+
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      scEvent_AfterChangeWeather( wk, weather );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+    }
+    return TRUE;
+  }
+  return FALSE;
 }
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：分類しきれないワザ
@@ -2788,8 +2855,54 @@ static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM*
     scput_Fight_Others_SkillSwap( wk, attacker, targets );
     break;
   default:
-    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      if( scEvent_UnCategoryWaza(wk, waza, attacker, targets) ){
+        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        Hem_PopState( &wk->HEManager, hem_state );
+      }
+      else{
+        SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
+      }
+    }
     break;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] 未分類ワザ処理コール
+ *
+ * @param   wk
+ * @param   waza
+ * @param   attacker
+ * @param   targets
+ *
+ * @retval  BOOL      反応したワザハンドラがあればTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets )
+{
+  u16 sp_before = Hem_GetStackPtr( &wk->HEManager );
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BTL_POKEPARAM_GetID(attacker) );
+    {
+      BTL_POKEPARAM* bpp;
+      u8 cnt, i;
+      cnt = TargetPokeRec_GetCount( targets );
+      BTL_EVENTVAR_SetValue( BTL_EVAR_TARGET_POKECNT, cnt );
+      for(i=0; i<cnt; ++i){
+        bpp = TargetPokeRec_Get( targets, i );
+        BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_TARGET1+i, BTL_POKEPARAM_GetID(bpp) );
+      }
+      BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORY_WAZA );
+    }
+  BTL_EVENTVAR_Pop();
+
+  {
+    u16 sp_after = Hem_GetStackPtr( &wk->HEManager );
+    return sp_after != sp_before;
   }
 }
 // スキルスワップ
@@ -2849,6 +2962,7 @@ static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_RANK_EFFECT:   scproc_HandEx_rankEffect( wk, handEx_header, useItemID ); break;
     case BTL_HANDEX_RECOVER_RANK:  scproc_HandEx_recoverRank( wk, handEx_header ); break;
     case BTL_HANDEX_DAMAGE:        scproc_HandEx_damage( wk, handEx_header ); break;
+    case BTL_HANDEX_CHANGE_TYPE:   scproc_HandEx_changeType( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -2973,6 +3087,19 @@ static void scproc_HandEx_recoverRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
 static void scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
 
+}
+
+
+static void scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_CHANGE_TYPE* param= (const BTL_HANDEX_PARAM_CHANGE_TYPE*)param_header;
+
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  PokeType type_pure = PokeTypePair_GetType1( param->next_type );
+
+  SCQUE_PUT_OP_ChangePokeType( wk->que, param->pokeID, param->next_type );
+  SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ChangePokeType, param->pokeID, type_pure );
+  BTL_POKEPARAM_ChangePokeType( bpp, param->next_type );
 }
 
 
@@ -4471,10 +4598,10 @@ static u32 scEvent_DecrementPPVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
     {
       u8 i = 0;
       BTL_POKEPARAM* bpp;
-      BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGED_POKECNT, TargetPokeRec_GetCount(rec) );
+      BTL_EVENTVAR_SetValue( BTL_EVAR_TARGET_POKECNT, TargetPokeRec_GetCount(rec) );
       while( (bpp=TargetPokeRec_Get(rec, i)) != NULL )
       {
-        BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DAMAGED1+i, BTL_POKEPARAM_GetID(bpp) );
+        BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_TARGET1+i, BTL_POKEPARAM_GetID(bpp) );
         ++i;
       }
     }
@@ -5052,37 +5179,42 @@ static void scEvent_CheckSpecialDrain( BTL_SVFLOW_WORK* wk, WazaID waza,
 }
 //--------------------------------------------------------------------------
 /**
- * 【Event】天候の変化
+ * 【Event】天候の変化チェック
  *
  * @param   wk
  * @param   weather 天候
- * @param   turn    継続ターン数
+ * @param   turn    [io]継続ターン数
  *
- * @retval  BOOL    変化した場合TRUE
+ * @retval  BOOL    変化する場合はTRUE
  */
 //--------------------------------------------------------------------------
-static BOOL scEvent_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn )
+static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8* turn )
 {
   GF_ASSERT(weather != BTL_WEATHER_NONE);
 
-  BTL_Printf("天候変化イベント発生 ... 天候->%d\n", weather);
-
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_WEATHER, weather );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_TURN_COUNT, *turn );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WEATHER_CHANGE );
     weather = BTL_EVENTVAR_GetValue( BTL_EVAR_WEATHER );
-    if( weather != BTL_WEATHER_NONE )
-    {
-      BTL_Printf("   天候 -> %d へ変化\n", weather);
-      BTL_FIELD_SetWeather( weather, turn );
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_WEATHER_CHANGE_AFTER );
-    }
-    else
-    {
-      BTL_Printf("   天候変化 打ち消し！\n");
-    }
+    *turn = BTL_EVENTVAR_GetValue( BTL_EVAR_TURN_COUNT );
   BTL_EVENTVAR_Pop();
   return (weather != BTL_WEATHER_NONE);
+}
+//----------------------------------------------------------------------------------
+/**
+ * 【Event】天候の変化後イベント
+ *
+ * @param   wk
+ * @param   weather
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_AfterChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WEATHER, weather );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WEATHER_CHANGE_AFTER );
+  BTL_EVENTVAR_Pop();
 }
 //--------------------------------------------------------------------------
 /**
@@ -5475,10 +5607,7 @@ void BTL_SVFLOW_RECEPT_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather )
 {
   if( weather != BTL_WEATHER_NONE )
   {
-    if( scEvent_ChangeWeather( wk, weather, BTL_WEATHER_TURN_PERMANENT ) )
-    {
-      SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
-    }
+    scproc_WeatherCore( wk, weather, BTL_WEATHER_TURN_PERMANENT );
   }
   else
   {
@@ -5597,6 +5726,11 @@ static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk )
   wk->read_ptr = 0;
 }
 
+static u16 Hem_GetStackPtr( const HANDLER_EXHIBISION_MANAGER* wk )
+{
+  return wk->stack_ptr;
+}
+
 static u32 Hem_PushState( HANDLER_EXHIBISION_MANAGER* wk )
 {
   u32 state = (wk->stack_ptr<<16) | wk->read_ptr;
@@ -5635,14 +5769,15 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     u8 eq_type;
     u8 size;
   }work_size_table[] = {
-    { BTL_HANDEX_USE_ITEM,      sizeof(BTL_HANDEX_PARAM_USE_ITEM)      },
-    { BTL_HANDEX_RECOVER_HP,    sizeof(BTL_HANDEX_PARAM_RECOVER_HP)    },
-    { BTL_HANDEX_RECOVER_PP,    sizeof(BTL_HANDEX_PARAM_RECOVER_PP)    },
-    { BTL_HANDEX_CURE_SICK,     sizeof(BTL_HANDEX_PARAM_CURE_SICK)     },
-    { BTL_HANDEX_ADD_SICK,      sizeof(BTL_HANDEX_PARAM_ADD_SICK)      },
-    { BTL_HANDEX_RANK_EFFECT,   sizeof(BTL_HANDEX_PARAM_RANK_EFFECT)   },
-    { BTL_HANDEX_RECOVER_RANK,  sizeof(BTL_HANDEX_PARAM_RECOVER_RANK)  },
-    { BTL_HANDEX_DAMAGE,        sizeof(BTL_HANDEX_PARAM_DAMAGE)        },
+    { BTL_HANDEX_USE_ITEM,      sizeof(BTL_HANDEX_PARAM_USE_ITEM)     },
+    { BTL_HANDEX_RECOVER_HP,    sizeof(BTL_HANDEX_PARAM_RECOVER_HP)   },
+    { BTL_HANDEX_RECOVER_PP,    sizeof(BTL_HANDEX_PARAM_RECOVER_PP)   },
+    { BTL_HANDEX_CURE_SICK,     sizeof(BTL_HANDEX_PARAM_CURE_SICK)    },
+    { BTL_HANDEX_ADD_SICK,      sizeof(BTL_HANDEX_PARAM_ADD_SICK)     },
+    { BTL_HANDEX_RANK_EFFECT,   sizeof(BTL_HANDEX_PARAM_RANK_EFFECT)  },
+    { BTL_HANDEX_RECOVER_RANK,  sizeof(BTL_HANDEX_PARAM_RECOVER_RANK) },
+    { BTL_HANDEX_DAMAGE,        sizeof(BTL_HANDEX_PARAM_DAMAGE)       },
+    { BTL_HANDEX_CHANGE_TYPE,   sizeof(BTL_HANDEX_PARAM_CHANGE_TYPE)  },
   };
   u32 size, i;
 

@@ -173,6 +173,7 @@ typedef enum {
   BTL_HANDEX_RANK_EFFECT,   ///< ランク増減効果
   BTL_HANDEX_RECOVER_RANK,  ///< マイナスランクをフラットに戻す
   BTL_HANDEX_DAMAGE,        ///< ダメージを与える
+  BTL_HANDEX_CHANGE_TYPE,   ///< ポケモンのタイプを変える
 
   BTL_HANDEX_MAX,
 
@@ -256,6 +257,12 @@ typedef struct {
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
  u16  damage[ BTL_POS_MAX ];         ///< ダメージ量
 }BTL_HANDEX_PARAM_DAMAGE;
+
+typedef struct {
+  BTL_HANDEX_PARAM_DAMAGE  header;
+  PokeTypePair    next_type;
+  u8              pokeID;
+}BTL_HANDEX_PARAM_CHANGE_TYPE;
 
 extern void* BTL_SVFLOW_HANDLERWORK_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
 extern u8 BTL_SERVERFLOW_RECEPT_GetTargetPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );

@@ -568,7 +568,7 @@ static void ms_set_omitoosi( STRBUF* dst, u16 strID, const int* args )
 static void ms_set_change_poke_type( STRBUF* dst, u16 strID, const int* args )
 {
   register_PokeNickname( args[0], BUFIDX_POKE_1ST );
-  WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );
+  WORDSET_RegisterPokeTypeName( SysWork.wset, 1, args[1] );
   strID = get_setStrID( args[0], strID );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );

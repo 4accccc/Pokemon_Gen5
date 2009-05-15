@@ -1027,9 +1027,8 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case 0:
     {
-      const BTL_POKEPARAM* poke = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-      WazaID waza = BTL_POKEPARAM_GetWazaNumber( poke, args[1] );
-      BTLV_StartMsgWaza( wk->viewCore, args[0], waza );
+      // args[0] = pokeID, args[1] = wazaID
+      BTLV_StartMsgWaza( wk->viewCore, args[0], args[1] );
     }
     (*seq)++;
     break;

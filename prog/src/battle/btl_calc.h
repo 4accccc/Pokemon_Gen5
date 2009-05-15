@@ -49,8 +49,8 @@ enum {
 
   // 天候関連
   BTL_CALC_WEATHER_MIST_HITRATIO = FX32_CONST(75),    ///< 「きり」の時の命中率補正率
-  BTL_WEATHER_TURN_DEFAULT = 5,         ///< ワザによる天候変化の継続ターン数
-  BTL_WEATHER_TURN_PERMANENT = 0xff,
+  BTL_WEATHER_TURN_DEFAULT = 5,         ///< ワザによる天候変化の継続ターン数デフォルト値
+  BTL_WEATHER_TURN_PERMANENT = 0xff,    ///< 天候継続ターン無制限
 
   // とくせい関連
   BTL_CALC_TOK_CHIDORI_HITRATIO = FX32_CONST(0.8f),     /// 「ちどりあし」の減衰命中率
