@@ -447,8 +447,12 @@ static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk )
   //GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID, FLDMAPMENU_STR11);
   //GMEVENT_CallEvent(mwk->gmEvent, subevent);
   GMEVENT * newEvent;
+  TRCARD_CALL_PARAM *callParam = TRAINERCASR_CreateCallParam_SelfData( 
+                                    GAMESYSTEM_GetGameData( mwk->gmSys ), 
+                                    HEAPID_PROC );
+
   newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
-      TRCARD_OVERLAY_ID, &TrCardSysProcData, NULL);
+      TRCARD_OVERLAY_ID, &TrCardSysProcData, callParam);
   GMEVENT_CallEvent(mwk->gmEvent, newEvent);
   return TRUE;
 }

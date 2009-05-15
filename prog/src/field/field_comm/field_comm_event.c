@@ -8,6 +8,7 @@
 //======================================================================
 #include <gflib.h>
 #include "system/gfl_use.h"
+#include "system/main.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
@@ -114,7 +115,7 @@ struct _FIELD_COMM_EVENT
   BOOL  isInitMenu_;        //フィールドのProcか(厳密にはメッセージの処理用
 };
 //ユーザーデータ初期化用関数タイプ
-typedef void(FIELD_COMM_EVENT_USERDATA_INIT_FUNC)( FIELD_COMM_MAIN *commSys );
+typedef void(FIELD_COMM_EVENT_USERDATA_INIT_FUNC)( FIELD_COMM_MAIN *commSys , GAMESYS_WORK *gameSys );
 
 //======================================================================
 //  proto
@@ -135,8 +136,8 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkCommonEvent( GMEVENT *event , int *se
 
 static  const BOOL  FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork );
 
-static void FIELD_COMM_EVENT_InitUserData_TrainerCard( FIELD_COMM_MAIN *commSys );
-static void FIELD_COMM_EVENT_InitUserData_Battle( FIELD_COMM_MAIN *commSys );
+static void FIELD_COMM_EVENT_InitUserData_TrainerCard( FIELD_COMM_MAIN *commSys , GAMESYS_WORK *gameSys );
+static void FIELD_COMM_EVENT_InitUserData_Battle( FIELD_COMM_MAIN *commSys , GAMESYS_WORK *gameSys );
 
 extern const int  FIELD_COMM_MAIN_GetWorkSize(void);
 extern FIELD_COMM_MENU** FIELD_COMM_MAIN_GetCommMenuWork( FIELD_COMM_MAIN *commSys );
@@ -520,11 +521,12 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkCommonEvent( GMEVENT *event , int *se
   FIELD_COMM_DATA *commData = FIELD_COMM_SYS_GetCommDataWork( FIELD_COMM_MAIN_GetCommFieldSysPtr(commSys) );
   //こっちで生成してやるのでポインタのポインタ・・・
   FIELD_COMM_MENU **commMenu = FIELD_COMM_MAIN_GetCommMenuWork( commSys );
+  GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
   GF_ASSERT( *seq >= TALK_SEQ_COMMON_START );
   switch( *seq )
   {
   case TPS_SEND_SYNC_START_ACTION:  //行動開始前の同期+データ初期化
-    userDataInitFunc[evtWork->selectAction_](commSys);
+    userDataInitFunc[evtWork->selectAction_](commSys,gameSys);
 
     FIELD_COMM_FUNC_Send_SyncCommand( FCST_START_INIT_ACTION , commFunc );
     *seq = TPS_WAIT_SYNC_START_ACTION;
@@ -670,9 +672,12 @@ static  const BOOL  FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
       GMEVENT * newEvent;
       if( evtWork->selectAction_ == FCAL_TRAINERCARD )
       {
+        TRCARD_CALL_PARAM *callParam = TRAINERCASR_CreateCallParam_CommData( 
+                                          GAMESYSTEM_GetGameData( evtWork->gameSys_ ), 
+                                          FIELD_COMM_DATA_GetPartnerUserData(commData, FCUT_TRAINERCARD) ,
+                                          HEAPID_PROC );
         newEvent = EVENT_FieldSubProc(evtWork->gameSys_, evtWork->fieldWork_,
-              TRCARD_OVERLAY_ID, &TrCardSysCommProcData,
-              FIELD_COMM_DATA_GetPartnerUserData(commData, FCUT_TRAINERCARD) );
+              TRCARD_OVERLAY_ID, &TrCardSysCommProcData, callParam );
       }
       else if( evtWork->selectAction_ == FCAL_BATTLE )
       {
@@ -696,18 +701,19 @@ static  const BOOL  FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 }
 
 //ユーザーデータ初期化用関数(仮
-static void FIELD_COMM_EVENT_InitUserData_TrainerCard( FIELD_COMM_MAIN *commSys )
+static void FIELD_COMM_EVENT_InitUserData_TrainerCard( FIELD_COMM_MAIN *commSys , GAMESYS_WORK *gameSys )
 {
   STRBUF *workStr;
   TR_CARD_DATA *cardData;
+  GAMEDATA *GameData = GAMESYSTEM_GetGameData( gameSys );
   FIELD_COMM_DATA *commData = FIELD_COMM_SYS_GetCommDataWork( FIELD_COMM_MAIN_GetCommFieldSysPtr(commSys) );
 
   FIELD_COMM_DATA_CreateUserData( commData, FCUT_TRAINERCARD );
   cardData = FIELD_COMM_DATA_GetSelfUserData( commData, FCUT_TRAINERCARD );
 
-  TRAINERCARD_GetSelfData( cardData , TRUE );
+  TRAINERCARD_GetSelfData( cardData , GameData , TRUE );
 }
-static void FIELD_COMM_EVENT_InitUserData_Battle( FIELD_COMM_MAIN *commSys )
+static void FIELD_COMM_EVENT_InitUserData_Battle( FIELD_COMM_MAIN *commSys , GAMESYS_WORK *gameSys )
 {
   FIELD_COMM_DATA *commData = FIELD_COMM_SYS_GetCommDataWork( FIELD_COMM_MAIN_GetCommFieldSysPtr(commSys) );
   FIELD_COMM_DATA_CreateUserData( commData, FCUT_BATTLE );
