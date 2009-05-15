@@ -48,12 +48,22 @@ ev_talkobj_boy1:
 	_TURN_HERO_SITE //自機の方向へ振り向きます
 	_TALKWIN_OPEN //会話ウィンドウを開きます
 	_TALKMSG_ALLPUT msg_r01_boy1_01 //会話ウィンドウにmsg_r01_boy1_01を表示します
-	_AB_KEYWAIT //ABキー待ちです
+
+	_YES_NO_WIN SCWK_ANSWER
 	_TALKWIN_CLOSE //会話ウィンドウを閉じます
 
-	_OBJ_ANIME R01BOY1,test01anime
-	_OBJ_ANIME_WAIT
+//	_IFVAL_JUMP SCWK_ANSWER,NE,0,talkobj_boy1_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_boy1_no
 
+talkobj_boy1_yes:
+	_OBJ_ANIME R01BOY1,test01anime
+	_JUMP talkobj_boy1_end
+
+talkobj_boy1_no:
+	_OBJ_ANIME R01BOY1,test02anime
+
+talkobj_boy1_end:
+	_OBJ_ANIME_WAIT
 	_OBJ_PAUSE_CLEAR_ALL //動作モデルポーズを解除します
 	_END //イベントを終了します
 
