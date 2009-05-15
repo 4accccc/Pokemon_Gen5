@@ -93,6 +93,9 @@ static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdObjPauseClearAll( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk );
 
+static VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk );
+static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk );
+
 //======================================================================
 //	グローバル変数
 //======================================================================
@@ -166,6 +169,8 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
 	EvCmdTalkObjPauseAll,
 	EvCmdObjPauseClearAll,
 	EvCmdObjTurn,
+  
+  EvCmdYesNoWin,
 };
 
 //--------------------------------------------------------------
@@ -1188,7 +1193,7 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
 		//ふれあい広場などで、連れ歩きOBJに対して、
 		//スクリプトでアニメを発行すると、
 		//アニメが行われず終了待ちにいかないでループしてしまう
-
+    
 		{
 			FIELD_OBJ_PTR player_pair =
 				FieldOBJSys_MoveCodeSearch( fsys->fldobjsys, MV_PAIR );
@@ -1376,7 +1381,6 @@ static VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
 //======================================================================
 //  はい、いいえ　処理
 //======================================================================
-#if 0
 //--------------------------------------------------------------
 /**
  * 「はい・いいえ」処理
@@ -1388,7 +1392,37 @@ static VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
   FLDMENUFUNC **mw	= SCRIPT_GetMemberWork( sc, ID_EVSCR_MENUWORK );
 	u16 wk_id			= VMGetU16( core );
+  
+  *mw = FLDMENUFUNC_AddYesNoMenu( fparam->msgBG, 0 );
+  core->vm_register[0] = wk_id;
+   
+  VMCMD_SetWait( core, EvYesNoWinSelect );
+  return 1;
 }
-#endif
+
+static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  FLDMENUFUNC **mw = SCRIPT_GetMemberWork( sc, ID_EVSCR_MENUWORK );
+  u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, core->vm_register[0] );
+  FLDMENUFUNC_YESNO ret = FLDMENUFUNC_ProcYesNoMenu( *mw );
+  
+  if( ret == FLDMENUFUNC_YESNO_NULL ){
+    return 0;
+  }
+  
+  if( ret == FLDMENUFUNC_YESNO_YES ){
+    *ret_wk = 0;
+  }else{
+    *ret_wk = 1;
+  }
+  
+  FLDMENUFUNC_DeleteMenu( *mw );
+  return 1;
+}
+

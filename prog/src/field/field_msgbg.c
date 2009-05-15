@@ -28,7 +28,8 @@
 #define FLDMSGBG_PANO_MENU (13) 			///<メニューパレットNo
 #define FLDMSGBG_PANO_FONT (14)				///<フォントパレットNo
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
-#define FLDMSGBG_STRLEN (48)				///<文字列長さ標準
+#define FLDMSGBG_STRLEN (64)				///<文字列長さ標準
+#define FLDMSGBG_PRINT_STREAM_MAX (1) ///<PRINT_STREAM稼働数
 
 //======================================================================
 //	typedef struct
@@ -61,6 +62,8 @@ struct _TAG_FLDMSGBG
 	GFL_FONT *fontHandle;
 	PRINT_QUE *printQue;
 	FLDMSGPRINT msgPrintTbl[FLDMSGBG_PRINT_MAX];
+  
+  GFL_TCBLSYS *printTCBLSys;
 };
 
 //--------------------------------------------------------------
@@ -116,6 +119,8 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID )
 	fmb->heapID = heapID;
 	fmb->bgFrame = FLDMSGBG_BGFRAME;
 	
+  KAGAYA_Printf( "FLDMAPBG 初期HEAPID = %d\n", fmb->heapID );
+  
 	{	//BG初期化
 		GFL_BG_BGCNT_HEADER bgcntText = {
 			0, 0, 0x800, 0,
@@ -158,6 +163,11 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID )
 		fmb->printQue = PRINTSYS_QUE_Create( fmb->heapID );
 	}
 	
+  { //PRINT_STREAM TCB
+    fmb->printTCBLSys = GFL_TCBL_Init(
+        fmb->heapID, fmb->heapID, FLDMSGBG_PRINT_STREAM_MAX, 4 );
+  }
+  
 	return( fmb );
 }
 
@@ -173,6 +183,8 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
 	int i = 0;
 	FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
 	
+  GFL_TCBL_Exit( fmb->printTCBLSys );
+  
 //	GFL_BG_FreeCharacterArea( fmb->bgFrame, 0x00, 0x20 );
 	GFL_BG_FillCharacterRelease( fmb->bgFrame, 0x00, 0x20 );
 
@@ -216,6 +228,8 @@ void FLDMSGBG_PrintMain( FLDMSGBG *fmb )
 				&msgPrint->printUtil, msgPrint->printQue );
 		}
 	}
+  
+  GFL_TCBL_Main( fmb->printTCBLSys );
 }
 
 //--------------------------------------------------------------
@@ -496,6 +510,10 @@ GFL_MSGDATA * FLDMSGPRINT_GetMsgData( FLDMSGPRINT *msgPrint )
 {
 	return( msgPrint->msgData );
 }
+
+//======================================================================
+//  FLDMSGPRINT_STREAM
+//======================================================================
 
 //======================================================================
 //	FLDMSGWIN	メッセージウィンドウ関連
@@ -868,7 +886,7 @@ static void FldMenuFuncH_BmpMenuListH(
  */
 //--------------------------------------------------------------
 FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
-    FLDMSGBG *fmb, FLDMENUFUNC_YESNO pos )
+    FLDMSGBG *fmb, FLDMENUFUNC_YESNO cursor_pos )
 {
   u32 max = 2;
 	GFL_MSGDATA *msgData;
@@ -878,13 +896,15 @@ FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
   const FLDMENUFUNC_LIST menuList[2] = {
     { msgid_yesno_yes, (void*)0 }, { msgid_yesno_no, (void*)1 }, };
   
+  OS_Printf( "fmb HEAPID = %d\n", fmb->heapID );
+
   msgData = FLDMSGBG_CreateMSGDATA( fmb, NARC_message_yesnomenu_dat );
   listData = FLDMENUFUNC_CreateMakeListData(
             menuList, max, msgData, fmb->heapID );
   GFL_MSG_Delete( msgData );
   
-	FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 15, 7, 4 );
-  menuFunc = FLDMENUFUNC_AddMenuList( fmb, &menuH, listData, 0, pos );
+	FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 14, 7, 4 );
+  menuFunc = FLDMENUFUNC_AddMenuList( fmb, &menuH, listData, 0, cursor_pos );
   return( menuFunc );
 }
 
@@ -957,6 +977,7 @@ static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
 static void FldBmpWinFrame_Delete( GFL_BMPWIN *bmpwin )
 {
 	BmpWinFrame_Clear( bmpwin, 0 );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(bmpwin) );
 	GFL_BMPWIN_Delete( bmpwin );
 }
 
@@ -987,3 +1008,91 @@ static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo =
 	0,		//表示サイズX キャラ単位
 	0,		//表示サイズY キャラ単位
 };
+
+
+//======================================================================
+//  FLDMSGPRINT_STREAM メッセージ　プリントストリーム関連
+//======================================================================
+typedef struct _TAG_FLDMSGPRINT_STREAM FLDMSGPRINT_STREAM;
+
+FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrint(
+	FLDMSGBG *fmb, const STRBUF *strbuf,
+  GFL_BMPWIN *bmpwin, u16 x, u16 y, int wait );
+
+void FLDMSGPRINT_STREAM_Delete( FLDMSGPRINT_STREAM *stm );
+BOOL FLDMSGPRINT_STREAM_ProcPrint( FLDMSGPRINT_STREAM *stm );
+
+//--------------------------------------------------------------
+/// FLDMSGPRINT_STREAM
+//--------------------------------------------------------------
+struct _TAG_FLDMSGPRINT_STREAM
+{
+  PRINT_STREAM *printStream;
+};
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGPRINT_STREAM プリント設定
+ * @param fmb FLDMSGBG
+ * @param strbuf 表示するSTRBUF
+ * @param bmpwin 表示する初期化済みのGFL_BMPWIN
+ * @param x 描画開始X座標(ドット)
+ * @param y 描画開始Y座標(ドット)
+ * @param   wait		１文字描画ごとのウェイトフレーム数
+ * @retval FLDMSGPRINT_STREAM
+ */
+//--------------------------------------------------------------
+FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrint(
+	FLDMSGBG *fmb, const STRBUF *strbuf,
+  GFL_BMPWIN *bmpwin, u16 x, u16 y, int wait )
+{
+  FLDMSGPRINT_STREAM *stm = GFL_HEAP_AllocClearMemory(
+      fmb->heapID, sizeof(FLDMSGPRINT_STREAM) );
+
+  stm->printStream = PRINTSYS_PrintStream(
+      bmpwin, x, y,
+      strbuf, fmb->fontHandle,
+      wait,
+      fmb->printTCBLSys, 0,
+      fmb->heapID, 0x0f );
+
+  return( stm );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGPRINT_STREAM 削除
+ * @param stm FLDMSGPRINT_STREAM*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGPRINT_STREAM_Delete( FLDMSGPRINT_STREAM *stm )
+{
+  PRINTSYS_PrintStreamDelete( stm->printStream );
+  GFL_HEAP_FreeMemory( stm );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGPRINT_STREAM プリント
+ * @param stm 
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+BOOL FLDMSGPRINT_STREAM_ProcPrint( FLDMSGPRINT_STREAM *stm )
+{
+  PRINTSTREAM_STATE state;
+  state = PRINTSYS_PrintStreamGetState( stm->printStream );
+  
+  switch( state ){
+  case PRINTSTREAM_STATE_RUNNING:
+    break;
+  case PRINTSTREAM_STATE_PAUSE:
+    break;
+  case PRINTSTREAM_STATE_DONE:
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
