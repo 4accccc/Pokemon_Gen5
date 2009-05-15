@@ -46,6 +46,11 @@
 //=====================================
 FS_EXTERN_OVERLAY( compatible_irc_sys );
 
+//-------------------------------------
+///	個数
+//=====================================
+#define CIRCLE_MAX		(10)
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -65,12 +70,35 @@ typedef struct {
 	GFL_G3D_CAMERA		*p_camera;
 } GRAPHIC_3D_WORK;
 //-------------------------------------
+///	円
+//=====================================
+enum {	
+	CIRCLE_VTX_MAX	=	60,
+};
+typedef struct 
+{
+	VecFx16	vtx[CIRCLE_VTX_MAX];
+	u16 r;				//半径	
+	u16 red:5;		//赤
+	u16	green:5;	//緑
+	u16 blue:5;		//青
+	u16	dummy1:1;
+
+	u16 add_r;
+	u16 add_red:5;
+	u16 add_green:5;
+	u16 add_blue:5;
+	u16 dummy2:1;
+} CIRCLE_WORK;
+//-------------------------------------
 ///	描画関係
 //=====================================
 typedef struct 
 {
 	GRAPHIC_BG_WORK		gbg;
 	GRAPHIC_3D_WORK		g3d;
+	CIRCLE_WORK				c[CIRCLE_MAX];
+
 	GFL_TCB *p_tcb;
 } GRAPHIC_WORK;
 //-------------------------------------
@@ -85,7 +113,8 @@ typedef struct
 //-------------------------------------
 ///	メッセージ
 //=====================================
-typedef struct {
+typedef struct 
+{
 	GFL_FONT*				  p_font;
   PRINT_STREAM*     p_printstream;
   PRINT_QUE*        p_print_que;
@@ -168,6 +197,11 @@ static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
 static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk );
 static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk );
 static void Graphic_3d_SetUp( void );
+//円プリミティブ
+static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color, u16 add_r, GXRgb add_color );
+static void CIRCLE_Draw( CIRCLE_WORK *p_wk );
+static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end );
+
 //=============================================================================
 /**
  *					データ
@@ -601,6 +635,14 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 	GRAPHIC_BG_Init( &p_wk->gbg, heapID );
 	GRAPHIC_3D_Init( &p_wk->g3d, heapID );
 
+	{	
+		int i;
+		for( i = 0; i < CIRCLE_MAX; i++ )
+		{	
+			CIRCLE_Init( &p_wk->c[i], 0, GX_RGB(31,16,0),0x8F+0x1F*i, GX_RGB(1,1,1) );
+		}
+	}
+
 	p_wk->p_tcb	= GFUser_VIntr_CreateTCB(Graphic_Tcb_Capture, p_wk, 0 );
 }
 
@@ -631,114 +673,36 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 {
-	enum {	
-			CIRCLE_VTX_MAX	=	60,
-	};
-
-	int i;
-	u16 r1;
-	VecFx16	circle_vtx[CIRCLE_VTX_MAX];
-
-	static u16 r	= 0;
-	static u8	red			= 31;
-	static u8	green		= 16;
-	static u8	blue		= 0;
-	
-	r+=0xFF;
-	red++;
-	green++;
-	blue++;
-	red	%= 32;
-	green	%= 32;
-	blue	%= 32;
-
-	{
-		for( i = 0; i < CIRCLE_VTX_MAX; i++ )
-		{	
-			circle_vtx[i].x	=	FX_CosIdx( ( i * 360 / CIRCLE_VTX_MAX) * 0xFFFF / 360 );
-			circle_vtx[i].y	=	FX_SinIdx( ( i * 360 / CIRCLE_VTX_MAX) * 0xFFFF / 360 );
-			circle_vtx[i].z	=	0;
-		}
-	}
 
 	GRAPHIC_3D_StartDraw( &p_wk->g3d );
 	//NNS系の3D描画
 	//なし
 	NNS_G3dGeFlushBuffer();
 	//SDK系の3D描画
-	G3_MaterialColorDiffAmb(GX_RGB(16, 16, 16), GX_RGB(16, 16, 16), FALSE );
-	G3_MaterialColorSpecEmi(GX_RGB( 16, 16, 16 ), GX_RGB( 31,31,31 ), FALSE );
-	G3_PolygonAttr( GX_LIGHTMASK_0123,GX_POLYGONMODE_MODULATE,GX_CULL_BACK,0,31,0 );
 
-	G3_Scale(FX_SinIdx(r), FX_SinIdx(r), FX_SinIdx(r));
-
-	G3_Begin( GX_BEGIN_TRIANGLES );
+	//円の描画
 	{	
-		G3_Color(GX_RGB(red, green, blue));
-		for( i = 0; i < CIRCLE_VTX_MAX - 1; i++ )
+		int i;
+		for( i = 0; i < CIRCLE_MAX; i++ )
 		{	
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
-			G3_Vtx( circle_vtx[i+1].x, circle_vtx[i+1].y, circle_vtx[i+1].z);
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
+			CIRCLE_Draw( &p_wk->c[i] );
 		}
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
-			G3_Vtx( circle_vtx[0].x, circle_vtx[0].y, circle_vtx[0].z);
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
 	}
-	G3_End();
 
-	if( r > 0x1fff )
-	{	
-		r1=	r - 0x1fff;
-	}else{	
-		r1=0;
-	}
-	G3_Scale(FX_SinIdx(r1), FX_SinIdx(r1), FX_SinIdx(r1));
-
-	G3_Begin( GX_BEGIN_TRIANGLES );
-	{	
-		G3_Color(GX_RGB(green, blue, red));
-		for( i = 0; i < CIRCLE_VTX_MAX - 1; i++ )
-		{	
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
-			G3_Vtx( circle_vtx[i+1].x, circle_vtx[i+1].y, circle_vtx[i+1].z);
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
-		}
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
-			G3_Vtx( circle_vtx[0].x, circle_vtx[0].y, circle_vtx[0].z);
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
-	}
-	G3_End();
-
-	if( r > 0x3fff )
-	{	
-		r1=	r - 0x3fff;
-	}else{	
-		r1=0;
-	}
-	G3_Scale(FX_SinIdx(r1), FX_SinIdx(r1), FX_SinIdx(r1));
-
-	G3_Begin( GX_BEGIN_TRIANGLES );
-	{	
-		G3_Color(GX_RGB(blue, red, green));
-		for( i = 0; i < CIRCLE_VTX_MAX-1; i++ )
-		{	
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
-			G3_Vtx( circle_vtx[i+1].x, circle_vtx[i+1].y, circle_vtx[i+1].z);
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
-		}
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
-			G3_Vtx( circle_vtx[0].x, circle_vtx[0].y, circle_vtx[0].z);
-			G3_Vtx( circle_vtx[i].x, circle_vtx[i].y, circle_vtx[i].z);
-	}
-	G3_End();
 
 	GRAPHIC_3D_EndDraw( &p_wk->g3d );
-
-
-
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Vブランクタスク
+ *
+ *	@param	GFL_TCB *p_tcb
+ *	@param	*p_work 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
 static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work )
 {	
 	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
@@ -1183,4 +1147,97 @@ static PRINT_STREAM * MSG_GetPrintStream( const MSG_WORK *cp_wk )
 static PRINT_QUE* MSG_GetPrintQue( const MSG_WORK *cp_wk )
 {	
 	return cp_wk->p_print_que;
+}
+//=============================================================================
+/**
+ *				円プリミティブ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	円プリミティブを作成
+ *
+ *	@param	CIRCLE_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color, u16 add_r, GXRgb add_color )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(CIRCLE_WORK) );
+	p_wk->r			= r;
+	p_wk->red		= (color&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+	p_wk->green	= (color&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+	p_wk->blue	= (color&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+	p_wk->add_r			= add_r;
+	p_wk->add_red		= (add_color&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+	p_wk->add_green	= (add_color&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+	p_wk->add_blue	= (add_color&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+
+	//円の頂点作成
+	{	
+		int i;
+		for( i = 0; i < CIRCLE_VTX_MAX; i++ )
+		{	
+			p_wk->vtx[i].x	=	FX_CosIdx( ( i * 360 / CIRCLE_VTX_MAX) * 0xFFFF / 360 );
+			p_wk->vtx[i].y	=	FX_SinIdx( ( i * 360 / CIRCLE_VTX_MAX) * 0xFFFF / 360 );
+			p_wk->vtx[i].z	=	0;
+		}
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	円を描画
+ *
+ *	@param	CIRCLE_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_Draw( CIRCLE_WORK *p_wk )
+{	
+	//マテリアル設定
+	G3_MaterialColorDiffAmb(GX_RGB(16, 16, 16), GX_RGB(16, 16, 16), FALSE );
+	G3_MaterialColorSpecEmi(GX_RGB( 16, 16, 16 ), GX_RGB( 31,31,31 ), FALSE );
+	G3_PolygonAttr( GX_LIGHTMASK_0123,GX_POLYGONMODE_MODULATE,GX_CULL_BACK,0,31,0 );
+
+	//サイズ設定
+	G3_Scale( FX_SinIdx(p_wk->r), FX_SinIdx(p_wk->r), FX_SinIdx(p_wk->r));
+
+	//描画
+	G3_Begin( GX_BEGIN_TRIANGLES );
+	{
+		int i;
+		G3_Color(GX_RGB( p_wk->red, p_wk->green, p_wk->blue ));
+		for( i = 0; i < CIRCLE_VTX_MAX - 1; i++ )
+		{	
+			Circle_DrawLine( &p_wk->vtx[i], &p_wk->vtx[i+1] );
+		}
+		Circle_DrawLine( &p_wk->vtx[i], &p_wk->vtx[0] );
+	}
+	G3_End();
+
+	//動作
+	p_wk->r				+= p_wk->add_r;
+	p_wk->red			+= p_wk->add_red;
+	p_wk->green		+= p_wk->add_green;
+	p_wk->blue		+= p_wk->add_blue;
+	p_wk->red			%= 31;
+	p_wk->green		%= 31;
+	p_wk->blue		%= 31;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	線を描画
+ *
+ *	@param	VecFx16 *p_start		開始座標
+ *	@param	*p_end							終了座標
+ *
+ */
+//-----------------------------------------------------------------------------
+static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end )
+{	
+	G3_Vtx( p_start->x, p_start->y, p_start->z);
+	G3_Vtx( p_end->x, p_end->y, p_end->z);
+	G3_Vtx( p_start->x, p_start->y, p_start->z);
 }
