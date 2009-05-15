@@ -20,7 +20,9 @@ enum {
 	NARC_fldmmdl_mdlres_middlew1_nsbtx = 6,
 	NARC_fldmmdl_mdlres_oldman1_nsbtx = 7,
 	NARC_fldmmdl_mdlres_oldwoman1_nsbtx = 8,
-	NARC_fldmmdl_mdlres_obj_kabi32_nsbtx = 9
+	NARC_fldmmdl_mdlres_obj_kabi32_nsbtx = 9,
+	NARC_fldmmdl_mdlres_babyboy1_nsbtx = 10,
+	NARC_fldmmdl_mdlres_babygirl1_nsbtx = 11
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */

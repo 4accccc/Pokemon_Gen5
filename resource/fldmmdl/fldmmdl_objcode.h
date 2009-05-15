@@ -13,6 +13,8 @@
 #define OLDMAN1 (0x8) //8 お爺さん
 #define OLDWOMAN1 (0x9) //9 お婆さん
 #define KABI32 (0xa) //10 テスト三頭身
-#define OBJCODEMAX (0xb) //11 最大
+#define BABYBOY1 (0xb) //11 幼児
+#define BABYGIRL1 (0xc) //12 幼女
+#define OBJCODEMAX (0xd) //13 最大
 
 #endif
