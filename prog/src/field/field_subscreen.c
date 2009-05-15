@@ -163,14 +163,17 @@ FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
 /**
  *	@brief	下画面の破棄処理
  * @param	pWork		サブスクリーン制御ワークへのポインタ
+ * @return mode
  */
 //-----------------------------------------------------------------------------
-void FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork )
+u8 FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork )
 {
+	u8 mode = pWork->mode;
 	GF_ASSERT(funcTable[pWork->mode].mode == pWork->mode);
 	funcTable[pWork->mode].exit_func(pWork);
 
   GFL_HEAP_FreeMemory(pWork);
+	return mode;
 }
 
 //----------------------------------------------------------------------------

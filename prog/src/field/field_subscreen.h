@@ -67,7 +67,7 @@ typedef struct _FIELD_SUBSCREEN_WORK FIELD_SUBSCREEN_WORK;
 //-----------------------------------------------------------------------------
 extern FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
     FIELDMAP_WORK * fieldmap, FIELD_SUBSCREEN_MODE mode );
-extern void FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork );
+extern u8 FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork );
 extern void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork );
 extern void FIELD_SUBSCREEN_Change( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode);
 extern FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_GetMode(const FIELD_SUBSCREEN_WORK * pWork);

@@ -202,6 +202,24 @@ extern void GAMEDATA_SetSeasonID(GAMEDATA *gamedata, u8 season_id);
 
 //--------------------------------------------------------------
 /**
+ * @brief	  フィールド下画面の取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @return	subscreen_mode
+ */
+//--------------------------------------------------------------
+extern u8 GAMEDATA_GetSubScreenMode(const GAMEDATA *gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief	  フィールド下画面の設定
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param	  subscreen_mode
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_SetSubScreenMode(GAMEDATA *gamedata, u8 subscreen_mode);
+
+//--------------------------------------------------------------
+/**
  * @brief   ゲームデータが持つ情報を元にセーブを実行
  *
  * @param   gamedata		ゲームデータへのポインタ

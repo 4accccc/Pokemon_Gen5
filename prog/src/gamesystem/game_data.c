@@ -29,6 +29,7 @@
 #include "savedata/situation.h"
 #include "savedata/player_data.h"
 #include "gamesystem/pm_season.h"		//季節定義参照
+#include "field/field_subscreen.h" //FIELD_SUBSCREEN_ACTION
 
 //============================================================================================
 //============================================================================================
@@ -49,6 +50,7 @@ struct _GAMEDATA{
 	FLDMMDLSYS *fldmmdlsys;
 	EVENTWORK *eventwork;
 	u8 season_id;				///<季節指定ID
+	u8 subscreen_mode; ///< フィールド下画面の状態
 	u8 padding[3];
 };
 
@@ -85,6 +87,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 		gd->season_id = date.month % PMSEASON_TOTAL;
 	}
 
+	//
+	gd->subscreen_mode = FIELD_SUBSCREEN_NORMAL;
+	
 	//状況データ
 	st = SaveData_GetSituation(gd->sv_control_ptr);
 	gd->start_loc = Situation_GetStartLocation(st);
@@ -284,6 +289,32 @@ void GAMEDATA_SetSeasonID(GAMEDATA *gamedata, u8 season_id)
 	GF_ASSERT(season_id < PMSEASON_TOTAL);
 	gamedata->season_id = season_id;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief	  フィールド下画面の取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @return	subscreen_mode
+ */
+//--------------------------------------------------------------
+u8 GAMEDATA_GetSubScreenMode(const GAMEDATA *gamedata)
+{
+	return gamedata->subscreen_mode;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	  フィールド下画面の設定
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param	  subscreen_mode
+ */
+//--------------------------------------------------------------
+void GAMEDATA_SetSubScreenMode(GAMEDATA *gamedata, u8 subscreen_mode)
+{
+	GF_ASSERT(subscreen_mode < FIELD_SUBSCREEN_MODE_MAX);
+	gamedata->subscreen_mode = subscreen_mode;
+}
+
 
 //============================================================================================
 //

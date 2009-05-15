@@ -470,8 +470,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       fieldWork->weather_sys, WEATHER_NO_SUNNY, fieldWork->heapID );
   
   //情報バーの初期化
-  fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, fieldWork, FIELD_SUBSCREEN_NORMAL);
-  
+	{
+		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+		fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, fieldWork, GAMEDATA_GetSubScreenMode(gamedata));
+	}
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 
@@ -573,7 +575,10 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   }
   
   //情報バーの開放
-  FIELD_SUBSCREEN_Exit(fieldWork->fieldSubscreenWork);
+	{
+		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+		GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_Exit(fieldWork->fieldSubscreenWork ));
+	}
 
   // 天気システム破棄
   FIELD_WEATHER_Exit( fieldWork->weather_sys );
