@@ -1422,7 +1422,7 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				int i;
 
 				DEBUGAURA_PRINT_UpDate( p_wk );
-			//	MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_003, 0, 0 );
+				//MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_003, 0, 0 );
 
 				//0‚È‚ç‚ÎŽ©•ª‚Ì”Ô‚È‚Ì‚ÅAŽŸ‚Í‘ŠŽè‚Ì”Ô
 				if( p_wk->debug_player == 0 )
@@ -1432,8 +1432,7 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				}
 				else
 				{
-				//1‚È‚ç‚Î‘ŠŽè‚Ì”Ô‚È‚Ì‚ÅI—¹
-					//MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_DEBUG_002, 0, 0 );
+					MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_DEBUG_002, 0, 0 );
 					SEQ_Change( p_wk, SEQFUNC_Result );
 				}
 			}
