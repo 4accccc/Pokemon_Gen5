@@ -514,34 +514,34 @@ static	void	INFOWIN_UpdateTime(void)
 {
 	RTCTime	time;
 	
-	if( RTC_GetTime( &time ) == RTC_RESULT_SUCCESS )
+	GFL_RTC_GetTime( &time );
 	{
-		const BOOL isDispColon = (BOOL)(time.second&1);
-		if( time.hour != infoWk->hour )
-		{
-			infoWk->hour = time.hour;
-			if( infoWk->hour >= 12 )
-			{
-				infoWk->hour -=12;
-				infoWk->isPm = TRUE;
-			}
-			else
-			{
-				infoWk->isPm = FALSE;
-			}
-			infoWk->isRefresh |= INFOWIN_REFRESH_TIME;
-		}
-		if( time.minute != infoWk->min )
-		{
-			infoWk->min = time.minute;
-			infoWk->isRefresh |= INFOWIN_REFRESH_TIME;
-		}
-		if( isDispColon != infoWk->isDispColon )
-		{
-			infoWk->isDispColon = isDispColon;
-			infoWk->isRefresh |= INFOWIN_REFRESH_TIME;
-		}
-	}
+  	const BOOL isDispColon = (BOOL)(time.second&1);
+  	if( time.hour != infoWk->hour )
+  	{
+  		infoWk->hour = time.hour;
+  		if( infoWk->hour >= 12 )
+  		{
+  			infoWk->hour -=12;
+  			infoWk->isPm = TRUE;
+  		}
+  		else
+  		{
+  			infoWk->isPm = FALSE;
+  		}
+  		infoWk->isRefresh |= INFOWIN_REFRESH_TIME;
+  	}
+  	if( time.minute != infoWk->min )
+  	{
+  		infoWk->min = time.minute;
+  		infoWk->isRefresh |= INFOWIN_REFRESH_TIME;
+  	}
+  	if( isDispColon != infoWk->isDispColon )
+  	{
+  		infoWk->isDispColon = isDispColon;
+  		infoWk->isRefresh |= INFOWIN_REFRESH_TIME;
+  	}
+  }
 }
 
 #pragma mark [>comm func

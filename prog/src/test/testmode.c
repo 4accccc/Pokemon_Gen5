@@ -425,7 +425,7 @@ static void TESTMODE_RefreshSubWindow( TESTMODE_WORK *work )
 	STRBUF *strbuf;
 	u16		workStr[strLen];
 	
-	RTC_GetDateTime( &work->rtcDate_ , &work->rtcTime_ );
+	GFL_RTC_GetDateTime( &work->rtcDate_ , &work->rtcTime_ );
 	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->bmpWinSub_), 15 );
 	
