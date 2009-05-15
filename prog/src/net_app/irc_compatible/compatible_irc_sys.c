@@ -73,6 +73,7 @@ typedef enum {
  *					構造体宣言
 */
 //=============================================================================
+
 //-------------------------------------
 ///	システムワークエリア
 //=====================================
@@ -84,6 +85,7 @@ struct _COMPATIBLE_IRC_SYS
 	u32		connect_bit;
 	BOOL	is_connect;
 	BOOL	is_exit;
+	BOOL	is_recv;
 };
 
 //=============================================================================
@@ -99,12 +101,27 @@ static BOOL NET_INIT_CompBeaconCallBack( GameServiceID myNO, GameServiceID beaco
 static void NET_INIT_DisConnectCallBack( void *p_work );
 static void NET_INIT_InitCallBack( void *p_work );
 static void NET_EXIT_ExitCallBack( void *p_work );
-
+//受信コマンドテーブル
+static void NET_RECV_DecideMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 //=============================================================================
 /**
  *					データ
  */
 //=============================================================================
+//-------------------------------------
+///	受信コールバック
+//=====================================
+enum
+{
+	SENDCMD_DECIDEMENU	= 0,
+};
+static const NetRecvFuncTable sc_net_recv_tbl[]	=
+{	
+	{	
+		NET_RECV_DecideMenu, NULL
+	},
+};
+
 //-------------------------------------
 ///	ビーコン
 //=====================================
@@ -118,8 +135,8 @@ static COMPATIBLE_IRC_BEACON sc_beacon = { WB_NET_IRCCOMPATIBLE };
 //=====================================
 static const GFLNetInitializeStruct sc_net_init =
 {
-    NULL,  // 受信関数テーブル
-    0, // 受信テーブル要素数
+    sc_net_recv_tbl,  // 受信関数テーブル
+    NELEMS(sc_net_recv_tbl), // 受信テーブル要素数
     NULL,    ///< ハードで接続した時に呼ばれる
     NET_INIT_NegotiationCallBack,    ///< ネゴシエーション完了時にコール
     NULL,   // ユーザー同士が交換するデータのポインタ取得関数
@@ -181,7 +198,7 @@ COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, HEAPID heapID
 	p_sys	= GFL_HEAP_AllocMemory( heapID, sizeof(COMPATIBLE_IRC_SYS) );
 	GFL_STD_MemClear( p_sys, sizeof(COMPATIBLE_IRC_SYS) );
 	//初期化
-	p_sys->irc_timeout	= irc_timeout;
+	p_sys->irc_timeout		= irc_timeout;
 
 	return p_sys;
 }
@@ -215,7 +232,6 @@ BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys )
 	case COMPATIBLE_IRC_SEQ_INIT_START:
 		{
 			GFLNetInitializeStruct net_init = sc_net_init;
-			
 			net_init.irc_timeout = p_sys->irc_timeout;
 			GFL_NET_Init( &net_init, NET_INIT_InitCallBack, p_sys );
 		}
@@ -462,6 +478,56 @@ BOOL COMPATIBLE_IRC_IsError( COMPATIBLE_IRC_SYS *p_sys )
 	}
 	return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー決定待ち処理
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys		ワーク
+ *
+ *	@retval	TRUEならば終了
+ *	@ratval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_IRC_SendMenuData( COMPATIBLE_IRC_SYS *p_sys, u32 menu_id )
+{	
+	switch( p_sys->seq )
+	{
+	case 0:
+		if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+				SENDCMD_DECIDEMENU, sizeof(u32), &menu_id ))
+		{
+			OS_TPrintf("最初のデータ送信成功\n");
+			p_sys->seq++;
+		}
+		break;
+	case 1:	//相手のデータが送られてくるのを待つ
+		if( p_sys->is_recv == TRUE )
+		{
+			OS_TPrintf("最初のデータ受信完了\n");
+			p_sys->is_recv = FALSE;
+			p_sys->seq = 0;
+			return TRUE;
+		}
+		break;
+	}
+	
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー情報取得
+ *
+ *	@param	const COMPATIBLE_IRC_SYS *cp_sys ワーク
+ *
+ *	@return	メニューID
+ */
+//-----------------------------------------------------------------------------
+u32 COMPATIBLE_IRC_GetMenuData( const COMPATIBLE_IRC_SYS *cp_sys )
+{	
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	転送処理
@@ -608,4 +674,33 @@ static void NET_EXIT_ExitCallBack( void *p_work )
 	COMPATIBLE_IRC_SYS *p_sys	= p_work;
 	p_sys->is_exit	= TRUE;
 	IRC_Print( "相性チェック通信システム解放完了\n" );
+}
+ 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー決定
+ *
+ *	@param	const int netID	ネットID
+ *	@param	int size				サイズ
+ *	@param	void* cp_data		データ
+ *	@param	p_work					パラメータ
+ *	@param	p_net_handle		ネットハンドル
+ *
+ */
+//-----------------------------------------------------------------------------
+static void NET_RECV_DecideMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+{	
+	COMPATIBLE_IRC_SYS *p_sys	= p_work;
+
+	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+	{
+		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+	}
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		return;	//自分のデータは無視
+	}
+
+	p_sys->is_recv	= TRUE;
+	IRC_Print( "メニュー決定" );
 }

@@ -202,6 +202,8 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	BUTTON_WORK			btn;
 	BOOL						is_temp_module;
 
+	void						*p_proc_param;	//PROCに飛ぶ際に渡す情報
+
 	//ネットモジュール
 	COMPATIBLE_IRC_SYS	*p_irc;
 	u32 cnt;	//タイムアウト仮
@@ -211,7 +213,7 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	u16		seq;
 
 	//パラメータ
-	GAMESYS_WORK	*p_gamesys;
+	GAMESYS_WORK		*p_gamesys;
 	BOOL is_end;
 };
 
@@ -269,6 +271,9 @@ static void CreateTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk );
 static void DeleteTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk );
 static void MainTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk );
 static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn );
+
+//recvFuncTable
+static void NETRECV_DecideMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 //=============================================================================
 /**
  *					データ
@@ -391,6 +396,12 @@ FS_EXTERN_OVERLAY(irc_aura);
 static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param, void *p_work )
 {	
 	IRC_COMPATIBLE_MAIN_WORK	*p_wk;
+
+//デバッグ時はNULLのときでも動く
+//（デバッグからはGAMESYS_WORKを渡せないため）
+#ifndef PM_DEBUG
+	GF_ASSERT( p_param );
+#endif //PM_DEBUG
 
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCCOMPATIBLE_SYSTEM, 0x08000 );
@@ -1087,7 +1098,6 @@ static void SEQFUNC_Connect( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 			*p_seq	= SEQ_MSG_CONNECT;
 		}
 
-//		if( COMPATIBLE_IRC_IsError( p_wk->p_irc) )
 		if( TP_GetRectTrg( &sc_btn_setp_tbl[BTNID_RETURN] ) )
 		{
 			SEQ_Change( p_wk, SEQFUNC_DisConnect );
@@ -1218,6 +1228,13 @@ static void SEQFUNC_CallProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_DELETE_SYSTEM:
 		DeleteTemporaryModules( p_wk );
+		{
+			IRC_AURA_PARAM	*p_param;
+			p_wk->p_proc_param	= GFL_HEAP_AllocMemory( HEAPID_IRCCOMPATIBLE_SYSTEM, sizeof(IRC_AURA_PARAM) );
+			p_param	= p_wk->p_proc_param;
+			p_param->p_gamesys	= p_wk->p_gamesys;
+			p_param->p_irc			= p_wk->p_irc;
+		}
 		*p_seq	= SEQ_CALL_PROC;
 		break;
 
@@ -1229,12 +1246,14 @@ static void SEQFUNC_CallProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 		}
 		else
 		{	
-			GAMESYSTEM_CallProc( p_wk->p_gamesys,FS_OVERLAY_ID(irc_aura),  &IrcAura_ProcData,  p_wk->p_gamesys );
+			GAMESYSTEM_CallProc( p_wk->p_gamesys,FS_OVERLAY_ID(irc_aura),  &IrcAura_ProcData,  p_wk->p_proc_param );
 		}
 		*p_seq	= SEQ_RETURN_PROC;
 		break;
 
 	case SEQ_RETURN_PROC:
+		GFL_HEAP_FreeMemory( p_wk->p_proc_param );
+		p_wk->p_proc_param	= NULL;
 		*p_seq	= SEQ_CREATE_SYSTEM;
 		break;
 
