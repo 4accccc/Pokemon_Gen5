@@ -374,7 +374,7 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
 {
   //TODO 場所により個数などが変動することを想定
   u8 i;
-  //BmpWinのサイズ(下に半キャラずらして使う
+  //BmpWinの位置(下に半キャラずらして使う
   static const u8 bmpState[7][2] =
   {
     {  6, 4 },
@@ -383,7 +383,7 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
     { 22,10 },
     {  6,16 },
     { 22,16 },
-    { 12,21 },
+    { 13,21 },
   };
   static const FIELD_MENU_ITEM_TYPE typeArr[7] =
   {
@@ -615,7 +615,7 @@ static void  FIELD_MENU_UpdateTP( FIELD_MENU_WORK* work )
     { 72,112 ,136,248},
     {120,160 ,  8,120},
     {120,160 ,136,248},
-    {184,192 ,  0,256},
+    {168,192 ,  0,255},
     {GFL_UI_TP_HIT_END,0,0,0},
   };
   
@@ -688,7 +688,7 @@ static void FIELD_MENU_Icon_CreateIcon( FIELD_MENU_WORK* work ,
   GFL_BMPWIN_MakeScreen( icon->strBmp );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(icon->strBmp), 0x00 );
   
-  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( icon->strBmp ) , 0 , 0 ,
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( icon->strBmp ) , 2 , 2 ,
                           initWork->str , fontHandle , PRINTSYS_LSB_Make( 1,2,0 ) );
   if( initWork->arcHandle != NULL )
   {

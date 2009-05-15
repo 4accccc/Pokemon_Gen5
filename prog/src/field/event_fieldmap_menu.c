@@ -466,7 +466,8 @@ static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk )
       FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
   GMEVENT_CallEvent(mwk->gmEvent, subevent);
   //本来ならレポート用への切り替え？
-  FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
+//  FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
+  GXS_SetMasterBrightness(-16);
   return( TRUE );
 }
 
