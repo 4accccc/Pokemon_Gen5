@@ -71,7 +71,7 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 	
 	work->fitInitWork->heapId = HEAPID_MUSICAL_DRESSUP;
 	work->fitInitWork->musPoke = MUSICAL_SYSTEM_InitMusPoke( initWork->pokePara , HEAPID_MUSICAL_DRESSUP );
-
+  work->fitInitWork->mus_save = initWork->mus_save;
 	return GFL_PROC_RES_FINISH;
 }
 

@@ -10,6 +10,7 @@
 #define MUSICAL_DRESSUP_SYS_H__
 
 #include "musical/musical_system.h"
+#include "savedata/musical_save.h"
 
 //======================================================================
 //	define
@@ -26,6 +27,7 @@
 typedef struct
 {
 	POKEMON_PARAM *pokePara;
+	MUSICAL_SAVE *mus_save;
 }DRESSUP_INIT_WORK;
 
 //======================================================================

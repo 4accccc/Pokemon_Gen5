@@ -35,6 +35,7 @@ typedef struct
 {
 	HEAPID heapId;
 	MUSICAL_POKE_PARAM *musPoke;
+	MUSICAL_SAVE *mus_save;
 }FITTING_INIT_WORK;
 
 //======================================================================

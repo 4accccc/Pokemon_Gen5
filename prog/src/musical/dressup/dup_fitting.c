@@ -871,8 +871,7 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
   //セーブからアイテムを散らかす
   {
     u8 i;
-    MUSICAL_SAVE *mus_save = MUSICAL_SAVE_GetMusicalSave(SaveControl_GetPointer());
-    MUSICAL_EQUIP_SAVE *mus_bef_save = MUSICAL_SAVE_GetBefEquipData( mus_save );
+    MUSICAL_EQUIP_SAVE *mus_bef_save = MUSICAL_SAVE_GetBefEquipData( work->initWork->mus_save );
     
     for( i=0;i<MUSICAL_ITEM_EQUIP_MAX;i++ )
     {
@@ -2456,13 +2455,12 @@ static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work )
 static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work )
 {
   
-  MUSICAL_SAVE *mus_save = MUSICAL_SAVE_GetMusicalSave(SaveControl_GetPointer());
-  MUSICAL_EQUIP_SAVE *mus_bef_save = MUSICAL_SAVE_GetBefEquipData( mus_save );
+  MUSICAL_EQUIP_SAVE *mus_bef_save = MUSICAL_SAVE_GetBefEquipData( work->initWork->mus_save );
   FIT_ITEM_WORK *item;
   u8 i;
   u8 save_pos = 0;
   
-  MUSICAL_SAVE_ResetBefEquip(mus_save);
+  MUSICAL_SAVE_ResetBefEquip(work->initWork->mus_save);
   
   item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
   while( item != NULL && save_pos < MUSICAL_ITEM_EQUIP_MAX )

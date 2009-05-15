@@ -20,7 +20,9 @@ static TESTMODE_MENU_LIST menuMusical[] =
 static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx )
 {
 	DRESSUP_INIT_WORK *initWork = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof(DRESSUP_INIT_WORK));
-	initWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , HEAPID_PROC );
+	initWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP );
+	initWork->mus_save = MUSICAL_SAVE_GetMusicalSave(SaveControl_GetPointer());
+
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &DressUp_ProcData, initWork);
 	return TRUE;
 }
