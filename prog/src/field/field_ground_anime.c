@@ -62,6 +62,11 @@ typedef struct
 
 	// エリアアニメ情報
 	void* p_anmfile;
+
+
+  // フレーム数
+	fx32	anime_speed;
+
 } FIELD_GRANM_ITA;
 
 
@@ -98,7 +103,6 @@ struct _FIELD_GRANM
 	
 	// アニメーションフレーム情報
 	u32								anime_flag;
-	fx32							anime_frame;
 	fx32							anime_speed;
 
 	// ITAアニメーション管理
@@ -121,7 +125,7 @@ struct _FIELD_GRANM
 //=====================================
 static void FIELD_GRANM_Ita_Init( FIELD_GRANM_ITA* p_wk, u32 arcID, u32 dataID, u32 block_num, u32 heapID );
 static void FIELD_GRANM_Ita_Exit( FIELD_GRANM_ITA* p_wk );
-static fx32 FIELD_GRANM_Ita_Main( FIELD_GRANM_ITA* p_wk, fx32 frame );
+static void FIELD_GRANM_Ita_Main( FIELD_GRANM_ITA* p_wk, fx32 speed );
 static FIELD_GRANM_WORK* FIELD_GRANM_Ita_GetWork( const FIELD_GRANM_ITA* cp_wk, u32 index );
 
 //-------------------------------------
@@ -208,18 +212,20 @@ void FIELD_GRANM_Delete( FIELD_GRANM* p_sys )
 //-----------------------------------------------------------------------------
 void FIELD_GRANM_Main( FIELD_GRANM* p_sys )
 {
+  fx32 speed;
 
 	// オートアニメーション処理
-	if( p_sys->anime_flag )
-	{
-		p_sys->anime_frame += p_sys->anime_speed;
-	}
+	if( p_sys->anime_flag ){
+    speed = p_sys->anime_speed;
+	}else{
+		speed = 0;
+  }
 
 	// ITAアニメーション処理
-	p_sys->anime_frame = FIELD_GRANM_Ita_Main( &p_sys->ita_anime, p_sys->anime_frame );
+	FIELD_GRANM_Ita_Main( &p_sys->ita_anime, speed );
 
 	// ITPアニメーション
-	FIELD_GRANM_Itp_Main( &p_sys->itp_anime, p_sys->anime_speed );
+	FIELD_GRANM_Itp_Main( &p_sys->itp_anime, speed );
 }
 
 //----------------------------------------------------------------------------
@@ -391,18 +397,20 @@ static void FIELD_GRANM_Ita_Exit( FIELD_GRANM_ITA* p_wk )
  *	@brief	ITAアニメーション処理	フレーム管理
  *
  *	@param	p_wk		ワーク
- *	@param	frame		フレーム数
- *
- *	@return	実際に設定したフレーム
+ *	@param	speed   スピードアニメーションスピード
  */
 //-----------------------------------------------------------------------------
-static fx32 FIELD_GRANM_Ita_Main( FIELD_GRANM_ITA* p_wk, fx32 frame )
+static void FIELD_GRANM_Ita_Main( FIELD_GRANM_ITA* p_wk, fx32 speed )
 {
 	int i;
 
+  // ITPとアニメーションフレームをあわせるため、
+  // 絶対にアニメーションは動かす
+  p_wk->anime_speed += speed;
+
 	// 初期化されていたら処理する
 	if( !p_wk->p_anmfile ){
-		return frame;
+		return;
 	}
 
 	// フレーム数設定
@@ -410,10 +418,8 @@ static fx32 FIELD_GRANM_Ita_Main( FIELD_GRANM_ITA* p_wk, fx32 frame )
 	{
 		// FIELD_GRANM_Work_SetAnimeFrameの中で、
 		// アニメーションフレームの最大値で、値をループさせています。
-		frame = FIELD_GRANM_Work_SetAnimeFrame( &p_wk->p_wkbuf[i], frame );
+		p_wk->anime_speed = FIELD_GRANM_Work_SetAnimeFrame( &p_wk->p_wkbuf[i], p_wk->anime_speed );
 	}
-
-	return frame;
 }
 
 //----------------------------------------------------------------------------
@@ -664,33 +670,38 @@ static void FIELD_GRANM_Itp_Main( FIELD_GRANM_ITP* p_wk, fx32 speed )
 		// アニメーション処理
 		frame_max = TEXANM_GetLastKeyFrame( &p_wk->anmtbl, i ) << FX32_SHIFT;
 		p_wk->p_anime_frame[i] += speed;
-		if( p_wk->p_anime_frame[i] >= frame_max ){
-			p_wk->p_anime_frame[i] = p_wk->p_anime_frame[i] % frame_max;
+		if( p_wk->p_anime_frame[i] > (frame_max+FX32_ONE) ){
+			p_wk->p_anime_frame[i] = p_wk->p_anime_frame[i] % (frame_max+FX32_ONE);
 		}
-		
-		// チェックの必要があるかチェック
-		if( p_wk->p_trans_addr[i] != FIELD_GRANM_ITP_TRANS_ADDR_NONE ){
-			
-			now_data = TEXANM_GetFrameData( &p_wk->anmtbl, i, p_wk->p_anime_frame[i]>>FX32_SHIFT );	
-			
-			// 更新チェック
-			if((now_data.tex_idx != p_wk->p_last_data[i].tex_idx) ||
-				p_wk->trans ){
+    // 今だけ、　最終フレームは無視する。
+    else if( p_wk->p_anime_frame[i] < frame_max )
+    {
+      
+      // チェックの必要があるかチェック
+      if( p_wk->p_trans_addr[i] != FIELD_GRANM_ITP_TRANS_ADDR_NONE ){
+        
+        now_data = TEXANM_GetFrameData( &p_wk->anmtbl, i, p_wk->p_anime_frame[i]>>FX32_SHIFT );	
+        
+        // 更新チェック
+        if((now_data.tex_idx != p_wk->p_last_data[i].tex_idx) ||
+          p_wk->trans ){
 
-				// 転送処理
-				result = NNS_GfdRegisterNewVramTransferTask(
-						NNS_GFD_DST_3D_TEX_VRAM, 
-						p_wk->p_trans_addr[i], 
-						FIELD_GRANM_Itp_GetAnimeTex( p_wk->p_tex, now_data.tex_idx ), 
-						p_wk->p_trans_size[i] );
+          // 転送処理
+          result = NNS_GfdRegisterNewVramTransferTask(
+              NNS_GFD_DST_3D_TEX_VRAM, 
+              p_wk->p_trans_addr[i], 
+              FIELD_GRANM_Itp_GetAnimeTex( p_wk->p_tex, now_data.tex_idx ), 
+              p_wk->p_trans_size[i] );
 
-				GF_ASSERT( result );
+          GF_ASSERT( result );
 
-			}
+        }
 
-			// 保存
-			p_wk->p_last_data[i] = now_data;
-		}
+        // 保存
+        p_wk->p_last_data[i] = now_data;
+      }
+
+    }
 	}
 
 	// 更新完了
