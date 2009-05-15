@@ -108,4 +108,5 @@ G3D_IMD = \
 	$(DIR_LANDRES)/palace_test02_00.imd \
 	$(DIR_LANDRES)/map12_03.imd \
 	$(DIR_LANDRES)/map13_03.imd \
-	$(DIR_LANDRES)/m_gate01_00_00.imd
+	$(DIR_LANDRES)/m_gate01_00_00.imd \
+	$(DIR_LANDRES)/m_pc01_00_00.imd
