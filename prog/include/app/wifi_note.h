@@ -19,7 +19,7 @@
  */
 //------------------------------------------------------
 typedef struct {
-	u32 dummy;	//下２つは要らないのでダミー
+    SAVE_CONTROL_WORK*  saveControlWork;
 //	SAVEDATA*  savedata;
 //	KEYTOUCH_STATUS* kt_status;
 }WIFINOTE_PROC_PARAM;

@@ -1808,10 +1808,11 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFINOTE, 0xC0000 );
 	p_wk = GFL_PROC_AllocWork( proc, sizeof(WFNOTE_WK), HEAPID_WIFINOTE );
 	memset( p_wk, 0, sizeof(WFNOTE_WK) );
+	p_wk->pp = pwk;
 	
 //	デバッグ起動で名前が無い時用
 	{
-		MYSTATUS	*myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+		MYSTATUS	*myStatus = SaveData_GetMyStatus( p_wk->pp->saveControlWork );
 		if( MyStatus_CheckNameClear( myStatus ) == TRUE )
 		{
 			STRBUF	*name = GFL_STR_CreateBuffer( 6 , HEAPID_WIFINOTE );
@@ -1824,7 +1825,6 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
 	}
 
 	// データワーク初期
-	p_wk->pp = pwk;
 	p_wk->vBlankTcb = NULL;
 	Data_Init( &p_wk->data, p_wk->pp, HEAPID_WIFINOTE );
 
@@ -1951,6 +1951,8 @@ GFL_PROC_RESULT WifiNoteProc_End( GFL_PROC * proc, int * seq , void *pwk, void *
 
 	// データワーク破棄
 	Data_Exit( &p_wk->data, p_wk->pp );
+	
+	GFL_HEAP_FreeMemory( p_wk->pp );
 
 	GFL_PROC_FreeWork( proc );				// PROCワーク開放
 	GFL_HEAP_DeleteHeap( HEAPID_WIFINOTE );
@@ -2076,7 +2078,7 @@ static void Data_Init( WFNOTE_DATA* p_data, WIFINOTE_PROC_PARAM* wp, u32 heapID 
 {
 	CONFIG* config;
 
-	p_data->p_save = SaveControl_GetPointer();
+	p_data->p_save = wp->saveControlWork;
 	p_data->codein.p_name = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 	p_data->codein.p_code = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 
