@@ -507,6 +507,9 @@ SRCS_OVERLAY_IRC_COMPATIBLE	= net_app/irc_compatible/compatible_irc_sys.c \
 #===> SRCS_OVERLAY_IRC_COMPATIBLE
 SRCS_OVERLAY_IRC_AURA	= net_app/irc_aura/irc_aura_main.c
 
+#赤外線リズムチェック
+#===> SRCS_OVERLAY_IRC_COMPATIBLE
+SRCS_OVERLAY_IRC_RHYTHM	= net_app/irc_rhythm/irc_rhythm.c
 
 #ダウンロードプレイ  DP/PL/GS吸い上げ
 #===> SRCS_OVERLAY_DEV_WIRELESS

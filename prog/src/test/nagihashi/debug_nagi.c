@@ -26,6 +26,7 @@
 
 //proc
 #include "net_app/irc_aura.h"
+#include "net_app/irc_rhythm.h"
 #include "net_app/irc_compatible.h"
 #include "net_app/compatible_irc_sys.h"
 
@@ -156,6 +157,7 @@ static PRINT_QUE* MSG_GetPrintQue( const MSG_WORK *cp_wk );
 //LISTFUNC
 typedef void (*LISTDATA_FUNCTION)( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_ChangeProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -210,15 +212,16 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 enum
 {	
 	LISTDATA_SEQ_PROC_AURA,
+	LISTDATA_SEQ_PROC_RHYTHM,
 	LISTDATA_SEQ_PROC_COMPATIBLE,
 	LISTDATA_SEQ_RETURN,
 	LISTDATA_SEQ_NEXT_HOME,
-	LISTDATA_SEQ_NEXT_PAGE1,
 	LISTDATA_SEQ_MAX,
 };
 static const LISTDATA_FUNCTION	sc_list_funciton[]	= 
 {	
 	LISTDATA_ChangeProcAura,
+	LISTDATA_ChangeProcRhythm,
 	LISTDATA_ChangeProcCompatible,
 	LISTDATA_Return,
 	LISTDATA_NextListHome,
@@ -232,6 +235,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
 	{	
 		L"オーラチェック", LISTDATA_SEQ_PROC_AURA
+	},
+	{	
+		L"リズムチェック",LISTDATA_SEQ_PROC_RHYTHM
 	},
 	{	
 		L"相性診断画面へ", LISTDATA_SEQ_PROC_COMPATIBLE
@@ -482,6 +488,20 @@ FS_EXTERN_OVERLAY(irc_aura);
 static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
 	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_aura), &IrcAura_ProcData, NULL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ProcChange
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+FS_EXTERN_OVERLAY(irc_rhythm);
+static void LISTDATA_ChangeProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_rhythm), &IrcRhythm_ProcData, NULL );
 }
 
 //----------------------------------------------------------------------------
