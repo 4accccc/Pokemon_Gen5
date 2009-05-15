@@ -581,7 +581,10 @@ static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcI
 	// アニメーション数分の情報作成
 	{
 		int i;
-		
+		int j, frame_num;
+    TEXANM_DATA texanm;
+    u32 min_texidx;
+    
 		p_wk->anime_num			= TEXANM_GetAnimeNum( &p_wk->anmtbl );
 		p_wk->p_last_data		= GFL_HEAP_AllocClearMemory( heapID, sizeof(TEXANM_DATA) * p_wk->anime_num );
 		p_wk->p_trans_addr	= GFL_HEAP_AllocClearMemory( heapID, sizeof(u32) * p_wk->anime_num );
@@ -591,8 +594,18 @@ static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcI
 		for( i=0; i<p_wk->anime_num; i++ ){
 			// 初期フレーム取得
 			p_wk->p_last_data[i]	= TEXANM_GetFrameData( &p_wk->anmtbl, i, 0 );
-			p_wk->p_trans_addr[i]	= FIELD_GRANM_Itp_GetTransTexAddr( cp_tex, p_wk->p_tex, p_wk->p_last_data[i].tex_idx );
-			p_wk->p_trans_size[i]	= FIELD_GRANM_Itp_GetTransTexSize( p_wk->p_tex, p_wk->p_last_data[i].tex_idx );
+
+      // 転送先テクスチャ名が入っているフレームを検索
+      frame_num = TEXANM_GetLastKeyFrame( &p_wk->anmtbl, i );
+      min_texidx = p_wk->p_last_data[i].tex_idx;
+      for( j=0; j<frame_num; j++ ){
+        texanm = TEXANM_GetFrameData( &p_wk->anmtbl, i, j );
+        if( min_texidx > texanm.tex_idx ){
+            min_texidx = texanm.tex_idx;
+        }
+      }
+			p_wk->p_trans_addr[i]	= FIELD_GRANM_Itp_GetTransTexAddr( cp_tex, p_wk->p_tex, min_texidx );
+			p_wk->p_trans_size[i]	= FIELD_GRANM_Itp_GetTransTexSize( p_wk->p_tex, min_texidx );
 		}
 	}
 
