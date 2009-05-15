@@ -62,10 +62,28 @@ ev_talkobj_woman01:
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01_testmsg02
+
+	_YES_NO_WIN SCWK_ANSWER
+	_TALKWIN_CLOSE //会話ウィンドウを閉じます
+
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_woman01_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_woman01_no
+
+talkobj_woman01_yes:
+	_TALKWIN_OPEN //会話ウィンドウを開きます
+	_TALKMSG_ALLPUT msg_t01_testmsg02_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
-  _END
+  	_TALKWIN_CLOSE
+  	_OBJ_PAUSE_CLEAR_ALL
+  	_END
+
+talkobj_woman01_no:
+	_TALKWIN_OPEN //会話ウィンドウを開きます
+	_TALKMSG_ALLPUT msg_t01_testmsg02_02
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
+  	_OBJ_PAUSE_CLEAR_ALL
+  	_END
 
 //-------------------------------------------------------------
 //  T01 BABYGIRL1の会話用イベントスクリプトです。
