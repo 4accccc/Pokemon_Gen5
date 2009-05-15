@@ -50,6 +50,9 @@ DATATABTXT	= $(WORKDIR)/$(DATAFILE:.xls=.txt)
 CONVSRCS	= $(WORKDIR)/zonetable.c
 DEPFILES	= ../area_data/area_id.h
 
+MATRIXDATA = ../map_matrix/map_matrix.xls
+MATRIXHEADER = $(WORKDIR)/map_matrix.h
+
 #コンバート結果のテキストファイル一覧（比較対象となるもの）
 OUTPUT		= zonetable.c zone_id.h #eventlist.txt
 #OUTPUT	+=	mapname.bin mapname.dat msg_header.h eventarc.txt doorevent.h
@@ -66,7 +69,8 @@ RESULTS		= $(NARCNAME) $(NAIXNAME) zone_id.h
 LDIRT_CLEAN = $(TEMP_FILES) $(addprefix $(TARGETDIR)/, $(RESULTS))
 ifeq	($(CONVERTUSER),true)
 #コンバート対象者のみ、中間ファイル削除
-LDIRT_CLEAN	+= $(OUTPUT) $(WORKDIR)/*.bin $(DATATABTXT) $(CONVSRCS) $(RESULTS)
+LDIRT_CLEAN	+= $(OUTPUT) $(WORKDIR)/*.bin $(DATATABTXT) $(CONVSRCS) $(RESULTS) \
+							 $(MATRIXHEADER)
 endif
 
 LINCLUDES	= $(NITROSDK_ROOT)/include
@@ -110,23 +114,25 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #	--(zonetable.rb)-->	zonetable.c（＋その他）
 #	--(コンパイル＆elf2bin)-->	zonetable.bin
 #	--(nnsarc)-->	zonedata.narc/.naix
-$(NARCNAME): $(DATAFILE) $(DEPFILES)
+$(NARCNAME): $(DATAFILE) $(DEPFILES) $(MATRIXHEADER)
 	$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
 	$(CONVERTER) $(DATATABTXT)
-	$(MAKE) make_matrix_header
 	$(MAKE) makebin				#Ｃソース→バイナリ変換して
 	nnsarc -i -c -l -n $(NARCNAME) $(WORKDIR)/*.bin > $(WORKDIR)/arc_result.txt	#アーカイブ作成
 	$(NAIXCUT) $(NAIXNAME)
+
+
+#map_matrix.xlsからヘッダを生成する
+$(MATRIXHEADER):	$(MATRIXDATA)
+	$(XLS2TAB) $(MATRIXDATA) > $(MATRIXHEADER:.h=.txt)
+	ruby scripts/make_matrix_header.rb $(MATRIXHEADER:.h=.txt) > $(MATRIXHEADER)
+
 endif
 
 
 
 #Ｃソース→バイナリ変換
 makebin: $(CONVSRCS:.c=.bin)
-
-make_matrix_header:
-	$(XLS2TAB) ../map_matrix/map_matrix.xls > $(WORKDIR)/map_matrix.txt
-	ruby scripts/make_matrix_header.rb $(WORKDIR)/map_matrix.txt > $(WORKDIR)/map_matrix.h
 
 
 
