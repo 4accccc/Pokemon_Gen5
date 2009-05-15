@@ -198,6 +198,8 @@ static BOOL _modeSelectChangeButtonCallback(int bttnid,C_GEAR_WORK* pWork);
 static void _modeSelectChangWait(C_GEAR_WORK* pWork);
 static void _modeSelectChangeInit(C_GEAR_WORK* pWork);
 
+static void _timeAnimation(C_GEAR_WORK* pWork);
+static void _typeAnimation(C_GEAR_WORK* pWork);
 
 
 #ifdef _NET_DEBUG
@@ -610,8 +612,6 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
                           &cellInitData , 
                           CLSYS_DEFREND_SUB ,
                           pWork->heapID );
-//    GFL_CLACT_WK_SetAutoAnmSpeed( pWork->cellCursor, FX32_ONE );
-//    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor, TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], TRUE );
   }
 
@@ -626,11 +626,9 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
 		
     GFL_CLWK_DATA cellInitData;
     //セルの生成
-		int x,y;
-		_gearGetTypeBestPosition(pWork, CGEAR_PANELTYPE_IR+i, &x, &y);
 
-		cellInitData.pos_x = x * 8;
-    cellInitData.pos_y = y * 8;
+		cellInitData.pos_x = 8;
+    cellInitData.pos_y = 8;
     cellInitData.anmseq = anmbuff[i];
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
@@ -642,10 +640,11 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
                           &cellInitData , 
                           CLSYS_DEFREND_SUB,
                           pWork->heapID );
-//    GFL_CLACT_WK_SetAutoAnmSpeed( pWork->cellType[i], FX32_ONE );
-//    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellType[i], TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], TRUE );
   }
+	_timeAnimation(pWork);
+	_typeAnimation(pWork);
+
 }
 
 //------------------------------------------------------------------------------
@@ -746,6 +745,7 @@ static void _workEnd(C_GEAR_WORK* pWork)
 static void _timeAnimation(C_GEAR_WORK* pWork)
 {
 	RTCTime time;
+	BOOL battflg = FALSE;  //バッテリー表示更新フラグ
 
 	GFL_RTC_GetTime( &time );
 
@@ -789,6 +789,7 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 		
 		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
 			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+			battflg = TRUE;
 		}
 	}
 	{//秒１
@@ -799,12 +800,15 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
 		}
 	}
-	{//BATT
+	if(battflg){//BATT
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_batt1];
-		int num = time.minute % 10;
-		
-		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
-			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		PMBattery buf;
+		if( PM_GetBattery(&buf) == PM_RESULT_SUCCESS )
+		{
+			int num = (buf==PM_BATTERY_HIGH ? 1:0);
+			if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
+				GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+			}
 		}
 	}
 
@@ -1094,8 +1098,9 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV )
 	pWork->pCGSV = pCGSV;
 
 //	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
-
-	_CHANGE_STATE( pWork, _modeInit);
+	_modeInit(pWork);
+	
+//	_CHANGE_STATE( pWork, _modeInit);
 	return pWork;
 }
 
