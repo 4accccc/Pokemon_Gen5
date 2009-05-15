@@ -51,7 +51,8 @@ struct _GAMEDATA{
 	EVENTWORK *eventwork;
 	u8 season_id;				///<季節指定ID
 	u8 subscreen_mode; ///< フィールド下画面の状態
-	u8 padding[3];
+	u8 subscreen_type; 
+	u8 padding[1];
 };
 
 //==============================================================================
@@ -313,6 +314,29 @@ void GAMEDATA_SetSubScreenMode(GAMEDATA *gamedata, u8 subscreen_mode)
 {
 	GF_ASSERT(subscreen_mode < FIELD_SUBSCREEN_MODE_MAX);
 	gamedata->subscreen_mode = subscreen_mode;
+}
+//--------------------------------------------------------------
+/**
+ * @brief	  フィールド下画面タイプの取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @return	subscreen_type
+ */
+//--------------------------------------------------------------
+const u8 GAMEDATA_GetSubScreenType(const GAMEDATA *gamedata)
+{
+	return gamedata->subscreen_type;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	  フィールド下画面種類の設定
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param	  subscreen_type
+ */
+//--------------------------------------------------------------
+void GAMEDATA_SetSubScreenType(GAMEDATA *gamedata, const u8 subscreen_type)
+{
+	gamedata->subscreen_type = subscreen_type;
 }
 
 

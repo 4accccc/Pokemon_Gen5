@@ -13,6 +13,7 @@
 #include <gflib.h>
 #include "field_subscreen.h"
 
+#include "system/wipe.h"
 #include "infowin/infowin.h"
 #include "c_gear/c_gear.h"
 #include "field_menu.h"
@@ -27,6 +28,17 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+typedef enum
+{
+  FSS_UPDATE,
+  //モードを切り替えるときのフェード処理
+  FSS_CHANGE_FADEOUT,
+  FSS_CHANGE_FADEOUT_WAIT,
+  FSS_CHANGE_INIT_FUNC,
+  FSS_CHANGE_FADEIN,
+  FSS_CHANGE_FADEIN_WAIT,
+}FIELD_SUBSCREEN_STATE;
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -36,6 +48,8 @@
 
 struct _FIELD_SUBSCREEN_WORK {
 	FIELD_SUBSCREEN_MODE mode;
+	FIELD_SUBSCREEN_MODE nextMode;
+	FIELD_SUBSCREEN_STATE state;
 	HEAPID heapID;
   FIELD_SUBSCREEN_ACTION action;
   FIELDMAP_WORK * fieldmap;
@@ -150,6 +164,8 @@ FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
 	GF_ASSERT(mode < FIELD_SUBSCREEN_MODE_MAX);
 	GF_ASSERT(funcTable[mode].mode == mode);
 	pWork->mode = mode;
+	pWork->nextMode = mode;
+	pWork->state = FSS_UPDATE;
 	pWork->heapID = heapID;
 	pWork->checker = NULL;
 	pWork->fieldmap = fieldmap;
@@ -184,7 +200,47 @@ u8 FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork )
 //-----------------------------------------------------------------------------
 void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
 {
-	funcTable[pWork->mode].update_func(pWork);
+  switch( pWork->state )
+  {
+  case FSS_UPDATE:
+    funcTable[pWork->mode].update_func(pWork);
+    break;
+
+  //モードを切り替えるときのフェード処理
+  case FSS_CHANGE_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    pWork->state = FSS_CHANGE_FADEOUT_WAIT;
+    break;
+    
+  case FSS_CHANGE_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      funcTable[pWork->mode].exit_func(pWork);
+      pWork->state = FSS_CHANGE_INIT_FUNC;
+    }
+    break;
+
+  case FSS_CHANGE_INIT_FUNC:
+    funcTable[pWork->nextMode].init_func(pWork);
+    pWork->mode = pWork->nextMode;
+    pWork->state = FSS_CHANGE_FADEIN;
+    break;
+
+  case FSS_CHANGE_FADEIN:
+    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    pWork->state = FSS_CHANGE_FADEIN_WAIT;
+    break;
+
+  case FSS_CHANGE_FADEIN_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      pWork->state = FSS_UPDATE;
+    }
+    funcTable[pWork->mode].update_func(pWork);
+    break;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -199,9 +255,8 @@ void FIELD_SUBSCREEN_Change( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE n
 {	
 	GF_ASSERT(new_mode < FIELD_SUBSCREEN_MODE_MAX);
 	GF_ASSERT(funcTable[new_mode].mode == new_mode);
-	funcTable[pWork->mode].exit_func(pWork);
-	funcTable[new_mode].init_func(pWork);
-	pWork->mode = new_mode;
+	pWork->nextMode = new_mode;
+  pWork->state = FSS_CHANGE_FADEOUT;
 }
 
 //----------------------------------------------------------------------------

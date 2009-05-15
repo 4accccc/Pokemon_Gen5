@@ -11,17 +11,20 @@
 //======================================================================
 #include <gflib.h>
 #include "system/gfl_use.h"
+#include "system/main.h"
 #include "arc_def.h"
 
-#include "field/field_msgbg.h"
 
 #include "message.naix"
 #include "msg/msg_fldmapmenu.h"
 #include "test/easy_pokelist.h"
 
-#include "event_fieldmap_menu.h"
-#include "fieldmap.h"
-#include "system/main.h"
+#include "system/wipe.h"
+#include "gamesystem/game_data.h"
+#include "gamesystem/game_event.h"
+#include "field/field_msgbg.h"
+#include "field/event_fieldmap_menu.h"
+#include "field/fieldmap.h"
 
 #include "event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "app/config_panel.h"   //ConfigPanelProcData
@@ -55,6 +58,7 @@ typedef enum
   FMENUSTATE_MAIN,
   FMENUSTATE_DECIDE_ITEM, //項目が決定された
   FMENUSTATE_WAIT_RETURN,
+  FMENUSTATE_RETURN_MENU,
 }FMENU_STATE;
 
 //======================================================================
@@ -223,9 +227,16 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
   switch (*seq) 
   {
   case FMENUSTATE_INIT:
-    FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
-    FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) , mwk->befType );
-    (*seq) = FMENUSTATE_MAIN;
+    {
+      GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
+      GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+      GAMEDATA_SetSubScreenType( gameData , FMIT_POKEMON );
+      FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
+      //FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) , mwk->befType );
+      (*seq) = FMENUSTATE_MAIN;
+      //WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+      //                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , mwk->heapID );
+    }
     break;
   case FMENUSTATE_MAIN:
     {
@@ -248,8 +259,11 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     break;
   case FMENUSTATE_DECIDE_ITEM:
     {
+      GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
+      GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
       const FIELD_MENU_ITEM_TYPE type = FIELD_SUBSCREEN_GetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
       mwk->befType = type;
+      GAMEDATA_SetSubScreenType( gameData , type );
       
       switch( type )
       {
@@ -296,7 +310,11 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
       GFL_HEAP_FreeMemory(mwk->sub_proc_parent);
       mwk->sub_proc_parent = NULL;
     }
-    (*seq) = FMENUSTATE_INIT;
+    (*seq) = FMENUSTATE_RETURN_MENU;
+    break;
+    
+  case FMENUSTATE_RETURN_MENU:
+    (*seq) = FMENUSTATE_MAIN;
     break;
   }
   return( GMEVENT_RES_CONTINUE );
@@ -392,7 +410,6 @@ static BOOL FMenuCallProc_Zukan( FMENU_EVENT_WORK *mwk )
   GMEVENT * subevent = createFMenuMsgWinEvent( mwk->gmSys, mwk->heapID,
     FLDMAPMENU_STR08, FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
   GMEVENT_CallEvent(mwk->gmEvent, subevent);
-  GXS_SetMasterBrightness(-16);
   return( TRUE );
 }
 
@@ -431,7 +448,6 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
   GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID,
       FLDMAPMENU_STR10, FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
   GMEVENT_CallEvent(mwk->gmEvent, subevent);
-  GXS_SetMasterBrightness(-16);
   return( TRUE );
 }
 
@@ -469,9 +485,6 @@ static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk )
   GMEVENT * subevent = createFMenuReportEvent( mwk->gmSys, mwk->fieldWork, mwk->heapID,
       FIELDMAP_GetFldMsgBG(mwk->fieldWork) );
   GMEVENT_CallEvent(mwk->gmEvent, subevent);
-  //本来ならレポート用への切り替え？
-//  FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
-  GXS_SetMasterBrightness(-16);
   return( TRUE );
 }
 
@@ -542,6 +555,7 @@ static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk )
       work->msgBG, NARC_message_fldmapmenu_dat );
     work->msgWin = FLDMSGWIN_AddTalkWin( work->msgBG, work->msgData );
     FLDMSGWIN_Print( work->msgWin, 0, 0, work->strID );
+    GXS_SetMasterBrightness(-16);
     (*seq)++;
     break;
   case 1:
@@ -560,6 +574,15 @@ static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk )
   case 3:
     FLDMSGWIN_Delete( work->msgWin );
     GFL_MSG_Delete( work->msgData );
+    GXS_SetMasterBrightness(0);
+    {
+      GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
+      GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gameSys );
+       
+      const FIELD_MENU_ITEM_TYPE type = GAMEDATA_GetSubScreenType( gameData );
+      FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(fieldWork) , type );
+    }
     return( GMEVENT_RES_FINISH );
   }
 
@@ -617,6 +640,9 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
     
     work->msgWin = FLDMSGWIN_AddTalkWin( work->msgBG, work->msgData );
     FLDMSGWIN_Print( work->msgWin, 0, 0, FLDMAPMENU_STR14 );
+    //本来ならレポート用への切り替え？
+    //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
+    GXS_SetMasterBrightness(-16);
     (*seq)++;
     break;
   case 1:
@@ -651,6 +677,17 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
   case 6:
     FLDMSGWIN_Delete( work->msgWin );
     GFL_MSG_Delete( work->msgData );
+    //本来ならメニューへの切り替え？
+    //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
+    GXS_SetMasterBrightness(0);
+    {
+      GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
+      GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gameSys );
+       
+      const FIELD_MENU_ITEM_TYPE type = GAMEDATA_GetSubScreenType( gameData );
+      FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(fieldWork) , type );
+    }
     return( GMEVENT_RES_FINISH );
   }
 

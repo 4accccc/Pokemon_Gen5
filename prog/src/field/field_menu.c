@@ -40,6 +40,9 @@
 //アイコン確定時のウェイト
 #define FIELD_MENU_ICON_DECIDE_ANIME_CNT (15) 
 
+//カーソル不正位置
+#define FIELD_MENU_INVALU_CURSOR (0xFF)
+
 //パレット
 #define FIELD_MENU_PLT_FONT (0x0d)
 //InfoBarで0x0f
@@ -173,7 +176,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
   
   work->cursorPosX = 0;
   work->cursorPosY = 0;
-  work->isUpdateCursor = TRUE;
+  work->isUpdateCursor = FALSE;
   work->activeIcon = NULL;
   
   work->printQue = PRINTSYS_QUE_Create( work->heapId );
@@ -183,6 +186,11 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
   FIELD_MENU_InitIcon( work , arcHandle);
   GFL_ARC_CloseDataHandle(arcHandle);
   
+  {
+    GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( fieldWork );
+    GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+    FIELD_MENU_SetMenuItemNo( work , GAMEDATA_GetSubScreenType( gameData ) );
+  }
   return work;
 }
 
@@ -223,7 +231,8 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       {
         FIELD_MENU_Icon_TransBmp( work , &work->icon[i] );
       }
-      GXS_SetMasterBrightness(0);
+//      WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+//                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
       work->state = FMS_LOOP;
     }
     break;
@@ -238,8 +247,8 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     if( work->isCancel == TRUE ||
         work->cursorPosY == 3 )
     {
-      WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                      WIPE_FADE_BLACK , 8 , 1 , work->heapId );
+//      WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+//                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
       work->state = FMS_EXIT_ENDMENU;
     }
     else
@@ -255,7 +264,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
         //決定のときは表示しっぱなしが良いかも知れないが、
         //現状レポートなど下画面のみ切り替えがありうるので一回消して開放させる。
         //WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-        //                WIPE_FADE_BLACK , 8 , 1 , work->heapId );
+        //                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
         work->state = FMS_EXIT_DECIDEITEM;
       }
     }
@@ -266,12 +275,12 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     if( work->waitCnt > FIELD_MENU_ICON_DECIDE_ANIME_CNT )
     {
       //WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-      //                WIPE_FADE_BLACK , 8 , 1 , work->heapId );
+      //                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
       work->state = FMS_EXIT_DECIDEITEM;
     }
     break;
   case FMS_EXIT_ENDMENU:
-    if( WIPE_SYS_EndCheck() == TRUE )
+    //if( WIPE_SYS_EndCheck() == TRUE )
     {
       FIELD_SUBSCREEN_SetAction( work->subScrWork , FIELD_SUBSCREEN_ACTION_TOPMENU_EXIT );
       work->state = FMS_FINISH;
@@ -545,6 +554,13 @@ void FIELD_MENU_SetMenuItemNo( FIELD_MENU_WORK* work , const FIELD_MENU_ITEM_TYP
         work->cursorPosY = i/2;
         work->isUpdateCursor = TRUE;
         FIELD_MENU_UpdateCursor( work );
+        
+        //FIXME 今はメニューで仮のものがあり、再起動がかからないので
+        //ステータスを初期に戻す処理で対応
+        if( work->state == FMS_FINISH )
+        {
+          work->state = FMS_WAIT_INIT;
+        }
       }
     }
   }
