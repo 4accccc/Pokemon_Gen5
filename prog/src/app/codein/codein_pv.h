@@ -269,8 +269,6 @@ typedef struct {
 
 	CODEIN_PARAM	param;			///< 外側からもらうパラメータ
 	
-	CONFIG*		cfg;						///< window_type取得用
-	
 } CODEIN_WORK;
 
 ///< codein_pv.c

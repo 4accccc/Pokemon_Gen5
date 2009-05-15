@@ -153,9 +153,9 @@ void CI_pv_disp_CodeRes_Load( CODEIN_WORK* wk )
 	
 	///< font
 	{
-		int wintype = CONFIG_GetWindowType( wk->cfg );
+//		int wintype = CONFIG_GetWindowType( wk->cfg );
 //		TalkWinGraphicSet( bgl, GF_BGL_FRAME0_S, 1, ePAL_WIN, wintype, HEAPID_CODEIN );
-		TalkWinFrame_GraphicSet( GFL_BG_FRAME0_S , 1 , ePAL_FRAME , wintype , HEAPID_CODEIN );
+		TalkWinFrame_GraphicSet( GFL_BG_FRAME0_S , 1 , ePAL_FRAME , 0 , HEAPID_CODEIN );
 //		PaletteWorkSet_Arc( pfd, ARC_WINFRAME, TalkWinPalArcGet( wintype ), HEAPID_CODEIN, FADE_SUB_BG, 0x20, ePAL_FRAME * 16 );
 
 		///< ƒtƒHƒ“ƒg
