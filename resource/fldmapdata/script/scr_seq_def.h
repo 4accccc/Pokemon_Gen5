@@ -87,6 +87,8 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	DEF_CMD EV_SEQ_TALK_OBJ_PAUSE_ALL
 	DEF_CMD EV_SEQ_OBJ_PAUSE_CLEAR_ALL
 	DEF_CMD EV_SEQ_OBJ_TURN
+  
+	DEF_CMD	EV_SEQ_YES_NO_WIN
 
 //======================================================================
 /**
@@ -714,3 +716,18 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 .macro  _SP_EVENT_DATA_END
 .byte SP_SCRID_NONE
 .endm
+
+//======================================================================
+/*
+ *「はい、いいえ」ウィンドウ関連
+ */
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *	はい、いいえ選択
+ */
+//--------------------------------------------------------------
+	.macro	_YES_NO_WIN ret_wk
+	.short	EV_SEQ_YES_NO_WIN
+	.short	\ret_wk
+	.endm
