@@ -3849,7 +3849,7 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 	// アイコンを表示するために必要な駆動処理
 	MysteryLib_DoClact_Ex( wk->demo_state );
 
-	GFL_RTC_Main();
+//	GFL_RTC_Main();
 	
 	return GFL_PROC_RES_CONTINUE;
 }

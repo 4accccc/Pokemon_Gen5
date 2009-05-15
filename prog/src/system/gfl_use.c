@@ -171,6 +171,7 @@ void GFLUser_Main(void)
 		GFL_PROC_Main();
 		GFL_FADE_Main();
 	}
+	GFL_RTC_Main();
 	//GFL_SOUND_Main();
 }
 

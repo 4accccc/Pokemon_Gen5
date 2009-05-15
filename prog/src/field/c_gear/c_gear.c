@@ -640,7 +640,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
                           pWork->objRes[_CLACT_PLT],
                           pWork->objRes[_CLACT_ANM],
                           &cellInitData , 
-                          CLSYS_DEFREND_SUB ,
+                          CLSYS_DEFREND_SUB,
                           pWork->heapID );
 //    GFL_CLACT_WK_SetAutoAnmSpeed( pWork->cellType[i], FX32_ONE );
 //    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellType[i], TRUE );
@@ -749,28 +749,68 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 
 	GFL_RTC_GetTime( &time );
 
-	{
+	{  //AMPM
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_ampm];
-		int num = time.hour % 12;
+		int num = time.hour / 12;
+		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		}
+	}
+	{  //Žž10
+		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO2];
+		int num = (time.hour % 12) / 10;
 		
 		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
 			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
 		}
 	}
-	{
-		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO10b];
-		int num = time.second % 10;
+	{  //Žž1
+		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO10a];
+		int num = (time.hour % 12) % 10;
 		
 		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
 			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
 		}
 	}
 
-	/*				
-			NANR_c_gear_obj_CellAnime_NO2,NANR_c_gear_obj_CellAnime_NO10a,
-			NANR_c_gear_obj_CellAnime_colon,
-			NANR_c_gear_obj_CellAnime_NO6,NANR_c_gear_obj_CellAnime_NO10b,
-*/
+	{  //‚±‚ë‚ñ
+		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_colon];
+		int num = time.second % 2;
+		
+		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		}
+	}
+
+	
+	{//•b‚P‚O
+		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO6];
+		int num = time.minute / 10;
+		
+		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		}
+	}
+	{//•b‚P
+		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO10b];
+		int num = time.minute % 10;
+		
+		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		}
+	}
+	{//BATT
+		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_batt1];
+		int num = time.minute % 10;
+		
+		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
+			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
+		}
+	}
+
+
+
+	
 	
 }
 
@@ -788,9 +828,16 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
 	for(i=0;i < _CLACT_TYPE_MAX ;i++)
 	{
 		int x,y;
+		GFL_CLACTPOS pos;
 		_gearGetTypeBestPosition(pWork, CGEAR_PANELTYPE_IR+i, &x, &y);
-		GFL_CLACT_WK_SetWldTypePos(pWork->cellType[i], x*8, CLSYS_MAT_X);
-		GFL_CLACT_WK_SetWldTypePos(pWork->cellType[i], y*8, CLSYS_MAT_Y);
+		x *= 8;
+		y *= 8;
+//		GFL_CLACT_WK_GetPos( pWork->cellType[i], &pos , CLSYS_DEFREND_SUB);
+//		if((pos.x != x) || (pos.y != y)){
+		pos.x = x+32;  // OBJ•\Ž¦‚Ìˆ×‚Ì•â³’l
+		pos.y = y+16;
+		GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CLSYS_DEFREND_SUB);
+//		}
 	}
 }
 
@@ -831,7 +878,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 {
 	GFL_BMN_Main( pWork->pButton );
 	_timeAnimation(pWork);
-	//_typeAnimation(pWork);
+	_typeAnimation(pWork);
 }
 
 
