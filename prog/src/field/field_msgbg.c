@@ -977,7 +977,6 @@ static GFL_BMPWIN * FldBmpWinFrame_Init( u32 bgFrame, HEAPID heapID,
 static void FldBmpWinFrame_Delete( GFL_BMPWIN *bmpwin )
 {
 	BmpWinFrame_Clear( bmpwin, 0 );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(bmpwin) );
 	GFL_BMPWIN_Delete( bmpwin );
 }
 

@@ -778,6 +778,8 @@ void FLDMMDL_SAVEDATA_Load(
 		save++;
 		no++;
 	}
+
+  fmmdlsys->fmmdl_count = no;
 }
 
 //--------------------------------------------------------------
