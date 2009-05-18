@@ -32,6 +32,11 @@ extern FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID);
 
 extern void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man);
 
+extern void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man);
+
+//------------------------------------------------------------------
+//  マップデータの読み込み処理
+//------------------------------------------------------------------
 extern void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid);
 
 extern const FLDMAPPER_RESISTDATA_OBJTBL * FIELD_BMODEL_MAN_GetOBJTBL(const FIELD_BMODEL_MAN * man);
@@ -40,6 +45,25 @@ extern const FLDMAPPER_RESISTDATA_OBJTBL * FIELD_BMODEL_MAN_GetOBJTBL(const FIEL
 //  配置モデルIDを登録済み配置モデルのインデックスに変換する
 //------------------------------------------------------------------
 extern u16 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN* man, BMODEL_ID id);
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef enum{ 
+  FIELD_BMODEL_ELBOARD_ID1 = 0,
+  FIELD_BMODEL_ELBOARD_ID2,
+
+  FIELD_BMODEL_ELBOARD_ID_MAX,
+}FIELD_BMODEL_ELBOARD_ID;
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern void FIELD_BMODEL_MAN_EntryELString(const FIELD_BMODEL_MAN* man,
+    FIELD_BMODEL_ELBOARD_ID id,
+    const STRBUF* str);
+
+extern void FIELD_BMODEL_MAN_EntryELStringID(const FIELD_BMODEL_MAN * man,
+    FIELD_BMODEL_ELBOARD_ID id,
+    ARCID msg_arc_id, u16 str_id);
 
 
 //============================================================================================

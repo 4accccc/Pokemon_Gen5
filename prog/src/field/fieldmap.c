@@ -59,6 +59,9 @@
 #include "sound/pm_sndsys.h"
 #include "sound/wb_sound_data.sadl"
 
+#include "message.naix" //NARC_message_d_field_dat
+#include "msg/msg_d_field.h"  //DEBUG_FIELD_STR00 DEBUG_FIELD_C_STR10
+
 //======================================================================
 //	define
 //======================================================================
@@ -384,6 +387,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 	//３Ｄデータのロード
 	fldmap_G3D_Load( fieldWork );
 	
+	//配置物設定
+	fieldWork->g3Dmapper = FLDMAPPER_Create( fieldWork->heapID );
+
 	TAMADA_Printf("TEX:%06x PLT:%04x\n",
 			DEBUG_GFL_G3D_GetBlankTextureSize(),
 			DEBUG_GFL_G3D_GetBlankPaletteSize());
@@ -416,6 +422,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
         GAMEDATA_GetSeasonID(gamedata),
         &fieldWork->map_res,
         fieldWork->pMapMatrix );
+    { //とりあえず、電光掲示板用文字列を登録
+      FIELD_BMODEL_MAN_EntryELStringID(bmodel_man,
+          FIELD_BMODEL_ELBOARD_ID1, NARC_message_d_field_dat, DEBUG_FIELD_C_STR10);
+      FIELD_BMODEL_MAN_EntryELStringID(bmodel_man,
+          FIELD_BMODEL_ELBOARD_ID1, NARC_message_d_field_dat, DEBUG_FIELD_STR00);
+    }
     //とりあえずここで配置モデルリストをセットする
     FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id);
   }
@@ -620,6 +632,8 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
 	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
+
+	FLDMAPPER_Delete( fieldWork->g3Dmapper );
 
 	fldmap_G3D_Unload( fieldWork );	//３Ｄデータ破棄
 	
@@ -1095,8 +1109,6 @@ static void fldmap_G3D_CallBackSetUp( void )
 //--------------------------------------------------------------
 static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
 {
-	//配置物設定
-	fieldWork->g3Dmapper = FLDMAPPER_Create( fieldWork->heapID );
 	fieldWork->bbdActSys = GFL_BBDACT_CreateSys(
 			FIELD_G3D_BBDACT_RESMAX, FIELD_G3D_BBDACT_ACTMAX,
 			fldmap_G3D_BBDTrans, fieldWork->heapID );
@@ -1170,7 +1182,6 @@ static void fldmap_G3D_Unload( FIELDMAP_WORK * fieldWork )
 	GFL_G3D_LIGHT_Delete( fieldWork->g3Dlightset );
 	GFL_G3D_CAMERA_Delete( fieldWork->g3Dcamera );
 	GFL_BBDACT_DeleteSys( fieldWork->bbdActSys );
-	FLDMAPPER_Delete( fieldWork->g3Dmapper );
 }
 
 //--------------------------------------------------------------

@@ -313,7 +313,7 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 			objRes = &g3Dmapper->globalObjRes[i];
 
 			if( objRes->g3Dobj != NULL ){
-#if 0
+#if 1
 				for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
 					GFL_G3D_OBJECT_LoopAnimeFrame( objRes->g3Dobj, j, FX32_ONE ); 
 				}
@@ -323,6 +323,8 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 			}
 		}
 	}
+  //配置モデル更新処理（現在は電光掲示板のみ）
+  FIELD_BMODEL_MAN_Main( g3Dmapper->bmodel_man );
 
 	// 地面アニメーション管理
 	if( g3Dmapper->granime ){
@@ -1376,15 +1378,16 @@ static void CreateGlobalObj_forBModel(FLDMAPPER * g3Dmapper, FIELD_BMODEL_MAN * 
 						( g3Dmapper->heapID, sizeof(GFL_G3D_MAP_OBJ) * gobjTbl->objCount );
 
 		for( i=0 ; i<gobjTbl->objCount; i++ ){
+      GLOBALOBJ_RES * objRes = &g3Dmapper->globalObjRes[i];
       ARCID arcID = FIELD_BMODEL_MAN_GetAnimeArcID(g3Dmapper->bmodel_man);
       int j, count;
       const u16 * anmIDs;
+      const FIELD_BMANIME_DATA * anmData;
 			objParam.mdl.arcID = gobjTbl->objArcID;
 			objParam.mdl.datID = gobjTbl->objData[i].highQ_ID;
 			objParam.mdl.inDatNum = 0;
       
       {//配置モデルに対応したアニメデータを取得 
-        const FIELD_BMANIME_DATA * anmData;
         anmData = FIELD_BMODEL_MAN_GetAnimeData(g3Dmapper->bmodel_man, objParam.mdl.datID);
         count = FIELD_BMANIME_DATA_getAnimeCount(anmData);
         anmIDs = FIELD_BMANIME_DATA_getAnimeFileID(anmData);
@@ -1401,12 +1404,18 @@ static void CreateGlobalObj_forBModel(FLDMAPPER * g3Dmapper, FIELD_BMODEL_MAN * 
 					objParam.anm[j].inDatNum = 0;
 				}
 			}
-			CreateGlobalObj( &g3Dmapper->globalObjRes[i], &objParam );
-			g3Dmapper->globalObj.gobj[i].g3DobjHQ = g3Dmapper->globalObjRes[i].g3Dobj;
+			CreateGlobalObj( objRes, &objParam );
+      { 
+        GFL_G3D_RES *g3DresTex;
+        g3DresTex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(objRes->g3Dobj));
+        FIELD_BMANIME_DATA_entryTexData(g3Dmapper->bmodel_man, anmData, g3DresTex );
+      }
+
+			g3Dmapper->globalObj.gobj[i].g3DobjHQ = objRes->g3Dobj;
 			g3Dmapper->globalObj.gobj[i].g3DobjLQ = NULL;
 			for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
-				GFL_G3D_OBJECT_EnableAnime( g3Dmapper->globalObjRes[i].g3Dobj, j ); 
-				GFL_G3D_OBJECT_ResetAnimeFrame( g3Dmapper->globalObjRes[i].g3Dobj, j ); 
+				GFL_G3D_OBJECT_EnableAnime( objRes->g3Dobj, j ); 
+				GFL_G3D_OBJECT_ResetAnimeFrame( objRes->g3Dobj, j ); 
 			}
 		}
 	}

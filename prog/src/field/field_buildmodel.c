@@ -19,8 +19,12 @@
 #include "field_g3d_mapper.h"		//下記ヘッダに必要
 #include "fieldmap_resist.h"		//FLDMAPPER_RESISTDATA_OBJTBLなど
 
+#include "system/el_scoreboard.h"
+
 #include "arc/fieldmap/area_id.h"
 #include "arc/fieldmap/buildmodel_info.naix"
+
+typedef EL_SCOREBOARD_TEX ELBOARD_TEX;
 
 //============================================================================================
 //============================================================================================
@@ -45,6 +49,9 @@ enum {
 	BMODEL_ENTRY_NG = BMODEL_ENTRY_MAX,
 
   BMANIME_NULL_ID  = 0xffff,
+
+  //電光掲示板で表示する文字列の長さ
+  BMODEL_ELBOARD_STR_LEN = 64 * 2,
 };
 
 //------------------------------------------------------------------
@@ -78,7 +85,11 @@ struct _FIELD_BMODEL_MAN
   //FLDMAPPERに引き渡すための生成データ保持ワーク
 	FLDMAPPER_RESISTDATA_OBJTBL	gobjData_Tbl;
 	FLDMAPPER_RESISTOBJDATA resistObjTbl[BMODEL_ENTRY_MAX * 2];
+  
+  STRBUF * elb_str[FIELD_BMODEL_ELBOARD_ID_MAX];
+  ELBOARD_TEX * elb_tex[FIELD_BMODEL_ELBOARD_ID_MAX];
 };
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -110,8 +121,16 @@ static void FIELD_BMANIME_DATA_init(FIELD_BMANIME_DATA * data);
 //------------------------------------------------------------------
 FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID)
 {	
+  int i;
 	FIELD_BMODEL_MAN * man = GFL_HEAP_AllocMemory(heapID, sizeof(FIELD_BMODEL_MAN));
 	man->heapID = heapID;
+
+  for (i = 0; i < FIELD_BMODEL_ELBOARD_ID_MAX; i ++) 
+  { 
+    man->elb_str[i] = GFL_STR_CreateBuffer(BMODEL_ELBOARD_STR_LEN, heapID);
+    man->elb_tex[i] = NULL;
+  }
+
 	return man;
 }
 
@@ -123,7 +142,36 @@ FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
 {	
+  int i;
+  for (i = 0; i < FIELD_BMODEL_ELBOARD_ID_MAX; i ++) 
+  { 
+    GFL_STR_DeleteBuffer(man->elb_str[i]);
+    if (man->elb_tex[i]) 
+    { 
+      ELBOARD_TEX_Delete(man->elb_tex[i]);
+    }
+  }
+
 	GFL_HEAP_FreeMemory(man);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 配置モデルマネジャーメイン処理
+ */
+//------------------------------------------------------------------
+void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
+{ 
+  int i;
+  for (i = 0; i < FIELD_BMODEL_ELBOARD_ID_MAX; i++)
+  { 
+    if (man->elb_tex[i])
+    { 
+      ELBOARD_TEX_Main(man->elb_tex[i]);
+    }
+  }
+
+
 }
 
 //------------------------------------------------------------------
@@ -475,6 +523,70 @@ static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id)
   GFL_ARC_CloseDataHandle(info_hdl);
 }
 
+
+//============================================================================================
+//
+//
+//    配置モデルへの電光掲示板反映
+//
+//
+//============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief
+ */
 //------------------------------------------------------------------
+void FIELD_BMODEL_MAN_EntryELString(const FIELD_BMODEL_MAN* man,
+    FIELD_BMODEL_ELBOARD_ID id,
+    const STRBUF* str)
+{ 
+  GF_ASSERT(id < FIELD_BMODEL_ELBOARD_ID_MAX);
+
+  GFL_STR_CopyBuffer(man->elb_str[id], str);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 電光掲示板用文字列の登録処理
+ */
+//------------------------------------------------------------------
+void FIELD_BMODEL_MAN_EntryELStringID(const FIELD_BMODEL_MAN * man,
+    FIELD_BMODEL_ELBOARD_ID id,
+    ARCID msg_arc_id, u16 str_id)
+{ 
+  GFL_MSGDATA * msgData;
+  STRBUF * str;
+
+  GF_ASSERT(id < FIELD_BMODEL_ELBOARD_ID_MAX);
+
+  msgData = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msg_arc_id, man->heapID);
+  GFL_MSG_GetString(msgData, str_id, man->elb_str[id]);
+
+  GFL_MSG_Delete(msgData);
+}
+//------------------------------------------------------------------
+/**
+ * @brief
+ */
+//------------------------------------------------------------------
+void FIELD_BMANIME_DATA_entryTexData(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
+    const GFL_G3D_RES * g3Dtex)
+{ 
+  switch ((BMANIME_PROG_TYPE)data->prg_type)
+  { 
+  case BMANIME_PROG_TYPE_ELBOARD1:
+    man->elb_tex[FIELD_BMODEL_ELBOARD_ID1] = ELBOARD_TEX_Add(
+        g3Dtex, man->elb_str[FIELD_BMODEL_ELBOARD_ID1], man->heapID);
+    break;
+  case BMANIME_PROG_TYPE_ELBOARD2:
+    man->elb_tex[FIELD_BMODEL_ELBOARD_ID2] = ELBOARD_TEX_Add(
+        g3Dtex, man->elb_str[FIELD_BMODEL_ELBOARD_ID1], man->heapID);
+    break;
+  case BMANIME_PROG_TYPE_NONE:
+  default:
+    //何もしない
+    break;
+  }
+}
+
 
