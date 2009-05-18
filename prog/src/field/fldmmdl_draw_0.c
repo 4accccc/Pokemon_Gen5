@@ -332,6 +332,14 @@ static void DrawBlAct_Draw( FLDMMDL *fmmdl )
 			flag = FALSE;
 		}
 		GFL_BBDACT_SetAnimeEnable( actSys, work->actID, flag );
+    
+    flag = TRUE; 
+    
+    if( FLDMMDL_CheckStatusBitVanish(fmmdl) == TRUE ){
+      flag = FALSE;
+    }
+    
+    GFL_BBDACT_SetDrawEnable( actSys, work->actID, flag );
 	}
 }
 
