@@ -7,7 +7,7 @@
 #
 #----------------------------------------------------------------------------
 #対象ユーザー
-USERS = kagaya matsumiya
+USERS = kagaya matsumiya tamada
 #共通
 include $(PROJECT_RSCDIR)/macro_define
 
@@ -37,6 +37,11 @@ TARGET_DIR = $(PROJECT_ROOT)/prog/arc/fieldmap
 TARGET_NARC = script_seq.narc
 TARGET_NAIX = $(TARGET_NARC:.narc=.naix)
 
+#(PM_DEBUG == yes)のときのみデバッグバージョン
+ifeq ($(PM_DEBUG),yes)
+ADD_MACRO = -DPM_DEBUG
+endif
+
 #----------------------------------------------------------------------------
 #	clean
 #----------------------------------------------------------------------------
@@ -60,8 +65,9 @@ do-build: $(SCRSRCS_BIN)
 #*.bin
 %.bin: %.ev $(DEPENDHEADERS)
 	@echo $<
-	@cp $< temp_$*.s
-	@$(MWAS) $(SUBDIRS) temp_$*.s -o $*.o
+	#@cp $< temp_$*.s
+	@ruby filter/user.rb $< > temp_$*.s
+	@$(MWAS) $(ADD_MACRO) $(SUBDIRS) temp_$*.s -o $*.o
 	@$(MWLD) -dis -o $*.elf $*.o
 	@elf2bin $*.elf
 	@rm $*.o $*.elf temp_$*.s
