@@ -1820,6 +1820,9 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 	DEBUGPRINT_PrintNumber( L"%d番目のゲーム", p_wk->debug_game_cnt, 0,  0 );
 	DEBUGPRINT_PrintNumber( L"%d人目の番です", p_wk->debug_player, 100,  0 );
 
+
+	//プリント
+	OS_Printf( "---○%d番目のゲーム　プリント開始----------------------\n" );
 	for( j = 0; j < 2; j++ )
 	{	
 		now_idx	= p_wk->debug_game_cnt + (j*DEBUG_GAME_NUM);
@@ -1850,9 +1853,7 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 		}
 	
 
-		//プリント
-		OS_Printf( "%d番目のゲーム\n", p_wk->debug_game_cnt );
-		OS_Printf( "%d人目の番です\n", p_wk->debug_player );
+		OS_Printf( "◇%d人目のデータ\n", j );
 	
 		OS_Printf("左手座標\n");
 		OS_Printf("X %d Y %d\n", p_wk->trg_left[now_idx].x, p_wk->trg_left[now_idx].y);
@@ -1864,20 +1865,20 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
 		{	
 			OS_Printf( "X %d (%d) Y %d (%d)\n", 
-					p_wk->shake_right[now_idx].shake[i].x, 
-					p_wk->shake_right[now_idx].shake[i].x - p_wk->shake_right[now_idx].shake[0].x, 
-					p_wk->shake_right[now_idx].shake[i].y, 
-					p_wk->shake_right[now_idx].shake[i].y - p_wk->shake_right[now_idx].shake[0].y );
+					p_wk->shake_left[now_idx].shake[i].x, 
+					p_wk->shake_left[now_idx].shake[i].x - p_wk->shake_left[now_idx].shake[0].x, 
+					p_wk->shake_left[now_idx].shake[i].y, 
+					p_wk->shake_left[now_idx].shake[i].y - p_wk->shake_left[now_idx].shake[0].y );
 		}
 	
 		OS_Printf("右手ブレ幅\n");
 		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
 		{	
 			OS_Printf( "X %d (%d) Y %d (%d)\n", 
-					p_wk->shake_left[now_idx].shake[i].x, 
-					p_wk->shake_left[now_idx].shake[i].x - p_wk->shake_left[now_idx].shake[0].x, 
-					p_wk->shake_left[now_idx].shake[i].y, 
-					p_wk->shake_left[now_idx].shake[i].y - p_wk->shake_left[now_idx].shake[0].y );
+					p_wk->shake_right[now_idx].shake[i].x, 
+					p_wk->shake_right[now_idx].shake[i].x - p_wk->shake_right[now_idx].shake[0].x, 
+					p_wk->shake_right[now_idx].shake[i].y, 
+					p_wk->shake_right[now_idx].shake[i].y - p_wk->shake_right[now_idx].shake[0].y );
 		}
 	}
 
@@ -1916,7 +1917,7 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 			DEBUGPRINT_PrintNumber( L"Y %d ", ofs1[3]-ofs2[3], DEBUGMSG3_TAB+60, i*10+40 );
 		}
 
-		OS_Printf( "○差\n" );
+		OS_Printf( "◇差\n" );
 		OS_Printf("左手座標の差\n");
 		OS_Printf("X %d Y %d\n", 
 				p_wk->trg_left[idx1].x - p_wk->trg_left[idx2].x,
