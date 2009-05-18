@@ -89,6 +89,43 @@ enum{
 	AURA_BG_PAL_S_13,		// 使用してない
 	AURA_BG_PAL_S_14,		// 使用してない
 	AURA_BG_PAL_S_15,		// 使用してない
+
+	// メイン画面OBJ
+	AURA_OBJ_PAL_M_00 = 0,//GUIDE用OBJ
+	AURA_OBJ_PAL_M_01,		// 使用してない
+	AURA_OBJ_PAL_M_02,		// 使用してない
+	AURA_OBJ_PAL_M_03,		// 使用してない
+	AURA_OBJ_PAL_M_04,		// 使用してない
+	AURA_OBJ_PAL_M_05,		// 使用してない
+	AURA_OBJ_PAL_M_06,		// 使用してない
+	AURA_OBJ_PAL_M_07,		// 使用してない
+	AURA_OBJ_PAL_M_08,		// 使用してない
+	AURA_OBJ_PAL_M_09,		// 使用してない
+	AURA_OBJ_PAL_M_10,		// 使用してない
+	AURA_OBJ_PAL_M_11,		// 使用してない
+	AURA_OBJ_PAL_M_12,		// 使用してない
+	AURA_OBJ_PAL_M_13,		// 使用してない
+	AURA_OBJ_PAL_M_14,		// 使用してない
+	AURA_OBJ_PAL_M_15,		// 使用してない
+
+
+	// サブ画面OBJ
+	AURA_OBJ_PAL_S_00 = 0,	//使用してない
+	AURA_OBJ_PAL_S_01,		// 使用してない
+	AURA_OBJ_PAL_S_02,		// 使用してない
+	AURA_OBJ_PAL_S_03,		// 使用してない
+	AURA_OBJ_PAL_S_04,		// 使用してない
+	AURA_OBJ_PAL_S_05,		// 使用してない
+	AURA_OBJ_PAL_S_06,		// 使用してない
+	AURA_OBJ_PAL_S_07,		// 使用してない
+	AURA_OBJ_PAL_S_08,		// 使用してない
+	AURA_OBJ_PAL_S_09,		// 使用してない
+	AURA_OBJ_PAL_S_10,		// 使用してない
+	AURA_OBJ_PAL_S_11,		// 使用してない
+	AURA_OBJ_PAL_S_12,		// 使用してない
+	AURA_OBJ_PAL_S_13,		// 使用してない
+	AURA_OBJ_PAL_S_14,		// 使用してない
+	AURA_OBJ_PAL_S_15,		// 使用してない
 };
 
 //-------------------------------------
@@ -140,6 +177,25 @@ typedef enum {
 }MSG_FONT_TYPE;
 
 //-------------------------------------
+///	OBJ登録ID
+//=====================================
+enum {
+	OBJREGID_TOUCH_PLT,
+	OBJREGID_TOUCH_CHR,
+	OBJREGID_TOUCH_CEL,
+
+	OBJREGID_MAX
+};
+//-------------------------------------
+///	CLWK取得
+//=====================================
+typedef enum{	
+	CLWKID_TOUCH,
+	
+	CLWKID_MAX
+}CLWKID;
+
+//-------------------------------------
 ///	デバッグ用人数セーブ機能
 //=====================================
 #ifdef DEBUG_ONLY_PLAY
@@ -167,12 +223,21 @@ typedef struct
 	GFL_G3D_CAMERA		*p_camera;
 } GRAPHIC_3D_WORK;
 //-------------------------------------
+///	OBJ関係
+//=====================================
+typedef struct {
+	GFL_CLUNIT *p_clunit;
+	u32					reg_id[OBJREGID_MAX];
+	GFL_CLWK	 *p_clwk[CLWKID_MAX];
+} GRAPHIC_OBJ_WORK;
+//-------------------------------------
 ///	描画関係
 //=====================================
 typedef struct 
 {
-	GRAPHIC_BG_WORK		gbg;
+	GRAPHIC_BG_WORK		bg;
 	GRAPHIC_3D_WORK		g3d;
+	GRAPHIC_OBJ_WORK	obj;
 	GFL_TCB						*p_vblank_task;
 } GRAPHIC_WORK;
 //-------------------------------------
@@ -235,6 +300,7 @@ typedef struct {
 	u16					shake_idx;
 	u32					cnt;				//カウンタ
 	u32					shake_cnt;	//ブレ計測用カウンタ
+	BOOL				is_end;			//1回取得したフラグ
 }SHAKE_SEARCH_WORK;
 
 
@@ -281,11 +347,18 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
+static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id );
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //BG
 static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
+//obj
+static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vram_bank, HEAPID heapID );
+static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk );
+static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk );
+static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk );
+static GFL_CLWK* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, CLWKID id );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
@@ -320,6 +393,8 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq );
 static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg );
 static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
 static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk );
+static void TouchMarker_SetPos( AURA_MAIN_WORK *p_wk, const GFL_POINT *cp_pos );
+static void TouchMarker_OffVisible( AURA_MAIN_WORK *p_wk );
 
 //ブレ計測
 static void	SHAKESEARCH_Init( SHAKE_SEARCH_WORK *p_wk );
@@ -456,7 +531,7 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	AURA_MAIN_WORK	*p_wk;
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCAURA, 0x16000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCAURA, 0x20000 );
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(AURA_MAIN_WORK), HEAPID_IRCAURA );
 	GFL_STD_MemClear( p_wk, sizeof(AURA_MAIN_WORK) );
@@ -610,6 +685,7 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 	{	
 		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
 	}
+	GRAPHIC_Draw( &p_wk->grp );
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -629,38 +705,41 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 {
+	static const GFL_DISP_VRAM sc_vramSetTable =
+	{
+		GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
+		GX_OBJVRAMMODE_CHAR_1D_128K,		
+		GX_OBJVRAMMODE_CHAR_1D_128K,		
+	};
+
 	//ワーククリア
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
 
 	//VRAMクリアー
 	GFL_DISP_ClearVRAM( 0 );
 
+	// VRAMバンク設定
+	GFL_DISP_SetBank( &sc_vramSetTable );
+
 	// ディスプレイON
 	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 	GFL_DISP_SetDispOn();
 
-	// VRAMバンク設定
-	{
-		static const GFL_DISP_VRAM sc_vramSetTable =
-		{
-			GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
-			GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-			GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
-			GX_VRAM_OBJ_NONE,						// メイン2DエンジンのOBJ
-			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-			GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
-			GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
-			GX_OBJVRAMMODE_CHAR_1D_128K,		
-			GX_OBJVRAMMODE_CHAR_1D_128K,		
-		};
-		GFL_DISP_SetBank( &sc_vramSetTable );
-	}
+	//表示
+	GFL_DISP_GX_InitVisibleControl();
 
 	//描画モジュール
-	GRAPHIC_BG_Init( &p_wk->gbg, heapID );
+	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
+	GRAPHIC_BG_Init( &p_wk->bg, heapID );
 //	GRAPHIC_3D_Init( &p_wk->g3d, heapID );
 
 	//VBlackTask登録
@@ -681,7 +760,7 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
 //	GRAPHIC_3D_Exit( &p_wk->g3d );
-	GRAPHIC_BG_Exit( &p_wk->gbg );
+	GRAPHIC_BG_Exit( &p_wk->bg );
 }
 
 //----------------------------------------------------------------------------
@@ -694,8 +773,22 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 {
+	GRAPHIC_OBJ_Main( &p_wk->obj );
 }
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLWK取得
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk	ワーク
+ *	@param	id												CLWKのID
+ *
+ *	@return	CLWK
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id )
+{	
+	return GRAPHIC_OBJ_GetClwk( &cp_wk->obj, id );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	VBlank用タスク
@@ -708,7 +801,8 @@ static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work )
 {	
 	GRAPHIC_WORK* p_wk	= p_work;
-	GRAPHIC_BG_VBlankFunction( &p_wk->gbg );
+	GRAPHIC_BG_VBlankFunction( &p_wk->bg );
+	GRAPHIC_OBJ_VBlankFunction( &p_wk->obj );
 }
 
 //=============================================================================
@@ -812,6 +906,139 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK* p_wk )
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk )
 {	
 	GFL_BG_VBlankFunc();
+}
+//=============================================================================
+/**
+ *				OBJ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	初期化
+ *
+ *	@param	GRAPHIC_OBJ_WORK *p_wk			ワーク
+ *	@param	GFL_DISP_VRAM* cp_vram_bank	バンクテーブル
+ *	@param	heapID											ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vram_bank, HEAPID heapID )
+{	
+	//クリア
+	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_OBJ_WORK) );
+
+	//システム作成
+	GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, cp_vram_bank, heapID );
+	p_wk->p_clunit	= GFL_CLACT_UNIT_Create( 128, 0, heapID );
+	GFL_CLACT_UNIT_SetDefaultRend( p_wk->p_clunit );
+
+	//表示
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+
+	//リソース読み込み
+	{	
+		ARCHANDLE *p_handle;
+
+		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCAURA_GRAPHIC, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
+				NARC_ircaura_gra_aura_obj_touch_NCLR, CLSYS_DRAW_MAIN, AURA_OBJ_PAL_M_00*0x20, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+				NARC_ircaura_gra_aura_obj_touch_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				NARC_ircaura_gra_aura_obj_touch_NCER, NARC_ircaura_gra_aura_obj_touch_NANR, heapID );
+
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+
+	//CLWK作成
+	{	
+		GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+		p_wk->p_clwk[CLWKID_TOUCH]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+				p_wk->reg_id[OBJREGID_TOUCH_CHR],
+				p_wk->reg_id[OBJREGID_TOUCH_PLT],
+				p_wk->reg_id[OBJREGID_TOUCH_CEL],
+				&cldata,
+				CLSYS_DEFREND_MAIN,
+				heapID
+				);
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	破棄
+ *
+ *	@param	GRAPHIC_OBJ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
+{	
+	//CLWK破棄
+	{	
+		int i;
+		for( i = 0; i < CLWKID_MAX; i++ )
+		{	
+			GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+		}
+	}
+
+	//リソース破棄
+	{	
+		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_TOUCH_PLT] );
+		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_TOUCH_CHR] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_TOUCH_CEL] );
+	}
+
+	//システム破棄
+	GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
+	GFL_CLACT_SYS_Delete();
+	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_OBJ_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	メイン処理
+ *
+ *	@param	GRAPHIC_OBJ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk )
+{	
+	GFL_CLACT_SYS_Main();
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	Vブランク処理
+ *
+ *	@param	GRAPHIC_OBJ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk )
+{	
+	GFL_CLACT_SYS_VBlankFunc();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	CLWK取得
+ *
+ *	@param	const GRAPHIC_OBJ_WORK *cp_wk	ワーク
+ *	@param	id														CLWKのID
+ *
+ *	@return	CLWK
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLWK* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, CLWKID id )
+{	
+	GF_ASSERT( id < CLWKID_MAX );
+	return cp_wk->p_clwk[id];
 }
 
 //=============================================================================
@@ -1310,6 +1537,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			}
 		}
 
+		TouchMarker_OffVisible( p_wk );
 		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
 		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], VISIBLE_ON );
 
@@ -1364,10 +1592,14 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_RET,
 	};
 
+	GFL_POINT	pos;
+
+	TouchMarker_OffVisible( p_wk );
+
 	switch( *p_seq )
 	{	
 	case SEQ_MAIN:
-		if( TP_GetRectCont( &sc_left, NULL ) )
+		if( TP_GetRectCont( &sc_left, &pos ) )
 		{	
 			//計測終了待ち
 			if( SHAKESEARCH_Main( &p_wk->shake_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ], &sc_left ) )
@@ -1377,6 +1609,8 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_ON );
 				*p_seq	= SEQ_WAIT_RIGHT;
 			}
+
+			TouchMarker_SetPos( p_wk, &pos );
 		}
 		else
 		{	
@@ -1388,12 +1622,16 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_WAIT_RIGHT:
 		if( TP_GetRectCont( &sc_right, &p_wk->trg_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ] ) )
 		{	
+			TouchMarker_SetPos( p_wk, &p_wk->trg_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ] );
+
+
 			DEBUGAURA_PRINT_UpDate( p_wk );
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchRight );
 		}
-		else if( TP_GetRectCont( &sc_left, NULL ) )
+		else if( TP_GetRectCont( &sc_left, &pos ) )
 		{	
+			TouchMarker_SetPos( p_wk, &pos );
 		}
 		else
 		{
@@ -1422,10 +1660,15 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_RET,
 	};
 
+
+	GFL_POINT	pos;
+
+	TouchMarker_OffVisible( p_wk );
+
 	switch( *p_seq )
 	{	
 	case SEQ_MAIN:
-		if( TP_GetRectCont( &sc_right, NULL ) )
+		if( TP_GetRectCont( &sc_right, &pos ) )
 		{	
 			if( SHAKESEARCH_Main( &p_wk->shake_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ], &sc_right ) )
 			{	
@@ -1446,6 +1689,8 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 					SEQ_Change( p_wk, SEQFUNC_Result );
 				}
 			}
+
+			TouchMarker_SetPos( p_wk, &pos );
 		}
 		else
 		{	
@@ -1705,6 +1950,44 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タッチマーカーの位置を決定し表示
+ *
+ *	@param	AURA_MAIN_WORK *p_wk	ワーク
+ *	@param	GFL_POINT *p_pos	位置
+ *
+ */
+//-----------------------------------------------------------------------------
+static void TouchMarker_SetPos( AURA_MAIN_WORK *p_wk, const GFL_POINT *cp_pos )
+{	
+	GFL_CLWK	*p_marker;
+	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
+	GFL_CLACT_WK_SetDrawEnable( p_marker, TRUE );
+
+	{
+		GFL_CLACTPOS clpos;
+		clpos.x	= cp_pos->x;
+		clpos.y	= cp_pos->y;
+		GFL_CLACT_WK_SetPos( p_marker, &clpos, 0 );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タッチマーカーの表示をOFF
+ *
+ *	@param	AURA_MAIN_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void TouchMarker_OffVisible( AURA_MAIN_WORK *p_wk )
+{	
+	GFL_CLWK	*p_marker;
+	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
+	GFL_CLACT_WK_SetDrawEnable( p_marker, FALSE );
+}
+
 //=============================================================================
 /**
  *			ブレ計測
@@ -1748,10 +2031,17 @@ static void	SHAKESEARCH_Exit( SHAKE_SEARCH_WORK *p_wk )
 static BOOL	SHAKESEARCH_Main( SHAKE_SEARCH_WORK *p_wk, const GFL_RECT	*cp_rect )
 {	
 
+	//終了していたらTRUE
+	if( p_wk->is_end )
+	{	
+		return TRUE;
+	}
+
 	//計測終了待ち
 	if( p_wk->cnt++ > TOUCH_COUNTER_MAX )
 	{	
 		TP_GetRectCont( cp_rect, &p_wk->shake[TOUCH_COUNTER_SHAKE_MAX-1] );
+		p_wk->is_end	= TRUE;
 		return TRUE;
 	}
 	else
