@@ -24,6 +24,7 @@
 typedef struct
 {
   u32 id;
+  u32 del_flag;
   FLDMMDL *fmmdl;
 }FIELD_COMM_ACTOR;
 
@@ -45,6 +46,7 @@ typedef struct
 {
   const u16 *watch_dir;
   const VecFx32 *watch_pos;
+  FIELD_COMM_ACTOR *comm_actor;
 }MV_COMMACT_WORK;
 
 //======================================================================
@@ -54,9 +56,11 @@ static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act );
 
 static FLDMMDL * fldcommAct_fmmdl_Add(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 code,
-    const u16 *watch_dir, const VecFx32 *watch_pos );
+    const u16 *watch_dir, const VecFx32 *watch_pos,
+    FIELD_COMM_ACTOR *comm_actor );
 static void fldcommAct_fmmdl_SetWatchData(
-    FLDMMDL *fmmdl, const u16 *dir, const VecFx32 *pos );
+    FLDMMDL *fmmdl, const u16 *dir, const VecFx32 *pos,
+    FIELD_COMM_ACTOR *comm_actor );
 
 static u16 grid_ChangeFourDir( u16 dir );
 
@@ -121,6 +125,8 @@ void FIELD_COMM_ACTOR_CTRL_Delete( FIELD_COMM_ACTOR_CTRL *act_ctrl )
  * @param watch_dir 方向参照先
  * @param watch_pos 座標参照先
  * @retval nothing
+ * @attention watch_dirとwatch_posを常に参照し、アクターへ反映させるので
+ * アクター動作中はwatch_dirとwatch_posは常に保持して下さい。
  */
 //--------------------------------------------------------------
 void FIELD_COMM_ACTOR_CTRL_AddActor( FIELD_COMM_ACTOR_CTRL *act_ctrl,
@@ -132,8 +138,9 @@ void FIELD_COMM_ACTOR_CTRL_AddActor( FIELD_COMM_ACTOR_CTRL *act_ctrl,
   for( i = 0; i < act_ctrl->max; i++, act++ ){
     if( act->fmmdl == NULL ){
       act->fmmdl = fldcommAct_fmmdl_Add(
-          act_ctrl, code, watch_dir, watch_pos );
+          act_ctrl, code, watch_dir, watch_pos, act );
       act->id = id;
+      OS_Printf( "FIELD_COMM_ACTOR AddActor ID %d\n", id );
       return;
     }
   }
@@ -176,7 +183,10 @@ void FIELD_COMM_ACTOR_CTRL_DeleteActro(
 //--------------------------------------------------------------
 static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act )
 {
-  FLDMMDL_Delete( act->fmmdl );
+  if( act->del_flag == FALSE ){
+    FLDMMDL_Delete( act->fmmdl );
+  }
+  
   MI_CpuClear8( act, sizeof(FIELD_COMM_ACTOR) );
 }
 
@@ -194,7 +204,8 @@ static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act )
 //--------------------------------------------------------------
 static FLDMMDL * fldcommAct_fmmdl_Add(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 code,
-    const u16 *watch_dir, const VecFx32 *watch_pos )
+    const u16 *watch_dir, const VecFx32 *watch_pos,
+    FIELD_COMM_ACTOR *comm_actor )
 {
   FLDMMDL *fmmdl;
   FLDMMDLSYS *fmmdlsys = act_ctrl->fmmdlsys;
@@ -202,7 +213,7 @@ static FLDMMDL * fldcommAct_fmmdl_Add(
   
   head.obj_code = code;
   fmmdl = FLDMMDLSYS_AddFldMMdl( fmmdlsys, &head, 0 );
-  fldcommAct_fmmdl_SetWatchData( fmmdl, watch_dir, watch_pos );
+  fldcommAct_fmmdl_SetWatchData( fmmdl, watch_dir, watch_pos, comm_actor );
   
   FLDMMDL_InitPosition( fmmdl, watch_pos, grid_ChangeFourDir(*watch_dir) );
   FLDMMDL_SetStatusBitHeightGetOFF( fmmdl, TRUE );
@@ -222,6 +233,20 @@ void FLDMMDL_MoveCommActor_Init( FLDMMDL *fmmdl )
 {
   MV_COMMACT_WORK *work;
   work = FLDMMDL_InitMoveProcWork( fmmdl, sizeof(MV_COMMACT_WORK) );
+}
+
+//--------------------------------------------------------------
+/**
+ * 通信用アクター　動作モデル　動作削除
+ * @param fmmdl FLDMMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDL_MoveCommActor_Delete( FLDMMDL *fmmdl )
+{
+  MV_COMMACT_WORK *work;
+  work = FLDMMDL_GetMoveProcWork( fmmdl );
+  work->comm_actor->del_flag = TRUE; //通信側アクターに削除通知
 }
 
 //--------------------------------------------------------------
@@ -269,12 +294,14 @@ void FLDMMDL_MoveCommActor_Move( FLDMMDL *fmmdl )
  */
 //--------------------------------------------------------------
 static void fldcommAct_fmmdl_SetWatchData(
-    FLDMMDL *fmmdl, const u16 *dir, const VecFx32 *pos )
+    FLDMMDL *fmmdl, const u16 *dir, const VecFx32 *pos,
+    FIELD_COMM_ACTOR *comm_actor )
 {
   MV_COMMACT_WORK *work;
   work = FLDMMDL_GetMoveProcWork( fmmdl );
   work->watch_dir = dir;
   work->watch_pos = pos;
+  work->comm_actor = comm_actor;
 }
 
 //--------------------------------------------------------------

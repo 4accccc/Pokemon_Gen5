@@ -33,5 +33,6 @@ extern void FIELD_COMM_ACTOR_CTRL_DeleteActro(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id );
 
 extern void FLDMMDL_MoveCommActor_Init( FLDMMDL *fmmdl );
+extern void FLDMMDL_MoveCommActor_Delete( FLDMMDL *fmmdl );
 extern void FLDMMDL_MoveCommActor_Move( FLDMMDL *fmmdl );
 

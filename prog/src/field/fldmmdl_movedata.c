@@ -850,7 +850,7 @@ static const FLDMMDL_MOVE_PROC_LIST DATA_FieldOBJMove_CommActor =
 	MV_COMM_ACTOR,												///<動作コード
 	FLDMMDL_MoveCommActor_Init,						///<初期化関数
 	FLDMMDL_MoveCommActor_Move,						///<動作関数
-	FLDMMDL_MoveDeleteProcDummy,					///<削除関数
+  FLDMMDL_MoveCommActor_Delete,					///<削除関数
 	FLDMMDL_MoveReturnProcDummy,					///<復帰関数
 };
 
