@@ -47,7 +47,13 @@ extern const FLDMAPPER_RESISTDATA_OBJTBL * FIELD_BMODEL_MAN_GetOBJTBL(const FIEL
 extern u16 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN* man, BMODEL_ID id);
 
 
+//============================================================================================
+//    電光掲示板関連
+//============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief 電光掲示板指定のための定義
+ */
 //------------------------------------------------------------------
 typedef enum{ 
   FIELD_BMODEL_ELBOARD_ID1 = 0,
@@ -55,7 +61,11 @@ typedef enum{
 
   FIELD_BMODEL_ELBOARD_ID_MAX,
 }FIELD_BMODEL_ELBOARD_ID;
+
 //------------------------------------------------------------------
+/**
+ * @brief 電光掲示板用文字列登録処理
+ */
 //------------------------------------------------------------------
 extern void FIELD_BMODEL_MAN_EntryELString(const FIELD_BMODEL_MAN* man,
     FIELD_BMODEL_ELBOARD_ID id,

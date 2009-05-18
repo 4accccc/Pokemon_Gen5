@@ -388,6 +388,12 @@ static void makeResistObjTable(FIELD_BMODEL_MAN * man)
 //
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief 配置モデルアニメデータアーカイブ指定IDの取得
+ *
+ * 本当はmanを受け取る必要はないが、将来的なこととインターフェイスを
+ * あわせる意味で引数に指定している。
+ */
 //------------------------------------------------------------------
 ARCID FIELD_BMODEL_MAN_GetAnimeArcID(const FIELD_BMODEL_MAN * man)
 { 
@@ -397,6 +403,9 @@ ARCID FIELD_BMODEL_MAN_GetAnimeArcID(const FIELD_BMODEL_MAN * man)
 /**
  * @brief 保持しているアニメIDへのポインタを返す
  * @param data  アニメデータへのポインタ
+ * @return  u16 * アニメID配列へのポインタ
+ *
+ * 配列長自体はFIELD_BMANIME_DATA_getAnimeCountで取得する
  */
 //------------------------------------------------------------------
 const u16 * FIELD_BMANIME_DATA_getAnimeFileID(const FIELD_BMANIME_DATA * data)
@@ -408,6 +417,7 @@ const u16 * FIELD_BMANIME_DATA_getAnimeFileID(const FIELD_BMANIME_DATA * data)
 /**
  * @brief 保持しているアニメIDの数を返す
  * @param data  アニメデータへのポインタ
+ * @param u32 保持しているアニメIDの数
  */
 //------------------------------------------------------------------
 u32 FIELD_BMANIME_DATA_getAnimeCount(const FIELD_BMANIME_DATA * data)
@@ -533,7 +543,9 @@ static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id)
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief
+ * @brief 電光掲示板用文字列の登録処理（直接文字列オブジェクトを渡す）
+ * @param man 配置モデルマネジャーへのポインタ
+ * @param id  電光掲示板指定ID
  */
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_EntryELString(const FIELD_BMODEL_MAN* man,
@@ -547,7 +559,11 @@ void FIELD_BMODEL_MAN_EntryELString(const FIELD_BMODEL_MAN* man,
 
 //------------------------------------------------------------------
 /**
- * @brief 電光掲示板用文字列の登録処理
+ * @brief 電光掲示板用文字列の登録処理（メッセージアーカイブ指定型）
+ * @param man 配置モデルマネジャーへのポインタ
+ * @param id  電光掲示板指定ID
+ * @param msg_arc_id  メッセージアーカイブ指定ID
+ * @param str_id  アーカイブ内メッセージ指定ID
  */
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_EntryELStringID(const FIELD_BMODEL_MAN * man,
@@ -566,21 +582,27 @@ void FIELD_BMODEL_MAN_EntryELStringID(const FIELD_BMODEL_MAN * man,
 }
 //------------------------------------------------------------------
 /**
- * @brief
+ * @brief   テクスチャの登録処理
+ * @param man 配置モデルマネジャーへのポインタ
+ * @param data  アニメデータへのポインタ
+ * @param g3DresTex   登録するテクスチャリソース
+ *
+ * 現在、電光掲示板のためだけに呼び出している。
+ * 電光掲示板以外の配置モデルではなにもせずに帰る
  */
 //------------------------------------------------------------------
 void FIELD_BMANIME_DATA_entryTexData(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
-    const GFL_G3D_RES * g3Dtex)
+    const GFL_G3D_RES * g3DresTex)
 { 
   switch ((BMANIME_PROG_TYPE)data->prg_type)
   { 
   case BMANIME_PROG_TYPE_ELBOARD1:
     man->elb_tex[FIELD_BMODEL_ELBOARD_ID1] = ELBOARD_TEX_Add(
-        g3Dtex, man->elb_str[FIELD_BMODEL_ELBOARD_ID1], man->heapID);
+        g3DresTex, man->elb_str[FIELD_BMODEL_ELBOARD_ID1], man->heapID);
     break;
   case BMANIME_PROG_TYPE_ELBOARD2:
     man->elb_tex[FIELD_BMODEL_ELBOARD_ID2] = ELBOARD_TEX_Add(
-        g3Dtex, man->elb_str[FIELD_BMODEL_ELBOARD_ID1], man->heapID);
+        g3DresTex, man->elb_str[FIELD_BMODEL_ELBOARD_ID1], man->heapID);
     break;
   case BMANIME_PROG_TYPE_NONE:
   default:

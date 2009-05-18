@@ -44,15 +44,22 @@ typedef enum {
 
 
 //------------------------------------------------------------------
+//アニメデータの取得処理
 //------------------------------------------------------------------
 extern const FIELD_BMANIME_DATA * FIELD_BMODEL_MAN_GetAnimeData(FIELD_BMODEL_MAN * man, u16 bm_id);
+
 extern ARCID FIELD_BMODEL_MAN_GetAnimeArcID(const FIELD_BMODEL_MAN * man);
 
 extern const u16 * FIELD_BMANIME_DATA_getAnimeFileID(const FIELD_BMANIME_DATA * data);
 extern u32 FIELD_BMANIME_DATA_getAnimeCount(const FIELD_BMANIME_DATA * data);
+
 extern BMANIME_TYPE FIELD_BMANIME_DATA_getAnimeType(const FIELD_BMANIME_DATA * data);
+
 extern BMANIME_PROG_TYPE FIELD_BMANIME_DATA_getProgType(const FIELD_BMANIME_DATA * data);
 
+//------------------------------------------------------------------
+//  テクスチャ情報の登録処理
+//------------------------------------------------------------------
 extern void FIELD_BMANIME_DATA_entryTexData(FIELD_BMODEL_MAN* man, const FIELD_BMANIME_DATA * data,
-    const GFL_G3D_RES * g3Dtex);
+    const GFL_G3D_RES * g3DresTex);
 
