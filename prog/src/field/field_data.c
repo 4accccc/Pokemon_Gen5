@@ -64,14 +64,20 @@ void FIELDDATA_SetMapperData(
 	//標準フィールド以外のときだけテクスチャをグローバルにしてみる
 	if (map_res->g3DmapFileType != FLDMAPPER_FILETYPE_PKGS && area_id != AREA_ID_FIELD) {
     FLDMAPPER_RESIST_TEX	gTexBuffer;
+    u32 area_season_id = area_id;
+    if (AREADATA_HasSeason(area_id)) 
+    { 
+      area_season_id += sid;
+    }
+		TAMADA_Printf("Load Area Season ID %d\n", area_season_id);
+
 		gTexBuffer.arcID = ARCID_AREA_MAPTEX;
-		gTexBuffer.datID = AREADATA_GetTextureSetID(area_id);
-		if (AREADATA_HasSeason(area_id) == TRUE) {
-			gTexBuffer.datID += sid;
-		}
-		TAMADA_Printf("Load Area Texture %d\n", gTexBuffer.datID);
+		gTexBuffer.datID = AREADATA_GetTextureSetID(area_season_id);
 		map_res->gtexType = FLDMAPPER_TEXTYPE_USE;
 		map_res->gtexData = gTexBuffer;
+
+    map_res->ground_anime.ita_datID = AREADATA_GetGroundITAID(area_season_id);
+    map_res->ground_anime.itp_anm_datID = AREADATA_GetGroundITPID(area_season_id);
 	}
 }
 

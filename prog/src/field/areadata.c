@@ -14,12 +14,16 @@
 #include "arc/arc_def.h"
 #include "arc/fieldmap/area_id.h"
 
+#include "arc/fieldmap/area_map_ita.naix"
+#include "arc/fieldmap/area_map_itp.naix"
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 struct AREADATA{
 	u16 model_set_index;		//配置モデルセット指定
 	u16 tex_set_index;			//テクスチャセット指定
-	u16 anm_set_index;			//金銀追加：地形アニメセット指定
+	u8  anm_ita_id;	  		//地形ITAアニメセット指定
+  u8  anm_itp_id;	  		//地形ITPアニメセット指定
 	u8  inner_outer;			//金銀追加：配置モデル種類指定（屋内・屋外）
 	u8 light_type;				//ライト指定
 };
@@ -89,11 +93,22 @@ u16 AREADATA_GetTextureSetID(u16 area_id)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-u16 AREADATA_GetAnimeSetID(u16 area_id)
+u32 AREADATA_GetGroundITAID(u16 area_id)
 {
 	AREADATA adbuf;
 	getAreaData(&adbuf, area_id);
-	return adbuf.anm_set_index;
+  if (adbuf.anm_ita_id == 0xff) return AREADATA_NO_ANIME_DATA;
+	return adbuf.anm_ita_id;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u32 AREADATA_GetGroundITPID(u16 area_id)
+{
+	AREADATA adbuf;
+	getAreaData(&adbuf, area_id);
+  if (adbuf.anm_itp_id == 0xff) return AREADATA_NO_ANIME_DATA;
+	return adbuf.anm_itp_id;
 }
 
 //------------------------------------------------------------------
