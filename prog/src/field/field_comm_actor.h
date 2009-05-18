@@ -27,8 +27,9 @@ typedef struct _TAG_FIELD_COMM_ACTOR_CTRL FIELD_COMM_ACTOR_CTRL;
 extern FIELD_COMM_ACTOR_CTRL * FIELD_COMM_ACTOR_CTRL_Create(
     int max, FLDMMDLSYS *fmmdlsys, HEAPID heapID );
 extern void FIELD_COMM_ACTOR_CTRL_Delete( FIELD_COMM_ACTOR_CTRL *act_ctrl );
-extern void FIELD_COMM_ACTOR_CTRL_AddActor( FIELD_COMM_ACTOR_CTRL *act_ctrl,
-    u32 id, u16 code, const u16 *watch_dir, const VecFx32 *watch_pos );
+extern void FIELD_COMM_ACTOR_CTRL_AddActor(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id, u16 code,
+    const u16 *watch_dir, const VecFx32 *watch_pos, const BOOL *watch_vanish );
 extern void FIELD_COMM_ACTOR_CTRL_DeleteActro(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id );
 

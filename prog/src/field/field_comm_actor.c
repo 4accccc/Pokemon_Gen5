@@ -46,6 +46,7 @@ typedef struct
 {
   const u16 *watch_dir;
   const VecFx32 *watch_pos;
+  const BOOL *watch_vanish;
   FIELD_COMM_ACTOR *comm_actor;
 }MV_COMMACT_WORK;
 
@@ -56,10 +57,10 @@ static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act );
 
 static FLDMMDL * fldcommAct_fmmdl_Add(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 code,
-    const u16 *watch_dir, const VecFx32 *watch_pos,
+    const u16 *watch_dir, const VecFx32 *watch_pos, const BOOL *watch_vanish,
     FIELD_COMM_ACTOR *comm_actor );
 static void fldcommAct_fmmdl_SetWatchData(
-    FLDMMDL *fmmdl, const u16 *dir, const VecFx32 *pos,
+    FLDMMDL *fmmdl, const u16 *dir, const VecFx32 *pos, const BOOL *vanish,
     FIELD_COMM_ACTOR *comm_actor );
 
 static u16 grid_ChangeFourDir( u16 dir );
@@ -124,13 +125,16 @@ void FIELD_COMM_ACTOR_CTRL_Delete( FIELD_COMM_ACTOR_CTRL *act_ctrl )
  * @param code 表示コード HERO等
  * @param watch_dir 方向参照先
  * @param watch_pos 座標参照先
+ * @param watch_vanish 表示フラグ TRUE=非表示 NULL指定=参照しません。
  * @retval nothing
- * @attention watch_dirとwatch_posを常に参照し、アクターへ反映させるので
- * アクター動作中はwatch_dirとwatch_posは常に保持して下さい。
+ * @attention watch_dirとwatch_pos,vanish_flagを常に参照し、
+ * アクターへ反映させるので、アクター動作中はwatch_dirと
+ * watch_pos,watch_vanishは常に保持して下さい。
  */
 //--------------------------------------------------------------
-void FIELD_COMM_ACTOR_CTRL_AddActor( FIELD_COMM_ACTOR_CTRL *act_ctrl,
-    u32 id, u16 code, const u16 *watch_dir, const VecFx32 *watch_pos )
+void FIELD_COMM_ACTOR_CTRL_AddActor(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id, u16 code,
+    const u16 *watch_dir, const VecFx32 *watch_pos, const BOOL *watch_vanish )
 {
   int i;
   FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
@@ -138,7 +142,7 @@ void FIELD_COMM_ACTOR_CTRL_AddActor( FIELD_COMM_ACTOR_CTRL *act_ctrl,
   for( i = 0; i < act_ctrl->max; i++, act++ ){
     if( act->fmmdl == NULL ){
       act->fmmdl = fldcommAct_fmmdl_Add(
-          act_ctrl, code, watch_dir, watch_pos, act );
+          act_ctrl, code, watch_dir, watch_pos, watch_vanish, act );
       act->id = id;
       OS_Printf( "FIELD_COMM_ACTOR AddActor ID %d\n", id );
       return;
@@ -204,7 +208,7 @@ static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act )
 //--------------------------------------------------------------
 static FLDMMDL * fldcommAct_fmmdl_Add(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 code,
-    const u16 *watch_dir, const VecFx32 *watch_pos,
+    const u16 *watch_dir, const VecFx32 *watch_pos, const BOOL *watch_vanish,
     FIELD_COMM_ACTOR *comm_actor )
 {
   FLDMMDL *fmmdl;
@@ -213,7 +217,8 @@ static FLDMMDL * fldcommAct_fmmdl_Add(
   
   head.obj_code = code;
   fmmdl = FLDMMDLSYS_AddFldMMdl( fmmdlsys, &head, 0 );
-  fldcommAct_fmmdl_SetWatchData( fmmdl, watch_dir, watch_pos, comm_actor );
+  fldcommAct_fmmdl_SetWatchData(
+      fmmdl, watch_dir, watch_pos, watch_vanish, comm_actor );
   
   FLDMMDL_InitPosition( fmmdl, watch_pos, grid_ChangeFourDir(*watch_dir) );
   FLDMMDL_SetStatusBitHeightGetOFF( fmmdl, TRUE );
@@ -283,6 +288,14 @@ void FLDMMDL_MoveCommActor_Move( FLDMMDL *fmmdl )
     
     FLDMMDL_SetDrawStatus( fmmdl, status );
   }
+  
+  if( work->watch_vanish != NULL ){
+    if( (*work->watch_vanish) == TRUE ){
+      FLDMMDL_SetStatusBitVanish( fmmdl, TRUE );
+    }else{
+      FLDMMDL_SetStatusBitVanish( fmmdl, FALSE );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -294,13 +307,14 @@ void FLDMMDL_MoveCommActor_Move( FLDMMDL *fmmdl )
  */
 //--------------------------------------------------------------
 static void fldcommAct_fmmdl_SetWatchData(
-    FLDMMDL *fmmdl, const u16 *dir, const VecFx32 *pos,
+    FLDMMDL *fmmdl, const u16 *dir, const VecFx32 *pos, const BOOL *vanish,
     FIELD_COMM_ACTOR *comm_actor )
 {
   MV_COMMACT_WORK *work;
   work = FLDMMDL_GetMoveProcWork( fmmdl );
   work->watch_dir = dir;
   work->watch_pos = pos;
+  work->watch_vanish = vanish;
   work->comm_actor = comm_actor;
 }
 

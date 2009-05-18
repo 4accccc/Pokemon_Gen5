@@ -445,7 +445,7 @@ static void FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
           {
             //–¢‰Šú‰»‚ÈƒLƒƒƒ‰‚È‚Ì‚ÅA‰Šú‰»‚·‚é
             FIELD_COMM_ACTOR_CTRL_AddActor( commSys->actCtrl_,
-                0, HERO, &setPlWork->direction, &setPlWork->position );
+                0, HERO, &setPlWork->direction, &setPlWork->position, NULL );
             FIELD_COMM_DATA_SetCharaData_IsExist(commData, i,TRUE);
           }
           FIELD_COMM_DATA_SetCharaData_IsValid(commData, i,FALSE);
