@@ -245,7 +245,7 @@ void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
 
 //----------------------------------------------------------------------------
 /**
- * @brief
+ * @brief         FIELD_SUBSCREEN_ChangeForceと違いフェードしてから切り替えます
  * @param	pWork
  * @param	pWork		サブスクリーン制御ワークへのポインタ
  * @param	mode
@@ -257,6 +257,24 @@ void FIELD_SUBSCREEN_Change( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE n
 	GF_ASSERT(funcTable[new_mode].mode == new_mode);
 	pWork->nextMode = new_mode;
   pWork->state = FSS_CHANGE_FADEOUT;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief         FIELD_SUBSCREEN_Changeと違い即座に切り替えます
+ * @param	pWork
+ * @param	pWork		サブスクリーン制御ワークへのポインタ
+ * @param	mode
+ */
+//----------------------------------------------------------------------------
+void FIELD_SUBSCREEN_ChangeForce( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode)
+{
+  GF_ASSERT(new_mode < FIELD_SUBSCREEN_MODE_MAX);
+  GF_ASSERT(funcTable[new_mode].mode == new_mode);
+  funcTable[pWork->mode].exit_func(pWork);
+  funcTable[new_mode].init_func(pWork);
+  pWork->mode = new_mode;
+  pWork->state = FSS_UPDATE;
 }
 
 //----------------------------------------------------------------------------

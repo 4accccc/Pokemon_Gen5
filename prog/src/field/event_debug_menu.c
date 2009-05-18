@@ -861,7 +861,7 @@ static GMEVENT_RESULT DMenuSubscreenSelectEvent(
         typedef void (* CHANGE_FUNC)(DMESSWORK*);
         CHANGE_FUNC func = (CHANGE_FUNC)ret;
         func(work);
-        //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(work->fieldWork), ret);
+        //FIELD_SUBSCREEN_ChangeForce(FIELDMAP_GetFieldSubscreenWork(work->fieldWork), ret);
 				return( GMEVENT_RES_FINISH );
 			}
 		}
@@ -880,7 +880,7 @@ static GMEVENT_RESULT DMenuSubscreenSelectEvent(
 //--------------------------------------------------------------
 static void setupTouchCameraSubscreen(DMESSWORK * dmess)
 { 
-  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
+  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
   { 
     void * inner_work;
     FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(dmess->fieldWork);
@@ -893,35 +893,35 @@ static void setupTouchCameraSubscreen(DMESSWORK * dmess)
 //--------------------------------------------------------------
 static void setupSoundViewerSubscreen(DMESSWORK * dmess)
 { 
-  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER);
+  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER);
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setupNormalSubscreen(DMESSWORK * dmess)
 { 
-  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_NORMAL);
+  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_NORMAL);
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setupTopMenuSubscreen(DMESSWORK * dmess)
 { 
-  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_TOPMENU);
+  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_TOPMENU);
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setupDebugRedSubscreen(DMESSWORK * dmess)
 { 
-  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_RED);
+  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_RED);
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setupDebugLightSubscreen(DMESSWORK * dmess)
 { 
-  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_LIGHT);
+  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_LIGHT);
 }
 
 //======================================================================
@@ -1144,7 +1144,7 @@ static GMEVENT_RESULT DMenuControlCamera(
 
 	// ƒJƒƒ‰‘€ì‚Í‰º‰æ–Ê‚Ås‚¤
 	subscreen = FIELDMAP_GetFieldSubscreenWork(work->fieldWork);
-  FIELD_SUBSCREEN_Change(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
+  FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
   { 
     void * inner_work;
     FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
