@@ -12,9 +12,13 @@
 
 enum {
 	NARC_ircaura_gra_aura_bg_guide_NCLR = 0,
-	NARC_ircaura_gra_aura_bg_guide_NCGR = 1,
-	NARC_ircaura_gra_aura_bg_guide_l_NSCR = 2,
-	NARC_ircaura_gra_aura_bg_guide_r_NSCR = 3
+	NARC_ircaura_gra_aura_obj_touch_NCLR = 1,
+	NARC_ircaura_gra_aura_bg_guide_NCGR = 2,
+	NARC_ircaura_gra_aura_obj_touch_NCGR = 3,
+	NARC_ircaura_gra_aura_obj_touch_NCER = 4,
+	NARC_ircaura_gra_aura_bg_guide_l_NSCR = 5,
+	NARC_ircaura_gra_aura_bg_guide_r_NSCR = 6,
+	NARC_ircaura_gra_aura_obj_touch_NANR = 7
 };
 
 /* NARC_IRCAURA_GRA_NAIX_ */
