@@ -171,7 +171,7 @@ begin
 
   build_vec = []
   tex_vec = []
-  g_anm_vec = []
+  anm_ita_vec = []
 
   total_bin_file = File.open(TARGET_BIN_FILENAME, "wb")
   total_txt_file = File.open("area_data.txt", "w")
@@ -194,14 +194,14 @@ begin
     FileWrite(total_bin_file,bm_id, "S")
     tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
     FileWrite(total_bin_file,tex_id, "S")
-    anm_id = EntryVec2(g_anm_vec,column[COL_ANMNAME],"none")	#地形アニメファイル
-    FileWrite(total_bin_file,anm_id, "S")
+    anm_ita_id = EntryVec2(anm_ita_vec,column[COL_ITA_NAME],"none")	#地形アニメファイル
+    FileWrite(total_bin_file,anm_ita_id, "S")
     inout = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
     FileWrite(total_bin_file,inout, "C")
     light = Getlight(column[COL_LIGHTTYPE])				#ライト
     FileWrite(total_bin_file,light, "C")
     total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d\n",
-                area_count, bm_id, tex_id, anm_id, inout, light);
+                area_count, bm_id, tex_id, anm_ita_id, inout, light);
 
     area_count += 1
     

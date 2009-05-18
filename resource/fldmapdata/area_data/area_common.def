@@ -54,9 +54,10 @@ COL_BMNAME		=	2	#配置モデル指定ファイル名
 COL_TEXNAME		=	3	#地形テクスチャ指定
 COL_TEXPART1	=	4	#地形テクスチャスロット１
 COL_TEXPART2	=	5	#地形テクスチャスロット２
-COL_ANMNAME		=	6	#アニメID指定
-COL_INOUT		=	7	#内外指定（配置モデルデータテーブル切り替え用）
-COL_LIGHTTYPE	=	8	#ライト指定
+COL_ITA_NAME	=	6	#ITAアニメID指定
+COL_ITP_NAME  = 7 #ITPアニメID指定
+COL_INOUT		=	8	#内外指定（配置モデルデータテーブル切り替え用）
+COL_LIGHTTYPE	=	9	#ライト指定
 
 #area_tableの読み飛ばす行数
 READTHROUGH_LINES	=	1
