@@ -1953,65 +1953,160 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 	{
 		GFL_POINT	temp;
 		u32	checklist[9];		//左上、右上、左下、右下、左、上、右、下、中心
-		OS_Printf( "△ブレ計測\n" );
 
-		GFL_STD_MemClear( checklist, sizeof(u32)*9 );
-		now_idx	= p_wk->debug_game_cnt + (0*DEBUG_GAME_NUM);
 
-		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
+
+		for( j = 0; j < 2; j++ )
 		{	
-			temp.x	= p_wk->shake_left[now_idx].shake[i].x - p_wk->shake_left[now_idx].shake[0].x;
-			temp.y	= p_wk->shake_left[now_idx].shake[i].y - p_wk->shake_left[now_idx].shake[0].y;
-			if( temp.x < 0 && temp.y > 0 )				//左上
+			OS_Printf( "△%d人目の左手ブレ計測\n", j );
+			now_idx	= p_wk->debug_game_cnt + (j*DEBUG_GAME_NUM);
+			GFL_STD_MemClear( checklist, sizeof(u32)*9 );
+
+			for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
 			{	
-				checklist[0]++;
+				temp.x	= p_wk->shake_left[now_idx].shake[i].x - p_wk->shake_left[now_idx].shake[0].x;
+				temp.y	= p_wk->shake_left[now_idx].shake[i].y - p_wk->shake_left[now_idx].shake[0].y;
+				if( temp.x < 0 && temp.y > 0 )				//左上
+				{	
+					checklist[0]++;
+				}
+				else if( temp.x > 0 && temp.y > 0 )		//右上
+				{	
+					checklist[1]++;
+				}
+				else if( temp.x < 0 && temp.y < 0 )		//左下
+				{	
+					checklist[2]++;
+				}
+				else if( temp.x > 0 && temp.y < 0 )		//右下
+				{	
+					checklist[3]++;
+				}
+				else if( temp.x < 0 && temp.y == 0 )		//左
+				{
+					checklist[4]++;
+				}
+				else if( temp.x == 0 && temp.y > 0 )		//上
+				{
+					checklist[5]++;
+				}
+				else if( temp.x > 0 && temp.y == 0 )		//右
+				{
+					checklist[6]++;
+				}
+				else if( temp.x == 0 && temp.y < 0 )	//下
+				{
+					checklist[7]++;
+				}
+				else if( temp.x == 0 && temp.y == 0 )	//中心
+				{
+					checklist[8]++;
+				}
+
 			}
-			else if( temp.x > 0 && temp.y > 0 )		//右上
+
+			OS_Printf( "左上　%d個\n", checklist[0] );
+			OS_Printf( "右上　%d個\n", checklist[1] );
+			OS_Printf( "左下　%d個\n", checklist[2] );
+			OS_Printf( "右下　%d個\n", checklist[3] );
+			OS_Printf( "左　　%d個\n", checklist[4] );
+			OS_Printf( "上　　%d個\n", checklist[5] );
+			OS_Printf( "右　　%d個\n", checklist[6] );
+			OS_Printf( "下　　%d個\n", checklist[7] );
+			OS_Printf( "中心　%d個\n", checklist[8] );
+
+
+			OS_Printf( "△%d人目の右手ブレ計測\n", j );
+			GFL_STD_MemClear( checklist, sizeof(u32)*9 );
+			for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
 			{	
-				checklist[1]++;
+				temp.x	= p_wk->shake_right[now_idx].shake[i].x - p_wk->shake_right[now_idx].shake[0].x;
+				temp.y	= p_wk->shake_right[now_idx].shake[i].y - p_wk->shake_right[now_idx].shake[0].y;
+				if( temp.x < 0 && temp.y > 0 )				//左上
+				{	
+					checklist[0]++;
+				}
+				else if( temp.x > 0 && temp.y > 0 )		//右上
+				{	
+					checklist[1]++;
+				}
+				else if( temp.x < 0 && temp.y < 0 )		//左下
+				{	
+					checklist[2]++;
+				}
+				else if( temp.x > 0 && temp.y < 0 )		//右下
+				{	
+					checklist[3]++;
+				}
+				else if( temp.x < 0 && temp.y == 0 )		//左
+				{
+					checklist[4]++;
+				}
+				else if( temp.x == 0 && temp.y > 0 )		//上
+				{
+					checklist[5]++;
+				}
+				else if( temp.x > 0 && temp.y == 0 )		//右
+				{
+					checklist[6]++;
+				}
+				else if( temp.x == 0 && temp.y < 0 )	//下
+				{
+					checklist[7]++;
+				}
+				else if( temp.x == 0 && temp.y == 0 )	//中心
+				{
+					checklist[8]++;
+				}
+
 			}
-			else if( temp.x < 0 && temp.y < 0 )		//左下
-			{	
-				checklist[2]++;
-			}
-			else if( temp.x > 0 && temp.y < 0 )		//右下
-			{	
-				checklist[3]++;
-			}
-			else if( temp.x < 0 && temp.y == 0 )		//左
-			{
-				checklist[4]++;
-			}
-			else if( temp.x == 0 && temp.y > 0 )		//上
-			{
-				checklist[5]++;
-			}
-			else if( temp.x > 0 && temp.y == 0 )		//右
-			{
-				checklist[6]++;
-			}
-			else if( temp.x == 0 && temp.y < 0 )	//下
-			{
-				checklist[7]++;
-			}
-			else if( temp.x == 0 && temp.y == 0 )	//中心
-			{
-				checklist[8]++;
-			}
+
+			OS_Printf( "左上　%d個\n", checklist[0] );
+			OS_Printf( "右上　%d個\n", checklist[1] );
+			OS_Printf( "左下　%d個\n", checklist[2] );
+			OS_Printf( "右下　%d個\n", checklist[3] );
+			OS_Printf( "左　　%d個\n", checklist[4] );
+			OS_Printf( "上　　%d個\n", checklist[5] );
+			OS_Printf( "右　　%d個\n", checklist[6] );
+			OS_Printf( "下　　%d個\n", checklist[7] );
+			OS_Printf( "中心　%d個\n", checklist[8] );
 
 		}
-
-		OS_Printf( "左上　%d個\n", checklist[0] );
-		OS_Printf( "右上　%d個\n", checklist[1] );
-		OS_Printf( "左下　%d個\n", checklist[2] );
-		OS_Printf( "右下　%d個\n", checklist[3] );
-		OS_Printf( "左　　%d個\n", checklist[4] );
-		OS_Printf( "上　　%d個\n", checklist[5] );
-		OS_Printf( "右　　%d個\n", checklist[6] );
-		OS_Printf( "下　　%d個\n", checklist[7] );
-		OS_Printf( "中心　%d個\n", checklist[8] );
-
 	}
+
+	{	
+		GFL_POINT	pos1, pos2;
+		u32 ret;
+		OS_Printf( "△お互いの座標計測\n" );
+		pos1	= p_wk->trg_left[p_wk->debug_game_cnt + (0*DEBUG_GAME_NUM)];
+		pos2	= p_wk->trg_left[p_wk->debug_game_cnt + (1*DEBUG_GAME_NUM)];
+		ret	= ((u32)(pos1.x-pos2.x)*(u32)(pos1.x-pos2.x))+((u32)(pos1.y-pos2.y)*(u32)(pos1.y-pos2.y));
+
+		if( 0 < ret & ret < 8*8 )
+		{	
+			OS_Printf( "距離　100点\n" );
+		}
+		else if( 8*8 < ret & ret < 16 * 16 )
+		{	
+			OS_Printf( "距離　80点\n" );
+		}
+		else if( 16*16 < ret & ret < 24 * 24 )
+		{	
+			OS_Printf( "距離　50点\n" );
+		}
+		else if( 24*24 < ret & ret < 32 * 32 )
+		{	
+			OS_Printf( "距離　30点\n" );
+		}
+		else if( 32*32 < ret & ret < 40 * 40 )
+		{	
+			OS_Printf( "距離　10点\n" );
+		}
+		else{	
+			OS_Printf( "距離　0点\n" );
+		}
+	}
+
 
 	OS_Printf( "↑○%d番目のゲーム　プリント終了↑↑↑↑↑↑↑↑\n", p_wk->debug_game_cnt );
 }
