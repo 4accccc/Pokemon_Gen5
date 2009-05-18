@@ -47,11 +47,31 @@ static GFL_PROC_RESULT FieldMapProcInit
 	FIELDMAP_WORK * fieldWork;
 	FIELDPROC_WORK * fpwk;
 	GAMESYS_WORK * gsys = pwk;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, 0x140000 );
-	fpwk = GFL_PROC_AllocWork(proc, sizeof(FIELDPROC_WORK), HEAPID_FIELDMAP);
-	fpwk->fieldWork = FIELDMAP_Create(gsys, HEAPID_FIELDMAP );
-	GAMESYSTEM_SetFieldMapWork(gsys, fpwk->fieldWork);
 
+  switch(*seq){
+  case 0:
+  	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, 0x140000 );
+  	fpwk = GFL_PROC_AllocWork(proc, sizeof(FIELDPROC_WORK), HEAPID_FIELDMAP);
+  	fpwk->fieldWork = FIELDMAP_Create(gsys, HEAPID_FIELDMAP );
+  	GAMESYSTEM_SetFieldMapWork(gsys, fpwk->fieldWork);
+  	(*seq)++;
+  	return GFL_PROC_RES_CONTINUE;
+  
+  default:
+    (*seq)++;
+  	return GFL_PROC_RES_CONTINUE;
+  case 10:   //※check　超暫定
+    //常時通信モード
+    {
+      GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
+      if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE 
+          && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
+        GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gcsp);
+      }
+    }
+    break;
+  }
+  
 	return GFL_PROC_RES_FINISH;
 }
 

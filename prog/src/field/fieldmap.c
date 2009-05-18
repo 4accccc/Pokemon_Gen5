@@ -313,6 +313,7 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	FIELD_COMM_MAIN_SetCommActor(fieldWork->commSys,
       GAMEDATA_GetFldMMdlSys(GAMESYSTEM_GetGameData(gsys)));
   
+#if 0   //※check　超暫定
   //常時通信モード
   {
     GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
@@ -321,6 +322,7 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
       GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gcsp);
     }
   }
+#endif
 	return fieldWork;
 }
 
