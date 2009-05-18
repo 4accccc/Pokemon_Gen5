@@ -372,7 +372,7 @@ struct _EL_SCOREBOARD_TEX {
  * @brief	オブジェクト追加(既存テクスチャに貼り付け)
  */
 //------------------------------------------------------------------
-EL_SCOREBOARD_TEX*	ELBOARD_TEX_Add( GFL_G3D_RES* g3Dtex, const STRBUF* str, HEAPID heapID )
+EL_SCOREBOARD_TEX*	ELBOARD_TEX_Add( const GFL_G3D_RES* g3Dtex, const STRBUF* str, HEAPID heapID )
 {
 	EL_SCOREBOARD_TEX* elb_tex = GFL_HEAP_AllocClearMemory(heapID, sizeof(EL_SCOREBOARD_TEX));
 
@@ -385,7 +385,7 @@ EL_SCOREBOARD_TEX*	ELBOARD_TEX_Add( GFL_G3D_RES* g3Dtex, const STRBUF* str, HEAP
 
 	//binary内辞書からから転送先データ取得
 	{
-		NNSG3dResTex*		NNSresTex = GFL_G3D_GetResTex(g3Dtex);
+		const NNSG3dResTex*		NNSresTex = GFL_G3D_GetResTex(g3Dtex);
 		elb_tex->texVramKey = NNSresTex->texInfo.vramKey;
 		elb_tex->plttVramKey = NNSresTex->plttInfo.vramKey;
 

@@ -38,7 +38,7 @@ void						ELBOARD_Draw( EL_SCOREBOARD* elb,
  *
  */
 //============================================================================================
-EL_SCOREBOARD_TEX*	ELBOARD_TEX_Add( GFL_G3D_RES* g3Dtex, const STRBUF* str, HEAPID heapID );
+EL_SCOREBOARD_TEX*	ELBOARD_TEX_Add(const GFL_G3D_RES* g3Dtex, const STRBUF* str, HEAPID heapID );
 void								ELBOARD_TEX_Delete( EL_SCOREBOARD_TEX* elb_tex );
 void								ELBOARD_TEX_Main( EL_SCOREBOARD_TEX* elb_tex );
 
