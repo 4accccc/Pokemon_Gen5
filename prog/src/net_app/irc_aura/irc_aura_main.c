@@ -761,6 +761,7 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 
 //	GRAPHIC_3D_Exit( &p_wk->g3d );
 	GRAPHIC_BG_Exit( &p_wk->bg );
+	GRAPHIC_OBJ_Exit( &p_wk->obj );
 }
 
 //----------------------------------------------------------------------------
