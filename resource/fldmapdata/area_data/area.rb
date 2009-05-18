@@ -19,6 +19,7 @@ load 'area_common.def'	#COL_～の定義など
 lib_path_naixread = ENV["PROJECT_ROOT"] + "tools/naixread"
 require lib_path_naixread
 
+NO_ANIME_ID = 0xff
 
 #配列へのエントリ
 def EntryVec(vec, item)
@@ -161,11 +162,25 @@ class AreaIDMaker
 end
 
 
+def enum_search naix, name
+  if name == "none" then return NO_ANIME_ID end
+  index = naix.getIndex(name.sub(/\./,"_"))
+  if index == nil then
+    puts "#{naix.getAreaName}に#{name}がみつからない！"
+    return NO_ANIME_ID
+  end
+  return index
+end
+
 #------------------------------------------------------------------------------
 #	コンバート本体
 #------------------------------------------------------------------------------
 
 begin
+  ita_enum = NAIXReader.read("area_map_ita/area_map_ita.naix")
+  itp_enum = NAIXReader.read("area_map_itp/area_map_itp.naix")
+  light_enum = NAIXReader.read("../../field_light/field_light.naix")
+
   area_tbl_file = File.open(ARGV[0],"r")
   id_file = AreaIDMaker.new(TARGET_HEADER_FILENAME)
 
@@ -194,14 +209,25 @@ begin
     FileWrite(total_bin_file,bm_id, "S")
     tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
     FileWrite(total_bin_file,tex_id, "S")
-    anm_ita_id = EntryVec2(anm_ita_vec,column[COL_ITA_NAME],"none")	#地形アニメファイル
-    FileWrite(total_bin_file,anm_ita_id, "S")
+
+    #anm_ita_id = EntryVec2(anm_ita_vec,column[COL_ITA_NAME],"none")	#地形ITAアニメファイル指定
+    #FileWrite(total_bin_file,anm_ita_id, "S")
+
+    #地形ITAアニメファイル指定
+    anm_ita_id = enum_search(ita_enum, column[COL_ITA_NAME].sub(/ita$/,"nsbta"))
+    #地形ITPアニメファイル指定
+    anm_itp_id = enum_search(itp_enum, column[COL_ITP_NAME].sub(/itp$/,"itpdat"))
+    total_bin_file.write([anm_ita_id,anm_itp_id].pack("CC"))
+
     inout = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
     FileWrite(total_bin_file,inout, "C")
-    light = Getlight(column[COL_LIGHTTYPE])				#ライト
-    FileWrite(total_bin_file,light, "C")
+    #light = Getlight(column[COL_LIGHTTYPE])				#ライト
+    #FileWrite(total_bin_file,light, "C")
+    light_idx = enum_search( light_enum, column[COL_LIGHTTYPE] )
+    total_bin_file.write( [light_idx].pack("C") )
+
     total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d\n",
-                area_count, bm_id, tex_id, anm_ita_id, inout, light);
+                area_count, bm_id, tex_id, anm_ita_id, inout, light_idx);
 
     area_count += 1
     
