@@ -283,8 +283,9 @@ void * FIELD_COMM_FUNC_InitCommSystem( int *seq, void *pwk )
   };
 
   COMM_FIELD_SYS_PTR commField;
+  FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
 
-  commField = FIELD_COMM_MAIN_CommFieldSysAlloc(GFL_HEAP_LOWID(GFL_HEAPID_APP));
+  commField = FIELD_COMM_MAIN_CommFieldSysAlloc(GFL_HEAP_LOWID(GFL_HEAPID_APP), invalid_parent->game_comm);
   
   GFL_NET_Init( &aGFLNetInit , FIELD_COMM_FUNC_FinishInitCallback , commField );
   {
@@ -742,6 +743,7 @@ void  FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const voi
   PLAYERWORK_setPalaceArea( plWork , pkt->palace_area );
   FIELD_COMM_DATA_SetCharaData_IsValid( commData, netID , TRUE );
   FIELD_COMM_DATA_SetTalkState( commData, netID , pkt->talkState_ );
+  GameCommStatus_SetPlayerStatus(FIELD_COMM_SYS_GetGameCommSys(commField), netID, pkt->zoneID_, pkt->palace_area);
 
 //  ARI_TPrintf("FieldComm PostSelfData[%d]\n",netID);
 }

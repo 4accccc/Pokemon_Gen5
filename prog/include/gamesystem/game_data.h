@@ -173,6 +173,16 @@ extern MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata);
 
 //--------------------------------------------------------------
 /**
+ * @brief   MYSTATUSへのポインタ取得(プレイヤーID指定)
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @param   player_id   プレイヤーID
+ * @retval  MYSTATUSへのポインタ
+ */
+//--------------------------------------------------------------
+extern MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id);
+
+//--------------------------------------------------------------
+/**
  * @brief
  * @param
  * @retval

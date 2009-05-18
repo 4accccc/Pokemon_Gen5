@@ -8,9 +8,13 @@
 //==============================================================================
 #include <gflib.h>
 #include "gamesystem/game_comm.h"
+#include "buflen.h"
 
 #include "field/game_beacon_search.h"
 #include "field/field_comm/field_comm_func.h"
+#include "fieldmap/zone_id.h"
+#include "message.naix"
+#include "msg/msg_invasion.h"
 
 
 //==============================================================================
@@ -25,10 +29,50 @@ typedef enum{
   GCSSEQ_EXIT_WAIT,
 }GCSSEQ;
 
+///通信最大人数
+#define COMM_PLAYER_MAX   (4)
+
+///インフォメーションメッセージキュー数
+#define COMM_INFO_QUE_MAX     (24)
+
 
 //==============================================================================
 //  構造体定義
 //==============================================================================
+//--------------------------------------------------------------
+//  ステータス
+//--------------------------------------------------------------
+///各プレイヤーの通信ステータス
+typedef struct{
+  u16 zone_id;        ///<現在いるゾーンID
+  u16 old_zone_id;    ///<前までいたゾーンID
+  u8 invasion_netid;  ///<侵入先ROM
+  u8 padding[3];
+}GAME_COMM_PLAYER_STATUS;
+
+//--------------------------------------------------------------
+//  インフォメーション
+//--------------------------------------------------------------
+///インフォメーションのメッセージキュー構造体
+typedef struct{
+  u16 message_id;
+  u8 net_id;
+  u8 use;           ///<TRUE:使用中 FALSE:未使用
+}GAME_COMM_INFO_QUE;
+
+///インフォメーション構造体
+typedef struct{
+  GAME_COMM_INFO_QUE msg_que[COMM_INFO_QUE_MAX];
+  u8 now_pos;       ///<貯まっているキューの開始位置
+  u8 space_pos;     ///<空きキューの開始位置
+  u8 padding[2];
+  
+  STRBUF *name_strbuf[COMM_INFO_QUE_MAX];
+}GAME_COMM_INFO;
+
+//--------------------------------------------------------------
+//  システム
+//--------------------------------------------------------------
 ///ゲーム実行用ワーク構造体
 typedef struct{
   int func_seq;
@@ -38,12 +82,16 @@ typedef struct{
 
 ///ゲーム通信管理ワーク構造体
 typedef struct _GAME_COMM_SYS{
+  GAMEDATA *gamedata;                 ///<ゲームデータへのポインタ
+  GAME_COMM_STATUS comm_status;         ///<通信ステータス
   GAME_COMM_NO game_comm_no;
   GAME_COMM_NO reserve_comm_game_no;   ///<予約通信ゲーム番号
   GAME_COMM_SUB_WORK sub_work;
   void *parent_work;                  ///<呼び出し時に引き渡すポインタ
   void *app_work;                     ///<各アプリケーションが確保したワークのポインタ
   void *reserve_parent_work;          ///<呼び出し時に引き渡すポインタ
+  GAME_COMM_PLAYER_STATUS player_status[COMM_PLAYER_MAX]; ///<通信プレイヤーステータス
+  GAME_COMM_INFO info;                ///<インフォメーションワーク
 }GAME_COMM_SYS;
 
 ///ゲーム通信関数データ構造体
@@ -92,6 +140,7 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
 //  プロトタイプ宣言
 //==============================================================================
 static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq);
+static void GameCommInfo_SetQue(GAME_COMM_SYS_PTR gcsp, int comm_net_id, u32 message_id);
 
 
 //==============================================================================
@@ -104,15 +153,24 @@ static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq);
  * ゲーム通信管理ワーク確保
  *
  * @param   heap_id		
+ * @param   gamedata     ゲームデータへのポインタ
  *
  * @retval  GAME_COMM_SYS_PTR		確保したワークへのポインタ
  */
 //==================================================================
-GAME_COMM_SYS_PTR GameCommSys_Alloc(HEAPID heap_id)
+GAME_COMM_SYS_PTR GameCommSys_Alloc(HEAPID heap_id, GAMEDATA *gamedata)
 {
   GAME_COMM_SYS_PTR gcsp;
+  GAME_COMM_INFO *comm_info;
+  int i;
   
   gcsp = GFL_HEAP_AllocClearMemory(heap_id, sizeof(GAME_COMM_SYS));
+  gcsp->gamedata = gamedata;
+  
+  comm_info = &gcsp->info;
+  for(i = 0; i < COMM_PLAYER_MAX; i++){
+    comm_info->name_strbuf[i] = GFL_STR_CreateBuffer(BUFLEN_PERSON_NAME, heap_id);
+  }
   return gcsp;
 }
 
@@ -125,8 +183,14 @@ GAME_COMM_SYS_PTR GameCommSys_Alloc(HEAPID heap_id)
 //==================================================================
 void GameCommSys_Free(GAME_COMM_SYS_PTR gcsp)
 {
+  GAME_COMM_INFO *comm_info = &gcsp->info;
+  int i;
+  
   GF_ASSERT(gcsp->game_comm_no == GAME_COMM_NO_NULL && gcsp->app_work == NULL);
   
+  for(i = 0; i < COMM_PLAYER_MAX; i++){
+    GFL_STR_DeleteBuffer(comm_info->name_strbuf[i]);
+  }
   GFL_HEAP_FreeMemory(gcsp);
 }
 
@@ -239,6 +303,20 @@ void GameCommSys_ChangeReq(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, vo
 
 //==================================================================
 /**
+ * 通信ステータスを取得
+ *
+ * @param   gcsp		
+ *
+ * @retval  GAME_COMM_STATUS	通信ステータス
+ */
+//==================================================================
+GAME_COMM_STATUS GameCommSys_GetCommStatus(GAME_COMM_SYS_PTR gcsp)
+{
+  return gcsp->comm_status;
+}
+
+//==================================================================
+/**
  * 起動確認
  *
  * @param   gcsp		
@@ -316,3 +394,119 @@ static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq)
   sub_work->seq = seq;
   sub_work->func_seq = 0;
 }
+
+
+//==============================================================================
+//  プレイヤーステータス
+//==============================================================================
+//==================================================================
+/**
+ * 通信プレイヤーステータスをセットする
+ *
+ * @param   gcsp		  
+ * @param   comm_net_id		    このステータス対象のnetID
+ * @param   zone_id		        comm_net_idのプレイヤーが今いるゾーンID
+ * @param   invasion_netid		comm_net_idのプレイヤーが侵入しているROMのnetID
+ */
+//==================================================================
+void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid)
+{
+  GAME_COMM_PLAYER_STATUS *comm_status = &gcsp->player_status[comm_net_id];
+  int wordset_no;
+  u32 message_id;
+  
+  if(comm_status->zone_id == zone_id && comm_status->invasion_netid == invasion_netid){
+    return;
+  }
+  
+  comm_status->zone_id = zone_id;
+  comm_status->invasion_netid = invasion_netid;
+  
+  //メッセージ作成
+  if(zone_id == ZONE_ID_PALACETEST){
+    message_id = msg_invasion_test01_01 + comm_net_id;
+  }
+
+  GameCommInfo_SetQue(gcsp, comm_net_id, message_id);
+}
+
+
+//==============================================================================
+//  インフォメーションメッセージ
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * インフォメーションメッセージをキューに貯める
+ *
+ * @param   gcsp		      
+ * @param   comm_net_id		
+ * @param   message_id		
+ */
+//--------------------------------------------------------------
+static void GameCommInfo_SetQue(GAME_COMM_SYS_PTR gcsp, int comm_net_id, u32 message_id)
+{
+  GAME_COMM_INFO *comm_info = &gcsp->info;
+  GAME_COMM_INFO_QUE *que;
+  
+  if(comm_info->msg_que[comm_info->space_pos].use == TRUE){
+    //メッセージの優先順位が決まっていない今は上書き(古いキューは最新のキューで上書きされる
+    que = &comm_info->msg_que[comm_info->space_pos];
+    comm_info->now_pos++;   //最古のキューから表示されるようにnow_posの位置も後ろにずらす
+  }
+  else{ //空いているキューなのでそのまま代入
+    que = &comm_info->msg_que[comm_info->space_pos];
+  }
+
+  GFL_STD_MemClear(que, sizeof(GAME_COMM_INFO_QUE));
+  que->net_id = comm_net_id;
+  que->message_id = message_id;
+  que->use = TRUE;
+
+  comm_info->space_pos++;
+  if(comm_info->space_pos >= COMM_INFO_QUE_MAX){
+    comm_info->space_pos = 0;
+  }
+  if(comm_info->now_pos >= COMM_INFO_QUE_MAX){
+    comm_info->now_pos = 0;
+  }
+}
+
+//==================================================================
+/**
+ * インフォメーションメッセージを取得する
+ *
+ * @param   gcsp		    
+ * @param   dest_msg		メッセージ代入先
+ *
+ * @retval  BOOL		TRUE:データあり
+ * @retval  BOOL		FALSE:データなし
+ */
+//==================================================================
+BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *dest_msg)
+{
+  GAME_COMM_INFO *comm_info = &gcsp->info;
+  GAME_COMM_INFO_QUE *que = &comm_info->msg_que[comm_info->now_pos];
+  MYSTATUS *myst;
+  
+  if(que->use == FALSE){
+    return FALSE;
+  }
+  
+  //キューをGAME_COMM_INFO_MESSAGE型に変換して代入
+  GFL_STD_MemClear(dest_msg, sizeof(GAME_COMM_INFO_MESSAGE));
+  myst = GAMEDATA_GetMyStatusPlayer(gcsp->gamedata, que->net_id);
+  MyStatus_CopyNameString(myst, comm_info->name_strbuf[que->net_id]);
+  dest_msg->name[0] = comm_info->name_strbuf[que->net_id];
+  dest_msg->wordset_no[0] = que->net_id;
+  dest_msg->message_id = que->message_id;
+  
+  //キューの参照位置を進める
+  que->use = FALSE;
+  comm_info->now_pos++;
+  if(comm_info->now_pos >= COMM_INFO_QUE_MAX){
+    comm_info->now_pos = 0;
+  }
+  
+  return TRUE;
+}
+

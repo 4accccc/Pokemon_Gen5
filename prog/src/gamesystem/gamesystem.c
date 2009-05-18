@@ -202,7 +202,7 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 
 	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
 	gsys->fieldmap = NULL;
-	gsys->game_comm = GameCommSys_Alloc(gsys->heapID);
+	gsys->game_comm = GameCommSys_Alloc(gsys->heapID, gsys->gamedata);
 	gsys->comm_infowin = NULL;
 	gsys->always_net = init_param->always_net;
 }

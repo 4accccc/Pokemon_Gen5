@@ -162,9 +162,9 @@ void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *co
  * @retval  COMM_FIELD_SYS_PTR    生成したフィールド通信監視ワークへのポインタ
  */
 //==================================================================
-COMM_FIELD_SYS_PTR FIELD_COMM_MAIN_CommFieldSysAlloc(HEAPID commHeapID)
+COMM_FIELD_SYS_PTR FIELD_COMM_MAIN_CommFieldSysAlloc(HEAPID commHeapID, GAME_COMM_SYS_PTR game_comm)
 {
-  return FIELD_COMM_SYS_Alloc(commHeapID);
+  return FIELD_COMM_SYS_Alloc(commHeapID, game_comm);
 }
 
 //==================================================================
@@ -305,6 +305,7 @@ static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
       invalid_parent = GFL_HEAP_AllocClearMemory(
           GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
       invalid_parent->my_invasion = TRUE;
+      invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
       GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION, invalid_parent);
 
       OS_TPrintf("パレス通信自動起動\n");
@@ -662,6 +663,7 @@ const BOOL  FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys, GAMESYS
       invalid_parent = GFL_HEAP_AllocClearMemory(
           GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
       invalid_parent->my_invasion = TRUE;
+      invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
       GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION, invalid_parent);
     #if 0
       if(commSys->comm_type == FIELD_COMM_TYPE_PALACE){
@@ -755,6 +757,7 @@ const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COM
       
       invalid_parent = GFL_HEAP_AllocClearMemory(
           GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
+      invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
       GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION, invalid_parent);
     #if 0
       if(commSys->comm_type == FIELD_COMM_TYPE_PALACE){
