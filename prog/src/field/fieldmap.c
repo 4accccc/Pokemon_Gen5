@@ -318,7 +318,7 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
     GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
     if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE 
         && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
-      GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH);
+      GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gcsp);
     }
   }
 	return fieldWork;
@@ -1500,6 +1500,14 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 		}
 	}
 	
+	//デバッグ：パレスで木に触れたらワープ
+  {
+    GMEVENT *ev;
+    ev =  DEBUG_PalaceTreeMapWarp(fieldWork, gsys, fieldWork->field_player);
+    if(ev != NULL){
+      return ev;
+    }
+	}
 	return NULL;
 }
 

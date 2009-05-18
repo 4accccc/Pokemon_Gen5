@@ -31,6 +31,7 @@ typedef enum{
 //==============================================================================
 ///ゲーム実行用ワーク構造体
 typedef struct{
+  int func_seq;
   u8 seq;
   u8 padding[3];
 }GAME_COMM_SUB_WORK;
@@ -40,16 +41,18 @@ typedef struct _GAME_COMM_SYS{
   GAME_COMM_NO game_comm_no;
   GAME_COMM_NO reserve_comm_game_no;   ///<予約通信ゲーム番号
   GAME_COMM_SUB_WORK sub_work;
+  void *parent_work;                  ///<呼び出し時に引き渡すポインタ
   void *app_work;                     ///<各アプリケーションが確保したワークのポインタ
+  void *reserve_parent_work;          ///<呼び出し時に引き渡すポインタ
 }GAME_COMM_SYS;
 
 ///ゲーム通信関数データ構造体
 typedef struct{
-  void *(*init_func)(void);                   ///<初期化処理
-  BOOL (*init_wait_func)(void *app_work);     ///<初期化完了待ち
-  void (*update_func)(void *app_work);        ///<更新処理
-  void (*exit_func)(void *app_work);          ///<終了処理
-  BOOL (*exit_wait_func)(void *app_work);     ///<終了完了待ち
+  void *(*init_func)(int *seq, void *pwk);                         ///<初期化処理
+  BOOL (*init_wait_func)(int *seq, void *pwk, void *app_work);     ///<初期化完了待ち
+  void (*update_func)(int *seq, void *pwk, void *app_work);        ///<更新処理
+  void (*exit_func)(int *seq, void *pwk, void *app_work);          ///<終了処理
+  BOOL (*exit_wait_func)(int *seq, void *pwk, void *app_work);     ///<終了完了待ち
 }GAME_FUNC_TBL;
 
 
@@ -85,6 +88,10 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
   },
 };
 
+//==============================================================================
+//  プロトタイプ宣言
+//==============================================================================
+static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq);
 
 
 //==============================================================================
@@ -105,7 +112,7 @@ GAME_COMM_SYS_PTR GameCommSys_Alloc(HEAPID heap_id)
 {
   GAME_COMM_SYS_PTR gcsp;
   
-  gcsp = GFL_HEAP_AllocMemory(heap_id, sizeof(GAME_COMM_SYS));
+  gcsp = GFL_HEAP_AllocClearMemory(heap_id, sizeof(GAME_COMM_SYS));
   return gcsp;
 }
 
@@ -145,33 +152,32 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
   switch(sub_work->seq){
   case GCSSEQ_INIT:
     if(func_tbl->init_func != NULL){
-      gcsp->app_work = func_tbl->init_func();
+      gcsp->app_work = func_tbl->init_func(&sub_work->func_seq, gcsp->parent_work);
     }
-    sub_work->seq++;
+    GameCommSub_SeqSet(sub_work, GCSSEQ_INIT_WAIT);
     break;
   case GCSSEQ_INIT_WAIT:
-    if(func_tbl->init_wait_func == NULL || func_tbl->init_wait_func(gcsp->app_work) == TRUE){
-      sub_work->seq++;
+    if(func_tbl->init_wait_func == NULL || func_tbl->init_wait_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work) == TRUE){
+      GameCommSub_SeqSet(sub_work, GCSSEQ_UPDATE);
     }
     break;
   case GCSSEQ_UPDATE:
-    func_tbl->update_func(gcsp->app_work);
+    func_tbl->update_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work);
     break;
   case GCSSEQ_EXIT:
     if(func_tbl->exit_func != NULL){
-      func_tbl->exit_func(gcsp->app_work);
+      func_tbl->exit_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work);
     }
-    sub_work->seq++;
+    GameCommSub_SeqSet(sub_work, GCSSEQ_EXIT_WAIT);
     break;
   case GCSSEQ_EXIT_WAIT:
-    if(func_tbl->exit_wait_func == NULL || func_tbl->exit_wait_func(gcsp->app_work) == TRUE){
-      if(gcsp->app_work != NULL){
-        GFL_HEAP_FreeMemory(gcsp->app_work);
-        gcsp->app_work = NULL;
-      }
+    if(func_tbl->exit_wait_func == NULL || func_tbl->exit_wait_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work) == TRUE){
+      gcsp->app_work = NULL;
       gcsp->game_comm_no = GAME_COMM_NO_NULL;
       if(gcsp->reserve_comm_game_no != GAME_COMM_NO_NULL){
-        GameCommSys_Boot(gcsp, gcsp->reserve_comm_game_no);
+        GameCommSys_Boot(gcsp, gcsp->reserve_comm_game_no, gcsp->reserve_parent_work);
+        gcsp->reserve_comm_game_no = GAME_COMM_NO_NULL;
+        gcsp->reserve_parent_work = NULL;
       }
     }
     break;
@@ -184,13 +190,15 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
  *
  * @param   gcsp		        ゲーム通信管理ワークへのポインタ
  * @param   game_comm_no		起動する通信ゲーム番号(GAME_COMM_NO_???)
+ * @param   parent_work     引き渡すポインタ
  */
 //==================================================================
-void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no)
+void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *parent_work)
 {
   GF_ASSERT(gcsp->game_comm_no == GAME_COMM_NO_NULL);
   
   gcsp->game_comm_no = game_comm_no;
+  gcsp->parent_work = parent_work;
   GFL_STD_MemClear(&gcsp->sub_work, sizeof(GAME_COMM_SUB_WORK));
 }
 
@@ -208,7 +216,7 @@ void GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp)
   GF_ASSERT(gcsp->sub_work.seq == GCSSEQ_UPDATE);
   
   OS_TPrintf("GameCommSys_ExitReq\n");
-  gcsp->sub_work.seq = GCSSEQ_EXIT;
+  GameCommSub_SeqSet(&gcsp->sub_work, GCSSEQ_EXIT);
 }
 
 //==================================================================
@@ -217,14 +225,16 @@ void GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp)
  *
  * @param   gcsp		
  * @param   game_comm_no		切り替え後、起動する通信ゲーム番号(GAME_COMM_NO_???)
+ * @param   parent_work     引き渡すポインタ
  */
 //==================================================================
-void GameCommSys_ChangeReq(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no)
+void GameCommSys_ChangeReq(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *parent_work)
 {
   GF_ASSERT(gcsp->sub_work.seq == GCSSEQ_UPDATE);
   
-  gcsp->sub_work.seq = GCSSEQ_EXIT;
+  GameCommSub_SeqSet(&gcsp->sub_work, GCSSEQ_EXIT);
   gcsp->reserve_comm_game_no = game_comm_no;
+  gcsp->reserve_parent_work = parent_work;
 }
 
 //==================================================================
@@ -291,4 +301,18 @@ BOOL GameCommSys_CheckSystemWaiting(GAME_COMM_SYS_PTR gcsp)
 void *GameCommSys_GetAppWork(GAME_COMM_SYS_PTR gcsp)
 {
   return gcsp->app_work;
+}
+
+//--------------------------------------------------------------
+/**
+ * サブワークのシーケンス番号をセットする
+ *
+ * @param   sub_work		
+ * @param   seq		
+ */
+//--------------------------------------------------------------
+static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq)
+{
+  sub_work->seq = seq;
+  sub_work->func_seq = 0;
 }

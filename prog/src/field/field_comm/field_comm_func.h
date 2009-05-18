@@ -37,6 +37,13 @@ typedef enum
 //======================================================================
 //  typedef struct
 //======================================================================
+///GameCommSys_Bootする時に引き渡すparent_work
+typedef struct{
+  u8 parent_macAddress[6];
+  u8 my_invasion;             ///<TRUE:侵入開始するユーザーである
+  u8 padding;
+}FIELD_INVALID_PARENT_WORK;
+
 
 //======================================================================
 //  proto
@@ -45,11 +52,11 @@ typedef enum
 extern FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID );
 extern void FIELD_COMM_FUNC_DataReset( FIELD_COMM_FUNC *commFunc );
 extern void FIELD_COMM_FUNC_TermSystem( FIELD_COMM_FUNC *commFunc );
-extern void * FIELD_COMM_FUNC_InitCommSystem( void );
-extern BOOL  FIELD_COMM_FUNC_InitCommSystemWait( void *pWork );
-extern void  FIELD_COMM_FUNC_TermCommSystem( void *pWork );
-extern BOOL  FIELD_COMM_FUNC_TermCommSystemWait( void *pWork );
-extern void  FIELD_COMM_FUNC_UpdateSystem( void *pWork );
+extern void * FIELD_COMM_FUNC_InitCommSystem( int *seq, void *pwk );
+extern BOOL  FIELD_COMM_FUNC_InitCommSystemWait( int *seq, void *pwk, void *pWork );
+extern void  FIELD_COMM_FUNC_TermCommSystem( int *seq, void *pwk, void *pWork );
+extern BOOL  FIELD_COMM_FUNC_TermCommSystemWait( int *seq, void *pwk, void *pWork );
+extern void  FIELD_COMM_FUNC_UpdateSystem( int *seq, void *pwk, void *pWork );
 
 extern void FIELD_COMM_FUNC_StartCommWait( FIELD_COMM_FUNC *commFunc );
 extern void FIELD_COMM_FUNC_StartCommSearch( FIELD_COMM_FUNC *commFunc );

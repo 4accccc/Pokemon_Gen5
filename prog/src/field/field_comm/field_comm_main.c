@@ -22,6 +22,8 @@
 #include "system/main.h"
 #include "field/field_comm_actor.h"
 #include "gamesystem/game_comm.h"
+#include "fieldmap/zone_id.h"
+#include "field/event_mapchange.h"
 
 #include "msg/msg_d_field.h"
 
@@ -53,6 +55,9 @@ struct _FIELD_COMM_MAIN
   PALACE_SYS_PTR palace;    ///<パレスシステムワークへのポインタ
   FIELD_COMM_ACTOR_CTRL *actCtrl_;
   GAME_COMM_SYS_PTR game_comm;
+  
+  u8 debug_palace_comm_seq;
+  u8 padding2[3];
 };
 
 //上下左右に対応したグリッドでのオフセット
@@ -99,6 +104,7 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID, 
   commSys = GFL_HEAP_AllocClearMemory( heapID , sizeof(FIELD_COMM_MAIN) );
   commSys->heapID_ = heapID;
   commSys->game_comm = game_comm;
+  commSys->palace = PALACE_SYS_Alloc(heapID);
   if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
     commSys->commField_ = GameCommSys_GetAppWork(game_comm);
   }
@@ -143,6 +149,7 @@ void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *co
     FIELD_COMM_ACTOR_CTRL_Delete( commSys->actCtrl_ );
   }
 
+  PALACE_SYS_Free(commSys->palace);
   GFL_HEAP_FreeMemory( commSys );
 }
 
@@ -228,6 +235,104 @@ void FIELD_COMM_MAIN_SetCommActor(FIELD_COMM_MAIN *commSys, FLDMMDLSYS *fmmdlsys
   commSys->actCtrl_ = FIELD_COMM_ACTOR_CTRL_Create( max, fmmdlsys, commSys->heapID_ );
 }
 
+//==================================================================
+/**
+ *   木に重なったらT1へワープ
+ *
+ * @param   fieldWork		
+ * @param   gameSys		
+ * @param   pcActor		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor)
+{
+  PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
+  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
+  VecFx32 pos;
+
+  if(zone_id != ZONE_ID_PALACETEST){
+    return NULL;
+  }
+  
+  FIELD_PLAYER_GetPos( pcActor, &pos );
+  if(pos.x >= FX32_CONST(760) && pos.x <= FX32_CONST(776) 
+      && pos.z >= FX32_CONST(72) && pos.z <= FX32_CONST(104)){
+    pos.x = 12040 << FX32_SHIFT;
+    pos.y = 0;
+    pos.z = 13080 << FX32_SHIFT;
+    return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0);
+  }
+  return NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグ：パレスマップに入ってきたかチェックし、入ってくれば通信起動などをする
+ *   ※check　将来的にスクリプトでマップ毎に自動起動イベントが出来るようになったらこれは削除する
+ *
+ * @param   fieldWork		
+ * @param   gameSys		
+ */
+//--------------------------------------------------------------
+static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_COMM_MAIN *commSys, FIELD_PLAYER *pcActor)
+{
+  PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
+  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
+
+  switch(commSys->debug_palace_comm_seq){
+  case 0:
+    //子として接続した場合
+    if(GameCommSys_BootCheck(commSys->game_comm) == GAME_COMM_NO_INVASION 
+        && commSys->commField_ == NULL){
+      commSys->debug_palace_comm_seq = 2;
+      break;
+    }
+    
+    //親として起動している場合のチェック
+    if(zone_id != ZONE_ID_PALACETEST 
+        || GFL_NET_IsExit() == FALSE
+        || GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_NULL){
+      return;
+    }
+    commSys->debug_palace_comm_seq++;
+    break;
+  case 1:
+    {
+      FIELD_INVALID_PARENT_WORK *invalid_parent;
+      
+      invalid_parent = GFL_HEAP_AllocClearMemory(
+          GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
+      invalid_parent->my_invasion = TRUE;
+      GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION, invalid_parent);
+
+      OS_TPrintf("パレス通信自動起動\n");
+      commSys->debug_palace_comm_seq++;
+    }
+    break;
+  case 2:
+    if(GameCommSys_CheckSystemWaiting(commSys->game_comm) == FALSE){
+      commSys->commField_ = GameCommSys_GetAppWork(commSys->game_comm);
+      OS_TPrintf("パレス通信自動起動完了\n");
+      commSys->debug_palace_comm_seq++;
+    }
+    break;
+  case 3:
+    if(zone_id == ZONE_ID_PALACETEST){
+      PALACE_DEBUG_CreateNumberAct(commSys->palace, GFL_HEAP_LOWID(GFL_HEAPID_APP));
+      commSys->debug_palace_comm_seq++;
+    }
+    break;
+  case 4:
+    if(zone_id != ZONE_ID_PALACETEST){
+      PALACE_DEBUG_DeleteNumberAct(commSys->palace);
+      commSys->debug_palace_comm_seq = 3;
+    }
+    break;
+  }
+}
+
 //--------------------------------------------------------------
 // フィールド通信システム更新
 //  @param  FIELD_MAIN_WORK フィールドワーク
@@ -240,6 +345,9 @@ void FIELD_COMM_MAIN_SetCommActor(FIELD_COMM_MAIN *commSys, FLDMMDLSYS *fmmdlsys
 void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys )
 {
+  //パレスマップに来たかチェック
+  DEBUG_PalaceMapInCheck(fieldWork, gameSys, commSys, pcActor);
+
   if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
     return;
   }
@@ -356,7 +464,8 @@ const BOOL  FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys )
   FIELD_COMM_FUNC *commFunc;
   FIELD_COMM_DATA *commData;
 
-  if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
+  if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION
+        || commSys->commField_ == NULL){
     return FALSE;
   }
 
@@ -410,7 +519,8 @@ const BOOL  FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys )
   FIELD_COMM_FUNC *commFunc;
   FIELD_COMM_DATA *commData;
 
-  if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
+  if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION
+      || commSys->commField_ == NULL){
     return FALSE;
   }
 
@@ -547,10 +657,17 @@ const BOOL  FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys, GAMESYS
     //未初期化のときだけ初期化する
 ////    if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commField_->commFunc_ ) == FALSE ){
     if(GameCommSys_BootCheck(commSys->game_comm) == GAME_COMM_NO_NULL){
-      GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION);
+      FIELD_INVALID_PARENT_WORK *invalid_parent;
+      
+      invalid_parent = GFL_HEAP_AllocClearMemory(
+          GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
+      invalid_parent->my_invasion = TRUE;
+      GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION, invalid_parent);
+    #if 0
       if(commSys->comm_type == FIELD_COMM_TYPE_PALACE){
         commSys->palace = PALACE_SYS_Alloc(GFL_HEAP_LOWID(GFL_HEAPID_APP));
       }
+    #endif
     }
     commSys->menuSeq_++;
     break;
@@ -634,10 +751,16 @@ const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COM
     //未初期化のときだけ初期化する
 ////    if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commField_->commFunc_ ) == FALSE ){
     if(GameCommSys_BootCheck(commSys->game_comm) == GAME_COMM_NO_NULL){
-      GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION);
+      FIELD_INVALID_PARENT_WORK *invalid_parent;
+      
+      invalid_parent = GFL_HEAP_AllocClearMemory(
+          GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
+      GameCommSys_Boot(commSys->game_comm, GAME_COMM_NO_INVASION, invalid_parent);
+    #if 0
       if(commSys->comm_type == FIELD_COMM_TYPE_PALACE){
         commSys->palace = PALACE_SYS_Alloc(GFL_HEAP_LOWID(GFL_HEAPID_APP));
       }
+    #endif
     }
     commSys->menuSeq_++;
     break;
@@ -686,8 +809,7 @@ BOOL FIELD_COMM_MAIN_DisconnectWait( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN
   if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
     commSys->commField_ = NULL;
     if(commSys->palace != NULL){
-      PALACE_SYS_Free(commSys->palace);
-      commSys->palace = NULL;
+        PALACE_SYS_InitWork(commSys->palace);
     }
     return TRUE;
   }

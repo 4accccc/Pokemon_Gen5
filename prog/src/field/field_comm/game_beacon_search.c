@@ -12,6 +12,8 @@
 #include "system/net_err.h"
 
 #include "field/game_beacon_search.h"
+#include "gamesystem/game_comm.h"
+#include "field/field_comm/field_comm_func.h"
 
 
 //==============================================================================
@@ -115,7 +117,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
  * @retval  GAME_BEACON_SYS_PTR		ゲームビーコンシステムへのポインタ
  */
 //==================================================================
-void * GameBeacon_Init(void)
+void * GameBeacon_Init(int *seq, void *pwk)
 {
 	GAME_BEACON_SYS_PTR gbs;
 	
@@ -133,7 +135,7 @@ void * GameBeacon_Init(void)
  * @retval  BOOL		TRUE:初期化完了     FALSE:初期化完了待ち
  */
 //==================================================================
-BOOL GameBeacon_InitWait(void *pWork)
+BOOL GameBeacon_InitWait(int *seq, void *pwk, void *pWork)
 {
   GAME_BEACON_SYS_PTR gbs = pWork;
 
@@ -166,7 +168,7 @@ static void GameBeacon_InitCallback(void *pWork)
  * ※この関数呼出し語、必ずGameBeacon_ExitWaitで終了待ちの確認をしてください
  */
 //==================================================================
-void GameBeacon_Exit(void *pWork)
+void GameBeacon_Exit(int *seq, void *pwk, void *pWork)
 {
   GAME_BEACON_SYS_PTR gbs = pWork;
   
@@ -182,11 +184,12 @@ void GameBeacon_Exit(void *pWork)
  * @retval  BOOL		TRUE:終了完了。　FALSE:終了待ち中
  */
 //==================================================================
-BOOL GameBeacon_ExitWait(void *pWork)
+BOOL GameBeacon_ExitWait(int *seq, void *pwk, void *pWork)
 {
   GAME_BEACON_SYS_PTR gbs = pWork;
 
   if(gbs->status == GBS_STATUS_NULL){
+    GFL_HEAP_FreeMemory(gbs);
     return TRUE;
   }
   return FALSE;
@@ -214,14 +217,32 @@ static void	GameBeacon_ExitCallback(void* pWork)
  * @param   pWork		GAME_BEACON_SYS_PTR
  */
 //==================================================================
-void GameBeacon_Update(void *pWork)
+void GameBeacon_Update(int *seq, void *pwk, void *pWork)
 {
+  GAME_COMM_SYS_PTR gcsp = pwk;
   GAME_BEACON_SYS_PTR gbs = pWork;
   GBS_TARGET_INFO *target;
   
   target = GameBeacon_UpdateBeacon(gbs);
   if(target != NULL){ //対象が見つかった
-    
+    switch(target->gsid){
+    case WB_NET_FIELDMOVE_SERVICEID:  //侵入(パレス)
+      {
+        FIELD_INVALID_PARENT_WORK *invalid_parent;
+        int i;
+        
+        invalid_parent = GFL_HEAP_AllocClearMemory(
+            GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
+        for(i = 0; i < 6; i++){
+          invalid_parent->parent_macAddress[i] = target->macAddress[i];
+        }
+        GameCommSys_ChangeReq(gcsp, GAME_COMM_NO_INVASION, invalid_parent);
+      }
+      break;
+    default:
+      OS_TPrintf("フィールドから繋ぐgsidでは無い為、無視 gsid = %d\n", target->gsid);
+      break;
+    }
   }
 }
 

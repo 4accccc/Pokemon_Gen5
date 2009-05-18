@@ -68,6 +68,10 @@ extern COMM_FIELD_SYS_PTR FIELD_COMM_MAIN_CommFieldSysAlloc(HEAPID commHeapID);
 extern void FIELD_COMM_MAIN_CommFieldSysFree(COMM_FIELD_SYS_PTR comm_field);
 extern void FIELD_COMM_MAIN_CommFieldMapInit(COMM_FIELD_SYS_PTR comm_field);
 
+//--------------------------------------------------------------
+//  デバッグ用
+//--------------------------------------------------------------
+extern GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor);
 
 #endif //FIELD_COMM_MAIN__
 

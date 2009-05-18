@@ -17,6 +17,7 @@
 
 #include "arc_def.h"
 #include "palace.naix"
+#include "fieldmap/zone_id.h"
 
 
 //==============================================================================
@@ -61,8 +62,6 @@ typedef struct _PALACE_SYS_WORK{
 //  プロトタイプ宣言
 //==============================================================================
 static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply);
-static void PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id);
-static void PALACE_DEBUG_DeleteNumberAct(PALACE_SYS_PTR palace);
 static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace);
 
 
@@ -83,13 +82,22 @@ PALACE_SYS_PTR PALACE_SYS_Alloc(HEAPID heap_id)
   PALACE_SYS_PTR palace;
   
   palace = GFL_HEAP_AllocClearMemory(heap_id, sizeof(PALACE_SYS_WORK));
-  palace->entry_count = 1;  //自分
-  palace->area = PALACE_AREA_NO_NULL;
-  
-  palace->clunit = GFL_CLACT_UNIT_Create( 1, 10, heap_id );
-  PALACE_DEBUG_CreateNumberAct(palace, heap_id);
+  PALACE_SYS_InitWork(palace);
   
   return palace;
+}
+
+//==================================================================
+/**
+ * パレスシステムワーク初期設定
+ *
+ * @param   palace		
+ */
+//==================================================================
+void PALACE_SYS_InitWork(PALACE_SYS_PTR palace)
+{
+  palace->entry_count = 1;  //自分
+  palace->area = PALACE_AREA_NO_NULL;
 }
 
 //==================================================================
@@ -102,7 +110,6 @@ PALACE_SYS_PTR PALACE_SYS_Alloc(HEAPID heap_id)
 void PALACE_SYS_Free(PALACE_SYS_PTR palace)
 {
   PALACE_DEBUG_DeleteNumberAct(palace);
-  GFL_CLACT_UNIT_Delete(palace->clunit);
   
   GFL_HEAP_FreeMemory(palace);
 }
@@ -125,9 +132,11 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
   //始めて通信確立した時のパレスの初期位置設定
   //※check　ちょっとやっつけっぽい。
   //正しくは通信確立時のコールバック内でパレスのエリア初期位置をセットしてあげるのがよい
-  if(palace->area == PALACE_AREA_NO_NULL && GFL_NET_GetConnectNum() > 1){
-    palace->area = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-    GFL_CLACT_WK_SetDrawEnable(palace->number.clact, TRUE);
+  if(palace->clunit != NULL){
+    if(palace->area == PALACE_AREA_NO_NULL && GFL_NET_GetConnectNum() > 1){
+      palace->area = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+      GFL_CLACT_WK_SetDrawEnable(palace->number.clact, TRUE);
+    }
   }
   
   //ユーザーの増加確認
@@ -165,6 +174,10 @@ static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIE
   int new_area, now_area;
   
   zone_id = PLAYERWORK_getZoneID(plwork);
+  if(zone_id != ZONE_ID_PALACETEST){
+    return;
+  }
+  
   FIELD_PLAYER_GetPos( fldply, &pos );
   new_pos = pos;
   now_area = (palace->area == PALACE_AREA_NO_NULL) ? 0 : palace->area;
@@ -285,9 +298,15 @@ void PALACE_SYS_FriendPosConvert(PALACE_SYS_PTR palace, int friend_area,
  * @param   heap_id		
  */
 //--------------------------------------------------------------
-static void PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id)
+void PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id)
 {
   PALACE_DEBUG_NUMBER *number = &palace->number;
+
+  if(palace->clunit != NULL){
+    return;
+  }
+
+  palace->clunit = GFL_CLACT_UNIT_Create( 1, 10, heap_id );
   
   {//リソース登録
     ARCHANDLE *handle;
@@ -324,15 +343,22 @@ static void PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id)
  * @param   palace		
  */
 //--------------------------------------------------------------
-static void PALACE_DEBUG_DeleteNumberAct(PALACE_SYS_PTR palace)
+void PALACE_DEBUG_DeleteNumberAct(PALACE_SYS_PTR palace)
 {
   PALACE_DEBUG_NUMBER *number = &palace->number;
-
+  
+  if(palace->clunit == NULL){
+    return;
+  }
+  
   GFL_CLACT_WK_Remove(number->clact);
 
   GFL_CLGRP_CGR_Release(number->cgr_id);
   GFL_CLGRP_PLTT_Release(number->pltt_id);
   GFL_CLGRP_CELLANIM_Release(number->cell_id);
+
+  GFL_CLACT_UNIT_Delete(palace->clunit);
+  palace->clunit = NULL;
 }
 
 //--------------------------------------------------------------
@@ -346,7 +372,7 @@ static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace)
 {
   PALACE_DEBUG_NUMBER *number = &palace->number;
   
-  if(palace->area == number->anmseq || palace->area == PALACE_AREA_NO_NULL){
+  if(palace->clunit == NULL || palace->area == number->anmseq || palace->area == PALACE_AREA_NO_NULL){
     return;
   }
   

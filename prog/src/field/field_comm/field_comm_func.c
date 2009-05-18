@@ -238,7 +238,7 @@ static void FIELD_COMM_FUNC_Connect(void* pWork,int hardID)
 //--------------------------------------------------------------
 //  通信開始
 //--------------------------------------------------------------
-void * FIELD_COMM_FUNC_InitCommSystem( void )
+void * FIELD_COMM_FUNC_InitCommSystem( int *seq, void *pwk )
 {
   static const GFLNetInitializeStruct aGFLNetInit = {
     FieldCommRecvTable, //NetSamplePacketTbl,  // 受信関数テーブル
@@ -302,14 +302,43 @@ void * FIELD_COMM_FUNC_InitCommSystem( void )
  * @retval  BOOL		TRUE:初期化完了　　FALSE:初期化待ち
  */
 //==================================================================
-BOOL  FIELD_COMM_FUNC_InitCommSystemWait( void *pWork )
+BOOL  FIELD_COMM_FUNC_InitCommSystemWait( int *seq, void *pwk, void *pWork )
 {
   COMM_FIELD_SYS_PTR commField = pWork;
   FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
+  FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
   
-  if(commFunc->isInitCommSystem_ == TRUE){
-    FIELD_COMM_FUNC_StartCommWait(commFunc);
-    return TRUE;
+  switch(*seq){
+  case 0:
+    if(commFunc->isInitCommSystem_ == TRUE){
+      if(invalid_parent->my_invasion == TRUE){
+        OS_TPrintf("親として起動\n");
+        FIELD_COMM_FUNC_StartCommWait(commFunc);
+        return TRUE;
+      }
+      else{
+        OS_TPrintf("子として起動\n");
+        GFL_NET_InitClientAndConnectToParent( invalid_parent->parent_macAddress );
+        commFunc->commMode_ = FIELD_COMM_MODE_CONNECTING;
+      }
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
+      OS_TPrintf("ネゴシエーション送信\n");
+      (*seq)++;
+    }
+    break;
+  case 2:
+    {
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_HANDLE_IsNegotiation( selfHandle ) == TRUE ){
+        OS_TPrintf("ネゴシエーション完了\n");
+        return TRUE;
+      }
+    }
+    break;
   }
   return FALSE;
 }
@@ -317,7 +346,7 @@ BOOL  FIELD_COMM_FUNC_InitCommSystemWait( void *pWork )
 //--------------------------------------------------------------
 //  通信システム終了
 //--------------------------------------------------------------
-void  FIELD_COMM_FUNC_TermCommSystem( void *pWork )
+void  FIELD_COMM_FUNC_TermCommSystem( int *seq, void *pwk, void *pWork )
 {
 ////  commFunc->isInitCommSystem_ = FALSE;
   GFL_NET_Exit( FIELD_COMM_FUNC_FinishTermCallback );
@@ -330,13 +359,14 @@ void  FIELD_COMM_FUNC_TermCommSystem( void *pWork )
  * @retval  BOOL		TRUE:終了。　FALSE:終了待ち
  */
 //==================================================================
-BOOL  FIELD_COMM_FUNC_TermCommSystemWait( void *pWork )
+BOOL  FIELD_COMM_FUNC_TermCommSystemWait( int *seq, void *pwk, void *pWork )
 {
   COMM_FIELD_SYS_PTR commField = pWork;
 
   FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
   if(commFunc->isInitCommSystem_ == FALSE){
     FIELD_COMM_MAIN_CommFieldSysFree(commField);
+    GFL_HEAP_FreeMemory(pwk);
     return TRUE;
   }
   return FALSE;
@@ -345,7 +375,7 @@ BOOL  FIELD_COMM_FUNC_TermCommSystemWait( void *pWork )
 //--------------------------------------------------------------
 //  通信システム更新(ビーコンの待ちうけ
 //--------------------------------------------------------------
-void  FIELD_COMM_FUNC_UpdateSystem( void *pWork )
+void  FIELD_COMM_FUNC_UpdateSystem( int *seq, void *pwk, void *pWork )
 {
   COMM_FIELD_SYS_PTR commField = pWork;
   FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
