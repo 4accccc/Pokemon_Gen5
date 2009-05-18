@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-15T17:14:33"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-05-18T12:56:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,36 +334,22 @@
 
 
 	<row id="RHYTHM_STR_000">
-		<language name="JPN" width="256">このゲームは　ふたりのオーラを　そくていします
-ガイドにそって　ゆびを　のせてください</language>
-		<language name="JPN_KANJI" width="256">このゲームは2人のオーラを測定します
-ガイドにそって指を乗せてください</language>
+		<language name="JPN" width="256">このゲームは　ふたりのリズムを　そくていします
+すきなばしょ　すきなタイミングで　１０かい　タッチ</language>
+		<language name="JPN_KANJI" width="256">このゲームは2人のリズムを測定します
+好きな場所　好きなタイミングで10回タッチして</language>
 	</row>
 
 	<row id="RHYTHM_STR_001">
-		<language name="JPN" width="256">そくていちゅう・・・
-あいてのことをねんじてください</language>
-		<language name="JPN_KANJI" width="256">測定中・・・
-相手のことを念じてください</language>
-	</row>
-
-	<row id="RHYTHM_STR_002">
-		<language name="JPN" width="256">ひだりておやゆびを　のせたまま
-ガイドにそって　ゆびをのせてください</language>
-		<language name="JPN_KANJI" width="256">左手親指を乗せたまま
-ガイドにそって指をのせてください</language>
-	</row>
-
-	<row id="RHYTHM_STR_003">
-		<language name="JPN" width="256">ゆびを　のせたまま
-せきがいせんを　つないでください</language>
-		<language name="JPN_KANJI" width="256">指を乗せたまま
-赤外線をつないでください</language>
+		<language name="JPN" width="256">そくてい　しゅうりょう！
+せきがいせんを　つなげてください</language>
+		<language name="JPN_KANJI" width="256">測定終了！
+赤外線をつなげてください</language>
 	</row>
 
 	<row id="RHYTHM_STR_004">
-		<language name="JPN" width="256">ふたりの　なかよしハートは・・・？</language>
-		<language name="JPN_KANJI" width="256">ふたりの仲良しハートは・・・？</language>
+		<language name="JPN" width="256">ふたりの　なかよしハートは……？</language>
+		<language name="JPN_KANJI" width="256">ふたりの仲良しハートは……？</language>
 	</row>
 
 	<row id="RHYTHM_STR_005">
@@ -382,9 +368,9 @@
 
 	<row id="RHYTHM_DEBUG_001">
 		<language name="JPN" width="256">あいての　ばんです
-ガイドにそって　ゆびを　のせてください</language>
+すきなばしょ　すきなタイミングで　１０かい　タッチ</language>
 		<language name="JPN_KANJI" width="256">相手の番です
-ガイドにそって指を乗せてください</language>
+好きな場所　好きなタイミングで10回タッチして</language>
 	</row>
 
 	<row id="RHYTHM_DEBUG_002">

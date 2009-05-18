@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-14T18:10:24"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-05-18T12:57:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -341,9 +341,9 @@
 	</row>
 
 	<row id="AURA_STR_001">
-		<language name="JPN" width="256">そくていちゅう・・・
+		<language name="JPN" width="256">そくていちゅう……
 あいてのことをねんじてください</language>
-		<language name="JPN_KANJI" width="256">測定中・・・
+		<language name="JPN_KANJI" width="256">測定中……
 相手のことを念じてください</language>
 	</row>
 
@@ -362,8 +362,8 @@
 	</row>
 
 	<row id="AURA_STR_004">
-		<language name="JPN" width="256">ふたりの　なかよしハートは・・・？</language>
-		<language name="JPN_KANJI" width="256">ふたりの仲良しハートは・・・？</language>
+		<language name="JPN" width="256">ふたりの　なかよしハートは……？</language>
+		<language name="JPN_KANJI" width="256">ふたりの仲良しハートは……？</language>
 	</row>
 
 	<row id="AURA_STR_005">
