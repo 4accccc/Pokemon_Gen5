@@ -27,7 +27,7 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_irc_rhythm.h"
-//#include "ircrhythm_gra.naix"
+#include "ircrhythm_gra.naix"
 
 //	rhythm
 #include "net_app/irc_rhythm.h"
@@ -54,7 +54,7 @@
 //=====================================
 enum{	
 	// メイン画面BG
-	RHYTHM_BG_PAL_M_00 = 0,//GUIDE用BG
+	RHYTHM_BG_PAL_M_00 = 0,//背景用BG
 	RHYTHM_BG_PAL_M_01,		// 使用してない
 	RHYTHM_BG_PAL_M_02,		// 使用してない
 	RHYTHM_BG_PAL_M_03,		// 使用してない
@@ -89,6 +89,43 @@ enum{
 	RHYTHM_BG_PAL_S_13,		// 使用してない
 	RHYTHM_BG_PAL_S_14,		// 使用してない
 	RHYTHM_BG_PAL_S_15,		// 使用してない
+
+	// メイン画面OBJ
+	RHYTHM_OBJ_PAL_M_00 = 0,// タッチ反応OBJ
+	RHYTHM_OBJ_PAL_M_01,		// 使用してない
+	RHYTHM_OBJ_PAL_M_02,		// 使用してない
+	RHYTHM_OBJ_PAL_M_03,		// 使用してない
+	RHYTHM_OBJ_PAL_M_04,		// 使用してない
+	RHYTHM_OBJ_PAL_M_05,		// 使用してない
+	RHYTHM_OBJ_PAL_M_06,		// 使用してない
+	RHYTHM_OBJ_PAL_M_07,		// 使用してない
+	RHYTHM_OBJ_PAL_M_08,		// 使用してない
+	RHYTHM_OBJ_PAL_M_09,		// 使用してない
+	RHYTHM_OBJ_PAL_M_10,		// 使用してない
+	RHYTHM_OBJ_PAL_M_11,		// 使用してない
+	RHYTHM_OBJ_PAL_M_12,		// 使用してない
+	RHYTHM_OBJ_PAL_M_13,		// 使用してない
+	RHYTHM_OBJ_PAL_M_14,		// 使用してない
+	RHYTHM_OBJ_PAL_M_15,		// 使用してない
+
+
+	// サブ画面OBJ
+	RHYTHM_OBJ_PAL_S_00 = 0,	//使用してない
+	RHYTHM_OBJ_PAL_S_01,		// 使用してない
+	RHYTHM_OBJ_PAL_S_02,		// 使用してない
+	RHYTHM_OBJ_PAL_S_03,		// 使用してない
+	RHYTHM_OBJ_PAL_S_04,		// 使用してない
+	RHYTHM_OBJ_PAL_S_05,		// 使用してない
+	RHYTHM_OBJ_PAL_S_06,		// 使用してない
+	RHYTHM_OBJ_PAL_S_07,		// 使用してない
+	RHYTHM_OBJ_PAL_S_08,		// 使用してない
+	RHYTHM_OBJ_PAL_S_09,		// 使用してない
+	RHYTHM_OBJ_PAL_S_10,		// 使用してない
+	RHYTHM_OBJ_PAL_S_11,		// 使用してない
+	RHYTHM_OBJ_PAL_S_12,		// 使用してない
+	RHYTHM_OBJ_PAL_S_13,		// 使用してない
+	RHYTHM_OBJ_PAL_S_14,		// 使用してない
+	RHYTHM_OBJ_PAL_S_15,		// 使用してない
 };
 
 //-------------------------------------
@@ -127,9 +164,12 @@ enum{
 //-------------------------------------
 ///	カウント
 //=====================================
-#define TOUCH_COUNTER_MAX	(60*5)
-#define TOUCH_COUNTER_SHAKE_SYNC	(30)	//ブレを観測するための1回のシンク
-#define TOUCH_COUNTER_SHAKE_MAX	(TOUCH_COUNTER_MAX/TOUCH_COUNTER_SHAKE_SYNC)	//ブレを取得する回数
+
+//-------------------------------------
+///	タッチ
+//=====================================
+#define TOUCH_DIAMOND_W	(48)
+#define TOUCH_DIAMOND_H	(48)
 
 //-------------------------------------
 ///		MSG_FONT
@@ -144,8 +184,27 @@ typedef enum {
 //=====================================
 #ifdef DEBUG_ONLY_PLAY
 #define DEBUG_GAME_NUM	(5)
-#define DEBUG_PLAYER_SAVE_NUM	(DEBUG_GAME_NUM*2)
 #endif //DEBUG_ONLY_PLAY
+
+//-------------------------------------
+///	OBJ登録ID
+//=====================================
+enum {
+	OBJREGID_TOUCH_PLT,
+	OBJREGID_TOUCH_CHR,
+	OBJREGID_TOUCH_CEL,
+
+	OBJREGID_MAX
+};
+//-------------------------------------
+///	CLWK取得
+//=====================================
+typedef enum{	
+	CLWKID_TOUCH,
+	
+	CLWKID_MAX
+}CLWKID;
+
 
 //=============================================================================
 /**
@@ -159,20 +218,23 @@ typedef struct
 {
 	int dummy;
 } GRAPHIC_BG_WORK;
+
 //-------------------------------------
-///	3D描画環境
+///	OBJ関係
 //=====================================
-typedef struct 
-{
-	GFL_G3D_CAMERA		*p_camera;
-} GRAPHIC_3D_WORK;
+typedef struct {
+	GFL_CLUNIT *p_clunit;
+	u32				reg_id[OBJREGID_MAX];
+	GFL_CLWK	 *p_clwk[CLWKID_MAX];
+} GRAPHIC_OBJ_WORK;
+
 //-------------------------------------
 ///	描画関係
 //=====================================
 typedef struct 
 {
-	GRAPHIC_BG_WORK		gbg;
-	GRAPHIC_3D_WORK		g3d;
+	GRAPHIC_BG_WORK		bg;
+	GRAPHIC_OBJ_WORK	obj;
 	GFL_TCB						*p_vblank_task;
 } GRAPHIC_WORK;
 //-------------------------------------
@@ -194,6 +256,18 @@ typedef struct {
 	PRINT_UTIL        print_util;
 	STRBUF*						p_strbuf;
 } MSGWND_WORK;
+
+//-------------------------------------
+///	サーチ部
+//=====================================
+typedef struct {
+	//どこを押したか
+	u16			x;
+	u16			y;
+	//押した時間
+	OSTick	time;
+} RHYTHMSEARCH_WORK;
+
 
 #ifdef DEBUG_RHYTHM_MSG
 //-------------------------------------
@@ -228,17 +302,6 @@ static DEBUG_PRINT_WORK *sp_dp_wk;
 #endif //DEBUG_RHYTHM_MSG
 
 //-------------------------------------
-///	ブレ計測
-//=====================================
-typedef struct {
-	GFL_POINT		shake[TOUCH_COUNTER_SHAKE_MAX];
-	u16					shake_idx;
-	u32					cnt;				//カウンタ
-	u32					shake_cnt;	//ブレ計測用カウンタ
-}SHAKE_SEARCH_WORK;
-
-
-//-------------------------------------
 ///	リズムチェックメインワーク
 //=====================================
 typedef struct _RHYTHM_MAIN_WORK RHYTHM_MAIN_WORK;
@@ -258,11 +321,8 @@ struct _RHYTHM_MAIN_WORK
 	u16							debug_player;			//自分か相手か
 	u16							debug_game_cnt;	//何ゲーム目か
 
-	//結果
-	GFL_POINT		trg_left[DEBUG_PLAYER_SAVE_NUM];
-	GFL_POINT		trg_right[DEBUG_PLAYER_SAVE_NUM];
-	SHAKE_SEARCH_WORK	shake_left[DEBUG_PLAYER_SAVE_NUM];
-	SHAKE_SEARCH_WORK	shake_right[DEBUG_PLAYER_SAVE_NUM];
+	//計測
+	RHYTHMSEARCH_WORK	search;
 
 	//引数
 	IRC_RHYTHM_PARAM	*p_param;
@@ -281,17 +341,18 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
+static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id );
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //BG
 static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
-//3d
-static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
-static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
-static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk );
-static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk );
-static void Graphic_3d_SetUp( void );
+//obj
+static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vram_bank, HEAPID heapID );
+static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk );
+static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk );
+static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk );
+static GFL_CLWK* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, CLWKID id );
 //MSG_WORK
 static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID );
 static void MSG_Exit( MSG_WORK *p_wk );
@@ -313,18 +374,11 @@ static void SEQ_Change( RHYTHM_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
 static void SEQ_End( RHYTHM_MAIN_WORK *p_wk );
 //SEQ_FUNC
 static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
-static void SEQFUNC_TouchLeft( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
-static void SEQFUNC_TouchRight( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
 //汎用
-static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg );
-static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
+static BOOL TP_GetDiamondCont( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
 static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk );
 
-//ブレ計測
-static void	SHAKESEARCH_Init( SHAKE_SEARCH_WORK *p_wk );
-static void	SHAKESEARCH_Exit( SHAKE_SEARCH_WORK *p_wk );
-static BOOL	SHAKESEARCH_Main( SHAKE_SEARCH_WORK *p_wk, const GFL_RECT	*cp_rect );
 //DEBUG_PRINT
 #ifdef DEBUG_RHYTHM_MSG
 static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID );
@@ -364,15 +418,14 @@ const GFL_PROC_DATA IrcRhythm_ProcData	=
 typedef enum 
 {
 	GRAPHIC_BG_FRAME_M_INFOWIN,
-	GRAPHIC_BG_FRAME_M_GUIDE_L,
-	GRAPHIC_BG_FRAME_M_GUIDE_R,
+	GRAPHIC_BG_FRAME_M_BACK,
 	GRAPHIC_BG_FRAME_S_TEXT,
 	GRAPHIC_BG_FRAME_S_BACK,
 	GRAPHIC_BG_FRAME_MAX
 } GRAPHIC_BG_FRAME;
 static const u32 sc_bgcnt_frame[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	INFOWIN_BG_FRAME, GFL_BG_FRAME1_M, GFL_BG_FRAME2_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,
+	INFOWIN_BG_FRAME, GFL_BG_FRAME1_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] = 
 {
@@ -383,18 +436,11 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
-	// GRAPHIC_BG_FRAME_M_GUIDE_L
+	// GRAPHIC_BG_FRAME_M_BACK
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
-	},
-	// GRAPHIC_BG_FRAME_M_GUIDE_R
-	{
-		0, 0, 0x800, 0,
-		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_TEXT
@@ -417,21 +463,39 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 //-------------------------------------
 ///	タッチ範囲
 //=====================================
-static const GFL_RECT	sc_left	=
+static const GFL_POINT	sc_diamond_pos[]	=
 {	
-	0, 2*8, 11*8, 20*8
+	{	
+		31, 47
+	},
+	{	
+		79, 47
+	},
+	{	
+		127, 47
+	},
+	{	
+		175, 47
+	},
+	{	
+		223, 47
+	},
+	{	
+		31, 95
+	},
+	{	
+		79, 95
+	},
+	{	
+		127, 95
+	},
+	{	
+		175, 95
+	},
+	{	
+		223, 95
+	},
 };
-#if 0
-static const GFL_RECT	sc_right	=
-{	
-	19, 2, 22, 20
-};
-#else	//2点タッチなので、上の座標と左座標の中点
-static const GFL_RECT	sc_right	=
-{	
-	11*8+1, 2*8, 22*8, 20*8
-};
-#endif
 
 
 //=============================================================================
@@ -468,15 +532,6 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, HEAPID_IRCRHYTHM );
 	MSGWND_Init( &p_wk->msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
 			MSGTEXT_WND_X, MSGTEXT_WND_Y, MSGTEXT_WND_W, MSGTEXT_WND_H, HEAPID_IRCRHYTHM );
-
-	{	
-		int i;
-		for( i = 0; i < DEBUG_PLAYER_SAVE_NUM; i++ )
-		{	
-			SHAKESEARCH_Init( &p_wk->shake_left[ i ] );
-			SHAKESEARCH_Init( &p_wk->shake_right[ i ] );
-		}
-	}
 
 	//デバッグ
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRHYTHM );
@@ -611,6 +666,8 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
 	}
 
+	GRAPHIC_Draw( &p_wk->grp );
+
 	return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================
@@ -629,41 +686,43 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 {
+	static const GFL_DISP_VRAM sc_vramSetTable =
+	{
+		GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
+		GX_OBJVRAMMODE_CHAR_1D_128K,		
+		GX_OBJVRAMMODE_CHAR_1D_128K,		
+	};
+
 	//ワーククリア
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
 
 	//VRAMクリアー
 	GFL_DISP_ClearVRAM( 0 );
 
+	// VRAMバンク設定
+	GFL_DISP_SetBank( &sc_vramSetTable );
+
 	// ディスプレイON
 	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 	GFL_DISP_SetDispOn();
 
-	// VRAMバンク設定
-	{
-		static const GFL_DISP_VRAM sc_vramSetTable =
-		{
-			GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
-			GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-			GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
-			GX_VRAM_OBJ_NONE,						// メイン2DエンジンのOBJ
-			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-			GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
-			GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
-			GX_OBJVRAMMODE_CHAR_1D_128K,		
-			GX_OBJVRAMMODE_CHAR_1D_128K,		
-		};
-		GFL_DISP_SetBank( &sc_vramSetTable );
-	}
+	//表示
+	GFL_DISP_GX_InitVisibleControl();
 
 	//描画モジュール
-	GRAPHIC_BG_Init( &p_wk->gbg, heapID );
-//	GRAPHIC_3D_Init( &p_wk->g3d, heapID );
+	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
+	GRAPHIC_BG_Init( &p_wk->bg, heapID );
 
-	//VBlackTask登録
+	//VBlankTask登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
 }
 
@@ -680,8 +739,8 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 {
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
-//	GRAPHIC_3D_Exit( &p_wk->g3d );
-	GRAPHIC_BG_Exit( &p_wk->gbg );
+	GRAPHIC_BG_Exit( &p_wk->bg );
+	GRAPHIC_OBJ_Exit( &p_wk->obj );
 }
 
 //----------------------------------------------------------------------------
@@ -694,6 +753,22 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 {
+	GRAPHIC_OBJ_Main( &p_wk->obj );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLWK取得
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk	ワーク
+ *	@param	id												CLWKのID
+ *
+ *	@return	CLWK
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id )
+{	
+	return GRAPHIC_OBJ_GetClwk( &cp_wk->obj, id );
 }
 
 //----------------------------------------------------------------------------
@@ -708,7 +783,8 @@ static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work )
 {	
 	GRAPHIC_WORK* p_wk	= p_work;
-	GRAPHIC_BG_VBlankFunction( &p_wk->gbg );
+	GRAPHIC_BG_VBlankFunction( &p_wk->bg );
+	GRAPHIC_OBJ_VBlankFunction( &p_wk->obj );
 }
 
 //=============================================================================
@@ -754,30 +830,23 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 		}
 	}
 
-#if 0
 	//読み込み設定
 	{	
 		ARCHANDLE *p_handle;
 
 		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCRHYTHM_GRAPHIC, heapID );
 
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircrhythm_gra_rhythm_bg_guide_NCLR,
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircrhythm_gra_rhythm_bg_back_NCLR,
 				PALTYPE_MAIN_BG, PALTYPE_MAIN_BG*0x20, 0x20, heapID );
 	
-		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_ircrhythm_gra_rhythm_bg_guide_NCGR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_ircrhythm_gra_rhythm_bg_back_NCGR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
 
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircrhythm_gra_rhythm_bg_guide_l_NSCR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], 0, 0, FALSE, heapID );
-
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircrhythm_gra_rhythm_bg_guide_r_NSCR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircrhythm_gra_rhythm_bg_back_NSCR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
-#endif
-
-	GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
 }
 
 //----------------------------------------------------------------------------
@@ -818,132 +887,138 @@ static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk )
 
 //=============================================================================
 /**
- *					GRAPHIC_3D
+ *				OBJ
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	３D環境の初期化
+ *	@brief	OBJ描画	初期化
  *
- *	@param	p_wk			ワーク
- *	@param	heapID		ヒープID
- */
-//-----------------------------------------------------------------------------
-static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
-{
-	static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST(5) };
-	static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };
-	static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };
-
-	enum{	
-		CAMERA_PER_FOVY	=	(40),
-		CAMERA_PER_ASPECT =	(FX32_ONE * 4 / 3),
-		CAMERA_PER_NEAR	=	(FX32_ONE * 1),
-		CAMERA_PER_FER	=	(FX32_ONE * 800),
-		CAMERA_PER_SCALEW	=(0),
-	};
-
-	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K,
-			GFL_G3D_VMANLNK, GFL_G3D_PLT32K, 0, heapID, Graphic_3d_SetUp );
-	p_wk->p_camera = GFL_G3D_CAMERA_CreatePerspective( CAMERA_PER_FOVY, CAMERA_PER_ASPECT,
-				CAMERA_PER_NEAR, CAMERA_PER_FER, CAMERA_PER_SCALEW, 
-				&sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	３D環境の破棄
+ *	@param	GRAPHIC_OBJ_WORK *p_wk			ワーク
+ *	@param	GFL_DISP_VRAM* cp_vram_bank	バンクテーブル
+ *	@param	heapID											ヒープID
  *
- *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk )
-{
-	GFL_G3D_CAMERA_Delete( p_wk->p_camera );
-	GFL_G3D_Exit();
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	描画開始
- *	
- *	@param	p_wk	ワーク
- */
-//-----------------------------------------------------------------------------
-static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk )
+static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vram_bank, HEAPID heapID )
 {	
-	GFL_G3D_DRAW_Start();
-	GFL_G3D_CAMERA_Switching( p_wk->p_camera );
-	GFL_G3D_DRAW_SetLookAt();
-}
+	//クリア
+	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_OBJ_WORK) );
 
+	//システム作成
+	GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, cp_vram_bank, heapID );
+	p_wk->p_clunit	= GFL_CLACT_UNIT_Create( 128, 0, heapID );
+	GFL_CLACT_UNIT_SetDefaultRend( p_wk->p_clunit );
+
+	//表示
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+
+	//リソース読み込み
+	{	
+		ARCHANDLE *p_handle;
+
+		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCRHYTHM_GRAPHIC, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
+				NARC_ircrhythm_gra_rhythm_obj_touch_NCLR, CLSYS_DRAW_MAIN, RHYTHM_OBJ_PAL_M_00*0x20, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+				NARC_ircrhythm_gra_rhythm_obj_touch_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+
+		p_wk->reg_id[OBJREGID_TOUCH_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				NARC_ircrhythm_gra_rhythm_obj_touch_NCER, NARC_ircrhythm_gra_rhythm_obj_touch_NANR, heapID );
+
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+
+	//CLWK作成
+	{	
+		GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+		p_wk->p_clwk[CLWKID_TOUCH]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+				p_wk->reg_id[OBJREGID_TOUCH_CHR],
+				p_wk->reg_id[OBJREGID_TOUCH_PLT],
+				p_wk->reg_id[OBJREGID_TOUCH_CEL],
+				&cldata,
+				CLSYS_DEFREND_MAIN,
+				heapID
+				);
+	}
+}
 //----------------------------------------------------------------------------
 /**
- *	@brief	描画終了
+ *	@brief	OBJ描画	破棄
  *
- *	@param	p_wk	ワーク
+ *	@param	GRAPHIC_OBJ_WORK *p_wk	ワーク
+ *
  */
 //-----------------------------------------------------------------------------
-static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk )
+static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 {	
-	GFL_G3D_DRAW_End();
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	環境セットアップコールバック関数
- */
-//-----------------------------------------------------------------------------
-static void Graphic_3d_SetUp( void )
-{
-	// ３Ｄ使用面の設定(表示＆プライオリティー)
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-	G2_SetBG0Priority(0);
-
-	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
-	G3X_SetShading( GX_SHADING_HIGHLIGHT );
-	G3X_AntiAlias( FALSE );
-	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
-	G3X_AlphaBlend( TRUE );		// アルファブレンド　オン
-	G3X_EdgeMarking( FALSE );
-	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
-
-	// クリアカラーの設定
-	G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
-	// ビューポートの設定
-	G3_ViewPort(0, 0, 255, 191);
-
-	// ライト設定
-	{
-		static const GFL_G3D_LIGHT sc_GFL_G3D_LIGHT[] = 
-		{
-			{
-				{ 0, -FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-			{
-				{ 0, FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-			{
-				{ 0, -FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-			{
-				{ 0, -FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-		};
+	//CLWK破棄
+	{	
 		int i;
-		
-		for( i=0; i<NELEMS(sc_GFL_G3D_LIGHT); i++ ){
-			GFL_G3D_SetSystemLight( i, &sc_GFL_G3D_LIGHT[i] );
+		for( i = 0; i < CLWKID_MAX; i++ )
+		{	
+			GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
 		}
 	}
 
-	//レンダリングスワップバッファ
-	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+	//リソース破棄
+	{	
+		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_TOUCH_PLT] );
+		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_TOUCH_CHR] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_TOUCH_CEL] );
+	}
+
+	//システム破棄
+	GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
+	GFL_CLACT_SYS_Delete();
+	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_OBJ_WORK) );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	メイン処理
+ *
+ *	@param	GRAPHIC_OBJ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk )
+{	
+	GFL_CLACT_SYS_Main();
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	Vブランク処理
+ *
+ *	@param	GRAPHIC_OBJ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk )
+{	
+	GFL_CLACT_SYS_VBlankFunc();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJ描画	CLWK取得
+ *
+ *	@param	const GRAPHIC_OBJ_WORK *cp_wk	ワーク
+ *	@param	id														CLWKのID
+ *
+ *	@return	CLWK
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLWK* GRAPHIC_OBJ_GetClwk( const GRAPHIC_OBJ_WORK *cp_wk, CLWKID id )
+{	
+	GF_ASSERT( id < CLWKID_MAX );
+	return cp_wk->p_clwk[id];
+}
+
 //=============================================================================
 /**
  *					MSG
@@ -1290,7 +1365,7 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	{	
 	case SEQ_INIT:
 
-		DEBUGRHYTHM_PRINT_UpDate( p_wk );
+		//DEBUGRHYTHM_PRINT_UpDate( p_wk );
 
 		if( p_wk->debug_player == 0 )
 		{	
@@ -1302,20 +1377,41 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_DEBUG_001, 0, 0 );
 		}
 
-
-		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
-		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], VISIBLE_ON );
-
 		*p_seq	= SEQ_MAIN;
 		break;
 
 	case SEQ_MAIN:
-		if( TP_GetRectTrg( &sc_left, &p_wk->trg_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ] ) )
-		{	
-			DEBUGRHYTHM_PRINT_UpDate( p_wk );
-			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_STR_001, 0, 0 );
-			SEQ_Change( p_wk, SEQFUNC_TouchLeft );
+
+
+		{
+			int i;
+			GFL_POINT	pos;
+		
+
+			GFL_CLWK	*p_marker;
+
+
+			p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
+			GFL_CLACT_WK_SetDrawEnable( p_marker, FALSE );
+			for( i = 0; i< NELEMS(sc_diamond_pos); i++ )
+			{
+				if( TP_GetDiamondCont( &sc_diamond_pos[i], &pos ) )
+				{	
+					GFL_CLACTPOS clpos;
+					clpos.x	= sc_diamond_pos[i].x;
+					clpos.y	= sc_diamond_pos[i].y;
+					GFL_CLACT_WK_SetPos( p_marker, &clpos, 0 );
+					GFL_CLACT_WK_SetDrawEnable( p_marker, TRUE );
+					break;
+				}
+			}
+			
+
 		}
+
+
+
+
 
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
 		{	
@@ -1339,117 +1435,6 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
 		break;
 	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	左手をタッチ中
- *
- *	@param	RHYTHM_MAIN_WORK *p_wk	メインワーク
- *	@param	*p_seq								シーケンス
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQFUNC_TouchLeft( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
-{	
-	enum{	
-		SEQ_MAIN,
-		SEQ_WAIT_RIGHT,
-		SEQ_RET,
-	};
-
-	switch( *p_seq )
-	{	
-	case SEQ_MAIN:
-		if( TP_GetRectCont( &sc_left, NULL ) )
-		{	
-			//計測終了待ち
-			if( SHAKESEARCH_Main( &p_wk->shake_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ], &sc_left ) )
-			{	
-				DEBUGRHYTHM_PRINT_UpDate( p_wk );
-				MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_STR_002, 0, 0 );
-				GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_ON );
-				*p_seq	= SEQ_WAIT_RIGHT;
-			}
-		}
-		else
-		{	
-			*p_seq	= SEQ_RET;
-		}
-		break;
-
-	case SEQ_WAIT_RIGHT:
-		if( TP_GetRectCont( &sc_right, &p_wk->trg_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ] ) )
-		{	
-			DEBUGRHYTHM_PRINT_UpDate( p_wk );
-			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_STR_001, 0, 0 );
-			SEQ_Change( p_wk, SEQFUNC_TouchRight );
-		}
-		else if( TP_GetRectCont( &sc_left, NULL ) )
-		{	
-		}
-		else
-		{
-			*p_seq	= SEQ_RET;
-		}
-		break;
-
-	case SEQ_RET:
-		SEQ_Change( p_wk, SEQFUNC_StartGame );
-		break;
-	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	右手タッチ中
- *
- *	@param	RHYTHM_MAIN_WORK *p_wk	メインワーク
- *	@param	*p_seq								シーケンス
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQFUNC_TouchRight( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
-{	
-	enum{	
-		SEQ_MAIN,
-		SEQ_RET,
-	};
-
-	switch( *p_seq )
-	{	
-	case SEQ_MAIN:
-		if( TP_GetRectCont( &sc_right, NULL ) )
-		{	
-			if( SHAKESEARCH_Main( &p_wk->shake_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ], &sc_right ) )
-			{	
-				int i;
-
-				DEBUGRHYTHM_PRINT_UpDate( p_wk );
-				//MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_STR_003, 0, 0 );
-
-				//0ならば自分の番なので、次は相手の番
-				if( p_wk->debug_player == 0 )
-				{	
-					p_wk->debug_player++;
-					SEQ_Change( p_wk, SEQFUNC_StartGame );
-				}
-				else
-				{
-					MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_DEBUG_002, 0, 0 );
-					SEQ_Change( p_wk, SEQFUNC_Result );
-				}
-			}
-		}
-		else
-		{	
-			*p_seq	= SEQ_RET;
-		}
-		break;
-
-	case SEQ_RET:
-		SEQ_Change( p_wk, SEQFUNC_StartGame );
-		break;
-	}
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -1477,25 +1462,32 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	矩形内にTrgしたかどうか
+ *	@brief	ひし形内にTrgしたかどうか	(W＝Hの場合のみ)
  *
- *	@param	const GFL_RECT *cp_rect	矩形
- *	@param	*p_trg									座標受け取り
+ *	@param	const GFL_POINT *cp_point	座標
+ *	@param	w													幅
+ *	@param	h													高さ
+ *	@param	*p_trg										座標受け取り
  *
  *	@retval	TRUEタッチした
  *	@retval	FALSEタッチしていない
  */
 //-----------------------------------------------------------------------------
-static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg )
+static BOOL TP_GetDiamondCont( const GFL_POINT *cp_diamond, GFL_POINT *p_trg )
 {	
 	u32 x, y;
+	u32	dx, dy;	//菱形上の
 	BOOL ret;
 
-	//Cont中で、矩形内のとき
-	if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+	//Cont中で、菱形内のとき
+	if( GFL_UI_TP_GetPointCont( &x, &y ) )
 	{	
-		if( ((u32)( x - cp_rect->left) < (u32)(cp_rect->right - cp_rect->left))
-				&	((u32)( y - cp_rect->top) < (u32)(cp_rect->bottom - cp_rect->top))
+		dx	= ((y - cp_diamond->y) / TOUCH_DIAMOND_H) * TOUCH_DIAMOND_W / 2;
+		dy	= ((x - cp_diamond->x) / TOUCH_DIAMOND_W) * TOUCH_DIAMOND_H / 2;
+
+		//矩形内で
+		if( ((u32)( x - cp_diamond->x - dx ) < (u32)( dx ))
+				&	((u32)( y - cp_diamond->y - dy) < (u32)(dy))
 			)
 		{
 			//受け取りが存在したら代入して返す
@@ -1503,41 +1495,6 @@ static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg )
 			{	
 				p_trg->x	= x;
 				p_trg->y	= y;
-			}
-			return TRUE;
-		}
-	}
-
-	return FALSE;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	矩形内にタッチしたかどうか
- *
- *	@param	const GFL_RECT *cp_rect	矩形
- *	@param	*p_cont									座標受け取り
- *
- *	@retval	TRUEタッチした
- *	@retval	FALSEタッチしていない
- */
-//-----------------------------------------------------------------------------
-static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont )
-{	
-	u32 x, y;
-	BOOL ret;
-
-	//Cont中で、矩形内のとき
-	if( GFL_UI_TP_GetPointCont( &x, &y ) )
-	{	
-		if( ((u32)( x - cp_rect->left) < (u32)(cp_rect->right - cp_rect->left))
-				&	((u32)( y - cp_rect->top) < (u32)(cp_rect->bottom - cp_rect->top))
-			)
-		{
-			//受け取りが存在したら代入して返す
-			if( p_cont )
-			{	
-				p_cont->x	= x;
-				p_cont->y	= y;
 			}
 			return TRUE;
 		}
@@ -1562,203 +1519,9 @@ static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk )
 
 	DEBUGPRINT_Clear();
 
-	DEBUGPRINT_PrintNumber( L"%d番目のゲーム", p_wk->debug_game_cnt, 0,  0 );
-	DEBUGPRINT_PrintNumber( L"%d人目の番です", p_wk->debug_player, 100,  0 );
+//	DEBUGPRINT_PrintNumber( L"%d番目のゲーム", p_wk->debug_game_cnt, 0,  0 );
+	//DEBUGPRINT_PrintNumber( L"%d人目の番です", p_wk->debug_player, 100,  0 );
 
-	for( j = 0; j < 2; j++ )
-	{	
-		now_idx	= p_wk->debug_game_cnt + (j*DEBUG_GAME_NUM);
-
-		DEBUGPRINT_Print( L"左指の座標", DEBUGMSG_LEFT1+(DEBUGMSG2_TAB*j), 10 );
-		DEBUGPRINT_Print( L"右指の座標", DEBUGMSG_RIGHT1+(DEBUGMSG2_TAB*j),10 );
-	
-		DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_left[now_idx].x, DEBUGMSG_LEFT1+(DEBUGMSG2_TAB*j), 20 );
-		DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_left[now_idx].y, DEBUGMSG_LEFT2+(DEBUGMSG2_TAB*j), 20 );
-	
-		DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_right[now_idx].x, DEBUGMSG_RIGHT1+(DEBUGMSG2_TAB*j), 20 );
-		DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_right[now_idx].y, DEBUGMSG_RIGHT2+(DEBUGMSG2_TAB*j), 20 );
-	
-		DEBUGPRINT_Print( L"左指のブレ", DEBUGMSG_LEFT1+(DEBUGMSG2_TAB*j), 30 );
-		DEBUGPRINT_Print( L"右指のブレ", DEBUGMSG_RIGHT1+(DEBUGMSG2_TAB*j),30 );
-
-		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
-		{	
-			//DEBUGPRINT_PrintNumber( L"X %d", p_wk->shake_left.shake[i].x, DEBUGMSG_LEFT1, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"X( %d )", p_wk->shake_left[now_idx].shake[i].x- p_wk->shake_left[now_idx].shake[0].x, DEBUGMSG_LEFT1+(DEBUGMSG2_TAB*j), i*10+40 );
-			//DEBUGPRINT_PrintNumber( L"Y %d", p_wk->shake_left.shake[i].y, DEBUGMSG_LEFT3, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"Y( %d )", p_wk->shake_left[now_idx].shake[i].y- p_wk->shake_left[now_idx].shake[0].y, DEBUGMSG_LEFT2+(DEBUGMSG2_TAB*j), i*10+40 );
-	
-			//DEBUGPRINT_PrintNumber( L"X %d", p_wk->shake_right.shake[i].x, DEBUGMSG_RIGHT1, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"X( %d )", p_wk->shake_right[now_idx].shake[i].x - p_wk->shake_right[now_idx].shake[0].x, DEBUGMSG_RIGHT1+(DEBUGMSG2_TAB*j), i*10+40 );
-			//DEBUGPRINT_PrintNumber( L"Y %d", p_wk->shake_right.shake[i].y, DEBUGMSG_RIGHT3, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"Y( %d )", p_wk->shake_right[now_idx].shake[i].y - p_wk->shake_right[now_idx].shake[0].y,DEBUGMSG_RIGHT2+(DEBUGMSG2_TAB*j), i*10+40 );
-		}
-	
-
-		//プリント
-		OS_Printf( "%d番目のゲーム\n", p_wk->debug_game_cnt );
-		OS_Printf( "%d人目の番です\n", p_wk->debug_player );
-	
-		OS_Printf("左手座標\n");
-		OS_Printf("X %d Y %d\n", p_wk->trg_left[now_idx].x, p_wk->trg_left[now_idx].y);
-	
-		OS_Printf("右手座標\n");
-		OS_Printf("X %d Y %d\n", p_wk->trg_right[now_idx].x, p_wk->trg_right[now_idx].y);
-	
-		OS_Printf("左手ブレ幅\n");
-		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
-		{	
-			OS_Printf( "X %d (%d) Y %d (%d)\n", 
-					p_wk->shake_right[now_idx].shake[i].x, 
-					p_wk->shake_right[now_idx].shake[i].x - p_wk->shake_right[now_idx].shake[0].x, 
-					p_wk->shake_right[now_idx].shake[i].y, 
-					p_wk->shake_right[now_idx].shake[i].y - p_wk->shake_right[now_idx].shake[0].y );
-		}
-	
-		OS_Printf("右手ブレ幅\n");
-		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
-		{	
-			OS_Printf( "X %d (%d) Y %d (%d)\n", 
-					p_wk->shake_left[now_idx].shake[i].x, 
-					p_wk->shake_left[now_idx].shake[i].x - p_wk->shake_left[now_idx].shake[0].x, 
-					p_wk->shake_left[now_idx].shake[i].y, 
-					p_wk->shake_left[now_idx].shake[i].y - p_wk->shake_left[now_idx].shake[0].y );
-		}
-	}
-
-	{	
-		u16 idx1, idx2;
-		s32	ofs1[4];
-		s32	ofs2[4];
-
-		idx1	= p_wk->debug_game_cnt + (0*DEBUG_GAME_NUM);;
-		idx2	= p_wk->debug_game_cnt + (1*DEBUG_GAME_NUM);;
-
-		//差---------------------
-		DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_left[idx1].x - p_wk->trg_left[idx2].x,
-				DEBUGMSG3_TAB, 20 );
-		DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_left[idx1].y - p_wk->trg_left[idx2].y,
-				DEBUGMSG3_TAB+20, 20 );
-		DEBUGPRINT_PrintNumber( L"X %d", p_wk->trg_right[idx1].x - p_wk->trg_right[idx2].x,
-				DEBUGMSG3_TAB+40, 20 );
-		DEBUGPRINT_PrintNumber( L"Y %d", p_wk->trg_right[idx1].y - p_wk->trg_right[idx2].y,
-				DEBUGMSG3_TAB+60, 20 );
-
-		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
-		{	
-			ofs1[0]	= p_wk->shake_left[idx1].shake[i].x- p_wk->shake_left[idx1].shake[0].x;
-			ofs1[1]	= p_wk->shake_left[idx1].shake[i].y- p_wk->shake_left[idx1].shake[0].y;
-			ofs1[2]	= p_wk->shake_right[idx1].shake[i].x- p_wk->shake_right[idx1].shake[0].x;
-			ofs1[3]	= p_wk->shake_right[idx1].shake[i].y- p_wk->shake_right[idx1].shake[0].y;
-			ofs2[0]	= p_wk->shake_left[idx2].shake[i].x- p_wk->shake_left[idx2].shake[0].x;
-			ofs2[1]	= p_wk->shake_left[idx2].shake[i].y- p_wk->shake_left[idx2].shake[0].y;
-			ofs2[2]	= p_wk->shake_right[idx2].shake[i].x- p_wk->shake_right[idx2].shake[0].x;
-			ofs2[3]	= p_wk->shake_right[idx2].shake[i].y- p_wk->shake_right[idx2].shake[0].y;
-
-			DEBUGPRINT_PrintNumber( L"X( %d )", ofs1[0]-ofs2[0], DEBUGMSG3_TAB, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"Y( %d )", ofs1[1]-ofs2[1], DEBUGMSG3_TAB+20, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"X( %d )", ofs1[2]-ofs2[2], DEBUGMSG3_TAB+40, i*10+40 );
-			DEBUGPRINT_PrintNumber( L"Y( %d )", ofs1[3]-ofs2[3], DEBUGMSG3_TAB+60, i*10+40 );
-
-		}
-
-		OS_Printf( "○差\n" );
-		OS_Printf("左手座標の差\n");
-		OS_Printf("X %d Y %d\n", 
-				p_wk->trg_left[idx1].x - p_wk->trg_left[idx2].x,
-				p_wk->trg_left[idx1].y - p_wk->trg_left[idx2].y);
-	
-		OS_Printf("右手座標の差\n");
-		OS_Printf("X %d Y %d\n", 
-				p_wk->trg_right[idx1].x - p_wk->trg_right[idx2].x,
-				p_wk->trg_right[idx1].y - p_wk->trg_right[idx2].y);
-
-		OS_Printf( "左手ブレの差\n" );
-		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
-		{	
-			ofs1[0]	= p_wk->shake_left[idx1].shake[i].x- p_wk->shake_left[idx1].shake[0].x;
-			ofs1[1]	= p_wk->shake_left[idx1].shake[i].y- p_wk->shake_left[idx1].shake[0].y;
-			ofs2[0]	= p_wk->shake_left[idx2].shake[i].x- p_wk->shake_left[idx2].shake[0].x;
-			ofs2[1]	= p_wk->shake_left[idx2].shake[i].y- p_wk->shake_left[idx2].shake[0].y;
-			OS_Printf( "X (%d) Y (%d)\n",ofs1[0]-ofs2[0], ofs1[1]-ofs2[1] );
-		}
-
-		OS_Printf( "右手ブレの差\n" );
-		for( i = 0; i < TOUCH_COUNTER_SHAKE_MAX; i++ )
-		{	
-			ofs1[2]	= p_wk->shake_right[idx1].shake[i].x- p_wk->shake_right[idx1].shake[0].x;
-			ofs1[3]	= p_wk->shake_right[idx1].shake[i].y- p_wk->shake_right[idx1].shake[0].y;
-			ofs2[2]	= p_wk->shake_right[idx2].shake[i].x- p_wk->shake_right[idx2].shake[0].x;
-			ofs2[3]	= p_wk->shake_right[idx2].shake[i].y- p_wk->shake_right[idx2].shake[0].y;
-			OS_Printf( "X (%d) Y (%d)\n",ofs1[2]-ofs2[2], ofs1[3]-ofs2[3] );
-		}
-
-	}
-
-}
-
-//=============================================================================
-/**
- *			ブレ計測
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	ブレ計測	初期化
- *
- *	@param	SHAKE_SEARCH_WORK *p_wk		ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void	SHAKESEARCH_Init( SHAKE_SEARCH_WORK *p_wk )
-{	
-	GFL_STD_MemClear( p_wk, sizeof(SHAKE_SEARCH_WORK) );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	ブレ計測	破棄
- *
- *	@param	SHAKE_SEARCH_WORK *p_wk		ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void	SHAKESEARCH_Exit( SHAKE_SEARCH_WORK *p_wk )
-{	
-	GFL_STD_MemClear( p_wk, sizeof(SHAKE_SEARCH_WORK) );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	ブレ計測	計測メイン
- *
- *	@param	SHAKE_SEARCH_WORK *p_wk 
- *	@param	cp_rect　計測する範囲
- *
- *	@retval	TRUE	計測終了
- *	@retval	FALSE	計測中
- */
-//-----------------------------------------------------------------------------
-static BOOL	SHAKESEARCH_Main( SHAKE_SEARCH_WORK *p_wk, const GFL_RECT	*cp_rect )
-{	
-
-	//計測終了待ち
-	if( p_wk->cnt++ > TOUCH_COUNTER_MAX )
-	{	
-		TP_GetRectCont( cp_rect, &p_wk->shake[TOUCH_COUNTER_SHAKE_MAX-1] );
-		return TRUE;
-	}
-	else
-	{	
-		//計測
-		if( p_wk->shake_cnt++ > TOUCH_COUNTER_SHAKE_SYNC )
-		{	
-			p_wk->shake_cnt	= 0;
-			TP_GetRectCont( cp_rect, &p_wk->shake[p_wk->shake_idx++] );
-			GF_ASSERT_MSG( p_wk->shake_idx < TOUCH_COUNTER_SHAKE_MAX, 
-					"ブレ計測インデックスエラーです %d\n" , p_wk->shake_idx );
-		}
-	}
-
-	return FALSE;
 }
  
 #ifdef DEBUG_RHYTHM_MSG
