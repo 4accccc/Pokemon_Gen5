@@ -1822,7 +1822,7 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 
 
 	//プリント
-	OS_Printf( "↓○%d番目のゲーム　プリント開始↓↓↓↓↓↓↓↓\n" );
+	OS_Printf( "↓○%d番目のゲーム　プリント開始↓↓↓↓↓↓↓↓\n",p_wk->debug_game_cnt );
 	for( j = 0; j < 2; j++ )
 	{	
 		now_idx	= p_wk->debug_game_cnt + (j*DEBUG_GAME_NUM);
@@ -1948,7 +1948,7 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 			OS_Printf( "X (%d) Y (%d)\n",ofs1[2]-ofs2[2], ofs1[3]-ofs2[3] );
 		}
 
-		OS_Printf( "↑○%d番目のゲーム　プリント終了↑↑↑↑↑↑↑↑\n" );
+		OS_Printf( "↑○%d番目のゲーム　プリント終了↑↑↑↑↑↑↑↑\n", p_wk->debug_game_cnt );
 	}
 
 }
