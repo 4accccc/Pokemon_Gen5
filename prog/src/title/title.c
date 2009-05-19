@@ -324,6 +324,11 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 			tw->mode = trg;
 			tw->seq = SEQ_FADEOUT;
 		}
+		if( GFL_UI_TP_GetTrg() == TRUE )
+		{
+			tw->mode = trg;
+			tw->seq = SEQ_FADEOUT;
+    }
 	}
 	
 	switch(tw->seq){
