@@ -14,6 +14,15 @@
 #include "field_ground_anime.h"
 #include "texanm_sys.h"
 
+
+#ifdef PM_DEBUG
+
+#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
+#define DEBUG_FIELD_GRANM_MEM_PRINT   // メモリ使用量チェック
+#endif
+
+#endif
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -352,7 +361,7 @@ static void FIELD_GRANM_Ita_Init( FIELD_GRANM_ITA* p_wk, u32 arcID, u32 dataID, 
 {
 	int i;
 	void* p_anmres;
-
+  
 	// アニメーションファイル読み込み
 	p_wk->p_anmfile = GFL_ARC_UTIL_Load( arcID, dataID, FALSE, heapID );
 	p_anmres = NNS_G3dGetAnmByIdx( p_wk->p_anmfile, 0 );
@@ -364,6 +373,19 @@ static void FIELD_GRANM_Ita_Init( FIELD_GRANM_ITA* p_wk, u32 arcID, u32 dataID, 
 	{
 		FIELD_GRANM_Work_Init( &p_wk->p_wkbuf[i], p_anmres, heapID );
 	}
+
+
+#ifdef DEBUG_FIELD_GRANM_MEM_PRINT
+  {
+    u32 size;
+
+    size = GFL_ARC_GetDataSize( arcID, dataID );
+    size += sizeof(FIELD_GRANM_WORK)*block_num;
+    size += FIELD_GRANM_WORK_ANIMEOBJ_WORK_SIZE*block_num;
+
+    OS_TPrintf( "ita use mem size = 0x%x worknum = %d\n", size, block_num );
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -508,10 +530,15 @@ static void FIELD_GRANM_Work_Bind( FIELD_GRANM_WORK* p_wk, const GFL_G3D_RES* cp
 	{
 		cp_tex = NULL;
 	}
+
+  // アニメーションメモリサイズチェック
+  GF_ASSERT( NNS_G3dAnmObjCalcSizeRequired( p_wk->p_anmres, cp_mdl ) < FIELD_GRANM_WORK_ANIMEOBJ_WORK_SIZE );
 	
 	// アニメーションオブジェの初期化
 	GFL_STD_MemClear( p_wk->p_anmobj, FIELD_GRANM_WORK_ANIMEOBJ_WORK_SIZE );
 	NNS_G3dAnmObjInit( p_wk->p_anmobj, p_wk->p_anmres, cp_mdl, cp_tex );
+
+
 
 	// レンダーオブジェに関連付け
 	NNS_G3dRenderObjAddAnmObj( p_rendobj, p_wk->p_anmobj );
@@ -617,6 +644,21 @@ static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcI
 
 	// 強制転送命令
 	p_wk->trans = TRUE;
+
+#ifdef DEBUG_FIELD_GRANM_MEM_PRINT
+  {
+    u32 size;
+
+    size = GFL_ARC_GetDataSize( arcID, anmID );
+    size += GFL_ARC_GetDataSize( tex_arcID, texID );
+    size += sizeof(TEXANM_DATA) * p_wk->anime_num;
+    size += sizeof(u32) * p_wk->anime_num;
+    size += sizeof(u32) * p_wk->anime_num;
+    size += sizeof(fx32) * p_wk->anime_num;
+
+    OS_TPrintf( "itp use mem size = 0x%x animenum = %d\n", size, p_wk->anime_num );
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------
