@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-18T19:54:10"/>
+	<create user="matsumiya" host="W00179" date="2009-05-19T17:14:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -449,28 +449,28 @@
 		<comment>侵入時
 ・親プレイヤーが侵入時</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]が　まちに　きました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]が　自分の街に　来ました！</language>
+		<language name="JPN_KANJI" width="256">INTRUDE</language>
 	</row>
 
 	<row id="msg_invasion_test07_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>侵入時
 ・子プレイヤー１</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]が　まちに　きました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]が　自分の街に　来ました！</language>
+		<language name="JPN_KANJI" width="256">INTRUDE</language>
 	</row>
 
 	<row id="msg_invasion_test07_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>侵入時
 ・子プレイヤー２</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:2]が　まちに　きました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:2]が　自分の街に　来ました！</language>
+		<language name="JPN_KANJI" width="256">INTRUDE</language>
 	</row>
 
 	<row id="msg_invasion_test07_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>侵入時
 ・子プレイヤー３</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:3]が　まちに　きました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:3]が　自分の街に　来ました！</language>
+		<language name="JPN_KANJI" width="256">INTRUDE</language>
 	</row>
 
 	<flowchart-group-list>
