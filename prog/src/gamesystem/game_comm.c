@@ -450,16 +450,19 @@ void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZON
     if(player_status->same_count == 0){
       GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test01_01 + comm_net_id);
       GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test03_01 + comm_net_id);
+      OS_TPrintf("INFO:パレスにいます net_id = %d\n", comm_net_id);
     }
     else if(player_status->same_count > 60 * 10){
       GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test01_01 + comm_net_id);
       GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test03_01 + comm_net_id);
       player_status->same_count = 0;
+      OS_TPrintf("INFO:継続してパレスにいます net_id = %d\n", comm_net_id);
     }
   }
   else if(player_status->old_zone_id == ZONE_ID_PALACETEST && comm_net_id != invasion_netid
       && zone_id != ZONE_ID_PALACETEST && invasion_netid == GFL_NET_SystemGetCurrentID()){
     GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test07_01 + comm_net_id);
+    OS_TPrintf("INFO:街に侵入してきた！ net_id = %d\n", comm_net_id);
   }
 }
 
