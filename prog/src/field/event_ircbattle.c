@@ -103,14 +103,23 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     break;
   case _WAIT_IRCBATTLE_MENU:
-    if(dbw->isEndProc){
+    if (GAMESYSTEM_IsProcExists(gsys)){
+      break;
+    }
+//    if(dbw->isEndProc){
 			if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE )
 			{	
 				*seq = _FIELD_FADEOUT_IRCBATTLE;
-			}else{	
+			}
+			else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_EXIT){
+				FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+				FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(fieldWork), FIELD_SUBSCREEN_NORMAL);
+				return GMEVENT_RES_FINISH;
+			}
+			else{	
 				(*seq) ++;
 			}
-    }
+//    }
     break;
   case _FIELD_FADEOUT:
     dbw->isEndProc = FALSE;

@@ -19,6 +19,7 @@
 #include "font/font.naix"
 #include "print/str_tool.h"
 #include "sound/pm_sndsys.h"
+#include "system/wipe.h"
 
 #include "c_gear.naix"
 #include "c_gear_obj_NANR_LBLDEFS.h"
@@ -75,9 +76,31 @@ typedef enum{
 } _CGEAR_CLACT_TYPE;
 
 
+typedef enum{
+	_CGEAR_NET_BIT_IR = (1 << CGEAR_PANELTYPE_IR),
+	_CGEAR_NET_BIT_WIRELESS = (1 << CGEAR_PANELTYPE_WIRELESS),
+	_CGEAR_NET_BIT_WIFI = (1 << CGEAR_PANELTYPE_WIFI),
+} _CGEAR_NET_BIT;
+
+
+#define _CGEAR_NET_CHANGEPAL_NUM (4)
+#define _CGEAR_NET_CHANGEPAL_POSX (0xC)
+#define _CGEAR_NET_CHANGEPAL_POSY (1)
+#define _CGEAR_NET_CHANGEPAL_MAX (3)
+
 
 //--------------------------
 
+typedef enum{
+	_SELECTANIM_NONE,
+	_SELECTANIM_STANDBY,
+	_SELECTANIM_ANIMING,
+	
+} _SELECTANIM_ENUM;
+
+
+
+//--------------------------
 
 typedef struct {
 	int leftx;
@@ -164,16 +187,27 @@ struct _C_GEAR_WORK {
 	GFL_ARCUTIL_TRANSINFO subchar;
 	int windowNum;
 	BOOL IsIrc;
-	GAMESYS_WORK *gameSys_;
-	FIELD_MAIN_WORK *fieldWork_;
-	GMEVENT* event_;
+	FIELD_SUBSCREEN_WORK* subscreen;
 	CGEAR_SAVEDATA* pCGSV;
 	u32 objRes[3];  //CLACTリソース
 
-  GFL_CLUNIT *cellUnit;
-  GFL_CLWK  *cellCursor[_CLACT_TIMEPARTS_MAX];
-  GFL_CLWK  *cellType[_CLACT_TYPE_MAX];
+	GFL_CLUNIT *cellUnit;
+	GFL_CLWK  *cellSelect[C_GEAR_PANEL_WIDTH*C_GEAR_PANEL_HEIGHT];
+	GFL_CLWK  *cellCursor[_CLACT_TIMEPARTS_MAX];
+	GFL_CLWK  *cellType[_CLACT_TYPE_MAX];
 
+	u16 palBase[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
+	u16 palChange[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
+	u16 palTrans[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
+
+	u8 typeAnim[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
+
+	u8 plt_counter;  //パレットアニメカウンタ
+	u8 beacon_bit;   //ビーコンbit
+	u8 touchx;    //タッチされた場所
+	u8 touchy;    //タッチされた場所
+	u8 select_counter;  //選択した時のアニメカウンタ
+	u8 dummy[3];
 };
 
 
@@ -186,17 +220,9 @@ static void _changeStateDebug(C_GEAR_WORK* pWork,StateFunc* state, int line);
 static void _buttonWindowCreate(int num,int* pMsgBuff,C_GEAR_WORK* pWork);
 static void _modeSelectMenuInit(C_GEAR_WORK* pWork);
 static void _modeSelectMenuWait(C_GEAR_WORK* pWork);
-static void _modeSelectEntryNumInit(C_GEAR_WORK* pWork);
-static void _modeSelectEntryNumWait(C_GEAR_WORK* pWork);
-static void _modeReportInit(C_GEAR_WORK* pWork);
-static void _modeReportWait(C_GEAR_WORK* pWork);
+static void _gearXY2PanelScreen(int x,int y, int* px, int* py);
+
 static BOOL _modeSelectMenuButtonCallback(int bttnid,C_GEAR_WORK* pWork);
-static BOOL _modeSelectEntryNumButtonCallback(int bttnid,C_GEAR_WORK* pWork);
-static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,C_GEAR_WORK* pWork);
-static void _modeSelectBattleTypeInit(C_GEAR_WORK* pWork);
-static BOOL _modeSelectChangeButtonCallback(int bttnid,C_GEAR_WORK* pWork);
-static void _modeSelectChangWait(C_GEAR_WORK* pWork);
-static void _modeSelectChangeInit(C_GEAR_WORK* pWork);
 
 static void _timeAnimation(C_GEAR_WORK* pWork);
 static void _typeAnimation(C_GEAR_WORK* pWork);
@@ -240,6 +266,230 @@ static void _changeStateDebug(C_GEAR_WORK* pWork,StateFunc state, int line)
 #endif
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   与えられたxyから周囲の座標を返す
+ * @param   x,y          探す場所
+ * @param   xbuff,ybuff  探した場所をバッファする
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _getHexAround(int x,int y, int* xbuff,int* ybuff)
+{
+	if((x % 2) == 0){  // 偶数なら短い列の方   yは=かy-1が隣になる
+		xbuff[0]=x;   ybuff[0]=y-1;
+		xbuff[1]=x;   ybuff[1]=y+1;
+		xbuff[2]=x+1; ybuff[2]=y;
+		xbuff[3]=x+1; ybuff[3]=y-1;
+		xbuff[4]=x-1; ybuff[4]=y;
+		xbuff[5]=x-1; ybuff[5]=y-1;
+	}
+	else{   // 奇数なら長い列の方   yは=かy+1が隣になる
+		xbuff[0]=x;   ybuff[0]=y-1;
+		xbuff[1]=x;   ybuff[1]=y+1;
+		xbuff[2]=x+1; ybuff[2]=y;
+		xbuff[3]=x+1; ybuff[3]=y+1;
+		xbuff[4]=x-1; ybuff[4]=y;
+		xbuff[5]=x-1; ybuff[5]=y+1;
+	}
+}
+
+
+
+static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
+{
+	GFL_CLWK_DATA cellInitData;
+	int scrx,scry,i;
+	
+	_gearXY2PanelScreen(x, y, &scrx, &scry);
+	cellInitData.pos_x = scrx * 8+16;
+	cellInitData.pos_y = scry * 8+16;
+	cellInitData.anmseq = NANR_c_gear_obj_CellAnime01;
+	cellInitData.softpri = 0;
+	cellInitData.bgpri = 0;
+	i = x + y * C_GEAR_PANEL_WIDTH;
+	pWork->cellSelect[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+																							pWork->objRes[_CLACT_CHR],
+																							pWork->objRes[_CLACT_PLT],
+																							pWork->objRes[_CLACT_ANM],
+																							&cellInitData ,
+																							CLSYS_DEFREND_SUB ,
+																							pWork->heapID );
+	GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellSelect[i], TRUE );
+	GFL_CLACT_WK_SetDrawEnable( pWork->cellSelect[i], TRUE );
+}
+
+
+static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
+{
+	int x;
+	int y,i;
+	int xbuff[6];
+	int ybuff[6];
+
+	pWork->select_counter++;
+
+	if(pWork->select_counter==20){
+
+    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+	}
+	else if(pWork->select_counter==40){
+		_CHANGE_STATE(pWork,NULL);
+		FIELD_SUBSCREEN_ChangeFromWithin(pWork->subscreen, FIELD_SUBSCREEN_DEBUG_RED, FALSE);
+	}
+	
+	
+	if(	pWork->select_counter % 4 != 1){
+		return;
+	}
+	
+	for(y = 0; y < C_GEAR_PANEL_HEIGHT; y++)
+	{
+		for(x = 0; x < C_GEAR_PANEL_WIDTH ; x++)
+		{
+			if(pWork->typeAnim[x][y] == _SELECTANIM_STANDBY)
+			{
+				_selectAnimInit(pWork, x,y);
+				pWork->typeAnim[x][y] = _SELECTANIM_ANIMING;
+			}
+		}
+	}
+
+	for(y = 0; y < C_GEAR_PANEL_HEIGHT; y++)
+	{
+		for(x = 0; x < C_GEAR_PANEL_WIDTH ; x++)
+		{
+			if(pWork->typeAnim[x][y] == _SELECTANIM_ANIMING)
+			{
+				_getHexAround(x,y,xbuff,ybuff);
+				for(i=0;i<6;i++)
+				{
+					if((xbuff[i] >= 0) && (xbuff[i] < C_GEAR_PANEL_WIDTH))
+					{
+						int subnum = 1 - xbuff[i] % 2;
+						if((ybuff[i] >= 0) && (ybuff[i] < (C_GEAR_PANEL_HEIGHT-subnum)))
+						{
+							if(pWork->typeAnim[xbuff[i]][ybuff[i]] == _SELECTANIM_NONE){
+								pWork->typeAnim[xbuff[i]][ybuff[i]] = _SELECTANIM_STANDBY;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+#if DEBUG_ONLY_FOR_ohno
+	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_L){
+		int i;
+		for(i = 0;i < C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT; i++){
+			if(pWork->cellSelect[i]){
+				GFL_CLACT_WK_Remove( pWork->cellSelect[i] );
+			}
+		}
+		GFL_STD_MemClear(pWork->typeAnim, C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT);
+		_CHANGE_STATE(pWork,_modeSelectMenuWait);
+	}
+#endif
+		pWork->select_counter++;
+
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   選択されたのでアニメを行う
+ * @param   x,y          探す場所
+ * @param   xbuff,ybuff  探した場所をバッファする
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeSelectAnimInit(C_GEAR_WORK* pWork)
+{
+	int x,y;
+	CGEAR_PANELTYPE_ENUM type;
+	
+	pWork->typeAnim[pWork->touchx][pWork->touchy] = _SELECTANIM_STANDBY;
+	type = CGEAR_SV_GetPanelType(pWork->pCGSV,pWork->touchx,pWork->touchy);
+	
+	for(y = 0; y < C_GEAR_PANEL_HEIGHT; y++)
+	{
+		for(x = 0; x < C_GEAR_PANEL_WIDTH ; x++)
+		{
+			if(CGEAR_SV_GetPanelType(pWork->pCGSV,x,y) == type){
+				pWork->typeAnim[x][y] = _SELECTANIM_STANDBY;
+			}
+		}
+	}
+
+
+
+	
+#if !(DEBUG_ONLY_FOR_ohno)
+	{
+		int i;
+		for(i = 0;i < _CLACT_TYPE_MAX; i++)
+		{
+			if( pWork->cellType[i])
+			{
+				GFL_CLACT_WK_Remove( pWork->cellType[i] );
+				pWork->cellType[i]=NULL;
+			}
+		}
+	}
+#endif
+	_modeSelectAnimWait(pWork);
+	_CHANGE_STATE(pWork, _modeSelectAnimWait);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信を拾ったら、パレットで点滅させる
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _PanelPaletteChange(C_GEAR_WORK* pWork)
+{
+	u8 bittype[_CGEAR_NET_CHANGEPAL_NUM]={_CGEAR_NET_BIT_IR,_CGEAR_NET_BIT_WIRELESS,_CGEAR_NET_BIT_WIFI};
+	CGEAR_PANELTYPE_ENUM type[_CGEAR_NET_CHANGEPAL_NUM] = {CGEAR_PANELTYPE_IR,CGEAR_PANELTYPE_WIRELESS,CGEAR_PANELTYPE_WIFI};
+	//u16 rgbmask[3] = {0x1f,0x3e,0x7c0};
+
+	int i,x,y,pal;
+	u8 plt_counter;  //パレットアニメカウンタ
+
+	for(i = 0 ; i < _CGEAR_NET_CHANGEPAL_MAX ; i++)
+	{
+		if((pWork->plt_counter <= 64) && (pWork->beacon_bit & bittype[ i ]))
+		{
+			for(pal = 0; pal < _CGEAR_NET_CHANGEPAL_NUM; pal++)
+			{
+				int add,rgb,base;
+				int mod;
+				pWork->palTrans[i][pal] = 0;
+				for(rgb = 0; rgb < 3; rgb++){
+					base = (pWork->palBase[i][pal] >> rgb*5) & 0x1f;
+					add = (pWork->palChange[i][pal] >> rgb*5) & 0x1f - base;
+					mod = (pWork->plt_counter % 64);
+					if(mod >= 32){
+						mod = 63 - mod;
+					}
+					pWork->palTrans[i][pal] += (add * mod / 32 + base)<<(rgb*5);
+				}
+			}
+//			if(i==0){
+	//			OS_TPrintf("transPtr %x %x %x %x = %d\n", pWork->palTrans[i][0], pWork->palTrans[i][1], pWork->palTrans[i][2], pWork->palTrans[i][3], pWork->plt_counter);
+		//	}
+			
+			DC_FlushRange(pWork->palTrans[i], _CGEAR_NET_CHANGEPAL_NUM*2);
+			GXS_LoadBGPltt(pWork->palTrans[i], (16*(i+1) + 0xc) * 2, 8);
+		}
+	}
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -329,9 +579,12 @@ static BOOL _gearGetTypeBestPosition(C_GEAR_WORK* pWork,CGEAR_PANELTYPE_ENUM typ
 {
 	int x,y;
 
-	for(y = 0; y < C_GEAR_PANEL_HEIGHT; y++){
-		for(x = 0; x < C_GEAR_PANEL_WIDTH; x++){
-			if(CGEAR_SV_GetPanelType(pWork->pCGSV,x,y) == type){
+	for(y = 0; y < C_GEAR_PANEL_HEIGHT; y++)
+	{
+		for(x = 0; x < C_GEAR_PANEL_WIDTH; x++)
+		{
+			if(CGEAR_SV_GetPanelType(pWork->pCGSV,x,y) == type)
+			{
 				_gearXY2PanelScreen(x,y,px,py);
 				return TRUE;
 			}
@@ -377,6 +630,27 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_c_gear_c_gear_NCLR,
 																		PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+
+
+  {
+		int x,y;
+    u16* loadPtr = GFL_ARC_LoadDataAllocByHandle(  p_handle,
+                            NARC_c_gear_c_gear_NCLR,
+                            GFL_HEAP_LOWID(pWork->heapID) );
+
+		for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_MAX; y++){
+			for(x = 0 ; x < _CGEAR_NET_CHANGEPAL_NUM; x++){
+				pWork->palBase[y][x ] = loadPtr[20 + 16*(_CGEAR_NET_CHANGEPAL_POSY+y) + _CGEAR_NET_CHANGEPAL_POSX + x];
+				pWork->palChange[y][x] = loadPtr[20 +16*(_CGEAR_NET_CHANGEPAL_POSY+_CGEAR_NET_CHANGEPAL_MAX+y) + _CGEAR_NET_CHANGEPAL_POSX + x];
+			}
+		}
+
+
+    GFL_HEAP_FreeMemory( loadPtr );
+
+  }
+
+	
 	// サブ画面BGキャラ転送
 	pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_c_gear_c_gear_NCGR,
 																																GEAR_MAIN_FRAME, 0, 0, pWork->heapID);
@@ -396,6 +670,8 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 	pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_Register( p_handle ,
 																											 NARC_c_gear_c_gear_obj_NCLR ,
 																											 CLSYS_DRAW_SUB , 0 , pWork->heapID );
+
+
 
 	pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( p_handle ,
 																											NARC_c_gear_c_gear_obj_NCGR ,
@@ -534,25 +810,51 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 	u32 friendNo;
 	u32 touchx,touchy;
 	int xp,yp;
+	int type = CGEAR_PANELTYPE_NONE;
 
 	switch( event ){
 	case GFL_BMN_EVENT_TOUCH:		///< 触れた瞬間
-		if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
+
+		if(GFL_UI_TP_GetPointCont(&touchx,&touchy))
+		{
 			int ypos[2] = {PANEL_Y1,PANEL_Y2};
 			int yloop[2] = {PANEL_HEIDHT1,PANEL_HEIGHT2};
 			touchx = touchx / 8;
 			touchy = touchy / 8;
 			xp = (touchx - PANEL_X1) / PANEL_SIZEXY;
 			yp = (touchy - ypos[xp % 2]) / PANEL_SIZEXY;
-			if((xp < C_GEAR_PANEL_WIDTH) && (yp < yloop[ xp % 2 ])){
-				int type = CGEAR_SV_GetPanelType(pWork->pCGSV,xp,yp);
+			if((xp < C_GEAR_PANEL_WIDTH) && (yp < yloop[ xp % 2 ]))
+			{
+				type = CGEAR_SV_GetPanelType(pWork->pCGSV,xp,yp);
+			}
+		}
 
-				if(_gearPanelTypeNum(pWork,type) > 1){
-					CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,(type+1) % CGEAR_PANELTYPE_MAX);
-				}
-				_gearPanelBgScreenMake(pWork, xp, yp, CGEAR_SV_GetPanelType(pWork->pCGSV,xp,yp));
-				GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L)  ///< パネルタイプを変更
+		{
+			if(_gearPanelTypeNum(pWork,type) > 1)
+			{
+				CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,(type+1) % CGEAR_PANELTYPE_MAX);
+			}
+			_gearPanelBgScreenMake(pWork, xp, yp,type);
+			GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+		}
+		else{    ///< ギアメニューを変更
+			pWork->touchx = xp;
+			pWork->touchy = yp;
 
+			switch(type){
+			case CGEAR_PANELTYPE_IR:
+				_CHANGE_STATE(pWork,_modeSelectAnimInit);
+				
+				
+//				_CHANGE_STATE(pWork,_modeSelectMenuInit);
+				break;
+			case CGEAR_PANELTYPE_WIRELESS:
+//				_CHANGE_STATE(pWork,_modeSelectMenuInit);
+				break;
+			case CGEAR_PANELTYPE_WIFI:
+	//			_CHANGE_STATE(pWork,_modeSelectMenuInit);
+				break;
 			}
 		}
 		break;
@@ -573,10 +875,10 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
 	int i;
 	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 
-  //セル系システムの作成
-  pWork->cellUnit = GFL_CLACT_UNIT_Create( 56+_CLACT_TIMEPARTS_MAX , 0 , pWork->heapID );
-  
-  for(i=0;i < _CLACT_TIMEPARTS_MAX ;i++)
+	//セル系システムの作成
+	pWork->cellUnit = GFL_CLACT_UNIT_Create( 56+_CLACT_TIMEPARTS_MAX , 0 , pWork->heapID );
+
+	for(i=0;i < _CLACT_TIMEPARTS_MAX ;i++)
 	{
 		int anmbuff[]=
 		{
@@ -596,26 +898,26 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
 			63,
 			218,
 		};
-		
-    GFL_CLWK_DATA cellInitData;
-    //セルの生成
-    cellInitData.pos_x = xbuff[i];
-    cellInitData.pos_y =  18;
-    cellInitData.anmseq = anmbuff[i];
-    cellInitData.softpri = 0;
-    cellInitData.bgpri = 0;
-    //↑矢印
-    pWork->cellCursor[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                          pWork->objRes[_CLACT_CHR],
-                          pWork->objRes[_CLACT_PLT],
-                          pWork->objRes[_CLACT_ANM],
-                          &cellInitData , 
-                          CLSYS_DEFREND_SUB ,
-                          pWork->heapID );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], TRUE );
-  }
 
-  for(i=0;i < _CLACT_TYPE_MAX ;i++)
+		GFL_CLWK_DATA cellInitData;
+		//セルの生成
+		cellInitData.pos_x = xbuff[i];
+		cellInitData.pos_y =  18;
+		cellInitData.anmseq = anmbuff[i];
+		cellInitData.softpri = 0;
+		cellInitData.bgpri = 0;
+		//↑矢印
+		pWork->cellCursor[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+																								pWork->objRes[_CLACT_CHR],
+																								pWork->objRes[_CLACT_PLT],
+																								pWork->objRes[_CLACT_ANM],
+																								&cellInitData ,
+																								CLSYS_DEFREND_SUB ,
+																								pWork->heapID );
+		GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], TRUE );
+	}
+
+	for(i=0;i < _CLACT_TYPE_MAX ;i++)
 	{
 		int anmbuff[]=
 		{
@@ -623,25 +925,25 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
 			NANR_c_gear_obj_CellAnime_WIRELESS,
 			NANR_c_gear_obj_CellAnime_WIFI,
 		};
-		
-    GFL_CLWK_DATA cellInitData;
-    //セルの生成
+
+		GFL_CLWK_DATA cellInitData;
+		//セルの生成
 
 		cellInitData.pos_x = 8;
-    cellInitData.pos_y = 8;
-    cellInitData.anmseq = anmbuff[i];
-    cellInitData.softpri = 0;
-    cellInitData.bgpri = 0;
-    //↑矢印
-    pWork->cellType[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                          pWork->objRes[_CLACT_CHR],
-                          pWork->objRes[_CLACT_PLT],
-                          pWork->objRes[_CLACT_ANM],
-                          &cellInitData , 
-                          CLSYS_DEFREND_SUB,
-                          pWork->heapID );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], TRUE );
-  }
+		cellInitData.pos_y = 8;
+		cellInitData.anmseq = anmbuff[i];
+		cellInitData.softpri = 0;
+		cellInitData.bgpri = 0;
+		//↑矢印
+		pWork->cellType[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+																							pWork->objRes[_CLACT_CHR],
+																							pWork->objRes[_CLACT_PLT],
+																							pWork->objRes[_CLACT_ANM],
+																							&cellInitData ,
+																							CLSYS_DEFREND_SUB,
+																							pWork->heapID );
+		GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], TRUE );
+	}
 	_timeAnimation(pWork);
 	_typeAnimation(pWork);
 
@@ -664,24 +966,13 @@ static void _modeInit(C_GEAR_WORK* pWork)
 
 	pWork->IsIrc=FALSE;
 
-	//  pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
-	//  pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
-	//  pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_c_gear_dat, pWork->heapID );
-	_CHANGE_STATE(pWork,_modeSelectMenuInit);
-}
+	GFL_NET_ReloadIcon();
 
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectMenuInit(C_GEAR_WORK* pWork)
-{
 	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-	pWork->touch = &_modeSelectMenuButtonCallback;
+//	pWork->touch = &_modeSelectMenuButtonCallback;
 
 	_CHANGE_STATE(pWork,_modeSelectMenuWait);
+
 }
 
 static void _workEnd(C_GEAR_WORK* pWork)
@@ -693,18 +984,27 @@ static void _workEnd(C_GEAR_WORK* pWork)
 	}
 	{
 		int i;
-		for(i=0;i < _CLACT_TIMEPARTS_MAX;i++){
-			GFL_CLACT_WK_Remove( pWork->cellCursor[i] );
+		for(i = 0;i < _CLACT_TIMEPARTS_MAX; i++){
+			if(pWork->cellCursor[i]){
+				GFL_CLACT_WK_Remove( pWork->cellCursor[i] );
+			}
 		}
-		for(i=0;i < _CLACT_TYPE_MAX;i++){
-			GFL_CLACT_WK_Remove( pWork->cellType[i] );
+		for(i = 0;i < _CLACT_TYPE_MAX; i++){
+			if( pWork->cellType[i]){
+				GFL_CLACT_WK_Remove( pWork->cellType[i] );
+			}
+		}
+		for(i = 0;i < C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT; i++){
+			if(pWork->cellSelect[i]){
+				GFL_CLACT_WK_Remove( pWork->cellSelect[i] );
+			}
 		}
 	}
-  GFL_CLACT_UNIT_Delete( pWork->cellUnit );
-  GFL_CLGRP_CELLANIM_Release( pWork->objRes[_CLACT_ANM] );
-  GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
-  GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
-	
+	GFL_CLACT_UNIT_Delete( pWork->cellUnit );
+	GFL_CLGRP_CELLANIM_Release( pWork->objRes[_CLACT_ANM] );
+	GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
+	GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
+
 	//    _buttonWindowDelete(pWork);
 	//  GFL_BG_FillCharacterRelease( GEAR_MAIN_FRAME, 1, 0);
 	//  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
@@ -759,7 +1059,7 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 	{  //時10
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO2];
 		int num = (time.hour % 12) / 10;
-		
+
 		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
 			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
 		}
@@ -767,7 +1067,7 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 	{  //時1
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO10a];
 		int num = (time.hour % 12) % 10;
-		
+
 		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
 			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
 		}
@@ -776,17 +1076,17 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 	{  //ころん
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_colon];
 		int num = time.second % 2;
-		
+
 		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
 			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
 		}
 	}
 
-	
+
 	{//秒１０
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO6];
 		int num = time.minute / 10;
-		
+
 		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
 			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
 			battflg = TRUE;
@@ -795,7 +1095,7 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 	{//秒１
 		GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_NO10b];
 		int num = time.minute % 10;
-		
+
 		if(GFL_CLACT_WK_GetAnmFrame(cp_wk) !=  num){
 			GFL_CLACT_WK_SetAnmFrame(cp_wk,num);
 		}
@@ -814,8 +1114,8 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 
 
 
-	
-	
+
+
 }
 
 //------------------------------------------------------------------------------
@@ -836,41 +1136,15 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
 		_gearGetTypeBestPosition(pWork, CGEAR_PANELTYPE_IR+i, &x, &y);
 		x *= 8;
 		y *= 8;
-//		GFL_CLACT_WK_GetPos( pWork->cellType[i], &pos , CLSYS_DEFREND_SUB);
-//		if((pos.x != x) || (pos.y != y)){
+		//		GFL_CLACT_WK_GetPos( pWork->cellType[i], &pos , CLSYS_DEFREND_SUB);
+		//		if((pos.x != x) || (pos.y != y)){
 		pos.x = x+32;  // OBJ表示の為の補正値
 		pos.y = y+16;
 		GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CLSYS_DEFREND_SUB);
-//		}
+		//		}
 	}
 }
 
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static BOOL _modeSelectMenuButtonCallback(int bttnid,C_GEAR_WORK* pWork)
-{
-	switch( bttnid ){
-	case _SELECTMODE_BATTLE:
-		_CHANGE_STATE(pWork,_modeSelectEntryNumInit);
-		_buttonWindowDelete(pWork);
-		return TRUE;
-	case _SELECTMODE_POKE_CHANGE:
-		_CHANGE_STATE(pWork,_modeSelectChangeInit);
-		_buttonWindowDelete(pWork);
-		return TRUE;
-	case _SELECTMODE_EXIT:
-		_CHANGE_STATE(pWork,NULL);        // 終わり
-		_buttonWindowDelete(pWork);
-		return TRUE;
-	default:
-		break;
-	}
-	return FALSE;
-}
 
 //------------------------------------------------------------------------------
 /**
@@ -883,202 +1157,11 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 	GFL_BMN_Main( pWork->pButton );
 	_timeAnimation(pWork);
 	_typeAnimation(pWork);
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   交換画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectChangeInit(C_GEAR_WORK* pWork)
-{
-	int aMsgBuff[]={gear_001, gear_001};
-
-	_buttonWindowCreate(NELEMS(aMsgBuff),aMsgBuff,pWork);
-
-	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-	pWork->touch = &_modeSelectChangeButtonCallback;
-
-	_CHANGE_STATE(pWork,_modeSelectChangWait);
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   交換画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static BOOL _modeSelectChangeButtonCallback(int bttnid,C_GEAR_WORK* pWork)
-{
-	switch(bttnid){
-	case _CHANGE_FRIENDCHANGE:
-		//    pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
-		_buttonWindowDelete(pWork);
-		_CHANGE_STATE(pWork,_modeReportInit);
-		return TRUE;
-	default:
-		break;
-	}
-	return FALSE;
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   交換画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectChangWait(C_GEAR_WORK* pWork)
-{
-	GFL_BMN_Main( pWork->pButton );
-
+	_PanelPaletteChange(pWork);
 }
 
 
 
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   人数選択画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectEntryNumInit(C_GEAR_WORK* pWork)
-{
-	int aMsgBuff[]={gear_001,gear_001,gear_001};
-
-	_buttonWindowCreate(3,aMsgBuff,pWork);
-
-	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-	pWork->touch = &_modeSelectEntryNumButtonCallback;
-
-	_CHANGE_STATE(pWork,_modeSelectEntryNumWait);
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static BOOL _modeSelectEntryNumButtonCallback(int bttnid,C_GEAR_WORK* pWork)
-{
-	switch(bttnid){
-	case _ENTRYNUM_DOUBLE:
-		_buttonWindowDelete(pWork);
-		_CHANGE_STATE(pWork,_modeSelectBattleTypeInit);
-		return TRUE;
-	case _ENTRYNUM_FOUR:
-		//    pWork->selectType = EVENTIRCBTL_ENTRYMODE_MULTH;
-		_buttonWindowDelete(pWork);
-		_CHANGE_STATE(pWork,_modeReportInit);
-		return TRUE;
-	case _ENTRYNUM_EXIT:
-		_buttonWindowDelete(pWork);
-		_CHANGE_STATE(pWork,_modeSelectMenuInit);
-		return TRUE;
-	default:
-		break;
-	}
-	return FALSE;
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   人数選択画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectBattleTypeInit(C_GEAR_WORK* pWork)
-{
-	int aMsgBuff[]={gear_001,gear_001,gear_001,gear_001};
-
-	_buttonWindowCreate(4,aMsgBuff,pWork);
-
-	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-	pWork->touch = &_modeSelectBattleTypeButtonCallback;
-
-	_CHANGE_STATE(pWork,_modeSelectEntryNumWait);
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,C_GEAR_WORK* pWork)
-{
-	switch(bttnid){
-	case _SELECTBT_SINGLE:
-		//    pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
-		_buttonWindowDelete(pWork);
-		_CHANGE_STATE(pWork,_modeReportInit);
-		break;
-	case _SELECTBT_DOUBLE:
-		//    pWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
-		_buttonWindowDelete(pWork);
-		_CHANGE_STATE(pWork,_modeReportInit);
-		break;
-	case _SELECTBT_TRI:
-		//    pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRI;
-		_buttonWindowDelete(pWork);
-		_CHANGE_STATE(pWork,_modeReportInit);
-		break;
-	default:
-		_buttonWindowDelete(pWork);
-		_CHANGE_STATE(pWork,_modeSelectMenuInit);
-		break;
-	}
-	return TRUE;
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   人数選択画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectEntryNumWait(C_GEAR_WORK* pWork)
-{
-	GFL_BMN_Main( pWork->pButton );
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブ確認画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeReportInit(C_GEAR_WORK* pWork)
-{
-
-	//    GAMEDATA_Save(GAMESYSTEM_GetGameData(GMEVENT_GetGameSysWork(event)));
-
-	_CHANGE_STATE(pWork,_modeReportWait);
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブ確認画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeReportWait(C_GEAR_WORK* pWork)
-{
-	pWork->IsIrc = TRUE;  //赤外線接続開始
-	_CHANGE_STATE(pWork,NULL);
-}
 
 
 //------------------------------------------------------------------------------
@@ -1087,7 +1170,7 @@ static void _modeReportWait(C_GEAR_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV )
+C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub )
 {
 	C_GEAR_WORK *pWork = NULL;
 
@@ -1096,11 +1179,12 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV )
 	pWork = GFL_HEAP_AllocClearMemory( HEAPID_FIELDMAP, sizeof( C_GEAR_WORK ) );
 	pWork->heapID = HEAPID_FIELDMAP;
 	pWork->pCGSV = pCGSV;
+	pWork->subscreen = pSub;
 
-//	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
+	//	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
 	_modeInit(pWork);
-	
-//	_CHANGE_STATE( pWork, _modeInit);
+
+	//	_CHANGE_STATE( pWork, _modeInit);
 	return pWork;
 }
 
@@ -1113,8 +1197,14 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV )
 void CGEAR_Main( C_GEAR_WORK* pWork )
 {
 	StateFunc* state = pWork->state;
-	if(state != NULL){
+	if(state != NULL)
+	{
 		state(pWork);
+		pWork->plt_counter++;
+		if(pWork->plt_counter==128)
+		{
+			pWork->plt_counter=0;
+		}
 	}
 }
 

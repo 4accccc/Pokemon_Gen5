@@ -914,7 +914,7 @@ static void setupTopMenuSubscreen(DMESSWORK * dmess)
 //--------------------------------------------------------------
 static void setupDebugRedSubscreen(DMESSWORK * dmess)
 { 
-  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_RED);
+  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_RED);
 }
 
 //--------------------------------------------------------------

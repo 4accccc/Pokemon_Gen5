@@ -9,8 +9,7 @@ extern "C" {
  * @date    2006.11.4
  */
 //=============================================================================
-#ifndef __GFL_NET_H__
-#define __GFL_NET_H__
+#pragma once
 
 #include "ui.h"
 
@@ -933,7 +932,6 @@ extern int GFL_NET_SystemIsLobbyError(void);
 #include "net_handle.h"
 #include "net_icondata.h"
 
-#endif // __GFL_NET_H__
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -279,6 +279,28 @@ void FIELD_SUBSCREEN_ChangeForce( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_M
 
 //----------------------------------------------------------------------------
 /**
+ * @brief         FIELD_SUBSCREEN内部から 別のサブスクリーンに切り替えます
+ * @param	pWork
+ * @param	pWork		サブスクリーン制御ワークへのポインタ
+ * @param	mode
+ */
+//----------------------------------------------------------------------------
+void FIELD_SUBSCREEN_ChangeFromWithin( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode, BOOL bFade)
+{
+  GF_ASSERT(new_mode < FIELD_SUBSCREEN_MODE_MAX);
+  GF_ASSERT(funcTable[new_mode].mode == new_mode);
+	pWork->nextMode = new_mode;
+	if(bFade){
+		pWork->state = FSS_CHANGE_FADEOUT;
+	}
+	else{
+		pWork->state = FSS_CHANGE_FADEOUT_WAIT;
+	}
+}
+
+
+//----------------------------------------------------------------------------
+/**
  * @brief
  * @param	pWork		サブスクリーン制御ワークへのポインタ
  * @return	FIELD_SUBSCREEN_MODE	現在の下画面モード
@@ -351,7 +373,7 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork)
   pWork->cgearWork = CGEAR_Init(CGEAR_SV_GetCGearSaveData(
 		GAMEDATA_GetSaveControlWork(
 		GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap))
-		)));
+		)), pWork);
 }
 
 //----------------------------------------------------------------------------

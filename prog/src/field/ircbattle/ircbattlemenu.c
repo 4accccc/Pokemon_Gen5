@@ -14,6 +14,7 @@
 #include "ircbattlemenu.h"
 #include "ircbattlematch.h"
 #include "system/main.h"
+#include "system/wipe.h"
 
 #include "message.naix"
 #include "print/printsys.h"
@@ -713,7 +714,12 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
     IRC_BATTLE_MENU *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_BATTLE_MENU ), HEAPID_IRCBATTLE );
     GFL_STD_MemClear(pWork, sizeof(IRC_BATTLE_MENU));
     pWork->heapID = HEAPID_IRCBATTLE;
-    _CHANGE_STATE( pWork, _modeInit);
+
+		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+
+
+		_CHANGE_STATE( pWork, _modeInit);
   }
   return GFL_PROC_RES_FINISH;
 }
