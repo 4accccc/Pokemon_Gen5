@@ -124,7 +124,7 @@ static void ms_set_trace( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_yotimu( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_omitoosi( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_change_poke_type( STRBUF* dst, u16 strID, const int* args );
-static void ms_set_kinomi_common( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_item_common( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_kinomi_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_item_recover_pp( STRBUF* dst, u16 strID, const int* args );
 
@@ -426,17 +426,18 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_YotimuExe,      ms_set_yotimu     },
     { BTL_STRID_SET_Omitoosi,       ms_set_omitoosi   },
     { BTL_STRID_SET_ChangePokeType, ms_set_change_poke_type },
-    { BTL_STRID_SET_UseItem_RecoverHP, ms_set_kinomi_common },
-    { BTL_STRID_SET_UseItem_CureDoku, ms_set_kinomi_common },
-    { BTL_STRID_SET_UseItem_CureMahi, ms_set_kinomi_common },
-    { BTL_STRID_SET_UseItem_CureNemuri, ms_set_kinomi_common },
-    { BTL_STRID_SET_UseItem_CureKoori,  ms_set_kinomi_common },
-    { BTL_STRID_SET_UseItem_CureYakedo, ms_set_kinomi_common },
-    { BTL_STRID_SET_UseItem_CureKonran, ms_set_kinomi_common },
-    { BTL_STRID_SET_UseItem_RecoverLittle, ms_set_kinomi_common },
+    { BTL_STRID_SET_UseItem_RecoverHP, ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureDoku, ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureMahi, ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureNemuri, ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureKoori,  ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureYakedo, ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureKonran, ms_set_item_common },
+    { BTL_STRID_SET_UseItem_RecoverLittle, ms_set_item_common },
+    { BTL_STRID_SET_RankRecoverItem,  ms_set_item_common },
+    { BTL_STRID_SET_KoraeItem,  ms_set_item_common },
     { BTL_STRID_SET_UseItem_Rankup_ATK, ms_set_kinomi_rankup },
     { BTL_STRID_SET_UseItem_RecoverPP, ms_set_item_recover_pp },
-    { BTL_STRID_SET_KoraeItem,  ms_set_kinomi_common },
 
   };
 
@@ -575,11 +576,11 @@ static void ms_set_change_poke_type( STRBUF* dst, u16 strID, const int* args )
 }
 //--------------------------------------------------------------
 /**
- *  ○○は××で　たいりょくをかいふくした！  等々、木の実効果。
+ *  ○○は××で　たいりょくをかいふくした！  等々、アイテム効果。
  *  args... [0]:pokeID,  [1]:itemID
  */
 //--------------------------------------------------------------
-static void ms_set_kinomi_common( STRBUF* dst, u16 strID, const int* args )
+static void ms_set_item_common( STRBUF* dst, u16 strID, const int* args )
 {
   register_PokeNickname( args[0], BUFIDX_POKE_1ST );
   WORDSET_RegisterItemName( SysWork.wset, 1, args[1] );

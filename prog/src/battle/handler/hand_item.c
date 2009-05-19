@@ -1394,8 +1394,16 @@ static void handler_SiroiHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_RECOVER_RANK* param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RECOVER_RANK, pokeID );
-    param->pokeID = pokeID;
+    BTL_HANDEX_PARAM_RECOVER_RANK* recover_param;
+    BTL_HANDEX_PARAM_MESSAGE* msg_param;
+
+    recover_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_RECOVER_RANK, pokeID );
+    recover_param->pokeID = pokeID;
+
+    msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
+    msg_param->strID = BTL_STRID_SET_RankRecoverItem;
+    msg_param->args[0] = pokeID;
+    msg_param->args[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
   }
 }
 //------------------------------------------------------------------------------

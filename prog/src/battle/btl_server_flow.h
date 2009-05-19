@@ -171,6 +171,7 @@ typedef enum {
   BTL_HANDEX_CURE_SICK,     ///< 状態異常を回復
   BTL_HANDEX_ADD_SICK,      ///< 状態異常にする
   BTL_HANDEX_RANK_EFFECT,   ///< ランク増減効果
+  BTL_HANDEX_RESET_RANK,    ///< ランク増減効果をリセット
   BTL_HANDEX_RECOVER_RANK,  ///< マイナスランクをフラットに戻す
   BTL_HANDEX_DAMAGE,        ///< ダメージを与える
   BTL_HANDEX_CHANGE_TYPE,   ///< ポケモンのタイプを変える
@@ -240,7 +241,7 @@ typedef struct {
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  WazaRankEffect rankType;            ///< ランク増減種類
- s8   rankVolume;                    ///< ランク増減値
+ s8   rankVolume;                    ///< ランク増減値(=0だと強制リセット）
  u8   fAlmost;                       ///< ほぼ確定フラグ（特殊要因で失敗した場合に原因メッセージを表示する）
  u8   poke_cnt;                      ///< 対象ポケモン数
  u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
@@ -250,6 +251,12 @@ typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8 pokeID;                          ///< 対象ポケモンID
 }BTL_HANDEX_PARAM_RECOVER_RANK;
+
+typedef struct {
+ BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
+ u8   poke_cnt;                      ///< 対象ポケモン数
+ u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
+}BTL_HANDEX_PARAM_RESET_RANK;
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ

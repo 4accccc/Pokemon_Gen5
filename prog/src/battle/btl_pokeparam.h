@@ -55,18 +55,32 @@ typedef enum {
 
 //--------------------------------------------------------------
 /**
- *  ターンごとにクリアされるフラグセット
+ *  ターン終了ごとにクリアされるフラグセット
  */
 //--------------------------------------------------------------
 typedef enum {
 
   BPP_TURNFLG_ACTION_DONE,  ///< 行動した
-  BPP_TURNFLG_SHRINK,     ///< ひるまされた
-  BPP_TURNFLG_DEAD,       ///< このターンに死んだ
+  BPP_TURNFLG_SHRINK,       ///< ひるまされた
+  BPP_TURNFLG_DEAD,         ///< このターンに死んだ
 
   BPP_TURNFLG_MAX,
 
 }BppTurnFlag;
+
+//--------------------------------------------------------------
+/**
+ *  アクション選択ごとにクリアされるフラグセット
+ */
+//--------------------------------------------------------------
+typedef enum {
+
+  BPP_ACTFLG_CANT_ACTION,   ///< アクション選択不可
+
+  BPP_ACTFLG_MAX,
+
+}BppActFlag;
+
 
 //--------------------------------------------------------------
 /**
@@ -186,6 +200,7 @@ extern BOOL BTL_POKEPARAM_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx );
 extern PokeSick BTL_POKEPARAM_GetPokeSick( const BTL_POKEPARAM* pp );
 extern int BTL_POKEPARAM_CalcSickDamage( const BTL_POKEPARAM* pp );
 extern BOOL BTL_POKEPARAM_GetTurnFlag( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
+extern BOOL BTL_POKEPARAM_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID );
 extern BOOL BTL_POKEPARAM_GetContFlag( const BTL_POKEPARAM* pp, BppContFlag flagID );
 extern u16 BTL_POKEPARAM_GetTurnCount( const BTL_POKEPARAM* pp );
 extern u16 BTL_POKEPARAM_GetAppearTurn( const BTL_POKEPARAM* pp );
@@ -247,6 +262,8 @@ extern void BTL_POKEPARAM_WazaSick_TurnCheck( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetShrink( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetTurnFlag( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BTL_POKEPARAM_ClearTurnFlag( BTL_POKEPARAM* pp );
+extern void BTL_POKEPARAM_SetActFlag( BTL_POKEPARAM* pp, BppActFlag flagID );
+extern void BTL_POKEPARAM_ClearActFlag( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_SetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BTL_POKEPARAM_ResetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BTL_POKEPARAM_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok );
@@ -255,6 +272,8 @@ extern void BTL_POKEPARAM_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type )
 extern void BTL_POKEPARAM_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
 extern void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza );
+extern void BTL_POKEPARAM_RankRecover( BTL_POKEPARAM* pp );
+extern void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp );
 
 
 

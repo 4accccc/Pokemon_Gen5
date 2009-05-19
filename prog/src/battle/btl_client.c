@@ -158,6 +158,9 @@ static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RemoveItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetContFlag( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_SetActFlag( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_ResetContFlag( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_ClearActFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
@@ -350,18 +353,25 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
   case SEQ_SELECT_ACTION:
     {
       BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
-      if( !BTL_POKEPARAM_IsDead(bpp) )
-      {
-        BTL_Printf("アクション選択(%d体目）開始します\n", wk->procPokeIdx );
-        BTLV_UI_SelectAction_Start( wk->viewCore, bpp, &wk->actionParam[wk->procPokeIdx] );
-        (*seq) = SEQ_CHECK_ACTION;
-      }
-      else
+      if( BTL_POKEPARAM_IsDead(bpp) )
       {
         BTL_Printf("アクション選択(%d体目）しんでるのでスキップします\n", wk->procPokeIdx );
         BTL_ACTION_SetNULL( &wk->actionParam[wk->procPokeIdx] );
         (*seq) = SEQ_CHECK_DONE;
+        break;
       }
+      if( BTL_POKEPARAM_GetActFlag(bpp, BPP_ACTFLG_CANT_ACTION) )
+      {
+        BTL_Printf("アクション選択(%d体目）動けないのでスキップします\n", wk->procPokeIdx );
+        BTL_ACTION_SetSkip( &wk->actionParam[wk->procPokeIdx] );
+        (*seq) = SEQ_CHECK_DONE;
+        break;
+      }
+
+      BTL_Printf("アクション選択(%d体目）開始します\n", wk->procPokeIdx );
+      BTLV_UI_SelectAction_Start( wk->viewCore, bpp, &wk->actionParam[wk->procPokeIdx] );
+      (*seq) = SEQ_CHECK_ACTION;
+      break;
     }
     break;
   case SEQ_CHECK_ACTION:
@@ -877,6 +887,9 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_REMOVE_ITEM,        scProc_OP_RemoveItem      },
     { SC_OP_UPDATE_USE_WAZA,    scProc_OP_UpdateUseWaza   },
     { SC_OP_SET_CONTFLAG,       scProc_OP_SetContFlag     },
+    { SC_OP_RESET_CONTFLAG,     scProc_OP_ResetContFlag   },
+    { SC_OP_SET_ACTFLAG,        scProc_OP_SetActFlag      },
+    { SC_OP_CLEAR_ACTFLAG,      scProc_OP_ClearActFlag    },
   };
 
 restart:
@@ -1707,6 +1720,24 @@ static BOOL scProc_OP_SetContFlag( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BTL_POKEPARAM_SetContFlag( pp, args[1] );
+  return TRUE;
+}
+static BOOL scProc_OP_SetActFlag( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM_SetActFlag( pp, args[1] );
+  return TRUE;
+}
+static BOOL scProc_OP_ResetContFlag( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM_ResetContFlag( pp, args[1] );
+  return TRUE;
+}
+static BOOL scProc_OP_ClearActFlag( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM_ClearActFlag( pp );
   return TRUE;
 }
 
