@@ -1825,6 +1825,118 @@ static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk )
 			OS_Printf( "間隔の差[%d] %d\n", i, MATH_IAbs(player1 - player2) );
 		}
 	}
+
+	OS_Printf( "■結果の表示\n" );
+	//結果
+	{	
+		s32 player1;
+		s32 player2;
+		u32	prog;
+		u32	score;
+		player1	= p_wk->search.data[p_wk->search.data_idx-1].prog_ms - p_wk->search.data[0].prog_ms;
+		player2	= p_wk->search2.data[p_wk->search2.data_idx-1].prog_ms - p_wk->search2.data[0].prog_ms;
+		prog	= MATH_IAbs(player1 - player2);
+		if( prog  == 0 )
+		{	
+			score	= 100;
+		}
+		else if( prog  < 500 )
+		{	
+			score	= 90;
+		}
+		else if( prog  < 1000 )
+		{
+			score	= 80;
+		}
+		else if( prog  < 3000 )
+		{
+			score	= 70;
+		}
+		else if( prog  < 5000 )
+		{
+			score	= 60;
+		}
+		else if( prog  < 10000 )
+		{
+			score	= 50;
+		}
+		else if( prog  < 15000 )
+		{
+			score	= 40;
+		}
+		else if( prog  < 20000 )
+		{
+			score	= 30;
+		}
+		else if( prog  < 25000 )
+		{
+			score	= 20;
+		}
+		else if( prog  < 30000 )
+		{
+			score	= 10;
+		}
+		else
+		{
+			score	= 0;
+		}
+
+		OS_Printf( "経過時間 点%d\n", score );
+		score	= 0;
+		for( i = 1; i < 10; i++ )
+		{	
+			player1	= p_wk->search.data[i].diff_ms;
+			player2	= p_wk->search2.data[i].diff_ms;
+			prog	= MATH_IAbs(player1 - player2);
+
+			if( prog  == 0 )
+			{	
+				score	+= 100;
+			}
+			else if( prog  < 200 )
+			{	
+				score	+= 90;
+			}
+			else if( prog  < 400 )
+			{
+				score	+= 80;
+			}
+			else if( prog  < 500 )
+			{
+				score	+= 70;
+			}
+			else if( prog  < 1000 )
+			{
+				score	+= 60;
+			}
+			else if( prog  < 2000 )
+			{
+				score	+= 50;
+			}
+			else if( prog  < 3000 )
+			{
+				score	+= 40;
+			}
+			else if( prog  < 5000 )
+			{
+				score	+= 30;
+			}
+			else if( prog  < 10000 )
+			{
+				score	+= 20;
+			}
+			else if( prog  < 15000 )
+			{
+				score	+= 10;
+			}
+			else
+			{
+				//score	+= 0;
+			}
+		}
+		OS_Printf( "間隔 点%d\n", score/9 );
+		
+	}
 	
 	OS_Printf( "↑リズムチェック表示終了↑↑↑↑↑\n" );
 
