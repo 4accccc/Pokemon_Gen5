@@ -75,7 +75,6 @@
 	ARCID_FLDMAP_MAPMATRIX "test_graphic/map_matrix.narc" #フィールドマップマトリクス
 	ARCID_BATTGRA		"battle/battgra_wb.narc"	#
 	ARCID_ZONEDATA		"fieldmap/zonedata.narc"		#ゾーン毎データ
-	ARCID_ALLBUILDMODEL	"fieldmap/all_build_model.narc"	#全配置モデルデータ
 	ARCID_BMODEL_OUTDOOR	"fieldmap/buildmodel_outdoor.narc"	#配置モデルデータ（屋外）
 	ARCID_BMODEL_INDOOR		"fieldmap/buildmodel_indoor.narc"	#配置モデルデータ（屋内）
 	ARCID_BMODEL_IDX_OUTDOOR	"fieldmap/bmodel_index_outdoor.narc"	#エリア毎配置モデルリスト（屋外）
