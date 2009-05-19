@@ -99,7 +99,11 @@ G_ANM_LIST	=	$(subst $(DQ),,$(ARC_ANM_LIST_FILENAME))
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(TARGET) subdir
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
+do-build:	area_map_tex.d  subdir $(TARGETDIR)/$(TARGET)
+else
+do-build:	subdir $(TARGETDIR)/$(TARGET)
+endif
 
 subdir:
 	$(MAKE_SUBDIR)
@@ -109,12 +113,16 @@ $(TARGETDIR)/$(TARGET):	$(TARGET)
 	$(COPY) $(TARGET_HEADER) $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
-$(TARGET):	$(SRC_XLS_FILE)
+$(SRC_TXT_FILE):	$(SRC_XLS_FILE)
 	#エクセルコンバート
 	#$(EXCEL2TAB) $(SRC_XLS_FILE)
 	$(XLS2TAB) $(SRC_XLS_FILE) > $(SRC_TXT_FILE)
+
+$(TARGET):	$(SRC_TXT_FILE)
 	#エリアデータコンバート＋各種定義リスト生成
 	ruby area.rb $(SRC_TXT_FILE)
+
+area_map_tex.d: $(SRC_TXT_FILE)
 	#地形モデルテクスチャコンバート用定義生成
 	ruby area_map_tex.rb $(SRC_TXT_FILE)
 endif
