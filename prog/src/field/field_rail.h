@@ -12,6 +12,10 @@
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+typedef struct _FIELD_RAIL_MAN FIELD_RAIL_MAN;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 typedef struct _RAIL_POINT RAIL_POINT;
 
 //------------------------------------------------------------------
@@ -19,7 +23,34 @@ typedef struct _RAIL_POINT RAIL_POINT;
 typedef struct _RAIL_LINE RAIL_LINE;
 
 
-typedef struct _RAIL_CAMERA_SET RAIL_CAMERA_SET;
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef void(RAIL_POS_FUNC)(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+
+
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
+typedef struct _RAIL_CAMERA_SET{
+  RAIL_POS_FUNC * func;
+  u32 param0;
+  u32 param1;
+  u32 param2;
+  u32 param3;
+}RAIL_CAMERA_SET;
+
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
+typedef struct _RAIL_LINEPOS_SET{
+  RAIL_POS_FUNC * func;
+  u32 param0;
+  u32 param1;
+  u32 param2;
+  u32 param3;
+}RAIL_LINEPOS_SET;
 
 //------------------------------------------------------------------
 /**
@@ -38,14 +69,20 @@ typedef enum {
   RAIL_KEY_MAX
 }RAIL_KEY;
 
+
 //------------------------------------------------------------------
+/**
+ */
 //------------------------------------------------------------------
 enum {  
   RAIL_CONNECT_LINE_MAX = 4,
   RAIL_CONNECT_POINT_MAX = 2,
 };
 
+
 //------------------------------------------------------------------
+/**
+ */
 //------------------------------------------------------------------
 struct _RAIL_POINT {  
   //keys[n]にマッチしたらline[n]に移動する
@@ -56,44 +93,31 @@ struct _RAIL_POINT {
   VecFx32 pos;
 
   const RAIL_CAMERA_SET * camera_set;
+  const char * name;
 };
 
+
 //------------------------------------------------------------------
+/**
+ */
 //------------------------------------------------------------------
 struct _RAIL_LINE { 
   //point[0] --> point[1]への動きをkeyで制御する
   const RAIL_POINT * point[RAIL_CONNECT_POINT_MAX];
   RAIL_KEY key;
+  const RAIL_LINEPOS_SET * line_pos_set;
 
   /// 直線状での動作
   u32 line_divider;
 
   const RAIL_CAMERA_SET * camera_set;
 
+  const char * name;
   //いずれ必要になるが今考えると混乱する
   //fx32 width_margin;  ///<LINEに対して動ける幅
   //u32 width_divider;
 };
 
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-typedef enum {  
-  FIELD_RAIL_TYPE_POINT = 0,
-  FIELD_RAIL_TYPE_LINE,
-
-  FIELD_RAIL_TYPE_MAX
-}FIELD_RAIL_TYPE;
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-typedef struct {  
-  FIELD_RAIL_TYPE type;
-  union { 
-    RAIL_POINT point;
-    RAIL_LINE line;
-  };
-}FIELD_RAIL;
 
 
 //============================================================================================
@@ -103,10 +127,6 @@ typedef struct {
 //
 //
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-typedef struct _FIELD_RAIL_MAN FIELD_RAIL_MAN;
-
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID);
@@ -121,11 +141,25 @@ extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const FIELD_RAIL * railData);
+extern void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_POINT * railPointData);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELD_RAIL_MAN_Get3DPos(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+extern void FIELD_RAIL_MAN_GetPos(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern void FIELD_RAIL_MAN_GetCameraPos(const FIELD_RAIL_MAN * man, VecFx32 * CamPos);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern void FIELD_RAIL_MAN_GetDirection(const FIELD_RAIL_MAN * man, VecFx32 * dir);
 
 
+//------------------------------------------------------------------
+//  LINE移動関数
+//------------------------------------------------------------------
+extern void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+
+extern const RAIL_LINEPOS_SET RAIL_LINEPOS_SET_Default;
 
