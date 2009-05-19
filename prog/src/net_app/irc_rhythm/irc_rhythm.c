@@ -1503,7 +1503,7 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	TouchMarker_Main( p_wk );
-	if(	GFL_UI_TP_GetTrg()	)
+	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_A	)
 	{	
 
 		RHYTHMSEARCH_Init( &p_wk->search );
