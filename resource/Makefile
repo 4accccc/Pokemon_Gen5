@@ -11,6 +11,9 @@ SUBDIRS	=	wmi \
 			sound \
 			test_graphic\
 			message\
+			field_weather \
+			field_weather_light \
+			field_light \
 			fldmmdl \
 			fldmapdata\
 			test3dp\
@@ -51,9 +54,6 @@ SUBDIRS	=	wmi \
 			shop \
 			code_input \
 			wazatype_icon \
-			field_weather \
-			field_weather_light \
-			field_light \
 			wifi_note \
 			record \
 			selbox \
