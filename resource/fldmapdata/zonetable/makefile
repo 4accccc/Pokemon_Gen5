@@ -115,11 +115,12 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #	--(コンパイル＆elf2bin)-->	zonetable.bin
 #	--(nnsarc)-->	zonedata.narc/.naix
 $(NARCNAME): $(DATAFILE) $(DEPFILES) $(MATRIXHEADER)
-	$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
-	$(CONVERTER) $(DATATABTXT)
-	$(MAKE) makebin				#Ｃソース→バイナリ変換して
-	nnsarc -i -c -l -n $(NARCNAME) $(WORKDIR)/*.bin > $(WORKDIR)/arc_result.txt	#アーカイブ作成
-	$(NAIXCUT) $(NAIXNAME)
+	@echo マップ管理表更新
+	@$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
+	@$(CONVERTER) $(DATATABTXT)
+	@$(MAKE) makebin				#Ｃソース→バイナリ変換して
+	@nnsarc -i -c -l -n $(NARCNAME) $(WORKDIR)/*.bin > $(WORKDIR)/arc_result.txt	#アーカイブ作成
+	@$(NAIXCUT) $(NAIXNAME)
 
 
 #map_matrix.xlsからヘッダを生成する
