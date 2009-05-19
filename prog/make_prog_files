@@ -56,6 +56,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/zonedata.c \
         field/areadata.c \
         field/location.c \
+        field/field_rail.c \
         field/eventdata_system.c \
         field/event_fieldmap_control.c \
         field/event_mapchange.c \
