@@ -202,6 +202,9 @@ typedef struct {
 	u16  PLTT_RegisterMax;			///< 登録できるパレットデータ数
 	u16  CELL_RegisterMax;			///< 登録できるセルアニメパターン数
 	u16  MULTICELL_RegisterMax;		///< 登録できるマルチセルアニメパターン数（※現状未対応）
+
+  u16 CGRVMan_AreaOffsMain; ///< メイン CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
+  u16 CGRVMan_AreaOffsSub;  ///< サブ CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
 } GFL_CLSYS_INIT;
 
 
@@ -273,10 +276,11 @@ typedef struct {
  *	const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_DIVSCREEN = {
  *		0, 0,
  *		0, 512,
- *		0, 128,
- *		0, 128,
+ *		4, 124,
+ *		4, 124,
  *		0,
- *		32,32,32,32
+ *		32,32,32,32,
+ *    16, 16,
  *	};
  */
 extern const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_DIVSCREEN;
@@ -285,10 +289,11 @@ extern const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_DIVSCREEN;
  *	const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_CONSCREEN = {
  *		0, 0,
  *		0, 192,
- *		0, 128,
- *		0, 128,
+ *		4, 124,
+ *		4, 124,
  *		0,
- *		32,32,32,32
+ *		32,32,32,32,
+ *    16, 16,
  *	};
  */
 extern const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_CONSCREEN;
