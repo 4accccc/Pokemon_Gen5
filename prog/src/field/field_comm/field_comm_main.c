@@ -107,6 +107,7 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID, 
   commSys->palace = PALACE_SYS_Alloc(heapID);
   if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
     commSys->commField_ = GameCommSys_GetAppWork(game_comm);
+    PALACE_SYS_SetArea(commSys->palace, FIELD_COMM_SYS_GetInvalidNetID(commSys->commField_));
   }
 ////  commSys->commField_->commFunc_ = FIELD_COMM_FUNC_InitSystem( commHeapID );
 
@@ -279,7 +280,8 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
 static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_COMM_MAIN *commSys, FIELD_PLAYER *pcActor)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
-  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
+//  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
+  ZONEID zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(GAMESYSTEM_GetGameData(gameSys)));
 
   switch(commSys->debug_palace_comm_seq){
   case 0:
@@ -321,13 +323,13 @@ static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
     break;
   case 3:
     if(zone_id == ZONE_ID_PALACETEST){
-      PALACE_DEBUG_CreateNumberAct(commSys->palace, GFL_HEAP_LOWID(GFL_HEAPID_APP));
+//      PALACE_DEBUG_CreateNumberAct(commSys->palace, GFL_HEAP_LOWID(GFL_HEAPID_APP));
       commSys->debug_palace_comm_seq++;
     }
     break;
   case 4:
     if(zone_id != ZONE_ID_PALACETEST){
-      PALACE_DEBUG_DeleteNumberAct(commSys->palace);
+//      PALACE_DEBUG_DeleteNumberAct(commSys->palace);
       commSys->debug_palace_comm_seq = 3;
     }
     break;
@@ -357,7 +359,7 @@ void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
   {
     u8 i;
 ////    FIELD_COMM_FUNC_UpdateSystem( commSys->commField_ );
-    PALACE_SYS_Update(commSys->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), pcActor);
+    PALACE_SYS_Update(commSys->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), pcActor, commSys->commField_);
     if( FIELD_COMM_FUNC_GetMemberNum() > 1 )
     //if( FIELD_COMM_FUNC_GetCommMode( commFunc ) == FIELD_COMM_MODE_CONNECT )
     {
@@ -394,7 +396,8 @@ static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork ,
   dir = FIELD_PLAYER_GetDir( pcActor );
   //dir = FieldMainGrid_GetPlayerDir( fieldWork );
   FIELD_COMM_DATA_SetSelfData_Pos( commData, &zoneID , &pos , &dir );
-  FIELD_COMM_FUNC_Send_SelfData( commFunc, commData, PALACE_SYS_GetArea(commSys->palace) );
+  FIELD_COMM_FUNC_Send_SelfData( 
+    commFunc, commData, FIELD_COMM_SYS_GetInvalidNetID(commSys->commField_ ));
 }
 
 //--------------------------------------------------------------
@@ -434,19 +437,22 @@ static void FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
       case FCCS_FIELD:
         {
           GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
-          PLAYER_WORK *setPlWork = GAMEDATA_GetPlayerWork( gameData , i+1 );  //0には自分が入っているから
+          PLAYER_WORK *setPlWork = GAMEDATA_GetPlayerWork( gameData , i );
           PLAYER_WORK *charaWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(commData, i);
           GFL_STD_MemCopy( (void*)charaWork , (void*)setPlWork , sizeof(PLAYER_WORK) );
 
           PALACE_SYS_FriendPosConvert(commSys->palace, PLAYERWORK_getPalaceArea(setPlWork), 
-            GAMEDATA_GetPlayerWork( gameData, 0 ), setPlWork);
+            GAMEDATA_GetMyPlayerWork( gameData ), setPlWork);
 
           if( FIELD_COMM_DATA_GetCharaData_IsExist(commData, i) == FALSE )
           {
+            BOOL *vanish_flag = FIELD_COMM_SYS_GetCommActorVanishFlag(commSys->commField_, i);
+            *vanish_flag = TRUE;
             //未初期化なキャラなので、初期化する
             FIELD_COMM_ACTOR_CTRL_AddActor( commSys->actCtrl_,
-                0, HERO, &setPlWork->direction, &setPlWork->position, NULL );
+                0, HERO, &setPlWork->direction, &setPlWork->position, vanish_flag );
             FIELD_COMM_DATA_SetCharaData_IsExist(commData, i,TRUE);
+            OS_TPrintf("登録バニッシュFlag = %d\n", i);
           }
           FIELD_COMM_DATA_SetCharaData_IsValid(commData, i,FALSE);
         }

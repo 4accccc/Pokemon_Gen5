@@ -25,14 +25,16 @@
 typedef enum
 {
 
-//  COMMDIR_UP    = 0x0000,
-//  COMMDIR_LEFT  = 0x4000,
-//  COMMDIR_DOWN  = 0x8000,
-//  COMMDIR_RIGHT = 0xc000,
+  COMMDIR_UP    = 0x0000,
+  COMMDIR_LEFT  = 0x4000,
+  COMMDIR_DOWN  = 0x8000,
+  COMMDIR_RIGHT = 0xc000,
+#if 0
   COMMDIR_UP    = 0,
   COMMDIR_DOWN  = 1,
   COMMDIR_LEFT  = 2,
   COMMDIR_RIGHT = 3,
+#endif
 }FIELD_COMM_ACTER_DIR;
 
 //======================================================================

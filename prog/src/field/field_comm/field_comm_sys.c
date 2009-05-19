@@ -20,6 +20,10 @@ typedef struct _COMM_FIELD_SYS{
   FIELD_COMM_DATA *commData_;
   
   GAME_COMM_SYS_PTR game_comm;
+  
+  BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
+  u8 invalid_netid;           ///<侵入先ROMのnet_id
+  u8 padding[3];
 }COMM_FIELD_SYS;
 
 
@@ -71,4 +75,46 @@ FIELD_COMM_DATA* FIELD_COMM_SYS_GetCommDataWork( COMM_FIELD_SYS_PTR commField )
 GAME_COMM_SYS_PTR FIELD_COMM_SYS_GetGameCommSys( COMM_FIELD_SYS_PTR commField )
 {
   return commField->game_comm;
+}
+
+//==================================================================
+/**
+ * アクター表示・非表示フラグへのポインタを取得
+ *
+ * @param   palace		
+ * @param   net_id		
+ *
+ * @retval  BOOL *		
+ */
+//==================================================================
+BOOL * FIELD_COMM_SYS_GetCommActorVanishFlag(COMM_FIELD_SYS_PTR commField, int net_id)
+{
+  return &commField->comm_act_vanish[net_id];
+}
+
+//==================================================================
+/**
+ * 侵入先ROMのネットIDをセットする
+ *
+ * @param   commField		    
+ * @param   invalid_netid		侵入先ROMのネットID
+ */
+//==================================================================
+void FIELD_COMM_SYS_SetInvalidNetID(COMM_FIELD_SYS_PTR commField, int invalid_netid)
+{
+  commField->invalid_netid = invalid_netid;
+}
+
+//==================================================================
+/**
+ * 侵入先ROMのネットIDを取得する
+ *
+ * @param   commField		
+ *
+ * @retval  int		侵入先ROMのネットID
+ */
+//==================================================================
+int FIELD_COMM_SYS_GetInvalidNetID(COMM_FIELD_SYS_PTR commField)
+{
+  return commField->invalid_netid;
 }

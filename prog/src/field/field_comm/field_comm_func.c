@@ -20,6 +20,7 @@
 #include "field/field_comm/field_comm_sys.h"
 #include "test/ariizumi/ari_debug.h"
 #include "field/game_beacon_search.h"
+#include "fieldmap/zone_id.h"
 
 //======================================================================
 //  define
@@ -694,11 +695,11 @@ const BOOL  FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc, FIELD_COMM
   commFunc->plPkt_.posX_ = F32_CONST( pos->x );
   commFunc->plPkt_.posY_ = (int)F32_CONST( pos->y );
   commFunc->plPkt_.posZ_ = F32_CONST( pos->z );
-  commFunc->plPkt_.dir_ = dir;
+  commFunc->plPkt_.dir_ = dir >> 14;// / 0x4000;   //送信データを小さくする為、indexに変換
   commFunc->plPkt_.talkState_ = talkState;
   commFunc->plPkt_.palace_area = palace_area;
 
-  ARI_TPrintf("SEND[ ][%d][%d][%d][%x]\n",commFunc->plPkt_.posX_,commFunc->plPkt_.posY_,commFunc->plPkt_.posZ_,dir);
+//  ARI_TPrintf("SEND[ ][%d][%d][%d][%x]\n",commFunc->plPkt_.posX_,commFunc->plPkt_.posY_,commFunc->plPkt_.posZ_,dir);
   {
     GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
     const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER ,
@@ -722,7 +723,6 @@ void  FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const voi
   FIELD_COMM_DATA *commData = FIELD_COMM_SYS_GetCommDataWork(commField);
 
   //自分のデータも一応セットしておく(同期用に使う
-  PLAYER_WORK *plWork;
   const FIELD_COMM_PLAYER_PACKET *pkt = (FIELD_COMM_PLAYER_PACKET*)pData;
   VecFx32 pos;
   u16 dir;
@@ -731,19 +731,42 @@ void  FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const voi
   pos.x = FX32_CONST( pkt->posX_ );
   pos.y = FX32_CONST( pkt->posY_ );
   pos.z = FX32_CONST( pkt->posZ_ );
-  dir = pkt->dir_;//通信キャラはインデックスの4方向なので
+  dir = pkt->dir_ << 14;// * 0x4000;//通信キャラはインデックスの4方向なので
 
-  ARI_TPrintf("POST[%d][%d][%d][%d][%x]\n",netID,pkt->posX_,pkt->posY_,pkt->posZ_,dir);
+//  ARI_TPrintf("POST[%d][%d][%d][%d][%x]\n",netID,pkt->posX_,pkt->posY_,pkt->posZ_,dir);
 
   //set
-  plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(commData, netID);
-  PLAYERWORK_setPosition( plWork , &pos );
-  PLAYERWORK_setDirection( plWork , dir );
-  PLAYERWORK_setZoneID( plWork , pkt->zoneID_ );
-  PLAYERWORK_setPalaceArea( plWork , pkt->palace_area );
-  FIELD_COMM_DATA_SetCharaData_IsValid( commData, netID , TRUE );
-  FIELD_COMM_DATA_SetTalkState( commData, netID , pkt->talkState_ );
-  GameCommStatus_SetPlayerStatus(FIELD_COMM_SYS_GetGameCommSys(commField), netID, pkt->zoneID_, pkt->palace_area);
+  {
+    PLAYER_WORK *plWork;
+    
+    plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(commData, netID);
+    PLAYERWORK_setPosition( plWork , &pos );
+    PLAYERWORK_setDirection( plWork , dir );
+    PLAYERWORK_setZoneID( plWork, pkt->zoneID_ );
+    PLAYERWORK_setPalaceArea( plWork, pkt->palace_area );
+    FIELD_COMM_DATA_SetCharaData_IsValid( commData, netID , TRUE );
+    FIELD_COMM_DATA_SetTalkState( commData, netID , pkt->talkState_ );
+    GameCommStatus_SetPlayerStatus(FIELD_COMM_SYS_GetGameCommSys(commField), netID, pkt->zoneID_, pkt->palace_area);
+  }
+  
+  {//ゾーン違いによるアクター表示・非表示設定
+    GAME_COMM_SYS_PTR game_comm = FIELD_COMM_SYS_GetGameCommSys(commField);
+    PLAYER_WORK *my_player = GAMEDATA_GetMyPlayerWork(GameCommSys_GetGameData(game_comm));
+    ZONEID my_zone_id = PLAYERWORK_getZoneID( my_player );
+    BOOL *vanish_flag = FIELD_COMM_SYS_GetCommActorVanishFlag(commField, netID);
+    
+    if(pkt->zoneID_ != my_zone_id){
+      *vanish_flag = TRUE;  //違うゾーンにいるので非表示
+    }
+    else if(pkt->zoneID_ != ZONE_ID_PALACETEST 
+        && pkt->palace_area != FIELD_COMM_SYS_GetInvalidNetID(commField)){
+      //通常フィールドの同じゾーンに居ても、侵入先ROMが違うなら非表示
+      *vanish_flag = TRUE;
+    }
+    else{
+      *vanish_flag = FALSE;
+    }
+  }
 
 //  ARI_TPrintf("FieldComm PostSelfData[%d]\n",netID);
 }

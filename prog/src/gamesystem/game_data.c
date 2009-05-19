@@ -149,7 +149,7 @@ PLAYER_WORK * GAMEDATA_GetPlayerWork(GAMEDATA * gamedata, u32 player_id)
 //------------------------------------------------------------------
 PLAYER_WORK * GAMEDATA_GetMyPlayerWork(GAMEDATA * gamedata)
 {
-	return &gamedata->playerWork[0];
+	return &gamedata->playerWork[PLAYER_ID_MINE];
 }
 
 //============================================================================================

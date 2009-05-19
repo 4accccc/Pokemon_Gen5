@@ -146,19 +146,14 @@ const u8 FIELD_COMM_DATA_GetFieldCommMode(FIELD_COMM_DATA *comm_data)
 //--------------------------------------------------------------
 void  FIELD_COMM_DATA_SetSelfData_Pos( FIELD_COMM_DATA *comm_data, const ZONEID *zoneID , const VecFx32 *pos , const u16 *dir )
 {
-  u16 workDir;
-  const u16 tempDir = *dir;
-  static const u8 changeDirArr[4] = { COMMDIR_UP , COMMDIR_LEFT , COMMDIR_DOWN , COMMDIR_RIGHT };
-
   GF_ASSERT( comm_data != NULL );
   PLAYERWORK_setZoneID( &comm_data->selfData_.plWork_ , *zoneID );
   PLAYERWORK_setPosition( &comm_data->selfData_.plWork_ , pos );
-  // 方向が0xFFFFで360度になったため、インデックスと変換させる
-  workDir = changeDirArr[(*dir)>>14];
-  PLAYERWORK_setDirection( &comm_data->selfData_.plWork_ , workDir );
+  PLAYERWORK_setDirection( &comm_data->selfData_.plWork_ , *dir );
   comm_data->selfData_.isExist_ = TRUE;
   comm_data->selfData_.isValid_ = TRUE;
 }
+
 //--------------------------------------------------------------
 //  自分のデータ取得
 //--------------------------------------------------------------

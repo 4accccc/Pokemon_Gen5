@@ -46,8 +46,9 @@ typedef enum{
 typedef struct{
   u16 zone_id;        ///<現在いるゾーンID
   u16 old_zone_id;    ///<前までいたゾーンID
+  u16 same_count;      ///<同じステータスが送られてきた回数
   u8 invasion_netid;  ///<侵入先ROM
-  u8 padding[3];
+  u8 padding;
 }GAME_COMM_PLAYER_STATUS;
 
 //--------------------------------------------------------------
@@ -222,6 +223,8 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     break;
   case GCSSEQ_INIT_WAIT:
     if(func_tbl->init_wait_func == NULL || func_tbl->init_wait_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work) == TRUE){
+      //※check　現状ワイヤレスしかないので、とりあえずここでWIRELESSを代入
+      gcsp->comm_status = GAME_COMM_STATUS_WIRELESS;
       GameCommSub_SeqSet(sub_work, GCSSEQ_UPDATE);
     }
     break;
@@ -238,6 +241,7 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     if(func_tbl->exit_wait_func == NULL || func_tbl->exit_wait_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work) == TRUE){
       gcsp->app_work = NULL;
       gcsp->game_comm_no = GAME_COMM_NO_NULL;
+      gcsp->comm_status = GAME_COMM_STATUS_NULL;
       if(gcsp->reserve_comm_game_no != GAME_COMM_NO_NULL){
         GameCommSys_Boot(gcsp, gcsp->reserve_comm_game_no, gcsp->reserve_parent_work);
         gcsp->reserve_comm_game_no = GAME_COMM_NO_NULL;
@@ -381,6 +385,20 @@ void *GameCommSys_GetAppWork(GAME_COMM_SYS_PTR gcsp)
   return gcsp->app_work;
 }
 
+//==================================================================
+/**
+ * GAMEDATAへのポインタを取得する
+ *
+ * @param   gcsp		
+ *
+ * @retval  GAMEDATA *		ゲームデータへのポインタ
+ */
+//==================================================================
+GAMEDATA * GameCommSys_GetGameData(GAME_COMM_SYS_PTR gcsp)
+{
+  return gcsp->gamedata;
+}
+
 //--------------------------------------------------------------
 /**
  * サブワークのシーケンス番号をセットする
@@ -411,23 +429,38 @@ static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq)
 //==================================================================
 void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid)
 {
-  GAME_COMM_PLAYER_STATUS *comm_status = &gcsp->player_status[comm_net_id];
-  int wordset_no;
-  u32 message_id;
+  GAME_COMM_PLAYER_STATUS *player_status = &gcsp->player_status[comm_net_id];
   
-  if(comm_status->zone_id == zone_id && comm_status->invasion_netid == invasion_netid){
+  if(player_status->zone_id == zone_id && player_status->invasion_netid == invasion_netid){
     return;
   }
   
-  comm_status->zone_id = zone_id;
-  comm_status->invasion_netid = invasion_netid;
+  if(player_status->zone_id != zone_id){
+    player_status->old_zone_id = player_status->zone_id;
+    player_status->zone_id = zone_id;
+    player_status->same_count = 0;
+  }
+  else if(zone_id == ZONE_ID_PALACETEST){
+    player_status->same_count++;
+  }
+  player_status->invasion_netid = invasion_netid;
   
   //メッセージ作成
   if(zone_id == ZONE_ID_PALACETEST){
-    message_id = msg_invasion_test01_01 + comm_net_id;
+    if(player_status->same_count == 0){
+      GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test01_01 + comm_net_id);
+      GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test03_01 + comm_net_id);
+    }
+    else if(player_status->same_count > 60 * 10){
+      GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test01_01 + comm_net_id);
+      GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test03_01 + comm_net_id);
+      player_status->same_count = 0;
+    }
   }
-
-  GameCommInfo_SetQue(gcsp, comm_net_id, message_id);
+  else if(player_status->old_zone_id == ZONE_ID_PALACETEST && comm_net_id != invasion_netid
+      && zone_id != ZONE_ID_PALACETEST && invasion_netid == GFL_NET_SystemGetCurrentID()){
+    GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test07_01 + comm_net_id);
+  }
 }
 
 

@@ -18,6 +18,7 @@
 #include "arc_def.h"
 #include "palace.naix"
 #include "fieldmap/zone_id.h"
+#include "system/main.h"
 
 
 //==============================================================================
@@ -52,7 +53,7 @@ typedef struct _PALACE_SYS_WORK{
   u8 area;          ///<自機が居るエリア番号
   u8 entry_count;   ///<参加したプレイヤー数(プレイヤーが抜けても減らない)
   u8 padding[2];
-  
+
   GFL_CLUNIT *clunit;
   PALACE_DEBUG_NUMBER number;
 }PALACE_SYS_WORK;
@@ -61,7 +62,7 @@ typedef struct _PALACE_SYS_WORK{
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply);
+static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field);
 static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace);
 
 
@@ -83,7 +84,6 @@ PALACE_SYS_PTR PALACE_SYS_Alloc(HEAPID heap_id)
   
   palace = GFL_HEAP_AllocClearMemory(heap_id, sizeof(PALACE_SYS_WORK));
   PALACE_SYS_InitWork(palace);
-  
   return palace;
 }
 
@@ -121,10 +121,11 @@ void PALACE_SYS_Free(PALACE_SYS_PTR palace)
  * @param   palace		
  */
 //==================================================================
-void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply)
+void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field)
 {
   int net_num;
-
+  int first_create;
+  
   if(palace == NULL){
     return;
   }
@@ -132,9 +133,13 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
   //始めて通信確立した時のパレスの初期位置設定
   //※check　ちょっとやっつけっぽい。
   //正しくは通信確立時のコールバック内でパレスのエリア初期位置をセットしてあげるのがよい
+  first_create = PALACE_DEBUG_CreateNumberAct(palace, GFL_HEAP_LOWID(GFL_HEAPID_APP));
   if(palace->clunit != NULL){
-    if(palace->area == PALACE_AREA_NO_NULL && GFL_NET_GetConnectNum() > 1){
-      palace->area = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+    if(GFL_NET_GetConnectNum() > 1){
+      if(palace->area == PALACE_AREA_NO_NULL){
+        palace->area = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+        FIELD_COMM_SYS_SetInvalidNetID(comm_field, palace->area);
+      }
       GFL_CLACT_WK_SetDrawEnable(palace->number.clact, TRUE);
     }
   }
@@ -152,7 +157,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
   }
   
   //自機の位置確認し、ワープ処理
-  PALACE_SYS_PosUpdate(palace, plwork, fldply);
+  PALACE_SYS_PosUpdate(palace, plwork, fldply, comm_field);
 
   PALACE_DEBUG_UpdateNumber(palace);
 }
@@ -166,7 +171,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
  * @param   fldply		
  */
 //--------------------------------------------------------------
-static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply)
+static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, COMM_FIELD_SYS_PTR comm_field)
 {
   ZONEID zone_id;
   VecFx32 pos, new_pos;
@@ -209,6 +214,7 @@ static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIE
   FIELD_PLAYER_SetPos( fldply, &new_pos );
   if(palace->area != PALACE_AREA_NO_NULL){
     palace->area = new_area;
+    FIELD_COMM_SYS_SetInvalidNetID(comm_field, palace->area);
   }
 }
 
@@ -298,12 +304,12 @@ void PALACE_SYS_FriendPosConvert(PALACE_SYS_PTR palace, int friend_area,
  * @param   heap_id		
  */
 //--------------------------------------------------------------
-void PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id)
+BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id)
 {
   PALACE_DEBUG_NUMBER *number = &palace->number;
 
   if(palace->clunit != NULL){
-    return;
+    return FALSE;
   }
 
   palace->clunit = GFL_CLACT_UNIT_Create( 1, 10, heap_id );
@@ -334,6 +340,7 @@ void PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id)
     GFL_CLACT_WK_SetAutoAnmFlag(number->clact, TRUE); //オートアニメON
     GFL_CLACT_WK_SetDrawEnable(number->clact, FALSE);
   }
+  return TRUE;
 }
 
 //--------------------------------------------------------------
