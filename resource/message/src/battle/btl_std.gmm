@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-05-01T16:23:31"/>
+	<create user="taya" host="W00146" date="2009-05-18T22:52:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -528,6 +528,13 @@
 [1:07:わざ名:1]しか　だせない！</language>
 		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]の　効果で
 [1:07:わざ名:1]しか　出せない！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_RankReset">
+		<language name="JPN" width="216">すべてのステータスが
+もとに　もどった！</language>
+		<language name="JPN_KANJI" width="216">全てのステータスが
+元に　戻った！</language>
 	</row>
 
 	<flowchart-group-list>

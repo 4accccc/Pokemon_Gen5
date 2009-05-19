@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-05-08T22:25:43"/>
+	<create user="taya" host="W00146" date="2009-05-19T14:52:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -421,7 +421,7 @@
 
 	<dialog left="130" top="0" right="811" bottom="508" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="530" top="492" right="961" bottom="890" visible="yes"/>
+		<tag-palette left="548" top="536" right="979" bottom="934" visible="yes"/>
 		<band id="0" index="0" style="0001" width="506"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
@@ -2950,6 +2950,31 @@
 [1:09:どうぐ名:1]で　もちこたえた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　もちこたえた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankRecoverItem">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+ステータスを　もとに　もどした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
+ステータスを　もとに　もどした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankRecoverItem_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+ステータスを　もとに　もどした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+ステータスを　元に　戻した！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_RankRecoverItem_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+ステータスを　もとに　もどした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
+ステータスを　元に　戻した！</language>
 	</row>
 
 	<flowchart-group-list>
