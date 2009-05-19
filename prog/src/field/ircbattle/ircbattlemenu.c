@@ -13,6 +13,7 @@
 
 #include "ircbattlemenu.h"
 #include "ircbattlematch.h"
+#include "infowin/infowin.h"
 #include "system/main.h"
 #include "system/wipe.h"
 
@@ -229,7 +230,24 @@ static void _changeStateDebug(IRC_BATTLE_MENU* pWork,StateFunc state, int line)
 
 static void _createSubBg(IRC_BATTLE_MENU* pWork)
 {
-  // フィールドに設定が無かったので仮設定
+
+  // 背景面
+  {
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,
+      0x10000,
+      GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
+    GFL_BG_SetPriority( GFL_BG_FRAME0_M, 0 );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+
+  }
+
   {
     int frame = GFL_BG_FRAME1_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
@@ -364,7 +382,9 @@ static void _modeInit(IRC_BATTLE_MENU* pWork)
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_ircbattle_dat, pWork->heapID );
   //    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-  _CHANGE_STATE(pWork,_modeSelectMenuInit);
+
+
+	_CHANGE_STATE(pWork,_modeSelectMenuInit);
 }
 
 //------------------------------------------------------------------------------
@@ -426,6 +446,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
     _buttonWindowDelete(pWork);
 		return TRUE;
   case _SELECTMODE_EXIT:
+    pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
     _CHANGE_STATE(pWork,NULL);        // 終わり
     _buttonWindowDelete(pWork);
     return TRUE;
@@ -660,12 +681,14 @@ void IRCBATTLE_MENU_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys ,
 
   GFL_STD_MemClear(pWork,sizeof(IRC_BATTLE_MENU));
   pWork->heapID = heapID;
-  _CHANGE_STATE( pWork, _modeInit);
+  //_CHANGE_STATE( pWork, _modeInit);
   //    _CHANGE_STATE( pWork, NULL);
 
   pWork->gameSys_ = gameSys;
   pWork->fieldWork_ = fieldWork;
   pWork->event_ = event;
+
+	_modeInit(pWork);
 }
 
 //--------------------------------------------------------------
@@ -698,6 +721,32 @@ GMEVENT_RESULT IRCBATTLE_MENU_Main( GMEVENT *event , int *seq , void *work )
 
 #endif
 
+static GFL_DISP_VRAM _defVBTbl = {
+  GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+  GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+
+  GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+  GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+
+  //        GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+  GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+  GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+
+  GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+
+  GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
+
+  GX_OBJVRAMMODE_CHAR_1D_128K,
+  GX_OBJVRAMMODE_CHAR_1D_32K,
+
+};
+
+
+//BG面とパレット番号(仮設定
+#define _SUBSCREEN_BGPLANE	(GFL_BG_FRAME0_S)
+#define _SUBSCREEN_PALLET	(0xE)
 
 
 //------------------------------------------------------------------------------
@@ -708,17 +757,51 @@ GMEVENT_RESULT IRCBATTLE_MENU_Main( GMEVENT *event , int *seq , void *work )
 //------------------------------------------------------------------------------
 static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x8000 );
+	
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x18000 );
 
   {
     IRC_BATTLE_MENU *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_BATTLE_MENU ), HEAPID_IRCBATTLE );
     GFL_STD_MemClear(pWork, sizeof(IRC_BATTLE_MENU));
     pWork->heapID = HEAPID_IRCBATTLE;
 
+
+		GFL_DISP_SetBank( &_defVBTbl );
+		GFL_BG_Init(pWork->heapID);
+		{
+			GFL_BG_SYS_HEADER BGsys_data = {
+				GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
+			};
+			GFL_BG_SetBGMode( &BGsys_data );
+		}
+		GFL_BMPWIN_Init(pWork->heapID);
+
 		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
 
+		{
+
+			// BG3 SUB (インフォバー
+			static const GFL_BG_BGCNT_HEADER header_sub3 = {
+				0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
+				GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x6000,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
+				};
+
+			GFL_BG_SetBGControl( _SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
+			GFL_BG_SetVisible( _SUBSCREEN_BGPLANE, VISIBLE_ON );
+			GFL_BG_ClearFrame( _SUBSCREEN_BGPLANE );
+			GFL_BG_ClearScreenCode( _SUBSCREEN_BGPLANE , 0 );
+
+			INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pWork->heapID);
+			if( INFOWIN_IsInitComm() == TRUE )
+			{
+				GFL_NET_ReloadIcon();
+			}
+		}
+		
 		_CHANGE_STATE( pWork, _modeInit);
   }
   return GFL_PROC_RES_FINISH;
@@ -741,6 +824,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
     retCode = GFL_PROC_RES_CONTINUE;
   }
   //	ConnectBGPalAnm_Main(&pWork->cbp);
+	INFOWIN_Update();
 
   return retCode;
 }
@@ -761,9 +845,20 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
 
   //	ConnectBGPalAnm_End(&pWork->cbp);
   GFL_PROC_FreeWork(proc);
-  GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
+
+	INFOWIN_Exit();
+	GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
+
+
+	GFL_BMPWIN_Exit();
+	GFL_BG_Exit();
+
+
+	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
   EVENT_IrcBattle_SetEnd(pParentWork);
 
+
+	
   return GFL_PROC_RES_FINISH;
 }
 

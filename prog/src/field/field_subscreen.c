@@ -91,10 +91,6 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork);
 static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
-static void init_debugred_subscreen(FIELD_SUBSCREEN_WORK * pWork);
-static void update_debugred_subscreen( FIELD_SUBSCREEN_WORK* pWork );
-static void exit_debugred_subscreen( FIELD_SUBSCREEN_WORK* pWork );
-
 static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork);
 static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
@@ -123,12 +119,6 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		update_topmenu_subscreen,
 		exit_topmenu_subscreen,
 	},
-  {
-    FIELD_SUBSCREEN_DEBUG_RED,
-		init_debugred_subscreen,
-		update_debugred_subscreen,
-		exit_debugred_subscreen,
-  },
 	{	
 		FIELD_SUBSCREEN_DEBUG_LIGHT,
 		init_light_subscreen,
@@ -427,7 +417,7 @@ static void init_debugred_subscreen(FIELD_SUBSCREEN_WORK * pWork)
 	{
 		GFL_NET_ReloadIcon();
 	}
-  FIELD_SUBSCREEN_SetAction(pWork, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
+ // FIELD_SUBSCREEN_SetAction(pWork, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
 }
 
 //----------------------------------------------------------------------------

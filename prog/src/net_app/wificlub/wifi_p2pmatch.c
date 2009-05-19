@@ -2783,13 +2783,13 @@ static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)
   }
 #endif
   const u8 CELL_MAX = 16;
-  GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
-  cellSysInitData.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL; //通信アイコンの分
-  cellSysInitData.oamnum_main = 64-GFL_CLSYS_OAMMAN_INTERVAL;
-  cellSysInitData.oamst_sub = 16;
-  cellSysInitData.oamnum_sub = 128-16;
+//  GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
+//  cellSysInitData.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL; //通信アイコンの分
+//  cellSysInitData.oamnum_main = 64-GFL_CLSYS_OAMMAN_INTERVAL;
+//  cellSysInitData.oamst_sub = 16;
+//  cellSysInitData.oamnum_sub = 128-16;
 
-  GFL_CLACT_SYS_Create( &cellSysInitData , &_defVBTbl, HEAPID_WIFIP2PMATCH );
+  GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &_defVBTbl, HEAPID_WIFIP2PMATCH );
   wk->clactSet  = GFL_CLACT_UNIT_Create( CELL_MAX , 0, HEAPID_WIFIP2PMATCH );
   GFL_CLACT_UNIT_SetDefaultRend( wk->clactSet );
 

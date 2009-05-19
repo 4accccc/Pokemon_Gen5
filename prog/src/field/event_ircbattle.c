@@ -48,11 +48,14 @@ FS_EXTERN_OVERLAY(irc_compatible);
 #define	HEAPID_CORE GFL_HEAPID_APP
 
 FS_EXTERN_OVERLAY(battle);
+FS_EXTERN_OVERLAY(fieldmap);
 FS_EXTERN_OVERLAY(ircbattlematch);
 
 #define _LOCALMATCHNO (100)
 
 enum _EVENT_IRCBATTLE {
+	_IRCBATTLE_START,
+	_IRCBATTLE_START_FIELD_CLOSE,
   _CALL_IRCBATTLE_MENU,
   _WAIT_IRCBATTLE_MENU,
   _FIELD_FADEOUT,
@@ -97,29 +100,38 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   EVENT_IRCBATTLE_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
   switch (*seq) {
-  case _CALL_IRCBATTLE_MENU:
+	case _IRCBATTLE_START:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
+		(*seq) ++;
+		break;
+	case _IRCBATTLE_START_FIELD_CLOSE:
+		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+		// ƒTƒEƒ“ƒhƒeƒXƒg
+		// ‚a‚f‚lˆêŽž’âŽ~¨‘Þ”ð
+		PMSND_PauseBGM(TRUE);
+		PMSND_PushBGM();
+		//
+		(*seq) = _CALL_IRCBATTLE_MENU;
+		break;
+	case _CALL_IRCBATTLE_MENU:
     dbw->isEndProc = FALSE;
-    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &IrcBattleMenuProcData, dbw);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(fieldmap), &IrcBattleMenuProcData, dbw);
     (*seq)++;
     break;
   case _WAIT_IRCBATTLE_MENU:
     if (GAMESYSTEM_IsProcExists(gsys)){
       break;
     }
-//    if(dbw->isEndProc){
-			if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE )
-			{	
-				*seq = _FIELD_FADEOUT_IRCBATTLE;
-			}
-			else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_EXIT){
-				FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
-				FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(fieldWork), FIELD_SUBSCREEN_NORMAL);
-				return GMEVENT_RES_FINISH;
-			}
-			else{	
-				(*seq) ++;
-			}
-//    }
+		if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE )
+		{	
+			*seq = _CALL_IRCCOMMPATIBLE;//_FIELD_FADEOUT_IRCBATTLE;
+		}
+		else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_EXIT){
+			*seq = _FIELD_OPEN;
+		}
+		else{	
+			(*seq) ++;
+		}
     break;
   case _FIELD_FADEOUT:
     dbw->isEndProc = FALSE;

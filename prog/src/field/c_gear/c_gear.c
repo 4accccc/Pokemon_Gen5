@@ -330,18 +330,11 @@ static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
 
 	pWork->select_counter++;
 
-	if(pWork->select_counter==20){
-
-    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-	}
-	else if(pWork->select_counter==40){
-		_CHANGE_STATE(pWork,NULL);
-		FIELD_SUBSCREEN_ChangeFromWithin(pWork->subscreen, FIELD_SUBSCREEN_DEBUG_RED, FALSE);
+	if(pWork->select_counter==3){
+		FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
 	}
 	
-	
-	if(	pWork->select_counter % 4 != 1){
+	if(	pWork->select_counter % 3 != 1){
 		return;
 	}
 	
@@ -392,7 +385,6 @@ static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
 		_CHANGE_STATE(pWork,_modeSelectMenuWait);
 	}
 #endif
-		pWork->select_counter++;
 
 }
 
@@ -966,7 +958,8 @@ static void _modeInit(C_GEAR_WORK* pWork)
 
 	pWork->IsIrc=FALSE;
 
-	GFL_NET_ReloadIcon();
+	GFL_NET_ChangeIconPosition(240-32,20);
+//	GFL_NET_ReloadIcon();
 
 	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
 //	pWork->touch = &_modeSelectMenuButtonCallback;

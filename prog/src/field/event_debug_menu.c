@@ -172,7 +172,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR07, DMenuCallProc_CameraList },
 	{ DEBUG_FIELD_STR13, DMenuCallProc_FldMMdlList },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
-//	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
+	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
 	{ DEBUG_FIELD_STR19, DMenuCallProc_OpenClubMenu },
 	{ DEBUG_FIELD_STR15, DMenuCallProc_ControlLight },
 	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
@@ -454,8 +454,10 @@ static BOOL DMenuCallProc_OpenIRCBTLMenu( DEBUG_MENU_EVENT_WORK *wk )
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
 
-    EVENT_IrcBattle(gameSys, fieldWork, event,FALSE);
-	return( TRUE );
+	FIELD_SUBSCREEN_SetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork), FIELD_SUBSCREEN_ACTION_DEBUGIRC);
+	
+//    EVENT_IrcBattle(gameSys, fieldWork, event,FALSE);
+	return( FALSE );
 }
 
 //--------------------------------------------------------------
@@ -765,7 +767,6 @@ static void setupTouchCameraSubscreen(DMESSWORK * dmess);
 static void setupSoundViewerSubscreen(DMESSWORK * dmess);
 static void setupNormalSubscreen(DMESSWORK * dmess);
 static void setupTopMenuSubscreen(DMESSWORK * dmess);
-static void setupDebugRedSubscreen(DMESSWORK * dmess);
 static void setupDebugLightSubscreen(DMESSWORK * dmess);
 
 
@@ -806,7 +807,6 @@ static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[FIELD_SUBSCREEN_MODE_MAX] =
 	{ DEBUG_FIELD_STR_SUBSCRN03, (void*)setupNormalSubscreen },
 	{ DEBUG_FIELD_STR_SUBSCRN04, (void*)setupTopMenuSubscreen },
 	{ DEBUG_FIELD_STR_SUBSCRN01, (void*)setupDebugLightSubscreen },
-	{ DEBUG_FIELD_STR12, (void*)setupDebugRedSubscreen },
 };
 
 //--------------------------------------------------------------
@@ -908,13 +908,6 @@ static void setupNormalSubscreen(DMESSWORK * dmess)
 static void setupTopMenuSubscreen(DMESSWORK * dmess)
 { 
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_TOPMENU);
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void setupDebugRedSubscreen(DMESSWORK * dmess)
-{ 
-  FIELD_SUBSCREEN_Change(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_RED);
 }
 
 //--------------------------------------------------------------
