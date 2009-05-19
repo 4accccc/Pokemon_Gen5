@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	ibe_mana tanoue_reiko yoshida sogabe
+USERS	=	ibe_mana tanoue_reiko yoshida
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -66,9 +66,9 @@ endif
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	sub_dir $(TARGETDIR)/$(NARCNAME)
-else
 do-build:	sub_dir ncg ncgc nce nmc ncln nclr $(TARGETDIR)/$(NARCNAME)
+else
+do-build:	sub_dir $(TARGETDIR)/$(NARCNAME)
 endif
 
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME) $(NAIXNAME) pokemon_viewer_def.h
