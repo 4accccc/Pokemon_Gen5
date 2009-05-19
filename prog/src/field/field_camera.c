@@ -27,6 +27,9 @@ struct _FIELD_CAMERA {
 	FIELD_CAMERA_TYPE	type;			///<カメラのタイプ指定
 
 	const VecFx32 *		watch_target;	///<追随する注視点へのポインタ
+  const VecFx32 *   watch_camera; ///<追随するカメラ位置へのポインタ
+
+  VecFx32       camPos;             ///<カメラ位置用ワーク
 
 	VecFx32				target;			        ///<注視点用ワーク
 	VecFx32				target_offset;			///<注視点用補正座標
@@ -130,6 +133,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 	camera->watch_target = target;
 	camera->heapID = heapID;
 
+  VEC_Set( &camera->camPos, 0, 0, 0 );
 	VEC_Set( &camera->target, 0, 0, 0 );
 
   camera->angle_yaw = 0;
@@ -302,6 +306,18 @@ static void updateTargetBinding(FIELD_CAMERA * camera)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static BOOL updateCamPosBinding(FIELD_CAMERA * camera)
+{
+  if (camera->watch_camera)
+  {
+    (camera->camPos) = *(camera->watch_camera);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static void updateAngleCamera(FIELD_CAMERA * camera)
 { 
   enum {  PITCH_LIMIT = 0x200 };
@@ -320,6 +336,7 @@ static void updateAngleCamera(FIELD_CAMERA * camera)
 	VEC_Normalize(&cameraPos, &cameraPos);
 	VEC_MultAdd( camera->angle_len, &cameraPos, &camera->target, &cameraPos );
   //cameraPos = cameraPos * length + camera->target
+  camera->camPos = cameraPos;
 	
 	// カメラターゲット補正
   VEC_Add( &camera->target, &camera->target_offset, &cameraTarget );
@@ -365,7 +382,19 @@ static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	//debugControl(camera, key_cont);
 	updateTargetBinding(camera);
-  updateCameraCalc(camera);
+  if (updateCamPosBinding(camera))
+  {
+    VecFx32 cameraTarget;
+    // カメラターゲット補正
+    VEC_Add( &camera->target, &camera->target_offset, &cameraTarget );
+
+    GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
+    GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
+  }
+  else
+  {
+    updateCameraCalc(camera);
+  }
 }
 
 //------------------------------------------------------------------
