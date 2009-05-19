@@ -11,6 +11,8 @@
 #
 #	2008.12.18	tamada	wb環境に移植開始
 #	2009.05.18  tamada  light/itp/itaの外部データ(*.naix)参照に対応
+#	2009.05.19  tamada  エラーになっても出力ファイルが生成されているために
+#	                    再度makeすると問題なく通ってしまう対処
 #
 #------------------------------------------------------------------------------
 
@@ -34,21 +36,6 @@ def EntryVec(vec, item)
 		return index
 	end
 end
-#配列へのエントリ(指定文字列は省く)
-def EntryVec2(vec, item, omit)
-	if omit == item then
-		return 0xffff	#登録なしコード
-	end
-	#すでにあるか調べる
-	index = vec.index(item)
-	if index == nil then
-		#登録
-		vec << item
-		return (vec.length-1)
-	else
-		return index
-	end
-end
 
 #屋内外設定取得
 def GetInnerOuter(str)
@@ -62,37 +49,6 @@ def GetInnerOuter(str)
 	return 0;
 end
 
-#ライト設定取得
-def Getlight(str)
-	fix_str = str.chomp("\n").chomp("\r")
-	if "ON" == fix_str then
-		return 1;
-	elsif "OFF" == fix_str then
-		return 0;
-	elsif "TOUDAI" == fix_str then
-		return 2;
-	end
-	#指定不明の場合は0をセット
-	return 0;
-end
-
-#拡張子変更
-def ChangeExtend(inStr, inExtStr)
-	idx = inStr.index(".")+1
-	last = inStr.length-1
-
-	str = inStr.dup
-	str[idx..last] = inExtStr
-	return str
-end
-
-
-#ファイルパックライト
-def FileWrite(bin_file, data, code)
-	ary = Array(data)
-	pack_str = ary.pack(code)
-	bin_file.write(pack_str)
-end
 
 
 ##	エラーを定義
@@ -173,6 +129,7 @@ def enum_search naix, name
   return index
 end
 
+
 #------------------------------------------------------------------------------
 #	コンバート本体
 #------------------------------------------------------------------------------
@@ -187,54 +144,50 @@ begin
 
   build_vec = []
   tex_vec = []
-  anm_ita_vec = []
 
-  total_bin_file = File.open(TARGET_BIN_FILENAME, "wb")
   total_txt_file = File.open("area_data.txt", "w")
 
-  #1行読み飛ばし
-  #line = area_tbl_file.gets
-	READTHROUGH_LINES.times{|| area_tbl_file.gets}
+  #行読み飛ばし
+	READTHROUGH_LINES.times{|| area_tbl_file.gets }
 
   area_count = 0
-  while line = area_tbl_file.gets
+  bin_out = ""
+  area_tbl_file.each{|line|
     column = line.split "\t"
 
-    #area_name = getAreaName(column)
     #エリアＩＤ列挙
     id_file.putAreaName(column)
 
     #binファイル作成
     #データ書き込み
-    bm_id = EntryVec(build_vec,column[COL_BMNAME])	#モデル
-    FileWrite(total_bin_file,bm_id, "S")
-    tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
-    FileWrite(total_bin_file,tex_id, "S")
+    bm_id = EntryVec(build_vec, column[COL_BMNAME])	#モデル
+    bin_out += [bm_id].pack("S") 
 
-    #anm_ita_id = EntryVec2(anm_ita_vec,column[COL_ITA_NAME],"none")	#地形ITAアニメファイル指定
-    #FileWrite(total_bin_file,anm_ita_id, "S")
+    tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
+    bin_out += [tex_id].pack("S") 
 
     #地形ITAアニメファイル指定
     anm_ita_id = enum_search(ita_enum, column[COL_ITA_NAME].sub(/ita$/,"nsbta"))
     #地形ITPアニメファイル指定
     anm_itp_id = enum_search(itp_enum, column[COL_ITP_NAME].sub(/itp$/,"itpdat"))
-    total_bin_file.write([anm_ita_id,anm_itp_id].pack("CC"))
+    bin_out +=[anm_ita_id,anm_itp_id].pack("CC")
 
     inout = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
-    FileWrite(total_bin_file,inout, "C")
-    #light = Getlight(column[COL_LIGHTTYPE])				#ライト
-    #FileWrite(total_bin_file,light, "C")
-    light_idx = enum_search( light_enum, column[COL_LIGHTTYPE] )
-    total_bin_file.write( [light_idx].pack("C") )
+    bin_out += [inout].pack("C") 
+
+    light_idx = enum_search( light_enum, column[COL_LIGHTTYPE] ) #ライト
+    bin_out += [light_idx].pack("C") 
 
     total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d\n",
                 area_count, bm_id, tex_id, anm_ita_id, inout, light_idx);
 
     area_count += 1
-    
-  end
+  }
 
-  total_bin_file.close
+  File.open(TARGET_BIN_FILENAME, "wb"){|file|
+    file.write(bin_out)
+  }
+
   total_txt_file.close
   #テイル作成
   id_file.close
