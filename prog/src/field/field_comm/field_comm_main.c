@@ -253,6 +253,21 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
   VecFx32 pos;
 
+  //デバッグ用にR+Y,Bでパレス、T01へワープできるようにする
+  if(GFL_UI_KEY_GetCont() == (PAD_BUTTON_R | PAD_BUTTON_Y)){
+    pos.x = 12040 << FX32_SHIFT;
+    pos.y = 0;
+    pos.z = 13080 << FX32_SHIFT;
+    return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0);
+  }
+  else if(GFL_UI_KEY_GetCont() == (PAD_BUTTON_R | PAD_BUTTON_B)){
+    pos.x = 760 << FX32_SHIFT;
+    pos.y = 0;
+    pos.z = 234 << FX32_SHIFT;
+    return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACETEST, &pos, 0);
+  }
+  
+  
   if(zone_id != ZONE_ID_PALACETEST){
     return NULL;
   }
