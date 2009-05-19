@@ -45,7 +45,6 @@ USERS	=	tamada nakatsui fuchino lee_hyunjung
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 TARGET		=	$(subst $(DQ),,$(TARGET_BIN_FILENAME))		#"area_data.bin
-TARGET_ARC	=	area_data.narc
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -121,35 +120,6 @@ $(TARGET):	$(SRC_XLS_FILE)
 endif
 
 
-$(TARGET_ARC): $(XLS)
-	#エクセルコンバート
-	#$(EXCEL2TAB) $(SRC_XLS_FILE)
-	$(XLS2TAB) $(SRC_XLS_FILE) > $(SRC_TXT_FILE)
-	#$(MAKE) convert				#コンバート
-	ruby area.rb $(SRC_TXT_FILE)
-	$(MAKE) mktexsetlst			#テクスチャセット元データリスト作成
-	$(MAKE) addnew				#新規空データ追加
-	$(MAKE) movelist			#リストファイル移動
-	$(MAKE) -C $(BUILD_DIR)		#配置データアーカイブ
-	#$(MAKE) -C $(TEXSET_DIR)
-
-#新規に空データをディレクトリに追加
-addnew:
-	$(NEWFILE) $(BUILDXLSLIST) $(BUILD_DIR) $(ORGAREAXLS)
-	$(NEWFILE) $(TEX_IMD_LIST) $(TEX_IMD_DIR) $(ORGTEXSET)
-
-#リストファイル移動
-movelist:
-	ruby $(LISTMK) $(BUILD_LIST) tmp $(BUILD_DIR)/$(BUILD_LIST)
-	#-rm $(BUILD_LIST)
-#	ruby $(LISTMK) $(TEX_LIST) $(NSBTXFILES_DIR) $(TEXSET_DIR)/$(TEX_LIST)
-	#-rm $(TEX_LIST)
-	ruby $(LISTMK) $(G_ANM_LIST) g_nsbta area_ground_anime/$(G_ANM_LIST)
-	-rm $(G_ANM_LIST) 
-
-#マップテクスチャセットリスト作成
-mktexsetlst:
-	$(TEXSET_MK) $(SRC_TXT_FILE) $(TEXSET_LIST)
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------

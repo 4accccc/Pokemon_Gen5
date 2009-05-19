@@ -10,6 +10,7 @@
 #
 #
 #	2008.12.18	tamada	wb環境に移植開始
+#	2009.05.18  tamada  light/itp/itaの外部データ(*.naix)参照に対応
 #
 #------------------------------------------------------------------------------
 
@@ -166,7 +167,7 @@ def enum_search naix, name
   if name == "none" then return NO_ANIME_ID end
   index = naix.getIndex(name.sub(/\./,"_"))
   if index == nil then
-    puts "#{naix.getAreaName}に#{name}がみつからない！"
+    puts "#{naix.getArchiveName}に#{name}がみつからない！"
     return NO_ANIME_ID
   end
   return index
