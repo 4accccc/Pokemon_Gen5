@@ -10,8 +10,11 @@
 
 #include <gflib.h>
 
+#include "field/fieldmap_proc.h"
+
 #include "field_rail.h"
 
+#include "field_camera.h"
 
 //============================================================================================
 //============================================================================================
@@ -55,8 +58,16 @@ typedef struct {
 struct _FIELD_RAIL_MAN{
   HEAPID heapID;
 
-  u32 line_ofs;     ///<LINEにいる間の、LINE上でのオフセット位置
+  FIELD_CAMERA * field_camera;
+
+  BOOL active_flag;
+
+  /// LINEにいる間の、LINE上でのオフセット位置
+  u32 line_ofs;
+
+  /// 移動が起きた最新のキーバリュー
   RAIL_KEY last_active_key;
+
   FIELD_RAIL nowRail;
 
   //いずれ必要になるが今考えると混乱する
@@ -76,6 +87,8 @@ static RAIL_KEY getReverseKey(RAIL_KEY key);
 static void initRail(FIELD_RAIL * rail);
 static BOOL isValidRail(const FIELD_RAIL * rail);
 static const char * getRailName(const FIELD_RAIL * rail);
+static BOOL checkLine(const RAIL_LINE * line);
+static BOOL checkPoint(const RAIL_POINT * point);
 
 
 //============================================================================================
@@ -85,11 +98,13 @@ static const char * getRailName(const FIELD_RAIL * rail);
  * @brief レール制御システムの生成
  */
 //------------------------------------------------------------------
-FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID)
+FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, FIELD_CAMERA * camera)
 { 
   FIELD_RAIL_MAN * man = GFL_HEAP_AllocMemory(heapID, sizeof(FIELD_RAIL_MAN));
 
   man->heapID = heapID;
+  man->active_flag = FALSE;
+  man->field_camera = camera;
   man->line_ofs = 0;
   man->last_active_key = RAIL_KEY_NULL;
   initRail(&man->nowRail);
@@ -120,6 +135,25 @@ void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_POINT * railPointData)
   FIELD_RAIL * rail = &man->nowRail;
   rail->type = FIELD_RAIL_TYPE_POINT;
   rail->point = railPointData;
+  man->active_flag = TRUE;
+}
+
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
+void FIELD_RAIL_MAN_SetActiveFlag(FIELD_RAIL_MAN * man, BOOL flag)
+{
+  man->active_flag = flag;
+}
+
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
+BOOL FIELD_RAIL_MAN_GetActiveFlag(const FIELD_RAIL_MAN *man)
+{
+  return man->active_flag;
 }
 
 //------------------------------------------------------------------
@@ -133,10 +167,16 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
   RAIL_KEY before_key = man->last_active_key;
   RAIL_KEY key = keyContToRailKey(key_cont);
 
+  if (!man->active_flag)
+  {
+    return;
+  }
+
   if (isValidRail(&man->nowRail) == FALSE)
   {
     return;
   }
+
   if (key == RAIL_KEY_NULL)
   {
     return;
@@ -150,12 +190,12 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
     {
       if (nPoint->keys[i] == key)
       { // POINT --> LINE[i] への移行処理
-        const RAIL_LINE * nLine = nPoint->line[i];
-        if (nLine->point[0] == nPoint)
+        const RAIL_LINE * nLine = nPoint->lines[i];
+        if (nLine->point_s == nPoint)
         { 
           man->line_ofs = 1;  //最初は１から！
         }
-        else if (nLine->point[1] == nPoint)
+        else if (nLine->point_e == nPoint)
         {
           man->line_ofs = nLine->line_divider - 1; //最後ー1から！
         }
@@ -163,6 +203,7 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
         man->nowRail.type = FIELD_RAIL_TYPE_LINE;
         man->nowRail.line = nLine;
         set_key = key;
+        checkLine(man->nowRail.line);
         
       }
     }
@@ -175,9 +216,10 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
       set_key = key;
       man->line_ofs ++;
       if (man->line_ofs == nLine->line_divider)
-      { // LINE --> POINT[1] への移行処理
+      { // LINE --> point_e への移行処理
         man->nowRail.type = FIELD_RAIL_TYPE_POINT;
-        man->nowRail.point = nLine->point[1];
+        man->nowRail.point = nLine->point_e;
+        checkPoint(man->nowRail.point);
       }
     }
     else if (key == getReverseKey(nLine->key))
@@ -185,16 +227,20 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
       set_key = key;
       man->line_ofs --;
       if (man->line_ofs == 0)
-      { // LINE --> POINT[0] への移行処理
+      { // LINE --> POINT_S への移行処理
         man->nowRail.type = FIELD_RAIL_TYPE_POINT;
-        man->nowRail.point = nLine->point[0];
+        man->nowRail.point = nLine->point_s;
+        checkPoint(man->nowRail.point);
       }
     }
   }
 
   if (set_key != RAIL_KEY_NULL)
   {
-    TAMADA_Printf("RAIL:active key ofs=%d\n", man->line_ofs);
+    static const char * const names[] = {
+      "RAIL_KEY_NULL","RAIL_KEY_UP","RAIL_KEY_RIGHT","RAIL_KEY_DOWN","RAIL_KEY_LEFT"
+    };
+    TAMADA_Printf("RAIL:%s :ofs=%d\n", names[set_key], man->line_ofs);
     man->last_active_key = set_key;
   }
 
@@ -236,10 +282,10 @@ void FIELD_RAIL_MAN_GetPos(const FIELD_RAIL_MAN * man, VecFx32 * pos)
 /**
  */
 //------------------------------------------------------------------
-void FIELD_RAIL_MAN_GetCameraPos(const FIELD_RAIL_MAN * man, VecFx32 * CamPos)
+void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
 {
   const FIELD_RAIL * rail = &man->nowRail;
-  RAIL_POS_FUNC * func = NULL;
+  RAIL_CAMERA_FUNC * func = NULL;
   switch (rail->type)
   {
   case FIELD_RAIL_TYPE_POINT:
@@ -259,7 +305,7 @@ void FIELD_RAIL_MAN_GetCameraPos(const FIELD_RAIL_MAN * man, VecFx32 * CamPos)
   }
   if (func)
   {
-    func(man, CamPos);
+    func(man);
   }
 }
 
@@ -304,6 +350,24 @@ static BOOL isValidRail(const FIELD_RAIL * rail)
     return FALSE;
   }
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const RAIL_CAMERA_SET * getCameraSet(const FIELD_RAIL * rail)
+{
+  switch (rail->type)
+  {
+  case FIELD_RAIL_TYPE_POINT:
+    return rail->point->camera_set;
+    break;
+  case FIELD_RAIL_TYPE_LINE:
+    return rail->line->camera_set;
+    break;
+  }
+  GF_ASSERT(0);
+  return &RAIL_CAMERA_SET_Default;
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static const char * getRailName(const FIELD_RAIL * rail)
@@ -317,6 +381,81 @@ static const char * getRailName(const FIELD_RAIL * rail)
   }
   return "NO ENTRY";
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static RAIL_KEY searchLineInPoint(const RAIL_POINT *point, const RAIL_LINE * line)
+{
+  int i;
+  for (i = 0; i < RAIL_CONNECT_LINE_MAX; i++)
+  {
+    if (point->lines[i] == line) return point->keys[i];
+  }
+  return RAIL_KEY_NULL;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BOOL checkLine(const RAIL_LINE * line)
+{
+
+  RAIL_KEY key;
+
+  if(line->point_s == NULL || line->point_e == NULL)
+  {
+    OS_Printf("%sはPOINTが正しくありません\n", line->name);
+    return FALSE;
+  }
+  key = searchLineInPoint(line->point_s, line);
+  if (key == RAIL_KEY_NULL)
+  {
+    OS_Printf("%sは%sと正しく接続できていません\n", line->name, line->point_s->name);
+    return FALSE;
+  }
+  if (key != line->key)
+  {
+    OS_Printf("%sは始端%sとキーがあっていません\n", line->name, line->point_s->name);
+    return FALSE;
+  }
+  key = searchLineInPoint(line->point_e, line);
+  if (key == RAIL_KEY_NULL)
+  {
+    OS_Printf("%sは%sと正しく接続できていません\n", line->name, line->point_e->name);
+    return FALSE;
+  }
+  if (key != getReverseKey(line->key))
+  {
+    OS_Printf("%sは終端%sとキーがあっていません\n", line->name, line->point_e->name);
+    return FALSE;
+  }
+  return TRUE;
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BOOL checkPoint(const RAIL_POINT * point)
+{
+  int i;
+  for (i = 0; i < RAIL_CONNECT_LINE_MAX; i++)
+  {
+    if (point->keys[i] == RAIL_KEY_NULL)
+    {
+      if (point->lines[i] == NULL)
+      {
+        return TRUE;
+      }
+      OS_Printf("%s:LINEとRAIL_KEYの指定に矛盾があります\n", point->name);
+    }
+    if (point->lines[i]->point_s != point && point->lines[i]->point_e != point)
+    {
+      OS_Printf("%sは%sと接続していません\n",point->name, point->lines[i]->name);
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief
@@ -349,6 +488,13 @@ static RAIL_KEY getReverseKey(RAIL_KEY key)
 }
 
 //============================================================================================
+//
+//
+//
+//    レール表現を実現するためのツール
+//
+//
+//
 //============================================================================================
 
 //------------------------------------------------------------------
@@ -360,12 +506,14 @@ void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_MAN * man, VecFx32 * pos)
     const RAIL_LINE * nLine = man->nowRail.line;
     fx32 ofs = (man->line_ofs * FX32_ONE) / nLine->line_divider;
     VecFx32 val;
-    const VecFx32 * p0 = &nLine->point[0]->pos;
-    const VecFx32 * p1 = &nLine->point[1]->pos;
+    const VecFx32 * p0 = &nLine->point_s->pos;
+    const VecFx32 * p1 = &nLine->point_e->pos;
     VEC_Subtract(p1, p0, &val);
     VEC_MultAdd(ofs, &val, p0, pos);
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 const RAIL_CAMERA_SET RAIL_CAMERA_SET_Default =
 {
   NULL,
@@ -375,6 +523,8 @@ const RAIL_CAMERA_SET RAIL_CAMERA_SET_Default =
   0,
 };
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 const RAIL_LINEPOS_SET RAIL_LINEPOS_SET_Default =
 {
   NULL,
@@ -383,6 +533,70 @@ const RAIL_LINEPOS_SET RAIL_LINEPOS_SET_Default =
   0,
   0,
 };
+
+//------------------------------------------------------------------
+/**
+ * @brief カメラ指定：パラメータをFx32３つとして単純に足すだけ
+ */
+//------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_FixPosCamera(const FIELD_RAIL_MAN* man)
+{
+  VecFx32 target;
+  const RAIL_CAMERA_SET * cam_set = getCameraSet(&man->nowRail);
+  FIELD_RAIL_MAN_GetPos(man, &target);
+
+  target.x += cam_set->param0;
+  target.y += cam_set->param1;
+  target.z += cam_set->param2;
+  //TODO: FIELD_CAMERAに直接カメラ位置指定をするものを追加する
+  //*pos = target;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief カメラ指定：パラメータをAngle指定に使用する
+ */
+//------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
+{
+  FIELD_CAMERA * cam = man->field_camera;
+  const RAIL_CAMERA_SET * cam_set = getCameraSet(&man->nowRail);
+  FIELD_CAMERA_SetAnglePitch(cam, (u16)cam_set->param0);
+  FIELD_CAMERA_SetAngleYaw(cam, (u16)cam_set->param1);
+  FIELD_CAMERA_SetAngleLen(cam, (fx32)cam_set->param2);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief カメラ指定：保持する二つのPOINTのangleバリューを補完する
+ */
+//------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
+{
+  const RAIL_CAMERA_SET * c0;
+  const RAIL_CAMERA_SET * c1;
+  GF_ASSERT(man->nowRail.type == FIELD_RAIL_TYPE_LINE);
+
+  c0 = man->nowRail.line->point_s->camera_set;
+  GF_ASSERT(c0->func == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
+  c1 = man->nowRail.line->point_e->camera_set;
+  GF_ASSERT(c1->func == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
+  {
+    u32 div = man->nowRail.line->line_divider;
+    u16 pitch = c0->param0 + ( ((int)c1->param0 - (int)c0->param0) * man->line_ofs / div );
+    /** TODO yawは足し算ではバグる！！！ */
+    u16 yaw = c0->param1 + ( ((int)c1->param1 - (int)c0->param1) * man->line_ofs / div );
+    fx32 len = c0->param2 + ( (c1->param2 - c0->param2) * man->line_ofs / div );
+    FIELD_CAMERA * cam = man->field_camera;
+    FIELD_CAMERA_SetAnglePitch(cam, pitch);
+    FIELD_CAMERA_SetAngleYaw(cam, yaw);
+    FIELD_CAMERA_SetAngleLen(cam, len);
+  }
+}
+
+
+
+
 
 
 

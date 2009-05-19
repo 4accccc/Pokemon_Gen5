@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "field_camera.h"
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct _FIELD_RAIL_MAN FIELD_RAIL_MAN;
@@ -25,7 +27,8 @@ typedef struct _RAIL_LINE RAIL_LINE;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-typedef void(RAIL_POS_FUNC)(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+typedef void (RAIL_POS_FUNC)(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+typedef void (RAIL_CAMERA_FUNC)(const FIELD_RAIL_MAN * man);
 
 
 //------------------------------------------------------------------
@@ -33,7 +36,7 @@ typedef void(RAIL_POS_FUNC)(const FIELD_RAIL_MAN * man, VecFx32 * pos);
  */
 //------------------------------------------------------------------
 typedef struct _RAIL_CAMERA_SET{
-  RAIL_POS_FUNC * func;
+  RAIL_CAMERA_FUNC * func;
   u32 param0;
   u32 param1;
   u32 param2;
@@ -85,8 +88,8 @@ enum {
  */
 //------------------------------------------------------------------
 struct _RAIL_POINT {  
-  //keys[n]にマッチしたらline[n]に移動する
-  const RAIL_LINE * line[RAIL_CONNECT_LINE_MAX];
+  //keys[n]にマッチしたらlines[n]に移動する
+  const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
 
   ///POINTの位置座標
@@ -102,8 +105,9 @@ struct _RAIL_POINT {
  */
 //------------------------------------------------------------------
 struct _RAIL_LINE { 
-  //point[0] --> point[1]への動きをkeyで制御する
-  const RAIL_POINT * point[RAIL_CONNECT_POINT_MAX];
+  //point_s --> point_eへの動きをkeyで制御する
+  const RAIL_POINT * point_s;
+  const RAIL_POINT * point_e;
   RAIL_KEY key;
   const RAIL_LINEPOS_SET * line_pos_set;
 
@@ -129,7 +133,7 @@ struct _RAIL_LINE {
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID);
+extern FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, FIELD_CAMERA * camera);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -144,12 +148,18 @@ extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont);
 extern void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_POINT * railPointData);
 
 //------------------------------------------------------------------
+//  たぶんデバッグ用途のみ
+//------------------------------------------------------------------
+extern void FIELD_RAIL_MAN_SetActiveFlag(FIELD_RAIL_MAN * man, BOOL flag);
+extern BOOL FIELD_RAIL_MAN_GetActiveFlag(const FIELD_RAIL_MAN *man);
+
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void FIELD_RAIL_MAN_GetPos(const FIELD_RAIL_MAN * man, VecFx32 * pos);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELD_RAIL_MAN_GetCameraPos(const FIELD_RAIL_MAN * man, VecFx32 * CamPos);
+extern void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -162,4 +172,11 @@ extern void FIELD_RAIL_MAN_GetDirection(const FIELD_RAIL_MAN * man, VecFx32 * di
 extern void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_MAN * man, VecFx32 * pos);
 
 extern const RAIL_LINEPOS_SET RAIL_LINEPOS_SET_Default;
+extern const RAIL_CAMERA_SET RAIL_CAMERA_SET_Default;
+extern void FIELD_RAIL_CAMERAFUNC_FixPosCamera(const FIELD_RAIL_MAN* man);
+extern void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man);
+extern void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man);
+
+
+
 
