@@ -148,27 +148,16 @@ enum{
 #define	MSGTEXT_WND_W	(30)
 #define	MSGTEXT_WND_H	(5)
 
-#define DEBUGMSG_LEFT1	(0)
-#define DEBUGMSG_LEFT2	(20)
-//#define DEBUGMSG_LEFT3	(40)
-//#define DEBUGMSG_LEFT4	(60)
-
-#define DEBUGMSG_RIGHT1	(40)
-#define DEBUGMSG_RIGHT2	(60)
-//#define DEBUGMSG_RIGHT3	(120)
-//#define DEBUGMSG_RIGHT4	(140)
-
-#define DEBUGMSG2_TAB			(175)
-#define DEBUGMSG3_TAB			(85)
-
 //-------------------------------------
 ///	カウント
 //=====================================
+#define TOUCHMARKER_VISIBLE_CNT	(10)
 
 //-------------------------------------
-///	タッチ
+///	計測情報
 //=====================================
-#define TOUCH_DIAMOND_W	(48)
+#define RHYTHMSEARCH_DATA_MAX	(15)	//計測回数最大
+#define TOUCH_DIAMOND_W	(48)				//タッチ幅
 #define TOUCH_DIAMOND_H	(48)
 
 //-------------------------------------
@@ -178,13 +167,6 @@ typedef enum {
 	MSG_FONT_TYPE_LARGE,
 	MSG_FONT_TYPE_SMALL,
 }MSG_FONT_TYPE;
-
-//-------------------------------------
-///	デバッグ用人数セーブ機能
-//=====================================
-#ifdef DEBUG_ONLY_PLAY
-#define DEBUG_GAME_NUM	(5)
-#endif //DEBUG_ONLY_PLAY
 
 //-------------------------------------
 ///	OBJ登録ID
@@ -204,7 +186,6 @@ typedef enum{
 	
 	CLWKID_MAX
 }CLWKID;
-
 
 //=============================================================================
 /**
@@ -251,7 +232,8 @@ typedef struct
 //-------------------------------------
 ///	メッセージ表示ウィンドウ
 //=====================================
-typedef struct {
+typedef struct
+{
 	GFL_BMPWIN*				p_bmpwin;
 	PRINT_UTIL        print_util;
 	STRBUF*						p_strbuf;
@@ -260,12 +242,19 @@ typedef struct {
 //-------------------------------------
 ///	サーチ部
 //=====================================
-typedef struct {
+typedef struct
+{
 	//どこを押したか
-	u16			x;
-	u16			y;
+	GFL_POINT		pos;
 	//押した時間
-	OSTick	time;
+	u32					prog_ms;	//経過時間
+	u32					diff_ms;	//差の時間
+} RHYTHMSEARCH_DATA;
+typedef struct
+{	
+	RHYTHMSEARCH_DATA	data[RHYTHMSEARCH_DATA_MAX];
+	u32			data_idx;
+	OSTick	start_time;
 } RHYTHMSEARCH_WORK;
 
 
@@ -273,7 +262,8 @@ typedef struct {
 //-------------------------------------
 ///	デバッグプリント用画面
 //=====================================
-typedef struct {
+typedef struct
+{
 	GFL_BMP_DATA *p_bmp;
 	GFL_FONT*			p_font;
 
@@ -318,14 +308,21 @@ struct _RHYTHM_MAIN_WORK
 	u16		seq;
 	BOOL is_end;
 
-	u16							debug_player;			//自分か相手か
-	u16							debug_game_cnt;	//何ゲーム目か
-
 	//計測
 	RHYTHMSEARCH_WORK	search;
 
+	//その他
+	u32								marker_cnt;	//マーカー表示時間
+
 	//引数
 	IRC_RHYTHM_PARAM	*p_param;
+
+#ifdef DEBUG_ONLY_PLAY
+	//デバッグ用
+	RHYTHMSEARCH_WORK	search2;
+	u16							debug_player;			//自分か相手か
+	u16							debug_game_cnt;	//何ゲーム目か
+#endif //DEBUG_ONLY_PLAY
 };
 
 //=============================================================================
@@ -374,9 +371,18 @@ static void SEQ_Change( RHYTHM_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
 static void SEQ_End( RHYTHM_MAIN_WORK *p_wk );
 //SEQ_FUNC
 static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
+//RHYTHMSEARCH
+static void RHYTHMSEARCH_Init( RHYTHMSEARCH_WORK *p_wk );
+static void RHYTHMSEARCH_Exit( RHYTHMSEARCH_WORK *p_wk );
+static void RHYTHMSEARCH_Start( RHYTHMSEARCH_WORK *p_wk );
+static BOOL RHYTHMSEARCH_IsEnd( const RHYTHMSEARCH_WORK *cp_wk );
+static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_pos );
 //汎用
-static BOOL TP_GetDiamondCont( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
+static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
+static void TouchMarker_SetPos( RHYTHM_MAIN_WORK *p_wk, const GFL_POINT *cp_pos );
+static void TouchMarker_Main( RHYTHM_MAIN_WORK *p_wk );
 static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk );
 
 //DEBUG_PRINT
@@ -481,6 +487,18 @@ static const GFL_POINT	sc_diamond_pos[]	=
 		223, 47
 	},
 	{	
+		55, 71
+	},
+	{	
+		103, 71
+	},
+	{	
+		151, 71
+	},
+	{	
+		199, 71
+	},
+	{	
 		31, 95
 	},
 	{	
@@ -495,6 +513,34 @@ static const GFL_POINT	sc_diamond_pos[]	=
 	{	
 		223, 95
 	},
+	{	
+		55, 119
+	},
+	{	
+		103, 119
+	},
+	{	
+		151, 119
+	},
+	{	
+		199, 119
+	},
+	{	
+		31, 143
+	},
+	{	
+		79, 143
+	},
+	{	
+		127, 143
+	},
+	{	
+		175, 143
+	},
+	{	
+		223, 143
+	},
+
 };
 
 
@@ -532,6 +578,8 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, HEAPID_IRCRHYTHM );
 	MSGWND_Init( &p_wk->msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
 			MSGTEXT_WND_X, MSGTEXT_WND_Y, MSGTEXT_WND_W, MSGTEXT_WND_H, HEAPID_IRCRHYTHM );
+
+	RHYTHMSEARCH_Init( &p_wk->search );
 
 	//デバッグ
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRHYTHM );
@@ -945,6 +993,9 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 				CLSYS_DEFREND_MAIN,
 				heapID
 				);
+
+
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CLWKID_TOUCH], FALSE );
 	}
 }
 //----------------------------------------------------------------------------
@@ -1356,84 +1407,88 @@ static void SEQ_End( RHYTHM_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-	enum{	
-		SEQ_INIT,
-		SEQ_MAIN,
-	};
+	RHYTHMSEARCH_WORK	*p_search;
+	p_search	= &p_wk->search;
 
-	switch( *p_seq )
+	MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_STR_000, 0, 0 );
+
+
+#ifdef DEBUG_ONLY_PLAY
+	DEBUGRHYTHM_PRINT_UpDate( p_wk );
+	if( p_wk->debug_player == 0 )
+	{
+		p_search	= &p_wk->search;
+	}
+	else
 	{	
-	case SEQ_INIT:
+		p_search	= &p_wk->search2;
+		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_DEBUG_001, 0, 0 );
+	}
+#endif // DEBUG_ONLY_PLAY
 
-		//DEBUGRHYTHM_PRINT_UpDate( p_wk );
 
+	RHYTHMSEARCH_Start( p_search );
+	SEQ_Change( p_wk, SEQFUNC_MainGame );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メイン処理
+ *
+ *	@param	RHYTHM_MAIN_WORK *p_wk	メインワーク
+ *	@param	*p_seq								シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
+{	
+	int i;
+	RHYTHMSEARCH_WORK	*p_search;
+	p_search	= &p_wk->search;
+
+#ifdef DEBUG_ONLY_PLAY
+	if( p_wk->debug_player == 0 )
+	{	
+		p_search	= &p_wk->search;
+	}
+	else
+	{	
+		p_search	= &p_wk->search2;
+	}
+#endif //DEBUG_ONLY_PLAY
+
+
+	TouchMarker_Main( p_wk );
+	for( i = 0; i< NELEMS(sc_diamond_pos); i++ )
+	{
+		if( TP_GetDiamondTrg( &sc_diamond_pos[i], NULL ) )
+		{	
+			TouchMarker_SetPos( p_wk, &sc_diamond_pos[i] );
+			RHYTHMSEARCH_SetData( p_search, &sc_diamond_pos[i] );
+			break;
+		}
+	}
+
+	//計測終了チェック
+	if( RHYTHMSEARCH_IsEnd( p_search ) )
+	{	
+		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_STR_001, 0, 0 );
+		SEQ_Change( p_wk, SEQFUNC_Result );
+
+#ifdef DEBUG_ONLY_PLAY
+		DEBUGRHYTHM_PRINT_UpDate( p_wk );
 		if( p_wk->debug_player == 0 )
 		{	
-			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_STR_000, 0, 0 );
+			p_wk->debug_player	= 1;
+			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_DEBUG_001, 0, 0 );
+			SEQ_Change( p_wk, SEQFUNC_StartGame );
 		}
 		else
 		{	
-
-			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_DEBUG_001, 0, 0 );
+			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_DEBUG_002, 0, 0 );
+		SEQ_Change( p_wk, SEQFUNC_Result );
 		}
-
-		*p_seq	= SEQ_MAIN;
-		break;
-
-	case SEQ_MAIN:
-
-
-		{
-			int i;
-			GFL_POINT	pos;
-		
-
-			GFL_CLWK	*p_marker;
-
-
-			p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
-			GFL_CLACT_WK_SetDrawEnable( p_marker, FALSE );
-			for( i = 0; i< NELEMS(sc_diamond_pos); i++ )
-			{
-				if( TP_GetDiamondCont( &sc_diamond_pos[i], &pos ) )
-				{	
-					GFL_CLACTPOS clpos;
-					clpos.x	= sc_diamond_pos[i].x;
-					clpos.y	= sc_diamond_pos[i].y;
-					GFL_CLACT_WK_SetPos( p_marker, &clpos, 0 );
-					GFL_CLACT_WK_SetDrawEnable( p_marker, TRUE );
-					break;
-				}
-			}
-			
-
-		}
-
-
-
-
-
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
-		{	
-			if( p_wk->debug_game_cnt == 0 )
-			{	
-				p_wk->debug_game_cnt	= DEBUG_GAME_NUM-1;
-			}
-			else
-			{	
-				p_wk->debug_game_cnt--;
-			}
-			SEQ_Change( p_wk, SEQFUNC_StartGame);
-		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
-		{	
-			p_wk->debug_game_cnt++;
-			p_wk->debug_game_cnt	%= DEBUG_GAME_NUM;
-			SEQ_Change( p_wk, SEQFUNC_StartGame);
-		}
-
-
-		break;
+#endif //DEBUG_ONLY_PLAY
 	}
 }
 //----------------------------------------------------------------------------
@@ -1447,13 +1502,127 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 {	
+	TouchMarker_Main( p_wk );
 	if(	GFL_UI_TP_GetTrg()	)
 	{	
-		p_wk->debug_game_cnt++;
-		p_wk->debug_game_cnt	%=	DEBUG_GAME_NUM;
+
+		RHYTHMSEARCH_Init( &p_wk->search );
+		RHYTHMSEARCH_Init( &p_wk->search2 );
 		p_wk->debug_player		= 0;
 		SEQ_Change( p_wk, SEQFUNC_StartGame );
 	}
+}
+//=============================================================================
+/**
+ *			RHYTHMSEARCH
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リズムサーチ用計測	初期化
+ *
+ *	@param	RHYTHMSEARCH_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void RHYTHMSEARCH_Init( RHYTHMSEARCH_WORK *p_wk )
+{	
+	//クリア
+	GFL_STD_MemClear( p_wk, sizeof(RHYTHMSEARCH_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リズムサーチ用計測	破棄
+ *
+ *	@param	RHYTHMSEARCH_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void RHYTHMSEARCH_Exit( RHYTHMSEARCH_WORK *p_wk )
+{	
+	//破棄
+	GFL_STD_MemClear( p_wk, sizeof(RHYTHMSEARCH_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リズムサーチ用計測	計測開始
+ *
+ *	@param	RHYTHMSEARCH_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void RHYTHMSEARCH_Start( RHYTHMSEARCH_WORK *p_wk )
+{	
+	if( OS_IsTickAvailable() )
+	{	
+		OS_InitTick();
+	}
+	//時間計測を開始
+	p_wk->start_time	=		OS_TicksToMilliSeconds(OS_GetTick());
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リズムサーチ用計測	計測終了判定
+ *
+ *	@param	RHYTHMSEARCH_WORK *p_wk		ワーク
+ *
+ *	@retval	TRUE計測終了
+ *	@retval	FALSE計測終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL RHYTHMSEARCH_IsEnd( const RHYTHMSEARCH_WORK *cp_wk )
+{	
+
+	//終了条件１
+	//タッチ回数が10回以上で、無タッチ状態が１秒以上
+	if( cp_wk->data_idx >= 10 )
+	{	
+		if( OS_TicksToMilliSeconds(OS_GetTick()) - cp_wk->start_time 
+			  - cp_wk->data[cp_wk->data_idx-1].prog_ms >= 1000 ) 
+		{	
+			return TRUE;
+		}
+	}
+
+	//終了条件２
+	//タッチ回数が15回
+	if( cp_wk->data_idx == RHYTHMSEARCH_DATA_MAX )
+	{	
+		return TRUE;
+	}
+
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リズムサーチ用計測	データ設定
+ *
+ *	@param	RHYTHMSEARCH_WORK *p_wk	ワーク
+ *	@param	GFL_POINT *cp_pos				座標
+ *
+ */
+//-----------------------------------------------------------------------------
+static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_pos )
+{	
+	GF_ASSERT( p_wk->data_idx < RHYTHMSEARCH_DATA_MAX );
+
+	p_wk->data[ p_wk->data_idx ].pos						= *cp_pos;
+	p_wk->data[ p_wk->data_idx ].prog_ms				= OS_TicksToMilliSeconds(OS_GetTick())
+																							  - p_wk->start_time;
+
+	//最初は、差が0
+	if( p_wk->data_idx == 0 )
+	{	
+		p_wk->data[ p_wk->data_idx ].diff_ms	= 0;
+	}
+	else	//お互いの差
+	{	
+		p_wk->data[ p_wk->data_idx ].diff_ms	= p_wk->data[ p_wk->data_idx ].prog_ms
+																								- p_wk->data[ p_wk->data_idx-1 ].prog_ms;
+	}
+
+	//セットしたので次へ進める
+	p_wk->data_idx++;
 }
 //=============================================================================
 /**
@@ -1473,22 +1642,47 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
  *	@retval	FALSEタッチしていない
  */
 //-----------------------------------------------------------------------------
-static BOOL TP_GetDiamondCont( const GFL_POINT *cp_diamond, GFL_POINT *p_trg )
+static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg )
 {	
 	u32 x, y;
-	u32	dx, dy;	//菱形上の
 	BOOL ret;
 
 	//Cont中で、菱形内のとき
-	if( GFL_UI_TP_GetPointCont( &x, &y ) )
+	//	当たり判定の方法は、ベクトルの右側に点があるとき～を辺の数だけ行う
+	//
+	//
+	if( GFL_UI_TP_GetPointTrg( &x, &y ) )
 	{	
-		dx	= ((y - cp_diamond->y) / TOUCH_DIAMOND_H) * TOUCH_DIAMOND_W / 2;
-		dy	= ((x - cp_diamond->x) / TOUCH_DIAMOND_W) * TOUCH_DIAMOND_H / 2;
+		//４頂点を作成
+		GFL_POINT	top, left, right, bottom;
+		int i;
+		int dx, dy;
+		u8 ret;
+		GFL_POINT	v[5];	//左、上、右、下、左の順に頂点
 
-		//矩形内で
-		if( ((u32)( x - cp_diamond->x - dx ) < (u32)( dx ))
-				&	((u32)( y - cp_diamond->y - dy) < (u32)(dy))
-			)
+		v[0].x	= cp_diamond->x - TOUCH_DIAMOND_W/2;
+		v[0].y	= cp_diamond->y;
+		v[1].x	= cp_diamond->x;
+		v[1].y	= cp_diamond->y - TOUCH_DIAMOND_H/2;
+		v[2].x	= cp_diamond->x + TOUCH_DIAMOND_W/2;
+		v[2].y	= cp_diamond->y;
+		v[3].x	= cp_diamond->x;
+		v[3].y	= cp_diamond->y + TOUCH_DIAMOND_H/2;
+		v[4]		= v[0];
+
+		dx	= x;
+		dy	= y;
+
+		ret = 0;
+		for( i = 0; i < 4; i++ )
+		{	
+			if( (v[i+1].x - v[i].x)*(dy-v[i].y) - (dx-v[i].x)*(v[i+1].y-v[i].y) > 0 )
+			{	
+				ret++;
+			}
+		}
+
+		if( ret == 4)
 		{
 			//受け取りが存在したら代入して返す
 			if( p_trg )
@@ -1498,11 +1692,54 @@ static BOOL TP_GetDiamondCont( const GFL_POINT *cp_diamond, GFL_POINT *p_trg )
 			}
 			return TRUE;
 		}
+
 	}
 
 	return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タッチマーカーの表示をOFF
+ *
+ *	@param	RHYTHM_MAIN_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void TouchMarker_Main( RHYTHM_MAIN_WORK *p_wk )
+{	
+	GFL_CLWK	*p_marker;
+	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
+
+	if( GFL_CLACT_WK_GetDrawEnable( p_marker ) )
+	{	
+		if( p_wk->marker_cnt++ > TOUCHMARKER_VISIBLE_CNT )
+		{	
+			GFL_CLACT_WK_SetDrawEnable( p_marker, FALSE );
+		}
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タッチマーカーの座標を設定し表示
+ *
+ *	@param	RHYTHM_MAIN_WORK *p_wk	ワーク
+ *	@param	GFL_POINT *cp_pos				座標
+ *
+ */
+//-----------------------------------------------------------------------------
+static void TouchMarker_SetPos( RHYTHM_MAIN_WORK *p_wk, const GFL_POINT *cp_pos )
+{	
+	GFL_CLACTPOS clpos;
+	GFL_CLWK	*p_marker;
+	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
+	clpos.x	= cp_pos->x+1;
+	clpos.y	= cp_pos->y+1;
+	GFL_CLACT_WK_SetPos( p_marker, &clpos, 0 );
+	GFL_CLACT_WK_SetDrawEnable( p_marker, TRUE );
+	p_wk->marker_cnt	= 0;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	デバッグプリントを更新
@@ -1513,14 +1750,83 @@ static BOOL TP_GetDiamondCont( const GFL_POINT *cp_diamond, GFL_POINT *p_trg )
  */
 //-----------------------------------------------------------------------------
 static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk )
-{	
-	int i, j;
-	int now_idx;
+{
+	enum{	
+		DEBUGMSG_TAB	= 90,
+		DEBUGMSG_TAB2	= 170,
+	};
+
+	int i,j;
+
+	RHYTHMSEARCH_WORK	*p_search;
+	p_search	= &p_wk->search;
 
 	DEBUGPRINT_Clear();
 
-//	DEBUGPRINT_PrintNumber( L"%d番目のゲーム", p_wk->debug_game_cnt, 0,  0 );
-	//DEBUGPRINT_PrintNumber( L"%d人目の番です", p_wk->debug_player, 100,  0 );
+	OS_Printf( "○リズムチェック表示スタート↓↓↓↓↓\n" );
+	for( j = 0; j < 2; j++ )
+	{	
+		if( j == 0 )
+		{	
+			p_search	= &p_wk->search;
+		}
+		else
+		{	
+			p_search	= &p_wk->search2;
+		}
+
+		OS_Printf( "▼%d人目の表示\n", j );
+		{	
+			u32 ret;
+
+			DEBUGPRINT_Print( L"タッチ開始から終了まで", 0,  0 );
+			ret	= p_search->data[p_search->data_idx-1].prog_ms - p_search->data[0].prog_ms;
+			DEBUGPRINT_PrintNumber( L"ミリ秒 %d", ret, DEBUGMSG_TAB*j,  10 );
+			DEBUGPRINT_PrintNumber( L"回数 %d", p_search->data_idx, 45+DEBUGMSG_TAB*j, 10 );
+			OS_Printf( "継続時間 %d, タッチ回数 %d\n", ret, p_search->data_idx );
+		}
+
+		{	
+			DEBUGPRINT_Print( L"タッチ間隔", 0,  30 );
+			for( i = 0; i < p_search->data_idx; i++ )
+			{	
+				if( i == 10 )
+				{	
+					break;
+				}
+				DEBUGPRINT_PrintNumber( L"間隔[%d]", i, DEBUGMSG_TAB*j,  40+i*10 );
+				DEBUGPRINT_PrintNumber( L"%d", p_search->data[i].diff_ms, 30+DEBUGMSG_TAB*j,  40+i*10 );
+				OS_Printf( "間隔[%d] %d\n", i, p_search->data[i].diff_ms );
+			}
+		}
+	}
+
+	OS_Printf( "◇差の表示\n" );
+	//差
+	{	
+		s32 player1;
+		s32 player2;
+		player1	= p_wk->search.data[p_wk->search.data_idx-1].prog_ms - p_wk->search.data[0].prog_ms;
+		player2	= p_wk->search2.data[p_wk->search2.data_idx-1].prog_ms - p_wk->search2.data[0].prog_ms;
+		DEBUGPRINT_PrintNumber( L"経過の差 %d", MATH_IAbs(player1 - player2), DEBUGMSG_TAB2,  10 );
+		OS_Printf( "経過時間の差 %d\n", MATH_IAbs(player1 - player2) );
+
+
+		for( i = 0; i < p_search->data_idx; i++ )
+		{	
+			if( i == 10 )
+			{	
+				break;
+			}
+			DEBUGPRINT_PrintNumber( L"差[%d]", i, DEBUGMSG_TAB2,  40+i*10 );
+			player1	= p_wk->search.data[i].diff_ms;
+			player2	= p_wk->search2.data[i].diff_ms;
+			DEBUGPRINT_PrintNumber( L"%d", MATH_IAbs(player1-player2), 30+DEBUGMSG_TAB2,  40+i*10 );
+			OS_Printf( "間隔の差[%d] %d\n", i, MATH_IAbs(player1 - player2) );
+		}
+	}
+	
+	OS_Printf( "↑リズムチェック表示終了↑↑↑↑↑\n" );
 
 }
  

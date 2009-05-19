@@ -198,8 +198,10 @@ static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk );
 static void GRAPHIC_3D_EndDraw( GRAPHIC_3D_WORK *p_wk );
 static void Graphic_3d_SetUp( void );
 //円プリミティブ
-static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color, u16 add_r, GXRgb add_color );
+static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color );
 static void CIRCLE_Draw( CIRCLE_WORK *p_wk );
+static void CIRCLE_SetAddR( CIRCLE_WORK *p_wk, u16 add_r );
+static void CIRCLE_SetAddColor( CIRCLE_WORK *p_wk, u16 add_color );
 static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end );
 
 //=============================================================================
@@ -639,7 +641,9 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 		int i;
 		for( i = 0; i < CIRCLE_MAX; i++ )
 		{	
-			CIRCLE_Init( &p_wk->c[i], 0, GX_RGB(31,16,0),0x8F+0x1F*i, GX_RGB(1,1,1) );
+			CIRCLE_Init( &p_wk->c[i], 0, GX_RGB(31,16,0) );
+			CIRCLE_SetAddR( &p_wk->c[i], 0x8F+0x1F*i );
+			CIRCLE_SetAddColor( &p_wk->c[i], GX_RGB(0,0,1) );
 		}
 	}
 
@@ -1161,17 +1165,13 @@ static PRINT_QUE* MSG_GetPrintQue( const MSG_WORK *cp_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color, u16 add_r, GXRgb add_color )
+static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color )
 {	
 	GFL_STD_MemClear( p_wk, sizeof(CIRCLE_WORK) );
 	p_wk->r			= r;
 	p_wk->red		= (color&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
 	p_wk->green	= (color&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
 	p_wk->blue	= (color&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
-	p_wk->add_r			= add_r;
-	p_wk->add_red		= (add_color&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
-	p_wk->add_green	= (add_color&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
-	p_wk->add_blue	= (add_color&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
 
 	//円の頂点作成
 	{	
@@ -1226,6 +1226,35 @@ static void CIRCLE_Draw( CIRCLE_WORK *p_wk )
 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	半径加算値をセット
+ *
+ *	@param	CIRCLE_WORK *p_wk	ワーク
+ *	@param	add_r							半径加算値	
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_SetAddR( CIRCLE_WORK *p_wk, u16 add_r )
+{	
+	p_wk->add_r			= add_r;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	色加算値をセット
+ *
+ *	@param	CIRCLE_WORK *p_wk	ワーク
+ *	@param	add_color					色加算値
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_SetAddColor( CIRCLE_WORK *p_wk, u16 add_color )
+{	
+	p_wk->add_red		= (add_color&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+	p_wk->add_green	= (add_color&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+	p_wk->add_blue	= (add_color&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	線を描画
