@@ -363,7 +363,7 @@ static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont)
 //------------------------------------------------------------------
 static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
 {
-	debugControl(camera, key_cont);
+	//debugControl(camera, key_cont);
 	updateTargetBinding(camera);
   updateCameraCalc(camera);
 }
