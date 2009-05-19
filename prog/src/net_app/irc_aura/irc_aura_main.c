@@ -392,9 +392,9 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq );
 //汎用
 static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg );
 static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
-static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk );
 static void TouchMarker_SetPos( AURA_MAIN_WORK *p_wk, const GFL_POINT *cp_pos );
 static void TouchMarker_OffVisible( AURA_MAIN_WORK *p_wk );
+static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk );
 
 //ブレ計測
 static void	SHAKESEARCH_Init( SHAKE_SEARCH_WORK *p_wk );
@@ -2105,6 +2105,68 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 		else{	
 			OS_Printf( "距離　0点\n" );
 		}
+	}
+
+	{
+		GFL_POINT temp1, temp2;
+		u32 shake1, shake2;
+		u8 idx1, idx2;
+		u16 ret;
+		u16 score;
+		OS_Printf( "△お互いのブレ計算結果\n" );
+
+		idx1	= p_wk->debug_game_cnt + (0*DEBUG_GAME_NUM);
+		idx2	= p_wk->debug_game_cnt + (1*DEBUG_GAME_NUM);
+
+		score	= 0;
+		for( i = 1; i <TOUCH_COUNTER_SHAKE_MAX; i++ )
+		{	
+			temp1.x	= p_wk->shake_left[idx1].shake[i].x - p_wk->shake_left[idx1].shake[0].x;
+			temp1.y	= p_wk->shake_left[idx1].shake[i].y - p_wk->shake_left[idx1].shake[0].y;
+			temp2.x	= p_wk->shake_left[idx2].shake[i].x - p_wk->shake_left[idx2].shake[0].x;
+			temp2.y	= p_wk->shake_left[idx2].shake[i].y - p_wk->shake_left[idx2].shake[0].y;
+
+			shake1	= MATH_IAbs( temp1.x ) + MATH_IAbs( temp1.y );
+			shake2	= MATH_IAbs( temp2.x ) + MATH_IAbs( temp2.y );
+
+			if( shake1 > shake2 )
+			{	
+				ret	= shake1 - shake2;
+			}
+			else
+			{	
+				ret	= shake2 - shake1;
+			}
+
+			switch( ret )
+			{	
+			case 0:
+				score	+= 100;
+				OS_Printf( "ブレ[i]　100点加算\n", i );
+				break;
+			case 1:
+				score	+= 80;
+				OS_Printf( "ブレ[i]　80点加算\n", i );
+				break;
+			case 2:
+				//fall through
+			case 3:
+				score	+= 50;
+				OS_Printf( "ブレ[i]　50点加算\n", i );
+				break;
+			case 4:
+				//fall through
+			case 5:
+				score	+= 30;
+				OS_Printf( "ブレ[i]　30点加算\n", i );
+				break;
+			default:	//6～
+				//score	+= 0;
+				OS_Printf( "ブレ[i]　0点加算\n", i );
+			}
+		}
+
+		OS_Printf( "ブレ結果 %d点\n", score/9 );
 	}
 
 
