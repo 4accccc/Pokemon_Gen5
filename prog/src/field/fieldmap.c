@@ -34,6 +34,7 @@
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_event.h"
 #include "field/zonedata.h"
+#include "field/areadata.h"
 
 #include "event_mapchange.h"
 #include "event_debug_menu.h"
@@ -467,8 +468,11 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   // ライトシステム生成
   {
     GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-    fieldWork->light = FIELD_LIGHT_Create( 0, 
-        GAMEDATA_GetSeasonID(gamedata), 0, 
+    u16 area_id = ZONEDATA_GetAreaID(fieldWork->map_id);
+    u16 area_season_id = area_id + ( AREADATA_HasSeason(area_id) ? GAMEDATA_GetSeasonID(gamedata) : 0 );
+
+    fieldWork->light = FIELD_LIGHT_Create( AREADATA_GetLightType( area_season_id ), 
+        0, 
         fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
   }
 

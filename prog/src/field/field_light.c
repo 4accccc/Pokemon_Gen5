@@ -15,8 +15,6 @@
 #include "arc_def.h"
 #include "message.naix"
 
-#include "gamesystem/pm_season.h"
-
 #include "print/wordset.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
@@ -234,7 +232,6 @@ struct _FIELD_LIGHT {
 	LIGHT_DATA* p_data;				// データ
 	u32			now_index;			// 今の反映インデックス
 	u16			default_lightno;
-	u16			default_season;
 	
 
 	// 反映情報
@@ -281,7 +278,7 @@ struct _FIELD_LIGHT {
 //=====================================
 static void FIELD_LIGHT_Reflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight );
 static void FIELD_LIGHT_ForceReflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight );
-static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 season, u32 heapID );
+static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID );
 static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID );
 static void FIELD_LIGHT_ReleaseData( FIELD_LIGHT* p_sys );
 static s32	FIELD_LIGHT_SearchNowIndex( const FIELD_LIGHT* cp_sys, int rtc_second );
@@ -347,7 +344,6 @@ static void DEBUG_LIGHT_SetWordsetVec( FIELD_LIGHT* p_wk, u32 bufstart, const Ve
  *	@brief	フィールドライト	システム作成
  *
  *	@param	light_no		ライトナンバー
- *	@param	season			季節
  *	@param	rtc_second		秒数
  *	@param	p_fog			フォグシステム
  *	@param	p_liblight		ライト管理システム
@@ -356,7 +352,7 @@ static void DEBUG_LIGHT_SetWordsetVec( FIELD_LIGHT* p_wk, u32 bufstart, const Ve
  *	@return	システムワーク
  */
 //-----------------------------------------------------------------------------
-FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, u32 season, int rtc_second, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight, u32 heapID )
+FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, int rtc_second, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight, u32 heapID )
 {
 	FIELD_LIGHT* p_sys;
 
@@ -366,7 +362,7 @@ FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, u32 season, int rtc_second, FIELD
 	rtc_second /= 2;
 
 	// ライト情報読み込み
-	FIELD_LIGHT_LoadData( p_sys, light_no, season, heapID );
+	FIELD_LIGHT_LoadData( p_sys, light_no, heapID );
 
 	// データ反映
 	p_sys->reflect_flag = TRUE;
@@ -486,15 +482,14 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
  *	@brief	フィールドライト	ライト情報の変更
  *
  *	@param	light_no		ライトナンバー
- *	@param	season			季節
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-void FIELD_LIGHT_Change( FIELD_LIGHT* p_sys, u32 light_no, u32 season, u32 heapID )
+void FIELD_LIGHT_Change( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID )
 {
 	// ライト情報を再読み込み
 	FIELD_LIGHT_ReleaseData( p_sys );
-	FIELD_LIGHT_LoadData( p_sys, light_no, season, heapID );
+	FIELD_LIGHT_LoadData( p_sys, light_no, heapID );
 
 	// 初期情報を設定
 	p_sys->now_index = FIELD_LIGHT_SearchNowIndex( p_sys, p_sys->time_second );
@@ -537,7 +532,7 @@ void FIELD_LIGHT_ReLoadDefault( FIELD_LIGHT* p_sys, u32 heapID )
 {
 	// ライト情報を再読み込み
 	FIELD_LIGHT_ReleaseData( p_sys );
-	FIELD_LIGHT_LoadData( p_sys, p_sys->default_lightno, p_sys->default_season, heapID );
+	FIELD_LIGHT_LoadData( p_sys, p_sys->default_lightno, heapID );
 
 	// 初期情報を設定
 	p_sys->now_index = FIELD_LIGHT_SearchNowIndex( p_sys, p_sys->time_second );
@@ -1369,17 +1364,15 @@ static void FIELD_LIGHT_ForceReflect( const FIELD_LIGHT* cp_sys, FIELD_FOG_WORK*
  *	
  *	@param	p_sys		システムワーク
  *	@param	light_no	ライトナンバー
- *	@param	season		季節
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 season, u32 heapID )
+static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID )
 {
 	// 基本季節・ライトナンバー設定
-	p_sys->default_season	= season;
 	p_sys->default_lightno	= light_no;
 
-	FIELD_LIGHT_LoadDataEx( p_sys, LIGHT_ARC_ID, (light_no*LIGHT_ARC_SEASON_NUM)*season, heapID );
+	FIELD_LIGHT_LoadDataEx( p_sys, LIGHT_ARC_ID, light_no, heapID );
 }
 
 //----------------------------------------------------------------------------
