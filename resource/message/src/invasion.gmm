@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-19T17:14:10"/>
+	<create user="matsumiya" host="W00179" date="2009-05-19T17:21:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -471,6 +471,12 @@
 ・子プレイヤー３</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:3]が　まちに　きました！</language>
 		<language name="JPN_KANJI" width="256">INTRUDE</language>
+	</row>
+
+	<row id="msg_invasion_test08_01">
+		<comment>通信相手不在時</comment>
+		<language name="JPN" width="256">これいじょう　すすめません</language>
+		<language name="JPN_KANJI" width="256">これいじょう　進めません</language>
 	</row>
 
 	<flowchart-group-list>
