@@ -26,7 +26,7 @@ struct _TAG_SCRCMD_WORK
 	SCRCMD_WORK_HEADER head;
 	
 	GFL_MSGDATA *msgData;
-	FLDMSGWIN *msgWin;
+	FLDMSGWIN_STREAM *msgWinStream;
 	
 	GFL_TCB *tcb_anm_tbl[SCRCMD_ACMD_MAX];
 };
@@ -205,27 +205,27 @@ GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
- * SCRCMD_WORK FLDMSGWINセット
+ * SCRCMD_WORK FLDMSGWIN_STREAMセット
  * @param	work SCRCMD_WORK
  * @param	msgWin FLDMSGWIN*
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void SCRCMD_WORK_SetFldMsgWin( SCRCMD_WORK *work, FLDMSGWIN *msgWin )
+void SCRCMD_WORK_SetFldMsgWinStream( SCRCMD_WORK *work, FLDMSGWIN_STREAM *msgWin )
 {
-	work->msgWin = msgWin;
+	work->msgWinStream = msgWin;
 }
 
 //--------------------------------------------------------------
 /**
- * SCRCMD_WORK GFL_MSGDATA取得
+ * SCRCMD_WORK FLDMSGWIN_STREAM取得
  * @param	work SCRCMD_WORK
  * @retval	FLDMSGWIN*
  */
 //--------------------------------------------------------------
-FLDMSGWIN * SCRCMD_WORK_GetFldMsgWin( SCRCMD_WORK *work )
+FLDMSGWIN_STREAM * SCRCMD_WORK_GetFldMsgWinStream( SCRCMD_WORK *work )
 {
-	return( work->msgWin );
+	return( work->msgWinStream );
 }
 
 //======================================================================

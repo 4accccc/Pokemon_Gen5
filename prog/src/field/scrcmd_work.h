@@ -59,8 +59,8 @@ extern SCRIPT_WORK * SCRCMD_WORK_GetScriptWork( SCRCMD_WORK *work );
 extern FLDMSGBG * SCRCMD_WORK_GetFldMsgBG( SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetMsgData( SCRCMD_WORK *work, GFL_MSGDATA *msgData );
 extern GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work );
-extern void SCRCMD_WORK_SetFldMsgWin( SCRCMD_WORK *work, FLDMSGWIN *msgWin );
-extern FLDMSGWIN * SCRCMD_WORK_GetFldMsgWin( SCRCMD_WORK *work );
+extern void SCRCMD_WORK_SetFldMsgWinStream( SCRCMD_WORK *work, FLDMSGWIN_STREAM *msgWin );
+extern FLDMSGWIN_STREAM * SCRCMD_WORK_GetFldMsgWinStream( SCRCMD_WORK *work );
 
 //アニメーションコマンド
 extern void SCRCMD_WORK_SetFldMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb );

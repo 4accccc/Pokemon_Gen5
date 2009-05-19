@@ -64,10 +64,17 @@ extern const CONNECT_DATA SampleConnectData_4season[];
 extern const int SampleConnectDataCount_4season;
 extern const FLDMMDL_HEADER SampleFldMMdlHeader_4season[];
 extern const int SampleFldMMdlHeaderCount_4season;
-extern const FLDMMDL_HEADER SampleFldMMdlHeader_T01[];
-extern const int SampleFldMMdlHeaderCount_T01;
-extern const FLDMMDL_HEADER SampleFldMMdlHeader_R01[];
-extern const int SampleFldMMdlHeaderCount_R01;
+
+//仮動作モデル配置データ
+#include "../../resource/fldmapdata/eventdata/zone_t01evc.cdat"
+#include "../../resource/fldmapdata/eventdata/zone_t01r0101evc.cdat"
+#include "../../resource/fldmapdata/eventdata/zone_t01r0201evc.cdat"
+#include "../../resource/fldmapdata/eventdata/zone_t01r0301evc.cdat"
+#include "../../resource/fldmapdata/eventdata/zone_t01r0401evc.cdat"
+#include "../../resource/fldmapdata/eventdata/zone_r01evc.cdat"
+#include "../../resource/fldmapdata/eventdata/zone_t02evc.cdat"
+#include "../../resource/fldmapdata/eventdata/zone_t02pc0101evc.cdat"
+
 
 //============================================================================================
 //
@@ -141,6 +148,26 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 	case ZONE_ID_R01:
 		evdata->npc_count = SampleFldMMdlHeaderCount_R01;
 		evdata->npc_data = SampleFldMMdlHeader_R01;
+		break;
+	case ZONE_ID_T01R0101:
+		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0101;
+		evdata->npc_data = SampleFldMMdlHeader_t01r0101;
+		break;
+	case ZONE_ID_T01R0201:
+		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0201;
+		evdata->npc_data = SampleFldMMdlHeader_t01r0201;
+		break;
+  case ZONE_ID_T01R0301:
+		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0301;
+		evdata->npc_data = SampleFldMMdlHeader_t01r0301;
+		break;
+  case ZONE_ID_T01R0401:
+		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0401;
+		evdata->npc_data = SampleFldMMdlHeader_t01r0401;
+		break;
+ case ZONE_ID_T02PC0101:
+		evdata->npc_count = SampleFldMMdlHeaderCount_t02pc0101;
+		evdata->npc_data = SampleFldMMdlHeader_t02pc0101;
 		break;
 	}
 }
@@ -913,65 +940,6 @@ const FLDMMDL_HEADER SampleFldMMdlHeader_4season[] = {
 };
 
 const int SampleFldMMdlHeaderCount_4season = NELEMS(SampleFldMMdlHeader_4season);
-
-const FLDMMDL_HEADER SampleFldMMdlHeader_T01[] = {
-	{
-		0,		///<識別ID
-		MAN1,	///<表示するOBJコード
-		MV_RND,	///<動作コード
-		0,	///<イベントタイプ
-		0,	///<イベントフラグ
-		1,	///<イベントID
-		DIR_DOWN,	///<指定方向
-		0,	///<指定パラメタ 0
-		0,	///<指定パラメタ 1
-		0,	///<指定パラメタ 2
-		2,	///<X方向移動制限
-		2,	///<Z方向移動制限
-		757,	///<グリッドX
-		811,	///<グリッドZ
-		0,	///<Y値 fx32型
-	},
-	{
-		1,		///<識別ID
-		WOMAN1,	///<表示するOBJコード
-		MV_RND,	///<動作コード
-		0,	///<イベントタイプ
-		0,	///<イベントフラグ
-		2,	///<イベントID
-		DIR_DOWN,	///<指定方向
-		0,	///<指定パラメタ 0
-		0,	///<指定パラメタ 1
-		0,	///<指定パラメタ 2
-		2,	///<X方向移動制限
-		2,	///<Z方向移動制限
-		760,	///<グリッドX
-		811,	///<グリッドZ
-		0,	///<Y値 fx32型
-	},
-	{
-		2,		///<識別ID
-		GIRL1,	///<表示するOBJコード
-		MV_RND,	///<動作コード
-		0,	///<イベントタイプ
-		0,	///<イベントフラグ
-		3,	///<イベントID
-		DIR_DOWN,	///<指定方向
-		0,	///<指定パラメタ 0
-		0,	///<指定パラメタ 1
-		0,	///<指定パラメタ 2
-		2,	///<X方向移動制限
-		2,	///<Z方向移動制限
-		759,	///<グリッドX
-		813,	///<グリッドZ
-		0,	///<Y値 fx32型
-	},
-};
-
-const int SampleFldMMdlHeaderCount_T01 = NELEMS(SampleFldMMdlHeader_T01);
-
-//仮 r01動作モデル
-#include "../../resource/fldmapdata/eventdata/zone_r01evc.cdat"
 
 #if 0
 const FLDMMDL_HEADER SampleFldMMdlHeader_R01[] = {

@@ -49,6 +49,8 @@ typedef enum
 typedef struct _TAG_FLDMSGBG FLDMSGBG;			///<FLDMSGBG
 typedef struct _TAG_FLDMSGPRINT FLDMSGPRINT;	///<FLDMSGPRINT
 typedef struct _TAG_FLDMSGWIN FLDMSGWIN;		///<FLDMSGWIN
+typedef struct _TAG_FLDMSGPRINT_STREAM FLDMSGPRINT_STREAM; ///<FLDMSGPRINT_STREAM
+typedef struct _TAG_FLDMSGWIN_STREAM FLDMSGWIN_STREAM; ///<FLDMSGWIN_STREAM
 typedef struct _TAG_FLDMENUFUNC FLDMENUFUNC;	///<FLDMENUFUNC
 
 //--------------------------------------------------------------
@@ -165,5 +167,25 @@ extern void FLDMENUFUNC_InputHeaderListSize(
 extern FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
     FLDMSGBG *fmb, FLDMENUFUNC_YESNO pos );
 extern FLDMENUFUNC_YESNO FLDMENUFUNC_ProcYesNoMenu( FLDMENUFUNC *menuFunc );
+
+//プリントストリーム
+extern FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrint(
+	FLDMSGBG *fmb, const STRBUF *strbuf,
+  GFL_BMPWIN *bmpwin, u16 x, u16 y, int wait );
+extern void FLDMSGPRINT_STREAM_Delete( FLDMSGPRINT_STREAM *stm );
+extern BOOL FLDMSGPRINT_STREAM_ProcPrint( FLDMSGPRINT_STREAM *stm );
+
+//メッセージウィンドウ　プリントストリーム
+extern FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
+    FLDMSGBG *fmb, const GFL_MSGDATA *msgData,
+    u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );
+extern void FLDMSGWIN_STREAM_Delete( FLDMSGWIN_STREAM *msgWin );
+extern void FLDMSGWIN_STREAM_PrintStart(
+    FLDMSGWIN_STREAM *msgWin, u16 x, u16 y, u32 strID );
+extern void FLDMSGWIN_STREAM_PrintStrBufStart(
+    FLDMSGWIN_STREAM *msgWin, u16 x, u16 y, const STRBUF *strBuf );
+extern BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin );
+extern FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_AddTalkWin(
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData );
 
 #endif //__FLDMSGBG_H__
