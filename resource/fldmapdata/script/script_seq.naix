@@ -18,9 +18,19 @@ enum {
 	NARC_script_seq_r01_bin = 4,
 	NARC_script_seq_sp_r01_bin = 5,
 	NARC_script_seq_sp_t01_bin = 6,
-	NARC_script_seq_sp_t02_bin = 7,
-	NARC_script_seq_t01_bin = 8,
-	NARC_script_seq_t02_bin = 9
+	NARC_script_seq_sp_t01r0101_bin = 7,
+	NARC_script_seq_sp_t01r0201_bin = 8,
+	NARC_script_seq_sp_t01r0301_bin = 9,
+	NARC_script_seq_sp_t01r0401_bin = 10,
+	NARC_script_seq_sp_t02_bin = 11,
+	NARC_script_seq_sp_t02pc0101_bin = 12,
+	NARC_script_seq_t01_bin = 13,
+	NARC_script_seq_t01r0101_bin = 14,
+	NARC_script_seq_t01r0201_bin = 15,
+	NARC_script_seq_t01r0301_bin = 16,
+	NARC_script_seq_t01r0401_bin = 17,
+	NARC_script_seq_t02_bin = 18,
+	NARC_script_seq_t02pc0101_bin = 19
 };
 
 /* NARC_SCRIPT_SEQ_NAIX_ */

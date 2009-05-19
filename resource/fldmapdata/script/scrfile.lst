@@ -6,6 +6,16 @@ SCRSRCS	=\
 	r01.ev	\
 	sp_r01.ev	\
 	sp_t01.ev	\
+	sp_t01r0101.ev	\
+	sp_t01r0201.ev	\
+	sp_t01r0301.ev	\
+	sp_t01r0401.ev	\
 	sp_t02.ev	\
+	sp_t02pc0101.ev	\
 	t01.ev	\
-	t02.ev	
+	t01r0101.ev	\
+	t01r0201.ev	\
+	t01r0301.ev	\
+	t01r0401.ev	\
+	t02.ev	\
+	t02pc0101.ev	
