@@ -35,7 +35,7 @@ use File::Basename;
 		$file_name = basename( @ARGV[0], '.ncg' );
 		if( $file_name =~ m/c_m/ ){
 			$file_name =~ s/c_m/c_f/g;
-			$file_name = @ARGV[1] . $file_name . ".NCGR";
+			$file_name = @ARGV[1] . $file_name . ".NCBR";
 			$size = -s $file_name;
 			if( $size eq "" ){
 				open( DUMMY, "> " . $file_name );

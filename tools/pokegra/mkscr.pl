@@ -22,6 +22,7 @@ use File::Basename;
 
 	$list_count = @list;
 	$no = 0;
+	$cnt = 0;
 
 	while( $list_count != 0 ){
 		$file_name = @list[ $no ];
@@ -87,6 +88,20 @@ use File::Basename;
 		$nclr_name_r = $nclr_name_n;
 		$nclr_name_r =~ s/_n.NCLR/_r.NCLR/g;
 
+		$no++;
+		$list_count--;
+
+		$size = -s $nmcr_name_f;
+		if( $size eq "" )
+		{
+			next;
+		}
+		$size = -s $nmcr_name_b;
+		if( $size eq "" )
+		{
+			next;
+		}
+
 		print SCR "\"$ncgr_m_name_f\"\n";
 		print SCR "\"$ncgr_f_name_f\"\n";
 		print SCR "\"$ncbr_m_name_f\"\n";
@@ -108,8 +123,8 @@ use File::Basename;
 		print SCR "\"$nclr_name_n\"\n";
 		print SCR "\"$nclr_name_r\"\n";
 
-		$no++;
-		$list_count--;
+		$cnt++;
+
 	}
 
 	close( SCR );
@@ -127,7 +142,7 @@ use File::Basename;
 	print	DEF	"//============================================================================================\n";
 	print	DEF	"\n\n";
 	print	DEF	"#pragma once\n\n";
-	print DEF "#define	NEW_POKEMON_COUNT	( " . ( $no - 493 ) . " ) \t//WBからの新ポケの総数\n\n";
+	print DEF "#define	NEW_POKEMON_COUNT	( " . ( $cnt - 493 ) . " ) \t//WBからの新ポケの総数\n\n";
 
 	close( DEF );
 

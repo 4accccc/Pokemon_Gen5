@@ -47,10 +47,12 @@ use constant NCG_Y	=>	12;
 		}
 	}
 	else{
-		$file_name = basename( @ARGV[0], '.ncg' );
-		$file_name = @ARGV[1] . $file_name . ".NCGR";
-		open( DUMMY, "> " . $file_name );
-		close( DUMMY );
+#		$file_name = basename( @ARGV[0], '.ncg' );
+#		$file_name = @ARGV[1] . $file_name . ".NCGR";
+#		open( DUMMY, "> " . $file_name );
+#		close( DUMMY );
+		print "error:FileOpenError\n";
+		die;
 	}
 
 #====================================================================================
