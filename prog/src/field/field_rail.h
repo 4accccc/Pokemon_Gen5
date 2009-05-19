@@ -19,6 +19,25 @@ typedef struct _RAIL_POINT RAIL_POINT;
 typedef struct _RAIL_LINE RAIL_LINE;
 
 
+typedef struct _RAIL_CAMERA_SET RAIL_CAMERA_SET;
+
+//------------------------------------------------------------------
+/**
+ * @brief キーの定義
+ *
+ * どの入力でどういう方向への移動になるか？の結びつけのための定義
+ */
+//------------------------------------------------------------------
+typedef enum {
+  RAIL_KEY_NULL = 0,
+  RAIL_KEY_UP,
+  RAIL_KEY_RIGHT,
+  RAIL_KEY_DOWN,
+  RAIL_KEY_LEFT,
+
+  RAIL_KEY_MAX
+}RAIL_KEY;
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {  
@@ -29,17 +48,31 @@ enum {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 struct _RAIL_POINT {  
-  RAIL_LINE * connect_line[RAIL_CONNECT_LINE_MAX];
+  //keys[n]にマッチしたらline[n]に移動する
+  const RAIL_LINE * line[RAIL_CONNECT_LINE_MAX];
+  RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+
   ///POINTの位置座標
-  VecFx32 Pos;
+  VecFx32 pos;
+
+  const RAIL_CAMERA_SET * camera_set;
 };
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 struct _RAIL_LINE { 
-  RAIL_POINT * connect_point[RAIL_CONNECT_POINT_MAX];
+  //point[0] --> point[1]への動きをkeyで制御する
+  const RAIL_POINT * point[RAIL_CONNECT_POINT_MAX];
+  RAIL_KEY key;
+
   /// 直線状での動作
   u32 line_divider;
+
+  const RAIL_CAMERA_SET * camera_set;
+
+  //いずれ必要になるが今考えると混乱する
+  //fx32 width_margin;  ///<LINEに対して動ける幅
+  //u32 width_divider;
 };
 
 
@@ -62,7 +95,13 @@ typedef struct {
   };
 }FIELD_RAIL;
 
+
 //============================================================================================
+//
+//
+//  レール制御のための関数群
+//
+//
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -83,4 +122,10 @@ extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const FIELD_RAIL * railData);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern void FIELD_RAIL_MAN_Get3DPos(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+
+
 
