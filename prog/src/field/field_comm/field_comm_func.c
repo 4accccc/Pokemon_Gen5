@@ -315,7 +315,9 @@ BOOL  FIELD_COMM_FUNC_InitCommSystemWait( int *seq, void *pwk, void *pWork )
     if(commFunc->isInitCommSystem_ == TRUE){
       if(invalid_parent->my_invasion == TRUE){
         OS_TPrintf("e‚Æ‚µ‚Ä‹N“®\n");
-        FIELD_COMM_FUNC_StartCommWait(commFunc);
+//        FIELD_COMM_FUNC_StartCommWait(commFunc);
+        GFL_NET_ChangeoverConnect(NULL);
+        commFunc->commMode_ = FIELD_COMM_MODE_WAIT;
         return TRUE;
       }
       else{

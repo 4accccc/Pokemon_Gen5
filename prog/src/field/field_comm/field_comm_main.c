@@ -282,26 +282,33 @@ static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
 //  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
   ZONEID zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(GAMESYSTEM_GetGameData(gameSys)));
-
+  GAME_COMM_NO comm_no;
+  
   switch(commSys->debug_palace_comm_seq){
   case 0:
+    comm_no = GameCommSys_BootCheck(commSys->game_comm);
     //子として接続した場合
-    if(GameCommSys_BootCheck(commSys->game_comm) == GAME_COMM_NO_INVASION 
-        && commSys->commField_ == NULL){
+    if(comm_no == GAME_COMM_NO_INVASION && commSys->commField_ == NULL){
       commSys->debug_palace_comm_seq = 2;
       break;
     }
     
+    //ビーコンサーチ状態でパレスに入ってきた場合
+    if(zone_id == ZONE_ID_PALACETEST && comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH){
+      OS_TPrintf("ビーコンサーチを終了\n");
+      GameCommSys_ExitReq(commSys->game_comm);
+      commSys->debug_palace_comm_seq++;
+      break;
+    }
+    
     //親として起動している場合のチェック
-    if(zone_id != ZONE_ID_PALACETEST 
-        || GFL_NET_IsExit() == FALSE
-        || GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_NULL){
+    if(zone_id != ZONE_ID_PALACETEST || GFL_NET_IsExit() == FALSE || comm_no != GAME_COMM_NO_NULL){
       return;
     }
     commSys->debug_palace_comm_seq++;
     break;
   case 1:
-    {
+    if(GameCommSys_BootCheck(commSys->game_comm) == GAME_COMM_NO_NULL){
       FIELD_INVALID_PARENT_WORK *invalid_parent;
       
       invalid_parent = GFL_HEAP_AllocClearMemory(
