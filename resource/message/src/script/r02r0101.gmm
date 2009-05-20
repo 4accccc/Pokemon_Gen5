@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-13T15:14:28"/>
+	<create user="matsumiya" host="W00179" date="2009-05-20T15:09:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,10 +296,10 @@
 		<comment>♀
 ・仮</comment>
 		<attribute name="キャラ指定">女性１</attribute>
-		<language name="JPN" width="256">でんこう　けいじばんは　みたかしら？▼
+		<language name="JPN" width="256">でんこう　けいじばんは　みたかしら？[BE:01:ページ切り替え（クリア）]
 たびに　やくだつ　じょうほうが
 たくさん　あるから　ようチェックよ！</language>
-		<language name="JPN_KANJI" width="256">電光掲示板は　見たかしら？▼
+		<language name="JPN_KANJI" width="256">電光掲示板は　見たかしら？[BE:01:ページ切り替え（クリア）]
 旅に　役立つ　情報が
 たくさん　あるから　要チェックよ！</language>
 	</row>
