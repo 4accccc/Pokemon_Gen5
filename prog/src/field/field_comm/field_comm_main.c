@@ -298,13 +298,27 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
   }
   
   FIELD_PLAYER_GetPos( pcActor, &pos );
-  if(pos.x >= FX32_CONST(760) && pos.x <= FX32_CONST(776) 
-      && pos.z >= FX32_CONST(72) && pos.z <= FX32_CONST(104)){
+  if(pos.x >= FX32_CONST(744) && pos.x <= FX32_CONST(776) 
+      && pos.z >= FX32_CONST(72) && pos.z <= FX32_CONST(88-1)){
     pos.x = 12040 << FX32_SHIFT;
     pos.y = 0;
     pos.z = 13080 << FX32_SHIFT;
     return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0);
   }
+  
+  {//自機の座標を監視し、誰とも通信していないのにパレスの橋の一定位置まで来たら
+   //注意メッセージを出して引き返させる
+    VecFx32 pos;
+    BOOL left_right;
+    
+    FIELD_PLAYER_GetPos( pcActor, &pos );
+    pos.x >>= FX32_SHIFT;
+    if(GFL_NET_GetConnectNum() <= 1 && pos.x <= 536 || pos.x >= 1000){
+      left_right = pos.x <= 536 ? 0 : 1;
+      return EVENT_DebugPalaceNGWin( gameSys, fieldWork, pcActor, left_right );
+    }
+  }
+  
   return NULL;
 }
 

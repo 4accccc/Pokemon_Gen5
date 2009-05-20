@@ -32,3 +32,4 @@ extern void PALACE_SYS_FriendPosConvert(PALACE_SYS_PTR palace, int friend_area,
 //--------------------------------------------------------------
 extern BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id);
 extern void PALACE_DEBUG_DeleteNumberAct(PALACE_SYS_PTR palace);
+extern GMEVENT * EVENT_DebugPalaceNGWin( GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, FIELD_PLAYER *fld_player, BOOL left_right );
