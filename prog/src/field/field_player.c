@@ -139,7 +139,11 @@ void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 void FIELD_PLAYER_GetPos( const FIELD_PLAYER *fld_player, VecFx32 *pos )
 {
+#if 0
 	*pos = fld_player->pos;
+#else //表示座標となるアクターから直に取得
+  FLDMMDL_GetVectorPos( fld_player->fldmmdl, pos );
+#endif
 }
 
 //--------------------------------------------------------------
