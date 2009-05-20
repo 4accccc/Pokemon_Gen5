@@ -28,7 +28,7 @@
 #define FLDMSGBG_PANO_MENU (13) 			///<メニューパレットNo
 #define FLDMSGBG_PANO_FONT (14)				///<フォントパレットNo
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
-#define FLDMSGBG_STRLEN (64)				///<文字列長さ標準
+#define FLDMSGBG_STRLEN (256)				///<文字列長さ標準
 #define FLDMSGBG_PRINT_STREAM_MAX (1) ///<PRINT_STREAM稼働数
 
 //======================================================================
