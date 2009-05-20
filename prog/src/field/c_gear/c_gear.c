@@ -331,10 +331,6 @@ static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
 
 	pWork->select_counter++;
 
-	if(pWork->select_counter==3){
-		FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
-	}
-	
 	if(	pWork->select_counter % 3 != 1){
 		return;
 	}
@@ -374,18 +370,6 @@ static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
 			}
 		}
 	}
-#if DEBUG_ONLY_FOR_ohno
-	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_L){
-		int i;
-		for(i = 0;i < C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT; i++){
-			if(pWork->cellSelect[i]){
-				GFL_CLACT_WK_Remove( pWork->cellSelect[i] );
-			}
-		}
-		GFL_STD_MemClear(pWork->typeAnim, C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT);
-		_CHANGE_STATE(pWork,_modeSelectMenuWait);
-	}
-#endif
 
 }
 
@@ -417,27 +401,27 @@ static void _modeSelectAnimInit(C_GEAR_WORK* pWork)
 			}
 		}
 	}
-
-
-
-	
-#if !(DEBUG_ONLY_FOR_ohno)
-	{
-		int i;
-		for(i = 0;i < _CLACT_TYPE_MAX; i++)
-		{
-			if( pWork->cellType[i])
-			{
-				GFL_CLACT_WK_Remove( pWork->cellType[i] );
-				pWork->cellType[i]=NULL;
-			}
-		}
-	}
-#endif
 	_modeSelectAnimWait(pWork);
 	_CHANGE_STATE(pWork, _modeSelectAnimWait);
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   パレスにジャンプする
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeSelectJumpPalace(C_GEAR_WORK* pWork)
+{
+	
+	if(pWork->select_counter==3){
+	}
+	
+
+	
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -837,13 +821,12 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
 			switch(type){
 			case CGEAR_PANELTYPE_IR:
+				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
 				_CHANGE_STATE(pWork,_modeSelectAnimInit);
-				
-				
-//				_CHANGE_STATE(pWork,_modeSelectMenuInit);
 				break;
 			case CGEAR_PANELTYPE_WIRELESS:
-//				_CHANGE_STATE(pWork,_modeSelectMenuInit);
+				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP);
+				_CHANGE_STATE(pWork,_modeSelectAnimInit);
 				break;
 			case CGEAR_PANELTYPE_WIFI:
 	//			_CHANGE_STATE(pWork,_modeSelectMenuInit);

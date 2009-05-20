@@ -1411,7 +1411,16 @@ static GMEVENT * fldmap_Event_Check_SubScreen(
     event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
     FIELD_SUBSCREEN_ResetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork));
     break;
-  }
+
+#if PM_DEBUG
+  case FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP:
+		event = DEBUG_PalaceJamp(fieldWork , gsys, fieldWork->field_player);
+    FIELD_SUBSCREEN_ResetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork));
+		break;
+#endif
+
+
+	}
   return event;
 }
 

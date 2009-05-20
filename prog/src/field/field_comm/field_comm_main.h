@@ -71,6 +71,7 @@ extern void FIELD_COMM_MAIN_CommFieldMapInit(COMM_FIELD_SYS_PTR comm_field);
 //--------------------------------------------------------------
 //  デバッグ用
 //--------------------------------------------------------------
+extern GMEVENT * DEBUG_PalaceJamp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor);
 extern GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor);
 
 #endif //FIELD_COMM_MAIN__

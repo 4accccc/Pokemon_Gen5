@@ -236,6 +236,31 @@ void FIELD_COMM_MAIN_SetCommActor(FIELD_COMM_MAIN *commSys, FLDMMDLSYS *fmmdlsys
   commSys->actCtrl_ = FIELD_COMM_ACTOR_CTRL_Create( max, fmmdlsys, commSys->heapID_ );
 }
 
+
+
+
+//==================================================================
+/**
+ *   デバッグ用 パレスに飛ぶイベントを作成する
+ *  @param   fieldWork		
+ *  @param   gameSys		
+ *  @param   pcActor		
+ *  @retval  GMEVENT *		
+ */
+//==================================================================
+
+GMEVENT * DEBUG_PalaceJamp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor)
+{
+  PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
+  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
+  VecFx32 pos;
+
+	pos.x = 760 << FX32_SHIFT;
+	pos.y = 0;
+	pos.z = 234 << FX32_SHIFT;
+	return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACETEST, &pos, 0);
+}
+
 //==================================================================
 /**
  *   木に重なったらT1へワープ
