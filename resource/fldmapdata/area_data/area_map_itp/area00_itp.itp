@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2009-05-01T17:21:58" source="itp_check.mb"/>
+	<create user="fuchino" host="W00152" date="2009-05-19T19:36:00" source="area00_itp.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,39 +11,89 @@
 <body>
 
 <tex_pattern_info
-	frame_size="100"
+	frame_size="120"
 	tool_start_frame="1"
-	tool_end_frame="100"
+	tool_end_frame="120"
 	compress_material="on" material_size="3 3"
 />
 
-<tex_pattern_list_data image_size="4" palette_size="4">
-	<image_name index="0" name="storm64.1"/>
-	<image_name index="1" name="storm64.2"/>
-	<image_name index="2" name="storm64.3"/>
-	<image_name index="3" name="storm64.4"/>
-	<palette_name index="0" name="storm64.1_pl"/>
-	<palette_name index="1" name="storm64.2_pl"/>
-	<palette_name index="2" name="storm64.3_pl"/>
-	<palette_name index="3" name="storm64.4_pl"/>
+<tex_pattern_list_data image_size="11" palette_size="11">
+	<image_name index="0" name="kisetu01.1"/>
+	<image_name index="1" name="kisetu01.2"/>
+	<image_name index="2" name="kisetu01.3"/>
+	<image_name index="3" name="kisetu01.4"/>
+	<image_name index="4" name="sea_kira.1"/>
+	<image_name index="5" name="sea_kira.2"/>
+	<image_name index="6" name="sea_kira.3"/>
+	<image_name index="7" name="sea_simi.1"/>
+	<image_name index="8" name="sea_simi.2"/>
+	<image_name index="9" name="sea_simi.3"/>
+	<image_name index="10" name="sea_simi.4"/>
+	<palette_name index="0" name="kisetu01.1_pl"/>
+	<palette_name index="1" name="kisetu01.2_pl"/>
+	<palette_name index="2" name="kisetu01.3_pl"/>
+	<palette_name index="3" name="kisetu01.4_pl"/>
+	<palette_name index="4" name="sea_kira.1_pl"/>
+	<palette_name index="5" name="sea_kira.2_pl"/>
+	<palette_name index="6" name="sea_kira.3_pl"/>
+	<palette_name index="7" name="sea_simi.1_pl"/>
+	<palette_name index="8" name="sea_simi.2_pl"/>
+	<palette_name index="9" name="sea_simi.3_pl"/>
+	<palette_name index="10" name="sea_simi.4_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="7">
-		0 17 52 0 71 0 37
+	<frame_idx size="129">
+		0 5 14 24 0 59 94 101 107 0
+		1 2 3 4 5 6 7 8 9 10
+		11 12 13 14 15 16 17 18 19 20
+		21 22 23 24 25 26 27 28 29 30
+		31 32 33 34 35 36 37 38 39 40
+		41 42 43 44 45 46 47 48 49 50
+		51 52 53 54 55 56 57 58 59 60
+		61 62 63 64 65 66 67 68 69 70
+		71 72 73 74 75 76 77 78 79 80
+		81 82 83 84 85 86 87 88 89 90
+		91 92 93 94 95 96 97 98 99 100
+		101 102 103 104 105 106 107 108 109 110
+		111 112 113 114 115 116 117 118 119
 	</frame_idx>
-	<image_idx size="7">
-		0 1 2 0 2 0 3
+	<image_idx size="129">
+		0 1 2 3 10 7 8 9 10 4
+		6 4 6 5 6 5 6 4 6 4
+		6 5 6 5 6 4 6 4 6 5
+		6 5 6 4 6 4 6 5 6 5
+		6 4 6 4 6 5 6 5 6 4
+		6 4 6 5 6 5 6 4 6 4
+		6 5 6 5 6 4 6 4 6 5
+		6 5 6 4 6 4 6 5 6 5
+		6 4 6 4 6 5 6 5 6 4
+		6 4 6 5 6 5 6 4 6 4
+		6 5 6 5 6 4 6 4 6 5
+		6 5 6 4 6 4 6 5 6 5
+		6 4 6 4 6 5 6 5 6
 	</image_idx>
-	<palette_idx size="7">
-		0 1 2 0 2 0 3
+	<palette_idx size="129">
+		0 1 2 3 10 7 8 9 10 4
+		6 4 6 5 6 5 6 4 6 4
+		6 5 6 5 6 4 6 4 6 5
+		6 5 6 4 6 4 6 5 6 5
+		6 4 6 4 6 5 6 5 6 4
+		6 4 6 5 6 5 6 4 6 4
+		6 5 6 5 6 4 6 4 6 5
+		6 5 6 4 6 4 6 5 6 5
+		6 4 6 4 6 5 6 5 6 4
+		6 4 6 5 6 5 6 4 6 4
+		6 5 6 5 6 4 6 4 6 5
+		6 5 6 4 6 4 6 5 6 5
+		6 4 6 4 6 5 6 5 6
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="3">
-	<tex_pattern_anm index="0" material_name="lambert2" data_size="3" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="lambert3" data_size="2" data_head="3"/>
-	<tex_pattern_anm index="2" material_name="lambert4" data_size="2" data_head="5"/>
+	<tex_pattern_anm index="0" material_name="kisetu01_lm1" data_size="4" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="sea_simi_lm1" data_size="5" data_head="4"/>
+	<tex_pattern_anm index="2" material_name="sea_kira_lm1" data_size="120" data_head="9"/>
 </tex_pattern_anm_array>
 
 </body>
