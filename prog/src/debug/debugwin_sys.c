@@ -584,11 +584,15 @@ static void DEBUGWIN_RemoveGroupChild( DEBUGWIN_GROUP *group )
     {
       DEBUGWIN_RemoveGroupFunc( (DEBUGWIN_GROUP*)item->work );
     }
-    DEBUGWIN_DeleteItem( item );
+    else
+    {
+      DEBUGWIN_DeleteItem( item );
+    }
     
     item = nextItem;
   }
   OS_TPrintf("DEBUG WINDOW:Group[%d] is removed.\n",group->id);
+  DEBUGWIN_DeleteItem( group->selfData );
   GFL_HEAP_FreeMemory( group );
 }
 
@@ -652,7 +656,7 @@ static void DEBUGWIN_DeleteItem( DEBUGWIN_ITEM *item )
   GFL_HEAP_FreeMemory( item );
 }
 
-static void DEBUGWIN_ITEM_SetName( DEBUGWIN_ITEM* item , const char *nameStr )
+void DEBUGWIN_ITEM_SetName( DEBUGWIN_ITEM* item , const char *nameStr )
 {
   int bufLen = DEBUGWIN_ITEM_NAME_LEN-1;
   STRCODE strCode[DEBUGWIN_ITEM_NAME_LEN];
