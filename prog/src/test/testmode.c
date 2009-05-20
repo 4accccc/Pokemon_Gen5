@@ -63,6 +63,7 @@ typedef enum
 {
 	TMI_NEWGAME,
 	TMI_CONTINUE,
+	TMI_CONTINUE_NET_OFF,
 	TMI_CONTINUE_NET,
 	TMI_DEBUG_START,
 	TMI_DEBUG_START_NET,
@@ -687,6 +688,9 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 			case TMI_CONTINUE:
 				GameStart_Continue();
 				break;
+			case TMI_CONTINUE_NET_OFF:
+				GameStart_ContinueNetOff();
+				break;
 			case TMI_CONTINUE_NET:
 				GameStart_ContinueNet();
 				break;
@@ -793,7 +797,7 @@ static BOOL TESTMODE_ITEM_SelectFuncDebugStartComm( TESTMODE_WORK *work , const 
 //‘±‚«‚©‚ç
 static BOOL TESTMODE_ITEM_SelectFuncContinue( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_StartGame( work , TMI_CONTINUE );
+	TESTMODE_COMMAND_StartGame( work , TMI_CONTINUE_NET_OFF );
 	return TRUE;
 }
 //‘±‚«‚©‚ç

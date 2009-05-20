@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-05-11T15:20:13"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-05-20T11:45:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="242" top="202" right="947" bottom="822" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -333,20 +333,36 @@
 	</lock>
 
 
-	<row id="QUESTION_STR">
+	<row id="QUESTION_STR1">
 		<comment>文字モードで文が変わらないように意図的にひらがな・漢字で同じものにしています</comment>
 		<language name="JPN" width="256">もじモードをえらんでください</language>
 		<language name="JPN_KANJI" width="256">もじモードをえらんでください</language>
 	</row>
 
-	<row id="ITEM1_STR">
+	<row id="QUESTION_STR2">
+		<comment>文字モードで文が変わらないように意図的にひらがな・漢字で同じものにしています</comment>
+		<language name="JPN" width="256">つうしんきのう　を　ONにしますか？</language>
+		<language name="JPN_KANJI" width="256">通信機能をONにしますか？</language>
+	</row>
+
+	<row id="ITEM1_STR1">
 		<language name="JPN" width="256">ひらがなモード</language>
 		<language name="JPN_KANJI" width="256">ひらがなモード</language>
 	</row>
 
-	<row id="ITEM2_STR">
+	<row id="ITEM2_STR1">
 		<language name="JPN" width="256">漢字モード</language>
 		<language name="JPN_KANJI" width="256">漢字モード</language>
+	</row>
+
+	<row id="ITEM1_STR2">
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
+	</row>
+
+	<row id="ITEM2_STR2">
+		<language name="JPN" width="256">いいえ</language>
+		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
 	<flowchart-group-list>
