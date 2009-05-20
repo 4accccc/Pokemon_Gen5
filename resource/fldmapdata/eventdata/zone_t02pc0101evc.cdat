@@ -25,7 +25,7 @@ const FLDMMDL_HEADER SampleFldMMdlHeader_t02pc0101[] = {
 		MV_DIR_RND,	///<動作コード
 		0,	///<イベントタイプ
 		0,	///<イベントフラグ
-		0,	///<イベントID
+		1,	///<イベントID
 		DIR_DOWN,	///<指定方向
 		0,	///<指定パラメタ 0
 		0,	///<指定パラメタ 1
