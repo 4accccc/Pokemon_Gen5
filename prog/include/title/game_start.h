@@ -16,6 +16,7 @@ extern void GameStart_Beginning(void);
 extern void GameStart_Continue(void);
 extern void GameStart_ContinueNet(void);
 extern void GameStart_Debug(void);
+extern void GameStart_DebugNet(void);
 extern void GameStart_Debug_SelectName(void);
 
 

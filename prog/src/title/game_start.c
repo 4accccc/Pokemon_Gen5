@@ -121,6 +121,18 @@ void GameStart_Debug(void)
 
 //--------------------------------------------------------------
 /**
+ * @brief   「デバッグ開始(常時通信)」を選択
+ */
+//--------------------------------------------------------------
+void GameStart_DebugNet(void)
+{
+#ifdef PM_DEBUG
+	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, (void*)TRUE);
+#endif
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   testmenuの「じんめいせんたく」を選択
  */
 //--------------------------------------------------------------
@@ -295,9 +307,12 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 #ifdef PM_DEBUG
 	GAME_INIT_WORK * init_param;
 	VecFx32 pos = {0,0,0};
+	BOOL always_net;
+	
+	always_net = (BOOL)pwk;   //TRUE:常時通信で「続きから」
 
 	SaveControl_ClearData(SaveControl_GetPointer());
-	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0, FALSE);
+	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0, always_net);
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 #endif
 
