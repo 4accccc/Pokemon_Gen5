@@ -308,6 +308,17 @@ static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
       break;
     }
     
+    {
+      VecFx32 pos;
+      
+      FIELD_PLAYER_GetPos( pcActor, &pos );
+      pos.x >>= FX32_SHIFT;
+      if( !((pos.x >= 512 && pos.x <= 648) || (pos.x >= 888 && pos.x <= 1016)) ){
+        //橋ではない場所にいるなら通信は開始しない
+        return;
+      }
+    }
+    
     //ビーコンサーチ状態でパレスに入ってきた場合
     if(zone_id == ZONE_ID_PALACETEST && comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH){
       OS_TPrintf("ビーコンサーチを終了\n");
