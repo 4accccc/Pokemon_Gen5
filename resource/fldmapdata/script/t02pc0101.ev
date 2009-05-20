@@ -40,6 +40,13 @@ _EVENT_DATA_END
 /*                                                            */
 /**************************************************************/
 ev_t02pc0101_woman1_1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t02pc0101_woman1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
 /**************************************************************/
