@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-12T18:57:22"/>
+	<create user="matsumiya" host="W00179" date="2009-05-20T13:22:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="36" top="214" right="741" bottom="834" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -296,17 +296,17 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">女性１</attribute>
 		<language name="JPN" width="256">トレーナーの　いこいの　ばしょ
-ポケモンたちが　すきな　くうかん▽
-それが　この　ポケモンセンター！▼
+ポケモンたちが　すきな　くうかん[BE:00:ページ切り替え（行送り）]
+それが　この　ポケモンセンター！[BE:01:ページ切り替え（クリア）]
 たたかう　げんきの　ない
-ポケモンを　かいふく　させたり▼
+ポケモンを　かいふく　させたり[BE:01:ページ切り替え（クリア）]
 パソコンに　あずけた　ポケモンを
 たびに　つれていけるわ</language>
 		<language name="JPN_KANJI" width="256">トレーナーの　憩いの　場所
-ポケモンたちが　好きな　空間▽
-それが　この　ポケモンセンター！▼
+ポケモンたちが　好きな　空間[BE:00:ページ切り替え（行送り）]
+それが　この　ポケモンセンター！[BE:01:ページ切り替え（クリア）]
 たたかう　元気の　ない
-ポケモンを　回復　させたり▼
+ポケモンを　回復　させたり[BE:01:ページ切り替え（クリア）]
 パソコンに　預けた　ポケモンを
 旅に　連れて行けるわ</language>
 	</row>
@@ -315,10 +315,10 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">おばさん！</attribute>
 		<language name="JPN" width="256">へえ！　イッシュちほう　では
-ポケモンセンターの　なかに▽
+ポケモンセンターの　なかに[BE:00:ページ切り替え（行送り）]
 フレンドリィショップが　あるのね！</language>
 		<language name="JPN_KANJI" width="256">へえ！　イッシュ地方　では
-ポケモンセンターの　中に▽
+ポケモンセンターの　中に[BE:00:ページ切り替え（行送り）]
 フレンドリィショップが　あるのね！</language>
 	</row>
 
