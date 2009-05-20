@@ -401,7 +401,7 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		}
 		break;
 	case WINSEQ_HOLD:
-		calcTail(tmsgwinSys, tmsgwin);
+		if(calcTail(tmsgwinSys, tmsgwin) == TRUE){ writeWindow(tmsgwinSys, tmsgwin); }
 		break;
 	case WINSEQ_CLOSE:
 		deleteWindow(tmsgwinSys, tmsgwin);
@@ -508,6 +508,7 @@ static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	VecFx32		vecWin0, vecWin1, vecWin2, vecWin3;
 	fx32			near_backup, scale;
 	u8				pattern;
+	BOOL			result = FALSE;
 
 	//変換精度を上げるためnearの距離をとる
 	GFL_G3D_CAMERA_GetNear(tmsgwinSys->setup.g3Dcamera, &near_backup);
@@ -518,7 +519,7 @@ static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		GFL_G3D_CAMERA_Switching(tmsgwinSys->setup.g3Dcamera);
 	}
 
-	//nearクリップ平面状の座標に変換
+	//tailをnearクリップ平面状の座標に変換
 	{
 		int	targetx, targety; 
 		int	tail_length;
@@ -607,6 +608,14 @@ static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 			NNS_G3dScrPosToWorldLine(ex2, ey2, &vecTail2, NULL );
 		}
 #endif
+	}
+	//winをnearクリップ平面状の座標に変換
+	{
+		int	px = GFL_BMPWIN_GetPosX(tmsgwin->bmpwin) * 8;
+		int	py = GFL_BMPWIN_GetPosY(tmsgwin->bmpwin) * 8;
+		int	sx = GFL_BMPWIN_GetScreenSizeX(tmsgwin->bmpwin) * 8;
+		int	sy = GFL_BMPWIN_GetScreenSizeY(tmsgwin->bmpwin) * 8;
+
 		NNS_G3dScrPosToWorldLine((px + 0),	(py + 0),		&vecWin0, NULL );
 		NNS_G3dScrPosToWorldLine((px + sx),	(py + 0),		&vecWin1, NULL );
 		NNS_G3dScrPosToWorldLine((px + 0),	(py + sy),	&vecWin2, NULL );
@@ -667,13 +676,15 @@ static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		VEC_Normalize(&vecN, &vecN);
 		VEC_Fx16Set(&tmsgwin->tailData.vecN, vecN.x, vecN.y, vecN.z);
 	}
-	tmsgwin->tailData.pattern = pattern;
-
+	if(tmsgwin->tailData.pattern != pattern){
+		tmsgwin->tailData.pattern = pattern;
+		result = TRUE;
+	}
 	//near復帰
 	GFL_G3D_CAMERA_SetNear(tmsgwinSys->setup.g3Dcamera, &near_backup);
 	GFL_G3D_CAMERA_Switching(tmsgwinSys->setup.g3Dcamera);
 
-	return TRUE;
+	return result;
 }
 
 //============================================================================================
