@@ -1444,18 +1444,7 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 	int	trg = FIELDMAP_GetKeyTrg( fieldWork );
 	int cont = FIELDMAP_GetKeyCont( fieldWork );
 	
-	//座標接続チェック
-	event = fldmap_Event_CheckConnect(gsys, fieldWork, &fieldWork->now_pos);
-	if( event != NULL ){
-		return event;
-	}
-	
-	//キー入力接続チェック
-	event = fldmap_Event_CheckPushConnect(gsys, fieldWork);
-	if( event != NULL ){
-		return event;
-	}
-	
+#ifdef  PM_DEBUG
 	//ソフトリセットチェック
 	if( (cont&resetCont) == resetCont ){
 		return DEBUG_EVENT_GameEnd(gsys, fieldWork);
@@ -1466,9 +1455,30 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
 	}
 	
+	//デバッグメニュー起動チェック
+	//if( trg == PAD_BUTTON_SELECT ){
+  if( (trg & PAD_BUTTON_X) && (cont & PAD_BUTTON_R) )
+  {
+		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
+				fieldWork->heapID, ZONEDATA_GetMapRscID(fieldWork->map_id));
+	}
+	
 	//戦闘移行チェック
 	if( trg == PAD_BUTTON_START ){
 		return DEBUG_EVENT_Battle(gsys, fieldWork);
+	}
+#endif
+	
+	//座標接続チェック
+	event = fldmap_Event_CheckConnect(gsys, fieldWork, &fieldWork->now_pos);
+	if( event != NULL ){
+		return event;
+	}
+	
+	//キー入力接続チェック
+	event = fldmap_Event_CheckPushConnect(gsys, fieldWork);
+	if( event != NULL ){
+		return event;
 	}
 	
 	//メニュー起動チェック
@@ -1483,12 +1493,6 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 		return event;
 	}
   
-	//デバッグメニュー起動チェック
-	if( trg == PAD_BUTTON_SELECT ){
-		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
-				fieldWork->heapID, ZONEDATA_GetMapRscID(fieldWork->map_id));
-	}
-	
 	///通信用会話処理(仮
 	//話しかける側
 	if( trg == PAD_BUTTON_A ){
