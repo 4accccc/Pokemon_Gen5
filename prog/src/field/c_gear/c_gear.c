@@ -188,6 +188,7 @@ struct _C_GEAR_WORK {
 	int windowNum;
 	BOOL IsIrc;
 	FIELD_SUBSCREEN_WORK* subscreen;
+	GAMESYS_WORK* pGameSys;
 	CGEAR_SAVEDATA* pCGSV;
 	u32 objRes[3];  //CLACTリソース
 
@@ -1163,7 +1164,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub )
+C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys )
 {
 	C_GEAR_WORK *pWork = NULL;
 
@@ -1173,6 +1174,7 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub )
 	pWork->heapID = HEAPID_FIELDMAP;
 	pWork->pCGSV = pCGSV;
 	pWork->subscreen = pSub;
+	pWork->pGameSys = pGameSys;
 
 	//	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
 	_modeInit(pWork);
@@ -1192,6 +1194,21 @@ void CGEAR_Main( C_GEAR_WORK* pWork )
 	StateFunc* state = pWork->state;
 	if(state != NULL)
 	{
+		GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
+		{
+			GAME_COMM_STATUS st = GameCommSys_GetCommStatus(pGC);
+			switch(st){
+			case GAME_COMM_STATUS_WIRELESS:          ///<ワイヤレス通信
+				pWork->beacon_bit = _CGEAR_NET_BIT_WIRELESS;
+				break;
+			case GAME_COMM_STATUS_WIFI:              ///<Wi-Fi通信
+				pWork->beacon_bit = _CGEAR_NET_BIT_WIFI;
+				break;
+			case GAME_COMM_STATUS_IRC:              ///<赤外線通信
+				pWork->beacon_bit = _CGEAR_NET_BIT_IR;
+				break;
+			}
+		}
 		state(pWork);
 		pWork->plt_counter++;
 		if(pWork->plt_counter==128)

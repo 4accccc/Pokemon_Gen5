@@ -19,7 +19,7 @@
 
 typedef struct _C_GEAR_WORK  C_GEAR_WORK;
 
-extern C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub );
+extern C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys );
 extern void CGEAR_Main(C_GEAR_WORK* pWork);
 extern void CGEAR_Exit(C_GEAR_WORK* pWork);
 

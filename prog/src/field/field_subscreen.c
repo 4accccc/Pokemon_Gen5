@@ -363,7 +363,7 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork)
   pWork->cgearWork = CGEAR_Init(CGEAR_SV_GetCGearSaveData(
 		GAMEDATA_GetSaveControlWork(
 		GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap))
-		)), pWork);
+		)), pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap));
 }
 
 //----------------------------------------------------------------------------
