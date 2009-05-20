@@ -141,7 +141,7 @@ static const GFL_DISP_VRAM bank_data = {
 	GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_64K,
-	GX_OBJVRAMMODE_CHAR_1D_32K
+	GX_OBJVRAMMODE_CHAR_1D_64K
 };
 
 //------------------------------------------------------------------
