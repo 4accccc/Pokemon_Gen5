@@ -23,7 +23,7 @@
 //--------------------------------------------------------------
 typedef enum
 {
-	PLAYER_MOVE_STOP,
+	PLAYER_MOVE_STOP = 0,
 	PLAYER_MOVE_WALK,
 	PLAYER_MOVE_TURN,
 	PLAYER_MOVE_HITCH,
@@ -34,11 +34,12 @@ typedef enum
 //--------------------------------------------------------------
 typedef enum
 {
-	PLAYER_SET_NON,
+	PLAYER_SET_NON = 0,
 	PLAYER_SET_STOP,
 	PLAYER_SET_WALK,
 	PLAYER_SET_TURN,
 	PLAYER_SET_HITCH,
+  PLAYER_SET_JUMP,
 }PLAYER_SET;
 
 //======================================================================
@@ -84,6 +85,9 @@ static void gjiki_SetMove_Turn(
 	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 static void gjiki_SetMove_Hitch(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void gjiki_SetMove_Jump(
 	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
 
@@ -206,6 +210,10 @@ void FIELD_PLAYER_GRID_Move(
 		gjiki_SetMove_Hitch(
 			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
 		break;
+  case PLAYER_SET_JUMP:
+		gjiki_SetMove_Jump(
+			g_jiki, fmmdl, key_trg, key_cont, dir, debug_flag );
+    break;
 	}
 }
 
@@ -267,7 +275,8 @@ static PLAYER_SET gjiki_CheckMoveStart_Walk(
 		return( PLAYER_SET_NON );
 	}
 	
-	if( dir == DIR_NOT ){
+	if( dir == DIR_NOT )
+  {
 		return( gjiki_CheckMoveStart_Stop(
 			g_jiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
 	}
@@ -275,16 +284,58 @@ static PLAYER_SET gjiki_CheckMoveStart_Walk(
 	{
 		u32 hit = FLDMMDL_HitCheckMoveDir( fmmdl, dir );
 		
-		if( debug_flag == TRUE ){
+		if( debug_flag == TRUE )
+    {
 			if( hit != FLDMMDL_MOVEHITBIT_NON &&
-				!(hit&FLDMMDL_MOVEHITBIT_OUTRANGE) ){
+          !(hit&FLDMMDL_MOVEHITBIT_OUTRANGE) )
+      {
 				hit = FLDMMDL_MOVEHITBIT_NON;
 			}
 		}
 		
-		if( hit == FLDMMDL_MOVEHITBIT_NON ){
+		if( hit == FLDMMDL_MOVEHITBIT_NON )
+    {
 			return( PLAYER_SET_WALK );
 		}
+    
+    if( (hit & FLDMMDL_MOVEHITBIT_ATTR) )
+    {
+      BOOL ret;
+      u32 attr;
+      VecFx32 pos;
+      
+      FLDMMDL_GetVectorPos( fmmdl, &pos );
+      FLDMMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+      ret = FLDMMDL_GetMapPosAttr( fmmdl, &pos, &attr );
+      
+      if( ret == TRUE )
+      {
+        u16 attr_dir = DIR_NOT;
+        u16 val = attr & 0xffff;
+        u16 flag = (attr&0xffff0000) >> 16;
+        
+        switch( val ) //ジャンプアトリビュートチェック
+        {
+        case 0x28:
+          attr_dir = DIR_RIGHT;
+          break;
+        case 0x29:
+          attr_dir = DIR_LEFT;
+          break;
+        case 0x2a:
+          attr_dir = DIR_UP;
+          break;
+        case 0x2b:
+          attr_dir = DIR_DOWN;
+          break;
+        }
+        
+        if( attr_dir != DIR_NOT && attr_dir == dir ) //ジャンプ方向一致
+        {
+          return( PLAYER_SET_JUMP );
+        }
+      }
+    }
 	}
 	
 	return( PLAYER_SET_HITCH );
@@ -486,6 +537,34 @@ static void gjiki_SetMove_Hitch(
 	
 	gjiki_Sound_MoveStop();
 }
+
+//--------------------------------------------------------------
+/**
+ * 移動セット ジャンプ
+ * @param	g_jiki FIELD_PLAYER_GRID
+ * @param fmmdl FLDMMDL*
+ * @param key_trg キートリガ
+ * @param key_cont キーコンティニュー
+ * @param debug_flag デバッグ移動可能フラグ TRUE=可能
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gjiki_SetMove_Jump(
+	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
+	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+{
+	u16 code;
+	
+	GF_ASSERT( dir != DIR_NOT );
+	
+	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+	
+	FLDMMDL_SetAcmd( fmmdl, code );
+	g_jiki->move_state = PLAYER_MOVE_WALK;
+	
+	gjiki_Sound_Move();
+}
+
 
 //======================================================================
 //	サウンド
