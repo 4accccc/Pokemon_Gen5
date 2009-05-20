@@ -1,0 +1,28 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: ircresult_gra.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_IRCRESULT_GRA_NAIX_
+#define NARC_IRCRESULT_GRA_NAIX_
+
+enum {
+	NARC_ircresult_gra_result_bg_NCLR = 0,
+	NARC_ircresult_gra_result_bg_memo_NCLR = 1,
+	NARC_ircresult_gra_result_obj_NCLR = 2,
+	NARC_ircresult_gra_result_bg_memo_NCGR = 3,
+	NARC_ircresult_gra_result_obj_big_heart_NCGR = 4,
+	NARC_ircresult_gra_result_obj_small_heart_NCGR = 5,
+	NARC_ircresult_gra_result_obj_big_heart_NCER = 6,
+	NARC_ircresult_gra_result_obj_small_heart_NCER = 7,
+	NARC_ircresult_gra_result_bg_memo_NSCR = 8,
+	NARC_ircresult_gra_result_obj_big_heart_NANR = 9,
+	NARC_ircresult_gra_result_obj_small_heart_NANR = 10
+};
+
+/* NARC_IRCRESULT_GRA_NAIX_ */
+#endif

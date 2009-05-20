@@ -63,7 +63,8 @@ SUBDIRS	=	wmi \
 			wazaeffect \
 			irc_aura \
 			field_menu \
-			irc_rhythm
+			irc_rhythm \
+			irc_result
 
 
 include $(RESOURCE_MACRO)
