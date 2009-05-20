@@ -127,6 +127,7 @@ SRCS  +=    $(SOUNDSRC) \
         app/wifi_note/wifi_note.c \
         test/camera_adjust_view.c \
         system/el_scoreboard.c \
+        system/talkmsgwin.c \
         system/selbox.c \
         gamesystem/game_comm.c \
         field/field_comm/game_beacon_search.c \
