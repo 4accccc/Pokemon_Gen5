@@ -109,4 +109,63 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/map12_03.bin $(DIR_LANDRES)/map12_03.imd \
 	$(DIR_LANDRES)/map13_03.bin $(DIR_LANDRES)/map13_03.imd \
 	$(DIR_LANDRES)/m_gate01_00_00.bin $(DIR_LANDRES)/m_gate01_00_00.imd \
-	$(DIR_LANDRES)/m_pc01_00_00.bin $(DIR_LANDRES)/m_pc01_00_00.imd
+	$(DIR_LANDRES)/m_pc01_00_00.bin $(DIR_LANDRES)/m_pc01_00_00.imd \
+	$(DIR_LANDRES)/m_dun0101_00_00.bin $(DIR_LANDRES)/m_dun0101_00_00.imd \
+	$(DIR_LANDRES)/m_dun0101_01_00.bin $(DIR_LANDRES)/m_dun0101_01_00.imd \
+	$(DIR_LANDRES)/m_dun0101_00_01.bin $(DIR_LANDRES)/m_dun0101_00_01.imd \
+	$(DIR_LANDRES)/m_dun0101_01_01.bin $(DIR_LANDRES)/m_dun0101_01_01.imd \
+	$(DIR_LANDRES)/m_ruin01_00_00.bin $(DIR_LANDRES)/m_ruin01_00_00.imd \
+	$(DIR_LANDRES)/m_dun0201_00_00.bin $(DIR_LANDRES)/m_dun0201_00_00.imd \
+	$(DIR_LANDRES)/m_dun0201_00_01.bin $(DIR_LANDRES)/m_dun0201_00_01.imd \
+	$(DIR_LANDRES)/m_dun0201_00_02.bin $(DIR_LANDRES)/m_dun0201_00_02.imd \
+	$(DIR_LANDRES)/m_dun0201_01_00.bin $(DIR_LANDRES)/m_dun0201_01_00.imd \
+	$(DIR_LANDRES)/m_dun0201_01_01.bin $(DIR_LANDRES)/m_dun0201_01_01.imd \
+	$(DIR_LANDRES)/m_dun0201_01_02.bin $(DIR_LANDRES)/m_dun0201_01_02.imd \
+	$(DIR_LANDRES)/m_dun0201_02_00.bin $(DIR_LANDRES)/m_dun0201_02_00.imd \
+	$(DIR_LANDRES)/m_dun0201_02_01.bin $(DIR_LANDRES)/m_dun0201_02_01.imd \
+	$(DIR_LANDRES)/m_dun0201_02_02.bin $(DIR_LANDRES)/m_dun0201_02_02.imd \
+	$(DIR_LANDRES)/m_dun0201_03_00.bin $(DIR_LANDRES)/m_dun0201_03_00.imd \
+	$(DIR_LANDRES)/m_dun0201_03_01.bin $(DIR_LANDRES)/m_dun0201_03_01.imd \
+	$(DIR_LANDRES)/m_dun0201_03_02.bin $(DIR_LANDRES)/m_dun0201_03_02.imd \
+	$(DIR_LANDRES)/m_dun0401_00_00.bin $(DIR_LANDRES)/m_dun0401_00_00.imd \
+	$(DIR_LANDRES)/m_dun0401_01_00.bin $(DIR_LANDRES)/m_dun0401_01_00.imd \
+	$(DIR_LANDRES)/m_dun0402_00_00.bin $(DIR_LANDRES)/m_dun0402_00_00.imd \
+	$(DIR_LANDRES)/m_dun0402_00_01.bin $(DIR_LANDRES)/m_dun0402_00_01.imd \
+	$(DIR_LANDRES)/m_dun0403_00_00.bin $(DIR_LANDRES)/m_dun0403_00_00.imd \
+	$(DIR_LANDRES)/m_dun0403_01_00.bin $(DIR_LANDRES)/m_dun0403_01_00.imd \
+	$(DIR_LANDRES)/m_dun0403_00_01.bin $(DIR_LANDRES)/m_dun0403_00_01.imd \
+	$(DIR_LANDRES)/m_dun0403_01_01.bin $(DIR_LANDRES)/m_dun0403_01_01.imd \
+	$(DIR_LANDRES)/m_dun0404_00_00.bin $(DIR_LANDRES)/m_dun0404_00_00.imd \
+	$(DIR_LANDRES)/m_dun0404_00_01.bin $(DIR_LANDRES)/m_dun0404_00_01.imd \
+	$(DIR_LANDRES)/m_dun0405_00_00.bin $(DIR_LANDRES)/m_dun0405_00_00.imd \
+	$(DIR_LANDRES)/m_dun0406_00_00.bin $(DIR_LANDRES)/m_dun0406_00_00.imd \
+	$(DIR_LANDRES)/m_dun0406_01_00.bin $(DIR_LANDRES)/m_dun0406_01_00.imd \
+	$(DIR_LANDRES)/m_dun0406_00_01.bin $(DIR_LANDRES)/m_dun0406_00_01.imd \
+	$(DIR_LANDRES)/m_dun0406_01_01.bin $(DIR_LANDRES)/m_dun0406_01_01.imd \
+	$(DIR_LANDRES)/m_dun0601_00_00.bin $(DIR_LANDRES)/m_dun0601_00_00.imd \
+	$(DIR_LANDRES)/m_dun0601_00_01.bin $(DIR_LANDRES)/m_dun0601_00_01.imd \
+	$(DIR_LANDRES)/m_dun0601_01_00.bin $(DIR_LANDRES)/m_dun0601_01_00.imd \
+	$(DIR_LANDRES)/m_dun0601_01_01.bin $(DIR_LANDRES)/m_dun0601_01_01.imd \
+	$(DIR_LANDRES)/m_dun0601_02_00.bin $(DIR_LANDRES)/m_dun0601_02_00.imd \
+	$(DIR_LANDRES)/m_dun0601_02_01.bin $(DIR_LANDRES)/m_dun0601_02_01.imd \
+	$(DIR_LANDRES)/m_dun0602_00_00.bin $(DIR_LANDRES)/m_dun0602_00_00.imd \
+	$(DIR_LANDRES)/m_dun0602_00_01.bin $(DIR_LANDRES)/m_dun0602_00_01.imd \
+	$(DIR_LANDRES)/m_dun0602_01_00.bin $(DIR_LANDRES)/m_dun0602_01_00.imd \
+	$(DIR_LANDRES)/m_dun0602_01_01.bin $(DIR_LANDRES)/m_dun0602_01_01.imd \
+	$(DIR_LANDRES)/m_dun0603_00_00.bin $(DIR_LANDRES)/m_dun0603_00_00.imd \
+	$(DIR_LANDRES)/m_dun0603_00_01.bin $(DIR_LANDRES)/m_dun0603_00_01.imd \
+	$(DIR_LANDRES)/m_buill01_00_00.bin $(DIR_LANDRES)/m_buill01_00_00.imd \
+	$(DIR_LANDRES)/m_buill02_00_00.bin $(DIR_LANDRES)/m_buill02_00_00.imd \
+	$(DIR_LANDRES)/m_grow01_00_00.bin $(DIR_LANDRES)/m_grow01_00_00.imd \
+	$(DIR_LANDRES)/m_school01_00_00.bin $(DIR_LANDRES)/m_school01_00_00.imd \
+	$(DIR_LANDRES)/m_cafe01_00_00.bin $(DIR_LANDRES)/m_cafe01_00_00.imd \
+	$(DIR_LANDRES)/m_whouse01_00_00.bin $(DIR_LANDRES)/m_whouse01_00_00.imd \
+	$(DIR_LANDRES)/m_buill03_00_00.bin $(DIR_LANDRES)/m_buill03_00_00.imd \
+	$(DIR_LANDRES)/m_buill04_00_00.bin $(DIR_LANDRES)/m_buill04_00_00.imd \
+	$(DIR_LANDRES)/m_buill05_00_00.bin $(DIR_LANDRES)/m_buill05_00_00.imd \
+	$(DIR_LANDRES)/m_fha01_00_00.bin $(DIR_LANDRES)/m_fha01_00_00.imd \
+	$(DIR_LANDRES)/m_fha02_00_00.bin $(DIR_LANDRES)/m_fha02_00_00.imd \
+	$(DIR_LANDRES)/m_fhb01_00_00.bin $(DIR_LANDRES)/m_fhb01_00_00.imd \
+	$(DIR_LANDRES)/m_fhb02_00_00.bin $(DIR_LANDRES)/m_fhb02_00_00.imd \
+	$(DIR_LANDRES)/m_hh01_00_00.bin $(DIR_LANDRES)/m_hh01_00_00.imd \
+	$(DIR_LANDRES)/m_hh02_00_00.bin $(DIR_LANDRES)/m_hh02_00_00.imd
