@@ -33,14 +33,6 @@ typedef struct {
 
 }TALKMSGWIN_SYS_SETUP;
 
-typedef struct {
-	u8				winpx;			
-	u8				winpy;			
-	u8				winsx;			
-	u8				winsy;			
-	GXRgb			color;
-}TALKMSGWIN_SETUP;
-
 //============================================================================================
 /**
  *
@@ -54,7 +46,8 @@ extern void							TALKMSGWIN_SystemDraw2D( TALKMSGWIN_SYS* tmsgwinSys );
 extern void							TALKMSGWIN_SystemDraw3D( TALKMSGWIN_SYS* tmsgwinSys );
 extern void							TALKMSGWIN_SystemDelete( TALKMSGWIN_SYS* tmsgwinSys );
 extern u32							TALKMSGWIN_SystemGetUsingChrNumber( TALKMSGWIN_SYS* tmsgwinSys );
-
+//äÆê¨Ç‹Ç≈ébíË
+extern void							TALKMSGWIN_SystemDebugOn( TALKMSGWIN_SYS* tmsgwinSys );
 //============================================================================================
 /**
  *
@@ -62,24 +55,46 @@ extern u32							TALKMSGWIN_SystemGetUsingChrNumber( TALKMSGWIN_SYS* tmsgwinSys 
  *
  */
 //============================================================================================
-#if 0
-extern int TALKMSGWIN_CreateWindow( TALKMSGWIN_SYS*		tmsgwinSys, 
-																		VecFx32*					pTarget,
-																		STRBUF*						msg,
-																		TALKMSGWIN_SETUP* tmsgwinSetup );
-#endif
-extern void TALKMSGWIN_CreateWindowIdx( TALKMSGWIN_SYS*		tmsgwinSys, 
-																				int								tmsgwinIdx, 
-																				VecFx32*					pTarget,
-																				STRBUF*						msg,
-																				TALKMSGWIN_SETUP* tmsgwinSetup );
-extern void TALKMSGWIN_CreateWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys, 
-																								int								tmsgwinIdx,
-																								int								prev_tmsgwinIdx,
-																								STRBUF*						msg,
-																								TALKMSGWIN_SETUP* tmsgwinSetup );
+extern void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys, 
+																							int								tmsgwinIdx,
+																							VecFx32*					pTarget,
+																							STRBUF*						msg,
+																							u8								winpx,			
+																							u8								winpy,			
+																							u8								winsx,			
+																							u8								winsy,			
+																							u8								colIdx );
+
+extern void TALKMSGWIN_CreateFloatWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys, 
+																										int								tmsgwinIdx,
+																										int								prev_tmsgwinIdx,
+																										STRBUF*						msg,
+																										u8								winpx,			
+																										u8								winpy,			
+																										u8								winsx,			
+																										u8								winsy,			
+																										u8								colIdx );
+
+extern void TALKMSGWIN_CreateFixWindowUpper(	TALKMSGWIN_SYS* tmsgwinSys, 
+																							int							tmsgwinIdx,
+																							VecFx32*				pTarget,
+																							STRBUF*					msg,
+																							u8							colIdx );
+
+extern void TALKMSGWIN_CreateFixWindowLower(	TALKMSGWIN_SYS* tmsgwinSys,
+																							int							tmsgwinIdx,
+																							VecFx32*				pTarget,
+																							STRBUF*					msg,
+																							u8							colIdx );
+
+extern void TALKMSGWIN_CreateFixWindowAuto(		TALKMSGWIN_SYS* tmsgwinSys,
+																							int							tmsgwinIdx,
+																							VecFx32*				pTarget,
+																							STRBUF*					msg,
+																							u8							colIdx );
 
 extern void TALKMSGWIN_DeleteWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
 extern void TALKMSGWIN_OpenWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
 extern void TALKMSGWIN_CloseWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
+
 

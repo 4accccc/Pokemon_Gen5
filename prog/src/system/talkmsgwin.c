@@ -14,6 +14,7 @@
 #include "font/font.naix"
 #include "print/printsys.h"
 #include "print/str_tool.h"
+#include "gamesystem\msgspeed.h"
 
 #include "system/talkmsgwin.h"
 
@@ -41,7 +42,23 @@
 #define COL_SIZ				(2)
 #define PLTT_SIZ			(16*COL_SIZ)
 
-#define BACKGROUND_COLOR (15)
+#define BACKGROUND_COLOR	(GX_RGB(31,31,31))
+#define BACKGROUND_COLIDX (15)
+
+typedef enum {
+	TALKWIN_SETPAT_FLOAT = 0,
+	TALKWIN_SETPAT_FIX_U,
+	TALKWIN_SETPAT_FIX_D,
+}TALKWIN_SETPAT;
+
+#define TALKMSGWIN_FLOAT_MAX	(TALKMSGWIN_NUM - 2)
+
+#define TWIN_FIX_SIZX		(28)
+#define TWIN_FIX_SIZY		(5)
+#define TWIN_FIX_POSX		(2)
+#define TWIN_FIX_POSY_U (1)
+#define TWIN_FIX_POSY_D (24 - (TWIN_FIX_SIZY+2))
+#define TWIN_FIX_TAIL_X	(7)
 
 typedef enum {
 	TAIL_SETPAT_NONE = 0,
@@ -49,6 +66,10 @@ typedef enum {
 	TAIL_SETPAT_D,
 	TAIL_SETPAT_L,
 	TAIL_SETPAT_R,
+	TAIL_SETPAT_FIX_UL,
+	TAIL_SETPAT_FIX_UR,
+	TAIL_SETPAT_FIX_DL,
+	TAIL_SETPAT_FIX_DR,
 }TAIL_SETPAT;
 
 //============================================================================================
@@ -69,11 +90,12 @@ typedef struct {
 	VecFx16				vtxWin2;
 	VecFx16				vtxWin3;
 	VecFx16				vecN;
-	TAIL_SETPAT		pattern;
+	TAIL_SETPAT		tailPat;
 }TAIL_DATA;
 
 typedef struct {
 	int							seq;
+	TALKWIN_SETPAT  winPat;
 
 	PRINT_STREAM*		printStream;
 	GFL_BMPWIN*			bmpwin;
@@ -96,7 +118,19 @@ struct _TALKMSGWIN_SYS{
 	TMSGWIN								tmsgwin[TALKMSGWIN_NUM];
   GFL_TCBLSYS*					tcbl;
   u16										chrNum;
+
+	//動作確認用暫定
+	BOOL						debugOn;
 };
+
+typedef struct {
+	TALKWIN_SETPAT	winPat;
+	u8							winpx;			
+	u8							winpy;			
+	u8							winsx;			
+	u8							winsy;			
+	GXRgb						color;
+}TALKMSGWIN_SETUP;
 
 static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup );
 
@@ -149,6 +183,7 @@ TALKMSGWIN_SYS* TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
 		u32 siz = setupWindowBG(&tmsgwinSys->setup);
 		tmsgwinSys->chrNum = siz/0x20;
 	}
+  tmsgwinSys->debugOn = FALSE;
 
 	return tmsgwinSys;
 }
@@ -200,6 +235,12 @@ u32 TALKMSGWIN_SystemGetUsingChrNumber( TALKMSGWIN_SYS* tmsgwinSys )
 	return tmsgwinSys->chrNum;
 }
 
+//------------------------------------------------------------------
+void TALKMSGWIN_SystemDebugOn( TALKMSGWIN_SYS* tmsgwinSys )
+{
+	tmsgwinSys->debugOn = TRUE;
+}
+
 //============================================================================================
 /**
  *
@@ -215,50 +256,116 @@ u32 TALKMSGWIN_SystemGetUsingChrNumber( TALKMSGWIN_SYS* tmsgwinSys )
  *
  */
 //============================================================================================
-#if 0
-int TALKMSGWIN_CreateWindow(	TALKMSGWIN_SYS*		tmsgwinSys, 
-															VecFx32*					pTarget,
-															STRBUF*						msg,
-															TALKMSGWIN_SETUP* tmsgwinSetup )
+void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys, 
+																			int								tmsgwinIdx,
+																			VecFx32*					pTarget,
+																			STRBUF*						msg,
+																			u8								winpx,			
+																			u8								winpy,			
+																			u8								winsx,			
+																			u8								winsy,			
+																			u8								colIdx )
 {
-	int i;
+	TALKMSGWIN_SETUP setup;
 
-	for( i=0; i<TALKMSGWIN_NUM; i++ ){ 
-		if(checkEmptyWindow(&tmsgwinSys->tmsgwin[i]) == TRUE){
-			setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[i], pTarget, msg, tmsgwinSetup);
-			return i;
-		}
-	}
-	return -1;
-}
-#endif
-//------------------------------------------------------------------
-void TALKMSGWIN_CreateWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys, 
-																	int								tmsgwinIdx,
-																	VecFx32*					pTarget,
-																	STRBUF*						msg,
-																	TALKMSGWIN_SETUP* tmsgwinSetup )
-{
 	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
 
-	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], pTarget, msg, tmsgwinSetup);
+	setup.winPat = TALKWIN_SETPAT_FLOAT;
+	setup.winpx = winpx;
+	setup.winpy = winpy;
+	setup.winsx = winsx;
+	setup.winsy = winsy;
+	setup.color = BACKGROUND_COLOR;
+
+	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], pTarget, msg, &setup);
 }
 
 //------------------------------------------------------------------
-void TALKMSGWIN_CreateWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys, 
-																				int								tmsgwinIdx,
-																				int								prev_tmsgwinIdx,
-																				STRBUF*						msg,
-																				TALKMSGWIN_SETUP* tmsgwinSetup )
+void TALKMSGWIN_CreateFloatWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys, 
+																							int								tmsgwinIdx,
+																							int								prev_tmsgwinIdx,
+																							STRBUF*						msg,
+																							u8								winpx,			
+																							u8								winpy,			
+																							u8								winsx,			
+																							u8								winsy,			
+																							u8								colIdx )
 {
+	TALKMSGWIN_SETUP setup;
+
 	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
 	GF_ASSERT( (prev_tmsgwinIdx>=0)&&(prev_tmsgwinIdx<TALKMSGWIN_NUM) );
 
+	setup.winPat = TALKWIN_SETPAT_FLOAT;
+	setup.winpx = winpx;
+	setup.winpy = winpy;
+	setup.winsx = winsx;
+	setup.winsy = winsy;
+	setup.color = BACKGROUND_COLOR;
+
 	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], 
-							tmsgwinSys->tmsgwin[prev_tmsgwinIdx].pTarget, msg, tmsgwinSetup);
+							tmsgwinSys->tmsgwin[prev_tmsgwinIdx].pTarget, msg, &setup);
 
 	tmsgwinSys->tmsgwin[prev_tmsgwinIdx].pTarget = NULL;
 	tmsgwinSys->tmsgwin[prev_tmsgwinIdx].refTarget = tmsgwinIdx;
+}
+
+//------------------------------------------------------------------
+void TALKMSGWIN_CreateFixWindowUpper( TALKMSGWIN_SYS* tmsgwinSys,
+																			int							tmsgwinIdx,
+																			VecFx32*				pTarget,
+																			STRBUF*					msg,
+																			u8							colIdx )
+{
+	TALKMSGWIN_SETUP setup;
+
+	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
+
+	setup.winPat = TALKWIN_SETPAT_FIX_U;
+	setup.winpx = TWIN_FIX_POSX;
+	setup.winpy = TWIN_FIX_POSY_U;
+	setup.winsx = TWIN_FIX_SIZX;
+	setup.winsy = TWIN_FIX_SIZY;
+	setup.color = BACKGROUND_COLOR;
+
+	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], pTarget, msg, &setup);
+}
+
+void TALKMSGWIN_CreateFixWindowLower( TALKMSGWIN_SYS* tmsgwinSys,
+																			int							tmsgwinIdx,
+																			VecFx32*				pTarget,
+																			STRBUF*					msg,
+																			u8							colIdx )
+{
+	TALKMSGWIN_SETUP setup;
+
+	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
+
+	setup.winPat = TALKWIN_SETPAT_FIX_D;
+	setup.winpx = TWIN_FIX_POSX;
+	setup.winpy = TWIN_FIX_POSY_D;
+	setup.winsx = TWIN_FIX_SIZX;
+	setup.winsy = TWIN_FIX_SIZY;
+	setup.color = BACKGROUND_COLOR;
+
+	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], pTarget, msg, &setup);
+}
+
+void TALKMSGWIN_CreateFixWindowAuto(	TALKMSGWIN_SYS* tmsgwinSys,
+																			int							tmsgwinIdx,
+																			VecFx32*				pTarget,
+																			STRBUF*					msg,
+																			u8							colIdx )
+{
+	int targetx, targety;
+
+	NNS_G3dWorldPosToScrPos(pTarget, &targetx, &targety);
+
+	if( targety < 96 ){ 
+		TALKMSGWIN_CreateFixWindowLower(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx);
+	} else {
+		TALKMSGWIN_CreateFixWindowUpper(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx);
+	}
 }
 
 //------------------------------------------------------------------
@@ -284,6 +391,8 @@ void TALKMSGWIN_CloseWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )
 
 	closeWindow(&tmsgwinSys->tmsgwin[tmsgwinIdx]);
 }
+
+//------------------------------------------------------------------
 
 
 
@@ -332,6 +441,7 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 	tmsgwin->msg = msg;
 	tmsgwin->color = setup->color;
 	tmsgwin->refTarget = 0;
+	tmsgwin->winPat = setup->winPat;
 
 	//描画用ビットマップ作成
 	{
@@ -343,12 +453,7 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 																				tmsgwinSys->setup.ini.fontPltID,
 																				GFL_BG_CHRAREA_GET_B );
 		//ウインドウ生成
-#if 0
-		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(tmsgwin->bmpwin), 2);
-		GFL_BMP_Fill(GFL_BMPWIN_GetBmp(tmsgwin->bmpwin), 2, 2, setup->winsx*8-4, setup->winsy*8-4, 15);
-#else
-		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(tmsgwin->bmpwin), BACKGROUND_COLOR);
-#endif
+		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(tmsgwin->bmpwin), BACKGROUND_COLIDX);
 		GFL_BMPWIN_TransVramCharacter(tmsgwin->bmpwin);
 	}
 	//吹き出しエフェクトパラメータ計算
@@ -419,6 +524,14 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		if(tmsgwin->timer < TALKMSGWIN_OPENWAIT){
 			tmsgwin->timer++;
 		}else{
+			int wait;
+			
+			if( tmsgwinSys->debugOn == TRUE ){
+				wait = 2;
+			} else {
+				wait = MSGSPEED_GetWait();
+			}
+
 			tmsgwin->seq = WINSEQ_HOLD;
 			writeWindow(tmsgwinSys, tmsgwin);
 
@@ -427,11 +540,11 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 																										tmsgwin->writey,							// u16
 																										tmsgwin->msg,									// STRBUF*
 																										tmsgwinSys->setup.fontHandle,	// GFL_FONT*
-																										2,														// int wait
+																										wait,													// int
 																										tmsgwinSys->tcbl,							// GFL_TCBLSYS*
 																										0,														// u32 tcbpri
 																										tmsgwinSys->setup.heapID,			// HEAPID
-																										BACKGROUND_COLOR );						// u16 clrCol
+																										BACKGROUND_COLIDX );					// u16 clrCol
 		}
 		break;
 	case WINSEQ_HOLD:
@@ -493,7 +606,7 @@ static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tail
 	G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
 	G3_PolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 63, 31, 0);
 	
-	if(tailData->pattern != TAIL_SETPAT_NONE){
+	if(tailData->tailPat != TAIL_SETPAT_NONE){
 		G3_Begin(GX_BEGIN_TRIANGLES);
 
 		G3_Color(color);
@@ -536,143 +649,206 @@ static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tail
  *
  */
 //============================================================================================
-static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
+static void calcStart( GFL_G3D_CAMERA* g3Dcamera, fx32* backupData )
 {
-	VecFx32		vecTail0, vecTail1, vecTail2;
-	VecFx32		vecWin0, vecWin1, vecWin2, vecWin3;
-	fx32			near_backup, scale;
-	u8				pattern;
-	BOOL			result = FALSE;
-
 	//変換精度を上げるためnearの距離をとる
-	GFL_G3D_CAMERA_GetNear(tmsgwinSys->setup.g3Dcamera, &near_backup);
-	{
-		fx32 near = 64* FX32_ONE;
+	fx32 near = 64* FX32_ONE;
 
-		GFL_G3D_CAMERA_SetNear(tmsgwinSys->setup.g3Dcamera, &near);
-		GFL_G3D_CAMERA_Switching(tmsgwinSys->setup.g3Dcamera);
+	GFL_G3D_CAMERA_GetNear(g3Dcamera, backupData);
+	GFL_G3D_CAMERA_SetNear(g3Dcamera, &near);
+	GFL_G3D_CAMERA_Switching(g3Dcamera);
+}
+
+//------------------------------------------------------------------
+static void calcEnd( GFL_G3D_CAMERA* g3Dcamera, fx32* backupData )
+{
+	//near復帰
+	GFL_G3D_CAMERA_SetNear(g3Dcamera, backupData);
+	GFL_G3D_CAMERA_Switching(g3Dcamera);
+}
+
+//------------------------------------------------------------------
+static void calcTailVtx0_target(	const VecFx32*	pTarget, 
+																	int*						pTargetScrx,
+																	int*						pTargetScry,
+																	VecFx32*				pTailVtx0 )
+{
+	//対象座標をnearクリップ平面状の座標に変換し、tail頂点算出
+	NNS_G3dWorldPosToScrPos(pTarget, pTargetScrx, pTargetScry);
+	NNS_G3dScrPosToWorldLine(*pTargetScrx, *pTargetScry, pTailVtx0, NULL );
+}
+
+//------------------------------------------------------------------
+static void calcTailVtx0_refwin(	const TMSGWIN*	win, 
+																	const TMSGWIN*	refwin,
+																	int*						pTargetScrx,
+																	int*						pTargetScry,
+																	VecFx32*				pTailVtx0 )
+{
+	//指定参照ウインドウ座標より、tail頂点算出※枠のサイズも考慮する
+	int	px = (GFL_BMPWIN_GetPosX(win->bmpwin)-1) * 8;
+	int	py = (GFL_BMPWIN_GetPosY(win->bmpwin)-1) * 8;
+	int	sx = (GFL_BMPWIN_GetScreenSizeX(win->bmpwin)+2) * 8;
+	int	sy = (GFL_BMPWIN_GetScreenSizeY(win->bmpwin)+2) * 8;
+	int	ref_px = (GFL_BMPWIN_GetPosX(refwin->bmpwin)-1) * 8;
+	int	ref_py = (GFL_BMPWIN_GetPosY(refwin->bmpwin)-1) * 8;
+	int	ref_sx = (GFL_BMPWIN_GetScreenSizeX(refwin->bmpwin)+2) * 8;
+	int	ref_sy = (GFL_BMPWIN_GetScreenSizeY(refwin->bmpwin)+2) * 8;
+
+	if((px + sx) < ref_px){
+		//参照winの左への配置設定
+		*pTargetScrx = ref_px;
+	} else if(px > (ref_px + ref_sx)){
+		//参照winの右への配置設定
+		*pTargetScrx = ref_px + ref_sx;
+	} else {
+		*pTargetScrx = ref_px + ref_sx/2;
 	}
+	if((py + sy) < ref_py){
+		//参照winの上への配置設定
+		*pTargetScry = ref_py;
+	} else if(py > (ref_py + ref_sy)){
+		//参照winの下への配置設定
+		*pTargetScry = ref_py + ref_sy;
+	} else {
+		*pTargetScry = ref_py + ref_sy/2;
+	}
+	NNS_G3dScrPosToWorldLine(*pTargetScrx, *pTargetScry, pTailVtx0, NULL );
+}
 
-	//tailをnearクリップ平面状の座標に変換
-	{
-		int	targetx, targety; 
-		int	tail_length;
-		int	px = (GFL_BMPWIN_GetPosX(tmsgwin->bmpwin)-1) * 8;
-		int	py = (GFL_BMPWIN_GetPosY(tmsgwin->bmpwin)-1) * 8;
-		int	sx = (GFL_BMPWIN_GetScreenSizeX(tmsgwin->bmpwin)+2) * 8;
-		int	sy = (GFL_BMPWIN_GetScreenSizeY(tmsgwin->bmpwin)+2) * 8;
+//------------------------------------------------------------------
+static u8 calcTailVtx1Vtx2( const TMSGWIN*	win,
+														const int				targetScrx,
+														const int				targetScry,
+														VecFx32*				pTailVtx1,
+														VecFx32*				pTailVtx2 )
+{
+	//tail根っこ算出※枠のサイズも考慮する
+	int	px = (GFL_BMPWIN_GetPosX(win->bmpwin)-1) * 8;
+	int	py = (GFL_BMPWIN_GetPosY(win->bmpwin)-1) * 8;
+	int	sx = (GFL_BMPWIN_GetScreenSizeX(win->bmpwin)+2) * 8;
+	int	sy = (GFL_BMPWIN_GetScreenSizeY(win->bmpwin)+2) * 8;
+	int	tail_length;
+	u8	tailPat;
+	u16 ex1, ey1, ex2, ey2;
 
-		//tail頂点算出
-		if(tmsgwin->pTarget != NULL){
-			//taget座標よりtail頂点算出
-			NNS_G3dWorldPosToScrPos(tmsgwin->pTarget, &targetx, &targety);
+	switch(win->winPat){
+	default:
+	case TALKWIN_SETPAT_FLOAT:
+		tail_length = ((sx>=16)&&(sy>=16))? 16 : sy;	//tail幅default = 16
+
+		if(targetScry < py){
+			ey1 = py + 1;
+			ey2 = py + 1;
+			ex1 = px + sx/2 - tail_length/2;
+			ex2 = px + sx/2 + tail_length/2;
+			tailPat = TAIL_SETPAT_U;
+		} else if(targetScry > (py + sy)){
+			ey1 = py + sy - 1;
+			ey2 = py + sy - 1;
+			ex1 = px + sx/2 - tail_length/2;
+			ex2 = px + sx/2 + tail_length/2;
+			tailPat = TAIL_SETPAT_D;
 		} else {
-			//指定参照ウインドウ座標よりtail頂点算出
-			GFL_BMPWIN* ref_bmpwin = tmsgwinSys->tmsgwin[tmsgwin->refTarget].bmpwin;
-			int	ref_px = (GFL_BMPWIN_GetPosX(ref_bmpwin)-1) * 8;
-			int	ref_py = (GFL_BMPWIN_GetPosY(ref_bmpwin)-1) * 8;
-			int	ref_sx = (GFL_BMPWIN_GetScreenSizeX(ref_bmpwin)+2) * 8;
-			int	ref_sy = (GFL_BMPWIN_GetScreenSizeY(ref_bmpwin)+2) * 8;
-
-			if((px + sx) < ref_px){
-				//参照winの左への配置設定
-				targetx = ref_px;
-			} else if(px > (ref_px + ref_sx)){
-				//参照winの右への配置設定
-				targetx = ref_px + ref_sx;
+			ey1 = py + sy/2 - tail_length/2;
+			ey2 = py + sy/2 + tail_length/2;
+			if(targetScrx < px){
+				ex1 = px + 1;
+				ex2 = px + 1;
+				tailPat = TAIL_SETPAT_L;
+			} else if(targetScrx > (px + sx)){
+				ex1 = px + sx - 1;
+				ex2 = px + sx - 1;
+				tailPat = TAIL_SETPAT_R;
 			} else {
-				targetx = ref_px + ref_sx/2;
-			}
-			if((py + sy) < ref_py){
-				//参照winの上への配置設定
-				targety = ref_py;
-			} else if(py > (ref_py + ref_sy)){
-				//参照winの下への配置設定
-				targety = ref_py + ref_sy;
-			} else {
-				targety = ref_py + ref_sy/2;
+				ex1 = px + sx/2;
+				ex2 = px + sx/2;
+				tailPat = TAIL_SETPAT_NONE;
 			}
 		}
-		NNS_G3dScrPosToWorldLine(targetx, targety, &vecTail0, NULL );
-#if 0
-		tail_length = ((sx>=32)&&(sy>=32))? 32 : sy;
-		if( (targety > py)&&(targety < (py + sy)) ){
-			NNS_G3dScrPosToWorldLine((px + sx/2),	(py + sy/2 - tail_length/2), &vecTail1, NULL );
-			NNS_G3dScrPosToWorldLine((px + sx/2),	(py + sy/2 + tail_length/2), &vecTail2, NULL );
+		break;
+	case TALKWIN_SETPAT_FIX_U:
+		ey1 = py + sy - 1;
+		ey2 = py + sy - 1;
+		if(targetScrx < 128){
+			ex1 = px + (TWIN_FIX_TAIL_X+1)*8;	//位置情報+枠
+			ex2 = ex1 + 16;
+			tailPat = TAIL_SETPAT_FIX_DL;
 		} else {
-			NNS_G3dScrPosToWorldLine((px + sx/2 - tail_length/2),	(py + sy/2), &vecTail1, NULL );
-			NNS_G3dScrPosToWorldLine((px + sx/2 + tail_length/2),	(py + sy/2), &vecTail2, NULL );
+			ex2 = px + sx - (TWIN_FIX_TAIL_X+1)*8;	//位置情報+枠
+			ex1 = ex2 - 16;
+			tailPat = TAIL_SETPAT_FIX_DR;
 		}
-#else
-		//tail根っこ算出
-		{
-			u16 ex1, ey1, ex2, ey2;
-
-			tail_length = ((sx>=16)&&(sy>=16))? 16 : sy;
-			if(targety < py){
-				ey1 = py + 1;
-				ey2 = py + 1;
-				ex1 = px + sx/2 - tail_length/2;
-				ex2 = px + sx/2 + tail_length/2;
-				pattern = TAIL_SETPAT_U;
-			} else if(targety > (py + sy)){
-				ey1 = py + sy - 1;
-				ey2 = py + sy - 1;
-				ex1 = px + sx/2 - tail_length/2;
-				ex2 = px + sx/2 + tail_length/2;
-				pattern = TAIL_SETPAT_D;
-			} else {
-				ey1 = py + sy/2 - tail_length/2;
-				ey2 = py + sy/2 + tail_length/2;
-				if(targetx < px){
-					ex1 = px + 1;
-					ex2 = px + 1;
-					pattern = TAIL_SETPAT_L;
-				} else if(targetx > (px + sx)){
-					ex1 = px + sx - 1;
-					ex2 = px + sx - 1;
-					pattern = TAIL_SETPAT_R;
-				} else {
-					ex1 = px + sx/2;
-					ex2 = px + sx/2;
-					pattern = TAIL_SETPAT_NONE;
-				}
-			}
-			NNS_G3dScrPosToWorldLine(ex1, ey1, &vecTail1, NULL );
-			NNS_G3dScrPosToWorldLine(ex2, ey2, &vecTail2, NULL );
+		break;
+	case TALKWIN_SETPAT_FIX_D:
+		ey1 = py + 1;
+		ey2 = py + 1;
+		if(targetScrx < 128){
+			ex1 = px + (TWIN_FIX_TAIL_X+1)*8;	//位置情報+枠
+			ex2 = ex1 + 16;
+			tailPat = TAIL_SETPAT_FIX_UL;
+		} else {
+			ex2 = px + sx - (TWIN_FIX_TAIL_X+1)*8;	//位置情報+枠
+			ex1 = ex2 - 16;
+			tailPat = TAIL_SETPAT_FIX_UR;
 		}
-#endif
+		break;
 	}
-	//winをnearクリップ平面状の座標に変換
-	{
-		int	px = GFL_BMPWIN_GetPosX(tmsgwin->bmpwin) * 8;
-		int	py = GFL_BMPWIN_GetPosY(tmsgwin->bmpwin) * 8;
-		int	sx = GFL_BMPWIN_GetScreenSizeX(tmsgwin->bmpwin) * 8;
-		int	sy = GFL_BMPWIN_GetScreenSizeY(tmsgwin->bmpwin) * 8;
+	NNS_G3dScrPosToWorldLine(ex1, ey1, pTailVtx1, NULL );
+	NNS_G3dScrPosToWorldLine(ex2, ey2, pTailVtx2, NULL );
 
-		NNS_G3dScrPosToWorldLine((px + 0),	(py + 0),		&vecWin0, NULL );
-		NNS_G3dScrPosToWorldLine((px + sx),	(py + 0),		&vecWin1, NULL );
-		NNS_G3dScrPosToWorldLine((px + 0),	(py + sy),	&vecWin2, NULL );
-		NNS_G3dScrPosToWorldLine((px + sx), (py + sy),	&vecWin3, NULL );
-	}
+	return tailPat;
+}
 
-	//vecTail0基準にベクトル変換
-	VEC_Subtract(&vecTail1, &vecTail0, &vecTail1);
-	VEC_Subtract(&vecTail2, &vecTail0, &vecTail2);
-	VEC_Subtract(&vecWin0, &vecTail0, &vecWin0);
-	VEC_Subtract(&vecWin1, &vecTail0, &vecWin1);
-	VEC_Subtract(&vecWin2, &vecTail0, &vecWin2);
-	VEC_Subtract(&vecWin3, &vecTail0, &vecWin3);
+//------------------------------------------------------------------
+static void calcWinVtx( const TMSGWIN*	win, 
+												VecFx32*				pWinVtx0,
+												VecFx32*				pWinVtx1,
+												VecFx32*				pWinVtx2,
+												VecFx32*				pWinVtx3 )
+{
+	//winをnearクリップ平面状の座標に変換※描画範囲のみ
+	int	px = GFL_BMPWIN_GetPosX(win->bmpwin) * 8;
+	int	py = GFL_BMPWIN_GetPosY(win->bmpwin) * 8;
+	int	sx = GFL_BMPWIN_GetScreenSizeX(win->bmpwin) * 8;
+	int	sy = GFL_BMPWIN_GetScreenSizeY(win->bmpwin) * 8;
+
+	NNS_G3dScrPosToWorldLine((px + 0),	(py + 0),		pWinVtx0, NULL );
+	NNS_G3dScrPosToWorldLine((px + sx),	(py + 0),		pWinVtx1, NULL );
+	NNS_G3dScrPosToWorldLine((px + 0),	(py + sy),	pWinVtx2, NULL );
+	NNS_G3dScrPosToWorldLine((px + sx), (py + sy),	pWinVtx3, NULL );
+}
+
+//------------------------------------------------------------------
+static void calcTailData( const TALKMSGWIN_SYS* tmsgwinSys,
+													TMSGWIN*							tmsgwin,
+													const VecFx32*				pTailVtx0,
+													const VecFx32*				pTailVtx1,
+													const VecFx32*				pTailVtx2,
+													const VecFx32*				pWinVtx0,
+													const VecFx32*				pWinVtx1,
+													const VecFx32*				pWinVtx2,
+													const VecFx32*				pWinVtx3 )
+{
+	VecFx32		vecTail1, vecTail2, vecWin0, vecWin1, vecWin2, vecWin3;
+	fx32			scale;
+
+	//pTailVtx0基準にベクトル変換
+	VEC_Subtract(pTailVtx1, pTailVtx0, &vecTail1);
+	VEC_Subtract(pTailVtx2, pTailVtx0, &vecTail2);
+	VEC_Subtract(pWinVtx0, pTailVtx0, &vecWin0);
+	VEC_Subtract(pWinVtx1, pTailVtx0, &vecWin1);
+	VEC_Subtract(pWinVtx2, pTailVtx0, &vecWin2);
+	VEC_Subtract(pWinVtx3, pTailVtx0, &vecWin3);
 
 	//スケールの決定
 	{
-		fx32 valTail1, valTail2, valWin0, valWin1, valWin2, valWin3;
-		valTail1 = VEC_Mag(&vecTail1);
-		valTail2 = VEC_Mag(&vecTail2);
-		valWin0 = VEC_Mag(&vecWin0);
-		valWin1 = VEC_Mag(&vecWin1);
-		valWin2 = VEC_Mag(&vecWin2);
-		valWin3 = VEC_Mag(&vecWin3);
+		fx32 valTail1 = VEC_Mag(&vecTail1);
+		fx32 valTail2 = VEC_Mag(&vecTail2);
+		fx32 valWin0 = VEC_Mag(&vecWin0);
+		fx32 valWin1 = VEC_Mag(&vecWin1);
+		fx32 valWin2 = VEC_Mag(&vecWin2);
+		fx32 valWin3 = VEC_Mag(&vecWin3);
 
 		//一番長いベクトルの長さをスケールに設定（頂点設定値の制限のため）
 		scale = (valTail1 >= valTail2)? valTail1 : valTail2;
@@ -681,9 +857,8 @@ static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		if( scale < valWin2 ){ scale = valWin2; }
 		if( scale < valWin3 ){ scale = valWin3; }
 	}
-
-	//パラメータ設定
-	VEC_Set(&tmsgwin->tailData.trans, vecTail0.x, vecTail0.y, vecTail0.z);
+	//頂点データ設定
+	VEC_Set(&tmsgwin->tailData.trans, pTailVtx0->x, pTailVtx0->y, pTailVtx0->z);
 	tmsgwin->tailData.scale = scale;
 
 	VEC_Fx16Set(&tmsgwin->tailData.vtxTail0, 0, 0, 0);
@@ -700,26 +875,43 @@ static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 							FX_Div(vecWin2.x,scale), FX_Div(vecWin2.y,scale), FX_Div(vecWin2.z,scale));
 	VEC_Fx16Set(&tmsgwin->tailData.vtxWin3,
 							FX_Div(vecWin3.x,scale), FX_Div(vecWin3.y,scale), FX_Div(vecWin3.z,scale));
-	{
-		//法線ベクトル取得
-		VecFx32 camPos, camTarget, vecN;
-
-		GFL_G3D_CAMERA_GetPos(tmsgwinSys->setup.g3Dcamera, &camPos );
-		GFL_G3D_CAMERA_GetTarget(tmsgwinSys->setup.g3Dcamera, &camTarget );
-		VEC_Subtract(&camPos, &camTarget, &vecN);
-		VEC_Normalize(&vecN, &vecN);
-		VEC_Fx16Set(&tmsgwin->tailData.vecN, vecN.x, vecN.y, vecN.z);
-	}
-	if(tmsgwin->tailData.pattern != pattern){
-		tmsgwin->tailData.pattern = pattern;
-		result = TRUE;
-	}
-	//near復帰
-	GFL_G3D_CAMERA_SetNear(tmsgwinSys->setup.g3Dcamera, &near_backup);
-	GFL_G3D_CAMERA_Switching(tmsgwinSys->setup.g3Dcamera);
-
-	return result;
 }
+
+
+//============================================================================================
+static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
+{
+	fx32	nearBackup;
+	u8		tailPat;
+
+	calcStart(tmsgwinSys->setup.g3Dcamera, &nearBackup);
+	{
+		int			targetScrx, targetScry;
+		VecFx32	tailVtx0, tailVtx1, tailVtx2;
+		VecFx32	winVtx0, winVtx1, winVtx2, winVtx3;
+
+		if(tmsgwin->pTarget != NULL){
+			calcTailVtx0_target(tmsgwin->pTarget, &targetScrx, &targetScry, &tailVtx0);
+		} else {
+			calcTailVtx0_refwin
+				(tmsgwin, &tmsgwinSys->tmsgwin[tmsgwin->refTarget], &targetScrx, &targetScry, &tailVtx0);
+		}
+		tailPat = calcTailVtx1Vtx2(tmsgwin, targetScrx, targetScry, &tailVtx1, &tailVtx2);
+
+		calcWinVtx(tmsgwin, &winVtx0, &winVtx1, &winVtx2, &winVtx3);
+
+		calcTailData
+		(tmsgwinSys, tmsgwin, &tailVtx0, &tailVtx1, &tailVtx2, &winVtx0, &winVtx1, &winVtx2, &winVtx3);
+	}
+	calcEnd(tmsgwinSys->setup.g3Dcamera, &nearBackup);
+
+	if(tmsgwin->tailData.tailPat != tailPat){
+		tmsgwin->tailData.tailPat = tailPat;
+		return TRUE;
+	}
+	return FALSE;
+}
+
 
 //============================================================================================
 /**
@@ -822,58 +1014,86 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	if(overU == FALSE){
 		if(overL == FALSE){
 			GFL_BG_FillScreen
-				(frameID, (wplt | (UL_CHR+chrOffs)), px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN );
+				(frameID, (wplt | (UL_CHR+chrOffs)), px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
 		GFL_BG_FillScreen
-			(frameID, (wplt | (U_CHR+chrOffs)), px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN );
+			(frameID, (wplt | (U_CHR+chrOffs)), px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN);
 		if(overR == FALSE){
 			GFL_BG_FillScreen
-				(frameID, (wplt | (UR_CHR+chrOffs)), px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN );
+				(frameID, (wplt | (UR_CHR+chrOffs)), px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
 	}
 	if(overL == FALSE){
 		GFL_BG_FillScreen
-			(frameID, (wplt | (L_CHR+chrOffs)), px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN );
+			(frameID, (wplt | (L_CHR+chrOffs)), px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN);
 	}
 	if(overR == FALSE){
 		GFL_BG_FillScreen
-			(frameID, (wplt | (R_CHR+chrOffs)), px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN );
+			(frameID, (wplt | (R_CHR+chrOffs)), px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN);
 	}
 	if(overD == FALSE){
 		if(overL == FALSE){
 			GFL_BG_FillScreen
-				(frameID, (wplt | (DL_CHR+chrOffs)), px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN );
+				(frameID, (wplt | (DL_CHR+chrOffs)), px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
 		GFL_BG_FillScreen
-			(frameID, (wplt | (D_CHR+chrOffs)), px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN );
+			(frameID, (wplt | (D_CHR+chrOffs)), px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN);
 		if(overR == FALSE){
 			GFL_BG_FillScreen
-				(frameID, (wplt | (DR_CHR+chrOffs)), px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN );
+				(frameID, (wplt | (DR_CHR+chrOffs)), px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
 	}
 	//tail接続領域
-	if(tmsgwin->tailData.pattern == TAIL_SETPAT_U){
-		if(overU == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (SPC_CHR+chrOffs)), px + sx/2 - 1, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN );
-		}
-	} else if(tmsgwin->tailData.pattern == TAIL_SETPAT_D){
-		if(overD == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (SPC_CHR+chrOffs)), px + sx/2 - 1, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN );
-		}
-	} else if(tmsgwin->tailData.pattern == TAIL_SETPAT_L){
-		if(overL == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (SPC_CHR+chrOffs)), px - 1, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN );
-		}
-	} else if(tmsgwin->tailData.pattern == TAIL_SETPAT_R){
-		if(overR == FALSE){
-			GFL_BG_FillScreen
-				(frameID, (wplt | (SPC_CHR+chrOffs)), px + sx, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN );
+	{
+		u16	nullChr = (wplt | SPC_CHR+chrOffs);
+
+		switch(tmsgwin->tailData.tailPat){
+		case TAIL_SETPAT_U:
+			if(overU == FALSE){
+				GFL_BG_FillScreen(frameID, nullChr, px + sx/2 - 1, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN);
+			}
+		break;
+		case TAIL_SETPAT_D:
+			if(overD == FALSE){
+				GFL_BG_FillScreen(frameID, nullChr, px + sx/2 - 1, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN);
+			}
+		break;
+		case TAIL_SETPAT_L:
+			if(overL == FALSE){
+				GFL_BG_FillScreen(frameID, nullChr, px - 1, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		case TAIL_SETPAT_R:
+			if(overR == FALSE){
+				GFL_BG_FillScreen(frameID, nullChr, px + sx, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		case TAIL_SETPAT_FIX_UL:
+			if(overU == FALSE){
+				GFL_BG_FillScreen
+					(frameID, nullChr, px + TWIN_FIX_TAIL_X, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		case TAIL_SETPAT_FIX_DL:
+			if(overU == FALSE){
+				GFL_BG_FillScreen
+					(frameID, nullChr, px + TWIN_FIX_TAIL_X, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		case TAIL_SETPAT_FIX_UR:
+			if(overD == FALSE){
+				GFL_BG_FillScreen
+					(frameID, nullChr, px + sx - TWIN_FIX_TAIL_X -2, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN);
+			}
+			break;
+		case TAIL_SETPAT_FIX_DR:
+			if(overD == FALSE){
+				GFL_BG_FillScreen
+					(frameID, nullChr, px + sx - TWIN_FIX_TAIL_X -2, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN);
+			}
+			break;
 		}
 	}
-
 	GFL_BG_LoadScreenReq(frameID);
 }
 
@@ -899,26 +1119,26 @@ static void clearWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 
 	if(overU == FALSE){
 		if(overL == FALSE){
-			GFL_BG_FillScreen(frameID, 0, px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN );
+			GFL_BG_FillScreen(frameID, 0, px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
-		GFL_BG_FillScreen(frameID, 0, px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_FillScreen(frameID, 0, px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN);
 		if(overR == FALSE){
-			GFL_BG_FillScreen(frameID, 0, px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN );
+			GFL_BG_FillScreen(frameID, 0, px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
 	}
 	if(overL == FALSE){
-		GFL_BG_FillScreen(frameID, 0, px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_FillScreen(frameID, 0, px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN);
 	}
 	if(overR == FALSE){
-		GFL_BG_FillScreen(frameID, 0, px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_FillScreen(frameID, 0, px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN);
 	}
 	if(overD == FALSE){
 		if(overL == FALSE){
-			GFL_BG_FillScreen(frameID, 0, px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN );
+			GFL_BG_FillScreen(frameID, 0, px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
-		GFL_BG_FillScreen(frameID, 0, px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_FillScreen(frameID, 0, px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN);
 		if(overR == FALSE){
-			GFL_BG_FillScreen(frameID, 0, px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN );
+			GFL_BG_FillScreen(frameID, 0, px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN);
 		}
 	}
 	GFL_BG_LoadScreenReq(frameID);

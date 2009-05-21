@@ -124,6 +124,8 @@ typedef struct {
 	VecFx32							twinTarget[TALKMSGWIN_NUM];
 
 	TEST_MSG_COMM				msgComm;
+
+	int									mode;
 }SAMPLE3_WORK;
 
 //============================================================================================
@@ -161,6 +163,7 @@ static GFL_PROC_RESULT Sample3Proc_Init(GFL_PROC * proc, int * seq, void * pwk, 
 	sw->timer = 0;
 	sw->tmsgwinIdx = 0;
 	sw->tmsgwinConnect = FALSE;
+	sw->mode = 0;
 
 	for(i=0; i<TALKMSGWIN_NUM; i++){ sw->strBuf[i] = GFL_STR_CreateBuffer(STRBUF_SIZE, sw->heapID); }
 
@@ -256,19 +259,43 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 
 	case 1:
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
-			sw->seq = 3;
+			sw->seq = 4;
 			break;
 		}
-		GFL_CAMADJUST_Main(sw->gflCamAdjust);
+		if( sw->mode == 0 ){
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+				GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
+				sw->mode = 1;
+				break;
+			}
+			GFL_CAMADJUST_Main(sw->gflCamAdjust);
 
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-			setSampleMsg1(sw, 0);
-			sw->seq++;
-		} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-		} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-		} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-		} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+				setSampleMsg1(sw, 0);
+				sw->seq = 2;
+			} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+			} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+			} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+			} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+			}
+		} else {
+			u32 tpx, tpy;
+
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+				GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
+				sw->mode = 0;
+				break;
+			}
+			if( GFL_UI_TP_GetPointTrg( &tpx, &tpy ) == TRUE ){
+				makeStr(testMsg, sw->strBuf[0]);
+				calcTarget(	sw->g3Dcamera, tpx, tpy, &sw->twinTarget[0]);
+
+				TALKMSGWIN_CreateFixWindowAuto
+					(sw->tmsgwinSys, 0, &sw->twinTarget[0], sw->strBuf[0], 15);
+				TALKMSGWIN_OpenWindow(sw->tmsgwinSys, 0);
+				sw->seq = 3;
+			}
 		}
 		systemFramework(sw);
 		break;
@@ -283,6 +310,26 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 		break;
 
 	case 3:
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+			TALKMSGWIN_DeleteWindow(sw->tmsgwinSys, 0);
+			sw->seq = 1;
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			if( sw->mode == 0 ){
+				GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
+				sw->mode = 1;
+			} else {
+				GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
+				sw->mode = 0;
+			}
+			break;
+		} 
+		if( sw->mode == 0 ){ GFL_CAMADJUST_Main(sw->gflCamAdjust); }
+
+		systemFramework(sw);
+		break;
+
+	case 4:
 		GFL_CAMADJUST_Delete(sw->gflCamAdjust);
 		systemDelete(sw);
 		return FALSE;
@@ -498,6 +545,7 @@ static void systemSetup(SAMPLE3_WORK* sw)
 		setup.ini = ini;
 
 		sw->tmsgwinSys = TALKMSGWIN_SystemCreate(&setup);
+		TALKMSGWIN_SystemDebugOn(sw->tmsgwinSys);
 	}
 }
 
@@ -740,14 +788,8 @@ static BOOL commWait(SAMPLE3_WORK* sw)
 //------------------------------------------------------------------
 static BOOL commSetMsg(SAMPLE3_WORK* sw)
 {
-	TALKMSGWIN_SETUP tmsgwinSetup;
 	u16	winIdx = sw->msgComm.commParam[0];
 
-	tmsgwinSetup.color = GX_RGB(31,31,31);
-	tmsgwinSetup.winpx = sw->msgComm.commParam[1];
-	tmsgwinSetup.winpy = sw->msgComm.commParam[2];
-	tmsgwinSetup.winsx = sw->msgComm.commParam[3];
-	tmsgwinSetup.winsy = sw->msgComm.commParam[4];
 	makeStr(testMsgTbl[sw->msgComm.commParam[5]], sw->strBuf[winIdx]);
 	
 	calcTarget(	sw->g3Dcamera, 
@@ -755,11 +797,15 @@ static BOOL commSetMsg(SAMPLE3_WORK* sw)
 							sw->msgComm.commParam[7], 
 							&sw->twinTarget[winIdx]);
 
-	TALKMSGWIN_CreateWindowIdx(	sw->tmsgwinSys,
-															winIdx,
-															&sw->twinTarget[winIdx],
-															sw->strBuf[winIdx],
-															&tmsgwinSetup);
+	TALKMSGWIN_CreateFloatWindowIdx(	sw->tmsgwinSys,
+																		winIdx,
+																		&sw->twinTarget[winIdx],
+																		sw->strBuf[winIdx],
+																		sw->msgComm.commParam[1],
+																		sw->msgComm.commParam[2],
+																		sw->msgComm.commParam[3],
+																		sw->msgComm.commParam[4],
+																		15);
 
 	TALKMSGWIN_OpenWindow(sw->tmsgwinSys, winIdx);
 
@@ -769,21 +815,19 @@ static BOOL commSetMsg(SAMPLE3_WORK* sw)
 //------------------------------------------------------------------
 static BOOL commConnectMsg(SAMPLE3_WORK* sw)
 {
-	TALKMSGWIN_SETUP tmsgwinSetup;
 	u16	winIdx = sw->msgComm.commParam[0];
 
-	tmsgwinSetup.color = GX_RGB(31,31,31);
-	tmsgwinSetup.winpx = sw->msgComm.commParam[1];
-	tmsgwinSetup.winpy = sw->msgComm.commParam[2];
-	tmsgwinSetup.winsx = sw->msgComm.commParam[3];
-	tmsgwinSetup.winsy = sw->msgComm.commParam[4];
 	makeStr(testMsgTbl[sw->msgComm.commParam[5]], sw->strBuf[winIdx]);
 	
-	TALKMSGWIN_CreateWindowIdxConnect(sw->tmsgwinSys,
-																		winIdx,
-																		sw->msgComm.commParam[6],
-																		sw->strBuf[winIdx],
-																		&tmsgwinSetup);
+	TALKMSGWIN_CreateFloatWindowIdxConnect( sw->tmsgwinSys,
+																					winIdx,
+																					sw->msgComm.commParam[6],
+																					sw->strBuf[winIdx],
+																					sw->msgComm.commParam[1],
+																					sw->msgComm.commParam[2],
+																					sw->msgComm.commParam[3],
+																					sw->msgComm.commParam[4],
+																					15);
 
 	TALKMSGWIN_OpenWindow(sw->tmsgwinSys, winIdx);
 
