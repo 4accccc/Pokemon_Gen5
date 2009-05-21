@@ -596,6 +596,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
 	fldmap_G3D_Control( fieldWork );
 	FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+  TALKMSGWIN_SystemMain( fieldWork->talkmsgwin_sys);
   TALKMSGWIN_SystemDraw2D( fieldWork->talkmsgwin_sys );
 
   if( fieldWork->fldMMdlSys != NULL ){
