@@ -1137,9 +1137,9 @@ static void WH_StateOutStartParent(void *arg)
             // cb->macAddress には, 切断された子機の MAC アドレスが入っています。
             _pWmInfo->sConnectBitmap &= ~target_bitmap;
             if(_pWmInfo->disconnectCallBack){
-			    GFI_NET_HANDLE_Delete(cb->aid);
                 _pWmInfo->disconnectCallBack(cb->aid);
             }
+  			    GFI_NET_HANDLE_Delete(cb->aid);
         }
         break;
 
@@ -3075,7 +3075,7 @@ static void WH_StateOutInitialize(void *arg)
 
 #ifndef SDK_FINALROM
     OS_TPrintf("ライフタイム変更\n");
-    WM_SetLifeTime(_setLifeCallback,0xffff, 0xffff, 0xffff,0xffff);
+    WM_SetLifeTime(_setLifeCallback,0xffff, 100, 5, 100);
 #else
     // システム状態をアイドリング（待機中）に変更。
     WH_ChangeSysState(WH_SYSSTATE_IDLE);
@@ -3173,7 +3173,7 @@ static void WH_StateOutPowerOn(void *arg)
 
 #ifndef SDK_FINALROM
     OS_TPrintf("ライフタイム変更\n");
-    WM_SetLifeTime(_setLifeCallback,0xffff, 0xffff, 0xffff,0xffff);
+    WM_SetLifeTime(_setLifeCallback,0xffff, 100, 5, 100);
 #else
     // システム状態をアイドリング（待機中）に変更。
     WH_ChangeSysState(WH_SYSSTATE_IDLE);
