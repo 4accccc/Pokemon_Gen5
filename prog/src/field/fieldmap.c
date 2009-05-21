@@ -412,17 +412,20 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
+  fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID );
+  //↑↓後で呼び出したほうがキャラとかフォントを上書きしている
   { //TALKMSGWIN(BG/3Dを使った吹き出し表示システム）の初期化
     TALKMSGWIN_SYS_SETUP setup =
     {
       0,//fieldWork->heapID,
       NULL,//fieldWork->g3Dcamera,
       NULL,//FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG),
+      1000, //u16 chrNumOffs;
 
       {
         GFL_BG_FRAME1_M,    //使用するフレームの指定
-        13,                 //使用するウィンドウ用パレット
-        14,                 //使用するフォント用パレット
+        11,                 //使用するウィンドウ用パレット
+        12,                 //使用するフォント用パレット
       },
     };
     setup.heapID = fieldWork->heapID;
@@ -436,8 +439,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     fieldWork->talkmsgwin_sys = TALKMSGWIN_SystemCreate(&setup);
   }
-  //↑↓後で呼び出したほうがキャラとかフォントを上書きしている
-  fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID );
   
 
   fieldWork->camera_control = FIELD_CAMERA_Create(
