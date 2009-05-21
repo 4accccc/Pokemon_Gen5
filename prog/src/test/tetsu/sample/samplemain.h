@@ -30,10 +30,12 @@ static const u16	resistDDobjTbl[] = {
 	NARC_sample_map_sample_tree_nsbtx,
 };
 
+#if 0
 #define DATID_GSMAP_GTEX (3)
 static const G3D_MAPPER_GLOBAL_TEXTURE	gtexData = {
 	ARCID_GSTEX, DATID_GSMAP_GTEX, 
 };
+#endif
 
 static const G3D_MAPPER_GLOBAL_OBJSET_TBL	gobjData_Tbl = {
 	ARCID_SAMPLEMAP, resistObjTbl, NELEMS(resistObjTbl), 

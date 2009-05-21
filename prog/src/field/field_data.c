@@ -187,11 +187,13 @@ static const FLDMAPPER_RESISTDATA_OBJBIN	gobjData_Bin = {
 	ARCID_GSOBJANM,
 };
 
+#if 0
 //グローバルテクスチャサンプル（金銀マップテクスチャ）
 #define DATID_GSMAP_GTEX (3)
 static const FLDMAPPER_RESIST_TEX	gtexData = {
 	ARCID_GSTEX, DATID_GSMAP_GTEX, 
 };
+#endif
 
 static const FLDMAPPER_MAPDATA GSMap[] = {
 	{ 21 }, { 22 },
@@ -272,12 +274,13 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,3,
       FLDMAPPER_MODE_SCROLL_XZ, 
-			ARCID_GSMAP, 
+			ARCID_AREA_MAPTEX,//ARCID_GSMAP, 
 
 			2,  6, NELEMS(GSMap),
 			GSMap, 
 
-			FLDMAPPER_TEXTYPE_USE,	{ ARCID_GSTEX, DATID_GSMAP_GTEX, },
+			//FLDMAPPER_TEXTYPE_USE,	{ ARCID_GSTEX, DATID_GSMAP_GTEX, },
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			FLDMAPPER_RESIST_OBJTYPE_BIN,	(void*)&gobjData_Bin,
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 		},
