@@ -25,9 +25,9 @@
 #define BGM_GS_BANK_START	700
 
 #define ME_START			1300
-
+#define SE_START			1350
 #define SE_PL_START			1372
-#define SE_START			1500
+
 #define SE_GS_BANK_START	750
 
 
