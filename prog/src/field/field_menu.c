@@ -489,7 +489,7 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
     else
     {
       //•Â‚¶‚é
-      initWork.cursorPosX = 236;
+      initWork.cursorPosX = 128;
       initWork.cursorPosY = 180;
       initWork.iconPosX = 0;
       initWork.iconPosY = 0;
@@ -608,7 +608,8 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
     }
   }
   else
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B || 
+      GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
   {
     work->isCancel = TRUE;
     work->state = FMS_EXIT_INIT;
