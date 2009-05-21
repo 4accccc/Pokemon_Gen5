@@ -482,6 +482,7 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 		GFL_BMPWIN_TransVramCharacter(tmsgwin->bmpwin);
 	}
 	//吹き出しエフェクトパラメータ計算
+	tmsgwin->tailData.tailPat = TAIL_SETPAT_NONE;
 	calcTail(tmsgwinSys, tmsgwin);
 
 	//描画位置算出（センタリング）
@@ -742,6 +743,17 @@ static void calcTailVtx0_refwin(	const TMSGWIN*	win,
 }
 
 //------------------------------------------------------------------
+static void getFixWinVtxPosX( int px, int sx, int side, u16* ex1, u16* ex2 )
+{
+	if(side == 0){
+		*ex1 = px + (TWIN_FIX_TAIL_X+1)*8;	//位置情報+枠
+		*ex2 = *ex1 + 16;
+	} else {
+		*ex2 = px + sx - (TWIN_FIX_TAIL_X+1)*8;	//位置情報+枠
+		*ex1 = *ex2 - 16;
+	}
+}
+
 static u8 calcTailVtx1Vtx2( const TMSGWIN*	win,
 														const int				targetScrx,
 														const int				targetScry,
@@ -793,29 +805,55 @@ static u8 calcTailVtx1Vtx2( const TMSGWIN*	win,
 		}
 		break;
 	case TALKWIN_SETPAT_FIX_U:
-		ey1 = py + sy - 1;
-		ey2 = py + sy - 1;
-		if(targetScrx < 128){
-			ex1 = px + (TWIN_FIX_TAIL_X+1)*8;	//位置情報+枠
-			ex2 = ex1 + 16;
-			tailPat = TAIL_SETPAT_FIX_DL;
-		} else {
-			ex2 = px + sx - (TWIN_FIX_TAIL_X+1)*8;	//位置情報+枠
-			ex1 = ex2 - 16;
-			tailPat = TAIL_SETPAT_FIX_DR;
+		{
+			int side;
+			ey1 = py + sy - 1;
+			ey2 = py + sy - 1;
+
+			if(win->tailData.tailPat == TAIL_SETPAT_NONE){
+				if(targetScrx < 128){
+					side = 0;
+					tailPat = TAIL_SETPAT_FIX_DL;
+				} else {
+					side = 1;
+					tailPat = TAIL_SETPAT_FIX_DR;
+				}
+			} else {
+				if(win->tailData.tailPat == TAIL_SETPAT_FIX_DL){
+					side = 0;
+					tailPat = TAIL_SETPAT_FIX_DL;
+				} else {
+					side = 1;
+					tailPat = TAIL_SETPAT_FIX_DR;
+				}
+			}
+			getFixWinVtxPosX(px, sx, side, &ex1, &ex2);
 		}
 		break;
 	case TALKWIN_SETPAT_FIX_D:
-		ey1 = py + 1;
-		ey2 = py + 1;
-		if(targetScrx < 128){
-			ex1 = px + (TWIN_FIX_TAIL_X+1)*8;	//位置情報+枠
-			ex2 = ex1 + 16;
-			tailPat = TAIL_SETPAT_FIX_UL;
-		} else {
-			ex2 = px + sx - (TWIN_FIX_TAIL_X+1)*8;	//位置情報+枠
-			ex1 = ex2 - 16;
-			tailPat = TAIL_SETPAT_FIX_UR;
+		{
+			int side;
+			ey1 = py + 1;
+			ey2 = py + 1;
+
+			if(win->tailData.tailPat == TAIL_SETPAT_NONE){
+				if(targetScrx < 128){
+					side = 0;
+					tailPat = TAIL_SETPAT_FIX_UL;
+				} else {
+					side = 1;
+					tailPat = TAIL_SETPAT_FIX_UR;
+				}
+			} else {
+				if(win->tailData.tailPat == TAIL_SETPAT_FIX_UL){
+					side = 0;
+					tailPat = TAIL_SETPAT_FIX_UL;
+				} else {
+					side = 1;
+					tailPat = TAIL_SETPAT_FIX_UR;
+				}
+			}
+			getFixWinVtxPosX(px, sx, side, &ex1, &ex2);
 		}
 		break;
 	}
