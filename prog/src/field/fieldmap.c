@@ -63,6 +63,9 @@
 #include "message.naix" //NARC_message_d_field_dat
 #include "msg/msg_d_field.h"  //DEBUG_FIELD_STR00 DEBUG_FIELD_C_STR10
 
+#include "system/talkmsgwin.h"  //TALKMSGWIN_～
+#include "font/font.naix"       //NARC_font_large_nftr
+
 //======================================================================
 //	define
 //======================================================================
@@ -180,6 +183,9 @@ struct _FIELDMAP_WORK
 	FLDMAPPER_RESISTDATA map_res;
 	FIELD_PLAYER *field_player;
 	
+  TALKMSGWIN_SYS * talkmsgwin_sys;
+  GFL_FONT * fontHandle;
+
 	GFL_G3D_CAMERA *g3Dcamera; //g3Dcamera Lib ハンドル
 	GFL_G3D_LIGHTSET *g3Dlightset; //g3Dlight Lib ハンドル
 	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
@@ -406,8 +412,34 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
+  { //TALKMSGWIN(BG/3Dを使った吹き出し表示システム）の初期化
+    TALKMSGWIN_SYS_SETUP setup =
+    {
+      0,//fieldWork->heapID,
+      NULL,//fieldWork->g3Dcamera,
+      NULL,//FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG),
+
+      {
+        GFL_BG_FRAME1_M,    //使用するフレームの指定
+        13,                 //使用するウィンドウ用パレット
+        14,                 //使用するフォント用パレット
+      },
+    };
+    setup.heapID = fieldWork->heapID;
+    setup.g3Dcamera = fieldWork->g3Dcamera;
+    setup.fontHandle = fieldWork->fontHandle;
+
+    //TALKMSGWIN用FONT生成
+		fieldWork->fontHandle = GFL_FONT_Create(
+			ARCID_FONT, NARC_font_large_nftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, fieldWork->heapID );
+
+    fieldWork->talkmsgwin_sys = TALKMSGWIN_SystemCreate(&setup);
+  }
+  //↑↓後で呼び出したほうがキャラとかフォントを上書きしている
   fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID );
   
+
   fieldWork->camera_control = FIELD_CAMERA_Create(
       fieldWork,
       ZONEDATA_GetCameraID(fieldWork->map_id),
@@ -508,6 +540,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
 
   FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+  TALKMSGWIN_SystemDraw2D( fieldWork->talkmsgwin_sys);
   FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
   
   if( fieldWork->fldMMdlSys != NULL ){
@@ -560,6 +593,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
 
 	fldmap_G3D_Control( fieldWork );
+	FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+  TALKMSGWIN_SystemDraw2D( fieldWork->talkmsgwin_sys );
 
   if( fieldWork->fldMMdlSys != NULL ){
     FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
@@ -624,6 +659,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   FLDMAPPER_ReleaseData( fieldWork->g3Dmapper );
   
+  TALKMSGWIN_SystemDelete( fieldWork->talkmsgwin_sys );
+  GFL_FONT_Delete( fieldWork->fontHandle ); //TALKMSGWIN用FONT破棄
+
   FLDMSGBG_Delete( fieldWork->fldMsgBG );
   
   FIELD_DEBUG_Delete( fieldWork->debugWork );
@@ -1151,8 +1189,6 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 		time %= 24*3600;
 		FIELD_LIGHT_Main( fieldWork->light, time );
 	}
-	
-	FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 }
 
 //--------------------------------------------------------------
@@ -1170,6 +1206,8 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 	GFL_BBDACT_Draw(
 			fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
 	FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
+  /* 会話ウィンドウ吹き出し.この関数呼び出しはここに配置される必要がある */
+  TALKMSGWIN_SystemDraw3D( fieldWork->talkmsgwin_sys );
 	
 	GFL_G3D_DRAW_End(); //描画終了（バッファスワップ）
 }
