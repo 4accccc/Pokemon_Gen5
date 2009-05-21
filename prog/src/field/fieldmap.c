@@ -540,6 +540,8 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 	GFL_CLACT_SYS_Main(); // CLSYSƒƒCƒ“
 
   FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+
+  TALKMSGWIN_SystemMain( fieldWork->talkmsgwin_sys);
   TALKMSGWIN_SystemDraw2D( fieldWork->talkmsgwin_sys);
   FIELD_DEBUG_UpdateProc( fieldWork->debugWork );
   
