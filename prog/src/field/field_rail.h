@@ -170,6 +170,7 @@ extern void FIELD_RAIL_MAN_GetDirection(const FIELD_RAIL_MAN * man, VecFx32 * di
 //  LINEà⁄ìÆä÷êî
 //------------------------------------------------------------------
 extern void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+extern void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_MAN * man, VecFx32 * pos);
 
 extern const RAIL_LINEPOS_SET RAIL_LINEPOS_SET_Default;
 extern const RAIL_CAMERA_SET RAIL_CAMERA_SET_Default;

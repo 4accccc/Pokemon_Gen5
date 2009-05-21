@@ -456,6 +456,7 @@ static BOOL checkPoint(const RAIL_POINT * point)
   return TRUE;
 }
 
+
 //------------------------------------------------------------------
 /**
  * @brief
@@ -489,6 +490,79 @@ static RAIL_KEY getReverseKey(RAIL_KEY key)
 
 //============================================================================================
 //
+//    座標演算関連
+//
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void getVectorFromAngleValue(VecFx32 * vec, u16 yaw, u16 pitch, fx32 len)
+{
+  enum {  PITCH_LIMIT = 0x200 };
+  VecFx32 cameraPos;
+
+	fx16 sinYaw = FX_SinIdx(yaw);
+	fx16 cosYaw = FX_CosIdx(yaw);
+	fx16 sinPitch = FX_SinIdx(pitch);
+	fx16 cosPitch = FX_CosIdx(pitch);
+
+  // 裏周りするとカメラ上位置も変更する必要がある！！
+  // 裏まわりしないようにマイナス値はプラス値に補正
+	if(cosPitch < 0){ cosPitch = -cosPitch; }
+  // 0値近辺は不正表示になるため補正
+	if(cosPitch < PITCH_LIMIT){ cosPitch = PITCH_LIMIT; }
+
+	VEC_Set( &cameraPos, FX_Mul(sinYaw, cosPitch), sinPitch, FX_Mul(cosYaw, cosPitch) );
+	VEC_Normalize(&cameraPos, &cameraPos);
+  {
+    const VecFx32 zeroVec = {0, 0, 0};
+    VEC_MultAdd(len, &cameraPos, &zeroVec, &cameraPos);
+  }
+  *vec = cameraPos;
+}
+
+#if 0
+static void getAngleFromVector(const VecFx32 * vec, u16 * yaw, u16 * pitch, fx32 * len)
+{
+  *len = VEC_Mag(vec);
+}
+#endif
+
+//------------------------------------------------------------------
+/**
+ * @brief ベクトルとベクトルの間の線形補完をおこなう
+ *
+ * @param out     生成したベクトル
+ * @param start   開始ベクトル
+ * @param end     終了ベクトル
+ * @param t       0～FX32_ONE
+ */
+//------------------------------------------------------------------
+static void getInternalVector(VecFx32 * out, const VecFx32 * start, const VecFx32 * end, fx32 t)
+{
+  VecFx32 s, e;
+  fx32 angle;   //-1～1
+  u16 sinTheta; //radian index
+  u16 Ps, Pe;   //radian index
+
+  VEC_Normalize( start, &s );
+  VEC_Normalize( end, &e );
+  angle = FX_AcosIdx( VEC_DotProduct( &s, &e ) );
+  sinTheta = FX_SinIdx( angle );
+  Ps = FX_SinIdx( FX_Mul(angle, FX32_ONE - t) );
+  Pe = FX_SinIdx( FX_Mul(angle, t) );
+
+  // out = ( Ps * s + Pe * e ) / sinTheta
+  GFL_CALC3D_VEC_MulScalar(&s, FX32_ONE * Ps / sinTheta, &s);
+  GFL_CALC3D_VEC_MulScalar(&e, FX32_ONE * Pe / sinTheta, &e);
+  //GFL_CALC3D_VEC_MulScalar(&s, FX32_ONE * Ps / 0x10000, &s);
+  //GFL_CALC3D_VEC_MulScalar(&e, FX32_ONE * Pe / 0x10000, &e);
+  VEC_Add(&s, &e, out);
+  //GFL_CALC3D_VEC_DivScalar(out, FX32_ONE * sinTheta / 0x10000, out);
+
+  VEC_Normalize(out, out);
+}
+//============================================================================================
+//
 //
 //
 //    レール表現を実現するためのツール
@@ -497,6 +571,14 @@ static RAIL_KEY getReverseKey(RAIL_KEY key)
 //
 //============================================================================================
 
+static void putVector(const VecFx32 * vec)
+{
+  OS_Printf("x = %d, y = %d, z = %d\n", FX_Whole(vec->x), FX_Whole(vec->y), FX_Whole(vec->z));
+}
+static void putVecHex(const VecFx32 * vec)
+{
+  OS_Printf("x:%08x, y:%08x, z:%08x\n", (vec->x), (vec->y), (vec->z));
+}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_MAN * man, VecFx32 * pos)
@@ -511,6 +593,62 @@ void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_MAN * man, VecFx32 * pos)
     VEC_Subtract(p1, p0, &val);
     VEC_MultAdd(ofs, &val, p0, pos);
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_MAN * man, VecFx32 * pos)
+{
+  const RAIL_LINE * nLine = man->nowRail.line;
+  const VecFx32 * p_s = &nLine->point_s->pos;
+  const VecFx32 * p_e = &nLine->point_e->pos;
+  VecFx32 center, vec_s, vec_e, vec_i;
+  fx32 ofs = (man->line_ofs * FX32_ONE) / nLine->line_divider;
+
+  center.x = nLine->line_pos_set->param0;
+  center.y = nLine->line_pos_set->param1;
+  center.z = nLine->line_pos_set->param2;
+
+  VEC_Subtract(p_s, &center, &vec_s);
+  VEC_Subtract(p_e, &center, &vec_e);
+  
+  getInternalVector(&vec_i, &vec_s, &vec_e, ofs);
+  {
+    fx32 l_s, l_e, l_i;
+    l_s = VEC_Mag(&vec_s);
+    l_e = VEC_Mag(&vec_e);
+    l_i = l_s + FX_Mul((l_e - l_s) , ofs);
+    VEC_MultAdd(l_i, &vec_i, &center, pos);
+  }
+  //VEC_Add(&center, &vec_i, pos);
+  if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
+  {
+    //VecFx32 s,e;
+    //fx32 angle;
+    //VEC_Normalize( &vec_s, &s );
+    //VEC_Normalize( &vec_e, &e );
+    //angle = FX_AcosIdx( VEC_DotProduct( &s, &e ) );
+    //OS_Printf("Deglee: %08x\n",angle);
+    OS_Printf("Center:");
+    putVector(&center);
+    OS_Printf("start: ");
+    putVector(p_s);
+    OS_Printf("end:   ");
+    putVector(p_e);
+    OS_Printf("v_s:   ");
+    putVector(&vec_s);
+    OS_Printf("v_s:len=%08x\n",VEC_Mag(&vec_s));
+    OS_Printf("v_e:   ");
+    putVector(&vec_e);
+    OS_Printf("v_e:len=%08x\n",VEC_Mag(&vec_e));
+    OS_Printf("v_i:   ");
+    putVector(&vec_i);
+    putVecHex(&vec_i);
+    OS_Printf("v_i:len=%08x\n",VEC_Mag(&vec_i));
+    OS_Printf("pos:   ");
+    putVector(pos);
+  }
+}
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -533,6 +671,40 @@ const RAIL_LINEPOS_SET RAIL_LINEPOS_SET_Default =
   0,
   0,
 };
+
+//============================================================================================
+//
+//
+//      カメラ指定のためのツール
+//
+//
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void calcAngleCamera(FIELD_CAMERA * field_camera)
+{
+  {
+    VecFx32 camPos, target, before;
+    u16 yaw = FIELD_CAMERA_GetAngleYaw(field_camera);
+    u16 pitch = FIELD_CAMERA_GetAnglePitch(field_camera);
+    fx32 len = FIELD_CAMERA_GetAngleLen(field_camera);
+
+    FIELD_CAMERA_GetCameraPos(field_camera, &before);
+
+    FIELD_CAMERA_GetTargetPos(field_camera, &target);
+    getVectorFromAngleValue(&camPos, yaw, pitch, len);
+    VEC_Add(&camPos, &target, &camPos);
+    FIELD_CAMERA_SetCameraPos(field_camera, &camPos);
+
+    if (before.x != camPos.x || before.y != camPos.y || before.z != camPos.z)
+    {
+      TAMADA_Printf("rail cam(%08x %08x %08x)\n",camPos.x, camPos.y, camPos.z);
+      TAMADA_Printf("org cam (%08x %08x %08x)\n",before.x, before.y, before.z);
+      TAMADA_Printf("tgt(%08x %08x %08x)\n",target.x, target.y, target.z);
+      TAMADA_Printf("yaw:%04x pitch:%04x len:%08x\n",yaw, pitch, len);
+    }
+  }
+}
 
 //------------------------------------------------------------------
 /**
@@ -564,6 +736,8 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
   FIELD_CAMERA_SetAnglePitch(cam, (u16)cam_set->param0);
   FIELD_CAMERA_SetAngleYaw(cam, (u16)cam_set->param1);
   FIELD_CAMERA_SetAngleLen(cam, (fx32)cam_set->param2);
+
+  calcAngleCamera(man->field_camera);
 }
 
 //------------------------------------------------------------------
@@ -573,25 +747,51 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
 //------------------------------------------------------------------
 void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
 {
-  const RAIL_CAMERA_SET * c0;
-  const RAIL_CAMERA_SET * c1;
+  VecFx32 before;
+  VecFx32 c_s, c_e, c_now, target;
+
+  const RAIL_CAMERA_SET * cs;
+  const RAIL_CAMERA_SET * ce;
   GF_ASSERT(man->nowRail.type == FIELD_RAIL_TYPE_LINE);
 
-  c0 = man->nowRail.line->point_s->camera_set;
-  GF_ASSERT(c0->func == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
-  c1 = man->nowRail.line->point_e->camera_set;
-  GF_ASSERT(c1->func == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
+  cs = man->nowRail.line->point_s->camera_set;
+  GF_ASSERT(cs->func == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
+  ce = man->nowRail.line->point_e->camera_set;
+  GF_ASSERT(ce->func == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
+
+  FIELD_CAMERA_GetCameraPos(man->field_camera, &before);
+#if 1
   {
     u32 div = man->nowRail.line->line_divider;
-    u16 pitch = c0->param0 + ( ((int)c1->param0 - (int)c0->param0) * man->line_ofs / div );
-    /** TODO yawは足し算ではバグる！！！ */
-    u16 yaw = c0->param1 + ( ((int)c1->param1 - (int)c0->param1) * man->line_ofs / div );
-    fx32 len = c0->param2 + ( (c1->param2 - c0->param2) * man->line_ofs / div );
-    FIELD_CAMERA * cam = man->field_camera;
-    FIELD_CAMERA_SetAnglePitch(cam, pitch);
-    FIELD_CAMERA_SetAngleYaw(cam, yaw);
-    FIELD_CAMERA_SetAngleLen(cam, len);
+    fx32 t = FX32_ONE * man->line_ofs / div;
+    fx32 len = cs->param2 + ( (ce->param2 - cs->param2) * man->line_ofs / div );
+    getVectorFromAngleValue(&c_s, cs->param1, cs->param0, cs->param2);
+    getVectorFromAngleValue(&c_e, ce->param1, ce->param0, ce->param2);
+    getInternalVector(&c_now, &c_s, &c_e, t);
+    {
+      const VecFx32 zeroVec = {0, 0, 0};
+      VEC_MultAdd(len, &c_now, &zeroVec, &c_now);
+    }
+    FIELD_CAMERA_GetTargetPos(man->field_camera, &target);
+    VEC_Add(&c_now, &target, &c_now);
+    FIELD_CAMERA_SetCameraPos(man->field_camera, &c_now);
   }
+#else
+  {
+    u32 div = man->nowRail.line->line_divider;
+    u16 pitch = cs->param0 + ( ((int)ce->param0 - (int)cs->param0) * man->line_ofs / div );
+    /** TODO yawは足し算ではバグる！！！ */
+    u16 yaw = cs->param1 + ( ((int)ce->param1 - (int)cs->param1) * man->line_ofs / div );
+    fx32 len = cs->param2 + ( (ce->param2 - cs->param2) * man->line_ofs / div );
+
+    FIELD_CAMERA_SetAnglePitch(man->field_camera, pitch);
+    FIELD_CAMERA_SetAngleYaw(man->field_camera, yaw);
+    FIELD_CAMERA_SetAngleLen(man->field_camera, len);
+
+
+    calcAngleCamera(man->field_camera);
+  }
+#endif
 }
 
 

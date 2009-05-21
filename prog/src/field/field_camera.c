@@ -360,6 +360,17 @@ static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont)
   updateG3Dcamera(camera);
 }
 
+void FIELD_CAMERA_BindNoCamera(FIELD_CAMERA * camera, BOOL flag)
+{
+  if (flag)
+  {
+    camera->watch_camera = &camera->camPos;
+  }
+  else
+  {
+    camera->watch_camera = NULL;
+  }
+}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)

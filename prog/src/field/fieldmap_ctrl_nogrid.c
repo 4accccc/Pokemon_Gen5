@@ -28,10 +28,21 @@ static FIELD_RAIL_MAN * railMan;
 
 static const RAIL_POINT point_bridge1;
 static const RAIL_POINT point_start;
+static const RAIL_POINT point_d02_loop_01;
+static const RAIL_POINT point_d02_start_00;
+
 static const RAIL_CAMERA_SET camera_point_start;
 static const RAIL_CAMERA_SET camera_point_slope;
 static const RAIL_CAMERA_SET camera_changeAngle;
 static const RAIL_CAMERA_SET camera_point_loop_up;
+static const RAIL_CAMERA_SET camera_point_d02_start_00;
+static const RAIL_CAMERA_SET camera_point_d02_start_01;
+static const RAIL_CAMERA_SET camera_point_d02_start_02;
+static const RAIL_CAMERA_SET camera_point_d02_loop_01;
+static const RAIL_CAMERA_SET camera_point_d02_loop_02;
+static const RAIL_CAMERA_SET camera_point_d02_loop_03;
+
+static const RAIL_LINEPOS_SET LoopLinePosSet;
 
 //======================================================================
 //	proto
@@ -70,8 +81,10 @@ static void mapCtrlNoGrid_Create(
   FIELD_CAMERA * camera = FIELDMAP_GetFieldCamera(fieldWork);
 
   railMan = FIELD_RAIL_MAN_Create( FIELDMAP_GetHeapID(fieldWork), camera );
-  FIELD_RAIL_MAN_Load(railMan, &point_start);
+  FIELD_RAIL_MAN_Load(railMan, &point_d02_start_00);
+  //FIELD_RAIL_MAN_Load(railMan, &point_start);
   FIELD_RAIL_MAN_GetPos(railMan, pos );
+  FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), TRUE);
 
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	FIELD_PLAYER_SetPos( fld_player, pos );
@@ -111,6 +124,16 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   if (key_trg & PAD_BUTTON_L)
   {
     FIELD_RAIL_MAN_SetActiveFlag(railMan, !rail_flag);
+    if (!rail_flag)
+    {
+      FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), TRUE);
+  //    FIELD_CAMERA_SetCameraType(FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_TYPE_H01);
+    }
+    else
+    {
+      FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), FALSE);
+   //   FIELD_CAMERA_SetCameraType(FIELDMAP_GetFieldCamera(fieldWork), FIELD_CAMERA_TYPE_NOUSE);
+    }
   }
 
 	FIELD_PLAYER_NOGRID_Move( fld_player, key_cont );
@@ -139,6 +162,13 @@ static const RAIL_LINE line_slope_start;
 static const RAIL_LINE line_bridge_start;
 static const RAIL_LINE line_bridge_long;
 
+static const RAIL_LINE line_d02_bridge_start;
+
+static const RAIL_LINE line_d02_start_00;
+static const RAIL_LINE line_d02_start_01;
+static const RAIL_LINE line_d02_loop_01;
+static const RAIL_LINE line_d02_loop_02;
+static const RAIL_LINE line_d02_loop_03;
 //======================================================================
 //
 //    POINT定義
@@ -239,7 +269,7 @@ static const RAIL_POINT point_bridge2 =
   //const RAIL_CAMERA_SET * camera;
   &camera_point_slope,
   //const char * name;
-  "point_start",
+  "point_bridge2",
 };
 
 //--------------------------------------------------------------
@@ -250,22 +280,253 @@ static const RAIL_POINT point_bridge_loop_top =
 {
   //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   {
-    &line_bridge_long, NULL, NULL, NULL,
+    &line_d02_bridge_start, &line_bridge_long, NULL, NULL, 
   },
   //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
   {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+    RAIL_KEY_DOWN, RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL,
   },
   //VecFx32 pos;
   {
     0x002c03f4, 0x000f4951, 0x008122c4,
   },
   //const RAIL_CAMERA_SET * camera;
-  &camera_point_loop_up,
+  &camera_point_d02_loop_03,
+  //&camera_point_loop_up,
   //const char * name;
-  "point_start",
+  "point_bridge_loop_top",
 };
 
+
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_POINT point_d02_loop_03 =
+{
+  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+  {
+    &line_d02_loop_03, &line_d02_bridge_start, NULL, NULL,
+  },
+  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+  {
+    RAIL_KEY_DOWN, RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL,
+  },
+  //VecFx32 pos;
+  {
+    0x002bf7fa, 0x000cf96f, 0x008d2807,
+  },
+  //const RAIL_CAMERA_SET * camera;
+  &camera_point_d02_loop_03,
+  //const char * name;
+  "point_d02_loop_03",
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_POINT point_d02_loop_02 =
+{
+  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+  {
+    &line_d02_loop_02, &line_d02_loop_03, NULL, NULL,
+  },
+  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+  {
+    RAIL_KEY_DOWN, RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL,
+  },
+  //VecFx32 pos;
+  {
+    0x0032b422, 0x000b106b, 0x0093ec33,
+  },
+  //const RAIL_CAMERA_SET * camera;
+  &camera_point_d02_loop_02,
+  //const char * name;
+  "point_d02_loop_02",
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_POINT point_d02_loop_01 =
+{
+  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+  {
+    &line_d02_loop_01, &line_d02_loop_02, NULL, NULL,
+  },
+  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+  {
+    RAIL_KEY_DOWN, RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL,
+  },
+  //VecFx32 pos;
+  {
+    0x00392cb0, 0x00085f20, 0x0089a7e7,
+    //0x003a4c22, 0x0008f5cb, 0x008cc224,
+  },
+  //const RAIL_CAMERA_SET * camera;
+  &camera_point_d02_loop_01,
+  //const char * name;
+  "point_d02_loop_01",
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_POINT point_d02_start_02 =
+{
+  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+  {
+    &line_d02_start_01, &line_d02_loop_01, NULL, NULL,
+  },
+  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+  {
+    RAIL_KEY_DOWN, RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL,
+  },
+  //VecFx32 pos;
+  {
+    0x0031ffcc, 0x0006f167, 0x0085f618,
+  },
+  //const RAIL_CAMERA_SET * camera;
+  &camera_point_d02_start_02,
+  //const char * name;
+  "point_d02_start_02",
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_POINT point_d02_start_01 =
+{
+  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+  {
+    &line_d02_start_00, &line_d02_start_01, NULL, NULL,
+  },
+  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+  {
+    RAIL_KEY_DOWN, RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL,
+  },
+  //VecFx32 pos;
+  {
+    0x0029bf6c, 0x00063f53, 0x0085f618,
+  },
+  //const RAIL_CAMERA_SET * camera;
+  &camera_point_d02_start_01,
+  //const char * name;
+  "point_d02_start_01",
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_POINT point_d02_start_00 =
+{
+  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
+  {
+    &line_d02_start_00, NULL, NULL, NULL,
+  },
+  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
+  {
+    RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+  },
+  //VecFx32 pos;
+  {
+    0x0022f76c, 0x00008000, 0x0085f618,
+  },
+  //const RAIL_CAMERA_SET * camera;
+  &camera_point_d02_start_00,
+  //const char * name;
+  "point_d02_start_02",
+};
+
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_LINE line_d02_loop_03 =
+{
+  //const RAIL_POINT * point_s
+  //const RAIL_POINT * point_e
+   &point_d02_loop_02, &point_d02_loop_03,
+  //RAIL_KEY key;
+  RAIL_KEY_UP,
+  //const RAIL_LINEPOS_SET * line_pos_set;
+  &LoopLinePosSet, //&RAIL_LINEPOS_SET_Default,
+  //u32 line_divider;
+  50,
+  //const RAIL_CAMERA_SET * camera;
+  &camera_changeAngle,
+  //const char * name;
+  "line_d02_loop_03",
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_LINE line_d02_loop_02 =
+{
+  //const RAIL_POINT * point_s
+  //const RAIL_POINT * point_e
+   &point_d02_loop_01, &point_d02_loop_02,
+  //RAIL_KEY key;
+  RAIL_KEY_UP,
+  //const RAIL_LINEPOS_SET * line_pos_set;
+  &LoopLinePosSet, //&RAIL_LINEPOS_SET_Default,
+  //u32 line_divider;
+  50,
+  //const RAIL_CAMERA_SET * camera;
+  &camera_changeAngle,
+  //const char * name;
+  "line_d02_loop_02",
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_LINE line_d02_loop_01 =
+{
+  //const RAIL_POINT * point_s
+  //const RAIL_POINT * point_e
+   &point_d02_start_02, &point_d02_loop_01,
+  //RAIL_KEY key;
+  RAIL_KEY_UP,
+  //const RAIL_LINEPOS_SET * line_pos_set;
+  &LoopLinePosSet, //&RAIL_LINEPOS_SET_Default,
+  //u32 line_divider;
+  50,
+  //const RAIL_CAMERA_SET * camera;
+  &camera_changeAngle,
+  //const char * name;
+  "line_d02_loop_01",
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_LINE line_d02_start_01 =
+{
+  //const RAIL_POINT * point_s
+  //const RAIL_POINT * point_e
+   &point_d02_start_01, &point_d02_start_02,
+  //RAIL_KEY key;
+  RAIL_KEY_UP,
+  //const RAIL_LINEPOS_SET * line_pos_set;
+  &RAIL_LINEPOS_SET_Default,
+  //u32 line_divider;
+  50,
+  //const RAIL_CAMERA_SET * camera;
+  &camera_changeAngle,
+  //const char * name;
+  "line_d02_start_01",
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_LINE line_d02_start_00 =
+{
+  //const RAIL_POINT * point_s
+  //const RAIL_POINT * point_e
+   &point_d02_start_00, &point_d02_start_01,
+  //RAIL_KEY key;
+  RAIL_KEY_UP,
+  //const RAIL_LINEPOS_SET * line_pos_set;
+  &RAIL_LINEPOS_SET_Default,
+  //u32 line_divider;
+  50,
+  //const RAIL_CAMERA_SET * camera;
+  &camera_changeAngle,
+  //const char * name;
+  "line_d02_start_00",
+};
 
 //======================================================================
 //
@@ -286,7 +547,7 @@ static const RAIL_LINE line_slope_up =
   //u32 line_divider;
   50,
   //const RAIL_CAMERA_SET * camera;
-  NULL,
+  &camera_changeAngle,
   //const char * name;
   "line_slope_up",
 };
@@ -324,7 +585,7 @@ static const RAIL_LINE line_bridge_start =
   //u32 line_divider;
   50,
   //const RAIL_CAMERA_SET * camera;
-  NULL,
+  &camera_changeAngle,
   //const char * name;
   "line_bridge_start",
 };
@@ -335,7 +596,7 @@ static const RAIL_LINE line_bridge_long =
 {
   //const RAIL_POINT * point_s
   //const RAIL_POINT * point_e
-  &point_bridge2, &point_bridge_loop_top,
+  &point_bridge_loop_top, &point_bridge2,
   //RAIL_KEY key;
   RAIL_KEY_UP,
   //const RAIL_LINEPOS_SET * line_pos_set;
@@ -348,11 +609,59 @@ static const RAIL_LINE line_bridge_long =
   "line_bridge_long",
 };
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_LINE line_d02_bridge_start =
+{
+  //const RAIL_POINT * point_s
+  //const RAIL_POINT * point_e
+  &point_d02_loop_03, &point_bridge_loop_top,
+  //RAIL_KEY key;
+  RAIL_KEY_UP,
+  //const RAIL_LINEPOS_SET * line_pos_set;
+  &RAIL_LINEPOS_SET_Default,
+  //u32 line_divider;
+  100,
+  //const RAIL_CAMERA_SET * camera;
+  &camera_changeAngle,
+  //const char * name;
+  "line_d02_bridge_start",
+};
+
 //======================================================================
 //
 //    RAIL_CAMERA_SET定義
 //
 //======================================================================
+static const RAIL_LINEPOS_SET LoopLinePosSet =
+{
+  FIELD_RAIL_POSFUNC_CurveLine,
+  0x00329c22,
+  0x0008f5cb,
+  0x008cc224,
+  0,
+};
+static const VecFx32 loopCenter =
+{
+  0x00329c22,
+  0x0008f5cb,
+  0x008cc224,
+};
+
+//--------------------------------------------------------------
+/**
+ * @brief LINE用カメラ設定：両端POINTの線形補完
+ */
+//--------------------------------------------------------------
+static const RAIL_CAMERA_SET camera_changeAngle =
+{
+  FIELD_RAIL_CAMERAFUNC_OfsAngleCamera,
+  0,    //no parameter
+  0,
+  0,
+  0,
+};
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static const RAIL_CAMERA_SET camera_point_start =
@@ -370,7 +679,7 @@ static const RAIL_CAMERA_SET camera_point_slope =
 {
   FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
   0x0fa8, //angle:pitch = angle h
-  0x8000, //angle:yaw = angle v
+  0x0000, //angle:yaw = angle v
   0x0120 * FX32_ONE,  //angle:len
   0,
 };
@@ -388,14 +697,70 @@ static const RAIL_CAMERA_SET camera_point_loop_up =
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static const RAIL_CAMERA_SET camera_changeAngle =
+static const RAIL_CAMERA_SET camera_point_d02_start_00 =
 {
-  FIELD_RAIL_CAMERAFUNC_OfsAngleCamera,
-  0,    //no parameter
-  0,
-  0,
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
+  0x1e00, //angle:pitch = angle h
+  0xc000, //angle:yaw = angle v
+  0x0058 * FX32_ONE,  //angle:len
   0,
 };
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_CAMERA_SET camera_point_d02_start_01 =
+{
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
+  0x1200, //angle:pitch = angle h
+  0xc000, //angle:yaw = angle v
+  0x0090 * FX32_ONE,  //angle:len
+  0,
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_CAMERA_SET camera_point_d02_start_02 =
+{
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
+  0x1200, //angle:pitch = angle h
+  0xc000, //angle:yaw = angle v
+  0x0090 * FX32_ONE,  //angle:len
+  0,
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_CAMERA_SET camera_point_d02_loop_01 =
+{
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
+  0x0800, //angle:pitch = angle h
+  0x8600, //angle:yaw = angle v
+  0x00f8 * FX32_ONE,  //angle:len
+  0,
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_CAMERA_SET camera_point_d02_loop_02 =
+{
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
+  0x0800, //angle:pitch = angle h
+  0x3c00, //angle:yaw = angle v
+  0x00f8 * FX32_ONE,  //angle:len
+  0,
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_CAMERA_SET camera_point_d02_loop_03 =
+{
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
+  0x0800, //angle:pitch = angle h
+  0x0000, //angle:yaw = angle v
+  0x00f8 * FX32_ONE,  //angle:len
+  0,
+};
+
 
 
 

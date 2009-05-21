@@ -124,6 +124,7 @@ extern void FIELD_CAMERA_FreeTarget(FIELD_CAMERA * camera);
 //------------------------------------------------------------------
 extern void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target);
 
+extern void FIELD_CAMERA_BindNoCamera(FIELD_CAMERA * camera, BOOL flag);
 
 #ifdef  PM_DEBUG
 //------------------------------------------------------------------
