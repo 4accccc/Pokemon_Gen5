@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-05-18T19:17:03"/>
+	<create user="matsumiya" host="W00179" date="2009-05-21T15:00:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="186"/>
+		<id position="0" width="149"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="217" right="711" bottom="837" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,10 +292,30 @@
 	</lock>
 
 
-	<row id="msg_t01r0401_test">
-		<attribute name="キャラ指定">不明</attribute>
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+	<row id="msg_t01r0401_doctor01_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">博士（子）</attribute>
+		<language name="JPN" width="256">アララギ『おっ！[BE:01:ページ切り替え（クリア）]
+どの　ポケモンを　えらんだんだい？
+ぼくの　よそうでは……</language>
+		<language name="JPN_KANJI" width="256">アララギ『おっ！[BE:01:ページ切り替え（クリア）]
+どの　ポケモンを　選んだんだい？
+ぼくの　予想では……</language>
+	</row>
+
+	<row id="msg_t01r0401_photo_01">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">写真たて</attribute>
+		<language name="JPN" width="256">アララギはかせ</language>
+		<language name="JPN_KANJI" width="256">アララギはかせ</language>
+	</row>
+
+	<row id="msg_t01r0401_photo_02">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">写真たて</attribute>
+		<language name="JPN" width="256">アララギはかせ</language>
+		<language name="JPN_KANJI" width="256">父と　子……
+二人の　アララギ博士が　写っている</language>
 	</row>
 
 	<flowchart-group-list>
