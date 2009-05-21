@@ -48,6 +48,7 @@ extern FLDMAPPER_GRIDINFODATA * FIELD_PLAYER_GetGridInfoData(
 //ÉcÅ[Éã
 extern void FIELD_PLAYER_GetFrontGridPos(
 		FIELD_PLAYER *fld_player, int *gx, int *gy, int *gz );
+extern BOOL FIELD_PLAYER_CheckLiveFldMMdl( FIELD_PLAYER *fld_player );
 
 //======================================================================
 //	è¡ÇµÇ‹Ç∑

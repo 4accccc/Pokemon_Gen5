@@ -262,6 +262,32 @@ void FIELD_PLAYER_GetFrontGridPos(
 	*gz += FLDMMDL_TOOL_GetDirAddValueGridZ( dir );
 }
 
+//--------------------------------------------------------------
+/**
+ * 動作モデルが生きているかチェック
+ * @param fld_player FIELD_PLAYER
+ * @retval BOOL TRUE=生存
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_CheckLiveFldMMdl( FIELD_PLAYER *fld_player )
+{
+  FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
+  
+  if( fmmdl == NULL ){
+    return( FALSE );
+  }
+   
+  if( FLDMMDL_CheckStatusBitUse(fmmdl) == FALSE ){
+    return( FALSE );
+  }
+  
+  if( FLDMMDL_GetOBJID(fmmdl) != FLDMMDL_ID_PLAYER ){
+    return( FALSE );
+  }
+  
+  return( TRUE );
+}
+
 //======================================================================
 //	data
 //======================================================================
