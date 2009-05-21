@@ -658,6 +658,16 @@ extern u32 GFL_UI_GetFrameRate( void );
 //-----------------------------------------------------------------------------
 extern void GFL_UI_ResetFrameRate( void );
 
+//----------------------------------------------------------------------------
+/**
+ * @brief	  フレームレートの開始
+ * @param	  GFL_UI_FRAMERATE_ENUM  定義のフレーム
+ * @retval	none
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_UI_StartFrameRateMode( const GFL_UI_FRAMERATE_ENUM framerate );
+
+
 #ifdef __cplusplus
 }/* extern "C" */
 #endif

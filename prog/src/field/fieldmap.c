@@ -405,6 +405,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 	fieldWork->g3dVintr =
 		GFUser_VIntr_CreateTCB( fldmap_G3D_VBlank, (void*)fieldWork, 0 );
 
+	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_30 );
 	
   return MAINSEQ_RESULT_NEXTSEQ;
 }
@@ -687,6 +688,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
+	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_60 );
 
 	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
 

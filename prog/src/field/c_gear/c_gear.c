@@ -25,6 +25,7 @@
 #include "c_gear_obj_NANR_LBLDEFS.h"
 
 #include "msg/msg_c_gear.h"
+#include "msg/msg_invasion.h"
 
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _BRIGHTNESS_SYNC (0)  // フェードのＳＹＮＣは要調整
@@ -176,14 +177,14 @@ struct _C_GEAR_WORK {
 	TouchFunc* touch;
 	int selectType;   // 接続タイプ
 	HEAPID heapID;
-	GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
+	GFL_BMPWIN* MyInfoWin; /// ウインドウ管理
 	GFL_BUTTON_MAN* pButton;
 	GFL_MSGDATA *pMsgData;  //
 	WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
-	GFL_FONT* pFontHandle;
 	STRBUF* pStrBuf;
 	u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
 	//    BMPWINFRAME_AREAMANAGER_POS aPos;
+	GFL_FONT* pFontHandle;
 	GFL_ARCUTIL_TRANSINFO subchar;
 	int windowNum;
 	BOOL IsIrc;
@@ -755,32 +756,6 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,C_GEAR_WORK* pWork)
  *	@param	p_work		ワーク
  */
 //-----------------------------------------------------------------------------
-
-static void _buttonWindowDelete(C_GEAR_WORK* pWork)
-{
-	int i;
-
-	GFL_BMN_Delete(pWork->pButton);
-	pWork->pButton = NULL;
-	for(i=0;i < pWork->windowNum;i++){
-		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
-		GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-		GFL_BMPWIN_Delete(pWork->buttonWin[i]);
-		pWork->buttonWin[i] = NULL;
-	}
-	pWork->windowNum = 0;
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	ボタンイベントコールバック
- *
- *	@param	bttnid		ボタンID
- *	@param	event		イベント種類
- *	@param	p_work		ワーク
- */
-//-----------------------------------------------------------------------------
 static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 {
 	C_GEAR_WORK *pWork = p_work;
@@ -931,6 +906,8 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
+#define _NUKI_FONT_PALNO  (13)
+
 static void _modeInit(C_GEAR_WORK* pWork)
 {
 	_createSubBg(pWork);   //BGVRAM設定
@@ -948,6 +925,21 @@ static void _modeInit(C_GEAR_WORK* pWork)
 	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
 //	pWork->touch = &_modeSelectMenuButtonCallback;
 
+
+
+  pWork->pWordSet    = WORDSET_Create( pWork->heapID );
+  pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_invasion_dat, pWork->heapID );
+  pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
+
+	
+	pWork->MyInfoWin = GFL_BMPWIN_Create(GEAR_BMPWIN_FRAME, 3, 0x15, 0x1a, 2,
+																			 _NUKI_FONT_PALNO,  GFL_BMP_CHRAREA_GET_B );
+
+	pWork->pStrBuf = GFL_STR_CreateBuffer( 128, pWork->heapID );
+
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+	
 	_CHANGE_STATE(pWork,_modeSelectMenuWait);
 
 }
@@ -982,10 +974,6 @@ static void _workEnd(C_GEAR_WORK* pWork)
 	GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
 	GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
 
-	//    _buttonWindowDelete(pWork);
-	//  GFL_BG_FillCharacterRelease( GEAR_MAIN_FRAME, 1, 0);
-	//  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
-	//                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
 
 	GFL_BG_FreeCharacterArea(GEAR_MAIN_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
 													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subchar));
@@ -994,6 +982,13 @@ static void _workEnd(C_GEAR_WORK* pWork)
 	GFL_BG_FreeBGControl(GEAR_BMPWIN_FRAME);
 	GFL_BG_FreeBGControl(GEAR_MAIN_FRAME);
 
+	if(pWork->MyInfoWin){
+		GFL_BMPWIN_Delete(pWork->MyInfoWin);
+	}
+
+	if(pWork->pWordSet){
+		WORDSET_Delete( pWork->pWordSet );
+	}
 	if(pWork->pMsgData)
 	{
 		GFL_MSG_Delete( pWork->pMsgData );
@@ -1138,16 +1133,50 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 
 
 #if 0
+	///インフォメーションメッセージ構造体(キューを取得する時、この構造体に変換して取得する)
+	typedef struct{
+		STRBUF *name[INFO_WORDSET_MAX];     ///<未使用の場合はNULLが入っています
+		u8 wordset_no[INFO_WORDSET_MAX];
+		u16 message_id;
+		u8 padding[2];
+	}GAME_COMM_INFO_MESSAGE;
+#endif
+
+
+	
+	
 //Cギアのメッセージ取得は
 	{
 		GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
 		GAME_COMM_INFO_MESSAGE infomsg;
-		if(GameCommInfo_GetMessage(pGC, GAME_COMM_INFO_MESSAGE *dest_msg))
+
+		GFL_STD_MemClear(&infomsg, sizeof(GAME_COMM_INFO_MESSAGE));
+		
+		if(GameCommInfo_GetMessage(pGC, &infomsg))
 		{
+			int k;
+			OS_TPrintf("infomsg->message_id %d \n",infomsg.message_id);
+
+			GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
+			GFL_MSG_GetString(  pWork->pMsgData, infomsg.message_id, pWork->pStrBuf );
+
+			for(k = 0 ; k < INFO_WORDSET_MAX; k++)
+			{
+				if(infomsg.name[k]!=NULL)
+				{
+					WORDSET_RegisterWord( pWork->pWordSet, infomsg.wordset_no[k], infomsg.name[k], PM_MALE,
+																TRUE, PM_LANG);
+				}
+			}
+			
+			PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 1, 0, pWork->pStrBuf, pWork->pFontHandle);
+			GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
+			GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
+			GFL_BG_LoadScreenReq(GEAR_BMPWIN_FRAME);
+
 		}
 	}
 
-#endif
 
 }
 
@@ -1176,6 +1205,8 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	//	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
 	_modeInit(pWork);
 
+
+	
 	//	_CHANGE_STATE( pWork, _modeInit);
 	return pWork;
 }
