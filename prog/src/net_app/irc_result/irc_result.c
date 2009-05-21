@@ -2,9 +2,9 @@
 /**
  *
  *	@file		irc_result_main.c
- *	@brief	赤外線ミニゲーム	リズムチェック
+ *	@brief	赤外線ミニゲーム	結果表示
  *	@author	Toru=Nagihashi
- *	@data		2009.05.11
+ *	@data		2009.05.19
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -26,8 +26,8 @@
 #include "arc_def.h"
 #include "font/font.naix"
 #include "message.naix"
-//#include "msg/msg_irc_result.h"
-//#include "ircresult_gra.naix"
+#include "msg/msg_irc_result.h"
+#include "ircresult_gra.naix"
 
 //	result
 #include "net_app/irc_result.h"
@@ -35,7 +35,7 @@
 #ifdef PM_DEBUG
 //debug用
 #include "system/net_err.h"	//VRAM退避用アドレスを貰うため
-#include <wchar.h>					//wcslen
+#include <wchar.h>					//wcslen,swprintf 
 #endif
 
 //=============================================================================
@@ -51,10 +51,11 @@
 //-------------------------------------
 ///	パレット
 //=====================================
-enum{	
+enum
+{	
 	// メイン画面BG
-	RESULT_BG_PAL_M_00 = 0,//背景用BG
-	RESULT_BG_PAL_M_01,		// 使用してない
+	RESULT_BG_PAL_M_00 = 0,// メモ用パレット256モードなのでパレット番号変更不可
+	RESULT_BG_PAL_M_01,		// 使用していない
 	RESULT_BG_PAL_M_02,		// 使用してない
 	RESULT_BG_PAL_M_03,		// 使用してない
 	RESULT_BG_PAL_M_04,		// 使用してない
@@ -67,12 +68,12 @@ enum{
 	RESULT_BG_PAL_M_11,		// 使用してない
 	RESULT_BG_PAL_M_12,		// 使用してない
 	RESULT_BG_PAL_M_13,		// 使用してない
-	RESULT_BG_PAL_M_14,		// 使用してない
+	RESULT_BG_PAL_M_14,		// フォント
 	RESULT_BG_PAL_M_15,		// INFOWIN
 
 
 	// サブ画面BG
-	RESULT_BG_PAL_S_00 = 0,	//フォント
+	RESULT_BG_PAL_S_00 = 0,	//font
 	RESULT_BG_PAL_S_01,		// 使用してない
 	RESULT_BG_PAL_S_02,		// 使用してない
 	RESULT_BG_PAL_S_03,		// 使用してない
@@ -86,7 +87,7 @@ enum{
 	RESULT_BG_PAL_S_11,		// 使用してない
 	RESULT_BG_PAL_S_12,		// 使用してない
 	RESULT_BG_PAL_S_13,		// 使用してない
-	RESULT_BG_PAL_S_14,		// 使用してない
+	RESULT_BG_PAL_S_14,		// フォント
 	RESULT_BG_PAL_S_15,		// 使用してない
 
 	// メイン画面OBJ
@@ -105,7 +106,7 @@ enum{
 	RESULT_OBJ_PAL_M_12,		// 使用してない
 	RESULT_OBJ_PAL_M_13,		// 使用してない
 	RESULT_OBJ_PAL_M_14,		// 使用してない
-	RESULT_OBJ_PAL_M_15,		// 使用してない
+	RESULT_OBJ_PAL_M_15,		// 通信アイコン
 
 
 	// サブ画面OBJ
@@ -136,26 +137,38 @@ enum{
 //-------------------------------------
 ///	文字
 //=====================================
-#define TEXTSTR_PLT_NO				(RESULT_BG_PAL_S_00)
+#define TEXTSTR_PLT_NO				(RESULT_BG_PAL_S_14)
 #define TEXTSTR_BUFFER_LENGTH	(255)
 
 //-------------------------------------
 ///	位置
 //=====================================
-#define	MSGTEXT_WND_X	(1)
-#define	MSGTEXT_WND_Y	(18)
-#define	MSGTEXT_WND_W	(30)
-#define	MSGTEXT_WND_H	(5)
+#define	MSGWND_MAIN_X	(8)
+#define	MSGWND_MAIN_Y	(3)
+#define	MSGWND_MAIN_W	(16)
+#define	MSGWND_MAIN_H	(14)
+
+#define	MSGWND_SUB_X	(4)
+#define	MSGWND_SUB_Y	(6)
+#define	MSGWND_SUB_W	(23)
+#define	MSGWND_SUB_H	(11)
 
 //-------------------------------------
-///	カウント
+///	数
 //=====================================
-#define TOUCHMARKER_VISIBLE_CNT	(10)
+#define CLWK_SMALL_HEART_MAX	(30)
+
+//-------------------------------------
+///	カウンタ
+//=====================================
+#define SEQFUNC_DECIDEHEART_WAIT	(60)
+#define HEART_SCALSE_WAIT	(180)
 
 //-------------------------------------
 ///		MSG_FONT
 //=====================================
-typedef enum {	
+typedef enum
+{	
 	MSG_FONT_TYPE_LARGE,
 	MSG_FONT_TYPE_SMALL,
 }MSG_FONT_TYPE;
@@ -163,21 +176,45 @@ typedef enum {
 //-------------------------------------
 ///	OBJ登録ID
 //=====================================
-enum {
-	OBJREGID_TOUCH_PLT,
-	OBJREGID_TOUCH_CHR,
-	OBJREGID_TOUCH_CEL,
+enum 
+{
+	OBJREGID_OBJ_PLT,
+	OBJREGID_BIG_HEART_CHR,
+	OBJREGID_BIG_HEART_CEL,
+	OBJREGID_SMALL_HEART_CHR,
+	OBJREGID_SMALL_HEART_CEL,
 
 	OBJREGID_MAX
 };
 //-------------------------------------
-///	CLWK取得
+///	CLWKID
 //=====================================
-typedef enum{	
-	CLWKID_TOUCH,
+typedef enum
+{	
+	CLWKID_BIG_HEART,
+	CLWKID_SMALL_HEART_TOP,
+	CLWKID_SMALL_HEART_END	= CLWKID_SMALL_HEART_TOP+CLWK_SMALL_HEART_MAX,
 	
-	CLWKID_MAX
+	CLWKID_MAX,
 }CLWKID;
+//-------------------------------------
+///	MSGWNDID
+//=====================================
+typedef enum
+{
+	MSGWNDID_MAIN,
+	MSGWNDID_SUB,
+
+	MSGWNDID_MAX
+} MSGWNDID;
+
+//-------------------------------------
+///	OBJの設定値
+//=====================================
+#define OBJ_BIG_HEART_MAX_SIZE	(	FX32_CONST(1.5) )
+#define OBJ_BIG_HEART_DEF_SIZE	( FX32_CONST(0.6) )
+#define OBJ_BIG_HEART_MIN_SIZE	( FX32_CONST(0.3) )
+#define OBJ_BIG_HEART_SUB_SIZE	( OBJ_BIG_HEART_MAX_SIZE-OBJ_BIG_HEART_MIN_SIZE )
 
 //=============================================================================
 /**
@@ -195,10 +232,11 @@ typedef struct
 //-------------------------------------
 ///	OBJ関係
 //=====================================
-typedef struct {
-	GFL_CLUNIT *p_clunit;
-	u32				reg_id[OBJREGID_MAX];
-	GFL_CLWK	 *p_clwk[CLWKID_MAX];
+typedef struct 
+{
+	GFL_CLUNIT	*p_clunit;
+	u32					reg_id[OBJREGID_MAX];
+	GFL_CLWK		*p_clwk[CLWKID_MAX];
 } GRAPHIC_OBJ_WORK;
 
 //-------------------------------------
@@ -231,6 +269,63 @@ typedef struct
 	STRBUF*						p_strbuf;
 } MSGWND_WORK;
 
+//-------------------------------------
+///	３次曲線CatmullROm曲線版
+//		始点、終点、制御点０，１を与えて
+//		点上を通る曲線。
+//=====================================
+typedef struct {
+	fx32 now;
+	fx32 start;
+	fx32 end;
+	fx32 ctrl1;
+	fx32 ctrl2;
+	int sync_now;		//現在のシンク
+	int sync_max;		//シンク最大数
+} PROGVAL_CATMULLROM_WORK;
+
+//-------------------------------------
+///	揺れる処理
+//=====================================
+typedef struct {
+	fx32				now;
+	fx32				start;
+	fx32				end;
+	fx32				shake_min;
+	fx32				shake_max;
+	u16					shake_cnt;
+	u16					shake_cnt_max;
+	u16					sync_now;
+	u16					sync_max;
+	u32					seq;
+} PROGVAL_SHAKE_WORK;
+
+//-------------------------------------
+///	竜巻処理
+//=====================================
+typedef struct {
+	VecFx32			now_pos;
+	VecFx32			start_pos;
+	u16					r_now;
+	u16					r_max;
+	u16					add_angle;
+	u16					angle;
+	u16					sync_now;
+	u16					sync_max;
+} PROGVAL_TORNADO_WORK;
+
+//-------------------------------------
+//	等速直線運動動作
+//=====================================
+typedef struct {
+	int now_val;		//現在の値
+	int start_val;		//開始の値
+	int end_val;		//終了の値
+	fx32 add_val;		//加算値(誤差をださないようにここだけfx)
+	int sync_now;		//現在のシンク
+	int sync_max;		//シンク最大数
+} PROGVAL_VELOCITY_WORK;
+
 #ifdef DEBUG_RESULT_MSG
 //-------------------------------------
 ///	デバッグプリント用画面
@@ -241,7 +336,7 @@ typedef struct
 	GFL_FONT*			p_font;
 
 	BOOL	is_now_save;
-	u8	frm;
+	u8		frm;
 
   u8  *p_char_temp_area;      ///<キャラクタVRAM退避先
   u16 *p_scrn_temp_area;      ///<スクリーンVRAM退避先
@@ -265,7 +360,7 @@ static DEBUG_PRINT_WORK *sp_dp_wk;
 #endif //DEBUG_RESULT_MSG
 
 //-------------------------------------
-///	リズムチェックメインワーク
+///	結果表示メインワーク
 //=====================================
 typedef struct _RESULT_MAIN_WORK RESULT_MAIN_WORK;
 typedef void (*SEQ_FUNCTION)( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
@@ -274,16 +369,25 @@ struct _RESULT_MAIN_WORK
 	//グラフィックモジュール
 	GRAPHIC_WORK		grp;
 	MSG_WORK				msg;
-	MSGWND_WORK			msgwnd;
+	MSGWND_WORK			msgwnd[MSGWNDID_MAX];
 
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
 	u16		seq;
-	BOOL is_end;
+	BOOL	is_end;
+
+	//その他汎用
+	u32		cnt;
+
+	//動き制御
+	PROGVAL_CATMULLROM_WORK	heart_size;
+	PROGVAL_SHAKE_WORK			shake;
+	PROGVAL_TORNADO_WORK		tornado[CLWK_SMALL_HEART_MAX];
+	PROGVAL_VELOCITY_WORK		memo_scale;
+	PROGVAL_VELOCITY_WORK		memo_rot;
 
 	//引数
 	IRC_RESULT_PARAM	*p_param;
-
 };
 
 //=============================================================================
@@ -330,6 +434,7 @@ static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static BOOL MSGWND_Main( MSGWND_WORK *p_wk, MSG_WORK *p_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk,
 		const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
+static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID );
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, 
 		u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
@@ -338,12 +443,31 @@ static void SEQ_Change( RESULT_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
 static void SEQ_End( RESULT_MAIN_WORK *p_wk );
 //SEQ_FUNC
 static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
-static void SEQFUNC_MainGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
-static void SEQFUNC_Result( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_DecideHeart( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_HeartEffect( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
 //汎用
 static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
 static void DEBUGRESULT_PRINT_UpDate( RESULT_MAIN_WORK *p_wk );
-
+//汎用的な動作
+static void PROGVAL_CATMULLROM_Init( PROGVAL_CATMULLROM_WORK* p_wk, fx32 start, fx32 ctrl1, fx32 ctrl2, fx32 end, int sync );
+static BOOL PROGVAL_CATMULLROM_Main( PROGVAL_CATMULLROM_WORK* p_wk );
+static void PROGVAL_SHAKE_Init( PROGVAL_SHAKE_WORK *p_wk, fx32 start, fx32 end, fx32 shake_min, fx32 shake_max, u16 shake_cnt, u16 sync );
+static BOOL PROGVAL_SHAKE_Main( PROGVAL_SHAKE_WORK *p_wk );
+static int Progval_Velocity( int start, int end, int sync_now, int sync_max );
+static void PROGVAL_TORNADO_Init( PROGVAL_TORNADO_WORK *p_wk, const VecFx32 *cp_start_pos, u16 r_max, u16 add_angle, int sync );
+static BOOL PROGVAL_TORNADO_Main( PROGVAL_TORNADO_WORK *p_wk );
+static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, int start, int end, int sync );
+static BOOL	PROGVAL_VEL_Main( PROGVAL_VELOCITY_WORK* p_wk );
+//ぶったいの動作
+static void BigHeart_InitScale( RESULT_MAIN_WORK *p_wk, u8 score );
+static BOOL BigHeart_MainScale( RESULT_MAIN_WORK *p_wk );
+static void BigHeart_InitShake( RESULT_MAIN_WORK *p_wk );
+static BOOL BigHeart_MainShake( RESULT_MAIN_WORK *p_wk );
+static void SmallHeart_InitTornado( RESULT_MAIN_WORK *p_wk );
+static BOOL SmallHeart_MainTornado( RESULT_MAIN_WORK *p_wk );
+static void Memo_InitRot( RESULT_MAIN_WORK *p_wk );
+static BOOL Memo_MainRot( RESULT_MAIN_WORK *p_wk );
 //DEBUG_PRINT
 #ifdef DEBUG_RESULT_MSG
 static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID );
@@ -369,7 +493,7 @@ static void DEBUGPRINT_Clear( void );
  */
 //=============================================================================
 //-------------------------------------
-///	リズムチェック用プロックデータ
+///	結果表示用プロックデータ
 //=====================================
 const GFL_PROC_DATA IrcResult_ProcData	= 
 {	
@@ -383,14 +507,16 @@ const GFL_PROC_DATA IrcResult_ProcData	=
 typedef enum 
 {
 	GRAPHIC_BG_FRAME_M_INFOWIN,
+	GRAPHIC_BG_FRAME_M_TEXT	= GRAPHIC_BG_FRAME_M_INFOWIN,
 	GRAPHIC_BG_FRAME_M_BACK,
+	GRAPHIC_BG_FRAME_M_MEMO,
 	GRAPHIC_BG_FRAME_S_TEXT,
 	GRAPHIC_BG_FRAME_S_BACK,
 	GRAPHIC_BG_FRAME_MAX
 } GRAPHIC_BG_FRAME;
 static const u32 sc_bgcnt_frame[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	INFOWIN_BG_FRAME, GFL_BG_FRAME1_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,
+	INFOWIN_BG_FRAME, GFL_BG_FRAME1_M, GFL_BG_FRAME2_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] = 
 {
@@ -406,6 +532,13 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+	},
+	// GRAPHIC_BG_FRAME_M_MEMO
+	{
+		0, 0, 0x800, 0,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_TEXT
@@ -422,86 +555,11 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
-
 };
-
-//-------------------------------------
-///	タッチ範囲
-//=====================================
-static const GFL_POINT	sc_diamond_pos[]	=
+static const u32 sc_bgmode[ GRAPHIC_BG_FRAME_MAX ] =
 {	
-	{	
-		31, 47
-	},
-	{	
-		79, 47
-	},
-	{	
-		127, 47
-	},
-	{	
-		175, 47
-	},
-	{	
-		223, 47
-	},
-	{	
-		55, 71
-	},
-	{	
-		103, 71
-	},
-	{	
-		151, 71
-	},
-	{	
-		199, 71
-	},
-	{	
-		31, 95
-	},
-	{	
-		79, 95
-	},
-	{	
-		127, 95
-	},
-	{	
-		175, 95
-	},
-	{	
-		223, 95
-	},
-	{	
-		55, 119
-	},
-	{	
-		103, 119
-	},
-	{	
-		151, 119
-	},
-	{	
-		199, 119
-	},
-	{	
-		31, 143
-	},
-	{	
-		79, 143
-	},
-	{	
-		127, 143
-	},
-	{	
-		175, 143
-	},
-	{	
-		223, 143
-	},
-
+	GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT,GFL_BG_MODE_AFFINE,GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT
 };
-
 
 //=============================================================================
 /**
@@ -510,7 +568,7 @@ static const GFL_POINT	sc_diamond_pos[]	=
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	リズムチェック	メインプロセス初期化
+ *	@brief	結果表示	メインプロセス初期化
  *
  *	@param	GFL_PROC *p_proc	プロセス
  *	@param	*p_seq						シーケンス
@@ -525,7 +583,7 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	RESULT_MAIN_WORK	*p_wk;
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCRESULT, 0x16000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCRESULT, 0x20000 );
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(RESULT_MAIN_WORK), HEAPID_IRCRESULT );
 	GFL_STD_MemClear( p_wk, sizeof(RESULT_MAIN_WORK) );
@@ -535,8 +593,14 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCRESULT );
 	MSG_Init( &p_wk->msg, MSG_FONT_TYPE_LARGE, HEAPID_IRCRESULT );
 	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, HEAPID_IRCRESULT );
-	MSGWND_Init( &p_wk->msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
-			MSGTEXT_WND_X, MSGTEXT_WND_Y, MSGTEXT_WND_W, MSGTEXT_WND_H, HEAPID_IRCRESULT );
+
+	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_MAIN], sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
+			MSGWND_MAIN_X, MSGWND_MAIN_Y, MSGWND_MAIN_W, MSGWND_MAIN_H, HEAPID_IRCRESULT );
+	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_SUB], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
+			MSGWND_SUB_X, MSGWND_SUB_Y, MSGWND_SUB_W, MSGWND_SUB_H, HEAPID_IRCRESULT );
+
+	//初期メッセージ
+	MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_000 );
 
 	//デバッグ
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRESULT );
@@ -548,7 +612,7 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	リズムチェック	メインプロセス破棄処理
+ *	@brief	結果表示	メインプロセス破棄処理
  *
  *	@param	GFL_PROC *p_proc	プロセス
  *	@param	*p_seq						シーケンス
@@ -569,7 +633,13 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 	DEBUGPRINT_Exit();
 
 	//モジュール破棄
-	MSGWND_Exit( &p_wk->msgwnd );
+	{	
+		int i;
+		for( i = 0; i < MSGWNDID_MAX; i++ )
+		{	
+			MSGWND_Exit( &p_wk->msgwnd[i] );
+		}
+	}
 	INFOWIN_Exit();
 	GRAPHIC_Exit( &p_wk->grp );
 	MSG_Exit( &p_wk->msg );
@@ -583,7 +653,7 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	リズムチェック	メインプロセスメイン処理
+ *	@brief	結果表示	メインプロセスメイン処理
  *
  *	@param	GFL_PROC *p_proc	プロセス
  *	@param	*p_seq						シーケンス
@@ -667,8 +737,12 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 
 	INFOWIN_Update();
 	if( MSG_Main( &p_wk->msg ) )
-	{	
-		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
+	{
+		int i;
+		for( i = 0; i < MSGWNDID_MAX; i++ )
+		{	
+			MSGWND_Main( &p_wk->msgwnd[i], &p_wk->msg );
+		}
 	}
 
 	GRAPHIC_Draw( &p_wk->grp );
@@ -697,7 +771,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 		GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
 		GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
 		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
+		GX_VRAM_OBJ_128_B,					// メイン2DエンジンのOBJ
 		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 		GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
@@ -818,7 +892,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 	{
 		static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
 		{
-			GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D
+			GX_DISPMODE_GRAPHICS,GX_BGMODE_2,GX_BGMODE_0,GX_BG0_AS_2D
 		};	
 		GFL_BG_SetBGMode( &sc_bg_sys_header );
 	}
@@ -829,31 +903,34 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 
 		for( i = 0; i < GRAPHIC_BG_FRAME_MAX; i++ )
 		{
-			GFL_BG_SetBGControl( sc_bgcnt_frame[i], &sc_bgcnt_data[i], GFL_BG_MODE_TEXT );
+			GFL_BG_SetBGControl( sc_bgcnt_frame[i], &sc_bgcnt_data[i], sc_bgmode[i] );
 			GFL_BG_ClearFrame( sc_bgcnt_frame[i] );
 			GFL_BG_SetVisible( sc_bgcnt_frame[i], VISIBLE_ON );
 		}
 	}
 
-#if 0
 	//読み込み設定
 	{	
 		ARCHANDLE *p_handle;
 
 		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCRESULT_GRAPHIC, heapID );
 
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircresult_gra_result_bg_back_NCLR,
-				PALTYPE_MAIN_BG, PALTYPE_MAIN_BG*0x20, 0x20, heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircresult_gra_result_bg_memo_NCLR,
+				PALTYPE_MAIN_BG, RESULT_BG_PAL_M_00*0x20, 0x20, heapID );
 	
-		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_ircresult_gra_result_bg_back_NCGR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_ircresult_gra_result_bg_memo_NCGR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_MEMO], 0, 0, FALSE, heapID );
 
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircresult_gra_result_bg_back_NSCR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircresult_gra_result_bg_memo_NSCR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_MEMO], 0, 0, FALSE, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
-#endif
+
+	//設定
+	{	
+		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_MEMO], VISIBLE_OFF );
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -921,42 +998,97 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
-#if 0
 	//リソース読み込み
 	{	
 		ARCHANDLE *p_handle;
 
 		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCRESULT_GRAPHIC, heapID );
 
-		p_wk->reg_id[OBJREGID_TOUCH_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
-				NARC_ircresult_gra_result_obj_touch_NCLR, CLSYS_DRAW_MAIN, RESULT_OBJ_PAL_M_00*0x20, heapID );
+		p_wk->reg_id[OBJREGID_OBJ_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
+				NARC_ircresult_gra_result_obj_NCLR, CLSYS_DRAW_MAIN, RESULT_OBJ_PAL_M_00*0x20, heapID );
 
-		p_wk->reg_id[OBJREGID_TOUCH_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
-				NARC_ircresult_gra_result_obj_touch_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+		p_wk->reg_id[OBJREGID_BIG_HEART_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+				NARC_ircresult_gra_result_obj_big_heart_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
 
-		p_wk->reg_id[OBJREGID_TOUCH_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
-				NARC_ircresult_gra_result_obj_touch_NCER, NARC_ircresult_gra_result_obj_touch_NANR, heapID );
+		p_wk->reg_id[OBJREGID_BIG_HEART_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				NARC_ircresult_gra_result_obj_big_heart_NCER, 
+				NARC_ircresult_gra_result_obj_big_heart_NANR, heapID );
+
+		p_wk->reg_id[OBJREGID_SMALL_HEART_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+				NARC_ircresult_gra_result_obj_small_heart_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+
+		p_wk->reg_id[OBJREGID_SMALL_HEART_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				NARC_ircresult_gra_result_obj_small_heart_NCER, 
+				NARC_ircresult_gra_result_obj_small_heart_NANR, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
-#endif
 
 	//CLWK作成
 	{	
+		int i;
 		GFL_CLWK_DATA	cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 
-		p_wk->p_clwk[CLWKID_TOUCH]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
-				p_wk->reg_id[OBJREGID_TOUCH_CHR],
-				p_wk->reg_id[OBJREGID_TOUCH_PLT],
-				p_wk->reg_id[OBJREGID_TOUCH_CEL],
+		p_wk->p_clwk[CLWKID_BIG_HEART]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+				p_wk->reg_id[OBJREGID_BIG_HEART_CHR],
+				p_wk->reg_id[OBJREGID_OBJ_PLT],
+				p_wk->reg_id[OBJREGID_BIG_HEART_CEL],
 				&cldata,
 				CLSYS_DEFREND_MAIN,
 				heapID
 				);
 
+		for( i = CLWKID_SMALL_HEART_TOP; i < CLWKID_SMALL_HEART_END; i++  )
+		{	
+			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+				p_wk->reg_id[OBJREGID_SMALL_HEART_CHR],
+				p_wk->reg_id[OBJREGID_OBJ_PLT],
+				p_wk->reg_id[OBJREGID_SMALL_HEART_CEL],
+				&cldata,
+				CLSYS_DEFREND_MAIN,
+				heapID
+				);
 
-		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CLWKID_TOUCH], FALSE );
+		}
+
+		{
+			GFL_CLACTPOS	pos;
+			GFL_CLSCALE		scale;
+			pos.x	= 128;
+			pos.y	= 96;
+			GFL_CLACT_WK_SetPos( p_wk->p_clwk[CLWKID_BIG_HEART], &pos, 0 );
+
+			scale.x	= OBJ_BIG_HEART_DEF_SIZE;
+			scale.y	= OBJ_BIG_HEART_DEF_SIZE;
+			GFL_CLACT_WK_SetScale( p_wk->p_clwk[CLWKID_BIG_HEART], &scale );
+		}
+
+	}
+
+	//CLWKの設定
+	{	
+		int i;
+		GFL_CLACTPOS	clpos	= {	
+			128, 92
+		};
+
+		///大きいハートを拡大縮小フラグをつけ、中央に配置
+		GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk[CLWKID_BIG_HEART], CLSYS_AFFINETYPE_DOUBLE );
+		GFL_CLACT_WK_SetPos( p_wk->p_clwk[CLWKID_BIG_HEART], &clpos, 0 );
+		GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[CLWKID_BIG_HEART], 2 );
+		GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[CLWKID_BIG_HEART], 1 );
+
+		//小さいハートは表示OFF
+		for( i = CLWKID_SMALL_HEART_TOP; i < CLWKID_SMALL_HEART_END; i++  )
+		{	
+			clpos.x	= 128;
+			clpos.y	= 64;
+			GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, 0 );
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 2 );
+			GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[i], 0 );
+		}
 	}
 }
 //----------------------------------------------------------------------------
@@ -974,15 +1106,18 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 		int i;
 		for( i = 0; i < CLWKID_MAX; i++ )
 		{	
-			GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+			if( p_wk->p_clwk[i] )
+			{	
+				GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+			}
 		}
 	}
 
 	//リソース破棄
 	{	
-		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_TOUCH_PLT] );
-		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_TOUCH_CHR] );
-		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_TOUCH_CEL] );
+		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_OBJ_PLT] );
+		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_BIG_HEART_CHR] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_BIG_HEART_CEL] );
 	}
 
 	//システム破棄
@@ -1068,14 +1203,16 @@ static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID )
 
 	p_wk->p_print_que = PRINTSYS_QUE_Create( heapID );
 
-/*	p_wk->p_msg = GFL_MSG_Create(
+	p_wk->p_msg = GFL_MSG_Create(
 		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_irc_result_dat, heapID );
-*/
+
 	p_wk->p_wordset	= WORDSET_Create( heapID );
 
 	{	
-		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,  RESULT_BG_PAL_S_14*0x20, 0x20, heapID );
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, RESULT_BG_PAL_M_14*0x20, 0x20, heapID );
 		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
+		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], GX_RGB(31,31,31) );
 	}
 }
 
@@ -1261,6 +1398,43 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, 
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	メッセージ表示面の中央に文字を表示
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	MSG_WORK *cp_msg	文字管理
+ *	@param	strID							文字ID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID )
+{	
+	const GFL_MSGDATA* cp_msgdata;
+	PRINT_QUE*	p_que;
+	GFL_FONT*		p_font;
+	u16 x, y;
+
+	cp_msgdata	= MSG_GetMsgDataConst( cp_msg );
+	p_que		= MSG_GetPrintQue( cp_msg );
+	p_font	= MSG_GetFont( cp_msg );
+
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+
+	//文字列作成
+	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
+
+	//センター位置計算
+	x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
+	y	= GFL_BMPWIN_GetSizeY( p_wk->p_bmpwin )*4;
+	x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_font, 0 )/2;
+	y	-= PRINTSYS_GetStrHeight( p_wk->p_strbuf, p_font )/2;
+
+	//表示
+	PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	メッセージ表示面に数値つき文字を表示
  *
  *	@param	MSGWND_WORK* p_wk	ワーク
@@ -1319,6 +1493,331 @@ static void MSGWND_Clear( MSGWND_WORK* p_wk )
 	GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
 }
 
+
+//=============================================================================
+/**
+ *			３次曲線　CatmullRom曲線版
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/*
+ *	@brief	３次曲線CatmullRom曲線版	初期化
+ *
+ *	@param	p_wk						ワーク
+ *	@param	start_pos					開始座標
+ *	@param	ctrl_pos0					制御点１
+ *	@param	ctrl_pos1					制御点２
+ *	@param	end_pos						終了座標
+ *	@param	sync						かかるシンク
+ *
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+static void PROGVAL_CATMULLROM_Init( PROGVAL_CATMULLROM_WORK* p_wk, fx32 start, fx32 ctrl1, fx32 ctrl2, fx32 end, int sync )
+{
+	p_wk->now				=	start;
+	p_wk->start			=	start;
+	p_wk->ctrl1			= ctrl1;
+	p_wk->ctrl2			= ctrl2;
+	p_wk->end				= end;
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= sync;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	３次曲線CatmullRom曲線版	メイン処理化
+ *
+ *	@param	p_wk	ワーク
+ *
+ *	@returnTRUEなら処理終了、FALSEなら処理中
+ */
+//-----------------------------------------------------------------------------
+BOOL PROGVAL_CATMULLROM_Main( PROGVAL_CATMULLROM_WORK* p_wk )
+{
+	if( p_wk->sync_now < (p_wk->sync_max-1) ) {	//	なぜ-1かというと、elseの中をふくめてのsyncだから
+		int	sync1div3	= (p_wk->sync_max-1) * 1 / 3;
+		int sync2div3	= (p_wk->sync_max-1) * 2 / 3;
+		fx32 t1, t2, t3;
+		fx32 mp0, mp1, mp2, mp3;
+
+		//	始点からP0までの曲線
+		if( p_wk->sync_now < sync1div3 ) {
+			t1	= FX_Div( FX32_CONST(p_wk->sync_now), FX32_CONST(sync1div3));
+			t2	= FX_Mul( t1, t1 );	//	t*t
+			t3	= FX_Mul( t2, t1 );	//	t*t*t
+
+			mp0	= 0;
+			mp1	=(   t2 - 3*t1 + 2*FX32_ONE) / 2;
+			mp2	=(-2*t2 + 4*t1) / 2;
+			mp3	=(   t2 -   t1) / 2;
+
+			p_wk->now	= FX_Mul(p_wk->start, mp1) + FX_Mul(p_wk->ctrl1, mp2)
+				+ FX_Mul(p_wk->ctrl2, mp3);
+
+		//	P0からP1までの曲線
+		}else if( p_wk->sync_now < sync2div3 ) {
+			t1	= FX_Div( FX32_CONST(p_wk->sync_now-sync1div3), FX32_CONST(sync2div3-sync1div3));
+			t2	= FX_Mul( t1, t1 );	//	t*t
+			t3	= FX_Mul( t2, t1 );	//	t*t*t
+
+			mp0	=(  -t3 + 2*t2 - t1) / 2;
+			mp1	=( 3*t3 - 5*t2 + 2*FX32_ONE) / 2;
+			mp2	=(-3*t3 + 4*t2 + t1) / 2;
+			mp3	=(   t3 -   t2 ) / 2;
+
+			p_wk->now	= FX_Mul(p_wk->start, mp0) + FX_Mul(p_wk->ctrl1, mp1)
+				+ FX_Mul(p_wk->ctrl2, mp2) + FX_Mul(p_wk->end,   mp3);
+
+		//	P1から終点までの曲線
+		}else if( sync2div3 <= p_wk->sync_now ) {
+			t1	= FX_Div( FX32_CONST(p_wk->sync_now-sync2div3), FX32_CONST(p_wk->sync_max-sync2div3));
+			t2	= FX_Mul( t1, t1 );	//	t*t
+			t3	= FX_Mul( t2, t1 );	//	t*t*t
+
+			mp0	=(   t2 - t1) /2;
+			mp1	=(-2*t2		   + 2*FX32_ONE) / 2;
+			mp2	=(   t2 + t1) / 2;
+			mp3	=0;	
+
+			p_wk->now	= FX_Mul(p_wk->ctrl1, mp0)
+				+ FX_Mul(p_wk->ctrl2, mp1) + FX_Mul(p_wk->end, mp2);
+		}
+
+		p_wk->sync_now++;
+
+		return FALSE;
+	}else{
+		p_wk->now	= p_wk->end;
+		return TRUE;
+	}
+
+	return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	揺れる処理	初期化
+ *
+ *	@param	PROGVAL_SHAKE_WORK_VEC *p_wk	ワーク
+ *	@param	VecFx32 *cp_start				開始点
+ *	@param	shake_min						揺れ幅	最小
+ *	@param	shake_max						揺れ幅　最大
+ *	@param	space							揺れるまでの幅
+ *	@param	sync							揺れるシンク
+ *
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+static void PROGVAL_SHAKE_Init( PROGVAL_SHAKE_WORK *p_wk, fx32 start, fx32 end, fx32 shake_min, fx32 shake_max, u16 shake_cnt, u16 sync )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(PROGVAL_SHAKE_WORK) );
+	p_wk->now	= start;
+	p_wk->start	= start;
+	p_wk->end		= end;
+	p_wk->shake_min	= shake_min;
+	p_wk->shake_max	= shake_max;
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= sync;
+	p_wk->shake_cnt	= 0;
+	p_wk->shake_cnt_max	= shake_cnt;
+	p_wk->seq		= 0;
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	揺れる処理	メイン処理
+ *
+ *	@param	PROGVAL_SHAKE_WORK *p_wk	ワーク
+ *
+ *	@return	TRUEならば終了　FALSEは継続
+ */
+//-----------------------------------------------------------------------------
+static BOOL PROGVAL_SHAKE_Main( PROGVAL_SHAKE_WORK *p_wk )
+{	
+	if( p_wk->sync_now < p_wk->sync_max )
+	{	
+		int sync_now;
+		int sync_max;
+		int sync_div	= p_wk->sync_max / (p_wk->shake_cnt_max*2+1);	//+1は最後の分
+
+		switch( p_wk->seq ) 
+		{
+		//行き
+		case 0:
+			sync_now	= p_wk->sync_now;
+			sync_max	= sync_div;
+			p_wk->now	= Progval_Velocity( p_wk->start, p_wk->shake_min, sync_now, sync_max );
+			if( sync_now > sync_max )
+			{	
+				p_wk->seq++;
+			}
+			break;
+		//揺れ開始
+		case 1:
+			sync_now	= p_wk->sync_now - sync_div * (p_wk->shake_cnt*2+1);
+			sync_max	= sync_div;
+			p_wk->now	= Progval_Velocity( p_wk->shake_min, p_wk->shake_max, sync_now, sync_max );
+			if( sync_now > sync_max )
+			{
+					p_wk->seq++;
+			}
+			break;
+		//ゆれ折り返し
+		case 2:
+			sync_now	= p_wk->sync_now - sync_div * (p_wk->shake_cnt*2+2);
+			sync_max	= sync_div;
+			p_wk->now	= Progval_Velocity( p_wk->shake_max, p_wk->shake_min, sync_now, sync_max );
+			if( sync_now > sync_max )
+			{
+				p_wk->shake_cnt++;
+
+				if( p_wk->shake_cnt+1 > p_wk->shake_cnt_max )
+				{	
+					p_wk->seq	= 3;
+				}
+				else
+				{	
+					p_wk->seq	= 1;
+				}
+			}
+			break;
+		//終わり
+		case 3:
+			sync_now	= p_wk->sync_now - sync_div * (p_wk->shake_cnt*2+3);
+			sync_max	= sync_div;
+			p_wk->now	= Progval_Velocity( p_wk->shake_max, p_wk->end, sync_now, sync_max );
+			if( sync_now > sync_max )
+			{	
+				p_wk->seq++;
+			}
+			break;
+		}
+
+		p_wk->sync_now++;
+	}
+	else
+	{	
+		p_wk->now	= p_wk->end;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	直線運動方程式
+ *
+ *	@param	int start	開始値
+ *	@param	end				終了値
+ *	@param	sync_now	現在のシンク
+ *	@param	sync_max	終了のシンク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static int Progval_Velocity( int start, int end, int sync_now, int sync_max )
+{	
+	return start + ( end - start ) * sync_now / sync_max ; 
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	竜巻状に回転	初期化
+ *
+ *	@param	PROGVAL_TORNADO_WORK *p_wk	ワーク
+ *	@param	*cp_start_pos								開始座標
+ *	@param	r_max												回転する円の半径最大														
+ *	@param	sync												回転する円の半径が最大になるまでの時間
+ *
+ */
+//-----------------------------------------------------------------------------
+static void PROGVAL_TORNADO_Init( PROGVAL_TORNADO_WORK *p_wk, const VecFx32 *cp_start_pos, u16 r_max, u16 add_angle, int sync )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(PROGVAL_TORNADO_WORK));
+	p_wk->now_pos		= *cp_start_pos;
+	p_wk->start_pos	= *cp_start_pos;
+	p_wk->r_now			= 0;
+	p_wk->r_max			= r_max;
+	p_wk->add_angle	= add_angle;
+	p_wk->angle			= 0;
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= sync;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	竜巻状に回転	メイン処理
+ *
+ *	@param	PROGVAL_TORNADO_WORK *p_wk 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL PROGVAL_TORNADO_Main( PROGVAL_TORNADO_WORK *p_wk )
+{	
+	p_wk->now_pos.x	= p_wk->start_pos.x + ((p_wk->r_now * FX_CosIdx( p_wk->angle ))>>FX32_SHIFT);
+	p_wk->now_pos.y	= p_wk->start_pos.y + ((p_wk->r_now * FX_SinIdx( p_wk->angle ))>>FX32_SHIFT);
+	p_wk->angle	+= p_wk->add_angle;
+
+	if( p_wk->sync_now < p_wk->sync_max )
+	{	
+		p_wk->r_now	= p_wk->r_max * p_wk->sync_now / p_wk->sync_max;
+		p_wk->sync_now++;
+	}
+	else
+	{	
+		return TRUE;
+	}
+
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	等速直線運動初期化
+ *
+ *	@param	PROGVAL_VELOCITY_WORK* p_wk	ワーク
+ *	@param	start						開始座標
+ *	@param	end							終了座標
+ *	@param	sync						かかるシンク
+ *
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, int start, int end, int sync )
+{
+	p_wk->now_val	= start;
+	p_wk->start_val	= start;
+	p_wk->end_val	= end;
+	p_wk->sync_max	= sync;
+	if( sync ) {
+		p_wk->add_val	= FX32_CONST(p_wk->end_val - p_wk->start_val) / sync;
+		p_wk->sync_now	= 0;
+	}else{
+		//	sync == 0 の場合は即処理終了
+		p_wk->sync_now	= p_wk->sync_max-2;	//(p_wk->sync_max-1)より下の値
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	等速直線運動メイン処理（毎フレームよぶこと）
+ *
+ *	@param	PROGVAL_VELOCITY_WORK* p_wk ワーク
+ *
+ *	@return	TRUEなら処理終了、FALSEなら処理中。
+ */
+//-----------------------------------------------------------------------------
+static BOOL PROGVAL_VEL_Main( PROGVAL_VELOCITY_WORK* p_wk )
+{
+	if( p_wk->sync_now < (p_wk->sync_max-1) ) {	//	なぜ-1かというと、elseの中をふくめてのsyncだから
+		p_wk->sync_now++;
+		p_wk->now_val	= p_wk->start_val + ((p_wk->add_val * (p_wk->sync_now)) >> FX32_SHIFT);
+		return FALSE;
+	}else{
+		p_wk->now_val	= p_wk->end_val;
+		return TRUE;
+	}
+}
 //=============================================================================
 /**
  *				SEQ
@@ -1368,11 +1867,250 @@ static void SEQ_End( RESULT_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-	//MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RESULT_STR_000, 0, 0 );
+	SEQ_Change( p_wk, SEQFUNC_DecideHeart );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	なかよしハート決定
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	メインワーク
+ *	@param	*p_seq								シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_DecideHeart( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
+{	
+	enum
+	{	
+		SEQ_WAIT,
+		SEQ_HEART_SCALSE_INIT,
+		SEQ_HEART_SCALSE_MAIN,
+		SEQ_HEART_SCALSE_EXIT,
+		SEQ_NEXTPROC,
+	};
 
+	switch( *p_seq )
+	{	
+	case SEQ_WAIT:
+		if( p_wk->cnt++ >SEQFUNC_DECIDEHEART_WAIT )
+		{	
+			p_wk->cnt	= 0;
+			*p_seq	= SEQ_HEART_SCALSE_INIT;
+		}
+		break;
 
-	SEQ_Change( p_wk, SEQFUNC_MainGame );
+	case SEQ_HEART_SCALSE_INIT:
+		BigHeart_InitScale( p_wk, 100 );
+		//BigHeart_InitScale( p_wk, p_wk->p_param->score );
+		*p_seq	= SEQ_HEART_SCALSE_MAIN;
+		break;
 
+	case SEQ_HEART_SCALSE_MAIN:
+		if( BigHeart_MainScale( p_wk ) )
+		{	
+			*p_seq	= SEQ_HEART_SCALSE_EXIT;
+		}
+		break;
+
+	case SEQ_HEART_SCALSE_EXIT:
+		*p_seq	= SEQ_NEXTPROC;
+		break;
+
+	case SEQ_NEXTPROC:
+		SEQ_Change( p_wk, SEQFUNC_HeartEffect );
+		break;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ハートの演出
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	メインワーク
+ *	@param	*p_seq								シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_HeartEffect( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
+{
+	enum
+	{	
+		SEQ_INIT,
+		SEQ_TOUCH,
+		SEQ_HEART_SHAKE_INIT,
+		SEQ_HEART_SHAKE_MAIN,
+		SEQ_HEART_SHAKE_EXIT,
+		SEQ_WAIT,
+		SEQ_HEART_SHOWER_INIT,
+		SEQ_HEART_SHOWER_MAIN,
+		SEQ_HEART_SHOWER_EXIT,
+		SEQ_NEXTPROC,
+	};
+
+	switch( *p_seq )
+	{	
+	case SEQ_INIT:
+		MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_001 );
+		*p_seq	= SEQ_TOUCH;
+		break;
+
+	case SEQ_TOUCH:
+		if( GFL_UI_TP_GetTrg() )
+		{	
+			*p_seq	= SEQ_HEART_SHAKE_INIT;
+		}
+		break;
+
+	case SEQ_HEART_SHAKE_INIT:
+		BigHeart_InitShake( p_wk );
+		SmallHeart_InitTornado( p_wk );
+		*p_seq	= SEQ_HEART_SHAKE_MAIN;
+		break;
+
+	case SEQ_HEART_SHAKE_MAIN:
+		if( BigHeart_MainShake( p_wk ) )
+		{	
+			*p_seq	= SEQ_HEART_SHAKE_EXIT;
+		}
+
+		if( p_wk->cnt ++ > 30 )
+		{	
+			p_wk->cnt	= 0;
+			*p_seq	= SEQ_HEART_SHOWER_MAIN;
+		}
+		break;
+
+	case SEQ_HEART_SHAKE_EXIT:
+		*p_seq	= SEQ_WAIT;
+		break;
+
+	case SEQ_WAIT:
+		if( p_wk->cnt ++ > 30 )
+		{	
+			p_wk->cnt	= 0;
+			*p_seq	= SEQ_HEART_SHOWER_INIT;
+		}
+		break;
+
+	case SEQ_HEART_SHOWER_INIT:
+		SmallHeart_InitTornado( p_wk );
+		*p_seq	= SEQ_HEART_SHOWER_MAIN;
+		break;
+
+	case SEQ_HEART_SHOWER_MAIN:
+		BigHeart_MainShake( p_wk );
+		if( SmallHeart_MainTornado( p_wk ) )
+		{	
+			*p_seq	= SEQ_HEART_SHOWER_EXIT;
+		}
+		break;
+
+	case SEQ_HEART_SHOWER_EXIT:
+		*p_seq	= SEQ_NEXTPROC;
+		break;
+
+	case SEQ_NEXTPROC:
+		SEQ_Change( p_wk, SEQFUNC_Memo );
+		break;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メモ
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	メインワーク
+ *	@param	*p_seq								シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
+{	
+	enum
+	{	
+		SEQ_INIT,
+		SEQ_FADEOUT_START,
+		SEQ_FADEOUT_WAIT,
+		SEQ_FADEIN_START,
+		SEQ_FADEIN_WAIT,
+		SEQ_MEMO_ROT_INIT,
+		SEQ_MEMO_ROT_MAIN,
+		SEQ_MEMO_ROT_EXIT,
+		SEQ_TOUCH,
+		SEQ_MEMO_QUESTION,
+		SEQ_TOUCH2,
+		SEQ_END,
+	};
+
+	switch( *p_seq )
+	{	
+	case SEQ_INIT:
+		*p_seq	= SEQ_FADEOUT_START;
+		break;
+
+	case SEQ_FADEOUT_START:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, 0 );
+		*p_seq	= SEQ_FADEOUT_WAIT;
+		break;
+
+	case SEQ_FADEOUT_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			Memo_InitRot( p_wk );
+			*p_seq	= SEQ_FADEIN_START;
+		}
+		break;
+
+	case SEQ_FADEIN_START:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, 0 );
+		*p_seq	= SEQ_FADEIN_WAIT;
+		break;
+
+	case SEQ_FADEIN_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= SEQ_MEMO_ROT_INIT;
+		}
+		break;
+
+	case SEQ_MEMO_ROT_INIT:
+		//Memo_InitRot( p_wk );
+		*p_seq	= SEQ_MEMO_ROT_MAIN;
+		break;
+
+	case SEQ_MEMO_ROT_MAIN:
+		if( Memo_MainRot( p_wk ) )
+		{	
+			*p_seq	= SEQ_MEMO_ROT_EXIT;
+		}
+		break;
+
+	case SEQ_MEMO_ROT_EXIT:
+		MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_002 );
+		*p_seq	= SEQ_TOUCH;
+		break;
+
+	case SEQ_TOUCH:
+		if( GFL_UI_TP_GetTrg() )
+		{	
+			*p_seq	= SEQ_MEMO_QUESTION;
+		}
+		break;
+
+	case SEQ_MEMO_QUESTION:
+		MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_GOOD_000 );
+		*p_seq	= SEQ_TOUCH2;
+		break;
+
+	case SEQ_TOUCH2:
+		if( GFL_UI_TP_GetTrg() )
+		{	
+			*p_seq	= SEQ_END;
+		}
+		break;
+
+	case SEQ_END:
+		SEQ_End( p_wk );
+		break;
+	}
 }
 //=============================================================================
 /**
@@ -1446,6 +2184,247 @@ static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg )
 	}
 
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	大きいハートの拡大処理初期化
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	ワーク
+ *	@param	score										点数
+ *
+ */
+//-----------------------------------------------------------------------------
+static void BigHeart_InitScale( RESULT_MAIN_WORK *p_wk, u8 score )
+{	
+	fx32	rate;
+	int	start;
+	int	end;
+	int	ctrl1;
+	int	ctrl2;
+
+	rate	= FX_Div( FX32_CONST(score), FX32_CONST(100) );
+	start	= OBJ_BIG_HEART_DEF_SIZE;
+	end		= FX_Mul( OBJ_BIG_HEART_SUB_SIZE, rate )+OBJ_BIG_HEART_MIN_SIZE;
+	ctrl1	= FX32_CONST(1.1);
+	ctrl2	= FX32_CONST(0.6);
+
+	PROGVAL_CATMULLROM_Init( &p_wk->heart_size, start, ctrl1, ctrl2, end, HEART_SCALSE_WAIT );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	大きいハートの拡大処理メイン処理
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば処理終了
+ *	@retval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL BigHeart_MainScale( RESULT_MAIN_WORK *p_wk )
+{
+	BOOL ret;
+	GFL_CLWK		*p_heart;
+	GFL_CLSCALE	scale;
+			
+	//動作
+	ret	=  PROGVAL_CATMULLROM_Main( &p_wk->heart_size );
+
+	//サイズ決定
+	p_heart	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_BIG_HEART );
+	scale.x	= p_wk->heart_size.now;
+	scale.y	= p_wk->heart_size.now;
+	GFL_CLACT_WK_SetScale( p_heart, &scale );
+
+	return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	揺れる処理	初期化
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	ワーク
+ *	@param	start										開始値
+ *	@param	end											終了値
+ *	@param	shake1									ゆれる点１
+ *	@param	shake2									ゆれる点２
+ *	@param	shake_cnt								ゆれる回数
+ *	@param	sync										ゆれるシンク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void BigHeart_InitShake( RESULT_MAIN_WORK *p_wk )
+{	
+	GFL_CLWK		*p_heart;
+	int start;
+	int shake_min;
+	int shake_max;
+	u16 space;
+	u16 sync;
+
+	p_heart	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_BIG_HEART );
+	start	= GFL_CLACT_WK_GetRotation( p_heart );
+	shake_min	= start	- 0x300;
+	shake_max	= start	+ 0x300;
+
+	PROGVAL_SHAKE_Init( &p_wk->shake, start, start, shake_min, shake_max, 50, 500 );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	揺れる処理	メイン
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk ワーク
+ *
+ *	@retval	TRUEならば処理終了
+ *	@retval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL BigHeart_MainShake( RESULT_MAIN_WORK *p_wk )
+{
+	BOOL ret;
+	GFL_CLWK		*p_heart;
+
+	//動作
+	ret	=  PROGVAL_SHAKE_Main( &p_wk->shake );
+
+	//サイズ決定
+	p_heart	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_BIG_HEART );
+	GFL_CLACT_WK_SetRotation( p_heart, p_wk->shake.now );
+
+	return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	小さいハートの竜巻処理	初期化
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	ワーク 
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SmallHeart_InitTornado( RESULT_MAIN_WORK *p_wk )
+{
+	VecFx32				pos;
+	GFL_CLWK			*p_clwk;
+	GFL_CLACTPOS	clpos;
+	int i;
+	for( i = 0; i < CLWK_SMALL_HEART_MAX; i++ )
+	{	
+		p_clwk	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_SMALL_HEART_TOP + i );
+		GFL_CLACT_WK_GetPos( p_clwk, &clpos, 0 );
+		pos.x	= clpos.x;
+		pos.y	= clpos.y;
+		pos.z	= 0;
+
+		PROGVAL_TORNADO_Init( &p_wk->tornado[i], &pos, 50+GFUser_GetPublicRand(80), 0x120, 100 );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	小さいハートの竜巻き処理	メイン
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば処理終了
+ *	@retval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL SmallHeart_MainTornado( RESULT_MAIN_WORK *p_wk )
+{	
+	int i;
+	u8	ret;
+	GFL_CLWK			*p_clwk;
+	GFL_CLACTPOS	clpos;
+
+	ret	= 0;
+	for( i = 0; i < CLWK_SMALL_HEART_MAX; i++ )
+	{	
+		p_clwk	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_SMALL_HEART_TOP + i );
+
+		//動作は見えてから
+		if( GFL_CLACT_WK_GetDrawEnable( p_clwk ) )
+		{	
+			ret	+= PROGVAL_TORNADO_Main( &p_wk->tornado[i] );
+			clpos.x	= p_wk->tornado[i].now_pos.x;
+			clpos.y	= p_wk->tornado[i].now_pos.y;
+			GFL_CLACT_WK_SetPos( p_clwk, &clpos, 0 );
+		}
+		else
+		{	
+			break;
+		}
+
+	}
+
+	//前回でたやつから一定カウントとってから表示
+	if( i < CLWK_SMALL_HEART_MAX )
+	{	
+		if( p_wk->cnt++ > 10 )
+		{	
+			p_clwk	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_SMALL_HEART_TOP + i );
+			GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
+			p_wk->cnt	= 0;
+		}
+	}
+		
+	if( ret == CLWK_SMALL_HEART_MAX )
+	{	
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メモの回転処理	初期化
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	ワーク 
+ *
+ */
+//-----------------------------------------------------------------------------
+static void Memo_InitRot( RESULT_MAIN_WORK *p_wk )
+{	
+	PROGVAL_VEL_Init( &p_wk->memo_scale, FX32_CONST(40), FX32_ONE, 80 );
+	PROGVAL_VEL_Init( &p_wk->memo_rot, 0, 0xFFF1, 80 );
+
+	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
+			GFL_BG_CENTER_X_SET, 128 );
+	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
+			GFL_BG_CENTER_Y_SET, 96 );
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
+			GFL_BG_SCALE_X_SET, p_wk->memo_scale.now_val);
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
+			GFL_BG_SCALE_Y_SET, p_wk->memo_scale.now_val);
+	GFL_BG_SetRadianReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
+			GFL_BG_RADION_SET, p_wk->memo_rot.now_val );
+	GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], TRUE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メモの回転処理	メイン処理
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば処理終了
+ *	@retval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Memo_MainRot( RESULT_MAIN_WORK *p_wk )
+{	
+	BOOL ret;
+	ret	= PROGVAL_VEL_Main( &p_wk->memo_scale );
+	ret |= PROGVAL_VEL_Main( &p_wk->memo_rot );
+
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
+			GFL_BG_SCALE_X_SET, p_wk->memo_scale.now_val);
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
+			GFL_BG_SCALE_Y_SET, p_wk->memo_scale.now_val);
+	GFL_BG_SetRadianReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
+			GFL_BG_RADION_SET, p_wk->memo_rot.now_val );
+
+	return ret;
 }
 //----------------------------------------------------------------------------
 /**

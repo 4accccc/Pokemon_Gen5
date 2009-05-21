@@ -23,6 +23,7 @@
 typedef struct {
 	GAMESYS_WORK				*p_gamesys;
 	COMPATIBLE_IRC_SYS	*p_irc;
+	u8									score;
 }IRC_RESULT_PARAM;
 
 
