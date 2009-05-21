@@ -1135,6 +1135,20 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 	_timeAnimation(pWork);
 	_typeAnimation(pWork);
 	_PanelPaletteChange(pWork);
+
+
+#if 0
+//Cギアのメッセージ取得は
+	{
+		GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
+		GAME_COMM_INFO_MESSAGE infomsg;
+		if(GameCommInfo_GetMessage(pGC, GAME_COMM_INFO_MESSAGE *dest_msg))
+		{
+		}
+	}
+
+#endif
+
 }
 
 

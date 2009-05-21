@@ -231,7 +231,7 @@ GFL_PROC_RESULT MySignProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 		GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
 		
 		//サンプリング開始
-		GFL_UI_TP_AutoStartNoBuff( 2 );	//今までは30フレーム動作で内部的にx2されてた
+		GFL_UI_TP_AutoStartNoBuff();
 
 		(*seq)++;
 		break;
