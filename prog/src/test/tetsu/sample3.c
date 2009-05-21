@@ -421,8 +421,8 @@ static void	bg_init(HEAPID heapID)
 	GFL_BG_SetPriority(STATUS_FRAME, 0);
 	GFL_BG_SetVisible(STATUS_FRAME, VISIBLE_ON);
 
-//	GFL_BG_FillCharacter(TEXT_FRAME, 0, 1, 0);	// 先頭にクリアキャラ配置
-//	GFL_BG_ClearScreen(TEXT_FRAME);
+	GFL_BG_FillCharacter(TEXT_FRAME, 0, 1, 0);	// 先頭にクリアキャラ配置
+	GFL_BG_ClearScreen(TEXT_FRAME);
 
 	//３Ｄシステム起動
 	GFL_G3D_Init
@@ -494,6 +494,7 @@ static void systemSetup(SAMPLE3_WORK* sw)
 		setup.heapID = sw->heapID;
 		setup.g3Dcamera = sw->g3Dcamera;
 		setup.fontHandle = sw->fontHandle;
+		setup.chrNumOffs = 0x10;
 		setup.ini = ini;
 
 		sw->tmsgwinSys = TALKMSGWIN_SystemCreate(&setup);

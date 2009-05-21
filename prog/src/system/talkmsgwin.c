@@ -41,7 +41,7 @@
 #define COL_SIZ				(2)
 #define PLTT_SIZ			(16*COL_SIZ)
 
-#define BACKGROUND_COLOR (0)
+#define BACKGROUND_COLOR (15)
 
 typedef enum {
 	TAIL_SETPAT_NONE = 0,
@@ -85,6 +85,9 @@ typedef struct {
 
 	TAIL_DATA				tailData;
 
+	u8							writex;
+	u8							writey;
+
 	u16							timer;
 }TMSGWIN;
 
@@ -92,9 +95,10 @@ struct _TALKMSGWIN_SYS{
 	TALKMSGWIN_SYS_SETUP	setup;
 	TMSGWIN								tmsgwin[TALKMSGWIN_NUM];
   GFL_TCBLSYS*					tcbl;
+  u16										chrNum;
 };
 
-static void setupWindowBG( TALKMSGWIN_SYS_SETUP* setup );
+static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup );
 
 static void initWindow( TMSGWIN* tmsgwin );
 static BOOL checkEmptyWindow( TMSGWIN* tmsgwin );
@@ -141,7 +145,10 @@ TALKMSGWIN_SYS* TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
 
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ initWindow(&tmsgwinSys->tmsgwin[i]); }
 
-	setupWindowBG(&tmsgwinSys->setup);
+	{
+		u32 siz = setupWindowBG(&tmsgwinSys->setup);
+		tmsgwinSys->chrNum = siz/0x20;
+	}
 
 	return tmsgwinSys;
 }
@@ -187,6 +194,11 @@ void TALKMSGWIN_SystemDelete( TALKMSGWIN_SYS* tmsgwinSys )
 	GFL_HEAP_FreeMemory(tmsgwinSys);
 }
 
+//------------------------------------------------------------------
+u32 TALKMSGWIN_SystemGetUsingChrNumber( TALKMSGWIN_SYS* tmsgwinSys )
+{
+	return tmsgwinSys->chrNum;
+}
 
 //============================================================================================
 /**
@@ -335,12 +347,34 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(tmsgwin->bmpwin), 2);
 		GFL_BMP_Fill(GFL_BMPWIN_GetBmp(tmsgwin->bmpwin), 2, 2, setup->winsx*8-4, setup->winsy*8-4, 15);
 #else
-		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(tmsgwin->bmpwin), 15);
+		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(tmsgwin->bmpwin), BACKGROUND_COLOR);
 #endif
 		GFL_BMPWIN_TransVramCharacter(tmsgwin->bmpwin);
 	}
 	//吹き出しエフェクトパラメータ計算
 	calcTail(tmsgwinSys, tmsgwin);
+
+	//描画位置算出（センタリング）
+	{
+		u32 width = PRINTSYS_GetStrWidth(msg, tmsgwinSys->setup.fontHandle, 0);
+		u32 height = PRINTSYS_GetStrHeight(msg, tmsgwinSys->setup.fontHandle);
+
+		//heightが正しくないのでとりあえず
+		height = setup->winsy*8;
+
+		if(width > (setup->winsx * 8)){
+			tmsgwin->writex = 0;
+			GF_ASSERT(0);
+		} else {
+			tmsgwin->writex = (setup->winsx*8 - width)/2;
+		}
+		if(height > (setup->winsy * 8)){
+			tmsgwin->writey = 0;
+			GF_ASSERT(0);
+		} else {
+			tmsgwin->writey = (setup->winsy*8 - height)/2;
+		}
+	}
 
 	tmsgwin->seq = WINSEQ_IDLING;
 }
@@ -389,15 +423,15 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 			writeWindow(tmsgwinSys, tmsgwin);
 
 			tmsgwin->printStream = PRINTSYS_PrintStream(	tmsgwin->bmpwin,							// GFL_BMPWIN
-																										2,														// u16 xpos
-																										2,														// u16 ypos
+																										tmsgwin->writex,							// u16
+																										tmsgwin->writey,							// u16
 																										tmsgwin->msg,									// STRBUF*
 																										tmsgwinSys->setup.fontHandle,	// GFL_FONT*
 																										2,														// int wait
 																										tmsgwinSys->tcbl,							// GFL_TCBLSYS*
 																										0,														// u32 tcbpri
 																										tmsgwinSys->setup.heapID,			// HEAPID
-																										15 );													// u16 clrCol
+																										BACKGROUND_COLOR );						// u16 clrCol
 		}
 		break;
 	case WINSEQ_HOLD:
@@ -702,12 +736,13 @@ static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
  *
  */
 //============================================================================================
-static void setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
+static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
 {
+	u32 chrSiz;
 	//GFL_BG_FillCharacter(setup->ini.frameID, 0, 1, 0);	// 先頭にクリアキャラ配置
 	GFL_BG_ClearScreen(setup->ini.frameID);
 
-	//フォント用パレット転送
+	//パレット転送
 	{
 		PALTYPE paltype = PALTYPE_MAIN_BG;
 
@@ -737,13 +772,15 @@ static void setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
 																	PLTT_SIZ,
 																	setup->heapID);
 	}
-	GFL_ARC_UTIL_TransVramBgCharacter(ARCID_TALKWIN_TEST, 
-																		NARC_talkwin_test_talkwin_NCGR,
-																		setup->ini.frameID,
-																		0,
-																		0,
-																		FALSE,
-																		setup->heapID);
+	//キャラクター転送
+	chrSiz = GFL_ARC_UTIL_TransVramBgCharacter(	ARCID_TALKWIN_TEST, 
+																							NARC_talkwin_test_talkwin_NCGR,
+																							setup->ini.frameID,
+																							setup->chrNumOffs,
+																							0,
+																							FALSE,
+																							setup->heapID);
+	return chrSiz;
 }
 
 //------------------------------------------------------------------
@@ -771,6 +808,7 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	BOOL overR = FALSE;
 	u8	frameID = tmsgwinSys->setup.ini.frameID;
 	u16	wplt = (tmsgwinSys->setup.ini.winPltID) << 12;
+	u16	chrOffs = tmsgwinSys->setup.chrNumOffs;
 
 	if(px == 0){ overL = TRUE; }
 	if((px + sx) == 32-1){ overR = TRUE; }
@@ -783,48 +821,56 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	//枠領域
 	if(overU == FALSE){
 		if(overL == FALSE){
-			GFL_BG_FillScreen(frameID, (wplt | UL_CHR), px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN );
+			GFL_BG_FillScreen
+				(frameID, (wplt | (UL_CHR+chrOffs)), px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN );
 		}
-		GFL_BG_FillScreen(frameID, (wplt | U_CHR), px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_FillScreen
+			(frameID, (wplt | (U_CHR+chrOffs)), px, py - 1, sx, 1, GFL_BG_SCRWRT_PALIN );
 		if(overR == FALSE){
-			GFL_BG_FillScreen(frameID, (wplt | UR_CHR), px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN );
+			GFL_BG_FillScreen
+				(frameID, (wplt | (UR_CHR+chrOffs)), px + sx, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN );
 		}
 	}
 	if(overL == FALSE){
-		GFL_BG_FillScreen(frameID, (wplt | L_CHR), px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_FillScreen
+			(frameID, (wplt | (L_CHR+chrOffs)), px - 1, py, 1, sy, GFL_BG_SCRWRT_PALIN );
 	}
 	if(overR == FALSE){
-		GFL_BG_FillScreen(frameID, (wplt | R_CHR), px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_FillScreen
+			(frameID, (wplt | (R_CHR+chrOffs)), px + sx, py, 1, sy, GFL_BG_SCRWRT_PALIN );
 	}
 	if(overD == FALSE){
 		if(overL == FALSE){
-			GFL_BG_FillScreen(frameID, (wplt | DL_CHR), px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN );
+			GFL_BG_FillScreen
+				(frameID, (wplt | (DL_CHR+chrOffs)), px - 1, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN );
 		}
-		GFL_BG_FillScreen(frameID, (wplt | D_CHR), px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_FillScreen
+			(frameID, (wplt | (D_CHR+chrOffs)), px, py + sy, sx, 1, GFL_BG_SCRWRT_PALIN );
 		if(overR == FALSE){
-			GFL_BG_FillScreen(frameID, (wplt | DR_CHR), px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN );
+			GFL_BG_FillScreen
+				(frameID, (wplt | (DR_CHR+chrOffs)), px + sx, py + sy, 1, 1, GFL_BG_SCRWRT_PALIN );
 		}
 	}
 	//tail接続領域
 	if(tmsgwin->tailData.pattern == TAIL_SETPAT_U){
 		if(overU == FALSE){
 			GFL_BG_FillScreen
-				(frameID, (wplt | SPC_CHR), px + sx/2 - 1, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN );
+				(frameID, (wplt | (SPC_CHR+chrOffs)), px + sx/2 - 1, py - 1, 2, 1, GFL_BG_SCRWRT_PALIN );
 		}
 	} else if(tmsgwin->tailData.pattern == TAIL_SETPAT_D){
 		if(overD == FALSE){
 			GFL_BG_FillScreen
-				(frameID, (wplt | SPC_CHR), px + sx/2 - 1, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN );
+				(frameID, (wplt | (SPC_CHR+chrOffs)), px + sx/2 - 1, py + sy, 2, 1, GFL_BG_SCRWRT_PALIN );
 		}
 	} else if(tmsgwin->tailData.pattern == TAIL_SETPAT_L){
 		if(overL == FALSE){
 			GFL_BG_FillScreen
-				(frameID, (wplt | SPC_CHR), px - 1, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN );
+				(frameID, (wplt | (SPC_CHR+chrOffs)), px - 1, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN );
 		}
 	} else if(tmsgwin->tailData.pattern == TAIL_SETPAT_R){
 		if(overR == FALSE){
 			GFL_BG_FillScreen
-				(frameID, (wplt | SPC_CHR), px + sx, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN );
+				(frameID, (wplt | (SPC_CHR+chrOffs)), px + sx, py + sy/2 - 1, 1, 2, GFL_BG_SCRWRT_PALIN );
 		}
 	}
 

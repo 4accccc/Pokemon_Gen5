@@ -27,6 +27,7 @@ typedef struct {
 	HEAPID							heapID;
 	GFL_G3D_CAMERA*			g3Dcamera;
 	GFL_FONT*						fontHandle;
+	u16									chrNumOffs;
 
 	TALKMSGWIN_SYS_INI	ini;
 
@@ -52,6 +53,7 @@ extern void							TALKMSGWIN_SystemMain( TALKMSGWIN_SYS* tmsgwinSys );
 extern void							TALKMSGWIN_SystemDraw2D( TALKMSGWIN_SYS* tmsgwinSys );
 extern void							TALKMSGWIN_SystemDraw3D( TALKMSGWIN_SYS* tmsgwinSys );
 extern void							TALKMSGWIN_SystemDelete( TALKMSGWIN_SYS* tmsgwinSys );
+extern u32							TALKMSGWIN_SystemGetUsingChrNumber( TALKMSGWIN_SYS* tmsgwinSys );
 
 //============================================================================================
 /**
