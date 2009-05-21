@@ -242,7 +242,7 @@ static void initC3Parameter(FIELD_CAMERA * camera)
 	
 	FIELD_CAMERA_SetTargetPos(camera, &trans);
 
-	FIELD_CAMERA_SetFar(camera, 0x480000);
+	FIELD_CAMERA_SetFar(camera, 0x680000);
 	FIELD_CAMERA_SetNear(camera, 0x64000);
 	camera->watch_target = NULL;
 

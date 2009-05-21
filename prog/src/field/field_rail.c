@@ -240,13 +240,13 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
     static const char * const names[] = {
       "RAIL_KEY_NULL","RAIL_KEY_UP","RAIL_KEY_RIGHT","RAIL_KEY_DOWN","RAIL_KEY_LEFT"
     };
-    TAMADA_Printf("RAIL:%s :ofs=%d\n", names[set_key], man->line_ofs);
+    OS_TPrintf("RAIL:%s :ofs=%d\n", names[set_key], man->line_ofs);
     man->last_active_key = set_key;
   }
 
   if (type != man->nowRail.type)
   {
-    TAMADA_Printf("RAIL:change to %d(%s:%08x)\n",
+    OS_TPrintf("RAIL:change to %d(%s:%08x)\n",
         man->nowRail.type,
         getRailName(&man->nowRail),
         man->nowRail.dummy);
@@ -599,4 +599,180 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
 
 
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  円移動
+ *
+ *	@param	man     レールマネージャ
+ *	@param	pos     位置格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_POSFUNC_CircleLine( const FIELD_RAIL_MAN * man, VecFx32 * pos )
+{
+  const RAIL_LINE * nLine = man->nowRail.line;
+  fx32 ofs = (man->line_ofs * FX32_ONE) / nLine->line_divider;
+  VecFx32 p0 = nLine->point_s->pos;
+  VecFx32 p1 = nLine->point_e->pos;
+  VecFx32 n0, n1;
+  VecFx32 def_vec = {0,0,FX32_ONE};
+  VecFx32 normal;
+  int rotate_dist, rotate_dist1;
+  u16 rotate, rotate_s;
+  fx32 dist0, dist1;
+  FIELD_CAMERA * cam = man->field_camera;
+  VecFx32 target;
+  
+  // ターゲット座標と、p0 p1 から回転角度と距離の移動値を求める。
+  FIELD_CAMERA_GetTargetPos( cam, &target );
+
+  // XZ平面で考える
+  target.y  = 0;
+  p0.y      = 0;
+  p1.y      = 0;
+
+  //  
+  VEC_Subtract( &p0, &target, &p0 );
+  VEC_Subtract( &p1, &target, &p1 );
+  VEC_Normalize( &p0, &n0 );
+  VEC_Normalize( &p1, &n1 );
+
+  // 移動角度を求める
+  rotate_s  = FX_AcosIdx( VEC_DotProduct( &n0, &def_vec ) );
+  VEC_CrossProduct( &n0, &def_vec, &normal );
+  if( normal.y > 0 ){
+    rotate_dist = -rotate_s;
+    rotate_s    = 0xffff - rotate_s;
+  }else{
+    rotate_dist = rotate_s;
+  }
+  rotate_dist1 = FX_AcosIdx( VEC_DotProduct( &n1, &def_vec ) );
+  VEC_CrossProduct( &n1, &def_vec, &normal );
+  if( normal.y > 0 ){
+    rotate_dist1 = -rotate_dist1;
+  }
+  rotate_dist = rotate_dist1 - rotate_dist;
+  
+  dist0   = VEC_Mag( &p0 );
+  dist1   = VEC_Mag( &p1 );
+  dist1   = dist1 - dist0;
+
+  /*
+  OS_TPrintf( "rotate dist=0x%x (%d)\n", rotate_dist, rotate_dist/182 );
+  OS_TPrintf( "rotate_s dist=0x%x (%d)\n", rotate_s, rotate_s/182 );
+
+  OS_TPrintf( "dist0=0x%x\n", dist0 );
+  OS_TPrintf( "dist dist=0x%x\n", dist1 );
+  //*/
+
+  // 今のline_ofsの回転角度と距離を求める
+  if( rotate_dist != 0 ){
+    rotate  = rotate_s + (( rotate_dist * man->line_ofs ) / nLine->line_divider);
+  }else{
+    rotate  = rotate_s;
+  }
+  if( dist1 != 0 ){
+    dist0   = dist0 + FX_Div( FX_Mul( dist1, man->line_ofs<<FX32_SHIFT ), nLine->line_divider<<FX32_SHIFT );
+  }
+    
+  pos->y = 0;
+  pos->x = FX_Mul( FX_SinIdx( rotate ), dist0 ) + target.x;
+  pos->z = FX_Mul( FX_CosIdx( rotate ), dist0 ) + target.z;
+
+  /*
+  OS_TPrintf( "line_ofs %d\n", man->line_ofs );
+  OS_TPrintf( "pos x=0x%x z=0x%x\n", pos->x, pos->z );
+  //*/
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  円カメラ動作
+ *
+ *	@param	man 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_POSFUNC_CircleCamera( const FIELD_RAIL_MAN * man )
+{
+  const RAIL_CAMERA_SET * c0;
+  const RAIL_CAMERA_SET * c1;
+  VecFx32 pos, target, npos, normal;
+  fx32 len, dist;
+  VecFx32 normal_vec = {0,0,FX32_ONE};
+  u16 yaw, pitch;
+  u32 div;
+  
+  // ターゲット座標取得
+  FIELD_CAMERA_GetTargetPos( man->field_camera, &target );
+  target.y  = 0;
+
+  // LINEとPOINTで動作を変更
+  if(man->nowRail.type == FIELD_RAIL_TYPE_LINE)
+  {
+    c0 = man->nowRail.line->point_s->camera_set;
+    GF_ASSERT(c0->func == FIELD_RAIL_POSFUNC_CircleCamera);
+    c1 = man->nowRail.line->point_e->camera_set;
+    GF_ASSERT(c1->func == FIELD_RAIL_POSFUNC_CircleCamera);
+
+    // 時機位置取得
+    FIELD_RAIL_MAN_GetPos( man, &pos ); 
+    pos.y = 0;
+    VEC_Subtract( &pos, &target, &pos );
+    VEC_Normalize( &pos, &npos );
+
+    div = man->nowRail.line->line_divider;
+
+    yaw = FX_AcosIdx( VEC_DotProduct( &npos, &normal_vec ) );
+    VEC_CrossProduct( &npos, &normal_vec, &normal );
+    if( normal.y > 0 ){
+      yaw = 0xffff-yaw;
+    }
+
+    // ピッチ
+    if( c0->param1 != c1->param1 ){
+      pitch = c0->param1 + ( ((int)c1->param1 - (int)c0->param1) * man->line_ofs / div );
+    }else{
+      pitch = c0->param1;
+    }
+
+    // 距離の計算 fx32型
+    dist = ((fx32)c1->param0 - (fx32)c0->param0);
+    if( dist > 0 ){
+      len = (fx32)c0->param0 + FX_Div( FX_Mul( dist, man->line_ofs<<FX32_SHIFT ), div<<FX32_SHIFT );
+    }else{
+      len = c0->param0;
+    }
+  }
+  else
+  {
+    c0 = man->nowRail.point->camera_set;
+    GF_ASSERT(c0->func == FIELD_RAIL_POSFUNC_CircleCamera);
+
+    // 時機位置取得
+    FIELD_RAIL_MAN_GetPos( man, &pos ); 
+    pos.y = 0;
+    VEC_Subtract( &pos, &target, &pos );
+    VEC_Normalize( &pos, &npos );
+
+
+    div = man->nowRail.line->line_divider;
+
+    // ヨー
+    yaw = FX_AcosIdx( VEC_DotProduct( &npos, &normal_vec ) );
+    VEC_CrossProduct( &npos, &normal_vec, &normal );
+    if( normal.y > 0 ){
+      yaw = 0xffff-yaw;
+    }
+
+    // ピッチ
+    pitch = c0->param1;
+
+    // 距離の計算 fx32型
+    len = c0->param0;
+  }
+
+  FIELD_CAMERA_SetAngleYaw(man->field_camera, yaw);
+  FIELD_CAMERA_SetAnglePitch(man->field_camera, pitch);
+  FIELD_CAMERA_SetAngleLen(man->field_camera, len);
+}
 

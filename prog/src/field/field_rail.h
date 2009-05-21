@@ -178,5 +178,9 @@ extern void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man);
 extern void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man);
 
 
-
+//-----------------------------------------------------------------------------
+//  â~ìÆçÏ
+//-----------------------------------------------------------------------------
+extern void FIELD_RAIL_POSFUNC_CircleLine( const FIELD_RAIL_MAN * man, VecFx32 * pos );
+extern void FIELD_RAIL_POSFUNC_CircleCamera( const FIELD_RAIL_MAN * man );
 
