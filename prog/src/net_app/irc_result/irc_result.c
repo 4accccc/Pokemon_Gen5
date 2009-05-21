@@ -1900,8 +1900,7 @@ static void SEQFUNC_DecideHeart( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_HEART_SCALSE_INIT:
-		BigHeart_InitScale( p_wk, 100 );
-		//BigHeart_InitScale( p_wk, p_wk->p_param->score );
+		BigHeart_InitScale( p_wk, p_wk->p_param->score );
 		*p_seq	= SEQ_HEART_SCALSE_MAIN;
 		break;
 
@@ -2036,6 +2035,7 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_MEMO_ROT_EXIT,
 		SEQ_TOUCH,
 		SEQ_MEMO_QUESTION,
+		SEQ_WAIT,
 		SEQ_TOUCH2,
 		SEQ_END,
 	};
@@ -2096,8 +2096,27 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_MEMO_QUESTION:
-		MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_GOOD_000 );
-		*p_seq	= SEQ_TOUCH2;
+		if( p_wk->p_param->score < 40 )
+		{	
+			MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_BAD_000 );
+		}
+		else if( p_wk->p_param->score < 70 )
+		{	
+			MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_NORMAL_000 );
+		}
+		else if( p_wk->p_param->score <= 100 )
+		{	
+			MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_GOOD_000 );
+		}
+		*p_seq	= SEQ_WAIT;
+		break;
+
+	case SEQ_WAIT:
+		if( p_wk->cnt++ > 30 )
+		{	
+			p_wk->cnt	= 0;
+			*p_seq	= SEQ_TOUCH2;
+		}
 		break;
 
 	case SEQ_TOUCH2:

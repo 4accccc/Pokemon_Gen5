@@ -99,6 +99,7 @@ typedef struct
 	GRAPHIC_BG_WORK		gbg;
 	GRAPHIC_3D_WORK		g3d;
 	CIRCLE_WORK				c[CIRCLE_MAX];
+	BOOL							is_init;
 
 	GFL_TCB *p_tcb;
 } GRAPHIC_WORK;
@@ -133,11 +134,14 @@ typedef struct
 	GFL_BMPWIN				*p_bmpwin;
 
 	BOOL	is_end;
+	BOOL	is_proc;
 
 	//ProcØ‚è‘Ö‚¦—p
 	FSOverlayID overlay_Id;
 	const GFL_PROC_DATA *p_procdata;
 	void	*p_proc_work;
+
+	IRC_RESULT_PARAM	result_param;
 } DEBUG_NAGI_MAIN_WORK;
 
 //-------------------------------------
@@ -162,6 +166,10 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 static void DEBUG_NAGI_COMMAND_ChangeProc( DEBUG_NAGI_MAIN_WORK * p_wk, FSOverlayID ov_id, const GFL_PROC_DATA *p_procdata, void *p_work );
 static void DEBUG_NAGI_COMMAND_ChangeMenu( DEBUG_NAGI_MAIN_WORK * p_wk, const LIST_SETUP_TBL *cp_tbl, u32 tbl_max );
 static void DEBUG_NAGI_COMMAND_End( DEBUG_NAGI_MAIN_WORK *p_wk );
+
+static void CreateTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk, HEAPID heapID );
+static void DeleteTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk );
+
 //grp
 static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
@@ -300,7 +308,11 @@ static const LIST_SETUP_TBL sc_list_data_page1[]	=
 	}
 };
 
-
+//-------------------------------------
+///	ŽŸ‚ÌPROC—pƒpƒ‰ƒ[ƒ^
+//=====================================
+#define PROC_PARAM_NUM	(0x100)
+static u8 s_proc_buff[PROC_PARAM_NUM];
 
 //----------------------------------------------------------------------------
 /**
@@ -321,16 +333,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(DEBUG_NAGI_MAIN_WORK), HEAPID_NAGI_DEBUG );
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
-	GRAPHIC_Init( &p_wk->grp, HEAPID_NAGI_DEBUG );
-
-	MSG_Init( &p_wk->msg, HEAPID_NAGI_DEBUG );
-
-	p_wk->p_bmpwin	= GFL_BMPWIN_Create( sc_bgcnt_frame[GRAPHIC_BG_FRAME_TEXT],
-			1, 1, 30, 10, 0, GFL_BMP_CHRAREA_GET_B );
-	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
-
-	LIST_Init( &p_wk->list, sc_list_data_home, NELEMS(sc_list_data_home), 
-			&p_wk->msg, p_wk->p_bmpwin, HEAPID_NAGI_DEBUG );
+	CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -353,18 +356,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Exit( GFL_PROC *p_proc, int *p_seq, void 
 
 	p_wk	= p_work;
 
-	if( p_wk->p_procdata )
-	{	
-		GFL_PROC_SysSetNextProc( p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
-	}
-
-	LIST_Exit( &p_wk->list );
-
-	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
-
-	MSG_Exit( &p_wk->msg );
-
-	GRAPHIC_Exit( &p_wk->grp );
+	DeleteTemporaryModules( p_wk );
 
 	GFL_PROC_FreeWork( p_proc );
 	GFL_HEAP_DeleteHeap( HEAPID_NAGI_DEBUG );
@@ -395,6 +387,11 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 		SEQ_FADEIN_START,
 		SEQ_FADEIN_WAIT,
 		SEQ_EXIT,
+
+		SEQ_PROC_FADEIN_START,
+		SEQ_PROC_FADEIN_WAIT,
+		SEQ_CALL_PROC,
+		SEQ_RET_PROC,
 	};
 
 	DEBUG_NAGI_MAIN_WORK	*p_wk;
@@ -435,7 +432,37 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 			{	
 				*p_seq	= SEQ_FADEIN_START;
 			}
+
+			//PROC”»’è
+			if( p_wk->is_proc )
+			{	
+				p_wk->is_proc	= FALSE;
+				*p_seq	= SEQ_PROC_FADEIN_START;
+			}
 		}
+		break;
+
+	case SEQ_PROC_FADEIN_START:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+		*p_seq	= SEQ_PROC_FADEIN_WAIT;
+		break;
+
+	case SEQ_PROC_FADEIN_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= SEQ_CALL_PROC;
+		}
+		break;
+
+	case SEQ_CALL_PROC:
+		DeleteTemporaryModules( p_wk );
+		GFL_PROC_SysCallProc( p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
+		*p_seq	= SEQ_RET_PROC;
+		break;
+
+	case SEQ_RET_PROC:
+		CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
+		*p_seq	= SEQ_FADEOUT_START;
 		break;
 
 	case SEQ_FADEIN_START:
@@ -482,7 +509,9 @@ static void DEBUG_NAGI_COMMAND_ChangeProc( DEBUG_NAGI_MAIN_WORK * p_wk, FSOverla
 	p_wk->overlay_Id	= ov_id;
 	p_wk->p_procdata	= p_procdata;
 	p_wk->p_proc_work	= p_work;
-	p_wk->is_end	= TRUE;
+//	p_wk->is_end	= TRUE;
+
+	p_wk->is_proc	= TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -514,6 +543,45 @@ static void DEBUG_NAGI_COMMAND_End( DEBUG_NAGI_MAIN_WORK *p_wk )
 	p_wk->is_end	= TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ˆêŽž“I‚Èƒ‚ƒWƒ…[ƒ‹‚ðì¬
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ƒ[ƒN
+ *	@param	heapID											ƒq[ƒvID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CreateTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk, HEAPID heapID )
+{	
+	GRAPHIC_Init( &p_wk->grp, heapID );
+
+	MSG_Init( &p_wk->msg, heapID );
+
+	p_wk->p_bmpwin	= GFL_BMPWIN_Create( sc_bgcnt_frame[GRAPHIC_BG_FRAME_TEXT],
+			1, 1, 30, 10, 0, GFL_BMP_CHRAREA_GET_B );
+	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+
+	LIST_Init( &p_wk->list, sc_list_data_home, NELEMS(sc_list_data_home), 
+			&p_wk->msg, p_wk->p_bmpwin, heapID );
+
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ˆêŽž“I‚Èƒ‚ƒWƒ…[ƒ‹‚ð”jŠü
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ƒ[ƒN
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DeleteTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	LIST_Exit( &p_wk->list );
+	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+	MSG_Exit( &p_wk->msg );
+	GRAPHIC_Exit( &p_wk->grp );
+}
 //=============================================================================
 /**
  *	ƒŠƒXƒgŠÖ”
@@ -557,7 +625,8 @@ static void LISTDATA_ChangeProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk )
 FS_EXTERN_OVERLAY(irc_result);
 static void LISTDATA_ChangeProcResult( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_result), &IrcResult_ProcData, NULL );
+	p_wk->result_param.score	= 100;
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_result), &IrcResult_ProcData, &p_wk->result_param );
 }
 //----------------------------------------------------------------------------
 /**
@@ -667,6 +736,8 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 	}
 
 	p_wk->p_tcb	= GFUser_VIntr_CreateTCB(Graphic_Tcb_Capture, p_wk, 0 );
+	
+	p_wk->is_init	= TRUE;
 }
 
 
@@ -680,10 +751,14 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 {
+	GF_ASSERT( p_wk->is_init );
+
 	GFL_TCB_DeleteTask( p_wk->p_tcb );
 
 	GRAPHIC_3D_Exit( &p_wk->g3d );
 	GRAPHIC_BG_Exit( &p_wk->gbg );
+
+	p_wk->is_init	= FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -696,24 +771,24 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 {
-
-	GRAPHIC_3D_StartDraw( &p_wk->g3d );
-	//NNSŒn‚Ì3D•`‰æ
-	//‚È‚µ
-	NNS_G3dGeFlushBuffer();
-	//SDKŒn‚Ì3D•`‰æ
-
-	//‰~‚Ì•`‰æ
+	if( p_wk->is_init )
 	{	
-		int i;
-		for( i = 0; i < CIRCLE_MAX; i++ )
+		GRAPHIC_3D_StartDraw( &p_wk->g3d );
+		//NNSŒn‚Ì3D•`‰æ
+		//‚È‚µ
+		NNS_G3dGeFlushBuffer();
+		//SDKŒn‚Ì3D•`‰æ
+
+		//‰~‚Ì•`‰æ
 		{	
-			CIRCLE_Draw( &p_wk->c[i] );
+			int i;
+			for( i = 0; i < CIRCLE_MAX; i++ )
+			{	
+				CIRCLE_Draw( &p_wk->c[i] );
+			}
 		}
+		GRAPHIC_3D_EndDraw( &p_wk->g3d );
 	}
-
-
-	GRAPHIC_3D_EndDraw( &p_wk->g3d );
 }
 
 //----------------------------------------------------------------------------
