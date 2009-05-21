@@ -131,6 +131,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 	camera->type = type;
 	camera->g3Dcamera = cam;
 	camera->watch_target = target;
+  camera->watch_camera = NULL;
 	camera->heapID = heapID;
 
   VEC_Set( &camera->camPos, 0, 0, 0 );
@@ -318,11 +319,10 @@ static BOOL updateCamPosBinding(FIELD_CAMERA * camera)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void updateAngleCamera(FIELD_CAMERA * camera)
+static void updateAngleCameraPos(FIELD_CAMERA * camera)
 { 
   enum {  PITCH_LIMIT = 0x200 };
   VecFx32 cameraPos;
-	VecFx32 cameraTarget = {0};
 	fx16 sinYaw = FX_SinIdx(camera->angle_yaw);
 	fx16 cosYaw = FX_CosIdx(camera->angle_yaw);
 	fx16 sinPitch = FX_SinIdx(camera->angle_pitch);
@@ -337,35 +337,18 @@ static void updateAngleCamera(FIELD_CAMERA * camera)
 	VEC_MultAdd( camera->angle_len, &cameraPos, &camera->target, &cameraPos );
   //cameraPos = cameraPos * length + camera->target
   camera->camPos = cameraPos;
+}
 	
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void updateG3Dcamera(FIELD_CAMERA * camera)
+{
+	VecFx32 cameraTarget;
 	// カメラターゲット補正
   VEC_Add( &camera->target, &camera->target_offset, &cameraTarget );
 
 	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
-	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &cameraPos );
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void updateCameraCalc(FIELD_CAMERA * camera)
-{ 
-   updateAngleCamera(camera);
-}
-//------------------------------------------------------------------
-/**
- * @brief	デバッグのためのキー制御
- */
-//------------------------------------------------------------------
-static void debugControl( FIELD_CAMERA * camera, int key)
-{
-	VecFx32	vecMove = { 0, 0, 0 };
-	VecFx32	vecUD = { 0, 0, 0 };
-	BOOL	mvFlag = FALSE;
-	if( key & PAD_BUTTON_R ){
-		camera->angle_yaw -= RT_SPEED/2;
-	}
-	if( key & PAD_BUTTON_L ){
-		camera->angle_yaw += RT_SPEED/2;
-	}
+	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
 }
 
 //------------------------------------------------------------------
@@ -373,28 +356,20 @@ static void debugControl( FIELD_CAMERA * camera, int key)
 static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	updateTargetBinding(camera);
-  updateCameraCalc(camera);
+  updateAngleCameraPos(camera);
+  updateG3Dcamera(camera);
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
 {
-	//debugControl(camera, key_cont);
 	updateTargetBinding(camera);
-  if (updateCamPosBinding(camera))
+  if (!updateCamPosBinding(camera))
   {
-    VecFx32 cameraTarget;
-    // カメラターゲット補正
-    VEC_Add( &camera->target, &camera->target_offset, &cameraTarget );
-
-    GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
-    GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
+    updateAngleCameraPos(camera);
   }
-  else
-  {
-    updateCameraCalc(camera);
-  }
+  updateG3Dcamera(camera);
 }
 
 //------------------------------------------------------------------
@@ -402,8 +377,10 @@ static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
 static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	updateTargetBinding(camera);
-  updateCameraCalc(camera);
+  updateAngleCameraPos(camera);
+  updateG3Dcamera(camera);
 }
+
 
 
 //============================================================================================
@@ -532,7 +509,31 @@ void	FIELD_CAMERA_SetTargetOffset( FIELD_CAMERA* camera, const VecFx32* target_o
   camera->target_offset = *target_offset;
 }
 
-
+//------------------------------------------------------------------
+/**
+ * @brief カメラ位置の取得
+ * @param	camera		        FIELDカメラ制御ポインタ
+ * @param camPos            取得位置を格納するVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+void FIELD_CAMERA_GetCameraPos( const FIELD_CAMERA * camera, VecFx32 * camPos)
+{
+  *camPos = camera->camPos;
+}
+//------------------------------------------------------------------
+/**
+ * @brief カメラ位置のセット
+ * @param	camera		        FIELDカメラ制御ポインタ
+ * @param camPos            設定する位置情報
+ *
+ * FIELD_CAMERA内部でカメラ位置が制御されているときには
+ * 反映されない場合もあるので注意
+ */
+//------------------------------------------------------------------
+void FIELD_CAMERA_SetCameraPos( FIELD_CAMERA * camera, const VecFx32 * camPos)
+{
+  camera->camPos = *camPos;
+}
 
 //----------------------------------------------------------------------------
 /**

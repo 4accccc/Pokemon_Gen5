@@ -106,6 +106,13 @@ extern void	FIELD_CAMERA_GetTargetOffset( const FIELD_CAMERA* camera, VecFx32* t
 extern void	FIELD_CAMERA_SetTargetOffset( FIELD_CAMERA* camera, const VecFx32* target_offset );
 
 //------------------------------------------------------------------
+//  カメラ位置の取得・セット
+//  カメラ動作状態によっては正しく反映されていないので注意
+//------------------------------------------------------------------
+extern void FIELD_CAMERA_GetCameraPos( const FIELD_CAMERA * camera, VecFx32 * camPos);
+extern void FIELD_CAMERA_SetCameraPos( FIELD_CAMERA * camera, const VecFx32 * camPos);
+
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 extern const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera);
 
