@@ -47,7 +47,7 @@ typedef struct {
  *
  */
 //============================================================================================
-extern TALKMSGWIN_SYS*	TALKWINMSG_SystemCreate( TALKMSGWIN_SYS_SETUP* setup );
+extern TALKMSGWIN_SYS*	TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup );
 extern void							TALKMSGWIN_SystemMain( TALKMSGWIN_SYS* tmsgwinSys );
 extern void							TALKMSGWIN_SystemDraw2D( TALKMSGWIN_SYS* tmsgwinSys );
 extern void							TALKMSGWIN_SystemDraw3D( TALKMSGWIN_SYS* tmsgwinSys );

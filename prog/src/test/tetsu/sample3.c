@@ -496,7 +496,7 @@ static void systemSetup(SAMPLE3_WORK* sw)
 		setup.fontHandle = sw->fontHandle;
 		setup.ini = ini;
 
-		sw->tmsgwinSys = TALKWINMSG_SystemCreate(&setup);
+		sw->tmsgwinSys = TALKMSGWIN_SystemCreate(&setup);
 	}
 }
 

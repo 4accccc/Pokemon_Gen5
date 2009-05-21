@@ -131,7 +131,7 @@ static void clearWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
  *
  */
 //============================================================================================
-TALKMSGWIN_SYS* TALKWINMSG_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
+TALKMSGWIN_SYS* TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
 {
 	int i;
 
