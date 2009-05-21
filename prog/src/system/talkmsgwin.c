@@ -136,6 +136,7 @@ static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup );
 
 static void initWindow( TMSGWIN* tmsgwin );
 static BOOL checkEmptyWindow( TMSGWIN* tmsgwin );
+static BOOL checkPrintOnWindow( TMSGWIN* tmsgwin );
 static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 													TMSGWIN*					tmsgwin,
 													VecFx32*					pTarget,
@@ -393,6 +394,22 @@ void TALKMSGWIN_CloseWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )
 }
 
 //------------------------------------------------------------------
+BOOL	TALKMSGWIN_CheckPrintOn( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )	
+{
+	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
+
+	return checkPrintOnWindow(&tmsgwinSys->tmsgwin[tmsgwinIdx]);
+}
+
+//------------------------------------------------------------------
+PRINT_STREAM*	TALKMSGWIN_GetPrintStream( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )	
+{
+	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
+
+	return tmsgwinSys->tmsgwin[tmsgwinIdx].printStream; 
+}
+
+//------------------------------------------------------------------
 
 
 
@@ -422,6 +439,14 @@ static void initWindow( TMSGWIN* tmsgwin )
 static BOOL checkEmptyWindow( TMSGWIN* tmsgwin )
 {
 	if( tmsgwin->seq != WINSEQ_EMPTY ){ return FALSE; }
+
+	return TRUE;
+}
+
+//------------------------------------------------------------------
+static BOOL checkPrintOnWindow( TMSGWIN* tmsgwin )
+{
+	if( tmsgwin->seq != WINSEQ_HOLD ){ return FALSE; }
 
 	return TRUE;
 }
