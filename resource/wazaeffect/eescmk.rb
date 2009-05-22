@@ -364,7 +364,11 @@ end
 				write_file = "we_" + num_str + ".s"
 				fp_w = open( write_file, "w" )
 				fp_w.print("//===================================================\n")
+				fp_w.print("//\n")
 				fp_w.print("//	エフェクトシーケンス\n")
+				fp_w.print("//\n")
+				fp_w.print("//	コンバータから吐き出されたファイルです\n")
+				fp_w.print("//\n")
 				fp_w.print("//===================================================\n")
 				fp_w.print("\n")
 				fp_w.print("\t.text\n")
@@ -373,9 +377,9 @@ end
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_efftool.h\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_effvm_def.h\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/system/mcss.h\n")
-				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/particle/wazaeffect/spa_def.h\n")
+				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/particle/battleeffect/spa_def.h\n")
 				inc_header.size.times { |inc|
-					fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/particle/wazaeffect/" + inc_header[ inc ] + "\n")
+					fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/particle/battleeffect/" + inc_header[ inc ] + "\n")
 				}
 				fp_w.print("\n")
 				fp_w.print( "WE_" + num_str + ":\n" )
@@ -496,7 +500,7 @@ end
 		#ファイルサイズ書き出し
 		bin_list.size.times {|num|
 			fp_r = File::stat( bin_list[ num ] )
-			padding << fp_r.size % 4
+			padding << 4 - ( fp_r.size % 4 )
 			size = fp_r.size + padding[ num ]
 			file.write [offset].pack("L")
 			offset += size
