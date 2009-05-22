@@ -735,12 +735,6 @@ enum {
 	MSG_TEST1 = 0,
 	MSG_TEST2,
 	MSG_TEST3,
-	MSG_TEST4,
-	MSG_TEST5,
-	MSG_TEST6,
-	MSG_TEST7,
-	MSG_TEST8,
-	MSG_TEST9,
 
 	MSG_TEST_MAX,
 };
@@ -857,49 +851,24 @@ static const COMM_TBL commTbl[COMM_MAX] = {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static const u16* testMsgTbl[MSG_TEST_MAX] = {
-	{ L"これでこの１巡だけでなく・・・" },
-	{ L"４巡・・・！" },
-	{ L"つまりラスト・・・" },
-	{ L"１７巡までセーフ・・・！" },
-	{ L"逃げ切り・・・！" },
-	{ L"神が選びしは・・・" },
-	{ L"やはり・・・" },
-	{ L"わし・・・！" },
-	{ L"ロン" },
+	{ L"戦闘力・・・" },
+	{ L"たったの５か・・・" },
+	{ L"ゴミめ・・・" },
 };
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static const u16 sampleMsg1[] = {
-	COMMSETMSG, 0, 10, 1, 20, 2, MSG_TEST1, 248, 184,
+	COMMSETMSG, 0, 16, 2, 12, 2, MSG_TEST1, 128, 160,
 	COMMWAIT, 120,
-	COMMCONNECTMSG, 1, 20, 6, 6, 2, MSG_TEST2, 0,
+	COMMCONNECTMSG, 1, 12, 8, 16, 2, MSG_TEST2, 0,
 	COMMWAIT, 120,
-	COMMCONNECTMSG, 2, 3, 6, 12, 2, MSG_TEST3, 1,
-	COMMWAIT, 120,
-	COMMCONNECTMSG, 3, 1, 11, 14, 2, MSG_TEST4, 2,
-	COMMWAIT, 120,
-	COMMCONNECTMSG, 4, 20, 11, 10, 2, MSG_TEST5, 3,
-	COMMWAIT, 120,
-	COMMCONNECTMSG, 5, 18, 16, 12, 2, MSG_TEST6, 4,
-	COMMWAIT, 120,
-	COMMCONNECTMSG, 6, 6, 16, 8, 2, MSG_TEST7, 5,
-	COMMWAIT, 120,
-	COMMCONNECTMSG, 7, 16, 20, 6, 2, MSG_TEST8, 6,
-	COMMWAIT, 60,
-
-	COMMSETMSG, 8, 6, 20, 6, 2, MSG_TEST9, 8, 184,
+	COMMCONNECTMSG, 2, 12, 14, 10, 2, MSG_TEST3, 1,
 	COMMWAIT, 120,
 
 	COMMDELMSG, 0,
 	COMMDELMSG, 1,
 	COMMDELMSG, 2,
-	COMMDELMSG, 3,
-	COMMDELMSG, 4,
-	COMMDELMSG, 5,
-	COMMDELMSG, 6,
-	COMMDELMSG, 7,
-	COMMDELMSG, 8,
 	COMMEND,
 };
 
