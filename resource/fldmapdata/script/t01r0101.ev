@@ -36,7 +36,26 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*    WOMAN1用会話                                            */
 /**************************************************************/
 ev_t01r0101_woman1_1:
-  _END
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01r0101_test_01
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME T01R0101_WOMAN1_1,test01anime
+	_OBJ_ANIME_WAIT
+
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
+
+//--------------------------------------------------------------
+//	アニメーションデータ
+//--------------------------------------------------------------
+_ANIME_LABEL test01anime
+	_ANIME_DATA AC_WALK_R_8F,3
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA ACMD_END,0
