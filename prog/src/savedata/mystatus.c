@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "savedata/mystatus.h"
 #include "mystatus_local.h"
+#include "system/main.h"
 
 #define TR_LOW_MASK		(0xffff)
 
@@ -148,7 +149,13 @@ void MyStatus_SetMyName(MYSTATUS * my, const STRCODE * name)
 	GF_ASSERT(len < PERSON_NAME_SIZE + EOM_SIZE)
 	PM_strcpy(my->name, name);
 #else
-	GF_ASSERT(0);	//未作成
+  //※check　STRCODE同士のコピーが出来るようになったら作り直す
+  STRBUF *namebuf;
+  
+  namebuf = GFL_STR_CreateBuffer(BUFLEN_PERSON_NAME, GFL_HEAPID_APP);  //一時バッファ
+  GFL_STR_SetStringCode(namebuf, name);
+  GFL_STR_GetStringCode(namebuf, my->name, PERSON_NAME_SIZE + EOM_SIZE);
+  GFL_STR_DeleteBuffer(namebuf);
 #endif
 }
 
