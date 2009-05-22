@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-22T14:45:50"/>
+	<create user="matsumiya" host="W00179" date="2009-05-22T19:18:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 	<row id="msg_t01_testmsg01_01">
 		<comment>はい</comment>
 		<language name="JPN" width="256">では
-はなしかたを　かえてみるよ</language>
+話し方を　変えてみるよ</language>
 		<language name="JPN_KANJI" width="256">では
 はなしかたを　かえてみるよ</language>
 	</row>
@@ -314,8 +314,8 @@
 		<comment>いいえ</comment>
 		<language name="JPN" width="256">うむッ！　ひらがなには　ひらがなの
 あじわいって　やつが　あるからね</language>
-		<language name="JPN_KANJI" width="256">なるほどね
-漢字が　読める　大人なんだね</language>
+		<language name="JPN_KANJI" width="256">なるほど……
+君は　漢字が　好きなんだね</language>
 	</row>
 
 	<row id="msg_t01_testmsg02">
