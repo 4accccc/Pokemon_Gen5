@@ -23,6 +23,12 @@
 #include "font/font.naix"
 #include "msg/msg_btl_ui.h"
 
+#include "battle_input.h"
+#include "battle_input_type.h"
+#include "btlv_effect.h"
+#include "poke_tool/monsno_def.h"
+
+#define PLATINUM_UNDER_SCREEN	//有効にすることでプラチナ下画面Verになる
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -108,6 +114,9 @@ struct _BTLV_SCD {
 	const BTL_MAIN_MODULE* mainModule;
 	const BTL_POKE_CONTAINER* pokeCon;
 	HEAPID	heapID;
+
+	void	*bip;
+	BATTLE_CURSOR_DISP	cursor_disp;
 };
 
 
@@ -144,6 +153,7 @@ static void printCommWait( BTLV_SCD* wk );
 
 
 
+#ifndef PLATINUM_UNDER_SCREEN
 BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, 
 				const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID )
 {
@@ -204,6 +214,71 @@ void BTLV_SCD_Delete( BTLV_SCD* wk )
 	GFL_STR_DeleteBuffer( wk->strbuf );
 	GFL_HEAP_FreeMemory( wk );
 }
+#else PLATINUM_UNDER_SCREEN
+//プラチナ下画面移植Ver
+BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, 
+				const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID )
+{
+	BTLV_SCD* wk = GFL_HEAP_AllocMemory( heapID, sizeof(BTLV_SCD) );
+
+	wk->vcore = vcore;
+	wk->mainModule = mainModule;
+	wk->pokeCon = pokeCon;
+	wk->heapID = heapID;
+	wk->font = font;
+	wk->strbuf = GFL_STR_CreateBuffer( 128, heapID );
+	wk->pokesel_param = NULL;
+
+	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
+
+	spstack_init( wk );
+
+	return wk;
+}
+
+void BTLV_SCD_Setup( BTLV_SCD* wk )
+{
+	ARCHANDLE* hdl_bg;
+	ARCHANDLE* hdl_obj;
+
+	hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  wk->heapID ); 
+	hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, wk->heapID );
+
+	wk->bip = BINPUT_SystemInit( hdl_bg, hdl_obj, NULL, wk->font, BTLV_EFFECT_GetTCBSYS(), BTLV_EFFECT_GetPfd(), &wk->cursor_disp, 0, wk->heapID );
+	BINPUT_DefaultFrameSet();
+	BINPUT_DefaultDataSet( wk->bip );
+	
+	BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_WALL, TRUE, NULL );
+
+	GFL_ARC_CloseDataHandle( hdl_bg );
+	GFL_ARC_CloseDataHandle( hdl_obj );
+
+	///<obj
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+
+	//GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, wk->heapID );
+	PaletteWorkSet_Arc( BTLV_EFFECT_GetPfd(), ARCID_FONT, NARC_font_default_nclr, wk->heapID, FADE_SUB_BG, 0x10 * 8, 0x20 );
+
+	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_S, 0, 0, 32, 24, 8, GFL_BMP_CHRAREA_GET_F );
+	wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
+	GFL_BMP_Clear( wk->bmp, 0x0f );
+	PRINT_UTIL_Setup( &wk->printUtil, wk->win );
+	GFL_BMPWIN_MakeScreen( wk->win );
+	GFL_BMPWIN_TransVramCharacter( wk->win );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME3_S );
+
+}
+
+void BTLV_SCD_Delete( BTLV_SCD* wk )
+{
+	GFL_BMPWIN_Delete( wk->win );
+
+	PRINTSYS_QUE_Delete( wk->printQue );
+	GFL_STR_DeleteBuffer( wk->strbuf );
+	BINPUT_SystemFree( wk->bip );
+	GFL_HEAP_FreeMemory( wk );
+}
+#endif PLATINUM_UNDER_SCREEN
 
 //-------------------------------------------------
 // サブプロセススタック管理
@@ -269,6 +344,7 @@ BtlvScd_SelAction_Result BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
 	}
 }
 
+#ifndef PLATINUM_UNDER_SCREEN
 static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
 	{  0,  95,   0,  127 },
 	{  0,  95,  128, 255 },
@@ -276,6 +352,27 @@ static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
 	{ 96, 192,  128, 255 },
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 },
 };
+#else //PLATINUM_UNDER_SCREEN
+///コマンド選択タッチパネル領域設定
+static const GFL_UI_TP_HITTBL BattleMenuTouchData[] = {
+	//UP DOWN LEFT RIGHT
+	{3*8, 0x12*8, 0*8, 255},			//たたかう
+	{0x12*8, 0x18*8, 0*8, 0xa*8},		//バッグ
+	{0x12*8, 0x18*8, 0x16*8, 255},	//ポケモン
+	{0x13*8, 0x18*8, 0xb*8, 0x15*8},	//にげる
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+///技選択タッチパネル領域設定
+static const GFL_UI_TP_HITTBL SkillMenuTouchData[] = {
+	//UP DOWN LEFT RIGHT
+	{0x13*8, 0x18*8, 1*8, 0x1f*8},		//キャンセル
+	{3*8, 10*8, 0*8, 0x10*8},		//技1
+	{3*8, 10*8, 0x10*8, 255},	//技2
+	{0xb*8, 0x12*8, 0*8, 0x10*8},	//技3
+	{0xb*8, 0x12*8, 0x10*8, 255},	//技4
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+#endif	//PLATINUM_UNDER_SCREEN
 
 static const struct {
 		u8 x;
@@ -328,6 +425,7 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 {
 	BTLV_SCD* wk = wk_adrs;
 
+#ifndef PLATINUM_UNDER_SCREEN
 	switch( *seq ){
 	case 0:
 		GFL_BMP_Clear( wk->bmp, 0x0f );
@@ -336,7 +434,6 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 		printBtn( wk, 128,  0, 128, 96, TEST_SELWIN_COL2, BTLMSG_UI_SEL_ITEM );
 		printBtn( wk,   0, 96, 128, 96, TEST_SELWIN_COL3, BTLMSG_UI_SEL_POKEMON );
 		printBtn( wk, 128, 96, 128, 96, TEST_SELWIN_COL4, BTLMSG_UI_SEL_ESCAPE );
-
 		(*seq)++;
 		break;
 
@@ -349,6 +446,20 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 		break;
 	}
 	return FALSE;
+#else	//PLATINUM_UNDER_SCREEN
+	{	
+		ARCHANDLE* hdl_bg;
+		ARCHANDLE* hdl_obj;
+
+		hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  wk->heapID ); 
+		hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, wk->heapID );
+		BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_A, FALSE, NULL );
+
+		GFL_ARC_CloseDataHandle( hdl_bg );
+		GFL_ARC_CloseDataHandle( hdl_obj );
+	}
+	return TRUE;
+#endif	//PLATINUM_UNDER_SCREEN
 }
 
 static BOOL selectAction_loop( int* seq, void* wk_adrs )
@@ -367,7 +478,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 	switch( *seq ){
 	case SEQ_START:
 		{
-			int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
+			int hit = GFL_UI_TP_HitTrg( BattleMenuTouchData );
 			if( hit != GFL_UI_TP_HIT_NONE )
 			{
 				hit += 1;
@@ -387,12 +498,17 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 					(*seq) = SEQ_SEL_ESCAPE;
 					break;
 				}
+				if( (*seq) != SEQ_START )
+				{	
+					Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
+				}
 			}
 		}
 		break;
 
 	case SEQ_SEL_FIGHT:
 		{
+#ifndef PLATINUM_UNDER_SCREEN
 			u16 wazaCnt, wazaID, i;
 			u8 PP, PPMax;
 
@@ -408,20 +524,54 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 				printBtnWaza( wk, i, 0x0f, NULL );
 			}
 			(*seq)++;
+#else	//PLATINUM_UNDER_SCREEN
+			BINPUT_WAZA_PARAM	bwp;
+			BINPUT_SCENE_WAZA	bsw;
+			u16 wazaCnt, wazaID, i;
+			u8 PP, PPMax;
+			ARCHANDLE* hdl_bg;
+			ARCHANDLE* hdl_obj;
+
+
+			wazaCnt = BTL_POKEPARAM_GetWazaCount( wk->bpp );
+			for(i=0; i<wazaCnt; i++)
+			{
+				wazaID = BTL_POKEPARAM_GetWazaParticular( wk->bpp, i, &PP, &PPMax );
+				bwp.wazano[ i ] = bsw.wazano[ i ] = wazaID;
+				bwp.pp[ i ] = bsw.pp[ i ] = PP;
+				bwp.ppmax[ i ] = bsw.ppmax[ i ] = PPMax;
+			}
+			for( ; i<PTL_WAZA_MAX; i++){
+				bwp.wazano[ i ] = bsw.wazano[ i ] = 0;
+				bwp.pp[ i ] = bsw.pp[ i ] = 0;
+				bwp.ppmax[ i ] = bsw.ppmax[ i ] = 0;
+			}
+			BINPUT_WazaParaMemoryDecord( wk->bip, 0, &bwp );
+
+			hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  wk->heapID ); 
+			hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, wk->heapID );
+			BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_WAZA, FALSE, &bsw );
+			GFL_ARC_CloseDataHandle( hdl_bg );
+			GFL_ARC_CloseDataHandle( hdl_obj );
+			(*seq)++;
 		}
+#endif	//PLATINUM_UNDER_SCREEN
 		break;
 	case SEQ_SEL_FIGHT+1:
+#ifndef PLATINUM_UNDER_SCREEN
 		PRINTSYS_QUE_Main( wk->printQue );
 		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
 		{
 			(*seq)++;
 		}
+#else	//PLATINUM_UNDER_SCREEN
+		(*seq)++;
+#endif	//PLATINUM_UNDER_SCREEN
 		break;
 	case SEQ_SEL_FIGHT+2:
 		{
+#ifndef PLATINUM_UNDER_SCREEN
 			int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
-			// soga
-//			if( hit != GFL_UI_TP_HIT_NONE )
 			if( ( hit != GFL_UI_TP_HIT_NONE ) && ( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) - 1 ) )
 			{
 				wk->selActionResult = check_unselectable_waza( wk, wk->bpp, hit );
@@ -442,6 +592,42 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 					(*seq)++;
 				}
 			}
+		}
+#else	//PLATINUM_UNDER_SCREEN
+			int hit = GFL_UI_TP_HitTrg( SkillMenuTouchData );
+			if( hit != GFL_UI_TP_HIT_NONE )
+			{
+				Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
+				//キャンセルが押された
+				if( hit == 0 )
+				{	
+					selectAction_init( seq, wk );
+					(*seq) = SEQ_START;
+				}
+				else if( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) )
+				{	
+					//キャンセルが先頭にはいっているので、デクリメントして正規の選択位置にする
+					hit--;
+					wk->selActionResult = check_unselectable_waza( wk, wk->bpp, hit );
+					if( wk->selActionResult != BTLV_SCD_SelAction_Still ){
+						return FALSE;
+					}
+
+					BTL_ACTION_SetFightParam( wk->destActionParam, hit, 0 );
+
+					if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE )
+					{
+						(*seq) = SEQ_SEL_FIGHT_FINISH;
+					}
+					else
+					{
+						BTL_Printf("ワザターゲット選択（確認）へ\n");
+						spstack_push( wk, selectTarget_init, selectTarget_loop );
+						(*seq)++;
+					}
+				}
+			}
+#endif	//PLATINUM_UNDER_SCREEN
 			break;
 		case SEQ_SEL_FIGHT+3:
 			if( wk->selTargetDone )
@@ -521,6 +707,7 @@ enum {
 	STW_BTNPOS_C_Y = STW_BTNPOS_A_Y,
 
 };
+#ifndef PLATINUM_UNDER_SCREEN
 // 描画位置に対応したボタンタッチ位置テーブル
 static const GFL_UI_TP_HITTBL STW_HitTbl[] = {
 	{ STW_BTNPOS_A_Y*8, (STW_BTNPOS_A_Y+STW_BTN_HEIGHT)*8, STW_BTNPOS_A_X*8, (STW_BTNPOS_A_X+STW_BTN_WIDTH)*8 },
@@ -530,6 +717,17 @@ static const GFL_UI_TP_HITTBL STW_HitTbl[] = {
 
 	{ GFL_UI_TP_HIT_END, 0, 0 }
 };
+#else //PLATINUM_UNDER_SCREEN
+static const GFL_UI_TP_HITTBL PokeSeleMenuTouchData[] = {
+	//UP DOWN LEFT RIGHT
+	{0xb*8, 0x12*8, 0*8, 0xf*8},			//ターゲットA
+	{1*8, 0xa*8, 0x11*8, 255},		//ターゲットB
+	{0xb*8, 0x12*8, 0x11*8, 255},		//ターゲットC
+	{1*8, 0xa*8, 0*8, 0xf*8},			//ターゲットD
+	{0x13*8, 0x18*8, 1*8, 0x1f*8},		//キャンセル
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+#endif //PLATINUM_UNDER_SCREEN
 // ↑描画位置から上記テーブルインデックスを引くためのテーブル
 static const u8 STW_HitTblIndex[] = {
 	BTLV_MCSS_POS_A,
@@ -626,6 +824,8 @@ static inline u8 stwdraw_vpos_to_tblidx( u8 vpos )
 	GF_ASSERT(0);
 	return 0;
 }
+
+#ifndef PLATINUM_UNDER_SCREEN
 // ボタン描画
 static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 {
@@ -671,9 +871,75 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 	}
 //	GFL_FONTSYS_SetDefaultColor();
 }
+#else	//PLATINUM_UNDER_SCREEN
+static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
+{
+	const BTL_POKEPARAM* bpp;
+	const POKEMON_PARAM* pp;
+	BINPUT_SCENE_POKE	bsp;
+	u8 vpos;
+	WazaID waza = BTL_POKEPARAM_GetWazaNumber( wk->bpp, wk->destActionParam->fight.wazaIdx );
+
+	bsp.pokesele_type = WAZADATA_GetTarget( waza );
+	bsp.client_type = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, BTL_POKEPARAM_GetID(wk->bpp) );
+
+	while( count-- )
+	{
+		bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, *pos );
+		pp  = BTL_POKEPARAM_GetSrcData( bpp );
+		vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, *pos );
+
+		bsp.dspp[ *pos ].hp = PP_Get( pp, ID_PARA_hp, NULL );
+		if( bsp.dspp[ *pos ].hp )
+		{	
+			int	mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+			bsp.dspp[ *pos ].pp = pp;
+			bsp.dspp[ *pos ].hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
+			bsp.dspp[ *pos ].exist = 1;
+			if( ( mons_no == MONSNO_NIDORAN_M ) || ( mons_no == MONSNO_NIDORAN_F ) )
+			{	
+				bsp.dspp[ *pos ].sex = PTL_SEX_UNKNOWN;
+			}
+			else
+			{	
+				bsp.dspp[ *pos ].sex = PP_Get( pp, ID_PARA_sex, NULL );
+			}
+
+			if( PP_Get( pp, ID_PARA_condition, NULL ) )
+			{	
+				bsp.dspp[ *pos ].status = COMSEL_STATUS_NG;
+			}
+			else
+			{	
+				bsp.dspp[ *pos ].status = COMSEL_STATUS_ALIVE;
+			}
+		}
+		else
+		{	
+			bsp.dspp[ *pos ].exist = 0;
+			bsp.dspp[ *pos ].status = COMSEL_STATUS_DEAD;
+		}
+		pos++;
+	}
+
+	{	
+		ARCHANDLE* hdl_bg;
+		ARCHANDLE* hdl_obj;
+		
+		hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  wk->heapID ); 
+		hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, wk->heapID );
+		BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_POKE, FALSE, &bsp );
+
+		GFL_ARC_CloseDataHandle( hdl_bg );
+		GFL_ARC_CloseDataHandle( hdl_obj );
+	}
+}
+#endif	//PLATINUM_UNDER_SCREEN
 static void stw_draw( const SEL_TARGET_WORK* stw, BTLV_SCD* work )
 {
+#ifndef PLATINUM_UNDER_SCREEN
 	GFL_BMP_Clear( work->bmp, 0x0f );
+#endif	//PLATINUM_UNDER_SCREEN
 
 	// ポケモン選択モード
 	if( stw->selectablePokeCount )
@@ -708,6 +974,7 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
 {
 	BTLV_SCD* wk = wk_adrs;
 
+#ifndef PLATINUM_UNDER_SCREEN
 	switch( *seq ){
 	case 0:
 		seltgt_init_setup_work( &wk->selTargetWork, wk );
@@ -725,11 +992,17 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
 		return TRUE;
 	}
 	return FALSE;
+#else	//PLATINUM_UNDER_SCREEN
+	seltgt_init_setup_work( &wk->selTargetWork, wk );
+	stw_draw( &wk->selTargetWork, wk );
+	return TRUE;
+#endif	//PLATINUM_UNDER_SCREEN
 }
 static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 {
 	BTLV_SCD* wk = wk_adrs;
 
+#ifndef PLATINUM_UNDER_SCREEN
 	switch( *seq ){
 	case 0:
 		{
@@ -755,6 +1028,36 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 		break;
 	}
 	return FALSE;
+#else //PLATINUM_UNDER_SCREEN
+	switch( *seq ){
+	case 0:
+		{
+			int hit = GFL_UI_TP_HitTrg( PokeSeleMenuTouchData );
+			if( hit != GFL_UI_TP_HIT_NONE )
+			{
+				Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
+				if( hit < BTL_CLIENT_MAX )
+				{
+					u8 target_idx;
+					if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &target_idx ) )
+					{
+						BTL_Printf("ターゲット決定 ... hitBtn=%d, hitPos=%d, target_idx=%d\n", hit, wk->selTargetWork.pos[hit], target_idx);
+						BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.wazaIdx, target_idx );
+						wk->selTargetDone = TRUE;
+						return TRUE;
+					}
+				}
+				else
+				{	
+					wk->selTargetDone = FALSE;
+					return TRUE;
+				}
+			}
+		}
+		break;
+	}
+	return FALSE;
+#endif //PLATINUM_UNDER_SCREEN
 }
 
 static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
@@ -893,6 +1196,9 @@ static BOOL selectPokemon_init( int* seq, void* wk_adrs )
 		PRINTSYS_QUE_Main( wk->printQue );
 		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
 		{
+			GFL_BMPWIN_MakeScreen( wk->win );
+			GFL_BMPWIN_TransVramCharacter( wk->win );
+			GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
 			return TRUE;
 		}
 		break;
@@ -992,6 +1298,7 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
 							// 次回に正しく初期化されずに呼び出されたら止まるようにNULLクリアしておく
 							wk->pokesel_param = NULL;
 							wk->pokesel_result = NULL;
+							GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
 							return TRUE;
 						}
 						else

@@ -135,9 +135,6 @@ void BTLV_Delete( BTLV_CORE* core )
 {
 	BTL_STR_QuitSystem();
 
-	//エフェクト削除 soga
-	BTLV_EFFECT_Exit();
-
 	BTLV_SCD_Delete( core->scrnD );
 	BTLV_SCU_Delete( core->scrnU );
 	cleanup_core( core );
@@ -243,7 +240,6 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 		setup_core( core, core->heapID );
 		BTLV_SCU_Setup( core->scrnU );
 		BTLV_SCD_Setup( core->scrnD );
-		BTLV_EFFECT_Init( 0, core->heapID );		//soga
 		(*seq)++;
 		break;
 
@@ -1043,7 +1039,7 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 	//ＢＧモード設定
 	{
 		static const GFL_BG_SYS_HEADER sysHeader = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
 		};
 		GFL_BG_SetBGMode( &sysHeader );
 	}
@@ -1069,12 +1065,17 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 		G2_SetWnd0Position( 1, 0, 255, 192 );
 		GX_SetVisibleWnd( GX_WNDMASK_W0 );
 	}
+
+	BTLV_EFFECT_Init( 0, &vramBank, heapID );
 }
 
 static void cleanup_core( BTLV_CORE* wk )
 {
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();
+
+	//エフェクト削除 soga
+	BTLV_EFFECT_Exit();
 
 	//3D関連削除 soga
 	GFL_G3D_Exit();
