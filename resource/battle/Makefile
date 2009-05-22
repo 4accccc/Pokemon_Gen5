@@ -63,22 +63,27 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build: pl_batt_obj.narc $(TARGETDIR)/$(NARCNAME)
+else
+do-build: $(TARGETDIR)/$(NARCNAME)
+endif
 
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 pl_batt_obj.narc:
 	nitro_comp $(NITROSDK_ROOT) batt_obj.lst pl_batt_obj.narc pl_batt_obj.naix
 	$(COPY) pl_batt_obj.narc platinum_data/
 	$(COPY) pl_batt_obj_*.h platinum_data/
 
+$(NARCNAME):	$(IMDFILE:.imd=.nsbmd) $(ICAFILE:.ica=.nsbca) battgra_wb.scr
+	nnsarc -c -l -n -i $(NARCNAME) -S battgra_wb.scr > error
+	$(NAIXCUT) $(NAIXNAME)
+endif
+
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME) platinum_data/*
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 	$(COPY) platinum_data/* $(TARGETDIR)	#プラチナデータはそのままコピーしておく
-
-$(NARCNAME):	$(IMDFILE:.imd=.nsbmd) $(ICAFILE:.ica=.nsbca) battgra_wb.scr
-	nnsarc -c -l -n -i $(NARCNAME) -S battgra_wb.scr > error
-	$(NAIXCUT) $(NAIXNAME)
-
 
 #------------------------------------------------------------------------------
 #	make cleanルール
