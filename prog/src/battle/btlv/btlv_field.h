@@ -14,7 +14,7 @@
 enum{
 	BTLV_FIELD_GROUND = 0,		//地面
 	BTLV_FIELD_BG,				//背景
-	BTLV_FIELD_SHADOW_LINE,		//影線
+//	BTLV_FIELD_SHADOW_LINE,		//影線
 	BTLV_FIELD_MAX				//フィールド構成OBJ数
 };
 

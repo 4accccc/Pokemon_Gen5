@@ -36,37 +36,38 @@
 
 struct _BTLV_MCSS_WORK
 {
-	GFL_TCBSYS				*tcb_sys;
-	MCSS_SYS_WORK			*mcss_sys;
-	MCSS_WORK				*mcss[ BTLV_MCSS_POS_MAX ];
+	GFL_TCBSYS*			tcb_sys;
+	MCSS_SYS_WORK*	mcss_sys;
+	MCSS_WORK*			mcss[ BTLV_MCSS_POS_MAX ];
+	int							callback_count[ BTLV_MCSS_POS_MAX ];		//コールバックが呼ばれた回数をカウント
 
-	u8						poke_mcss_ortho_mode			:1;
-	u8														:7;
-	u8						poke_mcss_tcb_move_execute;
-	u8						poke_mcss_tcb_scale_execute;
-	u8						poke_mcss_tcb_rotate_execute;
+	u8							poke_mcss_proj_mode		:1;
+	u8																		:7;
+	u8							poke_mcss_tcb_move_execute;
+	u8							poke_mcss_tcb_scale_execute;
+	u8							poke_mcss_tcb_rotate_execute;
 
-	u8						poke_mcss_tcb_blink_execute;
-	u8						dummy;								//padding
+	u8							poke_mcss_tcb_blink_execute;
+	u8							dummy;								//padding
 	HEAPID					heapID;
 };
 
 typedef struct
 {
-	BTLV_MCSS_WORK		*bmw;
-	int					position;
+	BTLV_MCSS_WORK*		bmw;
+	int								position;
 	EFFTOOL_MOVE_WORK	emw;
 }BTLV_MCSS_TCB_WORK;
 
 typedef struct	
 {
-	NNSG2dCharacterData*	pCharData;			//テクスチャキャラ
-	NNSG2dPaletteData*		pPlttData;			//テクスチャパレット
-	void					*pBufChar;			//テクスチャキャラバッファ
-	void					*pBufPltt;			//テクスチャパレットバッファ
-	int						chr_ofs;
-	int						pal_ofs;
-	BTLV_MCSS_WORK			*bmw;
+	NNSG2dCharacterData*	pCharData;		//テクスチャキャラ
+	NNSG2dPaletteData*		pPlttData;		//テクスチャパレット
+	void*									pBufChar;			//テクスチャキャラバッファ
+	void*									pBufPltt;			//テクスチャパレットバッファ
+	int										chr_ofs;
+	int										pal_ofs;
+	BTLV_MCSS_WORK*				bmw;
 }TCB_LOADRESOURCE_WORK;
 
 //============================================================================================
@@ -75,38 +76,17 @@ typedef struct
  */
 //============================================================================================
 
-BTLV_MCSS_WORK	*BTLV_MCSS_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
-void			BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw );
-void			BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw );
-void			BTLV_MCSS_Draw( BTLV_MCSS_WORK *bmw );
-void			BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position );
-void			BTLV_MCSS_Del( BTLV_MCSS_WORK *bmw, int position );
-void			BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw );
-void			BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw );
-void			BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
-void			BTLV_MCSS_SetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
-int				BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position );
-void			BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
-void			BTLV_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position );
-fx32			BTLV_MCSS_GetPokeDefaultScale( BTLV_MCSS_WORK *bmw, int position );
-void			BTLV_MCSS_GetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
-void			BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
-
-void			BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *pos, int frame, int wait, int count );
-void			BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *scale, int frame, int wait, int count );
-void			BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *rotate, int frame, int wait, int count );
-void			BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count );
-BOOL			BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
-BOOL			BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position );
-
 static	void	BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
 static	void	BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position );
 
-static	void	BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func );
+static	void	BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *start, VecFx32 *end,
+																			 int frame, int wait, int count, GFL_TCB_FUNC *func );
 static	void	TCB_BTLV_MCSS_Move( GFL_TCB *tcb, void *work );
 static	void	TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work );
 static	void	TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work );
 static	void	TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work );
+
+static	void	BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame );
 
 #ifdef PM_DEBUG
 void	BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
@@ -149,12 +129,12 @@ static	const	VecFx32	poke_pos_table[]={
 //============================================================================================
 static	const	fx32	poke_scale_table[ 2 ][ BTLV_MCSS_POS_MAX ]={
 	{
-		0x0780 * 2,	//POS_AA
-		0x1280,		//POS_BB
-		0x0873 * 2,	//POS_A
-		0x1322,		//POS_B
-		0x0831 * 2,	//POS_C
-		0x141e,		//POS_D
+		0x1030,		//POS_AA
+		0x119b,		//POS_BB
+		0x0f00,		//POS_A
+		0x10e0,		//POS_B
+		0x0d00,		//POS_C
+		0x1320,		//POS_D
 		0x1000 * 2,	//POS_E
 		0x1000,		//POS_F
 	},
@@ -250,6 +230,8 @@ void	BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position )
 									  &maw );
 
 	BTLV_MCSS_SetDefaultScale( bmw, position );
+
+	MCSS_SetAnimCtrlCallBack( bmw->mcss[ position ], position, BTLV_MCSS_CallBackFunctorFrame, 1 );
 }
 
 //============================================================================================
@@ -279,7 +261,7 @@ void	BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw )
 
 	MCSS_SetOrthoMode( bmw->mcss_sys );
 
-	bmw->poke_mcss_ortho_mode = 1;
+	bmw->poke_mcss_proj_mode = BTLV_MCSS_PROJ_ORTHO;
 
 	for( position = 0 ; position < BTLV_MCSS_POS_MAX ; position++ ){
 		if( bmw->mcss[ position ] ){
@@ -301,7 +283,7 @@ void	BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw )
 
 	MCSS_ResetOrthoMode( bmw->mcss_sys );
 
-	bmw->poke_mcss_ortho_mode = 0;
+	bmw->poke_mcss_proj_mode = BTLV_MCSS_PROJ_PERSPECTIVE;
 
 	for( position = 0 ; position < BTLV_MCSS_POS_MAX ; position++ ){
 		if( bmw->mcss[ position ] ){
@@ -414,7 +396,20 @@ void	BTLV_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position )
 //============================================================================================
 fx32	BTLV_MCSS_GetPokeDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 {
-	return poke_scale_table[ bmw->poke_mcss_ortho_mode ][ position ];
+	return BTLV_MCSS_GetPokeDefaultScaleEx( bmw, position, bmw->poke_mcss_proj_mode );
+}
+
+//============================================================================================
+/**
+ *	ポケモンの初期拡縮率を取得
+ *
+ * @param[in]	position	取得するポケモンの立ち位置
+ * @param[in]	proj			取得する射影方法
+ */
+//============================================================================================
+fx32	BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_MCSS_WORK *bmw, int position, BTLV_MCSS_PROJECTION proj )
+{
+	return poke_scale_table[ proj ][ position ];
 }
 
 //============================================================================================
@@ -442,6 +437,8 @@ void	BTLV_MCSS_GetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale )
 //============================================================================================
 void	BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale )
 {
+	VecFx32	shadow_scale;
+
 	MCSS_SetScale( bmw->mcss[ position ], scale );
 }
 
@@ -488,7 +485,7 @@ void	BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *
 {
 	VecFx32	start;
 
-	MCSS_GetScale( bmw->mcss[ position ], &start );
+	MCSS_GetOfsScale( bmw->mcss[ position ], &start );
 	BTLV_MCSS_TCBInitialize( bmw, position, type, &start, scale, frame, wait, count, TCB_BTLV_MCSS_Scale );
 	bmw->poke_mcss_tcb_scale_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
@@ -615,8 +612,8 @@ static	void	BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 	GF_ASSERT( bmw->mcss[ position ] );
 
 	VEC_Set( &scale, 
-			 poke_scale_table[ bmw->poke_mcss_ortho_mode ][ position ], 
-			 poke_scale_table[ bmw->poke_mcss_ortho_mode ][ position ],
+			 poke_scale_table[ bmw->poke_mcss_proj_mode ][ position ], 
+			 poke_scale_table[ bmw->poke_mcss_proj_mode ][ position ],
 			 FX32_ONE );
 
 	MCSS_SetScale( bmw->mcss[ position ], &scale );
@@ -638,30 +635,30 @@ static	void	BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int type
 {
 	BTLV_MCSS_TCB_WORK	*pmtw = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_TCB_WORK ) );
 
-	pmtw->bmw				= bmw;
-	pmtw->position			= position;
-	pmtw->emw.move_type		= type;
-	pmtw->emw.vec_time		= frame;
+	pmtw->bmw								= bmw;
+	pmtw->position					= position;
+	pmtw->emw.move_type			= type;
+	pmtw->emw.vec_time			= frame;
 	pmtw->emw.vec_time_tmp	= frame;
-	pmtw->emw.wait			= 0;
-	pmtw->emw.wait_tmp		= wait;
-	pmtw->emw.count			= count;
+	pmtw->emw.wait					= 0;
+	pmtw->emw.wait_tmp			= wait;
+	pmtw->emw.count					= count;
 	pmtw->emw.start_value.x	= start->x;
 	pmtw->emw.start_value.y	= start->y;
 	pmtw->emw.start_value.z	= start->z;
-	pmtw->emw.end_value.x	= end->x;
-	pmtw->emw.end_value.y	= end->y;
-	pmtw->emw.end_value.z	= end->z;
+	pmtw->emw.end_value.x		= end->x;
+	pmtw->emw.end_value.y		= end->y;
+	pmtw->emw.end_value.z		= end->z;
 
 	switch( type ){
-	case EFFTOOL_CALCTYPE_DIRECT:			//直接ポジションに移動
+	case EFFTOOL_CALCTYPE_DIRECT:					//直接ポジションに移動
 		break;
 	case EFFTOOL_CALCTYPE_INTERPOLATION:	//移動先までを補間しながら移動
 		BTLV_EFFTOOL_CalcMoveVector( &pmtw->emw.start_value, end, &pmtw->emw.vector, FX32_CONST( frame ) );
 		break;
 	case EFFTOOL_CALCTYPE_ROUNDTRIP_LONG:	//指定した区間を往復移動
 		pmtw->emw.vec_time_tmp	*= 2;
-	case EFFTOOL_CALCTYPE_ROUNDTRIP:		//指定した区間を往復移動
+	case EFFTOOL_CALCTYPE_ROUNDTRIP:			//指定した区間を往復移動
 		pmtw->emw.vector.x = FX_Div( end->x, FX32_CONST( frame ) );
 		pmtw->emw.vector.y = FX_Div( end->y, FX32_CONST( frame ) );
 		pmtw->emw.vector.z = FX_Div( end->z, FX32_CONST( frame ) );
@@ -704,9 +701,9 @@ static	void	TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work )
 	VecFx32	now_scale;
 	BOOL	ret;
 
-	MCSS_GetScale( bmw->mcss[ pmtw->position ], &now_scale );
+	MCSS_GetOfsScale( bmw->mcss[ pmtw->position ], &now_scale );
 	ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_scale );
-	MCSS_SetScale( bmw->mcss[ pmtw->position ], &now_scale );
+	MCSS_SetOfsScale( bmw->mcss[ pmtw->position ], &now_scale );
 	if( ret == TRUE ){
 		bmw->poke_mcss_tcb_scale_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ 0xff );
 		GFL_HEAP_FreeMemory( work );
@@ -758,6 +755,18 @@ static	void	TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
 	else{
 		pmtw->emw.wait--;
 	}
+}
+
+//============================================================================================
+/**
+ *	指定したフレームで呼ばれるコールバック関数
+ */
+//============================================================================================
+static	void	BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
+{	
+	BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
+
+	bmw->callback_count[ data ]++;		//コールバックが呼ばれた回数をカウント
 }
 
 #ifdef PM_DEBUG

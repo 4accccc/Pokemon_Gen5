@@ -36,8 +36,8 @@ struct _BTLV_CAMERA_WORK
 {
 	GFL_TCBSYS			*tcb_sys;
 	GFL_G3D_CAMERA	*camera;
-	u16							phi;
-	u16							theta;
+	int							phi;
+	int							theta;
 	fx32						radius;
 	int							move_flag;
 	VecFx32					move_pos;
@@ -55,17 +55,6 @@ struct _BTLV_CAMERA_WORK
  *	プロトタイプ宣言
  */
 //============================================================================================
-
-BTLV_CAMERA_WORK	*BTLV_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
-void				BTLV_CAMERA_Exit( BTLV_CAMERA_WORK *bcw );
-void				BTLV_CAMERA_Main( BTLV_CAMERA_WORK *bcw );
-void				BTLV_CAMERA_MoveCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target );
-void				BTLV_CAMERA_MoveCameraAngle( BTLV_CAMERA_WORK *bcw, int phi, int theta );
-void				BTLV_CAMERA_MoveCameraInterpolation( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target, int flame, int wait, int brake );
-void				BTLV_CAMERA_GetCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32 *target );
-void				BTLV_CAMERA_GetDefaultCameraPosition( VecFx32 *pos, VecFx32 *target );
-BOOL				BTLV_CAMERA_CheckExecute( BTLV_CAMERA_WORK *bcw );
-
 static	void		BTLV_CAMERA_Move( BTLV_CAMERA_WORK *bcw );
 static	void		BTLV_CAMERA_UpdateCameraAngle( BTLV_CAMERA_WORK *bcw );
 
@@ -172,29 +161,7 @@ void	BTLV_CAMERA_MoveCameraAngle( BTLV_CAMERA_WORK *bcw, int phi, int theta )
 {
 	VecFx32	pos, target;
 
-	GFL_G3D_CAMERA_GetTarget( bcw->camera, &target );
-
-	bcw->phi += phi;
-	bcw->theta += theta;
-
-//	if( now_phi <= -PHI_MAX ){
-//		now_phi = -PHI_MAX;
-//	}
-//	if( now_phi >= PHI_MAX ){
-//		now_phi = PHI_MAX;
-//	}
-
-	//phiとthetaとscaleからcamPosを計算
-	pos.x = FX_MUL( FX_CosIdx( bcw->theta ), FX_CosIdx( bcw->phi ) );
-	pos.y = FX_SinIdx( bcw->phi );
-	pos.z = FX_MUL( FX_SinIdx( bcw->theta ), FX_CosIdx( bcw->phi ) );
-	pos.x = FX_MUL( pos.x, bcw->radius );
-	pos.y = FX_MUL( pos.y, bcw->radius );
-	pos.z = FX_MUL( pos.z, bcw->radius );
-
-	pos.x += target.x;
-	pos.y += target.y;
-	pos.z += target.z;
+	BTLV_CAMERA_GetCameraPositionAngle( bcw, phi, theta, &pos, &target );
 
 	GFL_G3D_CAMERA_SetPos( bcw->camera, &pos );
 	GFL_G3D_CAMERA_Switching( bcw->camera );
@@ -252,6 +219,44 @@ void	BTLV_CAMERA_GetCameraPosition( BTLV_CAMERA_WORK *bcw, VecFx32 *pos, VecFx32
 {
 	GFL_G3D_CAMERA_GetPos( bcw->camera, pos );
 	GFL_G3D_CAMERA_GetTarget( bcw->camera, target );
+}
+
+//============================================================================================
+/**
+ *	指定された角度のカメラ位置を取得
+ *
+ * @param[in]		bcw			BTLV_CAMERA管理ワークへのポインタ
+ * @param[in]		phi			取得したいカメラ角度
+ * @param[in]		theta		取得したいカメラ角度
+ * @param[out]	pos			取得したカメラ位置を格納するワークへのポインタ
+ * @param[out]	target	取得したカメラターゲットを格納するワークへのポインタ
+ */
+//============================================================================================
+void	BTLV_CAMERA_GetCameraPositionAngle( BTLV_CAMERA_WORK *bcw, int phi, int theta, VecFx32 *pos, VecFx32 *target )
+{
+	GFL_G3D_CAMERA_GetTarget( bcw->camera, target );
+
+	bcw->phi += phi;
+	bcw->theta += theta;
+
+//	if( now_phi <= -PHI_MAX ){
+//		now_phi = -PHI_MAX;
+//	}
+//	if( now_phi >= PHI_MAX ){
+//		now_phi = PHI_MAX;
+//	}
+
+	//phiとthetaとscaleからcamPosを計算
+	pos->x = FX_MUL( FX_CosIdx( bcw->theta ), FX_CosIdx( bcw->phi ) );
+	pos->y = FX_SinIdx( bcw->phi );
+	pos->z = FX_MUL( FX_SinIdx( bcw->theta ), FX_CosIdx( bcw->phi ) );
+	pos->x = FX_MUL( pos->x, bcw->radius );
+	pos->y = FX_MUL( pos->y, bcw->radius );
+	pos->z = FX_MUL( pos->z, bcw->radius );
+
+	pos->x += target->x;
+	pos->y += target->y;
+	pos->z += target->z;
 }
 
 //============================================================================================

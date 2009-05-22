@@ -46,6 +46,12 @@ typedef enum{
 	BTLV_MCSS_POS_ERROR = 0xff
 }BtlvMcssPos;
 
+typedef enum{	
+	BTLV_MCSS_PROJ_PERSPECTIVE = 0,
+	BTLV_MCSS_PROJ_ORTHO,
+	BTLV_MCSS_PROJ_MAX,
+}BTLV_MCSS_PROJECTION;
+
 #define	BTLV_MCSS_MEPACHI_ON	( MCSS_MEPACHI_ON )
 #define	BTLV_MCSS_MEPACHI_OFF	( MCSS_MEPACHI_OFF )
 #define	BTLV_MCSS_MEPACHI_FLIP	( MCSS_MEPACHI_FLIP )
@@ -57,31 +63,35 @@ typedef enum{
 
 typedef struct _BTLV_MCSS_WORK BTLV_MCSS_WORK;
 
-extern	BTLV_MCSS_WORK	*BTLV_MCSS_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
-extern	void			BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw );
-extern	void			BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw );
-extern	void			BTLV_MCSS_Draw( BTLV_MCSS_WORK *bmw );
-extern	void			BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position );
-extern	void			BTLV_MCSS_Del( BTLV_MCSS_WORK *bmw, int position );
-extern	void			BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw );
-extern	void			BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw );
-extern	void			BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
-extern	void			BTLV_MCSS_SetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
-extern	int				BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position );
-extern	void			BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
-extern	void			BTLV_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position );
-extern	fx32			BTLV_MCSS_GetPokeDefaultScale( BTLV_MCSS_WORK *bmw, int position );
-extern	void			BTLV_MCSS_GetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
-extern	void			BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
-extern	void			BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int move_type, VecFx32 *pos, int frame, int wait, int count );
-extern	void			BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int move_type, VecFx32 *scale, int frame, int wait, int count );
-extern	void			BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *rotate, int frame, int wait, int count );
-extern	void			BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count );
-extern	BOOL			BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
-extern	BOOL			BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position );
+extern	BTLV_MCSS_WORK*	BTLV_MCSS_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
+extern	void						BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw );
+extern	void						BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw );
+extern	void						BTLV_MCSS_Draw( BTLV_MCSS_WORK *bmw );
+extern	void						BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position );
+extern	void						BTLV_MCSS_Del( BTLV_MCSS_WORK *bmw, int position );
+extern	void						BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw );
+extern	void						BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw );
+extern	void						BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
+extern	void						BTLV_MCSS_SetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
+extern	int							BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position );
+extern	void						BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
+extern	void						BTLV_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position );
+extern	fx32						BTLV_MCSS_GetPokeDefaultScale( BTLV_MCSS_WORK *bmw, int position );
+extern	fx32						BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_MCSS_WORK *bmw, int position, BTLV_MCSS_PROJECTION proj );
+extern	void						BTLV_MCSS_GetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
+extern	void						BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
+extern	void						BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int move_type,
+																								VecFx32 *pos, int frame, int wait, int count );
+extern	void						BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int move_type,
+																						 VecFx32 *scale, int frame, int wait, int count );
+extern	void						BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type,
+																							VecFx32 *rotate, int frame, int wait, int count );
+extern	void						BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count );
+extern	BOOL						BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
+extern	BOOL						BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position );
 
 #ifdef PM_DEBUG
-extern	void			BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
+extern	void						BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
 #endif
 
 #endif	//__BTLV_MCSS_H_

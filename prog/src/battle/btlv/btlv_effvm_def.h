@@ -49,16 +49,31 @@
 #define	BTLEFF_CAMERA_POS_DEFENCE				( 9 )
 #define	BTLEFF_CAMERA_POS_DEFENCE_PAIR	( 10 )
 
+//射影モード
+#define	BTLEFF_CAMERA_PROJECTION_ORTHO					( 0 )
+#define	BTLEFF_CAMERA_PROJECTION_PERSPECTIVE		( 1 )
+
 //パーティクル再生
 #define	BTLEFF_PARTICLE_PLAY_SIDE_NONE		( BTLEFF_CAMERA_POS_INIT )
 #define	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	( BTLEFF_CAMERA_POS_ATTACK )
 #define	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	( BTLEFF_CAMERA_POS_DEFENCE )
+
+//エミッタ移動
+#define	BTLEFF_EMITTER_MOVE_NONE							( 0 )
+#define	BTLEFF_EMITTER_MOVE_STRAIGHT					( 1 )
+#define	BTLEFF_EMITTER_MOVE_CURVE							( 2 )
 
 //ポケモン操作
 #define	BTLEFF_POKEMON_SIDE_ATTACK				( 0 )		//攻撃側
 #define	BTLEFF_POKEMON_SIDE_ATTACK_PAIR		( 1 )		//攻撃側ペア
 #define	BTLEFF_POKEMON_SIDE_DEFENCE				( 2 )		//防御側
 #define	BTLEFF_POKEMON_SIDE_DEFENCE_PAIR	( 3 )		//防御側ペア
+#define	BTLEFF_POKEMON_POS_AA							( 4 )
+#define	BTLEFF_POKEMON_POS_BB							( 5 )
+#define	BTLEFF_POKEMON_POS_A							( 6 )
+#define	BTLEFF_POKEMON_POS_B							( 7 )
+#define	BTLEFF_POKEMON_POS_C							( 8 )
+#define	BTLEFF_POKEMON_POS_D							( 9 )
 
 #define	BTLEFF_POKEMON_MOVE_DIRECT						( EFFTOOL_CALCTYPE_DIRECT )
 #define	BTLEFF_POKEMON_MOVE_INTERPOLATION			( EFFTOOL_CALCTYPE_INTERPOLATION )
@@ -78,10 +93,22 @@
 #define	BTLEFF_ANM_STOP												( MCSS_ANM_STOP_ON )
 #define	BTLEFF_ANM_START											( MCSS_ANM_STOP_OFF )
 
-//エミッタ移動
-#define	BTLEFF_EMITTER_MOVE_NONE							( 0 )
-#define	BTLEFF_EMITTER_MOVE_STRAIGHT					( 1 )
-#define	BTLEFF_EMITTER_MOVE_CURVE							( 2 )
+//トレーナー操作
+#define	BTLEFF_TRAINER_MOVE_DIRECT						( EFFTOOL_CALCTYPE_DIRECT )
+#define	BTLEFF_TRAINER_MOVE_INTERPOLATION			( EFFTOOL_CALCTYPE_INTERPOLATION )
+#define	BTLEFF_TRAINER_MOVE_ROUNDTRIP					( EFFTOOL_CALCTYPE_ROUNDTRIP )
+#define	BTLEFF_TRAINER_MOVE_ROUNDTRIP_LONG		( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
+
+//エフェクト終了待ち
+#define	BTLEFF_EFFENDWAIT_ALL									( 0 )
+#define	BTLEFF_EFFENDWAIT_CAMERA							( 1 )
+#define	BTLEFF_EFFENDWAIT_PARTICLE						( 2 )
+#define	BTLEFF_EFFENDWAIT_POKEMON							( 3 )
+#define	BTLEFF_EFFENDWAIT_TRAINER							( 4 )
+
+//制御モード
+#define	BTLEFF_CONTROL_MODE_CONTINUE					( 0 )
+#define	BTLEFF_CONTROL_MODE_SUSPEND						( 1 )
 
 #endif //__BTLV_EFFVM_DEF_H_
 
@@ -149,19 +176,28 @@ ex)
 //命令シンボル宣言
 //COMMAND_START
 #define	EC_CAMERA_MOVE							( 0 )
-#define	EC_PARTICLE_LOAD						( 1 )
-#define	EC_PARTICLE_PLAY						( 2 )
-#define	EC_POKEMON_MOVE							( 3 )
-#define	EC_POKEMON_SCALE						( 4 )
-#define	EC_POKEMON_ROTATE						( 5 )
-#define	EC_POKEMON_SET_MEPACHI_FLAG	( 6 )
-#define	EC_POKEMON_SET_ANM_FLAG			( 7 )
-#define	EC_EMITTER_MOVE							( 8 )
-#define	EC_EFFECT_END_WAIT					( 9 )
-#define	EC_WAIT											( 10 )
+#define	EC_CAMERA_MOVE_COORDINATE		( 1 )
+#define	EC_CAMERA_MOVE_ANGLE				( 2 )
+#define	EC_CAMERA_PROJECTION				( 3 )
+#define	EC_PARTICLE_LOAD						( 4 )
+#define	EC_PARTICLE_PLAY						( 5 )
+#define	EC_PARTICLE_PLAY_COORDINATE	( 6 )
+#define	EC_EMITTER_MOVE							( 7 )
+#define	EC_POKEMON_MOVE							( 8 )
+#define	EC_POKEMON_SCALE						( 9 )
+#define	EC_POKEMON_ROTATE						( 10 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	( 11 )
+#define	EC_POKEMON_SET_ANM_FLAG			( 12 )
+#define	EC_TRAINER_SET							( 13 )
+#define	EC_TRAINER_MOVE							( 14 )
+#define	EC_TRAINER_ANIME_SET				( 15 )
+#define	EC_TRAINER_DEL							( 16 )
+#define	EC_EFFECT_END_WAIT					( 17 )
+#define	EC_WAIT											( 18 )
+#define	EC_CONTROL_MODE							( 19 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									( 11 )
+#define	EC_SEQ_END									( 20 )
 
 #ifndef __C_NO_DEF_
 
@@ -200,12 +236,94 @@ ex)
 
 //======================================================================
 /**
+ * @brief		カメラ移動（座標指定）
+ *
+ * #param_num	6
+ * @param	type			カメラ移動タイプ
+ * @param	move_pos	移動先位置
+ * @param	move_tar	移動先ターゲット
+ * @param	frame			カメラタイプが追従のとき、何フレームで移動先に到達するかを指定
+ * @param	wait			移動ウエイト
+ * @param	brake			ブレーキをかけはじめるフレームを指定
+ *
+ * #param	COMBOBOX_TEXT	追従	ダイレクト
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_MOVE_INTERPOLATION	BTLEFF_CAMERA_MOVE_DIRECT
+ * #param	VALUE_VECFX32	CamPosX	CamPosY	CamPosZ
+ * #param	VALUE_VECFX32	CamTarX	CamTarY	CamTarZ
+ * #param	VALUE_INT	移動フレーム数
+ * #param	VALUE_INT	移動ウエイト
+ * #param	VALUE_INT	ブレーキ開始フレーム
+ */
+//======================================================================
+	.macro	CAMERA_MOVE_COODINATE	type, pos_x, pos_y, pos_z, tar_x, tar_y, tar_z, frame, wait, brake
+	.short	EC_CAMERA_MOVE_COORDINATE
+	.long		\type
+	.long		\pos_x
+	.long		\pos_y
+	.long		\pos_z
+	.long		\tar_x
+	.long		\tar_y
+	.long		\tar_z
+	.long		\frame
+	.long		\wait
+	.long		\brake
+	.endm
+
+//======================================================================
+/**
+ * @brief		カメラ移動（角度指定）
+ *
+ * #param_num	6
+ * @param	type				カメラ移動タイプ
+ * @param	angle_phi		移動先φ（追従のときは、現在値からの相対）
+ * @param	angle_theta	移動先θ（追従のときは、現在値からの相対）
+ * @param	frame				カメラタイプが追従のとき、何フレームで移動先に到達するかを指定
+ * @param	wait				移動ウエイト
+ * @param	brake				ブレーキをかけはじめるフレームを指定
+ *
+ * #param	COMBOBOX_TEXT	追従	ダイレクト
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_MOVE_INTERPOLATION	BTLEFF_CAMERA_MOVE_DIRECT
+ * #param	VALUE_INT	移動先φ
+ * #param	VALUE_INT	移動先θ
+ * #param	VALUE_INT	移動フレーム数
+ * #param	VALUE_INT	移動ウエイト
+ * #param	VALUE_INT	ブレーキ開始フレーム
+ */
+//======================================================================
+	.macro	CAMERA_MOVE_ANGLE	type, angle_phi, angle_theta, frame, wait, brake
+	.short	EC_CAMERA_MOVE_ANGLE
+	.long		\type
+	.long		\angle_phi
+	.long		\angle_theta
+	.long		\frame
+	.long		\wait
+	.long		\brake
+	.endm
+
+//======================================================================
+/**
+ * @brief		射影モード
+ *
+ * #param_num	1
+ * @param	type				射影タイプ
+ *
+ * #param	COMBOBOX_TEXT	正射影	透視射影
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_PROJECTION_ORTHO	BTLEFF_CAMERA_PROJECTION_PERSPECTIVE
+ */
+//======================================================================
+	.macro	CAMERA_PROJECTION	type
+	.short	EC_CAMERA_PROJECTION
+	.long		\type
+	.endm
+
+//======================================================================
+/**
  * @brief	パーティクルデータロード
  *
  * #param_num	1
  * @param	datID	アーカイブデータのdatID
  *
- * #param	FILE_DIALOG_WITH_ADD	.spa	パーティクル再生	エミッタ移動
+ * #param	FILE_DIALOG_WITH_ADD	.spa	パーティクル再生	パーティクル再生（座標指定）	エミッタ移動
  */
 //======================================================================
 	.macro	PARTICLE_LOAD	datID
@@ -227,10 +345,10 @@ ex)
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
- * #param	COMBOBOX_TEXT	攻撃側	防御側
- * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
- * #param	COMBOBOX_TEXT	方向無し	攻撃側	防御側
- * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_NONE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
+ * #param	COMBOBOX_TEXT	攻撃側	防御側	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D
+ * #param	COMBOBOX_TEXT	方向無し	攻撃側	防御側	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_NONE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D
  * #param	VALUE_FX32	パーティクル再生Y方向オフセット
  * #param	VALUE_FX32	パーティクル再生方向Y角度
  */
@@ -243,6 +361,75 @@ ex)
 	.long		\dir_pos
 	.long		\ofs_y
 	.long		\dir_angle
+	.endm
+
+//======================================================================
+/**
+ * @brief	パーティクル再生（座標指定）
+ *
+ * #param_num	6
+ * @param	num				再生パーティクルナンバー
+ * @param	index			spa内インデックスナンバー
+ * @param	start_pos	パーティクル再生開始位置
+ * @param	dir_pos		パーティクル再生方向位置
+ * @param	ofs_y			パーティクル再生Y方向オフセット
+ * @param	dir_angle	パーティクル再生方向Y角度
+ *
+ * #param	FILE_DIALOG_COMBOBOX .spa
+ * #param	COMBOBOX_HEADER
+ * #param	VALUE_VECFX32	POS_X	POS_Y	POS_Z
+ * #param	VALUE_VECFX32	DIR_X	DIR_Y	DIR_Z
+ * #param	VALUE_FX32	パーティクル再生Y方向オフセット
+ * #param	VALUE_FX32	パーティクル再生方向Y角度
+ */
+//======================================================================
+	.macro	PARTICLE_PLAY_COODINATE	num, index, start_pos_x, start_pos_y, start_pos_z, dir_pos_x, dir_pos_y, dir_pos_z, ofs_y, dir_angle
+	.short	EC_PARTICLE_PLAY_COODINATE
+	.long		\num
+	.long		\index
+	.long		\start_pos_x
+	.long		\start_pos_y
+	.long		\start_pos_z
+	.long		\dir_pos_x
+	.long		\dir_pos_y
+	.long		\dir_pos_z
+	.long		\ofs_y
+	.long		\dir_angle
+	.endm
+
+//======================================================================
+/**
+ * @brief	エミッタ移動
+ *
+ * #param_num	6
+ * @param	num					再生パーティクルナンバー
+ * @param	index				spa内インデックスナンバー
+ * @param	move_type		移動タイプ（直線、放物線）
+ * @param	start_pos		移動開始立ち位置
+ * @param	end_pos			移動終了立ち位置
+ * @param	move_param	立ち位置Y方向オフセット(ofs_y)	移動フレーム(move_frame)	放物線頂点（放物線時のみ）(top)
+ *
+ * #param	FILE_DIALOG_COMBOBOX .spa
+ * #param	COMBOBOX_HEADER
+ * #param	COMBOBOX_TEXT	直線	放物線
+ * #param	COMBOBOX_VALUE	BTLEFF_EMITTER_MOVE_STRAIGHT	BTLEFF_EMITTER_MOVE_CURVE
+ * #param	COMBOBOX_TEXT	攻撃側	防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
+ * #param	COMBOBOX_TEXT	攻撃側	防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
+ * #param	VALUE_VECFX32	立ち位置Y方向オフセット	移動フレーム	放物線頂点（放物線時のみ）
+ */
+//======================================================================
+	.macro	EMITTER_MOVE	num, index, move_type, start_pos, end_pos, ofs_y, move_frame, top
+	.short	EC_EMITTER_MOVE
+	.long		\num
+	.long		\index
+	.long		\move_type
+	.long		\start_pos
+	.long		\end_pos
+	.long		\ofs_y
+	.long		\move_frame
+	.long		\top
 	.endm
 
 //======================================================================
@@ -293,8 +480,8 @@ ex)
  * @param	wait		拡縮ウエイト
  * @param	count		往復カウント（拡縮タイプが往復のときだけ有効）
  *
- * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア
- * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR	BTLEFF_POKEMON_POS_AA	BTLEFF_POKEMON_POS_BB	BTLEFF_POKEMON_POS_A	BTLEFF_POKEMON_POS_B	BTLEFF_POKEMON_POS_C	BTLEFF_POKEMON_POS_D
  * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SCALE_DIRECT	BTLEFF_POKEMON_SCALE_INTERPOLATION	BTLEFF_POKEMON_SCALE_ROUNDTRIP	BTLEFF_POKEMON_SCALE_ROUNDTRIP_LONG
  * #param	VALUE_FX32	X方向拡縮率
@@ -389,54 +576,115 @@ ex)
 //======================================================================
 	.macro	POKEMON_SET_ANM_FLAG	pos, flag
 	.short	EC_POKEMON_SET_ANM_FLAG
-	.long	\pos
-	.long	\flag
+	.long		\pos
+	.long		\flag
 	.endm
 
 //======================================================================
 /**
- * @brief	エミッタ移動
+ * @brief	トレーナーセット
  *
- * #param_num	6
- * @param	num					再生パーティクルナンバー
- * @param	index				spa内インデックスナンバー
- * @param	move_type		移動タイプ（直線、放物線）
- * @param	start_pos		移動開始立ち位置
- * @param	end_pos			移動終了立ち位置
- * @param	move_param	立ち位置Y方向オフセット(ofs_y)	移動フレーム(move_frame)	放物線頂点（放物線時のみ）(top)
+ * #param_num	4
+ * @param	trtype		セットするトレーナータイプ
+ * @param	position	セットするトレーナーの立ち位置
+ * @param	pos_x			セットするX座標
+ * @param	pos_y			セットするY座標
  *
- * #param	FILE_DIALOG_COMBOBOX .spa
- * #param	COMBOBOX_HEADER
- * #param	COMBOBOX_TEXT	直線	放物線
- * #param	COMBOBOX_VALUE	BTLEFF_EMITTER_MOVE_STRAIGHT	BTLEFF_EMITTER_MOVE_CURVE
- * #param	COMBOBOX_TEXT	攻撃側	防御側
- * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
- * #param	COMBOBOX_TEXT	攻撃側	防御側
- * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
- * #param	VALUE_VECFX32	立ち位置Y方向オフセット	移動フレーム	放物線頂点（放物線時のみ）
+ * #param	VALUE_INT	トレーナータイプ
+ * #param	VALUE_INT	トレーナーの立ち位置
+ * #param	VALUE_INT	X座標
+ * #param	VALUE_INT	Y座標
  */
 //======================================================================
-	.macro	EMITTER_MOVE	num, index, move_type, start_pos, end_pos, ofs_y, move_frame, top
-	.short	EC_EMITTER_MOVE
-	.long		\num
+	.macro	TRAINER_SET	index, position, pos_x, pos_y
+	.short	EC_TRAINER_SET
 	.long		\index
-	.long		\move_type
-	.long		\start_pos
-	.long		\end_pos
-	.long		\ofs_y
-	.long		\move_frame
-	.long		\top
+	.long		\position
+	.long		\pos_x
+	.long		\pos_y
+	.endm
+
+//======================================================================
+/**
+ * @brief	トレーナー移動
+ *
+ * #param_num	7
+ * @param	index				移動させるトレーナーの立ち位置
+ * @param	type				移動タイプ
+ * @param	move_pos_x	移動先X座標
+ * @param	move_pos_y	移動先Y座標
+ * @param	frame				移動フレーム数（目的地まで何フレームで到達するか）
+ * @param	wait				移動ウエイト
+ * @param	count				往復カウント（移動タイプが往復のときだけ有効）
+ *
+ * #param	VALUE_INT		トレーナーの立ち位置
+ * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
+ * #param	COMBOBOX_VALUE	BTLEFF_TRAINER_MOVE_DIRECT	BTLEFF_TRAINER_MOVE_INTERPOLATION	BTLEFF_TRAINER_MOVE_ROUNDTRIP	BTLEFF_TRAINER_MOVE_ROUNDTRIP_LONG
+ * #param	VALUE_INT		移動先X座標
+ * #param	VALUE_INT		移動先Y座標
+ * #param	VALUE_INT		移動フレーム数
+ * #param	VALUE_INT		移動ウエイト
+ * #param	VALUE_INT		往復カウント（往復時有効）
+ */
+//======================================================================
+	.macro	TRAINER_MOVE	pos, type, move_pos_x, move_pos_y, frame, wait, count
+	.short	EC_TRAINER_MOVE
+	.long		\pos
+	.long		\type
+	.long		\move_pos_x
+	.long		\move_pos_y
+	.long		\frame
+	.long		\wait
+	.long		\count
+	.endm
+
+//======================================================================
+/**
+ * @brief	トレーナーアニメセット
+ *
+ * #param_num	2
+ * @param	pos			アニメセットするトレーナーの立ち位置
+ * @param	anm_no	セットするアニメナンバー
+ *
+ * #param	VALUE_INT		トレーナーの立ち位置
+ * #param	VALUE_INT		アニメナンバー
+ */
+//======================================================================
+	.macro	TRAINER_ANIME_SET	pos, anm_no
+	.short	EC_TRAINER_ANIME_SET
+	.long		\pos
+	.long		\anm_no
+	.endm
+
+//======================================================================
+/**
+ * @brief	トレーナー削除
+ *
+ * #param_num	1
+ * @param	index		削除するトレーナーの立ち位置
+ *
+ * #param	VALUE_INT		トレーナーの立ち位置
+ */
+//======================================================================
+	.macro	TRAINER_DEL	pos
+	.short	EC_TRAINER_DEL
+	.long		\pos
 	.endm
 
 //======================================================================
 /**
  * @brief	エフェクト終了待ち
  *
- * #param_num	0
+ * #param_num	1
+ * @param	kind	終了待ちする種類
+ *
+ * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー
+ * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER
  */
 //======================================================================
-	.macro	EFFECT_END_WAIT
+	.macro	EFFECT_END_WAIT	kind
 	.short	EC_EFFECT_END_WAIT
+	.long		\kind
 	.endm
 
 //======================================================================
@@ -452,6 +700,22 @@ ex)
 	.macro	WAIT	wait
 	.short	EC_WAIT
 	.long		\wait
+	.endm
+
+//======================================================================
+/**
+ * @brief	制御モード変更
+ *
+ * #param_num	1
+ * @param		mode	制御モード（継続：モードが切り替わるか、エフェクト終了まちまで処理を継続して実行　逐次：1行ごとに実行）
+ *
+ * #param	COMBOBOX_TEXT	継続	逐次
+ * #param	COMBOBOX_VALUE	BTLEFF_CONTROL_MODE_CONTINUE	BTLEFF_CONTROL_MODE_SUSPEND
+ */
+//======================================================================
+	.macro	CONTROL_MODE	mode
+	.short	EC_CONTROL_MODE
+	.long		\mode
 	.endm
 
 //======================================================================

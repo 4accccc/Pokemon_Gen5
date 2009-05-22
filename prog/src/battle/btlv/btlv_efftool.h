@@ -36,6 +36,13 @@ extern	void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BO
 extern	BOOL	BTLV_EFFTOOL_CalcParam( EFFTOOL_MOVE_WORK *emw, VecFx32 *now_param );
 extern	u8		BTLV_EFFTOOL_Pos2Bit( BtlvMcssPos no );
 
+static	inline	u32	BTLV_EFFTOOL_No2Bit( u32 no )
+{	
+	GF_ASSERT( no < 32 );
+	
+	return ( 1 <<  ( no ) );
+}
+
 #endif __ASM_NO_DEF_
 
 #endif	//__BTLV_EFFTOOL_H_

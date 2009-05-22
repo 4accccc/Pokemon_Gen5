@@ -49,8 +49,8 @@ void			BTLV_FIELD_Main( BTLV_FIELD_WORK *bfw );
 void			BTLV_FIELD_Draw( BTLV_FIELD_WORK *bfw );
 
 //TCB関数群
-static	void	BTLV_FIELD_TCBAdd( BTLV_FIELD_WORK *bfw );
-static	void	BTLV_FIELD_TCB_MoveShadowLine( GFL_TCB *tcb, void *work );
+//static	void	BTLV_FIELD_TCBAdd( BTLV_FIELD_WORK *bfw );
+//static	void	BTLV_FIELD_TCB_MoveShadowLine( GFL_TCB *tcb, void *work );
 
 //============================================================================================
 /**
@@ -59,7 +59,8 @@ static	void	BTLV_FIELD_TCB_MoveShadowLine( GFL_TCB *tcb, void *work );
 //============================================================================================
 //モデルデータ
 static	const	int	field_resource_table[][BTLV_FIELD_MAX]={
-	{ NARC_battgra_wb_batt_field01_nsbmd, NARC_battgra_wb_batt_bg01_nsbmd, NARC_battgra_wb_batt_field02_nsbmd },
+//	{ NARC_battgra_wb_batt_field01_nsbmd, NARC_battgra_wb_batt_bg01_nsbmd, NARC_battgra_wb_batt_field02_nsbmd },
+	{ NARC_battgra_wb_batt_field01_nsbmd, NARC_battgra_wb_batt_bg01_nsbmd },
 };
 
 //============================================================================================
@@ -103,7 +104,7 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( GFL_TCBSYS *tcb_sys, int index, HEAPID heapID 
 		MTX_Identity33( &bfw->field_status[ i ].rotate );
 	}
 
-	BTLV_FIELD_TCBAdd( bfw );
+//	BTLV_FIELD_TCBAdd( bfw );
 
 	return bfw;
 }
@@ -155,6 +156,7 @@ void	BTLV_FIELD_Draw( BTLV_FIELD_WORK *bfw )
 	}
 }
 
+#if 0
 //TCB関数群
 static	void	BTLV_FIELD_TCBAdd( BTLV_FIELD_WORK *bfw )
 {
@@ -198,4 +200,4 @@ static	void	BTLV_FIELD_TCB_MoveShadowLine( GFL_TCB *tcb, void *work )
 		GFL_TCB_DeleteTask( tcb );
 	}
 }
-
+#endif

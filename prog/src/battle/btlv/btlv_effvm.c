@@ -33,19 +33,21 @@ enum{
 //============================================================================================
 
 typedef struct{
-	u32					position_reverse_flag	:1;			//立ち位置反転フラグ
-	u32					camera_ortho_on_flag	:1;			//カメラ移動後、正射影に戻すフラグ
+	u32						position_reverse_flag	:1;			//立ち位置反転フラグ
+	u32						camera_ortho_on_flag	:1;			//カメラ移動後、正射影に戻すフラグ
 	u32									:30;
-	GFL_TCBSYS	*tcbsys;
-	GFL_PTC_PTR	ptc[ PARTICLE_GLOBAL_MAX ];
-	u16					ptc_no[ PARTICLE_GLOBAL_MAX ];
-	BtlvMcssPos	attack_pos;
-	BtlvMcssPos	defence_pos;
-	int					wait;
-	VM_CODE			*sequence;
-	void				*temp_work[ TEMP_WORK_SIZE ];
-	int					temp_work_count;
-	HEAPID			heapID;
+	GFL_TCBSYS		*tcbsys;
+	GFL_PTC_PTR		ptc[ PARTICLE_GLOBAL_MAX ];
+	u16						ptc_no[ PARTICLE_GLOBAL_MAX ];
+	BtlvMcssPos		attack_pos;
+	BtlvMcssPos		defence_pos;
+	int						wait;
+	VM_CODE				*sequence;
+	void					*temp_work[ TEMP_WORK_SIZE ];
+	int						temp_work_count;
+	HEAPID				heapID;
+	VMCMD_RESULT	control_mode;
+	int						effect_end_wait_kind;
 #ifdef PM_DEBUG
 	const	DEBUG_PARTICLE_DATA	*dpd;
 	BOOL											debug_flag;
@@ -56,6 +58,7 @@ typedef struct{
 
 typedef struct{
 	VMHANDLE	*vmh;
+	int				command;
 	int				src;
 	int				dst;
 	fx32			ofs_y;
@@ -63,6 +66,8 @@ typedef struct{
 	fx32			top;
 	int				move_type;
 	int				move_frame;	//移動するフレーム数
+	VecFx32		src_pos;
+	VecFx32		dst_pos;
 }BTLV_EFFVM_EMIT_INIT_WORK;
 
 //エミッタ移動用パラメータ構造体
@@ -88,16 +93,25 @@ void			BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID
 
 //エフェクトコマンド
 static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_CAMERA_MOVE_COODINATE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_CAMERA_MOVE_ANGLE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_CAMERA_PROJECTION( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work );
-static VMCMD_RESULT	VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_TRAINER_DEL( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_WAIT( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 
@@ -159,16 +173,25 @@ static const int	script_table[ BTLV_MCSS_POS_MAX ][ BTLV_MCSS_POS_MAX ]={
 //============================================================================================
 static const VMCMD_FUNC btlv_effect_command_table[]={
 	VMEC_CAMERA_MOVE,
+	VMEC_CAMERA_MOVE_COODINATE,
+	VMEC_CAMERA_MOVE_ANGLE,
+	VMEC_CAMERA_PROJECTION,
 	VMEC_PARTICLE_LOAD,
 	VMEC_PARTICLE_PLAY,
+	VMEC_PARTICLE_PLAY_COORDINATE,
+	VMEC_EMITTER_MOVE,
 	VMEC_POKEMON_MOVE,
 	VMEC_POKEMON_SCALE,
 	VMEC_POKEMON_ROTATE,
 	VMEC_POKEMON_SET_MEPACHI_FLAG,
 	VMEC_POKEMON_SET_ANM_FLAG,
-	VMEC_EMITTER_MOVE,
+	VMEC_TRAINER_SET,
+	VMEC_TRAINER_MOVE,
+	VMEC_TRAINER_ANIME_SET,
+	VMEC_TRAINER_DEL,
 	VMEC_EFFECT_END_WAIT,
 	VMEC_WAIT,
+	VMEC_CONTROL_MODE,
 
 	VMEC_SEQ_END,
 };
@@ -198,8 +221,12 @@ VMHANDLE	*BTLV_EFFVM_Init( GFL_TCBSYS *tcbsys, HEAPID heapID )
 	VMHANDLE	*vmh;
 	BTLV_EFFVM_WORK	*bevw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_EFFVM_WORK ) );
 
+	//VMCMD_RESULTはenum定義なので、.sでインクルードできないためdefine定義しているラベルと一致チェックをしておく
+	GF_ASSERT( VMCMD_RESULT_SUSPEND == BTLEFF_CONTROL_MODE_SUSPEND );
+
 	bevw->heapID = heapID;
 	bevw->tcbsys = tcbsys;
+	bevw->control_mode = BTLEFF_CONTROL_MODE_SUSPEND;
 
 	for( i = 0 ; i < PARTICLE_GLOBAL_MAX ; i++ )
 	{
@@ -244,7 +271,6 @@ void	BTLV_EFFVM_Exit( VMHANDLE *vmh )
 {
 	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 
-	GFL_HEAP_FreeMemory ( bevw->temp_work );
 	GFL_HEAP_FreeMemory ( bevw );
 	VM_Delete( vmh );
 }
@@ -339,7 +365,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 		cam_move_pos = EFFVM_GetPosition( vmh, cam_move_pos - BTLEFF_CAMERA_POS_ATTACK );
 		if( cam_move_pos == BTLV_MCSS_POS_ERROR )
 		{
-			return VMCMD_RESULT_SUSPEND;
+			return bevw->control_mode;
 		}
 		cam_pos.x = cam_pos_table[ cam_move_pos ].x;
 		cam_pos.y = cam_pos_table[ cam_move_pos ].y;
@@ -364,7 +390,125 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 		break;
 	}
 
-	return VMCMD_RESULT_SUSPEND;
+	return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *	カメラ移動（座標指定）
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_CAMERA_MOVE_COODINATE( VMHANDLE *vmh, void *context_work )
+{	
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+	VecFx32		cam_pos,cam_target;
+	//カメラタイプ読み込み
+	int			cam_type = ( int )VMGetU32( vmh );
+	int			frame, wait, brake;
+
+	//カメラ移動先位置を読み込み
+	cam_pos.x = ( fx32 )VMGetU32( vmh );
+	cam_pos.y = ( fx32 )VMGetU32( vmh );
+	cam_pos.z = ( fx32 )VMGetU32( vmh );
+	cam_target.x = ( fx32 )VMGetU32( vmh );
+	cam_target.y = ( fx32 )VMGetU32( vmh );
+	cam_target.z = ( fx32 )VMGetU32( vmh );
+
+	//移動フレーム数を読み込み
+	frame = ( int )VMGetU32( vmh );
+	//移動ウエイトを読み込み
+	wait = ( int )VMGetU32( vmh );
+	//ブレーキフレーム数を読み込み
+	brake = ( int )VMGetU32( vmh );
+
+	//投視射影モードにする
+	BTLV_MCSS_ResetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+
+	//カメラタイプから移動先を計算
+	switch( cam_type ){
+	case BTLEFF_CAMERA_MOVE_DIRECT:		//ダイレクト
+		BTLV_CAMERA_MoveCameraPosition( BTLV_EFFECT_GetCameraWork(), &cam_pos, &cam_target );
+		break;
+	case BTLEFF_CAMERA_MOVE_INTERPOLATION:	//追従
+		BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &cam_pos, &cam_target, frame, wait, brake );
+		break;
+	}
+
+	return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *	カメラ移動（角度指定）
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_CAMERA_MOVE_ANGLE( VMHANDLE *vmh, void *context_work )
+{	
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+	//カメラタイプ読み込み
+	int		cam_type = ( int )VMGetU32( vmh );
+	//カメラ角度読み込み
+	int		phi = ( int )VMGetU32( vmh );
+	int		theta = ( int )VMGetU32( vmh );
+	//移動フレーム数を読み込み
+	int		frame = ( int )VMGetU32( vmh );
+	//移動ウエイトを読み込み
+	int		wait = ( int )VMGetU32( vmh );
+	//ブレーキフレーム数を読み込み
+	int		brake = ( int )VMGetU32( vmh );
+
+	//投視射影モードにする
+	BTLV_MCSS_ResetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+
+	//カメラタイプから移動先を計算
+	switch( cam_type ){
+	case BTLEFF_CAMERA_MOVE_DIRECT:		//ダイレクト
+		BTLV_CAMERA_MoveCameraAngle( BTLV_EFFECT_GetCameraWork(), phi, theta );
+		break;
+	case BTLEFF_CAMERA_MOVE_INTERPOLATION:	//追従
+		{	
+			VecFx32	cam_pos, cam_target;
+			BTLV_CAMERA_GetCameraPositionAngle( BTLV_EFFECT_GetCameraWork(), phi, theta, &cam_pos, &cam_target );
+			BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &cam_pos, &cam_target, frame, wait, brake );
+		}
+		break;
+	}
+
+	return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *	射影モード
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_CAMERA_PROJECTION( VMHANDLE *vmh, void *context_work )
+{	
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+	//射影モードを読み込み
+	int type = ( int )VMGetU32( vmh );
+
+	if( type == BTLEFF_CAMERA_PROJECTION_ORTHO )
+	{	
+		//正射影モードにする
+		BTLV_MCSS_SetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+	}
+	else
+	{
+		//投視射影モードにする
+		BTLV_MCSS_ResetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+	}
+
+	return bevw->control_mode;
 }
 
 //============================================================================================
@@ -393,7 +537,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
 		ofs = bevw->dpd->adrs[ BTLV_EFFVM_GetDPDNo( bevw, datID ) ];
 		resource = (void *)&bevw->dpd->adrs[ ofs ];
 		GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
-		return VMCMD_RESULT_SUSPEND;
+		return bevw->control_mode;
 	}
 #endif
 
@@ -402,7 +546,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
 	resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, bevw->heapID );
 	GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
 
-	return VMCMD_RESULT_SUSPEND;
+	return bevw->control_mode;
 }
 
 //============================================================================================
@@ -421,6 +565,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 	int			ptc_no = EFFVM_GetPtcNo( bevw, datID );
 	int			index = ( int )VMGetU32( vmh );
 	
+	beeiw->command = EC_PARTICLE_PLAY;
 	beeiw->vmh = vmh;
 	beeiw->src = ( int )VMGetU32( vmh );
 	beeiw->dst = ( int )VMGetU32( vmh );
@@ -434,7 +579,71 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 
 	GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
 
-	return VMCMD_RESULT_SUSPEND;
+	return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *	パーティクル再生（座標指定）
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_work )
+{
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	BTLV_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+	ARCDATID	datID = ( ARCDATID )VMGetU32( vmh );
+	int			ptc_no = EFFVM_GetPtcNo( bevw, datID );
+	int			index = ( int )VMGetU32( vmh );
+	
+	beeiw->command = EC_PARTICLE_PLAY_COORDINATE;
+	beeiw->vmh = vmh;
+	beeiw->src_pos.x = ( fx32 )VMGetU32( vmh );
+	beeiw->src_pos.y = ( fx32 )VMGetU32( vmh );
+	beeiw->src_pos.z = ( fx32 )VMGetU32( vmh );
+	beeiw->dst_pos.x = ( fx32 )VMGetU32( vmh );
+	beeiw->dst_pos.y = ( fx32 )VMGetU32( vmh );
+	beeiw->dst_pos.z = ( fx32 )VMGetU32( vmh );
+	beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
+	beeiw->angle = ( fx32 )VMGetU32( vmh );
+
+	GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
+
+	return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *	エミッタ移動
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT	VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
+{
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	BTLV_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+	ARCDATID	datID = ( ARCDATID )VMGetU32( vmh );
+	int			ptc_no = EFFVM_GetPtcNo( bevw, datID );
+	int			index = ( int )VMGetU32( vmh );
+	
+	beeiw->vmh = vmh;
+	beeiw->move_type = ( int )VMGetU32( vmh );
+	beeiw->src = ( int )VMGetU32( vmh );
+	beeiw->dst = ( int )VMGetU32( vmh );
+	beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
+	beeiw->move_frame = ( int )VMGetU32( vmh );
+	beeiw->top = ( fx32 )VMGetU32( vmh );
+
+	//移動元と移動先が同一のときは、アサートで止める
+	GF_ASSERT( beeiw->dst != beeiw->src );
+
+	GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
+
+	return bevw->control_mode;
 }
 
 //============================================================================================
@@ -471,7 +680,7 @@ static VMCMD_RESULT	VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
 		BTLV_MCSS_MovePosition( BTLV_EFFECT_GetMcssWork(), position, type, &move_pos, frame, wait, count );
 	}
 
-	return VMCMD_RESULT_SUSPEND;
+	return bevw->control_mode;
 }
 
 //============================================================================================
@@ -508,7 +717,7 @@ static VMCMD_RESULT	VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
 		BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), position, type, &scale, frame, wait, count );
 	}
 
-	return VMCMD_RESULT_SUSPEND;
+	return bevw->control_mode;
 }
 
 //============================================================================================
@@ -545,7 +754,7 @@ static VMCMD_RESULT	VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
 		BTLV_MCSS_MoveRotate( BTLV_EFFECT_GetMcssWork(), position, type, &rotate, frame, wait, count );
 	}
 
-	return VMCMD_RESULT_SUSPEND;
+	return bevw->control_mode;
 }
 
 //============================================================================================
@@ -580,7 +789,7 @@ static VMCMD_RESULT	VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_
 		BTLV_MCSS_MoveBlink( BTLV_EFFECT_GetMcssWork(), position, type, wait, count );
 	}
 
-	return VMCMD_RESULT_SUSPEND;
+	return bevw->control_mode;
 }
 
 //============================================================================================
@@ -607,39 +816,96 @@ static VMCMD_RESULT	VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work
 		BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), position, flag );
 	}
 
-	return VMCMD_RESULT_SUSPEND;
+	return bevw->control_mode;
 }
 
 //============================================================================================
 /**
- *	エミッタ移動
+ *	トレーナーセット
  *
  * @param[in]	vmh				仮想マシン制御構造体へのポインタ
  * @param[in]	context_work	コンテキストワークへのポインタ
  */
 //============================================================================================
-static VMCMD_RESULT	VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
+static VMCMD_RESULT	VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work )
+{	
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	int		index = ( int )VMGetU32( vmh );
+	int		position = ( int )VMGetU32( vmh );
+	int		pos_x = ( int )VMGetU32( vmh );
+	int		pos_y = ( int )VMGetU32( vmh );
+
+	BTLV_EFFECT_SetTrainer( index, position , pos_x, pos_y );
+
+	return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *	トレーナー移動
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT	VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
-	BTLV_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
-	ARCDATID	datID = ( ARCDATID )VMGetU32( vmh );
-	int			ptc_no = EFFVM_GetPtcNo( bevw, datID );
-	int			index = ( int )VMGetU32( vmh );
-	
-	beeiw->vmh = vmh;
-	beeiw->move_type = ( int )VMGetU32( vmh );
-	beeiw->src = ( int )VMGetU32( vmh );
-	beeiw->dst = ( int )VMGetU32( vmh );
-	beeiw->ofs_y = ( fx32 )VMGetU32( vmh );
-	beeiw->move_frame = ( int )VMGetU32( vmh );
-	beeiw->top = ( fx32 )VMGetU32( vmh );
+	int						index;
+	int						type;
+	GFL_CLACTPOS	move_pos;
+	int						frame;
+	int						wait;
+	int						count;
 
-	//移動元と移動先が同一のときは、アサートで止める
-	GF_ASSERT( beeiw->dst != beeiw->src );
+	index = BTLV_EFFECT_GetTrainerIndex( ( int )VMGetU32( vmh ) );
+	type	   = ( int )VMGetU32( vmh );
+	move_pos.x = ( fx32 )VMGetU32( vmh ); 
+	move_pos.y = ( fx32 )VMGetU32( vmh ); 
+	frame	   = ( int )VMGetU32( vmh );
+	wait	   = ( int )VMGetU32( vmh );
+	count	   = ( int )VMGetU32( vmh );
 
-	GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
+	BTLV_CLACT_MovePosition( BTLV_EFFECT_GetCLWK(), index, type, &move_pos, frame, wait, count );
 
-	return VMCMD_RESULT_SUSPEND;
+	return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *	トレーナーアニメセット
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT	VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work )
+{	
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	int	index = BTLV_EFFECT_GetTrainerIndex( ( int )VMGetU32( vmh ) );
+	int	anm_no = ( int )VMGetU32( vmh );
+
+	BTLV_CLACT_SetAnime( BTLV_EFFECT_GetCLWK(), index, anm_no );
+
+	return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *	トレーナー削除
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT	VMEC_TRAINER_DEL( VMHANDLE *vmh, void *context_work )
+{	
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	int	position = ( int )VMGetU32( vmh );
+
+	BTLV_EFFECT_DelTrainer( position );
+
+	return bevw->control_mode;
 }
 
 //============================================================================================
@@ -652,7 +918,14 @@ static VMCMD_RESULT	VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT	VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work )
 {
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+
+	bevw->effect_end_wait_kind = ( int )VMGetU32( vmh );
+
 	VMCMD_SetWait( vmh, VWF_EFFECT_END_CHECK );
+
+	//エフェクト待ちは必ずSUSPENDモードに切り替える
+	bevw->control_mode = VMCMD_RESULT_SUSPEND;
 
 	return VMCMD_RESULT_SUSPEND;
 }
@@ -673,7 +946,27 @@ static VMCMD_RESULT	VMEC_WAIT( VMHANDLE *vmh, void *context_work )
 
 	VMCMD_SetWait( vmh, VWF_WAIT_CHECK );
 
+	//ウエイトは必ずSUSPENDモードに切り替える
+	bevw->control_mode = VMCMD_RESULT_SUSPEND;
+
 	return VMCMD_RESULT_SUSPEND;
+}
+
+//============================================================================================
+/**
+ *	コントロールモード変更
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT	VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work )
+{	
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+
+	bevw->control_mode = ( VMCMD_RESULT )VMGetU32( vmh );
+
+	return bevw->control_mode;
 }
 
 //============================================================================================
@@ -719,6 +1012,9 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 	bevw->debug_flag = FALSE;
 #endif
 
+	//SUSPENDモードに切り替えておく
+	bevw->control_mode = VMCMD_RESULT_SUSPEND;
+
 	return VMCMD_RESULT_SUSPEND;
 }
 
@@ -737,13 +1033,18 @@ static	BOOL	VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
 {
 	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
 
-	//カメラ移動終了？
-	if( BTLV_CAMERA_CheckExecute( BTLV_EFFECT_GetCameraWork() ) == TRUE )
-	{
-		return FALSE;
+	if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+			( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_CAMERA ) )
+	{	
+		//カメラ移動終了？
+		if( BTLV_CAMERA_CheckExecute( BTLV_EFFECT_GetCameraWork() ) == TRUE )
+		{
+			return FALSE;
+		}
 	}
-
 	//ポケモン移動終了？
+	if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+			( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_POKEMON ) )
 	{
 		BtlvMcssPos	pos;
 		
@@ -756,7 +1057,24 @@ static	BOOL	VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
 		}
 	}
 
+	//トレーナー移動終了？
+	if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+			( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_TRAINER ) )
+	{	
+		int	index;
+
+		for( index = 0 ; index < BTLV_CLACT_CLWK_MAX ; index++ )
+		{	
+			if( BTLV_CLACT_CheckTCBExecute( BTLV_EFFECT_GetCLWK(), index ) == TRUE )
+			{
+				return FALSE;
+			}
+		}
+	}
+
 	//パーティクル描画終了？
+	if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+			( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_PARTICLE ) )
 	{
 		int	ptc_no;
 
@@ -838,6 +1156,18 @@ static	int		EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
 		else{
 			position = BTLV_MCSS_POS_ERROR;
 		}
+		break;
+	case BTLEFF_POKEMON_POS_AA:
+	case BTLEFF_POKEMON_POS_BB:
+	case BTLEFF_POKEMON_POS_A:
+	case BTLEFF_POKEMON_POS_B:
+	case BTLEFF_POKEMON_POS_C:
+	case BTLEFF_POKEMON_POS_D:
+		position = BTLV_MCSS_POS_AA + pos_flag - BTLEFF_POKEMON_POS_AA;
+		break;
+	default:
+		OS_TPrintf("定義されていないフラグが指定されています\n");
+		GF_ASSERT( 0 );
 		break;
 	}
 
@@ -956,44 +1286,56 @@ static	void	EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 	VecFx32	src,dst;
 	VecFx16	dir;
 
-	switch( beeiw->src ){
-	case BTLEFF_CAMERA_POS_AA:
-	case BTLEFF_CAMERA_POS_BB:
-	case BTLEFF_CAMERA_POS_A:
-	case BTLEFF_CAMERA_POS_B:
-	case BTLEFF_CAMERA_POS_C:
-	case BTLEFF_CAMERA_POS_D:
-		beeiw->src = EFFVM_ConvPosition( beeiw->vmh, beeiw->src );
-		break;
-	case BTLEFF_CAMERA_POS_ATTACK:
-	case BTLEFF_CAMERA_POS_ATTACK_PAIR:
-	case BTLEFF_CAMERA_POS_DEFENCE:
-	case BTLEFF_CAMERA_POS_DEFENCE_PAIR:
-		beeiw->src = EFFVM_GetPosition( beeiw->vmh, beeiw->src - BTLEFF_CAMERA_POS_ATTACK );
-		GF_ASSERT( beeiw->src != BTLV_MCSS_POS_ERROR );
-		break;
-	}
+	if( beeiw->command == EC_PARTICLE_PLAY )
+	{
+		switch( beeiw->src ){
+		case BTLEFF_CAMERA_POS_AA:
+		case BTLEFF_CAMERA_POS_BB:
+		case BTLEFF_CAMERA_POS_A:
+		case BTLEFF_CAMERA_POS_B:
+		case BTLEFF_CAMERA_POS_C:
+		case BTLEFF_CAMERA_POS_D:
+			beeiw->src = EFFVM_ConvPosition( beeiw->vmh, beeiw->src );
+			break;
+		case BTLEFF_CAMERA_POS_ATTACK:
+		case BTLEFF_CAMERA_POS_ATTACK_PAIR:
+		case BTLEFF_CAMERA_POS_DEFENCE:
+		case BTLEFF_CAMERA_POS_DEFENCE_PAIR:
+			beeiw->src = EFFVM_GetPosition( beeiw->vmh, beeiw->src - BTLEFF_CAMERA_POS_ATTACK );
+			GF_ASSERT( beeiw->src != BTLV_MCSS_POS_ERROR );
+			break;
+		}
 
-	switch( beeiw->dst ){
-	case BTLEFF_CAMERA_POS_AA:
-	case BTLEFF_CAMERA_POS_BB:
-	case BTLEFF_CAMERA_POS_A:
-	case BTLEFF_CAMERA_POS_B:
-	case BTLEFF_CAMERA_POS_C:
-	case BTLEFF_CAMERA_POS_D:
-		beeiw->dst = EFFVM_ConvPosition( beeiw->vmh, beeiw->dst );
-		break;
-	case BTLEFF_CAMERA_POS_ATTACK:
-	case BTLEFF_CAMERA_POS_ATTACK_PAIR:
-	case BTLEFF_CAMERA_POS_DEFENCE:
-	case BTLEFF_CAMERA_POS_DEFENCE_PAIR:
-		beeiw->dst = EFFVM_GetPosition( beeiw->vmh, beeiw->dst - BTLEFF_CAMERA_POS_ATTACK );
-		GF_ASSERT( beeiw->dst != BTLV_MCSS_POS_ERROR );
-		break;
-	}
+		switch( beeiw->dst ){
+		case BTLEFF_CAMERA_POS_AA:
+		case BTLEFF_CAMERA_POS_BB:
+		case BTLEFF_CAMERA_POS_A:
+		case BTLEFF_CAMERA_POS_B:
+		case BTLEFF_CAMERA_POS_C:
+		case BTLEFF_CAMERA_POS_D:
+			beeiw->dst = EFFVM_ConvPosition( beeiw->vmh, beeiw->dst );
+			break;
+		case BTLEFF_CAMERA_POS_ATTACK:
+		case BTLEFF_CAMERA_POS_ATTACK_PAIR:
+		case BTLEFF_CAMERA_POS_DEFENCE:
+		case BTLEFF_CAMERA_POS_DEFENCE_PAIR:
+			beeiw->dst = EFFVM_GetPosition( beeiw->vmh, beeiw->dst - BTLEFF_CAMERA_POS_ATTACK );
+			GF_ASSERT( beeiw->dst != BTLV_MCSS_POS_ERROR );
+			break;
+		}
 
-	BTLV_MCSS_GetPokeDefaultPos( &src, beeiw->src );
-	BTLV_MCSS_GetPokeDefaultPos( &dst, beeiw->dst );
+		BTLV_MCSS_GetPokeDefaultPos( &src, beeiw->src );
+		BTLV_MCSS_GetPokeDefaultPos( &dst, beeiw->dst );
+	}
+	else
+	{	
+		src.x = beeiw->src_pos.x;
+		src.y = beeiw->src_pos.y;
+		src.z = beeiw->src_pos.z;
+		dst.x = beeiw->dst_pos.x;
+		dst.y = beeiw->dst_pos.y;
+		dst.z = beeiw->dst_pos.z;
+	}
 
 	src.y += beeiw->ofs_y;
 	dst.y += beeiw->ofs_y;
@@ -1168,6 +1510,7 @@ void	BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, in
 	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 	BTLV_EFFVM_EMIT_INIT_WORK	*beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
 
+	beeiw->command = EC_PARTICLE_PLAY;
 	beeiw->vmh = vmh;
 	beeiw->src = src;
 	beeiw->dst = dst;

@@ -31,6 +31,8 @@
 #define	BTLV_EFFECT_BLINK_TIME	( 3 )
 #define	BTLV_EFFECT_BLINK_WAIT	( 4 )
 
+#define	BTLV_EFFECT_TRAINER_INDEX_NONE	( 0xffffffff )
+
 //============================================================================================
 /**
  *	構造体宣言
@@ -44,12 +46,17 @@ struct _BTLV_EFFECT_WORK
 	GFL_TCBSYS				*tcb_sys;
 	void							*tcb_work;
 	VMHANDLE					*vm_core;
+	PALETTE_FADE_PTR	pfd;
 	BTLV_MCSS_WORK		*bmw;
 	BTLV_STAGE_WORK		*bsw;
 	BTLV_FIELD_WORK		*bfw;
 	BTLV_CAMERA_WORK	*bcw;
+	BTLV_CLACT_WORK		*bclw;
+	GFL_TCB						*v_tcb;
 	int								execute_flag;
 	HEAPID						heapID;
+
+	int								trainer_index[ BTLV_MCSS_POS_MAX ];
 
 	//暫定で戻し
 	GFL_PTC_PTR				ptc;
@@ -65,29 +72,20 @@ typedef	struct
 	int					wait;
 }BTLV_EFFECT_TCB;
 
+static	BTLV_EFFECT_WORK	*bew = NULL;
+
 //============================================================================================
 /**
  *	プロトタイプ宣言
  */
 //============================================================================================
 
-void	BTLV_EFFECT_Init( int index, HEAPID heapID );
-void	BTLV_EFFECT_Exit( void );
-void	BTLV_EFFECT_Main( void );
-void	BTLV_EFFECT_Add( int eff_no );
-BOOL	BTLV_EFFECT_CheckExecute( void );
-void	BTLV_EFFECT_SetPokemon( const POKEMON_PARAM *pp, int position );
-void	BTLV_EFFECT_DelPokemon( int position );
-BOOL	BTLV_EFFECT_CheckExistPokemon( int position );
+static	void	BTLV_EFFECT_VBlank( GFL_TCB *tcb, void *work );
 
-BTLV_CAMERA_WORK	*BTLV_EFFECT_GetCameraWork( void );
-BTLV_MCSS_WORK		*BTLV_EFFECT_GetMcssWork( void );
-VMHANDLE					*BTLV_EFFECT_GetVMHandle( void );
-
-static	BTLV_EFFECT_WORK	*bew = NULL;
-
+//暫定で作ったエフェクトシーケンス
 static	void	BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work );
 static	void	BTLV_EFFECT_TCB_CameraWork( GFL_TCB *tcb, void *work );
+static	void	BTLV_EFFECT_TCB_EncountEffect( GFL_TCB *tcb, void *work );
 
 //暫定で作ったTCBVerの技エフェクトシーケンス
 static	void	BTLV_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work );
@@ -123,11 +121,12 @@ static	GFL_TCB_FUNC * const BTLV_effect_tcb_table[]={
 /**
  *	システム初期化
  *
- * @param[in]	index	背景を決定するインデックスナンバー
- * @param[in]	heapID	ヒープID
+ * @param[in]	index			背景を決定するインデックスナンバー
+ * @param[in] vramBank	VRAM構成テーブル（CLACTの初期化に必要）
+ * @param[in]	heapID		ヒープID
  */
 //============================================================================================
-void	BTLV_EFFECT_Init( int index, HEAPID heapID )
+void	BTLV_EFFECT_Init( int index, const GFL_DISP_VRAM *vramBank, HEAPID heapID )
 {
 	GF_ASSERT( bew == NULL );
 	bew = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_EFFECT_WORK ) );
@@ -141,15 +140,37 @@ void	BTLV_EFFECT_Init( int index, HEAPID heapID )
 
 	bew->vm_core = BTLV_EFFVM_Init( bew->tcb_sys, heapID );
 
-	bew->bmw = BTLV_MCSS_Init( bew->tcb_sys, heapID );
-	bew->bsw = BTLV_STAGE_Init( index, heapID );
-	bew->bfw = BTLV_FIELD_Init( bew->tcb_sys, index, heapID );
-	bew->bcw = BTLV_CAMERA_Init( bew->tcb_sys, heapID );
+	//パレットフェード初期化
+	bew->pfd = PaletteFadeInit( heapID );
+	PaletteTrans_AutoSet( bew->pfd, TRUE );
+	PaletteFadeWorkAllocSet( bew->pfd, FADE_MAIN_BG, 0x200, heapID );
+	PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_BG, 0x200, heapID );
+	PaletteFadeWorkAllocSet( bew->pfd, FADE_MAIN_OBJ, 0x200, heapID );
+	PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_OBJ, 0x200, heapID );
+
+	bew->bmw	= BTLV_MCSS_Init( bew->tcb_sys, heapID );
+	bew->bsw	= BTLV_STAGE_Init( index, heapID );
+	bew->bfw	= BTLV_FIELD_Init( bew->tcb_sys, index, heapID );
+	bew->bcw	= BTLV_CAMERA_Init( bew->tcb_sys, heapID );
+	bew->bclw	= BTLV_CLACT_Init( bew->tcb_sys, vramBank, heapID );
 
 	BTLV_MCSS_SetOrthoMode( bew->bmw );
 
 	//パーティクル初期化
 	GFL_PTC_Init( heapID );
+
+	//トレーナーインデックス管理配列初期化
+	{	
+		int	index;
+
+		for( index = 0 ; index < BTLV_MCSS_POS_MAX ; index++ )
+		{	
+			bew->trainer_index[ index ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
+		}
+	}
+
+	//VBlank関数
+	bew->v_tcb = GFUser_VIntr_CreateTCB( BTLV_EFFECT_VBlank, NULL, 0 );
 }
 
 //============================================================================================
@@ -160,16 +181,26 @@ void	BTLV_EFFECT_Init( int index, HEAPID heapID )
 void	BTLV_EFFECT_Exit( void )
 {
 	GF_ASSERT( bew != NULL );
+
+	PaletteFadeWorkAllocFree( bew->pfd, FADE_MAIN_BG );
+	PaletteFadeWorkAllocFree( bew->pfd, FADE_SUB_BG );
+	PaletteFadeWorkAllocFree( bew->pfd, FADE_MAIN_OBJ );
+	PaletteFadeWorkAllocFree( bew->pfd, FADE_SUB_OBJ );
+	PaletteFadeFree( bew->pfd );
 	BTLV_MCSS_Exit( bew->bmw );
 	BTLV_STAGE_Exit( bew->bsw );
 	BTLV_FIELD_Exit( bew->bfw );
 	BTLV_CAMERA_Exit( bew->bcw );
+	BTLV_CLACT_Exit( bew->bclw );
 	GFL_PTC_Exit();
 	BTLV_EFFVM_Exit( bew->vm_core );
+	GFL_TCB_DeleteTask( bew->v_tcb );
 	GFL_TCB_Exit( bew->tcb_sys );
 	GFL_HEAP_FreeMemory( bew->tcb_work );
 	GFL_HEAP_FreeMemory( bew );
+
 	bew = NULL;
+
 }
 
 //============================================================================================
@@ -189,6 +220,7 @@ void	BTLV_EFFECT_Main( void )
 	BTLV_STAGE_Main( bew->bsw );
 	BTLV_FIELD_Main( bew->bfw );
 	BTLV_CAMERA_Main( bew->bcw );
+	BTLV_CLACT_Main( bew->bclw );
 
 	//3D描画
 	{
@@ -250,6 +282,22 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target )
 	bew->execute_flag = 1;
 
 	GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_Damage, bet, 0 );
+}
+
+//=============================================================================================
+/**
+ * エンカウントエフェクト起動
+ */
+//=============================================================================================
+void BTLV_EFFECT_EncountEffect( void )
+{
+	BTLV_EFFECT_TCB	*bet = GFL_HEAP_AllocMemory( bew->heapID, sizeof( BTLV_EFFECT_TCB ) );
+
+	bet->seq_no = 0;
+
+	bew->execute_flag = 1;
+
+	GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_EncountEffect, bet, 0 );
 }
 
 //============================================================================================
@@ -331,6 +379,63 @@ BOOL	BTLV_EFFECT_CheckExistPokemon( int position )
 
 //============================================================================================
 /**
+ *	指定された位置にトレーナーをセット
+ *
+ * @param[in]	trtype		セットするトレーナータイプ
+ * @param[in]	position	セットするトレーナーの立ち位置
+ * @param[in]	pos_x			セットするトレーナーのX座標（０で立ち位置のX座標を代入）
+ * @param[in]	pos_y			セットするトレーナーのY座標（０で立ち位置のY座標を代入）
+ */
+//============================================================================================
+void	BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y )
+{
+	GF_ASSERT( position < BTLV_MCSS_POS_MAX );
+	GF_ASSERT( bew->trainer_index[ position ] == BTLV_EFFECT_TRAINER_INDEX_NONE );
+
+#if 0
+	if( pos_x == 0 )
+	{	
+	}
+	if( pos_y == 0 )
+	{	
+	}
+#endif
+
+	bew->trainer_index[ position ] = BTLV_CLACT_Add( bew->bclw, ARCID_TRGRA, trtype * 4, pos_x, pos_y );
+}
+
+//============================================================================================
+/**
+ *	指定された立ち位置のトレーナーを削除
+ *
+ * @param[in]	position	削除するトレーナーの立ち位置
+ */
+//============================================================================================
+void	BTLV_EFFECT_DelTrainer( int position )
+{
+	GF_ASSERT( position < BTLV_MCSS_POS_MAX );
+	GF_ASSERT( bew->trainer_index[ position ] != BTLV_EFFECT_TRAINER_INDEX_NONE );
+
+	BTLV_CLACT_Delete( bew->bclw, bew->trainer_index[ position ] );
+	bew->trainer_index[ position ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
+}
+
+//============================================================================================
+/**
+ *	指定された立ち位置のトレーナーインデックスを取得
+ *
+ * @param[in]	position	取得するトレーナーの立ち位置
+ */
+//============================================================================================
+int	BTLV_EFFECT_GetTrainerIndex( int position )
+{
+	GF_ASSERT( position < BTLV_MCSS_POS_MAX );
+
+	return bew->trainer_index[ position ];
+}
+
+//============================================================================================
+/**
  *	エフェクトで使用されているカメラ管理構造体のポインタを取得
  *
  * @retval bcw カメラ管理構造体
@@ -363,6 +468,53 @@ BTLV_MCSS_WORK	*BTLV_EFFECT_GetMcssWork( void )
 VMHANDLE	*BTLV_EFFECT_GetVMHandle( void )
 {
 	return bew->vm_core;
+}
+
+//============================================================================================
+/**
+ *	エフェクトで使用されているGFL_TCBSYS管理構造体のポインタを取得
+ *
+ * @retval vm_core VMHANDLE管理構造体
+ */
+//============================================================================================
+GFL_TCBSYS	*BTLV_EFFECT_GetTCBSYS( void )
+{
+	return bew->tcb_sys;
+}
+
+//============================================================================================
+/**
+ *	エフェクトで使用されているPALETTE_FADE_PTR管理構造体のポインタを取得
+ *
+ * @retval vm_core VMHANDLE管理構造体
+ */
+//============================================================================================
+PALETTE_FADE_PTR	BTLV_EFFECT_GetPfd( void )
+{	
+	return bew->pfd;
+}
+
+//============================================================================================
+/**
+ *	エフェクトで使用されているCLWK管理構造体のポインタを取得
+ *
+ * @retval bclw CLWK管理構造体
+ */
+//============================================================================================
+BTLV_CLACT_WORK	*BTLV_EFFECT_GetCLWK( void )
+{
+	return bew->bclw;
+}
+
+//============================================================================================
+/**
+ *	VBlank関数
+ */
+//============================================================================================
+static	void	BTLV_EFFECT_VBlank( GFL_TCB *tcb, void *work )
+{	
+	GFL_CLACT_SYS_VBlankFunc();
+	PaletteFadeTrans( bew->pfd );
 }
 
 //============================================================================================
@@ -403,6 +555,66 @@ static	void	BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
  */
 //============================================================================================
 static	void	BTLV_EFFECT_TCB_CameraWork( GFL_TCB *tcb, void *work )
+{
+	BTLV_EFFECT_TCB	*bet = (BTLV_EFFECT_TCB *)work;
+	VecFx32			pos,target;
+	VecFx32	aa_value = { FX32_ONE * 16, FX32_ONE * 16, 0 };
+	VecFx32	bb_value = { FX32_ONE * 16 / 2, FX32_ONE * 16 / 2, 0 };
+	VecFx32	AA_value = { FX32_ONE * 16 * 2, FX32_ONE * 16 * 2, 0 };
+	VecFx32	BB_value = { FX32_ONE * 16, FX32_ONE * 16, 0 };
+
+
+	switch( bet->seq_no ){
+	//カメラAAに移動
+	case 0:
+		BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
+		target.x += FX32_ONE * 4;
+		target.y += FX32_ONE * 1;
+		target.z += FX32_ONE * 16;
+		pos.x += FX32_ONE * 4;
+		pos.y += FX32_ONE * 1;
+		pos.z += FX32_ONE * 16;
+		BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 32, 0, 32 );
+		BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_INTERPOLATION, &aa_value, 12, 2, 50 );
+		BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_INTERPOLATION, &bb_value, 12, 2, 50 );
+		bet->seq_no++;
+		break;
+	case 1:
+		if( ( BTLV_CAMERA_CheckExecute( bew->bcw ) == FALSE ) &&
+			( BTLV_MCSS_CheckTCBExecute( bew->bmw, BTLV_MCSS_POS_AA ) == FALSE ) &&
+			( BTLV_MCSS_CheckTCBExecute( bew->bmw, BTLV_MCSS_POS_BB ) == FALSE ) ){
+			bet->wait = 80;
+			bet->seq_no++;
+		}
+		break;
+	case 2:
+		if( --bet->wait <= 0 ){
+			BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
+			BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 32, 0, 32 );
+			BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_AA, EFFTOOL_CALCTYPE_INTERPOLATION, &AA_value, 12, 2, 50 );
+			BTLV_MCSS_MoveScale( bew->bmw, BTLV_MCSS_POS_BB, EFFTOOL_CALCTYPE_INTERPOLATION, &BB_value, 12, 2, 50 );
+			bet->seq_no++;
+		}
+		break;
+	//カメラデフォルト位置に移動
+	case 3:
+		if( ( BTLV_CAMERA_CheckExecute( bew->bcw ) == FALSE ) &&
+			( BTLV_MCSS_CheckTCBExecute( bew->bmw, BTLV_MCSS_POS_AA ) == FALSE ) &&
+			( BTLV_MCSS_CheckTCBExecute( bew->bmw, BTLV_MCSS_POS_BB ) == FALSE ) ){
+			bew->execute_flag = 0;
+			GFL_HEAP_FreeMemory( bet );
+			GFL_TCB_DeleteTask( tcb );
+		}
+		break;
+	}
+}
+
+//============================================================================================
+/**
+ *	エンカウントエフェクト（仮でTCBで作成）
+ */
+//============================================================================================
+static	void	BTLV_EFFECT_TCB_EncountEffect( GFL_TCB *tcb, void *work )
 {
 	BTLV_EFFECT_TCB	*bet = (BTLV_EFFECT_TCB *)work;
 	VecFx32			pos,target;
