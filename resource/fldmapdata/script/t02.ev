@@ -44,22 +44,50 @@ _EVENT_DATA_END
 //  BABYGIRL1_1 ˜b‚µŠ|‚¯
 //--------------------------------------------------------------
 ev_t02_babygirl1_1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_babygirl1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
 //--------------------------------------------------------------
 //  WOMAN1_1 ˜b‚µŠ|‚¯
 //--------------------------------------------------------------
 ev_t02_woman1_1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_woman1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
 //--------------------------------------------------------------
 //  OLDMAN1_1 ˜b‚µŠ|‚¯
 //--------------------------------------------------------------
 ev_t02_oldman1_1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_oldman1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
 
 //--------------------------------------------------------------
 //  OLDWOMAN1_1 ˜b‚µŠ|‚¯
 //--------------------------------------------------------------
 ev_t02_oldwoman1_1:
+	_TALK_OBJ_PAUSE_ALL
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_oldwoman1_01
+	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
   _END
