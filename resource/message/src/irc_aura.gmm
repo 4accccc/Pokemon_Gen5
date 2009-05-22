@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-18T12:57:25"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-05-22T12:30:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -361,23 +361,9 @@
 赤外線をつないでください</language>
 	</row>
 
-	<row id="AURA_STR_004">
-		<language name="JPN" width="256">ふたりの　なかよしハートは……？</language>
-		<language name="JPN_KANJI" width="256">ふたりの仲良しハートは……？</language>
-	</row>
-
-	<row id="AURA_STR_005">
-		<language name="JPN" width="256">ふたりの　なかよしハートを
-さわってみよう！</language>
-		<language name="JPN_KANJI" width="256">ふたりの仲良しハートを
-触ってみよう！</language>
-	</row>
-
-	<row id="AURA_RES_000">
-		<comment>結果文字</comment>
-		<language name="JPN" width="256">あなたは　ちょっとせっかちさん
-あいては　ちょっとしんちょうです</language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="AURA_BTN_000">
+		<language name="JPN" width="256">もどる</language>
+		<language name="JPN_KANJI" width="256">もどる</language>
 	</row>
 
 	<row id="AURA_DEBUG_001">

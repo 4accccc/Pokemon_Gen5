@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-05-22T15:37:28"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-05-22T17:05:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -410,10 +410,12 @@
 
 	<row id="RESULT_BAD_000">
 		<language name="JPN" width="256">あいてに
-「なまえは　アから　はじまりますか」と
+「なまえは　アから
+　　はじまりますか」と
 きいてみましょう！</language>
 		<language name="JPN_KANJI" width="256">相手に
-「名前はアからはじまりますか」と
+「名前はアから
+　はじまりますか」と
 聞いてみましょう！</language>
 	</row>
 

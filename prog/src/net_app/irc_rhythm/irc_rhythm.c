@@ -31,6 +31,8 @@
 
 //	rhythm
 #include "net_app/irc_rhythm.h"
+// proc
+#include "net_app/irc_result.h"
 
 #ifdef PM_DEBUG
 //debug用
@@ -38,14 +40,16 @@
 #include <wchar.h>					//wcslen
 #endif
 
+FS_EXTERN_OVERLAY(irc_result);
+
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
 #ifdef PM_DEBUG
-#define DEBUG_RHYTHM_MSG	//デバッグメッセージを出す
-#define DEBUG_ONLY_PLAY	//デバッグ用一台でプレイするモードを出す
+//#define DEBUG_RHYTHM_MSG	//デバッグメッセージを出す
+//#define DEBUG_ONLY_PLAY	//デバッグ用一台でプレイするモードを出す
 #endif //PM_DEBUG
 
 
@@ -68,12 +72,12 @@ enum{
 	RHYTHM_BG_PAL_M_11,		// 使用してない
 	RHYTHM_BG_PAL_M_12,		// 使用してない
 	RHYTHM_BG_PAL_M_13,		// 使用してない
-	RHYTHM_BG_PAL_M_14,		// 使用してない
+	RHYTHM_BG_PAL_M_14,		// フォント
 	RHYTHM_BG_PAL_M_15,		// INFOWIN
 
 
 	// サブ画面BG
-	RHYTHM_BG_PAL_S_00 = 0,	//フォント
+	RHYTHM_BG_PAL_S_00 = 0,	//使用していない
 	RHYTHM_BG_PAL_S_01,		// 使用してない
 	RHYTHM_BG_PAL_S_02,		// 使用してない
 	RHYTHM_BG_PAL_S_03,		// 使用してない
@@ -87,7 +91,7 @@ enum{
 	RHYTHM_BG_PAL_S_11,		// 使用してない
 	RHYTHM_BG_PAL_S_12,		// 使用してない
 	RHYTHM_BG_PAL_S_13,		// 使用してない
-	RHYTHM_BG_PAL_S_14,		// 使用してない
+	RHYTHM_BG_PAL_S_14,		//	フォント
 	RHYTHM_BG_PAL_S_15,		// 使用してない
 
 	// メイン画面OBJ
@@ -137,16 +141,21 @@ enum{
 //-------------------------------------
 ///	文字
 //=====================================
-#define TEXTSTR_PLT_NO				(RHYTHM_BG_PAL_S_00)
+#define TEXTSTR_PLT_NO				(RHYTHM_BG_PAL_S_14)
 #define TEXTSTR_BUFFER_LENGTH	(255)
 
 //-------------------------------------
 ///	位置
 //=====================================
-#define	MSGTEXT_WND_X	(1)
-#define	MSGTEXT_WND_Y	(18)
-#define	MSGTEXT_WND_W	(30)
-#define	MSGTEXT_WND_H	(5)
+#define	MSGWND_TEXT_X	(1)
+#define	MSGWND_TEXT_Y	(18)
+#define	MSGWND_TEXT_W	(30)
+#define	MSGWND_TEXT_H	(5)
+
+#define	MSGWND_RETURN_X	(1)
+#define	MSGWND_RETURN_Y	(22)
+#define	MSGWND_RETURN_W	(30)
+#define	MSGWND_RETURN_H	(2)
 
 //-------------------------------------
 ///	カウント
@@ -186,6 +195,17 @@ typedef enum{
 	
 	CLWKID_MAX
 }CLWKID;
+
+//-------------------------------------
+///	MSGWNDID
+//=====================================
+typedef enum {
+	MSGWNDID_TEXT,
+	MSGWNDID_RETURN,
+
+	MSGWNDID_MAX
+} MSGWNDID;
+
 
 //=============================================================================
 /**
@@ -257,6 +277,18 @@ typedef struct
 	OSTick	start_time;
 } RHYTHMSEARCH_WORK;
 
+//-------------------------------------
+///	RHYTHM用ネット
+//=====================================
+//ネットメイン
+typedef struct {
+	COMPATIBLE_IRC_SYS	*p_irc;
+	u32 seq;
+	RHYTHMSEARCH_WORK	result_recv;
+	RHYTHMSEARCH_WORK	result_recv_my;
+	RHYTHMSEARCH_WORK	result_send;
+	BOOL is_recv;
+} RHYTHMNET_WORK;
 
 #ifdef DEBUG_RHYTHM_MSG
 //-------------------------------------
@@ -301,12 +333,16 @@ struct _RHYTHM_MAIN_WORK
 	//グラフィックモジュール
 	GRAPHIC_WORK		grp;
 	MSG_WORK				msg;
-	MSGWND_WORK			msgwnd;
+	MSGWND_WORK			msgwnd[MSGWNDID_MAX];
+
+	//ネット
+	RHYTHMNET_WORK	net;
 
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
 	u16		seq;
 	BOOL is_end;
+	BOOL is_next_proc;
 
 	//計測
 	RHYTHMSEARCH_WORK	search;
@@ -364,6 +400,7 @@ static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe,
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static BOOL MSGWND_Main( MSGWND_WORK *p_wk, MSG_WORK *p_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
+static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID );
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
 //SEQ
@@ -379,11 +416,26 @@ static void RHYTHMSEARCH_Exit( RHYTHMSEARCH_WORK *p_wk );
 static void RHYTHMSEARCH_Start( RHYTHMSEARCH_WORK *p_wk );
 static BOOL RHYTHMSEARCH_IsEnd( const RHYTHMSEARCH_WORK *cp_wk );
 static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_pos );
+//net
+static void RHYTHMNET_Init( RHYTHMNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc );
+static void RHYTHMNET_Exit( RHYTHMNET_WORK *p_wk );
+static BOOL RHYTHMNET_SendResultData( RHYTHMNET_WORK *p_wk, const RHYTHMSEARCH_WORK *cp_data );
+static void RHYTHMNET_GetResultData( const RHYTHMNET_WORK *cp_wk, RHYTHMSEARCH_WORK *p_data );
+//net_recv
+static void NETRECV_Result( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+static u8* NETRECV_GetBufferAddr(int netID, void* pWork, int size);
 //汎用
 static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
 static void TouchMarker_SetPos( RHYTHM_MAIN_WORK *p_wk, const GFL_POINT *cp_pos );
 static void TouchMarker_Main( RHYTHM_MAIN_WORK *p_wk );
+static u8		CalcScore( const RHYTHM_MAIN_WORK *cp_wk );
+static BOOL TouchReturnBtn( void );
+
+#ifdef DEBUG_RHYTHM_MSG
 static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk );
+#else
+#define DEBUGRHYTHM_PRINT_UpDate(...)	((void)0)
+#endif
 
 //DEBUG_PRINT
 #ifdef DEBUG_RHYTHM_MSG
@@ -424,6 +476,7 @@ const GFL_PROC_DATA IrcRhythm_ProcData	=
 typedef enum 
 {
 	GRAPHIC_BG_FRAME_M_INFOWIN,
+	GRAPHIC_BG_FRAME_M_TEXT	= GRAPHIC_BG_FRAME_M_INFOWIN,
 	GRAPHIC_BG_FRAME_M_BACK,
 	GRAPHIC_BG_FRAME_S_TEXT,
 	GRAPHIC_BG_FRAME_S_BACK,
@@ -543,6 +596,19 @@ static const GFL_POINT	sc_diamond_pos[]	=
 
 };
 
+//-------------------------------------
+///	NET
+//=====================================
+enum
+{	
+	NETRECV_RESULT	= GFL_NET_CMD_IRCRHYTHM,
+};
+static const NetRecvFuncTable	sc_recv_tbl[]	=
+{
+	{	
+		NETRECV_Result, NETRECV_GetBufferAddr
+	}
+};
 
 //=============================================================================
 /**
@@ -576,8 +642,13 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCRHYTHM );
 	MSG_Init( &p_wk->msg, MSG_FONT_TYPE_LARGE, HEAPID_IRCRHYTHM );
 	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, HEAPID_IRCRHYTHM );
-	MSGWND_Init( &p_wk->msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
-			MSGTEXT_WND_X, MSGTEXT_WND_Y, MSGTEXT_WND_W, MSGTEXT_WND_H, HEAPID_IRCRHYTHM );
+	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_TEXT], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
+			MSGWND_TEXT_X, MSGWND_TEXT_Y, MSGWND_TEXT_W, MSGWND_TEXT_H, HEAPID_IRCRHYTHM );
+	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_RETURN], sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
+			MSGWND_RETURN_X, MSGWND_RETURN_Y, MSGWND_RETURN_W, MSGWND_RETURN_H, HEAPID_IRCRHYTHM );
+	MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_RETURN], &p_wk->msg, RHYTHM_BTN_000 );
+
+	RHYTHMNET_Init( &p_wk->net, p_wk->p_param->p_irc );
 
 	RHYTHMSEARCH_Init( &p_wk->search );
 
@@ -607,12 +678,26 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 
 	p_wk	= p_work;
 
+	//次のプロック予約
+	if( p_wk->is_next_proc )
+	{	
+		GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(irc_result), &IrcResult_ProcData,p_wk->p_param );
+	}
+
 	//デバッグ破棄
 	DEBUGPRINT_Close();
 	DEBUGPRINT_Exit();
 
+	RHYTHMNET_Exit( &p_wk->net );
+
 	//モジュール破棄
-	MSGWND_Exit( &p_wk->msgwnd );
+	{
+		int i;
+		for( i = 0; i < MSGWNDID_MAX; i++ )
+		{	
+			MSGWND_Exit( &p_wk->msgwnd[i] );
+		}
+	}
 	INFOWIN_Exit();
 	GRAPHIC_Exit( &p_wk->grp );
 	MSG_Exit( &p_wk->msg );
@@ -678,11 +763,13 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 			*p_seq	= SEQ_FADEIN_START;
 		}
 
+#if 0
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
 		{	
 			SEQ_Change( p_wk, SEQFUNC_StartGame );
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+#endif
+		if( TouchReturnBtn() )
 		{
 			SEQ_End( p_wk );
 		}
@@ -710,8 +797,12 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 
 	INFOWIN_Update();
 	if( MSG_Main( &p_wk->msg ) )
-	{	
-		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
+	{
+		int i;
+		for( i = 0; i < MSGWNDID_MAX; i++ )
+		{	
+			MSGWND_Main( &p_wk->msgwnd[i], &p_wk->msg );
+		}
 	}
 
 	GRAPHIC_Draw( &p_wk->grp );
@@ -1114,6 +1205,7 @@ static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID )
 
 	{	
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
 		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
 	}
 }
@@ -1300,6 +1392,43 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, 
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	メッセージ表示面の中央に文字を表示
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	MSG_WORK *cp_msg	文字管理
+ *	@param	strID							文字ID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID )
+{	
+	const GFL_MSGDATA* cp_msgdata;
+	PRINT_QUE*	p_que;
+	GFL_FONT*		p_font;
+	u16 x, y;
+
+	cp_msgdata	= MSG_GetMsgDataConst( cp_msg );
+	p_que		= MSG_GetPrintQue( cp_msg );
+	p_font	= MSG_GetFont( cp_msg );
+
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+
+	//文字列作成
+	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
+
+	//センター位置計算
+	x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
+	y	= GFL_BMPWIN_GetSizeY( p_wk->p_bmpwin )*4;
+	x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_font, 0 )/2;
+	y	-= PRINTSYS_GetStrHeight( p_wk->p_strbuf, p_font )/2;
+
+	//表示
+	PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	メッセージ表示面に数値つき文字を表示
  *
  *	@param	MSGWND_WORK* p_wk	ワーク
@@ -1410,7 +1539,7 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	RHYTHMSEARCH_WORK	*p_search;
 	p_search	= &p_wk->search;
 
-	MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_STR_000, 0, 0 );
+	MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_000, 0, 0 );
 
 
 #ifdef DEBUG_ONLY_PLAY
@@ -1422,7 +1551,7 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	else
 	{	
 		p_search	= &p_wk->search2;
-		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_DEBUG_001, 0, 0 );
+		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_DEBUG_001, 0, 0 );
 	}
 #endif // DEBUG_ONLY_PLAY
 
@@ -1472,7 +1601,7 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	//計測終了チェック
 	if( RHYTHMSEARCH_IsEnd( p_search ) )
 	{	
-		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_STR_001, 0, 0 );
+		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_001, 0, 0 );
 		SEQ_Change( p_wk, SEQFUNC_Result );
 
 #ifdef DEBUG_ONLY_PLAY
@@ -1480,12 +1609,12 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		if( p_wk->debug_player == 0 )
 		{	
 			p_wk->debug_player	= 1;
-			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_DEBUG_001, 0, 0 );
+			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_DEBUG_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_StartGame );
 		}
 		else
 		{	
-			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, RHYTHM_DEBUG_002, 0, 0 );
+			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_DEBUG_002, 0, 0 );
 		SEQ_Change( p_wk, SEQFUNC_Result );
 		}
 #endif //DEBUG_ONLY_PLAY
@@ -1502,15 +1631,47 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-	TouchMarker_Main( p_wk );
+#ifdef DEBUG_ONLY_PLAY
 	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_A	)
 	{	
 
 		RHYTHMSEARCH_Init( &p_wk->search );
+		SEQ_Change( p_wk, SEQFUNC_StartGame );
+
 		RHYTHMSEARCH_Init( &p_wk->search2 );
 		p_wk->debug_player		= 0;
-		SEQ_Change( p_wk, SEQFUNC_StartGame );
+
 	}
+#else
+	enum
+	{	
+		SEQ_SENDRESULT,
+		SEQ_CALC,
+		SEQ_NEXTPROC,
+	};
+
+	switch( *p_seq )
+	{	
+	case SEQ_SENDRESULT:
+		if( RHYTHMNET_SendResultData( &p_wk->net, &p_wk->search ) )
+		{	
+			*p_seq	= SEQ_CALC;
+		}
+		break;
+
+	case SEQ_CALC:
+		p_wk->p_param->score	= CalcScore( p_wk );
+		*p_seq	= SEQ_NEXTPROC;
+		break;
+
+	case SEQ_NEXTPROC:
+		p_wk->is_next_proc	= TRUE;
+		SEQ_End( p_wk );
+		break;
+	}
+#endif //DEBUG_ONLY_PLAY
+	TouchMarker_Main( p_wk );
+
 }
 //=============================================================================
 /**
@@ -1624,6 +1785,156 @@ static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_p
 	//セットしたので次へ進める
 	p_wk->data_idx++;
 }
+
+//=============================================================================
+/**
+ *							NET
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NET初期化
+ *
+ *	@param	RHYTHMNET_WORK *p_wk	ワーク
+ *	@param	*p_irc								赤外線システム
+ *
+ */
+//-----------------------------------------------------------------------------
+static void RHYTHMNET_Init( RHYTHMNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(RHYTHMNET_WORK) );
+	p_wk->p_irc	= p_irc;
+
+	COMPATIBLE_IRC_AddCommandTable( p_irc, GFL_NET_CMD_IRCRHYTHM, sc_recv_tbl, NELEMS(sc_recv_tbl), p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NET破棄
+ *
+ *	@param	RHYTHMNET_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void RHYTHMNET_Exit( RHYTHMNET_WORK *p_wk )
+{	
+	COMPATIBLE_IRC_DelCommandTable( p_wk->p_irc, GFL_NET_CMD_IRCRHYTHM );
+	GFL_STD_MemClear( p_wk, sizeof(RHYTHMNET_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	結果情報を相手へ送受信
+ *
+ *	@param	NET_WORK *p_wk	ワーク
+ *	@param	NET_RESULT_DATA *cp_data	データ
+ *
+ *	@retval	TRUEならば、相手から受信
+ *	@retval	FALSEならば受信待ち
+ */
+//-----------------------------------------------------------------------------
+static BOOL RHYTHMNET_SendResultData( RHYTHMNET_WORK *p_wk, const RHYTHMSEARCH_WORK *cp_data )
+{	
+	switch( p_wk->seq )
+	{	
+	case 0:
+		p_wk->result_send	= *cp_data;
+		p_wk->seq = 1;
+		NAGI_Printf( "結果データ送信開始\n" );
+		break;
+
+	case 1:
+		if( COMPATIBLE_IRC_SendDataEx( p_wk->p_irc, NETRECV_RESULT,
+					sizeof(RHYTHMSEARCH_WORK), &p_wk->result_send, FALSE, FALSE, TRUE ) )
+		{	
+			NAGI_Printf( "結果データ送信完了、相手待ち\n" );
+			p_wk->seq	= 2;
+		}
+		break;
+
+	case 2:
+		if( p_wk->is_recv )
+		{
+			p_wk->is_recv	= FALSE;
+			p_wk->seq	= 0;
+			return TRUE;
+		}
+		break;
+	}
+
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	結果データ受け取り
+ *
+ *	@param	NET_WORK *p_wk	ワーク
+ *	@param	*p_data							データ受け取り
+ *
+ */
+//-----------------------------------------------------------------------------
+static void RHYTHMNET_GetResultData( const RHYTHMNET_WORK *cp_wk, RHYTHMSEARCH_WORK *p_data )
+{	
+	*p_data	= cp_wk->result_recv;
+}
+//=============================================================================
+/**
+ *					NETRECV
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	結果データ受け取り受信コールバック
+ *
+ *	@param	const int netID	ネットID
+ *	@param	int size				サイズ
+ *	@param	void* p_data		データ
+ *	@param	p_work					ワーク
+ *	@param	p_net_handle		ハンドル
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void NETRECV_Result( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+{	
+	RHYTHMNET_WORK *p_wk	= p_work;
+
+	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+	{
+		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+	}
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		return;	//自分のデータは無視
+	}
+
+//	GFL_STD_MemCopy( cp_data, &p_wk->result_recv, sizeof(AURANET_RESULT_DATA) );
+	NAGI_Printf("結果データ受け取り完了\n" );
+	p_wk->is_recv		= TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	結果データ受け取りバッファポインタ
+ *
+ *	@param	netID
+ *	@param	pWork
+ *	@param	size
+ *
+ *	@return	バッファポインタ
+ */
+//-----------------------------------------------------------------------------
+static u8* NETRECV_GetBufferAddr(int netID, void* p_work, int size)
+{	
+	RHYTHMNET_WORK *p_wk	= p_work;
+
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		return (u8*)&p_wk->result_recv_my;
+	}
+	else
+	{	
+		return (u8*)&p_wk->result_recv;
+	}
+}
 //=============================================================================
 /**
  *				汎用
@@ -1722,6 +2033,170 @@ static void TouchMarker_Main( RHYTHM_MAIN_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	スコア計算
+ *
+ *	@param	RHYTHM_MAIN_WORK *p_wk	ワーク
+ *
+ *	@return	スコア
+ */
+//-----------------------------------------------------------------------------
+static u8	CalcScore( const RHYTHM_MAIN_WORK *cp_wk )
+{	
+	RHYTHMSEARCH_WORK	my;
+	RHYTHMSEARCH_WORK	you;
+
+	u32	prog_score;
+	u32	diff_score;
+
+	my	= cp_wk->search;
+	RHYTHMNET_GetResultData( &cp_wk->net, &you );
+
+	OS_Printf( "■結果の表示\n" );
+	//経過時間の判定
+	{	
+		s32 player1;
+		s32 player2;
+		u32	prog;
+		player1	= my.data[my.data_idx-1].prog_ms - my.data[0].prog_ms;
+		player2	= you.data[you.data_idx-1].prog_ms - you.data[0].prog_ms;
+		prog	= MATH_IAbs(player1 - player2);
+		if( prog  == 0 )
+		{
+			prog_score	= 100;
+		}
+		else if( prog  < 500 )
+		{	
+			prog_score	= 90;
+		}
+		else if( prog  < 1000 )
+		{
+			prog_score	= 80;
+		}
+		else if( prog  < 3000 )
+		{
+			prog_score	= 70;
+		}
+		else if( prog  < 5000 )
+		{
+			prog_score	= 60;
+		}
+		else if( prog  < 10000 )
+		{
+			prog_score	= 50;
+		}
+		else if( prog  < 15000 )
+		{
+			prog_score	= 40;
+		}
+		else if( prog  < 20000 )
+		{
+			prog_score	= 30;
+		}
+		else if( prog  < 25000 )
+		{
+			prog_score	= 20;
+		}
+		else if( prog  < 30000 )
+		{
+			prog_score	= 10;
+		}
+		else
+		{
+			prog_score	= 0;
+		}
+		OS_Printf( "経過時間 %d点", prog_score );
+	}
+
+	//時間の差の判定
+	{	
+		int i;
+		s32 player1;
+		s32 player2;
+		u32	prog;
+		diff_score	= 0;
+		for( i = 1; i < 10; i++ )
+		{	
+			player1	= my.data[i].diff_ms;
+			player2	= you.data[i].diff_ms;
+			prog	= MATH_IAbs(player1 - player2);
+
+			if( prog  == 0 )
+			{	
+				diff_score	+= 100;
+			}
+			else if( prog  < 200 )
+			{	
+				diff_score	+= 90;
+			}
+			else if( prog  < 400 )
+			{
+				diff_score	+= 80;
+			}
+			else if( prog  < 500 )
+			{
+				diff_score	+= 70;
+			}
+			else if( prog  < 1000 )
+			{
+				diff_score	+= 60;
+			}
+			else if( prog  < 2000 )
+			{
+				diff_score	+= 50;
+			}
+			else if( prog  < 3000 )
+			{
+				diff_score	+= 40;
+			}
+			else if( prog  < 5000 )
+			{
+				diff_score	+= 30;
+			}
+			else if( prog  < 10000 )
+			{
+				diff_score	+= 20;
+			}
+			else if( prog  < 15000 )
+			{
+				diff_score	+= 10;
+			}
+			else
+			{
+				//diff_score	+= 0;
+			}
+		}
+		OS_Printf( "間隔 %d点\n", diff_score/9 );
+	}
+	return (prog_score + (diff_score/9) )/2;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	戻るボタンを押したかどうか
+ *
+ *	@param	void 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL TouchReturnBtn( void )
+{	
+
+	u32 x;
+	u32 y;
+	if( GFL_UI_TP_GetPointTrg( &x, &y) )
+	{	
+		if( ((u32)( x - MSGWND_RETURN_X*8) < (u32)(MSGWND_RETURN_W*8))
+				&	((u32)( y - MSGWND_RETURN_Y*8) < (u32)(MSGWND_RETURN_H*8))
+			){
+			return TRUE;
+		}
+
+	}
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	タッチマーカーの座標を設定し表示
  *
  *	@param	RHYTHM_MAIN_WORK *p_wk	ワーク
@@ -1740,6 +2215,8 @@ static void TouchMarker_SetPos( RHYTHM_MAIN_WORK *p_wk, const GFL_POINT *cp_pos 
 	GFL_CLACT_WK_SetDrawEnable( p_marker, TRUE );
 	p_wk->marker_cnt	= 0;
 }
+
+#ifdef DEBUG_RHYTHM_MSG
 //----------------------------------------------------------------------------
 /**
  *	@brief	デバッグプリントを更新
@@ -1941,6 +2418,7 @@ static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk )
 	OS_Printf( "↑リズムチェック表示終了↑↑↑↑↑\n" );
 
 }
+#endif //DEBUG_RHYTHM_MSG
  
 #ifdef DEBUG_RHYTHM_MSG
 //=============================================================================

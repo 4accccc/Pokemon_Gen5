@@ -21,6 +21,7 @@
 #include "print/gf_font.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "system/bmp_winframe.h"
 
 //	archive
 #include "arc_def.h"
@@ -32,11 +33,17 @@
 //	aura
 #include "net_app/irc_aura.h"
 
+// proc
+#include "net_app/irc_result.h"
+
 #ifdef PM_DEBUG
 //debug用
 #include "system/net_err.h"	//VRAM退避用アドレスを貰うため
 #include <wchar.h>					//wcslen
 #endif
+
+
+FS_EXTERN_OVERLAY(irc_result);
 
 //=============================================================================
 /**
@@ -44,8 +51,8 @@
 */
 //=============================================================================
 #ifdef PM_DEBUG
-#define DEBUG_AURA_MSG	//デバッグメッセージを出す
-#define DEBUG_ONLY_PLAY	//デバッグ用一台でプレイするモードを出す
+//#define DEBUG_AURA_MSG	//デバッグメッセージを出す
+//#define DEBUG_ONLY_PLAY	//デバッグ用一台でプレイするモードを出す
 #endif //PM_DEBUG
 
 
@@ -55,7 +62,7 @@
 enum{	
 	// メイン画面BG
 	AURA_BG_PAL_M_00 = 0,//GUIDE用BG
-	AURA_BG_PAL_M_01,		// 使用してない
+	AURA_BG_PAL_M_01,		// 窓枠用
 	AURA_BG_PAL_M_02,		// 使用してない
 	AURA_BG_PAL_M_03,		// 使用してない
 	AURA_BG_PAL_M_04,		// 使用してない
@@ -68,7 +75,7 @@ enum{
 	AURA_BG_PAL_M_11,		// 使用してない
 	AURA_BG_PAL_M_12,		// 使用してない
 	AURA_BG_PAL_M_13,		// 使用してない
-	AURA_BG_PAL_M_14,		// 使用してない
+	AURA_BG_PAL_M_14,		// フォント用PLT
 	AURA_BG_PAL_M_15,		// INFOWIN
 
 
@@ -87,7 +94,7 @@ enum{
 	AURA_BG_PAL_S_11,		// 使用してない
 	AURA_BG_PAL_S_12,		// 使用してない
 	AURA_BG_PAL_S_13,		// 使用してない
-	AURA_BG_PAL_S_14,		// 使用してない
+	AURA_BG_PAL_S_14,		// フォント用PLT
 	AURA_BG_PAL_S_15,		// 使用してない
 
 	// メイン画面OBJ
@@ -137,16 +144,21 @@ enum{
 //-------------------------------------
 ///	文字
 //=====================================
-#define TEXTSTR_PLT_NO				(AURA_BG_PAL_S_00)
+#define TEXTSTR_PLT_NO				(AURA_BG_PAL_M_14)
 #define TEXTSTR_BUFFER_LENGTH	(255)
 
 //-------------------------------------
 ///	位置
 //=====================================
-#define	MSGTEXT_WND_X	(1)
-#define	MSGTEXT_WND_Y	(18)
-#define	MSGTEXT_WND_W	(30)
-#define	MSGTEXT_WND_H	(5)
+#define	MSGWND_TEXT_X	(1)
+#define	MSGWND_TEXT_Y	(18)
+#define	MSGWND_TEXT_W	(30)
+#define	MSGWND_TEXT_H	(5)
+
+#define	MSGWND_RETURN_X	(1)
+#define	MSGWND_RETURN_Y	(22)
+#define	MSGWND_RETURN_W	(30)
+#define	MSGWND_RETURN_H	(2)
 
 #define DEBUGMSG_LEFT1	(0)
 #define DEBUGMSG_LEFT2	(20)
@@ -196,11 +208,24 @@ typedef enum{
 }CLWKID;
 
 //-------------------------------------
+///	メッセージ表示ウィンドウ
+//=====================================
+enum {
+	MSGWNDID_TEXT,
+	MSGWNDID_RETURN,
+
+	MSGWNDID_MAX,
+};
+
+
+//-------------------------------------
 ///	デバッグ用人数セーブ機能
 //=====================================
 #ifdef DEBUG_ONLY_PLAY
 #define DEBUG_GAME_NUM	(5)
 #define DEBUG_PLAYER_SAVE_NUM	(DEBUG_GAME_NUM*2)
+#else
+#define DEBUG_PLAYER_SAVE_NUM (1)
 #endif //DEBUG_ONLY_PLAY
 
 //=============================================================================
@@ -213,7 +238,7 @@ typedef enum{
 //=====================================
 typedef struct
 {
-	int dummy;
+	GFL_ARCUTIL_TRANSINFO	frame_char;
 } GRAPHIC_BG_WORK;
 //-------------------------------------
 ///	3D描画環境
@@ -260,6 +285,38 @@ typedef struct {
 	STRBUF*						p_strbuf;
 } MSGWND_WORK;
 
+//-------------------------------------
+///	ブレ計測
+//=====================================
+typedef struct {
+	GFL_POINT		shake[TOUCH_COUNTER_SHAKE_MAX];
+	u16					shake_idx;
+	u32					cnt;				//カウンタ
+	u32					shake_cnt;	//ブレ計測用カウンタ
+	BOOL				is_end;			//1回取得したフラグ
+}SHAKE_SEARCH_WORK;
+
+//-------------------------------------
+///	オーラ用ネット
+//=====================================
+//データ
+typedef struct {
+	GFL_POINT	trg_left;
+	GFL_POINT	trg_right;
+	SHAKE_SEARCH_WORK	shake_left;
+	SHAKE_SEARCH_WORK	shake_right;
+} AURANET_RESULT_DATA;
+//ネットメイン
+typedef struct {
+	COMPATIBLE_IRC_SYS	*p_irc;
+	u32 seq;
+	AURANET_RESULT_DATA	result_recv;	//受信バッファ
+	AURANET_RESULT_DATA	result_recv_my;	//受信バッファ
+	AURANET_RESULT_DATA	result_send;	//送信バッファ
+	BOOL is_recv;
+} AURANET_WORK;
+
+
 #ifdef DEBUG_AURA_MSG
 //-------------------------------------
 ///	デバッグプリント用画面
@@ -292,16 +349,7 @@ typedef struct {
 static DEBUG_PRINT_WORK *sp_dp_wk;
 #endif //DEBUG_AURA_MSG
 
-//-------------------------------------
-///	ブレ計測
-//=====================================
-typedef struct {
-	GFL_POINT		shake[TOUCH_COUNTER_SHAKE_MAX];
-	u16					shake_idx;
-	u32					cnt;				//カウンタ
-	u32					shake_cnt;	//ブレ計測用カウンタ
-	BOOL				is_end;			//1回取得したフラグ
-}SHAKE_SEARCH_WORK;
+
 
 
 //-------------------------------------
@@ -314,15 +362,20 @@ struct _AURA_MAIN_WORK
 	//グラフィックモジュール
 	GRAPHIC_WORK		grp;
 	MSG_WORK				msg;
-	MSGWND_WORK			msgwnd;
+	MSGWND_WORK			msgwnd[MSGWNDID_MAX];
 
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
 	u16		seq;
 	BOOL is_end;
+	BOOL is_next_proc;
 
+#ifdef DEBUG_ONLY_PLAY
 	u16							debug_player;			//自分か相手か
 	u16							debug_game_cnt;	//何ゲーム目か
+#endif //DEBUG_ONLY_PLAY
+
+	AURANET_WORK	net;
 
 	//結果
 	GFL_POINT		trg_left[DEBUG_PLAYER_SAVE_NUM];
@@ -348,10 +401,12 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
 static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id );
+static void GRAPHIC_WriteBmpwinFrame( GRAPHIC_WORK *p_wk, GFL_BMPWIN *p_bmpwin );
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //BG
 static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
+static void GRAPHIC_BG_WriteBmpwinFrame( GRAPHIC_BG_WORK *p_wk, GFL_BMPWIN *p_bmpwin );
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
 //obj
 static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vram_bank, HEAPID heapID );
@@ -379,8 +434,10 @@ static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe,
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static BOOL MSGWND_Main( MSGWND_WORK *p_wk, MSG_WORK *p_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
+static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID );
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
+static GFL_BMPWIN *MSGWND_GetBmpWin( const MSGWND_WORK* cp_wk );
 //SEQ
 static void SEQ_Change( AURA_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
 static void SEQ_End( AURA_MAIN_WORK *p_wk );
@@ -389,12 +446,27 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq );
+//net
+static void AURANET_Init( AURANET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc );
+static void AURANET_Exit( AURANET_WORK *p_wk );
+static BOOL AURANET_SendResultData( AURANET_WORK *p_wk, const AURANET_RESULT_DATA *cp_data );
+static void AURANET_GetResultData( const AURANET_WORK *cp_wk, AURANET_RESULT_DATA *p_data );
+//net_recv
+static void NETRECV_Result( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+static u8* NETRECV_GetBufferAddr(int netID, void* pWork, int size);
 //汎用
 static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg );
 static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
 static void TouchMarker_SetPos( AURA_MAIN_WORK *p_wk, const GFL_POINT *cp_pos );
 static void TouchMarker_OffVisible( AURA_MAIN_WORK *p_wk );
+static u8		CalcScore( AURA_MAIN_WORK *p_wk );
+static BOOL TouchReturnBtn( void );
+
+#ifdef DEBUG_AURA_MSG
 static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk );
+#else
+#define DEBUGAURA_PRINT_UpDate( ... )	((void)0)
+#endif //DEBUG_AURA_MSG
 
 //ブレ計測
 static void	SHAKESEARCH_Init( SHAKE_SEARCH_WORK *p_wk );
@@ -439,6 +511,7 @@ const GFL_PROC_DATA IrcAura_ProcData	=
 typedef enum 
 {
 	GRAPHIC_BG_FRAME_M_INFOWIN,
+	GRAPHIC_BG_FRAME_M_TEXT	= GRAPHIC_BG_FRAME_M_INFOWIN,
 	GRAPHIC_BG_FRAME_M_GUIDE_L,
 	GRAPHIC_BG_FRAME_M_GUIDE_R,
 	GRAPHIC_BG_FRAME_S_TEXT,
@@ -508,6 +581,19 @@ static const GFL_RECT	sc_right	=
 };
 #endif
 
+//-------------------------------------
+///	NET
+//=====================================
+enum
+{	
+	NETRECV_RESULT	= GFL_NET_CMD_IRCAURA,
+};
+static const NetRecvFuncTable	sc_recv_tbl[]	=
+{
+	{	
+		NETRECV_Result, NETRECV_GetBufferAddr
+	}
+};
 
 //=============================================================================
 /**
@@ -538,11 +624,16 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	p_wk->p_param	= p_param;
 
 	//モジュール初期化
+	AURANET_Init( &p_wk->net, p_wk->p_param->p_irc );
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCAURA );
 	MSG_Init( &p_wk->msg, MSG_FONT_TYPE_LARGE, HEAPID_IRCAURA );
 	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, HEAPID_IRCAURA );
-	MSGWND_Init( &p_wk->msgwnd, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
-			MSGTEXT_WND_X, MSGTEXT_WND_Y, MSGTEXT_WND_W, MSGTEXT_WND_H, HEAPID_IRCAURA );
+	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_TEXT], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
+			MSGWND_TEXT_X, MSGWND_TEXT_Y, MSGWND_TEXT_W, MSGWND_TEXT_H, HEAPID_IRCAURA );
+	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_RETURN], sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
+			MSGWND_RETURN_X, MSGWND_RETURN_Y, MSGWND_RETURN_W, MSGWND_RETURN_H, HEAPID_IRCAURA );
+//	GRAPHIC_WriteBmpwinFrame( &p_wk->grp, MSGWND_GetBmpWin( &p_wk->msgwnd[MSGWNDID_RETURN]) );
+	MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_RETURN], &p_wk->msg, AURA_BTN_000 );
 
 	{	
 		int i;
@@ -579,15 +670,28 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 
 	p_wk	= p_work;
 
+	//次のプロック予約
+	if( p_wk->is_next_proc )
+	{	
+		GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(irc_result), &IrcResult_ProcData,p_wk->p_param );
+	}
+
 	//デバッグ破棄
 	DEBUGPRINT_Close();
 	DEBUGPRINT_Exit();
 
 	//モジュール破棄
-	MSGWND_Exit( &p_wk->msgwnd );
+	{	
+		int i;
+		for( i = 0; i < MSGWNDID_MAX; i++ )
+		{	
+			MSGWND_Exit( &p_wk->msgwnd[i] );
+		}
+	}
 	INFOWIN_Exit();
 	GRAPHIC_Exit( &p_wk->grp );
 	MSG_Exit( &p_wk->msg );
+	AURANET_Exit( &p_wk->net );
 
 	//プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );
@@ -650,6 +754,12 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 			*p_seq	= SEQ_FADEIN_START;
 		}
 
+		if( TouchReturnBtn() )
+		{
+			SEQ_End( p_wk );
+		}
+
+#if 0
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
 		{	
 			SEQ_Change( p_wk, SEQFUNC_StartGame );
@@ -658,7 +768,7 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 		{
 			SEQ_End( p_wk );
 		}
-
+#endif
 		break;
 
 	case SEQ_FADEIN_START:
@@ -683,7 +793,11 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 	INFOWIN_Update();
 	if( MSG_Main( &p_wk->msg ) )
 	{	
-		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
+		int i;
+		for( i = 0; i < MSGWNDID_MAX; i++ )
+		{	
+			MSGWND_Main( &p_wk->msgwnd[i], &p_wk->msg );
+		}
 	}
 	GRAPHIC_Draw( &p_wk->grp );
 
@@ -792,6 +906,19 @@ static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief	枠描画
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk	ワーク
+ *	@param	*p_bmpwin									BMPWIN
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_WriteBmpwinFrame( GRAPHIC_WORK *p_wk, GFL_BMPWIN *p_bmpwin )
+{	
+	GRAPHIC_BG_WriteBmpwinFrame( &p_wk->bg, p_bmpwin );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	VBlank用タスク
  *
  *	@param	GFL_TCB *p_tcb	タスクControlブロック
@@ -868,6 +995,9 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], 0, 0, FALSE, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
+
+		GFL_BG_FillCharacter( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], 0x00, 1, 0 );
+		p_wk->frame_char	= BmpWinFrame_GraphicSetAreaMan(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], AURA_BG_PAL_M_01, MENU_TYPE_SYSTEM, heapID);
 	}
 
 	GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
@@ -885,6 +1015,14 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK* p_wk )
 {	
 	int i;
 
+	//読み込み破棄
+	{	
+		GFL_BG_FreeCharacterArea(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT],
+				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->frame_char),
+				GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->frame_char));
+		GFL_BG_FillCharacterRelease(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], 1,0);
+	}
+
 	// BGコントロール破棄
 	for( i = 0; i < GRAPHIC_BG_FRAME_MAX; i++ )
 	{
@@ -894,6 +1032,21 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK* p_wk )
 	// BGシステム破棄
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	窓枠を書き込み
+ *
+ *	@param	GRAPHIC_BG_WORK *p_wk	ワーク
+ *	@param	*p_bmpwin							書き込むBMPWIN
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_BG_WriteBmpwinFrame( GRAPHIC_BG_WORK *p_wk, GFL_BMPWIN *p_bmpwin )
+{	
+	BmpWinFrame_Write( p_bmpwin, WINDOW_TRANS_ON, 
+					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->frame_char), AURA_BG_PAL_M_01 );
 }
 
 //----------------------------------------------------------------------------
@@ -1214,6 +1367,7 @@ static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID )
 
 	{	
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
 		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
 	}
 }
@@ -1400,6 +1554,43 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, 
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	メッセージ表示面の中央に文字を表示
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	MSG_WORK *cp_msg	文字管理
+ *	@param	strID							文字ID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID )
+{	
+	const GFL_MSGDATA* cp_msgdata;
+	PRINT_QUE*	p_que;
+	GFL_FONT*		p_font;
+	u16 x, y;
+
+	cp_msgdata	= MSG_GetMsgDataConst( cp_msg );
+	p_que		= MSG_GetPrintQue( cp_msg );
+	p_font	= MSG_GetFont( cp_msg );
+
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+
+	//文字列作成
+	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
+
+	//センター位置計算
+	x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
+	y	= GFL_BMPWIN_GetSizeY( p_wk->p_bmpwin )*4;
+	x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_font, 0 )/2;
+	y	-= PRINTSYS_GetStrHeight( p_wk->p_strbuf, p_font )/2;
+
+	//表示
+	PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	メッセージ表示面に数値つき文字を表示
  *
  *	@param	MSGWND_WORK* p_wk	ワーク
@@ -1458,6 +1649,20 @@ static void MSGWND_Clear( MSGWND_WORK* p_wk )
 	GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	BMPWIN取得
+ *
+ *	@param	const MSGWND_WORK* cp_wk	ワーク
+ *
+ *	@return	BMPWIN
+ */
+//-----------------------------------------------------------------------------
+static GFL_BMPWIN *MSGWND_GetBmpWin( const MSGWND_WORK* cp_wk )
+{	
+	return cp_wk->p_bmpwin;
+}
+
 //=============================================================================
 /**
  *				SEQ
@@ -1510,7 +1715,15 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	enum{	
 		SEQ_INIT,
 		SEQ_MAIN,
+		SEQ_END,
 	};
+	GFL_POINT		*p_trg_left;
+
+#ifdef DEBUG_ONLY_PLAY
+	p_trg_left	= &p_wk->trg_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ];
+#else
+	p_trg_left	= &p_wk->trg_left[0];
+#endif //DEBUG_ONLY_PLAY
 
 	switch( *p_seq )
 	{	
@@ -1518,16 +1731,12 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
 		DEBUGAURA_PRINT_UpDate( p_wk );
 
-		if( p_wk->debug_player == 0 )
+		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_000, 0, 0 );
+#ifdef DEBUG_ONLY_PLAY
+		if( p_wk->debug_player != 0 )
 		{	
-			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_000, 0, 0 );
+			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_DEBUG_001, 0, 0 );
 		}
-		else
-		{	
-
-			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_DEBUG_001, 0, 0 );
-		}
-
 		{	
 			int i;
 			for( i = 0 ; i < DEBUG_PLAYER_SAVE_NUM; i++ )
@@ -1537,6 +1746,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				p_wk->shake_left[i].shake_idx	= 0;
 			}
 		}
+#endif	//DEBUG_ONLY_PLAY 
 
 		TouchMarker_OffVisible( p_wk );
 		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
@@ -1546,13 +1756,14 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_MAIN:
-		if( TP_GetRectTrg( &sc_left, &p_wk->trg_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ] ) )
+		if( TP_GetRectTrg( &sc_left, p_trg_left ) )
 		{	
 			DEBUGAURA_PRINT_UpDate( p_wk );
-			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
-			SEQ_Change( p_wk, SEQFUNC_TouchLeft );
+			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_001, 0, 0 );
+			*p_seq	= SEQ_END;
 		}
 
+#ifdef DEBUG_ONLY_PLAY
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
 		{	
 			if( p_wk->debug_game_cnt == 0 )
@@ -1571,8 +1782,12 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			p_wk->debug_game_cnt	%= DEBUG_GAME_NUM;
 			SEQ_Change( p_wk, SEQFUNC_StartGame);
 		}
+#endif //DEBUG_ONLY_PLAY
 
+		break;
 
+	case SEQ_END:
+		SEQ_Change( p_wk, SEQFUNC_TouchLeft );
 		break;
 	}
 }
@@ -1592,8 +1807,17 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_WAIT_RIGHT,
 		SEQ_RET,
 	};
-
+	GFL_POINT		*p_trg_right;
+	SHAKE_SEARCH_WORK	*p_shake_left;
 	GFL_POINT	pos;
+
+#ifdef DEBUG_ONLY_PLAY
+	p_trg_right		= &p_wk->trg_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ];
+	p_shake_left	= &p_wk->shake_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ];
+#else
+	p_trg_right		= &p_wk->trg_right[0];
+	p_shake_left	= &p_wk->shake_left[0];
+#endif //DEBUG_ONLY_PLAY
 
 	TouchMarker_OffVisible( p_wk );
 
@@ -1603,10 +1827,10 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		if( TP_GetRectCont( &sc_left, &pos ) )
 		{	
 			//計測終了待ち
-			if( SHAKESEARCH_Main( &p_wk->shake_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ], &sc_left ) )
+			if( SHAKESEARCH_Main( p_shake_left, &sc_left ) )
 			{	
 				DEBUGAURA_PRINT_UpDate( p_wk );
-				MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_002, 0, 0 );
+				MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
 				GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_ON );
 				*p_seq	= SEQ_WAIT_RIGHT;
 			}
@@ -1615,19 +1839,19 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		}
 		else
 		{	
-			SHAKESEARCH_Init( &p_wk->shake_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ]);
+			SHAKESEARCH_Init( p_shake_left);
 			*p_seq	= SEQ_RET;
 		}
 		break;
 
 	case SEQ_WAIT_RIGHT:
-		if( TP_GetRectCont( &sc_right, &p_wk->trg_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ] ) )
+		if( TP_GetRectCont( &sc_right, p_trg_right ) )
 		{	
-			TouchMarker_SetPos( p_wk, &p_wk->trg_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ] );
+			TouchMarker_SetPos( p_wk, p_trg_right );
 
 
 			DEBUGAURA_PRINT_UpDate( p_wk );
-			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_001, 0, 0 );
+			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchRight );
 		}
 		else if( TP_GetRectCont( &sc_left, &pos ) )
@@ -1663,6 +1887,12 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
 
 	GFL_POINT	pos;
+	SHAKE_SEARCH_WORK	*p_shake_right;
+#ifdef DEBUG_ONLY_PLAY
+	p_shake_right	= &p_wk->shake_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ];
+#else
+	p_shake_right	= &p_wk->shake_right[0];
+#endif //DEBUG_ONLY_PLAY
 
 	TouchMarker_OffVisible( p_wk );
 
@@ -1671,13 +1901,12 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MAIN:
 		if( TP_GetRectCont( &sc_right, &pos ) )
 		{	
-			if( SHAKESEARCH_Main( &p_wk->shake_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ], &sc_right ) )
+			if( SHAKESEARCH_Main( p_shake_right, &sc_right ) )
 			{	
 				int i;
 
 				DEBUGAURA_PRINT_UpDate( p_wk );
-				//MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_STR_003, 0, 0 );
-
+#ifdef DEBUG_ONLY_PLAY
 				//0ならば自分の番なので、次は相手の番
 				if( p_wk->debug_player == 0 )
 				{	
@@ -1686,16 +1915,20 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				}
 				else
 				{
-					MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, AURA_DEBUG_002, 0, 0 );
+					MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_DEBUG_002, 0, 0 );
 					SEQ_Change( p_wk, SEQFUNC_Result );
 				}
+#else
+				MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_003, 0, 0 );
+				SEQ_Change( p_wk, SEQFUNC_Result );
+#endif //DEBUG_ONLY_PLAY
 			}
 
 			TouchMarker_SetPos( p_wk, &pos );
 		}
 		else
 		{	
-			SHAKESEARCH_Init( &p_wk->shake_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ]);
+			SHAKESEARCH_Init( p_shake_right );
 			*p_seq	= SEQ_RET;
 		}
 		break;
@@ -1717,6 +1950,7 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 {	
+#ifdef DEBUG_ONLY_PLAY
 	if(	GFL_UI_TP_GetTrg()	)
 	{	
 		p_wk->debug_game_cnt++;
@@ -1724,6 +1958,191 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		p_wk->debug_player		= 0;
 		SEQ_Change( p_wk, SEQFUNC_StartGame );
 	}
+#else
+	enum{	
+		SEQ_SENDRESULT,
+		SEQ_CALC,
+		SEQ_NEXTPROC,
+	};
+	AURANET_RESULT_DATA result;
+
+	switch( *p_seq )
+	{	
+	case SEQ_SENDRESULT:
+		result.trg_left			=	p_wk->trg_left[0];
+		result.trg_right		=	p_wk->trg_right[0];
+		result.shake_left		= p_wk->shake_left[0];
+		result.shake_right	=	p_wk->shake_right[0];
+		if( AURANET_SendResultData( &p_wk->net, &result ) )
+		{	
+			*p_seq	= SEQ_CALC;
+		}
+		break;
+
+	case SEQ_CALC:
+		p_wk->p_param->score	= CalcScore( p_wk );
+		*p_seq	= SEQ_NEXTPROC;
+		break;
+
+	case SEQ_NEXTPROC:
+		p_wk->is_next_proc	= TRUE;
+		SEQ_End( p_wk );
+		break;
+	}
+
+#endif //DEBUG_ONLY_PLAY
+}
+//=============================================================================
+/**
+ *					NET
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NET初期化
+ *
+ *	@param	AURANET_WORK *p_wk	ワーク
+ *	@param	COMPATIBLE_IRC_SYS	赤外線
+ *
+ */
+//-----------------------------------------------------------------------------
+static void AURANET_Init( AURANET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(AURANET_WORK) );
+	p_wk->p_irc	= p_irc;
+
+	COMPATIBLE_IRC_AddCommandTable( p_irc, GFL_NET_CMD_IRCAURA, sc_recv_tbl, NELEMS(sc_recv_tbl), p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NET破棄
+ *
+ *	@param	AURANET_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void AURANET_Exit( AURANET_WORK *p_wk )
+{	
+	COMPATIBLE_IRC_DelCommandTable( p_wk->p_irc, GFL_NET_CMD_IRCAURA );
+	GFL_STD_MemClear( p_wk, sizeof(AURANET_WORK) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	結果情報を相手へ送受信
+ *
+ *	@param	AURANET_WORK *p_wk	ワーク
+ *	@param	AURANET_RESULT_DATA *cp_data	データ
+ *
+ *	@retval	TRUEならば、相手から受信
+ *	@retval	FALSEならば受信待ち
+ */
+//-----------------------------------------------------------------------------
+static BOOL AURANET_SendResultData( AURANET_WORK *p_wk, const AURANET_RESULT_DATA *cp_data )
+{	
+	switch( p_wk->seq )
+	{	
+	case 0:
+		p_wk->result_send	= *cp_data;
+		p_wk->seq = 1;
+		NAGI_Printf( "結果データ送信開始\n" );
+		break;
+
+	case 1:
+		if( COMPATIBLE_IRC_SendDataEx( p_wk->p_irc, NETRECV_RESULT,
+					sizeof(AURANET_RESULT_DATA), &p_wk->result_send, FALSE, FALSE, TRUE ) )
+		{	
+			NAGI_Printf( "結果データ送信完了、相手待ち\n" );
+			p_wk->seq	= 2;
+		}
+		break;
+
+	case 2:
+		if( p_wk->is_recv )
+		{
+			p_wk->is_recv	= FALSE;
+			p_wk->seq	= 0;
+			return TRUE;
+		}
+		break;
+	}
+
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	結果データ受け取り
+ *
+ *	@param	AURANET_WORK *p_wk	ワーク
+ *	@param	*p_data							データ受け取り
+ *
+ */
+//-----------------------------------------------------------------------------
+static void AURANET_GetResultData( const AURANET_WORK *cp_wk, AURANET_RESULT_DATA *p_data )
+{	
+	*p_data	= cp_wk->result_recv;
+}
+//=============================================================================
+/**
+ *				NETRECV
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	結果データ受け取り受信コールバック
+ *
+ *	@param	const int netID	ネットID
+ *	@param	int size				サイズ
+ *	@param	void* p_data		データ
+ *	@param	p_work					ワーク
+ *	@param	p_net_handle		ハンドル
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void NETRECV_Result( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+{	
+	AURANET_WORK *p_wk	= p_work;
+
+	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+	{
+		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+	}
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		return;	//自分のデータは無視
+	}
+
+//	GFL_STD_MemCopy( cp_data, &p_wk->result_recv, sizeof(AURANET_RESULT_DATA) );
+	NAGI_Printf("結果データ受け取り完了\n" );
+	p_wk->is_recv		= TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	結果データ受け取りバッファポインタ
+ *
+ *	@param	netID
+ *	@param	pWork
+ *	@param	size
+ *
+ *	@return	バッファポインタ
+ */
+//-----------------------------------------------------------------------------
+static u8* NETRECV_GetBufferAddr(int netID, void* p_work, int size)
+{	
+	AURANET_WORK *p_wk	= p_work;
+
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		return (u8*)&p_wk->result_recv_my;
+	}
+	else
+	{	
+		return (u8*)&p_wk->result_recv;
+	}
+
 }
 //=============================================================================
 /**
@@ -1801,6 +2220,7 @@ static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont )
 	return FALSE;
 }
 
+#ifdef DEBUG_AURA_MSG
 //----------------------------------------------------------------------------
 /**
  *	@brief	デバッグプリントを更新
@@ -2172,6 +2592,7 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 
 	OS_Printf( "↑○%d番目のゲーム　プリント終了↑↑↑↑↑↑↑↑\n", p_wk->debug_game_cnt );
 }
+#endif //DEBUG_AURA_MSG
 
 //----------------------------------------------------------------------------
 /**
@@ -2209,6 +2630,163 @@ static void TouchMarker_OffVisible( AURA_MAIN_WORK *p_wk )
 	GFL_CLWK	*p_marker;
 	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
 	GFL_CLACT_WK_SetDrawEnable( p_marker, FALSE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スコア計算
+ *
+ *	@param	AURA_MAIN_WORK *p_wk	ワーク
+ *
+ *	@return	スコア
+ */
+//-----------------------------------------------------------------------------
+static u8	 CalcScore( AURA_MAIN_WORK *p_wk )
+{	
+	AURANET_RESULT_DATA	my;
+	AURANET_RESULT_DATA	you;
+
+	u32	pos_score;
+	u32 shake_score;
+
+	my.trg_left		= p_wk->trg_left[0];
+	my.trg_right	= p_wk->trg_right[0];
+	my.shake_left	= p_wk->shake_left[0];
+	my.shake_right= p_wk->shake_right[0];
+
+	AURANET_GetResultData( &p_wk->net, &you );
+
+	//座標スコア
+	{	
+		GFL_POINT	pos1, pos2;
+		u32 ret;
+		OS_Printf( "△お互いの座標計測\n" );
+		pos1	= my.trg_left;
+		pos2	= you.trg_left;
+		ret	= ((u32)(pos1.x-pos2.x)*(u32)(pos1.x-pos2.x))+((u32)(pos1.y-pos2.y)*(u32)(pos1.y-pos2.y));
+		if( 0 < ret & ret < 8*8 )
+		{	
+			pos_score	= 100;
+		}
+		else if( 8*8 < ret & ret < 16 * 16 )
+		{	
+			pos_score	= 80;
+		}
+		else if( 16*16 < ret & ret < 24 * 24 )
+		{	
+			pos_score	= 50;
+		}
+		else if( 24*24 < ret & ret < 32 * 32 )
+		{	
+			pos_score	= 30;
+		}
+		else if( 32*32 < ret & ret < 40 * 40 )
+		{	
+			pos_score	= 10;
+		}
+		else{	
+			pos_score	= 0;
+		}
+		OS_Printf("自分の左手座標\n");
+		OS_Printf("X %d Y %d\n", 
+				pos1.x,
+				pos1.y);
+	
+		OS_Printf("相手の左手座標\n");
+		OS_Printf("X %d Y %d\n", 
+				pos2.x,
+				pos2.y);
+		OS_Printf( "距離　%d点\n", pos_score );
+	}
+
+	//ブレスコア
+	{	
+		int i;
+		GFL_POINT temp1, temp2;
+		u32 shake1, shake2;
+		u16 ret;
+		shake_score	= 0;
+		for( i = 1; i <TOUCH_COUNTER_SHAKE_MAX; i++ )
+		{	
+			temp1.x	= my.shake_left.shake[i].x - my.shake_left.shake[0].x;
+			temp1.y	= my.shake_left.shake[i].y - my.shake_left.shake[0].y;
+			temp2.x	= you.shake_left.shake[i].x - you.shake_left.shake[0].x;
+			temp2.y	= you.shake_left.shake[i].y - you.shake_left.shake[0].y;
+
+			OS_Printf( "自分のブレ[%d] X %d Y %d\n", i, temp1.x, temp1.y );
+			OS_Printf( "相手のブレ[%d] X %d Y %d\n", i, temp2.x, temp2.y );
+			
+
+
+			shake1	= MATH_IAbs( temp1.x ) + MATH_IAbs( temp1.y );
+			shake2	= MATH_IAbs( temp2.x ) + MATH_IAbs( temp2.y );
+
+			if( shake1 > shake2 )
+			{	
+				ret	= shake1 - shake2;
+			}
+			else
+			{	
+				ret	= shake2 - shake1;
+			}
+
+			switch( ret )
+			{	
+			case 0:
+				shake_score	+= 100;
+				OS_Printf( "ブレ[i]　100点加算\n", i );
+				break;
+			case 1:
+				shake_score	+= 80;
+				OS_Printf( "ブレ[i]　80点加算\n", i );
+				break;
+			case 2:
+				//fall through
+			case 3:
+				shake_score	+= 50;
+				OS_Printf( "ブレ[i]　50点加算\n", i );
+				break;
+			case 4:
+				//fall through
+			case 5:
+				shake_score	+= 30;
+				OS_Printf( "ブレ[i]　30点加算\n", i );
+				break;
+			default:	//6～
+				//score	+= 0;
+				OS_Printf( "ブレ[i]　0点加算\n", i );
+			}
+		}
+		shake_score	/= 9;
+		OS_Printf( "ブレ　%d点\n", shake_score );
+	}
+
+	return (pos_score + shake_score)/2;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	戻るボタンを押したかどうか
+ *
+ *	@param	void 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL TouchReturnBtn( void )
+{	
+
+	u32 x;
+	u32 y;
+	if( GFL_UI_TP_GetPointTrg( &x, &y) )
+	{	
+		if( ((u32)( x - MSGWND_RETURN_X*8) < (u32)(MSGWND_RETURN_W*8))
+				&	((u32)( y - MSGWND_RETURN_Y*8) < (u32)(MSGWND_RETURN_H*8))
+			){
+			return TRUE;
+		}
+
+	}
+	return FALSE;
 }
 
 //=============================================================================

@@ -132,6 +132,7 @@ typedef struct
 	MSG_WORK					msg;
 	LIST_WORK					list;
 	GFL_BMPWIN				*p_bmpwin;
+	BOOL	is_temp_modules;
 
 	BOOL	is_end;
 	BOOL	is_proc;
@@ -169,6 +170,7 @@ static void DEBUG_NAGI_COMMAND_End( DEBUG_NAGI_MAIN_WORK *p_wk );
 
 static void CreateTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk, HEAPID heapID );
 static void DeleteTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void MainTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk );
 
 //grp
 static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
@@ -188,6 +190,7 @@ static BOOL LIST_IsDecide( const LIST_WORK *cp_wk, u32 *p_select );
 //MSG_WORK
 static void MSG_Init( MSG_WORK *p_wk, HEAPID heapID );
 static void MSG_Exit( MSG_WORK *p_wk );
+static BOOL MSG_Main( MSG_WORK *p_wk );
 static PRINT_UTIL * MSG_GetPrintUtil( MSG_WORK *p_wk, GFL_BMPWIN*	p_bmpwin );
 static GFL_FONT*	MSG_GetFont( const MSG_WORK *cp_wk );
 static PRINT_STREAM * MSG_GetPrintStream( const MSG_WORK *cp_wk );
@@ -263,6 +266,7 @@ enum
 	LISTDATA_SEQ_PROC_COMPATIBLE,
 	LISTDATA_SEQ_RETURN,
 	LISTDATA_SEQ_NEXT_HOME,
+	LISTDATA_SEQ_NEXT_PAGE1,
 	LISTDATA_SEQ_MAX,
 };
 static const LISTDATA_FUNCTION	sc_list_funciton[]	= 
@@ -281,6 +285,8 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 //=====================================
 static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
+
+#if 0
 	{	
 		L"オーラチェック", LISTDATA_SEQ_PROC_AURA
 	},
@@ -290,12 +296,13 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"結果表示", LISTDATA_SEQ_PROC_RESULT
 	},
+#endif
 	{	
 		L"相性診断画面へ", LISTDATA_SEQ_PROC_COMPATIBLE
 	},
 	{	
 		L"もどる", LISTDATA_SEQ_RETURN
-	}
+	},
 };
 
 static const LIST_SETUP_TBL sc_list_data_page1[]	=
@@ -307,12 +314,6 @@ static const LIST_SETUP_TBL sc_list_data_page1[]	=
 		L"前へ", LISTDATA_SEQ_NEXT_HOME
 	}
 };
-
-//-------------------------------------
-///	次のPROC用パラメータ
-//=====================================
-#define PROC_PARAM_NUM	(0x100)
-static u8 s_proc_buff[PROC_PARAM_NUM];
 
 //----------------------------------------------------------------------------
 /**
@@ -485,6 +486,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 	}
 
 	GRAPHIC_Draw( &p_wk->grp );
+	MainTemporaryModules( p_wk );
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -565,6 +567,7 @@ static void CreateTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk, HEAPID heapID )
 	LIST_Init( &p_wk->list, sc_list_data_home, NELEMS(sc_list_data_home), 
 			&p_wk->msg, p_wk->p_bmpwin, heapID );
 
+	p_wk->is_temp_modules	= TRUE;
 
 }
 //----------------------------------------------------------------------------
@@ -581,6 +584,25 @@ static void DeleteTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk )
 	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
 	MSG_Exit( &p_wk->msg );
 	GRAPHIC_Exit( &p_wk->grp );
+
+	p_wk->is_temp_modules	= FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void MainTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	if( p_wk->is_temp_modules )
+	{	
+		MSG_Main( &p_wk->msg );
+	}
 }
 //=============================================================================
 /**
@@ -694,32 +716,37 @@ static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 {
+	static const GFL_DISP_VRAM sc_vramSetTable =
+	{
+		GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_NONE,						// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_0_D,						// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
+		GX_OBJVRAMMODE_CHAR_1D_128K,		
+		GX_OBJVRAMMODE_CHAR_1D_128K,		
+	};
+
 	//ワーククリア
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
+
+	//VRAMクリアー
+	GFL_DISP_ClearVRAM( 0 );
+
+	// VRAMバンク設定
+	GFL_DISP_SetBank( &sc_vramSetTable );
 
 	// ディスプレイON
 	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 	GFL_DISP_SetDispOn();
 
-	// VRAMバンク設定
-	{
-		static const GFL_DISP_VRAM sc_vramSetTable =
-		{
-			GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
-			GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-			GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
-			GX_VRAM_OBJ_NONE,					// メイン2DエンジンのOBJ
-			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-			GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
-			GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_0_D,						// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
-			GX_OBJVRAMMODE_CHAR_1D_128K,		
-			GX_OBJVRAMMODE_CHAR_1D_128K,		
-		};
-		GFL_DISP_SetBank( &sc_vramSetTable );
-	}
+	//表示
+	GFL_DISP_GX_InitVisibleControl();
 
 	//描画モジュール
 	GRAPHIC_BG_Init( &p_wk->gbg, heapID );
@@ -803,6 +830,8 @@ static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work )
 {	
+	GFL_BG_VBlankFunc();
+
 	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
                       GX_CAPTURE_MODE_AB,			   // Capture mode
                       GX_CAPTURE_SRCA_2D3D,						 // Blend src A
@@ -1089,7 +1118,6 @@ static void LIST_Init( LIST_WORK *p_wk, const LIST_SETUP_TBL *cp_tbl, u32 tbl_ma
 		BmpMenuList_SetCursorBmp( p_wk->p_list, heapID );
 	}
 
-
 }
 
 //----------------------------------------------------------------------------
@@ -1187,6 +1215,26 @@ static void MSG_Exit( MSG_WORK *p_wk )
 
 	GFL_FONT_Delete( p_wk->p_font );
 	GFL_STD_MemClear( p_wk, sizeof(MSG_WORK) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	MSG関係	メイン処理
+ *
+ *	@param	MSG_WORK *p_wk	ワーク
+ *
+ * @retval  BOOL	処理が終了していればTRUE／それ以外はFALSE
+ *
+ */
+//-----------------------------------------------------------------------------
+static BOOL MSG_Main( MSG_WORK *p_wk )
+{	
+	if( PRINTSYS_QUE_Main( p_wk->p_print_que ) )
+	{	
+		return PRINT_UTIL_Trans( &p_wk->print_util, p_wk->p_print_que );
+	}
+
+	return FALSE;
 }
 
 //----------------------------------------------------------------------------

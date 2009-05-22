@@ -33,6 +33,7 @@
 
 //	proc
 #include "net_app/irc_aura.h"
+#include "net_app/irc_rhythm.h"
 
 //	mine
 #include "net_app/irc_compatible.h"
@@ -104,9 +105,14 @@ enum{
 #define	MSGWND_MSG_H	(6)
 
 #define	MSGWND_AURA_X	(8)
-#define	MSGWND_AURA_Y	(8)
+#define	MSGWND_AURA_Y	(7)
 #define	MSGWND_AURA_W	(16)
 #define	MSGWND_AURA_H	(3)
+
+#define	MSGWND_RHYTHM_X	(8)
+#define	MSGWND_RHYTHM_Y	(12)
+#define	MSGWND_RHYTHM_W	(16)
+#define	MSGWND_RHYTHM_H	(3)
 
 #define	MSGWND_RETURN_X	(1)
 #define	MSGWND_RETURN_Y	(20)
@@ -211,10 +217,18 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
 	u16		seq;
+	u32		proc_id;			//自分の選んだもの
+	u32		you_ms;				//相手の選んだミリ病
+	u32		you_proc_id;	//相手の選んだもの
 
 	//パラメータ
 	GAMESYS_WORK		*p_gamesys;
 	BOOL is_end;
+
+	//その他
+	u32		start_ms;
+	u32		now_ms;
+	BOOL	is_send;
 };
 
 //=============================================================================
@@ -271,6 +285,15 @@ static void CreateTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk );
 static void DeleteTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk );
 static void MainTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk );
 static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn );
+
+//PROCCHANE
+typedef void *(*SUBPROC_ALLOC_FUNCTION)( IRC_COMPATIBLE_MAIN_WORK *p_wk, HEAPID heapID );
+typedef void (*SUBPROC_FREE_FUNCTION)( IRC_COMPATIBLE_MAIN_WORK *p_wk, void *p_param );
+static void *SUBPROC_ALLOC_Aura( IRC_COMPATIBLE_MAIN_WORK *p_wk, HEAPID heapID );
+static void SUBPROC_FREE_Aura( IRC_COMPATIBLE_MAIN_WORK *p_wk, void *p_adrs );
+static void *SUBPROC_ALLOC_Rhythm( IRC_COMPATIBLE_MAIN_WORK *p_wk, HEAPID heapID );
+static void SUBPROC_FREE_Rhythm( IRC_COMPATIBLE_MAIN_WORK *p_wk, void *p_adrs );
+
 
 //recvFuncTable
 static void NETRECV_DecideMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
@@ -349,6 +372,7 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 //=====================================
 enum{	
 	BTNID_AURA,
+	BTNID_RHYTHM,
 	BTNID_RETURN,
 };
 static const BUTTON_SETUP	sc_btn_setp_tbl[]	=
@@ -361,6 +385,14 @@ static const BUTTON_SETUP	sc_btn_setp_tbl[]	=
 		MSGWND_AURA_W,
 		MSGWND_AURA_H,
 	},
+	//list選択
+	{	
+		COMPATI_LIST_001,
+		MSGWND_RHYTHM_X,
+		MSGWND_RHYTHM_Y,
+		MSGWND_RHYTHM_W,
+		MSGWND_RHYTHM_H,
+	},
 	//戻る
 	{	
 		COMPATI_BTN_000,
@@ -370,11 +402,46 @@ static const BUTTON_SETUP	sc_btn_setp_tbl[]	=
 		MSGWND_RETURN_H,
 	},
 };
-
 //-------------------------------------
 ///	PROC呼び出し
 //=====================================
 FS_EXTERN_OVERLAY(irc_aura);
+FS_EXTERN_OVERLAY(irc_rhythm);
+
+//-------------------------------------
+///	PROC移動データ
+//=====================================
+typedef enum
+{	
+	PROC_AURA,
+	PROC_RHYTHM,
+
+	PROC_MAX,
+	PROC_NULL	= PROC_MAX,
+} PROCID;
+static const struct
+{	
+	FSOverlayID		ov_id;
+	const GFL_PROC_DATA	*cp_procdata;
+	SUBPROC_ALLOC_FUNCTION	alloc_func;
+	SUBPROC_FREE_FUNCTION		free_func;
+} sc_proc_data_tbl[PROC_MAX]	=
+{	
+	{	
+		FS_OVERLAY_ID(irc_aura),
+		&IrcAura_ProcData,
+		SUBPROC_ALLOC_Aura,
+		SUBPROC_FREE_Aura,
+	},
+	{	
+		FS_OVERLAY_ID(irc_rhythm),
+		&IrcRhythm_ProcData,
+		SUBPROC_ALLOC_Rhythm,
+		SUBPROC_FREE_Rhythm,
+	}
+};
+
+
 
 //=============================================================================
 /**
@@ -409,10 +476,11 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(IRC_COMPATIBLE_MAIN_WORK), HEAPID_IRCCOMPATIBLE_SYSTEM );
 	GFL_STD_MemClear( p_wk, sizeof(IRC_COMPATIBLE_MAIN_WORK) );
 	p_wk->p_gamesys	= p_param;
-	p_wk->p_irc	= COMPATIBLE_IRC_CreateSystem( 60*5, HEAPID_IRCCOMPATIBLE_SYSTEM );
+	p_wk->p_irc	= COMPATIBLE_IRC_CreateSystem( 60*10, HEAPID_IRCCOMPATIBLE_SYSTEM );
 
 	//モジュール初期化
 	CreateTemporaryModules( p_wk );
+
 
 	SEQ_Change( p_wk, SEQFUNC_Connect );
 
@@ -522,7 +590,6 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 	}
 
 	MainTemporaryModules( p_wk );
-
 	return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================
@@ -650,7 +717,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 		GFL_BG_FillCharacter( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], 0x00, 1, 0 );
 		p_wk->frame_char2	= BmpWinFrame_GraphicSetAreaMan(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], IRC_COMPATIBLE_BG_PAL_M_01, MENU_TYPE_SYSTEM, heapID);
 	}
-
+	
 	//VBlackTask登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_BG_VBlankTask, p_wk, 0 );
 }
@@ -665,7 +732,6 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK* p_wk )
 {	
-
 	//タスク破棄
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
@@ -677,8 +743,8 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK* p_wk )
 		GFL_BG_FillCharacterRelease(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BTN], 1,0);
 
 		GFL_BG_FreeCharacterArea(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT],
-				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->frame_char),
-				GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->frame_char));
+				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->frame_char2),
+				GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->frame_char2));
 		GFL_BG_FillCharacterRelease(sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], 1,0);
 	}
 
@@ -1146,13 +1212,68 @@ static void SEQFUNC_Select( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 	enum{	
 		SEQ_INIT,
 		SEQ_SELECT,
+		SEQ_MSG,
+		SEQ_SENDMENU,	
+		SEQ_RECVMENU,	
+		SEQ_NEXTPROC,	
 	};
 	u32 ret;
+
+	//初期化以外受信して、次のPROCを決める処理
+	if( *p_seq != SEQ_INIT  )
+	{	
+		if( COMPATIBLE_IRC_RecvMenuData( p_wk->p_irc ) )
+		{	
+			COMPATIBLE_IRC_GetMenuData( p_wk->p_irc, &p_wk->you_proc_id, &p_wk->you_ms );
+			OS_TPrintf( "YOU PROC%d MS%d\n", p_wk->you_proc_id, p_wk->you_ms );
+			OS_TPrintf( "MY PROC%d MS%d\n", p_wk->proc_id, p_wk->now_ms );
+			//自分が選んでなかったら、相手に従う
+			if( p_wk->proc_id == PROC_NULL )
+			{	
+				p_wk->proc_id	= p_wk->you_proc_id;
+			}
+			else
+			{
+				//自分も選んでいたら、秒数が早い方にしたがう同じならば親機に従う
+				if( p_wk->now_ms < p_wk->you_ms )
+				{	
+	
+				}
+				else if( p_wk->now_ms > p_wk->you_ms )
+				{	
+					p_wk->proc_id	= p_wk->you_proc_id;
+				}
+				else
+				{	
+					if( GFL_NET_IsParentMachine() )
+					{	
+	
+					}
+					else
+					{	
+							p_wk->proc_id	= p_wk->you_proc_id;
+					}
+				}
+			}
+			COMPATIBLE_IRC_SendReturnMenu( p_wk->p_irc );
+			if( p_wk->is_send )
+			{	
+				*p_seq	= SEQ_RECVMENU;
+			}
+			else
+			{	
+				*p_seq	= SEQ_NEXTPROC;
+			}
+		}
+	}
 
 	switch( *p_seq )
 	{	
 	case SEQ_INIT:
+		p_wk->proc_id	= PROC_NULL;
+		p_wk->is_send	= FALSE;
 		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
+		p_wk->start_ms	= OS_TicksToMilliSeconds32( OS_GetTick() );
 		*p_seq	= SEQ_SELECT;
 		break;
 
@@ -1163,15 +1284,47 @@ static void SEQFUNC_Select( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 			switch( ret )
 			{	
 			case BTNID_AURA:
-				SEQ_Change( p_wk, SEQFUNC_CallProc );
+				p_wk->proc_id	= PROC_AURA;
+				*p_seq	= SEQ_MSG;
+				break;
+			case BTNID_RHYTHM:
+				p_wk->proc_id	= PROC_RHYTHM;
+				*p_seq	= SEQ_MSG;
 				break;
 			case BTNID_RETURN:
 				SEQ_Change( p_wk, SEQFUNC_DisConnect );
 				break;
 			};
 		}
+		p_wk->now_ms	= OS_TicksToMilliSeconds32( OS_GetTick() ) - p_wk->start_ms;
+		break;
+
+	case SEQ_MSG:
+		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_003, 0, 0  );
+		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], TRUE );
+		*p_seq	= SEQ_SENDMENU;
+		break;
+
+	case SEQ_SENDMENU:
+		p_wk->is_send	= TRUE;
+		if( COMPATIBLE_IRC_SendMenuData( p_wk->p_irc, p_wk->proc_id, p_wk->now_ms ) )
+		{	
+			*p_seq	= SEQ_RECVMENU;
+		}
+		break;
+
+	case SEQ_RECVMENU:
+		if( COMPATIBLE_IRC_RecvReturnMenu( p_wk->p_irc ) )
+		{	
+			*p_seq	= SEQ_NEXTPROC;
+		}
+		break;
+
+	case SEQ_NEXTPROC:
+		SEQ_Change( p_wk, SEQFUNC_CallProc );
 		break;
 	};
+
 }
 
 //----------------------------------------------------------------------------
@@ -1202,13 +1355,11 @@ static void SEQFUNC_CallProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 	switch( *p_seq )
 	{	
 	case SEQ_TIMING_START:
-		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_003, 0, 0  );
-		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], TRUE );
 		*p_seq	= SEQ_TIMING_WAIT;
 		break;
 
 	case SEQ_TIMING_WAIT:
-		if( COMPATIBLE_IRC_TimingSyncWait(p_wk->p_irc ) )
+		if( COMPATIBLE_IRC_WaitStartProcTiming( p_wk->p_irc ) )
 		{	
 			*p_seq	= SEQ_FADEOUT_START;
 		}
@@ -1228,13 +1379,7 @@ static void SEQFUNC_CallProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_DELETE_SYSTEM:
 		DeleteTemporaryModules( p_wk );
-		{
-			IRC_AURA_PARAM	*p_param;
-			p_wk->p_proc_param	= GFL_HEAP_AllocMemory( HEAPID_IRCCOMPATIBLE_SYSTEM, sizeof(IRC_AURA_PARAM) );
-			p_param	= p_wk->p_proc_param;
-			p_param->p_gamesys	= p_wk->p_gamesys;
-			p_param->p_irc			= p_wk->p_irc;
-		}
+		p_wk->p_proc_param	= sc_proc_data_tbl[	p_wk->proc_id].alloc_func( p_wk, HEAPID_IRCCOMPATIBLE_SYSTEM );
 		*p_seq	= SEQ_CALL_PROC;
 		break;
 
@@ -1242,17 +1387,20 @@ static void SEQFUNC_CallProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 		//タイトルデバッグから飛ぶ処理
 		if( p_wk->p_gamesys == NULL )
 		{	
-			GFL_PROC_SysCallProc( FS_OVERLAY_ID(irc_aura),  &IrcAura_ProcData,  p_wk->p_gamesys );
+			GFL_PROC_SysCallProc( sc_proc_data_tbl[	p_wk->proc_id].ov_id,
+					sc_proc_data_tbl[	p_wk->proc_id].cp_procdata,  p_wk->p_proc_param );
 		}
 		else
 		{	
-			GAMESYSTEM_CallProc( p_wk->p_gamesys,FS_OVERLAY_ID(irc_aura),  &IrcAura_ProcData,  p_wk->p_proc_param );
+			GAMESYSTEM_CallProc( p_wk->p_gamesys, sc_proc_data_tbl[	p_wk->proc_id].ov_id,
+					sc_proc_data_tbl[	p_wk->proc_id].cp_procdata,  p_wk->p_proc_param );
+
 		}
 		*p_seq	= SEQ_RETURN_PROC;
 		break;
 
 	case SEQ_RETURN_PROC:
-		GFL_HEAP_FreeMemory( p_wk->p_proc_param );
+		sc_proc_data_tbl[	p_wk->proc_id ].free_func( p_wk, p_wk->p_proc_param );
 		p_wk->p_proc_param	= NULL;
 		*p_seq	= SEQ_CREATE_SYSTEM;
 		break;
@@ -1368,9 +1516,7 @@ static void DeleteTemporaryModules( IRC_COMPATIBLE_MAIN_WORK *p_wk )
 {	
 	BUTTON_Exit( &p_wk->btn );
 
-	{	
-			MSGWND_Exit( &p_wk->msgwnd );
-	}
+	MSGWND_Exit( &p_wk->msgwnd );
 	INFOWIN_Exit();
 	GRAPHIC_BG_Exit( &p_wk->bg );
 	GRAPHIC_Exit( &p_wk->grp );
@@ -1609,3 +1755,77 @@ static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn )
 	return FALSE;
 }
 
+
+//=============================================================================
+/**
+ *				PROC移動用パラメータ作成
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	オーラチェックプロック用パラメータ作成
+ *
+ *	@param	IRC_COMPATIBLE_MAIN_WORK *p_wk	ワーク
+ *	@param	heapID													ヒープID
+ *
+ *	@return	オーラチェックに渡すパラメータ
+ */
+//-----------------------------------------------------------------------------
+static void *SUBPROC_ALLOC_Aura( IRC_COMPATIBLE_MAIN_WORK *p_wk, HEAPID heapID )
+{	
+	IRC_AURA_PARAM	*p_param;
+	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_AURA_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(IRC_AURA_PARAM)) ;
+	p_param->p_gamesys	= p_param->p_gamesys;
+	p_param->p_irc			= p_param->p_irc;
+	return p_param;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	オーラチェックプロック用パラメータ破棄
+ *
+ *	@param	IRC_COMPATIBLE_MAIN_WORK *p_wk	ワーク
+ *	@param	p_param													パラメータ
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SUBPROC_FREE_Aura( IRC_COMPATIBLE_MAIN_WORK *p_wk, void *p_adrs )
+{	
+	IRC_AURA_PARAM	*p_param	= p_adrs;
+	GFL_HEAP_FreeMemory( p_param );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リズムチェックプロック用パラメータ作成
+ *
+ *	@param	IRC_COMPATIBLE_MAIN_WORK *p_wk	ワーク
+ *	@param	heapID													ヒープID
+ *
+ *	@return	リズムチェックに渡すパラメータ
+ */
+//-----------------------------------------------------------------------------
+static void *SUBPROC_ALLOC_Rhythm( IRC_COMPATIBLE_MAIN_WORK *p_wk, HEAPID heapID )
+{	
+
+	IRC_RHYTHM_PARAM	*p_param;
+	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_RHYTHM_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(IRC_RHYTHM_PARAM)) ;
+	p_param->p_gamesys	= p_param->p_gamesys;
+	p_param->p_irc			= p_param->p_irc;
+
+	return p_param;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リズムチェックプロック用パラメータ破棄
+ *
+ *	@param	IRC_COMPATIBLE_MAIN_WORK *p_wk	ワーク
+ *	@param	p_param													パラメータ
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SUBPROC_FREE_Rhythm( IRC_COMPATIBLE_MAIN_WORK *p_wk, void *p_adrs )
+{	
+	IRC_RHYTHM_PARAM	*p_param	= p_adrs;
+	GFL_HEAP_FreeMemory( p_param );
+}

@@ -2096,17 +2096,20 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_MEMO_QUESTION:
-		if( p_wk->p_param->score < 40 )
 		{	
-			MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_BAD_000 );
-		}
-		else if( p_wk->p_param->score < 70 )
-		{	
-			MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_NORMAL_000 );
-		}
-		else if( p_wk->p_param->score <= 100 )
-		{	
-			MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_GOOD_000 );
+			u8	rnd	= GFUser_GetPublicRand( 3 );
+			if( p_wk->p_param->score < 40 )
+			{	
+				MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_BAD_000 + rnd );
+			}
+			else if( p_wk->p_param->score < 70 )
+			{	
+				MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_NORMAL_000 + rnd );
+			}
+			else if( p_wk->p_param->score <= 100 )
+			{	
+				MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_GOOD_000 + rnd );
+			}
 		}
 		*p_seq	= SEQ_WAIT;
 		break;
