@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-22T14:09:43"/>
+	<create user="matsumiya" host="W00179" date="2009-05-22T16:52:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="-2" top="184" right="703" bottom="804" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="184" right="703" bottom="804" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -295,12 +295,7 @@
 	<row id="msg_t01r0101_test_01">
 		<comment>♀
 ・5月用仮メッセージ
-続けて
-02
-03
-04
-05
-のどれかをランダム（25％）で</comment>
+アニメ後、続けて02</comment>
 		<attribute name="キャラ指定">お姉さん</attribute>
 		<language name="JPN" width="256">あなたも　ポケモンと　いっしょに
 イッシュちほうを　たびするのね[BE:01:ページ切り替え（クリア）]</language>
@@ -310,26 +305,30 @@
 
 	<row id="msg_t01r0101_test_02">
 		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">その１</language>
-		<language name="JPN_KANJI" width="256">その１</language>
+		<language name="JPN" width="256">ママから　ひとこと！[BE:01:ページ切り替え（クリア）]
+なぜ　たびを　するのか？
+じぶんで　かんがえてみてね</language>
+		<language name="JPN_KANJI" width="256">ママから　一言[BE:01:ページ切り替え（クリア）]
+なぜ　旅を　するのか？
+自分で　考えてみてね</language>
 	</row>
 
 	<row id="msg_t01r0101_test_03">
 		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">その２</language>
-		<language name="JPN_KANJI" width="256">その２</language>
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト用</language>
 	</row>
 
 	<row id="msg_t01r0101_test_04">
 		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">その３</language>
-		<language name="JPN_KANJI" width="256">その３</language>
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト用</language>
 	</row>
 
 	<row id="msg_t01r0101_test_05">
 		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">その４</language>
-		<language name="JPN_KANJI" width="256">その４</language>
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト用</language>
 	</row>
 
 	<flowchart-group-list>
