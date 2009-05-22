@@ -217,7 +217,7 @@ end
 	padding = 4 - ( size % 4 )
 	size += padding
 	
-	data = ["LINK", size, ncl_file ].pack("a* l a*") 
+	data = [ "LINK", size, ncl_file ].pack("a* l a*") 
 
 	padding.times{
 		data << 0

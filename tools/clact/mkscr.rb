@@ -31,6 +31,13 @@
 
 	fp_w = open( ARGV[ ARGV_WRITE_FILE ], "w" )
 
+	fp_r.read.each { |data|
+		name = File::basename( data, '.*' )
+		fp_w.print "\"" + name + ".NCGR\"\n"
+		fp_w.print "\"" + name + ".NCLR\"\n"
+		fp_w.print "\"" + name + ".NCER\"\n"
+		fp_w.print "\"" + name + ".NANR\"\n"
+	}
 
 	fp_r.close
 	fp_w.close
