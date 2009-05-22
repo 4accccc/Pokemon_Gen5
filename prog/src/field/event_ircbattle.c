@@ -135,7 +135,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _FIELD_FADEOUT:
     dbw->isEndProc = FALSE;
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+//    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
     (*seq)++;
     break;
   case _CALL_IRCBATTLE_MATCH:

@@ -421,7 +421,19 @@ static void _workEnd(IRC_BATTLE_MENU* pWork)
 
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   フェードアウト処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
+static void _modeFadeout(IRC_BATTLE_MENU* pWork)
+{
+	if(WIPE_SYS_EndCheck()){
+		_CHANGE_STATE(pWork, NULL);        // 終わり
+	}
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -447,7 +459,9 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 		return TRUE;
   case _SELECTMODE_EXIT:
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-    _CHANGE_STATE(pWork,NULL);        // 終わり
+		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    _CHANGE_STATE(pWork,_modeFadeout);        // 終わり
     _buttonWindowDelete(pWork);
     return TRUE;
   default:

@@ -332,7 +332,7 @@ static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
 
 	pWork->select_counter++;
 
-	if(	pWork->select_counter % 3 != 1){
+	if(	pWork->select_counter % 2 != 1){
 		return;
 	}
 	
@@ -1257,7 +1257,7 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
 
 	//  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, _BRIGHTNESS_SYNC);
 	_workEnd(pWork);
-
+G2S_BlendNone();
 	GFL_HEAP_FreeMemory(pWork);
 	//  GFL_HEAP_DeleteHeap(HEAPID_CGEAR);
 
