@@ -1,4 +1,3 @@
-//======================================================================
 /**
  * @file	fieldmap_ctrl_c3.c
  * @brief	フィールドマップ　コントロール　C3マップ処理
@@ -16,13 +15,125 @@
 #include "fieldmap_ctrl_c3.h"
 
 #include "field_rail.h"
+#include "fld_scenearea.h"
+
+
+//======================================================================
+//	シーンエリア情報
+//======================================================================
+static BOOL C3_SCENEAREA_CheckArea( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void C3_SCENEAREA_Updata( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void C3_SCENEAREA_Inside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void C3_SCENEAREA_Outside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+
+//-------------------------------------
+///	エリアパラメータ構造体
+//=====================================
+typedef struct {
+  u32   rot_start;
+  u32   rot_end;
+  fx32  dist_min;
+  fx32  dist_max;
+  u32   pitch;
+  fx32  length;
+} C3_SCENEAREA_PARAM;
+
+#define SCENE_AREA_DIST_MIN ( 0xfc024 )
+//#define SCENE_AREA_DIST_MAX ( 0x18e038 )
+#define SCENE_AREA_DIST_MAX ( 0x2000000 )
+
+static const FLD_SCENEAREA_DATA sc_SCENE[] = 
+{
+  // ALLAY00
+  {
+    { 
+      // エリア
+      // rot_start, rot_end, dist_min, dist_max
+      // (基準を{0,0,-FX32_ONE}としたときの角度)
+      0x27e8, 0x3048, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
+      // カメラ
+      // pitch len
+      0x600, 0x26D000,
+    },
+    C3_SCENEAREA_CheckArea,
+    C3_SCENEAREA_Updata,
+    C3_SCENEAREA_Inside,
+    C3_SCENEAREA_Outside,
+  },
+
+  // ALLAY01
+  {
+    { 
+      // エリア
+      // rot_start, rot_end, dist_min, dist_max
+      // (基準を{0,0,-FX32_ONE}としたときの角度)
+      0x4f28, 0x6868, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
+      // カメラ
+      // pitch len
+      0x600, 0x26D000,
+    },
+    C3_SCENEAREA_CheckArea,
+    C3_SCENEAREA_Updata,
+    C3_SCENEAREA_Inside,
+    C3_SCENEAREA_Outside,
+  },
+
+  // ALLAY02
+  {
+    { 
+      // エリア
+      // rot_start, rot_end, dist_min, dist_max
+      // (基準を{0,0,-FX32_ONE}としたときの角度)
+      0x7a28, 0x83d8, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
+      // カメラ
+      // pitch len
+      0x600, 0x26D000,
+    },
+    C3_SCENEAREA_CheckArea,
+    C3_SCENEAREA_Updata,
+    C3_SCENEAREA_Inside,
+    C3_SCENEAREA_Outside,
+  },
+
+  // ALLAY03
+  {
+    { 
+      // エリア
+      // rot_start, rot_end, dist_min, dist_max
+      // (基準を{0,0,-FX32_ONE}としたときの角度)
+      0xa638, 0xaff8, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
+      // カメラ
+      // pitch len
+      0x600, 0x26D000,
+    },
+    C3_SCENEAREA_CheckArea,
+    C3_SCENEAREA_Updata,
+    C3_SCENEAREA_Inside,
+    C3_SCENEAREA_Outside,
+  },
+
+  // ALLAY04
+  {
+    { 
+      // エリア
+      // rot_start, rot_end, dist_min, dist_max
+      // (基準を{0,0,-FX32_ONE}としたときの角度)
+      0xcfb8, 0xd9d8, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
+      // カメラ
+      // pitch len
+      0x600, 0x26D000,
+    },
+    C3_SCENEAREA_CheckArea,
+    C3_SCENEAREA_Updata,
+    C3_SCENEAREA_Inside,
+    C3_SCENEAREA_Outside,
+  },
+};
 
 
 //======================================================================
 //	rail情報
 //======================================================================
-//ポインタ
-static FIELD_RAIL_MAN * sp_railMan;
 
 // 出発と終端
 static const RAIL_POINT sc_POINT_C3_START;
@@ -34,13 +145,6 @@ static const RAIL_POINT sc_POINT_C3_JOINT01;
 static const RAIL_POINT sc_POINT_C3_JOINT02;
 static const RAIL_POINT sc_POINT_C3_JOINT03;
 static const RAIL_POINT sc_POINT_C3_JOINT04;
-
-// 路地
-static const RAIL_POINT sc_POINT_C3_ALLAY00;
-static const RAIL_POINT sc_POINT_C3_ALLAY01;
-static const RAIL_POINT sc_POINT_C3_ALLAY02;
-static const RAIL_POINT sc_POINT_C3_ALLAY03;
-static const RAIL_POINT sc_POINT_C3_ALLAY04;
 
 // ベイエリア
 static const RAIL_POINT sc_POINT_C3_BEACH00;
@@ -73,33 +177,33 @@ static const RAIL_LINE sc_LINE_C3_JOINT03toBEACH03;
 static const RAIL_LINE sc_LINE_C3_JOINT03toJOINT04;
 static const RAIL_LINE sc_LINE_C3_JOINT04toCA_ALLAY04;
 static const RAIL_LINE sc_LINE_C3_JOINT04toBEACH04;
-static const RAIL_LINE sc_LINE_C3_CA_ALLAY00toALLAY00;
-static const RAIL_LINE sc_LINE_C3_CA_ALLAY01toALLAY01;
-static const RAIL_LINE sc_LINE_C3_CA_ALLAY02toALLAY02;
-static const RAIL_LINE sc_LINE_C3_CA_ALLAY03toALLAY03;
-static const RAIL_LINE sc_LINE_C3_CA_ALLAY04toALLAY04;
 
 
 // カメラ
 static const RAIL_CAMERA_SET sc_CAMERA_C3_NORMAL;
-static const RAIL_CAMERA_SET sc_CAMERA_C3_PICKUP;
+static const RAIL_CAMERA_SET sc_CAMERA_C3_FIRST;
+static const RAIL_CAMERA_SET sc_CAMERA_C3_END;
+static const RAIL_CAMERA_SET sc_CAMERA_C3_JOINT04; 
 
 // 位置
 static const RAIL_LINEPOS_SET sc_LINEPOS_C3_NORMAL;
 
 
 // 基本分割数
-#define RAIL_LINE_DIV_NORMAL    (256)
-#define RAIL_LINE_DIV_FIRST     (26)
-#define RAIL_LINE_DIV_WALKIN    (16)
-#define RAIL_LINE_DIV_PICKUP    (2)
+#define RAIL_LINE_DIV_NORMAL    (196)
+#define RAIL_LINE_DIV_FIRST     (16)
+#define RAIL_LINE_DIV_WALKIN    (8)
+#define RAIL_LINE_DIV_PICKUP    (8)
 
 
 
 //======================================================================
 //	define
 //======================================================================
-#define HEIGHT	0x2000
+#define HEIGHT	(0x2000)
+
+#define CAMERA_DEF_PITCH  ( 0x800 )
+#define CAMERA_DEF_LEN    ( 0x38D000 )
 
 //======================================================================
 //	struct
@@ -112,6 +216,11 @@ typedef struct {
 	u16 pos_angle;
 	s16 df_len;
 	s16 df_angle;
+
+  //ポインタ
+  FIELD_RAIL_MAN * p_railMan;
+
+  FLD_SCENEAREA* p_sceneArea;
 }C3_MOVE_WORK;
 
 
@@ -126,6 +235,9 @@ static void mapCtrlC3_Delete( FIELDMAP_WORK *fieldWork );
 static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos );
 
 static void CalcPos( VecFx32 *pos, const VecFx32 *center, u16 len, u16 dir );
+
+static void mapCtrlC3_CameraMain( FIELDMAP_WORK *fieldWork, const VecFx32* cp_pos );
+
 
 //======================================================================
 //	フィールドマップ　コントロール　C3
@@ -169,9 +281,13 @@ static void mapCtrlC3_Create(
 	FIELDMAP_SetMapCtrlWork( fieldWork, work );
 
   // レール起動
-  sp_railMan = FIELD_RAIL_MAN_Create( FIELDMAP_GetHeapID(fieldWork), camera );
-  FIELD_RAIL_MAN_Load(sp_railMan, &sc_POINT_C3_START);
-  FIELD_RAIL_MAN_GetPos(sp_railMan, pos );
+  work->p_railMan = FIELD_RAIL_MAN_Create( FIELDMAP_GetHeapID(fieldWork), camera );
+  FIELD_RAIL_MAN_Load(work->p_railMan, &sc_POINT_C3_START);
+  FIELD_RAIL_MAN_GetPos(work->p_railMan, pos );
+
+  // シーンエリア
+  work->p_sceneArea = FLD_SCENEAREA_Create( FIELDMAP_GetHeapID(fieldWork), camera );
+  FLD_SCENEAREA_Load( work->p_sceneArea, sc_SCENE, NELEMS(sc_SCENE) );
 	
 	{	//ビルボード設定
 		VecFx32 scale = {
@@ -197,9 +313,10 @@ static void mapCtrlC3_Create(
 static void mapCtrlC3_Delete( FIELDMAP_WORK *fieldWork )
 {
 	C3_MOVE_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
+  FIELD_RAIL_MAN_Delete(work->p_railMan);
+  FLD_SCENEAREA_Delete( work->p_sceneArea );
 	GFL_HEAP_FreeMemory( work );
 
-  FIELD_RAIL_MAN_Delete(sp_railMan);
 }
 
 //--------------------------------------------------------------
@@ -215,28 +332,31 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 	int key_cont = FIELDMAP_GetKeyCont( fieldWork );
   int key_trg = FIELDMAP_GetKeyTrg(fieldWork);
 	C3_MOVE_WORK *mwk = FIELDMAP_GetMapCtrlWork( fieldWork );
-  BOOL rail_flag = FIELD_RAIL_MAN_GetActiveFlag(sp_railMan);
+  BOOL rail_flag = FIELD_RAIL_MAN_GetActiveFlag(mwk->p_railMan);
 	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );;
 
   //デバッグのため、レール処理をON/OFF
   if (key_trg & PAD_BUTTON_L)
   {
-    FIELD_RAIL_MAN_SetActiveFlag(sp_railMan, !rail_flag);
+    FIELD_RAIL_MAN_SetActiveFlag(mwk->p_railMan, !rail_flag);
   }
 
   if (rail_flag)
   {
-    FIELD_RAIL_MAN_Update(sp_railMan, FIELDMAP_GetKeyCont(fieldWork) );
-    FIELD_RAIL_MAN_GetPos(sp_railMan, pos );
+    // レール動作
+    FIELD_RAIL_MAN_Update(mwk->p_railMan, FIELDMAP_GetKeyCont(fieldWork) );
+    FIELD_RAIL_MAN_GetPos(mwk->p_railMan, pos );
     pos->y = HEIGHT;
     FIELD_PLAYER_SetPos( fld_player, pos );
-    FIELD_RAIL_MAN_UpdateCamera(sp_railMan);
+    FIELD_RAIL_MAN_UpdateCamera(mwk->p_railMan);
+
+    // シーンエリア処理でカメラ上書き
+    FLD_SCENEAREA_Updata( mwk->p_sceneArea, pos );
 
 		FIELD_PLAYER_C3_Move( fld_player, key_cont, 0 );
-    return;
-  }
-	
-	{
+  }	
+  else
+  {
 		s16 df_angle;
 		s16 df_len;
 
@@ -260,24 +380,48 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 		if (key_cont & PAD_KEY_DOWN) {
 			mwk->player_len += df_len;
 		}
-	}
 
-	{
-		VecFx32 cam, player_pos;
-		FIELD_CAMERA *camera_control;
-		camera_control = FIELDMAP_GetFieldCamera( fieldWork );
-		FIELD_CAMERA_GetTargetPos( camera_control, &cam);
-		CalcPos( &player_pos, &cam, mwk->player_len, mwk->pos_angle );
-		//SetPlayerActTrans( fieldWork->field_player, &player_pos );
-		FIELD_CAMERA_SetAngleYaw( camera_control, mwk->pos_angle );
-		FIELD_PLAYER_SetPos( fld_player, &player_pos);
-		FIELD_PLAYER_C3_Move( fld_player, key_cont, mwk->pos_angle );
 
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-      OS_TPrintf( "player pos x=0x%x y=0x%x z=0x%x\n", player_pos.x, player_pos.y, player_pos.z );
-      OS_TPrintf( "0x%x, 0x%x, 0x%x\n", player_pos.x, player_pos.y, player_pos.z );
+    {
+      VecFx32 cam, player_pos;
+      FIELD_CAMERA *camera_control;
+      camera_control = FIELDMAP_GetFieldCamera( fieldWork );
+      FIELD_CAMERA_GetTargetPos( camera_control, &cam);
+      CalcPos( &player_pos, &cam, mwk->player_len, mwk->pos_angle );
+      //SetPlayerActTrans( fieldWork->field_player, &player_pos );
+      FIELD_PLAYER_SetPos( fld_player, &player_pos);
+      *pos = player_pos;
+      // プレイヤー位置から、カメラ座標を決定
+      mapCtrlC3_CameraMain( fieldWork, pos );
+      FIELD_CAMERA_SetAngleYaw( camera_control, mwk->pos_angle);
+      FIELD_PLAYER_C3_Move( fld_player, key_cont, mwk->pos_angle );
+
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+        VecFx32 normal_vec = {0,0,-FX32_ONE};
+        VecFx32 npos;
+        u16 rotate;
+        fx32 dist;
+        VecFx32 normal;
+        
+        OS_TPrintf( "player pos x=0x%x y=0x%x z=0x%x\n", player_pos.x, player_pos.y, player_pos.z );
+        OS_TPrintf( "0x%x, 0x%x, 0x%x\n", player_pos.x, player_pos.y, player_pos.z );
+
+        VEC_Subtract( pos, &cam, &npos );
+        npos.y = 0;
+        dist = VEC_Mag( &npos );
+        VEC_Normalize( &npos, &npos );
+        rotate  = FX_AcosIdx( VEC_DotProduct( &npos, &normal_vec ) );
+        VEC_CrossProduct( &npos, &normal_vec, &normal );
+
+        if( normal.y < 0 ){
+          rotate = 0x10000 - rotate;
+        }
+        
+        OS_TPrintf( "rotate\n0x%x dist=0x%x normal=0x%x\n", rotate, dist, normal.y );
+      }
     }
 	}
+
 }
 
 //======================================================================
@@ -301,10 +445,163 @@ static void CalcPos(VecFx32 * pos, const VecFx32 * center, u16 len, u16 dir)
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラの計算
+ *
+ *	@param	fieldWork
+ *	@param	cp_pos 
+ */
+//-----------------------------------------------------------------------------
+static void mapCtrlC3_CameraMain( FIELDMAP_WORK *fieldWork, const VecFx32* cp_pos )
+{
+  VecFx32 pos, target, n0, camera_pos;
+  FIELD_CAMERA* p_camera;
+  fx32 xz_dist;
+  fx32 target_y;
+
+  p_camera = FIELDMAP_GetFieldCamera( fieldWork );
+	FIELD_CAMERA_GetTargetPos( p_camera, &target);
+  target_y  = target.y;
+  target.y  = 0;
+  
+  pos     = *cp_pos;
+  pos.y   = 0;
+
+  VEC_Subtract( &pos, &target, &pos );
+  VEC_Normalize( &pos, &n0 );
+
+  // 方向ベクトルから、カメラangleを求める
+  camera_pos.y = FX_Mul( FX_SinIdx( CAMERA_DEF_PITCH ), CAMERA_DEF_LEN );
+  xz_dist      = FX_Mul( FX_CosIdx( CAMERA_DEF_PITCH ), CAMERA_DEF_LEN );
+  camera_pos.x = FX_Mul( n0.x, xz_dist );
+  camera_pos.z = FX_Mul( n0.z, xz_dist );
+  camera_pos.x += target.x;
+  camera_pos.y += target_y;
+  camera_pos.z += target.z;
+  
+	FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
+}
 
 
 
 
+//======================================================================
+//	SCENEAREA情報
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  シーンエリア情報  エリア判定
+ *
+ *	@param	cp_sys      システム
+ *	@param	cp_data     データ
+ *	@param	cp_pos      自機位置
+ *
+ *	@retval TRUE    エリア内
+ *	@retval FALSE   エリア外
+ */
+//-----------------------------------------------------------------------------
+static BOOL C3_SCENEAREA_CheckArea( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  VecFx32 normal_vec = {0,0,-FX32_ONE};
+  VecFx32 npos;
+  fx32 dist;
+  u32 rotate;
+  VecFx32 target, normal;
+  FIELD_CAMERA* p_camera;
+  const C3_SCENEAREA_PARAM* cp_param = (C3_SCENEAREA_PARAM*)cp_data->area;
+
+  //カメラ取得
+  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+  FIELD_CAMERA_GetTargetPos( p_camera, &target );
+  target.y = 0;
+  
+
+  VEC_Subtract( cp_pos, &target, &npos );
+  npos.y  = 0;
+  dist    = VEC_Mag( &npos );
+  VEC_Normalize( &npos, &npos );
+  rotate  = FX_AcosIdx( VEC_DotProduct( &npos, &normal_vec ) );
+  VEC_CrossProduct( &npos, &normal_vec, &normal );
+  if( normal.y < 0 ){
+    rotate = 0x10000 - rotate;
+  }
+
+  // エリア内判定
+  if( (cp_param->rot_start <= rotate) && (cp_param->rot_end > rotate) ){
+    if( (cp_param->dist_min <= dist) && (cp_param->dist_max > dist) ){
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  更新処理
+ *
+ *	@param	cp_sys      システム
+ *	@param	cp_data     データ
+ *	@param	cp_pos      位置情報
+ */
+//-----------------------------------------------------------------------------
+static void C3_SCENEAREA_Updata( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  VecFx32 pos, target, n0, camera_pos;
+  FIELD_CAMERA* p_camera;
+  fx32 xz_dist;
+  fx32 target_y;
+  const C3_SCENEAREA_PARAM* cp_param = (const C3_SCENEAREA_PARAM*)cp_data->area;
+
+  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+	FIELD_CAMERA_GetTargetPos( p_camera, &target);
+  target_y  = target.y;
+  target.y  = 0;
+  
+  pos     = *cp_pos;
+  pos.y   = 0;
+
+  VEC_Subtract( &pos, &target, &pos );
+  VEC_Normalize( &pos, &n0 );
+
+  // 方向ベクトルから、カメラangleを求める
+  camera_pos.y = FX_Mul( FX_SinIdx( cp_param->pitch ), cp_param->length );
+  xz_dist      = FX_Mul( FX_CosIdx( cp_param->pitch ), cp_param->length );
+  camera_pos.x = FX_Mul( n0.x, xz_dist );
+  camera_pos.z = FX_Mul( n0.z, xz_dist );
+  camera_pos.x += target.x;
+  camera_pos.y += target_y;
+  camera_pos.z += target.z;
+  
+	FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  範囲に入った瞬間の処理
+ *
+ *	@param	cp_sys      システム
+ *	@param	cp_data     データ
+ *	@param	cp_pos      位置情報
+ */
+//-----------------------------------------------------------------------------
+static void C3_SCENEAREA_Inside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  範囲から出た瞬間の処理
+ *
+ *	@param	cp_sys      システム
+ *	@param	cp_data     データ
+ *	@param	cp_pos      位置情報
+ */
+//-----------------------------------------------------------------------------
+static void C3_SCENEAREA_Outside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+}
 
 
 
@@ -328,7 +625,7 @@ static const RAIL_POINT sc_POINT_C3_START =
     0x461fa2, 0x6000, 0x20189e
   },
   //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
+  &sc_CAMERA_C3_FIRST,
   //const char * name;
   "sc_POINT_C3_START",
 };
@@ -348,7 +645,7 @@ static const RAIL_POINT sc_POINT_C3_END =
     0x461fa2, 0x6000, 0x20189e
   },
   //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
+  &sc_CAMERA_C3_END,
   //const char * name;
   "sc_POINT_C3_END",
 };
@@ -446,105 +743,9 @@ static const RAIL_POINT sc_POINT_C3_JOINT04 =
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
+//  &sc_CAMERA_C3_JOINT04,
   //const char * name;
   "sc_POINT_C3_JOINT04",
-};
-
-// 路地
-static const RAIL_POINT sc_POINT_C3_ALLAY00 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_CA_ALLAY00toALLAY00, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x3ecd6e, 0x6000, 0x27b672
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
-  //const char * name;
-  "sc_POINT_C3_ALLAY00",
-};
-static const RAIL_POINT sc_POINT_C3_ALLAY01 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_CA_ALLAY01toALLAY01, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x3ed0b6, 0x6000, 0x386c1a
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
-  //const char * name;
-  "sc_POINT_C3_ALLAY01",
-};
-static const RAIL_POINT sc_POINT_C3_ALLAY02 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_CA_ALLAY02toALLAY02, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x2ff15e, 0x6000, 0x4191d2
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
-  //const char * name;
-  "sc_POINT_C3_ALLAY02",
-};
-static const RAIL_POINT sc_POINT_C3_ALLAY03 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_CA_ALLAY03toALLAY03, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x205b5e, 0x6000, 0x38f5ea
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
-  //const char * name;
-  "sc_POINT_C3_ALLAY03",
-};
-static const RAIL_POINT sc_POINT_C3_ALLAY04 = 
-{
-  //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
-  {
-    &sc_LINE_C3_CA_ALLAY04toALLAY04, NULL, NULL, NULL,
-  },
-  //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
-  {
-    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
-  },
-  //VecFx32 pos;
-  {
-    0x208fde, 0x6000, 0x26da9a
-  },
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
-  //const char * name;
-  "sc_POINT_C3_ALLAY04",
 };
 
 // ベイエリア
@@ -649,18 +850,18 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY00 =
 {
   //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   {
-    &sc_LINE_C3_CA_ALLAY00toALLAY00, &sc_LINE_C3_JOINT00toCA_ALLAY00, NULL, NULL,
+    &sc_LINE_C3_JOINT00toCA_ALLAY00, NULL, NULL, NULL,
   },
   //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
   {
-    RAIL_KEY_UP, RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL,
+    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
   },
   //VecFx32 pos;
   {
     0x45b43b, 0x6000, 0x23473f
   },
   //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
+  &sc_CAMERA_C3_NORMAL,
   //const char * name;
   "sc_POINT_C3_CA_ALLAY00",
 };
@@ -668,18 +869,18 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY01 =
 {
   //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   {
-    &sc_LINE_C3_CA_ALLAY01toALLAY01, &sc_LINE_C3_JOINT01toCA_ALLAY01, NULL, NULL,
+    &sc_LINE_C3_JOINT01toCA_ALLAY01, NULL, NULL, NULL,
   },
   //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
   {
-    RAIL_KEY_UP, RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL,
+    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
   },
   //VecFx32 pos;
   {
     0x454772, 0x6000, 0x3c1a3b
   },
   //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
+  &sc_CAMERA_C3_NORMAL,
   //const char * name;
   "sc_POINT_C3_CA_ALLAY01",
 };
@@ -687,18 +888,18 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY02 =
 {
   //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   {
-    &sc_LINE_C3_CA_ALLAY02toALLAY02, &sc_LINE_C3_JOINT02toCA_ALLAY02, NULL, NULL,
+    &sc_LINE_C3_JOINT02toCA_ALLAY02, NULL, NULL, NULL, 
   },
   //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
   {
-    RAIL_KEY_UP, RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL,
+    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
   },
   //VecFx32 pos;
   {
     0x3015fb, 0x6000, 0x490273
   },
   //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
+  &sc_CAMERA_C3_NORMAL,
   //const char * name;
   "sc_POINT_C3_CA_ALLAY02",
 };
@@ -706,18 +907,18 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY03 =
 {
   //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   {
-    &sc_LINE_C3_CA_ALLAY03toALLAY03, &sc_LINE_C3_JOINT03toCA_ALLAY03, NULL, NULL,
+    &sc_LINE_C3_JOINT03toCA_ALLAY03, NULL, NULL, NULL,
   },
   //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
   {
-    RAIL_KEY_UP, RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL,
+    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
   },
   //VecFx32 pos;
   {
     0x3001b8, 0x6000, 0x490273
   },
   //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
+  &sc_CAMERA_C3_NORMAL,
   //const char * name;
   "sc_POINT_C3_CA_ALLAY03",
 };
@@ -725,18 +926,18 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY04 =
 {
   //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   {
-    &sc_LINE_C3_CA_ALLAY04toALLAY04, &sc_LINE_C3_JOINT04toCA_ALLAY04, NULL, NULL,
+    &sc_LINE_C3_JOINT04toCA_ALLAY04, NULL, NULL, NULL,
   },
   //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
   {
-    RAIL_KEY_UP, RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL,
+    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL, 
   },
   //VecFx32 pos;
   {
     0x19fc49, 0x6000, 0x235a8c
   },
   //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
+  &sc_CAMERA_C3_NORMAL,
   //const char * name;
   "sc_POINT_C3_CA_ALLAY04",
 };
@@ -754,7 +955,7 @@ static const RAIL_LINE sc_LINE_C3_STARTtoJOINT00 =
   //u32 line_divider;
   RAIL_LINE_DIV_FIRST,
   //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
+  &sc_CAMERA_C3_FIRST,
   //const char * name;
   "sc_LINE_C3_STARTtoJOINT00",
 };
@@ -770,7 +971,7 @@ static const RAIL_LINE sc_LINE_C3_JOINT00toEND =
   //u32 line_divider;
   RAIL_LINE_DIV_FIRST,
   //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_NORMAL,
+  &sc_CAMERA_C3_END,
   //const char * name;
   "sc_LINE_C3_JOINT00toEND",
 };
@@ -800,7 +1001,7 @@ static const RAIL_LINE sc_LINE_C3_JOINT00toBEACH00 =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
   //u32 line_divider;
-  RAIL_LINE_DIV_NORMAL,
+  RAIL_LINE_DIV_WALKIN,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -848,7 +1049,7 @@ static const RAIL_LINE sc_LINE_C3_JOINT01toBEACH01 =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
   //u32 line_divider;
-  RAIL_LINE_DIV_NORMAL,
+  RAIL_LINE_DIV_WALKIN,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -896,7 +1097,7 @@ static const RAIL_LINE sc_LINE_C3_JOINT02toBEACH02 =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
   //u32 line_divider;
-  RAIL_LINE_DIV_NORMAL,
+  RAIL_LINE_DIV_WALKIN,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -944,7 +1145,7 @@ static const RAIL_LINE sc_LINE_C3_JOINT03toBEACH03 =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
   //u32 line_divider;
-  RAIL_LINE_DIV_NORMAL,
+  RAIL_LINE_DIV_WALKIN,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -992,91 +1193,11 @@ static const RAIL_LINE sc_LINE_C3_JOINT04toBEACH04 =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
   //u32 line_divider;
-  RAIL_LINE_DIV_NORMAL,
+  RAIL_LINE_DIV_WALKIN,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
   "sc_LINE_C3_JOINT04toBEACH04",
-};
-static const RAIL_LINE sc_LINE_C3_CA_ALLAY00toALLAY00 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_CA_ALLAY00, &sc_POINT_C3_ALLAY00,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_WALKIN,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
-  //const char * name;
-  "sc_LINE_C3_CA_ALLAY00toALLAY00",
-};
-static const RAIL_LINE sc_LINE_C3_CA_ALLAY01toALLAY01 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_CA_ALLAY01, &sc_POINT_C3_ALLAY01,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_WALKIN,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
-  //const char * name;
-  "sc_LINE_C3_CA_ALLAY01toALLAY01",
-};
-static const RAIL_LINE sc_LINE_C3_CA_ALLAY02toALLAY02 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_CA_ALLAY02, &sc_POINT_C3_ALLAY02,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_WALKIN,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
-  //const char * name;
-  "sc_LINE_C3_CA_ALLAY02toALLAY02",
-};
-static const RAIL_LINE sc_LINE_C3_CA_ALLAY03toALLAY03 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_CA_ALLAY03, &sc_POINT_C3_ALLAY03,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_WALKIN,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
-  //const char * name;
-  "sc_LINE_C3_CA_ALLAY03toALLAY03",
-};
-static const RAIL_LINE sc_LINE_C3_CA_ALLAY04toALLAY04 =
-{
-  //const RAIL_POINT * point_s
-  //const RAIL_POINT * point_e
-  &sc_POINT_C3_CA_ALLAY04, &sc_POINT_C3_ALLAY04,
-  //RAIL_KEY key;
-  RAIL_KEY_UP,
-  //const RAIL_LINEPOS_SET * line_pos_set;
-  &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_WALKIN,
-  //const RAIL_CAMERA_SET * camera;
-  &sc_CAMERA_C3_PICKUP,
-  //const char * name;
-  "sc_LINE_C3_CA_ALLAY04toALLAY04",
 };
 
 
@@ -1084,15 +1205,33 @@ static const RAIL_LINE sc_LINE_C3_CA_ALLAY04toALLAY04 =
 static const RAIL_CAMERA_SET sc_CAMERA_C3_NORMAL = 
 {
   FIELD_RAIL_POSFUNC_CircleCamera,
-  0x38D000,
-  0x600,
-};
-static const RAIL_CAMERA_SET sc_CAMERA_C3_PICKUP = 
-{
-  FIELD_RAIL_POSFUNC_CircleCamera,
-  0x26D000,
   0x800,
+  0x38D000,
 };
+static const RAIL_CAMERA_SET sc_CAMERA_C3_FIRST = 
+{
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
+  0xA00,
+  0x55C0,
+  0x3FD000,
+};
+
+static const RAIL_CAMERA_SET sc_CAMERA_C3_END = 
+{
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
+  0x600,
+  0x55C0,
+  0x26D000,
+};
+
+static const RAIL_CAMERA_SET sc_CAMERA_C3_JOINT04 = 
+{
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
+  0x800,
+  0xAA40,
+  0x38D000,
+};
+
 // 位置
 static const RAIL_LINEPOS_SET sc_LINEPOS_C3_NORMAL = 
 {

@@ -151,19 +151,31 @@ void FLD_SCENEAREA_Updata( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
   }
 
   // エリアインデックスの変更をチェック
+  // 今は、エリアが変わったときは更新処理を呼ばないようにしています。
+  // 呼ぶか呼ばないか選べるようにすることも考えています。
   if( now_active != p_sys->active_area )
   {
     if( now_active != FLD_SCENEAREA_ACTIVE_NONE ){
-      p_sys->cp_data[now_active].p_inside( p_sys, &p_sys->cp_data[now_active], cp_pos );
+      if( p_sys->cp_data[now_active].p_inside ){
+        p_sys->cp_data[now_active].p_inside( p_sys, &p_sys->cp_data[now_active], cp_pos );
+      }
     }
 
     if( p_sys->active_area != FLD_SCENEAREA_ACTIVE_NONE ){
-      p_sys->cp_data[now_active].p_outside( p_sys, &p_sys->cp_data[now_active], cp_pos );
+      if( p_sys->cp_data[p_sys->active_area].p_outside ){
+        p_sys->cp_data[p_sys->active_area].p_outside( p_sys, &p_sys->cp_data[p_sys->active_area], cp_pos );
+      }
     }
-  }else{
+
+    p_sys->active_area = now_active;
+  }
+  else if( p_sys->active_area != FLD_SCENEAREA_ACTIVE_NONE )
+  {
 
     // 更新処理
-    p_sys->cp_data[now_active].p_updata( p_sys, &p_sys->cp_data[now_active], cp_pos );
+    if( p_sys->cp_data[p_sys->active_area].p_updata ){
+      p_sys->cp_data[p_sys->active_area].p_updata( p_sys, &p_sys->cp_data[p_sys->active_area], cp_pos );
+    }
   }
 }
 

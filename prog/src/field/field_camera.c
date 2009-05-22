@@ -388,7 +388,11 @@ static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
 static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	updateTargetBinding(camera);
-  updateAngleCameraPos(camera);
+/*
+  if( key_cont & PAD_BUTTON_R ){
+    updateAngleCameraPos(camera); // 主人公位置からカメラポスを直接求める
+  }
+//*/
   updateG3Dcamera(camera);
 }
 
