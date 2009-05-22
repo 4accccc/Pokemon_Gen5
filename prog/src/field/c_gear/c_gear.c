@@ -34,6 +34,7 @@
 #define GEAR_SE_DECIDE_ (SEQ_SE_DP_DECIDE)
 #define GEAR_SE_CANCEL_ (SEQ_SE_DP_SELECT)
 
+#define MSG_COUNTDOWN_FRAMENUM (30*3)
 
 //--------------------------------------------
 // 画面構成定義
@@ -182,6 +183,7 @@ struct _C_GEAR_WORK {
 	GFL_MSGDATA *pMsgData;  //
 	WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
 	STRBUF* pStrBuf;
+	STRBUF* pStrBufOrg;
 	u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
 	//    BMPWINFRAME_AREAMANAGER_POS aPos;
 	GFL_FONT* pFontHandle;
@@ -197,7 +199,7 @@ struct _C_GEAR_WORK {
 	GFL_CLWK  *cellSelect[C_GEAR_PANEL_WIDTH*C_GEAR_PANEL_HEIGHT];
 	GFL_CLWK  *cellCursor[_CLACT_TIMEPARTS_MAX];
 	GFL_CLWK  *cellType[_CLACT_TYPE_MAX];
-
+	int msgCountDown;
 	u16 palBase[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
 	u16 palChange[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
 	u16 palTrans[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
@@ -936,6 +938,7 @@ static void _modeInit(C_GEAR_WORK* pWork)
 																			 _NUKI_FONT_PALNO,  GFL_BMP_CHRAREA_GET_B );
 
 	pWork->pStrBuf = GFL_STR_CreateBuffer( 128, pWork->heapID );
+	pWork->pStrBufOrg = GFL_STR_CreateBuffer( 128, pWork->heapID );
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
@@ -998,6 +1001,7 @@ static void _workEnd(C_GEAR_WORK* pWork)
 	}
 	if(pWork->pStrBuf)
 	{
+		GFL_STR_DeleteBuffer(pWork->pStrBufOrg);
 		GFL_STR_DeleteBuffer(pWork->pStrBuf);
 	}
 	GFL_BG_SetVisible( GEAR_BUTTON_FRAME, VISIBLE_OFF );
@@ -1146,7 +1150,11 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 	
 	
 //Cギアのメッセージ取得は
-	{
+
+	if(pWork->msgCountDown > 0){
+		pWork->msgCountDown--;
+	}
+	if(pWork->msgCountDown <= 0){
 		GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
 		GAME_COMM_INFO_MESSAGE infomsg;
 
@@ -1158,7 +1166,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 			OS_TPrintf("infomsg->message_id %d \n",infomsg.message_id);
 
 			GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
-			GFL_MSG_GetString(  pWork->pMsgData, infomsg.message_id, pWork->pStrBuf );
+			GFL_MSG_GetString(  pWork->pMsgData, infomsg.message_id, pWork->pStrBufOrg );
 
 			for(k = 0 ; k < INFO_WORDSET_MAX; k++)
 			{
@@ -1168,11 +1176,15 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 																TRUE, PM_LANG);
 				}
 			}
+			WORDSET_ExpandStr(pWork->pWordSet, pWork->pStrBuf, pWork->pStrBufOrg);
+			
+			GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
 			
 			PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 1, 0, pWork->pStrBuf, pWork->pFontHandle);
 			GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
 			GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
 			GFL_BG_LoadScreenReq(GEAR_BMPWIN_FRAME);
+			pWork->msgCountDown = MSG_COUNTDOWN_FRAMENUM;
 
 		}
 	}
