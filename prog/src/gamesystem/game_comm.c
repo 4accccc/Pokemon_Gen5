@@ -434,6 +434,14 @@ void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZON
   if(player_status->zone_id == zone_id && player_status->invasion_netid == invasion_netid){
     return;
   }
+  //※check　暫定処理　通信確立＝必ず名前を交換しあっている状況ではないため
+  {
+    MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gcsp->gamedata, comm_net_id);
+    if(MyStatus_CheckNameClear(myst) == TRUE){
+      OS_TPrintf("INFO:名前がない net_id = %d\n", comm_net_id);
+      return;
+    }
+  }
   
   if(player_status->zone_id != zone_id){
     player_status->old_zone_id = player_status->zone_id;

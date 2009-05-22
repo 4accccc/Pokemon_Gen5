@@ -318,7 +318,6 @@ BOOL  FIELD_COMM_FUNC_InitCommSystemWait( int *seq, void *pwk, void *pWork )
 //        FIELD_COMM_FUNC_StartCommWait(commFunc);
         GFL_NET_ChangeoverConnect(NULL);
         commFunc->commMode_ = FIELD_COMM_MODE_WAIT;
-        return TRUE;
       }
       else{
         OS_TPrintf("子として起動\n");
@@ -338,6 +337,17 @@ BOOL  FIELD_COMM_FUNC_InitCommSystemWait( int *seq, void *pwk, void *pWork )
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
       if( GFL_NET_HANDLE_IsNegotiation( selfHandle ) == TRUE ){
+        {
+          GAME_COMM_SYS_PTR game_comm = FIELD_COMM_SYS_GetGameCommSys(commField);
+          MYSTATUS *myst = GAMEDATA_GetMyStatus(GameCommSys_GetGameData(game_comm));
+          MYSTATUS *dest_myst = GAMEDATA_GetMyStatusPlayer(GameCommSys_GetGameData(game_comm), GFL_NET_SystemGetCurrentID());
+          MyStatus_Copy(myst, dest_myst);
+        }
+        
+        {
+          FIELD_COMM_FUNC_Send_RequestData( GFL_NET_SENDID_ALLUSER , FCRT_PROFILE , commFunc );
+        }
+        
         OS_TPrintf("ネゴシエーション完了\n");
         return TRUE;
       }
@@ -817,13 +827,12 @@ static const BOOL FIELD_COMM_FUNC_Send_RequestDataFunc( const u8 charaIdx , cons
 void  FIELD_COMM_FUNC_Post_RequestData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
   COMM_FIELD_SYS_PTR commField = pWork;
-  FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
   const u8 type = *(u8*)pData;
   ARI_TPrintf("FieldComm PostReqData[%d:%d]\n",netID,type);
   switch( type )
   {
   case FCRT_PROFILE:
-    FIELD_COMM_FUNC_Send_SelfProfile( netID , commFunc );
+    FIELD_COMM_FUNC_Send_SelfProfile( netID , commField );
     break;
   default:
     OS_TPrintf("Invalid Type[%d]!\n!",type);
@@ -838,15 +847,23 @@ void  FIELD_COMM_FUNC_Post_RequestData( const int netID, const int size , const 
 //--------------------------------------------------------------
 typedef struct
 {
+  STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];
   u16 ID_;
   u8  sex_:1;
   u8  regionCode_:7;
 }FIELD_COMM_CHARA_PROFILE;
-const BOOL  FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUNC *commFunc )
+const BOOL  FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID , COMM_FIELD_SYS_PTR commField )
 {
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
   FIELD_COMM_CHARA_PROFILE profile;
+  STRBUF *namebuf;
+  GAME_COMM_SYS_PTR game_comm = FIELD_COMM_SYS_GetGameCommSys(commField);
+  MYSTATUS *myst = GAMEDATA_GetMyStatus(GameCommSys_GetGameData(game_comm));
+  
   //FIXME:IDとかの正しい持って来る方法がわからないので仮処理
+  namebuf = MyStatus_CreateNameString(myst, GFL_HEAPID_APP);
+  GFL_STR_GetStringCode(namebuf, profile.name, PERSON_NAME_SIZE + EOM_SIZE);
+  GFL_STR_DeleteBuffer(namebuf);
   profile.ID_ = 1000+GFL_NET_GetNetID( selfHandle );
   profile.sex_ = 0;
   profile.regionCode_ = 0;
@@ -864,7 +881,6 @@ const BOOL  FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FU
 void  FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
   COMM_FIELD_SYS_PTR commField = pWork;
-  FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
   FIELD_COMM_DATA *commData = FIELD_COMM_SYS_GetCommDataWork(commField);
   const FIELD_COMM_CHARA_PROFILE *prof = (FIELD_COMM_CHARA_PROFILE*)pData;
   PLAYER_WORK *plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork( commData, netID );
@@ -873,6 +889,12 @@ void  FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const 
   plWork->mystatus.id = prof->ID_;
   plWork->mystatus.sex = prof->sex_;
   plWork->mystatus.region_code = prof->regionCode_;
+  MyStatus_SetMyName(&plWork->mystatus, prof->name);
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){//gamedataの方にもセット
+    GAME_COMM_SYS_PTR game_comm = FIELD_COMM_SYS_GetGameCommSys(commField);
+    MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(GameCommSys_GetGameData(game_comm), netID);
+    MyStatus_SetMyName(myst, prof->name);
+  }
   FIELD_COMM_DATA_SetCharaData_State( commData, netID , FCCS_EXIST_DATA );
 }
 
