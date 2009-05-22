@@ -42,15 +42,15 @@
 //--------------------------------------------------------------------------
 typedef struct	
 {
-	NNSG2dCharacterData*	pCharData;			//テクスチャキャラ
-	NNSG2dPaletteData*		pPlttData;			//テクスチャパレット
-    NNSG2dImageProxy		*image_p;
-    NNSG2dImagePaletteProxy	*palette_p;
-	void					*pBufChar;			//テクスチャキャラバッファ
-	void					*pBufPltt;			//テクスチャパレットバッファ
-	int						chr_ofs;
-	int						pal_ofs;
-	MCSS_WORK				*mcss;
+	NNSG2dCharacterData*			pCharData;			//テクスチャキャラ
+	NNSG2dPaletteData*				pPlttData;			//テクスチャパレット
+	NNSG2dImageProxy*					image_p;
+	NNSG2dImagePaletteProxy*	palette_p;
+	void*											pBufChar;			//テクスチャキャラバッファ
+	void*											pBufPltt;			//テクスチャパレットバッファ
+	int												chr_ofs;
+	int												pal_ofs;
+	MCSS_WORK*								mcss;
 }TCB_LOADRESOURCE_WORK;
 
 //--------------------------------------------------------------------------
@@ -58,33 +58,6 @@ typedef struct
  * プロトタイプ宣言
  */
 //--------------------------------------------------------------------------
-MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID );
-void			MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
-void			MCSS_Main( MCSS_SYS_WORK *mcss_sys );
-void			MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
-MCSS_WORK*		MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_WORK *maw );
-void			MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
-
-void			MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys );
-void			MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys );
-
-void			MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
-void			MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
-void			MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale );
-void			MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale );
-void			MCSS_GetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
-void			MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
-void			MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale );
-void			MCSS_SetMepachiFlag( MCSS_WORK *mcss );
-void			MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
-void			MCSS_FlipMepachiFlag( MCSS_WORK *mcss );
-void			MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
-void			MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
-int				MCSS_GetVanishFlag( MCSS_WORK *mcss );
-void			MCSS_SetVanishFlag( MCSS_WORK *mcss );
-void			MCSS_ResetVanishFlag( MCSS_WORK *mcss );
-void			MCSS_FlipVanishFlag( MCSS_WORK *mcss );
-
 static	void	MCSS_DrawAct( MCSS_WORK *mcss, 
 							  fx32 pos_x,
 							  fx32 pos_y,
@@ -102,7 +75,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw );
 static	void	MCSS_GetNewMultiCellAnimation(MCSS_WORK *mcss, NNSG2dMCType	mcType );
 static	void	MCSS_MaterialSetup( void );
-static NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
+static	NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
 
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work );
 
@@ -206,23 +179,23 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
 //--------------------------------------------------------------------------
 void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 {
-	MCSS_WORK					*mcss;
-	MCSS_NCEC					*ncec;
-    NNSG2dImageProxy			*image_p;
-    NNSG2dImagePaletteProxy		*palette_p;
-	int							index;
-	int							node,cell;
-	fx32						pos_z_default;
-	NNSG2dAnimController		*anim_ctrl_mc;
-	NNSG2dAnimDataSRT			anim_SRT_mc;
-	NNSG2dAnimController		*anim_ctrl_c;
-	NNSG2dAnimDataT				*anim_T_p;
-	NNSG2dAnimDataSRT			anim_SRT;
+	MCSS_WORK									*mcss;
+	MCSS_NCEC									*ncec;
+	NNSG2dImageProxy					*image_p;
+	NNSG2dImagePaletteProxy		*palette_p;
+	int												index;
+	int												node,cell;
+	fx32											pos_z_default;
+	NNSG2dAnimController			*anim_ctrl_mc;
+	NNSG2dAnimDataSRT					anim_SRT_mc;
+	NNSG2dAnimController			*anim_ctrl_c;
+	NNSG2dAnimDataT						*anim_T_p;
+	NNSG2dAnimDataSRT					anim_SRT;
 	NNSG2dMCNodeCellAnimArray	*MC_Array;
 	NNSG2dAnimSequenceData		*anim;
-	VecFx32						pos,anim_pos;
-	MtxFx44						inv_camera;
-	u16							rotate;
+	VecFx32										pos,anim_pos;
+	MtxFx44										inv_camera;
+	u16												rotate;
 
 	G3_PushMtx();
 	G3_MtxMode( GX_MTXMODE_PROJECTION );
@@ -261,9 +234,10 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 
 			mcss		= mcss_sys->mcss[index];
 			image_p		= &mcss->mcss_image_proxy;
+			pos_z_default = 0;
+
 			anim_ctrl_mc= NNS_G2dGetMCAnimAnimCtrl(&mcss->mcss_mcanim);
 			MC_Array = (NNSG2dMCNodeCellAnimArray*)&mcss->mcss_mcanim.multiCellInstance.pCellAnimInstasnces;
-			pos_z_default = 0;
 
 			switch( anim_ctrl_mc->pAnimSequence->animType & 0xffff ){
 			case NNS_G2D_ANIMELEMENT_INDEX:		// Index のみ
@@ -345,7 +319,14 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 
 			G3_Translate( anim_pos.x, anim_pos.y, 0 );
 			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ + rotate ), FX_CosIdx( anim_SRT_mc.rotZ + rotate ) );
-			G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->scale.y ), FX32_ONE );
+			{	
+				VecFx32	scale;
+
+				scale.x = FX_Mul( anim_SRT_mc.sx, mcss->scale.x );
+				scale.y = FX_Mul( anim_SRT_mc.sy, mcss->scale.y );
+
+				G3_Scale( FX_Mul( scale.x, mcss->ofs_scale.x ), FX_Mul( scale.y, mcss->ofs_scale.y ), FX32_ONE );
+			}
 
 			G3_StoreMtx( MCSS_NORMAL_MTX );
 
@@ -359,7 +340,14 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			G3_RotX( FX_SinIdx( 65536 / 64 * 49 ), FX_CosIdx( 65536 / 64 * 49 ) );
 			G3_Translate( MCSS_CONST( anim_SRT_mc.px ), MCSS_CONST( -anim_SRT_mc.py ), 0 );
 			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ + rotate ), FX_CosIdx( anim_SRT_mc.rotZ + rotate ) );
-			G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->shadow_scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->shadow_scale.y ), FX32_ONE );
+			{	
+				VecFx32	scale;
+
+				scale.x = FX_Mul( anim_SRT_mc.sx, mcss->shadow_scale.x );
+				scale.y = FX_Mul( anim_SRT_mc.sy, mcss->shadow_scale.y );
+
+				G3_Scale( FX_Mul( scale.x, mcss->ofs_scale.x ), FX_Mul( scale.y, mcss->ofs_scale.y ), FX32_ONE );
+			}
 
 			G3_StoreMtx( MCSS_SHADOW_MTX );
 
@@ -620,6 +608,9 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 			mcss_sys->mcss[ count ]->scale.x = FX32_ONE;
 			mcss_sys->mcss[ count ]->scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->scale.z = FX32_ONE;
+			mcss_sys->mcss[ count ]->ofs_scale.x = FX32_ONE;
+			mcss_sys->mcss[ count ]->ofs_scale.y = FX32_ONE;
+			mcss_sys->mcss[ count ]->ofs_scale.z = FX32_ONE;
 			MCSS_LoadResource( mcss_sys, count, maw );
 			break;
 		}
@@ -714,6 +705,30 @@ void	MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale )
 	mcss->scale.x = scale->x;
 	mcss->scale.y = scale->y;
 	mcss->scale.z = scale->z;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * オフセットスケールゲット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_GetOfsScale( MCSS_WORK *mcss, VecFx32 *scale )
+{
+	scale->x = mcss->ofs_scale.x;
+	scale->y = mcss->ofs_scale.y;
+	scale->z = mcss->ofs_scale.z;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * オフセットスケールセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetOfsScale( MCSS_WORK *mcss, VecFx32 *scale )
+{
+	mcss->ofs_scale.x = scale->x;
+	mcss->ofs_scale.y = scale->y;
+	mcss->ofs_scale.z = scale->z;
 }
 
 //--------------------------------------------------------------------------
@@ -840,6 +855,18 @@ void	MCSS_ResetVanishFlag( MCSS_WORK *mcss )
 void	MCSS_FlipVanishFlag( MCSS_WORK *mcss )
 {
 	mcss->vanish_flag ^= MCSS_VANISH_ON;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * 指定したフレームになったらコールバック関数を呼ぶようにAnmCtrlに登録
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetAnimCtrlCallBack( MCSS_WORK *mcss, u32 param, NNSG2dAnmCallBackPtr pFunc, u16 frameIdx )
+{	
+
+	NNS_G2dSetAnimCtrlCallBackFunctor( NNS_G2dGetMCAnimAnimCtrl(&mcss->mcss_mcanim),
+																		 NNS_G2D_ANMCALLBACKTYPE_LAST_FRM, param, pFunc );
 }
 
 //--------------------------------------------------------------------------
@@ -1111,6 +1138,9 @@ MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	
 			mcss_sys->mcss[ count ]->scale.x = FX32_ONE;
 			mcss_sys->mcss[ count ]->scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->scale.z = FX32_ONE;
+			mcss_sys->mcss[ count ]->ofs_scale.x = FX32_ONE;
+			mcss_sys->mcss[ count ]->ofs_scale.y = FX32_ONE;
+			mcss_sys->mcss[ count ]->ofs_scale.z = FX32_ONE;
 			MCSS_LoadResourceDebug( mcss_sys, count, madw );
 			break;
 		}

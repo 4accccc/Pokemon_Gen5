@@ -55,44 +55,45 @@ struct _MCSS_NCEC_WORK
 
 struct _MCSS_WORK
 {
-	void						*mcss_ncer_buf;			//ファイルデータ読み込みバッファ
-	NNSG2dCellDataBank			*mcss_ncer;				//ファイルデータ読み込みバッファからncerデータを抽出したデータ
-	void						*mcss_nmcr_buf;			//ファイルデータ読み込みバッファ
-	NNSG2dMultiCellDataBank		*mcss_nmcr;				//ファイルデータ読み込みバッファからnmcrデータを抽出したデータ
-	void						*mcss_nanr_buf;			//ファイルデータ読み込みバッファ
-	NNSG2dCellAnimBankData		*mcss_nanr;				//ファイルデータ読み込みバッファからnanrデータを抽出したデータ
-	void						*mcss_nmar_buf;			//ファイルデータ読み込みバッファ
-	NNSG2dMultiCellAnimBankData	*mcss_nmar;				//ファイルデータ読み込みバッファからnmarデータを抽出したデータ
-	MCSS_NCEC_WORK				*mcss_ncec;				//1枚の板ポリで表示するための情報が格納された独自フォーマットデータ
-	NNSG2dMultiCellAnimation	mcss_mcanim;			//マルチセルアニメーションの実体
-	void						*mcss_mcanim_buf;		//マルチセルアニメーションの実体の内部で使用するワーク領域
-	NNSG2dImageProxy			mcss_image_proxy;		//テクスチャプロキシ
-	NNSG2dImagePaletteProxy		mcss_palette_proxy;		//パレットプロキシ
-	VecFx32						pos;					//マルチセルのポジション
-	VecFx32						scale;					//マルチセルのスケール
-	VecFx32						rotate;					//マルチセルの回転
-	VecFx32						shadow_scale;			//影のスケール
-	u32							mepachi_flag	:1;		//メパチフラグ
-	u32							anm_stop_flag	:1;		//アニメストップフラグ
-	u32							vanish_flag		:1;		//バニッシュフラグ
-	u32											:29;
-	int							index;					//登録INDEX
-	int							heapID;					//使用するヒープID
+	void*													mcss_ncer_buf;				//ファイルデータ読み込みバッファ
+	NNSG2dCellDataBank*						mcss_ncer;						//ファイルデータ読み込みバッファからncerデータを抽出したデータ
+	void*													mcss_nmcr_buf;				//ファイルデータ読み込みバッファ
+	NNSG2dMultiCellDataBank*			mcss_nmcr;						//ファイルデータ読み込みバッファからnmcrデータを抽出したデータ
+	void*													mcss_nanr_buf;				//ファイルデータ読み込みバッファ
+	NNSG2dCellAnimBankData*				mcss_nanr;						//ファイルデータ読み込みバッファからnanrデータを抽出したデータ
+	void*													mcss_nmar_buf;				//ファイルデータ読み込みバッファ
+	NNSG2dMultiCellAnimBankData*	mcss_nmar;						//ファイルデータ読み込みバッファからnmarデータを抽出したデータ
+	MCSS_NCEC_WORK*								mcss_ncec;						//1枚の板ポリで表示するための情報が格納された独自フォーマットデータ
+	NNSG2dMultiCellAnimation			mcss_mcanim;					//マルチセルアニメーションの実体
+	void*													mcss_mcanim_buf;			//マルチセルアニメーションの実体の内部で使用するワーク領域
+	NNSG2dImageProxy							mcss_image_proxy;			//テクスチャプロキシ
+	NNSG2dImagePaletteProxy				mcss_palette_proxy;		//パレットプロキシ
+	VecFx32												pos;									//マルチセルのポジション
+	VecFx32												scale;								//マルチセルのスケール
+	VecFx32												rotate;								//マルチセルの回転
+	VecFx32												shadow_scale;					//影のスケール
+	VecFx32												ofs_scale;						//スケールオフセット
+	u32														mepachi_flag	:1;			//メパチフラグ
+	u32														anm_stop_flag	:1;			//アニメストップフラグ
+	u32														vanish_flag		:1;			//バニッシュフラグ
+	u32																					:29;
+	int														index;								//登録INDEX
+	int														heapID;								//使用するヒープID
 };
 
 struct _MCSS_SYS_WORK
 {
-	int							mcss_max;				//登録数MAX
-	MCSS_WORK					**mcss;					//登録マルチセル構造体
+	int											mcss_max;							//登録数MAX
+	MCSS_WORK**							mcss;									//登録マルチセル構造体
 #ifdef USE_RENDER
-	NNSG2dRendererInstance		mcss_render;			//描画用 Render　
-	NNSG2dRenderSurface			mcss_surface;			//メイン画面 Surface
+	NNSG2dRendererInstance	mcss_render;					//描画用 Render　
+	NNSG2dRenderSurface			mcss_surface;					//メイン画面 Surface
 #endif //USE_RENDER
-	NNSG2dImagePaletteProxy		shadow_palette_proxy;	//パレットプロキシ（影用）
-	u32							mcss_ortho_mode	:1;		//正射影描画モードフラグ
-	u32											:31;
-	int							texAdrs;				//テクスチャ転送開始アドレス
-	int							palAdrs;				//テクスチャパレット転送開始アドレス
-	int							heapID;					//使用するヒープID
+	NNSG2dImagePaletteProxy	shadow_palette_proxy;	//パレットプロキシ（影用）
+	u32											mcss_ortho_mode	:1;		//正射影描画モードフラグ
+	u32																			:31;
+	int											texAdrs;							//テクスチャ転送開始アドレス
+	int											palAdrs;							//テクスチャパレット転送開始アドレス
+	int											heapID;								//使用するヒープID
 };
 
