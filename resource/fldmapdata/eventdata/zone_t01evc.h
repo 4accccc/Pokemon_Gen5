@@ -7,7 +7,7 @@
 #define zone_t01_EVC_H
 
 #define T01_MAN1 ( 0 )
-#define T01_WOMAN1 ( 0 )
-#define T01_BABYGIRL1 ( 0 )
+#define T01_WOMAN1 ( 1 )
+#define T01_BABYGIRL1 ( 2 )
 
 #endif
