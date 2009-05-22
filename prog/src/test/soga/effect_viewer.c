@@ -159,39 +159,36 @@ FS_EXTERN_OVERLAY(battle);
 static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	EFFECT_VIEWER_WORK *evw;
+	static const GFL_DISP_VRAM dispvramBank = {
+		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_01_BC,				// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
+		GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+	};		
 
-	GFL_OVERLAY_Load(FS_OVERLAY_ID(battle));
+	GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
 	evw = GFL_PROC_AllocWork( proc, sizeof( EFFECT_VIEWER_WORK ), HEAPID_SOGABE_DEBUG );
 	MI_CpuClearFast( evw, sizeof( EFFECT_VIEWER_WORK ) );
 	evw->heapID = HEAPID_SOGABE_DEBUG;
 		
-	{
-		static const GFL_DISP_VRAM dispvramBank = {
-			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-			GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-			GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_01_BC,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
-			GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
-			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-		};		
-		GFL_DISP_SetBank( &dispvramBank );
+	GFL_DISP_SetBank( &dispvramBank );
 
-		//VRAMクリア
-		MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
-		MI_CpuFill16((void*)HW_BG_PLTT, 0x0000, HW_BG_PLTT_SIZE);
-
-	}	
+	//VRAMクリア
+	MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
+	MI_CpuFill16((void*)HW_BG_PLTT, 0x0000, HW_BG_PLTT_SIZE);
 
 	G2_BlendNone();
 	GFL_BG_Init( evw->heapID );
@@ -217,6 +214,9 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 		GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
 		GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
 		
+		///<obj
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	}		
 	GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
 
@@ -232,7 +232,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 
 	//戦闘エフェクト初期化
 	{
-		BTLV_EFFECT_Init( 0, evw->heapID );
+		BTLV_EFFECT_Init( 0, &dispvramBank, evw->heapID );
 	}
 
 	set_pokemon( evw );
@@ -332,37 +332,14 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
 	int tp = GFL_UI_TP_GetTrg();
 	EFFECT_VIEWER_WORK *evw = mywk;
 
-	if( evw->mcs_enable ){
-		MCS_Main();
-	}
+	MCS_Main();
 
-	if( trg & PAD_BUTTON_START ){
-#if 0
-		if( evw->mcs_enable ){
-			evw->seq_no = SEQ_IDLE;
-			MCS_Exit();
-			evw->mcs_enable = 0;
-			if( evw->sequence_data ){
-				GFL_HEAP_FreeMemory( evw->sequence_data );
-			}
-			if( evw->resource_data ){
-				GFL_HEAP_FreeMemory( evw->resource_data );
-			}
-			evw->sequence_data = NULL;
-			evw->resource_data = NULL;
+	if( trg & PAD_BUTTON_START )
+	{	
+		if( MCS_CheckEnable() == FALSE )
+		{	
+			MCS_Init( evw->heapID );
 		}
-		else{
-			if( MCS_Init( evw->heapID ) == FALSE ){
-				evw->mcs_enable = 1;
-			}
-		}
-#else
-		if( evw->mcs_enable == 0){
-			if( MCS_Init( evw->heapID ) == FALSE ){
-				evw->mcs_enable = 1;
-			}
-		}
-#endif
 	}
 
 	EffectViewerSequence( evw );
@@ -399,16 +376,28 @@ static GFL_PROC_RESULT EffectViewerProcExit( GFL_PROC * proc, int * seq, void * 
 	GFL_MSG_Delete( evw->msg );
 	GFL_FONT_Delete( evw->font );
 
+	MCS_Exit();
+
+	GFL_BMPWIN_Delete( evw->bmpwin );
+
 	GFL_BG_Exit();
 	GFL_BMPWIN_Exit();
 
 	if( evw->param ){
 		GFL_HEAP_FreeMemory( evw->param );
 	}
+	if( evw->sequence_data ){
+		GFL_HEAP_FreeMemory( evw->sequence_data );
+	}
+	if( evw->resource_data ){
+		GFL_HEAP_FreeMemory( evw->resource_data );
+	}
 
 	GFL_PROC_FreeWork( proc );
 
 	GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
+
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -448,11 +437,14 @@ static	void	EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
 		EffectViewerResourceLoad( evw );
 		break;
 	case SEQ_EFFECT_ENABLE:
-		if( cont == PAD_BUTTON_A ){
-			BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->sequence_data, evw->resource_data );
-		}
-		else if( cont == PAD_BUTTON_B ){
-			BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data );
+		if(	( evw->sequence_data != NULL ) && ( evw->resource_data != NULL ) )
+		{	
+			if( cont == PAD_BUTTON_A ){
+				BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->sequence_data, evw->resource_data );
+			}
+			else if( cont == PAD_BUTTON_B ){
+				BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data );
+			}
 		}
 		evw->seq_no++;
 		break;
@@ -477,7 +469,7 @@ static	void	EffectViewerRead( EFFECT_VIEWER_WORK *evw )
 	u32	size;
 	u32	head;
 
-	if( evw->mcs_enable == 0 ){
+	if( MCS_CheckEnable() == FALSE ){
 		return;
 	}
 
@@ -683,7 +675,7 @@ static	void	EffectViewerDrawCursor( EFFECT_VIEWER_WORK *evw )
 						msp_p->mlp[ evw->cursor_pos ].cursor_pos_x,
 						msp_p->mlp[ evw->cursor_pos ].cursor_pos_y,
 						strbuf, evw->font );
-		GFL_HEAP_FreeMemory( strbuf );
+		GFL_STR_DeleteBuffer( strbuf );
 	}
 }
 
@@ -703,7 +695,7 @@ static	void	EffectViewerDrawMenuLabel( EFFECT_VIEWER_WORK *evw )
 		msd_p = msp_p->msd[ i ];
 		strbuf = GFL_MSG_CreateString( evw->msg,  msd_p->strID );
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->label_x, msd_p->label_y, strbuf, evw->font );
-		GFL_HEAP_FreeMemory( strbuf );
+		GFL_STR_DeleteBuffer( strbuf );
 	}
 }
 
@@ -757,13 +749,13 @@ static	void	EffectViewerDrawMenuDataNum( EFFECT_VIEWER_WORK *evw, const MENU_SCR
 		if( ( keta == 2 ) && ( msd_p->edit_type == EDIT_FX32 ) ){
 			strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_NUMDOT );
 			PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->data_x + ofsx, msd_p->data_y, strbuf, evw->font );
-			GFL_HEAP_FreeMemory( strbuf );
+			GFL_STR_DeleteBuffer( strbuf );
 			ofsx += 8;
 		}
 		num = ( evw->param[ param ] & ( 0x0000000f << ( keta * 4 ) ) ) >> ( keta * 4 );
 		strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_NUM0 + num );
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->data_x + ofsx, msd_p->data_y, strbuf, evw->font );
-		GFL_HEAP_FreeMemory( strbuf );
+		GFL_STR_DeleteBuffer( strbuf );
 		ofsx += 8;
 	}
 }
@@ -784,7 +776,7 @@ static	void	EffectViewerDrawMenuDataComboBox( EFFECT_VIEWER_WORK *evw, const MEN
 
 	strbuf = GFL_MSG_CreateString( evw->msg,  msd_p->edit_min + evw->param[ param ] );
 	PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->data_x, msd_p->data_y, strbuf, evw->font );
-	GFL_HEAP_FreeMemory( strbuf );
+	GFL_STR_DeleteBuffer( strbuf );
 }
 
 //======================================================================
@@ -1053,7 +1045,7 @@ static	void	MoveCamera( EFFECT_VIEWER_WORK *evw )
 			camTarget.z );
 */
 	}
-	if( pad & PAD_BUTTON_START ){
+	if( pad & PAD_BUTTON_DEBUG ){
 		BTLV_CAMERA_GetDefaultCameraPosition( &camPos, &camTarget );
 		BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &camPos, &camTarget, 20, 0, 20 );
 	}

@@ -17,6 +17,8 @@
 
 #include "system\gfl_use.h"
 #include "battle/btlv/btlv_effect.h"
+#include "battle/btlv/battle_input.h"
+#include "battle/btlv/battle_cursor.h"
 #include "pokegra/pokegra_wb.naix"
 #include "battle/battgra_wb.naix"
 
@@ -27,8 +29,10 @@
 
 #include "waza_tool/wazano_def.h"
 
-//#define MCS_ENABLE		//MCSを使用する
-//#define	SCALE_CHECK		//透視射影と正射影でスケールの誤差を修正するテストモードの起動
+#include "print/printsys.h"
+#include "font/font.naix"
+#include "message.naix"
+
 #define BTLV_MCSS_1vs1		//1vs1描画
 
 #define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
@@ -47,39 +51,6 @@
 
 #define	SWITCH_TIME			( 60 * 5 )
 
-#define	INTERVAL		(16)
-#define	CH_MAX			(1)			//1:モノラル 2:ステレオ
-#define	STRM_BUF_SIZE	( INTERVAL * 2 * CH_MAX * 32 )
-#define	SWAV_HEAD_SIZE	(18)
-
-// Windowsアプリケーションとの識別で使用するチャンネル値です
-//static const u16 MCS_CHANNEL0 = 0;
-//static const u16 MCS_CHANNEL1 = 1;
-
-enum{
-	MCS_CHANNEL0 = 0,
-	MCS_CHANNEL1,
-	MCS_CHANNEL2,
-	MCS_CHANNEL3,
-	MCS_CHANNEL4,
-	MCS_CHANNEL5,
-	MCS_CHANNEL6,
-	MCS_CHANNEL7,
-	MCS_CHANNEL8,
-	MCS_CHANNEL9,
-	MCS_CHANNEL10,
-	MCS_CHANNEL11,
-	MCS_CHANNEL12,
-	MCS_CHANNEL13,
-	MCS_CHANNEL14,
-	MCS_CHANNEL15,
-
-	MCS_CHANNEL_END,
-};
-
-#define	MCS_CH_MAX		( MCS_CHANNEL_END )
-#define	MCS_SEND_SIZE	( 0x1800 )
-
 #define G2D_BACKGROUND_COL	(0x0000)
 #define G2D_FONT_COL		(0x7fff)
 #define G2D_FONTSELECT_COL	(0x001f)
@@ -93,88 +64,37 @@ enum{
 	BMPWIN_MAX
 };
 
-//32バイトアライメントでヒープからの取り方がわからないので、とりあえず静的に
-static	u8				strmBuffer[STRM_BUF_SIZE] ATTRIBUTE_ALIGN(32);
-
 typedef struct
 {
-	int					phi;
-	int					theta;
-	int					distance;
-	int					pos_x;
-	int					pos_y;
-}MCS_WORK;
-
-typedef struct
-{
-	int					seq_no;
-	BTLV_CAMERA_WORK	*bcw;
+	int									seq_no;
+	BTLV_CAMERA_WORK		*bcw;
 //	BTLV_EFFECT_WORK	*bew;
-	HEAPID				heapID;
-	NNSSndStrm			strm;
-	u8					FS_strmBuffer[STRM_BUF_SIZE];
-	int					FSReadPos;
-	u32					strmReadPos;
-	u32					strmWritePos;
-	int					visible_flag;
-	int					timer_flag;
-	int					timer;
+	HEAPID							heapID;
+	int									visible_flag;
+	int									timer_flag;
+	int									timer;
 
-	//MCS
-    u8*					mcsWorkMem;
-    NNSMcsDeviceCaps	deviceCaps;
-    NNSMcsRecvCBInfo	recvCBInfo;
-	void*				printBuffer;
-	void*				recvBuf;
-	int					mcs_idle;
-	int					mcs_enable;
-	MCS_WORK			mw;
-	POKEMON_PARAM		*pp;
-	int					mons_no;
-	GFL_BMPWIN			*bmpwin[ BMPWIN_MAX ];
-	int					position;
-	BTLV_MCSS_WORK		*bmw;
-	int					key_repeat_speed;
-	int					key_repeat_wait;
-	int					ortho_mode;
-	VecFx32				scale;
+	POKEMON_PARAM				*pp;
+	int									mons_no;
+	GFL_BMPWIN					*bmpwin[ BMPWIN_MAX ];
+	int									position;
+	BTLV_MCSS_WORK			*bmw;
+	int									key_repeat_speed;
+	int									key_repeat_wait;
+	int									ortho_mode;
+	VecFx32							scale;
+	void								*bip;
+	BATTLE_CURSOR_DISP	cursor_disp;
+	GFL_MSGDATA					*msg;
+	GFL_FONT						*font;
 }SOGA_WORK;
-
-//ストリーム再生
-static	void	StrmSetUp(SOGA_WORK *sw);
-static	void	StrmCBWaveDataStock(NNSSndStrmCallbackStatus status,
-									int numChannels,
-									void *buffer[],
-									u32	len,
-									NNSSndStrmFormat format,
-									void *arg);
-static	void	StrmBufferCopy(SOGA_WORK *sw,int size);
-
-//MCS
-static BOOL MCS_Init( SOGA_WORK *sw );
-static void MCS_Exit( SOGA_WORK *sw );
-static void MCS_Read( SOGA_WORK *sw );
-static void MCS_Write( SOGA_WORK *sw );
-static void MCS_DataRecvCallback( const void* pRecv, u32 recvSize, u32 userData, u32 offset, u32 totalSize );
-static void MCS_VBlankIntr( GFL_TCB *tcb, void *work );
-
-//Capture
-static void Capture_VBlankIntr( GFL_TCB *tcb, void *work );
-
-typedef struct
-{
-	s32	x[2];
-	s32	y[2];
-	s32	percent;
-	int	update;
-}PERFORMANCE_PARAM;
-
-extern	PERFORMANCE_PARAM	per_para;
 
 static	void	MoveCamera( SOGA_WORK *wk );
 
 static	void	set_pokemon( SOGA_WORK *wk );
 static	void	del_pokemon( SOGA_WORK *wk );
+
+static	void	d_btl_v_blank( GFL_TCB *tcb, void *work );
 
 static	const	int	pokemon_pos_table[][2]={ 
 	{ BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB },
@@ -192,7 +112,20 @@ FS_EXTERN_OVERLAY(battle);
 static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	SOGA_WORK* wk;
-	u8 chNoList[1]={0};
+	static const GFL_DISP_VRAM dispvramBank = {
+		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_01_BC,				// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
+		GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+	};		
 
 	GFL_OVERLAY_Load(FS_OVERLAY_ID(battle));
 
@@ -201,31 +134,14 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 	MI_CpuClearFast( wk, sizeof( SOGA_WORK ) );
 	wk->heapID = HEAPID_SOGABE_DEBUG;
 		
-	{
-		static const GFL_DISP_VRAM dispvramBank = {
-			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-			GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-			GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_01_BC,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
-			GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
-			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-		};		
-		GFL_DISP_SetBank( &dispvramBank );
+	GFL_DISP_SetBank( &dispvramBank );
 
-		//VRAMクリア
-		MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
-		MI_CpuFill16((void*)HW_BG_PLTT, 0x0000, HW_BG_PLTT_SIZE);
-
-	}	
+	//VRAMクリア
+	MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
+	MI_CpuFill16((void*)HW_BG_PLTT, 0x0000, HW_BG_PLTT_SIZE);
 
 	GX_SetBankForLCDC( GX_VRAM_LCDC_D );
 	
@@ -249,11 +165,14 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
 
 		///< sub
-		GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_ON );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_ON );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_ON );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_ON );
 		
+		///<obj
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	}		
 	GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
 
@@ -282,7 +201,7 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 	wk->seq_no = 0;
 #if 1
 	{
-		BTLV_EFFECT_Init( 0, wk->heapID );
+		BTLV_EFFECT_Init( 0, &dispvramBank, wk->heapID );
 		wk->bcw = BTLV_EFFECT_GetCameraWork();
 	}
 
@@ -290,7 +209,7 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 
 #else
 	{
-		wk->bew = BTLV_EFFECT_Init( 0, wk->heapID );
+		wk->bew = BTLV_EFFECT_Init( 0, &dispvramBank, wk->heapID );
 		wk->bcw = BTLV_EFFECT_GetCameraWork( wk->bew );
 	}
 
@@ -347,27 +266,42 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 		GX_SetVisibleWnd( GX_WNDMASK_W0 );
 	}
 
-#if 0
-	//ストリーム再生初期化
-    NNS_SndInit();
-    NNS_SndStrmInit( &wk->strm );
-	NNS_SndStrmAllocChannel( &wk->strm, CH_MAX, chNoList);
-
-	StrmSetUp(wk);
-
-	NNS_SndStrmStart(&wk->strm);
-#endif
-
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 	
-	//キャプチャセット
-	GFUser_VIntr_CreateTCB( Capture_VBlankIntr, NULL, 0 );
-
 	//フェードイン
 	GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
 
 	GFL_UI_KEY_GetRepeatSpeed( &wk->key_repeat_speed, &wk->key_repeat_wait );
 	GFL_UI_KEY_SetRepeatSpeed( wk->key_repeat_speed / 4, wk->key_repeat_wait );
+
+#if 0
+	//メッセージ系初期化
+	GFL_FONTSYS_Init();
+	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, wk->heapID );
+	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, TRUE, wk->heapID );
+
+	//サブ画面
+	{	
+		ARCHANDLE* hdl_bg;
+		ARCHANDLE* hdl_obj;
+
+		hdl_bg  = GFL_ARC_OpenDataHandle( ARCID_BATT_BG,  wk->heapID ); 
+		hdl_obj = GFL_ARC_OpenDataHandle( ARCID_BATT_OBJ, wk->heapID );
+
+		wk->bip = BINPUT_SystemInit( hdl_bg, hdl_obj, wk->msg, wk->font, BTLV_EFFECT_GetTCBSYS(), BTLV_EFFECT_GetPfd(), &wk->cursor_disp, 0, wk->heapID );
+		BINPUT_DefaultFrameSet();
+		BINPUT_DefaultDataSet( wk->bip );
+	
+		BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_WALL, TRUE, NULL );
+		BINPUT_CreateBG( hdl_bg, hdl_obj, wk->bip, BINPUT_TYPE_A, FALSE, NULL );
+		BINPUT_StockBallActorResourceLoad( hdl_obj, wk->bip );
+
+		GFL_ARC_CloseDataHandle( hdl_bg );
+		GFL_ARC_CloseDataHandle( hdl_obj );
+	}
+#endif
+
+	BTLV_EFFECT_SetTrainer( 0, BTLV_MCSS_POS_AA, 128, 80 );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -384,14 +318,6 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
 	int rep = GFL_UI_KEY_GetRepeat();
 	int tp = GFL_UI_TP_GetTrg();
 	SOGA_WORK* wk = mywk;
-
-#ifdef MCS_ENABLE
-	if( wk->mcs_enable ){
-		NNS_McsPollingIdle();
-		MCS_Read( wk );
-		MCS_Write( wk );
-	}
-#endif
 
 	//画面切り替え実験
 	if( wk->timer_flag ){
@@ -412,29 +338,12 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
 		}
 	}
 
-#if 0
-	StrmBufferCopy(wk,0);
-#endif
-
-#ifdef MCS_ENABLE
-	if( ( ( trg & PAD_BUTTON_START ) ||
-		  ( wk->mcs_idle ) ) &&
-		  ( wk->timer_flag == 0 ) ){
-		if( wk->mcs_enable ){
-			MCS_Exit( wk );
-		}
-		else{
-			wk->mcs_idle = MCS_Init( wk );
-		}
-	}
-#else
 	if( trg & PAD_BUTTON_START ){
 		VecFx32	pos,target;
 		BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
 //		BTLV_CAMERA_MoveCameraPosition( wk->bcw, &pos, &target );
 		BTLV_CAMERA_MoveCameraInterpolation( wk->bcw, &pos, &target, 20, 0, 20 );
 	}
-#endif
 
 	MoveCamera( wk );
 
@@ -481,7 +390,6 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
 	BTLV_EFFECT_Main();
 
 	if( pad == PAD_BUTTON_EXIT ){
-//		NNS_SndStrmStop(&wk->strm);
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, 2 );
 		return GFL_PROC_RES_FINISH;	
 	}
@@ -514,6 +422,8 @@ static GFL_PROC_RESULT DebugBattleTestProcExit( GFL_PROC * proc, int * seq, void
 	GFL_PROC_FreeWork( proc );
 
 	GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
+
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -599,6 +509,7 @@ static	void	MoveCamera( SOGA_WORK *wk )
 		camTarget.z += ofsx.z + ofsz.z;
 
 		BTLV_CAMERA_MoveCameraPosition( wk->bcw, &camPos, &camTarget );
+#if 0
 		OS_TPrintf("pos_x:%08x pos_y:%08x pos_z:%08x tar_x:%08x tar_y:%08x tar_z:%08x\n",
 			camPos.x,
 			camPos.y,
@@ -606,6 +517,7 @@ static	void	MoveCamera( SOGA_WORK *wk )
 			camTarget.x,
 			camTarget.y,
 			camTarget.z );
+#endif
 	}
 
 }
@@ -817,273 +729,4 @@ static	void	CalcCamera( CAMERA_WORK *cw )
 	MTX_MultVec43( &pos, &trans, &cw->camPos );
 }
 #endif
-
-//---------------------------------------------------------------------------
-//	ストリーム再生関数
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-static	void	StrmSetUp(SOGA_WORK *sw)
-{
-	sw->FSReadPos=SWAV_HEAD_SIZE;
-	sw->strmReadPos=0;
-	sw->strmWritePos=0;
-
-	MI_CpuClearFast( &strmBuffer[0], STRM_BUF_SIZE );
-    
-	NNS_SndStrmSetup( &sw->strm,
-					  NNS_SND_STRM_FORMAT_PCM8,
-					  &strmBuffer[0],
-					  STRM_BUF_SIZE,
-					  NNS_SND_STRM_TIMER_CLOCK/8000,
-					  INTERVAL,
-					  StrmCBWaveDataStock,
-					  sw);
-}
-
-//---------------------------------------------------------------------------
-// 波形データを補充するコールバックが割り込み禁止で呼ばれるので、
-// FS_～が中から呼べないので、この関数でReadしておく
-//---------------------------------------------------------------------------
-static	void	StrmBufferCopy(SOGA_WORK *sw,int size)
-{
-	FSFile	file;
-	s32		ret;
-
-    FS_InitFile(&file);
-	FS_OpenFile(&file,"/pm_battle.swav");
-	FS_SeekFile(&file,sw->FSReadPos,FS_SEEK_SET);
-
-	if(size){
-		ret=FS_ReadFile(&file,&sw->FS_strmBuffer[0],size);
-		sw->FSReadPos+=size;
-	}
-	else{
-		while(sw->strmReadPos!=sw->strmWritePos){
-			ret=FS_ReadFile(&file,&sw->FS_strmBuffer[sw->strmWritePos],32);
-			if(ret==0){
-				sw->FSReadPos=SWAV_HEAD_SIZE;
-				FS_SeekFile(&file,sw->FSReadPos,FS_SEEK_SET);
-				continue;
-			}
-			sw->FSReadPos+=32;
-			sw->strmWritePos+=32;
-			if(sw->strmWritePos>=STRM_BUF_SIZE){
-				sw->strmWritePos=0;
-			}
-		}
-	}
-	FS_CloseFile(&file);
-}
-
-//---------------------------------------------------------------------------
-// 波形データを補充するコールバック
-//---------------------------------------------------------------------------
-static	void	StrmCBWaveDataStock(NNSSndStrmCallbackStatus status,
-									int numChannels,
-									void *buffer[],
-									u32	len,
-									NNSSndStrmFormat format,
-									void *arg)
-{
-	SOGA_WORK *sw=(SOGA_WORK *)arg;
-	int	i;
-	u8	*strBuf;
-
-	strBuf=buffer[0];
-	
-	for(i=0;i<len;i++){
-		strBuf[i]=sw->FS_strmBuffer[i+sw->strmReadPos];
-	}
-
-	sw->strmReadPos+=len;
-	if(sw->strmReadPos>=STRM_BUF_SIZE){
-		sw->strmReadPos=0;
-	}
-	DC_FlushRange(strBuf,len);
-}
-
-//
-//	MCS制御実験
-//
-static BOOL MCS_Init( SOGA_WORK *wk )
-{
-	if(	wk->mcs_enable ) return FALSE;
-
-	wk->mw.phi = 0;
-	wk->mw.theta = 0;
-
-	// mcsの初期化
-	wk->mcsWorkMem = GFL_HEAP_AllocMemory( wk->heapID, NNS_MCS_WORKMEM_SIZE ); // MCSのワーク用メモリを確保
-	OS_TPrintf("size:%08x\n",NNS_MCS_WORKMEM_SIZE);
-	NNS_McsInit( wk->mcsWorkMem );
-
-	GFUser_VIntr_CreateTCB( MCS_VBlankIntr, NULL, 0 );
-
-	// デバイスのオープン
-	if( NNS_McsGetMaxCaps() > 0 && NNS_McsOpen( &wk->deviceCaps ) )
-	{
-		wk->printBuffer = GFL_HEAP_AllocMemory( wk->heapID, 1024 );        // プリント用のバッファの確保
-		wk->recvBuf = GFL_HEAP_AllocMemory( wk->heapID, 1024 );       // 受信用バッファの確保
-
-        NNS_NULL_ASSERT(wk->printBuffer);
-        NNS_NULL_ASSERT(wk->recvBuf);
-
-        // OS_Printfによる出力
-        OS_Printf("device open\n");
-
-        // mcs文字列出力の初期化
-		NNS_McsInitPrint( wk->printBuffer, 1024 );
-
-        // NNS_McsPrintfによる出力
-        // このタイミングでmcsサーバが接続していれば、コンソールに表示されます。
-		(void)NNS_McsPrintf("device ID %08X\n", wk->deviceCaps.deviceID );
-
-        // 読み取り用バッファの登録
-		NNS_McsRegisterStreamRecvBuffer(MCS_CHANNEL0, wk->recvBuf, 1024 );
-
-        // 受信コールバック関数の登録
-//		NNS_McsRegisterRecvCallback( &wk->recvCBInfo, MCS_CHANNEL1, MCS_DataRecvCallback, (u32)&wk->mw );
-
-		wk->mcs_enable = 1;
-
-        return FALSE;
-    }
-	OS_Printf("device open fail.\n");
-	return TRUE;
-}
-
-static void MCS_Exit( SOGA_WORK *wk )
-{
-//	NNS_McsUnregisterRecvResource(MCS_CHANNEL1);
-	NNS_McsUnregisterRecvResource(MCS_CHANNEL0);
-
-	GFL_HEAP_FreeMemory( wk->recvBuf );
-	GFL_HEAP_FreeMemory( wk->printBuffer );
-
-	// NNS_McsPutStringによる出力
-	(void)NNS_McsPutString("device close\n");
-
-	// デバイスをクローズ
-	(void)NNS_McsClose();
-
-	wk->mcs_enable = 0;
-	wk->mcs_idle = 0;
-}
-
-static void MCS_Read( SOGA_WORK *wk )
-{
-	int			len;
-	MCS_WORK	buf;
-
-	// 受信可能なデータサイズの取得
-	len = NNS_McsGetStreamReadableSize( MCS_CHANNEL0 );
-
-	if( len > 0 ){
-		u32 readSize;
-		// データの読み取り
-		if( NNS_McsReadStream( MCS_CHANNEL0, &buf, sizeof(MCS_WORK), &readSize)){
-			wk->mw = buf;
-        }
-	}
-}
-
-static void MCS_Write( SOGA_WORK *wk )
-{
-#if 0 
-	if( per_para.update ){
-		per_para.update = 0;
-		// データの書き込み
-		NNS_McsWriteStream( MCS_CHANNEL0, &per_para, sizeof(PERFORMANCE_PARAM) - 4 );
-	}
-#else
-//	NNS_McsWriteStream( MCS_CHANNEL0, (const void *)HW_LCDC_VRAM_D, 256*192*2 );
-	int ch;
-
-	for( ch = 0 ; ch < MCS_CH_MAX ; ch++ ){
-		NNS_McsWriteStream( MCS_CHANNEL0 + ch, (const void *)(HW_LCDC_VRAM_D + MCS_SEND_SIZE * ch), MCS_SEND_SIZE );
-	}
-#endif
-}
-
-/*---------------------------------------------------------------------------*
-  Name:         DataRecvCallback
-
-  Description:  PC側からデータを受信したときに呼ばれるコールバック関数です。
-
-                登録するコールバック関数内ではデータの送受信を行わないでください。
-                また、割り込みが禁止されている場合があるため、
-                割り込み待ちループも行わないでください。
-
-  Arguments:    recv:       受信したデータの一部あるいは全部を格納している
-                            バッファへのポインタ。
-                recvSize:   recvによって示されるバッファに格納されている
-                            データのサイズ。
-                userData:   NNS_McsRegisterRecvCallback()の引数userDataで
-                            指定した値。
-                offset:     受信したデータの全部がrecvによって示されるバッファに
-                            格納されている場合は0。
-                            受信したデータの一部が格納されている場合は、
-                            受信したデータ全体に対する0を基準としたオフセット位置。
-                totalSize:  受信したデータの全体のサイズ。
-
-  Returns:      なし。
- *---------------------------------------------------------------------------*/
-static void
-MCS_DataRecvCallback(
-    const void* pRecv,
-    u32         recvSize,
-    u32         userData,
-    u32         offset,
-    u32         totalSize
-)
-{
-    MCS_WORK *mw = (MCS_WORK *)userData;
-
-	OS_Printf( " Callback OK!\n");
-
-	// 受信バッファチェック
-	if (pRecv != NULL && recvSize == sizeof(MCS_WORK) && offset == 0)
-	{
-        mw = (MCS_WORK *)pRecv;
-    }
-}
-
-/*---------------------------------------------------------------------------*
-  Name:         VBlankIntr
-
-  Description:  Vブランク割り込みハンドラです。
-
-  Arguments:    なし。
-
-  Returns:      なし。
- *---------------------------------------------------------------------------*/
-static void MCS_VBlankIntr( GFL_TCB *tcb, void *work )
-{
-    NNS_McsVBlankInterrupt();
-}
-
-/*---------------------------------------------------------------------------*
-  Name:         VBlankIntr
-
-  Description:  Vブランク割り込みハンドラです。
-
-  Arguments:    なし。
-
-  Returns:      なし。
- *---------------------------------------------------------------------------*/
-static void Capture_VBlankIntr( GFL_TCB *tcb, void *work )
-{
-	//---------------------------------------------------------------------------
-	// Execute capture
-	// Blend rendered image and displayed image (VRAM), and output to VRAM-C
-	GX_SetCapture(GX_CAPTURE_SIZE_256x192,			// Capture size
-				  GX_CAPTURE_MODE_A,				// Capture mode
-				  GX_CAPTURE_SRCA_2D3D,				// Blend src A
-				  GX_CAPTURE_SRCB_VRAM_0x00000,		// Blend src B
-				  GX_CAPTURE_DEST_VRAM_D_0x00000,	// Output VRAM
-				  16,								// Blend parameter for src A
-				  16);								// Blend parameter for src B
-	//---------------------------------------------------------------------------
-}
 

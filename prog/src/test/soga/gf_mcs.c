@@ -48,6 +48,7 @@ void	MCS_Main( void );
 u32		MCS_Read( void *buf, int size );
 BOOL	MCS_Write( int ch, const void *buf, int size );
 u32		MCS_CheckRead( void );
+BOOL	MCS_CheckEnable( void );
 
 static	void	MCS_DataRecvCallback( const void* pRecv, u32 recvSize, u32 userData, u32 offset, u32 totalSize );
 static	void	MCS_VBlankIntr( GFL_TCB *tcb, void *work );
@@ -261,6 +262,23 @@ u32		MCS_CheckRead( void )
 	}
 
 	return size;
+}
+
+//============================================================================================
+/**
+ *	MCSが起動していてデバイスがオープンしているかチェック
+ *
+ *	@retval TRUE:起動中　FALSE:停止中
+ */
+//============================================================================================
+BOOL	MCS_CheckEnable( void )
+{	
+	if( mw == NULL )
+	{	
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 /*---------------------------------------------------------------------------*

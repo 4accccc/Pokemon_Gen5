@@ -128,6 +128,7 @@ static void MCS_Read( SOGA_WORK *sw );
 static void MCS_Write( SOGA_WORK *sw );
 static void MCS_DataRecvCallback( const void* pRecv, u32 recvSize, u32 userData, u32 offset, u32 totalSize );
 static void MCS_VBlankIntr( GFL_TCB *tcb, void *work );
+static	void	MCS_CartIntrFunc( void );
 
 //Capture
 static void Capture_VBlankIntr( GFL_TCB *tcb, void *work );
@@ -163,7 +164,20 @@ FS_EXTERN_OVERLAY(battle);
 static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	SOGA_WORK* wk;
-	u8 chNoList[1]={0};
+	static const GFL_DISP_VRAM dispvramBank = {
+		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_01_BC,				// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
+		GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+	};		
 
 	GFL_OVERLAY_Load(FS_OVERLAY_ID(battle));
 
@@ -172,31 +186,14 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
 	MI_CpuClearFast( wk, sizeof( SOGA_WORK ) );
 	wk->heapID = HEAPID_SOGABE_DEBUG;
 		
-	{
-		static const GFL_DISP_VRAM dispvramBank = {
-			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-			GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-			GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_01_BC,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
-			GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
-			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-		};		
-		GFL_DISP_SetBank( &dispvramBank );
+	GFL_DISP_SetBank( &dispvramBank );
 
-		//VRAMクリア
-		MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
-		MI_CpuFill16((void*)HW_BG_PLTT, 0x0000, HW_BG_PLTT_SIZE);
-
-	}	
+	//VRAMクリア
+	MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+	MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+	MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+	MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
+	MI_CpuFill16((void*)HW_BG_PLTT, 0x0000, HW_BG_PLTT_SIZE);
 
 	GX_SetBankForLCDC( GX_VRAM_LCDC_D );
 	
@@ -253,7 +250,7 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
 	wk->seq_no = 0;
 #if 1
 	{
-		BTLV_EFFECT_Init( 0, wk->heapID );
+		BTLV_EFFECT_Init( 0, &dispvramBank, wk->heapID );
 		wk->bcw = BTLV_EFFECT_GetCameraWork();
 	}
 
@@ -261,7 +258,7 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
 
 #else
 	{
-		wk->bew = BTLV_EFFECT_Init( 0, wk->heapID );
+		wk->bew = BTLV_EFFECT_Init( 0, &dispvramBank, wk->heapID );
 		wk->bcw = BTLV_EFFECT_GetCameraWork( wk->bew );
 	}
 
@@ -736,6 +733,11 @@ static BOOL MCS_Init( SOGA_WORK *wk )
 
 	GFUser_VIntr_CreateTCB( MCS_VBlankIntr, NULL, 0 );
 
+	// カートリッジ割り込みを有効にし、カートリッジ割り込み内で
+	// NNS_McsCartridgeInterrupt()が呼ばれるようにする
+	OS_SetIrqFunction( OS_IE_CARTRIDGE, MCS_CartIntrFunc );
+	( void )OS_EnableIrqMask( OS_IE_CARTRIDGE );
+
 	// デバイスのオープン
 	if( NNS_McsGetMaxCaps() > 0 && NNS_McsOpen( &wk->deviceCaps ) )
 	{
@@ -877,6 +879,22 @@ MCS_DataRecvCallback(
 static void MCS_VBlankIntr( GFL_TCB *tcb, void *work )
 {
     NNS_McsVBlankInterrupt();
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         CartIntrFunc
+
+  Description:  カードリッジ割り込みハンドラです。
+
+  Arguments:    なし。
+
+  Returns:      なし。
+ *---------------------------------------------------------------------------*/
+//static void MCS_CartIntrFunc( GFL_TCB *tcb, void *work )
+static void MCS_CartIntrFunc( void )
+{
+	OS_SetIrqCheckFlag(OS_IE_CARTRIDGE);
+	NNS_McsCartridgeInterrupt();
 }
 
 /*---------------------------------------------------------------------------*
