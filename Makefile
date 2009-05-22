@@ -14,7 +14,7 @@ ARC_DIR = ./prog/arc
 LIB_DIR = ./lib
 
 
-.PHONY : do-build clean	prog resource arc test landdata dmyfmmdl build_model
+.PHONY : do-build clean	prog resource arc test landdata dmyfmmdl build_model area_data
 
 #  make‚µ‚½ê‡‚É‚·‚×‚Äì‚ç‚ê‚é‚æ‚¤‚É‹Lq‚µ‚Ä‚­‚¾‚³‚¢
 #--------------------------------------- ----------------------------
@@ -72,6 +72,10 @@ fmmdldmy:
 
 build_model:
 	$(MAKE) -C $(RESOURCE_DIR)/fldmapdata/build_model clean
+	$(MAKE)
+
+area_data:
+	$(MAKE) -C $(RESOURCE_DIR)/fldmapdata/area_data clean
 	$(MAKE)
 
 
