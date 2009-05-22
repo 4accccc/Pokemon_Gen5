@@ -87,8 +87,8 @@ static RAIL_KEY getReverseKey(RAIL_KEY key);
 static void initRail(FIELD_RAIL * rail);
 static BOOL isValidRail(const FIELD_RAIL * rail);
 static const char * getRailName(const FIELD_RAIL * rail);
-static BOOL checkLine(const RAIL_LINE * line);
-static BOOL checkPoint(const RAIL_POINT * point);
+static BOOL debugCheckLineData(const RAIL_LINE * line);
+static BOOL debugCheckPointData(const RAIL_POINT * point);
 static void debugPrintPoint(const char * before, const RAIL_POINT * point, const char * after);
 
 
@@ -204,7 +204,7 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
         man->nowRail.type = FIELD_RAIL_TYPE_LINE;
         man->nowRail.line = nLine;
         set_key = key;
-        checkLine(man->nowRail.line);
+        debugCheckLineData(man->nowRail.line);
         
       }
     }
@@ -220,7 +220,7 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
       { // LINE --> point_e への移行処理
         man->nowRail.type = FIELD_RAIL_TYPE_POINT;
         man->nowRail.point = nLine->point_e;
-        checkPoint(man->nowRail.point);
+        debugCheckPointData(man->nowRail.point);
       }
     }
     else if (key == getReverseKey(nLine->key))
@@ -231,7 +231,7 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
       { // LINE --> POINT_S への移行処理
         man->nowRail.type = FIELD_RAIL_TYPE_POINT;
         man->nowRail.point = nLine->point_s;
-        checkPoint(man->nowRail.point);
+        debugCheckPointData(man->nowRail.point);
       }
     }
   }
@@ -383,6 +383,37 @@ static const RAIL_CAMERA_SET * getCameraSet(const FIELD_RAIL * rail)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief
+ */
+//------------------------------------------------------------------
+static RAIL_KEY keyContToRailKey(int cont)
+{
+  if (cont & PAD_KEY_UP) return RAIL_KEY_UP;
+  if (cont & PAD_KEY_LEFT) return RAIL_KEY_LEFT;
+  if (cont & PAD_KEY_RIGHT) return RAIL_KEY_RIGHT;
+  if (cont & PAD_KEY_DOWN) return RAIL_KEY_DOWN;
+  return RAIL_KEY_NULL;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static RAIL_KEY getReverseKey(RAIL_KEY key)
+{
+  switch (key) {
+  case RAIL_KEY_UP: 
+    return RAIL_KEY_DOWN;
+  case RAIL_KEY_DOWN:
+    return RAIL_KEY_UP;
+  case RAIL_KEY_LEFT:
+    return RAIL_KEY_RIGHT;
+  case RAIL_KEY_RIGHT:
+    return RAIL_KEY_LEFT;
+  }
+  return RAIL_KEY_NULL;
+}
+
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 static const char * getRailName(const FIELD_RAIL * rail)
 {
@@ -408,9 +439,16 @@ static RAIL_KEY searchLineInPoint(const RAIL_POINT *point, const RAIL_LINE * lin
   return RAIL_KEY_NULL;
 }
 
+//============================================================================================
+//
+//
+//    デバッグ用関数
+//
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static BOOL checkLine(const RAIL_LINE * line)
+static BOOL debugCheckLineData(const RAIL_LINE * line)
 {
 
   RAIL_KEY key;
@@ -448,7 +486,7 @@ static BOOL checkLine(const RAIL_LINE * line)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static BOOL checkPoint(const RAIL_POINT * point)
+static BOOL debugCheckPointData(const RAIL_POINT * point)
 {
   int i;
   for (i = 0; i < RAIL_CONNECT_LINE_MAX; i++)
@@ -512,37 +550,6 @@ static void debugPrintDegree(const VecFx32 * p0, const VecFx32 * p1)
     OS_Printf("Degree: %08x\n",angle);
 }
 
-//------------------------------------------------------------------
-/**
- * @brief
- */
-//------------------------------------------------------------------
-static RAIL_KEY keyContToRailKey(int cont)
-{
-  if (cont & PAD_KEY_UP) return RAIL_KEY_UP;
-  if (cont & PAD_KEY_LEFT) return RAIL_KEY_LEFT;
-  if (cont & PAD_KEY_RIGHT) return RAIL_KEY_RIGHT;
-  if (cont & PAD_KEY_DOWN) return RAIL_KEY_DOWN;
-  return RAIL_KEY_NULL;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static RAIL_KEY getReverseKey(RAIL_KEY key)
-{
-  switch (key) {
-  case RAIL_KEY_UP: 
-    return RAIL_KEY_DOWN;
-  case RAIL_KEY_DOWN:
-    return RAIL_KEY_UP;
-  case RAIL_KEY_LEFT:
-    return RAIL_KEY_RIGHT;
-  case RAIL_KEY_RIGHT:
-    return RAIL_KEY_LEFT;
-  }
-  return RAIL_KEY_NULL;
-}
-
 //============================================================================================
 //
 //    座標演算関連
@@ -590,9 +597,11 @@ static void getAngleFromVector(const VecFx32 * vec, u16 * yaw, u16 * pitch, fx32
  * @param start   開始ベクトル
  * @param end     終了ベクトル
  * @param t       0～FX32_ONE
+ *
+ * 生成されるベクトルは正規化されているので注意
  */
 //------------------------------------------------------------------
-static void getInternalVector(VecFx32 * out, const VecFx32 * start, const VecFx32 * end, fx32 t)
+static void getInterNormalVector(VecFx32 * out, const VecFx32 * start, const VecFx32 * end, fx32 t)
 {
   VecFx32 s, e;
   fx32 angle;   //-1～1
@@ -616,6 +625,29 @@ static void getInternalVector(VecFx32 * out, const VecFx32 * start, const VecFx3
 
   VEC_Normalize(out, out);
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief ベクトルとベクトルの間の線形補完（長さも補完）
+ *
+ * @param out     生成したベクトル
+ * @param start   開始ベクトル
+ * @param end     終了ベクトル
+ * @param t       0～FX32_ONE
+ */
+//------------------------------------------------------------------
+static void getIntermediateVector(VecFx32 * out, const VecFx32 * start, const VecFx32 * end, fx32 t)
+{
+  const VecFx32 zeroVec = {0, 0, 0};
+  fx32 l_s, l_e, l_i;
+  getInterNormalVector(out, start, end, t);
+
+  l_s = VEC_Mag(start);
+  l_e = VEC_Mag(end);
+  l_i = l_s + FX_Mul((l_e - l_s) , t);
+  VEC_MultAdd(l_i, out, &zeroVec, out);
+}
+
 //============================================================================================
 //
 //
@@ -670,23 +702,11 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_MAN * man, VecFx32 * pos)
   VEC_Subtract(p_s, &center, &vec_s);
   VEC_Subtract(p_e, &center, &vec_e);
   
-  getInternalVector(&vec_i, &vec_s, &vec_e, ofs);
-  {
-    fx32 l_s, l_e, l_i;
-    l_s = VEC_Mag(&vec_s);
-    l_e = VEC_Mag(&vec_e);
-    l_i = l_s + FX_Mul((l_e - l_s) , ofs);
-    VEC_MultAdd(l_i, &vec_i, &center, pos);
-  }
-  //VEC_Add(&center, &vec_i, pos);
+  getIntermediateVector(&vec_i, &vec_s, &vec_e, ofs);
+  VEC_Add(&center, &vec_i, pos);
+
   if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
   {
-    //VecFx32 s,e;
-    //fx32 angle;
-    //VEC_Normalize( &vec_s, &s );
-    //VEC_Normalize( &vec_e, &e );
-    //angle = FX_AcosIdx( VEC_DotProduct( &s, &e ) );
-    //OS_Printf("Deglee: %08x\n",angle);
     debugPrintWholeVector("Center:", &center, "\n");
     debugPrintWholeVector("start: ", p_s, "\n");
     debugPrintWholeVector("end:   ", p_e, "\n");
@@ -754,13 +774,6 @@ static void calcAngleCamera(FIELD_CAMERA * field_camera)
       debugPrintWholeVector("CamPos:", &camPos, "\n");
       OS_Printf("yaw:%04x pitch:%04x len:%08x\n",yaw, pitch, len);
     }
-    if (before.x != camPos.x || before.y != camPos.y || before.z != camPos.z)
-    {
-      TAMADA_Printf("rail cam(%08x %08x %08x)\n",camPos.x, camPos.y, camPos.z);
-      TAMADA_Printf("org cam (%08x %08x %08x)\n",before.x, before.y, before.z);
-      TAMADA_Printf("tgt(%08x %08x %08x)\n",target.x, target.y, target.z);
-      TAMADA_Printf("yaw:%04x pitch:%04x len:%08x\n",yaw, pitch, len);
-    }
   }
 }
 
@@ -818,41 +831,20 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
   GF_ASSERT(ce->func == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
 
   FIELD_CAMERA_GetCameraPos(man->field_camera, &before);
-#if 1
+
   {
     u32 div = man->nowRail.line->line_divider;
     fx32 t = FX32_ONE * man->line_ofs / div;
-    fx32 ofs = (man->line_ofs * FX32_ONE) / div;
-    fx32 len = cs->param2 + FX_Mul( (ce->param2 - cs->param2), ofs );
-    //fx32 len = cs->param2 + ( (ce->param2 - cs->param2) * man->line_ofs / div );
 
     getVectorFromAngleValue(&c_s, cs->param1, cs->param0, cs->param2);
     getVectorFromAngleValue(&c_e, ce->param1, ce->param0, ce->param2);
-    getInternalVector(&c_now, &c_s, &c_e, t);
-    {
-      const VecFx32 zeroVec = {0, 0, 0};
-      VEC_MultAdd(len, &c_now, &zeroVec, &c_now);
-    }
+    getIntermediateVector(&c_now, &c_s, &c_e, t);
+
     FIELD_CAMERA_GetTargetPos(man->field_camera, &target);
     VEC_Add(&c_now, &target, &c_now);
     FIELD_CAMERA_SetCameraPos(man->field_camera, &c_now);
   }
-#else
-  {
-    u32 div = man->nowRail.line->line_divider;
-    u16 pitch = cs->param0 + ( ((int)ce->param0 - (int)cs->param0) * man->line_ofs / div );
-    /** TODO yawは足し算ではバグる！！！ */
-    u16 yaw = cs->param1 + ( ((int)ce->param1 - (int)cs->param1) * man->line_ofs / div );
-    fx32 len = cs->param2 + ( (ce->param2 - cs->param2) * man->line_ofs / div );
 
-    FIELD_CAMERA_SetAnglePitch(man->field_camera, pitch);
-    FIELD_CAMERA_SetAngleYaw(man->field_camera, yaw);
-    FIELD_CAMERA_SetAngleLen(man->field_camera, len);
-
-
-    calcAngleCamera(man->field_camera);
-  }
-#endif
   if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y)
   {
     debugPrintWholeVector("CamTgt:", &target, "\n");
