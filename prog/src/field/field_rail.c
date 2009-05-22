@@ -89,6 +89,7 @@ static BOOL isValidRail(const FIELD_RAIL * rail);
 static const char * getRailName(const FIELD_RAIL * rail);
 static BOOL checkLine(const RAIL_LINE * line);
 static BOOL checkPoint(const RAIL_POINT * point);
+static void debugPrintPoint(const char * before, const RAIL_POINT * point, const char * after);
 
 
 //============================================================================================
@@ -250,12 +251,21 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
         man->nowRail.type,
         getRailName(&man->nowRail),
         man->nowRail.dummy);
+    if (type == FIELD_RAIL_TYPE_POINT)
+    {
+      debugPrintPoint(NULL, man->nowRail.point ,"\n");
+    } else if (type == FIELD_RAIL_TYPE_LINE)
+    {
+      debugPrintPoint("start", man->nowRail.line->point_s, NULL);
+      debugPrintPoint("-end", man->nowRail.line->point_e, "\n");
+    }
   }
 }
 
 
 //------------------------------------------------------------------
 /**
+ * @brief 現在位置の取得
  */
 //------------------------------------------------------------------
 void FIELD_RAIL_MAN_GetPos(const FIELD_RAIL_MAN * man, VecFx32 * pos)
@@ -280,6 +290,7 @@ void FIELD_RAIL_MAN_GetPos(const FIELD_RAIL_MAN * man, VecFx32 * pos)
 
 //------------------------------------------------------------------
 /**
+ * @brief カメラ状態のアップデート
  */
 //------------------------------------------------------------------
 void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
@@ -310,6 +321,9 @@ void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
 }
 
 //------------------------------------------------------------------
+/**
+ *
+ */
 //------------------------------------------------------------------
 void FIELD_RAIL_MAN_GetDirection(const FIELD_RAIL_MAN * man, VecFx32 * dir)
 {
@@ -455,7 +469,48 @@ static BOOL checkPoint(const RAIL_POINT * point)
   }
   return TRUE;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void debugPrintWholeVector(const char * before, const VecFx32 * vec, const char * after)
+{
+  if (before)
+  {
+    OS_TPrintf("%s",before);
+  }
+  OS_Printf("( %d, %d, %d)", FX_Whole(vec->x), FX_Whole(vec->y), FX_Whole(vec->z));
+  if (after)
+  {
+    OS_TPrintf("%s",after);
+  }
+}
+static void debugPrintHexVector(const VecFx32 * vec)
+{
+  OS_Printf("(%08x, %08x, %08x)\n", (vec->x), (vec->y), (vec->z));
+}
 
+static void debugPrintPoint(const char * before, const RAIL_POINT * point, const char * after)
+{
+  if (point != NULL)
+  {
+    debugPrintWholeVector(before, &point->pos, after);
+  }
+  else
+  {
+    if (before) OS_TPrintf("%s", before);
+    OS_Printf("( NULL )");
+    if (after) OS_TPrintf("%s", after);
+  }
+}
+
+static void debugPrintDegree(const VecFx32 * p0, const VecFx32 * p1)
+{
+    VecFx32 s,e;
+    fx32 angle;
+    VEC_Normalize( p0, &s );
+    VEC_Normalize( p1, &e );
+    angle = FX_AcosIdx( VEC_DotProduct( &s, &e ) );
+    OS_Printf("Degree: %08x\n",angle);
+}
 
 //------------------------------------------------------------------
 /**
@@ -571,30 +626,34 @@ static void getInternalVector(VecFx32 * out, const VecFx32 * start, const VecFx3
 //
 //============================================================================================
 
-static void putVector(const VecFx32 * vec)
-{
-  OS_Printf("x = %d, y = %d, z = %d\n", FX_Whole(vec->x), FX_Whole(vec->y), FX_Whole(vec->z));
-}
-static void putVecHex(const VecFx32 * vec)
-{
-  OS_Printf("x:%08x, y:%08x, z:%08x\n", (vec->x), (vec->y), (vec->z));
-}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_MAN * man, VecFx32 * pos)
 {
-    //LINEにいるときはPOINTとPOINTの間の座標
-    //pos = p0 + (p1 - p0) * (ofs / div )
-    const RAIL_LINE * nLine = man->nowRail.line;
-    fx32 ofs = (man->line_ofs * FX32_ONE) / nLine->line_divider;
-    VecFx32 val;
-    const VecFx32 * p0 = &nLine->point_s->pos;
-    const VecFx32 * p1 = &nLine->point_e->pos;
-    VEC_Subtract(p1, p0, &val);
-    VEC_MultAdd(ofs, &val, p0, pos);
+  //LINEにいるときはPOINTとPOINTの間の座標
+  //pos = p0 + (p1 - p0) * (ofs / div )
+  const RAIL_LINE * nLine = man->nowRail.line;
+  fx32 ofs = (man->line_ofs * FX32_ONE) / nLine->line_divider;
+  VecFx32 val;
+  const VecFx32 * p0 = &nLine->point_s->pos;
+  const VecFx32 * p1 = &nLine->point_e->pos;
+  VEC_Subtract(p1, p0, &val);
+  VEC_MultAdd(ofs, &val, p0, pos);
+
+  if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
+  {
+    debugPrintWholeVector("start ", p0, "\n");
+    debugPrintWholeVector("now   ", pos, "\n");
+    debugPrintWholeVector("end   ", p1, "\n");
+  }
 }
 
 //------------------------------------------------------------------
+/**
+ *
+ * （中心点-->スタート位置）、（中心点-->終了位置）の二つのベクトルを
+ * 球面線形補完している
+ */
 //------------------------------------------------------------------
 void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_MAN * man, VecFx32 * pos)
 {
@@ -628,24 +687,17 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_MAN * man, VecFx32 * pos)
     //VEC_Normalize( &vec_e, &e );
     //angle = FX_AcosIdx( VEC_DotProduct( &s, &e ) );
     //OS_Printf("Deglee: %08x\n",angle);
-    OS_Printf("Center:");
-    putVector(&center);
-    OS_Printf("start: ");
-    putVector(p_s);
-    OS_Printf("end:   ");
-    putVector(p_e);
-    OS_Printf("v_s:   ");
-    putVector(&vec_s);
+    debugPrintWholeVector("Center:", &center, "\n");
+    debugPrintWholeVector("start: ", p_s, "\n");
+    debugPrintWholeVector("end:   ", p_e, "\n");
+    debugPrintWholeVector("v_s:   ", &vec_s, "\n");
     OS_Printf("v_s:len=%08x\n",VEC_Mag(&vec_s));
-    OS_Printf("v_e:   ");
-    putVector(&vec_e);
+    debugPrintWholeVector("v_e:   ", &vec_e, "\n");
     OS_Printf("v_e:len=%08x\n",VEC_Mag(&vec_e));
-    OS_Printf("v_i:   ");
-    putVector(&vec_i);
-    putVecHex(&vec_i);
+    debugPrintWholeVector("v_i:   ", &vec_i, "\n");
+    debugPrintHexVector(&vec_i);
     OS_Printf("v_i:len=%08x\n",VEC_Mag(&vec_i));
-    OS_Printf("pos:   ");
-    putVector(pos);
+    debugPrintWholeVector("pos:   ", pos, "\n");
   }
 }
 
@@ -696,6 +748,12 @@ static void calcAngleCamera(FIELD_CAMERA * field_camera)
     VEC_Add(&camPos, &target, &camPos);
     FIELD_CAMERA_SetCameraPos(field_camera, &camPos);
 
+    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y)
+    {
+      debugPrintWholeVector("CamTgt:", &target, "\n");
+      debugPrintWholeVector("CamPos:", &camPos, "\n");
+      OS_Printf("yaw:%04x pitch:%04x len:%08x\n",yaw, pitch, len);
+    }
     if (before.x != camPos.x || before.y != camPos.y || before.z != camPos.z)
     {
       TAMADA_Printf("rail cam(%08x %08x %08x)\n",camPos.x, camPos.y, camPos.z);
@@ -764,7 +822,10 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
   {
     u32 div = man->nowRail.line->line_divider;
     fx32 t = FX32_ONE * man->line_ofs / div;
-    fx32 len = cs->param2 + ( (ce->param2 - cs->param2) * man->line_ofs / div );
+    fx32 ofs = (man->line_ofs * FX32_ONE) / div;
+    fx32 len = cs->param2 + FX_Mul( (ce->param2 - cs->param2), ofs );
+    //fx32 len = cs->param2 + ( (ce->param2 - cs->param2) * man->line_ofs / div );
+
     getVectorFromAngleValue(&c_s, cs->param1, cs->param0, cs->param2);
     getVectorFromAngleValue(&c_e, ce->param1, ce->param0, ce->param2);
     getInternalVector(&c_now, &c_s, &c_e, t);
@@ -792,6 +853,11 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
     calcAngleCamera(man->field_camera);
   }
 #endif
+  if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y)
+  {
+    debugPrintWholeVector("CamTgt:", &target, "\n");
+    debugPrintWholeVector("CamPos:", &c_now, "\n");
+  }
 }
 
 
@@ -914,7 +980,7 @@ void FIELD_RAIL_POSFUNC_CircleCamera( const FIELD_RAIL_MAN * man )
     c1 = man->nowRail.line->point_e->camera_set;
     GF_ASSERT(c1->func == FIELD_RAIL_POSFUNC_CircleCamera);
 
-    // 時機位置取得
+    // 自機位置取得
     FIELD_RAIL_MAN_GetPos( man, &pos ); 
     pos.y = 0;
     VEC_Subtract( &pos, &target, &pos );

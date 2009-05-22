@@ -27,11 +27,12 @@
 static FIELD_RAIL_MAN * railMan;
 
 static const RAIL_POINT point_bridge1;
-static const RAIL_POINT point_start;
+static const RAIL_POINT point_c03_start;
 static const RAIL_POINT point_d02_loop_01;
 static const RAIL_POINT point_d02_start_00;
 
-static const RAIL_CAMERA_SET camera_point_start;
+static const RAIL_CAMERA_SET camera_point_c03_start_00;
+static const RAIL_CAMERA_SET camera_point_c03_start_01;
 static const RAIL_CAMERA_SET camera_point_slope;
 static const RAIL_CAMERA_SET camera_changeAngle;
 static const RAIL_CAMERA_SET camera_point_loop_up;
@@ -82,7 +83,7 @@ static void mapCtrlNoGrid_Create(
 
   railMan = FIELD_RAIL_MAN_Create( FIELDMAP_GetHeapID(fieldWork), camera );
   FIELD_RAIL_MAN_Load(railMan, &point_d02_start_00);
-  //FIELD_RAIL_MAN_Load(railMan, &point_start);
+  //FIELD_RAIL_MAN_Load(railMan, &point_c03_start);
   FIELD_RAIL_MAN_GetPos(railMan, pos );
   FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), TRUE);
 
@@ -179,7 +180,7 @@ static const RAIL_LINE line_d02_loop_03;
  * ç≈èâÇÃPOINT
  */
 //--------------------------------------------------------------
-static const RAIL_POINT point_start =
+static const RAIL_POINT point_c03_start =
 {
   //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   {
@@ -187,16 +188,16 @@ static const RAIL_POINT point_start =
   },
   //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
   {
-    RAIL_KEY_UP, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
+    RAIL_KEY_DOWN, RAIL_KEY_NULL, RAIL_KEY_NULL, RAIL_KEY_NULL,
   },
   //VecFx32 pos;
   {
-    0x002bfdac, 0x00055578, 0x00ea45c
+    0x002bfdac, 0x00008000, 0x007b2c2
   },
   //const RAIL_CAMERA_SET * camera;
-  &camera_point_start,
+  &camera_point_c03_start_00,
   //const char * name;
-  "point_start",
+  "point_c03_start",
 };
 
 //--------------------------------------------------------------
@@ -204,11 +205,11 @@ static const RAIL_POINT point_start =
  * éüÇÃPOINTÅiè„ÇËìríÜÅj
  */
 //--------------------------------------------------------------
-static const RAIL_POINT point_slope =
+static const RAIL_POINT point_c03_start_01 =
 {
   //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   {
-    &line_slope_start, &line_slope_up, NULL, NULL,
+    &line_slope_up, &line_slope_start, NULL, NULL,
   },
   //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
   {
@@ -219,9 +220,9 @@ static const RAIL_POINT point_slope =
     0x002beb9c, 0x000c691c, 0x0016e5b6
   },
   //const RAIL_CAMERA_SET * camera;
-  &camera_point_slope,
+  &camera_point_c03_start_01,
   //const char * name;
-  "point_slope",
+  "point_c03_start_01",
 };
 
 //--------------------------------------------------------------
@@ -232,7 +233,7 @@ static const RAIL_POINT point_bridge1 =
 {
   //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   {
-    &line_slope_up, &line_bridge_start, NULL, NULL,
+    &line_bridge_start, &line_slope_up, NULL, NULL,
   },
   //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
   {
@@ -256,7 +257,7 @@ static const RAIL_POINT point_bridge2 =
 {
   //const RAIL_LINE * lines[RAIL_CONNECT_LINE_MAX];
   {
-    &line_bridge_start, &line_bridge_long, NULL, NULL,
+    &line_bridge_long, &line_bridge_start, NULL, NULL,
   },
   //RAIL_KEY keys[RAIL_CONNECT_LINE_MAX];
   {
@@ -539,7 +540,7 @@ static const RAIL_LINE line_slope_up =
 {
   //const RAIL_POINT * point_s
   //const RAIL_POINT * point_e
-   &point_slope, &point_bridge1,
+  &point_bridge1, &point_c03_start_01,
   //RAIL_KEY key;
   RAIL_KEY_UP,
   //const RAIL_LINEPOS_SET * line_pos_set;
@@ -558,7 +559,7 @@ static const RAIL_LINE line_slope_start =
 {
   //const RAIL_POINT * point_s
   //const RAIL_POINT * point_e
-  &point_start, &point_slope,
+  &point_c03_start_01, &point_c03_start,
   //RAIL_KEY key;
   RAIL_KEY_UP,
   //const RAIL_LINEPOS_SET * line_pos_set;
@@ -577,7 +578,7 @@ static const RAIL_LINE line_bridge_start =
 {
   //const RAIL_POINT * point_s
   //const RAIL_POINT * point_e
-  &point_bridge1, &point_bridge2,
+  &point_bridge2, &point_bridge1,
   //RAIL_KEY key;
   RAIL_KEY_UP,
   //const RAIL_LINEPOS_SET * line_pos_set;
@@ -602,7 +603,7 @@ static const RAIL_LINE line_bridge_long =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &RAIL_LINEPOS_SET_Default,
   //u32 line_divider;
-  100,
+  200,
   //const RAIL_CAMERA_SET * camera;
   &camera_changeAngle,
   //const char * name;
@@ -621,7 +622,7 @@ static const RAIL_LINE line_d02_bridge_start =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &RAIL_LINEPOS_SET_Default,
   //u32 line_divider;
-  100,
+  50,
   //const RAIL_CAMERA_SET * camera;
   &camera_changeAngle,
   //const char * name;
@@ -664,12 +665,23 @@ static const RAIL_CAMERA_SET camera_changeAngle =
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static const RAIL_CAMERA_SET camera_point_start =
+static const RAIL_CAMERA_SET camera_point_c03_start_00 =
 {
   FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
-  0x0fa8, //angle:pitch = angle h
-  0x8000, //angle:yaw = angle v
-  0x009b * FX32_ONE,  //angle:len
+  0x31a8, //angle:pitch = angle h
+  0x0000, //angle:yaw = angle v
+  0x0090 * FX32_ONE,  //angle:len
+  0,
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const RAIL_CAMERA_SET camera_point_c03_start_01 =
+{
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
+  0x31a8, //angle:pitch = angle h
+  0x0000, //angle:yaw = angle v
+  0x00f8 * FX32_ONE,  //angle:len
   0,
 };
 
@@ -678,9 +690,12 @@ static const RAIL_CAMERA_SET camera_point_start =
 static const RAIL_CAMERA_SET camera_point_slope =
 {
   FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
-  0x0fa8, //angle:pitch = angle h
+  0x31a8, //angle:pitch = angle h
   0x0000, //angle:yaw = angle v
-  0x0120 * FX32_ONE,  //angle:len
+  0x0280 * FX32_ONE,  //angle:len
+  //0x0fa8, //angle:pitch = angle h
+  //0x0000, //angle:yaw = angle v
+  //0x0120 * FX32_ONE,  //angle:len
   0,
 };
 
@@ -690,7 +705,7 @@ static const RAIL_CAMERA_SET camera_point_loop_up =
 {
   FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
   0x31a8, //angle:pitch = angle h
-  0x8000, //angle:yaw = angle v
+  0x0000, //angle:yaw = angle v
   0x0280 * FX32_ONE,  //angle:len
   0,
 };
