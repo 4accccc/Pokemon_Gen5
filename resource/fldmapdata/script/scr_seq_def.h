@@ -90,6 +90,8 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
   
 	DEF_CMD	EV_SEQ_YES_NO_WIN
 
+  DEF_CMD EV_SEQ_CHG_LANGID
+  
 //======================================================================
 /**
  *	基本コマンド
@@ -731,3 +733,12 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	.short	EV_SEQ_YES_NO_WIN
 	.short	\ret_wk
 	.endm
+
+//--------------------------------------------------------------
+/**
+ *	言語ID切り替え
+ */
+//--------------------------------------------------------------
+  .macro  _CHG_LANGID
+  .short  EV_SEQ_CHG_LANGID
+  .endm
