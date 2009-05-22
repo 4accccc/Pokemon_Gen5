@@ -584,6 +584,7 @@ static void systemFramework(SAMPLE3_WORK* sw)
 	GFL_G3D_DRAW_Start();			//描画開始
 	{
 		GFL_G3D_CAMERA_Switching(sw->g3Dcamera);
+		TALKMSGWIN_SystemDraw3D(sw->tmsgwinSys);
 		{
 			u16						objIdx, elboard1Idx;
 			GFL_G3D_OBJ*	g3Dobj;
@@ -598,7 +599,6 @@ static void systemFramework(SAMPLE3_WORK* sw)
 			anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
 			for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_LoopAnimeFrame(g3Dobj, i, FX32_ONE ); } 
 		}
-		TALKMSGWIN_SystemDraw3D(sw->tmsgwinSys);
 
 	}
 	GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
