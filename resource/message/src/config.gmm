@@ -9,6 +9,13 @@
 </head>
 
 <body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
 	<tag-table>
 		<group entry="0" japanese="タググループ" english="タググループ">
 		</group>
