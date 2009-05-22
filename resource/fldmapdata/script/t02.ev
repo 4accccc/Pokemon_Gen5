@@ -49,9 +49,19 @@ ev_t02_babygirl1_1:
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01_babygirl1_01
 	_AB_KEYWAIT
-  _TALKWIN_CLOSE
-  _OBJ_PAUSE_CLEAR_ALL
-  _END
+	_TALKWIN_CLOSE
+
+	_OBJ_ANIME T02_BABYGIRL1_1,test01anime
+	_OBJ_ANIME_WAIT
+
+	_TURN_HERO_SITE
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_t01_babygirl1_02
+	_AB_KEYWAIT
+	_TALKWIN_CLOSE
+
+	_OBJ_PAUSE_CLEAR_ALL
+	_END
 
 //--------------------------------------------------------------
 //  WOMAN1_1 話し掛け
@@ -91,3 +101,12 @@ ev_t02_oldwoman1_1:
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
   _END
+
+//--------------------------------------------------------------
+//	アニメーションデータ
+//--------------------------------------------------------------
+_ANIME_LABEL test01anime
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA ACMD_END,0
+
