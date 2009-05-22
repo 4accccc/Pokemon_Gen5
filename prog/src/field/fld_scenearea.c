@@ -131,7 +131,7 @@ void FLD_SCENEAREA_Release( FLD_SCENEAREA* p_sys )
  *	@param	cp_pos    自機位置
  */
 //-----------------------------------------------------------------------------
-void FLD_SCENEAREA_Updata( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
+void FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
 {
   int i;
   u32 now_active;
@@ -173,8 +173,8 @@ void FLD_SCENEAREA_Updata( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
   {
 
     // 更新処理
-    if( p_sys->cp_data[p_sys->active_area].p_updata ){
-      p_sys->cp_data[p_sys->active_area].p_updata( p_sys, &p_sys->cp_data[p_sys->active_area], cp_pos );
+    if( p_sys->cp_data[p_sys->active_area].p_update ){
+      p_sys->cp_data[p_sys->active_area].p_update( p_sys, &p_sys->cp_data[p_sys->active_area], cp_pos );
     }
   }
 }

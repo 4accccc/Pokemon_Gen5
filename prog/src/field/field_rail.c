@@ -956,45 +956,6 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
 
 
 
-
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  円移動
- *
- *	@param	man     レールマネージャ
- *	@param	pos     位置格納先
- */
-//-----------------------------------------------------------------------------
-void FIELD_RAIL_POSFUNC_CircleLine( const FIELD_RAIL * rail, VecFx32 * pos )
-{
-  const RAIL_LINE * nLine = rail->line;
-  VecFx32 p_s = nLine->point_s->pos;
-  VecFx32 p_e = nLine->point_e->pos;
-  VecFx32 center, vec_s, vec_e, vec_i;
-  fx32 ofs = (rail->line_ofs * FX32_ONE) / nLine->line_divider;
-
-  center.x = nLine->line_pos_set->param0;
-  center.y = nLine->line_pos_set->param1;
-  center.z = nLine->line_pos_set->param2;
-
-  center.y  = 0;
-  p_s.y     = 0;
-  p_e.y     = 0;
-
-  VEC_Subtract(&p_s, &center, &vec_s);
-  VEC_Subtract(&p_e, &center, &vec_e);
-  
-  getIntermediateVector(&vec_i, &vec_s, &vec_e, ofs);
-  VEC_Add(&center, &vec_i, pos);
-  {
-    VecFx32 w_vec;
-    VEC_Normalize(&vec_i, &w_vec);
-    VEC_MultAdd(-(rail->width_ofs) * WIDTH_OFS_UNIT, &w_vec, pos, pos);
-  }
-}
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  円カメラ動作

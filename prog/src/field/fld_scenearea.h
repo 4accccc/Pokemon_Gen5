@@ -27,7 +27,7 @@ extern "C"{
 */
 //-----------------------------------------------------------------------------
 // シーンに持たせるパラメータサイズの最大値
-#define FLD_SCENEAREA_SCENEPARAM_SIZE  ( 32 )
+#define FLD_SCENEAREA_SCENEPARAM_SIZE  ( 64 )
 
 //-----------------------------------------------------------------------------
 /**
@@ -59,7 +59,7 @@ struct _FLD_SCENEAREA_DATA{
 
   // コールバック関数
   FLD_SCENEAREA_CHECK_AREA_FUNC* p_checkArea;   // 範囲内チェック
-  FLD_SCENEAREA_UPDATA_FUNC* p_updata;      // 情報の更新（エリア内の場合マイフレーム行う処理）
+  FLD_SCENEAREA_UPDATA_FUNC* p_update;      // 情報の更新（エリア内の場合マイフレーム行う処理）
   FLD_SCENEAREA_UPDATA_FUNC* p_inside;      // 範囲に入った瞬間の処理
   FLD_SCENEAREA_UPDATA_FUNC* p_outside;     // 範囲を抜けた瞬間の処理
 };
@@ -76,7 +76,7 @@ extern void FLD_SCENEAREA_Delete( FLD_SCENEAREA* p_sys );
 
 extern void FLD_SCENEAREA_Load( FLD_SCENEAREA* p_sys, const FLD_SCENEAREA_DATA* cp_data, u32 datanum );
 extern void FLD_SCENEAREA_Release( FLD_SCENEAREA* p_sys );
-extern void FLD_SCENEAREA_Updata( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos );
+extern void FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos );
 
 // 各種情報の受け渡し
 extern FIELD_CAMERA* FLD_SCENEAREA_GetFieldCamera( const FLD_SCENEAREA* cp_sys );

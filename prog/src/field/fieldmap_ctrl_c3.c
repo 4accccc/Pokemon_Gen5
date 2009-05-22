@@ -22,9 +22,12 @@
 //	シーンエリア情報
 //======================================================================
 static BOOL C3_SCENEAREA_CheckArea( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
-static void C3_SCENEAREA_Updata( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void C3_SCENEAREA_Update( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void C3_SCENEAREA_Update( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 static void C3_SCENEAREA_Inside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 static void C3_SCENEAREA_Outside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void C3_SCENEAREA_InsideFxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void C3_SCENEAREA_OutsideFxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 
 //-------------------------------------
 ///	エリアパラメータ構造体
@@ -36,11 +39,19 @@ typedef struct {
   fx32  dist_max;
   u32   pitch;
   fx32  length;
+
+  // 固定カメラに必要なパラメータ
+  fx32  target_x;
+  fx32  target_y;
+  fx32  target_z;
+  fx32  camera_x;
+  fx32  camera_y;
+  fx32  camera_z;
 } C3_SCENEAREA_PARAM;
 
 #define SCENE_AREA_DIST_MIN ( 0xfc024 )
-//#define SCENE_AREA_DIST_MAX ( 0x18e038 )
-#define SCENE_AREA_DIST_MAX ( 0x2000000 )
+#define SCENE_AREA_DIST_MAX ( 0x1a8fea )
+//#define SCENE_AREA_DIST_MAX ( 0x2000000 )
 
 static const FLD_SCENEAREA_DATA sc_SCENE[] = 
 {
@@ -56,7 +67,7 @@ static const FLD_SCENEAREA_DATA sc_SCENE[] =
       0x600, 0x26D000,
     },
     C3_SCENEAREA_CheckArea,
-    C3_SCENEAREA_Updata,
+    C3_SCENEAREA_Update,
     C3_SCENEAREA_Inside,
     C3_SCENEAREA_Outside,
   },
@@ -73,7 +84,7 @@ static const FLD_SCENEAREA_DATA sc_SCENE[] =
       0x600, 0x26D000,
     },
     C3_SCENEAREA_CheckArea,
-    C3_SCENEAREA_Updata,
+    C3_SCENEAREA_Update,
     C3_SCENEAREA_Inside,
     C3_SCENEAREA_Outside,
   },
@@ -84,13 +95,13 @@ static const FLD_SCENEAREA_DATA sc_SCENE[] =
       // エリア
       // rot_start, rot_end, dist_min, dist_max
       // (基準を{0,0,-FX32_ONE}としたときの角度)
-      0x7a28, 0x83d8, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
+      0x7a28, 0x9298, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
       // カメラ
       // pitch len
       0x600, 0x26D000,
     },
     C3_SCENEAREA_CheckArea,
-    C3_SCENEAREA_Updata,
+    C3_SCENEAREA_Update,
     C3_SCENEAREA_Inside,
     C3_SCENEAREA_Outside,
   },
@@ -107,7 +118,7 @@ static const FLD_SCENEAREA_DATA sc_SCENE[] =
       0x600, 0x26D000,
     },
     C3_SCENEAREA_CheckArea,
-    C3_SCENEAREA_Updata,
+    C3_SCENEAREA_Update,
     C3_SCENEAREA_Inside,
     C3_SCENEAREA_Outside,
   },
@@ -124,9 +135,31 @@ static const FLD_SCENEAREA_DATA sc_SCENE[] =
       0x600, 0x26D000,
     },
     C3_SCENEAREA_CheckArea,
-    C3_SCENEAREA_Updata,
+    C3_SCENEAREA_Update,
     C3_SCENEAREA_Inside,
     C3_SCENEAREA_Outside,
+  },
+
+  // ピカチュー
+  {
+    { 
+      // エリア
+      // rot_start, rot_end, dist_min, dist_max
+      // (基準を{0,0,-FX32_ONE}としたときの角度)
+//      0xc268, 0xcfb8, SCENE_AREA_DIST_MIN, 0x1a5001,
+      0xc268, 0xcfb8, SCENE_AREA_DIST_MIN, SCENE_AREA_DIST_MAX,
+      // カメラ
+      // dummy, dummy,
+      0, 0,
+      // target x,y,z
+      0x3e2504,0xfff1ee7f,0x10d83a,
+      // camera x,y,z
+      0xb573b,0x76e53,0x30e81c,
+    },
+    C3_SCENEAREA_CheckArea,
+    C3_SCENEAREA_InsideFxCamera,
+    C3_SCENEAREA_InsideFxCamera,
+    C3_SCENEAREA_OutsideFxCamera,
   },
 };
 
@@ -192,6 +225,7 @@ static const RAIL_LINEPOS_SET sc_LINEPOS_C3_NORMAL;
 // 基本分割数
 #define RAIL_LINE_DIV_NORMAL    (196)
 #define RAIL_LINE_DIV_FIRST     (16)
+#define RAIL_LINE_DIV_END       (32)
 #define RAIL_LINE_DIV_WALKIN    (8)
 #define RAIL_LINE_DIV_PICKUP    (8)
 
@@ -200,10 +234,13 @@ static const RAIL_LINEPOS_SET sc_LINEPOS_C3_NORMAL;
 //======================================================================
 //	define
 //======================================================================
-#define HEIGHT	(0x2000)
+#define HEIGHT	(0x3000)
 
 #define CAMERA_DEF_PITCH  ( 0x800 )
 #define CAMERA_DEF_LEN    ( 0x38D000 )
+#define CAMERA_DEF_TARGET_X ( 0x2f6f36 )
+#define CAMERA_DEF_TARGET_Y ( 0x4000 )
+#define CAMERA_DEF_TARGET_Z ( 0x301402 )
 
 //======================================================================
 //	struct
@@ -216,6 +253,8 @@ typedef struct {
 	u16 pos_angle;
 	s16 df_len;
 	s16 df_angle;
+  fx32  camera_len;
+  u16   camera_pitch;
 
   //ポインタ
   FIELD_RAIL_MAN * p_railMan;
@@ -236,7 +275,8 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos );
 
 static void CalcPos( VecFx32 *pos, const VecFx32 *center, u16 len, u16 dir );
 
-static void mapCtrlC3_CameraMain( FIELDMAP_WORK *fieldWork, const VecFx32* cp_pos );
+static void mapCtrlC3_CameraMain( FIELDMAP_WORK *fieldWork, const VecFx32* cp_pos, u16 pitch, fx32 len );
+static void cameraMain( FIELD_CAMERA* p_camera, const VecFx32* cp_pos, u16 pitch, fx32 len );
 
 
 //======================================================================
@@ -272,7 +312,9 @@ static void mapCtrlC3_Create(
 		 0x1f0,
 		 0,
 		 1,
-		 16
+		 16,
+     CAMERA_DEF_LEN,
+     CAMERA_DEF_PITCH,
 	};
 	
 	heapID = FIELDMAP_GetHeapID( fieldWork );
@@ -351,7 +393,7 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
     FIELD_RAIL_MAN_UpdateCamera(mwk->p_railMan);
 
     // シーンエリア処理でカメラ上書き
-    FLD_SCENEAREA_Updata( mwk->p_sceneArea, pos );
+    FLD_SCENEAREA_Update( mwk->p_sceneArea, pos );
 
 		FIELD_PLAYER_C3_Move( fld_player, key_cont, 0 );
   }	
@@ -368,18 +410,34 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 			df_len		= mwk->df_len;
 		}
 		
-		if (key_cont & PAD_KEY_LEFT) {
-			mwk->pos_angle -= df_angle;
-		}
-		if (key_cont & PAD_KEY_RIGHT) {
-			mwk->pos_angle += df_angle;
-		}
-		if (key_cont & PAD_KEY_UP) {
-			mwk->player_len -= df_len;
-		}
-		if (key_cont & PAD_KEY_DOWN) {
-			mwk->player_len += df_len;
-		}
+    if( (key_cont & PAD_BUTTON_X) ){
+      if (key_cont & PAD_KEY_LEFT) {
+        mwk->camera_len -= FX32_ONE*2;
+      }
+      if (key_cont & PAD_KEY_RIGHT) {
+        mwk->camera_len += FX32_ONE*2;
+      }
+
+      if (key_cont & PAD_KEY_UP) {
+        mwk->camera_pitch += 0x400;
+      }
+      if (key_cont & PAD_KEY_DOWN) {
+        mwk->camera_pitch -= 0x400;
+      }
+    }else{
+      if (key_cont & PAD_KEY_LEFT) {
+        mwk->pos_angle -= df_angle;
+      }
+      if (key_cont & PAD_KEY_RIGHT) {
+        mwk->pos_angle += df_angle;
+      }
+      if (key_cont & PAD_KEY_UP) {
+        mwk->player_len -= df_len;
+      }
+      if (key_cont & PAD_KEY_DOWN) {
+        mwk->player_len += df_len;
+      }
+    }
 
 
     {
@@ -392,7 +450,7 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
       FIELD_PLAYER_SetPos( fld_player, &player_pos);
       *pos = player_pos;
       // プレイヤー位置から、カメラ座標を決定
-      mapCtrlC3_CameraMain( fieldWork, pos );
+      mapCtrlC3_CameraMain( fieldWork, pos, mwk->camera_pitch, mwk->camera_len );
       FIELD_CAMERA_SetAngleYaw( camera_control, mwk->pos_angle);
       FIELD_PLAYER_C3_Move( fld_player, key_cont, mwk->pos_angle );
 
@@ -453,14 +511,20 @@ static void CalcPos(VecFx32 * pos, const VecFx32 * center, u16 len, u16 dir)
  *	@param	cp_pos 
  */
 //-----------------------------------------------------------------------------
-static void mapCtrlC3_CameraMain( FIELDMAP_WORK *fieldWork, const VecFx32* cp_pos )
+static void mapCtrlC3_CameraMain( FIELDMAP_WORK *fieldWork, const VecFx32* cp_pos, u16 pitch, fx32 len )
+{
+  FIELD_CAMERA* p_camera;
+  
+  p_camera = FIELDMAP_GetFieldCamera( fieldWork );
+
+  cameraMain( p_camera, cp_pos, pitch, len );
+}
+static void cameraMain( FIELD_CAMERA* p_camera, const VecFx32* cp_pos, u16 pitch, fx32 len )
 {
   VecFx32 pos, target, n0, camera_pos;
-  FIELD_CAMERA* p_camera;
   fx32 xz_dist;
   fx32 target_y;
 
-  p_camera = FIELDMAP_GetFieldCamera( fieldWork );
 	FIELD_CAMERA_GetTargetPos( p_camera, &target);
   target_y  = target.y;
   target.y  = 0;
@@ -472,8 +536,8 @@ static void mapCtrlC3_CameraMain( FIELDMAP_WORK *fieldWork, const VecFx32* cp_po
   VEC_Normalize( &pos, &n0 );
 
   // 方向ベクトルから、カメラangleを求める
-  camera_pos.y = FX_Mul( FX_SinIdx( CAMERA_DEF_PITCH ), CAMERA_DEF_LEN );
-  xz_dist      = FX_Mul( FX_CosIdx( CAMERA_DEF_PITCH ), CAMERA_DEF_LEN );
+  camera_pos.y = FX_Mul( FX_SinIdx( pitch ), len );
+  xz_dist      = FX_Mul( FX_CosIdx( pitch ), len );
   camera_pos.x = FX_Mul( n0.x, xz_dist );
   camera_pos.z = FX_Mul( n0.z, xz_dist );
   camera_pos.x += target.x;
@@ -482,6 +546,7 @@ static void mapCtrlC3_CameraMain( FIELDMAP_WORK *fieldWork, const VecFx32* cp_po
   
 	FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
 }
+
 
 
 
@@ -508,13 +573,9 @@ static BOOL C3_SCENEAREA_CheckArea( const FLD_SCENEAREA* cp_sys, const FLD_SCENE
   fx32 dist;
   u32 rotate;
   VecFx32 target, normal;
-  FIELD_CAMERA* p_camera;
   const C3_SCENEAREA_PARAM* cp_param = (C3_SCENEAREA_PARAM*)cp_data->area;
 
-  //カメラ取得
-  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
-  FIELD_CAMERA_GetTargetPos( p_camera, &target );
-  target.y = 0;
+  VEC_Set( &target, CAMERA_DEF_TARGET_X, 0, CAMERA_DEF_TARGET_Z );
   
 
   VEC_Subtract( cp_pos, &target, &npos );
@@ -546,7 +607,7 @@ static BOOL C3_SCENEAREA_CheckArea( const FLD_SCENEAREA* cp_sys, const FLD_SCENE
  *	@param	cp_pos      位置情報
  */
 //-----------------------------------------------------------------------------
-static void C3_SCENEAREA_Updata( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+static void C3_SCENEAREA_Update( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
 {
   VecFx32 pos, target, n0, camera_pos;
   FIELD_CAMERA* p_camera;
@@ -603,6 +664,53 @@ static void C3_SCENEAREA_Outside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAR
 {
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  固定カメラの　設定処理
+ *  
+ *	@param	cp_sys    システムワーク
+ *	@param	cp_data   データ
+ *	@param	cp_pos    位置情報
+ */
+//-----------------------------------------------------------------------------
+static void C3_SCENEAREA_InsideFxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  FIELD_CAMERA* p_camera;
+  const C3_SCENEAREA_PARAM* cp_param = (const C3_SCENEAREA_PARAM*)cp_data->area;
+  VecFx32 target, camera_pos;
+
+  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+
+  // ターゲット位置設定
+  VEC_Set( &target, cp_param->target_x, cp_param->target_y, cp_param->target_z );
+  VEC_Set( &camera_pos, cp_param->camera_x, cp_param->camera_y, cp_param->camera_z );
+  FIELD_CAMERA_SetTargetPos( p_camera, &target );
+  FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  固定カメラの　回避処理
+ *  
+ *	@param	cp_sys    システムワーク
+ *	@param	cp_data   データ
+ *	@param	cp_pos    位置情報
+ */
+//-----------------------------------------------------------------------------
+static void C3_SCENEAREA_OutsideFxCamera( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  FIELD_CAMERA* p_camera;
+  VecFx32 target, camera_pos;
+
+  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+
+  // ターゲット位置設定
+  VEC_Set( &target, CAMERA_DEF_TARGET_X, CAMERA_DEF_TARGET_Y, CAMERA_DEF_TARGET_Z );
+  FIELD_CAMERA_SetTargetPos( p_camera, &target );
+
+  // カメラーパラメータ設定
+  cameraMain( p_camera, cp_pos, 0x600, 0x26D000 );
+}
 
 
 
@@ -642,7 +750,7 @@ static const RAIL_POINT sc_POINT_C3_END =
   },
   //VecFx32 pos;
   {
-    0x461fa2, 0x6000, 0x20189e
+    0x447656, 0x6000, 0x1f24d2
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_END,
@@ -969,7 +1077,7 @@ static const RAIL_LINE sc_LINE_C3_JOINT00toEND =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
   //u32 line_divider;
-  RAIL_LINE_DIV_FIRST,
+  RAIL_LINE_DIV_END,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_END,
   //const char * name;
@@ -1220,7 +1328,7 @@ static const RAIL_CAMERA_SET sc_CAMERA_C3_END =
 {
   FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
   0x600,
-  0x55C0,
+  0x55F0,
   0x26D000,
 };
 
@@ -1235,10 +1343,10 @@ static const RAIL_CAMERA_SET sc_CAMERA_C3_JOINT04 =
 // 位置
 static const RAIL_LINEPOS_SET sc_LINEPOS_C3_NORMAL = 
 {
-  FIELD_RAIL_POSFUNC_CircleLine,
-	0x2f6f36,
-  0x4000,
-  0x301402
+  FIELD_RAIL_POSFUNC_CurveLine,
+  0x2f6f36,
+  HEIGHT,
+  0x301402,
 };
 
 
