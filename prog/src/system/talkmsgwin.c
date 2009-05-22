@@ -118,9 +118,6 @@ struct _TALKMSGWIN_SYS{
 	TMSGWIN								tmsgwin[TALKMSGWIN_NUM];
   GFL_TCBLSYS*					tcbl;
   u16										chrNum;
-
-	//動作確認用暫定
-	BOOL						debugOn;
 };
 
 typedef struct {
@@ -154,7 +151,9 @@ static void	drawTail(TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tailO
 static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void clearWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 
-#define TALKMSGWIN_OPENWAIT	(16)
+	//動作確認用暫定
+static BOOL	debugOn;
+#define TALKMSGWIN_OPENWAIT	(8)
 //============================================================================================
 /**
  *
@@ -184,7 +183,7 @@ TALKMSGWIN_SYS* TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
 		u32 siz = setupWindowBG(&tmsgwinSys->setup);
 		tmsgwinSys->chrNum = siz/0x20;
 	}
-  tmsgwinSys->debugOn = FALSE;
+  debugOn = FALSE;
 
 	return tmsgwinSys;
 }
@@ -211,11 +210,18 @@ void TALKMSGWIN_SystemDraw3D( TALKMSGWIN_SYS* tmsgwinSys )
 {
 	int i;
 
-//	GFL_G3D_DRAW_Start();			//描画開始
+	G3X_Reset();
+	//カメラ設定取得
+	{
+		VecFx32		camPos, camUp, target, vecNtmp;
 
+		GFL_G3D_CAMERA_GetPos( tmsgwinSys->setup.g3Dcamera, &camPos );
+		GFL_G3D_CAMERA_GetCamUp( tmsgwinSys->setup.g3Dcamera, &camUp );
+		GFL_G3D_CAMERA_GetTarget( tmsgwinSys->setup.g3Dcamera, &target );
+
+		G3_LookAt( &camPos, &camUp, &target, NULL );
+	}
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ draw3Dwindow(&tmsgwinSys->tmsgwin[i]); }
-
-//	GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）
 }
 
 //------------------------------------------------------------------
@@ -239,7 +245,7 @@ u32 TALKMSGWIN_SystemGetUsingChrNumber( TALKMSGWIN_SYS* tmsgwinSys )
 //------------------------------------------------------------------
 void TALKMSGWIN_SystemDebugOn( TALKMSGWIN_SYS* tmsgwinSys )
 {
-	tmsgwinSys->debugOn = TRUE;
+	debugOn = TRUE;
 }
 
 //============================================================================================
@@ -542,17 +548,21 @@ static void closeWindow( TMSGWIN* tmsgwin )
 //------------------------------------------------------------------
 static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 {
+	u16 timerWait = TALKMSGWIN_OPENWAIT;
+	if(debugOn == TRUE){ timerWait *= 2; }
+
 	switch(tmsgwin->seq){
 	case WINSEQ_EMPTY:
 	case WINSEQ_IDLING:
 		break;
 	case WINSEQ_OPEN:
-		if(tmsgwin->timer < TALKMSGWIN_OPENWAIT){
+		//if(tmsgwin->timer < TALKMSGWIN_OPENWAIT){
+		if(tmsgwin->timer < timerWait){
 			tmsgwin->timer++;
 		}else{
 			int wait;
 			
-			if( tmsgwinSys->debugOn == TRUE ){
+			if(debugOn == TRUE){
 				wait = 2;
 			} else {
 				wait = MSGSPEED_GetWait();
@@ -617,15 +627,15 @@ static void draw3Dwindow( TMSGWIN* tmsgwin )
 static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tailOnly )
 {
 	fx32 scale;
-
-	G3X_Reset();
-	GFL_G3D_DRAW_SetLookAt();
+	u16 timerWait = TALKMSGWIN_OPENWAIT;
+	if(debugOn == TRUE){ timerWait *= 2; }
 
 	G3_PushMtx();
 	//平行移動パラメータ設定
 	G3_Translate(tailData->trans.x, tailData->trans.y, tailData->trans.z);
 	//グローバルスケール設定
-	scale = tailData->scale * scaleWait / TALKMSGWIN_OPENWAIT;
+	//scale = tailData->scale * scaleWait / TALKMSGWIN_OPENWAIT;
+	scale = tailData->scale * scaleWait / timerWait;
 	G3_Scale(scale, scale, scale);
 
 	G3_TexImageParam(GX_TEXFMT_NONE, GX_TEXGEN_NONE, 0, 0, 0, 0, GX_TEXPLTTCOLOR0_USE, 0);
