@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-15T18:39:24"/>
+	<create user="matsumiya" host="W00179" date="2009-05-22T14:45:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="189"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="28" top="175" right="733" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -293,11 +293,29 @@
 
 
 	<row id="msg_t01_testmsg01">
+		<comment>はい・いいえ処理
+はいだと文字モード切替</comment>
 		<attribute name="キャラ指定">man01</attribute>
-		<language name="JPN" width="256">テストメッセージだけど
-かがくの　ちからって　すげー！</language>
-		<language name="JPN_KANJI" width="256">テスト文章だけど
-科学の　力って　すげー！</language>
+		<language name="JPN" width="256">きみは　ひらがな　よりも
+かんじの　ほうが　すきかい？</language>
+		<language name="JPN_KANJI" width="256">きみは　漢字よりも
+ひらがなの　方が　好きかい？</language>
+	</row>
+
+	<row id="msg_t01_testmsg01_01">
+		<comment>はい</comment>
+		<language name="JPN" width="256">では
+はなしかたを　かえてみるよ</language>
+		<language name="JPN_KANJI" width="256">では
+はなしかたを　かえてみるよ</language>
+	</row>
+
+	<row id="msg_t01_testmsg01_02">
+		<comment>いいえ</comment>
+		<language name="JPN" width="256">うむッ！　ひらがなには　ひらがなの
+あじわいって　やつが　あるからね</language>
+		<language name="JPN_KANJI" width="256">なるほどね
+漢字が　読める　大人なんだね</language>
 	</row>
 
 	<row id="msg_t01_testmsg02">
@@ -323,9 +341,13 @@
 	<row id="msg_t01_testmsg03">
 		<attribute name="キャラ指定">babygirl1</attribute>
 		<language name="JPN" width="256">こんにちは！
-トレーナーさん！！</language>
+トレーナーさん！！[BE:01:ページ切り替え（クリア）]
+あたしが　いうのも　へんだけど[BE:01:ページ切り替え（クリア）]
+かがくの　ちからって　すごいわね！</language>
 		<language name="JPN_KANJI" width="256">こんにちは！
-トレーナーさん！！</language>
+トレーナーさん！！[BE:01:ページ切り替え（クリア）]
+あたしが　いうのも　へんだけど[BE:01:ページ切り替え（クリア）]
+科学の　力って　すごいわね！</language>
 	</row>
 
 	<flowchart-group-list>
