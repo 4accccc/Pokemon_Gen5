@@ -146,6 +146,8 @@
 	ARCID_MUSICAL_SCRIPT	"musical_script.narc"		#ミュージカルスクリプト
 	ARCID_OTHERS		"others.narc"
 	ARCID_WAZAEFF_SEQ	"wazaeffect/waza_eff.narc"	#技エフェクトシーケンス
+	ARCID_BATT_OBJ		"battle/pl_batt_obj.narc"	#戦闘画面OBJ
+	ARCID_BATT_BG		"battle/pl_batt_bg.narc"	#戦闘画面BG
 	ARCID_CAMERACONT	"camera_adjust_view.narc"	#カメラ調整用画像（デバッグ）
 	ARCID_MUSICAL_DEBUG	"mus_debug.narc"	#ミュージカルデバッグ用（デバッグ）
 	ARCID_ELBOARD_TEST	"elboard_test.narc"	#電光掲示板（テスト）
@@ -154,6 +156,7 @@
 	ARCID_AREA_ITP_TEX		"fieldmap/area_map_itp_tex.narc"	#エリア地面アニメーションデータ
 	ARCID_IRCAURA_GRAPHIC	"ircaura_gra.narc"	#赤外線オーラチェックゲーム用絵素材
 	ARCID_FIELD_MENU		"field_menu.narc"	#フィールドメニュー
+	ARCID_TRGRA	"trgra/trgra_wb.narc"	#トレーナーグラフィック（戦闘実験用）
 	ARCID_IRCRHYTHM_GRAPHIC	"ircrhythm_gra.narc"	#赤外線リズムチェックゲーム用絵素材
 	ARCID_IRCRESULT_GRAPHIC "ircresult_gra.narc" #赤外線結果表示用絵
 	ARCID_TALKWIN_TEST "talkwin_test.narc" #会話ウインドウ（テスト）
