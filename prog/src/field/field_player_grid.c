@@ -508,7 +508,7 @@ static void gjiki_SetMove_Turn(
 	u16 code;
 	
 	GF_ASSERT( dir != DIR_NOT );
-	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_8F );
+	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
 	
 	FLDMMDL_SetAcmd( fmmdl, code );
 	g_jiki->move_state = PLAYER_MOVE_TURN;
