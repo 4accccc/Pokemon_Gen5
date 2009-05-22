@@ -282,7 +282,7 @@ void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const
   sickCont->raw = 0;
   sickCont->type = wazaSickCont.type;
 
-  switch( wazaSickCont.type ){
+  switch( sickCont->type ){
   case WAZASICK_CONT_POKE:
     GF_ASSERT(attacker!=NULL);
     sickCont->poke.ID = BTL_POKEPARAM_GetID( attacker );

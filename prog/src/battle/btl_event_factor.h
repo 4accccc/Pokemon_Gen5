@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btl_event_factor.h
- * @brief	ポケモンWB バトルシステム	イベント＆ハンドラ処理（FACTOR側にのみ公開）
- * @author	taya
+ * @file  btl_event_factor.h
+ * @brief ポケモンWB バトルシステム イベント＆ハンドラ処理（FACTOR側にのみ公開）
+ * @author  taya
  *
- * @date	2008.10.23	作成
+ * @date  2008.10.23  作成
  */
 //=============================================================================================
 #ifndef __BTL_EVENT_FACTOR_H__
@@ -20,36 +20,36 @@
 
 
 enum {
-	EVENT_HANDLER_WORK_ELEMS = 8,
+  EVENT_HANDLER_WORK_ELEMS = 8,
 };
 
 //--------------------------------------------------------------
 /**
-*	イベント実体型
+* イベント実体型
 */
 //--------------------------------------------------------------
-typedef struct _BTL_EVENT_FACTOR	BTL_EVENT_FACTOR;
+typedef struct _BTL_EVENT_FACTOR  BTL_EVENT_FACTOR;
 
 //--------------------------------------------------------------
 /**
-*	イベントハンドラ型
+* イベントハンドラ型
 *
-*	factor	自身削除用のハンドル
-*	flowWk 	サーバフローワーク
-*	pokeID	主体となるポケモンのID
-*	work	ワーク用配列（要素数はEVENT_HANDLER_WORK_ELEMS, 初回呼び出し時ゼロクリアが保証される）
+* factor  自身削除用のハンドル
+* flowWk  サーバフローワーク
+* pokeID  主体となるポケモンのID
+* work  ワーク用配列（要素数はEVENT_HANDLER_WORK_ELEMS, 初回呼び出し時ゼロクリアが保証される）
 */
 //--------------------------------------------------------------
 typedef void (*BtlEventHandler)( BTL_EVENT_FACTOR* factor, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 //--------------------------------------------------------------
 /**
-*	イベントハンドラ＆タイプの関連付けテーブル
+* イベントハンドラ＆タイプの関連付けテーブル
 */
 //--------------------------------------------------------------
 typedef struct {
-	BtlEventType		eventType;
-	BtlEventHandler		handler;
+  BtlEventType    eventType;
+  BtlEventHandler   handler;
 }BtlEventHandlerTable;
 
 
@@ -59,14 +59,15 @@ extern BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactor factorType, u8 pok
 extern void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 pri );
 extern u16 BTL_EVENT_FACTOR_GetSubID( const BTL_EVENT_FACTOR* factor );
+extern int BTL_EVENT_FACTOR_GetWorkValue( const BTL_EVENT_FACTOR* factor, u8 workIdx );
 
 
 //=============================================================================================
 /**
  * 特定タイプ＆サブIDのファクターを１ターン休止させる
  *
- * @param   type		
- * @param   subID		
+ * @param   type
+ * @param   subID
  *
  */
 //=============================================================================================

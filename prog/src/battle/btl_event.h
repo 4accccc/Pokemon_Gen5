@@ -30,8 +30,7 @@ typedef enum {
   BTL_EVENT_CALC_AGILITY,           ///< すばやさ計算
   BTL_EVENT_CHECK_CONF,             ///< 混乱チェック
   BTL_EVENT_CALC_CONF_DAMAGE,       ///< 混乱ダメージ計算
-  BTL_EVENT_WAZA_EXECUTE_POKESICK,  ///< ワザ実行チェック（ポケモン系状態異常）
-  BTL_EVENT_WAZA_EXECUTE,           ///< ワザ実行チェック
+  BTL_EVENT_WAZA_EXECUTE_CHECK,     ///< ワザ実行チェック
   BTL_EVENT_WAZA_EXECUTE_FAIL,      ///< ワザ出し失敗
   BTL_EVENT_WAZA_EXECUTE_FIX,       ///< ワザ出し成功確定
   BTL_EVENT_WAZA_PARAM,             ///< ワザパラメータチェック

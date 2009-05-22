@@ -684,6 +684,22 @@ BppHpBorder BTL_POKEPARAM_GetHPBorder( const BTL_POKEPARAM* pp )
 {
   return BTL_POKEPARAM_CheckHPBorder( pp, pp->hp );
 }
+
+//=============================================================================================
+/**
+ * 残りHP/MaxHP 比率（パーセンテージ）取得
+ *
+ * @param   pp
+ *
+ * @retval  fx32
+ */
+//=============================================================================================
+fx32 BTL_POKEPARAM_GetHPRatio( const BTL_POKEPARAM* pp )
+{
+  double r = (double)(pp->hp * 100) / (double)(pp->baseParam.hpMax);
+  return FX32_CONST( r );
+}
+
 //=============================================================================================
 /**
  * 直前に使ったワザナンバーを返す
@@ -699,7 +715,7 @@ WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp )
 }
 //=============================================================================================
 /**
- * 同じワザを連続何回出しているか返す
+ * 同じワザを連続何回出しているか返す（連続していない場合は0、連続中は1オリジンの値が返る）
  *
  * @param   pp
  *
@@ -708,7 +724,7 @@ WazaID BTL_POKEPARAM_GetPrevWazaNumber( const BTL_POKEPARAM* pp )
 //=============================================================================================
 u32 BTL_POKEPARAM_GetSameWazaUsedCounter( const BTL_POKEPARAM* pp )
 {
-  return pp->sameWazaCounter;;
+  return pp->sameWazaCounter;
 }
 
 
@@ -1088,7 +1104,6 @@ void BTL_POKEPARAM_ResetContFlag( BTL_POKEPARAM* pp, BppContFlag flagID )
 {
   flgbuf_reset( pp->contFlag, flagID );
 }
-
 //=============================================================================================
 /**
  * 「ねむり」ターン進行　※ポケモン状態異常チェックは、「たたかう」を選んだ場合にのみ行う
@@ -1196,7 +1211,6 @@ void BTL_POKEPARAM_ClearActFlag( BTL_POKEPARAM* pp )
 {
   flgbuf_clear( pp->actFlag, sizeof(pp->actFlag) );
 }
-
 //=============================================================================================
 /**
  * タイプかきかえ
@@ -1257,7 +1271,7 @@ void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza )
   WazaID prev = pp->prevWazaID;
   if( prev != waza ){
     pp->prevWazaID = waza;
-    pp->sameWazaCounter = 1;
+    pp->sameWazaCounter = 0;
   }else
   {
     pp->sameWazaCounter++;

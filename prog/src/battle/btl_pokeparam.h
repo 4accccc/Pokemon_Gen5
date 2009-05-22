@@ -61,6 +61,7 @@ typedef enum {
 typedef enum {
 
   BPP_TURNFLG_ACTION_DONE,  ///< 行動した
+  BPP_TURNFLG_WAZA_EXE,     ///< ワザを出した
   BPP_TURNFLG_SHRINK,       ///< ひるまされた
   BPP_TURNFLG_DEAD,         ///< このターンに死んだ
 
@@ -92,6 +93,7 @@ typedef enum {
   BPP_CONTFLG_MEMBERIN_EFFECT,  ///< 入場直後
   BPP_CONTFLG_DEAD_IGNORE,      ///< 既に死んでいるので場にいないものとして扱う
   BPP_CONTFLG_KODAWARI_LOCK,    ///< 最初に使ったワザしか出せなくなる
+  BPP_CONTFLG_CANT_CHANGE,      ///< にげる・入れ替えが出来なくなる
 
   BPP_CONTFLG_MAX,
 
@@ -274,6 +276,7 @@ extern void BTL_POKEPARAM_RemoveItem( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_UpdateUsedWazaNumber( BTL_POKEPARAM* pp, WazaID waza );
 extern void BTL_POKEPARAM_RankRecover( BTL_POKEPARAM* pp );
 extern void BTL_POKEPARAM_RankReset( BTL_POKEPARAM* pp );
+extern fx32 BTL_POKEPARAM_GetHPRatio( const BTL_POKEPARAM* pp );
 
 
 

@@ -990,7 +990,7 @@ static void handler_NazoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_TYPEAFF) > BTL_TYPEAFF_100 )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_ITEMUSE_FLAG, TRUE );
+      BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
   }
 }
@@ -1360,7 +1360,7 @@ static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n )
   {
     u32 hp = BTL_POKEPARAM_GetValue( bpp, BPP_HP );
     if( hp <= BTL_CALC_QuotMaxHP(bpp, n) ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_ITEMUSE_FLAG, TRUE );
+      BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
   }
 }
@@ -2278,10 +2278,10 @@ static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
     u16 counter = BTL_POKEPARAM_GetSameWazaUsedCounter( bpp );
-    if( counter > 1 )
+    if( counter )
     {
       u16 ratio, damage;
-      ratio = 100 + (common_GetItemParam(myHandle, flowWk, ITEM_PRM_ATTACK) * (counter-1));
+      ratio = 100 + (common_GetItemParam(myHandle, flowWk, ITEM_PRM_ATTACK) * (counter));
       if( ratio > 200 ){ ratio = 200; }
       damage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
       damage = (damage * ratio) / 100;

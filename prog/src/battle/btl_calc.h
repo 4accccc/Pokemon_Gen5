@@ -87,6 +87,15 @@ static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
   return (value * ratio) >> FX32_SHIFT;
 }
 
+static inline u32 BTL_CALC_MulRatio_OverZero( u32 value, fx32 ratio )
+{
+  value = (value * ratio) >> FX32_SHIFT;
+  if( value == 0 ){
+    value = 1;
+  }
+  return value;
+}
+
 static inline u32 BTL_CALC_IsOccurPer( u32 per )
 {
   return (GFL_STD_MtRand(100) < per);
