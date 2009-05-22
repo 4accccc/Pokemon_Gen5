@@ -67,12 +67,14 @@ struct _FIELD_SUBSCREEN_WORK {
 
 typedef void INIT_FUNC(FIELD_SUBSCREEN_WORK *);
 typedef void UPDATE_FUNC(FIELD_SUBSCREEN_WORK *);
+typedef void DRAW_FUNC(FIELD_SUBSCREEN_WORK *);
 typedef void EXIT_FUNC(FIELD_SUBSCREEN_WORK *);
 typedef struct
 {	
 	FIELD_SUBSCREEN_MODE mode;		//エラー検出用
 	INIT_FUNC * init_func;
 	UPDATE_FUNC * update_func;
+	DRAW_FUNC * draw_func;
 	EXIT_FUNC * exit_func;
 	
 }FIELD_SUBSCREEN_FUNC_TABLE;
@@ -111,30 +113,35 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		FIELD_SUBSCREEN_NORMAL,
 		init_normal_subscreen,
 		update_normal_subscreen,
+		NULL ,
 		exit_normal_subscreen,
 	},
 	{	
 		FIELD_SUBSCREEN_TOPMENU,
 		init_topmenu_subscreen,
 		update_topmenu_subscreen,
+		NULL ,
 		exit_topmenu_subscreen,
 	},
 	{	
 		FIELD_SUBSCREEN_DEBUG_LIGHT,
 		init_light_subscreen,
 		update_light_subscreen,
+		NULL ,
 		exit_light_subscreen,
 	},
 	{	
 		FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA,
 		init_touchcamera_subscreen,
 		update_touchcamera_subscreen,
+		NULL ,
 		exit_touchcamera_subscreen,
 	},
 	{	
 		FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER,
 		init_soundviewer_subscreen,
 		update_soundviewer_subscreen,
+		NULL ,
 		exit_soundviewer_subscreen,
 	}
 };
@@ -233,6 +240,40 @@ void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	下画面の描画処理
+ * @param	pWork		サブスクリーン制御ワークへのポインタ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_SUBSCREEN_Draw( FIELD_SUBSCREEN_WORK* pWork )
+{
+  switch( pWork->state )
+  {
+  case FSS_UPDATE:
+    if( funcTable[pWork->mode].draw_func != NULL )
+    {
+      funcTable[pWork->mode].draw_func(pWork);
+    }
+    break;
+
+  //モードを切り替えるときのフェード処理
+  case FSS_CHANGE_FADEOUT:
+    break;
+    
+  case FSS_CHANGE_FADEOUT_WAIT:
+    break;
+
+  case FSS_CHANGE_INIT_FUNC:
+    break;
+
+  case FSS_CHANGE_FADEIN:
+    break;
+
+  case FSS_CHANGE_FADEIN_WAIT:
+    break;
+  }
+}
 //----------------------------------------------------------------------------
 /**
  * @brief         FIELD_SUBSCREEN_ChangeForceと違いフェードしてから切り替えます
@@ -456,7 +497,7 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork)
   static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x6000,
+		GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x00000,0x5800,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
 

@@ -626,6 +626,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 	GFL_UI_ChangeFrameRate(GFL_UI_FRAMERATE_30);
 //  fieldWork->key_trg_tail = GFL_UI_KEY_GetTrg();
 
+  FIELD_SUBSCREEN_Draw(fieldWork->fieldSubscreenWork);
   FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
 	fldmap_G3D_Draw( fieldWork );
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
@@ -1571,7 +1572,7 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 	
 	//メニュー起動チェック
 	if( trg == PAD_BUTTON_X ){
-		if(WIPE_SYS_EffectCheck()){
+		if(WIPE_SYS_EffectCheck() == FALSE ){
 			return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
 		}
 	}
