@@ -23,7 +23,7 @@
 #define	WALK_NEXT_PERCENT	(5) ///<歩数カウント失敗で次の処理に進む確率
 
 #ifdef DEBUG_ONLY_FOR_kagaya
-#define DEBUG_ENCOUNT_CHECKOFF_ATTR
+//#define DEBUG_ENCOUNT_CHECKOFF_ATTR
 #endif
 
 //--------------------------------------------------------------
