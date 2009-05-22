@@ -54,6 +54,58 @@ FS_EXTERN_OVERLAY(irc_result);
 
 
 //-------------------------------------
+///	点数
+//=====================================
+//間隔の時間による得点
+#define VAL_RHYTHMSCORE_PROC_00	(100)
+#define VAL_RHYTHMSCORE_PROC_01	(90)
+#define VAL_RHYTHMSCORE_PROC_02	(80)
+#define VAL_RHYTHMSCORE_PROC_03	(70)
+#define VAL_RHYTHMSCORE_PROC_04	(60)
+#define VAL_RHYTHMSCORE_PROC_05	(50)
+#define VAL_RHYTHMSCORE_PROC_06	(40)
+#define VAL_RHYTHMSCORE_PROC_07	(30)
+#define VAL_RHYTHMSCORE_PROC_08	(20)
+#define VAL_RHYTHMSCORE_PROC_09	(10)
+#define VAL_RHYTHMSCORE_PROC_10	(0)
+
+#define RANGE_RHYTHMSCORE_PROC_00	(0)
+#define RANGE_RHYTHMSCORE_PROC_01	(500)
+#define RANGE_RHYTHMSCORE_PROC_02	(1000)
+#define RANGE_RHYTHMSCORE_PROC_03	(3000)
+#define RANGE_RHYTHMSCORE_PROC_04	(5000)
+#define RANGE_RHYTHMSCORE_PROC_05	(10000)
+#define RANGE_RHYTHMSCORE_PROC_06	(15000)
+#define RANGE_RHYTHMSCORE_PROC_07	(20000)
+#define RANGE_RHYTHMSCORE_PROC_08	(25000)
+#define RANGE_RHYTHMSCORE_PROC_09	(30000)
+
+//間隔の時間による得点
+#define VAL_RHYTHMSCORE_DIFF_00	(100)
+#define VAL_RHYTHMSCORE_DIFF_01	(90)
+#define VAL_RHYTHMSCORE_DIFF_02	(80)
+#define VAL_RHYTHMSCORE_DIFF_03	(70)
+#define VAL_RHYTHMSCORE_DIFF_04	(60)
+#define VAL_RHYTHMSCORE_DIFF_05	(50)
+#define VAL_RHYTHMSCORE_DIFF_06	(40)
+#define VAL_RHYTHMSCORE_DIFF_07	(30)
+#define VAL_RHYTHMSCORE_DIFF_08	(20)
+#define VAL_RHYTHMSCORE_DIFF_09	(10)
+#define VAL_RHYTHMSCORE_DIFF_10	(0)
+
+#define RANGE_RHYTHMSCORE_DIFF_00	(0)
+#define RANGE_RHYTHMSCORE_DIFF_01	(200)
+#define RANGE_RHYTHMSCORE_DIFF_02	(400)
+#define RANGE_RHYTHMSCORE_DIFF_03	(500)
+#define RANGE_RHYTHMSCORE_DIFF_04	(1000)
+#define RANGE_RHYTHMSCORE_DIFF_05	(2000)
+#define RANGE_RHYTHMSCORE_DIFF_06	(3000)
+#define RANGE_RHYTHMSCORE_DIFF_07	(5000)
+#define RANGE_RHYTHMSCORE_DIFF_08	(10000)
+#define RANGE_RHYTHMSCORE_DIFF_09	(15000)
+
+
+//-------------------------------------
 ///	パレット
 //=====================================
 enum{	
@@ -2067,49 +2119,51 @@ static u8	CalcScore( const RHYTHM_MAIN_WORK *cp_wk )
 		player1	= my.data[my.data_idx-1].prog_ms - my.data[0].prog_ms;
 		player2	= you.data[you.data_idx-1].prog_ms - you.data[0].prog_ms;
 		prog	= MATH_IAbs(player1 - player2);
-		if( prog  == 0 )
+		if( prog  == RANGE_RHYTHMSCORE_PROC_00 )
 		{
-			prog_score	= 100;
+			prog_score	= VAL_RHYTHMSCORE_PROC_00;
 		}
-		else if( prog  < 500 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_01 )
 		{	
-			prog_score	= 90;
+			prog_score	= VAL_RHYTHMSCORE_PROC_01;
 		}
-		else if( prog  < 1000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_02 )
 		{
-			prog_score	= 80;
+			prog_score	= VAL_RHYTHMSCORE_PROC_02;
 		}
-		else if( prog  < 3000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_03 )
 		{
-			prog_score	= 70;
+			prog_score	= VAL_RHYTHMSCORE_PROC_03;
 		}
-		else if( prog  < 5000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_04 )
 		{
-			prog_score	= 60;
+			prog_score	= VAL_RHYTHMSCORE_PROC_04;
 		}
-		else if( prog  < 10000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_05 )
 		{
-			prog_score	= 50;
+			prog_score	= VAL_RHYTHMSCORE_PROC_05;
 		}
-		else if( prog  < 15000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_06 )
 		{
-			prog_score	= 40;
+			prog_score	= VAL_RHYTHMSCORE_PROC_06;
 		}
-		else if( prog  < 20000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_07 )
 		{
-			prog_score	= 30;
+			prog_score	= VAL_RHYTHMSCORE_PROC_07;
 		}
-		else if( prog  < 25000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_08 )
 		{
-			prog_score	= 20;
+			prog_score	= VAL_RHYTHMSCORE_PROC_08;
 		}
-		else if( prog  < 30000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_09 )
 		{
-			prog_score	= 10;
+			prog_score	= VAL_RHYTHMSCORE_PROC_09;
 		}
 		else
 		{
-			prog_score	= 0;
+#if VAL_RHYTHMSCORE_PROC_10
+			prog_score	= VAL_RHYTHMSCORE_PROC_10;
+#endif 
 		}
 		OS_Printf( "経過時間 %d点", prog_score );
 	}
@@ -2127,49 +2181,51 @@ static u8	CalcScore( const RHYTHM_MAIN_WORK *cp_wk )
 			player2	= you.data[i].diff_ms;
 			prog	= MATH_IAbs(player1 - player2);
 
-			if( prog  == 0 )
+			if( prog  == RANGE_RHYTHMSCORE_DIFF_00 )
 			{	
-				diff_score	+= 100;
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_00;
 			}
-			else if( prog  < 200 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_01 )
 			{	
-				diff_score	+= 90;
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_01;
 			}
-			else if( prog  < 400 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_02 )
 			{
-				diff_score	+= 80;
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_02;
 			}
-			else if( prog  < 500 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_03 )
 			{
-				diff_score	+= 70;
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_03;
 			}
-			else if( prog  < 1000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_04 )
 			{
-				diff_score	+= 60;
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_04;
 			}
-			else if( prog  < 2000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_05 )
 			{
-				diff_score	+= 50;
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_05;
 			}
-			else if( prog  < 3000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_06 )
 			{
-				diff_score	+= 40;
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_06;
 			}
-			else if( prog  < 5000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_07 )
 			{
-				diff_score	+= 30;
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_07;
 			}
-			else if( prog  < 10000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_08 )
 			{
-				diff_score	+= 20;
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_08;
 			}
-			else if( prog  < 15000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_09 )
 			{
-				diff_score	+= 10;
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_09;
 			}
 			else
 			{
-				//diff_score	+= 0;
+#if VAL_RHYTHMSCORE_DIFF_10
+				diff_score	+= VAL_RHYTHMSCORE_DIFF_10;
+#endif
 			}
 		}
 		OS_Printf( "間隔 %d点\n", diff_score/9 );
@@ -2373,49 +2429,51 @@ static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk )
 			player2	= p_wk->search2.data[i].diff_ms;
 			prog	= MATH_IAbs(player1 - player2);
 
-			if( prog  == 0 )
+			if( prog  == RANGE_RHYTHMSCORE_DIFF_00 )
 			{	
-				score	+= 100;
+				score	+= VAL_RHYTHMSCORE_DIFF_00;
 			}
-			else if( prog  < 200 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_01 )
 			{	
-				score	+= 90;
+				score	+= VAL_RHYTHMSCORE_DIFF_01;
 			}
-			else if( prog  < 400 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_02 )
 			{
-				score	+= 80;
+				score	+= VAL_RHYTHMSCORE_DIFF_02;
 			}
-			else if( prog  < 500 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_03 )
 			{
-				score	+= 70;
+				score	+= VAL_RHYTHMSCORE_DIFF_03;
 			}
-			else if( prog  < 1000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_04 )
 			{
-				score	+= 60;
+				score	+= VAL_RHYTHMSCORE_DIFF_04;
 			}
-			else if( prog  < 2000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_05 )
 			{
-				score	+= 50;
+				score	+= VAL_RHYTHMSCORE_DIFF_05;
 			}
-			else if( prog  < 3000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_06 )
 			{
-				score	+= 40;
+				score	+= VAL_RHYTHMSCORE_DIFF_06;
 			}
-			else if( prog  < 5000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_07 )
 			{
-				score	+= 30;
+				score	+= VAL_RHYTHMSCORE_DIFF_07;
 			}
-			else if( prog  < 10000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_08 )
 			{
-				score	+= 20;
+				score	+= VAL_RHYTHMSCORE_DIFF_08;
 			}
-			else if( prog  < 15000 )
+			else if( prog  < RANGE_RHYTHMSCORE_DIFF_09 )
 			{
-				score	+= 10;
+				score	+= VAL_RHYTHMSCORE_DIFF_09;
 			}
 			else
 			{
-				//score	+= 0;
+#if VAL_RHYTHMSCORE_DIFF_10
+				score	+= VAL_RHYTHMSCORE_DIFF_10;
+#endif
 			}
 		}
 		OS_Printf( "間隔 点%d\n", score/9 );

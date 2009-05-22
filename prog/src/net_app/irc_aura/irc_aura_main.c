@@ -57,6 +57,36 @@ FS_EXTERN_OVERLAY(irc_result);
 
 
 //-------------------------------------
+///	点数
+//=====================================
+//左手最初の座標の距離による点数
+#define VAL_POS_SCORE_00 (100)
+#define VAL_POS_SCORE_01 (80)
+#define VAL_POS_SCORE_02 (50)
+#define VAL_POS_SCORE_03 (30)
+#define VAL_POS_SCORE_04 (10)
+#define VAL_POS_SCORE_05 (0)
+
+#define RANGE_POS_SCORE_00 (8*8)
+#define RANGE_POS_SCORE_01 (16*16)
+#define RANGE_POS_SCORE_02 (24*24)
+#define RANGE_POS_SCORE_03 (32*32)
+#define RANGE_POS_SCORE_04 (40*40)
+
+//ブレの座標による点数
+#define VAL_SHAKE_SCORE_00 (100)
+#define VAL_SHAKE_SCORE_01 (80)
+#define VAL_SHAKE_SCORE_02 (50)
+#define VAL_SHAKE_SCORE_03 (30)
+#define VAL_SHAKE_SCORE_04 (0)
+
+#define RANGE_SHAKE_SCORE_00(x) ( x == 0 )
+#define RANGE_SHAKE_SCORE_01(x) ( x == 1 )
+#define RANGE_SHAKE_SCORE_02(x) ( 2 <= x && x <= 3 )
+#define RANGE_SHAKE_SCORE_03(x) ( 4 <= x && x <= 5 )
+#define RANGE_SHAKE_SCORE_04(x) ( x <= 6)
+
+//-------------------------------------
 ///	パレット
 //=====================================
 enum{	
@@ -2670,28 +2700,28 @@ static u8	 CalcScore( AURA_MAIN_WORK *p_wk )
 		pos1	= my.trg_left;
 		pos2	= you.trg_left;
 		ret	= ((u32)(pos1.x-pos2.x)*(u32)(pos1.x-pos2.x))+((u32)(pos1.y-pos2.y)*(u32)(pos1.y-pos2.y));
-		if( 0 < ret & ret < 8*8 )
+		if( 0 < ret & ret <= RANGE_POS_SCORE_00 )
 		{	
-			pos_score	= 100;
+			pos_score	= VAL_POS_SCORE_00;
 		}
-		else if( 8*8 < ret & ret < 16 * 16 )
+		else if( RANGE_POS_SCORE_00 < ret & ret <= RANGE_POS_SCORE_01 )
 		{	
-			pos_score	= 80;
+			pos_score	= VAL_POS_SCORE_01;
 		}
-		else if( 16*16 < ret & ret < 24 * 24 )
+		else if( RANGE_POS_SCORE_01 < ret & ret <= RANGE_POS_SCORE_02 )
 		{	
-			pos_score	= 50;
+			pos_score	= VAL_POS_SCORE_02;
 		}
-		else if( 24*24 < ret & ret < 32 * 32 )
+		else if( RANGE_POS_SCORE_02 < ret & ret <= RANGE_POS_SCORE_03 )
 		{	
-			pos_score	= 30;
+			pos_score	= VAL_POS_SCORE_03;
 		}
-		else if( 32*32 < ret & ret < 40 * 40 )
+		else if( RANGE_POS_SCORE_03 < ret & ret <= RANGE_POS_SCORE_04 )
 		{	
-			pos_score	= 10;
+			pos_score	= VAL_POS_SCORE_04;
 		}
 		else{	
-			pos_score	= 0;
+			pos_score	= VAL_POS_SCORE_05;
 		}
 		OS_Printf("自分の左手座標\n");
 		OS_Printf("X %d Y %d\n", 
@@ -2736,31 +2766,32 @@ static u8	 CalcScore( AURA_MAIN_WORK *p_wk )
 				ret	= shake2 - shake1;
 			}
 
-			switch( ret )
+			if( RANGE_SHAKE_SCORE_00(ret) )
 			{	
-			case 0:
-				shake_score	+= 100;
-				OS_Printf( "ブレ[i]　100点加算\n", i );
-				break;
-			case 1:
-				shake_score	+= 80;
-				OS_Printf( "ブレ[i]　80点加算\n", i );
-				break;
-			case 2:
-				//fall through
-			case 3:
-				shake_score	+= 50;
-				OS_Printf( "ブレ[i]　50点加算\n", i );
-				break;
-			case 4:
-				//fall through
-			case 5:
-				shake_score	+= 30;
-				OS_Printf( "ブレ[i]　30点加算\n", i );
-				break;
-			default:	//6～
-				//score	+= 0;
-				OS_Printf( "ブレ[i]　0点加算\n", i );
+				shake_score	+= VAL_SHAKE_SCORE_00;
+				OS_Printf( "ブレ[%d]　%d点加算\n", i, VAL_SHAKE_SCORE_00 );
+			}
+			else if( RANGE_SHAKE_SCORE_01(ret) )
+			{	
+				shake_score	+= VAL_SHAKE_SCORE_01;
+				OS_Printf( "ブレ[%d]　%d点加算\n", i, VAL_SHAKE_SCORE_01 );
+			}
+			else if( RANGE_SHAKE_SCORE_02(ret) )
+			{	
+				shake_score	+= VAL_SHAKE_SCORE_02;
+				OS_Printf( "ブレ[%d]　%d点加算\n", i, VAL_SHAKE_SCORE_02 );
+			}
+			else if( RANGE_SHAKE_SCORE_03(ret) )
+			{	
+				shake_score	+= VAL_SHAKE_SCORE_03;
+				OS_Printf( "ブレ[%d]　%d点加算\n", i, VAL_SHAKE_SCORE_03 );
+			}
+			else if( RANGE_SHAKE_SCORE_04(ret) )
+			{	
+#if VAL_SHAKE_SCORE_04
+					shake_score	+= VAL_SHAKE_SCORE_04;
+#endif //VAL_SHAKE_SCORE_04
+					OS_Printf( "ブレ[%d]　%d点加算\n", i, VAL_SHAKE_SCORE_04 );
 			}
 		}
 		shake_score	/= 9;
