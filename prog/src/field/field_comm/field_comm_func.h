@@ -67,7 +67,7 @@ extern void FIELD_COMM_FUNC_InitCommData_StartTalk( FIELD_COMM_FUNC *commFunc );
 extern const BOOL  FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc, FIELD_COMM_DATA *commData, int palace_area );
 extern const BOOL FIELD_COMM_FUNC_Send_RequestData( const u8 charaIdx , const F_COMM_REQUEST_TYPE reqType , FIELD_COMM_FUNC *commFunc );
 extern const BOOL  FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID , COMM_FIELD_SYS_PTR commField );
-extern const BOOL FIELD_COMM_FUNC_Send_CommonFlg( FIELD_COMM_FUNC *commFunc, const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID );
+extern const BOOL FIELD_COMM_FUNC_Send_CommonFlg( FIELD_COMM_FUNC *commFunc, const F_COMM_COMMON_FLG flg , const u16 val , const u16 val2, const u8 sendID );
 extern const BOOL  FIELD_COMM_FUNC_Send_UserData( FIELD_COMM_DATA *commData, F_COMM_USERDATA_TYPE type , const u8 sendID );
 //同期用コマンド
 extern void FIELD_COMM_FUNC_Send_SyncCommand( const F_COMM_SYNC_TYPE type , FIELD_COMM_FUNC *commFunc );
@@ -82,7 +82,7 @@ extern const int  FIELD_COMM_FUNC_GetSelfIndex( FIELD_COMM_FUNC *commFunc );
 extern const BOOL FIELD_COMM_FUNC_IsReserveTalk( FIELD_COMM_FUNC *commFunc );
 extern void FIELD_COMM_FUNC_ResetReserveTalk( FIELD_COMM_FUNC *commFunc );
 extern void FIELD_COMM_FUNC_GetTalkParterData_ID( u8 *ID , FIELD_COMM_FUNC *commFunc );
-extern void FIELD_COMM_FUNC_GetTalkParterData_Pos( u8 *posX , u8 *posZ , FIELD_COMM_FUNC *commFunc );
+extern void FIELD_COMM_FUNC_GetTalkParterData_Pos( u16 *posX , u16 *posZ , FIELD_COMM_FUNC *commFunc );
 extern const F_COMM_ACTION_LIST FIELD_COMM_FUNC_GetSelectAction( FIELD_COMM_FUNC *commFunc );
 extern const BOOL FIELD_COMM_FUNC_IsActionReturn( FIELD_COMM_FUNC *commFunc );
 extern const BOOL FIELD_COMM_FUNC_GetActionReturn( FIELD_COMM_FUNC *commFunc );

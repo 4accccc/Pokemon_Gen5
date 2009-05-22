@@ -312,7 +312,7 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEvent( GMEVENT *event , int *seq , vo
         {
           u8 partnerID;
           FIELD_COMM_FUNC_GetTalkParterData_ID( &partnerID , commFunc );
-          FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_ACTION_SELECT , evtWork->selectAction_ , partnerID );
+          FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_ACTION_SELECT , evtWork->selectAction_ , 0, partnerID );
           *seq = TPS_SELECT_ACTION_TERM;
         }
         break;
@@ -464,12 +464,12 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEventPartner( GMEVENT *event , int *s
         FIELD_COMM_FUNC_GetTalkParterData_ID( &partnerID , commFunc );
         if( ret == YNR_YES )
         {
-          FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_ACTION_RETURN , TRUE , partnerID );
+          FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_ACTION_RETURN , TRUE , 0, partnerID );
           evtWork->isDoAction_ = TRUE;
         }
         else
         {
-          FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_ACTION_RETURN , FALSE , partnerID );
+          FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_ACTION_RETURN , FALSE , 0, partnerID );
           evtWork->isDoAction_ = FALSE;
         }
         FIELD_COMM_MENU_SetMessage( DEBUG_FIELD_C_STR10 , *commMenu );
@@ -641,8 +641,12 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkCommonEvent( GMEVENT *event , int *se
   case TPS_END_TALK:
     {
       u8 partnerID;
+      F_COMM_TALK_STATE partner_state;
+      
       FIELD_COMM_FUNC_GetTalkParterData_ID( &partnerID , commFunc );
-      if( FIELD_COMM_DATA_GetTalkState( commData, partnerID ) == FCTS_WAIT_END )
+
+      partner_state = FIELD_COMM_DATA_GetTalkState( commData, partnerID );
+      if( partner_state == FCTS_WAIT_END || partner_state == FCTS_NONE )
       {
         FIELD_COMM_MENU_CloseMessageWindow( *commMenu );
         FIELD_COMM_MENU_TermBG_MsgPlane( *commMenu );

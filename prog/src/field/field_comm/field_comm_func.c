@@ -72,6 +72,7 @@ typedef struct
   u8  type_;
   u8  id_;
   u16 value_;
+  u16 value2_;
   u8  sendID_;
 }FIELD_COMM_PACKET_BUFF_DATA;
 
@@ -95,8 +96,8 @@ struct _FIELD_COMM_FUNC
 
   //会話関係
   u8    talkID_;    //会話対象
-  u8    talkPosX_;
-  u8    talkPosZ_;    //会話対象位置
+  u16    talkPosX_;
+  u16    talkPosZ_;    //会話対象位置
 
   //行動選択系
   u8    selectAction_;    //親が選んだ行動
@@ -124,7 +125,7 @@ static  u8  FIELD_COMM_FUNC_CompareBeacon( const FIELD_COMM_BEACON *firstBcn , c
 
 //各種チェック関数
 static const BOOL FIELD_COMM_FUNC_Send_RequestDataFunc( const u8 charaIdx , const F_COMM_REQUEST_TYPE reqType , const BOOL isReSend , FIELD_COMM_FUNC *commFunc );
-static const BOOL FIELD_COMM_FUNC_Send_CommonFlgFunc( const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID , BOOL isReSend , FIELD_COMM_FUNC *commFunc );
+static const BOOL FIELD_COMM_FUNC_Send_CommonFlgFunc( const F_COMM_COMMON_FLG flg , const u16 val , const u16 val2, const u8 sendID , BOOL isReSend , FIELD_COMM_FUNC *commFunc );
 
 //各種コールバック
 void  FIELD_COMM_FUNC_FinishInitCallback( void* pWork );
@@ -136,7 +137,7 @@ void  FIELD_COMM_FUNC_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 void  FIELD_COMM_FUNC_DisconnectCallBack(void* pWork);  // 通信切断時に呼ばれる関数(終了時
 
 const BOOL  FIELD_COMM_FUNC_SendPacketBuff( FIELD_COMM_FUNC *commFunc );
-void  FIELD_COMM_FUNC_SetPacketBuff( const F_COMM_PACKET_BUFF_TYPE type , const u8 id , const u8 value , const u8 sendID , FIELD_COMM_FUNC *commFunc );
+void  FIELD_COMM_FUNC_SetPacketBuff( const F_COMM_PACKET_BUFF_TYPE type , const u8 id , const u16 value , const u16 val2, const u8 sendID , FIELD_COMM_FUNC *commFunc );
 const BOOL  FIELD_COMM_FUNC_SendPacketBuff( FIELD_COMM_FUNC *commFunc );
 
 
@@ -348,6 +349,7 @@ BOOL  FIELD_COMM_FUNC_InitCommSystemWait( int *seq, void *pwk, void *pWork )
           FIELD_COMM_FUNC_Send_RequestData( GFL_NET_SENDID_ALLUSER , FCRT_PROFILE , commFunc );
         }
         
+        commFunc->commMode_ = FIELD_COMM_MODE_CONNECT;
         OS_TPrintf("ネゴシエーション完了\n");
         return TRUE;
       }
@@ -404,7 +406,7 @@ void  FIELD_COMM_FUNC_UpdateSystem( int *seq, void *pwk, void *pWork )
   //  if( GFL_NET_IsParentMachine() == FALSE )
     {
       //子機の場合はビーコンのチェック
-      FIELD_COMM_FUNC_UpdateSearchParent( commFunc );
+////      FIELD_COMM_FUNC_UpdateSearchParent( commFunc );
     }
   //  else
     {
@@ -645,7 +647,7 @@ void FIELD_COMM_FUNC_GetTalkParterData_ID( u8 *ID , FIELD_COMM_FUNC *commFunc )
 {
   *ID = commFunc->talkID_;
 }
-void FIELD_COMM_FUNC_GetTalkParterData_Pos( u8 *posX , u8 *posZ , FIELD_COMM_FUNC *commFunc )
+void FIELD_COMM_FUNC_GetTalkParterData_Pos( u16 *posX , u16 *posZ , FIELD_COMM_FUNC *commFunc )
 {
   *posX = commFunc->talkPosX_;
   *posZ = commFunc->talkPosZ_;
@@ -801,7 +803,7 @@ static const BOOL FIELD_COMM_FUNC_Send_RequestDataFunc( const u8 charaIdx , cons
     if( ret == FALSE )
     {
       //送信失敗したらバッファにためて終わり
-      FIELD_COMM_FUNC_SetPacketBuff( FCPBT_REQ_DATA , reqType , 0 , charaIdx , commFunc );
+      FIELD_COMM_FUNC_SetPacketBuff( FCPBT_REQ_DATA , reqType , 0 , 0, charaIdx , commFunc );
       ARI_TPrintf("FieldComm SendRequestData is failue![Buffer]\n");
       return FALSE;
     }
@@ -818,7 +820,7 @@ static const BOOL FIELD_COMM_FUNC_Send_RequestDataFunc( const u8 charaIdx , cons
       if( isReSend == FALSE )
       {
         //バッファにセット
-        FIELD_COMM_FUNC_SetPacketBuff( FCPBT_REQ_DATA , reqType , 0 , charaIdx , commFunc );
+        FIELD_COMM_FUNC_SetPacketBuff( FCPBT_REQ_DATA , reqType , 0 , 0, charaIdx , commFunc );
       }
     }
     return ret;
@@ -904,14 +906,27 @@ void  FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const 
 typedef struct
 {
   u8  flg_;
-  u16 value_;
+  u8  padding[3];
+  union{
+    struct{
+      u16 work[2];
+    };
+    struct{
+      u16 value_;
+      u16 padding2;
+    };
+    struct{
+      u16 talk_x;
+      u16 talk_y;
+    };
+  };
 }FIELD_COMM_COMMONFLG_PACKET;
-const BOOL  FIELD_COMM_FUNC_Send_CommonFlg( FIELD_COMM_FUNC *commFunc, const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID)
+const BOOL  FIELD_COMM_FUNC_Send_CommonFlg( FIELD_COMM_FUNC *commFunc, const F_COMM_COMMON_FLG flg , const u16 val , const u16 val2, const u8 sendID)
 {
   //再送機能を実装したため、一段噛ませて引数の追加に対応
-  return FIELD_COMM_FUNC_Send_CommonFlgFunc( flg , val , sendID , FALSE , commFunc );
+  return FIELD_COMM_FUNC_Send_CommonFlgFunc( flg , val , val2, sendID , FALSE , commFunc );
 }
-static const BOOL FIELD_COMM_FUNC_Send_CommonFlgFunc( const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID , BOOL isReSend , FIELD_COMM_FUNC *commFunc )
+static const BOOL FIELD_COMM_FUNC_Send_CommonFlgFunc( const F_COMM_COMMON_FLG flg , const u16 val , const u16 val2, const u8 sendID , BOOL isReSend , FIELD_COMM_FUNC *commFunc )
 {
   //まずバッファの処理を行う
   if( isReSend == FALSE )
@@ -921,7 +936,7 @@ static const BOOL FIELD_COMM_FUNC_Send_CommonFlgFunc( const F_COMM_COMMON_FLG fl
     {
       //送信失敗したらバッファにためて終わり
       ARI_TPrintf("FieldComm Send commonFlg is failue[Buffer]!\n");
-      FIELD_COMM_FUNC_SetPacketBuff( FCPBT_FLG , flg , val , sendID , commFunc );
+      FIELD_COMM_FUNC_SetPacketBuff( FCPBT_FLG , flg , val , val2, sendID , commFunc );
       return FALSE;
     }
   }
@@ -929,7 +944,8 @@ static const BOOL FIELD_COMM_FUNC_Send_CommonFlgFunc( const F_COMM_COMMON_FLG fl
     GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
     FIELD_COMM_COMMONFLG_PACKET pkt;
     pkt.flg_ = flg;
-    pkt.value_ = val;
+    pkt.work[0] = val;
+    pkt.work[1] = val2;
     {
       const BOOL ret = GFL_NET_SendDataEx( selfHandle , sendID ,
           FC_CMD_COMMON_FLG , sizeof( FIELD_COMM_COMMONFLG_PACKET ) ,
@@ -939,7 +955,7 @@ static const BOOL FIELD_COMM_FUNC_Send_CommonFlgFunc( const F_COMM_COMMON_FLG fl
         ARI_TPrintf("FieldComm Send commonFlg is failue!\n");
         if( isReSend == FALSE )
         {
-          FIELD_COMM_FUNC_SetPacketBuff( FCPBT_FLG , flg , val , sendID , commFunc );
+          FIELD_COMM_FUNC_SetPacketBuff( FCPBT_FLG , flg , val , val2, sendID , commFunc );
         }
       }
       return ret;
@@ -960,13 +976,13 @@ void  FIELD_COMM_FUNC_Post_CommonFlg( const int netID, const int size , const vo
     if( talkState == FCTS_NONE )
     {
       FIELD_COMM_DATA_SetTalkState( commData, FCD_SELF_INDEX , FCTS_RESERVE_TALK );
-      commFunc->talkPosX_ = pkt->value_ & 0x00FF;
-      commFunc->talkPosZ_ = pkt->value_>>8;
+      commFunc->talkPosX_ = pkt->talk_x;
+      commFunc->talkPosZ_ = pkt->talk_y;
       commFunc->talkID_ = netID;
     }
     else
     {
-      FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_TALK_UNPOSSIBLE , 0xf , netID );
+      FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_TALK_UNPOSSIBLE , 0xf , 0, netID );
     }
     break;
 
@@ -1047,7 +1063,7 @@ u8*   FIELD_COMM_FUNC_Post_UserData_Buff( int netID, void* pWork , int size )
 void FIELD_COMM_FUNC_Send_SyncCommand( const F_COMM_SYNC_TYPE type , FIELD_COMM_FUNC *commFunc )
 {
   commFunc->sendSyncType_ = type;
-  FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_SYNC_TYPE , type , GFL_NET_SENDID_ALLUSER );
+  FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_SYNC_TYPE , type , 0, GFL_NET_SENDID_ALLUSER );
 //  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
 //  GFL_NET_TimingSyncStart( selfHandle , type );
 }
@@ -1098,7 +1114,7 @@ const u8 FIELD_COMM_FUNC_GetBit_TalkMember( FIELD_COMM_FUNC *commFunc )
 //--------------------------------------------------------------
 // 送信バッファセット
 //--------------------------------------------------------------
-void  FIELD_COMM_FUNC_SetPacketBuff( const F_COMM_PACKET_BUFF_TYPE type , const u8 id , const u8 value , const u8 sendID , FIELD_COMM_FUNC *commFunc )
+void  FIELD_COMM_FUNC_SetPacketBuff( const F_COMM_PACKET_BUFF_TYPE type , const u8 id , const u16 value , const u16 val2, const u8 sendID , FIELD_COMM_FUNC *commFunc )
 {
   //元に戻すように取っておく
   u8 idx = commFunc->pktBuffEnd_;
@@ -1119,6 +1135,7 @@ void  FIELD_COMM_FUNC_SetPacketBuff( const F_COMM_PACKET_BUFF_TYPE type , const 
   commFunc->pktBuffData_[commFunc->pktBuffEnd_].type_ = type;
   commFunc->pktBuffData_[commFunc->pktBuffEnd_].id_ = id;
   commFunc->pktBuffData_[commFunc->pktBuffEnd_].value_ = value;
+  commFunc->pktBuffData_[commFunc->pktBuffEnd_].value2_ = val2;
   commFunc->pktBuffData_[commFunc->pktBuffEnd_].sendID_ = sendID;
   ARI_TPrintf("FieldComm PktBuff Set[%d-%d]\n",commFunc->pktBuffStart_, commFunc->pktBuffEnd_);
 }
@@ -1141,7 +1158,7 @@ const BOOL  FIELD_COMM_FUNC_SendPacketBuff( FIELD_COMM_FUNC *commFunc )
     switch( pktBuff->type_ )
     {
     case FCPBT_FLG:
-      ret = FIELD_COMM_FUNC_Send_CommonFlgFunc( pktBuff->id_ , pktBuff->value_ , pktBuff->sendID_ , TRUE , commFunc );
+      ret = FIELD_COMM_FUNC_Send_CommonFlgFunc( pktBuff->id_ , pktBuff->value_,pktBuff->value2_ , pktBuff->sendID_ , TRUE , commFunc );
       break;
     case FCPBT_REQ_DATA:
       ret = FIELD_COMM_FUNC_Send_RequestDataFunc( pktBuff->sendID_ , pktBuff->id_ , TRUE , commFunc );

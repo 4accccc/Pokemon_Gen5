@@ -60,8 +60,8 @@ struct _FIELD_COMM_MAIN
   u8 padding2[3];
 };
 
-//上下左右に対応したグリッドでのオフセット
-static const s8 FCM_dirOfsArr[4][2]={{0,-1},{0,1},{-1,0},{1,0}};
+//上左下右に対応したグリッドでのオフセット
+static const s8 FCM_dirOfsArr[4][2]={{0,-1},{-1,0},{0,1},{1,0}};
 
 //======================================================================
 //  proto
@@ -570,17 +570,32 @@ static  const u8 FIELD_COMM_MAIN_CheckTalkTarget( FIELD_COMM_MAIN *commSys )
   FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commSys->commField_);
   FIELD_COMM_DATA *commData = FIELD_COMM_SYS_GetCommDataWork(commSys->commField_);
   const PLAYER_WORK *plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork( commData, FCD_SELF_INDEX );
-  const u16 selfDir = plWork->direction;
+  const u16 selfDir = plWork->direction >> 14;
   int selfX,selfZ;
+  int member_num;
+  int my_palace_area, target_palace_area;
+  PLAYER_WORK *target_plWork;
+  ZONEID my_zone_id, target_zone_id;
+  
   FIELD_COMM_DATA_GetGridPos_AfterMove( commData, FCD_SELF_INDEX,&selfX,&selfZ );
   selfX += FCM_dirOfsArr[selfDir][0];
   selfZ += FCM_dirOfsArr[selfDir][1];
-  for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+  member_num = FIELD_COMM_FUNC_GetMemberNum();
+  my_palace_area = PALACE_SYS_GetArea(commSys->palace);
+  my_zone_id = PLAYERWORK_getZoneID( plWork );
+  for( i=0;i<member_num;i++ )
   {
-    if( i != FIELD_COMM_FUNC_GetSelfIndex(commFunc) )
+    target_plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(commData, i);
+    target_palace_area = PLAYERWORK_getPalaceArea( target_plWork );
+    target_zone_id = PLAYERWORK_getZoneID( target_plWork );
+    OS_TPrintf("check my_area = %d, target_area = %d, my_zone=%d, trg_zone=%d\n", my_palace_area, target_palace_area, my_zone_id, target_zone_id);
+    if( i != FIELD_COMM_FUNC_GetSelfIndex(commFunc) 
+        && (my_palace_area == target_palace_area 
+        || (my_zone_id == target_zone_id && my_zone_id == ZONE_ID_PALACETEST)) )
     {
       int px,pz;
       FIELD_COMM_DATA_GetGridPos_AfterMove( commData, i,&px,&pz );
+      OS_TPrintf("check px = %d, pz = %d, selfX = %d, selfZ = %d, selfDir=%d\n", px, pz, selfX, selfZ, selfDir);
       if( px == selfX && pz == selfZ )
       {
         return i;
@@ -609,7 +624,8 @@ const BOOL  FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys )
   if( FIELD_COMM_DATA_GetTalkState( commData, FCD_SELF_INDEX ) == FCTS_RESERVE_TALK )
   {
     int selfX,selfZ;
-    u8  postID,postX,postZ;
+    u8  postID;
+    u16 postX,postZ;
     const BOOL isMove = FIELD_COMM_DATA_GetGridPos_AfterMove( commData, FCD_SELF_INDEX ,&selfX,&selfZ);
     FIELD_COMM_FUNC_GetTalkParterData_ID( &postID , commFunc );
     FIELD_COMM_FUNC_GetTalkParterData_Pos( &postX , &postZ , commFunc );
@@ -629,7 +645,7 @@ const BOOL  FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys )
     {
       //すでに通り過ぎてしまっているためキャンセル処理
       FIELD_COMM_DATA_SetTalkState( commData, FCD_SELF_INDEX , FCTS_NONE );
-      FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_TALK_UNPOSSIBLE , 0 , postID );
+      FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_TALK_UNPOSSIBLE , 0 , 0, postID );
       return FALSE;
     }
   }
@@ -644,15 +660,13 @@ void  FIELD_COMM_MAIN_StartTalk( FIELD_COMM_MAIN *commSys )
   FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commSys->commField_);
   FIELD_COMM_DATA *commData = FIELD_COMM_SYS_GetCommDataWork(commSys->commField_);
   const PLAYER_WORK *plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork( commData, FCD_SELF_INDEX );
-  const u16 selfDir = plWork->direction;
+  const u16 selfDir = plWork->direction >> 14;
   int selfX,selfZ;
-  u16 sendValue;
   FIELD_COMM_DATA_GetGridPos_AfterMove( commData, FCD_SELF_INDEX,&selfX,&selfZ );
   selfX += FCM_dirOfsArr[selfDir][0];
   selfZ += FCM_dirOfsArr[selfDir][1];
-  sendValue = selfX + (selfZ<<8);
   FIELD_COMM_FUNC_InitCommData_StartTalk( commFunc );
-  FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_TALK_REQUEST , sendValue , commSys->talkTrgChara_ );
+  FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_TALK_REQUEST , selfX , selfZ, commSys->talkTrgChara_ );
   FIELD_COMM_DATA_SetTalkState( commData, FCD_SELF_INDEX , FCTS_WAIT_TALK );
 }
 //--------------------------------------------------------------
@@ -665,7 +679,7 @@ void  FIELD_COMM_MAIN_StartTalkPartner( FIELD_COMM_MAIN *commSys )
   u8  postID;
   FIELD_COMM_FUNC_InitCommData_StartTalk( commFunc );
   FIELD_COMM_FUNC_GetTalkParterData_ID( &postID , commFunc );
-  FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_TALK_ACCEPT , 0 , postID );
+  FIELD_COMM_FUNC_Send_CommonFlg( commFunc, FCCF_TALK_ACCEPT , 0 , 0, postID );
   FIELD_COMM_DATA_SetTalkState( commData, FCD_SELF_INDEX , FCTS_REPLY_TALK );
 }
 
