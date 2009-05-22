@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-05-18T19:14:14"/>
+	<create user="matsumiya" host="W00179" date="2009-05-22T14:09:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="147"/>
+		<comment position="4" width="220"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="-2" top="184" right="703" bottom="804" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,10 +292,44 @@
 	</lock>
 
 
-	<row id="msg_t01r0101_test">
-		<attribute name="キャラ指定">不明</attribute>
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+	<row id="msg_t01r0101_test_01">
+		<comment>♀
+・5月用仮メッセージ
+続けて
+02
+03
+04
+05
+のどれかをランダム（25％）で</comment>
+		<attribute name="キャラ指定">お姉さん</attribute>
+		<language name="JPN" width="256">あなたも　ポケモンと　いっしょに
+イッシュちほうを　たびするのね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あなたも　ポケモンと　一緒に
+イッシュ地方を　旅するのね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0101_test_02">
+		<attribute name="キャラ指定">お姉さん</attribute>
+		<language name="JPN" width="256">その１</language>
+		<language name="JPN_KANJI" width="256">その１</language>
+	</row>
+
+	<row id="msg_t01r0101_test_03">
+		<attribute name="キャラ指定">お姉さん</attribute>
+		<language name="JPN" width="256">その２</language>
+		<language name="JPN_KANJI" width="256">その２</language>
+	</row>
+
+	<row id="msg_t01r0101_test_04">
+		<attribute name="キャラ指定">お姉さん</attribute>
+		<language name="JPN" width="256">その３</language>
+		<language name="JPN_KANJI" width="256">その３</language>
+	</row>
+
+	<row id="msg_t01r0101_test_05">
+		<attribute name="キャラ指定">お姉さん</attribute>
+		<language name="JPN" width="256">その４</language>
+		<language name="JPN_KANJI" width="256">その４</language>
 	</row>
 
 	<flowchart-group-list>
