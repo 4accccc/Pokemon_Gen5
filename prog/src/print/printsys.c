@@ -1282,7 +1282,6 @@ u32 PRINTSYS_GetStrHeight( const STRBUF* str, GFL_FONT* font )
     if( *sp == CR_CODE )
     {
       ++numCR;
-      continue;
     }
     if( *sp == SPCODE_TAG_START_ )
     {
