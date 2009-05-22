@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-21T15:20:35"/>
+	<create user="matsumiya" host="W00179" date="2009-05-22T19:57:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="30" top="198" right="735" bottom="818" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,9 +293,23 @@
 
 
 	<row id="msg_t01r0301_test_01">
-		<attribute name="キャラ指定">不明</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+		<comment>仮
+・t02r0103と同じ</comment>
+		<attribute name="キャラ指定">老婆</attribute>
+		<language name="JPN" width="256">ある　ひとは　いいました
+いろんな　かんがえが　あるから[BE:00:ページ切り替え（行送り）]
+あらそいが　うまれるのだと……[BE:01:ページ切り替え（クリア）]
+べつの　ひとは　いいました
+いろんな　かんがえが　あるから[BE:00:ページ切り替え（行送り）]
+せかいが　ひろがるのだと……[BE:01:ページ切り替え（クリア）]
+きっと　どちらも　せいかい　なのね</language>
+		<language name="JPN_KANJI" width="256">ある　人は　いいました
+いろんな　考えが　あるから[BE:00:ページ切り替え（行送り）]
+争いが　うまれるのだと……[BE:01:ページ切り替え（クリア）]
+べつの　人は　いいました
+いろんな　考えが　あるから[BE:00:ページ切り替え（行送り）]
+世界が　広がるのだと……[BE:01:ページ切り替え（クリア）]
+きっと　どちらも　正解なのね</language>
 	</row>
 
 	<flowchart-group-list>
