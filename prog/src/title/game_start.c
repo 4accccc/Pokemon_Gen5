@@ -17,6 +17,8 @@
 #include "app/name_input.h"
 #include "test/testmode.h"
 #include "select_moji_mode.h"
+#include "message.naix"
+#include "msg/msg_debugname.h"
 
 //==============================================================================
 //	
@@ -360,7 +362,29 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 	
 	always_net = (BOOL)pwk;   //TRUE:常時通信で「続きから」
 
-	SaveControl_ClearData(SaveControl_GetPointer());
+	SaveControl_ClearData(SaveControl_GetPointer());  //セーブデータクリア
+  
+  {//名前のセット
+  	MYSTATUS		*myStatus;
+  	GFL_MSGDATA *msgman;
+  	STRBUF *namebuf;
+  	u32 msg_id;
+  	
+  	msgman = GFL_MSG_Create( 
+  	  GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, GFL_HEAPID_APP );
+  #if PM_VERSION == VERSION_BLACK
+  	namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_BLACK );
+  #else
+    namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_WHITE );
+  #endif
+  	
+  	myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+  	MyStatus_SetMyNameFromString( myStatus , namebuf );
+  	
+  	GFL_STR_DeleteBuffer(namebuf);
+  	GFL_MSG_Delete(msgman);
+  }
+	
 	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0, always_net);
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 #endif

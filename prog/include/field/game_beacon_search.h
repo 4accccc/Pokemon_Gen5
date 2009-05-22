@@ -25,7 +25,8 @@ typedef struct
   GameServiceID gsid; ///<Game Service ID
   u8 member_num;      ///<現在の参加人数
   u8 member_max;      ///<最大人数
-  u8 padding[2];
+  u8 error;           ///<エラー状況
+  u8 padding;
 }GBS_BEACON;
 
 

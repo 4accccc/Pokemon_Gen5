@@ -1193,6 +1193,7 @@ static void* FIELD_COMM_FUNC_GetBeaconData_CommFunc(FIELD_COMM_FUNC *commFunc)
   beacon->gsid = WB_NET_FIELDMOVE_SERVICEID;
   beacon->member_num = FIELD_COMM_FUNC_GetMemberNum();
   beacon->member_max = FIELD_COMM_MEMBER_MAX;
+  beacon->error = GFL_NET_SystemIsError();
   return beacon;
 #endif
 }
@@ -1223,5 +1224,6 @@ void  FIELD_COMM_FUNC_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 //--------------------------------------------------------------
 void  FIELD_COMM_FUNC_DisconnectCallBack(void* pWork)
 {
+  OS_TPrintf("切断コールバック呼ばれた\n");
 }
 

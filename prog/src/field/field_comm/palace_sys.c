@@ -54,7 +54,8 @@ typedef struct{
 typedef struct _PALACE_SYS_WORK{
   u8 area;          ///<自機が居るエリア番号
   u8 entry_count;   ///<参加したプレイヤー数(プレイヤーが抜けても減らない)
-  u8 padding[2];
+  u8 entry_count_max; ///今までの最大参加人数
+  u8 padding;
 
   GFL_CLUNIT *clunit;
   PALACE_DEBUG_NUMBER number;
@@ -99,6 +100,7 @@ PALACE_SYS_PTR PALACE_SYS_Alloc(HEAPID heap_id)
 void PALACE_SYS_InitWork(PALACE_SYS_PTR palace)
 {
   palace->entry_count = 1;  //自分
+  palace->entry_count_max = 1;
   palace->area = PALACE_AREA_NO_NULL;
 }
 
@@ -151,11 +153,18 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
   if(net_num > palace->entry_count){
     OS_TPrintf("palace:ユーザーが増えた old=%d, new=%d\n", palace->entry_count, net_num);
     palace->entry_count = net_num;
+    palace->entry_count_max = net_num;
     //※check　親の場合、ここで増えたentry_countを一斉送信
     //         現在はGFL_NET_GetConnectNumで親子関係無く増やしている
     //         entry_countの意味が「参加したプレイヤー数(プレイヤーが抜けても減らない)」の為、
     //         親が管理し、送信する必要がある
       ;
+  }
+  else if(net_num < palace->entry_count && palace->entry_count_max > 1){
+    OS_TPrintf("palace:ユーザーが減ったので強制エラー発動\n");
+    GFL_NET_FatalErrorFunc(1);
+    palace->entry_count_max = net_num;
+    palace->entry_count = net_num;
   }
   
   //自機の位置確認し、ワープ処理
@@ -181,7 +190,7 @@ static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIE
   int new_area, now_area;
   
   zone_id = PLAYERWORK_getZoneID(plwork);
-  if(zone_id != ZONE_ID_PALACETEST){
+  if(zone_id != ZONE_ID_PALACETEST || FIELD_PLAYER_CheckLiveFldMMdl(fldply) == FALSE){
     return;
   }
   
@@ -400,7 +409,6 @@ typedef struct{
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   BOOL left_right;
-  int wait;
 }DEBUG_PALACE_NGWIN;
 
 static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk );
@@ -466,12 +474,6 @@ static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk 
   case 5:
     if(FLDMMDL_CheckEndAcmd(ngwin->player_mmdl) == TRUE){
       FLDMMDL_EndAcmd(ngwin->player_mmdl);
-      (*seq)++;
-    }
-    break;
-  case 6:
-    ngwin->wait++;
-    if(ngwin->wait > 60*3){
       return( GMEVENT_RES_FINISH );
     }
     break;

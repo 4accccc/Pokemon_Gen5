@@ -313,7 +313,7 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
     
     FIELD_PLAYER_GetPos( pcActor, &pos );
     pos.x >>= FX32_SHIFT;
-    if(GFL_NET_GetConnectNum() <= 1 && pos.x <= 536 || pos.x >= 1000){
+    if(GFL_NET_GetConnectNum() <= 1 && (pos.x <= 536 || pos.x >= 1000)){
       left_right = pos.x <= 536 ? 0 : 1;
       return EVENT_DebugPalaceNGWin( gameSys, fieldWork, pcActor, left_right );
     }

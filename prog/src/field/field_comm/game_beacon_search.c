@@ -366,6 +366,7 @@ static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon)
   beacon->gsid = aGFLNetInit.gsid;
   beacon->member_num = GFL_NET_GetConnectNum();
   beacon->member_max = 4;
+  beacon->error = GFL_NET_SystemIsError();
 }
 
 //--------------------------------------------------------------
@@ -440,6 +441,9 @@ static const GBS_BEACON * GameBeacon_CompareBeacon( const GBS_BEACON *beacon_a ,
 {
   //¦check@“d”gó‹µ‚Ì‰Á–¡‚ÍŒã‚Å“ü‚ê‚é
   
+  if(beacon_a->error > 0){
+    return beacon_b;
+  }
   if(beacon_a->member_num >= beacon_b->member_num){
     return beacon_a;  //l”‚ª‘½‚¢•û‚ğ—Dæ
   }
