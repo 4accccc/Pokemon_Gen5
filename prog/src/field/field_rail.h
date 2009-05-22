@@ -18,6 +18,10 @@ typedef struct _FIELD_RAIL_MAN FIELD_RAIL_MAN;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+typedef struct _FIELD_RAIL FIELD_RAIL;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 typedef struct _RAIL_POINT RAIL_POINT;
 
 //------------------------------------------------------------------
@@ -27,7 +31,7 @@ typedef struct _RAIL_LINE RAIL_LINE;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-typedef void (RAIL_POS_FUNC)(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+typedef void (RAIL_POS_FUNC)(const FIELD_RAIL * man, VecFx32 * pos);
 typedef void (RAIL_CAMERA_FUNC)(const FIELD_RAIL_MAN * man);
 
 
@@ -169,8 +173,8 @@ extern void FIELD_RAIL_MAN_GetDirection(const FIELD_RAIL_MAN * man, VecFx32 * di
 //------------------------------------------------------------------
 //  LINEà⁄ìÆä÷êî
 //------------------------------------------------------------------
-extern void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_MAN * man, VecFx32 * pos);
-extern void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_MAN * man, VecFx32 * pos);
+extern void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL * rail, VecFx32 * pos);
+extern void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL * rail, VecFx32 * pos);
 
 extern const RAIL_LINEPOS_SET RAIL_LINEPOS_SET_Default;
 extern const RAIL_CAMERA_SET RAIL_CAMERA_SET_Default;
@@ -182,6 +186,6 @@ extern void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man);
 //-----------------------------------------------------------------------------
 //  â~ìÆçÏ
 //-----------------------------------------------------------------------------
-extern void FIELD_RAIL_POSFUNC_CircleLine( const FIELD_RAIL_MAN * man, VecFx32 * pos );
+extern void FIELD_RAIL_POSFUNC_CircleLine( const FIELD_RAIL * rail, VecFx32 * pos );
 extern void FIELD_RAIL_POSFUNC_CircleCamera( const FIELD_RAIL_MAN * man );
 

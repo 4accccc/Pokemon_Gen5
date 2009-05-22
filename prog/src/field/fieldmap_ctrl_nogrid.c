@@ -634,6 +634,11 @@ static const RAIL_LINE line_d02_bridge_start =
 //    RAIL_CAMERA_SET定義
 //
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 立体交差ループの移動定義
+ */
+//--------------------------------------------------------------
 static const RAIL_LINEPOS_SET LoopLinePosSet =
 {
   FIELD_RAIL_POSFUNC_CurveLine,
@@ -693,9 +698,6 @@ static const RAIL_CAMERA_SET camera_point_slope =
   0x31a8, //angle:pitch = angle h
   0x0000, //angle:yaw = angle v
   0x0280 * FX32_ONE,  //angle:len
-  //0x0fa8, //angle:pitch = angle h
-  //0x0000, //angle:yaw = angle v
-  //0x0120 * FX32_ONE,  //angle:len
   0,
 };
 

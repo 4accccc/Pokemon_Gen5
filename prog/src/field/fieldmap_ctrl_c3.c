@@ -1236,6 +1236,9 @@ static const RAIL_CAMERA_SET sc_CAMERA_C3_JOINT04 =
 static const RAIL_LINEPOS_SET sc_LINEPOS_C3_NORMAL = 
 {
   FIELD_RAIL_POSFUNC_CircleLine,
+	0x2f6f36,
+  0x4000,
+  0x301402
 };
 
 
