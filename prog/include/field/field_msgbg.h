@@ -12,6 +12,7 @@
 #include "system/gfl_use.h"
 #include "print/printsys.h"
 #include "print/gf_font.h"
+#include "system/talkmsgwin.h"
 
 //======================================================================
 //	define
@@ -43,6 +44,16 @@ typedef enum
   FLDMENUFUNC_YESNO_NULL, ///<選択中
 }FLDMENUFUNC_YESNO;
 
+//--------------------------------------------------------------
+/// FLDTALKMSGWIN_IDX 吹き出しウィンドウインデックス
+//--------------------------------------------------------------
+typedef enum
+{
+  FLDTALKMSGWIN_IDX_UPPER = 0, ///<画面上部に
+  FLDTALKMSGWIN_IDX_LOWER, ///<画面下部に
+  FLDTALKMSGWIN_IDX_AUTO, ///<吹き出し元の座標を考慮し自動で配置
+}FLDTALKMSGWIN_IDX;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -52,6 +63,7 @@ typedef struct _TAG_FLDMSGWIN FLDMSGWIN;		///<FLDMSGWIN
 typedef struct _TAG_FLDMSGPRINT_STREAM FLDMSGPRINT_STREAM; ///<FLDMSGPRINT_STREAM
 typedef struct _TAG_FLDMSGWIN_STREAM FLDMSGWIN_STREAM; ///<FLDMSGWIN_STREAM
 typedef struct _TAG_FLDMENUFUNC FLDMENUFUNC;	///<FLDMENUFUNC
+typedef struct _TAG_FLDTALKMSGWIN FLDTALKMSGWIN; ///FLDTALKMSGWIN
 
 //--------------------------------------------------------------
 ///	FLDMENUFUNC_LISTDATA
@@ -101,9 +113,10 @@ typedef struct
 //	extern
 //======================================================================
 //メッセージBG
-extern FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID );
+extern FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera );
 extern void FLDMSGBG_Delete( FLDMSGBG *fmb );
 extern void FLDMSGBG_PrintMain( FLDMSGBG *fmb );
+extern void FLDMSGBG_PrintG3D( FLDMSGBG *fmb );
 extern void FLDMSGBG_ClearPrintQue( FLDMSGBG *fmb );
 extern void FLDMSGBG_AllPrint( FLDMSGBG *fmb );
 extern BOOL FLDMSGBG_CheckFinishPrint( FLDMSGBG *fmb );
@@ -187,5 +200,14 @@ extern void FLDMSGWIN_STREAM_PrintStrBufStart(
 extern BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin );
 extern FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_AddTalkWin(
     FLDMSGBG *fmb, GFL_MSGDATA *msgData );
+
+//吹き出しメッセージウィンドウ
+extern FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
+    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
+    const GFL_MSGDATA *msgData, u32 msgID );
+extern FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
+    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf );
+extern void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg );
+extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
 
 #endif //__FLDMSGBG_H__

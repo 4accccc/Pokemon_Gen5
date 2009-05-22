@@ -623,6 +623,7 @@ extern void FLDMMDL_AddGridPosY( FLDMMDL * fmmdl, s16 y );
 extern s16 FLDMMDL_GetGridPosZ( const FLDMMDL * fmmdl );
 extern void FLDMMDL_SetGridPosZ( FLDMMDL * fmmdl, s16 z );
 extern void FLDMMDL_AddGridPosZ( FLDMMDL * fmmdl, s16 z );
+extern const VecFx32 * FLDMMDL_GetVectorPosAddress( const FLDMMDL * fmmdl );
 extern void FLDMMDL_GetVectorPos( const FLDMMDL * fmmdl, VecFx32 *vec );
 extern void FLDMMDL_SetVectorPos( FLDMMDL * fmmdl, const VecFx32 *vec );
 extern fx32 FLDMMDL_GetVectorPosY( const FLDMMDL * fmmdl );

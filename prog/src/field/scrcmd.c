@@ -950,6 +950,7 @@ static BOOL EvWaitABKey( VMHANDLE * core, void *wk )
 //======================================================================
 static BOOL TalkMsgWait( VMHANDLE *core, void *wk )
 {
+#if 0
 	SCRCMD_WORK *work = wk;
 	FLDMSGWIN_STREAM *msgWin;
   msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
@@ -959,6 +960,17 @@ static BOOL TalkMsgWait( VMHANDLE *core, void *wk )
   }
   
   return( 0 );
+#else
+	SCRCMD_WORK *work = wk;
+	FLDTALKMSGWIN *tmsg;
+  tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetFldMsgWinStream( work );
+  
+  if( FLDTALKMSGWIN_Print(tmsg) == TRUE ){
+    return( 1 );
+  }
+  
+  return( 0 );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -970,6 +982,7 @@ static BOOL TalkMsgWait( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 {
+#if 0
 	SCRCMD_WORK *work = wk;
 	u8 msg_id = VMGetU8(core);
 	FLDMSGWIN_STREAM *msgWin;
@@ -978,6 +991,27 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 	FLDMSGWIN_STREAM_PrintStart( msgWin, 0, 0, msg_id );
   VMCMD_SetWait( core, TalkMsgWait );
 	return 1;
+#else
+  const VecFx32 *pos;
+  FLDMMDL *fmmdl;
+	FLDTALKMSGWIN *tmsg;
+	SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	u8 msg_id = VMGetU8(core);
+  GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+	
+  fmmdl = FLDMMDLSYS_SearchOBJID( SCRCMD_WORK_GetFldMMdlSys(work), 0xff );
+  pos = FLDMMDL_GetVectorPosAddress( fmmdl );
+  
+  tmsg = FLDTALKMSGWIN_Add(
+      fparam->msgBG, FLDTALKMSGWIN_IDX_LOWER, pos, msgData, msg_id );
+  
+	SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
+
+  VMCMD_SetWait( core, TalkMsgWait );
+	return 1;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1033,6 +1067,7 @@ static VMCMD_RESULT EvCmdChangeLangID( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 {
+#if 0 //吹き出しウィンドウテスト
 	SCRCMD_WORK *work = wk;
 	SCRIPT_WORK *sc;
 	SCRIPT_FLDPARAM *fparam;
@@ -1048,6 +1083,7 @@ static VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 
 	win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
 	*win_open_flag = TRUE;	//ON;
+#endif
 	return 0;
 }
 
@@ -1060,6 +1096,7 @@ static VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
 {
+#if 0 //吹き出しウィンドウテスト
 	SCRCMD_WORK *work = wk;
 	SCRIPT_WORK *sc;
 	FLDMSGWIN_STREAM *msgWin;
@@ -1071,6 +1108,14 @@ static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
 	sc = SCRCMD_WORK_GetScriptWork( work );
 	win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
 	*win_open_flag = FALSE;	//OFF;
+#else
+	SCRCMD_WORK *work = wk;
+	SCRIPT_WORK *sc;
+	FLDTALKMSGWIN *tmsg;
+  
+  tmsg = (FLDTALKMSGWIN*) SCRCMD_WORK_GetFldMsgWinStream( work );
+	FLDTALKMSGWIN_Delete( tmsg );
+#endif
 	return 0;
 }
 

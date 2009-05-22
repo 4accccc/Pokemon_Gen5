@@ -25,11 +25,17 @@
 //	define
 //======================================================================
 #define FLDMSGBG_BGFRAME (GFL_BG_FRAME1_M)	///<使用BGフレーム
+
+#define FLDMSGBG_PANO_TALKMSGWIN (12) ///<吹き出し会話ウィンドウパレットNo
 #define FLDMSGBG_PANO_MENU (13) 			///<メニューパレットNo
 #define FLDMSGBG_PANO_FONT (14)				///<フォントパレットNo
+
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
-#define FLDMSGBG_STRLEN (256)				///<文字列長さ標準
 #define FLDMSGBG_PRINT_STREAM_MAX (1) ///<PRINT_STREAM稼働数
+
+#define FLDMSGBG_STRLEN (256)				///<文字列長さ標準
+
+#define FLDMSGBG_CHAROFFS_TALKMSGWIN (32) ///<TALKWINMSGキャラオフセット
 
 //======================================================================
 //	typedef struct
@@ -62,6 +68,8 @@ struct _TAG_FLDMSGBG
 	GFL_FONT *fontHandle;
 	PRINT_QUE *printQue;
 	FLDMSGPRINT msgPrintTbl[FLDMSGBG_PRINT_MAX];
+  
+  TALKMSGWIN_SYS *talkMsgWinSys;
   
   GFL_TCBLSYS *printTCBLSys;
 };
@@ -130,10 +138,11 @@ static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo;
 /**
  * FLDMSGBG セットアップ
  * @param	heapID	HEAPID
+ * @param g3Dcamera GFL_G3D_CAMERA* 吹き出しウィンドウで使用 NULL=使用しない
  * @retval	FLDMAPBG	FLDMAPBG*
  */
 //--------------------------------------------------------------
-FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID )
+FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 {
 	FLDMSGBG *fmb;
 	
@@ -190,6 +199,20 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID )
         fmb->heapID, fmb->heapID, FLDMSGBG_PRINT_STREAM_MAX, 4 );
   }
   
+  { //TALKMSGWIN
+    if( g3Dcamera != NULL ){
+      TALKMSGWIN_SYS_SETUP setup;
+      setup.heapID = fmb->heapID;
+      setup.g3Dcamera = g3Dcamera;
+      setup.fontHandle = fmb->fontHandle;
+      setup.chrNumOffs = FLDMSGBG_CHAROFFS_TALKMSGWIN;
+      setup.ini.frameID = FLDMSGBG_BGFRAME;
+      setup.ini.winPltID = FLDMSGBG_PANO_TALKMSGWIN;
+      setup.ini.fontPltID = FLDMSGBG_PANO_FONT;
+      fmb->talkMsgWinSys = TALKMSGWIN_SystemCreate( &setup );
+    }
+  }
+
 	return( fmb );
 }
 
@@ -205,9 +228,13 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
 	int i = 0;
 	FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
 	
+  if( fmb->talkMsgWinSys != NULL ){
+    TALKMSGWIN_SystemDelete( fmb->talkMsgWinSys );
+  }
+  
   GFL_TCBL_Exit( fmb->printTCBLSys );
   
-//	GFL_BG_FreeCharacterArea( fmb->bgFrame, 0x00, 0x20 );
+//GFL_BG_FreeCharacterArea( fmb->bgFrame, 0x00, 0x20 );
 	GFL_BG_FillCharacterRelease( fmb->bgFrame, 0x00, 0x20 );
 
 	GFL_BG_FreeBGControl( fmb->bgFrame );
@@ -252,6 +279,25 @@ void FLDMSGBG_PrintMain( FLDMSGBG *fmb )
 	}
   
   GFL_TCBL_Main( fmb->printTCBLSys );
+  
+  if( fmb->talkMsgWinSys != NULL ){
+    TALKMSGWIN_SystemMain( fmb->talkMsgWinSys );
+    TALKMSGWIN_SystemDraw2D( fmb->talkMsgWinSys );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG G3D描画処理
+ * @param fmb FLDMSGBG
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_PrintG3D( FLDMSGBG *fmb )
+{
+  if( fmb->talkMsgWinSys != NULL ){
+    TALKMSGWIN_SystemDraw3D( fmb->talkMsgWinSys );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1055,7 +1101,8 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
 {
   FLDMSGWIN_STREAM *msgWin;
 	
-	msgWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMSGWIN_STREAM) );
+	msgWin = GFL_HEAP_AllocClearMemory(
+      fmb->heapID, sizeof(FLDMSGWIN_STREAM) );
 	msgWin->fmb = fmb;
   msgWin->msgData = msgData;
 	msgWin->bmpwin = FldBmpWinFrame_Init(
@@ -1158,6 +1205,182 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_AddTalkWin(
     FLDMSGBG *fmb, GFL_MSGDATA *msgData )
 {
   return( FLDMSGWIN_STREAM_Add(fmb,msgData,1,19,30,4) );
+}
+
+//======================================================================
+//  FLDTALKMSGWIN
+//======================================================================
+//--------------------------------------------------------------
+/// FLDTALKMSGWIN
+//--------------------------------------------------------------
+struct _TAG_FLDTALKMSGWIN
+{
+  u8 flag_key_trg;
+  u8 flag_key_cont;
+  STRBUF *strBuf;
+  int talkMsgWinIdx;
+  TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
+};
+
+//--------------------------------------------------------------
+/**
+ * FLDTALKMSGWIN 吹き出しウィンドウセット
+ * @param fmb FLDMSGBG
+ * @param idx FLDTALKMSGWIN_IDX
+ * @param strBuf 表示するSTRBUF
+ * @param pos 吹き出し元座標
+ * @retval FLDTALKMSGWIN*
+ * @note 引数pos,strBufは表示中、常に参照されるので
+ * 削除されるまで保持して下さい
+ */
+//--------------------------------------------------------------
+static void fldTalkMsgWin_Add(
+    FLDMSGBG *fmb, FLDTALKMSGWIN *tmsg,
+    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf )
+{
+  GF_ASSERT( fmb->talkMsgWinSys != NULL );
+  
+  tmsg->talkMsgWinSys = fmb->talkMsgWinSys;
+  tmsg->talkMsgWinIdx = idx;
+
+#if 0 
+  TALKMSGWIN_CreateFloatWindowIdx(
+      tmsg->talkMsgWinSys,
+      0,
+      (VecFx32*)pos, strBuf,
+      1, 19,
+      30, 4,
+      15 );
+#else
+  OS_Printf( "ウィンドウ %d,%d,%d\n", pos->x, pos->y, pos->z );
+  switch( idx ){
+  case FLDTALKMSGWIN_IDX_UPPER:
+    TALKMSGWIN_CreateFixWindowUpper( tmsg->talkMsgWinSys,
+        FLDTALKMSGWIN_IDX_UPPER, (VecFx32*)pos, strBuf, 15 );
+  case FLDTALKMSGWIN_IDX_LOWER:
+    TALKMSGWIN_CreateFixWindowLower( tmsg->talkMsgWinSys,
+        FLDTALKMSGWIN_IDX_LOWER, (VecFx32*)pos, strBuf, 15 );
+    break;
+  default:
+    TALKMSGWIN_CreateFixWindowAuto( tmsg->talkMsgWinSys,
+        FLDTALKMSGWIN_IDX_AUTO, (VecFx32*)pos, strBuf, 15 );
+  }
+  
+  TALKMSGWIN_OpenWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+#endif
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDTALKMSGWIN 吹き出しウィンドウセット
+ * @param fmb FLDMSGBG
+ * @param idx FLDTALKMSGWIN_TYPE
+ * @param pos 吹き出し元座標
+ * @param msgData 使用するGFL_MSGDATA
+ * @param msgID メッセージ アーカイブデータID
+ * @retval FLDTALKMSGWIN*
+ * @note 引数pos,strBufは表示中、常に参照されるので
+ * 削除されるまで保持して下さい
+ */
+//--------------------------------------------------------------
+FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
+    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
+    const GFL_MSGDATA *msgData, u32 msgID )
+{
+  FLDTALKMSGWIN *tmsg = GFL_HEAP_AllocClearMemory(
+      fmb->heapID, sizeof(FLDTALKMSGWIN) );
+  tmsg->strBuf = GFL_STR_CreateBuffer(
+					FLDMSGBG_STRLEN, fmb->heapID );
+  GFL_MSG_GetString( msgData, msgID, tmsg->strBuf );
+  fldTalkMsgWin_Add( fmb, tmsg, idx, pos, tmsg->strBuf );
+  return( tmsg );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDTALKMSGWIN 吹き出しウィンドウセット
+ * @param fmb FLDMSGBG
+ * @param idx FLDTALKMSGWIN_TYPE
+ * @param strBuf 表示するSTRBUF
+ * @param pos 吹き出し元座標
+ * @retval FLDTALKMSGWIN*
+ * @note 引数pos,strBufは表示中、常に参照されるので
+ * 削除されるまで保持して下さい
+ */
+//--------------------------------------------------------------
+FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
+    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos, STRBUF *strBuf )
+{
+  FLDTALKMSGWIN *tmsg = GFL_HEAP_AllocClearMemory(
+      fmb->heapID, sizeof(FLDTALKMSGWIN) );
+  fldTalkMsgWin_Add( fmb, tmsg, idx, pos, strBuf );
+  return( tmsg );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDTALKMSGWIN 吹き出しウィンドウ削除
+ * @param tmsg FLDTALKMSGWIN
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg )
+{
+  if( tmsg->strBuf != NULL ){
+		GFL_STR_DeleteBuffer( tmsg->strBuf );
+  }
+  
+  TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+  GFL_HEAP_FreeMemory( tmsg );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDTALKMSGWIN 吹き出しウィンドウ 表示
+ * @param tmsg FLDTALKMSGWIN
+ * @retval BOOL TRUE=表示終了,FALSE=表示中
+ */
+//--------------------------------------------------------------
+BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
+{
+  int trg,cont;
+  PRINTSTREAM_STATE state;
+  PRINT_STREAM *stream;
+  
+  if( TALKMSGWIN_CheckPrintOn(
+        tmsg->talkMsgWinSys,tmsg->talkMsgWinIdx) == FALSE ){
+    return( FALSE );
+  }
+
+  trg = GFL_UI_KEY_GetTrg();
+  cont = GFL_UI_KEY_GetCont();
+  stream = TALKMSGWIN_GetPrintStream(
+      tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+  state = PRINTSYS_PrintStreamGetState( stream );
+  
+  switch( state ){
+  case PRINTSTREAM_STATE_RUNNING: //実行中
+    if( (trg & PAD_BUTTON_A) ){
+      tmsg->flag_key_trg = TRUE;
+    }
+    
+    if( tmsg->flag_key_trg == TRUE && (cont & PAD_BUTTON_A) ){
+      PRINTSYS_PrintStreamShortWait( stream, 0 );
+    }else{
+      PRINTSYS_PrintStreamShortWait( stream, 2 );
+    }
+    break;
+  case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    if( (trg & PAD_BUTTON_A) ){
+      PRINTSYS_PrintStreamReleasePause( stream );
+      tmsg->flag_key_trg = FALSE;
+    }
+    break;
+  case PRINTSTREAM_STATE_DONE: //終了
+    return( TRUE );
+  }
+  
+  return( FALSE );
 }
 
 //======================================================================

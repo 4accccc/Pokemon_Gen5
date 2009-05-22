@@ -2456,6 +2456,18 @@ void FLDMMDL_AddGridPosZ( FLDMMDL * fmmdl, s16 z )
 
 //--------------------------------------------------------------
 /**
+ * FLDMMDL 実座標ポインタ取得
+ * @param	fmmdl	FLDMMDL * 
+ * @retval VecFx32*
+ */
+//--------------------------------------------------------------
+const VecFx32 * FLDMMDL_GetVectorPosAddress( const FLDMMDL * fmmdl )
+{
+  return( &fmmdl->vec_pos_now );
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMMDL 実座標取得
  * @param	fmmdl	FLDMMDL * 
  * @param	vec		座標格納先
