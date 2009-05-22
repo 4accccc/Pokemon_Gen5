@@ -430,6 +430,10 @@ static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq)
 void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid)
 {
   GAME_COMM_PLAYER_STATUS *player_status = &gcsp->player_status[comm_net_id];
+  ZONEID old, now;
+  
+  old = player_status->old_zone_id;
+  now = player_status->zone_id;
   
   if(player_status->zone_id == zone_id && player_status->invasion_netid == invasion_netid){
     return;
@@ -471,6 +475,10 @@ void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZON
       && zone_id != ZONE_ID_PALACETEST && invasion_netid == GFL_NET_SystemGetCurrentID()){
     GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test07_01 + comm_net_id);
     OS_TPrintf("INFO:ŠX‚ÉN“ü‚µ‚Ä‚«‚½I net_id = %d\n", comm_net_id);
+  }
+  else if(old == 0 && now == 0){
+    GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test09_01);
+    OS_TPrintf("INFO:’ÊMÚ‘±‚µ‚½I net_id = %d\n", comm_net_id);
   }
 }
 
