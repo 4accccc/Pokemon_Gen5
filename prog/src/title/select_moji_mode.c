@@ -10,6 +10,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/bmp_winframe.h"
+#include "system/wipe.h"
 
 #include "arc_def.h"
 #include "print/printsys.h"
@@ -69,6 +70,7 @@ typedef enum
 {
   SMS_KANJI,
   SMS_COMM,
+  SMS_WAIT_FADEOUT,
 }SELECT_MODE_STATE;
 
 typedef enum
@@ -204,10 +206,20 @@ static GFL_PROC_RESULT SEL_MODE_ProcMain( GFL_PROC * proc, int * seq, void * pwk
         {
           initWork->isComm = FALSE;
         }
-        return GFL_PROC_RES_FINISH;
+        WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                        WIPE_FADE_BLACK , 12 , WIPE_DEF_SYNC , HEAPID_SEL_MODE );
+        
+        work->state = SMS_WAIT_FADEOUT;
       }
     }
+    break;
+  case SMS_WAIT_FADEOUT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      return GFL_PROC_RES_FINISH;
+    }
 
+    break;
   }
   return GFL_PROC_RES_CONTINUE;
 }
