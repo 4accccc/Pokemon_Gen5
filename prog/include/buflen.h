@@ -6,6 +6,8 @@
 #ifndef __BUFLEN_H__
 #define __BUFLEN_H__
 
+#define GLOBAL_MSGLEN		( 2 )		///<文字列データ補正定義（以前はcommon.hに定義されていた）
+
 #define	PERSON_NAME_SIZE	7	// 人物の名前の長さ（自分も含む）
 #define	MONS_NAME_SIZE		10	// ポケモン名の長さ(バッファサイズ EOM_含まず)
 #define MONUMENT_NAME_SIZE	10	// 石碑の名前の長さ
