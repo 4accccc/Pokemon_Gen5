@@ -1185,6 +1185,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 			GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
 			GFL_BG_LoadScreenReq(GEAR_BUTTON_FRAME);
 			pWork->msgCountDown = MSG_COUNTDOWN_FRAMENUM;
+	GFL_FONTSYS_SetDefaultColor();
 
 		}
 	}

@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"					//GFL_HEAPID_APP
+#include "system/wipe.h"
 #include "arc_def.h"
 
 #include "net/network_define.h"
@@ -1570,7 +1571,9 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 	
 	//メニュー起動チェック
 	if( trg == PAD_BUTTON_X ){
-		return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
+		if(WIPE_SYS_EffectCheck()){
+			return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
+		}
 	}
 
 	//サブスクリーンからのイベント起動チェック
