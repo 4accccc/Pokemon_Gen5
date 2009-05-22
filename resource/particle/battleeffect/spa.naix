@@ -11,7 +11,8 @@
 #define NARC_SPA_NAIX_
 
 enum {
-	NARC_spa_be_m_ball_00_kaiten_spa = 0
+	NARC_spa_be_000_ec001_1a_spa = 0,
+	NARC_spa_be_m_ball_00_kaiten_spa = 1
 };
 
 /* NARC_SPA_NAIX_ */
