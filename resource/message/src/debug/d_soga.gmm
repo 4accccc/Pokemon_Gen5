@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2009-04-22T15:30:38"/>
+	<create user="sogabe" host="W00140" date="2009-05-12T17:37:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,7 +296,7 @@
 
 	<dialog left="50" top="62" right="755" bottom="682" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="756" top="61" right="1229" bottom="459" visible="no"/>
+		<tag-palette left="756" top="61" right="1229" bottom="459" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -520,6 +520,38 @@
 
 	<row id="PPNowMaxMsg">
 		<language name="JPN">[2:01:２桁:0]／[2:01:２桁:1]</language>
+	</row>
+
+	<row id="BINPUT_FIGHT">
+		<language name="JPN">たたかう</language>
+	</row>
+
+	<row id="BINPUT_BAG">
+		<language name="JPN">バッグ</language>
+	</row>
+
+	<row id="BINPUT_POKEMON">
+		<language name="JPN">ポケモン</language>
+	</row>
+
+	<row id="BINPUT_ESCAPE">
+		<language name="JPN">にげる</language>
+	</row>
+
+	<row id="BINPUT_MODORU">
+		<language name="JPN">もどる</language>
+	</row>
+
+	<row id="TargetPokemonMaleMsg">
+		<language name="JPN">[1:02:ポケモンニックネーム:0]♂</language>
+	</row>
+
+	<row id="TargetPokemonFemaleMsg">
+		<language name="JPN">[1:02:ポケモンニックネーム:0]♀</language>
+	</row>
+
+	<row id="TargetPokemonMsg">
+		<language name="JPN">[1:02:ポケモンニックネーム:0]</language>
 	</row>
 
 	<flowchart-group-list>
