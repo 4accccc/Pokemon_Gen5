@@ -625,8 +625,6 @@ static void Local_MessageSetting(TRADE_WORK *tw)
 	//フォントパレット転送
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
 		0x20*D_FONT_PALNO, 0x20, HEAPID_TRADE);
-	
-	GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
 }
 
 //--------------------------------------------------------------
