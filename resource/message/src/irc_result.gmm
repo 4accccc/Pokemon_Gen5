@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-20T11:38:13"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-05-22T15:37:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="349" right="953" bottom="969" maximized="no" rayout="Vertical2">
+	<dialog left="80" top="44" right="785" bottom="664" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -335,15 +335,15 @@
 
 	<row id="RESULT_STR_000">
 		<language name="JPN" width="256">あなたと　あいての
-なかよし　ハートは？</language>
+なかよし　オブジェは？</language>
 		<language name="JPN_KANJI" width="256">あなたと相手の
-仲良しハートは？</language>
+仲良しオブジェは？</language>
 	</row>
 
 	<row id="RESULT_STR_001">
-		<language name="JPN" width="256">なかよしハートを
+		<language name="JPN" width="256">なかよしオブジェを
 さわってみよう！</language>
-		<language name="JPN_KANJI" width="256">仲良しハートを
+		<language name="JPN_KANJI" width="256">仲良しオブジェを
 触ってみよう！</language>
 	</row>
 
@@ -356,29 +356,83 @@
 
 	<row id="RESULT_GOOD_000">
 		<language name="JPN" width="256">あいてに
-「おきにいりの　ばしょ」
-をきいてみましょう！</language>
+「おきにいりの　ばしょ」を
+きいてみましょう！</language>
 		<language name="JPN_KANJI" width="256">相手に
-「お気に入りの場所」
-を聞いてみましょう！</language>
+「お気に入りの場所」を
+聞いてみましょう！</language>
+	</row>
+
+	<row id="RESULT_GOOD_001">
+		<language name="JPN" width="256">あいてに
+「きゅうじつのすごしかた」を
+きいてみましょう！</language>
+		<language name="JPN_KANJI" width="256">相手に
+「休日の過ごし方」を
+聞いてみましょう！</language>
+	</row>
+
+	<row id="RESULT_GOOD_002">
+		<language name="JPN" width="256">あいてに
+「かなえたい　ゆめ」を
+きいてみましょう！</language>
+		<language name="JPN_KANJI" width="256">相手に
+「かなえたい夢」を
+聞いてみましょう！</language>
 	</row>
 
 	<row id="RESULT_NORMAL_000">
 		<language name="JPN" width="256">あいてに
-「すきな　たべもの」
-をきいてみましょう！</language>
+「すきな　たべもの」を
+きいてみましょう！</language>
 		<language name="JPN_KANJI" width="256">相手に
-「好きな食べ物」
-を聞いてみましょう！</language>
+「好きな食べ物」を
+聞いてみましょう！</language>
+	</row>
+
+	<row id="RESULT_NORMAL_001">
+		<language name="JPN" width="256">あいてに
+「きのう　したこと」を
+きいてみましょう！</language>
+		<language name="JPN_KANJI" width="256">相手に
+「昨日　した事」を
+聞いてみましょう！</language>
+	</row>
+
+	<row id="RESULT_NORMAL_002">
+		<language name="JPN" width="256">あいてに
+「いきたい　ところ」を
+きいてみましょう！</language>
+		<language name="JPN_KANJI" width="256">相手に
+「行きたい所」を
+聞いてみましょう！</language>
 	</row>
 
 	<row id="RESULT_BAD_000">
 		<language name="JPN" width="256">あいてに
-「なまえは　アから　はじまりますか」
-ときいてみましょう！</language>
+「なまえは　アから　はじまりますか」と
+きいてみましょう！</language>
 		<language name="JPN_KANJI" width="256">相手に
-「名前はアからはじまりますか」
-と聞いてみましょう！</language>
+「名前はアからはじまりますか」と
+聞いてみましょう！</language>
+	</row>
+
+	<row id="RESULT_BAD_001">
+		<language name="JPN" width="256">あいてに
+「かみ　ながいですか？」と
+きいてみましょう！</language>
+		<language name="JPN_KANJI" width="256">相手に
+「髪　長いですか？」と
+聞いてみましょう！</language>
+	</row>
+
+	<row id="RESULT_BAD_002">
+		<language name="JPN" width="256">あいてに
+「めがね　かけてますか？」と
+きいてみましょう！</language>
+		<language name="JPN_KANJI" width="256">相手に
+「眼鏡かけてますか？」と
+聞いてみましょう！</language>
 	</row>
 
 	<flowchart-group-list>
