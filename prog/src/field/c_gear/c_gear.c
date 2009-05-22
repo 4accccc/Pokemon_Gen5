@@ -908,7 +908,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-#define _NUKI_FONT_PALNO  (13)
+//#define _NUKI_FONT_PALNO  (13)
 
 static void _modeInit(C_GEAR_WORK* pWork)
 {
@@ -934,8 +934,8 @@ static void _modeInit(C_GEAR_WORK* pWork)
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
 
 	
-	pWork->MyInfoWin = GFL_BMPWIN_Create(GEAR_BMPWIN_FRAME, 3, 0x15, 0x1a, 2,
-																			 _NUKI_FONT_PALNO,  GFL_BMP_CHRAREA_GET_B );
+	pWork->MyInfoWin = GFL_BMPWIN_Create(GEAR_BUTTON_FRAME, 3, 0x15, 0x1a, 2,
+																			 _BUTTON_MSG_PAL,  GFL_BMP_CHRAREA_GET_B );
 
 	pWork->pStrBuf = GFL_STR_CreateBuffer( 128, pWork->heapID );
 	pWork->pStrBufOrg = GFL_STR_CreateBuffer( 128, pWork->heapID );
@@ -1183,7 +1183,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 			PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 1, 0, pWork->pStrBuf, pWork->pFontHandle);
 			GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
 			GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
-			GFL_BG_LoadScreenReq(GEAR_BMPWIN_FRAME);
+			GFL_BG_LoadScreenReq(GEAR_BUTTON_FRAME);
 			pWork->msgCountDown = MSG_COUNTDOWN_FRAMENUM;
 
 		}
