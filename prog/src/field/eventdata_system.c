@@ -66,14 +66,14 @@ extern const FLDMMDL_HEADER SampleFldMMdlHeader_4season[];
 extern const int SampleFldMMdlHeaderCount_4season;
 
 //仮動作モデル配置データ
-#include "../../resource/fldmapdata/eventdata/zone_t01evc.cdat"
-#include "../../resource/fldmapdata/eventdata/zone_t01r0101evc.cdat"
-#include "../../resource/fldmapdata/eventdata/zone_t01r0201evc.cdat"
-#include "../../resource/fldmapdata/eventdata/zone_t01r0301evc.cdat"
-#include "../../resource/fldmapdata/eventdata/zone_t01r0401evc.cdat"
-#include "../../resource/fldmapdata/eventdata/zone_r01evc.cdat"
-#include "../../resource/fldmapdata/eventdata/zone_t02evc.cdat"
-#include "../../resource/fldmapdata/eventdata/zone_t02pc0101evc.cdat"
+#include "../../../resource/fldmapdata/eventdata/zone_t01evc.cdat"
+#include "../../../resource/fldmapdata/eventdata/zone_t01r0101evc.cdat"
+#include "../../../resource/fldmapdata/eventdata/zone_t01r0201evc.cdat"
+#include "../../../resource/fldmapdata/eventdata/zone_t01r0301evc.cdat"
+#include "../../../resource/fldmapdata/eventdata/zone_t01r0401evc.cdat"
+#include "../../../resource/fldmapdata/eventdata/zone_r01evc.cdat"
+#include "../../../resource/fldmapdata/eventdata/zone_t02evc.cdat"
+#include "../../../resource/fldmapdata/eventdata/zone_t02pc0101evc.cdat"
 
 
 //============================================================================================
@@ -144,6 +144,10 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 	case ZONE_ID_T01:
 		evdata->npc_count = SampleFldMMdlHeaderCount_T01;
 		evdata->npc_data = SampleFldMMdlHeader_T01;
+		break;
+	case ZONE_ID_T02:
+		evdata->npc_count = SampleFldMMdlHeaderCount_t02;
+		evdata->npc_data = SampleFldMMdlHeader_t02;
 		break;
 	case ZONE_ID_R01:
 		evdata->npc_count = SampleFldMMdlHeaderCount_R01;

@@ -19,6 +19,8 @@
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 
+#include "msgdata.h"
+
 //======================================================================
 //	定義
 //======================================================================
@@ -79,6 +81,7 @@ static VMCMD_RESULT EvCmdABKeyWait( VMHANDLE * core, void *wk );
 static BOOL EvWaitABKey( VMHANDLE * core, void *wk );
 
 static VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk );
+static VMCMD_RESULT EvCmdChangeLangID( VMHANDLE *core, void *wk );
 
 static VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk );
@@ -171,6 +174,8 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
 	EvCmdObjTurn,
   
   EvCmdYesNoWin,
+
+  EvCmdChangeLangID,
 };
 
 //--------------------------------------------------------------
@@ -993,10 +998,28 @@ static VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
 	FLDMSGWIN_STREAM_PrintStart( msgWin, 0, 0, msg_id );
 	return 0;
 #else
-  EvCmdTalkMsg( core, wk );
+  return( EvCmdTalkMsg(core,wk) );
 #endif
 }
 
+//--------------------------------------------------------------
+/**
+ * 言語IDを切り替え
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdChangeLangID( VMHANDLE *core, void *wk )
+{
+  u8 id = GFL_MSGSYS_GetLangID();
+  if( id == 0 ){ //ひらがな
+    id = 1;
+  }else if( id == 1 ){ //漢字
+    id = 0;
+  }
+  GFL_MSGSYS_SetLangID( id );
+  return 0;
+}
 
 //======================================================================
 //	フィールド　会話ウィンドウ
