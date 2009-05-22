@@ -360,13 +360,16 @@ SRCS_OVERLAY_TAYA_DEBUG   = test/taya/d_taya.c
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>          libnnsmcs.a
-SRCS_OVERLAY_SOGABE_DEBUG   = test/soga/d_soga.c \
-                  test/soga/d_btltest.c \
-                  test/soga/gf_mcs.c \
-                  test/soga/capture.c \
-                  test/soga/effect_viewer.c \
-                  test/soga/pokemon_viewer.c
+#if mcs_user
+#else
+#LIB=>					libnnsmcs.a
+#endif
+SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
+								  test/soga/d_btltest.c \
+								  test/soga/gf_mcs.c \
+								  test/soga/capture.c \
+								  test/soga/effect_viewer.c \
+								  test/soga/pokemon_viewer.c
 
 # タイトル
 #===> SRCS_OVERLAY_DEV_IRC
@@ -408,41 +411,59 @@ SRCS_OVERLAY_BALLOON =  net_app/balloon/balloon.c \
 # バトル
 #===> SRCS_OVERLAY_TAYA_DEBUG
 #===> SRCS_OVERLAY_SOGABE_DEBUG
-SRCS_OVERLAY_BATTLE = battle/btl_main.c \
-      battle/btl_server.c \
-      battle/btl_server_flow.c \
-      battle/btl_server_cmd.c \
-      battle/btl_pre_sc.c \
-      battle/btl_client.c \
-      battle/btl_adapter.c \
-      battle/btl_pokeparam.c \
-      battle/btl_event.c \
-      battle/btl_calc.c \
-      battle/btl_net.c \
-      battle/btl_string.c \
-      battle/btl_util.c \
-      battle/btl_field.c \
-      battle/btl_pokeselect.c \
-      battle/handler/hand_tokusei.c \
-      battle/handler/hand_item.c \
+SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
+			battle/btl_server.c \
+			battle/btl_server_flow.c \
+			battle/btl_server_cmd.c \
+			battle/btl_pre_sc.c \
+			battle/btl_client.c \
+			battle/btl_adapter.c \
+			battle/btl_pokeparam.c \
+			battle/btl_event.c \
+			battle/btl_calc.c \
+			battle/btl_net.c \
+			battle/btl_string.c \
+			battle/btl_util.c \
+			battle/btl_field.c \
+			battle/btl_pokeselect.c \
+			battle/handler/hand_tokusei.c \
+			battle/handler/hand_item.c \
       battle/handler/hand_waza.c \
-      battle/handler/tokusei/hand_tok_ikaku.c \
-      battle/handler/tokusei/hand_tok_clearbody.c \
-      battle/handler/tokusei/hand_tok_seisinryoku.c \
-      battle/handler/tokusei/hand_tok_fukutsuno.c \
-      battle/handler/tokusei/hand_tok_atuisibou.c \
-      battle/handler/tokusei/hand_tok_kairikibasami.c \
-      battle/handler/tokusei/hand_tok_tikaramoti.c \
-      battle/btlv/btlv_core.c \
-      battle/btlv/btlv_scu.c \
-      battle/btlv/btlv_scd.c \
-      battle/btlv/btlv_stage.c \
-      battle/btlv/btlv_field.c \
-      battle/btlv/btlv_camera.c \
-      battle/btlv/btlv_effect.c \
-      battle/btlv/btlv_efftool.c \
-      battle/btlv/btlv_effvm.c \
-      battle/btlv/btlv_mcss.c
+			battle/handler/tokusei/hand_tok_ikaku.c \
+			battle/handler/tokusei/hand_tok_clearbody.c \
+			battle/handler/tokusei/hand_tok_seisinryoku.c \
+			battle/handler/tokusei/hand_tok_fukutsuno.c \
+			battle/handler/tokusei/hand_tok_atuisibou.c \
+			battle/handler/tokusei/hand_tok_kairikibasami.c \
+			battle/handler/tokusei/hand_tok_tikaramoti.c \
+			battle/btlv/btlv_core.c \
+			battle/btlv/btlv_scu.c \
+			battle/btlv/btlv_scd.c \
+			battle/btlv/btlv_stage.c \
+			battle/btlv/btlv_field.c \
+			battle/btlv/btlv_camera.c \
+			battle/btlv/btlv_effect.c \
+			battle/btlv/btlv_efftool.c \
+			battle/btlv/btlv_effvm.c \
+			battle/btlv/btlv_mcss.c \
+			battle/btlv/btlv_clact.c \
+			battle/btlv/battle_cursor.c \
+			battle/btlv/battle_cursor_disp.c \
+			battle/btlv/battle_input.c \
+			battle/btlv/battle_playbackstop.c \
+			battle/btlv/wazatype_panel.c
+
+#			battle/btlv/b_app_tool.c \
+#			battle/btlv/b_bag_anm.c \
+#			battle/btlv/b_bag_bmp.c \
+#			battle/btlv/b_bag_item.c \
+#			battle/btlv/b_bag_main.c \
+#			battle/btlv/b_bag_obj.c \
+#			battle/btlv/b_plist_anm.c \
+#			battle/btlv/b_plist_bmp.c \
+#			battle/btlv/b_plist_main.c \
+#			battle/btlv/b_plist_obj.c \
+#			battle/btlv/finger_cursor.c \
 
 # WIFICLUB
 #===> SRCS_OVERLAY_DEV_WIFI
