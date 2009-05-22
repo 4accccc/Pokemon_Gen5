@@ -618,6 +618,9 @@ static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tail
 {
 	fx32 scale;
 
+	G3X_Reset();
+	GFL_G3D_DRAW_SetLookAt();
+
 	G3_PushMtx();
 	//平行移動パラメータ設定
 	G3_Translate(tailData->trans.x, tailData->trans.y, tailData->trans.z);
