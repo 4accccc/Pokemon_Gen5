@@ -291,8 +291,8 @@ const SCENE_DATA resistMapTbl[] = {
 		{	
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
-      3,3,
-      FLDMAPPER_MODE_SCROLL_XZ, 
+      2,2,
+      FLDMAPPER_MODE_SCROLL_NONE, 
 			ARCID_FLDMAP_LAND_EX,
 
 			2,  2, NELEMS(test_c3map),
