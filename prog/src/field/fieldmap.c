@@ -24,6 +24,7 @@
 #include "field_camera.h"
 #include "field_data.h"
 #include "field/field_msgbg.h"
+#include "field_encount.h"
 
 #include "weather.h"
 #include "field_fog.h"
@@ -182,7 +183,8 @@ struct _FIELDMAP_WORK
 	MAP_MATRIX *pMapMatrix;
 	FLDMAPPER_RESISTDATA map_res;
 	FIELD_PLAYER *field_player;
-	
+	FIELD_ENCOUNT *encount;
+
   TALKMSGWIN_SYS * talkmsgwin_sys;
   GFL_FONT * fontHandle;
 
@@ -527,6 +529,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
 		fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, fieldWork, GAMEDATA_GetSubScreenMode(gamedata));
 	}
+  
+  //フィールドエンカウント初期化
+  fieldWork->encount = FIELD_ENCOUNT_Create( fieldWork );
+  
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 
@@ -642,6 +648,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     PLAYERWORK_setPosition(pw, &player_pos);
   }
   
+  //フィールドエンカウント破棄
+  FIELD_ENCOUNT_Delete( fieldWork->encount );
+
   //情報バーの開放
 	{
 		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
@@ -1498,7 +1507,16 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 	FIELDMAP_WORK *fieldWork = work;
 	int	trg = FIELDMAP_GetKeyTrg( fieldWork );
 	int cont = FIELDMAP_GetKeyCont( fieldWork );
-	
+	PLAYER_MOVE_STATE state;
+  PLAYER_MOVE_VALUE value;
+
+  { //自機動作ステータス更新
+    FIELD_PLAYER_UpdateMoveStatus( fieldWork->field_player );
+  }
+  
+  value = FIELD_PLAYER_GetMoveValue( fieldWork->field_player );
+  state = FIELD_PLAYER_GetMoveState( fieldWork->field_player );
+  
 #ifdef  PM_DEBUG
 	//ソフトリセットチェック
 	if( (cont&resetCont) == resetCont ){
@@ -1517,13 +1535,27 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
 				fieldWork->heapID, ZONEDATA_GetMapRscID(fieldWork->map_id));
 	}
+#endif //debug
 	
-	//戦闘移行チェック
-	if( trg == PAD_BUTTON_START ){
-		return DEBUG_EVENT_Battle(gsys, fieldWork);
-	}
-#endif
-	
+  //戦闘移行チェック
+  if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){
+    #ifdef PM_DEBUG
+    if( (cont & PAD_BUTTON_R) == 0 ){
+      if( state == PLAYER_MOVE_STATE_END ){
+        if( FIELD_ENCOUNT_CheckEncount(fieldWork->encount) == TRUE ){
+          return EVENT_Battle( gsys, fieldWork );
+        }
+      }
+    }
+    #else
+    if( state == PLAYER_MOVE_STATE_END ){
+      if( FIELD_ENCOUNT_CheckEncount(fieldWork->encount) == TRUE ){
+        return EVENT_Battle( gsys, fieldWork );
+      }
+    }
+    #endif
+  }
+  
 	//座標接続チェック
 	event = fldmap_Event_CheckConnect(gsys, fieldWork, &fieldWork->now_pos);
 	if( event != NULL ){

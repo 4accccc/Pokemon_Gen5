@@ -26,15 +26,18 @@ struct _FIELD_PLAYER
 {
 	HEAPID heapID;
 	FIELDMAP_WORK *fieldWork;
+  
+  PLAYER_MOVE_STATE move_state;
+  PLAYER_MOVE_VALUE move_value;
 	
 	u16 dir;
 	u16 padding0;
 	VecFx32 pos;
-	
+  
 	FLDMMDL *fldmmdl;
 	FLDMAPPER_GRIDINFODATA gridInfoData;
-	
-	//消します
+  
+	//以下消します
 	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
 	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
 };
@@ -124,6 +127,73 @@ void FIELD_PLAYER_Delete( FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
 {
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドプレイヤー　動作ステータス更新
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
+{
+  FLDMMDL *fmmdl = fld_player->fldmmdl;
+  PLAYER_MOVE_VALUE value = fld_player->move_value;
+  PLAYER_MOVE_STATE state = fld_player->move_state;
+
+  fld_player->move_state = PLAYER_MOVE_STATE_OFF;
+
+  if( FLDMMDL_CheckPossibleAcmd(fmmdl) == FALSE ){ //動作中
+    switch( value ){
+    case PLAYER_MOVE_VALUE_STOP:
+      break;
+    case PLAYER_MOVE_VALUE_WALK:
+      if( state == PLAYER_MOVE_STATE_OFF ||
+          state == PLAYER_MOVE_STATE_END ){
+        fld_player->move_state = PLAYER_MOVE_STATE_START;
+      }else{
+        fld_player->move_state = PLAYER_MOVE_STATE_ON;
+      }
+      break;
+    case PLAYER_MOVE_VALUE_TURN:
+      fld_player->move_state = PLAYER_MOVE_STATE_ON;
+      break;
+    }
+    
+    return;
+  }
+  
+  if( FLDMMDL_CheckEndAcmd(fmmdl) == TRUE ){ //動作終了
+    switch( value ){
+    case PLAYER_MOVE_VALUE_STOP:
+      break;
+    case PLAYER_MOVE_VALUE_WALK:
+      switch( state ){
+      case PLAYER_MOVE_STATE_OFF:
+        break;
+      case PLAYER_MOVE_STATE_END:
+        fld_player->move_state = PLAYER_MOVE_STATE_OFF;
+        break;
+      default:
+        fld_player->move_state = PLAYER_MOVE_STATE_END;
+      }
+      break;
+    case PLAYER_MOVE_VALUE_TURN:
+      switch( state ){
+      case PLAYER_MOVE_STATE_OFF:
+        break;
+      case PLAYER_MOVE_STATE_END:
+        fld_player->move_state = PLAYER_MOVE_STATE_OFF;
+        break;
+      default:
+        fld_player->move_state = PLAYER_MOVE_STATE_END;
+      }
+      break;
+    }
+
+    return;
+  }
 }
 
 //======================================================================
@@ -232,6 +302,45 @@ FLDMAPPER_GRIDINFODATA * FIELD_PLAYER_GetGridInfoData(
 		FIELD_PLAYER *fld_player )
 {
 	return( &fld_player->gridInfoData );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER PLAYER_MOVE_VALUEセット
+ * @param fld_player FIELD_PLAYER
+ * @retval PLAYER_MOVE_STATE
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_SetMoveValue(
+    FIELD_PLAYER *fld_player, PLAYER_MOVE_VALUE val )
+{
+  fld_player->move_value = val;
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER PLAYER_MOVE_VALUE取得
+ * @param fld_player FIELD_PLAYER
+ * @retval PLAYER_MOVE_STATE
+ */
+//--------------------------------------------------------------
+PLAYER_MOVE_VALUE FIELD_PLAYER_GetMoveValue(
+    const FIELD_PLAYER *fld_player )
+{
+  return( fld_player->move_value );
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER PLAYER_MOVE_STATE取得
+ * @param fld_player FIELD_PLAYER
+ * @retval PLAYER_MOVE_STATE
+ */
+//--------------------------------------------------------------
+PLAYER_MOVE_STATE FIELD_PLAYER_GetMoveState(
+    const FIELD_PLAYER *fld_player )
+{
+  return( fld_player->move_state );
 }
 
 //======================================================================

@@ -5,6 +5,7 @@
  * @author kagaya
  */
 //======================================================================
+#pragma once
 #include <gflib.h>
 #include "system/gfl_use.h"
 

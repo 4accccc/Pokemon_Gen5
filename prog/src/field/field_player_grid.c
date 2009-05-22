@@ -444,6 +444,8 @@ static void gjiki_SetMove_Stop(
 	FLDMMDL_SetAcmd( fmmdl, code );
 	g_jiki->move_state = PLAYER_MOVE_STOP;
 	
+  FIELD_PLAYER_SetMoveValue( g_jiki->fld_player, PLAYER_MOVE_VALUE_STOP );
+
 	gjiki_Sound_MoveStop();
 }
 
@@ -482,6 +484,8 @@ static void gjiki_SetMove_Walk(
 	
 	FLDMMDL_SetAcmd( fmmdl, code );
 	g_jiki->move_state = PLAYER_MOVE_WALK;
+
+  FIELD_PLAYER_SetMoveValue( g_jiki->fld_player, PLAYER_MOVE_VALUE_WALK );
 	
 	gjiki_Sound_Move();
 }
@@ -509,6 +513,7 @@ static void gjiki_SetMove_Turn(
 	FLDMMDL_SetAcmd( fmmdl, code );
 	g_jiki->move_state = PLAYER_MOVE_TURN;
 	
+  FIELD_PLAYER_SetMoveValue( g_jiki->fld_player, PLAYER_MOVE_VALUE_TURN );
 	gjiki_Sound_MoveStop();
 }
 
@@ -535,6 +540,7 @@ static void gjiki_SetMove_Hitch(
 	FLDMMDL_SetAcmd( fmmdl, code );
 	g_jiki->move_state = PLAYER_MOVE_HITCH;
 	
+  FIELD_PLAYER_SetMoveValue( g_jiki->fld_player, PLAYER_MOVE_VALUE_STOP );
 	gjiki_Sound_MoveStop();
 }
 
@@ -561,7 +567,8 @@ static void gjiki_SetMove_Jump(
 	
 	FLDMMDL_SetAcmd( fmmdl, code );
 	g_jiki->move_state = PLAYER_MOVE_WALK;
-	
+  
+  FIELD_PLAYER_SetMoveValue( g_jiki->fld_player, PLAYER_MOVE_VALUE_WALK );
 	gjiki_Sound_Move();
 }
 
