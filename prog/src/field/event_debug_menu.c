@@ -128,6 +128,7 @@ static void DEBUG_SetMenuWorkZoneIDName(
 		FLDMENUFUNC_LISTDATA *list, HEAPID heapID, u32 zoneID );
 
 static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL DMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -147,6 +148,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
+	{ DEBUG_FIELD_STR20, DMenuCallProc_ControlTarget },
 	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
 	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
 	{ DEBUG_FIELD_STR01, NULL },
@@ -165,6 +167,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 {
 	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
 	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
+	{ DEBUG_FIELD_STR20, DMenuCallProc_ControlTarget },
 	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
 	{ DEBUG_FIELD_STR04, DMenuCallProc_GridScaleControl },
 	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
@@ -885,7 +888,7 @@ static void setupTouchCameraSubscreen(DMESSWORK * dmess)
     void * inner_work;
     FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(dmess->fieldWork);
     inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(dmess->subscreen);
-    FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work);
+    FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS);
   }
 }
 
@@ -1114,8 +1117,62 @@ static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
 	work->event = event;
 	work->heapID = heapID;
 	work->fieldWork = fieldWork;
-	work->pMsgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-	work->pStrBuf = GFL_STR_CreateBuffer( 128, work->heapID );
+
+  {
+
+    FIELD_SUBSCREEN_WORK * subscreen;
+    
+
+    // カメラ操作は下画面で行う
+    subscreen = FIELDMAP_GetFieldSubscreenWork(work->fieldWork);
+    FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
+    { 
+      void * inner_work;
+      FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
+      inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
+      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS);
+    }
+  }
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　カメラ操作
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
+{
+	DEBUG_CTLCAMERA_WORK *work;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	
+	GMEVENT_Change( event, DMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
+	work = GMEVENT_GetEventWork( event );
+	MI_CpuClear8( work, sizeof(DEBUG_CTLCAMERA_WORK) );
+	
+	work->gsys = gsys;
+	work->event = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+
+  {
+    FIELD_SUBSCREEN_WORK * subscreen;
+
+    // カメラ操作は下画面で行う
+    subscreen = FIELDMAP_GetFieldSubscreenWork(work->fieldWork);
+    FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
+    { 
+      void * inner_work;
+      FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
+      inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
+      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_TARGET_POS);
+    }
+  }
 	return( TRUE );
 }
 
@@ -1132,22 +1189,15 @@ static GMEVENT_RESULT DMenuControlCamera(
 		GMEVENT *event, int *seq, void *wk )
 {
 	DEBUG_CTLCAMERA_WORK *work = wk;
-  FIELD_SUBSCREEN_WORK * subscreen;
-	
+  FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
 
-	// カメラ操作は下画面で行う
-	subscreen = FIELDMAP_GetFieldSubscreenWork(work->fieldWork);
-  FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
-  { 
-    void * inner_work;
-    FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
-    inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
-    FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work);
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+    FIELD_CAMERA_DEBUG_ReleaseSubScreen( cam );
+	  return( GMEVENT_RES_FINISH );
   }
 
-	GFL_STR_DeleteBuffer( work->pStrBuf );
-
-	return( GMEVENT_RES_FINISH );
+  return( GMEVENT_RES_CONTINUE );
 }
 
 //======================================================================

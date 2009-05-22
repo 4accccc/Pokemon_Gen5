@@ -37,6 +37,16 @@ struct _FIELD_CAMERA {
   u16         angle_pitch;
   u16         angle_yaw;
   fx32        angle_len;
+
+#ifdef PM_DEBUG
+  u32 debug_subscreen_type;
+
+  // ターゲット操作用
+  u16         debug_target_pitch;
+  u16         debug_target_yaw;
+  fx32        debug_target_len;
+  VecFx32     debug_target;
+#endif
 };
 
 
@@ -319,14 +329,14 @@ static BOOL updateCamPosBinding(FIELD_CAMERA * camera)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void updateAngleCameraPos(FIELD_CAMERA * camera)
-{ 
+static void calcAnglePos( const VecFx32* cp_target, VecFx32* p_pos, u16 yaw, u16 pitch, fx32 len )
+{
   enum {  PITCH_LIMIT = 0x200 };
   VecFx32 cameraPos;
-	fx16 sinYaw = FX_SinIdx(camera->angle_yaw);
-	fx16 cosYaw = FX_CosIdx(camera->angle_yaw);
-	fx16 sinPitch = FX_SinIdx(camera->angle_pitch);
-	fx16 cosPitch = FX_CosIdx(camera->angle_pitch);
+	fx16 sinYaw = FX_SinIdx(yaw);
+	fx16 cosYaw = FX_CosIdx(yaw);
+	fx16 sinPitch = FX_SinIdx(pitch);
+	fx16 cosPitch = FX_CosIdx(pitch);
 
 	if(cosPitch < 0){ cosPitch = -cosPitch; }	// 裏周りしないようにマイナス値はプラス値に補正
 	if(cosPitch < PITCH_LIMIT){ cosPitch = PITCH_LIMIT; }	// 0値近辺は不正表示になるため補正
@@ -334,9 +344,17 @@ static void updateAngleCameraPos(FIELD_CAMERA * camera)
 	// カメラの座標計算
 	VEC_Set( &cameraPos, FX_Mul(sinYaw, cosPitch), sinPitch, FX_Mul(cosYaw, cosPitch) );
 	VEC_Normalize(&cameraPos, &cameraPos);
-	VEC_MultAdd( camera->angle_len, &cameraPos, &camera->target, &cameraPos );
+	VEC_MultAdd( len, &cameraPos, cp_target, &cameraPos );
   //cameraPos = cameraPos * length + camera->target
-  camera->camPos = cameraPos;
+  *p_pos = cameraPos;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void updateAngleCameraPos(FIELD_CAMERA * camera)
+{ 
+  // カメラポジション計算
+  calcAnglePos( &camera->target, &camera->camPos, camera->angle_yaw, camera->angle_pitch, camera->angle_len );
 }
 	
 //------------------------------------------------------------------
@@ -344,11 +362,42 @@ static void updateAngleCameraPos(FIELD_CAMERA * camera)
 static void updateG3Dcamera(FIELD_CAMERA * camera)
 {
 	VecFx32 cameraTarget;
+
+#ifndef PM_DEBUG
 	// カメラターゲット補正
   VEC_Add( &camera->target, &camera->target_offset, &cameraTarget );
 
 	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
 	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
+#else
+
+  if( camera->debug_subscreen_type != FIELD_CAMERA_DEBUG_BIND_TARGET_POS )
+  {
+    // 通常のカメラターゲット
+    // カメラターゲット補正
+    VEC_Add( &camera->target, &camera->target_offset, &cameraTarget );
+
+    GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
+    GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
+  }
+  else
+  {
+    // ターゲットを変更
+    calcAnglePos( &camera->camPos, &camera->debug_target, camera->debug_target_yaw,
+        camera->debug_target_pitch, camera->debug_target_len );
+
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+    {
+      OS_TPrintf( "DEBUG Camera Target x[0x%x] y[0x%x] z[0x%x]\n", camera->debug_target.x, camera->debug_target.y, camera->debug_target.z  );
+      OS_TPrintf( "DEBUG Camera Pos x[0x%x] y[0x%x] z[0x%x]\n", camera->camPos.x, camera->camPos.y, camera->camPos.z  );
+    }
+
+    GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &camera->debug_target );
+    GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
+  }
+
+#endif
+
 }
 
 //------------------------------------------------------------------
@@ -599,16 +648,35 @@ void FIELD_CAMERA_SetAngleLen(FIELD_CAMERA * camera, fx32 length )
 //------------------------------------------------------------------
 //  デバッグ用：下画面操作とのバインド
 //------------------------------------------------------------------
-void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param)
+void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD_CAMERA_DEBUG_BIND_TYPE type)
 { 
   GFL_CAMADJUST * gflCamAdjust = param;
-  GFL_CAMADJUST_SetCameraParam(gflCamAdjust,
-      &camera->angle_yaw, &camera->angle_pitch, &camera->angle_len);
 
+  camera->debug_subscreen_type = type;
+  if( type == FIELD_CAMERA_DEBUG_BIND_CAMERA_POS )
+  {
+    GFL_CAMADJUST_SetCameraParam(gflCamAdjust,
+      &camera->angle_yaw, &camera->angle_pitch, &camera->angle_len);  
+  }
+  else if( type == FIELD_CAMERA_DEBUG_BIND_TARGET_POS )
+  {
+    camera->debug_target_yaw    = camera->angle_yaw - 0x8000;
+    camera->debug_target_pitch  = camera->angle_pitch - 0x4000;
+    camera->debug_target_len    = camera->angle_len;
+    GFL_CAMADJUST_SetCameraParam(gflCamAdjust,
+      &camera->debug_target_yaw, &camera->debug_target_pitch, &camera->debug_target_len);  
+  }
 }
 
 void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
 { 
+
+  if( camera->debug_subscreen_type == FIELD_CAMERA_DEBUG_BIND_TARGET_POS ){
+    OS_TPrintf( "DEBUG Camera Target x[0x%x] y[0x%x] z[0x%x]\n", camera->debug_target.x, camera->debug_target.y, camera->debug_target.z  );
+    OS_TPrintf( "DEBUG Camera Pos x[0x%x] y[0x%x] z[0x%x]\n", camera->camPos.x, camera->camPos.y, camera->camPos.z  );
+  }
+
+  camera->debug_subscreen_type = FIELD_CAMERA_DEBUG_BIND_NONE;
 }
 #endif  //PM_DEBUG
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-05-08T11:11:39"/>
+	<create user="tomoya_takahashi" host="W00148" date="2009-05-22T20:15:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,6 +349,11 @@
 	<row id="DEBUG_FIELD_STR19">
 		<language name="JPN" width="160">WIFICLUB</language>
 		<language name="JPN_KANJI" width="160">WIFICLUB</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR20">
+		<language name="JPN" width="160">ターゲットそうさ</language>
+		<language name="JPN_KANJI" width="160">ターゲット操作</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR_SPRING">

@@ -127,10 +127,15 @@ extern void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch
 extern void FIELD_CAMERA_BindNoCamera(FIELD_CAMERA * camera, BOOL flag);
 
 #ifdef  PM_DEBUG
+typedef enum{
+  FIELD_CAMERA_DEBUG_BIND_NONE,
+  FIELD_CAMERA_DEBUG_BIND_CAMERA_POS,
+  FIELD_CAMERA_DEBUG_BIND_TARGET_POS,
+} FIELD_CAMERA_DEBUG_BIND_TYPE;
 //------------------------------------------------------------------
 //  デバッグ用：下画面操作とのバインド
 //------------------------------------------------------------------
-extern void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param);
+extern void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD_CAMERA_DEBUG_BIND_TYPE type);
 extern void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera);
 #endif
 

@@ -321,7 +321,7 @@ static const GFL_UI_TP_HITTBL eventTouchPanelTable[TPBTN_MAX + 1] = {
 #define	CAMERA_TARGET_HEIGHT	(4 * FX32_ONE)
 #define CAMLEN_MVSPD			(8 * FX32_ONE)
 #define	CAMANGLEH_MAX			(0x4000 - ANGLE_ROTATE_SPD)
-#define	CAMANGLEH_MIN			(0)
+#define	CAMANGLEH_MIN			(-0x4000 + ANGLE_ROTATE_SPD)
 #define	CAMLEN_MAX				(4096 * FX32_ONE)
 #define	CAMLEN_MIN				(16 * FX32_ONE)
 
