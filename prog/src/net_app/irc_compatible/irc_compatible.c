@@ -1380,6 +1380,11 @@ static void SEQFUNC_CallProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_DELETE_SYSTEM:
 		DeleteTemporaryModules( p_wk );
 		p_wk->p_proc_param	= sc_proc_data_tbl[	p_wk->proc_id].alloc_func( p_wk, HEAPID_IRCCOMPATIBLE_SYSTEM );
+		{	
+			IRC_AURA_PARAM* p_param;
+			p_param	= p_wk->p_proc_param;
+			p_param->random	= COMPATIBLE_IRC_GetRandom( p_wk->p_irc );
+		}
 		*p_seq	= SEQ_CALL_PROC;
 		break;
 

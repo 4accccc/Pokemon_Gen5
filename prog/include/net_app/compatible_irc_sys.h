@@ -65,6 +65,7 @@ extern BOOL COMPATIBLE_IRC_SendReturnMenu( COMPATIBLE_IRC_SYS *p_sys );
 extern BOOL COMPATIBLE_IRC_RecvReturnMenu( COMPATIBLE_IRC_SYS *p_sys );
 
 extern BOOL COMPATIBLE_IRC_WaitStartProcTiming( COMPATIBLE_IRC_SYS *p_sys );
+extern u32 COMPATIBLE_IRC_GetRandom( const COMPATIBLE_IRC_SYS *cp_sys );
 
 //各赤外線ミニゲームで使用
 extern BOOL COMPATIBLE_IRC_SendData( COMPATIBLE_IRC_SYS *p_sys, u16 send_command, u16 size, const void *cp_data );

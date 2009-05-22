@@ -2097,7 +2097,7 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_MEMO_QUESTION:
 		{	
-			u8	rnd	= GFUser_GetPublicRand( 3 );
+			u8	rnd	= p_wk->p_param->random;
 			if( p_wk->p_param->score < 40 )
 			{	
 				MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_BAD_000 + rnd );

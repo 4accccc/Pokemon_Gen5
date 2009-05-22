@@ -681,7 +681,14 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 	//次のプロック予約
 	if( p_wk->is_next_proc )
 	{	
-		GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(irc_result), &IrcResult_ProcData,p_wk->p_param );
+		if( p_wk->p_param->p_gamesys == NULL )
+		{	
+			GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(irc_result), &IrcResult_ProcData,p_wk->p_param );
+		}
+		else
+		{	
+			GAMESYSTEM_SetNextProc( p_wk->p_param->p_gamesys, FS_OVERLAY_ID(irc_result), &IrcResult_ProcData,p_wk->p_param );
+		}
 	}
 
 	//デバッグ破棄

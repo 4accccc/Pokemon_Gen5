@@ -13,6 +13,7 @@
 
 //const
 #include "system/main.h"
+#include "system/gfl_use.h"
 
 //mine
 #include "net_app/compatible_irc_sys.h"
@@ -94,6 +95,7 @@ struct _COMPATIBLE_IRC_SYS
 	BOOL	is_recv;
 	BOOL	is_return;
 	BOOL	is_start;
+	u32		random;
 
 	MENU_DECIDE_DATA	menu_recv;
 	MENU_DECIDE_DATA	menu_send;
@@ -629,19 +631,23 @@ BOOL COMPATIBLE_IRC_RecvReturnMenu( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_WaitStartProcTiming( COMPATIBLE_IRC_SYS *p_sys )
 {	
-	u32 dummy;
 	switch( p_sys->seq )
 	{	
 	case 0:
-		if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-					SENDCMD_STARTPROC, sizeof(u32), &dummy ))
-		{
-			OS_TPrintf("メニュー送信開始\n");
-			p_sys->seq	= 1;
-		}
+		p_sys->random	= GFUser_GetPublicRand(3);
+		p_sys->seq	= 1;
 		break;
 
 	case 1:
+		if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+					SENDCMD_STARTPROC, sizeof(u32), &p_sys->random ))
+		{
+			OS_TPrintf("メニュー送信開始\n");
+			p_sys->seq	= 2;
+		}
+		break;
+
+	case 2:
 		if( p_sys->is_start )
 		{	
 			p_sys->is_start	= FALSE;
@@ -655,6 +661,19 @@ BOOL COMPATIBLE_IRC_WaitStartProcTiming( COMPATIBLE_IRC_SYS *p_sys )
 	return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ランダム取得
+ *
+ *	@param	const COMPATIBLE_IRC_SYS *cp_sys	ワーク
+ *
+ *	@return	ランダム
+ */
+//-----------------------------------------------------------------------------
+u32 COMPATIBLE_IRC_GetRandom( const COMPATIBLE_IRC_SYS *cp_sys )
+{	
+	return cp_sys->random;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	転送処理
@@ -924,7 +943,12 @@ static void NET_RECV_StartProc( const int netID, const int size, const void* cp_
 		return;	//自分のデータは無視
 	}
 
+	if( !GFL_NET_IsParentMachine() )
+	{	
+		p_sys->random	= *(u32*)cp_data;
+	}
+
 	p_sys->is_start		= TRUE;
-	IRC_Print( "同期OK\n" );
+	IRC_Print( "同期OK rnd%d\n", p_sys->random );
 
 }
