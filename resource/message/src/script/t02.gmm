@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-13T11:21:36"/>
+	<create user="matsumiya" host="W00179" date="2009-05-22T19:24:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="33" top="195" right="738" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -294,26 +294,45 @@
 
 	<row id="msg_t01_babygirl1_01">
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">フレンドリィショップは[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">フレンドリィショップの　場所は[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01_babygirl1_02">
+		<language name="JPN" width="256">なんと！
+ポケモンセンターの　なか　なのです！</language>
+		<language name="JPN_KANJI" width="256">なんと！
+ポケモンセンターの　中なのです！</language>
 	</row>
 
 	<row id="msg_t01_woman1_01">
 		<attribute name="キャラ指定">女性１</attribute>
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">ポケモンミュージカルって
+おもしろそうだと　おもわない？[BE:01:ページ切り替え（クリア）]
+いろんな　グッズを　つけた
+ポケモンが　おどって　くれるのよ！</language>
+		<language name="JPN_KANJI" width="256">ポケモンミュージカルって
+おもしろそうだと　思わない？[BE:01:ページ切り替え（クリア）]
+いろんな　グッズを　つけた
+ポケモンが　踊ってくれるのよ！</language>
 	</row>
 
 	<row id="msg_t01_oldman1_01">
 		<attribute name="キャラ指定">老人１</attribute>
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">その　むかし　サント・アンヌごうで
+カントーちほう　に　いったことがある[BE:01:ページ切り替え（クリア）]
+それはそれは　ながい　たび　だった</language>
+		<language name="JPN_KANJI" width="256">その昔　サント・アンヌ号で
+カントー地方に　行ったことがある[BE:01:ページ切り替え（クリア）]
+それはそれは　長い　旅だった</language>
 	</row>
 
 	<row id="msg_t01_oldwoman1_01">
 		<attribute name="キャラ指定">老婆１</attribute>
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">ポケモンと　いっしょに　あそぶ
+バスケは　サッカーは　しってるかね？</language>
+		<language name="JPN_KANJI" width="256">ポケモンと　一緒に　遊ぶ
+バスケは　サッカーは　知ってるかね？</language>
 	</row>
 
 	<row id="msg_t01_sign1_01">
