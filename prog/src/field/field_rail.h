@@ -108,15 +108,15 @@ struct _RAIL_POINT {
 /**
  */
 //------------------------------------------------------------------
-struct _RAIL_LINE { 
-  //point_s --> point_e‚Ö‚Ì“®‚«‚ğkey‚Å§Œä‚·‚é
+struct _RAIL_LINE {
+  //point_s --> point_e‚Ö‚Ì“®‚«‚ğkey•ûŒü‚ğ³‚Æ‚µ‚Ä§Œä‚·‚é
   const RAIL_POINT * point_s;
   const RAIL_POINT * point_e;
   RAIL_KEY key;
   const RAIL_LINEPOS_SET * line_pos_set;
 
   /// ’¼üó‚Å‚Ì“®ì
-  u32 line_divider;
+  s32 ofs_max;
 
   const RAIL_CAMERA_SET * camera_set;
 

@@ -36,9 +36,9 @@ typedef enum {
 
 enum {
   //取り急ぎ、すべてのレールで幅移動制限値は同じにする
-  WIDTH_OFS_MAX = 5,
+  WIDTH_OFS_MAX = 8,
   //取り急ぎ、すべてのレールで幅移動単位は同じにする
-  WIDTH_OFS_UNIT = FX32_ONE * 8,
+  WIDTH_OFS_UNIT = FX32_ONE * 4,
 };
 
 //------------------------------------------------------------------
@@ -54,11 +54,12 @@ struct _FIELD_RAIL{
     const RAIL_LINE * line;
   };
   /// LINEにいる間の、LINE上でのオフセット位置
-  u32 line_ofs;
+  s32 line_ofs;
   /// LINEにいる間の幅オフセット位置(XZ平面上でLINEに垂直)
   s32 width_ofs;
-};
 
+  RAIL_KEY key;
+};
 
 //------------------------------------------------------------------
 /**
@@ -72,17 +73,10 @@ struct _FIELD_RAIL_MAN{
 
   BOOL active_flag;
 
-  /// LINEにいる間の、LINE上でのオフセット位置
-  //u32 line_ofs;
-
   /// 移動が起きた最新のキーバリュー
   RAIL_KEY last_active_key;
 
-  FIELD_RAIL nowRail;
-
-  //いずれ必要になるが今考えると混乱する
-  //u32 width_ofs;    ///<LINEにいる間の幅の動きオフセット位置
-
+  FIELD_RAIL now_rail;
 };
 
 //============================================================================================
@@ -91,8 +85,8 @@ struct _FIELD_RAIL_MAN{
 //------------------------------------------------------------------
 static RAIL_KEY keyContToRailKey(int cont);
 static RAIL_KEY getReverseKey(RAIL_KEY key);
-static RAIL_KEY getCrockwiseKey(RAIL_KEY key);
-static RAIL_KEY getAntiCrockwiseKey(RAIL_KEY key);
+static RAIL_KEY getClockwiseKey(RAIL_KEY key);
+static RAIL_KEY getAntiClockwiseKey(RAIL_KEY key);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -100,6 +94,7 @@ static void initRail(FIELD_RAIL * rail);
 static BOOL isValidRail(const FIELD_RAIL * rail);
 static const RAIL_CAMERA_SET * getCameraSet(const FIELD_RAIL * rail);
 static const char * getRailName(const FIELD_RAIL * rail);
+static void getRailPosition(const FIELD_RAIL * rail, VecFx32 * pos);
 
 
 //------------------------------------------------------------------
@@ -111,7 +106,8 @@ static const char * debugGetRailKeyName(RAIL_KEY key);
 static void debugPrintRailInfo(const FIELD_RAIL * rail);
 
 
-static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key);
+static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key);
+//static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key);
 static RAIL_KEY updatePointMove(FIELD_RAIL * rail, RAIL_KEY key);
 
 //============================================================================================
@@ -130,7 +126,7 @@ FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, FIELD_CAMERA * camera)
   man->field_camera = camera;
   //man->line_ofs = 0;
   man->last_active_key = RAIL_KEY_NULL;
-  initRail(&man->nowRail);
+  initRail(&man->now_rail);
 
   return man;
 }
@@ -155,7 +151,7 @@ void FIELD_RAIL_MAN_Delete(FIELD_RAIL_MAN * man)
 //------------------------------------------------------------------
 void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_POINT * railPointData)
 { 
-  FIELD_RAIL * rail = &man->nowRail;
+  FIELD_RAIL * rail = &man->now_rail;
   rail->type = FIELD_RAIL_TYPE_POINT;
   rail->point = railPointData;
   man->active_flag = TRUE;
@@ -186,22 +182,7 @@ BOOL FIELD_RAIL_MAN_GetActiveFlag(const FIELD_RAIL_MAN *man)
 //------------------------------------------------------------------
 void FIELD_RAIL_MAN_GetPos(const FIELD_RAIL_MAN * man, VecFx32 * pos)
 {
-  RAIL_POS_FUNC * func = NULL;
-
-  if(man->nowRail.type == FIELD_RAIL_TYPE_POINT)
-  {
-    //POINTにいるときはPOINTの座標
-    *pos = man->nowRail.point->pos;
-  }
-  else if(man->nowRail.type == FIELD_RAIL_TYPE_LINE)
-  {
-    func = man->nowRail.line->line_pos_set->func;
-    if (func == NULL)
-    {
-      func = FIELD_RAIL_POSFUNC_StraitLine;
-    }
-    func(&man->nowRail, pos);
-  }
+  getRailPosition(&man->now_rail, pos);
 }
 
 //------------------------------------------------------------------
@@ -211,7 +192,7 @@ void FIELD_RAIL_MAN_GetPos(const FIELD_RAIL_MAN * man, VecFx32 * pos)
 //------------------------------------------------------------------
 void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
 {
-  const FIELD_RAIL * rail = &man->nowRail;
+  const FIELD_RAIL * rail = &man->now_rail;
   RAIL_CAMERA_FUNC * func = NULL;
   switch (rail->type)
   {
@@ -243,7 +224,7 @@ void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
 //------------------------------------------------------------------
 void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
 { 
-  FIELD_RAIL_TYPE type = man->nowRail.type;
+  FIELD_RAIL_TYPE type = man->now_rail.type;
   RAIL_KEY set_key = RAIL_KEY_NULL;
   RAIL_KEY key = keyContToRailKey(key_cont);
 
@@ -252,7 +233,7 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
     return;
   }
 
-  if (isValidRail(&man->nowRail) == FALSE)
+  if (isValidRail(&man->now_rail) == FALSE)
   {
     return;
   }
@@ -262,29 +243,314 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont)
     return;
   }
 
-  if(man->nowRail.type == FIELD_RAIL_TYPE_POINT)
+  if(man->now_rail.type == FIELD_RAIL_TYPE_POINT)
   { //POINT上のときの移動処理
-    set_key = updatePointMove(&man->nowRail, key);
+    set_key = updatePointMove(&man->now_rail, key);
   }
-  else if(man->nowRail.type == FIELD_RAIL_TYPE_LINE)
+  else if(man->now_rail.type == FIELD_RAIL_TYPE_LINE)
   { //LINE上のときの移動処理
-    set_key = updateLineMove(&man->nowRail, key);
+    set_key = updateLineMove_new(&man->now_rail, key);
   }
 
   if (set_key != RAIL_KEY_NULL)
   {
     OS_TPrintf("RAIL:%s :line_ofs=%d width_ofs=%d\n",
-        debugGetRailKeyName(set_key), man->nowRail.line_ofs, man->nowRail.width_ofs);
+        debugGetRailKeyName(set_key), man->now_rail.line_ofs, man->now_rail.width_ofs);
     man->last_active_key = set_key;
   }
 
-  if (type != man->nowRail.type)
+  if (type != man->now_rail.type)
   {
-    OS_TPrintf("RAIL:change to %d", man->nowRail.type );
-    debugPrintRailInfo(&man->nowRail);
+    OS_TPrintf("RAIL:change to ");
+    debugPrintRailInfo(&man->now_rail);
   }
 }
 
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const RAIL_LINE * RAILPOINT_getLineByKey(const RAIL_POINT * point, RAIL_KEY key)
+{
+  int i;
+  for (i = 0; i < RAIL_CONNECT_LINE_MAX; i++)
+  {
+    if (point->keys[i] == key)
+    {
+      return point->lines[i];
+    }
+  }
+  return NULL;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static RAIL_KEY setLine(FIELD_RAIL * rail, const RAIL_LINE * line, RAIL_KEY key, int l_ofs, int w_ofs)
+{
+  GF_ASSERT(rail->line != line);
+  GF_ASSERT(rail->line);
+  GF_ASSERT(line->name);
+  if (rail->type == FIELD_RAIL_TYPE_LINE)
+  {
+    TAMADA_Printf("RAIL: LINE \"%s\" to %s \"%s\"\n",
+        rail->line->name, debugGetRailKeyName(key), line->name);
+  }
+  else
+  {
+    TAMADA_Printf("RAIL: POINT \"%s\" to %s \"%s\"\n",
+        rail->point->name, debugGetRailKeyName(key), line->name);
+  }
+  rail->type = FIELD_RAIL_TYPE_LINE;
+  rail->line = line;
+  rail->key = key;
+  rail->line_ofs = l_ofs;
+  rail->width_ofs = w_ofs;
+
+  debugCheckLineData(line);
+  return key;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
+{ //LINE上のときの移動処理
+  const RAIL_LINE * nLine = rail->line;
+
+  if (key == nLine->key)
+  {//正方向キーの場合
+    const RAIL_POINT* nPoint = nLine->point_e;
+    const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, key);
+    const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key));
+    const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key));
+    //const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, getReverseKey(key));
+    TAMADA_Printf("↑");
+    rail->line_ofs ++;
+    if (rail->line_ofs <= nLine->ofs_max) return key;
+    if (front)
+    { //正面移行処理
+      debugCheckPointData(nPoint);
+      return setLine(rail, front, key,
+          /*l_ofs*/1,
+          /*w_ofs*/rail->width_ofs); //そのまま
+    }
+    if (left && rail->width_ofs < 0)
+    { //左側移行処理
+      if (left->point_s == nPoint)
+      { //始端の場合
+        debugCheckPointData(nPoint);
+        return setLine(rail, left, key,
+            /*l_ofs*/rail->width_ofs,
+            /*w_ofs*/0);
+      }
+      else if (left->point_e == nPoint)
+      { //終端の場合
+        debugCheckPointData(nPoint);
+        return setLine(rail, left, key,
+            /*l_ofs*/left->ofs_max + rail->width_ofs, //width_ofs < 0なので実質減算
+            /*w_ofs*/0);
+      }
+      else GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, left->name);
+    }
+    if (right && rail->width_ofs > 0)
+    { //右側移行処理
+      if (right->point_s == nPoint)
+      { //始端の場合
+        debugCheckPointData(nPoint);
+        return setLine(rail, right, key,
+            /*l_ofs*/rail->width_ofs,
+            /*w_ofs*/0);
+      }
+      else if (right->point_e == nPoint)
+      { //終端の場合
+        debugCheckPointData(nPoint);
+        return setLine(rail, right, key,
+            /*l_ofs*/right->ofs_max - rail->width_ofs,
+            /*w_ofs*/0);
+      }
+      else GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, left->name);
+    }
+
+    //行くあてがない…LINEそのまま、加算をとりけし
+    rail->line_ofs = nLine->ofs_max;
+    return key;
+  }
+  else if (key == getReverseKey(nLine->key))
+  {//逆方向キーの場合
+    const RAIL_POINT* nPoint = nLine->point_s;
+    //const RAIL_LINE * front = RAILPOINT_getLineByKey(nPoint, key);
+    const RAIL_LINE * left = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key));
+    const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key));
+    const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, key);
+    TAMADA_Printf("↓");
+    rail->line_ofs --;
+    if (rail->line_ofs >= 0) return key;
+    if (back)
+    {//背面移行処理
+      debugCheckPointData(nPoint);
+      return setLine(rail, back, key,
+          /*l_ofs*/back->ofs_max - 1,
+          /*w_ofs*/rail->width_ofs);
+    }
+    if (left && rail->width_ofs < 0)
+    { //左側移行処理
+      if (left->point_s == nPoint)
+      { //始端の場合
+        debugCheckPointData(nPoint);
+        return setLine(rail, left, key,
+            /*l_ofs*/rail->width_ofs,
+            /*w_ofs*/0);
+      }
+      else if (left->point_e == nPoint)
+      { //終端の場合
+        debugCheckPointData(nPoint);
+        return setLine(rail, right, key,
+            /*l_ofs*/left->ofs_max + rail->width_ofs, //width_ofs < 0なので実質減算
+            /*w_ofs*/0);
+      }
+      else GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, left->name);
+    }
+    if (right && rail->width_ofs > 0)
+    { //右側移行処理
+      if (right->point_s == nPoint)
+      { //始端の場合
+        debugCheckPointData(nPoint);
+        return setLine(rail, right, key,
+            /*l_ofs*/rail->width_ofs,
+            /*w_ofs*/0);
+      }
+      if (right->point_e == nPoint)
+      { //終端の場合
+        debugCheckPointData(nPoint);
+        return setLine(rail, right, key,
+            /*l_ofs*/right->ofs_max - rail->width_ofs,
+            /*w_ofs*/0);
+      }
+      else GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, right->name);
+    }
+    //行くあてがない…LINEそのまま、減算を取り消し
+    rail->line_ofs = 0;
+    return key;
+  }
+  else if (key == getClockwiseKey(nLine->key))
+  {//時計回り隣方向キーの場合
+    TAMADA_Printf("→");
+    rail->width_ofs ++;
+    if (rail->width_ofs < WIDTH_OFS_MAX)
+    {//範囲内の場合、終了
+      return key;
+    }
+    else if (rail->line_ofs < WIDTH_OFS_MAX)
+    { //始端に近い場合
+      const RAIL_POINT* nPoint = nLine->point_s;
+      const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key);
+      if (right)
+      {
+        if (right->point_s == nPoint)
+        {//右側LINEは始端からの場合
+          debugCheckPointData(nPoint);
+          return setLine(rail, right, key,
+              rail->width_ofs,
+              - rail->line_ofs);
+        }
+        if (right->point_e == nPoint)
+        {//右側LINEは終端からの場合
+          debugCheckPointData(nPoint);
+          return setLine(rail, right, key,
+              right->ofs_max - rail->width_ofs,
+              rail->line_ofs);
+        }
+        GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, right->name);
+      }
+    }
+    else if (rail->line_ofs >= rail->line->ofs_max - WIDTH_OFS_MAX)
+    { //終端に近い場合
+      const RAIL_POINT* nPoint = nLine->point_e;
+      const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key);
+      if (right)
+      {
+        if (right->point_s == nPoint)
+        {//右側LINEは始端からの場合
+          debugCheckPointData(nPoint);
+          return setLine(rail, right, key,
+              rail->width_ofs,
+              nLine->ofs_max - rail->line_ofs);
+        }
+        if (right->point_e == nPoint)
+        {//右側LINEは終端からの場合
+          debugCheckPointData(nPoint);
+          return setLine(rail, right, key,
+              right->ofs_max - rail->width_ofs,
+              - (nLine->ofs_max - rail->line_ofs));
+        }
+        GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, right->name);
+      }
+    }
+    //中間地点の場合、行くあてがない場合…LINEそのまま、加算を取り消し
+    rail->width_ofs = WIDTH_OFS_MAX - 1;
+    return key;
+  }
+  else if (key == getAntiClockwiseKey(nLine->key))
+  {//反時計回り隣方向キーの場合
+    TAMADA_Printf("←");
+    rail->width_ofs --;
+    if (MATH_ABS(rail->width_ofs) < WIDTH_OFS_MAX)
+    {//範囲内の場合、終了
+      return key;
+    }
+    else if (rail->line_ofs < WIDTH_OFS_MAX)
+    {//始端に近い場合
+      const RAIL_POINT* nPoint = nLine->point_s;
+      const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key);
+      if (left)
+      {
+        if (left->point_s == nPoint)
+        {//左側LINEが始端からの場合
+          debugCheckPointData(nPoint);
+          return setLine(rail, left, key,
+              MATH_ABS(rail->width_ofs), 
+              rail->line_ofs );
+        }
+        if (left->point_e == nPoint)
+        {//左側LINEが終端からの場合
+          debugCheckPointData(nPoint);
+          return setLine(rail, left, key,
+              left->ofs_max - MATH_ABS(rail->width_ofs),
+              - rail->line_ofs );
+        }
+        GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, left->name);
+      }
+    }
+    if (rail->line_ofs >= nLine->ofs_max - WIDTH_OFS_MAX)
+    {//終端に近い場合
+      const RAIL_POINT* nPoint = nLine->point_e;
+      const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key);
+      if (left)
+      {
+        if (left->point_s == nPoint)
+        {//左側LINEが始端からの場合
+          debugCheckPointData(nPoint);
+          return setLine(rail, left, key,
+              MATH_ABS(rail->width_ofs),
+              - (nLine->ofs_max - rail->line_ofs));
+        }
+        if (left->point_e == nPoint)
+        {//左側LINEが終端からの場合
+          debugCheckPointData(nPoint);
+          return setLine(rail, left, key,
+              left->ofs_max - MATH_ABS(rail->width_ofs),
+              nLine->ofs_max - rail->line_ofs);
+        }
+        GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, left->name);
+      }
+    }
+    //中間地点の場合、行くあてがない場合…LINEそのまま、減算を取り消し
+    rail->width_ofs ++;
+    return key;
+  }
+  return RAIL_KEY_NULL;
+}
+
+#if 0
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key)
@@ -293,7 +559,7 @@ static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key)
   if (key == nLine->key)
   {//正方向キーの場合
     rail->line_ofs ++;
-    if (rail->line_ofs == nLine->line_divider)
+    if (rail->line_ofs == nLine->ofs_max)
     { // LINE --> point_e への移行処理
       rail->type = FIELD_RAIL_TYPE_POINT;
       rail->point = nLine->point_e;
@@ -312,7 +578,7 @@ static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key)
     }
     return key;
   }
-  else if (key == getCrockwiseKey(nLine->key))
+  else if (key == getClockwiseKey(nLine->key))
   {//時計回りとなり方向キーの場合
     if (rail->width_ofs < WIDTH_OFS_MAX)
     {
@@ -320,7 +586,7 @@ static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key)
     }
     return key;
   }
-  else if (key == getAntiCrockwiseKey(nLine->key))
+  else if (key == getAntiClockwiseKey(nLine->key))
   {//反時計回りとなり方向キーの場合
     if (rail->width_ofs > - WIDTH_OFS_MAX)
     {
@@ -330,11 +596,14 @@ static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key)
   }
   return RAIL_KEY_NULL;
 }
+#endif
 
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static RAIL_KEY updatePointMove(FIELD_RAIL * rail, RAIL_KEY key)
-{ //POINT上のときの移動処理
+{//POINT上のときの移動処理
   int i;
   const RAIL_POINT * nPoint = rail->point;
   for (i = 0; i < RAIL_CONNECT_LINE_MAX; i++)
@@ -344,21 +613,25 @@ static RAIL_KEY updatePointMove(FIELD_RAIL * rail, RAIL_KEY key)
       const RAIL_LINE * nLine = nPoint->lines[i];
       if (nLine->point_s == nPoint)
       { 
-        rail->line_ofs = 1;  //最初は１から！
+        setLine(rail, nLine, key, 1, 0);
+        //rail->line_ofs = 1;  //最初は１から！
       }
       else if (nLine->point_e == nPoint)
       {
-        rail->line_ofs = nLine->line_divider - 1; //最後ー1から！
+        setLine(rail, nLine, key, nLine->ofs_max - 1, 0);
+        //rail->line_ofs = nLine->ofs_max - 1; //最後ー1から！
       }
       //つながったLINEを次のRAILとしてセット
-      rail->type = FIELD_RAIL_TYPE_LINE;
-      rail->line = nLine;
-      debugCheckLineData(rail->line);
+      //rail->type = FIELD_RAIL_TYPE_LINE;
+      //rail->line = nLine;
+      //debugCheckLineData(rail->line);
       return key;
     }
   }
   return RAIL_KEY_NULL;
 }
+
+
 
 //============================================================================================
 /**
@@ -372,6 +645,7 @@ static void initRail(FIELD_RAIL * rail)
   rail->dummy = NULL;
   rail->line_ofs = 0;
   rail->width_ofs = 0;
+  rail->key = RAIL_KEY_NULL;
 }
 
 //------------------------------------------------------------------
@@ -406,6 +680,27 @@ static const RAIL_CAMERA_SET * getCameraSet(const FIELD_RAIL * rail)
 }
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static void getRailPosition(const FIELD_RAIL * rail, VecFx32 * pos)
+{
+  RAIL_POS_FUNC * func = NULL;
+
+  if(rail->type == FIELD_RAIL_TYPE_POINT)
+  {
+    //POINTにいるときはPOINTの座標
+    *pos = rail->point->pos;
+  }
+  else if(rail->type == FIELD_RAIL_TYPE_LINE)
+  {
+    func = rail->line->line_pos_set->func;
+    if (func == NULL)
+    {
+      func = FIELD_RAIL_POSFUNC_StraitLine;
+    }
+    func(rail, pos);
+  }
+}
+//------------------------------------------------------------------
 /**
  * @brief
  */
@@ -437,7 +732,7 @@ static RAIL_KEY getReverseKey(RAIL_KEY key)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static RAIL_KEY getCrockwiseKey(RAIL_KEY key)
+static RAIL_KEY getClockwiseKey(RAIL_KEY key)
 {
   switch (key) {
   case RAIL_KEY_UP: 
@@ -453,7 +748,7 @@ static RAIL_KEY getCrockwiseKey(RAIL_KEY key)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static RAIL_KEY getAntiCrockwiseKey(RAIL_KEY key)
+static RAIL_KEY getAntiClockwiseKey(RAIL_KEY key)
 {
   switch (key) {
   case RAIL_KEY_UP: 
@@ -540,21 +835,37 @@ static BOOL debugCheckLineData(const RAIL_LINE * line)
 //------------------------------------------------------------------
 static BOOL debugCheckPointData(const RAIL_POINT * point)
 {
-  int i;
+  int i, j;
   for (i = 0; i < RAIL_CONNECT_LINE_MAX; i++)
   {
-    if (point->keys[i] == RAIL_KEY_NULL)
+    if ((point->keys[i] == RAIL_KEY_NULL) != (point->lines[i] == NULL) )
     {
-      if (point->lines[i] == NULL)
-      {
-        return TRUE;
-      }
       OS_TPrintf("%s:LINEとRAIL_KEYの指定に矛盾があります\n", point->name);
+      return FALSE;
     }
+
+    if (point->lines[i] == NULL) continue;
+
     if (point->lines[i]->point_s != point && point->lines[i]->point_e != point)
     {
       OS_TPrintf("%sは%sと接続していません\n",point->name, point->lines[i]->name);
       return FALSE;
+    }
+
+    if (point->keys[i] != RAIL_KEY_NULL)
+    {
+      for (j = i+1; j < RAIL_CONNECT_LINE_MAX; j++)
+      {
+        if (point->keys[i] == getReverseKey(point->keys[j]))
+        {
+          if (point->lines[i]->key != point->lines[j]->key)
+          {
+            OS_Printf("%s から %s 経由で %s へ向かうキーに矛盾があります\n",
+                point->lines[i]->name, point->name, point->lines[j]->name);
+            return FALSE;
+          }
+        }
+      }
     }
   }
   return TRUE;
@@ -758,7 +1069,7 @@ void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL * rail, VecFx32 * pos)
   //LINEにいるときはPOINTとPOINTの間の座標
   //pos = p0 + (p1 - p0) * (ofs / div )
   const RAIL_LINE * nLine = rail->line;
-  fx32 ofs = (rail->line_ofs * FX32_ONE) / nLine->line_divider;
+  fx32 ofs = (rail->line_ofs * FX32_ONE) / nLine->ofs_max;
   VecFx32 val;
   const VecFx32 * p0 = &nLine->point_s->pos;
   const VecFx32 * p1 = &nLine->point_e->pos;
@@ -800,7 +1111,7 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL * rail, VecFx32 * pos)
   const VecFx32 * p_s = &nLine->point_s->pos;
   const VecFx32 * p_e = &nLine->point_e->pos;
   VecFx32 center, vec_s, vec_e, vec_i;
-  fx32 ofs = (rail->line_ofs * FX32_ONE) / nLine->line_divider;
+  fx32 ofs = (rail->line_ofs * FX32_ONE) / nLine->ofs_max;
 
   center.x = nLine->line_pos_set->param0;
   center.y = nLine->line_pos_set->param1;
@@ -886,7 +1197,7 @@ static void calcAngleCamera(FIELD_CAMERA * field_camera)
 void FIELD_RAIL_CAMERAFUNC_FixPosCamera(const FIELD_RAIL_MAN* man)
 {
   VecFx32 pos;
-  const RAIL_CAMERA_SET * cam_set = getCameraSet(&man->nowRail);
+  const RAIL_CAMERA_SET * cam_set = getCameraSet(&man->now_rail);
   FIELD_RAIL_MAN_GetPos(man, &pos);
 
   pos.x += cam_set->param0;
@@ -903,7 +1214,7 @@ void FIELD_RAIL_CAMERAFUNC_FixPosCamera(const FIELD_RAIL_MAN* man)
 void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
 {
   FIELD_CAMERA * cam = man->field_camera;
-  const RAIL_CAMERA_SET * cam_set = getCameraSet(&man->nowRail);
+  const RAIL_CAMERA_SET * cam_set = getCameraSet(&man->now_rail);
   FIELD_CAMERA_SetAnglePitch(cam, (u16)cam_set->param0);
   FIELD_CAMERA_SetAngleYaw(cam, (u16)cam_set->param1);
   FIELD_CAMERA_SetAngleLen(cam, (fx32)cam_set->param2);
@@ -921,7 +1232,7 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
   VecFx32 before;
   VecFx32 c_s, c_e, c_now, target;
 
-  const FIELD_RAIL * rail = &man->nowRail;
+  const FIELD_RAIL * rail = &man->now_rail;
   const RAIL_CAMERA_SET * cs;
   const RAIL_CAMERA_SET * ce;
   GF_ASSERT(rail->type == FIELD_RAIL_TYPE_LINE);
@@ -934,8 +1245,8 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
   FIELD_CAMERA_GetCameraPos(man->field_camera, &before);
 
   {
-    u32 div = rail->line->line_divider;
-    fx32 t = FX32_ONE * man->nowRail.line_ofs / div;
+    u32 div = rail->line->ofs_max;
+    fx32 t = FX32_ONE * man->now_rail.line_ofs / div;
 
     getVectorFromAngleValue(&c_s, cs->param1, cs->param0, cs->param2);
     getVectorFromAngleValue(&c_e, ce->param1, ce->param0, ce->param2);
@@ -976,17 +1287,17 @@ void FIELD_RAIL_POSFUNC_CircleCamera( const FIELD_RAIL_MAN * man )
   s32 div;
   s32 ofs;
 
-  if( man->nowRail.type == FIELD_RAIL_TYPE_LINE )
+  if( man->now_rail.type == FIELD_RAIL_TYPE_LINE )
   {
-    cs = man->nowRail.line->point_s->camera_set;
-    ce = man->nowRail.line->point_e->camera_set;
-    div = man->nowRail.line->line_divider;
-    ofs = man->nowRail.line_ofs;
+    cs = man->now_rail.line->point_s->camera_set;
+    ce = man->now_rail.line->point_e->camera_set;
+    div = man->now_rail.line->ofs_max;
+    ofs = man->now_rail.line_ofs;
   }
   else
   {
-    cs = man->nowRail.point->camera_set;
-    ce = man->nowRail.point->camera_set;
+    cs = man->now_rail.point->camera_set;
+    ce = man->now_rail.point->camera_set;
     div = 1;
     ofs = 0;
   }
