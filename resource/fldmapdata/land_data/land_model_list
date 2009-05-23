@@ -168,4 +168,6 @@ G3D_IMD = \
 	$(DIR_LANDRES)/m_fhb01_00_00.imd \
 	$(DIR_LANDRES)/m_fhb02_00_00.imd \
 	$(DIR_LANDRES)/m_hh01_00_00.imd \
-	$(DIR_LANDRES)/m_hh02_00_00.imd
+	$(DIR_LANDRES)/m_hh02_00_00.imd \
+	$(DIR_LANDRES)/m_labo01_00_00.imd \
+	$(DIR_LANDRES)/h01b_00_00.imd

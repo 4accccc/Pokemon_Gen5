@@ -58,7 +58,9 @@ enum {
 	NARC_map_matrix_fhb01_mat_bin = 44,
 	NARC_map_matrix_fhb02_mat_bin = 45,
 	NARC_map_matrix_hh01_mat_bin = 46,
-	NARC_map_matrix_hh02_mat_bin = 47
+	NARC_map_matrix_hh02_mat_bin = 47,
+	NARC_map_matrix_h01b_mat_bin = 48,
+	NARC_map_matrix_labo01_mat_bin = 49
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

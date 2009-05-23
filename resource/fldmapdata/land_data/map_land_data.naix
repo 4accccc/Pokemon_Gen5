@@ -180,7 +180,9 @@ enum {
 	NARC_map_land_data_m_fhb01_00_00_3dppack = 166,
 	NARC_map_land_data_m_fhb02_00_00_3dppack = 167,
 	NARC_map_land_data_m_hh01_00_00_3dppack = 168,
-	NARC_map_land_data_m_hh02_00_00_3dppack = 169
+	NARC_map_land_data_m_hh02_00_00_3dppack = 169,
+	NARC_map_land_data_m_labo01_00_00_3dppack = 170,
+	NARC_map_land_data_h01b_00_00_3dppack = 171
 };
 
 /* NARC_MAP_LAND_DATA_NAIX_ */
