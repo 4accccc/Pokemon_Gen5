@@ -545,6 +545,7 @@ static void WFLBY_3DMDL_RES_Delete( WFLBY_3DMDLRES* p_wk );
 static void WFLBY_3DMDL_RES_SetAlpha( WFLBY_3DMDLRES* p_wk, u32 alpha );
 static u32 WFLBY_3DMDL_RES_GetAlpha( const WFLBY_3DMDLRES* cp_wk );
 static void WFLBY_3DMDL_RES_InitD3DOBJ( WFLBY_3DMDLRES* p_wk, GFL_G3D_OBJ** p_obj );
+static void WFLBY_3DMDL_RES_DeleteD3DOBJ( GFL_G3D_OBJ** p_obj );
 
 
 //-------------------------------------
@@ -588,14 +589,13 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 	WFLBY_3DOBJSYS* p_sys;
 
 
-	p_sys = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DOBJSYS) );
-	GFL_STD_MemFill( p_sys, 0, sizeof(WFLBY_3DOBJSYS) );
+	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WFLBY_3DOBJSYS) );
 
 	// オブジェクトテーブル作成
 	{
 		int i;
 		
-		p_sys->p_obj	= GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DOBJWK)*objnum );
+		p_sys->p_obj	= GFL_HEAP_AllocClearMemory( heapID, sizeof(WFLBY_3DOBJWK)*objnum );
 		p_sys->objnum	= objnum;
 	
 		for( i=0; i<p_sys->objnum; i++ ){
@@ -762,6 +762,16 @@ static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz 
 //-----------------------------------------------------------------------------
 void WFLBY_3DOBJSYS_Exit( WFLBY_3DOBJSYS* p_sys )
 {
+  // 残っているモデルを破棄
+  {
+    int i;
+    for(i = 0; i < p_sys->objnum; i++){
+      if(WFLBY_3DOBJWK_CheckMove( &p_sys->p_obj[i] ) == TRUE){
+        WFLBY_3DOBJWK_Del(&p_sys->p_obj[i]);
+      }
+    }
+  }
+  
 	// 読み込んだリソースを破棄する
 	{
 		WFLBY_3DMDL_RES_Delete( &p_sys->shadowres );
@@ -930,7 +940,7 @@ u32 WFLBY_3DOBJSYS_GetShadowAlpha( const WFLBY_3DOBJSYS* cp_sys )
 WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp_objwk )
 {
 	WFLBY_3DOBJWK* p_wk;
-
+  
 	// 空いているワークを取得
 	p_wk = WFLBY_3DOBJSYS_GetCleanWk( p_sys );
 	p_wk->p_blact = p_sys->p_blact;
@@ -1055,7 +1065,7 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 		// 影を作成
 		WFLBY_3DMDL_RES_InitD3DOBJ( &p_sys->shadowres, &p_wk->shadow );
 		p_wk->shadow_draw_flag = TRUE;
-
+    
 		// 座標をあわせる
 	#if WB_FIX
 		D3DOBJ_SetMatrix( &p_wk->shadow, 
@@ -1099,8 +1109,7 @@ void WFLBY_3DOBJWK_Del( WFLBY_3DOBJWK* p_wk )
 	BLACT_Delete( p_wk->p_act );
 #else
 	GFL_BBDACT_RemoveAct(p_wk->p_blact, p_wk->act_idx, 1);
-	GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(p_wk->shadow));
-	GFL_G3D_OBJECT_Delete(p_wk->shadow);
+	WFLBY_3DMDL_RES_DeleteD3DOBJ(&p_wk->shadow);
 #endif
 	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_3DOBJWK) );
 }
@@ -1503,6 +1512,7 @@ static void WFLBY_3DMDL_RES_Delete( WFLBY_3DMDLRES* p_wk )
 	D3DOBJ_MdlDelete( &p_wk->mdlres );
 #else
 	GFL_G3D_FreeVramTexture(p_wk->mdlres);
+	GFL_G3D_DeleteResource(p_wk->mdlres);
 #endif
 }
 
@@ -1561,6 +1571,20 @@ static void WFLBY_3DMDL_RES_InitD3DOBJ( WFLBY_3DMDLRES* p_wk, GFL_G3D_OBJ** p_ob
 	g3drnd = GFL_G3D_RENDER_Create( p_wk->mdlres, 0, p_wk->mdlres );
 	*p_obj = GFL_G3D_OBJECT_Create( g3drnd, NULL, 0 );
 #endif
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	３Dモデルリソースを使った表示オブジェワークを削除
+ *
+ *	@param	p_obj		表示オブジェクト
+ */
+//-----------------------------------------------------------------------------
+static void WFLBY_3DMDL_RES_DeleteD3DOBJ( GFL_G3D_OBJ** p_obj )
+{
+	GFL_G3D_RENDER_Delete( GFL_G3D_OBJECT_GetG3Drnd(*p_obj) );
+	GFL_G3D_OBJECT_Delete( *p_obj );
+	*p_obj = NULL;
 }
 
 

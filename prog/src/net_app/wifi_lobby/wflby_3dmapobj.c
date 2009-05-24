@@ -1723,36 +1723,37 @@ static void WFLBY_3DMAPOBJ_MAP_Add( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MAP
 //-----------------------------------------------------------------------------
 static void WFLBY_3DMAPOBJ_MAP_Delete( WFLBY_3DMAPOBJ_MAP* p_wk, WFLBY_3DMAPOBJ_MAPRES* p_res )
 {
-	int i;
+	int i, k;
 
 	// 全アニメをはがす
-	for( i=0; i<WFLBY_3DMAPOBJ_MAP_ANM_NUM-1; i++ ){
+	for( k=0; k<WFLBY_3DMAPOBJ_MAPOBJ_NUM; k++){
+  	for( i=0; i<WFLBY_3DMAPOBJ_MAP_ANM_NUM-1; i++ ){
 
-		if( p_wk->anm_on[i] == TRUE ){
-			p_wk->anm_on[i] = FALSE;
+  		if( p_wk->anm_on[i] == TRUE ){
+  			p_wk->anm_on[i] = FALSE;
 
-			// シート用マットアニメ以外はMAPにアニメ追加
-			if( i != WFLBY_3DMAPOBJ_MAP_ANM_MAT ){
+  			// シート用マットアニメ以外はMAPにアニメ追加
+  			if( i != WFLBY_3DMAPOBJ_MAP_ANM_MAT ){
 
-			#if WB_FIX
-				D3DOBJ_DelAnm( &p_wk->obj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], 
-						&p_res->anm[i] );
-			#else
-				GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], i );
-			#endif
-			}else{
-			#if WB_FIX
-				D3DOBJ_DelAnm( &p_wk->obj[WFLBY_3DMAPOBJ_MAPOBJ_MAT], 
-						&p_res->anm[i] );
-			#else
-				GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAT], i );
-			#endif
-			}
-		}
-		GFL_G3D_OBJECT_Delete( p_wk->g3dobj[i] );
-		p_wk->g3dobj[i] = NULL;
+  			#if WB_FIX
+  				D3DOBJ_DelAnm( &p_wk->obj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], 
+  						&p_res->anm[i] );
+  			#else
+  				GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAP], i );
+  			#endif
+  			}else{
+  			#if WB_FIX
+  				D3DOBJ_DelAnm( &p_wk->obj[WFLBY_3DMAPOBJ_MAPOBJ_MAT], 
+  						&p_res->anm[i] );
+  			#else
+  				GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj[WFLBY_3DMAPOBJ_MAPOBJ_MAT], i );
+  			#endif
+  			}
+  		}
+  	}
+		GFL_G3D_OBJECT_Delete( p_wk->g3dobj[k] );
+		p_wk->g3dobj[k] = NULL;
 	}
-	
 	
 	p_wk->on = FALSE;
 }
@@ -1942,6 +1943,11 @@ static void WFLBY_3DMAPOBJ_FLOAT_Release( WFLBY_3DMAPOBJ_FLOATRES* p_wk )
 {
 	int i, j;
 
+  // レンダーの破棄
+  for(i = 0; i < WFLBY_3DMAPOBJ_FLOAT_NUM; i++){
+    GFL_G3D_RENDER_Delete(p_wk->rnder[i]);
+  }
+  
 	// アニメの破棄
 	{
 		for( i=0; i<WFLBY_3DMAPOBJ_FLOAT_NUM; i++ ){

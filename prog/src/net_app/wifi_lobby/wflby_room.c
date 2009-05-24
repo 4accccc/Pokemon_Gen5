@@ -3802,7 +3802,11 @@ static BOOL WFLBY_ROOM_TalkWin_EndWait( WFLBY_ROOM_TALKMSG* cp_wk )
 #if WB_FIX
 	if( GF_MSG_PrintEndCheck( cp_wk->msgno ) == 0 ){
 #else
-	if(cp_wk->print_stream == NULL || PRINTSYS_PrintStreamGetState(cp_wk->print_stream) == PRINTSTREAM_STATE_DONE){
+	if(cp_wk->print_stream == NULL){
+    return TRUE;
+  }
+  if(PRINTSYS_PrintStreamGetState(cp_wk->print_stream) == PRINTSTREAM_STATE_DONE){
+		PRINTSYS_PrintStreamDelete(cp_wk->print_stream);
 		cp_wk->print_stream = NULL;
 #endif
 		return TRUE;
