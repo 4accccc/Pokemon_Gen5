@@ -1,0 +1,98 @@
+#event data
+#save date:2009/05/24 21:08:19
+# linked worldmap file name
+
+#SECTION START:OBJ_EVENT
+#Map Event List data
+#save date:2009/05/24 21:08:19
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:OBJ_EVENT
+#SECTION START:BG_EVENT
+#Map Event List data
+#save date:2009/05/24 21:08:19
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:BG_EVENT
+#SECTION START:POS_EVENT
+#Map Event List data
+#save date:2009/05/24 21:08:19
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:POS_EVENT
+#SECTION START:DOOR_EVENT
+#Map Event List data
+#save date:2009/05/24 21:08:19
+2
+#hold event type:
+1
+#hold event number:
+6
+#event number: 0
+#Door Event Label
+DOORID_T01_DOOR02
+#Next Zone ID Name
+DOORID_T01R0201_EXIT01
+#Next Door ID Name
+DOORID_T01R0201_EXIT01
+#position
+-80 0 -80
+#event number: 1
+#Door Event Label
+DOORID_T01_DOOR01
+#Next Zone ID Name
+DOORID_T01R0101_EXIT01
+#Next Door ID Name
+DOORID_T01R0101_EXIT01
+#position
+80 0 -80
+#event number: 2
+#Door Event Label
+DOORID_DUMMY
+#Next Zone ID Name
+ZONEID_DUMMY_NEXT
+#Next Door ID Name
+DOORID_DUMMY_NEXT
+#position
+-80 0 -80
+#event number: 3
+#Door Event Label
+DOORID_DUMMY
+#Next Zone ID Name
+ZONEID_DUMMY_NEXT
+#Next Door ID Name
+DOORID_DUMMY_NEXT
+#position
+-80 0 -80
+#event number: 4
+#Door Event Label
+DOORID_T01_DOOR03
+#Next Zone ID Name
+DOORID_T01R0301_EXIT01
+#Next Door ID Name
+DOORID_T01R0301_EXIT01
+#position
+-16 0 48
+#event number: 5
+#Door Event Label
+DOORID_T01_DOOR04
+#Next Zone ID Name
+DOORID_T01R0401_EXIT00
+#Next Door ID Name
+DOORID_T01R0401_EXIT00
+#position
+-80 0 160
+#Map Event List Data End
+#SECTION End:DOOR_EVENT
