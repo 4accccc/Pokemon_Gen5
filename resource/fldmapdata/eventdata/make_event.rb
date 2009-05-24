@@ -11,6 +11,9 @@
 class DataFormatError < Exception; end
 
 
+def debug_puts str
+  #puts str
+end
 #============================================================================
 #
 #   イベントデータクラス
@@ -26,7 +29,7 @@ class EventData
   attr :type
 
   def initialize stream, section_name
-    @zonename = File.basename(stream.path,".*")
+    @zonename = File.basename(stream.path,".*").upcase
     @path = stream.path
     @section_name = section_name
     @items = Array.new
@@ -37,16 +40,16 @@ class EventData
     while(true) 
       line = stream.gets
       if line == nil then
-        puts "stream read end"
+        debug_puts "stream read end"
         break
       end
       if line =~text_start then
-        puts "SECTION START: #{@section_name}"
+        debug_puts "SECTION START: #{@section_name}"
         flag = true
         next
       end
       if line =~text_end then
-        puts "SECTION END: #{@section_name}"
+        debug_puts "SECTION END: #{@section_name}"
         break
       end
       if flag == false then
@@ -54,7 +57,7 @@ class EventData
       end
 
       if line =~/Map Event List data/ then
-        puts "START METHOD read_items"
+        debug_puts "START METHOD read_items"
         read_items stream
       end
 
@@ -71,19 +74,19 @@ class EventData
 
     dummy = stream.gets #save data
     @version = Integer(stream.gets) #version
-    puts "Version = #{version}"
+    debug_puts "Version = #{version}"
 
     line = stream.gets
     if line =~ /^#hold event type:/ then
       @type = Integer(stream.gets) #event type
-      puts "event type = #{type}"
+      debug_puts "event type = #{type}"
     else
       raise DataFormatError, line
     end
 
     if stream.gets =~ /^#hold event number:/ then
       @num = Integer(stream.gets) #event number
-      puts "event num = #{num}"
+      debug_puts "event num = #{num}"
     else
       raise DataFormatError 
     end
@@ -92,7 +95,7 @@ class EventData
     line = stream.gets
 
     while (count < @num - 1)
-      #puts "count:#{count} < @num:#{@num}"
+      #debug_puts "count:#{count} < @num:#{@num}"
       string = ""
       raise DataFormatError unless line =~/^#event number/
       string += line
@@ -106,14 +109,14 @@ class EventData
       @items << string
       count += 1
     end
-    puts "end of read_items"
+    debug_puts "end of read_items"
   end
 
 
-  def dump outputstream
-    puts "number of events:#{@num}"
+  def dump output
+    debug_puts "number of events:#{@num}"
     @items.each{|item|
-      outputstream.puts"#{item}"
+      output.puts"#{item}"
     }
   end
 
@@ -124,7 +127,31 @@ end   # end of class EventData
 # ドアイベントクラス
 #
 #============================================================================
-class DoorEvent
+class AllEvent
+  def read lines, exp
+    line = lines.shift
+    if line =~ exp then
+      return lines.shift
+    else
+      raise DataFormatError
+    end
+  end
+
+  def readEventNumber lines
+    line = lines.shift
+    raise DataFormatError unless line =~/#event number:/
+    column = line.split
+    return Integer(column[2])
+  end
+
+  def readPosition lines
+    line = read( lines, /#position/)
+    column = line.split
+    return [Integer(column[0]), Integer(column[1]), Integer(column[2])]
+  end
+end
+
+class DoorEvent < AllEvent
 
   attr :number
   attr :door_id
@@ -136,54 +163,84 @@ class DoorEvent
 
 
   def initialize lines
-    line = lines.shift
-    if line =~/#event number:/ then
-      column = line.split
-      @number = Integer(column[2])
-    else
-      raise DataFormatError
-    end
-
-    line = lines.shift
-    if line =~/#Door Event Label/ then
-      @door_id = lines.shift
-    else
-      raise DataFormatError
-    end
-    line = lines.shift
-    if line =~/#Next Zone ID Name/ then
-      @next_zone_id = lines.shift
-    else
-      raise DataFormatError
-    end
-    line = lines.shift
-    if line =~/#Next Door ID Name/ then
-      @next_door_id = lines.shift
-    else
-      raise DataFormatError
-    end
-    line = lines.shift
-    if line=~/#position/ then
-      column = lines.shift.split
-      @x = Integer(column[0])
-      @y = Integer(column[1])
-      @z = Integer(column[2])
-    else
-      raise DataFormatError
-    end
+    @number = readEventNumber( lines )
+    @door_id = read( lines, /#Door Event Label/)
+    @next_zone_id = read( lines, /#Next Zone ID Name/)
+    @next_door_id = read(lines, /#Next Door ID Name/)
+    @x, @y, @z = readPosition(lines)
   end
 
-  def dump outputstream
-    outputstream.puts "\t{//#{@door_id} = #{@number}"
-    outputstream.puts "\t\t{#{@x}, #{@y}, #{@z}},"
-    outputstream.puts "\t\t#{@next_zone_id}, #{@next_door_id},"
-    outputstream.puts "\t\tEXIT_DIR_DOWN, EXIT_TYPE_NONE"
-    outputstream.puts "\t},"
+  def dump output
+    output.puts "\t{//#{@door_id} = #{@number}"
+    output.puts "\t\t{#{@x}, #{@y}, #{@z}},"
+    output.puts "\t\t#{@next_zone_id}, #{@next_door_id},"
+    output.puts "\t\tEXIT_DIR_DOWN, EXIT_TYPE_NONE"
+    output.puts "\t},"
   end
 
+  def dumpHeader output
+    output.printf("\#define %-32s %2d\n", @door_id, @number)
+  end
 end
 
-class ObjEvent
+class ObjEvent < AllEvent
+  attr :type
+  attr :id              #u16
+  attr :obj_code        #u16
+  attr :move_code       #u16
+  attr :event_type      #u16
+  attr :event_flag      #u16
+  attr :event_id        #u16
+  attr :dir             #s16
+  attr :param0          #u16
+  attr :param1          #u16
+  attr :param2          #u16
+  attr :move_limit_x    #s16
+  attr :move_limit_z    #s16
+  attr :gx              #u16 grid x
+  attr :gz              #u16 grid z
+  attr :y               #fx32 y
+
+  def initialize lines
+    @type = read(lines, /#type/)
+    @id = read(lines, /#ID name/)
+    @obj_code = read(lines, /#OBJ CODE Number/)
+    @move_code = read(lines, /#MOVE CODE Number/)
+    @event_type = read(lines, /#EVENT TYPE Number/)
+    @event_flag = read(lines, /#Flag Name/)
+    @event_id = read(lines, "#Event Script Name")
+    @dir = read(lines, /#Direction Type Number/)
+    @param0 = read(lines, /#Parameter 0 Number/)
+    @param1 = read(lines, /#Parameter 1 Number/)
+    @param2 = read(lines, /#Parameter 2 Number/)
+    @move_limit_x = read(lines, /#Move Limit X Number/)
+    @move_limit_z = read(lines, /#Move Limit Z Number/)
+    @gx, @gy, @z = read(lines, /#position/).split
+  end
+ 
+  def dump output
+    output.puts "\t{"
+		output.puts "\t\t#{@id}"		    #///<識別ID
+		output.puts "\t\t#{@obj_code}"   #MAN1,	///<表示するOBJコード
+		output.puts "\t\t#{@move_code}"  #MV_RND,	///<動作コード
+		output.puts "\t\t#{@event_type}" #0,	///<イベントタイプ
+		output.puts "\t\t#{@event_flag}" #0,	///<イベントフラグ
+		output.puts "\t\t#{@event_id}"   #1,	///<イベントID
+		output.puts "\t\t#{@dir}"   #DIR_DOWN,	///<指定方向
+		output.puts "\t\t#{@param0}"   #0,	///<指定パラメタ 0
+		output.puts "\t\t#{@param1}"   #0,	///<指定パラメタ 1
+		output.puts "\t\t#{@param2}"   #0,	///<指定パラメタ 2
+		output.puts "\t\t#{@move_limit_x}"   #2,	///<X方向移動制限
+		output.puts "\t\t#{@move_limit_z}"   #2,	///<Z方向移動制限
+		output.puts "\t\t#{@gx}"   #757,	///<グリッドX
+		output.puts "\t\t#{@gz}"   #811,	///<グリッドZ
+		output.puts "\t\t#{@y}"   #0,	///<Y値 fx32型
+    output.puts "\t},"
+  end
+
+  def dumpHeader output
+    output.printf( "\#define %-32s  %02d\n", @id, @number)
+  end
 end
 
 #============================================================================
@@ -202,15 +259,52 @@ class DoorEventData < EventData
     }
   end
 
-  def dump outputstream
+  def dump output
+    output.puts "const CONNECT_DATA ConnectData_#{@zonename}[] = {"
+    @doors.each{|door| door.dump output }
+    output.puts "};"
+    output.puts "const int ConnectCount_#{@zonename} = NELEMS(ConnectData_#{@zonename})"
+  end
 
-    outputstream.puts "const CONNECT_DATA ConnectData_#{@zonename}[] = {"
-    @doors.each{|door|
-      door.dump outputstream
+  def dumpHeader output
+    incguard = "ZONE_#{@zonename.upcase}_EVD_H"
+    output.puts "//このファイルは#{@path}から自動生成されました"
+    output.puts "#ifndef #{incguard}"
+    output.puts "#define #{incguard}"
+    output.puts ""
+    @doors.each{|item| item.dumpHeader( output ) }
+    output.puts "\n#endif //#{incguard}"
+  end
+
+end
+
+
+class ObjEventData < EventData
+
+  def initialize stream, section_name
+    super
+    @objs = Array.new
+    @items.each{|item|
+      lines = item.split(/\r\n/)
+      @objs << ObjEvent.new(lines)
     }
-    outputstream.puts "};"
+  end
 
-    outputstream.puts "const int ConnectCount_#{@zonename} = NELEMS(ConnectData_#{@zonename})"
+  def dump output
+    output.puts "const FLDMMDL_HEADER FldMMdlHeader_#{@zonename}[] = {"
+    @objs.each{|obj| obj.dump(output) }
+    output.puts "};"
+    output.puts "const int ObjCount_#{@zonename} = NELEMS(FldMMdlHeader_#{zonename})"
+  end
+
+  def dumpHeader output
+    incguard = "ZONE_#{@zonename.upcase}_EVC_H"
+    output.puts "//このファイルは#{@path}から自動生成されました"
+    output.puts "#ifndef #{incguard}"
+    output.puts "#define #{incguard}"
+    output.puts ""
+    @objs.each{|item| item.dumpHeader( output ) }
+    output.puts "\n#endif //#{incguard}"
   end
 
 end
@@ -223,12 +317,32 @@ end
 #============================================================================
 begin
   File.open(ARGV[0]){|file|
-    obj_events = EventData.new(file, "OBJ_EVENT")
+    obj_events = ObjEventData.new(file, "OBJ_EVENT")
     bg_events = EventData.new(file, "BG_EVENT")
     pos_events = EventData.new(file, "POS_EVENT")
     door_events = DoorEventData.new(file, "DOOR_EVENT")
 
-    door_events.dump STDOUT
+    id = "zone_" + door_events.zonename.downcase
+=begin
+    File.open("#{id}evc.cdat","w") {|file|
+    #  obj_events.dump(file)
+    }
+    File.open("#{id}evc.h", "w") {|file|
+    #  obj_events.dumpHeader(file)
+    }
+    File.open("#{id}evd.cdat", "w"){|file|
+      door_events.dump(file)
+    }
+    File.open("#{id}evd.h", "w"){|file|
+      door_events.dumpHeader STDOUT
+    }
+=end
+    File.open("#{id}.h", "w"){|file|
+      door_events.dumpHeader(file)
+    }
+    File.open("#{id}.cdat", "w"){|file|
+      door_events.dump(file)
+    }
   }
 end
 
