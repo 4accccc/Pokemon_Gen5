@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-22T15:09:44"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-05-25T20:01:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,6 +364,26 @@
 ありがとうございました</language>
 		<language name="JPN_KANJI" width="256">終了です
 ありがとうございました</language>
+	</row>
+
+	<row id="RHYTHM_RES_000">
+		<language name="JPN" width="256">いまの　あなたの　リズムは……</language>
+		<language name="JPN_KANJI" width="256">今のあなたのリズムは……</language>
+	</row>
+
+	<row id="RHYTHM_RESMSG_000">
+		<language name="JPN" width="256">きんちょう　している　みたい</language>
+		<language name="JPN_KANJI" width="256">緊張しているみたい</language>
+	</row>
+
+	<row id="RHYTHM_RESMSG_001">
+		<language name="JPN" width="256">おちついている　みたい</language>
+		<language name="JPN_KANJI" width="256">落ち着いているみたい</language>
+	</row>
+
+	<row id="RHYTHM_RESMSG_002">
+		<language name="JPN" width="256">リラックスしているみたい</language>
+		<language name="JPN_KANJI" width="256">リラックスしているみたい</language>
 	</row>
 
 	<flowchart-group-list>

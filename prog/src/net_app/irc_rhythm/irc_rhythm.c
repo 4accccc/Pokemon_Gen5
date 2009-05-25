@@ -258,6 +258,30 @@ typedef enum {
 	MSGWNDID_MAX
 } MSGWNDID;
 
+//-------------------------------------
+///	個人結果画面の定数
+//=====================================
+enum
+{	
+	ROR_MSGWNDID_TITLE,
+	ROR_MSGWNDID_MSG,
+	ROR_MSGWNDID_DEBUG,
+
+	ROR_MSGWNDID_MAX,
+};
+
+#define ROR_MSGWND_TITLE_X	(2)
+#define ROR_MSGWND_TITLE_Y	(3)
+#define ROR_MSGWND_TITLE_W	(20)
+#define ROR_MSGWND_TITLE_H	(2)
+#define ROR_MSGWND_MSG_X		(6)
+#define ROR_MSGWND_MSG_Y		(9)
+#define ROR_MSGWND_MSG_W		(20)
+#define ROR_MSGWND_MSG_H		(6)
+#define ROR_MSGWND_DEBUG_X	(2)
+#define ROR_MSGWND_DEBUG_Y	(16)
+#define ROR_MSGWND_DEBUG_W	(28)
+#define ROR_MSGWND_DEBUG_H	(4)
 
 //=============================================================================
 /**
@@ -342,6 +366,17 @@ typedef struct {
 	BOOL is_recv;
 } RHYTHMNET_WORK;
 
+//-------------------------------------
+///	個人成績画面
+//=====================================
+typedef struct 
+{
+	u32	seq;
+	const MSG_WORK *cp_msg;
+	const RHYTHMSEARCH_WORK *cp_search;
+	MSGWND_WORK			msgwnd[ROR_MSGWNDID_MAX];
+} RHYTHM_ONLYRESULT_WORK;
+
 #ifdef DEBUG_RHYTHM_MSG
 //-------------------------------------
 ///	デバッグプリント用画面
@@ -389,6 +424,9 @@ struct _RHYTHM_MAIN_WORK
 
 	//ネット
 	RHYTHMNET_WORK	net;
+
+	//結果表示
+	RHYTHM_ONLYRESULT_WORK	onlyresult;
 
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
@@ -450,11 +488,15 @@ static WORDSET * MSG_GetWordSet( const MSG_WORK *cp_wk );
 static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe,
 		u8 x, u8 y, u8 w, u8 h, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
-static BOOL MSGWND_Main( MSGWND_WORK *p_wk, MSG_WORK *p_msg );
+static BOOL MSGWND_Main( MSGWND_WORK *p_wk, const MSG_WORK *cp_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
 static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID );
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
+//ONLYRESULT
+static void RHYTHM_ONLYRESULT_Init( RHYTHM_ONLYRESULT_WORK* p_wk, u8 frm, const MSG_WORK *cp_msg, const RHYTHMSEARCH_WORK *cp_search,  HEAPID heapID );
+static void RHYTHM_ONLYRESULT_Exit( RHYTHM_ONLYRESULT_WORK* p_wk );
+static BOOL RHYTHM_ONLYRESULT_Main( RHYTHM_ONLYRESULT_WORK* p_wk );
 //SEQ
 static void SEQ_Change( RHYTHM_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
 static void SEQ_End( RHYTHM_MAIN_WORK *p_wk );
@@ -507,6 +549,8 @@ static void DEBUGPRINT_Clear( void );
 #define DEBUGPRINT_PrintNumber(...) ((void)0)
 #define DEBUGPRINT_Clear(...)				((void)0)
 #endif //DEBUG_RHYTHM_MSG
+static STRBUF * DEBUGPRINT_CreateWideChar( const u16 *cp_str, HEAPID heapID );
+static STRBUF * DEBUGPRINT_CreateWideCharNumber( const u16 *cp_str, int number, HEAPID heapID );
 
 //=============================================================================
 /**
@@ -684,7 +728,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	RHYTHM_MAIN_WORK	*p_wk;
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCRHYTHM, 0x16000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCRHYTHM, 0x20000 );
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(RHYTHM_MAIN_WORK), HEAPID_IRCRHYTHM );
 	GFL_STD_MemClear( p_wk, sizeof(RHYTHM_MAIN_WORK) );
@@ -828,10 +872,6 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 			SEQ_Change( p_wk, SEQFUNC_StartGame );
 		}
 #endif
-		if( TouchReturnBtn() )
-		{
-			SEQ_End( p_wk );
-		}
 
 		break;
 
@@ -1266,6 +1306,7 @@ static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID )
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
 		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
+		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], GX_RGB(31,31,31) );
 	}
 }
 
@@ -1412,9 +1453,9 @@ static void MSGWND_Exit( MSGWND_WORK* p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static BOOL MSGWND_Main( MSGWND_WORK *p_wk, MSG_WORK *p_msg )
+static BOOL MSGWND_Main( MSGWND_WORK *p_wk, const MSG_WORK *cp_msg )
 {	
-	return PRINT_UTIL_Trans( &p_wk->print_util, p_msg->p_print_que );
+	return PRINT_UTIL_Trans( &p_wk->print_util, cp_msg->p_print_que );
 }
 
 //----------------------------------------------------------------------------
@@ -1544,6 +1585,160 @@ static void MSGWND_Clear( MSGWND_WORK* p_wk )
 {	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
 	GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
+}
+//=============================================================================
+/**
+ *				個人結果画面
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	個人結果画面	初期化
+ *
+ *	@param	RHYTHM_ONLYRESULT_WORK* p_wk	ワーク
+ *	@param	frm									使用フレーム
+ *	@param	MSG_WORK *cp_wk			メッセージ
+ *	@param	heapID							ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void RHYTHM_ONLYRESULT_Init( RHYTHM_ONLYRESULT_WORK* p_wk, u8 frm, const MSG_WORK *cp_msg, const RHYTHMSEARCH_WORK *cp_search,  HEAPID heapID )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(RHYTHM_ONLYRESULT_WORK) );
+	p_wk->cp_msg		= cp_msg;
+	p_wk->cp_search	= cp_search;
+
+	MSGWND_Init( &p_wk->msgwnd[ROR_MSGWNDID_TITLE], frm, ROR_MSGWND_TITLE_X, ROR_MSGWND_TITLE_Y,
+				ROR_MSGWND_TITLE_W, ROR_MSGWND_TITLE_H, heapID );
+	MSGWND_Init( &p_wk->msgwnd[ROR_MSGWNDID_MSG], frm, ROR_MSGWND_MSG_X, ROR_MSGWND_MSG_Y,
+				ROR_MSGWND_MSG_W, ROR_MSGWND_MSG_H, heapID );
+
+	MSGWND_Init( &p_wk->msgwnd[ROR_MSGWNDID_DEBUG], frm, ROR_MSGWND_DEBUG_X, ROR_MSGWND_DEBUG_Y,
+				ROR_MSGWND_DEBUG_W, ROR_MSGWND_DEBUG_H, heapID );
+
+	MSGWND_Print( &p_wk->msgwnd[ROR_MSGWNDID_TITLE], cp_msg, RHYTHM_RES_000, 0, 0 );
+
+
+	//文字列作成
+	{
+		u32 msg_idx;
+		u32 ms_sum;
+		int i;
+
+		ms_sum	= 0;
+		for( i = 1; i <10; i++ )
+		{	
+			ms_sum	+= cp_search->data[i].diff_ms;
+		}
+		ms_sum	/=	9;
+
+		if( 40 <= ms_sum )
+		{	
+			msg_idx	= 0;
+		}
+		else if( 20 < ms_sum && ms_sum < 40 )
+		{	
+			msg_idx	= 1;
+		}
+		else if( ms_sum <= 20 )
+		{	
+			msg_idx	= 2;
+		}
+		else
+		{	
+			GF_ASSERT( 0 );
+		}
+		OS_Printf( "差の平均値 %d\n", ms_sum );
+
+		MSGWND_Print( &p_wk->msgwnd[ROR_MSGWNDID_MSG], cp_msg, RHYTHM_RESMSG_000 + msg_idx, 0, 0 );
+	}
+
+	//デバッグ文字列作成
+	{	
+		MSGWND_WORK* p_msgwnd;
+		PRINT_QUE*	p_que;
+		GFL_FONT*		p_font;
+		int i;
+		u32 ms;
+		u32 ms_sum;
+		STRBUF *p_strbuf;
+
+		p_msgwnd	= &p_wk->msgwnd[ROR_MSGWNDID_DEBUG];
+		p_font	= GFL_FONT_Create( ARCID_FONT,
+					NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );		
+		ms_sum	= 0;
+		for( i = 1; i < 10; i++ )
+		{	
+			ms	= cp_search->data[i].diff_ms;
+			ms_sum	+= ms;
+
+			p_strbuf	= DEBUGPRINT_CreateWideCharNumber( L"%d回目",i, heapID ); 
+			PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_msgwnd->p_bmpwin ), i*20, 0, p_strbuf, p_font );
+			GFL_STR_DeleteBuffer( p_strbuf );
+
+			p_strbuf	= DEBUGPRINT_CreateWideCharNumber( L" %d", ms, heapID ); 
+			PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_msgwnd->p_bmpwin ), i*20, 10, p_strbuf, p_font );
+			GFL_STR_DeleteBuffer( p_strbuf );
+		}
+
+		p_strbuf	= DEBUGPRINT_CreateWideChar( L"平均", heapID ); 
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_msgwnd->p_bmpwin ), i*20, 0, p_strbuf, p_font );
+		GFL_STR_DeleteBuffer( p_strbuf );
+
+
+		p_strbuf	= DEBUGPRINT_CreateWideCharNumber( L" %d", ms_sum/9, heapID ); 
+		PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_msgwnd->p_bmpwin ), i*20, 10, p_strbuf, p_font );
+		GFL_STR_DeleteBuffer( p_strbuf );
+
+		GFL_BMPWIN_MakeTransWindow( p_msgwnd->p_bmpwin );
+		GFL_FONT_Delete( p_font );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	個人結果画面	破棄
+ *
+ *	@param	RHYTHM_ONLYRESULT_WORK* p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void RHYTHM_ONLYRESULT_Exit( RHYTHM_ONLYRESULT_WORK* p_wk )
+{	
+	int i;
+	for( i = 0; i < ROR_MSGWNDID_MAX; i++ )
+	{	
+		MSGWND_Exit( &p_wk->msgwnd[i] );
+	}
+	GFL_STD_MemClear( p_wk, sizeof(RHYTHM_ONLYRESULT_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	個人結果画面	メイン処理
+ *
+ *	@param	RHYTHM_ONLYRESULT_WORK* p_wk ワーク
+ *
+ *	@retval	TRUEならば終了
+ *	@retval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL RHYTHM_ONLYRESULT_Main( RHYTHM_ONLYRESULT_WORK* p_wk )
+{	
+
+	{	
+		int i;
+		for( i = 0; i < MSGWNDID_MAX; i++ )
+		{	
+			MSGWND_Main( &p_wk->msgwnd[i], p_wk->cp_msg );
+		}
+	}
+
+	if( GFL_UI_TP_GetTrg() )
+	{	
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 //=============================================================================
@@ -1678,6 +1873,12 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		}
 #endif //DEBUG_ONLY_PLAY
 	}
+
+
+	if( TouchReturnBtn() )
+	{
+		SEQ_End( p_wk );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -1706,6 +1907,13 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	{	
 		SEQ_SENDRESULT,
 		SEQ_CALC,
+		SEQ_FADEIN_START,
+		SEQ_FADEIN_WAIT,
+		SEQ_FADEOUT_START,
+		SEQ_FADEOUT_WAIT,
+		SEQ_ONLYRESULT_INIT,
+		SEQ_ONLYRESULT_MAIN,
+		SEQ_ONLYRESULT_EXIT,
 		SEQ_NEXTPROC,
 	};
 
@@ -1720,6 +1928,54 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_CALC:
 		p_wk->p_param->score	= CalcScore( p_wk );
+		*p_seq	= SEQ_FADEIN_START;
+		break;
+
+	case SEQ_FADEIN_START:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+		*p_seq	= SEQ_FADEIN_WAIT;
+		break;
+
+	case SEQ_FADEIN_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= SEQ_ONLYRESULT_INIT;
+		}
+		break;
+
+	case SEQ_FADEOUT_START:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+		*p_seq	= SEQ_FADEOUT_WAIT;
+		break;
+
+	case SEQ_FADEOUT_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= SEQ_ONLYRESULT_MAIN;
+		}
+		break;
+
+	case SEQ_ONLYRESULT_INIT:
+		//画面上のものを消去
+		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BACK], FALSE );
+		MSGWND_Clear( &p_wk->msgwnd[MSGWNDID_TEXT] );
+		MSGWND_Clear( &p_wk->msgwnd[MSGWNDID_RETURN] );
+
+		//新たに結果画面作成
+		RHYTHM_ONLYRESULT_Init( &p_wk->onlyresult, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], &p_wk->msg, &p_wk->search, HEAPID_IRCRHYTHM );
+
+		*p_seq	= SEQ_FADEOUT_START;
+		break;
+
+	case SEQ_ONLYRESULT_MAIN:
+		if( RHYTHM_ONLYRESULT_Main( &p_wk->onlyresult ) )
+		{	
+			*p_seq	= SEQ_ONLYRESULT_EXIT;
+		}
+		break;
+
+	case SEQ_ONLYRESULT_EXIT:
+		RHYTHM_ONLYRESULT_Exit( &p_wk->onlyresult );
 		*p_seq	= SEQ_NEXTPROC;
 		break;
 
@@ -1966,7 +2222,7 @@ static void NETRECV_Result( const int netID, const int size, const void* cp_data
 		return;	//自分のデータは無視
 	}
 
-//	GFL_STD_MemCopy( cp_data, &p_wk->result_recv, sizeof(AURANET_RESULT_DATA) );
+//	GFL_STD_MemCopy( cp_data, &p_wk->result_recv, sizeof(RHYTHMNET_RESULT_DATA) );
 	NAGI_Printf("結果データ受け取り完了\n" );
 	p_wk->is_recv		= TRUE;
 }
@@ -2702,4 +2958,51 @@ static void DEBUGPRINT_Clear( void )
 	GF_ASSERT(p_wk);
 	GFL_BMP_Clear( p_wk->p_bmp, 0 );
 }
-#endif //DEBUG_RHYTHM_MSG 
+#endif //DEBUG_RHYTHM_MSG
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Wide文字列をSTRBUFに格納
+ *
+ *	@param	const u16 *cp_char	ワイド文字列
+ *	@param	heapID							ヒープID
+ *
+ *	@return	STRBUF
+ */
+//-----------------------------------------------------------------------------
+static STRBUF * DEBUGPRINT_CreateWideChar( const u16 *cp_str, HEAPID heapID )
+{	
+	STRBUF	*p_strbuf;
+	STRCODE	str[128];
+	u16	strlen;
+
+	//STRBUF用に変換
+	strlen	= wcslen(cp_str);
+	GFL_STD_MemCopy(cp_str, str, strlen*2);
+	str[strlen]	= GFL_STR_GetEOMCode();
+
+	//STRBUFに転送
+	p_strbuf	= GFL_STR_CreateBuffer( strlen*2, heapID );
+	GFL_STR_SetStringCode( p_strbuf, str);
+
+	return p_strbuf;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	数値つきWide文字列をSTRBUFに格納
+ *
+ *	@param	const u16 *cp_char	ワイド文字列
+ *	@param	number							数値
+ *	@param	heapID							ヒープID
+ *
+ *	@return	STRBUF
+ */
+//-----------------------------------------------------------------------------
+static STRBUF * DEBUGPRINT_CreateWideCharNumber( const u16 *cp_str, int number, HEAPID heapID )
+{	
+	u16	str[128];
+	swprintf( str, 128, cp_str, number ); 
+	return DEBUGPRINT_CreateWideChar( str, heapID );
+}
+//#endif //DEBUG_RHYTHM_MSG 
