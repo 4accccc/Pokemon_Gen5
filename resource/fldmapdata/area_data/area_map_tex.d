@@ -646,9 +646,10 @@ nsbtx_files/tex_set_in08.nsbtx: src_imd_files/testroom00_00c.imd src_imd_files/i
 	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in08.imd src_imd_files/testroom00_00c.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in08.imd -o nsbtx_files/tex_set_in08.nsbtx -etex
 
-nsbtx_files/tex_set_in09.nsbtx: src_imd_files/in09_local_texset.imd
-	@echo src_imd_files/in09_local_texset.imd Å® nsbtx_files/tex_set_in09.nsbtx
-	@$(COPY) src_imd_files/in09_local_texset.imd marged_imd_files/tex_set_in09.imd
+nsbtx_files/tex_set_in09.nsbtx: src_imd_files/in09_local_texset.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in09_local_texset.imd + src_imd_files/in00_texset.imd Å® nsbtx_files/tex_set_in09.nsbtx
+	@-rm marged_imd_files/tex_set_in09.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in09.imd src_imd_files/in09_local_texset.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in09.imd -o nsbtx_files/tex_set_in09.nsbtx -etex
 
 nsbtx_files/tex_set_in10.nsbtx: src_imd_files/in10_local_texset.imd
