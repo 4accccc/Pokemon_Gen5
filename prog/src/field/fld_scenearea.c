@@ -20,7 +20,7 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
-#define FLD_SCENEAREA_ACTIVE_NONE (0xffffffff)
+#define FLD_SCENEAREA_ACTIVE_NONE (FLD_SCENEAREA_UPDATE_NONE)
 
 //-----------------------------------------------------------------------------
 /**
@@ -129,9 +129,12 @@ void FLD_SCENEAREA_Release( FLD_SCENEAREA* p_sys )
  *
  *	@param	p_sys     システム
  *	@param	cp_pos    自機位置
+ *
+ *	@retval FLD_SCENEAREA_UPDATE_NONE 更新なし
+ *	@retval その他                    更新したデータのインデックス
  */
 //-----------------------------------------------------------------------------
-void FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
+u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
 {
   int i;
   u32 now_active;
@@ -177,6 +180,8 @@ void FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
       p_sys->cp_data[p_sys->active_area].p_update( p_sys, &p_sys->cp_data[p_sys->active_area], cp_pos );
     }
   }
+
+  return p_sys->active_area;
 }
 
 

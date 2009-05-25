@@ -107,6 +107,9 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key);
 //static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key);
 static RAIL_KEY updatePointMove(FIELD_RAIL * rail, RAIL_KEY key);
 
+
+static void updateCircleCamera( const FIELD_RAIL_MAN * man, u16 pitch, fx32 len, const VecFx32* cp_target );
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -1262,6 +1265,28 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ‚·‚×‚ÄŒˆ‚ß‚¤‚¿‚ÌƒJƒƒ‰
+ *
+ *	@param	man
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_FixAllCamera(const FIELD_RAIL_MAN* man)
+{
+  VecFx32 pos;
+  VecFx32 target;
+  const RAIL_CAMERA_SET * cam_set = getCameraSet(&man->now_rail);
+
+  pos.x = cam_set->param0;
+  pos.y = cam_set->param1;
+  pos.z = cam_set->param2;
+  target.x = cam_set->param3;
+  target.y = cam_set->param4;
+  target.z = cam_set->param5;
+  FIELD_CAMERA_SetCameraPos(man->field_camera, &pos);
+  FIELD_CAMERA_SetTargetPos(man->field_camera, &target);
+}
 
 
 
@@ -1276,14 +1301,11 @@ void FIELD_RAIL_POSFUNC_CircleCamera( const FIELD_RAIL_MAN * man )
 {
   const RAIL_CAMERA_SET * cs;
   const RAIL_CAMERA_SET * ce;
-  VecFx32 pos, target, n0, camera_pos;
-  FIELD_CAMERA* p_camera;
-  fx32 xz_dist;
-  fx32 target_y;
   u16 pitch;
   fx32 len;
   s32 div;
   s32 ofs;
+  VecFx32 target;
 
   if( man->now_rail.type == FIELD_RAIL_TYPE_LINE )
   {
@@ -1304,8 +1326,66 @@ void FIELD_RAIL_POSFUNC_CircleCamera( const FIELD_RAIL_MAN * man )
   pitch = cs->param0 + ((((int)ce->param0 - (int)cs->param0) * ofs) / div);
   len   = cs->param1 + FX_Div( FX_Mul(ce->param1 - cs->param1, ofs<<FX32_SHIFT), div<<FX32_SHIFT );
 
+  target.x = cs->param2;
+  target.y = cs->param3;
+  target.z = cs->param4;
+
+  updateCircleCamera( man, pitch, len, &target );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ‹——£ŒÅ’è@‰~‰^“®ƒJƒƒ‰
+ *
+ *	@param	man   
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_POSFUNC_FixLenCircleCamera( const FIELD_RAIL_MAN * man )
+{
+  const RAIL_CAMERA_SET * cline;
+  u16 pitch;
+  fx32 len;
+  VecFx32 target;
+
+  if( man->now_rail.type == FIELD_RAIL_TYPE_LINE )
+  {
+    cline = man->now_rail.line->camera_set;
+  }
+  else
+  {
+    cline = man->now_rail.point->camera_set;
+  }
+
+  // pitch len ‚ÌŒvŽZ
+  pitch = cline->param0;
+  len   = cline->param1;
+
+  target.x = cline->param2;
+  target.y = cline->param3;
+  target.z = cline->param4;
+
+  updateCircleCamera( man, pitch, len, &target );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ‰~‰^“®ƒJƒƒ‰‚ÌXV
+ *
+ *	@param	man
+ *	@param	pitch
+ *	@param	len 
+ */
+//-----------------------------------------------------------------------------
+static void updateCircleCamera( const FIELD_RAIL_MAN * man, u16 pitch, fx32 len, const VecFx32* cp_target )
+{
+  VecFx32 pos, target, n0, camera_pos;
+  FIELD_CAMERA* p_camera;
+  fx32 xz_dist;
+  fx32 target_y;
+
+
   p_camera = man->field_camera;
-	FIELD_CAMERA_GetTargetPos( p_camera, &target);
+  target    = *cp_target;
   target_y  = target.y;
   target.y  = 0;
   
@@ -1324,6 +1404,7 @@ void FIELD_RAIL_POSFUNC_CircleCamera( const FIELD_RAIL_MAN * man )
   camera_pos.y += target_y;
   camera_pos.z += target.z;
   
+	FIELD_CAMERA_SetTargetPos( p_camera, cp_target );
 	FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
 }
 

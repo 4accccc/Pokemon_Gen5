@@ -29,6 +29,9 @@ extern "C"{
 // シーンに持たせるパラメータサイズの最大値
 #define FLD_SCENEAREA_SCENEPARAM_SIZE  ( 64 )
 
+// Updateの戻り値
+#define FLD_SCENEAREA_UPDATE_NONE ( 0xffffffff )
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -76,7 +79,7 @@ extern void FLD_SCENEAREA_Delete( FLD_SCENEAREA* p_sys );
 
 extern void FLD_SCENEAREA_Load( FLD_SCENEAREA* p_sys, const FLD_SCENEAREA_DATA* cp_data, u32 datanum );
 extern void FLD_SCENEAREA_Release( FLD_SCENEAREA* p_sys );
-extern void FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos );
+extern u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos );
 
 // 各種情報の受け渡し
 extern FIELD_CAMERA* FLD_SCENEAREA_GetFieldCamera( const FLD_SCENEAREA* cp_sys );

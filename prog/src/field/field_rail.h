@@ -45,6 +45,8 @@ typedef struct _RAIL_CAMERA_SET{
   u32 param1;
   u32 param2;
   u32 param3;
+  u32 param4;
+  u32 param5;
 }RAIL_CAMERA_SET;
 
 //------------------------------------------------------------------
@@ -192,10 +194,12 @@ extern const RAIL_CAMERA_SET RAIL_CAMERA_SET_Default;
 extern void FIELD_RAIL_CAMERAFUNC_FixPosCamera(const FIELD_RAIL_MAN* man);
 extern void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man);
 extern void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man);
+extern void FIELD_RAIL_CAMERAFUNC_FixAllCamera(const FIELD_RAIL_MAN* man);
 
 
 //-----------------------------------------------------------------------------
 //  â~ìÆçÏ
 //-----------------------------------------------------------------------------
 extern void FIELD_RAIL_POSFUNC_CircleCamera( const FIELD_RAIL_MAN * man );
+extern void FIELD_RAIL_POSFUNC_FixLenCircleCamera( const FIELD_RAIL_MAN * man );
 
