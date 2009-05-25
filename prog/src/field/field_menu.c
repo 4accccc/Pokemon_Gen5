@@ -211,6 +211,9 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
   FIELD_MENU_InitGraphic( work , arcHandle);
   FIELD_MENU_InitIcon( work , arcHandle);
   GFL_ARC_CloseDataHandle(arcHandle);
+
+  G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
+                            0 , 0 , -6 );
   
   {
     GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( fieldWork );
@@ -234,6 +237,8 @@ void FIELD_MENU_ExitMenu( FIELD_MENU_WORK* work )
   {
     FIELD_MENU_Icon_DeleteIcon( work , &work->icon[i] );
   }
+  G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
+                            0 , 0 , 0 );
   
   GFL_TCB_DeleteTask( work->vBlankTcb );
   

@@ -59,6 +59,7 @@ typedef enum
   FMENUSTATE_DECIDE_ITEM, //€–Ú‚ªŒˆ’è‚³‚ê‚½
   FMENUSTATE_WAIT_RETURN,
   FMENUSTATE_RETURN_MENU,
+  FMENUSTATE_EXIT_MENU,
 }FMENU_STATE;
 
 //======================================================================
@@ -229,14 +230,13 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
   case FMENUSTATE_INIT:
     if( FIELD_SUBSCREEN_CanChange( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) ) == TRUE )
     {
+      FLDMMDLSYS *fldMdlSys = FIELDMAP_GetFldMMdlSys( mwk->fieldWork );
       GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
       GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+      FLDMMDLSYS_PauseMoveProc( fldMdlSys );
       GAMEDATA_SetSubScreenType( gameData , FMIT_POKEMON );
       FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
-      //FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) , mwk->befType );
       (*seq) = FMENUSTATE_MAIN;
-      //WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-      //                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , mwk->heapID );
     }
     break;
   case FMENUSTATE_MAIN:
@@ -252,9 +252,8 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
       if( action == FIELD_SUBSCREEN_ACTION_TOPMENU_EXIT )
       {
         //ƒLƒƒƒ“ƒZƒ‹
+        (*seq) = FMENUSTATE_EXIT_MENU;
         FIELD_SUBSCREEN_ResetAction( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
-        FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_NORMAL);
-        return( GMEVENT_RES_FINISH );
       }
     }
     break;
@@ -300,7 +299,10 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
           return( GMEVENT_RES_CONTINUE );
         }
       }
-      return( GMEVENT_RES_FINISH );
+      else
+      {
+        (*seq) = FMENUSTATE_EXIT_MENU;
+      }
      }
     break;
 
@@ -317,6 +319,16 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
   case FMENUSTATE_RETURN_MENU:
     (*seq) = FMENUSTATE_MAIN;
     break;
+  
+  case FMENUSTATE_EXIT_MENU:
+    {
+      FLDMMDLSYS *fldMdlSys = FIELDMAP_GetFldMMdlSys( mwk->fieldWork );
+      FLDMMDLSYS_ClearPauseMoveProc( fldMdlSys );
+      FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_NORMAL);
+    }
+    return( GMEVENT_RES_FINISH );
+    break;
+  
   }
   return( GMEVENT_RES_CONTINUE );
 
