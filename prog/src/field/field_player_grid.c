@@ -387,6 +387,14 @@ static PLAYER_SET gjiki_CheckMoveStart_Hitch(
 	FIELD_PLAYER_GRID *g_jiki, FLDMMDL *fmmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
+  u16 dir_now = FLDMMDL_GetDirDisp( fmmdl );
+   
+  if( dir != DIR_NOT && dir != dir_now ){
+    FLDMMDL_FreeAcmd( fmmdl );
+	  return( gjiki_CheckMoveStart_Walk(
+		  g_jiki,fmmdl,key_trg,key_cont,dir,debug_flag) );
+  }
+  
 	if( FLDMMDL_CheckPossibleAcmd(fmmdl) == FALSE ){
 		return( PLAYER_SET_NON );
 	}

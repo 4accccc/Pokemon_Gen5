@@ -150,10 +150,12 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
   if( enc_CheckEncount(enc,pre,attr_val) == TRUE ){ //エンカウントチェック
     ret = TRUE;
   }
-  
+
+#ifdef DEBUG_ONLY_FOR_kagaya
   if( ret == FALSE ){
     OS_Printf( "フィールドエンカウント　はずれ\n" );
   }
+#endif
   return( ret );
 }
 
