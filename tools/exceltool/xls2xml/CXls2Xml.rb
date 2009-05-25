@@ -45,6 +45,7 @@ CMD_PATH = File.dirname(__FILE__).gsub(/\\/,"/")
 #CMD_XLS2XML = "java -Xmx512M -jar #{CMD_PATH}/xls2xml.jar -s -windows "
 #CMD_XLS2XML = "java -Xmx512M -jar #{CMD_PATH}/poidom.jar -s -windows "
 CMD_XLS2XML = "java -Xmx512M -classpath #{CMD_PATH}/xls2xml.jar XLS2XML "
+#CMD_XLS2XML = "java -Xmx512M -classpath #{CMD_PATH}/xls2xml.jar XLS2XML "
 CMD_2SJIS = ""
 #CMD_2SJIS = " | #{CMD_PATH}/nkf.exe -SsLw"
 
