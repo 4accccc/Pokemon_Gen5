@@ -127,6 +127,17 @@ struct _RAIL_LINE {
 };
 
 
+//------------------------------------------------------------------
+/**
+ *  幅情報
+ */
+//------------------------------------------------------------------
+typedef struct {
+  s32   ofs_max;      // 幅分割数
+  fx32  ofs_unit;     // 幅の移動単位
+} RAIL_WIDTH;
+
+
 
 //============================================================================================
 //
@@ -149,7 +160,7 @@ extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_POINT * railPointData);
+extern void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_POINT * railPointData, const RAIL_WIDTH * railWidth);
 
 //------------------------------------------------------------------
 //  たぶんデバッグ用途のみ

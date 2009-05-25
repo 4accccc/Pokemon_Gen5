@@ -34,13 +34,6 @@ typedef enum {
   FIELD_RAIL_TYPE_MAX
 }FIELD_RAIL_TYPE;
 
-enum {
-  //取り急ぎ、すべてのレールで幅移動制限値は同じにする
-  WIDTH_OFS_MAX = 8,
-  //取り急ぎ、すべてのレールで幅移動単位は同じにする
-  WIDTH_OFS_UNIT = FX32_ONE * 4,
-};
-
 //------------------------------------------------------------------
 /**
  * @brief
@@ -59,6 +52,9 @@ struct _FIELD_RAIL{
   s32 width_ofs;
 
   RAIL_KEY key;
+
+  /// 幅情報
+  RAIL_WIDTH width;
 };
 
 //------------------------------------------------------------------
@@ -77,6 +73,7 @@ struct _FIELD_RAIL_MAN{
   RAIL_KEY last_active_key;
 
   FIELD_RAIL now_rail;
+
 };
 
 //============================================================================================
@@ -149,11 +146,12 @@ void FIELD_RAIL_MAN_Delete(FIELD_RAIL_MAN * man)
  *
  */
 //------------------------------------------------------------------
-void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_POINT * railPointData)
+void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_POINT * railPointData, const RAIL_WIDTH * railWidth)
 { 
   FIELD_RAIL * rail = &man->now_rail;
   rail->type = FIELD_RAIL_TYPE_POINT;
   rail->point = railPointData;
+  rail->width = *railWidth;
   man->active_flag = TRUE;
 }
 
@@ -435,11 +433,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
   {//時計回り隣方向キーの場合
     TAMADA_Printf("→");
     rail->width_ofs ++;
-    if (rail->width_ofs < WIDTH_OFS_MAX)
+    if (rail->width_ofs < rail->width.ofs_max)
     {//範囲内の場合、終了
       return key;
     }
-    else if (rail->line_ofs < WIDTH_OFS_MAX)
+    else if (rail->line_ofs < rail->width.ofs_max)
     { //始端に近い場合
       const RAIL_POINT* nPoint = nLine->point_s;
       const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key);
@@ -462,7 +460,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
         GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, right->name);
       }
     }
-    else if (rail->line_ofs >= rail->line->ofs_max - WIDTH_OFS_MAX)
+    else if (rail->line_ofs >= rail->line->ofs_max - rail->width.ofs_max)
     { //終端に近い場合
       const RAIL_POINT* nPoint = nLine->point_e;
       const RAIL_LINE *right = RAILPOINT_getLineByKey(nPoint, key);
@@ -486,18 +484,18 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
       }
     }
     //中間地点の場合、行くあてがない場合…LINEそのまま、加算を取り消し
-    rail->width_ofs = WIDTH_OFS_MAX - 1;
+    rail->width_ofs = rail->width.ofs_max - 1;
     return key;
   }
   else if (key == getAntiClockwiseKey(nLine->key))
   {//反時計回り隣方向キーの場合
     TAMADA_Printf("←");
     rail->width_ofs --;
-    if (MATH_ABS(rail->width_ofs) < WIDTH_OFS_MAX)
+    if (MATH_ABS(rail->width_ofs) < rail->width.ofs_max)
     {//範囲内の場合、終了
       return key;
     }
-    else if (rail->line_ofs < WIDTH_OFS_MAX)
+    else if (rail->line_ofs < rail->width.ofs_max)
     {//始端に近い場合
       const RAIL_POINT* nPoint = nLine->point_s;
       const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key);
@@ -520,7 +518,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key)
         GF_ASSERT_MSG(0, "%sから%sへの接続異常\n", nLine->name, left->name);
       }
     }
-    if (rail->line_ofs >= nLine->ofs_max - WIDTH_OFS_MAX)
+    if (rail->line_ofs >= nLine->ofs_max - rail->width.ofs_max)
     {//終端に近い場合
       const RAIL_POINT* nPoint = nLine->point_e;
       const RAIL_LINE* left = RAILPOINT_getLineByKey(nPoint, key);
@@ -580,7 +578,7 @@ static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key)
   }
   else if (key == getClockwiseKey(nLine->key))
   {//時計回りとなり方向キーの場合
-    if (rail->width_ofs < WIDTH_OFS_MAX)
+    if (rail->width_ofs < rail->width.ofs_max)
     {
       rail->width_ofs ++;
     }
@@ -588,7 +586,7 @@ static RAIL_KEY updateLineMove(FIELD_RAIL * rail, RAIL_KEY key)
   }
   else if (key == getAntiClockwiseKey(nLine->key))
   {//反時計回りとなり方向キーの場合
-    if (rail->width_ofs > - WIDTH_OFS_MAX)
+    if (rail->width_ofs > - rail->width.ofs_max)
     {
       rail->width_ofs --;
     }
@@ -1079,7 +1077,7 @@ void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL * rail, VecFx32 * pos)
   {
     VecFx32 xzNormal = {0,FX32_ONE, 0}; //XZ平面に垂直な単位ベクトル
     VecFx32 width;
-    fx32 w_ofs = rail->width_ofs * WIDTH_OFS_UNIT;
+    fx32 w_ofs = rail->width_ofs * rail->width.ofs_unit;
     VEC_CrossProduct(&val, &xzNormal, &width);
     VEC_Normalize(&width, &width);
     VEC_MultAdd(w_ofs, &width, pos, pos);
@@ -1125,7 +1123,7 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL * rail, VecFx32 * pos)
   {
     VecFx32 w_vec;
     VEC_Normalize(&vec_i, &w_vec);
-    VEC_MultAdd(-(rail->width_ofs) * WIDTH_OFS_UNIT, &w_vec, pos, pos);
+    VEC_MultAdd(-(rail->width_ofs) * rail->width.ofs_unit, &w_vec, pos, pos);
   }
 
   if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)

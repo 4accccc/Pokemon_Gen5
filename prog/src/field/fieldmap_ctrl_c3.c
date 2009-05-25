@@ -140,7 +140,7 @@ static const FLD_SCENEAREA_DATA sc_SCENE[] =
     C3_SCENEAREA_Outside,
   },
 
-  // ピカチュー
+  // ピカチューのビルの固定カメラ
   {
     { 
       // エリア
@@ -222,13 +222,19 @@ static const RAIL_CAMERA_SET sc_CAMERA_C3_JOINT04;
 static const RAIL_LINEPOS_SET sc_LINEPOS_C3_NORMAL;
 static const RAIL_LINEPOS_SET sc_LINEPOS_C3_Strait;
 
+// 幅情報
+static const RAIL_WIDTH sc_RAIL_WIDTH = {
+  8,
+  4*FX32_ONE
+};
+
 
 // 基本分割数
 #define RAIL_LINE_DIV_NORMAL    (196)
 #define RAIL_LINE_DIV_FIRST     (16)
 #define RAIL_LINE_DIV_END       (32)
-#define RAIL_LINE_DIV_WALKIN    (8)
-#define RAIL_LINE_DIV_PICKUP    (8)
+#define RAIL_LINE_DIV_WALKIN    (48)
+#define RAIL_LINE_DIV_PICKUP    (48)
 
 
 
@@ -325,7 +331,7 @@ static void mapCtrlC3_Create(
 
   // レール起動
   work->p_railMan = FIELD_RAIL_MAN_Create( FIELDMAP_GetHeapID(fieldWork), camera );
-  FIELD_RAIL_MAN_Load(work->p_railMan, &sc_POINT_C3_START);
+  FIELD_RAIL_MAN_Load(work->p_railMan, &sc_POINT_C3_START, &sc_RAIL_WIDTH);
   FIELD_RAIL_MAN_GetPos(work->p_railMan, pos );
 
   // シーンエリア
@@ -967,7 +973,7 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY00 =
   },
   //VecFx32 pos;
   {
-    0x45b43b, 0x6000, 0x23473f
+    0x3ecd6e, 0x6000, 0x27b672
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -986,7 +992,7 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY01 =
   },
   //VecFx32 pos;
   {
-    0x454772, 0x6000, 0x3c1a3b
+    0x3ed0b6, 0x6000, 0x386c1a
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1005,7 +1011,7 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY02 =
   },
   //VecFx32 pos;
   {
-    0x3015fb, 0x6000, 0x490273
+    0x2ff15e, 0x6000, 0x4191d2
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1024,7 +1030,7 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY03 =
   },
   //VecFx32 pos;
   {
-    0x3001b8, 0x6000, 0x490273
+    0x205b5e, 0x6000, 0x38f5ea
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1043,7 +1049,7 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY04 =
   },
   //VecFx32 pos;
   {
-    0x19fc49, 0x6000, 0x235a8c
+    0x208fde, 0x6000, 0x26da9a
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,

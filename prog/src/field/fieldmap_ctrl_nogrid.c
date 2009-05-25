@@ -45,6 +45,11 @@ static const RAIL_CAMERA_SET camera_point_d02_loop_03;
 
 static const RAIL_LINEPOS_SET LoopLinePosSet;
 
+static const RAIL_WIDTH lineWidth = {
+  8,
+  4*FX32_ONE
+};
+
 //======================================================================
 //	proto
 //======================================================================
@@ -82,7 +87,7 @@ static void mapCtrlNoGrid_Create(
   FIELD_CAMERA * camera = FIELDMAP_GetFieldCamera(fieldWork);
 
   railMan = FIELD_RAIL_MAN_Create( FIELDMAP_GetHeapID(fieldWork), camera );
-  FIELD_RAIL_MAN_Load(railMan, &point_d02_start_00);
+  FIELD_RAIL_MAN_Load(railMan, &point_d02_start_00, &lineWidth);
   //FIELD_RAIL_MAN_Load(railMan, &point_c03_start);
   FIELD_RAIL_MAN_GetPos(railMan, pos );
   FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), TRUE);
