@@ -9,8 +9,7 @@ extern "C" {
  * @date    2008.2.26
  */
 //=============================================================================
-#ifndef __NET_HANDLE_H__
-#define __NET_HANDLE_H__
+#pragma once
 
 typedef struct _GFL_NETHANDLE2 GFL_NETHANDLE2;
 
@@ -20,8 +19,8 @@ typedef void (FUNC2)(GFL_NETHANDLE2* handle);
 
 ///<  @brief  ネットワークハンドル
 struct _GFL_NETHANDLE2{
-    void* pInfomation;       ///<ユーザー同士が交換するデータのポインタ
-    FUNC2* pCallback;
+  void* pInfomation;       ///<ユーザー同士が交換するデータのポインタ
+  FUNC2* pCallback;
 };
 
 
@@ -31,20 +30,22 @@ struct _GFL_NETHANDLE2{
 
 ///<  @brief  ネットワークハンドル
 struct _GFL_NETHANDLE{
-    void* pInfomation;       ///<ユーザー同士が交換するデータのポインタ
-    int infomationSize;      ///< ユーザー同士が交換するデータのサイズ
-    void* negoBuff[GFL_NET_HANDLE_MAX];       ///< 子機からの受け取り記録
-    u16 negotiationBit;  ///< 他の接続を許すかどうか 0なら許可
-    u16 negotiationReturn;  ///< 他の接続を許すかどうか 0なら許可
-    u8 timingRecv;       ///< 通信で受け取った番号
-    u8 timingSyncEnd;    ///< 同期コマンド用
-    u8 timingSendFlg;      ///< 送ったかどうか
-    u8 timingSyncMy;     ///< 自分が送ったNO
-    u8 negotiationType;        ///< 接続しているハンドルの状態
-    u8 negotiationSendFlg;      ///< 送ったかどうか
-    u8 serviceNo;              ///< 通信サービス番号
-    u8 version;                ///< 通信相手の通信バージョン番号
-    u8 timingR[(GFL_NET_HANDLE_MAX / 4) * 4];       ///< 子機からの受け取り記録padding
+  void* pInfomation;       ///<ユーザー同士が交換するデータのポインタ
+  int infomationSize;      ///< ユーザー同士が交換するデータのサイズ
+  void* negoBuff[GFL_NET_HANDLE_MAX];       ///< 子機からの受け取り記録
+  u16 negotiationBit;  ///< 他の接続を許すかどうか 0なら許可
+  u16 negotiationReturn;  ///< 他の接続を許すかどうか 0なら許可
+  u8 timingRecv;       ///< 通信で受け取った番号
+  u8 timingSyncEnd;    ///< 同期コマンド用
+  u8 timingSendFlg;      ///< 送ったかどうか
+  u8 timingSyncMy;     ///< 自分が送ったNO
+  u8 negotiationType;        ///< 接続しているハンドルの状態
+  u8 negotiationSendFlg;      ///< 送ったかどうか
+  u8 serviceNo;              ///< 通信サービス番号
+  u8 version;                ///< 通信相手の通信バージョン番号
+  u8 timingR[(GFL_NET_HANDLE_MAX / 4) * 4];       ///< 子機からの受け取り記録padding
+  u8 bSendInfomation;   ///< インフォメーションデータを送るフラグ
+  u8 dummy[3];
 };
 
 
@@ -53,13 +54,13 @@ typedef struct _NET_TOOLSYS_t NET_TOOLSYS;
 
 
 typedef enum {
-    _NEG_TYPE_FIRST,
-    _NEG_TYPE_SEND_BEFORE,
-    _NEG_TYPE_SEND,
-    _NEG_TYPE_SEND_AFTER,
-    _NEG_TYPE_RECV,
-    _NEG_TYPE_CONNECT,       ///< 接続を親が認証した場合 CONNECTになる このコマンド後は通信可能になる
-    _NEG_TYPE_END,           ///< 切断状態
+  _NEG_TYPE_FIRST,
+  _NEG_TYPE_SEND_BEFORE,
+  _NEG_TYPE_SEND,
+  _NEG_TYPE_SEND_AFTER,
+  _NEG_TYPE_RECV,
+  _NEG_TYPE_CONNECT,       ///< 接続を親が認証した場合 CONNECTになる このコマンド後は通信可能になる
+  _NEG_TYPE_END,           ///< 切断状態
 
 } _NEGOTIATION_TYPE_E;
 
@@ -94,7 +95,7 @@ extern int GFL_NET_HANDLE_GetNetHandleID(GFL_NETHANDLE* pHandle);
  */
 //==============================================================================
 extern void GFL_NET_HANDLE_RecvTimingSync(const int netID, const int size, const void* pData,
-                                       void* pWork, GFL_NETHANDLE* pNet);
+                                          void* pWork, GFL_NETHANDLE* pNet);
 //==============================================================================
 /**
  * @brief   タイミングコマンドENDを受信した   GFL_NET_CMD_TIMING_SYNC_END
@@ -107,7 +108,7 @@ extern void GFL_NET_HANDLE_RecvTimingSync(const int netID, const int size, const
  */
 //==============================================================================
 extern void GFL_NET_HANDLE_RecvTimingSyncEnd(const int netID, const int size, const void* pData,
-                                          void* pWork, GFL_NETHANDLE* pNet);
+                                             void* pWork, GFL_NETHANDLE* pNet);
 //==============================================================================
 /**
  * @brief   タイミングコマンドを発行する
@@ -155,7 +156,7 @@ extern BOOL GFL_NET_HANDLE_IsNegotiation(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
  * @brief       ネゴシエーションが完了しているのが何人か
- * @return      すんでいる人数 
+ * @return      すんでいる人数
  */
 //==============================================================================
 extern int GFL_NET_HANDLE_GetNumNegotiation(void);
@@ -198,8 +199,34 @@ extern GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID);
  */
 //==============================================================================
 extern void GFI_NET_HANDLE_Delete(int netID);
+//==============================================================================
+/**
+ * @brief   インフォメーション用コールバック GFL_NET_CMD_INFOMATION
+ * @param   callback用引数
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_HANDLE_RecvInfomation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
-#endif //__NET_HANDLE_H__
+
+//-------------------------------------------------------------------------
+/**
+ * @brief   GFL_NETHANDLEのインフォメーションを得る
+ * @param   GFL_NETHANDLE
+ * @retval  INFOMATIONデータ
+ */
+//-------------------------------------------------------------------------
+extern void* GFL_NET_HANDLE_GetInfomationData(const GFL_NETHANDLE* pNetHandle);
+
+//-------------------------------------------------------------------------
+/**
+ * @brief   GFL_NETHANDLEのインフォメーションサイズを得る
+ * @param   GFL_NETHANDLE
+ * @retval  INFOMATIONサイズ
+ */
+//-------------------------------------------------------------------------
+extern int GFL_NET_HANDLE_GetInfomationDataSize(const GFL_NETHANDLE* pNetHandle);
+
 
 
 

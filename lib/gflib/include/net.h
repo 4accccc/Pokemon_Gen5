@@ -265,7 +265,7 @@ typedef struct{
   NetDeleteFriendListCallback friendDeleteFunc;  ///< wifiフレンドリスト削除コールバック
   NetGetDWCFriendDataCallback keyList;   ///< DWC形式の友達リスト	
   NetGetDWCUserDataCallback myUserData;  ///< DWCのユーザデータ（自分のデータ）
-  int heapSize;           ///< DWCへのヒープサイズ
+  u16 heapSize;           ///< DWCへのヒープサイズ
   u16 bDebugServer;        ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
   u32 ggid;                 ///< ＤＳでゲームソフトを区別する為のID 任天堂からもらう

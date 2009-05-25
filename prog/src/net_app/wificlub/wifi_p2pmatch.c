@@ -43,8 +43,8 @@
 #include "msg/msg_wifi_system.h"
 
 #include "field/fldmmdl_pl_code.h" //クリーチャー
+#include "sound/pm_sndsys.h"  //SOUND関連
 
-//#include "sound/pm_sndsys.h"
 
 
 // 置き換える必要があるがまだない関数  @@OO
@@ -3085,6 +3085,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
   {        // 接続がまだ
 
     Snd_DataSetByScene( SND_SCENE_P2P, SEQ_WIFILOBBY, 1 );
+		PMSND_PlayNextBGM(SEQ_WIFI_ACCESS);
     MainMenuMsgInit(wk);// BMPWIN登録・描画
     if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(wk->pList) ) )
     {
