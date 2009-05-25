@@ -253,8 +253,8 @@ BOOL	SampleMain( void )
 		sampleWork->mapNum = 0;
 		sampleWork->seq++;
 
-		PMSND_PlayBGM(SEQ_WB_BICYCLE);
-        break;
+		//PMSND_PlayBGM(SEQ_BICYCLE);
+    break;
 
 	case 1:
 		//セットアップ
