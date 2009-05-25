@@ -46,7 +46,7 @@ static const RAIL_CAMERA_SET camera_point_d02_loop_03;
 static const RAIL_LINEPOS_SET LoopLinePosSet;
 
 static const RAIL_WIDTH lineWidth = {
-  8,
+  4,
   4*FX32_ONE
 };
 
