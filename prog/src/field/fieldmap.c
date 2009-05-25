@@ -1399,18 +1399,30 @@ static GMEVENT * fldmap_Event_Check_SubScreen(
   
   switch(FIELD_SUBSCREEN_GetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork))){
   case FIELD_SUBSCREEN_ACTION_DEBUGIRC:
-    event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
-    FIELD_SUBSCREEN_ResetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork));
+		{
+			GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
+			GAME_COMM_NO no = GameCommSys_BootCheck(gcsp);
+			if(GAME_COMM_NO_FIELD_BEACON_SEARCH == no){
+				GameCommSys_ExitReq(gcsp);
+			}
+			if((GAME_COMM_NO_FIELD_BEACON_SEARCH == no) || (GAME_COMM_NO_NULL == no)){
+				event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
+			}
+		}
     break;
-
 #if PM_DEBUG
   case FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP:
 		event = DEBUG_PalaceJamp(fieldWork , gsys, fieldWork->field_player);
-    FIELD_SUBSCREEN_ResetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork));
 		break;
 #endif
-
-
+	}
+	if(event)
+	{
+		FIELD_SUBSCREEN_GrantPermission(FIELDMAP_GetFieldSubscreenWork(fieldWork));
+	}
+	else
+	{
+		FIELD_SUBSCREEN_ResetAction(FIELDMAP_GetFieldSubscreenWork(fieldWork));
 	}
   return event;
 }

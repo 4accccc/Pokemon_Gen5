@@ -211,7 +211,8 @@ struct _C_GEAR_WORK {
 	u8 touchx;    //タッチされた場所
 	u8 touchy;    //タッチされた場所
 	u8 select_counter;  //選択した時のアニメカウンタ
-	u8 dummy[3];
+	u8 bAction;
+	u8 dummy[2];
 };
 
 
@@ -453,6 +454,9 @@ static void _PanelPaletteChange(C_GEAR_WORK* pWork)
 				pWork->palTrans[i][pal] = 0;
 				for(rgb = 0; rgb < 3; rgb++){
 					base = (pWork->palBase[i][pal] >> rgb*5) & 0x1f;
+					if(!pWork->bAction){
+						base = base / 2;
+					}
 					add = (pWork->palChange[i][pal] >> rgb*5) & 0x1f - base;
 					mod = (pWork->plt_counter % 64);
 					if(mod >= 32){
@@ -461,15 +465,45 @@ static void _PanelPaletteChange(C_GEAR_WORK* pWork)
 					pWork->palTrans[i][pal] += (add * mod / 32 + base)<<(rgb*5);
 				}
 			}
-//			if(i==0){
-	//			OS_TPrintf("transPtr %x %x %x %x = %d\n", pWork->palTrans[i][0], pWork->palTrans[i][1], pWork->palTrans[i][2], pWork->palTrans[i][3], pWork->plt_counter);
-		//	}
-			
 			DC_FlushRange(pWork->palTrans[i], _CGEAR_NET_CHANGEPAL_NUM*2);
 			GXS_LoadBGPltt(pWork->palTrans[i], (16*(i+1) + 0xc) * 2, 8);
 		}
 	}
 }
+
+
+
+static void _PanelPaletteChangeAction(C_GEAR_WORK* pWork)
+{
+	u8 bittype[_CGEAR_NET_CHANGEPAL_NUM]={_CGEAR_NET_BIT_IR,_CGEAR_NET_BIT_WIRELESS,_CGEAR_NET_BIT_WIFI};
+	CGEAR_PANELTYPE_ENUM type[_CGEAR_NET_CHANGEPAL_NUM] = {CGEAR_PANELTYPE_IR,CGEAR_PANELTYPE_WIRELESS,CGEAR_PANELTYPE_WIFI};
+	//u16 rgbmask[3] = {0x1f,0x3e,0x7c0};
+
+	int i,x,y,pal;
+	u8 plt_counter;  //パレットアニメカウンタ
+
+	for(i = 0 ; i < _CGEAR_NET_CHANGEPAL_MAX ; i++)
+	{
+		{
+			for(pal = 0; pal < _CGEAR_NET_CHANGEPAL_NUM; pal++)
+			{
+				int add,rgb,base;
+				int mod;
+				pWork->palTrans[i][pal] = 0;
+				for(rgb = 0; rgb < 3; rgb++){
+					base = (pWork->palBase[i][pal] >> rgb*5) & 0x1f;
+					if(!pWork->bAction){
+						base = base / 2;
+					}
+					pWork->palTrans[i][pal] += ( base)<<(rgb*5);
+				}
+			}
+			DC_FlushRange(pWork->palTrans[i], _CGEAR_NET_CHANGEPAL_NUM*2);
+			GXS_LoadBGPltt(pWork->palTrans[i], (16*(i+1) + 0xc) * 2, 8);
+		}
+	}
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -766,6 +800,10 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 	int xp,yp;
 	int type = CGEAR_PANELTYPE_NONE;
 
+	if(!pWork->bAction){
+		return;
+	}
+	
 	switch( event ){
 	case GFL_BMN_EVENT_TOUCH:		///< 触れた瞬間
 
@@ -787,10 +825,11 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 		{
 			if(_gearPanelTypeNum(pWork,type) > 1)
 			{
-				CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,(type+1) % CGEAR_PANELTYPE_MAX);
+				type = (type+1) % CGEAR_PANELTYPE_MAX;
+				CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,type);
+				_gearPanelBgScreenMake(pWork, xp, yp,type);
+				GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
 			}
-			_gearPanelBgScreenMake(pWork, xp, yp,type);
-			GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
 		}
 		else{    ///< ギアメニューを変更
 			pWork->touchx = xp;
@@ -799,14 +838,11 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 			switch(type){
 			case CGEAR_PANELTYPE_IR:
 				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
-				_CHANGE_STATE(pWork,_modeSelectAnimInit);
 				break;
 			case CGEAR_PANELTYPE_WIRELESS:
 				FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP);
-				_CHANGE_STATE(pWork,_modeSelectAnimInit);
 				break;
 			case CGEAR_PANELTYPE_WIFI:
-	//			_CHANGE_STATE(pWork,_modeSelectMenuInit);
 				break;
 			}
 		}
@@ -816,6 +852,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 		break;
 	}
 }
+
 
 //------------------------------------------------------------------------------
 /**
@@ -1185,7 +1222,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 			GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
 			GFL_BG_LoadScreenReq(GEAR_BUTTON_FRAME);
 			pWork->msgCountDown = MSG_COUNTDOWN_FRAMENUM;
-	GFL_FONTSYS_SetDefaultColor();
+			GFL_FONTSYS_SetDefaultColor();
 
 		}
 	}
@@ -1214,6 +1251,7 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	pWork->pCGSV = pCGSV;
 	pWork->subscreen = pSub;
 	pWork->pGameSys = pGameSys;
+	pWork->bAction = TRUE;
 
 	//	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
 	_modeInit(pWork);
@@ -1230,9 +1268,17 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
  * @retval  none
  */
 //------------------------------------------------------------------------------
-void CGEAR_Main( C_GEAR_WORK* pWork )
+void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 {
 	StateFunc* state = pWork->state;
+
+
+	if(pWork->bAction != bAction){
+		pWork->bAction = bAction;
+		_PanelPaletteChangeAction(pWork);
+	}
+	pWork->bAction = bAction;
+	
 	if(state != NULL)
 	{
 		GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
@@ -1259,6 +1305,30 @@ void CGEAR_Main( C_GEAR_WORK* pWork )
 	}
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   CGEAR_ActionCallback
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void CGEAR_ActionCallback( C_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
+{
+
+	switch(actionno){
+	case FIELD_SUBSCREEN_ACTION_DEBUGIRC:
+		PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );
+		_CHANGE_STATE(pWork,_modeSelectAnimInit);
+		break;
+	case FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP:
+		PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );
+		_CHANGE_STATE(pWork,_modeSelectAnimInit);
+		break;
+	}
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   PROCEnd
@@ -1267,12 +1337,9 @@ void CGEAR_Main( C_GEAR_WORK* pWork )
 //------------------------------------------------------------------------------
 void CGEAR_Exit( C_GEAR_WORK* pWork )
 {
-
-	//  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, _BRIGHTNESS_SYNC);
 	_workEnd(pWork);
-G2S_BlendNone();
+	G2S_BlendNone();
 	GFL_HEAP_FreeMemory(pWork);
-	//  GFL_HEAP_DeleteHeap(HEAPID_CGEAR);
 
 }
 

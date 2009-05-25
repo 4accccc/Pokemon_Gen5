@@ -28,6 +28,7 @@
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
+#include "sound/pm_sndsys.h"
 
 #include "msg/msg_ircbattle.h"
 #include "../event_fieldmap_control.h"	//EVENT_FieldSubProc
@@ -352,13 +353,9 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   case GFL_BMN_EVENT_TOUCH:		///< G‚ê‚½uŠÔ
     if(pWork->touch!=NULL){
       if(pWork->touch(bttnid, pWork)){
-        Snd_SePlay( _SE_DESIDE );
         return;
       }
-      else{
-      }
     }
-    Snd_SePlay( _SE_CANCEL );
     break;
 
   default:
@@ -445,19 +442,23 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
   switch( bttnid ){
   case _SELECTMODE_BATTLE:
-    _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		_CHANGE_STATE(pWork,_modeSelectEntryNumInit);
     _buttonWindowDelete(pWork);
     return TRUE;
   case _SELECTMODE_POKE_CHANGE:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGE_STATE(pWork,_modeSelectChangeInit);
     _buttonWindowDelete(pWork);
     return TRUE;
 	case _SELECTMODE_COMPATIBLE:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_COMPATIBLE;
     _CHANGE_STATE(pWork,NULL);        // ‘Š«f’fƒ‚[ƒh‚ÖˆÚ‚é‚½‚ß‚ÉI—¹
     _buttonWindowDelete(pWork);
 		return TRUE;
   case _SELECTMODE_EXIT:
+		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
 		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
 										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
@@ -512,11 +513,16 @@ static BOOL _modeSelectChangeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
   switch(bttnid){
   case _CHANGE_FRIENDCHANGE:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
     _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeReportInit);
     return TRUE;
-  default:
+  case _ENTRYNUM_EXIT:
+		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+    _buttonWindowDelete(pWork);
+    _CHANGE_STATE(pWork,_modeSelectMenuInit);
+	default:
     break;
   }
   return FALSE;
@@ -568,15 +574,18 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 {
   switch(bttnid){
   case _ENTRYNUM_DOUBLE:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeSelectBattleTypeInit);
     return TRUE;
   case _ENTRYNUM_FOUR:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_MULTH;
     _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeReportInit);
     return TRUE;
   case _ENTRYNUM_EXIT:
+		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
     _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
     return TRUE;
@@ -617,21 +626,25 @@ static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWor
 {
   switch(bttnid){
   case _SELECTBT_SINGLE:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
     _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeReportInit);
     break;
   case _SELECTBT_DOUBLE:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
     _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeReportInit);
     break;
   case _SELECTBT_TRI:
+		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRI;
     _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeReportInit);
     break;
   default:
+		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
     _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
     break;

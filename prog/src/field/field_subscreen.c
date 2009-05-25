@@ -70,9 +70,11 @@ struct _FIELD_SUBSCREEN_WORK {
 };
 
 typedef void INIT_FUNC(FIELD_SUBSCREEN_WORK * , FIELD_SUBSCREEN_MODE prevMode );
-typedef void UPDATE_FUNC(FIELD_SUBSCREEN_WORK *);
-typedef void DRAW_FUNC(FIELD_SUBSCREEN_WORK *);
+typedef void UPDATE_FUNC(FIELD_SUBSCREEN_WORK *, BOOL bActive);
+typedef void DRAW_FUNC(FIELD_SUBSCREEN_WORK *, BOOL bActive);
 typedef void EXIT_FUNC(FIELD_SUBSCREEN_WORK *);
+typedef void ACTION_CALLBACK(FIELD_SUBSCREEN_WORK *,FIELD_SUBSCREEN_ACTION actionno);
+
 typedef struct
 {	
 	FIELD_SUBSCREEN_MODE mode;		//エラー検出用
@@ -80,6 +82,7 @@ typedef struct
 	UPDATE_FUNC * update_func;
 	DRAW_FUNC * draw_func;
 	EXIT_FUNC * exit_func;
+	ACTION_CALLBACK * action_callback; ///< アクションによる切り替えが行われる事をサブスクリーンに伝える関数
 	
 }FIELD_SUBSCREEN_FUNC_TABLE;
 
@@ -90,24 +93,25 @@ typedef struct
 //-----------------------------------------------------------------------------
 
 static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
-static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void actioncallback_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_ACTION actionno );
 
 static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
-static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
-static void draw_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
+static void draw_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
 static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
-static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
 static void init_touchcamera_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
-static void update_touchcamera_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_touchcamera_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_touchcamera_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
 static void init_soundviewer_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
-static void update_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
 //-----------------------------------------------------------------------------
@@ -120,6 +124,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		update_normal_subscreen,
 		NULL ,
 		exit_normal_subscreen,
+		actioncallback_normal_subscreen,
 	},
 	{	
 		FIELD_SUBSCREEN_TOPMENU,
@@ -127,6 +132,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		update_topmenu_subscreen,
 		draw_topmenu_subscreen ,
 		exit_topmenu_subscreen,
+		NULL ,
 	},
 	{	
 		FIELD_SUBSCREEN_DEBUG_LIGHT,
@@ -134,6 +140,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		update_light_subscreen,
 		NULL ,
 		exit_light_subscreen,
+		NULL ,
 	},
 	{	
 		FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA,
@@ -141,6 +148,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		update_touchcamera_subscreen,
 		NULL ,
 		exit_touchcamera_subscreen,
+		NULL ,
 	},
 	{	
 		FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER,
@@ -148,6 +156,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		update_soundviewer_subscreen,
 		NULL ,
 		exit_soundviewer_subscreen,
+		NULL ,
 	}
 };
 
@@ -205,7 +214,7 @@ void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
   switch( pWork->state )
   {
   case FSS_UPDATE:
-    funcTable[pWork->mode].update_func(pWork);
+    funcTable[pWork->mode].update_func(pWork,(NULL==GAMESYSTEM_GetEvent(FIELDMAP_GetGameSysWork(pWork->fieldmap))));
     break;
 
   //モードを切り替えるときのフェード処理
@@ -240,7 +249,7 @@ void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
     {
       pWork->state = FSS_UPDATE;
     }
-    funcTable[pWork->mode].update_func(pWork);
+    funcTable[pWork->mode].update_func(pWork,(NULL==GAMESYSTEM_GetEvent(FIELDMAP_GetGameSysWork(pWork->fieldmap))));
     break;
   }
 }
@@ -258,7 +267,7 @@ void FIELD_SUBSCREEN_Draw( FIELD_SUBSCREEN_WORK* pWork )
   case FSS_UPDATE:
     if( funcTable[pWork->mode].draw_func != NULL )
     {
-      funcTable[pWork->mode].draw_func(pWork);
+      funcTable[pWork->mode].draw_func(pWork, (NULL==GAMESYSTEM_GetEvent(FIELDMAP_GetGameSysWork(pWork->fieldmap))));
     }
     break;
 
@@ -395,6 +404,20 @@ void FIELD_SUBSCREEN_SetAction( FIELD_SUBSCREEN_WORK* pWork , FIELD_SUBSCREEN_AC
 
 //----------------------------------------------------------------------------
 /**
+ * @brief  アクション状態を許可する
+ * @param	 mode
+ */
+//----------------------------------------------------------------------------
+void FIELD_SUBSCREEN_GrantPermission( FIELD_SUBSCREEN_WORK* pWork )
+{
+  if(pWork){
+		funcTable[pWork->mode].action_callback(pWork, pWork->action);
+  }
+	FIELD_SUBSCREEN_SetAction(pWork, FIELD_SUBSCREEN_ACTION_NONE);
+}
+
+//----------------------------------------------------------------------------
+/**
  * @brief  アクション状態を消す
  * @param	 mode
  */
@@ -443,12 +466,22 @@ static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	アクションが行われた事を通知
+ */
+//-----------------------------------------------------------------------------
+static void actioncallback_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
+{
+  CGEAR_ActionCallback(pWork->cgearWork, actionno);
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	インフォーバーの更新
  */
 //-----------------------------------------------------------------------------
-static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-  CGEAR_Main(pWork->cgearWork);
+	CGEAR_Main(pWork->cgearWork,bActive);
 }
 
 //=============================================================================
@@ -501,7 +534,7 @@ static void exit_debugred_subscreen( FIELD_SUBSCREEN_WORK* pWork )
  *	@brief	赤外線デバッグの更新
  */
 //-----------------------------------------------------------------------------
-static void update_debugred_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+static void update_debugred_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
 	INFOWIN_Update();
 }
@@ -558,7 +591,7 @@ static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
  *	@brief	メニュー画面の更新
  */
 //-----------------------------------------------------------------------------
-static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
 	FIELD_MENU_UpdateMenu( pWork->fieldMenuWork );
 	INFOWIN_Update();
@@ -569,7 +602,7 @@ static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
  *	@brief	メニュー画面の描画
  */
 //-----------------------------------------------------------------------------
-static void draw_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+static void draw_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
 	FIELD_MENU_DrawMenu( pWork->fieldMenuWork );
 }
@@ -618,7 +651,7 @@ static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_M
 {	
 
 }
-static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {	
 
 }
@@ -638,7 +671,7 @@ static void init_touchcamera_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSC
 	pWork->gflCamAdjust = GFL_CAMADJUST_Create(&camAdjustData, pWork->heapID);
 
 }
-static void update_touchcamera_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+static void update_touchcamera_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {	
 	if( GFL_CAMADJUST_Main( pWork->gflCamAdjust ) == FALSE )
 	{	
@@ -672,7 +705,7 @@ static void init_soundviewer_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSC
 
 }
 
-static void update_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+static void update_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {	
 	if ( GFL_SNDVIEWER_Main( pWork->gflSndViewer ) == FALSE )
 	{	
