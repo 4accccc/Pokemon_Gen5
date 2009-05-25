@@ -470,7 +470,7 @@ static const RAIL_LINE line_d02_loop_02 =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &LoopLinePosSet, //&RAIL_LINEPOS_SET_Default,
   //u32 line_divider;
-  50,
+  70,
   //const RAIL_CAMERA_SET * camera;
   &camera_changeAngle,
   //const char * name;
@@ -551,7 +551,7 @@ static const RAIL_LINE line_slope_up =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &RAIL_LINEPOS_SET_Default,
   //u32 line_divider;
-  50,
+  70,
   //const RAIL_CAMERA_SET * camera;
   &camera_changeAngle,
   //const char * name;
@@ -570,7 +570,7 @@ static const RAIL_LINE line_slope_start =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &RAIL_LINEPOS_SET_Default,
   //u32 line_divider;
-  50,
+  70,
   //const RAIL_CAMERA_SET * camera;
   &camera_changeAngle,
   //const char * name;
@@ -589,7 +589,7 @@ static const RAIL_LINE line_bridge_start =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &RAIL_LINEPOS_SET_Default,
   //u32 line_divider;
-  50,
+  70,
   //const RAIL_CAMERA_SET * camera;
   &camera_changeAngle,
   //const char * name;
@@ -608,7 +608,7 @@ static const RAIL_LINE line_bridge_long =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &RAIL_LINEPOS_SET_Default,
   //u32 line_divider;
-  200,
+  300,
   //const RAIL_CAMERA_SET * camera;
   &camera_changeAngle,
   //const char * name;
@@ -627,7 +627,7 @@ static const RAIL_LINE line_d02_bridge_start =
   //const RAIL_LINEPOS_SET * line_pos_set;
   &RAIL_LINEPOS_SET_Default,
   //u32 line_divider;
-  50,
+  60,
   //const RAIL_CAMERA_SET * camera;
   &camera_changeAngle,
   //const char * name;
