@@ -12,6 +12,8 @@
 #include "field_func_bridge_file.h"
 
 
+#include "../field_g3dmap_exwork.h"	// GFL_G3D_MAP拡張ワーク
+
 #include "height.h"
 
 /// 全部をパックしたファイルのヘッダー
@@ -63,8 +65,12 @@ enum {
 BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 {
 	GFL_G3D_MAP_LOAD_STATUS* ldst;
+	FLD_G3D_MAP_EXWORK* p_exwork;	// GFL_G3D_MAP拡張ワーク
 
 	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
+
+	// 拡張ワーク取得
+	p_exwork = exWork;
 
 	switch( ldst->seq ){
 
@@ -126,6 +132,8 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 				//GFL_G3D_MAP_MakeTestPos( g3Dmap );
 			//===========
 			}
+
+      
 #if 0
     OS_Printf("DataID=%08x\n",fileHeader->DataID);         ////< DP3PACK_HEADER
     OS_Printf("dummy1=%08x\n",fileHeader->dummy1);
@@ -143,6 +151,18 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 		}
 		//>>GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
 		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
+
+
+
+		// 地面アニメーションの設定
+		if( FLD_G3D_MAP_EXWORK_IsGranm( p_exwork ) ){
+			FIELD_GRANM_WORK* p_granm;
+
+			p_granm = FLD_G3D_MAP_EXWORK_GetGranmWork( p_exwork );
+			FIELD_GRANM_WORK_Bind( p_granm, 
+					GFL_G3D_MAP_GetResourceMdl(g3Dmap), GFL_G3D_MAP_GetResourceTex(g3Dmap), 
+					GFL_G3D_MAP_GetRenderObj(g3Dmap) );
+		}
 
 		ldst->seq = TEX_TRANS;
 		break;
