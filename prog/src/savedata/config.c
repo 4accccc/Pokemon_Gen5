@@ -99,6 +99,7 @@ void CONFIG_Init(CONFIG * cfg)
 	cfg->wazaeff_mode = WAZAEFF_MODE_ON;
 	cfg->input_mode = INPUTMODE_NORMAL;
 	cfg->window_type = WINTYPE_01;
+  cfg->moji_mode = MOJIMODE_HIRAGANA;
 }
 
 //============================================================================================
@@ -240,5 +241,16 @@ WINTYPE CONFIG_GetWindowType(const CONFIG * cfg)
 void CONFIG_SetWindowType(CONFIG * cfg, WINTYPE type)
 {
 	cfg->window_type = type;
+}
+
+//	•¶Žšƒ‚[ƒh
+MOJIMODE CONFIG_GetMojiMode(const CONFIG * cfg)
+{
+  return cfg->moji_mode;
+}
+
+void CONFIG_SetMojiMode(CONFIG * cfg, MOJIMODE type)
+{
+  cfg->moji_mode = type;
 }
 

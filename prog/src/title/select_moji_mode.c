@@ -182,10 +182,12 @@ static GFL_PROC_RESULT SEL_MODE_ProcMain( GFL_PROC * proc, int * seq, void * pwk
         if( ret == SMUR_TRUE )
         {
           GFL_MSGSYS_SetLangID( 0 );
+          CONFIG_SetMojiMode(initWork->configSave,MOJIMODE_HIRAGANA );
         }
         else
         {
           GFL_MSGSYS_SetLangID( 1 );
+          CONFIG_SetMojiMode(initWork->configSave,MOJIMODE_KANJI );
         }
         SEL_MODE_ExitItem( work );
         work->state = SMS_COMM;

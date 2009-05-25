@@ -35,7 +35,7 @@ struct _CONFIG {
 	u16 wazaeff_mode:1;			///<WAZAEFF_MODE	わざエフェクト
 	u16 input_mode:2;			///<INPUTMODE		入力モード
 	u16 window_type:5;			///<WINTYPE			ウィンドウタイプ
-	u16 dummy:1;
+	u16 moji_mode:1;      ///<MOJIMODE
 	
 	u16 padding;	//WBでパディングを入れました 2008.12.11(木) matsuda
 };
@@ -110,6 +110,14 @@ typedef enum{
 	WINTYPE_MAX,
 }WINTYPE;
 
+//----------------------------------------------------------
+//----------------------------------------------------------
+typedef enum{
+	MOJIMODE_HIRAGANA,
+	MOJIMODE_KANJI,
+	MOJIMODE_MAX,
+}MOJIMODE;
+
 
 //============================================================================================
 //============================================================================================
@@ -167,6 +175,10 @@ extern void CONFIG_SetInputMode(CONFIG * cfg, INPUTMODE mode);
 //	ウィンドウタイプ
 extern WINTYPE CONFIG_GetWindowType(const CONFIG * cfg);
 extern void CONFIG_SetWindowType(CONFIG * cfg, WINTYPE type);
+
+//	文字モード
+extern MOJIMODE CONFIG_GetMojiMode(const CONFIG * cfg);
+extern void CONFIG_SetMojiMode(CONFIG * cfg, MOJIMODE type);
 
 //----------------------------------------------------------
 //	セーブデータ取得のための関数

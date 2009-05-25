@@ -316,7 +316,9 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/samplemain.c \
         test/tetsu/debug_watanabe.c
 
 # コンフィグ画面
-#===> main
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel.c
 
 

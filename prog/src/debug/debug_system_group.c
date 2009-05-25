@@ -10,6 +10,7 @@
 
 #include "debug/debugwin_sys.h"
 #include "debug/debug_system_group.h"
+#include "savedata/config.h"
 #include "test/performance.h"
 #include "test/debug_pause.h"
 
@@ -144,14 +145,18 @@ static void DEBWIN_Update_Kanji( void* userWork , DEBUGWIN_ITEM* item )
 {
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
-    const u8 langId = GFL_MSGSYS_GetLangID();
-    if( langId == 0 )
+    CONFIG *save = SaveData_GetConfig( SaveControl_GetPointer() );
+    const MOJIMODE mojiMode = CONFIG_GetMojiMode(save );
+
+    if( mojiMode == MOJIMODE_HIRAGANA )
     {
       GFL_MSGSYS_SetLangID( 1 );
+      CONFIG_SetMojiMode(save,MOJIMODE_KANJI );
     }
     else
     {
       GFL_MSGSYS_SetLangID( 0 );
+      CONFIG_SetMojiMode(save,MOJIMODE_HIRAGANA );
     }
     DEBUGWIN_RefreshScreen();
   }

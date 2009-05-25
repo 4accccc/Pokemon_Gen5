@@ -500,8 +500,11 @@ static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk )
   //GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID, FLDMAPMENU_STR13);
   //GMEVENT_CallEvent(mwk->gmEvent, subevent);
   GMEVENT * newEvent;
+  GAMEDATA *gameData = GAMESYSTEM_GetGameData( mwk->gmSys );
+  SAVE_CONTROL_WORK *saveControl = GAMEDATA_GetSaveControlWork( gameData );
+  CONFIG *config = SaveData_GetConfig( saveControl );
   newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
-      FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, NULL);
+      FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, config);
   GMEVENT_CallEvent(mwk->gmEvent, newEvent);
   return TRUE;
 }
