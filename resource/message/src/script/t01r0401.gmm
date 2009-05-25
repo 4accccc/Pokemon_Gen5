@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-21T15:00:04"/>
+	<create user="matsumiya" host="W00179" date="2009-05-25T17:09:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -295,12 +295,38 @@
 	<row id="msg_t01r0401_doctor01_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">アララギ『おっ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アララギ『おっ！
+まっていたよ！！[BE:01:ページ切り替え（クリア）]
 どの　ポケモンを　えらんだんだい？
 ぼくの　よそうでは……</language>
-		<language name="JPN_KANJI" width="256">アララギ『おっ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">アララギ『おっ！
+待っていたよ！！[BE:01:ページ切り替え（クリア）]
 どの　ポケモンを　選んだんだい？
 ぼくの　予想では……</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor01_02">
+		<attribute name="キャラ指定">博士（子）</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor01_03">
+		<attribute name="キャラ指定">博士（子）</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor01_04">
+		<attribute name="キャラ指定">博士（子）</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+	</row>
+
+	<row id="msg_t01r0401_doctor01_05">
+		<attribute name="キャラ指定">博士（子）</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">テストメッセージ</language>
 	</row>
 
 	<row id="msg_t01r0401_photo_01">
