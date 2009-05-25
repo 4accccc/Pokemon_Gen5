@@ -1749,13 +1749,13 @@ static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 	u16 nextBGM = 0;
 	switch( zone_id ){
 	case ZONE_ID_T01:
-		nextBGM = SEQ_WB_T_01; break;
+		nextBGM = SEQ_T_01; break;
 	case ZONE_ID_C01:
-		nextBGM = SEQ_WB_TITLE; break;
+		nextBGM = SEQ_TITLE; break;
 	case ZONE_ID_R01:
-		nextBGM = SEQ_WB_R_A_SP; break;
+		nextBGM = SEQ_R_A_SP; break;
 	case ZONE_ID_D01:
-		nextBGM = SEQ_WB_SHINKA; break;
+		nextBGM = SEQ_SHINKA; break;
 		break;
 	default:
 		break;
