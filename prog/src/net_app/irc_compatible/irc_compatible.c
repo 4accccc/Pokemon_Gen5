@@ -476,7 +476,10 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(IRC_COMPATIBLE_MAIN_WORK), HEAPID_IRCCOMPATIBLE_SYSTEM );
 	GFL_STD_MemClear( p_wk, sizeof(IRC_COMPATIBLE_MAIN_WORK) );
 	p_wk->p_gamesys	= p_param;
-	p_wk->p_irc	= COMPATIBLE_IRC_CreateSystem( 60*10, HEAPID_IRCCOMPATIBLE_SYSTEM );
+	//0xFFFFFFFFは応急処理（仮）5月ROM焼きのあと、
+	//毎回接続しなおす処理に直す。その際、最初の接続時にマックアドレスを貰いその人としか
+	//繋がらないような処理にする
+	p_wk->p_irc	= COMPATIBLE_IRC_CreateSystem( 0xFFFFFFFF, HEAPID_IRCCOMPATIBLE_SYSTEM );
 
 	//モジュール初期化
 	CreateTemporaryModules( p_wk );

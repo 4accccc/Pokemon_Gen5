@@ -36,32 +36,6 @@
 #define IRC_Print(...)	((void)0)
 #endif //DEBUG_COMPATIBLE_IRC_PRINT
 
-
-//-------------------------------------
-///	メインシーケンス
-//=====================================
-typedef enum {
-	COMPATIBLE_IRC_SEQ_WAIT	= 0,			
-	COMPATIBLE_IRC_SEQ_INIT_START	= 0,
-	COMPATIBLE_IRC_SEQ_INIT_WAIT,
-	COMPATIBLE_IRC_SEQ_INIT_END,
-	COMPATIBLE_IRC_SEQ_CONNECT_START	= 0,
-	COMPATIBLE_IRC_SEQ_CONNECT_WAIT,
-	COMPATIBLE_IRC_SEQ_CONNECT_TIMING_START,
-	COMPATIBLE_IRC_SEQ_CONNECT_TIMING_WAIT,
-	COMPATIBLE_IRC_SEQ_CONNECT_END,
-	COMPATIBLE_IRC_SEQ_DISCONNECT_START	= 0,
-	COMPATIBLE_IRC_SEQ_DISCONNECT_WAIT,
-	COMPATIBLE_IRC_SEQ_DISCONNECT_END,
-	COMPATIBLE_IRC_SEQ_EXIT_START	= 0,
-	COMPATIBLE_IRC_SEQ_EXIT_WAIT,
-	COMPATIBLE_IRC_SEQ_EXIT_END,
-	COMPATIBLE_IRC_SEQ_TIMING_START	= 0,
-	COMPATIBLE_IRC_SEQ_TIMING_WAIT,
-	COMPATIBLE_IRC_SEQ_TIMING_END,
-	COMPATIBLE_IRC_SEQ_MAIN	= 0,
-} COMPATIBLE_IRC_SEQ;
-
 //-------------------------------------
 ///	
 //=====================================
@@ -96,6 +70,8 @@ struct _COMPATIBLE_IRC_SYS
 	BOOL	is_return;
 	BOOL	is_start;
 	u32		random;
+
+	u8		mac_address[6];
 
 	MENU_DECIDE_DATA	menu_recv;
 	MENU_DECIDE_DATA	menu_send;
@@ -241,6 +217,7 @@ void COMPATIBLE_IRC_DeleteSystem( COMPATIBLE_IRC_SYS *p_sys )
 	GFL_HEAP_FreeMemory( p_sys );
 }
 
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	初期化待ち処理
@@ -253,26 +230,33 @@ void COMPATIBLE_IRC_DeleteSystem( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys )
 {	
+	enum
+	{	
+		SEQ_INIT_START,
+		SEQ_INIT_WAIT,
+		SEQ_INIT_END,
+	};
+
 	switch( p_sys->seq )
 	{
-	case COMPATIBLE_IRC_SEQ_INIT_START:
+	case SEQ_INIT_START:
 		{
 			GFLNetInitializeStruct net_init = sc_net_init;
 			net_init.irc_timeout = p_sys->irc_timeout;
 			GFL_NET_Init( &net_init, NET_INIT_InitCallBack, p_sys );
 		}
-		p_sys->seq	= COMPATIBLE_IRC_SEQ_INIT_WAIT;
+		p_sys->seq	= SEQ_INIT_WAIT;
 		break;
 
-	case COMPATIBLE_IRC_SEQ_INIT_WAIT:
+	case SEQ_INIT_WAIT:
 		if(GFL_NET_IsInit())
 		{
-			p_sys->seq	= COMPATIBLE_IRC_SEQ_INIT_END;
+			p_sys->seq	= SEQ_INIT_END;
 		}
 		break;
 
-	case COMPATIBLE_IRC_SEQ_INIT_END:
-		p_sys->seq	= COMPATIBLE_IRC_SEQ_WAIT;
+	case SEQ_INIT_END:
+		p_sys->seq	= 0;
 		return TRUE;
 
 	default:
@@ -294,11 +278,18 @@ BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 {	
+	enum
+	{	
+		SEQ_EXIT_START,
+		SEQ_EXIT_WAIT,
+		SEQ_EXIT_END,
+	};
+
 	switch(p_sys->seq){
-	case COMPATIBLE_IRC_SEQ_EXIT_START:
+	case SEQ_EXIT_START:
 		if( GFL_NET_Exit(NET_EXIT_ExitCallBack ) )
 		{
-			p_sys->seq	= COMPATIBLE_IRC_SEQ_EXIT_WAIT;
+			p_sys->seq	= SEQ_EXIT_WAIT;
 		}
 		else
 		{
@@ -306,15 +297,15 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 		}
 		break;
 
-	case COMPATIBLE_IRC_SEQ_EXIT_WAIT:
+	case SEQ_EXIT_WAIT:
 		if( p_sys->is_exit )
 		{
-			p_sys->seq	= COMPATIBLE_IRC_SEQ_EXIT_END;
+			p_sys->seq	= SEQ_EXIT_END;
 		}
 		break;
 
-	case COMPATIBLE_IRC_SEQ_EXIT_END:
-		p_sys->seq	= COMPATIBLE_IRC_SEQ_WAIT;
+	case SEQ_EXIT_END:
+		p_sys->seq	= 0;
 		return TRUE;
 
 	default:
@@ -336,38 +327,48 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 {	
+	enum
+	{	
+		SEQ_CONNECT_START,
+		SEQ_CONNECT_WAIT,
+		SEQ_CONNECT_TIMING_START,
+		SEQ_CONNECT_TIMING_WAIT,
+		SEQ_CONNECT_END,
+	};
+
 	switch( p_sys->seq ){
-	case COMPATIBLE_IRC_SEQ_CONNECT_START:
+	case SEQ_CONNECT_START:
 		GFL_NET_ChangeoverConnect( NULL );
-		p_sys->seq	= COMPATIBLE_IRC_SEQ_CONNECT_WAIT;
+		p_sys->seq	= SEQ_CONNECT_WAIT;
 		break;
 
-	case COMPATIBLE_IRC_SEQ_CONNECT_WAIT:
+	case SEQ_CONNECT_WAIT:
 		//自動接続待ち
 		if( p_sys->is_connect )
 		{
 			IRC_Print("接続した\n");
-			p_sys->seq	= COMPATIBLE_IRC_SEQ_CONNECT_TIMING_START;
+			p_sys->seq	= SEQ_CONNECT_TIMING_START;
 		}
 		break;
 
-	case COMPATIBLE_IRC_SEQ_CONNECT_TIMING_START:
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,COMPATIBLE_IRC_CONNECT_TIMINGSYNC_NO);
-		p_sys->seq	= COMPATIBLE_IRC_SEQ_CONNECT_TIMING_WAIT;
+	case SEQ_CONNECT_TIMING_START:
+		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),
+				COMPATIBLE_IRC_CONNECT_TIMINGSYNC_NO);
+		p_sys->seq	= SEQ_CONNECT_TIMING_WAIT;
 		break;
 
-	case COMPATIBLE_IRC_SEQ_CONNECT_TIMING_WAIT:
+	case SEQ_CONNECT_TIMING_WAIT:
 		if( GFL_NET_HANDLE_IsTimingSync( GFL_NET_HANDLE_GetCurrentHandle(),
 					COMPATIBLE_IRC_CONNECT_TIMINGSYNC_NO) )
 		{
-			p_sys->seq	= COMPATIBLE_IRC_SEQ_CONNECT_END;
+			p_sys->seq	= SEQ_CONNECT_END;
 		}
 		break;
 
-	case COMPATIBLE_IRC_SEQ_CONNECT_END:
+	case SEQ_CONNECT_END:
 		IRC_Print("タイミング取り成功\n");
 		IRC_Print("接続人数 = %d\n", GFL_NET_GetConnectNum());
-		p_sys->seq = COMPATIBLE_IRC_SEQ_WAIT;
+		p_sys->seq = 0;
 		return TRUE;
 
 	default:
@@ -389,31 +390,38 @@ BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 {	
+	enum
+	{	
+		SEQ_DISCONNECT_START,
+		SEQ_DISCONNECT_WAIT,
+		SEQ_DISCONNECT_END,
+	};
+
 	switch(p_sys->seq){
-	case COMPATIBLE_IRC_SEQ_DISCONNECT_START:
+	case SEQ_DISCONNECT_START:
 		if(GFL_NET_IsParentMachine() == TRUE)
 		{
 			IRC_Print("親機：GFL_NET_CMD_EXIT_REQ送信\n");
 			if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_CMD_EXIT_REQ, 0, NULL) )
 			{
-				p_sys->seq	= COMPATIBLE_IRC_SEQ_DISCONNECT_WAIT;
+				p_sys->seq	= SEQ_DISCONNECT_WAIT;
 			}
 		}
 		else
 		{
-			p_sys->seq	= COMPATIBLE_IRC_SEQ_DISCONNECT_WAIT;
+			p_sys->seq	= SEQ_DISCONNECT_WAIT;
 		}
 //		break;
 //	fall through
 
-	case COMPATIBLE_IRC_SEQ_DISCONNECT_WAIT:
+	case SEQ_DISCONNECT_WAIT:
 		if( !p_sys->is_connect ){
-			p_sys->seq = COMPATIBLE_IRC_SEQ_DISCONNECT_END;
+			p_sys->seq = SEQ_DISCONNECT_END;
 		}
 		break;
 
-	case COMPATIBLE_IRC_SEQ_DISCONNECT_END:
-		p_sys->seq = COMPATIBLE_IRC_SEQ_WAIT;
+	case SEQ_DISCONNECT_END:
+		p_sys->seq = 0;
 		return TRUE;
 
 	default:
@@ -436,24 +444,31 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_TimingSyncWait( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_TIMING_NO timing_no )
 {
+	enum
+	{	
+		SEQ_TIMING_START,
+		SEQ_TIMING_WAIT,
+		SEQ_TIMING_END,
+	};
+
 	switch( p_sys->seq )
 	{	
-	case COMPATIBLE_IRC_SEQ_TIMING_START:
+	case SEQ_TIMING_START:
 		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,timing_no);
-		p_sys->seq	= COMPATIBLE_IRC_SEQ_TIMING_WAIT;
+		p_sys->seq	= SEQ_TIMING_WAIT;
 		break;
 
-	case COMPATIBLE_IRC_SEQ_TIMING_WAIT:
+	case SEQ_TIMING_WAIT:
 		if( GFL_NET_HANDLE_IsTimingSync( GFL_NET_HANDLE_GetCurrentHandle(),
 					timing_no ) )
 		{
-			p_sys->seq	= COMPATIBLE_IRC_SEQ_TIMING_END;
+			p_sys->seq	= SEQ_TIMING_END;
 		}
 		break;
 
-	case COMPATIBLE_IRC_SEQ_TIMING_END:
+	case SEQ_TIMING_END:
 		IRC_Print("タイミング取り成功\n");
-		p_sys->seq = COMPATIBLE_IRC_SEQ_WAIT;
+		p_sys->seq = 0;
 		return TRUE;
 
 	default:
@@ -475,31 +490,38 @@ BOOL COMPATIBLE_IRC_TimingSyncWait( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_TIMING
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_IsError( COMPATIBLE_IRC_SYS *p_sys )
 {	
+	enum
+	{	
+		SEQ_ERROR_START,
+		SEQ_ERROR_WAIT,
+		SEQ_ERROR_END,
+	};
+
 	switch(p_sys->err_seq){
-	case 0:
+	case SEQ_ERROR_START:
 		if(GFL_NET_IsInit() == TRUE && GFL_NET_SystemIsError() != 0)
 		{
 			IRC_Print("通信エラーが発生\n");
 			if(GFL_NET_Exit(NET_EXIT_ExitCallBack) == TRUE)
 			{
-				p_sys->err_seq++;
+				p_sys->err_seq = SEQ_ERROR_WAIT;
 			}
 			else
 			{
-				p_sys->err_seq = 100;
+				p_sys->err_seq = SEQ_ERROR_END;
 			}
 			return TRUE;
 		}
 		break;
 
-	case 1:
+	case SEQ_ERROR_WAIT:
 		if(p_sys->is_exit == TRUE)
 		{
-			p_sys->err_seq = 100;
+			p_sys->err_seq = SEQ_ERROR_END;
 		}
 		return TRUE;
 
-	case 100:
+	case SEQ_ERROR_END:
 		GFL_STD_MemClear(p_sys, sizeof(COMPATIBLE_IRC_SYS));
 		return FALSE;
 	}
@@ -631,25 +653,37 @@ BOOL COMPATIBLE_IRC_RecvReturnMenu( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_WaitStartProcTiming( COMPATIBLE_IRC_SYS *p_sys )
 {	
+	enum
+	{	
+		SEQ_PROC_START,
+		SEQ_PROC_WAIT,
+		SEQ_PROC_END,
+	};
+
 	switch( p_sys->seq )
 	{	
-	case 0:
-		p_sys->random	= GFUser_GetPublicRand(3);
-		p_sys->seq	= 1;
+	case SEQ_PROC_START:
+		if( GFL_NET_IsParentMachine() )
+		{	
+			p_sys->random	= GFUser_GetPublicRand(3);
+			OS_TPrintf( "親ランダム生成 %d\n", p_sys->random );
+		}
+		p_sys->seq	= SEQ_PROC_WAIT;
 		break;
 
-	case 1:
+	case SEQ_PROC_WAIT:
 		if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
 					SENDCMD_STARTPROC, sizeof(u32), &p_sys->random ))
 		{
 			OS_TPrintf("メニュー送信開始\n");
-			p_sys->seq	= 2;
+			p_sys->seq	= SEQ_PROC_END;
 		}
 		break;
 
-	case 2:
+	case SEQ_PROC_END:
 		if( p_sys->is_start )
 		{	
+			OS_TPrintf( "ランダム決定 %d\n", p_sys->random );
 			p_sys->is_start	= FALSE;
 			p_sys->seq			= 0;
 			return TRUE;
@@ -674,6 +708,7 @@ u32 COMPATIBLE_IRC_GetRandom( const COMPATIBLE_IRC_SYS *cp_sys )
 {	
 	return cp_sys->random;
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	転送処理
@@ -943,12 +978,13 @@ static void NET_RECV_StartProc( const int netID, const int size, const void* cp_
 		return;	//自分のデータは無視
 	}
 
+	//子供は親のランダムを貰う
 	if( !GFL_NET_IsParentMachine() )
 	{	
-		p_sys->random	= *(u32*)cp_data;
+		GFL_STD_MemCopy( cp_data, &p_sys->random, sizeof(u32) );
 	}
 
 	p_sys->is_start		= TRUE;
-	IRC_Print( "同期OK rnd%d\n", p_sys->random );
+	IRC_Print( "同期OK 受信rnd%d\n", p_sys->random );
 
 }
