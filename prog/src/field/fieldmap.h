@@ -74,8 +74,6 @@ extern GFL_BBDACT_SYS * FIELDMAP_GetBbdActSys( FIELDMAP_WORK *fieldWork );
 extern FLDMAPPER * FIELDMAP_GetFieldG3Dmapper( FIELDMAP_WORK *fieldWork );
 extern void * FIELDMAP_GetMapCtrlWork( FIELDMAP_WORK *fieldWork );
 extern void FIELDMAP_SetMapCtrlWork(FIELDMAP_WORK *fieldWork,void *ctrlWork);
-extern int FIELDMAP_GetKeyCont( const FIELDMAP_WORK *fieldWork );
-extern int FIELDMAP_GetKeyTrg( const FIELDMAP_WORK *fieldWork );
 extern FIELD_PLAYER * FIELDMAP_GetFieldPlayer( FIELDMAP_WORK *fieldWork );
 extern FIELD_SUBSCREEN_WORK* FIELDMAP_GetFieldSubscreenWork(
     FIELDMAP_WORK *fieldWork );

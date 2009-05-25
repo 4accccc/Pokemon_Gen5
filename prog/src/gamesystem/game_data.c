@@ -52,7 +52,9 @@ struct _GAMEDATA{
 	u8 season_id;				///<季節指定ID
 	u8 subscreen_mode; ///< フィールド下画面の状態
 	u8 subscreen_type; 
-	u8 padding[1];
+	u8 frameSpritcount;    ///< フレーム分割動作で動作する場合のカウント
+	u8 frameSpritEnable;   ///< フレーム分割動作で動作する場合の許可
+	u8 dummy[3];
 };
 
 //==============================================================================
@@ -351,6 +353,60 @@ const u8 GAMEDATA_GetSubScreenType(const GAMEDATA *gamedata)
 void GAMEDATA_SetSubScreenType(GAMEDATA *gamedata, const u8 subscreen_type)
 {
 	gamedata->subscreen_type = subscreen_type;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	  フレーム分割動作で動作する場合の許可フラグ設定
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param	  bEnable 分割する場合TRUE
+ */
+//------------------------------------------------------------------
+void GAMEDATA_SetFrameSpritEnable(GAMEDATA *gamedata,BOOL bEnable)
+{
+	 gamedata->frameSpritEnable = bEnable;
+	if(bEnable){
+		gamedata->frameSpritcount = 0;    ///< フレーム分割動作で動作する場合のカウント
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	  フレーム分割動作で動作する場合のカウンタリセット
+ * @param   gamedata	GAMEDATAへのポインタ
+ */
+//------------------------------------------------------------------
+void GAMEDATA_ResetFrameSpritCount(GAMEDATA *gamedata)
+{
+	gamedata->frameSpritcount = 0;    ///< フレーム分割動作で動作する場合のカウント
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	  フレーム分割動作で動作する場合のフレーム
+ * @param   gamedata	GAMEDATAへのポインタ
+ */
+//------------------------------------------------------------------
+u8 GAMEDATA_GetAndAddFrameSpritCount(GAMEDATA *gamedata)
+{
+	if(gamedata->frameSpritEnable){
+		u8 ret = gamedata->frameSpritcount;
+		gamedata->frameSpritcount++;
+		return ret;
+	}
+	return 0;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	  フレーム分割動作で動作しているかどうか
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @return  動作している場合TRUE
+ */
+//------------------------------------------------------------------
+BOOL GAMEDATA_IsFrameSpritMode(GAMEDATA *gamedata)
+{
+	return gamedata->frameSpritEnable;
 }
 
 

@@ -378,8 +378,8 @@ static void mapCtrlC3_Delete( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 {
-	int key_cont = FIELDMAP_GetKeyCont( fieldWork );
-  int key_trg = FIELDMAP_GetKeyTrg(fieldWork);
+	int key_cont = GFL_UI_KEY_GetCont(  );
+  int key_trg = GFL_UI_KEY_GetTrg();
 	C3_MOVE_WORK *mwk = FIELDMAP_GetMapCtrlWork( fieldWork );
   BOOL rail_flag = FIELD_RAIL_MAN_GetActiveFlag(mwk->p_railMan);
 	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );;
@@ -393,7 +393,7 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   if (rail_flag)
   {
     // ƒŒ[ƒ‹“®ì
-    FIELD_RAIL_MAN_Update(mwk->p_railMan, FIELDMAP_GetKeyCont(fieldWork) );
+    FIELD_RAIL_MAN_Update(mwk->p_railMan, GFL_UI_KEY_GetCont() );
     FIELD_RAIL_MAN_GetPos(mwk->p_railMan, pos );
     pos->y = HEIGHT;
     FIELD_PLAYER_SetPos( fld_player, pos );

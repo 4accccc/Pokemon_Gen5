@@ -121,8 +121,8 @@ static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 {
-	int key_cont = FIELDMAP_GetKeyCont( fieldWork );
-  int key_trg = FIELDMAP_GetKeyTrg(fieldWork);
+	int key_cont = GFL_UI_KEY_GetCont();
+  int key_trg = GFL_UI_KEY_GetTrg();
   BOOL rail_flag = FIELD_RAIL_MAN_GetActiveFlag(railMan);
 	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 
@@ -147,7 +147,7 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 
   if (rail_flag)
   {
-    FIELD_RAIL_MAN_Update(railMan, FIELDMAP_GetKeyCont(fieldWork) );
+    FIELD_RAIL_MAN_Update(railMan, GFL_UI_KEY_GetCont() );
     FIELD_RAIL_MAN_GetPos(railMan, pos );
     FIELD_PLAYER_SetPos( fld_player, pos );
     FIELD_RAIL_MAN_UpdateCamera(railMan);

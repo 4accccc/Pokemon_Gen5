@@ -109,6 +109,7 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT GameMainProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	GAMESYS_WORK * gsys = mywk;
+
 	if (GameSystem_Main(gsys)) {
 		return GFL_PROC_RES_FINISH;
 	} else {
@@ -232,19 +233,42 @@ static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK *
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 {
 	//Game Server Proccess
-	//PlayerController/Event Trigger
-	//イベント起動チェック処理（シチュエーションにより分岐）
-	GAMESYSTEM_EVENT_CheckSet(gsys, gsys->evcheck_func, gsys->evcheck_context);
-	//イベント実行処理
-	GAMESYSTEM_EVENT_Main(gsys);
-	//通信イベント実行処理
-	GameCommSys_Main(gsys->game_comm);
+
+	if(GAMEDATA_IsFrameSpritMode(gsys->gamedata)) //フレーム分割状態にいる場合
+	{
+		//ここから３０フレーム用のキーを返すようにします
+		GFL_UI_ChangeFrameRate(GFL_UI_FRAMERATE_30);
+	}
+
+	// このフレームが０以外の場合、処理分割が行われている
+	// 処理分割時には処理分割の最初のフレームだけ、動く必要がある
+	// そうでない場合、継続のフラグだけ返す
+	if(!GAMEDATA_GetAndAddFrameSpritCount(gsys->gamedata))
+	{
+		//PlayerController/Event Trigger
+		//イベント起動チェック処理（シチュエーションにより分岐）
+		GAMESYSTEM_EVENT_CheckSet(gsys, gsys->evcheck_func, gsys->evcheck_context);
+		//イベント実行処理
+		GAMESYSTEM_EVENT_Main(gsys);
+		//通信イベント実行処理
+		GameCommSys_Main(gsys->game_comm);
+	}
 	//メインプロセス
 	gsys->proc_result = GFL_PROC_LOCAL_Main(gsys->procsys);
-	if (gsys->proc_result == FALSE && gsys->event == NULL) {
+
+	if(GAMEDATA_IsFrameSpritMode(gsys->gamedata)) //フレーム分割状態にいる場合
+	{
+		//ここから６０フレーム用のキーを返すようにします
+		GFL_UI_ChangeFrameRate(GFL_UI_FRAMERATE_60);
+	}
+
+	if (gsys->proc_result == FALSE && gsys->event == NULL)
+	{
 		//プロセスもイベントも存在しないとき、ゲーム終了
 		return TRUE;
-	} else {
+	}
+	else
+	{
 		return FALSE;
 	}
 }

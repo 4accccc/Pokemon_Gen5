@@ -185,9 +185,6 @@ struct _FIELDMAP_WORK
 	FLDMAPSEQ seq;
   u32 seq_switch;
 	int timer;
-//	int	key_trg;
-//  int key_trg_tail;
-//	int key_cont;
 	u16 map_id;
 	VecFx32 now_pos;
 	LOCATION location;
@@ -530,26 +527,23 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       gsys, fldmapFunc_Event_CheckEvent, fieldWork );
   
   fieldWork->gamemode = GAMEMODE_NORMAL;
+	GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), TRUE);
+
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-{ 
-	//30フレームに変更
-	GFL_UI_ChangeFrameRate(GFL_UI_FRAMERATE_30);
+{
+	//キーの分割取得カウンタをリセット
 	GFL_UI_ResetFrameRate();
 	//ゾーン更新処理
   fldmapMain_UpdateMoveZone( fieldWork );
 
   //マップ別 登録処理
-//  fieldWork->key_trg = 0;
-//  fieldWork->key_cont = 0;
 
   if( GAMESYSTEM_GetEvent(gsys) == NULL) {
-//    fieldWork->key_trg = GFL_UI_KEY_GetTrg() | fieldWork->key_trg_tail;
-//    fieldWork->key_cont = GFL_UI_KEY_GetCont();
     
     //登録テーブルごとに個別のメイン処理を呼び出し
     fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
@@ -575,17 +569,11 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
   }
 
-	//60フレームに変更
-	GFL_UI_ChangeFrameRate(GFL_UI_FRAMERATE_60);
   return MAINSEQ_RESULT_CONTINUE;
 }
 
 static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
-	//30フレームに変更
-	GFL_UI_ChangeFrameRate(GFL_UI_FRAMERATE_30);
-//  fieldWork->key_trg_tail = GFL_UI_KEY_GetTrg();
-  
   FIELD_SUBSCREEN_Draw(fieldWork->fieldSubscreenWork);
   FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
   
@@ -594,8 +582,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 	fldmap_G3D_Draw( fieldWork );
 	GFL_CLACT_SYS_Main(); // CLSYSメイン
   
-	//60フレームに変更
-	GFL_UI_ChangeFrameRate(GFL_UI_FRAMERATE_60);
+	// ゲームデータのフレーム分割用カウンタをリセット
+	GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
   return MAINSEQ_RESULT_CONTINUE;
 }
 
@@ -652,6 +640,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   FIELD_DEBUG_Delete( fieldWork->debugWork );
 
+	GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), FALSE);
+	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_60 );
+
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
@@ -659,7 +650,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
-	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_60 );
 
 	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
 
@@ -788,10 +778,6 @@ const BOOL FIELDMAP_IsReady( const FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 void FIELDMAP_ForceUpdate( FIELDMAP_WORK *fieldWork )
 {
-	//キー入力は無いものとする
-//	fieldWork->key_trg = 0;
-//	fieldWork->key_cont = 0;
-	
 	//登録テーブルごとに個別のメイン処理を呼び出し
 	fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
 	
@@ -984,30 +970,6 @@ void FIELDMAP_SetMapCtrlWork( FIELDMAP_WORK *fieldWork, void *ctrlWork )
 {
 	GF_ASSERT( fieldWork->mapCtrlWork == NULL ); //二重登録禁止
 	fieldWork->mapCtrlWork = ctrlWork;
-}
-
-//--------------------------------------------------------------
-/**
- * FIELDMAP_WORK キーコンテニュー取得
- * @param fieldWork FIELDMAP_WORK
- * @retval int キーコンティニュー PAD_BUTTON_A等
- */
-//--------------------------------------------------------------
-int FIELDMAP_GetKeyCont( const FIELDMAP_WORK *fieldWork )
-{
-	return GFL_UI_KEY_GetCont();//fieldWork->key_cont;
-}
-
-//--------------------------------------------------------------
-/**
- * FIELDMAP_WORK キートリガ取得
- * @param fieldWork FIELDMAP_WORK
- * @retval int キートリガ PAD_BUTTON_A等
- */
-//--------------------------------------------------------------
-int FIELDMAP_GetKeyTrg( const FIELDMAP_WORK *fieldWork )
-{
-	return GFL_UI_KEY_GetTrg();//fieldWork->key_trg;
 }
 
 //--------------------------------------------------------------
@@ -1397,7 +1359,7 @@ static GMEVENT * fldmap_Event_CheckPushConnect(
 {
 	VecFx32 now_pos = fieldWork->now_pos;
 	
-	switch( FIELDMAP_GetKeyCont(fieldWork) ) {
+	switch( GFL_UI_KEY_GetCont() ) {
 	case PAD_KEY_UP:		now_pos.z -= FX32_ONE * 16; break;
 	case PAD_KEY_DOWN:	now_pos.z += FX32_ONE * 16; break;
 	case PAD_KEY_LEFT:	now_pos.x -= FX32_ONE * 16; break;
@@ -1470,8 +1432,8 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 	
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldWork = work;
-	int	trg = FIELDMAP_GetKeyTrg( fieldWork );
-	int cont = FIELDMAP_GetKeyCont( fieldWork );
+	int	trg = GFL_UI_KEY_GetTrg();
+	int cont = GFL_UI_KEY_GetCont();
 	PLAYER_MOVE_STATE state;
   PLAYER_MOVE_VALUE value;
 

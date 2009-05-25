@@ -248,6 +248,41 @@ extern const u8 GAMEDATA_GetSubScreenType(const GAMEDATA *gamedata);
 //--------------------------------------------------------------
 extern void GAMEDATA_SetSubScreenType(GAMEDATA *gamedata, const u8 subscreen_type);
 
+//------------------------------------------------------------------
+/**
+ * @brief	  フレーム分割動作で動作する場合の許可フラグ設定
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param	  bEnable 分割する場合TRUE
+ */
+//------------------------------------------------------------------
+extern void GAMEDATA_SetFrameSpritEnable(GAMEDATA *gamedata,BOOL bEnable);
+
+//------------------------------------------------------------------
+/**
+ * @brief	  フレーム分割動作で動作する場合のカウンタリセット
+ * @param   gamedata	GAMEDATAへのポインタ
+ */
+//------------------------------------------------------------------
+extern void GAMEDATA_ResetFrameSpritCount(GAMEDATA *gamedata);
+
+//------------------------------------------------------------------
+/**
+ * @brief	  フレーム分割動作で動作する場合のフレーム
+ * @param   gamedata	GAMEDATAへのポインタ
+ */
+//------------------------------------------------------------------
+extern u8 GAMEDATA_GetAndAddFrameSpritCount(GAMEDATA *gamedata);
+
+//------------------------------------------------------------------
+/**
+ * @brief	  フレーム分割動作で動作しているかどうか
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @return  動作している場合TRUE
+ */
+//------------------------------------------------------------------
+extern BOOL GAMEDATA_IsFrameSpritMode(GAMEDATA *gamedata);
+
+
 //--------------------------------------------------------------
 /**
  * @brief   ゲームデータが持つ情報を元にセーブを実行

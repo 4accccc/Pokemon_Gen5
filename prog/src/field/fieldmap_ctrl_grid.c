@@ -144,8 +144,8 @@ static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 	FIELD_PLAYER_GRID *gridPlayer = gridWork->gridPlayer;
 	
 	{	//Ž©‹@ˆÚ“®
-		int key_trg = FIELDMAP_GetKeyTrg( fieldWork );
-		int key_cont = FIELDMAP_GetKeyCont( fieldWork );
+		int key_trg = GFL_UI_KEY_GetTrg( );
+		int key_cont = GFL_UI_KEY_GetCont( );
 		FIELD_PLAYER_GRID_Move( gridPlayer, key_trg, key_cont );
 		
 		{
