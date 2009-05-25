@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2009-05-07T18:18:01" source="untitled"/>
+	<create user="iwao_kazumasa" host="W00203" date="2009-05-25T18:33:09" source="untitled"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="iwao_kazumasa" host="W00203" date="2009-05-07T18:18:01" source="untitled"/>
+<original_create user="iwao_kazumasa" host="W00203" date="2009-05-25T18:33:09" source="untitled"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -202,70 +202,70 @@
 		path="C:/home/wb_data3d/field/out00/chip/tex/mori01b.tga"
 	>
 		<bitmap size="512">
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e0e0 e0e0 e0e0 e0e0 e2e0 e2e2 e2e2 e2e2
-			e2e2 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e2e2 e2e2 e2e2
-			e2e2 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e2e2 e2e2 e2e2
-			e2e2 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e2e2 e2e2 e2e2
-			e2e2 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e0e0 e2e2 e2e2 e2e2
-			e2e2 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e0e0 e2e2 e2e2 e2e2
-			e2e2 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e2e2 e2e2 e2e2
-			e2e2 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e2e2 e2e2 e2e2
-			e2e2 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e2e2 e2e2 e3e2
-			e2e3 e2e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e2e2 e3e2 e2e3
-			e2e2 e2e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e2e2 e3e2 e3e3
-			e3e3 e2e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e3e2 e3e3 e3e3
-			e2e3 e2e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e3e2 e3e3 e3e3
-			e3e3 e2e3 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e3e3 e3e3 e3e3
-			e4e3 e2e3 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e3e3 e3e3 e3e3
-			e4e4 e3e3 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e3e3 e4e3 e4e4
-			e4e4 e3e4 e2e2 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e3e3 e4e4 e4e4
-			e4e4 e3e4 e2e3 e0e0 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e4e3 e4e4 e4e4
-			e4e4 e4e4 e2e4 e0e2 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e4e3 e4e4 e4e4
-			e4e4 e4e4 e4e4 e0e2 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e2e0 e4e2 e4e4 e4e6
-			e4e6 e4e4 e4e4 e0e4 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e4e0 e4e4 e6e4 e6e6
-			e4e6 e4e4 e4e6 e4e6 e0e0 e0e0 e0e0 e0e0
-			e0e0 e0e0 e0e0 e0e0 e1e1 e6e6 e6e6 e6e6
-			e6e6 e6e6 e6e6 e1e6 e0e0 e0e0 e0e0 e0e0
-			e0e0 60e0 e060 e1e1 e1e1 e6e6 e6e6 e6e6
-			e6e6 e6e6 e6e6 e6e6 e0e4 e0e0 e0e0 e0e0
-			e0e0 6061 6160 e1e1 e6e1 e6e6 e6e6 e6e6
-			e6e6 e6e6 e6e6 6666 6464 e0e0 e0e0 e0e0
-			e1e1 6161 6161 e161 e6e1 e6e6 66e6 e666
-			e6e6 e6e6 e6e1 6666 6161 e161 e0e0 e0e0
-			e1e1 6161 6161 6161 e666 e6e6 6666 e666
-			e6e6 e6e6 66e1 6661 6166 6161 6161 e161
-			6161 0161 0101 6161 6666 6161 6666 6666
-			e166 6161 6161 0101 0106 6101 6161 6161
-			6161 0101 0101 6101 0161 0101 0101 6161
-			6161 6161 0101 0101 0101 0101 6101 6161
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
+			e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8
+			e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8
+			e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8
+			e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8
+			e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6
+			e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6
+			e0e0 e2e0 e2e2 e2e2 e2e2 e2e2 e0e2 e0e0
+			e0e0 e2e0 e2e2 e2e2 e2e2 e2e2 e0e2 e0e0
+			e0e0 e2e0 e2e2 e2e2 e2e2 e2e2 e0e2 e0e0
+			e0e0 e2e0 e2e2 e2e2 e2e2 e2e2 e0e2 e0e0
+			e0e0 e2e0 e2e2 e2e2 e2e2 e2e2 e0e2 e0e0
+			e0e0 e2e0 e2e2 e2e2 e2e2 e2e2 e0e2 e0e0
+			e0e0 e2e0 e2e2 e2e2 e2e2 e2e2 e0e2 e0e0
+			e0e0 e2e0 e2e2 e2e2 e2e2 e2e2 e0e2 e0e0
+			e0e0 e2e0 e2e2 e2e2 e2e2 e2e2 e0e2 e0e0
+			e0e0 e3e0 e2e2 e2e2 e2e2 e2e2 e0e3 e0e0
+			e0e0 e2e0 e2e2 e2e2 e2e2 e2e2 e0e2 e0e0
+			e0e0 e3e0 e2e3 e2e2 e2e2 e3e2 e0e3 e0e0
+			e0e0 e3e0 e2e2 e2e2 e2e2 e2e2 e0e3 e0e0
+			e0e0 e3e0 e3e3 e3e3 e3e3 e3e3 e0e3 e0e0
+			e0e0 e3e0 e2e3 e2e2 e2e2 e3e2 e0e3 e0e0
+			e0e0 e3e0 e3e3 e3e3 e3e3 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e3e3 e3e3 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e3e3 e3e3 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e3e3 e3e3 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e3e3 e3e3 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e3e3 e3e3 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e3e3 e3e3 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e3e3 e3e3 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e5e5 e5e5 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e3e3 e3e3 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e5e5 e5e5 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e5e5 e5e5 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e5e5 e5e5 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e5e5 e5e5 e3e3 e0e3 e0e0
+			e0e0 e3e0 e3e5 e5e5 e5e5 e5e3 e0e3 e0e0
+			e0e0 e3e0 e3e3 e5e5 e5e5 e3e3 e0e3 e0e0
+			e0e0 e3e0 e5e5 e5e5 e5e5 e5e5 e2e3 e0e0
+			e0e0 e3e0 e3e5 e5e5 e5e5 e5e3 e0e3 e0e0
+			e0e0 e3e2 e5e5 e5e5 e5e5 e5e5 e2e3 e0e0
+			e0e0 e3e0 e5e5 e5e5 e5e5 e5e5 e2e3 e0e0
+			e0e0 e5e2 e5e5 e7e7 e7e7 e5e5 e2e5 e0e0
+			e0e0 e3e2 e5e5 e5e5 e5e5 e5e5 e2e3 e0e0
+			e0e0 e5e2 e5e7 e7e7 e7e7 e7e5 e2e5 e0e0
+			e0e0 e5e2 e5e5 e7e7 e7e7 e5e5 e2e5 e0e0
+			e0e0 e5e3 e5e7 e7e7 e7e7 e7e5 e3e5 e0e0
+			e0e0 e5e2 e5e7 e7e7 e7e7 e7e5 e2e5 e0e0
+			e0e0 e5e5 e7e7 e7e7 e7e7 e7e7 e5e5 e0e0
+			e0e0 e5e3 e5e7 e7e7 e7e7 e7e5 e3e5 e0e0
+			e0e0 e7e5 e7e7 e7e7 e7e7 e7e7 e5e7 e0e0
+			e0e0 e5e5 e7e7 e7e7 e7e7 e7e7 e5e5 e0e0
+			e0c0 e7e5 e7e7 e7e7 e7e7 e7e7 e5e7 c0e0
+			e0e0 e7e5 e7e7 e7e7 e7e7 e7e7 e5e7 e0e0
+			e560 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 60e5
+			e0c0 e7e5 e7e7 e7e7 e7e7 e7e7 e5e7 c0e0
+			c560 c7e7 e7c1 e7e7 e7e7 c1e7 e7c7 60c5
+			e560 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 60e5
+			4124 6141 c181 e7e7 e7e7 81c1 4161 2441
+			c560 c7e7 e7c1 e7e7 e7e7 c1e7 e7c7 60c5
+			2121 2121 2121 8781 8187 2121 2121 2121
+			4121 6141 c181 e7e7 e7e7 81c1 4161 2141
+			2121 0101 0101 0101 0101 0101 0101 2121
+			2121 2121 2121 8781 8187 2121 2121 2121
+			0121 0101 0101 0101 0101 0101 0101 2101
 		</bitmap>
 	</tex_image>
 	<tex_image index="6" name="mori01c"
@@ -347,8 +347,9 @@
 	<tex_palette index="4" name="mori01a_pl" color_size="8">
 		2564 2da4 31e4 3224 3265 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="5" name="mori01b_pl" color_size="8">
-		1ce2 1d43 2103 2123 2543 2564 2567 31e4
+	<tex_palette index="5" name="mori01b_pl" color_size="16">
+		1ce2 1d43 2103 2123 2125 2543 2564 2567
+		31e4 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="6" name="mori01c_pl" color_size="16">
 		7c1f 2da4 31e4 2564 1d23 3224 3265 19e4
@@ -360,7 +361,7 @@
 </tex_palette_array>
 
 <material_array size="8">
-	<material index="0" name="grass01a_lm5"
+	<material index="0" name="grass01a_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -408,7 +409,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="michi02b_lm3"
+	<material index="2" name="michi02b_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -432,7 +433,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="mizutama01_lm2"
+	<material index="3" name="mizutama01_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -456,7 +457,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="mori01a_lm2"
+	<material index="4" name="mori01a_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -480,7 +481,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="mori01b_lm2"
+	<material index="5" name="mori01b_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -504,7 +505,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="mori01c_lm4"
+	<material index="6" name="mori01c_lm3"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -528,7 +529,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="saku01a_lm4"
+	<material index="7" name="saku01a_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
