@@ -52,18 +52,32 @@ ev_talkobj_boy1:
 	_YES_NO_WIN SCWK_ANSWER
 	_TALKWIN_CLOSE //会話ウィンドウを閉じます
 
-//	_IFVAL_JUMP SCWK_ANSWER,NE,0,talkobj_boy1_yes
+	_IFVAL_JUMP SCWK_ANSWER,EQ,0,talkobj_boy1_yes
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,talkobj_boy1_no
 
 talkobj_boy1_yes:
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_boy1_02
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
 	_OBJ_ANIME R01BOY1,test01anime
+	_OBJ_ANIME_WAIT
+
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_boy1_03
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
 	_JUMP talkobj_boy1_end
 
 talkobj_boy1_no:
 	_OBJ_ANIME R01BOY1,test02anime
+	_OBJ_ANIME_WAIT
+	_TALKWIN_OPEN
+	_TALKMSG_ALLPUT msg_r01_boy1_04
+	_AB_KEYWAIT
+  	_TALKWIN_CLOSE
 
 talkobj_boy1_end:
-	_OBJ_ANIME_WAIT
 	_OBJ_PAUSE_CLEAR_ALL //動作モデルポーズを解除します
 	_END //イベントを終了します
 
@@ -101,8 +115,8 @@ ev_talkobj_man1:
 //	アニメーションデータ
 //--------------------------------------------------------------
 _ANIME_LABEL test01anime
-	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_U_8F,4
+	_ANIME_DATA AC_WALK_D_8F,4
 	_ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL test02anime
