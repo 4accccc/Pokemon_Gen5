@@ -223,8 +223,8 @@ static const RAIL_LINEPOS_SET sc_LINEPOS_C3_Strait;
 
 // 幅情報
 static const RAIL_WIDTH sc_RAIL_WIDTH = {
-  8,
-  4*FX32_ONE
+  16,
+  2*FX32_ONE
 };
 
 
@@ -1369,6 +1369,11 @@ static const RAIL_CAMERA_SET sc_CAMERA_C3_NORMAL =
 };
 static const RAIL_CAMERA_SET sc_CAMERA_C3_FIRST = 
 {
+//*  遠く、変わらない　ターゲットも変更
+  FIELD_RAIL_CAMERAFUNC_FixAllCamera,
+  0x5e6375, 0x2a357, 0x1f4628,
+  0x2fcf14, 0xa8c3c, 0x2d6876,
+//*/
 /*遠くから変わる
   FIELD_RAIL_POSFUNC_CircleCamera,
   0xC00,
@@ -1377,9 +1382,9 @@ static const RAIL_CAMERA_SET sc_CAMERA_C3_FIRST =
   HEIGHT,
   0x301402,
 //*/
-//*  遠く、変わらない　ターゲットも変更
+/*  遠く、変わらない　ターゲットも変更
   FIELD_RAIL_CAMERAFUNC_FixAllCamera,
-  0x4c8d58, 0x20b05, 0x180818,
+  0x2fcf14, 0xa8c3c, 0x2d6876,
   0x3a3a7e, 0xc5313, 0x44a305,
 //*/
 /*　近く変わらない
