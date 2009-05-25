@@ -227,6 +227,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
   switch (*seq) 
   {
   case FMENUSTATE_INIT:
+    if( FIELD_SUBSCREEN_CanChange( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) ) == TRUE )
     {
       GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
       GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );

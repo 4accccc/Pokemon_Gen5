@@ -18,6 +18,7 @@
 
 #include "savedata/save_control.h"
 #include "savedata/mystatus.h"
+#include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 
 #include "field/field_msgbg.h"
@@ -267,6 +268,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       if( work->scrollOffset != 0 )
       {
         work->state = FMS_WAIT_MOVEIN;
+        PMSND_PlaySystemSE( SEQ_SE_OPEN1 );
       }
       else
       {
@@ -299,6 +301,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
         work->cursorPosY == 3 )
     {
       work->state = FMS_WAIT_MOVEOUT;
+      PMSND_PlaySystemSE( SEQ_SE_CLOSE1 );
     }
     else
     {
@@ -307,6 +310,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
         work->waitCnt = 0;
         GFL_CLACT_WK_SetAnmSeq( work->activeIcon->cellIcon , FIA_DECIDE );
         work->state = FMS_WAIT_ICON_ANIME;
+        PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
       }
       else
       {
@@ -713,6 +717,7 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
     {
       work->cursorPosY--;
       work->isUpdateCursor = TRUE;
+      PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     }
   }
   else
@@ -722,24 +727,29 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
     {
       work->cursorPosY++;
       work->isUpdateCursor = TRUE;
+      PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     }
   }
   else
   if( repeat & PAD_KEY_LEFT )
   {
-    if( work->cursorPosX > 0 )
+    if( work->cursorPosX > 0 && 
+        work->cursorPosY < 3)
     {
       work->cursorPosX--;
       work->isUpdateCursor = TRUE;
+      PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     }
   }
   else
   if( repeat & PAD_KEY_RIGHT )
   {
-    if( work->cursorPosX < 1 )
+    if( work->cursorPosX < 1 && 
+        work->cursorPosY < 3 )
     {
       work->cursorPosX++;
       work->isUpdateCursor = TRUE;
+      PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     }
   }
   else

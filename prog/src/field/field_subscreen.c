@@ -279,6 +279,24 @@ void FIELD_SUBSCREEN_Draw( FIELD_SUBSCREEN_WORK* pWork )
     break;
   }
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ * @brief         切り替え可能か？(遷移中はNG)
+ * @param	pWork
+ * @param	pWork		サブスクリーン制御ワークへのポインタ
+ * @param	mode
+ */
+//----------------------------------------------------------------------------
+const BOOL FIELD_SUBSCREEN_CanChange( FIELD_SUBSCREEN_WORK* pWork )
+{
+  if( pWork->state == FSS_UPDATE )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
 //----------------------------------------------------------------------------
 /**
  * @brief         FIELD_SUBSCREEN_ChangeForceと違いフェードしてから切り替えます
@@ -293,6 +311,7 @@ void FIELD_SUBSCREEN_Change( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE n
 	GF_ASSERT(funcTable[new_mode].mode == new_mode);
 	pWork->nextMode = new_mode;
   pWork->state = FSS_CHANGE_FADEOUT;
+
 }
 
 //----------------------------------------------------------------------------
@@ -516,7 +535,6 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
 	
 	pWork->fieldMenuWork = FIELD_MENU_InitMenu( pWork->heapID , pWork , pWork->fieldmap , isScrollIn );
 	INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , pWork->heapID);
-
   if( INFOWIN_IsInitComm() == TRUE )
   {
     GFL_NET_ReloadIcon();
