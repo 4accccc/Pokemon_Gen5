@@ -43,6 +43,8 @@
 //#include "agbdownload.h"
 #include "beacondownload.h"
 
+#include "sound/pm_sndsys.h"  //SOUND関連
+
 #include "mysterylib.h"
 // 親のテスト実装
 //#define PARENT_TEST
@@ -1924,6 +1926,8 @@ static GFL_PROC_RESULT MysteryGiftProc_Init(GFL_PROC *proc, int * seq, void *pwk
 	/* サウンドデータロード */
 	Snd_DataSetByScene( SND_SCENE_HUSIGI, SEQ_PRESENT, 1 );
 #endif
+	PMSND_PlayNextBGM(SEQ_WIFI_PRESENT);
+
 	/* AGBからのダウンロードかどうかのフラグを設定 */
 /*
 	if(GetAgbCartridgeDataSize()){
