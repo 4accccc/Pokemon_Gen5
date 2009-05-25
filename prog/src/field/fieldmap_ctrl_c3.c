@@ -228,14 +228,6 @@ static const RAIL_WIDTH sc_RAIL_WIDTH = {
 };
 
 
-// äÓñ{ï™äÑêî
-#define RAIL_LINE_DIV_NORMAL    (196)
-#define RAIL_LINE_DIV_FIRST     (24)
-#define RAIL_LINE_DIV_END       (32)
-#define RAIL_LINE_DIV_WALKIN    (24)
-#define RAIL_LINE_DIV_PICKUP    (24)
-
-
 
 //======================================================================
 //	define
@@ -1148,8 +1140,6 @@ static const RAIL_LINE sc_LINE_C3_STARTtoJOINT00 =
   RAIL_KEY_LEFT,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_FIRST,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_FIRST,
   //const char * name;
@@ -1164,8 +1154,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT00toEND =
   RAIL_KEY_LEFT,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_END,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_END,
   //const char * name;
@@ -1180,8 +1168,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT00toCA_ALLAY00 =
   RAIL_KEY_UP,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_PICKUP,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1196,8 +1182,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT00toBEACH00 =
   RAIL_KEY_UP,//RAIL_KEY_DOWN,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_WALKIN,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1212,8 +1196,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT00toJOINT01 =
   RAIL_KEY_LEFT,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_NORMAL,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1228,8 +1210,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT01toCA_ALLAY01 =
   RAIL_KEY_UP,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_PICKUP,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1244,8 +1224,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT01toBEACH01 =
   RAIL_KEY_UP,//RAIL_KEY_DOWN,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_WALKIN,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1260,8 +1238,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT01toJOINT02 =
   RAIL_KEY_LEFT,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_NORMAL,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1276,8 +1252,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT02toCA_ALLAY02 =
   RAIL_KEY_UP,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_PICKUP,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1292,8 +1266,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT02toBEACH02 =
   RAIL_KEY_UP,//RAIL_KEY_DOWN,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_WALKIN,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1308,8 +1280,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT02toJOINT03 =
   RAIL_KEY_LEFT,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_NORMAL,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1324,8 +1294,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT03toCA_ALLAY03 =
   RAIL_KEY_UP,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_PICKUP,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1340,8 +1308,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT03toBEACH03 =
   RAIL_KEY_UP,//RAIL_KEY_DOWN,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_WALKIN,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1356,8 +1322,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT03toJOINT04 =
   RAIL_KEY_LEFT,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_NORMAL,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1372,8 +1336,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT04toCA_ALLAY04 =
   RAIL_KEY_UP,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_PICKUP,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;
@@ -1388,8 +1350,6 @@ static const RAIL_LINE sc_LINE_C3_JOINT04toBEACH04 =
   RAIL_KEY_UP,//RAIL_KEY_DOWN,
   //const RAIL_LINEPOS_SET * line_pos_set;
   &sc_LINEPOS_C3_Strait,//&sc_LINEPOS_C3_NORMAL,
-  //u32 line_divider;
-  RAIL_LINE_DIV_WALKIN,
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
   //const char * name;

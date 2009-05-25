@@ -117,9 +117,6 @@ struct _RAIL_LINE {
   RAIL_KEY key;
   const RAIL_LINEPOS_SET * line_pos_set;
 
-  /// ’¼üó‚Å‚Ì“®ì
-  s32 ofs_max;
-
   const RAIL_CAMERA_SET * camera_set;
 
   const char * name;
