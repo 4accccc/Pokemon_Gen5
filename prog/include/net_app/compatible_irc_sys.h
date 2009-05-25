@@ -6,6 +6,11 @@
  *	@author	Toru=Nagihashi
  *	@date		2009.05.13
  *
+ *	相性診断ゲームは、何回も接続するが、接続と接続の間が長めで
+ *	タイムアウトしてしまうので、毎回、ネゴシエーションからやり直す。
+ *	ただし、それだと誰とも繋がってしまうので、
+ *	最初につないだとき相手のMacAddrを貰い、その相手とのみ通信するようにする。
+ *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
@@ -54,6 +59,7 @@ extern void COMPATIBLE_IRC_DeleteSystem( COMPATIBLE_IRC_SYS *p_sys );
 extern BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys );
 extern BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys );
 extern BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys );
+
 extern BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys );
 extern BOOL COMPATIBLE_IRC_TimingSyncWait( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_TIMING_NO timing_no );
 extern BOOL COMPATIBLE_IRC_IsError( COMPATIBLE_IRC_SYS *p_sys );
