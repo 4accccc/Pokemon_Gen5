@@ -14,6 +14,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "field_player_grid.h"
+#include "map_attr.h"
 
 //======================================================================
 //	define
@@ -311,21 +312,21 @@ static PLAYER_SET gjiki_CheckMoveStart_Walk(
       if( ret == TRUE )
       {
         u16 attr_dir = DIR_NOT;
-        u16 val = attr & 0xffff;
-        u16 flag = (attr&0xffff0000) >> 16;
+        MAPATTR_VAL val = MAPATTR_GetMapAttrValue( attr );
+        MAPATTR_FLAG flag = MAPATTR_GetMapAttrFlag( attr );
         
         switch( val ) //ジャンプアトリビュートチェック
         {
-        case 0x28:
+        case 0x72:
           attr_dir = DIR_RIGHT;
           break;
-        case 0x29:
+        case 0x73:
           attr_dir = DIR_LEFT;
           break;
-        case 0x2a:
+        case 0x74:
           attr_dir = DIR_UP;
           break;
-        case 0x2b:
+        case 0x75:
           attr_dir = DIR_DOWN;
           break;
         }
