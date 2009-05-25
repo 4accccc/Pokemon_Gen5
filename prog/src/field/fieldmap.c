@@ -1536,7 +1536,7 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 	//メニュー起動チェック
 	if( trg == PAD_BUTTON_X ){
 		if(WIPE_SYS_EndCheck()){
-			return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
+  			return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
 		}
 	}
 

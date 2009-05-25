@@ -36,6 +36,9 @@ typedef enum {
 	FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER,
 
 	FIELD_SUBSCREEN_MODE_MAX,
+
+    //サブメニューの初期化に渡す前回モードで起動時に呼ばれた場合
+  FIELD_SUBSCREEN_FIRST_CALL,
 }FIELD_SUBSCREEN_MODE;
 
 

@@ -36,7 +36,7 @@
 #define FIELD_MENU_BG_NAME (GFL_BG_FRAME2_S)
 
 //スクロール速度
-#define FIELD_MENU_SCROLL_SPD (16) 
+#define FIELD_MENU_SCROLL_SPD (64) 
 
 //レンダーのサーフェイス番号
 #define FIELD_MENU_RENDER_SURFACE (0)
@@ -44,6 +44,9 @@
 //戻る込みのアイテム個数
 #define FIELD_MENU_ITEM_NUM (7) 
 
+//セルの回り込み防止チェックに使う。縦の最大サイズを
+#define FIELD_MENU_ICON_SIZE_Y (32) 
+#define FIELD_MENU_CURSOR_SIZE_Y (44)
 //アイコン確定時のウェイト
 #define FIELD_MENU_ICON_DECIDE_ANIME_CNT (15) 
 
@@ -93,6 +96,7 @@ typedef enum
   FMS_WAIT_ICON_ANIME ,
   FMS_EXIT_ENDMENU,     //終了時の処理
   FMS_EXIT_DECIDEITEM,  //項目決定時の処理
+  FMS_WAIT_MOVEOUT, 
   FMS_FINISH,
   
   FIELD_MENU_STATE_MAX,
@@ -145,6 +149,7 @@ struct _FIELD_MENU_WORK
   u8  waitCnt;
   BOOL isUpdateCursor;
   BOOL isCancel;
+  BOOL isDispCursor;
   FIELD_MENU_ICON icon[FIELD_MENU_ITEM_NUM];
   FIELD_MENU_ICON *activeIcon; //参照中のアイコン
   
@@ -181,7 +186,7 @@ static void FIELD_MENU_Icon_TransBmp( FIELD_MENU_WORK* work , FIELD_MENU_ICON *i
 //--------------------------------------------------------------
 //  初期化
 //--------------------------------------------------------------
-FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK* subScreenWork , FIELDMAP_WORK *fieldWork )
+FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK* subScreenWork , FIELDMAP_WORK *fieldWork , const BOOL isScrollIn )
 {
   FIELD_MENU_WORK *work = GFL_HEAP_AllocMemory( heapId , sizeof( FIELD_MENU_WORK ) );
   ARCHANDLE *arcHandle;
@@ -193,6 +198,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
   work->cursorPosX = 0;
   work->cursorPosY = 0;
   work->isUpdateCursor = FALSE;
+  work->isDispCursor = TRUE;
   work->activeIcon = NULL;
   work->vBlankTcb = GFUser_VIntr_CreateTCB( FIELD_MENU_VBlankTCB , (void*)work , 0 );
   
@@ -210,8 +216,10 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
     GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
     FIELD_MENU_SetMenuItemNo( work , GAMEDATA_GetSubScreenType( gameData ) );
   }
-  
-  //FIELD_MENU_InitScrollIn( work );
+  if( isScrollIn == TRUE )
+  {
+    FIELD_MENU_InitScrollIn( work );
+  }
   return work;
 }
 
@@ -268,24 +276,16 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     break;
     
   case FMS_WAIT_MOVEIN:
+    if( work->scrollOffset < FIELD_MENU_SCROLL_SPD )
     {
-      if( work->scrollOffset < FIELD_MENU_SCROLL_SPD )
-      {
-        work->scrollOffset = 0;
-        work->state = FMS_LOOP;
-      }
-      else
-      {
-        work->scrollOffset -= FIELD_MENU_SCROLL_SPD;
-      }
-      {
-        GFL_CLACTPOS sufacePos;
-        sufacePos.x = 0;
-        sufacePos.y = -work->scrollOffset;
-        GFL_CLACT_USERREND_SetSurfacePos( work->cellRender , FIELD_MENU_RENDER_SURFACE , &sufacePos );
-      }
-      work->isUpdateScroll = TRUE;
+      work->scrollOffset = 0;
+      work->state = FMS_LOOP;
     }
+    else
+    {
+      work->scrollOffset -= FIELD_MENU_SCROLL_SPD;
+    }
+    work->isUpdateScroll = TRUE;
     break;
 
   case FMS_LOOP:
@@ -298,7 +298,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     if( work->isCancel == TRUE ||
         work->cursorPosY == 3 )
     {
-      work->state = FMS_EXIT_ENDMENU;
+      work->state = FMS_WAIT_MOVEOUT;
     }
     else
     {
@@ -331,8 +331,71 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     FIELD_SUBSCREEN_SetAction( work->subScrWork , FIELD_SUBSCREEN_ACTION_TOPMENU_DECIDE );
     work->state = FMS_FINISH;
     break;
+  case FMS_WAIT_MOVEOUT:
+    if( work->scrollOffset + FIELD_MENU_SCROLL_SPD > 192 )
+    {
+      work->scrollOffset = 192;
+      work->state = FMS_EXIT_ENDMENU;
+    }
+    else
+    {
+      work->scrollOffset += FIELD_MENU_SCROLL_SPD;
+    }
+    work->isUpdateScroll = TRUE;
   }
   PRINTSYS_QUE_Main( work->printQue );
+}
+
+//--------------------------------------------------------------
+//  更新
+//--------------------------------------------------------------
+void FIELD_MENU_DrawMenu( FIELD_MENU_WORK* work )
+{
+  if( work->isUpdateScroll == TRUE )
+  {
+    u8 i;
+    GFL_CLACTPOS sufacePos;
+
+    GFL_BG_SetScrollReq( FIELD_MENU_BG_BACK , GFL_BG_SCROLL_Y_SET , -work->scrollOffset );
+    GFL_BG_SetScrollReq( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -work->scrollOffset );
+    
+    sufacePos.x = 0;
+    sufacePos.y = -work->scrollOffset;
+    GFL_CLACT_USERREND_SetSurfacePos( work->cellRender , FIELD_MENU_RENDER_SURFACE , &sufacePos );
+    //アイコンの処理
+    for( i=0;i<FIELD_MENU_ITEM_NUM;i++ )
+    {
+      if( work->icon[i].cellIcon != NULL )
+      {
+        GFL_CLACTPOS cellPos;
+        GFL_CLACT_WK_GetPos( work->icon[i].cellIcon , &cellPos , FIELD_MENU_RENDER_SURFACE );
+        if( cellPos.y < 192 + FIELD_MENU_ICON_SIZE_Y/2 )
+        {
+          GFL_CLACT_WK_SetDrawEnable( work->icon[i].cellIcon, TRUE );
+        }
+        else
+        {
+          GFL_CLACT_WK_SetDrawEnable( work->icon[i].cellIcon, FALSE );
+        }
+      }
+    }
+    //カーソルの処理
+    {
+      GFL_CLACTPOS cellPos;
+      GFL_CLACT_WK_GetPos( work->cellCursor , &cellPos , FIELD_MENU_RENDER_SURFACE );
+      if( work->isDispCursor &&
+          cellPos.y < 192 + FIELD_MENU_CURSOR_SIZE_Y/2 )
+      {
+        GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
+      }
+    }
+    
+    work->isUpdateScroll = FALSE;
+  }
 }
 
 //--------------------------------------------------------------
@@ -395,7 +458,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   
   //レンダラー作成
   {
-    const GFL_REND_SURFACE_INIT renderInitData = { 0,0,256,192,CLSYS_DRAW_SUB};
+    const GFL_REND_SURFACE_INIT renderInitData = { 0,0,256,191,CLSYS_DRAW_SUB};
     
     work->cellRender = GFL_CLACT_USERREND_Create( &renderInitData , 1 , work->heapId );
     GFL_CLACT_UNIT_SetUserRend( work->cellUnit , work->cellRender );
@@ -559,14 +622,6 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
 static void FIELD_MENU_VBlankTCB( GFL_TCB *tcb , void *userWork )
 {
   FIELD_MENU_WORK *work = userWork;
-  if( work->isUpdateScroll == TRUE )
-  {
-
-    GFL_BG_SetScrollReq( FIELD_MENU_BG_BACK , GFL_BG_SCROLL_Y_SET , -work->scrollOffset );
-    GFL_BG_SetScrollReq( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -work->scrollOffset );
-    
-    work->isUpdateScroll = FALSE;
-  }
 }
 
 static void FIELD_MENU_InitScrollIn( FIELD_MENU_WORK* work )
@@ -643,6 +698,14 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
 {
   const int trg = GFL_UI_KEY_GetTrg();
   const int repeat = GFL_UI_KEY_GetRepeat();
+
+  if( work->isDispCursor == FALSE &&
+      trg != 0 )
+  {
+    work->isDispCursor = TRUE;
+    GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
+    return;
+  }
   
   if( repeat & PAD_KEY_UP )
   {
@@ -715,6 +778,8 @@ static void  FIELD_MENU_UpdateTP( FIELD_MENU_WORK* work )
     work->cursorPosX = ret%2;
     work->cursorPosY = ret/2;
     work->isUpdateCursor = TRUE;
+    work->isDispCursor = FALSE;
+    GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
     work->isCancel = FALSE;
     work->state = FMS_EXIT_INIT;
   }

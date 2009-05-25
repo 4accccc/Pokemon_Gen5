@@ -28,6 +28,10 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+
+#define FLD_SUBSCR_FADE_DIV (1)
+#define FLD_SUBSCR_FADE_SYNC (1)
+
 typedef enum
 {
   FSS_UPDATE,
@@ -65,7 +69,7 @@ struct _FIELD_SUBSCREEN_WORK {
 	fx32 len;
 };
 
-typedef void INIT_FUNC(FIELD_SUBSCREEN_WORK *);
+typedef void INIT_FUNC(FIELD_SUBSCREEN_WORK * , FIELD_SUBSCREEN_MODE prevMode );
 typedef void UPDATE_FUNC(FIELD_SUBSCREEN_WORK *);
 typedef void DRAW_FUNC(FIELD_SUBSCREEN_WORK *);
 typedef void EXIT_FUNC(FIELD_SUBSCREEN_WORK *);
@@ -85,23 +89,24 @@ typedef struct
 */
 //-----------------------------------------------------------------------------
 
-static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork);
+static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
-static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork);
+static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void draw_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
-static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork);
+static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
-static void init_touchcamera_subscreen(FIELD_SUBSCREEN_WORK * pWork);
+static void init_touchcamera_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_touchcamera_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_touchcamera_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
-static void init_soundviewer_subscreen(FIELD_SUBSCREEN_WORK * pWork);
+static void init_soundviewer_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void exit_soundviewer_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 
@@ -120,7 +125,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		FIELD_SUBSCREEN_TOPMENU,
 		init_topmenu_subscreen,
 		update_topmenu_subscreen,
-		NULL ,
+		draw_topmenu_subscreen ,
 		exit_topmenu_subscreen,
 	},
 	{	
@@ -167,7 +172,7 @@ FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
 	pWork->checker = NULL;
 	pWork->fieldmap = fieldmap;
 
-	funcTable[mode].init_func(pWork);
+	funcTable[mode].init_func(pWork,FIELD_SUBSCREEN_FIRST_CALL);
   
   return pWork;
 }
@@ -206,7 +211,7 @@ void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
   //モードを切り替えるときのフェード処理
   case FSS_CHANGE_FADEOUT:
     WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+                    WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , pWork->heapID );
     pWork->state = FSS_CHANGE_FADEOUT_WAIT;
     break;
     
@@ -219,14 +224,14 @@ void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
     break;
 
   case FSS_CHANGE_INIT_FUNC:
-    funcTable[pWork->nextMode].init_func(pWork);
+    funcTable[pWork->nextMode].init_func(pWork,pWork->mode);
     pWork->mode = pWork->nextMode;
     pWork->state = FSS_CHANGE_FADEIN;
     break;
 
   case FSS_CHANGE_FADEIN:
     WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+                    WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , pWork->heapID );
     pWork->state = FSS_CHANGE_FADEIN_WAIT;
     break;
 
@@ -303,7 +308,7 @@ void FIELD_SUBSCREEN_ChangeForce( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_M
   GF_ASSERT(new_mode < FIELD_SUBSCREEN_MODE_MAX);
   GF_ASSERT(funcTable[new_mode].mode == new_mode);
   funcTable[pWork->mode].exit_func(pWork);
-  funcTable[new_mode].init_func(pWork);
+  funcTable[new_mode].init_func(pWork,pWork->mode);
   pWork->mode = new_mode;
   pWork->state = FSS_UPDATE;
 }
@@ -399,7 +404,7 @@ void * FIELD_SUBSCREEN_DEBUG_GetControl(FIELD_SUBSCREEN_WORK * pWork)
  *	@param	heapID	ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork)
+static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
   pWork->cgearWork = CGEAR_Init(CGEAR_SV_GetCGearSaveData(
 		GAMEDATA_GetSaveControlWork(
@@ -437,7 +442,7 @@ static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
  *	@param	heapID	ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-static void init_debugred_subscreen(FIELD_SUBSCREEN_WORK * pWork)
+static void init_debugred_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
   // BG3 SUB (インフォバー
   static const GFL_BG_BGCNT_HEADER header_sub3 = {
@@ -491,7 +496,7 @@ static void update_debugred_subscreen( FIELD_SUBSCREEN_WORK* pWork )
  *	@param	heapID	ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork)
+static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
   // BG3 SUB (インフォバー
   static const GFL_BG_BGCNT_HEADER header_sub3 = {
@@ -500,6 +505,7 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork)
 		GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x00000,0x5800,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
+	const BOOL isScrollIn = ( prevMode == FIELD_SUBSCREEN_NORMAL ? TRUE : FALSE );
 
 	GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
 	GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
@@ -508,7 +514,7 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork)
 	
 	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 	
-	pWork->fieldMenuWork = FIELD_MENU_InitMenu( pWork->heapID , pWork , pWork->fieldmap );
+	pWork->fieldMenuWork = FIELD_MENU_InitMenu( pWork->heapID , pWork , pWork->fieldmap , isScrollIn );
 	INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , pWork->heapID);
 
   if( INFOWIN_IsInitComm() == TRUE )
@@ -538,6 +544,16 @@ static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
 	FIELD_MENU_UpdateMenu( pWork->fieldMenuWork );
 	INFOWIN_Update();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の描画
+ */
+//-----------------------------------------------------------------------------
+static void draw_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+	FIELD_MENU_DrawMenu( pWork->fieldMenuWork );
 }
 
 //----------------------------------------------------------------------------
@@ -580,7 +596,7 @@ void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD
 
 //=============================================================================
 //=============================================================================
-static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork)
+static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {	
 
 }
@@ -595,7 +611,7 @@ static void exit_light_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 
 //=============================================================================
 //=============================================================================
-static void init_touchcamera_subscreen(FIELD_SUBSCREEN_WORK * pWork)
+static void init_touchcamera_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
 	static const GFL_CAMADJUST_SETUP camAdjustData= {
 		PAD_BUTTON_SELECT,
@@ -622,7 +638,7 @@ static void exit_touchcamera_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 
 //=============================================================================
 //=============================================================================
-static void init_soundviewer_subscreen(FIELD_SUBSCREEN_WORK * pWork)
+static void init_soundviewer_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {	
 	static const GFL_SNDVIEWER_SETUP sndStatusData= {
 		PAD_BUTTON_SELECT,
