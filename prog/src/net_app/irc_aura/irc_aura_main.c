@@ -82,8 +82,8 @@ FS_EXTERN_OVERLAY(irc_result);
 
 #define RANGE_SHAKE_SCORE_00(x) ( x == 0 )
 #define RANGE_SHAKE_SCORE_01(x) ( x == 1 )
-#define RANGE_SHAKE_SCORE_02(x) ( 2 <= x && x <= 3 )
-#define RANGE_SHAKE_SCORE_03(x) ( 4 <= x && x <= 5 )
+#define RANGE_SHAKE_SCORE_02(x) ( x == 2 )
+#define RANGE_SHAKE_SCORE_03(x) ( 3 <= x && x <= 5 )
 #define RANGE_SHAKE_SCORE_04(x) ( x <= 6)
 
 //-------------------------------------
