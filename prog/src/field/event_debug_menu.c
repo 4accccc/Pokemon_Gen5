@@ -9,6 +9,7 @@
 //======================================================================
 #include <gflib.h>
 #include "system/gfl_use.h"
+#include "system/main.h"
 #include "arc_def.h"
 
 #include "field/field_msgbg.h"
@@ -121,6 +122,7 @@ static BOOL DMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk );
 
 static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
 static DMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk );
+static DMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk );
 
 static void DEBUG_SetMenuWorkZoneIDNameAll(
 		FLDMENUFUNC_LISTDATA *list, HEAPID heapID );
@@ -180,6 +182,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR15, DMenuCallProc_ControlLight },
 	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
   { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
+  { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -918,6 +921,159 @@ static void setupTopMenuSubscreen(DMESSWORK * dmess)
 static void setupDebugLightSubscreen(DMESSWORK * dmess)
 { 
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_LIGHT);
+}
+
+
+//--------------------------------------------------------------
+//  ミュージカル系
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(musical);
+#include "musical/musical_local.h"
+#include "musical/musical_dressup_sys.h"
+#include "musical/musical_stage_sys.h"
+#include "poke_tool/poke_tool.h"  //ドレスアップ仮データ用
+#include "poke_tool/monsno_def.h" //ドレスアップ仮データ用
+#include "event_fieldmap_control.h"
+typedef struct {  
+	HEAPID heapID;
+	GAMESYS_WORK *gmSys;
+	GMEVENT *gmEvent;
+	GMEVENT *newEvent;
+	FIELD_MAIN_WORK *fieldWork;
+	FLDMENUFUNC *menuFunc;
+	
+	DRESSUP_INIT_WORK *dupInitWork;
+	u8  menuRet;
+}DEBUG_MENU_EVENT_MUSICAL_SELECT_WORK, DEB_MENU_MUS_WORK;
+static GMEVENT_RESULT DMenuMusicalSelectEvent( GMEVENT *event, int *seq, void *wk );
+
+static void setupMusicalDressup(DEB_MENU_MUS_WORK * work);
+static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work);
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　ミュージカル呼び出し
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static DMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
+{
+	HEAPID heapID = wk->heapID;
+	GMEVENT *event = wk->gmEvent;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	DEB_MENU_MUS_WORK *work;
+	
+		GMEVENT_Change( event,
+			DMenuMusicalSelectEvent, sizeof(DEB_MENU_MUS_WORK) );
+		work = GMEVENT_GetEventWork( event );
+		MI_CpuClear8( work, sizeof(DEB_MENU_MUS_WORK) );
+	
+		work->gmSys = gsys;
+		work->gmEvent = event;
+		work->heapID = heapID;
+		work->fieldWork = fieldWork;
+		work->dupInitWork = NULL;
+		return( TRUE );
+}
+
+//--------------------------------------------------------------
+static const FLDMENUFUNC_LIST DATA_MusicalMenuList[2] =
+{
+	{ DEBUG_FIELD_STR_MUSICAL1, (void*)setupMusicalDressup },
+	{ DEBUG_FIELD_STR_MUSICAL2, (void*)setupMusicarShowPart },
+};
+
+//--------------------------------------------------------------
+/**
+ * イベント：ミュージカルデバッグメニュー
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuMusicalSelectEvent(
+		GMEVENT *event, int *seq, void *wk )
+{
+	DEB_MENU_MUS_WORK *work = wk;
+
+	switch( *seq )
+  {
+	case 0:
+		{
+			FLDMSGBG *msgBG;
+	    GFL_MSGDATA *msgData;
+			FLDMENUFUNC_LISTDATA *listdata;
+			u32 max = NELEMS(DATA_MusicalMenuList);
+			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;  //流用
+			
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
+			msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
+			listdata = FLDMENUFUNC_CreateMakeListData(
+				DATA_MusicalMenuList, max, msgData, work->heapID );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 16, max*2 );
+			
+			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
+			GFL_MSG_Delete( msgData );
+		}
+		(*seq)++;
+		break;
+	case 1:
+		{
+			u32 ret;
+			ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+
+			if( ret == FLDMENUFUNC_NULL ){	//操作無し
+				break;
+			}
+			
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+
+			if( ret == FLDMENUFUNC_CANCEL ){	//キャンセル
+				return( GMEVENT_RES_FINISH );
+			}else{
+        typedef void (* CHANGE_FUNC)(DEB_MENU_MUS_WORK*);
+        CHANGE_FUNC func = (CHANGE_FUNC)ret;
+        func(work);
+        GMEVENT_CallEvent(work->gmEvent, work->newEvent);
+    		(*seq)++;
+    		return( GMEVENT_RES_CONTINUE );
+			}
+		}
+		break;
+  case 2:
+    if( work->dupInitWork != NULL )
+    {
+      GFL_HEAP_FreeMemory( work->dupInitWork->pokePara );
+      GFL_HEAP_FreeMemory( work->dupInitWork );
+      work->dupInitWork = NULL;
+    }
+		return( GMEVENT_RES_FINISH );
+    
+    break;
+	}
+	
+	return GMEVENT_RES_CONTINUE ;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void setupMusicalDressup(DEB_MENU_MUS_WORK * work)
+{
+	work->dupInitWork = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(DRESSUP_INIT_WORK));
+	work->dupInitWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , HEAPID_PROC );
+	work->dupInitWork->mus_save = MUSICAL_SAVE_GetMusicalSave(SaveControl_GetPointer());
+
+  work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
+        FS_OVERLAY_ID(musical), &DressUp_ProcData, work->dupInitWork );
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work)
+{ 
+  work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
+        FS_OVERLAY_ID(musical), &MusicalStage_ProcData, NULL );
 }
 
 //======================================================================
