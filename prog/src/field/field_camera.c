@@ -393,8 +393,13 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
 
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
     {
+      VecFx32 target_offset;
+      
       OS_TPrintf( "DEBUG Camera Target x[0x%x] y[0x%x] z[0x%x]\n", camera->debug_target.x, camera->debug_target.y, camera->debug_target.z  );
       OS_TPrintf( "DEBUG Camera Pos x[0x%x] y[0x%x] z[0x%x]\n", camera->camPos.x, camera->camPos.y, camera->camPos.z  );
+
+      VEC_Subtract( &camera->debug_target, &camera->target, &target_offset );
+      OS_TPrintf( "DEBUG Scroll Camera Target Offset x[0x%x] y[0x%x] z[0x%x]\n", target_offset.x, target_offset.y, target_offset.z  );
     }
 
     GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &camera->debug_target );
@@ -677,8 +682,12 @@ void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
 { 
 
   if( camera->debug_subscreen_type == FIELD_CAMERA_DEBUG_BIND_TARGET_POS ){
+
     OS_TPrintf( "DEBUG Camera Target x[0x%x] y[0x%x] z[0x%x]\n", camera->debug_target.x, camera->debug_target.y, camera->debug_target.z  );
     OS_TPrintf( "DEBUG Camera Pos x[0x%x] y[0x%x] z[0x%x]\n", camera->camPos.x, camera->camPos.y, camera->camPos.z  );
+
+    VEC_Subtract( &camera->debug_target, &camera->target, &camera->target_offset );
+    OS_TPrintf( "DEBUG Scroll Camera Target Offset x[0x%x] y[0x%x] z[0x%x]\n", camera->target_offset.x, camera->target_offset.y, camera->target_offset.z  );
   }
 
   camera->debug_subscreen_type = FIELD_CAMERA_DEBUG_BIND_NONE;
