@@ -377,6 +377,7 @@ end
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_efftool.h\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/src/battle/btlv/btlv_effvm_def.h\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/system/mcss.h\n")
+				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/include/sound/wb_sound_data.sadl\n")
 				fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/particle/battleeffect/spa_def.h\n")
 				inc_header.size.times { |inc|
 					fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/particle/battleeffect/" + inc_header[ inc ] + "\n")
@@ -478,19 +479,21 @@ end
 		data_pos += 1
 	end
 
-	count = 0
-
 	#bin_list_tmpのダブりをチェック
 	bin_list_tmp.size.times {|tmp_num|
-		bin_list.size.times {|count|
-			if bin_list[ count ] == bin_list_tmp[ tmp_num ]
+		count = 0
+		bin_list.size.times {|list_num|
+			if bin_list[ list_num ] == bin_list_tmp[ tmp_num ]
 				break;
 			end
+			count += 1
 		}
 		if bin_list.size == count
 			bin_list << bin_list_tmp[ tmp_num ]
 		end
 	}
+
+	p bin_list
 
 	open( "eebinary.bin", "wb" ) {|file|
 		padding = []
