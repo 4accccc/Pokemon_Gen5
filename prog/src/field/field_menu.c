@@ -366,7 +366,7 @@ void FIELD_MENU_DrawMenu( FIELD_MENU_WORK* work )
     GFL_CLACTPOS sufacePos;
 
     GFL_BG_SetScrollReq( FIELD_MENU_BG_BACK , GFL_BG_SCROLL_Y_SET , -work->scrollOffset );
-    GFL_BG_SetScrollReq( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -work->scrollOffset );
+    GFL_BG_SetScrollReq( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -work->scrollOffset -4 );
     
     sufacePos.x = 0;
     sufacePos.y = -work->scrollOffset;
@@ -638,7 +638,7 @@ static void FIELD_MENU_InitScrollIn( FIELD_MENU_WORK* work )
   GFL_CLACTPOS sufacePos;
   work->scrollOffset = 192;
   GFL_BG_SetScroll( FIELD_MENU_BG_BACK , GFL_BG_SCROLL_Y_SET , -192 );
-  GFL_BG_SetScroll( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -192 );
+  GFL_BG_SetScroll( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -192 -4);
   
   sufacePos.x = 0;
   sufacePos.y = 192;
