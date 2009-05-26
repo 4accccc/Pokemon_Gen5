@@ -4879,7 +4879,6 @@ static void WFLBY_ROOM_Msg_Exit( WFLBY_ROOM_DEFMSG* p_wk )
 //-----------------------------------------------------------------------------
 static STRBUF* WFLBY_ROOM_Msg_Get( WFLBY_ROOM_DEFMSG* p_wk, WFLBY_DEFMSG_TYPE type, u32 strid )
 {
-  OS_TPrintf("aaa msgman = %x, type = %d, strid = %d\n", p_wk->p_msgman[type], type, strid);
 	GFL_MSG_GetString( p_wk->p_msgman[type], strid, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
 	return p_wk->p_str;

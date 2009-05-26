@@ -54,6 +54,7 @@
 #include "system/wipe.h"
 #include "net/net_exchange.h"
 #include "net\dwc_rapfriend.h"
+#include "sound/pm_sndsys.h"
 
 #include "net_app/net_bugfix.h"
 
@@ -3328,8 +3329,10 @@ static MNGM_ENTRYWK* MNGM_ENTRY_CommonInit( const MNGM_ENRES_PARAM* cp_commparam
   int i;
 
   // BGMçƒê∂
-#if WB_TEMP_FIX
+#if WB_FIX
   Snd_DataSetByScene( SND_SCENE_WIFI_LOBBY_GAME, SEQ_PL_WIFIGAME, 0 );
+#else
+  PMSND_PlayBGM(SEQ_WIFIPARADE);  //ÉpÉåÅ[Éh
 #endif
 
   p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(MNGM_ENTRYWK) );

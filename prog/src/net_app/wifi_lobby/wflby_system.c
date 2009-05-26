@@ -51,6 +51,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "poke_tool/monsno_def.h"
+#include "sound/pm_sndsys.h"
 #include "net_app/net_bugfix.h"
 
 //-----------------------------------------------------------------------------
@@ -1586,8 +1587,10 @@ void WFLBY_SYSTEM_SetNowBGM( const WFLBY_SYSTEM* cp_wk )
 {
 	if( (cp_wk->event.parade == TRUE) && (cp_wk->event.parade_count <= 0) ){
 
-	#if WB_TEMP_FIX
+	#if WB_FIX
 		Snd_DataSetByScene( SND_SCENE_WIFI_LOBBY_HIROBA, SEQ_PL_WIFIPARADE, 0 );	// パレード
+	#else
+	  PMSND_PlayBGM(SEQ_WIFIPARADE);  //パレード
 	#endif
 	
 		// ボリューム設定
@@ -1595,8 +1598,10 @@ void WFLBY_SYSTEM_SetNowBGM( const WFLBY_SYSTEM* cp_wk )
 	}else{
 
 		// BGMチェンジ
-	#if WB_TEMP_FIX
+	#if WB_FIX
 		Snd_DataSetByScene( SND_SCENE_WIFI_LOBBY_HIROBA, SEQ_PL_WIFIUNION, 0 );	//wifiロビー再生
+  #else
+    PMSND_PlayBGM(SEQ_BLD_WIFIUNION); //wifiロビー
 	#endif
 	
 		// ボリューム設定
@@ -4928,8 +4933,10 @@ static void WFLBY_SYSTEM_EVENT_Count( WFLBY_SYSTEM_EVENT* p_wk, WFLBY_SYSTEM_FLA
 
 		// BGM変更
 		if( p_wk->bgm_lock == FALSE ){
-		#if WB_TEMP_FIX
+		#if WB_FIX
 			Snd_BgmPlay( SEQ_PL_WIFIPARADE );	// サウンドデータロード
+		#else
+  	  PMSND_PlayBGM(SEQ_WIFIPARADE);
 		#endif
 		}
 		p_wk->parade		= TRUE;
