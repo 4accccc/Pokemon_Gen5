@@ -747,6 +747,7 @@ static void C3_SCENEAREA_Update( const FLD_SCENEAREA* cp_sys, const FLD_SCENEARE
 //-----------------------------------------------------------------------------
 static void C3_SCENEAREA_Inside( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
 {
+  C3_SCENEAREA_Update( cp_sys, cp_data, cp_pos );
 }
 
 //----------------------------------------------------------------------------
