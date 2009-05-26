@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-22T19:18:29"/>
+	<create user="matsumiya" host="W00179" date="2009-05-26T12:11:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -348,6 +348,36 @@
 トレーナーさん！！[BE:01:ページ切り替え（クリア）]
 あたしが　いうのも　へんだけど[BE:01:ページ切り替え（クリア）]
 科学の　力って　すごいわね！</language>
+	</row>
+
+	<row id="msg_t01_sign1_01">
+		<attribute name="キャラ指定">看板：街</attribute>
+		<language name="JPN" width="256">ここは　カノコタウン</language>
+		<language name="JPN_KANJI" width="256">ここは　カノコタウン</language>
+	</row>
+
+	<row id="msg_t01_sign2_01">
+		<attribute name="キャラ指定">看板：主人公</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　いえ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　家</language>
+	</row>
+
+	<row id="msg_t01_sign3_01">
+		<attribute name="キャラ指定">看板：友達１</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]の　いえ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]の　家</language>
+	</row>
+
+	<row id="msg_t01_sign4_01">
+		<attribute name="キャラ指定">看板：友達２</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:2]の　いえ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:2]の　家</language>
+	</row>
+
+	<row id="msg_t01_sign5_01">
+		<attribute name="キャラ指定">看板：研究所</attribute>
+		<language name="JPN" width="256">アララギ　ポケモンけんきゅうじょ</language>
+		<language name="JPN_KANJI" width="256">アララギ　ポケモン研究所</language>
 	</row>
 
 	<flowchart-group-list>
