@@ -888,6 +888,8 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
   u8 vpos;
   WazaID waza = BTL_POKEPARAM_GetWazaNumber( wk->bpp, wk->destActionParam->fight.wazaIdx );
 
+	MI_CpuClear16( &bsp, sizeof( BINPUT_SCENE_POKE ) );
+
   bsp.pokesele_type = WAZADATA_GetTarget( waza );
   bsp.client_type = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, BTL_POKEPARAM_GetID(wk->bpp) );
 
