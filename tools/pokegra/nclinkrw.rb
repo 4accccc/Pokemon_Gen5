@@ -22,18 +22,16 @@
 	ARGV_READ_FILE = 0
 	ARGV_OUT_DIR = 1
 
-	TYPE_NMC = 0
-	TYPE_NCE = 1
-	TYPE_NCG = 2
+	TYPE_NMC	= 0
+	TYPE_NCE	= 1
+	TYPE_NCG	= 2
 
-	head = [ "NCMC", "NCOB", "NCOB", "NCCG" ]
+	head = [ "NCMC", "NCOB", "NCCG" ]
 
 	signature = [
 		#NMC
 		[ "MCEL", "CCTL", "GRP ", "ANIM", "ACTL", "LABL", "CMNT", "CCMT", "ECMT", "FCMT", "CLBL" ],
-		#NCE 2D
-		[ "CELL", "CNUM", "GRP ", "ANIM", "ACTL", "MODE", "LABL", "CMNT", "CCMT", "ECMT", "FCMT", "CLBL", "EXTR" ],
-		#NCE 1D
+		#NCE
 		[ "CELL", "CNUM", "CHAR", "GRP ", "ANIM", "ACTL", "MODE", "LABL", "CMNT", "CCMT", "ECMT", "FCMT", "CLBL", "EXTR" ],
 		#NCG
 		[ "CHAR", "ATTR" ]
@@ -92,6 +90,13 @@
 	signature[ type ].size.times{ |sig_cnt|
 		read_data = fp_r.read( 8 )
 		sig, size = read_data.unpack("a4l")
+
+		if type == TYPE_NCE && signature[ type ][ sig_cnt ] == "CHAR"
+			if sig == "GRP "
+				fp_r.seek( -8, IO::SEEK_CUR )
+				next		
+			end
+		end
 
 		cnt = 0
 		signature[ type ][ sig_cnt ].each_byte  { |c|
