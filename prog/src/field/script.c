@@ -19,6 +19,7 @@
 #include "field/zonedata.h"
 
 #include "message.naix"
+#include "print/wordset.h"
 
 #include "arc/fieldmap/zone_id.h"
 
@@ -88,10 +89,11 @@ struct _TAG_SCRIPT_WORK
 	u16 *ret_script_wk;			//スクリプト結果を代入するワークのポインタ
 	VMHANDLE *vm[VMHANDLE_MAX];	//仮想マシンへのポインタ
 
-#ifndef SCRIPT_PL_NULL
 	WORDSET* wordset;				//単語セット
 	STRBUF* msg_buf;				//メッセージバッファポインタ
 	STRBUF* tmp_buf;				//テンポラリバッファポインタ
+  
+#ifndef SCRIPT_PL_NULL
 	void * waiticon;				///<待機アイコンのポインタ
 #endif
 	
@@ -343,7 +345,7 @@ static BOOL GMEVENT_ControlScript(GMEVENT_CONTROL * event)
 		sc->wordset = WORDSET_CreateEx(WORDSET_SCRIPT_SETNUM, WORDSET_SCRIPT_BUFLEN, HEAPID_WORLD);
 		sc->msg_buf = STRBUF_Create( SCR_MSG_BUF_SIZE, HEAPID_WORLD );
 		sc->tmp_buf = STRBUF_Create( SCR_MSG_BUF_SIZE, HEAPID_WORLD );
-
+    
 		sc->seq++;
 		/* FALL THROUGH */
 		
@@ -964,13 +966,6 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	//ビットマップメニューワークのポインタ
 	case ID_EVSCR_MENUWORK:
 		return &sc->mw;
-#ifndef SCRIPT_PL_NULL
-	//イベントウィンドウワークのポインタ
-	case ID_EVSCR_EVWIN:
-		return &sc->ev_win;
-	//会話ウィンドウビットマップデータのポインタ
-	case ID_EVSCR_MSGWINDAT:
-		return &sc->MsgWinDat;
 	//単語セット
 	case ID_EVSCR_WORDSET:
 		return &sc->wordset;
@@ -980,6 +975,13 @@ void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	//テンポラリバッファのポインタ
 	case ID_EVSCR_TMPBUF:
 		return &sc->tmp_buf;
+#ifndef SCRIPT_PL_NULL
+	//イベントウィンドウワークのポインタ
+	case ID_EVSCR_EVWIN:
+		return &sc->ev_win;
+	//会話ウィンドウビットマップデータのポインタ
+	case ID_EVSCR_MSGWINDAT:
+		return &sc->MsgWinDat;
 	//待機アイコンのポインタ
 	case ID_EVSCR_WAITICON:
 		return &sc->waiticon;
@@ -1197,12 +1199,10 @@ static GMEVENT_RESULT FldScriptEvent_ControlScript(
 		sc->vm_machine_count = 1;
 		
 		//メッセージ関連
-		#ifndef SCRIPT_PL_NULL
 		sc->wordset = WORDSET_CreateEx(
-			WORDSET_SCRIPT_SETNUM, WORDSET_SCRIPT_BUFLEN, HEAPID_WORLD);
-		sc->msg_buf = STRBUF_Create( SCR_MSG_BUF_SIZE, HEAPID_WORLD );
-		sc->tmp_buf = STRBUF_Create( SCR_MSG_BUF_SIZE, HEAPID_WORLD );
-		#endif
+			WORDSET_SCRIPT_SETNUM, WORDSET_SCRIPT_BUFLEN, sc->heapID );
+		sc->msg_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->heapID );
+		sc->tmp_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->heapID );
 		
 		(*seq)++;
 	case 1:
@@ -1227,11 +1227,9 @@ static GMEVENT_RESULT FldScriptEvent_ControlScript(
 		if( sc->vm_machine_count <= 0 ){
 			SCRIPT_EVENTFUNC func = sc->next_func;		//退避
 			
-			#ifndef SCRIPT_PL_NULL
 			WORDSET_Delete( sc->wordset );
-			STRBUF_Delete( sc->msg_buf );
-			STRBUF_Delete( sc->tmp_buf );
-			#endif
+			GFL_STR_DeleteBuffer( sc->msg_buf );
+			GFL_STR_DeleteBuffer( sc->tmp_buf );
 
 			//デバック処理
 			//debug_script_flag = 0;

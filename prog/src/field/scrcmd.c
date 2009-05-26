@@ -20,6 +20,7 @@
 #include "scrcmd_work.h"
 
 #include "msgdata.h"
+#include "print/wordset.h"
 
 //======================================================================
 //	定義
@@ -99,6 +100,8 @@ static VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk );
 static VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk );
 static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk );
 
+static VMCMD_RESULT EvCmdPlayerName( VMHANDLE * core, void *wk );
+
 //======================================================================
 //	グローバル変数
 //======================================================================
@@ -176,6 +179,8 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdYesNoWin,
 
   EvCmdChangeLangID,
+
+  EvCmdPlayerName,
 };
 
 //--------------------------------------------------------------
@@ -993,6 +998,9 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 	return 1;
 #else
   const VecFx32 *pos;
+  WORDSET **wordset;
+  STRBUF **msgbuf;
+  STRBUF **tmpbuf;
   FLDMMDL *fmmdl;
 	FLDTALKMSGWIN *tmsg;
 	SCRCMD_WORK *work = wk;
@@ -1004,8 +1012,16 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   fmmdl = FLDMMDLSYS_SearchOBJID( SCRCMD_WORK_GetFldMMdlSys(work), 0xff );
   pos = FLDMMDL_GetVectorPosAddress( fmmdl );
   
-  tmsg = FLDTALKMSGWIN_Add(
-      fparam->msgBG, FLDTALKMSGWIN_IDX_LOWER, pos, msgData, msg_id );
+  {
+    wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+    msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+    tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+    GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
+    WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+  }
+  
+  tmsg = FLDTALKMSGWIN_AddStrBuf(
+      fparam->msgBG, FLDTALKMSGWIN_IDX_LOWER, pos, *msgbuf );
   
 	SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
 
@@ -1531,3 +1547,29 @@ static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk )
   return 1;
 }
 
+//======================================================================
+//  WORDSET関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * プレイヤー名を指定バッファに登録
+ *
+ * @param	core		仮想マシン制御構造体へのポインタ
+ *
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdPlayerName( VMHANDLE * core, void *wk ) 
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+//	FIELDSYS_WORK * fsys	= core->fsys;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+	WORDSET **wordset		= SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+	u8 idx = VMGetU8(core);
+  
+	WORDSET_RegisterPlayerName( *wordset, idx, mystatus );
+	return 0;
+}

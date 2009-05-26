@@ -33,7 +33,7 @@
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
 #define FLDMSGBG_PRINT_STREAM_MAX (1) ///<PRINT_STREAM稼働数
 
-#define FLDMSGBG_STRLEN (512)				///<文字列長さ標準
+#define FLDMSGBG_STRLEN (128)				///<文字列長さ標準
 
 #define FLDMSGBG_CHAROFFS_TALKMSGWIN (32) ///<TALKWINMSGキャラオフセット
 
