@@ -290,15 +290,9 @@ BOOL CONNECTDATA_IsSpecialExit(const CONNECT_DATA * connect)
 //------------------------------------------------------------------
 BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * loc, u16 exit_id)
 {
-  enum{ GRIDSIZE = 16, MV = GRIDSIZE * FX32_ONE};
-  static const VecFx32 dir_ofs[EXIT_DIR_MAX] = {
-    /*EXIT_DIR_NON  */{ 0, 0, 0},
-    /*EXIT_DIR_UP   */{ 0, 0, - MV},
-    /*EXIT_DIR_DOWN */{ 0, 0, + MV},
-    /*EXIT_DIR_LEFT */{ -MV, 0, 0},
-    /*EXIT_DIR_RIGHT*/{ +MV, 0, 0},
-  };
-  static const VecFx32 ofs = { OFS_X * FX32_ONE, OFS_Y * FX32_ONE, OFS_Z * FX32_ONE };
+  /** TODO:　見た目含めてオフセットを再計算すること */
+  enum{ GRIDSIZE = 8, MV = GRIDSIZE * FX32_ONE};
+  static const VecFx32 ofs = { OFS_X * FX32_ONE, OFS_Y * FX32_ONE, 0 * FX32_ONE };
 
 	const CONNECT_DATA * connect = EVENTDATA_GetConnectByID(evdata, exit_id);
 	if (connect == NULL) {
@@ -319,7 +313,6 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
 			connect->pos.x * FX32_ONE,
 			connect->pos.y * FX32_ONE,
 			connect->pos.z * FX32_ONE);
-  VEC_Add(&loc->pos, &dir_ofs[connect->exit_dir], &loc->pos);
   VEC_Add(&loc->pos, &ofs, &loc->pos);
 	loc->dir_id = connect->exit_dir;
 	loc->zone_id = evdata->now_zone_id;
