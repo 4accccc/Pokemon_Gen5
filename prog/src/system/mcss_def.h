@@ -68,15 +68,23 @@ struct _MCSS_WORK
 	void*													mcss_mcanim_buf;			//マルチセルアニメーションの実体の内部で使用するワーク領域
 	NNSG2dImageProxy							mcss_image_proxy;			//テクスチャプロキシ
 	NNSG2dImagePaletteProxy				mcss_palette_proxy;		//パレットプロキシ
+	u16														*pltt_data;						//パレットデータ（パレットフェード用）
+	int														pltt_data_size;				//パレットデータサイズ
 	VecFx32												pos;									//マルチセルのポジション
 	VecFx32												scale;								//マルチセルのスケール
 	VecFx32												rotate;								//マルチセルの回転
 	VecFx32												shadow_scale;					//影のスケール
 	VecFx32												ofs_scale;						//スケールオフセット
+	u8														pal_fade_start_evy;		//パレットフェード　START_EVY値
+	u8														pal_fade_end_evy;			//パレットフェード　END_EVY値
+	u8														pal_fade_wait;				//パレットフェード　wait値
+	u8														pal_fade_wait_tmp;		//パレットフェード　wait_tmp値
+	u32														pal_fade_rgb;					//パレットフェード　end_evy時のrgb値
 	u32														mepachi_flag	:1;			//メパチフラグ
 	u32														anm_stop_flag	:1;			//アニメストップフラグ
 	u32														vanish_flag		:1;			//バニッシュフラグ
-	u32																					:29;
+	u32														pal_fade_flag	:1;			//パレットフェードフラグ
+	u32																					:28;
 	int														index;								//登録INDEX
 	int														heapID;								//使用するヒープID
 };
