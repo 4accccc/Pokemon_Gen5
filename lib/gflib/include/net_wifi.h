@@ -303,6 +303,23 @@ extern void GFL_NET_StateWifiLobbyLogout( void );
 //-----------------------------------------------------------------------------
 extern BOOL GFL_NET_StateWifiLobbyDwcLoginCheck( void );
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WiFiロビーミニゲーム開始
+ *
+ *	@param	type		ゲームタイプ(DWC_LOBBY_MG_TYPE)
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_NET_StateWifiP2PStart( int type );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WiFiロビーミニゲーム終了
+ *			P2P切断チェックは、GFL_NET_StateWifiP2PGetConnectStateで行ってください
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_NET_StateWifiP2PEnd( void );
+
 
 
 /// WiFiで使うHeapのサイズ

@@ -85,6 +85,13 @@ typedef BOOL (*DevLobbyUpdateErrorCheckFunc)(void);	///<DWC_LOBBY_UpdateErrorChe
 typedef BOOL (*DevLobbyLoginWaitFunc)(void);	///<DWC_LOBBY_LoginWait
 typedef void (*DevLobbyLogoutFunc)(void);	///<DWC_LOBBY_Logout
 typedef BOOL (*DevLobbyLogoutWaitFunc)(void);	///<DWC_LOBBY_LogoutWait
+typedef BOOL (*DevLobbyMgCheckRecruitFunc)( int type ); ///<DWC_LOBBY_MG_CheckRecruit
+typedef BOOL (*DevLobbyMgStartRecruitFunc)( int type, u32 maxnum ); ///<DWC_LOBBY_MG_StartRecruit
+typedef BOOL (*DevLobbyMgEntryFunc)( int type );  ///<DWC_LOBBY_MG_Entry
+typedef BOOL (*DevLobbyMgForceEndFunc)( void ); ///<DWC_LOBBY_MG_ForceEnd
+typedef void (*DevLobbyMgEndConnectFunc)( void ); ///<DWC_LOBBY_MG_EndConnect
+typedef BOOL (*DevLobbyMgMyParentFunc)( void );  ///<DWC_LOBBY_MG_MyParent
+typedef void (*DevLobbyMgEndRecruitFunc)( void );  ///<DWC_LOBBY_MG_EndRecruit
 
 
 /// @brief デバイスアクセス用構造体
@@ -147,8 +154,14 @@ typedef struct{
   DevLobbyLoginWaitFunc DevLobbyLoginWait;	///<DWC_LOBBY_LoginWait
   DevLobbyLogoutFunc DevLobbyLogout;	///<DWC_LOBBY_Logout
   DevLobbyLogoutWaitFunc DevLobbyLogoutWait;	///<DWC_LOBBY_LogoutWait
-
-
+  DevLobbyMgCheckRecruitFunc DevLobbyMgCheckRecruit;  ///<DWC_LOBBY_MG_CheckRecruit
+  DevLobbyMgStartRecruitFunc DevLobbyMgStartRecruit;  ///<DWC_LOBBY_MG_StartRecruit
+  DevLobbyMgEntryFunc DevLobbyMgEntry;  ///<DWC_LOBBY_MG_Entry
+  DevLobbyMgForceEndFunc DevLobbyMgForceEnd;  ///<DWC_LOBBY_MG_ForceEnd
+  DevLobbyMgEndConnectFunc DevLobbyMgEndConnect; ///<DWC_LOBBY_MG_EndConnect
+  DevLobbyMgMyParentFunc DevLobbyMgMyParent;  ///<DWC_LOBBY_MG_MyParent
+  DevLobbyMgEndRecruitFunc DevLobbyMgEndRecruit;  ///<DWC_LOBBY_MG_EndRecruit
+  
 } GFLNetDevTable;
 
 
