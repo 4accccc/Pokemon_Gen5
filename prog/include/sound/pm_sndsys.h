@@ -98,6 +98,7 @@ extern void PMSND_SetSystemFadeFrames( int frames );	//ƒVƒXƒeƒ€ƒtƒF[ƒhi©“®jƒ
 //============================================================================================
 extern void	PMSND_PlaySystemSE( u32 soundNum );	//ƒVƒXƒeƒ€‚r‚d‚ğÄ¶
 extern void	PMSND_PlaySE( u32 soundNum );		//‚r‚d‚ğÄ¶
+extern void	PMSND_StopSE( void );						//‚r‚d‚ğ’â~
 extern BOOL	PMSND_CheckPlaySE( void );			//‚r‚dI—¹ŒŸo(TRUEÀs’†)
 extern void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan );//‚r‚dƒXƒe[ƒ^ƒX•ÏX
 
