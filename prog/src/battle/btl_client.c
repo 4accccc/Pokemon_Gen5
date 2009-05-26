@@ -1065,7 +1065,11 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
     const BTL_POKEPARAM* poke;
 
     atPokePos   = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[0] );
-    defPokePos  = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[1] );
+    if( args[1] != BTL_POKEID_NULL ){
+      defPokePos  = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, args[1] );
+    }else{
+      defPokePos = 0;
+    }
     waza      = args[2];
     poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
     BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza );

@@ -71,6 +71,8 @@ static void handler_Koraeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Nekodamasi( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Nekodamasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_AsaNoHizasi( u16 pri, WazaID waza, u8 pokeID );
+static void handler_AsaNoHizasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 
@@ -115,6 +117,9 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_HUNKA,           ADD_Funka         },
     { WAZANO_SIOHUKI,         ADD_Funka         },  // しおふき=ふんか と等価
     { WAZANO_RIHURESSYU,      ADD_Refresh       },
+    { WAZANO_ASANOHIZASI,     ADD_AsaNoHizasi   },
+    { WAZANO_TUKINOHIKARI,    ADD_AsaNoHizasi   },  // つきのひかり = あさのひざし と等価
+    { WAZANO_KOUGOUSEI,       ADD_AsaNoHizasi   },  // こうごうせい = あさのひざし と等価
   };
 
   int i;
@@ -785,3 +790,35 @@ static void handler_Nekodamasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * あさのひざし・こうごうせい・つきのひかり
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_AsaNoHizasi( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_RECOVER_HP_RATIO,       handler_AsaNoHizasi },     // HP回復率計算ハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_AsaNoHizasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BtlWeather w = BTL_FIELD_GetWeather();
+    u8 ratio = 50;
+    switch( w ){
+    case BTL_WEATHER_SHINE:  ratio = 66; break;
+    case BTL_WEATHER_RAIN:
+    case BTL_WEATHER_SAND:
+    case BTL_WEATHER_SNOW:
+      ratio = 25;
+      break;
+    }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, ratio );
+  }
+}
+
+

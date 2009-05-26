@@ -474,7 +474,7 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
       reserved_size = scque_read1byte( que );
       que->readPtr = default_read_pos;
     }
-    if( cmd == SCEX_RESERVE )
+    if( cmd != SCEX_RESERVE )
     {
       u8 wrote_size;
       u16 default_write_pos = que->writePtr;

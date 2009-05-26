@@ -380,6 +380,7 @@ static void scEvent_CheckSpecialDrain( BTL_SVFLOW_WORK* wk, WazaID waza,
 static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8* turn );
 static void scEvent_AfterChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather );
 static BOOL scEvent_CheckItemUseEnable( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp );
 static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk );
 static u16 Hem_GetStackPtr( const HANDLER_EXHIBISION_MANAGER* wk );
 static u32 Hem_PushState( HANDLER_EXHIBISION_MANAGER* wk );
@@ -1026,7 +1027,7 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 pok
   party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
 
-  GF_ASSERT_MSG(pokeIdx < clwk->numCoverPos, "pokeIdx=%d, clientID=%d, numCoverPos=%d", pokeIdx, clientID, clwk->numCoverPos);
+  GF_ASSERT(posIdx < clwk->numCoverPos);
 
   if( posIdx != pokeIdx )
   {
@@ -1216,6 +1217,7 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   if( wk->wazaEff_EnableFlag )
   {
     SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT, pokeID, wk->wazaEff_TargetPokeID, waza );
+    BTL_Printf("予約コマンドうわがき");
   }
 
   if( WAZADATA_IsTire(waza) ){
@@ -2647,15 +2649,20 @@ static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
   }
 }
 //---------------------------------------------------------------------------------------------
-// サーバーフロー：一撃ワザ処理
+// サーバーフロー：HP回復
 //---------------------------------------------------------------------------------------------
 static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker )
 {
-  if( BTL_POKEPARAM_CheckSick(attacker, WAZASICK_KAIHUKUHUUJI) )
+  if( !BTL_POKEPARAM_CheckSick(attacker, WAZASICK_KAIHUKUHUUJI) )
+  {
+    u32 recoverHP = scEvent_CalcRecoverHP( wk, waza, attacker );
+    scPut_SimpleHp( wk, attacker, recoverHP );
+  }
+  // かいふくふうじで失敗
+  else
   {
     u8 pokeID = BTL_POKEPARAM_GetID( attacker );
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFuji, pokeID, waza );
-    return;
   }
 }
 //---------------------------------------------------------------------------------------------
@@ -5354,7 +5361,33 @@ static BOOL scEvent_CheckItemUseEnable( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザによるHP回復量計算
+ *
+ * @param   wk
+ * @param   waza
+ * @param   bpp
+ *
+ * @retval  u32
+ */
+//----------------------------------------------------------------------------------
+static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp )
+{
+  u32 ratio = WAZADATA_GetRecoverHPRatio( waza );
 
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BTL_POKEPARAM_GetID(bpp) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, ratio );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_RECOVER_HP_RATIO );
+    ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
+  BTL_EVENTVAR_Pop();
+
+  {
+    u32 volume = (BTL_POKEPARAM_GetValue(bpp, BPP_MAX_HP) * ratio) / 100;
+    return volume;
+  }
+}
 
 
 //----------------------------------------------------------------------------------------------------------
