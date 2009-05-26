@@ -260,22 +260,22 @@ const u8  FIELD_COMM_MENU_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu )
 void  FIELD_COMM_MENU_OpenActionList( u8 bgPlane , FIELD_COMM_MENU *commMenu )
 {
   { //menu create
-    const u16 lmax = FCAL_MAX;
+    const u16 lmax = FCAL_MAX - 1;
     FLDMENUFUNC_HEADER head = YesNoMenuHeader;
     FLDMENUFUNC_LISTDATA *MenuList;
     static const FLDMENUFUNC_LIST listMsgIDArr[FCAL_MAX]=
     {
       { DEBUG_FIELD_C_CHOICE04, (void*)FCAL_TRAINERCARD },  //トレーナーカード
-      { DEBUG_FIELD_C_CHOICE05, (void*)FCAL_BATTLE },   //バトル
+//      { DEBUG_FIELD_C_CHOICE05, (void*)FCAL_BATTLE },   //バトル
       { DEBUG_FIELD_C_CHOICE06, (void*)FCAL_END },      //終了
     };
 
     MenuList = FLDMENUFUNC_CreateMakeListData(
-      listMsgIDArr, FCAL_MAX, commMenu->msgData_, commMenu->heapID_ );
+      listMsgIDArr, FCAL_MAX - 1, commMenu->msgData_, commMenu->heapID_ );
 
     FLDMENUFUNC_InputHeaderListSize( &head, lmax,
-      F_COMM_ACTLIST_LEFT, F_COMM_ACTLIST_TOP,
-      F_COMM_ACTLIST_WIDTH, F_COMM_ACTLIST_HEIGHT );
+      F_COMM_ACTLIST_LEFT, F_COMM_ACTLIST_TOP + 2,
+      F_COMM_ACTLIST_WIDTH, F_COMM_ACTLIST_HEIGHT - 2 );
 
     commMenu->ynMenuFunc_ = FLDMENUFUNC_AddMenu( commMenu->fldMsgBG_, &head, MenuList );
   }
