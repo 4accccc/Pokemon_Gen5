@@ -18,6 +18,8 @@ def debug_puts str
   #puts str
 end
 
+GRID_SIZE   =   16    #1グリッドのユニット数
+BLOCK_SIZE  =   32    #地形ブロック当たりのグリッド数
 #============================================================================
 #============================================================================
 class EventHeader
@@ -60,11 +62,11 @@ class EventHeader
   end
 
   def calcXofs x
-    return ((x / 16) + 16 + @x_ofs * 32) * 16
+    return  x + (BLOCK_SIZE / 2 + @x_ofs * BLOCK_SIZE) * GRID_SIZE
   end
 
   def calcZofs z
-    return ((-z / 16) + 16 + @z_ofs * 32) * 16
+    return -z + (BLOCK_SIZE / 2 + @z_ofs * BLOCK_SIZE) * GRID_SIZE
   end
 
 end
