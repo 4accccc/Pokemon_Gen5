@@ -80,10 +80,8 @@ typedef struct {
 extern const FLDMMDL_HEADER SampleFldMMdlHeader_4season[];
 extern const int SampleFldMMdlHeaderCount_4season;
 
+#define DOOR_ID_T01R0301_EXIT01 0 //暫定！
 #include "arc/fieldmap/zone_id.h"
-#include "../../../resource/fldmapdata/eventdata/event_t01.h"
-#include "../../../resource/fldmapdata/eventdata/event_t01r0101.h"
-#include "../../../resource/fldmapdata/eventdata/event_t01r0102.h"
 //仮動作モデル配置データ
 #include "../../../resource/fldmapdata/eventdata/zone_t01evc.cdat"
 #include "../../../resource/fldmapdata/eventdata/zone_t01r0101evc.cdat"
@@ -213,6 +211,12 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   evdata->bg_data = tables->table->bg_data;
   evdata->pos_count = tables->table->pos_count;
   evdata->pos_data = tables->table->pos_data;
+
+  for (i = 0; i < evdata->connect_count; i++)
+  {
+    const CONNECT_DATA * cnct = &evdata->connect_data[i];
+    TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)\n", i, cnct->pos.x, cnct->pos.y, cnct->pos.z);
+  }
 }
 
 //============================================================================================
@@ -222,17 +226,17 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 //============================================================================================
 #define	ZONE_ID_SPECIAL		(0x0fff)
 #define	EXIT_ID_SPECIAL		(0x0100)
+	enum {
+		OFS_X = -8,
+		OFS_Y = 0,
+		OFS_Z = 8,
+	};
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos)
 {
 	int i;
 	int x,y,z;
-	enum {
-		OFS_X = 8,
-		OFS_Y = 0,
-		OFS_Z = 8,
-	};
 	const CONNECT_DATA * cnct = evdata->connect_data;
 	x = FX_Whole(pos->x) - OFS_X;
 	y = FX_Whole(pos->y) - OFS_Y;
@@ -246,6 +250,7 @@ int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx3
 		if (cnct->pos.y != y) continue;
 		if (cnct->pos.z != z) continue;
 		OS_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
+		OS_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
 		return i;
 	}
 	return EXIT_ID_NONE;
@@ -285,6 +290,16 @@ BOOL CONNECTDATA_IsSpecialExit(const CONNECT_DATA * connect)
 //------------------------------------------------------------------
 BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * loc, u16 exit_id)
 {
+  enum{ GRIDSIZE = 16, MV = GRIDSIZE * FX32_ONE};
+  static const VecFx32 dir_ofs[EXIT_DIR_MAX] = {
+    /*EXIT_DIR_NON  */{ 0, 0, 0},
+    /*EXIT_DIR_UP   */{ 0, 0, - MV},
+    /*EXIT_DIR_DOWN */{ 0, 0, + MV},
+    /*EXIT_DIR_LEFT */{ -MV, 0, 0},
+    /*EXIT_DIR_RIGHT*/{ +MV, 0, 0},
+  };
+  static const VecFx32 ofs = { OFS_X * FX32_ONE, OFS_Y * FX32_ONE, OFS_Z * FX32_ONE };
+
 	const CONNECT_DATA * connect = EVENTDATA_GetConnectByID(evdata, exit_id);
 	if (connect == NULL) {
 		return FALSE;
@@ -304,6 +319,8 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
 			connect->pos.x * FX32_ONE,
 			connect->pos.y * FX32_ONE,
 			connect->pos.z * FX32_ONE);
+  VEC_Add(&loc->pos, &dir_ofs[connect->exit_dir], &loc->pos);
+  VEC_Add(&loc->pos, &ofs, &loc->pos);
 	loc->dir_id = connect->exit_dir;
 	loc->zone_id = evdata->now_zone_id;
 	loc->exit_id = exit_id;
