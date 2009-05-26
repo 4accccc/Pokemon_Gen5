@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-05-22T18:49:29" source="C3_01_02_0520.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2009-05-26T16:14:30" source="C3_01_02_0520.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-05-22T18:49:29" source="C3_01_02_0520.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2009-05-26T16:14:30" source="C3_01_02_0520.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1190,7 +1190,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="17" name="sea_gake1"
+	<material index="17" name="sea_gake02_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1214,13 +1214,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="18" name="sea_mizu"
+	<material index="18" name="sea_mizu1_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="16"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="3"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1238,13 +1238,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="19" name="sea_mizu1"
+	<material index="19" name="sea_mizu1_lm2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="16"
+		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="3"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -5132,8 +5132,8 @@
 		<display index="15" material="15" polygon="11" priority="0"/>
 		<display index="16" material="16" polygon="7" priority="0"/>
 		<display index="17" material="17" polygon="0" priority="0"/>
-		<display index="18" material="18" polygon="24" priority="0"/>
-		<display index="19" material="19" polygon="23" priority="0"/>
+		<display index="18" material="18" polygon="23" priority="0"/>
+		<display index="19" material="19" polygon="24" priority="0"/>
 		<display index="20" material="20" polygon="9" priority="0"/>
 		<display index="21" material="21" polygon="1" priority="0"/>
 		<display index="22" material="22" polygon="20" priority="0"/>
