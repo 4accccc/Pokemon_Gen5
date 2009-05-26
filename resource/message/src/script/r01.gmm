@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-26T12:12:50"/>
+	<create user="matsumiya" host="W00179" date="2009-05-26T16:32:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,9 +336,9 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">少女</attribute>
 		<language name="JPN" width="256">うれしい　きぶん　だから
-くるくる　まわっちゃうの！</language>
+ぴょんぴょん　とびはねるの！</language>
 		<language name="JPN_KANJI" width="256">うれしい　気分だから
-くるくる　回っちゃうの！</language>
+ぴょんぴょん　飛び跳ねるの！</language>
 	</row>
 
 	<row id="msg_r01_man1_01">
