@@ -149,7 +149,7 @@ void FootPrintTool_NameErase(GFL_BMPWIN *win[], u32 user_index)
 		GF_ASSERT(0);
 		return;
 	}
-	GF_BGL_BmpWinOff(&win[user_index]);
+	GFL_BMPWIN_ClearTransWindow(&win[user_index]);
 }
 
 //--------------------------------------------------------------

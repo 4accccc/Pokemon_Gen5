@@ -2588,13 +2588,13 @@ static void BCT_CLIENT_ScoreEffectWkInit( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, CLAC
 		p_wk->p_clwk[i] = CLACT_Add( p_ad );
 
 		// アニメ設定
-		CLACT_AnmChg( p_wk->p_clwk[i], BCT_GRA_OAMMAIN_ANM_100 );
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], BCT_GRA_OAMMAIN_ANM_100 );
 
 		// 表示OFF
-		CLACT_SetDrawFlag( p_wk->p_clwk[i], FALSE );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
 
 		// オートアニメ設定
-		CLACT_SetAnmFlag( p_wk->p_clwk[i], TRUE );
+		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
 		CLACT_SetAnmFrame( p_wk->p_clwk[i], FX32_CONST(1.5) );
 
 		// 動作カウンタ
@@ -2622,7 +2622,7 @@ static void BCT_CLIENT_ScoreEffectWkExit( BCT_CLIENT_SCORE_EFFECT_WK* p_wk )
 	int i;
 
 	for( i=0; i<BCT_SCORE_EFFECT_BUF; i++ ){
-		CLACT_Delete( p_wk->p_clwk[i] );
+		GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
 	}
 }
 
@@ -2692,9 +2692,9 @@ static void BCT_CLIENT_ScoreEffectWkStart( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, u32
 		}
 		palno	= BCT_GRA_OAMMAIN_PAL_SCOREEX;
 	}
-	CLACT_AnmChg( p_wk->p_clwk[idx], anm_seq );
+	GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[idx], anm_seq );
 	p_wk->count[idx] = 0;
-	CLACT_SetDrawFlag( p_wk->p_clwk[idx], TRUE );	// 描画開始
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[idx], TRUE );	// 描画開始
 	BCT_CLIENT_ScoreEffectWkSetMatrix( p_wk, idx );	// 座標
 	CLACT_DrawPriorityChg( p_wk->p_clwk[idx], BCT_SCORE_EFFECT_PRI_START );	// 優先順位
 	CLACT_PaletteNoChg( p_wk->p_clwk[idx], palno );	// パレット
@@ -2755,7 +2755,7 @@ static void BCT_CLIENT_ScoreEffectWkSetMatrix( BCT_CLIENT_SCORE_EFFECT_WK* p_wk,
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_ScoreEffectWkEnd( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, u32 idx )
 {
-	CLACT_SetDrawFlag( p_wk->p_clwk[idx], FALSE );
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[idx], FALSE );
 }
 
 
@@ -2844,8 +2844,8 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 					col = BCT_COL_N_BLACK;
 				}
 				MyStatus_CopyNameString( cp_param->cp_status[i], p_namestr );	// 名前取得
-				GF_BGL_BmpWinSet_PosX( &namebmpwin, name_x );	// 位置設定
-				GF_BGL_BmpWinSet_PosY( &namebmpwin, name_y );
+				GFL_BMPWIN_SetPosX( &namebmpwin, name_x );	// 位置設定
+				GFL_BMPWIN_SetPosY( &namebmpwin, name_y );
 				namebmpwin.chrofs = namebmp_cgx;				// cgx設定
 				namestrsize = PRINTSYS_GetStrWidth( p_namestr, GFL_FONT* font/*NET_FONT_SYSTEM*/, 0 );	// 表示位置設定
 				draw_x		= ((BCT_START_NAME_BMP_WINSIZ_X*8) - namestrsize) / 2;	// 中央表示
@@ -5379,7 +5379,7 @@ static void BCT_CLIENT_TOUCHPEN_Init( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 		add.heap			= heapID;
 
 		p_wk->p_clwk = CLACT_AddSimple( &add );
-		CLACT_SetDrawFlag( p_wk->p_clwk, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
 	}
 
     GFL_ARC_CloseDataHandle( p_handle );
@@ -5397,7 +5397,7 @@ static void BCT_CLIENT_TOUCHPEN_Exit( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 {
 	// アクターワークの破棄
 	{
-		CLACT_Delete( p_wk->p_clwk );
+		GFL_CLACT_WK_Remove( p_wk->p_clwk );
 	}
 
 	// リソース破棄
@@ -5434,7 +5434,7 @@ static void BCT_CLIENT_TOUCHPEN_Start( BCT_CLIENT_TOUCHPEN_MOVE* p_wk )
 	}
 
 	// 描画開始
-	CLACT_SetDrawFlag( p_wk->p_clwk, TRUE );
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -5466,14 +5466,22 @@ static BOOL BCT_CLIENT_TOUCHPEN_Main( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 
 	// メイン
 	case BCT_TOUCHPEN_ANM_SEQ_MOVE_MAIN:
+	#if WB_FIX
 		CLACT_AnmFrameChg( p_wk->p_clwk, FX32_CONST(2) );
-
+  #else
+    GFL_CLACT_WK_AddAnmFrame( p_wk->p_clwk, FX32_CONST(2) );
+  #endif
+  
 		// アニメフレームにあわせて持っている木の実を出す
 		{
 			u32 frame;
 
+    #if WB_FIX
 			frame = CLACT_AnmFrameGet( p_wk->p_clwk );
-
+    #else
+      frame = GFL_CLACT_WK_GetAnmFrame(p_wk->p_clwk);
+    #endif
+    
 			// 動作チェック
 			switch( frame ){
 			// ここで発射させる
@@ -5522,7 +5530,7 @@ static BOOL BCT_CLIENT_TOUCHPEN_Main( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 		if( BCT_CLIENT_NutsMoveCheck( p_sys ) == FALSE ){
 
 			// 描画開始
-			CLACT_SetDrawFlag( p_wk->p_clwk, FALSE );
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
 			return TRUE;
 		}
 		break;
@@ -6129,6 +6137,7 @@ static void BCT_CLIENT_OamInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
 {
     int i;
 
+#if WB_FIX
     // OAMマネージャーの初期化
     NNS_G2dInitOamManagerModule();
 
@@ -6141,6 +6150,7 @@ static void BCT_CLIENT_OamInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
         0, 126,     // サブ画面OAM管理領域
         0, 31,      // サブ画面アフィン管理領域
         heapID);
+#endif
 
 
     // キャラクタマネージャー初期化
@@ -7191,7 +7201,7 @@ static void BCT_CLIENT_NutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_D
         add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
         add.heap  = heapID;
         p_data->p_clwk = CLACT_Add( &add );
-        CLACT_SetDrawFlag( p_data->p_clwk, FALSE );
+        GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, FALSE );
     }
 
 	// 陰グラフィック設定
@@ -7209,7 +7219,7 @@ static void BCT_CLIENT_NutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_D
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_NutsDrawExit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_DRAW* p_data )
 {
-    CLACT_Delete( p_data->p_clwk );
+    GFL_CLACT_WK_Remove( p_data->p_clwk );
     GFL_STD_MemFill( p_data, 0, sizeof(BCT_CLIENT_NUTS_DRAW) );
 }
 
@@ -7238,7 +7248,7 @@ static void BCT_CLIENT_NutsDrawStart( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_
     BCT_CLIENT_NutsDrawMatrixSet( p_data, cp_data, comm_num );
 
     // 表示開始
-    CLACT_SetDrawFlag( p_data->p_clwk, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, TRUE );
 
 
 #ifdef BCT_DEBUG
@@ -7264,7 +7274,7 @@ static void BCT_CLIENT_NutsDrawStartNoOam( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_
 	p_data->rota_chg_count = 0;
 
     // 表示開始
-    CLACT_SetDrawFlag( p_data->p_clwk, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, FALSE );
     BCT_CLIENT_Nuts3DDrawOn( p_data, p_wk );
 
 #ifdef BCT_DEBUG
@@ -7414,7 +7424,7 @@ static void BCT_CLIENT_NutsDrawEnd( BCT_CLIENT_NUTS_DRAW* p_data )
 {
     p_data->cp_data = NULL;
     p_data->draw2d = FALSE;
-    CLACT_SetDrawFlag( p_data->p_clwk, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, FALSE );
 
 	D3DOBJ_SetDraw( &p_data->shadow, FALSE );
 
@@ -7490,7 +7500,7 @@ static void BCT_CLIENT_Nuts3DDrawOn( BCT_CLIENT_NUTS_DRAW* p_data, BCT_CLIENT_GR
 {
 	GFL_G3D_OBJ* p_mdl;
 	
-    CLACT_SetDrawFlag( p_data->p_clwk, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, FALSE );
     p_data->draw2d = FALSE;
 
 	p_mdl = BCT_CLIENT_Nuts3DMdlGet( p_data->cp_data, &p_wk->nutsres );
@@ -7586,7 +7596,7 @@ static void BCT_CLIENT_HandNutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_HA
     add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
     add.heap  = heapID;
     p_nuts->p_clwk = CLACT_Add( &add );
-    CLACT_SetDrawFlag( p_nuts->p_clwk, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( p_nuts->p_clwk, FALSE );
 	CLACT_PaletteNoChg( p_nuts->p_clwk, plno );
     p_nuts->draw = FALSE;
 }
@@ -7600,7 +7610,7 @@ static void BCT_CLIENT_HandNutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_HA
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_HandNutsDrawExit( BCT_CLIENT_HANDNUTS_DRAW* p_nuts )
 {
-    CLACT_Delete( p_nuts->p_clwk );
+    GFL_CLACT_WK_Remove( p_nuts->p_clwk );
 }
 
 //----------------------------------------------------------------------------
@@ -7612,7 +7622,7 @@ static void BCT_CLIENT_HandNutsDrawExit( BCT_CLIENT_HANDNUTS_DRAW* p_nuts )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_HandNutsDrawStart( BCT_CLIENT_HANDNUTS_DRAW* p_nuts )
 {
-    CLACT_SetDrawFlag( p_nuts->p_clwk, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( p_nuts->p_clwk, TRUE );
     p_nuts->draw = TRUE;
 }
 
@@ -7663,7 +7673,7 @@ static void BCT_CLIENT_HandNutsDrawSetMatrix( BCT_CLIENT_HANDNUTS_DRAW* p_nuts, 
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_HandNutsDrawEnd( BCT_CLIENT_HANDNUTS_DRAW* p_nuts )
 {
-    CLACT_SetDrawFlag( p_nuts->p_clwk, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( p_nuts->p_clwk, FALSE );
     p_nuts->draw = FALSE;
 }
 
@@ -7692,7 +7702,7 @@ static void BCT_CLIENT_OamAwayNutsInit( BCT_CLIENT_GRAPHIC* p_drawsys, BCT_CLIEN
 
 	for( i=0; i<BCT_OAMAWAYNUTS_BUFFNUM; i++ ){
 	    p_wk->nutsbuff[i].p_clwk = CLACT_Add( &add );
-		CLACT_SetDrawFlag( p_wk->nutsbuff[i].p_clwk, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->nutsbuff[i].p_clwk, FALSE );
 		CLACT_SetAffineParam( p_wk->nutsbuff[i].p_clwk, CLACT_AFFINE_NORMAL );
 		CLACT_PaletteNoChg( p_wk->nutsbuff[i].p_clwk, plno );
 	    p_wk->nutsbuff[i].draw = FALSE;
@@ -7712,7 +7722,7 @@ static void BCT_CLIENT_OamAwayNutsExit( BCT_CLIENT_GRAPHIC* p_drawsys, BCT_CLIEN
 	int i;
 
 	for( i=0; i<BCT_OAMAWAYNUTS_BUFFNUM; i++ ){
-		CLACT_Delete( p_wk->nutsbuff[i].p_clwk );
+		GFL_CLACT_WK_Remove( p_wk->nutsbuff[i].p_clwk );
 	}
 }
 
@@ -7777,7 +7787,7 @@ static void BCT_CLIENT_OamAwayNutsMain( BCT_CLIENT_OAMAWAYNUTS_DRAW* p_wk )
 				(p_wk->nutsbuff[i].mat.y < BCT_OAMAWAYNUTS_DEL_YMIN + BCT_GRA_OAMSUBSURFACE_Y) ||
 				(p_wk->nutsbuff[i].mat.y > BCT_OAMAWAYNUTS_DEL_YMAX + BCT_GRA_OAMSUBSURFACE_Y) ){
 				p_wk->nutsbuff[i].draw = FALSE;
-				CLACT_SetDrawFlag( p_wk->nutsbuff[i].p_clwk, FALSE );
+				GFL_CLACT_WK_SetDrawEnable( p_wk->nutsbuff[i].p_clwk, FALSE );
 			}
 		}
 	}
@@ -7821,7 +7831,7 @@ static void BCT_CLIENT_OamAwayNutsStart( BCT_CLIENT_OAMAWAYNUTS_DRAW* p_wk, s32 
 
 	// 表示、動作開始
 	p_obj->draw = TRUE;
-	CLACT_SetDrawFlag( p_obj->p_clwk, TRUE );
+	GFL_CLACT_WK_SetDrawEnable( p_obj->p_clwk, TRUE );
 
 	// カウンタ初期化
 	p_obj->count = 0;
@@ -8306,7 +8316,7 @@ static void BCT_CLIENT_BGPRISCRL_SetPri( BCT_CLIENT_GRAPHIC* p_gra, s16 most_bac
 
 		
 		// 優先順位設定
-		GF_BGL_PrioritySet( bgno, (BCT_BGPRI_SCRL_PRI_MAX - i) );
+		GFL_BG_SetPriority( bgno, (BCT_BGPRI_SCRL_PRI_MAX - i) );
 
 		// パレット設定
 		if( i==0 ){
@@ -8399,7 +8409,7 @@ static void BCT_CLIENT_NUTS_COUNT_Init( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 		add.heap			= heapID;
 
 		p_wk->p_tblwk = CLACT_AddSimple( &add );
-		CLACT_SetDrawFlag( p_wk->p_tblwk, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_tblwk, FALSE );
 	}
 	
 	// フォントOAMデータ作成
@@ -8509,7 +8519,7 @@ static void BCT_CLIENT_NUTS_COUNT_Exit( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 	}
 
 	// テーブル破棄
-	CLACT_Delete( p_wk->p_tblwk );
+	GFL_CLACT_WK_Remove( p_wk->p_tblwk );
 
 	// テーブルとなるOAMのリソース破棄
 	{
@@ -8560,7 +8570,7 @@ static void BCT_CLIENT_NUTS_COUNT_Start( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT
 
 	// 描画開始
 	FONTOAM_SetDrawFlag( p_wk->p_fontoam, TRUE );
-	CLACT_SetDrawFlag( p_wk->p_tblwk, TRUE );
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_tblwk, TRUE );
 
 	// 
 	p_wk->seq = BCT_NUTS_COUNT_SEQ_IN;	
@@ -8667,7 +8677,7 @@ static void BCT_CLIENT_NUTS_COUNT_Main( BCT_CLIENT_NUTS_COUNT* p_wk )
 			p_wk->seq = BCT_NUTS_COUNT_SEQ_WAIT;
 			// 表示OFF
 			FONTOAM_SetDrawFlag( p_wk->p_fontoam, FALSE );
-			CLACT_SetDrawFlag( p_wk->p_tblwk, FALSE );
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_tblwk, FALSE );
 		}
 		break;
 	}

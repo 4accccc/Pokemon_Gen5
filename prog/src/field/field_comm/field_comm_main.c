@@ -306,7 +306,7 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
     return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0);
   }
   
-  {//自機の座標を監視し、誰とも通信していないのにパレスの橋の一定位置まで来たら
+  if(0){//自機の座標を監視し、誰とも通信していないのにパレスの橋の一定位置まで来たら
    //注意メッセージを出して引き返させる
     VecFx32 pos;
     BOOL left_right;

@@ -2755,6 +2755,7 @@ static void WLDTIMER_DrawSysOamInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
 {
     int i;
 
+#if WB_FIX
     // OAMマネージャーの初期化
     NNS_G2dInitOamManagerModule();
 
@@ -2767,7 +2768,7 @@ static void WLDTIMER_DrawSysOamInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
         0, 126,     // サブ画面OAM管理領域
         0, 31,      // サブ画面アフィン管理領域
         heapID);
-
+#endif
 
     // キャラクタマネージャー初期化
     InitCharManagerReg(&sc_WLDTIMER_CHARMAN_INIT, GX_OBJVRAMMODE_CHAR_1D_32K, GX_OBJVRAMMODE_CHAR_1D_32K );
@@ -4724,7 +4725,7 @@ static void WLDTIMER_ViewerMsgCharTrans( WLDTIMER_VIEWER* p_wk, u32 drawtype, u3
 	cgx += (WLDTIMER_VIEWER_MSGBMP_SIZX*y);
 
 	// 転送
-	AddVramTransferManager( NNS_GFD_DST_2D_BG1_CHAR_SUB, cgx*32, 
+	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG1_CHAR_SUB, cgx*32, 
 			(void*)cp_buff, WLDTIMER_VIEWER_MSGBMP_SIZX*32 );
 }
 
@@ -4767,7 +4768,7 @@ static void WLDTIMER_TimeZoneAnm_Init( WLDTIMER_TIMEZONEANM* p_wk, WLDTIMER_DRAW
 		p_wk->plttframe = cp_init->pltt_frame;
 		p_wk->plttno	= cp_init->pltt_no;
 		
-		p_wk->p_plttbuff = ArcUtil_HDL_PalDataGet( 
+		p_wk->p_plttbuff = GFL_ARCHDL_UTIL_LoadPalette( 
 				p_drawsys->p_handle, cp_init->pltt_idx,
 				&p_wk->p_plttdata, heapID );
 	}
@@ -4851,7 +4852,7 @@ static void WLDTIMER_TimeZoneAnm_Main( WLDTIMER_TIMEZONEANM* p_wk, WLDTIMER_DRAW
 
 		// 転送
 		p_data = (u8*)p_wk->p_plttdata->pRawData;
-		result = AddVramTransferManager( NNS_GFD_DST_2D_BG_PLTT_SUB,
+		result = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB,
 				p_wk->plttno*32, &p_data[p_wk->plttframe_now*32], 32 );
 		GF_ASSERT( result );
 	}
@@ -5004,7 +5005,7 @@ static void WLDTIMER_PokeBaloon_Init( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_DRAWS
 		p_wk->p_act[ i ] = CLACT_AddSimple( &add );
 
 		// オートアニメON
-		CLACT_SetAnmFlag( p_wk->p_act[ i ], TRUE );
+		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_act[ i ], TRUE );
 		CLACT_SetAnmFrame( p_wk->p_act[ i ], FX32_ONE );
 	}
 
@@ -5032,7 +5033,7 @@ static void WLDTIMER_PokeBaloon_Exit( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_DRAWS
 	// リソースとワーク破棄
 	for( i=0; i<WLDTIMER_TIME_POKE_NUM; i++ ){
 		// ワーク破棄
-		CLACT_Delete( p_wk->p_act[i] );
+		GFL_CLACT_WK_Remove( p_wk->p_act[i] );
 
 		// VRAM開放
 		CLACT_U_CharManagerDelete( p_wk->p_res[i][0] );
@@ -5111,7 +5112,7 @@ static void WLDTIMER_PokeBaloon_CleanDraw( WLDTIMER_POKEBALLOON* p_wk )
 {
 	int i;
 	for( i=0; i<WLDTIMER_TIME_POKE_NUM; i++ ){
-		CLACT_SetDrawFlag( p_wk->p_act[i], FALSE );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_act[i], FALSE );
 	}
 }
 
@@ -5179,7 +5180,7 @@ static BOOL WLDTIMER_PokeBaloon_Start( WLDTIMER_POKEBALLOON* p_wk, u32 drawtype,
 	WLDTIMER_PokeBln_MoveReset( &p_wk->move[drawtype], p_wnd );
 
 	// 表示ON
-	CLACT_SetDrawFlag( p_wk->p_act[ p_wk->pokegra[ drawtype ] ], TRUE );
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_act[ p_wk->pokegra[ drawtype ] ], TRUE );
 
 	// 座標設定
 	WLDTIMER_PokeBln_ActSetMatrix( p_wk, drawtype );
@@ -5213,7 +5214,7 @@ static BOOL WLDTIMER_PokeBaloon_Move( WLDTIMER_POKEBALLOON* p_wk, u32 drawtype, 
 	WLDTIMER_PokeBln_ActSetMatrix( p_wk, drawtype );				// 座標設定
 
 	if( result == TRUE ){
-		CLACT_SetDrawFlag( p_wk->p_act[ p_wk->pokegra[ drawtype ] ], FALSE );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_act[ p_wk->pokegra[ drawtype ] ], FALSE );
 	}
 
 	return result;

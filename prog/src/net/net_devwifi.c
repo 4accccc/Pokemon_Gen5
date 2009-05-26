@@ -46,6 +46,13 @@ static BOOL _DevLobbyUpdateErrorCheck(void);
 static BOOL _DevLobbyLoginWait(void);
 static void _DevLobbyLogout(void);
 static BOOL _DevLobbyLogoutWait(void);
+static BOOL _DevLobbyMgCheckRecruit( int type );
+static BOOL _DevLobbyMgStartRecruit( int type, u32 maxnum );
+static BOOL _DevLobbyMgEntry( int type );
+static BOOL _DevLobbyMgForceEnd( void );
+static void _DevLobbyMgEndConnect( void );
+static BOOL _DevLobbyMgMyParent( void );
+static void _DevLobbyMgEndRecruit( void );
 
 
 //--------------------------------------------
@@ -107,6 +114,13 @@ static GFLNetDevTable netDevTbl={
   _DevLobbyLoginWait,	//DevLobbyLoginWaitFunc
   _DevLobbyLogout,	//DevLobbyLogoutFunc
   _DevLobbyLogoutWait,	//DevLobbyLogoutWaitFunc
+  _DevLobbyMgCheckRecruit,    //DevLobbyMgCheckRecruitFunc
+  _DevLobbyMgStartRecruit,    //DevLobbyMgStartRecruitFunc
+  _DevLobbyMgEntry,   //DevLobbyMgEntryFunc
+  _DevLobbyMgForceEnd,    //DevLobbyMgForceEndFunc
+  _DevLobbyMgEndConnect,    //DevLobbyMgEndConnectFunc
+  _DevLobbyMgMyParent,    //DevLobbyMgMyParentFunc
+  _DevLobbyMgEndRecruit,    //DevLobbyMgEndRecruitFunc
 };
 
 //--------------------------------------------
@@ -518,6 +532,40 @@ static BOOL _DevLobbyLogoutWait(void)
   return DWC_LOBBY_LogoutWait();
 }
 
+static BOOL _DevLobbyMgCheckRecruit( int type )
+{
+  return DWC_LOBBY_MG_CheckRecruit(type);
+}
+
+static BOOL _DevLobbyMgStartRecruit( int type, u32 maxnum )
+{
+  return DWC_LOBBY_MG_StartRecruit(type, maxnum);
+}
+
+static BOOL _DevLobbyMgEntry( int type )
+{
+  return DWC_LOBBY_MG_Entry(type);
+}
+
+static BOOL _DevLobbyMgForceEnd( void )
+{
+  return DWC_LOBBY_MG_ForceEnd();
+}
+
+static void _DevLobbyMgEndConnect( void )
+{
+  DWC_LOBBY_MG_EndConnect();
+}
+
+static BOOL _DevLobbyMgMyParent( void )
+{
+  return DWC_LOBBY_MG_MyParent();
+}
+
+static void _DevLobbyMgEndRecruit( void )
+{
+  DWC_LOBBY_MG_EndRecruit();
+}
 
 
 //==============================================================================

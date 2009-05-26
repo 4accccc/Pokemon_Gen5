@@ -16,6 +16,7 @@
 #include "savedata/save_control.h"
 
 #include "net_app/wifi_lobby/wflby_system.h"
+#include "system/actor_tool.h"
 
 #include "net_app/net_bugfix.h"
 
@@ -201,12 +202,12 @@ extern BOOL MNGM_ERROR_DisconnectWait( const MNGM_ENRES_PARAM* cp_commparam );
 ///	START	TIMEUP	ワーク
 //	Hブランク使用します。
 //=====================================
-extern MNGM_COUNTWK* MNGM_COUNT_Init( GFL_CLUNIT* p_clset, u32 heapID );
-extern void MNGM_COUNT_Exit( MNGM_COUNTWK* p_wk );
+extern MNGM_COUNTWK* MNGM_COUNT_Init( GFL_CLUNIT* p_clset, u32 heapID, PLTTSLOT_SYS_PTR plttslot );
+extern void MNGM_COUNT_Exit( MNGM_COUNTWK* p_wk, PLTTSLOT_SYS_PTR plttslot );
 extern void MNGM_COUNT_StartStart( MNGM_COUNTWK* p_wk, GFL_TCBSYS *tcbsys );
 extern void MNGM_COUNT_StartTimeUp( MNGM_COUNTWK* p_wk, GFL_TCBSYS *tcbsys );
 extern BOOL MNGM_COUNT_Wait( const MNGM_COUNTWK* p_wk );
-extern int MNGM_PalNoGet( MNGM_COUNTWK* p_wk );
+extern int MNGM_PalNoGet( MNGM_COUNTWK* p_wk, PLTTSLOT_SYS_PTR plttslot );
 
 #endif		// __MINIGAME_TOOL_H__
 

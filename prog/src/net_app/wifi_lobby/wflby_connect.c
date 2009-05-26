@@ -50,6 +50,7 @@
 #include "test/wflby_debug.h"
 #include "savedata/wifilist.h"
 #include "gamesystem/msgspeed.h"
+#include "net/net_exchange.h"
 
 // ダミーグラフィックです
 #include "wifip2pmatch.naix"
@@ -297,6 +298,8 @@ typedef struct {
 	
 	GFL_TCBLSYS *tcbl;
 	PRINT_QUE *printQue;
+	
+	WIFI_EXCHANGE_WORK my_exchange_data;    ///<自分の交換データ
 } WFLBY_CONNECTWK;
 
 
@@ -397,6 +400,8 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 ite
 static DWCUserData* _getMyUserData(void* pWork);
 static DWCFriendData* _getFriendData(void* pWork);
 static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork);
+static void * _WFLBY_GetExchangeDataPtr(void *pWork);
+static int _WFLBY_GetExchangeDataSize(void *pWork);
 
 
 //==============================================================================
@@ -409,13 +414,13 @@ static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork);
 #define _MAXSIZE  (80)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
-static GFLNetInitializeStruct aGFLNetInit = {
+static const GFLNetInitializeStruct aGFLNetInit = {
     NULL,  // 受信関数テーブル
     0, // 受信テーブル要素数
     NULL,    ///< ハードで接続した時に呼ばれる
     NULL,    ///< ネゴシエーション完了時にコール
-    NULL,   // ユーザー同士が交換するデータのポインタ取得関数
-    NULL,   // ユーザー同士が交換するデータのサイズ取得関数
+    NULL,//_WFLBY_GetExchangeDataPtr,   // ユーザー同士が交換するデータのポインタ取得関数
+    NULL,//_WFLBY_GetExchangeDataSize,   // ユーザー同士が交換するデータのサイズ取得関数
     NULL,  // ビーコンデータ取得関数
     NULL,  // ビーコンデータサイズ取得関数
     NULL,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
@@ -451,7 +456,6 @@ static GFLNetInitializeStruct aGFLNetInit = {
 
 
 
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	ログイン	開始
@@ -478,6 +482,9 @@ GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	// パラメータ取得
 	p_param	= pwk;
 	p_wk->p_save		= p_param->p_save;
+
+  // 自分の交換データ作成
+  NET_EXCHANGE_SetParam(p_param->p_save, &p_wk->my_exchange_data);
 
 	//TCBL作成
 	p_wk->tcbl = GFL_TCBL_Init( HEAPID_WFLBY_ROOM, HEAPID_WFLBY_ROOM, 4, 32);
@@ -1724,4 +1731,29 @@ static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork)
     WifiList_DataMarge(SaveData_GetWifiListData(wk->p_save), deletedIndex, srcIndex);
 	//フレンド毎に持つフロンティアデータもマージする 2008.05.24(土) matsuda
 //	FrontierRecord_DataMarge(SaveData_GetFrontier(wk->pSaveData), deletedIndex, srcIndex);
+}
+
+//--------------------------------------------------------------
+/**
+ * 共通交換データへのポインタ取得
+ * @param   pWork		
+ * @retval  void *		
+ */
+//--------------------------------------------------------------
+static void * _WFLBY_GetExchangeDataPtr(void *pWork)
+{
+  WFLBY_CONNECTWK *wk = pWork;
+  return &wk->my_exchange_data;
+}
+
+//--------------------------------------------------------------
+/**
+ * 共通交換データのサイズ取得
+ * @param   pWork		
+ * @retval  int		
+ */
+//--------------------------------------------------------------
+static int _WFLBY_GetExchangeDataSize(void *pWork)
+{
+  return sizeof(WIFI_EXCHANGE_WORK);
 }

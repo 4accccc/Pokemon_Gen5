@@ -561,9 +561,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		}
 
 		// P2P接続開始
-	#if WB_TEMP_FIX
-		CommStateWifiP2PStart( p_param->mg_type );
-	#endif
+		GFL_NET_StateWifiP2PStart( p_param->mg_type );
 	
 		// 募集開始を教える
 		if( DWC_LOBBY_MG_MyParent() == TRUE ){
@@ -1206,10 +1204,10 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 	// 通信切断終了
 	case WFLBY_EV_MG_ERREND:
 		// 通信切断
-    #if WB_TEMP_FIX
-        CommInfoFinalize();
-		CommStateWifiP2PEnd();
-	#endif
+  #if WB_FIX
+    CommInfoFinalize();
+  #endif
+		GFL_NET_StateWifiP2PEnd();
 		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERRENDWAIT );
 		break;
 
@@ -1296,10 +1294,10 @@ BOOL WFLBY_EV_MG_End( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		// 通信切断
 		if( GFL_NET_StateIsWifiLoginMatchState() == FALSE ){	// Login状態じゃなかったらやる
 			// Info終了
-		#if WB_TEMP_FIX
+		#if WB_FIX
 			CommInfoFinalize();
-			CommStateWifiP2PEnd();
 		#endif
+			GFL_NET_StateWifiP2PEnd();
 		}
 
 		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_END_WAIT );

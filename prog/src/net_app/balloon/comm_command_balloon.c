@@ -77,6 +77,7 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
 	{Recv_CommGameEnd,		 	NULL},	// CB_GAME_END
 };
 
+
 //--------------------------------------------------------------
 /**
  * @brief   コンテスト用のコマンド体系に初期化します
@@ -86,15 +87,14 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
 //--------------------------------------------------------------
 void CommCommandBalloonInitialize(void* pWork)
 {
-#if WB_TEMP_FIX
-    int length = sizeof(_CommPacketTbl)/sizeof(NetRecvFuncTable);
-    CommCommandInitialize(_CommPacketTbl, length, pWork);
+  int length = sizeof(_CommPacketTbl)/sizeof(NetRecvFuncTable);
+#if WB_FIX
+  CommCommandInitialize(_CommPacketTbl, length, pWork);
 #else
-	//GGIDを後で入れる
-	GFL_NET_COMMAND_Init(0, _CommPacketTbl, NELEMS(_CommPacketTbl), pWork);
+	GFL_NET_AddCommandTable(GFL_NET_CMD_BALLOON, _CommPacketTbl, length, pWork);
 #endif
 
-    GF_ASSERT(sizeof(BALLOON_SIO_PLAY_WORK) < 256);	//このサイズを超えたらHugeBuffにする必要がある
+  GF_ASSERT(sizeof(BALLOON_SIO_PLAY_WORK) < 256);	//このサイズを超えたらHugeBuffにする必要がある
 }
 
 

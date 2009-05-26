@@ -983,11 +983,11 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 
 #if WB_TEMP_FIX
 	//ミニゲーム共通カウントダウンシステム
-	game->mgcount = MNGM_COUNT_Init(CATS_GetClactSetPtr(game->crp), HEAPID_BALLOON);
+	game->mgcount = MNGM_COUNT_Init(CATS_GetClactSetPtr(game->crp), HEAPID_BALLOON, game->plttslot);
 	//ミニゲーム共通カウントダウンシステムで使用しているパレットをPFDにも展開
 	{
 		int pal_pos;
-		pal_pos = MNGM_PalNoGet(game->mgcount);
+		pal_pos = MNGM_PalNoGet(game->mgcount, game->plttslot);
 		PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, pal_pos*16, MNGM_COUNT_PALNUM*0x20);
 	}
 #endif
@@ -1239,7 +1239,7 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	
 	//ミニゲーム共通カウントダウンシステム削除
 #if WB_TEMP_FIX
-	MNGM_COUNT_Exit(game->mgcount);
+	MNGM_COUNT_Exit(game->mgcount, game->plttslot);
 #endif
 
 	Air_ActorAllDelete(game);

@@ -1133,6 +1133,7 @@ static void NEWSDRAW_DrawSysOamInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 {
     int i;
 
+#if WB_FIX
     // OAMマネージャーの初期化
     NNS_G2dInitOamManagerModule();
 
@@ -1145,7 +1146,7 @@ static void NEWSDRAW_DrawSysOamInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
         0, 126,     // サブ画面OAM管理領域
         0, 31,      // サブ画面アフィン管理領域
         heapID);
-
+#endif
 
     // キャラクタマネージャー初期化
     InitCharManagerReg(&sc_NEWSDRAW_CHARMAN_INIT, GX_OBJVRAMMODE_CHAR_1D_128K, GX_OBJVRAMMODE_CHAR_1D_32K );
@@ -1894,7 +1895,7 @@ static void NEWSDRAW_TopicTrColDataTrans( const NEWSDRAW_TOPIC_TRCOL* cp_wk, con
 	
 	for( i=0; i<WFLBY_MINIGAME_MAX; i++ ){
 		// トレーナーカラーに合った色を転送するタスクを作成
-		result = AddVramTransferManager( 
+		result = NNS_GfdRegisterNewVramTransferTask( 
 				NNS_GFD_DST_2D_BG_PLTT_MAIN,
 				(plttidx*0x20)+(NEWS_PLTT_FONTTR_TR_00*2)+(i*0x4),	// 転送先
 				(void*)(&cp_plttdata[ (NEWS_PLTT_FONT*0x20)+(cp_wk->trcol[i]*2) ]), 
@@ -1941,7 +1942,7 @@ static void NEWSDRAW_TopicWinInit( NEWSDRAW_TOPICWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 	
 
 	// パレットデータ
-	p_wk->p_plttbuff = ArcUtil_HDL_PalDataGet( p_draw->p_handle, 
+	p_wk->p_plttbuff = GFL_ARCHDL_UTIL_LoadPalette( p_draw->p_handle, 
 			NARC_lobby_news_lobby_news_bg_NCLR,
 			&p_wk->p_pltt, heapID);
 

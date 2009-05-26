@@ -1210,7 +1210,6 @@ static void WFLBY_APLDATA_BL_Exit( WFLBY_APLDATA* p_data )
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_BL_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 {
-#if WB_TEMP_FIX
 	FS_EXTERN_OVERLAY(balloon);
 	FS_EXTERN_OVERLAY(minigame_common);
 	// プロセス定義データ
@@ -1231,7 +1230,6 @@ static void WFLBY_APLDATA_BL_Start( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data )
 	}
 	
 	WFLBY_APL_PROC_Start( p_sys, p_data, &Proc, FS_OVERLAY_ID(balloon) );
-#endif
 }
 
 //----------------------------------------------------------------------------

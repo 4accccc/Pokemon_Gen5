@@ -1089,6 +1089,7 @@ static void ANKETO_OamInit( ANKETO_DRAWSYS* p_wk, u32 heapID )
 {
     int i;
 
+#if WB_FIX
     // OAMマネージャーの初期化
     NNS_G2dInitOamManagerModule();
 
@@ -1101,7 +1102,7 @@ static void ANKETO_OamInit( ANKETO_DRAWSYS* p_wk, u32 heapID )
         0, 126,     // サブ画面OAM管理領域
         0, 31,      // サブ画面アフィン管理領域
         heapID);
-
+#endif
 
     // キャラクタマネージャー初期化
     InitCharManagerReg(&sc_ANKETO_CHARMAN_INIT, GX_OBJVRAMMODE_CHAR_1D_32K, GX_OBJVRAMMODE_CHAR_1D_32K );
@@ -1421,7 +1422,7 @@ static void ANKETO_INPUT_Init( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 
 		// アクター作成
 		p_wk->p_cursor_act = CLACT_AddSimple( &add );
-		CLACT_SetDrawFlag( p_wk->p_cursor_act, FALSE );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor_act, FALSE );
 	}
 	
 	// ウィンドウ作成
@@ -1681,7 +1682,7 @@ static void ANKETO_INPUT_Exit( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 
 	// cursor破棄
 	{
-		CLACT_Delete( p_wk->p_cursor_act );
+		GFL_CLACT_WK_Remove( p_wk->p_cursor_act );
 	}
 
 	// OAM破棄
@@ -1741,13 +1742,13 @@ static void ANKETO_INPUT_DrawAnswer( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, A
 //-----------------------------------------------------------------------------
 static void ANKETO_INPUT_DrawCursor( ANKETO_INPUT* p_wk )
 {
-	CLACT_SetDrawFlag( p_wk->p_cursor_act, TRUE );
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor_act, TRUE );
 
 	CLACT_SetMatrix( p_wk->p_cursor_act, &sc_ANKETO_INPUT_CURSOR_MAT[ p_wk->cursor ] );
 }
 static void ANKETO_INPUT_AnmCursor( ANKETO_INPUT* p_wk )
 {
-	CLACT_SetAnmFlag( p_wk->p_cursor_act, TRUE );
+	GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_cursor_act, TRUE );
 }
 
 

@@ -34,6 +34,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
 NETWORKSRC =  net/net_icondata.c \
         net/net_dev.c \
         net/dwc_rapfriend.c \
+        net/net_exchange.c \
         system/net_err.c
 
 
@@ -643,7 +644,6 @@ SRCS_OVERLAY_WIFILOBBY_COMMON   = net_app/wifi_lobby/wifi_lobby.c \
 #===>SRCS_OVERLAY_WIFILOBBY_COMMON
 SRCS_OVERLAY_WIFILOBBY_CONNECT    = net_app/wifi_lobby/wflby_connect.c
 
-
 ### #WIFILOBBY
 ### #===>SRCS_OVERLAY_WIFILOBBY_COMMON
 ### SRCS_OVERLAY_WIFILOBBY_ANKETO   = net_app/wifi_lobby/wflby_anketo.c
@@ -672,3 +672,10 @@ SRCS_OVERLAY_WIFILOBBY_ROOM   = net_app/wifi_lobby/wflby_3dmatrix.c \
                   net_app/wifi_lobby/wflby_fire.c \
                   net_app/wifi_lobby/wflby_ev_anketo.c \
                   net_app/wifi_lobby/wflby_float.c
+
+#wifiミニゲームツール
+#===> SRCS_OVERLAY_WIFILOBBY_COMMON
+SRCS_OVERLAY_MINIGAME_COMMON = net_app/wifi_lobby/minigame_tool.c \
+							   net_app/wifi_lobby/minigame_commcomand.c \
+							   net_app/wifi_lobby/minigame_commcomand_func.c
+
