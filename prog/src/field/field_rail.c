@@ -22,17 +22,6 @@
 //------------------------------------------------------------------
 
 
-//------------------------------------------------------------------
-/**
- * @brief
- */
-//------------------------------------------------------------------
-typedef enum {  
-  FIELD_RAIL_TYPE_POINT = 0,
-  FIELD_RAIL_TYPE_LINE,
-
-  FIELD_RAIL_TYPE_MAX
-}FIELD_RAIL_TYPE;
 
 //------------------------------------------------------------------
 /**
@@ -76,6 +65,12 @@ struct _FIELD_RAIL_MAN{
 
   FIELD_RAIL now_rail;
 
+  /// ライン、ポイントテーブル
+  const RAIL_POINT * const * point_table;
+  const RAIL_LINE * const * line_table;
+  u16 point_count;
+  u16 line_count;
+
 };
 
 //============================================================================================
@@ -95,6 +90,7 @@ static const RAIL_CAMERA_SET * getCameraSet(const FIELD_RAIL * rail);
 static const char * getRailName(const FIELD_RAIL * rail);
 static void getRailPosition(const FIELD_RAIL * rail, VecFx32 * pos);
 static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit );
+static RAIL_KEY setLine(FIELD_RAIL * rail, const RAIL_LINE * line, RAIL_KEY key, int l_ofs, int w_ofs, int l_ofs_max);
 
 
 //------------------------------------------------------------------
@@ -111,6 +107,9 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL * rail, RAIL_KEY key);
 static RAIL_KEY updatePointMove(FIELD_RAIL * rail, RAIL_KEY key);
 
 static void updateCircleCamera( const FIELD_RAIL_MAN * man, u16 pitch, fx32 len, const VecFx32* cp_target );
+
+static u32 getPointIndex( const FIELD_RAIL_MAN * man, const RAIL_POINT* point );
+static u32 getLineIndex( const FIELD_RAIL_MAN * man, const RAIL_LINE* line );
 
 //============================================================================================
 //============================================================================================
@@ -151,16 +150,79 @@ void FIELD_RAIL_MAN_Delete(FIELD_RAIL_MAN * man)
  *
  */
 //------------------------------------------------------------------
-void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_POINT * railPointData, const RAIL_WIDTH * railWidth)
+void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_SETTING * setting)
 { 
   FIELD_RAIL * rail = &man->now_rail;
   rail->type    = FIELD_RAIL_TYPE_POINT;
-  rail->point   = railPointData;
+  rail->point   = setting->point_table[0];
   rail->line_ofs_max  = 0;
-  rail->width_ofs_max = railWidth->ofs_max;
-  rail->ofs_unit      = railWidth->ofs_unit;
+  rail->width_ofs_max = setting->ofs_max;
+  rail->ofs_unit      = setting->ofs_unit;
   man->active_flag = TRUE;
+
+  // ポイント、ラインテーブル設定
+  man->point_count  = setting->point_count;
+  man->line_count   = setting->line_count;
+  man->point_table  = setting->point_table;
+  man->line_table   = setting->line_table;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール位置情報の取得
+ *
+ *	@param	man       マネージャ
+ *	@param	location  位置情報格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_MAN_GetLocation(const FIELD_RAIL_MAN * man, RAIL_LOCATION * location)
+{
+  location->type        = man->now_rail.type;
+
+  // インデックス取得
+  if( man->now_rail.type==FIELD_RAIL_TYPE_POINT ){
+    location->rail_index  = getPointIndex( man, man->now_rail.point );
+  }else{
+    location->rail_index  = getLineIndex( man, man->now_rail.line );
+  }
+
+  // 各種オフセット
+  location->line_ofs  = man->now_rail.line_ofs;
+  location->width_ofs = man->now_rail.width_ofs;
+  location->key       = man->now_rail.key;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール位置情報の設定
+ *
+ *	@param	man       マネージャ
+ *	@param	location  指定位置情報
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * location)
+{
+  FIELD_RAIL * rail = &man->now_rail;
+
+  // 初期化
+  initRail( rail );
+
+  if( location->type==FIELD_RAIL_TYPE_POINT )
+  {
+    rail->type          = FIELD_RAIL_TYPE_POINT;
+    rail->point         = man->point_table[ location->rail_index ];
+  }
+  else
+  {
+    u32 line_ofs_max;
+    const RAIL_LINE* line;
+    
+    line                = man->line_table[ location->rail_index ];
+    line_ofs_max        = getLineOfsMax( line, rail->ofs_unit );
+    setLine( rail, line, location->key, location->line_ofs, location->width_ofs, line_ofs_max );
+  }
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -199,6 +261,17 @@ void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
 {
   const FIELD_RAIL * rail = &man->now_rail;
   RAIL_CAMERA_FUNC * func = NULL;
+
+  if (!man->active_flag)
+  {
+    return;
+  }
+
+  if (isValidRail(&man->now_rail) == FALSE)
+  {
+    return;
+  }
+
   switch (rail->type)
   {
   case FIELD_RAIL_TYPE_POINT:
@@ -1529,5 +1602,53 @@ static void updateCircleCamera( const FIELD_RAIL_MAN * man, u16 pitch, fx32 len,
   
 	FIELD_CAMERA_SetTargetPos( p_camera, cp_target );
 	FIELD_CAMERA_SetCameraPos( p_camera, &camera_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポイントのテーブルインデックスを取得
+ *
+ *	@param	man       マネージャ
+ *	@param	point     ポイント
+ *
+ *	@return インデックス
+ */
+//-----------------------------------------------------------------------------
+static u32 getPointIndex( const FIELD_RAIL_MAN * man, const RAIL_POINT* point )
+{
+  int i;
+
+  for( i=0; i<man->point_count; i++ ){
+    if( (u32)man->point_table[i] == (u32)point ){
+      return i;
+    }
+  }
+
+  GF_ASSERT_MSG( i<man->point_count, "不明なpointです。" );
+  return 0; // フリーズ回避
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ラインのテーブルインデックスを取得
+ *
+ *	@param	man       マネージャ
+ *	@param	line      ライン
+ *
+ *	@return インデックス
+ */
+//-----------------------------------------------------------------------------
+static u32 getLineIndex( const FIELD_RAIL_MAN * man, const RAIL_LINE* line )
+{
+  int i;
+
+  for( i=0; i<man->line_count; i++ ){
+    if( (u32)man->line_table[i] == (u32)line ){
+      return i;
+    }
+  }
+
+  GF_ASSERT_MSG( i<man->line_count, "不明なlineです。" );
+  return 0; // フリーズ回避
 }
 

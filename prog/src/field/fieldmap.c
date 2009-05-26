@@ -31,6 +31,7 @@
 #include "field_fog.h"
 #include "field_light.h"
 #include "field_buildmodel.h"
+#include "field_rail.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
@@ -171,6 +172,8 @@ struct _FIELDMAP_WORK
 	FLDMSGBG *fldMsgBG;
 	
 	FLDMMDLSYS *fldMMdlSys;
+
+	FIELD_RAIL_MAN * railMan;
 	
 	FLDMAPPER *g3Dmapper;
 	MAP_MATRIX *pMapMatrix;
@@ -417,6 +420,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       &fieldWork->now_pos,
       fieldWork->heapID );
 
+  // railシステム初期化
+  fieldWork->railMan = FIELD_RAIL_MAN_Create( fieldWork->heapID, fieldWork->camera_control );
+
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fieldWork->g3Dmapper );
@@ -559,6 +565,10 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   //マップ別 登録処理
 
   if( GAMESYSTEM_GetEvent(gsys) == NULL) {
+
+    // レールシステムメイン
+    FIELD_RAIL_MAN_Update(fieldWork->railMan, GFL_UI_KEY_GetCont() );
+    FIELD_RAIL_MAN_UpdateCamera(fieldWork->railMan);
     
     //登録テーブルごとに個別のメイン処理を呼び出し
     fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
@@ -639,6 +649,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   // フォグシステム破棄
   FIELD_FOG_Delete( fieldWork->fog );
+
+  // レール制御破棄
+  FIELD_RAIL_MAN_Delete( fieldWork->railMan );
   
   FIELD_CAMERA_Delete( fieldWork->camera_control );
 
@@ -798,6 +811,10 @@ const BOOL FIELDMAP_IsReady( const FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 void FIELDMAP_ForceUpdate( FIELDMAP_WORK *fieldWork )
 {
+  // レールシステムメイン
+  FIELD_RAIL_MAN_Update(fieldWork->railMan, GFL_UI_KEY_GetCont() );
+  FIELD_RAIL_MAN_UpdateCamera(fieldWork->railMan);
+  
 	//登録テーブルごとに個別のメイン処理を呼び出し
 	fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
 	
@@ -843,6 +860,16 @@ FLDMSGBG * FIELDMAP_GetFldMsgBG( FIELDMAP_WORK *fieldWork )
 FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELDMAP_WORK *fieldWork )
 {
 	return fieldWork->camera_control;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール制御システムの取得
+ */
+//-----------------------------------------------------------------------------
+FIELD_RAIL_MAN * FIELDMAP_GetFieldRailMan( FIELDMAP_WORK *fieldWork )
+{
+	return fieldWork->railMan;
 }
 
 //--------------------------------------------------------------

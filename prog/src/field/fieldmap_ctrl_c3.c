@@ -238,12 +238,63 @@ static const RAIL_CAMERA_SET sc_CAMERA_C3_JOINT04;
 static const RAIL_LINEPOS_SET sc_LINEPOS_C3_NORMAL;
 static const RAIL_LINEPOS_SET sc_LINEPOS_C3_Strait;
 
-// 幅情報
-static const RAIL_WIDTH sc_RAIL_WIDTH = {
+// レール情報
+static const RAIL_POINT* scp_RAIL_POINT[] = {
+  &sc_POINT_C3_START,
+  &sc_POINT_C3_END,
+                          
+  &sc_POINT_C3_JOINT00,
+  &sc_POINT_C3_JOINT01,
+  &sc_POINT_C3_JOINT02,
+  &sc_POINT_C3_JOINT03,
+  &sc_POINT_C3_JOINT04,
+                          
+                          
+  &sc_POINT_C3_BEACH00,
+  &sc_POINT_C3_BEACH01,
+  &sc_POINT_C3_BEACH02,
+  &sc_POINT_C3_BEACH03,
+  &sc_POINT_C3_BEACH04,
+                          
+                          
+  &sc_POINT_C3_CA_ALLAY00,
+  &sc_POINT_C3_CA_ALLAY01,
+  &sc_POINT_C3_CA_ALLAY02,
+  &sc_POINT_C3_CA_ALLAY03,
+  &sc_POINT_C3_CA_ALLAY04,
+};
+static const RAIL_LINE* scp_RAIL_LINE[] = {
+  &sc_LINE_C3_STARTtoJOINT00,
+  &sc_LINE_C3_JOINT00toEND,
+  &sc_LINE_C3_JOINT00toCA_ALLAY00,
+  &sc_LINE_C3_JOINT00toBEACH00,
+  &sc_LINE_C3_JOINT00toJOINT01,
+  &sc_LINE_C3_JOINT01toCA_ALLAY01,
+  &sc_LINE_C3_JOINT01toBEACH01,
+  &sc_LINE_C3_JOINT01toJOINT02,
+  &sc_LINE_C3_JOINT02toCA_ALLAY02,
+  &sc_LINE_C3_JOINT02toBEACH02,
+  &sc_LINE_C3_JOINT02toJOINT03,
+  &sc_LINE_C3_JOINT03toCA_ALLAY03,
+  &sc_LINE_C3_JOINT03toBEACH03,
+  &sc_LINE_C3_JOINT03toJOINT04,
+  &sc_LINE_C3_JOINT04toCA_ALLAY04,
+  &sc_LINE_C3_JOINT04toBEACH04,
+};
+static const RAIL_SETTING sc_RAIL_SETTING = {
+  NELEMS( scp_RAIL_POINT ),
+  NELEMS( scp_RAIL_LINE ),
+  scp_RAIL_POINT,
+  scp_RAIL_LINE,
   16,
   2*FX32_ONE
 };
 
+// レール位置情報
+static const RAIL_LOCATION sc_RAIL_START_LOCATION = {
+  FIELD_RAIL_TYPE_POINT,
+  0,
+};
 
 
 //======================================================================
@@ -274,9 +325,6 @@ typedef struct {
 	s16 df_angle;
   fx32  camera_len;
   u16   camera_pitch;
-
-  //ポインタ
-  FIELD_RAIL_MAN * p_railMan;
 
   FLD_SCENEAREA* p_sceneArea;
 }C3_MOVE_WORK;
@@ -329,6 +377,7 @@ static void mapCtrlC3_Create(
 	C3_MOVE_WORK *work;
 	FIELD_PLAYER *fld_player;
   FIELD_CAMERA * camera = FIELDMAP_GetFieldCamera(fieldWork);
+  FIELD_RAIL_MAN* railMan = FIELDMAP_GetFieldRailMan(fieldWork);
 	static const C3_MOVE_WORK init = {
 		 0x1f0,
 		 0,
@@ -344,9 +393,9 @@ static void mapCtrlC3_Create(
 	FIELDMAP_SetMapCtrlWork( fieldWork, work );
 
   // レール起動
-  work->p_railMan = FIELD_RAIL_MAN_Create( FIELDMAP_GetHeapID(fieldWork), camera );
-  FIELD_RAIL_MAN_Load(work->p_railMan, &sc_POINT_C3_START, &sc_RAIL_WIDTH);
-  FIELD_RAIL_MAN_GetPos(work->p_railMan, pos );
+  FIELD_RAIL_MAN_Load(railMan, &sc_RAIL_SETTING);
+  FIELD_RAIL_MAN_SetLocation( railMan, &sc_RAIL_START_LOCATION );
+  FIELD_RAIL_MAN_GetPos(railMan, pos );
 
   // シーンエリア
   work->p_sceneArea = FLD_SCENEAREA_Create( FIELDMAP_GetHeapID(fieldWork), camera );
@@ -376,7 +425,6 @@ static void mapCtrlC3_Create(
 static void mapCtrlC3_Delete( FIELDMAP_WORK *fieldWork )
 {
 	C3_MOVE_WORK *work = FIELDMAP_GetMapCtrlWork( fieldWork );
-  FIELD_RAIL_MAN_Delete(work->p_railMan);
   FLD_SCENEAREA_Delete( work->p_sceneArea );
 	GFL_HEAP_FreeMemory( work );
 
@@ -395,24 +443,22 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 	int key_cont = GFL_UI_KEY_GetCont(  );
   int key_trg = GFL_UI_KEY_GetTrg();
 	C3_MOVE_WORK *mwk = FIELDMAP_GetMapCtrlWork( fieldWork );
-  BOOL rail_flag = FIELD_RAIL_MAN_GetActiveFlag(mwk->p_railMan);
+  FIELD_RAIL_MAN* railMan = FIELDMAP_GetFieldRailMan(fieldWork);
+  BOOL rail_flag = FIELD_RAIL_MAN_GetActiveFlag(railMan);
 	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );;
 
   //デバッグのため、レール処理をON/OFF
   if (key_trg & PAD_BUTTON_L)
   {
-    FIELD_RAIL_MAN_SetActiveFlag(mwk->p_railMan, !rail_flag);
+    FIELD_RAIL_MAN_SetActiveFlag(railMan, !rail_flag);
   }
 
   if (rail_flag)
   {
     // レール動作
-    FIELD_RAIL_MAN_Update(mwk->p_railMan, GFL_UI_KEY_GetCont() );
-    FIELD_RAIL_MAN_GetPos(mwk->p_railMan, pos );
+    FIELD_RAIL_MAN_GetPos(railMan, pos );
     pos->y = HEIGHT;
     FIELD_PLAYER_SetPos( fld_player, pos );
-    FIELD_RAIL_MAN_UpdateCamera(mwk->p_railMan);
-
     
     // シーンエリア処理でカメラ上書き
     if( FLD_SCENEAREA_Update( mwk->p_sceneArea, pos ) == FLD_SCENEAREA_UPDATE_NONE ){
@@ -1379,9 +1425,9 @@ static const RAIL_LINE sc_LINE_C3_JOINT04toBEACH04 =
 static const RAIL_CAMERA_SET sc_CAMERA_C3_NORMAL = 
 {
   FIELD_RAIL_POSFUNC_CircleCamera,
-  0x800,
-//  0x38D000,
-  0x303000,
+  0x700,
+//  0x2F5000,
+  0x2B1000,
   0x2f6f36,
   HEIGHT,
   0x301402,

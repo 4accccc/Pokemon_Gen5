@@ -23,13 +23,29 @@
 //	struct
 //======================================================================
 
-//ポインタ
-static FIELD_RAIL_MAN * railMan;
 
-static const RAIL_POINT point_bridge1;
 static const RAIL_POINT point_c03_start;
+static const RAIL_POINT point_c03_start_01;
+static const RAIL_POINT point_bridge1;
+static const RAIL_POINT point_bridge2;
+static const RAIL_POINT point_bridge_loop_top;
+static const RAIL_POINT point_d02_loop_03;
+static const RAIL_POINT point_d02_loop_02;
 static const RAIL_POINT point_d02_loop_01;
+static const RAIL_POINT point_d02_start_02;
+static const RAIL_POINT point_d02_start_01;
 static const RAIL_POINT point_d02_start_00;
+
+static const RAIL_LINE line_d02_loop_03;
+static const RAIL_LINE line_d02_loop_02;
+static const RAIL_LINE line_d02_loop_01;
+static const RAIL_LINE line_d02_start_01;
+static const RAIL_LINE line_d02_start_00;
+static const RAIL_LINE line_slope_up;
+static const RAIL_LINE line_slope_start;
+static const RAIL_LINE line_bridge_start;
+static const RAIL_LINE line_bridge_long;
+static const RAIL_LINE line_d02_bridge_start;
 
 static const RAIL_CAMERA_SET camera_point_c03_start_00;
 static const RAIL_CAMERA_SET camera_point_c03_start_01;
@@ -45,9 +61,44 @@ static const RAIL_CAMERA_SET camera_point_d02_loop_03;
 
 static const RAIL_LINEPOS_SET LoopLinePosSet;
 
-static const RAIL_WIDTH lineWidth = {
+
+// レール情報
+static const RAIL_POINT* pointTable[] = {
+  &point_c03_start,
+  &point_c03_start_01,
+  &point_bridge1,
+  &point_bridge2,
+  &point_bridge_loop_top,
+  &point_d02_loop_03,
+  &point_d02_loop_02,
+  &point_d02_loop_01,
+  &point_d02_start_02,
+  &point_d02_start_01,
+  &point_d02_start_00,
+};
+static const RAIL_LINE* lineTable[] = {
+  &line_d02_loop_03,
+  &line_d02_loop_02,
+  &line_d02_loop_01,
+  &line_d02_start_01,
+  &line_d02_start_00,
+  &line_slope_up,
+  &line_slope_start,
+  &line_bridge_start,
+  &line_bridge_long,
+  &line_d02_bridge_start,
+};
+static const RAIL_SETTING lineWidth = {
+  NELEMS(pointTable),
+  NELEMS(lineTable),
+  pointTable,
+  lineTable,
   4,
   4*FX32_ONE
+};
+static const RAIL_LOCATION locationStart = {
+  FIELD_RAIL_TYPE_POINT,
+  10,
 };
 
 //======================================================================
@@ -85,9 +136,10 @@ static void mapCtrlNoGrid_Create(
 {
 	FIELD_PLAYER *fld_player;
   FIELD_CAMERA * camera = FIELDMAP_GetFieldCamera(fieldWork);
+  FIELD_RAIL_MAN * railMan = FIELDMAP_GetFieldRailMan(fieldWork);
 
-  railMan = FIELD_RAIL_MAN_Create( FIELDMAP_GetHeapID(fieldWork), camera );
-  FIELD_RAIL_MAN_Load(railMan, &point_d02_start_00, &lineWidth);
+  FIELD_RAIL_MAN_Load(railMan, &lineWidth);
+  FIELD_RAIL_MAN_SetLocation( railMan, &locationStart );
   //FIELD_RAIL_MAN_Load(railMan, &point_c03_start);
   FIELD_RAIL_MAN_GetPos(railMan, pos );
   FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), TRUE);
@@ -107,7 +159,6 @@ static void mapCtrlNoGrid_Create(
 //--------------------------------------------------------------
 static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 {
-  FIELD_RAIL_MAN_Delete(railMan);
 	//DeletePlayerAct( fieldWork->field_player );
 }
 
@@ -123,6 +174,7 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 {
 	int key_cont = GFL_UI_KEY_GetCont();
   int key_trg = GFL_UI_KEY_GetTrg();
+  FIELD_RAIL_MAN * railMan = FIELDMAP_GetFieldRailMan(fieldWork);
   BOOL rail_flag = FIELD_RAIL_MAN_GetActiveFlag(railMan);
 	FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 
@@ -147,10 +199,8 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 
   if (rail_flag)
   {
-    FIELD_RAIL_MAN_Update(railMan, GFL_UI_KEY_GetCont() );
     FIELD_RAIL_MAN_GetPos(railMan, pos );
     FIELD_PLAYER_SetPos( fld_player, pos );
-    FIELD_RAIL_MAN_UpdateCamera(railMan);
   }
   {
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
@@ -163,18 +213,6 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 
 //======================================================================
 //======================================================================
-static const RAIL_LINE line_slope_up;
-static const RAIL_LINE line_slope_start;
-static const RAIL_LINE line_bridge_start;
-static const RAIL_LINE line_bridge_long;
-
-static const RAIL_LINE line_d02_bridge_start;
-
-static const RAIL_LINE line_d02_start_00;
-static const RAIL_LINE line_d02_start_01;
-static const RAIL_LINE line_d02_loop_01;
-static const RAIL_LINE line_d02_loop_02;
-static const RAIL_LINE line_d02_loop_03;
 //======================================================================
 //
 //    POINT定義

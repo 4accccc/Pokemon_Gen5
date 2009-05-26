@@ -78,6 +78,20 @@ typedef enum {
   RAIL_KEY_MAX
 }RAIL_KEY;
 
+//------------------------------------------------------------------
+/**
+ * @brief レールタイプ
+ *
+ * LOCATIONなどの内容が、POINTなのかLINEなのかを判断するための定義
+ */
+//------------------------------------------------------------------
+typedef enum {  
+  FIELD_RAIL_TYPE_POINT = 0,
+  FIELD_RAIL_TYPE_LINE,
+
+  FIELD_RAIL_TYPE_MAX
+}FIELD_RAIL_TYPE;
+
 
 //------------------------------------------------------------------
 /**
@@ -127,15 +141,28 @@ struct _RAIL_LINE {
 
 
 //------------------------------------------------------------------
-/**
- *  幅情報
- */
+/// レール情報
 //------------------------------------------------------------------
 typedef struct {
+  u16 point_count;
+  u16 line_count;
+  const RAIL_POINT * const * point_table;
+  const RAIL_LINE * const * line_table;
+
   s32   ofs_max;      // 幅分割数
   fx32  ofs_unit;     // 幅の移動単位
-} RAIL_WIDTH;
+} RAIL_SETTING;
 
+//------------------------------------------------------------------
+/// レール位置情報
+//------------------------------------------------------------------
+typedef struct {
+  u16 type;       // FIELD_RAIL_TYPE
+  u16 rail_index; //index of point or line
+  s32 line_ofs;
+  s32 width_ofs;
+  u32 key;
+} RAIL_LOCATION;
 
 
 //============================================================================================
@@ -159,7 +186,10 @@ extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man, int key_cont);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_POINT * railPointData, const RAIL_WIDTH * railWidth);
+extern void FIELD_RAIL_MAN_Load(FIELD_RAIL_MAN * man, const RAIL_SETTING * setting);
+extern void FIELD_RAIL_MAN_GetLocation(const FIELD_RAIL_MAN * man, RAIL_LOCATION * location);
+extern void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * location);
+
 
 //------------------------------------------------------------------
 //  たぶんデバッグ用途のみ
