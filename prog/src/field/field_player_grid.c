@@ -12,6 +12,7 @@
 #include "field_player.h"
 
 #include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
 
 #include "field_player_grid.h"
 #include "map_attr.h"
@@ -151,7 +152,7 @@ void FIELD_PLAYER_GRID_Move(
 	BOOL debug_flag;
 	PLAYER_SET set;
 	FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( g_jiki->fld_player );
-	
+  
 	dir = DIR_NOT;
 	if( (key_cont&PAD_KEY_UP) ){
 		dir = DIR_UP;
@@ -544,12 +545,13 @@ static void gjiki_SetMove_Hitch(
 	u16 code;
 	
 	GF_ASSERT( dir != DIR_NOT );
-	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_32F );
+	code = FLDMMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
 	
 	FLDMMDL_SetAcmd( fmmdl, code );
 	g_jiki->move_state = PLAYER_MOVE_HITCH;
 	
   FIELD_PLAYER_SetMoveValue( g_jiki->fld_player, PLAYER_MOVE_VALUE_STOP );
+  PMSND_PlaySE( SEQ_SE_WALL_HIT );
 	gjiki_Sound_MoveStop();
 }
 
@@ -578,6 +580,7 @@ static void gjiki_SetMove_Jump(
 	g_jiki->move_state = PLAYER_MOVE_WALK;
   
   FIELD_PLAYER_SetMoveValue( g_jiki->fld_player, PLAYER_MOVE_VALUE_WALK );
+  PMSND_PlaySE( SEQ_SE_DANSA );
 	gjiki_Sound_Move();
 }
 
