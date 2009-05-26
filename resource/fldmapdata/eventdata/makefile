@@ -13,21 +13,23 @@
 
 SRCDATA = $(wildcard data/*.mev)
 TGTDATA = $(basename $(notdir $(SRCDATA)))
-EVD_H = $(addsuffix evd.h,$(TGTDATA))
-#EVD_CDAT = $(addsuffix evd.cdat,$(TGTDATA))
-CDAT = $(addsuffix .cdat,$(TGTDATA))
+CDAT = $(addprefix event_,$(addsuffix .cdat,$(TGTDATA)))
+HEADER = $(CDAT:.cdat=.h)
+
+TARGET = eventdata_table.cdat
 
 .PHONY:	do-build clean test
 
-do-build:	$(CDAT)
+do-build:	$(TARGET)
 
+$(TARGET):	$(CDAT)
+	ruby make_table.rb $(CDAT) > $(TARGET)
 
-%.cdat: data/%.mev
+event_%.cdat: data/%.mev
 	ruby make_event.rb $<
 
 clean:
-	-rm $(CDAT)
-	#-rm $(EVD_H) $(EVD_CDAT)
+	-rm $(CDAT) $(HEADER) $(TARGET)
 
 test:
 	@echo $(CDAT)
