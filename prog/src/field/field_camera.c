@@ -86,12 +86,17 @@ typedef struct {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void initGridParameter(FIELD_CAMERA * camera);
-static void initBridgeParameter(FIELD_CAMERA * camera);
-static void initC3Parameter(FIELD_CAMERA * camera);
 static void ControlGridParameter(FIELD_CAMERA * camera, u16 key_cont);
+
+static void initBridgeParameter(FIELD_CAMERA * camera);
 static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont);
+
+static void initC3Parameter(FIELD_CAMERA * camera);
 static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont);
 
+static void initPokeCenParameter(FIELD_CAMERA * camera);
+static void initH01P01Parameter(FIELD_CAMERA * camera);
+//static void ControlPokeCenParameter(FIELD_CAMERA * camera, u16 key_cont);
 
 //============================================================================================
 //============================================================================================
@@ -112,7 +117,15 @@ static const CAMERA_FUNC_TABLE CameraFuncTable[] = {
 	{
 		initC3Parameter,
 		ControlC3Parameter,
-	}
+	},
+  {
+    initPokeCenParameter,
+    ControlGridParameter,
+  },
+  {
+    initH01P01Parameter,
+    ControlGridParameter,
+  },
 };
 
 
@@ -214,6 +227,33 @@ static void initGridParameter(FIELD_CAMERA * camera)
 	}
 #endif
 
+  camera->angle_len = 0x00d5 * FX32_ONE;
+  camera->angle_pitch = 0x25d8;
+	
+	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
+	
+  // ターゲット補正値
+  VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void initPokeCenParameter(FIELD_CAMERA * camera)
+{
+  camera->angle_len = 0x00d5 * FX32_ONE;
+  camera->angle_pitch = 0x1bd8;
+	
+	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
+	
+  // ターゲット補正値
+  VEC_Set( &camera->target_offset, 0, 0x18066, 0xfffef197 );
+}
+
+//------------------------------------------------------------------
+//  未設定なのでデフォルトと一緒
+//------------------------------------------------------------------
+static void initH01P01Parameter(FIELD_CAMERA * camera)
+{
   camera->angle_len = 0x00d5 * FX32_ONE;
   camera->angle_pitch = 0x25d8;
 	
