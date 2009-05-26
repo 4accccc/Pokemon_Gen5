@@ -54,6 +54,8 @@ struct _EVDATA_SYS {
 };
 
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 typedef struct {
 
   u8 bg_count;
@@ -68,15 +70,13 @@ typedef struct {
 
 }EVENTDATA_TABLE;
 
+typedef struct {
+  u16 zone_id;
+  const EVENTDATA_TABLE * table;
+}EVENTDATA_TOTAL_TABLES;
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 
-extern const CONNECT_DATA SampleConnectData[];
-extern const int SampleConnectDataCount;
-extern const CONNECT_DATA SampleConnectData_testpc[];
-extern const int SampleConnectDataCount_testpc;
-extern const CONNECT_DATA SampleConnectData_testroom[];
-extern const int SampleConnectDataCount_testroom;
-extern const CONNECT_DATA SampleConnectData_4season[];
-extern const int SampleConnectDataCount_4season;
 extern const FLDMMDL_HEADER SampleFldMMdlHeader_4season[];
 extern const int SampleFldMMdlHeaderCount_4season;
 
@@ -94,14 +94,13 @@ extern const int SampleFldMMdlHeaderCount_4season;
 #include "../../../resource/fldmapdata/eventdata/zone_t02evc.cdat"
 #include "../../../resource/fldmapdata/eventdata/zone_t02pc0101evc.cdat"
 
-#include "../../../resource/fldmapdata/eventdata/event_t01.cdat"
-#include "../../../resource/fldmapdata/eventdata/event_t01r0101.cdat"
-#include "../../../resource/fldmapdata/eventdata/event_t01r0102.cdat"
+//生成したイベントデータを全部インクルード
+#include "../../../resource/fldmapdata/eventdata/eventdata_table.cdat"
 
 
 //============================================================================================
 //============================================================================================
-static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, const EVENTDATA_TABLE * tbl);
+static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id);
 
 //============================================================================================
 //
@@ -145,31 +144,17 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 	EVENTDATA_SYS_Clear(evdata);
 	evdata->now_zone_id = zone_id;
 
+  loadEventDataTable(evdata, zone_id);
 	/* テスト的に接続データを設定 */
 	switch (zone_id) {
-	case ZONE_ID_TESTPC:
-		evdata->connect_count = SampleConnectDataCount_testpc;
-		evdata->connect_data = SampleConnectData_testpc;
-		break;
-	case ZONE_ID_TESTROOM:
-		evdata->connect_count = SampleConnectDataCount_testroom;
-		evdata->connect_data = SampleConnectData_testroom;
-		break;
-	case ZONE_ID_PLANNERTEST:
-		evdata->connect_count = SampleConnectDataCount;
-		evdata->connect_data = SampleConnectData;
-		break;
 	case ZONE_ID_MAPSPRING:
 	case ZONE_ID_MAPSUMMER:
 	case ZONE_ID_MAPAUTUMN:
 	case ZONE_ID_MAPWINTER:
-		evdata->connect_count = SampleConnectDataCount_4season;
-		evdata->connect_data = SampleConnectData_4season;
 		evdata->npc_count = SampleFldMMdlHeaderCount_4season;
 		evdata->npc_data = SampleFldMMdlHeader_4season;
 		break;
 	case ZONE_ID_T01:
-    loadEventDataTable(evdata, &event_t01);
 		evdata->npc_count = SampleFldMMdlHeaderCount_T01;
 		evdata->npc_data = SampleFldMMdlHeader_T01;
 		break;
@@ -182,12 +167,10 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 		evdata->npc_data = SampleFldMMdlHeader_R01;
 		break;
 	case ZONE_ID_T01R0101:
-    loadEventDataTable(evdata, &event_t01r0101);
 		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0101;
 		evdata->npc_data = SampleFldMMdlHeader_t01r0101;
 		break;
   case ZONE_ID_T01R0102:
-    loadEventDataTable(evdata, &event_t01r0102);
     break;
 	case ZONE_ID_T01R0201:
 		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0201;
@@ -210,16 +193,26 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, const EVENTDATA_TABLE * tbl)
+static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 {
-  evdata->npc_count = tbl->npc_count;
-  evdata->npc_data = tbl->npc_data;
-  evdata->connect_count = tbl->connect_count;
-  evdata->connect_data = tbl->connect_data;
-  evdata->bg_count = tbl->bg_count;
-  evdata->bg_data = tbl->bg_data;
-  evdata->pos_count = tbl->pos_count;
-  evdata->pos_data = tbl->pos_data;
+  int i;
+  const EVENTDATA_TOTAL_TABLES * tables = TotalTables;
+  for (i = 0; i < ZONE_ID_MAX; i++, tables ++)
+  {
+    if (tables->table == NULL) return; //centinel
+    if (tables->zone_id == zone_id)
+    {
+      break;
+    }
+  }
+  evdata->npc_count = tables->table->npc_count;
+  evdata->npc_data = tables->table->npc_data;
+  evdata->connect_count = tables->table->connect_count;
+  evdata->connect_data = tables->table->connect_data;
+  evdata->bg_count = tables->table->bg_count;
+  evdata->bg_data = tables->table->bg_data;
+  evdata->pos_count = tables->table->pos_count;
+  evdata->pos_data = tables->table->pos_data;
 }
 
 //============================================================================================
@@ -357,90 +350,6 @@ u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata )
 //		※実際には外部でコンバートされたものをファイルから読み込む
 //
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-const CONNECT_DATA SampleConnectData[] = {
-	{
-		{160, 0, 0},
-		ZONE_ID_PLANNERTEST,	1,
-		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
-	},
-	{
-		{48, 0, 96 },
-		ZONE_ID_PLANNERTEST,	0,
-		EXIT_DIR_RIGHT, EXIT_TYPE_NONE,
-	},
-	{
-		{704, 16, 112 },
-		ZONE_ID_TESTPC,	1,
-		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
-	},
-};
-const int SampleConnectDataCount = NELEMS(SampleConnectData);
-
-const CONNECT_DATA SampleConnectData_4season[] = {
-	{
-		{(1432 - 8), 0, (1288 - 8)},
-		ZONE_ID_TESTPC, 1,
-		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
-	},
-	{
-		//{(1160 - 8), 0, (1352 - 8)},
-		{(1240 - 8), 0, (1336 - 8)},
-		ZONE_ID_TESTROOM, 0,
-		//EXIT_DIR_DOWN, EXIT_TYPE_NONE,
-		EXIT_DIR_RIGHT, EXIT_TYPE_NONE,
-	},
-	{
-		{(1192 - 8), 0, (1160 - 8)},
-		ZONE_ID_TESTROOM, 0,
-		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
-	},
-	{
-		{(1432 - 8), 48, (1144 - 8 - 16)},
-		ZONE_ID_TESTROOM, 0,
-		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
-	},
-
-};
-const int SampleConnectDataCount_4season = NELEMS(SampleConnectData_4season);
-
-const CONNECT_DATA SampleConnectData_testpc[] = {
-	{
-		{128, 0, 224 },
-		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
-		//ZONE_ID_PLANNERTEST,	2,
-		EXIT_DIR_UP, EXIT_TYPE_NONE,
-	},
-	{
-		{144, 0, 224 },
-		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
-		//ZONE_ID_PLANNERTEST,	2,
-		EXIT_DIR_UP, EXIT_TYPE_NONE,
-	},
-	{
-		{160, 0, 224 },
-		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
-		//ZONE_ID_PLANNERTEST,	2,
-		EXIT_DIR_UP, EXIT_TYPE_NONE,
-	},
-};
-const int SampleConnectDataCount_testpc = NELEMS(SampleConnectData_testpc);
-
-const CONNECT_DATA SampleConnectData_testroom[] = {
-	{
-		{(72 - 8), 0, (88 - 8) },
-		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
-		EXIT_DIR_UP, EXIT_TYPE_NONE,
-	},
-	{
-		{(88 - 8), 0, (88 - 8) },
-		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
-		EXIT_DIR_UP, EXIT_TYPE_NONE,
-	},
-};
-const int SampleConnectDataCount_testroom = NELEMS(SampleConnectData_testroom);
-
 const FLDMMDL_HEADER SampleFldMMdlHeader_4season[] = {
 	{
 		0,		///<識別ID
