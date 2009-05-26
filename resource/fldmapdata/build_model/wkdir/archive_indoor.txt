@@ -53,7 +53,6 @@
 "nsbmdfiles/d6stone05.nsbmd"
 "nsbmdfiles/d6rock01.nsbmd"
 "nsbmdfiles/pcshelf01.nsbmd"
-"nsbmdfiles/d5stone05.nsbmd"
 "nsbmdfiles/d6rock01_dummy.nsbmd"
 "nsbmdfiles/pcshelf01_dummy.nsbmd"
 "nsbmdfiles/d5container01.nsbmd"

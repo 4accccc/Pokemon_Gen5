@@ -54,7 +54,6 @@ DEP_INDOOR	=	\
 	$(RESDIR)/d6stone05.nsbmd \
 	$(RESDIR)/d6rock01.nsbmd \
 	$(RESDIR)/pcshelf01.nsbmd \
-	$(RESDIR)/d5stone05.nsbmd \
 	$(RESDIR)/d6rock01_dummy.nsbmd \
 	$(RESDIR)/pcshelf01_dummy.nsbmd \
 	$(RESDIR)/d5container01.nsbmd \
