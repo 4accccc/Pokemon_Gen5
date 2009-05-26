@@ -1379,7 +1379,11 @@ BOOL WFLBY_EV_DEF_PlayerA_MINIGAME_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_
 	case 1:
 		if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE) || (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) || (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) || (GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN) ){
 			WFLBY_EV_MG_MINIGAME_PrintExit( &p_evwk->data, p_rmwk );
+		#if WB_FIX  //看板ではない方を停止させているので、看板のprint_streamが残る。バグなので修正 2009.05.26(火) matsuda
 			WFLBY_ROOM_TALKWIN_Off( p_rmwk );
+		#else
+			WFLBY_ROOM_BOARDWIN_Off( p_rmwk );
+		#endif
 			{
 				WFLBY_3DOBJCONT* p_objcont;
 				WFLBY_3DPERSON* p_person;

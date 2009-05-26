@@ -1056,8 +1056,8 @@ static void WFLBY_ROOM_RoomDraw( WFLBY_ROOMWK* p_wk );
 
 static void WFLBY_ROOM_MapAnmCont( WFLBY_ROOMWK* p_wk );
 
-static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID );
-static void WFLBY_ROOM_TalkWin_Exit( WFLBY_ROOM_TALKMSG* p_wk );
+static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID, BOOL bmpwin_create );
+static void WFLBY_ROOM_TalkWin_Exit( WFLBY_ROOM_TALKMSG* p_wk, BOOL bmpwin_delete );
 static void WFLBY_ROOM_TalkWin_BmpWinDelete( WFLBY_ROOM_TALKMSG *p_wk );
 static void WFLBY_ROOM_TalkWin_Print( WFLBY_ROOM_TALKMSG* p_wk, const STRBUF* cp_str, GFL_FONT *font_handle, GFL_TCBLSYS *tcblsys );
 static void WFLBY_ROOM_TalkWin_PrintAll( WFLBY_ROOM_TALKMSG* p_wk, const STRBUF* cp_str, PRINT_QUE *que, GFL_FONT *talk_handle );
@@ -1068,7 +1068,7 @@ static BOOL WFLBY_ROOM_TalkWin_CheckTimeWait( const WFLBY_ROOM_TALKMSG* cp_wk );
 static BOOL WFLBY_ROOM_TalkWin_EndWait( WFLBY_ROOM_TALKMSG* cp_wk );
 static void WFLBY_ROOM_TalkWin_Off( WFLBY_ROOM_TALKMSG* p_wk );
 
-static void WFLBY_ROOM_TalkWin_Board_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_ROOM_TALKMSG* p_talkwk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID );
+static void WFLBY_ROOM_TalkWin_Board_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_ROOM_TALKMSG* p_talk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void WFLBY_ROOM_TalkWin_Board_Exit( WFLBY_ROOM_TALKMSG* p_wk );
 static void WFLBY_ROOM_TalkWin_Board_Print( WFLBY_ROOM_TALKMSG* p_wk, const STRBUF* cp_str, GFL_FONT *system_handle, GFL_TCBLSYS *tcblsys );
 static void WFLBY_ROOM_TalkWin_Board_PrintAll( WFLBY_ROOM_TALKMSG* p_wk, const STRBUF* cp_str, GFL_FONT *talk_handle, PRINT_QUE* que );
@@ -1295,7 +1295,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	p_wk->p_camera = WFLBY_CAMERA_Init( HEAPID_WFLBY_ROOM );
 
 	// ウィンドウ
-	WFLBY_ROOM_TalkWin_Init( &p_wk->talkwin, &p_wk->graphic, p_param->p_save, HEAPID_WFLBY_ROOM );
+	WFLBY_ROOM_TalkWin_Init( &p_wk->talkwin, &p_wk->graphic, p_param->p_save, HEAPID_WFLBY_ROOM, TRUE );
 	WFLBY_ROOM_TalkWin_Board_Init( &p_wk->boardwin, &p_wk->talkwin, &p_wk->graphic, p_param->p_save, HEAPID_WFLBY_ROOM );
 	WFLBY_ROOM_ListWin_Init( &p_wk->listwin, &p_wk->graphic, HEAPID_WFLBY_ROOM );
 #if WB_FIX
@@ -1681,7 +1681,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	WFLBY_ROOM_Msg_Exit( &p_wk->def_msg );
 
 	// ウィンドウ破棄
-	WFLBY_ROOM_TalkWin_Exit( &p_wk->talkwin );
+	WFLBY_ROOM_TalkWin_Exit( &p_wk->talkwin, TRUE );
 	WFLBY_ROOM_TalkWin_Board_Exit( &p_wk->boardwin );
 	WFLBY_ROOM_ListWin_Exit( &p_wk->listwin, &p_wk->graphic );
 	WFLBY_ROOM_ErrWin_Exit( &p_wk->errwin );
@@ -1704,6 +1704,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	WFLBY_ROOM_GraphicExit( &p_wk->graphic );
 
 	//TCBL削除
+	GFL_TCBL_Main(p_wk->tcblsys);
 	GFL_TCBL_Exit(p_wk->tcblsys);
 
 	// ワーク破棄
@@ -3517,7 +3518,7 @@ static  void WFLBY_ROOM_MapAnmCont( WFLBY_ROOMWK* p_wk )
 //--------------------------------------------------------------
 static void _PrintStreamForceStop(WFLBY_ROOM_TALKMSG* p_wk)
 {
-	if(p_wk->print_stream != NULL && PRINTSYS_PrintStreamGetState(p_wk->print_stream) != PRINTSTREAM_STATE_DONE){
+	if(p_wk->print_stream != NULL){// && PRINTSYS_PrintStreamGetState(p_wk->print_stream) != PRINTSTREAM_STATE_DONE){
 		PRINTSYS_PrintStreamDelete(p_wk->print_stream);
 		p_wk->print_stream = NULL;
 	}
@@ -3533,20 +3534,22 @@ static void _PrintStreamForceStop(WFLBY_ROOM_TALKMSG* p_wk)
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID )
+static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID, BOOL bmpwin_create )
 {
 
 	//  ビットマップ確保
-	p_wk->win = GFL_BMPWIN_CreateFixPos(
-				sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN],
-				WFLBY_TALKWIN_X, WFLBY_TALKWIN_Y,
-				WFLBY_TALKWIN_SIZX, WFLBY_TALKWIN_SIZY, WFLBY_ROOM_BGPL_TALKFONT_CL,
-				WFLBY_TALKWIN_CGX );
+	if(bmpwin_create == TRUE){
+  	p_wk->win = GFL_BMPWIN_CreateFixPos(
+  				sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_MAIN_MSGWIN],
+  				WFLBY_TALKWIN_X, WFLBY_TALKWIN_Y,
+  				WFLBY_TALKWIN_SIZX, WFLBY_TALKWIN_SIZY, WFLBY_ROOM_BGPL_TALKFONT_CL,
+  				WFLBY_TALKWIN_CGX );
 
-	// クリーン
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
-//	GFL_BMPWIN_MakeScreen(p_wk->win);
-	PRINT_UTIL_Setup( &p_wk->printUtil, p_wk->win );
+  	// クリーン
+  	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
+  //	GFL_BMPWIN_MakeScreen(p_wk->win);
+  	PRINT_UTIL_Setup( &p_wk->printUtil, p_wk->win );
+  }
 
 	// 文字列バッファ作成
 	p_wk->p_str = GFL_STR_CreateBuffer( WFLBY_TALKWIN_STRBUFNUM, heapID );
@@ -3567,7 +3570,7 @@ static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT
  *	@param	p_wk		ワーク
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_TalkWin_Exit( WFLBY_ROOM_TALKMSG* p_wk )
+static void WFLBY_ROOM_TalkWin_Exit( WFLBY_ROOM_TALKMSG* p_wk, BOOL bmpwin_delete )
 {
 	//  すべて停止
 #if WB_FIX
@@ -3585,7 +3588,12 @@ static void WFLBY_ROOM_TalkWin_Exit( WFLBY_ROOM_TALKMSG* p_wk )
 	OS_TPrintf("p_str破棄\n");
 
 	// ビットマップ破棄
-	WFLBY_ROOM_TalkWin_BmpWinDelete(p_wk);
+  if(bmpwin_delete == TRUE){
+  	WFLBY_ROOM_TalkWin_BmpWinDelete(p_wk);
+  }
+  else{
+    p_wk->win = NULL;
+  }
 }
 
 //--------------------------------------------------------------
@@ -3853,14 +3861,16 @@ static void WFLBY_ROOM_TalkWin_Off( WFLBY_ROOM_TALKMSG* p_wk )
  *	@param	heapID			ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_TalkWin_Board_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_ROOM_TALKMSG* p_talkwk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID )
+static void WFLBY_ROOM_TalkWin_Board_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_ROOM_TALKMSG* p_talk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 #if WB_FIX
 	WFLBY_ROOM_TalkWin_Init( p_wk, p_sys, p_save, heapID );
 	// パレットナンバーだけ変更
 	GFL_BMPWIN_SetPalette( p_wk->win, WFLBY_ROOM_BGPL_BOARDWIN );
 #else
-	p_wk->win = p_talkwk->win;
+	WFLBY_ROOM_TalkWin_Init( p_wk, p_sys, p_save, heapID, FALSE );
+	p_wk->win = p_talk->win;  //BMP領域は共有する
+ 	PRINT_UTIL_Setup( &p_wk->printUtil, p_wk->win );  //printUtilは独自に動く
 #endif
 }
 
@@ -3873,9 +3883,7 @@ static void WFLBY_ROOM_TalkWin_Board_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_ROOM_
 //-----------------------------------------------------------------------------
 static void WFLBY_ROOM_TalkWin_Board_Exit( WFLBY_ROOM_TALKMSG* p_wk )
 {
-#if WB_FIX
-	WFLBY_ROOM_TalkWin_Exit( p_wk );
-#endif
+	WFLBY_ROOM_TalkWin_Exit( p_wk, FALSE );
 }
 
 //----------------------------------------------------------------------------
