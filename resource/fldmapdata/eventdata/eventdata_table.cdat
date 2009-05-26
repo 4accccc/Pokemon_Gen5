@@ -71,5 +71,6 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_T01, &event_t01 },
 	{ ZONE_ID_T01R0101, &event_t01r0101 },
 	{ ZONE_ID_T01R0102, &event_t01r0102 },
+	{ 0, NULL }
 };
 
