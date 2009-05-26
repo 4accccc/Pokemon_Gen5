@@ -1067,6 +1067,8 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 	}
 
 	BTLV_EFFECT_Init( 0, &vramBank, heapID );
+
+	GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
 }
 
 static void cleanup_core( BTLV_CORE* wk )

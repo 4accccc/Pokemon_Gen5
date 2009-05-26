@@ -309,21 +309,7 @@ void BTLV_EFFECT_EncountEffect( void )
 //============================================================================================
 void	BTLV_EFFECT_Add( int eff_no )
 {
-#if 1
-	BTLV_EFFECT_TCB	*bet = GFL_HEAP_AllocMemory( bew->heapID, sizeof( BTLV_EFFECT_TCB ) );
-
-	bet->seq_no = 0;
-	bet->wait = 0;
-
-	GFL_TCB_AddTask( bew->tcb_sys, BTLV_effect_tcb_table[ eff_no ], bet, 0 );
-
-	GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
-	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
-
-	bew->execute_flag = 1;
-#else
-	BTLV_EFFVM_Start( bew->vm_core, eff_no & 1, ( eff_no & 1  ) ^ 1, 0 );
-#endif
+	BTLV_EFFVM_Start( bew->vm_core, BTLEFF_POKEMON_POS_AA, BTLEFF_POKEMON_POS_AA, eff_no );
 }
 
 //============================================================================================

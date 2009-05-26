@@ -20,7 +20,17 @@
 #include "waza_tool/wazadata.h"
 #include "system/palanm.h"
 
+#include	"waza_tool/wazano_def.h"
+
 #pragma	once
+
+
+//戦闘エフェクト定義
+enum{	
+	BTLEFF_SINGLE_ENCOUNT_1 = WAZANO_MAX + 1,
+	BTLEFF_SINGLE_ENCOUNT_2,
+	BTLEFF_CAMERA_WORK,
+};
 
 enum{
 	BTLV_EFFECT_AA2BBGANSEKI = 0,

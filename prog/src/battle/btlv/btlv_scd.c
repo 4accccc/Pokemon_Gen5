@@ -28,6 +28,8 @@
 #include "btlv_effect.h"
 #include "poke_tool/monsno_def.h"
 
+#include "sound/pm_sndsys.h"
+
 #define PLATINUM_UNDER_SCREEN	//有効にすることでプラチナ下画面Verになる
 
 /*--------------------------------------------------------------------------*/
@@ -148,7 +150,8 @@ static BOOL selectPokemon_init( int* seq, void* wk_adrs );
 static BOOL selectPokemon_loop( int* seq, void* wk_adrs );
 static void printCommWait( BTLV_SCD* wk );
 
-
+static	inline	void	SePlayDecide( void );
+static	inline	void	SePlayCancel( void );
 
 
 
@@ -481,7 +484,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 			int hit = GFL_UI_TP_HitTrg( BattleMenuTouchData );
 			if( hit != GFL_UI_TP_HIT_NONE )
 			{
-				hit += 1;
+				hit += 2;
 				BTL_Printf(" アクション選択ボタンタッチ-> (%d)\n", hit);
 				switch( hit ){
 				default:
@@ -500,6 +503,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 				}
 				if( (*seq) != SEQ_START )
 				{	
+					SePlayDecide();
 					Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
 				}
 			}
@@ -601,11 +605,13 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 				//キャンセルが押された
 				if( hit == 0 )
 				{	
+					SePlayCancel();
 					selectAction_init( seq, wk );
 					(*seq) = SEQ_START;
 				}
 				else if( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) )
 				{	
+					SePlayDecide();
 					//キャンセルが先頭にはいっているので、デクリメントして正規の選択位置にする
 					hit--;
 					wk->selActionResult = check_unselectable_waza( wk, wk->bpp, hit );
@@ -1039,6 +1045,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 				if( hit < BTL_CLIENT_MAX )
 				{
 					u8 target_idx;
+					SePlayDecide();
 					if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &target_idx ) )
 					{
 						BTL_Printf("ターゲット決定 ... hitBtn=%d, hitPos=%d, target_idx=%d\n", hit, wk->selTargetWork.pos[hit], target_idx);
@@ -1373,5 +1380,21 @@ static void printCommWait( BTLV_SCD* wk )
 	drawX = (256 - strWidth) / 2;
 	drawY = (192 - 16) / 2;
 	PRINT_UTIL_Print( &wk->printUtil, wk->printQue, drawX, drawY, wk->strbuf, wk->font );
+}
+
+//=============================================================================================
+//	決定音再生
+//=============================================================================================
+static	inline	void	SePlayDecide( void )
+{	
+	PMSND_PlaySE( SEQ_SE_DECIDE2 );
+}
+
+//=============================================================================================
+//	キャンセル音再生
+//=============================================================================================
+static	inline	void	SePlayCancel( void )
+{	
+	PMSND_PlaySE( SEQ_SE_CANCEL2 );
 }
 

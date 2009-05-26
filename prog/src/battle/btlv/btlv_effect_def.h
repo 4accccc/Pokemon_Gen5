@@ -7,7 +7,5 @@
  */
 //======================================================================
 
-#ifndef __BTLV_EFFECT_DEF_H_
-#define __BTLV_EFFECT_DEF_H_
+#pragma	once
 
-#endif //__BTLV_EFFECT_DEF_H_
