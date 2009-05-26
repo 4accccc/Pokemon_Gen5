@@ -33,6 +33,7 @@
 #include "msg/msg_ircbattle.h"
 #include "../event_fieldmap_control.h"	//EVENT_FieldSubProc
 #include "../event_ircbattle.h"
+#include "ircbattle.naix"
 
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
@@ -56,17 +57,19 @@ FS_EXTERN_OVERLAY(ircbattlematch);
 #define _BUTTON_WIN_WIDTH (22)    // ウインドウ幅
 #define _BUTTON_WIN_HEIGHT (3)    // ウインドウ高さ
 #define _BUTTON_WIN_PAL   (12)  // ウインドウ
-#define _BUTTON_MSG_PAL   (13)  // メッセージフォント
+#define _BUTTON_MSG_PAL   (11)  // メッセージフォント
 
-#define	_BUTTON_WIN_CGX_SIZE   ( 18+12 )
-#define	_BUTTON_WIN_CGX	( 2 )
-
-
-#define	_BUTTON_FRAME_CGX		( _BUTTON_WIN_CGX + ( 23 * 16 ) )	// 通信システムウィンドウ転送先
+//BG面とパレット番号(仮設定
+#define _SUBSCREEN_BGPLANE	(GFL_BG_FRAME3_S)
+#define _SUBSCREEN_PALLET	(0xE)
 
 
+//#define	_BUTTON_WIN_CGX_SIZE   ( 18+12 )
+//#define	_BUTTON_WIN_CGX	( 2 )
 
-#define	FBMP_COL_WHITE		(15)
+
+//#define	_BUTTON_FRAME_CGX		( _BUTTON_WIN_CGX + ( 23 * 16 ) )	// 通信システムウィンドウ転送先
+
 
 
 typedef struct {
@@ -105,6 +108,22 @@ static const GFL_UI_TP_HITTBL bttndata[] = {
 //------------------------------------------------------------------
 
 #define WINCLR_COL(col)	(((col)<<4)|(col))
+//------------------------------------------------------------------
+//	カラー関連ダミー定義
+//------------------------------------------------------------------
+// 通常のフォントカラー
+#define	FBMP_COL_NULL		(0)
+#define	FBMP_COL_BLACK		(1)
+#define	FBMP_COL_BLK_SDW	(2)
+#define	FBMP_COL_RED		(3)
+#define	FBMP_COL_RED_SDW	(4)
+#define	FBMP_COL_GREEN		(5)
+#define	FBMP_COL_GRN_SDW	(6)
+#define	FBMP_COL_BLUE		(7)
+#define	FBMP_COL_BLU_SDW	(8)
+#define	FBMP_COL_PINK		(9)
+#define	FBMP_COL_PNK_SDW	(10)
+#define	FBMP_COL_WHITE		(15)
 
 
 
@@ -158,6 +177,7 @@ struct _IRC_BATTLE_MENU {
   GFL_FONT* pFontHandle;
   STRBUF* pStrBuf;
   u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
+	u32 subchar;
   //    BMPWINFRAME_AREAMANAGER_POS aPos;
   int windowNum;
   BOOL IsIrc;
@@ -235,9 +255,9 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
   // 背景面
   {
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,
-      0x10000,
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,
+      0x8000,
       GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
       };
@@ -250,21 +270,44 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
   }
 
   {
+    int frame = GFL_BG_FRAME0_S;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      3, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
     int frame = GFL_BG_FRAME1_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+      2, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_SetPriority( frame, 0 );
     GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = GFL_BG_FRAME3_S;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_LoadScreenReq( frame );
   }
 }
@@ -284,16 +327,20 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
   int frame = GFL_BG_FRAME1_S;
 
   pWork->windowNum = num;
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
   for(i=0;i < num;i++){
     _WINDOWPOS* pos = wind4;
+
+		GFL_FONTSYS_SetDefaultColor();
 
     pWork->buttonWin[i] = GFL_BMPWIN_Create(
       frame,
       pos[i].leftx, pos[i].lefty,
       pos[i].width, pos[i].height,
-      _BUTTON_WIN_PAL, GFL_BMP_CHRAREA_GET_F);
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
+      _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
     GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
     GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
     BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
@@ -301,12 +348,22 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
     // システムウインドウ枠描画
 
     GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
-    GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
     GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
 
-
   }
+#if 1
+  for(i=num;i < _WINDOW_MAXNUM;i++){
+		if(pWork->buttonWin[i]){
+			GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
+			GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
+		}
+		pWork->buttonWin[i]=NULL;
+	}
+#endif
+	GFL_BG_LoadScreenReq(GFL_BG_FRAME1_S);
+
 }
 
 //----------------------------------------------------------------------------
@@ -325,10 +382,12 @@ static void _buttonWindowDelete(IRC_BATTLE_MENU* pWork)
 
   GFL_BMN_Delete(pWork->pButton);
   pWork->pButton = NULL;
-  for(i=0;i < pWork->windowNum;i++){
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
-    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-    GFL_BMPWIN_Delete(pWork->buttonWin[i]);
+  for(i=0;i < _WINDOW_MAXNUM;i++){
+		if(pWork->buttonWin[i]){
+			GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
+			GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
+		}
     pWork->buttonWin[i] = NULL;
   }
   pWork->windowNum = 0;
@@ -371,17 +430,36 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 //------------------------------------------------------------------------------
 static void _modeInit(IRC_BATTLE_MENU* pWork)
 {
-  _createSubBg(pWork);
   pWork->IsIrc=FALSE;
 
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_ircbattle_dat, pWork->heapID );
   //    GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+
+	{
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
+
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircbattle_connect_NCLR,
+                                      PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+    // サブ画面BG0キャラ転送
+    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_ircbattle_connect_sub_NCGR,
+                                                                  GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
+
+    // サブ画面BG0スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_connect_sub_NSCR,
+                                              GFL_BG_FRAME0_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                              pWork->heapID);
+		GFL_ARC_CloseDataHandle(p_handle);
+	}
+
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+	
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
 
-	_CHANGE_STATE(pWork,_modeSelectMenuInit);
 }
 
 //------------------------------------------------------------------------------
@@ -411,6 +489,7 @@ static void _workEnd(IRC_BATTLE_MENU* pWork)
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
   GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
+  GFL_BG_FreeBGControl(GFL_BG_FRAME0_S);
   GFL_MSG_Delete( pWork->pMsgData );
   GFL_FONT_Delete(pWork->pFontHandle);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
@@ -690,64 +769,6 @@ static void _modeReportWait(IRC_BATTLE_MENU* pWork)
   _CHANGE_STATE(pWork,NULL);
 }
 
-
-#if 0
-//--------------------------------------------------------------
-//	ワークサイズ取得
-//--------------------------------------------------------------
-int IRCBATTLE_MENU_GetWorkSize(void)
-{
-  return sizeof( IRC_BATTLE_MENU );
-}
-//--------------------------------------------------------------
-//	ワーク初期化
-//--------------------------------------------------------------
-void IRCBATTLE_MENU_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys ,
-                              FIELD_MAIN_WORK *fieldWork , GMEVENT *event , IRC_BATTLE_MENU *pWork )
-{
-
-  GFL_STD_MemClear(pWork,sizeof(IRC_BATTLE_MENU));
-  pWork->heapID = heapID;
-  //_CHANGE_STATE( pWork, _modeInit);
-  //    _CHANGE_STATE( pWork, NULL);
-
-  pWork->gameSys_ = gameSys;
-  pWork->fieldWork_ = fieldWork;
-  pWork->event_ = event;
-
-	_modeInit(pWork);
-}
-
-//--------------------------------------------------------------
-//	イベントメイン
-//--------------------------------------------------------------
-GMEVENT_RESULT IRCBATTLE_MENU_Main( GMEVENT *event , int *seq , void *work )
-{
-  IRC_BATTLE_MENU* pWork = work;
-
-  StateFunc* state = pWork->state;
-  if(state != NULL){
-    state(pWork);
-    return GMEVENT_RES_CONTINUE;
-  }
-  _workEnd(pWork);
-
-  if(pWork->IsIrc){
-    //        GMEVENT * newEvent;
-    //      newEvent = EVENT_FieldSubProc(pWork->gameSys_, pWork->fieldWork_,
-    //                              FS_OVERLAY_ID(ircbattlematch), &IrcBattleMatchProcData, NULL);
-    //    GMEVENT_CallEvent(event, newEvent);
-    //  return GMEVENT_RES_CONTINUE; //changeするからfinishをかえさない
-    GAMESYSTEM_SetEvent(pWork->gameSys_, EVENT_IrcBattle(pWork->gameSys_, pWork->fieldWork_));
-    return GMEVENT_RES_CONTINUE;
-
-  }
-  return GMEVENT_RES_FINISH;
-
-}
-
-#endif
-
 static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
@@ -771,11 +792,6 @@ static GFL_DISP_VRAM _defVBTbl = {
 };
 
 
-//BG面とパレット番号(仮設定
-#define _SUBSCREEN_BGPLANE	(GFL_BG_FRAME0_S)
-#define _SUBSCREEN_PALLET	(0xE)
-
-
 //------------------------------------------------------------------------------
 /**
  * @brief   PROCスタート
@@ -793,44 +809,33 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
     pWork->heapID = HEAPID_IRCBATTLE;
 
 
-		GFL_DISP_SetBank( &_defVBTbl );
 		GFL_BG_Init(pWork->heapID);
+		GFL_BMPWIN_Init(pWork->heapID);
+		GFL_FONTSYS_Init();
+		GFL_DISP_SetBank( &_defVBTbl );
 		{
 			GFL_BG_SYS_HEADER BGsys_data = {
 				GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
 			};
 			GFL_BG_SetBGMode( &BGsys_data );
 		}
-		GFL_BMPWIN_Init(pWork->heapID);
+		GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+		GFL_DISP_GXS_SetVisibleControlDirect(0);
 
-		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-
+		_createSubBg(pWork);
+		_modeInit(pWork);
 
 		{
-
-			// BG3 SUB (インフォバー
-			static const GFL_BG_BGCNT_HEADER header_sub3 = {
-				0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-				GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x6000,
-				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
-				};
-
-			GFL_BG_SetBGControl( _SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
-			GFL_BG_SetVisible( _SUBSCREEN_BGPLANE, VISIBLE_ON );
-			GFL_BG_ClearFrame( _SUBSCREEN_BGPLANE );
-			GFL_BG_ClearScreenCode( _SUBSCREEN_BGPLANE , 0 );
-
 			INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pWork->heapID);
 			if( INFOWIN_IsInitComm() == TRUE )
 			{
 				GFL_NET_ReloadIcon();
 			}
 		}
-		
-		_CHANGE_STATE( pWork, _modeInit);
-  }
+		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+		_CHANGE_STATE(pWork,_modeSelectMenuInit);
+	}
   return GFL_PROC_RES_FINISH;
 }
 

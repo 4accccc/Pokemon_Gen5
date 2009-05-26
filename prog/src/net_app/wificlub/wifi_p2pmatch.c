@@ -6570,12 +6570,13 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
     wk->SubListWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME2_M, 16, 11+ ((3-length)*2), 15  , length * 2,
       FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
-    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  MENU_WIN_CGX_NUM, MENU_WIN_PAL );
+//    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  MENU_WIN_CGX_NUM, MENU_WIN_PAL );
+		BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
     list_h.list = wk->submenulist;
     list_h.win = wk->SubListWin;
 
     list_h.print_que = wk->SysMsgQue;
-    //        PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->SubListWin );
+     PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->SubListWin );
     list_h.print_util = &wk->SysMsgPrintUtil;
     list_h.font_handle = wk->fontHandle;
 
@@ -7557,12 +7558,16 @@ static int _exitYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if( PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
     // はいいいえウインドウを出す
+
+    BmpWinFrame_GraphicSet(
+      GFL_BG_FRAME2_M, MENU_WIN_CGX_NUM, MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
+		
     wk->pYesNoWork =
       BmpMenu_YesNoSelectInit(
         &_yesNoBmpDat,
         MENU_WIN_CGX_NUM, MENU_WIN_PAL,0,
         HEAPID_WIFIP2PMATCH );
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_EXIT_WAIT);
+		_CHANGESTATE(wk,WIFIP2PMATCH_MODE_EXIT_WAIT);
   }
 
   // WIFI　対戦AUTOﾓｰﾄﾞデバック

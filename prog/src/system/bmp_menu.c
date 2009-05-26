@@ -22,6 +22,7 @@
 #include "message.naix"
 #include "msg/msg_yesnomenu.h"
 #include "font/font.naix"
+#include "sound/pm_sndsys.h"
 
 //======================================================================
 //	シンボル定義
@@ -210,38 +211,34 @@ u32 BmpMenu_Main( BMPMENU_WORK * mw )
 	mw->mv = BMPMENU_MOVE_NONE;
 
 	if( trg & PAD_BUTTON_DECIDE ){
-		//		Snd_SePlay( SE_DECIDE );
+		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 		return mw->hed.menu[ mw->cur_pos ].param;
 	}
 
 	if( trg & mw->cancel ){
-		//		Snd_SePlay( SE_CANCEL );
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		return BMPMENU_CANCEL;
 	}
 	if( trg & PAD_KEY_UP ){
-		//		if( BmpMenuCursorMove( mw, MV_UP, SEQ_SE_DP_SELECT ) == TRUE ){
-		if( BmpMenuCursorMove( mw, MV_UP, 0 ) == TRUE ){
+		if( BmpMenuCursorMove( mw, MV_UP, SEQ_SE_SELECT1 ) == TRUE ){
 			mw->mv = BMPMENU_MOVE_UP;
 		}
 		return BMPMENU_NULL;
 	}
 	if( trg & PAD_KEY_DOWN ){
-		//		if( BmpMenuCursorMove( mw, MV_DOWN, SEQ_SE_DP_SELECT ) == TRUE ){
-		if( BmpMenuCursorMove( mw, MV_DOWN, 0 ) == TRUE ){
+		if( BmpMenuCursorMove( mw, MV_DOWN, SEQ_SE_SELECT1 ) == TRUE ){
 			mw->mv = BMPMENU_MOVE_DOWN;
 		}
 		return BMPMENU_NULL;
 	}
 	if( trg & PAD_KEY_LEFT ){
-		//		if( BmpMenuCursorMove( mw, MV_LEFT, SEQ_SE_DP_SELECT ) == TRUE ){
-		if( BmpMenuCursorMove( mw, MV_LEFT, 0 ) == TRUE ){
+		if( BmpMenuCursorMove( mw, MV_LEFT, SEQ_SE_SELECT1 ) == TRUE ){
 			mw->mv = BMPMENU_MOVE_LEFT;
 		}
 		return BMPMENU_NULL;
 	}
 	if( trg & PAD_KEY_RIGHT ){
-		//		if( BmpMenuCursorMove( mw, MV_RIGHT, SEQ_SE_DP_SELECT ) == TRUE ){
-		if( BmpMenuCursorMove( mw, MV_RIGHT, 0 ) == TRUE ){
+		if( BmpMenuCursorMove( mw, MV_RIGHT, SEQ_SE_SELECT1 ) == TRUE ){
 			mw->mv = BMPMENU_MOVE_RIGHT;
 		}
 		return BMPMENU_NULL;
@@ -266,11 +263,11 @@ u32 BmpMenu_MainSE( BMPMENU_WORK * mw, u16 key_se )
 	mw->mv = BMPMENU_MOVE_NONE;
 
 	if( trg & PAD_BUTTON_DECIDE ){
-		//		Snd_SePlay( SE_DECIDE );
+		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 		return mw->hed.menu[ mw->cur_pos ].param;
 	}
 	if( trg & mw->cancel ){
-		//		Snd_SePlay( SE_CANCEL );
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		return BMPMENU_CANCEL;
 	}
 	if( trg & PAD_KEY_UP ){
@@ -315,31 +312,27 @@ u32 BmpMenu_MainOutControl( BMPMENU_WORK * mw, u8 prm )
 {
 	switch( prm ){
 	case BMPMENU_CNTROL_DECIDE:		// 決定
-		//		Snd_SePlay( SE_DECIDE );
+		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 		return mw->hed.menu[ mw->cur_pos ].param;
 
 	case BMPMENU_CNTROL_CANCEL:		// キャンセル
-		//		Snd_SePlay( SE_CANCEL );
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		return BMPMENU_CANCEL;
 
 	case BMPMENU_CNTROL_UP:			// 上
-		//		BmpMenuCursorMove( mw, MV_UP, SEQ_SE_DP_SELECT );
-		BmpMenuCursorMove( mw, MV_UP, 0 );
+		BmpMenuCursorMove( mw, MV_UP, SEQ_SE_SELECT1 );
 		return BMPMENU_NULL;
 
 	case BMPMENU_CNTROL_DOWN:		// 下
-		//		BmpMenuCursorMove( mw, MV_DOWN, SEQ_SE_DP_SELECT );
-		BmpMenuCursorMove( mw, MV_DOWN, 0 );
+		BmpMenuCursorMove( mw, MV_DOWN, SEQ_SE_SELECT1 );
 		return BMPMENU_NULL;
 
 	case BMPMENU_CNTROL_LEFT:		// 左
-		//		BmpMenuCursorMove( mw, MV_LEFT, SEQ_SE_DP_SELECT );
-		BmpMenuCursorMove( mw, MV_LEFT, 0 );
+		BmpMenuCursorMove( mw, MV_LEFT, SEQ_SE_SELECT1 );
 		return BMPMENU_NULL;
 
 	case BMPMENU_CNTROL_RIGHT:		// 右
-		//		BmpMenuCursorMove( mw, MV_RIGHT, SEQ_SE_DP_SELECT );
-		BmpMenuCursorMove( mw, MV_RIGHT, 0 );
+		BmpMenuCursorMove( mw, MV_RIGHT, SEQ_SE_SELECT1 );
 		return BMPMENU_NULL;
 	}
 
@@ -418,7 +411,7 @@ static BOOL BmpMenuCursorMove( BMPMENU_WORK * mw, u8 mv, u16 se )
 	}
 
 	BmpMenuCursorPut( mw );
-	//	Snd_SePlay( se );
+	PMSND_PlaySystemSE( se );
 	return TRUE;
 }
 
@@ -699,6 +692,7 @@ u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
 	}
 	return	ret;
 }
+
 
 //--------------------------------------------------------------------------------------------
 /**

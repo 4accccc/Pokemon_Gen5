@@ -15,6 +15,7 @@
 #include "system/bmp_winframe.h"
 #include "system/bmp_cursor.h"
 #include "system/bmp_menulist.h"
+#include "sound/pm_sndsys.h"
 
 /********************************************************************/
 /*                                                                  */
@@ -158,19 +159,23 @@ u32 BmpMenuList_Main( BMPMENULIST_WORK * lw )
 	lw->work = BMPMENULIST_MOVE_NONE;
 
 	if( trg & PAD_BUTTON_DECIDE ){
+		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 		return lw->hed.list[lw->lp + lw->cp].param;
 	}
 	if( trg & PAD_BUTTON_CANCEL ){
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		return BMPMENULIST_CANCEL;
 	}
 	if( repeat & PAD_KEY_UP ){
 		if( ListMoveUpDownCheck( lw, 1, 1, LIST_UP ) == 0 ){
+			PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
 			lw->work = BMPMENULIST_MOVE_UP;
 		}
 		return BMPMENULIST_NULL;
 	}
 	if( repeat & PAD_KEY_DOWN ){
 		if( ListMoveUpDownCheck( lw, 1, 1, LIST_DOWN ) == 0 ){
+			PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
 			lw->work = BMPMENULIST_MOVE_DOWN;
 		}
 		return BMPMENULIST_NULL;
