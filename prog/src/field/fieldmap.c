@@ -1488,9 +1488,12 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
     }
     #else
     if( state == PLAYER_MOVE_STATE_END ){
-      if( FIELD_ENCOUNT_CheckEncount(fieldWork->encount) == TRUE ){
-        return EVENT_Battle( gsys, fieldWork );
-      }
+			if(!GFL_NET_IsInit())
+			{
+				if( FIELD_ENCOUNT_CheckEncount(fieldWork->encount) == TRUE ){
+					return EVENT_Battle( gsys, fieldWork );
+				}
+			}
     }
     #endif
   }
