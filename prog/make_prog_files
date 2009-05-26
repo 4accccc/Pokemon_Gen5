@@ -287,7 +287,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_encount.c \
         field/map_attr.c \
         field/fld_scenearea.c \
-        field/event_encount_effect.c
+        field/event_encount_effect.c \
+        field/field_effect.c
 
 
 # フィールド天気

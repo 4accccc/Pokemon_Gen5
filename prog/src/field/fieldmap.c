@@ -57,6 +57,8 @@
 
 #include "field/eventdata_sxy.h"
 
+#include "field_effect.h"
+
 #include "arc/fieldmap/zone_id.h"
 #include "field/weather_no.h"
 #include "sound/pm_sndsys.h"
@@ -175,7 +177,8 @@ struct _FIELDMAP_WORK
 	FLDMAPPER_RESISTDATA map_res;
 	FIELD_PLAYER *field_player;
 	FIELD_ENCOUNT *encount;
-	
+	FLDEFF_CTRL *fldeff_ctrl;
+
   GFL_G3D_CAMERA *g3Dcamera; //g3Dcamera Lib ハンドル
 	GFL_G3D_LIGHTSET *g3Dlightset; //g3Dlight Lib ハンドル
 	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
@@ -495,6 +498,16 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールドエンカウント初期化
   fieldWork->encount = FIELD_ENCOUNT_Create( fieldWork );
   
+  //フィールドエフェクト初期化
+  fieldWork->fldeff_ctrl = FLDEFF_CTRL_Create(
+      fieldWork, FLDEFF_PROCID_MAX, fieldWork->heapID );
+  
+  //フィールドエフェクト　パラメタ初期化
+  FLDEFF_CTRL_SetTaskParam( fieldWork->fldeff_ctrl, FLDEFF_TASK_MAX );
+  
+  //フィールドエフェクト　登録
+//  FLDEFF_CTRL_RegistEffect( fieldWork->fldeff_ctrl, NULL, 0 );
+
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 
@@ -522,6 +535,8 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     return MAINSEQ_RESULT_CONTINUE;
   }
   
+  FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
+
   //フィールドマップ用イベント起動チェックをセットする
   GAMESYSTEM_EVENT_EntryCheckFunc(
       gsys, fldmapFunc_Event_CheckEvent, fieldWork );
@@ -568,6 +583,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   if( fieldWork->fldMMdlSys != NULL ){
     FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
   }
+  
+  FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
 
   return MAINSEQ_RESULT_CONTINUE;
 }
@@ -609,7 +626,10 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
 		GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_Exit(fieldWork->fieldSubscreenWork ));
 	}
-
+  
+  // フィールドエフェクト破棄
+  FLDEFF_CTRL_Delete( fieldWork->fldeff_ctrl );
+  
   // 天気システム破棄
   FIELD_WEATHER_Exit( fieldWork->weather_sys );
   fieldWork->weather_sys = NULL;
@@ -1155,6 +1175,8 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
   
   FLDMSGBG_PrintG3D( fieldWork->fldMsgBG );
   
+  FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
+
 	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
  
 	GFL_BBDACT_Draw(
