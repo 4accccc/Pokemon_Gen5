@@ -17,6 +17,7 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_select_moji_mode.h"
+#include "sound/pm_sndsys.h"
 
 #include "select_moji_mode.h"
 #include "test/ariizumi/ari_debug.h"
@@ -433,10 +434,12 @@ static const SELECT_MODE_UI_RETURN  SEL_MODE_UpdateUI( SEL_MODE_WORK *work )
       work->selectItem = 0;
     }
     SEL_MODE_DrawWinFrame( work );
+    PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
   }
   
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
+    PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
     if( work->selectItem == 0 )
     {
       return SMUR_TRUE;
@@ -469,6 +472,7 @@ static const SELECT_MODE_UI_RETURN  SEL_MODE_UpdateUI( SEL_MODE_WORK *work )
     const int ret = GFL_UI_TP_HitTrg( hitTbl );
     if( ret != GFL_UI_TP_HIT_NONE )
     {
+      PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
       if( ret == 0 )
       {
         return SMUR_TRUE;

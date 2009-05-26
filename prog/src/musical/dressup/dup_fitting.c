@@ -10,6 +10,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
+#include "sound/pm_sndsys.h"
 
 #include "arc_def.h"
 #include "musical_item.naix"
@@ -1282,6 +1283,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
       //チェックボタン
       work->state = DUS_GO_CHECK;
       work->animeCnt = 0;
+      PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
     }
     else
     {
@@ -2341,11 +2343,13 @@ static FITTING_RETURN DUP_CHECK_CheckMain(  FITTING_WORK *work )
   {
   case 0: //決定ボタン
     DUP_CHECK_SaveNowEquip( work );
+    PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
     return FIT_RET_GO_END;
     break;
   case 1: //戻るボタン
     work->state = DUS_RETURN_FITTING;
     work->animeCnt = FIT_ANIME_MAX;
+    PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
     {
       DUP_CHECK_ResetItemAngle( work );
     }

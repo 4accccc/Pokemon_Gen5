@@ -19,6 +19,7 @@
 #include "message.naix"
 #include "startmenu.naix"
 #include "msg/msg_startmenu.h"
+#include "sound/pm_sndsys.h"
 
 #include "net/dwc_raputil.h"
 #include "savedata/save_control.h"
@@ -727,6 +728,7 @@ static void START_MENU_UpdatePad( START_MENU_WORK *work )
     {
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 0 , 16 , ARI_FADE_SPD );
       work->state = SMS_FADE_OUT;
+      PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
     }
   }
   else
@@ -735,6 +737,7 @@ static void START_MENU_UpdatePad( START_MENU_WORK *work )
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 0 , 16 , ARI_FADE_SPD );
     work->selectItem = SMI_RETURN_TITLE;
     work->state = SMS_FADE_OUT;
+    PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
   }
 }
 
@@ -771,6 +774,7 @@ static void START_MENU_UpdateTp( START_MENU_WORK *work )
         work->targetPos = 0;
       }
       START_MENU_CheckButtonAnime( work );
+      PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     }
     else
     if( ret == 1 && 
@@ -782,6 +786,7 @@ static void START_MENU_UpdateTp( START_MENU_WORK *work )
         work->targetPos = work->length*8 -192;
       }
       START_MENU_CheckButtonAnime( work );
+      PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     }
 
     if( ret == GFL_UI_TP_HIT_NONE )
@@ -807,6 +812,7 @@ static void START_MENU_UpdateTp( START_MENU_WORK *work )
               GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 0 , 16 , ARI_FADE_SPD );
               work->state = SMS_FADE_OUT;
               work->selectItem = i;
+              PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
             }
             break;
           }
@@ -867,6 +873,7 @@ static BOOL START_MENU_MoveSelectItem( START_MENU_WORK *work , const BOOL isDown
     //上のチェック
     work->targetPos = ( work->selectButtom - ItemSettingData[work->selectItem].height - 2 )*8;
   }
+  PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
   START_MENU_CheckButtonAnime( work );
   return TRUE;
 }
