@@ -4,7 +4,7 @@
  * @file	monsno.h
  * @bfief	モンスターNoのDefine定義
  * @author	HisashiSogabe
- * @date	2009.3.31
+ * @date	2009.5.25
  *	パーソナルコンバータから生成されました
  */
 //============================================================================================
@@ -505,10 +505,29 @@
 #define	MONSNO_DAAKURAI	(491)
 #define	MONSNO_SHEIMI	(492)
 #define	MONSNO_ARUSEUSU	(493)
-#define	MONSNO_TAMAGO	(494)
-#define	MONSNO_DAMETAMAGO	(495)
-#define	MONSNO_END	(493)
-#define	MONSNO_MAX	(495)
-#define	SINOU_MAX	(210)
+#define	MONSNO_PINBOO	(494)
+#define	MONSNO_MOGURYUU	(495)
+#define	MONSNO_GORIDARUMA	(496)
+#define	MONSNO_WANIMEGANE	(497)
+#define	MONSNO_WANIGURASU	(498)
+#define	MONSNO_WANIBAAN	(499)
+#define	MONSNO_HAGOROMUSI	(500)
+#define	MONSNO_HAKISIIDO	(501)
+#define	MONSNO_ONOKKUSU	(502)
+#define	MONSNO_KAAMENTO	(503)
+#define	MONSNO_BANBIINA	(504)
+#define	MONSNO_BATOROODO	(505)
+#define	MONSNO_PURUNSU	(506)
+#define	MONSNO_KOBATO	(507)
+#define	MONSNO_RAIBURA	(508)
+#define	MONSNO_BAKUPAKU	(509)
+#define	MONSNO_YURIKONE	(510)
+#define	MONSNO_OOBATO	(511)
+#define	MONSNO_PANTIINU	(512)
+#define	MONSNO_MOKOUMORI	(513)
+#define	MONSNO_TAMAGO	(514)
+#define	MONSNO_DAMETAMAGO	(515)
+#define	MONSNO_END	(513)
+#define	MONSNO_MAX	(515)
 
 #endif __MONSNO_H_
