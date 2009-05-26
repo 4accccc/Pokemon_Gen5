@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-22T16:52:20"/>
+	<create user="matsumiya" host="W00179" date="2009-05-26T20:53:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,9 +297,11 @@
 ・5月用仮メッセージ
 アニメ後、続けて02</comment>
 		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">あなたも　ポケモンと　いっしょに
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+あなたも　ポケモンと　いっしょに
 イッシュちほうを　たびするのね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">あなたも　ポケモンと　一緒に
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+あなたも　ポケモンと　一緒に
 イッシュ地方を　旅するのね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
