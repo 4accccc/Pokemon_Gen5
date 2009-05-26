@@ -585,6 +585,24 @@ BOOL	BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
+ *	指定された立ち位置のポケモンにパレットフェードをセットする
+ *
+ * @param[in]	bmw				BTLV_MCSS管理ワークへのポインタ
+ * @param[in]	position	ポケモンの立ち位置
+ * @param[in]	start_evy	セットするパラメータ（フェードさせる色に対する開始割合16段階）
+ * @param[in]	end_evy		セットするパラメータ（フェードさせる色に対する終了割合16段階）
+ * @param[in]	wait			セットするパラメータ（ウェイト）
+ * @param[in]	rgb				セットするパラメータ（フェードさせる色）
+ *
+ */
+//============================================================================================
+void	BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position, u8 start_evy, u8 end_evy, u8 wait, u32 rgb )
+{
+	MCSS_SetPaletteFade( bmw->mcss[ position ], start_evy, end_evy, wait, rgb );
+}
+
+//============================================================================================
+/**
  *	POKEMON_PARAMからMCSS_ADD_WORKを生成する
  *
  * @param[in]	pp			POKEMON_PARAM構造体へのポインタ

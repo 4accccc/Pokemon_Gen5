@@ -348,8 +348,6 @@ static	void	TCB_BTLV_CLACT_Move( GFL_TCB *tcb, void *work )
 	GFL_CLACTPOS	now_pos;
 	BOOL					ret;
 
-	OS_TPrintf("index:%d\n",bctw->index);
-
 	ret = BTLV_EFFTOOL_CalcParam( &bctw->emw, &bctw->now_pos );
 	now_pos.x = bctw->now_pos.x >> FX32_SHIFT;
 	now_pos.y = bctw->now_pos.y >> FX32_SHIFT;

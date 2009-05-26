@@ -98,7 +98,7 @@ BTLV_FIELD_WORK	*BTLV_FIELD_Init( GFL_TCBSYS *tcb_sys, int index, HEAPID heapID 
 		bfw->field_status[ i ].trans.x = 0;
 		bfw->field_status[ i ].trans.y = 0;
 		bfw->field_status[ i ].trans.z = 0;
-		bfw->field_status[ i ].scale.x = FX32_ONE;
+		bfw->field_status[ i ].scale.x = FX32_ONE * 2;
 		bfw->field_status[ i ].scale.y = FX32_ONE;
 		bfw->field_status[ i ].scale.z = FX32_ONE;
 		MTX_Identity33( &bfw->field_status[ i ].rotate );

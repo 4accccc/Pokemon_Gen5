@@ -89,6 +89,8 @@ extern	void						BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int ty
 extern	void						BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count );
 extern	BOOL						BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
 extern	BOOL						BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position );
+extern	void						BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position,
+																									u8 start_evy, u8 end_evy, u8 wait, u32 rgb );
 
 #ifdef PM_DEBUG
 extern	void						BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
