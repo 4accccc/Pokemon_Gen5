@@ -16,6 +16,7 @@
 #include "field/zonedata.h"
 #include "field/fieldmap.h"
 #include "field/location.h"
+#include "field/rail_location.h"  //RAIL_LOCATION
 #include "field/eventdata_sxy.h"
 #include "field/fldmmdl.h"
 
@@ -373,6 +374,24 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 		LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_req->zone_id);
 	}
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void MakeNewRailLocation(GAMEDATA * gamedata, const LOCATION * loc_req)
+{
+  RAIL_LOCATION railLoc;
+  RAIL_LOCATION_Init(&railLoc);
+
+  if (ZONEDATA_GetMapRscID(loc_req->zone_id) != 1
+      && loc_req->type == LOCATION_TYPE_DIRECT)
+  {
+    railLoc.type = FIELD_RAIL_TYPE_POINT;
+    railLoc.rail_index = loc_req->exit_id;
+    railLoc.line_ofs = 0;
+    railLoc.width_ofs = 0;
+    railLoc.key = RAIL_KEY_NULL;
+  }
+  GAMEDATA_SetRailLocation(gamedata, &railLoc);
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -393,6 +412,7 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 	
 	//開始位置セット
 	MakeNewLocation(evdata, loc_req, &loc);
+  MakeNewRailLocation(gamedata, loc_req);
 
 	//特殊接続出入口に出た場合は、前のマップの出入口位置を記憶しておく
 	if (loc.type == LOCATION_TYPE_SPID) {

@@ -467,7 +467,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
     
     TAMADA_Printf("start X,Y,Z=%d,%d,%d\n", FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
-    TAMADA_Printf( "Start Dir = %d\n", pw->direction );
+    TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
   }
   
   // フォグシステム生成

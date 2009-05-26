@@ -30,6 +30,7 @@
 #include "savedata/player_data.h"
 #include "gamesystem/pm_season.h"		//季節定義参照
 #include "field/field_subscreen.h" //FIELD_SUBSCREEN_ACTION
+#include "field/rail_location.h"    //RAIL_LOCATION
 
 //============================================================================================
 //============================================================================================
@@ -45,6 +46,8 @@ struct _GAMEDATA{
 	LOCATION *start_loc;
 	LOCATION *entrance_loc;
 	LOCATION *special_loc;
+  RAIL_LOCATION railLoc;    ///<レール構造時の自分位置
+
 	MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
 	POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
 	FLDMMDLSYS *fldmmdlsys;
@@ -98,6 +101,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	gd->start_loc = Situation_GetStartLocation(st);
 	gd->entrance_loc = Situation_GetStartLocation(st);
 	gd->special_loc = Situation_GetStartLocation(st);
+
+  //レール状況データのクリア
+  RAIL_LOCATION_Init(&gd->railLoc);
 	
 	//プレイヤーワーク
 	for (i = 0; i < PLAYER_MAX; i++) {
@@ -204,6 +210,20 @@ const LOCATION * GAMEDATA_GetSpecialLocation(const GAMEDATA * gamedata)
 void GAMEDATA_SetSpecialLocation(GAMEDATA * gamedata, const LOCATION * loc)
 {
 	*(gamedata->special_loc) = *loc;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+const RAIL_LOCATION * GAMEDATA_GetRailLocation(const GAMEDATA * gamedata)
+{
+  return &gamedata->railLoc;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void GAMEDATA_SetRailLocation(GAMEDATA * gamedata, const RAIL_LOCATION * railLoc)
+{
+  gamedata->railLoc = * railLoc;
 }
 
 //--------------------------------------------------------------

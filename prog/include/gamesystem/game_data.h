@@ -19,6 +19,7 @@
 #include "gamesystem/playerwork.h"
 #include "field/eventdata_system.h"
 #include "field/location.h"
+#include "field/rail_location.h"  //RAIL_LOCATION
 #include "savedata/myitem_savedata.h"
 #include "poke_tool/pokeparty.h"
 #include "field/fldmmdl.h"
@@ -145,6 +146,13 @@ extern const LOCATION * GAMEDATA_GetSpecialLocation(const GAMEDATA * gamedata);
  */
 //------------------------------------------------------------------
 extern void GAMEDATA_SetSpecialLocation(GAMEDATA * gamedata, const LOCATION * loc);
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern const RAIL_LOCATION * GAMEDATA_GetRailLocation(const GAMEDATA * gamedata);
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern void GAMEDATA_SetRailLocation(GAMEDATA * gamedata, const RAIL_LOCATION * railLoc);
 
 //--------------------------------------------------------------
 /**
