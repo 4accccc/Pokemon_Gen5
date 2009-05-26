@@ -100,8 +100,6 @@ typedef struct {
 	GFL_BMPWIN*			bmpwin;
 
 	VecFx32*				pTarget;
-	VecFx32					camTarget;
-
 	STRBUF*					msg;
 	GXRgb						color;
 	u16							refTarget;
@@ -570,7 +568,7 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		tmsgwin->seq = WINSEQ_OPEN;
 		break;
 	case WINSEQ_OPEN:
-		//calcTail(tmsgwinSys, tmsgwin);
+		calcTail(tmsgwinSys, tmsgwin);
 		//if(tmsgwin->timer < TALKMSGWIN_OPENWAIT){
 		if(tmsgwin->timer < timerWait){
 			tmsgwin->timer++;

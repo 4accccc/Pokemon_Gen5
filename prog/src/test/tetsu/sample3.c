@@ -106,8 +106,6 @@ typedef struct {
 
 	GFL_G3D_CAMERA*			g3Dcamera;	
 	GFL_G3D_LIGHTSET*		g3Dlightset;	
-	GFL_G3D_UTIL*				g3Dutil;
-	u16									g3DutilUnitIdx;
 
 	GFL_CAMADJUST*			gflCamAdjust;
 	fx32								cameraLength;
@@ -309,9 +307,11 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 			}
 			if( GFL_UI_TP_GetPointTrg( &tpx, &tpy ) == TRUE ){
 				makeStr(testMsg, sw->strBuf[0]);
-				calcTarget(	sw->g3Dcamera, tpx, tpy, &sw->twinTarget[0]);
-				//sw->twinTarget[0] = sw->cameraTarget;
-				//sw->cameraTarget.y -= 8*FX32_ONE;
+				//calcTarget(	sw->g3Dcamera, tpx, tpy, &sw->twinTarget[0]);
+				VEC_Set(&sw->twinTarget[0], 
+								sw->cameraTarget.x + 16*FX32_ONE,
+								sw->cameraTarget.y - 16*FX32_ONE,
+								sw->cameraTarget.z + 16*FX32_ONE);
 
 				TALKMSGWIN_CreateFixWindowAuto
 					(sw->tmsgwinSys, 0, &sw->twinTarget[0], sw->strBuf[0], 15);
@@ -429,43 +429,6 @@ static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
 };
 static const GFL_G3D_LIGHTSET_SETUP light0Setup = { light0Tbl, NELEMS(light0Tbl) };
 
-#include "arc/elboard_test.naix"
-
-enum {
-	G3DRES_ELBOARD2_BMD = 0,
-	G3DRES_ELBOARD2_BTX,
-	G3DRES_ELBOARD2_BTA,
-};
-
-static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbmd, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbtx, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbta, GFL_G3D_UTIL_RESARC },
-};
-
-static const GFL_G3D_UTIL_ANM g3Dutil_anm2Tbl[] = {
-	{ G3DRES_ELBOARD2_BTA, 0 },
-};
-
-enum {
-	G3DOBJ_ELBOARD2 = 0,
-};
-
-static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
-	{ G3DRES_ELBOARD2_BMD, 0, G3DRES_ELBOARD2_BTX, g3Dutil_anm2Tbl, NELEMS(g3Dutil_anm2Tbl) },
-};
-
-static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
-	g3Dutil_resTbl, NELEMS(g3Dutil_resTbl),
-	g3Dutil_objTbl, NELEMS(g3Dutil_objTbl),
-};
-
-static const GFL_G3D_OBJSTATUS g3DobjStatus1 = {
-	{ 0, 0, 0 },																				//座標
-	{ FX32_ONE, FX32_ONE, FX32_ONE },										//スケール
-	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
-};
-
 //------------------------------------------------------------------
 /**
  * @brief		ＢＧ設定＆データ転送
@@ -534,29 +497,6 @@ static void systemSetup(SAMPLE3_WORK* sw)
 	sw->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(&cameraPos, &cameraTarget, sw->heapID);
 	GFL_G3D_CAMERA_Switching(sw->g3Dcamera);
 
-	//３Ｄオブジェクト作成
-	{
-		u16						objIdx, elboard1Idx;
-		GFL_G3D_OBJ*	g3Dobj;
-		GFL_G3D_RES*	g3Dtex;
-		int i, anmCount;
-
-		//リソース作成
-		sw->g3Dutil = GFL_G3D_UTIL_Create(NELEMS(g3Dutil_resTbl), NELEMS(g3Dutil_objTbl), sw->heapID );
-		sw->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( sw->g3Dutil, &g3Dutil_setup );
-
-		//アニメーションを有効にする
-		objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx);
-		{
-			elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
-			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
-
-			anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
-			for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_EnableAnime(g3Dobj, i); } 
-
-			g3Dtex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
-		}
-	}
 	{
 		TALKMSGWIN_SYS_INI ini = {TEXT_FRAME, WIN_PLTTID, TEXT_PLTTID};
 		TALKMSGWIN_SYS_SETUP setup;		
@@ -599,9 +539,15 @@ static void systemFramework(SAMPLE3_WORK* sw)
 
 		GFL_G3D_CAMERA_SetTarget(sw->g3Dcamera, &sw->cameraTarget);
 		GFL_G3D_CAMERA_SetPos(sw->g3Dcamera, &cameraPos);
+		GFL_G3D_CAMERA_Switching(sw->g3Dcamera);
 	}
 	TALKMSGWIN_SystemMain(sw->tmsgwinSys);
 	TALKMSGWIN_SystemDraw2D(sw->tmsgwinSys);
+
+	//３Ｄ描画
+	GFL_G3D_DRAW_Start();			//描画開始
+	GFL_G3D_DRAW_SetLookAt();
+	TALKMSGWIN_SystemDraw3D(sw->tmsgwinSys);
 
 	{
 		VecFx32 pos, up, target;
@@ -639,34 +585,6 @@ static void systemFramework(SAMPLE3_WORK* sw)
 		G3_End();
 		G3_PopMtx(1);
 	}
-
-	//３Ｄ描画
-	GFL_G3D_DRAW_Start();			//描画開始
-	{
-		GFL_G3D_CAMERA_Switching(sw->g3Dcamera);
-		TALKMSGWIN_SystemDraw3D(sw->tmsgwinSys);
-		{
-			u16						objIdx, elboard1Idx;
-			GFL_G3D_OBJ*	g3Dobj;
-			int i, anmCount;
-
-			objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx );
-			elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
-			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
-
-			{
-				GFL_G3D_OBJSTATUS status;
-
-				status = g3DobjStatus1;
-				status.trans = sw->cameraTarget;
-				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
-			}
-
-			anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
-			for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_LoopAnimeFrame(g3Dobj, i, FX32_ONE ); } 
-		}
-
-	}
 	GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 }
 
@@ -678,9 +596,6 @@ static void systemFramework(SAMPLE3_WORK* sw)
 static void systemDelete(SAMPLE3_WORK* sw)
 {
 	TALKMSGWIN_SystemDelete(sw->tmsgwinSys);
-
-	GFL_G3D_UTIL_DelUnit(sw->g3Dutil, sw->g3DutilUnitIdx);
-	GFL_G3D_UTIL_Delete(sw->g3Dutil);
 
 	GFL_G3D_CAMERA_Delete(sw->g3Dcamera);
 
