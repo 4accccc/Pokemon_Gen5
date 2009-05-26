@@ -8,12 +8,67 @@
 #
 #============================================================================
 
+#============================================================================
+#============================================================================
 class DataFormatError < Exception; end
 
+class ReadWMSError < Exception; end
 
 def debug_puts str
   #puts str
 end
+
+#============================================================================
+#============================================================================
+class EventHeader
+
+  def initialize stream
+    line = stream.gets
+    raise DataFormatError unless line =~ /^#event data/
+    line = stream.gets
+    raise DataFormatError unless line =~ /^#save date/
+    line = stream.gets
+    raise DataFormatError unless line =~/# linked worldmap file name/
+    line = stream.gets.chomp!  #*.wmsファイル名
+    if FileTest.exist? line then
+    else
+      raise ReadWMSError, "#{line}がみつかりません"
+    end
+    File.open(line){|file|
+      readWMS file
+    }
+  end
+
+  def read lines, exp
+    line = lines.gets
+    if line =~ exp then
+      return lines.gets
+    else
+      raise DataFormatError
+    end
+  end
+
+  def readWMS lines
+    line = lines.gets
+    raise ReadWMSError unless line =~/WorldMap SaveData/
+    line = lines.gets
+    raise ReadWMSError unless line =~/save date:/
+    @width = read(lines, /^#Width/)
+    @height = read(lines, /^#Height/)
+    @x_ofs = Integer(read(lines, /^#block x offset/))
+    @z_ofs = Integer(read(lines, /^#block z offset/))
+  end
+
+  def calcXofs x
+    return (x / 16) + 16 + @x_ofs * 32
+  end
+
+  def calcZofs z
+    return (z / 16) + 16 + @z_ofs * 32
+  end
+
+end
+
 #============================================================================
 #
 #   イベントデータクラス
@@ -27,8 +82,12 @@ class EventData
   attr :version
   attr :num
   attr :type
+  attr :header
 
-  def initialize stream, section_name
+  attr :items
+
+  def initialize stream, section_name, header
+    @header = header
     @zonename = File.basename(stream.path,".*").upcase
     @path = stream.path
     @section_name = section_name
@@ -123,11 +182,15 @@ class EventData
 end   # end of class EventData
 
 #============================================================================
-#
-# ドアイベントクラス
-#
 #============================================================================
 class AllEvent
+  attr :header
+
+  def initialize lines, header
+    @header = header
+    #readEventNumber lines
+  end
+
   def read lines, exp
     line = lines.shift
     if line =~ exp then
@@ -149,8 +212,18 @@ class AllEvent
     column = line.split
     return [Integer(column[0]), Integer(column[1]), Integer(column[2])]
   end
+
+  def calc_ofs x, z
+    [@header.calcXofs(x), @header.calcZofs(z)]
+  end
+
 end
 
+#============================================================================
+#
+# ドアイベントクラス
+#
+#============================================================================
 class DoorEvent < AllEvent
 
   attr :number
@@ -162,7 +235,8 @@ class DoorEvent < AllEvent
   attr :posz
 
 
-  def initialize lines
+  def initialize lines, header
+    super
     @number = readEventNumber( lines )
     @door_id = read( lines, /#Door Event Label/)
     @next_zone_id = read( lines, /#Next Zone ID Name/)
@@ -171,8 +245,10 @@ class DoorEvent < AllEvent
   end
 
   def dump output
+    gx,gz = calc_ofs @x, @z
     output.puts "\t{//#{@door_id} = #{@number}"
-    output.puts "\t\t{#{@x}, #{@y}, #{@z}},"
+    output.puts "\t\t{#{gx}, #{@y}, #{gz}},"
+    #output.puts "\t\t{#{@x}, #{@y}, #{@z}},"
     output.puts "\t\t#{@next_zone_id}, #{@next_door_id},"
     output.puts "\t\tEXIT_DIR_DOWN, EXIT_TYPE_NONE"
     output.puts "\t},"
@@ -183,6 +259,11 @@ class DoorEvent < AllEvent
   end
 end
 
+#============================================================================
+#
+# OBJイベントクラス
+#
+#============================================================================
 class ObjEvent < AllEvent
   attr :type
   attr :id              #u16
@@ -201,7 +282,8 @@ class ObjEvent < AllEvent
   attr :gz              #u16 grid z
   attr :y               #fx32 y
 
-  def initialize lines
+  def initialize lines, header
+    super
     @type = read(lines, /#type/)
     @id = read(lines, /#ID name/)
     @obj_code = read(lines, /#OBJ CODE Number/)
@@ -219,6 +301,8 @@ class ObjEvent < AllEvent
   end
  
   def dump output
+    gx,gz = calc_ofs @gx, @gz
+
     output.puts "\t{"
 		output.puts "\t\t#{@id}"		    #///<識別ID
 		output.puts "\t\t#{@obj_code}"   #MAN1,	///<表示するOBJコード
@@ -232,8 +316,10 @@ class ObjEvent < AllEvent
 		output.puts "\t\t#{@param2}"   #0,	///<指定パラメタ 2
 		output.puts "\t\t#{@move_limit_x}"   #2,	///<X方向移動制限
 		output.puts "\t\t#{@move_limit_z}"   #2,	///<Z方向移動制限
-		output.puts "\t\t#{@gx}"   #757,	///<グリッドX
-		output.puts "\t\t#{@gz}"   #811,	///<グリッドZ
+		output.puts "\t\t#{gx}"   #757,	///<グリッドX
+		output.puts "\t\t#{gz}"   #811,	///<グリッドZ
+		#output.puts "\t\t#{@gx}"   #757,	///<グリッドX
+		#output.puts "\t\t#{@gz}"   #811,	///<グリッドZ
 		output.puts "\t\t#{@y}"   #0,	///<Y値 fx32型
     output.puts "\t},"
   end
@@ -250,20 +336,24 @@ end
 #============================================================================
 class DoorEventData < EventData
 
-  def initialize stream, section_name
+  def initialize stream, section_name, header
     super
     @doors = Array.new
     @items.each{|item|
       lines = item.split(/\r\n/)
-      @doors << DoorEvent.new(lines)
+      @doors << DoorEvent.new(lines, header)
     }
   end
 
   def dump output
+    if @doors.length == 0 then
+      output.puts "//ConnectData_#{@zonename}[]はデータがないため存在しない"
+      return
+    end
     output.puts "const CONNECT_DATA ConnectData_#{@zonename}[] = {"
     @doors.each{|door| door.dump output }
     output.puts "};"
-    output.puts "const int ConnectCount_#{@zonename} = NELEMS(ConnectData_#{@zonename})"
+    output.puts "const int ConnectCount_#{@zonename} = NELEMS(ConnectData_#{@zonename});"
   end
 
   def dumpHeader output
@@ -279,18 +369,22 @@ class DoorEventData < EventData
 end
 
 
+#============================================================================
+#============================================================================
 class ObjEventData < EventData
 
-  def initialize stream, section_name
+  def initialize stream, section_name, header
     super
     @objs = Array.new
     @items.each{|item|
       lines = item.split(/\r\n/)
-      @objs << ObjEvent.new(lines)
+      @objs << ObjEvent.new(lines, header)
     }
   end
 
   def dump output
+    output.puts "\#include \"zone_#{@zonename}evc.h\""
+    output.puts "\#include \"../script/#{@zonename}_def.h\""
     output.puts "const FLDMMDL_HEADER FldMMdlHeader_#{@zonename}[] = {"
     @objs.each{|obj| obj.dump(output) }
     output.puts "};"
@@ -317,31 +411,37 @@ end
 #============================================================================
 begin
   File.open(ARGV[0]){|file|
-    obj_events = ObjEventData.new(file, "OBJ_EVENT")
-    bg_events = EventData.new(file, "BG_EVENT")
-    pos_events = EventData.new(file, "POS_EVENT")
-    door_events = DoorEventData.new(file, "DOOR_EVENT")
+    header = EventHeader.new(file)
+    obj_events = ObjEventData.new(file, "OBJ_EVENT", header)
+    bg_events = EventData.new(file, "BG_EVENT", header)
+    pos_events = EventData.new(file, "POS_EVENT", header)
+    door_events = DoorEventData.new(file, "DOOR_EVENT", header)
 
-    id = "zone_" + door_events.zonename.downcase
-=begin
-    File.open("#{id}evc.cdat","w") {|file|
-    #  obj_events.dump(file)
-    }
-    File.open("#{id}evc.h", "w") {|file|
-    #  obj_events.dumpHeader(file)
-    }
-    File.open("#{id}evd.cdat", "w"){|file|
-      door_events.dump(file)
-    }
-    File.open("#{id}evd.h", "w"){|file|
-      door_events.dumpHeader STDOUT
-    }
-=end
+    id = "event_" + door_events.zonename.downcase
+
     File.open("#{id}.h", "w"){|file|
       door_events.dumpHeader(file)
     }
+
     File.open("#{id}.cdat", "w"){|file|
       door_events.dump(file)
+      #obj_events.dump(file)
+
+      file.puts ""
+      file.puts "static const EVENTDATA_TABLE #{id} = {"
+      file.puts "\t#{bg_events.items.length},"
+      file.puts "\t#{obj_events.items.length},"
+      file.puts "\t#{door_events.items.length},"
+      file.puts "\t#{pos_events.items.length},"
+      file.puts "\t(void *)NULL,"
+      file.puts "\t(void *)NULL,"
+      if door_events.items.length == 0 then
+        file.puts "\t(void *)NULL,"
+      else
+        file.puts "\t(void *)&ConnectData_#{door_events.zonename.upcase},"
+      end
+      file.puts "\t(void *)NULL,"
+      file.puts "};"
     }
   }
 end

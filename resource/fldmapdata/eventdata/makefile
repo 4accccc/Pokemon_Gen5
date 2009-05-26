@@ -26,9 +26,9 @@ do-build:	$(CDAT)
 	ruby make_event.rb $<
 
 clean:
-	-rm $(EVD_H) $(EVD_CDAT)
+	-rm $(CDAT)
+	#-rm $(EVD_H) $(EVD_CDAT)
 
 test:
-	@echo $(TGTDATA) $(EVD_H) $(EVD_CDAT)
-	ruby make_event.rb data\t01_sample.mev
+	@echo $(CDAT)
 

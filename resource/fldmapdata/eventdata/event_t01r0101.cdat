@@ -1,0 +1,29 @@
+const CONNECT_DATA ConnectData_T01R0101[] = {
+	{//DOORID_T01R0101_EXIT01 = 0
+		{5, 0, 25},
+		ZONE_ID_T01, DOORID_T01_EXIT01,
+		EXIT_DIR_DOWN, EXIT_TYPE_NONE
+	},
+	{//DOORID_T01R0101_EXIT02 = 1
+		{6, 0, 25},
+		ZONE_ID_T01, DOORID_T01_EXIT01,
+		EXIT_DIR_DOWN, EXIT_TYPE_NONE
+	},
+	{//DOORID_T01R0101_EXIT03 = 2
+		{7, 0, 25},
+		ZONE_ID_T01, DOORID_T01_EXIT01,
+		EXIT_DIR_DOWN, EXIT_TYPE_NONE
+	},
+};
+const int ConnectCount_T01R0101 = NELEMS(ConnectData_T01R0101);
+
+static const EVENTDATA_TABLE event_t01r0101 = {
+	0,
+	0,
+	3,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&ConnectData_T01R0101,
+	(void *)NULL,
+};
