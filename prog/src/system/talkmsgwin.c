@@ -89,7 +89,6 @@ typedef struct {
 	VecFx16				vtxWin1;
 	VecFx16				vtxWin2;
 	VecFx16				vtxWin3;
-	VecFx16				vecN;
 	TAIL_SETPAT		tailPat;
 }TAIL_DATA;
 
@@ -101,6 +100,8 @@ typedef struct {
 	GFL_BMPWIN*			bmpwin;
 
 	VecFx32*				pTarget;
+	VecFx32					camTarget;
+
 	STRBUF*					msg;
 	GXRgb						color;
 	u16							refTarget;
@@ -118,6 +119,10 @@ struct _TALKMSGWIN_SYS{
 	TMSGWIN								tmsgwin[TALKMSGWIN_NUM];
   GFL_TCBLSYS*					tcbl;
   u16										chrNum;
+	VecFx32								camPosBackUp;
+	VecFx32								camUpBackUp;
+	VecFx32								camTargetBackUp;
+	fx32									camNearBackUp;
 };
 
 typedef struct {
@@ -128,6 +133,10 @@ typedef struct {
 	u8							winsy;			
 	GXRgb						color;
 }TALKMSGWIN_SETUP;
+
+static void settingCamera( TALKMSGWIN_SYS* tmsgwinSys, int mode );
+static void backupCamera( TALKMSGWIN_SYS* tmsgwinSys );
+static void recoverCamera( TALKMSGWIN_SYS* tmsgwinSys );
 
 static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup );
 
@@ -143,16 +152,18 @@ static void deleteWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void openWindow( TMSGWIN* tmsgwin );
 static void closeWindow( TMSGWIN* tmsgwin );
 static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
-static void draw3Dwindow( TMSGWIN* tmsgwin);
+static void draw3Dwindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 
 static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
-static void	drawTail(TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tailOnly);
+static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tailOnly );
 
 static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void clearWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 
 	//動作確認用暫定
 static BOOL	debugOn;
+static void	drawTest( TMSGWIN* tmsgwin );
+static MtxFx43 testMtx;
 #define TALKMSGWIN_OPENWAIT	(8)
 //============================================================================================
 /**
@@ -195,9 +206,13 @@ void TALKMSGWIN_SystemMain( TALKMSGWIN_SYS* tmsgwinSys )
 
   GFL_TCBL_Main(tmsgwinSys->tcbl);
 
+	backupCamera(tmsgwinSys);
+	settingCamera(tmsgwinSys, 0);
+
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ 
 		mainfuncWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[i]); 
 	}
+	recoverCamera(tmsgwinSys);
 }
 
 //------------------------------------------------------------------
@@ -211,17 +226,12 @@ void TALKMSGWIN_SystemDraw3D( TALKMSGWIN_SYS* tmsgwinSys )
 	int i;
 
 	G3X_Reset();
-	//カメラ設定取得
-	{
-		VecFx32		camPos, camUp, target, vecNtmp;
 
-		GFL_G3D_CAMERA_GetPos( tmsgwinSys->setup.g3Dcamera, &camPos );
-		GFL_G3D_CAMERA_GetCamUp( tmsgwinSys->setup.g3Dcamera, &camUp );
-		GFL_G3D_CAMERA_GetTarget( tmsgwinSys->setup.g3Dcamera, &target );
+	settingCamera(tmsgwinSys, 1);
 
-		G3_LookAt( &camPos, &camUp, &target, NULL );
+	for( i=0; i<TALKMSGWIN_NUM; i++ ){ 
+		draw3Dwindow(tmsgwinSys, &tmsgwinSys->tmsgwin[i]);
 	}
-	for( i=0; i<TALKMSGWIN_NUM; i++ ){ draw3Dwindow(&tmsgwinSys->tmsgwin[i]); }
 }
 
 //------------------------------------------------------------------
@@ -429,6 +439,7 @@ PRINT_STREAM*	TALKMSGWIN_GetPrintStream( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwin
 enum {
 	WINSEQ_EMPTY = 0,
 	WINSEQ_IDLING,
+	WINSEQ_OPEN_START,
 	WINSEQ_OPEN,
 	WINSEQ_HOLD,
 	WINSEQ_CLOSE,
@@ -489,7 +500,6 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 	}
 	//吹き出しエフェクトパラメータ計算
 	tmsgwin->tailData.tailPat = TAIL_SETPAT_NONE;
-	calcTail(tmsgwinSys, tmsgwin);
 
 	//描画位置算出（センタリング）
 	{
@@ -535,8 +545,7 @@ static void deleteWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 //------------------------------------------------------------------
 static void openWindow( TMSGWIN* tmsgwin )
 {
-	tmsgwin->seq = WINSEQ_OPEN;
-	tmsgwin->timer = 0;
+	tmsgwin->seq = WINSEQ_OPEN_START;
 }
 
 //------------------------------------------------------------------
@@ -555,7 +564,13 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	case WINSEQ_EMPTY:
 	case WINSEQ_IDLING:
 		break;
+	case WINSEQ_OPEN_START:
+		calcTail(tmsgwinSys, tmsgwin);
+		tmsgwin->timer = 0;
+		tmsgwin->seq = WINSEQ_OPEN;
+		break;
 	case WINSEQ_OPEN:
+		//calcTail(tmsgwinSys, tmsgwin);
 		//if(tmsgwin->timer < TALKMSGWIN_OPENWAIT){
 		if(tmsgwin->timer < timerWait){
 			tmsgwin->timer++;
@@ -593,18 +608,20 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 }
 
 //------------------------------------------------------------------
-static void draw3Dwindow( TMSGWIN* tmsgwin )
+static void draw3Dwindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 {
 	switch(tmsgwin->seq){
 	case WINSEQ_EMPTY:
 	case WINSEQ_IDLING:
+	case WINSEQ_CLOSE:
+	case WINSEQ_OPEN_START:
 		break;
 	case WINSEQ_OPEN:
-	case WINSEQ_CLOSE:
 		drawTail(&tmsgwin->tailData, tmsgwin->color, tmsgwin->timer, FALSE);
 		break;
 	case WINSEQ_HOLD:
-		drawTail(&tmsgwin->tailData, tmsgwin->color, tmsgwin->timer, TRUE);
+		//drawTail(&tmsgwin->tailData, tmsgwin->color, tmsgwin->timer, TRUE);
+		drawTail(&tmsgwin->tailData, tmsgwin->color, tmsgwin->timer, FALSE);
 		break;
 	}
 }
@@ -633,6 +650,7 @@ static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tail
 	G3_PushMtx();
 	//平行移動パラメータ設定
 	G3_Translate(tailData->trans.x, tailData->trans.y, tailData->trans.z);
+
 	//グローバルスケール設定
 	//scale = tailData->scale * scaleWait / TALKMSGWIN_OPENWAIT;
 	scale = tailData->scale * scaleWait / timerWait;
@@ -672,7 +690,6 @@ static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tail
 	G3_PopMtx(1);
 }
 
-
 //============================================================================================
 /**
  *
@@ -688,25 +705,6 @@ static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tail
  *
  */
 //============================================================================================
-static void calcStart( GFL_G3D_CAMERA* g3Dcamera, fx32* backupData )
-{
-	//変換精度を上げるためnearの距離をとる
-	fx32 near = 64* FX32_ONE;
-
-	GFL_G3D_CAMERA_GetNear(g3Dcamera, backupData);
-	GFL_G3D_CAMERA_SetNear(g3Dcamera, &near);
-	GFL_G3D_CAMERA_Switching(g3Dcamera);
-}
-
-//------------------------------------------------------------------
-static void calcEnd( GFL_G3D_CAMERA* g3Dcamera, fx32* backupData )
-{
-	//near復帰
-	GFL_G3D_CAMERA_SetNear(g3Dcamera, backupData);
-	GFL_G3D_CAMERA_Switching(g3Dcamera);
-}
-
-//------------------------------------------------------------------
 static void calcTailVtx0_target(	const VecFx32*	pTarget, 
 																	int*						pTargetScrx,
 																	int*						pTargetScry,
@@ -934,6 +932,7 @@ static void calcTailData( const TALKMSGWIN_SYS* tmsgwinSys,
 		if( scale < valWin3 ){ scale = valWin3; }
 	}
 	//頂点データ設定
+	//VEC_Add(&tmsgwinSys->camTargetBackUp, pTailVtx0, &tmsgwin->tailData.trans);
 	VEC_Set(&tmsgwin->tailData.trans, pTailVtx0->x, pTailVtx0->y, pTailVtx0->z);
 	tmsgwin->tailData.scale = scale;
 
@@ -960,14 +959,15 @@ static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	fx32	nearBackup;
 	u8		tailPat;
 
-	calcStart(tmsgwinSys->setup.g3Dcamera, &nearBackup);
 	{
 		int			targetScrx, targetScry;
 		VecFx32	tailVtx0, tailVtx1, tailVtx2;
 		VecFx32	winVtx0, winVtx1, winVtx2, winVtx3;
 
 		if(tmsgwin->pTarget != NULL){
-			calcTailVtx0_target(tmsgwin->pTarget, &targetScrx, &targetScry, &tailVtx0);
+			VecFx32	tmpVtx0;
+			VEC_Subtract(tmsgwin->pTarget, &tmsgwinSys->camTargetBackUp, &tmpVtx0);
+			calcTailVtx0_target(&tmpVtx0, &targetScrx, &targetScry, &tailVtx0);
 		} else {
 			calcTailVtx0_refwin
 				(tmsgwin, &tmsgwinSys->tmsgwin[tmsgwin->refTarget], &targetScrx, &targetScry, &tailVtx0);
@@ -979,13 +979,57 @@ static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		calcTailData
 		(tmsgwinSys, tmsgwin, &tailVtx0, &tailVtx1, &tailVtx2, &winVtx0, &winVtx1, &winVtx2, &winVtx3);
 	}
-	calcEnd(tmsgwinSys->setup.g3Dcamera, &nearBackup);
 
 	if(tmsgwin->tailData.tailPat != tailPat){
 		tmsgwin->tailData.tailPat = tailPat;
 		return TRUE;
 	}
 	return FALSE;
+}
+
+//============================================================================================
+static void settingCamera( TALKMSGWIN_SYS* tmsgwinSys, int mode )
+{
+	//原点座標に変換
+	VecFx32		vec, pos, up, target;
+	
+	VEC_Subtract(&tmsgwinSys->camPosBackUp, &tmsgwinSys->camTargetBackUp, &vec);
+	VEC_Set(&pos, 0, 0, VEC_Mag(&vec));
+	VEC_Set(&up, 0, FX32_ONE, 0);
+	VEC_Set(&target, 0, 0, 0);
+
+	if( mode == 0 ){
+		//変換精度を上げるためnearの距離をとる
+		fx32 near = 64* FX32_ONE;
+
+		GFL_G3D_CAMERA_SetPos(tmsgwinSys->setup.g3Dcamera, &pos);
+		GFL_G3D_CAMERA_SetCamUp(tmsgwinSys->setup.g3Dcamera, &up);
+		GFL_G3D_CAMERA_SetTarget(tmsgwinSys->setup.g3Dcamera, &target);
+		GFL_G3D_CAMERA_SetNear(tmsgwinSys->setup.g3Dcamera, &near);
+
+		GFL_G3D_CAMERA_Switching(tmsgwinSys->setup.g3Dcamera);
+	} else {
+		G3_LookAt(&pos, &up, &target, NULL);
+	}
+}
+
+//------------------------------------------------------------------
+static void backupCamera( TALKMSGWIN_SYS* tmsgwinSys )
+{
+	GFL_G3D_CAMERA_GetPos(tmsgwinSys->setup.g3Dcamera, &tmsgwinSys->camPosBackUp);
+	GFL_G3D_CAMERA_GetCamUp(tmsgwinSys->setup.g3Dcamera, &tmsgwinSys->camUpBackUp);
+	GFL_G3D_CAMERA_GetTarget(tmsgwinSys->setup.g3Dcamera, &tmsgwinSys->camTargetBackUp);
+	GFL_G3D_CAMERA_GetNear(tmsgwinSys->setup.g3Dcamera, &tmsgwinSys->camNearBackUp);
+}
+
+static void recoverCamera( TALKMSGWIN_SYS* tmsgwinSys )
+{
+	GFL_G3D_CAMERA_SetPos(tmsgwinSys->setup.g3Dcamera, &tmsgwinSys->camPosBackUp);
+	GFL_G3D_CAMERA_SetCamUp(tmsgwinSys->setup.g3Dcamera, &tmsgwinSys->camUpBackUp);
+	GFL_G3D_CAMERA_SetTarget(tmsgwinSys->setup.g3Dcamera, &tmsgwinSys->camTargetBackUp);
+	GFL_G3D_CAMERA_SetNear(tmsgwinSys->setup.g3Dcamera, &tmsgwinSys->camNearBackUp);
+
+	GFL_G3D_CAMERA_Switching(tmsgwinSys->setup.g3Dcamera);
 }
 
 

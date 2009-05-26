@@ -53,6 +53,7 @@
 #define PLTT_SIZ			(16*COL_SIZ)
 
 #define BACKGROUND_COLOR (0)
+#define BACKGROUND_COLOR2 (0x7c00)
 //------------------------------------------------------------------
 /**
  * @brief		ＢＧ描画データ
@@ -126,6 +127,8 @@ typedef struct {
 	TEST_MSG_COMM				msgComm;
 
 	int									mode;
+
+	int									testPat;
 }SAMPLE3_WORK;
 
 //============================================================================================
@@ -251,13 +254,25 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 		systemSetup(sw);
 
 		sw->gflCamAdjust = GFL_CAMADJUST_Create(&camAdjustData, sw->heapID);
+
+		sw->cameraAngleV = 0;
+		sw->cameraAngleH = 0;
+		sw->cameraLength = 8*FX32_ONE; 
 		GFL_CAMADJUST_SetCameraParam
 			(sw->gflCamAdjust, &sw->cameraAngleV, &sw->cameraAngleH, &sw->cameraLength); 
 
+		sw->testPat = 0;
 		sw->seq++;
 		break;
 
 	case 1:
+		if( sw->testPat == 0 ){
+			VEC_Set(&sw->tmsgTarget,0,0,0);
+			GFL_BG_SetBackGroundColor( TEXT_FRAME, BACKGROUND_COLOR );
+		} else {
+			VEC_Set(&sw->tmsgTarget,0x10000*FX32_ONE,0,0*FX32_ONE);
+			GFL_BG_SetBackGroundColor( TEXT_FRAME, BACKGROUND_COLOR2 );
+		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
 			sw->seq = 4;
 			break;
@@ -275,9 +290,14 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 				sw->seq = 2;
 			} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 			} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+				sw->cameraAngleV = 0;
+				sw->cameraAngleH = 0;
+				sw->cameraLength = 8*FX32_ONE; 
 			} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 			} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
 			} else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+				if(sw->testPat)	{ sw->testPat = 0; }
+				else						{ sw->testPat = 1; }
 			}
 		} else {
 			u32 tpx, tpy;
@@ -290,6 +310,8 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 			if( GFL_UI_TP_GetPointTrg( &tpx, &tpy ) == TRUE ){
 				makeStr(testMsg, sw->strBuf[0]);
 				calcTarget(	sw->g3Dcamera, tpx, tpy, &sw->twinTarget[0]);
+				//sw->twinTarget[0] = sw->tmsgTarget;
+				//sw->tmsgTarget.y -= 8*FX32_ONE;
 
 				TALKMSGWIN_CreateFixWindowAuto
 					(sw->tmsgwinSys, 0, &sw->twinTarget[0], sw->strBuf[0], 15);
@@ -559,7 +581,7 @@ static void systemFramework(SAMPLE3_WORK* sw)
 {
 	//距離とアングルによるカメラ位置計算
 	{
-		VecFx32 target = {0,0,0};
+		//VecFx32 target = {12136*FX32_ONE,0,12968*FX32_ONE};
 		VecFx32 cameraPos;
 		VecFx32 vecCamera;
 		fx16 sinYaw = FX_SinIdx(sw->cameraAngleV);
@@ -573,8 +595,9 @@ static void systemFramework(SAMPLE3_WORK* sw)
 		// カメラの座標計算
 		VEC_Set( &vecCamera, sinYaw * cosPitch, sinPitch * FX16_ONE, cosYaw * cosPitch);
 		VEC_Normalize(&vecCamera, &vecCamera);
-		VEC_MultAdd(sw->cameraLength, &vecCamera, &target, &cameraPos);
+		VEC_MultAdd(sw->cameraLength, &vecCamera, &sw->tmsgTarget, &cameraPos);
 
+		GFL_G3D_CAMERA_SetTarget(sw->g3Dcamera, &sw->tmsgTarget);
 		GFL_G3D_CAMERA_SetPos(sw->g3Dcamera, &cameraPos);
 	}
 	TALKMSGWIN_SystemMain(sw->tmsgwinSys);
@@ -594,7 +617,13 @@ static void systemFramework(SAMPLE3_WORK* sw)
 			elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
 			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
 
-			GFL_G3D_DRAW_DrawObject(g3Dobj, &g3DobjStatus1);
+			{
+				GFL_G3D_OBJSTATUS status;
+
+				status = g3DobjStatus1;
+				status.trans = sw->tmsgTarget;
+				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
+			}
 
 			anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
 			for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_LoopAnimeFrame(g3Dobj, i, FX32_ONE ); } 
