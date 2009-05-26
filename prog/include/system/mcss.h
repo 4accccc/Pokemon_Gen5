@@ -70,35 +70,36 @@ typedef struct _MCSS_WORK				MCSS_WORK;
 typedef struct _MCSS_SYS_WORK		MCSS_SYS_WORK;
 
 extern	MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID );
-extern	void			MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
-extern	void			MCSS_Main( MCSS_SYS_WORK *mcss_sys );
-extern	void			MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
-extern	MCSS_WORK*		MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_WORK *maw );
-extern	void			MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
-extern	void			MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys );
-extern	void			MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys );
-extern	void			MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
-extern	void			MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
-extern	void			MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale );
-extern	void			MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale );
-extern	void			MCSS_GetOfsScale( MCSS_WORK *mcss, VecFx32 *scale );
-extern	void			MCSS_SetOfsScale( MCSS_WORK *mcss, VecFx32 *scale );
-extern	void			MCSS_GetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
-extern	void			MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
-extern	void			MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale );
-extern	void			MCSS_SetMepachiFlag( MCSS_WORK *mcss );
-extern	void			MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
-extern	void			MCSS_FlipMepachiFlag( MCSS_WORK *mcss );
-extern	void			MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
-extern	void			MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
-extern	int				MCSS_GetVanishFlag( MCSS_WORK *mcss );
-extern	void			MCSS_SetVanishFlag( MCSS_WORK *mcss );
-extern	void			MCSS_ResetVanishFlag( MCSS_WORK *mcss );
-extern	void			MCSS_FlipVanishFlag( MCSS_WORK *mcss );
-extern	void			MCSS_SetAnimCtrlCallBack( MCSS_WORK *mcss, u32 param, NNSG2dAnmCallBackPtr pFunc, u16 frameIdx );
+extern	void						MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
+extern	void						MCSS_Main( MCSS_SYS_WORK *mcss_sys );
+extern	void						MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
+extern	MCSS_WORK*			MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_WORK *maw );
+extern	void						MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
+extern	void						MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys );
+extern	void						MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys );
+extern	void						MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
+extern	void						MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
+extern	void						MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale );
+extern	void						MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale );
+extern	void						MCSS_GetOfsScale( MCSS_WORK *mcss, VecFx32 *scale );
+extern	void						MCSS_SetOfsScale( MCSS_WORK *mcss, VecFx32 *scale );
+extern	void						MCSS_GetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
+extern	void						MCSS_SetRotate( MCSS_WORK *mcss, VecFx32 *rotate );
+extern	void						MCSS_SetShadowScale( MCSS_WORK *mcss, VecFx32 *scale );
+extern	void						MCSS_SetMepachiFlag( MCSS_WORK *mcss );
+extern	void						MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
+extern	void						MCSS_FlipMepachiFlag( MCSS_WORK *mcss );
+extern	void						MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
+extern	void						MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
+extern	int							MCSS_GetVanishFlag( MCSS_WORK *mcss );
+extern	void						MCSS_SetVanishFlag( MCSS_WORK *mcss );
+extern	void						MCSS_ResetVanishFlag( MCSS_WORK *mcss );
+extern	void						MCSS_FlipVanishFlag( MCSS_WORK *mcss );
+extern	void						MCSS_SetAnimCtrlCallBack( MCSS_WORK *mcss, u32 param, NNSG2dAnmCallBackPtr pFunc, u16 frameIdx );
+extern	void						MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, u8 wait, u32 rgb );
 
 #ifdef PM_DEBUG
-extern	MCSS_WORK*		MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
+extern	MCSS_WORK*			MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
 #endif
 
 #endif
