@@ -782,7 +782,7 @@ void	PMSND_PlaySystemSE( u32 soundIdx )
 
 //------------------------------------------------------------------
 /**
- * @brief	‚r‚dƒTƒEƒ“ƒhŠÖ”
+ * @brief	‚r‚dƒTƒEƒ“ƒhÄ¶ŠÖ”
  */
 //------------------------------------------------------------------
 void	PMSND_PlaySE( u32 soundIdx )
@@ -795,6 +795,19 @@ void	PMSND_PlaySE( u32 soundIdx )
 	ppd->soundIdx = soundIdx;
 
 	NNS_SndArcPlayerStartSeqEx(&ppd->sndHandle, ppd->playerNo, -1, 126, soundIdx);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	‚r‚dƒTƒEƒ“ƒh’âŽ~ŠÖ”
+ */
+//------------------------------------------------------------------
+void	PMSND_StopSE( void )
+{
+	PMSND_PLAYER_DATA* ppd = &systemPlayerUnit.playerDataArray[PLAYER_SEVOICE];
+
+	NNS_SndPlayerStopSeq(&ppd->sndHandle, 0);
+	ppd->soundIdx = 0;
 }
 
 //------------------------------------------------------------------
