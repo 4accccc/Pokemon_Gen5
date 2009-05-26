@@ -2062,11 +2062,91 @@
 	</row>
 
 	<row id="MONSNAME_494">
-		<language name="JPN">アワネズミ</language>
+		<language name="JPN">ピンボー</language>
 	</row>
 
 	<row id="MONSNAME_495">
-		<language name="JPN">ガーロック</language>
+		<language name="JPN">モグリュー</language>
+	</row>
+
+	<row id="MONSNAME_496">
+		<language name="JPN">ゴリダルマ</language>
+	</row>
+
+	<row id="MONSNAME_497">
+		<language name="JPN">ワニメガネ</language>
+	</row>
+
+	<row id="MONSNAME_498">
+		<language name="JPN">ワニグラス</language>
+	</row>
+
+	<row id="MONSNAME_499">
+		<language name="JPN">ワニバーン</language>
+	</row>
+
+	<row id="MONSNAME_500">
+		<language name="JPN">ハゴロムシ</language>
+	</row>
+
+	<row id="MONSNAME_501">
+		<language name="JPN">ハキシード</language>
+	</row>
+
+	<row id="MONSNAME_502">
+		<language name="JPN">オノックス</language>
+	</row>
+
+	<row id="MONSNAME_503">
+		<language name="JPN">カーメント</language>
+	</row>
+
+	<row id="MONSNAME_504">
+		<language name="JPN">バンビーナ</language>
+	</row>
+
+	<row id="MONSNAME_505">
+		<language name="JPN">バトロード</language>
+	</row>
+
+	<row id="MONSNAME_506">
+		<language name="JPN">プルンス</language>
+	</row>
+
+	<row id="MONSNAME_507">
+		<language name="JPN">コバト</language>
+	</row>
+
+	<row id="MONSNAME_508">
+		<language name="JPN">ライブラ</language>
+	</row>
+
+	<row id="MONSNAME_509">
+		<language name="JPN">バクパク</language>
+	</row>
+
+	<row id="MONSNAME_510">
+		<language name="JPN">ユリコネ</language>
+	</row>
+
+	<row id="MONSNAME_511">
+		<language name="JPN">オーバト</language>
+	</row>
+
+	<row id="MONSNAME_512">
+		<language name="JPN">パンチーヌ</language>
+	</row>
+
+	<row id="MONSNAME_513">
+		<language name="JPN">モコウモリ</language>
+	</row>
+
+	<row id="MONSNAME_514">
+		<language name="JPN">タマゴ</language>
+	</row>
+
+	<row id="MONSNAME_515">
+		<language name="JPN">ダメタマゴ</language>
 	</row>
 
 	<flowchart-group-list>
