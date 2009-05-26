@@ -160,6 +160,23 @@ static const FLD_SCENEAREA_DATA sc_SCENE[] =
     C3_SCENEAREA_InsideFxCamera,
     C3_SCENEAREA_OutsideFxCamera,
   },
+
+  // 外周エリア
+  {
+    { 
+      // エリア
+      // rot_start, rot_end, dist_min, dist_max
+      // (基準を{0,0,-FX32_ONE}としたときの角度)
+      0x1ca8, 0xe398, 0x1c8f6b, 0x300000,
+      // カメラ
+      // pitch len
+      0x800, 0x38D000,
+    },
+    C3_SCENEAREA_CheckArea,
+    C3_SCENEAREA_Update,
+    C3_SCENEAREA_Inside,
+    C3_SCENEAREA_Outside,
+  },
 };
 
 
@@ -1362,7 +1379,8 @@ static const RAIL_CAMERA_SET sc_CAMERA_C3_NORMAL =
 {
   FIELD_RAIL_POSFUNC_CircleCamera,
   0x800,
-  0x38D000,
+//  0x38D000,
+  0x303000,
   0x2f6f36,
   HEIGHT,
   0x301402,
