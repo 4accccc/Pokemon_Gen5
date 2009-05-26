@@ -65,6 +65,9 @@ static GMEVENT_RESULT fieldBattleEvent(
 static GMEVENT_RESULT DebugBattleEvent(
     GMEVENT * event, int *  seq, void * work );
 
+const u32 data_EncountPoke200905[];
+const u32 data_EncountPoke200905Max;
+
 //======================================================================
 //  フィールド　バトルイベント
 //======================================================================
@@ -108,8 +111,13 @@ GMEVENT * EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
 
     //1vs1時の敵AI, 2vs2時の１番目敵AI用
 		para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );
-		PokeParty_Add( para->partyEnemy1,
-        PP_Create(MONSNO_ARUSEUSU+1,15,3594,HEAPID_CORE) );
+    {
+      u32 pokeNo200905 = GFUser_GetPublicRand(data_EncountPoke200905Max);
+  //  u32 pokeNo = MONSNO_ARUSEUSU+1;
+      u32 pokeNo = data_EncountPoke200905[pokeNo200905];
+		  PokeParty_Add( para->partyEnemy1,
+        PP_Create(pokeNo,15,3594,HEAPID_CORE) );
+    }
 
     //2vs2時の味方AI（不要ならnull）
 		para->partyPartner = NULL;
@@ -344,3 +352,35 @@ static GMEVENT_RESULT DebugBattleEvent(
 
 	return GMEVENT_RES_CONTINUE;
 }
+
+//======================================================================
+//  data
+//======================================================================
+//--------------------------------------------------------------
+/// ５月末用エンカウントポケモン一覧
+//--------------------------------------------------------------
+const u32 data_EncountPoke200905[] =
+{
+  494,//ピンボー
+  495,//モグリュー
+  496,//ゴリダルマ
+  497,//ワニメガネ
+  498,//ワニグラス
+  499,//ワニバーン
+  500,//ハゴロムシ
+  501,//ハキシード
+  502,//オノックス
+  503,//カーメント
+  504,//バンビーナ
+  505,//バトロード
+  506,//プルンス
+  507,//コバト
+  508,//ライブラ
+  509,//バクパク
+  510,//ユリコネ
+  511,//オーバト
+  512,//パンチーヌ
+  513,//モコウモリ
+};
+
+const u32 data_EncountPoke200905Max = NELEMS(data_EncountPoke200905);
