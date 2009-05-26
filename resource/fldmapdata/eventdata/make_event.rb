@@ -196,7 +196,7 @@ class AllEvent
     if line =~ exp then
       return lines.shift
     else
-      raise DataFormatError
+      raise DataFormatError, "#{line}"
     end
   end
 
@@ -230,6 +230,8 @@ class DoorEvent < AllEvent
   attr :door_id
   attr :next_zone_id
   attr :next_door_id
+  attr :door_dir
+  attr :door_type
   attr :posx 
   attr :posy
   attr :posz
@@ -241,6 +243,8 @@ class DoorEvent < AllEvent
     @door_id = read( lines, /#Door Event Label/)
     @next_zone_id = read( lines, /#Next Zone ID Name/)
     @next_door_id = read(lines, /#Next Door ID Name/)
+    @door_dir = read(lines, /#Door Direction/)
+    @door_type = read(lines, /#Door Type/)
     @x, @y, @z = readPosition(lines)
   end
 
@@ -250,7 +254,8 @@ class DoorEvent < AllEvent
     output.puts "\t\t{#{gx}, #{@y}, #{gz}},"
     #output.puts "\t\t{#{@x}, #{@y}, #{@z}},"
     output.puts "\t\t#{@next_zone_id}, #{@next_door_id},"
-    output.puts "\t\tEXIT_DIR_DOWN, EXIT_TYPE_NONE"
+    output.puts "\t\t#{@door_dir},//direction"
+    output.puts "\t\t#{@door_type} //type"
     output.puts "\t},"
   end
 

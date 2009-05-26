@@ -2,7 +2,8 @@ const CONNECT_DATA ConnectData_T01[] = {
 	{//DOORID_T01_EXIT01 = 0
 		{11952, 0, 13136},
 		ZONE_ID_T01R0101, DOORID_T01R0101_EXIT01,
-		EXIT_DIR_DOWN, EXIT_TYPE_NONE
+		0,//direction
+		0 //type
 	},
 };
 const int ConnectCount_T01 = NELEMS(ConnectData_T01);
