@@ -60,11 +60,11 @@ class EventHeader
   end
 
   def calcXofs x
-    return (x / 16) + 16 + @x_ofs * 32
+    return ((x / 16) + 16 + @x_ofs * 32) * 16
   end
 
   def calcZofs z
-    return (z / 16) + 16 + @z_ofs * 32
+    return ((-z / 16) + 16 + @z_ofs * 32) * 16
   end
 
 end
