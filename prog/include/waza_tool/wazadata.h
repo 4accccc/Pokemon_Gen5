@@ -338,6 +338,8 @@ extern u8 WAZADATA_GetReactionRatio( WazaID id );
 //=============================================================================================
 extern u8 WAZADATA_GetDrainRatio( WazaID id );
 
+extern u8 WAZADATA_GetRecoverHPRatio( WazaID id );
+
 
 /*-----------------------------------------------------------------
 

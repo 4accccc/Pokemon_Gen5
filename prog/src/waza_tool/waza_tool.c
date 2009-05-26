@@ -283,6 +283,7 @@ enum {
   WSEQ_CRITICAL_UP = 43,
   WSEQ_ICHIGEKI = 38,
   WSEQ_EFF_SICK1 = 118,
+  WSEQ_SIMPLE_RECOVER = 32,
 
   WSEQ_REACT_HAKAI = 80,  ///< 次のターンアクションできない
 
@@ -553,7 +554,13 @@ static const SEQ_PARAM* getSeqParam( WazaID waza )
         WAZASICK_KONRAN, WAZASICK_CONT_PERMANENT, 0, 0,
         { { WAZA_RANKEFF_ATTACK, 2 }, { WAZA_RANKEFF_NULL, 0 } },
         FALSE, BTL_WEATHER_NONE, 0, 0,
+    },{
+        WSEQ_SIMPLE_RECOVER, WAZADATA_CATEGORY_SIMPLE_RECOVER,
+        WAZASICK_KONRAN, WAZASICK_CONT_PERMANENT, 0, 0,
+        { { WAZA_RANKEFF_NULL, 0 }, { WAZA_RANKEFF_NULL, 0 } },
+        FALSE, BTL_WEATHER_NONE, 0, 0,
     },
+
   };
   u16 seq = WT_WazaDataParaGet( waza, ID_WTD_battleeffect );
   u16 i;
@@ -650,6 +657,9 @@ BOOL WAZADATA_IsTouch( WazaID id )
   // @@@ いまはてきとー
   return WAZADATA_IsDamage( id );
 }
+
+
+
 
 // 効果範囲
 WazaTarget WAZADATA_GetTarget( WazaID id )
@@ -905,6 +915,28 @@ BtlWeather WAZADATA_GetWeather( WazaID id )
   }
   return BTL_WEATHER_NONE;
 }
+
+//=============================================================================================
+/**
+ * ワザ使用によるHP回復率（％）を取得
+ *
+ * @param   id
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 WAZADATA_GetRecoverHPRatio( WazaID id )
+{
+
+  const SEQ_PARAM* seq = getSeqParam( id );
+  if( seq && (seq->wseq == WSEQ_SIMPLE_RECOVER) ){
+    return 50;
+  }
+  return 0;
+
+
+}
+
 //=============================================================================================
 /**
  * ワザイメージチェック
