@@ -9,10 +9,12 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-#ifndef __WFLBY_SND_H__
-#define __WFLBY_SND_H__
+#pragma once
 
-//#include "system/snd_tool.h"
+#include "sound/pm_sndsys.h"
+#include "net_app/net_bugfix.h"
+
+#if WB_FIX    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 //-----------------------------------------------------------------------------
 /**
@@ -201,6 +203,192 @@
 #define ANKETO_SND_BAR			( SEQ_SE_PL_PINPON2 )	// バー表示
 
 
-#endif		// __WFLBY_SND_H__
+#else WB_FIX    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+#define WFLBY_SND_JUMP		( SEQ_SE_SELECT1 )		// 乗り物に乗る音
+
+#define WFLBY_SND_MINIGAME	( SEQ_SE_SELECT1 )		// ミニゲームカウンターに入った音
+//#define WFLBY_SND_MINIGAME	( SEQ_SE_SELECT1 )		// ミニゲームカウンターに入った音
+
+#define WFLBY_SND_CURSOR	( SEQ_SE_SELECT1 )		// リストのカーソル音
+#define WFLBY_SND_DECIDE	( SEQ_SE_DECIDE1 )		// リストの決定音
+#define WFLBY_SND_CANCEL	( SEQ_SE_CANCEL1 )		// リストのキャンセル音
+
+#define WFLBY_SND_STAFF		( SEQ_SE_SELECT1 )		// スタッフに話しかけたとき
+
+#define WFLBY_SND_PLIN		( SEQ_SE_SELECT1 )			// 人が降りてくる音
+#define WFLBY_SND_PLOUT		( SEQ_SE_SELECT1 )			// 人が上る音
+
+#define WFLBY_SND_DOUZOU	( SEQ_SE_SELECT1 )			// 銅像に話しかけ(おもちゃが動く音)
+#define WFLBY_SND_DOUZOU2	( SEQ_SE_SELECT1 )			// 銅像に話しかけ(おもちゃが動く音)ミュウ
+
+//未使用
+//#define WFLBY_SND_NEWSIN	( SEQ_SE_SELECT1 )		// ロビーニュースに入った音
+//#define WFLBY_SND_WLDTMIN	( SEQ_SE_SELECT1 )		// 世界時計に入った音
+//#define WFLBY_SND_FOOTIN	( SEQ_SE_SELECT1 )		// 足跡ボードに入った音
+#define WFLBY_SND_NEWSIN	( SEQ_SE_SELECT1 )		// ロビーニュースに入った音
+#define WFLBY_SND_WLDTMIN	( SEQ_SE_SELECT1 )		// 世界時計に入った音
+#define WFLBY_SND_FOOTIN	( SEQ_SE_SELECT1 )		// 足跡ボードに入った音
+
+#define WFLBY_SND_TALK		( SEQ_SE_SELECT1 )		// 話しかけ音
+
+#define WFLBY_SND_PROFILE	( SEQ_SE_SELECT1 )		// Xボタンで自分のプロフィールを開く
+
+//-----------------------------------------------------------------------------
+//
+//	フロート関連			
+//
+//	鳴き声＋エフェクト＋モーターがなるかも？
+//
+//	乗り物動かすボタンは共通
+//	○_PV = 鳴き声ならすボタン(鳴き声処理＋SEを再生)
+//	○_EX = 特殊動きボタン
+//-----------------------------------------------------------------------------
+#define WFLBY_SND_RIDE_INVALIDITY			(0xfffe)	// SEを再生しない定義
+
+//#define WFLBY_SND_RIDE_BUTTON01	( SEQ_SE_SELECT1 )// フロート搭乗時に下ボタン(乗物を動かす)
+#define WFLBY_SND_RIDE_BUTTON01	( SEQ_SE_SELECT1 )	// フロート搭乗時に下ボタン(乗物を動かす)
+//#define WFLBY_SND_RIDE_BUTTON02	( SEQ_SE_SELECT1 )// フロート搭乗時に下ボタン(ライト動かす)
+//#define WFLBY_SND_RIDE_BUTTON03	( SEQ_SE_SELECT1 )// フロート搭乗時に下ボタン(鳴き声ならす)
+//↑ここはSnd_PMVoicePlay( monsno, 0 );でお願いします
+
+//01(アチャモ)
+//トサカが揺れる
+#define WFLBY_SND_RIDE_BUTTON_ATYAMO_PV		( WFLBY_SND_RIDE_INVALIDITY )	//目の表情が変わる
+#define WFLBY_SND_RIDE_BUTTON_ATYAMO_EX		( SEQ_SE_SELECT1 )	//トサカが揺れる
+
+//02(リザードン)
+#define WFLBY_SND_RIDE_BUTTON_RIZAADON_PV	( SEQ_SE_SELECT1 )		//炎が出る
+//#define WFLBY_SND_RIDE_BUTTON_RIZAADON_PV	( WFLBY_SND_RIDE_INVALIDITY )		//炎が出る
+#define WFLBY_SND_RIDE_BUTTON_RIZAADON_EX	( SEQ_SE_SELECT1 )	//羽がひらく
+
+//03(フシギダネ)
+#define WFLBY_SND_RIDE_BUTTON_HUSIGIDANE_PV	( SEQ_SE_SELECT1 )		//つるの鞭が出る
+#define WFLBY_SND_RIDE_BUTTON_HUSIGIDANE_EX	( SEQ_SE_SELECT1 )	//背中のつぼみがはまって飛び出す
+
+//04(マスキッパ)
+#define WFLBY_SND_RIDE_BUTTON_HAEZIGOKU_PV	( SEQ_SE_SELECT1 )	//口が動く
+#define WFLBY_SND_RIDE_BUTTON_HAEZIGOKU_EX	( SEQ_SE_SELECT1 )	//手が動く
+
+//05(ポッチャマ)
+#define WFLBY_SND_RIDE_BUTTON_POTTYAMA_PV	( SEQ_SE_SELECT1 )	//足が動く
+//#define WFLBY_SND_RIDE_BUTTON_POTTYAMA_EX	( SEQ_SE_SELECT1 )	//手が回る
+#define WFLBY_SND_RIDE_BUTTON_POTTYAMA_EX	( SEQ_SE_SELECT1 )	//手が回る
+
+//06(ギャラドス)
+#define WFLBY_SND_RIDE_BUTTON_GYARADOSU_PV	( SEQ_SE_SELECT1 )			//水が出る
+//#define WFLBY_SND_RIDE_BUTTON_GYARADOSU_PV	( WFLBY_SND_RIDE_INVALIDITY )	//水が出る
+#define WFLBY_SND_RIDE_BUTTON_GYARADOSU_EX	( SEQ_SE_SELECT1 )	//尻尾が動く
+
+//07(ピカチュウ)
+//#define WFLBY_SND_RIDE_BUTTON_PIKATYUU_PV	( SEQ_SE_SELECT1 )	//顔の表情が変わる
+#define WFLBY_SND_RIDE_BUTTON_PIKATYUU_PV	( WFLBY_SND_RIDE_INVALIDITY )	//顔の表情が変わる
+#define WFLBY_SND_RIDE_BUTTON_PIKATYUU_EX	( SEQ_SE_SELECT1 )	//尻尾が動く
+
+//08(ジバコイル)
+//#define WFLBY_SND_RIDE_BUTTON_DEKAKOIRU_PV	( SEQ_SE_SELECT1 )		//目が動く
+#define WFLBY_SND_RIDE_BUTTON_DEKAKOIRU_PV	( WFLBY_SND_RIDE_INVALIDITY )	//目が動く
+#define WFLBY_SND_RIDE_BUTTON_DEKAKOIRU_EX	( SEQ_SE_SELECT1 )	//電気が出る
+
+//09(ミュウ)
+//#define WFLBY_SND_RIDE_BUTTON_MYUU_PV		( SEQ_SE_SELECT1 )	//足が動く
+#define WFLBY_SND_RIDE_BUTTON_MYUU_PV		( WFLBY_SND_RIDE_INVALIDITY )	//足が動く
+#define WFLBY_SND_RIDE_BUTTON_MYUU_EX		( SEQ_SE_SELECT1 )	//尻尾が動く
+#define WFLBY_SND_RIDE_BUTTON_MYUU_PV_2		( SEQ_SE_SELECT1 )	//キラキラエフェクト(3台目のみ)
+
+
+//-----------------------------------------------------------------------------
+//
+//	タッチトイ関連
+//
+//-----------------------------------------------------------------------------
+#if 0	//2ch
+#define WFLBY_SND_TOUCH_TOY01_1	( SEQ_SE_SELECT1 )	// ベル
+#define WFLBY_SND_TOUCH_TOY01_2	( SEQ_SE_SELECT1 )// ベル
+#define WFLBY_SND_TOUCH_TOY01_3	( SEQ_SE_SELECT1 )// ベル
+#else	//1ch
+#define WFLBY_SND_TOUCH_TOY01_1	( SEQ_SE_SELECT1 )// ベル
+#define WFLBY_SND_TOUCH_TOY01_2	( SEQ_SE_SELECT1 )// ベル
+#define WFLBY_SND_TOUCH_TOY01_3	( SEQ_SE_SELECT1 )// ベル
+#endif
+
+#if 1	//2ch(ここだけ1chだと聞こえないため)
+#define WFLBY_SND_TOUCH_TOY02_1	( SEQ_SE_SELECT1 )	// ドラム
+#define WFLBY_SND_TOUCH_TOY02_2	( SEQ_SE_SELECT1 )// ドラム
+#define WFLBY_SND_TOUCH_TOY02_3	( SEQ_SE_SELECT1 )// ドラム
+#else
+#define WFLBY_SND_TOUCH_TOY02_1	( SEQ_SE_SELECT1 )// ドラム
+#define WFLBY_SND_TOUCH_TOY02_2	( SEQ_SE_SELECT1 )// ドラム
+#define WFLBY_SND_TOUCH_TOY02_3	( SEQ_SE_SELECT1 )// ドラム
+#endif	//1ch
+
+#if 0	//2ch
+#define WFLBY_SND_TOUCH_TOY03_1	( SEQ_SE_SELECT1 )	// シンバル
+#define WFLBY_SND_TOUCH_TOY03_2	( SEQ_SE_SELECT1 )// シンバル
+#define WFLBY_SND_TOUCH_TOY03_3	( SEQ_SE_SELECT1 )// シンバル
+#else	//1ch
+#define WFLBY_SND_TOUCH_TOY03_1	( SEQ_SE_SELECT1 )// シンバル
+#define WFLBY_SND_TOUCH_TOY03_2	( SEQ_SE_SELECT1 )// シンバル
+#define WFLBY_SND_TOUCH_TOY03_3	( SEQ_SE_SELECT1 )// シンバル
+#endif
+
+#define WFLBY_SND_TOUCH_TOY04_1	( SEQ_SE_SELECT1 )	// リップル(はもん)
+#define WFLBY_SND_TOUCH_TOY04_2	( SEQ_SE_SELECT1 )// リップル(はもん)
+#define WFLBY_SND_TOUCH_TOY04_3	( SEQ_SE_SELECT1 )// リップル(はもん)
+#define WFLBY_SND_TOUCH_TOY05_1	( SEQ_SE_SELECT1 )	// シグナル
+#define WFLBY_SND_TOUCH_TOY05_2	( SEQ_SE_SELECT1)// シグナル
+#define WFLBY_SND_TOUCH_TOY05_3	( SEQ_SE_SELECT1)// シグナル
+#define WFLBY_SND_TOUCH_TOY06_1	( SEQ_SE_SELECT1 )	// スイング
+#define WFLBY_SND_TOUCH_TOY06_2	( SEQ_SE_SELECT1 )// スイング
+#define WFLBY_SND_TOUCH_TOY06_3	( SEQ_SE_SELECT1 )// スイング
+#define WFLBY_SND_TOUCH_TOY07_1	( SEQ_SE_SELECT1 )		// クラッカー(小)
+#define WFLBY_SND_TOUCH_TOY07_2	( SEQ_SE_SELECT1 )	// クラッカー
+#define WFLBY_SND_TOUCH_TOY07_3	( SEQ_SE_SELECT1 )	// クラッカー(大)
+#define WFLBY_SND_TOUCH_TOY08_1	( SEQ_SE_SELECT1 )		// 紙吹雪
+#define WFLBY_SND_TOUCH_TOY08_2	( SEQ_SE_SELECT1 )	// 紙吹雪
+#define WFLBY_SND_TOUCH_TOY08_3	( SEQ_SE_SELECT1 )	// 紙吹雪
+#define WFLBY_SND_TOUCH_TOY09_1	( SEQ_SE_SELECT1 )	// 風船
+#define WFLBY_SND_TOUCH_TOY09_2	( SEQ_SE_SELECT1 )	// 風船
+#define WFLBY_SND_TOUCH_TOY09_3	( SEQ_SE_SELECT1 )	// 風船
+
+//タッチトイの風船
+#define WFLBY_SND_BALLOON_01	( SEQ_SE_SELECT1 )	// 割れる
+#define WFLBY_SND_BALLOON_02	( SEQ_SE_SELECT1 )		// 主人公着地
+//↑割れる音と同時なのでいらないかも？
+
+//花火
+#define WFLBY_SND_FIREWORKS01	( SEQ_SE_SELECT1 )		// 設置花火(小さい打ち上げも込み)
+//↑ループ音なので、終了時にSnd_SeStopBySeqNo( WFLBY_SND_FIREWORKS01, 0 );を呼んでください
+//#define WFLBY_SND_FIREWORKS02	( SEQ_SE_SELECT1 )		// 打上花火(最後に打ちあがる花火)
+#define WFLBY_SND_FIREWORKS02	( SEQ_SE_SELECT1 )		// 打上花火(最後に打ちあがる花火)
+
+//タッチトイを交換する
+//#define WFLBY_SND_TOUCH_TOY_CHG	( SEQ_SE_SELECT1 )		// 現状はSEで試す
+#define WFLBY_SND_TOUCH_TOY_CHG	( SEQ_SE_SELECT1 )		// 現状はSEで試す
+
+
+
+// プロフィールにタイプを入れる音
+#define WFLBY_SND_TYPE_SET	( SEQ_SE_SELECT1 )
+
+
+//-----------------------------------------------------------------------------
+/**
+ *			アンケート関連
+ */
+//-----------------------------------------------------------------------------
+#define ANKETO_SND_RECV_WAIT	( SEQ_SE_SELECT1 )	// 受信中
+#define ANKETO_SND_RECV			( SEQ_SE_SELECT1 )	// 受信
+#define ANKETO_SND_SEND_WAIT	( SEQ_SE_SELECT1 )	// 送信中
+#define ANKETO_SND_SEND			( SEQ_SE_SELECT1 )	// 送信
+#define ANKETO_SND_CURSOR		( SEQ_SE_SELECT1 )	// cursor音
+//#define ANKETO_SND_SELECT		( SEQ_SE_SELECT1 )	// 選択
+#define ANKETO_SND_SELECT		( SEQ_SE_SELECT1 )	// 選択(すぐ送信にいくので短い音)
+//#define ANKETO_SND_BAR		( SEQ_SE_SELECT1 )	// バー表示
+#define ANKETO_SND_BAR			( SEQ_SE_SELECT1 )	// バー表示
+
+
+#endif  //WB_FIX @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 

@@ -63,6 +63,7 @@
 #include "system/actor_tool.h"
 #include "lobby_trfgra.naix"
 #include "gamesystem/msgspeed.h"
+#include "sound/pm_sndsys.h"
 
 
 //-----------------------------------------------------------------------------
@@ -2469,9 +2470,7 @@ WFLBY_ROOM_YESNO_RET WFLBY_ROOM_YESNOWIN_Main( WFLBY_ROOMWK* p_wk )
 	switch( result ){
 	// ‚¢‚¢‚¦
 	case BMPMENULIST_CANCEL:
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_CURSOR );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_CANCEL );
 	case WFLBY_ROOM_YESNO_NO:
 		return WFLBY_ROOM_YESNO_NO;
 
@@ -4385,9 +4384,7 @@ static u32 WFLBY_ROOM_ListWin_Main( WFLBY_ROOM_LISTWIN* p_wk )
 		break;
 		
 	default:
-	#if WB_TEMP_FIX
-		Snd_SePlay(WFLBY_SND_CURSOR);
-	#endif
+		PMSND_PlaySE(WFLBY_SND_DECIDE);
 		break;
 	}
 
@@ -4442,9 +4439,7 @@ static void WFLBY_ROOM_ListWin_End( WFLBY_ROOM_LISTWIN* p_wk, u16* p_list_p, u16
 static void WFLBY_ROOM_ListWin_CurCallBack( BMPMENULIST_WORK* p_wk,u32 param,u8 mode )
 {
     if(mode == 0){
-	#if WB_TEMP_FIX
-        Snd_SePlay(WFLBY_SND_CURSOR);
-	#endif
+        PMSND_PlaySE(WFLBY_SND_CURSOR);
     }
 }
 

@@ -1745,14 +1745,14 @@ static void WFLBY_GADGET_SePlay( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk, u3
 {
 	// 自分と他人で再生方法を変更
 	if( p_wk->p_person == WFLBY_3DOBJCONT_GetPlayer( p_sys->p_objcont ) ){
-	#if WB_TEMP_FIX
+	#if WB_FIX
 		Snd_SePlayEx( seno, SND_PLAYER_NO_WIFI_HIROBA );	//自分専用のプレイヤーナンバーで再生
+	#else
+	  PMSND_PlaySE(seno);
 	#endif
 	}else{
 		if( WFLBY_3DOBJCONT_GetCullingFlag( p_wk->p_person ) == FALSE ){
-		#if WB_TEMP_FIX
-			Snd_SePlay( seno );
-		#endif
+			PMSND_PlaySE( seno );
 		}
 	}
 }

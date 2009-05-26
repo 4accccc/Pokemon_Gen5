@@ -27,6 +27,7 @@
 
 #include "field/fldmmdl_pl_code.h"
 #include "system/gfl_use.h"
+#include "sound/pm_sndsys.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -1720,9 +1721,7 @@ static void WFLBY_3DOBJCONT_FlyUpMove( WFLBY_3DPERSON* p_wk, WFLBY_3DOBJCONT* p_
 
 
 			// ã‚Á‚Ä‚¢‚­‰¹
-		#if WB_TEMP_FIX
-			Snd_SePlay( WFLBY_SND_PLOUT );
-		#endif
+			PMSND_PlaySE( WFLBY_SND_PLOUT );
 		}
 		break;
 		
@@ -1776,9 +1775,7 @@ static void WFLBY_3DOBJCONT_FlyDownMove( WFLBY_3DPERSON* p_wk, WFLBY_3DOBJCONT* 
 		p_wk->seq ++;
 
 		// —Ž‚¿‚Ä‚­‚é‰¹
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_PLOUT );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_PLOUT );
 	
 	// “®ìƒƒCƒ“
 	case WFLBY_3DOBJCONT_FLYDOWN_SEQ_MAIN:

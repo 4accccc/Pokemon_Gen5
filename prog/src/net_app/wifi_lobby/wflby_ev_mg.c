@@ -436,9 +436,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			break;
 		}
 
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_MINIGAME );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_MINIGAME );
 	
 		// シーケンスを進める
 		WFLBY_EVENTWK_AddSeq( p_wk );
@@ -663,9 +661,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			if( p_evwk->timelimit_10 == FALSE ){
 				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 
-				#if WB_TEMP_FIX
-					Snd_SePlay( SEQ_SE_DP_SELECT );
-				#endif
+					PMSND_PlaySE( SEQ_SE_DP_SELECT );
 				
 					if( DWC_LOBBY_MG_MyParent() == FALSE ){
 						// 子機用処理

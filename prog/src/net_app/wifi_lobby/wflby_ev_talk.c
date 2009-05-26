@@ -1160,9 +1160,7 @@ BOOL WFLBY_EV_TALK_StartA( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			WFLBY_EVENT_SetPrivateEventMove( p_event, idx, FALSE );
 
 			// 話しかけ音
-		#if WB_TEMP_FIX
-			Snd_SePlay( WFLBY_SND_TALK );
-		#endif
+			PMSND_PlaySE( WFLBY_SND_TALK );
 		
 			// 会話シーケンスへ
 			WFLBY_SYSTEM_SetMyStatus( p_system, WFLBY_STATUS_TALK );
@@ -1558,9 +1556,7 @@ BOOL WFLBY_EV_TALK_StartA( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 	case WFLBY_EV_TALK_A_SEQ_SEND_G_RECV_B_SE:
 		// ガジェットもらうBの受信確認
 		// SE再生
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_TOUCH_TOY_CHG );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_TOUCH_TOY_CHG );
 		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_TALK_A_SEQ_SEND_G_RECV_B );
 		break;
 
@@ -2132,9 +2128,7 @@ BOOL WFLBY_EV_TALK_StartB( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			result = WFLBY_EV_TALK_WK_Init( p_evwk, p_system, talk_idx );
 
 			// 話しかけ音
-		#if WB_TEMP_FIX
-			Snd_SePlay( WFLBY_SND_TALK );
-		#endif
+			PMSND_PlaySE( WFLBY_SND_TALK );
 			// 会話シーケンスへ
 			WFLBY_SYSTEM_SetMyStatus( p_system, WFLBY_STATUS_TALK );
 
@@ -2430,9 +2424,7 @@ BOOL WFLBY_EV_TALK_StartB( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 	case WFLBY_EV_TALK_B_SEQ_MSG_G03:
 
 		// わけてあげたSE
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_TOUCH_TOY_CHG );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_TOUCH_TOY_CHG );
 		// 文字列作成
 		WFLBY_ROOM_MSG_SetIdxPlayerName( p_rmwk, p_evwk->talk_idx, 0 );
 		p_str = WFLBY_EV_TALK_GetStrBuf( p_rmwk, p_evwk->talk_idx, msg_hiroba_item_00_08 );
@@ -2834,9 +2826,7 @@ BOOL WFLBY_EV_DEF_PlayerA_SWTOPIC_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 		p_evwk = WFLBY_EVENTWK_AllocWk( p_wk, sizeof(WFLBY_EV_DEF_PLAYER_WFTOPIC_WK) );
 
 		// 話しかけられた音
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_STAFF );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_STAFF );
 		// クローズ前かあとかで変更
 		if( WFLBY_SYSTEM_Event_GetEndCM( p_system ) == TRUE ){
 
@@ -2931,9 +2921,7 @@ BOOL WFLBY_EV_DEF_PlayerA_SWTOPIC_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 				delete = TRUE;
 				break;
 			case BMPMENULIST_CANCEL:
-			#if WB_TEMP_FIX
-				Snd_SePlay( SEQ_SE_DP_SELECT );	// CANCEL音
-			#endif
+				PMSND_PlaySE( SEQ_SE_DP_SELECT );	// CANCEL音
 			case WFLBY_EV_TOPIC_LIST_SEL_END:	
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_DEF_PLAYER_TOPIC_MSGEND );
 				delete = TRUE;
@@ -2989,9 +2977,7 @@ BOOL WFLBY_EV_DEF_PlayerA_SWTOPIC_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 				break;
 
 			case BMPMENULIST_CANCEL:
-			#if WB_TEMP_FIX
-				Snd_SePlay( SEQ_SE_DP_SELECT );	// CANCEL音
-			#endif
+				PMSND_PlaySE( SEQ_SE_DP_SELECT );	// CANCEL音
 			case WFLBY_EV_TOPIC_LIST_SEL_MG_END:
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_DEF_PLAYER_TOPIC_MSG01 );
 				delete = TRUE;
@@ -3092,9 +3078,7 @@ BOOL WFLBY_EV_DEF_PlayerA_SWTOPIC_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 				break;
 
 			case BMPMENULIST_CANCEL:
-			#if WB_TEMP_FIX
-				Snd_SePlay( SEQ_SE_DP_SELECT );	// CANCEL音
-			#endif
+				PMSND_PlaySE( SEQ_SE_DP_SELECT );	// CANCEL音
 			case WFLBY_EV_TOPIC_LIST_SEL_EVE_END:
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_DEF_PLAYER_TOPIC_MSG01 );
 				delete = TRUE;
@@ -3197,9 +3181,7 @@ BOOL WFLBY_EV_DEF_PlayerA_SWTOPIC_PLAYED_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOM
 	case WFLBY_EV_DEF_PLAYER_TOPIC_PLAYED_INIT:		// 初期化
 
 		// 話しかけられた音
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_STAFF );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_STAFF );
 	
 		// PARADE中はPARADEのことをいう
 		if( WFLBY_SYSTEM_Event_GetEndCM( p_system ) == FALSE ){

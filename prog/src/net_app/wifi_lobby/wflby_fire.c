@@ -529,9 +529,7 @@ static void WFLBY_FIRE_CONT_MoveClimax( WFLBY_FIRE_CONT* p_sys, u32 count )
 			WFLBY_3DMAPOBJCONT_MAP_SetDouzouBigFire( p_sys->p_mapobjcont, 
 					sc_WFLBY_FIRECONT_CLIMAX_ANMDATA[p_sys->move_wk.climax.anmidx].anm_speed );
 
-		#if WB_TEMP_FIX
-			Snd_SePlay( WFLBY_SND_FIREWORKS02 );
-		#endif
+			PMSND_PlaySE( WFLBY_SND_FIREWORKS02 );
 		
 			// ŽŸ‚ÌƒAƒjƒ‚Ö
 			p_sys->move_wk.climax.anmidx ++;
@@ -681,9 +679,7 @@ static void WFLBY_FIRE_CONT_Nami_GetTblData( u32 idx, WFLBY_FIRECONT_NAMI_TBL* p
 static void WFLBY_FIRE_CONT_StartFireSe( WFLBY_FIRE_CONT* p_wk )
 {
 	if( p_wk->fire_se == FALSE ){
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_FIREWORKS01 );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_FIREWORKS01 );
 		p_wk->fire_se = TRUE;
 	}
 }

@@ -2133,9 +2133,7 @@ void MNGM_COUNT_StartTimeUp( MNGM_COUNTWK* p_wk, GFL_TCBSYS *tcbsys )
   p_wk->p_tcb = GFL_TCB_AddTask(tcbsys, MNGM_COUNT_TimeUpTcb, p_wk, 0 );
   p_wk->seq = MNGM_COUNT_TIMEUP_SEQ_INIT;
 
-#if WB_TEMP_FIX
-  Snd_SePlay( MNGM_SND_TIMEUP ); 
-#endif
+  PMSND_PlaySE( MNGM_SND_TIMEUP ); 
 }
 
 //----------------------------------------------------------------------------
@@ -4155,9 +4153,7 @@ static BOOL MNGM_PLATE_PLAYERTBL_MainMove( MNGM_PLATE_PLAYER* p_player )
   if(p_player->draw_x_wait <= 0){
     if( p_player->draw_x_count == 0 ){
       // 最初に１回音を出す
-#if WB_TEMP_FIX
-      Snd_SePlay( p_player->draw_x_snd );
-#endif
+      PMSND_PlaySE( p_player->draw_x_snd );
     }
     p_player->draw_x_count++;
     ret = MNGM_AddMoveMainFx( &p_player->draw_x, p_player->draw_x_count );
@@ -4623,9 +4619,7 @@ static BOOL MNGM_TITLELOGO_InMain( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk )
     p_wk->count ++;
     if( result == TRUE ){
       //  
-#if WB_TEMP_FIX
-      Snd_SePlay( MNGM_SND_TITLE );
-#endif
+      PMSND_PlaySE( MNGM_SND_TITLE );
 
       // 次の動作の初期化
       MNGM_AddMoveReqFx( &p_wk->move, 
@@ -6342,9 +6336,7 @@ static BOOL MNGM_RESULT_Balloon_Main( MNGM_BALLOON_WK* p_wk, MNGM_BGL* p_bgl )
       p_wk->seq = MNGM_RESULT_BALLOON_SEQ_BLN_END;
       break;  
     }
-#if WB_TEMP_FIX
-    Snd_SePlay( MNGM_SND_BALLOON );
-#endif
+    PMSND_PlaySE( MNGM_SND_BALLOON );
     
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[ (p_wk->idx % MNGM_RESULT_BALLOON_CLACT_NUM) ], TRUE );
     p_wk->count = MNGM_RESULT_BALLOON_WAIT;
@@ -7004,32 +6996,30 @@ static void MNGM_COUNT_StartTcb( GFL_TCB* tcb, void* p_work )
 
     // 変更前と後でフレームが切り替わったら音を出す
     if( last_seq != now_seq ){
-#if WB_TEMP_FIX
       switch( now_seq ){
       case MNGM_COUNT_REDY_ANM:
-        Snd_SePlay( MNGM_SND_COUNT );
+        PMSND_PlaySE( MNGM_SND_COUNT );
         break;
         
       case MNGM_COUNT_3_ANM:
-        Snd_SePlay( MNGM_SND_COUNT );
+        PMSND_PlaySE( MNGM_SND_COUNT );
         break;
         
       case MNGM_COUNT_2_ANM:
-        Snd_SePlay( MNGM_SND_COUNT );
+        PMSND_PlaySE( MNGM_SND_COUNT );
         break;
         
       case MNGM_COUNT_1_ANM:
-        Snd_SePlay( MNGM_SND_COUNT );
+        PMSND_PlaySE( MNGM_SND_COUNT );
         break;
         
       case MNGM_COUNT_STARTFRAME:
-        Snd_SePlay( MNGM_SND_START );
+        PMSND_PlaySE( MNGM_SND_START );
         break;
 
       default:
         break;
       }
-#endif
     }
 
     // パレットアニメ

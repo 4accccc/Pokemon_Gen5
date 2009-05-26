@@ -1674,9 +1674,7 @@ static BOOL WFLBY_EV_DEF_PlayerInNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMW
 
 			// 選ばない
 			case BMPMENULIST_CANCEL:
-			#if WB_TEMP_FIX
-				Snd_SePlay( SEQ_SE_DP_SELECT );	// CANCEL音
-			#endif
+				PMSND_PlaySE( SEQ_SE_DP_SELECT );	// CANCEL音
 			case WFLBY_POKEWAZA_TYPE_NONE:
 				p_evwk->type1 = WFLBY_POKEWAZA_TYPE_NONE;
 				delete = TRUE;
@@ -1740,9 +1738,7 @@ static BOOL WFLBY_EV_DEF_PlayerInNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMW
 				WFLBY_SYSTEM_SetSelectWazaType( p_system, p_evwk->type1, p_evwk->type2 );
 				WFLBY_ROOM_UNDERWIN_TrCardWazaTypeWrite( p_rmwk );
 
-			#if WB_TEMP_FIX
-				Snd_SePlay( WFLBY_SND_TYPE_SET );
-			#endif
+				PMSND_PlaySE( WFLBY_SND_TYPE_SET );
 				break;
 				
 			// いいえ
@@ -1789,9 +1785,7 @@ static BOOL WFLBY_EV_DEF_PlayerInNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMW
 
 			// 選ばない
 			case BMPMENULIST_CANCEL:
-			#if WB_TEMP_FIX
-				Snd_SePlay( SEQ_SE_DP_SELECT );	// CANCEL音
-			#endif
+				PMSND_PlaySE( SEQ_SE_DP_SELECT );	// CANCEL音
 			case WFLBY_POKEWAZA_TYPE_NONE:
 				p_evwk->type2 = WFLBY_POKEWAZA_TYPE_NONE;
 				delete = TRUE;
@@ -1856,9 +1850,7 @@ static BOOL WFLBY_EV_DEF_PlayerInNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMW
 				WFLBY_SYSTEM_SetSelectWazaType( p_system, p_evwk->type1, p_evwk->type2 );
 				WFLBY_ROOM_UNDERWIN_TrCardWazaTypeWrite( p_rmwk );
 
-			#if WB_TEMP_FIX
-				Snd_SePlay( WFLBY_SND_TYPE_SET );
-			#endif
+				PMSND_PlaySE( WFLBY_SND_TYPE_SET );
 				break;
 				
 			// いいえ
@@ -1877,7 +1869,7 @@ static BOOL WFLBY_EV_DEF_PlayerInNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMW
 /*
 	// ”プロフィールをもらった”
 	case WFLBY_EV_DEF_PLAYERIN_NORMAL_SEQ_MSG13:
-		Snd_SePlay( WFLBY_SND_TOUCH_TOY_CHG );
+		PMSND_PlaySE( WFLBY_SND_TOUCH_TOY_CHG );
 
 		// 選択した技タイプを設定
 		WFLBY_SYSTEM_SetSelectWazaType( p_system, p_evwk->type1, p_evwk->type2 );
@@ -1911,9 +1903,7 @@ static BOOL WFLBY_EV_DEF_PlayerInNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMW
 	case WFLBY_EV_DEF_PLAYERIN_NORMAL_SEQ_MSG15:
 
 
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_TOUCH_TOY_CHG );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_TOUCH_TOY_CHG );
 	
 		// ガジェット取得
 		WFLBY_ROOM_GadGet_Get( p_rmwk );
@@ -1948,16 +1938,14 @@ static BOOL WFLBY_EV_DEF_PlayerInNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMW
 	case WFLBY_EV_DEF_PLAYERIN_NORMAL_SEQ_MSG17:
 
 	#if WB_TEMP_FIX
-		if( !((Snd_SePlayCheck( WFLBY_SND_TOUCH_TOY_CHG ) == FALSE) && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL))) ){
+		if( !((PMSND_CheckPlaySE( WFLBY_SND_TOUCH_TOY_CHG ) == FALSE) && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL))) ){
 	#else
 		if( !((GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL))) ){
 	#endif
 			break;
 		}
 	
-	#if WB_TEMP_FIX
-		Snd_SePlay( SEQ_SE_DP_SELECT );
-	#endif
+		PMSND_PlaySE( SEQ_SE_DP_SELECT );
 	
 		p_str = WFLBY_ROOM_MSG_Get( p_rmwk, WFLBY_DEFMSG_TYPE_HIROBA, msg_hiroba_infoa_t01 );
 		WFLBY_ROOM_TALKWIN_PrintStr( p_rmwk, p_str );
@@ -2710,18 +2698,14 @@ static BOOL WFLBY_EV_DEF_PlayerMain_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p
 					// スイッチ表示
 					if( WFLBY_ROOM_UNDERWIN_TrCardGetDraw( p_rmwk ) == FALSE ){
 						WFLBY_ROOM_UNDERWIN_TrCardOn( p_rmwk, WFLBY_SYSTEM_GetMyIdx( p_system ), FALSE );
-					#if WB_TEMP_FIX
-						Snd_SePlay( WFLBY_SND_PROFILE );
-					#endif
+						PMSND_PlaySE( WFLBY_SND_PROFILE );
 					}else{
 						u32 trcard_plidx;
 						// 自分かチェック
 						trcard_plidx = WFLBY_ROOM_UNDERWIN_TrCardGetPlIdx( p_rmwk );
 						if( trcard_plidx == plno ){
 							WFLBY_ROOM_UNDERWIN_TrCardOff( p_rmwk );
-						#if WB_TEMP_FIX
-							Snd_SePlay( WFLBY_SND_PROFILE );
-						#endif
+							PMSND_PlaySE( WFLBY_SND_PROFILE );
 						}
 					}
 					return FALSE;
@@ -2794,9 +2778,7 @@ static BOOL WFLBY_EV_DEF_PlayerOutNormal_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOM
 		// はなしかけられないように変更
 		WFLBY_SYSTEM_SetMyStatus( WFLBY_ROOM_GetSystemData(p_rmwk), WFLBY_STATUS_LOGOUT );
 
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_MINIGAME );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_MINIGAME );
 	
 		{
 			STRBUF* p_str;
@@ -3998,9 +3980,7 @@ static BOOL WFLBY_EV_DEF_PlayerA_SWIN_Before( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK*
 			WFLBY_ROOM_TALKWIN_PrintStr( p_rmwk, p_str );
 
 			// 話しかけられた音
-		#if WB_TEMP_FIX
-			Snd_SePlay( WFLBY_SND_STAFF );
-		#endif
+			PMSND_PlaySE( WFLBY_SND_STAFF );
 			
 			WFLBY_EVENTWK_AddSeq( p_wk );
 		}
@@ -4175,9 +4155,7 @@ static BOOL WFLBY_EV_FLOAT_Inside( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u3
 				WFLBY_3DOBJCONT_DRAW_SetAnmJump( p_evwk->p_obj, TRUE );
 				
 				// ジャンプ音
-			#if WB_TEMP_FIX
-				Snd_SePlay( WFLBY_SND_JUMP );
-			#endif
+				PMSND_PlaySE( WFLBY_SND_JUMP );
 			
 				// した画面フロートに変更
 				WFLBY_ROOM_UNDERWIN_FloatBttnOn( p_rmwk );
@@ -5107,9 +5085,7 @@ static BOOL WFLBY_EV_DEF_NpcFloat_Brfore( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_r
 			}
 
 			// 落ちてくる音
-		#if WB_TEMP_FIX
-			Snd_SePlay( WFLBY_SND_PLOUT );
-		#endif
+			PMSND_PlaySE( WFLBY_SND_PLOUT );
 		
 			// 回転開始
 			WFLBY_3DOBJCONT_DRAW_SetAnmRota( p_evwk->p_npc, TRUE );

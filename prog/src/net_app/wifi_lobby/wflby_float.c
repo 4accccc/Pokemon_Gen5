@@ -591,21 +591,19 @@ static void WFLBY_FLOAT_CONT_PlaySe( BOOL my_float_on, BOOL my_float, BOOL my_of
 
 			// さらに自分の座席のＳＥなら自分専用プレイヤーで鳴らす
 			if( my_offs ){
-			#if WB_TEMP_FIX
+			#if WB_FIX
 				Snd_SePlayEx( se_idx, SND_PLAYER_NO_WIFI_HIROBA );
+			#else
+			  PMSND_PlaySE(se_idx);
 			#endif
 			}else{
-			#if WB_TEMP_FIX
-				Snd_SePlay( se_idx );
-			#endif
+				PMSND_PlaySE( se_idx );
 			}
 		}
 	}else{
 
 		// 乗っていないときは全部Snd_SePlayで上書き
-	#if WB_TEMP_FIX
-		Snd_SePlay( se_idx );
-	#endif
+		PMSND_PlaySE( se_idx );
 	}
 }
 

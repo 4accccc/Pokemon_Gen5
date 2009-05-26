@@ -1371,9 +1371,7 @@ static void WFLBY_3DMAPOBJ_DouzouAnm_PlayNormal( WFLBY_3DMAPOBJ_CONT* p_sys, WFL
 
 
 		// ì∫ëúìÆçÏâπê›íË
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_DOUZOU );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_DOUZOU );
 	}
 }
 // ì¡éÍïîâÆóp
@@ -1396,9 +1394,7 @@ static void WFLBY_3DMAPOBJ_DouzouAnm_PlaySpecial( WFLBY_3DMAPOBJ_CONT* p_sys, WF
 		WFLBY_3DMAPOBJ_DouzouAnm_PlayAnm( p_sys, p_wk );	
 
 		// ì∫ëúìÆçÏâπê›íË
-	#if WB_TEMP_FIX
-		Snd_SePlay( WFLBY_SND_DOUZOU2 );
-	#endif
+		PMSND_PlaySE( WFLBY_SND_DOUZOU2 );
 	}
 }
 

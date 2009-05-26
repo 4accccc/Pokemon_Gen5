@@ -9,13 +9,13 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-#ifndef __MINIGAME_TOOL_SND_H__
-#define __MINIGAME_TOOL_SND_H__
+#pragma once
 
-//#include "system/snd_tool.h"
+#include "sound/pm_sndsys.h"
 #include "net_app/net_bugfix.h"
 
-#if WB_TEMP_FIX
+#if WB_FIX   //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 
 #define MNGM_SND_COUNT				( SEQ_SE_DP_DECIDE )		// ３・２・１
 #define MNGM_SND_START				( SEQ_SE_DP_CON_016 )		// スタート
@@ -35,24 +35,30 @@
 #define MNGM_SND_BAR_FLASH			( SEQ_SE_PL_FVSDEMO06 )		// 1位のバーが点滅 
 //SEQ_PL_WINMINI2(MEを当てることに変更予定 08.03.18)
 
-#else //WB_TEMP_FIX @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-#define MNGM_SND_COUNT				( 0 )		// ３・２・１
-#define MNGM_SND_START				( 0 )		// スタート
 
-#define MNGM_SND_TIMEUP				( 0 )		// タイムアップ
 
-#define MNGM_SND_TITLE				( 0 )			// 3匹の絵が表示される時
-//#define MNGM_SND_BALLOON			( 0 )			// 協力して割った風船を表示される音
-#define MNGM_SND_BALLOON			( 0 )		// 協力して割った風船を表示される音
+
+#else //WB_FIX @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+
+
+#define MNGM_SND_COUNT				( SEQ_SE_SELECT1 )		// ３・２・１
+#define MNGM_SND_START				( SEQ_SE_SELECT1 )		// スタート
+
+#define MNGM_SND_TIMEUP				( SEQ_SE_SELECT1 )		// タイムアップ
+
+#define MNGM_SND_TITLE				( SEQ_SE_SELECT1 )			// 3匹の絵が表示される時
+//#define MNGM_SND_BALLOON			( SEQ_SE_SELECT1 )			// 協力して割った風船を表示される音
+#define MNGM_SND_BALLOON			( SEQ_SE_SELECT1 )		// 協力して割った風船を表示される音
 
 //通信対戦と合わせている
-#define MNGM_SND_BAR_IN				( 0 )		// バー(タッチペン)がインする動き
-#define MNGM_SND_BAR_OUT			( 0 )		// バー(タッチペン)がアウトする動き
-#define MNGM_SND_BAR_FLASH			( 0 )		// 1位のバーが点滅 
+#define MNGM_SND_BAR_IN				( SEQ_SE_SELECT1 )		// バー(タッチペン)がインする動き
+#define MNGM_SND_BAR_OUT			( SEQ_SE_SELECT1 )		// バー(タッチペン)がアウトする動き
+#define MNGM_SND_BAR_FLASH			( SEQ_SE_SELECT1 )		// 1位のバーが点滅 
 //SEQ_PL_WINMINI2(MEを当てることに変更予定 08.03.18)
 
-#endif  //WB_TEMP_FIX
-
-#endif		// __MINIGAME_TOOL_SND_H__
+#endif  //WB_FIX
 
