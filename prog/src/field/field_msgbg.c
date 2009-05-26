@@ -967,7 +967,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
             menuList, max, msgData, fmb->heapID );
   GFL_MSG_Delete( msgData );
   
-	FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 13, 7, 4 );
+	FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 10, 7, 4 );
   menuFunc = FLDMENUFUNC_AddMenuList( fmb, &menuH, listData, 0, cursor_pos );
   return( menuFunc );
 }
