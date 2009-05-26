@@ -18,6 +18,7 @@
 #include "../sta_act_poke.h"
 #include "../sta_act_obj.h"
 #include "../sta_act_light.h"
+#include "../sta_act_audience.h"
 
 //======================================================================
 //	define
@@ -105,6 +106,7 @@ void			STA_ACT_SetEffectWork( ACTING_WORK *work , STA_EFF_WORK *effWork , const 
 STA_LIGHT_SYS* 	STA_ACT_GetLightSys( ACTING_WORK *work );
 STA_LIGHT_WORK* STA_ACT_GetLightWork( ACTING_WORK *work , const u8 idx );
 void 			STA_ACT_SetLightWork( ACTING_WORK *work , STA_LIGHT_WORK *lightWork , const u8 idx );
+STA_AUDI_SYS* STA_ACT_GetAudienceSys( ACTING_WORK *work );
 
 u16		STA_ACT_GetCurtainHeight( ACTING_WORK *work );
 void	STA_ACT_SetCurtainHeight( ACTING_WORK *work , const u16 height );

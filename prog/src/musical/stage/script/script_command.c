@@ -107,6 +107,7 @@ typedef struct
 
 typedef struct
 {
+  u8 trgPokeNo;
   STA_LIGHT_WORK *lightWork;
   POKE_TRACE_WORK_VEC moveWork;
 }MOVE_TRACE_LIGHT_VEC;
@@ -1329,8 +1330,10 @@ SCRIPT_FUNC_DEF( LightMoveTrace )
   }
   else
   {
+    STA_AUDI_SYS *audiSys = STA_ACT_GetAudienceSys( work->actWork );
     MOVE_TRACE_LIGHT_VEC *moveTraceLight;
     moveTraceLight = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_TRACE_LIGHT_VEC ));
+    moveTraceLight->trgPokeNo = pokeNo;
     moveTraceLight->lightWork = lightWork;
     moveTraceLight->moveWork.actWork = work->actWork;
     moveTraceLight->moveWork.pokeWork = pokeWork;
@@ -1338,6 +1341,8 @@ SCRIPT_FUNC_DEF( LightMoveTrace )
     VEC_Set( &moveTraceLight->moveWork.ofs , ofsX,ofsY,ofsZ );
     moveTraceLight->moveWork.frame = frame;
 
+    STA_AUDI_SetAttentionPoke( audiSys , pokeNo , TRUE );
+    
     GFL_TCB_AddTask( work->tcbSys , SCRIPT_TCB_MoveTraceLightTCB , (void*)moveTraceLight , SCRIPT_TCB_PRI_LOW );
   }
   
@@ -1349,6 +1354,7 @@ static void SCRIPT_TCB_MoveTraceLightTCB(  GFL_TCB *tcb, void *work )
 {
   MOVE_TRACE_LIGHT_VEC *moveLight = (MOVE_TRACE_LIGHT_VEC*)work;
   STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( moveLight->moveWork.actWork );
+  STA_AUDI_SYS *audiSys = STA_ACT_GetAudienceSys( moveLight->moveWork.actWork );
   VecFx32 newPos;
   
   const BOOL isFinish = SCRIPT_TCB_UpdatePokeTrace( &moveLight->moveWork , &newPos );
@@ -1356,6 +1362,7 @@ static void SCRIPT_TCB_MoveTraceLightTCB(  GFL_TCB *tcb, void *work )
   
   if( isFinish == TRUE )
   {
+    STA_AUDI_SetAttentionPoke( audiSys , moveLight->trgPokeNo , FALSE );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }

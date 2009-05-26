@@ -32,6 +32,7 @@
 #include "sta_local_def.h"
 #include "script/sta_act_script_def.h"
 #include "sta_act_bg.h"
+#include "sta_act_audience.h"
 
 #include "eff_def/mus_eff.h"
 
@@ -121,6 +122,8 @@ struct _ACTING_WORK
   STA_SCRIPT_SYS    *scriptSys;
   void        *scriptData;
   
+  STA_AUDI_SYS  *audiSys;
+  
   //メッセージ用
   GFL_TCBLSYS     *tcblSys;
   GFL_BMPWIN      *msgWin;
@@ -154,24 +157,23 @@ static void STA_ACT_StartScript( ACTING_WORK *work );
 
 
 static const GFL_DISP_VRAM vramBank = {
-  GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
+  GX_VRAM_BG_128_C,       // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_23_G,     // メイン2DエンジンのBG拡張パレット
-//  GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
   GX_VRAM_SUB_BG_48_HI,     // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
   GX_VRAM_OBJ_16_F,       // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
-  GX_VRAM_SUB_OBJ_NONE,     // サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJ_128_D,     // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
   GX_VRAM_TEX_01_AB,        // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_0123_E,     // テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_32K,
-  GX_OBJVRAMMODE_CHAR_1D_32K
+  GX_OBJVRAMMODE_CHAR_1D_128K
 };
 //  A テクスチャ
 //  B テクスチャ
-//  C None
-//  D MainBg
+//  C MainBg
+//  D SubObj
 //  E テクスチャパレット
 //  F MainObj
 //  G MainBgExPlt
@@ -183,7 +185,6 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 ACTING_WORK*  STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
 {
-  u8 i;
   ACTING_WORK *work = GFL_HEAP_AllocMemory( initWork->heapId , sizeof( ACTING_WORK ));
   
   work->heapId = initWork->heapId;
@@ -191,6 +192,7 @@ ACTING_WORK*  STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
   work->updateScroll = FALSE;
   work->scrollOffset = 0;
   work->makuOffset = 0;
+  work->scriptData = NULL;
 
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
 
@@ -200,8 +202,10 @@ ACTING_WORK*  STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
   STA_ACT_SetupPokemon( work );
   STA_ACT_SetupItem( work );
   STA_ACT_SetupEffect( work );
-
+  
   work->lightSys = STA_LIGHT_InitSystem(work->heapId , work );
+  work->audiSys = STA_AUDI_InitSystem( work->heapId , work );
+
   work->scriptSys = STA_SCRIPT_InitSystem( work->heapId , work );
   
   INFOWIN_Init( ACT_FRAME_SUB_INFO,ACT_PAL_INFO,work->heapId);
@@ -214,8 +218,10 @@ ACTING_WORK*  STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
   DEBUGWIN_InitProc( ACT_FRAME_MAIN_CURTAIN , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 31,31,31 );
 #endif  //USE_DEBUGWIN_SYSTEM
+//  OS_TPrintf("FreeHeap:[%x]\n", GFL_HEAP_GetHeapFreeSize( work->heapId ) );
   return work;
 }
+
 
 void  STA_ACT_TermActing( ACTING_WORK *work )
 {
@@ -239,6 +245,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   GFL_FONT_Delete( work->fontHandle );
   GFL_TCBL_Exit( work->tcblSys );
   
+  STA_AUDI_ExitSystem( work->audiSys );
   STA_BG_ExitSystem( work->bgSys );
   STA_LIGHT_ExitSystem( work->lightSys );
   STA_EFF_ExitSystem( work->effSys );
@@ -318,6 +325,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   //ポケとかに追従する可能性もあるので最後
   STA_LIGHT_UpdateSystem( work->lightSys );
 
+  STA_AUDI_UpdateSystem( work->audiSys );
 
   //3D描画  
   GFL_G3D_DRAW_Start();
@@ -495,16 +503,20 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
     GFL_BBD_SetScale( work->bbdSys , &scale );
   }
   
-  //ライト用OBJ
+  //CELL初期化(ライト・観客用)
   {
     GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
     cellSysInitData.oamst_main = 0x10;  //デバッグメータの分
     cellSysInitData.oamnum_main = 128-0x10;
+    cellSysInitData.CGR_RegisterMax = 48;
+    cellSysInitData.CELL_RegisterMax = 48;
+    cellSysInitData.tr_cell = 48;
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
     
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
-  
+  //ライト用のアルファ設定
   G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ , GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG3 , 4 , 31 );
 }
 
@@ -904,6 +916,11 @@ void STA_ACT_SetLightWork( ACTING_WORK *work , STA_LIGHT_WORK *lightWork , const
 {
   GF_ASSERT( idx < ACT_LIGHT_MAX );
   work->lightWork[idx] = lightWork;
+}
+
+STA_AUDI_SYS* STA_ACT_GetAudienceSys( ACTING_WORK *work )
+{
+  return work->audiSys;
 }
 
 u16   STA_ACT_GetCurtainHeight( ACTING_WORK *work )

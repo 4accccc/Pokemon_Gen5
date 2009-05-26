@@ -65,7 +65,12 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 {
 	int ePos;
 	STAGE_LOCAL_WORK *work;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x100000 );
+/*
+	OS_TPrintf("FreeHeap:[%x][%x]\n", 
+    	GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
+    	GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
+*/
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x120000 );
 
 	work = GFL_PROC_AllocWork( proc, sizeof(STAGE_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
 	work->actInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STAGE , sizeof(ACTING_INIT_WORK) );

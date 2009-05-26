@@ -50,6 +50,7 @@ void	STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll );
 
 
 //エディタ用
+
 void	STA_ACT_EDITOR_SetScript( ACTING_WORK *work , void* data );
 void	STA_ACT_EDITOR_StartScript( ACTING_WORK *work );
 #endif STA_ACTING_H__

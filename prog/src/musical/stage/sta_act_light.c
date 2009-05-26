@@ -72,8 +72,6 @@ struct _STA_LIGHT_SYS
 #pragma mark [> proto
 
 static void STA_LIGHT_UpdateObjFunc( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWork );
-static void STA_LIGHT_DrawCircle( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWork );
-static void STA_LIGHT_DrawShines( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWork );
 
 //--------------------------------------------------------------
 //	
@@ -146,86 +144,6 @@ static void STA_LIGHT_UpdateObjFunc( STA_LIGHT_SYS *work , STA_LIGHT_WORK *light
 
 void	STA_LIGHT_DrawSystem( STA_LIGHT_SYS *work )
 {
-	u8 i;
-	for( i=0;i<ACT_LIGHT_MAX;i++ )
-	{
-		/*
-		switch( work->lightWork[i].type )
-		{
-		case ALT_CIRCLE:
-			STA_LIGHT_DrawCircle( work , &work->lightWork[i] );
-			break;
-		case ALT_SHINES:
-			STA_LIGHT_DrawShines( work , &work->lightWork[i] );
-			break;
-		}
-		*/
-	}
-}
-
-
-static void STA_LIGHT_DrawCircle( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWork )
-{
-	u32 i;
-	u16 add = 0x800;
-	const u16 scrOfs = STA_ACT_GetStageScroll( work->actWork );
-	const fx32 posX = lightWork->pos.x - FX32_CONST(scrOfs);
-	fx16 rad = STA_LIGHT_POS_X(lightWork->val1);
-	G3_PushMtx();
-	G3_PolygonAttr(GX_LIGHTMASK_NONE,  // no lights
-				   GX_POLYGONMODE_MODULATE, 	// modulation mode
-				   GX_CULL_NONE,		// cull none
-				   ACT_POLYID_LIGHT,	// polygon ID(0 - 63)
-				   lightWork->alpha,	// alpha(0 - 31)
-				   0// OR of GXPolygonAttrMisc's value
-		);
-
-	G3_Translate( 0,0,FX32_CONST(199.0f));
-	G3_Scale( FX32_ONE*4,FX32_ONE*4,FX32_ONE);
-	G3_Begin(GX_BEGIN_TRIANGLES);
-	{
-		G3_Color(lightWork->color);
-		for( i=0;i<0x10000;i+=add)
-		{
-			G3_Vtx(STA_LIGHT_POS_X(posX),STA_LIGHT_POS_Y(lightWork->pos.y),0);
-			G3_Vtx(	STA_LIGHT_POS_X(posX) + FX_Mul(FX_SinIdx((u16)i),rad) ,
-					STA_LIGHT_POS_Y(lightWork->pos.y) + FX_Mul(FX_CosIdx((u16)i),rad) ,
-					0);
-			G3_Vtx(	STA_LIGHT_POS_X(posX) + FX_Mul(FX_SinIdx((u16)(i+add)),rad) ,
-					STA_LIGHT_POS_Y(lightWork->pos.y) + FX_Mul(FX_CosIdx((u16)(i+add)),rad) ,
-					0);
-			
-		}
-	}
-	G3_End();
-	G3_PopMtx(1);
-}
-
-static void STA_LIGHT_DrawShines( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWork )
-{
-	const u16 scrOfs = STA_ACT_GetStageScroll( work->actWork );
-	const fx32 posX = lightWork->pos.x - FX32_CONST(scrOfs);
-	G3_PushMtx();
-	G3_PolygonAttr(GX_LIGHTMASK_NONE,	// no lights
-				   GX_POLYGONMODE_MODULATE, 	// modulation mode
-				   GX_CULL_NONE,		// cull none
-				   ACT_POLYID_LIGHT,	// polygon ID(0 - 63)
-				   lightWork->alpha,	// alpha(0 - 31)
-				   0// OR of GXPolygonAttrMisc's value
-		);
-
-	G3_Translate( 0,0,FX32_CONST(199.0f));
-	G3_Scale( FX32_ONE*4,FX32_ONE*4,FX32_ONE);
-	G3_Begin(GX_BEGIN_QUADS);
-	{
-		G3_Color(lightWork->color);
-		G3_Vtx(STA_LIGHT_POS_X(posX - lightWork->val1),STA_LIGHT_POS_Y(0),0);
-		G3_Vtx(STA_LIGHT_POS_X(posX + lightWork->val1),STA_LIGHT_POS_Y(0),0);
-		G3_Vtx(STA_LIGHT_POS_X(posX + lightWork->val2),STA_LIGHT_POS_Y(lightWork->pos.y),0);
-		G3_Vtx(STA_LIGHT_POS_X(posX - lightWork->val2),STA_LIGHT_POS_Y(lightWork->pos.y),0);
-	}
-	G3_End();
-	G3_PopMtx(1);
 }
 
 STA_LIGHT_WORK* STA_LIGHT_CreateObject( STA_LIGHT_SYS *work , const STA_LIGHT_TYPE type )
