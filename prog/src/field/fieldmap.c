@@ -471,7 +471,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     u16 area_season_id = area_id + ( AREADATA_HasSeason(area_id) ? GAMEDATA_GetSeasonID(gamedata) : 0 );
 
     fieldWork->light = FIELD_LIGHT_Create( AREADATA_GetLightType( area_season_id ), 
-        0, 
+        14400, 
         fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
   }
 
@@ -1133,8 +1133,8 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 	
 	FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
 	FIELD_FOG_Main( fieldWork->fog );
-	{
-		static int time;
+  {
+		static int time = 14400;
 		time += 30;
 		time %= 24*3600;
 		FIELD_LIGHT_Main( fieldWork->light, time );

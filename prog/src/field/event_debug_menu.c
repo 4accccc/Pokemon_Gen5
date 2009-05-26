@@ -142,6 +142,8 @@ static BOOL DMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
+
 //--------------------------------------------------------------
 ///	デバッグメニューリスト　汎用
 ///	データを追加する事でメニューの項目も増えます。
@@ -152,8 +154,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
 	{ DEBUG_FIELD_STR20, DMenuCallProc_ControlTarget },
 	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
+	{ DEBUG_FIELD_STR22, DMenuCallProc_ControlRtcList },
 	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
-	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
@@ -179,6 +181,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
 	{ DEBUG_FIELD_STR19, DMenuCallProc_OpenClubMenu },
+	{ DEBUG_FIELD_STR22, DMenuCallProc_ControlRtcList },
 	{ DEBUG_FIELD_STR15, DMenuCallProc_ControlLight },
 	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
   { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
@@ -2093,4 +2096,199 @@ static BOOL DMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
 	FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( wk->fieldWork );
 	FIELD_DEBUG_SetPosPrint( debug );
 	return( FALSE );
+}
+
+
+
+//--------------------------------------------------------------
+///	デバックメニュー　時間
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+///	DEBUG_CONTROL_TIME_LIST_EVENT_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+	int seq_no;
+	HEAPID heapID;
+	GAMESYS_WORK *gmSys;
+	GMEVENT *gmEvent;
+	FIELD_MAIN_WORK *fieldWork;
+	GFL_MSGDATA *msgData;
+	FLDMENUFUNC *menuFunc;
+}DEBUG_CONTROL_TIME_LIST_EVENT_WORK;
+
+//--------------------------------------------------------------
+///	proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuControlTimeListEvent(
+		GMEVENT *event, int *seq, void *work );
+
+
+//--------------------------------------------------------------
+///	data
+//--------------------------------------------------------------
+/// 時間管理タイプ数
+enum{
+  CONT_TIME_TYPE_NORMAL,
+  CONT_TIME_TYPE_8HOUR,
+  CONT_TIME_TYPE_12HOUR,
+  CONT_TIME_TYPE_18HOUR,
+  CONT_TIME_TYPE_22HOUR,
+  CONT_TIME_TYPE_2HOUR,
+  CONT_TIME_TYPE_600RATE,
+  CONT_TIME_TYPE_60RATE,
+
+  CONT_TIME_TYPE_NUM,
+} ;
+
+
+///テストカメラリスト メニューヘッダー
+static const FLDMENUFUNC_HEADER DATA_DebugMenuList_ContTimeList =
+{
+	1,		//リスト項目数
+	CONT_TIME_TYPE_NUM,		//表示最大項目数
+	0,		//ラベル表示Ｘ座標
+	13,		//項目表示Ｘ座標
+	0,		//カーソル表示Ｘ座標
+	0,		//表示Ｙ座標
+	1,		//表示文字色
+	15,		//表示背景色
+	2,		//表示文字影色
+	0,		//文字間隔Ｘ
+	1,		//文字間隔Ｙ
+	FLDMENUFUNC_SKIP_LRKEY,	//ページスキップタイプ
+	12,		//文字サイズX(ドット
+	12,		//文字サイズY(ドット
+	0,		//表示座標X キャラ単位
+	0,		//表示座標Y キャラ単位
+	0,		//表示サイズX キャラ単位
+	0,		//表示サイズY キャラ単位
+};
+
+///テストカメラメニューリスト
+static const FLDMENUFUNC_LIST DATA_ControlTimeMenuList[CONT_TIME_TYPE_NUM] =
+{
+	{ DEBUG_FIELD_STR30, (void*)CONT_TIME_TYPE_NORMAL,  },
+	{ DEBUG_FIELD_STR23, (void*)CONT_TIME_TYPE_8HOUR,   },
+	{ DEBUG_FIELD_STR24, (void*)CONT_TIME_TYPE_12HOUR,  },
+	{ DEBUG_FIELD_STR25, (void*)CONT_TIME_TYPE_18HOUR,  },
+	{ DEBUG_FIELD_STR26, (void*)CONT_TIME_TYPE_22HOUR,  },
+	{ DEBUG_FIELD_STR27, (void*)CONT_TIME_TYPE_2HOUR,   },
+	{ DEBUG_FIELD_STR28, (void*)CONT_TIME_TYPE_600RATE, },
+	{ DEBUG_FIELD_STR29, (void*)CONT_TIME_TYPE_60RATE,  },
+};
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　テストカメラリスト
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk )
+{
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	DEBUG_CONTROL_TIME_LIST_EVENT_WORK *work;
+	
+	GMEVENT_Change( event,
+		DMenuControlTimeListEvent, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
+	
+	work = GMEVENT_GetEventWork( event );
+	MI_CpuClear8( work, sizeof(DEBUG_CONTROL_TIME_LIST_EVENT_WORK) );
+	
+	work->gmSys = gsys;
+	work->gmEvent = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：時間操作リスト
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuControlTimeListEvent(
+		GMEVENT *event, int *seq, void *wk )
+{
+	DEBUG_CONTROL_TIME_LIST_EVENT_WORK *work = wk;
+	
+	switch( (*seq) ){
+	case 0:
+		{
+			FLDMSGBG *msgBG;
+			FLDMENUFUNC_LISTDATA *listdata;
+			u32 max = CONT_TIME_TYPE_NUM;
+			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ContTimeList;
+			
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
+			work->msgData = FLDMSGBG_CreateMSGDATA(
+				msgBG, NARC_message_d_field_dat );
+			listdata = FLDMENUFUNC_CreateMakeListData(
+				DATA_ControlTimeMenuList, max, work->msgData, work->heapID );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 9, 13 );
+			
+			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &menuH, listdata );
+			GFL_MSG_Delete( work->msgData );
+		}
+		
+		(*seq)++;
+		break;
+	case 1:
+		{
+			u32 ret;
+			ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+			
+			if( ret == FLDMENUFUNC_NULL ){	//操作無し
+				break;
+			}
+			
+			if( ret != FLDMENUFUNC_CANCEL ){	//決定
+        switch( ret ){
+        case CONT_TIME_TYPE_NORMAL:
+          GFL_RTC_DEBUG_StopFakeTime();
+          break;
+        case CONT_TIME_TYPE_8HOUR:
+          GFL_RTC_DEBUG_StartFakeFixTime( 8,0 );
+        case CONT_TIME_TYPE_12HOUR:
+          GFL_RTC_DEBUG_StartFakeFixTime( 12,0 );
+          break;
+        case CONT_TIME_TYPE_18HOUR:
+          GFL_RTC_DEBUG_StartFakeFixTime( 18,0 );
+          break;
+        case CONT_TIME_TYPE_22HOUR:
+          GFL_RTC_DEBUG_StartFakeFixTime( 22,0 );
+          break;
+        case CONT_TIME_TYPE_2HOUR:
+          GFL_RTC_DEBUG_StartFakeFixTime( 2,0 );
+          break;
+        case CONT_TIME_TYPE_600RATE:
+          GFL_RTC_DEBUG_StartFakeTime( 600 );
+          break;
+        case CONT_TIME_TYPE_60RATE:
+          GFL_RTC_DEBUG_StartFakeTime( 60 );
+          break;
+        default:
+          break;
+        }
+			}else{
+
+			  FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			
+			
+        // オワリ
+  			return( GMEVENT_RES_FINISH );
+      }
+		}
+		break;
+	}
+	
+	return( GMEVENT_RES_CONTINUE );
 }

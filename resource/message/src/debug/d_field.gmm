@@ -361,6 +361,51 @@
 		<language name="JPN_KANJI" width="160">ミュージカル</language>
 	</row>
 
+	<row id="DEBUG_FIELD_STR22">
+		<language name="JPN" width="160">じかん</language>
+		<language name="JPN_KANJI" width="160">時間</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR23">
+		<language name="JPN" width="160">08:00</language>
+		<language name="JPN_KANJI" width="160">08:00</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR24">
+		<language name="JPN" width="160">12:00</language>
+		<language name="JPN_KANJI" width="160">12:00</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR25">
+		<language name="JPN" width="160">18:00</language>
+		<language name="JPN_KANJI" width="160">18:00</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR26">
+		<language name="JPN" width="160">22:00</language>
+		<language name="JPN_KANJI" width="160">22:00</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR27">
+		<language name="JPN" width="160">02:00</language>
+		<language name="JPN_KANJI" width="160">02:00</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR28">
+		<language name="JPN" width="160">じかん600ばい</language>
+		<language name="JPN_KANJI" width="160">時間600倍</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR29">
+		<language name="JPN" width="160">じかん60ばい</language>
+		<language name="JPN_KANJI" width="160">時間60倍</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR30">
+		<language name="JPN" width="160">DSじかん</language>
+		<language name="JPN_KANJI" width="160">DS時間</language>
+	</row>
+
 	<row id="DEBUG_FIELD_STR_SPRING">
 		<language name="JPN" width="160">はる</language>
 		<language name="JPN_KANJI" width="160">春</language>

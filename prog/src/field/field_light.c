@@ -43,6 +43,19 @@
  *						小文字と”＿”と数字を使用する 関数の引数もこれと同じ
 */
 //-----------------------------------------------------------------------------
+#ifdef PM_DEBUG
+#define DEBUG_LIGHT_AUTO  // ライトを昼多めに
+#endif
+
+#ifdef DEBUG_LIGHT_AUTO
+static const u32 sc_DEBUG_LIGHT_AUTO_END_TIME[] = {
+  0, 7200, 7700, 8100,
+  9000, 14070, 21600, 30000, 34000,
+  36200, 37200, 38200, 39000, 42000, 43200,
+};
+#endif
+
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -1373,6 +1386,8 @@ static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID )
 	p_sys->default_lightno	= light_no;
 
 	FIELD_LIGHT_LoadDataEx( p_sys, LIGHT_ARC_ID, light_no, heapID );
+
+
 }
 
 //----------------------------------------------------------------------------
@@ -1400,6 +1415,11 @@ static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u
 		for( j=0; j<4; j++ ){
 			VEC_Fx16Normalize( &p_sys->p_data[i].light_vec[j], &p_sys->p_data[i].light_vec[j] );
 		}
+
+#ifdef DEBUG_LIGHT_AUTO
+    // 時間の部分を上書き
+    p_sys->p_data[i].endtime = sc_DEBUG_LIGHT_AUTO_END_TIME[i];
+#endif
 
 #if 0
 		// データのデバック表示
