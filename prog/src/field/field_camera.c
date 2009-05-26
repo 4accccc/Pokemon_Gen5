@@ -187,8 +187,9 @@ void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont)
 //------------------------------------------------------------------
 static void initGridParameter(FIELD_CAMERA * camera)
 {
+#if 0
 	enum { 
-		CAMERA_LENGTH = 0x78000,
+		CAMERA_LENGTH = 0x00e1000,//0x78000,
 		CAMERA_HEIGHT = 0xd8000,
 	};
 	//{ 0x78, 0xd8000 },	//DP‚Û‚¢
@@ -211,6 +212,10 @@ static void initGridParameter(FIELD_CAMERA * camera)
 		cos = VEC_DotProduct( &vec0, &vec1 );
 		camera->angle_pitch = FX_AcosIdx( cos );
 	}
+#endif
+
+  camera->angle_len = 0x00d5 * FX32_ONE;
+  camera->angle_pitch = 0x25d8;
 	
 	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
 	
