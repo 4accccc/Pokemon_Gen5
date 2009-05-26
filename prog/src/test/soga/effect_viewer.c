@@ -542,7 +542,8 @@ static	void	EffectViewerResourceLoad( EFFECT_VIEWER_WORK *evw )
 		head = SEND_IDLE;
 		MCS_Write( MCS_WRITE_CH, &head, 4 );
 		evw->seq_no = SEQ_IDLE;
-		OS_TPrintf("resource_data load:%d\n",size);
+		OS_TPrintf("resource_data adrs:%08x\n",evw->resource_data);
+		OS_TPrintf("resource_data size:%d\n",size);
 	}
 }
 
@@ -1058,7 +1059,7 @@ static	void	set_pokemon( EFFECT_VIEWER_WORK *evw )
 	POKEMON_PARAM	*pp = GFL_HEAP_AllocMemory( evw->heapID, POKETOOL_GetWorkSize() );
 	PP_SetupEx( pp, 0, 0, 0, 0, 255 );
 	
-	PP_Put( pp, ID_PARA_monsno, MONSNO_RIZAADON );
+	PP_Put( pp, ID_PARA_monsno, MONSNO_WANIGURASU );
 	PP_Put( pp, ID_PARA_id_no, 0x10 );
 	BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
 	BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );

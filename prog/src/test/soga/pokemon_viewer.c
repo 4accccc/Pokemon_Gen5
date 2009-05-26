@@ -702,6 +702,7 @@ static	BOOL	PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
 			{	
 				pvw->mons_no[ pvw->edit_pos ] += 100;
 			}
+#if 0
 			if( pvw->mons_no[ pvw->edit_pos ] < 0 )
 			{	
 				pvw->mons_no[ pvw->edit_pos ] += NEW_POKEMON_END + 1;
@@ -710,6 +711,16 @@ static	BOOL	PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
 			{	
 				pvw->mons_no[ pvw->edit_pos ] -= NEW_POKEMON_END + 1;
 			}
+#else
+			if( pvw->mons_no[ pvw->edit_pos ] < 0 )
+			{	
+				pvw->mons_no[ pvw->edit_pos ] += MONSNO_END + 1;
+			}
+			if( pvw->mons_no[ pvw->edit_pos ] > MONSNO_END )
+			{	
+				pvw->mons_no[ pvw->edit_pos ] -= MONSNO_END + 1;
+			}
+#endif
 			if( rep != 0 )
 			{	
 				if( BTLV_EFFECT_CheckExistPokemon( pvw->edit_pos ) == TRUE ){
@@ -972,6 +983,7 @@ static	void	PokemonViewerDrawInfo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
 //======================================================================
 static	void	PokemonViewerPP_Put( POKEMON_VIEWER_WORK *pvw, int mons_no )
 {	
+#if 0
 	if( mons_no >= NEW_POKEMON_START )
 	{	
 		mons_no -= NEW_POKEMON_START;
@@ -981,6 +993,16 @@ static	void	PokemonViewerPP_Put( POKEMON_VIEWER_WORK *pvw, int mons_no )
 	{	
 		mons_no = 0;
 	}
+#else
+	if( mons_no < 0 )
+	{	
+		mons_no = MONSNO_END;
+	}
+	else if( mons_no > MONSNO_END )
+	{	
+		mons_no = 0;
+	}
+#endif
 	PP_Put( pvw->pp, ID_PARA_monsno, mons_no );
 }
 

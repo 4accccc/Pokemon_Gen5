@@ -302,6 +302,7 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 #endif
 
 	BTLV_EFFECT_SetTrainer( 0, BTLV_MCSS_POS_AA, 128, 80 );
+	BTLV_MCSS_SetPaletteFade( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB, 16, 0, 8, 0 );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -537,7 +538,7 @@ static	void	set_pokemon( SOGA_WORK *wk )
 	else{
 #ifdef BTLV_MCSS_1vs1
 //1vs1
-		PP_Put( pp, ID_PARA_monsno, MONSNO_RIZAADON );
+		PP_Put( pp, ID_PARA_monsno, MONSNO_WANIGURASU );
 		PP_Put( pp, ID_PARA_id_no, 0x10 );
 		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
 		BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
