@@ -1,7 +1,39 @@
-#include "event_t01.h"
-#include "event_t01r0101.h"
-#include "event_t01r0102.h"
-#include "event_t01r0201.h"
+//#include "event_t01.h"
+//このファイルはdata/t01.mevから自動生成されました
+#ifndef ZONE_T01_EVD_H
+#define ZONE_T01_EVD_H
+
+#define DOOR_ID_T01_EXIT01                0
+#define DOOR_ID_T01_EXIT02                1
+#define DOOR_ID_T01_EXIT03                2
+
+#endif //ZONE_T01_EVD_H
+//#include "event_t01r0101.h"
+//このファイルはdata/t01r0101.mevから自動生成されました
+#ifndef ZONE_T01R0101_EVD_H
+#define ZONE_T01R0101_EVD_H
+
+#define DOOR_ID_T01R0101_EXIT01           0
+#define DOOR_ID_T01R0101_EXIT02           1
+#define DOOR_ID_T01R0101_EXIT03           2
+
+#endif //ZONE_T01R0101_EVD_H
+//#include "event_t01r0102.h"
+//このファイルはdata/t01r0102.mevから自動生成されました
+#ifndef ZONE_T01R0102_EVD_H
+#define ZONE_T01R0102_EVD_H
+
+
+#endif //ZONE_T01R0102_EVD_H
+//#include "event_t01r0201.h"
+//このファイルはdata/t01r0201.mevから自動生成されました
+#ifndef ZONE_T01R0201_EVD_H
+#define ZONE_T01R0201_EVD_H
+
+#define DOOR_ID_T01R0201_EXIT01           0
+#define DOOR_ID_T01R0201_EXIT02           1
+
+#endif //ZONE_T01R0201_EVD_H
 
 const CONNECT_DATA ConnectData_T01[] = {
 	{//DOOR_ID_T01_EXIT01 = 0

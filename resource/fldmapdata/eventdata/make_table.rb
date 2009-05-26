@@ -14,7 +14,9 @@ begin
 
   ARGV.each{|filename|
     File.open(filename){|file|
-      header += "\#include \"#{File.basename(filename, ".*")}.h\"\n"
+      headername = "#{File.basename(filename,".*")}.h"
+      header += "//\#include \"#{File.basename(filename, ".*")}.h\"\n"
+      header += File.open(headername).read
       id = File.basename(filename,".*").sub(/^event_/,"")
       footer += "\t{ ZONE_ID_#{id.upcase}, &event_#{id} },\n"
       contents += file.read
