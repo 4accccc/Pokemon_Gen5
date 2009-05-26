@@ -207,6 +207,7 @@ static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork);
 static BOOL _modeSelectChangeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork);
 static void _modeSelectChangWait(IRC_BATTLE_MENU* pWork);
 static void _modeSelectChangeInit(IRC_BATTLE_MENU* pWork);
+static void _buttonWindowDelete(IRC_BATTLE_MENU* pWork);
 
 
 
@@ -326,44 +327,51 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork)
   u32 cgx;
   int frame = GFL_BG_FRAME1_S;
 
+	//_buttonWindowDelete(pWork);
+
   pWork->windowNum = num;
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-
+	
   for(i=0;i < num;i++){
     _WINDOWPOS* pos = wind4;
 
 		GFL_FONTSYS_SetDefaultColor();
-
-    pWork->buttonWin[i] = GFL_BMPWIN_Create(
-      frame,
-      pos[i].leftx, pos[i].lefty,
-      pos[i].width, pos[i].height,
-      _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+		if(pWork->buttonWin[i]==NULL){
+			pWork->buttonWin[i] = GFL_BMPWIN_Create(
+				frame,
+				pos[i].leftx, pos[i].lefty,
+				pos[i].width, pos[i].height,
+				_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+		}
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
     GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
-    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-    BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
+//    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+		BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
     // システムウインドウ枠描画
-
     GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
     GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
 
   }
-#if 1
-  for(i=num;i < _WINDOW_MAXNUM;i++){
+
+
+	if(pWork->pButton){
+		GFL_BMN_Delete(pWork->pButton);
+	}
+  pWork->pButton = NULL;
+	 
+  for(i = num;i < _WINDOW_MAXNUM;i++){
 		if(pWork->buttonWin[i]){
-			GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
-			GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+			GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
+			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+			BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
 			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
 		}
-		pWork->buttonWin[i]=NULL;
-	}
-#endif
-	GFL_BG_LoadScreenReq(GFL_BG_FRAME1_S);
-
+    pWork->buttonWin[i] = NULL;
+  }
+	 
 }
 
 //----------------------------------------------------------------------------
@@ -380,12 +388,18 @@ static void _buttonWindowDelete(IRC_BATTLE_MENU* pWork)
 {
   int i;
 
-  GFL_BMN_Delete(pWork->pButton);
+	if(pWork->pButton){
+		GFL_BMN_Delete(pWork->pButton);
+	}
   pWork->pButton = NULL;
   for(i=0;i < _WINDOW_MAXNUM;i++){
 		if(pWork->buttonWin[i]){
-			GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
-			GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+			GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
+			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+			BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
+			
+//			GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
+//			GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
 			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
 		}
     pWork->buttonWin[i] = NULL;
@@ -484,7 +498,7 @@ static void _workEnd(IRC_BATTLE_MENU* pWork)
 {
   GFL_FONTSYS_SetDefaultColor();
 
-  //    _buttonWindowDelete(pWork);
+	_buttonWindowDelete(pWork);
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
@@ -523,18 +537,15 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   case _SELECTMODE_BATTLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
 		_CHANGE_STATE(pWork,_modeSelectEntryNumInit);
-    _buttonWindowDelete(pWork);
     return TRUE;
   case _SELECTMODE_POKE_CHANGE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGE_STATE(pWork,_modeSelectChangeInit);
-    _buttonWindowDelete(pWork);
     return TRUE;
 	case _SELECTMODE_COMPATIBLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_COMPATIBLE;
     _CHANGE_STATE(pWork,NULL);        // 相性診断モードへ移るために終了
-    _buttonWindowDelete(pWork);
 		return TRUE;
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
@@ -542,7 +553,6 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
 										WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
     _CHANGE_STATE(pWork,_modeFadeout);        // 終わり
-    _buttonWindowDelete(pWork);
     return TRUE;
   default:
     break;
@@ -594,12 +604,10 @@ static BOOL _modeSelectChangeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   case _CHANGE_FRIENDCHANGE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
-    _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeReportInit);
     return TRUE;
   case _ENTRYNUM_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
 	default:
     break;
@@ -654,18 +662,15 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   switch(bttnid){
   case _ENTRYNUM_DOUBLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeSelectBattleTypeInit);
     return TRUE;
   case _ENTRYNUM_FOUR:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_MULTH;
-    _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeReportInit);
     return TRUE;
   case _ENTRYNUM_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
     return TRUE;
   default:
@@ -707,24 +712,24 @@ static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWor
   case _SELECTBT_SINGLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
-    _buttonWindowDelete(pWork);
+  //  _buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeReportInit);
     break;
   case _SELECTBT_DOUBLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
-    _buttonWindowDelete(pWork);
+    //_buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeReportInit);
     break;
   case _SELECTBT_TRI:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRI;
-    _buttonWindowDelete(pWork);
+    //_buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeReportInit);
     break;
   default:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    _buttonWindowDelete(pWork);
+    //_buttonWindowDelete(pWork);
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
     break;
   }

@@ -1057,6 +1057,14 @@
 		<language name="JPN" width="256">HURU</language>
 		<language name="JPN_KANJI" width="256">HURU</language>
 	</row>
+	<row id="msg_seq_se_dansa">
+		<language name="JPN" width="256">DANSA</language>
+		<language name="JPN_KANJI" width="256">DANSA</language>
+	</row>
+	<row id="msg_seq_se_wall_hit">
+		<language name="JPN" width="256">WALL-HIT</language>
+		<language name="JPN_KANJI" width="256">WALL-HIT</language>
+	</row>
 	<row id="msg_seq_se_pl_w012">
 		<language name="JPN" width="256">PL-W012</language>
 		<language name="JPN_KANJI" width="256">PL-W012</language>
@@ -1705,10 +1713,6 @@
 		<language name="JPN" width="256">CARD2</language>
 		<language name="JPN_KANJI" width="256">CARD2</language>
 	</row>
-	<row id="msg_seq_se_wall_hit">
-		<language name="JPN" width="256">WALL-HIT</language>
-		<language name="JPN_KANJI" width="256">WALL-HIT</language>
-	</row>
 	<row id="msg_seq_se_wall_hit2">
 		<language name="JPN" width="256">WALL-HIT2</language>
 		<language name="JPN_KANJI" width="256">WALL-HIT2</language>
@@ -1744,10 +1748,6 @@
 	<row id="msg_seq_se_dummy3">
 		<language name="JPN" width="256">DUMMY3</language>
 		<language name="JPN_KANJI" width="256">DUMMY3</language>
-	</row>
-	<row id="msg_seq_se_dansa">
-		<language name="JPN" width="256">DANSA</language>
-		<language name="JPN_KANJI" width="256">DANSA</language>
 	</row>
 	<row id="msg_seq_se_pc_on">
 		<language name="JPN" width="256">PC-ON</language>
