@@ -126,6 +126,7 @@ static void ms_set_omitoosi( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_change_poke_type( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_item_common( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_kinomi_rankup( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_waza_sp( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_item_recover_pp( STRBUF* dst, u16 strID, const int* args );
 
 
@@ -418,26 +419,27 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     u16   strID;
     void  (* func)( STRBUF*, u16, const int* );
   }funcTbl[] = {
-    { BTL_STRID_SET_Rankup_ATK,     ms_set_rankup     },
-    { BTL_STRID_SET_Rankdown_ATK,   ms_set_rankdown   },
-    { BTL_STRID_SET_RankupMax_ATK,  ms_set_rank_limit },
-    { BTL_STRID_SET_RankdownMin_ATK,ms_set_rank_limit },
-    { BTL_STRID_SET_Trace,          ms_set_trace      },
-    { BTL_STRID_SET_YotimuExe,      ms_set_yotimu     },
-    { BTL_STRID_SET_Omitoosi,       ms_set_omitoosi   },
-    { BTL_STRID_SET_ChangePokeType, ms_set_change_poke_type },
-    { BTL_STRID_SET_UseItem_RecoverHP, ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureDoku, ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureMahi, ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureNemuri, ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureKoori,  ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureYakedo, ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureKonran, ms_set_item_common },
-    { BTL_STRID_SET_UseItem_RecoverLittle, ms_set_item_common },
-    { BTL_STRID_SET_RankRecoverItem,  ms_set_item_common },
-    { BTL_STRID_SET_KoraeItem,  ms_set_item_common },
-    { BTL_STRID_SET_UseItem_Rankup_ATK, ms_set_kinomi_rankup },
-    { BTL_STRID_SET_UseItem_RecoverPP, ms_set_item_recover_pp },
+    { BTL_STRID_SET_Rankup_ATK,           ms_set_rankup     },
+    { BTL_STRID_SET_Rankdown_ATK,         ms_set_rankdown   },
+    { BTL_STRID_SET_RankupMax_ATK,        ms_set_rank_limit },
+    { BTL_STRID_SET_RankdownMin_ATK,      ms_set_rank_limit },
+    { BTL_STRID_SET_Trace,                ms_set_trace      },
+    { BTL_STRID_SET_YotimuExe,            ms_set_yotimu     },
+    { BTL_STRID_SET_Omitoosi,             ms_set_omitoosi   },
+    { BTL_STRID_SET_ChangePokeType,       ms_set_change_poke_type },
+    { BTL_STRID_SET_UseItem_RecoverHP,    ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureDoku,     ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureMahi,     ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureNemuri,   ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureKoori,    ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureYakedo,   ms_set_item_common },
+    { BTL_STRID_SET_UseItem_CureKonran,   ms_set_item_common },
+    { BTL_STRID_SET_UseItem_RecoverLittle,ms_set_item_common },
+    { BTL_STRID_SET_RankRecoverItem,      ms_set_item_common },
+    { BTL_STRID_SET_KoraeItem,            ms_set_item_common },
+    { BTL_STRID_SET_UseItem_Rankup_ATK,   ms_set_kinomi_rankup },
+    { BTL_STRID_SET_UseItem_RecoverPP,    ms_set_item_recover_pp },
+    { BTL_STRID_SET_KaifukuFuji,          ms_set_waza_sp },
 
   };
 
@@ -595,6 +597,26 @@ static void ms_set_item_common( STRBUF* dst, u16 strID, const int* args )
  */
 //--------------------------------------------------------------
 static void ms_set_kinomi_rankup( STRBUF* dst, u16 strID, const int* args )
+{
+  u8 statusType = args[1] - WAZA_RANKEFF_ORIGIN;
+  if( args[2] > 1 )
+  {
+    strID += (SETTYPE_MAX * WAZA_RANKEFF_NUMS);
+  }
+  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+  WORDSET_RegisterItemName( SysWork.wset, 1, args[3] );
+
+  strID = get_setPtnStrID( args[0], strID, statusType );
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+//--------------------------------------------------------------
+/**
+ *  ››‚Í@‚©‚¢‚Ó‚­‚Ó‚¤‚¶‚Å  ~~‚ªŽg‚¦‚È‚¢I@‚È‚Ç
+ *  args... [0]:pokeID  [1]:wazaID
+ */
+//--------------------------------------------------------------
+static void ms_set_waza_sp( STRBUF* dst, u16 strID, const int* args )
 {
   u8 statusType = args[1] - WAZA_RANKEFF_ORIGIN;
   if( args[2] > 1 )

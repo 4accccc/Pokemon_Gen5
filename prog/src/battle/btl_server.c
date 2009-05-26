@@ -9,6 +9,7 @@
 //=============================================================================================
 #include <gflib.h>
 #include "waza_tool\wazadata.h"
+#include "sound\pm_sndsys.h"
 
 #include "btl_common.h"
 #include "btl_client.h"
@@ -432,6 +433,8 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
         {
 //          server->quitStep = QUITSTEP_REQ;
         }
+        PMSND_PlayBGM( SEQ_WIN1 );
+//        (*seq) =
         return TRUE;
       }
     }

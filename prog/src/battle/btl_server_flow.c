@@ -8,6 +8,7 @@
  */
 //=============================================================================================
 #include <gflib.h>
+#include "sound\pm_sndsys.h"
 #include "waza_tool\wazadata.h"
 #include "waza_tool\wazano_def.h"
 #include "item\item.h"
@@ -244,6 +245,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_
 static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
   WazaRankEffect effect, int volume, u16 itemID, BOOL fAlmost );
 static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targetRec );
+static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker );
 static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, TARGET_POKE_REC* targets );
 static void svflowsub_MakeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* receiver, BTL_POKEPARAM* attacker,
     WazaSick sick, BPP_SICK_CONT contParam, BOOL fAlmost );
@@ -489,7 +491,9 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
         break;
       case BTL_ACTION_ESCAPE:
         BTL_Printf("【にげる】を処理。\n");
-        if( scput_Nigeru( wk, clientID, pokeIdx ) ){
+        if( scput_Nigeru( wk, clientID, pokeIdx ) )
+        {
+          PMSND_PlaySE( SEQ_SE_NIGERU );
           SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeSuccess );
           wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
         } else {
@@ -1022,7 +1026,7 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 pok
   party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
 
-  GF_ASSERT(pokeIdx < clwk->numCoverPos);
+  GF_ASSERT_MSG(pokeIdx < clwk->numCoverPos, "pokeIdx=%d, clientID=%d, numCoverPos=%d", pokeIdx, clientID, clwk->numCoverPos);
 
   if( posIdx != pokeIdx )
   {
@@ -1194,8 +1198,9 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   case WAZADATA_CATEGORY_PUSHOUT:
     scproc_Fight_PushOut( wk, waza, attacker, &wk->targetPokemon );
     break;
-
-//  case WAZADATA_CATEGORY_SIMPLE_RECOVER:
+  case WAZADATA_CATEGORY_SIMPLE_RECOVER:
+    scproc_Fight_SimpleRecover( wk, waza, attacker );
+    break;
 //  case WAZADATA_CATEGORY_BIND:
 //  case WAZADATA_CATEGORY_GUARD:
 //  case WAZADATA_CATEGORY_FIELD_EFFECT:
@@ -2639,6 +2644,18 @@ static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
     {
       scPut_WazaAvoid( wk, target, waza );
     }
+  }
+}
+//---------------------------------------------------------------------------------------------
+// サーバーフロー：一撃ワザ処理
+//---------------------------------------------------------------------------------------------
+static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker )
+{
+  if( BTL_POKEPARAM_CheckSick(attacker, WAZASICK_KAIHUKUHUUJI) )
+  {
+    u8 pokeID = BTL_POKEPARAM_GetID( attacker );
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFuji, pokeID, waza );
+    return;
   }
 }
 //---------------------------------------------------------------------------------------------
