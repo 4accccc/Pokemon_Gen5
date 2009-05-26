@@ -994,7 +994,8 @@ static void settingCamera( TALKMSGWIN_SYS* tmsgwinSys, int mode )
 	VecFx32		vec, pos, up, target;
 	
 	VEC_Subtract(&tmsgwinSys->camPosBackUp, &tmsgwinSys->camTargetBackUp, &vec);
-	VEC_Set(&pos, 0, 0, VEC_Mag(&vec));
+	//VEC_Set(&pos, 0, 0, VEC_Mag(&vec));
+	VEC_Set(&pos, vec.x, vec.y, vec.z);
 	VEC_Set(&up, 0, FX32_ONE, 0);
 	VEC_Set(&target, 0, 0, 0);
 

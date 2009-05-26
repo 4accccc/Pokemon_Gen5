@@ -118,7 +118,7 @@ typedef struct {
 
 	TALKMSGWIN_SYS*			tmsgwinSys;
 	int									tmsgwinIdx;
-	VecFx32							tmsgTarget;
+	VecFx32							cameraTarget;
 	BOOL								tmsgwinConnect;
 
 	STRBUF*							strBuf[TALKMSGWIN_NUM];
@@ -267,10 +267,10 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 
 	case 1:
 		if( sw->testPat == 0 ){
-			VEC_Set(&sw->tmsgTarget,0,0,0);
+			VEC_Set(&sw->cameraTarget,0,0,0);
 			GFL_BG_SetBackGroundColor( TEXT_FRAME, BACKGROUND_COLOR );
 		} else {
-			VEC_Set(&sw->tmsgTarget,0x10000*FX32_ONE,0,0*FX32_ONE);
+			VEC_Set(&sw->cameraTarget,0x10000*FX32_ONE,0,0*FX32_ONE);
 			GFL_BG_SetBackGroundColor( TEXT_FRAME, BACKGROUND_COLOR2 );
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
@@ -310,8 +310,8 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 			if( GFL_UI_TP_GetPointTrg( &tpx, &tpy ) == TRUE ){
 				makeStr(testMsg, sw->strBuf[0]);
 				calcTarget(	sw->g3Dcamera, tpx, tpy, &sw->twinTarget[0]);
-				//sw->twinTarget[0] = sw->tmsgTarget;
-				//sw->tmsgTarget.y -= 8*FX32_ONE;
+				//sw->twinTarget[0] = sw->cameraTarget;
+				//sw->cameraTarget.y -= 8*FX32_ONE;
 
 				TALKMSGWIN_CreateFixWindowAuto
 					(sw->tmsgwinSys, 0, &sw->twinTarget[0], sw->strBuf[0], 15);
@@ -595,13 +595,50 @@ static void systemFramework(SAMPLE3_WORK* sw)
 		// カメラの座標計算
 		VEC_Set( &vecCamera, sinYaw * cosPitch, sinPitch * FX16_ONE, cosYaw * cosPitch);
 		VEC_Normalize(&vecCamera, &vecCamera);
-		VEC_MultAdd(sw->cameraLength, &vecCamera, &sw->tmsgTarget, &cameraPos);
+		VEC_MultAdd(sw->cameraLength, &vecCamera, &sw->cameraTarget, &cameraPos);
 
-		GFL_G3D_CAMERA_SetTarget(sw->g3Dcamera, &sw->tmsgTarget);
+		GFL_G3D_CAMERA_SetTarget(sw->g3Dcamera, &sw->cameraTarget);
 		GFL_G3D_CAMERA_SetPos(sw->g3Dcamera, &cameraPos);
 	}
 	TALKMSGWIN_SystemMain(sw->tmsgwinSys);
 	TALKMSGWIN_SystemDraw2D(sw->tmsgwinSys);
+
+	{
+		VecFx32 pos, up, target;
+
+		G3X_Reset();
+
+		GFL_G3D_CAMERA_GetPos(sw->g3Dcamera, &pos);
+		GFL_G3D_CAMERA_GetCamUp(sw->g3Dcamera, &up);
+		GFL_G3D_CAMERA_GetTarget(sw->g3Dcamera, &target);
+		G3_LookAt(&pos, &up, &target, NULL);
+
+		G3_PushMtx();
+		//平行移動パラメータ設定
+		G3_Translate(sw->cameraTarget.x, sw->cameraTarget.y, sw->cameraTarget.z);
+
+		//グローバルスケール設定
+		G3_Scale(32 * FX32_ONE, 32 * FX32_ONE, 32 * FX32_ONE);
+
+		G3_TexImageParam(GX_TEXFMT_NONE, GX_TEXGEN_NONE, 0, 0, 0, 0, GX_TEXPLTTCOLOR0_USE, 0);
+	
+		//マテリアル設定
+		G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE);
+		G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
+		G3_PolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 63, 31, 0);
+		
+		G3_Begin( GX_BEGIN_QUADS );
+	
+		G3_Color(GX_RGB(31,0,0));
+	
+		G3_Vtx(-(FX16_ONE-1), 0, (FX16_ONE-1));
+		G3_Vtx(-(FX16_ONE-1), 0, -(FX16_ONE-1));
+		G3_Vtx((FX16_ONE-1), 0, -(FX16_ONE-1));
+		G3_Vtx((FX16_ONE-1), 0, (FX16_ONE-1));
+	
+		G3_End();
+		G3_PopMtx(1);
+	}
 
 	//３Ｄ描画
 	GFL_G3D_DRAW_Start();			//描画開始
@@ -621,7 +658,7 @@ static void systemFramework(SAMPLE3_WORK* sw)
 				GFL_G3D_OBJSTATUS status;
 
 				status = g3DobjStatus1;
-				status.trans = sw->tmsgTarget;
+				status.trans = sw->cameraTarget;
 				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
 			}
 
@@ -815,10 +852,14 @@ static BOOL commSetMsg(SAMPLE3_WORK* sw)
 
 	makeStr(testMsgTbl[sw->msgComm.commParam[5]], sw->strBuf[winIdx]);
 	
-	calcTarget(	sw->g3Dcamera, 
-							sw->msgComm.commParam[6], 
-							sw->msgComm.commParam[7], 
-							&sw->twinTarget[winIdx]);
+//	calcTarget(	sw->g3Dcamera, 
+//							sw->msgComm.commParam[6], 
+//							sw->msgComm.commParam[7], 
+//							&sw->twinTarget[winIdx]);
+	VEC_Set(&sw->twinTarget[winIdx], 
+					sw->cameraTarget.x + 16*FX32_ONE,
+					sw->cameraTarget.y - 16*FX32_ONE,
+					sw->cameraTarget.z + 16*FX32_ONE);
 
 	TALKMSGWIN_CreateFloatWindowIdx(	sw->tmsgwinSys,
 																		winIdx,
