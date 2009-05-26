@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-05-07T15:57:24" source="d4_ruins_02b.mb"/>
+	<create user="fuchino" host="W00152" date="2009-05-26T20:35:56"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -303,7 +303,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -327,7 +327,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -351,7 +351,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -375,7 +375,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -399,7 +399,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -1959,6 +1959,41 @@
 
 <output_info vertex_size="582" polygon_size="151"
 	triangle_size="16" quad_size="135"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="5">
+		<ex_tex_image index="0" disp_pos="-240.000000 300.000000"/>
+		<ex_tex_image index="1" disp_pos="-120.000000 300.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 300.000000"/>
+		<ex_tex_image index="3" disp_pos="120.000000 300.000000"/>
+		<ex_tex_image index="4" disp_pos="240.000000 300.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="5">
+		<ex_tex_palette index="0" disp_pos="-240.000000 360.000000"/>
+		<ex_tex_palette index="1" disp_pos="-120.000000 360.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 360.000000"/>
+		<ex_tex_palette index="3" disp_pos="120.000000 360.000000"/>
+		<ex_tex_palette index="4" disp_pos="240.000000 360.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="5">
+		<ex_material index="0" disp_pos="-240.000000 240.000000"/>
+		<ex_material index="1" disp_pos="-120.000000 240.000000"/>
+		<ex_material index="2" disp_pos="0.000000 240.000000"/>
+		<ex_material index="3" disp_pos="120.000000 240.000000"/>
+		<ex_material index="4" disp_pos="240.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="5">
+		<ex_polygon index="0" disp_pos="120.000000 180.000000"/>
+		<ex_polygon index="1" disp_pos="240.000000 180.000000"/>
+		<ex_polygon index="2" disp_pos="-240.000000 180.000000"/>
+		<ex_polygon index="3" disp_pos="-120.000000 180.000000"/>
+		<ex_polygon index="4" disp_pos="0.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
