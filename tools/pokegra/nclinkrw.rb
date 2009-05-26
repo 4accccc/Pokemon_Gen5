@@ -26,13 +26,15 @@
 	TYPE_NCE = 1
 	TYPE_NCG = 2
 
-	head = [ "NCMC", "NCOB", "NCCG" ]
+	head = [ "NCMC", "NCOB", "NCOB", "NCCG" ]
 
 	signature = [
 		#NMC
 		[ "MCEL", "CCTL", "GRP ", "ANIM", "ACTL", "LABL", "CMNT", "CCMT", "ECMT", "FCMT", "CLBL" ],
-		#NCE
+		#NCE 2D
 		[ "CELL", "CNUM", "GRP ", "ANIM", "ACTL", "MODE", "LABL", "CMNT", "CCMT", "ECMT", "FCMT", "CLBL", "EXTR" ],
+		#NCE 1D
+		[ "CELL", "CNUM", "CHAR", "GRP ", "ANIM", "ACTL", "MODE", "LABL", "CMNT", "CCMT", "ECMT", "FCMT", "CLBL", "EXTR" ],
 		#NCG
 		[ "CHAR", "ATTR" ]
 	]
@@ -130,7 +132,14 @@
 	size = 8 + file_name.size 
 	padding = 4 - ( size % 4 )
 	size += padding
-	
+
+	current_file = File::basename( read_file )
+
+	#コピーしてダミーファイルを作っている場合があるので、ナンバーをあわせておく
+	if( file_name[ 5..7 ] != current_file[ 5..7 ] )
+		file_name[ 5..7 ] = current_file[ 5..7 ]
+	end
+
 	data = [ "LINK", size, file_name ].pack("a* l a*") 
 
 	padding.times{
