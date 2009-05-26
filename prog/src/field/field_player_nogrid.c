@@ -150,7 +150,7 @@ static void nogridPC_Move_SetValue( FIELD_PLAYER *fld_player,
 	}
 	
 	if( mvFlag == TRUE ){
-		FLDMMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK);
+		FLDMMDL_SetDrawStatus(fmmdl,DRAW_STA_WALK_8F);
 	} else {
 		FLDMMDL_SetDrawStatus(fmmdl,DRAW_STA_STOP);
 	}
