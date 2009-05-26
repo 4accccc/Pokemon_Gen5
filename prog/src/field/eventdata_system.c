@@ -54,6 +54,21 @@ struct _EVDATA_SYS {
 };
 
 
+typedef struct {
+
+  u8 bg_count;
+  u8 npc_count;
+  u8 connect_count;
+  u8 pos_count;
+
+  void * bg_data;
+  void * npc_data;
+  void * connect_data;
+  void * pos_data;
+
+}EVENTDATA_TABLE;
+
+
 extern const CONNECT_DATA SampleConnectData[];
 extern const int SampleConnectDataCount;
 extern const CONNECT_DATA SampleConnectData_testpc[];
@@ -65,6 +80,10 @@ extern const int SampleConnectDataCount_4season;
 extern const FLDMMDL_HEADER SampleFldMMdlHeader_4season[];
 extern const int SampleFldMMdlHeaderCount_4season;
 
+#include "arc/fieldmap/zone_id.h"
+#include "../../../resource/fldmapdata/eventdata/event_t01.h"
+#include "../../../resource/fldmapdata/eventdata/event_t01r0101.h"
+#include "../../../resource/fldmapdata/eventdata/event_t01r0102.h"
 //仮動作モデル配置データ
 #include "../../../resource/fldmapdata/eventdata/zone_t01evc.cdat"
 #include "../../../resource/fldmapdata/eventdata/zone_t01r0101evc.cdat"
@@ -75,6 +94,14 @@ extern const int SampleFldMMdlHeaderCount_4season;
 #include "../../../resource/fldmapdata/eventdata/zone_t02evc.cdat"
 #include "../../../resource/fldmapdata/eventdata/zone_t02pc0101evc.cdat"
 
+#include "../../../resource/fldmapdata/eventdata/event_t01.cdat"
+#include "../../../resource/fldmapdata/eventdata/event_t01r0101.cdat"
+#include "../../../resource/fldmapdata/eventdata/event_t01r0102.cdat"
+
+
+//============================================================================================
+//============================================================================================
+static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, const EVENTDATA_TABLE * tbl);
 
 //============================================================================================
 //
@@ -142,6 +169,7 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 		evdata->npc_data = SampleFldMMdlHeader_4season;
 		break;
 	case ZONE_ID_T01:
+    loadEventDataTable(evdata, &event_t01);
 		evdata->npc_count = SampleFldMMdlHeaderCount_T01;
 		evdata->npc_data = SampleFldMMdlHeader_T01;
 		break;
@@ -154,9 +182,13 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 		evdata->npc_data = SampleFldMMdlHeader_R01;
 		break;
 	case ZONE_ID_T01R0101:
+    loadEventDataTable(evdata, &event_t01r0101);
 		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0101;
 		evdata->npc_data = SampleFldMMdlHeader_t01r0101;
 		break;
+  case ZONE_ID_T01R0102:
+    loadEventDataTable(evdata, &event_t01r0102);
+    break;
 	case ZONE_ID_T01R0201:
 		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0201;
 		evdata->npc_data = SampleFldMMdlHeader_t01r0201;
@@ -176,6 +208,19 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 	}
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, const EVENTDATA_TABLE * tbl)
+{
+  evdata->npc_count = tbl->npc_count;
+  evdata->npc_data = tbl->npc_data;
+  evdata->connect_count = tbl->connect_count;
+  evdata->connect_data = tbl->connect_data;
+  evdata->bg_count = tbl->bg_count;
+  evdata->bg_data = tbl->bg_data;
+  evdata->pos_count = tbl->pos_count;
+  evdata->pos_data = tbl->pos_data;
+}
 
 //============================================================================================
 //

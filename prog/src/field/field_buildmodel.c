@@ -260,7 +260,7 @@ u16 FIELD_BMODEL_MAN_GetEntryIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
 	u16 entry;
 	GF_ASSERT(id < BMODEL_ID_MAX);
 	entry = man->IDToEntryTable[id];
-	TAMADA_Printf("bmodel: id(%d) -->entry_index(%d)\n",id, entry);
+	//TAMADA_Printf("bmodel: id(%d) -->entry_index(%d)\n",id, entry);
 	return entry;
 }
 
@@ -295,7 +295,7 @@ static void loadBModelIDList(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id)
   ARCHANDLE * hdl = GFL_ARC_OpenDataHandle(arc_id, man->heapID);
   u16 data_count = GFL_ARC_GetDataFileCntByHandle(hdl);
 
-  TAMADA_Printf("bmodel list id = %d\n",file_id);
+  //TAMADA_Printf("bmodel list id = %d\n",file_id);
   if (data_count < file_id)
   {	
     GF_ASSERT_MSG(0, "配置モデルリストデータがありません(%d<%d)\n", data_count, file_id);
@@ -312,7 +312,7 @@ static void loadBModelIDList(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id)
 			man->entryCount = BMODEL_ENTRY_MAX;	//とりあえずハングアップ回避
 			size = sizeof(man->entryToIDTable);
 		}
-		TAMADA_Printf("entryCount=%d\n", man->entryCount);
+		//TAMADA_Printf("entryCount=%d\n", man->entryCount);
 		GFL_ARC_LoadDataOfsByHandle(hdl, file_id, 0, size, man->entryToIDTable);
 	}
 	GFL_ARC_CloseDataHandle(hdl);
@@ -486,14 +486,14 @@ static void FIELD_BMANIME_DATA_dump(const FIELD_BMANIME_DATA * data)
   int i;
   int type = data->anm_type;
   if (type >= BMANIME_TYPE_MAX) type = 3;
-  TAMADA_Printf("FIELD_BMANIME_DATA:");
-  TAMADA_Printf("%s, %d\n", animetype[data->anm_type], type);
-  TAMADA_Printf("%d %d %d\n",data->prg_type, data->anm_count, data->set_count);
+  //TAMADA_Printf("FIELD_BMANIME_DATA:");
+  //TAMADA_Printf("%s, %d\n", animetype[data->anm_type], type);
+  //TAMADA_Printf("%d %d %d\n",data->prg_type, data->anm_count, data->set_count);
   for (i = 0; i < BMANIME_ID_COUNT_MAX; i++)
   {
-    TAMADA_Printf("%04x ", data->anm_id[i]);
+    //TAMADA_Printf("%04x ", data->anm_id[i]);
   }
-  TAMADA_Printf("\n");
+  //TAMADA_Printf("\n");
 }
 #endif
 
@@ -510,18 +510,18 @@ static void loadAnimeData(FIELD_BMODEL_MAN * man, u16 file_id)
 
   { 
     int count = GFL_ARC_GetDataSizeByHandle(info_hdl, file_id) / sizeof(u16);
-    TAMADA_Printf("BModel <--> anime table (%d)\n",count);
+    //TAMADA_Printf("BModel <--> anime table (%d)\n",count);
     for (i = 0; i < count ; i++)
     { 
       GFL_ARC_LoadDataOfsByHandle(info_hdl, file_id, i * sizeof(u16), sizeof(u16), &anime_id);
-      TAMADA_Printf("%03d %04x\n", i, anime_id);
+      //TAMADA_Printf("%03d %04x\n", i, anime_id);
     }
   }
   for (i = 0; i < man->entryCount; i++)
   { 
     BMODEL_ID id = man->entryToIDTable[i];
     GFL_ARC_LoadDataOfsByHandle(info_hdl, file_id, id * sizeof(u16), sizeof(u16), &anime_id);
-    TAMADA_Printf("bmodel: entry ID(%d) --> anime_id(%d)\n", id, anime_id);
+    //TAMADA_Printf("bmodel: entry ID(%d) --> anime_id(%d)\n", id, anime_id);
     if (anime_id != 0xffff)
     { 
       GFL_ARC_LoadDataOfsByHandle(info_hdl, FILEID_BMODEL_ANIMEDATA,
