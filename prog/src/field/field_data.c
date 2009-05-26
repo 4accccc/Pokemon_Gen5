@@ -305,6 +305,24 @@ const SCENE_DATA resistMapTbl[] = {
 		&FieldMapCtrl_C3Functions,
 		FALSE,
 	},
+	{	//実験マップ グリッド移動
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,1,
+      FLDMAPPER_MODE_SCROLL_NONE, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
+			{0,2},	// 地面アニメーション
+		},
+		&FieldMapCtrl_GridFunctions,
+		TRUE,
+	},
 };
 
 const unsigned int resistMapTblCount = NELEMS(resistMapTbl);
