@@ -877,6 +877,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< 1vs1Žž‚Ì“GAI, 2vs2Žž‚Ì‚P”Ô–Ú“GAI—p
       para->partyPartner = NULL;  ///< 2vs2Žž‚Ì–¡•ûAIi•s—v‚È‚çnullj
       para->partyEnemy2 = NULL; ///< 2vs2Žž‚Ì‚Q”Ô–Ú“GAI—pi•s—v‚È‚çnullj
+      para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
     #ifdef DEBUG_ONLY_FOR_taya
       setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
@@ -1094,6 +1095,7 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
       para->partyEnemy1 = NULL;   ///< 1vs1Žž‚Ì“GAI, 2vs2Žž‚Ì‚P”Ô–Ú“GAI—p
       para->partyPartner = NULL;  ///< 2vs2Žž‚Ì–¡•ûAIi•s—v‚È‚çnullj
       para->partyEnemy2 = NULL;   ///< 2vs2Žž‚Ì‚Q”Ô–Ú“GAI—pi•s—v‚È‚çnullj
+      para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
       if( para->netID == 0 )
       {
