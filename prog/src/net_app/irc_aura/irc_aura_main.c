@@ -206,8 +206,8 @@ enum{
 //-------------------------------------
 ///	カウント
 //=====================================
-#define TOUCH_COUNTER_MAX	(60*5)
-#define TOUCH_COUNTER_SHAKE_SYNC	(30)	//ブレを観測するための1回のシンク
+#define TOUCH_COUNTER_MAX	(150)//(60*5)
+#define TOUCH_COUNTER_SHAKE_SYNC	(15)	//ブレを観測するための1回のシンク
 #define TOUCH_COUNTER_SHAKE_MAX	(TOUCH_COUNTER_MAX/TOUCH_COUNTER_SHAKE_SYNC)	//ブレを取得する回数
 
 //-------------------------------------
