@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T12:45:39"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T18:50:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1618" top="224" right="2229" bottom="569" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="234" right="705" bottom="854" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="0" style="0000" width="603"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="436"/>
-		<band id="3" index="3" style="0000" width="603"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,9 +334,9 @@
 
 
 	<row id="RHYTHM_STR_000">
-		<language name="JPN" width="256">ふたりの　リズムを　しらべます　どこでも
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんとの　リズムを　しらべます
 すきなように　１０かい　タッチしましょう！</language>
-		<language name="JPN_KANJI" width="256">２人の　リズムを　調べます　どこでも
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんとの　リズムを　調べます
 好きなように　１０回　タッチしましょう！</language>
 	</row>
 

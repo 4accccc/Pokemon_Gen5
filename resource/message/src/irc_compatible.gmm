@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T12:35:33"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T17:26:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,20 +334,26 @@
 
 
 	<row id="COMPATI_STR_000">
-		<language name="JPN" width="256">せきがいせん　つうしんを　してください</language>
-		<language name="JPN_KANJI" width="256">赤外線通信を　してください</language>
+		<language name="JPN" width="256">せきがいせん　つうしんを
+してください</language>
+		<language name="JPN_KANJI" width="256">赤外線通信を
+してください</language>
 	</row>
 
 	<row id="COMPATI_STR_001">
-		<language name="JPN" width="256">せきがいせん　つうしんに　しっぱいしました
+		<language name="JPN" width="256">せきがいせん　つうしんに
+しっぱいしました
 メニューに　もどります</language>
-		<language name="JPN_KANJI" width="256">赤外線通信に　失敗しました
+		<language name="JPN_KANJI" width="256">赤外線通信に
+失敗しました
 メニューに　戻ります</language>
 	</row>
 
 	<row id="COMPATI_STR_002">
-		<language name="JPN" width="256">せきがいせん　つうしんが　つながりました！</language>
-		<language name="JPN_KANJI" width="256">赤外線通信が　つながりました！</language>
+		<language name="JPN" width="256">せきがいせん　つうしんが
+つながりました！</language>
+		<language name="JPN_KANJI" width="256">赤外線通信が
+つながりました！</language>
 	</row>
 
 	<row id="COMPATI_STR_003">
