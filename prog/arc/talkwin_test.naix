@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2009-05-20T13:58:00
+	Update:2009-05-27T19:38:08
  *****************************************************************************/
 
 #ifndef NARC_TALKWIN_TEST_NAIX_
@@ -12,7 +12,8 @@
 
 enum {
 	NARC_talkwin_test_talkwin_NCGR = 0,
-	NARC_talkwin_test_talkwin_NCLR = 1
+	NARC_talkwin_test_talkwin_NCLR = 1,
+	NARC_talkwin_test_talkwin2_NCLR = 2
 };
 
 /* NARC_TALKWIN_TEST_NAIX_ */
