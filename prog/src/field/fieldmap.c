@@ -1805,7 +1805,7 @@ static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 			zone_id, GAMEDATA_GetSeasonID(gdata) );
 	
 	if( nextBGM != 0 ){
-		if( PMSND_GetBGMsoundNo() != nextBGM ){
+		if( PMSND_GetNextBGMsoundNo() != nextBGM ){
 			PMSND_PlayNextBGM_EX( nextBGM, trackBit, 30, 0 );
 		}
 	}

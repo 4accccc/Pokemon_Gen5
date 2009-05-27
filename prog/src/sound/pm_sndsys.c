@@ -73,7 +73,8 @@ typedef struct {
 	u16		volumeCounter;
 	u16		nextTrackBit;
 	u32		nextSoundIdx;
-	int		fadeFrames;
+	int		fadeInFrame;
+	int		fadeOutFrame;
 }PMSND_FADESTATUS;
 
 //------------------------------------------------------------------
@@ -276,6 +277,14 @@ NNSSndHandle* PMSND_GetBGMhandlePointer( void )
 u32 PMSND_GetBGMsoundNo( void )
 {
 	return SOUNDMAN_GetHierarchyPlayerSoundIdx();
+}
+
+u32 PMSND_GetNextBGMsoundNo( void )
+{
+	if( fadeStatus.active == FALSE ){
+		return SOUNDMAN_GetHierarchyPlayerSoundIdx();
+	}
+	return fadeStatus.nextSoundIdx;
 }
 
 u32 PMSND_GetBGMplayerNoIdx( void )
@@ -487,10 +496,13 @@ void	PMSND_PlayBGM_EX( u32 soundIdx, u16 trackBit )
 }
 
 //------------------------------------------------------------------
-void	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit, u8 fadeInFrame, u8 fadeOutFrame )
+void	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit, u8 fadeOutFrame, u8 fadeInFrame )
 {
 	fadeStatus.nextSoundIdx = soundIdx;
 	fadeStatus.nextTrackBit = trackBit;
+	fadeStatus.fadeInFrame = fadeInFrame;
+	fadeStatus.fadeOutFrame = fadeOutFrame;
+	fadeStatus.volumeCounter = fadeStatus.fadeOutFrame;
 	fadeStatus.active = TRUE;
 }
 
@@ -652,7 +664,8 @@ BOOL	PMSND_CheckPlayBGM( void )
 //------------------------------------------------------------------
 static void PMSND_InitSystemFadeBGM( void )
 {
-	fadeStatus.fadeFrames = 60;
+	fadeStatus.fadeInFrame = 60;
+	fadeStatus.fadeOutFrame = 60;
 	PMSND_ResetSystemFadeBGM();
 }
 
@@ -661,7 +674,7 @@ static void PMSND_ResetSystemFadeBGM( void )
 	fadeStatus.active = FALSE;
 	fadeStatus.nextTrackBit = 0xffff;
 	fadeStatus.nextSoundIdx = 0;
-	fadeStatus.volumeCounter = fadeStatus.fadeFrames;
+	fadeStatus.volumeCounter = 0;//fadeStatus.fadeFrames;
 	//最大値に更新
 	NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127);
 
@@ -675,14 +688,13 @@ static void PMSND_CancelSystemFadeBGM( void )
 		u32	nowSoundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
 		if( nowSoundIdx != fadeStatus.nextSoundIdx ){
 			PMSND_PlayBGM_EX(fadeStatus.nextSoundIdx, fadeStatus.nextTrackBit);
-		} else {
-			PMSND_ResetSystemFadeBGM();
 		}
+		PMSND_ResetSystemFadeBGM();
 	}
 }
 
 //------------------------------------------------------------------
-int debugCounter;
+//int debugCounter;
 
 static void PMSND_SystemFadeBGM( void )
 {
@@ -692,19 +704,29 @@ static void PMSND_SystemFadeBGM( void )
 
 	if( fadeStatus.active == FALSE ){ return; }
 
+	if(threadBusy == TRUE){
+		if(checkEndSoundPlayThread() == TRUE){
+			threadBusy = FALSE;
+		}
+	}
+
 	if(nowSoundIdx){
 		if( nowSoundIdx != fadeStatus.nextSoundIdx ){
 			//FADEOUT
 			if( fadeStatus.volumeCounter > 0 ){
 				fadeStatus.volumeCounter--;
+				NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeOutFrame);
 			} else {
-				threadBusy = FALSE;
+				//threadBusy = FALSE;
 				bgmSetFlag = TRUE;
+				SOUNDMAN_StopHierarchyPlayer();
+				NNS_SndPlayerSetVolume(pBgmHandle, 0);
 			}
 		} else {									
 			//FADEIN
-			if( fadeStatus.volumeCounter < fadeStatus.fadeFrames ){
+			if( fadeStatus.volumeCounter < fadeStatus.fadeInFrame ){
 				fadeStatus.volumeCounter++;
+				NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeInFrame);
 			} else {
 				PMSND_ResetSystemFadeBGM();
 				return;			//終了
@@ -712,7 +734,7 @@ static void PMSND_SystemFadeBGM( void )
 		}
 	} else {
 		if( threadBusy == TRUE ){
-				debugCounter++;
+				//debugCounter++;
 				OS_Sleep(0);
 				return;
 		}
@@ -727,16 +749,12 @@ static void PMSND_SystemFadeBGM( void )
 #else
 			createSoundPlayThread( fadeStatus.nextSoundIdx );
 			threadBusy = TRUE;
-			debugCounter = 0;
+			//debugCounter = 0;
 #endif
 			fadeStatus.volumeCounter = 0;
 		} else {
 			PMSND_StopBGM();
 		}
-	} else {
-		int volume = fadeStatus.volumeCounter * 127 / fadeStatus.fadeFrames;
-
-		NNS_SndPlayerSetVolume(pBgmHandle, volume);
 	}
 }
 
@@ -745,9 +763,10 @@ static void PMSND_SystemFadeBGM( void )
  * @brief	システムフェードフレーム設定
  */
 //------------------------------------------------------------------
-void PMSND_SetSystemFadeFrames( int frames )
+void PMSND_SetSystemFadeFrames( int fadeOutFrame, int fadeInFrame )
 {
-	fadeStatus.fadeFrames = frames;
+	fadeStatus.fadeInFrame = fadeInFrame;
+	fadeStatus.fadeOutFrame = fadeOutFrame;
 }
 
 
