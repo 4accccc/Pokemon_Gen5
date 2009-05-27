@@ -64,6 +64,11 @@ static BTL_EVENT_FACTOR*  ADD_Jitabata( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Jitabata( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Funka( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Funka( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_Siboritoru( u16 pri, WazaID waza, u8 pokeID );
+static void handler_Siboritoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BTL_EVENT_FACTOR*  ADD_WeatherBall( u16 pri, WazaID waza, u8 pokeID );
+static void handler_WeatherBall_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_WeatherBall_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Mineuti( u16 pri, WazaID waza, u8 pokeID );
 static void handler_Mineuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BTL_EVENT_FACTOR*  ADD_Koraeru( u16 pri, WazaID waza, u8 pokeID );
@@ -120,6 +125,9 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_ASANOHIZASI,     ADD_AsaNoHizasi   },
     { WAZANO_TUKINOHIKARI,    ADD_AsaNoHizasi   },  // つきのひかり = あさのひざし と等価
     { WAZANO_KOUGOUSEI,       ADD_AsaNoHizasi   },  // こうごうせい = あさのひざし と等価
+    { WAZANO_SIBORITORU,      ADD_Siboritoru    },
+    { WAZANO_NIGIRITUBUSU,    ADD_Siboritoru    },  // にぎりつぶす = しぼりとる と等価
+    { WAZANO_WHEZAABOORU,     ADD_WeatherBall   },
   };
 
   int i;
@@ -701,6 +709,72 @@ static void handler_Funka( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 }
 //----------------------------------------------------------------------------------
 /**
+ * しぼりとる・にぎりつぶす
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_Siboritoru( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER, handler_Siboritoru },    // ワザ威力チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_Siboritoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
+    fx32 r = BTL_POKEPARAM_GetHPRatio( bpp );
+    u32 pow = BTL_CALC_MulRatio_OverZero( 120, r );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * ウェザーボール
+ */
+//----------------------------------------------------------------------------------
+static BTL_EVENT_FACTOR*  ADD_WeatherBall( u16 pri, WazaID waza, u8 pokeID )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_PARAM, handler_WeatherBall_Type },  // ワザパラメータチェックハンドラ
+    { BTL_EVENT_WAZA_POWER, handler_WeatherBall_Pow },   // ワザ威力チェックハンドラ
+    { BTL_EVENT_NULL, NULL },
+  };
+  return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, pri, pokeID, HandlerTable );
+}
+static void handler_WeatherBall_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  {
+    BtlWeather weather = BTL_FIELD_GetWeather();
+    PokeType type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
+    switch( weather ){
+    case BTL_WEATHER_SHINE:  type = POKETYPE_HONOO; break;
+    case BTL_WEATHER_RAIN:   type = POKETYPE_MIZU; break;
+    case BTL_WEATHER_SAND:   type = POKETYPE_IWA; break;
+    case BTL_WEATHER_SNOW:   type = POKETYPE_KOORI; break;
+    }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, type );
+  }
+}
+static void handler_WeatherBall_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) != POKETYPE_NORMAL)
+  ){
+    u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
+    pow *= 2;
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
+  }
+}
+
+
+
+//----------------------------------------------------------------------------------
+/**
  * みねうち
  */
 //----------------------------------------------------------------------------------
@@ -820,5 +894,3 @@ static void handler_AsaNoHizasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, ratio );
   }
 }
-
-
