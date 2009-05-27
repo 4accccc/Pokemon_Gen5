@@ -1,39 +1,41 @@
 //============================================================================================
 /**
- * @file	mystatus.h
- * @brief	自分状態データアクセス用ヘッダ
- * @author	tamada GAME FREAK inc.
- * @date	2005.10.27
+ * @file  mystatus.h
+ * @brief 自分状態データアクセス用ヘッダ
+ * @author  tamada GAME FREAK inc.
+ * @date  2005.10.27
  */
 //============================================================================================
 #ifndef __MYSTATUS_H__
 #define __MYSTATUS_H__
 
-#include "savedata/save_control.h"	//SAVE_CONTROL_WORK参照のため
+#include <strbuf.h>
+
+#include "savedata/save_control.h"  //SAVE_CONTROL_WORK参照のため
 
 
 //============================================================================================
 //============================================================================================
 //----------------------------------------------------------
 /**
- * @brief	自分状態データ型定義
+ * @brief 自分状態データ型定義
  */
 //----------------------------------------------------------
 typedef struct _MYSTATUS MYSTATUS;
 
-#define POKEMON_DP_ROM_CODE	( 0 )		///< PokemonDP で 扱われていた RomCode
+#define POKEMON_DP_ROM_CODE ( 0 )   ///< PokemonDP で 扱われていた RomCode
 
 //============================================================================================
 //============================================================================================
 //----------------------------------------------------------
-//	セーブデータシステムが依存する関数
+//  セーブデータシステムが依存する関数
 //----------------------------------------------------------
 extern int MyStatus_GetWorkSize(void);
 extern MYSTATUS * MyStatus_AllocWork(u32 heapID);
 extern void MyStatus_Copy(const MYSTATUS * from, MYSTATUS * to);
 
 //----------------------------------------------------------
-//	MYSTATUS操作のための関数
+//  MYSTATUS操作のための関数
 //----------------------------------------------------------
 extern void MyStatus_Init(MYSTATUS * my);
 
@@ -74,9 +76,9 @@ extern u8 MyStatus_GetTrainerView( const MYSTATUS *my );
 // 実際、ダイヤ・パールともに、0しかはいってない。
 // プラチナでは、PM_VERSIONが初期値として設定されているので
 // DPとの比較は、0 = DP PM_VERSION = プラチナ　となります。
-extern u8	MyStatus_GetRomCode( const MYSTATUS * my );
+extern u8 MyStatus_GetRomCode( const MYSTATUS * my );
 extern void MyStatus_SetRomCode( MYSTATUS * my, u8 rom_code );
-extern u8	PokemonDP_GetRomCode( void );
+extern u8 PokemonDP_GetRomCode( void );
 
 // リージョンコード
 extern u8  MyStatus_GetRegionCode( const MYSTATUS * my );
@@ -96,20 +98,20 @@ extern u32 MyStatus_GetExtraInitFlag(const MYSTATUS * my);
 
 
 //----------------------------------------------------------
-//	セーブデータ取得のための関数
+//  セーブデータ取得のための関数
 //----------------------------------------------------------
 extern MYSTATUS * SaveData_GetMyStatus(SAVE_CONTROL_WORK * sv);
 
 
-//	myStatus同士が同じものかどうかを調べる
+//  myStatus同士が同じものかどうかを調べる
 BOOL MyStatus_Compare(const MYSTATUS * my, const MYSTATUS * target);
 
 //----------------------------------------------------------
-//	デバッグ用データ生成のための関数
+//  デバッグ用データ生成のための関数
 //----------------------------------------------------------
 #ifdef PM_DEBUG
 extern void DEBUG_MyStatus_DummyNameSet(MYSTATUS *mystatus, HEAPID heap_id);
-#endif	//PM_DEBUG
+#endif  //PM_DEBUG
 
 #ifdef CREATE_INDEX
 extern void *Index_Get_Mystatus_Name_Offset(MYSTATUS *my);
