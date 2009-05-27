@@ -69,6 +69,7 @@ typedef struct {
 	WFLBY_SYSTEM*	p_commsys;	// WiFiロビー共通処理システム
 	WFLBY_APL*		p_apl;		// WiFiロビーアプリ管理システム
 	GFL_TCB* p_vtcb;				// VBLANKTCB
+	GAME_COMM_SYS_PTR p_game_comm;
 } WFLBY_WK;
 
 
@@ -142,11 +143,12 @@ GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq , void * pwk, void 
 
 	// セーブデータ取得
 	p_wk->p_save = p_param->p_save;
+	p_wk->p_game_comm = p_param->p_game_comm;
 
 	// 共通処理システム作成
 	p_wk->p_commsys = WFLBY_SYSTEM_Init( p_wk->p_save, HEAPID_WFLOBBY );
 	p_wk->p_apl = WFLBY_APL_Init( p_param->check_skip, p_param->p_save, 
-			p_param->p_wflby_counter, p_wk->p_commsys, HEAPID_WFLOBBY );
+			p_param->p_wflby_counter, p_wk->p_commsys, HEAPID_WFLOBBY, p_param->p_game_comm );
 
 	// VブランクHブランク関数設定
 	//sys_HBlankIntrStop();	//HBlank割り込み停止

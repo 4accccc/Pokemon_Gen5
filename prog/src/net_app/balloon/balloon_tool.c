@@ -311,26 +311,26 @@ ALIGN4 static const u16 ExplodedChipPalNo[] = {
 ///BalloonPlayerSortと同じ並び順(下を開始位置にして左回り)
 static const AIR_POSITION_DATA AirPositionDataTbl[][WFLBY_MINIGAME_MAX] = {
 	{//player_maxそのままでアクセスできるように1origin化の為のダミー
-		{128, 192+16,	MIXOBJ_ANMSEQ_AIR_0, PALOFS_SUB_AIR_RED,	DIR_UP},		//下
+		{128, 192+16,	MIXOBJ_ANMSEQ_AIR_0, PALOFS_SUB_AIR_RED,	BA_DIR_UP},		//下
 	},
 	
 	{//参加人数1人(デバッグ用)
-		{128, 192+16,	MIXOBJ_ANMSEQ_AIR_0, PALOFS_SUB_AIR_RED,	DIR_UP},		//下
+		{128, 192+16,	MIXOBJ_ANMSEQ_AIR_0, PALOFS_SUB_AIR_RED,	BA_DIR_UP},		//下
 	},
 	{//参加人数2人
-		{128, 192+16,	MIXOBJ_ANMSEQ_AIR_0, PALOFS_SUB_AIR_RED,	DIR_UP},		//下
-		{128, 0-16,	MIXOBJ_ANMSEQ_AIR_3, PALOFS_SUB_AIR_BLUE,	DIR_DOWN},		//上
+		{128, 192+16,	MIXOBJ_ANMSEQ_AIR_0, PALOFS_SUB_AIR_RED,	BA_DIR_UP},		//下
+		{128, 0-16,	MIXOBJ_ANMSEQ_AIR_3, PALOFS_SUB_AIR_BLUE,	BA_DIR_DOWN},		//上
 	},
 	{//参加人数3人
-		{128, 192+16,	MIXOBJ_ANMSEQ_AIR_0, PALOFS_SUB_AIR_RED,	DIR_UP},		//下
-		{0-16, 192/2,	MIXOBJ_ANMSEQ_AIR_2, PALOFS_SUB_AIR_YELLOW,	DIR_RIGHT},		//左
-		{256+16, 192/2,	MIXOBJ_ANMSEQ_AIR_1, PALOFS_SUB_AIR_BLUE,	DIR_LEFT},	//右
+		{128, 192+16,	MIXOBJ_ANMSEQ_AIR_0, PALOFS_SUB_AIR_RED,	BA_DIR_UP},		//下
+		{0-16, 192/2,	MIXOBJ_ANMSEQ_AIR_2, PALOFS_SUB_AIR_YELLOW,	BA_DIR_RIGHT},		//左
+		{256+16, 192/2,	MIXOBJ_ANMSEQ_AIR_1, PALOFS_SUB_AIR_BLUE,	BA_DIR_LEFT},	//右
 	},
 	{//参加人数4人
-		{128, 192+16,	MIXOBJ_ANMSEQ_AIR_0, PALOFS_SUB_AIR_RED,	DIR_UP},		//下
-		{0-16, 192/2,	MIXOBJ_ANMSEQ_AIR_2, PALOFS_SUB_AIR_GREEN,	DIR_RIGHT},		//左
-		{128, 0-16,	MIXOBJ_ANMSEQ_AIR_3, PALOFS_SUB_AIR_BLUE,	DIR_DOWN},		//上
-		{256, 192/2,	MIXOBJ_ANMSEQ_AIR_1, PALOFS_SUB_AIR_YELLOW,	DIR_LEFT},	//右
+		{128, 192+16,	MIXOBJ_ANMSEQ_AIR_0, PALOFS_SUB_AIR_RED,	BA_DIR_UP},		//下
+		{0-16, 192/2,	MIXOBJ_ANMSEQ_AIR_2, PALOFS_SUB_AIR_GREEN,	BA_DIR_RIGHT},		//左
+		{128, 0-16,	MIXOBJ_ANMSEQ_AIR_3, PALOFS_SUB_AIR_BLUE,	BA_DIR_DOWN},		//上
+		{256, 192/2,	MIXOBJ_ANMSEQ_AIR_1, PALOFS_SUB_AIR_YELLOW,	BA_DIR_LEFT},	//右
 	},
 };
 
@@ -1107,16 +1107,16 @@ static int Air_ParamCreate(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA * air_d
 		s32 before_joint_offset = 0;
 
 		switch(air_posdata->move_dir){
-		case DIR_DOWN:
+		case BA_DIR_DOWN:
 			before_joint_offset = JointActorPosTbl[JOINT_ACTOR_U].y - before.y;
 			break;
-		case DIR_LEFT:
+		case BA_DIR_LEFT:
 			before_joint_offset = before.x - JointActorPosTbl[JOINT_ACTOR_R].x;
 			break;
-		case DIR_UP:
+		case BA_DIR_UP:
 			before_joint_offset = before.y - JointActorPosTbl[JOINT_ACTOR_D].y;
 			break;
-		case DIR_RIGHT:
+		case BA_DIR_RIGHT:
 			before_joint_offset = JointActorPosTbl[JOINT_ACTOR_L].x - before.x;
 			break;
 		}
@@ -1180,7 +1180,7 @@ static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param)
 	GFL_CLACT_WK_GetPos(air_param->cap, &before, CLSYS_DEFREND_SUB);
 	
 	switch(air_param->apd->move_dir){
-	case DIR_DOWN:
+	case BA_DIR_DOWN:
 		before_joint_offset = JointActorPosTbl[JOINT_ACTOR_U].y - before.y;
 		
 		air_param->y += AIR_MOVE_SPEED;
@@ -1193,7 +1193,7 @@ static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param)
 			del_flag = TRUE;
 		}
 		break;
-	case DIR_LEFT:
+	case BA_DIR_LEFT:
 		before_joint_offset = before.x - JointActorPosTbl[JOINT_ACTOR_R].x;
 
 		air_param->x += -AIR_MOVE_SPEED;
@@ -1206,7 +1206,7 @@ static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param)
 			del_flag = TRUE;
 		}
 		break;
-	case DIR_UP:
+	case BA_DIR_UP:
 		before_joint_offset = before.y - JointActorPosTbl[JOINT_ACTOR_D].y;
 
 		air_param->y += -AIR_MOVE_SPEED;
@@ -1219,7 +1219,7 @@ static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param)
 			del_flag = TRUE;
 		}
 		break;
-	case DIR_RIGHT:
+	case BA_DIR_RIGHT:
 		before_joint_offset = JointActorPosTbl[JOINT_ACTOR_L].x - before.x;
 
 		air_param->x += AIR_MOVE_SPEED;

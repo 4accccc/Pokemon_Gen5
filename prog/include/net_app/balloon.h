@@ -11,6 +11,7 @@
 
 #include <procsys.h>
 #include "net_app/wifi_lobby/minigame_tool.h"
+#include "gamesystem/game_comm.h"
 
 //==============================================================================
 //	構造体定義
@@ -23,10 +24,11 @@
 typedef struct {
 	WFLBY_MINIGAME_WK lobby_wk;
 	SAVE_CONTROL_WORK* p_save;
+	GAME_COMM_SYS_PTR game_comm;
 	u8 vchat;
 	u8 wifi_lobby;
 	u8 pad[2];
-	
+
 #ifdef PM_DEBUG
 	int debug_offline;		///<TRUE:デバッグ用のオフラインモード
 #endif

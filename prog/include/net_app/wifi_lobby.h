@@ -15,6 +15,7 @@
 #include <procsys.h>
 #include "savedata/save_control.h"
 #include "net_app/wflby_counter.h"
+#include "gamesystem/game_comm.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -34,6 +35,7 @@ typedef struct {
 	WFLBY_COUNTER_TIME* p_wflby_counter;	// WiFiひろば入室時間格納先
 	SAVE_CONTROL_WORK*			p_save;				// セーブデータ
 	BOOL				check_skip;			// 接続確認をスキップする　TRUE：スキップ	FALSE：通常
+	GAME_COMM_SYS_PTR p_game_comm;
 } WFLBY_PROC_PARAM;
 
 

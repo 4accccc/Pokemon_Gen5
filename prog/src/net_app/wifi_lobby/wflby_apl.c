@@ -28,6 +28,8 @@
 #include "worldtimer.h"
 #include "lobby_news.h"
 #include "wflby_connect.h"
+#include "gamesystem/gamesystem.h"
+#include "gamesystem/game_event.h"
 
 #include "net_app/net_bugfix.h"
 
@@ -103,6 +105,7 @@ struct _WFLBY_APL{
 	WFLBY_SYSTEM*		p_system;
 	SAVE_CONTROL_WORK*			p_savedata;
 	WFLBY_COUNTER_TIME* p_wflby_counter;
+	GAME_COMM_SYS_PTR p_game_comm;
 };
 
 //-----------------------------------------------------------------------------
@@ -202,7 +205,7 @@ static WFLBY_APL_RET WFLBY_APLDATA_ANKETO_End( WFLBY_APL* p_sys, WFLBY_APLDATA* 
  *	@return	システムワーク
  */
 //-----------------------------------------------------------------------------
-WFLBY_APL* WFLBY_APL_Init( BOOL check_skip, SAVE_CONTROL_WORK* p_save, WFLBY_COUNTER_TIME* p_wflby_counter, WFLBY_SYSTEM* p_system, u32 heapID )
+WFLBY_APL* WFLBY_APL_Init( BOOL check_skip, SAVE_CONTROL_WORK* p_save, WFLBY_COUNTER_TIME* p_wflby_counter, WFLBY_SYSTEM* p_system, u32 heapID, GAME_COMM_SYS_PTR p_game_comm )
 {
 	WFLBY_APL* p_wk;
 
@@ -213,6 +216,7 @@ WFLBY_APL* WFLBY_APL_Init( BOOL check_skip, SAVE_CONTROL_WORK* p_save, WFLBY_COU
 	p_wk->p_system			= p_system;
 	p_wk->p_savedata		= p_save;
 	p_wk->p_wflby_counter	= p_wflby_counter;
+	p_wk->p_game_comm = p_game_comm;
 
 	// 接続確認フラグ
 	p_wk->check_skip	= check_skip;
@@ -1177,6 +1181,7 @@ static void WFLBY_APLDATA_BL_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  u32
 	p_param->vchat		= FALSE;
 	p_param->wifi_lobby	= TRUE;
 	p_param->p_save		= p_sys->p_savedata;
+  p_param->game_comm = p_sys->p_game_comm;
 
 	// ミニゲーム共通ワークメモリ確保
 	WFLBY_APL_MINIGAME_AllocWk( &p_param->lobby_wk, heapID );

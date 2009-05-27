@@ -181,7 +181,7 @@ GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq, void * pwk, void *
 		(*seq)++;
 		break;
 	case MAINSEQ_END_BEFORE_TIMING_WAIT:
-	#if WB_FIX
+	#if WB_TEMP_FIX
 		if((GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BALLOON_END_TIMING_NO) == TRUE) 
 				|| (CommGetConnectNum() < CommInfoGetEntryNum()) ){	// “¯Šú‚ªŽæ‚ê‚é‚©Al”‚ª­‚È‚­‚È‚Á‚½‚ç‚»‚Ì‚Ü‚Ü”²‚¯‚é
 	#else
@@ -280,6 +280,8 @@ static void Ballon_ProcWorkInit(BALLOON_SYSTEM_WORK *bsw, BALLOON_PROC_WORK *par
 	MNGM_ENRES_PARAM_Init( &bsw->entry_param, parent->wifi_lobby, parent->p_save, parent->vchat, &parent->lobby_wk );
 #endif
 #endif
+
+  bsw->game_comm = parent->game_comm;
 }
 
 

@@ -683,6 +683,7 @@ static BALLOON_PROC_WORK* BL_ProcSet( GMEVENT* fsys, u32 heapID, u32 vchat )
     p_work->vchat		= vchat;
     p_work->wifi_lobby	= FALSE;
     p_work->p_save		= SaveControl_GetPointer();
+    p_work->game_comm = GAMESYSTEM_GetGameCommSysPtr(GMEVENT_GetGameSysWork(fsys));
 
     // ミニゲーム共通オーバーレイを読み込む
     //GFL_OVERLAY_Load( FS_OVERLAY_ID(minigame_common));

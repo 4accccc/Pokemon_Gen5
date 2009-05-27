@@ -10,6 +10,7 @@
 #define __BALLOON_COMMON_H__
 
 #include "net_app/wifi_lobby/minigame_tool.h"
+#include "gamesystem/game_comm.h"
 
 ///デバッグ用定義
 //WB移植にあたって暫定的に無効化する部分を囲う
@@ -132,6 +133,8 @@ typedef struct{
 
 	u8 dis_error;						///< 切断エラー検知	080527 tomoya 
 	u8 dis_error_seq;					///< 切断エラー検知	080625 tomoya 
+
+	GAME_COMM_SYS_PTR game_comm;
 
 #ifdef PM_DEBUG
 	int debug_offline;		///<TRUE:デバッグ用のオフラインモード
