@@ -199,6 +199,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
 
   switch (ep2p->seq) {
   case P2P_INIT:
+	
     ep2p->seq = P2P_MATCH_BOARD;
     if(ep2p->pMatchParam->seq == WIFI_P2PMATCH_DPW){
       if( mydwc_checkMyGSID() ){
@@ -423,9 +424,15 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
   ep2p->pWifiList = SaveData_GetWifiListData(pClub->ctrl); //クラブに必要な物を移し変え
   ep2p->pMatchParam->seq = P2P_INIT;
   ep2p->gsys = pClub->gsys;
-
+	
   pClub->pWork = ep2p;
 
+	// サウンドテスト
+	// ＢＧＭ一時停止→退避
+	PMSND_PauseBGM(TRUE);
+	PMSND_PushBGM();
+
+	
   return GFL_PROC_RES_FINISH;
 }
 
@@ -438,6 +445,13 @@ static GFL_PROC_RESULT WifiClubProcEnd( GFL_PROC * proc, int * seq, void * pwk, 
   GFL_HEAP_FreeMemory(ep2p->pMatchParam);
   GFL_PROC_FreeWork(proc);
 
+	// サウンドテスト
+	// ＢＧＭ取り出し→再開
+	PMSND_PopBGM();
+	PMSND_PauseBGM(FALSE);
+	PMSND_FadeInBGM(60);
+
+	
   return GFL_PROC_RES_FINISH;
 }
 

@@ -101,15 +101,16 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   GAMESYS_WORK * gsys = dbw->gsys;
   switch (*seq) {
 	case _IRCBATTLE_START:
+		// サウンドテスト
+		// ＢＧＭ一時停止→退避
+		PMSND_PauseBGM(TRUE);
+		PMSND_PushBGM();
+
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
 		(*seq) ++;
 		break;
 	case _IRCBATTLE_START_FIELD_CLOSE:
 		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
-		// サウンドテスト
-		// ＢＧＭ一時停止→退避
-		PMSND_PauseBGM(TRUE);
-		PMSND_PushBGM();
 		//
 		(*seq) = _CALL_IRCBATTLE_MENU;
 		break;
@@ -145,7 +146,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   case _WAIT_IRCBATTLE_MATCH:
     if (!GAMESYSTEM_IsProcExists(gsys)){
       if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_EXIT){
-        return GMEVENT_RES_FINISH;
+        *seq = _FIELD_END;
+        return GMEVENT_RES_CONTINUE;
       }
       else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND){
         *seq = _CALL_IRCBATTLE_FRIEND;
@@ -226,11 +228,17 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) ++;
     break;
   case _FIELD_FADEIN:
-    OS_TPrintf("_FIELD_FADEIN\n");
+		OS_TPrintf("_FIELD_FADEIN\n");
     GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
     (*seq) ++;
     break;
   case _FIELD_END:
+		// サウンドテスト
+		// ＢＧＭ取り出し→再開
+		PMSND_PopBGM();
+		PMSND_PauseBGM(FALSE);
+		PMSND_FadeInBGM(60);
+
     return GMEVENT_RES_FINISH;
 
 	//相性チェックはプロセス移動
