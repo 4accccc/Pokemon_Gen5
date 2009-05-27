@@ -76,9 +76,6 @@ enum _EVENT_IRCBATTLE {
 	_FIELD_END_IRCBATTLE,
 	_CALL_IRCCOMMPATIBLE,
 	_WAIT_IRCCOMMPATIBLE,
-	_FIELD_OPEN_IRCBATTLE,
-	_FIELD_FADEIN_IRCBATTLE,
-	_FIELD_NEXT_IRCBATTLE,
 };
 
 struct _EVENT_IRCBATTLE_WORK{
@@ -257,22 +254,10 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 	case _WAIT_IRCCOMMPATIBLE:
 		if (!GAMESYSTEM_IsProcExists(gsys))
 		{
+			GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
       NET_PRINT("相性チェック画面おわり\n");
-			(*seq)++;
+			(*seq)=_CALL_IRCBATTLE_MENU;
     }
-		break;
-	case _FIELD_OPEN_IRCBATTLE:
-    GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-    (*seq)++;
-		break;
-	case _FIELD_FADEIN_IRCBATTLE:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
-    (*seq)++;
-		break;
-	case _FIELD_NEXT_IRCBATTLE:
-		//もう一度同じイベントを呼び、メニュー画面にする
-    GMEVENT_ChangeEvent(event, EVENT_IrcBattle( gsys, dbw->fieldmap, event, FALSE));
-		(*seq)	= _CALL_IRCBATTLE_MENU;
 		break;
   default:
     GF_ASSERT(0);
