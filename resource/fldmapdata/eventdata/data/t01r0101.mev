@@ -1,10 +1,10 @@
 #event data
-#save date:2009/05/27 17:03:13
+#save date:2009/05/27 17:57:46
 # linked worldmap file name
 c:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/05/27 17:03:13
+#save date:2009/05/27 17:57:46
 2
 #hold event type:
 1
@@ -43,7 +43,7 @@ SCRID_DUMMY
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/05/27 17:03:13
+#save date:2009/05/27 17:57:46
 2
 #hold event type:
 1
@@ -53,7 +53,7 @@ SCRID_DUMMY
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/05/27 17:03:13
+#save date:2009/05/27 17:57:46
 2
 #hold event type:
 1
@@ -63,12 +63,12 @@ SCRID_DUMMY
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/05/27 17:03:13
+#save date:2009/05/27 17:57:46
 2
 #hold event type:
 1
 #hold event number:
-3
+4
 #event number: 0
 #Door Event Label
 DOOR_ID_T01R0101_EXIT01
@@ -108,5 +108,18 @@ DOOR_ID_T01_EXIT03
 0
 #position
 -144 0 144
+#event number: 3
+#Door Event Label
+DOOR_ID_T01R0101_EXIT04
+#Next Zone ID Name
+ZONE_ID_T01R0102
+#Next Door ID Name
+DOOR_ID_T01R0101_EXIT01
+#Door Direction
+4
+#Door Type
+0
+#position
+-208 0 224
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
