@@ -36,6 +36,7 @@ typedef enum {
 typedef struct {
 	GAMESYS_WORK				*p_gamesys;//[in]ゲームシステム
 	COMPATIBLE_IRC_SYS	*p_irc;	//[in]赤外線システム
+	MYSTATUS						*p_you_status;//[in]通信相手のステータス（バッファを渡してください）
 	IRCAURA_RESULT			result;	//[out]PROCが戻ってきたときの内部進行状況
 	u8									score;	//[out]オーラチェックで得た点数
 }IRC_AURA_PARAM;

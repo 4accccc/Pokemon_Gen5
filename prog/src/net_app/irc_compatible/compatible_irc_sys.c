@@ -48,18 +48,35 @@
 */
 //=============================================================================
 //-------------------------------------
-///	メニュー決定データ
+///	メニュー用ネット
 //=====================================
-typedef struct {
-	u32		menu_data;
-	u32		ms;
-} MENU_DECIDE_DATA;
+typedef struct
+{	
+	u32	select;	//選んだもの
+	u32	ms;	//メニューを選んだ時間
+} MENUNET_DECIDEMENU_DATA;
+typedef struct 
+{
+	COMPATIBLE_IRC_SYS	*p_irc;
+	u32 seq;
+	MENUNET_DECIDEMENU_DATA	menudata;
+	MENUNET_DECIDEMENU_DATA	menusend;
+	BOOL	is_recv;
+	BOOL	is_return;
+	BOOL	is_start_proc;
+	BOOL	is_status_recv;
+	MYSTATUS	*p_send_status;
+	MYSTATUS	*p_my_status;
+	MYSTATUS	*p_you_status;
+} MENUNET_WORK;
 
 //-------------------------------------
 ///	システムワークエリア
 //=====================================
 struct _COMPATIBLE_IRC_SYS
 {	
+	MENUNET_WORK	menu;
+
 	u32		irc_timeout;
 	u32		seq;
 	u32		err_seq;
@@ -73,8 +90,7 @@ struct _COMPATIBLE_IRC_SYS
 
 	u8		mac_address[6];
 
-	MENU_DECIDE_DATA	menu_recv;
-	MENU_DECIDE_DATA	menu_send;
+	HEAPID	heapID;
 };
 
 
@@ -94,9 +110,25 @@ static void NET_INIT_DisConnectCallBack( void *p_work );
 static void NET_INIT_InitCallBack( void *p_work );
 static void NET_EXIT_ExitCallBack( void *p_work );
 //受信コマンドテーブル
-static void NET_RECV_DecideMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 static void NET_RECV_ReturnMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 static void NET_RECV_StartProc( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+
+//net
+static void MENUNET_Init( MENUNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc, HEAPID heapID );
+static void MENUNET_Exit( MENUNET_WORK *p_wk );
+static BOOL MENUNET_SendMenuData( MENUNET_WORK *p_wk, u32 ms, u32 select );
+static BOOL MENUNET_RecvMenuData( MENUNET_WORK *p_wk );
+static void MENUNET_GetMenuData( const MENUNET_WORK *cp_wk, u32 *p_ms, u32 *p_select );
+static BOOL MENUNET_SendReturnMenu( MENUNET_WORK *p_sys );
+static BOOL MENUNET_RecvReturnMenu( MENUNET_WORK *p_sys );
+static BOOL MENUNET_SendStatusData( MENUNET_WORK *p_wk, GAMESYS_WORK *p_gamesys );
+static void MENUNET_GetStatusData( const MENUNET_WORK *cp_wk, MYSTATUS *p_status );
+//netrecv
+static void NETRECV_DecideMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+static void NETRECV_RecvMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+static void NETRECV_StartProcTiming( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+static void NETRECV_SendStatus( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+static u8*NETRECV_GetStatusBuffer( int netID, void* p_work, int size );
 //=============================================================================
 /**
  *					データ
@@ -107,15 +139,11 @@ static void NET_RECV_StartProc( const int netID, const int size, const void* cp_
 //=====================================
 enum
 {
-	SENDCMD_DECIDEMENU	= GFL_NET_CMD_IRCCOMPATIBLE,
-	SENDCMD_RETURNMENU,
+	SENDCMD_RETURNMENU = GFL_NET_CMD_IRCCOMPATIBLE,
 	SENDCMD_STARTPROC,
 };
 static const NetRecvFuncTable sc_net_recv_tbl[]	=
 {	
-	{	
-		NET_RECV_DecideMenu, NULL
-	},
 	{	
 		NET_RECV_ReturnMenu, NULL
 	},
@@ -178,6 +206,33 @@ static const GFLNetInitializeStruct sc_net_init =
 #endif
 };
 
+
+//-------------------------------------
+///	NET
+//=====================================
+enum
+{	
+	NETRECV_DECIDE_MENU	= GFL_NET_CMD_IRCMENU,
+	NETRECV_RECV_MENU,
+	NETRECV_START_PROC,
+	NETRECV_SEND_STATUS,
+};
+static const NetRecvFuncTable	sc_recv_tbl[]	=
+{
+	{	
+		NETRECV_DecideMenu, NULL
+	},
+	{	
+		NETRECV_RecvMenu, NULL
+	},
+	{	
+		NETRECV_StartProcTiming, NULL
+	},
+	{	
+		NETRECV_SendStatus, NETRECV_GetStatusBuffer,
+	}
+};
+
 //=============================================================================
 /**
  *					GLOBAL
@@ -201,6 +256,7 @@ COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, HEAPID heapID
 	GFL_STD_MemClear( p_sys, sizeof(COMPATIBLE_IRC_SYS) );
 	//初期化
 	p_sys->irc_timeout		= irc_timeout;
+	p_sys->heapID	= heapID;
 
 	return p_sys;
 }
@@ -234,6 +290,7 @@ BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys )
 	{	
 		SEQ_INIT_START,
 		SEQ_INIT_WAIT,
+		SEQ_INIT_MENU,
 		SEQ_INIT_END,
 	};
 
@@ -251,8 +308,13 @@ BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys )
 	case SEQ_INIT_WAIT:
 		if(GFL_NET_IsInit())
 		{
-			p_sys->seq	= SEQ_INIT_END;
+			p_sys->seq	= SEQ_INIT_MENU;
 		}
+		break;
+
+	case SEQ_INIT_MENU:
+		MENUNET_Init( &p_sys->menu, p_sys, p_sys->heapID );
+		p_sys->seq	= SEQ_INIT_END;
 		break;
 
 	case SEQ_INIT_END:
@@ -285,7 +347,8 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 		SEQ_EXIT_END,
 	};
 
-	switch(p_sys->seq){
+	switch(p_sys->seq)
+	{
 	case SEQ_EXIT_START:
 		if( GFL_NET_Exit(NET_EXIT_ExitCallBack ) )
 		{
@@ -392,12 +455,18 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 {	
 	enum
 	{	
+		SEQ_DISCONNECT_MENU,
 		SEQ_DISCONNECT_START,
 		SEQ_DISCONNECT_WAIT,
 		SEQ_DISCONNECT_END,
 	};
 
 	switch(p_sys->seq){
+	case SEQ_DISCONNECT_MENU:
+		MENUNET_Exit( &p_sys->menu );
+		p_sys->seq	= SEQ_DISCONNECT_START;
+		break;
+
 	case SEQ_DISCONNECT_START:
 #if 0
 		if(GFL_NET_IsParentMachine() == TRUE)
@@ -621,6 +690,106 @@ void COMPATIBLE_IRC_DelCommandTable( COMPATIBLE_IRC_SYS *p_sys, int cmdkindID )
 	GFL_NET_DelCommandTable( cmdkindID );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニューデータ送信
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys	ワーク
+ *	@param	ms												秒数
+ *	@param	select										選んだもの
+ *
+ *	@retval	TRUEならば送信
+ *	@ratval	FALSEならば送信できなかった
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_MENU_SendMenuData( COMPATIBLE_IRC_SYS *p_sys, u32 ms, u32 select )
+{	
+	return MENUNET_SendMenuData( &p_sys->menu, ms, select );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニューデータ受信
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys	ワーク
+ *
+ *	@retval	TRUEならば受信
+ *	@ratval	FALSEならば受信できなかった
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_MENU_RecvMenuData( COMPATIBLE_IRC_SYS *p_sys )
+{	
+	return MENUNET_RecvMenuData( &p_sys->menu );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニューデータ取得
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys	ワーク
+ *	@param	ms												秒数受け取り
+ *	@param	select										選んだもの受け取り
+ *
+ */
+//-----------------------------------------------------------------------------
+void COMPATIBLE_MENU_GetMenuData( const COMPATIBLE_IRC_SYS *cp_sys, u32 *p_ms, u32 *p_select )
+{	
+	MENUNET_GetMenuData( &cp_sys->menu, p_ms, p_select );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニューリターン
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys ワーク
+ *
+ *	@retval	TRUEならば送信
+ *	@ratval	FALSEならば送信できなかった
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_MENU_SendReturnMenu( COMPATIBLE_IRC_SYS *p_sys )
+{	
+	return MENUNET_SendReturnMenu( &p_sys->menu );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニューリターン受信
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys ワーク
+ *
+ *	@retval	TRUEならば受信
+ *	@ratval	FALSEならば受信できなかった
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_MENU_RecvReturnMenu( COMPATIBLE_IRC_SYS *p_sys )
+{	
+	return MENUNET_RecvReturnMenu( &p_sys->menu );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ステータス送信
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_wk	ワーク
+ *	@param	*p_gamesys								ゲームシステム
+ *
+ *	@retval	TRUEならば送信
+ *	@ratval	FALSEならば送信できなかった
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_MENU_SendStatusData( COMPATIBLE_IRC_SYS *p_sys, GAMESYS_WORK *p_gamesys )
+{	
+	return MENUNET_SendStatusData( &p_sys->menu, p_gamesys );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ステータス受け取り
+ *
+ *	@param	const COMPATIBLE_IRC_SYS *cp_wk	ワーク
+ *	@param	*p_status												ステータス
+ *
+ */
+//-----------------------------------------------------------------------------
+void COMPATIBLE_MENU_GetStatusData( const COMPATIBLE_IRC_SYS *cp_sys, MYSTATUS *p_status )
+{	
+	MENUNET_GetStatusData( &cp_sys->menu, p_status );
+}
 //=============================================================================
 /**
  *		network_setup_callback
@@ -733,39 +902,7 @@ static void NET_EXIT_ExitCallBack( void *p_work )
 	p_sys->is_exit	= TRUE;
 	IRC_Print( "相性チェック通信システム解放完了\n" );
 }
- 
-//----------------------------------------------------------------------------
-/**
- *	@brief	メニュー決定
- *
- *	@param	const int netID	ネットID
- *	@param	int size				サイズ
- *	@param	void* cp_data		データ
- *	@param	p_work					パラメータ
- *	@param	p_net_handle		ネットハンドル
- *
- */
-//-----------------------------------------------------------------------------
-static void NET_RECV_DecideMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
-{	
-	COMPATIBLE_IRC_SYS *p_sys	= p_work;
 
-	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
-	{
-		IRC_Print( "ハンドルが一致しなかった\n" );
-		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
-	}
-	if( netID == GFL_NET_SystemGetCurrentID() )
-	{
-		IRC_Print( "NETIDが一致した\n" );
-		return;	//自分のデータは無視
-	}
-
-	GFL_STD_MemCopy( cp_data, &p_sys->menu_recv, sizeof(MENU_DECIDE_DATA) );
-
-	p_sys->is_recv		= TRUE;
-	IRC_Print( "メニュー決定\n" );
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief	メニュー決定を受信した
@@ -830,4 +967,437 @@ static void NET_RECV_StartProc( const int netID, const int size, const void* cp_
 	p_sys->is_start		= TRUE;
 	IRC_Print( "同期OK 受信rnd%d\n", p_sys->random );
 
+}
+
+
+//=============================================================================
+/**
+ *					NET
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NET初期化
+ *
+ *	@param	MENUNET_WORK *p_wk	ワーク
+ *	@param	COMPATIBLE_IRC_SYS	赤外線
+ *	@param	HEAPID							ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MENUNET_Init( MENUNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc, HEAPID heapID )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(MENUNET_WORK) );
+	p_wk->p_irc	= p_irc;
+	p_wk->p_send_status	= GFL_HEAP_AllocMemory( heapID, MyStatus_GetWorkSize() );
+	GFL_STD_MemClear( p_wk->p_send_status, MyStatus_GetWorkSize() );
+	p_wk->p_my_status	= GFL_HEAP_AllocMemory( heapID, MyStatus_GetWorkSize() );
+	GFL_STD_MemClear( p_wk->p_my_status, MyStatus_GetWorkSize() );
+	p_wk->p_you_status	= GFL_HEAP_AllocMemory( heapID, MyStatus_GetWorkSize() );
+	GFL_STD_MemClear( p_wk->p_you_status, MyStatus_GetWorkSize() );
+
+	COMPATIBLE_IRC_AddCommandTable( p_irc, GFL_NET_CMD_IRCMENU, sc_recv_tbl, NELEMS(sc_recv_tbl), p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NET破棄
+ *
+ *	@param	MENUNET_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MENUNET_Exit( MENUNET_WORK *p_wk )
+{	
+	COMPATIBLE_IRC_DelCommandTable( p_wk->p_irc, GFL_NET_CMD_IRCMENU );
+	GFL_HEAP_FreeMemory( p_wk->p_send_status );
+	GFL_HEAP_FreeMemory( p_wk->p_my_status );
+	GFL_HEAP_FreeMemory( p_wk->p_you_status );
+	GFL_STD_MemClear( p_wk, sizeof(MENUNET_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー決定データ送信
+ *
+ *	@param	MENUNET_WORK *p_wk	ワーク
+ *	@param	MENUNET_DECIDEMENU_DATA *cp_data	送信データ
+ *
+ *	@retval	TRUEならば終了
+ *	@ratval	FALSEならば処理中
+ **/
+//-----------------------------------------------------------------------------
+static BOOL MENUNET_SendMenuData( MENUNET_WORK *p_wk, u32 ms, u32 select )
+{	
+
+	p_wk->menusend.ms	= ms;
+	p_wk->menusend.select	= select;
+
+	if(COMPATIBLE_IRC_SendData( p_wk->p_irc, 
+				NETRECV_DECIDE_MENU, sizeof(MENUNET_DECIDEMENU_DATA), &p_wk->menusend ))
+	{
+		OS_TPrintf("メニュー送信開始\n");
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー決定データ受信待ち
+ *
+ *	@param	MENUNET_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば終了
+ *	@ratval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL MENUNET_RecvMenuData( MENUNET_WORK *p_wk )
+{	
+	if( p_wk->is_recv == TRUE )
+	{
+		OS_TPrintf("メニュー受信完了\n");
+		p_wk->is_recv = FALSE;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー決定データ受け取り
+ *
+ *	@param	const MENUNET_WORK *cp_wk	ワーク
+ *	@param	*p_data										メニュー決定データ受け取り
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MENUNET_GetMenuData( const MENUNET_WORK *cp_wk, u32 *p_ms, u32 *p_select )
+{	
+	if( p_ms )
+	{	
+		*p_ms			= cp_wk->menudata.ms;
+	}
+
+	if( p_select )
+	{	
+		*p_select	= cp_wk->menudata.select;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー返信データ送信
+ *
+ *	@param	MENUNET_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば終了
+ *	@ratval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL MENUNET_SendReturnMenu( MENUNET_WORK *p_wk )
+{	
+	u32 dummy;
+	if(COMPATIBLE_IRC_SendData( p_wk->p_irc, 
+				NETRECV_RECV_MENU, sizeof(u32), &dummy ))
+	{
+		OS_TPrintf("返信開始\n");
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー返信データ受信
+ *
+ *	@param	MENUNET_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば終了
+ *	@ratval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL MENUNET_RecvReturnMenu( MENUNET_WORK *p_wk )
+{	
+	if( p_wk->is_return == TRUE )
+	{
+		p_wk->is_return = FALSE;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	PROC開始タイミング取得
+ *
+ *	@param	MENUNET_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば終了
+ *	@ratval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL MENUNET_SendStartProcTiming( MENUNET_WORK *p_wk )
+{	
+	enum
+	{	
+		SEQ_PROC_SEND,
+		SEQ_PROC_WAIT,
+	};
+
+	u32 dummy;
+
+	switch( p_wk->seq )
+	{	
+
+	case SEQ_PROC_SEND:
+
+		
+		if(COMPATIBLE_IRC_SendData( p_wk->p_irc, 
+					NETRECV_START_PROC, sizeof(u32), &dummy ))
+		{
+			OS_TPrintf("メニュー送信開始\n");
+			p_wk->seq	= SEQ_PROC_WAIT;
+		}
+		break;
+
+	case SEQ_PROC_WAIT:
+		if( p_wk->is_start_proc )
+		{	
+			p_wk->is_start_proc	= FALSE;
+			p_wk->seq			= 0;
+			return TRUE;
+		}
+		break;
+	
+	}
+	
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	自分のステータスを送信
+ *
+ *	@param	MENUNET_WORK *p_wk	ワーク
+ *	@param	cp_data							自分のステータス
+ *
+ *	@retval	TRUEならば終了
+ *	@ratval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL MENUNET_SendStatusData( MENUNET_WORK *p_wk, GAMESYS_WORK *p_gamesys )
+{	
+	enum
+	{	
+		SEQ_PROC_SEND,
+		SEQ_PROC_WAIT,
+	};
+
+	u32 dummy;
+	MYSTATUS *p_status;
+	PLAYER_WORK *p_player;
+
+	switch( p_wk->seq )
+	{	
+
+	case SEQ_PROC_SEND:
+		//データ取得
+		if( p_gamesys )
+		{	
+			p_player	= GAMESYSTEM_GetMyPlayerWork( p_gamesys );
+			p_status	= &p_player->mystatus;
+		}
+		else
+		{	
+			return TRUE;
+		}
+
+		//送信
+		if(COMPATIBLE_IRC_SendDataEx( p_wk->p_irc, 
+					NETRECV_SEND_STATUS, MyStatus_GetWorkSize(), p_status, 
+					GFL_NET_SENDID_ALLUSER, FALSE, FALSE, TRUE ))
+		{
+			OS_TPrintf("メニュー送信開始\n");
+			p_wk->seq	= SEQ_PROC_WAIT;
+		}
+		break;
+
+	case SEQ_PROC_WAIT:
+		if( p_wk->is_status_recv )
+		{	
+			p_wk->is_status_recv	= FALSE;
+			p_wk->seq			= 0;
+			return TRUE;
+		}
+		break;
+	
+	}
+	
+	return FALSE;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	相手のステータスを取得
+ *
+ *	@param	const MENUNET_WORK *cp_wk	ワーク	
+ *	@param	*p_status									ステータス格納バッファ
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MENUNET_GetStatusData( const MENUNET_WORK *cp_wk, MYSTATUS *p_status )
+{	
+	MyStatus_Copy(cp_wk->p_you_status, p_status);
+}
+
+//=============================================================================
+/**
+ *				NETRECV
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー決定データ送信
+ *
+ *	@param	const int netID	ネットID
+ *	@param	int size				サイズ
+ *	@param	void* p_data		データ
+ *	@param	p_work					ワーク
+ *	@param	p_net_handle		ハンドル
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void NETRECV_DecideMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+{	
+	MENUNET_WORK *p_wk	= p_work;
+
+	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+	{
+		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+	}
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		return;	//自分のデータは無視
+	}
+
+	GFL_STD_MemCopy( cp_data, &p_wk->menudata, sizeof(MENUNET_DECIDEMENU_DATA) );
+	NAGI_Printf("結果データ受け取り完了\n" );
+	p_wk->is_recv		= TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニューデータ受け取り返信
+ *
+ *	@param	const int netID	ネットID
+ *	@param	int size				サイズ
+ *	@param	void* p_data		データ
+ *	@param	p_work					ワーク
+ *	@param	p_net_handle		ハンドル
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void NETRECV_RecvMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+{	
+	MENUNET_WORK *p_wk	= p_work;
+
+	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+	{
+		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+	}
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		return;	//自分のデータは無視
+	}
+
+	NAGI_Printf("返信完了\n" );
+	p_wk->is_return		= TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	PROC開始タイミング受信
+ *
+ *	@param	const int netID	ネットID
+ *	@param	int size				サイズ
+ *	@param	void* p_data		データ
+ *	@param	p_work					ワーク
+ *	@param	p_net_handle		ハンドル
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void NETRECV_StartProcTiming( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+{	
+	MENUNET_WORK *p_wk	= p_work;
+
+	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+	{
+		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+	}
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		return;	//自分のデータは無視
+	}
+
+	NAGI_Printf("PROC開始タイミング完了\n" );
+	p_wk->is_start_proc		= TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ステータス送信
+ *
+ *	@param	const int netID	ネットID
+ *	@param	int size				サイズ
+ *	@param	void* cp_data		データ
+ *	@param	p_work					ワーク
+ *	@param	p_net_handle		ハンドル
+ *
+ */
+//-----------------------------------------------------------------------------
+static void NETRECV_SendStatus( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+{	
+	MENUNET_WORK *p_wk	= p_work;
+
+	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+	{
+		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+	}
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		return;	//自分のデータは無視
+	}
+
+	NAGI_Printf("PROC開始タイミング完了\n" );
+	p_wk->is_status_recv		= TRUE;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ステータス用バッファ取得
+ *
+ *	@param	int netID	ネットID
+ *	@param	p_work		ワーク
+ *	@param	size			サイズ
+ *
+ *	@return	バッファ
+ */
+//-----------------------------------------------------------------------------
+static u8*NETRECV_GetStatusBuffer( int netID, void* p_work, int size )
+{	
+	MENUNET_WORK *p_wk	= p_work;
+
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		//自分のデータ
+		return (u8*)p_wk->p_my_status;
+	}
+	else
+	{	
+		//あいてのデータ
+		return (u8*)p_wk->p_you_status;
+	}
 }

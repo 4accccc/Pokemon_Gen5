@@ -89,6 +89,7 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	u8									score;
 	u8									dummy2[3];
 	BOOL								is_init;
+	MYSTATUS						*p_you_status;
 
 };
 
@@ -230,14 +231,17 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	GFL_STD_MemClear( p_wk, sizeof(IRC_COMPATIBLE_MAIN_WORK) );
 	p_wk->p_gamesys	= p_param;
 
+	//通信相手データ用バッファ作成
+	p_wk->p_you_status	= GFL_HEAP_AllocMemory( HEAPID_IRCCOMPATIBLE_SYSTEM, MyStatus_GetWorkSize() );
+	GFL_STD_MemClear( p_wk->p_you_status, MyStatus_GetWorkSize() );
 
+	//モジュール作成
 	SUBPROC_Init( &p_wk->subproc, HEAPID_IRCCOMPATIBLE_SYSTEM );
 
 	//0xFFFFFFFFは応急処理（仮）5月ROM焼きのあと、
 	//毎回接続しなおす処理に直す。その際、最初の接続時にマックアドレスを貰いその人としか
 	//繋がらないような処理にする
 	p_wk->p_irc	= COMPATIBLE_IRC_CreateSystem( 0xFFFFFFFF, HEAPID_IRCCOMPATIBLE_SYSTEM );
-
 
 	p_wk->is_init	= TRUE;
 
@@ -263,9 +267,12 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 
 	p_wk	= p_work;
 
+	//モジュール破棄
 	COMPATIBLE_IRC_DeleteSystem( p_wk->p_irc );
-
 	SUBPROC_Exit( &p_wk->subproc );
+	
+	//バッファ破棄
+	GFL_HEAP_FreeMemory( p_wk->p_you_status );
 
 	//プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );
@@ -668,6 +675,7 @@ static void *SUBPROC_ALLOC_Menu( HEAPID heapID, void *p_wk_adrs )
 	GFL_STD_MemClear( p_param, sizeof(IRC_MENU_PARAM));
 	p_param->p_gamesys	= p_wk->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
+	p_param->p_you_status	= p_wk->p_you_status;
 
 	if( p_wk->is_init )
 	{	
@@ -724,6 +732,8 @@ static void *SUBPROC_ALLOC_Aura( HEAPID heapID, void *p_wk_adrs )
 	GFL_STD_MemClear( p_param, sizeof(IRC_AURA_PARAM)) ;
 	p_param->p_gamesys	= p_wk->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
+	p_param->p_you_status	= p_wk->p_you_status;
+
 	return p_param;
 }
 //----------------------------------------------------------------------------
@@ -769,6 +779,7 @@ static void *SUBPROC_ALLOC_Rhythm( HEAPID heapID, void *p_wk_adrs )
 	GFL_STD_MemClear( p_param, sizeof(IRC_RHYTHM_PARAM)) ;
 	p_param->p_gamesys	= p_wk->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
+	p_param->p_you_status	= p_wk->p_you_status;
 
 	return p_param;
 }
@@ -815,6 +826,7 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 	GFL_STD_MemClear( p_param, sizeof(IRC_RESULT_PARAM)) ;
 	p_param->p_gamesys	= p_wk->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
+	p_param->p_you_status	= p_wk->p_you_status;
 	p_param->score			= p_wk->score / 2;
 
 	return p_param;

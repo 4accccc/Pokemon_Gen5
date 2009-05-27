@@ -454,8 +454,9 @@ static BOOL MSGWND_Main( MSGWND_WORK *p_wk, MSG_WORK *p_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk,
 		const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
 static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID );
-static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, 
-		u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
+static void MSGWND_PrintNumberCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, 
+		u32 strID, u16 number, u16 buff_id );
+static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_my, const MYSTATUS *cp_you );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
 //SEQ
 static void SEQ_Change( RESULT_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
@@ -633,7 +634,19 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	OBJNUBER_Init( &p_wk->number, &p_wk->grp );
 
 	//初期メッセージ
-	MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_000 );
+	if( p_wk->p_param->p_gamesys )
+	{	
+		PLAYER_WORK *p_player;
+		MYSTATUS *p_status;
+		p_player	= GAMESYSTEM_GetMyPlayerWork( p_wk->p_param->p_gamesys );
+		p_status	= &p_player->mystatus;
+		MSGWND_PrintBothNameCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, 
+				RESULT_STR_000, p_status, p_wk->p_param->p_you_status );
+	}
+	else	
+	{	
+		MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_000 );
+	}
 
 	//デバッグ
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRESULT );
@@ -1518,7 +1531,7 @@ static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
  *	@param	y									開始位置Y
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id, u16 x, u16 y )
+static void MSGWND_PrintNumberCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id )
 {
 	const GFL_MSGDATA* cp_msgdata;
 	WORDSET *p_wordset;
@@ -1531,7 +1544,60 @@ static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 	cp_msgdata	= MSG_GetMsgDataConst( cp_msg );
 
 	//数値をワードセットに登録
-	WORDSET_RegisterNumber(	p_wordset, buff_id, number, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber(	p_wordset, buff_id, number, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+	//元の文字列に数値を適用
+	{	
+		STRBUF	*p_strbuf;
+		p_strbuf	= GFL_MSG_CreateString( cp_msgdata, strID );
+		WORDSET_ExpandStr( p_wordset, p_wk->p_strbuf, p_strbuf );
+		GFL_STR_DeleteBuffer( p_strbuf );
+	}
+
+	//表示
+	{	
+		PRINT_QUE*	p_que;
+		GFL_FONT*		p_font;	
+		u16 x, y;
+
+		p_que		= MSG_GetPrintQue( cp_msg );
+		p_font	= MSG_GetFont( cp_msg );
+
+		//センター位置計算
+		x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
+		y	= GFL_BMPWIN_GetSizeY( p_wk->p_bmpwin )*4;
+		x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_font, 0 )/2;
+		y	-= PRINTSYS_GetStrHeight( p_wk->p_strbuf, p_font )/2;
+
+		PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージ表示面に数値つき文字を表示
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	MSG_WORK *cp_msg	文字管理
+ *	@param	strID							文字ID
+ *	@param	cp_status					プレイヤーの状態
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_my, const MYSTATUS *cp_you )
+{	
+	const GFL_MSGDATA* cp_msgdata;
+	WORDSET *p_wordset;
+	u16 x, y;
+	
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+
+	//モジュール取得
+	p_wordset		= MSG_GetWordSet( cp_msg );
+	cp_msgdata	= MSG_GetMsgDataConst( cp_msg );
+
+	//数値をワードセットに登録
+	WORDSET_RegisterPlayerName( p_wordset, 0, cp_you );
+	WORDSET_RegisterPlayerName( p_wordset, 1, cp_my );
 
 	//元の文字列に数値を適用
 	{	
@@ -1547,10 +1613,16 @@ static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 		GFL_FONT*		p_font;	
 		p_que		= MSG_GetPrintQue( cp_msg );
 		p_font	= MSG_GetFont( cp_msg );
+
+		//センター位置計算
+		x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
+		y	= GFL_BMPWIN_GetSizeY( p_wk->p_bmpwin )*4;
+		x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_font, 0 )/2;
+		y	-= PRINTSYS_GetStrHeight( p_wk->p_strbuf, p_font )/2;
+
 		PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
 	}
 }
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	画面クリア
@@ -1987,6 +2059,8 @@ static void SEQFUNC_DecideHeart( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_HEART_SCALSE_EXIT:
+		MSGWND_PrintNumberCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_001,
+				p_wk->p_param->score, 2 );
 		*p_seq	= SEQ_NEXTPROC;
 		break;
 

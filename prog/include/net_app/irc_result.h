@@ -23,6 +23,7 @@
 typedef struct {
 	GAMESYS_WORK				*p_gamesys;//[in]ゲームシステム
 	COMPATIBLE_IRC_SYS	*p_irc;		//[in]赤外線システム
+	MYSTATUS						*p_you_status;//[in]通信相手のステータス（バッファを渡してください）
 	u8									score;		//[in]ゲームの点数
 }IRC_RESULT_PARAM;
 

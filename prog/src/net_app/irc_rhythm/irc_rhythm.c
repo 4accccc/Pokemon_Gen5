@@ -492,6 +492,7 @@ static BOOL MSGWND_Main( MSGWND_WORK *p_wk, const MSG_WORK *cp_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
 static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID );
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
+static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_status, u16 x, u16 y );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
 //ONLYRESULT
 static void RHYTHM_ONLYRESULT_Init( RHYTHM_ONLYRESULT_WORK* p_wk, u8 frm, const MSG_WORK *cp_msg, const RHYTHMSEARCH_WORK *cp_search,  HEAPID heapID );
@@ -1581,7 +1582,50 @@ static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 		PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
 	}
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージ表示面に数値つき文字を表示
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	MSG_WORK *cp_msg	文字管理
+ *	@param	strID							文字ID
+ *	@param	cp_status					プレイヤーの状態
+ *	@param	x									開始位置X
+ *	@param	y									開始位置Y
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_status, u16 x, u16 y )
+{	
+	const GFL_MSGDATA* cp_msgdata;
+	WORDSET *p_wordset;
+	
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
 
+	//モジュール取得
+	p_wordset		= MSG_GetWordSet( cp_msg );
+	cp_msgdata	= MSG_GetMsgDataConst( cp_msg );
+
+	//数値をワードセットに登録
+	WORDSET_RegisterPlayerName( p_wordset, 0, cp_status );
+
+	//元の文字列に数値を適用
+	{	
+		STRBUF	*p_strbuf;
+		p_strbuf	= GFL_MSG_CreateString( cp_msgdata, strID );
+		WORDSET_ExpandStr( p_wordset, p_wk->p_strbuf, p_strbuf );
+		GFL_STR_DeleteBuffer( p_strbuf );
+	}
+
+	//表示
+	{	
+		PRINT_QUE*	p_que;
+		GFL_FONT*		p_font;	
+		p_que		= MSG_GetPrintQue( cp_msg );
+		p_font	= MSG_GetFont( cp_msg );
+		PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
+	}
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	画面クリア
@@ -1802,8 +1846,16 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	RHYTHMSEARCH_WORK	*p_search;
 	p_search	= &p_wk->search;
 
-	MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_000, 0, 0 );
-
+		if( p_wk->p_param->p_gamesys )
+		{	
+			MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, 
+					RHYTHM_STR_000, p_wk->p_param->p_you_status,  0, 0 );
+		}
+		else
+		{	
+			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_000, 0, 0 );
+		}
+	
 
 #ifdef DEBUG_ONLY_PLAY
 	DEBUGRHYTHM_PRINT_UpDate( p_wk );
