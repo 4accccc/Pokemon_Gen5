@@ -112,6 +112,7 @@ static void mapCtrlGrid_Create(
     FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
 		u16 dir4 = grid_ChangeFourDir( dir );
     FLDMMDL_SetDirDisp( fmmdl, dir4 );
+    KAGAYA_Printf( "‚í‚½‚³‚ê‚½•ûŒü %xH, %d\n", dir, dir4 );
 		gridWork->gridPlayer = FIELD_PLAYER_GRID_Init( fld_player, heapID );
 	}
 	
