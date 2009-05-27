@@ -323,7 +323,7 @@ extern void GFL_NET_StateWifiP2PEnd( void );
 
 
 /// WiFiで使うHeapのサイズ
-#define GFL_NET_DWC_HEAPSIZE        (0x35400)   //WIFIクラブのHEAP量
+#define GFL_NET_DWC_HEAPSIZE        (0x45400)   //WIFIクラブのHEAP量
 #define GFL_NET_DWCLOBBY_HEAPSIZE   (0x60000)   //WIFI広場のHEAP量
 
 

@@ -202,6 +202,7 @@ struct _IRC_BATTLE_MATCH {
   BMPWINFRAME_AREAMANAGER_POS aPos;
   int windowNum;
   BOOL IsIrc;
+  BMPMENU_WORK* pYesNoWork;
   //    GAMESYS_WORK *gameSys_;
   //    FIELD_MAIN_WORK *fieldWork_;
   u32 connect_bit;
@@ -382,7 +383,7 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      2, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -392,6 +393,20 @@ static void _createBg(IRC_BATTLE_MATCH* pWork)
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
     //        GFL_BG_ClearFrame(frame);
+  }
+  {
+    int frame = GFL_BG_FRAME2_S;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
   }
 }
 
@@ -526,6 +541,7 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
   GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
 
 
   _CHANGE_STATE(pWork,_fadeInWait);
@@ -615,13 +631,67 @@ static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   ‚h‚q‚bÚ‘±‘Ò‹@
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
+{
+  int ret = BmpMenu_YesNoSelectMain(pWork->pYesNoWork);
+  if(ret == BMPMENU_NULL)
+  {  // ‚Ü‚¾‘I‘ð’†
+    return;
+  }
+  else
+  {
+    if(ret == 0)
+    { // ‚Í‚¢‚ð‘I‘ð‚µ‚½ê‡
+    }
+    else
+    {  // ‚¢‚¢‚¦‚ð‘I‘ð‚µ‚½ê‡
+    }
+  }
+}
+
+
+
+
+
+//------------------------------------------------------------------------------
+/**
  * @brief   l”‘I‘ð‰æ–Ê‰Šú‰»
  * @retval  none
  */
 //------------------------------------------------------------------------------
+#define	FLD_YESNO_WIN_PX	( 25 )
+#define	FLD_YESNO_WIN_PY	( 13 )
+
+static const BMPWIN_YESNO_DAT _yesNoBmpDatSys2 = {
+	GFL_BG_FRAME2_S, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY+6,
+	11, 512
+	};
+
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 {
 
+	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
+		int aMsgBuff[]={IRCBTL_STR_16};
+		_buttonWindowDelete(pWork);
+		_msgWindowCreate(aMsgBuff, pWork);
+    BmpWinFrame_GraphicSet(
+      GFL_BG_FRAME2_S, 512-24, 11, 0, pWork->heapID );
+
+		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+																	0x20*11, 0x20, pWork->heapID);
+		GFL_FONTSYS_SetColor( 1, 2, 15 );
+
+		pWork->pYesNoWork =
+			BmpMenu_YesNoSelectInit(&_yesNoBmpDatSys2, 512-24, 11, 0, pWork->heapID );
+		GFL_FONTSYS_SetDefaultColor();
+		_CHANGE_STATE(pWork,_ircExitWait);
+	}
+
+	
   // if(pWork->connect_ok == TRUE){
   //		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_START_TIMING);
   // _CHANGE_STATE(pWork,_ircStartTiming);

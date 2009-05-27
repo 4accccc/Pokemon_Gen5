@@ -3925,6 +3925,8 @@ static GFL_PROC_RESULT MysteryGiftProc_End(GFL_PROC * proc, int * seq, void *pwk
 	
 	GFL_BG_Exit();
 
+	PMSND_FadeOutBGM(60);
+
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_MYSTERYGIFT);
 //	if(wk->comm_type == MYSTERYCOMM_TYPE_AGBCARTRIDGE)

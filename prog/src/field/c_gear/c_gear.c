@@ -1388,7 +1388,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 		}
 		state(pWork);
 		pWork->plt_counter++;
-		if(pWork->plt_counter==128)
+		if(pWork->plt_counter==82)
 		{
 			pWork->plt_counter=0;
 		}

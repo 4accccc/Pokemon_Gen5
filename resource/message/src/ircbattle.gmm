@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-19T17:54:30"/>
+	<create user="ohno" host="W00141" date="2009-05-27T15:07:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -412,6 +412,11 @@
 	<row id="IRCBTL_STR_15">
 		<language name="JPN" width="256">あいしょうチェック</language>
 		<language name="JPN_KANJI" width="256">相性チェック</language>
+	</row>
+
+	<row id="IRCBTL_STR_16">
+		<language name="JPN" width="256">ちゅうだんしますか？</language>
+		<language name="JPN_KANJI" width="256">中断しますか？</language>
 	</row>
 
 	<flowchart-group-list>
