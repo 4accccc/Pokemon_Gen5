@@ -98,7 +98,7 @@ static const RAIL_SETTING lineWidth = {
 };
 static const RAIL_LOCATION locationStart = {
   FIELD_RAIL_TYPE_POINT,
-  10,
+  0,
 };
 
 //======================================================================
@@ -142,12 +142,13 @@ static void mapCtrlNoGrid_Create(
   FIELD_RAIL_MAN_SetLocation( railMan, &locationStart );
   //FIELD_RAIL_MAN_Load(railMan, &point_c03_start);
   FIELD_RAIL_MAN_GetPos(railMan, pos );
-  FIELD_CAMERA_BindNoCamera(FIELDMAP_GetFieldCamera(fieldWork), TRUE);
+  FIELD_CAMERA_BindNoCamera(camera, TRUE);
 
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	FIELD_PLAYER_SetPos( fld_player, pos );
 	FIELD_PLAYER_SetDir( fld_player, dir );
 
+  FIELD_CAMERA_SetTargetPos( camera, pos );
 }
 
 //--------------------------------------------------------------
@@ -201,6 +202,7 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   {
     FIELD_RAIL_MAN_GetPos(railMan, pos );
     FIELD_PLAYER_SetPos( fld_player, pos );
+    FIELD_CAMERA_SetTargetPos( FIELDMAP_GetFieldCamera(fieldWork), pos );
   }
   {
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );

@@ -1467,9 +1467,7 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
 //------------------------------------------------------------------
 void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
 {
-  VecFx32 before;
   VecFx32 c_s, c_e, c_now, target;
-
   const FIELD_RAIL * rail = &man->now_rail;
   const RAIL_CAMERA_SET * cs;
   const RAIL_CAMERA_SET * ce;
@@ -1480,8 +1478,6 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
   ce = rail->line->point_e->camera_set;
   GF_ASSERT(ce->func == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
 
-  FIELD_CAMERA_GetCameraPos(man->field_camera, &before);
-
   {
     u32 div = rail->line_ofs_max;
     fx32 t = FX32_ONE * man->now_rail.line_ofs / div;
@@ -1490,7 +1486,7 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
     getVectorFromAngleValue(&c_e, ce->param1, ce->param0, ce->param2);
     getIntermediateVector(&c_now, &c_s, &c_e, t);
 
-    FIELD_CAMERA_GetTargetPos(man->field_camera, &target);
+    FIELD_RAIL_MAN_GetPos( man, &target );
     VEC_Add(&c_now, &target, &c_now);
     FIELD_CAMERA_SetCameraPos(man->field_camera, &c_now);
   }
