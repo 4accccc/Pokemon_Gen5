@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T17:26:48"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T20:26:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,10 +357,10 @@
 	</row>
 
 	<row id="COMPATI_STR_003">
-		<language name="JPN" width="256">あいしょう　チェックを　かいしします！
-せきがいせん　つうしんを　してください</language>
-		<language name="JPN_KANJI" width="256">相性チェックを　開始します！
-赤外線通信を　してください</language>
+		<language name="JPN" width="256">あいしょう　チェックを　はじめます
+せきがいせん　つうしんを　しましょう！</language>
+		<language name="JPN_KANJI" width="256">相性チェックを　はじめます
+赤外線通信を　しましょう！</language>
 	</row>
 
 	<row id="COMPATI_LIST_000">

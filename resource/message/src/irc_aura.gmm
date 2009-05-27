@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T13:01:23"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T20:10:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="76" top="179" right="781" bottom="799" maximized="no" rayout="Vertical2">
+	<dialog left="111" top="382" right="816" bottom="1002" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -334,29 +334,29 @@
 
 
 	<row id="AURA_STR_000">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さんとの　シンクロを　しらべます
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんとの　シンクロどを　しらべます
 ガイドにそって　おやゆびを　のせましょう！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんとの　シンクロを　調べます
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんとの　シンクロ度を　調べます
 ガイドにそって　親指を　乗せましょう！</language>
 	</row>
 
 	<row id="AURA_STR_001">
-		<language name="JPN" width="256">そくていちゅう……</language>
-		<language name="JPN_KANJI" width="256">測定中……</language>
+		<language name="JPN" width="256">シンクロどを　しらべています……</language>
+		<language name="JPN_KANJI" width="256">シンクロ度を　調べています……</language>
 	</row>
 
 	<row id="AURA_STR_002">
-		<language name="JPN" width="256">おやゆびを　のせたまま　みぎがわの
+		<language name="JPN" width="256">ひだりて　おやゆびを　そのままに　みぎがわの
 ガイドにそって　ゆびをのせましょう！</language>
-		<language name="JPN_KANJI" width="256">親指を　乗せたまま　右側の
+		<language name="JPN_KANJI" width="256">左手親指を　そのままに　右側の
 ガイドにそって　指を乗せましょう！</language>
 	</row>
 
 	<row id="AURA_STR_003">
-		<language name="JPN" width="256">そくてい　しゅうりょうです！
-せきがいせん　つうしんを　しましょう</language>
-		<language name="JPN_KANJI" width="256">測定終了です！
-赤外線通信を　しましょう</language>
+		<language name="JPN" width="256">チェックが　おわりました
+せきがいせん　つうしんを　しましょう！</language>
+		<language name="JPN_KANJI" width="256">チェックが　終わりました
+赤外線通信を　しましょう！</language>
 	</row>
 
 	<row id="AURA_BTN_000">

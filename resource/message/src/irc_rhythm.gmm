@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T18:50:17"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T20:27:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="234" right="705" bottom="854" maximized="no" rayout="Vertical2">
+	<dialog left="-202" top="431" right="503" bottom="1051" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -341,10 +341,10 @@
 	</row>
 
 	<row id="RHYTHM_STR_001">
-		<language name="JPN" width="256">そくてい　しゅうりょう！
-せきがいせん　つうしんを　してください</language>
-		<language name="JPN_KANJI" width="256">測定終了！
-赤外線通信を　してください</language>
+		<language name="JPN" width="256">チェックが　おわりました
+せきがいせん　つうしんを　しましょう！</language>
+		<language name="JPN_KANJI" width="256">チェックが　おわりました
+赤外線通信を　しましょう！</language>
 	</row>
 
 	<row id="RHYTHM_BTN_000">
