@@ -187,6 +187,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 	work->nameInParam = NameIn_ParamAllocMake( GFL_HEAPID_APP , NAMEIN_MYNAME , 0 , PERSON_NAME_SIZE , NULL );
 	work->selModeParam.type = SMT_START_GAME;
 	work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
+	work->selModeParam.mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -259,6 +260,7 @@ static GFL_PROC_RESULT GameStart_ContinueProcInit( GFL_PROC * proc, int * seq, v
 	GAMESTART_FIRST_WORK *work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
 	work->selModeParam.type = SMT_CONTINUE_GAME;
 	work->selModeParam.configSave = NULL;
+	work->selModeParam.mystatus = NULL;
 	
 	
 	return GFL_PROC_RES_FINISH;

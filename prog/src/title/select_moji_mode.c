@@ -14,6 +14,7 @@
 
 #include "arc_def.h"
 #include "print/printsys.h"
+#include "poke_tool/poke_tool.h"
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_select_moji_mode.h"
@@ -70,6 +71,7 @@
 typedef enum
 {
   SMS_KANJI,
+  SMS_SEX,
   SMS_COMM,
   SMS_WAIT_FADEOUT,
 }SELECT_MODE_STATE;
@@ -189,6 +191,25 @@ static GFL_PROC_RESULT SEL_MODE_ProcMain( GFL_PROC * proc, int * seq, void * pwk
         {
           GFL_MSGSYS_SetLangID( 1 );
           CONFIG_SetMojiMode(initWork->configSave,MOJIMODE_KANJI );
+        }
+        SEL_MODE_ExitItem( work );
+        work->state = SMS_SEX;
+        SEL_MODE_InitItem( work );
+      }
+    }
+    break;
+  case SMS_SEX:
+    {
+      const SELECT_MODE_UI_RETURN ret = SEL_MODE_UpdateUI( work );
+      if( ret != SMUR_CONTINUE )
+      {
+        if( ret == SMUR_TRUE )
+        {
+          MyStatus_SetMySex( initWork->mystatus , PTL_SEX_MALE );
+        }
+        else
+        {
+          MyStatus_SetMySex( initWork->mystatus , PTL_SEX_FEMALE );
         }
         SEL_MODE_ExitItem( work );
         work->state = SMS_COMM;

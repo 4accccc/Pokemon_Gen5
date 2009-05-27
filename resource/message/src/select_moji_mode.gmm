@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-05-20T11:45:14"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-05-27T17:10:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="242" top="202" right="947" bottom="822" maximized="no" rayout="Vertical2">
+	<dialog left="110" top="202" right="815" bottom="822" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -340,7 +340,11 @@
 	</row>
 
 	<row id="QUESTION_STR2">
-		<comment>文字モードで文が変わらないように意図的にひらがな・漢字で同じものにしています</comment>
+		<language name="JPN" width="256">おとこのこ？　おんなのこ？</language>
+		<language name="JPN_KANJI" width="256">男の子？　女の子？</language>
+	</row>
+
+	<row id="QUESTION_STR3">
 		<language name="JPN" width="256">つうしんきのう　を　ONにしますか？</language>
 		<language name="JPN_KANJI" width="256">通信機能をONにしますか？</language>
 	</row>
@@ -356,11 +360,21 @@
 	</row>
 
 	<row id="ITEM1_STR2">
+		<language name="JPN" width="256">おとこのこ</language>
+		<language name="JPN_KANJI" width="256">男の子</language>
+	</row>
+
+	<row id="ITEM2_STR2">
+		<language name="JPN" width="256">おんなのこ</language>
+		<language name="JPN_KANJI" width="256">女の子</language>
+	</row>
+
+	<row id="ITEM1_STR3">
 		<language name="JPN" width="256">はい</language>
 		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
-	<row id="ITEM2_STR2">
+	<row id="ITEM2_STR3">
 		<language name="JPN" width="256">いいえ</language>
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
