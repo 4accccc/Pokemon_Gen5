@@ -20,6 +20,8 @@
 
 #include "src/field/event_mapchange.h"
 
+#include "poke_tool/monsno_def.h"
+
 //============================================================================================
 //============================================================================================
 enum {
@@ -417,14 +419,12 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
 	
 	party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys));
 
-	pp = PP_Create(150, 50, 123456, GFL_HEAPID_APP);
+	pp = PP_Create(MONSNO_WANIBAAN, 50, 123456, GFL_HEAPID_APP);
 	
 	PokeParty_Add(party, pp);
-	PP_Setup(pp, 250, 100, 123456);
+	PP_Setup(pp, MONSNO_ONOKKUSU, 100, 123456);
 	PokeParty_Add(party, pp);
-	PP_Setup(pp, 350, 100, 123456);
-	PokeParty_Add(party, pp);
-	PP_Setup(pp, 400, 100, 123456);
+	PP_Setup(pp, MONSNO_BANBIINA, 100, 123456);
 	PokeParty_Add(party, pp);
 	
 	GFL_HEAP_FreeMemory(pp);
