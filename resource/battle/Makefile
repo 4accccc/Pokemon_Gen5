@@ -45,9 +45,10 @@ NITRO_COMP = ../../tools/nitro_comp
 IMDFILE	:= $(wildcard $(RES_3DDIR)*.imd)
 ICAFILE	:= $(wildcard $(RES_3DDIR)*.ica)
 BGNCGFILE := $(wildcard $(RES_BGDIR)*.ncg)
+BGNCLFILE := $(wildcard $(RES_BGDIR)*.ncl)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-.SUFFIXES:	.imd.nsbmd.ice.nsbca.ncg
+.SUFFIXES:	.imd.nsbmd.ice.nsbca.ncg.ncl
 
 do-build: $(IMDFILE:.imd=.nsbmd)
 %.nsbmd: %.imd
@@ -60,6 +61,10 @@ do-build: $(ICAFILE:.ica=.nsbca)
 do-build: $(BGNCGFILE:.ncg=.NCGR)
 %.NCGR: %.ncg
 	g2dcvtr -bg $<
+
+do-build: $(BGNCLFILE:.ncl=.NCLR)
+%.NCLR: %.ncl
+	g2dcvtr $<
 
 endif
 
