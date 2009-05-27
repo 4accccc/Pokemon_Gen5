@@ -39,19 +39,19 @@ const CONNECT_DATA ConnectData_T01[] = {
 	{//DOOR_ID_T01_EXIT01 = 0
 		{11952, 0, 13136},
 		ZONE_ID_T01R0101, DOOR_ID_T01R0101_EXIT01,
-		1,//direction
+		2,//direction
 		0 //type
 	},
 	{//DOOR_ID_T01_EXIT02 = 1
 		{12112, 0, 13136},
 		ZONE_ID_T01R0201, DOOR_ID_T01R0201_EXIT01,
-		1,//direction
+		2,//direction
 		0 //type
 	},
 	{//DOOR_ID_T01_EXIT03 = 2
 		{12016, 0, 13008},
 		ZONE_ID_T01R0301, DOOR_ID_T01R0301_EXIT01,
-		1,//direction
+		2,//direction
 		0 //type
 	},
 };
