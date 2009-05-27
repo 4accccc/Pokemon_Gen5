@@ -79,6 +79,8 @@ enum {
 	WFLBY_EV_MG_INFO_INIT,		// CommInfoの初期化	
 	WFLBY_EV_MG_INFO_POKE,		// CommInfoのPokeData送信
 	WFLBY_EV_MG_STARTWAIT,		// ゲーム開始待ち
+	WFLBY_EV_MG_NEGO_START,		// ネゴシエーション開始
+	WFLBY_EV_MG_NEGO_WAIT,		// ネゴシエーション開始
 	WFLBY_EV_MG_PLIDX_RESET,	// PLAYER_IDX初期化
 	WFLBY_EV_MG_PLIDX_SEND,		// PLAYER_IDX送信
 	WFLBY_EV_MG_PLIDX_CHECK,	// PLAYER_IDXチェック
@@ -312,6 +314,8 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 	case WFLBY_EV_MG_INFO_INIT:		// CommInfoの初期化	
 	case WFLBY_EV_MG_INFO_POKE:		// CommInfoのPokeData送信
 	case WFLBY_EV_MG_STARTWAIT:		// ゲーム開始待ち
+	case WFLBY_EV_MG_NEGO_START:
+	case WFLBY_EV_MG_NEGO_WAIT:
 	case WFLBY_EV_MG_PLIDX_RESET:	// PLAYER_IDX初期化
 	case WFLBY_EV_MG_PLIDX_SEND:		// PLAYER_IDX送信
 	case WFLBY_EV_MG_PLIDX_CHECK:	// PLAYER_IDXチェック
@@ -326,11 +330,14 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		}
 
 		// 通信人数よりエントリー人数が多いときはおかしい
-	#if WB_TEMP_FIX
+	#if WB_FIX
 		if( p_evwk->match_entry_num > CommGetConnectNum() ){
 			OS_TPrintf( "p_evwk->match_entry_num > CommGetConnectNum() = %d > %d\n", p_evwk->match_entry_num, CommGetConnectNum() );
 	#else
-		if( 0 ){
+      //暫定無効 GFL_NET_SystemGetConnectNumの公開をやめたため。
+//		if( p_evwk->match_entry_num > GFL_NET_SystemGetConnectNum() ){
+//			OS_TPrintf( "p_evwk->match_entry_num > CommGetConnectNum() = %d > %d\n", p_evwk->match_entry_num, GFL_NET_SystemGetConnectNum() );
+    if(1){
 	#endif
 			p_param->in_ok = WFLBY_EV_MG_RET_NG_DISCON;
 			WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERREND );
@@ -813,7 +820,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		OS_TPrintf( "matchok netid%d\n", GFL_NET_SystemGetCurrentID() );
 
 		// 4人接続モードにする
-	#if WB_TEMP_FIX
+	#if WB_FIX    //WB_TEMP_FIX
 		CommStateChangeWiFiLobbyMinigame();
 	
 		// Info
@@ -824,6 +831,12 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 
 		// 同期なし
 		CommSetWifiBothNet(FALSE);
+	#else
+		// 広場のMYSTATUSを設定する
+//		CommInfoSetWiFiPlaceMyStatus( WFLBY_SYSTEM_GetMgMyStatus( p_system ) );
+
+		// 同期なし
+    GFL_NET_SetWifiBothNet(FALSE);
 	#endif
 
 		
@@ -838,17 +851,44 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		WFLBY_EV_MG_MINIGAME_PrintSetCount( &p_evwk->kanban, 0 );
 		WFLBY_EV_MG_MINIGAME_PrintMinigame_Recruit( &p_evwk->kanban, p_rmwk, FALSE );
 
-	#if WB_TEMP_FIX
+	#if WB_FIX  //WB_TEMP_FIX
 		// 自分を教える
 		CommInfoSendPokeData();
 
 		// 自分はエントリー
 		CommInfoSetEntry( GFL_NET_SystemGetCurrentID() );
-	#endif
+
 		// 通信開始命令待ちへ
 		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_STARTWAIT );
+	#else
+	  //ここら辺は全てGFL_NET_HANDLE_GetInfomation系でやっているのでいらない
+
+		// 通信開始命令待ちへ
+		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_NEGO_START );
+	#endif
 		break;
 
+  case WFLBY_EV_MG_NEGO_START:
+	  if(GFL_NET_HANDLE_RequestNegotiation() == TRUE){
+  		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_NEGO_WAIT );
+    }
+    break;
+  case WFLBY_EV_MG_NEGO_WAIT:
+    //全員のネゴシエーションが終了し、InfomationDataが全員分取得出来る状態になったら進む
+//    if(GFL_NET_SystemGetConnectNum() == GFL_NET_GetConnectNum()){
+      //暫定無効 GFL_NET_SystemGetConnectNumの公開をやめたため。
+    if(1){
+      int info_num = 0, i;
+      for(i = 0; i < WFLBY_MINIGAME_MAX; i++){
+        if(GFL_NET_HANDLE_GetInfomationData( GFL_NET_GetNetHandle(i) ) != NULL){
+          info_num++;
+        }
+      }
+      if(info_num == GFL_NET_GetConnectNum()){
+    		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_STARTWAIT );
+    	}
+    }
+    break;
 	// ゲーム開始待ち
 	case WFLBY_EV_MG_STARTWAIT:
 
@@ -858,7 +898,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 
 
 		// 新しく来た人をENTRY状態にする
-	#if WB_TEMP_FIX
+	#if WB_FIX  //WB_TEMP_FIX
 		{
 			int netid;
 			while( (netid = CommInfoGetNewNameID()) != INVALID_NETID ){
@@ -866,6 +906,8 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 				OS_TPrintf( "Entry=%d  EntryNum=%d\n", netid, CommInfoGetEntryNum() );
 			}
 		}
+	#else
+	  //WFLBY_EV_MG_NEGO_WAITでネゴシエーションを待っているのでここの処理はいらない
 	#endif
 	
 		/*
@@ -875,8 +917,11 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
         }
 		//*/
 		// 人数がそろったらゲームを開始させる
-	#if WB_TEMP_FIX
+	#if WB_FIX  //WB_TEMP_FIX
 		if( CommInfoGetEntryNum() >= DWC_LOBBY_MG_GetEntryNum( p_param->mg_type ) ){
+	#else
+	  if( GFL_NET_GetConnectNum() >= DWC_LOBBY_MG_GetEntryNum( p_param->mg_type ) ){
+	#endif
 			if( DWC_LOBBY_MG_MyParent() == TRUE ){
 				if( p_evwk->start_game_set == FALSE ){
 					DWC_LOBBY_MG_StartGame();
@@ -897,7 +942,6 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 				OS_TPrintf( "mg not parent commnum_diff\n" );
 			}
 		}
-	#endif
 		break;
 
 	// PLAYER_IDX初期化

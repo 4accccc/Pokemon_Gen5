@@ -24,6 +24,8 @@ typedef struct{
   u8 mac[WM_SIZE_BSSID];  ///mac
   u8 my_nation;			///<Ž©•ª‚Ì‘
   u8 my_area;				///<Ž©•ª‚Ì’nˆæ
+  
+  s32 lobby_userid;   ///<DWC_LOBBY_GetMyUserID@¦Lê—p
 }WIFI_EXCHANGE_WORK;
 
 

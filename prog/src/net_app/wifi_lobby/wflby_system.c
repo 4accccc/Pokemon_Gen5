@@ -1984,7 +1984,7 @@ void WFLBY_SYSTEM_GetProfileMyStatus( const WFLBY_USER_PROFILE* cp_profile, MYST
 	set_dummy = FALSE;
 	
 	if( result == TRUE ){
-	#if WB_TEMP_FIX	//WBでは文字がunicodeの為、ここで仮のSTRCODEを入れておく。後々はサーバー側でunicode対応 or ローカルでPLまでのSTRCODEへunicodeの変換、のどちらかが必要
+	#if WB_TEMP_FIX	//※check　WBでは文字がunicodeの為、ここで仮のSTRCODEを入れておく。後々はサーバー側でunicode対応 or ローカルでPLまでのSTRCODEへunicodeの変換、のどちらかが必要
 		// 名前
 		MyStatus_SetMyName( p_buff, cp_profile->name );
 
