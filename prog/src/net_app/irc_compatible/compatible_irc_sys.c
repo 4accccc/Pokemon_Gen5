@@ -489,6 +489,19 @@ BOOL COMPATIBLE_IRC_TimingSyncWait( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_TIMING
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	Wait処理をキャンセルする
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void COMPATIBLE_IRC_Cancel( COMPATIBLE_IRC_SYS *p_sys )
+{	
+	p_sys->seq	= 0;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	エラーチェック待ち処理
  *
  *	@param	COMPATIBLE_IRC_SYS *p_sys		ワーク

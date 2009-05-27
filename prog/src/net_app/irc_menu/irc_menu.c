@@ -38,6 +38,8 @@
  *					定数宣言
 */
 //=============================================================================
+
+
 //-------------------------------------
 ///	パレット
 //=====================================
@@ -445,12 +447,6 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 {	
 	IRC_MENU_MAIN_WORK	*p_wk;
 
-//デバッグ時はNULLのときでも動く
-//（デバッグからはGAMESYS_WORKを渡せないため）
-#ifndef PM_DEBUG
-	GF_ASSERT( p_param );
-#endif //PM_DEBUG
-
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCCOMPATIBLE,  0x20000 );
 	//プロセスワーク作成
@@ -464,7 +460,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCCOMPATIBLE );
 	GRAPHIC_BG_Init( &p_wk->bg, HEAPID_IRCCOMPATIBLE );
 
-	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, NULL, HEAPID_IRCCOMPATIBLE );
+	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys), HEAPID_IRCCOMPATIBLE );
 	
 	BUTTON_Init( &p_wk->btn, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BTN],
 			sc_btn_setp_tbl, NELEMS(sc_btn_setp_tbl), &p_wk->msg, p_wk->bg.frame_char, IRC_MENU_BG_PAL_M_01, HEAPID_IRCCOMPATIBLE );
@@ -1169,6 +1165,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 		if( TP_GetRectTrg( &sc_btn_setp_tbl[BTNID_RETURN] ) )
 		{
+			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
 			SEQ_Change( p_wk, SEQFUNC_DisConnect );
 		}
 		break;

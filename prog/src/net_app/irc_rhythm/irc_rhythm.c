@@ -737,7 +737,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	//ƒ‚ƒWƒ…[ƒ‹‰Šú‰»
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCRHYTHM );
 	MSG_Init( &p_wk->msg, MSG_FONT_TYPE_LARGE, HEAPID_IRCRHYTHM );
-	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, NULL, HEAPID_IRCRHYTHM );
+	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys), HEAPID_IRCRHYTHM );
 	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_TEXT], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
 			MSGWND_TEXT_X, MSGWND_TEXT_Y, MSGWND_TEXT_W, MSGWND_TEXT_H, HEAPID_IRCRHYTHM );
 	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_RETURN], sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
@@ -1879,6 +1879,7 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
 	if( TouchReturnBtn() )
 	{
+		p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}
 }
@@ -1933,6 +1934,7 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_CALC:
 		p_wk->p_param->score	= CalcScore( p_wk );
+		p_wk->p_param->result	= IRCRHYTHM_RESULT_CLEAR;
 	//	*p_seq	= SEQ_FADEIN_START;
 		*p_seq	= SEQ_END;
 		break;

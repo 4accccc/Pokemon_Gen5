@@ -36,6 +36,14 @@
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef PM_DEBUG
+#ifdef defined DEBUG_ONLY_FOR_toru_nagihashi
+#define DEBUG_RETURN_TO_PROG	//戻るボタンを押すと次へ進む
+#endif	//DEBUG_ONLY_FOR_toru_nagihashi
+#endif	//PM_DEBUG
 
 //=============================================================================
 /**
@@ -76,6 +84,10 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 
 	//PROC間データ
 	IRCMENU_SELECT			select;	//メニューで選んだもの
+	IRCAURA_RESULT			aura_result;
+	IRCRHYTHM_RESULT		rhythm_result;
+	u8									score;
+	u8									dummy2[3];
 	BOOL								is_init;
 
 };
@@ -461,25 +473,63 @@ static void SEQFUNC_CompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	enum
 	{	
+		SEQ_INIT,
 		SEQ_PROC_RHYTHM,
+		SEQ_PROC_RHYTHM_RESULT,
 		SEQ_PROC_AURA,
+		SEQ_PROC_AURA_RESULT,
 		SEQ_PROC_RESULT,
 		SEQ_CHANGE_MENU,
 	};
 
 	switch( *p_seq )
 	{	
+	case SEQ_INIT:
+		p_wk->score	= 0;
+		*p_seq	= SEQ_PROC_RHYTHM;
+		break;
+
 	case SEQ_PROC_RHYTHM:
 		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_RHYTHM, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
 		{	
+			*p_seq	= SEQ_PROC_RHYTHM_RESULT;
+		}
+		break;
+
+	case SEQ_PROC_RHYTHM_RESULT:
+#ifdef DEBUG_RETURN_TO_PROG
+		if(1)
+#else
+		if( p_wk->rhythm_result == IRCRHYTHM_RESULT_CLEAR )
+#endif	//DEBUG_RETURN_TO_PROG
+		{	
 			*p_seq	= SEQ_PROC_AURA;
+		}
+		else
+		{	
+			*p_seq	= SEQ_CHANGE_MENU;
 		}
 		break;
 
 	case SEQ_PROC_AURA:
 		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_AURA, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
 		{	
+			*p_seq	= SEQ_PROC_AURA_RESULT;
+		}
+		break;
+
+	case SEQ_PROC_AURA_RESULT:
+#ifdef DEBUG_RETURN_TO_PROG
+		if(1)
+#else
+		if( p_wk->aura_result == IRCAURA_RESULT_CLEAR )
+#endif //DEBUG_RETURN_TO_PROG
+		{	
 			*p_seq	= SEQ_PROC_RESULT;
+		}
+		else
+		{	
+			*p_seq	= SEQ_CHANGE_MENU;
 		}
 		break;
 
@@ -616,6 +666,7 @@ static void *SUBPROC_ALLOC_Menu( HEAPID heapID, void *p_wk_adrs )
 
 	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_MENU_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(IRC_MENU_PARAM));
+	p_param->p_gamesys	= p_wk->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
 
 	if( p_wk->is_init )
@@ -671,6 +722,7 @@ static void *SUBPROC_ALLOC_Aura( HEAPID heapID, void *p_wk_adrs )
 
 	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_AURA_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(IRC_AURA_PARAM)) ;
+	p_param->p_gamesys	= p_wk->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
 	return p_param;
 }
@@ -690,6 +742,9 @@ static void SUBPROC_FREE_Aura( void *p_param_adrs, void *p_wk_adrs )
 	
 	p_wk		= p_wk_adrs;
 	p_param	= p_param_adrs;
+
+	p_wk->aura_result	= p_param->result;
+	p_wk->score				+= p_param->score;
 
 	GFL_HEAP_FreeMemory( p_param );
 }
@@ -712,6 +767,7 @@ static void *SUBPROC_ALLOC_Rhythm( HEAPID heapID, void *p_wk_adrs )
 
 	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_RHYTHM_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(IRC_RHYTHM_PARAM)) ;
+	p_param->p_gamesys	= p_wk->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
 
 	return p_param;
@@ -732,6 +788,9 @@ static void SUBPROC_FREE_Rhythm( void *p_param_adrs, void *p_wk_adrs )
 	
 	p_wk		= p_wk_adrs;
 	p_param	= p_param_adrs;
+
+	p_wk->rhythm_result	= p_param->result;
+	p_wk->score					+= p_param->score;
 
 	GFL_HEAP_FreeMemory( p_param );
 }
@@ -754,7 +813,9 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 
 	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_RESULT_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(IRC_RESULT_PARAM)) ;
+	p_param->p_gamesys	= p_wk->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
+	p_param->score			= p_wk->score / 2;
 
 	return p_param;
 }

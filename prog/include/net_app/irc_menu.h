@@ -43,6 +43,7 @@ typedef enum
 ///	PROCに渡すパラメータ
 //=====================================
 typedef struct {
+	GAMESYS_WORK				*p_gamesys;//[in]ゲームシステム
 	COMPATIBLE_IRC_SYS	*p_irc;			//[in]共通で使う赤外線システム
 	IRCMENU_MODE				mode;				//[in]メニュー画面軌道モード
 	IRCMENU_SELECT			select;			//[out]メニュー画面で選んだもの

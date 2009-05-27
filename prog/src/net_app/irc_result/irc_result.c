@@ -44,7 +44,7 @@
 */
 //=============================================================================
 #ifdef PM_DEBUG
-#define DEBUG_RESULT_MSG	//デバッグメッセージを出す
+//#define DEBUG_RESULT_MSG	//デバッグメッセージを出す
 #endif //PM_DEBUG
 
 
@@ -157,6 +157,7 @@ enum
 ///	数
 //=====================================
 #define CLWK_SMALL_HEART_MAX	(30)
+#define CLWK_NUMBER_MAX				(3)
 
 //-------------------------------------
 ///	カウンタ
@@ -183,6 +184,8 @@ enum
 	OBJREGID_BIG_HEART_CEL,
 	OBJREGID_SMALL_HEART_CHR,
 	OBJREGID_SMALL_HEART_CEL,
+	OBJREGID_NUMBER_CHR,
+	OBJREGID_NUMBER_CEL,
 
 	OBJREGID_MAX
 };
@@ -194,6 +197,8 @@ typedef enum
 	CLWKID_BIG_HEART,
 	CLWKID_SMALL_HEART_TOP,
 	CLWKID_SMALL_HEART_END	= CLWKID_SMALL_HEART_TOP+CLWK_SMALL_HEART_MAX,
+	CLWKID_NUMBER_TOP,
+	CLWKID_NUMBER_END	= CLWKID_NUMBER_TOP+CLWK_NUMBER_MAX,
 	
 	CLWKID_MAX,
 }CLWKID;
@@ -202,7 +207,7 @@ typedef enum
 //=====================================
 typedef enum
 {
-	MSGWNDID_MAIN,
+//	MSGWNDID_MAIN,
 	MSGWNDID_SUB,
 
 	MSGWNDID_MAX
@@ -326,6 +331,18 @@ typedef struct {
 	int sync_max;		//シンク最大数
 } PROGVAL_VELOCITY_WORK;
 
+//-------------------------------------
+///	OBJ数字
+//=====================================
+typedef struct {
+	GFL_CLWK *p_clwk[CLWK_NUMBER_MAX];
+	u16 sync;
+	u16 sync_max;
+	u8 number;
+	u8 dummy;
+} OBJNUBER_WORK;
+
+
 #ifdef DEBUG_RESULT_MSG
 //-------------------------------------
 ///	デバッグプリント用画面
@@ -370,6 +387,8 @@ struct _RESULT_MAIN_WORK
 	GRAPHIC_WORK		grp;
 	MSG_WORK				msg;
 	MSGWND_WORK			msgwnd[MSGWNDID_MAX];
+
+	OBJNUBER_WORK		number;
 
 	//シーケンス管理
 	SEQ_FUNCTION		seq_function;
@@ -446,6 +465,11 @@ static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_DecideHeart( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_HeartEffect( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
+//OBJNUBER
+static void OBJNUBER_Init( OBJNUBER_WORK *p_wk, const GRAPHIC_WORK *cp_grp );
+static void OBJNUBER_Start( OBJNUBER_WORK *p_wk, int number, int sync );
+static BOOL OBJNUBER_Main( OBJNUBER_WORK *p_wk );
+static void ObjNumber_SetNumber( OBJNUBER_WORK *p_wk, int number );
 //汎用
 static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
 static void DEBUGRESULT_PRINT_UpDate( RESULT_MAIN_WORK *p_wk );
@@ -592,12 +616,14 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	//モジュール初期化
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCRESULT );
 	MSG_Init( &p_wk->msg, MSG_FONT_TYPE_LARGE, HEAPID_IRCRESULT );
-	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, NULL, HEAPID_IRCRESULT );
+	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys), HEAPID_IRCRESULT );
 
-	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_MAIN], sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
+/*	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_MAIN], sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
 			MSGWND_MAIN_X, MSGWND_MAIN_Y, MSGWND_MAIN_W, MSGWND_MAIN_H, HEAPID_IRCRESULT );
-	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_SUB], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
+*/	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_SUB], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
 			MSGWND_SUB_X, MSGWND_SUB_Y, MSGWND_SUB_W, MSGWND_SUB_H, HEAPID_IRCRESULT );
+
+	OBJNUBER_Init( &p_wk->number, &p_wk->grp );
 
 	//初期メッセージ
 	MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_000 );
@@ -915,6 +941,18 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 
 		p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCRESULT_GRAPHIC, heapID );
 
+
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircresult_gra_result_bg_NCLR,
+				PALTYPE_MAIN_BG, RESULT_BG_PAL_M_00*0x20, 0x20, heapID );
+	
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_ircresult_gra_result_bg_back_NCGR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
+
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircresult_gra_result_bg_back_NSCR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
+
+
+/*
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircresult_gra_result_bg_memo_NCLR,
 				PALTYPE_MAIN_BG, RESULT_BG_PAL_M_00*0x20, 0x20, heapID );
 	
@@ -923,13 +961,13 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 
 		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircresult_gra_result_bg_memo_NSCR,
 				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_MEMO], 0, 0, FALSE, heapID );
-
+*/
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
 	//設定
 	{	
-		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_MEMO], VISIBLE_OFF );
+	//	GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_MEMO], VISIBLE_OFF );
 	}
 }
 
@@ -1021,6 +1059,13 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 				NARC_ircresult_gra_result_obj_small_heart_NCER, 
 				NARC_ircresult_gra_result_obj_small_heart_NANR, heapID );
 
+		p_wk->reg_id[OBJREGID_NUMBER_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+				NARC_ircresult_gra_result_obj_number_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+
+		p_wk->reg_id[OBJREGID_NUMBER_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				NARC_ircresult_gra_result_obj_number_NCER, 
+				NARC_ircresult_gra_result_obj_number_NANR, heapID );
+
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
@@ -1045,6 +1090,19 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 				p_wk->reg_id[OBJREGID_SMALL_HEART_CHR],
 				p_wk->reg_id[OBJREGID_OBJ_PLT],
 				p_wk->reg_id[OBJREGID_SMALL_HEART_CEL],
+				&cldata,
+				CLSYS_DEFREND_MAIN,
+				heapID
+				);
+
+		}
+
+		for( i = CLWKID_NUMBER_TOP; i < CLWKID_NUMBER_END; i++  )
+		{	
+			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+				p_wk->reg_id[OBJREGID_NUMBER_CHR],
+				p_wk->reg_id[OBJREGID_OBJ_PLT],
+				p_wk->reg_id[OBJREGID_NUMBER_CEL],
 				&cldata,
 				CLSYS_DEFREND_MAIN,
 				heapID
@@ -1085,6 +1143,13 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 			clpos.x	= 128;
 			clpos.y	= 64;
 			GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, 0 );
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 2 );
+			GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[i], 0 );
+		}
+
+		for( i = CLWKID_NUMBER_TOP; i < CLWKID_NUMBER_END; i++  )
+		{	
 			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
 			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 2 );
 			GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[i], 0 );
@@ -1901,10 +1966,13 @@ static void SEQFUNC_DecideHeart( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_HEART_SCALSE_INIT:
 		BigHeart_InitScale( p_wk, p_wk->p_param->score );
+		OBJNUBER_Start( &p_wk->number, p_wk->p_param->score, 120 );
+		OS_Printf( "○相性　%d点！！", p_wk->p_param->score );
 		*p_seq	= SEQ_HEART_SCALSE_MAIN;
 		break;
 
 	case SEQ_HEART_SCALSE_MAIN:
+		OBJNUBER_Main( &p_wk->number );
 		if( BigHeart_MainScale( p_wk ) )
 		{	
 			*p_seq	= SEQ_HEART_SCALSE_EXIT;
@@ -1917,7 +1985,10 @@ static void SEQFUNC_DecideHeart( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_NEXTPROC:
 		//SEQ_Change( p_wk, SEQFUNC_HeartEffect );
-		SEQ_End( p_wk );
+		if( GFL_UI_TP_GetTrg() )
+		{	
+			SEQ_End( p_wk );
+		}
 		break;
 	}
 }
@@ -2135,6 +2206,143 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 	}
 }
+//=============================================================================
+/**
+ *			OBJ_NUMBER
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	初期化
+ *
+ *	@param	OBJNUBER_WORK *p_wk	ワーク
+ *	@param	*p_grp							描画ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void OBJNUBER_Init( OBJNUBER_WORK *p_wk, const GRAPHIC_WORK *cp_grp )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(OBJNUBER_WORK) );
+	{	
+		int i;
+		GFL_CLACTPOS	clpos;
+		for( i = 0; i < CLWK_NUMBER_MAX; i++ )
+		{	
+			p_wk->p_clwk[i]	= GRAPHIC_GetClwk( cp_grp, CLWKID_NUMBER_TOP + i );
+			clpos.x	= 256/2 + 36 * (i-1);
+			clpos.y	= 92;
+			GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, 0 );
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+		}
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	開始
+ *
+ *	@param	OBJNUBER_WORK *p_wk	ワーク
+ *	@param	number							表示する番号
+ *	@param	sync								シンク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void OBJNUBER_Start( OBJNUBER_WORK *p_wk, int number, int sync )
+{	
+	p_wk->sync			= 0;
+	p_wk->sync_max	= sync;
+	p_wk->number		= number;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メイン
+ *
+ *	@param	OBJNUBER_WORK *p_wk	ワーク
+ *	@param	number							表示する番号
+ *	@param	sync								シンク
+ *
+ *	@return	TRUE処理終了
+ *	@return	FALSE処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL OBJNUBER_Main( OBJNUBER_WORK *p_wk )
+{	
+	int i;
+	u8 anm;
+
+	for( i = 0; i < CLWK_NUMBER_MAX; i++ )
+	{	
+		anm	= GFUser_GetPublicRand( 10 );
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], anm );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+	}
+
+	if( p_wk->sync++ > p_wk->sync_max )
+	{	
+		ObjNumber_SetNumber( p_wk, p_wk->number );
+		return TRUE;
+	}
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OBJに番号をセット
+ *
+ *	@param	OBJNUBER_WORK *p_wk	ワーク
+ *	@param	number							番号
+ *
+ */
+//-----------------------------------------------------------------------------
+static void ObjNumber_SetNumber( OBJNUBER_WORK *p_wk, int number )
+{	
+	static const u8 sc_num_table[] = 
+	{
+		1,
+		10,
+		100,
+		1000,
+	};
+	u8 fig;
+	u8 n;
+	u8 num;
+	int i;
+
+	//何桁か調べる
+	n		= number;
+	fig	= 0;
+	if( n == 0 )
+	{	
+		fig	= 1;
+	}
+	else
+	{	
+		while( 1 )
+		{
+			if( n == 0 )
+			{	
+				break;
+			}
+			n	/= 10;
+			fig++;
+		}
+	}
+	
+
+	//一端消去
+	for( i = 0; i < CLWK_NUMBER_MAX; i++ )
+	{
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+	}
+
+	//OBJのアニメを桁の数値に合わせる
+	for( i = 0; i < fig; i++ )
+	{
+		num	= number % sc_num_table[ i+1 ] / sc_num_table[ i ];
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[CLWK_NUMBER_MAX-1-i], num );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CLWK_NUMBER_MAX-1-i], TRUE );
+	}
+}
+
 //=============================================================================
 /**
  *				汎用
@@ -2412,7 +2620,7 @@ static void Memo_InitRot( RESULT_MAIN_WORK *p_wk )
 	PROGVAL_VEL_Init( &p_wk->memo_scale, FX32_CONST(40), FX32_ONE, 80 );
 	PROGVAL_VEL_Init( &p_wk->memo_rot, 0, 0xFFF1, 80 );
 
-	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
+/*	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
 			GFL_BG_CENTER_X_SET, 128 );
 	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
 			GFL_BG_CENTER_Y_SET, 96 );
@@ -2423,7 +2631,7 @@ static void Memo_InitRot( RESULT_MAIN_WORK *p_wk )
 	GFL_BG_SetRadianReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
 			GFL_BG_RADION_SET, p_wk->memo_rot.now_val );
 	GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], TRUE );
-}
+*/}
 //----------------------------------------------------------------------------
 /**
  *	@brief	メモの回転処理	メイン処理
@@ -2440,13 +2648,13 @@ static BOOL Memo_MainRot( RESULT_MAIN_WORK *p_wk )
 	ret	= PROGVAL_VEL_Main( &p_wk->memo_scale );
 	ret |= PROGVAL_VEL_Main( &p_wk->memo_rot );
 
-	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
+/*	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
 			GFL_BG_SCALE_X_SET, p_wk->memo_scale.now_val);
 	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
 			GFL_BG_SCALE_Y_SET, p_wk->memo_scale.now_val);
 	GFL_BG_SetRadianReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
 			GFL_BG_RADION_SET, p_wk->memo_rot.now_val );
-
+*/
 	return ret;
 }
 //----------------------------------------------------------------------------

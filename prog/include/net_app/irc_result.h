@@ -21,8 +21,9 @@
 ///	PROCに渡すパラメータ
 //=====================================
 typedef struct {
-	COMPATIBLE_IRC_SYS	*p_irc;
-	u8									score;
+	GAMESYS_WORK				*p_gamesys;//[in]ゲームシステム
+	COMPATIBLE_IRC_SYS	*p_irc;		//[in]赤外線システム
+	u8									score;		//[in]ゲームの点数
 }IRC_RESULT_PARAM;
 
 
