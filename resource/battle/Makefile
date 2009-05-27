@@ -73,11 +73,11 @@ nsbca: $(notdir $(ICAFILE:.ica=.nsbca))
 %.nsbca: $(RES_3DDIR)%.ica
 	g3dcvtr $<
 
-ncgr: $(BGNCGFILE:.ncg=.NCGR)
+ncgr: $(notdir $(BGNCGFILE:.ncg=.NCGR))
 %.NCGR: %.ncg
 	g2dcvtr -bg $< -o/./
 
-nclr: $(BGNCLFILE:.ncl=.NCLR)
+nclr: $(notdir $(BGNCLFILE:.ncl=.NCLR))
 %.NCLR: %.ncl
 	g2dcvtr $< -o/./
 
