@@ -36,8 +36,6 @@ struct _TAG_FLDEFF_KEMURI
   
   GFL_G3D_RES *g3d_res_mdl;
   GFL_G3D_RES *g3d_res_anm;
-  GFL_G3D_RND *g3d_rnd;
-  GFL_G3D_ANM *g3d_anm;
 };
 
 //--------------------------------------------------------------
@@ -47,6 +45,8 @@ typedef struct
 {
   FLDEFF_KEMURI *eff_kemuri;
   GFL_G3D_OBJ *obj;
+  GFL_G3D_ANM *obj_anm;
+  GFL_G3D_RND *obj_rnd;
 }TASKWORK_KEMURI;
 
 //--------------------------------------------------------------
@@ -125,12 +125,6 @@ static void kemuri_InitResource( FLDEFF_KEMURI *kemu )
 
   kemu->g3d_res_anm	=
     GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_hero_kemu_nsbtp );
-  
-  kemu->g3d_rnd =
-    GFL_G3D_RENDER_Create( kemu->g3d_res_mdl, 0, kemu->g3d_res_mdl );
-  
-  kemu->g3d_anm =
-    GFL_G3D_ANIME_Create( kemu->g3d_rnd, kemu->g3d_res_anm, 0 );
 }
 
 //--------------------------------------------------------------
@@ -142,8 +136,6 @@ static void kemuri_InitResource( FLDEFF_KEMURI *kemu )
 //--------------------------------------------------------------
 static void kemuri_DeleteResource( FLDEFF_KEMURI *kemu )
 {
-  GFL_G3D_ANIME_Delete( kemu->g3d_anm );
-	GFL_G3D_RENDER_Delete( kemu->g3d_rnd );
  	GFL_G3D_DeleteResource( kemu->g3d_res_anm );
  	GFL_G3D_DeleteResource( kemu->g3d_res_mdl );
 }
@@ -194,9 +186,17 @@ static void kemuriTask_Init( FLDEFF_TASK *task, void *wk )
   work->eff_kemuri = head->eff_kemuri;
   FLDEFF_TASK_SetPos( task, &head->pos );
   
+  work->obj_rnd =
+    GFL_G3D_RENDER_Create(
+        work->eff_kemuri->g3d_res_mdl, 0, work->eff_kemuri->g3d_res_mdl );
+  
+  work->obj_anm =
+    GFL_G3D_ANIME_Create(
+        work->obj_rnd, work->eff_kemuri->g3d_res_anm, 0 );
+  
   work->obj = GFL_G3D_OBJECT_Create(
-      work->eff_kemuri->g3d_rnd, &work->eff_kemuri->g3d_anm, 1 );
-	GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
+      work->obj_rnd, &work->obj_anm, 1 );
+  GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
 }
 
 //--------------------------------------------------------------
@@ -210,7 +210,9 @@ static void kemuriTask_Init( FLDEFF_TASK *task, void *wk )
 static void kemuriTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_KEMURI *work = wk;
+  GFL_G3D_ANIME_Delete( work->obj_anm );
   GFL_G3D_OBJECT_Delete( work->obj );
+	GFL_G3D_RENDER_Delete( work->obj_rnd );
 }
 
 //--------------------------------------------------------------
