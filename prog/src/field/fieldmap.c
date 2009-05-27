@@ -1792,7 +1792,7 @@ static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 	
 	if( nextBGM != 0 ){
 		if( PMSND_GetBGMsoundNo() != nextBGM ){
-			PMSND_PlayNextBGM_EX( nextBGM, trackBit );
+			PMSND_PlayNextBGM_EX( nextBGM, trackBit, 30, 0 );
 		}
 	}
 }

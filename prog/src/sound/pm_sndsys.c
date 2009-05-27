@@ -487,7 +487,7 @@ void	PMSND_PlayBGM_EX( u32 soundIdx, u16 trackBit )
 }
 
 //------------------------------------------------------------------
-void	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit )
+void	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit, u8 fadeInFrame, u8 fadeOutFrame )
 {
 	fadeStatus.nextSoundIdx = soundIdx;
 	fadeStatus.nextTrackBit = trackBit;

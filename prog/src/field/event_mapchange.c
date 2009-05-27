@@ -58,7 +58,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 			u16 trackBit = 0xfcff;	// track 9,10 OFF
 			u16 nextBGM = ZONEDATA_GetBGMID(fmw->loc_req.zone_id,
 					GAMEDATA_GetSeasonID(fmw->gamedata));
-			PMSND_PlayNextBGM_EX(nextBGM, trackBit);
+			PMSND_PlayNextBGM_EX(nextBGM, trackBit, 30, 0);
 		}
 		
 		switch(game_init_work->mode){
@@ -193,7 +193,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 			u16 trackBit = 0xfcff;	// track 9,10 OFF
 			u16 nextBGM = ZONEDATA_GetBGMID(mcw->loc_req.zone_id,
 					GAMEDATA_GetSeasonID(gamedata));
-			PMSND_PlayNextBGM_EX(nextBGM, trackBit);
+			PMSND_PlayNextBGM_EX(nextBGM, trackBit, 30, 0);
 		}
 		//フィールドマップをフェードアウト
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));

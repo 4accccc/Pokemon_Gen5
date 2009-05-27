@@ -855,17 +855,17 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 
 	case SNDTEST_TPEV_BGM_PLAYFADEIN:
 		PMSND_StopBGM();
-		PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
+		PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO], 60, 60);
 		sw->bgmPauseSw = FALSE;
 		break;
 
 	case SNDTEST_TPEV_BGM_FADEOUTSTOP:
-		PMSND_PlayNextBGM(0);
+		PMSND_PlayNextBGM(0, 60, 60);
 		sw->bgmPauseSw = FALSE;
 		break;
 
 	case SNDTEST_TPEV_BGM_FADEOUTPLAYFADEIN:
-		PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO]);
+		PMSND_PlayNextBGM(sw->setNo[NOIDX_BGMNO], 60, 60);
 		sw->bgmPauseSw = FALSE;
 		break;
 

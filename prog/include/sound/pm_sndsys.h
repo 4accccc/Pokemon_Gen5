@@ -72,17 +72,19 @@ extern void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, 
 //============================================================================================
 extern void	PMSND_PlayBGM_EX( u32 soundIdx, u16 trackBit );				//ＢＧＭを再生
 #define PMSND_PlayBGM( soundIdx ) PMSND_PlayBGM_EX( soundIdx, 0xffff )	//上記簡易版
-extern void	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit );			//ＢＧＭ自動フェード再生
-#define PMSND_PlayNextBGM( soundIdx ) PMSND_PlayNextBGM_EX( soundIdx, 0xffff );	//上記簡易版
-extern BOOL	PMSND_CheckPlayBGM( void );						//ＢＧＭ終了検出(TRUE実行中)
+extern void	PMSND_PlayNextBGM_EX
+		( u32 soundIdx, u16 trackBit, u8 fadeOutFrame, u8 fadeInFrame );			//ＢＧＭ自動フェード再生
+#define PMSND_PlayNextBGM( soundIdx, fadeInFrame, fadeOutFrame ) \
+					PMSND_PlayNextBGM_EX( soundIdx, 0xffff, fadeInFrame, fadeOutFrame );	//上記簡易版
+extern BOOL	PMSND_CheckPlayBGM( void );								//ＢＧＭ終了検出(TRUE実行中)
 extern void	PMSND_ChangeBGMtrack( u16 trackBit );			//ＢＧＭの再生トラック変更
 extern void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan );//ＢＧＭステータス変更
 
-extern void	PMSND_StopBGM( void );				//現在のＢＧＭを停止
-extern void	PMSND_PauseBGM( BOOL pauseFlag );	//現在のＢＧＭを一時停止(TRUE停止,FALSE再開)
-extern void	PMSND_FadeInBGM( u16 frames );		//現在のＢＧＭをフェードイン
-extern void	PMSND_FadeOutBGM( u16 frames );		//現在のＢＧＭをフェードアウト
-extern BOOL	PMSND_CheckFadeOnBGM( void );		//フェード実行チェック(TRUE実行中)
+extern void	PMSND_StopBGM( void );							//現在のＢＧＭを停止
+extern void	PMSND_PauseBGM( BOOL pauseFlag );		//現在のＢＧＭを一時停止(TRUE停止,FALSE再開)
+extern void	PMSND_FadeInBGM( u16 frames );			//現在のＢＧＭをフェードイン
+extern void	PMSND_FadeOutBGM( u16 frames );			//現在のＢＧＭをフェードアウト
+extern BOOL	PMSND_CheckFadeOnBGM( void );				//フェード実行チェック(TRUE実行中)
 
 extern void	PMSND_PushBGM( void );				//現在のＢＧＭを退避
 extern void	PMSND_PopBGM( void );				//現在のＢＧＭを復元
