@@ -213,13 +213,11 @@ TALKMSGWIN_SYS* TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
 		tmsgwinSys->chrNum = siz/0x20;
 	}
 	//ƒeƒNƒXƒ`ƒƒ‚u‚q‚`‚lŠm•Û
-#if 0
 	{
 		u32 texVramSiz = sizeof(texData);
 		tmsgwinSys->texVramKey = NNS_GfdAllocTexVram(texVramSiz, FALSE, 0);
 		tmsgwinSys->plttVramKey = NNS_GfdAllocPlttVram(16, FALSE, 0);
 	}
-#endif
 
   debugOn = FALSE;
 
@@ -269,6 +267,9 @@ void TALKMSGWIN_SystemDelete( TALKMSGWIN_SYS* tmsgwinSys )
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ 
 		deleteWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[i]); 
 	}
+	NNS_GfdFreePlttVram(tmsgwinSys->plttVramKey);
+	NNS_GfdFreeTexVram(tmsgwinSys->texVramKey);
+
   GFL_TCBL_Exit(tmsgwinSys->tcbl);
 	GFL_HEAP_FreeMemory(tmsgwinSys);
 }
