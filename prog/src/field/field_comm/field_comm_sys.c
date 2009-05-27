@@ -23,7 +23,8 @@ typedef struct _COMM_FIELD_SYS{
   
   BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
   u8 invalid_netid;           ///<侵入先ROMのnet_id
-  u8 padding[3];
+  u8 exit_recv;               ///<TRUE:終了フラグ
+  u8 padding[2];
 }COMM_FIELD_SYS;
 
 
@@ -117,4 +118,30 @@ void FIELD_COMM_SYS_SetInvalidNetID(COMM_FIELD_SYS_PTR commField, int invalid_ne
 int FIELD_COMM_SYS_GetInvalidNetID(COMM_FIELD_SYS_PTR commField)
 {
   return commField->invalid_netid;
+}
+
+//==================================================================
+/**
+ * 終了フラグをセットする
+ *
+ * @param   commField		
+ */
+//==================================================================
+void FIELD_COMM_SYS_SetExitReq(COMM_FIELD_SYS_PTR commField)
+{
+  commField->exit_recv = TRUE;
+}
+
+//==================================================================
+/**
+ * 終了フラグを取得する
+ *
+ * @param   commField		
+ *
+ * @retval  BOOL		TRUE:終了フラグが立っている
+ */
+//==================================================================
+BOOL FIELD_COMM_SYS_GetExitReq(COMM_FIELD_SYS_PTR commField)
+{
+  return commField->exit_recv;
 }

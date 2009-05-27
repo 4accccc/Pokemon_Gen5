@@ -160,7 +160,8 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
     //         親が管理し、送信する必要がある
       ;
   }
-  else if(net_num < palace->entry_count && palace->entry_count_max > 1){
+  else if(FIELD_COMM_SYS_GetExitReq(comm_field) == FALSE 
+      && net_num < palace->entry_count && palace->entry_count_max > 1 ){
     OS_TPrintf("palace:ユーザーが減ったので強制エラー発動\n");
     GFL_NET_FatalErrorFunc(1);
     palace->entry_count_max = net_num;
@@ -294,7 +295,16 @@ void PALACE_SYS_FriendPosConvert(PALACE_SYS_PTR palace, int friend_area,
   
 //  FIELD_PLAYER_GetPos( friend_fldply, &pos );
   pos = *(PLAYERWORK_getPosition(friend_plwork));
-  if(friend_area == right_area){  //右隣のエリアにいる場合
+  if(right_area == left_area && friend_area == right_area){
+    //二人の場合は右も左も同じエリアの為、座標で判定
+    if(pos.x > ((PALACE_MAP_RANGE_LEFT_X + PALACE_MAP_RANGE_LEN/2) << FX32_SHIFT)){
+      pos.x -= PALACE_MAP_RANGE_LEN << FX32_SHIFT;
+    }
+    else{
+      pos.x += PALACE_MAP_RANGE_LEN << FX32_SHIFT;
+    }
+  }
+  else if(friend_area == right_area){  //右隣のエリアにいる場合
     pos.x += PALACE_MAP_RANGE_LEN << FX32_SHIFT;
   }
   else if(friend_area == left_area){ //左隣のエリアにいる場合
@@ -377,6 +387,22 @@ void PALACE_DEBUG_DeleteNumberAct(PALACE_SYS_PTR palace)
 
   GFL_CLACT_UNIT_Delete(palace->clunit);
   palace->clunit = NULL;
+}
+
+//==================================================================
+/**
+ * デバッグ：パレスエリア番号表示アクターの表示・非表示設定
+ *
+ * @param   palace		
+ * @param   enable		
+ */
+//==================================================================
+void PALACE_DEBUG_EnableNumberAct(PALACE_SYS_PTR palace, BOOL enable)
+{
+  if(palace->clunit == NULL){
+    return;
+  }
+  GFL_CLACT_WK_SetDrawEnable(palace->number.clact, enable);
 }
 
 //--------------------------------------------------------------

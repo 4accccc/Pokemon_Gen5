@@ -39,6 +39,7 @@ typedef enum
   FC_CMD_SELF_PROFILE,  //キャラの基本情報
   FC_CMD_COMMON_FLG,    //汎用フラグ
   FC_CMD_USERDATA,    //行動用ユーザーデータ
+  FC_CMD_EXIT_REQ,    //切断リクエスト
 }F_COMM_COMMAND_TYPE;
 
 //パケットバッファの送信タイプ
@@ -49,6 +50,11 @@ typedef enum
 
   FCPBT_INVALID,
 }F_COMM_PACKET_BUFF_TYPE;
+
+///同期取り番号
+enum{
+  FCF_TIMING_EXIT = 20,
+};
 
 //======================================================================
 //  typedef struct
@@ -146,6 +152,7 @@ void  FIELD_COMM_FUNC_Post_RequestData( const int netID, const int size , const 
 void  FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 void  FIELD_COMM_FUNC_Post_CommonFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 void  FIELD_COMM_FUNC_Post_UserData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static void  FIELD_COMM_FUNC_Post_ExitReq( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 u8*   FIELD_COMM_FUNC_Post_UserData_Buff( int netID, void* pWork , int size );
 
 static const NetRecvFuncTable FieldCommRecvTable[] = {
@@ -154,6 +161,7 @@ static const NetRecvFuncTable FieldCommRecvTable[] = {
   { FIELD_COMM_FUNC_Post_SelfProfile  ,NULL },
   { FIELD_COMM_FUNC_Post_CommonFlg  ,NULL },
   { FIELD_COMM_FUNC_Post_UserData   ,FIELD_COMM_FUNC_Post_UserData_Buff  },
+  { FIELD_COMM_FUNC_Post_ExitReq    ,NULL },
 };
 
 //--------------------------------------------------------------
@@ -265,7 +273,7 @@ void * FIELD_COMM_FUNC_InitCommSystem( int *seq, void *pwk )
     0,   ///< DWCへのHEAPサイズ
     TRUE,        ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
-    0x576,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+    0x222,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
@@ -362,10 +370,54 @@ BOOL  FIELD_COMM_FUNC_InitCommSystemWait( int *seq, void *pwk, void *pWork )
 //--------------------------------------------------------------
 //  通信システム終了
 //--------------------------------------------------------------
-void  FIELD_COMM_FUNC_TermCommSystem( int *seq, void *pwk, void *pWork )
+BOOL  FIELD_COMM_FUNC_TermCommSystem( int *seq, void *pwk, void *pWork )
 {
-////  commFunc->isInitCommSystem_ = FALSE;
-  GFL_NET_Exit( FIELD_COMM_FUNC_FinishTermCallback );
+  COMM_FIELD_SYS_PTR commField = pWork;
+  FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
+
+  switch(*seq){
+  case 0:
+    if(GFL_NET_IsParentMachine() == TRUE){
+      if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), FC_CMD_EXIT_REQ, 0, NULL) == TRUE){
+        (*seq)++;
+      }
+    }
+    else{
+      (*seq)++;
+    }
+    break;
+  case 1:
+    GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle() , FCF_TIMING_EXIT );
+    (*seq)++;
+    break;
+  case 2:
+    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), FCF_TIMING_EXIT) == TRUE){
+      OS_TPrintf("切断同期完了\n");
+      (*seq)++;
+    }
+    else{
+      OS_TPrintf("切断同期待ち\n");
+    }
+    break;
+  case 3:
+    if(GFL_NET_IsParentMachine() == TRUE){
+      if(GFL_NET_GetConnectNum() <= 1){ //親は自分一人になってから終了する
+        (*seq)++;
+      }
+      else{
+        OS_TPrintf("親：子の終了待ち 残り=%d\n", GFL_NET_GetConnectNum() - 1);
+      }
+    }
+    else{
+      (*seq)++;
+    }
+    break;
+  case 4:
+    GFL_NET_Exit( FIELD_COMM_FUNC_FinishTermCallback );
+    return TRUE;
+  }
+  
+  return FALSE;
 }
 
 //==================================================================
@@ -1057,6 +1109,33 @@ u8*   FIELD_COMM_FUNC_Post_UserData_Buff( int netID, void* pWork , int size )
   return (u8*)userData;
 }
 
+//--------------------------------------------------------------
+/**
+ * 切断リクエスト：受信
+ *
+ * @param   netID		
+ * @param   size		
+ * @param   pData		
+ * @param   pWork		
+ * @param   pNetHandle		
+ */
+//--------------------------------------------------------------
+static void  FIELD_COMM_FUNC_Post_ExitReq( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  COMM_FIELD_SYS_PTR commField = pWork;
+  FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
+  GAME_COMM_SYS_PTR game_comm = FIELD_COMM_SYS_GetGameCommSys(commField);
+  
+  OS_TPrintf("切断リクエスト受信\n");
+
+  FIELD_COMM_SYS_SetExitReq(commField); //終了フラグをセット
+#if 0
+  if(GFL_NET_IsParentMachine() == FALSE){
+    GameCommSys_ExitReq(game_comm);
+  }
+#endif
+}
+
 //======================================================================
 //同期用コマンド
 //======================================================================
@@ -1194,13 +1273,16 @@ void  FIELD_COMM_FUNC_FinishInitCallback( void* pWork )
 {
   COMM_FIELD_SYS_PTR commField = pWork;
   FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
+  
   commFunc->isInitCommSystem_ = TRUE;
 }
 void  FIELD_COMM_FUNC_FinishTermCallback( void* pWork )
 {
   COMM_FIELD_SYS_PTR commField = pWork;
   FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commField);
+  
   commFunc->isInitCommSystem_ = FALSE;
+  OS_TPrintf("切断完了コールバック\n");
 }
 
 //--------------------------------------------------------------

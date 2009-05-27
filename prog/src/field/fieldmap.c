@@ -1646,7 +1646,7 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 	//デバッグ：パレスで木に触れたらワープ
   {
     GMEVENT *ev;
-    ev =  DEBUG_PalaceTreeMapWarp(fieldWork, gsys, fieldWork->field_player);
+    ev =  DEBUG_PalaceTreeMapWarp(fieldWork, gsys, fieldWork->field_player, fieldWork->commSys);
     if(ev != NULL){
       return ev;
     }

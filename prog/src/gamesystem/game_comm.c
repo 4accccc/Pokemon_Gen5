@@ -100,7 +100,7 @@ typedef struct{
   void *(*init_func)(int *seq, void *pwk);                         ///<初期化処理
   BOOL (*init_wait_func)(int *seq, void *pwk, void *app_work);     ///<初期化完了待ち
   void (*update_func)(int *seq, void *pwk, void *app_work);        ///<更新処理
-  void (*exit_func)(int *seq, void *pwk, void *app_work);          ///<終了処理
+  BOOL (*exit_func)(int *seq, void *pwk, void *app_work);          ///<終了処理
   BOOL (*exit_wait_func)(int *seq, void *pwk, void *app_work);     ///<終了完了待ち
 }GAME_FUNC_TBL;
 
@@ -233,9 +233,13 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     break;
   case GCSSEQ_EXIT:
     if(func_tbl->exit_func != NULL){
-      func_tbl->exit_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work);
+      if(func_tbl->exit_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work) == TRUE){
+        GameCommSub_SeqSet(sub_work, GCSSEQ_EXIT_WAIT);
+      }
     }
-    GameCommSub_SeqSet(sub_work, GCSSEQ_EXIT_WAIT);
+    else{
+      GameCommSub_SeqSet(sub_work, GCSSEQ_EXIT_WAIT);
+    }
     break;
   case GCSSEQ_EXIT_WAIT:
     if(func_tbl->exit_wait_func == NULL || func_tbl->exit_wait_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work) == TRUE){

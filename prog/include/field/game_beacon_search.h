@@ -35,7 +35,7 @@ typedef struct
 //==============================================================================
 extern void * GameBeacon_Init(int *seq, void *pwk);
 extern BOOL GameBeacon_InitWait(int *seq, void *pwk, void *pWork);
-extern void GameBeacon_Exit(int *seq, void *pwk, void *pWork);
+extern BOOL GameBeacon_Exit(int *seq, void *pwk, void *pWork);
 extern BOOL GameBeacon_ExitWait(int *seq, void *pwk, void *pWork);
 extern void GameBeacon_Update(int *seq, void *pwk, void *pWork);
 

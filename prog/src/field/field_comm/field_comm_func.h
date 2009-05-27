@@ -55,7 +55,7 @@ extern void FIELD_COMM_FUNC_DataReset( FIELD_COMM_FUNC *commFunc );
 extern void FIELD_COMM_FUNC_TermSystem( FIELD_COMM_FUNC *commFunc );
 extern void * FIELD_COMM_FUNC_InitCommSystem( int *seq, void *pwk );
 extern BOOL  FIELD_COMM_FUNC_InitCommSystemWait( int *seq, void *pwk, void *pWork );
-extern void  FIELD_COMM_FUNC_TermCommSystem( int *seq, void *pwk, void *pWork );
+extern BOOL  FIELD_COMM_FUNC_TermCommSystem( int *seq, void *pwk, void *pWork );
 extern BOOL  FIELD_COMM_FUNC_TermCommSystemWait( int *seq, void *pwk, void *pWork );
 extern void  FIELD_COMM_FUNC_UpdateSystem( int *seq, void *pwk, void *pWork );
 

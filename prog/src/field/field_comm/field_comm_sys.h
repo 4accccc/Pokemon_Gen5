@@ -23,4 +23,6 @@ extern GAME_COMM_SYS_PTR FIELD_COMM_SYS_GetGameCommSys( COMM_FIELD_SYS_PTR commF
 extern BOOL * FIELD_COMM_SYS_GetCommActorVanishFlag(COMM_FIELD_SYS_PTR commField, int net_id);
 extern void FIELD_COMM_SYS_SetInvalidNetID(COMM_FIELD_SYS_PTR commField, int invalid_netid);
 extern int FIELD_COMM_SYS_GetInvalidNetID(COMM_FIELD_SYS_PTR commField);
+extern void FIELD_COMM_SYS_SetExitReq(COMM_FIELD_SYS_PTR commField);
+extern BOOL FIELD_COMM_SYS_GetExitReq(COMM_FIELD_SYS_PTR commField);
 

@@ -25,7 +25,9 @@
 #include "fieldmap/zone_id.h"
 #include "field/event_mapchange.h"
 
+#include "message.naix"
 #include "msg/msg_d_field.h"
+#include "msg/msg_invasion.h"
 
 //======================================================================
 //  define
@@ -60,6 +62,29 @@ struct _FIELD_COMM_MAIN
   u8 padding2[3];
 };
 
+///デバッグ用
+typedef struct{
+  VecFx32 pos;
+  FIELD_COMM_MAIN *commSys;
+  FIELD_MAIN_WORK *fieldmap;
+  GFL_MSGDATA *msgData;
+  FLDMSGWIN *msgWin;
+  ZONEID zoneID;
+  u16 wait;
+  u8 padding[2];
+}DEBUG_SIOEND_WARP;  //DEBUG_SIOEND_MAPCHANGE;
+
+///デバッグ用
+typedef struct{
+  FIELD_COMM_MAIN *commSys;
+  FIELD_MAIN_WORK *fieldmap;
+  GFL_MSGDATA *msgData;
+  FLDMSGWIN *msgWin;
+  u16 wait;
+  u8 padding[2];
+}DEBUG_SIOEND_CHILD;
+
+
 //上左下右に対応したグリッドでのオフセット
 static const s8 FCM_dirOfsArr[4][2]={{0,-1},{-1,0},{0,1},{1,0}};
 
@@ -91,6 +116,12 @@ const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COM
 
 void  FIELD_COMM_MAIN_Disconnect( FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
 void FIELD_COMM_MAIN_CommFieldSysFree(COMM_FIELD_SYS_PTR comm_field);
+
+static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+		u16 zone_id, const VecFx32 * pos, FIELD_COMM_MAIN *commSys );
+static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work);
+static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, FIELD_COMM_MAIN *commSys);
+static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*work);
 
 
 //--------------------------------------------------------------
@@ -272,7 +303,7 @@ GMEVENT * DEBUG_PalaceJamp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FI
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor)
+GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, FIELD_COMM_MAIN *commSys)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
@@ -292,6 +323,11 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
     return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACETEST, &pos, 0);
   }
   
+  if(commSys != NULL && commSys->commField_ != NULL){
+    if(FIELD_COMM_SYS_GetExitReq(commSys->commField_) == TRUE){
+      return DEBUG_EVENT_ChildCommEnd(gameSys, fieldWork, commSys);
+    }
+  }
   
   if(zone_id != ZONE_ID_PALACETEST){
     return NULL;
@@ -303,6 +339,15 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
     pos.x = 12040 << FX32_SHIFT;
     pos.y = 0;
     pos.z = 13080 << FX32_SHIFT;
+    
+    if(commSys != NULL 
+        && GFL_NET_GetConnectNum() > 1 
+        && GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gameSys)) == GAME_COMM_NO_INVASION
+        && GFL_NET_IsParentMachine() == TRUE
+        && FIELD_COMM_SYS_GetInvalidNetID(FIELD_COMM_MAIN_GetCommFieldSysPtr(commSys)) == GFL_NET_SystemGetCurrentID()){
+      //親が通信状態で自分の街に入る場合は切断
+      return DEBUG_EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, ZONE_ID_T01, &pos, commSys);
+    }
     return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0);
   }
   
@@ -320,6 +365,176 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
   }
   
   return NULL;
+}
+
+
+//==================================================================
+/**
+ * ※デバッグ用　通信を終了させてからマップ移動
+ *
+ * @param   gsys		
+ * @param   fieldmap		
+ * @param   zone_id		
+ * @param   pos		
+ * @param   dir		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+		u16 zone_id, const VecFx32 * pos, FIELD_COMM_MAIN *commSys )
+{
+  DEBUG_SIOEND_WARP *dsw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, DebugEVENT_MapChangeCommEnd, sizeof(DEBUG_SIOEND_WARP));
+	dsw = GMEVENT_GetEventWork(event);
+	GFL_STD_MemClear(dsw, sizeof(DEBUG_SIOEND_WARP));
+	dsw->fieldmap = fieldmap;
+	dsw->zoneID = zone_id;
+	dsw->pos = *pos;
+	dsw->commSys = commSys;
+	
+	OS_TPrintf("親機：通信切断イベント起動\n");
+	return event;
+}
+
+static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work)
+{
+	DEBUG_SIOEND_WARP * dsw = work;
+	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
+	FIELD_MAIN_WORK * fieldmap = dsw->fieldmap;
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	
+	switch (*seq) {
+	case 0:
+    GameCommSys_ExitReq(game_comm); //通信終了リクエスト
+	  {
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(dsw->fieldmap);
+      dsw->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
+      dsw->msgWin = FLDMSGWIN_AddTalkWin( msgBG, dsw->msgData );
+      FLDMSGWIN_Print( dsw->msgWin, 0, 0, msg_invasion_test06_01 );
+      GXS_SetMasterBrightness(-16);
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( FLDMSGWIN_CheckPrintTrans(dsw->msgWin) == TRUE ){
+      (*seq)++;
+    } 
+    break;
+  case 2:
+    dsw->wait++;
+    if(dsw->wait > 60){
+      if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
+        GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+        int i;
+        PLAYER_WORK *plwork;
+        VecFx32 pos = {0,0,0};
+        
+        for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+          plwork = GAMEDATA_GetPlayerWork( gamedata , i );
+          PLAYERWORK_setPosition(plwork, &pos);
+        }
+        dsw->commSys->commField_ = NULL;
+        (*seq)++;
+      }
+    }
+    break;
+  case 3:
+    FLDMSGWIN_Delete( dsw->msgWin );
+    GFL_MSG_Delete( dsw->msgData );
+    GXS_SetMasterBrightness(0);
+    (*seq)++;
+    break;
+	case 4:
+  	GMEVENT_CallEvent(
+  	  event, DEBUG_EVENT_ChangeMapPos(gsys, dsw->fieldmap, dsw->zoneID, &dsw->pos, 0));
+    (*seq)++;
+    break;
+	default:
+		return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ※デバッグ用　子機の通信終了
+ *
+ * @param   gsys		
+ * @param   fieldmap		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, FIELD_COMM_MAIN *commSys)
+{
+  DEBUG_SIOEND_CHILD *dsc;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, DebugEVENT_ChildCommEnd, sizeof(DEBUG_SIOEND_CHILD));
+	dsc = GMEVENT_GetEventWork(event);
+	GFL_STD_MemClear(dsc, sizeof(DEBUG_SIOEND_CHILD));
+	dsc->fieldmap = fieldmap;
+	dsc->commSys = commSys;
+	
+	OS_TPrintf("子機：通信切断イベント起動\n");
+	return event;
+}
+
+static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*work)
+{
+  DEBUG_SIOEND_CHILD *dsc = work;
+	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
+	FIELD_MAIN_WORK * fieldmap = dsc->fieldmap;
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	
+	switch (*seq) {
+	case 0:
+    GameCommSys_ExitReq(game_comm); //通信終了リクエスト
+	  {
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(dsc->fieldmap);
+      dsc->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
+      dsc->msgWin = FLDMSGWIN_AddTalkWin( msgBG, dsc->msgData );
+      FLDMSGWIN_Print( dsc->msgWin, 0, 0, msg_invasion_test06_01 );
+      GXS_SetMasterBrightness(-16);
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( FLDMSGWIN_CheckPrintTrans(dsc->msgWin) == TRUE ){
+      (*seq)++;
+    } 
+    break;
+  case 2:
+    dsc->wait++;
+    if(dsc->wait > 60){
+      if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
+        GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+        int i;
+        PLAYER_WORK *plwork;
+        VecFx32 pos = {0,0,0};
+        
+        for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+          plwork = GAMEDATA_GetPlayerWork( gamedata , i );
+          PLAYERWORK_setPosition(plwork, &pos);
+        }
+        dsc->commSys->commField_ = NULL;
+        (*seq)++;
+      }
+    }
+    break;
+  case 3:
+    FLDMSGWIN_Delete( dsc->msgWin );
+    GFL_MSG_Delete( dsc->msgData );
+    GXS_SetMasterBrightness(0);
+    (*seq)++;
+    break;
+	default:
+		return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -424,6 +639,9 @@ void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
   DEBUG_PalaceMapInCheck(fieldWork, gameSys, commSys, pcActor);
 
   if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
+    if(commSys->palace != NULL){ //すごいやっつけっぽいけど所詮デバッグ用のアクターなので
+      PALACE_DEBUG_EnableNumberAct(commSys->palace, FALSE);
+    }
     return;
   }
 
@@ -432,13 +650,14 @@ void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
     u8 i;
 ////    FIELD_COMM_FUNC_UpdateSystem( commSys->commField_ );
     PALACE_SYS_Update(commSys->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), pcActor, commSys->commField_);
-    if( FIELD_COMM_FUNC_GetMemberNum() > 1 )
+    if( FIELD_COMM_FUNC_GetMemberNum() > 1 && FIELD_COMM_SYS_GetExitReq(commSys->commField_) == FALSE )
     //if( FIELD_COMM_FUNC_GetCommMode( commFunc ) == FIELD_COMM_MODE_CONNECT )
     {
       FIELD_COMM_MAIN_UpdateSelfData( fieldWork , gameSys , pcActor , commSys );
       FIELD_COMM_MAIN_UpdateCharaData( fieldWork , gameSys , commSys );
     }
   }
+
 #if DEB_ARI
   if(commSys->commField_ != NULL)
   {
@@ -468,8 +687,10 @@ static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork ,
   dir = FIELD_PLAYER_GetDir( pcActor );
   //dir = FieldMainGrid_GetPlayerDir( fieldWork );
   FIELD_COMM_DATA_SetSelfData_Pos( commData, &zoneID , &pos , &dir );
-  FIELD_COMM_FUNC_Send_SelfData( 
-    commFunc, commData, FIELD_COMM_SYS_GetInvalidNetID(commSys->commField_ ));
+  if(FIELD_COMM_SYS_GetExitReq(commSys->commField_) == FALSE){
+    FIELD_COMM_FUNC_Send_SelfData( 
+      commFunc, commData, FIELD_COMM_SYS_GetInvalidNetID(commSys->commField_ ));
+  }
 }
 
 //--------------------------------------------------------------
@@ -544,7 +765,7 @@ const BOOL  FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys )
   FIELD_COMM_DATA *commData;
 
   if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION
-        || commSys->commField_ == NULL){
+        || commSys->commField_ == NULL || FIELD_COMM_SYS_GetExitReq(commSys->commField_) == TRUE){
     return FALSE;
   }
 
@@ -614,7 +835,7 @@ const BOOL  FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys )
   FIELD_COMM_DATA *commData;
 
   if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION
-      || commSys->commField_ == NULL){
+      || commSys->commField_ == NULL || FIELD_COMM_SYS_GetExitReq(commSys->commField_) == TRUE){
     return FALSE;
   }
 
