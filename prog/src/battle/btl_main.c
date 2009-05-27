@@ -934,7 +934,7 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
 //=============================================================================================
 const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE * wk )
 {
-  return NULL;
+  return wk->setupParam->statusPlayer;
 }
 
 //=============================================================================================
