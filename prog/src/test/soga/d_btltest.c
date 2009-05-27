@@ -245,12 +245,6 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
     GFL_BG_ClearScreen(GFL_BG_FRAME2_M );
     GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M );
-
-    GFL_ARC_UTIL_TransVramBgCharacter(ARCID_BATTGRA,NARC_battgra_wb_batt_bg1_NCGR,GFL_BG_FRAME1_M,0,0,0,wk->heapID);
-    GFL_ARC_UTIL_TransVramScreen(ARCID_BATTGRA,NARC_battgra_wb_batt_bg1_NSCR,GFL_BG_FRAME1_M,0,0,0,wk->heapID);
-    GFL_ARC_UTIL_TransVramBgCharacter(ARCID_BATTGRA,NARC_battgra_wb_batt_bg2_NCGR,GFL_BG_FRAME2_M,0,0,0,wk->heapID);
-    GFL_ARC_UTIL_TransVramScreen(ARCID_BATTGRA,NARC_battgra_wb_batt_bg2_NSCR,GFL_BG_FRAME2_M,0,0,0,wk->heapID);
-    GFL_ARC_UTIL_TransVramPalette(ARCID_BATTGRA,NARC_battgra_wb_batt_bg_NCLR,PALTYPE_MAIN_BG,0,0x100,wk->heapID);
   }
 
   //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
@@ -347,39 +341,6 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
   }
 
   MoveCamera( wk );
-
-#if 0
-  if( (trg & PAD_BUTTON_X ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
-    BTLV_EFFECT_Add( BTLV_EFFECT_A2BGANSEKI );
-  }
-  if( (trg & PAD_BUTTON_Y ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
-    BTLV_EFFECT_Add( BTLV_EFFECT_B2AGANSEKI );
-  }
-  if( (trg & PAD_BUTTON_A ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
-    BTLV_EFFECT_Add( BTLV_EFFECT_A2BMIZUDEPPOU );
-  }
-  if( (trg & PAD_BUTTON_B ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
-    BTLV_EFFECT_Add( BTLV_EFFECT_B2AMIZUDEPPOU );
-  }
-  if( trg & PAD_BUTTON_SELECT ){
-    wk->timer_flag ^= 1;
-  }
-#endif
-    if( (trg & PAD_BUTTON_X ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
-      BTLV_EFFECT_Add( BTLV_EFFECT_AA2BBGANSEKI );
-    }
-    if( (trg & PAD_BUTTON_Y ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
-      BTLV_EFFECT_Add( BTLV_EFFECT_BB2AAGANSEKI );
-    }
-    if( (trg & PAD_BUTTON_A ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
-      BTLV_EFFECT_Add( BTLV_EFFECT_AA2BBMIZUDEPPOU );
-    }
-    if( (trg & PAD_BUTTON_B ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
-      BTLV_EFFECT_Add( BTLV_EFFECT_BB2AAMIZUDEPPOU );
-    }
-    if( (trg & PAD_BUTTON_SELECT ) && ( BTLV_EFFECT_CheckExecute() == FALSE ) ){
-      BTLV_EFFECT_Add( BTLV_EFFECT_A2BGANSEKI );
-    }
 
   BTLV_EFFECT_Main();
 
