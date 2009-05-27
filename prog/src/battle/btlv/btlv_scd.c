@@ -664,6 +664,11 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 
 
   case SEQ_SEL_ESCAPE:
+		//ボタン決定音と逃げるSEが重ならないようにSEの鳴り終わりを待つ
+		if( PMSND_CheckPlaySE() )
+		{	
+			return FALSE;
+		}
     BTL_ACTION_SetEscapeParam( wk->destActionParam );
     return TRUE;
   }

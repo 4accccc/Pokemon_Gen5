@@ -113,7 +113,9 @@ static VMCMD_RESULT	VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_TRAINER_DEL( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_BG_VISIBLE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT	VMEC_SE_STOP( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT	VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work );
@@ -199,7 +201,9 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
 	VMEC_TRAINER_MOVE,
 	VMEC_TRAINER_ANIME_SET,
 	VMEC_TRAINER_DEL,
+	VMEC_BG_VISIBLE,
 	VMEC_SE_PLAY,
+	VMEC_SE_STOP,
 	VMEC_EFFECT_END_WAIT,
 	VMEC_WAIT,
 	VMEC_CONTROL_MODE,
@@ -1006,6 +1010,25 @@ static VMCMD_RESULT	VMEC_TRAINER_DEL( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ * BGの表示/非表示
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT	VMEC_BG_VISIBLE( VMHANDLE *vmh, void *context_work )
+{	
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+	int	bg_num = ( int )VMGetU32( vmh );
+	int	sw = ( int )VMGetU32( vmh );
+
+	GFL_BG_SetVisible( bg_num, sw );
+
+	return bevw->control_mode;
+}
+
+//============================================================================================
+/**
  *	SE再生
  *
  * @param[in]	vmh				仮想マシン制御構造体へのポインタ
@@ -1018,6 +1041,23 @@ static VMCMD_RESULT	VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
 	int	se_no = ( int )VMGetU32( vmh );
 
 	PMSND_PlaySE( se_no );
+
+	return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ *	SEストップ
+ *
+ * @param[in]	vmh				仮想マシン制御構造体へのポインタ
+ * @param[in]	context_work	コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT	VMEC_SE_STOP( VMHANDLE *vmh, void *context_work )
+{	
+	BTLV_EFFVM_WORK	*bevw = ( BTLV_EFFVM_WORK* )context_work;
+
+	PMSND_StopSE();
 
 	return bevw->control_mode;
 }

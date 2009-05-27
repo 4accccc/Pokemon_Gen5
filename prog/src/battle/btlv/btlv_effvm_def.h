@@ -121,6 +121,15 @@
 
 #define BTLEFF_FX32_SHIFT											( 12 )
 
+//BG表示/非表示（display.h　bg_sys.hで定義されている値にあわせる）
+#define	BTLEFF_FRAME0_M			( 0 )
+#define	BTLEFF_FRAME1_M			( 1 )
+#define	BTLEFF_FRAME2_M			( 2 )
+#define	BTLEFF_FRAME3_M			( 3 )
+
+#define	BTLEFF_VISIBLE_OFF	( 0 )
+#define	BTLEFF_VISIBLE_ON		( 1 )
+
 #endif //__BTLV_EFFVM_DEF_H_
 
 //====================================================================================
@@ -206,13 +215,15 @@ ex)
 #define	EC_TRAINER_MOVE							( 17 )
 #define	EC_TRAINER_ANIME_SET				( 18 )
 #define	EC_TRAINER_DEL							( 19 )
-#define	EC_SE_PLAY									( 20 )
-#define	EC_EFFECT_END_WAIT					( 21 )
-#define	EC_WAIT											( 22 )
-#define	EC_CONTROL_MODE							( 23 )
+#define	EC_BG_VISIBLE								( 20 )
+#define	EC_SE_PLAY									( 21 )
+#define	EC_SE_STOP									( 22 )
+#define	EC_EFFECT_END_WAIT					( 23 )
+#define	EC_WAIT											( 24 )
+#define	EC_CONTROL_MODE							( 25 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									( 24 )
+#define	EC_SEQ_END									( 26 )
 
 #ifndef __C_NO_DEF_
 
@@ -767,6 +778,26 @@ ex)
 
 //======================================================================
 /**
+ * @brief	BGの表示/非表示
+ *
+ * #param_num	2
+ * @param	bg_num	操作するBG
+ * @param	sw			表示/非表示を指定
+ *
+ * #param	COMBOBOX_TEXT	BG0	BG1	BG2	BG3
+ * #param	COMBOBOX_VALUE	BTLEFF_FRAME0_M	BTLEFF_FRAME1_M	BTLEFF_FRAME2_M	BTLEFF_FRAME3_M
+ * #param	COMBOBOX_TEXT	表示	非表示
+ * #param	COMBOBOX_VALUE	BTLEFF_VISIBLE_ON	BTLEFF_VISIBLE_OFF
+ */
+//======================================================================
+	.macro	BG_VISIBLE	bg_num, sw
+	.short	EC_BG_VISIBLE
+	.long		\bg_num
+	.long		\sw
+	.endm
+
+//======================================================================
+/**
  * @brief	SE再生
  *
  * #param_num	1
@@ -778,6 +809,17 @@ ex)
 	.macro	SE_PLAY	se_no
 	.short	EC_SE_PLAY
 	.long		\se_no
+	.endm
+
+//======================================================================
+/**
+ * @brief	SEストップ
+ *
+ * #param_num	0
+ */
+//======================================================================
+	.macro	SE_STOP
+	.short	EC_SE_STOP
 	.endm
 
 //======================================================================
