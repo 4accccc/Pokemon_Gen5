@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fldeff.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-05-27T12:11:13
+ *****************************************************************************/
+
+#ifndef NARC_FLDEFF_NAIX_
+#define NARC_FLDEFF_NAIX_
+
+enum {
+	NARC_fldeff_kage_nsbmd = 0,
+	NARC_fldeff_hero_kemu_nsbmd = 1,
+	NARC_fldeff_hero_kemu_nsbtp = 2
+};
+
+/* NARC_FLDEFF_NAIX_ */
+#endif
