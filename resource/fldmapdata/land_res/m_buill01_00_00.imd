@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="hiroki_nakamura" host="W00204" date="2009-05-19T12:39:13" source="untitled"/>
+	<create user="nakatsui" host="W00169" date="2009-05-27T15:47:03" source="untitled"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="hiroki_nakamura" host="W00204" date="2009-05-19T12:39:13" source="untitled"/>
+<original_create user="nakatsui" host="W00169" date="2009-05-27T15:47:03" source="untitled"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,8 +20,8 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="1 1"
-	compress_material="off" material_size="5 5"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="5 5"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -209,7 +209,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="chip_yuka_lm4"
+	<material index="4" name="chip_yuka_lm1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
