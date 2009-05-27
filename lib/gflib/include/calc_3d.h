@@ -251,6 +251,32 @@ extern void GFL_CALC3D_MTX_Screen( fx32 width, fx32 height, fx32 z_min, fx32 z_m
 extern int GFL_CALC3D_MTX_Inverse44(const MtxFx44 * pSrc, MtxFx44 * pDst);
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	直線上の交点を求める
+ *
+ *	@param  p0      直線1　始点
+ *	@param  way0    直線1　方向
+ *	@param  p1      直線2　始点
+ *	@param  way1    直線2　方向
+ *	@param  p_ans   結果格納先
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_CALC3D_GetVectorCrossPos( const VecFx32* p0, const VecFx32* way0, const VecFx32* p1, const VecFx32* way1, VecFx32* p_ans );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	交点の有無を調べる
+ *
+ *	@param  way0    ベクトル1
+ *	@param  way1    ベクトル2
+ *
+ *	@retval TRUE  ある
+ *	@retval FALSE ない
+ */
+//-----------------------------------------------------------------------------
+extern BOOL GFL_CALC3D_IsVectorCross( const VecFx32* vec0, const VecFx32* vec1 );
+
 
 
 #ifdef __cplusplus
