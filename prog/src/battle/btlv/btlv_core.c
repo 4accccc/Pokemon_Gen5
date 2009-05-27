@@ -451,7 +451,11 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* core )
 //=============================================================================================
 void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, WazaID waza )
 {
-  BTL_Printf( "WazaEff waza=%d, atPos=%d, defPos=%d\n", waza, atPokePos, defPokePos);
+  BtlvMcssPos  at_pos, def_pos;
+
+  at_pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, atPokePos );
+  def_pos = (defPokePos != BTL_POS_NULL)?
+      BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPokePos ) : BTLV_MCSS_POS_ERROR;
 
   BTLV_SCU_StartWazaEffect( wk->scrnU, atPokePos, defPokePos, waza );
 }

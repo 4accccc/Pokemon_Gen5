@@ -2881,6 +2881,7 @@ static void scput_Fight_Others( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM*
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
       if( scEvent_UnCategoryWaza(wk, waza, attacker, targets) ){
+        wazaEff_SetNoTarget( wk );
         scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
         Hem_PopState( &wk->HEManager, hem_state );
       }

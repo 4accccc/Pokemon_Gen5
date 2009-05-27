@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btlv_core.h
- * @brief	ポケモンWB バトル描画担当メインモジュール
- * @author	taya
+ * @file  btlv_core.h
+ * @brief ポケモンWB バトル描画担当メインモジュール
+ * @author  taya
  *
- * @date	2008.10.02	作成
+ * @date  2008.10.02  作成
  */
 //=============================================================================================
 #ifndef __BTLV_CORE_H__
@@ -13,14 +13,14 @@
 
 //----------------------------------------------------------------------
 /**
- *	描画メインモジュールハンドラ型定義
+ *  描画メインモジュールハンドラ型定義
  */
 //----------------------------------------------------------------------
-typedef  struct _BTLV_CORE		BTLV_CORE;
+typedef  struct _BTLV_CORE    BTLV_CORE;
 
 
 //----------------------------------------------------------------------
-// 参照ヘッダ include 
+// 参照ヘッダ include
 //----------------------------------------------------------------------
 #include "battle/btl_main.h"
 #include "battle/btl_client.h"
@@ -32,18 +32,18 @@ typedef  struct _BTLV_CORE		BTLV_CORE;
 
 //----------------------------------------------------------------------
 /**
- *	描画コマンド
+ *  描画コマンド
  */
 //----------------------------------------------------------------------
 typedef enum {
 
-	BTLV_CMD_SETUP,
-	BTLV_CMD_SELECT_ACTION,
-	BTLV_CMD_SELECT_POKEMON,
-	BTLV_CMD_MSG,
+  BTLV_CMD_SETUP,
+  BTLV_CMD_SELECT_ACTION,
+  BTLV_CMD_SELECT_POKEMON,
+  BTLV_CMD_MSG,
 
-	BTLV_CMD_MAX,
-	BTLV_CMD_NULL = BTLV_CMD_MAX,
+  BTLV_CMD_MAX,
+  BTLV_CMD_NULL = BTLV_CMD_MAX,
 
 }BtlvCmd;
 
@@ -53,10 +53,10 @@ typedef enum {
 /**
  * 描画メインモジュールの生成
  *
- * @param   mainModule		システムメインモジュールのハンドラ
- * @param   heapID			生成先ヒープID
+ * @param   mainModule    システムメインモジュールのハンドラ
+ * @param   heapID      生成先ヒープID
  *
- * @retval  BTLV_CORE*		生成された描画メインモジュールのハンドラ
+ * @retval  BTLV_CORE*    生成された描画メインモジュールのハンドラ
  */
 //=============================================================================================
 extern BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, const BTL_POKE_CONTAINER* pokeCon, HEAPID heapID );
@@ -65,7 +65,7 @@ extern BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* c
 /**
  * 描画メインモジュールの破棄
  *
- * @param   core		描画メインモジュールのハンドラ
+ * @param   core    描画メインモジュールのハンドラ
  */
 //=============================================================================================
 extern void BTLV_Delete( BTLV_CORE* core );
@@ -74,7 +74,7 @@ extern void BTLV_Delete( BTLV_CORE* core );
 /**
  * 描画メインループ
  *
- * @param   core		描画メインモジュールのハンドラ
+ * @param   core    描画メインモジュールのハンドラ
  */
 //=============================================================================================
 extern void BTLV_CORE_Main( BTLV_CORE* core );
@@ -83,9 +83,9 @@ extern void BTLV_CORE_Main( BTLV_CORE* core );
 /**
  * BTLV_StartCommand で受け付けた描画コマンドの終了を待つ
  *
- * @param   wk			描画メインモジュールのハンドラ
+ * @param   wk      描画メインモジュールのハンドラ
  *
- * @retval  BOOL		終了していたらTRUE
+ * @retval  BOOL    終了していたらTRUE
  */
 //=============================================================================================
 extern void BTLV_StartCommand( BTLV_CORE* btlv, BtlvCmd cmd );
@@ -94,9 +94,9 @@ extern void BTLV_StartCommand( BTLV_CORE* btlv, BtlvCmd cmd );
 /**
  * BTLV_StartCommand で受け付けた描画コマンドの終了を待つ
  *
- * @param   wk			描画メインモジュールのハンドラ
+ * @param   wk      描画メインモジュールのハンドラ
  *
- * @retval  BOOL		終了していたらTRUE
+ * @retval  BOOL    終了していたらTRUE
  */
 //=============================================================================================
 extern BOOL BTLV_WaitCommand( BTLV_CORE* btlv );
@@ -114,9 +114,9 @@ extern BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk );
 /**
  * ポケモン選択処理を開始
  *
- * @param   core			[in]  描画メインモジュールハンドラ
- * @param   param			[in]  選択処理パラメータポインタ
- * @param   result		[out] 選択結果格納構造体ポインタ
+ * @param   core      [in]  描画メインモジュールハンドラ
+ * @param   param     [in]  選択処理パラメータポインタ
+ * @param   result    [out] 選択結果格納構造体ポインタ
  */
 //=============================================================================================
 extern void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
@@ -125,9 +125,9 @@ extern void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* p
 /**
  * ポケモン選択処理の終了待ち
  *
- * @param   core			[in]  描画メインモジュールハンドラ
+ * @param   core      [in]  描画メインモジュールハンドラ
  *
- * @retval  BOOL			終了したらTRUE
+ * @retval  BOOL      終了したらTRUE
  */
 //=============================================================================================
 extern BOOL BTLV_WaitPokeSelect( BTLV_CORE* core );
@@ -136,13 +136,13 @@ extern BOOL BTLV_WaitPokeSelect( BTLV_CORE* core );
 
 //=============================================================================================
 /**
- * 
  *
- * @param   wk		
- * @param   strID		
- * @param   clientID		
  *
- * @retval  extern void		
+ * @param   wk
+ * @param   strID
+ * @param   clientID
+ *
+ * @retval  extern void
  */
 //=============================================================================================
 extern void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args );
@@ -157,17 +157,17 @@ extern void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, BtlPokePos defPoke
 extern BOOL BTLV_ACT_DamageEffectSingle_Wait( BTLV_CORE* wk );
 
 extern void BTLV_ACT_DamageEffectDouble_Start( BTLV_CORE* wk,
-	BtlPokePos defPokePos1, BtlPokePos defPokePos2, BtlTypeAff aff );
+  BtlPokePos defPokePos1, BtlPokePos defPokePos2, BtlTypeAff aff );
 extern BOOL BTLV_ACT_DamageEffectDouble_Wait( BTLV_CORE* wk );
 
 //=============================================================================================
 /**
  * 複数体一斉ダメージ処理 開始
  *
- * @param   wk				
- * @param   pokeCnt		ポケモン数
- * @param   affAbout	相性ID
- * @param   pokeID		対象となるポケモンID配列
+ * @param   wk
+ * @param   pokeCnt   ポケモン数
+ * @param   affAbout  相性ID
+ * @param   pokeID    対象となるポケモンID配列
  */
 //=============================================================================================
 extern void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAbout affAbout, const u8* pokeID );

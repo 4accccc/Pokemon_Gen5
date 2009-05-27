@@ -68,6 +68,7 @@ typedef enum {
   BTL_POS_2ND_2,
 
   BTL_POS_MAX,
+  BTL_POS_NULL = BTL_POS_MAX,
 
 }BtlPokePos;
 
