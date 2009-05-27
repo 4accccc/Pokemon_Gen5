@@ -508,6 +508,10 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
       if (key_cont & PAD_KEY_DOWN) {
         mwk->player_len += df_len;
       }
+      // 基準プレイヤー距離
+      if (key_cont & PAD_BUTTON_SELECT) {
+        mwk->player_len = 0x01B8;
+      }
     }
 
 
@@ -916,7 +920,7 @@ static const RAIL_POINT sc_POINT_C3_JOINT00 =
   },
   //VecFx32 pos;
   {
-    0x476e5e, 0x6000, 0x222466
+    0x47aa2e, 0x6000, 0x231482
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -935,7 +939,7 @@ static const RAIL_POINT sc_POINT_C3_JOINT01 =
   },
   //VecFx32 pos;
   {
-    0x47e292, 0x6000, 0x3d31c2
+    0x475286, 0x6000, 0x3db512
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -954,7 +958,7 @@ static const RAIL_POINT sc_POINT_C3_JOINT02 =
   },
   //VecFx32 pos;
   {
-    0x303d9a, 0x6000, 0x4bd08a
+    0x2fa47e, 0x6000, 0x4b9402
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -973,7 +977,7 @@ static const RAIL_POINT sc_POINT_C3_JOINT03 =
   },
   //VecFx32 pos;
   {
-    0x17f9fe, 0x7000, 0x3df152
+    0x17b1b6, 0x6000, 0x3df662
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -992,7 +996,7 @@ static const RAIL_POINT sc_POINT_C3_JOINT04 =
   },
   //VecFx32 pos;
   {
-    0x18153e, 0x7000, 0x2208b6
+    0x17ef96, 0x6000, 0x21cc3a
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1013,7 +1017,7 @@ static const RAIL_POINT sc_POINT_C3_BEACH00 =
   },
   //VecFx32 pos;
   {
-    0x4beb91, 0x7000, 0x209278
+    0x4d1dd9, 0x6000, 0x2027d2
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1032,7 +1036,7 @@ static const RAIL_POINT sc_POINT_C3_BEACH01 =
   },
   //VecFx32 pos;
   {
-    0x4b75fb, 0x7000, 0x406864
+    0x4d3d74, 0x6000, 0x411568
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1051,7 +1055,7 @@ static const RAIL_POINT sc_POINT_C3_BEACH02 =
   },
   //VecFx32 pos;
   {
-    0x2feeef, 0x7000, 0x508402
+    0x2fb0b9, 0x6000, 0x51e402
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1070,7 +1074,7 @@ static const RAIL_POINT sc_POINT_C3_BEACH03 =
   },
   //VecFx32 pos;
   {
-    0x1388e1, 0x7000, 0x40a128
+    0x13a5c6, 0x6000, 0x40543e
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1089,7 +1093,7 @@ static const RAIL_POINT sc_POINT_C3_BEACH04 =
   },
   //VecFx32 pos;
   {
-    0x1376a2, 0x7000, 0x1fa953
+    0x1261b6, 0x6000, 0x1e6c22
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1110,7 +1114,7 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY00 =
   },
   //VecFx32 pos;
   {
-    0x42c5cc, 0x7000, 0x25337a
+    0x43b326, 0x6000, 0x253502
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1129,7 +1133,7 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY01 =
   },
   //VecFx32 pos;
   {
-    0x42c5cc, 0x7000, 0x3af48a
+    0x427d90, 0x6000, 0x3af354
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1148,7 +1152,7 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY02 =
   },
   //VecFx32 pos;
   {
-    0x2fe93e, 0x7000, 0x46429f
+    0x2f9a52, 0x6000, 0x465402
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1167,7 +1171,7 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY03 =
   },
   //VecFx32 pos;
   {
-    0x1cdbae, 0x7000, 0x3ae6d2
+    0x1ca876, 0x6000, 0x3b0f32
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1186,7 +1190,7 @@ static const RAIL_POINT sc_POINT_C3_CA_ALLAY04 =
   },
   //VecFx32 pos;
   {
-    0x1d141e, 0x7000, 0x24e1ca
+    0x1d1016, 0x6000, 0x24e9da
   },
   //const RAIL_CAMERA_SET * camera;
   &sc_CAMERA_C3_NORMAL,
@@ -1426,7 +1430,6 @@ static const RAIL_CAMERA_SET sc_CAMERA_C3_NORMAL =
 {
   FIELD_RAIL_POSFUNC_CircleCamera,
   0x700,
-//  0x2F5000,
   0x2B1000,
   0x2f6f36,
   HEIGHT,
@@ -1434,38 +1437,9 @@ static const RAIL_CAMERA_SET sc_CAMERA_C3_NORMAL =
 };
 static const RAIL_CAMERA_SET sc_CAMERA_C3_FIRST = 
 {
-//*  遠く、変わらない　ターゲットも変更
   FIELD_RAIL_CAMERAFUNC_FixAllCamera,
   0x5e6375, 0x2a357, 0x1f4628,
   0x2fcf14, 0xa8c3c, 0x2d6876,
-//*/
-/*遠くから変わる
-  FIELD_RAIL_POSFUNC_CircleCamera,
-  0xC00,
-  0x56D000,
-  0x2f6f36,
-  HEIGHT,
-  0x301402,
-//*/
-/*  遠く、変わらない　ターゲットも変更
-  FIELD_RAIL_CAMERAFUNC_FixAllCamera,
-  0x2fcf14, 0xa8c3c, 0x2d6876,
-  0x3a3a7e, 0xc5313, 0x44a305,
-//*/
-/*　近く変わらない
-  FIELD_RAIL_POSFUNC_FixLenCircleCamera,
-  0x600,
-  0x26D000,
-  0x2f6f36,
-  HEIGHT,
-  0x301402,
-//*/
-/* 遠方変わらない
-  FIELD_RAIL_CAMERAFUNC_FixAngleCamera,
-  0xC00,
-  0x4780,
-  0x56D000,
-//*/
 };
 
 static const RAIL_CAMERA_SET sc_CAMERA_C3_END = 
