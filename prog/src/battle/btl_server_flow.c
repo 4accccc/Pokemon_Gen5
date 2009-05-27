@@ -3639,7 +3639,7 @@ static void scput_DmgToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVW
   }
   else
   {
-    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_SET_NoEffect, pokeID );
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, pokeID );
   }
 
   if( evwk->tokFlag ){
