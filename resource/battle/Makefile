@@ -47,27 +47,6 @@ ICAFILE	:= $(wildcard $(RES_3DDIR)*.ica)
 BGNCGFILE := $(wildcard $(RES_BGDIR)*.ncg)
 BGNCLFILE := $(wildcard $(RES_BGDIR)*.ncl)
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-.SUFFIXES:	.imd.nsbmd.ice.nsbca.ncg.ncl
-
-do-build: $(IMDFILE:.imd=.nsbmd)
-%.nsbmd: %.imd
-	g3dcvtr $<
-
-do-build: $(ICAFILE:.ica=.nsbca)
-%.nsbca: %.ica
-	g3dcvtr $<
-
-do-build: $(BGNCGFILE:.ncg=.NCGR)
-%.NCGR: %.ncg
-	g2dcvtr -bg $<
-
-do-build: $(BGNCLFILE:.ncl=.NCLR)
-%.NCLR: %.ncl
-	g2dcvtr $<
-
-endif
-
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
@@ -75,7 +54,7 @@ endif
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 #do-build: pl_batt_obj.narc $(TARGETDIR)/$(NARCNAME)
-do-build: $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+do-build: nsbmd nsbca ncgr nclr $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
 do-build: $(TARGETDIR)/$(NARCNAME)
 endif
@@ -86,9 +65,26 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 #	$(COPY) pl_batt_obj.narc platinum_data/
 #	$(COPY) pl_batt_obj_*.h platinum_data/
 
-$(NARCNAME):	$(IMDFILE:.imd=.nsbmd) $(ICAFILE:.ica=.nsbca) $(BGNCGFILE:.ncg=.NCGR) battgra_wb.scr
+nsbmd: $(notdir $(IMDFILE:.imd=.nsbmd))
+%.nsbmd: $(RES_3DDIR)%.imd
+	g3dcvtr $<
+
+nsbca: $(notdir $(ICAFILE:.ica=.nsbca))
+%.nsbca: $(RES_3DDIR)%.ica
+	g3dcvtr $<
+
+ncgr: $(BGNCGFILE:.ncg=.NCGR)
+%.NCGR: %.ncg
+	g2dcvtr -bg $< -o/./
+
+nclr: $(BGNCLFILE:.ncl=.NCLR)
+%.NCLR: %.ncl
+	g2dcvtr $< -o/./
+
+$(NARCNAME):	$(notdir $(IMDFILE:.imd=.nsbmd)) $(notdir $(ICAFILE:.ica=.nsbca)) $(notdir $(BGNCGFILE:.ncg=.NCGR)) $(notdir $(BGNCLFILE:.ncl=.NCLR)) battgra_wb.scr
 	nnsarc -c -l -n -i $(NARCNAME) -S battgra_wb.scr > error
 	$(NAIXCUT) $(NAIXNAME)
+
 endif
 
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME) platinum_data/*
@@ -100,6 +96,9 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME) platinum_data/*
 #	make cleanルール
 #------------------------------------------------------------------------------
 clean:
+	-rm -f *.N*R
+	-rm -f *.nsbmd
+	-rm -f *.nsbca
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
 
