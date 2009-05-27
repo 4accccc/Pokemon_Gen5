@@ -10,6 +10,11 @@
 //======================================================================
 #include "fldmmdl.h"
 
+#include "fieldmap.h"
+
+#include "fldeff_shadow.h"
+#include "fldeff_kemuri.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -688,7 +693,23 @@ static void FldMMdl_MapAttrShadowProc_1(
 			FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_SET );
 		}
 	}
-	#endif
+	#else
+  {
+  	const FLDMMDLSYS *fos = FLDMMDL_GetFldMMdlSys( fmmdl );
+    
+		if( FLDMMDLSYS_CheckJoinShadow(fos) == FALSE ){
+			return;
+		}
+    
+		if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_SHADOW_SET) == 0 ){
+      FLDMMDLSYS *fos = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );
+      FIELDMAP_WORK *fieldMapWork = FLDMMDLSYS_GetFieldMapWork( fos );
+      FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldMapWork );
+      FLDEFF_SHADOW_SetFldMMdl( fmmdl, fectrl );
+			FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_SHADOW_SET );
+    }
+  }
+  #endif
 }
 
 //--------------------------------------------------------------
@@ -758,7 +779,14 @@ static void FldMMdl_MapAttrGroundSmokeProc_2(
 	}
 	
 	FE_fmmdlKemuri_Add( fmmdl );
-	#endif
+	#else
+  {
+    FLDMMDLSYS *fos = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );
+    FIELDMAP_WORK *fieldMapWork = FLDMMDLSYS_GetFieldMapWork( fos );
+    FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldMapWork );
+    FLDEFF_KEMURI_SetFldMMdl( fmmdl, fectrl );
+  }
+  #endif
 }
 
 //======================================================================

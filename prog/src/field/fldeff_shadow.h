@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	fldeff_shadow.c
+ * @file	fldeff_shadow.h
  * @brief	フィールドOBJ影
  * @author	kagaya
  * @data	05.07.13

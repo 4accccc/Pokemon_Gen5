@@ -531,6 +531,9 @@ extern void FLDMMDLSYS_SetBlActCont(
 		FLDMMDLSYS *fmmdlsys, FLDMMDL_BLACTCONT *pBlActCont );
 extern FLDMMDL_BLACTCONT * FLDMMDLSYS_GetBlActCont( FLDMMDLSYS *fmmdlsys );
 extern const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos );
+extern void FLDMMDLSYS_SetFieldMapWork(
+    FLDMMDLSYS *fos, void *fieldMapWork );
+extern void * FLDMMDLSYS_GetFieldMapWork( FLDMMDLSYS *fos );
 
 extern void FLDMMDL_OnStatusBit( FLDMMDL *fmmdl, FLDMMDL_STABIT bit );
 extern void FLDMMDL_OffStatusBit( FLDMMDL *fmmdl, FLDMMDL_STABIT bit );

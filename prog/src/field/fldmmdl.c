@@ -55,7 +55,7 @@ struct _TAG_FLDMMDLSYS
 	u16 tcb_pri;					///<TCBプライオリティ
 	u16 dummy;						///<余り
 	const FLDMAPPER *pG3DMapper;	///<FLDMAPPER
-	
+
 	void *pTCBSysWork;				///<TCBワーク
 	GFL_TCBSYS *pTCBSys;			///<TCBSYS*
 	
@@ -63,6 +63,8 @@ struct _TAG_FLDMMDLSYS
 	
 	u8 *pOBJCodeParamBuf;			///<OBJCODE_PARAMバッファ
 	const OBJCODE_PARAM *pOBJCodeParamTbl; ///<OBJCODE_PARAM
+  
+  void *fieldMapWork; ///<FIELDMAP_WORK
 };
 
 #define FLDMMDLSYS_SIZE (sizeof(FLDMMDLSYS)) ///<FLDMMDLSYSサイズ
@@ -704,6 +706,10 @@ void FLDMMDLSYS_Pop( FLDMMDLSYS *fmmdlsys )
 				FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_DRAW_PUSH );
 			}
 		}
+
+    { //リカバリー
+      FldMMdl_InitDrawEffectFlag( fmmdl );
+    }
 	}
 }
 
@@ -1255,6 +1261,33 @@ const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos )
 {
 	GF_ASSERT( fos->pG3DMapper != NULL);
 	return( fos->pG3DMapper );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS FIELDMAP_WORKセット
+ * @param fmmdlsys FLDMMDLSYS
+ * @param fieldMapWork FIELDMAP_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMMDLSYS_SetFieldMapWork(
+    FLDMMDLSYS *fos, void *fieldMapWork )
+{
+  fos->fieldMapWork = fieldMapWork;
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMMDLSYS FIELDMAP_WORK取得
+ * @param fmmdlsys FLDMMDLSYS
+ * @retval fieldMapWork FIELDMAP_WORK
+ */
+//--------------------------------------------------------------
+void * FLDMMDLSYS_GetFieldMapWork( FLDMMDLSYS *fos )
+{
+  GF_ASSERT( fos->fieldMapWork != NULL );
+  return( fos->fieldMapWork );
 }
 
 //======================================================================

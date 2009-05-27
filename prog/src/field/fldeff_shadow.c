@@ -48,53 +48,52 @@ typedef struct _TAG_FLDEFF_SHADOW FLDEFF_SHADOW;
 //--------------------------------------------------------------
 ///	FE_SHADOW構造体
 //--------------------------------------------------------------
-typedef struct _TAG_FLDEFF_SHADOW
+struct _TAG_FLDEFF_SHADOW
 {
+#ifndef DEBUG_SHADOW_PL_NON
 	int time_seq_no;
 	int time_zone;
 	int next_time_zone;
 	int frame;
 	fx32 alpha;
 	VecFx32 scale;
+#endif
 	FLDEFF_CTRL *fectrl;
-  
+
   GFL_G3D_RES *g3d_res;
   GFL_G3D_RND *g3d_rnd;
   GFL_G3D_OBJ *g3d_obj;
-
-#ifndef DEBUG_SHADOW_PL_NON
-	TCB_PTR tcb_time_proc;
-	FRO_MDL rmdl[SHADOW_MAX];
-	FRO_OBJ robj[SHADOW_MAX];
-#endif
-}FE_SHADOW;
-
-#define FE_SHADOW_SIZE (sizeof(FE_SHADOW)) ///<FE_SHADOWサイズ
+};
 
 //--------------------------------------------------------------
 ///	SHADOW_ADD_H構造体
 //--------------------------------------------------------------
 typedef struct
 {
-	FLDEFF_CTRL *fectrl;								///<FLDEFF_CTRL *
-	FLDEFF_SHADOW *shadow;						///<FLDEFF_SHADOW
-	FLDMMDL * fmmdl;						///<影の対象FLDMMDL *
+	FLDEFF_CTRL *fectrl;			///<FLDEFF_CTRL *
+	FLDEFF_SHADOW *shadow;		///<FLDEFF_SHADOW
+	FLDMMDL *fmmdl;						///<影の対象FLDMMDL *
 }SHADOW_ADD_H;
 
-#define SHADOW_ADD_H_SIZE (sizeof(SHADOW_ADD_H)) ///<SHADOW_ADD_Hサイズ
-
 //--------------------------------------------------------------
-///	SHADOW_WORK構造体
+/// SHADOW_TASKHEADER
 //--------------------------------------------------------------
 typedef struct
 {
-	int obj_code;								///<影対象OBJコード
-	int obj_id;									///<影対象OBJID
-	int zone_id;								///<影対象ゾーンID
-	int vanish_sw;								///<非表示SW
-	int type;									///<SHADOW_BLACK等
-	SHADOW_ADD_H head;							///<追加時のSHADOW_ADD_H
-}SHADOW_WORK;
+  FLDEFF_SHADOW *eff_shadow;
+  FLDMMDL *fmmdl;
+}SHADOW_TASKHEADER;
+
+//--------------------------------------------------------------
+/// TASKWORK_SHADOW
+//--------------------------------------------------------------
+typedef struct
+{
+  FLDEFF_SHADOW *eff_shadow;
+  FLDMMDL *fmmdl;
+  u16 obj_id;
+  u16 zone_id;
+}TASKWORK_SHADOW;
 
 //======================================================================
 //	プロトタイプ
@@ -122,6 +121,8 @@ static const DATA_ShadowArcIdx[SHADOW_MAX];
 
 static void shadow_InitResource( FLDEFF_SHADOW *sd );
 static void shadow_DeleteResource( FLDEFF_SHADOW *sd );
+
+static const FLDEFF_TASK_HEADER DATA_shadowTaskHeader;
 
 //======================================================================
 //	影　システム
@@ -166,7 +167,7 @@ void FLDEFF_SHADOW_Delete( FLDEFF_CTRL *fectrl, void *work )
 //--------------------------------------------------------------
 /**
  * 影　リソース初期化
- * @param fectrl FLDEFF_CTRL*
+ * @param sd FLDEFF_SHADOW
  * @retval nothing
  */
 //--------------------------------------------------------------
@@ -189,7 +190,7 @@ static void shadow_InitResource( FLDEFF_SHADOW *sd )
 //--------------------------------------------------------------
 /**
  * 影　リソース削除
- * @param fectrl FLDEFF_CTRL*
+ * @param sd FLDEFF_SHADOW
  * @retval nothing
  */
 //--------------------------------------------------------------
@@ -203,28 +204,6 @@ static void shadow_DeleteResource( FLDEFF_SHADOW *sd )
 //======================================================================
 //	影　タスク
 //======================================================================
-//--------------------------------------------------------------
-/// SHADOW_TASKHEADER
-//--------------------------------------------------------------
-typedef struct
-{
-  FLDEFF_SHADOW *eff_shadow;
-  FLDMMDL *fmmdl;
-}SHADOW_TASKHEADER;
-
-//--------------------------------------------------------------
-/// SHADOW_TASKWORK
-//--------------------------------------------------------------
-typedef struct
-{
-  FLDEFF_SHADOW *eff_shadow;
-  FLDMMDL *fmmdl;
-  u16 obj_id;
-  u16 zone_id;
-}TASKWORK_SHADOW;
-
-static const FLDEFF_TASK_HEADER DATA_shadowTaskHeader;
-
 //--------------------------------------------------------------
 /**
  * 動作モデル用影　追加
@@ -336,158 +315,6 @@ static const FLDEFF_TASK_HEADER DATA_shadowTaskHeader =
   shadowTask_Update,
   shadowTask_Draw,
 };
-
-#ifndef DEBUG_SHADOW_PL_NON
-//--------------------------------------------------------------
-/**
- * フィールドOBJ用影追加
- * @param	fmmdl		FLDMMDL *
- * @retval	nothing
- */
-//--------------------------------------------------------------
-void FE_fmmdlShadow_Add( FLDMMDL * fmmdl )
-{
-	int param,pri;
-	SHADOW_ADD_H head;
-	FLDEFF_CTRL *fectrl;
-	VecFx32 mtx;
-	
-	fectrl = FE_FieldOBJ_FLDEFF_CTRL_Get( fmmdl );
-	
-	head.fectrl = fectrl;
-	head.shadow = FE_EffectWorkGet( fectrl, FE_FLD_SHADOW );
-	head.fmmdl = fmmdl;
-	FieldOBJ_VecPosGet( fmmdl, &mtx );
-	
-	param = SHADOW_BLACK;
-	pri = FieldOBJ_TCBPriGet( fmmdl, fmmdl_TCBPRI_OFFS_AFTER );
-	FE_EoaAddNpp( fectrl, &DATA_EoaH_Shadow, &mtx, param, &head, pri );
-}
-
-//--------------------------------------------------------------
-/**
- * EOA 影　初期化
- * @param	eoa		EOA_PTR
- * @param	wk		eoa work *
- * @retval	int		TRUE=正常終了。FALSE=異常終了
- */
-//--------------------------------------------------------------
-static int EoaShadow_Init( EOA_PTR eoa, void *wk )
-{
-	SHADOW_WORK *work;
-	const SHADOW_ADD_H *head;
-	
-	work = wk;
-	head = EOA_AddPtrGet( eoa );
-	work->head = *head;
-	
-	work->type = EOA_AddParamGet( eoa );
-	work->obj_code = FieldOBJ_OBJCodeGet( work->head.fmmdl );
-	work->obj_id = FieldOBJ_OBJIDGet( work->head.fmmdl );
-	
-	if( FieldOBJ_StatusBitCheck_Alies(work->head.fmmdl) == TRUE ){
-		work->zone_id = FieldOBJ_ZoneIDGetAlies( work->head.fmmdl );
-	}else{
-		work->zone_id = FieldOBJ_ZoneIDGet( work->head.fmmdl );
-	}
-	
-	return( TRUE );
-}
-
-//--------------------------------------------------------------
-/**
- * EOA 影　削除
- * @param	eoa		EOA_PTR
- * @param	wk		eoa work *
- * @retval	nothing
- */
-//--------------------------------------------------------------
-static void EoaShadow_Delete( EOA_PTR eoa, void *wk )
-{
-}
-
-//--------------------------------------------------------------
-/**
- * EOA 影　動作
- * @param	eoa		EOA_PTR
- * @param	wk		eoa work *
- * @retval	nothing
- */
-//--------------------------------------------------------------
-static void EoaShadow_Move( EOA_PTR eoa, void *wk )
-{
-	SHADOW_WORK *work;
-	FLDMMDL * fmmdl;
-	
-	work = wk;
-	fmmdl = work->head.fmmdl;
-	
-	if( FieldOBJ_CheckSameIDOBJCodeIn(
-		fmmdl,work->obj_code,work->obj_id,work->zone_id) == FALSE ){
-		FE_EoaDelete( eoa );										//同一ではない
-		return;
-	}
-	
-	if( FieldOBJ_FieldOBJSysStatusBitCheck(
-        fmmdl,fmmdlSYS_STA_BIT_SHADOW_JOIN_NOT) ){
-		FE_EoaDelete( eoa );
-		return;
-	}
-	
-	work->vanish_sw = FALSE;
-	
-	if( FieldOBJ_StatusBit_CheckEasy(fmmdl,
-		fmmdl_STA_BIT_VANISH|fmmdl_STA_BIT_SHADOW_VANISH) == TRUE ){
-		work->vanish_sw = TRUE;									//非表示
-		return;
-	}
-	
-	{
-		VecFx32 vec;
-		
-		FieldOBJ_VecPosGet( fmmdl, &vec );
-		EOA_MatrixSet( eoa, &vec );
-	}
-}
-
-//--------------------------------------------------------------
-/**
- * EOA 影　描画
- * @param	eoa		EOA_PTR
- * @param	wk		eoa work *
- * @retval	nothing
- */
-//--------------------------------------------------------------
-static void EoaShadow_Draw( EOA_PTR eoa, void *wk )
-{
-	SHADOW_WORK *work = wk;
-	
-	if( work->vanish_sw == FALSE ){
-		VecFx32 pos,scale;
-		MtxFx33 rot = { FX32_ONE, 0,0,0, FX32_ONE, 0,0,0,FX32_ONE};
-		FRO_OBJ *robj = &work->head.shadow->robj[SHADOW_BLACK];
-		
-		Shadow_TimeScaleGet( work->head.shadow, &scale );
-		EOA_MatrixGet( eoa, &pos );
-		pos.x += NUM_FX32(-1) / 2;
-		pos.y += NUM_FX32(-4);
-		pos.z += NUM_FX32(1);
-		FRO_OBJ_Draw( robj, &pos, &scale, &rot );
-	}
-}
-
-//--------------------------------------------------------------
-///	影EOA_H
-//--------------------------------------------------------------
-static const EOA_H_NPP DATA_EoaH_Shadow =
-{
-	SHADOW_WORK_SIZE,
-	EoaShadow_Init,
-	EoaShadow_Delete,
-	EoaShadow_Move,
-	EoaShadow_Draw,
-};
-#endif
 
 //======================================================================
 //	data

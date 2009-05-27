@@ -95,7 +95,7 @@ static void gjiki_SetMove_Jump(
 
 static void gjiki_Sound_MoveStop( void );
 static void gjiki_Sound_Move( void );
-#include "fldeff_shadow.h"
+
 //======================================================================
 //	グリッド移動 フィールドプレイヤー制御
 //======================================================================
@@ -116,13 +116,15 @@ FIELD_PLAYER_GRID * FIELD_PLAYER_GRID_Init(
 	g_jiki->fld_player = fld_player;
 	g_jiki->fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
 	g_jiki->scale_size = FX16_ONE*8-1;
-  
+
+#if 0  
   {
     FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
     FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( g_jiki->fieldWork );
     FLDEFF_SHADOW_SetFldMMdl( fmmdl, fectrl );
   }
-  
+#endif
+
 //SetGridPlayerActTrans( g_jiki->pActCont, &g_jiki->vec_pos );
 	return( g_jiki );
 }

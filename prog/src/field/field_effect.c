@@ -731,10 +731,12 @@ HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task )
 //  data ‰¼ ‹Œfield_effect_data.c
 //======================================================================
 #include "fldeff_shadow.h"
+#include "fldeff_kemuri.h"
 
 FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
 {
   {FLDEFF_PROCID_SHADOW,FLDEFF_SHADOW_Init,FLDEFF_SHADOW_Delete},
+  {FLDEFF_PROCID_KEMURI,FLDEFF_KEMURI_Init,FLDEFF_KEMURI_Delete},
   {FLDEFF_PROCID_MAX,NULL,NULL}, ///<I’[
 };
 
@@ -744,6 +746,7 @@ FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
 const FLDEFF_PROCID DATA_FLDEFF_RegistEffectGroundTbl[] =
 {
   FLDEFF_PROCID_SHADOW,
+  FLDEFF_PROCID_KEMURI,
 };
 
 const u32 DATA_FLDEFF_RegistEffectGroundTblNum = 

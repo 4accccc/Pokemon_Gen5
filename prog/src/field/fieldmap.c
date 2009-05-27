@@ -1312,7 +1312,8 @@ static void fldmapMain_FLDMMDL_Init( FIELDMAP_WORK *fieldWork )
 	FLDMMDLSYS *fmmdlsys = GAMEDATA_GetFldMMdlSys( gdata );
 		
 	fieldWork->fldMMdlSys = fmmdlsys;
-	
+	FLDMMDLSYS_SetFieldMapWork( fmmdlsys, fieldWork );
+
 	FLDMMDLSYS_SetupProc( fmmdlsys,	//動作モデルシステム　セットアップ
 		fieldWork->heapID, fieldWork->g3Dmapper );
 		
