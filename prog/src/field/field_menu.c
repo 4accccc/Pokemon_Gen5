@@ -37,7 +37,7 @@
 #define FIELD_MENU_BG_NAME (GFL_BG_FRAME2_S)
 
 //スクロール速度
-#define FIELD_MENU_SCROLL_SPD (96) 
+#define FIELD_MENU_SCROLL_SPD (64) 
 
 //レンダーのサーフェイス番号
 #define FIELD_MENU_RENDER_SURFACE (0)
@@ -220,6 +220,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
     GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
     FIELD_MENU_SetMenuItemNo( work , GAMEDATA_GetSubScreenType( gameData ) );
   }
+  
   if( isScrollIn == TRUE )
   {
     FIELD_MENU_InitScrollIn( work );
@@ -273,12 +274,12 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       if( work->scrollOffset != 0 )
       {
         work->state = FMS_WAIT_MOVEIN;
-        PMSND_PlaySystemSE( SEQ_SE_OPEN1 );
       }
       else
       {
         work->state = FMS_LOOP;
       }
+      PMSND_PlaySystemSE( SEQ_SE_OPEN1 );
     }
     break;
     
@@ -305,6 +306,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     if( work->isCancel == TRUE ||
         work->cursorPosY == 3 )
     {
+      //work->state = FMS_EXIT_ENDMENU;
       work->state = FMS_WAIT_MOVEOUT;
       PMSND_PlaySystemSE( SEQ_SE_CLOSE1 );
     }
@@ -491,7 +493,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
                           work->heapId );
     GFL_CLACT_WK_SetAutoAnmSpeed( work->cellCursor, FX32_ONE );
     GFL_CLACT_WK_SetAutoAnmFlag( work->cellCursor, TRUE );
-    GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
     
   }
 }
@@ -711,16 +713,19 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
   if( work->isDispCursor == FALSE &&
       trg != 0 )
   {
-    work->isDispCursor = TRUE;
-    work->isUpdateCursor = TRUE;
-    GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
-
     if( trg & PAD_BUTTON_B || 
         trg & PAD_BUTTON_X )
     {
       work->isCancel = TRUE;
       work->state = FMS_EXIT_INIT;
     }
+    else
+    {
+      work->isDispCursor = TRUE;
+      work->isUpdateCursor = TRUE;
+      GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
+    }
+
     return;
   }
   
