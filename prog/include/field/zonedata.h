@@ -88,3 +88,8 @@ extern u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id);
 //------------------------------------------------------------------
 extern BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id);
 
+//------------------------------------------------------------------
+//  レール移動を使用しているマップかどうかのチェック
+//------------------------------------------------------------------
+extern BOOL ZONEDATA_DEBUG_IsRailMap(u16 zone_id);
+
