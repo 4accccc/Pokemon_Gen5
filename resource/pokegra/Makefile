@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	ibe_mana tanoue_reiko yoshida
+USERS	=	ibe_mana tanoue_reiko yoshida sogabe
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -107,11 +107,12 @@ nclr: $(notdir $(NCLRFILE:.ncl=.NCLR))
 endif
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	$(SCRFILE) $(NARCNAME)
+#do-build:	$(SCRFILE) $(NARCNAME)
+do-build:	$(NARCNAME)
 
-$(SCRFILE): $(SCRIPT_DIR)mkscr.pl $(NCGFILE) $(NCGCFILE) $(NMCFILE) $(NCLNFILE) $(NCLRFILE)
-	ls -1 pfwb*.NMCR > nmcr.lst
-	perl $(SCRIPT_DIR)mkscr.pl nmcr.lst
+#$(SCRFILE): $(SCRIPT_DIR)mkscr.pl $(NCGFILE) $(NCGCFILE) $(NMCFILE) $(NCLNFILE) $(NCLRFILE)
+#	ls -1 pfwb*.NMCR > nmcr.lst
+#	perl $(SCRIPT_DIR)mkscr.pl nmcr.lst
 
 $(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLNFILE:.ncl=.NCLR)) $(notdir $(NCLRFILE:.ncl=.NCLR)) $(SCRFILE)
 	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE)
