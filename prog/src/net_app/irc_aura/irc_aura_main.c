@@ -169,7 +169,7 @@ enum{
 ///	情報バー
 //=====================================
 #define INFOWIN_PLT_NO		(AURA_BG_PAL_M_15)
-#define INFOWIN_BG_FRAME	(GFL_BG_FRAME0_M)
+#define INFOWIN_BG_FRAME	(GFL_BG_FRAME1_M)
 
 //-------------------------------------
 ///	文字
@@ -211,6 +211,11 @@ enum{
 #define TOUCH_COUNTER_SHAKE_MAX	(TOUCH_COUNTER_MAX/TOUCH_COUNTER_SHAKE_SYNC)	//ブレを取得する回数
 
 //-------------------------------------
+///	個数
+//=====================================
+#define CIRCLE_MAX		(10)
+
+//-------------------------------------
 ///		MSG_FONT
 //=====================================
 typedef enum {	
@@ -246,6 +251,17 @@ enum {
 
 	MSGWNDID_MAX,
 };
+
+//-------------------------------------
+///	タッチエフェクト
+//=====================================
+typedef enum {
+	TOUCHEFFID_LEFT,
+	TOUCHEFFID_RIGHT,
+
+
+	TOUCHEFFID_MAX,
+}TOUCHEFFID;
 
 //-------------------------------------
 ///	個人結果画面の定数
@@ -302,6 +318,34 @@ typedef struct
 	GFL_G3D_CAMERA		*p_camera;
 } GRAPHIC_3D_WORK;
 //-------------------------------------
+///	円
+//=====================================
+enum {	
+	CIRCLE_VTX_MAX	=	60,
+};
+typedef struct 
+{
+	VecFx16	vtx[CIRCLE_VTX_MAX];
+	u16 r;				//半径	
+	u16 red:5;		//赤
+	u16	green:5;	//緑
+	u16 blue:5;		//青
+	u16	dummy1:1;
+
+	u16 add_r;
+	u16 add_red:5;
+	u16 add_green:5;
+	u16 add_blue:5;
+	u16 dummy2:1;
+} CIRCLE_WORK;
+typedef struct {
+	CIRCLE_WORK				c[TOUCHEFFID_MAX][CIRCLE_MAX];
+	BOOL							is_visible[TOUCHEFFID_MAX];
+	VecFx32						trans[TOUCHEFFID_MAX];
+	GFL_POINT					left;
+} TOUCH_EFFECT_WORK;
+
+//-------------------------------------
 ///	OBJ関係
 //=====================================
 typedef struct {
@@ -317,6 +361,8 @@ typedef struct
 	GRAPHIC_BG_WORK		bg;
 	GRAPHIC_3D_WORK		g3d;
 	GRAPHIC_OBJ_WORK	obj;
+	TOUCH_EFFECT_WORK		touch_eff;
+
 	GFL_TCB						*p_vblank_task;
 } GRAPHIC_WORK;
 //-------------------------------------
@@ -475,6 +521,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
 static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id );
+static TOUCH_EFFECT_WORK * GRAPHIC_GetTouchEffWk( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_WriteBmpwinFrame( GRAPHIC_WORK *p_wk, GFL_BMPWIN *p_bmpwin );
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //BG
@@ -534,6 +581,19 @@ static void AURANET_GetResultData( const AURANET_WORK *cp_wk, AURANET_RESULT_DAT
 //net_recv
 static void NETRECV_Result( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 static u8* NETRECV_GetBufferAddr(int netID, void* pWork, int size);
+//円プリミティブ
+static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color );
+static void CIRCLE_Draw( CIRCLE_WORK *p_wk );
+static void CIRCLE_SetAddR( CIRCLE_WORK *p_wk, u16 add_r );
+static void CIRCLE_SetAddColor( CIRCLE_WORK *p_wk, u16 add_color );
+static void CIRCLE_Reset( CIRCLE_WORK *p_wk );
+static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end );
+//演出
+static void TOUCH_EFFECT_Init( TOUCH_EFFECT_WORK *p_wk );
+static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_WORK *p_wk );
+static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_WORK *p_wk, TOUCHEFFID id, BOOL is_visible );
+static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_WORK *p_wk, TOUCHEFFID id, u32 x, u32 y );
+
 //汎用
 static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg );
 static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
@@ -602,7 +662,7 @@ typedef enum
 } GRAPHIC_BG_FRAME;
 static const u32 sc_bgcnt_frame[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	INFOWIN_BG_FRAME, GFL_BG_FRAME1_M, GFL_BG_FRAME2_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,
+	INFOWIN_BG_FRAME, GFL_BG_FRAME2_M, GFL_BG_FRAME3_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] = 
 {
@@ -918,7 +978,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 		GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
 		GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
 		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
+		GX_VRAM_OBJ_64_E,						// メイン2DエンジンのOBJ
 		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 		GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
@@ -936,6 +996,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 
 	// VRAMバンク設定
 	GFL_DISP_SetBank( &sc_vramSetTable );
+	GX_SetBankForLCDC(GX_VRAM_LCDC_B);	//Capture用
 
 	// ディスプレイON
 	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
@@ -947,7 +1008,10 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 	//描画モジュール
 	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
 	GRAPHIC_BG_Init( &p_wk->bg, heapID );
-//	GRAPHIC_3D_Init( &p_wk->g3d, heapID );
+	GRAPHIC_3D_Init( &p_wk->g3d, heapID );
+
+	TOUCH_EFFECT_Init( &p_wk->touch_eff );
+
 
 	//VBlackTask登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
@@ -966,7 +1030,7 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 {
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
-//	GRAPHIC_3D_Exit( &p_wk->g3d );
+	GRAPHIC_3D_Exit( &p_wk->g3d );
 	GRAPHIC_BG_Exit( &p_wk->bg );
 	GRAPHIC_OBJ_Exit( &p_wk->obj );
 }
@@ -982,6 +1046,25 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 {
 	GRAPHIC_OBJ_Main( &p_wk->obj );
+
+	GRAPHIC_3D_StartDraw( &p_wk->g3d );
+	//NNS系の3D描画
+	//なし
+	NNS_G3dGeFlushBuffer();
+	//SDK系の3D描画
+
+	TOUCH_EFFECT_Draw( &p_wk->touch_eff );
+
+	GRAPHIC_3D_EndDraw( &p_wk->g3d );
+
+
+	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
+                      GX_CAPTURE_MODE_AB,			   // Capture mode
+                      GX_CAPTURE_SRCA_2D3D,						 // Blend src A
+                      GX_CAPTURE_SRCB_VRAM_0x00000,     // Blend src B
+                      GX_CAPTURE_DEST_VRAM_B_0x00000,   // Output VRAM
+                      14,             // Blend parameter for src A
+                      14);            // Blend parameter for src B
 }
 //----------------------------------------------------------------------------
 /**
@@ -996,6 +1079,21 @@ static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 static GFL_CLWK* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id )
 {	
 	return GRAPHIC_OBJ_GetClwk( &cp_wk->obj, id );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タッチ演出ワーク取得
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk	ワーク
+ *	@param	id												ID
+ *
+ *	@return	タッチ演出ワーク取得
+ */
+//-----------------------------------------------------------------------------
+static TOUCH_EFFECT_WORK * GRAPHIC_GetTouchEffWk( GRAPHIC_WORK *p_wk )
+{	
+	return &p_wk->touch_eff;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1052,7 +1150,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 	{
 		static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
 		{
-			GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D
+			GX_DISPMODE_VRAM_B,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
 		};	
 		GFL_BG_SetBGMode( &sc_bg_sys_header );
 	}
@@ -1205,7 +1303,6 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	{	
 		GFL_CLWK_DATA	cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-
 		p_wk->p_clwk[CLWKID_TOUCH]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
 				p_wk->reg_id[OBJREGID_TOUCH_CHR],
 				p_wk->reg_id[OBJREGID_TOUCH_PLT],
@@ -1215,6 +1312,9 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 				heapID
 				);
 	}
+
+
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -1258,6 +1358,7 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk )
 {	
 	GFL_CLACT_SYS_Main();
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -1311,7 +1412,7 @@ static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
 		CAMERA_PER_FOVY	=	(40),
 		CAMERA_PER_ASPECT =	(FX32_ONE * 4 / 3),
 		CAMERA_PER_NEAR	=	(FX32_ONE * 1),
-		CAMERA_PER_FER	=	(FX32_ONE * 800),
+		CAMERA_PER_FER	=	(FX32_ONE * 2),
 		CAMERA_PER_SCALEW	=(0),
 	};
 
@@ -1381,7 +1482,7 @@ static void Graphic_3d_SetUp( void )
 	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
 
 	// クリアカラーの設定
-	G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
+	G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
 	// ビューポートの設定
 	G3_ViewPort(0, 0, 255, 191);
 
@@ -1462,6 +1563,7 @@ static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID )
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
 		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, TEXTSTR_PLT_NO*0x20, 0x20, heapID );
 		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], GX_RGB(31,31,31) );
+		GFL_BG_SetBackGroundColor( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_TEXT], GX_RGB(0,0,0) );
 	}
 }
 
@@ -2062,6 +2164,17 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		}
 #endif	//DEBUG_ONLY_PLAY 
 
+		//タッチ演出OFF
+		{	
+			int i;
+			TOUCH_EFFECT_WORK *p_touch;
+			p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
+			for( i = 0; i < TOUCHEFFID_MAX; i++ )
+			{	
+				TOUCH_EFFECT_SetVisible( p_touch, i, FALSE );
+			}
+		}
+
 		TouchMarker_OffVisible( p_wk );
 		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_OFF );
 		GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_L], VISIBLE_ON );
@@ -2074,6 +2187,16 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		{	
 			DEBUGAURA_PRINT_UpDate( p_wk );
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_001, 0, 0 );
+		
+			//左タッチ演出ON
+			{	
+				TOUCH_EFFECT_WORK *p_touch;
+				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
+				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
+				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, p_trg_left->x, p_trg_left->y );
+			}
+
+
 			*p_seq	= SEQ_END;
 		}
 
@@ -2173,6 +2296,14 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			DEBUGAURA_PRINT_UpDate( p_wk );
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchRight );
+
+			//右タッチ演出ON
+			{	
+				TOUCH_EFFECT_WORK *p_touch;
+				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
+				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
+				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, p_trg_right->x, p_trg_right->y );
+			}
 		}
 		else if( TP_GetRectCont( &sc_left, &pos ) )
 		{	
@@ -2560,6 +2691,257 @@ static u8* NETRECV_GetBufferAddr(int netID, void* p_work, int size)
 	else
 	{	
 		return (u8*)&p_wk->result_recv;
+	}
+
+}
+
+//=============================================================================
+/**
+ *				円プリミティブ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	円プリミティブを作成
+ *
+ *	@param	CIRCLE_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_Init( CIRCLE_WORK *p_wk, u16 r, GXRgb color )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(CIRCLE_WORK) );
+	p_wk->r			= r;
+	p_wk->red		= (color&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+	p_wk->green	= (color&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+	p_wk->blue	= (color&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+
+	//円の頂点作成
+	{	
+		int i;
+		for( i = 0; i < CIRCLE_VTX_MAX; i++ )
+		{	
+			p_wk->vtx[i].x	=	FX_CosIdx( ( i * 360 / CIRCLE_VTX_MAX) * 0xFFFF / 360 );
+			p_wk->vtx[i].y	=	FX_SinIdx( ( i * 360 / CIRCLE_VTX_MAX) * 0xFFFF / 360 );
+			p_wk->vtx[i].z	=	0;
+		}
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	円を描画
+ *
+ *	@param	CIRCLE_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_Draw( CIRCLE_WORK *p_wk )
+{	
+	//マテリアル設定
+	G3_MaterialColorDiffAmb(GX_RGB(16, 16, 16), GX_RGB(16, 16, 16), FALSE );
+	G3_MaterialColorSpecEmi(GX_RGB( 16, 16, 16 ), GX_RGB( 31,31,31 ), FALSE );
+	G3_PolygonAttr( GX_LIGHTMASK_0123,GX_POLYGONMODE_MODULATE,GX_CULL_BACK,0,31,0 );
+
+	//サイズ設定
+	G3_Scale( FX_SinIdx(p_wk->r)/4, FX_SinIdx(p_wk->r)/4, FX_SinIdx(p_wk->r)/4);
+
+	//描画
+	G3_Begin( GX_BEGIN_TRIANGLES );
+	{
+		int i;
+		G3_Color(GX_RGB( p_wk->red, p_wk->green, p_wk->blue ));
+		for( i = 0; i < CIRCLE_VTX_MAX - 1; i++ )
+		{	
+			Circle_DrawLine( &p_wk->vtx[i], &p_wk->vtx[i+1] );
+		}
+		Circle_DrawLine( &p_wk->vtx[i], &p_wk->vtx[0] );
+	}
+	G3_End();
+
+	//動作
+	p_wk->r				+= p_wk->add_r;
+	p_wk->red			+= p_wk->add_red;
+	p_wk->green		+= p_wk->add_green;
+	p_wk->blue		+= p_wk->add_blue;
+	p_wk->red			%= 31;
+	p_wk->green		%= 31;
+	p_wk->blue		%= 31;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	半径加算値をセット
+ *
+ *	@param	CIRCLE_WORK *p_wk	ワーク
+ *	@param	add_r							半径加算値	
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_SetAddR( CIRCLE_WORK *p_wk, u16 add_r )
+{	
+	p_wk->add_r			= add_r;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	色加算値をセット
+ *
+ *	@param	CIRCLE_WORK *p_wk	ワーク
+ *	@param	add_color					色加算値
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_SetAddColor( CIRCLE_WORK *p_wk, u16 add_color )
+{	
+	p_wk->add_red		= (add_color&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+	p_wk->add_green	= (add_color&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+	p_wk->add_blue	= (add_color&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リセット
+ *
+ *	@param	CIRCLE_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void CIRCLE_Reset( CIRCLE_WORK *p_wk )
+{	
+	p_wk->r					= 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	線を描画
+ *
+ *	@param	VecFx16 *p_start		開始座標
+ *	@param	*p_end							終了座標
+ *
+ */
+//-----------------------------------------------------------------------------
+static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end )
+{	
+	G3_Vtx( p_start->x, p_start->y, p_start->z);
+	G3_Vtx( p_end->x, p_end->y, p_end->z);
+	G3_Vtx( p_start->x, p_start->y, p_start->z);
+}
+//=============================================================================
+/**
+ *				演出
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タッチ演出、初期化
+ *
+ *	@param	TOUCH_EFFECT_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void TOUCH_EFFECT_Init( TOUCH_EFFECT_WORK *p_wk )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(TOUCH_EFFECT_WORK) );
+
+	{	
+		int i,j;
+		for( j = 0; j < TOUCHEFFID_MAX; j++ )
+		{	
+			for( i = 0; i < CIRCLE_MAX; i++ )
+			{	
+				CIRCLE_Init( &p_wk->c[j][i], 0, GX_RGB(31,16,0) );
+				CIRCLE_SetAddR( &p_wk->c[j][i], 0x4F+0x28*i );
+				CIRCLE_SetAddColor( &p_wk->c[j][i], GX_RGB(0,0,1) );
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タッチ演出	描画
+ *
+ *	@param	TOUCH_EFFECT_WORK *p_wk		ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_WORK *p_wk )
+{	
+	int j;
+
+	for( j = 0; j < TOUCHEFFID_MAX; j++ )
+	{	
+
+		if( p_wk->is_visible[j] )
+		{	
+			int i;
+			G3_PushMtx();
+			G3_Translate( p_wk->trans[j].x, p_wk->trans[j].y, p_wk->trans[j].z );
+			for( i = 0; i < CIRCLE_MAX; i++ )
+			{	
+				CIRCLE_Draw( &p_wk->c[j][i] );
+			}
+			G3_PopMtx(1);
+		}
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タッチ演出	表示設定
+ *
+ *	@param	TOUCH_EFFECT_WORK *p_wk	ワーク
+ *	@param	is_visible							表示ON,OFF
+ *
+ */
+//-----------------------------------------------------------------------------
+static void TOUCH_EFFECT_SetVisible( TOUCH_EFFECT_WORK *p_wk, TOUCHEFFID id, BOOL is_visible )
+{	
+	p_wk->is_visible[id]	= is_visible;
+	if( !is_visible )
+	{	
+		int i;
+		for( i = 0; i < CIRCLE_MAX; i++ )
+		{	
+			CIRCLE_Reset( &p_wk->c[id][i] );
+		}
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	座標設定
+ *
+ *	@param	TOUCH_EFFECT_WORK *p_wk		ワーク
+ *	@param	x													LCD座標X
+ *	@param	y													LCD座標Y
+ *
+ */
+//-----------------------------------------------------------------------------
+static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_WORK *p_wk, TOUCHEFFID id, u32 x, u32 y )
+{	
+	VecFx32	near;
+	VecFx32	far;
+	switch( id )
+	{
+	case TOUCHEFFID_LEFT:
+		NNS_G3dScrPosToWorldLine( x, y, &near, &far );
+		p_wk->trans[id]	= near;
+		p_wk->left.x	= x;
+		p_wk->left.y	= y;
+		break;
+
+	case TOUCHEFFID_RIGHT:
+		{
+			GFL_POINT	pos;
+			//通常2倍で良いはずだが、誤差がでるため
+			pos.x		= p_wk->left.x + (x - p_wk->left.x) * 2;
+			pos.y		= p_wk->left.y + (y - p_wk->left.y) * 2;
+			NAGI_Printf( "X 左%d 中%d 右%d", p_wk->left.x, x, pos.x );
+			NAGI_Printf( "Y 左%d 中%d 右%d", p_wk->left.y, y, pos.y );
+			NNS_G3dScrPosToWorldLine( pos.x, pos.y, &near, &far );
+			p_wk->trans[id]	= near;
+		}
+		break;
 	}
 
 }
@@ -3024,7 +3406,7 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void TouchMarker_SetPos( AURA_MAIN_WORK *p_wk, const GFL_POINT *cp_pos )
 {	
-	GFL_CLWK	*p_marker;
+/*	GFL_CLWK	*p_marker;
 	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
 	GFL_CLACT_WK_SetDrawEnable( p_marker, TRUE );
 
@@ -3034,7 +3416,7 @@ static void TouchMarker_SetPos( AURA_MAIN_WORK *p_wk, const GFL_POINT *cp_pos )
 		clpos.y	= cp_pos->y;
 		GFL_CLACT_WK_SetPos( p_marker, &clpos, 0 );
 	}
-}
+*/}
 
 //----------------------------------------------------------------------------
 /**
@@ -3046,10 +3428,10 @@ static void TouchMarker_SetPos( AURA_MAIN_WORK *p_wk, const GFL_POINT *cp_pos )
 //-----------------------------------------------------------------------------
 static void TouchMarker_OffVisible( AURA_MAIN_WORK *p_wk )
 {	
-	GFL_CLWK	*p_marker;
+/*	GFL_CLWK	*p_marker;
 	p_marker	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_TOUCH );
 	GFL_CLACT_WK_SetDrawEnable( p_marker, FALSE );
-}
+*/}
 //----------------------------------------------------------------------------
 /**
  *	@brief	スコア計算
@@ -3539,3 +3921,4 @@ static STRBUF * DEBUGPRINT_CreateWideCharNumber( const u16 *cp_str, int number, 
 	return DEBUGPRINT_CreateWideChar( str, heapID );
 }
 //#endif //DEBUG_AURA_MSG 
+
