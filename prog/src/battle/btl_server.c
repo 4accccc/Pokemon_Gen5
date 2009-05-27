@@ -433,9 +433,7 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
         {
 //          server->quitStep = QUITSTEP_REQ;
         }
-        PMSND_PlayBGM( SEQ_WIN1 );
-//        (*seq) =
-        return TRUE;
+        (*seq) = 3;
       }
     }
     break;
@@ -465,6 +463,20 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
       {
         setMainProc( server, ServerMain_SelectAction );
       }
+    }
+    break;
+
+  case 3:
+     //
+     PMSND_PlayBGM( SEQ_WIN1 );
+     (*seq)++;
+     break;
+  case 4:
+    if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A)
+    ||  !(PMSND_CheckPlayBGM())
+    )
+    {
+      return TRUE;
     }
     break;
   }
