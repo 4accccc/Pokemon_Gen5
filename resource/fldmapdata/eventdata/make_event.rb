@@ -15,7 +15,7 @@ class DataFormatError < Exception; end
 class ReadWMSError < Exception; end
 
 def debug_puts str
-  #puts str
+  puts str
 end
 
 GRID_SIZE   =   16    #1グリッドのユニット数
@@ -155,8 +155,8 @@ class EventData
     count = 0
     line = stream.gets
 
-    while (count < @num - 1)
-      #debug_puts "count:#{count} < @num:#{@num}"
+    while (count < @num )
+      debug_puts "count:#{count} < @num:#{@num}"
       string = ""
       raise DataFormatError unless line =~/^#event number/
       string += line
@@ -164,6 +164,7 @@ class EventData
       while(true)
         line = stream.gets
         if line =~/^\#event number/ then break end
+        if line =~/^\#Map Event List Data End/ then break end
         string += line
       end
 
@@ -198,7 +199,7 @@ class AllEvent
     if line =~ exp then
       return lines.shift
     else
-      raise DataFormatError, "#{line}"
+      raise DataFormatError, "\"#{line}\", but need #{exp.to_s}"
     end
   end
 
@@ -272,6 +273,7 @@ end
 #
 #============================================================================
 class ObjEvent < AllEvent
+  attr :number
   attr :type
   attr :id              #u16
   attr :obj_code        #u16
@@ -291,13 +293,14 @@ class ObjEvent < AllEvent
 
   def initialize lines, header
     super
+    @number = readEventNumber( lines )
     @type = read(lines, /#type/)
     @id = read(lines, /#ID name/)
     @obj_code = read(lines, /#OBJ CODE Number/)
     @move_code = read(lines, /#MOVE CODE Number/)
     @event_type = read(lines, /#EVENT TYPE Number/)
     @event_flag = read(lines, /#Flag Name/)
-    @event_id = read(lines, "#Event Script Name")
+    @event_id = read(lines, /#Event Script Name/)
     @dir = read(lines, /#Direction Type Number/)
     @param0 = read(lines, /#Parameter 0 Number/)
     @param1 = read(lines, /#Parameter 1 Number/)
