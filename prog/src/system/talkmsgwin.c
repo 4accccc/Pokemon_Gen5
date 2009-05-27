@@ -78,6 +78,17 @@ typedef enum {
 	TAIL_SETPAT_FIX_DR,
 }TAIL_SETPAT;
 
+static u16 texData[8*8*2] = {
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+};
+
 //============================================================================================
 /**
  *
@@ -127,6 +138,9 @@ struct _TALKMSGWIN_SYS{
 	VecFx32								camUpBackUp;
 	VecFx32								camTargetBackUp;
 	fx32									camNearBackUp;
+
+	NNSGfdTexKey					texVramKey;
+	NNSGfdTexKey					plttVramKey;
 };
 
 typedef struct {
@@ -198,6 +212,15 @@ TALKMSGWIN_SYS* TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
 		u32 siz = setupWindowBG(&tmsgwinSys->setup);
 		tmsgwinSys->chrNum = siz/0x20;
 	}
+	//ƒeƒNƒXƒ`ƒƒ‚u‚q‚`‚lŠm•Û
+#if 0
+	{
+		u32 texVramSiz = sizeof(texData);
+		tmsgwinSys->texVramKey = NNS_GfdAllocTexVram(texVramSiz, FALSE, 0);
+		tmsgwinSys->plttVramKey = NNS_GfdAllocPlttVram(16, FALSE, 0);
+	}
+#endif
+
   debugOn = FALSE;
 
 	return tmsgwinSys;
@@ -382,7 +405,7 @@ void TALKMSGWIN_CreateFixWindowAuto(	TALKMSGWIN_SYS* tmsgwinSys,
 
 	NNS_G3dWorldPosToScrPos(pTarget, &targetx, &targety);
 
-	if( targety < 96 ){ 
+	if( targety < (96+16) ){ 
 		TALKMSGWIN_CreateFixWindowLower(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx);
 	} else {
 		TALKMSGWIN_CreateFixWindowUpper(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx);

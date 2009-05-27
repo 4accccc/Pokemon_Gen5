@@ -171,7 +171,7 @@ EL_SCOREBOARD* ELBOARD_Add( const STRBUF* str, const ELB_MODE mode, HEAPID heapI
 	}
 	//ƒeƒNƒXƒ`ƒƒ‚u‚q‚`‚lŠm•Û
 	{
-		u32 texVramSiz = GX_texSizTbl[elb->texSizIdxS].siz * GX_texSizTbl[elb->texSizIdxT].siz;
+		u32 texVramSiz = GX_texSizTbl[elb->texSizIdxS].siz * GX_texSizTbl[elb->texSizIdxT].siz * 2;
 		elb->texVramKey = NNS_GfdAllocTexVram(texVramSiz, FALSE, 0);
 		elb->plttVramKey = NNS_GfdAllocPlttVram(16, FALSE, 0);
 	}
