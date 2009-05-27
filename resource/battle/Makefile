@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	sogabe
+USERS	=	sogabe taya
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -69,7 +69,8 @@ endif
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build: pl_batt_obj.narc $(TARGETDIR)/$(NARCNAME)
+#do-build: pl_batt_obj.narc $(TARGETDIR)/$(NARCNAME)
+do-build: $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
 do-build: $(TARGETDIR)/$(NARCNAME)
 endif
