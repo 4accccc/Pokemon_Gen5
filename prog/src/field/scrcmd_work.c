@@ -27,7 +27,8 @@ struct _TAG_SCRCMD_WORK
 	
 	GFL_MSGDATA *msgData;
 	FLDMSGWIN_STREAM *msgWinStream;
-	
+	VecFx32 talkMsgWinTailPos;
+
 	GFL_TCB *tcb_anm_tbl[SCRCMD_ACMD_MAX];
 };
 
@@ -226,6 +227,32 @@ void SCRCMD_WORK_SetFldMsgWinStream( SCRCMD_WORK *work, FLDMSGWIN_STREAM *msgWin
 FLDMSGWIN_STREAM * SCRCMD_WORK_GetFldMsgWinStream( SCRCMD_WORK *work )
 {
 	return( work->msgWinStream );
+}
+
+//--------------------------------------------------------------
+/**
+ * SCRCMD_WORK 吹き出しウィンドウ用座標セット
+ * @param work SCRCMD_WORK
+ * @param pos セットする座標
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void SCRCMD_WORK_SetTalkMsgWinTailPos(
+    SCRCMD_WORK *work, const VecFx32 *pos )
+{
+  work->talkMsgWinTailPos = *pos;
+}
+
+//--------------------------------------------------------------
+/**
+ * SCRCMD_WORK 吹き出しウィンドウ用座標ポインタ取得
+ * @param work SCRCMD_WORK
+ * @retval VecFx32*
+ */
+//--------------------------------------------------------------
+const VecFx32 * SCRCMD_WORK_GetTalkMsgWinTailPos( SCRCMD_WORK *work )
+{
+  return( &work->talkMsgWinTailPos );
 }
 
 //======================================================================

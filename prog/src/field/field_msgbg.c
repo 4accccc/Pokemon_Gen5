@@ -21,6 +21,9 @@
 
 #include "field/field_msgbg.h"
 
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
+
 //======================================================================
 //	define
 //======================================================================
@@ -1069,6 +1072,7 @@ BOOL FLDMSGPRINT_STREAM_ProcPrint( FLDMSGPRINT_STREAM *stm )
     break;
   case PRINTSTREAM_STATE_PAUSE: //ˆêŽž’âŽ~’†
     if( (trg & PAD_BUTTON_A) ){
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       PRINTSYS_PrintStreamReleasePause( stm->printStream );
       stm->flag_key_trg = FALSE;
     }
@@ -1372,6 +1376,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     break;
   case PRINTSTREAM_STATE_PAUSE: //ˆêŽž’âŽ~’†
     if( (trg & PAD_BUTTON_A) ){
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       PRINTSYS_PrintStreamReleasePause( stream );
       tmsg->flag_key_trg = FALSE;
     }

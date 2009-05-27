@@ -997,7 +997,9 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   VMCMD_SetWait( core, TalkMsgWait );
 	return 1;
 #else
-  const VecFx32 *pos;
+  u16 dir;
+  VecFx32 pos;
+  const VecFx32 *pos_p;
   WORDSET **wordset;
   STRBUF **msgbuf;
   STRBUF **tmpbuf;
@@ -1010,8 +1012,12 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
 	
   fmmdl = FLDMMDLSYS_SearchOBJID( SCRCMD_WORK_GetFldMMdlSys(work), 0xff );
-  pos = FLDMMDL_GetVectorPosAddress( fmmdl );
-  
+  FLDMMDL_GetVectorPos( fmmdl, &pos );
+  dir = FLDMMDL_GetDirDisp( fmmdl );
+  FLDMMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+  SCRCMD_WORK_SetTalkMsgWinTailPos( work, &pos );
+  pos_p = SCRCMD_WORK_GetTalkMsgWinTailPos( work );
+
   {
     wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
     msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
@@ -1021,7 +1027,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   }
   
   tmsg = FLDTALKMSGWIN_AddStrBuf(
-      fparam->msgBG, FLDTALKMSGWIN_IDX_LOWER, pos, *msgbuf );
+      fparam->msgBG, FLDTALKMSGWIN_IDX_AUTO, pos_p, *msgbuf );
   
 	SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
 

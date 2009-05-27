@@ -62,6 +62,10 @@ extern GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetFldMsgWinStream( SCRCMD_WORK *work, FLDMSGWIN_STREAM *msgWin );
 extern FLDMSGWIN_STREAM * SCRCMD_WORK_GetFldMsgWinStream( SCRCMD_WORK *work );
 
+extern void SCRCMD_WORK_SetTalkMsgWinTailPos(
+    SCRCMD_WORK *work, const VecFx32 *pos );
+extern const VecFx32 * SCRCMD_WORK_GetTalkMsgWinTailPos( SCRCMD_WORK *work );
+
 //アニメーションコマンド
 extern void SCRCMD_WORK_SetFldMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb );
 extern BOOL SCRCMD_WORK_CheckFldMMdlAnmTCB( SCRCMD_WORK *work );
