@@ -34,7 +34,7 @@
  *
  */
 //============================================================================================
-#define TALKWIN_MODE (0)
+#define TALKWIN_MODE (1)
 //------------------------------------------------------------------
 /**
  * @brief	定数
@@ -44,11 +44,11 @@
 #define PLTT_SIZ			(16*COL_SIZ)
 
 
-#if TALKWIN_MODE
-#define BACKGROUND_COLOR	(GX_RGB(0,0,0))
-#else
+//#if TALKWIN_MODE
+//#define BACKGROUND_COLOR	(GX_RGB(0,0,0))
+//#else
 #define BACKGROUND_COLOR	(GX_RGB(31,31,31))
-#endif
+//#endif
 #define BACKGROUND_COLIDX (15)
 
 typedef enum {
@@ -143,6 +143,7 @@ static void backupCamera( TALKMSGWIN_SYS* tmsgwinSys );
 static void recoverCamera( TALKMSGWIN_SYS* tmsgwinSys );
 
 static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup );
+static void setBGAlpha( TALKMSGWIN_SYS_SETUP* setup );
 
 static void initWindow( TMSGWIN* tmsgwin );
 static BOOL checkEmptyWindow( TMSGWIN* tmsgwin );
@@ -623,8 +624,7 @@ static void draw3Dwindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		drawTail(&tmsgwin->tailData, tmsgwin->color, tmsgwin->timer, FALSE);
 		break;
 	case WINSEQ_HOLD:
-		//drawTail(&tmsgwin->tailData, tmsgwin->color, tmsgwin->timer, TRUE);
-		drawTail(&tmsgwin->tailData, tmsgwin->color, tmsgwin->timer, FALSE);
+		drawTail(&tmsgwin->tailData, tmsgwin->color, tmsgwin->timer, TRUE);
 		break;
 	}
 }
@@ -886,9 +886,9 @@ static void calcWinVtx( const TMSGWIN*	win,
 {
 	//winをnearクリップ平面状の座標に変換※描画範囲のみ
 	int	px = GFL_BMPWIN_GetPosX(win->bmpwin) * 8;
-	int	py = GFL_BMPWIN_GetPosY(win->bmpwin) * 8;
+	int	py = (GFL_BMPWIN_GetPosY(win->bmpwin)-1) * 8;
 	int	sx = GFL_BMPWIN_GetScreenSizeX(win->bmpwin) * 8;
-	int	sy = GFL_BMPWIN_GetScreenSizeY(win->bmpwin) * 8;
+	int	sy = (GFL_BMPWIN_GetScreenSizeY(win->bmpwin)+2) * 8;
 
 	NNS_G3dScrPosToWorldLine((px + 0),	(py + 0),		pWinVtx0, NULL );
 	NNS_G3dScrPosToWorldLine((px + sx),	(py + 0),		pWinVtx1, NULL );
@@ -1088,6 +1088,7 @@ static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
 																	setup->ini.winPltID * PLTT_SIZ,
 																	PLTT_SIZ,
 																	setup->heapID);
+		setBGAlpha(setup);
 #else
 		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, 
 																	NARC_font_default_nclr,
@@ -1113,6 +1114,59 @@ static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
 																							setup->heapID);
 	return chrSiz;
 }
+
+//------------------------------------------------------------------
+static void setBGAlpha( TALKMSGWIN_SYS_SETUP* setup )
+{
+	int funcType;
+	int plane1;
+	int plane2 = 0x003f;
+	int ev1 = 31;
+	int ev2 = 8;
+
+	switch(setup->ini.frameID){
+	case GFL_BG_FRAME0_M:
+		plane1 = GX_BLEND_PLANEMASK_BG0;
+		funcType = 0;
+		break;
+	case GFL_BG_FRAME1_M:
+		plane1 = GX_BLEND_PLANEMASK_BG1;
+		funcType = 0;
+		break;
+	case GFL_BG_FRAME2_M:
+		plane1 = GX_BLEND_PLANEMASK_BG2;
+		funcType = 0;
+		break;
+	case GFL_BG_FRAME3_M:
+		plane1 = GX_BLEND_PLANEMASK_BG3;
+		funcType = 0;
+		break;
+	case GFL_BG_FRAME0_S:
+		plane1 = GX_BLEND_PLANEMASK_BG0;
+		funcType = 1;
+		break;
+	case GFL_BG_FRAME1_S:
+		plane1 = GX_BLEND_PLANEMASK_BG1;
+		funcType = 1;
+		break;
+	case GFL_BG_FRAME2_S:
+		plane1 = GX_BLEND_PLANEMASK_BG2;
+		funcType = 1;
+		break;
+	case GFL_BG_FRAME3_S:
+		plane1 = GX_BLEND_PLANEMASK_BG3;
+		funcType = 1;
+		break;
+	}
+	plane2 &= (plane1^0xffff);
+
+	if(funcType == 0){
+		G2_SetBlendAlpha(plane1, plane2, ev1, ev2);
+	} else {
+		G2S_SetBlendAlpha(plane1, plane2, ev1, ev2);
+	}
+}
+
 
 //------------------------------------------------------------------
 #define FLIP_H (0x0400)
@@ -1183,6 +1237,8 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 		}
 	}
 	//tail接続領域
+#if TALKWIN_MODE
+#else
 	{
 		u16	nullChr = (wplt | SPC_CHR+chrOffs);
 
@@ -1233,6 +1289,7 @@ static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 			break;
 		}
 	}
+#endif
 	GFL_BG_LoadScreenReq(frameID);
 }
 
