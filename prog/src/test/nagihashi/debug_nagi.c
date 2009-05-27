@@ -118,7 +118,6 @@ typedef struct
 typedef struct 
 {
 	GFL_FONT*				  p_font;
-  PRINT_STREAM*     p_printstream;
   PRINT_QUE*        p_print_que;
   PRINT_UTIL        print_util;
 } MSG_WORK;
@@ -193,7 +192,6 @@ static void MSG_Exit( MSG_WORK *p_wk );
 static BOOL MSG_Main( MSG_WORK *p_wk );
 static PRINT_UTIL * MSG_GetPrintUtil( MSG_WORK *p_wk, GFL_BMPWIN*	p_bmpwin );
 static GFL_FONT*	MSG_GetFont( const MSG_WORK *cp_wk );
-static PRINT_STREAM * MSG_GetPrintStream( const MSG_WORK *cp_wk );
 static PRINT_QUE* MSG_GetPrintQue( const MSG_WORK *cp_wk );
 //LISTFUNC
 typedef void (*LISTDATA_FUNCTION)( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -467,7 +465,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 		break;
 
 	case SEQ_FADEIN_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
 		*p_seq	= SEQ_FADEIN_WAIT;
 		break;
 
@@ -561,7 +559,8 @@ static void CreateTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk, HEAPID heapID )
 
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( sc_bgcnt_frame[GRAPHIC_BG_FRAME_TEXT],
 			1, 1, 30, 10, 0, GFL_BMP_CHRAREA_GET_B );
-	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+	GFL_BMPWIN_MakeScreen( p_wk->p_bmpwin );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(p_wk->p_bmpwin) );
 
 	LIST_Init( &p_wk->list, sc_list_data_home, NELEMS(sc_list_data_home), 
 			&p_wk->msg, p_wk->p_bmpwin, heapID );
@@ -740,6 +739,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 
 	// VRAMバンク設定
 	GFL_DISP_SetBank( &sc_vramSetTable );
+	GX_SetBankForLCDC(GX_VRAM_LCDC_B);	//Capture用
 
 	// ディスプレイON
 	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
@@ -781,6 +781,7 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 	GF_ASSERT( p_wk->is_init );
 
 	GFL_TCB_DeleteTask( p_wk->p_tcb );
+	GX_ResetCapture();
 
 	GRAPHIC_3D_Exit( &p_wk->g3d );
 	GRAPHIC_BG_Exit( &p_wk->gbg );
@@ -835,7 +836,7 @@ static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work )
 
 	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
                       GX_CAPTURE_MODE_AB,			   // Capture mode
-                      GX_CAPTURE_SRCA_2D3D,						 // Blend src A
+                      GX_CAPTURE_SRCA_3D,						 // Blend src A
                       GX_CAPTURE_SRCB_VRAM_0x00000,     // Blend src B
                       GX_CAPTURE_DEST_VRAM_B_0x00000,   // Output VRAM
                       14,             // Blend parameter for src A
@@ -1267,20 +1268,6 @@ static PRINT_UTIL * MSG_GetPrintUtil( MSG_WORK *p_wk, GFL_BMPWIN*	p_bmpwin )
 static GFL_FONT*	MSG_GetFont( const MSG_WORK *cp_wk )
 {	
 	return cp_wk->p_font;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	PRINTSTREAMを取得
- *
- *	@param	const MSG_WORK *cp_wk		ワーク
- *
- *	@return	PRINTSTREAM
- */
-//-----------------------------------------------------------------------------
-static PRINT_STREAM * MSG_GetPrintStream( const MSG_WORK *cp_wk )
-{	
-	return cp_wk->p_printstream;
 }
 
 //----------------------------------------------------------------------------
