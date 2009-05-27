@@ -203,7 +203,7 @@ FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID )
 
 void FIELD_COMM_FUNC_DataReset( FIELD_COMM_FUNC *commFunc )
 {
-  if( GFL_NET_IsInit() && INFOWIN_IsInitComm() == FALSE )
+  if( GFL_NET_IsInit() )
   {
     commFunc->isInitCommSystem_ = TRUE;
   }

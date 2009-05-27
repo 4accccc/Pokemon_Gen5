@@ -464,7 +464,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCCOMPATIBLE );
 	GRAPHIC_BG_Init( &p_wk->bg, HEAPID_IRCCOMPATIBLE );
 
-	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, HEAPID_IRCCOMPATIBLE );
+	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, NULL, HEAPID_IRCCOMPATIBLE );
 	
 	BUTTON_Init( &p_wk->btn, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BTN],
 			sc_btn_setp_tbl, NELEMS(sc_btn_setp_tbl), &p_wk->msg, p_wk->bg.frame_char, IRC_MENU_BG_PAL_M_01, HEAPID_IRCCOMPATIBLE );

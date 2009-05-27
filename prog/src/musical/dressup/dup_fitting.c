@@ -368,7 +368,7 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
   DUP_FIT_SetupPokemon( work );
   DUP_FIT_SetupItem( work );
   
-  INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,initWork->heapId);
+  INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,NULL,initWork->heapId);
   work->vBlankTcb = GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
   
   //フェードないので仮処理

@@ -831,11 +831,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 		_modeInit(pWork);
 
 		{
-			INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , pWork->heapID);
-			if( INFOWIN_IsInitComm() == TRUE )
-			{
-				GFL_NET_ReloadIcon();
-			}
+			INFOWIN_Init( _SUBSCREEN_BGPLANE , _SUBSCREEN_PALLET , NULL , pWork->heapID);
 		}
 		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );

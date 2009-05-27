@@ -730,15 +730,7 @@ const BOOL  FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys, GAMESYS
     }
     break;
   case 1:
-    if( INFOWIN_IsInitComm() == TRUE )
-    {
-      INFOWIN_ExitComm();
-      commSys->menuSeq_++;
-    }
-    else
-    {
-      commSys->menuSeq_ = 3;
-    }
+    commSys->menuSeq_ = 3;
     break;
   case 2:
     if( GFL_NET_IsExit() == TRUE )
@@ -825,15 +817,7 @@ const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COM
     }
     break;
   case 1:
-    if( INFOWIN_IsInitComm() == TRUE )
-    {
-      INFOWIN_ExitComm();
-      commSys->menuSeq_++;
-    }
-    else
-    {
-      commSys->menuSeq_ = 3;
-    }
+    commSys->menuSeq_ = 3;
     break;
   case 2:
     if( GFL_NET_IsExit() == TRUE )

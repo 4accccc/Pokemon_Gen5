@@ -714,6 +714,13 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
     work->isDispCursor = TRUE;
     work->isUpdateCursor = TRUE;
     GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
+
+    if( trg & PAD_BUTTON_B || 
+        trg & PAD_BUTTON_X )
+    {
+      work->isCancel = TRUE;
+      work->state = FMS_EXIT_INIT;
+    }
     return;
   }
   
@@ -759,14 +766,14 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
     }
   }
   else
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B || 
-      GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  if( trg & PAD_BUTTON_B || 
+      trg & PAD_BUTTON_X )
   {
     work->isCancel = TRUE;
     work->state = FMS_EXIT_INIT;
   }
   else
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  if( trg & PAD_BUTTON_A )
   {
     work->isCancel = FALSE;
     work->state = FMS_EXIT_INIT;

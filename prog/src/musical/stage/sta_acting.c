@@ -208,7 +208,7 @@ ACTING_WORK*  STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
 
   work->scriptSys = STA_SCRIPT_InitSystem( work->heapId , work );
   
-  INFOWIN_Init( ACT_FRAME_SUB_INFO,ACT_PAL_INFO,work->heapId);
+  INFOWIN_Init( ACT_FRAME_SUB_INFO,ACT_PAL_INFO,NULL,work->heapId);
 
   //フェードないので仮処理
   GX_SetMasterBrightness(0);  

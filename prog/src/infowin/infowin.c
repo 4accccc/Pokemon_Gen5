@@ -98,6 +98,7 @@ enum
 	
 	INFOWIN_REFRESH_MASK = 0x003F,
 	INFOWIN_DISP_MASK = 0x0700,
+	INFOWIN_BIT_MASK = 0xFFFF,
 	INFOWIN_FLG_NULL = 0x0000,
 };
 
@@ -154,6 +155,7 @@ typedef struct
 	u16	isRefresh;
 	u8	bgplane;
 	u8	pltNo;
+	GAME_COMM_SYS_PTR commSys;
 	
 	//時計
 	BOOL	isDispColon;
@@ -171,17 +173,6 @@ typedef struct
 	GFL_TCB *vblankFunc;
 }INFOWIN_WORK;
 
-//通信系ワーク
-typedef struct
-{
-	INFOWIN_COMM_STATE commState;
-	//beacon
-	u16		beaconCnt;		//beaconを取得している時間
-	u16		restartSeq;
-	BOOL	isRestart;
-
-}INFOWIN_COMM_WORK;
-
 //======================================================================
 //	proto
 //======================================================================
@@ -192,27 +183,18 @@ static	void	INFOWIN_SetPltFunc( const u8 pltPos , const u16 *col , const u8 num 
 static	void	INFOWIN_InitBg( u8 bgplane , u8 pltNo, HEAPID heapId );
 static	void	INFOWIN_UpdateTime(void);
 
-static const BOOL	INFOWIN_IsStartComm( void );
-
-static	void	INFOWIN_StartCommFunc( void );
-static	void	INFOWIN_StopCommFunc( void );
-static	void	INFOWIN_WaitCommInitCallBack(void* pWork);
-static	void	INFOWIN_WaitCommExitCallBack(void* pWork);
-static	void	INFOWIN_UpdateSearchBeacon( void );
-
-//ビーコンスキャン中の電源節約のため、接続しなおす関数bynagihashi
-static void INFOWIN_ReStartCommMain( void );
+static inline void INFOWIN_SetBit( const u16 bit );
+static inline void INFOWIN_ResetBit( const u16 bit );
 
 
 INFOWIN_WORK *infoWk = NULL;
-INFOWIN_COMM_WORK *infoCommWk = NULL;
-
 //初期化
 //	@param bgplane	BG面
 //	@param bgOfs	NCGの読み込むVRAMアドレス(0x1000必要)
 //	@param pltNo	パレット番号(1本必要)
+//	@param commSys	通信システム
 //	@param heapId	ヒープID
-void	INFOWIN_Init( const u8 bgplane , const u8 pltNo , const HEAPID heapId )
+void	INFOWIN_Init( const u8 bgplane , const u8 pltNo , GAME_COMM_SYS_PTR commSys , const HEAPID heapId )
 {
 	GF_ASSERT_MSG(infoWk == NULL ,"Infobar is initialized!!\n");
 	
@@ -221,6 +203,13 @@ void	INFOWIN_Init( const u8 bgplane , const u8 pltNo , const HEAPID heapId )
 	
 	infoWk->bgplane = bgplane;
 	infoWk->pltNo = pltNo;
+	infoWk->commSys = commSys;
+	if( infoWk->commSys == NULL )
+	{
+    OS_TPrintf("--------------------------------------\n");
+    OS_TPrintf("InfoWin GAME_COMM_SYS_PTR is NULL !!!!\n");
+    OS_TPrintf("--------------------------------------\n");
+  }
 	INFOWIN_InitBg( bgplane,pltNo,heapId );
 	
 	infoWk->vblankFunc = GFUser_VIntr_CreateTCB( INFOWIN_VBlankFunc , (void*)infoWk , 1 );
@@ -251,8 +240,7 @@ void	INFOWIN_Update( void )
 	//バッテリー
 	infoWk->batteryCnt++;
 	if(	infoWk->batteryCnt > 200 )
-
-	{
+  {
 		PMBattery buf;
 		if( PM_GetBattery(&buf) == PM_RESULT_SUCCESS )
 		{
@@ -271,16 +259,68 @@ void	INFOWIN_Update( void )
 #endif //DEBUG_LO_BATTERY_VOLUME_UP
 		}
 	}
-
-	if( INFOWIN_IsInitComm() == TRUE )
+	
+	//通信系の更新
+	if( infoWk->commSys != NULL )
 	{
-		if( INFOWIN_IsStartComm() == TRUE )
-		{
-			INFOWIN_UpdateSearchBeacon();
-		}
-		//リスタート処理
-		INFOWIN_ReStartCommMain();
-	}
+    const GAME_COMM_STATUS state = GameCommSys_GetCommStatus( infoWk->commSys );
+    
+    //ワイヤレス
+    if( state == GAME_COMM_STATUS_WIRELESS )
+    {
+      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == FALSE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
+        INFOWIN_SetBit(INFOWIN_DISP_BEACON);
+      }
+    }
+    else
+    {
+      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == TRUE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
+        INFOWIN_ResetBit(INFOWIN_DISP_BEACON);
+      }
+    }
+      
+    //IRC
+    if( state == GAME_COMM_STATUS_IRC )
+    {
+      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_IR) == FALSE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_IR);
+        INFOWIN_SetBit(INFOWIN_DISP_IR);
+      }
+    }
+    else
+    {
+      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_IR) == TRUE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_IR);
+        INFOWIN_ResetBit(INFOWIN_DISP_IR);
+      }
+    }
+    
+    //Wifi
+    if( state == GAME_COMM_STATUS_IRC )
+    {
+      if( infoWk->wifiState == IWS_DISABLE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_WIFI);
+        infoWk->wifiState = IWS_ENABLE;
+      }
+    }
+    else
+    {
+      if( infoWk->wifiState != IWS_DISABLE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_WIFI);
+        infoWk->wifiState = IWS_DISABLE;
+      }
+    }
+    
+  }
+	
 }
 
 void	INFOWIN_Exit( void )
@@ -301,7 +341,8 @@ static	void	INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
 
 	if( infoWk == NULL )
 		return;
-		
+	
+	//時計の更新
 	if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_TIME) )
 	{
 		u8 i;
@@ -345,6 +386,7 @@ static	void	INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
 		transReq = TRUE;
 	}
 	
+	//G-SYNCの更新
 	if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_GPF_SYNC) )
 	{
 		static const u16 GPFSYNC_TOP_CHAR[2] = {0x20,0x20};
@@ -365,6 +407,7 @@ static	void	INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
 		
 	}
 	
+	//赤外線の更新
 	if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_IR) )
 	{
 		static const u16 IR_TOP_CHAR[2] = {0x48,0x48};
@@ -385,6 +428,7 @@ static	void	INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
 		
 	}
 	
+	//Wi-Fiの更新
 	if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_WIFI) )
 	{
 		static const u16 WIFI_TOP_CHAR[IWS_MAX] = {0x28,0x28,0x28,0x28,0x28};
@@ -407,6 +451,7 @@ static	void	INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
 		
 	}
 	
+	//ワイヤレスの更新
 	if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_BEACON) )
 	{
 		static const u16 BEACON_TOP_CHAR[2] = {0x2C,0x2C};
@@ -427,6 +472,7 @@ static	void	INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
 		
 	}
 	
+	//バッテリーの更新
 	if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_BATTERY) )
 	{
 		static const u16 BATTERY_TOP_CHAR[4] = {0x40,0x41,0x42,0x43};
@@ -544,301 +590,12 @@ static	void	INFOWIN_UpdateTime(void)
   }
 }
 
-#pragma mark [>comm func
-
-//InfoWinの通信処理が初期化されたか？
-const BOOL INFOWIN_IsInitComm( void )
+static inline void INFOWIN_SetBit( const u16 bit )
 {
-	if( infoCommWk == NULL )
-	{
-		return FALSE;
-	}
-	else
-	{
-		return TRUE;
-	}
+  infoWk->isRefresh = infoWk->isRefresh|bit;
 }
 
-//実際通信しているか？
-static const BOOL	INFOWIN_IsStartComm( void )
+static inline void INFOWIN_ResetBit( const u16 bit )
 {
-	if( infoCommWk->commState==ICS_STOP || 
-	 		infoCommWk->commState==ICS_WAIT_FINISH )
-	{
-		return FALSE;
-	}
-	else
-	{
-		return TRUE;
-	}
-	
-}
-
-void	INFOWIN_InitComm( const HEAPID heapId )
-{
-	if( infoCommWk != NULL )
-	{
-		OS_TPrintf("Infobar comm is started!!\n");
-		return;
-	}
-	
-	infoCommWk = GFL_HEAP_AllocClearMemory( heapId , sizeof(INFOWIN_COMM_WORK) );
-	infoCommWk->commState = ICS_STOP;
-
-	INFOWIN_StartCommFunc();
-}
-
-static	void	INFOWIN_StartCommFunc( void )
-{
-	if( infoCommWk->commState!=ICS_STOP )
-	{
-		OS_TPrintf("Infobar comm is started!!\n");
-		return;
-	}
-	{
-		GFLNetInitializeStruct aGFLNetInit = {
-			NULL,		//NetSamplePacketTbl,  // 受信関数テーブル
-			0,			// 受信テーブル要素数
-			NULL,		///< ハードで接続した時に呼ばれる
-			NULL,		///< ネゴシエーション完了時にコール
-			NULL,		// ユーザー同士が交換するデータのポインタ取得関数
-			NULL,		// ユーザー同士が交換するデータのサイズ取得関数
-			NULL,		// ビーコンデータ取得関数  
-			NULL,		// ビーコンデータサイズ取得関数 
-			NULL,		// ビーコンのサービスを比較して繋いで良いかどうか判断する
-			NULL,		// 通信不能なエラーが起こった場合呼ばれる
-			NULL,		//FatalError
-			NULL,		// 通信切断時に呼ばれる関数(終了時
-			NULL,		// オート接続で親になった場合
-	#if GFL_NET_WIFI
-			NULL,		///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
-			NULL,		///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-			NULL,		///< wifiフレンドリスト削除コールバック
-			NULL,		///< DWC形式の友達リスト	
-			NULL,		///< DWCのユーザデータ（自分のデータ）
-			0,			///< DWCへのHEAPサイズ
-			TRUE,		///< デバック用サーバにつなぐかどうか
-	#endif  //GFL_NET_WIFI
-			0x444,		//ggid  DP=0x333,RANGER=0x178,WII=0x346
-			GFL_HEAPID_APP,		//元になるheapid
-			HEAPID_NETWORK + HEAPDIR_MASK,		//通信用にcreateされるHEAPID
-			HEAPID_WIFI + HEAPDIR_MASK,		//wifi用にcreateされるHEAPID
-			HEAPID_NETWORK + HEAPDIR_MASK,		//
-			GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
-			4,//_MAXNUM,	//最大接続人数
-			48,//_MAXSIZE,	//最大送信バイト数
-			4,//_BCON_GET_NUM,  // 最大ビーコン収集数
-			TRUE,		// CRC計算
-			FALSE,		// MP通信＝親子型通信モードかどうか
-			GFL_NET_TYPE_WIRELESS_SCANONLY,		//通信タイプの指定
-			TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
-			WB_NET_FIELDMOVE_SERVICEID,	//GameServiceID
-	#if GFL_NET_IRC
-			IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
-	#endif
-			};
-			
-		GFL_NET_Init( &aGFLNetInit , INFOWIN_WaitCommInitCallBack , (void*)infoCommWk );	
-	}
-
-	infoCommWk->commState = ICS_WAIT_INIT;
-}
-
-
-void	INFOWIN_ExitComm( void )
-{
-	if( infoCommWk == NULL )
-	{
-		OS_TPrintf("Infobar comm is stoped!!\n");
-		return;
-	}
-	
-	INFOWIN_StopCommFunc();
-	
-	GFL_HEAP_FreeMemory( infoCommWk );
-	infoCommWk = NULL;
-}
-
-static	void	INFOWIN_StopCommFunc( void )
-{
-	if( infoCommWk->commState == ICS_STOP )
-	{
-		OS_TPrintf("Infobar comm is stoped!!\n");
-		return;
-	}
-
-	if( INFOWIN_IsStartComm() )
-	{
-		GFL_NET_Exit(INFOWIN_WaitCommExitCallBack);
-		infoCommWk->commState = ICS_WAIT_FINISH;
-	}
-}
-
-
-static void	INFOWIN_WaitCommInitCallBack(void* pWork)
-{
-	infoCommWk->commState = ICS_FINISH_INIT;
-}
-
-
-static void	INFOWIN_WaitCommExitCallBack(void* pWork)
-{
-	if( infoCommWk != NULL )
-	{
-		infoCommWk->commState = ICS_STOP;
-	}
-}
-
-//--------------------------------------------------------------
-//	ビーコンの捜索
-//--------------------------------------------------------------
-static	void INFOWIN_UpdateSearchBeacon( void )
-{
-#if 0 //origin
-	u8 bcnIdx = 0;
-	int targetIdx = -1;
-	void *bcnData;
-	BOOL flg = FALSE;
-
-	if( infoCommState == ICS_FINISH_INIT )
-	{
-		infoCommState = ICS_SCAN_BEACON;
-		GFL_NET_StartBeaconScan();
-	}
-
-	while( GFL_NET_GetBeaconData(bcnIdx) != NULL )
-	{
-		bcnData = GFL_NET_GetBeaconData( bcnIdx );
-		flg = TRUE;
-		bcnIdx++;
-	}
-	
-	if( flg != INFOWIN_CHECK_BIT( infoWk->isRefresh , INFOWIN_DISP_BEACON ) )
-	{
-		if( flg == TRUE )
-		{
-			infoWk->isRefresh |= INFOWIN_DISP_BEACON;
-			ARI_TPrintf("INFO:beacon is find!\n");
-		}
-		else
-		{
-			infoWk->isRefresh -= INFOWIN_DISP_BEACON;
-			ARI_TPrintf("INFO:beacon is lost!\n");
-		}
-		infoWk->isRefresh |= INFOWIN_REFRESH_BEACON;
-	}
-#else	//電源節約処理を入れました090406nagihashi
-	u8 bcnIdx = 0;
-	int targetIdx = -1;
-	void *bcnData;
-	BOOL flg = FALSE;
-
-	//ビーコンスキャン開始
-	if( infoCommWk->commState == ICS_FINISH_INIT )
-	{
-		infoCommWk->commState = ICS_SCAN_BEACON;
-		GFL_NET_StartBeaconScan();
-		NAGI_Printf("●ビーコン開始\n");
-	}
-
-	//ビーコンスキャン時の操作
-	if( infoCommWk->commState == ICS_SCAN_BEACON )
-	{
-		//ビーコンスキャンをするカウント
-		if( infoCommWk->beaconCnt++ >= INFOWIN_BEACON_SCAN_SYNC ){
-			infoCommWk->beaconCnt	= 0;
-			//時間がたったらネットリスタート
-			infoCommWk->isRestart	= TRUE;
-			NAGI_Printf("●ネットリスタート\n");
-		}
-		
-
-		//以下、ビーコンチェック
-		while( GFL_NET_GetBeaconData(bcnIdx) != NULL )
-		{
-			bcnData = GFL_NET_GetBeaconData( bcnIdx );
-			flg = TRUE;
-			bcnIdx++;
-		}
-		
-		if( infoWk != NULL )
-		{
-			if( flg != INFOWIN_CHECK_BIT( infoWk->isRefresh , INFOWIN_DISP_BEACON ) )
-			{
-				if( flg == TRUE )
-				{
-					infoWk->isRefresh |= INFOWIN_DISP_BEACON;
-					ARI_TPrintf("INFO:beacon is find!\n");
-				}
-				else
-				{
-					infoWk->isRefresh &= 0xffff ^ INFOWIN_DISP_BEACON;
-					ARI_TPrintf("INFO:beacon is lost!\n");
-				}
-				infoWk->isRefresh |= INFOWIN_REFRESH_BEACON;
-			}
-		}
-	}
-
-#endif
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	リスタートメイン処理処理
- *
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static void INFOWIN_ReStartCommMain( void )
-{
-	enum{
-		SEQ_STOP_NET_REQ,
-		SEQ_STOP_NET_WAIT,
-		SEQ_WAIT_SYNC,
-		SEQ_START_NET_REQ,
-		SEQ_START_NET_WAIT,
-	};
-
-	//リスタートリクエストがでたら開始
-	if( infoCommWk->isRestart ){
-
-		switch( infoCommWk->restartSeq ){
-		//電源節約のためネット停止
-		case SEQ_STOP_NET_REQ:
-			INFOWIN_StopCommFunc();
-			infoCommWk->restartSeq++;
-			break;
-
-		case SEQ_STOP_NET_WAIT:
-			if( INFOWIN_IsStartComm() == FALSE ){
-				infoCommWk->restartSeq++;
-			}
-			break;
-
-		//電源節約時間
-		case SEQ_WAIT_SYNC:
-			if( infoCommWk->beaconCnt++ >= INFOWIN_BEACON_WAIT_SYNC ){
-				infoCommWk->beaconCnt	= 0;
-				infoCommWk->restartSeq++;
-			}
-			break;
-
-		//ビーコンチェックのためネット接続
-		case SEQ_START_NET_REQ:
-			INFOWIN_StartCommFunc();
-			infoCommWk->restartSeq++;
-			break;
-
-		case SEQ_START_NET_WAIT:
-			if( INFOWIN_IsStartComm() ){
-				infoCommWk->restartSeq	= 0;
-				infoCommWk->isRestart	= FALSE;
-				NAGI_Printf("●ネット再接続\n");
-			}
-			break;
-		}
-	}
+  infoWk->isRefresh = infoWk->isRefresh&(INFOWIN_BIT_MASK-bit);
 }

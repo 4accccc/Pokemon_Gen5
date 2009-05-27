@@ -7,8 +7,9 @@
  */
 //======================================================================
 
-#ifndef INFOWIN_H__
-#define INFOWIN_H__
+#pragma once
+
+#include "gamesystem/game_comm.h"
 
 //======================================================================
 //	define
@@ -32,14 +33,10 @@
 //初期化
 //	@param bgplane	BG面
 //	@param pltNo	パレット番号
+//	@param commSys	通信システム
 //	@param heapId	ヒープID
 //	VramのCharエリアに INFOWIN_CHARAREA_SIZE の空きが必要です
-void	INFOWIN_Init( const u8 bgplane , const u8 pltNo, const HEAPID heapId );
+void	INFOWIN_Init( const u8 bgplane , const u8 pltNo, GAME_COMM_SYS_PTR commSys ,const HEAPID heapId );
 void	INFOWIN_Update( void );
 void	INFOWIN_Exit( void );
 
-void	INFOWIN_InitComm( const HEAPID heapId );
-const BOOL	INFOWIN_IsInitComm( void );
-void	INFOWIN_ExitComm( void );
-
-#endif //INFOWIN_H__
