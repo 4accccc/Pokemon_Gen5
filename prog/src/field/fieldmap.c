@@ -1547,11 +1547,13 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
     #endif
   }
   
+#if 0
 	//座標接続チェック
 	event = fldmap_Event_CheckConnect(gsys, fieldWork, &fieldWork->now_pos);
 	if( event != NULL ){
 		return event;
 	}
+#endif
 	
 	//キー入力接続チェック
 	event = fldmap_Event_CheckPushConnect(gsys, fieldWork);
