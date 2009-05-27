@@ -79,9 +79,10 @@ enum NetworkServiceID_e {
   WB_NET_COMPATI_CHECK,				///<相性チェック（テスト版）
   WB_NET_IRCBATTLE,               ///< IRC>WIRELESS>接続
   WB_NET_WIFILOBBY,                 ///<WIFI広場
-	WB_NET_IRCCOMPATIBLE,			///相性チェックメニュー
+	WB_NET_IRCCOMPATIBLE,			///相性チェック
 	WB_NET_IRCAURA,					///相性チェック オーラチェック
 	WB_NET_IRCRHYTHM,				///相性チェック　RHYTHMチェック
+	WB_NET_IRCMENU,				///相性チェック　RHYTHMチェック
   WB_NET_SERVICEID_MAX   // 終端
 };
 
@@ -105,9 +106,10 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_COMPATI_CHECK = (WB_NET_COMPATI_CHECK<<8),	///<相性チェック（テスト版）
   GFL_NET_CMD_IRCBATTLE = (WB_NET_IRCBATTLE<<8),  ///< IRC>WIRELESS>接続
   GFL_NET_CMD_WIFILOBBY = (WB_NET_WIFILOBBY<<8),			///<WIFI広場
-	GFL_NET_CMD_IRCCOMPATIBLE	= (WB_NET_IRCCOMPATIBLE<<8),	///<相性チェックメニュー
+	GFL_NET_CMD_IRCCOMPATIBLE	= (WB_NET_IRCCOMPATIBLE<<8),	///<相性チェック
 	GFL_NET_CMD_IRCAURA	= (WB_NET_IRCAURA<<8),	///<相性チェック　オーラチェック
 	GFL_NET_CMD_IRCRHYTHM	= (WB_NET_IRCRHYTHM<<8),	///<相性チェック　リズムチェック
+	GFL_NET_CMD_IRCMENU	= (WB_NET_IRCMENU<<8),	///<相性チェック　メニュー
 };
 
 

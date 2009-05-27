@@ -774,6 +774,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 
 	p_wk	= p_work;
 
+#if 0
 	//次のプロック予約
 	if( p_wk->is_next_proc )
 	{	
@@ -786,6 +787,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 			GAMESYSTEM_SetNextProc( p_wk->p_param->p_gamesys, FS_OVERLAY_ID(irc_result), &IrcResult_ProcData,p_wk->p_param );
 		}
 	}
+#endif
 
 	//デバッグ破棄
 	DEBUGPRINT_Close();
@@ -1907,6 +1909,8 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	{	
 		SEQ_SENDRESULT,
 		SEQ_CALC,
+		SEQ_END,
+#if 0
 		SEQ_FADEIN_START,
 		SEQ_FADEIN_WAIT,
 		SEQ_FADEOUT_START,
@@ -1915,6 +1919,7 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_ONLYRESULT_MAIN,
 		SEQ_ONLYRESULT_EXIT,
 		SEQ_NEXTPROC,
+#endif
 	};
 
 	switch( *p_seq )
@@ -1928,9 +1933,14 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_CALC:
 		p_wk->p_param->score	= CalcScore( p_wk );
-		*p_seq	= SEQ_FADEIN_START;
+	//	*p_seq	= SEQ_FADEIN_START;
+		*p_seq	= SEQ_END;
 		break;
 
+	case SEQ_END:
+		SEQ_End( p_wk );
+		break;
+#if 0
 	case SEQ_FADEIN_START:
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
 		*p_seq	= SEQ_FADEIN_WAIT;
@@ -1983,6 +1993,7 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		p_wk->is_next_proc	= TRUE;
 		SEQ_End( p_wk );
 		break;
+#endif
 	}
 #endif //DEBUG_ONLY_PLAY
 	TouchMarker_Main( p_wk );
@@ -2158,11 +2169,21 @@ static BOOL RHYTHMNET_SendResultData( RHYTHMNET_WORK *p_wk, const RHYTHMSEARCH_W
 		break;
 
 	case 1:
-		if( COMPATIBLE_IRC_SendDataEx( p_wk->p_irc, NETRECV_RESULT,
-					sizeof(RHYTHMSEARCH_WORK), &p_wk->result_send, FALSE, FALSE, TRUE ) )
 		{	
-			NAGI_Printf( "結果データ送信完了、相手待ち\n" );
-			p_wk->seq	= 2;
+			NetID	netID;
+			netID	= GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+			if( netID == 0 )
+			{	
+				netID	= 1;
+			}else{	
+				netID	= 0;
+			}
+			if( COMPATIBLE_IRC_SendDataEx( p_wk->p_irc, NETRECV_RESULT,
+					sizeof(RHYTHMSEARCH_WORK), &p_wk->result_send, netID, FALSE, FALSE, TRUE ) )
+			{	
+				NAGI_Printf( "結果データ送信完了、相手待ち\n" );
+				p_wk->seq	= 2;
+			}
 		}
 		break;
 

@@ -751,6 +751,7 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 
 	p_wk	= p_work;
 
+#if 0
 	//次のプロック予約
 	if( p_wk->is_next_proc )
 	{	
@@ -763,6 +764,7 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 			GAMESYSTEM_SetNextProc( p_wk->p_param->p_gamesys, FS_OVERLAY_ID(irc_result), &IrcResult_ProcData,p_wk->p_param );
 		}
 	}
+#endif
 
 	//デバッグ破棄
 	DEBUGPRINT_Close();
@@ -2228,6 +2230,8 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	enum{	
 		SEQ_SENDRESULT,
 		SEQ_CALC,
+		SEQ_END,
+#if 0
 		SEQ_FADEIN_START,
 		SEQ_FADEIN_WAIT,
 		SEQ_FADEOUT_START,
@@ -2237,6 +2241,7 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_ONLYRESULT_EXIT,
 
 		SEQ_NEXTPROC,
+#endif 
 	};
 	AURANET_RESULT_DATA result;
 
@@ -2255,9 +2260,15 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_CALC:
 		p_wk->p_param->score	= CalcScore( p_wk );
-		*p_seq	= SEQ_FADEIN_START;
+	//	*p_seq	= SEQ_FADEIN_START;
+		*p_seq	= SEQ_END;
 		break;
 
+	case SEQ_END:
+		SEQ_End( p_wk );
+		break;
+
+#if 0
 	case SEQ_FADEIN_START:
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
 		*p_seq	= SEQ_FADEIN_WAIT;
@@ -2312,6 +2323,7 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		p_wk->is_next_proc	= TRUE;
 		SEQ_End( p_wk );
 		break;
+#endif
 	}
 
 #endif //DEBUG_ONLY_PLAY
@@ -2364,26 +2376,44 @@ static void AURANET_Exit( AURANET_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL AURANET_SendResultData( AURANET_WORK *p_wk, const AURANET_RESULT_DATA *cp_data )
 {	
+	enum
+	{	
+		SEQ_BUFF_SAVE,
+		SEQ_SEND_DATA,
+		SEQ_RECV_WAIT,
+	};
+
 	switch( p_wk->seq )
 	{	
-	case 0:
+	case SEQ_BUFF_SAVE:
 		p_wk->result_send	= *cp_data;
-		p_wk->seq = 1;
+		p_wk->seq = SEQ_SEND_DATA;
 		NAGI_Printf( "結果データ送信開始\n" );
 		break;
 
-	case 1:
-		if( COMPATIBLE_IRC_SendDataEx( p_wk->p_irc, NETRECV_RESULT,
-					sizeof(AURANET_RESULT_DATA), &p_wk->result_send, FALSE, FALSE, TRUE ) )
+	case SEQ_SEND_DATA:
 		{	
-			NAGI_Printf( "結果データ送信完了、相手待ち\n" );
-			p_wk->seq	= 2;
+			NetID	netID;
+			netID	= GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+			if( netID == 0 )
+			{	
+				netID	= 1;
+			}else{	
+				netID	= 0;
+			}
+			if( COMPATIBLE_IRC_SendDataEx( p_wk->p_irc, NETRECV_RESULT,
+					sizeof(AURANET_RESULT_DATA), &p_wk->result_send, netID, FALSE, FALSE, TRUE ) )
+			{	
+				NAGI_Printf( "結果データ送信完了、相手待ち\n" );
+				p_wk->seq	= SEQ_RECV_WAIT;
+			}
 		}
 		break;
 
-	case 2:
+	case SEQ_RECV_WAIT:
 		if( p_wk->is_recv )
 		{
+			NAGI_Printf( "結果データ受信完了\n" );
 			p_wk->is_recv	= FALSE;
 			p_wk->seq	= 0;
 			return TRUE;

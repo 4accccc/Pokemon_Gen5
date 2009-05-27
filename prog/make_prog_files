@@ -535,6 +535,10 @@ SRCS_OVERLAY_COMPATI_CHECK = net_app/compatible/compati_check.c \
 SRCS_OVERLAY_IRC_COMPATIBLE	= net_app/irc_compatible/compatible_irc_sys.c \
 															net_app/irc_compatible/irc_compatible.c
 
+#赤外線ミニゲームメニュー
+#===> SRCS_OVERLAY_IRC_COMPATIBLE
+SRCS_OVERLAY_IRC_MENU	= net_app/irc_menu/irc_menu.c
+
 #赤外線オーラチェック
 #===> SRCS_OVERLAY_IRC_COMPATIBLE
 SRCS_OVERLAY_IRC_AURA	= net_app/irc_aura/irc_aura_main.c

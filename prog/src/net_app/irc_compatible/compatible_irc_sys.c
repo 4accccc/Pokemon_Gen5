@@ -399,6 +399,7 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 
 	switch(p_sys->seq){
 	case SEQ_DISCONNECT_START:
+#if 0
 		if(GFL_NET_IsParentMachine() == TRUE)
 		{
 			IRC_Print("親機：GFL_NET_CMD_EXIT_REQ送信\n");
@@ -411,11 +412,19 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 		{
 			p_sys->seq	= SEQ_DISCONNECT_WAIT;
 		}
+#else
+		//相手を終わらせてしまうので、MENUのNETが解放されなくなってしまう
+		//自分だけ終わるためExitをよぶ
+		if( GFL_NET_Exit(NULL) )
+		{	
+			p_sys->seq	= SEQ_DISCONNECT_WAIT;
+		}
+#endif
 //		break;
 //	fall through
 
 	case SEQ_DISCONNECT_WAIT:
-		if( !p_sys->is_connect ){
+		if( !p_sys->is_connect || GFL_NET_IsExit() ){
 			p_sys->seq = SEQ_DISCONNECT_END;
 		}
 		break;
@@ -530,187 +539,6 @@ BOOL COMPATIBLE_IRC_IsError( COMPATIBLE_IRC_SYS *p_sys )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	メニュー決定待ち処理
- *
- *	@param	COMPATIBLE_IRC_SYS *p_sys		ワーク
- *	@param	menu_id		メニューID
- *	@param	ms				ミリ秒
- *
- *	@retval	TRUEならば終了
- *	@ratval	FALSEならば処理中
- */
-//-----------------------------------------------------------------------------
-BOOL COMPATIBLE_IRC_SendMenuData( COMPATIBLE_IRC_SYS *p_sys, u32 menu_id, u32 ms )
-{	
-	p_sys->menu_send.menu_data	= menu_id;
-	p_sys->menu_send.ms					= ms;
-
-	if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-				SENDCMD_DECIDEMENU, sizeof(MENU_DECIDE_DATA), &p_sys->menu_send ))
-	{
-		OS_TPrintf("メニュー送信開始\n");
-		return TRUE;
-	}
-	
-	return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	メニュー受信待ち
- *
- *	@param	COMPATIBLE_IRC_SYS *p_sys		ワーク
- *
- *	@retval	TRUEならば終了
- *	@ratval	FALSEならば処理中
- */
-//-----------------------------------------------------------------------------
-BOOL COMPATIBLE_IRC_RecvMenuData( COMPATIBLE_IRC_SYS *p_sys )
-{	
-	if( p_sys->is_recv == TRUE )
-	{
-		OS_TPrintf("メニュー受信完了\n");
-		p_sys->is_recv = FALSE;
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	メニュー情報取得
- *
- *	@param	const COMPATIBLE_IRC_SYS *cp_sys ワーク
- *	@param	p_menu_data	メニューデータうけとり
- *	@param	p_ms				ミリ秒うけとり
- *
- */
-//-----------------------------------------------------------------------------
-void COMPATIBLE_IRC_GetMenuData( const COMPATIBLE_IRC_SYS *cp_sys, u32 *p_menu_data, u32 *p_ms )
-{	
-	if( p_menu_data)
-	{	
-		*p_menu_data	= cp_sys->menu_recv.menu_data;
-	}
-	if( p_ms )
-	{	
-		*p_ms					= cp_sys->menu_recv.ms;
-	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	メニュー受信返答送信
- *
- *	@param	COMPATIBLE_IRC_SYS *p_sys		ワーク
- *
- */
-//-----------------------------------------------------------------------------
-BOOL COMPATIBLE_IRC_SendReturnMenu( COMPATIBLE_IRC_SYS *p_sys )
-{	
-	u32 dummy;
-	if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-				SENDCMD_RETURNMENU, sizeof(u32), &dummy ))
-	{
-		return TRUE;
-	}
-	
-	return FALSE;
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	メニュー受信返答待ち
- *
- *	@param	COMPATIBLE_IRC_SYS *p_sys		ワーク
- *
- *	@retval	TRUEならば終了
- *	@ratval	FALSEならば処理中
- */
-//-----------------------------------------------------------------------------
-BOOL COMPATIBLE_IRC_RecvReturnMenu( COMPATIBLE_IRC_SYS *p_sys )
-{	
-	if( p_sys->is_return == TRUE )
-	{
-		p_sys->is_return = FALSE;
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	PROC開始待ち処理
- *
- *	@param	COMPATIBLE_IRC_SYS *p_sys		ワーク
- *	@param	menu_id		メニューID
- *	@param	ms				ミリ秒
- *
- *	@retval	TRUEならば終了
- *	@ratval	FALSEならば処理中
- */
-//-----------------------------------------------------------------------------
-BOOL COMPATIBLE_IRC_WaitStartProcTiming( COMPATIBLE_IRC_SYS *p_sys )
-{	
-	enum
-	{	
-		SEQ_PROC_START,
-		SEQ_PROC_WAIT,
-		SEQ_PROC_END,
-	};
-
-	switch( p_sys->seq )
-	{	
-	case SEQ_PROC_START:
-		if( GFL_NET_IsParentMachine() )
-		{	
-			p_sys->random	= GFUser_GetPublicRand(3);
-			OS_TPrintf( "親ランダム生成 %d\n", p_sys->random );
-		}
-		p_sys->seq	= SEQ_PROC_WAIT;
-		break;
-
-	case SEQ_PROC_WAIT:
-		if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-					SENDCMD_STARTPROC, sizeof(u32), &p_sys->random ))
-		{
-			OS_TPrintf("メニュー送信開始\n");
-			p_sys->seq	= SEQ_PROC_END;
-		}
-		break;
-
-	case SEQ_PROC_END:
-		if( p_sys->is_start )
-		{	
-			OS_TPrintf( "ランダム決定 %d\n", p_sys->random );
-			p_sys->is_start	= FALSE;
-			p_sys->seq			= 0;
-			return TRUE;
-		}
-		break;
-	
-	}
-	
-	return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	ランダム取得
- *
- *	@param	const COMPATIBLE_IRC_SYS *cp_sys	ワーク
- *
- *	@return	ランダム
- */
-//-----------------------------------------------------------------------------
-u32 COMPATIBLE_IRC_GetRandom( const COMPATIBLE_IRC_SYS *cp_sys )
-{	
-	return cp_sys->random;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief	転送処理
  *
  *	@param	COMPATIBLE_IRC_SYS *p_sys	ワーク
@@ -735,6 +563,7 @@ BOOL COMPATIBLE_IRC_SendData( COMPATIBLE_IRC_SYS *p_sys, u16 send_command, u16 s
  *	@param	send_command							送信コマンド
  *	@param	size											サイズ
  *	@param	void *cp_data							データ
+ *	@param	sendID										送る相手	GFL_NET_SENDID_ALLUSER
  *	@param	BOOL b_fast								（通常はFALSE）
  *	@param	BOOL b_repeat							（通常はFALSE）
  *	@param	BOOL b_send_buff_lock			大きいデータを送り、バッファを自分で保持する場合TRUE
@@ -743,9 +572,9 @@ BOOL COMPATIBLE_IRC_SendData( COMPATIBLE_IRC_SYS *p_sys, u16 send_command, u16 s
  *	@ratval	FALSEならば送信できなかった
  */
 //-----------------------------------------------------------------------------
-BOOL COMPATIBLE_IRC_SendDataEx( COMPATIBLE_IRC_SYS *p_sys, u16 send_command, u16 size, const void *cp_data, const BOOL b_fast, const BOOL b_repeat, const BOOL b_send_buff_lock )
+BOOL COMPATIBLE_IRC_SendDataEx( COMPATIBLE_IRC_SYS *p_sys, u16 send_command, u16 size, const void *cp_data, const NetID sendID, const BOOL b_fast, const BOOL b_repeat, const BOOL b_send_buff_lock )
 {	
-	return GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER,
+	return GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), sendID,
 			send_command, size, cp_data, b_fast, b_repeat, b_send_buff_lock );
 }
 //----------------------------------------------------------------------------
@@ -778,6 +607,7 @@ void COMPATIBLE_IRC_DelCommandTable( COMPATIBLE_IRC_SYS *p_sys, int cmdkindID )
 {	
 	GFL_NET_DelCommandTable( cmdkindID );
 }
+
 //=============================================================================
 /**
  *		network_setup_callback

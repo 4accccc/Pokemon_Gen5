@@ -467,7 +467,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 		break;
 
 	case SEQ_FADEIN_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
 		*p_seq	= SEQ_FADEIN_WAIT;
 		break;
 
@@ -485,7 +485,6 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 		GF_ASSERT_MSG( 0, "DEBUG_PROC_NAGI_Main‚ÌSEQƒGƒ‰[ %d", *p_seq );
 	}
 
-	GRAPHIC_Draw( &p_wk->grp );
 	MainTemporaryModules( p_wk );
 
 	return GFL_PROC_RES_CONTINUE;
@@ -602,6 +601,7 @@ static void MainTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk )
 	if( p_wk->is_temp_modules )
 	{	
 		MSG_Main( &p_wk->msg );
+		GRAPHIC_Draw( &p_wk->grp );
 	}
 }
 //=============================================================================
@@ -786,6 +786,7 @@ static void GRAPHIC_Exit( GRAPHIC_WORK* p_wk )
 	GRAPHIC_BG_Exit( &p_wk->gbg );
 
 	p_wk->is_init	= FALSE;
+	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
 }
 
 //----------------------------------------------------------------------------
@@ -937,6 +938,7 @@ static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
 
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K,
 			GFL_G3D_VMANLNK, GFL_G3D_PLT32K, 0, heapID, Graphic_3d_SetUp );
+
 	p_wk->p_camera = GFL_G3D_CAMERA_CreatePerspective( CAMERA_PER_FOVY, CAMERA_PER_ASPECT,
 				CAMERA_PER_NEAR, CAMERA_PER_FER, CAMERA_PER_SCALEW, 
 				&sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
@@ -1230,7 +1232,7 @@ static void MSG_Exit( MSG_WORK *p_wk )
 static BOOL MSG_Main( MSG_WORK *p_wk )
 {	
 	if( PRINTSYS_QUE_Main( p_wk->p_print_que ) )
-	{	
+	{
 		return PRINT_UTIL_Trans( &p_wk->print_util, p_wk->p_print_que );
 	}
 

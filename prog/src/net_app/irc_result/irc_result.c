@@ -1916,7 +1916,8 @@ static void SEQFUNC_DecideHeart( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_NEXTPROC:
-		SEQ_Change( p_wk, SEQFUNC_HeartEffect );
+		//SEQ_Change( p_wk, SEQFUNC_HeartEffect );
+		SEQ_End( p_wk );
 		break;
 	}
 }
@@ -2096,7 +2097,7 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_MEMO_QUESTION:
-		{	
+/*		{	
 			u8	rnd	= p_wk->p_param->random;
 			if( p_wk->p_param->score < 40 )
 			{	
@@ -2111,7 +2112,7 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 				MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_MAIN], &p_wk->msg, RESULT_GOOD_000 + rnd );
 			}
 		}
-		*p_seq	= SEQ_WAIT;
+	*/	*p_seq	= SEQ_WAIT;
 		break;
 
 	case SEQ_WAIT:

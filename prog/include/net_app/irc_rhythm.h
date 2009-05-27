@@ -21,10 +21,8 @@
 ///	PROCÇ…ìnÇ∑ÉpÉâÉÅÅ[É^
 //=====================================
 typedef struct {
-	GAMESYS_WORK				*p_gamesys;
 	COMPATIBLE_IRC_SYS	*p_irc;
 	u8									score;
-	u8									random;
 }IRC_RHYTHM_PARAM;
 
 
