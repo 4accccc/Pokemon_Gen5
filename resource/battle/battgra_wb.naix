@@ -11,21 +11,17 @@
 #define NARC_BATTGRA_WB_NAIX_
 
 enum {
-	NARC_battgra_wb_batt_bg1_NCGR = 0,
-	NARC_battgra_wb_batt_bg1_NSCR = 1,
-	NARC_battgra_wb_batt_bg2_NCGR = 2,
-	NARC_battgra_wb_batt_bg2_NSCR = 3,
-	NARC_battgra_wb_batt_bg_NCLR = 4,
-	NARC_battgra_wb_batt_bg01_nsbmd = 5,
-	NARC_battgra_wb_batt_field01_nsbmd = 6,
-	NARC_battgra_wb_batt_field02_nsbmd = 7,
-	NARC_battgra_wb_batt_stage01_nsbmd = 8,
-	NARC_battgra_wb_batt_stage01_nsbca = 9,
-	NARC_battgra_wb_batt_stage02_nsbmd = 10,
-	NARC_battgra_wb_batt_stage02_nsbca = 11,
-	NARC_battgra_wb_batt_stage03_nsbmd = 12,
-	NARC_battgra_wb_shadow_NCBR = 13,
-	NARC_battgra_wb_shadow_NCLR = 14
+	NARC_battgra_wb_batt_bg01_nsbmd = 0,
+	NARC_battgra_wb_batt_field01_nsbmd = 1,
+	NARC_battgra_wb_batt_field02_nsbmd = 2,
+	NARC_battgra_wb_batt_stage01_nsbmd = 3,
+	NARC_battgra_wb_batt_stage01_nsbca = 4,
+	NARC_battgra_wb_batt_stage02_nsbmd = 5,
+	NARC_battgra_wb_batt_stage02_nsbca = 6,
+	NARC_battgra_wb_batt_stage03_nsbmd = 7,
+	NARC_battgra_wb_shadow_NCLR = 8,
+	NARC_battgra_wb_msgwin_frm_NCGR = 9,
+	NARC_battgra_wb_msgwin_frm_NCLR = 10
 };
 
 /* NARC_BATTGRA_WB_NAIX_ */
