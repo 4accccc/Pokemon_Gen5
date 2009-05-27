@@ -109,7 +109,9 @@ static void mapCtrlGrid_Create(
 	
 	{ //Ž©‹@ì¬
 		FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+    FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
 		u16 dir4 = grid_ChangeFourDir( dir );
+    FLDMMDL_SetDirDisp( fmmdl, dir4 );
 		gridWork->gridPlayer = FIELD_PLAYER_GRID_Init( fld_player, heapID );
 	}
 	
