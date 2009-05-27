@@ -302,11 +302,27 @@ void	BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID w
 {
 	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 	int	*start_ofs;
+  int table_ofs;
 	bevw->attack_pos = from;
 	bevw->defence_pos = to;
 	bevw->camera_projection = BTLEFF_CAMERA_PROJECTION_PERSPECTIVE;
 	bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, bevw->heapID );
-	start_ofs = (int *)&bevw->sequence[ script_table[ from ][ to ] ] ;
+  if( ( from != BTLV_MCSS_POS_ERROR ) && ( to != BTLV_MCSS_POS_ERROR ) )
+  { 
+    table_ofs = script_table[ from ][ to ];
+    GF_ASSERT( table_ofs != TBL_ERROR );
+    if( table_ofs == TBL_ERROR )
+    { 
+      table_ofs = TBL_AA2BB;
+    }
+  }
+  else
+  { 
+    table_ofs = TBL_AA2BB;
+  }
+
+  start_ofs = (int *)&bevw->sequence[ table_ofs ];
+
 	VM_Start( vmh, &bevw->sequence[ start_ofs[ 0 ] ] );
 }
 
