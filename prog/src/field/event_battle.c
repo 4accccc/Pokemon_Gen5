@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	event_battle.c
- * @brief	イベント：フィールドバトル
- * @author	tamada GAMEFREAK inc.
- * @date	2008.01.19
+ * @file  event_battle.c
+ * @brief イベント：フィールドバトル
+ * @author  tamada GAMEFREAK inc.
+ * @date  2008.01.19
  */
 //======================================================================
 #include <gflib.h>
@@ -35,7 +35,7 @@ extern const GFL_PROC_DATA DebugSogabeMainProcData;
 //======================================================================
 //  define
 //======================================================================
-#define	HEAPID_CORE GFL_HEAPID_APP
+#define HEAPID_CORE GFL_HEAPID_APP
 
 //======================================================================
 //  OVERLAY
@@ -49,10 +49,10 @@ FS_EXTERN_OVERLAY(battle);
 /// DEBUG_BATTLE_WORK
 //--------------------------------------------------------------
 typedef struct {
-	GAMESYS_WORK * gsys;
-	FIELD_MAIN_WORK * fieldmap;
-	BATTLE_SETUP_PARAM para;
-	u16 timeWait;
+  GAMESYS_WORK * gsys;
+  FIELD_MAIN_WORK * fieldmap;
+  BATTLE_SETUP_PARAM para;
+  u16 timeWait;
 }DEBUG_BATTLE_WORK;
 
 //======================================================================
@@ -81,58 +81,60 @@ const u32 data_EncountPoke200905Max;
 //--------------------------------------------------------------
 GMEVENT * EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
 {
-	GMEVENT * event;
-	BATTLE_SETUP_PARAM * para;
-	DEBUG_BATTLE_WORK * dbw;
-  
-	event = GMEVENT_Create(
+  GMEVENT * event;
+  BATTLE_SETUP_PARAM * para;
+  DEBUG_BATTLE_WORK * dbw;
+
+  event = GMEVENT_Create(
       gsys, NULL, fieldBattleEvent, sizeof(DEBUG_BATTLE_WORK) );
 
-	dbw = GMEVENT_GetEventWork(event);
-	dbw->gsys = gsys;
-	dbw->fieldmap = fieldmap;
-	para = &dbw->para;
-  
-	{
-		para->engine = BTL_ENGINE_ALONE;
-		para->rule = BTL_RULE_SINGLE;
-		para->competitor = BTL_COMPETITOR_WILD;
-    
-		para->netHandle = NULL;
-		para->commMode = BTL_COMM_NONE;
-		para->commPos = 0;
-		para->netID = 0;
-    
+  dbw = GMEVENT_GetEventWork(event);
+  dbw->gsys = gsys;
+  dbw->fieldmap = fieldmap;
+  para = &dbw->para;
+
+  {
+    para->engine = BTL_ENGINE_ALONE;
+    para->rule = BTL_RULE_SINGLE;
+    para->competitor = BTL_COMPETITOR_WILD;
+
+    para->netHandle = NULL;
+    para->commMode = BTL_COMM_NONE;
+    para->commPos = 0;
+    para->netID = 0;
+
     //プレイヤーのパーティ
-		para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );
-		PokeParty_Copy(
+    para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );
+    PokeParty_Copy(
         GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)),
         para->partyPlayer);
 
     //1vs1時の敵AI, 2vs2時の１番目敵AI用
-		para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );
+    para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );
     {
       u32 pokeNo200905 = GFUser_GetPublicRand(data_EncountPoke200905Max);
   //  u32 pokeNo = MONSNO_ARUSEUSU+1;
       u32 pokeNo = data_EncountPoke200905[pokeNo200905];
-		  PokeParty_Add( para->partyEnemy1,
+      PokeParty_Add( para->partyEnemy1,
         PP_Create(pokeNo,15,3594,HEAPID_CORE) );
     }
 
     //2vs2時の味方AI（不要ならnull）
-		para->partyPartner = NULL;
+    para->partyPartner = NULL;
     //2vs2時の２番目敵AI用（不要ならnull）
-		para->partyEnemy2 = NULL;
+    para->partyEnemy2 = NULL;
+    //
+    para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
     //デフォルト時のBGMナンバー
     para->musicDefault = SEQ_WB_BA_TEST_250KB;
     //ピンチ時のBGMナンバー
     para->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;
 
-		dbw->timeWait = 0;
-	}
+    dbw->timeWait = 0;
+  }
 
-	return event;
+  return event;
 }
 
 //--------------------------------------------------------------
@@ -147,68 +149,68 @@ GMEVENT * EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
 static GMEVENT_RESULT fieldBattleEvent(
     GMEVENT * event, int *  seq, void * work )
 {
-	DEBUG_BATTLE_WORK * dbw = work;
-	GAMESYS_WORK * gsys = dbw->gsys;
-	
+  DEBUG_BATTLE_WORK * dbw = work;
+  GAMESYS_WORK * gsys = dbw->gsys;
+
   switch (*seq) {
-	case 0:
-		// サウンドテスト
-		// ＢＧＭ一時停止→退避
-		PMSND_PauseBGM(TRUE);
-		PMSND_PushBGM();
-     
-		// サウンドテスト
-		// 戦闘用ＢＧＭセット
-		PMSND_PlayBGM(dbw->para.musicDefault);
-    
+  case 0:
+    // サウンドテスト
+    // ＢＧＭ一時停止→退避
+    PMSND_PauseBGM(TRUE);
+    PMSND_PushBGM();
+
+    // サウンドテスト
+    // 戦闘用ＢＧＭセット
+    PMSND_PlayBGM(dbw->para.musicDefault);
+
     //エンカウントエフェクト
     GMEVENT_CallEvent( event,
         EVENT_FieldEncountEffect(gsys,dbw->fieldmap) );
     (*seq)++;
     break;
   case 1:
-		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
-		(*seq)++;
-		break;
-	case 2:
-		GAMESYSTEM_CallProc(
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+    (*seq)++;
+    break;
+  case 2:
+    GAMESYSTEM_CallProc(
         gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
-		(*seq)++;
-		break;
-	case 3:
-		if (GAMESYSTEM_IsProcExists(gsys)) break;
-		// サウンドテスト
-		// 戦闘ＢＧＭフェードアウト
-		dbw->timeWait = 60;
-		PMSND_FadeOutBGM(60);
-		(*seq) ++;
-		break;
-	case 4:
-		if(dbw->timeWait){
-			dbw->timeWait--;
-		} else {
-			(*seq) ++;
-		}
-		break;
-	case 5:
-		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-		// サウンドテスト
-		// ＢＧＭ取り出し→再開
-		PMSND_PopBGM();
-		PMSND_PauseBGM(FALSE);
-		PMSND_FadeInBGM(60);
-		//
-		(*seq) ++;
-		break;
-	case 6:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
-		(*seq) ++;
-		break;
-	case 7:
-		return GMEVENT_RES_FINISH;
-	}
+    (*seq)++;
+    break;
+  case 3:
+    if (GAMESYSTEM_IsProcExists(gsys)) break;
+    // サウンドテスト
+    // 戦闘ＢＧＭフェードアウト
+    dbw->timeWait = 60;
+    PMSND_FadeOutBGM(60);
+    (*seq) ++;
+    break;
+  case 4:
+    if(dbw->timeWait){
+      dbw->timeWait--;
+    } else {
+      (*seq) ++;
+    }
+    break;
+  case 5:
+    GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+    // サウンドテスト
+    // ＢＧＭ取り出し→再開
+    PMSND_PopBGM();
+    PMSND_PauseBGM(FALSE);
+    PMSND_FadeInBGM(60);
+    //
+    (*seq) ++;
+    break;
+  case 6:
+    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
+    (*seq) ++;
+    break;
+  case 7:
+    return GMEVENT_RES_FINISH;
+  }
 
-	return GMEVENT_RES_CONTINUE;
+  return GMEVENT_RES_CONTINUE;
 }
 
 //======================================================================
@@ -224,53 +226,53 @@ static GMEVENT_RESULT fieldBattleEvent(
 //--------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
 {
-	GMEVENT * event;
-	BATTLE_SETUP_PARAM * para;
-	DEBUG_BATTLE_WORK * dbw;
-  
-	event = GMEVENT_Create(
+  GMEVENT * event;
+  BATTLE_SETUP_PARAM * para;
+  DEBUG_BATTLE_WORK * dbw;
+
+  event = GMEVENT_Create(
       gsys, NULL, DebugBattleEvent, sizeof(DEBUG_BATTLE_WORK) );
 
-	dbw = GMEVENT_GetEventWork(event);
-	dbw->gsys = gsys;
-	dbw->fieldmap = fieldmap;
-	para = &dbw->para;
+  dbw = GMEVENT_GetEventWork(event);
+  dbw->gsys = gsys;
+  dbw->fieldmap = fieldmap;
+  para = &dbw->para;
 
-	{
-		para->engine = BTL_ENGINE_ALONE;
-		para->rule = BTL_RULE_SINGLE;
-		para->competitor = BTL_COMPETITOR_WILD;
-    
-		para->netHandle = NULL;
-		para->commMode = BTL_COMM_NONE;
-		para->commPos = 0;
-		para->netID = 0;
-    
+  {
+    para->engine = BTL_ENGINE_ALONE;
+    para->rule = BTL_RULE_SINGLE;
+    para->competitor = BTL_COMPETITOR_WILD;
+
+    para->netHandle = NULL;
+    para->commMode = BTL_COMM_NONE;
+    para->commPos = 0;
+    para->netID = 0;
+
     //プレイヤーのパーティ
-		para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );
-		PokeParty_Copy(
+    para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );
+    PokeParty_Copy(
         GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)),
         para->partyPlayer);
 
     //1vs1時の敵AI, 2vs2時の１番目敵AI用
-		para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );
-		PokeParty_Add( para->partyEnemy1,
+    para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );
+    PokeParty_Add( para->partyEnemy1,
         PP_Create(MONSNO_ARUSEUSU+1,15,3594,HEAPID_CORE) );
 
     //2vs2時の味方AI（不要ならnull）
-		para->partyPartner = NULL;
+    para->partyPartner = NULL;
     //2vs2時の２番目敵AI用（不要ならnull）
-		para->partyEnemy2 = NULL;
+    para->partyEnemy2 = NULL;
 
     //デフォルト時のBGMナンバー
     para->musicDefault = SEQ_WB_BA_TEST_250KB;
     //ピンチ時のBGMナンバー
     para->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;
 
-		dbw->timeWait = 0;
-	}
+    dbw->timeWait = 0;
+  }
 
-	return event;
+  return event;
 }
 
 //--------------------------------------------------------------
@@ -285,72 +287,72 @@ GMEVENT * DEBUG_EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
 static GMEVENT_RESULT DebugBattleEvent(
     GMEVENT * event, int *  seq, void * work )
 {
-	DEBUG_BATTLE_WORK * dbw = work;
-	GAMESYS_WORK * gsys = dbw->gsys;
+  DEBUG_BATTLE_WORK * dbw = work;
+  GAMESYS_WORK * gsys = dbw->gsys;
 #if 0
-	switch (*seq) {
-	case 0:
-		GMEVENT_CallEvent(event,
-				EVENT_FieldSubProc(dbw->gsys, dbw->fieldmap,
-					FS_OVERLAY_ID(battle), &BtlProcData, &(dbw->para))
-				);
-		(*seq) ++;
-		break;
-	case 1:
-		return GMEVENT_RES_FINISH;
-	}
+  switch (*seq) {
+  case 0:
+    GMEVENT_CallEvent(event,
+        EVENT_FieldSubProc(dbw->gsys, dbw->fieldmap,
+          FS_OVERLAY_ID(battle), &BtlProcData, &(dbw->para))
+        );
+    (*seq) ++;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
 #endif
-	switch (*seq) {
-	case 0:
-		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+  switch (*seq) {
+  case 0:
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
     // サウンドテスト
-		// ＢＧＭ一時停止→退避
-		PMSND_PauseBGM(TRUE);
-		PMSND_PushBGM();
-		(*seq)++;
-		break;
-	case 1:
-		GAMESYSTEM_CallProc(
+    // ＢＧＭ一時停止→退避
+    PMSND_PauseBGM(TRUE);
+    PMSND_PushBGM();
+    (*seq)++;
+    break;
+  case 1:
+    GAMESYSTEM_CallProc(
         gsys, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para);
-	  // サウンドテスト
-		// 戦闘用ＢＧＭセット
-		PMSND_PlayBGM(dbw->para.musicDefault);
-		(*seq)++;
-		break;
-	case 2:
-		if (GAMESYSTEM_IsProcExists(gsys)) break;
-		// サウンドテスト
-		// 戦闘ＢＧＭフェードアウト
-		dbw->timeWait = 60;
-		PMSND_FadeOutBGM(60);
-		(*seq) ++;
-		break;
-	case 3:
-		if(dbw->timeWait){
-			dbw->timeWait--;
-		} else {
-			(*seq) ++;
-		}
-		break;
-	case 4:
-		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-		// サウンドテスト
-		// ＢＧＭ取り出し→再開
-		PMSND_PopBGM();
-		PMSND_PauseBGM(FALSE);
-		PMSND_FadeInBGM(60);
-		//
-		(*seq) ++;
-		break;
-	case 5:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
-		(*seq) ++;
-		break;
-	case 6:
-		return GMEVENT_RES_FINISH;
-	}
+    // サウンドテスト
+    // 戦闘用ＢＧＭセット
+    PMSND_PlayBGM(dbw->para.musicDefault);
+    (*seq)++;
+    break;
+  case 2:
+    if (GAMESYSTEM_IsProcExists(gsys)) break;
+    // サウンドテスト
+    // 戦闘ＢＧＭフェードアウト
+    dbw->timeWait = 60;
+    PMSND_FadeOutBGM(60);
+    (*seq) ++;
+    break;
+  case 3:
+    if(dbw->timeWait){
+      dbw->timeWait--;
+    } else {
+      (*seq) ++;
+    }
+    break;
+  case 4:
+    GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+    // サウンドテスト
+    // ＢＧＭ取り出し→再開
+    PMSND_PopBGM();
+    PMSND_PauseBGM(FALSE);
+    PMSND_FadeInBGM(60);
+    //
+    (*seq) ++;
+    break;
+  case 5:
+    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
+    (*seq) ++;
+    break;
+  case 6:
+    return GMEVENT_RES_FINISH;
+  }
 
-	return GMEVENT_RES_CONTINUE;
+  return GMEVENT_RES_CONTINUE;
 }
 
 //======================================================================
