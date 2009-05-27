@@ -91,6 +91,7 @@ static const char * getRailName(const FIELD_RAIL * rail);
 static void getRailPosition(const FIELD_RAIL * rail, VecFx32 * pos);
 static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit );
 static RAIL_KEY setLine(FIELD_RAIL * rail, const RAIL_LINE * line, RAIL_KEY key, int l_ofs, int w_ofs, int l_ofs_max);
+static void setLineData(FIELD_RAIL * rail, const RAIL_LINE * line, RAIL_KEY key, int l_ofs, int w_ofs, int l_ofs_max);
 
 
 //------------------------------------------------------------------
@@ -237,6 +238,7 @@ void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * loca
 
   if( location->type==FIELD_RAIL_TYPE_POINT )
   {
+    // 点初期化
     rail->type          = FIELD_RAIL_TYPE_POINT;
     rail->point         = man->point_table[ location->rail_index ];
   }
@@ -245,9 +247,11 @@ void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * loca
     u32 line_ofs_max;
     const RAIL_LINE* line;
     
+    // ライン初期化
     line                = man->line_table[ location->rail_index ];
     line_ofs_max        = getLineOfsMax( line, rail->ofs_unit );
-    setLine( rail, line, location->key, location->line_ofs, location->width_ofs, line_ofs_max );
+
+    setLineData( rail, line, location->key, location->line_ofs, location->width_ofs, line_ofs_max );
   }
 }
 
@@ -406,15 +410,24 @@ static RAIL_KEY setLine(FIELD_RAIL * rail, const RAIL_LINE * line, RAIL_KEY key,
     TAMADA_Printf("RAIL: POINT \"%s\" to %s \"%s\"\n",
         rail->point->name, debugGetRailKeyName(key), line->name);
   }
+
+  setLineData( rail, line, key, l_ofs, w_ofs, l_ofs_max );
+
+  debugCheckLineData(line);
+  return key;
+}
+
+// レールシステムにラインの情報を設定する
+static void setLineData(FIELD_RAIL * rail, const RAIL_LINE * line, RAIL_KEY key, int l_ofs, int w_ofs, int l_ofs_max)
+{
+  GF_ASSERT( rail );
+  GF_ASSERT( line );
   rail->type = FIELD_RAIL_TYPE_LINE;
   rail->line = line;
   rail->key = key;
   rail->line_ofs = l_ofs;
   rail->width_ofs = w_ofs;
   rail->line_ofs_max = l_ofs_max;
-
-  debugCheckLineData(line);
-  return key;
 }
 
 //------------------------------------------------------------------

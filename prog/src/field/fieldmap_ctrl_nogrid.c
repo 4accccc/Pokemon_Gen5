@@ -64,6 +64,7 @@ static const RAIL_LINEPOS_SET LoopLinePosSet;
 
 // ƒŒ[ƒ‹î•ñ
 static const RAIL_POINT* pointTable[] = {
+  &point_d02_start_00,
   &point_c03_start,
   &point_c03_start_01,
   &point_bridge1,
@@ -74,7 +75,6 @@ static const RAIL_POINT* pointTable[] = {
   &point_d02_loop_01,
   &point_d02_start_02,
   &point_d02_start_01,
-  &point_d02_start_00,
 };
 static const RAIL_LINE* lineTable[] = {
   &line_d02_loop_03,
