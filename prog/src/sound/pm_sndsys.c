@@ -645,8 +645,7 @@ void	PMSND_SetStatusBGM( int tempoRatio, int pitch, int pan )
 //------------------------------------------------------------------
 BOOL	PMSND_CheckPlayBGM( void )
 {
-	u16 playerNo = SOUNDMAN_GetHierarchyPlayerPlayerNoIdx() + PLAYER_DEFAULT_MAX;
-	int count = NNS_SndPlayerCountPlayingSeqByPlayerNo(playerNo);
+	int count = NNS_SndPlayerCountPlayingSeqBySeqNo(SOUNDMAN_GetHierarchyPlayerSoundIdx());
 
 	if( count ){
 		return TRUE;

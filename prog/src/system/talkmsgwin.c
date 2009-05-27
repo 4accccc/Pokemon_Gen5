@@ -1077,7 +1077,7 @@ static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
 																	PLTT_SIZ,
 																	setup->heapID);
 		GFL_ARC_UTIL_TransVramPalette(ARCID_TALKWIN_TEST, 
-																	NARC_talkwin_test_talkwin_NCLR,
+																	NARC_talkwin_test_talkwin2_NCLR,
 																	paltype,
 																	setup->ini.winPltID * PLTT_SIZ,
 																	PLTT_SIZ,
