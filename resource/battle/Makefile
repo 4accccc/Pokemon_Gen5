@@ -42,11 +42,10 @@ RES_3DDIR = battle_3d/
 #とりあえず直下の*.imdを依存対象とする
 IMDFILE	:= $(wildcard $(RES_3DDIR)*.imd)
 ICAFILE	:= $(wildcard $(RES_3DDIR)*.ica)
+BGNCGFILE := $(wildcard $(RES_BGDIR)*.ncg)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-.SUFFIXES:	.imd.nsbmd.ice.nsbca
-
-#nmcデータからの生成ルール
+.SUFFIXES:	.imd.nsbmd.ice.nsbca.ncg
 
 do-build: $(IMDFILE:.imd=.nsbmd)
 %.nsbmd: %.imd
@@ -55,6 +54,10 @@ do-build: $(IMDFILE:.imd=.nsbmd)
 do-build: $(ICAFILE:.ica=.nsbca)
 %.nsbca: %.ica
 	g3dcvtr $<
+
+do-build: $(BGNCGFILE:.ncg=.NCGR)
+%.NCGR: %.ncg
+	g2dcvtr -bg $<
 
 endif
 
