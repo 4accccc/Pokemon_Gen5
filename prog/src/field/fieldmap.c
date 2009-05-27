@@ -199,6 +199,9 @@ struct _FIELDMAP_WORK
 	void *mapCtrlWork;
 	
 	FIELD_DEBUG_WORK *debugWork;
+
+
+  int firstConnectEventID;
 };
 
 //--------------------------------------------------------------
@@ -554,6 +557,13 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
 
+  if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == TRUE)
+  {
+    GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+    EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
+    fieldWork->firstConnectEventID = 
+      EVENTDATA_SearchConnectIDBySphere(evdata, &fieldWork->now_pos);
+  }
   //フィールドマップ用イベント起動チェックをセットする
   GAMESYSTEM_EVENT_EntryCheckFunc(
       gsys, fldmapFunc_Event_CheckEvent, fieldWork );
@@ -1508,6 +1518,58 @@ static GMEVENT * fldmap_Event_Check_SubScreen(
 }
 
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+static GMEVENT * checkRailExit(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
+{
+  int idx;
+  VecFx32 pos;
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+  EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
+
+  if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == FALSE) return NULL;
+  FIELD_RAIL_MAN_GetPos(fieldWork->railMan, &pos);
+  idx = EVENTDATA_SearchConnectIDBySphere(evdata, &pos);
+  if (fieldWork->firstConnectEventID == idx) return NULL;
+  if (idx == EXIT_ID_NONE)
+  {
+    fieldWork->firstConnectEventID = idx;
+    return NULL;
+  }
+
+  {
+		LOCATION loc_req;
+    const CONNECT_DATA * cnct;
+    cnct = EVENTDATA_GetConnectByID(evdata, idx);
+	
+		CONNECTDATA_SetNextLocation(cnct, &loc_req);
+		return EVENT_ChangeMap(gsys, fieldWork, &loc_req);
+  }
+#if 0
+	//マップ遷移発生の場合、出入口を記憶しておく
+	{
+		LOCATION ent_loc;
+		LOCATION_Set(
+				&ent_loc, fieldWork->map_id, idx, 0,
+				now_pos->x, now_pos->y, now_pos->z);
+		GAMEDATA_SetEntranceLocation(gamedata, &ent_loc);
+	}
+#endif
+
+#if 0
+	if (CONNECTDATA_IsSpecialExit(cnct)) {
+		//特殊接続先が指定されている場合、記憶しておいた場所に飛ぶ
+		const LOCATION * sp = GAMEDATA_GetSpecialLocation(gamedata);
+		return EVENT_ChangeMap(gsys, fieldWork, sp);
+	}else{
+		LOCATION loc_req;
+		CONNECTDATA_SetNextLocation(cnct, &loc_req);
+		return EVENT_ChangeMap(gsys, fieldWork, &loc_req);
+	}
+#endif
+
+}
+
+//--------------------------------------------------------------
 /**
  * イベント　イベント起動チェック
  * @param	gsys GAMESYS_WORK
@@ -1586,6 +1648,12 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 	}
 #endif
 	
+  //レールの場合のマップ遷移チェック
+  event = checkRailExit(gsys, fieldWork);
+  if( event != NULL ){
+    return event;
+  }
+
 	//キー入力接続チェック
 	event = fldmap_Event_CheckPushConnect(gsys, fieldWork);
 	if( event != NULL ){
@@ -1807,7 +1875,7 @@ static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 	
 	if( nextBGM != 0 ){
 		if( PMSND_GetNextBGMsoundNo() != nextBGM ){
-			PMSND_PlayNextBGM_EX( nextBGM, trackBit, 30, 0 );
+			PMSND_PlayNextBGM_EX( nextBGM, trackBit, 60, 0 );
 		}
 	}
 }

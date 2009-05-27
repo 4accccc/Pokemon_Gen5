@@ -89,9 +89,44 @@ typedef struct {
 #include "../../../resource/fldmapdata/eventdata/zone_t02evc.cdat"
 #include "../../../resource/fldmapdata/eventdata/zone_t02pc0101evc.cdat"
 
+#define DOOR_ID_T01R0301_EXIT01 0
 //生成したイベントデータを全部インクルード
 #include "../../../resource/fldmapdata/eventdata/eventdata_table.cdat"
 
+
+static const CONNECT_DATA ConnectData_H01[] = {
+	{//DOOR_ID_H01_EXIT01 = 0
+		{559, 0, 2143},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT01,
+		2,//direction
+		0 //type
+	},
+	{//DOOR_ID_H01_EXIT02 = 1
+		{703, 0, 128},
+		ZONE_ID_C03, 0,
+		2,//direction
+		0 //type
+	},
+};
+static const int ConnectCount_H01 = NELEMS(ConnectData_H01);
+
+static const CONNECT_DATA ConnectData_C03[] = {
+	{//DOOR_ID_C03_EXIT01 = 0
+		{1101, 0, 493},
+		ZONE_ID_H01, 1 /* DOOR_ID_H01_EXIT01*/,
+		2,//direction
+		0 //type
+	},
+#if 0
+	{//DOOR_ID_C03_EXIT02 = 1
+		{703, 0, 128},
+		ZONE_ID_T01, DOOR_ID_T01_EXIT02
+		2,//direction
+		0 //type
+	},
+#endif
+};
+static const int ConnectCount_C03 = NELEMS(ConnectData_C03);
 
 //============================================================================================
 //============================================================================================
@@ -158,8 +193,6 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0101;
 		evdata->npc_data = SampleFldMMdlHeader_t01r0101;
 		break;
-  case ZONE_ID_T01R0102:
-    break;
 	case ZONE_ID_T01R0201:
 		evdata->npc_count = SampleFldMMdlHeaderCount_t01r0201;
 		evdata->npc_data = SampleFldMMdlHeader_t01r0201;
@@ -176,6 +209,14 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 		evdata->npc_count = SampleFldMMdlHeaderCount_t02pc0101;
 		evdata->npc_data = SampleFldMMdlHeader_t02pc0101;
 		break;
+ case ZONE_ID_H01:
+    evdata->connect_count = ConnectCount_H01;
+    evdata->connect_data = ConnectData_H01;
+    break;
+ case ZONE_ID_C03:
+    evdata->connect_count = ConnectCount_C03;
+    evdata->connect_data = ConnectData_C03;
+    break;
 	}
 }
 
@@ -324,16 +365,17 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
   enum { HIT_RANGE = FX32_ONE * 10 };
 	int i;
 	int x,y,z;
-  fx32 len;
+  VecFx32 check;
+
 	const CONNECT_DATA * cnct = evdata->connect_data;
 	x = FX_Whole(sphere->x) - OFS_X;
 	y = FX_Whole(sphere->y) - OFS_Y;
 	z = FX_Whole(sphere->z) - OFS_Z;
+
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
+    VEC_Set(&check, cnct->pos.x * FX32_ONE, cnct->pos.y * FX32_ONE, cnct->pos.z * FX32_ONE);
+    if (VEC_Distance(&check, sphere) > HIT_RANGE) continue;
 #if 0
-		OS_Printf("CNCT:x,y,z=%d,%d,%d\n",
-				FX_Whole(cnct->pos.x),FX_Whole(cnct->pos.y),FX_Whole(cnct->pos.z));
-#endif
     {
       fx32 lx = x - cnct->pos.x;
       fx32 ly = y - cnct->pos.y;
@@ -341,6 +383,7 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
       fx32 len = FX_Sqrt(FX_Mul(lx,lx) + FX_Mul(ly,ly) + FX_Mul(lz, lz));
       if (len > HIT_RANGE) continue;
     }
+#endif
 		OS_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
 		OS_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,sphere->x, y,sphere->y, z,sphere->z);
 		return i;
