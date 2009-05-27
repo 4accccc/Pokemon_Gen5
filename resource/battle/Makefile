@@ -38,6 +38,8 @@ RES_BGDIR = battle_bg/
 RES_OBJDIR = battle_obj/
 RES_3DDIR = battle_3d/
 
+#コンバータ
+NITRO_COMP = ../../tools/nitro_comp
 
 #とりあえず直下の*.imdを依存対象とする
 IMDFILE	:= $(wildcard $(RES_3DDIR)*.imd)
@@ -74,7 +76,7 @@ endif
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 pl_batt_obj.narc:
-	nitro_comp $(NITROSDK_ROOT) batt_obj.lst pl_batt_obj.narc pl_batt_obj.naix
+	$(NITRO_COMP) $(NITROSDK_ROOT) batt_obj.lst pl_batt_obj.narc pl_batt_obj.naix
 	$(COPY) pl_batt_obj.narc platinum_data/
 	$(COPY) pl_batt_obj_*.h platinum_data/
 
