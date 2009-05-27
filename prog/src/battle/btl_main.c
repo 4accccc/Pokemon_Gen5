@@ -923,6 +923,19 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
   return BTL_ESCAPE_MODE_OK;
 }
 
+//=============================================================================================
+/**
+ * プレイヤー情報（セーブデータ）ハンドラを返す
+ *
+ * @param   wk
+ *
+ * @retval  const MYSTATUS*
+ */
+//=============================================================================================
+const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE * wk )
+{
+  return NULL;
+}
 
 //=============================================================================================
 /**

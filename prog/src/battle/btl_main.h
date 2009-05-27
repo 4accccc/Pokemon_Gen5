@@ -6,10 +6,10 @@
 #include "btl_common.h"
 #include "btl_pokeparam.h"
 
-typedef struct _BTL_MAIN_MODULE		BTL_MAIN_MODULE;
+typedef struct _BTL_MAIN_MODULE   BTL_MAIN_MODULE;
 
-typedef struct _BTL_PARTY						BTL_PARTY;
-typedef struct _BTL_POKE_CONTAINER	BTL_POKE_CONTAINER;
+typedef struct _BTL_PARTY           BTL_PARTY;
+typedef struct _BTL_POKE_CONTAINER  BTL_POKE_CONTAINER;
 
 extern BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk );
 extern BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk );
@@ -25,6 +25,7 @@ extern BtlSide BTL_MAIN_GetClientSide( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk );
 extern BOOL BTL_MAIN_IsFriendPokeID( const BTL_MAIN_MODULE* wk, u8 pokeID1, u8 pokeID2 );
 extern u8 BTL_MAIN_PokeIDtoClientID( const BTL_MAIN_MODULE* wk, u8 pokeID );
+extern const MYSTATUS* BTL_MAIN_GetPlayerStatus( const BTL_MAIN_MODULE* wk );
 
 //-------------------------
 
@@ -47,7 +48,7 @@ extern void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 );
 
 //-------------------------------------------------------------------------------
 /**
- *	POKEMON_CONTAINER 関連
+ *  POKEMON_CONTAINER 関連
  */
 //-------------------------------------------------------------------------------
 extern BTL_POKEPARAM* BTL_POKECON_GetFrontPokeData( BTL_POKE_CONTAINER* wk, BtlPokePos pos );
@@ -65,22 +66,22 @@ extern const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER*
 
 //-------------------------------------------------------------------------------
 /**
- *	サイドID関連
+ *  サイドID関連
  */
 //-------------------------------------------------------------------------------
 
 static inline BtlSide BTL_MAINUTIL_GetOpponentSide( BtlSide side )
 {
-	GF_ASSERT(side < BTL_SIDE_MAX);
-	return !side;
+  GF_ASSERT(side < BTL_SIDE_MAX);
+  return !side;
 }
 
 static inline BtlPokePos BTL_MAINUTIL_GetSidePos( BtlSide side, u8 idx )
 {
-	GF_ASSERT(side < BTL_SIDE_MAX);
-	GF_ASSERT(idx < BTL_POSIDX_MAX);
+  GF_ASSERT(side < BTL_SIDE_MAX);
+  GF_ASSERT(idx < BTL_POSIDX_MAX);
 
-	return (side&1) + idx*2;
+  return (side&1) + idx*2;
 }
 
 extern BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 );
@@ -88,16 +89,16 @@ extern BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 );
 
 //-------------------------------------------------------------------------------
 /**
- *	特殊位置ID指定子
+ *  特殊位置ID指定子
  */
 //-------------------------------------------------------------------------------
 typedef enum {
 
-	BTL_EXPOS_DEFAULT = 0,		///< 自分だけ
-	BTL_EXPOS_ENEMY_ALL,			///< 相手全部
-	BTL_EXPOS_WITHOUT_ME,			///< 自分以外全部
-	BTL_EXPOS_MYSIDE_ALL,			///< 味方全部
-	BTL_EXPOS_ALL,						///< 敵・味方全部
+  BTL_EXPOS_DEFAULT = 0,    ///< 自分だけ
+  BTL_EXPOS_ENEMY_ALL,      ///< 相手全部
+  BTL_EXPOS_WITHOUT_ME,     ///< 自分以外全部
+  BTL_EXPOS_MYSIDE_ALL,     ///< 味方全部
+  BTL_EXPOS_ALL,            ///< 敵・味方全部
 
 }BtlExPosType;
 
@@ -105,17 +106,17 @@ typedef u16 BtlExPos;
 
 static inline BtlExPos  EXPOS_MAKE( BtlExPosType type, u8 basePos )
 {
-	return (type<<8) | basePos;
+  return (type<<8) | basePos;
 }
 
 static inline u8 EXPOS_GET_TYPE( BtlExPos exPos )
 {
-	return (exPos >> 8) & 0xff;
+  return (exPos >> 8) & 0xff;
 }
 
 static inline u8 EXPOS_GET_BASEPOS( BtlExPos exPos )
 {
-	return exPos & 0xff;
+  return exPos & 0xff;
 }
 
 
@@ -124,11 +125,11 @@ static inline u8 EXPOS_GET_BASEPOS( BtlExPos exPos )
 /**
  * 特殊クライアントID指定子を、実際の対象クライアントIDに変換
  *
- * @param   wk						メインモジュールハンドラ
- * @param   exPos					特殊ポケモン位置指定子
- * @param   dst						[out] 対象ポケモン位置を格納するバッファ（BTL_POSIDX_MAX分が確保されていること）
+ * @param   wk            メインモジュールハンドラ
+ * @param   exPos         特殊ポケモン位置指定子
+ * @param   dst           [out] 対象ポケモン位置を格納するバッファ（BTL_POSIDX_MAX分が確保されていること）
  *
- * @retval  u8		対象ポケモン数
+ * @retval  u8    対象ポケモン数
  */
 //=============================================================================================
 extern u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* dst );

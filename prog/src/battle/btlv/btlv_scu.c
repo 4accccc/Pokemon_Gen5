@@ -366,7 +366,14 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
     subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
     subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
     BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_BB );
-    BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_1 );
+    {
+      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
+      if( MyStatus_GetMySex(status) == PM_MALE ){
+        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_1 );
+      }else{
+        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_1 );
+      }
+    }
     (*seq)++;
     break;
   case 1:
