@@ -231,6 +231,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   //フェードないので仮処理
   GX_SetMasterBrightness(-16);  
   GXS_SetMasterBrightness(-16);
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE , GX_BLEND_PLANEMASK_NONE , 31 , 31 );
   
   INFOWIN_Exit();
   

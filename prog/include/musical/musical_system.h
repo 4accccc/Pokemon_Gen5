@@ -9,6 +9,14 @@
 #ifndef MUSICAL_SYSTEM_H__
 #define MUSICAL_SYSTEM_H__
 #include "musical_define.h"
+#include "savedata/save_control.h"
+
+typedef struct
+{
+  SAVE_CONTROL_WORK *saveCtrl;
+}MUSICAL_INIT_WORK;
+
+extern GFL_PROC_DATA Musical_ProcData;
 
 
 //ミュージカルの参加資格があるか調べる
@@ -17,5 +25,7 @@ const BOOL	MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( const u16 mons_no );
 const u16	MUSICAL_SYSTEM_ChangeMusicalPokeNumber( POKEMON_PARAM *pokePara );
 //ミュージカル用パラメータの初期化
 MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID heapId );
+
+
 
 #endif MUSICAL_SYSTEM_H__

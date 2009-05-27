@@ -344,7 +344,7 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
 {
-  FITTING_WORK *work = GFL_HEAP_AllocMemory( initWork->heapId , sizeof( FITTING_WORK ));
+  FITTING_WORK *work = GFL_HEAP_AllocClearMemory( initWork->heapId , sizeof( FITTING_WORK ));
 
   work->heapId = initWork->heapId;
   work->initWork = initWork;
@@ -359,6 +359,7 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
   work->isSortAnime = FALSE;
   work->sortType = MUS_POKE_EQUIP_USER_MAX;
   work->listAngle = 0;
+  work->isDemo = FALSE;
 
   work->listSpeed = 0;
   work->snapPos = MUS_POKE_EQU_INVALID;

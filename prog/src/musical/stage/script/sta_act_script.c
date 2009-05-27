@@ -79,6 +79,8 @@ void STA_SCRIPT_ExitSystem( STA_SCRIPT_SYS *work )
 	{
 		if( work->scriptWork[i] != NULL )
 		{
+			VM_End( work->scriptWork[i]->vmHandle );
+			VM_Delete( work->scriptWork[i]->vmHandle );
 			GFL_HEAP_FreeMemory( work->scriptWork[i] );
 			work->scriptWork[i] = NULL;
 		}

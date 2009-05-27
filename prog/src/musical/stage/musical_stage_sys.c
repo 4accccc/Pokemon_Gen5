@@ -72,32 +72,40 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 */
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x120000 );
 
+  //TODO データの渡し方整理！
 	work = GFL_PROC_AllocWork( proc, sizeof(STAGE_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
-	work->actInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STAGE , sizeof(ACTING_INIT_WORK) );
-	work->actInitWork->heapId = HEAPID_MUSICAL_STAGE;
-	work->actInitWork->musPoke[0].pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_STAGE );
-	work->actInitWork->musPoke[1].pokePara = PP_Create( MONSNO_RAITYUU , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_STAGE );
-	work->actInitWork->musPoke[2].pokePara = PP_Create( MONSNO_EREBUU , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_STAGE );
-	work->actInitWork->musPoke[3].pokePara = PP_Create( MONSNO_RUKARIO , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_STAGE );
-	for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
+	if( pwk == NULL )
 	{
-		work->actInitWork->musPoke[0].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
-		work->actInitWork->musPoke[1].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
-		work->actInitWork->musPoke[2].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
-		work->actInitWork->musPoke[3].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
-	}
-	
-	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HAND_R].itemNo = 13;
-	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HEAD].itemNo = 16;
-	
-	work->actInitWork->musPoke[1].equip[MUS_POKE_EQU_EAR_L].itemNo = 7;
-	work->actInitWork->musPoke[1].equip[MUS_POKE_EQU_BODY].itemNo = 9;
-	
-	work->actInitWork->musPoke[2].equip[MUS_POKE_EQU_HAND_R].itemNo = 31;
-	work->actInitWork->musPoke[2].equip[MUS_POKE_EQU_HEAD].itemNo = 15;
-	
-	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HAND_R].itemNo = 30;
-	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HEAD].itemNo = 21;
+  	work->actInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STAGE , sizeof(ACTING_INIT_WORK) );
+  	work->actInitWork->musPoke[0].pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_STAGE );
+  	work->actInitWork->musPoke[1].pokePara = PP_Create( MONSNO_RAITYUU , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_STAGE );
+  	work->actInitWork->musPoke[2].pokePara = PP_Create( MONSNO_EREBUU , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_STAGE );
+  	work->actInitWork->musPoke[3].pokePara = PP_Create( MONSNO_RUKARIO , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_STAGE );
+  	for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
+  	{
+  		work->actInitWork->musPoke[0].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
+  		work->actInitWork->musPoke[1].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
+  		work->actInitWork->musPoke[2].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
+  		work->actInitWork->musPoke[3].equip[ePos].itemNo = MUSICAL_ITEM_INVALID;
+  	}
+  	
+  	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HAND_R].itemNo = 13;
+  	work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HEAD].itemNo = 16;
+  	
+  	work->actInitWork->musPoke[1].equip[MUS_POKE_EQU_EAR_L].itemNo = 7;
+  	work->actInitWork->musPoke[1].equip[MUS_POKE_EQU_BODY].itemNo = 9;
+  	
+  	work->actInitWork->musPoke[2].equip[MUS_POKE_EQU_HAND_R].itemNo = 31;
+  	work->actInitWork->musPoke[2].equip[MUS_POKE_EQU_HEAD].itemNo = 15;
+  	
+  	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HAND_R].itemNo = 30;
+  	work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HEAD].itemNo = 21;
+  }
+  else
+  {
+    work->actInitWork = pwk;
+  }
+	work->actInitWork->heapId = HEAPID_MUSICAL_STAGE;
 
 /*
 	for( ePos=0;ePos<4;ePos++ )
@@ -116,11 +124,14 @@ static GFL_PROC_RESULT MusicalStageProc_Term( GFL_PROC * proc, int * seq , void 
 {
 	STAGE_LOCAL_WORK *work = mywk;
 	
-	GFL_HEAP_FreeMemory( work->actInitWork->musPoke[0].pokePara );
-	GFL_HEAP_FreeMemory( work->actInitWork->musPoke[1].pokePara );
-	GFL_HEAP_FreeMemory( work->actInitWork->musPoke[2].pokePara );
-	GFL_HEAP_FreeMemory( work->actInitWork->musPoke[3].pokePara );
-	GFL_HEAP_FreeMemory( work->actInitWork );
+	if( pwk == NULL )
+	{
+    GFL_HEAP_FreeMemory( work->actInitWork->musPoke[0].pokePara );
+    GFL_HEAP_FreeMemory( work->actInitWork->musPoke[1].pokePara );
+    GFL_HEAP_FreeMemory( work->actInitWork->musPoke[2].pokePara );
+    GFL_HEAP_FreeMemory( work->actInitWork->musPoke[3].pokePara );
+    GFL_HEAP_FreeMemory( work->actInitWork );
+  }
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STAGE );
 

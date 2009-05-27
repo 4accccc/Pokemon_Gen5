@@ -932,6 +932,7 @@ static void setupDebugLightSubscreen(DMESSWORK * dmess)
 //--------------------------------------------------------------
 FS_EXTERN_OVERLAY(musical);
 #include "musical/musical_local.h"
+#include "musical/musical_system.h"
 #include "musical/musical_dressup_sys.h"
 #include "musical/musical_stage_sys.h"
 #include "poke_tool/poke_tool.h"  //ドレスアップ仮データ用
@@ -945,6 +946,7 @@ typedef struct {
 	FIELD_MAIN_WORK *fieldWork;
 	FLDMENUFUNC *menuFunc;
 	
+	MUSICAL_INIT_WORK *musInitWork;
 	DRESSUP_INIT_WORK *dupInitWork;
 	u8  menuRet;
 }DEBUG_MENU_EVENT_MUSICAL_SELECT_WORK, DEB_MENU_MUS_WORK;
@@ -952,6 +954,7 @@ static GMEVENT_RESULT DMenuMusicalSelectEvent( GMEVENT *event, int *seq, void *w
 
 static void setupMusicalDressup(DEB_MENU_MUS_WORK * work);
 static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work);
+static void setupMusicarAll(DEB_MENU_MUS_WORK * work);
 
 //--------------------------------------------------------------
 /**
@@ -982,8 +985,9 @@ static DMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
 }
 
 //--------------------------------------------------------------
-static const FLDMENUFUNC_LIST DATA_MusicalMenuList[2] =
+static const FLDMENUFUNC_LIST DATA_MusicalMenuList[3] =
 {
+	{ DEBUG_FIELD_STR_MUSICAL3, (void*)setupMusicarAll },
 	{ DEBUG_FIELD_STR_MUSICAL1, (void*)setupMusicalDressup },
 	{ DEBUG_FIELD_STR_MUSICAL2, (void*)setupMusicarShowPart },
 };
@@ -1047,6 +1051,10 @@ static GMEVENT_RESULT DMenuMusicalSelectEvent(
 		}
 		break;
   case 2:
+    if( work->musInitWork != NULL )
+    {
+      GFL_HEAP_FreeMemory( work->musInitWork );
+    }
     if( work->dupInitWork != NULL )
     {
       GFL_HEAP_FreeMemory( work->dupInitWork->pokePara );
@@ -1077,6 +1085,16 @@ static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work)
 { 
   work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
         FS_OVERLAY_ID(musical), &MusicalStage_ProcData, NULL );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void setupMusicarAll(DEB_MENU_MUS_WORK * work)
+{
+	work->musInitWork = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(DRESSUP_INIT_WORK));
+	work->musInitWork->saveCtrl = SaveControl_GetPointer();
+  work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
+        NO_OVERLAY_ID, &Musical_ProcData, work->musInitWork );
 }
 
 //======================================================================
