@@ -1015,9 +1015,24 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   FLDMMDL_GetVectorPos( fmmdl, &pos );
   dir = FLDMMDL_GetDirDisp( fmmdl );
   FLDMMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+  
+  if( dir == DIR_UP ){        //‰º‚©‚ç
+    pos.x += FX32_ONE*8;
+    pos.z -= FX32_ONE*8;
+  }else if( dir == DIR_DOWN ){ //ã‚©‚ç
+    pos.x += FX32_ONE*8;
+    pos.z -= FX32_ONE*8;
+  }else if( dir == DIR_LEFT ){ //‰E‚©‚ç
+    pos.x += -FX32_ONE*8;
+    pos.z += FX32_ONE*16;
+  }else{                       //¶‚©‚ç
+    pos.x += FX32_ONE*8;
+    pos.z += FX32_ONE*16;
+  }
+  
   SCRCMD_WORK_SetTalkMsgWinTailPos( work, &pos );
   pos_p = SCRCMD_WORK_GetTalkMsgWinTailPos( work );
-
+  
   {
     wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
     msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
@@ -1026,8 +1041,15 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
     WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
   }
   
-  tmsg = FLDTALKMSGWIN_AddStrBuf(
-      fparam->msgBG, FLDTALKMSGWIN_IDX_AUTO, pos_p, *msgbuf );
+  {
+    FLDTALKMSGWIN_IDX idx = FLDTALKMSGWIN_IDX_LOWER;
+    
+    if( dir == DIR_UP ){
+      idx = FLDTALKMSGWIN_IDX_UPPER;
+    }
+    
+    tmsg = FLDTALKMSGWIN_AddStrBuf( fparam->msgBG, idx, pos_p, *msgbuf );
+  }
   
 	SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
 
