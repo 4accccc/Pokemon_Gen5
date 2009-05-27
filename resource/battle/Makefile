@@ -74,12 +74,12 @@ nsbca: $(notdir $(ICAFILE:.ica=.nsbca))
 	g3dcvtr $<
 
 ncgr: $(notdir $(BGNCGFILE:.ncg=.NCGR))
-%.NCGR: %.ncg
-	g2dcvtr -bg $< -o/./
+%.NCGR: $(RES_BGDIR)%.ncg
+	g2dcvtr $< -bg -o/./
 
 nclr: $(notdir $(BGNCLFILE:.ncl=.NCLR))
-%.NCLR: %.ncl
-	g2dcvtr $< -o/./
+%.NCLR: $(RES_BGDIR)%.ncl
+	g2dcvtr $< -pcm -o/./
 
 $(NARCNAME):	$(notdir $(IMDFILE:.imd=.nsbmd)) $(notdir $(ICAFILE:.ica=.nsbca)) $(notdir $(BGNCGFILE:.ncg=.NCGR)) $(notdir $(BGNCLFILE:.ncl=.NCLR)) battgra_wb.scr
 	nnsarc -c -l -n -i $(NARCNAME) -S battgra_wb.scr > error
