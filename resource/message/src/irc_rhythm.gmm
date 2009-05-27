@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-25T20:01:56"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T12:45:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="349" right="953" bottom="969" maximized="no" rayout="Vertical2">
+	<dialog left="1618" top="224" right="2229" bottom="569" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="603"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="436"/>
+		<band id="3" index="3" style="0000" width="603"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,17 +334,17 @@
 
 
 	<row id="RHYTHM_STR_000">
-		<language name="JPN" width="256">このゲームは　ふたりのリズムを　そくていします
-すきなばしょ　すきなタイミングで　１０かい　タッチ</language>
-		<language name="JPN_KANJI" width="256">このゲームは2人のリズムを測定します
-好きな場所　好きなタイミングで10回タッチして</language>
+		<language name="JPN" width="256">ふたりの　リズムを　しらべます　どこでも
+すきなように　１０かい　タッチしましょう！</language>
+		<language name="JPN_KANJI" width="256">２人の　リズムを　調べます　どこでも
+好きなように　１０回　タッチしましょう！</language>
 	</row>
 
 	<row id="RHYTHM_STR_001">
 		<language name="JPN" width="256">そくてい　しゅうりょう！
-せきがいせんを　つなげてください</language>
+せきがいせん　つうしんを　してください</language>
 		<language name="JPN_KANJI" width="256">測定終了！
-赤外線をつなげてください</language>
+赤外線通信を　してください</language>
 	</row>
 
 	<row id="RHYTHM_BTN_000">
@@ -353,17 +353,13 @@
 	</row>
 
 	<row id="RHYTHM_DEBUG_001">
-		<language name="JPN" width="256">あいての　ばんです
-すきなばしょ　すきなタイミングで　１０かい　タッチ</language>
-		<language name="JPN_KANJI" width="256">相手の番です
-好きな場所　好きなタイミングで10回タッチして</language>
+		<language name="JPN" width="256">　</language>
+		<language name="JPN_KANJI" width="256">　</language>
 	</row>
 
 	<row id="RHYTHM_DEBUG_002">
-		<language name="JPN" width="256">しゅうりょうです
-ありがとうございました</language>
-		<language name="JPN_KANJI" width="256">終了です
-ありがとうございました</language>
+		<language name="JPN" width="256">チェックを　おわります。</language>
+		<language name="JPN_KANJI" width="256">チェックを　終わります。</language>
 	</row>
 
 	<row id="RHYTHM_RES_000">

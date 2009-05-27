@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-22T17:05:01"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T13:07:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,17 +334,15 @@
 
 
 	<row id="RESULT_STR_000">
-		<language name="JPN" width="256">あなたと　あいての
-なかよし　オブジェは？</language>
-		<language name="JPN_KANJI" width="256">あなたと相手の
-仲良しオブジェは？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんと　[1:00:トレーナー名:1]さんの
+きになる　あいしょうは……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんと　[1:00:トレーナー名:1]さんの
+気になる　相性は……</language>
 	</row>
 
 	<row id="RESULT_STR_001">
-		<language name="JPN" width="256">なかよしオブジェを
-さわってみよう！</language>
-		<language name="JPN_KANJI" width="256">仲良しオブジェを
-触ってみよう！</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！</language>
 	</row>
 
 	<row id="RESULT_STR_002">
