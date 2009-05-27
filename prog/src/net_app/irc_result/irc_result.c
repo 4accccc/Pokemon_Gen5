@@ -616,7 +616,14 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	//ƒ‚ƒWƒ…[ƒ‹‰Šú‰»
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCRESULT );
 	MSG_Init( &p_wk->msg, MSG_FONT_TYPE_LARGE, HEAPID_IRCRESULT );
-	INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys), HEAPID_IRCRESULT );
+	{
+		GAME_COMM_SYS_PTR comm	= NULL;
+		if( p_wk->p_param->p_gamesys )
+		{	
+			comm	= GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys);
+		}
+		INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, comm, HEAPID_IRCRESULT );
+	}
 
 /*	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_MAIN], sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
 			MSGWND_MAIN_X, MSGWND_MAIN_Y, MSGWND_MAIN_W, MSGWND_MAIN_H, HEAPID_IRCRESULT );
