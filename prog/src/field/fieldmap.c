@@ -1344,6 +1344,12 @@ static void fldmapMain_FLDMMDL_Init( FIELDMAP_WORK *fieldWork )
 	
 	//“®ìƒ‚ƒfƒ‹@•œ‹A
 	FLDMMDLSYS_Pop( fieldWork->fldMMdlSys );
+  
+  if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){
+    FLDMMDLSYS_SetJoinShadow( fmmdlsys, TRUE );
+  }else{
+    FLDMMDLSYS_SetJoinShadow( fmmdlsys, FALSE );
+  }
 }
 
 //--------------------------------------------------------------
