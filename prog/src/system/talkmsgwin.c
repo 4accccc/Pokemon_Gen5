@@ -34,6 +34,7 @@
  *
  */
 //============================================================================================
+#define TALKWIN_MODE (1)
 //------------------------------------------------------------------
 /**
  * @brief	定数
@@ -42,7 +43,12 @@
 #define COL_SIZ				(2)
 #define PLTT_SIZ			(16*COL_SIZ)
 
+
+#if TALKWIN_MODE
+#define BACKGROUND_COLOR	(GX_RGB(0,0,0))
+#else
 #define BACKGROUND_COLOR	(GX_RGB(31,31,31))
+#endif
 #define BACKGROUND_COLIDX (15)
 
 typedef enum {
@@ -56,7 +62,7 @@ typedef enum {
 #define TWIN_FIX_SIZX		(28)
 #define TWIN_FIX_SIZY		(5)
 #define TWIN_FIX_POSX		(2)
-#define TWIN_FIX_POSY_U (1)
+#define TWIN_FIX_POSY_U (2)
 #define TWIN_FIX_POSY_D (24 - (TWIN_FIX_SIZY+2))
 #define TWIN_FIX_TAIL_X	(7)
 
@@ -160,8 +166,7 @@ static void clearWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 
 	//動作確認用暫定
 static BOOL	debugOn;
-static void	drawTest( TMSGWIN* tmsgwin );
-static MtxFx43 testMtx;
+
 #define TALKMSGWIN_OPENWAIT	(8)
 //============================================================================================
 /**
@@ -1070,8 +1075,9 @@ static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
 			paltype = PALTYPE_SUB_BG;
 			break;
 		}
-		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, 
-																	NARC_font_default_nclr,
+#if TALKWIN_MODE
+		GFL_ARC_UTIL_TransVramPalette(ARCID_TALKWIN_TEST, 
+																	NARC_talkwin_test_talkwin2_NCLR,
 																	paltype,
 																	setup->ini.fontPltID * PLTT_SIZ,
 																	PLTT_SIZ,
@@ -1082,6 +1088,20 @@ static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
 																	setup->ini.winPltID * PLTT_SIZ,
 																	PLTT_SIZ,
 																	setup->heapID);
+#else
+		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, 
+																	NARC_font_default_nclr,
+																	paltype,
+																	setup->ini.fontPltID * PLTT_SIZ,
+																	PLTT_SIZ,
+																	setup->heapID);
+		GFL_ARC_UTIL_TransVramPalette(ARCID_TALKWIN_TEST, 
+																	NARC_talkwin_test_talkwin_NCLR,
+																	paltype,
+																	setup->ini.winPltID * PLTT_SIZ,
+																	PLTT_SIZ,
+																	setup->heapID);
+#endif
 	}
 	//キャラクター転送
 	chrSiz = GFL_ARC_UTIL_TransVramBgCharacter(	ARCID_TALKWIN_TEST, 
