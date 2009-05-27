@@ -77,7 +77,7 @@ typedef struct {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
-#define DOOR_ID_T01R0301_EXIT01 0 //暫定！
+//#define DOOR_ID_T01R0301_EXIT01 0 //暫定！
 #include "arc/fieldmap/zone_id.h"
 //仮動作モデル配置データ
 #include "../../../resource/fldmapdata/eventdata/zone_t01evc.cdat"
@@ -315,6 +315,37 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
 void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc)
 {
 	LOCATION_SetID(loc, connect->link_zone_id, connect->link_exit_id);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const VecFx32 * sphere)
+{
+  enum { HIT_RANGE = FX32_ONE * 10 };
+	int i;
+	int x,y,z;
+  fx32 len;
+	const CONNECT_DATA * cnct = evdata->connect_data;
+	x = FX_Whole(sphere->x) - OFS_X;
+	y = FX_Whole(sphere->y) - OFS_Y;
+	z = FX_Whole(sphere->z) - OFS_Z;
+	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
+#if 0
+		OS_Printf("CNCT:x,y,z=%d,%d,%d\n",
+				FX_Whole(cnct->pos.x),FX_Whole(cnct->pos.y),FX_Whole(cnct->pos.z));
+#endif
+    {
+      fx32 lx = x - cnct->pos.x;
+      fx32 ly = y - cnct->pos.y;
+      fx32 lz = z - cnct->pos.z;
+      fx32 len = FX_Sqrt(FX_Mul(lx,lx) + FX_Mul(ly,ly) + FX_Mul(lz, lz));
+      if (len > HIT_RANGE) continue;
+    }
+		OS_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
+		OS_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,sphere->x, y,sphere->y, z,sphere->z);
+		return i;
+	}
+	return EXIT_ID_NONE;
 }
 
 //============================================================================================

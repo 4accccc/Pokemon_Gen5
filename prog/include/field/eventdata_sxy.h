@@ -97,6 +97,19 @@ extern const CONNECT_DATA * EVENTDATA_GetConnectByID(const EVENTDATA_SYSTEM * ev
 //------------------------------------------------------------------
 extern BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * loc, u16 exit_id);
 
+
+//------------------------------------------------------------------
+/**
+ * @brief	出入口情報を探す
+ * @param	evdata	イベントデータへのポインタ
+ * @param	pos		探す位置
+ * @return	int	出入口データのインデックスEXIT_ID_NONEのとき、出入口は存在しない
+ *
+ * ※球判定
+ */
+//------------------------------------------------------------------
+extern int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const VecFx32 * sphere);
+
 //------------------------------------------------------------------
 /**
  * @brief
