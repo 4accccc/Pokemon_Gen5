@@ -472,11 +472,12 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
      (*seq)++;
      break;
   case 4:
-    if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A)
-    ||  !(PMSND_CheckPlayBGM())
-    )
     {
-      return TRUE;
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        BTL_Printf("touch=%d, bgm_end=%d\n", touch, bgm_end);
+        return TRUE;
+      }
     }
     break;
   }
