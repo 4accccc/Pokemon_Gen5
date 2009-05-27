@@ -381,8 +381,8 @@ static void MakeNewRailLocation(GAMEDATA * gamedata, const LOCATION * loc_req)
   RAIL_LOCATION railLoc;
   RAIL_LOCATION_Init(&railLoc);
 
-  if (ZONEDATA_GetMapRscID(loc_req->zone_id) != 1
-      && loc_req->type == LOCATION_TYPE_DIRECT)
+  if (ZONEDATA_DEBUG_IsRailMap(loc_req->zone_id) == TRUE
+      && loc_req->type != LOCATION_TYPE_DIRECT)
   {
     railLoc.type = FIELD_RAIL_TYPE_POINT;
     railLoc.rail_index = loc_req->exit_id;

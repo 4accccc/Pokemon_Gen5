@@ -114,6 +114,15 @@ static u32 getLineIndex( const FIELD_RAIL_MAN * man, const RAIL_LINE* line );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static void RAIL_LOCATION_Dump(const RAIL_LOCATION * railLoc)
+{
+  TAMADA_Printf("RAIL_LOC:type = %d, rail_index = %d\n",railLoc->type, railLoc->rail_index);
+  TAMADA_Printf("RAIL_LOC:line_ofs = %d, width_ofs = %d\n", railLoc->line_ofs, railLoc->width_ofs);
+  TAMADA_Printf("RAIL_LOC:key = %s\n", debugGetRailKeyName(railLoc->key));
+}
+
+//------------------------------------------------------------------
 /**
  * @brief RAIL_LOCATION\‘¢‘Ì‚Ì‰Šú‰»ˆ—
  */
@@ -206,6 +215,8 @@ void FIELD_RAIL_MAN_GetLocation(const FIELD_RAIL_MAN * man, RAIL_LOCATION * loca
   location->line_ofs  = man->now_rail.line_ofs;
   location->width_ofs = man->now_rail.width_ofs;
   location->key       = man->now_rail.key;
+
+  RAIL_LOCATION_Dump(location);
 }
 
 //----------------------------------------------------------------------------
@@ -220,6 +231,7 @@ void FIELD_RAIL_MAN_SetLocation(FIELD_RAIL_MAN * man, const RAIL_LOCATION * loca
 {
   FIELD_RAIL * rail = &man->now_rail;
 
+  RAIL_LOCATION_Dump(location);
   // ‰Šú‰»
   initRail( rail );
 

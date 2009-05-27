@@ -474,7 +474,17 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     //登録テーブルごとに個別の初期化処理を呼び出し
     fieldWork->now_pos = *pos;
     fieldWork->func_tbl->create_func(fieldWork, &fieldWork->now_pos, dir);
-    
+
+    //レールマップの場合は、↑上記でレールに関する初期化が終わった後に
+    //保存した位置を反映する
+    if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == TRUE)
+    { 
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+      const RAIL_LOCATION * railLoc = GAMEDATA_GetRailLocation(gamedata);
+      FIELD_RAIL_MAN_SetLocation(fieldWork->railMan, railLoc);
+      FIELD_RAIL_MAN_GetPos( fieldWork->railMan, &fieldWork->now_pos );
+    }
+
     FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
     
     TAMADA_Printf("start X,Y,Z=%d,%d,%d\n", FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
@@ -627,6 +637,13 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
     FIELD_PLAYER_GetPos(fieldWork->field_player, &player_pos);
     PLAYERWORK_setPosition(pw, &player_pos);
+  }
+  if (ZONEDATA_DEBUG_IsRailMap(fieldWork->map_id) == TRUE)
+  {
+		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    RAIL_LOCATION railLoc;
+    FIELD_RAIL_MAN_GetLocation(fieldWork->railMan, &railLoc);
+    GAMEDATA_SetRailLocation(gamedata, &railLoc);
   }
   
   //フィールドエンカウント破棄
@@ -1783,25 +1800,9 @@ static void zoneChange_SetMMdl(
 static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 {
 	u16 trackBit = 0xfcff;	// track 9,10 OFF
-	#if 0
+
 	u16 nextBGM = ZONEDATA_GetBGMID(
-			new_zone_id, GAMEDATA_GetSeasonID(gdata) );
-	#else
-	u16 nextBGM = 0;
-	switch( zone_id ){
-	case ZONE_ID_T01:
-		nextBGM = SEQ_T_01; break;
-	case ZONE_ID_C01:
-		nextBGM = SEQ_TITLE; break;
-	case ZONE_ID_R01:
-		nextBGM = SEQ_R_A_SP; break;
-	case ZONE_ID_D01:
-		nextBGM = SEQ_SHINKA; break;
-		break;
-	default:
-		break;
-	}
-	#endif
+			zone_id, GAMEDATA_GetSeasonID(gdata) );
 	
 	if( nextBGM != 0 ){
 		if( PMSND_GetBGMsoundNo() != nextBGM ){
