@@ -617,15 +617,6 @@ static u16 SetScriptDataSub( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16
       OS_Printf( "ゾーンスクリプト起動 scr_idx = %d, msg_idx = %d\n",
           idx_script, idx_msg );
       
-      switch( zone_id ){ //サンプルマップ用
-      case ZONE_ID_MAPSPRING:
-      case ZONE_ID_MAPSUMMER:
-      case ZONE_ID_MAPAUTUMN:
-      case ZONE_ID_MAPWINTER:
-        idx_script = NARC_script_seq_c99_bin;
-        idx_msg = NARC_message_c99_dat;
-        break;
-      }
 #endif
 	  	SetScriptData( work, core, idx_script, idx_msg, heapID );
 		  scr_id -= ID_START_SCR_OFFSET;
