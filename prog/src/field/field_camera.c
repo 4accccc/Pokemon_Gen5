@@ -254,13 +254,13 @@ static void initPokeCenParameter(FIELD_CAMERA * camera)
 //------------------------------------------------------------------
 static void initH01P01Parameter(FIELD_CAMERA * camera)
 {
-  camera->angle_len = 0x00d5 * FX32_ONE;
-  camera->angle_pitch = 0x25d8;
+  camera->angle_len = 0x004d * FX32_ONE;
+  camera->angle_pitch = 0x05d8;
 	
 	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
 	
   // ターゲット補正値
-  VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
+  VEC_Set( &camera->target_offset, 0, 0x199f7, 0x09ed );
 }
 
 //------------------------------------------------------------------
