@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-05-27T15:07:22"/>
+	<create user="ohno" host="W00141" date="2009-05-27T20:23:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -375,16 +375,16 @@
 
 	<row id="IRCBTL_STR_09">
 		<language name="JPN" width="256">たいせん　あいてに
-せきがいせんを　あわせて　ください</language>
+せきがいせんを　むけて　ください</language>
 		<language name="JPN_KANJI" width="256">対戦相手に
-赤外線をあわせて下さい</language>
+赤外線を向けて下さい</language>
 	</row>
 
 	<row id="IRCBTL_STR_10">
 		<language name="JPN" width="256">パートナーとなる　ともだちに
 せきがいせんを　むけて　ください</language>
 		<language name="JPN_KANJI" width="256">パートナーとなる友達に
-赤外線を向けてください</language>
+赤外線を向けて下さい</language>
 	</row>
 
 	<row id="IRCBTL_STR_11">
@@ -394,9 +394,9 @@
 
 	<row id="IRCBTL_STR_12">
 		<language name="JPN" width="256">たいせん　あいての　リーダーに
-せきがいせんを　むけて　ください！</language>
+せきがいせんを　むけて　ください</language>
 		<language name="JPN_KANJI" width="256">対戦相手のリーダーに
-赤外線を向けてください！</language>
+赤外線を向けて下さい</language>
 	</row>
 
 	<row id="IRCBTL_STR_13">
@@ -417,6 +417,13 @@
 	<row id="IRCBTL_STR_16">
 		<language name="JPN" width="256">ちゅうだんしますか？</language>
 		<language name="JPN_KANJI" width="256">中断しますか？</language>
+	</row>
+
+	<row id="IRCBTL_STR_17">
+		<language name="JPN" width="256">こうかんする　ともだちに
+せきがいせんを　むけて　ください</language>
+		<language name="JPN_KANJI" width="256">交換する友達に
+赤外線を向けて下さい</language>
 	</row>
 
 	<flowchart-group-list>

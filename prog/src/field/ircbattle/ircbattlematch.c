@@ -191,7 +191,8 @@ static const GFLNetInitializeStruct aGFLNetInit = {
 
 
 struct _IRC_BATTLE_MATCH {
-  StateFunc* state;      ///< ハンドルのプログラム状態
+  EVENT_IRCBATTLE_WORK* pBattleWork;
+	StateFunc* state;      ///< ハンドルのプログラム状態
   int selectType;   // 接続タイプ
   HEAPID heapID;
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
@@ -534,8 +535,16 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
   {
-    int aMsgBuff[]={IRCBTL_STR_09};
-    _msgWindowCreate(aMsgBuff, pWork);
+		if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND)
+		{
+			int aMsgBuff[]={IRCBTL_STR_17};
+			_msgWindowCreate(aMsgBuff, pWork);
+		}
+		else
+		{
+			int aMsgBuff[]={IRCBTL_STR_09};
+			_msgWindowCreate(aMsgBuff, pWork);
+		}
   }
 
   GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
@@ -646,10 +655,15 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
   {
     if(ret == 0)
     { // はいを選択した場合
+			EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_EXIT);
+			GFL_NET_Exit(NULL);
+			_CHANGE_STATE(pWork,NULL);
     }
     else
     {  // いいえを選択した場合
-    }
+			_buttonWindowDelete(pWork);
+			_CHANGE_STATE(pWork,_ircMatchWait);
+		}
   }
 }
 
@@ -668,7 +682,7 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
 
 static const BMPWIN_YESNO_DAT _yesNoBmpDatSys2 = {
 	GFL_BG_FRAME2_S, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY+6,
-	11, 512
+	12, 512
 	};
 
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
@@ -677,12 +691,14 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
 		int aMsgBuff[]={IRCBTL_STR_16};
 		_buttonWindowDelete(pWork);
+
+		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+																	0x20*12, 0x20, pWork->heapID);
+
 		_msgWindowCreate(aMsgBuff, pWork);
     BmpWinFrame_GraphicSet(
       GFL_BG_FRAME2_S, 512-24, 11, 0, pWork->heapID );
 
-		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-																	0x20*11, 0x20, pWork->heapID);
 		GFL_FONTSYS_SetColor( 1, 2, 15 );
 
 		pWork->pYesNoWork =
@@ -810,6 +826,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcInit( GFL_PROC * proc, int * seq, void 
   {
     IRC_BATTLE_MATCH *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_BATTLE_MATCH ), HEAPID_IRCBATTLE );
     GFL_STD_MemClear(pWork, sizeof(IRC_BATTLE_MATCH));
+		pWork->pBattleWork = pwk;
     pWork->heapID = HEAPID_IRCBATTLE;
     pWork->selectType =  EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
     _CHANGE_STATE( pWork, _modeInit);

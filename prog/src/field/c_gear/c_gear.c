@@ -670,20 +670,27 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
+static u32 _bgpal[]={NARC_c_gear_c_gear_NCLR,NARC_c_gear_c_gear2_NCLR,NARC_c_gear_c_gear_NCLR};
+static u32 _bgcgx[]={NARC_c_gear_c_gear_NCGR,NARC_c_gear_c_gear2_NCGR,NARC_c_gear_c_gear_NCGR};
+
+
+static u32 _objpal[]={NARC_c_gear_c_gear_obj_NCLR,NARC_c_gear_c_gear2_obj_NCLR,NARC_c_gear_c_gear_obj_NCLR};
+static u32 _objcgx[]={NARC_c_gear_c_gear_obj_NCGR,NARC_c_gear_c_gear2_obj_NCGR,NARC_c_gear_c_gear_obj_NCGR};
+
 static void _gearArcCreate(C_GEAR_WORK* pWork)
 {
-
-
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, pWork->heapID );
-
-	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_c_gear_c_gear_NCLR,
+	MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+	u32 sex = MyStatus_GetMySex(pMy);
+	
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, _bgpal[ sex ],
 																		PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
 
 
   {
 		int x,y;
     u16* loadPtr = GFL_ARC_LoadDataAllocByHandle(  p_handle,
-                            NARC_c_gear_c_gear_NCLR,
+                            _bgpal[ sex ],
                             GFL_HEAP_LOWID(pWork->heapID) );
 
 		for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_MAX; y++){
@@ -700,7 +707,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 
 	
 	// ƒTƒu‰æ–ÊBGƒLƒƒƒ‰“]‘—
-	pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_c_gear_c_gear_NCGR,
+	pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, _bgcgx[sex],
 																																GEAR_MAIN_FRAME, 0, 0, pWork->heapID);
 
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
@@ -716,13 +723,13 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 																				 pWork->heapID);
 
 	pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_Register( p_handle ,
-																											 NARC_c_gear_c_gear_obj_NCLR ,
+																											 _objpal[sex],
 																											 CLSYS_DRAW_SUB , 0 , pWork->heapID );
 
 
 
 	pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( p_handle ,
-																											NARC_c_gear_c_gear_obj_NCGR ,
+																											_objcgx[sex] ,
 																											FALSE , CLSYS_DRAW_SUB , pWork->heapID );
 
 	pWork->objRes[_CLACT_ANM] = GFL_CLGRP_CELLANIM_Register( p_handle ,
@@ -1388,7 +1395,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 		}
 		state(pWork);
 		pWork->plt_counter++;
-		if(pWork->plt_counter==82)
+		if(pWork->plt_counter>=66)
 		{
 			pWork->plt_counter=0;
 		}

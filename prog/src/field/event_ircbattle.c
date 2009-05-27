@@ -146,7 +146,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   case _WAIT_IRCBATTLE_MATCH:
     if (!GAMESYSTEM_IsProcExists(gsys)){
       if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_EXIT){
-        *seq = _FIELD_END;
+        *seq = _WAIT_NET_END;
         return GMEVENT_RES_CONTINUE;
       }
       else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND){

@@ -4190,11 +4190,6 @@ static void	_lineCallBack(BMPMENULIST_WORK * lw, u32 param, u8 y)
     gmmNo = msg_wifilobby_debug_00;
     break;
 #endif
-  case WIFI_STATUS_BUCKET_WAIT:    // バケット募集中
-  case WIFI_STATUS_BALANCEBALL_WAIT:    // バケット募集中
-  case WIFI_STATUS_BALLOON_WAIT:    // バケット募集中
-    gmmNo = msg_wifilobby_147;
-    break;
   case WIFI_STATUS_LOGIN_WAIT:    // 待機中　ログイン直後はこれ
     gmmNo = msg_wifilobby_046;
     break;
@@ -4283,18 +4278,12 @@ static void	_iconDisp(WIFIP2PMATCH_WORK * wk, int status, int vctIcon, int x,int
 #ifdef WFP2P_DEBUG_EXON
   case WIFI_STATUS_BATTLEROOM_WAIT:// 交換募集中
 #endif
-  case WIFI_STATUS_BUCKET_WAIT:// 交換募集中
-  case WIFI_STATUS_BALANCEBALL_WAIT:// 交換募集中
-  case WIFI_STATUS_BALLOON_WAIT:// 交換募集中
     col = 0x1000;
   case WIFI_STATUS_TRADE:          // 交換中
   case WIFI_STATUS_FRONTIER:          // フロンティア中
 #ifdef WFP2P_DEBUG_EXON
   case WIFI_STATUS_BATTLEROOM:     // 交換中
 #endif
-  case WIFI_STATUS_BUCKET:     // 交換中
-  case WIFI_STATUS_BALANCEBALL:     // 交換中
-  case WIFI_STATUS_BALLOON:     // 交換中
     pData = chg;
     break;
   case WIFI_STATUS_LOGIN_WAIT:    // 待機中　ログイン直後はこれ
@@ -4537,15 +4526,6 @@ static BOOL WIFIP2PModeCheck( int friendIndex ,void* pWork)
     return TRUE;
   }
 #endif
-  else if((mySt == WIFI_STATUS_BUCKET_WAIT)&&(targetSt == WIFI_STATUS_BUCKET)){
-    return TRUE;
-  }
-  else if((mySt == WIFI_STATUS_BALANCEBALL_WAIT)&&(targetSt == WIFI_STATUS_BALANCEBALL)){
-    return TRUE;
-  }
-  else if((mySt == WIFI_STATUS_BALLOON_WAIT)&&(targetSt == WIFI_STATUS_BALLOON)){
-    return TRUE;
-  }
   else if((mySt == WIFI_STATUS_LOGIN_WAIT)&&(targetSt == WIFI_STATUS_VCT)){
     return TRUE;
   }
@@ -5793,14 +5773,6 @@ static _infoMenu _endMenu = {
   };
 
 
-// ミニゲーム
-_infoMenu _parentMiniGameInfoMenuList[] = {
-  { msg_wifilobby_mg02, (u32)WIFI_STATUS_BUCKET_WAIT },
-  { msg_wifilobby_mg02, (u32)WIFI_STATUS_BALANCEBALL_WAIT },
-  { msg_wifilobby_mg02, (u32)WIFI_STATUS_BALLOON_WAIT },
-  { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL },
-};
-
 _infoMenu _parentSingleInfoMenuList[] = {
   { msg_wifilobby_059, (u32)WIFI_STATUS_SBATTLE_FREE_WAIT },
   { msg_wifilobby_060, (u32)WIFI_STATUS_SBATTLE50_WAIT },
@@ -5853,35 +5825,6 @@ static const BMPMENULIST_HEADER _parentInfoBattleMenuListHeader = {
   NULL,                   //
   NELEMS(_parentSingleInfoMenuList),	// リスト項目数
   NELEMS(_parentSingleInfoMenuList),	// 表示最大項目数
-  0,						// ラベル表示Ｘ座標
-  8,						// 項目表示Ｘ座標
-  0,						// カーソル表示Ｘ座標
-  0,						// 表示Ｙ座標
-  FBMP_COL_BLACK,			// 文字色
-  FBMP_COL_WHITE,			// 背景色
-  FBMP_COL_BLK_SDW,		// 文字影色
-  0,						// 文字間隔Ｘ
-  16,						// 文字間隔Ｙ
-  BMPMENULIST_NO_SKIP,		// ページスキップタイプ
-  0,//FONT_SYSTEM,				// 文字指定
-  0,						// ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
-  NULL,                    // work
-  _BMPMENULIST_FONTSIZE,			//文字サイズX(ドット
-  _BMPMENULIST_FONTSIZE,			//文字サイズY(ドット
-  NULL,		//表示に使用するメッセージバッフ
-  NULL,		//表示に使用するプリントユーティ
-  NULL,		//表示に使用するプリントキュー
-  NULL,		//表示に使用するフォントハンドル
-};
-
-///選択メニューのリスト
-static const BMPMENULIST_HEADER _parentInfoMiniGameMenuListHeader = {
-  NULL,			// 表示文字データポインタ
-  _curCallBack,					// カーソル移動ごとのコールバック関数
-  NULL,					// 一列表示ごとのコールバック関数
-  NULL,                   //
-  NELEMS(_parentMiniGameInfoMenuList),	// リスト項目数
-  NELEMS(_parentMiniGameInfoMenuList),	// 表示最大項目数
   0,						// ラベル表示Ｘ座標
   8,						// 項目表示Ｘ座標
   0,						// カーソル表示Ｘ座標
@@ -6170,12 +6113,6 @@ static int _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret )
     list_h = _parentInfoBattleMenuListHeader;
     break;
 
-  case WIFI_STSET_MINIGAME:
-    pMenu = _parentMiniGameInfoMenuList;
-    length = NELEMS(_parentMiniGameInfoMenuList);
-    list_h = _parentInfoMiniGameMenuListHeader;
-    wk->bSingle = 2;
-    break;
   }
 
   wk->submenulist = BmpMenuWork_ListCreate( length , HEAPID_WIFIP2PMATCH );
