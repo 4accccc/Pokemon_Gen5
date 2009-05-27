@@ -20,6 +20,7 @@
 #include "test/easy_pokelist.h"
 
 #include "system/wipe.h"
+#include "gamesystem/game_comm.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_event.h"
 #include "field/field_msgbg.h"
@@ -651,15 +652,29 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
   
   switch( (*seq) ){
   case 0:
-    work->msgData = FLDMSGBG_CreateMSGDATA(
-      work->msgBG, NARC_message_fldmapmenu_dat );
-    
-    work->msgWin = FLDMSGWIN_AddTalkWin( work->msgBG, work->msgData );
-    FLDMSGWIN_Print( work->msgWin, 0, 0, FLDMAPMENU_STR14 );
-    //本来ならレポート用への切り替え？
-    //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
-    GXS_SetMasterBrightness(-16);
-    (*seq)++;
+    {
+      GAME_COMM_SYS_PTR commSys = GAMESYSTEM_GetGameCommSysPtr( work->gsys );
+      work->msgData = FLDMSGBG_CreateMSGDATA(
+             work->msgBG, NARC_message_fldmapmenu_dat );
+      
+      work->msgWin = FLDMSGWIN_AddTalkWin( work->msgBG, work->msgData );
+      
+      if( GameCommSys_BootCheck(commSys) == GAME_COMM_NO_INVASION )
+      {
+        //通信中でレポートが書けない
+        FLDMSGWIN_Print( work->msgWin, 0, 0, FLDMAPMENU_STR16 );
+        GXS_SetMasterBrightness(-16);
+        (*seq) = 20;
+      }
+      else
+      {
+        FLDMSGWIN_Print( work->msgWin, 0, 0, FLDMAPMENU_STR14 );
+        //本来ならレポート用への切り替え？
+        //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
+        GXS_SetMasterBrightness(-16);
+        (*seq)++;
+      }
+    }
     break;
   case 1:
     if( FLDMSGWIN_CheckPrintTrans(work->msgWin) == TRUE ){
@@ -705,6 +720,36 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
       FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(fieldWork) , type );
     }
     return( GMEVENT_RES_FINISH );
+    break;
+    
+    //セーブできません
+  case 20:
+    if( FLDMSGWIN_CheckPrintTrans(work->msgWin) == TRUE ){
+      (*seq)++;
+    } 
+    break;
+  case 21:
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+      if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+        (*seq)++;
+      }
+    }
+    break;
+  case 22:
+    FLDMSGWIN_Delete( work->msgWin );
+    GFL_MSG_Delete( work->msgData );
+    GXS_SetMasterBrightness(0);
+    {
+      GAMESYS_WORK *gameSys = GMEVENT_GetGameSysWork( event );
+      GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gameSys );
+      
+      const FIELD_MENU_ITEM_TYPE type = GAMEDATA_GetSubScreenType( gameData );
+      FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(fieldWork) , type );
+    }
+    return( GMEVENT_RES_FINISH );
+    break;
   }
 
   return( GMEVENT_RES_CONTINUE );

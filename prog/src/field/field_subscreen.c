@@ -223,7 +223,7 @@ void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
                     WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , pWork->heapID );
     pWork->state = FSS_CHANGE_FADEOUT_WAIT;
     break;
-    
+#if 0    
   case FSS_CHANGE_FADEOUT_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
@@ -236,6 +236,25 @@ void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
     funcTable[pWork->nextMode].init_func(pWork,pWork->mode);
     pWork->mode = pWork->nextMode;
     pWork->state = FSS_CHANGE_FADEIN;
+    break;
+
+  case FSS_CHANGE_FADEIN:
+    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                    WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , pWork->heapID );
+    pWork->state = FSS_CHANGE_FADEIN_WAIT;
+    break;
+#endif
+  //‘‚­‚·‚é
+  case FSS_CHANGE_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      funcTable[pWork->mode].exit_func(pWork);
+      funcTable[pWork->nextMode].init_func(pWork,pWork->mode);
+      pWork->mode = pWork->nextMode;
+//      WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+//                      WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , pWork->heapID );
+      pWork->state = FSS_CHANGE_FADEIN;
+    }
     break;
 
   case FSS_CHANGE_FADEIN:

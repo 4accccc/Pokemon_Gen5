@@ -37,7 +37,7 @@
 #define FIELD_MENU_BG_NAME (GFL_BG_FRAME2_S)
 
 //スクロール速度
-#define FIELD_MENU_SCROLL_SPD (64) 
+#define FIELD_MENU_SCROLL_SPD (96) 
 
 //レンダーのサーフェイス番号
 #define FIELD_MENU_RENDER_SURFACE (0)
@@ -199,7 +199,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
   work->cursorPosX = 0;
   work->cursorPosY = 0;
   work->isUpdateCursor = FALSE;
-  work->isDispCursor = TRUE;
+  work->isDispCursor = FALSE;
   work->activeIcon = NULL;
   work->vBlankTcb = GFUser_VIntr_CreateTCB( FIELD_MENU_VBlankTCB , (void*)work , 0 );
   
@@ -712,6 +712,7 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
       trg != 0 )
   {
     work->isDispCursor = TRUE;
+    work->isUpdateCursor = TRUE;
     GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
     return;
   }
@@ -823,7 +824,8 @@ static void  FIELD_MENU_UpdateCursor( FIELD_MENU_WORK* work )
     pos.x = work->activeIcon->posX;
     pos.y = work->activeIcon->posY;
     GFL_CLACT_WK_SetPos( work->cellCursor , &pos , FIELD_MENU_RENDER_SURFACE );
-    if( work->activeIcon->cellIcon != NULL )
+    if( work->activeIcon->cellIcon != NULL &&
+        work->isDispCursor == TRUE )
     {
       GFL_CLACT_WK_SetAnmSeq( work->activeIcon->cellIcon , FIA_ACTIVE );
     }
