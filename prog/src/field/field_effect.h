@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	field_effect.c
+ * @file	field_effect.h
  * @brief	フィールドエフェクト
  * @authaor	kagaya
  * @data	2008.12.11
@@ -11,6 +11,8 @@
 #include "system/gfl_use.h"
 
 #include "field/fieldmap_proc.h"
+
+#include "arc/fieldmap/fldeff.naix"
 
 //======================================================================
 //  define
@@ -92,6 +94,7 @@ extern void FLDEFF_CTRL_Draw( FLDEFF_CTRL *fectrl );
 
 //FLDEFF_CTRL 参照
 extern FIELDMAP_WORK * FLDEFF_CTRL_GetFieldMapWork( FLDEFF_CTRL *fectrl );
+extern ARCHANDLE * FLDEFF_CTRL_GetArcHandleEffect( FLDEFF_CTRL *fectrl );
 
 //FLDEFF_CTRL effect process
 extern void FLDEFF_CTRL_RegistEffect(
@@ -100,6 +103,8 @@ extern void FLDEFF_CTRL_DeleteEffect(
      FLDEFF_CTRL *fectrl, FLDEFF_PROCID id );
 extern BOOL FLDEFF_CTRL_CheckRegistEffect(
     const FLDEFF_CTRL *fectrl, FLDEFF_PROCID id );
+extern void * FLDEFF_CTRL_GetEffectWork(
+    FLDEFF_CTRL *fectrl, FLDEFF_PROCID id );
 
 //FLDEFF_CTRL task
 extern FLDEFF_TASK * FLDEFF_CTRL_AddTask(
@@ -130,4 +135,6 @@ extern HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task );
 
 //kari
 extern FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1];
-extern const u32 DATA_FLDEFF_RegistEffectTbl[];
+
+extern const FLDEFF_PROCID DATA_FLDEFF_RegistEffectGroundTbl[];
+extern const u32 DATA_FLDEFF_RegistEffectGroundTblNum;

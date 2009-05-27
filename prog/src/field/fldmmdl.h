@@ -712,9 +712,9 @@ extern void FLDMMDL_InitPosition(
 extern void FLDMMDL_ChangeMoveCode( FLDMMDL *fmmdl, u16 code );
 extern void FLDMMDL_ChangeOBJID( FLDMMDL * fmmdl, u16 id );
 extern BOOL FLDMMDL_CheckSameID(
-	const FLDMMDL * fmmdl, u16 obj_id, int zone_id );
+	const FLDMMDL * fmmdl, u16 obj_id, u16 zone_id );
 extern BOOL FLDMMDL_CheckSameIDCode(
-	const FLDMMDL * fmmdl, u16 code, u16 obj_id, int zone_id );
+	const FLDMMDL * fmmdl, u16 code, u16 obj_id, u16 zone_id );
 
 extern const OBJCODE_PARAM * FLDMMDLSYS_GetOBJCodeParam(
 		const FLDMMDLSYS *fmmdlsys, u16 code );

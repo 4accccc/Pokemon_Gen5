@@ -28,6 +28,7 @@
 #include "field_debug.h"
 #include "field_subscreen.h"
 #include "field_rail.h"
+#include "field_effect.h"
 
 //======================================================================
 //	define
@@ -81,3 +82,4 @@ extern FIELD_SUBSCREEN_WORK* FIELDMAP_GetFieldSubscreenWork(
     FIELDMAP_WORK *fieldWork );
 extern void FIELDMAP_SetFieldSubscreenWork(
     FIELDMAP_WORK *fieldWork,FIELD_SUBSCREEN_WORK* pWork );
+extern FLDEFF_CTRL * FIELDMAP_GetFldEffCtrl( FIELDMAP_WORK *fieldWork );

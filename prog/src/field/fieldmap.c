@@ -451,6 +451,17 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //動作モデル初期化
   fldmapMain_FLDMMDL_Init(fieldWork);
   
+  //フィールドエフェクト初期化
+  fieldWork->fldeff_ctrl = FLDEFF_CTRL_Create(
+      fieldWork, FLDEFF_PROCID_MAX, fieldWork->heapID );
+  
+  //フィールドエフェクト　パラメタ初期化
+  FLDEFF_CTRL_SetTaskParam( fieldWork->fldeff_ctrl, FLDEFF_TASK_MAX );
+  
+  //フィールドエフェクト　登録
+  FLDEFF_CTRL_RegistEffect( fieldWork->fldeff_ctrl,
+    DATA_FLDEFF_RegistEffectGroundTbl, DATA_FLDEFF_RegistEffectGroundTblNum );
+  
   {
     const PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
     const u16 dir = pw->direction;
@@ -504,17 +515,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールドエンカウント初期化
   fieldWork->encount = FIELD_ENCOUNT_Create( fieldWork );
   
-  //フィールドエフェクト初期化
-  fieldWork->fldeff_ctrl = FLDEFF_CTRL_Create(
-      fieldWork, FLDEFF_PROCID_MAX, fieldWork->heapID );
-  
-  //フィールドエフェクト　パラメタ初期化
-  FLDEFF_CTRL_SetTaskParam( fieldWork->fldeff_ctrl, FLDEFF_TASK_MAX );
-  
-  //フィールドエフェクト　登録
-//  FLDEFF_CTRL_RegistEffect( fieldWork->fldeff_ctrl, NULL, 0 );
-
-  //フィールドデバッグ初期化
+   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, fieldWork->heapID );
 
   return MAINSEQ_RESULT_NEXTSEQ;
@@ -1056,6 +1057,18 @@ void FIELDMAP_SetFieldSubscreenWork(
     FIELDMAP_WORK *fieldWork, FIELD_SUBSCREEN_WORK *pWork )
 {
   fieldWork->fieldSubscreenWork = pWork;
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELDMAP_WORK FLDEFF_CTRL取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval FLDEFF_CTRL*
+ */
+//--------------------------------------------------------------
+FLDEFF_CTRL * FIELDMAP_GetFldEffCtrl( FIELDMAP_WORK *fieldWork )
+{
+  return fieldWork->fldeff_ctrl;
 }
 
 //======================================================================

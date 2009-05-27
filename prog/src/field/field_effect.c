@@ -31,6 +31,8 @@ struct _TAG_FLDEFF_CTRL
   HEAPID heapID;
   FIELDMAP_WORK *fieldMapWork;
   
+  ARCHANDLE *arcHandle;
+
   FLDEFF_PROCEFF *proceff_tbl;
    
   u32 task_max;
@@ -112,7 +114,7 @@ FLDEFF_CTRL * FLDEFF_CTRL_Create(
   fectrl->reg_max = reg_max;
   fectrl->heapID = heapID;
   fectrl->fieldMapWork = fieldMapWork;
-  
+  fectrl->arcHandle = GFL_ARC_OpenDataHandle( ARCID_FLDEFF, heapID );
   fectrl_InitProcEffect( fectrl );
   return( fectrl );
 }
@@ -128,6 +130,7 @@ void FLDEFF_CTRL_Delete( FLDEFF_CTRL *fectrl )
 {
   fectrl_DeleteTaskParam( fectrl );
   fectrl_DeleteProcEffect( fectrl );
+  GFL_ARC_CloseDataHandle( fectrl->arcHandle );
   GFL_HEAP_FreeMemory( fectrl );
 }
 
@@ -168,6 +171,18 @@ void FLDEFF_CTRL_Draw( FLDEFF_CTRL *fectrl )
 FIELDMAP_WORK * FLDEFF_CTRL_GetFieldMapWork( FLDEFF_CTRL *fectrl )
 {
   return( fectrl->fieldMapWork );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドエフェクト コントロール アーカイブID ARCID_FLDEFFハンドル取得
+ * @param fectrl
+ * @retval ARCHANDLE ARCID_FLDEFFハンドル
+ */
+//--------------------------------------------------------------
+ARCHANDLE * FLDEFF_CTRL_GetArcHandleEffect( FLDEFF_CTRL *fectrl )
+{
+  return( fectrl->arcHandle );
 }
 
 //======================================================================
@@ -229,7 +244,7 @@ void FLDEFF_CTRL_DeleteEffect( FLDEFF_CTRL *fectrl, FLDEFF_PROCID id )
 
 //--------------------------------------------------------------
 /**
- * フィールドエフェクト　エフェクトプロセスチェック
+ * フィールドエフェクト　エフェクトプロセス登録チェック
  * @param fectrl FLDEFF_CTRL
  * @param id チェックするFLDEFF_PROCID
  * @retval BOOL TRUE=登録済み
@@ -239,12 +254,28 @@ BOOL FLDEFF_CTRL_CheckRegistEffect(
     const FLDEFF_CTRL *fectrl, FLDEFF_PROCID id )
 {
   FLDEFF_PROCEFF *proc;
-  //cast変更問題無し
+  //const cast変更問題無し
   proc = fectrl_SearchProcEffect( (FLDEFF_CTRL*)fectrl, id );
   if( proc == NULL ){
     return( FALSE );
   }
   return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドエフェクト　エフェクトプロセスが使用しているワークを取得
+ * @param fectrl FLDEFF_CTRL
+ * @param id FLDEFF_PROCID
+ * @retval
+ */
+//--------------------------------------------------------------
+void * FLDEFF_CTRL_GetEffectWork( FLDEFF_CTRL *fectrl, FLDEFF_PROCID id )
+{
+  FLDEFF_PROCEFF *proc;
+  proc = fectrl_SearchProcEffect( (FLDEFF_CTRL*)fectrl, id );
+  GF_ASSERT( proc != NULL );
+  return( proc->proc_work );
 }
 
 //--------------------------------------------------------------
@@ -321,7 +352,7 @@ static FLDEFF_PROCEFF * fectrl_SearchProcEffect(
 
 //--------------------------------------------------------------
 /**
- * DATA_FLDEFF_RegistEffectTbl検索
+ * DATA_FLDEFF_ProcEffectDataTbl検索
  * @param id FLDEFF_PROCID
  * @retval FLDEFF_PROCEFF_DATA
  */
@@ -374,7 +405,7 @@ void FLDEFF_CTRL_SetTaskParam( FLDEFF_CTRL *fectrl, u32 max )
  * フィールドエフェクト　コントロール　タスク追加
  * @param fectrl FLDEFF_CTRL
  * @param head FLDEFF_TASK_HEADER
- * @param pos タスクに指定する座標
+ * @param pos タスクに指定する座標 NULL=指定無し
  * @param add_param タスクに渡す任意のパラメタ
  * @param add_ptr タスクに渡す任意のポインタ
  * @param pri タスク動作時のTCBプライオリティ
@@ -504,7 +535,7 @@ void FLDEFF_TASKSYS_Draw( FLDEFF_TASKSYS *tasksys )
  * フィールドエフェクト　タスクシステム　追加
  * @param FLDEFF_TASKSYS
  * @param head FLDEFF_TASK_HEADER
- * @param pos タスクに指定する座標
+ * @param pos タスクに指定する座標 NULL=指定無し
  * @param add_param タスクに渡す任意のパラメタ
  * @param add_ptr タスクに渡す任意のポインタ
  * @param pri タスク動作時のTCBプライオリティ
@@ -527,7 +558,11 @@ FLDEFF_TASK * FLDEFF_TASKSYS_Add(
       task->header = *head;
       task->add_param = add_param;
       task->add_ptr = add_ptr;
-      task->pos = *pos;
+
+      if( pos != NULL ){
+        task->pos = *pos;
+      }
+
       task->tasksys = tasksys;
       task->tcb = GFL_TCB_AddTask(
           tasksys->tcbsys, fetask_ProcTCB, task, pri );
@@ -538,6 +573,7 @@ FLDEFF_TASK * FLDEFF_TASKSYS_Add(
   }while( i < tasksys->max );
   
   GF_ASSERT( i < tasksys->max && "ERROR FLDEFF_TASKSYS MAX\n" );
+  FLDEFF_TASK_CallInit( task );
   return( task );
 }
 
@@ -613,6 +649,7 @@ void FLDEFF_TASK_CallDraw( FLDEFF_TASK *task )
 {
   GF_ASSERT( task->flag );
   GF_ASSERT( task != NULL );
+  GF_ASSERT( task->work );
   task->header.proc_draw( task, task->work );
 }
 
@@ -693,18 +730,21 @@ HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task )
 //======================================================================
 //  data 仮 旧field_effect_data.c
 //======================================================================
+#include "fldeff_shadow.h"
+
 FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
 {
-  {FLDEFF_PROCID_SHADOW,NULL,NULL},
+  {FLDEFF_PROCID_SHADOW,FLDEFF_SHADOW_Init,FLDEFF_SHADOW_Delete},
   {FLDEFF_PROCID_MAX,NULL,NULL}, ///<終端
 };
 
 //--------------------------------------------------------------
 /// フィールドエフェクト　地上用エフェクト登録テーブル
 //--------------------------------------------------------------
-const u32 DATA_FLDEFF_RegistEffectTbl[] =
+const FLDEFF_PROCID DATA_FLDEFF_RegistEffectGroundTbl[] =
 {
   FLDEFF_PROCID_SHADOW,
-  FLDEFF_PROCID_MAX,
 };
 
+const u32 DATA_FLDEFF_RegistEffectGroundTblNum = 
+  NELEMS(DATA_FLDEFF_RegistEffectGroundTbl);

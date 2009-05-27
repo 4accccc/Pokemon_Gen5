@@ -3940,7 +3940,7 @@ static void FldMMdl_ChangeOBJAlies(
  * @retval	int		TRUE=ìØàÍÅBFALSE=ìØàÍÇ≈ÇÕÇ»Ç¢
  */
 //--------------------------------------------------------------
-BOOL FLDMMDL_CheckSameID( const FLDMMDL * fmmdl, u16 obj_id, int zone_id )
+BOOL FLDMMDL_CheckSameID( const FLDMMDL * fmmdl, u16 obj_id, u16 zone_id )
 {
 	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_USE) == 0 ){
 		return( FALSE );
@@ -3975,7 +3975,7 @@ BOOL FLDMMDL_CheckSameID( const FLDMMDL * fmmdl, u16 obj_id, int zone_id )
  */
 //--------------------------------------------------------------
 BOOL FLDMMDL_CheckSameIDCode(
-		const FLDMMDL * fmmdl, u16 code, u16 obj_id, int zone_id )
+		const FLDMMDL * fmmdl, u16 code, u16 obj_id, u16 zone_id )
 {
 	if( FLDMMDL_CheckStatusBit(fmmdl,FLDMMDL_STABIT_USE) ){
 		return( FALSE );
