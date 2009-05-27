@@ -127,7 +127,8 @@ GMEVENT * EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
     para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
     //デフォルト時のBGMナンバー
-    para->musicDefault = SEQ_WB_BA_TEST_250KB;
+//    para->musicDefault = SEQ_WB_BA_TEST_250KB;
+    para->musicDefault = SEQ_VS_NORAPOKE;
     //ピンチ時のBGMナンバー
     para->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;
 
