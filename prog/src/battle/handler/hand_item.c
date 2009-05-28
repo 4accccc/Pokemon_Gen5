@@ -1402,8 +1402,9 @@ static void handler_SiroiHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 
     msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
     msg_param->strID = BTL_STRID_SET_RankRecoverItem;
-    msg_param->args[0] = pokeID;
-    msg_param->args[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
+    msg_param->pokeID = pokeID;
+    msg_param->args[0] = BTL_EVENT_FACTOR_GetSubID( myHandle );
+    msg_param->arg_cnt = 1;
   }
 }
 //------------------------------------------------------------------------------
@@ -2341,8 +2342,9 @@ static void handler_KaigaraNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
         {
           BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVFLOW_HANDLERWORK_Push( flowWk, BTL_HANDEX_MESSAGE_SET, pokeID );
           msg_param->strID = BTL_STRID_SET_UseItem_RecoverLittle;
-          msg_param->args[0] = pokeID;
-          msg_param->args[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
+          msg_param->pokeID = pokeID;
+          msg_param->args[0] = BTL_EVENT_FACTOR_GetSubID( myHandle );
+          msg_param->arg_cnt = 1;
         }
       }
     }
