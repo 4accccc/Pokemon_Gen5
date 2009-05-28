@@ -250,7 +250,7 @@ static void initPokeCenParameter(FIELD_CAMERA * camera)
   // ターゲット補正値
   VEC_Set( &camera->target_offset, 0, 0x18066, 0xfffef197 );
 
-  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
+  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
 }
 
 //------------------------------------------------------------------
