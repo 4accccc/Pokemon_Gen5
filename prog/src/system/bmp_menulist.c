@@ -198,12 +198,14 @@ u32 BmpMenuList_Main( BMPMENULIST_WORK * lw )
 	}
 	if( skip_u ){
 		if( ListMoveUpDownCheck( lw, 1, (u8)lw->hed.line, LIST_UP ) == 0 ){
+			PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
 			lw->work = BMPMENULIST_MOVE_UP_SKIP;
 		}
 		return BMPMENULIST_NULL;
 	}
 	if( skip_d ){
 		if( ListMoveUpDownCheck( lw, 1, (u8)lw->hed.line, LIST_DOWN ) == 0 ){
+			PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
 			lw->work = BMPMENULIST_MOVE_DOWN_SKIP;
 		}
 		return BMPMENULIST_NULL;
