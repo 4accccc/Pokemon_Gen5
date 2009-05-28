@@ -150,6 +150,25 @@ static BOOL DMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
+	{ DEBUG_FIELD_STR17, DMenuCallProc_FieldPosData },
+	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
+	{ DEBUG_FIELD_STR20, DMenuCallProc_ControlTarget },
+	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
+	{ DEBUG_FIELD_STR04, DMenuCallProc_GridScaleControl },
+	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
+	{ DEBUG_FIELD_STR06, DMenuCallProc_MapSeasonSelect},
+	{ DEBUG_FIELD_STR07, DMenuCallProc_CameraList },
+	{ DEBUG_FIELD_STR13, DMenuCallProc_FldMMdlList },
+	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
+	{ DEBUG_FIELD_STR12, DMenuCallProc_OpenIRCBTLMenu },
+	{ DEBUG_FIELD_STR19, DMenuCallProc_OpenClubMenu },
+	{ DEBUG_FIELD_STR22, DMenuCallProc_ControlRtcList },
+	{ DEBUG_FIELD_STR15, DMenuCallProc_ControlLight },
+	{ DEBUG_FIELD_STR16, DMenuCallProc_WeatherList },
+  { DEBUG_FIELD_STR_SUBSCRN, DMenuCallProc_SubscreenSelect },
+  { DEBUG_FIELD_STR21 , DMenuCallProc_MusicalSelect },
+	{ DEBUG_FIELD_STR01, NULL },
+#if 0
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
 	{ DEBUG_FIELD_STR20, DMenuCallProc_ControlTarget },
@@ -161,6 +180,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
+#endif
 };
 
 //--------------------------------------------------------------
