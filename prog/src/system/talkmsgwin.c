@@ -80,20 +80,22 @@ typedef enum {
 
 #define TEX_DATA_SIZ (32)
 static u8 texData[32] = {
-	0x22,0x22,0x22,0x22,
-	0x12,0x11,0x11,0x11,
-	0x12,0x11,0x11,0x11,
-	0x12,0x11,0x11,0x11,
-	0x12,0x11,0x11,0x11,
-	0x12,0x11,0x11,0x11,
-	0x12,0x11,0x11,0x11,
-	0x12,0x11,0x11,0x11,
+	0x44,0x44,0x44,0x44,
+	0x34,0x33,0x33,0x33,
+	0x34,0x22,0x22,0x22,
+	0x34,0x12,0x11,0x11,
+	0x34,0x12,0x11,0x11,
+	0x34,0x12,0x11,0x11,
+	0x34,0x12,0x11,0x11,
+	0x34,0x12,0x11,0xff,
 };
 
 #define TEX_PLTT_SIZ (32)
 static u16 texPltt[16] = {
-	0x0000,0x7fff,0x56b5,0x294a,0x0000,0x0000,0x0000,0x0000,
-	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	GX_RGB(0,0,0),GX_RGB(31,31,31),GX_RGB(31,31,31),GX_RGB(31,31,31),
+	GX_RGB(31,31,31),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),
+	GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),
+	GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(24,24,24),
 };
 
 //============================================================================================
@@ -706,14 +708,11 @@ static void	drawTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, BOOL tailOnl
 
 		G3_Color(tmsgwin->color);
 
-		//G3_TexCoord(0, 8 * FX32_ONE);
-		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		G3_TexCoord(0, 8 * FX32_ONE);
 		G3_Vtx(tailData->vtxTail2.x, tailData->vtxTail2.y, tailData->vtxTail2.z); 
-		//G3_TexCoord(0, 0);
-		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		G3_TexCoord(0, 0);
 		G3_Vtx(tailData->vtxTail0.x, tailData->vtxTail0.y, tailData->vtxTail0.z); 
-		//G3_TexCoord(8 * FX32_ONE, 0);
-		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		G3_TexCoord(8 * FX32_ONE, 0);
 		G3_Vtx(tailData->vtxTail1.x, tailData->vtxTail1.y, tailData->vtxTail1.z); 
 
 		G3_End();
@@ -723,13 +722,13 @@ static void	drawTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, BOOL tailOnl
 
 		G3_Color(tmsgwin->color);
 
-		G3_TexCoord(0, 0);
+		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
 		G3_Vtx(tailData->vtxWin2.x, tailData->vtxWin2.y, tailData->vtxWin2.z); 
-		G3_TexCoord(0, 0);
+		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
 		G3_Vtx(tailData->vtxWin0.x, tailData->vtxWin0.y, tailData->vtxWin0.z); 
-		G3_TexCoord(0, 0);
+		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
 		G3_Vtx(tailData->vtxWin1.x, tailData->vtxWin1.y, tailData->vtxWin1.z); 
-		G3_TexCoord(0, 0);
+		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
 		G3_Vtx(tailData->vtxWin3.x, tailData->vtxWin3.y, tailData->vtxWin3.z); 
 
 		G3_End();
