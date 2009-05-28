@@ -41,7 +41,11 @@ enum {
   SUBPROC_WORK_SIZE = 64,
 
   PALIDX_MSGWIN     = 0,
-  PALIDX_MSGWIN_FRM = 1,
+  PALIDX_POKEWIN    = 1,
+
+  COLIDX_MSGWIN_CLEAR  = 0x0c,
+  COLIDX_MSGWIN_LETTER = 0x01,
+  COLIDX_MSGWIN_SHADOW = 0x09,
 };
 
 typedef enum {
@@ -196,10 +200,10 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 
 //  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_FONT, NARC_font_default_nclr, wk->heapID, FADE_MAIN_BG, 0x20,
-        PALIDX_MSGWIN*0x20, 0 );
+        PALIDX_POKEWIN*16, 0 );
 
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_msgwin_frm_NCLR, wk->heapID, FADE_MAIN_BG, 0x20,
-        PALIDX_MSGWIN_FRM*16, 0 );
+        PALIDX_MSGWIN*16, 0 );
 
   GFL_BG_FillScreen( GFL_BG_FRAME1_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
   GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0x00, 1, 0 );
@@ -209,7 +213,6 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
     transInfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, NARC_battgra_wb_msgwin_frm_NCGR,
                 GFL_BG_FRAME1_M, 0, FALSE, GFL_HEAP_LOWID(wk->heapID) );
     winfrm_charpos = GFL_ARCUTIL_TRANSINFO_GetPos( transInfo );
-    BTL_Printf("フレームキャラナンバ=%d\n", winfrm_charpos);
     GFL_ARC_CloseDataHandle( handle );
   }
 
@@ -225,9 +228,9 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   GFL_BMPWIN_MakeScreen( wk->win );
 
 //    GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0xaa, 9, 1 );
-  GFL_BMPWIN_MakeFrameScreen( wk->win, winfrm_charpos, PALIDX_MSGWIN_FRM );
+  GFL_BMPWIN_MakeFrameScreen( wk->win, winfrm_charpos, PALIDX_MSGWIN );
 
-  GFL_BMP_Clear( wk->bmp, 0x0f );
+  GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
   GFL_BMPWIN_TransVramCharacter( wk->win );
 
   statwin_setupAll( wk );
@@ -427,19 +430,19 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 4:
     if( BTLV_SCU_WaitMsg(wk) )
     {
-			BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_AA );
-		  BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
-			(*seq)++;
-		}
-		break;
-	case 5:
-		if( !BTLV_EFFECT_CheckExecute() )
-		{
-			statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
-			return TRUE;
-		}
-		break;
-	}
+      BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_AA );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+      (*seq)++;
+    }
+    break;
+  case 5:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
+      return TRUE;
+    }
+    break;
+  }
 #endif
   return FALSE;
 }
@@ -641,7 +644,7 @@ static void tokwinRenewTask( GFL_TCBL* tcbl, void* wk_adrs )
  *
  * @param   wk
  * @param   str     表示文字列
- * @param   wait    表示終了後の待ち方( 0:何もしない / 1～:通常時はキー待ち，通信時は指定フレーム待ち）
+ * @param   wait    表示終了後の待ち方( 0:即終了 / 1～:通常時はキー待ち，通信時は指定フレーム待ち）
  *
  */
 //=============================================================================================
@@ -649,11 +652,13 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
 {
   GF_ASSERT( wk->printStream == NULL );
 
-  GFL_BMP_Clear( wk->bmp, 0x0f );
+  GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
+
+  GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, COLIDX_MSGWIN_CLEAR );
 
   wk->printStream = PRINTSYS_PrintStream(
         wk->win, 0, 0, str, wk->defaultFont, MSGSPEED_GetWait(), wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
-        wk->heapID, 0x0f
+        wk->heapID, COLIDX_MSGWIN_CLEAR
   );
   wk->printSeq = 0;
   wk->printWait = wait;
@@ -676,6 +681,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     {
       if( PRINTSYS_PrintStreamGetState( wk->printStream ) == PRINTSTREAM_STATE_DONE )
       {
+        GFL_FONTSYS_SetDefaultColor();
         PRINTSYS_PrintStreamDelete( wk->printStream );
         wk->printStream = NULL;
       }
@@ -1275,7 +1281,8 @@ static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos )
 
   TAYA_Printf("[STATWIN Setup] pokePos=%d, viewPos=%d (%d,%d)\n", pokePos, viewPos, px, py);
 
-  stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, px, py, STATWIN_WIDTH, STATWIN_HEIGHT, 0, GFL_BMP_CHRAREA_GET_F );
+  stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, px, py, STATWIN_WIDTH, STATWIN_HEIGHT,
+      PALIDX_POKEWIN, GFL_BMP_CHRAREA_GET_F );
   stwin->bmp = GFL_BMPWIN_GetBmp( stwin->win );
 
   statwin_reset_data( stwin );
@@ -1383,7 +1390,8 @@ static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, BtlPokePos pos )
   px = winpos[vpos].x;
   py = winpos[vpos].y;
 
-  tokwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, px, py, TEST_TOKWIN_CHAR_WIDTH, 2, 0, GFL_BMP_CHRAREA_GET_F );
+  tokwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, px, py, TEST_TOKWIN_CHAR_WIDTH, 2,
+      PALIDX_POKEWIN, GFL_BMP_CHRAREA_GET_F );
   tokwin->bmp = GFL_BMPWIN_GetBmp( tokwin->win );
 
   {
