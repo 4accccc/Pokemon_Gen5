@@ -5273,7 +5273,7 @@ static void Sub_WazaTypeIconCreateAll(BI_PARAM_PTR bip)
 													bip->wazatype_charID[ i ], bip->wazatype_plttID, bip->wazatype_cellID,
 													&obj_param, CLSYS_DEFREND_SUB, bip->heapID );
 
-//      GFL_CLACT_WK_SetPlttOffs( bip->icon_cap[ i ], WazaTypeIcon_PlttOffsetGet(waza_type) + 3, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      GFL_CLACT_WK_SetPlttOffs( bip->icon_cap[ i ], WazaTypeIcon_PlttOffsetGet(waza_type), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
 			{//ƒLƒƒƒ‰“]‘—
 				void *obj_vram;
