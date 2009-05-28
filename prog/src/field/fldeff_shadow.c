@@ -183,6 +183,16 @@ static void shadow_InitResource( FLDEFF_SHADOW *sd )
   
   sd->g3d_rnd =
     GFL_G3D_RENDER_Create( sd->g3d_res, 0, sd->g3d_res );
+  
+  {
+    NNSG3dRenderObj *rnd = GFL_G3D_RENDER_GetRenderObj( sd->g3d_rnd );
+	  NNSG3dResMdl *pMdl = NNS_G3dRenderObjGetResMdl( rnd );
+   	NNS_G3dMdlUseGlbDiff( pMdl );
+	  NNS_G3dMdlUseGlbAmb( pMdl );
+	  NNS_G3dMdlUseGlbSpec( pMdl );
+  	NNS_G3dMdlUseGlbEmi( pMdl );
+  }
+  
   sd->g3d_obj =
     GFL_G3D_OBJECT_Create( sd->g3d_rnd, NULL, 0 );
 }
@@ -243,6 +253,8 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
   work->fmmdl = head->fmmdl;
   work->obj_id = FLDMMDL_GetOBJID( work->fmmdl );
   work->zone_id = FLDMMDL_GetZoneID( work->fmmdl );
+  
+  FLDEFF_TASK_CallUpdate( task ); //‘¦AÀ•W‚ğ”½‰f‚·‚é
 }
 
 //--------------------------------------------------------------
