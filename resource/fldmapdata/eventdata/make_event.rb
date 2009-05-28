@@ -428,12 +428,13 @@ begin
     door_events = DoorEventData.new(file, "DOOR_EVENT", header)
 
     id = "event_" + door_events.zonename.downcase
+    ofilename = id.sub(/event_/,"tmp/")
 
-    File.open("#{id}.h", "w"){|file|
+    File.open("#{ofilename}.h", "w"){|file|
       door_events.dumpHeader(file)
     }
 
-    File.open("#{id}.cdat", "w"){|file|
+    File.open("#{ofilename}.cdat", "w"){|file|
       door_events.dump(file)
       #obj_events.dump(file)
 

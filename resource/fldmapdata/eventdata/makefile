@@ -24,9 +24,10 @@ include $(PROJECT_RSCDIR)\macro_define
 
 
 
+TMPDIR	= tmp
 SRCDATA = $(wildcard data/*.mev)
 TGTDATA = $(basename $(notdir $(SRCDATA)))
-CDAT = $(addprefix event_,$(addsuffix .cdat,$(TGTDATA)))
+CDAT = $(addprefix $(TMPDIR)/,$(addsuffix .cdat,$(TGTDATA)))
 HEADER = $(CDAT:.cdat=.h)
 
 TARGET = eventdata_table.cdat
@@ -42,7 +43,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 $(TARGET):	$(CDAT)
 	ruby make_table.rb $(CDAT) > $(TARGET)
 
-event_%.cdat: data/%.mev
+$(TMPDIR)/%.cdat: data/%.mev
 	ruby make_event.rb $<
 endif
 
@@ -52,6 +53,7 @@ endif
 #------------------------------------------------------------------------------
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
+	-rm event_*.cdat event_*.h
 	-rm $(CDAT) $(HEADER) $(TARGET)
 endif
 

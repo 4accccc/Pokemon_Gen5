@@ -1,4 +1,4 @@
-//#include "event_d02.h"
+//#include "tmp/d02.h"
 //このファイルはdata/d02.mevから自動生成されました
 #ifndef ZONE_D02_EVD_H
 #define ZONE_D02_EVD_H
@@ -8,7 +8,7 @@
 #define DOOR_ID_D02_EXIT03                2
 
 #endif //ZONE_D02_EVD_H
-//#include "event_d02r0101.h"
+//#include "tmp/d02r0101.h"
 //このファイルはdata/d02r0101.mevから自動生成されました
 #ifndef ZONE_D02R0101_EVD_H
 #define ZONE_D02R0101_EVD_H
@@ -25,7 +25,7 @@
 #define DOOR_ID_D02R0101_EXIT10           9
 
 #endif //ZONE_D02R0101_EVD_H
-//#include "event_h01p01.h"
+//#include "tmp/h01p01.h"
 //このファイルはdata/h01p01.mevから自動生成されました
 #ifndef ZONE_H01P01_EVD_H
 #define ZONE_H01P01_EVD_H
@@ -36,7 +36,7 @@
 #define DOOR_ID_H01P01_EXIT04             3
 
 #endif //ZONE_H01P01_EVD_H
-//#include "event_t01.h"
+//#include "tmp/t01.h"
 //このファイルはdata/t01.mevから自動生成されました
 #ifndef ZONE_T01_EVD_H
 #define ZONE_T01_EVD_H
@@ -47,7 +47,7 @@
 #define DOOR_ID_T01_EXIT04                3
 
 #endif //ZONE_T01_EVD_H
-//#include "event_t01r0101.h"
+//#include "tmp/t01r0101.h"
 //このファイルはdata/t01r0101.mevから自動生成されました
 #ifndef ZONE_T01R0101_EVD_H
 #define ZONE_T01R0101_EVD_H
@@ -58,7 +58,7 @@
 #define DOOR_ID_T01R0101_EXIT04           3
 
 #endif //ZONE_T01R0101_EVD_H
-//#include "event_t01r0102.h"
+//#include "tmp/t01r0102.h"
 //このファイルはdata/t01r0102.mevから自動生成されました
 #ifndef ZONE_T01R0102_EVD_H
 #define ZONE_T01R0102_EVD_H
@@ -67,7 +67,7 @@
 #define DOOR_ID_T01R0102_EXIT02           1
 
 #endif //ZONE_T01R0102_EVD_H
-//#include "event_t01r0201.h"
+//#include "tmp/t01r0201.h"
 //このファイルはdata/t01r0201.mevから自動生成されました
 #ifndef ZONE_T01R0201_EVD_H
 #define ZONE_T01R0201_EVD_H
@@ -79,7 +79,7 @@
 #define DOOR_ID_T01R0201_EXIT04           4
 
 #endif //ZONE_T01R0201_EVD_H
-//#include "event_t01r0202.h"
+//#include "tmp/t01r0202.h"
 //このファイルはdata/t01r0202.mevから自動生成されました
 #ifndef ZONE_T01R0202_EVD_H
 #define ZONE_T01R0202_EVD_H
@@ -88,7 +88,7 @@
 #define DOOR_ID_T01R0202_EXIT02           1
 
 #endif //ZONE_T01R0202_EVD_H
-//#include "event_t01r0301.h"
+//#include "tmp/t01r0301.h"
 //このファイルはdata/t01r0301.mevから自動生成されました
 #ifndef ZONE_T01R0301_EVD_H
 #define ZONE_T01R0301_EVD_H
@@ -99,7 +99,7 @@
 #define DOOR_ID_T01R0301_EXIT04           3
 
 #endif //ZONE_T01R0301_EVD_H
-//#include "event_t01r0302.h"
+//#include "tmp/t01r0302.h"
 //このファイルはdata/t01r0302.mevから自動生成されました
 #ifndef ZONE_T01R0302_EVD_H
 #define ZONE_T01R0302_EVD_H
@@ -108,7 +108,7 @@
 #define DOOR_ID_T01R0302_EXIT02           1
 
 #endif //ZONE_T01R0302_EVD_H
-//#include "event_t01r0401.h"
+//#include "tmp/t01r0401.h"
 //このファイルはdata/t01r0401.mevから自動生成されました
 #ifndef ZONE_T01R0401_EVD_H
 #define ZONE_T01R0401_EVD_H
@@ -118,7 +118,7 @@
 #define DOOR_ID_T01R0401_EXIT03           2
 
 #endif //ZONE_T01R0401_EVD_H
-//#include "event_t02.h"
+//#include "tmp/t02.h"
 //このファイルはdata/t02.mevから自動生成されました
 #ifndef ZONE_T02_EVD_H
 #define ZONE_T02_EVD_H
@@ -130,7 +130,7 @@
 #define DOOR_ID_T02_EXIT04                4
 
 #endif //ZONE_T02_EVD_H
-//#include "event_t02pc0101.h"
+//#include "tmp/t02pc0101.h"
 //このファイルはdata/t02pc0101.mevから自動生成されました
 #ifndef ZONE_T02PC0101_EVD_H
 #define ZONE_T02PC0101_EVD_H
@@ -141,7 +141,7 @@
 #define DOOR_ID_T02PC0101_EXIT03          3
 
 #endif //ZONE_T02PC0101_EVD_H
-//#include "event_t02r0101.h"
+//#include "tmp/t02r0101.h"
 //このファイルはdata/t02r0101.mevから自動生成されました
 #ifndef ZONE_T02R0101_EVD_H
 #define ZONE_T02R0101_EVD_H
@@ -151,7 +151,7 @@
 #define DOOR_ID_T02R0101_EXIT03           2
 
 #endif //ZONE_T02R0101_EVD_H
-//#include "event_t02r0201.h"
+//#include "tmp/t02r0201.h"
 //このファイルはdata/t02r0201.mevから自動生成されました
 #ifndef ZONE_T02R0201_EVD_H
 #define ZONE_T02R0201_EVD_H
@@ -161,7 +161,7 @@
 #define DOOR_ID_T02R0201_EXIT03           2
 
 #endif //ZONE_T02R0201_EVD_H
-//#include "event_t02r0301.h"
+//#include "tmp/t02r0301.h"
 //このファイルはdata/t02r0301.mevから自動生成されました
 #ifndef ZONE_T02R0301_EVD_H
 #define ZONE_T02R0301_EVD_H
