@@ -506,6 +506,8 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 //          (*seq) = SEQ_SEL_FIGHT;
           break;
         case BTL_ACTION_CHANGE:
+          BTLV_EFFECT_Stop();
+          BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
           (*seq) = SEQ_SEL_POKEMON;
           break;
         case BTL_ACTION_ESCAPE:
@@ -613,10 +615,10 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
       int hit = GFL_UI_TP_HitTrg( SkillMenuTouchData );
       if( hit != GFL_UI_TP_HIT_NONE )
       {
-        Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
         //ƒLƒƒƒ“ƒZƒ‹‚ª‰Ÿ‚³‚ê‚½
         if( hit == 0 )
         {
+          Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
           SePlayCancel();
           selectAction_init( seq, wk );
           (*seq) = SEQ_START;
@@ -635,6 +637,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 
           if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE )
           {
+            Sub_TouchEndDelete( wk->bip, TRUE, TRUE );
             (*seq) = SEQ_SEL_FIGHT_FINISH;
           }
           else
@@ -679,9 +682,12 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
     break;
 
   case SEQ_SEL_POKEMON:
-    BTL_ACTION_SetChangeBegin( wk->destActionParam );
-    return TRUE;
-
+  	if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      BTL_ACTION_SetChangeBegin( wk->destActionParam );
+     return TRUE;
+    }
+    break;
   case SEQ_SEL_POKEMON+1:
     return TRUE;
 
