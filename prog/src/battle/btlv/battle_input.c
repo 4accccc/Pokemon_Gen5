@@ -496,17 +496,17 @@ ALIGN4 static const u16 WazaIconPos[][2] = {	//0:X, 1:Y
 
 //uPPv‚Ì•\Ž¦À•W
 ALIGN4 static const u16 PPMsgPos[][2] = {	//0:X, 1:Y
-	{4*8 + 28-1, 		FA_POS_WAZA_1_Y + 16},
-	{0x14*8 + 28-1,	FA_POS_WAZA_2_Y + 16},
-	{4*8 + 28-1, 		FA_POS_WAZA_3_Y + 16},
-	{0x14*8 + 28-1,	FA_POS_WAZA_4_Y + 16},
+	{3*8 + 28-1, 		FA_POS_WAZA_1_Y + 16}, //{4*8 + 28-1, 		FA_POS_WAZA_1_Y + 16},
+	{0x13*8 + 28-1,	FA_POS_WAZA_2_Y + 16}, //{0x14*8 + 28-1,	FA_POS_WAZA_2_Y + 16},
+	{3*8 + 28-1, 		FA_POS_WAZA_3_Y + 16}, //{4*8 + 28-1, 		FA_POS_WAZA_3_Y + 16},
+	{0x13*8 + 28-1,	FA_POS_WAZA_4_Y + 16}, //{0x14*8 + 28-1,	FA_POS_WAZA_4_Y + 16},
 };
 //Œ»ÝPP(”’l)‚Ì•\Ž¦À•W
 ALIGN4 static const u16 NowPPPos[][2] = {	//0:X, 1:Y
-	{4*8 + 44, 		FA_POS_WAZA_1_Y + 16},
-	{0x14*8 + 44,		FA_POS_WAZA_2_Y + 16},
-	{4*8 + 44, 		FA_POS_WAZA_3_Y + 16},
-	{0x14*8 + 44,		FA_POS_WAZA_4_Y + 16},
+	{3*8 + 44, 		FA_POS_WAZA_1_Y + 16}, //{4*8 + 44, 		FA_POS_WAZA_1_Y + 16},
+	{0x13*8 + 44,		FA_POS_WAZA_2_Y + 16}, //{0x14*8 + 44,		FA_POS_WAZA_2_Y + 16},
+	{3*8 + 44, 		FA_POS_WAZA_3_Y + 16}, //{4*8 + 44, 		FA_POS_WAZA_3_Y + 16},
+	{0x13*8 + 44,		FA_POS_WAZA_4_Y + 16}, //{0x14*8 + 44,		FA_POS_WAZA_4_Y + 16},
 };
 
 //‹Z•ª—Þ‚Ì•\Ž¦À•W(XF¶’[À•W)
@@ -544,8 +544,8 @@ enum{
 	PALOFS_POKEMON = 2,
 	PALOFS_ESCAPE = 2,
 	
-	PALOFS_WAZA = 3,
-	PALOFS_PP = 4,
+	PALOFS_WAZA = 2,  //3,
+	PALOFS_PP = 2,    //3,
 	PALOFS_WAZA_MODORU = 2,
 	
 	PALOFS_SYSMSG = 3,
@@ -563,11 +563,11 @@ enum{
 #define MSGCOLOR_POKEMON		(PRINTSYS_LSB_Make(7, 8, 9))
 #define MSGCOLOR_ESCAPE			(PRINTSYS_LSB_Make(10, 11, 12))
 
-#define MSGCOLOR_WAZA			(PRINTSYS_LSB_Make(7, 8, 9))
-#define MSGCOLOR_PP_BLACK		(PRINTSYS_LSB_Make(1, 2, 0))	//FONT_SYSTEM‚È‚Ì‚Å”wŒi”²‚«FŽw’è
-#define MSGCOLOR_PP_YELLOW		(PRINTSYS_LSB_Make(3, 4, 0))	//FONT_SYSTEM‚È‚Ì‚Å”wŒi”²‚«FŽw’è
-#define MSGCOLOR_PP_ORANGE		(PRINTSYS_LSB_Make(5, 6, 0))	//FONT_SYSTEM‚È‚Ì‚Å”wŒi”²‚«FŽw’è
-#define MSGCOLOR_PP_RED			(PRINTSYS_LSB_Make(7, 8, 0))	//FONT_SYSTEM‚È‚Ì‚Å”wŒi”²‚«FŽw’è
+#define MSGCOLOR_WAZA			(PRINTSYS_LSB_Make(14, 14, 0))  //#define MSGCOLOR_WAZA			(PRINTSYS_LSB_Make(7, 8, 9))
+#define MSGCOLOR_PP_BLACK		(PRINTSYS_LSB_Make(14, 14, 0))	//FONT_SYSTEM‚È‚Ì‚Å”wŒi”²‚«FŽw’è	(PRINTSYS_LSB_Make(1, 2, 0))
+#define MSGCOLOR_PP_YELLOW		(PRINTSYS_LSB_Make(14, 14, 0))	//FONT_SYSTEM‚È‚Ì‚Å”wŒi”²‚«FŽw’è	(PRINTSYS_LSB_Make(3, 4, 0))
+#define MSGCOLOR_PP_ORANGE		(PRINTSYS_LSB_Make(14, 14, 0))	//FONT_SYSTEM‚È‚Ì‚Å”wŒi”²‚«FŽw’è	(PRINTSYS_LSB_Make(5, 6, 0))
+#define MSGCOLOR_PP_RED			(PRINTSYS_LSB_Make(14, 14, 0))	//FONT_SYSTEM‚È‚Ì‚Å”wŒi”²‚«FŽw’è	(PRINTSYS_LSB_Make(7, 8, 0))
 #define MSGCOLOR_WAZA_MODORU	(PRINTSYS_LSB_Make(10, 11, 12))
 
 #define MSGCOLOR_SYSMSG			(PRINTSYS_LSB_Make(9, 8, 0))//FONT_SYSTEM‚È‚Ì‚Å”wŒi”²‚«FŽw’è
@@ -2653,9 +2653,9 @@ void BINPUT_DefaultDataSet(BI_PARAM_PTR bip)
 	
 		hdl = GFL_ARC_OpenDataHandle( WazaTypeIcon_ArcIDGet(), bip->heapID );
 		bip->wazatype_cellID = GFL_CLGRP_CELLANIM_Register( hdl, WazaTypeIcon_CellIDGet(), WazaTypeIcon_CellAnmIDGet(), bip->heapID );
-		bip->wazatype_plttID = GFL_CLGRP_PLTT_Register( hdl, WazaTypeIcon_PlttIDGet(), CLSYS_DRAW_SUB, 0, bip->heapID );
-		PaletteWorkSet_VramCopy( bip->pfd, FADE_SUB_OBJ,
-								 GFL_CLGRP_PLTT_GetAddr( bip->wazatype_plttID, CLSYS_DRAW_SUB ) / 0x20, 0x20 * 3 );
+		bip->wazatype_plttID = GFL_CLGRP_PLTT_Register( hdl, WazaTypeIcon_PlttIDGet(), CLSYS_DRAW_SUB, 0x20 * 3, bip->heapID );
+  	PaletteWorkSet_VramCopy( bip->pfd, FADE_SUB_OBJ,
+                             GFL_CLGRP_PLTT_GetAddr( bip->wazatype_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
 		for(i = 0; i < PTL_WAZA_MAX; i++){
 			bip->wazatype_charID[ i ] = GFL_CLGRP_CGR_Register( hdl, WazaTypeIcon_CgrIDGet( POKETYPE_NORMAL ), FALSE,
 													   CLSYS_DRAW_SUB, bip->heapID );
@@ -2786,7 +2786,7 @@ void BINPUT_CreateBG(ARCHANDLE* hdl_bg, ARCHANDLE* hdl_obj, BI_PARAM_PTR bip, in
 //	bip->objplttID = GFL_CLGRP_PLTT_Register( hdl_obj, BATTLE_WOBJ_NCLR, CLSYS_DRAW_SUB, 0, bip->heapID );
 	bip->objplttID = GFL_CLGRP_PLTT_RegisterComp( hdl_obj, BATTLE_WOBJ_NCLR, CLSYS_DRAW_SUB, 0, bip->heapID );
 	PaletteWorkSet_VramCopy( bip->pfd, FADE_SUB_OBJ,
-							 GFL_CLGRP_PLTT_GetAddr( bip->objplttID, CLSYS_DRAW_SUB ) / 0x20, 0x20 * 3 );
+  						 GFL_CLGRP_PLTT_GetAddr( bip->objplttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
 	bip->makedata_no = select_bg;
 
 	//ƒuƒŒƒ“ƒhÝ’è
@@ -4939,8 +4939,12 @@ static void Sub_FontOamCreate(BI_PARAM_PTR bip, FONT_ACTOR *font_actor, const ST
 
 	//BMPì¬
 	if( ex_bmp == NULL ){
+    u8 letter, shadow, back;
 		bmp = GFL_BMP_Create( char_len, 16 / 8, GFL_BMP_16_COLOR, bip->heapID );
+    GFL_FONTSYS_GetColor( &letter, &shadow, &back );
+    GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( color ), PRINTSYS_LSB_GetS( color ), PRINTSYS_LSB_GetB( color ) );
 		PRINTSYS_Print( bmp, 0, 0, str, bip->font );
+    GFL_FONTSYS_SetColor( letter, shadow, back );
 //		GF_STR_PrintExpand(&bmpwin, font_type, str, 0, 0, MSG_NO_PUT, color, 
 //			PANEL_MSG_MARGIN, 0, NULL);
 //		GF_STR_PrintColor(&bmpwin, font_type, str, 0, 0, MSG_NO_PUT, color, NULL );
@@ -5222,6 +5226,7 @@ static void FontExBmpwin_FontSet(BI_PARAM_PTR bip, const STRBUF *str,
 	FONT_EX_BMP *ex_bmp, PRINTSYS_LSB color)
 {
 	int font_len, char_len;
+  u8 letter, shadow, back;
 	
 	FontLenGet(str, bip->font, &font_len, &char_len);
 	ex_bmp->font_len = font_len;
@@ -5230,7 +5235,10 @@ static void FontExBmpwin_FontSet(BI_PARAM_PTR bip, const STRBUF *str,
 		GFL_BMP_Delete( ex_bmp->bmp );
 	}
 	ex_bmp->bmp = GFL_BMP_Create( char_len, 16 / 8, GFL_BMP_16_COLOR, bip->heapID );
+  GFL_FONTSYS_GetColor( &letter, &shadow, &back );
+  GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( color ), PRINTSYS_LSB_GetS( color ), PRINTSYS_LSB_GetB( color ) );
 	PRINTSYS_Print( ex_bmp->bmp, 0, 0, str, bip->font );
+  GFL_FONTSYS_SetColor( letter, shadow, back );
 }
 
 
@@ -5264,6 +5272,9 @@ static void Sub_WazaTypeIconCreateAll(BI_PARAM_PTR bip)
 			bip->icon_cap[i] = GFL_CLACT_WK_Create( bip->wazatype_clunit,
 													bip->wazatype_charID[ i ], bip->wazatype_plttID, bip->wazatype_cellID,
 													&obj_param, CLSYS_DEFREND_SUB, bip->heapID );
+
+//      GFL_CLACT_WK_SetPlttOffs( bip->icon_cap[ i ], WazaTypeIcon_PlttOffsetGet(waza_type) + 3, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
 			{//ƒLƒƒƒ‰“]‘—
 				void *obj_vram;
 				NNSG2dImageProxy image;
@@ -5493,6 +5504,7 @@ static void Sub_BackScrnOnlyVisible(void)
 void Sub_TouchEndDelete(BI_PARAM_PTR bip, int obj, int bg)
 {
 	if(obj == TRUE){
+	  GFL_CLGRP_PLTT_Release( bip->objplttID );
 		Sub_SceneOBJDelete(bip);
 	}
 	if(bg == TRUE){
