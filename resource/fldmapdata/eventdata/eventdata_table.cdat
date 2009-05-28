@@ -10,6 +10,18 @@
 #define DOOR_ID_C01_EXIT05                4
 
 #endif //ZONE_C01_EVD_H
+//#include "tmp/c02.h"
+//このファイルはdata/c02.mevから自動生成されました
+#ifndef ZONE_C02_EVD_H
+#define ZONE_C02_EVD_H
+
+#define DOOR_ID_C02_EXIT01                0
+#define DOOR_ID_C02_EXIT02                1
+#define DOOR_ID_C02_EXIT03                2
+#define DOOR_ID_C02_EXIT04                3
+#define DOOR_ID_C02_EXIT05                4
+
+#endif //ZONE_C02_EVD_H
 //#include "tmp/d02.h"
 //このファイルはdata/d02.mevから自動生成されました
 #ifndef ZONE_D02_EVD_H
@@ -60,6 +72,18 @@
 #define DOOR_ID_R02_EXIT05                4
 
 #endif //ZONE_R02_EVD_H
+//#include "tmp/r03.h"
+//このファイルはdata/r03.mevから自動生成されました
+#ifndef ZONE_R03_EVD_H
+#define ZONE_R03_EVD_H
+
+#define DOOR_ID_R03_EXIT01                0
+#define DOOR_ID_R03_EXIT02                1
+#define DOOR_ID_R03_EXIT03                2
+#define DOOR_ID_R03_EXIT04                3
+#define DOOR_ID_R03_EXIT05                4
+
+#endif //ZONE_R03_EVD_H
 //#include "tmp/t01.h"
 //このファイルはdata/t01.mevから自動生成されました
 #ifndef ZONE_T01_EVD_H
@@ -238,6 +262,50 @@ static const EVENTDATA_TABLE event_c01 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&ConnectData_C01,
+	(void *)NULL,
+};
+const CONNECT_DATA ConnectData_C02[] = {
+	{//DOOR_ID_C02_EXIT01 = 0
+		{9152, 0, 10592},
+		ZONE_ID_R03, DOOR_ID_R03_EXIT01,
+		3,//direction
+		0 //type
+	},
+	{//DOOR_ID_C02_EXIT02 = 1
+		{9152, 0, 10608},
+		ZONE_ID_R03, DOOR_ID_R03_EXIT02,
+		3,//direction
+		0 //type
+	},
+	{//DOOR_ID_C02_EXIT03 = 2
+		{9152, 0, 10624},
+		ZONE_ID_R03, DOOR_ID_R03_EXIT03,
+		3,//direction
+		0 //type
+	},
+	{//DOOR_ID_C02_EXIT04 = 3
+		{9152, 0, 10640},
+		ZONE_ID_R03, DOOR_ID_R03_EXIT04,
+		3,//direction
+		0 //type
+	},
+	{//DOOR_ID_C02_EXIT05 = 4
+		{9152, 0, 10656},
+		ZONE_ID_R03, DOOR_ID_R03_EXIT05,
+		3,//direction
+		0 //type
+	},
+};
+const int ConnectCount_C02 = NELEMS(ConnectData_C02);
+
+static const EVENTDATA_TABLE event_c02 = {
+	0,
+	0,
+	5,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&ConnectData_C02,
 	(void *)NULL,
 };
 const CONNECT_DATA ConnectData_D02[] = {
@@ -426,6 +494,50 @@ static const EVENTDATA_TABLE event_r02 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&ConnectData_R02,
+	(void *)NULL,
+};
+const CONNECT_DATA ConnectData_R03[] = {
+	{//DOOR_ID_R03_EXIT01 = 0
+		{9232, 0, 10592},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT01,
+		4,//direction
+		0 //type
+	},
+	{//DOOR_ID_R03_EXIT02 = 1
+		{9232, 0, 10608},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT02,
+		4,//direction
+		0 //type
+	},
+	{//DOOR_ID_R03_EXIT03 = 2
+		{9232, 0, 10624},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT03,
+		4,//direction
+		0 //type
+	},
+	{//DOOR_ID_R03_EXIT04 = 3
+		{9232, 0, 10640},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT04,
+		4,//direction
+		0 //type
+	},
+	{//DOOR_ID_R03_EXIT05 = 4
+		{9232, 0, 10656},
+		ZONE_ID_C02, DOOR_ID_C02_EXIT05,
+		4,//direction
+		0 //type
+	},
+};
+const int ConnectCount_R03 = NELEMS(ConnectData_R03);
+
+static const EVENTDATA_TABLE event_r03 = {
+	0,
+	0,
+	5,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&ConnectData_R03,
 	(void *)NULL,
 };
 const CONNECT_DATA ConnectData_T01[] = {
@@ -877,10 +989,12 @@ static const EVENTDATA_TABLE event_t02r0301 = {
 
 static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_C01, &event_c01 },
+	{ ZONE_ID_C02, &event_c02 },
 	{ ZONE_ID_D02, &event_d02 },
 	{ ZONE_ID_D02R0101, &event_d02r0101 },
 	{ ZONE_ID_H01P01, &event_h01p01 },
 	{ ZONE_ID_R02, &event_r02 },
+	{ ZONE_ID_R03, &event_r03 },
 	{ ZONE_ID_T01, &event_t01 },
 	{ ZONE_ID_T01R0101, &event_t01r0101 },
 	{ ZONE_ID_T01R0102, &event_t01r0102 },
