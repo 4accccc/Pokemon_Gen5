@@ -1133,7 +1133,7 @@ static void WH_StateOutStartParent(void *arg)
 	case WM_STATECODE_DISCONNECTED:
 	case WM_STATECODE_DISCONNECTED_FROM_MYSELF:
 		{
-			WH_TRACE("StartParent - child (aid 0x%x) disconnected\n", cb->aid);
+			WH_TRACE("StartParent - child (aid 0x%x) disconnected %d\n", cb->aid,cb->state);
 			// cb->macAddress には, 切断された子機の MAC アドレスが入っています。
 			_pWmInfo->sConnectBitmap &= ~target_bitmap;
 			if(_pWmInfo->disconnectCallBack){
@@ -1645,7 +1645,7 @@ static void WH_StateOutStartScan(void *arg)
 
 
 			WH_TRACE("強度 %d\n",WMSP_GetRssi8(bd->rssi));
-			if(WMSP_GetRssi8(bd->rssi) < 50){
+			if(WMSP_GetRssi8(bd->rssi) < 30){
 				continue;
 			}
 
