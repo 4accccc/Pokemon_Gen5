@@ -480,10 +480,10 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 
   //カメラワークエフェクト
   if( *seq < SEQ_SEL_FIGHT_FINISH )
-  { 
-  	if( !BTLV_EFFECT_CheckExecute() )
-    { 
-  		BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
+  {
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
     }
   }
 
@@ -666,8 +666,8 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 
   case SEQ_SEL_FIGHT_FINISH:
     //カメラワークエフェクトが起動しているかチェック
-	  if( !BTLV_EFFECT_CheckExecute() )
-    { 
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
       return TRUE;
     }
     BTLV_EFFECT_Stop();
@@ -675,15 +675,15 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
     (*seq)++;
     break;
   case SEQ_SEL_FIGHT_FINISH+1:
-	  if( !BTLV_EFFECT_CheckExecute() )
-    { 
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
       return TRUE;
     }
     break;
 
   case SEQ_SEL_POKEMON:
-  	if( !BTLV_EFFECT_CheckExecute() )
-    { 
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
       BTL_ACTION_SetChangeBegin( wk->destActionParam );
      return TRUE;
     }
@@ -693,11 +693,11 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 
 
   case SEQ_SEL_ESCAPE:
-		//ボタン決定音と逃げるSEが重ならないようにSEの鳴り終わりを待つ
-		if( PMSND_CheckPlaySE() )
-		{	
-			return FALSE;
-		}
+    //ボタン決定音と逃げるSEが重ならないようにSEの鳴り終わりを待つ
+    if( PMSND_CheckPlaySE() )
+    {
+      return FALSE;
+    }
     BTL_ACTION_SetEscapeParam( wk->destActionParam );
     return TRUE;
   }
@@ -922,10 +922,10 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
   u8 vpos;
   WazaID waza = BTL_POKEPARAM_GetWazaNumber( wk->bpp, wk->destActionParam->fight.wazaIdx );
 
-	MI_CpuClear16( &bsp, sizeof( BINPUT_SCENE_POKE ) );
+  MI_CpuClear16( &bsp, sizeof( BINPUT_SCENE_POKE ) );
 
   bsp.pokesele_type = WAZADATA_GetTarget( waza );
-  bsp.client_type = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, BTL_POKEPARAM_GetID(wk->bpp) );
+  bsp.client_type = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, BTL_POKEPARAM_GetID(wk->bpp) );
 
   while( count-- )
   {
@@ -1109,7 +1109,7 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 {
   WazaID waza = BTL_POKEPARAM_GetWazaNumber( wk->bpp, wk->destActionParam->fight.wazaIdx );
   WazaTarget target = WAZADATA_GetTarget( waza );
-  BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, BTL_POKEPARAM_GetID(wk->bpp) );
+  BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, BTL_POKEPARAM_GetID(wk->bpp) );
 
   stw_init( stw );
 

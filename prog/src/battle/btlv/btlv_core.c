@@ -669,7 +669,7 @@ void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAb
     for(i=0; i<pokeCnt; ++i)
     {
       BTL_Printf("  ‘ÎÛƒ|ƒPID=%d\n", pokeID[i]);
-      subwk->pokePos[i] = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, pokeID[i] );
+      subwk->pokePos[i] = BTL_MAIN_PokeIDtoPokePosClient( wk->mainModule, pokeID[i] );
     }
   }
 }
