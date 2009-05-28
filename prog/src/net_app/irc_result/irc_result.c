@@ -153,7 +153,7 @@ enum
 #define	MSGWND_SUB_W	(23)
 #define	MSGWND_SUB_H	(11)
 
-#define	SCALE_MIN			( 0x11 )
+#define	SCALE_MIN			(0x310c0)//(0x11)
 
 //-------------------------------------
 ///	数
@@ -325,9 +325,9 @@ typedef struct {
 //	等速直線運動動作
 //=====================================
 typedef struct {
-	s32 now_val;		//現在の値
-	s32 start_val;		//開始の値
-	s32 end_val;		//終了の値
+	fx32 now_val;		//現在の値
+	fx32 start_val;		//開始の値
+	fx32 end_val;		//終了の値
 	fx32 add_val;		//加算値(誤差をださないようにここだけfx)
 	s32 sync_now;		//現在のシンク
 	s32 sync_max;		//シンク最大数
@@ -485,7 +485,7 @@ static BOOL PROGVAL_SHAKE_Main( PROGVAL_SHAKE_WORK *p_wk );
 static int Progval_Velocity( int start, int end, int sync_now, int sync_max );
 static void PROGVAL_TORNADO_Init( PROGVAL_TORNADO_WORK *p_wk, const VecFx32 *cp_start_pos, u16 r_max, u16 add_angle, int sync );
 static BOOL PROGVAL_TORNADO_Main( PROGVAL_TORNADO_WORK *p_wk );
-static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, s32 start, s32 end, s32 sync );
+static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, fx32 start, fx32 end, s32 sync );
 static BOOL	PROGVAL_VEL_Main( PROGVAL_VELOCITY_WORK* p_wk );
 //ぶったいの動作
 #if 0
@@ -1937,14 +1937,14 @@ static BOOL PROGVAL_TORNADO_Main( PROGVAL_TORNADO_WORK *p_wk )
  *	@return	none
  */
 //-----------------------------------------------------------------------------
-static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, s32 start, s32 end, s32 sync )
+static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, fx32 start, fx32 end, s32 sync )
 {
 	p_wk->now_val	= start;
 	p_wk->start_val	= start;
 	p_wk->end_val	= end;
 	p_wk->sync_max	= sync;
 	if( sync ) {
-		p_wk->add_val	= FX32_CONST(p_wk->end_val - p_wk->start_val) / sync;
+		p_wk->add_val	= (p_wk->end_val - p_wk->start_val) / sync;
 		p_wk->sync_now	= 0;
 	}else{
 		//	sync == 0 の場合は即処理終了
@@ -1965,7 +1965,7 @@ static BOOL PROGVAL_VEL_Main( PROGVAL_VELOCITY_WORK* p_wk )
 {
 	if( p_wk->sync_now < (p_wk->sync_max-1) ) {	//	なぜ-1かというと、elseの中をふくめてのsyncだから
 		p_wk->sync_now++;
-		p_wk->now_val	= p_wk->start_val + ((p_wk->add_val * (p_wk->sync_now)) >> FX32_SHIFT);
+		p_wk->now_val	+= p_wk->add_val;
 		return FALSE;
 	}else{
 		p_wk->now_val	= p_wk->end_val;
@@ -2585,21 +2585,22 @@ static BOOL BigHeart_MainScale( RESULT_MAIN_WORK *p_wk )
 static void BigHeart_InitScale( RESULT_MAIN_WORK *p_wk, u8 score, u8 sync )
 {	
 	fx32 rate;
-	fx32 max;
-	fx32 min;
+	fx32 start;
+	fx32 end;
 
 	rate	= FX_Div( FX32_CONST(score), FX32_CONST(100) );
 	rate	= FX32_ONE - rate;
 	//max		= SCALE_MIN + FX_Mul((FX32_ONE-SCALE_MIN), rate );
-	min	= FX32_CONST(2);//SCALE_MIN;
+	start	= FX32_CONST(2);//SCALE_MIN;
 
 //	max	= FX_Mul( FX32_ONE, rate );
 //
-	max	= FX32_ONE + FX_Mul((min - FX32_ONE ) , rate);
+	end	= FX32_ONE + FX_Mul((start - FX32_ONE ) , rate);
 
 	OS_Printf( "rate %d\n", FX_FX32_TO_F32(rate) );
 
-	PROGVAL_VEL_Init( &p_wk->scale, min, max, sync );
+
+	PROGVAL_VEL_Init( &p_wk->scale, start, end, sync );
 
 	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 
 			GFL_BG_CENTER_X_SET, 128 );

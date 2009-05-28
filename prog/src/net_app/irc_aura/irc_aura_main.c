@@ -2451,6 +2451,7 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 #else
 	enum{	
 		SEQ_SENDRESULT,
+		SEQ_TIMING,
 		SEQ_CALC,
 		SEQ_END,
 #if 0
@@ -2475,6 +2476,21 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 		result.shake_left		= p_wk->shake_left[0];
 		result.shake_right	=	p_wk->shake_right[0];
 		if( AURANET_SendResultData( &p_wk->net, &result ) )
+		{	
+			*p_seq	= SEQ_TIMING;
+		}
+
+		if( TouchReturnBtn() )
+		{
+			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
+			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+			p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
+			SEQ_End( p_wk );
+		}
+		break;
+
+	case SEQ_TIMING:
+		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_AURA_END ) )
 		{	
 			*p_seq	= SEQ_CALC;
 		}

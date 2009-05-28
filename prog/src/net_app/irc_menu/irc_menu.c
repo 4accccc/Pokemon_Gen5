@@ -1094,10 +1094,9 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_MSG_STARTNET,
 		SEQ_CONNECT,
 		SEQ_SEND_STATUS,
+		SEQ_TIMING,
 		SEQ_MSG_CONNECT,
 		SEQ_CHANGE_SELECT,
-		SEQ_MSG_TIMEOUT,
-		SEQ_TIMEOUT,
 	};
 
 	switch( *p_seq )
@@ -1114,6 +1113,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 		if( TP_GetRectTrg( &sc_btn_setp_tbl[BTNID_RETURN] ) )
 		{
+			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
 			SEQ_Change( p_wk, SEQFUNC_DisConnect );
 		}
@@ -1123,13 +1123,21 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		if(COMPATIBLE_MENU_SendStatusData( p_wk->p_param->p_irc, p_wk->p_param->p_gamesys ) )
 		{	
 			COMPATIBLE_MENU_GetStatusData( p_wk->p_param->p_irc, p_wk->p_param->p_you_status  );
-			*p_seq	= SEQ_MSG_CONNECT;
+			*p_seq	= SEQ_TIMING;
 		}
 
 		if( TP_GetRectTrg( &sc_btn_setp_tbl[BTNID_RETURN] ) )
 		{
+			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
 			SEQ_Change( p_wk, SEQFUNC_DisConnect );
+		}
+		break;
+
+	case SEQ_TIMING:
+		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_MENU_START ) )
+		{	
+			*p_seq	= SEQ_MSG_CONNECT;
 		}
 		break;
 
