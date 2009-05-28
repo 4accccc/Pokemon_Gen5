@@ -886,8 +886,15 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
         #if 1
         POKEMON_PARAM* pp;
         pp = PokeParty_GetMemberPointer( para->partyPlayer, 0 );
-        PP_Put( pp, ID_PARA_item, ITEM_TABENOKOSI );
-        PP_SetWazaPos( pp, WAZANO_DENZIHA, 2 );
+//        PP_Put( pp, ID_PARA_item, ITEM_TABENOKOSI );
+        PP_SetWazaPos( pp, 0, 1 );
+        PP_SetWazaPos( pp, 0, 2 );
+        PP_SetWazaPos( pp, 0, 3 );
+
+        pp = PokeParty_GetMemberPointer( para->partyPlayer, 1 );
+        PP_SetWazaPos( pp, 0, 2 );
+        PP_SetWazaPos( pp, 0, 3 );
+
 
         pp = PokeParty_GetMemberPointer( para->partyEnemy1, 0 );
         PP_Put( pp, ID_PARA_speabino, POKETOKUSEI_DAPPI );

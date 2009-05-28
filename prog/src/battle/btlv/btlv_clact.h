@@ -1,32 +1,32 @@
 
 //============================================================================================
 /**
- * @file	btlv_clact.h
- * @brief	êÌì¨âÊñ CLACTêßå‰
- * @author	soga
- * @date	2009.05.14
+ * @file  btlv_clact.h
+ * @brief êÌì¨âÊñ CLACTêßå‰
+ * @author  soga
+ * @date  2009.05.14
  */
 //============================================================================================
 
-#pragma	once
+#pragma once
 
-#define	BTLV_CLACT_CLWK_MAX	( 10 )		//UNITÇÃMAX
+#define BTLV_CLACT_CLWK_MAX ( 10 )    //UNITÇÃMAX
 
 typedef struct _BTLV_CLACT_WORK BTLV_CLACT_WORK;
 typedef struct _BTLV_CLACT_CLWK BTLV_CLACT_CLWK;
 
-extern	BTLV_CLACT_WORK*	BTLV_CLACT_Init( GFL_TCBSYS *tcb_sys, const GFL_DISP_VRAM *vramBank, HEAPID heapID );
-extern	void							BTLV_CLACT_Exit( BTLV_CLACT_WORK *bclw );
-extern	void							BTLV_CLACT_Main( BTLV_CLACT_WORK *bclw );
+extern  BTLV_CLACT_WORK*  BTLV_CLACT_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
+extern  void              BTLV_CLACT_Exit( BTLV_CLACT_WORK *bclw );
+extern  void              BTLV_CLACT_Main( BTLV_CLACT_WORK *bclw );
 
-extern	int								BTLV_CLACT_Add( BTLV_CLACT_WORK *bclw, ARCID arcID, ARCDATID ncgrID, s16 posx, s16 posy );
-extern	int								BTLV_CLACT_AddEx( BTLV_CLACT_WORK *bclw, ARCID arcID, ARCDATID ncgrID, ARCDATID nclrID,
-																						ARCDATID ncerID, ARCDATID nanrID, s16 posx, s16 posy );
-extern	void							BTLV_CLACT_Delete( BTLV_CLACT_WORK *bclw, int index );
+extern  int               BTLV_CLACT_Add( BTLV_CLACT_WORK *bclw, ARCID arcID, ARCDATID ncgrID, s16 posx, s16 posy );
+extern  int               BTLV_CLACT_AddEx( BTLV_CLACT_WORK *bclw, ARCID arcID, ARCDATID ncgrID, ARCDATID nclrID,
+                                            ARCDATID ncerID, ARCDATID nanrID, s16 posx, s16 posy );
+extern  void              BTLV_CLACT_Delete( BTLV_CLACT_WORK *bclw, int index );
 
-extern	void							BTLV_CLACT_MovePosition( BTLV_CLACT_WORK *bclw, int index, int type,
-																									 GFL_CLACTPOS *pos, int frame, int wait, int count );
-extern	void							BTLV_CLACT_SetAnime( BTLV_CLACT_WORK *bclw, int index, int anm_no );
-extern	BOOL							BTLV_CLACT_CheckTCBExecute( BTLV_CLACT_WORK *bclw, int index );
+extern  void              BTLV_CLACT_MovePosition( BTLV_CLACT_WORK *bclw, int index, int type,
+                                                   GFL_CLACTPOS *pos, int frame, int wait, int count );
+extern  void              BTLV_CLACT_SetAnime( BTLV_CLACT_WORK *bclw, int index, int anm_no );
+extern  BOOL              BTLV_CLACT_CheckTCBExecute( BTLV_CLACT_WORK *bclw, int index );
 
 

@@ -1,4 +1,3 @@
-
 //============================================================================================
 /**
  * @file  btlv_effect.h
@@ -7,6 +6,8 @@
  * @date  2008.11.21
  */
 //============================================================================================
+#pragma once
+
 
 #include "btlv_stage.h"
 #include "btlv_field.h"
@@ -22,8 +23,6 @@
 
 #include  "waza_tool/wazano_def.h"
 
-#pragma once
-
 
 //戦闘エフェクト定義
 enum{
@@ -32,7 +31,7 @@ enum{
   BTLEFF_SINGLE_ENCOUNT_2_FEMALE,
   BTLEFF_SINGLE_ENCOUNT_3,
   BTLEFF_CAMERA_WORK,
-	BTLEFF_CAMERA_INIT,
+  BTLEFF_CAMERA_INIT,
 };
 
 typedef struct _BTLV_EFFECT_WORK BTLV_EFFECT_WORK;
@@ -52,7 +51,7 @@ typedef struct {
 
 
 
-extern  void              BTLV_EFFECT_Init( int index, const GFL_DISP_VRAM *vramBank, HEAPID heapID );
+extern  void              BTLV_EFFECT_Init( int index, HEAPID heapID );
 extern  void              BTLV_EFFECT_Exit( void );
 extern  void              BTLV_EFFECT_Main( void );
 extern  void              BTLV_EFFECT_Add( int eff_no );

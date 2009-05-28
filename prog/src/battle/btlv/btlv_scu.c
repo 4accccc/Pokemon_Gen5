@@ -109,6 +109,7 @@ struct _BTLV_SCU {
   u8            printSeq;
   u8            playerClientID;
   u16           printWait;
+  u8            msgwinVisibleFlag;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -123,6 +124,7 @@ static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs );
+static void msgWin_Visible( BTLV_SCU* wk, BOOL flag );
 static void statwin_setupAll( BTLV_SCU* wk );
 static void statwin_cleanupAll( BTLV_SCU* wk );
 static void tokwin_setupAll( BTLV_SCU* wk );
@@ -162,6 +164,7 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
   wk->printStream = NULL;
   wk->tcbl = tcbl;
   wk->strBuf = GFL_STR_CreateBuffer( STRBUF_LEN, heapID );
+  wk->msgwinVisibleFlag = FALSE;
 
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
   PRINT_UTIL_Setup( &wk->printUtil, wk->win );
@@ -335,63 +338,12 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   BTLV_SCU* wk = wk_adrs;
   ProcWork* subwk = Scu_GetProcWork( wk, sizeof(ProcWork) );
 
-#if 0
   switch( *seq ){
   case 0:
     subwk->pokePos = BTL_POS_2ND_0;
     subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
     subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
-    BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount, 1, subwk->pokeID );
-    BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
-    (*seq)++;
-    break;
-  case 1:
-    if( BTLV_SCU_WaitMsg(wk) )
-    {
-      statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
-      //soga
-      {
-        BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_BB );
-      }
-      (*seq)++;
-    }
-    break;
-  case 2:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      subwk->pokePos = BTL_POS_1ST_0;
-      subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
-      subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
-
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
-      (*seq)++;
-    }
-    break;
-  case 3:
-    if( BTLV_SCU_WaitMsg(wk) )
-    {
-      statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
-      //soga
-      {
-        BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_AA );
-      }
-      (*seq)++;
-    }
-    break;
-  case 4:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      return TRUE;
-    }
-    break;
-  }
-#else
-  switch( *seq ){
-  case 0:
-    subwk->pokePos = BTL_POS_2ND_0;
-    subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
-    subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
+    msgWin_Visible( wk, FALSE );
     BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_BB );
     BTLV_EFFECT_AddByPos( BTLV_MCSS_POS_BB, BTLEFF_SINGLE_ENCOUNT_1 );
     (*seq)++;
@@ -399,8 +351,9 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
+      msgWin_Visible( wk, TRUE );
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
+      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -411,6 +364,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
 
+      msgWin_Visible( wk, FALSE );
       if( MyStatus_GetMySex(status) == PM_MALE ){
         BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
       }else{
@@ -426,8 +380,9 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
       subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
 
+      msgWin_Visible( wk, TRUE );
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
+      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -435,6 +390,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
     if( BTLV_SCU_WaitMsg(wk) )
     {
       BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_AA );
+      msgWin_Visible( wk, FALSE );
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
       (*seq)++;
     }
@@ -442,12 +398,12 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 5:
     if( !BTLV_EFFECT_CheckExecute() )
     {
+      msgWin_Visible( wk, TRUE );
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
       return TRUE;
     }
     break;
   }
-#endif
   return FALSE;
 }
 //--------------------------------------------------------------------------
@@ -479,7 +435,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
       subwk[1].pokeID = BTL_POKEPARAM_GetID( subwk[1].pp );
 
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Double, 2, subwk[0].pokeID, subwk[1].pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
+      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -512,7 +468,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
       subwk[1].pokeID = BTL_POKEPARAM_GetID( subwk[1].pp );
 
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutDouble, 2, subwk[0].pokeID, subwk[1].pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_NONE );
+      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
@@ -1191,6 +1147,21 @@ BOOL BTLV_SCU_KinomiAct_Wait( BTLV_SCU* wk, BtlPokePos pos )
   return TRUE;
 }
 
+
+static void msgWin_Visible( BTLV_SCU* wk, BOOL flag )
+{
+  if( flag ){
+    if( wk->msgwinVisibleFlag == FALSE ){
+      GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+      wk->msgwinVisibleFlag = TRUE;
+    }
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE );
+  }else{
+    wk->msgwinVisibleFlag = FALSE;
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, FALSE );
+  }
+}
 
 //----------------------------
 

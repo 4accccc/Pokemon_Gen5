@@ -240,6 +240,8 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
   switch( *seq ){
   case 0:
     setup_core( core, core->heapID );
+    BTLV_EFFECT_Init( 0, core->heapID );
+
     BTLV_SCU_Setup( core->scrnU );
     BTLV_SCD_Setup( core->scrnD );
     (*seq)++;
@@ -1004,23 +1006,6 @@ BOOL BTLV_KinomiAct_Wait( BTLV_CORE* wk, BtlPokePos pos )
 
 static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 {
-//soga
-#if 0
-  static const GFL_DISP_VRAM vramBank = {
-    GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
-    GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-    GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
-    GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-    GX_VRAM_OBJ_128_B,        // メイン2DエンジンのOBJ
-    GX_VRAM_OBJEXTPLTT_0_F,     // メイン2DエンジンのOBJ拡張パレット
-    GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
-    GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-    GX_VRAM_TEX_NONE,       // テクスチャイメージスロット
-    GX_VRAM_TEXPLTT_0123_E,     // テクスチャパレットスロット
-    GX_OBJVRAMMODE_CHAR_1D_128K,  // メインOBJマッピングモード
-    GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
-  };
-#else
   static const GFL_DISP_VRAM vramBank = {
     GX_VRAM_BG_128_D,           // メイン2DエンジンのBG
     GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
@@ -1035,7 +1020,6 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
     GX_OBJVRAMMODE_CHAR_1D_64K, // メインOBJマッピングモード
     GX_OBJVRAMMODE_CHAR_1D_32K, // サブOBJマッピングモード
   };
-#endif
 
   // BGsystem初期化
   GFL_BG_Init( heapID );
@@ -1082,7 +1066,7 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
   }
 
-  BTLV_EFFECT_Init( 0, &vramBank, heapID );
+  GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &vramBank, heapID );
 
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
 }

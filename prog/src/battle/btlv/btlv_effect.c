@@ -94,11 +94,10 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
  *  システム初期化
  *
  * @param[in] index     背景を決定するインデックスナンバー
- * @param[in] vramBank  VRAM構成テーブル（CLACTの初期化に必要）
  * @param[in] heapID    ヒープID
  */
 //============================================================================================
-void  BTLV_EFFECT_Init( int index, const GFL_DISP_VRAM *vramBank, HEAPID heapID )
+void  BTLV_EFFECT_Init( int index, HEAPID heapID )
 {
   GF_ASSERT( bew == NULL );
   bew = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_EFFECT_WORK ) );
@@ -124,7 +123,7 @@ void  BTLV_EFFECT_Init( int index, const GFL_DISP_VRAM *vramBank, HEAPID heapID 
   bew->bsw  = BTLV_STAGE_Init( index, heapID );
   bew->bfw  = BTLV_FIELD_Init( bew->tcb_sys, index, heapID );
   bew->bcw  = BTLV_CAMERA_Init( bew->tcb_sys, heapID );
-  bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, vramBank, heapID );
+  bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID );
 
   BTLV_MCSS_SetOrthoMode( bew->bmw );
 
