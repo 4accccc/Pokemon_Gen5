@@ -52,7 +52,7 @@ typedef struct {
 	u16 count;
 	u16 count_max;
 	
-	u32	offset_start;
+	s32	offset_start;
 	s32	offset_dist;
 
 	u32	slope_start;
@@ -69,8 +69,9 @@ struct _FIELD_FOG_WORK {
 	u8		blendmode;		// フォグモード
 	u8		slope;			// かかり具合
 	u8		alpha;			// フォグカラーアルファ
-	u16		offset;			// オフセットデプス値
+	s32		offset;			// オフセットデプス値
 	u16		rgb;			// フォグカラー
+  u16   pading;
 
 	u8		fog_tbl[FIELD_FOG_TBL_MAX];	// 32段階のフォグテーブル
 
@@ -91,9 +92,9 @@ struct _FIELD_FOG_WORK {
 ///	フェードシステム
 //=====================================
 static BOOL FADE_WORK_IsFade( const FADE_WORK* cp_wk );
-static void FADE_WORK_Init( FADE_WORK* p_wk, u16 offset_start, u16 offset_end, u16 slope_start, u16 slope_end, u16 count_max );
+static void FADE_WORK_Init( FADE_WORK* p_wk, s32 offset_start, s32 offset_end, u16 slope_start, u16 slope_end, u16 count_max );
 static void FADE_WORK_Main( FADE_WORK* p_wk );
-static u16 FADE_WORK_GetOffset( const FADE_WORK* cp_wk );
+static s32 FADE_WORK_GetOffset( const FADE_WORK* cp_wk );
 static u16 FADE_WORK_GetSlope( const FADE_WORK* cp_wk );
 
 
@@ -231,7 +232,7 @@ void FIELD_FOG_SetSlope( FIELD_FOG_WORK* p_wk, FIELD_FOG_SLOPE slope )
  *	@param	depth_offset	オフセット
  */
 //-----------------------------------------------------------------------------
-void FIELD_FOG_SetOffset( FIELD_FOG_WORK* p_wk, u16 depth_offset )
+void FIELD_FOG_SetOffset( FIELD_FOG_WORK* p_wk, s32 depth_offset )
 {
 	GF_ASSERT( p_wk );
 	FOG_FADE_ASSERT(p_wk);
@@ -245,7 +246,7 @@ void FIELD_FOG_SetOffset( FIELD_FOG_WORK* p_wk, u16 depth_offset )
  *
  *	@param	p_wk		ワーク
  *	@param	rgb			カラー
- */
+ 32*/
 //-----------------------------------------------------------------------------
 void FIELD_FOG_SetColorRgb( FIELD_FOG_WORK* p_wk, GXRgb rgb )
 {
@@ -359,7 +360,7 @@ FIELD_FOG_SLOPE FIELD_FOG_GetSlope( const FIELD_FOG_WORK* cp_wk )
  *	@return	オフセット
  */
 //-----------------------------------------------------------------------------
-u16 FIELD_FOG_GetOffset( const FIELD_FOG_WORK* cp_wk )
+s32 FIELD_FOG_GetOffset( const FIELD_FOG_WORK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	return cp_wk->offset;
@@ -444,7 +445,7 @@ void FIELD_FOG_TBL_SetUpDefault( FIELD_FOG_WORK* p_wk )
  *	@param	count_max		フェードシンク数
  */
 //-----------------------------------------------------------------------------
-void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, FIELD_FOG_SLOPE slope_end, u32 count_max )
+void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, s32 offset_end, FIELD_FOG_SLOPE slope_end, u32 count_max )
 {
 	GF_ASSERT( p_wk );
 	FADE_WORK_Init( &p_wk->fade, p_wk->offset, offset_end, p_wk->slope, slope_end, count_max );
@@ -462,7 +463,7 @@ void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, FIELD_FOG_SLOPE 
  *	@param	count_max		フェードに使用するシンク数
  */
 //-----------------------------------------------------------------------------
-void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, u16 offset_start, u16 offset_end, FIELD_FOG_SLOPE slope_start, FIELD_FOG_SLOPE slope_end, u16 count_max  )
+void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, s32 offset_start, s32 offset_end, FIELD_FOG_SLOPE slope_start, FIELD_FOG_SLOPE slope_end, u16 count_max  )
 {
 	GF_ASSERT( p_wk );
 	FADE_WORK_Init( &p_wk->fade, offset_start, offset_end, slope_start, slope_end, count_max );
@@ -527,7 +528,7 @@ static BOOL FADE_WORK_IsFade( const FADE_WORK* cp_wk )
  *	@param	count_max		フェードに使用するシンク数
  */
 //-----------------------------------------------------------------------------
-static void FADE_WORK_Init( FADE_WORK* p_wk, u16 offset_start, u16 offset_end, u16 slope_start, u16 slope_end, u16 count_max )
+static void FADE_WORK_Init( FADE_WORK* p_wk, s32 offset_start, s32 offset_end, u16 slope_start, u16 slope_end, u16 count_max )
 {
 	p_wk->count			= 0;
 	p_wk->count_max		= count_max;
@@ -562,9 +563,9 @@ static void FADE_WORK_Main( FADE_WORK* p_wk )
  *	@return	オフセットの値
  */
 //-----------------------------------------------------------------------------
-static u16 FADE_WORK_GetOffset( const FADE_WORK* cp_wk )
+static s32 FADE_WORK_GetOffset( const FADE_WORK* cp_wk )
 {
-	u16 ans;
+	s32 ans;
 
 	ans = (cp_wk->offset_dist * cp_wk->count) / cp_wk->count_max;
 	ans += cp_wk->offset_start;

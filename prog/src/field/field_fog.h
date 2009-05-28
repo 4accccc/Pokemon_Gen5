@@ -87,7 +87,7 @@ extern void FIELD_FOG_Main( FIELD_FOG_WORK* p_wk );
 extern void FIELD_FOG_SetFlag( FIELD_FOG_WORK* p_wk, BOOL flag );
 extern void FIELD_FOG_SetBlendMode( FIELD_FOG_WORK* p_wk, FIELD_FOG_BLEND blendmode );
 extern void FIELD_FOG_SetSlope( FIELD_FOG_WORK* p_wk, FIELD_FOG_SLOPE slope );
-extern void FIELD_FOG_SetOffset( FIELD_FOG_WORK* p_wk, u16 depth_offset );
+extern void FIELD_FOG_SetOffset( FIELD_FOG_WORK* p_wk, s32 depth_offset );
 extern void FIELD_FOG_SetColorRgb( FIELD_FOG_WORK* p_wk, GXRgb rgb );
 extern void FIELD_FOG_SetColorA( FIELD_FOG_WORK* p_wk, u8 a );
 extern void FIELD_FOG_SetTbl( FIELD_FOG_WORK* p_wk, u8 index, u8 data );
@@ -97,7 +97,7 @@ extern void FIELD_FOG_SetTblAll( FIELD_FOG_WORK* p_wk, const u8* cp_tbl );
 extern BOOL FIELD_FOG_GetFlag( const FIELD_FOG_WORK* cp_wk );
 extern FIELD_FOG_BLEND FIELD_FOG_GetBlendMode( const FIELD_FOG_WORK* cp_wk );
 extern FIELD_FOG_SLOPE FIELD_FOG_GetSlope( const FIELD_FOG_WORK* cp_wk );
-extern u16 FIELD_FOG_GetOffset( const FIELD_FOG_WORK* cp_wk );
+extern s32 FIELD_FOG_GetOffset( const FIELD_FOG_WORK* cp_wk );
 extern GXRgb FIELD_FOG_GetColorRgb( const FIELD_FOG_WORK* cp_wk );
 extern u8 FIELD_FOG_GetColorA( const FIELD_FOG_WORK* cp_wk );
 extern u8 FIELD_FOG_GetTbl( const FIELD_FOG_WORK* cp_wk, u8 index );
@@ -111,8 +111,8 @@ extern void FIELD_FOG_TBL_SetUpDefault( FIELD_FOG_WORK* p_wk );
 //-------------------------------------
 ///	フェードリクエスト
 //=====================================
-extern void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, u16 offset_end, FIELD_FOG_SLOPE slope_end, u32 count_max );
-extern void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, u16 offset_start, u16 offset_end, FIELD_FOG_SLOPE slope_start, FIELD_FOG_SLOPE slope_end, u16 count_max  );
+extern void FIELD_FOG_FADE_Init( FIELD_FOG_WORK* p_wk, s32 offset_end, FIELD_FOG_SLOPE slope_end, u32 count_max );
+extern void FIELD_FOG_FADE_InitEx( FIELD_FOG_WORK* p_wk, s32 offset_start, s32 offset_end, FIELD_FOG_SLOPE slope_start, FIELD_FOG_SLOPE slope_end, u16 count_max  );
 extern BOOL FIELD_FOG_FADE_IsFade( const FIELD_FOG_WORK* cp_wk );
 
 

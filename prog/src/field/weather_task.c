@@ -389,7 +389,8 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 		break;
 
 	// 管理関数  フェードイン	呼び出し
-	case WEATHER_TASK_SEQ_CALL_FADEIN:		
+	case WEATHER_TASK_SEQ_CALL_FADEIN:
+    
 		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_fadein, heapID ) ){
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_MAIN;
 		}
@@ -405,6 +406,8 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 
 	// 管理関数　メイン			呼び出し
 	case WEATHER_TASK_SEQ_CALL_MAIN:		
+
+
 		// *外部的なリクエストで、終了する
 		WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_main, heapID );
 		WEATHER_TASK_WK_MainObjList( p_wk );

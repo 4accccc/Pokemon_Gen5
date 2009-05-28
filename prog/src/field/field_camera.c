@@ -227,13 +227,15 @@ static void initGridParameter(FIELD_CAMERA * camera)
 	}
 #endif
 
-  camera->angle_len = 0x00d5 * FX32_ONE;
+  camera->angle_len = 0x00ED * FX32_ONE;
   camera->angle_pitch = 0x25d8;
 	
 	FIELD_CAMERA_SetFar( camera, (1024 << FX32_SHIFT) );
 	
   // ターゲット補正値
   VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
+
+  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
 }
 
 //------------------------------------------------------------------
@@ -247,6 +249,8 @@ static void initPokeCenParameter(FIELD_CAMERA * camera)
 	
   // ターゲット補正値
   VEC_Set( &camera->target_offset, 0, 0x18066, 0xfffef197 );
+
+  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
 }
 
 //------------------------------------------------------------------
@@ -261,6 +265,8 @@ static void initH01P01Parameter(FIELD_CAMERA * camera)
 	
   // ターゲット補正値
   VEC_Set( &camera->target_offset, 0, 0x199f7, 0x09ed );
+
+  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
 }
 
 //------------------------------------------------------------------
@@ -303,6 +309,8 @@ static void initC3Parameter(FIELD_CAMERA * camera)
 
   // ターゲット補正値
   VEC_Set( &camera->target_offset, 0, 0, 0 );
+
+  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
 }
 
 //------------------------------------------------------------------
@@ -339,6 +347,8 @@ static void initBridgeParameter(FIELD_CAMERA * camera)
 
   // ターゲット補正値
   VEC_Set( &camera->target_offset, 0, 0x4000, 0 );
+
+  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
 }
 
 //============================================================================================

@@ -60,7 +60,6 @@
 #define WEATHER_SNOW_FOG_START		(8)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_SNOW_FOG_START_END	(16)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_SNOW_FOG_OFS		(0x300)
-#define WEATHER_SNOW_FOG_OFS_START	(0xb00)
 
 /*== 雪オブジェクト ==*/
 #define	WEATHER_SNOW_ADD_TMG_X_BASE	(2)					// 雪のスピードを足すタイミング
@@ -103,8 +102,7 @@
 #define	WEATHER_SSNOW_FOG_TIMING_END	(300)							// に１回フォグテーブルを操作
 #define WEATHER_SSNOW_FOG_START			(8)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_SSNOW_FOG_START_END		(1)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_SSNOW_FOG_OFS			(0x0)
-#define WEATHER_SSNOW_FOG_OFS_START		(0x800)
+#define WEATHER_SSNOW_FOG_OFS			(0x100)
 
 /*== 雪オブジェクト ==*/
 #define WEATHER_SSNOW_SPEED_X		(-1)						// 横に進むスピード
@@ -146,8 +144,7 @@
 #define	WEATHER_SNOW_S_FOG_TIMING_END	(150)							// に１回フォグテーブルを操作
 #define WEATHER_SNOW_S_FOG_START		(8)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_SNOW_S_FOG_START_END	(10)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_SNOW_S_FOG_OFS			(-0x80)
-#define WEATHER_SNOW_S_FOG_OFS_START	(0x800)
+#define WEATHER_SNOW_S_FOG_OFS			(0x100)
 
 /*== BG ==*/
 #define WEATHER_SNOW_S_BG_ALP_TIM_S	(6)		// アルファを１上げるタイミング
@@ -194,7 +191,6 @@ static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6
 #define WEATHER_ARARE_FOG_START		(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_ARARE_FOG_START_END	(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_ARARE_FOG_OFS		(0x300)
-#define WEATHER_ARARE_FOG_OFS_START	(0x800)
 
 /*== あられオブジェクト ==*/
 #define WEATHER_ARARE_SPEED_X		(-4)						// 横に進むスピード
@@ -511,7 +507,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Init( WEATHER_TASK* p_wk, WEATHER_T
 	p_local_wk->work[1] = 0;							// 雪が１回下まで行ったかのフラグ
 	
 	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS_START, fog_cont );
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
 	
 	p_local_wk->work[0] = WEATHER_SNOW_FOG_START;	// 同じくフォグ用
 	
@@ -683,7 +679,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeOut( WEATHER_TASK* p_wk, WEATHE
 		if( p_local_wk->work[0] == 0 ){
 
 			WEATHER_TASK_FogFadeOut_Init( p_wk,
-					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_FOG_OFS_START, 
+					WEATHER_FOG_DEPTH_DEFAULT_START, 
 					WEATHER_SNOW_FOG_TIMING_END, fog_cont );
 		}
 	}else{
@@ -922,7 +918,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_Init( WEATHER_TASK* p_wk, WEATHER_
 	
 
 	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SSNOW_FOG_OFS_START, fog_cont );
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
 
 	p_local_wk->work[0] = WEATHER_SNOW_S_FOG_START;	// 同じくフォグ用
 
@@ -1105,7 +1101,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_FadeOut( WEATHER_TASK* p_wk, WEATH
 		if( p_local_wk->work[0] == 0 ){
 
 			WEATHER_TASK_FogFadeOut_Init( p_wk,
-					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SSNOW_FOG_OFS_START, 
+					WEATHER_FOG_DEPTH_DEFAULT_START, 
 					WEATHER_SSNOW_FOG_TIMING_END, fog_cont );
 		}
 	}else{
@@ -1330,7 +1326,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_Init( WEATHER_TASK* p_wk, WEATHER
 	
 
 	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_S_FOG_OFS_START, fog_cont );
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
 
 	p_local_wk->work[0] = WEATHER_SNOW_S_FOG_START;	// 同じくフォグ用
 
@@ -1525,7 +1521,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_FadeOut( WEATHER_TASK* p_wk, WEAT
 		if( p_local_wk->work[0] == 0 ){
 
 			WEATHER_TASK_FogFadeOut_Init( p_wk,
-					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_S_FOG_OFS_START, 
+					WEATHER_FOG_DEPTH_DEFAULT_START, 
 					WEATHER_SNOW_S_FOG_TIMING_END, fog_cont );
 		}
 	}else{
@@ -1743,7 +1739,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_Init( WEATHER_TASK* p_wk, WEATHER_
 		WEATHER_ARARE_OBJ_Add );
 
 	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_ARARE_FOG_OFS_START, fog_cont );
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
 
 
 
@@ -1918,7 +1914,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_FadeOut( WEATHER_TASK* p_wk, WEATH
 		if( p_local_wk->work[0] == 0 ){
 
 			WEATHER_TASK_FogFadeOut_Init( p_wk,
-					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_ARARE_FOG_OFS_START, 
+					WEATHER_FOG_DEPTH_DEFAULT_START, 
 					WEATHER_ARARE_FOG_TIMING_END, fog_cont );
 		}
 	}else{

@@ -62,8 +62,7 @@
 #define	WEATHER_STORM_FOG_TIMING_END	(300)							// に１回フォグテーブルを操作
 #define WEATHER_STORM_FOG_START			(1)							// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STORM_FOG_START_END		(31)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_STORM_FOG_OFS	( 0x60 )
-#define WEATHER_STORM_FOG_OFS_START	( 0xa00 )
+#define WEATHER_STORM_FOG_OFS	( 0x100 )
 #define WEATHER_STORM_FOG_SLOPE	( 4 )
 
 
@@ -199,7 +198,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Init( WEATHER_TASK* p_wk, WEATHER_
 
 	// フォグの設定
 	WEATHER_TASK_FogSet( p_wk, WEATHER_STORM_FOG_SLOPE, 
-				WEATHER_FOG_DEPTH_DEFAULT + WEATHER_STORM_FOG_OFS_START, fog_cont );
+				WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
 
 
 
@@ -391,7 +390,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeOut( WEATHER_TASK* p_wk, WEATH
 		if( p_local_wk->work[0] == 0 ){
 
 			WEATHER_TASK_FogFadeOut_Init( p_wk,
-					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_STORM_FOG_OFS_START, 
+					WEATHER_FOG_DEPTH_DEFAULT_START, 
 					WEATHER_STORM_FOG_TIMING_END, fog_cont );
 		}
 	}else{

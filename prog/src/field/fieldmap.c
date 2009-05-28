@@ -1176,7 +1176,7 @@ static void fldmap_G3D_CallBackSetUp( void )
 	
 	// ビューポートの設定
 	G3_ViewPort(0, 0, 255, 191);
-	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
+	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
 }
 
 //--------------------------------------------------------------
@@ -1235,6 +1235,8 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
  * @retval nothing
  */
 //--------------------------------------------------------------
+//プロジェクションマトリクスを操作する際のＺオフセット
+#define	PRO_MAT_Z_OFS	(310)
 static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 {
 	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
@@ -1242,12 +1244,37 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
   
   FLDMSGBG_PrintG3D( fieldWork->fldMsgBG );
   
-  FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
 
 	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera );
  
-	GFL_BBDACT_Draw(
-			fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+  {
+	  MtxFx44 org_pm,pm;
+		const MtxFx44 *m;
+		m = NNS_G3dGlbGetProjectionMtx();
+/**		
+		OS_Printf("%x,%x,%x,%x\n%x,%x,%x,%x\n%x,%x,%x,%x\n%x,%x,%x,%x\n",
+				m->_00,m->_01,m->_02,m->_03,
+				m->_10,m->_11,m->_12,m->_13,
+				m->_20,m->_21,m->_22,m->_23,
+				m->_30,m->_31,m->_32,m->_33);
+//*/				
+    
+		org_pm = *m;
+		pm = org_pm;
+		pm._32 += FX_Mul( pm._22, PRO_MAT_Z_OFS );
+		NNS_G3dGlbSetProjectionMtx(&pm);
+		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
+    NNS_G3dGeFlushBuffer(); // 転送まち
+
+    FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
+  
+    GFL_BBDACT_Draw(
+        fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+
+		NNS_G3dGlbSetProjectionMtx(&org_pm);
+		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
+  }
+
 	
   FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
 	

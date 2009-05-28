@@ -61,7 +61,6 @@
 #define WEATHER_RAIN_FOG_START		(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_RAIN_FOG_START_END	(1)						// このカウント動いてからフォグテーブルを操作
 #define WEATHER_RAIN_FOG_OFS		(0x300)
-#define WEATHER_RAIN_FOG_OFS_START	(0x800)
 
 /*== 雨オブジェクト ==*/
 #define WEATHER_RAIN_SPEED_X		(-8)						// 横に進むスピード
@@ -101,7 +100,6 @@
 #define WEATHER_STRAIN_FOG_START		(1)					// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STRAIN_FOG_START_END	(1)					// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STRAIN_FOG_OFS			(0x200)
-#define WEATHER_STRAIN_FOG_OFS_START	(0x800)
 
 
 /*== 雨オブジェクト ==*/
@@ -411,7 +409,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_Init( WEATHER_TASK* p_wk, WEATHER_T
 		WEATHER_RAIN_OBJ_Add );
 
 	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_RAIN_FOG_OFS_START, fog_cont );
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
 
 
 
@@ -586,7 +584,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_FadeOut( WEATHER_TASK* p_wk, WEATHE
 		if( p_local_wk->work[0] == 0 ){
 
 			WEATHER_TASK_FogFadeOut_Init( p_wk,
-					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_RAIN_FOG_OFS_START, 
+					WEATHER_FOG_DEPTH_DEFAULT_START, 
 					WEATHER_RAIN_FOG_TIMING_END, fog_cont );
 		}
 	}else{
@@ -787,7 +785,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_Init( WEATHER_TASK* p_wk, WEAT
 	
 
 	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT+WEATHER_STRAIN_FOG_OFS_START, fog_cont );
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
 
 	p_local_wk->work[0] = WEATHER_STRAIN_FOG_START;	// 同じくフォグ用
 	p_local_wk->work[1] = 0;
@@ -967,7 +965,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_FadeOut( WEATHER_TASK* p_wk, W
 		if( p_local_wk->work[0] == 0 ){
 
 			WEATHER_TASK_FogFadeOut_Init( p_wk,
-					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_STRAIN_FOG_OFS_START, 
+					WEATHER_FOG_DEPTH_DEFAULT_START, 
 					WEATHER_STRAIN_FOG_TIMING_END, fog_cont );
 		}
 	}else{
