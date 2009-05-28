@@ -210,4 +210,7 @@ extern FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
 extern void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg );
 extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
 
+//‚»‚Ì‘¼
+extern void FLDMSGBG_SetBlendAlpha( void );
+
 #endif //__FLDMSGBG_H__
