@@ -54,6 +54,7 @@ enum _EVENT_IRCBATTLE {
   _FIELD_END
 };
 
+static void _battleParaFree(EVENT_WIFICLUB_WORK *dbw);
 
 //============================================================================================
 //
@@ -87,12 +88,11 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     }
     break;
   case _FIELD_OPEN:
-    OS_TPrintf("_FIELD_OPEN\n");
+		_battleParaFree(dbw);
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
   case _FIELD_FADEIN:
-    OS_TPrintf("_FIELD_FADEIN\n");
     GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
     (*seq) ++;
     break;
@@ -142,4 +142,12 @@ void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * ev
   }
 }
 
+
+static void _battleParaFree(EVENT_WIFICLUB_WORK *dbw)
+{
+	BATTLE_SETUP_PARAM * para;
+
+	para = &dbw->para;
+	GFL_HEAP_FreeMemory(para->partyPlayer);
+}
 

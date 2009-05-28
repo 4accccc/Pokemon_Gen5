@@ -87,6 +87,8 @@ struct _EVENT_IRCBATTLE_WORK{
   int selectType;
 };
 
+static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
+
 //============================================================================================
 //
 //		サブイベント
@@ -196,7 +198,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     NET_PRINT("バトル完了 event_ircbattle\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-    (*seq) = _CALL_NET_END;
+		_battleParaFree(dbw);
+		(*seq) = _CALL_NET_END;
     break;
   case _CALL_IRCBATTLE_FRIEND:  //  ともだちコード交換
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ircbattlematch), &IrcBattleFriendProcData, dbw);
@@ -305,6 +308,15 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT
     PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->partyPlayer);
   }
   return event;
+}
+
+
+static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw)
+{
+	BATTLE_SETUP_PARAM * para;
+
+	para = &dbw->para;
+	GFL_HEAP_FreeMemory(para->partyPlayer);
 }
 
 

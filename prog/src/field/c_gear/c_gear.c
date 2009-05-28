@@ -905,6 +905,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 			GFL_CLACT_WK_Remove( pWork->cellMove );
 			pWork->cellMove=NULL;
 
+			if(_gearPanelTypeNum(pWork,type) > 1)  //‰º‚É‚ ‚éƒ^ƒCƒv‚ªˆêŒÂˆÈã‚ ‚éê‡
 			{
 				type = pWork->cellMoveType;
 				CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,type);

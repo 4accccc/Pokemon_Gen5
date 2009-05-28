@@ -461,7 +461,10 @@ static void _buttonWindowDelete(IRC_BATTLE_MATCH* pWork)
 {
   int i;
 
-  GFL_BMPWIN_Delete(pWork->buttonWin[0]);
+	if(pWork->buttonWin[0]){
+		GFL_BMPWIN_Delete(pWork->buttonWin[0]);
+	}
+	pWork->buttonWin[0]=NULL;
 }
 
 
@@ -661,7 +664,9 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
     }
     else
     {  // Ç¢Ç¢Ç¶ÇëIëÇµÇΩèÍçá
+			int aMsgBuff[]={IRCBTL_STR_09};
 			_buttonWindowDelete(pWork);
+			_msgWindowCreate(aMsgBuff, pWork);
 			_CHANGE_STATE(pWork,_ircMatchWait);
 		}
   }
