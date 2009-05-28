@@ -2278,6 +2278,15 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				*p_seq	= SEQ_WAIT_RIGHT;
 			}
 
+
+			//左タッチ演出ON
+			{	
+				TOUCH_EFFECT_WORK *p_touch;
+				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
+				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
+				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, pos.x, pos.y );
+			}
+
 			TouchMarker_SetPos( p_wk, &pos );
 		}
 		else
@@ -2381,10 +2390,24 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 #endif //DEBUG_ONLY_PLAY
 			}
 
+			//右タッチ演出ON
+			{	
+				TOUCH_EFFECT_WORK *p_touch;
+				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
+				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
+				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, pos.x, pos.y );
+			}
+
 			TouchMarker_SetPos( p_wk, &pos );
 		}
 		else
 		{	
+			//右タッチ演出ON
+			{	
+				TOUCH_EFFECT_WORK *p_touch;
+				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
+				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, FALSE );
+			}
 			SHAKESEARCH_Init( p_shake_right );
 			*p_seq	= SEQ_RET;
 		}
