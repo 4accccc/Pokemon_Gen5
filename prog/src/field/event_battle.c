@@ -58,6 +58,11 @@ typedef struct {
 //======================================================================
 //  proto
 //======================================================================
+//BATTLE_SETUP_PARAMの解放処理
+static const void BATTLE_SETUP_PARAM_Destructor(BATTLE_SETUP_PARAM * para);
+//POKEPARTYにポケモンを加える
+static const void addPartyPokemon(POKEPARTY * party, u16 monsno, u8 level, u16 id);
+
 static GMEVENT_RESULT fieldBattleEvent(
     GMEVENT * event, int *  seq, void * work );
 
@@ -67,6 +72,7 @@ static GMEVENT_RESULT DebugBattleEvent(
 
 const u32 data_EncountPoke200905[];
 const u32 data_EncountPoke200905Max;
+
 
 //======================================================================
 //  フィールド　バトルイベント
@@ -115,8 +121,8 @@ GMEVENT * EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
       u32 pokeNo200905 = GFUser_GetPublicRand(data_EncountPoke200905Max);
   //  u32 pokeNo = MONSNO_ARUSEUSU+1;
       u32 pokeNo = data_EncountPoke200905[pokeNo200905];
-      PokeParty_Add( para->partyEnemy1,
-        PP_Create(pokeNo,15,3594,HEAPID_CORE) );
+      addPartyPokemon( para->partyEnemy1, pokeNo, 15, 3594 );
+      //PokeParty_Add( para->partyEnemy1, PP_Create(pokeNo,15,3594,HEAPID_CORE) );
     }
 
     //2vs2時の味方AI（不要ならnull）
@@ -208,6 +214,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq) ++;
     break;
   case 7:
+    BATTLE_SETUP_PARAM_Destructor(&dbw->para);
     return GMEVENT_RES_FINISH;
   }
 
@@ -257,8 +264,8 @@ GMEVENT * DEBUG_EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
 
     //1vs1時の敵AI, 2vs2時の１番目敵AI用
     para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );
-    PokeParty_Add( para->partyEnemy1,
-        PP_Create(MONSNO_ARUSEUSU+1,15,3594,HEAPID_CORE) );
+    addPartyPokemon( para->partyEnemy1, MONSNO_ARUSEUSU+1, 15, 3594 );
+    //PokeParty_Add( para->partyEnemy1, PP_Create(MONSNO_ARUSEUSU+1,15,3594,HEAPID_CORE) );
 
     //2vs2時の味方AI（不要ならnull）
     para->partyPartner = NULL;
@@ -350,10 +357,42 @@ static GMEVENT_RESULT DebugBattleEvent(
     (*seq) ++;
     break;
   case 6:
+    BATTLE_SETUP_PARAM_Destructor(&dbw->para);
     return GMEVENT_RES_FINISH;
   }
 
   return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const void addPartyPokemon(POKEPARTY * party, u16 monsno, u8 level, u16 id)
+{
+  POKEMON_PARAM * pp = PP_Create(monsno, level, id, HEAPID_CORE);
+  PokeParty_Add( party, pp);
+  GFL_HEAP_FreeMemory( pp );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static const void BATTLE_SETUP_PARAM_Destructor(BATTLE_SETUP_PARAM * para)
+{
+  if (para->partyPlayer)
+  {
+    GFL_HEAP_FreeMemory(para->partyPlayer);
+  }
+  if (para->partyPartner)
+  {
+    GFL_HEAP_FreeMemory(para->partyPartner);
+  }
+  if (para->partyEnemy1)
+  {
+    GFL_HEAP_FreeMemory(para->partyEnemy1);
+  }
+  if (para->partyEnemy2)
+  {
+    GFL_HEAP_FreeMemory(para->partyEnemy2);
+  }
 }
 
 //======================================================================
