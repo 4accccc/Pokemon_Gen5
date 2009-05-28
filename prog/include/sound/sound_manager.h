@@ -65,6 +65,10 @@ extern void	SOUNDMAN_PauseHierarchyPlayer( BOOL flag );
 extern BOOL	SOUNDMAN_PushHierarchyPlayer( void );
 extern BOOL	SOUNDMAN_PopHierarchyPlayer( void );
 
+// 階層プレーヤーサウンド操作(スレッド再生用)
+extern void	SOUNDMAN_PlayHierarchyPlayer_forThread_heapsv( void );
+extern BOOL	SOUNDMAN_PlayHierarchyPlayer_forThread_play( u32 soundIdx );
+
 //============================================================================================
 /**
  * @brief	サウンドプリセット関数
