@@ -671,12 +671,7 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
 
     case CR_CODE:
       wk->write_x = wk->org_x;
-//      wk->write_y += LINE_DOT_HEIGHT;
-      {
-        u16 h = GFL_FONT_GetLineHeight( wk->fontHandle );
-        TAYA_Printf("LINE HEIGHT=%d\n", h);
-        wk->write_y += h;
-      }
+      wk->write_y += LINE_DOT_HEIGHT;
       sp++;
       break;
 
