@@ -344,7 +344,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
     subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
     subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
     msgWin_Visible( wk, FALSE );
-    BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_BB );
+    BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTL_MAIN_BtlPosToViewPos(wk->mainModule, subwk->pokePos) );
     BTLV_EFFECT_AddByPos( BTLV_MCSS_POS_BB, BTLEFF_SINGLE_ENCOUNT_1 );
     (*seq)++;
     break;
@@ -389,7 +389,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 4:
     if( BTLV_SCU_WaitMsg(wk) )
     {
-      BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_AA );
+      BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTL_MAIN_BtlPosToViewPos(wk->mainModule,subwk->pokePos) );
       msgWin_Visible( wk, FALSE );
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
       (*seq)++;
