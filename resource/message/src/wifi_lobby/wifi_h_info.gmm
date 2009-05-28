@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-01-26T16:40:52"/>
+	<create user="matsuda" host="W00142" date="2009-05-28T18:59:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -365,34 +365,34 @@ msg_wifi_h_info_07_03→どんどんソーナンス</comment>
 		<comment>参加するを選んだが、定員オーバー、
 またはタイムアウトで、募集に間に合わなかった場合</comment>
 		<language name="JPN" width="216">[1:40:広場ミニゲーム:0]に
-さんか　できません　でした▼</language>
+さんか　できません　でした[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">[1:40:広場ミニゲーム:0]に
-さんか　できません　でした▼</language>
+さんか　できません　でした[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_01_05">
 		<comment>「さんかする」を選んだが、ミニゲーム開催中の場合</comment>
 		<language name="JPN" width="216">ただいま　ゲームちゅう　です！
-おわるまで　さんか　できません！▼</language>
+おわるまで　さんか　できません！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">ただいま　ゲームちゅう　です！
-おわるまで　さんか　できません！▼</language>
+おわるまで　さんか　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_01_06">
 		<comment>タイムテーブルにより、ミニゲームが終了している場合</comment>
 		<language name="JPN" width="216">[1:40:広場ミニゲーム:0]の　うけつけは
-しゅうりょう　しました！▼</language>
+しゅうりょう　しました！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">[1:40:広場ミニゲーム:0]の　うけつけは
-しゅうりょう　しました！▼</language>
+しゅうりょう　しました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_01_07">
 		<comment>自分が親になり、募集を解散した場合で、
 募集不可の間のメッセージ。</comment>
 		<language name="JPN" width="216">じゅんびが　できるまで
-しばらく　おまち　ください▼</language>
+しばらく　おまち　ください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">じゅんびが　できるまで
-しばらく　おまち　ください▼</language>
+しばらく　おまち　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_01_09">
@@ -400,11 +400,11 @@ msg_wifi_h_info_07_03→どんどんソーナンス</comment>
 		<language name="JPN" width="216">つごうが　わるくなって　しまった
 メンバーが　いたので▽
 [1:40:広場ミニゲーム:0]を▽
-ちゅうし　しました！▼</language>
+ちゅうし　しました！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">つごうが　わるくなって　しまった
 メンバーが　いたので▽
 [1:40:広場ミニゲーム:0]を▽
-ちゅうし　しました！▼</language>
+ちゅうし　しました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_02_01">
@@ -435,26 +435,26 @@ msg_wifi_h_info_07_03→どんどんソーナンス</comment>
 
 	<row id="msg_wifi_h_info_02_06">
 		<comment>ミニゲームのタイトル名</comment>
-		<language name="JPN" font=" 1:font_system" width="216">[1:40:広場ミニゲーム:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">[1:40:広場ミニゲーム:0]</language>
+		<language name="JPN" font=" 1:small" width="216">[1:40:広場ミニゲーム:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:40:広場ミニゲーム:0]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_02_07">
 		<comment>参加している人数を表示。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">さんか　[2:00:１桁:0]にん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">さんか　[2:00:１桁:0]にん</language>
+		<language name="JPN" font=" 1:small" width="216">さんか　[2:00:１桁:0]にん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">さんか　[2:00:１桁:0]にん</language>
 	</row>
 
 	<row id="msg_wifi_h_info_02_08">
 		<comment>参加できる残り人数を表示。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">のこり　[2:00:１桁:0]にん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">のこり　[2:00:１桁:0]にん</language>
+		<language name="JPN" font=" 1:small" width="216">のこり　[2:00:１桁:0]にん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">のこり　[2:00:１桁:0]にん</language>
 	</row>
 
 	<row id="msg_wifi_h_info_02_03">
 		<comment>募集の残り時間を表示。</comment>
-		<language name="JPN" font=" 1:font_system" width="216">あと　[2:01:２桁:0]びょう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">あと　[2:01:２桁:0]びょう</language>
+		<language name="JPN" font=" 1:small" width="216">あと　[2:01:２桁:0]びょう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">あと　[2:01:２桁:0]びょう</language>
 	</row>
 
 	<row id="msg_wifi_h_info_02_04">
@@ -468,13 +468,13 @@ msg_wifi_h_info_07_03→どんどんソーナンス</comment>
 	<row id="msg_wifi_h_info_02_05">
 		<comment>参加できなくなった人が出た場合。終了</comment>
 		<language name="JPN" width="216">つごうが　わるくなって　しまった
-メンバーが　います▼
+メンバーが　います[BE:01:ページ切り替え（クリア）]
 もういちど　さいしょから
-てつづきを　やりなおして　ください▼</language>
+てつづきを　やりなおして　ください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">つごうが　わるくなって　しまった
-メンバーが　います▼
+メンバーが　います[BE:01:ページ切り替え（クリア）]
 もういちど　さいしょから
-てつづきを　やりなおして　ください▼</language>
+てつづきを　やりなおして　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_03_01">
@@ -488,13 +488,13 @@ msg_wifi_h_info_07_03→どんどんソーナンス</comment>
 	<row id="msg_wifi_h_info_04_01">
 		<comment>制限時間が来て、メンバーが自分だけの場合</comment>
 		<language name="JPN" width="216">せいげん　じかんないに　メンバーが
-あつまりません　でした▼
+あつまりません　でした[BE:01:ページ切り替え（クリア）]
 もういちど　さいしょから
-てつづきを　やりなおして　ください▼</language>
+てつづきを　やりなおして　ください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">せいげん　じかんないに　メンバーが
-あつまりません　でした▼
+あつまりません　でした[BE:01:ページ切り替え（クリア）]
 もういちど　さいしょから
-てつづきを　やりなおして　ください▼</language>
+てつづきを　やりなおして　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_05_01">
@@ -502,9 +502,9 @@ msg_wifi_h_info_07_03→どんどんソーナンス</comment>
 空いている席で話しかけたが、
 すでに一杯になっている場合のメッセージ。</comment>
 		<language name="JPN" width="216">にんずうが　いっぱいで
-さんか　することが　できません！▼</language>
+さんか　することが　できません！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">にんずうが　いっぱいで
-さんか　することが　できません！▼</language>
+さんか　することが　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_05_02">
@@ -512,19 +512,19 @@ msg_wifi_h_info_07_03→どんどんソーナンス</comment>
 制限時間で強制的に終了となった場合のメッセージ。</comment>
 		<language name="JPN" width="216">せいげん　じかんが　きましたので
 [1:40:広場ミニゲーム:0]を▽
-しゅうりょう　します！▼</language>
+しゅうりょう　します！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">せいげん　じかんが　きましたので
 [1:40:広場ミニゲーム:0]を▽
-しゅうりょう　します！▼</language>
+しゅうりょう　します！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_05_03">
 		<comment>世界時計、足跡ボード、ロビーニュースで
 参加が終了している場合のメッセージ。</comment>
 		<language name="JPN" width="216">[1:40:広場ミニゲーム:0]は
-しゅうりょう　しました！▼</language>
+しゅうりょう　しました！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">[1:40:広場ミニゲーム:0]は
-しゅうりょう　しました！▼</language>
+しゅうりょう　しました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_05_04">
@@ -535,13 +535,13 @@ msg_wifi_h_info_07_03→どんどんソーナンス</comment>
 
 	<row id="msg_wifi_h_info_05_05">
 		<comment>最終確認。msg_wifi_h_info_05_07へ</comment>
-		<language name="JPN" font=" 1:font_system" width="216">はい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">はい</language>
+		<language name="JPN" font=" 1:small" width="216">はい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">はい</language>
 	</row>
 
 	<row id="msg_wifi_h_info_05_06">
-		<language name="JPN" font=" 1:font_system" width="216">いいえ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">いいえ</language>
+		<language name="JPN" font=" 1:small" width="216">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">いいえ</language>
 	</row>
 
 	<row id="msg_wifi_h_info_05_07">
@@ -556,27 +556,27 @@ msg_wifi_h_info_07_03→どんどんソーナンス</comment>
 
 	<row id="msg_wifi_h_info_05_08">
 		<comment>msg_wifi_h_info_05_10へ</comment>
-		<language name="JPN" font=" 1:font_system" width="216">はい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">はい</language>
+		<language name="JPN" font=" 1:small" width="216">はい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">はい</language>
 	</row>
 
 	<row id="msg_wifi_h_info_05_09">
-		<language name="JPN" font=" 1:font_system" width="216">いいえ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="216">いいえ</language>
+		<language name="JPN" font=" 1:small" width="216">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">いいえ</language>
 	</row>
 
 	<row id="msg_wifi_h_info_05_10">
 		<comment>受付処理の終了。</comment>
-		<language name="JPN" width="216">さんか　するのを　やめました▼</language>
-		<language name="JPN_KANJI" width="216">さんか　するのを　やめました▼</language>
+		<language name="JPN" width="216">さんか　するのを　やめました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">さんか　するのを　やめました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_06_01">
 		<comment>パレード開始前にＰＯＳを踏んだときのメッセージ。</comment>
 		<language name="JPN" width="216">パレード　かいしまで
-しばらく　おまち　ください！▼</language>
+しばらく　おまち　ください！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">パレード　かいしまで
-しばらく　おまち　ください！▼</language>
+しばらく　おまち　ください！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_06_02">
@@ -591,90 +591,90 @@ msg_wifi_h_info_07_03→どんどんソーナンス</comment>
 	<row id="msg_wifi_h_info_06_03">
 		<comment>フロートが定員オーバーになったときのメッセージ。
 </comment>
-		<language name="JPN" width="216">もう　のれない　みたいだ……▼</language>
-		<language name="JPN_KANJI" width="216">もう　のれない　みたいだ……▼</language>
+		<language name="JPN" width="216">もう　のれない　みたいだ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">もう　のれない　みたいだ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_06_04">
 		<comment>パレードが終了している場合のメッセージ。</comment>
-		<language name="JPN" width="216">パレードは　しゅうりょう　しました▼</language>
-		<language name="JPN_KANJI" width="216">パレードは　しゅうりょう　しました▼</language>
+		<language name="JPN" width="216">パレードは　しゅうりょう　しました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">パレードは　しゅうりょう　しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_07_01">
 		<comment>●ばくばくマルノームの説明</comment>
-		<language name="JPN" width="216">「[1:40:広場ミニゲーム:0]」▼
+		<language name="JPN" width="216">「[1:40:広場ミニゲーム:0]」[BE:01:ページ切り替え（クリア）]
 まわる　マルノームの　くちを　めがけ
-きのみを　はじいて　いれましょう！▼
+きのみを　はじいて　いれましょう！[BE:01:ページ切り替え（クリア）]
 れんぞくで　いれた　ぶんだけ
-とくてん　アップ！▼
+とくてん　アップ！[BE:01:ページ切り替え（クリア）]
 フィーバータイムに　なると
-さらに　とくてん　アップします！▼
+さらに　とくてん　アップします！[BE:01:ページ切り替え（クリア）]
 ねらいを　さだめるのか
 どんどん　なげいれるのかは▽
-あなたしだい　です！▼</language>
-		<language name="JPN_KANJI" width="216">「[1:40:広場ミニゲーム:0]」▼
+あなたしだい　です！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">「[1:40:広場ミニゲーム:0]」[BE:01:ページ切り替え（クリア）]
 まわる　マルノームの　くちを　めがけ
-きのみを　はじいて　いれましょう！▼
+きのみを　はじいて　いれましょう！[BE:01:ページ切り替え（クリア）]
 れんぞくで　いれた　ぶんだけ
-とくてん　アップ！▼
+とくてん　アップ！[BE:01:ページ切り替え（クリア）]
 フィーバータイムに　なると
-さらに　とくてん　アップします！▼
+さらに　とくてん　アップします！[BE:01:ページ切り替え（クリア）]
 ねらいを　さだめるのか
 どんどん　なげいれるのかは▽
-あなたしだい　です！▼</language>
+あなたしだい　です！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_07_02">
 		<comment>●ころころマネネの説明</comment>
-		<language name="JPN" width="216">「[1:40:広場ミニゲーム:0]」▼
+		<language name="JPN" width="216">「[1:40:広場ミニゲーム:0]」[BE:01:ページ切り替え（クリア）]
 マネネを　おとさないように
-ボールを　うまく　うごかしましょう！▼
+ボールを　うまく　うごかしましょう！[BE:01:ページ切り替え（クリア）]
+ボールに　のりつづけると
+ライトが　きらめき[BE:00:ページ切り替え（行送り）]
+はくしゅが　わきあがります！[BE:01:ページ切り替え（クリア）]
+さらに　ぜんいんが　ボールに
+のりつづけると　まくも　あがります！[BE:01:ページ切り替え（クリア）]
+おちることなく　みんな
+じょうずに　のりつづけましょう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">「[1:40:広場ミニゲーム:0]」[BE:01:ページ切り替え（クリア）]
+マネネを　おとさないように
+ボールを　うまく　うごかしましょう！[BE:01:ページ切り替え（クリア）]
 ボールに　のりつづけると
 ライトが　きらめき▽
-はくしゅが　わきあがります！▼
+はくしゅが　わきあがります！[BE:01:ページ切り替え（クリア）]
 さらに　ぜんいんが　ボールに
-のりつづけると　まくも　あがります！▼
+のりつづけると　まくも　あがります！[BE:01:ページ切り替え（クリア）]
 おちることなく　みんな
-じょうずに　のりつづけましょう！▼</language>
-		<language name="JPN_KANJI" width="216">「[1:40:広場ミニゲーム:0]」▼
-マネネを　おとさないように
-ボールを　うまく　うごかしましょう！▼
-ボールに　のりつづけると
-ライトが　きらめき▽
-はくしゅが　わきあがります！▼
-さらに　ぜんいんが　ボールに
-のりつづけると　まくも　あがります！▼
-おちることなく　みんな
-じょうずに　のりつづけましょう！▼</language>
+じょうずに　のりつづけましょう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_h_info_07_03">
 		<comment>●どんどんソーナンスの説明</comment>
-		<language name="JPN" width="216">「[1:40:広場ミニゲーム:0]」▼
+		<language name="JPN" width="216">「[1:40:広場ミニゲーム:0]」[BE:01:ページ切り替え（クリア）]
 ポンプを　まっすぐ　うえから　おして
 たくさんの　くうきを　おくりこみ▽
-どんどん　ふうせんを　わりましょう！▼
+どんどん　ふうせんを　わりましょう！[BE:01:ページ切り替え（クリア）]
 どんどんおして　ポンプがあかくなると
-おくりこめる　くうきが　ふえます！▼
+おくりこめる　くうきが　ふえます！[BE:01:ページ切り替え（クリア）]
 あと　まわっている　ソーナノですが
 うまく　あわせると　よりたくさんの▽
-くうきを　おくりこめます！▼
+くうきを　おくりこめます！[BE:01:ページ切り替え（クリア）]
 ただし　おなじ　ソーナノでも
 ほそい　ソーナノに　あわせると▽
-くうきが　へるので　ごようじん！▼</language>
-		<language name="JPN_KANJI" width="216">「[1:40:広場ミニゲーム:0]」▼
+くうきが　へるので　ごようじん！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">「[1:40:広場ミニゲーム:0]」[BE:01:ページ切り替え（クリア）]
 ポンプを　まっすぐ　うえから　おして
 たくさんの　くうきを　おくりこみ▽
-どんどん　ふうせんを　わりましょう！▼
+どんどん　ふうせんを　わりましょう！[BE:01:ページ切り替え（クリア）]
 どんどんおして　ポンプがあかくなると
-おくりこめる　くうきが　ふえます！▼
+おくりこめる　くうきが　ふえます！[BE:01:ページ切り替え（クリア）]
 あと　まわっている　ソーナノですが
 うまく　あわせると　よりたくさんの▽
-くうきを　おくりこめます！▼
+くうきを　おくりこめます！[BE:01:ページ切り替え（クリア）]
 ただし　おなじ　ソーナノでも
 ほそい　ソーナノに　あわせると▽
-くうきが　へるので　ごようじん！▼</language>
+くうきが　へるので　ごようじん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

@@ -3808,17 +3808,33 @@ static BOOL WFLBY_ROOM_TalkWin_EndWait( WFLBY_ROOM_TALKMSG* cp_wk )
 {
 #if WB_FIX
 	if( GF_MSG_PrintEndCheck( cp_wk->msgno ) == 0 ){
-#else
-	if(cp_wk->print_stream == NULL){
-    return TRUE;
-  }
-  if(PRINTSYS_PrintStreamGetState(cp_wk->print_stream) == PRINTSTREAM_STATE_DONE){
-		PRINTSYS_PrintStreamDelete(cp_wk->print_stream);
-		cp_wk->print_stream = NULL;
-#endif
 		return TRUE;
 	}
 	return FALSE;
+#else
+  PRINTSTREAM_STATE state;
+  
+	if(cp_wk->print_stream == NULL){
+    return TRUE;
+  }
+
+  state = PRINTSYS_PrintStreamGetState(cp_wk->print_stream);
+  switch( state ){
+  case PRINTSTREAM_STATE_DONE:
+		PRINTSYS_PrintStreamDelete(cp_wk->print_stream);
+		cp_wk->print_stream = NULL;
+		return TRUE;
+
+  case PRINTSTREAM_STATE_PAUSE: //ˆêŽž’âŽ~’†
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A | PAD_BUTTON_B)){
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+      PRINTSYS_PrintStreamReleasePause( cp_wk->print_stream );
+    }
+    break;
+  }
+	
+	return FALSE;
+#endif
 }
 
 //----------------------------------------------------------------------------

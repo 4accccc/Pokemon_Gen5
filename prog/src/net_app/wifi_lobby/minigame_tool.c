@@ -3240,13 +3240,23 @@ static BOOL MNGM_TALKWIN_MsgEndCheck( MNGM_TALKWIN* p_wk, u32 idx )
   }
   return FALSE;
 #else
+  PRINTSTREAM_STATE state;
+  
   if(p_wk->print_stream[idx] == NULL){
     return TRUE;
   }
-  if(PRINTSYS_PrintStreamGetState(p_wk->print_stream[idx]) == PRINTSTREAM_STATE_DONE){
+  state = PRINTSYS_PrintStreamGetState(p_wk->print_stream[idx]);
+  switch(state){
+  case PRINTSTREAM_STATE_DONE:
 		PRINTSYS_PrintStreamDelete(p_wk->print_stream[idx]);
 		p_wk->print_stream[idx] = NULL;
 		return TRUE;
+  case PRINTSTREAM_STATE_PAUSE: //ˆêŽž’âŽ~’†
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A | PAD_BUTTON_B)){
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+      PRINTSYS_PrintStreamReleasePause(p_wk->print_stream[idx]);
+    }
+    break;
 	}
 	return FALSE;
 #endif
