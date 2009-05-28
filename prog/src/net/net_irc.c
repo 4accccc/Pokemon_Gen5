@@ -311,6 +311,9 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 value)
 	
 	send_value = value & 0xf;
 	receive_value = value >> 4;
+
+	//OS_TPrintf("%x value \n",value);
+	
 	
 	if(command != GF_NET_COMMAND_CONTINUE){
 		IRC_PRINT("IRC受信コールバック呼び出し, size=%d, command=%d, send_value=%d, receive_value=%d\n", size,command,send_value,receive_value);
@@ -359,7 +362,7 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 value)
 		OS_TPrintf("赤外線：同一valueを受信\n");
 		return;
 	}
-	NetIrcSys.last_value = value;
+	NetIrcSys.last_value = send_value;
 
 	send_id = IRC_TargetIDGet();
 	if(NetIrcSys.recieve_func != NULL){

@@ -484,14 +484,15 @@ static void _modeInit(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuInit(IRC_BATTLE_MENU* pWork)
 {
-  int aMsgBuff[]={IRCBTL_STR_01,IRCBTL_STR_02,IRCBTL_STR_15,IRCBTL_STR_03};
+	int aMsgBuff[]={IRCBTL_STR_01,IRCBTL_STR_02,IRCBTL_STR_15,IRCBTL_STR_03};
+	
+	_buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
 
-  _buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork);
+	pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
+	pWork->touch = &_modeSelectMenuButtonCallback;
 
-  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_modeSelectMenuButtonCallback;
+	_CHANGE_STATE(pWork,_modeSelectMenuWait);
 
-  _CHANGE_STATE(pWork,_modeSelectMenuWait);
 }
 
 static void _workEnd(IRC_BATTLE_MENU* pWork)
@@ -568,8 +569,9 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(IRC_BATTLE_MENU* pWork)
 {
-  GFL_BMN_Main( pWork->pButton );
-
+	if(WIPE_SYS_EndCheck()){
+		GFL_BMN_Main( pWork->pButton );
+	}
 }
 
 
