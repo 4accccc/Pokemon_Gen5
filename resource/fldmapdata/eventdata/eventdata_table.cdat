@@ -1,9 +1,28 @@
+//#include "event_d02.h"
+//このファイルはdata/d02.mevから自動生成されました
+#ifndef ZONE_D02_EVD_H
+#define ZONE_D02_EVD_H
+
+#define DOOR_ID_D02_EXIT01                0
+#define DOOR_ID_D02_EXIT02                1
+#define DOOR_ID_D02_EXIT03                2
+
+#endif //ZONE_D02_EVD_H
 //#include "event_d02r0101.h"
 //このファイルはdata/d02r0101.mevから自動生成されました
 #ifndef ZONE_D02R0101_EVD_H
 #define ZONE_D02R0101_EVD_H
 
-#define DOOR_ID_D02R0101_EXIT01           0
+#define DOOR_ID_D02R0101_EXIT06           0
+#define DOOR_ID_D02R0101_EXIT01           1
+#define DOOR_ID_D02R0101_EXIT02           2
+#define DOOR_ID_D02R0101_EXIT03           3
+#define DOOR_ID_D02R0101_EXIT04           4
+#define DOOR_ID_D02R0101_EXIT05           5
+#define DOOR_ID_D02R0101_EXIT07           6
+#define DOOR_ID_D02R0101_EXIT08           7
+#define DOOR_ID_D02R0101_EXIT09           8
+#define DOOR_ID_D02R0101_EXIT10           9
 
 #endif //ZONE_D02R0101_EVD_H
 //#include "event_h01p01.h"
@@ -153,10 +172,96 @@
 
 #endif //ZONE_T02R0301_EVD_H
 
+const CONNECT_DATA ConnectData_D02[] = {
+	{//DOOR_ID_D02_EXIT01 = 0
+		{7792, 0, 9904},
+		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT02,
+		4,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02_EXIT02 = 1
+		{7792, 0, 9920},
+		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT02,
+		4,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02_EXIT03 = 2
+		{7792, 0, 9936},
+		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT04,
+		4,//direction
+		0 //type
+	},
+};
+const int ConnectCount_D02 = NELEMS(ConnectData_D02);
+
+static const EVENTDATA_TABLE event_d02 = {
+	0,
+	0,
+	3,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&ConnectData_D02,
+	(void *)NULL,
+};
 const CONNECT_DATA ConnectData_D02R0101[] = {
-	{//DOOR_ID_D02R0101_EXIT01 = 0
-		{176, 0, 96},
+	{//DOOR_ID_D02R0101_EXIT06 = 0
+		{1168, 0, 352},
 		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT01,
+		2,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02R0101_EXIT01 = 1
+		{1392, 0, 1200},
+		ZONE_ID_D02, DOOR_ID_D02_EXIT01,
+		3,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02R0101_EXIT02 = 2
+		{1392, 0, 1216},
+		ZONE_ID_D02, DOOR_ID_D02_EXIT01,
+		3,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02R0101_EXIT03 = 3
+		{1392, 0, 1232},
+		ZONE_ID_D02, DOOR_ID_D02_EXIT01,
+		3,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02R0101_EXIT04 = 4
+		{1392, 0, 1184},
+		ZONE_ID_D02, DOOR_ID_D02_EXIT01,
+		3,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02R0101_EXIT05 = 5
+		{1392, 0, 1248},
+		ZONE_ID_D02, DOOR_ID_D02_EXIT01,
+		3,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02R0101_EXIT07 = 6
+		{1184, 0, 352},
+		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT02,
+		2,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02R0101_EXIT08 = 7
+		{1200, 0, 352},
+		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT02,
+		2,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02R0101_EXIT09 = 8
+		{1216, 0, 352},
+		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT02,
+		2,//direction
+		0 //type
+	},
+	{//DOOR_ID_D02R0101_EXIT10 = 9
+		{1232, 0, 352},
+		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT02,
 		2,//direction
 		0 //type
 	},
@@ -166,7 +271,7 @@ const int ConnectCount_D02R0101 = NELEMS(ConnectData_D02R0101);
 static const EVENTDATA_TABLE event_d02r0101 = {
 	0,
 	0,
-	1,
+	10,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -176,19 +281,19 @@ static const EVENTDATA_TABLE event_d02r0101 = {
 const CONNECT_DATA ConnectData_H01P01[] = {
 	{//DOOR_ID_H01P01_EXIT01 = 0
 		{256, 0, 448},
-		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT01,
+		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT08,
 		1,//direction
 		0 //type
 	},
 	{//DOOR_ID_H01P01_EXIT02 = 1
 		{272, 0, 448},
-		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT01,
+		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT08,
 		1,//direction
 		0 //type
 	},
 	{//DOOR_ID_H01P01_EXIT03 = 2
 		{288, 0, 448},
-		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT01,
+		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT08,
 		1,//direction
 		0 //type
 	},
@@ -659,6 +764,7 @@ static const EVENTDATA_TABLE event_t02r0301 = {
 };
 
 static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
+	{ ZONE_ID_D02, &event_d02 },
 	{ ZONE_ID_D02R0101, &event_d02r0101 },
 	{ ZONE_ID_H01P01, &event_h01p01 },
 	{ ZONE_ID_T01, &event_t01 },
