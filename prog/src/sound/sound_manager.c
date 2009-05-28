@@ -281,6 +281,32 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 }
 
 //--------------------------------------------------------------------------------------------
+void	SOUNDMAN_PlayHierarchyPlayer_forThread1( void )
+{
+	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
+	GF_ASSERT(pSndHeapHandle);
+
+	player->heapLvPush = NNS_SndHeapSaveState(*pSndHeapHandle);
+}
+
+BOOL	SOUNDMAN_PlayHierarchyPlayer_forThread2( u32 soundIdx )
+{
+	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
+	BOOL result;
+
+	GF_ASSERT(pSndHeapHandle);
+
+	// サウンド再生開始
+	result = NNS_SndArcPlayerStartSeqEx(&player->sndHandle, sndHierarchyPlayerNo, -1, -1, soundIdx);
+	if( result == FALSE){ return FALSE; }
+
+	player->heapLvFull = NNS_SndHeapSaveState(*pSndHeapHandle);
+	player->soundIdx = soundIdx;
+
+	return TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
 /**
  *
  * @brief	サウンド停止
