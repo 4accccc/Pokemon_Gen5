@@ -2956,11 +2956,10 @@ static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_WORK *p_wk, TOUCHEFFID id, u32 x, 
 	case TOUCHEFFID_RIGHT:
 		{
 			GFL_POINT	pos;
-			//通常2倍で良いはずだが、誤差がでるため
 			pos.x		= p_wk->left.x + (x - p_wk->left.x) * 2;
 			pos.y		= p_wk->left.y + (y - p_wk->left.y) * 2;
-			NAGI_Printf( "X 左%d 中%d 右%d", p_wk->left.x, x, pos.x );
-			NAGI_Printf( "Y 左%d 中%d 右%d", p_wk->left.y, y, pos.y );
+	//		NAGI_Printf( "X 左%d 中%d 右%d", p_wk->left.x, x, pos.x );
+		//	NAGI_Printf( "Y 左%d 中%d 右%d", p_wk->left.y, y, pos.y );
 			NNS_G3dScrPosToWorldLine( pos.x, pos.y, &near, &far );
 			p_wk->trans[id]	= near;
 		}

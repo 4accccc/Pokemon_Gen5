@@ -153,6 +153,8 @@ enum
 #define	MSGWND_SUB_W	(23)
 #define	MSGWND_SUB_H	(11)
 
+#define	SCALE_MIN			( 0x11 )
+
 //-------------------------------------
 ///	数
 //=====================================
@@ -323,12 +325,12 @@ typedef struct {
 //	等速直線運動動作
 //=====================================
 typedef struct {
-	int now_val;		//現在の値
-	int start_val;		//開始の値
-	int end_val;		//終了の値
+	s32 now_val;		//現在の値
+	s32 start_val;		//開始の値
+	s32 end_val;		//終了の値
 	fx32 add_val;		//加算値(誤差をださないようにここだけfx)
-	int sync_now;		//現在のシンク
-	int sync_max;		//シンク最大数
+	s32 sync_now;		//現在のシンク
+	s32 sync_max;		//シンク最大数
 } PROGVAL_VELOCITY_WORK;
 
 //-------------------------------------
@@ -404,6 +406,7 @@ struct _RESULT_MAIN_WORK
 	PROGVAL_TORNADO_WORK		tornado[CLWK_SMALL_HEART_MAX];
 	PROGVAL_VELOCITY_WORK		memo_scale;
 	PROGVAL_VELOCITY_WORK		memo_rot;
+	PROGVAL_VELOCITY_WORK		scale;
 
 	//引数
 	IRC_RESULT_PARAM	*p_param;
@@ -482,17 +485,25 @@ static BOOL PROGVAL_SHAKE_Main( PROGVAL_SHAKE_WORK *p_wk );
 static int Progval_Velocity( int start, int end, int sync_now, int sync_max );
 static void PROGVAL_TORNADO_Init( PROGVAL_TORNADO_WORK *p_wk, const VecFx32 *cp_start_pos, u16 r_max, u16 add_angle, int sync );
 static BOOL PROGVAL_TORNADO_Main( PROGVAL_TORNADO_WORK *p_wk );
-static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, int start, int end, int sync );
+static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, s32 start, s32 end, s32 sync );
 static BOOL	PROGVAL_VEL_Main( PROGVAL_VELOCITY_WORK* p_wk );
 //ぶったいの動作
+#if 0
 static void BigHeart_InitScale( RESULT_MAIN_WORK *p_wk, u8 score );
 static BOOL BigHeart_MainScale( RESULT_MAIN_WORK *p_wk );
+#else
+static void BigHeart_InitScale( RESULT_MAIN_WORK *p_wk, u8 score, u8 sync );
+static BOOL BigHeart_MainScale( RESULT_MAIN_WORK *p_wk );
+#endif
 static void BigHeart_InitShake( RESULT_MAIN_WORK *p_wk );
 static BOOL BigHeart_MainShake( RESULT_MAIN_WORK *p_wk );
 static void SmallHeart_InitTornado( RESULT_MAIN_WORK *p_wk );
 static BOOL SmallHeart_MainTornado( RESULT_MAIN_WORK *p_wk );
+
+#if 0
 static void Memo_InitRot( RESULT_MAIN_WORK *p_wk );
 static BOOL Memo_MainRot( RESULT_MAIN_WORK *p_wk );
+#endif
 //DEBUG_PRINT
 #ifdef DEBUG_RESULT_MSG
 static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID );
@@ -534,7 +545,7 @@ typedef enum
 	GRAPHIC_BG_FRAME_M_INFOWIN,
 	GRAPHIC_BG_FRAME_M_TEXT	= GRAPHIC_BG_FRAME_M_INFOWIN,
 	GRAPHIC_BG_FRAME_M_BACK,
-	GRAPHIC_BG_FRAME_M_MEMO,
+	GRAPHIC_BG_FRAME_M_HEART,
 	GRAPHIC_BG_FRAME_S_TEXT,
 	GRAPHIC_BG_FRAME_S_BACK,
 	GRAPHIC_BG_FRAME_MAX
@@ -556,14 +567,14 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 	},
-	// GRAPHIC_BG_FRAME_M_MEMO
+	// GRAPHIC_BG_FRAME_M_HEART
 	{
-		0, 0, 0x800, 0,
+		0, 0, 0x1000, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_TEXT
@@ -813,7 +824,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 {
 	static const GFL_DISP_VRAM sc_vramSetTable =
 	{
-		GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
+		GX_VRAM_BG_256_AD,					// メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
 		GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
 		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
@@ -972,22 +983,19 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
 
 
-/*
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircresult_gra_result_bg_memo_NCLR,
+
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_ircresult_gra_result_bg_heart256_NCLR,
 				PALTYPE_MAIN_BG, RESULT_BG_PAL_M_00*0x20, 0x20, heapID );
 	
-		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_ircresult_gra_result_bg_memo_NCGR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_MEMO], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_ircresult_gra_result_bg_heart_NCGR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
 
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircresult_gra_result_bg_memo_NSCR,
-				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_MEMO], 0, 0, FALSE, heapID );
-*/
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_ircresult_gra_result_bg_heart_NSCR,
+				sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
+
 		GFL_ARC_CloseDataHandle( p_handle );
-	}
 
-	//設定
-	{	
-	//	GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_MEMO], VISIBLE_OFF );
+		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], FALSE );
 	}
 }
 
@@ -1140,6 +1148,8 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 			scale.x	= OBJ_BIG_HEART_DEF_SIZE;
 			scale.y	= OBJ_BIG_HEART_DEF_SIZE;
 			GFL_CLACT_WK_SetScale( p_wk->p_clwk[CLWKID_BIG_HEART], &scale );
+
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CLWKID_BIG_HEART], FALSE );
 		}
 
 	}
@@ -1171,7 +1181,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 		for( i = CLWKID_NUMBER_TOP; i < CLWKID_NUMBER_END; i++  )
 		{	
 			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
-			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 2 );
+			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 0 );
 			GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[i], 0 );
 		}
 	}
@@ -1927,7 +1937,7 @@ static BOOL PROGVAL_TORNADO_Main( PROGVAL_TORNADO_WORK *p_wk )
  *	@return	none
  */
 //-----------------------------------------------------------------------------
-static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, int start, int end, int sync )
+static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, s32 start, s32 end, s32 sync )
 {
 	p_wk->now_val	= start;
 	p_wk->start_val	= start;
@@ -2044,17 +2054,22 @@ static void SEQFUNC_DecideHeart( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_HEART_SCALSE_INIT:
-		BigHeart_InitScale( p_wk, p_wk->p_param->score );
-		OBJNUBER_Start( &p_wk->number, p_wk->p_param->score, 120 );
+		BigHeart_InitScale( p_wk, p_wk->p_param->score, 180 );
+		OBJNUBER_Start( &p_wk->number, p_wk->p_param->score, 180 );
 		OS_Printf( "○相性　%d点！！", p_wk->p_param->score );
 		*p_seq	= SEQ_HEART_SCALSE_MAIN;
 		break;
 
 	case SEQ_HEART_SCALSE_MAIN:
-		OBJNUBER_Main( &p_wk->number );
-		if( BigHeart_MainScale( p_wk ) )
 		{	
-			*p_seq	= SEQ_HEART_SCALSE_EXIT;
+			u8 ret	= 0;
+			ret	+= OBJNUBER_Main( &p_wk->number );
+			ret	+= BigHeart_MainScale( p_wk );
+
+			if(ret==2)
+			{	
+				*p_seq	= SEQ_HEART_SCALSE_EXIT;
+			}
 		}
 		break;
 
@@ -2183,11 +2198,11 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_FADEOUT_WAIT,
 		SEQ_FADEIN_START,
 		SEQ_FADEIN_WAIT,
-		SEQ_MEMO_ROT_INIT,
-		SEQ_MEMO_ROT_MAIN,
-		SEQ_MEMO_ROT_EXIT,
+		SEQ_HEART_ROT_INIT,
+		SEQ_HEART_ROT_MAIN,
+		SEQ_HEART_ROT_EXIT,
 		SEQ_TOUCH,
-		SEQ_MEMO_QUESTION,
+		SEQ_HEART_QUESTION,
 		SEQ_WAIT,
 		SEQ_TOUCH2,
 		SEQ_END,
@@ -2207,7 +2222,7 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_FADEOUT_WAIT:
 		if( !GFL_FADE_CheckFade() )
 		{	
-			Memo_InitRot( p_wk );
+		//	Memo_InitRot( p_wk );
 			*p_seq	= SEQ_FADEIN_START;
 		}
 		break;
@@ -2220,23 +2235,23 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_FADEIN_WAIT:
 		if( !GFL_FADE_CheckFade() )
 		{	
-			*p_seq	= SEQ_MEMO_ROT_INIT;
+			*p_seq	= SEQ_HEART_ROT_INIT;
 		}
 		break;
 
-	case SEQ_MEMO_ROT_INIT:
+	case SEQ_HEART_ROT_INIT:
 		//Memo_InitRot( p_wk );
-		*p_seq	= SEQ_MEMO_ROT_MAIN;
+		*p_seq	= SEQ_HEART_ROT_MAIN;
 		break;
 
-	case SEQ_MEMO_ROT_MAIN:
-		if( Memo_MainRot( p_wk ) )
+	case SEQ_HEART_ROT_MAIN:
+		//if( Memo_MainRot( p_wk ) )
 		{	
-			*p_seq	= SEQ_MEMO_ROT_EXIT;
+			*p_seq	= SEQ_HEART_ROT_EXIT;
 		}
 		break;
 
-	case SEQ_MEMO_ROT_EXIT:
+	case SEQ_HEART_ROT_EXIT:
 		MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_002 );
 		*p_seq	= SEQ_TOUCH;
 		break;
@@ -2244,11 +2259,11 @@ static void SEQFUNC_Memo( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_TOUCH:
 		if( GFL_UI_TP_GetTrg() )
 		{	
-			*p_seq	= SEQ_MEMO_QUESTION;
+			*p_seq	= SEQ_HEART_QUESTION;
 		}
 		break;
 
-	case SEQ_MEMO_QUESTION:
+	case SEQ_HEART_QUESTION:
 /*		{	
 			u8	rnd	= p_wk->p_param->random;
 			if( p_wk->p_param->score < 40 )
@@ -2348,20 +2363,23 @@ static void OBJNUBER_Start( OBJNUBER_WORK *p_wk, int number, int sync )
 //-----------------------------------------------------------------------------
 static BOOL OBJNUBER_Main( OBJNUBER_WORK *p_wk )
 {	
-	int i;
-	u8 anm;
-
-	for( i = 0; i < CLWK_NUMBER_MAX; i++ )
-	{	
-		anm	= GFUser_GetPublicRand( 10 );
-		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], anm );
-		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
-	}
 
 	if( p_wk->sync++ > p_wk->sync_max )
 	{	
 		ObjNumber_SetNumber( p_wk, p_wk->number );
 		return TRUE;
+	}
+	else
+	{	
+		int i;
+		u8 anm;
+
+		for( i = 0; i < CLWK_NUMBER_MAX; i++ )
+		{	
+			anm	= GFUser_GetPublicRand( 10 );
+			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], anm );
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+		}
 	}
 	return FALSE;
 }
@@ -2412,7 +2430,9 @@ static void ObjNumber_SetNumber( OBJNUBER_WORK *p_wk, int number )
 	//一端消去
 	for( i = 0; i < CLWK_NUMBER_MAX; i++ )
 	{
-		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+		//GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], 0 );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
 	}
 
 	//OBJのアニメを桁の数値に合わせる
@@ -2498,6 +2518,7 @@ static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg )
 	return FALSE;
 }
 
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief	大きいハートの拡大処理初期化
@@ -2551,6 +2572,77 @@ static BOOL BigHeart_MainScale( RESULT_MAIN_WORK *p_wk )
 
 	return ret;
 }
+#else
+//----------------------------------------------------------------------------
+/**
+ *	@brief	大きいハートの拡大処理初期化
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	ワーク
+ *	@param	score										点数
+ *
+ */
+//-----------------------------------------------------------------------------
+static void BigHeart_InitScale( RESULT_MAIN_WORK *p_wk, u8 score, u8 sync )
+{	
+	fx32 rate;
+	fx32 max;
+	fx32 min;
+
+	rate	= FX_Div( FX32_CONST(score), FX32_CONST(100) );
+	rate	= FX32_ONE - rate;
+	//max		= SCALE_MIN + FX_Mul((FX32_ONE-SCALE_MIN), rate );
+	min	= FX32_CONST(2);//SCALE_MIN;
+
+//	max	= FX_Mul( FX32_ONE, rate );
+//
+	max	= FX32_ONE + FX_Mul((min - FX32_ONE ) , rate);
+
+	OS_Printf( "rate %d\n", FX_FX32_TO_F32(rate) );
+
+	PROGVAL_VEL_Init( &p_wk->scale, min, max, sync );
+
+	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 
+			GFL_BG_CENTER_X_SET, 128 );
+	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 
+			GFL_BG_CENTER_Y_SET, 96 );
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART],
+			GFL_BG_SCALE_X_SET, p_wk->scale.now_val);
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART],
+			GFL_BG_SCALE_Y_SET, p_wk->scale.now_val);
+	GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], FALSE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	大きいハートの拡大処理メイン処理
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば処理終了
+ *	@retval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL BigHeart_MainScale( RESULT_MAIN_WORK *p_wk )
+{
+	BOOL ret;
+	GFL_CLWK		*p_heart;
+	GFL_CLSCALE	scale;
+			
+	//動作
+	ret	=  PROGVAL_VEL_Main( &p_wk->scale );
+
+	//サイズ決定
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART],
+			GFL_BG_SCALE_X_SET, p_wk->scale.now_val);
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART],
+			GFL_BG_SCALE_Y_SET, p_wk->scale.now_val);
+
+	GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], TRUE );
+
+	return ret;
+}
+
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -2688,6 +2780,7 @@ static BOOL SmallHeart_MainTornado( RESULT_MAIN_WORK *p_wk )
 	return FALSE;
 }
 
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief	メモの回転処理	初期化
@@ -2701,17 +2794,17 @@ static void Memo_InitRot( RESULT_MAIN_WORK *p_wk )
 	PROGVAL_VEL_Init( &p_wk->memo_scale, FX32_CONST(40), FX32_ONE, 80 );
 	PROGVAL_VEL_Init( &p_wk->memo_rot, 0, 0xFFF1, 80 );
 
-/*	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
+/*	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 
 			GFL_BG_CENTER_X_SET, 128 );
-	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
+	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 
 			GFL_BG_CENTER_Y_SET, 96 );
-	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART],
 			GFL_BG_SCALE_X_SET, p_wk->memo_scale.now_val);
-	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART],
 			GFL_BG_SCALE_Y_SET, p_wk->memo_scale.now_val);
-	GFL_BG_SetRadianReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
+	GFL_BG_SetRadianReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 
 			GFL_BG_RADION_SET, p_wk->memo_rot.now_val );
-	GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], TRUE );
+	GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], TRUE );
 */}
 //----------------------------------------------------------------------------
 /**
@@ -2729,15 +2822,17 @@ static BOOL Memo_MainRot( RESULT_MAIN_WORK *p_wk )
 	ret	= PROGVAL_VEL_Main( &p_wk->memo_scale );
 	ret |= PROGVAL_VEL_Main( &p_wk->memo_rot );
 
-/*	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
+/*	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART],
 			GFL_BG_SCALE_X_SET, p_wk->memo_scale.now_val);
-	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO],
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART],
 			GFL_BG_SCALE_Y_SET, p_wk->memo_scale.now_val);
-	GFL_BG_SetRadianReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_MEMO], 
+	GFL_BG_SetRadianReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 
 			GFL_BG_RADION_SET, p_wk->memo_rot.now_val );
 */
 	return ret;
 }
+
+#endif
 //----------------------------------------------------------------------------
 /**
  *	@brief	デバッグプリントを更新
