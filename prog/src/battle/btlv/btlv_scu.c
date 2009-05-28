@@ -90,6 +90,7 @@ struct _BTLV_SCU {
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil;
   GFL_FONT*       defaultFont;
+  GFL_FONT*       smallFont;
   GFL_TCBLSYS*    tcbl;
   PRINT_STREAM*   printStream;
   STRBUF*         strBuf;
@@ -155,8 +156,9 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
   wk->pokeCon = pokeCon;
   wk->heapID = heapID;
   wk->playerClientID = playerClientID;
-
   wk->defaultFont = defaultFont;
+//  wk->smallFont = GFL_FONT_Create( ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+
   wk->printStream = NULL;
   wk->tcbl = tcbl;
   wk->strBuf = GFL_STR_CreateBuffer( STRBUF_LEN, heapID );
@@ -259,6 +261,8 @@ void BTLV_SCU_Delete( BTLV_SCU* wk )
 
   PRINTSYS_QUE_Delete( wk->printQue );
   GFL_STR_DeleteBuffer( wk->strBuf );
+//  GFL_FONT_Delete( wk->smallFont );
+
   GFL_HEAP_FreeMemory( wk );
 }
 
@@ -691,6 +695,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     {
       if( wk->printWait )
       {
+        // やっぱり非通信時でも普通にwaitする
         if( BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE )
         {
           wk->printSeq = 1;
@@ -710,6 +715,11 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
   case 1: // 待ち指定あり（通常時）
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
+      wk->printWait = 0;
+    }
+    if( wk->printWait ){
+      wk->printWait--;
+    }else{
       return TRUE;
     }
     break;
