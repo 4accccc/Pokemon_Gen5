@@ -1930,13 +1930,16 @@ static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 //--------------------------------------------------------------
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
-	u32 w_no = WEATHER_NO_NUM;
+	u32 w_no = WEATHER_NO_SUNNY;
 	FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( fieldWork );
 	
 	switch( zone_id ){
+/*
+ * 090528VerÇÃROMÇ≈ÇÕê·ÇÕç~ÇÁÇ»Ç¢
 	case ZONE_ID_T01:
 		w_no = WEATHER_NO_SNOW;
 		break;
+//*/
 	case ZONE_ID_R01:
 		w_no = WEATHER_NO_RAIN;
 		break;
