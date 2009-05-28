@@ -159,10 +159,6 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->setupParam = setup_param;
 
       BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
-      BTL_ADAPTERSYS_Init( setup_param->commMode );
-      BTL_FIELD_Init( BTL_WEATHER_SHINE );
-
-      setSubProcForSetup( &wk->subProc, wk, setup_param );
 
 //      WAZADATA_PrintDebug();
       (*seq)++;
@@ -170,15 +166,26 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
     break;
 
   case 1:
+    if( BTL_NET_IsInitialized() )
     {
+      BTL_MAIN_MODULE* wk = mywk;
+      BTL_ADAPTERSYS_Init( wk->setupParam->commMode );
+      BTL_FIELD_Init( BTL_WEATHER_SHINE );
+      setSubProcForSetup( &wk->subProc, wk, wk->setupParam );
+      (*seq)++;
+    }
+    break;
+
+   case 2:
+   {
       BTL_MAIN_MODULE* wk = mywk;
       if( BTL_UTIL_CallProc(&wk->subProc) )
       {
         BTL_Printf("Proc Init done\n");
         return GFL_PROC_RES_FINISH;
       }
-    }
-    break;
+   }
+   break;
 
   }
 
