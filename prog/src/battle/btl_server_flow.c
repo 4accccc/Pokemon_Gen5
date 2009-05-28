@@ -1018,7 +1018,7 @@ static BOOL scput_Nigeru( BTL_SVFLOW_WORK* wk, u8 clientID, u8 pokeIdx )
 //-----------------------------------------------------------------------------------
 // サーバーフロー：メンバーを場に登場させる
 //-----------------------------------------------------------------------------------
-static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 pokeIdx, BOOL fBtlStart )
+static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next_poke_idx, BOOL fBtlStart )
 {
   SVCL_WORK* clwk;
   BTL_PARTY* party;
@@ -1029,9 +1029,9 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 pok
 
   GF_ASSERT(posIdx < clwk->numCoverPos);
 
-  if( posIdx != pokeIdx )
+  if( posIdx != next_poke_idx )
   {
-    BTL_PARTY_SwapMembers( party, posIdx, pokeIdx );
+    BTL_PARTY_SwapMembers( party, posIdx, next_poke_idx );
   }
   bpp = BTL_PARTY_GetMemberData( party, posIdx );
 
@@ -1042,10 +1042,10 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 pok
   BTL_POKEPARAM_SetContFlag( bpp, BPP_CONTFLG_MEMBERIN_EFFECT );
   BTL_POKEPARAM_SetAppearTurn( bpp, wk->turnCount );
 
-  SCQUE_PUT_OP_MemberIn( wk->que, clientID, posIdx, pokeIdx, wk->turnCount );
+  SCQUE_PUT_OP_MemberIn( wk->que, clientID, posIdx, next_poke_idx, wk->turnCount );
   if( !fBtlStart )
   {
-    SCQUE_PUT_ACT_MemberIn( wk->que, clientID, posIdx, pokeIdx, wk->turnCount );
+    SCQUE_PUT_ACT_MemberIn( wk->que, clientID, posIdx, next_poke_idx, wk->turnCount );
   }
 }
 static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )

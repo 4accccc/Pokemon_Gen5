@@ -1461,6 +1461,8 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
 
   party = &wk->party[ clientID ];
 
+  BTL_Printf("戦闘位置[%d] = クライアント[%d]の %d 番目のポケを返す\n", pos, clientID, posIdx );
+
   return BTL_PARTY_GetMemberDataConst( party, posIdx );
 }
 //=============================================================================================
@@ -1493,8 +1495,9 @@ BTL_POKEPARAM* BTL_POKECON_GetClientPokeData( BTL_POKE_CONTAINER* wk, u8 clientI
 //=============================================================================================
 const BTL_POKEPARAM* BTL_POKECON_GetClientPokeDataConst( const BTL_POKE_CONTAINER* wk, u8 clientID, u8 memberIdx )
 {
-  u8 pokeID = ClientBasePokeID[ clientID ] + memberIdx;
-  return wk->pokeParam[ pokeID ];
+  const BTL_PARTY* party;
+  party = &wk->party[ clientID ];
+  return BTL_PARTY_GetMemberDataConst( party, memberIdx );
 }
 
 BTL_POKEPARAM* BTL_POKECON_GetPokeParam( BTL_POKE_CONTAINER* wk, u8 pokeID )

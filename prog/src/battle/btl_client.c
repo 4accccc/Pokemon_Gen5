@@ -989,7 +989,7 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
       u8 memberIdx = wk->cmdArgs[2];
       BtlPokePos  pokePos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
 
-      BTLV_StartMemberChangeAct( wk->viewCore, pokePos, clientID, memberIdx );
+      BTLV_StartMemberChangeAct( wk->viewCore, pokePos, clientID, posIdx );
       (*seq)++;
     }
     break;
@@ -1668,12 +1668,15 @@ static BOOL scProc_OP_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
   u8 clientID = wk->cmdArgs[0];
   u8 posIdx = wk->cmdArgs[1];
   u8 memberIdx = wk->cmdArgs[2];
-  BtlPokePos  pokePos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
 
   {
     BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+
     BTL_POKEPARAM* bpp;
-    BTL_PARTY_SwapMembers( party, posIdx, memberIdx );
+    if( posIdx != memberIdx ){
+      BTL_PARTY_SwapMembers( party, posIdx, memberIdx );
+    }
+    BTL_Printf("メンバーイン 位置 %d <- %d にいたポケ\n", posIdx, memberIdx);
     bpp = BTL_PARTY_GetMemberData( party, posIdx );
     BTL_POKEPARAM_SetAppearTurn( bpp, args[3] );
   }
