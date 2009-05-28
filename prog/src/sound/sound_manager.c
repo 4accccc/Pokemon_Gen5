@@ -281,7 +281,7 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 }
 
 //--------------------------------------------------------------------------------------------
-void	SOUNDMAN_PlayHierarchyPlayer_forThread1( void )
+void	SOUNDMAN_PlayHierarchyPlayer_forThread_heapsv( void )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 	GF_ASSERT(pSndHeapHandle);
@@ -289,7 +289,7 @@ void	SOUNDMAN_PlayHierarchyPlayer_forThread1( void )
 	player->heapLvPush = NNS_SndHeapSaveState(*pSndHeapHandle);
 }
 
-BOOL	SOUNDMAN_PlayHierarchyPlayer_forThread2( u32 soundIdx )
+BOOL	SOUNDMAN_PlayHierarchyPlayer_forThread_play( u32 soundIdx )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 	BOOL result;

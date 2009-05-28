@@ -112,6 +112,7 @@ static const SOUNDMAN_HIERARCHY_PLAYER_DATA pmHierarchyPlayerData = {
 	PLAYER_MUSIC_HEAPSIZ, PLAYER_DEFAULT_MAX, PLAYER_MUSIC_CH,
 };
 
+#define BGM_BLOCKLOAD_SIZE  (0x2000)
 //============================================================================================
 /**
  *
@@ -142,7 +143,7 @@ static PMSND_PL_UNIT						systemPlayerUnit;
 static PMSND_PLAYERSTATUS				bgmPlayerInfo;
 static SOUNDMAN_PRESET_HANDLE*	systemPresetHandle;
 static SOUNDMAN_PRESET_HANDLE*	usrPresetHandle1;
-static OSMutex									sndTreadMutex;		
+//static OSMutex									sndTreadMutex;		
 
 #define THREAD_STACKSIZ		(0x8000)
 OSThread		soundLoadThread;
@@ -195,7 +196,7 @@ void	PMSND_Init( void )
 	PMSND_InitCaptureReverb();
 
 	// 排他制御用Mutex初期化(NNS_SndMainがスレッドセーフ設計ではないため)
-	OS_InitMutex(&sndTreadMutex);		
+	//OS_InitMutex(&sndTreadMutex);		
 
 	bgmFadeCounter = 0;
 
@@ -655,8 +656,6 @@ BOOL	PMSND_CheckPlayBGM( void )
 }
 
 
-extern void	SOUNDMAN_PlayHierarchyPlayer_forThread1( void );
-extern BOOL	SOUNDMAN_PlayHierarchyPlayer_forThread2( u32 soundIdx );
 //------------------------------------------------------------------
 /**
  *
@@ -713,54 +712,6 @@ static void PMSND_CancelSystemFadeBGM( void )
 
 static void PMSND_SystemFadeBGM( void )
 {
-#if 0
-	NNSSndHandle*	pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
-	u32				nowSoundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
-	BOOL			bgmSetFlag = FALSE;
-
-	if( fadeStatus.active == FALSE ){ return; }
-
-	switch( fadeStatus.seq ){
-	case 0:
-		if(nowSoundIdx){
-			if( nowSoundIdx != fadeStatus.nextSoundIdx ){
-				//FADEOUT
-				if( fadeStatus.volumeCounter > 0 ){
-					fadeStatus.volumeCounter--;
-					NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeOutFrame);
-					return;
-				}
-				SOUNDMAN_StopHierarchyPlayer();
-				NNS_SndPlayerSetVolume(pBgmHandle, 0);
-			} else {									
-				//FADEIN
-				if( fadeStatus.volumeCounter < fadeStatus.fadeInFrame ){
-					fadeStatus.volumeCounter++;
-					NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeInFrame);
-					return;
-				}
-				PMSND_ResetSystemFadeBGM();
-				return;			//終了
-			}
-		}
-		if(fadeStatus.nextSoundIdx == 0){
-			SOUNDMAN_StopHierarchyPlayer();
-			PMSND_ResetSystemFadeBGM();
-			return;			//終了
-		}
-		createSoundPlayThread( fadeStatus.nextSoundIdx );
-		fadeStatus.volumeCounter = 0;
-		fadeStatus.seq++;
-		break;
-	case 1:
-		if(checkEndSoundPlayThread() == TRUE){
-			fadeStatus.seq = 0;
-		} else {
-			OS_Sleep(1);
-		}
-		break;
-	}
-#else
 	NNSSndHandle*	pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
 	u32				nowSoundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
 	BOOL			bgmSetFlag = FALSE;
@@ -795,13 +746,17 @@ static void PMSND_SystemFadeBGM( void )
 			PMSND_ResetSystemFadeBGM();
 			return;			//終了
 		}
+		NNS_SndArcSetLoadBlockSize(BGM_BLOCKLOAD_SIZE);	//分割ロード指定
+
 		createSoundPlayThread( fadeStatus.nextSoundIdx );
 		fadeStatus.volumeCounter = 0;
 		fadeStatus.seq++;
 		break;
 	case 1:
 		if(checkEndSoundPlayThread() == TRUE){
-			SOUNDMAN_PlayHierarchyPlayer_forThread2( fadeStatus.nextSoundIdx );
+			NNS_SndArcSetLoadBlockSize(0);	//分割ロードなしに復帰
+
+			SOUNDMAN_PlayHierarchyPlayer_forThread_play( fadeStatus.nextSoundIdx );
 			NNS_SndPlayerSetVolume(pBgmHandle, 0);
 			fadeStatus.seq = 0;
 		} else {
@@ -809,7 +764,6 @@ static void PMSND_SystemFadeBGM( void )
 		}
 		break;
 	}
-#endif
 }
 
 //------------------------------------------------------------------
@@ -963,35 +917,23 @@ void PMSND_ReleasePreset( void )
 //============================================================================================
 //スレッド関数
 /// BGMの分割読み込みのサイズ  
-#define BGM_BLOCKLOAD_SIZE  (0x2000)
 //--------------------------------------------------------------------------------------------
 static void	_loadPlayThread( void* arg )
 {
-#if 0
 	SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG* arg1 = (SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG*)arg;
-
-	//OS_LockMutex(&sndTreadMutex);		
-
-	NNS_SndArcSetLoadBlockSize(BGM_BLOCKLOAD_SIZE);	//分割ロード指定
-
-	SOUNDMAN_PlayHierarchyPlayer(arg1->soundIdx);
-	NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), arg1->volume);
-
-	NNS_SndArcSetLoadBlockSize(0);	//分割ロードなし
-
-	//OS_UnlockMutex(&sndTreadMutex);
-#else
-	SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG* arg1 = (SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG*)arg;
+	BOOL result;
 
 	// サウンドデータ（seq, bank）読み込み
-	NNS_SndArcLoadSeqEx
+	result = NNS_SndArcLoadSeqEx
 		(arg1->soundIdx, NNS_SND_ARC_LOAD_SEQ | NNS_SND_ARC_LOAD_BANK, PmSndHeapHandle);
+	if( result == FALSE){ OS_Printf("sound seqbank load error!\n"); }
 
-	SOUNDMAN_PlayHierarchyPlayer_forThread1();
+	// サウンド階層構造用設定
+	SOUNDMAN_PlayHierarchyPlayer_forThread_heapsv();
 
 	// サウンドデータ（wave）読み込み
-	NNS_SndArcLoadSeqEx(arg1->soundIdx, NNS_SND_ARC_LOAD_WAVE, PmSndHeapHandle);
-#endif
+	result = NNS_SndArcLoadSeqEx(arg1->soundIdx, NNS_SND_ARC_LOAD_WAVE, PmSndHeapHandle);
+	if( result == FALSE){ OS_Printf("sound wave load error!\n"); }
 }
 
 static void createSoundPlayThread( u32 soundIdx )
