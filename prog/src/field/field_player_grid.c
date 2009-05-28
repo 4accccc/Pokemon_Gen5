@@ -493,11 +493,13 @@ static void gjiki_SetMove_Walk(
 	}else{
 		code = AC_WALK_U_8F;
 	}
-	
+
+#if 0	//段差出きるまでのデバッグ用
 	if( key_cont & PAD_BUTTON_A ){ //kari
 		code = AC_JUMP_U_2G_16F;
 	}
-	
+#endif
+
 	code = FLDMMDL_ChangeDirAcmdCode( dir, code );
 	
 	FLDMMDL_SetAcmd( fmmdl, code );
@@ -624,4 +626,18 @@ static void gjiki_Sound_Move( void )
 	u16 trackBit = 0xffff; // 全track ON
 	PMSND_ChangeBGMtrack(trackBit);
 	//　↑
+}
+
+//======================================================================
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER *fld_player )
+{
 }

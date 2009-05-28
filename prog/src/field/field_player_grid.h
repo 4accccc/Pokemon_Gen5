@@ -28,3 +28,5 @@ extern void FIELD_PLAYER_GRID_Delete( FIELD_PLAYER_GRID *g_jiki );
 
 extern void FIELD_PLAYER_GRID_Move(
 		FIELD_PLAYER_GRID *g_jiki, int key_trg, int key_cont );
+
+extern void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER *fld_player );

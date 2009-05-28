@@ -60,6 +60,8 @@
 
 #include "field_effect.h"
 
+#include "field_player_grid.h"
+
 #include "arc/fieldmap/zone_id.h"
 #include "field/weather_no.h"
 #include "sound/pm_sndsys.h"
@@ -613,6 +615,10 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   
   if( fieldWork->fldMMdlSys != NULL ){
     FLDMMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
+    
+    if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){ //‰¼‘Îˆ
+      FIELD_PLAYER_GetPos( fieldWork->field_player, &fieldWork->now_pos );
+    }
   }
   
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
@@ -1738,6 +1744,7 @@ static GMEVENT * fldmapFunc_Event_CheckEvent( GAMESYS_WORK *gsys, void *work )
 				u32 scr_id = FLDMMDL_GetEventID( fmmdl_talk );
 				FLDMMDL *fmmdl_player = FIELD_PLAYER_GetFldMMdl(
 						fieldWork->field_player );
+        FIELD_PLAYER_GRID_ForceStop( fieldWork->field_player );
 				return EVENT_FieldTalk( gsys, fieldWork,
 					scr_id, fmmdl_player, fmmdl_talk, fieldWork->heapID );
 			}
