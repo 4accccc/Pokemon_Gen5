@@ -32,6 +32,7 @@
 #include "event_ircbattle.h"
 #include "event_wificlub.h"
 #include "field_subscreen.h"
+#include "sound/pm_sndsys.h"
 
 #include "font/font.naix"
 
@@ -1064,6 +1065,8 @@ static GMEVENT_RESULT DMenuMusicalSelectEvent(
         typedef void (* CHANGE_FUNC)(DEB_MENU_MUS_WORK*);
         CHANGE_FUNC func = (CHANGE_FUNC)ret;
         func(work);
+        PMSND_PauseBGM(TRUE);
+        PMSND_PushBGM();
         GMEVENT_CallEvent(work->gmEvent, work->newEvent);
     		(*seq)++;
     		return( GMEVENT_RES_CONTINUE );
@@ -1081,6 +1084,9 @@ static GMEVENT_RESULT DMenuMusicalSelectEvent(
       GFL_HEAP_FreeMemory( work->dupInitWork );
       work->dupInitWork = NULL;
     }
+    PMSND_PopBGM();
+    PMSND_PauseBGM(FALSE);
+    PMSND_FadeInBGM(60);
 		return( GMEVENT_RES_FINISH );
     
     break;
