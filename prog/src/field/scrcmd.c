@@ -22,6 +22,9 @@
 #include "msgdata.h"
 #include "print/wordset.h"
 
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
+
 //======================================================================
 //	’è‹`
 //======================================================================
@@ -1052,6 +1055,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   }
   
 	SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
+  PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
 
   VMCMD_SetWait( core, TalkMsgWait );
 	return 1;
