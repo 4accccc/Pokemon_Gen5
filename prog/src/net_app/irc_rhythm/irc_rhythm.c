@@ -1969,6 +1969,7 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 #else
 	enum
 	{	
+		SEQ_RESULT,
 		SEQ_SENDRESULT,
 		SEQ_TIMING,
 		SEQ_CALC,
@@ -1987,6 +1988,13 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
 	switch( *p_seq )
 	{	
+	case SEQ_RESULT:
+		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_RHYTHM_RESULT ) )
+		{	
+			*p_seq	= SEQ_SENDRESULT;
+		}
+		break;
+
 	case SEQ_SENDRESULT:
 		if( RHYTHMNET_SendResultData( &p_wk->net, &p_wk->search ) )
 		{	

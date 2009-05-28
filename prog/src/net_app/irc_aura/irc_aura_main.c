@@ -2450,6 +2450,7 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	}
 #else
 	enum{	
+		SEQ_RESULT,
 		SEQ_SENDRESULT,
 		SEQ_TIMING,
 		SEQ_CALC,
@@ -2470,6 +2471,13 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
 	switch( *p_seq )
 	{	
+	case SEQ_RESULT:
+		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_AURA_RESULT ) )
+		{	
+			*p_seq	= SEQ_SENDRESULT;
+		}
+		break;
+
 	case SEQ_SENDRESULT:
 		result.trg_left			=	p_wk->trg_left[0];
 		result.trg_right		=	p_wk->trg_right[0];
