@@ -91,6 +91,7 @@ VMHANDLE*	BTLV_EFFVM_Init( GFL_TCBSYS *tcbsys, HEAPID heapID );
 BOOL			BTLV_EFFVM_Main( VMHANDLE *vmh );
 void			BTLV_EFFVM_Exit( VMHANDLE *vmh );
 void			BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID waza );
+void			BTLV_EFFVM_Stop( VMHANDLE *vmh );
 
 //エフェクトコマンド
 static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work );
@@ -328,6 +329,22 @@ void	BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID w
 
 //============================================================================================
 /**
+ *	VM強制停止
+ *
+ * @param[in]	vmh	仮想マシン制御構造体へのポインタ
+ */
+//============================================================================================
+void			BTLV_EFFVM_Stop( VMHANDLE *vmh )
+{ 
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+
+  VMEC_SEQ_END( vmh, VM_GetContext( vmh ) );
+	GFL_HEAP_FreeMemory( bevw->sequence );
+	bevw->sequence = NULL;
+}
+
+//============================================================================================
+/**
  *	カメラ移動
  *
  * @param[in]	vmh				仮想マシン制御構造体へのポインタ
@@ -336,7 +353,7 @@ void	BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID w
 //============================================================================================
 static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 {
-	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)context_work;
 	VecFx32		cam_pos,cam_target;
 	//カメラタイプ読み込み
 	int			cam_type = ( int )VMGetU32( vmh );
@@ -436,7 +453,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT VMEC_CAMERA_MOVE_COODINATE( VMHANDLE *vmh, void *context_work )
 {	
-	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)context_work;
 	VecFx32		cam_pos,cam_target;
 	//カメラタイプ読み込み
 	int			cam_type = ( int )VMGetU32( vmh );
@@ -493,7 +510,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE_COODINATE( VMHANDLE *vmh, void *context_wor
 //============================================================================================
 static VMCMD_RESULT VMEC_CAMERA_MOVE_ANGLE( VMHANDLE *vmh, void *context_work )
 {	
-	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)context_work;
 	//カメラタイプ読み込み
 	int		cam_type = ( int )VMGetU32( vmh );
 	//カメラ角度読み込み
@@ -536,7 +553,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE_ANGLE( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT VMEC_CAMERA_PROJECTION( VMHANDLE *vmh, void *context_work )
 {	
-	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+	BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)context_work;
 	//射影モードを読み込み
 	bevw->camera_projection = ( int )VMGetU32( vmh );
 

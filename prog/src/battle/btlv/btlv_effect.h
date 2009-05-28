@@ -35,17 +35,6 @@ enum{
 	BTLEFF_CAMERA_INIT,
 };
 
-enum{
-  BTLV_EFFECT_AA2BBGANSEKI = 0,
-  BTLV_EFFECT_BB2AAGANSEKI,
-  BTLV_EFFECT_AA2BBMIZUDEPPOU,
-  BTLV_EFFECT_BB2AAMIZUDEPPOU,
-  BTLV_EFFECT_A2BGANSEKI,
-  BTLV_EFFECT_B2AGANSEKI,
-  BTLV_EFFECT_A2BMIZUDEPPOU,
-  BTLV_EFFECT_B2AMIZUDEPPOU
-};
-
 typedef struct _BTLV_EFFECT_WORK BTLV_EFFECT_WORK;
 
 //--------------------------------------------
@@ -69,10 +58,10 @@ extern  void              BTLV_EFFECT_Main( void );
 extern  void              BTLV_EFFECT_Add( int eff_no );
 extern  void              BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no );
 extern  void              BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param );
+extern  void              BTLV_EFFECT_Stop( void );
 
 //暫定でTCBで作成したエフェクト
 extern  void              BTLV_EFFECT_Damage( BtlvMcssPos target );
-extern  void              BTLV_EFFECT_EncountEffect( void );
 
 extern  BOOL              BTLV_EFFECT_CheckExecute( void );
 extern  void              BTLV_EFFECT_SetPokemon( const POKEMON_PARAM *pp, int position );

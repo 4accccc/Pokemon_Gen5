@@ -407,27 +407,20 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 4:
     if( BTLV_SCU_WaitMsg(wk) )
     {
-//      VecFx32 scale;
-
-//      VEC_Set( &scale, 0, 0, 0 );
-
-      BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_AA );
-//      BTLV_MCSS_SetScale( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_AA, &scale );
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
-      (*seq)++;
-    }
-    break;
-  case 5:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
-      //BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
-      return TRUE;
-    }
-    break;
-  }
+			BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTLV_MCSS_POS_AA );
+		  BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+			(*seq)++;
+		}
+		break;
+	case 5:
+		if( !BTLV_EFFECT_CheckExecute() )
+		{
+			statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
+			return TRUE;
+		}
+		break;
+	}
 #endif
-
   return FALSE;
 }
 //--------------------------------------------------------------------------

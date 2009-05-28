@@ -478,6 +478,15 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 
   BTLV_SCD* wk = wk_adrs;
 
+  //カメラワークエフェクト
+  if( *seq < SEQ_SEL_FIGHT_FINISH )
+  { 
+  	if( !BTLV_EFFECT_CheckExecute() )
+    { 
+  		BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
+    }
+  }
+
   switch( *seq ){
   case SEQ_START:
     {
@@ -500,6 +509,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
           (*seq) = SEQ_SEL_POKEMON;
           break;
         case BTL_ACTION_ESCAPE:
+          BTLV_EFFECT_Stop();
           (*seq) = SEQ_SEL_ESCAPE;
           break;
         }
@@ -652,8 +662,21 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
     break;
 
   case SEQ_SEL_FIGHT_FINISH:
-    return TRUE;
-
+    //カメラワークエフェクトが起動しているかチェック
+	  if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      return TRUE;
+    }
+    BTLV_EFFECT_Stop();
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+    (*seq)++;
+    break;
+  case SEQ_SEL_FIGHT_FINISH+1:
+	  if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      return TRUE;
+    }
+    break;
 
   case SEQ_SEL_POKEMON:
     BTL_ACTION_SetChangeBegin( wk->destActionParam );
