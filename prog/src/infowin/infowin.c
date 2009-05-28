@@ -302,7 +302,7 @@ void	INFOWIN_Update( void )
     }
     
     //Wifi
-    if( state == GAME_COMM_STATUS_IRC )
+    if( state == GAME_COMM_STATUS_WIFI )
     {
       if( infoWk->wifiState == IWS_DISABLE )
       {
