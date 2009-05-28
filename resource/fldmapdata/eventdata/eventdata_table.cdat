@@ -26,6 +26,7 @@
 #define ZONE_T01R0102_EVD_H
 
 #define DOOR_ID_T01R0102_EXIT01           0
+#define DOOR_ID_T01R0102_EXIT02           1
 
 #endif //ZONE_T01R0102_EVD_H
 //#include "event_t01r0201.h"
@@ -46,6 +47,7 @@
 #define ZONE_T01R0202_EVD_H
 
 #define DOOR_ID_T01R0202_EXIT01           0
+#define DOOR_ID_T01R0202_EXIT02           1
 
 #endif //ZONE_T01R0202_EVD_H
 //#include "event_t01r0301.h"
@@ -65,6 +67,7 @@
 #define ZONE_T01R0302_EVD_H
 
 #define DOOR_ID_T01R0302_EXIT01           0
+#define DOOR_ID_T01R0302_EXIT02           1
 
 #endif //ZONE_T01R0302_EVD_H
 //#include "event_t01r0401.h"
@@ -214,13 +217,19 @@ const CONNECT_DATA ConnectData_T01R0102[] = {
 		3,//direction
 		0 //type
 	},
+	{//DOOR_ID_T01R0102_EXIT02 = 1
+		{112, 0, 16},
+		ZONE_ID_T01R0101, DOOR_ID_T01R0101_EXIT04,
+		3,//direction
+		0 //type
+	},
 };
 const int ConnectCount_T01R0102 = NELEMS(ConnectData_T01R0102);
 
 static const EVENTDATA_TABLE event_t01r0102 = {
 	0,
 	0,
-	1,
+	2,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -275,7 +284,13 @@ const CONNECT_DATA ConnectData_T01R0202[] = {
 	{//DOOR_ID_T01R0202_EXIT01 = 0
 		{64, 8, 32},
 		ZONE_ID_T01R0201, DOOR_ID_T01R0201_EXIT04,
-		3,//direction
+		4,//direction
+		0 //type
+	},
+	{//DOOR_ID_T01R0202_EXIT02 = 1
+		{64, 0, 16},
+		ZONE_ID_T01R0201, DOOR_ID_T01R0201_EXIT04,
+		4,//direction
 		0 //type
 	},
 };
@@ -284,7 +299,7 @@ const int ConnectCount_T01R0202 = NELEMS(ConnectData_T01R0202);
 static const EVENTDATA_TABLE event_t01r0202 = {
 	0,
 	0,
-	1,
+	2,
 	0,
 	(void *)NULL,
 	(void *)NULL,
@@ -336,13 +351,19 @@ const CONNECT_DATA ConnectData_T01R0302[] = {
 		4,//direction
 		0 //type
 	},
+	{//DOOR_ID_T01R0302_EXIT02 = 1
+		{64, 0, 16},
+		ZONE_ID_T01R0301, DOOR_ID_T01R0301_EXIT04,
+		4,//direction
+		0 //type
+	},
 };
 const int ConnectCount_T01R0302 = NELEMS(ConnectData_T01R0302);
 
 static const EVENTDATA_TABLE event_t01r0302 = {
 	0,
 	0,
-	1,
+	2,
 	0,
 	(void *)NULL,
 	(void *)NULL,
