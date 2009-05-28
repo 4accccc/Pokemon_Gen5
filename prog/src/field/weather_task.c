@@ -406,8 +406,6 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 
 	// 管理関数　メイン			呼び出し
 	case WEATHER_TASK_SEQ_CALL_MAIN:		
-
-
 		// *外部的なリクエストで、終了する
 		WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_main, heapID );
 		WEATHER_TASK_WK_MainObjList( p_wk );
