@@ -87,7 +87,8 @@ struct _COMPATIBLE_IRC_SYS
 	BOOL	is_return;
 	BOOL	is_start;
 	u32		random;
-	BOOL	is_timing[COMPATIBLE_TIMING_NO_MAX];
+	BOOL	is_you_timing[COMPATIBLE_TIMING_NO_MAX];
+	BOOL	is_my_timing[COMPATIBLE_TIMING_NO_MAX];
 
 	u8		mac_address[6];
 
@@ -535,9 +536,10 @@ BOOL COMPATIBLE_IRC_TimingSyncWait( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_TIMING
 		break;
 
 	case SEQ_TIMING_WAIT:
-		if( p_sys->is_timing[timing_no] )
+		if( p_sys->is_my_timing[timing_no] && p_sys->is_you_timing[timing_no] )
 		{
-			p_sys->is_timing[timing_no]	= FALSE;
+			p_sys->is_my_timing[timing_no]	= FALSE;
+			p_sys->is_you_timing[timing_no]	= FALSE;
 			p_sys->seq	= SEQ_TIMING_END;
 		}
 		break;
@@ -922,16 +924,22 @@ static void NET_RECV_Timing( const int netID, const int size, const void* cp_dat
 	{
 		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
 	}
-	if( netID == GFL_NET_SystemGetCurrentID() )
-	{
-		return;	//自分のデータは無視
-	}
 
 	GFL_STD_MemCopy( cp_data, &no, sizeof(COMPATIBLE_IRC_TIMINGSYNC_NO) );
-
 	GF_ASSERT( no < COMPATIBLE_TIMING_NO_MAX );
-	p_sys->is_timing[no]		= TRUE;
-	IRC_Print( "返答 %d \n", no );
+
+	if( netID == GFL_NET_SystemGetCurrentID() )
+	{
+		p_sys->is_my_timing[no]		= TRUE;
+		IRC_Print( "自分返答 %d \n", no );
+	}
+	else
+	{	
+		p_sys->is_you_timing[no]		= TRUE;
+		IRC_Print( "相手返答 %d \n", no );
+	}
+
+
 }
 
 //=============================================================================
