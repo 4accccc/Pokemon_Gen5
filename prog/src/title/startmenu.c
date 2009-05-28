@@ -802,21 +802,24 @@ static void START_MENU_UpdateTp( START_MENU_WORK *work )
         int nowLine = -(work->targetPos/8);
         for( i = 0; i < SMI_MAX ; i++ )
         {
-          //ògÇÃè„ÇÃï™Ç≈+1
-          if( nowLine+1 <= touchLine &&
-              nowLine+ItemSettingData[i].height+1 > touchLine )
+          if( work->itemWork[i].enable == TRUE )
           {
-            const BOOL ret = ItemSettingData[i].selectFunc( work );
-            if( ret == TRUE )
+            //ògÇÃè„ÇÃï™Ç≈+1
+            if( nowLine+1 <= touchLine &&
+                nowLine+ItemSettingData[i].height+1 > touchLine )
             {
-              GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 0 , 16 , ARI_FADE_SPD );
-              work->state = SMS_FADE_OUT;
-              work->selectItem = i;
-              PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+              const BOOL ret = ItemSettingData[i].selectFunc( work );
+              if( ret == TRUE )
+              {
+                GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 0 , 16 , ARI_FADE_SPD );
+                work->state = SMS_FADE_OUT;
+                work->selectItem = i;
+                PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+              }
+              break;
             }
-            break;
+            nowLine += ItemSettingData[i].height + 2;//ògÇ≈+2
           }
-          nowLine += ItemSettingData[i].height + 2;//ògÇ≈+2
         }
       }
     }
