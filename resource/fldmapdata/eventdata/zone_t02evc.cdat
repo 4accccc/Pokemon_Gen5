@@ -4,7 +4,7 @@
 const FLDMMDL_HEADER SampleFldMMdlHeader_t02[] = {
 	{
 		0,		///<識別ID
-		GIRL1,	///<表示するOBJコード
+		BABYGIRL1,	///<表示するOBJコード
 		MV_DIR_RND,	///<動作コード
 		0,	///<イベントタイプ
 		0,	///<イベントフラグ
@@ -38,7 +38,7 @@ const FLDMMDL_HEADER SampleFldMMdlHeader_t02[] = {
 	},
   {
 		2,		///<識別ID
-		KABI32,	///<表示するOBJコード
+		OLDMAN1,	///<表示するOBJコード
 		MV_DIR_RND,	///<動作コード
 		0,	///<イベントタイプ
 		0,	///<イベントフラグ

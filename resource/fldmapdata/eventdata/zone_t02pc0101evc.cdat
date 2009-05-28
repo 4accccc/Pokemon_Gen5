@@ -21,7 +21,7 @@ const FLDMMDL_HEADER SampleFldMMdlHeader_t02pc0101[] = {
 	},
 	{
 		1,		///<識別ID
-		OLDWOMAN1,	///<表示するOBJコード
+		MIDDLEWOMAN1,	///<表示するOBJコード
 		MV_DIR_RND,	///<動作コード
 		0,	///<イベントタイプ
 		0,	///<イベントフラグ

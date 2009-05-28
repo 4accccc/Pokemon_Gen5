@@ -38,7 +38,7 @@ const FLDMMDL_HEADER SampleFldMMdlHeader_T01[] = {
 	},
 	{
 		2,		///<識別ID
-		GIRL1,	///<表示するOBJコード
+		BABYGIRL1,	///<表示するOBJコード
 		MV_RND,	///<動作コード
 		0,	///<イベントタイプ
 		0,	///<イベントフラグ
