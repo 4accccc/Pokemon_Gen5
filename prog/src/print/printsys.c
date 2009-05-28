@@ -671,7 +671,12 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
 
     case CR_CODE:
       wk->write_x = wk->org_x;
-      wk->write_y += LINE_DOT_HEIGHT;
+//      wk->write_y += LINE_DOT_HEIGHT;
+      {
+        u16 h = GFL_FONT_GetLineHeight( wk->fontHandle );
+        TAYA_Printf("LINE HEIGHT=%d\n", h);
+        wk->write_y += h;
+      }
       sp++;
       break;
 
@@ -1091,7 +1096,7 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
           GFL_BMPWIN_TransVramCharacter( wk->dstWin );
           if( wk->pauseWait == LINE_DOT_HEIGHT )
           {
-            wk->printJob.write_x = 0;
+            wk->printJob.write_x = wk->printJob.org_x;
             wk->printJob.write_y = LINE_DOT_HEIGHT;
             wk->state = PRINTSTREAM_STATE_RUNNING;
           }
@@ -1131,7 +1136,7 @@ static void ctrlStreamTag( PRINT_STREAM* wk )
     wk->pauseType = PRINTSTREAM_PAUSE_LINEFEED;
     wk->pauseWait = 0;
     wk->pauseReleaseFlag = FALSE;
-    wk->printJob.write_x = 0;
+    wk->printJob.write_x = wk->printJob.org_x;
     wk->printJob.write_y = 0;
     skipCR = TRUE;
     break;
@@ -1140,7 +1145,7 @@ static void ctrlStreamTag( PRINT_STREAM* wk )
     wk->pauseType = PRINTSTREAM_PAUSE_CLEAR;
     wk->pauseWait = 0;
     wk->pauseReleaseFlag = FALSE;
-    wk->printJob.write_x = 0;
+    wk->printJob.write_x = wk->printJob.org_x;
     wk->printJob.write_y = 0;
     skipCR = TRUE;
     break;
