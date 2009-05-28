@@ -246,6 +246,28 @@ static void _typeAnimation(C_GEAR_WORK* pWork);
 #endif //_NET_DEBUG
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   チップを置いて良いかどうか
+ * @retval  置いていいときTRUE
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _isSetChip(int x,int y)
+{
+	if((x % 2) == 0){  // 偶数なら短い列の方   yは=かy-1が隣になる
+		if(y < (C_GEAR_PANEL_HEIGHT-1)){
+			return TRUE;
+		}
+	}
+	else{
+		if(y < (C_GEAR_PANEL_HEIGHT)){
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
 
 
 //------------------------------------------------------------------------------
@@ -905,7 +927,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 			GFL_CLACT_WK_Remove( pWork->cellMove );
 			pWork->cellMove=NULL;
 
-			if(_gearPanelTypeNum(pWork,type) > 1)  //下にあるタイプが一個以上ある場合
+			if(_gearPanelTypeNum(pWork,type) > 1 && _isSetChip(xp,yp))  //下にあるタイプが一個以上ある場合
 			{
 				type = pWork->cellMoveType;
 				CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,type);
@@ -918,7 +940,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
 		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L)  ///< パネルタイプを変更
 		{
-			if(_gearPanelTypeNum(pWork,type) > 1)
+			if(_gearPanelTypeNum(pWork,type) > 1 && _isSetChip(xp,yp))
 			{
 				type = (type+1) % CGEAR_PANELTYPE_MAX;
 				CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,type);
