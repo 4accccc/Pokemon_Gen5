@@ -1403,24 +1403,23 @@ const RAIL_CAMERA_SET RAIL_CAMERA_SET_Default =
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void calcAngleCamera(FIELD_CAMERA * field_camera)
+static void calcAngleCamera(FIELD_CAMERA * field_camera, const VecFx32 * target)
 {
   {
-    VecFx32 camPos, target, before;
+    VecFx32 camPos, before;
     u16 yaw = FIELD_CAMERA_GetAngleYaw(field_camera);
     u16 pitch = FIELD_CAMERA_GetAnglePitch(field_camera);
     fx32 len = FIELD_CAMERA_GetAngleLen(field_camera);
 
     FIELD_CAMERA_GetCameraPos(field_camera, &before);
 
-    FIELD_CAMERA_GetTargetPos(field_camera, &target);
     getVectorFromAngleValue(&camPos, yaw, pitch, len);
-    VEC_Add(&camPos, &target, &camPos);
+    VEC_Add(&camPos, target, &camPos);
     FIELD_CAMERA_SetCameraPos(field_camera, &camPos);
 
     if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y)
     {
-      debugPrintWholeVector("CamTgt:", &target, "\n");
+      debugPrintWholeVector("CamTgt:", target, "\n");
       debugPrintWholeVector("CamPos:", &camPos, "\n");
       OS_TPrintf("yaw:%04x pitch:%04x len:%08x\n",yaw, pitch, len);
     }
@@ -1452,12 +1451,14 @@ void FIELD_RAIL_CAMERAFUNC_FixPosCamera(const FIELD_RAIL_MAN* man)
 void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
 {
   FIELD_CAMERA * cam = man->field_camera;
+  VecFx32 pos;
   const RAIL_CAMERA_SET * cam_set = getCameraSet(&man->now_rail);
   FIELD_CAMERA_SetAnglePitch(cam, (u16)cam_set->param0);
   FIELD_CAMERA_SetAngleYaw(cam, (u16)cam_set->param1);
   FIELD_CAMERA_SetAngleLen(cam, (fx32)cam_set->param2);
 
-  calcAngleCamera(man->field_camera);
+  FIELD_RAIL_MAN_GetPos( man, &pos );
+  calcAngleCamera(man->field_camera, &pos );
 }
 
 //------------------------------------------------------------------
