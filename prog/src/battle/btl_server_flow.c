@@ -178,7 +178,7 @@ static u32 TargetPokeRec_CopyFriends( const TARGET_POKE_REC* rec, const BTL_POKE
 static u32 TargetPokeRec_CopyEnemys( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, TARGET_POKE_REC* dst );
 static void TargetPokeRec_RemoveDeadPokemon( TARGET_POKE_REC* rec );
 static BOOL scput_Nigeru( BTL_SVFLOW_WORK* wk, u8 clientID, u8 pokeIdx );
-static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 pokeIdx, BOOL fBtlStart );
+static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next_poke_idx, BOOL fBtlStart );
 static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
 static void scproc_MemberOut( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx );
 static void scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
@@ -271,6 +271,8 @@ static void scproc_HandEx_recoverRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
 static void scproc_HandEx_resetRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static void scproc_HandEx_messageSet( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static void scproc_HandEx_messageStd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
 static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
@@ -1216,7 +1218,15 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   if( wk->wazaEff_EnableFlag )
   {
-    SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT, pokeID, wk->wazaEff_TargetPokeID, waza );
+    BtlPokePos  atPos, defPos;
+
+    atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, pokeID );
+    if( wk->wazaEff_TargetPokeID != BTL_POKEID_NULL ){
+      defPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->wazaEff_TargetPokeID );
+    }else{
+      defPos = BTL_POS_NULL;
+    }
+    SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT, atPos, defPos, waza );
     BTL_Printf("予約コマンドうわがき");
   }
 
@@ -2990,6 +3000,8 @@ static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_RESET_RANK:    scproc_HandEx_resetRank( wk, handEx_header ); break;
     case BTL_HANDEX_DAMAGE:        scproc_HandEx_damage( wk, handEx_header ); break;
     case BTL_HANDEX_CHANGE_TYPE:   scproc_HandEx_changeType( wk, handEx_header ); break;
+    case BTL_HANDEX_MESSAGE_SET:   scproc_HandEx_messageSet( wk, handEx_header ); break;
+    case BTL_HANDEX_MESSAGE_STD:   scproc_HandEx_messageStd( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -3154,8 +3166,21 @@ static void scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
   SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ChangePokeType, param->pokeID, type_pure );
   BTL_POKEPARAM_ChangePokeType( bpp, param->next_type );
 }
+static void scproc_HandEx_messageSet( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_MESSAGE* param = (const BTL_HANDEX_PARAM_MESSAGE*)(param_header);
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
+  scPut_Message_SetEx( wk, bpp, param->strID, param->arg_cnt, param->args );
+}
 
+static void scproc_HandEx_messageStd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_MESSAGE* param = (const BTL_HANDEX_PARAM_MESSAGE*)(param_header);
+//  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+//  scPut_Message_SetEx( wk, bpp, param->arg_cnt, param->args );
+  SCQUE_PUT_MSG_STD( wk->que, param->strID );
+}
 
 //==============================================================================
 // サーバーフロー：ターンチェックルート

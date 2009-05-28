@@ -1261,6 +1261,33 @@ BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, u8 pokeID )
 }
 //=============================================================================================
 /**
+ * バトルポケモンIDをポケモン戦闘位置に変換
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BtlPokePos    ポケモン戦闘位置
+ */
+//=============================================================================================
+BtlPokePos BTL_MAIN_PokeIDtoPokePosClient( const BTL_MAIN_MODULE* wk, u8 pokeID )
+{
+  u8 clientID = PokeID_to_ClientID( pokeID );
+
+  int idx = PokeCon_FindPokemon( &wk->pokeconForClient, clientID, pokeID );
+  if( idx >= 0 )
+  {
+    BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, idx );
+    if( pos != BTL_POS_MAX )
+    {
+      return pos;
+    }
+    GF_ASSERT_MSG(0, " not fighting pokeID [%d]", pokeID );
+  }
+  GF_ASSERT_MSG(0, " not including pokeID [%d] (clientID=%d)", pokeID, clientID );
+  return 0;
+}
+//=============================================================================================
+/**
  * バトルポケモンIDから、そのポケモンを管理するクライアントIDを取得
  *
  * @param   wk
@@ -1383,16 +1410,7 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* part
                         PokeParty_GetMemberPointer(party_src, i), pokeID, HEAPID_BTL_SYSTEM
     );
 
-    #ifdef PM_DEBUG
-    // 超デバッグ措置
-    /*
-    if (pokeID == 0 )
-    {
-      BTL_POKEPARAM_ChangeTokusei( pokecon->pokeParam[ pokeID ], POKETOKUSEI_KANSOUHADA );
-    }
-    */
-    #endif
-    BTL_Printf(" Create PokeParam ID=%d, adrs=%p\n", pokeID, pokecon->pokeParam[i]);
+    BTL_Printf(" Create Client(%d)'s PokeParam ID=%d, adrs=%p\n", clientID, pokeID, pokecon->pokeParam[i]);
 
     BTL_PARTY_AddMember( party, pokecon->pokeParam[ pokeID ] );
   }
@@ -1533,6 +1551,7 @@ const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER* wk, u3
 {
   return &wk->party[ clientID ];
 }
+
 
 //=======================================================================================================
 // BTL_PARTY

@@ -201,6 +201,8 @@ typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< ‹¤—Lƒwƒbƒ_
  int  args[ BTL_STR_ARG_MAX ];
  u16  strID;
+ u8   pokeID;
+ u8   arg_cnt;
 }BTL_HANDEX_PARAM_MESSAGE;
 
 
