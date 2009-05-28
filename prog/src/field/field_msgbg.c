@@ -215,7 +215,8 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
       fmb->talkMsgWinSys = TALKMSGWIN_SystemCreate( &setup );
     }
   }
-
+  
+  FLDMSGBG_SetBlendAlpha();
 	return( fmb );
 }
 
@@ -1400,10 +1401,20 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
 //--------------------------------------------------------------
 void FLDMSGBG_SetBlendAlpha( void )
 {
-  int plane1 = GX_BLEND_PLANEMASK_BG1; 
-	int plane2 = 0x003f;
-	plane2 &= (plane1^0xffff);
-	G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+  { //バトルのウィンドウ変更に対応
+    int mask =
+      GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
+      GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | 
+      GX_WND_PLANEMASK_OBJ;
+    G2_SetWnd0InsidePlane( mask, TRUE );
+  }
+
+  {
+    int plane1 = GX_BLEND_PLANEMASK_BG1; 
+  	int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
+      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
+  	G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+  }
 }
 
 //======================================================================
