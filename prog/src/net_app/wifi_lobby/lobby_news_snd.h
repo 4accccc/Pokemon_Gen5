@@ -9,16 +9,18 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-#ifndef __LOBBY_NEWS_SND_H__
-#define __LOBBY_NEWS_SND_H__
+#pragma once
 
-//#include "system/snd_tool.h"
+#include "sound/pm_sndsys.h"
 
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+
+#if WB_FIX  //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 //#define NEWSDRAW_NEWTOPIC	( SEQ_SE_DP_DECIDE )		// 新しいトピック
 //#define NEWSDRAW_NEWTOPIC	( SEQ_SE_DP_PIRORIRO )		// 新しいトピック
 #define NEWSDRAW_NEWTOPIC	( SEQ_SE_DP_PIRORIRO2 )		// 新しいトピック
@@ -36,6 +38,12 @@
 #define NEWSDRAW_NEWPLAYER	( SEQ_SE_DP_BUTTON9 )		// 人が入った、帰った
 
 
-#endif		// __LOBBY_NEWS_SND_H__
+#else //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+#define NEWSDRAW_NEWTOPIC	( SEQ_SE_SELECT1 )		// 新しいトピック
+#define NEWSDRAW_NEWTIME	( SEQ_SE_SELECT1 )		// 時間更新
+#define NEWSDRAW_NEWPLAYER	( SEQ_SE_SELECT1 )		// 人が入った、帰った
+
+
+#endif  //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 

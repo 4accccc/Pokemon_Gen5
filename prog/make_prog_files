@@ -652,6 +652,10 @@ SRCS_OVERLAY_WIFILOBBY_COMMON   = net_app/wifi_lobby/wifi_lobby.c \
 #===>SRCS_OVERLAY_WIFILOBBY_COMMON
 SRCS_OVERLAY_WIFILOBBY_CONNECT    = net_app/wifi_lobby/wflby_connect.c
 
+#wifiロビーニュース
+#===> SRCS_OVERLAY_WIFILOBBY_COMMON
+SRCS_OVERLAY_LOBBYNEWS =	net_app/wifi_lobby/lobby_news.c 
+
 ### #WIFILOBBY
 ### #===>SRCS_OVERLAY_WIFILOBBY_COMMON
 ### SRCS_OVERLAY_WIFILOBBY_ANKETO   = net_app/wifi_lobby/wflby_anketo.c

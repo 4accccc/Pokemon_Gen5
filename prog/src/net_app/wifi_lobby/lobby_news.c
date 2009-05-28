@@ -13,18 +13,15 @@
 #include <gflib.h>
 
 #include "strbuf.h"
-#include "gflib/msg_print.h"
 
-#include "system/clact_util.h"
 #include "system/wipe.h"
-#include "system/render_oam.h"
-//#include "system/fontproc.h"
 #include "print\gf_font.h"
 #include "print/wordset.h"
 
 #include "net\network_define.h"
+#include "net_app/net_bugfix.h"
 
-#include "src/graphic/lobby_news.naix"
+#include "lobby_news.naix"
 
 #include "message.naix"
 #include "msg/msg_wflby_news.h"
@@ -34,6 +31,11 @@
 #include "lobby_news_snd.h"
 #include "wflby_snd.h"
 #include "system/gfl_use.h"
+#include "system/main.h"
+#include "system/actor_tool.h"
+#include "system/bmp_winframe.h"
+#include "print/printsys.h"
+#include "system/palanm.h"
 
 
 
@@ -80,12 +82,14 @@ static u32 sc_WFLBY_DEBUG_LOBBY_NEWS_TOPIC_MAKE_TOPIC = NEWS_TOPICTYPE_CONNECT;
 #define NEWSDRAW_OAM_CONTNUM	( 32 )
 #define NEWSDRAW_RESMAN_NUM		( 4 )	// OAMリソースマネージャ数
 #define NEWSDRAW_SF_MAT_Y		( FX32_CONST(256) )
+#if WB_FIX
 static const CHAR_MANAGER_MAKE sc_NEWSDRAW_CHARMAN_INIT = {
 	NEWSDRAW_OAM_CONTNUM,
 	96*1024,	// 96K
 	16*1024,	// 16K
 	HEAPID_NEWSDRAW
 };
+#endif
 
 
 //-------------------------------------
@@ -101,7 +105,7 @@ static const GFL_DISP_VRAM sc_NEWSDRAW_BANK = {
 	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
+	GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 };
@@ -524,6 +528,8 @@ typedef struct {
 
 	// トピックカラーデータ
 	NEWSDRAW_TOPIC_TRCOL trcol;
+
+	PRINT_UTIL print_util;
 } NEWSDRAW_TOPIC;
 typedef struct {
 	// データ
@@ -553,6 +559,7 @@ typedef struct {
 // ワーク
 typedef struct {
 	GFL_BMPWIN		*bmp[ NEWSDRAW_TITLEWIN_NUM ];
+	PRINT_UTIL print_util[ NEWSDRAW_TITLEWIN_NUM ];
 	NEWSDRAW_TITLEEFF	eff[ NEWSDRAW_TITLEWIN_NUM ];	// エフェクトワーク
 } NEWSDRAW_TITLEWIN;
 
@@ -563,13 +570,13 @@ typedef struct {
 ///	表示システム
 //=====================================
 typedef struct {
-	// BG
-	//GF_BGL_INI*				p_bgl;
-
 	// OAM
     GFL_CLUNIT*           p_clactset;		// セルアクターセット
+  	PLTTSLOT_SYS_PTR	plttslot;
+#if WB_FIX
     CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR p_resman[NEWSDRAW_RESMAN_NUM]; // キャラ・パレットリソースマネージャ
+#endif
 
 	// アーカイブ
 	ARCHANDLE* p_handle;
@@ -603,6 +610,10 @@ typedef struct {
 	NEWSDRAW_TITLEWIN	title;
 
 	GFL_TCB *vintr_tcb;
+	
+	GFL_FONT *font_handle;
+	GFL_TCBLSYS *tcbl;
+	PRINT_QUE *printQue;
 } NEWSDRAW_WK;
 
 
@@ -660,18 +671,18 @@ static void NEWSDRAW_TopicTrColDataTrans( const NEWSDRAW_TOPIC_TRCOL* cp_wk, con
 // トピックスウィンドウ
 static void NEWSDRAW_TopicWinInit( NEWSDRAW_TOPICWIN* p_wk, NEWSDRAW_DRAWSYS* p_draw, u32 heapID );
 static void NEWSDRAW_TopicWinExit( NEWSDRAW_TOPICWIN* p_wk );
-static BOOL NEWSDRAW_TopicWinMain( NEWSDRAW_TOPICWIN* p_wk, NEWS_DATA* p_data, const WFLBY_SYSTEM* cp_system, u32 heapID );
+static BOOL NEWSDRAW_TopicWinMain( NEWSDRAW_TOPICWIN* p_wk, NEWS_DATA* p_data, const WFLBY_SYSTEM* cp_system, u32 heapID, GFL_FONT *font_handle, PRINT_QUE *printQue );
 static void NEWSDRAW_TopicWinDraw( NEWSDRAW_TOPICWIN* p_wk );
 static void NEWSDRAW_TopicInit( NEWSDRAW_TOPIC* p_wk, NEWSDRAW_DRAWSYS* p_draw, u32 idx, u32 heapID );
 static void NEWSDRAW_TopicExit( NEWSDRAW_TOPIC* p_wk );
-static void NEWSDRAW_TopicStart( NEWSDRAW_TOPIC* p_wk, const STRBUF* cp_str, u32 speed, const NEWSDRAW_TOPIC_TRCOL* cp_trcol, const NNSG2dPaletteData* cp_pltt );
+static void NEWSDRAW_TopicStart( NEWSDRAW_TOPIC* p_wk, const STRBUF* cp_str, u32 speed, const NEWSDRAW_TOPIC_TRCOL* cp_trcol, const NNSG2dPaletteData* cp_pltt, GFL_FONT *font_handle, PRINT_QUE *printQue );
 static void NEWSDRAW_TopicEnd( NEWSDRAW_TOPIC* p_wk );
 static BOOL NEWSDRAW_TopicMain( NEWSDRAW_TOPIC* p_wk );
-static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp );
+static void NEWSDRAW_TopicDraw( NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp );
 
 
 // タイトルウィンドウ
-static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_draw, u32 heapID );
+static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_draw, u32 heapID, GFL_FONT *font_handle, PRINT_QUE *printQue );
 static void NEWSDRAW_TitleWinExit( NEWSDRAW_TITLEWIN* p_wk );
 static void NEWSDRAW_TitleWinDraw( NEWSDRAW_TITLEWIN* p_wk );
 static void NEWSDRAW_TitleWinEffectStart( NEWSDRAW_TITLEWIN* p_wk, u32 title_no );
@@ -721,6 +732,14 @@ GFL_PROC_RESULT NEWS_DRAW_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * 
 	// 表示システム初期化
 	NEWSDRAW_DrawSysInit( &p_wk->draw, HEAPID_NEWSDRAW );
 
+  //フォント読み込み
+  p_wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NEWSDRAW );
+	//TCBL作成
+	p_wk->tcbl = GFL_TCBL_Init( HEAPID_NEWSDRAW, HEAPID_NEWSDRAW, 4, 32);
+	//PrintQue作成
+	p_wk->printQue = PRINTSYS_QUE_Create(HEAPID_NEWSDRAW);
+	
 	// スクリーンセット初期化
 	NEWSDRAW_ScrnSetInit( &p_wk->scrn, &p_wk->draw, HEAPID_NEWSDRAW );
 
@@ -734,7 +753,7 @@ GFL_PROC_RESULT NEWS_DRAW_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * 
 	NEWSDRAW_TopicWinInit( &p_wk->topic, &p_wk->draw, HEAPID_NEWSDRAW );
 
 	// タイトル作成
-	NEWSDRAW_TitleWinInit( &p_wk->title, &p_wk->draw, HEAPID_NEWSDRAW );
+	NEWSDRAW_TitleWinInit( &p_wk->title, &p_wk->draw, HEAPID_NEWSDRAW, p_wk->font_handle, p_wk->printQue );
 
 	// 割り込み設定
 	p_wk->vintr_tcb = GFUser_VIntr_CreateTCB(NEWSDRAW_WkVBlank, p_wk, 200);
@@ -763,6 +782,17 @@ GFL_PROC_RESULT NEWS_DRAW_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * 
 	GFL_UI_KEY_GetTrg()		|= PAD_BUTTON_B;
 	GFL_UI_KEY_GetCont()	|= PAD_BUTTON_B;
 #endif
+
+	PRINTSYS_QUE_Main(p_wk->printQue);
+	{
+    int i;
+    for(i = 0; i < NEWSDRAW_TOPIC_NUM; i++){
+      PRINT_UTIL_Trans(&p_wk->topic.topic[i].print_util, p_wk->printQue);
+    }
+    for(i = 0; i < NEWSDRAW_TITLEWIN_NUM; i++){
+      PRINT_UTIL_Trans(&p_wk->title.print_util[i], p_wk->printQue);
+    }
+  }
 
 	switch( *p_seq ){
 	case NEWSDRAW_SEQ_FADEIN:
@@ -818,7 +848,7 @@ GFL_PROC_RESULT NEWS_DRAW_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * 
 			}
 
 			// トピックウィンドウ処理
-			result = NEWSDRAW_TopicWinMain( &p_wk->topic, p_wk->p_data, p_param->p_system, HEAPID_NEWSDRAW );
+			result = NEWSDRAW_TopicWinMain( &p_wk->topic, p_wk->p_data, p_param->p_system, HEAPID_NEWSDRAW, p_wk->font_handle, p_wk->printQue );
 			if( result == TRUE ){
 				NEWSDRAW_TitleWinEffectStart( &p_wk->title, NEWSDRAW_TITLEWIN_TOPIC );
 			}
@@ -880,7 +910,13 @@ GFL_PROC_RESULT NEWS_DRAW_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * 
 	GFL_TCB_DeleteTask(p_wk->vintr_tcb);
 	//sys_HBlankIntrStop();	//HBlank割り込み停止
 
-
+  //フォント破棄
+	GFL_FONT_Delete(p_wk->font_handle);
+	//TCBL破棄
+	GFL_TCBL_Exit(p_wk->tcbl);
+	//PrintQue破棄
+	PRINTSYS_QUE_Delete(p_wk->printQue);
+  
 	// 描画システム破棄
 	NEWSDRAW_DrawSysExit( &p_wk->draw );
 
@@ -1010,7 +1046,11 @@ static void NEWSDRAW_DrawSysExit( NEWSDRAW_DRAWSYS* p_wk )
 //-----------------------------------------------------------------------------
 static void NEWSDRAW_DrawSysDraw( NEWSDRAW_DRAWSYS* p_wk )
 {
+#if WB_FIX
 	CLACT_Draw( p_wk->p_clactset );
+#else
+	GFL_CLACT_SYS_Main();
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1023,10 +1063,14 @@ static void NEWSDRAW_DrawSysDraw( NEWSDRAW_DRAWSYS* p_wk )
 static void NEWSDRAW_DrawSysVBlank( NEWSDRAW_DRAWSYS* p_wk )
 {
     // BG書き換え
-    GFL_BG_VBlankFunc( p_wk->p_bgl );
+    GFL_BG_VBlankFunc();
 
+#if WB_FIX
     // レンダラ共有OAMマネージャVram転送
     REND_OAMTrans();
+#else
+  	GFL_CLACT_SYS_VBlankFunc();
+#endif
 
 #if WB_TEMP_FIX
 	// Vram転送
@@ -1075,15 +1119,15 @@ static void NEWSDRAW_DrawSysBgInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 		// キャラクタ
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_wk->p_handle,
 				NARC_lobby_news_lobby_news_bg_NCGR, 
-				p_wk->p_bgl, GFL_BG_FRAME1_M, 0, 0, FALSE, heapID );
+				GFL_BG_FRAME1_M, 0, 0, FALSE, heapID );
 
 		// スクリーン
 		GFL_ARCHDL_UTIL_TransVramScreen(p_wk->p_handle, 
 				NARC_lobby_news_lobby_news_bg1_NSCR, 
-				p_wk->p_bgl, GFL_BG_FRAME1_M, 0, 0, FALSE, heapID);
+				GFL_BG_FRAME1_M, 0, 0, FALSE, heapID);
 		GFL_ARCHDL_UTIL_TransVramScreen(p_wk->p_handle, 
 				NARC_lobby_news_lobby_news_bg2_NSCR, 
-				p_wk->p_bgl, GFL_BG_FRAME2_M, 0, 0, FALSE, heapID);
+				GFL_BG_FRAME2_M, 0, 0, FALSE, heapID);
 
 	}
 
@@ -1096,12 +1140,12 @@ static void NEWSDRAW_DrawSysBgInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 		// キャラクタ
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_wk->p_handle,
 				NARC_lobby_news_wifi_mark_bg_NCGR, 
-				p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
+				GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
 
 		// スクリーン
 		GFL_ARCHDL_UTIL_TransVramScreen(p_wk->p_handle, 
 				NARC_lobby_news_wifi_mark_bg_NSCR, 
-				p_wk->p_bgl, GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
+				GFL_BG_FRAME0_S, 0, 0, FALSE, heapID);
 	}
 
 	// 基本キャラクタパレットフレーム
@@ -1115,7 +1159,7 @@ static void NEWSDRAW_DrawSysBgExit( NEWSDRAW_DRAWSYS* p_wk )
 		int i;
 
 		for( i=0; i<NEWSDRAW_BGCNT_NUM; i++ ){
-			GFL_BG_FreeBGControl( p_wk->p_bgl, sc_NEWSDRAW_BGCNT_FRM[i] );
+			GFL_BG_FreeBGControl( sc_NEWSDRAW_BGCNT_FRM[i] );
 		}
 	}
 	
@@ -1146,7 +1190,6 @@ static void NEWSDRAW_DrawSysOamInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
         0, 126,     // サブ画面OAM管理領域
         0, 31,      // サブ画面アフィン管理領域
         heapID);
-#endif
 
     // キャラクタマネージャー初期化
     InitCharManagerReg(&sc_NEWSDRAW_CHARMAN_INIT, GX_OBJVRAMMODE_CHAR_1D_128K, GX_OBJVRAMMODE_CHAR_1D_32K );
@@ -1160,8 +1203,10 @@ static void NEWSDRAW_DrawSysOamInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
     //通信アイコン用にキャラ＆パレット制限
     CLACT_U_WmIcon_SetReserveAreaCharManager(NNS_G2D_VRAM_TYPE_2DMAIN, GX_OBJVRAMMODE_CHAR_1D_128K);
     CLACT_U_WmIcon_SetReserveAreaPlttManager(NNS_G2D_VRAM_TYPE_2DMAIN);
+#endif
     
 
+#if WB_FIX
     // セルアクターセット作成
     p_wk->p_clactset = CLACT_U_SetEasyInit( NEWSDRAW_OAM_CONTNUM, &p_wk->renddata, heapID );
 
@@ -1172,6 +1217,20 @@ static void NEWSDRAW_DrawSysOamInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
     for( i=0; i<NEWSDRAW_RESMAN_NUM; i++ ){
         p_wk->p_resman[i] = CLACT_U_ResManagerInit(NEWSDRAW_OAM_CONTNUM, i, heapID);
     }
+#else
+		{
+			GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
+			
+			clsys_init.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL;	//通信アイコンの分
+			clsys_init.oamnum_main = 128-GFL_CLSYS_OAMMAN_INTERVAL;
+			clsys_init.tr_cell = 32;	//セルVram転送管理数
+
+			GFL_CLACT_SYS_Create( &clsys_init, &sc_NEWSDRAW_BANK, heapID );
+			p_wk->p_clactset = GFL_CLACT_UNIT_Create( NEWSDRAW_OAM_CONTNUM, 0, heapID );
+			GFL_CLACT_UNIT_SetDefaultRend(p_wk->p_clactset);
+			p_wk->plttslot = PLTTSLOT_Init(heapID, 16, 16);
+		}
+#endif
 
 	// 下画面に通信アイコンを出す
 #if WB_TEMP_FIX
@@ -1186,6 +1245,7 @@ static void NEWSDRAW_DrawSysOamExit( NEWSDRAW_DRAWSYS* p_wk )
 {
     int i;
 
+#if WB_FIX
     // アクターの破棄
     CLACT_DestSet( p_wk->p_clactset );
 
@@ -1199,6 +1259,11 @@ static void NEWSDRAW_DrawSysOamExit( NEWSDRAW_DRAWSYS* p_wk )
 
     //OAMレンダラー破棄
     REND_OAM_Delete();
+#else
+		GFL_CLACT_UNIT_Delete(p_wk->p_clactset);
+		GFL_CLACT_SYS_Delete();
+		PLTTSLOT_Exit(p_wk->plttslot);
+#endif
 }
 
 
@@ -1264,7 +1329,7 @@ static void NEWSDRAW_ScrnWriteTimeBlock( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSY
 			p_wk->p_scrn->screenWidth/8,
 			p_wk->p_scrn->screenHeight/8 );
 
-	GFL_BG_LoadScreenV_Req( p_draw->p_bgl, GFL_BG_FRAME3_M );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
 }
 
 //----------------------------------------------------------------------------
@@ -1316,7 +1381,7 @@ static void NEWSDRAW_ScrnWritePlayer( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSYS* 
 
 	// vipは青くする
 	if( vip ){
-		GFL_BG_ChangeScreenPalette( p_draw->p_bgl, GFL_BG_FRAME3_M,
+		GFL_BG_ChangeScreenPalette( GFL_BG_FRAME3_M,
 				NEWSDRAW_PLAYER_SCRN_DRAWX+(x*NEWSDRAW_PLAYER_BLOCK_SIZX), 
 				NEWSDRAW_PLAYER_SCRN_DRAWY+(y*NEWSDRAW_PLAYER_BLOCK_SIZY),
 				NEWSDRAW_PLAYER_BLOCK_SIZX, NEWSDRAW_PLAYER_BLOCK_SIZY,
@@ -1325,7 +1390,7 @@ static void NEWSDRAW_ScrnWritePlayer( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSYS* 
 
 		// 自分のデータはオレンジくする
 		if( mydata ){
-			GFL_BG_ChangeScreenPalette( p_draw->p_bgl, GFL_BG_FRAME3_M,
+			GFL_BG_ChangeScreenPalette( GFL_BG_FRAME3_M,
 					NEWSDRAW_PLAYER_SCRN_DRAWX+(x*NEWSDRAW_PLAYER_BLOCK_SIZX), 
 					NEWSDRAW_PLAYER_SCRN_DRAWY+(y*NEWSDRAW_PLAYER_BLOCK_SIZY),
 					NEWSDRAW_PLAYER_BLOCK_SIZX, NEWSDRAW_PLAYER_BLOCK_SIZY,
@@ -1333,7 +1398,7 @@ static void NEWSDRAW_ScrnWritePlayer( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSYS* 
 		}
 	}
 
-	GFL_BG_LoadScreenV_Req( p_draw->p_bgl, GFL_BG_FRAME3_M );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
 }
 
 
@@ -1525,12 +1590,12 @@ static void NEWSDRAW_TimeWinDrawUpdate( NEWSDRAW_TIMEWIN* p_wk, NEWSDRAW_SCRNSET
 		p_wk->updata = FALSE;
 
 		// スクリーン領域をClean
-		GFL_BG_FillScreen( p_draw->p_bgl, GFL_BG_FRAME3_M, 0,
+		GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0,
 				NEWSDRAW_TIME_SCRN_DRAWX, NEWSDRAW_TIME_SCRN_DRAWY,
 				NEWSDRAW_TIME_X_SIZ*NEWSDRAW_TIME_BLOCK_SIZX,
 				NEWSDRAW_TIME_Y_SIZ*NEWSDRAW_TIME_BLOCK_SIZY,
 				0 );
-		GFL_BG_LoadScreenV_Req( p_draw->p_bgl, GFL_BG_FRAME3_M );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
 		
 		
 		// 残り時間でスクリーンを表示する
@@ -1748,7 +1813,7 @@ static void NEWSDRAW_PlayerWinWrite( NEWSDRAW_SCRNSET* p_scrn, NEWSDRAW_DRAWSYS*
 	u32 draw_player_type;
 
 	// スクリーン領域をClean
-	GFL_BG_FillScreen( p_draw->p_bgl, GFL_BG_FRAME3_M, 0,
+	GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0,
 			NEWSDRAW_PLAYER_SCRN_DRAWX, NEWSDRAW_PLAYER_SCRN_DRAWY,
 			NEWSDRAW_PLAYERWIN_DRAW_X*NEWSDRAW_PLAYER_BLOCK_SIZX,
 			NEWSDRAW_PLAYERWIN_DRAW_Y*NEWSDRAW_PLAYER_BLOCK_SIZY,
@@ -1948,15 +2013,15 @@ static void NEWSDRAW_TopicWinInit( NEWSDRAW_TOPICWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 
 
 	// 通常の文字色を１パレット内の0xD、0xEに転送する
-	GF_BGL_PaletteSet( GFL_BG_FRAME0_M, 
+	GFL_BG_LoadPalette( GFL_BG_FRAME0_M, 
 			&((u8*)p_wk->p_pltt->pRawData)[ (NEWS_PLTT_FONT*0x20)+(NEWS_PLTT_FONT_FONT*2) ],
 			0x4, (NEWS_PLTT_FONT*0x20)+(NEWS_PLTT_FONTTR_FONT*2) );
 	
-	GF_BGL_PaletteSet( GFL_BG_FRAME0_M, 
+	GFL_BG_LoadPalette( GFL_BG_FRAME0_M, 
 			&((u8*)p_wk->p_pltt->pRawData)[ (NEWS_PLTT_FONT*0x20)+(NEWS_PLTT_FONT_FONT*2) ],
 			0x4, (NEWS_PLTT_FONT01*0x20)+(NEWS_PLTT_FONTTR_FONT*2) );
 
-	GF_BGL_PaletteSet( GFL_BG_FRAME0_M, 
+	GFL_BG_LoadPalette( GFL_BG_FRAME0_M, 
 			&((u8*)p_wk->p_pltt->pRawData)[ (NEWS_PLTT_FONT*0x20)+(NEWS_PLTT_FONT_FONT*2) ],
 			0x4, (NEWS_PLTT_FONT02*0x20)+(NEWS_PLTT_FONTTR_FONT*2) );
 }
@@ -1981,7 +2046,7 @@ static void NEWSDRAW_TopicWinExit( NEWSDRAW_TOPICWIN* p_wk )
 	// トピックデータ破棄
 	for( i=0; i<NEWSDRAW_TOPIC_NUM; i++ ){
 		// ビットマップ破棄
-		GFL_BMPWIN_Delete( &p_wk->bmp[i] );
+		GFL_BMPWIN_Delete( p_wk->bmp[i] );
 		
 		NEWSDRAW_TopicExit( &p_wk->topic[i] );
 	}
@@ -2000,7 +2065,7 @@ static void NEWSDRAW_TopicWinExit( NEWSDRAW_TOPICWIN* p_wk )
  *	@retval	FALSE	変更がなかった
  */
 //-----------------------------------------------------------------------------
-static BOOL NEWSDRAW_TopicWinMain( NEWSDRAW_TOPICWIN* p_wk, NEWS_DATA* p_data, const WFLBY_SYSTEM* cp_system, u32 heapID )
+static BOOL NEWSDRAW_TopicWinMain( NEWSDRAW_TOPICWIN* p_wk, NEWS_DATA* p_data, const WFLBY_SYSTEM* cp_system, u32 heapID, GFL_FONT *font_handle, PRINT_QUE *printQue )
 {
 	int i;
 	BOOL result;
@@ -2018,7 +2083,7 @@ static BOOL NEWSDRAW_TopicWinMain( NEWSDRAW_TOPICWIN* p_wk, NEWS_DATA* p_data, c
 			if( result == TRUE ){
 				// １つ下の段にデータを写す
 				if( (i+1) < NEWSDRAW_TOPIC_NUM ){
-					NEWSDRAW_TopicStart( &p_wk->topic[i+1], p_wk->topic[i].p_str, NEWSDRAW_TOPIC_COUNT[i+1], &p_wk->topic[i].trcol, p_wk->p_pltt );
+					NEWSDRAW_TopicStart( &p_wk->topic[i+1], p_wk->topic[i].p_str, NEWSDRAW_TOPIC_COUNT[i+1], &p_wk->topic[i].trcol, p_wk->p_pltt, font_handle, printQue );
 				}
 				NEWSDRAW_TopicEnd( &p_wk->topic[i] );
 			} 
@@ -2037,7 +2102,7 @@ static BOOL NEWSDRAW_TopicWinMain( NEWSDRAW_TOPICWIN* p_wk, NEWS_DATA* p_data, c
 
 				// トピックを追加できたのでオワリ
 				NEWSDRAW_TopicTrColDataGet( &trcol, p_data, type, cp_system );
-				NEWSDRAW_TopicStart( &p_wk->topic[0], p_wk->p_str, NEWSDRAW_TOPIC_COUNT[0], &trcol, p_wk->p_pltt );
+				NEWSDRAW_TopicStart( &p_wk->topic[0], p_wk->p_str, NEWSDRAW_TOPIC_COUNT[0], &trcol, p_wk->p_pltt, font_handle, printQue );
 
 				// 先頭のデータを消す
 				NEWS_DSET_RemoveTopTopic( p_data );
@@ -2097,6 +2162,7 @@ static void NEWSDRAW_TopicInit( NEWSDRAW_TOPIC* p_wk, NEWSDRAW_DRAWSYS* p_draw, 
 				NEWSDRAW_TOPIC_DMBMP_SX, NEWSDRAW_TOPIC_DMBMP_SY,
 				NEWSDRAW_TOPIC_BMP_PAL, GFL_BMP_CHRAREA_GET_F );
 	GFL_BMPWIN_MakeScreen(p_wk->bmp);
+	PRINT_UTIL_Setup( &p_wk->print_util, p_wk->bmp );
 }
 
 //----------------------------------------------------------------------------
@@ -2111,7 +2177,7 @@ static void NEWSDRAW_TopicExit( NEWSDRAW_TOPIC* p_wk )
 	GFL_STR_DeleteBuffer( p_wk->p_str );
 
 	//  ダミーBMPWIN破棄
-	GFL_BMPWIN_Delete( &p_wk->bmp );
+	GFL_BMPWIN_Delete( p_wk->bmp );
 }
 
 //----------------------------------------------------------------------------
@@ -2124,7 +2190,7 @@ static void NEWSDRAW_TopicExit( NEWSDRAW_TOPIC* p_wk )
  *	@param	cp_trcol	トレーナーカラー
  */
 //-----------------------------------------------------------------------------
-static void NEWSDRAW_TopicStart( NEWSDRAW_TOPIC* p_wk, const STRBUF* cp_str, u32 speed, const NEWSDRAW_TOPIC_TRCOL* cp_trcol, const NNSG2dPaletteData* cp_pltt )
+static void NEWSDRAW_TopicStart( NEWSDRAW_TOPIC* p_wk, const STRBUF* cp_str, u32 speed, const NEWSDRAW_TOPIC_TRCOL* cp_trcol, const NNSG2dPaletteData* cp_pltt, GFL_FONT *font_handle, PRINT_QUE *printQue )
 {
 	// 文章コピー
 	GFL_STR_CopyBuffer( p_wk->p_str, cp_str );
@@ -2134,7 +2200,7 @@ static void NEWSDRAW_TopicStart( NEWSDRAW_TOPIC* p_wk, const STRBUF* cp_str, u32
 // BTS通信バグ601の対処	tomoya
 //	p_wk->count_max	= speed * STRBUF_GetLen( cp_str );	// 文字数から最大カウントを求める
 	p_wk->count_max	= speed;
-	p_wk->str_siz	= PRINTSYS_GetStrWidth( cp_str, GFL_FONT* font/*FONT_TALK*/, 0 );
+	p_wk->str_siz	= PRINTSYS_GetStrWidth( cp_str, font_handle, 0 );
 	p_wk->str_siz	+= NEWSDRAW_TOPIC_YOHAKU;	// 上の余白部分
 
 	// 文字列長さオーバー
@@ -2144,9 +2210,13 @@ static void NEWSDRAW_TopicStart( NEWSDRAW_TOPIC* p_wk, const STRBUF* cp_str, u32
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp), 0 );
 
 	// 文字を書き込む
+#if WB_FIX
 	GF_STR_PrintSimple( &p_wk->bmp, FONT_TALK, p_wk->p_str,
 			0, 0,
 			MSG_NO_PUT, NULL);
+#else
+	PRINT_UTIL_Print( &p_wk->print_util, printQue, 0, 0, p_wk->p_str, font_handle );
+#endif
 
 	// トレーナーカラーデータを保存
 	p_wk->trcol = *cp_trcol;
@@ -2195,7 +2265,7 @@ static BOOL NEWSDRAW_TopicMain( NEWSDRAW_TOPIC* p_wk )
  *	@param	p_bmp	描画先ビットマップ
  */
 //-----------------------------------------------------------------------------
-static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp )
+static void NEWSDRAW_TopicDraw( NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp )
 {
 	s32	x;	// 基準となるｘ座標
 	s32 wx;	// 書き込み先ｘ
@@ -2227,6 +2297,7 @@ static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp )
 			255, NEWSDRAW_TOPIC_DMBMP_SY*8, 0 );	
 
 	// 書き込む
+#if WB_FIX
 	GF_BGL_BmpWinPrintEx( p_bmp,
 			cp_wk->bmp.chrbuf,		// キャラクタバッファ
 			rx, 0,					//  chrbuf読み込み開始位置
@@ -2234,6 +2305,13 @@ static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp )
 			NEWSDRAW_TOPIC_DMBMP_SY*8,	// chrbufのサイズ
 			wx, 0,						// 書き込み先位置
 			sx, NEWSDRAW_TOPIC_DMBMP_SY*8, 15 );// 書き込みサイズ
+#else
+	GFL_BMP_Print( GFL_BMPWIN_GetBmp(cp_wk->bmp),		// キャラクタバッファ
+	    GFL_BMPWIN_GetBmp(p_bmp),
+			rx, 0,					//  chrbuf読み込み開始位置
+			wx, 0,						// 書き込み先位置
+			sx, NEWSDRAW_TOPIC_DMBMP_SY*8, 15 );// 書き込みサイズ
+#endif
 
 	BmpWinFrame_TransScreen( p_bmp ,WINDOW_TRANS_ON_V);
 }
@@ -2251,7 +2329,7 @@ static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp )
  *	@param	heapID		ヒープ
  */
 //-----------------------------------------------------------------------------
-static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_draw, u32 heapID )
+static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_draw, u32 heapID, GFL_FONT *font_handle, PRINT_QUE *printQue )
 {
 	int i;
 	GFL_MSGDATA*	p_msgman;
@@ -2277,7 +2355,8 @@ static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 		
 		GFL_BMPWIN_MakeScreen(p_wk->bmp[i]);
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp[i]), 0 );
-
+    PRINT_UTIL_Setup( &p_wk->print_util[i], p_wk->bmp[i] );
+    
 		// タイトルを書き込む
 		GFL_MSG_GetString( p_msgman, wflby_news_00+i, p_str );
 		
@@ -2300,14 +2379,14 @@ static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 
 
 		if( i==NEWSDRAW_TITLEWIN_APLNAME ){
-			PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/
-				&p_wk->bmp[i], NET_FONT_SYSTEM, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
-				NEWSDRAW_TITLE_BMPDATA[i].dy, MSG_NO_PUT, NEWSDRAW_TITLEWIN_APL_COL, NULL );
+			PRINT_UTIL_PrintColor(&p_wk->print_util[i], printQue, 
+			  NEWSDRAW_TITLE_BMPDATA[i].dx, NEWSDRAW_TITLE_BMPDATA[i].dy, 
+			  p_str, font_handle, NEWSDRAW_TITLEWIN_APL_COL);
 		}else{
 	
-			PRINT_UTIL_PrintColor(/*引数内はまだ未移植*/
-				&p_wk->bmp[i], NET_FONT_SYSTEM, p_str, NEWSDRAW_TITLE_BMPDATA[i].dx,
-				NEWSDRAW_TITLE_BMPDATA[i].dy, MSG_NO_PUT, NEWSDRAW_TITLEWIN_COL, NULL );
+			PRINT_UTIL_PrintColor(&p_wk->print_util[i], printQue, 
+				NEWSDRAW_TITLE_BMPDATA[i].dx, NEWSDRAW_TITLE_BMPDATA[i].dy, 
+				p_str, font_handle, NEWSDRAW_TITLEWIN_COL );
 		}
 		
 		BmpWinFrame_TransScreen( p_wk->bmp[i] ,WINDOW_TRANS_ON_V);
@@ -2331,7 +2410,7 @@ static void NEWSDRAW_TitleWinExit( NEWSDRAW_TITLEWIN* p_wk )
 
 
 	for( i=0; i<NEWSDRAW_TITLEWIN_NUM; i++ ){
-		GFL_BMPWIN_Delete( &p_wk->bmp[i] );
+		GFL_BMPWIN_Delete( p_wk->bmp[i] );
 
 		// タイトルエフェクト破棄
 		NEWSDRAW_TitleEffExit( &p_wk->eff[i] );
@@ -2438,7 +2517,11 @@ static void NEWSDRAW_TitleEffDraw( NEWSDRAW_TITLEEFF* p_wk )
 
 	// 音を鳴らすタイミング
 	if( p_wk->col_count == NEWSDRAW_TITLEWIN_EFFECT_SND_PLY ){
+	#if WB_FIX
 		Snd_SePlay( p_wk->sound );
+	#else
+	  PMSND_PlaySE(p_wk->sound);
+	#endif
 	}
 
 	// カラー係数を求める
