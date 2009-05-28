@@ -320,6 +320,30 @@ void GameCommSys_ChangeReq(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, vo
 //==================================================================
 GAME_COMM_STATUS GameCommSys_GetCommStatus(GAME_COMM_SYS_PTR gcsp)
 {
+  const GFLNetInitializeStruct *aNetStruct;
+  
+  if(GFL_NET_IsInit() == FALSE){
+    return GAME_COMM_STATUS_NULL;
+  }
+  
+  aNetStruct = GFL_NET_GetNETInitStruct();
+	switch(aNetStruct->bNetType){
+  case GFL_NET_TYPE_WIRELESS:		///<ワイヤレス通信
+  case GFL_NET_TYPE_IRC_WIRELESS:	///<赤外線通信でマッチング後、ワイヤレス通信へ移行
+  case GFL_NET_TYPE_WIRELESS_SCANONLY:	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
+    gcsp->comm_status = GAME_COMM_STATUS_WIRELESS;
+    break;
+  case GFL_NET_TYPE_WIFI:			///<WIFI通信
+  case GFL_NET_TYPE_WIFI_LOBBY:	///<WIFI広場通信
+    gcsp->comm_status = GAME_COMM_STATUS_WIFI;
+    break;
+  case GFL_NET_TYPE_IRC:			///<赤外線通信
+    gcsp->comm_status = GAME_COMM_STATUS_IRC;
+    break;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
   return gcsp->comm_status;
 }
 
