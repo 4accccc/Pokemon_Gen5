@@ -27,3 +27,5 @@ typedef struct _TAG_FIELDMAP_CTRL_GRID FIELDMAP_CTRL_GRID;
 //======================================================================
 extern const DEPEND_FUNCTIONS FieldMapCtrl_GridFunctions;
 
+extern FIELD_PLAYER_GRID * FIELDMAP_CTRL_GRID_GetFieldPlayerGrid(
+    FIELDMAP_CTRL_GRID *gridWork );

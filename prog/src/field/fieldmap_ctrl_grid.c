@@ -192,3 +192,17 @@ static u16 grid_ChangeFourDir( u16 dir )
 	}
 	return( dir );
 }
+
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ *
+ */
+//--------------------------------------------------------------
+FIELD_PLAYER_GRID * FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( FIELDMAP_CTRL_GRID *gridWork )
+{
+  return( gridWork->gridPlayer );
+}

@@ -14,6 +14,7 @@
 #include "sound/pm_sndsys.h"
 #include "sound/wb_sound_data.sadl"
 
+#include "fieldmap_ctrl_grid.h"
 #include "field_player_grid.h"
 #include "map_attr.h"
 
@@ -633,11 +634,23 @@ static void gjiki_Sound_Move( void )
 //======================================================================
 //--------------------------------------------------------------
 /**
- *
- * @param
- * @retval
+ * 自機を強制停止させる。グリッド専用
+ * @param fld_player FIELD_PLAYER
+ * @retval nothing
+ * @note 自機が強制停止出来ない場合はそのまま
  */
 //--------------------------------------------------------------
 void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER *fld_player )
 {
+  FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
+  FIELDMAP_CTRL_GRID *gridMap = FIELDMAP_GetMapCtrlWork( fieldWork );
+  FIELD_PLAYER_GRID *g_jiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+
+  if( g_jiki->move_state == PLAYER_MOVE_HITCH ){
+    FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
+    FLDMMDL_FreeAcmd( fmmdl );
+    FLDMMDL_SetDirDisp( fmmdl, FLDMMDL_GetDirDisp(fmmdl) );
+    FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
+    FIELD_PLAYER_SetMoveValue( fld_player, PLAYER_MOVE_VALUE_STOP );
+  }
 }
