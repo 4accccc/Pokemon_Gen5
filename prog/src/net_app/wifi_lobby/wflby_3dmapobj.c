@@ -65,6 +65,8 @@ static OSTick	WFLBY_DEBUG_3DMAPOBJ_PRINT_TIME_Tick;
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+///未使用のアニメインデックス
+#define WFLBY_NO_ANM_INDEX    (0xff)
 
 //-----------------------------------------------------------------------------
 /**
@@ -156,7 +158,11 @@ struct _WFLBY_3DMAPOBJ_WK{
 	u8			pad;	// 基本アルファ値
 	
 	u8			draw_flag;
+#if WB_FIX
 	u8			padding[3];
+#else
+	u8      anm_index[WFLBY_3DMAPOBJ_ALL_ANM_MAX];
+#endif
 };
 
 //-------------------------------------
@@ -265,7 +271,8 @@ static void WFLBY_RotateMtx(VecFx32 *rotate, MtxFx33 *dst_mtx);
 WFLBY_3DMAPOBJ* WFLBY_3DMAPOBJ_Init( u32 float_num, u32 objwk_num, u32 heapID, u32 gheapID )
 {
 	WFLBY_3DMAPOBJ* p_sys;
-
+  int i, anm_num;
+  
 	p_sys = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DMAPOBJ) );
 	GFL_STD_MemFill( p_sys,  0, sizeof(WFLBY_3DMAPOBJ) );
 
@@ -274,6 +281,11 @@ WFLBY_3DMAPOBJ* WFLBY_3DMAPOBJ_Init( u32 float_num, u32 objwk_num, u32 heapID, u
 	p_sys->p_obj	= GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DMAPOBJ_WK)*objwk_num );
 	GFL_STD_MemFill( p_sys->p_float, 0, sizeof(WFLBY_3DMAPOBJ_FLOAT)*float_num );
 	GFL_STD_MemFill( p_sys->p_obj, 0, sizeof(WFLBY_3DMAPOBJ_WK)*objwk_num );
+	for(i = 0; i < objwk_num; i++){
+    for(anm_num = 0; anm_num < WFLBY_3DMAPOBJ_ALL_ANM_MAX; anm_num++){
+      p_sys->p_obj[i].anm_index[anm_num] = WFLBY_NO_ANM_INDEX;
+    }
+  }
 	p_sys->floatnum	= float_num;
 	p_sys->objnum	= objwk_num;
 	
@@ -883,6 +895,7 @@ void WFLBY_3DMAPOBJ_WK_Del( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk )
 			GFL_G3D_ANIME_Delete( p_wk->anm[i] );
 			p_wk->anm[i] = NULL;
 		}
+		p_wk->anm_index[i] = WFLBY_NO_ANM_INDEX;
 	#endif
 	}
 	
@@ -975,16 +988,14 @@ void WFLBY_3DMAPOBJ_WK_AddAnm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk, W
 //-----------------------------------------------------------------------------
 void WFLBY_3DMAPOBJ_WK_AddAnmAnmCallBack( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk, WFLBY_3DMAPOBJ_WK_ANM_TYPE anm, WFLBY_3DMAPOBJ_WK_ANM_PLAY play, pWFLBY_3DMAPOBJ_WK_AnmCallBack p_callback )
 {
-	int get_anmframe, set_anmframe, index;
-	int test, test2;
+	int get_anmframe, set_anmframe;
+	int test2;
 	
 	// そのアニメがあるかチェック
 	GF_ASSERT( anm < WFLBY_3DMAPOBJ_ALL_ANM_MAX );
 	GF_ASSERT( play < WFLBY_3DMAPOBJ_WK_ANM_PLAYNUM );
 	GF_ASSERT( p_wk->mdlid < WFLBY_3DMAPOBJ_WK_NUM );
 
-	index = 0;
-	
 #if WB_FIX
 	if( (p_sys->objres.p_anm[p_wk->mdlid][anm] != NULL) ){
 #else
@@ -995,11 +1006,11 @@ void WFLBY_3DMAPOBJ_WK_AddAnmAnmCallBack( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_
 		#if WB_FIX
 			D3DOBJ_AddAnm( &p_wk->obj, &p_wk->anm[anm] );
 		#else
-			GFL_G3D_OBJECT_RemoveAnime( p_wk->g3dobj, index);
-			test = GFL_G3D_OBJECT_AddAnime( p_wk->g3dobj, p_wk->anm[anm] );
-			test2 = GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj, index );
-			GF_ASSERT(index == test);
-			GF_ASSERT(test == 0);
+		  if(p_wk->anm_index[anm] != WFLBY_NO_ANM_INDEX){
+  			GFL_G3D_OBJECT_RemoveAnime( p_wk->g3dobj, p_wk->anm_index[anm] );
+  		}
+			p_wk->anm_index[anm] = GFL_G3D_OBJECT_AddAnime( p_wk->g3dobj, p_wk->anm[anm] );
+			test2 = GFL_G3D_OBJECT_EnableAnime( p_wk->g3dobj, p_wk->anm_index[anm] );
 			GF_ASSERT(test2 == TRUE);
 		#endif
 		}
@@ -1039,8 +1050,8 @@ void WFLBY_3DMAPOBJ_WK_AddAnmAnmCallBack( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_
 		D3DOBJ_AnmSet( &p_wk->anm[anm], p_wk->anm_frame[anm] );
 	#else
 		set_anmframe = p_wk->anm_frame[anm];
-		GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, index, &set_anmframe );
-		OS_TPrintf("aaa SetAnimeFrame frame=%d, index=%d\n", set_anmframe, index);
+		GFL_G3D_OBJECT_SetAnimeFrame( p_wk->g3dobj, p_wk->anm_index[anm], &set_anmframe );
+		OS_TPrintf("aaa SetAnimeFrame frame=%d, index=%d\n", set_anmframe, p_wk->anm_index[anm]);
 	#endif
 	}	
 }
@@ -1074,8 +1085,12 @@ void WFLBY_3DMAPOBJ_WK_DelAnm( WFLBY_3DMAPOBJ* p_sys, WFLBY_3DMAPOBJ_WK* p_wk, W
 	#if WB_FIX
 		D3DOBJ_DelAnm( &p_wk->obj, &p_wk->anm[ anm ] );
 	#else
-		ret = GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj, index ); //anm );
-		GF_ASSERT(ret == TRUE);
+	  if(p_wk->anm_index[anm] != WFLBY_NO_ANM_INDEX){
+  		ret = GFL_G3D_OBJECT_DisableAnime( p_wk->g3dobj, p_wk->anm_index[anm] ); //anm );
+ 			GFL_G3D_OBJECT_RemoveAnime( p_wk->g3dobj, p_wk->anm_index[anm] );
+ 			p_wk->anm_index[anm] = WFLBY_NO_ANM_INDEX;
+	  	GF_ASSERT(ret == TRUE);
+	  }
 	#endif
 	
 		p_wk->anm_on[ anm ]		= FALSE;
