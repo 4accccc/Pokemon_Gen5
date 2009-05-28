@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-05-27T13:07:51"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-05-28T12:35:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,9 +334,9 @@
 
 
 	<row id="RESULT_STR_000">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さんと　[1:00:トレーナー名:1]さんの
+		<language name="JPN" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんと　[1:00:トレーナー名:1]さんの
 きになる　あいしょうは……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんと　[1:00:トレーナー名:1]さんの
+		<language name="JPN_KANJI" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんと　[1:00:トレーナー名:1]さんの
 気になる　相性は……</language>
 	</row>
 
