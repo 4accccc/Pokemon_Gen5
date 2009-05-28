@@ -78,14 +78,21 @@ typedef enum {
 	TAIL_SETPAT_FIX_DR,
 }TAIL_SETPAT;
 
-static u16 texData[8*8*2] = {
-	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
-	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
-	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
-	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
-	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
-	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
-	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+#define TEX_DATA_SIZ (32)
+static u8 texData[32] = {
+	0x22,0x22,0x22,0x22,
+	0x12,0x11,0x11,0x11,
+	0x12,0x11,0x11,0x11,
+	0x12,0x11,0x11,0x11,
+	0x12,0x11,0x11,0x11,
+	0x12,0x11,0x11,0x11,
+	0x12,0x11,0x11,0x11,
+	0x12,0x11,0x11,0x11,
+};
+
+#define TEX_PLTT_SIZ (32)
+static u16 texPltt[16] = {
+	0x0000,0x7fff,0x56b5,0x294a,0x0000,0x0000,0x0000,0x0000,
 	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
 };
 
@@ -139,8 +146,8 @@ struct _TALKMSGWIN_SYS{
 	VecFx32								camTargetBackUp;
 	fx32									camNearBackUp;
 
-	NNSGfdTexKey					texVramKey;
-	NNSGfdTexKey					plttVramKey;
+	NNSGfdTexKey					texDataVramKey;
+	NNSGfdTexKey					texPlttVramKey;
 };
 
 typedef struct {
@@ -156,8 +163,8 @@ static void settingCamera( TALKMSGWIN_SYS* tmsgwinSys, int mode );
 static void backupCamera( TALKMSGWIN_SYS* tmsgwinSys );
 static void recoverCamera( TALKMSGWIN_SYS* tmsgwinSys );
 
-static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup );
-static void setBGAlpha( TALKMSGWIN_SYS_SETUP* setup );
+static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup );
+static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup );
 
 static void initWindow( TMSGWIN* tmsgwin );
 static BOOL checkEmptyWindow( TMSGWIN* tmsgwin );
@@ -174,7 +181,7 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void draw3Dwindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 
 static BOOL calcTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
-static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tailOnly );
+static void	drawTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, BOOL tailOnly );
 
 static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void clearWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
@@ -208,15 +215,14 @@ TALKMSGWIN_SYS* TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
 
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ initWindow(&tmsgwinSys->tmsgwin[i]); }
 
-	{
-		u32 siz = setupWindowBG(&tmsgwinSys->setup);
-		tmsgwinSys->chrNum = siz/0x20;
-	}
 	//テクスチャＶＲＡＭ確保
+	tmsgwinSys->texDataVramKey = NNS_GfdAllocTexVram(TEX_DATA_SIZ, FALSE, 0);
+	tmsgwinSys->texPlttVramKey = NNS_GfdAllocPlttVram(TEX_PLTT_SIZ, FALSE, 0);
+	GF_ASSERT(tmsgwinSys->texDataVramKey != NNS_GFD_ALLOC_ERROR_TEXKEY);
+	GF_ASSERT(tmsgwinSys->texPlttVramKey != NNS_GFD_ALLOC_ERROR_PLTTKEY);
 	{
-		u32 texVramSiz = sizeof(texData);
-		tmsgwinSys->texVramKey = NNS_GfdAllocTexVram(texVramSiz, FALSE, 0);
-		tmsgwinSys->plttVramKey = NNS_GfdAllocPlttVram(16, FALSE, 0);
+		u32 siz = setupWindowBG(tmsgwinSys, &tmsgwinSys->setup);
+		tmsgwinSys->chrNum = siz/0x20;
 	}
 
   debugOn = FALSE;
@@ -267,8 +273,8 @@ void TALKMSGWIN_SystemDelete( TALKMSGWIN_SYS* tmsgwinSys )
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ 
 		deleteWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[i]); 
 	}
-	NNS_GfdFreePlttVram(tmsgwinSys->plttVramKey);
-	NNS_GfdFreeTexVram(tmsgwinSys->texVramKey);
+	NNS_GfdFreePlttVram(tmsgwinSys->texPlttVramKey);
+	NNS_GfdFreeTexVram(tmsgwinSys->texDataVramKey);
 
   GFL_TCBL_Exit(tmsgwinSys->tcbl);
 	GFL_HEAP_FreeMemory(tmsgwinSys);
@@ -645,10 +651,10 @@ static void draw3Dwindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 	case WINSEQ_OPEN_START:
 		break;
 	case WINSEQ_OPEN:
-		drawTail(&tmsgwin->tailData, tmsgwin->color, tmsgwin->timer, FALSE);
+		drawTail(tmsgwinSys, tmsgwin, FALSE);
 		break;
 	case WINSEQ_HOLD:
-		drawTail(&tmsgwin->tailData, tmsgwin->color, tmsgwin->timer, TRUE);
+		drawTail(tmsgwinSys, tmsgwin, TRUE);
 		break;
 	}
 }
@@ -668,10 +674,12 @@ static void draw3Dwindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
  *
  */
 //============================================================================================
-static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tailOnly )
+static void	drawTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, BOOL tailOnly )
 {
 	fx32 scale;
+	TAIL_DATA* tailData = &tmsgwin->tailData;
 	u16 timerWait = TALKMSGWIN_OPENWAIT;
+
 	if(debugOn == TRUE){ timerWait *= 2; }
 
 	G3_PushMtx();
@@ -679,11 +687,14 @@ static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tail
 	G3_Translate(tailData->trans.x, tailData->trans.y, tailData->trans.z);
 
 	//グローバルスケール設定
-	//scale = tailData->scale * scaleWait / TALKMSGWIN_OPENWAIT;
-	scale = tailData->scale * scaleWait / timerWait;
+	//scale = tailData->scale * tmsgwin->timer / TALKMSGWIN_OPENWAIT;
+	scale = tailData->scale * tmsgwin->timer / timerWait;
 	G3_Scale(scale, scale, scale);
 
-	G3_TexImageParam(GX_TEXFMT_NONE, GX_TEXGEN_NONE, 0, 0, 0, 0, GX_TEXPLTTCOLOR0_USE, 0);
+	G3_TexImageParam(	GX_TEXFMT_PLTT16, GX_TEXGEN_NONE, GX_TEXSIZE_S8, GX_TEXSIZE_T8,
+										GX_TEXREPEAT_ST, GX_TEXFLIP_NONE, GX_TEXPLTTCOLOR0_USE,
+										NNS_GfdGetTexKeyAddr(tmsgwinSys->texDataVramKey) );
+	G3_TexPlttBase( NNS_GfdGetPlttKeyAddr(tmsgwinSys->texPlttVramKey), GX_TEXFMT_PLTT16 );
 
 	//マテリアル設定
 	G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE);
@@ -693,10 +704,16 @@ static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tail
 	if(tailData->tailPat != TAIL_SETPAT_NONE){
 		G3_Begin(GX_BEGIN_TRIANGLES);
 
-		G3_Color(color);
+		G3_Color(tmsgwin->color);
 
+		//G3_TexCoord(0, 8 * FX32_ONE);
+		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
 		G3_Vtx(tailData->vtxTail2.x, tailData->vtxTail2.y, tailData->vtxTail2.z); 
+		//G3_TexCoord(0, 0);
+		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
 		G3_Vtx(tailData->vtxTail0.x, tailData->vtxTail0.y, tailData->vtxTail0.z); 
+		//G3_TexCoord(8 * FX32_ONE, 0);
+		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
 		G3_Vtx(tailData->vtxTail1.x, tailData->vtxTail1.y, tailData->vtxTail1.z); 
 
 		G3_End();
@@ -704,11 +721,15 @@ static void	drawTail( TAIL_DATA* tailData, GXRgb color, u16 scaleWait, BOOL tail
 	if( tailOnly == FALSE ){
 		G3_Begin( GX_BEGIN_QUADS );
 
-		G3_Color(color);
+		G3_Color(tmsgwin->color);
 
+		G3_TexCoord(0, 0);
 		G3_Vtx(tailData->vtxWin2.x, tailData->vtxWin2.y, tailData->vtxWin2.z); 
+		G3_TexCoord(0, 0);
 		G3_Vtx(tailData->vtxWin0.x, tailData->vtxWin0.y, tailData->vtxWin0.z); 
+		G3_TexCoord(0, 0);
 		G3_Vtx(tailData->vtxWin1.x, tailData->vtxWin1.y, tailData->vtxWin1.z); 
+		G3_TexCoord(0, 0);
 		G3_Vtx(tailData->vtxWin3.x, tailData->vtxWin3.y, tailData->vtxWin3.z); 
 
 		G3_End();
@@ -1076,7 +1097,7 @@ static void recoverCamera( TALKMSGWIN_SYS* tmsgwinSys )
  *
  */
 //============================================================================================
-static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
+static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup )
 {
 	u32 chrSiz;
 	//GFL_BG_FillCharacter(setup->ini.frameID, 0, 1, 0);	// 先頭にクリアキャラ配置
@@ -1112,7 +1133,7 @@ static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
 																	setup->ini.winPltID * PLTT_SIZ,
 																	PLTT_SIZ,
 																	setup->heapID);
-		setBGAlpha(setup);
+		setBGAlpha(tmsgwinSys, setup);
 #else
 		GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, 
 																	NARC_font_default_nclr,
@@ -1136,11 +1157,22 @@ static u32 setupWindowBG( TALKMSGWIN_SYS_SETUP* setup )
 																							0,
 																							FALSE,
 																							setup->heapID);
+	//テクスチャ転送
+	GX_BeginLoadTex(); 
+	DC_FlushRange(texData, TEX_DATA_SIZ);
+	GX_LoadTex(texData, NNS_GfdGetTexKeyAddr(tmsgwinSys->texDataVramKey), TEX_DATA_SIZ); 
+	GX_EndLoadTex(); 
+
+	GX_BeginLoadTexPltt(); 
+	DC_FlushRange(texPltt, TEX_PLTT_SIZ);
+	GX_LoadTexPltt(texPltt, NNS_GfdGetPlttKeyAddr(tmsgwinSys->texPlttVramKey), TEX_PLTT_SIZ); 
+	GX_EndLoadTexPltt(); 
+	
 	return chrSiz;
 }
 
 //------------------------------------------------------------------
-static void setBGAlpha( TALKMSGWIN_SYS_SETUP* setup )
+static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup )
 {
 	int funcType;
 	int plane1;
