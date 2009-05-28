@@ -87,8 +87,8 @@ struct _COMPATIBLE_IRC_SYS
 	BOOL	is_return;
 	BOOL	is_start;
 	u32		random;
-	BOOL	is_you_timing[COMPATIBLE_TIMING_NO_MAX];
-	BOOL	is_my_timing[COMPATIBLE_TIMING_NO_MAX];
+	s32 	child_timing[2];
+	BOOL	is_timing;
 
 	u8		mac_address[6];
 
@@ -112,7 +112,8 @@ static void NET_INIT_DisConnectCallBack( void *p_work );
 static void NET_INIT_InitCallBack( void *p_work );
 static void NET_EXIT_ExitCallBack( void *p_work );
 //受信コマンドテーブル
-static void NET_RECV_Timing( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+static void NET_RECV_TimingStart( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+static void NET_RECV_TimingEnd( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 
 //net
 static void MENUNET_Init( MENUNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc, HEAPID heapID );
@@ -140,12 +141,16 @@ static u8*NETRECV_GetStatusBuffer( int netID, void* p_work, int size );
 //=====================================
 enum
 {
-	SENDCMD_TIMING = GFL_NET_CMD_IRCCOMPATIBLE,
+	SENDCMD_TIMING_START = GFL_NET_CMD_IRCCOMPATIBLE,
+	SENDCMD_TIMING_END,
 };
 static const NetRecvFuncTable sc_net_recv_tbl[]	=
 {	
 	{	
-		NET_RECV_Timing, NULL
+		NET_RECV_TimingStart, NULL
+	},
+	{	
+		NET_RECV_TimingEnd, NULL
 	},
 };
 
@@ -523,23 +528,54 @@ BOOL COMPATIBLE_IRC_TimingSyncWait( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_TIMING
 	{	
 		SEQ_TIMING_START,
 		SEQ_TIMING_WAIT,
+		SEQ_TIMING_RETURN,
+		SEQ_TIMING_RETURN_WAIT,
 		SEQ_TIMING_END,
 	};
 
 	switch( p_sys->seq )
 	{	
 	case SEQ_TIMING_START:
-		if( COMPATIBLE_IRC_SendData( p_sys, SENDCMD_TIMING, sizeof(COMPATIBLE_IRC_TIMINGSYNC_NO), &timing_no ) )
+		p_sys->is_timing	= FALSE;
+		if( COMPATIBLE_IRC_SendData( p_sys, SENDCMD_TIMING_START, sizeof(COMPATIBLE_IRC_TIMINGSYNC_NO), &timing_no ) )
 		{	
 			p_sys->seq	= SEQ_TIMING_WAIT;
 		}
 		break;
 
 	case SEQ_TIMING_WAIT:
-		if( p_sys->is_my_timing[timing_no] && p_sys->is_you_timing[timing_no] )
-		{
-			p_sys->is_my_timing[timing_no]	= FALSE;
-			p_sys->is_you_timing[timing_no]	= FALSE;
+		if( GFL_NET_IsParentMachine() )
+		{	
+			int i;
+			for( i = 0; i < 2; i++ )
+			{	
+				if( p_sys->child_timing[i] != timing_no )
+				{	
+					break;
+				}
+			}
+
+			if( i == 2 )
+			{	
+				p_sys->seq	= SEQ_TIMING_RETURN;
+			}
+		}
+		else
+		{	
+			p_sys->seq	= SEQ_TIMING_RETURN_WAIT;
+		}
+		break;
+
+	case SEQ_TIMING_RETURN:
+		if( COMPATIBLE_IRC_SendData( p_sys, SENDCMD_TIMING_END, sizeof(COMPATIBLE_IRC_TIMINGSYNC_NO), &timing_no ) )
+		{	
+			p_sys->seq	= SEQ_TIMING_END;
+		}
+		break;
+
+	case SEQ_TIMING_RETURN_WAIT:
+		if( p_sys->is_timing )
+		{	
 			p_sys->seq	= SEQ_TIMING_END;
 		}
 		break;
@@ -902,7 +938,33 @@ static void NET_EXIT_ExitCallBack( void *p_work )
 	p_sys->is_exit	= TRUE;
 	IRC_Print( "相性チェック通信システム解放完了\n" );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タイミングあわせ	開始
+ *
+ *	@param	const int netID	ネットID
+ *	@param	int size				サイズ
+ *	@param	void* cp_data		データ
+ *	@param	p_work					パラメータ
+ *	@param	p_net_handle		ネットハンドル
+ *
+ */
+//-----------------------------------------------------------------------------
+static void NET_RECV_TimingStart( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+{	
+	COMPATIBLE_IRC_SYS *p_sys	= p_work;
+	COMPATIBLE_TIMING_NO	no;
 
+	//子機が親機にタイミングを集め、親が集める
+	if( GFL_NET_IsParentMachine() )
+	{
+		GFL_STD_MemCopy( cp_data, &no, sizeof(COMPATIBLE_IRC_TIMINGSYNC_NO) );
+		GF_ASSERT( no < COMPATIBLE_TIMING_NO_MAX );
+		GF_ASSERT( netID < 2 );
+		p_sys->child_timing[ netID ]	= no;
+		OS_TPrintf( "親　%dのタイミング%dを受信\n", netID, no );
+	}
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	タイミングあわせ
@@ -915,7 +977,7 @@ static void NET_EXIT_ExitCallBack( void *p_work )
  *
  */
 //-----------------------------------------------------------------------------
-static void NET_RECV_Timing( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+static void NET_RECV_TimingEnd( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
 {	
 	COMPATIBLE_IRC_SYS *p_sys	= p_work;
 	COMPATIBLE_TIMING_NO	no;
@@ -924,23 +986,15 @@ static void NET_RECV_Timing( const int netID, const int size, const void* cp_dat
 	{
 		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
 	}
-
-	GFL_STD_MemCopy( cp_data, &no, sizeof(COMPATIBLE_IRC_TIMINGSYNC_NO) );
-	GF_ASSERT( no < COMPATIBLE_TIMING_NO_MAX );
-
-	if( netID == GFL_NET_SystemGetCurrentID() )
+/*	if( netID == GFL_NET_SystemGetCurrentID() )
 	{
-		p_sys->is_my_timing[no]		= TRUE;
-		IRC_Print( "自分返答 %d \n", no );
+		return;	//自分のデータは無視
 	}
-	else
-	{	
-		p_sys->is_you_timing[no]		= TRUE;
-		IRC_Print( "相手返答 %d \n", no );
-	}
-
-
+*/
+	NAGI_Printf("タイミング完了\n" );
+	p_sys->is_timing		= TRUE;
 }
+
 
 //=============================================================================
 /**
