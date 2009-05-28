@@ -89,7 +89,7 @@ typedef struct {
 #include "../../../resource/fldmapdata/eventdata/zone_t02evc.cdat"
 #include "../../../resource/fldmapdata/eventdata/zone_t02pc0101evc.cdat"
 
-#define DOOR_ID_T01R0301_EXIT01 0
+//#define DOOR_ID_T01R0301_EXIT01 0
 //生成したイベントデータを全部インクルード
 #include "../../../resource/fldmapdata/eventdata/eventdata_table.cdat"
 
@@ -97,7 +97,7 @@ typedef struct {
 static const CONNECT_DATA ConnectData_H01[] = {
 	{//DOOR_ID_H01_EXIT01 = 0
 		{559, 0, 2143},
-		ZONE_ID_T01, DOOR_ID_T01_EXIT01,
+		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT04,
 		2,//direction
 		0 //type
 	},

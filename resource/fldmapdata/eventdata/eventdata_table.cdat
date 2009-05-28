@@ -1,3 +1,22 @@
+//#include "event_d02r0101.h"
+//このファイルはdata/d02r0101.mevから自動生成されました
+#ifndef ZONE_D02R0101_EVD_H
+#define ZONE_D02R0101_EVD_H
+
+#define DOOR_ID_D02R0101_EXIT01           0
+
+#endif //ZONE_D02R0101_EVD_H
+//#include "event_h01p01.h"
+//このファイルはdata/h01p01.mevから自動生成されました
+#ifndef ZONE_H01P01_EVD_H
+#define ZONE_H01P01_EVD_H
+
+#define DOOR_ID_H01P01_EXIT01             0
+#define DOOR_ID_H01P01_EXIT02             1
+#define DOOR_ID_H01P01_EXIT03             2
+#define DOOR_ID_H01P01_EXIT04             3
+
+#endif //ZONE_H01P01_EVD_H
 //#include "event_t01.h"
 //このファイルはdata/t01.mevから自動生成されました
 #ifndef ZONE_T01_EVD_H
@@ -134,6 +153,64 @@
 
 #endif //ZONE_T02R0301_EVD_H
 
+const CONNECT_DATA ConnectData_D02R0101[] = {
+	{//DOOR_ID_D02R0101_EXIT01 = 0
+		{176, 0, 96},
+		ZONE_ID_H01P01, DOOR_ID_H01P01_EXIT01,
+		2,//direction
+		0 //type
+	},
+};
+const int ConnectCount_D02R0101 = NELEMS(ConnectData_D02R0101);
+
+static const EVENTDATA_TABLE event_d02r0101 = {
+	0,
+	0,
+	1,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&ConnectData_D02R0101,
+	(void *)NULL,
+};
+const CONNECT_DATA ConnectData_H01P01[] = {
+	{//DOOR_ID_H01P01_EXIT01 = 0
+		{256, 0, 448},
+		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT01,
+		1,//direction
+		0 //type
+	},
+	{//DOOR_ID_H01P01_EXIT02 = 1
+		{272, 0, 448},
+		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT01,
+		1,//direction
+		0 //type
+	},
+	{//DOOR_ID_H01P01_EXIT03 = 2
+		{288, 0, 448},
+		ZONE_ID_D02R0101, DOOR_ID_D02R0101_EXIT01,
+		1,//direction
+		0 //type
+	},
+	{//DOOR_ID_H01P01_EXIT04 = 3
+		{336, 0, 400},
+		ZONE_ID_H01, 0,
+		3,//direction
+		0 //type
+	},
+};
+const int ConnectCount_H01P01 = NELEMS(ConnectData_H01P01);
+
+static const EVENTDATA_TABLE event_h01p01 = {
+	0,
+	0,
+	4,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)&ConnectData_H01P01,
+	(void *)NULL,
+};
 const CONNECT_DATA ConnectData_T01[] = {
 	{//DOOR_ID_T01_EXIT01 = 0
 		{11952, 0, 13136},
@@ -582,6 +659,8 @@ static const EVENTDATA_TABLE event_t02r0301 = {
 };
 
 static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
+	{ ZONE_ID_D02R0101, &event_d02r0101 },
+	{ ZONE_ID_H01P01, &event_h01p01 },
 	{ ZONE_ID_T01, &event_t01 },
 	{ ZONE_ID_T01R0101, &event_t01r0101 },
 	{ ZONE_ID_T01R0102, &event_t01r0102 },
