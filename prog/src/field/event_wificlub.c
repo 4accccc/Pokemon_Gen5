@@ -134,6 +134,7 @@ void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * ev
     para->partyEnemy1 = NULL;		///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
     para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
     para->partyEnemy2 = NULL;		///< 2vs2時の２番目敵AI用（不要ならnull）
+		para->statusPlayer =  GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
 
     para->musicDefault = SEQ_BA_TEST_250KB;		///< デフォルト時のBGMナンバー
     para->musicPinch = SEQ_BA_PINCH_TEST_150KB;			///< ピンチ時のBGMナンバー
