@@ -15,6 +15,7 @@
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
+#include "battle/battgra_wb.naix"
 
 #include "battle/btl_common.h"
 #include "battle/btl_util.h"
@@ -38,6 +39,9 @@ enum {
 
   STRBUF_LEN = 512,
   SUBPROC_WORK_SIZE = 64,
+
+  PALIDX_MSGWIN     = 0,
+  PALIDX_MSGWIN_FRM = 1,
 };
 
 typedef enum {
@@ -184,17 +188,30 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
     GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000, 0x8000,
     GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
   };
+  u32 winfrm_charpos;
 
   GFL_BG_SetBGControl( GFL_BG_FRAME1_M,   &bgcntText,   GFL_BG_MODE_TEXT );
   GFL_BG_SetBGControl( GFL_BG_FRAME2_M,   &bgcntTok,   GFL_BG_MODE_TEXT );
   GFL_BG_SetBGControl( GFL_BG_FRAME3_M,   &bgcntStat,   GFL_BG_MODE_TEXT );
 
 //  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
-  PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_FONT, NARC_font_default_nclr, wk->heapID, FADE_MAIN_BG, 0x20, 0, 0 );
-//    void GFL_BG_FillScreen( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode )
-  GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0x00, 1, 0 );
-  GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0xaa, 9, 1 );
+  PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_FONT, NARC_font_default_nclr, wk->heapID, FADE_MAIN_BG, 0x20,
+        PALIDX_MSGWIN*0x20, 0 );
+
+  PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_msgwin_frm_NCLR, wk->heapID, FADE_MAIN_BG, 0x20,
+        PALIDX_MSGWIN_FRM*16, 0 );
+
   GFL_BG_FillScreen( GFL_BG_FRAME1_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+  GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0x00, 1, 0 );
+  {
+    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->heapID) );
+    GFL_ARCUTIL_TRANSINFO transInfo;
+    transInfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, NARC_battgra_wb_msgwin_frm_NCGR,
+                GFL_BG_FRAME1_M, 0, FALSE, GFL_HEAP_LOWID(wk->heapID) );
+    winfrm_charpos = GFL_ARCUTIL_TRANSINFO_GetPos( transInfo );
+    BTL_Printf("フレームキャラナンバ=%d\n", winfrm_charpos);
+    GFL_ARC_CloseDataHandle( handle );
+  }
 
   GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0x00, 1, 0 );
   GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0xff, 1, 1 );
@@ -203,10 +220,13 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 
 
-  wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 1, 19, 30, 4, 0, GFL_BMP_CHRAREA_GET_F );
+  wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 1, 19, 30, 4, PALIDX_MSGWIN, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
   GFL_BMPWIN_MakeScreen( wk->win );
-  GFL_BMPWIN_MakeFrameScreen( wk->win, 1, 0 );
+
+//    GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0xaa, 9, 1 );
+  GFL_BMPWIN_MakeFrameScreen( wk->win, winfrm_charpos, PALIDX_MSGWIN_FRM );
+
   GFL_BMP_Clear( wk->bmp, 0x0f );
   GFL_BMPWIN_TransVramCharacter( wk->win );
 
