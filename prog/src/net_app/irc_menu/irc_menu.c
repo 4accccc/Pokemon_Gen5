@@ -14,6 +14,7 @@
 //	system
 #include "system/main.h"	//HEAPID
 #include "system/gfl_use.h"
+#include "sound/pm_sndsys.h"
 
 //	module
 #include "infowin/infowin.h"
@@ -426,6 +427,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 		break;
 
 	case IRCMENU_MODE_RETURN:
+		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
 		SEQ_Change( p_wk, SEQFUNC_Select );
 		break;
 
@@ -1139,6 +1141,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_CHANGE_SELECT:
 		if( GFL_UI_TP_GetTrg() )
 		{	
+			PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 			GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
 			SEQ_Change( p_wk, SEQFUNC_Select );
 		}
@@ -1233,9 +1236,11 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 			switch( p_wk->select )
 			{	
 			case BTNID_COMATIBLE:
+				PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 				*p_seq	= SEQ_MSG;
 				break;
 			case BTNID_RETURN:
+				PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 				SEQ_Change( p_wk, SEQFUNC_DisConnect );
 				break;
 			};

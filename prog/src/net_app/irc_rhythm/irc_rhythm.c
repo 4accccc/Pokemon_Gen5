@@ -14,6 +14,7 @@
 //	constant
 #include "system/main.h"	//HEAPID
 #include "system/gfl_use.h"
+#include "sound/pm_sndsys.h"
 
 //	module
 #include "infowin/infowin.h"
@@ -1938,6 +1939,7 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
 	if( TouchReturnBtn() )
 	{
+		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 		p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}
@@ -1968,6 +1970,7 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	enum
 	{	
 		SEQ_SENDRESULT,
+		SEQ_TIMING,
 		SEQ_CALC,
 		SEQ_END,
 #if 0
@@ -1986,6 +1989,13 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	{	
 	case SEQ_SENDRESULT:
 		if( RHYTHMNET_SendResultData( &p_wk->net, &p_wk->search ) )
+		{	
+			*p_seq	= SEQ_TIMING;
+		}
+		break;
+
+	case SEQ_TIMING:
+		if( COMPATIBLE_IRC_TimingSyncWait( p_wk->p_param->p_irc, COMPATIBLE_TIMING_NO_RHYTHM_END ) )
 		{	
 			*p_seq	= SEQ_CALC;
 		}

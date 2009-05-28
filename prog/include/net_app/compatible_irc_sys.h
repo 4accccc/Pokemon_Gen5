@@ -27,18 +27,14 @@
 #define COMPATIBLE_IRC_SENDDATA_BYTE  (32)    // 最大送信バイト数
 #define COMPATIBLE_IRC_GETBEACON_NUM	(16)    // 最大ビーコン収集数
 
-//-------------------------------------
-///	タイミングNOの重複は許されないため、
-//	必要あるたび増やしていく。
-//	255まで
-//	ただし、メニューから戻ってきて再度タイミングを
-//	行ったときに通過してしまうことに注意
-//	（ネット接続中の同じタイミングNOでの同期は
-//	一度OKになってしまえば、あとは通過してしまう）
-//=====================================
+
 typedef enum
 {	
 	COMPATIBLE_TIMING_NO_MENU_START,
+	COMPATIBLE_TIMING_NO_RHYTHM_END,
+
+
+	COMPATIBLE_TIMING_NO_MAX,
 }COMPATIBLE_TIMING_NO;
 
 //=============================================================================

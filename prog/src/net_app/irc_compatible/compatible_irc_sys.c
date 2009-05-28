@@ -87,6 +87,7 @@ struct _COMPATIBLE_IRC_SYS
 	BOOL	is_return;
 	BOOL	is_start;
 	u32		random;
+	BOOL	is_timing[COMPATIBLE_TIMING_NO_MAX];
 
 	u8		mac_address[6];
 
@@ -110,8 +111,7 @@ static void NET_INIT_DisConnectCallBack( void *p_work );
 static void NET_INIT_InitCallBack( void *p_work );
 static void NET_EXIT_ExitCallBack( void *p_work );
 //受信コマンドテーブル
-static void NET_RECV_ReturnMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
-static void NET_RECV_StartProc( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
+static void NET_RECV_Timing( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 
 //net
 static void MENUNET_Init( MENUNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc, HEAPID heapID );
@@ -139,17 +139,13 @@ static u8*NETRECV_GetStatusBuffer( int netID, void* p_work, int size );
 //=====================================
 enum
 {
-	SENDCMD_RETURNMENU = GFL_NET_CMD_IRCCOMPATIBLE,
-	SENDCMD_STARTPROC,
+	SENDCMD_TIMING = GFL_NET_CMD_IRCCOMPATIBLE,
 };
 static const NetRecvFuncTable sc_net_recv_tbl[]	=
 {	
 	{	
-		NET_RECV_ReturnMenu, NULL
+		NET_RECV_Timing, NULL
 	},
-	{	
-		NET_RECV_StartProc, NULL
-	}
 };
 
 //-------------------------------------
@@ -532,14 +528,16 @@ BOOL COMPATIBLE_IRC_TimingSyncWait( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_TIMING
 	switch( p_sys->seq )
 	{	
 	case SEQ_TIMING_START:
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,timing_no);
-		p_sys->seq	= SEQ_TIMING_WAIT;
+		if( COMPATIBLE_IRC_SendData( p_sys, SENDCMD_TIMING, sizeof(COMPATIBLE_IRC_TIMINGSYNC_NO), &timing_no ) )
+		{	
+			p_sys->seq	= SEQ_TIMING_WAIT;
+		}
 		break;
 
 	case SEQ_TIMING_WAIT:
-		if( GFL_NET_HANDLE_IsTimingSync( GFL_NET_HANDLE_GetCurrentHandle(),
-					timing_no ) )
+		if( p_sys->is_timing[timing_no] )
 		{
+			p_sys->is_timing[timing_no]	= FALSE;
 			p_sys->seq	= SEQ_TIMING_END;
 		}
 		break;
@@ -905,7 +903,7 @@ static void NET_EXIT_ExitCallBack( void *p_work )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	メニュー決定を受信した
+ *	@brief	タイミングあわせ
  *
  *	@param	const int netID	ネットID
  *	@param	int size				サイズ
@@ -915,9 +913,10 @@ static void NET_EXIT_ExitCallBack( void *p_work )
  *
  */
 //-----------------------------------------------------------------------------
-static void NET_RECV_ReturnMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
+static void NET_RECV_Timing( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
 {	
 	COMPATIBLE_IRC_SYS *p_sys	= p_work;
+	COMPATIBLE_TIMING_NO	no;
 
 	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
 	{
@@ -928,47 +927,12 @@ static void NET_RECV_ReturnMenu( const int netID, const int size, const void* cp
 		return;	//自分のデータは無視
 	}
 
+	GFL_STD_MemCopy( cp_data, &no, sizeof(COMPATIBLE_IRC_TIMINGSYNC_NO) );
 
-	p_sys->is_return		= TRUE;
-	IRC_Print( "メニュー返答\n" );
-
+	GF_ASSERT( no < COMPATIBLE_TIMING_NO_MAX );
+	p_sys->is_timing[no]		= TRUE;
+	IRC_Print( "返答 %d \n", no );
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief	PROC開始同期用
- *
- *	@param	const int netID	ネットID
- *	@param	int size				サイズ
- *	@param	void* cp_data		データ
- *	@param	p_work					パラメータ
- *	@param	p_net_handle		ネットハンドル
- *
- */
-//-----------------------------------------------------------------------------
-static void NET_RECV_StartProc( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle )
-{	
-	COMPATIBLE_IRC_SYS *p_sys	= p_work;
-
-	if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
-	{
-		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
-	}
-	if( netID == GFL_NET_SystemGetCurrentID() )
-	{
-		return;	//自分のデータは無視
-	}
-
-	//子供は親のランダムを貰う
-	if( !GFL_NET_IsParentMachine() )
-	{	
-		GFL_STD_MemCopy( cp_data, &p_sys->random, sizeof(u32) );
-	}
-
-	p_sys->is_start		= TRUE;
-	IRC_Print( "同期OK 受信rnd%d\n", p_sys->random );
-
-}
-
 
 //=============================================================================
 /**
