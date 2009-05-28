@@ -469,7 +469,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
     clientID = wk->actOrder[i].clientID;
     pokeIdx  = wk->actOrder[i].pokeIdx;
     clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
-    bpp = BTL_SVCL_GetFrontPokeData( clwk, pokeIdx );
+    bpp = clwk->frontMember[ pokeIdx ];
 
     if( !BTL_POKEPARAM_IsDead(bpp) )
     {
@@ -624,7 +624,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order )
     numPoke = BTL_SVCL_GetNumActPoke( clwk );
     for(j=0; j<numPoke; j++)
     {
-      bpp = BTL_SVCL_GetFrontPokeData( clwk, j );
+      bpp = clwk->frontMember[j];
       actParam = BTL_SVCL_GetPokeAction( clwk, j );
 
       // 行動による優先順（優先度高いほど数値大）
@@ -702,7 +702,7 @@ static u8 countAlivePokemon( BTL_SVFLOW_WORK* wk )
     clwk = BTL_SERVER_GetClientWork( wk->server, i );
     for(j=0; j<clwk->numCoverPos; ++j)
     {
-      bpp = BTL_SVCL_GetFrontPokeData( clwk, j );
+      bpp = clwk->frontMember[ j ];
       if( bpp != NULL )
       {
         if( !BTL_POKEPARAM_IsDead(bpp) )

@@ -591,10 +591,3 @@ const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
   }
 }
 
-BTL_POKEPARAM* BTL_SVCL_GetFrontPokeData( SVCL_WORK* clwk, u8 posIdx )
-{
-  GF_ASSERT(posIdx<clwk->numCoverPos);
-//  return clwk->frontMember[ posIdx ];
-  return clwk->member[ posIdx ];
-}
-

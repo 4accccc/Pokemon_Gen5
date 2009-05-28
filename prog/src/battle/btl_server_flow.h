@@ -85,7 +85,6 @@ extern SVCL_WORK* BTL_SERVER_GetClientWorkIfEnable( BTL_SERVER* server, u8 clien
 extern u8 BTL_SVCL_GetNumActPoke( SVCL_WORK* clwk );
 extern u8 BTL_SVCL_GetNumCoverPos( SVCL_WORK* clwk );
 extern const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx );
-extern BTL_POKEPARAM* BTL_SVCL_GetFrontPokeData( SVCL_WORK* clwk, u8 posIdx );
 
 
 //------------------------------------------------
