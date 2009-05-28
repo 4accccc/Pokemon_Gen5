@@ -15,6 +15,16 @@
 extern "C" {
 #endif
 
+
+//DMAを使う種別
+typedef enum {
+  GFL_DMA_NET_NO = 1,
+  GFL_DMA_GX_NO= 3,
+} GFL_DMA_NO ;
+
+
+
+
 //DMAイネーブルフラグ（0:disable 1:enable）
 #define	GFL_DMA_DISABLE				(0)
 #define	GFL_DMA_ENABLE				(1)
@@ -108,6 +118,16 @@ extern	void	GFL_DMA_Start(int ch,u32 sad,u32 dad,int dma_enable,int intr_enable,
  */
 //--------------------------------------------------------------------------------------------
 extern	void	GFL_DMA_Stop(int ch);
+
+//--------------------------------------------------------------------------------------------
+/**
+ * GXのDMAを使うor使わないを切り替える
+ *
+ * @param	bEnable	使う時TRUE 使わない時FALSE
+ */
+//--------------------------------------------------------------------------------------------
+
+extern void GFL_DMA_GXDmaEnable(BOOL bEnable);
 
 #ifdef __cplusplus
 }/* extern "C" */
