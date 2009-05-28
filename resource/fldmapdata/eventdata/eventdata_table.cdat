@@ -416,7 +416,7 @@ const CONNECT_DATA ConnectData_T02[] = {
 		0 //type
 	},
 	{//DOOR_ID_T02_EXIT02 = 2
-		{11840, -80, 11568},
+		{11840, -80, 11584},
 		ZONE_ID_T02R0101, DOOR_ID_T02R0101_EXIT02,
 		2,//direction
 		0 //type
