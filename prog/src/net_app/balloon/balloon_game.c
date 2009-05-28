@@ -47,6 +47,7 @@
 #include <calctool.h>
 #include "system/bmp_winframe.h"
 #include "infowin/infowin.h"
+#include "sound/pm_sndsys.h"
 
 
 
@@ -998,6 +999,8 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		GFL_NET_DWC_StartVChat( HEAPID_BALLOON );
 	}
 	
+	//※check　BGM確認用で暫定でここで鳴らす(本来はミニゲームエントリー画面で鳴らす) 2009.05.28(木)
+	PMSND_PlayBGM(SEQ_WIFIGAME);
 	return GFL_PROC_RES_FINISH;
 }
 
