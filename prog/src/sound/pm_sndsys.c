@@ -70,6 +70,7 @@ typedef struct {
 //------------------------------------------------------------------
 typedef struct {
 	BOOL	active;
+	int		seq;
 	u16		volumeCounter;
 	u16		nextTrackBit;
 	u32		nextSoundIdx;
@@ -146,11 +147,11 @@ static SOUNDMAN_PRESET_HANDLE*	usrPresetHandle1;
 OSThread		soundLoadThread;
 static u64	threadStack[ THREAD_STACKSIZ / sizeof(u64) ];
 SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG threadArg;
-BOOL				threadBusy;
 
 static void PMSND_CreatePlayerUnit( const PMSND_PLSETUP* setupTbl, PMSND_PL_UNIT* playerUnit );
 static void PMSND_DeletePlayerUnit( PMSND_PL_UNIT* playerUnit );
 static void PMSND_InitSystemFadeBGM( void );
+static void PMSND_SetSystemFadeBGM( u32 nextSoundIdx, u16 trackBit, u8 outFrame, u8 inFrame );
 static void PMSND_ResetSystemFadeBGM( void );
 static void PMSND_CancelSystemFadeBGM( void );
 static void PMSND_SystemFadeBGM( void );
@@ -191,7 +192,6 @@ void	PMSND_Init( void )
 	PMSND_InitSystemFadeBGM();
 	PMSND_InitCaptureReverb();
 
-	threadBusy = FALSE;
 	bgmFadeCounter = 0;
 
 	// 常駐サウンドデータ読み込み
@@ -498,12 +498,7 @@ void	PMSND_PlayBGM_EX( u32 soundIdx, u16 trackBit )
 //------------------------------------------------------------------
 void	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit, u8 fadeOutFrame, u8 fadeInFrame )
 {
-	fadeStatus.nextSoundIdx = soundIdx;
-	fadeStatus.nextTrackBit = trackBit;
-	fadeStatus.fadeInFrame = fadeInFrame;
-	fadeStatus.fadeOutFrame = fadeOutFrame;
-	fadeStatus.volumeCounter = fadeStatus.fadeOutFrame;
-	fadeStatus.active = TRUE;
+	PMSND_SetSystemFadeBGM(soundIdx, trackBit, fadeOutFrame, fadeInFrame );
 }
 
 //------------------------------------------------------------------
@@ -668,6 +663,20 @@ static void PMSND_InitSystemFadeBGM( void )
 	PMSND_ResetSystemFadeBGM();
 }
 
+static void PMSND_SetSystemFadeBGM( u32 nextSoundIdx, u16 trackBit, u8 outFrame, u8 inFrame )
+{
+	fadeStatus.nextTrackBit = trackBit;
+	fadeStatus.nextSoundIdx = nextSoundIdx;
+	fadeStatus.fadeInFrame = inFrame;
+	fadeStatus.fadeOutFrame = outFrame;
+	fadeStatus.volumeCounter = outFrame;
+
+	deleteSoundPlayThread();
+
+	fadeStatus.seq = 0;
+	fadeStatus.active = TRUE;
+}
+
 static void PMSND_ResetSystemFadeBGM( void )
 {
 	fadeStatus.active = FALSE;
@@ -678,7 +687,6 @@ static void PMSND_ResetSystemFadeBGM( void )
 	NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127);
 
 	deleteSoundPlayThread();
-	threadBusy = FALSE;
 }
 
 static void PMSND_CancelSystemFadeBGM( void )
@@ -703,57 +711,45 @@ static void PMSND_SystemFadeBGM( void )
 
 	if( fadeStatus.active == FALSE ){ return; }
 
-	if(threadBusy == TRUE){
-		if(checkEndSoundPlayThread() == TRUE){
-			threadBusy = FALSE;
-		}
-	}
-
-	if(nowSoundIdx){
-		if( nowSoundIdx != fadeStatus.nextSoundIdx ){
-			//FADEOUT
-			if( fadeStatus.volumeCounter > 0 ){
-				fadeStatus.volumeCounter--;
-				NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeOutFrame);
-			} else {
-				//threadBusy = FALSE;
-				bgmSetFlag = TRUE;
+	switch( fadeStatus.seq ){
+	case 0:
+		if(nowSoundIdx){
+			if( nowSoundIdx != fadeStatus.nextSoundIdx ){
+				//FADEOUT
+				if( fadeStatus.volumeCounter > 0 ){
+					fadeStatus.volumeCounter--;
+					NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeOutFrame);
+					return;
+				}
 				SOUNDMAN_StopHierarchyPlayer();
 				NNS_SndPlayerSetVolume(pBgmHandle, 0);
-			}
-		} else {									
-			//FADEIN
-			if( fadeStatus.volumeCounter < fadeStatus.fadeInFrame ){
-				fadeStatus.volumeCounter++;
-				NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeInFrame);
-			} else {
+			} else {									
+				//FADEIN
+				if( fadeStatus.volumeCounter < fadeStatus.fadeInFrame ){
+					fadeStatus.volumeCounter++;
+					NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeInFrame);
+					return;
+				}
 				PMSND_ResetSystemFadeBGM();
 				return;			//終了
 			}
 		}
-	} else {
-		if( threadBusy == TRUE ){
-				//debugCounter++;
-				OS_Sleep(0);
-				return;
+		if(fadeStatus.nextSoundIdx == 0){
+			SOUNDMAN_StopHierarchyPlayer();
+			PMSND_ResetSystemFadeBGM();
+			return;			//終了
 		}
-		bgmSetFlag = TRUE;	// 最初に鳴り出す場合
-	}
-
-	if(bgmSetFlag == TRUE){
-		if(fadeStatus.nextSoundIdx){
-#if 0
-			PMSND_PlayBGM_CORE( fadeStatus.nextSoundIdx, fadeStatus.nextTrackBit);
-			NNS_SndPlayerSetVolume(pBgmHandle, 0);
-#else
-			createSoundPlayThread( fadeStatus.nextSoundIdx );
-			threadBusy = TRUE;
-			//debugCounter = 0;
-#endif
-			fadeStatus.volumeCounter = 0;
+		createSoundPlayThread( fadeStatus.nextSoundIdx );
+		fadeStatus.volumeCounter = 0;
+		fadeStatus.seq++;
+		break;
+	case 1:
+		if(checkEndSoundPlayThread() == TRUE){
+			fadeStatus.seq = 0;
 		} else {
-			PMSND_StopBGM();
+			OS_Sleep(1);
 		}
+		break;
 	}
 }
 
