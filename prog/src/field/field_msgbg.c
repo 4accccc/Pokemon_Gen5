@@ -1402,11 +1402,15 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
 void FLDMSGBG_SetBlendAlpha( void )
 {
   { //バトルのウィンドウ変更に対応
+    #if 0
     int mask =
       GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
       GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | 
       GX_WND_PLANEMASK_OBJ;
     G2_SetWnd0InsidePlane( mask, TRUE );
+    #else
+    GX_SetVisibleWnd( GX_WNDMASK_NONE );
+    #endif
   }
 
   {
