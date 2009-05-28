@@ -183,14 +183,20 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
 }
 BOOL BTL_NET_IsInitialized( void )
 {
-  if( BTL_NET_IsTimingSync(BTL_NET_TIMING_INITIALIZE) )
+  if( Sys )
   {
-    TMP_SEND_BUFFER* tsb = &Sys->sendBuf[0];
-    tsb->val32 = BTL_NET_SERVER_VERSION;
-    GFL_NET_SendData( Sys->netHandle, CMD_NOTIFY_SERVER_VER, sizeof(*tsb), tsb );
+    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_INITIALIZE) )
+    {
+      TMP_SEND_BUFFER* tsb = &Sys->sendBuf[0];
+      tsb->val32 = BTL_NET_SERVER_VERSION;
+      GFL_NET_SendData( Sys->netHandle, CMD_NOTIFY_SERVER_VER, sizeof(*tsb), tsb );
+      return TRUE;
+    }
+    return FALSE;
+  }
+  else{
     return TRUE;
   }
-  return FALSE;
 }
 
 void BTL_NET_QuitSystem( void )
@@ -409,31 +415,39 @@ void BTL_NET_EndNotifyPartyData( void )
 //
 void BTL_NET_TimingSyncStart( u8 timingID )
 {
-  GFL_NET_TimingSyncStart( Sys->netHandle, timingID );
-  Sys->timingID = timingID;
-  Sys->timingSyncStartFlag = TRUE;
+  if( Sys )
+  {
+    GFL_NET_TimingSyncStart( Sys->netHandle, timingID );
+    Sys->timingID = timingID;
+    Sys->timingSyncStartFlag = TRUE;
 
-  // @@@ 本来はこうする
+    // @@@ 本来はこうする
 //  Sys->timingSyncStartFlag = GFL_NET_TimingSyncStart( Sys->netHandle, timingID );
-
+  }
 }
 
 BOOL BTL_NET_IsTimingSync( u8 timingID )
 {
-  if( Sys->timingSyncStartFlag ){
-    BOOL is_sync = GFL_NET_IsTimingSync( Sys->netHandle, Sys->timingID );
-    if( is_sync ){
-      Sys->timingID = BTL_NET_TIMING_NULL;
-      Sys->timingSyncStartFlag = FALSE;
-      return is_sync;
+  if( Sys )
+  {
+    if( Sys->timingSyncStartFlag ){
+      BOOL is_sync = GFL_NET_IsTimingSync( Sys->netHandle, Sys->timingID );
+      if( is_sync ){
+        Sys->timingID = BTL_NET_TIMING_NULL;
+        Sys->timingSyncStartFlag = FALSE;
+        return is_sync;
+      }
+    }else{
+      GFL_NET_TimingSyncStart( Sys->netHandle, Sys->timingID );
+      Sys->timingSyncStartFlag = TRUE;
+      // @@@ 本来はこうする
+  //    Sys->timingSyncStartFlag = GFL_NET_TimingSyncStart( Sys->netHandle, Sys->timingID );
     }
-  }else{
-    GFL_NET_TimingSyncStart( Sys->netHandle, Sys->timingID );
-    Sys->timingSyncStartFlag = TRUE;
-    // @@@ 本来はこうする
-//    Sys->timingSyncStartFlag = GFL_NET_TimingSyncStart( Sys->netHandle, Sys->timingID );
+    return FALSE;
   }
-  return FALSE;
+  else{
+    return TRUE;
+  }
 }
 
 
