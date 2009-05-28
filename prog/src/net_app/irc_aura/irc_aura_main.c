@@ -2231,7 +2231,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
 	if( TouchReturnBtn() )
 	{
-		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );	
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );	
 		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}
@@ -2333,7 +2333,7 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
 	if( TouchReturnBtn() )
 	{
-		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}
@@ -2424,7 +2424,7 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
 	if( TouchReturnBtn() )
 	{
-		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		p_wk->p_param->result	= IRCAURA_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}

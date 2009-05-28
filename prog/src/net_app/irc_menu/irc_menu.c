@@ -1240,7 +1240,7 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 				*p_seq	= SEQ_MSG;
 				break;
 			case BTNID_RETURN:
-				PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+				PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 				SEQ_Change( p_wk, SEQFUNC_DisConnect );
 				break;
 			};
