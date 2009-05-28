@@ -419,7 +419,7 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
 	
 	party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys));
 
-	pp = PP_Create(MONSNO_WANIBAAN, 50, 123456, GFL_HEAPID_APP);
+	pp = PP_Create(MONSNO_WANIBAAN, 100, 123456, GFL_HEAPID_APP);
 	
 	PokeParty_Add(party, pp);
 	PP_Setup(pp, MONSNO_ONOKKUSU, 100, 123456);
