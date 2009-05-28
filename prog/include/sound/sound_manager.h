@@ -39,8 +39,6 @@ typedef struct {
 // スレッド使用引数構造体
 typedef struct {
 	u32	soundIdx;
-	u8	volume;
-	u8	dummy[3];
 }SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG;
 
 //------------------------------------------------------------------

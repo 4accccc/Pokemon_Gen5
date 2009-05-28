@@ -112,7 +112,18 @@ static const SOUNDMAN_HIERARCHY_PLAYER_DATA pmHierarchyPlayerData = {
 	PLAYER_MUSIC_HEAPSIZ, PLAYER_DEFAULT_MAX, PLAYER_MUSIC_CH,
 };
 
+//------------------------------------------------------------------
+/**
+ * @brief	スレッド制御定義
+ */
+//------------------------------------------------------------------
 #define BGM_BLOCKLOAD_SIZE  (0x2000)
+
+typedef enum {
+	THREADLOAD_SEQBANK = 0,
+	THREADLOAD_WAVE,
+}THREADLOAD_MODE;
+
 //============================================================================================
 /**
  *
@@ -160,8 +171,7 @@ static void PMSND_SystemFadeBGM( void );
 
 static void PMSND_InitCaptureReverb( void );
 
-static void createSoundPlayThread( u32 soundIdx );
-//static void createSoundPlayThread( u32 soundIdx, u8 funcIdx );
+static void createSoundPlayThread( u32 soundIdx, THREADLOAD_MODE mode );
 static void deleteSoundPlayThread( void );
 static BOOL checkEndSoundPlayThread( void );
 //============================================================================================
@@ -748,11 +758,20 @@ static void PMSND_SystemFadeBGM( void )
 		}
 		NNS_SndArcSetLoadBlockSize(BGM_BLOCKLOAD_SIZE);	//分割ロード指定
 
-		createSoundPlayThread( fadeStatus.nextSoundIdx );
+		createSoundPlayThread( fadeStatus.nextSoundIdx, THREADLOAD_SEQBANK );
 		fadeStatus.volumeCounter = 0;
-		fadeStatus.seq++;
+		fadeStatus.seq = 1;
 		break;
 	case 1:
+		if(checkEndSoundPlayThread() == TRUE){
+			SOUNDMAN_PlayHierarchyPlayer_forThread_heapsv();// サウンド階層構造用設定
+
+			createSoundPlayThread( fadeStatus.nextSoundIdx, THREADLOAD_WAVE );
+			fadeStatus.seq = 2;
+		} else {
+			OS_Sleep(1);
+		}
+	case 2:
 		if(checkEndSoundPlayThread() == TRUE){
 			NNS_SndArcSetLoadBlockSize(0);	//分割ロードなしに復帰
 
@@ -918,7 +937,7 @@ void PMSND_ReleasePreset( void )
 //スレッド関数
 /// BGMの分割読み込みのサイズ  
 //--------------------------------------------------------------------------------------------
-static void	_loadPlayThread( void* arg )
+static void	_loadSeqBankThread( void* arg )
 {
 	SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG* arg1 = (SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG*)arg;
 	BOOL result;
@@ -927,27 +946,41 @@ static void	_loadPlayThread( void* arg )
 	result = NNS_SndArcLoadSeqEx
 		(arg1->soundIdx, NNS_SND_ARC_LOAD_SEQ | NNS_SND_ARC_LOAD_BANK, PmSndHeapHandle);
 	if( result == FALSE){ OS_Printf("sound seqbank load error!\n"); }
+}
 
-	// サウンド階層構造用設定
-	SOUNDMAN_PlayHierarchyPlayer_forThread_heapsv();
+static void	_loadWaveThread( void* arg )
+{
+	SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG* arg1 = (SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG*)arg;
+	BOOL result;
 
 	// サウンドデータ（wave）読み込み
 	result = NNS_SndArcLoadSeqEx(arg1->soundIdx, NNS_SND_ARC_LOAD_WAVE, PmSndHeapHandle);
 	if( result == FALSE){ OS_Printf("sound wave load error!\n"); }
 }
 
-static void createSoundPlayThread( u32 soundIdx )
+static void createSoundPlayThread( u32 soundIdx, THREADLOAD_MODE mode )
 {
 	threadArg.soundIdx = soundIdx;
-	threadArg.volume = 0;
 
 	deleteSoundPlayThread();
-	OS_CreateThread(&soundLoadThread, 
-									_loadPlayThread,
-									&threadArg,
-									threadStack + (THREAD_STACKSIZ/sizeof(u64)),
-									THREAD_STACKSIZ,
-									17);
+	switch( mode ){
+	case THREADLOAD_SEQBANK:
+		OS_CreateThread(&soundLoadThread, 
+										_loadSeqBankThread,
+										&threadArg,
+										threadStack + (THREAD_STACKSIZ/sizeof(u64)),
+										THREAD_STACKSIZ,
+										17);
+		break;
+	case THREADLOAD_WAVE:
+		OS_CreateThread(&soundLoadThread, 
+										_loadWaveThread,
+										&threadArg,
+										threadStack + (THREAD_STACKSIZ/sizeof(u64)),
+										THREAD_STACKSIZ,
+										17);
+		break;
+	}
 	OS_WakeupThreadDirect(&soundLoadThread);
 }
 
