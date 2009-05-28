@@ -342,7 +342,7 @@ typedef struct
 typedef struct
 {
 	//‚Ç‚±‚ğ‰Ÿ‚µ‚½‚©
-	GFL_POINT		pos;
+//	GFL_POINT		pos;
 	//‰Ÿ‚µ‚½ŠÔ
 	u32					prog_ms;	//Œo‰ßŠÔ
 	u32					diff_ms;	//·‚ÌŠÔ
@@ -2180,7 +2180,7 @@ static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_p
 {	
 	GF_ASSERT( p_wk->data_idx < RHYTHMSEARCH_DATA_MAX );
 
-	p_wk->data[ p_wk->data_idx ].pos						= *cp_pos;
+//	p_wk->data[ p_wk->data_idx ].pos						= *cp_pos;
 	p_wk->data[ p_wk->data_idx ].prog_ms				= OS_TicksToMilliSeconds(OS_GetTick())
 																							  - p_wk->start_time;
 
