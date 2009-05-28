@@ -76,15 +76,6 @@ typedef void (*pPut1CharFunc)( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* 
  */
 //--------------------------------------------------------------------------
 typedef struct {
-  #if 0
-  u16   org_x;      ///< 書き込み開始Ｘ座標
-  u16   org_y;      ///< 書き込み開始Ｙ座標
-  u16   write_x;    ///< 書き込み中のＸ座標
-  u16   write_y;    ///< 書き込み中のＹ座標
-  u8    colorLetter;      ///< 描画色（文字）
-  u8    colorShadow;      ///< 描画色（影）
-  u8    colorBackGround;  ///< 描画色（背景）
-  #endif
 
   u32   org_x : 10;
   u32   org_y : 10;
@@ -865,15 +856,16 @@ static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp )
 /**
  * プリントストリーム作成（通常版 - コールバックなし）
  *
- * @param   dst   描画先Bitmap
- * @param   xpos  描画開始Ｘ座標（ドット）
- * @param   ypos  描画開始Ｙ座標（ドット）
- * @param   str   文字列
- * @param   font  フォントタイプ
- * @param   wait    １文字描画ごとのウェイトフレーム数
- * @param   tcbsys    使用するGFL_TCBLシステムポインタ
- * @param   tcbpri    使用するタスクプライオリティ
- * @param   heapID    使用するヒープID
+ * @param   dst             描画先Bitmap
+ * @param   xpos            描画開始Ｘ座標（ドット）
+ * @param   ypos            描画開始Ｙ座標（ドット）
+ * @param   str             文字列
+ * @param   font            フォントタイプ
+ * @param   wait            １文字描画ごとのウェイトフレーム数
+ * @param   tcbsys          使用するGFL_TCBLシステムポインタ
+ * @param   tcbpri          使用するタスクプライオリティ
+ * @param   clearColorIdx   描画クリア用の色インデックス
+ * @param   heapID          使用するヒープID
  *
  * @retval  PRINT_STREAM* ストリームハンドル
  *
@@ -881,10 +873,10 @@ static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp )
 //==============================================================================================
 PRINT_STREAM* PRINTSYS_PrintStream(
     GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
-    int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor )
+    int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColorIdx )
 {
   return PRINTSYS_PrintStreamCallBack(
-    dst, xpos, ypos, str, font, wait, tcbsys, tcbpri, heapID, clearColor, NULL
+    dst, xpos, ypos, str, font, wait, tcbsys, tcbpri, heapID, clearColorIdx, NULL
   );
 }
 
@@ -892,16 +884,17 @@ PRINT_STREAM* PRINTSYS_PrintStream(
 /**
  * プリントストリーム作成（コールバックあり）
  *
- * @param   dst   描画先Bitmap
- * @param   xpos  描画開始Ｘ座標（ドット）
- * @param   ypos  描画開始Ｙ座標（ドット）
- * @param   str   文字列
- * @param   font  フォントタイプ
- * @param   wait    １文字描画ごとのウェイトフレーム数
- * @param   tcbsys    使用するGFL_TCBLシステムポインタ
- * @param   tcbpri    使用するタスクプライオリティ
- * @param   heapID    使用するヒープID
- * @param   callback  １文字描画ごとのコールバック関数アドレス
+ * @param   dst             描画先Bitmap
+ * @param   xpos            描画開始Ｘ座標（ドット）
+ * @param   ypos            描画開始Ｙ座標（ドット）
+ * @param   str             文字列
+ * @param   font            フォントタイプ
+ * @param   wait            １文字描画ごとのウェイトフレーム数
+ * @param   tcbsys          使用するGFL_TCBLシステムポインタ
+ * @param   tcbpri          使用するタスクプライオリティ
+ * @param   heapID          使用するヒープID
+ * @param   clearColorIdx   描画クリア用の色インデックス
+ * @param   callback        １文字描画ごとのコールバック関数アドレス
  *
  * @retval  PRINT_STREAM* ストリームハンドル
  *
@@ -909,7 +902,7 @@ PRINT_STREAM* PRINTSYS_PrintStream(
 //==============================================================================================
 PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
     GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
-    int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor, pPrintCallBack callback )
+    int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColorIdx, pPrintCallBack callback )
 {
   PRINT_STREAM* stwk;
   GFL_TCBL* tcb;
@@ -943,7 +936,7 @@ PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
   stwk->dstWin = dst;
   stwk->dstBmp = dstBmp;
   stwk->state = PRINTSTREAM_STATE_RUNNING;
-  stwk->clearColor = clearColor;
+  stwk->clearColor = clearColorIdx;
   stwk->pauseType = PRINTSTREAM_PAUSE_CLEAR;
   stwk->pauseWait = 0;
   stwk->pauseReleaseFlag = FALSE;
