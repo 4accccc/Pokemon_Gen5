@@ -310,6 +310,7 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
   VecFx32 pos;
 
   //デバッグ用にR+Y,Bでパレス、T01へワープできるようにする
+#if 0
   if(GFL_UI_KEY_GetCont() == (PAD_BUTTON_R | PAD_BUTTON_Y)){
     pos.x = 12040 << FX32_SHIFT;
     pos.y = 0;
@@ -322,7 +323,8 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
     pos.z = 234 << FX32_SHIFT;
     return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACETEST, &pos, 0);
   }
-  
+#endif
+
   if(commSys != NULL && commSys->commField_ != NULL){
     if(FIELD_COMM_SYS_GetExitReq(commSys->commField_) == TRUE){
       return DEBUG_EVENT_ChildCommEnd(gameSys, fieldWork, commSys);

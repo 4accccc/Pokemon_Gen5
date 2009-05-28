@@ -298,6 +298,7 @@ typedef struct {
 	
 	GFL_TCBLSYS *tcbl;
 	PRINT_QUE *printQue;
+	PRINT_UTIL print_util;
 	
 	WIFI_EXCHANGE_WORK my_exchange_data;    ///<自分の交換データ
 } WFLBY_CONNECTWK;
@@ -977,8 +978,20 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 	p_param	= pwk;
 	p_wk->p_save		= p_param->p_save;
 
+	//TCBL作成
+	p_wk->tcbl = GFL_TCBL_Init( HEAPID_WFLBY_ROOM, HEAPID_WFLBY_ROOM, 4, 32);
+	//PrintQue作成
+	p_wk->printQue = PRINTSYS_QUE_Create(HEAPID_WFLBY_ROOM);
+
 	// グラフィック初期化
 	WFLBY_CONNECT_GraphicInit( p_wk, HEAPID_WFLBY_ROOM );
+
+	// フォント作成	※check PLのように会話フォント、システムフォントといったものがまだ無いので
+	//						どちらも同じフォントを読み込んでいる 2009.03.10(火) matsuda
+	p_wk->fontHandle_talk = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WFLBY_ROOM);
+	p_wk->fontHandle_system = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WFLBY_ROOM);
 
 	// ウィンドウシステム初期化
 	WFLBY_CONNECT_WIN_Init( &p_wk->talk, p_wk->fontHandle_talk, 
@@ -1032,6 +1045,12 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 	
 	p_wk	= mywk;
 	p_param	= pwk;
+
+	PRINTSYS_QUE_Main(p_wk->printQue);
+	PRINT_UTIL_Trans(&p_wk->title.print_util, p_wk->printQue);
+	PRINT_UTIL_Trans(&p_wk->talk.print_util, p_wk->printQue);
+	PRINT_UTIL_Trans(&p_wk->talk_system.print_util, p_wk->printQue);
+	PRINT_UTIL_Trans(&p_wk->system.print_util, p_wk->printQue);
 
 	switch( *p_seq ){
 	// フェードイン
@@ -1163,6 +1182,15 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 	//sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	ConnectBGPalAnm_End(&p_wk->cbp);
+
+	//フォント破棄
+	GFL_FONT_Delete(p_wk->fontHandle_talk);
+	GFL_FONT_Delete(p_wk->fontHandle_system);
+	
+	//TCBL破棄
+	GFL_TCBL_Exit(p_wk->tcbl);
+	//PrintQue破棄
+	PRINTSYS_QUE_Delete(p_wk->printQue);
 
 	// ウィンドウシステム破棄
 	WFLBY_CONNECT_WIN_Exit( &p_wk->talk );
@@ -1373,6 +1401,8 @@ static void WFLBY_CONNECT_GraphicVBlank( WFLBY_CONNECTWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GFL_FONT *font_handle, GFL_TCBLSYS *tcbl, PRINT_QUE *printQue, u32 fontid, u32 msgid, u32 x, u32 y, u32 sizx, u32 sizy, u32 cgx, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
+  GF_ASSERT(printQue);
+  
 	p_wk->p_wordset = WORDSET_Create( heapID );
 	p_wk->p_msgman	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msgid, heapID );
 	p_wk->p_str		= GFL_STR_CreateBuffer( WFLBY_WINSYS_STRBUFNUM, heapID );
