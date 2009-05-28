@@ -60,8 +60,6 @@ extern void	SOUNDMAN_RecoverHierarchyPlayerState( void );
 
 // 階層プレーヤーサウンド操作
 extern BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx );
-extern void	SOUNDMAN_PlayHierarchyPlayer_forThread( void* arg );
-
 extern void	SOUNDMAN_StopHierarchyPlayer( void );
 extern void	SOUNDMAN_PauseHierarchyPlayer( BOOL flag );
 extern BOOL	SOUNDMAN_PushHierarchyPlayer( void );

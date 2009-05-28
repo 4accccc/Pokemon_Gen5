@@ -10,9 +10,6 @@
 
 #include "sound/sound_manager.h"
 
-/// BGMの分割読み込みのサイズ  
-#define BGM_BLOCKLOAD_SIZE  (0x2000)
-
 static NNSSndHeapHandle*	pSndHeapHandle = NULL;
 //#define STATUS_PRINT
 //============================================================================================
@@ -247,7 +244,6 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 	BOOL result;
-	BOOL playerCreateFlag = FALSE;
 #ifdef STATUS_PRINT
 	u32	 heapSize;
 #endif
@@ -269,7 +265,7 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 	result = NNS_SndArcLoadSeqEx(soundIdx, NNS_SND_ARC_LOAD_WAVE, *pSndHeapHandle);
 	if( result == FALSE){ return FALSE; }
 
-	// サウンドデータ（seq, bank）をプレーヤーヒープに読み込み、サウンド再生開始
+	// サウンド再生開始
 	result = NNS_SndArcPlayerStartSeqEx(&player->sndHandle, sndHierarchyPlayerNo, -1, -1, soundIdx);
 	if( result == FALSE){ return FALSE; }
 
@@ -283,26 +279,6 @@ BOOL	SOUNDMAN_PlayHierarchyPlayer( u32 soundIdx )
 	player->soundIdx = soundIdx;
 	return result;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- *
- * @brief	サウンド再生(スレッド用関数)
- *
- */
-//--------------------------------------------------------------------------------------------
-void	SOUNDMAN_PlayHierarchyPlayer_forThread( void* arg )
-{
-	SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG* arg1 = (SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG*)arg;
-
-	NNS_SndArcSetLoadBlockSize(BGM_BLOCKLOAD_SIZE);	//分割ロード指定
-
-	SOUNDMAN_PlayHierarchyPlayer(arg1->soundIdx);
-	NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), arg1->volume);
-
-	NNS_SndArcSetLoadBlockSize(0);	//分割ロードなし
-}
-
 
 //--------------------------------------------------------------------------------------------
 /**

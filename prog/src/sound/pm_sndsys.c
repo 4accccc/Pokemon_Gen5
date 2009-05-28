@@ -142,6 +142,7 @@ static PMSND_PL_UNIT						systemPlayerUnit;
 static PMSND_PLAYERSTATUS				bgmPlayerInfo;
 static SOUNDMAN_PRESET_HANDLE*	systemPresetHandle;
 static SOUNDMAN_PRESET_HANDLE*	usrPresetHandle1;
+static OSMutex									sndTreadMutex;		
 
 #define THREAD_STACKSIZ		(0x8000)
 OSThread		soundLoadThread;
@@ -159,6 +160,7 @@ static void PMSND_SystemFadeBGM( void );
 static void PMSND_InitCaptureReverb( void );
 
 static void createSoundPlayThread( u32 soundIdx );
+//static void createSoundPlayThread( u32 soundIdx, u8 funcIdx );
 static void deleteSoundPlayThread( void );
 static BOOL checkEndSoundPlayThread( void );
 //============================================================================================
@@ -191,6 +193,9 @@ void	PMSND_Init( void )
 
 	PMSND_InitSystemFadeBGM();
 	PMSND_InitCaptureReverb();
+
+	// 排他制御用Mutex初期化(NNS_SndMainがスレッドセーフ設計ではないため)
+	OS_InitMutex(&sndTreadMutex);		
 
 	bgmFadeCounter = 0;
 
@@ -649,6 +654,7 @@ BOOL	PMSND_CheckPlayBGM( void )
 	}
 }
 
+
 //------------------------------------------------------------------
 /**
  *
@@ -753,6 +759,10 @@ static void PMSND_SystemFadeBGM( void )
 	}
 }
 
+extern void	SOUNDMAN_PlayHierarchyPlayer_thread1( void* arg );
+extern void	SOUNDMAN_PlayHierarchyPlayer_forThread1_after( void );
+extern void	SOUNDMAN_PlayHierarchyPlayer_thread2( void* arg );
+extern void	SOUNDMAN_PlayHierarchyPlayer_forThread2_after( u32 soundIdx );
 //------------------------------------------------------------------
 /**
  * @brief	システムフェードフレーム設定
@@ -902,6 +912,26 @@ void PMSND_ReleasePreset( void )
  *
  */
 //============================================================================================
+//スレッド関数
+/// BGMの分割読み込みのサイズ  
+#define BGM_BLOCKLOAD_SIZE  (0x2000)
+//--------------------------------------------------------------------------------------------
+static void	_loadPlayThread( void* arg )
+{
+	SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG* arg1 = (SOUNDMAN_HIERARCHY_PLAYTHREAD_ARG*)arg;
+
+	OS_LockMutex(&sndTreadMutex);		
+
+	NNS_SndArcSetLoadBlockSize(BGM_BLOCKLOAD_SIZE);	//分割ロード指定
+
+	SOUNDMAN_PlayHierarchyPlayer(arg1->soundIdx);
+	NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), arg1->volume);
+
+	NNS_SndArcSetLoadBlockSize(0);	//分割ロードなし
+
+	OS_UnlockMutex(&sndTreadMutex);
+}
+
 static void createSoundPlayThread( u32 soundIdx )
 {
 	threadArg.soundIdx = soundIdx;
@@ -909,7 +939,7 @@ static void createSoundPlayThread( u32 soundIdx )
 
 	deleteSoundPlayThread();
 	OS_CreateThread(&soundLoadThread, 
-									SOUNDMAN_PlayHierarchyPlayer_forThread,
+									_loadPlayThread,
 									&threadArg,
 									threadStack + (THREAD_STACKSIZ/sizeof(u64)),
 									THREAD_STACKSIZ,
