@@ -46,8 +46,8 @@ enum {
 typedef struct {
 
   u16 monsno;       ///< ポケモンナンバー
+  u16 hpMax;        ///< 最大HP
 
-  u8  hpMax;        ///< 最大HP
   u8  attack;       ///< こうげき
   u8  defence;      ///< ぼうぎょ
   u8  sp_attack;    ///< とくこう
