@@ -1993,13 +1993,6 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		{	
 			*p_seq	= SEQ_SENDRESULT;
 		}
-		break;
-
-	case SEQ_SENDRESULT:
-		if( RHYTHMNET_SendResultData( &p_wk->net, &p_wk->search ) )
-		{	
-			*p_seq	= SEQ_TIMING;
-		}
 
 		if( TouchReturnBtn() )
 		{
@@ -2008,6 +2001,14 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 			p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
 			SEQ_End( p_wk );
 		}	
+		break;
+
+	case SEQ_SENDRESULT:
+		if( RHYTHMNET_SendResultData( &p_wk->net, &p_wk->search ) )
+		{	
+			*p_seq	= SEQ_TIMING;
+		}
+
 		break;
 
 	case SEQ_TIMING:

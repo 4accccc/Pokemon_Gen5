@@ -268,6 +268,7 @@ static void Button_TouchCallBack( u32 btnID, u32 event, void *p_param );
 //”Ä—p
 static void MainModules( IRC_MENU_MAIN_WORK *p_wk );
 static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn );
+static BOOL TouchReturnBtn( void );
 
 //=============================================================================
 /**
@@ -1282,6 +1283,13 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 	};
 
+	if( TouchReturnBtn() && *p_seq >= SEQ_MSG )
+	{
+		COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+		p_wk->p_param->select	= IRCMENU_SELECT_RETURN;
+		SEQ_Change( p_wk, SEQFUNC_DisConnect );
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -1573,5 +1581,29 @@ static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn )
 
 	return FALSE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	–ß‚éƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½‚©‚Ç‚¤‚©
+ *
+ *	@param	void 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL TouchReturnBtn( void )
+{	
 
+	u32 x;
+	u32 y;
+	if( GFL_UI_TP_GetPointTrg( &x, &y) )
+	{	
+		if( ((u32)( x - MSGWND_RETURN_X*8) < (u32)(MSGWND_RETURN_W*8))
+				&	((u32)( y - MSGWND_RETURN_Y*8) < (u32)(MSGWND_RETURN_H*8))
+			){
+			return TRUE;
+		}
+
+	}
+	return FALSE;
+}
 
