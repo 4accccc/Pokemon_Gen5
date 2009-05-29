@@ -14,6 +14,7 @@ USERS	= tomoya_takahashi tamada fuchino
 #------------------------------------------------------------------------------
 targetname 	= area_map_itp
 targetname2 = area_map_itp_tex
+targetname3 = area_map_itp_tbl
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -41,6 +42,8 @@ IMAFILE = $(wildcard *.ima)
 ITPFILE = $(wildcard *.itp)
 ITAFILE = $(wildcard *.ita)
 
+XLSFILE = $(wildcard *.xls)
+
 ##########################################
 #ターゲットファイル
 ##########################################
@@ -57,10 +60,13 @@ NSBMAFILE = $(IMAFILE:.ima=.nsbma)
 NSBTPFILE = $(ITPFILE:.itp=.itpdat)
 NSBTAFILE = $(ITAFILE:.ita=.nsbta)
 
+#エクセルファイル
+TBLFILE = $(XLSFILE:.xls=.itptbl)
 
 LIST_FILE 	= list.txt
 OBJ_FILE 	=  $(NSBTPFILE)
 OBJ_FILE2 = $(NSBTXFILE)
+OBJ_FILE3 = $(TBLFILE)
 
 
 #ITPコンバータ
@@ -73,7 +79,7 @@ ITP_CONV = $(PROJECT_ROOT)tools/imdtools/itp_conv/itp_conv.exe
 ifeq	($(CONVERTUSER),true)	
 
 
-.SUFFIXES: .ncl .nce .nsc .NCLR .NCER .NSCR .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .itpdat .nsbta
+.SUFFIXES: .ncl .nce .nsc .NCLR .NCER .NSCR .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .itpdat .nsbta .xls .itptbl
 
 #コンバート環境
 #2d
@@ -105,6 +111,10 @@ ifeq	($(CONVERTUSER),true)
 .ita.nsbta:
 	g3dcvtr $<
 
+.xls.itptbl:
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*.csv -p 0 -s csv $<
+	perl conv.pl $*.csv $@ area_map_itp.naix area_map_itp_tex.naix
+
 
 endif
 
@@ -115,7 +125,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname2).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname2).narc $(TARGETDIR)/$(targetname3).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -129,6 +139,11 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 $(TARGETDIR)/$(targetname2).narc: $(targetname2).narc
 	$(COPY) $(targetname2).narc $(TARGETDIR)
 	$(COPY) $(targetname2).naix $(TARGETDIR)
+
+# narc のコピーだけ実行する
+$(TARGETDIR)/$(targetname3).narc: $(targetname3).narc
+	$(COPY) $(targetname3).narc $(TARGETDIR)
+	$(COPY) $(targetname3).naix $(TARGETDIR)
 
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -148,6 +163,14 @@ $(targetname2).narc: $(OBJ_FILE2)
 	nnsarc -c -l -n -i $(targetname2) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname2).naix
 	-rm	$(LIST_FILE)
+
+# コピー先のnarcが古い場合実行する
+$(targetname3).narc: $(OBJ_FILE3)
+	-ls *.itptbl >> $(LIST_FILE)
+	$(ARCLIST_MAKE) $(LIST_FILE)
+	nnsarc -c -l -n -i $(targetname3) -S $(LIST_FILE)
+	$(NAIXCUT) $(targetname3).naix
+	-rm	$(LIST_FILE)
 endif
 
 #------------------------------------------------------------------------------
@@ -160,17 +183,22 @@ clean:
 	rm -f $(TARGETDIR)/$(targetname).naix
 	rm -f $(TARGETDIR)/$(targetname2).narc
 	rm -f $(TARGETDIR)/$(targetname2).naix
+	rm -f $(TARGETDIR)/$(targetname3).narc
+	rm -f $(TARGETDIR)/$(targetname3).naix
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
 	rm -f *.itpdat
 	rm -f *.nsb*
+	rm -f *.itptbl
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 	rm -f $(targetname2).narc
 	rm -f $(targetname2).naix
+	rm -f $(targetname3).narc
+	rm -f $(targetname3).naix
 endif
 
 
