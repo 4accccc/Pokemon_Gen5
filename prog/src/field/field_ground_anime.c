@@ -21,6 +21,10 @@
 #define DEBUG_FIELD_GRANM_MEM_PRINT   // メモリ使用量チェック
 #endif
 
+#ifdef DEBUG_ONLY_FOR_fuchino
+#define DEBUG_FIELD_GRANM_MEM_PRINT   // メモリ使用量チェック
+#endif
+
 #endif
 
 //-----------------------------------------------------------------------------
@@ -41,6 +45,8 @@
 ///	ITPアニメーション
 //=====================================
 #define FIELD_GRANM_ITP_TRANS_ADDR_NONE	( 0xffffffff )
+#define FIELD_GRANM_ITP_NUM (16)
+#define FIELD_GRANM_ITP_TBL_NONE	( 0xff )
 
 
 
@@ -82,6 +88,15 @@ typedef struct
 //-------------------------------------
 ///	ITPアニメーション管理
 //=====================================
+typedef struct
+{
+  u8  itp[ FIELD_GRANM_ITP_NUM ]; 
+  u8  tex[ FIELD_GRANM_ITP_NUM ]; 
+} FIELD_GRANM_ITP_TBL;
+
+//-------------------------------------
+///	ITPアニメーション管理
+//=====================================
 typedef struct 
 {
 
@@ -104,6 +119,12 @@ typedef struct
 
 } FIELD_GRANM_ITP;
 
+// 管理システム
+typedef struct
+{
+  FIELD_GRANM_ITP wk[ FIELD_GRANM_ITP_NUM ];
+}FIELD_GRANM_ITP_SYS;
+
 //-------------------------------------
 ///	フィールド地面アニメーション管理システム
 //=====================================
@@ -118,8 +139,7 @@ struct _FIELD_GRANM
 	FIELD_GRANM_ITA	ita_anime;
 
 	// ITPアニメーション管理
-	FIELD_GRANM_ITP	itp_anime;
-
+	FIELD_GRANM_ITP_SYS	itp_anime;
 };
 
 
@@ -150,9 +170,14 @@ static fx32 FIELD_GRANM_Work_SetAnimeFrame( FIELD_GRANM_WORK* p_wk, fx32 frame )
 //-------------------------------------
 ///	ITPアニメーション管理
 //=====================================
+static void FIELD_GRANM_ItpSys_Init( FIELD_GRANM_ITP_SYS* p_sys, u32 arcID, u32 tblID, u32 itparcID, u32 texarcID, const GFL_G3D_RES* cp_tex, u32 heapID );
+static void FIELD_GRANM_ItpSys_Exit( FIELD_GRANM_ITP_SYS* p_sys );
+static void FIELD_GRANM_ItpSys_Main( FIELD_GRANM_ITP_SYS* p_sys, fx32 speed );
+
 static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, u32 heapID );
 static void FIELD_GRANM_Itp_Exit( FIELD_GRANM_ITP* p_wk );
 static void FIELD_GRANM_Itp_Main( FIELD_GRANM_ITP* p_wk, fx32 speed );
+static BOOL FIELD_GRANM_Itp_IsMove( const FIELD_GRANM_ITP* cp_wk );
 static u32 FIELD_GRANM_Itp_GetTransTexAddr( const GFL_G3D_RES* cp_ground_tex, const GFL_G3D_RES* cp_anmtex, u32 anm_tex_idx );
 static u32 FIELD_GRANM_Itp_GetTransTexSize( const GFL_G3D_RES* cp_anmtex, u32 anm_tex_idx );
 static void* FIELD_GRANM_Itp_GetAnimeTex( const GFL_G3D_RES* cp_anmtex, u32 anm_tex_idx );
@@ -183,7 +208,7 @@ FIELD_GRANM* FIELD_GRANM_Create( const FIELD_GRANM_SETUP* cp_setup, const GFL_G3
 
 	// ITPアニメーションの初期化処理
 	if( cp_setup->itp_use ){
-		FIELD_GRANM_Itp_Init( &p_sys->itp_anime, cp_setup->itp_arcID, cp_setup->itp_texarcID, cp_setup->itp_anmID, cp_setup->itp_texID, cp_tex, heapID );
+		FIELD_GRANM_ItpSys_Init( &p_sys->itp_anime, cp_setup->itp_arcID, cp_setup->itp_tblID, cp_setup->itp_itparcID, cp_setup->itp_texarcID, cp_tex, heapID );
 	}
 
 	// オートアニメーションフラグ設定
@@ -204,7 +229,7 @@ void FIELD_GRANM_Delete( FIELD_GRANM* p_sys )
 {
 
 	// ITPアニメーションの破棄
-	FIELD_GRANM_Itp_Exit( &p_sys->itp_anime );
+	FIELD_GRANM_ItpSys_Exit( &p_sys->itp_anime );
 
 	// ITAアニメーションの破棄処理
 	FIELD_GRANM_Ita_Exit( &p_sys->ita_anime );
@@ -234,7 +259,7 @@ void FIELD_GRANM_Main( FIELD_GRANM* p_sys )
 	FIELD_GRANM_Ita_Main( &p_sys->ita_anime, speed );
 
 	// ITPアニメーション
-	FIELD_GRANM_Itp_Main( &p_sys->itp_anime, speed );
+	FIELD_GRANM_ItpSys_Main( &p_sys->itp_anime, speed );
 }
 
 //----------------------------------------------------------------------------
@@ -584,6 +609,69 @@ static fx32 FIELD_GRANM_Work_SetAnimeFrame( FIELD_GRANM_WORK* p_wk, fx32 frame )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ITPアニメーションシステム 初期化
+ *    
+ *	@param	p_sys     システム
+ *	@param	arcID     ITPテーブルアーカイブID
+ *	@param	cp_tex    ITPテーブルデータID
+ *	@param	heapID    ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_GRANM_ItpSys_Init( FIELD_GRANM_ITP_SYS* p_sys, u32 arcID, u32 tblID, u32 itparcID, u32 texarcID, const GFL_G3D_RES* cp_tex, u32 heapID )
+{
+  FIELD_GRANM_ITP_TBL* p_tbl;
+  int i;
+
+  p_tbl = GFL_ARC_UTIL_Load( arcID, tblID, FALSE, heapID );
+
+  for( i=0; i<FIELD_GRANM_ITP_NUM; i++ ){
+    // ITPアニメーションの初期化
+    if( p_tbl->itp[i] != FIELD_GRANM_ITP_TBL_NONE ){
+      FIELD_GRANM_Itp_Init( &p_sys->wk[i], itparcID, texarcID, p_tbl->itp[i], p_tbl->tex[i], cp_tex, heapID );
+    }
+  }
+  
+  GFL_HEAP_FreeMemory( p_tbl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  破棄処理
+ *
+ *	@param	p_sys システムワーク
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_GRANM_ItpSys_Exit( FIELD_GRANM_ITP_SYS* p_sys )
+{
+  int i;
+
+  for( i=0; i<FIELD_GRANM_ITP_NUM; i++ ){
+    if( FIELD_GRANM_Itp_IsMove( &p_sys->wk[i] ) ){
+      FIELD_GRANM_Itp_Exit( &p_sys->wk[i] );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メイン動作
+ *
+ *	@param	p_sys   システムワーク
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_GRANM_ItpSys_Main( FIELD_GRANM_ITP_SYS* p_sys, fx32 speed )
+{
+  int i;
+
+  for( i=0; i<FIELD_GRANM_ITP_NUM; i++ ){
+    if( FIELD_GRANM_Itp_IsMove( &p_sys->wk[i] ) ){
+      FIELD_GRANM_Itp_Main( &p_sys->wk[i], speed );
+    }
+  }
+}
+
 
 
 //----------------------------------------------------------------------------
@@ -715,8 +803,7 @@ static void FIELD_GRANM_Itp_Main( FIELD_GRANM_ITP* p_wk, fx32 speed )
 		if( p_wk->p_anime_frame[i] > (frame_max+FX32_ONE) ){
 			p_wk->p_anime_frame[i] = p_wk->p_anime_frame[i] % (frame_max+FX32_ONE);
 		}
-    // 今だけ、　最終フレームは無視する。
-    else if( p_wk->p_anime_frame[i] < frame_max )
+    else
     {
       
       // チェックの必要があるかチェック
@@ -749,6 +836,24 @@ static void FIELD_GRANM_Itp_Main( FIELD_GRANM_ITP* p_wk, fx32 speed )
 	// 更新完了
 	p_wk->trans = FALSE;
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GRANM_Itpが動いているかチェック
+ *
+ *	@param	cp_wk 
+ *
+ *	@retval TRUE  動いている
+ *	@retval FALSE 動いていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL FIELD_GRANM_Itp_IsMove( const FIELD_GRANM_ITP* cp_wk )
+{
+	if( cp_wk->p_anmfile ){
+		return TRUE;
+	}
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------

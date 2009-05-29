@@ -1567,8 +1567,8 @@ static FIELD_GRANM * createGroundAnime( u32 blockNum, GFL_G3D_RES* globalTexture
     FALSE, FALSE,
     0,
     ARCID_AREA_ITA, 0,
-    ARCID_AREA_ITP, 0, 
-    ARCID_AREA_ITP_TEX, 0, 
+    ARCID_AREA_ITP_TBL, 0, 
+    ARCID_AREA_ITP, ARCID_AREA_ITP_TEX,
   };
 
   //  ƒuƒƒbƒN”
@@ -1587,8 +1587,7 @@ static FIELD_GRANM * createGroundAnime( u32 blockNum, GFL_G3D_RES* globalTexture
     granm_setup.itp_use			= FALSE;
   }else{
     granm_setup.itp_use			= TRUE;
-    granm_setup.itp_anmID		= resistGroundAnimeData->itp_anm_datID;
-    granm_setup.itp_texID		= resistGroundAnimeData->itp_anm_datID;
+    granm_setup.itp_tblID		= resistGroundAnimeData->itp_anm_datID;
   }
 	return FIELD_GRANM_Create( &granm_setup, globalTexture, heapID );
 }

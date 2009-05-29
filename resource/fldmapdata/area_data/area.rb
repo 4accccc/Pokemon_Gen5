@@ -136,7 +136,7 @@ end
 
 begin
   ita_enum = NAIXReader.read("area_map_ita/area_map_ita.naix")
-  itp_enum = NAIXReader.read("area_map_itp/area_map_itp.naix")
+  itp_enum = NAIXReader.read("area_map_itp/area_map_itp_tbl.naix")
   light_enum = NAIXReader.read("../../field_light/field_light.naix")
 
   area_tbl_file = File.open(ARGV[0],"r")
@@ -169,7 +169,7 @@ begin
     #地形ITAアニメファイル指定
     anm_ita_id = enum_search(ita_enum, column[COL_ITA_NAME].sub(/ita$/,"nsbta"))
     #地形ITPアニメファイル指定
-    anm_itp_id = enum_search(itp_enum, column[COL_ITP_NAME].sub(/itp$/,"itpdat"))
+    anm_itp_id = enum_search(itp_enum, column[COL_ITP_NAME].sub(/xls$/,"itptbl"))
     bin_out +=[anm_ita_id,anm_itp_id].pack("CC")
 
     inout = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
