@@ -131,6 +131,7 @@ static int testBeaconGetSizeFunc( void* pWork );
 static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
 static void testCallBack(void* pWork);
 static void autoConnectCallBack( void* pWork );
+static BOOL SUBPROC_MakePokeTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static void* btlBeaconGetFunc( void* pWork );
 static int btlBeaconGetSizeFunc( void* pWork );
@@ -155,12 +156,13 @@ static const struct {
   u16       quickKey;
 }MainMenuTbl[] = {
   { DEBUG_TAYA_MENU1,   SUBPROC_GoBattle,       0, 0 },
-  { DEBUG_TAYA_MENU2,   SUBPROC_CommBattle,     0, 0 },
-  { DEBUG_TAYA_MENU3,   SUBPROC_MultiBattle,    1, PAD_BUTTON_X },
-  { DEBUG_TAYA_MENU4,   SUBPROC_MultiBattle,    0, PAD_BUTTON_Y },
-  { DEBUG_TAYA_MENU5,   SUBPROC_KanjiMode,      0, 0 },
-  { DEBUG_TAYA_MENU6,   SUBPROC_NetPrintTest,   0, 0 },
-  { DEBUG_TAYA_MENU8,   SUBPROC_PrintTest,      0, 0 },
+  { DEBUG_TAYA_MENU2,   SUBPROC_MakePokeTest,   0, 0 },
+  { DEBUG_TAYA_MENU3,   SUBPROC_CommBattle,     0, 0 },
+  { DEBUG_TAYA_MENU4,   SUBPROC_MultiBattle,    1, PAD_BUTTON_X },
+  { DEBUG_TAYA_MENU5,   SUBPROC_MultiBattle,    0, PAD_BUTTON_Y },
+  { DEBUG_TAYA_MENU6,   SUBPROC_KanjiMode,      0, 0 },
+  { DEBUG_TAYA_MENU8,   SUBPROC_NetPrintTest,   0, 0 },
+  { DEBUG_TAYA_MENU9,   SUBPROC_PrintTest,      0, 0 },
 };
 
 enum {
@@ -822,6 +824,32 @@ static void autoConnectCallBack( void* pWork )
   wk->netTestSeq = 1;
 }
 
+//------------------------------------------------------------------------------------------------------
+// ポケモン作成画面へ
+//------------------------------------------------------------------------------------------------------
+#include "debug\debug_makepoke.h"
+#include "poke_tool\monsno_def.h"
+
+static BOOL SUBPROC_MakePokeTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
+FS_EXTERN_OVERLAY(debug_makepoke);
+
+  MAIN_WORK* wk = mywk;
+
+  switch( *seq ){
+  case 0:
+    {
+      PROCPARAM_DEBUG_MAKEPOKE* para = getGenericWork( wk, sizeof(PROCPARAM_DEBUG_MAKEPOKE) );
+      para->dst = PP_Create( MONSNO_POTTYAMA, 10, 3594, HEAPID_CORE );
+      GFL_PROC_SysCallProc( FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, para );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    return TRUE;
+  }
+  return FALSE;
+}
 //------------------------------------------------------------------------------------------------------
 // バトル画面へ
 //------------------------------------------------------------------------------------------------------
