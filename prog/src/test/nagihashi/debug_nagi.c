@@ -30,6 +30,7 @@
 #include "net_app/irc_result.h"
 #include "net_app/irc_compatible.h"
 #include "net_app/compatible_irc_sys.h"
+#include "debug_irc_name.h"
 
 //=============================================================================
 /**
@@ -203,6 +204,7 @@ static void LISTDATA_ChangeProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcResult( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_ChangeProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -268,6 +270,7 @@ enum
 	LISTDATA_SEQ_PROC_COMPATIBLE,
 	LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG,
 	LISTDATA_SEQ_RETURN,
+	LISTDATA_SEQ_PROC_NAME_DEBUG,
 	LISTDATA_SEQ_NEXT_HOME,
 	LISTDATA_SEQ_NEXT_PAGE1,
 	LISTDATA_SEQ_MAX,
@@ -280,6 +283,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_ChangeProcCompatible,
 	LISTDATA_ChangeProcCompatibleDebug,
 	LISTDATA_Return,
+	LISTDATA_ChangeProcNameDebug,
 	LISTDATA_NextListHome,
 	LISTDATA_NextListPage1,
 };
@@ -312,6 +316,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	},
 	{	
 		L"リズム（ひとり）", LISTDATA_SEQ_PROC_RHYTHM_DEBUG
+	},
+	{	
+		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
 	},
 	{	
 		L"もどる", LISTDATA_SEQ_RETURN
@@ -702,11 +709,22 @@ static void LISTDATA_ChangeProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
+static void LISTDATA_ChangeProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, NO_OVERLAY_ID, &DebugIrcName_ProcData, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	終了
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	DEBUG_NAGI_COMMAND_End( p_wk );
 }
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	最初のリストに
