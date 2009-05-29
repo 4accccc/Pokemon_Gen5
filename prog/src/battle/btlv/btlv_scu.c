@@ -332,6 +332,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   typedef struct {
     const BTL_POKEPARAM* pp;
     BtlPokePos  pokePos;
+    u8          viewPos;
     u8  pokeID;
   }ProcWork;
 
@@ -340,12 +341,16 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 
   switch( *seq ){
   case 0:
-    subwk->pokePos = BTL_POS_2ND_0;
+    subwk->viewPos = BTLV_MCSS_POS_BB;
+    subwk->pokePos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, subwk->viewPos );
+    BTL_Printf(" wild in 1  btlPos=%d, vpos=%d\n", subwk->pokePos, subwk->viewPos );
     subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
     subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
     msgWin_Visible( wk, FALSE );
-    BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTL_MAIN_BtlPosToViewPos(wk->mainModule, subwk->pokePos) );
-    BTLV_EFFECT_AddByPos( BTLV_MCSS_POS_BB, BTLEFF_SINGLE_ENCOUNT_1 );
+    {
+      BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), subwk->viewPos );
+      BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_ENCOUNT_1 );
+    }
     (*seq)++;
     break;
   case 1:
@@ -376,9 +381,11 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 3:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      subwk->pokePos = BTL_POS_1ST_0;
+      subwk->viewPos = BTLV_MCSS_POS_AA;
+      subwk->pokePos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, subwk->viewPos );
       subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
       subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
+      BTL_Printf(" wild in 2  btlPos=%d, vpos=%d\n", subwk->pokePos, subwk->viewPos );
 
       msgWin_Visible( wk, TRUE );
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
@@ -389,7 +396,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 4:
     if( BTLV_SCU_WaitMsg(wk) )
     {
-      BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), BTL_MAIN_BtlPosToViewPos(wk->mainModule,subwk->pokePos) );
+      BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), subwk->viewPos );
       msgWin_Visible( wk, FALSE );
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
       (*seq)++;
