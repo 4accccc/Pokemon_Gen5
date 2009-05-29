@@ -97,7 +97,7 @@ struct _ACTING_WORK
   
   GFL_TCB   *vblankFuncTcb;
 
-  ACTING_INIT_WORK *initWork;
+  STAGE_INIT_WORK *initWork;
 
   MUS_POKE_DRAW_SYSTEM  *drawSys;
   MUS_ITEM_DRAW_SYSTEM  *itemDrawSys;
@@ -136,7 +136,7 @@ struct _ACTING_WORK
 //  proto
 //======================================================================
 #pragma mark [> proto
-ACTING_WORK*  STA_ACT_InitActing( ACTING_INIT_WORK *initWork );
+ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId);
 void  STA_ACT_TermActing( ACTING_WORK *work );
 ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work );
 static void STA_ACT_VBlankFunc(GFL_TCB *tcb,void *work);
@@ -183,11 +183,11 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
-ACTING_WORK*  STA_ACT_InitActing( ACTING_INIT_WORK *initWork )
+ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
 {
-  ACTING_WORK *work = GFL_HEAP_AllocMemory( initWork->heapId , sizeof( ACTING_WORK ));
+  ACTING_WORK *work = GFL_HEAP_AllocMemory( heapId , sizeof( ACTING_WORK ));
   
-  work->heapId = initWork->heapId;
+  work->heapId = heapId;
   work->initWork = initWork;
   work->updateScroll = FALSE;
   work->scrollOffset = 0;

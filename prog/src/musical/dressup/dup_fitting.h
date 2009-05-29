@@ -33,7 +33,6 @@ typedef struct _FITTING_WORK FITTING_WORK;
 
 typedef struct
 {
-	HEAPID heapId;
 	MUSICAL_POKE_PARAM *musPoke;
 	MUSICAL_SAVE *mus_save;
 }FITTING_INIT_WORK;
@@ -42,7 +41,7 @@ typedef struct
 //	proto
 //======================================================================
 
-FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork );
+FITTING_WORK*	DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId );
 void	DUP_FIT_TermFitting( FITTING_WORK *work );
 FITTING_RETURN	DUP_FIT_LoopFitting( FITTING_WORK *work );
 

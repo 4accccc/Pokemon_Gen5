@@ -12,6 +12,7 @@
 
 #include "musical/musical_system.h"
 #include "musical/musical_dressup_sys.h"
+#include "dup_local_def.h"
 #include "dup_fitting.h"
 
 //======================================================================
@@ -69,8 +70,7 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 	work = GFL_PROC_AllocWork( proc, sizeof(DRESSUP_LOCAL_WORK), HEAPID_MUSICAL_DRESSUP );
 	work->fitInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_DRESSUP , sizeof(FITTING_INIT_WORK) );
 	
-	work->fitInitWork->heapId = HEAPID_MUSICAL_DRESSUP;
-	work->fitInitWork->musPoke = MUSICAL_SYSTEM_InitMusPoke( initWork->pokePara , HEAPID_MUSICAL_DRESSUP );
+	work->fitInitWork->musPoke = initWork->musPoke;
   work->fitInitWork->mus_save = initWork->mus_save;
 	return GFL_PROC_RES_FINISH;
 }
@@ -78,7 +78,6 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 static GFL_PROC_RESULT DressUpProc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
 	DRESSUP_LOCAL_WORK *work = mywk;
-	GFL_HEAP_FreeMemory( work->fitInitWork->musPoke );
 	GFL_HEAP_FreeMemory( work->fitInitWork );
 	GFL_PROC_FreeWork( proc );
 
@@ -94,7 +93,7 @@ static GFL_PROC_RESULT DressUpProc_Main( GFL_PROC * proc, int * seq , void *pwk,
 	switch( *seq )
 	{
 	case DUP_SEQ_INIT_FITTING:
-		work->fitWork = DUP_FIT_InitFitting(work->fitInitWork);
+		work->fitWork = DUP_FIT_InitFitting(work->fitInitWork,HEAPID_MUSICAL_DRESSUP);
 		*seq = DUP_SEQ_LOOP_FITTING;
 		break;
 		
@@ -117,3 +116,23 @@ static GFL_PROC_RESULT DressUpProc_Main( GFL_PROC * proc, int * seq , void *pwk,
 	return GFL_PROC_RES_CONTINUE;
 }
 
+//--------------------------------------------------------------
+//	InitWork‰Šú‰»
+//--------------------------------------------------------------
+DRESSUP_INIT_WORK* MUSICAL_DRESSUP_CreateInitWork( HEAPID heapId , MUSICAL_POKE_PARAM *musPoke , SAVE_CONTROL_WORK *saveCtrl )
+{
+  DRESSUP_INIT_WORK* initWork;
+  initWork = GFL_HEAP_AllocMemory( heapId , sizeof(DRESSUP_INIT_WORK));
+  initWork->mus_save = MUSICAL_SAVE_GetMusicalSave(saveCtrl);
+  initWork->musPoke = musPoke;
+
+  return initWork;
+}
+
+//--------------------------------------------------------------
+//	InitWorkŠJ•ú
+//--------------------------------------------------------------
+void MUSICAL_DRESSUP_DeleteInitWork( DRESSUP_INIT_WORK* initWork )
+{
+  GFL_HEAP_FreeMemory( initWork );
+}

@@ -13,6 +13,7 @@
 
 typedef struct
 {
+  POKEMON_PARAM *pokePara;
   SAVE_CONTROL_WORK *saveCtrl;
 }MUSICAL_INIT_WORK;
 

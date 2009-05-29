@@ -27,6 +27,7 @@
 //======================================================================
 
 //ミュージカルポケモンの装備箇所
+//データ上の装備箇所
 typedef enum
 {
 	MUS_POKE_EQU_EAR_R,		//右耳
@@ -61,6 +62,17 @@ typedef enum
 	MUS_POKE_EQU_USER_INVALID,	//無効値
 }MUS_POKE_EQUIP_USER;
 
+//ミュージカルのキャラの種類
+typedef enum
+{
+  MUS_CHARA_PLAYER, //自分
+  MUS_CHARA_COMM,   //通信相手
+  MUS_CHARA_NPC,    //NPC
+
+  MUS_CHARA_MAX,
+
+  MUS_CHARA_INVALID,    //無効値
+}MUSICAL_CHARA_TYPE;
 
 //======================================================================
 //	typedef struct
@@ -74,6 +86,7 @@ typedef struct
 
 typedef struct
 {
+  MUSICAL_CHARA_TYPE charaType;
 	POKEMON_PARAM *pokePara;
 	MUSICAL_POKE_EQUIP equip[MUS_POKE_EQUIP_MAX];
 }MUSICAL_POKE_PARAM;

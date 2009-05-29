@@ -953,6 +953,7 @@ static void setupDebugLightSubscreen(DMESSWORK * dmess)
 //--------------------------------------------------------------
 FS_EXTERN_OVERLAY(musical);
 #include "musical/musical_local.h"
+#include "musical/musical_define.h"
 #include "musical/musical_system.h"
 #include "musical/musical_dressup_sys.h"
 #include "musical/musical_stage_sys.h"
@@ -967,6 +968,8 @@ typedef struct {
 	FIELD_MAIN_WORK *fieldWork;
 	FLDMENUFUNC *menuFunc;
 	
+	POKEMON_PARAM *pokePara;
+	MUSICAL_POKE_PARAM *musPoke;
 	MUSICAL_INIT_WORK *musInitWork;
 	DRESSUP_INIT_WORK *dupInitWork;
 	u8  menuRet;
@@ -1001,7 +1004,9 @@ static DMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
 		work->gmEvent = event;
 		work->heapID = heapID;
 		work->fieldWork = fieldWork;
+		work->musInitWork = NULL;
 		work->dupInitWork = NULL;
+		work->pokePara = NULL;
 		return( TRUE );
 }
 
@@ -1076,13 +1081,24 @@ static GMEVENT_RESULT DMenuMusicalSelectEvent(
   case 2:
     if( work->musInitWork != NULL )
     {
+      GFL_HEAP_FreeMemory( work->musInitWork->pokePara );
       GFL_HEAP_FreeMemory( work->musInitWork );
+      work->musInitWork = NULL;
     }
     if( work->dupInitWork != NULL )
     {
-      GFL_HEAP_FreeMemory( work->dupInitWork->pokePara );
-      GFL_HEAP_FreeMemory( work->dupInitWork );
+      MUSICAL_DRESSUP_DeleteInitWork( work->dupInitWork );
       work->dupInitWork = NULL;
+    }
+    if( work->musPoke != NULL )
+    {
+      GFL_HEAP_FreeMemory( work->musPoke );
+      work->musPoke = NULL;
+    }
+    if( work->pokePara != NULL )
+    {
+      GFL_HEAP_FreeMemory( work->pokePara );
+      work->pokePara = NULL;
     }
     PMSND_PopBGM();
     PMSND_PauseBGM(FALSE);
@@ -1098,9 +1114,9 @@ static GMEVENT_RESULT DMenuMusicalSelectEvent(
 //--------------------------------------------------------------
 static void setupMusicalDressup(DEB_MENU_MUS_WORK * work)
 {
-	work->dupInitWork = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(DRESSUP_INIT_WORK));
-	work->dupInitWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , HEAPID_PROC );
-	work->dupInitWork->mus_save = MUSICAL_SAVE_GetMusicalSave(SaveControl_GetPointer());
+  work->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP|HEAPDIR_MASK );
+  work->musPoke = MUSICAL_SYSTEM_InitMusPoke( work->pokePara , GFL_HEAPID_APP|HEAPDIR_MASK );
+  work->dupInitWork = MUSICAL_DRESSUP_CreateInitWork( GFL_HEAPID_APP|HEAPDIR_MASK , work->musPoke , SaveControl_GetPointer() );
 
   work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
         FS_OVERLAY_ID(musical), &DressUp_ProcData, work->dupInitWork );
@@ -1117,8 +1133,9 @@ static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work)
 //--------------------------------------------------------------
 static void setupMusicarAll(DEB_MENU_MUS_WORK * work)
 {
-	work->musInitWork = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(DRESSUP_INIT_WORK));
+	work->musInitWork = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof(MUSICAL_INIT_WORK));
 	work->musInitWork->saveCtrl = SaveControl_GetPointer();
+	work->musInitWork->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , HEAPID_PROC );
   work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
         NO_OVERLAY_ID, &Musical_ProcData, work->musInitWork );
 }

@@ -9,8 +9,7 @@
 #ifndef MUSICAL_DRESSUP_SYS_H__
 #define MUSICAL_DRESSUP_SYS_H__
 
-#include "musical/musical_system.h"
-#include "savedata/musical_save.h"
+#include "musical/musical_define.h"
 
 //======================================================================
 //	define
@@ -24,17 +23,16 @@
 //	typedef struct
 //======================================================================
 
-typedef struct
-{
-	POKEMON_PARAM *pokePara;
-	MUSICAL_SAVE *mus_save;
-}DRESSUP_INIT_WORK;
+typedef struct _DRESSUP_INIT_WORK DRESSUP_INIT_WORK;
 
 //======================================================================
 //	proto
 //======================================================================
 
 extern GFL_PROC_DATA DressUp_ProcData;
+
+DRESSUP_INIT_WORK* MUSICAL_DRESSUP_CreateInitWork( HEAPID heapId ,  MUSICAL_POKE_PARAM *musPoke , SAVE_CONTROL_WORK *saveCtrl );
+void MUSICAL_DRESSUP_DeleteInitWork( DRESSUP_INIT_WORK* initWork );
 
 //--------------------------------------------------------------
 //	

@@ -24,6 +24,7 @@
 #include "musical/mus_item_draw.h"
 #include "musical/mus_item_data.h"
 #include "musical/musical_camera_def.h"
+#include "dup_local_def.h"
 #include "dup_fitting.h"
 #include "dup_fitting_item.h"
 
@@ -342,11 +343,11 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 //  試着メイン 初期化
 //--------------------------------------------------------------
-FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
+FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
 {
-  FITTING_WORK *work = GFL_HEAP_AllocClearMemory( initWork->heapId , sizeof( FITTING_WORK ));
+  FITTING_WORK *work = GFL_HEAP_AllocClearMemory( heapId , sizeof( FITTING_WORK ));
 
-  work->heapId = initWork->heapId;
+  work->heapId = heapId;
   work->initWork = initWork;
   work->state = DUS_FITTING_MAIN;
   work->animeCnt = 0;
@@ -368,7 +369,7 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork )
   DUP_FIT_SetupPokemon( work );
   DUP_FIT_SetupItem( work );
   
-  INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,NULL,initWork->heapId);
+  INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,NULL,work->heapId);
   work->vBlankTcb = GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
   
   //フェードないので仮処理
@@ -2478,6 +2479,7 @@ static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work )
     mus_bef_save->equipData[save_pos].pos = equip_pos;
     mus_bef_save->equipData[save_pos].data.itemNo = DUP_FIT_ITEM_GetItemState( item )->itemId;
     mus_bef_save->equipData[save_pos].data.angle = work->initWork->musPoke->equip[equip_pos].angle;
+    work->initWork->musPoke->equip[equip_pos].itemNo = DUP_FIT_ITEM_GetItemState( item )->itemId;
     
     item = DUP_FIT_ITEM_GetNextItem(item);
 

@@ -10,6 +10,7 @@
 #define STA_ACTING_H__
 
 #include "musical/musical_system.h"
+#include "musical/musical_stage_sys.h"
 
 //======================================================================
 //	define
@@ -30,18 +31,12 @@ typedef enum
 
 typedef struct _ACTING_WORK ACTING_WORK;
 
-typedef struct
-{
-	HEAPID heapId;
-	MUSICAL_POKE_PARAM musPoke[MUSICAL_POKE_MAX];
-	u16		repertorie;	//‰‰–Ú
-}ACTING_INIT_WORK;
 
 //======================================================================
 //	proto
 //======================================================================
 
-ACTING_WORK*	STA_ACT_InitActing( ACTING_INIT_WORK *initWork );
+ACTING_WORK*	STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId );
 void	STA_ACT_TermActing( ACTING_WORK *work );
 ACTING_RETURN	STA_ACT_LoopActing( ACTING_WORK *work );
 
