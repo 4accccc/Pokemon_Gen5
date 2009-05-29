@@ -1,8 +1,8 @@
 //============================================================================================
 /**
- * @file	gfl_msgdata.h
- * @brief	複数言語に対応したメッセージデータ
- * @author	taya GAME FREAK inc.
+ * @file  gfl_msgdata.h
+ * @brief 複数言語に対応したメッセージデータ
+ * @author  taya GAME FREAK inc.
  */
 //============================================================================================
 #ifndef __GFL_MSGDATA_H__
@@ -20,7 +20,7 @@ extern "C" {
  *  メッセージデータハンドル型
  */
 //----------------------------------------------------
-typedef struct _GFL_MSGDATA		GFL_MSGDATA;
+typedef struct _GFL_MSGDATA   GFL_MSGDATA;
 
 //----------------------------------------------------
 /**
@@ -28,8 +28,8 @@ typedef struct _GFL_MSGDATA		GFL_MSGDATA;
  */
 //----------------------------------------------------
 typedef enum {
-	GFL_MSG_LOAD_NORMAL,	///< 最低限のヘッダだけをオンメモリにし、必要に応じてファイルアクセスする。
-	GFL_MSG_LOAD_FAST,		///< 必要な全てのデータをオンメモリにする。高速化が必要な個所で使用してください。
+  GFL_MSG_LOAD_NORMAL,  ///< 最低限のヘッダだけをオンメモリにし、必要に応じてファイルアクセスする。
+  GFL_MSG_LOAD_FAST,    ///< 必要な全てのデータをオンメモリにする。高速化が必要な個所で使用してください。
 }GflMsgLoadType;
 
 
@@ -39,7 +39,7 @@ extern void GFL_MSG_Delete( GFL_MSGDATA* handle );
 extern void GFL_MSG_GetString( const GFL_MSGDATA* handle, u32 strID, STRBUF* dst );
 extern STRBUF* GFL_MSG_CreateString( const GFL_MSGDATA* handle, u32 strID );
 extern u32 GFL_MSG_GetStrCount( const GFL_MSGDATA* handle );
-
+extern u16 GFL_MSG_GetDispAreaWidth( const GFL_MSGDATA* handle, u32 strID );
 
 /*============================================================================================*/
 /*                                                                                            */
@@ -56,7 +56,7 @@ extern u32 GFL_MSG_GetStrCount( const GFL_MSGDATA* handle );
  * ロード対象となる言語IDを設定する。
  * 以降、文字列取得関数を介して取得できる文字列が切り替わる。
  *
- * @param   langID		言語ID
+ * @param   langID    言語ID
  */
 //--------------------------------------------------------------------------------------
 extern void GFL_MSGSYS_SetLangID( u8 langID );
@@ -65,7 +65,7 @@ extern void GFL_MSGSYS_SetLangID( u8 langID );
 /**
  * 設定されたロード対象の言語IDを取得。
  *
- * @retval  u8		設定されている言語ID
+ * @retval  u8    設定されている言語ID
  */
 //--------------------------------------------------------------------------------------
 extern u8 GFL_MSGSYS_GetLangID( void );
@@ -87,5 +87,5 @@ extern void GFL_MSG_GetStringRaw( const GFL_MSGDATA* handle, u32 strID, STRCODE*
 #endif
 
 
-#endif	/* #ifndef __GFL_MSGDATA_H__ */
+#endif  /* #ifndef __GFL_MSGDATA_H__ */
 
