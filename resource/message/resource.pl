@@ -23,7 +23,9 @@ my $DataExt = ".dat";
 #===================================================
 my @MsgLen = ();
 my @MsgBody = ();
+my @AreaWidth = ();
 my $MsgCount = 0;
+
 
 # メッセージエディタのタグ機能でカラー変更する際、
 # カラー変更開始タグだけ設定して、終了タグ（元の色に戻す）を設定していないケースがあるので、
@@ -49,6 +51,7 @@ sub init {
 	@MsgLen = ();
 	@MsgLenTotal = ();
 	@MsgBody = ();
+	@AreaWidth = ();
 	$MsgCount = ();
 }
 #===============================================================
@@ -59,6 +62,7 @@ sub add_msg {
 	my $txt = shift;
 	my $lang_idx = shift;
 	my $org_lang_flag = shift;
+	my $area_width = shift;
 	my $data = "";
 	my $len = "";
 
@@ -152,11 +156,14 @@ sub add_msg {
 
 	if( $lang_idx == 0 )
 	{
+		$AreaWidth[ $MsgCount ] = $area_width;
 		$MsgCount++;
 	}
 
 	return 1;
 }
+
+
 #===============================================================
 # データ出力（外部インターフェイス）
 # input 0: 処理中のファイル名（拡張子を変更したものを出力）
@@ -261,7 +268,8 @@ sub output_main {
 				# 言語ブロック先頭からのオフセット計算
 				$val = LANGBLOCK_HEADER_SIZE + ($MsgCount  * STR_HEADER_SIZE) + $ofs_sum;
 				$dat =  pack('I', $val);
-				$dat .= pack('I', $len[$s]);
+				$dat .= pack('S', $len[$s]);
+				$dat .= pack('S', $AreaWidth[$s]);
 				syswrite (RES, $dat, STR_HEADER_SIZE);
 				$remSize -= STR_HEADER_SIZE;
 				$ofs_sum += $len[$s] * 2;

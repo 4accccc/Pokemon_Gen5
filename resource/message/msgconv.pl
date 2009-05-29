@@ -75,7 +75,7 @@ my $NumParsedLangCount = 0;	# コンバートした言語数
 my $ParsingFileName = "";	# 解析中のファイル名
 my $DefaultGroupName = "デフォルト";	# デフォルトのグループ名（読み込んだソースによって可変）
 my $ReadingText = "";		# 読み込み中のテキスト内容
-
+my $AreaWidth = 0;			# 読み込み中テキストの表示最低領域幅（ドット）
 
 
 my @TargetLangs = ();
@@ -271,6 +271,7 @@ sub StartHandler {
 			if( &is_target_lang($elems{name}) )
 			{
 				$ReadingText = "";
+				$AreaWidth = $elems{width};
 				&FwdSeq;
 			}
 		}
@@ -298,7 +299,8 @@ sub EndHandler
 	{
 		if($tag eq "language")
 		{
-			if(&resource::add_msg($ReadingText, $ParsingLangID, $OrgLangFlag) == 0)
+#			print "area_width=$AreaWidth\n";
+			if(&resource::add_msg($ReadingText, $ParsingLangID, $OrgLangFlag, $AreaWidth) == 0)
 			{
 				my $id = &idman::get_latest_id();
 				print "解析出来ない文字：ID[ $id ] in $ParsingFileName\n";
