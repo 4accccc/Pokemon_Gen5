@@ -1051,6 +1051,7 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
     G3X_AlphaBlend( TRUE );
     G3X_EdgeMarking( TRUE );
     G3X_AntiAlias( FALSE );
+    G3X_SetFog( FALSE, 0, 0, 0 );
     G2_SetBG0Priority( 1 );
   }
   //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）soga
@@ -1078,6 +1079,9 @@ static void cleanup_core( BTLV_CORE* wk )
 
   //エフェクト削除 soga
   BTLV_EFFECT_Exit();
+
+  //セルアクター削除
+  GFL_CLACT_SYS_Delete();
 
   //3D関連削除 soga
   GFL_G3D_Exit();
