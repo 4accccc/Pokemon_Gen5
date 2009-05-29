@@ -181,7 +181,7 @@ static STRBUF * DEBUGPRINT_CreateWideChar( const u16 *cp_str, HEAPID heapID );
 static STRBUF * DEBUGPRINT_CreateWideCharNumber( const u16 *cp_str, int number, HEAPID heapID );
 //score
 static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_player2_name );
-static u32 MATH_GetMostOnebit( u32 x );
+static u32 MATH_GetMostOnebit( u32 x, u8 bit );
 //=============================================================================
 /**
  *					データ
@@ -929,9 +929,16 @@ static STRBUF * DEBUGPRINT_CreateWideCharNumber( const u16 *cp_str, int number, 
 //-----------------------------------------------------------------------------
 static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_player2_name )
 {	
+	enum
+	{	
+		BIT_NUM	= 8,
+	};
+
 	const STRCODE	*cp_p1;
 	const STRCODE	*cp_p2;
 	
+	u32 num1;
+	u32 num2;
 	u32 b1;
 	u32 b2;
 	u32 bit1;
@@ -942,37 +949,39 @@ static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_p
 
 	cp_p1	= GFL_STR_GetStringCodePointer( cp_player1_name );
 	cp_p2	= GFL_STR_GetStringCodePointer( cp_player2_name );
-	bit1	= MATH_GetMostOnebit( *cp_p1 );
-	bit2	= MATH_GetMostOnebit( *cp_p2 );
+	num1	= *cp_p1;
+	num2	= *cp_p2;
+	bit1	= MATH_GetMostOnebit( *cp_p1, BIT_NUM );
+	bit2	= MATH_GetMostOnebit( *cp_p2, BIT_NUM );
 
 	ans_max	= 0;
 	ans_cnt	= 0;
 	while( 1 )
 	{
-
 	 OS_Printf( "num1%d bit1%d num2%d bit2%d\n", *cp_p1, bit1, *cp_p2, bit2 );
-
 	 if( bit1 == 0 )
 	 {	
 		cp_p1++;
-		if( *cp_p1 == GFL_STR_GetEOMCode() )
+		num1	= *cp_p1;
+		if( num1 == GFL_STR_GetEOMCode() )
 		{	
 			break;
 		}
-		bit1	= MATH_GetMostOnebit( *cp_p1 );
+		bit1	= MATH_GetMostOnebit( num1, BIT_NUM );
 	 }
 	 if( bit2 == 0 )
 	 {	
 		cp_p2++;
-		if( *cp_p2 == GFL_STR_GetEOMCode() )
+		num2	= *cp_p2;
+		if( num2 == GFL_STR_GetEOMCode() )
 		{	
 			break;
 		}
- 		bit2	= MATH_GetMostOnebit( *cp_p2 );
+ 		bit2	= MATH_GetMostOnebit( num2, BIT_NUM );
 	 }
 
-	 b1	= ((*cp_p1) >> bit1) & 0x1;
-	 b2	= ((*cp_p2) >> bit2) & 0x1;
+	 b1	= ((num1) >> bit1) & 0x1;
+	 b2	= ((num2) >> bit2) & 0x1;
 
 	 //bitの一致率をチェック
 	 if( b1 == b2 )
@@ -987,7 +996,6 @@ static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_p
 	}
 	
 	score	= 100*ans_cnt/ans_max;
-
 	OS_Printf( "全体のビット%d 一致%d 点数\n", ans_max, ans_cnt, score );
 
 	return score;
@@ -997,15 +1005,16 @@ static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_p
 /**
  *	@brief	最上位が１のビットを数得る
  *
- *	@param	u32 x 値
+ *	@param	u32 x		値
+ *	@param	u8 bit	ビット数
  *
  *	@return	最上位の１のビットの位置
  */
 //-----------------------------------------------------------------------------
-static u32 MATH_GetMostOnebit( u32 x )
+static u32 MATH_GetMostOnebit( u32 x, u8 bit )
 {	
 	int i;
-	for( i = 31-1; i != 0; i-- )
+	for( i = bit-1; i != 0; i-- )
 	{	
 		if( (x >> i) & 0x1 )
 		{
