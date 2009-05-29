@@ -133,7 +133,7 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/game_comm.c \
         field/field_comm/game_beacon_search.c \
         debug/debugwin_sys.c \
-        debug/debug_system_group.c
+        debug/debug_system_group.c \
 
 
 #================================================
@@ -362,6 +362,13 @@ SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_TAYA_DEBUG   = test/taya/d_taya.c
 
+
+#デバッグポケモン作成
+#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_TAYA_DEBUG
+SRCS_OVERLAY_DEBUG_MAKEPOKE = debug/debug_makepoke.c
 
 # 曽我部デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
