@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: area_map_itp_tbl.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_AREA_MAP_ITP_TBL_NAIX_
+#define NARC_AREA_MAP_ITP_TBL_NAIX_
+
+enum {
+	NARC_area_map_itp_tbl_area00_itp_itptbl = 0
+};
+
+/* NARC_AREA_MAP_ITP_TBL_NAIX_ */
+#endif
