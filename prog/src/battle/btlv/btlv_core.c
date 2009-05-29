@@ -459,7 +459,7 @@ void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos 
   def_pos = (defPokePos != BTL_POS_NULL)?
       BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPokePos ) : BTLV_MCSS_POS_ERROR;
 
-  BTLV_SCU_StartWazaEffect( wk->scrnU, atPokePos, defPokePos, waza );
+  BTLV_SCU_StartWazaEffect( wk->scrnU, at_pos, def_pos, waza );
 }
 //=============================================================================================
 /**
