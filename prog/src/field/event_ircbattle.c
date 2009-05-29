@@ -85,6 +85,7 @@ struct _EVENT_IRCBATTLE_WORK{
   BATTLE_SETUP_PARAM para;
   BOOL isEndProc;
   int selectType;
+	IRC_COMPATIBLE_PARAM	compatible_param;	//赤外線メニューに渡す情報
 };
 
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
@@ -251,6 +252,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
 		break;
 	case _CALL_IRCCOMMPATIBLE:	//相性チェック画面へ
+		dbw->compatible_param.p_gamesys	= dbw->gsys;
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, gsys );
     (*seq)++;
 		break;

@@ -11,6 +11,7 @@
 #pragma once
 #include "gamesystem/gamesystem.h"
 #include "net_app/compatible_irc_sys.h"
+#include "net_app/irc_compatible.h"
 
 //=============================================================================
 /**
@@ -41,6 +42,10 @@ typedef struct {
 	MYSTATUS						*p_you_status;//[in]通信相手のステータス（バッファを渡してください）
 	IRCRHYTHM_RESULT		result;	//[out]PROCが戻ってきたときの内部進行状況
 	u8									score;	//[out]リズムチェックで得た点数
+
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+	BOOL								is_only_play;	//[in]デバッグ時専用、一人プレイモード
+#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
 }IRC_RHYTHM_PARAM;
 
 //-------------------------------------

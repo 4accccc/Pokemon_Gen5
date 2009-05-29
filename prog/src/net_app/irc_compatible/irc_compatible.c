@@ -43,7 +43,6 @@
 #ifdef defined DEBUG_ONLY_FOR_toru_nagihashi
 #define DEBUG_RETURN_TO_PROG	//戻るボタンを押すと次へ進む
 #endif	//DEBUG_ONLY_FOR_toru_nagihashi
-#define DEBUG_ONLY_PLAY
 #endif	//PM_DEBUG
 
 //=============================================================================
@@ -73,8 +72,8 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	//サブプロセスモジュール
 	SUBPROC_WORK				subproc;
 
-	//ゲームシステム
-	GAMESYS_WORK				*p_gamesys;
+	//相性診断パラメータ
+	IRC_COMPATIBLE_PARAM	*p_param;
 
 	//シーケンス管理
 	SEQ_FUNCTION				seq_function;
@@ -92,9 +91,6 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	BOOL								is_init;
 	MYSTATUS						*p_you_status;
 
-#ifdef DEBUG_ONLY_PLAY
-	u8									you_score;
-#endif //DEBUG_ONLY_PLAY
 };
 
 //=============================================================================
@@ -234,7 +230,7 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(IRC_COMPATIBLE_MAIN_WORK), HEAPID_IRCCOMPATIBLE_SYSTEM );
 	GFL_STD_MemClear( p_wk, sizeof(IRC_COMPATIBLE_MAIN_WORK) );
-	p_wk->p_gamesys	= p_param;
+	p_wk->p_param	= p_param;
 
 	//通信相手データ用バッファ作成
 	p_wk->p_you_status	= GFL_HEAP_AllocMemory( HEAPID_IRCCOMPATIBLE_SYSTEM, MyStatus_GetWorkSize() );
@@ -250,7 +246,16 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 
 	p_wk->is_init	= TRUE;
 
-	SEQ_Change( p_wk, SEQFUNC_Start );
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+	if( p_wk->p_param->is_only_play )
+	{	
+		SEQ_Change( p_wk, SEQFUNC_DebugCompatibleProc );
+	}
+	else
+#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
+	{	
+		SEQ_Change( p_wk, SEQFUNC_Start );
+	}
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -549,7 +554,7 @@ static void SEQFUNC_CompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 	};
 }
-#ifdef DEBUG_ONLY_PLAY
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
 //----------------------------------------------------------------------------
 /**
  *	@brief	デバッグ相性PROCゲーム
@@ -564,10 +569,8 @@ static void SEQFUNC_DebugCompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_
 	enum
 	{	
 		SEQ_INIT,
-		SEQ_PROC_MY_RHYTHM,
-		SEQ_PROC_YOU_RHYTHM,
-		SEQ_PROC_MY_AURA,
-		SEQ_PROC_YOU_AURA,
+		SEQ_PROC_RHYTHM,
+		SEQ_PROC_AURA,
 		SEQ_PROC_RESULT,
 		SEQ_END,
 	};
@@ -576,32 +579,17 @@ static void SEQFUNC_DebugCompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_
 	{	
 	case SEQ_INIT:
 		p_wk->score			= 0;
-		p_wk->you_score	= 0;
-		*p_seq	= SEQ_PROC_MY_RHYTHM;
+		*p_seq	= SEQ_PROC_RHYTHM;
 		break;
 
-	case SEQ_PROC_MY_RHYTHM:
+	case SEQ_PROC_RHYTHM:
 		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_RHYTHM, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
 		{	
-			*p_seq	= SEQ_PROC_YOU_RHYTHM;
+			*p_seq	= SEQ_PROC_AURA;
 		}
 		break;
 
-	case SEQ_PROC_YOU_RHYTHM:
-		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_RHYTHM, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
-		{	
-			*p_seq	= SEQ_PROC_MY_AURA;
-		}
-		break;
-
-	case SEQ_PROC_MY_AURA:
-		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_AURA, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
-		{	
-			*p_seq	= SEQ_PROC_YOU_AURA;
-		}
-		break;
-
-	case SEQ_PROC_YOU_AURA:
+	case SEQ_PROC_AURA:
 		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_AURA, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
 		{	
 			*p_seq	= SEQ_PROC_RESULT;
@@ -620,7 +608,7 @@ static void SEQFUNC_DebugCompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_
 		break;
 	};
 }
-#endif //DEBUG_ONLY_PLAY
+#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
 //=============================================================================
 /**
  *			SUBPROCシステム
@@ -741,7 +729,7 @@ static void *SUBPROC_ALLOC_Menu( HEAPID heapID, void *p_wk_adrs )
 
 	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_MENU_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(IRC_MENU_PARAM));
-	p_param->p_gamesys	= p_wk->p_gamesys;
+	p_param->p_gamesys	= p_wk->p_param->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
 	p_param->p_you_status	= p_wk->p_you_status;
 
@@ -798,9 +786,13 @@ static void *SUBPROC_ALLOC_Aura( HEAPID heapID, void *p_wk_adrs )
 
 	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_AURA_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(IRC_AURA_PARAM)) ;
-	p_param->p_gamesys	= p_wk->p_gamesys;
+	p_param->p_gamesys	= p_wk->p_param->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
 	p_param->p_you_status	= p_wk->p_you_status;
+
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+	p_param->is_only_play	= p_wk->p_param->is_only_play;
+#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
 
 	return p_param;
 }
@@ -845,9 +837,13 @@ static void *SUBPROC_ALLOC_Rhythm( HEAPID heapID, void *p_wk_adrs )
 
 	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_RHYTHM_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(IRC_RHYTHM_PARAM)) ;
-	p_param->p_gamesys	= p_wk->p_gamesys;
+	p_param->p_gamesys	= p_wk->p_param->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
 	p_param->p_you_status	= p_wk->p_you_status;
+
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+	p_param->is_only_play	= p_wk->p_param->is_only_play;
+#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
 
 	return p_param;
 }
@@ -892,7 +888,7 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 
 	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_RESULT_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(IRC_RESULT_PARAM)) ;
-	p_param->p_gamesys	= p_wk->p_gamesys;
+	p_param->p_gamesys	= p_wk->p_param->p_gamesys;
 	p_param->p_irc			= p_wk->p_irc;
 	p_param->p_you_status	= p_wk->p_you_status;
 	p_param->score			= p_wk->score / 2;

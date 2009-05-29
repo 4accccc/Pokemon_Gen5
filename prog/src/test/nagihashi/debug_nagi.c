@@ -141,7 +141,10 @@ typedef struct
 	const GFL_PROC_DATA *p_procdata;
 	void	*p_proc_work;
 
-	IRC_RESULT_PARAM	result_param;
+	IRC_RESULT_PARAM			result_param;
+	IRC_COMPATIBLE_PARAM	compatible_param;
+	IRC_AURA_PARAM				aura_param;
+	IRC_RHYTHM_PARAM			rhythm_param;
 } DEBUG_NAGI_MAIN_WORK;
 
 //-------------------------------------
@@ -199,6 +202,7 @@ static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcResult( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_ChangeProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -258,10 +262,11 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 //=====================================
 enum
 {	
-	LISTDATA_SEQ_PROC_AURA,
-	LISTDATA_SEQ_PROC_RHYTHM,
+	LISTDATA_SEQ_PROC_AURA_DEBUG,
+	LISTDATA_SEQ_PROC_RHYTHM_DEBUG,
 	LISTDATA_SEQ_PROC_RESULT,
 	LISTDATA_SEQ_PROC_COMPATIBLE,
+	LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG,
 	LISTDATA_SEQ_RETURN,
 	LISTDATA_SEQ_NEXT_HOME,
 	LISTDATA_SEQ_NEXT_PAGE1,
@@ -273,6 +278,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_ChangeProcRhythm,
 	LISTDATA_ChangeProcResult,
 	LISTDATA_ChangeProcCompatible,
+	LISTDATA_ChangeProcCompatibleDebug,
 	LISTDATA_Return,
 	LISTDATA_NextListHome,
 	LISTDATA_NextListPage1,
@@ -299,15 +305,21 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"相性診断画面へ", LISTDATA_SEQ_PROC_COMPATIBLE
 	},
 	{	
+		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
+	},
+	{	
+		L"オーラ（ひとり）", LISTDATA_SEQ_PROC_AURA_DEBUG
+	},
+	{	
+		L"リズム（ひとり）", LISTDATA_SEQ_PROC_RHYTHM_DEBUG
+	},
+	{	
 		L"もどる", LISTDATA_SEQ_RETURN
 	},
 };
 
 static const LIST_SETUP_TBL sc_list_data_page1[]	=
 {	
-	{	
-		L"進んだよ", LISTDATA_SEQ_PROC_AURA
-	},
 	{	
 		L"前へ", LISTDATA_SEQ_NEXT_HOME
 	}
@@ -619,7 +631,9 @@ static void MainTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk )
 FS_EXTERN_OVERLAY(irc_aura);
 static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_aura), &IrcAura_ProcData, NULL );
+	GFL_STD_MemClear( &p_wk->aura_param, sizeof(IRC_AURA_PARAM) );
+	p_wk->aura_param.is_only_play	= TRUE;
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_aura), &IrcAura_ProcData, &p_wk->aura_param );
 }
 
 //----------------------------------------------------------------------------
@@ -633,7 +647,9 @@ static void LISTDATA_ChangeProcAura( DEBUG_NAGI_MAIN_WORK *p_wk )
 FS_EXTERN_OVERLAY(irc_rhythm);
 static void LISTDATA_ChangeProcRhythm( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_rhythm), &IrcRhythm_ProcData, NULL );
+	GFL_STD_MemClear( &p_wk->rhythm_param, sizeof(IRC_RHYTHM_PARAM) );
+	p_wk->rhythm_param.is_only_play	= TRUE;
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_rhythm), &IrcRhythm_ProcData, &p_wk->rhythm_param );
 }
 //----------------------------------------------------------------------------
 /**
@@ -660,7 +676,23 @@ static void LISTDATA_ChangeProcResult( DEBUG_NAGI_MAIN_WORK *p_wk )
 FS_EXTERN_OVERLAY(irc_compatible);
 static void LISTDATA_ChangeProcCompatible( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, NULL );
+	p_wk->compatible_param.p_gamesys	= NULL;
+	p_wk->compatible_param.is_only_play	= FALSE;
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, &p_wk->compatible_param );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ProcChange
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_ChangeProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	p_wk->compatible_param.p_gamesys	= NULL;
+	p_wk->compatible_param.is_only_play	= TRUE;
+	DEBUG_NAGI_COMMAND_ChangeProc( p_wk, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, &p_wk->compatible_param );
 }
 //----------------------------------------------------------------------------
 /**

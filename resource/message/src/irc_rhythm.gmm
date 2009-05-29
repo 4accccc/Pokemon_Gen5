@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-05-28T12:34:50"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-05-29T17:26:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1684" top="81" right="2187" bottom="674" maximized="no" rayout="Vertical2">
+	<dialog left="-910" top="409" right="-205" bottom="1037" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="0" style="0000" width="495"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="328"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -353,11 +353,13 @@
 	</row>
 
 	<row id="RHYTHM_DEBUG_001">
-		<language name="JPN" width="256">　</language>
-		<language name="JPN_KANJI" width="256">　</language>
+		<comment>デバッグ用</comment>
+		<language name="JPN" width="256">あいての　ばん　です</language>
+		<language name="JPN_KANJI" width="256">相手の番です</language>
 	</row>
 
 	<row id="RHYTHM_DEBUG_002">
+		<comment>デバッグ用</comment>
 		<language name="JPN" width="256">チェックを　おわります。</language>
 		<language name="JPN_KANJI" width="256">チェックを　終わります。</language>
 	</row>

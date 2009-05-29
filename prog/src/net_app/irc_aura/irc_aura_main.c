@@ -52,9 +52,22 @@ FS_EXTERN_OVERLAY(irc_result);
 */
 //=============================================================================
 #ifdef PM_DEBUG
-//#define DEBUG_AURA_MSG	//デバッグメッセージを出す
-//#define DEBUG_ONLY_PLAY	//デバッグ用一台でプレイするモードを出す
 #endif //PM_DEBUG
+
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+static s_is_debug_only_play	= 0;
+#define DEBUG_ONLYPLAY_IF			if(s_is_debug_only_play){	
+#define DEBUG_ONLYPLAY_ELSE		}else{
+#define DEBUG_ONLYPLAY_ENDIF	}
+
+#define DEBUG_AURA_MSG	//デバッグメッセージを出す
+
+#else
+#define s_is_debug_only_play	(0)
+#define DEBUG_ONLYPLAY_IF			/*  */
+#define DEBUG_ONLYPLAY_ELSE		/*  */
+#define DEBUG_ONLYPLAY_ENDIF	/*  */
+#endif 
 
 
 //-------------------------------------
@@ -207,7 +220,7 @@ enum{
 //-------------------------------------
 ///	カウント
 //=====================================
-#define TOUCH_COUNTER_MAX	(150)//(60*5)
+#define TOUCH_COUNTER_MAX	(150)
 #define TOUCH_COUNTER_SHAKE_SYNC	(15)	//ブレを観測するための1回のシンク
 #define TOUCH_COUNTER_SHAKE_MAX	(TOUCH_COUNTER_MAX/TOUCH_COUNTER_SHAKE_SYNC)	//ブレを取得する回数
 
@@ -292,12 +305,12 @@ enum
 //-------------------------------------
 ///	デバッグ用人数セーブ機能
 //=====================================
-#ifdef DEBUG_ONLY_PLAY
-#define DEBUG_GAME_NUM	(5)
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+#define DEBUG_GAME_NUM	(1)
 #define DEBUG_PLAYER_SAVE_NUM	(DEBUG_GAME_NUM*2)
 #else
 #define DEBUG_PLAYER_SAVE_NUM (1)
-#endif //DEBUG_ONLY_PLAY
+#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
 
 //=============================================================================
 /**
@@ -487,10 +500,10 @@ struct _AURA_MAIN_WORK
 	BOOL is_end;
 	BOOL is_next_proc;
 
-#ifdef DEBUG_ONLY_PLAY
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
 	u16							debug_player;			//自分か相手か
 	u16							debug_game_cnt;	//何ゲーム目か
-#endif //DEBUG_ONLY_PLAY
+#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
 
 	//ネット
 	AURANET_WORK	net;
@@ -766,6 +779,10 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	GFL_STD_MemClear( p_wk, sizeof(AURA_MAIN_WORK) );
 	p_wk->p_param	= p_param;
 
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+		s_is_debug_only_play	= p_wk->p_param->is_only_play;
+#endif// DEBUG_IRC_COMPATIBLE_ONLYPLAY
+
 	//モジュール初期化
 	AURANET_Init( &p_wk->net, p_wk->p_param->p_irc );
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCAURA );
@@ -794,9 +811,10 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 		}
 	}
 
-	//デバッグ
+DEBUG_ONLYPLAY_IF
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCAURA );
 	DEBUGPRINT_Open();
+DEBUG_ONLYPLAY_ENDIF
 
 
 	SEQ_Change( p_wk, SEQFUNC_StartGame );
@@ -820,24 +838,11 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 
 	p_wk	= p_work;
 
-#if 0
-	//次のプロック予約
-	if( p_wk->is_next_proc )
-	{	
-		if( p_wk->p_param->p_gamesys == NULL )
-		{	
-			GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(irc_result), &IrcResult_ProcData,p_wk->p_param );
-		}
-		else
-		{	
-			GAMESYSTEM_SetNextProc( p_wk->p_param->p_gamesys, FS_OVERLAY_ID(irc_result), &IrcResult_ProcData,p_wk->p_param );
-		}
-	}
-#endif
 
-	//デバッグ破棄
+DEBUG_ONLYPLAY_IF
 	DEBUGPRINT_Close();
 	DEBUGPRINT_Exit();
+DEBUG_ONLYPLAY_ENDIF
 
 	//モジュール破棄
 	{	
@@ -913,16 +918,6 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 			*p_seq	= SEQ_FADEIN_START;
 		}
 
-#if 0
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
-		{	
-			SEQ_Change( p_wk, SEQFUNC_StartGame );
-		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-		{
-			SEQ_End( p_wk );
-		}
-#endif
 		break;
 
 	case SEQ_FADEIN_START:
@@ -2127,17 +2122,15 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	};
 	GFL_POINT		*p_trg_left;
 
-#ifdef DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_IF
 	p_trg_left	= &p_wk->trg_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ];
-#else
+DEBUG_ONLYPLAY_ELSE
 	p_trg_left	= &p_wk->trg_left[0];
-#endif //DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_ENDIF
 
 	switch( *p_seq )
 	{	
 	case SEQ_INIT:
-
-		DEBUGAURA_PRINT_UpDate( p_wk );
 
 		if( p_wk->p_param->p_gamesys )
 		{	
@@ -2149,7 +2142,9 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, 
 					AURA_STR_000, 0, 0 );
 		}
-#ifdef DEBUG_ONLY_PLAY
+
+DEBUG_ONLYPLAY_IF
+		DEBUGAURA_PRINT_UpDate( p_wk );
 		if( p_wk->debug_player != 0 )
 		{	
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_DEBUG_001, 0, 0 );
@@ -2163,7 +2158,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				p_wk->shake_left[i].shake_idx	= 0;
 			}
 		}
-#endif	//DEBUG_ONLY_PLAY 
+DEBUG_ONLYPLAY_ENDIF
 
 		//タッチ演出OFF
 		{	
@@ -2186,7 +2181,6 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MAIN:
 		if( TP_GetRectTrg( &sc_left, p_trg_left ) )
 		{	
-			DEBUGAURA_PRINT_UpDate( p_wk );
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_001, 0, 0 );
 		
 			//左タッチ演出ON
@@ -2200,27 +2194,6 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
 			*p_seq	= SEQ_END;
 		}
-
-#ifdef DEBUG_ONLY_PLAY
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
-		{	
-			if( p_wk->debug_game_cnt == 0 )
-			{	
-				p_wk->debug_game_cnt	= DEBUG_GAME_NUM-1;
-			}
-			else
-			{	
-				p_wk->debug_game_cnt--;
-			}
-			SEQ_Change( p_wk, SEQFUNC_StartGame);
-		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
-		{	
-			p_wk->debug_game_cnt++;
-			p_wk->debug_game_cnt	%= DEBUG_GAME_NUM;
-			SEQ_Change( p_wk, SEQFUNC_StartGame);
-		}
-#endif //DEBUG_ONLY_PLAY
 
 		break;
 
@@ -2256,13 +2229,13 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	SHAKE_SEARCH_WORK	*p_shake_left;
 	GFL_POINT	pos;
 
-#ifdef DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_IF
 	p_trg_right		= &p_wk->trg_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ];
 	p_shake_left	= &p_wk->shake_left[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ];
-#else
+DEBUG_ONLYPLAY_ELSE
 	p_trg_right		= &p_wk->trg_right[0];
 	p_shake_left	= &p_wk->shake_left[0];
-#endif //DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_ENDIF
 
 	TouchMarker_OffVisible( p_wk );
 
@@ -2274,7 +2247,6 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			//計測終了待ち
 			if( SHAKESEARCH_Main( p_shake_left, &sc_left ) )
 			{	
-				DEBUGAURA_PRINT_UpDate( p_wk );
 				MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
 				GFL_BG_SetVisible( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_M_GUIDE_R], VISIBLE_ON );
 				*p_seq	= SEQ_WAIT_RIGHT;
@@ -2304,7 +2276,6 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			TouchMarker_SetPos( p_wk, p_trg_right );
 
 
-			DEBUGAURA_PRINT_UpDate( p_wk );
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_001, 0, 0 );
 			SEQ_Change( p_wk, SEQFUNC_TouchRight );
 
@@ -2357,11 +2328,11 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
 	GFL_POINT	pos;
 	SHAKE_SEARCH_WORK	*p_shake_right;
-#ifdef DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_IF
 	p_shake_right	= &p_wk->shake_right[ p_wk->debug_game_cnt + (p_wk->debug_player*DEBUG_GAME_NUM) ];
-#else
+DEBUG_ONLYPLAY_ELSE
 	p_shake_right	= &p_wk->shake_right[0];
-#endif //DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_ENDIF
 
 	TouchMarker_OffVisible( p_wk );
 
@@ -2374,8 +2345,7 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			{	
 				int i;
 
-				DEBUGAURA_PRINT_UpDate( p_wk );
-#ifdef DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_IF
 				//0ならば自分の番なので、次は相手の番
 				if( p_wk->debug_player == 0 )
 				{	
@@ -2387,10 +2357,10 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 					MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_DEBUG_002, 0, 0 );
 					SEQ_Change( p_wk, SEQFUNC_Result );
 				}
-#else
+DEBUG_ONLYPLAY_ELSE
 				MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_003, 0, 0 );
 				SEQ_Change( p_wk, SEQFUNC_Result );
-#endif //DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_ENDIF
 			}
 
 			//右タッチ演出ON
@@ -2440,32 +2410,37 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-#ifdef DEBUG_ONLY_PLAY
-	if(	GFL_UI_TP_GetTrg()	)
+DEBUG_ONLYPLAY_IF
+	enum
 	{	
-		p_wk->debug_game_cnt++;
-		p_wk->debug_game_cnt	%=	DEBUG_GAME_NUM;
-		p_wk->debug_player		= 0;
-		SEQ_Change( p_wk, SEQFUNC_StartGame );
+		SEQ_INIT,
+		SEQ_MAIN,
+	};
+
+	switch( *p_seq )
+	{	
+	case SEQ_INIT:
+		p_wk->p_param->score	= CalcScore( p_wk );
+		DEBUGAURA_PRINT_UpDate( p_wk );
+		OS_Printf( "オーラチェック %d点\n", p_wk->p_param->score );
+		*p_seq	= SEQ_MAIN;
+		break;
+
+	case SEQ_MAIN:
+		if(	TouchReturnBtn() )
+		{
+			SEQ_End( p_wk );
+		}
+		break;
 	}
-#else
+DEBUG_ONLYPLAY_ELSE
 	enum{	
 		SEQ_RESULT,
 		SEQ_SENDRESULT,
 		SEQ_TIMING,
 		SEQ_CALC,
 		SEQ_END,
-#if 0
-		SEQ_FADEIN_START,
-		SEQ_FADEIN_WAIT,
-		SEQ_FADEOUT_START,
-		SEQ_FADEOUT_WAIT,
-		SEQ_ONLYRESULT_INIT,
-		SEQ_ONLYRESULT_MAIN,
-		SEQ_ONLYRESULT_EXIT,
 
-		SEQ_NEXTPROC,
-#endif 
 	};
 	AURANET_RESULT_DATA result;
 
@@ -2507,73 +2482,15 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_CALC:
 		p_wk->p_param->score	= CalcScore( p_wk );
 		p_wk->p_param->result	= IRCAURA_RESULT_CLEAR;
-	//	*p_seq	= SEQ_FADEIN_START;
 		*p_seq	= SEQ_END;
 		break;
 
 	case SEQ_END:
 		SEQ_End( p_wk );
 		break;
-
-#if 0
-	case SEQ_FADEIN_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-		*p_seq	= SEQ_FADEIN_WAIT;
-		break;
-
-	case SEQ_FADEIN_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{	
-			*p_seq	= SEQ_ONLYRESULT_INIT;
-		}
-		break;
-
-	case SEQ_FADEOUT_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
-		*p_seq	= SEQ_FADEOUT_WAIT;
-		break;
-
-	case SEQ_FADEOUT_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{	
-			*p_seq	= SEQ_ONLYRESULT_MAIN;
-		}
-		break;
-
-	case SEQ_ONLYRESULT_INIT:
-		//画面上のものを消去
-		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE_L], FALSE );
-		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_GUIDE_R], FALSE );
-		TouchMarker_OffVisible( p_wk );
-		MSGWND_Clear( &p_wk->msgwnd[MSGWNDID_TEXT] );
-		MSGWND_Clear( &p_wk->msgwnd[MSGWNDID_RETURN] );
-
-		//新たに結果画面作成
-		AURA_ONLYRESULT_Init( &p_wk->onlyresult, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], &p_wk->msg, &p_wk->shake_left[0], HEAPID_IRCAURA );
-
-		*p_seq	= SEQ_FADEOUT_START;
-		break;
-
-	case SEQ_ONLYRESULT_MAIN:
-		if( AURA_ONLYRESULT_Main( &p_wk->onlyresult ) )
-		{	
-			*p_seq	= SEQ_ONLYRESULT_EXIT;
-		}
-		break;
-
-	case SEQ_ONLYRESULT_EXIT:
-		AURA_ONLYRESULT_Exit( &p_wk->onlyresult );
-		*p_seq	= SEQ_NEXTPROC;
-		break;
-
-	case SEQ_NEXTPROC:
-		p_wk->is_next_proc	= TRUE;
-		SEQ_End( p_wk );
-		break;
-#endif
 	}
 
-#endif //DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_ENDIF
 }
 //=============================================================================
 /**
@@ -2594,7 +2511,10 @@ static void AURANET_Init( AURANET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc )
 	GFL_STD_MemClear( p_wk, sizeof(AURANET_WORK) );
 	p_wk->p_irc	= p_irc;
 
+DEBUG_ONLYPLAY_IF
+DEBUG_ONLYPLAY_ELSE
 	COMPATIBLE_IRC_AddCommandTable( p_irc, GFL_NET_CMD_IRCAURA, sc_recv_tbl, NELEMS(sc_recv_tbl), p_wk );
+DEBUG_ONLYPLAY_ENDIF
 }
 //----------------------------------------------------------------------------
 /**
@@ -2606,7 +2526,11 @@ static void AURANET_Init( AURANET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc )
 //-----------------------------------------------------------------------------
 static void AURANET_Exit( AURANET_WORK *p_wk )
 {	
+DEBUG_ONLYPLAY_IF
+DEBUG_ONLYPLAY_ELSE
 	COMPATIBLE_IRC_DelCommandTable( p_wk->p_irc, GFL_NET_CMD_IRCAURA );
+DEBUG_ONLYPLAY_ENDIF
+
 	GFL_STD_MemClear( p_wk, sizeof(AURANET_WORK) );
 }
 
@@ -3348,35 +3272,35 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 	{	
 		GFL_POINT	pos1, pos2;
 		u32 ret;
+		u32 pos_score;
 		OS_Printf( "△お互いの座標計測\n" );
 		pos1	= p_wk->trg_left[p_wk->debug_game_cnt + (0*DEBUG_GAME_NUM)];
 		pos2	= p_wk->trg_left[p_wk->debug_game_cnt + (1*DEBUG_GAME_NUM)];
 		ret	= ((u32)(pos1.x-pos2.x)*(u32)(pos1.x-pos2.x))+((u32)(pos1.y-pos2.y)*(u32)(pos1.y-pos2.y));
-
-		if( 0 < ret & ret < 8*8 )
+		if( 0 < ret & ret <= RANGE_POS_SCORE_00 )
 		{	
-			OS_Printf( "距離　100点\n" );
+			pos_score	= VAL_POS_SCORE_00;
 		}
-		else if( 8*8 < ret & ret < 16 * 16 )
+		else if( RANGE_POS_SCORE_00 < ret & ret <= RANGE_POS_SCORE_01 )
 		{	
-			OS_Printf( "距離　80点\n" );
+			pos_score	= VAL_POS_SCORE_01;
 		}
-		else if( 16*16 < ret & ret < 24 * 24 )
+		else if( RANGE_POS_SCORE_01 < ret & ret <= RANGE_POS_SCORE_02 )
 		{	
-			OS_Printf( "距離　50点\n" );
+			pos_score	= VAL_POS_SCORE_02;
 		}
-		else if( 24*24 < ret & ret < 32 * 32 )
+		else if( RANGE_POS_SCORE_02 < ret & ret <= RANGE_POS_SCORE_03 )
 		{	
-			OS_Printf( "距離　30点\n" );
+			pos_score	= VAL_POS_SCORE_03;
 		}
-		else if( 32*32 < ret & ret < 40 * 40 )
+		else if( RANGE_POS_SCORE_03 < ret & ret <= RANGE_POS_SCORE_04 )
 		{	
-			OS_Printf( "距離　10点\n" );
+			pos_score	= VAL_POS_SCORE_04;
 		}
 		else{	
-			OS_Printf( "距離　0点\n" );
+			pos_score	= VAL_POS_SCORE_05;
 		}
-	}
+		OS_Printf( "距離　%d点\n", pos_score );	}
 
 	{
 		GFL_POINT temp1, temp2;
@@ -3409,31 +3333,32 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk )
 				ret	= shake2 - shake1;
 			}
 
-			switch( ret )
+			if( RANGE_SHAKE_SCORE_00(ret) )
 			{	
-			case 0:
-				score	+= 100;
-				OS_Printf( "ブレ[i]　100点加算\n", i );
-				break;
-			case 1:
-				score	+= 80;
-				OS_Printf( "ブレ[i]　80点加算\n", i );
-				break;
-			case 2:
-				//fall through
-			case 3:
-				score	+= 50;
-				OS_Printf( "ブレ[i]　50点加算\n", i );
-				break;
-			case 4:
-				//fall through
-			case 5:
-				score	+= 30;
-				OS_Printf( "ブレ[i]　30点加算\n", i );
-				break;
-			default:	//6～
-				//score	+= 0;
-				OS_Printf( "ブレ[i]　0点加算\n", i );
+				score	+= VAL_SHAKE_SCORE_00;
+				OS_Printf( "ブレ[%d]　%d点加算\n", i, VAL_SHAKE_SCORE_00 );
+			}
+			else if( RANGE_SHAKE_SCORE_01(ret) )
+			{	
+				score	+= VAL_SHAKE_SCORE_01;
+				OS_Printf( "ブレ[%d]　%d点加算\n", i, VAL_SHAKE_SCORE_01 );
+			}
+			else if( RANGE_SHAKE_SCORE_02(ret) )
+			{	
+				score	+= VAL_SHAKE_SCORE_02;
+				OS_Printf( "ブレ[%d]　%d点加算\n", i, VAL_SHAKE_SCORE_02 );
+			}
+			else if( RANGE_SHAKE_SCORE_03(ret) )
+			{	
+				score	+= VAL_SHAKE_SCORE_03;
+				OS_Printf( "ブレ[%d]　%d点加算\n", i, VAL_SHAKE_SCORE_03 );
+			}
+			else if( RANGE_SHAKE_SCORE_04(ret) )
+			{	
+#if VAL_SHAKE_SCORE_04
+					score	+= VAL_SHAKE_SCORE_04;
+#endif //VAL_SHAKE_SCORE_04
+					OS_Printf( "ブレ[%d]　%d点加算\n", i, VAL_SHAKE_SCORE_04 );
 			}
 		}
 
@@ -3498,7 +3423,17 @@ static u8	 CalcScore( AURA_MAIN_WORK *p_wk )
 
 	u32	pos_score;
 	u32 shake_score;
+DEBUG_ONLYPLAY_IF
+	my.trg_left		= p_wk->trg_left[0];
+	my.trg_right	= p_wk->trg_right[0];
+	my.shake_left	= p_wk->shake_left[0];
+	my.shake_right= p_wk->shake_right[0];
 
+	you.trg_left		= p_wk->trg_left[p_wk->debug_game_cnt + (1*DEBUG_GAME_NUM)];
+	you.trg_right		= p_wk->trg_right[p_wk->debug_game_cnt + (1*DEBUG_GAME_NUM)];
+	you.shake_left	= p_wk->shake_left[p_wk->debug_game_cnt + (1*DEBUG_GAME_NUM)];
+	you.shake_right	= p_wk->shake_right[p_wk->debug_game_cnt + (1*DEBUG_GAME_NUM)];
+DEBUG_ONLYPLAY_ELSE
 	my.trg_left		= p_wk->trg_left[0];
 	my.trg_right	= p_wk->trg_right[0];
 	my.shake_left	= p_wk->shake_left[0];
@@ -3506,6 +3441,7 @@ static u8	 CalcScore( AURA_MAIN_WORK *p_wk )
 
 	AURANET_GetResultData( &p_wk->net, &you );
 
+DEBUG_ONLYPLAY_ENDIF
 	//座標スコア
 	{	
 		GFL_POINT	pos1, pos2;
@@ -3699,13 +3635,18 @@ static BOOL	SHAKESEARCH_Main( SHAKE_SEARCH_WORK *p_wk, const GFL_RECT	*cp_rect )
 	}
 	else
 	{	
+
+		if( p_wk->shake_cnt == 0 )
+		{	
+			TP_GetRectCont( cp_rect, &p_wk->shake[p_wk->shake_idx++] );
+			GF_ASSERT_MSG( p_wk->shake_idx < TOUCH_COUNTER_SHAKE_MAX, 
+					"ブレ計測インデックスエラーです %d\n" , p_wk->shake_idx );
+		}
+
 		//計測
 		if( p_wk->shake_cnt++ > TOUCH_COUNTER_SHAKE_SYNC )
 		{	
 			p_wk->shake_cnt	= 0;
-			TP_GetRectCont( cp_rect, &p_wk->shake[p_wk->shake_idx++] );
-			GF_ASSERT_MSG( p_wk->shake_idx < TOUCH_COUNTER_SHAKE_MAX, 
-					"ブレ計測インデックスエラーです %d\n" , p_wk->shake_idx );
 		}
 	}
 

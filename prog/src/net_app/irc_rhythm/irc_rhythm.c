@@ -48,11 +48,26 @@ FS_EXTERN_OVERLAY(irc_result);
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	デバッグ用定義
+//=====================================
 #ifdef PM_DEBUG
-//#define DEBUG_RHYTHM_MSG	//デバッグメッセージを出す
-//#define DEBUG_ONLY_PLAY	//デバッグ用一台でプレイするモードを出す
 #endif //PM_DEBUG
 
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+static s_is_debug_only_play	= 0;
+#define DEBUG_ONLYPLAY_IF			if(s_is_debug_only_play){	
+#define DEBUG_ONLYPLAY_ELSE		}else{
+#define DEBUG_ONLYPLAY_ENDIF	}
+
+#define DEBUG_RHYTHM_MSG	//デバッグメッセージを出す
+
+#else
+#define s_is_debug_only_play	(0)
+#define DEBUG_ONLYPLAY_IF			/*  */
+#define DEBUG_ONLYPLAY_ELSE		/*  */
+#define DEBUG_ONLYPLAY_ENDIF	/*  */
+#endif 
 
 //-------------------------------------
 ///	点数
@@ -444,12 +459,12 @@ struct _RHYTHM_MAIN_WORK
 	//引数
 	IRC_RHYTHM_PARAM	*p_param;
 
-#ifdef DEBUG_ONLY_PLAY
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
 	//デバッグ用
 	RHYTHMSEARCH_WORK	search2;
 	u16							debug_player;			//自分か相手か
 	u16							debug_game_cnt;	//何ゲーム目か
-#endif //DEBUG_ONLY_PLAY
+#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
 };
 
 //=============================================================================
@@ -736,6 +751,11 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GFL_STD_MemClear( p_wk, sizeof(RHYTHM_MAIN_WORK) );
 	p_wk->p_param	= p_param;
 
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+	s_is_debug_only_play	= p_wk->p_param->is_only_play;
+#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
+
+
 	//モジュール初期化
 	GRAPHIC_Init( &p_wk->grp, HEAPID_IRCRHYTHM );
 	MSG_Init( &p_wk->msg, MSG_FONT_TYPE_LARGE, HEAPID_IRCRHYTHM );
@@ -757,10 +777,10 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 
 	RHYTHMSEARCH_Init( &p_wk->search );
 
-	//デバッグ
+DEBUG_ONLYPLAY_IF
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRHYTHM );
 	DEBUGPRINT_Open();
-
+DEBUG_ONLYPLAY_ENDIF
 
 	SEQ_Change( p_wk, SEQFUNC_StartGame );
 	return GFL_PROC_RES_FINISH;
@@ -798,9 +818,10 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 	}
 #endif
 
-	//デバッグ破棄
+DEBUG_ONLYPLAY_IF
 	DEBUGPRINT_Close();
 	DEBUGPRINT_Exit();
+DEBUG_ONLYPLAY_ENDIF
 
 	RHYTHMNET_Exit( &p_wk->net );
 
@@ -1858,7 +1879,8 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		}
 	
 
-#ifdef DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_IF
+
 	DEBUGRHYTHM_PRINT_UpDate( p_wk );
 	if( p_wk->debug_player == 0 )
 	{
@@ -1869,8 +1891,8 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		p_search	= &p_wk->search2;
 		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_DEBUG_001, 0, 0 );
 	}
-#endif // DEBUG_ONLY_PLAY
 
+DEBUG_ONLYPLAY_ENDIF
 
 	RHYTHMSEARCH_Start( p_search );
 	SEQ_Change( p_wk, SEQFUNC_MainGame );
@@ -1891,7 +1913,8 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	RHYTHMSEARCH_WORK	*p_search;
 	p_search	= &p_wk->search;
 
-#ifdef DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_IF
+
 	if( p_wk->debug_player == 0 )
 	{	
 		p_search	= &p_wk->search;
@@ -1900,7 +1923,8 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	{	
 		p_search	= &p_wk->search2;
 	}
-#endif //DEBUG_ONLY_PLAY
+
+DEBUG_ONLYPLAY_ENDIF
 
 
 	TouchMarker_Main( p_wk );
@@ -1920,7 +1944,8 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_001, 0, 0 );
 		SEQ_Change( p_wk, SEQFUNC_Result );
 
-#ifdef DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_IF
+
 		DEBUGRHYTHM_PRINT_UpDate( p_wk );
 		if( p_wk->debug_player == 0 )
 		{	
@@ -1931,9 +1956,10 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		else
 		{	
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_DEBUG_002, 0, 0 );
-		SEQ_Change( p_wk, SEQFUNC_Result );
+			SEQ_Change( p_wk, SEQFUNC_Result );
 		}
-#endif //DEBUG_ONLY_PLAY
+
+DEBUG_ONLYPLAY_ENDIF
 	}
 
 
@@ -1955,18 +1981,14 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-#ifdef DEBUG_ONLY_PLAY
-	if(	GFL_UI_KEY_GetTrg() & PAD_BUTTON_A	)
+DEBUG_ONLYPLAY_IF
+	if(	TouchReturnBtn()	)
 	{	
-
-		RHYTHMSEARCH_Init( &p_wk->search );
-		SEQ_Change( p_wk, SEQFUNC_StartGame );
-
-		RHYTHMSEARCH_Init( &p_wk->search2 );
-		p_wk->debug_player		= 0;
-
+		p_wk->p_param->score	= CalcScore( p_wk );
+		OS_Printf( "リズムチェック %d点\n", p_wk->p_param->score );
+		SEQ_End( p_wk );
 	}
-#else
+DEBUG_ONLYPLAY_ELSE
 	enum
 	{	
 		SEQ_RESULT,
@@ -2083,7 +2105,8 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 #endif
 	}
-#endif //DEBUG_ONLY_PLAY
+DEBUG_ONLYPLAY_ENDIF
+
 	TouchMarker_Main( p_wk );
 
 }
@@ -2219,7 +2242,10 @@ static void RHYTHMNET_Init( RHYTHMNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc )
 	GFL_STD_MemClear( p_wk, sizeof(RHYTHMNET_WORK) );
 	p_wk->p_irc	= p_irc;
 
+DEBUG_ONLYPLAY_IF
+DEBUG_ONLYPLAY_ELSE
 	COMPATIBLE_IRC_AddCommandTable( p_irc, GFL_NET_CMD_IRCRHYTHM, sc_recv_tbl, NELEMS(sc_recv_tbl), p_wk );
+DEBUG_ONLYPLAY_ENDIF
 }
 
 //----------------------------------------------------------------------------
@@ -2232,7 +2258,10 @@ static void RHYTHMNET_Init( RHYTHMNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc )
 //-----------------------------------------------------------------------------
 static void RHYTHMNET_Exit( RHYTHMNET_WORK *p_wk )
 {	
+DEBUG_ONLYPLAY_IF
+DEBUG_ONLYPLAY_ELSE
 	COMPATIBLE_IRC_DelCommandTable( p_wk->p_irc, GFL_NET_CMD_IRCRHYTHM );
+DEBUG_ONLYPLAY_ENDIF
 	GFL_STD_MemClear( p_wk, sizeof(RHYTHMNET_WORK) );
 }
 //----------------------------------------------------------------------------
@@ -2472,8 +2501,13 @@ static u8	CalcScore( const RHYTHM_MAIN_WORK *cp_wk )
 	u32	prog_score;
 	u32	diff_score;
 
+DEBUG_ONLYPLAY_IF
+	my	=	cp_wk->search;
+	you	=	cp_wk->search2;
+DEBUG_ONLYPLAY_ELSE
 	my	= cp_wk->search;
 	RHYTHMNET_GetResultData( &cp_wk->net, &you );
+DEBUG_ONLYPLAY_ENDIF
 
 	OS_Printf( "■結果の表示\n" );
 	//経過時間の判定
@@ -2741,52 +2775,53 @@ static void DEBUGRHYTHM_PRINT_UpDate( RHYTHM_MAIN_WORK *p_wk )
 		player1	= p_wk->search.data[p_wk->search.data_idx-1].prog_ms - p_wk->search.data[0].prog_ms;
 		player2	= p_wk->search2.data[p_wk->search2.data_idx-1].prog_ms - p_wk->search2.data[0].prog_ms;
 		prog	= MATH_IAbs(player1 - player2);
-		if( prog  == 0 )
+		if( prog  == RANGE_RHYTHMSCORE_PROC_00 )
+		{
+			score	= VAL_RHYTHMSCORE_PROC_00;
+		}
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_01 )
 		{	
-			score	= 100;
+			score	= VAL_RHYTHMSCORE_PROC_01;
 		}
-		else if( prog  < 500 )
-		{	
-			score	= 90;
-		}
-		else if( prog  < 1000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_02 )
 		{
-			score	= 80;
+			score	= VAL_RHYTHMSCORE_PROC_02;
 		}
-		else if( prog  < 3000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_03 )
 		{
-			score	= 70;
+			score	= VAL_RHYTHMSCORE_PROC_03;
 		}
-		else if( prog  < 5000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_04 )
 		{
-			score	= 60;
+			score	= VAL_RHYTHMSCORE_PROC_04;
 		}
-		else if( prog  < 10000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_05 )
 		{
-			score	= 50;
+			score	= VAL_RHYTHMSCORE_PROC_05;
 		}
-		else if( prog  < 15000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_06 )
 		{
-			score	= 40;
+			score	= VAL_RHYTHMSCORE_PROC_06;
 		}
-		else if( prog  < 20000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_07 )
 		{
-			score	= 30;
+			score	= VAL_RHYTHMSCORE_PROC_07;
 		}
-		else if( prog  < 25000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_08 )
 		{
-			score	= 20;
+			score	= VAL_RHYTHMSCORE_PROC_08;
 		}
-		else if( prog  < 30000 )
+		else if( prog  < RANGE_RHYTHMSCORE_PROC_09 )
 		{
-			score	= 10;
+			score	= VAL_RHYTHMSCORE_PROC_09;
 		}
 		else
 		{
-			score	= 0;
+#if VAL_RHYTHMSCORE_PROC_10
+			score	= VAL_RHYTHMSCORE_PROC_10;
+#endif 
 		}
-
-		OS_Printf( "経過時間 点%d\n", score );
+		OS_Printf( "経過時間 %d点", score );
 		score	= 0;
 		for( i = 1; i < 10; i++ )
 		{	

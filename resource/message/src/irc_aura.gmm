@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-05-28T12:56:58"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-05-29T18:21:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,11 +365,13 @@
 	</row>
 
 	<row id="AURA_DEBUG_001">
-		<language name="JPN" width="256">　</language>
-		<language name="JPN_KANJI" width="256">　</language>
+		<comment>デバッグ用</comment>
+		<language name="JPN" width="256">あいての　ばん　です</language>
+		<language name="JPN_KANJI" width="256">相手の番です</language>
 	</row>
 
 	<row id="AURA_DEBUG_002">
+		<comment>デバッグ用</comment>
 		<language name="JPN" width="256">しゅうりょうです
 ありがとうございました</language>
 		<language name="JPN_KANJI" width="256">終了です
