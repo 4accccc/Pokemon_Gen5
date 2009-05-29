@@ -372,6 +372,8 @@ static GFL_PROC_RESULT EffectViewerProcExit( GFL_PROC * proc, int * seq, void * 
 
   BTLV_EFFECT_Exit();
 
+  GFL_CLACT_SYS_Delete();
+
   GFL_G3D_Exit();
 
   GFL_MSG_Delete( evw->msg );

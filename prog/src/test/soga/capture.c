@@ -387,6 +387,8 @@ static GFL_PROC_RESULT CaptureTestProcExit( GFL_PROC * proc, int * seq, void * p
 
   BTLV_EFFECT_Exit();
 
+  GFL_CLACT_SYS_Delete();
+
   GFL_G3D_Exit();
 
   GFL_BG_Exit();

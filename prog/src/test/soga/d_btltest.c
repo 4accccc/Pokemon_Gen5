@@ -370,6 +370,8 @@ static GFL_PROC_RESULT DebugBattleTestProcExit( GFL_PROC * proc, int * seq, void
 
   BTLV_EFFECT_Exit();
 
+  GFL_CLACT_SYS_Delete();
+
   GFL_G3D_Exit();
 
   GFL_BG_Exit();
