@@ -43,6 +43,7 @@
 #ifdef defined DEBUG_ONLY_FOR_toru_nagihashi
 #define DEBUG_RETURN_TO_PROG	//戻るボタンを押すと次へ進む
 #endif	//DEBUG_ONLY_FOR_toru_nagihashi
+#define DEBUG_ONLY_PLAY
 #endif	//PM_DEBUG
 
 //=============================================================================
@@ -91,6 +92,9 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	BOOL								is_init;
 	MYSTATUS						*p_you_status;
 
+#ifdef DEBUG_ONLY_PLAY
+	u8									you_score;
+#endif //DEBUG_ONLY_PLAY
 };
 
 //=============================================================================
@@ -110,6 +114,7 @@ static void SEQFUNC_Start( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_End( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_MenuProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_CompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_DebugCompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq );
 //PROCMODE
 static void SUBPROC_Init( SUBPROC_WORK *p_wk, HEAPID heapID );
 static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk );
@@ -366,19 +371,19 @@ static void SEQFUNC_Start( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	enum
 	{	
-		SEQ_NET_INIT,
+	//	SEQ_NET_INIT,
 		SEQ_CHANGE_MENU,
 	};
 
 	switch( *p_seq )
 	{	
-	case SEQ_NET_INIT:
+/*	case SEQ_NET_INIT:
 		if( COMPATIBLE_IRC_InitWait( p_wk->p_irc ) )
 		{	
 			*p_seq	= SEQ_CHANGE_MENU;
 		}
 		break;
-		
+	*/	
 	case SEQ_CHANGE_MENU:
 		SEQ_Change( p_wk, SEQFUNC_MenuProc );
 		break;
@@ -397,20 +402,12 @@ static void SEQFUNC_End( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	enum
 	{	
-		SEQ_NET_DISCONNECT,
 		SEQ_NET_EXIT,
 		SEQ_END,
 	};
 
 	switch( *p_seq )
 	{	
-	case SEQ_NET_DISCONNECT:
-		if( COMPATIBLE_IRC_DisConnextWait( p_wk->p_irc ) )
-		{	
-			*p_seq	= SEQ_NET_EXIT;
-		}
-		break;
-
 	case SEQ_NET_EXIT:
 		if( COMPATIBLE_IRC_ExitWait( p_wk->p_irc ) )
 		{	
@@ -552,7 +549,78 @@ static void SEQFUNC_CompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 	};
 }
+#ifdef DEBUG_ONLY_PLAY
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグ相性PROCゲーム
+ *
+ *	@param	IRC_COMPATIBLE_MAIN_WORK *p_wk	ワーク
+ *	@param	*p_seq													シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_DebugCompatibleProc( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
+{	
+	enum
+	{	
+		SEQ_INIT,
+		SEQ_PROC_MY_RHYTHM,
+		SEQ_PROC_YOU_RHYTHM,
+		SEQ_PROC_MY_AURA,
+		SEQ_PROC_YOU_AURA,
+		SEQ_PROC_RESULT,
+		SEQ_END,
+	};
 
+	switch( *p_seq )
+	{	
+	case SEQ_INIT:
+		p_wk->score			= 0;
+		p_wk->you_score	= 0;
+		*p_seq	= SEQ_PROC_MY_RHYTHM;
+		break;
+
+	case SEQ_PROC_MY_RHYTHM:
+		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_RHYTHM, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
+		{	
+			*p_seq	= SEQ_PROC_YOU_RHYTHM;
+		}
+		break;
+
+	case SEQ_PROC_YOU_RHYTHM:
+		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_RHYTHM, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
+		{	
+			*p_seq	= SEQ_PROC_MY_AURA;
+		}
+		break;
+
+	case SEQ_PROC_MY_AURA:
+		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_AURA, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
+		{	
+			*p_seq	= SEQ_PROC_YOU_AURA;
+		}
+		break;
+
+	case SEQ_PROC_YOU_AURA:
+		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_AURA, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
+		{	
+			*p_seq	= SEQ_PROC_RESULT;
+		}
+		break;
+
+	case SEQ_PROC_RESULT:
+		if( SUBPROC_CallProcReq( &p_wk->subproc, SUBPROCID_RESULT, HEAPID_IRCCOMPATIBLE_SYSTEM, p_wk ) )
+		{	
+			*p_seq	= SEQ_END;
+		}
+		break;
+
+	case SEQ_END:
+		SEQ_End( p_wk );
+		break;
+	};
+}
+#endif //DEBUG_ONLY_PLAY
 //=============================================================================
 /**
  *			SUBPROCシステム

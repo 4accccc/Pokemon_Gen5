@@ -496,6 +496,7 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 
 	case SEQ_DISCONNECT_WAIT:
 		if( !p_sys->is_connect || GFL_NET_IsExit() ){
+			p_sys->is_connect	= FALSE;
 			p_sys->seq = SEQ_DISCONNECT_END;
 		}
 		break;
@@ -509,6 +510,21 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 	}
 	
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	接続中かチェック
+ *
+ *	@param	const COMPATIBLE_IRC_SYS *cp_sys ワーク
+ *
+ *	@retval	接続中
+ *	@retval	切断中
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_IRC_IsConnext( const COMPATIBLE_IRC_SYS *cp_sys )
+{	
+	return cp_sys->is_connect;
 }
 
 //----------------------------------------------------------------------------

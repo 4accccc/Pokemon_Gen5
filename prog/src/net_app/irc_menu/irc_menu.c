@@ -38,6 +38,11 @@
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	音楽
+//=====================================
+#define MENU_SE_DECIDE	(SEQ_SE_DECIDE1)
+#define MENU_SE_CANCEL	(SEQ_SE_CANCEL1)
 
 
 //-------------------------------------
@@ -259,6 +264,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_NextProc( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_DisConnect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_End( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
 //BTN
 static void BUTTON_Init( BUTTON_WORK *p_wk, u8 frm, const	 BUTTON_SETUP *cp_btn_setup_tbl, u8 tbl_max, const MSG_WORK *cp_msg, GFL_ARCUTIL_TRANSINFO frame_char, u8 plt, HEAPID heapID );
 static void BUTTON_Exit( BUTTON_WORK *p_wk );
@@ -418,18 +424,18 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 			MSGWND_MSG_X, MSGWND_MSG_Y, MSGWND_MSG_W, MSGWND_MSG_H, IRC_MENU_BG_PAL_M_00, HEAPID_IRCCOMPATIBLE );
 	BmpWinFrame_Write( p_wk->msgwnd.p_bmpwin, WINDOW_TRANS_ON, 
 					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->bg.frame_char), IRC_MENU_BG_PAL_M_01 );
-	MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_000, 0, 0 );
 
+	GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
 
 	switch( p_wk->p_param->mode )
 	{	
 	case IRCMENU_MODE_INIT:
-		SEQ_Change( p_wk, SEQFUNC_Connect );
+		SEQ_Change( p_wk, SEQFUNC_Select );
 		break;
 
 	case IRCMENU_MODE_RETURN:
 		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
-		SEQ_Change( p_wk, SEQFUNC_Select );
+		SEQ_Change( p_wk, SEQFUNC_DisConnect );
 		break;
 
 	default:
@@ -1098,12 +1104,20 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_TIMING,
 		SEQ_MSG_CONNECT,
 		SEQ_CHANGE_SELECT,
+		SEQ_SENDMENU,
+		SEQ_RECVMENU,
+		SEQ_SENDRETURNMENU,
+		SEQ_RECVRETURNMENU,
+		SEQ_NEXTPROC,
 	};
 
 	switch( *p_seq )
 	{	
 	case SEQ_MSG_STARTNET:
-		*p_seq	= SEQ_CONNECT;
+		if(COMPATIBLE_IRC_InitWait( p_wk->p_param->p_irc ) )
+		{	
+			*p_seq	= SEQ_CONNECT;
+		}
 		break;
 
 	case SEQ_CONNECT:
@@ -1114,9 +1128,9 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 		if( TP_GetRectTrg( &sc_btn_setp_tbl[BTNID_RETURN] ) )
 		{
-			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+			PMSND_PlaySystemSE( MENU_SE_CANCEL );
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-			SEQ_Change( p_wk, SEQFUNC_DisConnect );
+			SEQ_Change( p_wk, SEQFUNC_End );
 		}
 		break;
 
@@ -1129,9 +1143,9 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 		if( TP_GetRectTrg( &sc_btn_setp_tbl[BTNID_RETURN] ) )
 		{
-			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+			PMSND_PlaySystemSE( MENU_SE_CANCEL );
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-			SEQ_Change( p_wk, SEQFUNC_DisConnect );
+			SEQ_Change( p_wk, SEQFUNC_End );
 		}
 		break;
 
@@ -1144,16 +1158,40 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_MSG_CONNECT:
 		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_002, 0, 0  );
-		*p_seq	= SEQ_CHANGE_SELECT;
+		*p_seq	= SEQ_SENDMENU;
 		break;
 		
-	case SEQ_CHANGE_SELECT:
-		if( GFL_UI_TP_GetTrg() )
+	case SEQ_SENDMENU:
+		p_wk->is_send	= TRUE;
+		if( COMPATIBLE_MENU_SendMenuData( p_wk->p_param->p_irc, p_wk->now_ms, p_wk->select ) )
 		{	
-			PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
-			GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
-			SEQ_Change( p_wk, SEQFUNC_Select );
+			*p_seq	= SEQ_RECVMENU;
 		}
+		break;
+
+	case SEQ_RECVMENU:
+		if( COMPATIBLE_MENU_RecvMenuData( p_wk->p_param->p_irc ) )
+		{	
+			*p_seq	= SEQ_SENDRETURNMENU;
+		}
+		break;
+
+	case SEQ_SENDRETURNMENU:
+		if( COMPATIBLE_MENU_SendReturnMenu( p_wk->p_param->p_irc ) )
+		{
+			*p_seq	= SEQ_RECVRETURNMENU;
+		}
+		break;
+
+	case SEQ_RECVRETURNMENU:
+		if( COMPATIBLE_MENU_RecvReturnMenu( p_wk->p_param->p_irc ) )
+		{
+			*p_seq	= SEQ_NEXTPROC;
+		}
+		break;
+
+	case SEQ_NEXTPROC:
+		SEQ_Change( p_wk, SEQFUNC_NextProc );
 		break;
 	};
 }
@@ -1172,12 +1210,10 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_INIT,
 		SEQ_SELECT,
 		SEQ_MSG,
-		SEQ_SENDMENU,	
-		SEQ_RECVMENU,	
 		SEQ_NEXTPROC,	
 	};
 	u32 ret;
-
+#if 0
 	//初期化以外受信して、次のPROCを決める処理
 	if( *p_seq != SEQ_INIT  )
 	{	
@@ -1227,7 +1263,7 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 			}
 		}
 	}
-
+#endif
 	switch( *p_seq )
 	{	
 	case SEQ_INIT:
@@ -1245,12 +1281,12 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 			switch( p_wk->select )
 			{	
 			case BTNID_COMATIBLE:
-				PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+				PMSND_PlaySystemSE( MENU_SE_DECIDE );
 				*p_seq	= SEQ_MSG;
 				break;
 			case BTNID_RETURN:
-				PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
-				SEQ_Change( p_wk, SEQFUNC_DisConnect );
+				PMSND_PlaySystemSE( MENU_SE_CANCEL );
+				SEQ_Change( p_wk, SEQFUNC_End );
 				break;
 			};
 		}
@@ -1260,9 +1296,9 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MSG:
 		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_003, 0, 0  );
 		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], TRUE );
-		*p_seq	= SEQ_SENDMENU;
+		SEQ_Change( p_wk, SEQFUNC_Connect );
 		break;
-
+#if 0
 	case SEQ_SENDMENU:
 		p_wk->is_send	= TRUE;
 		if( COMPATIBLE_MENU_SendMenuData( p_wk->p_param->p_irc, p_wk->now_ms, p_wk->select ) )
@@ -1281,14 +1317,14 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_NEXTPROC:
 		SEQ_Change( p_wk, SEQFUNC_NextProc );
 		break;
+#endif
 	};
 
 	if( TouchReturnBtn() && *p_seq >= SEQ_MSG )
 	{
 		COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
-		p_wk->p_param->select	= IRCMENU_SELECT_RETURN;
-		SEQ_Change( p_wk, SEQFUNC_DisConnect );
+		PMSND_PlaySystemSE( MENU_SE_CANCEL );
+		SEQ_Change( p_wk, SEQFUNC_End );
 	}
 }
 
@@ -1335,13 +1371,73 @@ static void SEQFUNC_DisConnect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	enum{	
 		SEQ_NET_DISCONNECT,
-		SEQ_END,
+		SEQ_NET_EXIT,
+		SEQ_CHANGE_MENU,
 	};
 
 	switch( *p_seq )
 	{	
 	case SEQ_NET_DISCONNECT:
-		//if( COMPATIBLE_IRC_DisConnextWait( p_wk->p_param->p_irc ) )
+		if( COMPATIBLE_IRC_DisConnextWait( p_wk->p_param->p_irc ) )
+		{	
+			*p_seq	= SEQ_NET_EXIT;
+		}
+		break;
+
+	case SEQ_NET_EXIT:
+		if( COMPATIBLE_IRC_ExitWait( p_wk->p_param->p_irc) )
+		{	
+			*p_seq	= SEQ_CHANGE_MENU;
+		}
+		break;
+
+	case SEQ_CHANGE_MENU:
+		SEQ_Change( p_wk, SEQFUNC_Select );
+		break;
+
+	};
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	終了シーケンス
+ *
+ *	@param	IRC_MENU_MAIN_WORK *p_wk	ワーク
+ *	@param	*p_seq													シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_End( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
+{	
+	enum{	
+		SEQ_JUNCTION,
+		SEQ_NET_DISCONNECT,
+		SEQ_NET_EXIT,
+		SEQ_END,
+	};
+
+	switch( *p_seq )
+	{
+	case SEQ_JUNCTION:
+		if( COMPATIBLE_IRC_IsConnext(p_wk->p_param->p_irc) )
+		{	
+			*p_seq	= SEQ_NET_DISCONNECT;
+		}
+		else
+		{	
+			*p_seq	= SEQ_END;
+		}
+		break;
+
+	case SEQ_NET_DISCONNECT:
+		if( COMPATIBLE_IRC_DisConnextWait( p_wk->p_param->p_irc ) )
+		{	
+			*p_seq	= SEQ_NET_EXIT;
+		}
+		break;
+
+	case SEQ_NET_EXIT:
+		if( COMPATIBLE_IRC_ExitWait( p_wk->p_param->p_irc) )
 		{	
 			*p_seq	= SEQ_END;
 		}
@@ -1351,8 +1447,7 @@ static void SEQFUNC_DisConnect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		p_wk->p_param->select	= IRCMENU_SELECT_RETURN;
 		SEQ_End( p_wk );
 		break;
-
-	};
+	}
 }
 //=============================================================================
 /**
