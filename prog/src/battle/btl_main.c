@@ -1364,6 +1364,42 @@ u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
 
 //=============================================================================================
 /**
+ * •`‰æˆÊ’u -> í“¬ˆÊ’u•ÏŠ·
+ *
+ * @param   wk
+ * @param   vpos
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos )
+{
+  u8 isFarSide = ( vpos & 1 );
+
+  if( wk->setupParam->rule == BTL_RULE_SINGLE )
+  {
+    if( isFarSide ){
+      return !(wk->myOrgPos);
+    }else{
+      return wk->myOrgPos;
+    }
+  }
+  else
+  {
+    u8 org_pos = (wk->myOrgPos & 1);
+    if( isFarSide )
+    {
+      return (!org_pos) + (vpos / 2);
+    }
+    else
+    {
+      return org_pos + (vpos / 2);
+    }
+  }
+}
+
+//=============================================================================================
+/**
  * –¡•û“¯Žm‚Ìƒ|ƒPƒ‚ƒ“ID‚©‚Ç‚¤‚©‚ð”»’è‚·‚é
  *
  * @param   pokeID1

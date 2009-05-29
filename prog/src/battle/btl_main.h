@@ -64,6 +64,7 @@ extern BTL_PARTY* BTL_POKECON_GetPartyData( BTL_POKE_CONTAINER* wk, u32 clientID
 extern const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER* wk, u32 clientID );
 
 extern BtlPokePos BTL_MAIN_PokeIDtoPokePosClient( const BTL_MAIN_MODULE* wk, u8 pokeID );
+extern BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos );
 
 
 //-------------------------------------------------------------------------------
