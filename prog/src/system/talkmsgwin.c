@@ -414,7 +414,7 @@ void TALKMSGWIN_CreateFixWindowAuto(	TALKMSGWIN_SYS* tmsgwinSys,
 
 	NNS_G3dWorldPosToScrPos(pTarget, &targetx, &targety);
 
-	if( targety < (96+16) ){ 
+	if( targety < (96) ){ 
 		TALKMSGWIN_CreateFixWindowLower(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx);
 	} else {
 		TALKMSGWIN_CreateFixWindowUpper(tmsgwinSys, tmsgwinIdx, pTarget, msg, colIdx);

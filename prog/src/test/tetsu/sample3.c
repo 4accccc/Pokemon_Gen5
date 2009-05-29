@@ -22,6 +22,7 @@
 #include "test/camera_adjust_view.h"
 
 #include "system/talkmsgwin.h"
+#include "msg/msg_d_tetsu.h"
 
 //============================================================================================
 /**
@@ -82,9 +83,6 @@ static const GFL_CAMADJUST_SETUP camAdjustData= {
  * @brief	
  */
 //------------------------------------------------------------------
-static const u16 testMsg[] = { L"セリフを入れよう！！" };
-static const u16 testMsg2[] = { L"連動" };
-
 //============================================================================================
 /**
  *
@@ -119,6 +117,7 @@ typedef struct {
 	VecFx32							cameraTarget;
 	BOOL								tmsgwinConnect;
 
+	GFL_MSGDATA*				msgManager;
 	STRBUF*							strBuf[TALKMSGWIN_NUM];
 	VecFx32							twinTarget[TALKMSGWIN_NUM];
 
@@ -234,7 +233,6 @@ static void systemFramework(SAMPLE3_WORK* sw);
 static void systemDelete(SAMPLE3_WORK* sw);
 
 static BOOL calcTarget(GFL_G3D_CAMERA* g3Dcamera, int x, int y, VecFx32* target);
-static void makeStr(const u16* str, STRBUF* strBuf);
 static void commFunc(SAMPLE3_WORK* sw);
 
 static void setSampleMsg1(SAMPLE3_WORK* sw, int idx);
@@ -245,6 +243,7 @@ static void setSampleMsg1(SAMPLE3_WORK* sw, int idx);
  *
  */
 //------------------------------------------------------------------
+#define FIX_WIN_IDX	(0)
 static BOOL	sample3(SAMPLE3_WORK* sw)
 {
 	switch(sw->seq){
@@ -306,16 +305,16 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 				break;
 			}
 			if( GFL_UI_TP_GetPointTrg( &tpx, &tpy ) == TRUE ){
-				makeStr(testMsg, sw->strBuf[0]);
-				//calcTarget(	sw->g3Dcamera, tpx, tpy, &sw->twinTarget[0]);
-				VEC_Set(&sw->twinTarget[0], 
+				GFL_MSG_GetString(sw->msgManager, DEBUG_TETSU_STR0_4, sw->strBuf[FIX_WIN_IDX]);
+				//calcTarget(	sw->g3Dcamera, tpx, tpy, &sw->twinTarget[FIX_WIN_IDX]);
+				VEC_Set(&sw->twinTarget[FIX_WIN_IDX], 
 								sw->cameraTarget.x + 16*FX32_ONE,
 								sw->cameraTarget.y - 16*FX32_ONE,
 								sw->cameraTarget.z + 16*FX32_ONE);
 
 				TALKMSGWIN_CreateFixWindowAuto
-					(sw->tmsgwinSys, 0, &sw->twinTarget[0], sw->strBuf[0], 15);
-				TALKMSGWIN_OpenWindow(sw->tmsgwinSys, 0);
+					(sw->tmsgwinSys, FIX_WIN_IDX, &sw->twinTarget[FIX_WIN_IDX], sw->strBuf[FIX_WIN_IDX], 15);
+				TALKMSGWIN_OpenWindow(sw->tmsgwinSys, FIX_WIN_IDX);
 				sw->seq = 3;
 			}
 		}
@@ -333,7 +332,7 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 
 	case 3:
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-			TALKMSGWIN_DeleteWindow(sw->tmsgwinSys, 0);
+			TALKMSGWIN_DeleteWindow(sw->tmsgwinSys, FIX_WIN_IDX);
 			sw->seq = 1;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
@@ -492,6 +491,9 @@ static void systemSetup(SAMPLE3_WORK* sw)
 	//フォントハンドル作成
 	sw->fontHandle = GFL_FONT_Create
 		(	ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, sw->heapID);
+	//メッセージマネージャ作成
+	sw->msgManager = GFL_MSG_Create
+		(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tetsu_dat, sw->heapID);
 
 	//カメラ作成
 	sw->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(&cameraPos, &cameraTarget, sw->heapID);
@@ -599,6 +601,7 @@ static void systemDelete(SAMPLE3_WORK* sw)
 
 	GFL_G3D_CAMERA_Delete(sw->g3Dcamera);
 
+	GFL_MSG_Delete(sw->msgManager);
 	GFL_FONT_Delete(sw->fontHandle);
 	bg_exit();
 }
@@ -669,28 +672,6 @@ static BOOL calcTarget(GFL_G3D_CAMERA* g3Dcamera, int x, int y, VecFx32* target)
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief	文字列作成
- */
-//------------------------------------------------------------------
-static void makeStr(const u16* str, STRBUF* strBuf)
-{
-	STRCODE strTmp[STRBUF_SIZE];
-	u32 strLen;
-
-	//文字列長さ取得
-	const u16 checkLen = wcslen(str);
-	if(checkLen >= STRBUF_SIZE){ strLen = STRBUF_SIZE - 1; }
-	else { strLen = checkLen; }
-
-	//終端コードを追加してからSTRBUFに変換
-	GFL_STD_MemCopy(str, strTmp, strLen*2);
-	strTmp[strLen] = GFL_STR_GetEOMCode();
-
-	GFL_STR_SetStringCode(strBuf, strTmp);
-}
-
-//------------------------------------------------------------------
-/**
  * @brief	テストコマンドテーブル
  */
 //------------------------------------------------------------------
@@ -712,14 +693,6 @@ enum {
 };
 static const COMM_TBL commTbl[COMM_MAX];
 
-enum {
-	MSG_TEST1 = 0,
-	MSG_TEST2,
-	MSG_TEST3,
-
-	MSG_TEST_MAX,
-};
-static const u16* testMsgTbl[MSG_TEST_MAX];
 //------------------------------------------------------------------
 /**
  * @brief	テストコマンド
@@ -764,12 +737,16 @@ static BOOL commWait(SAMPLE3_WORK* sw)
 static BOOL commSetMsg(SAMPLE3_WORK* sw)
 {
 	u16	winIdx = sw->msgComm.commParam[0];
+	u16	msgID = sw->msgComm.commParam[3];
+	u16	msgWidth;
+	u16	msgHeight = 2;
 
-	makeStr(testMsgTbl[sw->msgComm.commParam[5]], sw->strBuf[winIdx]);
-	
+	GFL_MSG_GetString(sw->msgManager, msgID, sw->strBuf[winIdx]);
+	msgWidth = GFL_MSG_GetDispAreaWidth(sw->msgManager, msgID) / 8;
+
 //	calcTarget(	sw->g3Dcamera, 
-//							sw->msgComm.commParam[6], 
-//							sw->msgComm.commParam[7], 
+//							sw->msgComm.commParam[4], 
+//							sw->msgComm.commParam[5], 
 //							&sw->twinTarget[winIdx]);
 	VEC_Set(&sw->twinTarget[winIdx], 
 					sw->cameraTarget.x + 16*FX32_ONE,
@@ -780,10 +757,9 @@ static BOOL commSetMsg(SAMPLE3_WORK* sw)
 																		winIdx,
 																		&sw->twinTarget[winIdx],
 																		sw->strBuf[winIdx],
-																		sw->msgComm.commParam[1],
+																		sw->msgComm.commParam[1] - msgWidth/2,
 																		sw->msgComm.commParam[2],
-																		sw->msgComm.commParam[3],
-																		sw->msgComm.commParam[4],
+																		msgWidth, msgHeight,
 																		15);
 
 	TALKMSGWIN_OpenWindow(sw->tmsgwinSys, winIdx);
@@ -795,17 +771,20 @@ static BOOL commSetMsg(SAMPLE3_WORK* sw)
 static BOOL commConnectMsg(SAMPLE3_WORK* sw)
 {
 	u16	winIdx = sw->msgComm.commParam[0];
+	u16	msgID = sw->msgComm.commParam[3];
+	u16	msgWidth;
+	u16	msgHeight = 2;
 
-	makeStr(testMsgTbl[sw->msgComm.commParam[5]], sw->strBuf[winIdx]);
+	GFL_MSG_GetString(sw->msgManager, msgID, sw->strBuf[winIdx]);
+	msgWidth = GFL_MSG_GetDispAreaWidth(sw->msgManager, msgID) / 8;
 	
 	TALKMSGWIN_CreateFloatWindowIdxConnect( sw->tmsgwinSys,
 																					winIdx,
-																					sw->msgComm.commParam[6],
-																					sw->strBuf[winIdx],
-																					sw->msgComm.commParam[1],
-																					sw->msgComm.commParam[2],
-																					sw->msgComm.commParam[3],
 																					sw->msgComm.commParam[4],
+																					sw->strBuf[winIdx],
+																					sw->msgComm.commParam[1] - msgWidth/2,
+																					sw->msgComm.commParam[2],
+																					msgWidth, msgHeight,
 																					15);
 
 	TALKMSGWIN_OpenWindow(sw->tmsgwinSys, winIdx);
@@ -827,33 +806,25 @@ static const COMM_TBL commTbl[COMM_MAX] = {
 	{ NULL,							0 },
 	{ commEnd,					0 },
 	{ commWait,					1 },
-	{ commSetMsg,				8 },
-	{ commConnectMsg,		7 },
+	{ commSetMsg,				6 },
+	{ commConnectMsg,		5 },
 	{ commDelMsg,				1 },
 };
 
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const u16* testMsgTbl[MSG_TEST_MAX] = {
-	{ L"戦闘力・・・" },
-	{ L"たったの５か・・・" },
-	{ L"ゴミめ・・・" },
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 static const u16 sampleMsg1[] = {
-	COMMSETMSG, 0, 16, 2, 12, 2, MSG_TEST1, 128, 160,
-	COMMWAIT, 120,
-	COMMCONNECTMSG, 1, 12, 8, 16, 2, MSG_TEST2, 0,
-	COMMWAIT, 120,
-	COMMCONNECTMSG, 2, 13, 14, 10, 2, MSG_TEST3, 1,
-	COMMWAIT, 120,
+	COMMSETMSG,				0, 20, 2, DEBUG_TETSU_STR0_1, 128, 160,
+	COMMWAIT,					120,
+	COMMCONNECTMSG,		1, 19, 8, DEBUG_TETSU_STR0_2, 0,
+	COMMWAIT,					120,
+	COMMCONNECTMSG,		2, 18, 14, DEBUG_TETSU_STR0_3, 1,
+	COMMWAIT,					120,
 
-	COMMDELMSG, 0,
-	COMMDELMSG, 1,
-	COMMDELMSG, 2,
+	COMMDELMSG,				0,
+	COMMDELMSG,				1,
+	COMMDELMSG,				2,
 	COMMEND,
 };
 

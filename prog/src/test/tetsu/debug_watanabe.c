@@ -6,16 +6,17 @@
  * @date	2007.02.01
  */
 //============================================================================================
-#include <wchar.h>
 #include "gflib.h"
 #include "system/gfl_use.h"
 #include "system\main.h"
 #include "arc_def.h"
+#include "message.naix"
 
 #include "font/font.naix"
 #include "print/printsys.h"
 #include "print/str_tool.h"
 
+#include "msg/msg_d_tetsu.h"
 //============================================================================================
 /**
  *
@@ -122,8 +123,8 @@ const GFL_PROC_DATA DebugWatanabeMainProcData = {
 //------------------------------------------------------------------
 #define LISTITEM_NAMESIZE	(32)
 typedef struct {
-	u16						str[LISTITEM_NAMESIZE];
-	FSOverlayID				procOvID;
+	u32										msgID;
+	FSOverlayID						procOvID;
 	const GFL_PROC_DATA*	procData;
 }DEBUGITEM_LIST;
 
@@ -135,9 +136,9 @@ FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeSample3ProcData;
 
 static const DEBUGITEM_LIST debugItemList[] = {
-	{L"■３Ｄシーンサンプル",			FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
-	{L"■電光けいじばんサンプル",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample2ProcData},
-	{L"■サンプル",	FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample3ProcData},
+	{DEBUG_TETSU_MENU1, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
+	{DEBUG_TETSU_MENU2, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample2ProcData},
+	{DEBUG_TETSU_MENU3, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample3ProcData},
 };
 
 //------------------------------------------------------------------
@@ -152,7 +153,8 @@ typedef struct {
 	
 	PRINT_UTIL			printUtil;
 	PRINT_QUE*			printQue;
-	GFL_FONT*			fontHandle;
+	GFL_FONT*				fontHandle;
+	GFL_MSGDATA*		msgManager;
 	GFL_BMPWIN*			bmpwin;
 	
 	GFL_UI_TP_HITTBL	tpTable[NELEMS(debugItemList)+1];
@@ -353,6 +355,9 @@ static void systemSetup(DEBUG_WATANABE_WORK* dw)
 	//プリントキューハンドル作成
 	dw->printQue = PRINTSYS_QUE_Create(dw->heapID);
 
+	dw->msgManager = GFL_MSG_Create
+		(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tetsu_dat, dw->heapID);
+
 	//描画用ビットマップ作成（画面全体）
 	dw->bmpwin = GFL_BMPWIN_Create(	TEXT_FRAME,
 									0, 0, 32, 24,
@@ -383,6 +388,8 @@ static void systemDelete(DEBUG_WATANABE_WORK* dw)
 {
 	PRINTSYS_QUE_Clear(dw->printQue);
 	GFL_BMPWIN_Delete(dw->bmpwin);
+
+	GFL_MSG_Delete(dw->msgManager);
 
 	PRINTSYS_QUE_Delete(dw->printQue);
 	GFL_FONT_Delete(dw->fontHandle);
@@ -418,7 +425,6 @@ static void systemDelete(DEBUG_WATANABE_WORK* dw)
 //------------------------------------------------------------------
 static void drawList(DEBUG_WATANABE_WORK* dw)
 {
-	STRCODE			str[128];
 	STRBUF*			strBuf;
 	PRINTSYS_LSB	lsb;
 	int i;
@@ -428,12 +434,8 @@ static void drawList(DEBUG_WATANABE_WORK* dw)
 	strBuf = GFL_STR_CreateBuffer(LISTITEM_NAMESIZE+1, dw->heapID);
 
 	for( i=0; i<NELEMS(debugItemList); i++ ){
-		//終端コードを追加してからSTRBUFに変換
-		const u16 strLen = wcslen(debugItemList[i].str);
-		GFL_STD_MemCopy(debugItemList[i].str, str, strLen*2);
-		str[strLen] = GFL_STR_GetEOMCode();
-		GFL_STR_SetStringCode(strBuf, str);
-			
+		GFL_MSG_GetString(dw->msgManager, debugItemList[i].msgID, strBuf);
+
 		if( i == dw->selectItem ){ lsb = PRINTSYS_LSB_Make(3,2,15); }
 		else { lsb = PRINTSYS_LSB_Make(1,2,15); }
 
