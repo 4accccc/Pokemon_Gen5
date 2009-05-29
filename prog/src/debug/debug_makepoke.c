@@ -45,7 +45,7 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Quit( GFL_PROC* proc, int* seq, void* pwk, 
  *  Proc Data
  */
 //--------------------------------------------------------------
-const GFL_PROC_DATA ProcData_DebugPokeMake = {
+const GFL_PROC_DATA ProcData_DebugMakePoke = {
   PROC_MAKEPOKE_Init,
   PROC_MAKEPOKE_Main,
   PROC_MAKEPOKE_Quit,
