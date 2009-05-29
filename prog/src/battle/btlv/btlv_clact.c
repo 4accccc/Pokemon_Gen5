@@ -101,7 +101,6 @@ void  BTLV_CLACT_Exit( BTLV_CLACT_WORK *bclw )
     }
   }
   GFL_CLACT_UNIT_Delete( bclw->clunit );
-  GFL_CLACT_SYS_Delete();
   GFL_HEAP_FreeMemory( bclw );
 }
 
