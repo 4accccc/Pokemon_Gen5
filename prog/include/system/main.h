@@ -1,9 +1,9 @@
 //===================================================================
 /**
- * @file	main.h
- * @brief	アプリケーション　サンプルスケルトン
- * @author	GAME FREAK Inc.
- * @date	06.11.28
+ * @file  main.h
+ * @brief アプリケーション　サンプルスケルトン
+ * @author  GAME FREAK Inc.
+ * @date  06.11.28
  *
  * $LastChangedDate$
  * $Id$
@@ -35,7 +35,7 @@ enum{
   HEAPID_MATSUDA_DEBUG,
   HEAPID_GOTO_DEBUG,
   HEAPID_ARIIZUMI_DEBUG,
-	HEAPID_NAGI_DEBUG,
+  HEAPID_NAGI_DEBUG,
   HEAPID_NETWORK_FIX,
   HEAPID_NETWORK,
   HEAPID_WIFI,
@@ -76,17 +76,18 @@ enum{
   HEAPID_WIFINOTE,
   HEAPID_CGEAR,
   HEAPID_DEBUGWIN,
-	HEAPID_IRCAURA,
-	HEAPID_IRCRHYTHM,
+  HEAPID_IRCAURA,
+  HEAPID_IRCRHYTHM,
   HEAPID_SEL_MODE,
-	HEAPID_IRCCOMPATIBLE_SYSTEM,
-	HEAPID_IRCCOMPATIBLE,
-	HEAPID_IRCRESULT,
-	HEAPID_NEWSDRAW,
+  HEAPID_IRCCOMPATIBLE_SYSTEM,
+  HEAPID_IRCCOMPATIBLE,
+  HEAPID_IRCRESULT,
+  HEAPID_NEWSDRAW,
+  HEAPID_DEBUG_POKEMAKE,
 
-  HEAPID_CHILD_MAX,	//終端
+  HEAPID_CHILD_MAX, //終端
 };
 
-#define	HEAPSIZE_SYSTEM	(0x008000)
-#define	HEAPSIZE_APP	(0x180000)   // PL,GSは約0x13A000
+#define HEAPSIZE_SYSTEM (0x008000)
+#define HEAPSIZE_APP  (0x180000)   // PL,GSは約0x13A000
 
