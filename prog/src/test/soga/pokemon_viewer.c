@@ -333,6 +333,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 
   //戦闘エフェクト初期化
   {
+    GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, pvw->heapID );
     BTLV_EFFECT_Init( 0, pvw->heapID );
   }
 

@@ -250,6 +250,7 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
   wk->seq_no = 0;
 #if 1
   {
+    GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, wk->heapID );
     BTLV_EFFECT_Init( 0, wk->heapID );
     wk->bcw = BTLV_EFFECT_GetCameraWork();
   }
