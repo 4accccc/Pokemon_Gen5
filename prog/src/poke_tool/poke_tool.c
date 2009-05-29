@@ -1254,7 +1254,14 @@ static void  calc_renew_core( POKEMON_PARAM *pp )
 			hp = hpmax;
 		}
 		else{
-			hp += ( hpmax - oldhpmax );
+			if( ( hpmax - oldhpmax ) < 0 ){
+				if( hp > hpmax ){
+					hp = hpmax;
+				}
+			}
+			else{
+			  hp += ( hpmax - oldhpmax );
+			}
 		}
 	}
 
