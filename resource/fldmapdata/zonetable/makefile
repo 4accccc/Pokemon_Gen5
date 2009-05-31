@@ -48,7 +48,11 @@ WORKDIR		= tmp
 DATAFILE	= zonetable.xls
 DATATABTXT	= $(WORKDIR)/$(DATAFILE:.xls=.txt)
 CONVSRCS	= $(WORKDIR)/zonetable.c
-DEPFILES	= ../area_data/area_id.h
+DEPFILES	= ../area_data/area_id.h \
+						../../sound/wb_sound_data.sadl \
+						../script/script_seq.naix \
+						../../message/message.naix \
+						tmp/map_matrix.h
 
 MATRIXDATA = ../map_matrix/map_matrix.xls
 MATRIXHEADER = $(WORKDIR)/map_matrix.h
