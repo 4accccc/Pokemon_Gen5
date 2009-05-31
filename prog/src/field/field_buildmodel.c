@@ -180,7 +180,7 @@ void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man)
  * @param man 配置モデルマネジャーへのポインタ
  */
 //------------------------------------------------------------------
-void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid)
+void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata)
 {	
 	u16 area_id = ZONEDATA_GetAreaID(zoneid);
 	u16 bmlist_index = calcArcIndex(area_id);
@@ -195,7 +195,7 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid)
     FIELD_BMANIME_DATA_init(&man->animeData[i]);
   }
 
-  if (AREADATA_GetInnerOuterSwitch(area_id) != 0) 
+  if (AREADATA_GetInnerOuterSwitch(areadata) != 0) 
   {	
     man->model_arcid = ARCID_BMODEL_OUTDOOR;
     model_info_dataid = NARC_buildmodel_info_buildmodel_outdoor_bin;

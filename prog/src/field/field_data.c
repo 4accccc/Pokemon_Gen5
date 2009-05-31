@@ -44,10 +44,9 @@ static u16 MapID2ResistID(u16 mapid)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void FIELDDATA_SetMapperData(
-	u16 mapid, u8 sid, FLDMAPPER_RESISTDATA * map_res, MAP_MATRIX *matrix_buf )
+void FIELDDATA_SetMapperData(u16 mapid, const AREADATA * areadata,
+    FLDMAPPER_RESISTDATA * map_res, MAP_MATRIX *matrix_buf )
 {
-	u16 area_id = ZONEDATA_GetAreaID(mapid);
 	u16 resid = MapID2ResistID(mapid);
 	*map_res = resistMapTbl[resid].mapperData;
 
@@ -62,22 +61,16 @@ void FIELDDATA_SetMapperData(
 	}
 	
 	//標準フィールド以外のときだけテクスチャをグローバルにしてみる
-	if (map_res->g3DmapFileType != FLDMAPPER_FILETYPE_PKGS && area_id != AREA_ID_FIELD) {
+	if (map_res->g3DmapFileType != FLDMAPPER_FILETYPE_PKGS) {
     FLDMAPPER_RESIST_TEX	gTexBuffer;
-    u32 area_season_id = area_id;
-    if (AREADATA_HasSeason(area_id)) 
-    { 
-      area_season_id += sid;
-    }
-		TAMADA_Printf("Load Area Season ID %d\n", area_season_id);
 
 		gTexBuffer.arcID = ARCID_AREA_MAPTEX;
-		gTexBuffer.datID = AREADATA_GetTextureSetID(area_season_id);
+		gTexBuffer.datID = AREADATA_GetTextureSetID(areadata);
 		map_res->gtexType = FLDMAPPER_TEXTYPE_USE;
 		map_res->gtexData = gTexBuffer;
 
-    map_res->ground_anime.ita_datID = AREADATA_GetGroundITAID(area_season_id);
-    map_res->ground_anime.itp_anm_datID = AREADATA_GetGroundITPID(area_season_id);
+    map_res->ground_anime.ita_datID = AREADATA_GetGroundITAID(areadata);
+    map_res->ground_anime.itp_anm_datID = AREADATA_GetGroundITPID(areadata);
 	}
 }
 

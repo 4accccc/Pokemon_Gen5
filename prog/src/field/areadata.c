@@ -38,7 +38,7 @@ enum {
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static inline u16 check_range(u16 area_id)
+static inline u16 check_area_range(u16 area_id)
 {
 	GF_ASSERT(area_id < AREA_ID_MAX);
 	if (area_id < AREA_ID_MAX) {
@@ -47,7 +47,7 @@ static inline u16 check_range(u16 area_id)
 		return 0;
 	}
 }
-#define	CHECK_RANGE(value)	{value = check_range(value);}
+#define	CHECK_AREA_RANGE(value)	{value = check_area_range(value);}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -56,88 +56,99 @@ u16 AREADATA_GetAreaIDMax(void)
 	return AREA_ID_MAX;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static AREADATA * loadZoneData(HEAPID heapID)
-{
-	AREADATA * buffer;
-	buffer = GFL_FILE_LoadDataAlloc(ARCID_AREADATA, heapID);
-	return buffer;
-}
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void getAreaData(AREADATA * adbuf, u16 area_id)
-{
-	CHECK_RANGE(area_id);
-	GFL_FILE_LoadDataOfs(adbuf, ARCID_AREADATA,
-			sizeof(AREADATA) * area_id, sizeof(AREADATA));
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief   エリアデータの取得
+ * @param   heapID
+ * @return  AREADATA
+ */
 //------------------------------------------------------------------
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-u16 AREADATA_GetModelSetID(u16 area_id)
+AREADATA * AREADATA_Create(u16 heapID, u16 area_id, u32 season_id)
 {
-	AREADATA adbuf;
-	getAreaData(&adbuf, area_id);
-	return adbuf.model_set_index;
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-u16 AREADATA_GetTextureSetID(u16 area_id)
-{
-	AREADATA adbuf;
-	getAreaData(&adbuf, area_id);
-	return adbuf.tex_set_index;
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-u32 AREADATA_GetGroundITAID(u16 area_id)
-{
-	AREADATA adbuf;
-	getAreaData(&adbuf, area_id);
-  if (adbuf.anm_ita_id == 0xff) return AREADATA_NO_ANIME_DATA;
-	return adbuf.anm_ita_id;
+  AREADATA * areadata;
+  if (AREADATA_HasSeason(area_id))
+  {
+    area_id += season_id;
+  }
+  CHECK_AREA_RANGE(area_id);
+  areadata = GFL_FILE_LoadDataAllocOfs(
+      ARCID_AREADATA,
+      heapID,
+      sizeof(AREADATA) * area_id,
+      sizeof(AREADATA) );
+  return areadata;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-u32 AREADATA_GetGroundITPID(u16 area_id)
+void AREADATA_Delete(AREADATA * areadata)
 {
-	AREADATA adbuf;
-	getAreaData(&adbuf, area_id);
-  if (adbuf.anm_itp_id == 0xff) return AREADATA_NO_ANIME_DATA;
-	return adbuf.anm_itp_id;
+  GFL_HEAP_FreeMemory( areadata );
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-u8 AREADATA_GetInnerOuterSwitch(u16 area_id)
+u16 AREADATA_GetModelSetID(const AREADATA * areadata)
 {
-	AREADATA adbuf;
-	getAreaData(&adbuf, area_id);
-	return adbuf.inner_outer;
+  return areadata->model_set_index;
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-u8 AREADATA_GetLightType(u16 area_id)
+u16 AREADATA_GetTextureSetID(const AREADATA * areadata)
 {
-	AREADATA adbuf;
-	getAreaData(&adbuf, area_id);
-	return adbuf.light_type;
+  return areadata->tex_set_index;
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u32 AREADATA_GetGroundITAID(const AREADATA * areadata)
+{
+  if (areadata->anm_ita_id == 0xff )
+  {
+    return AREADATA_NO_ANIME_DATA;
+  }
+  else
+  {
+    return areadata->anm_ita_id;
+  }
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u32 AREADATA_GetGroundITPID(const AREADATA * areadata)
+{
+  if (areadata->anm_itp_id == 0xff)
+  {
+    return AREADATA_NO_ANIME_DATA;
+  }
+  else
+  {
+    return areadata->anm_itp_id;
+  }
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u8 AREADATA_GetInnerOuterSwitch(const AREADATA * areadata)
+{
+  return areadata->inner_outer;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u8 AREADATA_GetLightType(const AREADATA * areadata)
+{
+  return areadata->light_type;
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 BOOL AREADATA_HasSeason(u16 area_id)
 {
-  //GF_ASSERT(AREA_ID_OUT_MAX == AREA_ID_OUT29);
 	if (AREA_ID_OUT01 <= area_id && area_id < AREA_ID_OUT_MAX) return TRUE;
 	return FALSE;
 }

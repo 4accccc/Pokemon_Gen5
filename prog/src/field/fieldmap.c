@@ -161,6 +161,8 @@ struct _FIELDMAP_WORK
 {
 	HEAPID heapID;
 	GAMESYS_WORK *gsys;
+
+  AREADATA * areadata;
 	
 	FIELD_CAMERA *camera_control;
 	FIELD_LIGHT *light;
@@ -311,6 +313,11 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 		PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
 		fieldWork->map_id = PLAYERWORK_getZoneID( pw );
 	}
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    fieldWork->areadata = AREADATA_Create( heapID,
+        ZONEDATA_GetAreaID(fieldWork->map_id), GAMEDATA_GetSeasonID(gamedata) );
+  }
 	
 	//マップコントロール
 	fieldWork->func_tbl = FIELDDATA_GetFieldFunctions( fieldWork->map_id );
@@ -346,6 +353,9 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 //--------------------------------------------------------------
 void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 {
+  //
+  AREADATA_Delete( fieldWork->areadata );
+
 	//マップマトリクス
 	MAP_MATRIX_Delete( fieldWork->pMapMatrix );
 	
@@ -433,7 +443,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fieldWork->g3Dmapper );
     
     FIELDDATA_SetMapperData(fieldWork->map_id,
-        GAMEDATA_GetSeasonID(gamedata),
+        fieldWork->areadata,
         &fieldWork->map_res,
         fieldWork->pMapMatrix );
     { //とりあえず、電光掲示板用文字列を登録
@@ -443,7 +453,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
           FIELD_BMODEL_ELBOARD_ID2, NARC_message_d_field_dat, DEBUG_FIELD_STR00);
     }
     //とりあえずここで配置モデルリストをセットする
-    FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id);
+    FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata);
   }
   
   //フィールドマップ用ロケーション作成
@@ -502,10 +512,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   // ライトシステム生成
   {
     GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-    u16 area_id = ZONEDATA_GetAreaID(fieldWork->map_id);
-    u16 area_season_id = area_id + ( AREADATA_HasSeason(area_id) ? GAMEDATA_GetSeasonID(gamedata) : 0 );
 
-    fieldWork->light = FIELD_LIGHT_Create( AREADATA_GetLightType( area_season_id ), 
+    fieldWork->light = FIELD_LIGHT_Create( AREADATA_GetLightType( fieldWork->areadata ), 
         14400, 
         fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
   }

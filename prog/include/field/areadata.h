@@ -28,28 +28,36 @@ enum {
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+extern AREADATA * AREADATA_Create(u16 heapID, u16 area_id, u32 season_id);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern void AREADATA_Delete(AREADATA * areadata);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 extern u16 AREADATA_GetAreaIDMax(void);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern u16 AREADATA_GetModelSetID(u16 area_id);
+extern u16 AREADATA_GetModelSetID(const AREADATA * areadata);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern u16 AREADATA_GetTextureSetID(u16 area_id);
+extern u16 AREADATA_GetTextureSetID(const AREADATA * areadata);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern u32 AREADATA_GetGroundITAID(u16 area_id);
+extern u32 AREADATA_GetGroundITAID(const AREADATA * areadata);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern u32 AREADATA_GetGroundITPID(u16 area_id);
+extern u32 AREADATA_GetGroundITPID(const AREADATA * areadata);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern u8 AREADATA_GetInnerOuterSwitch(u16 area_id);
+extern u8 AREADATA_GetInnerOuterSwitch(const AREADATA * areadata);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern u8 AREADATA_GetLightType(u16 area_id);
+extern u8 AREADATA_GetLightType(const AREADATA * areadata);
 
 extern BOOL AREADATA_HasSeason(u16 area_id);
 

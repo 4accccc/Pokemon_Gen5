@@ -8,11 +8,13 @@
 #include "fieldmap_resist.h"
 #include "map_matrix.h"
 
+#include "field/areadata.h"
 #include "fieldmap.h"
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELDDATA_SetMapperData(u16 mapid, u8 sid, FLDMAPPER_RESISTDATA * map_res, MAP_MATRIX *matrix_buf );
+extern void FIELDDATA_SetMapperData(u16 mapid, const AREADATA * areadata,
+    FLDMAPPER_RESISTDATA * map_res, MAP_MATRIX *matrix_buf );
 extern const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid);
 
 //------------------------------------------------------------------

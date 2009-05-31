@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 
+#include "field/areadata.h"
 #include "field_g3d_mapper.h"
 #include "fieldmap_resist.h"
 
@@ -37,7 +38,7 @@ extern void FIELD_BMODEL_MAN_Main(FIELD_BMODEL_MAN * man);
 //------------------------------------------------------------------
 //  マップデータの読み込み処理
 //------------------------------------------------------------------
-extern void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid);
+extern void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata);
 
 extern const FLDMAPPER_RESISTDATA_OBJTBL * FIELD_BMODEL_MAN_GetOBJTBL(const FIELD_BMODEL_MAN * man);
 
