@@ -10,7 +10,7 @@
 
 #include <gflib.h>
 /*Å™[GS_CONVERT_TAG]*/
-#include "wh.h"
+//#include "wh.h"
 #include "net_old/communication.h"
 #include "comm_local.h"
 #include "comm_ring_buff.h"
@@ -65,7 +65,7 @@ u16 CommLocalGetServiceMaxEntry(u16 serviceNo)
 		COMM_MODE_CLUB_WIFI_NUM_MAX,
         COMM_MODE_EMAIL_WIFI_NUM_MAX,
     };
-    GF_ASSERT_RETURN(serviceNo < sizeof(maxBuff), COMM_MODE_TRADE_NUM_MAX);
+    GF_ASSERT(serviceNo < sizeof(maxBuff));
     return maxBuff[serviceNo];
 }
 
@@ -120,7 +120,7 @@ u16 CommLocalGetServiceMinEntry(u16 serviceNo)
 		COMM_MODE_CLUB_WIFI_NUM_MIN,
 		COMM_MODE_EMAIL_WIFI_NUM_MIN,
     };
-    GF_ASSERT_RETURN(serviceNo < sizeof(minBuff), COMM_MODE_TRADE_NUM_MIN);
+    GF_ASSERT(serviceNo < sizeof(minBuff));
     return minBuff[serviceNo];
 }
 

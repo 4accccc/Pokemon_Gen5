@@ -8,6 +8,7 @@
 //=============================================================================
 
 #include <gflib.h>
+#include "system/main.h"
 /*Å™[GS_CONVERT_TAG]*/
 #include "net_old/communication.h"
 #include "comm_local.h"

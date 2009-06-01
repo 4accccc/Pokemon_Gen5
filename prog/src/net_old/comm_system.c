@@ -10,21 +10,21 @@
 
 #include <gflib.h>
 /*↑[GS_CONVERT_TAG]*/
+#include "system/main.h"
 #include "comm_wh_config.h"
-#include "comm_wh.h"
 #include "net_old/communication.h"
 #include "comm_local.h"
 
-#include "system/pm_str.h"
-#include "system/gamedata.h"  //PERSON_NAME_SIZE
+//#include "system/pm_str.h"
+//#include "system/gamedata.h"  //PERSON_NAME_SIZE
 
 #include "comm_ring_buff.h"
 #include "comm_queue.h"
-#include "system/savedata.h"
-#include "savedata/regulation.h"
-#include "system/pm_rtc.h"  //GF_RTC
+#include "savedata/save_control.h"
+//#include "savedata/regulation.h"
+//#include "system/pm_rtc.h"  //GF_RTC
 
-#include "wifi/dwc_rap.h"   //WIFI
+#include "net_old/comm_dwc_rap.h"   //WIFI
 
 #define FREEZE_SORCE (0)
 #define _SENDRECV_LIMIT  (3)  // 送信と受信の数がずれた場合送信を抑制する
@@ -90,7 +90,7 @@
 #define _PORT_DATA_PARENT         _PORT_DATA_RETRANSMISSION
 #define _PORT_DATA_CHILD              _PORT_DATA_RETRANSMISSION
 
-typedef enum{   // 送信状態
+enum _SEND_CB_TYPE_e {   // 送信状態
     _SEND_CB_NONE,           // なにもしていない
     _SEND_CB_FIRST_SEND,     // 流れの中での最初の送信
     _SEND_CB_FIRST_SENDEND,  // 最初の送信のコールバックが来た
@@ -99,14 +99,14 @@ typedef enum{   // 送信状態
 
 };
 
-typedef enum{   // 送信形態
+enum _SEND_COMM_MODECHANGE_e{   // 送信形態
     _MP_MODE,    // 親子型
     _DS_MODE,    // 並列型
     _CHANGE_MODE_DSMP,  // DSからMPに切り替え中
     _CHANGE_MODE_MPDS,  // MPからDSに切り替え中
 };
 
-typedef enum TrapKeyMode_e{
+enum _TRAPKEYMODE_e{
     _NONE_KEY,
     _RANDOM_KEY,
     _REVERSE_KEY,
@@ -161,7 +161,7 @@ typedef struct{
     _RECV_COMMAND_PACK recvCommClient;
     
     ///------  pad関連
-    MATHRandContext32 sRand;                    ///< キー用乱数キー
+    GFL_STD_RandContext sRand;                    ///< キー用乱数キー
     u16 cont[COMM_MACHINE_MAX];            ///< 独自キーシェアリング
     u8 speed[COMM_MACHINE_MAX];             ///< 速度を毎回送る
     u16 sendCont;
@@ -227,10 +227,8 @@ static u8 _dsdataWrited = FALSE; //DSデータ送信の監視
 //==============================================================================
 
 static void _commCommandInit(void);
-static void _commMpVBlankIntr(GFL_TCB* pTCB, void* pWork);
 /*↑[GS_CONVERT_TAG]*/
 static void _dataMpStep(void);
-static void _updateMpDataServer(void);
 static void _dataMpServerStep(void);
 static void _sendCallbackFunc(BOOL result);
 static void _sendServerCallback(BOOL result);
@@ -239,12 +237,10 @@ static void _commRecvParentCallback(u16 aid, u16 *data, u16 size);
 static BOOL _checkSendRecvLimit(void);
 
 static void _keyRand(void);
-static void _updateMpData(void);
 
 static void _recvDataFunc(void);
 static void _recvDataServerFunc(void);
 static BOOL _setSendData(u8* pSendBuff);
-static void _setSendDataServer(u8* pSendBuff);
 
 static BOOL _padDataRecv(u8* pRecvBuff, int netID);
 static BOOL _padDataSend(u8* pSendBuff);
@@ -340,15 +336,11 @@ static BOOL _commInit(BOOL bAlloc, int packetSizeMax)
     if(!bReInit){   // コマンドの初期化
         _commCommandInit();
     }
-    CommRandSeedInitialize(&_pComm->sRand);
+    //++CommRandSeedInitialize(&_pComm->sRand);
+	GFL_STD_RandGeneralInit(&_pComm->sRand);
 
     //************************************
 
-    if(!bReInit){   // プロセスタスクの作成
-        // VBLANK
-        _pComm->pVBlankTCB = VIntrTCB_Add(_commMpVBlankIntr, NULL, _PRIORITY_VBLANKFUNC);
-
-    }
     _pComm->bWifiConnect = FALSE;
     return TRUE;
 }
@@ -551,13 +543,6 @@ static void _connectCallBack(int netID)
 BOOL CommParentModeInit(BOOL bAlloc, BOOL bTGIDChange, int packetSizeMax, BOOL bEntry)
 {
     BOOL ret = TRUE;
-    if(!CommLocalIsWiFiGroup(CommStateGetServiceNo())){
-        ret = CommMPParentInit(bAlloc, bTGIDChange, bEntry);
-#if T1657_060818_FIX
-        HWSetConnectCallBack(_connectCallBack);
-#endif
-
-    }
     _commInit(bAlloc, packetSizeMax);
     return ret;
 }
@@ -576,11 +561,6 @@ BOOL CommChildModeInit(BOOL bAlloc, BOOL bBconInit, int packetSizeMax)
 {
     BOOL ret = TRUE;
 
-    if(!CommLocalIsWiFiGroup(CommStateGetServiceNo())){
-        ret = CommMPChildInit(bAlloc, bBconInit);
-    }
-    else{
-    }
     _commInit(bAlloc, packetSizeMax);
     _sendCallBack = _SEND_CB_SECOND_SENDEND;
 
@@ -710,18 +690,13 @@ void CommFinalize(void)
             mydwc_Logout();  // 切断
             bEnd = TRUE;
         }
-        else{
-            if(CommMPFinalize()){
-                bEnd = TRUE;
-            }
-        }
     }
     if(bEnd){
         CommToolFinalize();
         CommInfoFinalize();
         // VBLANKタスクを切る
         _bVSAccess = FALSE;  // 割り込み内での処理を禁止
-        TCB_Delete(_pComm->pVBlankTCB);
+//        TCB_Delete(_pComm->pVBlankTCB);
         _pComm->pVBlankTCB = NULL;
         GFL_HEAP_FreeMemory(_pComm->pRecvBufRing);
 /*↑[GS_CONVERT_TAG]*/
@@ -749,27 +724,7 @@ void CommFinalize(void)
 //==============================================================================
 BOOL CommChildIndexConnect(u16 index)
 {
-    return CommMPChildIndexConnect(index);
-}
-
-//==============================================================================
-/**
- * 通信処理を含めたVBLANK割り込み処理
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _commMpVBlankIntr(GFL_TCB* pTCB, void* pWork)
-/*↑[GS_CONVERT_TAG]*/
-{
-    if(_bVSAccess){
-        _updateMpData();     // データ送受信
-        if(((CommGetCurrentID() == COMM_PARENT_ID) && (CommIsConnect(COMM_PARENT_ID))) || CommGetAloneMode()){
-            _updateMpDataServer();   // MP通信サーバー側STEP処理
-        }
-        _bVSAccess = FALSE;  // 割り込み内での処理を禁止
-    }
+	return FALSE; //    return CommMPChildIndexConnect(index);
 }
 
 
@@ -780,7 +735,7 @@ static void _commMpVBlankIntr(GFL_TCB* pTCB, void* pWork)
  * @retval  none
  */
 //==============================================================================
-
+#if 0
 static void _autoExitSystemFunc(void)
 {
     if(!CommMPIsAutoExit()){
@@ -796,7 +751,7 @@ static void _autoExitSystemFunc(void)
         CommFinalize();  // 終了処理に入る
     }
 }
-
+#endif
 //==============================================================================
 /**
  * 通信データの更新処理  データを収集
@@ -836,16 +791,16 @@ BOOL CommUpdateData(void)
             }
             _bVSAccess = TRUE;  // 次の割り込み時での処理を許可
         }
-        CommMpProcess(_pComm->bitmap);
+        //CommMpProcess(_pComm->bitmap);
         if(CommGetCurrentID() == COMM_PARENT_ID){
             _connectFunc();
         }
-        _autoExitSystemFunc();  // 自動切断 _pComm=NULLになるので注意
+        //_autoExitSystemFunc();  // 自動切断 _pComm=NULLになるので注意
     }
     else{
-        CommMpProcess(0);
+//        CommMpProcess(0);
     }
-    CommErrorDispCheck(HEAPID_BASE_SYSTEM);
+    CommErrorDispCheck(GFL_HEAPID_APP);
     CommTimingSyncSend();
     return TRUE;
 }
@@ -905,7 +860,7 @@ void CommSystemResetBattleChild(void)
     _bVSAccess = FALSE;  // 割り込み内での処理を禁止
     if(_pComm){
         _commCommandInit();
-        ChildBconDataInit();
+//        ChildBconDataInit();
     }
     _bVSAccess = bAcc;
 }
@@ -928,14 +883,6 @@ static void _dataMpStep(void)
                 if( mydwc_sendToServer( _pComm->sSendBuf[0], _SEND_BUFF_SIZE_4CHILD )){
                     _pComm->bSendNoneSend = FALSE;
                 }
-            }
-        }
-        else if(((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) &&
-                 (CommIsConnect(CommGetCurrentID()))) || CommGetAloneMode()){
-            _sendCallBack = _SEND_CB_NONE;
-            _updateMpData();     // データ送受信
-            if(_sendCallBack != _SEND_CB_NONE){
-                _pComm->bSendNoneSend = FALSE;
             }
         }
         return;
@@ -1012,40 +959,6 @@ static void _dataMpStep(void)
             }
         }
     }
-    else if(((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) &&
-        (CommIsConnect(CommGetCurrentID()))) || CommGetAloneMode()){
-
-#if AFTER_MASTER_070420_GF_COMM_FIX
-        while(1){
-            if(_sendCallBack != _SEND_CB_SECOND_SENDEND){  // 2個送ったが送信完了していない
-//                OHNO_PRINT("送信完了してない\n");
-                break;
-            }
-            if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //送りすぎ
-//                OHNO_PRINT("送りすぎC\n");
-                break;
-            }
-            _setSendData(_pComm->sSendBuf[_pComm->sendSwitch]);  // 送るデータをリングバッファから差し替える
-            _setSendData(_pComm->sSendBuf[ 1 - _pComm->sendSwitch]);  // 送るデータをリングバッファから差し替える
-            _sendCallBack = _SEND_CB_NONE;
-            break;
-        }
-        _updateMpData();     // データ送受信
-#else
-        if(_sendCallBack != _SEND_CB_SECOND_SENDEND){  // 2個送ったが送信完了していない
-//            OHNO_PRINT("にかいうけとってない _sendCallBack\n");
-            return;
-        }
-        if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //送りすぎ
-//            OHNO_PRINT("子機がデータ送信をしない\n");
-            return;
-        }
-        _setSendData(_pComm->sSendBuf[_pComm->sendSwitch]);  // 送るデータをリングバッファから差し替える
-        _setSendData(_pComm->sSendBuf[ 1 - _pComm->sendSwitch]);  // 送るデータをリングバッファから差し替える
-        _sendCallBack = _SEND_CB_NONE;
-        _updateMpData();     // データ送受信
-#endif
-    }
 }
 
 //==============================================================================
@@ -1091,87 +1004,6 @@ static BOOL _copyDSData(int switchNo)
     return TRUE;
 }
 
-//==============================================================================
-/**
- * データ送信処理  サーバー側
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _updateMpDataServer(void)
-{
-    int i;
-    int debug=0;
-    int mcSize ,machineMax;
-
-    if(!_pComm){
-        return;
-    }
-    if(CommLocalIsWiFiGroup(CommStateGetServiceNo())){
-        return;
-    }
-    
-    mcSize = CommGetServiceMaxChildSendByte(CommStateGetServiceNo());
-    machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
-    if((_sendCallBackServer == _SEND_CB_FIRST_SENDEND) ||
-       (_sendCallBackServer == _SEND_CB_NONE)){
-        _sendCallBackServer++;
-        if(_transmissonType() == _DS_MODE){
-#if AFTER_MASTER_070420_GF_COMM_FIX
-            if(_dsdataWrited == FALSE){
-                _copyDSData(_pComm->sendServerSwitch);
-                _dsdataWrited = TRUE;
-            }
-#else
-            _copyDSData(_pComm->sendServerSwitch);
-#endif
-        }
-        if( (WH_GetSystemState() == WH_SYSSTATE_CONNECTED)  && !CommGetAloneMode()){
-            if(!WH_SendData(_pComm->sSendServerBuf[_pComm->sendServerSwitch],
-                            _SEND_BUFF_SIZE_PARENT,
-                            _PORT_DATA_PARENT, _sendServerCallback)){
-                _sendCallBackServer--;
-            }
-        }
-        // 送信完了
-        if((_sendCallBackServer == _SEND_CB_FIRST_SEND) || (_sendCallBackServer == _SEND_CB_SECOND_SEND) ){
-#if AFTER_MASTER_070420_GF_COMM_FIX
-            _dsdataWrited = FALSE;
-#endif
-            for(i = 0; i < machineMax; i++){
-                if(CommIsConnect(i)){
-                    _pComm->countSendRecvServer[i]++;
-                }
-                else if(CommGetAloneMode() && (i == 0)){
-                    _pComm->countSendRecvServer[i]++;
-                }
-            }
-
-            // 親機自身に子機の動きをさせるためここでコールバックを呼ぶ
-            _commRecvCallback(COMM_PARENT_ID,
-                              (u16*)_pComm->sSendServerBuf[ _pComm->sendServerSwitch ],
-                              _SEND_BUFF_SIZE_PARENT);
-            _pComm->sendServerSwitch = 1 - _pComm->sendServerSwitch;
-        }
-#if !(AFTER_MASTER_070420_GF_COMM_FIX)
-        for(i = 0; i < machineMax; i++){
-            if(!CommIsConnect(i)){
-                if(_transmissonType() == _DS_MODE){             // 初期化
-                    _pComm->sSendServerBuf[_pComm->sendServerSwitch][i*mcSize] = _INVALID_HEADER;
-                }
-                else{
-  //                        _clearChildBuffers(i);
-                }
-            }
-        }
-#endif
-        if( (WH_GetSystemState() != WH_SYSSTATE_CONNECTED)  || CommGetAloneMode() ){
-            // 割り込みが無い状況でも動かす為ここでカウント
-            _sendCallBackServer++;
-        }
-    }
-}
 
 //==============================================================================
 /**
@@ -1220,13 +1052,6 @@ static void _dataMpServerStep(void)
                 }
             }
         }
-        else if((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) || (CommGetAloneMode()) ){
-            _updateMpDataServer();
-            if(_sendCallBackServer == _SEND_CB_FIRST_SENDEND){
-                _pComm->bSendNoneSend = FALSE;
-                return;
-            }
-        }
     }
 #endif
     if(CommLocalIsWiFiGroup(CommStateGetServiceNo())){
@@ -1266,22 +1091,6 @@ static void _dataMpServerStep(void)
 //                OHNO_PRINT("mydwc_sendToClientに失敗\n");
             }
         }
-    }
-    else if((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) || (CommGetAloneMode()) ){
-        if(_sendCallBackServer != _SEND_CB_SECOND_SENDEND){
-//            OHNO_PRINT("二回うけとってない_sendCallBackServer\n");
-            return;
-        }
-        if(!_checkSendRecvLimit()){
-            return;
-        }
-        if(_transmissonType() == _MP_MODE){  // DS時にはすでにsSendServerBufにデータがある
-            _setSendDataServer(_pComm->sSendServerBuf[ _pComm->sendServerSwitch ]);  // 送るデータをリングバッファから差し替える
-            _setSendDataServer(_pComm->sSendServerBuf[ 1 - _pComm->sendServerSwitch ]);  // 送るデータをリングバッファから差し替える
-        }
-        _sendCallBackServer = _SEND_CB_NONE;
-        // 最初の送信処理
-        _updateMpDataServer();
     }
 }
 
@@ -1572,75 +1381,6 @@ static void _sendServerCallback(BOOL result)
 
 //==============================================================================
 /**
- * データの収集
- * @param   none
- * @retval  none
- */
-//==============================================================================
-static void _updateMpData(void)
-{
-    u16 i;
-    u8 *adr;
-    int size;
-
-    if(!_pComm){
-        return;
-    }
-    if(CommLocalIsWiFiGroup(CommStateGetServiceNo())){
-        return;
-    }
-    {
-        int mcSize = CommGetServiceMaxChildSendByte(CommStateGetServiceNo());
-        int machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
-        if(CommGetAloneMode()){   // aloneモードの場合
-            if((_sendCallBack == _SEND_CB_FIRST_SENDEND) || (_sendCallBack == _SEND_CB_NONE)){
-                _sendCallBack++;
-                _sendCallbackFunc(TRUE);
-                // 子機のふりをする部分          // 親機は自分でコールバックを呼ぶ
-                _commRecvParentCallback(COMM_PARENT_ID, (u16*)_pComm->sSendBuf[_pComm->sendSwitch],
-                                    mcSize);
-                _pComm->sendSwitch = 1 - _pComm->sendSwitch;
-                _pComm->countSendRecv++; // MP送信親
-                return;
-            }
-        }
-        if(WH_GetSystemState() == WH_SYSSTATE_CONNECTED ){
-            if(!CommIsConnect(CommGetCurrentID())){
-                if(CommGetCurrentID()==1){
-                 //   OHNO_PRINT("自分自身の接続がまだ\n");
-                }
-                return;
-            }
-            if((_sendCallBack == _SEND_CB_FIRST_SENDEND) || (_sendCallBack == _SEND_CB_NONE)){
-                // 子機データ送信
-                if(CommGetCurrentID() != COMM_PARENT_ID){
-                    _sendCallBack++;
-                    if(!WH_SendData(_pComm->sSendBuf[_pComm->sendSwitch],
-                                    mcSize, _PORT_DATA_CHILD, _sendCallbackFunc)){
-                        _sendCallBack--;
-                      //  OHNO_PRINT("failed WH_SendData\n");
-                    }
-                    else{
-                        _pComm->sendSwitch = 1 - _pComm->sendSwitch;
-                        _pComm->countSendRecv++; // MP送信
-                    }
-                }
-                else if(WH_GetBitmap() & 0xfffe){         // サーバーとしての処理 自分以外の誰かにつながっている時
-                    _sendCallBack++;
-                    _sendCallbackFunc(TRUE);
-                    // 子機のふりをする部分          // 親機は自分でコールバックを呼ぶ
-                    _commRecvParentCallback(COMM_PARENT_ID, (u16*)_pComm->sSendBuf[_pComm->sendSwitch],
-                                        mcSize);
-                    _pComm->sendSwitch = 1 - _pComm->sendSwitch;
-                    _pComm->countSendRecv++; // MP送信
-                }
-            }
-        }
-    }
-}
-
-//==============================================================================
-/**
  * キーの乱数を発生する キーが入力された時だけ動く
  * @param   none
  * @retval  エラーの時TRUE
@@ -1681,7 +1421,7 @@ static void _keyRand(void)
             }
         }
         else{
-            switch(MATH_Rand32(&_pComm->sRand, 4)){
+            switch(GFL_STD_Rand(&_pComm->sRand, 4)){
               case 0:
                 pad = PAD_KEY_LEFT;
                 break;
@@ -1695,7 +1435,7 @@ static void _keyRand(void)
                 pad = PAD_KEY_DOWN;
                 break;
             }
-            _pComm->randPadStep = MATH_Rand32(&_pComm->sRand, 16);
+            _pComm->randPadStep = GFL_STD_Rand(&_pComm->sRand, 16);
             _pComm->oldPad = pad;
         }
     }
@@ -1902,51 +1642,6 @@ static BOOL _setSendData(u8* pSendBuff)
     }
 #endif
     return TRUE;
-}
-
-//==============================================================================
-/**
- * 送信キューにあったものを送信バッファに入れる サーバーMP通信用
- * @param   pSendBuff 入れる送信バッファ
- * @retval  none
- */
-//==============================================================================
-
-
-
-static void _setSendDataServer(u8* pSendBuff)
-{
-    int i;
-
-    pSendBuff[0] = _MP_DATA_HEADER;
-
-    if(_pComm->bNextSendDataServer == FALSE){  // 一回で送れる場合
-        pSendBuff[1] = _SEND_NONE;
-    }
-    else{
-        pSendBuff[1] = _SEND_NEXT;  // 一回で送れない場合
-    }
-
-    {
-        u16 bitmap = WH_GetBitmap();
-        pSendBuff[2] = bitmap >> 8;
-        pSendBuff[3] = bitmap & 0xff;
-
-        {
-            SEND_BUFF_DATA buffData;
-            buffData.size = _SEND_BUFF_SIZE_PARENT - 5;
-            buffData.pData = &pSendBuff[5];
-            if(CommQueueGetData(&_pComm->sendQueueMgrServer, &buffData, FALSE)){
-                _pComm->bNextSendDataServer = FALSE;
-                pSendBuff[4] = (_SEND_BUFF_SIZE_PARENT - 5) - buffData.size;
-            }
-            else{
-                _pComm->bNextSendDataServer = TRUE;
-                pSendBuff[4] = _SEND_BUFF_SIZE_PARENT - 5;
-            }
-
-        }
-    }
 }
 
 //==============================================================================
@@ -2503,17 +2198,8 @@ BOOL CommIsConnect(u16 netID)
     if(!CommIsInitialize()){
         return FALSE;
     }
-    if (WH_GetSystemState() != WH_SYSSTATE_CONNECTED) {
-        return FALSE;
-    }
     if(CommGetCurrentID()==netID){// 自分はONLINE
         return TRUE;
-    }
-    else if(CommGetCurrentID()==COMM_PARENT_ID){  // 親機のみ子機情報をLIBで得られる
-        u16 bitmap = WH_GetBitmap();
-        if( bitmap & (1<<netID)){
-            return TRUE;
-        }
     }
     else if(_pComm->bitmap & (1<<netID)){
         return TRUE;
@@ -2554,7 +2240,7 @@ BOOL CommIsInitialize(void)
             return TRUE;
         }
     }
-    return CommMPIsInitialize();
+	return FALSE; //    return CommMPIsInitialize();
 }
 
 //==============================================================================
@@ -2818,9 +2504,6 @@ u16 CommGetCurrentID(void)
         else if(CommGetAloneMode()){
             return COMM_PARENT_ID;
         }
-        else{
-            return WH_GetCurrentAid();
-        }
     }
     return COMM_PARENT_ID;
 }
@@ -2876,7 +2559,7 @@ BOOL CommSendFixData(int command)
 
 BOOL CommIsChildsConnecting(void)
 {
-    return CommMPIsChildsConnecting();
+	return FALSE;	//    return CommMPIsChildsConnecting();
 }
 
 //==============================================================================
@@ -2898,7 +2581,7 @@ BOOL CommIsError(void)
             return TRUE;
         }
     }
-    return CommMPIsError();
+	return FALSE; //    return CommMPIsError();
 }
 
 //==============================================================================
@@ -2989,16 +2672,16 @@ BOOL CommGetAloneMode(void)
 void CommRecvAutoExit(int netID, int size, void* pData, void* pWork)
 {
     u8 dummy;
-
-    if(!CommMPIsAutoExit()){
-        if(CommGetCurrentID() == COMM_PARENT_ID){   // 自分が親の場合みんなに逆返信する
-            CommSendFixSizeData_ServerSide(CS_AUTO_EXIT, &dummy);
-        }
-    }
-    CommMPSetAutoExit();
+	GF_ASSERT(0);  //ここはWIFIではこないはず  2009.06.01
+//    if(!CommMPIsAutoExit()){
+//        if(CommGetCurrentID() == COMM_PARENT_ID){   // 自分が親の場合みんなに逆返信する
+//            CommSendFixSizeData_ServerSide(CS_AUTO_EXIT, &dummy);
+//        }
+//    }
+//    CommMPSetAutoExit();
 }
 
-#ifdef PM_DEBUG
+#if 0
 
 //==============================================================================
 /**
@@ -3033,27 +2716,6 @@ void CommDump_Debug(u8* adr, int length, char* pInfoStr)
 }
 
 #endif
-
-//==============================================================================
-/**
- * WEP Key の種用の乱数生成機の初期化
- * @param   pRand  乱数管理構造体
- * @retval  none
- */
-//==============================================================================
-
-void CommRandSeedInitialize(MATHRandContext32* pRand)
-{
-    u64 randSeed = 0;
-    RTCDate date;
-    RTCTime time;
-    
-    GF_RTC_GetDateTime(&date, &time);
-    randSeed = (((((((u64)date.year * 16ULL + date.month) * 32ULL)
-                   + date.day) * 32ULL + time.hour) * 64ULL + time.minute)
-                * 64ULL + (time.second + sys.vsync_counter));
-    MATH_InitRand32(pRand, randSeed);
-}
 
 
 //==============================================================================
@@ -3188,11 +2850,7 @@ int CommGetStandNo(int netID)
 
 BOOL CommIsVChat(void)
 {
-    if(!CommLocalIsWiFiGroup(CommStateGetServiceNo())){
-        return FALSE;
-    }
-    return mydwc_IsVChat();
-
+	return FALSE;
 }
 
 //==============================================================================

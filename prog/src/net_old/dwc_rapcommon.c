@@ -10,7 +10,7 @@
 #include <gflib.h>
 /*Å™[GS_CONVERT_TAG]*/
 #include <dwc.h>
-#include "wifi/dwc_rap.h"
+#include "net_old/comm_dwc_rap.h"
 
 //==============================================================================
 /**

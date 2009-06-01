@@ -100,9 +100,9 @@ void CommRingPuts(RingBuffWork* pRing, u8* pDataArea, int size,int line)
 /*ª[GS_CONVERT_TAG]*/
 #ifdef PM_DEBUG
         int res = _backupRingDataRestSize(pRing);
-        GF_ASSERT_Printf("RECV %d CNT %d LINE %d\n",size,pRing->count,line);
+//        GF_ASSERT_Printf("RECV %d CNT %d LINE %d\n",size,pRing->count,line);
         _errdisp(pDataArea,size);
-        GF_ASSERT_Printf("s%d %d %d %d %d %d\n", pRing->size,pRing->startPos,pRing->endPos,pRing->backupEndPos,CommGetCurrentID(),res);
+//        GF_ASSERT_Printf("s%d %d %d %d %d %d\n", pRing->size,pRing->startPos,pRing->endPos,pRing->backupEndPos,CommGetCurrentID(),res);
         _errring(pRing);
         GF_ASSERT_MSG(0,"RingOVER\n");
 #endif

@@ -10,7 +10,7 @@
 #include <gflib.h>
 /*↑[GS_CONVERT_TAG]*/
 #include "net_old/communication.h"
-#include "system/snd_tool.h"
+//#include "system/snd_tool.h"
 
 
 //汎用データの１パケット
@@ -57,9 +57,7 @@ void CommToolInitialize(int heapID)
     int i;
     
     if(!_pCT){
-        _pCT = GFL_HEAP_AllocMemory(heapID,sizeof(COMM_TOOL_WORK));
-/*↑[GS_CONVERT_TAG]*/
-        MI_CpuFill8(_pCT,0,sizeof(COMM_TOOL_WORK));
+        _pCT = GFL_HEAP_AllocClearMemory(heapID,sizeof(COMM_TOOL_WORK));
     }
 
 

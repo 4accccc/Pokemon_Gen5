@@ -11,10 +11,11 @@
 
 #include <gflib.h>
 /*ª[GS_CONVERT_TAG]*/
+#include "system/main.h"
 #include "net_old/communication.h"
 #include "comm_local.h"
 
-#include "system/mystatus.h"
+#include "savedata/mystatus.h"
 
 //==============================================================================
 //  static’è‹`
@@ -92,7 +93,6 @@ void CommCommandInitialize(const CommPacketTbl* pCommPacketLocal,int listNum,voi
     
     if(!_pCommandWork){
         _pCommandWork = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_COMMAND_WORK));
-/*ª[GS_CONVERT_TAG]*/
     }
     _pCommandWork->pCommPacket = pCommPacketLocal;
     _pCommandWork->listNum = listNum;
@@ -143,7 +143,7 @@ void CommCommandCallBack(int netID, int command, int size, void* pData)
         func = _CommPacketTbl[command].callbackFunc;
     }
     else{
-        GF_ASSERT_RETURN(_pCommandWork,);
+//        GF_ASSERT_RETURN(_pCommandWork,);
         if(command > (_pCommandWork->listNum + CS_COMMAND_MAX)){
 #ifdef DEBUG_ONLY_FOR_ohno
             OHNO_PRINT("command %d \n", command);
@@ -278,7 +278,7 @@ static int _getTwo(void)
 
 BOOL CommCommandThrowOut(void)
 {
-    GF_ASSERT_RETURN(_pCommandWork, TRUE);
+    //GF_ASSERT_RETURN(_pCommandWork, TRUE);
 
     _pCommandWork->bThrowOuted = FALSE;
     return CommSendFixData(CS_COMMAND_THROWOUT);

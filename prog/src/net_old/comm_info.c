@@ -11,16 +11,15 @@
 /*↑[GS_CONVERT_TAG]*/
 #include "net_old/communication.h"
 #include "comm_local.h"
-
-#include "system/gamedata.h"
-#include "system/pm_str.h"
+#include "system/main.h"
+//#include "system/gamedata.h"
+//#include "system/pm_str.h"
 
 #include "net_old/comm_info.h"
-#include "system/savedata.h"
-#include "savedata/randomgroup.h"
-#include "savedata/undergrounddata.h"
+#include "savedata/save_control.h"
+//#include "savedata/randomgroup.h"
 #include "savedata/wifihistory.h"
-#include "wifi/dwc_rapfriend.h"
+#include "net_old/comm_dwc_rapfriend.h"
 
 //==============================================================================
 // ワーク
@@ -34,13 +33,15 @@ enum _info_e {
     _INFO_MAX
 };
 
+#define	_DP_EOM_SIZE			1	// 終了コードの長さ
+#define _DP_PERSON_NAME_SIZE	7	// 人物の名前の長さ（自分も含む）
 
 // MYSTATUSにない要素を持った構造体
 typedef struct{
     u8 myRegulation[COMM_SEND_REGULATION_SIZE]; //
     u8 myStatusBuff[COMM_SEND_MYSTATUS_SIZE];  	// 実際のmystatusの大きさは実行時でないとわからないので上に切ってある
     DWCFriendData friendData;   //通信で渡す用のフレンドコード
-    STRCODE groupName[PERSON_NAME_SIZE + EOM_SIZE];     //ランダムグループの MYUSE名
+    STRCODE groupName[_DP_PERSON_NAME_SIZE + _DP_EOM_SIZE];     //ランダムグループの MYUSE名
     u8 mac[WM_SIZE_BSSID];  ///mac
     u8 netID;     /// ID
     u8 my_nation;			///<自分の国
@@ -62,7 +63,7 @@ typedef struct{
 typedef struct{
     MYSTATUS* pWiFiPlaceMyStatus; //WIFI広場用MyStatus;
     const REGULATION* pReg;
-    SAVEDATA* pSaveData;
+    SAVE_CONTROL_WORK* pSaveData;
     PlayerInfo sPlayerData[COMM_MACHINE_MAX];  // 通信用 info
     MYSTATUS* pMyStatus[COMM_MACHINE_MAX];     // myStatus
     PlayerResult sPlayerResult[COMM_MACHINE_MAX];
@@ -85,7 +86,7 @@ static _COMM_INFO_WORK* _pCommInfo;
  */
 //--------------------------------------------------------------
 
-void CommInfoInitialize(SAVEDATA* pSaveData, const REGULATION* pReg)
+void CommInfoInitialize(SAVE_CONTROL_WORK* pSaveData)
 {
     int i;
     MYSTATUS* pMyStatus = SaveData_GetMyStatus(pSaveData);
@@ -96,9 +97,9 @@ void CommInfoInitialize(SAVEDATA* pSaveData, const REGULATION* pReg)
 #endif
         return;
     }
-    _pCommInfo = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_INFO_WORK));
+    _pCommInfo = GFL_HEAP_AllocClearMemory(HEAPID_COMMUNICATION, sizeof(_COMM_INFO_WORK));
 /*↑[GS_CONVERT_TAG]*/
-    MI_CpuClear8(_pCommInfo, sizeof(_COMM_INFO_WORK));
+//    MI_CpuClear8(_pCommInfo, sizeof(_COMM_INFO_WORK));
     for(i = 0; i < COMM_MACHINE_MAX ; i++){
         _pCommInfo->pMyStatus[i] = (MYSTATUS*)&_pCommInfo->sPlayerData[i].myStatusBuff[0]; //MyStatus_AllocWork(HEAPID_COMMUNICATION);
         CommInfoDeletePlayer( i );
@@ -107,7 +108,7 @@ void CommInfoInitialize(SAVEDATA* pSaveData, const REGULATION* pReg)
     _pCommInfo->bNewInfoData = FALSE;
     _pCommInfo->nowNetID = 0;
     _pCommInfo->pSaveData = pSaveData;
-    _pCommInfo->pReg = pReg;
+//    _pCommInfo->pReg = pReg;
 
     // 自分のMYSTATUSをコピー
     MyStatus_Copy( pMyStatus, _pCommInfo->pMyStatus[0]);
@@ -169,7 +170,7 @@ void CommInfoSendPokeData(void)
     u16 netID = CommGetCurrentID();
     MYSTATUS* pMyStatus;
     const STRCODE *pStr;
-    RANDOM_GROUP* pRG = SaveData_GetRandomGroup(_pCommInfo->pSaveData);
+//    RANDOM_GROUP* pRG = SaveData_GetRandomGroup(_pCommInfo->pSaveData);
     WIFI_LIST* pList = SaveData_GetWifiListData(_pCommInfo->pSaveData);
     WIFI_HISTORY* pHistry = SaveData_GetWifiHistory(_pCommInfo->pSaveData);
 
@@ -183,23 +184,23 @@ void CommInfoSendPokeData(void)
     MyStatus_Copy( pMyStatus, _pCommInfo->pMyStatus[netID]);
     OS_GetMacAddress(&_pCommInfo->sPlayerData[netID].mac[0]);
 
-    pStr = RandomGroup_GetNamePtr( pRG, RANDOMGROUP_MYUSE, RANDOMGROUP_NAME_GROUP );
+ //   pStr = RandomGroup_GetNamePtr( pRG, RANDOMGROUP_MYUSE, RANDOMGROUP_NAME_GROUP );
 
-    OHNO_PRINT("コピーサイズ  %d \n",sizeof(_pCommInfo->sPlayerData[netID].groupName));
-    MI_CpuCopy8(pStr,_pCommInfo->sPlayerData[netID].groupName,
-                sizeof(_pCommInfo->sPlayerData[netID].groupName));
+ //   OHNO_PRINT("コピーサイズ  %d \n",sizeof(_pCommInfo->sPlayerData[netID].groupName));
+ //   MI_CpuCopy8(pStr,_pCommInfo->sPlayerData[netID].groupName,
+ //               sizeof(_pCommInfo->sPlayerData[netID].groupName));
 
     _pCommInfo->sPlayerData[netID].my_nation = WIFIHISTORY_GetMyNation(pHistry);
     _pCommInfo->sPlayerData[netID].my_area = WIFIHISTORY_GetMyArea(pHistry);
-    _pCommInfo->sPlayerData[netID].myPenalty = UnderGroundDataIsGoodsSend(_pCommInfo->pSaveData);
-    _pCommInfo->sPlayerData[netID].myPenalty = 1 - _pCommInfo->sPlayerData[netID].myPenalty;
+   // _pCommInfo->sPlayerData[netID].myPenalty = UnderGroundDataIsGoodsSend(_pCommInfo->pSaveData);
+   // _pCommInfo->sPlayerData[netID].myPenalty = 1 - _pCommInfo->sPlayerData[netID].myPenalty;
     
     DWC_CreateExchangeToken(WifiList_GetMyUserInfo(pList), &_pCommInfo->sPlayerData[netID].friendData);
 
     MI_CpuClear8(_pCommInfo->sPlayerData[netID].myRegulation, COMM_SEND_REGULATION_SIZE);
-    if(_pCommInfo->pReg){
-        Regulation_Copy(_pCommInfo->pReg, (REGULATION*)_pCommInfo->sPlayerData[netID].myRegulation);
-    }
+ //   if(_pCommInfo->pReg){
+//        Regulation_Copy(_pCommInfo->pReg, (REGULATION*)_pCommInfo->sPlayerData[netID].myRegulation);
+//    }
     CommSendData(CS_COMM_INFO, &_pCommInfo->sPlayerData[netID], sizeof(PlayerInfo));
 }
 
@@ -316,7 +317,7 @@ void CommInfoRecvPlayerData( int netID, int size, void* pData, void* pWork)
     OHNO_SP_PRINT("CommInfo %d\n", netID);
 
     MI_CpuCopy8( pData, &_pCommInfo->sPlayerData[netID], sizeof(PlayerInfo));
-    CommMPSetBackupMacAddress(&_pCommInfo->sPlayerData[netID].mac[0], netID);
+    //++CommMPSetBackupMacAddress(&_pCommInfo->sPlayerData[netID].mac[0], netID);
 
     _pCommInfo->info[netID] = _INFO_NEW_ENTRY;  // 新たなエントリー
     if(CommGetCurrentID() == netID){  // 自分自身はすでに受付完了状態にする
@@ -600,7 +601,7 @@ MYSTATUS* CommInfoGetMyStatus(int netID)
  * @retval  REGULATION*
  */
 //==============================================================================
-
+#if 0
 const REGULATION* CommInfoGetRegulation(int netID)
 {
     if(!_pCommInfo){
@@ -614,7 +615,7 @@ const REGULATION* CommInfoGetRegulation(int netID)
     }
     return NULL;
 }
-
+#endif
 //==============================================================================
 /**
  *  DWCFriendDataを返す
@@ -792,7 +793,7 @@ static void _commInfoSetResult(int type,int num)
  */
 //------------------------------------------------------------------
 
-void CommInfoWriteResult(SAVEDATA* pSaveData)
+void CommInfoWriteResult(SAVE_CONTROL_WORK* pSaveData)
 {
     WIFI_LIST* pList = SaveData_GetWifiListData(pSaveData);
     int i,ret,pos;
@@ -837,7 +838,7 @@ void CommInfoWriteResult(SAVEDATA* pSaveData)
  */
 //------------------------------------------------------------------
 
-void CommInfoSetBattleResult(SAVEDATA* pSaveData, int bWin )
+void CommInfoSetBattleResult(SAVE_CONTROL_WORK* pSaveData, int bWin )
 {
     if(bWin==1){
         _commInfoSetResult(_RESULT_TYPE_WIN, 1);
@@ -848,7 +849,7 @@ void CommInfoSetBattleResult(SAVEDATA* pSaveData, int bWin )
     CommInfoWriteResult(pSaveData);
 }
 
-void CommInfoSetTradeResult(SAVEDATA* pSaveData, int num)
+void CommInfoSetTradeResult(SAVE_CONTROL_WORK* pSaveData, int num)
 {
     _commInfoSetResult(_RESULT_TYPE_TRADE, num);
     CommInfoWriteResult(pSaveData);

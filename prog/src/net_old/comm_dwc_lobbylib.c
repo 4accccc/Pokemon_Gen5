@@ -16,10 +16,11 @@
 #include "savedata/wifilist.h"
 #include "savedata/wifihistory.h"
 
-#include "msgdata/msg_wifi_place_msg_world.h"
+#include "msg/msg_wifi_place_msg_world.h"
 
-#include "wifi/dwc_lobbylib.h"
-#include "wifi/dwc_rap.h"
+#include "net_old/communication.h"
+#include "net_old/comm_dwc_lobbylib.h"
+#include "net_old/comm_dwc_rap.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -228,7 +229,7 @@ typedef struct {
 //=====================================
 typedef struct {
 	//  セーブデータ
-	SAVEDATA*		p_save;	
+	SAVE_CONTROL_WORK*		p_save;	
 	WIFI_LIST*		p_wifilist;
 	WIFI_HISTORY*	p_wifihistory;
 
@@ -438,7 +439,7 @@ static void DWC_LOBBY_DEBUG_Printf( const PPW_LobbyQuestionnaireRecord* cp_data 
  *	@param	p_callbackwork	コールバックワーク
  */
 //-----------------------------------------------------------------------------
-void DWC_LOBBY_Init( u32 heapID, SAVEDATA* p_save, u32 profilesize, const DWC_LOBBY_CALLBACK* cp_callback,  void* p_callbackwork )
+void DWC_LOBBY_Init( u32 heapID, SAVE_CONTROL_WORK* p_save, u32 profilesize, const DWC_LOBBY_CALLBACK* cp_callback,  void* p_callbackwork )
 {
 	GF_ASSERT( p_DWC_LOBBYLIB_WK == NULL );
 	GF_ASSERT( profilesize < PPW_LOBBY_MAX_BINARY_SIZE );	// プロフィールサイズ最大数チェック
@@ -2693,7 +2694,7 @@ static void DWC_LOBBY_Profile_SetDataEx( DWC_LOBBYLIB_WK* p_sys, s32 userid, con
 	}else{
 		copy_size = p_sys->profilesize;
 	}
-	GFL_STD_MemCopy( p_buff, cp_data, copy_size );
+	GFL_STD_MemCopy( cp_data, p_buff, copy_size );
 /*↑[GS_CONVERT_TAG]*/
 }
 
@@ -3317,7 +3318,7 @@ static void DWC_LOBBY_CallBack_ChannelDataRecv( BOOL success, BOOL broadcast, PP
 
 	// 受信チェック
 	if( strcmp( p_key, sc_DWC_LOBBY_CHANNEL_KEY_NAME[DWC_LOBBY_CHANNEL_KEY_WLDDATA] ) == 0 ){
-		GFL_STD_MemCopy( p_DWC_LOBBYLIB_WK->wfldata, cp_data, sizeof(DWC_WLDDATA)*DWC_WLDDATA_MAX );
+		GFL_STD_MemCopy(  cp_data, p_DWC_LOBBYLIB_WK->wfldata,sizeof(DWC_WLDDATA)*DWC_WLDDATA_MAX );
 /*↑[GS_CONVERT_TAG]*/
 
 		// 送信完了待ち中ならフラグを下げる
@@ -4077,7 +4078,7 @@ static s32 DWC_LOBBY_VIPDATA_GetAikotoba( const DWC_LOBBY_VIP* cp_vip, s32 profi
 //-----------------------------------------------------------------------------
 static void DWC_LOBBY_ANKETO_Set( DWC_ANKETO_DATA* p_wk, const PPW_LobbyQuestionnaire* cp_question )
 {
-	GFL_STD_MemCopy( &p_wk->question, cp_question, sizeof(PPW_LobbyQuestionnaire) );
+	GFL_STD_MemCopy( cp_question, &p_wk->question, sizeof(PPW_LobbyQuestionnaire) );
 /*↑[GS_CONVERT_TAG]*/
 
 #ifdef DWC_LOBBY_ANKETO_DRAW

@@ -16,25 +16,25 @@
 
 //#include "system/lib_pack.h"
 /*↑[GS_CONVERT_TAG]*/
-#include "system/bmp_list.h"
+#include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
-#include "system/fontproc.h"
-#include "msgdata/msg.naix"
-#include "system/pm_str.h"
+//#include "system/fontproc.h"
+//#include "msgdata/msg.naix"
+//#include "system/pm_str.h"
 #include "system/wipe.h"
-#include "system/window.h"
-#include "system/snd_tool.h"
+//#include "system/window.h"
+//#include "system/snd_tool.h"
 #include "system/palanm.h"
-#include "system/wordset.h"
-#include "system/pmfprint.h"
+//#include "system/wordset.h"
+//#include "system/pmfprint.h"
 #include "system/main.h"
-#include "system/brightness.h"
-#if PL_T0871_080719_FIX
-#include "system/snd_tool.h"
-#include "system/snd_system.h"
+//#include "system/brightness.h"
+#if 1//PL_T0871_080719_FIX
+//#include "system/snd_tool.h"
+//#include "system/snd_system.h"
 #endif
 
-#include "msgdata/msg_wifi_system.h"
+#include "msg/msg_wifi_system.h"
 
 #if	AFTERMASTER_070122_WARNING_DISP_FIX
 extern	void sys_SetDummyVBlankIntr(void);
@@ -89,7 +89,7 @@ static const GFL_DISP_VRAM vramSetTable = {
 	GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
 };
 
-static const GF_BGL_SYS_HEADER BGsys_data = {
+static const GFL_BG_SYS_HEADER BGsys_data = {
 	GX_DISPMODE_GRAPHICS,
 	GX_BGMODE_0, GX_BGMODE_0,
 	GX_BG0_AS_2D
@@ -114,7 +114,7 @@ static const BMPWIN_DAT windata = {
 //=================================================================================================
 void DWClibWarningCall( int heapID, int error_msg_id )
 {
-	GF_BGL_INI*			bgl;
+//	GF_BGL_INI*			bgl;
 	GF_BGL_BMPWIN		msgwin;
 	GFL_MSGDATA*	msgman;
 /*↑[GS_CONVERT_TAG]*/

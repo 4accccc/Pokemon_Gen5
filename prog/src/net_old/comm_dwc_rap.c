@@ -14,11 +14,12 @@
 #include "net_old/comm_state.h"
 #include "net_old/comm_local.h"
 #include "net_old/comm_system.h"
-#include "net_old/dwc_rap.h"
-#include "net_old/dwc_lobbylib.h"
-#include "system/pm_debug_wifi.h"
-#include "savedata/frontier_savedata.h"
-#include <vct.h>
+#include "net_old/comm_dwc_rap.h"
+#include "net_old/comm_dwc_lobbylib.h"
+//#include "system/pm_debug_wifi.h"
+//#include "savedata/frontier_savedata.h"
+//#include <vct.h>
+#include "system/main.h"
 
 
 // 何秒間通信が届かないとタイムアウトと判断するか
@@ -99,7 +100,7 @@ typedef struct
 	DWCFriendsMatchControl stDwcCnt;    // DWC制御構造体	
     DWCUserData *myUserData;		// DWCのユーザデータ（自分のデータ）
 	DWCInetControl stConnCtrl;
-    SAVEDATA* pSaveData;   // 2006.04.07 k.ohno  セーブデータを保持
+    SAVE_CONTROL_WORK* pSaveData;   // 2006.04.07 k.ohno  セーブデータを保持
 	
 	void *orgPtr;  //32バイトアライメントしていない自分のポインタ
     void *recvPtr[COMM_MODE_CLUB_WIFI_NUM_MAX+1];  //受信バッファの32バイトアライメントしていないポインタ
@@ -252,6 +253,8 @@ static BOOL _isSendableReliable(void);
 static void mydwc_releaseRecvBuff(int aid);
 static void mydwc_releaseRecvBuffAll(void);
 static void mydwc_allocRecvBuff(int i);
+static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align );
+static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  );
 
 static void mydwc_updateFriendInfo( );
 
@@ -282,7 +285,7 @@ static void _NNSFndHeapVisitor(void* memBlock, NNSFndHeapHandle heap, u32 userPa
  */
 //==============================================================================
 //-----#if TESTOHNO 
-int mydwc_startConnect(SAVEDATA* pSaveData, int heapID, int heapSize, int maxConnectNum)
+int mydwc_startConnect(SAVE_CONTROL_WORK* pSaveData, int heapID, int heapSize, int maxConnectNum)
 //-----#endif //TESTOHNO
 {
     void* pTemp;
@@ -407,9 +410,9 @@ void mydwc_free()
             _dWork->heapPtrEx = NULL;
 		}
         NNS_FndDestroyExpHeap( _dWork->headHandle );
-        GFL_HEAP_FreeMemory( _dWork->heapID, _dWork->heapPtr  );
+        GFL_HEAP_FreeMemory(  _dWork->heapPtr  );
 /*↑[GS_CONVERT_TAG]*/
-        GFL_HEAP_FreeMemory( _dWork->heapID, _dWork->orgPtr  );
+        GFL_HEAP_FreeMemory(  _dWork->orgPtr  );
 /*↑[GS_CONVERT_TAG]*/
         _dWork = NULL;
     }
@@ -1111,7 +1114,7 @@ static void DeleteFriendListCallback(int deletedIndex, int srcIndex, void* param
     WifiList_DataMarge(SaveData_GetWifiListData(_dWork->pSaveData),
                        deletedIndex, srcIndex);
 	//フレンド毎に持つフロンティアデータもマージする 2008.05.24(土) matsuda
-	FrontierRecord_DataMarge(SaveData_GetFrontier(_dWork->pSaveData), deletedIndex, srcIndex);
+	//FrontierRecord_DataMarge(SaveData_GetFrontier(_dWork->pSaveData), deletedIndex, srcIndex);
 }
 
 
@@ -1287,7 +1290,7 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size )
 	}
 	else {
 #ifdef MYDWC_USEVCHA		
-		if( myvct_checkData( aid, buffer,size ) ) return;
+//		if( myvct_checkData( aid, buffer,size ) ) return;
 #endif	
 		// 無意味な情報（コネクションを保持するためのものと思われる）
 		_setOpVchat( topcode );
@@ -1398,107 +1401,40 @@ static void ConnectionClosedCallback(DWCError error,
   メモリ確保関数
  *---------------------------------------------------------------------------*/
 //------#if TESTOHNO
-void*
-mydwc_AllocFunc( DWCAllocType name, u32   size, int align )
+static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align )
 {
 #pragma unused( name )
-    void * ptr;
-    OSIntrMode old;
+	void * ptr;
+	OSIntrMode old;
 
-#ifdef CHEAK_HEAPSPACE
-#ifdef _WIFI_DEBUG_TUUSHIN
-#ifdef DEBUGPRINT_ON
-   MYDWC_DEBUGPRINT("HEAP取得(%d, %d) from %p %x\n", size, align, _dWork->headHandle, _dWork->headHandle->signature);
-#endif
-#endif
-#endif
-    
-    old = OS_DisableInterrupts();
+	old = OS_DisableInterrupts();
+	GF_ASSERT(align < 32);
+	
+	ptr = GFL_NET_Align32Alloc(HEAPID_NETWORK, size);
 
-    ptr = NNS_FndAllocFromExpHeapEx( _dWork->headHandle, size, align );
-
-//	OS_TPrintf("dwc_rap:heap alloc  needsize=%d  heapnokori=%d  heapnokori max=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap( _dWork->headHandle ), NNS_FndGetAllocatableSizeForExpHeap( _dWork->headHandle ) );
-
-    if(ptr == NULL){
-        if(_dWork->heapPtrEx!=NULL){
-//			OS_TPrintf("**** dwc_rap:ex_heap alloc  needsize=%d  heapnokori=%d heapnokori max=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap( _dWork->headHandleEx ), NNS_FndGetAllocatableSizeForExpHeap( _dWork->headHandleEx ) );
-            ptr = NNS_FndAllocFromExpHeapEx( _dWork->headHandleEx, size, align );
-        }
-    }
-
-    if(ptr == NULL){
-#ifdef _WIFI_DEBUG_TUUSHIN
-//        GF_ASSERT_MSG(ptr,"HEAP faqiled");
-#endif
-
-        // ヒープが無い場合の修正
-        CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);  // エラーにする
-        OS_RestoreInterrupts( old );
-
-		OS_TPrintf("dwc_rap:heap none  needsize=%d  heapnokori=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap( _dWork->headHandle ) );
-        return NULL;//GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION,size);  // ニセモノをつかませARM9どまりを発生させない
-/*↑[GS_CONVERT_TAG]*/
-    }
-
-#ifdef CHEAK_HEAPSPACE
-    {
-		int hspace = NNS_FndGetTotalFreeSizeForExpHeap( _dWork->headHandle );
-		if( hspace < _dWork->_heapspace )
-		{
-			OS_TPrintf("ヒープ残り：%d\n", hspace);
-			_dWork->_heapspace = hspace;
-		}
+	OS_RestoreInterrupts( old );
+  if(ptr == NULL){
+		// ヒープが無い場合の修正
+		CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);  // エラーにする
+		return NULL;
 	}
-	{
-		int maxspace = NNS_FndGetAllocatableSizeForExpHeap( _dWork->headHandle );
-		if( maxspace < _dWork->_heapmaxspace )
-		{
-			OS_TPrintf("MaxHeap残り：%d\n", maxspace);
-			_dWork->_heapmaxspace = maxspace;
-		}		
-	}
-#endif	
-    OS_RestoreInterrupts( old );
-#ifdef DEBUGPRINT_ON
-//	MYDWC_DEBUGPRINT("dwc_rap:ヒープ取得（size = %d）：残り%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap( _dWork->headHandle ) );
-#endif
-    return ptr;
+	return ptr;
 }
 //-----#endif //TESTOHNO
 
 /*---------------------------------------------------------------------------*
   メモリ開放関数
  *---------------------------------------------------------------------------*/
-void
-mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  )
+static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  )
 {
 #pragma unused( name, size )
-    OSIntrMode old;
+	OSIntrMode old;
 	u16 groupid;
 
-    if ( !ptr ) return;
-//    MYDWC_DEBUGPRINT("HEAP解放(%p) to %p\n", ptr, _dWork->headHandle);    
-    old = OS_DisableInterrupts();
-
-
-	// GROUPIDから臨時ヒープか確認し
-	// 確保先の拡張ヒープでメモリを開放する
-	groupid = NNS_FndGetGroupIDForMBlockExpHeap( ptr );
-//	OS_TPrintf( "dwc_rap:heap free groupid %d\n", groupid );
-	if( groupid == _EXTRA_HEAP_GROUPID ){	
-
-		if( _dWork->heapPtrEx==NULL ){
-			// ヒープが無い場合のえらー
-			CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);  // エラーにする
-			OS_TPrintf( "dwc_rap;ex_heap none\n" );
-			return ;
-		}
-		
-	    NNS_FndFreeToExpHeap( _dWork->headHandleEx, ptr );
-	}else{
-	    NNS_FndFreeToExpHeap( _dWork->headHandle, ptr );
-	}
-    OS_RestoreInterrupts( old );
+	if ( !ptr ) return;
+	old = OS_DisableInterrupts();
+	GFL_NET_Align32Free( ptr );
+	OS_RestoreInterrupts( old );
 }
 
 //==============================================================================
@@ -1716,21 +1652,21 @@ static int mydwc_step(void)
 		
 		if( (_dWork->myvchaton == 1) && (_dWork->opvchaton == 1) && (_dWork->myvchat_send == TRUE) )
 		{
-			myvct_onVchat();
+//			myvct_onVchat();
 		}
 		else
 		{
-			myvct_offVchat();
+	//		myvct_offVchat();
 		}
 				
-		myvct_main();
+	//	myvct_main();
 
         if(_dWork->backupBitmap != DWC_GetAIDBitmap()){
-            if(!_dWork->pausevchat && _dWork->bVChat){
-                if(myvct_AddConference(DWC_GetAIDBitmap(), DWC_GetMyAID())){
+     //       if(!_dWork->pausevchat && _dWork->bVChat){
+          //      if(myvct_AddConference(DWC_GetAIDBitmap(), DWC_GetMyAID())){
                     _dWork->backupBitmap = DWC_GetAIDBitmap();
-                }
-            }
+            //    }
+     //       }
         }
 	}
 #endif
@@ -1794,9 +1730,9 @@ void mydwc_startvchat(int heapID)
 
 	// デバックプリントOFF
 #ifndef DEBUGPRINT_ON
-	VCT_SetReportLevel( VCT_REPORTLEVEL_NONE );
+//	VCT_SetReportLevel( VCT_REPORTLEVEL_NONE );
 #else
-      VCT_SetReportLevel( VCT_REPORTLEVEL_ALL );
+//      VCT_SetReportLevel( VCT_REPORTLEVEL_ALL );
 
 #endif
 
@@ -1812,30 +1748,31 @@ void mydwc_startvchat(int heapID)
     }
     
 	if( _dWork->isvchat==0 ){
-        switch( _dWork->vchatcodec ){
-          case VCHAT_G711_ULAW:
-            late = VCT_CODEC_G711_ULAW;
-            break;
-          case VCHAT_2BIT_ADPCM:
-            late = VCT_CODEC_2BIT_ADPCM;
-            break;
-          case VCHAT_3BIT_ADPCM:
-            late = VCT_CODEC_3BIT_ADPCM;
-            break;
-          case VCHAT_4BIT_ADPCM:		
-            late = VCT_CODEC_4BIT_ADPCM;
-            break;
-          default:
-            if(!bFourGame){
-                late = VCT_CODEC_4BIT_ADPCM;   //  DP
-            }
-            else{
-                late = VCT_CODEC_3BIT_ADPCM;
-            }
-            break;
-        }
-        myvct_init( heapID, late, num );
-        myvct_setDisconnectCallback( vct_endcallback );
+/*         switch( _dWork->vchatcodec ){
+ *           case VCHAT_G711_ULAW:
+ *             late = VCT_CODEC_G711_ULAW;
+ *             break;
+ *           case VCHAT_2BIT_ADPCM:
+ *             late = VCT_CODEC_2BIT_ADPCM;
+ *             break;
+ *           case VCHAT_3BIT_ADPCM:
+ *             late = VCT_CODEC_3BIT_ADPCM;
+ *             break;
+ *           case VCHAT_4BIT_ADPCM:		
+ *             late = VCT_CODEC_4BIT_ADPCM;
+ *             break;
+ *           default:
+ *             if(!bFourGame){
+ *                 late = VCT_CODEC_4BIT_ADPCM;   //  DP
+ *             }
+ *             else{
+ *                 late = VCT_CODEC_3BIT_ADPCM;
+ *             }
+ *             break;
+ *         }
+ */
+//        myvct_init( heapID, late, num );
+  //      myvct_setDisconnectCallback( vct_endcallback );
         _dWork->isvchat = 1;
     }
 }
@@ -1851,7 +1788,7 @@ void mydwc_startvchat(int heapID)
 //==============================================================================
 void mydwc_setVchat(int codec){
 	_dWork->vchatcodec = codec;
-
+#if 0
 	if( _dWork->isvchat ){
 		switch( _dWork->vchatcodec ){
 			case VCHAT_G711_ULAW:
@@ -1871,6 +1808,7 @@ void mydwc_setVchat(int codec){
 			break;
 		}
 	}
+#endif
 }
 
 //==============================================================================
@@ -1883,7 +1821,7 @@ void mydwc_setVchat(int codec){
 
 void mydwc_stopvchat(void)
 {
-    myvct_free();
+    //myvct_free();
     if(_dWork != NULL){
 	    _dWork->isvchat = 0;
     	_dWork->backupBitmap = 0;
@@ -1901,7 +1839,7 @@ void mydwc_stopvchat(void)
 void mydwc_pausevchat(BOOL bPause)
 {
     if(bPause){
-        myvct_DelConference(DWC_GetMyAID());
+        //myvct_DelConference(DWC_GetMyAID());
         _dWork->pausevchat = TRUE;
     }
     else{
@@ -1987,8 +1925,8 @@ int mydwc_disconnect( int sync )
           case MDSTATE_MATCHED:
           case MDSTATE_PLAYING:
             if( _dWork->isvchat ){
-                MYDWC_DEBUGPRINT("ボイスチャット稼働中 止める\n");
-                myvct_endConnection();
+                //MYDWC_DEBUGPRINT("ボイスチャット稼働中 止める\n");
+                //myvct_endConnection();
             }
             _dWork->state = MDSTATE_DISCONNECTTING;
             break;
@@ -2507,7 +2445,7 @@ void mydwc_showFriendInfo()
 // 送信したかどうかを返します
 BOOL mydwc_IsSendVoiceAndInc(void)
 {
-    return myvct_IsSendVoiceAndInc();
+	return FALSE; //    return myvct_IsSendVoiceAndInc();
 }
 
 
@@ -2667,7 +2605,7 @@ int mydwc_AnybodyEvalNum(void)
 void mydwc_recvHeapChange(BOOL bWorldHeap, int heapID)
 {
     if(bWorldHeap){
-        _dWork->recvHeapID = HEAPID_WORLD;   //受信バッファ用HEAPID
+        _dWork->recvHeapID = GFL_HEAPID_SYSTEM;   //受信バッファ用HEAPID
 
         if(_dWork->heapPtrEx==NULL){
             _dWork->heapPtrEx = GFL_HEAP_AllocMemory(heapID, _EXTRA_HEAPSIZE + 32);  // 拡張HEAP
@@ -2750,7 +2688,7 @@ void mydwc_allocRecvBuff(int i)
 
     if(_dWork->recvPtr[i]==NULL){
         OHNO_PRINT("_SetRecvBufferメモリ確保 %d\n",i);
-        if(_dWork->recvHeapID == HEAPID_WORLD){
+        if(_dWork->recvHeapID == GFL_HEAPID_SYSTEM){
             _dWork->recvPtr[i] = GFL_HEAP_AllocMemory(_dWork->recvHeapID, SIZE_RECV_BUFFER + 32);
 /*↑[GS_CONVERT_TAG]*/
             _dWork->bRecvPtrWorld[i] = TRUE;
