@@ -1401,6 +1401,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
 //--------------------------------------------------------------
 void FLDMSGBG_SetBlendAlpha( void )
 {
+#if 0 //フィールドマップ側で対応
   { //バトルのウィンドウ変更に対応
     #if 0
     int mask =
@@ -1412,7 +1413,8 @@ void FLDMSGBG_SetBlendAlpha( void )
     GX_SetVisibleWnd( GX_WNDMASK_NONE );
     #endif
   }
-
+#endif
+  
   {
     int plane1 = GX_BLEND_PLANEMASK_BG1; 
   	int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|

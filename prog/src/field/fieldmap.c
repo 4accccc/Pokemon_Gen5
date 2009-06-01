@@ -1142,6 +1142,9 @@ static void	fldmap_BG_Init( FIELDMAP_WORK *fieldWork )
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_DISP_SetDispOn();
+  
+  //使用するウィンドウ
+  GX_SetVisibleWnd( GX_WNDMASK_NONE );
 }
 
 //--------------------------------------------------------------
