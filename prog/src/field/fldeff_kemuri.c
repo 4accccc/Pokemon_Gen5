@@ -226,15 +226,10 @@ static void kemuriTask_Delete( FLDEFF_TASK *task, void *wk )
 static void kemuriTask_Update( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_KEMURI *work = wk;
-#if 1 
+  
   if( GFL_G3D_OBJECT_IncAnimeFrame(work->obj,0,FX32_ONE) == FALSE ){
     FLDEFF_TASK_CallDelete( task );
   }
-#else
-  if( GFL_G3D_OBJECT_LoopAnimeFrame(work->obj,0,FX32_ONE) == FALSE ){
-//    FLDEFF_TASK_CallDelete( task );
-  }
-#endif
 }
 
 //--------------------------------------------------------------
