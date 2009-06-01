@@ -8,6 +8,43 @@
 //=============================================================================
 #pragma once
 
+
+//==============================================================================
+//	サーバーの製品版、開発版への接続切り替え
+//==============================================================================
+///認証サーバーの開発用サーバー、製品版サーバーの切り替え
+#ifdef PM_DEBUG
+///有効にしているとデバッグサーバーへ接続
+#define DEBUG_SERVER
+#else
+
+#endif
+
+#ifdef DEBUG_SERVER
+//開発用サーバー
+#define GF_DWC_CONNECTINET_AUTH_TYPE	(DWC_CONNECTINET_AUTH_TEST)
+//不思議な贈り物　定義を有効にすると本番サーバへ接続
+//#define USE_AUTHSERVER_RELEASE			// 本番サーバへ接続
+// dpw_common.h のDPW_SERVER_PUBLICの定義は直接ファイル内で変更する必要があります。
+//DPW_SERVER_PUBLIC
+
+//Wi-Fiロビーサーバ
+#define GF_DWC_LOBBY_CHANNEL_PREFIX		(PPW_LOBBY_CHANNEL_PREFIX_DEBUG)
+
+#else	//---------- DEBUG_SERVER
+
+//製品版用サーバー
+#define GF_DWC_CONNECTINET_AUTH_TYPE	(DWC_CONNECTINET_AUTH_RELEASE)
+//不思議な贈り物　定義を有効にすると本番サーバへ接続
+#define USE_AUTHSERVER_RELEASE			// 本番サーバへ接続
+// dpw_common.h のDPW_SERVER_PUBLICの定義は直接ファイル内で変更する必要があります。
+//DPW_SERVER_PUBLIC
+//Wi-Fiロビーサーバ
+#define GF_DWC_LOBBY_CHANNEL_PREFIX		(DWC_LOBBY_CHANNEL_PREFIX_RELEASE)
+
+#endif	//---------- DEBUG_SERVER
+
+
 #include "comm_def.h"
 #include "system/pms_data.h"
 
@@ -56,6 +93,12 @@
 
 #define MYSTERY_BEACON_DATA_SIZE   (84)
 
+typedef struct {
+	u16				sentence_type;			///< 文章タイプ
+	u16				sentence_id;			///< タイプ内ID
+	u16		word[2];		///< 単語ID
+} old_PMS_DATA;
+
 // WMBssDescのgameInfo.userGameInfoを使用している状況の構造体
 // WM_SIZE_USER_GAMEINFO  最大 112byte
 // 今後の会議で変更になる予定
@@ -66,7 +109,7 @@ typedef struct{
   u8  		regulationNo;  	// 戦闘レギュレーション＆コンテストタイプの識別		10
   u8  		connectNum;    	// つながっている台数  --> 本親かどうか識別			11
   u8 		soloDebugNo;  	// 他の人と通信しないようにするための番号			12
-  PMS_DATA	pmsData;									// 簡易会話データ		20
+  old_PMS_DATA	pmsData;									// 簡易会話データ		20
   u8  		myStatusBuff[COMM_SEND_MYSTATUS_SIZE];  	// 実際のmystatusの大きさは実行時でないとわからないので上に切ってある
   u8  		regulationBuff[COMM_SEND_REGULATION_SIZE];  // 実際のregの大きさは実行時でないとわからないので上に切ってある
   // 戦闘の時以外は空いてるので、ユニオンルームの子機IDも入れる事にする
@@ -87,12 +130,12 @@ typedef struct{
 
 #include "net_old/comm_command.h"
 #include "net_old/comm_info.h"
-#include "net_old/comm_mp.h"
+//#include "net_old/comm_mp.h"
 #include "net_old/comm_system.h"
 #include "net_old/comm_recv.h"
 #include "net_old/comm_message.h"
 #include "net_old/comm_tool.h"
-#include "net_old/comm_wm_icon.h"
+//#include "net_old/comm_wm_icon.h"
 #include "net_old/comm_state.h"
 
 // 他の人と通信接続しないようにするための番号
@@ -108,11 +151,4 @@ typedef struct{
 #define COMMDIRECT_DEBUG_NO  (2)
 
 
-// データダンプ
-#ifdef PM_DEBUG
-extern void CommDump_Debug(u8* adr, int length, char* pInfoStr);
-#define DEBUG_DUMP(a,l,s)  CommDump_Debug(a,l,s)
-#else
-#define DEBUG_DUMP(a,l,s)       ((void) 0)
-#endif
 

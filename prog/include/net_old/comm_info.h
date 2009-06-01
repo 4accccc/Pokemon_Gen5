@@ -10,11 +10,12 @@
 #pragma once
 
 #include "savedata/mystatus.h"
-#include "savedata/regulation.h"
-#include "wifi/dwc_rap.h"
+//#include "savedata/regulation.h"
+#include "net_old/comm_dwc_rap.h"
 
 /// 初期化
-extern void CommInfoInitialize(SAVEDATA* pSaveData, const REGULATION* pReg);
+//extern void CommInfoInitialize(SAVEDATA* pSaveData, const REGULATION* pReg);
+extern void CommInfoInitialize(SAVE_CONTROL_WORK* pSaveData);
 /// 開放
 extern void CommInfoFinalize(void);
 /// ワークサイズを得る
@@ -82,14 +83,14 @@ extern int CommInfoGetMyArea(int netID);
 /// myPenaltyを返す
 extern int CommInfoGetMyPenalty(int netID);
 // レギュレーションを返す
-extern const REGULATION* CommInfoGetRegulation(int netID);
+//++ extern const REGULATION* CommInfoGetRegulation(int netID);
 // 接続している人のレギュレーションが同じかどうか検査する
 extern BOOL CommInfoRegulationCheck(void);
 
 // 通信たいせん＆こうかん結果を一時記録
-extern void CommInfoWriteResult(SAVEDATA* pSaveData);
-extern void CommInfoSetBattleResult(SAVEDATA* pSaveData, int bWin );
-extern void CommInfoSetTradeResult(SAVEDATA* pSaveData, int num);
+extern void CommInfoWriteResult(SAVE_CONTROL_WORK* pSaveData);
+extern void CommInfoSetBattleResult(SAVE_CONTROL_WORK* pSaveData, int bWin );
+extern void CommInfoSetTradeResult(SAVE_CONTROL_WORK* pSaveData, int num);
 
 
 // エントリー中なのかどうか調べる

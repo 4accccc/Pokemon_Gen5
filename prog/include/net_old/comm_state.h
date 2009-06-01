@@ -12,9 +12,11 @@
 
 #pragma once
 
-#include "savedata/savedata.h"
-#include "savedata/regulation.h"
-#include "wifi/dwc_lobbylib.h"
+#include "savedata/save_control.h"
+//#include "savedata/regulation.h"
+typedef void REGULATION;
+
+#include "net_old/comm_dwc_lobbylib.h"
 
 #ifdef PM_DEBUG
 #define COMMST_DEBUG_WFLBY_START	// デバック開始定義
@@ -32,7 +34,7 @@ extern void DebugOhnoCommDebugUnderChildOnly(int no);
 
 extern BOOL CommStateIsInitialize(void);
 // 地下に入る場合の処理 ステートが地下用に変更される
-extern void CommStateEnterUnderGround(SAVEDATA* pSaveData);
+extern void CommStateEnterUnderGround(SAVE_CONTROL_WORK* pSaveData);
 // 地下をでる場合の処理 ステートが何もなしに変更される
 extern void CommStateExitUnderGround(void);
 // 地下において接続中STATEなのかどうか返す
@@ -56,15 +58,15 @@ extern void CommStateUnderGroundDigFossilEnd(void);
 
 // バトル時に親になる場合の処理開始
 #ifdef PM_DEBUG
-extern void CommStateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi, int soloDebugNo);
+extern void CommStateEnterBattleParent(SAVE_CONTROL_WORK* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi, int soloDebugNo);
 #else
-extern void CommStateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi);
+extern void CommStateEnterBattleParent(SAVE_CONTROL_WORK* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi);
 #endif
 // バトル時に子になる場合の処理開始
 #ifdef PM_DEBUG
-extern void CommStateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi, int soloDebugNo);
+extern void CommStateEnterBattleChild(SAVE_CONTROL_WORK* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi, int soloDebugNo);
 #else
-extern void CommStateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi);
+extern void CommStateEnterBattleChild(SAVE_CONTROL_WORK* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi);
 #endif
 // バトル時に親を決めた際の子機の処理
 extern void CommStateConnectBattleChild(int connectIndex);
@@ -75,32 +77,8 @@ extern void CommStateExitBattle(void);
 // バトル接続中STATEなのかどうか返す
 extern BOOL CommIsBattleConnectingState(void);
 
-/// ユニオンルームでビーコンの収集
-extern void CommStateUnionBconCollection(SAVEDATA* pSaveData);
 /// ユニオン子機になる予定なので誰もつながらない
 extern void CommStateChildReserve(void);
-/// ユニオンルームで会話開始
-extern void CommStateUnionTalkStart(void);
-/// ユニオンルームで接続開始 
-extern void CommStateUnionConnectStart(int index);
-/// 接続したかどうか
-extern int CommStateIsUnionConnectSuccess(void);
-/// 親機として接続しているかどうか
-extern BOOL CommStateIsUnionParentConnectSuccess(void);
-/// ビーコン収集再開
-extern void CommStateUnionBconCollectionRestart(void);
-/// ビーコン収集再開の流れに戻ったかどうか
-extern BOOL CommStateUnionIsRestartSuccess(void);
-// 終了処理手続き
-extern void CommStateExitUnion(void);
-/// 一時停止
-extern void CommStateUnionPause(void);
-/// ユニオンルーム内の接続モードに戻す
-extern void CommStateUnionAppEnd(void);
-/// 「ユニオンルームアプリケーション」という接続モードに変える
-extern void CommStateUnionAppStart(void);
-
-
 
 
 
@@ -109,15 +87,11 @@ extern void CommStateSetPokemon(u8* sel);
 // コピー
 extern void CommStateGetPokemon(u8* sel);
 
-// 不思議通信親機の接続
-extern void CommStateEnterMysteryParent(SAVEDATA* pSaveData, int serviceNo);
-// 不思議通信子機の接続
-extern void CommStateEnterMysteryChild(SAVEDATA* pSaveData, int serviceNo);
 
 
 #ifdef PM_DEBUG
 // タイトルから通信デバッグを行う時の関数
-extern void CommStateDBattleConnect(BOOL bParent, int gameMode ,SAVEDATA* pSaveData);
+extern void CommStateDBattleConnect(BOOL bParent, int gameMode ,SAVE_CONTROL_WORK* pSaveData);
 // WIFIステート処理
 extern void CommStateWifiCheckFunc(void);
 
@@ -157,7 +131,7 @@ extern int CommRecvGetNegotiationSize(void);
 /// 入ってくる人の数を制限
 extern void CommStateSetLimitNum(int num);
 /// ぽけっち接続開始
-extern void CommStateEnterPockchChild(SAVEDATA* pSaveData);
+extern void CommStateEnterPockchChild(SAVE_CONTROL_WORK* pSaveData);
 /// ぽけっち処理手続き
 extern void CommStateExitPoketch(void);
 /// ぽけっちにおいて情報収集STATEなのかどうか返す
@@ -170,7 +144,7 @@ extern BOOL CommIsPoketchSearchingState(void);
 #define PARTYGAME_DOWNLOAD_BCON (0x08)
 
 // * パーティーゲーム検索の通信処理開始（子機状態のみ）
-extern void CommStateEnterPartyGameScanChild(SAVEDATA* pSaveData);
+extern void CommStateEnterPartyGameScanChild(SAVE_CONTROL_WORK* pSaveData);
 // パーティーゲームサーチの終了処理
 extern void CommStateExitPartyGameScan(void);
 // 拾ったビーコンのBITを返す
@@ -183,14 +157,14 @@ extern void CommStateCheckFunc(void);
 
 // WIFIバトル接続用関数
 #ifdef PM_DEBUG
-void CommStateWifiEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo, int soloDebugNo);
+void CommStateWifiEnterBattleChild(SAVE_CONTROL_WORK* pSaveData, int serviceNo, int regulationNo, int soloDebugNo);
 #else
-void CommStateWifiEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo);
+void CommStateWifiEnterBattleChild(SAVE_CONTROL_WORK* pSaveData, int serviceNo, int regulationNo);
 #endif
 #ifdef PM_DEBUG
-void CommStateWifiEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, int soloDebugNo);
+void CommStateWifiEnterBattleParent(SAVE_CONTROL_WORK* pSaveData, int serviceNo, int regulationNo, int soloDebugNo);
 #else
-void CommStateWifiEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo);
+void CommStateWifiEnterBattleParent(SAVE_CONTROL_WORK* pSaveData, int serviceNo, int regulationNo);
 #endif
 //
 
@@ -204,7 +178,7 @@ extern BOOL CommStateGetErrorCheck(void);
 extern BOOL CommStateGetWifiDPWError(void);
 
 
-extern void* CommStateWifiEnterLogin(SAVEDATA* pSaveData, int wifiFriendStatusSize);
+extern void* CommStateWifiEnterLogin(SAVE_CONTROL_WORK* pSaveData, int wifiFriendStatusSize);
 extern void* CommStateGetMatchWork(void);
 extern BOOL CommStateIsWifiLoginState(void);
 extern BOOL CommStateIsWifiLoginMatchState(void);
@@ -237,13 +211,13 @@ extern int CommWifiIsMatched();
 extern BOOL CommStateIsWifiConnect(void);
 
 
-extern void CommStateWifiDPWStart(SAVEDATA* pSaveData);
+extern void CommStateWifiDPWStart(SAVE_CONTROL_WORK* pSaveData);
 extern void CommStateWifiDPWEnd(void);
 
-extern void CommStateWifiFusigiStart(SAVEDATA* pSaveData);
+extern void CommStateWifiFusigiStart(SAVE_CONTROL_WORK* pSaveData);
 extern void CommStateWifiFusigiEnd(void);
 
-extern void CommStateWifiEMailStart(SAVEDATA* pSaveData);
+extern void CommStateWifiEMailStart(SAVE_CONTROL_WORK* pSaveData);
 extern void CommStateWifiEMailEnd(void);
 
 
@@ -258,7 +232,7 @@ extern void CommStateWifiEMailEnd(void);
 //
 // ロビー専用の関数
 // この関数を呼ぶ前にDWC_LOBBY_Initを行っておいてください。
-extern void CommStateWifiLobbyLogin( SAVEDATA* p_save, const void* cp_initprofile );
+extern void CommStateWifiLobbyLogin( SAVE_CONTROL_WORK* p_save, const void* cp_initprofile );
 extern void CommStateWifiLobbyLogout( void );
 extern BOOL CommStateWifiLobbyDwcLoginCheck( void );
 extern BOOL CommStateWifiLobbyError( void );
@@ -272,7 +246,7 @@ enum{
 };
 extern u32 CommStateWifiP2PGetConnectState( void );
 #ifdef COMMST_DEBUG_WFLBY_START
-extern void CommStateWifiLobbyLogin_Debug( SAVEDATA* p_save, const void* cp_initprofile, u32 season, u32 room );
+extern void CommStateWifiLobbyLogin_Debug( SAVE_CONTROL_WORK* p_save, const void* cp_initprofile, u32 season, u32 room );
 #endif	// COMMST_DEBUG_WFLBY_START
 
 

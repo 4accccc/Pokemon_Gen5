@@ -9,14 +9,14 @@
 
 #pragma once
 
-#include "gflib/bg_system.h" //GF_BGL_INI
+#include "gflib.h"
 
 
 /// 通信エラー用ウインドウを出す
-extern void CommErrorMessageStart(int heapID, GF_BGL_INI* bgl);
+extern void CommErrorMessageStart(int heapID);
 
 /// 通信エラーを検査していてエラーになると止まる
-extern void CommErrorCheck(int heapID, GF_BGL_INI* bgl);
+extern void CommErrorCheck(int heapID);
 
 /// 通信エラーを検査していてエラーになると止まる
 extern void CommErrorDispCheck(int heapID);
