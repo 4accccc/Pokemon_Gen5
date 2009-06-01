@@ -274,7 +274,7 @@ void * FLDEFF_CTRL_GetEffectWork( FLDEFF_CTRL *fectrl, FLDEFF_PROCID id )
 {
   FLDEFF_PROCEFF *proc;
   proc = fectrl_SearchProcEffect( (FLDEFF_CTRL*)fectrl, id );
-  GF_ASSERT( proc != NULL );
+  GF_ASSERT( proc != NULL && "effect not regist\n" );
   return( proc->proc_work );
 }
 
@@ -732,11 +732,13 @@ HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task )
 //======================================================================
 #include "fldeff_shadow.h"
 #include "fldeff_kemuri.h"
+#include "fldeff_grass.h"
 
 FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
 {
   {FLDEFF_PROCID_SHADOW,FLDEFF_SHADOW_Init,FLDEFF_SHADOW_Delete},
   {FLDEFF_PROCID_KEMURI,FLDEFF_KEMURI_Init,FLDEFF_KEMURI_Delete},
+  {FLDEFF_PROCID_GRASS,FLDEFF_GRASS_Init,FLDEFF_GRASS_Delete},
   {FLDEFF_PROCID_MAX,NULL,NULL}, ///<I’[
 };
 
@@ -747,6 +749,7 @@ const FLDEFF_PROCID DATA_FLDEFF_RegistEffectGroundTbl[] =
 {
   FLDEFF_PROCID_SHADOW,
   FLDEFF_PROCID_KEMURI,
+  FLDEFF_PROCID_GRASS,
 };
 
 const u32 DATA_FLDEFF_RegistEffectGroundTblNum = 

@@ -14,6 +14,9 @@
 
 #include "fldeff_shadow.h"
 #include "fldeff_kemuri.h"
+#include "fldeff_grass.h"
+
+#include "map_attr.h"
 
 //======================================================================
 //	define
@@ -282,7 +285,7 @@ static void FldMMdl_ProcMoveStartSecond( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 /**
  * ìÆçÏèIóπÇ≈î≠ê∂
- * @param	fmmdl	FLDMMDL *
+ * @param	fmmdl	FLDMMDL *GX_WNDMASK_NONE
  * @retval	nothing
  */
 //--------------------------------------------------------------
@@ -519,7 +522,18 @@ static void FldMMdl_MapAttrGrassProc_0(
 	if( MATR_IsGrass(now) == TRUE ){
 		FE_fmmdlGrass_Add( fmmdl, FALSE );
 	}
-	#endif
+	#else
+  {
+    MAPATTR_FLAG flag = MAPATTR_GetMapAttrFlag( now );
+    
+    if( (flag&MAPATTR_FLAGBIT_GRASS) ){
+      FLDMMDLSYS *fos = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );
+      FIELDMAP_WORK *fieldMapWork = FLDMMDLSYS_GetFieldMapWork( fos );
+      FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldMapWork );
+      FLDEFF_GRASS_SetFldMMdl( fectrl, fmmdl, FALSE );
+    }
+  }
+  #endif
 }
 
 //--------------------------------------------------------------
@@ -539,7 +553,18 @@ static void FldMMdl_MapAttrGrassProc_12(
 	if( MATR_IsGrass(now) == TRUE ){
 		FE_fmmdlGrass_Add( fmmdl, TRUE );
 	}
-	#endif
+	#else
+  {
+    MAPATTR_FLAG flag = MAPATTR_GetMapAttrFlag( now );
+    
+    if( (flag&MAPATTR_FLAGBIT_GRASS) ){
+      FLDMMDLSYS *fos = (FLDMMDLSYS*)FLDMMDL_GetFldMMdlSys( fmmdl );
+      FIELDMAP_WORK *fieldMapWork = FLDMMDLSYS_GetFieldMapWork( fos );
+      FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldMapWork );
+      FLDEFF_GRASS_SetFldMMdl( fectrl, fmmdl, TRUE );
+    }
+  }
+  #endif
 }
 
 //======================================================================
@@ -1876,7 +1901,7 @@ BOOL FLDMMDL_UpdateCurrentHeight( FLDMMDL * fmmdl )
 //--------------------------------------------------------------
 BOOL FLDMMDL_UpdateCurrentMapAttr( FLDMMDL * fmmdl )
 {
-	#ifndef FLDMMDL_PL_NULL
+#ifndef FLDMMDL_PL_NULL
 	MATR old_attr = MATR_IsNotAttrGet();
 	MATR now_attr = old_attr;
 	
@@ -1900,8 +1925,38 @@ BOOL FLDMMDL_UpdateCurrentMapAttr( FLDMMDL * fmmdl )
 	}
 	
 	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ATTR_GET_ERROR );
-	#endif
+  return( TRUE );
+#else
+	MAPATTR old_attr = MAPATTR_ERROR;
+	MAPATTR now_attr = old_attr;
+	
+  if( FLDMMDL_CheckMoveBitAttrGetOFF(fmmdl) == FALSE ){
+    VecFx32 pos;
+		int gx = FLDMMDL_GetOldGridPosX( fmmdl );
+		int gz = FLDMMDL_GetOldGridPosZ( fmmdl );
+    
+    pos.x = GRID_SIZE_FX32( gx );
+    pos.y = 0;
+    pos.z = GRID_SIZE_FX32( gz );
+    FLDMMDL_GetMapPosAttr( fmmdl, &pos, &old_attr );
+    
+    gx = FLDMMDL_GetGridPosX( fmmdl );
+    gz = FLDMMDL_GetGridPosZ( fmmdl );
+    FLDMMDL_TOOL_GetCenterGridPos( gx, gz, &pos );
+    FLDMMDL_GetMapPosAttr( fmmdl, &pos, &now_attr );
+  }
+  
+	FLDMMDL_SetMapAttrOld( fmmdl, old_attr );
+	FLDMMDL_SetMapAttr( fmmdl, now_attr );
+  
+  if( now_attr == MAPATTR_ERROR ){
+		FLDMMDL_OnStatusBit( fmmdl, FLDMMDL_STABIT_ATTR_GET_ERROR );
+		return( FALSE );
+  }
+  
+	FLDMMDL_OffStatusBit( fmmdl, FLDMMDL_STABIT_ATTR_GET_ERROR );
 	return( TRUE );
+#endif
 }
 
 //======================================================================

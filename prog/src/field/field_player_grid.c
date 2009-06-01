@@ -494,13 +494,7 @@ static void gjiki_SetMove_Walk(
 	}else{
 		code = AC_WALK_U_8F;
 	}
-
-#if 0	//段差出きるまでのデバッグ用
-	if( key_cont & PAD_BUTTON_A ){ //kari
-		code = AC_JUMP_U_2G_16F;
-	}
-#endif
-
+  
 	code = FLDMMDL_ChangeDirAcmdCode( dir, code );
 	
 	FLDMMDL_SetAcmd( fmmdl, code );
@@ -648,8 +642,9 @@ void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER *fld_player )
 
   if( g_jiki->move_state == PLAYER_MOVE_HITCH ){
     FLDMMDL *fmmdl = FIELD_PLAYER_GetFldMMdl( fld_player );
+    u16 dir = FLDMMDL_GetDirDisp( fmmdl );
     FLDMMDL_FreeAcmd( fmmdl );
-    FLDMMDL_SetDirDisp( fmmdl, FLDMMDL_GetDirDisp(fmmdl) );
+    FLDMMDL_SetDirDisp( fmmdl, dir );
     FLDMMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
     FIELD_PLAYER_SetMoveValue( fld_player, PLAYER_MOVE_VALUE_STOP );
   }

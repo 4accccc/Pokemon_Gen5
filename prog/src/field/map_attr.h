@@ -26,8 +26,9 @@ typedef enum
   MAPATTR_FLAGBIT_ENCOUNT = (1<<2), ///<敵出現フラグ ON=出現
   MAPATTR_FLAGBIT_FOOTMARK = (1<<3), ///<足跡表示フラグ ON=足跡有り
   MAPATTR_FLAGBIT_SPLASH = (1<<4), ///<水飛沫表示フラグ ON=水飛沫有り
-  MAPATTR_FLAGBIT_REFLECT = (1<<5), ///<映り込み表示フラグ ON=映り込み有り
-  MAPATTR_FLAGBIT_SHADOW = (1<<6), ///<影表示フラグ ON=影表示有り
+  MAPATTR_FLAGBIT_GRASS = (1<<5), ///<草揺れフラグ ON=草
+  MAPATTR_FLAGBIT_REFLECT = (1<<6), ///<映り込み表示フラグ ON=映り込み有り
+  MAPATTR_FLAGBIT_SHADOW = (1<<7), ///<影表示フラグ ON=影表示有り
 }MAPATTR_FLAGBIT;
 
 //======================================================================
