@@ -292,7 +292,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_encount_effect.c \
         field/field_effect.c \
         field/fldeff_shadow.c \
-        field/fldeff_kemuri.c
+        field/fldeff_kemuri.c \
+        field/fldeff_grass.c
 
 
 # フィールド天気
