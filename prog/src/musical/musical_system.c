@@ -17,6 +17,8 @@
 #include "musical/musical_system.h"
 #include "musical/musical_dressup_sys.h"
 #include "musical/musical_stage_sys.h"
+#include "musical/comm/mus_comm_lobby.h"
+#include "musical/comm/mus_comm_func.h"
 #include "musical/stage/sta_acting.h"
 #include "musical/dressup/dup_local_def.h"
 #include "poke_tool/monsno_def.h"
@@ -33,12 +35,14 @@ FS_EXTERN_OVERLAY(musical);
 #pragma mark [> enum
 typedef enum
 {
+  MPS_INIT_LOBBY,
+  MPS_TERM_LOBBY,
   MPS_INIT_DRESSUP,
-  MPS_LOOP_DRESSUP,
   MPS_TERM_DRESSUP,
   MPS_INIT_ACTING,
-  MPS_LOOP_ACTING,
   MPS_TERM_ACTING,
+  
+  MPS_FINISH,
 }MUSICAL_PROC_STATE;
 
 //======================================================================
@@ -47,7 +51,10 @@ typedef enum
 #pragma mark [> struct
 typedef struct
 {
+  GFL_PROCSYS *procSys;
+  
   MUSICAL_PROC_STATE state;
+  MUS_COMM_WORK     *commWork;
   DRESSUP_INIT_WORK *dupInitWork;
   STAGE_INIT_WORK *actInitWork;
   
@@ -147,14 +154,27 @@ static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 {
   MUSICAL_INIT_WORK *initWork = pwk;
   MUSICAL_PROC_WORK *work;
-  *seq = MPS_INIT_DRESSUP;
-
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_PROC|HEAPDIR_MASK, 0x4000 );
+  
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_PROC|HEAPDIR_MASK, 0x8000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUSICAL_PROC_WORK), HEAPID_MUSICAL_PROC );
   work->musPoke = MUSICAL_SYSTEM_InitMusPoke( initWork->pokePara , HEAPID_MUSICAL_PROC );
   work->dupInitWork = NULL;
   work->actInitWork = NULL;
+
+  work->procSys = GFL_PROC_LOCAL_boot( HEAPID_MUSICAL_PROC );
+  
+  if( initWork->isComm == TRUE )
+  {
+    work->state = MPS_INIT_LOBBY;
+    work->commWork = MUS_COMM_CreateWork( HEAPID_MUSICAL_PROC , initWork->gameComm , initWork->saveCtrl);
+  }
+  else
+  {
+    work->state = MPS_INIT_DRESSUP;
+    work->commWork = NULL;
+  }
   return GFL_PROC_RES_FINISH;
   
 }
@@ -163,6 +183,11 @@ static GFL_PROC_RESULT MusicalProc_Term( GFL_PROC * proc, int * seq , void *pwk,
 {
   MUSICAL_INIT_WORK *initWork = pwk;
   MUSICAL_PROC_WORK *work = mywk;
+  
+  if( work->commWork != NULL )
+  {
+    MUS_COMM_DeleteWork( work->commWork );
+  }
   if( work->dupInitWork != NULL )
   {
     MUSICAL_DRESSUP_DeleteInitWork( work->dupInitWork );
@@ -171,11 +196,14 @@ static GFL_PROC_RESULT MusicalProc_Term( GFL_PROC * proc, int * seq , void *pwk,
   {
     MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
   }
+  GFL_PROC_LOCAL_Exit( work->procSys );
   GFL_HEAP_FreeMemory( work->musPoke );
   
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_PROC );
 
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical));
+  
   return GFL_PROC_RES_FINISH;
 }
 
@@ -183,41 +211,57 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
 {
   MUSICAL_INIT_WORK *initWork = pwk;
   MUSICAL_PROC_WORK *work = mywk;
-  switch( *seq )
+  
+  const BOOL isActiveProc = GFL_PROC_LOCAL_Main( work->procSys );
+  
+  switch( work->state )
   {
+  case MPS_INIT_LOBBY:
+    GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MUS_LOBBY_ProcData, work->commWork );
+    work->state = MPS_TERM_LOBBY;
+    break;
+    
+  case MPS_TERM_LOBBY:
+    if( isActiveProc == FALSE )
+    {
+      switch( MUS_COMM_GetMode( work->commWork ) )
+      {
+      case MCM_NONE:
+        work->state = MPS_FINISH;
+        break;
+      
+      default:  //‰¼
+        work->state = MPS_INIT_DRESSUP;
+        break;
+      }
+    }
+    break;
+    
   case MPS_INIT_DRESSUP:
     work->dupInitWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_PROC , work->musPoke , initWork->saveCtrl );
-    GFL_PROC_SysCallProc( FS_OVERLAY_ID(musical), &DressUp_ProcData, work->dupInitWork );
-    *seq = MPS_TERM_DRESSUP;
-    break;
-
-  case MPS_LOOP_DRESSUP:
+    GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &DressUp_ProcData, work->dupInitWork );
+    work->state = MPS_TERM_DRESSUP;
     break;
 
   case MPS_TERM_DRESSUP:
-    *seq = MPS_INIT_ACTING;
+    if( isActiveProc == FALSE )
+    {
+      work->state = MPS_INIT_ACTING;
+    }
     break;
 
   case MPS_INIT_ACTING:
     {
       u8 ePos,i;
+      OS_TPrintf("FreeHeap:[%x][%x]\n", 
+          GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
+          GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
       work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC );
       MUSICAL_STAGE_SetData_Player( work->actInitWork , 0 , work->musPoke );
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_RAITYUU , HEAPID_MUSICAL_PROC );
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , HEAPID_MUSICAL_PROC );
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_RUKARIO , HEAPID_MUSICAL_PROC );
-      /*
-      for( i=0;i<MUSICAL_ITEM_EQUIP_MAX;i++ )
-      {
-        MUSICAL_EQUIP_SAVE *equipSave = MUSICAL_SAVE_GetBefEquipData( work->dupInitWork->mus_save );
-        MUSICAL_EQUIP_ONE_SAVE *equip = &equipSave->equipData[i];
-        //MUSICAL_POKE_PARAM *pokePara = &work->actInitWork->musPoke[0];
-        if( equip->pos != MUS_POKE_EQU_INVALID )
-        {
-          MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , equip->pos , equip->data.itemNo , equip->data.angle );
-        }
-      }
-      */
+
       MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_EAR_L , 7 , 0 );
       MUSICAL_STAGE_SetEquip( work->actInitWork , 1 , MUS_POKE_EQU_BODY  , 9 , 0 );
 
@@ -227,17 +271,27 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
       MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 );
       MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HEAD   , 21 , 0 );
     }
-    GFL_PROC_SysCallProc( FS_OVERLAY_ID(musical), &MusicalStage_ProcData, work->actInitWork );
-    *seq = MPS_TERM_ACTING;
-    break;
-
-  case MPS_LOOP_ACTING:
+    GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MusicalStage_ProcData, work->actInitWork );
+    work->state = MPS_TERM_ACTING;
     break;
 
   case MPS_TERM_ACTING:
+    if( isActiveProc == FALSE )
+    {
+      work->state = MPS_FINISH;
+    }
+    break;
+    
+  case MPS_FINISH:
     return GFL_PROC_RES_FINISH;
     break;
   }
+  
+  if( work->commWork != NULL )
+  {
+    MUS_COMM_UpdateComm( work->commWork );
+  }
+  
   return GFL_PROC_RES_CONTINUE;
 }
 

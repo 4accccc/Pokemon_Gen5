@@ -10,11 +10,14 @@
 #define MUSICAL_SYSTEM_H__
 #include "musical_define.h"
 #include "savedata/save_control.h"
+#include "gamesystem/game_comm.h"
 
 typedef struct
 {
+  BOOL          isComm;
   POKEMON_PARAM *pokePara;
   SAVE_CONTROL_WORK *saveCtrl;
+  GAME_COMM_SYS_PTR gameComm;
 }MUSICAL_INIT_WORK;
 
 extern GFL_PROC_DATA Musical_ProcData;

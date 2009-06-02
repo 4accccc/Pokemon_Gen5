@@ -622,6 +622,8 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
         musical/stage/script/script_command.c \
         musical/stage/script/script_table.c \
 		musical/stage/sta_act_audience.c \
+		musical/comm/mus_comm_lobby.c \
+		musical/comm/mus_comm_func.c \
         test/ariizumi/musical_editor.c
 
 #ƒpƒŒƒX
