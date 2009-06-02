@@ -313,7 +313,8 @@ SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
 
 # マッパーサンプル
 #===> main
-SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/samplemain.c \
+SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/debug_common.c \
+				test/tetsu/sample/samplemain.c \
         test/tetsu/sample/g3d_mapper.c \
         test/tetsu/sample/sample_net.c \
         test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
