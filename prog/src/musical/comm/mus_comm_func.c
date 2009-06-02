@@ -13,9 +13,12 @@
 #include "system/gfl_use.h"
 
 #include "net/network_define.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/monsno_def.h"
 
 #include "mus_comm_func.h"
 #include "mus_comm_define.h"
+#include "musical/musical_system.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -25,17 +28,28 @@
 #pragma mark [> define
 
 #define MUS_COMM_BEACON_MAX (4)
+#define MUS_COMM_POKEDATA_SIZE (sizeof(MUSICAL_POKE_PARAM)+POKETOOL_GetWorkSize())
 
 //======================================================================
 //	enum
 //======================================================================
 #pragma mark [> enum
+//送信の種類
 typedef enum
 {
-  MCST_FLG,
+  MCST_FLG = GFL_NET_CMD_MUSICAL,
+  MCST_POKEDATA ,
   
   MCST_MAX,
 }MUS_COMM_SEND_TYPE;
+
+//Flg送信の種類
+typedef enum
+{
+  MCFT_START_GAME,
+  MCFT_GAME_STATE,
+  
+}MUS_COMM_FLAG_TYPE;
 
 //通信状態
 typedef enum
@@ -58,12 +72,21 @@ typedef enum
 //======================================================================
 #pragma mark [> struct
 
+typedef struct
+{
+  BOOL                isValidData;  //pokeData受信完了フラグ
+  u8                  musicalIdx;
+  MUS_COMM_GAME_STATE gameState;
+  void *pokeData;
+}MUS_COMM_USER_DATA;
+
 struct _MUS_COMM_WORK
 {
   HEAPID heapId;
   
   BOOL isInitComm;
   BOOL isRefreshUserData;
+  BOOL isStartGame;
   u8   befMemberNum;
   
   MUS_COMM_BEACON beacon;
@@ -72,6 +95,9 @@ struct _MUS_COMM_WORK
 
   GAME_COMM_SYS_PTR gameComm;
   MYSTATUS *myStatus;
+  
+  MUS_COMM_USER_DATA userData[MUSICAL_COMM_MEMBER_NUM];
+  void *selfPokeData;
 };
 
 //======================================================================
@@ -82,8 +108,10 @@ struct _MUS_COMM_WORK
 static void MUS_COMM_FinishNetInitCallback( void* pWork );
 static void MUS_COMM_FinishNetTermCallback( void* pWork );
 
-//static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK *work );
+static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK* work , const u8 flag , u8 value , NetID target );
 static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static void MUS_COMM_Post_MusPokeData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static u8*    MUS_COMM_Post_MusPokeDataBuff( int netID, void* pWork , int size );
 
 static void* MUS_COMM_GetUserData(void* pWork);
 static int MUS_COMM_GetUserDataSize(void* pWork);
@@ -98,6 +126,7 @@ inline static void MUS_COMM_SetCommState( MUS_COMM_WORK *work , const MUS_COMM_S
 static const NetRecvFuncTable MusCommRecvTable[MCST_MAX] = 
 {
   { MUS_COMM_Post_Flag   ,NULL  },
+  { MUS_COMM_Post_MusPokeData , MUS_COMM_Post_MusPokeDataBuff },
 };
 
 //--------------------------------------------------------------
@@ -105,11 +134,18 @@ static const NetRecvFuncTable MusCommRecvTable[MCST_MAX] =
 //--------------------------------------------------------------
 MUS_COMM_WORK* MUS_COMM_CreateWork( HEAPID heapId , GAME_COMM_SYS_PTR gameComm , SAVE_CONTROL_WORK *saveCtrl )
 {
+  u8 i;
   MUS_COMM_WORK* work = GFL_HEAP_AllocClearMemory( heapId , sizeof( MUS_COMM_WORK ));
+  
   work->gameComm = gameComm;
   work->mode = MCM_NONE;
   work->isInitComm = FALSE;
+  work->selfPokeData = NULL;
   work->myStatus = SaveData_GetMyStatus(saveCtrl);
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    work->userData[i].pokeData = NULL;
+  }
 
   MUS_COMM_SetCommState( work , MCS_NONE);
 
@@ -121,6 +157,20 @@ MUS_COMM_WORK* MUS_COMM_CreateWork( HEAPID heapId , GAME_COMM_SYS_PTR gameComm ,
 //--------------------------------------------------------------
 void MUS_COMM_DeleteWork( MUS_COMM_WORK* work )
 {
+  u8 i;
+  
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    if( work->userData[i].pokeData != NULL )
+    {
+      GFL_HEAP_FreeMemory( work->userData[i].pokeData );
+    }
+  }
+  if( work->selfPokeData != NULL )
+  {
+    GFL_HEAP_FreeMemory( work->selfPokeData );
+  }
+
   if( work->isInitComm == TRUE )
   {
     GFL_NET_Exit(NULL);
@@ -177,8 +227,27 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
 #endif
   };  
   
+  u8 i;
+  
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    work->userData[i].musicalIdx = i;
+    work->userData[i].gameState = MCGS_NONE;
+    work->userData[i].isValidData = FALSE;
+    if( work->userData[i].pokeData != NULL )
+    {
+      GFL_HEAP_FreeMemory( work->userData[i].pokeData );
+    }
+    work->userData[i].pokeData = GFL_HEAP_AllocMemory( work->heapId , MUS_COMM_POKEDATA_SIZE );
+  }
+  if( work->selfPokeData != NULL )
+  {
+    GFL_HEAP_FreeMemory( work->selfPokeData );
+  }
+  work->selfPokeData = NULL;
   work->befMemberNum = 0;
   work->isRefreshUserData = FALSE;
+  work->isStartGame = FALSE;
   
   GFL_NET_Init( &aGFLNetInit , MUS_COMM_FinishNetInitCallback , (void*)work );
 
@@ -303,6 +372,29 @@ void MUS_COMM_StartChild( MUS_COMM_WORK* work )
   GFL_NET_StartBeaconScan();
 }
 
+//--------------------------------------------------------------
+// ゲーム開始(新規接続禁止とフラグの送信
+//--------------------------------------------------------------
+const BOOL MUS_COMM_StartGame( MUS_COMM_WORK* work )
+{
+  if( work->mode != MCM_PARENT )
+  {
+    GF_ASSERT_MSG(0, "MusComm mode is not parent[%d]\n",work->mode );
+    return FALSE;
+  }
+  {
+    GFL_NETHANDLE *handle = GFL_NET_HANDLE_GetCurrentHandle();
+    GFL_NET_SetClientConnect( handle , FALSE );
+   
+    return MUS_COMM_Send_Flag( work , MCFT_START_GAME , 0 , GFL_NET_SENDID_ALLUSER );
+  }
+}
+const BOOL MUS_COMM_IsStartGame( MUS_COMM_WORK* work )
+{
+  return work->isStartGame;
+}
+
+
 #pragma mark [> userData func
 //--------------------------------------------------------------
 // ユーザーデータ設定
@@ -344,6 +436,33 @@ const BOOL MUS_COMM_IsRefreshUserData( MUS_COMM_WORK *work )
 void MUS_COMM_ResetRefreshUserData( MUS_COMM_WORK *work )
 {
   work->isRefreshUserData = FALSE;
+}
+
+const BOOL MUS_COMM_SetCommGameState( MUS_COMM_WORK *work , MUS_COMM_GAME_STATE state )
+{
+  return MUS_COMM_Send_Flag( work , MCFT_GAME_STATE , state , GFL_NET_SENDID_ALLUSER );
+}
+
+
+//--------------------------------------------------------------
+// タイミングコマンド
+//--------------------------------------------------------------
+void MUS_COMM_SendTimingCommand( MUS_COMM_WORK *work , const u8 no )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  GFL_NET_TimingSyncStart( selfHandle , no );
+  ARI_TPrintf("MusComm Send timming command[%d]\n",no);
+}
+
+const BOOL MUS_COMM_CheckTimingCommand( MUS_COMM_WORK *work , const u8 no )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  if( GFL_NET_IsTimingSync( selfHandle , no ) == TRUE )
+  {
+    ARI_TPrintf("MusComm Sync timming command[%d]\n",no);
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -399,9 +518,136 @@ static BOOL MUS_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID G
 
 
 #pragma mark [> send/post func
+//--------------------------------------------------------------
+// フラグ送受信
+//--------------------------------------------------------------
+typedef struct
+{
+  u8 flg;
+  u8 value;
+}MUS_COMM_FLG_PACKET;
+
+static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK* work , const u8 flag , u8 value , NetID target )
+{
+  BOOL ret;
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  MUS_COMM_FLG_PACKET pkt;
+  pkt.flg = flag;
+  pkt.value = value;
+  ARI_TPrintf("Send Flg[%d:%d].\n",pkt.flg,pkt.value);
+
+  ret = GFL_NET_SendDataEx( selfHandle , target , 
+                            MCST_FLG , sizeof( MUS_COMM_FLG_PACKET ) , 
+                            (void*)&pkt , TRUE , FALSE , FALSE );
+  if( ret == FALSE )
+  {
+    ARI_TPrintf("Send Flg is failued!!\n");
+  }
+  return ret;
+}
+
 static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
+  MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  MUS_COMM_FLG_PACKET *pkt = (MUS_COMM_FLG_PACKET*)pData;
+
+  OS_TPrintf("Post Flg[%d:%d] To [%d].\n",pkt->flg,pkt->value,netID);
+  switch( pkt->flg )
+  {
+  case MCFT_START_GAME:
+    work->isStartGame = TRUE;
+    break;
+
+  case MCFT_GAME_STATE:
+    
+    work->userData[netID].gameState = pkt->value;
+    break;
+  }
   
+}
+//--------------------------------------------------------------
+// ポケモンデータ送受信
+//--------------------------------------------------------------
+const BOOL MUS_COMM_Send_MusPokeData( MUS_COMM_WORK *work , MUSICAL_POKE_PARAM *musPoke )
+{
+  if( work->selfPokeData != NULL )
+  {
+    GFL_HEAP_FreeMemory( work->selfPokeData );
+  }
+  work->selfPokeData = GFL_HEAP_AllocMemory( work->heapId , MUS_COMM_POKEDATA_SIZE );
+  {
+    u32 pokeParaAdr = (u32)work->selfPokeData+sizeof(MUSICAL_POKE_PARAM);
+    GFL_STD_MemCopy( musPoke , work->selfPokeData , sizeof(MUSICAL_POKE_PARAM) );
+    GFL_STD_MemCopy( musPoke->pokePara , (void*)pokeParaAdr , POKETOOL_GetWorkSize() );
+  }
+  
+  ARI_TPrintf("Send PokeData \n");
+  {
+    
+    GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+    BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+                              MCST_POKEDATA , MUS_COMM_POKEDATA_SIZE , 
+                              work->selfPokeData , TRUE , FALSE , TRUE );
+    if( ret == FALSE )
+    {
+      ARI_TPrintf("Send PokeData is failued!!\n");
+    }
+    return ret;
+  }
+}
+static void MUS_COMM_Post_MusPokeData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  work->userData[netID].isValidData = TRUE;
+  OS_TPrintf("MusComm Finish Post PokeData[%d].\n",netID);
+  
+  {
+    u32 pokeParaAdr = (u32)work->userData[netID].pokeData+sizeof(MUSICAL_POKE_PARAM);
+    MUSICAL_POKE_PARAM *musPoke = work->userData[netID].pokeData;
+    musPoke->pokePara = (void*)pokeParaAdr;
+  }
+
+}
+static u8*    MUS_COMM_Post_MusPokeDataBuff( int netID, void* pWork , int size )
+{
+  MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  OS_TPrintf("MusComm Start Post PokeData[%d].\n",netID);
+  work->userData[netID].isValidData = FALSE;
+  return work->userData[netID].pokeData;
+}
+
+MUSICAL_POKE_PARAM* MUS_COMM_GetMusPokeParam( MUS_COMM_WORK *work , const u8 musicalIdx )
+{
+  u8 i;
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    if( work->userData[i].musicalIdx == musicalIdx )
+    {
+      if( work->userData[i].isValidData == TRUE )
+      {
+        return work->userData[i].pokeData;
+      }
+    }
+  }
+  return NULL;
+}
+
+//--------------------------------------------------------------
+// 全員ポケデータ届いたか？
+//--------------------------------------------------------------
+const BOOL MUS_COMM_CheckAllPostPokeData( MUS_COMM_WORK *work )
+{
+  u8 i;
+  
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    if( work->userData[i].gameState != MCGS_NONE &&
+        work->userData[i].isValidData == FALSE )
+    {
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
 
 #pragma mark [> outer func

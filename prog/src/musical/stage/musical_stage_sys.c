@@ -181,8 +181,7 @@ void MUSICAL_STAGE_DeleteStageWork( STAGE_INIT_WORK *initWork )
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
     u8 ePos;
-    if( initWork->musPoke[i].charaType == MUS_CHARA_COMM ||
-        initWork->musPoke[i].charaType == MUS_CHARA_NPC )
+    if( initWork->musPoke[i].charaType == MUS_CHARA_NPC )
     {
       GFL_HEAP_FreeMemory( initWork->musPoke[i].pokePara );
     }
@@ -225,6 +224,26 @@ void MUSICAL_STAGE_SetData_NPC( STAGE_INIT_WORK *initWork , const u8 idx , u16 p
   initPara->charaType = MUS_CHARA_NPC;
   initPara->pokePara = PP_Create( pokeID , 20 , PTL_SETUP_POW_AUTO , heapId );
 
+}
+
+//--------------------------------------------------------------
+//  キャラセット(通信
+//--------------------------------------------------------------
+void MUSICAL_STAGE_SetData_Comm( STAGE_INIT_WORK *initWork , const u8 idx , MUSICAL_POKE_PARAM *musPara )
+{
+  u8 ePos;
+  MUSICAL_POKE_PARAM *initPara = &initWork->musPoke[idx];
+  GF_ASSERT_MSG( idx < MUSICAL_POKE_MAX , "Musical invalid index [%d]\n",idx);
+  GF_ASSERT_MSG( initWork->musPoke[idx].pokePara == NULL , "Musical index[%d] is not NULL\n",idx);
+
+  initPara->charaType = MUS_CHARA_COMM;
+  initPara->pokePara = musPara->pokePara;
+  for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
+  {
+    OS_TPrintf("MUS[%d][%d][%d]\n",ePos,musPara->equip[ePos].itemNo,musPara->equip[ePos].angle);
+    initPara->equip[ePos].itemNo = musPara->equip[ePos].itemNo;
+    initPara->equip[ePos].angle  = musPara->equip[ePos].angle;
+  }
 }
 
 //--------------------------------------------------------------

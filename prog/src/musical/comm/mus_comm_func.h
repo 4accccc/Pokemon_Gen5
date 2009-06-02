@@ -10,6 +10,7 @@
 //======================================================================
 #pragma once
 
+#include "musical/musical_define.h"
 #include "gamesystem/game_comm.h"
 #include "savedata/save_control.h"
 #include "savedata/mystatus.h"
@@ -19,10 +20,15 @@
 //======================================================================
 #pragma mark [> define
 
+//タイミングコマンド
+#define MUS_COMM_TIMMING_DRESSUP_WAIT (10)
+#define MUS_COMM_TIMMING_START_ACTING (20)
+
 //======================================================================
 //	enum
 //======================================================================
 #pragma mark [> enum
+//通信モード
 typedef enum
 {
   MCM_NONE,
@@ -31,6 +37,17 @@ typedef enum
   MUS_COMM_MODE_MAX
 }MUS_COMM_MODE;
 
+
+//ゲーム状態
+typedef enum
+{
+  MCGS_NONE,
+//  MCGS_LOBBY,
+  MCGS_DRESSUP,
+  MCGS_WAIT_DRESSUP,
+  MCGS_ACTING,
+  
+}MUS_COMM_GAME_STATE;
 
 //======================================================================
 //	typedef struct
@@ -59,6 +76,18 @@ const BOOL MUS_COMM_IsInitComm( MUS_COMM_WORK* work );
 
 void MUS_COMM_StartParent( MUS_COMM_WORK* work );
 void MUS_COMM_StartChild( MUS_COMM_WORK* work );
+const BOOL MUS_COMM_StartGame( MUS_COMM_WORK* work );
+const BOOL MUS_COMM_IsStartGame( MUS_COMM_WORK* work );
+
+//ゲーム状態の設定
+const BOOL MUS_COMM_SetCommGameState( MUS_COMM_WORK *work , MUS_COMM_GAME_STATE state );
+const BOOL MUS_COMM_Send_MusPokeData( MUS_COMM_WORK *work , MUSICAL_POKE_PARAM *musPoke );
+const BOOL MUS_COMM_CheckAllPostPokeData( MUS_COMM_WORK *work );
+//ミュージカルの役者IDXでデータを取得
+MUSICAL_POKE_PARAM* MUS_COMM_GetMusPokeParam( MUS_COMM_WORK *work , const u8 musicalIdx );
+
+void MUS_COMM_SendTimingCommand( MUS_COMM_WORK *work , const u8 no );
+const BOOL MUS_COMM_CheckTimingCommand( MUS_COMM_WORK *work , const u8 no );
 
 MYSTATUS *MUS_COMM_GetPlayerMyStatus( MUS_COMM_WORK* work , u8 idx );
 const BOOL MUS_COMM_IsRefreshUserData( MUS_COMM_WORK *work );

@@ -61,17 +61,8 @@
 #define MUS_LOBBY_PARENT_MEMBER_HEIGHT (8)
 
 #define MUS_LOBBY_PARENT_START_TOP (20)
-#define MUS_LOBBY_PARENT_START_LEFT (7)
-#define MUS_LOBBY_PARENT_START_WIDTH (8)
-
-#define MUS_LOBBY_PARENT_CANCEL_TOP (20)
-#define MUS_LOBBY_PARENT_CANCEL_LEFT (17)
-#define MUS_LOBBY_PARENT_CANCEL_WIDTH (8)
 
 //ChildMenu
-#define MUS_LOBBY_CHILD_CANCEL_TOP (20)
-#define MUS_LOBBY_CHILD_CANCEL_LEFT (12)
-#define MUS_LOBBY_CHILD_CANCEL_WIDTH (8)
 
 #define MUS_LOBBY_SELECT_NONE (0xFF)
 
@@ -89,6 +80,7 @@ typedef enum
   MLS_INIT_PARENT,
   MLS_INIT_PARENT_WAIT,
   MLS_LOOP_PARENT,
+  MLS_PARENT_WAIT_START,
 
   MLS_INIT_CHILD,
   MLS_INIT_CHILD_WAIT,
@@ -113,14 +105,12 @@ typedef enum
 {
   MLBP_MEMBER,
   MLBP_START,
-  MLBP_CANCEL,
   MLBP_MAX,
 }MUSICAL_LOBBY_BMPWIN_PARENT;
 
 typedef enum
 {
   MLBC_MEMBER,
-  MLBC_CANCEL,
   MLBC_MAX,
 }MUSICAL_LOBBY_BMPWIN_CHILD;
 
@@ -325,8 +315,26 @@ static GFL_PROC_RESULT MUS_LOBBY_MainProc( GFL_PROC * proc, int * seq , void *pw
   
   case MLS_LOOP_PARENT:
     MUS_LOBBY_LoopParentMenu( work );
+    if( work->selectItem != MUS_LOBBY_SELECT_NONE )
+    {
+      if( MUS_COMM_StartGame( work->commWork ) == TRUE )
+      {
+        work->state = MLS_PARENT_WAIT_START;
+      }
+    }
     break;
     
+  case MLS_PARENT_WAIT_START:
+    if( MUS_COMM_IsStartGame( work->commWork ) == TRUE )
+    {
+      if( MUS_COMM_SetCommGameState( work->commWork , MCGS_DRESSUP ) == TRUE )
+      {
+        MUS_LOBBY_ExitParentMenu( work );
+        work->state = MLS_INIT_FADE_OUT;
+      }
+    }
+    break;
+
     //子機開始
   case MLS_INIT_CHILD:
     work->state = MLS_INIT_CHILD_WAIT;
@@ -346,6 +354,14 @@ static GFL_PROC_RESULT MUS_LOBBY_MainProc( GFL_PROC * proc, int * seq , void *pw
 
   case MLS_LOOP_CHILD:
     MUS_LOBBY_LoopChildMenu( work );
+    if( MUS_COMM_IsStartGame( work->commWork ) == TRUE )
+    {
+      if( MUS_COMM_SetCommGameState( work->commWork , MCGS_DRESSUP ) == TRUE )
+      {
+        MUS_LOBBY_ExitChildMenu( work );
+        work->state = MLS_INIT_FADE_OUT;
+      }
+    }
     break;
     
   case MLS_INIT_FADE_OUT:
@@ -607,12 +623,8 @@ static void MUS_LOBBY_InitParentMenu( MUS_LOBBY_WORK *work )
                                 MUS_LOBBY_BMPWIN_WIDTH , MUS_LOBBY_PARENT_MEMBER_HEIGHT ,
                                 MUS_LOBBY_FONT_PLT , GFL_BMP_CHRAREA_GET_B );
   work->winArr[MLBP_START] = GFL_BMPWIN_Create( MUS_LOBBY_BG_BMP ,
-                                MUS_LOBBY_PARENT_START_LEFT , MUS_LOBBY_PARENT_START_TOP ,
-                                MUS_LOBBY_PARENT_START_WIDTH , MUS_LOBBY_BMPWIN_HEIGHT ,
-                                MUS_LOBBY_FONT_PLT , GFL_BMP_CHRAREA_GET_B );
-  work->winArr[MLBP_CANCEL] = GFL_BMPWIN_Create( MUS_LOBBY_BG_BMP ,
-                                MUS_LOBBY_PARENT_CANCEL_LEFT , MUS_LOBBY_PARENT_CANCEL_TOP ,
-                                MUS_LOBBY_PARENT_CANCEL_WIDTH , MUS_LOBBY_BMPWIN_HEIGHT ,
+                                MUS_LOBBY_BMPWIN_LEFT , MUS_LOBBY_PARENT_START_TOP ,
+                                MUS_LOBBY_BMPWIN_WIDTH , MUS_LOBBY_BMPWIN_HEIGHT ,
                                 MUS_LOBBY_FONT_PLT , GFL_BMP_CHRAREA_GET_B );
   
   for( i=0;i<MLBP_MAX;i++ )
@@ -626,7 +638,7 @@ static void MUS_LOBBY_InitParentMenu( MUS_LOBBY_WORK *work )
       MUS_LOBBY_DrawStringFunc( work , work->winArr[i] , LOBBY_PARENT_1+(i-1) , TRUE );
     }
   }
-
+  work->selectItem = MUS_LOBBY_SELECT_NONE;
 }
 
 static void MUS_LOBBY_ExitParentMenu( MUS_LOBBY_WORK *work )
@@ -653,6 +665,7 @@ static void MUS_LOBBY_DispParentMenu( MUS_LOBBY_WORK *work )
 
 static void MUS_LOBBY_LoopParentMenu( MUS_LOBBY_WORK *work )
 {
+  //メンバーの更新判定
   if( MUS_COMM_IsRefreshUserData( work->commWork ) == TRUE )
   {
     MUS_COMM_ResetRefreshUserData( work->commWork );
@@ -663,6 +676,27 @@ static void MUS_LOBBY_LoopParentMenu( MUS_LOBBY_WORK *work )
   {
     work->isRefreshMember = FALSE;
     GFL_BMPWIN_MakeTransWindow_VBlank( work->winArr[MLBP_MEMBER] );
+  }
+
+  //TPチェック
+  {
+    const GFL_UI_TP_HITTBL hitTbl[MLBT_MAX+1] =
+    {
+      { 
+        MUS_LOBBY_PARENT_START_TOP*8 , 
+        (MUS_LOBBY_PARENT_START_TOP+MUS_LOBBY_BMPWIN_HEIGHT)*8 ,
+        MUS_LOBBY_BMPWIN_LEFT*8 ,
+        (MUS_LOBBY_BMPWIN_LEFT+MUS_LOBBY_BMPWIN_WIDTH)*8 ,
+      },
+      { GFL_UI_TP_HIT_END , 0 , 0 , 0 }
+    };
+    
+    const int ret = GFL_UI_TP_HitTrg( hitTbl );
+    
+    if( ret != GFL_UI_TP_HIT_NONE )
+    {
+      work->selectItem = ret;
+    }
   }
 }
 
@@ -708,13 +742,10 @@ static void MUS_LOBBY_InitChildMenu( MUS_LOBBY_WORK *work )
                                 MUS_LOBBY_BMPWIN_LEFT , MUS_LOBBY_PARENT_MEMBER_TOP , 
                                 MUS_LOBBY_BMPWIN_WIDTH , MUS_LOBBY_PARENT_MEMBER_HEIGHT ,
                                 MUS_LOBBY_FONT_PLT , GFL_BMP_CHRAREA_GET_B );
-  work->winArr[MLBC_CANCEL] = GFL_BMPWIN_Create( MUS_LOBBY_BG_BMP ,
-                                MUS_LOBBY_CHILD_CANCEL_LEFT , MUS_LOBBY_CHILD_CANCEL_TOP ,
-                                MUS_LOBBY_CHILD_CANCEL_WIDTH , MUS_LOBBY_BMPWIN_HEIGHT ,
-                                MUS_LOBBY_FONT_PLT , GFL_BMP_CHRAREA_GET_B );
   
   MUS_LOBBY_DrawMember( work );
-  MUS_LOBBY_DrawStringFunc( work , work->winArr[MLBC_CANCEL] , LOBBY_PARENT_2 , TRUE );
+
+  work->selectItem = MUS_LOBBY_SELECT_NONE;
 }
 
 static void MUS_LOBBY_ExitChildMenu( MUS_LOBBY_WORK *work )

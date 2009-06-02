@@ -40,7 +40,13 @@ typedef enum
   MPS_INIT_DRESSUP,
   MPS_TERM_DRESSUP,
   MPS_INIT_ACTING,
+  MPS_INIT_ACTING_COMM,
   MPS_TERM_ACTING,
+  
+  MPS_WAIT_MEMBER_DRESSUP,
+  MPS_SEND_MUS_POKE,
+  MPS_POST_WAIT_MUS_POKE,
+  MPS_POST_WAIT_START_ACTING,
   
   MPS_FINISH,
 }MUSICAL_PROC_STATE;
@@ -187,7 +193,14 @@ static GFL_PROC_RESULT MusicalProc_Term( GFL_PROC * proc, int * seq , void *pwk,
   if( work->commWork != NULL )
   {
     MUS_COMM_DeleteWork( work->commWork );
+    work->commWork = NULL;
   }
+  
+  if( GFL_NET_IsExit() == FALSE )
+  {
+    return GFL_PROC_RES_CONTINUE;
+  }
+  
   if( work->dupInitWork != NULL )
   {
     MUSICAL_DRESSUP_DeleteInitWork( work->dupInitWork );
@@ -246,7 +259,51 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
   case MPS_TERM_DRESSUP:
     if( isActiveProc == FALSE )
     {
-      work->state = MPS_INIT_ACTING;
+      if( initWork->isComm == TRUE )
+      {
+        if( MUS_COMM_SetCommGameState( work->commWork , MCGS_WAIT_DRESSUP ) == TRUE )
+        {
+          work->state = MPS_WAIT_MEMBER_DRESSUP;
+          MUS_COMM_SendTimingCommand( work->commWork , MUS_COMM_TIMMING_DRESSUP_WAIT );
+        }
+      }
+      else
+      {
+        work->state = MPS_INIT_ACTING;
+      }
+    }
+    break;
+  
+    //メンバー待ち
+  case MPS_WAIT_MEMBER_DRESSUP:
+    if( MUS_COMM_CheckTimingCommand( work->commWork , MUS_COMM_TIMMING_DRESSUP_WAIT ) == TRUE )
+    {
+      work->state = MPS_SEND_MUS_POKE;
+    }
+    break;
+    
+    //MusPokeを送る
+  case MPS_SEND_MUS_POKE:
+    if( MUS_COMM_Send_MusPokeData( work->commWork , work->musPoke ) == TRUE )
+    {
+      work->state = MPS_POST_WAIT_MUS_POKE;
+    }
+    break;
+
+    //全員分もらうのを待つ
+  case MPS_POST_WAIT_MUS_POKE:
+    if( MUS_COMM_CheckAllPostPokeData( work->commWork ) == TRUE )
+    {
+      MUS_COMM_SendTimingCommand( work->commWork , MUS_COMM_TIMMING_START_ACTING );
+      work->state = MPS_POST_WAIT_START_ACTING;
+    }
+    break;
+  
+    //全員そろうのを待つ
+  case MPS_POST_WAIT_START_ACTING:
+    if( MUS_COMM_CheckTimingCommand( work->commWork , MUS_COMM_TIMMING_START_ACTING ) == TRUE )
+    {
+      work->state = MPS_INIT_ACTING_COMM;
     }
     break;
 
@@ -273,6 +330,28 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
     }
     GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MusicalStage_ProcData, work->actInitWork );
     work->state = MPS_TERM_ACTING;
+    break;
+
+  case MPS_INIT_ACTING_COMM:
+    {
+      u8 i;
+      work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC );
+      for( i=0;i<MUSICAL_POKE_MAX;i++ )
+      {
+        MUSICAL_POKE_PARAM *musPoke = MUS_COMM_GetMusPokeParam( work->commWork , i );
+        if( musPoke != NULL )
+        {
+          MUSICAL_STAGE_SetData_Comm( work->actInitWork , i , musPoke );
+        }
+        else
+        {
+          MUSICAL_STAGE_SetData_NPC( work->actInitWork , i , MONSNO_PIKATYUU  , HEAPID_MUSICAL_PROC );
+        }
+      }
+      GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MusicalStage_ProcData, work->actInitWork );
+      work->state = MPS_TERM_ACTING;
+    }
+    
     break;
 
   case MPS_TERM_ACTING:
