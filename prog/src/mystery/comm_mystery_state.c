@@ -271,7 +271,7 @@ static void _mysteryParentWaiting(void)
 {
 	int i;
 	for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
-		const GFL_NETHANDLE *handle = GFL_NET_HANDLE_Get(i);
+//		const GFL_NETHANDLE *handle = GFL_NET_HANDLE_Get(i);
 			//FIXME const‘Î‰žŒã
 //		if( _pCommStateM->status[i] == NULL && GFL_NET_HANDLE_IsNegotiation(handle) == TRUE)
 			{

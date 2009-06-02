@@ -1404,7 +1404,7 @@ void MNGM_ENRES_PARAM_Init( MNGM_ENRES_PARAM* p_param, BOOL lobby_flag, SAVE_CON
   ;
 #else
   for(i = 0; i < WFLBY_MINIGAME_MAX; i++){
-    net_handle[i] = GFL_NET_HANDLE_Get(i);
+    net_handle[i] = GFL_NET_GetNetHandle(i);
   }
 #endif
   
@@ -1557,7 +1557,7 @@ MYSTATUS* MNGM_ENRES_PARAM_GetMystatus( const MNGM_ENRES_PARAM* cp_param, u32 ne
   #if WB_FIX
     return CommInfoGetMyStatus( netid );
   #else
-    return _CommInfo_GetMyStatus( GFL_NET_HANDLE_Get(netid) );
+    return _CommInfo_GetMyStatus( GFL_NET_GetNetHandle(netid) );
   #endif
   }
 
@@ -4421,7 +4421,7 @@ static void MNGM_COMMPDATA_Init( MNGM_COMM_PDATA* p_wk, const MNGM_ENRES_PARAM* 
     p_wk->nation[i]   = CommInfoGetMyNation( cp_comm_param->pnetid[i] );
     p_wk->area[i]   = CommInfoGetMyArea( cp_comm_param->pnetid[i] );
   #else
-    exc = GFL_NET_HANDLE_GetInfomationData(GFL_NET_HANDLE_Get(cp_comm_param->pnetid[i]));
+    exc = GFL_NET_HANDLE_GetInfomationData(GFL_NET_GetNetHandle(cp_comm_param->pnetid[i]));
     p_wk->nation[i] = exc->my_nation;
     p_wk->area[i] = exc->my_area;
   #endif
@@ -6544,7 +6544,7 @@ static void MNGM_RESULT_SetPlayNum( MNGM_RESULTWK* p_wk )
 
   for( i=0; i<p_wk->comm_param.num; i++ ){
     netID = p_wk->comm_param.pnetid[i];
-    p_friend_data = _CommInfo_GetFriendCode( GFL_NET_HANDLE_Get(netID) );
+    p_friend_data = _CommInfo_GetFriendCode( GFL_NET_GetNetHandle(netID) );
     ret = GFL_NET_DWC_CheckFriendByToken( p_friend_data, &pos );
     switch( ret ){
     case DWCFRIEND_INLIST:// … すでに、同じデータがリスト上にある。この場合は何もする必要なし。

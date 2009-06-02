@@ -185,7 +185,7 @@ extern void GFL_NET_HANDLE_RecvNegotiationReturn(const int netID, const int size
 extern BOOL GFL_NET_HANDLE_RequestNegotiation(void);
 //==============================================================================
 /**
- * @brief       id‚É‰ˆ‚Á‚½netHandle‚ğo‚·  ”ñŒöŠJŠÖ”
+ * @brief       id‚É‰ˆ‚Á‚½netHandle‚ğo‚·
  * @param       netID    id
  * @return      netHandle
  */
