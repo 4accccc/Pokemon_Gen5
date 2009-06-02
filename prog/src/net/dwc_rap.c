@@ -90,13 +90,13 @@ typedef struct
   DWCInetControl stConnCtrl;
   void *recvPtr[_WIFI_NUM_MAX];  //受信バッファの32バイトアライメントしていないポインタ
 
-  MYDWCReceiverFunc serverCallback;
-  MYDWCReceiverFunc clientCallback;
+  GFL_NET_MYDWCReceiverFunc serverCallback;
+  GFL_NET_MYDWCReceiverFunc clientCallback;
   MYDWCDisconnectFunc disconnectCallback;
   void* pDisconnectWork;
   MYDWCConnectFunc connectCallback;
   void* pConnectWork;
-  MYDWCConnectModeCheckFunc connectModeCheck;
+  GFL_NET_MYDWCConnectModeCheckFunc connectModeCheck;
 
   void (*fetalErrorCallback)(int);
   u8 randommatch_query[_MATCHSTRINGNUM];
@@ -251,7 +251,7 @@ BOOL GFL_NET_DWC_IsInit(void)
  * @retval  MYDWC_STARTCONNECT_DIFFERENTDS … 異なるＤＳで接続しようしてる場合。（要警告）
  */
 //==============================================================================
-int mydwc_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
+int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
 {
   void* pTemp;
   GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
@@ -301,7 +301,7 @@ int mydwc_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
 
 
   // ユーザデータの状態をチェック。
-  mydwc_showFriendInfo();
+  GFL_NET_DWC_showFriendInfo();
 
 
   if( !DWC_CheckHasProfile( _dWork->myUserData ) )
@@ -328,7 +328,7 @@ int mydwc_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
  * @retval  none
  */
 //==============================================================================
-void mydwc_free()
+void GFL_NET_DWC_free()
 {
   if(_dWork){
     GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
@@ -348,7 +348,7 @@ void mydwc_free()
  * @retval  正…接続完了。０…接続中。負…エラー（エラーコードが返る）
  */
 //==============================================================================
-int mydwc_connect()
+int GFL_NET_DWC_connect()
 {
   //    NET_PRINT("mydwc_connect %d\n",_dWork->state);
   switch( _dWork->state )
@@ -442,7 +442,7 @@ int mydwc_connect()
  * @retval  none
  */
 //==============================================================================
-void mydwc_setReceiver( MYDWCReceiverFunc server, MYDWCReceiverFunc client )
+void GFL_NET_DWC_setReceiver( GFL_NET_MYDWCReceiverFunc server, GFL_NET_MYDWCReceiverFunc client )
 {
   _dWork->serverCallback = server;
   _dWork->clientCallback = client;
@@ -470,7 +470,7 @@ void GFL_NET_DWC_SetDisconnectCallback( MYDWCDisconnectFunc pFunc, void* pWork )
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_DWC_SetConnectModeCheckCallback( MYDWCConnectModeCheckFunc pFunc )
+void GFL_NET_DWC_SetConnectModeCheckCallback( GFL_NET_MYDWCConnectModeCheckFunc pFunc )
 {
   _dWork->connectModeCheck = pFunc;
 }
@@ -592,7 +592,7 @@ static void finishcancel()
  */
 //==============================================================================
 
-int mydwc_stepmatch( int isCancel )
+int GFL_NET_DWC_stepmatch( int isCancel )
 {
   switch ( _dWork->state ){
   case MDSTATE_INIT:
@@ -600,7 +600,7 @@ int mydwc_stepmatch( int isCancel )
   case MDSTATE_CONNECTED:
   case MDSTATE_TRYLOGIN:
   case MDSTATE_LOGIN:
-    return mydwc_connect();
+    return GFL_NET_DWC_connect();
   case MDSTATE_MATCHING:
     // 現在探索中
     if( isCancel )
@@ -727,7 +727,7 @@ int mydwc_stepmatch( int isCancel )
  * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
  */
 //==============================================================================
-BOOL mydwc_canSendToServer()
+BOOL GFL_NET_DWC_canSendToServer()
 {
   return ( DWC_GetMyAID() == 0 || ( _dWork->sendbufflag == 0 && _isSendableReliable() ) );
 }
@@ -738,7 +738,7 @@ BOOL mydwc_canSendToServer()
  * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
  */
 //==============================================================================
-BOOL mydwc_canSendToClient()
+BOOL GFL_NET_DWC_canSendToClient()
 {
   return ( _dWork->sendbufflag == 0 && _isSendableReliable() );
 }
@@ -750,12 +750,12 @@ BOOL mydwc_canSendToClient()
  * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
  */
 //==============================================================================
-int mydwc_sendToServer(void *data, int size)
+int GFL_NET_DWC_sendToServer(void *data, int size)
 {
   if( !(size < SIZE_SEND_BUFFER) ){
     return 0;
   }
-  if(FALSE==mydwc_canSendToServer()){
+  if(FALSE == GFL_NET_DWC_canSendToServer()){
     return 0;
   }
 
@@ -806,7 +806,7 @@ int mydwc_sendToServer(void *data, int size)
  * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
  */
 //==============================================================================
-int mydwc_sendToClient(void *data, int size)
+int GFL_NET_DWC_sendToClient(void *data, int size)
 {
   if( !(size < SIZE_SEND_BUFFER) ){
     return 0;
@@ -1729,7 +1729,7 @@ void GFL_NET_DWC_StopVChat(void)
  */
 //==============================================================================
 
-void mydwc_pausevchat(BOOL bPause)
+void GFL_NET_DWC_pausevchat(BOOL bPause)
 {
   if(bPause){
     myvct_DelConference(DWC_GetMyAID());
@@ -1809,7 +1809,7 @@ int GFL_NET_DWC_ErrorType(int code, int type)
  * @retval 　　　 1 = 接続処理完了。0 = 切断処理中。
  */
 //==============================================================================
-int mydwc_disconnect( int sync )
+int GFL_NET_DWC_disconnect( int sync )
 {
   if( sync == 0 ){
     MYDWC_DEBUGPRINT(" mydwc_disconnect state %d \n",_dWork->state);
@@ -1848,7 +1848,7 @@ int mydwc_disconnect( int sync )
  * @retval  1 = 成功。0 = 失敗。
  */
 //==============================================================================
-int mydwc_returnLobby()
+int GFL_NET_DWC_returnLobby()
 {
   if( _dWork->state == MDSTATE_DISCONNECT || _dWork->state == MDSTATE_TIMEOUT || _dWork->state == MDSTATE_LOGIN) {
     //        _dWork->op_aid = -1;
@@ -1867,7 +1867,7 @@ int mydwc_returnLobby()
  * @retval  1 = 成功。0 = 失敗。
  */
 //==============================================================================
-void mydwc_setFetalErrorCallback( void (*func)(int) )
+void GFL_NET_DWC_setFetalErrorCallback( void (*func)(int) )
 {
   if(_dWork){
     _dWork->fetalErrorCallback = func;
@@ -1885,13 +1885,13 @@ void mydwc_setFetalErrorCallback( void (*func)(int) )
  */
 //==============================================================================
 
-void mydwc_Logout(void)
+void GFL_NET_DWC_Logout(void)
 {
   MYDWC_DEBUGPRINT("----------------------ok LOGOUT  \n");
   DWC_ShutdownFriendsMatch();
   DWC_CleanupInet();
   GFL_NET_DWC_StopVChat();
-  mydwc_free();
+  GFL_NET_DWC_free();
 }
 
 //-------------------------------------------------------------------------------
@@ -1956,7 +1956,7 @@ u8 *GFL_NET_DWC_GetFriendInfo( int index )
  * @retval  友達の状態。DWC_GetFriendStatusDataの返り値と同じ
  */
 //==============================================================================
-u8 mydwc_getFriendStatus( int index )
+u8 GFL_NET_DWC_getFriendStatus( int index )
 {
   return _dWork->friend_status[index];
 }
@@ -2262,7 +2262,7 @@ void mydwc_changeVADLevel(int d)
  * @retval  none
  */
 //==============================================================================
-void mydwc_showFriendInfo()
+void GFL_NET_DWC_showFriendInfo()
 {
   int i;
 
@@ -2317,7 +2317,7 @@ void mydwc_showFriendInfo()
 
 
 // 送信したかどうかを返します
-BOOL mydwc_IsSendVoiceAndInc(void)
+BOOL GFL_NET_DWC_IsSendVoiceAndInc(void)
 {
   return myvct_IsSendVoiceAndInc();
 }
@@ -2329,7 +2329,7 @@ BOOL mydwc_IsSendVoiceAndInc(void)
  * @retval  TRUE…ボイスチャット   FALSE…ボイスチャットではない
  */
 //==============================================================================
-BOOL mydwc_IsVChat(void)
+BOOL GFL_NET_DWC_IsVChat(void)
 {
   if(_dWork){
     return _dWork->bVChat;
@@ -2567,7 +2567,7 @@ void GFL_NET_DWC_ResetSaving(void)
  *	@param	FALSE キャンセルしてよい TRUEキャンセル禁止
  */
 //-----------------------------------------------------------------------------
-BOOL mydwc_CancelDisable(void)
+BOOL GFL_NET_DWC_CancelDisable(void)
 {
   return _dWork->bConnectCallback;
 }
@@ -2578,7 +2578,7 @@ BOOL mydwc_CancelDisable(void)
  *	@param	TRUE LOGIN状態である
  */
 //-----------------------------------------------------------------------------
-BOOL mydwc_IsLogin(void)
+BOOL GFL_NET_DWC_IsLogin(void)
 {
   if(_dWork){
     return ( _dWork->state == MDSTATE_LOGIN );

@@ -107,14 +107,6 @@ extern void GFL_NET_DWC_StartVChat(int heapID);
  */
 //==============================================================================
 extern void GFL_NET_DWC_StopVChat(void);
-//==============================================================================
-/**
- * @brief   ボイスチャット中かどうか
- * @param   void
- * @retval  void
- */
-//==============================================================================
-extern BOOL GFL_NET_DWC_IsVChat(void);
 
 // すでに、同じデータがリスト上にある。この場合は何もする必要なし。
 #define DWCFRIEND_INLIST 0
@@ -328,10 +320,10 @@ extern void GFL_NET_StateWifiP2PEnd( void );
 
 
 // 受信コールバック型。WHReceiverFuncと同形
-typedef void (*MYDWCReceiverFunc) (u16 aid, u16 *data, u16 size);
+typedef void (*GFL_NET_MYDWCReceiverFunc) (u16 aid, u16 *data, u16 size);
 
 //接続検査 フレンドコードリストインデックス
-typedef BOOL (*MYDWCConnectModeCheckFunc) (int index,void* pWork);
+typedef BOOL (*GFL_NET_MYDWCConnectModeCheckFunc) (int index,void* pWork);
 
 #define DWCRAP_STARTGAME_OK (0)
 #define DWCRAP_STARTGAME_NOTSTATE  (-1)

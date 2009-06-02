@@ -144,11 +144,11 @@ typedef struct _GFL_NETSYS GFL_NETSYS;
 /// @brief  コマンド関連の定義
 
 /// コールバック関数の書式
-typedef void (*PTRCommRecvFunc)(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+typedef void (*GFL_NET_PTRCommRecvFunc)(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 /// サイズが固定の場合サイズを関数で返す
 //typedef int (*PTRCommRecvSizeFunc)(void);
 /// 受信バッファを外部で持っている場合そのポインタ
-typedef u8* (*PTRCommRecvBuffAddr)(int netID, void* pWork, int size);
+typedef u8* (*GFL_NET_PTRCommRecvBuffAddr)(int netID, void* pWork, int size);
 /// 送信した場合に呼ばれるコールバック
 typedef u8* (*GFL_NET_SendCallbackType)(int netID, int command, void* pWork);
 
@@ -157,9 +157,9 @@ typedef u8* (*GFL_NET_SendCallbackType)(int netID, int command, void* pWork);
 
 /// コマンドパケットテーブル定義
 typedef struct {
-    PTRCommRecvFunc callbackFunc;    ///< コマンドがきた時に呼ばれるコールバック関数
+    GFL_NET_PTRCommRecvFunc callbackFunc;    ///< コマンドがきた時に呼ばれるコールバック関数
 //    PTRCommRecvSizeFunc getSizeFunc; ///< コマンドの送信データサイズが固定なら書いてください
-    PTRCommRecvBuffAddr getAddrFunc;
+    GFL_NET_PTRCommRecvBuffAddr getAddrFunc;
 } NetRecvFuncTable;
 
 /// 可変データ送信であることを示している
@@ -931,7 +931,7 @@ extern int GFL_NET_SystemIsLobbyError(void);
 #include "net_command.h"
 #include "net_handle.h"
 #include "net_icondata.h"
-
+#include "net_icon.h"
 
 #ifdef __cplusplus
 } /* extern "C" */

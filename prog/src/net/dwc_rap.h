@@ -4,33 +4,6 @@
 #include <dwc.h>
 #include "net_wifi.h"
 
-/*
-/// WiFiで使うHeapのサイズ
-#define MYDWC_HEAPSIZE (0x30000)
-
-// 受信コールバック型。WHReceiverFuncと同形
-typedef void (*MYDWCReceiverFunc) (u16 aid, u16 *data, u16 size);
-
-//接続検査 フレンドコードリストインデックス
-typedef BOOL (*MYDWCConnectModeCheckFunc) (int index);
-
-#define DWCRAP_STARTGAME_OK (0)
-#define DWCRAP_STARTGAME_NOTSTATE  (-1)
-#define DWCRAP_STARTGAME_RETRY  (-2)
-#define DWCRAP_STARTGAME_FAILED  (-3)
-#define DWCRAP_STARTGAME_FIRSTSAVE (-4)
-
-#define STEPMATCH_CONTINUE 0
-#define STEPMATCH_SUCCESS  (DWC_ERROR_NUM)
-#define STEPMATCH_CANCEL (STEPMATCH_SUCCESS+1)
-#define STEPMATCH_FAIL (STEPMATCH_SUCCESS+2)
-#define STEPMATCH_TIMEOUT (STEPMATCH_SUCCESS+3)
-#define STEPMATCH_DISCONNECT (STEPMATCH_SUCCESS+4)
-#define ERRORCODE_0 (STEPMATCH_SUCCESS+5)
-#define ERRORCODE_HEAP (STEPMATCH_SUCCESS+6)
-#define STEPMATCH_CONNECT (STEPMATCH_SUCCESS+7)
-*/
-
 #define MYDWC_STATUS_DATA_SIZE_MAX (180)   /// WIFIフレンド情報サイズ DWCに189バイト可能とあるが、定義が無いので控えめサイズで決めうち
 
 
@@ -65,7 +38,7 @@ extern void GFL_NET_DWC_SetVchat(int codec);
  * @retval  MYDWC_STARTCONNECT_DIFFERENTDS … 異なるＤＳで接続しようしてる場合。（要警告）
  */
 //==============================================================================
-extern int mydwc_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData);
+extern int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData);
 
 #define MYDWC_STARTCONNECT_OK 0
 #define MYDWC_STARTCONNECT_FIRST 1
@@ -79,7 +52,7 @@ extern int mydwc_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData
  * @retval  正…接続完了。０…接続中。負…エラー（エラーコードが返る）
  */
 //==============================================================================
-extern int mydwc_connect();
+extern int GFL_NET_DWC_connect();
 
 //==============================================================================
 /**
@@ -123,7 +96,7 @@ extern void GFL_NET_DWC_SetClosedDisconnectFlag( BOOL flag );
  	負…エラー発生
  */
 //==============================================================================
-extern int mydwc_stepmatch( int isCancel );
+extern int GFL_NET_DWC_stepmatch( int isCancel );
 
 //==============================================================================
 /**
@@ -133,7 +106,7 @@ extern int mydwc_stepmatch( int isCancel );
  * @retval  none
  */
 //==============================================================================
-extern void mydwc_setReceiver( MYDWCReceiverFunc server, MYDWCReceiverFunc client );
+extern void GFL_NET_DWC_setReceiver( GFL_NET_MYDWCReceiverFunc server, GFL_NET_MYDWCReceiverFunc client );
 
 //==============================================================================
 /**
@@ -142,7 +115,7 @@ extern void mydwc_setReceiver( MYDWCReceiverFunc server, MYDWCReceiverFunc clien
  * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
  */
 //==============================================================================
-extern int mydwc_sendToServer(void *data, int size);
+extern int GFL_NET_DWC_sendToServer(void *data, int size);
 
 //==============================================================================
 /**
@@ -151,17 +124,7 @@ extern int mydwc_sendToServer(void *data, int size);
  * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
  */
 //==============================================================================
-extern int mydwc_sendToClient(void *data, int size);
-
-//==============================================================================
-/**
- * DWC通信処理更新を行う
- * @param none
- * @retval 0…正常, 負…エラー発生 1…タイムアウト 2…相手から切断された
- */
-//==============================================================================
-extern int mydwc_step();
-
+extern int GFL_NET_DWC_sendToClient(void *data, int size);
 
 //==============================================================================
 /**
@@ -170,11 +133,11 @@ extern int mydwc_step();
  * @retval  void
  */
 //==============================================================================
-extern void mydwc_pausevchat(BOOL bPause);
+extern void GFL_NET_DWC_pausevchat(BOOL bPause);
 
 
-extern BOOL mydwc_canSendToServer();
-extern BOOL mydwc_canSendToClient();
+extern BOOL GFL_NET_DWC_canSendToServer();
+extern BOOL GFL_NET_DWC_canSendToClient();
 
 //==============================================================================
 /**
@@ -183,7 +146,7 @@ extern BOOL mydwc_canSendToClient();
  * @retval  none
  */
 //==============================================================================
-extern void mydwc_free();
+extern void GFL_NET_DWC_free();
 
 //==============================================================================
 /**
@@ -192,7 +155,7 @@ extern void mydwc_free();
  * @retval 　　　 1 = 接続処理完了。0 = 切断処理中。
  */
 //==============================================================================
-extern int mydwc_disconnect( int sync );
+extern int GFL_NET_DWC_disconnect( int sync );
 
 //==============================================================================
 /**
@@ -201,7 +164,7 @@ extern int mydwc_disconnect( int sync );
  * @retval  1 = 成功。0 = 失敗。
  */
 //==============================================================================
-extern int mydwc_returnLobby();
+extern int GFL_NET_DWC_returnLobby();
 
 //==============================================================================
 /**
@@ -210,7 +173,7 @@ extern int mydwc_returnLobby();
  * @retval  1 = 成功。0 = 失敗。
  */
 //==============================================================================
-extern void mydwc_setFetalErrorCallback( void (*func)(int) );
+extern void GFL_NET_DWC_setFetalErrorCallback( void (*func)(int) );
 
 //-----2006.04.11 k.ohno
 //==============================================================================
@@ -220,7 +183,7 @@ extern void mydwc_setFetalErrorCallback( void (*func)(int) );
  * @retval  none
  */
 //==============================================================================
-extern void mydwc_Logout(void);
+extern void GFL_NET_DWC_Logout(void);
 
 
 
@@ -251,7 +214,7 @@ extern u8 *GFL_NET_DWC_GetFriendInfo( int index );
  * @retval  友達の状態。DWC_GetFriendStatusDataの返り値と同じ
  */
 //==============================================================================
-extern u8 mydwc_getFriendStatus( int index );
+extern u8 GFL_NET_DWC_getFriendStatus( int index );
 
 //==============================================================================
 /**
@@ -260,7 +223,7 @@ extern u8 mydwc_getFriendStatus( int index );
  * @retval  none
  */
 //==============================================================================
-extern void mydwc_showFriendInfo();
+extern void GFL_NET_DWC_showFriendInfo();
 
 //==============================================================================
 /**
@@ -300,7 +263,7 @@ extern int mydwc_getMyGSID(void);
 extern u8 GFL_NET_DWC_GetSaving(void);
 
 
-extern BOOL mydwc_IsSendVoiceAndInc(void);
+extern BOOL GFL_NET_DWC_IsSendVoiceAndInc(void);
 
 //==============================================================================
 /**
@@ -309,7 +272,7 @@ extern BOOL mydwc_IsSendVoiceAndInc(void);
  * @retval  FALSE…ボイスチャットではない 
  */
 //==============================================================================
-extern BOOL mydwc_IsVChat(void);
+extern BOOL GFL_NET_DWC_IsVChat(void);
 
 //==============================================================================
 /**
@@ -396,7 +359,7 @@ extern BOOL GFL_NET_DWC_IsInit(void);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_DWC_SetConnectModeCheckCallback( MYDWCConnectModeCheckFunc pFunc );
+extern void GFL_NET_DWC_SetConnectModeCheckCallback( GFL_NET_MYDWCConnectModeCheckFunc pFunc );
 //==============================================================================
 /**
  * 他の相手に送信を行う関数
@@ -420,14 +383,14 @@ extern void GFL_NET_DWC_ResetSaving(void);
  *	@param	FALSE キャンセルしてよい TRUEキャンセル禁止
  */
 //-----------------------------------------------------------------------------
-extern BOOL mydwc_CancelDisable(void);
+extern BOOL GFL_NET_DWC_CancelDisable(void);
 //----------------------------------------------------------------------------
 /**
  *	@brief	LOGIN状態かどうか
  *	@param	TRUE LOGIN状態である
  */
 //-----------------------------------------------------------------------------
-extern BOOL mydwc_IsLogin(void);
+extern BOOL GFL_NET_DWC_IsLogin(void);
 
 
 #if GFL_NET_WIFI

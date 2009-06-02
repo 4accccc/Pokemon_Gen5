@@ -225,6 +225,7 @@ SRCS_OVERLAY_DEV_WIRELESS   =   net/net_devwireless.c \
                   net/wih.c
 
 
+
 # ircƒvƒƒOƒ‰ƒ€
 #===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
@@ -642,8 +643,23 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c
 
-#Wi-FiLê
+# ŒÃ‚¢’ÊMƒvƒƒOƒ‰ƒ€ WIFILêˆÈŠOŽg—p‹ÖŽ~
 #===> SRCS_OVERLAY_WIFI2DMAP
+SRCS_OVERLAY_NETOLD = net_old/comm_ring_buff.c \
+                      net_old/comm_command.c \
+                      net_old/comm_queue.c \
+                      net_old/comm_tool.c \
+                      net_old/comm_system.c \
+                      net_old/comm_info.c \
+                      net_old/comm_local.c \
+                      net_old/comm_wifihistory.c \
+                      net_old/comm_state.c \
+                      net_old/comm_dwc_rap.c \
+                      net_old/com_dwc_warning.c \
+                      net_old/com_error_warning_reset.c
+
+#Wi-FiLê
+#===> SRCS_OVERLAY_NETOLD
 #LIB=>          libdwcbm.a
 #LIB=>          libdwcaccount.a
 #LIB=>          libdwcgschat.a

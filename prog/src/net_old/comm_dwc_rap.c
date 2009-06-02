@@ -15,7 +15,7 @@
 #include "net_old/comm_local.h"
 #include "net_old/comm_system.h"
 #include "net_old/comm_dwc_rap.h"
-#include "net_old/comm_dwc_lobbylib.h"
+#include "../net/dwc_lobbylib.h"
 //#include "system/pm_debug_wifi.h"
 //#include "savedata/frontier_savedata.h"
 //#include <vct.h>
@@ -2750,5 +2750,30 @@ void mydwc_resetSaving(void)
 BOOL mydwc_CancelDisable(void)
 {
     return _dWork->bConnectCallback;
+}
+
+// フレンドリストのサイズ
+#define FRIENDLIST_MAXSIZE 32
+
+
+//==============================================================================
+/**
+ *  netIDからWifiListの順番を返す
+ * @param   netID   id
+ * @retval  WifiListの順番
+ */
+//==============================================================================
+int dwc_SearchNetID2WifiListIndex(SAVE_CONTROL_WORK* pSaveData,int netID)
+{
+    int i,size;
+    DWCFriendData* pSearch = CommInfoGetDWCFriendCode(netID);
+    WIFI_LIST* pList = SaveData_GetWifiListData(pSaveData);
+    
+    for(i = 0; i <WIFILIST_FRIEND_MAX; i++){
+        if(DWC_IsEqualFriendData(pSearch, WifiList_GetDwcDataPtr( pList, i ))){
+            return i;
+        }
+    }
+    return WIFILIST_FRIEND_MAX;
 }
 

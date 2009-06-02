@@ -20,10 +20,10 @@
 //#include "system/pm_str.h"
 #include "system/main.h"
 #include "net_old/comm_dwc_rap.h"   //WIFI
-#include "net_old/comm_dwc_lobbylib.h"   //WIFIlobby
+#include "../net/dwc_lobbylib.h"   //WIFIlobby
 //#include "system/snd_tool.h"  //sndTOOL
 #include "sound/pm_sndsys.h"
-#include  "net_old/comm_wm_icon.h"
+//#include  "net_old/comm_wm_icon.h"
 
 #include "net_old/comm_state.h"
 
@@ -85,7 +85,7 @@ typedef struct{
 
 static _COMM_STATE_WORK* _pCommState = NULL;  ///<　ワーク構造体のポインタ
 
-static BOOL sys_SioErrorNG_Get(void){ return FALSE; };//@@OO
+static BOOL sys_SioErrorNG_Get(void){ return FALSE; } //@@OO
 
 
 // WiFiロビーデバック開始用
@@ -290,7 +290,7 @@ static void _commStateInitialize(SAVE_CONTROL_WORK* pSaveData,int serviceNo)
 
 	if((serviceNo != COMM_MODE_UNION) && (serviceNo != COMM_MODE_PARTY) &&
 		 (serviceNo != COMM_MODE_MYSTERY)){
-		WirelessIconEasy();
+		GFL_NET_WirelessIconEasyXY( GFL_WICON_POSX, GFL_WICON_POSY, TRUE , HEAPID_COMMUNICATION);
 	}
 }
 
@@ -320,7 +320,7 @@ static void _stateFinalize(void)
 		GFL_HEAP_DeleteHeap(HEAPID_WIFI);
 		/*↑[GS_CONVERT_TAG]*/
 	}
-	WirelessIconEasyEnd();
+	GFL_NET_WirelessIconEasyEnd();
 //++	CommVRAMDFinalize();
 	GFL_HEAP_FreeMemory(_pCommState);
 	/*↑[GS_CONVERT_TAG]*/
@@ -556,7 +556,7 @@ void CommStateCheckFunc(void)
 		}
 	}
 	if(CommStateIsWifiConnect()){
-		WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - DWC_GetLinkLevel());
+		GFL_NET_WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - DWC_GetLinkLevel());
 	}
 //	else if(CommMPIsInitialize()){
 //		WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - WM_GetLinkLevel());

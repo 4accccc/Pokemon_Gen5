@@ -526,4 +526,12 @@ extern void mydwc_resetSaving(void);
 extern BOOL mydwc_CancelDisable(void);
 
 
+//==============================================================================
+/**
+ *  netID‚©‚çWifiList‚Ì‡”Ô‚ğ•Ô‚·
+ * @param   netID   id
+ * @retval  WifiList‚Ì‡”Ô
+ */
+//==============================================================================
+extern int dwc_SearchNetID2WifiListIndex(SAVE_CONTROL_WORK* pSaveData,int netID);
 

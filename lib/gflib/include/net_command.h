@@ -11,8 +11,7 @@ extern "C" {
  */
 //=============================================================================
 
-#ifndef __NET_COMMAND_H__
-#define __NET_COMMAND_H__
+#pragma once
 
 
 //==============================================================================
@@ -29,7 +28,7 @@ extern "C" {
 ///-------------------------------------------------------------------------
 
 /// 汎用通信コマンドの定義
-enum CommCommand_e {
+enum GFL_NET_CommCommand_e {
   GFL_NET_CMD_NONE = 0,                ///< なにもしない
   GFL_NET_CMD_FREE = GFL_NET_CMD_NONE,                   ///< 空コマンド
   GFL_NET_CMD_COMMAND_MIN = 1,             ///< 最小値
@@ -143,7 +142,6 @@ extern void* GFI_NET_COMMAND_CreateBuffStart(int command, int netID, int size);
 extern BOOL GFI_NET_COMMAND_RecvCheck(int recvID);
 
 
-#endif// __NET_COMMAND_H__
 
 #ifdef __cplusplus
 } /* extern "C" */

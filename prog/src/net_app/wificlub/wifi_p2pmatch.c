@@ -1201,58 +1201,10 @@ static u32 _WifiMyStatusGet( WIFIP2PMATCH_WORK * p_wk, _WIFI_MACH_STATUS* p_stat
       status = WIFI_STATUS_UNKNOWN;
     }
   }
-  if( (status == WIFI_STATUS_BUCKET) ||
-      (status == WIFI_STATUS_BUCKET_WAIT) ||
-      (status == WIFI_STATUS_BALANCEBALL) ||
-      (status == WIFI_STATUS_BALANCEBALL_WAIT) ||
-      (status == WIFI_STATUS_BALLOON) ||
-      (status == WIFI_STATUS_BALLOON_WAIT) ){
-
-    if( _miniGameInCheck( p_wk ) == FALSE ){
-      status = WIFI_STATUS_UNKNOWN;
-    }
-  }
   return status;
 }
 
 
-// 2～4人であそべるか
-static BOOL _wait2to4Mode( int status )
-{
-  switch(status){
-  case WIFI_STATUS_BUCKET_WAIT:    // バケット募集中
-  case WIFI_STATUS_BUCKET:		 // バケット中
-
-  case WIFI_STATUS_BALLOON_WAIT:    // バケット募集中
-  case WIFI_STATUS_BALLOON:		 // バケット中
-
-  case WIFI_STATUS_BALANCEBALL_WAIT:    // バケット募集中
-  case WIFI_STATUS_BALANCEBALL:		 // バケット中
-    return TRUE;
-  default:
-    return FALSE;
-  }
-}
-
-static u32 _get2to4ModeEndSeq( int status )
-{
-  switch(status){
-  case WIFI_STATUS_BUCKET_WAIT:    // バケット募集中
-  case WIFI_STATUS_BUCKET:		 // バケット中
-    return WIFI_P2PMATCH_BUCKET;
-  case WIFI_STATUS_BALLOON_WAIT:    // バケット募集中
-  case WIFI_STATUS_BALLOON:		 // バケット中
-    return WIFI_P2PMATCH_BALLOON;
-  case WIFI_STATUS_BALANCEBALL_WAIT:    // バケット募集中
-  case WIFI_STATUS_BALANCEBALL:		 // バケット中
-    return WIFI_P2PMATCH_BALANCEBALL;
-  default:
-    break;
-  }
-
-  GF_ASSERT(0);
-  return 0;
-}
 
 // ステートがBATTLEWAITかどうか
 static BOOL _modeBattleWait(int status)
@@ -1458,11 +1410,7 @@ static int _convertState(int state)
 
 static void _commStateChange(int status)
 {
-  if(_wait2to4Mode(status)){
-    //        GFL_NET_StateChangeWiFiClub();	//  @@OO  クラブ用に切り替え
-
-  }
-  else if(status == WIFI_STATUS_LOGIN_WAIT){
+  if(status == WIFI_STATUS_LOGIN_WAIT){
     //        GFL_NET_StateChangeWiFiLogin();   // @@OO ログイン用
     GFL_NET_SetWifiBothNet(FALSE);
     GFL_NET_ChangeInitStruct(&aGFLNetInit);
@@ -5018,7 +4966,7 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
 
 	// VCHAT　ON　状態なのに、新しいコネクトが-1ならVCHATをOFFにする
 	// 080615	tomoya
-	if( (mydwc_IsVChat() == TRUE) && (GFL_NET_DWC_IsNewPlayer() == -1) ){
+	if( (GFL_NET_DWC_IsVChat() == TRUE) && (GFL_NET_DWC_IsNewPlayer() == -1) ){
     GFL_NET_DWC_SetVChat(FALSE);// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
   }
 
@@ -5357,7 +5305,7 @@ static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else{
     // アイコン書き換え
-    if(mydwc_IsSendVoiceAndInc()){
+    if(GFL_NET_DWC_IsSendVoiceAndInc()){
       WifiP2PMatchFriendListIconWrite(   &wk->icon, GFL_BG_FRAME1_M,
                                          PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCTBIG, 0 );
     }
@@ -5997,15 +5945,7 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     {
       BOOL  msg_on = TRUE;
 
-      if( _wait2to4Mode(ret) && (wk->seq == WIFIP2PMATCH_MODE_FRIENDLIST) ){
-        _CHANGESTATE(wk,WIFIP2PMATCH_PARENT_RESTART);
-        WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );
-        _commStateChange( ret );
-        _myStatusChange(wk, ret);
-        wk->endSeq = _get2to4ModeEndSeq( ret );
-        msg_on = FALSE;
-      }
-      else{
+      {
         WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );	// 交換でも通信方法を変更するためにここに移動
         _commStateChange( ret );
         /*				↑commStateChangeでよい
@@ -6065,7 +6005,6 @@ static int _parentRestart( WIFIP2PMATCH_WORK *wk, int seq )
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
                                 0,16,COMM_BRIGHTNESS_SYNC);
 
-    //        wk->endSeq = _get2to4ModeEndSeq( ret );
     wk->bRetryBattle = FALSE;
 
     //        CommInfoInitialize( wk->pSaveData, NULL );   //@@OO
@@ -6202,21 +6141,8 @@ static int _parentModeSubSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   //	{
   if( wk->seq == WIFIP2PMATCH_MODE_FRIENDLIST ){	// 何か選択したときのみ、CANCELはだめ
     BOOL msg_on = TRUE;
-    if( _wait2to4Mode(ret) ){
-      _CHANGESTATE(wk,WIFIP2PMATCH_PARENT_RESTART);
-
-      WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );
-
-      _commStateChange(ret);
-      _myStatusChange(wk, ret);
-      wk->endSeq = _get2to4ModeEndSeq( ret );
-      msg_on = FALSE;
-
-    }
-    else {
-      WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );
-      //@@OO            GFL_NET_StateChangeWiFiBattle();
-    }
+		WifiP2PMatch_CommWifiBattleStart( wk, -1, ret );
+		//@@OO            GFL_NET_StateChangeWiFiBattle();
     // 動作停止させる
     FriendRequestWaitOn( wk, msg_on );
     //    _commStateChange(ret);
@@ -6339,27 +6265,6 @@ static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
     gmmno = msg_wifilobby_debug_00;
   }
 #endif
-  else if(status == WIFI_STATUS_BUCKET_WAIT){
-    WORDSET_RegisterWiFiLobbyGameName( wk->WordSet, 1, WFLBY_GAME_BALLSLOW );
-    gmmno = msg_wifilobby_144;
-  }
-  else if(status == WIFI_STATUS_BUCKET){
-    gmmno = msg_wifilobby_149;
-  }
-  else if(status == WIFI_STATUS_BALANCEBALL_WAIT){
-    WORDSET_RegisterWiFiLobbyGameName( wk->WordSet, 1, WFLBY_GAME_BALANCEBALL );
-    gmmno = msg_wifilobby_144;
-  }
-  else if(status == WIFI_STATUS_BALANCEBALL){
-    gmmno = msg_wifilobby_149;
-  }
-  else if(status == WIFI_STATUS_BALLOON_WAIT){
-    WORDSET_RegisterWiFiLobbyGameName( wk->WordSet, 1, WFLBY_GAME_BALLOON );
-    gmmno = msg_wifilobby_144;
-  }
-  else if(status == WIFI_STATUS_BALLOON){
-    gmmno = msg_wifilobby_149;
-  }
   else if(_modeBattleWait(status)){
     gmmno = msg_wifilobby_003;
   }
@@ -6667,7 +6572,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       // 状態がかわったり
       // 4人募集のゲームじゃないのに、VCHATフラグが変わったら切断
       if((wk->keepStatus != status) ||
-         (( _wait2to4Mode(status) == FALSE ) && (wk->keepVChat != vchat)) ){
+         ( (wk->keepVChat != vchat)) ){
 
         // NPCを元に戻す
         // ここでやってしまうとPauseOffを２重でよんでしまう
@@ -6705,7 +6610,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
         // 状態がかわったり
         // 4人募集のゲームじゃないのに、VCHATフラグが変わったら切断
         if((wk->keepStatus != status) ||
-           (( _wait2to4Mode(status) == FALSE ) && (wk->keepVChat != vchat)) ){
+           ((wk->keepVChat != vchat)) ){
           _friendNameExpand(wk, friendNo - 1);
           WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
           _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
@@ -6734,7 +6639,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
         }
         // VCTモードチェック
         // 2～4人マッチングの場合VCTモードを合わせる必要はなし
-        if( _wait2to4Mode( status ) == FALSE ){
+        {
 
           if(vchat != wk->pMatch->myMatchStatus.vchat){  // 自分のVCHATと状態が違う場合メッセージ
             if(vchat){
@@ -6863,7 +6768,7 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
 
     // ２～４人募集でないとき
     status = _WifiMyStatusGet( wk, &wk->pMatch->myMatchStatus );
-    if( _wait2to4Mode( status ) == FALSE ){
+    {
 
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
       //    _timeWaitIconDel(wk);		timeWait内でMsgWinを破棄しているということはメッセージ終了でもOK↓
@@ -6872,40 +6777,6 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
       CommCommandWFP2PMF_MatchStartInitialize(wk);
       wk->timer = 30;
 
-    }else if( GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER) == TRUE ){
-
-      // メッセージ停止
-      EndMessageWindowOff( wk );
-
-      //			CommInfoInitialize(wk->pSaveData,NULL);   //Info初期化  //@@OO
-      CommCommandWFP2PMF_MatchStartInitialize(wk);
-
-
-      GFL_NET_SetAutoErrorCheck(FALSE);
-      GFL_NET_SetNoChildErrorCheck(TRUE);
-
-
-      // ２～４人募集の時
-      // ポフィンなら通信方式をポフィン用にする
-      _commStateChange(status);
-      wk->endSeq = _get2to4ModeEndSeq( status );
-      GFL_NET_SetWifiBothNet(FALSE); // wifiの通信を同期から非同期に
-      //			WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
-      //							COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
-      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
-                                  0,16,COMM_BRIGHTNESS_SYNC);
-      wk->bRetryBattle = FALSE;
-      seq = SEQ_OUT;						//終了シーケンスへ
-    }else{
-
-      // 通信バグ:324
-      // Matched()は1が帰ってきて、GFL_NET_IsConnectMemberではFALSEが帰ってきている
-      // WiFiP2P通信が可能な状態なのに親と接続していないならエラー処理へ
-      if( GFL_NET_SystemGetWifiConnect() == TRUE ){
-        _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-        WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
-        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
-      }
     }
   }
   return seq;
@@ -7041,15 +6912,6 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
   }
 #endif
-  else if((mySt == WIFI_STATUS_BUCKET_WAIT)&&(targetSt == WIFI_STATUS_BUCKET)){
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
-  }
-  else if((mySt == WIFI_STATUS_BALANCEBALL_WAIT)&&(targetSt == WIFI_STATUS_BALANCEBALL)){
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
-  }
-  else if((mySt == WIFI_STATUS_BALLOON_WAIT)&&(targetSt == WIFI_STATUS_BALLOON)){
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
-  }
   else if((mySt == WIFI_STATUS_LOGIN_WAIT)&&(targetSt == WIFI_STATUS_VCT)&&(myvchat > 0)){	// 080703 tomoya VCHATがONであることを条件に追加
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT_INIT);
     return seq;
@@ -7345,18 +7207,6 @@ static int _parentModeCallMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       wk->endSeq = WIFI_P2PMATCH_BATTLEROOM;
     }
 #endif
-    else if((status == WIFI_STATUS_BUCKET_WAIT) || (status == WIFI_STATUS_BUCKET)){
-      status = WIFI_STATUS_BUCKET;
-      wk->endSeq = WIFI_P2PMATCH_BUCKET;
-    }
-    else if((status == WIFI_STATUS_BALANCEBALL_WAIT) || (status == WIFI_STATUS_BALANCEBALL)){
-      status = WIFI_STATUS_BALANCEBALL;
-      wk->endSeq = WIFI_P2PMATCH_BALANCEBALL;
-    }
-    else if((status == WIFI_STATUS_BALLOON_WAIT) || (status == WIFI_STATUS_BALLOON)){
-      status = WIFI_STATUS_BALLOON;
-      wk->endSeq = WIFI_P2PMATCH_BALLOON;
-    }
     else if((status == WIFI_STATUS_SBATTLE50_WAIT) || (status == WIFI_STATUS_SBATTLE50)){
       status = WIFI_STATUS_SBATTLE50;
       wk->endSeq = WIFI_P2PMATCH_SBATTLE50;
@@ -8119,18 +7969,16 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status)
     _commStateChange(status);
 
     wk->pMatch->myMatchStatus.status = status;
-    if(_modeBattle(status) || (status == WIFI_STATUS_TRADE)|| (status == WIFI_STATUS_FRONTIER)||
+		if(_modeBattle(status) || (status == WIFI_STATUS_TRADE)|| (status == WIFI_STATUS_FRONTIER)
 #ifdef WFP2P_DEBUG_EXON
-       (status == WIFI_STATUS_BATTLEROOM) ||
+       ||(status == WIFI_STATUS_BATTLEROOM)
 #endif
-       (status == WIFI_STATUS_BUCKET) ||
-       (status == WIFI_STATUS_BALANCEBALL) ||
-       (status == WIFI_STATUS_BALLOON) ){
-      //     Snd_BgmFadeOut( 24, BGM_FADE_VCHAT_TIME);
-    }
-    else if(status == WIFI_STATUS_VCT){
-      Snd_BgmFadeOut( 0, BGM_FADE_VCHAT_TIME); // VCT状態へ
-
+			 ){
+			//     Snd_BgmFadeOut( 24, BGM_FADE_VCHAT_TIME);
+		}
+		else if(status == WIFI_STATUS_VCT){
+			Snd_BgmFadeOut( 0, BGM_FADE_VCHAT_TIME); // VCT状態へ
+			
     }
     else if(status == WIFI_STATUS_LOGIN_WAIT){    // 待機中　ログイン直後はこれ
 
@@ -9810,18 +9658,6 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, int* col )
     msg_id = msg_wifilobby_debug_00;
     break;
 #endif
-  case WIFI_STATUS_BUCKET:          // バケット中
-  case WIFI_STATUS_BALANCEBALL:          // バケット中
-  case WIFI_STATUS_BALLOON:          // バケット中
-    msg_id = msg_wifilobby_148;
-    //		*col = _COL_N_GRAY;
-    _COL_N_GRAY;
-    break;
-  case WIFI_STATUS_BUCKET_WAIT:    // バケット募集中
-  case WIFI_STATUS_BALANCEBALL_WAIT:    // バケット募集中
-  case WIFI_STATUS_BALLOON_WAIT:    // バケット募集中
-    msg_id = msg_wifilobby_147;
-    break;
   case WIFI_STATUS_LOGIN_WAIT:    // 待機中　ログイン直後はこれ
     msg_id = msg_wifilobby_046;
     break;
@@ -10523,7 +10359,7 @@ static u8 WifiDwc_getFriendStatus( int idx )
 #ifdef WFP2PM_MANY_OBJ
   idx = 0;
 #endif
-  return mydwc_getFriendStatus( idx );
+  return GFL_NET_DWC_getFriendStatus( idx );
 }
 
 //----------------------------------------------------------------------------
@@ -10543,13 +10379,6 @@ static BOOL WifiP2PMatch_CommWifiBattleStart( WIFIP2PMATCH_WORK* wk, int friendn
   // ボイスチャットとBGM音量の関係を整理 tomoya takahashi
   GFL_NET_DWC_SetVChat(wk->pMatch->myMatchStatus.vchat);
 
-  // 4人で遊ぶゲームのときは、通信の一部をHEAP_WORLDから確保する
-  // その他は通常の通信バッファからとる
-  //	if( _wait2to4Mode( status ) == TRUE ){   //@@OOなるべくイレギュラーにはしたくない
-  //		mydwc_recvHeapChange( TRUE, HEAPID_WIFIP2PMATCHEX );
-  //	}else{
-  //		mydwc_recvHeapChange( FALSE, HEAPID_WIFIP2PMATCHEX );
-  //	}
   // 接続する前に４人募集で送られてくる可能性のある
   // コマンドを設定する
   CommCommandWFP2PMF_MatchStartInitialize(wk);

@@ -172,7 +172,7 @@ static BOOL _DevInitFunc(HEAPID heapID, GFL_NETSYS* pNet,NetDevEndCallback callb
 //------------------------------------------------------------------------------
 static int _DevStartFunc(NetDevEndCallback callback)
 {
-  int ret = mydwc_startConnect( GFI_NET_GetMyDWCUserData() ,GFI_NET_GetMyDWCFriendData());
+  int ret = GFL_NET_DWC_startConnect( GFI_NET_GetMyDWCUserData() ,GFI_NET_GetMyDWCFriendData());
   if(callback)
     callback(TRUE);
   //    mydwc_setFetalErrorCallback(CommFatalErrorFunc);   //@@OO ÉGÉâÅ[èàóùí«â¡ïKóv 07/02/22
@@ -188,7 +188,7 @@ static int _DevStartFunc(NetDevEndCallback callback)
 
 static int _DevMainFunc(u16 bitmap)
 {
-  return mydwc_stepmatch(bitmap);
+  return GFL_NET_DWC_stepmatch(bitmap);
 }
 
 //------------------------------------------------------------------------------
@@ -200,13 +200,13 @@ static int _DevMainFunc(u16 bitmap)
 //------------------------------------------------------------------------------
 static BOOL _DevEndFunc(BOOL bForce, NetDevEndCallback callback)
 {
-  if(mydwc_disconnect( !bForce ) ){
-    if(mydwc_returnLobby()){
+  if(GFL_NET_DWC_disconnect( !bForce ) ){
+    if(GFL_NET_DWC_returnLobby()){
       return TRUE;
     }
   }
   else{
-    mydwc_stepmatch(bForce);
+    GFL_NET_DWC_stepmatch(bForce);
   }
   return FALSE;
 }
@@ -220,7 +220,7 @@ static BOOL _DevEndFunc(BOOL bForce, NetDevEndCallback callback)
 static BOOL _DevExitFunc(NetDevEndCallback callback)
 {
   if(_pWork){
-    mydwc_Logout();  // êÿíf
+    GFL_NET_DWC_Logout();  // êÿíf
     if(callback){
       callback(TRUE);
     }
@@ -261,8 +261,8 @@ static BOOL _DevWifiConnectFunc(int index, int maxnum, BOOL bVCT)
 //------------------------------------------------------------------------------
 static BOOL _DevModeDisconnectFunc(BOOL bForce, NetDevEndCallback callback)
 {
-  if(mydwc_disconnect( !bForce )){
-    mydwc_returnLobby();
+  if(GFL_NET_DWC_disconnect( !bForce )){
+    GFL_NET_DWC_returnLobby();
     return TRUE;
   }
   return FALSE;
@@ -294,7 +294,7 @@ static BOOL _DevSendDataFunc(void* data, int size, int no, NetDevEndCallback cal
 //------------------------------------------------------------------------------
 static BOOL _DevSetRecvCallbackFunc(PTRCommRecvLocalFunc recvCallback)
 {
-  mydwc_setReceiver(recvCallback,recvCallback);
+  GFL_NET_DWC_setReceiver(recvCallback,recvCallback);
   return TRUE;
 }
 
@@ -340,7 +340,7 @@ static BOOL _DevIsEndFunc(void)
 //------------------------------------------------------------------------------
 static BOOL _DevIsIdleFunc(void)
 {
-  return mydwc_IsLogin();
+  return GFL_NET_DWC_IsLogin();
 }
 
 //------------------------------------------------------------------------------
@@ -423,7 +423,7 @@ static void _DevSetNoChildErrorSet(BOOL bOn)
 
 static BOOL _DevIsConnectable(int index)
 {
-  if( mydwc_getFriendStatus(index) != DWC_STATUS_MATCH_SC_SV ){
+  if( GFL_NET_DWC_getFriendStatus(index) != DWC_STATUS_MATCH_SC_SV ){
     return FALSE;
   }
   //    mydwc_setReceiver( CommRecvParentCallback, CommRecvCallback );
@@ -439,7 +439,7 @@ static BOOL _DevIsConnectable(int index)
 
 static BOOL _DevIsVChat(void)
 {
-  return mydwc_IsVChat();
+  return GFL_NET_DWC_IsVChat();
 }
 
 //------------------------------------------------------------------------------

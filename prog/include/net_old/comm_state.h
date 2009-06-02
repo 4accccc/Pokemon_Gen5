@@ -16,7 +16,8 @@
 //#include "savedata/regulation.h"
 typedef void REGULATION;
 
-#include "net_old/comm_dwc_lobbylib.h"
+//#include "net_old/comm_dwc_lobbylib.h"
+#include "src/net/dwc_lobbylib.h"   //WIFIlobby
 
 #ifdef PM_DEBUG
 #define COMMST_DEBUG_WFLBY_START	// デバック開始定義

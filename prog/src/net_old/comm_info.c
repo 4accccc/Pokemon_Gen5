@@ -19,7 +19,7 @@
 #include "savedata/save_control.h"
 //#include "savedata/randomgroup.h"
 #include "savedata/wifihistory.h"
-#include "net_old/comm_dwc_rapfriend.h"
+#include "net_old/comm_dwc_rap.h"
 
 //==============================================================================
 // ワーク
@@ -803,22 +803,23 @@ void CommInfoWriteResult(SAVE_CONTROL_WORK* pSaveData)
         if(pFriend == NULL){
             continue;
         }
-        ret = dwc_checkfriendByToken(pSaveData, pFriend, &pos);
-        switch(ret){
-          case DWCFRIEND_INLIST:// … すでに、同じデータがリスト上にある。この場合は何もする必要なし。
-          case DWCFRIEND_OVERWRITE:// … すでに、同じデータがリスト上にあるが、上書きすることが望ましい場合。
-            GF_ASSERT(pos >= 0);
-
-            OHNO_PRINT("勝ち負け記録  %d %d  %d %d %d \n",i,pos,
-                       _pCommInfo->sPlayerResult[i].win,
-                       _pCommInfo->sPlayerResult[i].lose,
-                       _pCommInfo->sPlayerResult[i].trade);
-            WifiList_SetResult(pList, pos,
-                               _pCommInfo->sPlayerResult[i].win,
-                               _pCommInfo->sPlayerResult[i].lose,
-                               _pCommInfo->sPlayerResult[i].trade);
-            break;
-        }
+/* 			//        ret = dwc_checkfriendByToken(pSaveData, pFriend, &pos);
+ *         switch(ret){
+ *           case DWCFRIEND_INLIST:// … すでに、同じデータがリスト上にある。この場合は何もする必要なし。
+ *           case DWCFRIEND_OVERWRITE:// … すでに、同じデータがリスト上にあるが、上書きすることが望ましい場合。
+ *             GF_ASSERT(pos >= 0);
+ * 
+ *             OHNO_PRINT("勝ち負け記録  %d %d  %d %d %d \n",i,pos,
+ *                        _pCommInfo->sPlayerResult[i].win,
+ *                        _pCommInfo->sPlayerResult[i].lose,
+ *                        _pCommInfo->sPlayerResult[i].trade);
+ *             WifiList_SetResult(pList, pos,
+ *                                _pCommInfo->sPlayerResult[i].win,
+ *                                _pCommInfo->sPlayerResult[i].lose,
+ *                                _pCommInfo->sPlayerResult[i].trade);
+ *             break;
+ *         }
+ */
     }
     // けします
     for(i = 0;i < COMM_MACHINE_MAX;i++){
