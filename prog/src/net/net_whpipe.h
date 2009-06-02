@@ -468,5 +468,8 @@ extern void GFL_NET_WHPipeFree(void);
 
 extern BOOL GFI_NET_WHPipeEnd(NetDevEndCallback callback);
 
+
+extern void GFL_NET_WHPipeSetClientConnect(BOOL bEnable);
+
 #endif  //__NET_WIRELESS_H__
 

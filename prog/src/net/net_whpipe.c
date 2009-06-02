@@ -1877,3 +1877,34 @@ BOOL GFI_NET_WHPipeEnd(NetDevEndCallback callback)
     return TRUE;
 }
 
+
+// Ú‘±‹–‰Â”»’èŠÖ”Œ^
+static BOOL _connectEnable(WMStartParentCallback* pCallback)
+{
+	return TRUE;
+}
+
+// Ú‘±‹–‰Â”»’èŠÖ”Œ^
+static BOOL _connectDisable(WMStartParentCallback* pCallback)
+{
+	return FALSE;
+}
+
+
+//-------------------------------------------------------------
+/**
+ * @brief   Ú‘±‹–‰Â”ñ‹–‰ÂØ‚è‘Ö‚¦
+ * @param   bEnable  ‚Â‚È‚®‚ÍTRUE
+ * @retval  TRUE
+ */
+//-------------------------------------------------------------
+
+void GFL_NET_WHPipeSetClientConnect(BOOL bEnable)
+{
+	if(bEnable){
+		WH_SetJudgeAcceptFunc(&_connectEnable);
+	}
+	else{
+		WH_SetJudgeAcceptFunc(&_connectDisable);
+	}
+}

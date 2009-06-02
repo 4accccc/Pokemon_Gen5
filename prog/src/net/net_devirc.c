@@ -57,51 +57,66 @@ static void _DevConnectWorkInitFunc(void);
 //--------------------------------------------
 
 static GFLNetDevTable netDevTbl={
-    NULL,
-    _DevInitFunc,
-    _DevStartFunc,
-    _DevMainFunc,
-    _DevEndFunc,
-    _DevExitFunc,
-    NULL, //_DevChildWorkInitFunc,
-    NULL, //_DevParentWorkInitFunc,
-    NULL, //_DevMyBeaconSetFunc,
-    NULL,
-    NULL, //_DevBeaconGetFunc,
-    NULL, //_DevBeaconGetMacFunc,
-    NULL, //_DevIsBeaconChangeFunc,
-    NULL, //_DevResetBeaconChangeFlgFunc,
-    NULL, //_DevIsChangeOverTurnFunc,
-    NULL, //_DevSetChildConnectCallbackFunc,
-    NULL,
-    NULL,
-    NULL,
-    NULL, //_DevChangeOverModeConnectFunc,
-    NULL,
-    NULL, //_DevModeDisconnectFunc,
-    NULL, //_DevIsStepDSFunc,
-    NULL, //_DevStepDSFunc,
-    NULL, //_DevGetSharedDataAdrFunc,
-    _DevSendDataFunc,
-    _DevSetRecvCallbackFunc,
-    _DevIsStartFunc,
-    _DevIsConnectFunc,
-    _DevIsEndFunc,
-    _DevIsIdleFunc,
-    _DevGetBitmapFunc, //_DevGetBitmapFunc,
-    _DevGetCurrentIDFunc,
-    NULL,
-    _DevGetErrorFunc, //_DevGetError,
-    NULL, //_DevSetNoChildErrorSet,
-    NULL, //_DevIsConnectable
-    NULL, //_DevIsVChat
-    NULL, //_DevIsNewPlayer
-    _DevIrcMoveFunc,
-    _DevIsSendDataFunc,
-    _DevGetSendTurnFunc,
-    _DevIsConnectSystemFunc,
-    _DevGetSendLockFlagFunc,
-    _DevConnectWorkInitFunc,
+	NULL,
+	_DevInitFunc,
+	_DevStartFunc,
+	_DevMainFunc,
+	_DevEndFunc,
+	_DevExitFunc,
+	NULL, //_DevChildWorkInitFunc,
+	NULL, //_DevParentWorkInitFunc,
+	NULL, //_DevMyBeaconSetFunc,
+	NULL,
+	NULL, //_DevBeaconGetFunc,
+	NULL, //_DevBeaconGetMacFunc,
+	NULL, //_DevIsBeaconChangeFunc,
+	NULL, //_DevResetBeaconChangeFlgFunc,
+	NULL, //_DevIsChangeOverTurnFunc,
+	NULL, //_DevSetChildConnectCallbackFunc,
+	NULL,
+	NULL,
+	NULL,
+	NULL, //_DevChangeOverModeConnectFunc,
+	NULL,
+	NULL, //_DevModeDisconnectFunc,
+	NULL, //_DevIsStepDSFunc,
+	NULL, //_DevStepDSFunc,
+	NULL, //_DevGetSharedDataAdrFunc,
+	_DevSendDataFunc,
+	_DevSetRecvCallbackFunc,
+	_DevIsStartFunc,
+	_DevIsConnectFunc,
+	_DevIsEndFunc,
+	_DevIsIdleFunc,
+	_DevGetBitmapFunc, //_DevGetBitmapFunc,
+	_DevGetCurrentIDFunc,
+	NULL,
+	_DevGetErrorFunc, //_DevGetError,
+	NULL, //_DevSetNoChildErrorSet,
+	NULL, //_DevIsConnectable
+	NULL, //_DevIsVChat
+	NULL, //_DevIsNewPlayer
+	_DevIrcMoveFunc,
+	_DevIsSendDataFunc,
+	_DevGetSendTurnFunc,
+	_DevIsConnectSystemFunc,
+	_DevGetSendLockFlagFunc,
+	_DevConnectWorkInitFunc,
+	NULL, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
+
+	NULL, //DevLobbyLoginFunc DevLobbyLogin;		///<Wi-Fi広場にログイン	DWC_LOBBY_Login
+	NULL, //DevDebugSetRoomFunc DevDebugSetRoom;	///<デバッグ用 部屋データ設定 DWC_LOBBY_DEBUG_SetRoomData
+	NULL, //DevLobbyUpdateErrorCheckFunc DevLobbyUpdateErrorCheck;	///<DWCロビー更新 DWC_LOBBY_UpdateErrorCheck
+	NULL, //DevLobbyLoginWaitFunc DevLobbyLoginWait;	///<DWC_LOBBY_LoginWait
+	NULL, //DevLobbyLogoutFunc DevLobbyLogout;	///<DWC_LOBBY_Logout
+	NULL, //DevLobbyLogoutWaitFunc DevLobbyLogoutWait;	///<DWC_LOBBY_LogoutWait
+	NULL, //DevLobbyMgCheckRecruitFunc DevLobbyMgCheckRecruit;  ///<DWC_LOBBY_MG_CheckRecruit
+	NULL, //DevLobbyMgStartRecruitFunc DevLobbyMgStartRecruit;  ///<DWC_LOBBY_MG_StartRecruit
+	NULL, //DevLobbyMgEntryFunc DevLobbyMgEntry;  ///<DWC_LOBBY_MG_Entry
+	NULL, //DevLobbyMgForceEndFunc DevLobbyMgForceEnd;  ///<DWC_LOBBY_MG_ForceEnd
+	NULL, //DevLobbyMgEndConnectFunc DevLobbyMgEndConnect; ///<DWC_LOBBY_MG_EndConnect
+	NULL, //DevLobbyMgMyParentFunc DevLobbyMgMyParent;  ///<DWC_LOBBY_MG_MyParent
+	NULL, //DevLobbyMgEndRecruitFunc DevLobbyMgEndRecruit;  ///<DWC_LOBBY_MG_EndRecruit
 };
 
 //------------------------------------------------------------------------------
@@ -112,17 +127,17 @@ static GFLNetDevTable netDevTbl={
 //------------------------------------------------------------------------------
 static BOOL _DevInitFunc(HEAPID heapID, GFL_NETSYS* pNet,NetDevEndCallback callback, void* pUserWork)
 {
-    GFL_NET_IRC_Init((GFL_NET_GetNETInitStruct())->irc_timeout);
-    GFL_NET_IRC_InitializeFlagSet();
-    return TRUE;
+	GFL_NET_IRC_Init((GFL_NET_GetNETInitStruct())->irc_timeout);
+	GFL_NET_IRC_InitializeFlagSet();
+	return TRUE;
 }
 
 
 static BOOL _DevStartFunc(NetDevEndCallback callback)
 {
 	OS_TPrintf("IRC_Connect実行\n");
-    IRC_Connect();
-    return TRUE;
+	IRC_Connect();
+	return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -133,8 +148,8 @@ static BOOL _DevStartFunc(NetDevEndCallback callback)
 //------------------------------------------------------------------------------
 static int _DevMainFunc(u16 bitmap)
 {
-    GFL_NET_IRC_CommandContinue();
-    return 0;
+	GFL_NET_IRC_CommandContinue();
+	return 0;
 }
 
 //------------------------------------------------------------------------------
@@ -146,8 +161,8 @@ static int _DevMainFunc(u16 bitmap)
 
 static BOOL _DevEndFunc(BOOL bForce,NetDevEndCallback callback)
 {
-    //赤外線には切断処理がない
-    return TRUE;
+	//赤外線には切断処理がない
+	return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -159,8 +174,8 @@ static BOOL _DevEndFunc(BOOL bForce,NetDevEndCallback callback)
 
 static BOOL _DevExitFunc(NetDevEndCallback callback)
 {
-    GFL_NET_IRC_Exit();
-    return TRUE;
+	GFL_NET_IRC_Exit();
+	return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -172,7 +187,7 @@ static BOOL _DevExitFunc(NetDevEndCallback callback)
 
 static BOOL _DevIsStartFunc(void)
 {
-    return GFL_NET_IRC_InitializeFlagGet();
+	return GFL_NET_IRC_InitializeFlagGet();
 }
 
 //------------------------------------------------------------------------------
@@ -184,32 +199,32 @@ static BOOL _DevIsStartFunc(void)
 
 static BOOL _DevIsEndFunc(void)
 {
-    return !GFL_NET_IRC_InitializeFlagGet();
+	return !GFL_NET_IRC_InitializeFlagGet();
 }
 
 
 static BOOL _DevSendDataFunc(void* data,int size,int no,NetDevEndCallback callback)
 {
-    GFL_NET_IRC_Send(data, size, 0);
-    if(callback){
-        callback( TRUE );
-    }
-    return TRUE;
+	GFL_NET_IRC_Send(data, size, 0);
+	if(callback){
+		callback( TRUE );
+	}
+	return TRUE;
 }
 
 static BOOL _DevSetRecvCallbackFunc(PTRCommRecvLocalFunc recvCallback)
 {
-    GFL_NET_IRC_RecieveFuncSet(recvCallback);
-    return TRUE;
+	GFL_NET_IRC_RecieveFuncSet(recvCallback);
+	return TRUE;
 }
 
 
 static u32 _DevGetCurrentIDFunc(void) ///<DevGetCurrentID            自分の接続IDを返す
 {
-    if(GFL_NET_IRC_IsConnect()){
-        return GFL_NET_IRC_System_GetCurrentAid();
-    }
-    return GFL_NET_NO_PARENTMACHINE;
+	if(GFL_NET_IRC_IsConnect()){
+		return GFL_NET_IRC_System_GetCurrentAid();
+	}
+	return GFL_NET_NO_PARENTMACHINE;
 }
 
 static int _DevGetErrorFunc(void)
@@ -219,28 +234,28 @@ static int _DevGetErrorFunc(void)
 
 static void _DevIrcMoveFunc(void)
 {
-    GFL_NET_IRC_Move();
+	GFL_NET_IRC_Move();
 }
 
 static BOOL _DevIsSendDataFunc(void)
 {
-    return GFL_NET_IRC_SendCheck();
+	return GFL_NET_IRC_SendCheck();
 }
 
 
 static BOOL _DevGetSendTurnFunc(void)
 {
-    return GFL_NET_IRC_SendTurnGet();
+	return GFL_NET_IRC_SendTurnGet();
 }
 
 static BOOL _DevIsConnectSystemFunc(void)
 {
-    return GFL_NET_IRC_IsConnectSystem();
+	return GFL_NET_IRC_IsConnectSystem();
 }
 
 static BOOL _DevIsConnectFunc(void)
 {
-    return GFL_NET_IRC_IsConnect();
+	return GFL_NET_IRC_IsConnect();
 }
 
 //------------------------------------------------------------------------------
@@ -252,7 +267,7 @@ static BOOL _DevIsConnectFunc(void)
 
 static BOOL _DevIsIdleFunc(void)
 {
-    return GFL_NET_IRC_InitializeFlagGet();
+	return GFL_NET_IRC_InitializeFlagGet();
 }
 
 //------------------------------------------------------------------------------
@@ -265,20 +280,20 @@ static BOOL _DevIsIdleFunc(void)
 
 static u32 _DevGetBitmapFunc(void)
 {
-    if(GFL_NET_IRC_IsConnect()){
-        return 0x03;
-    }
-    return 0;
+	if(GFL_NET_IRC_IsConnect()){
+		return 0x03;
+	}
+	return 0;
 }
 
 static BOOL _DevGetSendLockFlagFunc(void)
 {
-    return GFL_NET_IRC_SendLockFlagGet();
+	return GFL_NET_IRC_SendLockFlagGet();
 }
 
 static void _DevConnectWorkInitFunc(void)
 {
-    GFL_NET_IRC_FirstConnect();
+	GFL_NET_IRC_FirstConnect();
 }
 
 
@@ -290,6 +305,6 @@ static void _DevConnectWorkInitFunc(void)
 //------------------------------------------------------------------------------
 GFLNetDevTable *NET_GetIrcDeviceTable(void)
 {
-    return &netDevTbl;
+	return &netDevTbl;
 }
 

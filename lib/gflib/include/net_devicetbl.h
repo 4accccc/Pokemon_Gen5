@@ -78,6 +78,7 @@ typedef BOOL (*DevGetSendTurnFunc)(void);  ///< 送信可能ターンフラグを取得
 typedef BOOL (*DevIsConnectSystemFunc)(void);  ///< 再接続中など関係なく、純粋に今、繋がっているか
 typedef BOOL (*DevGetSendLockFlagFunc)(void); ///< 送信ロックフラグを取得
 typedef void (*DevConnectWorkInitFunc)(void); ///< 初めての接続後のワーク設定
+typedef void (*DevSetClientConnectFunc)(BOOL bEnable); ///< 子機がつながってよいかどうかハードレベルで調整
 
 typedef BOOL (*DevLobbyLoginFunc)(const void* cp_loginprofile); ///<Wi-Fi広場にログイン	DWC_LOBBY_Login
 typedef void (*DevDebugSetRoomFunc)( u32 locktime, u32 random, u8 roomtype, u8 season ); ///<デバッグ用 部屋データ設定DWC_LOBBY_DEBUG_SetRoomData
@@ -146,6 +147,7 @@ typedef struct{
   DevIsConnectSystemFunc DevIsConnectSystem;  ///< 再接続中など関係なく、純粋に今、繋がっているか
   DevGetSendLockFlagFunc DevGetSendLockFlag;  ///< 送信ロックフラグを取得
   DevConnectWorkInitFunc DevConnectWorkInit;           ///<初めての接続後のワーク設定
+  DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
 
   //-- 以下、Wi-Fi広場専用
   DevLobbyLoginFunc DevLobbyLogin;		///<Wi-Fi広場にログイン	DWC_LOBBY_Login

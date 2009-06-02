@@ -113,6 +113,9 @@ void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * ev
   BATTLE_SETUP_PARAM * para;
   EVENT_WIFICLUB_WORK * dbw;
 
+
+	GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(gsys));
+	
   GMEVENT_Change( event, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK) );
   dbw = GMEVENT_GetEventWork(event);
   dbw->ctrl = SaveControl_GetPointer();
