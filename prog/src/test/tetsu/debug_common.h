@@ -22,3 +22,6 @@ extern GFL_CAMADJUST*			DWS_GetCamAdjust(DWS_SYS* dws);
 extern void								DWS_SetG3DcamTarget(DWS_SYS* dws, VecFx32* t);
 extern void								DWS_CamAdjustOn(DWS_SYS* dws);
 extern void								DWS_CamAdjustOff(DWS_SYS* dws);
+
+extern void								DWS_DrawLocalOriginPlane(DWS_SYS* dws, GXRgb color);
+

@@ -327,3 +327,46 @@ void							DWS_CamAdjustOff(DWS_SYS* dws)
 	dws->cameraAdjustOn = FALSE;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief		基準平面描画
+ */
+//------------------------------------------------------------------
+void DWS_DrawLocalOriginPlane(DWS_SYS* dws, GXRgb color)
+{
+	VecFx32 pos, up, target;
+
+	G3X_Reset();
+
+	GFL_G3D_CAMERA_GetPos(dws->g3Dcamera, &pos);
+	GFL_G3D_CAMERA_GetCamUp(dws->g3Dcamera, &up);
+	GFL_G3D_CAMERA_GetTarget(dws->g3Dcamera, &target);
+	G3_LookAt(&pos, &up, &target, NULL);
+
+	G3_PushMtx();
+	//平行移動パラメータ設定
+	G3_Translate(target.x, target.y, target.z);
+
+	//グローバルスケール設定
+	G3_Scale(32 * FX32_ONE, 32 * FX32_ONE, 32 * FX32_ONE);
+
+	G3_TexImageParam(GX_TEXFMT_NONE, GX_TEXGEN_NONE, 0, 0, 0, 0, GX_TEXPLTTCOLOR0_USE, 0);
+	
+	//マテリアル設定
+	G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE);
+	G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
+	G3_PolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 63, 31, 0);
+		
+	G3_Begin( GX_BEGIN_QUADS );
+	
+	G3_Color(color);
+	
+	G3_Vtx(-(FX16_ONE-1), 0, (FX16_ONE-1));
+	G3_Vtx(-(FX16_ONE-1), 0, -(FX16_ONE-1));
+	G3_Vtx((FX16_ONE-1), 0, -(FX16_ONE-1));
+	G3_Vtx((FX16_ONE-1), 0, (FX16_ONE-1));
+	
+	G3_End();
+	G3_PopMtx(1);
+}
+

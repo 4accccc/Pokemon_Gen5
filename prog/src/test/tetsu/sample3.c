@@ -121,6 +121,8 @@ static GFL_PROC_RESULT Sample3Proc_Init(GFL_PROC * proc, int * seq, void * pwk, 
   GFL_STD_MemClear(sw, sizeof(SAMPLE3_WORK));
   sw->heapID = GFL_HEAPID_APP;
 	sw->seq = 0;
+
+	sw->tmsgwinSys = NULL;
 	sw->timer = 0;
 	sw->tmsgwinIdx = 0;
 	sw->tmsgwinConnect = FALSE;
@@ -195,7 +197,6 @@ const GFL_PROC_DATA DebugWatanabeSample3ProcData = {
  *
  */
 //============================================================================================
-static void framework(SAMPLE3_WORK* sw);
 static void commFunc(SAMPLE3_WORK* sw);
 
 static void setSampleMsg1(SAMPLE3_WORK* sw, int idx);
@@ -210,6 +211,7 @@ static BOOL calcTarget(GFL_G3D_CAMERA* g3Dcamera, int x, int y, VecFx32* target)
 #define FIX_WIN_IDX	(0)
 static BOOL	sample3(SAMPLE3_WORK* sw)
 {
+	//モードセレクト
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		if( sw->mode == 0 ){
 			DWS_CamAdjustOff(sw->dws);
@@ -219,6 +221,7 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 			sw->mode = 0;
 		}
 	} 
+	//コントロール
 	switch(sw->seq){
 	case 0:
 		{
@@ -235,10 +238,9 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 		}
 		sw->testPat = 0;
 		sw->seq++;
-		break;
+		return TRUE;
 
 	case 1:
-		framework(sw);
 		if( sw->testPat == 0 ){
 			VEC_Set(&sw->cameraTarget,0,0,0);
 			GFL_BG_SetBackGroundColor( TEXT_FRAME, BACKGROUND_COLOR );
@@ -282,14 +284,12 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 		break;
 
 	case 2:
-		framework(sw);
 		commFunc(sw);
 
 		if(sw->msgComm.pCommand == NULL){ sw->seq = 1; }
 		break;
 
 	case 3:
-		framework(sw);
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 			TALKMSGWIN_DeleteWindow(sw->tmsgwinSys, FIX_WIN_IDX);
 			sw->seq = 1;
@@ -300,61 +300,24 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 		TALKMSGWIN_SystemDelete(sw->tmsgwinSys);
 		return FALSE;
 	}
+	//メイン動作
+	if( sw->tmsgwinSys ){
+		TALKMSGWIN_SystemMain(sw->tmsgwinSys);
+		TALKMSGWIN_SystemDraw2D(sw->tmsgwinSys);
+	}
+	//描画
+	{
+		GFL_G3D_DRAW_Start();			//描画開始
+		GFL_G3D_DRAW_SetLookAt();
+
+		if( sw->tmsgwinSys ){ TALKMSGWIN_SystemDraw3D(sw->tmsgwinSys); }
+		DWS_DrawLocalOriginPlane(sw->dws, GX_RGB(31, 0, 0));
+
+		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
+	}
 	return TRUE;
 }
 
-
-
-
-static void framework(SAMPLE3_WORK* sw)
-{
-	TALKMSGWIN_SystemMain(sw->tmsgwinSys);
-	TALKMSGWIN_SystemDraw2D(sw->tmsgwinSys);
-
-	//３Ｄ描画
-	GFL_G3D_DRAW_Start();			//描画開始
-	GFL_G3D_DRAW_SetLookAt();
-	TALKMSGWIN_SystemDraw3D(sw->tmsgwinSys);
-
-	{
-		VecFx32 pos, up, target;
-		GFL_G3D_CAMERA* g3Dcamera = DWS_GetG3Dcamera(sw->dws);
-
-		G3X_Reset();
-
-		GFL_G3D_CAMERA_GetPos(g3Dcamera, &pos);
-		GFL_G3D_CAMERA_GetCamUp(g3Dcamera, &up);
-		GFL_G3D_CAMERA_GetTarget(g3Dcamera, &target);
-		G3_LookAt(&pos, &up, &target, NULL);
-
-		G3_PushMtx();
-		//平行移動パラメータ設定
-		G3_Translate(sw->cameraTarget.x, sw->cameraTarget.y, sw->cameraTarget.z);
-
-		//グローバルスケール設定
-		G3_Scale(32 * FX32_ONE, 32 * FX32_ONE, 32 * FX32_ONE);
-
-		G3_TexImageParam(GX_TEXFMT_NONE, GX_TEXGEN_NONE, 0, 0, 0, 0, GX_TEXPLTTCOLOR0_USE, 0);
-	
-		//マテリアル設定
-		G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE);
-		G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
-		G3_PolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 63, 31, 0);
-		
-		G3_Begin( GX_BEGIN_QUADS );
-	
-		G3_Color(GX_RGB(31,0,0));
-	
-		G3_Vtx(-(FX16_ONE-1), 0, (FX16_ONE-1));
-		G3_Vtx(-(FX16_ONE-1), 0, -(FX16_ONE-1));
-		G3_Vtx((FX16_ONE-1), 0, -(FX16_ONE-1));
-		G3_Vtx((FX16_ONE-1), 0, (FX16_ONE-1));
-	
-		G3_End();
-		G3_PopMtx(1);
-	}
-	GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
-}
 
 //============================================================================================
 /**
