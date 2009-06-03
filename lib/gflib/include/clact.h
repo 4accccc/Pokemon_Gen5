@@ -107,7 +107,7 @@ typedef enum{
 //=====================================
 typedef enum{
 	CLWK_PLTTOFFS_MODE_OAM_COLOR,		// OamAttr.c_paramからのオフセット設定
-	CLWK_PLTTOFFS_MODE_PLTT_TOP,		// パレットの０番からのオフセット設定
+	CLWK_PLTTOFFS_MODE_PLTT_TOP,		// パレット転送先の先頭からのオフセット設定
 
 	CLWK_PLTTOFFS_MODE_NUM
 } CLWK_PLTTOFFS_MODE;

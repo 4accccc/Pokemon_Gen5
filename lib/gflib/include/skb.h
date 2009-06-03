@@ -46,6 +46,16 @@ typedef struct {
 
 }GFL_SKB_SETUP;
 
+typedef enum {
+
+  GFL_SKB_REACTION_QUIT = 0,  ///< 終了した
+  GFL_SKB_REACTION_NONE,      ///< 反応無し
+  GFL_SKB_REACTION_INPUT,     ///< 何か文字が入力された
+  GFL_SKB_REACTION_BACKSPACE, ///< BackSpace入力された
+  GFL_SKB_REACTION_PAGE,      ///< ページ切り替え入力された
+
+}GflSkbReaction;
+
 //============================================================================================
 /**
  *
@@ -55,7 +65,10 @@ typedef struct {
 //============================================================================================
 extern GFL_SKB*   GFL_SKB_Create( void* strings, const GFL_SKB_SETUP* setup, HEAPID heapID );
 extern void     GFL_SKB_Delete( GFL_SKB* gflSkb );
-extern BOOL     GFL_SKB_Main( GFL_SKB* gflSkb );  //FALSEで終了
+extern GflSkbReaction     GFL_SKB_Main( GFL_SKB* gflSkb );  //FALSEで終了
+
+extern void GFL_SKB_PickStr( GFL_SKB* skb );
+extern void GFL_SKB_ReloadStr( GFL_SKB* skb, const STRBUF* strbuf );
 
 //SjisCode格納用文字列バッファ作成
 //GFL_SKB_STRTYPE_SJISを使用する場合、この関数で入力最大配列を確保出来る
