@@ -40,6 +40,8 @@ enum {
 	BMP_ANGLEV = 0,
 	BMP_ANGLEH,
 	BMP_LENGTH,
+	BMP_FOVY,
+	BMP_FAR,
 
 	BMP_MAX,
 };
@@ -201,6 +203,8 @@ BOOL	GFL_CAMADJUST_Main( GFL_CAMADJUST* gflCamAdjust )
 		CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEV, *gflCamAdjust->pAngleV, 0xa4 );
 		CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEH, *gflCamAdjust->pAngleH, 0xc4 );
 		CAMADJUST_NumPrint( gflCamAdjust, BMP_LENGTH, *gflCamAdjust->pLength/FX32_ONE, 0xe4 );
+		CAMADJUST_NumPrint( gflCamAdjust, BMP_FOVY, *gflCamAdjust->pFovy, 0xac );
+		CAMADJUST_NumPrint( gflCamAdjust, BMP_FOVY, *gflCamAdjust->pFar/FX32_ONE, 0xcc );
 
 		GFL_DISPUT_LoadScr(gflCamAdjust->setup.bgID, gflCamAdjust->scrnBuf, 0, PUSH_SCR_SIZ);
 		break;
