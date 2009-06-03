@@ -130,15 +130,15 @@ typedef struct {
 
 FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeSample1ProcData;
-FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeSample2ProcData;
-FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeSample3ProcData;
+extern const GFL_PROC_DATA DebugWatanabeSample4ProcData;
 
 static const DEBUGITEM_LIST debugItemList[] = {
 	{DEBUG_TETSU_MENU1, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample1ProcData},
 	{DEBUG_TETSU_MENU2, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample2ProcData},
 	{DEBUG_TETSU_MENU3, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample3ProcData},
+	{DEBUG_TETSU_MENU4, FS_OVERLAY_ID(watanabe_sample),	&DebugWatanabeSample4ProcData},
 };
 
 //------------------------------------------------------------------

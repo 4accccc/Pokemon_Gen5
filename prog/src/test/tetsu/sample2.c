@@ -6,7 +6,6 @@
  * @date	
  */
 //============================================================================================
-#include <wchar.h>
 #include "gflib.h"
 #include "system/gfl_use.h"
 #include "arc_def.h"

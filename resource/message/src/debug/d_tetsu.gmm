@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="watanabe" host="W00138" date="2009-06-02T19:29:07"/>
+	<create user="watanabe" host="W00138" date="2009-06-03T19:01:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -326,6 +326,11 @@
 	<row id="DEBUG_TETSU_STR0_5">
 		<language name="JPN" width="200">でんこうけいじばんをつくってみよう</language>
 		<language name="JPN_KANJI" width="172">電光掲示板を作ってみよう！！……</language>
+	</row>
+
+	<row id="DEBUG_TETSU_MENU4">
+		<language name="JPN" width="112">■みていぎサンプル</language>
+		<language name="JPN_KANJI" width="96">■未定義サンプル</language>
 	</row>
 
 	<flowchart-group-list>
