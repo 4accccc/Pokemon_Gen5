@@ -274,14 +274,14 @@ int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx3
 	z = FX_Whole(pos->z) - OFS_Z;
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
 #if 0
-		OS_Printf("CNCT:x,y,z=%d,%d,%d\n",
+		TAMADA_Printf("CNCT:x,y,z=%d,%d,%d\n",
 				FX_Whole(cnct->pos.x),FX_Whole(cnct->pos.y),FX_Whole(cnct->pos.z));
 #endif
 		if (cnct->pos.x != x) continue;
 		if (cnct->pos.y != y) continue;
 		if (cnct->pos.z != z) continue;
-		OS_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-		OS_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
+		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
+		TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
 		return i;
 	}
 	return EXIT_ID_NONE;
@@ -384,8 +384,8 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
       if (len > HIT_RANGE) continue;
     }
 #endif
-		OS_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-		OS_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,sphere->x, y,sphere->y, z,sphere->z);
+		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
+		TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,sphere->x, y,sphere->y, z,sphere->z);
 		return i;
 	}
 	return EXIT_ID_NONE;
