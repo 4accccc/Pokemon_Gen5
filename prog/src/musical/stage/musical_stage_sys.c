@@ -41,6 +41,7 @@ typedef struct
 {
   STAGE_INIT_WORK *actInitWork;
   ACTING_WORK     *actWork;
+  MUS_COMM_WORK   *commWork;
 }STAGE_LOCAL_WORK;
 
 //======================================================================
@@ -76,7 +77,7 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
   work = GFL_PROC_AllocWork( proc, sizeof(STAGE_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   if( pwk == NULL )
   {
-    work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE );
+    work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
     MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKUSII , HEAPID_MUSICAL_STAGE );
     MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_RAITYUU , HEAPID_MUSICAL_STAGE );
     MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , HEAPID_MUSICAL_STAGE );
@@ -153,12 +154,12 @@ static GFL_PROC_RESULT MusicalStageProc_Main( GFL_PROC * proc, int * seq , void 
 //--------------------------------------------------------------
 //  InitWorkì¬
 //--------------------------------------------------------------
-STAGE_INIT_WORK* MUSICAL_STAGE_CreateStageWork( HEAPID heapId )
+STAGE_INIT_WORK* MUSICAL_STAGE_CreateStageWork( HEAPID heapId , MUS_COMM_WORK *commWork )
 {
   u8 i;
   STAGE_INIT_WORK *initWork;
   initWork = GFL_HEAP_AllocMemory( heapId , sizeof(STAGE_INIT_WORK) );
-  
+  initWork->commWork = commWork;
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
     u8 ePos;
@@ -257,5 +258,4 @@ void MUSICAL_STAGE_SetEquip( STAGE_INIT_WORK *initWork , const u8 idx , MUS_POKE
   initPara->equip[ePos].itemNo = itemId;
   initPara->equip[ePos].angle  = angle;
 }
-
 

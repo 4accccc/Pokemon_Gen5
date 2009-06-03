@@ -23,6 +23,8 @@
 //タイミングコマンド
 #define MUS_COMM_TIMMING_DRESSUP_WAIT (10)
 #define MUS_COMM_TIMMING_START_ACTING (20)
+//デバッグ
+#define MUS_COMM_TIMMING_START_SCRIPT (200)
 
 //======================================================================
 //	enum

@@ -10,6 +10,7 @@
 #define STA_LOCAL_DEF_H__
 
 #include "musical/musical_define.h"
+#include "musical/comm/mus_comm_func.h"
 
 //BBD用座標変換(カメラの幅から計算
 #define ACT_POS_X(val)	FX32_CONST((val)/16.0f)
@@ -42,6 +43,7 @@
 
 struct _STAGE_INIT_WORK
 {
+  MUS_COMM_WORK *commWork;
 	MUSICAL_POKE_PARAM musPoke[MUSICAL_POKE_MAX];
 	u16		repertorie;	//演目
 };

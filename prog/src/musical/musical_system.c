@@ -313,7 +313,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
       OS_TPrintf("FreeHeap:[%x][%x]\n", 
           GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
           GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
-      work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC );
+      work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC , work->commWork );
       MUSICAL_STAGE_SetData_Player( work->actInitWork , 0 , work->musPoke );
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_RAITYUU , HEAPID_MUSICAL_PROC );
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , HEAPID_MUSICAL_PROC );
@@ -335,7 +335,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
   case MPS_INIT_ACTING_COMM:
     {
       u8 i;
-      work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC );
+      work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC , work->commWork );
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
       {
         MUSICAL_POKE_PARAM *musPoke = MUS_COMM_GetMusPokeParam( work->commWork , i );

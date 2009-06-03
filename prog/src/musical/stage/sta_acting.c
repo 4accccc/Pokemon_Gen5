@@ -295,16 +295,36 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
       STA_ACT_StartScript( work );
     }
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  if( work->initWork->commWork != NULL )
   {
+    static BOOL isStartCnt = 0;
+    MUS_COMM_WORK *commWork = work->initWork->commWork;
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      MUS_COMM_SendTimingCommand( commWork , MUS_COMM_TIMMING_START_SCRIPT+isStartCnt );
+    }
     
-    //演劇風
-    G3X_EdgeMarking( TRUE );
-  }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-  {
-    //ミュージカル風
-    G3X_EdgeMarking( FALSE );
+    if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
+    {
+      static u32 vcount = 0;
+      if( vcount != 0 )
+      {
+        u32 nowVCount = OS_GetVBlankCount();
+        OS_TPrintf("Script count[%d]\n",nowVCount-vcount);
+        vcount = 0;
+      }
+      if( MUS_COMM_CheckTimingCommand( commWork , MUS_COMM_TIMMING_START_SCRIPT+isStartCnt ) == TRUE )
+      {
+        if( work->scriptData != NULL )
+        {
+          GFL_HEAP_FreeMemory( work->scriptData );
+        }
+        work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_mus_002_001_bin , FALSE , work->heapId );
+        STA_ACT_StartScript( work );
+        vcount = OS_GetVBlankCount(); 
+        isStartCnt++;
+      }
+    }
   }
 
 
