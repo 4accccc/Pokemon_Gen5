@@ -1061,10 +1061,15 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
                  GX_WND_PLANEMASK_BG2 |
                  GX_WND_PLANEMASK_BG3 |
                  GX_WND_PLANEMASK_OBJ,
-                 FALSE );
-    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+                 TRUE );
+    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG1, TRUE );
     G2_SetWnd0Position( 1, 0, 255, 192 );
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
+
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                      31, 3 );
   }
 
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &vramBank, heapID );
