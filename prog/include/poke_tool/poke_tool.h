@@ -602,6 +602,10 @@ extern  void  PP_SetSick( POKEMON_PARAM* pp, PokeSick sick );
 extern  void  PP_Clear( POKEMON_PARAM *pp );
 extern  void  PPP_Clear( POKEMON_PASO_PARAM *ppp );
 
+// モンスターナンバー書き換え（進化等で使用）
+extern void PP_ChangeMonsNo( POKEMON_PARAM* ppp, u16 monsno );
+extern void PPP_ChangeMonsNo( POKEMON_PASO_PARAM* ppp, u16 monsno );
+
 // PPP部分からPP部分を再計算
 extern  void  PP_Renew( POKEMON_PARAM *pp );
 

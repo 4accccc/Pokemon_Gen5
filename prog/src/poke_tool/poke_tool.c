@@ -63,6 +63,11 @@ static  void  load_grow_table( int para, u32 *GrowTable );
 static  u32   get_growtbl_param( int para, int level );
 static  void  *ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id );
 static  BOOL  pppAct_check_nickname( POKEMON_PASO_PARAM* ppp );
+static POKEMON_PERSONAL_DATA* Personal_Load( u16 monsno, u16 formno );
+static u8 Personal_GetTokuseiCount( POKEMON_PERSONAL_DATA* ppd );
+static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
+static void change_monsno_sub_sex( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
+
 
 #define decord_data( data, size, code )   encode_data( data, size, code );
 
@@ -71,10 +76,11 @@ static  BOOL  pppAct_check_nickname( POKEMON_PASO_PARAM* ppp );
  *  スタティック変数
  */
 //============================================================================================
+static  u32 GrowTable[ GROW_TBL_SIZE ];         //成長曲線テーブル
+static  STRCODE StrBuffer[STRBUFFER_LEN];       //文字列バッファ
 static  POKEMON_PERSONAL_DATA PersonalDataWork; //ポケモン１体分のパーソナルデータ構造体
-static  u32 GrowTable[ GROW_TBL_SIZE ];       //成長曲線テーブル
-static  STRCODE StrBuffer[STRBUFFER_LEN];     //文字列バッファ
-
+static  u16  PersonalLatestMonsNo;              //直前に読み込んだパーソナルデータ引数（モンスターナンバー）
+static  u16  PersonalLatestFormNo;              //直前に読み込んだパーソナルデータ引数（フォルムナンバー）
 
 
 //=============================================================================================
@@ -88,6 +94,7 @@ static  STRCODE StrBuffer[STRBUFFER_LEN];     //文字列バッファ
 void POKETOOL_InitSystem( HEAPID heapID )
 {
   POKE_PERSONAL_InitSystem( heapID );
+  PersonalLatestMonsNo = MONSNO_MAX;
 }
 
 
@@ -169,11 +176,10 @@ void  PPP_Clear( POKEMON_PASO_PARAM *ppp )
 /**
  *  ポケモンパラメータ構造体の内容を構築
  *
- * @param[out]  pp    構築先構造体アドレス
- * @param[in] mons_no ポケモンナンバー
- * @param[in] level レベル
- * @param[in] id    ID
- *
+ * @param[out] pp       構築先構造体アドレス
+ * @param[in]  mons_no  ポケモンナンバー
+ * @param[in]  level    レベル
+ * @param[in]  id       ID
  */
 //=============================================================================================
 void PP_Setup( POKEMON_PARAM *pp, u16 mons_no, u16 level, u32 ID )
@@ -185,12 +191,12 @@ void PP_Setup( POKEMON_PARAM *pp, u16 mons_no, u16 level, u32 ID )
 /**
  *  ポケモンパラメータ構造体にポケモンパラメータを構築【拡張版】
  *
- * @param[out]  pp      パラメータを生成するポケモンパラメータ構造体のポインタ
- * @param[in] mons_no   ポケモンナンバー
- * @param[in] level   レベル
- * @param[in] ID      ID指定（PTL_SETUP_ID_AUTO でランダム）
- * @param[in] pow     個体値指定（PTL_SETUP_POW_AUTO でランダム／詳しくはpoke_tool.h 参照）
- * @param[in] rnd     個性乱数指定（PTL_SETUP_RND_AUTOでランダム／詳しくはpoke_tool.h 参照）
+ * @param[out]  pp       パラメータを生成するポケモンパラメータ構造体のポインタ
+ * @param[in]   mons_no  ポケモンナンバー
+ * @param[in]   level    レベル
+ * @param[in]   ID       ID指定（PTL_SETUP_ID_AUTO でランダム）
+ * @param[in]   pow      個体値指定（PTL_SETUP_POW_AUTO でランダム／詳しくはpoke_tool.h 参照）
+ * @param[in]   rnd      個性乱数指定（PTL_SETUP_RND_AUTOでランダム／詳しくはpoke_tool.h 参照）
  */
 //============================================================================================
 void  PP_SetupEx( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID, PtlSetupPow pow, u64 rnd )
@@ -253,11 +259,11 @@ void  PPP_Setup( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u32 id )
  *  ボックスポケモンパラメータ構造体にポケモンパラメータを構築【拡張版】
  *
  * @param[out]  ppp     パラメータを生成するボックスポケモンパラメータ構造体のポインタ
- * @param[in] mons_no   ポケモンナンバー
- * @param[in] level   レベル
- * @param[in] id      ID指定（PTL_SETUP_ID_AUTO でランダム）
- * @param[in] pow     個体値指定（PTL_SETUP_POW_AUTO でランダム／詳しくはpoke_tool.h 参照）
- * @param[in] rnd     個性乱数指定（PTL_SETUP_RND_AUTOでランダム／詳しくはpoke_tool.h 参照）
+ * @param[in]   mons_no ポケモンナンバー
+ * @param[in]   level   レベル
+ * @param[in]   id      ID指定（PTL_SETUP_ID_AUTO でランダム）
+ * @param[in]   pow     個体値指定（PTL_SETUP_POW_AUTO でランダム／詳しくはpoke_tool.h 参照）
+ * @param[in]   rnd     個性乱数指定（PTL_SETUP_RND_AUTOでランダム／詳しくはpoke_tool.h 参照）
  */
 //============================================================================================
 void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlSetupPow pow, u64 rnd )
@@ -272,8 +278,7 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
   flag = PPP_FastModeOn( ppp );
 
 // パーソナルデータをロードしておく
-  POKE_PERSONAL_LoadData( mons_no, PTL_FORM_NO_NONE, &PersonalDataWork );
-  ppd = &PersonalDataWork;
+  ppd = Personal_Load( mons_no, PTL_FORM_NO_NONE );
 
 //IDナンバーセット
   if( id == PTL_SETUP_ID_AUTO )
@@ -285,9 +290,9 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
 //個性乱数セット
   if( rnd == PTL_SETUP_RND_AUTO )
   {
-    rnd = __GFL_STD_MtRand();;
+    rnd = __GFL_STD_MtRand();
   }
-  else if( rnd == PTL_SETUP_RND_AUTO )
+  else if( rnd == PTL_SETUP_RND_RARE )
   {
     rnd = id;
   }
@@ -334,7 +339,7 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
 //パワー乱数セット
   if( pow == PTL_SETUP_POW_AUTO )
   {
-    PPP_Put( ppp, ID_PARA_hp_rnd,   GFL_STD_MtRand(32) );
+    PPP_Put( ppp, ID_PARA_hp_rnd,     GFL_STD_MtRand(32) );
     PPP_Put( ppp, ID_PARA_pow_rnd,    GFL_STD_MtRand(32) );
     PPP_Put( ppp, ID_PARA_def_rnd,    GFL_STD_MtRand(32) );
     PPP_Put( ppp, ID_PARA_spepow_rnd, GFL_STD_MtRand(32) );
@@ -343,7 +348,7 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
   }
   else
   {
-    PPP_Put( ppp, ID_PARA_hp_rnd,   PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_HP) );
+    PPP_Put( ppp, ID_PARA_hp_rnd,     PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_HP) );
     PPP_Put( ppp, ID_PARA_pow_rnd,    PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_ATK) );
     PPP_Put( ppp, ID_PARA_def_rnd,    PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_DEF) );
     PPP_Put( ppp, ID_PARA_spepow_rnd, PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_SPATK) );
@@ -351,20 +356,17 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
     PPP_Put( ppp, ID_PARA_agi_rnd,    PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_AGI) );
   }
 
-//特殊能力セット
-  val = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi2 );
-  if( val )
+// とくせいセット
   {
-    if( !(rnd&1) )
-    {
-      val = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi1 );
+    u16 param = POKEPER_ID_speabi1;
+    if( Personal_GetTokuseiCount(ppd) == 2 ){
+      if( rnd & 0x200 ){
+        param = POKEPER_ID_speabi2;
+      }
     }
+    val = POKE_PERSONAL_GetParam( ppd, param );
+    PPP_Put( ppp, ID_PARA_speabino, val );
   }
-  else
-  {
-    val = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi1 );
-  }
-  PPP_Put( ppp, ID_PARA_speabino, val );
 
 //性別セット
   val = PPP_GetSex( ppp );
@@ -375,6 +377,108 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
 
   PPP_FastModeOff( ppp, flag );
 }
+
+//=============================================================================================
+/**
+ * モンスターナンバーを書き換える。
+ * 必要に応じて計算し直す必要のあるパラメータも合わせて変更する（進化時などの使用を想定）
+ *
+ * @param   pp
+ * @param   monsno
+ */
+//=============================================================================================
+void PP_ChangeMonsNo( POKEMON_PARAM* pp, u16 monsno )
+{
+  u8 fast_flag = PP_FastModeOn( pp );
+  {
+    PPP_ChangeMonsNo( &pp->ppp, monsno );
+    PP_Renew( pp );
+  }
+  PP_FastModeOff( pp, fast_flag );
+}
+//=============================================================================================
+/**
+ * モンスターナンバーを書き換える。
+ * 必要に応じて計算し直す必要のあるパラメータも合わせて変更する（進化時などの使用を想定）
+ *
+ * @param   ppp
+ * @param   mons_no   書き換え後のモンスターナンバー
+ */
+//=============================================================================================
+void PPP_ChangeMonsNo( POKEMON_PASO_PARAM* ppp, u16 next_monsno )
+{
+  u8 fast_flag = PPP_FastModeOn( ppp );
+  {
+    u16 old_monsno = PPP_Get( ppp, ID_PARA_monsno, NULL );
+    if( old_monsno != next_monsno )
+    {
+      u16 form_no = PPP_Get( ppp, ID_PARA_form_no, NULL );
+      change_monsno_sub_tokusei( ppp, next_monsno, old_monsno );
+      change_monsno_sub_sex( ppp, next_monsno, old_monsno );
+      PPP_Put( ppp, ID_PARA_monsno, next_monsno );
+    }
+  }
+  PPP_FastModeOff( ppp, fast_flag );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * モンスターナンバー書き換え後の とくせい 変化処理
+ * （PPP_ChangeMonsNoの下請け）
+ *
+ * @param   ppp
+ * @param   next_monsno
+ * @param   old_monsno
+ */
+//----------------------------------------------------------------------------------
+static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 next_monsno, u16 old_monsno )
+{
+  u32 form_no = PPP_Get( ppp, ID_PARA_form_no, NULL );
+  POKEMON_PERSONAL_DATA* ppd = Personal_Load( next_monsno, form_no );
+  u32 rnd = PPP_Get( ppp, ID_PARA_personal_rnd, NULL );
+  u16 param = POKEPER_ID_speabi1;
+  if( Personal_GetTokuseiCount(ppd) == 2 ){
+    if( rnd & 0x200 ){
+      param = POKEPER_ID_speabi2;
+    }
+  }
+
+  {
+    u32 val = POKE_PERSONAL_GetParam( ppd, param );
+    PPP_Put( ppp, ID_PARA_speabino, val );
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * モンスターナンバー書き換え後の 性別 変化処理
+ * （PPP_ChangeMonsNoの下請け）
+ *
+ * @param   ppp
+ * @param   new_monsno
+ * @param   old_monsno
+ */
+//----------------------------------------------------------------------------------
+static void change_monsno_sub_sex( POKEMON_PASO_PARAM* ppp, u16 next_monsno, u16 old_monsno )
+{
+  u32 form_no = PPP_Get( ppp, ID_PARA_form_no, NULL );
+  POKEMON_PERSONAL_DATA* ppd = Personal_Load( next_monsno, form_no );
+  u32 next_param, old_param;
+
+  next_param = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
+  ppd = Personal_Load( old_monsno, form_no );
+  old_param = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
+
+  if( (next_param == POKEPER_SEX_MALE)
+  ||  (next_param == POKEPER_SEX_FEMALE)
+  ||  (next_param == POKEPER_SEX_UNKNOWN)
+  ||  (old_param == POKEPER_SEX_UNKNOWN)
+  ){
+    u32 rnd = PPP_Get( ppp, ID_PARA_personal_rnd, NULL );
+    u8 sex = POKETOOL_GetSex( next_monsno, form_no, rnd );
+    PPP_Put( ppp, ID_PARA_sex, sex );
+  }
+}
+
 
 
 //============================================================================================
@@ -703,8 +807,8 @@ u8 POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd )
 {
   u8 sex_param;
 
-  POKE_PERSONAL_LoadData( mons_no, form_no, &PersonalDataWork );
-  sex_param = POKE_PERSONAL_GetParam( &PersonalDataWork, POKEPER_ID_sex );
+  POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
+  sex_param = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
 
 // 性別固定のケース
   switch( sex_param ){
@@ -1028,8 +1132,8 @@ u32 POKETOOL_CalcLevel( u16 mons_no, u16 form_no, u32 exp )
 {
   u16 growType, level;
 
-  POKE_PERSONAL_LoadData( mons_no, form_no, &PersonalDataWork );
-  growType = POKE_PERSONAL_GetParam( &PersonalDataWork, POKEPER_ID_grow );
+  POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
+  growType = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_grow );
   load_grow_table( growType, &GrowTable[0] );
 
   for( level = 1 ; level < 101 ; level++ ){
@@ -1211,8 +1315,7 @@ static void  calc_renew_core( POKEMON_PARAM *pp )
 
   monsno = PP_Get( pp, ID_PARA_monsno, 0 );
 
-  POKE_PERSONAL_LoadData( monsno, form_no, &PersonalDataWork );
-  ppd = &PersonalDataWork;
+  ppd = Personal_Load( monsno, form_no );
 
   if( monsno == MONSNO_NUKENIN ){
     hpmax = 1;
@@ -2740,6 +2843,43 @@ static  void  *ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id )
  */
 //============================================================================================
 
+//----------------------------------------------------------------------------------
+/**
+ * ローカルワークにパーソナルデータ読み込み（直前と同じデータならそのまま何もしない）
+ *
+ * @param   monsno
+ * @param   formno
+ *
+ * @retval  POKEMON_PERSONAL_DATA*    読み込み先ワークポインタ
+ */
+//----------------------------------------------------------------------------------
+static POKEMON_PERSONAL_DATA* Personal_Load( u16 monsno, u16 formno )
+{
+  if( (monsno != PersonalLatestMonsNo) || (formno != PersonalLatestFormNo) ){
+    PersonalLatestFormNo = formno;
+    PersonalLatestMonsNo = monsno;
+    POKE_PERSONAL_LoadData( monsno, formno, &PersonalDataWork );
+  }
+  return &PersonalDataWork;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * とくせい数をカウント
+ *
+ * @param   ppd
+ *
+ * @retval  u8
+ */
+//----------------------------------------------------------------------------------
+static u8 Personal_GetTokuseiCount( POKEMON_PERSONAL_DATA* ppd )
+{
+  if( POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi2 ) ){
+    return 2;
+  }
+  return 1;
+}
+
 //============================================================================================
 /**
  *  ポケモンパーソナル構造体データから任意でデータを取得
@@ -2755,6 +2895,6 @@ static  void  *ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id )
 //============================================================================================
 u32 POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID param )
 {
-  POKE_PERSONAL_LoadData( mons_no, form_no, &PersonalDataWork );
-  return POKE_PERSONAL_GetParam( &PersonalDataWork, param );
+  POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
+  return POKE_PERSONAL_GetParam( ppd, param );
 }
