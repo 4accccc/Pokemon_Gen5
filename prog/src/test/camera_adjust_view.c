@@ -280,9 +280,6 @@ static void loadGraphicData( GFL_CAMADJUST* gflCamAdjust )
 #define BTN_SX	(32-1)
 #define BTN_SY	(32-1)
 
-#define BTN_SML_SX	(32-1)
-#define BTN_SML_SY	(16-1)
-
 #define EXIT_PX			(232)
 #define EXIT_PY			(0)
 //------------------------------------------------------------------
@@ -310,10 +307,10 @@ static const GFL_UI_TP_HITTBL eventTouchPanelTable[TPBTN_MAX + 1] = {
 	{ 12*8, 12*8+BTN_SY, 21*8, 21*8+BTN_SX },	//TPBTN_ANGLE_R
 	{ 10*8, 10*8+BTN_SY, 14*8, 14*8+BTN_SX },	//TPBTN_LENDOWN
 	{ 14*8, 14*8+BTN_SY, 14*8, 14*8+BTN_SX },	//TPBTN_LENUP
-	{ 18*8, 18*8+BTN_SML_SY, 22*8, 22*8+BTN_SX },	//TPBTN_FOVYUP
-	{ 21*8, 21*8+BTN_SML_SY, 22*8, 22*8+BTN_SX },	//TPBTN_FOVYDOWN
-	{ 18*8, 18*8+BTN_SML_SY, 27*8, 27*8+BTN_SX },	//TPBTN_FARUP
-	{ 21*8, 21*8+BTN_SML_SY, 27*8, 27*8+BTN_SX },	//TPBTN_FARDOWN
+	{ 15*8, 15*8+BTN_SY,  1*8,  1*8+BTN_SX },	//TPBTN_FOVYUP
+	{ 19*8, 19*8+BTN_SY,  1*8,  1*8+BTN_SX },	//TPBTN_FOVYDOWN
+	{ 15*8, 15*8+BTN_SY, 26*8, 26*8+BTN_SX },	//TPBTN_FARUP
+	{ 19*8, 19*8+BTN_SY, 26*8, 26*8+BTN_SX },	//TPBTN_FARDOWN
 
 	//{ EXIT_PY, EXIT_PY+7, EXIT_PX, EXIT_PX+23 },
 
