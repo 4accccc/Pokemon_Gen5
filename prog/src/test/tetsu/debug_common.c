@@ -255,6 +255,12 @@ void DWS_SYS_Framework(DWS_SYS* dws)
 {
 	if(dws->cameraAdjustOn == TRUE){ GFL_CAMADJUST_Main(dws->gflCamAdjust); }
 
+	//射影設定
+	{
+		GFL_G3D_CAMERA_SetfovySin(dws->g3Dcamera, FX_SinIdx(dws->cameraFovy));
+		GFL_G3D_CAMERA_SetfovyCos(dws->g3Dcamera, FX_CosIdx(dws->cameraFovy));
+		GFL_G3D_CAMERA_SetFar(dws->g3Dcamera, &dws->cameraFar);
+	}
 	//距離とアングルによるカメラ位置計算
 	{
 		VecFx32 cameraPos, cameraTarget;
@@ -278,8 +284,8 @@ void DWS_SYS_Framework(DWS_SYS* dws)
 		VEC_MultAdd(dws->cameraLength, &vecCamera, &cameraTarget, &cameraPos);
 		GFL_G3D_CAMERA_SetTarget(dws->g3Dcamera, &cameraTarget);
 		GFL_G3D_CAMERA_SetPos(dws->g3Dcamera, &cameraPos);
-		GFL_G3D_CAMERA_Switching(dws->g3Dcamera);
 	}
+	GFL_G3D_CAMERA_Switching(dws->g3Dcamera);
 }
 
 //------------------------------------------------------------------
