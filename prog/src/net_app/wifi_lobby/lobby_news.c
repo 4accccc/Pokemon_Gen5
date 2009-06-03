@@ -2000,8 +2000,10 @@ static void NEWSDRAW_TopicWinInit( NEWSDRAW_TOPICWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp[i]), 0 );
 		GFL_BMPWIN_MakeScreen(p_wk->bmp[i]);
+		GFL_BG_LoadScreenReq(GFL_BG_FRAME3_M);
 		
-		BmpWinFrame_TransScreen(p_wk->bmp[i], WINDOW_TRANS_ON_V);
+//		BmpWinFrame_TransScreen(p_wk->bmp[i], WINDOW_TRANS_ON_V);
+      GFL_BMPWIN_MakeTransWindow_VBlank(p_wk->bmp[i]);
 	}
 
 	// 文字列取得
@@ -2165,6 +2167,7 @@ static void NEWSDRAW_TopicInit( NEWSDRAW_TOPIC* p_wk, NEWSDRAW_DRAWSYS* p_draw, 
   				NEWSDRAW_TOPIC_DMBMP_SX, NEWSDRAW_TOPIC_DMBMP_SY,
   				NEWSDRAW_TOPIC_BMP_PAL, GFL_BMP_CHRAREA_GET_B );
   	GFL_BMPWIN_MakeScreen(p_wk->bmp);
+		GFL_BG_LoadScreenReq(GFL_BG_FRAME3_M);
   }
   else{
     p_wk->bmp = bmpwin;
@@ -2322,7 +2325,8 @@ static void NEWSDRAW_TopicDraw( NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp )
 			sx, NEWSDRAW_TOPIC_DMBMP_SY*8, 15 );// 書き込みサイズ
 #endif
 
-	BmpWinFrame_TransScreen( p_bmp ,WINDOW_TRANS_ON_V);
+//	BmpWinFrame_TransScreen( p_bmp ,WINDOW_TRANS_ON_V);
+  GFL_BMPWIN_MakeTransWindow_VBlank(p_bmp);
 }
 
 
@@ -2398,7 +2402,8 @@ static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 				p_str, font_handle, NEWSDRAW_TITLEWIN_COL );
 		}
 		
-		BmpWinFrame_TransScreen( p_wk->bmp[i] ,WINDOW_TRANS_ON_V);
+	//	BmpWinFrame_TransScreen( p_wk->bmp[i] ,WINDOW_TRANS_ON_V);
+	  GFL_BMPWIN_MakeTransWindow_VBlank(p_wk->bmp[i]);
 	}
 
 	// メッセージデータ破棄
