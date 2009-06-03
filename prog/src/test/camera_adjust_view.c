@@ -198,9 +198,9 @@ BOOL	GFL_CAMADJUST_Main( GFL_CAMADJUST* gflCamAdjust )
 		if( CAMADJUST_Control( gflCamAdjust ) == FALSE ){
 			gflCamAdjust->seq = SEQ_POPVRAM;
 		}
-		CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEV, *gflCamAdjust->pAngleV, 0xa6 );
-		CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEH, *gflCamAdjust->pAngleH, 0xc6 );
-		CAMADJUST_NumPrint( gflCamAdjust, BMP_LENGTH, *gflCamAdjust->pLength/FX32_ONE, 0xe6 );
+		CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEV, *gflCamAdjust->pAngleV, 0xa4 );
+		CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEH, *gflCamAdjust->pAngleH, 0xc4 );
+		CAMADJUST_NumPrint( gflCamAdjust, BMP_LENGTH, *gflCamAdjust->pLength/FX32_ONE, 0xe4 );
 
 		GFL_DISPUT_LoadScr(gflCamAdjust->setup.bgID, gflCamAdjust->scrnBuf, 0, PUSH_SCR_SIZ);
 		break;

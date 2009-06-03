@@ -234,8 +234,12 @@ DWS_SYS* DWS_SYS_Setup(HEAPID heapID)
 	dws->cameraLength = 8*FX32_ONE; 
   dws->cameraFovy   = defaultCameraFovy/2 *PERSPWAY_COEFFICIENT;
   dws->cameraFar    = defaultCameraFar;
-	GFL_CAMADJUST_SetCameraParam
-						(dws->gflCamAdjust, &dws->cameraAngleV, &dws->cameraAngleH, &dws->cameraLength, &dws->cameraFovy, &dws->cameraFar); 
+	GFL_CAMADJUST_SetCameraParam(	dws->gflCamAdjust, 
+																&dws->cameraAngleV, 
+																&dws->cameraAngleH, 
+																&dws->cameraLength, 
+																&dws->cameraFovy, 
+																&dws->cameraFar); 
 	dws->pCameraTarget = NULL;
 	dws->cameraAdjustOn = TRUE;
 
