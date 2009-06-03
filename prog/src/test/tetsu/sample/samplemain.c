@@ -326,10 +326,16 @@ BOOL	SampleMain( void )
 				//sampleWork->gflSkb = GFL_SKB_Create
 				//						( sampleWork->skbStrBuf, &skbData, sampleWork->heapID );
 				sampleWork->gflCamAdjust = GFL_CAMADJUST_Create(&camAdjustData, sampleWork->heapID);
-				GFL_CAMADJUST_SetCameraParam(	sampleWork->gflCamAdjust,
-												GetCursorCameraAngleVPointer(sampleWork->cursor),
-												GetCursorCameraAngleHPointer(sampleWork->cursor),
-												GetCursorCameraLengthPointer(sampleWork->cursor) );
+
+        {
+          static u16 fovy;
+          static fx32 far;
+          GFL_CAMADJUST_SetCameraParam(	sampleWork->gflCamAdjust,
+                          GetCursorCameraAngleVPointer(sampleWork->cursor),
+                          GetCursorCameraAngleHPointer(sampleWork->cursor),
+                          GetCursorCameraLengthPointer(sampleWork->cursor),
+                          &fovy, &far);  // プログラムが動くように変更させていただきました。tomoya takahashi
+        }
 				sampleWork->subProcSw = TRUE;
 				break;
 			}

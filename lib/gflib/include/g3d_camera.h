@@ -232,6 +232,30 @@ extern void GFL_G3D_CAMERA_SetNear( GFL_G3D_CAMERA* g3Dcamera, const fx32* near 
 extern void GFL_G3D_CAMERA_GetFar( const GFL_G3D_CAMERA* g3Dcamera, fx32* far );
 extern void GFL_G3D_CAMERA_SetFar( GFL_G3D_CAMERA* g3Dcamera, const fx32* far );
 
+
+//-----------------------------------------------------------------------------
+/**
+ *  éÀâeèÓïÒÇÃéÊìæÇ∆ïœçX
+ */
+//-----------------------------------------------------------------------------
+extern GFL_G3D_PROJECTION_TYPE GFL_G3D_CAMERA_GetProjectionType( const GFL_G3D_CAMERA* g3Dcamera );
+// GFL_G3D_PRJPERS
+extern void GFL_G3D_CAMERA_GetfovySin( const GFL_G3D_CAMERA* g3Dcamera, fx32* fovySin );
+extern void GFL_G3D_CAMERA_SetfovySin( GFL_G3D_CAMERA* g3Dcamera, fx32 fovySin );
+extern void GFL_G3D_CAMERA_GetfovyCos( const GFL_G3D_CAMERA* g3Dcamera, fx32* fovyCos );
+extern void GFL_G3D_CAMERA_SetfovyCos( GFL_G3D_CAMERA* g3Dcamera, fx32 fovyCos );
+extern void GFL_G3D_CAMERA_GetAspect( const GFL_G3D_CAMERA* g3Dcamera, fx32* aspect );
+extern void GFL_G3D_CAMERA_SetAspect( GFL_G3D_CAMERA* g3Dcamera, fx32 aspect );
+// GFL_G3D_PRJFRST / GFL_G3D_PRJORTH
+extern void GFL_G3D_CAMERA_GetTop( const GFL_G3D_CAMERA* g3Dcamera, fx32* top );
+extern void GFL_G3D_CAMERA_SetTop( GFL_G3D_CAMERA* g3Dcamera, fx32 top );
+extern void GFL_G3D_CAMERA_GetBottom( const GFL_G3D_CAMERA* g3Dcamera, fx32* bottom );
+extern void GFL_G3D_CAMERA_SetBottom( GFL_G3D_CAMERA* g3Dcamera, fx32 bottom );
+extern void GFL_G3D_CAMERA_GetLeft( const GFL_G3D_CAMERA* g3Dcamera, fx32* left );
+extern void GFL_G3D_CAMERA_SetLeft( GFL_G3D_CAMERA* g3Dcamera, fx32 left );
+extern void GFL_G3D_CAMERA_GetRight( const GFL_G3D_CAMERA* g3Dcamera, fx32* right );
+extern void GFL_G3D_CAMERA_SetRight( GFL_G3D_CAMERA* g3Dcamera, fx32 right );
+
 //--------------------------------------------------------------------------------------------
 /**
  * ÉJÉÅÉâï˚å¸Ç∆ëŒè€à íuÇ∆ÇÃì‡êœÇéÊìæÇ∑ÇÈ

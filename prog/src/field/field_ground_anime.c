@@ -795,10 +795,10 @@ static void FIELD_GRANM_Itp_Main( FIELD_GRANM_ITP* p_wk, fx32 speed )
 	}
 	
 	// アニメーション分更新チェック
+	frame_max = TEXANM_GetFrameMax( &p_wk->anmtbl ) << FX32_SHIFT;
 	for( i=0; i<p_wk->anime_num; i++ ){
 
 		// アニメーション処理
-		frame_max = TEXANM_GetLastKeyFrame( &p_wk->anmtbl, i ) << FX32_SHIFT;
 		p_wk->p_anime_frame[i] += speed;
 		if( p_wk->p_anime_frame[i] > (frame_max+FX32_ONE) ){
 			p_wk->p_anime_frame[i] = p_wk->p_anime_frame[i] % (frame_max+FX32_ONE);

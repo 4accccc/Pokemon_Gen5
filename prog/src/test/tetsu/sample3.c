@@ -109,6 +109,10 @@ typedef struct {
 	fx32								cameraLength;
 	u16									cameraAngleV;
 	u16									cameraAngleH;
+  // camera_adjust‚ð“®‚©‚·‚½‚ß‚É’Ç‰Á‚µ‚Ü‚µ‚½B tomoya takahashi
+	u16									cameraFovy;
+  u16                 padding;
+	fx32								cameraFar;
 
 	int									timer;
 
@@ -255,8 +259,10 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 		sw->cameraAngleV = 0;
 		sw->cameraAngleH = 0;
 		sw->cameraLength = 8*FX32_ONE; 
+    sw->cameraFovy   = defaultCameraFovy/2 *PERSPWAY_COEFFICIENT;
+    sw->cameraFar    = defaultCameraFar;
 		GFL_CAMADJUST_SetCameraParam
-			(sw->gflCamAdjust, &sw->cameraAngleV, &sw->cameraAngleH, &sw->cameraLength); 
+			(sw->gflCamAdjust, &sw->cameraAngleV, &sw->cameraAngleH, &sw->cameraLength, &sw->cameraFovy, &sw->cameraFar); 
 
 		sw->testPat = 0;
 		sw->seq++;

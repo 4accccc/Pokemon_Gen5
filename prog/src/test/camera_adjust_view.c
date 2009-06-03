@@ -56,6 +56,8 @@ struct _GFL_CAMADJUST {
 	u16*					pAngleV;
 	u16*					pAngleH;
 	fx32*					pLength;
+  u16*          pFovy;
+  fx32*         pFar;
 
 	GFL_BMP_DATA*			bmp[BMP_MAX];
 	STRBUF*					strBufTmp;
@@ -100,6 +102,8 @@ extern GFL_CAMADJUST*	GFL_CAMADJUST_Create( const GFL_CAMADJUST_SETUP* setup, HE
 	gflCamAdjust->pAngleV = NULL;
 	gflCamAdjust->pAngleH = NULL;
 	gflCamAdjust->pLength = NULL;
+	gflCamAdjust->pFovy   = NULL;
+	gflCamAdjust->pFar    = NULL;
 
 	for( i=0; i<BMP_MAX; i++ ){
 		gflCamAdjust->bmp[i] = GFL_BMP_Create( 4, 1, GFL_BMP_16_COLOR, gflCamAdjust->heapID );
@@ -131,13 +135,15 @@ void	GFL_CAMADJUST_Delete( GFL_CAMADJUST* gflCamAdjust )
 }
 
 void	GFL_CAMADJUST_SetCameraParam
-		( GFL_CAMADJUST* gflCamAdjust, u16* pAngleV, u16* pAngleH, fx32* pLength )
+		( GFL_CAMADJUST* gflCamAdjust, u16* pAngleV, u16* pAngleH, fx32* pLength, u16* pFovy, fx32* pFar )
 {
 	if( gflCamAdjust == NULL ) return;
 
 	gflCamAdjust->pAngleV = pAngleV;
 	gflCamAdjust->pAngleH = pAngleH;
 	gflCamAdjust->pLength = pLength;
+	gflCamAdjust->pFovy   = pFovy;
+	gflCamAdjust->pFar    = pFar;
 }
 
 //============================================================================================
@@ -274,6 +280,9 @@ static void loadGraphicData( GFL_CAMADJUST* gflCamAdjust )
 #define BTN_SX	(32-1)
 #define BTN_SY	(32-1)
 
+#define BTN_SML_SX	(32-1)
+#define BTN_SML_SY	(16-1)
+
 #define EXIT_PX			(232)
 #define EXIT_PY			(0)
 //------------------------------------------------------------------
@@ -284,6 +293,10 @@ enum {
 	TPBTN_ANGLE_R,
 	TPBTN_LENDOWN,
 	TPBTN_LENUP,
+	TPBTN_FOVYUP,
+	TPBTN_FOVYDOWN,
+	TPBTN_FARUP,
+	TPBTN_FARDOWN,
 
 	//TP_EXIT,
 
@@ -297,6 +310,10 @@ static const GFL_UI_TP_HITTBL eventTouchPanelTable[TPBTN_MAX + 1] = {
 	{ 12*8, 12*8+BTN_SY, 21*8, 21*8+BTN_SX },	//TPBTN_ANGLE_R
 	{ 10*8, 10*8+BTN_SY, 14*8, 14*8+BTN_SX },	//TPBTN_LENDOWN
 	{ 14*8, 14*8+BTN_SY, 14*8, 14*8+BTN_SX },	//TPBTN_LENUP
+	{ 18*8, 18*8+BTN_SML_SY, 22*8, 22*8+BTN_SX },	//TPBTN_FOVYUP
+	{ 21*8, 21*8+BTN_SML_SY, 22*8, 22*8+BTN_SX },	//TPBTN_FOVYDOWN
+	{ 18*8, 18*8+BTN_SML_SY, 27*8, 27*8+BTN_SX },	//TPBTN_FARUP
+	{ 21*8, 21*8+BTN_SML_SY, 27*8, 27*8+BTN_SX },	//TPBTN_FARDOWN
 
 	//{ EXIT_PY, EXIT_PY+7, EXIT_PX, EXIT_PX+23 },
 
@@ -324,6 +341,8 @@ static const GFL_UI_TP_HITTBL eventTouchPanelTable[TPBTN_MAX + 1] = {
 #define	CAMANGLEH_MIN			(-0x4000 + ANGLE_ROTATE_SPD)
 #define	CAMLEN_MAX				(4096 * FX32_ONE)
 #define	CAMLEN_MIN				(16 * FX32_ONE)
+#define	CAMANGFOVY_MAX			(0x4000 - ANGLE_ROTATE_SPD)
+#define	CAMANGFOVY_MIN			(0x0 + ANGLE_ROTATE_SPD)
 
 static BOOL CAMADJUST_Control( GFL_CAMADJUST* gflCamAdjust )
 {
@@ -332,6 +351,8 @@ static BOOL CAMADJUST_Control( GFL_CAMADJUST* gflCamAdjust )
 	if(gflCamAdjust->pAngleV == NULL){ return TRUE; }
 	if(gflCamAdjust->pAngleH == NULL){ return TRUE; }
 	if(gflCamAdjust->pLength == NULL){ return TRUE; }
+	if(gflCamAdjust->pFar == NULL){ return TRUE; }
+	if(gflCamAdjust->pFovy == NULL){ return TRUE; }
 
 	if(tblPos == GFL_UI_TP_HIT_NONE){
 		return TRUE;
@@ -365,6 +386,28 @@ static BOOL CAMADJUST_Control( GFL_CAMADJUST* gflCamAdjust )
 	case TPBTN_LENUP:
 			*(gflCamAdjust->pLength) += CAMLEN_MVSPD;
 			if( *gflCamAdjust->pLength > CAMLEN_MAX ){ *(gflCamAdjust->pLength) = CAMLEN_MAX; }
+			break;
+	case TPBTN_FOVYUP:
+			*(gflCamAdjust->pFovy) += ANGLE_ROTATE_SPD;
+			{
+				s16 value = (s16)(*gflCamAdjust->pFovy);
+				if( value > CAMANGFOVY_MAX ){ *gflCamAdjust->pFovy = CAMANGFOVY_MAX; }
+			}
+			break;
+	case TPBTN_FOVYDOWN:
+			*(gflCamAdjust->pFovy) -= ANGLE_ROTATE_SPD;
+			{
+				s16 value = (s16)(*gflCamAdjust->pFovy);
+				if( value < CAMANGFOVY_MIN ){ *gflCamAdjust->pFovy = CAMANGFOVY_MIN; }
+			}
+			break;
+	case TPBTN_FARUP:
+			*(gflCamAdjust->pFar) += CAMLEN_MVSPD;
+			if( *gflCamAdjust->pFar > CAMLEN_MAX ){ *(gflCamAdjust->pFar) = CAMLEN_MAX; }
+			break;
+	case TPBTN_FARDOWN:
+			*(gflCamAdjust->pFar) -= CAMLEN_MVSPD;
+			if( *gflCamAdjust->pFar < CAMLEN_MIN ){ *(gflCamAdjust->pFar) = CAMLEN_MIN; }
 			break;
 	}
 	return TRUE;

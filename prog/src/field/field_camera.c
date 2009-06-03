@@ -38,6 +38,8 @@ struct _FIELD_CAMERA {
   u16         angle_yaw;
   fx32        angle_len;
 
+  u16         fovy;
+  u16         pad;
 #ifdef PM_DEBUG
   u32 debug_subscreen_type;
 
@@ -46,6 +48,8 @@ struct _FIELD_CAMERA {
   u16         debug_target_yaw;
   fx32        debug_target_len;
   VecFx32     debug_target;
+
+  fx32        debug_far;
 #endif
 };
 
@@ -163,6 +167,13 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
   camera->angle_yaw = 0;
   camera->angle_pitch = 0;
   camera->angle_len = 0x0078;
+
+  // パースをカメラの情報から取得
+  if( GFL_G3D_CAMERA_GetProjectionType( cam ) == GFL_G3D_PRJPERS ){
+    fx32 fovyCos;
+    GFL_G3D_CAMERA_GetfovyCos( cam, &fovyCos );
+    camera->fovy = FX_AcosIdx( fovyCos );
+  }
 
 	CameraFuncTable[camera->type].init_func(camera);
 
@@ -456,6 +467,15 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
     GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
   }
 
+  // Far,Fovy座標の設定
+  if( camera->debug_subscreen_type != FIELD_CAMERA_DEBUG_BIND_NONE ){
+    GFL_G3D_CAMERA_SetFar( camera->g3Dcamera, &camera->debug_far );
+    if( GFL_G3D_CAMERA_GetProjectionType(camera->g3Dcamera) == GFL_G3D_PRJPERS ){
+      GFL_G3D_CAMERA_SetfovySin( camera->g3Dcamera, FX_SinIdx( camera->fovy ) );
+      GFL_G3D_CAMERA_SetfovyCos( camera->g3Dcamera, FX_CosIdx( camera->fovy ) );
+    }
+  }
+
 #endif
 
 }
@@ -712,11 +732,14 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
 { 
   GFL_CAMADJUST * gflCamAdjust = param;
 
+  // ファー座標を取得
+  GFL_G3D_CAMERA_GetFar( camera->g3Dcamera, &camera->debug_far );
+
   camera->debug_subscreen_type = type;
   if( type == FIELD_CAMERA_DEBUG_BIND_CAMERA_POS )
   {
     GFL_CAMADJUST_SetCameraParam(gflCamAdjust,
-      &camera->angle_yaw, &camera->angle_pitch, &camera->angle_len);  
+      &camera->angle_yaw, &camera->angle_pitch, &camera->angle_len, &camera->fovy, &camera->debug_far);  
   }
   else if( type == FIELD_CAMERA_DEBUG_BIND_TARGET_POS )
   {
@@ -724,7 +747,7 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
     camera->debug_target_pitch  = camera->angle_pitch - 0x4000;
     camera->debug_target_len    = camera->angle_len;
     GFL_CAMADJUST_SetCameraParam(gflCamAdjust,
-      &camera->debug_target_yaw, &camera->debug_target_pitch, &camera->debug_target_len);  
+      &camera->debug_target_yaw, &camera->debug_target_pitch, &camera->debug_target_len, &camera->fovy, &camera->debug_far);  
   }
 }
 

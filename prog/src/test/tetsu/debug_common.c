@@ -63,6 +63,10 @@ struct _DWS_SYS {
 	BOOL							cameraAdjustOn;
 	VecFx32*					pCameraTarget;
 
+  // camera_adjust‚ð“®‚©‚·‚½‚ß‚É’Ç‰Á‚µ‚Ü‚µ‚½B tomoya takahashi
+  fx32              cameraFar;
+  u16               cameraFovy;
+  u16               padding;
 };
 
 //------------------------------------------------------------------
@@ -228,8 +232,10 @@ DWS_SYS* DWS_SYS_Setup(HEAPID heapID)
 	dws->cameraAngleV = 0;
 	dws->cameraAngleH = 0;
 	dws->cameraLength = 8*FX32_ONE; 
+  dws->cameraFovy   = defaultCameraFovy/2 *PERSPWAY_COEFFICIENT;
+  dws->cameraFar    = defaultCameraFar;
 	GFL_CAMADJUST_SetCameraParam
-						(dws->gflCamAdjust, &dws->cameraAngleV, &dws->cameraAngleH, &dws->cameraLength); 
+						(dws->gflCamAdjust, &dws->cameraAngleV, &dws->cameraAngleH, &dws->cameraLength, &dws->cameraFovy, &dws->cameraFar); 
 	dws->pCameraTarget = NULL;
 	dws->cameraAdjustOn = TRUE;
 
