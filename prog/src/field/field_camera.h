@@ -29,6 +29,12 @@ typedef enum {
 	FIELD_CAMERA_TYPE_MAX,
 }FIELD_CAMERA_TYPE;
 
+//カメラトレースマスク定義
+#define CAM_TRACE_MASK_X	(1)
+#define CAM_TRACE_MASK_Y	(2)
+#define CAM_TRACE_MASK_Z	(4)
+#define CAM_TRACE_MASK_ALL	(CAM_TRACE_MASK_X|CAM_TRACE_MASK_Y|CAM_TRACE_MASK_Z)
+
 
 //============================================================================================
 //	生成・メイン・消去

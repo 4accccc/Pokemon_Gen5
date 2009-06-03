@@ -14,6 +14,28 @@
 //============================================================================================
 //============================================================================================
 
+#define FIELD_CAMERA_DELAY	(6)
+#define FIELD_CAMERA_TRACE_BUFF	(FIELD_CAMERA_DELAY+1)
+
+
+
+/*---------------------------------------------------------------------------*
+	カメラトレース構造体
+ *---------------------------------------------------------------------------*/
+typedef struct 
+{
+	int HistNum;
+	int CamPoint;
+	int TargetPoint;
+	int Delay;			//遅延時間
+	BOOL UpdateFlg;		//更新開始フラグ
+	BOOL ValidX;		//X遅延を有効にするかのフラグ
+	BOOL ValidY;		//Y遅延を有効にするかのフラグ
+	BOOL ValidZ;		//Z遅延を有効にするかのフラグ
+	VecFx32 *HistPos;
+
+}CAMERA_TRACE;
+
 //------------------------------------------------------------------
 /**
  * @brief	型宣言
@@ -33,6 +55,7 @@ struct _FIELD_CAMERA {
 
 	VecFx32				target;			        ///<注視点用ワーク
 	VecFx32				target_offset;			///<注視点用補正座標
+  VecFx32       target_before;
 
   u16         angle_pitch;
   u16         angle_yaw;
@@ -51,6 +74,8 @@ struct _FIELD_CAMERA {
 
   fx32        debug_far;
 #endif
+
+  CAMERA_TRACE * Trace;
 };
 
 
@@ -87,6 +112,12 @@ typedef struct {
 	void (*control)(FIELD_CAMERA * camera, u16 key_cont);
 }CAMERA_FUNC_TABLE;
 
+static void GFC_AllocTraceData(const int inHistNum, const int inDelay,
+						const int inTraceMask, const int inHeapID,
+						FIELD_CAMERA * ioCamera);
+static void GFC_FreeTraceData(FIELD_CAMERA * camera_ptr);
+static void UpdateTraceData(CAMERA_TRACE * trace, const VecFx32 *inVec, VecFx32 *outVec);
+static void traceUpdate(FIELD_CAMERA * camera);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void initGridParameter(FIELD_CAMERA * camera);
@@ -163,6 +194,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 
   VEC_Set( &camera->camPos, 0, 0, 0 );
 	VEC_Set( &camera->target, 0, 0, 0 );
+  VEC_Set( &camera->target_before, 0, 0, 0 );
 
   camera->angle_yaw = 0;
   camera->angle_pitch = 0;
@@ -177,6 +209,9 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 
 	CameraFuncTable[camera->type].init_func(camera);
 
+	GFC_AllocTraceData(	FIELD_CAMERA_TRACE_BUFF, FIELD_CAMERA_DELAY,
+							CAM_TRACE_MASK_Y, heapID, camera);
+
 	return camera;
 }
 //------------------------------------------------------------------
@@ -186,6 +221,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 //------------------------------------------------------------------
 void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 {
+  GFC_FreeTraceData( camera );
 	GFL_HEAP_FreeMemory( camera );
 }
 
@@ -211,33 +247,6 @@ void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont)
 //------------------------------------------------------------------
 static void initGridParameter(FIELD_CAMERA * camera)
 {
-#if 0
-	enum { 
-		CAMERA_LENGTH = 0x00e1000,//0x78000,
-		CAMERA_HEIGHT = 0xd8000,
-	};
-	//{ 0x78, 0xd8000 },	//DPぽい
-	// 距離
-	camera->angle_len = FX_Mul( CAMERA_LENGTH, CAMERA_LENGTH ) + FX_Mul( CAMERA_HEIGHT, CAMERA_HEIGHT );
-	camera->angle_len = FX_Sqrt( camera->angle_len );
-
-	// X軸の角度
-	{
-		fx32 cos;
-		VecFx32 vec0 = { 0,0,FX32_ONE };
-		VecFx32 vec1 = { 0 };
-
-		vec1.z = CAMERA_LENGTH;
-		vec1.y = CAMERA_HEIGHT;
-
-		VEC_Normalize( &vec0, &vec0 );
-		VEC_Normalize( &vec1, &vec1 );
-
-		cos = VEC_DotProduct( &vec0, &vec1 );
-		camera->angle_pitch = FX_AcosIdx( cos );
-	}
-#endif
-
   camera->angle_len = 0x00ED * FX32_ONE;
   camera->angle_pitch = 0x25d8;
 	
@@ -420,7 +429,8 @@ static void calcAnglePos( const VecFx32* cp_target, VecFx32* p_pos, u16 yaw, u16
 static void updateAngleCameraPos(FIELD_CAMERA * camera)
 { 
   // カメラポジション計算
-  calcAnglePos( &camera->target, &camera->camPos, camera->angle_yaw, camera->angle_pitch, camera->angle_len );
+  calcAnglePos( &camera->target, &camera->camPos,
+      camera->angle_yaw, camera->angle_pitch, camera->angle_len );
 }
 	
 //------------------------------------------------------------------
@@ -478,6 +488,8 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
 
 #endif
 
+  traceUpdate( camera );
+
 }
 
 //------------------------------------------------------------------
@@ -517,11 +529,6 @@ static void ControlBridgeParameter(FIELD_CAMERA * camera, u16 key_cont)
 static void ControlC3Parameter(FIELD_CAMERA * camera, u16 key_cont)
 {
 	updateTargetBinding(camera);
-/*
-  if( key_cont & PAD_BUTTON_R ){
-    updateAngleCameraPos(camera); // 主人公位置からカメラポスを直接求める
-  }
-//*/
   updateG3Dcamera(camera);
 }
 
@@ -545,6 +552,8 @@ const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * camera)
 void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target)
 {
 	camera->watch_target = watch_target;
+  camera->target_before = *watch_target;
+  camera->target = *watch_target;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -615,6 +624,7 @@ fx32 FIELD_CAMERA_GetFar(const FIELD_CAMERA * camera)
 void	FIELD_CAMERA_SetTargetPos( FIELD_CAMERA* camera, const VecFx32* target )
 {
 	camera->target = *target;
+  camera->target_before = * target;
 }
 //------------------------------------------------------------------
 /**
@@ -702,6 +712,7 @@ u16 FIELD_CAMERA_GetAngleYaw(const FIELD_CAMERA * camera )
 {
 	return camera->angle_yaw;
 }
+
 void FIELD_CAMERA_SetAngleYaw(FIELD_CAMERA * camera, u16 angle )
 {
 	camera->angle_yaw = angle;
@@ -766,4 +777,180 @@ void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
   camera->debug_subscreen_type = FIELD_CAMERA_DEBUG_BIND_NONE;
 }
 #endif  //PM_DEBUG
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	トレースデータの更新
+ * 
+ * @param	camera_ptr	カメラポインタ
+ * @param	inVec		バッファに格納する座標
+ * @param	outVec		適用座標
+ * 
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+static void UpdateTraceData(CAMERA_TRACE * trace, const VecFx32 *inVec, VecFx32 *outVec)
+{
+	int cam_ofs;
+	int tgt_ofs;
+
+	if (trace==NULL)
+  {
+    VEC_Set(outVec, 0, 0, 0);
+		//(*outVec) = (*inVec);
+    return;
+  }
+
+  cam_ofs = trace->CamPoint;
+  tgt_ofs = trace->TargetPoint;
+
+  if (!trace->UpdateFlg){
+    VEC_Set(outVec, 0, 0, 0);
+    //(*outVec) = (*inVec);
+    if (cam_ofs==trace->Delay){
+      trace->UpdateFlg = TRUE;
+    }
+  }else{
+    //履歴データから座標取得
+    (*outVec) = trace->HistPos[cam_ofs];
+  }
+  //参照位置更新
+  cam_ofs = (cam_ofs+1) % trace->HistNum;
+  //履歴に積む
+  trace->HistPos[tgt_ofs] = (*inVec);
+  //書き換え位置更新
+  tgt_ofs = (tgt_ofs+1) % trace->HistNum;
+  
+  //トレースデータの無効座標軸は、そのまま現在座標を採用
+  if (!trace->ValidX){	//ｘ無効判定
+    outVec->x = 0;
+    //outVec->x = inVec->x;
+  }
+  if (!trace->ValidY){	//ｙ無効判定
+    outVec->y = 0;
+    //outVec->y = inVec->y;
+  }
+  if (!trace->ValidZ){	//ｚ無効判定
+    outVec->z = 0;
+    //outVec->z = inVec->z;
+  }
+  trace->CamPoint = cam_ofs;
+  trace->TargetPoint = tgt_ofs;
+
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	トレース構造体のアロケーション　カメラが対象物にバインド済みであること
+ * 
+ * @param	inHistNum		バッファサイズ
+ * @param	inDelay			遅延度合い
+ * @param	inTraceMask		トレースマスク	camera.hに定義
+ * @param	inHeapID		ヒープID
+ * @param	ioCamera		カメラポインタ
+ * 
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+void GFC_AllocTraceData(const int inHistNum, const int inDelay,
+						const int inTraceMask, const int inHeapID,
+						FIELD_CAMERA * ioCamera)
+{
+	int i;
+	CAMERA_TRACE *trace;
+	//バインドされていなければ、処理しない
+	if (ioCamera->watch_target == NULL){
+		return;
+	}
+	//配列サイズの整合性チェック
+	GF_ASSERT((inDelay+1<=inHistNum)&&"配列数が足りません");
+	
+	trace = GFL_HEAP_AllocMemory(inHeapID,sizeof(CAMERA_TRACE));
+	trace->HistPos = GFL_HEAP_AllocMemory(inHeapID,sizeof(VecFx32)*inHistNum);
+	
+	//トレース配列クリア
+	for(i=0;i<inHistNum;i++){
+		trace->HistPos[i].x = 0;
+		trace->HistPos[i].y = 0;
+		trace->HistPos[i].z = 0;
+	}
+	
+	trace->HistNum = inHistNum;
+	//０番目にカメラ参照位置をセット
+	trace->CamPoint = 0;
+	//対象物参照位置セット
+	trace->TargetPoint = 0+inDelay;
+	
+	trace->Delay = inDelay;
+	trace->UpdateFlg = FALSE;
+	
+	trace->ValidX = FALSE;
+	trace->ValidY = FALSE;
+	trace->ValidZ = FALSE;
+	if (inTraceMask & CAM_TRACE_MASK_X){
+		trace->ValidX = TRUE;
+	}
+	if (inTraceMask & CAM_TRACE_MASK_Y){
+		trace->ValidY = TRUE;
+	}
+	if (inTraceMask & CAM_TRACE_MASK_Z){
+		trace->ValidZ = TRUE;
+	}
+	
+	ioCamera->Trace = trace;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	トレースデータの解放
+ * 
+ * @param	camera_ptr		カメラポインタ
+ * 
+ * @return	none
+ */
+//---------------------------------------------------------------------------
+void GFC_FreeTraceData(FIELD_CAMERA * camera_ptr)
+{
+	if (camera_ptr->Trace!=NULL){
+		GFL_HEAP_FreeMemory(camera_ptr->Trace->HistPos);
+		GFL_HEAP_FreeMemory(camera_ptr->Trace);
+		camera_ptr->Trace = NULL;
+	}
+}
+
+
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+static void traceUpdate(FIELD_CAMERA * camera)
+{
+  VecFx32 sub;
+  VecFx32 apply;
+  VecFx32 cam, tgt;
+
+  if (camera->watch_target == NULL) return;
+
+
+  GFL_G3D_CAMERA_GetTarget(camera->g3Dcamera, &tgt);
+  GFL_G3D_CAMERA_GetPos(camera->g3Dcamera, &cam);
+
+  VEC_Subtract( &tgt, &camera->target_before, &sub );
+  camera->target_before = tgt;
+#if 0
+  if( VEC_Mag(&sub) > FX32_ONE * 64)
+  {
+    TAMADA_Printf("clear subs %08x %08x %08x\n", sub.x, sub.y, sub.z );
+    VEC_Set( &sub, 0, 0, 0 );   //あんまり差分が大きすぎるときはクリア
+  }
+#endif
+  UpdateTraceData( camera->Trace, &sub, &apply );
+  VEC_Add(&cam, &apply, &cam);
+  VEC_Add(&tgt, &apply, &tgt);
+
+  GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &tgt );
+  GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &cam );
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) {
+    TAMADA_Printf("TARGET Y:%d\n", FX_Whole(tgt.y) );
+  }
+}
+
 
