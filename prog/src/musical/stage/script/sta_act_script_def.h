@@ -71,6 +71,7 @@ struct _STA_SCRIPT_SYS
 {
 	HEAPID heapId;
 	
+	u32 befVCount;
 	
 	GFL_TCBSYS	*tcbSys;
 	void		*tcbWork;

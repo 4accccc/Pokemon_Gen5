@@ -112,5 +112,6 @@ struct _MUS_MCSS_SYS_WORK
 	int						texAdrs;			//テクスチャ転送開始アドレス
 	int						palAdrs;			//テクスチャパレット転送開始アドレス
 	int						heapID;				//使用するヒープID
+	u32           befVCount;    //遅延時アニメ補正チェック用
 };
 

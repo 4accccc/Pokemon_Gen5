@@ -137,6 +137,8 @@ MUS_MCSS_SYS_WORK*	MUS_MCSS_Init( int max, HEAPID heapID )
 	mcss_sys->heapID		= heapID;
 
 	mcss_sys->mcss =GFL_HEAP_AllocClearMemory( heapID, sizeof(MUS_MCSS_WORK *) * max );
+  
+  mcss_sys->befVCount = OS_GetVBlankCount();
 
 #ifdef USE_RENDER
 	MUS_MCSS_InitRenderer( mcss_sys );
@@ -196,12 +198,16 @@ void	MUS_MCSS_Main( MUS_MCSS_SYS_WORK *mcss_sys )
 {
 	int	index;
 
+  const u32 nowVCount = OS_GetVBlankCount();
+  u32 subVCount = nowVCount - mcss_sys->befVCount;
+
 	for( index = 0 ; index < mcss_sys->mcss_max ; index++ ){
 		if( ( mcss_sys->mcss[index] != NULL ) && ( mcss_sys->mcss[index]->anm_stop_flag == 0 ) ){
 			// アニメーションを更新します
-			NNS_G2dTickMCAnimation( &mcss_sys->mcss[index]->mcss_mcanim, FX32_ONE );
+			NNS_G2dTickMCAnimation( &mcss_sys->mcss[index]->mcss_mcanim, FX32_ONE*subVCount );
 		}
 	}
+	mcss_sys->befVCount = nowVCount;
 }
 
 #ifndef USE_RENDER
