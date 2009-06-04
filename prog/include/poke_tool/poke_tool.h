@@ -31,7 +31,7 @@
 #define PTL_STRONG_MAX      (255)   //たくましさMAX値
 #define PTL_FUR_MAX         (255)   //毛艶MAX値
 
-#define PTL_FORM_NO_NONE    ( 0 )   //別フォルムなし
+#define PTL_FORM_NONE      ( 0 )   //別フォルムなし
 
 //能力値
 #define PTL_ABILITY_HP      (0) ///<体力
@@ -57,6 +57,7 @@
 #define ITEM_RANGE_HUKUGAN    ( 1 ) //特性ふくがん効果確率
 
 //ポケモンの性格定義
+#if 0
 #define POKE_PERSONALITY_GANBARIYA    ( 0 )   //がんばりや
 #define POKE_PERSONALITY_SAMISHIGARI  ( 1 )   //さみしがり
 #define POKE_PERSONALITY_YUUKAN     ( 2 )   //ゆうかん
@@ -82,6 +83,34 @@
 #define POKE_PERSONALITY_NAMAIKI    ( 22 )  //なまいき
 #define POKE_PERSONALITY_SINTYOU    ( 23 )  //しんちょう
 #define POKE_PERSONALITY_KIMAGURE   ( 24 )  //きまぐれ
+#else
+#define PTL_SEIKAKU_GANBARIYA    ( 0 )   ///< がんばりや
+#define PTL_SEIKAKU_SAMISHIGARI  ( 1 )   //さみしがり
+#define PTL_SEIKAKU_YUUKAN       ( 2 )   //ゆうかん
+#define PTL_SEIKAKU_IJIPPARI     ( 3 )   //いじっぱり
+#define PTL_SEIKAKU_YANTYA       ( 4 )   //やんちゃ
+#define PTL_SEIKAKU_ZUBUTOI      ( 5 )   //ずぶとい
+#define PTL_SEIKAKU_SUNAO        ( 6 )   //すなお
+#define PTL_SEIKAKU_NONKI        ( 7 )   //のんき
+#define PTL_SEIKAKU_WANPAKU      ( 8 )   //わんぱく
+#define PTL_SEIKAKU_NOUTENKI     ( 9 )   //のうてんき
+#define PTL_SEIKAKU_OKUBYOU      ( 10 )  //おくびょう
+#define PTL_SEIKAKU_SEKKATI      ( 11 )  //せっかち
+#define PTL_SEIKAKU_MAJIME       ( 12 )  //まじめ
+#define PTL_SEIKAKU_YOUKI        ( 13 )  //ようき
+#define PTL_SEIKAKU_MUJYAKI      ( 14 )  //むじゃき
+#define PTL_SEIKAKU_HIKAEME      ( 15 )  //ひかえめ
+#define PTL_SEIKAKU_OTTORI       ( 16 )  //おっとり
+#define PTL_SEIKAKU_REISEI       ( 17 )  //れいせい
+#define PTL_SEIKAKU_TEREYA       ( 18 )  //てれや
+#define PTL_SEIKAKU_UKKARIYA     ( 19 )  //うっかりや
+#define PTL_SEIKAKU_ODAYAKA      ( 20 )  //おだやか
+#define PTL_SEIKAKU_OTONASHII    ( 21 )  //おとなしい
+#define PTL_SEIKAKU_NAMAIKI      ( 22 )  //なまいき
+#define PTL_SEIKAKU_SINTYOU      ( 23 )  //しんちょう
+#define PTL_SEIKAKU_KIMAGURE     ( 24 )  //きまぐれ
+#define PTL_SEIKAKU_MAX          ( 25 )
+#endif
 
 //=========================================================================
 //  ポケモンのフォルムナンバー定義
@@ -618,9 +647,8 @@ extern  u32   POKETOOL_GetMinExp( u16 mons_no, u16 form_no, u16 level );
 extern  u8    POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd );
 extern  u8    POKETOOL_GetSeikaku( u32 personal_rnd );
 extern  BOOL  POKETOOL_CheckRare( u32 id, u32 personal_rnd );
-extern  u32  POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID param );
-
-
+extern  u32   POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID param );
+extern  u32   POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex, u8 tokusei );
 
 
 
