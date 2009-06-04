@@ -2046,10 +2046,19 @@ BOOL CommStateWifiLobbyError( void )
  *	@param	type		ゲームタイプ
  */
 //-----------------------------------------------------------------------------
-void CommStateWifiP2PStart( DWC_LOBBY_MG_TYPE type )
+void CommStateWifiP2PStart( DWC_LOBBY_MG_TYPE type, const HEAPID heapID, SAVE_CONTROL_WORK* pSaveData, int wifiFriendStatusSize )
 {
+	_commStateInitialize(pSaveData,COMM_MODE_LOGIN_WIFI);
+	_pCommState->pWifiFriendStatus = GFL_HEAP_AllocMemory( heapID, wifiFriendStatusSize );
+	GFL_STD_MemClear( _pCommState->pWifiFriendStatus, wifiFriendStatusSize );
+	_pCommState->regulationNo = 0;
+	_pCommState->pSaveData = pSaveData;
+#ifdef PM_DEBUG
+	_pCommState->soloDebugNo = 0;
+#endif
+
 	GF_ASSERT( _pCommState );
-	GF_ASSERT( CommStateIsWifiLoginMatchState() == TRUE );
+//	GF_ASSERT( CommStateIsWifiLoginMatchState() == TRUE );
 
 	// 接続開始
 	if( DWC_LOBBY_MG_CheckRecruit( type ) == FALSE ){
