@@ -33,6 +33,7 @@ typedef enum {
 typedef enum {
 	FLDMAPPER_FILETYPE_NORMAL = 0,
 	FLDMAPPER_FILETYPE_PKGS = 1,
+  FLDMAPPER_FILETYPE_RANDOM = 2,
 }FLDMAPPER_FILETYPE;
 
 //------------------------------------------------------------------
