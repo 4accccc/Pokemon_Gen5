@@ -69,6 +69,14 @@ class EventHeader
     return -z + (BLOCK_SIZE / 2 + @z_ofs * BLOCK_SIZE) * GRID_SIZE
   end
 
+  def calcXgridOfs x
+    return x / GRID_SIZE + (BLOCK_SIZE / 2 + @x_ofs * BLOCK_SIZE) - 1
+  end
+
+  def calcZgridOfs z
+    return (- z) / GRID_SIZE + (BLOCK_SIZE / 2 + @z_ofs * BLOCK_SIZE)
+  end
+
 end
 
 #============================================================================
@@ -220,6 +228,10 @@ class AllEvent
     [@header.calcXofs(x), @header.calcZofs(z)]
   end
 
+  def calc_grid_ofs x, z
+    [@header.calcXgridOfs(x), @header.calcZgridOfs(z)]
+  end
+
 end
 
 #============================================================================
@@ -307,35 +319,34 @@ class ObjEvent < AllEvent
     @param2 = read(lines, /#Parameter 2 Number/)
     @move_limit_x = read(lines, /#Move Limit X Number/)
     @move_limit_z = read(lines, /#Move Limit Z Number/)
-    @gx, @gy, @z = read(lines, /#position/).split
+    @gx, @y, @gz = readPosition( lines )
+    #@gx, @gy, @z = read(lines, /#position/).split
   end
  
   def dump output
-    gx,gz = calc_ofs @gx, @gz
+    gx,gz = calc_grid_ofs @gx, @gz
 
     output.puts "\t{"
-		output.puts "\t\t#{@id}"		    #///<識別ID
-		output.puts "\t\t#{@obj_code}"   #MAN1,	///<表示するOBJコード
-		output.puts "\t\t#{@move_code}"  #MV_RND,	///<動作コード
-		output.puts "\t\t#{@event_type}" #0,	///<イベントタイプ
-		output.puts "\t\t#{@event_flag}" #0,	///<イベントフラグ
-		output.puts "\t\t#{@event_id}"   #1,	///<イベントID
-		output.puts "\t\t#{@dir}"   #DIR_DOWN,	///<指定方向
-		output.puts "\t\t#{@param0}"   #0,	///<指定パラメタ 0
-		output.puts "\t\t#{@param1}"   #0,	///<指定パラメタ 1
-		output.puts "\t\t#{@param2}"   #0,	///<指定パラメタ 2
-		output.puts "\t\t#{@move_limit_x}"   #2,	///<X方向移動制限
-		output.puts "\t\t#{@move_limit_z}"   #2,	///<Z方向移動制限
-		output.puts "\t\t#{gx}"   #757,	///<グリッドX
-		output.puts "\t\t#{gz}"   #811,	///<グリッドZ
-		#output.puts "\t\t#{@gx}"   #757,	///<グリッドX
-		#output.puts "\t\t#{@gz}"   #811,	///<グリッドZ
-		output.puts "\t\t#{@y}"   #0,	///<Y値 fx32型
+		output.puts "\t\t#{@id},"		    #///<識別ID
+		output.puts "\t\t#{@obj_code},"   #MAN1,	///<表示するOBJコード
+		output.puts "\t\t#{@move_code},"  #MV_RND,	///<動作コード
+		output.puts "\t\t#{@event_type}," #0,	///<イベントタイプ
+		output.puts "\t\t#{@event_flag}," #0,	///<イベントフラグ
+		output.puts "\t\t#{@event_id},"   #1,	///<イベントID
+		output.puts "\t\t#{@dir},"   #DIR_DOWN,	///<指定方向
+		output.puts "\t\t#{@param0},"   #0,	///<指定パラメタ 0
+		output.puts "\t\t#{@param1},"   #0,	///<指定パラメタ 1
+		output.puts "\t\t#{@param2},"   #0,	///<指定パラメタ 2
+		output.puts "\t\t#{@move_limit_x},"   #2,	///<X方向移動制限
+		output.puts "\t\t#{@move_limit_z},"   #2,	///<Z方向移動制限
+		output.puts "\t\t#{gx},"   #757,	///<グリッドX
+		output.puts "\t\t#{gz},"   #811,	///<グリッドZ
+		output.puts "\t\t#{@y},"   #0,	///<Y値 fx32型
     output.puts "\t},"
   end
 
   def dumpHeader output
-    output.printf( "\#define %-32s  %02d\n", @id, @number)
+    output.printf( "\#define %-32s  %2d\n", @id, @number)
   end
 end
 
@@ -393,12 +404,13 @@ class ObjEventData < EventData
   end
 
   def dump output
-    output.puts "\#include \"zone_#{@zonename}evc.h\""
-    output.puts "\#include \"../script/#{@zonename}_def.h\""
+    if @objs.length == 0 then return end
+    #output.puts "\#include \"zone_#{@zonename.downcase}evc.h\""
+    output.puts "\#include \"../script/#{@zonename.downcase}_def.h\""
     output.puts "const FLDMMDL_HEADER FldMMdlHeader_#{@zonename}[] = {"
     @objs.each{|obj| obj.dump(output) }
     output.puts "};"
-    output.puts "const int ObjCount_#{@zonename} = NELEMS(FldMMdlHeader_#{zonename})"
+    output.puts "const int ObjCount_#{@zonename} = NELEMS(FldMMdlHeader_#{zonename});"
   end
 
   def dumpHeader output
@@ -432,11 +444,12 @@ begin
 
     File.open("#{ofilename}.h", "w"){|file|
       door_events.dumpHeader(file)
+      obj_events.dumpHeader(file)
     }
 
     File.open("#{ofilename}.cdat", "w"){|file|
       door_events.dump(file)
-      #obj_events.dump(file)
+      obj_events.dump(file)
 
       file.puts ""
       file.puts "static const EVENTDATA_TABLE #{id} = {"
@@ -444,8 +457,13 @@ begin
       file.puts "\t#{obj_events.items.length},"
       file.puts "\t#{door_events.items.length},"
       file.puts "\t#{pos_events.items.length},"
+
       file.puts "\t(void *)NULL,"
-      file.puts "\t(void *)NULL,"
+      if obj_events.items.length == 0 then
+        file.puts "\t(void *)NULL,"
+      else
+        file.puts "\t(void *)&FldMMdlHeader_#{obj_events.zonename.upcase},"
+      end
       if door_events.items.length == 0 then
         file.puts "\t(void *)NULL,"
       else

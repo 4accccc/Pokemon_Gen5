@@ -1,10 +1,10 @@
 #event data
-#save date:2009/05/27 17:57:46
+#save date:2009/06/04 19:31:10
 # linked worldmap file name
 c:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/05/27 17:57:46
+#save date:2009/06/04 19:31:10
 2
 #hold event type:
 1
@@ -14,19 +14,19 @@ c:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0101.wms
 #type
 1
 #ID name
-DUMMY_OBJ
+T01R0101_WOMAN1_1
 #OBJ CODE Number
-1
+WOMAN1
 #MOVE CODE Number
-1
+MV_DIR_RND
 #EVENT TYPE Number
-1
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+1
 #Direction Type Number
-0
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -34,16 +34,16 @@ SCRID_DUMMY
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #position
--160 0 176
+-176 0 208
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/05/27 17:57:46
+#save date:2009/06/04 19:31:10
 2
 #hold event type:
 1
@@ -53,7 +53,7 @@ SCRID_DUMMY
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/05/27 17:57:46
+#save date:2009/06/04 19:31:10
 2
 #hold event type:
 1
@@ -63,7 +63,7 @@ SCRID_DUMMY
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/05/27 17:57:46
+#save date:2009/06/04 19:31:10
 2
 #hold event type:
 1
@@ -77,9 +77,9 @@ ZONE_ID_T01
 #Next Door ID Name
 DOOR_ID_T01_EXIT03
 #Door Direction
-1
+EXIT_DIR_UP
 #Door Type
-0
+EXIT_TYPE_MAT
 #position
 -176 0 144
 #event number: 1
@@ -90,9 +90,9 @@ ZONE_ID_T01
 #Next Door ID Name
 DOOR_ID_T01_EXIT03
 #Door Direction
-1
+EXIT_DIR_UP
 #Door Type
-0
+EXIT_TYPE_MAT
 #position
 -160 0 144
 #event number: 2
@@ -103,9 +103,9 @@ ZONE_ID_T01
 #Next Door ID Name
 DOOR_ID_T01_EXIT03
 #Door Direction
-1
+EXIT_DIR_UP
 #Door Type
-0
+EXIT_TYPE_MAT
 #position
 -144 0 144
 #event number: 3
@@ -116,9 +116,9 @@ ZONE_ID_T01R0102
 #Next Door ID Name
 DOOR_ID_T01R0101_EXIT01
 #Door Direction
-4
+EXIT_DIR_RIGHT
 #Door Type
-0
+EXIT_TYPE_STAIRS
 #position
 -208 0 224
 #Map Event List Data End
