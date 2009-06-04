@@ -751,13 +751,13 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent(
 				ZONEID zone_id = PLAYERWORK_getZoneID(player);
 				
 				if( (dir>0x2000) && (dir<0x6000) ){
-					dir = EXIT_TYPE_LEFT;
+					dir = EXIT_DIR_LEFT;
 				}else if( (dir >= 0x6000) && (dir <= 0xa000) ){
-					dir = EXIT_TYPE_DOWN;
+					dir = EXIT_DIR_DOWN;
 				}else if( (dir > 0xa000) && (dir < 0xe000) ){
-					dir = EXIT_TYPE_RIGHT;
+					dir = EXIT_DIR_RIGHT;
 				}else{
-					dir = EXIT_TYPE_UP;
+					dir = EXIT_DIR_UP;
 				}
 
 				GAMEDATA_SetSeasonID(gdata, ret);

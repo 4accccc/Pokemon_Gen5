@@ -27,10 +27,10 @@
 //------------------------------------------------------------------
 enum {
 	EXIT_TYPE_NONE = 0,
-	EXIT_TYPE_UP,
-	EXIT_TYPE_DOWN,
-	EXIT_TYPE_LEFT,
-	EXIT_TYPE_RIGHT,
+	EXIT_TYPE_MAT,
+	EXIT_TYPE_STAIRS,
+	EXIT_TYPE_DOOR,
+	EXIT_TYPE_WALL,
 };
 
 //------------------------------------------------------------------
