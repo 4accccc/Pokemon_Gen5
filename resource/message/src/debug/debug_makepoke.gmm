@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-06-02T22:24:09"/>
+	<create user="taya" host="W00146" date="2009-06-05T01:35:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -363,27 +363,75 @@
 	</row>
 
 	<row id="DMPSTR_HP_RND">
-		<language name="JPN" width="256">HPrnd</language>
+		<language name="JPN" width="256">rnd</language>
 	</row>
 
 	<row id="DMPSTR_POW_RND">
-		<language name="JPN" width="256">POWrnd</language>
+		<language name="JPN" width="256">rnd</language>
 	</row>
 
 	<row id="DMPSTR_DEF_RND">
-		<language name="JPN" width="256">DEFrnd</language>
+		<language name="JPN" width="256">rnd</language>
 	</row>
 
 	<row id="DMPSTR_AGI_RND">
-		<language name="JPN" width="256">AGIrnd</language>
+		<language name="JPN" width="256">rnd</language>
 	</row>
 
 	<row id="DMPSTR_SPW_RND">
-		<language name="JPN" width="256">SPWrnd</language>
+		<language name="JPN" width="256">rnd</language>
 	</row>
 
 	<row id="DMPSTR_SDF_RND">
-		<language name="JPN" width="256">SDFrnd</language>
+		<language name="JPN" width="256">rnd</language>
+	</row>
+
+	<row id="DMPSTR_HP_EXP">
+		<language name="JPN" width="256">exp</language>
+	</row>
+
+	<row id="DMPSTR_POW_EXP">
+		<language name="JPN" width="256">exp</language>
+	</row>
+
+	<row id="DMPSTR_DEF_EXP">
+		<language name="JPN" width="256">exp</language>
+	</row>
+
+	<row id="DMPSTR_AGI_EXP">
+		<language name="JPN" width="256">exp</language>
+	</row>
+
+	<row id="DMPSTR_SPW_EXP">
+		<language name="JPN" width="256">exp</language>
+	</row>
+
+	<row id="DMPSTR_SDF_EXP">
+		<language name="JPN" width="256">exp</language>
+	</row>
+
+	<row id="DMPSTR_HP">
+		<language name="JPN" width="256">H P</language>
+	</row>
+
+	<row id="DMPSTR_POW">
+		<language name="JPN" width="256">POW</language>
+	</row>
+
+	<row id="DMPSTR_DEF">
+		<language name="JPN" width="256">DEF</language>
+	</row>
+
+	<row id="DMPSTR_AGI">
+		<language name="JPN" width="256">AGI</language>
+	</row>
+
+	<row id="DMPSTR_SPW">
+		<language name="JPN" width="256">SPW</language>
+	</row>
+
+	<row id="DMPSTR_SDF">
+		<language name="JPN" width="256">SDF</language>
 	</row>
 
 	<row id="DMPSTR_SEX_MALE">
@@ -395,7 +443,39 @@
 	</row>
 
 	<row id="DMPSTR_SEX_UNKNOWN">
-		<language name="JPN" width="256">-</language>
+		<language name="JPN" width="256">？</language>
+	</row>
+
+	<row id="DMPSTR_PPCNT1">
+		<language name="JPN" width="256">PPCnt1</language>
+	</row>
+
+	<row id="DMPSTR_PPCNT2">
+		<language name="JPN" width="256">PPCnt2</language>
+	</row>
+
+	<row id="DMPSTR_PPCNT3">
+		<language name="JPN" width="256">PPCnt3</language>
+	</row>
+
+	<row id="DMPSTR_PPCNT4">
+		<language name="JPN" width="256">PPCnt4</language>
+	</row>
+
+	<row id="DMPSTR_PPMAX1">
+		<language name="JPN" width="256">PPMax1</language>
+	</row>
+
+	<row id="DMPSTR_PPMAX2">
+		<language name="JPN" width="256">PPMax2</language>
+	</row>
+
+	<row id="DMPSTR_PPMAX3">
+		<language name="JPN" width="256">PPMax3</language>
+	</row>
+
+	<row id="DMPSTR_PPMAX4">
+		<language name="JPN" width="256">PPMax4</language>
 	</row>
 
 	<flowchart-group-list>
