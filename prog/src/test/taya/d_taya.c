@@ -22,6 +22,7 @@
 #include "print\gf_font.h"
 #include "poke_tool\pokeparty.h"
 #include "poke_tool\poke_tool.h"
+#include "poke_tool\monsno_def.h"
 #include "item\itemsym.h"
 #include "net\network_define.h"
 #include "battle\battle.h"
@@ -89,6 +90,7 @@ typedef struct {
   pSubProc    subProc;
   int       subSeq;
   u16       subArg;
+  u8        tmpModuleExistFlag;
 
   V_MENU_CTRL   menuCtrl;
 
@@ -103,6 +105,7 @@ typedef struct {
   BOOL                    ImParent;
 
   TEST_PACKET     packet;
+  POKEMON_PARAM*  testPoke;
 
 }MAIN_WORK;
 
@@ -111,11 +114,14 @@ typedef struct {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT DebugTayaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void initGraphicSystems( MAIN_WORK* wk );
 static void quitGraphicSystems( MAIN_WORK* wk );
 static void startView( MAIN_WORK* wk );
 static void createTemporaryModules( MAIN_WORK* wk );
 static void deleteTemporaryModules( MAIN_WORK* wk );
+static void changeScene_start( MAIN_WORK* wk );
+static void changeScene_recover( MAIN_WORK* wk );
 static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void VMENU_Init( V_MENU_CTRL* ctrl, u8 maxLines, u8 maxElems );
 static BOOL VMENU_Ctrl( V_MENU_CTRL* ctrl );
@@ -124,7 +130,6 @@ static u8 VMENU_GetWritePos( const V_MENU_CTRL* ctrl );
 static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl );
 static void* getGenericWork( MAIN_WORK* mainWork, u32 size );
 static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
-static GFL_PROC_RESULT DebugTayaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void* testBeaconGetFunc( void* pWork );
 static int testBeaconGetSizeFunc( void* pWork );
@@ -186,6 +191,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 
   wk = GFL_PROC_AllocWork( proc, sizeof(MAIN_WORK), HEAPID_CORE );
   wk->heapID = HEAPID_TEMP;
+  wk->tmpModuleExistFlag = FALSE;
 
   initGraphicSystems( wk );
   createTemporaryModules( wk );
@@ -195,11 +201,26 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
   wk->seq = 0;
   wk->subArg = 0;
   wk->subProc = NULL;
-
+  wk->testPoke = PP_Create( MONSNO_POTTYAMA, 20, 3594, HEAPID_CORE );
 
   return GFL_PROC_RES_FINISH;
-
 }
+
+//--------------------------------------------------------------------------
+/**
+ * PROC Quit
+ */
+//--------------------------------------------------------------------------
+static GFL_PROC_RESULT DebugTayaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  MAIN_WORK* wk = mywk;
+  GFL_HEAP_FreeMemoryblock( wk->testPoke );
+  GFL_HEAP_DeleteHeap( HEAPID_TEMP );
+  GFL_HEAP_DeleteHeap( HEAPID_CORE );
+  return GFL_PROC_RES_FINISH;
+}
+
+
 
 static void initGraphicSystems( MAIN_WORK* wk )
 {
@@ -304,16 +325,15 @@ static void createTemporaryModules( MAIN_WORK* wk )
 
   GFL_HEAP_CheckHeapSafe( wk->heapID );
   wk->fontHandle = GFL_FONT_Create( ARCID_FONT,
-  #if 0
-    NARC_d_taya_lc12_2bit_nftr,
-  #else
     NARC_font_small_nftr,
-  #endif
     GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
-
   PRINT_UTIL_Setup( wk->printUtil, wk->win );
+
+  TAYA_Printf("Queがつくられた\n");
+  wk->tmpModuleExistFlag = TRUE;
+
 }
 
 static void deleteTemporaryModules( MAIN_WORK* wk )
@@ -326,8 +346,26 @@ static void deleteTemporaryModules( MAIN_WORK* wk )
   GFL_MSG_Delete( wk->mm );
 
   GFL_BMPWIN_Delete( wk->win );
+
+  wk->tmpModuleExistFlag = FALSE;
+
 }
 
+
+
+static void changeScene_start( MAIN_WORK* wk )
+{
+  deleteTemporaryModules( wk );
+  quitGraphicSystems( wk );
+  GFL_HEAP_DeleteHeap( HEAPID_TEMP );
+}
+static void changeScene_recover( MAIN_WORK* wk )
+{
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,  0xb0000 );
+  initGraphicSystems( wk );
+  createTemporaryModules( wk );
+  startView( wk );
+}
 
 
 //--------------------------------------------------------------------------
@@ -339,8 +377,18 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 {
   MAIN_WORK* wk = mywk;
 
-  PRINTSYS_QUE_Main( wk->printQue );
+  if( wk->subProc != NULL )
+  {
+    if( wk->subProc( proc, &(wk->subSeq), pwk, mywk ) )
+    {
+      wk->subProc = NULL;
+      *seq = 0;
+    }
+    return GFL_PROC_RES_CONTINUE;
+  }
 
+
+  PRINTSYS_QUE_Main( wk->printQue );
   if( !PRINT_UTIL_Trans( wk->printUtil, wk->printQue ) )
   {
     return FALSE;
@@ -678,18 +726,6 @@ static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 
   return FALSE;
 }
-//--------------------------------------------------------------------------
-/**
- * PROC Quit
- */
-//--------------------------------------------------------------------------
-static GFL_PROC_RESULT DebugTayaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
-{
-  return GFL_PROC_RES_FINISH;
-}
-
-
-
 
 //----------------------------------------------------------
 /**
@@ -838,14 +874,21 @@ FS_EXTERN_OVERLAY(debug_makepoke);
 
   switch( *seq ){
   case 0:
+    changeScene_start( wk );
+    (*seq)++;
+    break;
+  case 1:
     {
       PROCPARAM_DEBUG_MAKEPOKE* para = getGenericWork( wk, sizeof(PROCPARAM_DEBUG_MAKEPOKE) );
-      para->dst = PP_Create( MONSNO_POTTYAMA, 10, 3594, HEAPID_CORE );
+      para->dst = wk->testPoke;
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, para );
       (*seq)++;
     }
     break;
-  case 1:
+  case 2:
+    TAYA_Printf("ふっき");
+    changeScene_recover( wk );
+    TAYA_Printf("します");
     return TRUE;
   }
   return FALSE;
@@ -873,15 +916,13 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
   case 0:
 
     GFL_STD_MtRandInit(0);
-
-    deleteTemporaryModules( wk );
-    quitGraphicSystems( wk );
-    GFL_HEAP_DeleteHeap( HEAPID_TEMP );
     {
       // メッセージ速度を最速に
       CONFIG* cfg = SaveData_GetConfig( SaveControl_GetPointer() );
       CONFIG_SetMsgSpeed( cfg, MSGSPEED_FAST );
     }
+
+    changeScene_start( wk );
     (*seq)++;
     break;
   case 1:
@@ -939,10 +980,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
     }
     break;
   case 2:
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
-    initGraphicSystems( wk );
-    createTemporaryModules( wk );
-    startView( wk );
+    changeScene_recover( wk );
     return TRUE;
   }
 
@@ -1084,9 +1122,7 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
 
   switch( *seq ){
   case 0:
-    deleteTemporaryModules( wk );
-    quitGraphicSystems( wk );
-    GFL_HEAP_DeleteHeap( HEAPID_TEMP );
+    changeScene_start( wk );
     (*seq)++;
     break;
   case 1:
@@ -1147,10 +1183,7 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
     }
     break;
   case 5:
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
-    initGraphicSystems( wk );
-    createTemporaryModules( wk );
-    startView( wk );
+    changeScene_recover( wk );
     return TRUE;
   }
 
@@ -1168,9 +1201,7 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
 
   switch( *seq ){
   case 0:
-    deleteTemporaryModules( wk );
-    quitGraphicSystems( wk );
-    GFL_HEAP_DeleteHeap( HEAPID_TEMP );
+    changeScene_start( wk );
     (*seq)++;
     break;
   case 1:
@@ -1327,10 +1358,7 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
     break;
 
   case 8:
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
-    initGraphicSystems( wk );
-    createTemporaryModules( wk );
-    startView( wk );
+    changeScene_recover( wk );
     return TRUE;
   }
 

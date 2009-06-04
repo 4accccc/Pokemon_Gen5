@@ -648,7 +648,7 @@ extern  u8    POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd );
 extern  u8    POKETOOL_GetSeikaku( u32 personal_rnd );
 extern  BOOL  POKETOOL_CheckRare( u32 id, u32 personal_rnd );
 extern  u32   POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID param );
-extern  u32   POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex, u8 tokusei );
+extern  u32   POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex );
 
 
 

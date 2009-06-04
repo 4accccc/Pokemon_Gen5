@@ -1285,17 +1285,14 @@ const POKEMON_PASO_PARAM  *PP_GetPPPPointerConst( const POKEMON_PARAM *pp )
  * @param[in] form_no     フォルムーナンバー（不要なら PTR_FORM_NONE）
  * @param[in] chr         性格( 0 - 24 )
  * @param[in] sex         性別( PTL_SEX_MALE or PTL_SEX_FEMALE or PTL_SEX_UNKNOWN )
- * @param[in] tokusei     特性（ 0 or 1 ）
  *
  * @retval  計算した個性乱数
  */
 //============================================================================================
-u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex, u8 tokusei )
+u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex )
 {
   u32 rnd;
 
-  //特性ナンバーではないので、2以上はアサートにする
-  GF_ASSERT( tokusei < 2 );
   GF_ASSERT( chr < 25 );
 
   // 性別 : 下位 1byte を調整
@@ -1314,10 +1311,7 @@ u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex, u8 tok
     rnd = byte;
   }
 
-  // とくせい : 特定BIT（現状16bit目）をon
-  rnd |= ( tokusei << PRAND_TOKUSEI_SHIFT );
-
-  // 性格 ： 性別＆とくせいに影響の無い範囲で値を調整
+  // 性格 ： 性別に影響の無い範囲で値を調整
   {
     int diff = chr - POKETOOL_GetSeikaku( rnd );
     if( diff < 0 ){
