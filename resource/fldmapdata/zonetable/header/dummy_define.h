@@ -56,6 +56,7 @@ enum {
 	GRID_GS_SAMPLE = 3,
 	NOGRID_C03 = 4,
   GRID_PALACE = 5,
+  GRID_RANDOM_MAP = 6,
 
 	RSC_TYPE_END
 };
