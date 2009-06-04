@@ -35,6 +35,8 @@ enum {
 //  LEVELUPWAZA_WAZA_MASK = 0x01ff,
 //  LEVELUPWAZA_LEVEL_SHIFT = 9,
 
+  PRAND_TOKUSEI_SHIFT = 16,   ///< 個性乱数：とくせい種類を決定するBitのIndex
+  PRAND_TOKUSEI_MASK = (1 << PRAND_TOKUSEI_SHIFT ),
 };
 
 /*--------------------------------------------------------------------------*/
@@ -278,7 +280,7 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
   flag = PPP_FastModeOn( ppp );
 
 // パーソナルデータをロードしておく
-  ppd = Personal_Load( mons_no, PTL_FORM_NO_NONE );
+  ppd = Personal_Load( mons_no, PTL_FORM_NONE );
 
 //IDナンバーセット
   if( id == PTL_SETUP_ID_AUTO )
@@ -319,7 +321,7 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
   PPP_Put( ppp, ID_PARA_nickname_raw, (u32)StrBuffer );
 
 //経験値セット
-  val = POKETOOL_GetMinExp( mons_no, PTL_FORM_NO_NONE, level );
+  val = POKETOOL_GetMinExp( mons_no, PTL_FORM_NONE, level );
   PPP_Put( ppp, ID_PARA_exp, val );
 
 //友好値セット
@@ -360,7 +362,7 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
   {
     u16 param = POKEPER_ID_speabi1;
     if( Personal_GetTokuseiCount(ppd) == 2 ){
-      if( rnd & 0x200 ){
+      if( rnd & PRAND_TOKUSEI_MASK ){
         param = POKEPER_ID_speabi2;
       }
     }
@@ -413,9 +415,10 @@ void PPP_ChangeMonsNo( POKEMON_PASO_PARAM* ppp, u16 next_monsno )
     if( old_monsno != next_monsno )
     {
       u16 form_no = PPP_Get( ppp, ID_PARA_form_no, NULL );
+
+      PPP_Put( ppp, ID_PARA_monsno, next_monsno );
       change_monsno_sub_tokusei( ppp, next_monsno, old_monsno );
       change_monsno_sub_sex( ppp, next_monsno, old_monsno );
-      PPP_Put( ppp, ID_PARA_monsno, next_monsno );
     }
   }
   PPP_FastModeOff( ppp, fast_flag );
@@ -1235,10 +1238,8 @@ u8  PPP_GetSeikaku( const POKEMON_PASO_PARAM *ppp )
 //============================================================================================
 u8 POKETOOL_GetSeikaku( u32 personal_rnd )
 {
-  return ( u8 )( personal_rnd % 25 );
+  return ( u8 )( personal_rnd % PTL_SEIKAKU_MAX );
 }
-
-
 
 
 //=============================================================================================
@@ -1275,6 +1276,69 @@ const POKEMON_PASO_PARAM  *PP_GetPPPPointerConst( const POKEMON_PARAM *pp )
 {
   return &pp->ppp;
 }
+
+//============================================================================================
+/**
+ *  指定されたパラメータになるように個性乱数を計算する
+ *
+ * @param[in] mons_no     モンスターナンバー
+ * @param[in] form_no     フォルムーナンバー（不要なら PTR_FORM_NONE）
+ * @param[in] chr         性格( 0 - 24 )
+ * @param[in] sex         性別( PTL_SEX_MALE or PTL_SEX_FEMALE or PTL_SEX_UNKNOWN )
+ * @param[in] tokusei     特性（ 0 or 1 ）
+ *
+ * @retval  計算した個性乱数
+ */
+//============================================================================================
+u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex, u8 tokusei )
+{
+  u32 rnd;
+
+  //特性ナンバーではないので、2以上はアサートにする
+  GF_ASSERT( tokusei < 2 );
+  GF_ASSERT( chr < 25 );
+
+  // 性別 : 下位 1byte を調整
+  {
+    u8 byte = 0;
+    if( sex == PTL_SEX_MALE ){
+      POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
+      u8 sex_param = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
+      if( (sex_param != POKEPER_SEX_MALE)
+      &&  (sex_param != POKEPER_SEX_FEMALE)
+      &&  (sex_param != POKEPER_SEX_UNKNOWN)
+      ){
+        byte = sex_param+1; // オスにしたい場合のみ調整
+      }
+    }
+    rnd = byte;
+  }
+
+  // とくせい : 特定BIT（現状16bit目）をon
+  rnd |= ( tokusei << PRAND_TOKUSEI_SHIFT );
+
+  // 性格 ： 性別＆とくせいに影響の無い範囲で値を調整
+  {
+    int diff = chr - POKETOOL_GetSeikaku( rnd );
+    if( diff < 0 ){
+      diff += PTL_SEIKAKU_MAX;
+    }
+    if( diff )
+    {
+      static const u16 addtbl[] = {
+        256*21, 256*17, 256*13, 256* 9, 256* 5, 256* 1,
+        256*22, 256*18, 256*14, 256*10, 256* 6, 256* 2,
+        256*23, 256*19, 256*15, 256*11, 256* 7, 256* 3,
+        256*24, 256*20, 256*16, 256*12, 256* 8, 256* 4,
+      };
+      rnd |= addtbl[ diff-1 ];
+    }
+  }
+
+  return rnd;
+}
+
+
 
 //--------------------------------------------------------------------------
 /**
@@ -2245,7 +2309,7 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
       //ppp2->sex=buf8[0];
       //必ずパラメータから計算して代入する
       ppp2->sex = POKETOOL_GetSex( ppp1->monsno, ppp2->form_no, ppp->personal_rnd );
-      GF_ASSERT_MSG( ( arg == ppp2->sex ), "Disagreement personal_rnd <> ID_PARA_sex\n");
+      GF_ASSERT_MSG( ( arg == ppp2->sex ), "monsno=%d, Disagreement personal_rnd(%d) <> ID_PARA_sex(%d)\n", ppp1->monsno, ppp2->sex, arg);
       break;
     case ID_PARA_form_no:
       ppp2->form_no = arg;
