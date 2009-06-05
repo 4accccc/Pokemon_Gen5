@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-05-18T22:52:24"/>
+	<create user="taya" host="W00146" date="2009-06-05T21:54:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -511,7 +511,7 @@
 
 	<row id="BTL_STRID_STD_Ichigeki">
 		<language name="JPN" width="216">いちげきひっさつ！</language>
-		<language name="JPN_KANJI" width="216">いちげき必殺！</language>
+		<language name="JPN_KANJI" width="216">一撃必殺！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_KinomiEff_WazaWeak">
@@ -535,6 +535,11 @@
 もとに　もどった！</language>
 		<language name="JPN_KANJI" width="216">全てのステータスが
 元に　戻った！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_NotHappen">
+		<language name="JPN" width="216">しかし　なにもおこらない！</language>
+		<language name="JPN_KANJI" width="216">しかし　何も起こらない！</language>
 	</row>
 
 	<flowchart-group-list>
