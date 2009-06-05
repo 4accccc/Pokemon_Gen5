@@ -79,18 +79,18 @@ typedef struct {
   GFL_BMPWIN*     win;
   GFL_BMP_DATA*   bmp;
   GFL_MSGDATA*    mm;
-  STRBUF*       strbuf;
+  STRBUF*         strbuf;
   GFL_TCBLSYS*    tcbl;
 
-  GFL_FONT*       fontHandle;
+  GFL_FONT*         fontHandle;
   PRINT_STREAM*     printStream;
   PRINT_QUE*        printQue;
   PRINT_UTIL        printUtil[1];
 
   pSubProc    subProc;
-  int       subSeq;
-  u16       subArg;
-  u8        tmpModuleExistFlag;
+  int         subSeq;
+  u16         subArg;
+  u8          tmpModuleExistFlag;
 
   V_MENU_CTRL   menuCtrl;
 
@@ -106,6 +106,7 @@ typedef struct {
 
   TEST_PACKET     packet;
   POKEMON_PARAM*  testPoke;
+  u8              testPokeEditFlag;
 
 }MAIN_WORK;
 
@@ -202,6 +203,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
   wk->subArg = 0;
   wk->subProc = NULL;
   wk->testPoke = PP_Create( MONSNO_POTTYAMA, 20, 3594, HEAPID_CORE );
+  wk->testPokeEditFlag = FALSE;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -886,9 +888,8 @@ FS_EXTERN_OVERLAY(debug_makepoke);
     }
     break;
   case 2:
-    TAYA_Printf("‚Ó‚Á‚«");
+    wk->testPokeEditFlag = TRUE;
     changeScene_recover( wk );
-    TAYA_Printf("‚µ‚Ü‚·");
     return TRUE;
   }
   return FALSE;
@@ -951,6 +952,10 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
     #ifdef DEBUG_ONLY_FOR_taya
       setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
       setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_AABOKKU, MONSNO_METAGUROSU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
+      if( wk->testPokeEditFlag )
+      {
+        PokeParty_SetMemberData( para->partyPlayer, 0, wk->testPoke );
+      }
       {
         #if 1
         POKEMON_PARAM* pp;
