@@ -130,6 +130,7 @@ static const CONNECT_DATA ConnectData_C03[] = {
 static const int ConnectCount_C03 = NELEMS(ConnectData_C03);
 
 //座標イベントテスト
+#if 0
 static const POS_EVENT_DATA PosEventData_T01[] =
 {
   {
@@ -144,6 +145,7 @@ static const POS_EVENT_DATA PosEventData_T01[] =
   },
 };
 static const int PosEventDataCount_T01 = NELEMS(PosEventData_T01);
+#endif
 
 //BG話し掛けイベントテスト
 #if 0
@@ -216,8 +218,8 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 	case ZONE_ID_T01:
 	//	evdata->npc_count = SampleFldMMdlHeaderCount_T01;
 	//	evdata->npc_data = SampleFldMMdlHeader_T01;
-    evdata->pos_count = PosEventDataCount_T01;
-    evdata->pos_data = PosEventData_T01;
+//    evdata->pos_count = PosEventDataCount_T01;
+//    evdata->pos_data = PosEventData_T01;
 //    evdata->bg_data = BGEventData_T01;
 //    evdata->bg_count = BGEventDataCount_T01;
 		break;
