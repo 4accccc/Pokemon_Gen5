@@ -43,7 +43,7 @@ enum {
   COLIDX_GRAY,
   COLIDX_RED_D,
   COLIDX_RED_L,
-  COLIDX_BULE_D,
+  COLIDX_BLUE_D,
   COLIDX_BLUE_L,
   COLIDX_YELLOW_D,
   COLIDX_YELLOW_L,
@@ -67,14 +67,14 @@ enum {
   LINE_MARGIN = 2,
   LINE_DIFFER = LINE_HEIGHT + LINE_MARGIN,
 
-  LY_LV1 = 3,
+  LY_LV1 = 6,
   LY_LV2 = LY_LV1+LINE_DIFFER,
   LY_LV3 = LY_LV2+LINE_DIFFER,
-  LY_LV4 = LY_LV3+LINE_DIFFER,
+  LY_LV4 = LY_LV3+LINE_DIFFER + 2,
   LY_LV5 = LY_LV4+LINE_DIFFER,
   LY_LV6 = LY_LV5+LINE_DIFFER,
   LY_LV7 = LY_LV6+LINE_DIFFER,
-  LY_LV8 = LY_LV7+LINE_DIFFER,
+  LY_LV8 = LY_LV7+LINE_DIFFER + 2,
   LY_LV9 = LY_LV8+LINE_DIFFER,
   LY_LV10 = LY_LV9+LINE_DIFFER,
   LY_LV11 = LY_LV10+LINE_DIFFER,
@@ -948,7 +948,10 @@ static void update_dst( DMP_MAINWORK* wk )
   {
     u32 i;
     for(i=0; i<PTL_WAZA_MAX; ++i){
-      PP_SetWazaPos( wk->dst, box_getvalue(wk, INPUTBOX_ID_WAZA1+i), i );
+      {
+        u16 waza = box_getvalue(wk, INPUTBOX_ID_WAZA1+i);
+        PP_SetWazaPos( wk->dst, box_getvalue(wk, INPUTBOX_ID_WAZA1+i), i );
+      }
       PP_Put( wk->dst, ID_PARA_pp_count1+i, box_getvalue(wk, INPUTBOX_ID_PPCNT1+i) );
     }
 
@@ -1149,7 +1152,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     {
       u8 idx = updateBoxID - INPUTBOX_ID_WAZA1;
       u16 waza = box_getvalue( wk, updateBoxID );
-      PP_Put( wk->dst, ID_PARA_waza1 + idx, waza );
+      PP_SetWazaPos( wk->dst, waza, idx );
       box_setup( wk, INPUTBOX_ID_PPMAX1+idx, wk->dst );
     }
     break;
