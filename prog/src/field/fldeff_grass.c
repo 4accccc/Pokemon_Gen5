@@ -174,7 +174,7 @@ void FLDEFF_GRASS_SetFldMMdl( FLDEFF_CTRL *fectrl, FLDMMDL *fmmdl, BOOL anm )
   head.zone_id = FLDMMDL_GetZoneID( fmmdl );
   head.init_gx = FLDMMDL_GetGridPosX( fmmdl );
   head.init_gz = FLDMMDL_GetGridPosZ( fmmdl );
-  OS_Printf( "草エフェクト GX=%d,GZ=%d\n", head.init_gx, head.init_gz );
+  KAGAYA_Printf( "草エフェクト GX=%d,GZ=%d\n", head.init_gx, head.init_gz );
   FLDMMDL_TOOL_GetCenterGridPos( head.init_gx, head.init_gz, &pos );
   pos.y = FLDMMDL_GetVectorPosY( fmmdl );
   
