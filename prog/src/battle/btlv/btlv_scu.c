@@ -46,6 +46,13 @@ enum {
   COLIDX_MSGWIN_CLEAR  = 0x0c,
   COLIDX_MSGWIN_LETTER = 0x01,
   COLIDX_MSGWIN_SHADOW = 0x09,
+
+
+  MSGWIN_EVA_MAX = 31,
+  MSGWIN_EVA_MIN = 0,
+  MSGWIN_EVB_MIN = 3,
+  MSGWIN_EVB_MAX = 16,
+  MSGWIN_VISIBLE_STEP = 6,
 };
 
 typedef enum {
@@ -56,6 +63,15 @@ typedef enum {
   TASKTYPE_MAX,
 
 }TaskType;
+
+typedef enum {
+
+  MSGWIN_STATE_DISP = 0,
+  MSGWIN_STATE_TO_HIDE,
+  MSGWIN_STATE_HIDE,
+  MSGWIN_STATE_TO_DISP,
+
+}MsgWinState;
 
 
 typedef struct {
@@ -76,6 +92,16 @@ typedef struct {
   u8              renewingFlag;
   BTLV_SCU*     parentWk;
 }TOK_WIN;
+
+typedef struct {
+  GFL_BMPWIN*  win;
+  fx32  eva;
+  fx32  evb;
+  fx32  eva_step;
+  fx32  evb_step;
+  u8    state;
+  u8    timer;
+}MSGWIN_VISIBLE;
 
 //--------------------------------------------------------------
 /**
@@ -110,6 +136,8 @@ struct _BTLV_SCU {
   u8            playerClientID;
   u16           printWait;
   u8            msgwinVisibleFlag;
+  u16           msgwinVisibleSeq;
+  MSGWIN_VISIBLE   msgwinVisibleWork;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -124,6 +152,10 @@ static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs );
+static void msgWinVisible_Init( MSGWIN_VISIBLE* wk, GFL_BMPWIN* win );
+static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk );
+static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk );
+static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk );
 static void msgWin_Visible( BTLV_SCU* wk, BOOL flag );
 static void statwin_setupAll( BTLV_SCU* wk );
 static void statwin_cleanupAll( BTLV_SCU* wk );
@@ -168,8 +200,6 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
 
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
   PRINT_UTIL_Setup( &wk->printUtil, wk->win );
-
-//  GFL_ASSERT_SetLCDMode();
 
   return wk;
 }
@@ -237,6 +267,8 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 
   GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
   GFL_BMPWIN_TransVramCharacter( wk->win );
+
+  msgWinVisible_Init( &wk->msgwinVisibleWork, wk->win );
 
   statwin_setupAll( wk );
   tokwin_setupAll( wk );
@@ -343,33 +375,39 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 0:
     subwk->viewPos = BTLV_MCSS_POS_BB;
     subwk->pokePos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, subwk->viewPos );
-    BTL_Printf(" wild in 1  btlPos=%d, vpos=%d\n", subwk->pokePos, subwk->viewPos );
     subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
     subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
-    msgWin_Visible( wk, FALSE );
-    {
-      BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), subwk->viewPos );
-      BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_ENCOUNT_1 );
-    }
+    msgWinVisible_Hide( &wk->msgwinVisibleWork );
     (*seq)++;
     break;
   case 1:
+    if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
+    {
+      BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), subwk->viewPos );
+      BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_ENCOUNT_1 );
+      (*seq)++;
+    }
+    break;
+  case 2:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      msgWin_Visible( wk, TRUE );
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
-  case 2:
+  case 3:
     if( BTLV_SCU_WaitMsg(wk) )
     {
-      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
-
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
-
-      msgWin_Visible( wk, FALSE );
+      msgWinVisible_Hide( &wk->msgwinVisibleWork );
+      (*seq)++;
+    }
+    break;
+  case 4:
+    if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
+    {
+      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
       if( MyStatus_GetMySex(status) == PM_MALE ){
         BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
       }else{
@@ -378,34 +416,36 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 3:
+  case 5:
     if( !BTLV_EFFECT_CheckExecute() )
     {
       subwk->viewPos = BTLV_MCSS_POS_AA;
       subwk->pokePos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, subwk->viewPos );
       subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
       subwk->pokeID = BTL_POKEPARAM_GetID( subwk->pp );
-      BTL_Printf(" wild in 2  btlPos=%d, vpos=%d\n", subwk->pokePos, subwk->viewPos );
 
-      msgWin_Visible( wk, TRUE );
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
     break;
-  case 4:
+  case 6:
     if( BTLV_SCU_WaitMsg(wk) )
     {
       BTLV_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData(subwk->pp), subwk->viewPos );
-      msgWin_Visible( wk, FALSE );
+      msgWinVisible_Hide( &wk->msgwinVisibleWork );
+      (*seq)++;
+    }
+    break;
+  case 7:
+    if( msgWinVisible_Update(&wk->msgwinVisibleWork) ){
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
       (*seq)++;
     }
     break;
-  case 5:
+  case 8:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      msgWin_Visible( wk, TRUE );
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
       return TRUE;
     }
@@ -627,6 +667,8 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
         wk->win, 0, 0, str, wk->defaultFont, MSGSPEED_GetWait(), wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
         wk->heapID, COLIDX_MSGWIN_CLEAR
   );
+  PRINTSYS_PrintStreamStop( wk->printStream );
+
   wk->printSeq = 0;
   wk->printWait = wait;
 }
@@ -644,6 +686,21 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
 {
   switch( wk->printSeq ){
   case 0:
+    msgWinVisible_Disp( &wk->msgwinVisibleWork );
+    wk->printSeq++;
+    /* fallthru */
+  case 1:
+    if( !msgWinVisible_Update(&wk->msgwinVisibleWork) ){
+      break;
+    }else{
+      if( wk->printStream )
+      {
+        PRINTSYS_PrintStreamRun( wk->printStream );
+      }
+      wk->printSeq++;
+    }
+    /* fallthru */
+  case 2:
     if( wk->printStream )
     {
       if( PRINTSYS_PrintStreamGetState( wk->printStream ) == PRINTSTREAM_STATE_DONE )
@@ -659,13 +716,10 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
       if( wk->printWait )
       {
         // やっぱり非通信時でも普通にwaitする
-        if( BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE )
-        {
-          wk->printSeq = 1;
-        }
-        else
-        {
-          wk->printSeq = 2;
+        if( BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE ){
+          wk->printSeq = 3;
+        } else {
+          wk->printSeq = 4;
         }
       }
       else
@@ -675,7 +729,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     }
     break;
 
-  case 1: // 待ち指定あり（通常時）
+  case 3: // 待ち指定あり（通常時）
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
       wk->printWait = 0;
@@ -687,7 +741,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     }
     break;
 
-  case 2: // 待ち指定あり（通信時）
+  case 4: // 待ち指定あり（通信時）
     if( wk->printWait )
     {
       wk->printWait--;
@@ -1154,22 +1208,93 @@ BOOL BTLV_SCU_KinomiAct_Wait( BTLV_SCU* wk, BtlPokePos pos )
   return TRUE;
 }
 
-
-static void msgWin_Visible( BTLV_SCU* wk, BOOL flag )
+//==============================================================================================
+// メッセージウィンドウ表示・消去処理
+//==============================================================================================
+static void msgWinVisible_Init( MSGWIN_VISIBLE* wk, GFL_BMPWIN* win )
 {
-  if( flag ){
-    if( wk->msgwinVisibleFlag == FALSE ){
-      GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
-      GFL_BMPWIN_TransVramCharacter( wk->win );
-      wk->msgwinVisibleFlag = TRUE;
-    }
-    GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE );
-  }else{
-    wk->msgwinVisibleFlag = FALSE;
-    GFL_BG_SetVisible( GFL_BG_FRAME1_M, FALSE );
+  wk->win = win;
+  wk->state = MSGWIN_STATE_DISP;
+  wk->eva = FX32_CONST( MSGWIN_EVA_MAX );
+  wk->evb = FX32_CONST( MSGWIN_EVB_MIN );
+
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                    GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                    GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                    MSGWIN_EVA_MAX, MSGWIN_EVB_MIN );
+}
+static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk )
+{
+  if( wk->state == MSGWIN_STATE_DISP
+  ||  wk->state == MSGWIN_STATE_TO_DISP
+  ){
+    wk->eva = FX32_CONST( MSGWIN_EVA_MAX );
+    wk->evb = FX32_CONST( MSGWIN_EVB_MIN );
+    wk->eva_step = FX32_CONST( MSGWIN_EVA_MIN - MSGWIN_EVA_MAX ) / MSGWIN_VISIBLE_STEP;
+    wk->evb_step = FX32_CONST( MSGWIN_EVB_MAX - MSGWIN_EVB_MIN ) / MSGWIN_VISIBLE_STEP;
+    wk->timer = MSGWIN_VISIBLE_STEP;
+    wk->state = MSGWIN_STATE_TO_HIDE;
   }
 }
+static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk )
+{
+  if( wk->state == MSGWIN_STATE_HIDE
+  ||  wk->state == MSGWIN_STATE_TO_HIDE
+  ){
+    GFL_BMP_DATA* bmp = GFL_BMPWIN_GetBmp( wk->win );
+    GFL_BMP_Clear( bmp, COLIDX_MSGWIN_CLEAR );
+    GFL_BMPWIN_TransVramCharacter( wk->win );
 
+    wk->eva = FX32_CONST( MSGWIN_EVA_MIN );
+    wk->evb = FX32_CONST( MSGWIN_EVB_MAX );
+    wk->eva_step = FX32_CONST( MSGWIN_EVA_MAX - MSGWIN_EVA_MIN ) / MSGWIN_VISIBLE_STEP;
+    wk->evb_step = FX32_CONST( MSGWIN_EVB_MIN - MSGWIN_EVB_MAX ) / MSGWIN_VISIBLE_STEP;
+    wk->timer = MSGWIN_VISIBLE_STEP;
+    wk->state = MSGWIN_STATE_TO_DISP;
+  }
+}
+static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk )
+{
+  switch( wk->state ){
+  case MSGWIN_STATE_HIDE:
+    return TRUE;
+  case MSGWIN_STATE_DISP:
+    return TRUE;
+  case MSGWIN_STATE_TO_DISP:
+    if( wk->timer ){
+      wk->eva += wk->eva_step;
+      wk->evb += wk->evb_step;
+      wk->timer--;
+    }else{
+      wk->eva = FX32_CONST( MSGWIN_EVA_MAX );
+      wk->evb = FX32_CONST( MSGWIN_EVB_MIN );
+      wk->state = MSGWIN_STATE_DISP;
+    }
+    break;
+  case MSGWIN_STATE_TO_HIDE:
+    if( wk->timer ){
+      wk->eva += wk->eva_step;
+      wk->evb += wk->evb_step;
+      wk->timer--;
+    }else{
+      wk->eva = FX32_CONST( MSGWIN_EVA_MIN );
+      wk->evb = FX32_CONST( MSGWIN_EVB_MAX );
+      wk->state = MSGWIN_STATE_HIDE;
+    }
+    break;
+  }
+
+  {
+    u8 eva = wk->eva >> FX32_SHIFT;
+    u8 evb = wk->evb >> FX32_SHIFT;
+
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                    GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                    GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                    eva, evb );
+  }
+  return FALSE;
+}
 //----------------------------
 
 static void statwin_setupAll( BTLV_SCU* wk )
