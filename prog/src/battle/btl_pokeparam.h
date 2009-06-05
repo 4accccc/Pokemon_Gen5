@@ -64,6 +64,7 @@ typedef enum {
   BPP_TURNFLG_WAZA_EXE,     ///< ƒƒU‚ðo‚µ‚½
   BPP_TURNFLG_SHRINK,       ///< ‚Ð‚é‚Ü‚³‚ê‚½
   BPP_TURNFLG_DEAD,         ///< ‚±‚Ìƒ^[ƒ“‚ÉŽ€‚ñ‚¾
+  BPP_TURNFLG_MAMORU,       ///< g‚Ü‚à‚éh”­“®
 
   BPP_TURNFLG_MAX,
 

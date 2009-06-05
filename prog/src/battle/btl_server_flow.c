@@ -273,6 +273,7 @@ static void scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
 static void scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_messageSet( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_HandEx_messageStd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static void scproc_HandEx_setTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
 static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, BtlEventType event_type );
@@ -1447,6 +1448,18 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_
     {
       TargetPokeRec_Remove( targets, bpp );
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BTL_POKEPARAM_GetID(bpp) );
+    }
+  }
+
+  // まもるチェック
+  TargetPokeRec_GetStart( targets );
+  while( (bpp = TargetPokeRec_GetNext(targets)) != NULL )
+  {
+    if( BTL_POKEPARAM_GetTurnFlag( bpp, BPP_TURNFLG_MAMORU )
+    &&  WAZADATA_GetFlag( waza, WAZAFLAG_MAMORU )
+    ){
+      TargetPokeRec_Remove( targets, bpp );
+      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Mamoru, BTL_POKEPARAM_GetID(bpp) );
     }
   }
 }
@@ -2974,7 +2987,7 @@ static void scput_Fight_Others_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* at
 //---------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
 /**
- * ハンドラ反応スタック解消処理ルート
+ * ハンドラ反応スタック処理ルート
  *
  * @param   wk
  * @param   useItemID   アイテム使用による呼び出しの場合、そのアイテムID／それ以外、ITEM_DUMMY_DATA
@@ -3002,12 +3015,12 @@ static void scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_CHANGE_TYPE:   scproc_HandEx_changeType( wk, handEx_header ); break;
     case BTL_HANDEX_MESSAGE_SET:   scproc_HandEx_messageSet( wk, handEx_header ); break;
     case BTL_HANDEX_MESSAGE_STD:   scproc_HandEx_messageStd( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_TURNFLAG:  scproc_HandEx_setTurnFlag( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
   }
 }
-
 static void scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
@@ -3024,7 +3037,6 @@ static void scproc_HandEx_useItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
   BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
   scproc_UseItem( wk, pp_user );
 }
-
 static void scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
 {
   const BTL_HANDEX_PARAM_RECOVER_HP* param = (BTL_HANDEX_PARAM_RECOVER_HP*)param_header;
@@ -3085,7 +3097,6 @@ static void scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
     scPut_TokWin_Out( wk, pp_user );
   }
 }
-
 static void scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   const BTL_HANDEX_PARAM_ADD_SICK* param = (BTL_HANDEX_PARAM_ADD_SICK*)param_header;
@@ -3107,8 +3118,6 @@ static void scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
     }
   }
 }
-
-
 static void scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header, u16 itemID )
 {
   const BTL_HANDEX_PARAM_RANK_EFFECT* param = (BTL_HANDEX_PARAM_RANK_EFFECT*)param_header;
@@ -3121,14 +3130,12 @@ static void scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
     scproc_RankEffectCore( wk, pp_target, param->rankType, param->rankVolume, itemID, param->fAlmost );
   }
 }
-
 static void scproc_HandEx_recoverRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   BTL_HANDEX_PARAM_RECOVER_RANK* param = (BTL_HANDEX_PARAM_RECOVER_RANK*)param_header;
   BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
   BTL_POKEPARAM_RankRecover( pp_user );
 }
-
 static void scproc_HandEx_resetRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   BTL_HANDEX_PARAM_RESET_RANK* param = (BTL_HANDEX_PARAM_RESET_RANK*)param_header;
@@ -3140,7 +3147,6 @@ static void scproc_HandEx_resetRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
     BTL_POKEPARAM_RankReset( pp_target );
   }
 }
-
 static void scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   BTL_HANDEX_PARAM_DAMAGE* param = (BTL_HANDEX_PARAM_DAMAGE*)param_header;
@@ -3153,8 +3159,6 @@ static void scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
     scproc_SimpleDamage( wk, pp_target, param->damage[i], STRID_NULL );
   }
 }
-
-
 static void scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   const BTL_HANDEX_PARAM_CHANGE_TYPE* param= (const BTL_HANDEX_PARAM_CHANGE_TYPE*)param_header;
@@ -3181,6 +3185,14 @@ static void scproc_HandEx_messageStd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 //  scPut_Message_SetEx( wk, bpp, param->arg_cnt, param->args );
   SCQUE_PUT_MSG_STD( wk->que, param->strID );
 }
+static void scproc_HandEx_setTurnFlag( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SET_TURNFLAG* param = (const BTL_HANDEX_PARAM_SET_TURNFLAG*)(param_header);
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  BTL_POKEPARAM_SetTurnFlag( bpp, param->flag );
+}
+
 
 //==============================================================================
 // サーバーフロー：ターンチェックルート
@@ -5954,6 +5966,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_MESSAGE_SET,   sizeof(BTL_HANDEX_PARAM_MESSAGE)      },
     { BTL_HANDEX_TOKWIN_IN,     sizeof(BTL_HANDEX_PARAM_HEADER)       },
     { BTL_HANDEX_TOKWIN_OUT,    sizeof(BTL_HANDEX_PARAM_HEADER)       },
+    { BTL_HANDEX_SET_TURNFLAG,  sizeof(BTL_HANDEX_PARAM_SET_TURNFLAG) },
   };
   u32 size, i;
 

@@ -207,6 +207,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   for(i=0; i<PTL_WAZA_MAX; i++)
   {
     bpp->waza[i].number = PP_Get( pp, ID_PARA_waza1+i, 0 );
+    TAYA_Printf("ƒƒU%d ", bpp->waza[i].number);
     if( bpp->waza[i].number )
     {
       bpp->waza[i].pp = PP_Get( pp, ID_PARA_pp1+i, 0 );
