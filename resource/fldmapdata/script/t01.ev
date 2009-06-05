@@ -19,6 +19,8 @@
 _EVENT_DATA   ev_talkobj_man01
 _EVENT_DATA   ev_talkobj_woman01
 _EVENT_DATA   ev_talkobj_babygirl1
+_EVENT_DATA   ev_posevent_test1
+_EVENT_DATA   ev_bgevent_test1
 _EVENT_DATA_END //データ終端を指定しています。
 
 
@@ -126,6 +128,31 @@ ev_talkobj_babygirl1:
 	_TALKWIN_OPEN
 	_TALKMSG_ALLPUT msg_t01_testmsg03
 	_AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _END
+
+//-------------------------------------------------------------
+//  T01 テスト用座標イベントスクリプト
+//-------------------------------------------------------------
+ev_posevent_test1:
+  _TALK_OBJ_PAUSE_ALL
+  _TALKWIN_OPEN
+  _TALKMSG_ALLPUT msg_t01_testmsg03
+  _AB_KEYWAIT
+  _TALKWIN_CLOSE
+  _OBJ_PAUSE_CLEAR_ALL
+  _LDVAL SVSCRWK_START,1
+  _END
+
+//-------------------------------------------------------------
+//  T01 テスト用BG話し掛けイベントスクリプト
+//-------------------------------------------------------------
+ev_bgevent_test1:
+  _TALK_OBJ_PAUSE_ALL
+  _TALKWIN_OPEN
+  _TALKMSG_ALLPUT msg_t01_testmsg03
+  _AB_KEYWAIT
   _TALKWIN_CLOSE
   _OBJ_PAUSE_CLEAR_ALL
   _END

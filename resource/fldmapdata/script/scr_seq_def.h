@@ -93,6 +93,18 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_CHG_LANGID
 
 	DEF_CMD EV_SEQ_PLAYER_NAME
+
+ 	DEF_CMD	EV_SEQ_FLAG_SET
+	DEF_CMD	EV_SEQ_FLAG_RESET
+	DEF_CMD	EV_SEQ_FLAG_CHECK
+	DEF_CMD	EV_SEQ_FLAG_CHECK_WK
+	DEF_CMD	EV_SEQ_FLAG_SET_WK
+  
+	DEF_CMD	EV_SEQ_ADD_WK
+	DEF_CMD	EV_SEQ_SUB_WK
+	DEF_CMD	EV_SEQ_LD_WK_VAL
+	DEF_CMD	EV_SEQ_LD_WK_WK
+	DEF_CMD	EV_SEQ_LD_WK_WKVAL
   
 //======================================================================
 /**
@@ -241,6 +253,8 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	.long	\adr1
 	.long	\adr2
 	.endm
+
+
 
 //======================================================================
 /**
@@ -756,4 +770,124 @@ DEF_CMD_COUNT	=	( DEF_CMD_COUNT + 1 )
 	.macro	_PLAYER_NAME	idx
 	.short	EV_SEQ_PLAYER_NAME
 	.byte	\idx
+	.endm
+
+//=============================================================================
+//  イベントフラグ関連
+//=============================================================================
+//-----------------------------------------------------------------------------
+/**
+ *	フラグのセット
+ */
+//-----------------------------------------------------------------------------
+	.macro	_FLAG_SET num
+	.short	EV_SEQ_FLAG_SET
+	.short	\num
+	.endm
+
+	//到着フラグセット
+	.macro	_ARRIVE_FLAG_SET num
+	_FLAG_SET	(\num + SYS_FLAG_ARRIVE_START)
+	.endm
+
+//-----------------------------------------------------------------------------
+/**
+ *	フラグのリセット
+ */
+//-----------------------------------------------------------------------------
+	.macro	_FLAG_RESET num
+	.short	EV_SEQ_FLAG_RESET
+	.short	\num
+	.endm
+
+//-----------------------------------------------------------------------------
+/**
+ *	フラグチェック
+ */
+//-----------------------------------------------------------------------------
+	.macro	_FLAG_CHECK num
+	.short	EV_SEQ_FLAG_CHECK
+	.short	\num
+	.endm
+
+	//フラグONの時に分岐(JUMP)
+	.macro	_IF_FLAGON_JUMP num,adrs
+	_FLAG_CHECK \num
+	_IF_JUMP	FLGON,\adrs
+	.endm
+
+	//フラグOFFの時に分岐(JUMP)
+	.macro	_IF_FLAGOFF_JUMP num,adrs
+	_FLAG_CHECK \num
+	_IF_JUMP	FLGOFF,\adrs
+	.endm
+
+	//フラグONの時に分岐(CALL)
+	.macro	_IF_FLAGON_CALL num,adrs
+	_FLAG_CHECK \num
+	_IF_CALL	FLGON,\adrs
+	.endm
+
+	//フラグOFFの時に分岐(CALL)
+	.macro	_IF_FLAGOFF_CALL num,adrs
+	_FLAG_CHECK \num
+	_IF_CALL	FLGOFF,\adrs
+	.endm
+
+//======================================================================
+//  ワーク操作関連
+//======================================================================
+//-----------------------------------------------------------------------------
+/**
+ *	ワークに値を足す
+ */
+//-----------------------------------------------------------------------------
+	.macro	_ADD_WK wk,num
+	.short	EV_SEQ_ADD_WK
+	.short	\wk
+	.short	\num
+	.endm
+
+//-----------------------------------------------------------------------------
+/**
+ *	ワークから値を引く
+ */
+//-----------------------------------------------------------------------------
+	.macro	_SUB_WK wk,num
+	.short	EV_SEQ_SUB_WK
+	.short	\wk
+	.short	\num
+	.endm
+
+//-----------------------------------------------------------------------------
+/**
+ *	ワークに値を代入
+ */
+//-----------------------------------------------------------------------------
+	.macro	_LDVAL	wk,val
+	.short	EV_SEQ_LD_WK_VAL
+	.short	\wk
+	.short	\val
+	.endm
+
+//-----------------------------------------------------------------------------
+/**
+ *	ワークにワークの値を代入
+ */
+//-----------------------------------------------------------------------------
+	.macro	_LDWK	wk1,wk2
+	.short	EV_SEQ_LD_WK_WK
+	.short	\wk1
+	.short	\wk2
+	.endm
+
+//-----------------------------------------------------------------------------
+/**
+ *	ワークに値かワークの値を代入
+ */
+//-----------------------------------------------------------------------------
+	.macro	_LDWKVAL	wk1,wk2
+	.short	EV_SEQ_LD_WK_WKVAL
+	.short	\wk1
+	.short	\wk2
 	.endm

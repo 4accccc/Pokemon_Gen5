@@ -106,6 +106,8 @@
 //src/field
 #include "../../../prog/src/field/script_def.h"
 
+//イベントワーク、フラグ evwkdef.h
+#include "../../../prog/src/field/eventwork_def.h"
 
 #if 0 //wb null
 #include "saveflag.h"								//フラグ、ワーク定義
