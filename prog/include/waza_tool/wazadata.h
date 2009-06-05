@@ -88,7 +88,9 @@ typedef enum {
   WAZASICK_KANASIBARI,
   WAZASICK_HOROBINOUTA,
   WAZASICK_MUSTHIT,
-  WAZASICK_CANT_ESCAPE,   ///< にげる・いれかえ不可
+  WAZASICK_WAZALOCK,      ///< 直前に使ったワザしか出せない
+  WAZASICK_WAZALOCK_HARD, ///< 直前に使ったワザしか出せない上、行動不可（行動を選択できない）
+  WAZASICK_CANT_ESCAPE,   ///< にげる・いれかえが出来ない
 
   WAZASICK_MAX,
   WAZASICK_NULL = POKESICK_NULL,
