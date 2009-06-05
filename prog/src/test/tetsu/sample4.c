@@ -12,7 +12,6 @@
 #include "system/main.h"
 
 #include "debug_common.h"
-#include "system/el_scoreboard.h"
 
 //============================================================================================
 /**
@@ -41,14 +40,17 @@ typedef struct {
 	DWS_SYS*						dws;
 
 	int									seq;
-	STRBUF*							strBuf;
 
 	GFL_G3D_UTIL*				g3Dutil;
 	u16									g3DutilUnitIdx;
+	GFL_G3D_RES*				g3DresMdl0;
+	GFL_G3D_OBJ*				g3Dobj0;
+	GFL_G3D_RES*				g3DresMdl1;
+	GFL_G3D_OBJ*				g3Dobj1;
 
-	EL_SCOREBOARD_TEX*	elb_tex[2];
-
-	u16									targetObjID;
+	int									target;
+	int									mode;
+	VecFx32							trans;
 
 	int									timer;
 }SAMPLE4_WORK;
@@ -85,6 +87,8 @@ static GFL_PROC_RESULT Sample4Proc_Init(GFL_PROC * proc, int * seq, void * pwk, 
 	sw->seq = 0;
 
 	sw->dws = DWS_SYS_Setup(sw->heapID);
+	VEC_Set(&sw->trans, 0, 0, 0);
+	DWS_SetG3DcamTarget(sw->dws, &sw->trans);
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -148,149 +152,175 @@ const GFL_PROC_DATA DebugWatanabeSample4ProcData = {
  */
 //============================================================================================
 #define STRBUF_SIZE		(64*2)
-
-#include "arc/elboard_test.naix"
-
-enum {
-	G3DRES_ELBOARD_BMD = 0,
-	G3DRES_ELBOARD_BTX,
-	G3DRES_ELBOARD_BCA,
-	G3DRES_ELBOARD_BTA,
-	G3DRES_ELBOARD2_BMD,
-	G3DRES_ELBOARD2_BTX,
-	G3DRES_ELBOARD2_BTA,
-};
-
-static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbmd, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbtx, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbca, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard_test_nsbta, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbmd, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbtx, GFL_G3D_UTIL_RESARC },
-	{	ARCID_ELBOARD_TEST, NARC_elboard_test_elboard2_test_nsbta, GFL_G3D_UTIL_RESARC },
-};
-
-static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
-	{ G3DRES_ELBOARD_BCA, 0 },
-	{ G3DRES_ELBOARD_BTA, 0 },
-};
-
-static const GFL_G3D_UTIL_ANM g3Dutil_anm2Tbl[] = {
-	{ G3DRES_ELBOARD2_BTA, 0 },
-};
-
-enum {
-	G3DOBJ_ELBOARD1 = 0,
-	G3DOBJ_ELBOARD2,
-};
-
-static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
-	{ G3DRES_ELBOARD_BMD, 0, G3DRES_ELBOARD_BTX, g3Dutil_anm1Tbl, NELEMS(g3Dutil_anm1Tbl) },
-	{ G3DRES_ELBOARD2_BMD, 0, G3DRES_ELBOARD2_BTX, g3Dutil_anm2Tbl, NELEMS(g3Dutil_anm2Tbl) },
-};
-
-static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
-	g3Dutil_resTbl, NELEMS(g3Dutil_resTbl),
-	g3Dutil_objTbl, NELEMS(g3Dutil_objTbl),
-};
+#include "arc/shadow_test.naix"
 
 static const GFL_G3D_OBJSTATUS g3DobjStatus1 = {
-	{ 0, 0, 0 },																				//座標
+	{ 0, 0, 0 },															//座標
 	{ FX32_ONE, FX32_ONE, FX32_ONE },										//スケール
 	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
 };
 
+static void	rotateCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate);
+static void	cameraTraseCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate);
+static void	cameraTargetMvCalc(SAMPLE4_WORK* sw);
 //============================================================================================
 static BOOL	sample4(SAMPLE4_WORK* sw)
 {
 	switch(sw->seq){
 
 	case 0:
-		sw->strBuf = GFL_STR_CreateBuffer(STRBUF_SIZE, sw->heapID);
-		GFL_MSG_GetString(DWS_GetMsgManager(sw->dws), DEBUG_TETSU_STR0_5, sw->strBuf);
 		sw->timer = 0;
+		sw->target = 0;
+		sw->mode = 0;
 
 		//３Ｄオブジェクト作成
-		{
-			u16						objIdx, elboard1Idx;
-			GFL_G3D_OBJ*	g3Dobj;
-			GFL_G3D_RES*	g3Dtex;
-			int i, anmCount;
+		sw->g3DresMdl0 = GFL_G3D_CreateResourceArc
+										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow_test_nsbmd);
+		sw->g3Dobj0 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl0, 0, NULL), NULL, 0); 
+		sw->g3DresMdl1 = GFL_G3D_CreateResourceArc
+										(ARCID_SHADOW_TEST, NARC_shadow_test_shadow2_test_nsbmd);
+		sw->g3Dobj1 = GFL_G3D_OBJECT_Create(GFL_G3D_RENDER_Create(sw->g3DresMdl1, 0, NULL), NULL, 0); 
 
-			//リソース作成
-			sw->g3Dutil = GFL_G3D_UTIL_Create
-											(NELEMS(g3Dutil_resTbl), NELEMS(g3Dutil_objTbl), sw->heapID );
-			sw->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( sw->g3Dutil, &g3Dutil_setup );
-	
-			//アニメーションを有効にする
-			objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx);
-			{
-				elboard1Idx = objIdx + G3DOBJ_ELBOARD1;
-				g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
-	
-				anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
-				for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_EnableAnime(g3Dobj, i); } 
-	
-				g3Dtex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
-				sw->elb_tex[0] = ELBOARD_TEX_Add(g3Dtex, sw->strBuf, sw->heapID);
-			} 
-			{
-				elboard1Idx = objIdx + G3DOBJ_ELBOARD2;
-				g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
-	
-				anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
-				for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_EnableAnime(g3Dobj, i); } 
-	
-				g3Dtex =	GFL_G3D_RENDER_GetG3DresTex(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj));
-				sw->elb_tex[1] = ELBOARD_TEX_Add(g3Dtex, sw->strBuf, sw->heapID);
-			}
-			sw->targetObjID = G3DOBJ_ELBOARD1;
-		}
+		GFL_G3D_SetSystemSwapBufferMode(GX_SORTMODE_MANUAL, GX_BUFFERMODE_W);
+
 		sw->seq++;
 		break;
 
 	case 1:
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){ sw->seq++; }
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-			if(sw->targetObjID == G3DOBJ_ELBOARD2)	{ sw->targetObjID = G3DOBJ_ELBOARD1; }
-			else																		{ sw->targetObjID = G3DOBJ_ELBOARD2; }
-		}
-		ELBOARD_TEX_Main(sw->elb_tex[0]);
-		ELBOARD_TEX_Main(sw->elb_tex[1]);
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){ sw->target = (sw->target)? 0 : 1; }
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){ sw->mode = (sw->mode)? 0 : 1; }
+
+		cameraTargetMvCalc(sw);
 
 		//３Ｄ描画
 		GFL_G3D_DRAW_Start();			//描画開始
 		GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定		
+
+		DWS_DrawLocalOriginBumpPlane(sw->dws, 64*FX32_ONE, GX_RGB(0,31,0), GX_RGB(0,24,0), 32);
 		{
-			u16						objIdx, elboard1Idx;
-			GFL_G3D_OBJ*	g3Dobj;
-			int i, anmCount;
+			GFL_G3D_OBJ*			g3Dobj;
+			NNSG3dRenderObj*	pRnd;
+			NNSG3dResMdl*			pMdl;
+			GFL_G3D_OBJSTATUS status;
 
-			objIdx = GFL_G3D_UTIL_GetUnitObjIdx(sw->g3Dutil, sw->g3DutilUnitIdx );
-			elboard1Idx = objIdx + sw->targetObjID;
-			g3Dobj = GFL_G3D_UTIL_GetObjHandle(sw->g3Dutil, elboard1Idx);
+			status = g3DobjStatus1;
 
-			GFL_G3D_DRAW_DrawObject(g3Dobj, &g3DobjStatus1);
+			if(sw->target == 0){
+				g3Dobj = sw->g3Dobj0;
+				status.trans = sw->trans;
+				cameraTraseCalc(sw, &status.rotate);
+			} else {
+				g3Dobj = sw->g3Dobj1;
+				status.trans.y = FX32_ONE*16;
+				rotateCalc(sw, &status.rotate);
+			}
+			pRnd = GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj)); 
+			pMdl = NNS_G3dRenderObjGetResMdl(pRnd);
 
-			anmCount = GFL_G3D_OBJECT_GetAnimeCount(g3Dobj);
-			for( i=0; i<anmCount; i++ ){ GFL_G3D_OBJECT_LoopAnimeFrame(g3Dobj, i, FX32_ONE ); } 
+			if(sw->mode == 0){
+				NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
+				NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 63 );
+				NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
+				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 10 );
+				NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_MODULATE );
+
+				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
+			} else {
+				NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
+				NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 0 );
+				NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
+				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 10 );
+				NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
+
+				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
+
+				NNS_G3dMdlSetMdlLightEnableFlag( pMdl, 0, 0x0 );
+				NNS_G3dMdlSetMdlPolygonID( pMdl, 0, 1 );
+				NNS_G3dMdlSetMdlCullMode( pMdl, 0, GX_CULL_NONE ); 
+				NNS_G3dMdlSetMdlAlpha( pMdl, 0, 10 );
+				NNS_G3dMdlSetMdlPolygonMode( pMdl, 0, GX_POLYGONMODE_SHADOW );
+
+				GFL_G3D_DRAW_DrawObject(g3Dobj, &status);
+			}
 		}
+
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 		break;
 
 	case 2:
-		ELBOARD_TEX_Delete(sw->elb_tex[1]);
-		ELBOARD_TEX_Delete(sw->elb_tex[0]);
-
-		GFL_G3D_UTIL_DelUnit(sw->g3Dutil, sw->g3DutilUnitIdx);
-		GFL_G3D_UTIL_Delete(sw->g3Dutil);
-
-		GFL_STR_DeleteBuffer(sw->strBuf);
-
+		GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(sw->g3Dobj1)); 
+		GFL_G3D_OBJECT_Delete(sw->g3Dobj1); 
+		GFL_G3D_DeleteResource(sw->g3DresMdl1);
+		GFL_G3D_RENDER_Delete(GFL_G3D_OBJECT_GetG3Drnd(sw->g3Dobj0)); 
+		GFL_G3D_OBJECT_Delete(sw->g3Dobj0); 
+		GFL_G3D_DeleteResource(sw->g3DresMdl0);
 		return FALSE;
 	}
 	return TRUE;
+}
+
+//--------------------------------------------------------------
+static void	rotateCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate)
+{
+	VecFx32	vecRot;
+	MtxFx33 tmpMtx;
+
+	vecRot.x = 0;
+	vecRot.y = 0;
+	vecRot.z = sw->timer * 0x080;
+
+	MTX_RotX33(pRotate, FX_SinIdx((u16)vecRot.x), FX_CosIdx((u16)vecRot.x));
+
+	MTX_RotY33(&tmpMtx, FX_SinIdx((u16)vecRot.y), FX_CosIdx((u16)vecRot.y)); 
+	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
+
+	MTX_RotZ33(&tmpMtx, FX_SinIdx((u16)vecRot.z), FX_CosIdx((u16)vecRot.z)); 
+	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
+}
+
+//--------------------------------------------------------------
+static void	cameraTraseCalc(SAMPLE4_WORK* sw, MtxFx33* pRotate)
+{
+	VecFx32	vecRot;
+	MtxFx33	tmpMtx;
+
+	vecRot.x = 0x4000;
+	vecRot.y = 0;
+	vecRot.z = 0;
+
+	MTX_RotX33(pRotate, FX_SinIdx((u16)vecRot.x), FX_CosIdx((u16)vecRot.x));
+
+	MTX_RotY33(&tmpMtx, FX_SinIdx((u16)vecRot.y), FX_CosIdx((u16)vecRot.y)); 
+	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
+
+	MTX_RotZ33(&tmpMtx, FX_SinIdx((u16)vecRot.z), FX_CosIdx((u16)vecRot.z)); 
+	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
+
+	MTX_Copy43To33(NNS_G3dGlbGetInvCameraMtx(), &tmpMtx);
+	MTX_Concat33(pRotate, &tmpMtx, pRotate); 
+}
+
+//--------------------------------------------------------------
+#define MV_SP (FX32_ONE/2)
+static void	cameraTargetMvCalc(SAMPLE4_WORK* sw)
+{
+	VecFx32 vecMv;
+	u16			angle, angleOffs;
+
+	if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )					{ angleOffs = 0x8000; }
+	else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )	{ angleOffs = 0x0000; }
+	else if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )	{ angleOffs = 0xc000; }
+	else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )	{ angleOffs = 0x4000; }
+	else { return; }
+
+	angle = DWS_GetCamAngleV(sw->dws);
+	angle += angleOffs;
+
+	VEC_Set(&vecMv, FX_SinIdx(angle), 0, FX_CosIdx(angle));
+	VEC_Normalize(&vecMv, &vecMv);
+
+	VEC_MultAdd(MV_SP, &vecMv, &sw->trans, &sw->trans);
 }
 
 

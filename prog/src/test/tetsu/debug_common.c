@@ -321,6 +321,8 @@ GFL_MSGDATA*			DWS_GetMsgManager(DWS_SYS* dws)								{ return dws->msgManager; 
 GFL_G3D_CAMERA*		DWS_GetG3Dcamera(DWS_SYS* dws)								{ return dws->g3Dcamera; }
 GFL_G3D_LIGHTSET*	DWS_GetG3Dlight(DWS_SYS* dws)									{ return dws->g3Dlightset; }	
 GFL_CAMADJUST*		DWS_GetCamAdjust(DWS_SYS* dws)								{ return dws->gflCamAdjust; }	
+u16								DWS_GetCamAngleH(DWS_SYS* dws)								{ return dws->cameraAngleH; }	
+u16								DWS_GetCamAngleV(DWS_SYS* dws)								{ return dws->cameraAngleV; }	
 void							DWS_SetG3DcamTarget(DWS_SYS* dws, VecFx32* t)	{ dws->pCameraTarget = t; }
 void							DWS_CamAdjustOn(DWS_SYS* dws)
 { 
@@ -338,7 +340,7 @@ void							DWS_CamAdjustOff(DWS_SYS* dws)
  * @brief		基準平面描画
  */
 //------------------------------------------------------------------
-void DWS_DrawLocalOriginPlane(DWS_SYS* dws, GXRgb color)
+void DWS_DrawLocalOriginPlane(DWS_SYS* dws, fx32 scale, GXRgb color)
 {
 	VecFx32 pos, up, target;
 
@@ -351,10 +353,11 @@ void DWS_DrawLocalOriginPlane(DWS_SYS* dws, GXRgb color)
 
 	G3_PushMtx();
 	//平行移動パラメータ設定
-	G3_Translate(target.x, target.y, target.z);
+	//G3_Translate(target.x, target.y, target.z);
+	G3_Translate(0, 0, 0);
 
 	//グローバルスケール設定
-	G3_Scale(32 * FX32_ONE, 32 * FX32_ONE, 32 * FX32_ONE);
+	G3_Scale(scale, scale, scale);
 
 	G3_TexImageParam(GX_TEXFMT_NONE, GX_TEXGEN_NONE, 0, 0, 0, 0, GX_TEXPLTTCOLOR0_USE, 0);
 	
@@ -371,6 +374,69 @@ void DWS_DrawLocalOriginPlane(DWS_SYS* dws, GXRgb color)
 	G3_Vtx(-(FX16_ONE-1), 0, -(FX16_ONE-1));
 	G3_Vtx((FX16_ONE-1), 0, -(FX16_ONE-1));
 	G3_Vtx((FX16_ONE-1), 0, (FX16_ONE-1));
+	
+	G3_End();
+	G3_PopMtx(1);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		基準Bump平面描画
+ */
+//------------------------------------------------------------------
+void DWS_DrawLocalOriginBumpPlane(DWS_SYS* dws, fx32 scale, GXRgb color1, GXRgb color2, int div)
+{
+	VecFx32 pos, up, target;
+	fx16		sx;
+	u8			dir;
+	int			i;
+
+	if( div > 32){ div = 32; }
+	sx = (FX16_ONE-1)*2 /div;
+	dir = 0;
+
+	G3X_Reset();
+
+	GFL_G3D_CAMERA_GetPos(dws->g3Dcamera, &pos);
+	GFL_G3D_CAMERA_GetCamUp(dws->g3Dcamera, &up);
+	GFL_G3D_CAMERA_GetTarget(dws->g3Dcamera, &target);
+	G3_LookAt(&pos, &up, &target, NULL);
+
+	G3_PushMtx();
+	//平行移動パラメータ設定
+	//G3_Translate(target.x, target.y, target.z);
+	G3_Translate(0, 0, 0);
+
+	//グローバルスケール設定
+	G3_Scale(scale, scale, scale);
+
+	G3_TexImageParam(GX_TEXFMT_NONE, GX_TEXGEN_NONE, 0, 0, 0, 0, GX_TEXPLTTCOLOR0_USE, 0);
+	
+	//マテリアル設定
+	G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE);
+	G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
+	G3_PolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 63, 31, 0);
+		
+	G3_Begin( GX_BEGIN_QUADS );
+	
+	for( i=0; i<div; i++ ){
+		fx16 y1, y2;
+		if( dir ){
+			y1 = FX16_ONE/32;
+			y2 = 0;
+			G3_Color(color2);
+		} else {
+			y1 = 0;
+			y2 = FX16_ONE/32;
+			G3_Color(color1);
+		}
+		G3_Vtx(-(FX16_ONE-1) + sx*i, y1, (FX16_ONE-1));
+		G3_Vtx(-(FX16_ONE-1) + sx*i, y1, -(FX16_ONE-1));
+		G3_Vtx(-(FX16_ONE-1) + sx*(i+1), y2, -(FX16_ONE-1));
+		G3_Vtx(-(FX16_ONE-1) + sx*(i+1), y2, (FX16_ONE-1));
+
+		dir = (dir)? 0 : 1;
+	}
 	
 	G3_End();
 	G3_PopMtx(1);

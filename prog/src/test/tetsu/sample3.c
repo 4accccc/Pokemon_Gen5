@@ -311,7 +311,7 @@ static BOOL	sample3(SAMPLE3_WORK* sw)
 		GFL_G3D_DRAW_SetLookAt();
 
 		if( sw->tmsgwinSys ){ TALKMSGWIN_SystemDraw3D(sw->tmsgwinSys); }
-		DWS_DrawLocalOriginPlane(sw->dws, GX_RGB(31, 0, 0));
+		DWS_DrawLocalOriginPlane(sw->dws, 32*FX32_ONE, GX_RGB(31, 0, 0));
 
 		GFL_G3D_DRAW_End();				//描画終了（バッファスワップ）					
 	}
