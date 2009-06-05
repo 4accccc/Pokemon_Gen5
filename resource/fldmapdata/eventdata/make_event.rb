@@ -155,7 +155,7 @@ class EventData
 
     if stream.gets =~ /^#hold event number:/ then
       @num = Integer(stream.gets) #event number
-      debug_puts "event num = #{num}"
+      debug_puts "event num = #{@num}"
     else
       raise DataFormatError 
     end
@@ -399,9 +399,9 @@ class PosEvent < AllEvent
 
   def dump output
     gx,gz = calc_grid_ofs @x, @z
-    output.puts "\t{#{@pos_id} = #{@number}"
-    putput.puts "\t\t#{@event_id},"
-    output.puts "\t\t#{@gx}, #{@gz},"
+    output.puts "\t{//#{@pos_id} = #{@number}"
+    output.puts "\t\t#{@event_id},"
+    output.puts "\t\t#{gx}, #{gz},"
     output.puts "\t\t#{@sizex}, #{@sizez},"
     output.puts "\t\t#{@y},  //height"
     output.puts "\t\t#{@workvalue},"
@@ -443,7 +443,7 @@ class BgEvent < AllEvent
 
   def dump output
     gx,gz = calc_grid_ofs @x, @z
-    output.puts "\t{#{@bg_id} = #{@number}"
+    output.puts "\t{//#{@bg_id} = #{@number}"
     output.puts "\t\t#{@event_id},  //event id"
     output.puts "\t\t#{@bg_type}, //type"
     output.puts "\t\t#{gx}, #{gz},"
@@ -568,7 +568,7 @@ class PosEventData < EventData
 
   def dump output
     if @poss.length == 0 then return end
-    output.puts "const POS_TALK_DATA #{getStructName}[] = {"
+    output.puts "const POS_EVENT_DATA #{getStructName}[] = {"
     @poss.each{|pos| pos.dump(output) }
     output.puts "};"
     output.puts "const int PosCount_#{@zonename} = NELEMS(#{getStructName});"
