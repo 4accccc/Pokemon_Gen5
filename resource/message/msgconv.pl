@@ -100,7 +100,7 @@ sub main {
 		return 1;
 	}
 
-	@TargetLangs = @ARGV[1..(@ARGV-1)];
+	@TargetLangs = @ARGV[2..(@ARGV-1)];
 	$OrgLangFlag = ($TargetLangs[0] == ORG_LANG_CODE);
 
 	my $parser = new XML::Parser;
@@ -111,7 +111,7 @@ sub main {
 						);
 
 
-	if(&conv($ARGV[0], \$parser))
+	if(&conv($ARGV[0], $ARGV[1], \$parser))
 	{
 		return 1;
 	}
@@ -185,6 +185,7 @@ sub usage {
 #===============================================================
 sub conv {
 	my $filename = shift;
+	my $dst_dir = shift;
 	my $parser = shift;
 	my $xml;
 
@@ -215,8 +216,8 @@ sub conv {
 
 	&idman::check_error();
 
-	&idman::output_header($filename, $RESOURCE_OUTPUT_DIR);
-	&resource::output($filename, $RESOURCE_OUTPUT_DIR, $NumParsedLangCount);
+	&idman::output_header($filename, $dst_dir );
+	&resource::output($filename, $dst_dir, $NumParsedLangCount);
 
 	return 0;
 

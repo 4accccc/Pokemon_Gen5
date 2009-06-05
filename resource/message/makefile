@@ -1,6 +1,7 @@
 
 SRC_ROOT_DIR	= src
 DST_ROOT_DIR	= dst
+DST_SCRIPT_DIR	= $(DST_ROOT_DIR)/script
 RESOURCE_LIST	= resource.list
 DEPEND_LIST	= depend.list
 TARGET_LIST	= target.list
@@ -10,6 +11,12 @@ ARCHIVE_DATA_NAME	= $(ARCHIVE_NAME_BODY).narc
 ARCHIVE_HEADER_NAME	= $(ARCHIVE_NAME_BODY).naix
 ARCHIVE_DATA_PATH	= $(PROJECT_ARCDIR)$(ARCHIVE_DATA_NAME)
 ARCHIVE_HEADER_PATH	= $(PROJECT_ARCDIR)$(ARCHIVE_HEADER_NAME)
+
+SCRIPT_ARCHIVE_NAME_BODY	= script_message
+SCRIPT_ARCHIVE_DATA_NAME	= $(SCRIPT_ARCHIVE_NAME_BODY).narc
+SCRIPT_ARCHIVE_HEADER_NAME	= $(SCRIPT_ARCHIVE_NAME_BODY).naix
+SCRIPT_ARCHIVE_DATA_PATH	= $(PROJECT_ARCDIR)$(SCRIPT_ARCHIVE_DATA_NAME)
+SCRIPT_ARCHIVE_HEADER_PATH	= $(PROJECT_ARCDIR)$(SCRIPT_ARCHIVE_HEADER_NAME)
 
 ARCHIVE_NAME_BODY_DL	= message_dl
 ARCHIVE_DATA_NAME_DL	= $(ARCHIVE_NAME_BODY_DL).narc
@@ -37,6 +44,7 @@ no-rule:
 	$(MAKE)	depend
 	$(MAKE)	datfiles
 	$(MAKE)	$(ARCHIVE_DATA_PATH)
+	$(MAKE)	$(SCRIPT_ARCHIVE_DATA_PATH)
 	$(MAKE)	$(ARCHIVE_DATA_PATH_DL)
 
 
@@ -53,13 +61,14 @@ depend:
 #	gmm -> dat
 #=========================================================
 HEADER_COPY_DIR	= $(PROJECT_PROGDIR)/include/msg/
+SCRIPT_HEADER_COPY_DIR	= $(HEADER_COPY_DIR)/script/
 
 -include $(TARGET_LIST)
 -include $(DEPEND_LIST)
 
 datfiles: $(TARGETS)
 	cp -u $(DST_ROOT_DIR)/*.h $(HEADER_COPY_DIR)
-
+	cp -u $(DST_SCRIPT_DIR)/*.h $(SCRIPT_HEADER_COPY_DIR)
 
 #=========================================================
 #	‘Sdat -> narc
@@ -68,6 +77,11 @@ $(ARCHIVE_DATA_PATH) : $(wildcard $(DST_ROOT_DIR)/*.dat)
 	nnsarc -c -l -n -i $(ARCHIVE_DATA_NAME) $(DST_ROOT_DIR)/*.dat
 	cp -u $(ARCHIVE_DATA_NAME) $(ARCHIVE_DATA_PATH)
 	perl naixcopy.pl $(ARCHIVE_HEADER_NAME) $(ARCHIVE_HEADER_PATH)
+
+$(SCRIPT_ARCHIVE_DATA_PATH) : $(wildcard $(DST_ROOT_DIR)/*.dat)
+	nnsarc -c -l -n -i $(SCRIPT_ARCHIVE_DATA_NAME) $(DST_SCRIPT_DIR)/*.dat
+	cp -u $(SCRIPT_ARCHIVE_DATA_NAME) $(SCRIPT_ARCHIVE_DATA_PATH)
+	perl naixcopy.pl $(SCRIPT_ARCHIVE_HEADER_NAME) $(SCRIPT_ARCHIVE_HEADER_PATH)
 
 $(ARCHIVE_DATA_PATH_DL) : $(DST_ROOT_DIR)/d_dlplay.dat
 	nnsarc -c -l -n -i $(ARCHIVE_DATA_NAME_DL) $(DST_ROOT_DIR)/d_dlplay.dat
@@ -81,6 +95,10 @@ $(ARCHIVE_DATA_PATH_DL) : $(DST_ROOT_DIR)/d_dlplay.dat
 clean:
 	-rm $(DST_ROOT_DIR)/*.dat
 	-rm $(DST_ROOT_DIR)/*.h
+	-rm $(DST_SCRIPT_DIR)/*.dat
+	-rm $(DST_SCRIPT_DIR)/*.h
+	-rm $(HEADER_COPY_DIR)/*.h
+	-rm $(SCRIPT_HEADER_COPY_DIR)/*.h
 	-rm $(DEPEND_LIST)
 	-rm $(TARGET_LIST)
 

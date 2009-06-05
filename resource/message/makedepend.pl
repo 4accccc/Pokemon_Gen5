@@ -46,11 +46,16 @@ sub make_target_path {
 	my $dst_dir = shift;
 	my $file = shift;
 
+	if( $file =~ /^src\/script\//){
+		$dst_dir .= "/script";
+	}
+
 	if($file =~ /\//)
 	{
 		my @tmp = split(/\//, $file);
 		$file = $tmp[(@tmp-1)];
 	}
+
 
 	$file =~ s/gmm$/dat/;
 	return $dst_dir . '/' . $file;
@@ -72,19 +77,36 @@ sub print_targets {
 	}
 }
 
+sub make_dirpath {
+	my $file_path = shift;
+
+	my @elems = split( /\//, $file_path );
+	pop @elems;
+
+	my $dirpath = "";
+	my $tmp = "";
+	foreach $tmp (@elems) {
+		$dirpath .= "$tmp/";
+	}
+	return $dirpath;
+}
+
 sub print_depends {
 	my $src_ref = shift;
 	my $target_ref = shift;
 	my $lang_ref = shift;
 	my $filename = shift;
+	my $dst_dir;
 
 	if(open(DEPEND_FILE, ">$filename"))
 	{
 		my $i, $L;
 		for($i=0; $i<@$src_ref; $i++)
 		{
+			$dst_dir = make_dirpath( $$target_ref[$i] );
 			print DEPEND_FILE "$$target_ref[$i]:\t$$src_ref[$i] resource.pl\n";
-			print DEPEND_FILE "\t perl msgconv.pl $$src_ref[$i]";
+			print DEPEND_FILE "\t perl msgconv.pl $$src_ref[$i] $dst_dir";
+
 			for($L=0; $L<@$lang_ref; $L++)
 			{
 				print DEPEND_FILE " $$lang_ref[$L]";
