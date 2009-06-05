@@ -16,11 +16,11 @@
 //               スクリプトテーブル
 //　スクリプトデータとなるラベルを指定します
 //--------------------------------------------------------------
-_EVENT_DATA   ev_talkobj_man01
-_EVENT_DATA   ev_talkobj_woman01
-_EVENT_DATA   ev_talkobj_babygirl1
-_EVENT_DATA   ev_posevent_test1
-_EVENT_DATA   ev_bgevent_test1
+_EVENT_DATA   ev_t01_talkobj_man01
+_EVENT_DATA   ev_t01_talkobj_woman01
+_EVENT_DATA   ev_t01_talkobj_babygirl1
+_EVENT_DATA   ev_t01_posevent_test1
+_EVENT_DATA   ev_t01_bgevent_test1
 _EVENT_DATA_END //データ終端を指定しています。
 
 
@@ -28,7 +28,7 @@ _EVENT_DATA_END //データ終端を指定しています。
 /*            FLAG_CHANGE_LABEL                               */
 /*
  * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
+ * ev_t01_SCRIPT_WORKを確保していないので、
  * SCWK_ANSWERなどのワークは使用することが出来ない！
  * LOCALWORK0などを使用するようにする！
  *
@@ -37,7 +37,7 @@ _EVENT_DATA_END //データ終端を指定しています。
  * あまりつかわないかも？
  */
 /**************************************************************/
-//ev_t01_flag_change:
+//ev_t01_t01_flag_change:
 //  _END
 
 /**************************************************************/
@@ -46,7 +46,7 @@ _EVENT_DATA_END //データ終端を指定しています。
 //-------------------------------------------------------------
 //  T01 MAN1の会話用イベントスクリプトです。
 //-------------------------------------------------------------
-ev_talkobj_man01:
+ev_t01_talkobj_man01:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -82,7 +82,7 @@ talkobj_man01_end:
 //  T01 WOMAN1の会話用イベントスクリプトです。
 //-------------------------------------------------------------
 
-ev_talkobj_woman01:
+ev_t01_talkobj_woman01:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -122,7 +122,7 @@ talkobj_woman01_end:
 //-------------------------------------------------------------
 //  T01 BABYGIRL1の会話用イベントスクリプトです。
 //-------------------------------------------------------------
-ev_talkobj_babygirl1:
+ev_t01_talkobj_babygirl1:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -135,7 +135,7 @@ ev_talkobj_babygirl1:
 //-------------------------------------------------------------
 //  T01 テスト用座標イベントスクリプト
 //-------------------------------------------------------------
-ev_posevent_test1:
+ev_t01_posevent_test1:
   _TALK_OBJ_PAUSE_ALL
   _TALKWIN_OPEN
   _TALKMSG_ALLPUT msg_t01_testmsg03
@@ -148,7 +148,7 @@ ev_posevent_test1:
 //-------------------------------------------------------------
 //  T01 テスト用BG話し掛けイベントスクリプト
 //-------------------------------------------------------------
-ev_bgevent_test1:
+ev_t01_bgevent_test1:
   _TALK_OBJ_PAUSE_ALL
   _TALKWIN_OPEN
   _TALKMSG_ALLPUT msg_t01_testmsg03

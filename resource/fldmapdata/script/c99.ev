@@ -11,24 +11,24 @@
 //--------------------------------------------------------------------
 //					     スクリプト本体
 //--------------------------------------------------------------------
-_EVENT_DATA		ev_talkobj_sample_01
-_EVENT_DATA		ev_talkobj_sample_02
-_EVENT_DATA		ev_talkobj_sample_03
-_EVENT_DATA		ev_talkobj_sample_04
-_EVENT_DATA		ev_talkobj_sample_05
-_EVENT_DATA		ev_talkobj_sample_06
-_EVENT_DATA		ev_talkobj_kabi32_00
-_EVENT_DATA		ev_talkobj_kabi32_01
-_EVENT_DATA		ev_talkobj_kabi32_02
-_EVENT_DATA		ev_talkobj_kabi32_03
-_EVENT_DATA		ev_talkobj_kabi32_04
+_EVENT_DATA		ev_c99_talkobj_sample_01
+_EVENT_DATA		ev_c99_talkobj_sample_02
+_EVENT_DATA		ev_c99_talkobj_sample_03
+_EVENT_DATA		ev_c99_talkobj_sample_04
+_EVENT_DATA		ev_c99_talkobj_sample_05
+_EVENT_DATA		ev_c99_talkobj_sample_06
+_EVENT_DATA		ev_c99_talkobj_kabi32_00
+_EVENT_DATA		ev_c99_talkobj_kabi32_01
+_EVENT_DATA		ev_c99_talkobj_kabi32_02
+_EVENT_DATA		ev_c99_talkobj_kabi32_03
+_EVENT_DATA		ev_c99_talkobj_kabi32_04
 
 _EVENT_DATA_END //終了
 
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_talkobj_sample_01:
+ev_c99_talkobj_sample_01:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -41,7 +41,7 @@ ev_talkobj_sample_01:
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_talkobj_sample_02:
+ev_c99_talkobj_sample_02:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -54,7 +54,7 @@ ev_talkobj_sample_02:
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_talkobj_sample_03:
+ev_c99_talkobj_sample_03:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -67,7 +67,7 @@ ev_talkobj_sample_03:
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_talkobj_sample_04:
+ev_c99_talkobj_sample_04:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -80,7 +80,7 @@ ev_talkobj_sample_04:
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_talkobj_sample_05:
+ev_c99_talkobj_sample_05:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -93,7 +93,7 @@ ev_talkobj_sample_05:
 //--------------------------------------------------------------------
 //	話し掛け サンプル
 //--------------------------------------------------------------------
-ev_talkobj_sample_06:
+ev_c99_talkobj_sample_06:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -106,7 +106,7 @@ ev_talkobj_sample_06:
 //--------------------------------------------------------------------
 //	話し掛け KABI32 00
 //--------------------------------------------------------------------
-ev_talkobj_kabi32_00:
+ev_c99_talkobj_kabi32_00:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	
@@ -124,7 +124,7 @@ ev_talkobj_kabi32_00:
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 01
 //--------------------------------------------------------------------
-ev_talkobj_kabi32_01:
+ev_c99_talkobj_kabi32_01:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	
@@ -141,7 +141,7 @@ ev_talkobj_kabi32_01:
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 02
 //--------------------------------------------------------------------
-ev_talkobj_kabi32_02:
+ev_c99_talkobj_kabi32_02:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	
@@ -158,7 +158,7 @@ ev_talkobj_kabi32_02:
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 03
 //--------------------------------------------------------------------
-ev_talkobj_kabi32_03:
+ev_c99_talkobj_kabi32_03:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	
@@ -175,7 +175,7 @@ ev_talkobj_kabi32_03:
 //--------------------------------------------------------------------
 //	話し掛け サンプル KABI32 04
 //--------------------------------------------------------------------
-ev_talkobj_kabi32_04:
+ev_c99_talkobj_kabi32_04:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	

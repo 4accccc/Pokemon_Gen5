@@ -15,9 +15,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA ev_talkobj_boy1
-_EVENT_DATA ev_talkobj_girl1
-_EVENT_DATA ev_talkobj_man1
+_EVENT_DATA ev_r01_talkobj_boy1
+_EVENT_DATA ev_r01_talkobj_girl1
+_EVENT_DATA ev_r01_talkobj_man1
 _EVENT_DATA_END
 
 
@@ -25,7 +25,7 @@ _EVENT_DATA_END
 /*            FLAG_CHANGE_LABEL                               */
 /*
  * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
+ * ev_r01_SCRIPT_WORKを確保していないので、
  * SCWK_ANSWERなどのワークは使用することが出来ない！
  * LOCALWORK0などを使用するようにする！
  *
@@ -34,7 +34,7 @@ _EVENT_DATA_END
  * あまりつかわないかも？
  */
 /**************************************************************/
-//ev_r01_flag_change:
+//ev_r01_r01_flag_change:
 //  _END
 
 /**************************************************************/
@@ -43,7 +43,7 @@ _EVENT_DATA_END
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
-ev_talkobj_boy1:
+ev_r01_talkobj_boy1:
 	_TALK_OBJ_PAUSE_ALL //動作モデルをポーズします
 	_TURN_HERO_SITE //自機の方向へ振り向きます
 	_TALKWIN_OPEN //会話ウィンドウを開きます
@@ -83,7 +83,7 @@ talkobj_boy1_end:
 	_END //イベントを終了します
 
 
-ev_talkobj_girl1:
+ev_r01_talkobj_girl1:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
@@ -98,7 +98,7 @@ ev_talkobj_girl1:
 	_END
 
 
-ev_talkobj_man1:
+ev_r01_talkobj_man1:
 	_TALK_OBJ_PAUSE_ALL
 	_TURN_HERO_SITE
 	_TALKWIN_OPEN
