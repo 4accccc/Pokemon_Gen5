@@ -933,8 +933,6 @@ u8 WAZADATA_GetRecoverHPRatio( WazaID id )
     return 50;
   }
   return 0;
-
-
 }
 
 //=============================================================================================
@@ -952,6 +950,25 @@ BOOL WAZADATA_IsImage( WazaID id, WazaImage img )
   // @@@ 今はてきとー
   return FALSE;
 }
+
+//=============================================================================================
+/**
+ * ワザフラグ取得
+ *
+ * @param   id
+ * @param   flag
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL WAZADATA_GetFlag( WazaID id, WazaFlag flag )
+{
+  GF_ASSERT( flag < WAZAFLAG_MAX );
+
+  // @@@ 今はてきとー
+  return WAZADATA_IsDamage( id );
+}
+
 
 
 #ifdef PM_DEBUG
