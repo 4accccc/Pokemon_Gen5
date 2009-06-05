@@ -723,7 +723,7 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
 static void put1char_normal( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size )
 {
   GFL_FONT_GetBitMap( fontHandle, charCode, GFL_BMP_GetCharacterAdrs(SystemWork.charBuffer), size );
-  GFL_BMP_Print( SystemWork.charBuffer, dst, 0, 0, xpos+size->left_width, ypos, size->glyph_width, size->height, 0x0f );
+  GFL_BMP_Print( SystemWork.charBuffer, dst, 0, 0, xpos+size->left_width, ypos, size->glyph_width, size->height, 0x00 );
 }
 //------------------------------------------------------------------
 /**
@@ -1086,7 +1086,7 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
 
           size_x = GFL_BMP_GetSizeX( wk->dstBmp );
           size_y = GFL_BMP_GetSizeY( wk->dstBmp );
-          GFL_BMP_Print( wk->dstBmp, wk->dstBmp, 0, 1, 0, 0, size_x, size_y-1, 0xff );
+          GFL_BMP_Print( wk->dstBmp, wk->dstBmp, 0, 1, 0, 0, size_x, size_y-1, GF_BMPPRT_NOTNUKI );
           GFL_BMP_Fill( wk->dstBmp, 0, size_y-1, size_x, 1, wk->clearColor );
           GFL_BMPWIN_TransVramCharacter( wk->dstWin );
           if( wk->pauseWait == LINE_DOT_HEIGHT )
